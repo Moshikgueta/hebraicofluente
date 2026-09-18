@@ -1,0 +1,169 @@
+# Dar, tirar e conferir acesso — pelo GitHub, sem terminal.
+#
+# É a ferramenta de operação da plataforma. Serve para:
+#
+#   · você mesmo entrar no curso antes de o pagamento estar ligado;
+#   · liberar um aluno que pagou por fora (transferência, dinheiro, brinde);
+#   · FECHAR o acesso depois de um estorno — que é a metade que todo mundo
+#     esquece: devolver o dinheiro na Mercado Pago não tira o curso de
+#     ninguém, e sem isto a pessoa estudaria de graça por doze meses;
+#   · olhar o que existe no banco quando algo não bate.
+#
+# Como usar: aba Actions → "Acesso" → Run workflow → escolha a ação, digite o
+# e-mail → Run.
+#
+# Toda execução fica registrada no histórico do Actions, com quem disparou e
+# quando. Isso é de propósito: mexer no acesso de alguém tem de deixar rastro.
+
+name: Acesso
+
+on:
+  workflow_dispatch:
+    inputs:
+      acao:
+        description: 'O que fazer'
+        required: true
+        default: liberar
+        type: choice
+        options: [liberar, revogar, consultar, listar]
+      email:
+        description: 'E-mail da conta (não precisa em "listar")'
+        required: false
+        type: string
+      curso:
+        description: 'Curso'
+        required: true
+        default: alfabetizacao
+        type: choice
+        options: [alfabetizacao, hebraico-a1, hebraico-a2, hebraico-b1]
+      meses:
+        description: 'Meses de acesso (só em "liberar")'
+        required: false
+        default: '12'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare
+  cancel-in-progress: false
+
+jobs:
+  acesso:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Executar
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACAO: ${{ inputs.acao }}
+          EMAIL: ${{ inputs.email }}
+          CURSO: ${{ inputs.curso }}
+          MESES: ${{ inputs.meses }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN não está nos segredos do repositório."
+            exit 1
+          fi
+
+          W="npx --yes wrangler@4 d1 execute hebraico-fluente --remote"
+          say() { echo "$*" >> "$GITHUB_STEP_SUMMARY"; }
+
+          # O e-mail é normalizado do mesmo jeito que na entrada da plataforma
+          # (minúsculas, sem espaços). Sem isto, "Ana@Exemplo.BR " não acha a
+          # conta que foi gravada como "ana@exemplo.br" e o operador conclui,
+          # erradamente, que ela não existe.
+          MAIL="$(printf '%s' "${EMAIL:-}" | tr '[:upper:]' '[:lower:]' | xargs || true)"
+
+          # Aspas simples viram o fim da string no SQL. Dobrar é o escape do
+          # SQLite — e um e-mail é entrada de usuário como qualquer outra.
+          SQLMAIL="$(printf '%s' "$MAIL" | sed "s/'/''/g")"
+
+          say "## Acesso — \`$ACAO\`"
+          say ""
+
+          case "$ACAO" in
+            listar)
+              say '```'
+              $W --command \
+                "SELECT id, email, name, datetime(created_at/1000,'unixepoch') AS criada
+                   FROM accounts ORDER BY created_at DESC LIMIT 25" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
+              ;;
+
+            consultar)
+              [ -n "$MAIL" ] || { echo "::error::Informe o e-mail."; exit 1; }
+              say '```'
+              $W --command \
+                "SELECT a.id, a.email,
+                        e.course_slug,
+                        datetime(e.expires_at/1000,'unixepoch') AS vence_em,
+                        CASE WHEN e.expires_at > unixepoch()*1000 THEN 'ATIVO' ELSE 'vencido' END AS estado
+                   FROM accounts a
+                   LEFT JOIN entitlements e ON e.account_id = a.id
+                  WHERE a.email = '$SQLMAIL'" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
+              ;;
+
+            liberar)
+              [ -n "$MAIL" ] || { echo "::error::Informe o e-mail."; exit 1; }
+              M="$(printf '%s' "${MESES:-12}" | tr -cd '0-9')"
+              [ -n "$M" ] || M=12
+
+              # ON CONFLICT porque a chave é (conta, curso): liberar duas vezes
+              # ESTENDE o prazo em vez de criar uma segunda linha. Duas linhas
+              # para o mesmo curso seriam duas datas de validade, e alguma
+              # consulta escolheria a errada.
+              #
+              # O SELECT no VALUES resolve o e-mail para o id da conta, e some
+              # sem fazer nada se a conta não existir — por isso o conferimento
+              # logo abaixo, que é o que diz se funcionou.
+              $W --command \
+                "INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
+                 SELECT id, '$CURSO', unixepoch()*1000,
+                        unixepoch()*1000 + $M * 2629800000, 'MANUAL-ACTIONS'
+                   FROM accounts WHERE email = '$SQLMAIL'
+                 ON CONFLICT(account_id, course_slug) DO UPDATE SET
+                   expires_at = excluded.expires_at,
+                   order_id   = excluded.order_id;
+                 INSERT INTO access_log (account_id, action, detail, created_at)
+                 SELECT id, 'grant-manual', '$CURSO via GitHub Actions', unixepoch()*1000
+                   FROM accounts WHERE email = '$SQLMAIL'"
+
+              say "Tentativa de liberar **$CURSO** por **$M meses** para \`$MAIL\`."
+              say ""
+              say "Conferindo o resultado:"
+              say '```'
+              $W --command \
+                "SELECT a.email, e.course_slug,
+                        datetime(e.expires_at/1000,'unixepoch') AS vence_em
+                   FROM accounts a JOIN entitlements e ON e.account_id = a.id
+                  WHERE a.email = '$SQLMAIL' AND e.course_slug = '$CURSO'" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
+              say ""
+              say "Se a tabela acima veio vazia, **essa conta não existe**."
+              say "Crie-a primeiro em \`/criar-conta\` no site, com esse mesmo e-mail."
+              ;;
+
+            revogar)
+              [ -n "$MAIL" ] || { echo "::error::Informe o e-mail."; exit 1; }
+              $W --command \
+                "INSERT INTO access_log (account_id, action, detail, created_at)
+                 SELECT id, 'revoke-manual', '$CURSO via GitHub Actions', unixepoch()*1000
+                   FROM accounts WHERE email = '$SQLMAIL';
+                 DELETE FROM entitlements
+                  WHERE course_slug = '$CURSO'
+                    AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL')"
+              say "Acesso a **$CURSO** removido de \`$MAIL\`."
+              say ""
+              say "Fecha na hora: o cookie de sessão não carrega direito nenhum,"
+              say "então não há atraso até ele expirar."
+              ;;
+          esac
