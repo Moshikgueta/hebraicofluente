@@ -37,7 +37,11 @@ data/
 templates/
   letter.js         as 5 etapas de uma letra; nunca cita uma letra específica
   page-0.js         Os sinais de vogal, antes da letra 1
+  review.js         as 5 revisões + a revisão final cumulativa
+  appendix.js       alfabeto · nikud · transliteração · cursiva
   partials.js       badge, callout, tabela, exercício, documento
+tools/
+  gen-stroke-order.py   ferramenta de autoria; gera assets/stroke-order/*.svg
 scripts/
   build.js          data + templates → dist/
   validate.js       as 13 regras
@@ -49,7 +53,7 @@ styles/
   print.css         geometria A4
 assets/
   fonts/            woff2 + licenças
-  stroke-order/     22 SVG de ordem de traçado (placeholders por enquanto)
+  stroke-order/     27 SVG de ordem de traçado (22 letras + 5 formas finais)
 ```
 
 ---
@@ -70,7 +74,7 @@ assets/
 | V7 | `confusableWith` só contém letras hebraicas reais | falha |
 | V8 | Nenhum caractere hebraico fora de um span `.he` no HTML gerado | falha |
 | V9 | Nenhuma pontuação bidi-neutra dentro de um span `.he` | falha |
-| V10 | Revisão N só usa letras de ordem ≤ 4N | falha *(pendente)* |
+| V10 | Revisão N só mostra letras já ensinadas | falha |
 | V11 | SVG de traçado ausente ou ainda placeholder | aviso |
 | V12 | `wordsToRead` vazio (esperado na letra 1) | aviso |
 | V13 | Hebraico em campo de prosa sem marcação `{{…}}` | falha |
