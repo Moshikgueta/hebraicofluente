@@ -183,6 +183,16 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Os segredos da Mercado Pago vivem AQUI, nos segredos deste
+          # repositório, e o script os empurra para o Worker a cada
+          # publicação. Assim há um lugar só para guardar chave, e rotacionar
+          # uma é editar e dar push — em vez de abrir dois painéis e lembrar
+          # qual está com o valor velho.
+          #
+          # Vazios enquanto a conta não existir: o site sobe inteiro e só o
+          # checkout fica desligado, dizendo isso na tela.
+          MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
+          MP_WEBHOOK_SECRET: ${{ secrets.MP_WEBHOOK_SECRET }}
           # O build já aconteceu no passo anterior, com o cache do npm, para
           # que uma falha de build apareça como falha de build.
           HF_SKIP_BUILD: '1'
@@ -196,6 +206,42 @@ jobs:
           rc=$?
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           exit $rc
+
+      # O e2e pergunta "o servidor mandou a página?". Esta etapa pergunta "a
+      # página APARECE?" — que é outra coisa, e é a que o aluno faz.
+      #
+      # Entre as duas cabem um erro de script que apaga a tela, uma fonte ou um
+      # chunk que não vem, uma chamada de API que trava o app num estado vazio.
+      # Nenhum deles aparece num código 200, e todos chegam a quem abre como
+      # "o site não funciona".
+      #
+      # Não derruba a publicação: o código já está no ar, e um vermelho aqui
+      # faria alguém republicar sem saber o quê. O que importa é o relato.
+      - name: A capa aparece num navegador?
+        if: steps.guard.outputs.ok == 'true'
+        continue-on-error: true
+        env:
+          HF_BASE: https://hebraico-fluente.moshikg10.workers.dev
+        run: |
+          npm install --no-save playwright >/dev/null 2>&1
+          npx --yes playwright install --with-deps chromium >/dev/null 2>&1
+          {
+            echo "## A capa num navegador de verdade"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          node worker/browser-check.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      # As capturas encerram a discussão quando o texto não basta.
+      - name: Guardar as capturas
+        if: always() && steps.guard.outputs.ok == 'true'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-da-capa
+          path: captura*.png
+          if-no-files-found: ignore
+          retention-days: 7
 
       # A conferência cria uma conta de teste no banco DE PRODUÇÃO — é o que
       # torna a verificação real. Sem esta limpeza, cada publicação deixa mais

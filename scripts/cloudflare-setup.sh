@@ -178,11 +178,32 @@ else
   fi
 fi
 
-# Sem os da Mercado Pago a plataforma SOBE e funciona — só o pagamento fica
-# desligado, e o checkout diz isso na tela. Por isso é aviso, não parada.
-tem MP_ACCESS_TOKEN   && ok "MP_ACCESS_TOKEN definido" \
+# Os da Mercado Pago: se o valor estiver no AMBIENTE (segredo do GitHub, ou
+# exportado na sua máquina), ele é empurrado para o Worker. É o que evita a
+# viagem ao painel da Cloudflare — os segredos ficam num lugar só, o mesmo
+# onde já estão os da Cloudflare, e uma troca de chave é uma edição e um push.
+#
+# Empurra SEMPRE que o valor existe no ambiente, mesmo que o Worker já tenha
+# um: é assim que rotacionar uma chave funciona. Sem isso, trocar o token no
+# GitHub não trocaria nada e a pessoa passaria uma tarde entendendo por quê.
+empurra() {
+  local nome="$1" valor="$2"
+  if [ -n "$valor" ]; then
+    if printf '%s' "$valor" | $W secret put "$nome" >/dev/null 2>&1; then
+      ok "$nome enviado ao Worker"
+    else
+      info "Não consegui enviar $nome — rode 'npx wrangler secret put $nome'."
+    fi
+  elif tem "$nome"; then
+    ok "$nome já definido no Worker"
+  else
+    return 1
+  fi
+}
+
+empurra MP_ACCESS_TOKEN   "${MP_ACCESS_TOKEN:-}" \
   || info "MP_ACCESS_TOKEN ausente — pagamento fica desligado (o site funciona)."
-tem MP_WEBHOOK_SECRET && ok "MP_WEBHOOK_SECRET definido" \
+empurra MP_WEBHOOK_SECRET "${MP_WEBHOOK_SECRET:-}" \
   || info "MP_WEBHOOK_SECRET ausente — o webhook recusa tudo, de propósito."
 
 # ── 5. construir ──────────────────────────────────────────────────────────
