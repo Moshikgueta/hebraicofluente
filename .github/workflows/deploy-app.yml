@@ -1,0 +1,86 @@
+# Deploys the interactive course to GitHub Pages.
+#
+# The whole app is static — 48 prerendered pages, and the only state is the
+# learner's own, in their browser — so there is nothing to run at the edge and
+# nothing to pay for. `npm run build` regenerates app/content/ from data/ first,
+# which is why the content directory is gitignored: the site is always built
+# from the same source the printed book is.
+#
+# NEXT_PUBLIC_BASE_PATH is what makes a project page work. Pages serves this at
+# /hebraicofluente, and every URL the app builds by hand — an audio clip, a
+# stroke-order SVG — needs that prefix. Fonts go through next/font/local so Next
+# rewrites them; a hand-written url('/fonts/…') in CSS would 404.
+
+name: Deploy app to Pages
+
+on:
+  push:
+    branches: [claude/practical-babbage-veufcz, main]
+    paths:
+      - 'app/**'
+      - 'data/**'
+      - 'assets/**'
+      - 'tools/export-content.mjs'
+      - '.github/workflows/deploy-app.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a queued run supersedes a waiting one but never
+# cancels a deploy in flight.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install
+        working-directory: app
+        run: npm ci
+
+      # The tests are the gate. The order rule in particular: a broken build
+      # that still deploys would put a lesson in front of a learner with a
+      # letter they have not been taught.
+      - name: Test
+        working-directory: app
+        run: npm test
+
+      - name: Build
+        working-directory: app
+        env:
+          NEXT_PUBLIC_BASE_PATH: /hebraicofluente
+        run: npm run build
+
+      # Jekyll would otherwise swallow Next's _next/ directory.
+      - run: touch app/out/.nojekyll
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

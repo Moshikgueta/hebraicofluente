@@ -1,6 +1,46 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
+import localFont from 'next/font/local';
 import './globals.css';
+
+/* Loaded through next/font/local rather than @font-face in CSS: Next then owns
+   the URLs and rewrites them for whatever base path the site is served from.
+   A hand-written url('/fonts/…') would 404 on a project page. */
+const display = localFont({
+  variable: '--font-display-loaded',
+  display: 'swap',
+  src: [
+    { path: '../../public/fonts/dm-sans-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/dm-sans-latin-600-normal.woff2', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/dm-sans-latin-700-normal.woff2', weight: '700', style: 'normal' }
+  ]
+});
+const ui = localFont({
+  variable: '--font-ui-loaded',
+  display: 'swap',
+  src: [
+    { path: '../../public/fonts/inter-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/inter-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/inter-latin-700-normal.woff2', weight: '700', style: 'normal' }
+  ]
+});
+/* Noto Sans Hebrew carries 55 nikud marks and a ccmp table — chosen over the
+   alternatives by inspecting the binaries, because a font that positions the
+   vowel points badly makes every reading exercise in the course wrong. */
+const hebrew = localFont({
+  variable: '--font-he-loaded',
+  display: 'swap',
+  src: [
+    { path: '../../public/fonts/noto-sans-hebrew-hebrew-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/noto-sans-hebrew-hebrew-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/noto-sans-hebrew-hebrew-700-normal.woff2', weight: '700', style: 'normal' }
+  ]
+});
+const cursive = localFont({
+  variable: '--font-he-cursive-loaded',
+  display: 'swap',
+  src: [{ path: '../../public/fonts/gveret-levin-hebrew-400-normal.woff2', weight: '400', style: 'normal' }]
+});
 import { ProgressProvider } from '@/lib/state/store';
 import { AppShell } from '@/components/shell/AppShell';
 import { course } from '@/lib/content';
@@ -27,7 +67,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR" dir="ltr">
+    <html
+      lang="pt-BR"
+      dir="ltr"
+      className={`${display.variable} ${ui.variable} ${hebrew.variable} ${cursive.variable}`}
+    >
       <body>
         <a
           href="#conteudo"

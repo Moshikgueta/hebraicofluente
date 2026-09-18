@@ -23,6 +23,7 @@ import Image from 'next/image';
 import { He } from '@/components/hebrew/He';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { asset } from '@/lib/asset';
 
 type Mode = 'trace' | 'free';
 
@@ -167,7 +168,7 @@ export function WritingCanvas({
             </p>
             {strokeOrderSrc ? (
               <div className="rounded-[var(--r-md)] bg-surface-2 p-3 grid place-items-center">
-                <Image src={strokeOrderSrc} alt={`Ordem dos traços da letra ${label}`}
+                <Image src={asset(strokeOrderSrc)} alt={`Ordem dos traços da letra ${label}`}
                        width={140} height={140} unoptimized />
               </div>
             ) : (

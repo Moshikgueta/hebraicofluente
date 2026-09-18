@@ -5,49 +5,9 @@
    changes here is scale, not identity: a screen needs a dark mode, larger
    Hebrew and a touch-sized rhythm that a printed page does not. */
 
-@font-face {
-  font-family: 'DM Sans'; font-style: normal; font-weight: 400; font-display: swap;
-  src: url('/fonts/dm-sans-latin-400-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'DM Sans'; font-style: normal; font-weight: 600; font-display: swap;
-  src: url('/fonts/dm-sans-latin-600-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'DM Sans'; font-style: normal; font-weight: 700; font-display: swap;
-  src: url('/fonts/dm-sans-latin-700-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap;
-  src: url('/fonts/inter-latin-400-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap;
-  src: url('/fonts/inter-latin-500-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap;
-  src: url('/fonts/inter-latin-700-normal.woff2') format('woff2');
-}
 /* Noto Sans Hebrew carries 55 nikud marks and a ccmp table — chosen over the
    alternatives by inspecting the binaries, because a font that positions the
    vowel points badly makes every reading exercise in the course wrong. */
-@font-face {
-  font-family: 'Noto Sans Hebrew'; font-style: normal; font-weight: 400; font-display: swap;
-  src: url('/fonts/noto-sans-hebrew-hebrew-400-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Noto Sans Hebrew'; font-style: normal; font-weight: 500; font-display: swap;
-  src: url('/fonts/noto-sans-hebrew-hebrew-500-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Noto Sans Hebrew'; font-style: normal; font-weight: 700; font-display: swap;
-  src: url('/fonts/noto-sans-hebrew-hebrew-700-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Gveret Levin'; font-style: normal; font-weight: 400; font-display: swap;
-  src: url('/fonts/gveret-levin-hebrew-400-normal.woff2') format('woff2');
-}
 
 :root {
   /* ink */
@@ -83,10 +43,13 @@
   --line:       rgba(11, 11, 12, 0.10);
   --line-soft:  rgba(11, 11, 12, 0.06);
 
-  --font-display: 'DM Sans', system-ui, sans-serif;
-  --font-ui:      'Inter', system-ui, sans-serif;
-  --font-he:      'Noto Sans Hebrew', 'Inter', sans-serif;
-  --font-he-cursive: 'Gveret Levin', 'Noto Sans Hebrew', cursive;
+  /* The -loaded variables come from next/font/local in app/layout.tsx, which
+     owns the font URLs so they survive a base path. The fallbacks matter: a
+     missing Hebrew face is not a style regression, it is an unreadable page. */
+  --font-display: var(--font-display-loaded), system-ui, sans-serif;
+  --font-ui:      var(--font-ui-loaded), system-ui, sans-serif;
+  --font-he:      var(--font-he-loaded), 'Noto Sans Hebrew', serif;
+  --font-he-cursive: var(--font-he-cursive-loaded), var(--font-he-loaded), cursive;
 
   --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
   --shadow-1: 0 1px 2px rgba(11,11,12,.05), 0 4px 16px rgba(11,11,12,.04);

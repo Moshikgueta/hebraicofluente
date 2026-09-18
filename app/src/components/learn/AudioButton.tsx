@@ -19,6 +19,7 @@
  * scheme and no renaming when a lesson is reordered. */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { asset } from '@/lib/asset';
 import { track } from '@/lib/analytics';
 
 /* Which clips exist. Populated at build time from public/audio/; empty today,
@@ -47,7 +48,7 @@ export function AudioButton({
 
   const play = useCallback((rate: number) => {
     if (!audioId || !available) return;
-    const el = ref.current ?? new Audio(`/audio/${audioId}.mp3`);
+    const el = ref.current ?? new Audio(asset(`/audio/${audioId}.mp3`));
     ref.current = el;
     el.playbackRate = rate;
     el.currentTime = 0;
