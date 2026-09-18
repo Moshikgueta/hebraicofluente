@@ -20,8 +20,47 @@
 
 const enc = new TextEncoder();
 
-/** 310.000 — o piso recomendado pelo OWASP para PBKDF2-HMAC-SHA256. */
-export const PBKDF2_ITER = 310_000;
+/* ── quantas iterações ────────────────────────────────────────────────────
+ * Aqui mora um conflito real entre segurança e a plataforma, e ele precisa
+ * estar escrito porque a escolha não é livre.
+ *
+ * O OWASP recomenda 600.000 iterações para PBKDF2-HMAC-SHA256. O plano
+ * GRATUITO do Cloudflare Workers dá 10 ms de CPU por requisição. Medido:
+ *
+ *      10.000 →  1,9 ms      100.000 → 17,0 ms
+ *      25.000 →  4,4 ms      310.000 → 53,0 ms
+ *      50.000 →  8,6 ms
+ *
+ * Ou seja: qualquer coisa acima de ~50.000 é morta no meio do cálculo, e a
+ * rota devolve 500. Foi exatamente o que aconteceu na primeira publicação —
+ * tudo que calculava hash falhava, tudo que não calculava funcionava. (O
+ * `wrangler dev` local não aplica esse limite, então o erro só aparece em
+ * produção, que é a pior hora para aparecer.)
+ *
+ * O padrão abaixo cabe no plano gratuito com folga. É MENOS do que o
+ * recomendado, e isso é uma dívida consciente, não um descuido.
+ *
+ * COMO PAGAR ESSA DÍVIDA (uns cinco minutos, depois do Workers Paid, US$5/mês):
+ *
+ *   1. em wrangler.toml, [vars]:   PBKDF2_ITERATIONS = "310000"
+ *   2. em wrangler.toml, no topo:  [limits]
+ *                                  cpu_ms = 200
+ *   3. publicar.
+ *
+ * Nada mais. Ninguém é deslogado e nenhuma senha é invalidada, porque cada
+ * linha da tabela guarda as iterações com que FOI gravada (accounts.pass_iter)
+ * e continua sendo verificada com elas. E as contas antigas se atualizam
+ * sozinhas: no primeiro login depois da mudança, a senha é re-hasheada com o
+ * número novo (ver `login` em api/auth.js). */
+
+/** O padrão, dimensionado para o plano gratuito. */
+export const PBKDF2_ITER = 25_000;
+
+/** O alvo desta implantação. `PBKDF2_ITERATIONS` no wrangler.toml manda. */
+export function itersFor(env) {
+  const n = Number(env && env.PBKDF2_ITERATIONS);
+  return Number.isFinite(n) && n >= 10_000 ? Math.floor(n) : PBKDF2_ITER;
+}
 
 const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
 const unhex = s => Uint8Array.from(s.match(/../g).map(h => parseInt(h, 16)));
@@ -78,8 +117,8 @@ export async function verifyPassword(pass, saltHex, hashHex, iterations) {
 }
 
 const DUMMY_SALT = '00000000000000000000000000000000';
-export async function fakeVerify(pass) {
-  await hashPassword(String(pass || ''), DUMMY_SALT, PBKDF2_ITER);
+export async function fakeVerify(pass, iterations = PBKDF2_ITER) {
+  await hashPassword(String(pass || ''), DUMMY_SALT, iterations);
   return false;
 }
 

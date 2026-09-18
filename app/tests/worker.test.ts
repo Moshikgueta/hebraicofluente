@@ -18,7 +18,7 @@ import { mapStatus, verifyWebhookSignature } from '../../worker/src/lib/mercadop
 // @ts-expect-error — idem
 import { isGatedPath } from '../../worker/src/gate.js';
 // @ts-expect-error — idem
-import { hmacHex, timingSafeEqual, hashPassword, verifyPassword, PBKDF2_ITER }
+import { hmacHex, timingSafeEqual, hashPassword, verifyPassword, PBKDF2_ITER, itersFor }
   from '../../worker/src/lib/crypto.js';
 
 describe('o preço vem do servidor', () => {
@@ -169,8 +169,23 @@ describe('o portão', () => {
 });
 
 describe('senhas', () => {
-  it('usa o piso recomendado de iterações', () => {
-    expect(PBKDF2_ITER).toBeGreaterThanOrEqual(310_000);
+  it('cabe no limite de CPU do plano gratuito', () => {
+    /* 10 ms de CPU por requisição no plano gratuito, e 310.000 iterações
+       custam 53 ms — foi assim que a primeira publicação devolveu 500 em toda
+       rota que calculava hash. O padrão tem de caber com folga. */
+    expect(PBKDF2_ITER).toBeLessThanOrEqual(50_000);
+    /* E mesmo assim não pode ser simbólico. */
+    expect(PBKDF2_ITER).toBeGreaterThanOrEqual(25_000);
+  });
+
+  it('deixa subir o custo por configuração, e ignora lixo', () => {
+    expect(itersFor({ PBKDF2_ITERATIONS: '310000' })).toBe(310_000);
+    expect(itersFor({})).toBe(PBKDF2_ITER);
+    expect(itersFor(undefined)).toBe(PBKDF2_ITER);
+    /* Um valor absurdamente baixo não pode enfraquecer tudo por engano de
+       digitação — cai no padrão. */
+    expect(itersFor({ PBKDF2_ITERATIONS: '1' })).toBe(PBKDF2_ITER);
+    expect(itersFor({ PBKDF2_ITERATIONS: 'muitas' })).toBe(PBKDF2_ITER);
   });
 
   it('confere a senha certa e recusa a errada', async () => {

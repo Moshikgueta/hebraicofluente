@@ -32,6 +32,14 @@ export async function createAccount(env, { email, name, hash, salt, iterations }
   return findAccountByEmail(env, mail);
 }
 
+/** Regrava o hash da senha. Usado só pela re-hasheamento no login, quando o
+ *  custo do PBKDF2 sobe — ver a nota em lib/crypto.js. */
+export async function setPasswordHash(env, accountId, { hash, salt, iterations }) {
+  await env.DB.prepare(
+    'UPDATE accounts SET pass_hash = ?, pass_salt = ?, pass_iter = ? WHERE id = ?'
+  ).bind(hash, salt, iterations, accountId).run();
+}
+
 /* ── direitos de acesso ─────────────────────────────────────────────────── */
 
 /** Só os que ainda valem. Um direito vencido não é devolvido: nada acima

@@ -26,6 +26,12 @@ run_worker_first = true
 # servidor.
 not_found_handling = "404-page"
 
+# No plano GRATUITO são 10 ms de CPU por requisição, e não há o que
+# configurar. No Workers Paid, descomente para permitir o PBKDF2 forte
+# (ver PBKDF2_ITERATIONS em [vars]).
+# [limits]
+# cpu_ms = 200
+
 [[d1_databases]]
 binding = "DB"
 database_name = "hebraico-fluente"
@@ -56,3 +62,12 @@ SITE_ORIGIN = "https://hebraico-fluente.workers.dev"
 # "0" — e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.
 MP_SANDBOX = "1"
+# Custo do hash de senha. O padrão do código (25.000) foi dimensionado para o
+# limite de 10 ms de CPU do plano GRATUITO — acima disso o Worker é morto no
+# meio do cálculo e toda conta/login devolve 500.
+#
+# No Workers Paid, descomente as duas linhas abaixo e o bloco [limits] acima
+# para chegar ao valor recomendado pelo OWASP. Ninguém é deslogado: cada conta
+# guarda as iterações com que foi gravada, e se atualiza sozinha no primeiro
+# login. Ver a nota em worker/src/lib/crypto.js.
+# PBKDF2_ITERATIONS = "310000"

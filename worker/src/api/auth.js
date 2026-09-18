@@ -3,9 +3,10 @@
  * O que merece atenção aqui não é o caminho feliz.
  *
  * · Criar conta e entrar demoram O MESMO TEMPO quando o e-mail não existe.
- *   `fakeVerify` queima as mesmas 310.000 iterações. Sem isso, a diferença de
- *   tempo de resposta responde "esse endereço é cliente?" — e a mensagem de
- *   erro genérica, que existe justamente para não responder, vira decoração.
+ *   `fakeVerify` queima exatamente as mesmas iterações do caminho real. Sem
+ *   isso, a diferença de tempo de resposta responde "esse endereço é
+ *   cliente?" — e a mensagem de erro genérica, que existe justamente para não
+ *   responder, vira decoração.
  *
  * · O freio conta por IP E por e-mail. Só por IP, uma rede grande inteira
  *   apanha junto; só por e-mail, um ataque distribuído passa por baixo.
@@ -20,11 +21,11 @@
  */
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
-import { fakeVerify, hashPassword, PBKDF2_ITER, verifyPassword } from '../lib/crypto.js';
+import { fakeVerify, hashPassword, itersFor, verifyPassword } from '../lib/crypto.js';
 import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/session.js';
 import {
   activeEntitlements, createAccount, findAccountByEmail, findAccountById,
-  log, normalizeEmail, throttled
+  log, normalizeEmail, setPasswordHash, throttled
 } from '../lib/db.js';
 
 const MIN_PASSWORD = 8;
@@ -62,11 +63,11 @@ export async function signup({ request, env }) {
 
   const existing = await findAccountByEmail(env, email);
   if (existing) {
-    await fakeVerify(password);          // mesmo custo do caminho que cria
+    await fakeVerify(password, itersFor(env));   // mesmo custo do caminho que cria
     return fail('email-taken', 409);
   }
 
-  const { hash, salt, iterations } = await hashPassword(password, null, PBKDF2_ITER);
+  const { hash, salt, iterations } = await hashPassword(password, null, itersFor(env));
   const account = await createAccount(env, { email, name, hash, salt, iterations });
   await log(env, account.id, 'signup', email);
 
@@ -89,11 +90,31 @@ export async function login({ request, env }) {
   const account = await findAccountByEmail(env, email);
   const ok = account
     ? await verifyPassword(password, account.pass_salt, account.pass_hash, account.pass_iter)
-    : await fakeVerify(password);
+    : await fakeVerify(password, itersFor(env));
 
   if (!account || !ok) {
     await log(env, account ? account.id : null, 'login-failed', email);
     return fail('bad-credentials', 401);
+  }
+
+  /* Subiu o custo do hash? Esta conta se atualiza sozinha, agora, com a senha
+     que acabou de ser digitada — o único instante em que ela existe em claro.
+     Sem isto, elevar PBKDF2_ITERATIONS só protegeria quem se cadastrasse
+     depois, e as contas antigas ficariam para trás para sempre.
+
+     Só quando o alvo é MAIOR: nunca enfraquece um hash existente. E é feito
+     depois de responder ao aluno estar garantido — se falhar, ele entra do
+     mesmo jeito e a próxima vez tenta de novo. */
+  const target = itersFor(env);
+  if (Number(account.pass_iter) < target) {
+    try {
+      const next = await hashPassword(password, null, target);
+      await setPasswordHash(env, account.id, next);
+      await log(env, account.id, 'rehash', `${account.pass_iter} → ${target}`);
+    } catch {
+      /* Custo de CPU estourado, ou o banco fora. O login não pode cair por
+         causa de uma melhoria opcional. */
+    }
   }
 
   return json(await sessionBody(env, account), 200,
@@ -145,7 +166,11 @@ export async function health({ env }) {
     /* Cobrança ligada? `false` é um estado legítimo — ver o checkout. */
     payments: !!env.MP_ACCESS_TOKEN,
     /* Webhook verificável? `false` faz /api/pay/webhook recusar tudo. */
-    webhook: !!env.MP_WEBHOOK_SECRET
+    webhook: !!env.MP_WEBHOOK_SECRET,
+    /* O custo do hash de senha em vigor. Não é segredo — está no repositório
+       — e é a única forma de confirmar, de fora, que uma subida de custo
+       realmente entrou em vigor. */
+    iterations: itersFor(env)
   };
 
   if (env.DB) {
