@@ -132,7 +132,25 @@ export type LearnerState = {
   days: Record<string, DayRecord>;  // YYYY-MM-DD
   streak: { current: number; longest: number; lastDay: string | null };
   lastRoute: string | null;
-  finalChallenge: { best: number | null; completedAt: string | null };
+  /**
+   * The final exam.
+   *
+   * `completedAt` is the first sitting of any score — the course was finished.
+   * `passedAt` is the first sitting at or above the pass mark, and it is what
+   * the certificate is issued against; the two are deliberately different
+   * dates, because finishing and passing are different facts.
+   *
+   * `parts` holds the LAST sitting's part scores, which is what the report
+   * shows. Keeping the best of each part separately would produce a report
+   * describing an exam nobody ever sat.
+   */
+  finalChallenge: {
+    best: number | null;
+    completedAt: string | null;
+    passedAt?: string | null;
+    attempts?: number;
+    parts?: Record<string, { correct: number; total: number }>;
+  };
 
   /* ── added in v2 ──────────────────────────────────────────────────── */
 

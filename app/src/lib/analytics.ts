@@ -20,6 +20,7 @@ export type EventName =
   | 'first_reached'
   | 'gym_started' | 'gym_completed'
   | 'trace_completed' | 'trace_retried'
+  | 'certificate_downloaded' | 'certificate_shared'
   | 'course_completed' | 'next_course_clicked';
 
 export type EventProps = {

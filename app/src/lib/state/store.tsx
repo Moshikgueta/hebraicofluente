@@ -19,10 +19,12 @@ import { SupabaseProgressStore, supabaseConfigured } from './supabase';
 import {
   ANSWER_UNITS, applyPractice, awardXp, clearConfusion, completeStage, courseProgress,
   displayStreak, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
-  recordCheckpoint, recordConfusion, recordGym, recordQuiz, recordSkill, syncAchievements, today,
+  recordCheckpoint, recordConfusion, recordExam, recordGym, recordQuiz, recordSkill,
+  syncAchievements, today,
   topConfusions, weakLetters, XP
 } from './rules';
 import { track } from '@/lib/analytics';
+import { EXAM_PASS } from '@/lib/engine/exam';
 
 function createStore(): ProgressStore {
   return supabaseConfigured() ? new SupabaseProgressStore() : new LocalProgressStore();
@@ -77,6 +79,10 @@ type Ctx = {
   finishCheckpoint: (id: string, score: number) => void;
   finishReview: (score: number) => void;
   finishFinalChallenge: (score: number) => void;
+  /** One sitting of the final exam: its overall score and each part's. */
+  finishExam: (
+    score: number, parts: Record<string, { correct: number; total: number }>
+  ) => void;
   remember: (route: string) => void;
   reset: () => void;
 };
@@ -222,6 +228,13 @@ export function ProgressProvider({
     track('course_completed', { score });
   }, [commit, state]);
 
+  const finishExam = useCallback((
+    score: number, parts: Record<string, { correct: number; total: number }>
+  ) => {
+    commit(recordExam(state, score, parts, today(), EXAM_PASS));
+    track('course_completed', { score });
+  }, [commit, state]);
+
   const remember = useCallback((route: string) => {
     setState(s => {
       if (s.lastRoute === route) return s;
@@ -253,12 +266,13 @@ export function ProgressProvider({
       pending,
       clearPending: () => setPending([]),
       setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
-      finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, remember, reset
+      finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
+      remember, reset
     };
   }, [
     state, ready, persistent, day, totalLetters, extraKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
-    finishCheckpoint, finishReview, finishFinalChallenge, remember, reset
+    finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

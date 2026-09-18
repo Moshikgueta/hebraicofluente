@@ -342,6 +342,48 @@ export function clearConfusion(state: LearnerState, correct: string, chosen: str
   return { ...state, confusions };
 }
 
+/* ── the final exam ─────────────────────────────────────────────────────
+   Unlimited attempts, no penalty, and the best score is kept — the same
+   policy as every other assessment in the course. What is NOT overwritten is
+   `passedAt`: the day a learner first passed is a fact about them, and a
+   later worse attempt does not take it away. */
+export function recordExam(
+  state: LearnerState, score: number, parts: Record<string, { correct: number; total: number }>,
+  day: string, passMark: number
+): LearnerState {
+  const prev = state.finalChallenge;
+  const passing = score >= passMark;
+  const firstPass = passing && !prev.passedAt;
+
+  const next: LearnerState = {
+    ...state,
+    finalChallenge: {
+      best: prev.best == null ? score : Math.max(prev.best, score),
+      completedAt: prev.completedAt ?? new Date().toISOString(),
+      passedAt: prev.passedAt ?? (passing ? new Date().toISOString() : null),
+      attempts: (prev.attempts ?? 0) + 1,
+      /* The sitting that just happened, not a best-of composite. */
+      parts
+    }
+  };
+  return firstPass ? awardXp(next, day, XP.checkpoint) : next;
+}
+
+/**
+ * May this learner be issued a certificate?
+ *
+ * Two conditions, both about the learner and neither about payment: every
+ * letter finished, and the exam passed. A certificate for someone who has not
+ * passed is worth nothing, including to them.
+ */
+export function certificateReady(
+  state: LearnerState, totalLetters: number
+): { ready: boolean; lettersDone: number; examPassed: boolean } {
+  const lettersDone = lettersMastered(state);
+  const examPassed = !!state.finalChallenge.passedAt;
+  return { ready: lettersDone >= totalLetters && examPassed, lettersDone, examPassed };
+}
+
 /* ── the reading gym ────────────────────────────────────────────────────
    One record per mode. The time comparison is the learner against their own
    last run and nothing else — no target, no average, no other learners. */

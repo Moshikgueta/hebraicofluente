@@ -16,6 +16,7 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, course } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
+import { CertificateCallout } from '@/app/certificado/CertificadoClient';
 
 const A1_SKILLS = [
   'Apresentação pessoal', 'Perguntas básicas', 'Verbos essenciais',
@@ -30,6 +31,10 @@ export function CompletionClient() {
 
   return (
     <div className="grid gap-6 reading">
+      {/* First thing on the page once it exists: it is the thing they came
+          back for, and it is the one part of this course that leaves it. */}
+      <CertificateCallout />
+
       <Card tone="mint" className="p-7 sm:p-10 grid gap-5 text-center">
         <Badge tone="mint">{finished ? 'Curso concluído' : 'Onde você está'}</Badge>
         <h1 className="text-[29px] sm:text-[38px] font-bold leading-[1.15]">
