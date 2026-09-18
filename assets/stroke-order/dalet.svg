@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Dálet">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ד (Dálet).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Dálet: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Dálet: 1 movimento</title>
+  <defs>
+    <marker id="adalet" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(33.72,169.37) scale(0.22057,-0.22057)">
+    <path d="M325 3Q313 -13 294.5 -17.0Q276 -21 259.5 -15.0Q243 -9 236.0 5.5Q229 20 240 40Q262 81 272.5 106.0Q283 131 286 161Q289 190 274.0 206.5Q259 223 212 228Q188 231 160.5 226.5Q133 222 107.5 220.0Q82 218 63.5 228.0Q45 238 40 269Q37 294 55.0 307.5Q73 321 101.5 327.5Q130 334 159.5 335.5Q189 337 209.0 336.0Q229 335 229 335Q269 347 311.5 369.0Q354 391 389.0 415.0Q424 439 439 455Q454 471 456.5 489.0Q459 507 447.0 521.0Q435 535 404 538Q358 543 307.5 532.5Q257 522 226 509Q205 500 175.5 494.5Q146 489 120.0 491.5Q94 494 82 507Q71 522 73.0 537.5Q75 553 83.5 566.5Q92 580 100 587Q118 601 152.0 613.5Q186 626 228.0 634.5Q270 643 312.5 646.5Q355 650 389 647Q435 642 475.5 623.0Q516 604 540.0 569.0Q564 534 558 481Q553 437 529.0 403.5Q505 370 472.0 346.0Q439 322 406.0 307.0Q373 292 350 286Q362 281 373.5 268.0Q385 255 391.0 227.5Q397 200 392 154Q388 115 381.0 92.0Q374 69 365.0 54.5Q356 40 346.0 29.0Q336 18 325 3Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="137.7" y1="47.5" x2="125.2" y2="61.8"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#adalet)"/>
+  <circle cx="147.5" cy="36.1" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="147.5" y="40.3" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

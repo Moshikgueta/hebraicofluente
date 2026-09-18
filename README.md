@@ -171,10 +171,32 @@ Os três estados de escrita saem do **mesmo caractere**, em CSS:
 Verificado renderizando em Chromium: o contorno aparece corretamente na tela e
 no PDF de impressão.
 
-**Ordem dos traços** é a única coisa que precisa de SVG de verdade.
-`assets/stroke-order/<id>.svg` traz 22 placeholders com viewBox e convenção
-documentadas. O build **não quebra** quando um está faltando ou ainda é
-placeholder: a página mostra a letra-modelo e a nota "em breve", e V11 avisa.
+### Ordem dos traços
+
+`assets/stroke-order/` traz **27 SVG** — as 22 letras e as 5 formas finais —
+gerados por `tools/gen-stroke-order.py`. É uma ferramenta de autoria, roda uma
+vez e os SVG vão versionados; **não faz parte de `npm run build`**:
+
+```bash
+pip install fonttools brotli
+python3 tools/gen-stroke-order.py
+```
+
+O que é exato e o que é regra, porque a diferença importa:
+
+| | |
+|---|---|
+| **Traçado da letra** | Exato. O contorno sai do próprio `gveret-levin-hebrew-400-normal.woff2`, a mesma face cursiva do modelo e das linhas de traçado — a forma que o aluno traça e a que ele vê aqui não podem divergir. |
+| **Número de traços** | Derivado. O contorno é separado em partes; uma parte cujo retângulo cabe dentro de outro é um vazado (o buraco de um laço fechado como o {{ס}}), não um traço à parte. Contando só os contornos externos: **he, álef e qof com dois traços, todas as outras com um** — que é a contagem real da cursiva israelense. |
+| **Ordem e ponto de partida** | Regra. O traço começa no alto, e quando há mais de um o da direita vem primeiro, porque o hebraico corre da direita para a esquerda. As duas regras concordam nas três letras de dois traços: he (corpo, depois a perna esquerda), álef (curva direita, depois o traço esquerdo), qof (cabeça, depois a haste). |
+| **Seta** | Aponta do ponto de partida para o centro do traço — "comece aqui e siga para dentro da forma". Não afirma o sentido da curva, que é justamente o que o contorno não sabe dizer. |
+
+Um revisor nativo ainda deve conferir a ordem antes da impressão. Nada disso é
+crítico para o build: uma letra sem SVG, ou com um ainda marcado
+`data-placeholder`, mostra a letra-modelo e a nota "em breve", e V11 avisa.
+
+Licença: Gveret Levin é OFL-1.1, que permite derivar e embutir contornos.
+`assets/fonts/LICENSE-gveret-levin.txt` acompanha o projeto.
 
 ---
 

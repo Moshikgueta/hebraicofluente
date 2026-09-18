@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Pe / Fe">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra פ (Pe / Fe).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Pe / Fe: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Pe / Fe: 1 movimento</title>
+  <defs>
+    <marker id="ape" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(38.37,160.19) scale(0.20613,-0.20613)">
+    <path d="M183 -67Q133 -67 88.0 -49.5Q43 -32 15.0 10.5Q-13 53 -13 126Q-13 173 5.5 215.5Q24 258 54.0 292.5Q84 327 119.5 349.5Q155 372 189 378Q235 386 275.5 369.5Q316 353 338.0 318.0Q360 283 349 233Q345 216 326.5 191.0Q308 166 282.0 145.0Q256 124 229.5 116.5Q203 109 183 125Q173 133 178.0 147.5Q183 162 194.0 180.0Q205 198 217.0 215.5Q229 233 234.0 248.0Q239 263 231 271Q222 280 200.0 273.0Q178 266 153.5 244.5Q129 223 111.5 190.5Q94 158 94 116Q94 84 117.0 65.0Q140 46 183 46Q211 46 250.5 59.5Q290 73 332.0 100.0Q374 127 410.5 167.5Q447 208 469.5 262.5Q492 317 492 384Q492 457 461.5 494.0Q431 531 387 539Q336 549 275.5 531.5Q215 514 165 481Q139 463 114.0 459.5Q89 456 74 472Q57 490 69.0 521.0Q81 552 124 583Q172 618 234.5 633.5Q297 649 370 650Q433 651 479.5 625.0Q526 599 555.5 555.0Q585 511 598.0 457.5Q611 404 606 348Q599 263 559.5 187.5Q520 112 459.5 55.0Q399 -2 327.0 -34.5Q255 -67 183 -67Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="137.0" y1="48.1" x2="124.7" y2="62.5"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ape)"/>
+  <circle cx="146.8" cy="36.7" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="146.8" y="40.9" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

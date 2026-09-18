@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Nun final: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Nun final: 1 movimento</title>
+  <defs>
+    <marker id="anun-final" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(93.43,120.44) scale(0.14756,-0.14756)">
+    <path d="M-153 -354Q-168 -348 -172.0 -324.0Q-176 -300 -168.5 -268.0Q-161 -236 -141 -206Q-132 -192 -114.0 -151.5Q-96 -111 -72.0 -51.5Q-48 8 -21.5 78.0Q5 148 30.5 221.0Q56 294 78.0 361.5Q100 429 114 482Q118 498 127.5 525.5Q137 553 152.0 580.5Q167 608 187.0 624.0Q207 640 231 632Q253 626 259.0 603.0Q265 580 260.0 548.0Q255 516 243 480Q210 381 172.0 279.5Q134 178 96.0 84.0Q58 -10 24.0 -88.0Q-10 -166 -34.5 -218.0Q-59 -270 -69 -287Q-94 -327 -112.0 -345.0Q-130 -363 -153 -354Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="125.8" y1="48.2" x2="117.2" y2="65.2"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#anun-final)"/>
+  <circle cx="132.5" cy="34.9" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="132.5" y="39.1" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
+</svg>

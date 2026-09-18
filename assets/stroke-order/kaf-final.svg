@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Kaf / Chaf final: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Kaf / Chaf final: 1 movimento</title>
+  <defs>
+    <marker id="akaf-final" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(67.33,117.39) scale(0.15056,-0.15056)">
+    <path d="M-5 -370Q-9 -366 -16.0 -355.5Q-23 -345 -21.5 -326.5Q-20 -308 0 -280Q30 -238 64.0 -185.0Q98 -132 130.0 -80.0Q162 -28 186.5 13.0Q211 54 221 70Q244 108 271.5 156.0Q299 204 319.0 256.5Q339 309 339 360Q339 422 293.0 458.5Q247 495 164 481Q130 476 106.0 484.0Q82 492 77 520Q69 570 118.5 588.5Q168 607 259 598Q335 588 379.0 551.0Q423 514 440.0 460.0Q457 406 453.5 344.5Q450 283 430.5 224.0Q411 165 382 118Q363 88 335.5 43.5Q308 -1 275.5 -52.5Q243 -104 208.5 -156.0Q174 -208 139.5 -254.5Q105 -301 75 -336Q47 -368 25.0 -372.0Q3 -376 -5 -370Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="113.5" y1="43.2" x2="108.0" y2="61.4"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#akaf-final)"/>
+  <circle cx="117.8" cy="28.9" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="117.8" y="33.1" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
+</svg>

@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Yod">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra י (Yod).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Yod: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Yod: 1 movimento</title>
+  <defs>
+    <marker id="ayod" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(42.94,268.38) scale(0.42899,-0.42899)">
+    <path d="M62 229Q38 238 37.5 265.5Q37 293 49.5 331.5Q62 370 79.0 412.0Q96 454 106 491Q117 528 140.0 546.5Q163 565 188 557Q223 545 226.0 515.0Q229 485 215 447Q209 431 199.0 401.5Q189 372 175.5 339.0Q162 306 144.5 277.5Q127 249 106.5 234.5Q86 220 62 229Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="131.0" y1="47.5" x2="121.4" y2="63.9"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ayod)"/>
+  <circle cx="138.6" cy="34.6" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="138.6" y="38.8" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

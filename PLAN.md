@@ -29,6 +29,9 @@
   origem.
 - Fontes auto-hospedadas com licença; cursiva Gveret Levin conferida nas 22
   letras e nas 5 formas finais (ver Apêndice D).
+- **27 SVG de ordem de traçado** (22 letras + 5 formas finais), gerados de
+  `tools/gen-stroke-order.py` a partir do contorno real do glifo cursivo. As
+  letras com forma final mostram o traçado das duas na página 3A.
 - `data/translit.json` — 254 entradas, gerado a partir de `letters.json` e
   provado consistente pela V3.
 
@@ -41,8 +44,11 @@
 2. **Três decisões pendentes:** a regra de acento na transliteração (implementada
    como "acentue pelas regras do português"), a aprovação da cursiva, e se o
    teal escurecido do cabeçalho fica.
-3. Desenhar os 22 SVG de ordem de traçado (`assets/stroke-order/`). O build não
-   quebra sem eles — mostra "em breve" e avisa (V11).
+3. **Conferência nativa da ordem de traçado.** Os 27 SVG estão prontos, com o
+   contorno exato da cursiva e a contagem de traços derivada do próprio glifo
+   (he, álef e qof com dois; as demais com um). O ponto de partida segue a
+   regra "começa no alto, o da direita primeiro" — vale um olhar de quem
+   escreve hebraico à mão antes de imprimir. Ver README §Ordem dos traços.
 4. Ilustrações do vocabulário (os poços `.well`/`.well-sm` já reservam o espaço).
 
 ## Adiado de propósito

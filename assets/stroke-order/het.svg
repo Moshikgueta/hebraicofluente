@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Het">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ח (Het).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Het: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Het: 1 movimento</title>
+  <defs>
+    <marker id="ahet" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(32.81,167.40) scale(0.21295,-0.21295)">
+    <path d="M-5 12Q-23 20 -27.0 44.5Q-31 69 -10 106Q-3 118 15.0 153.0Q33 188 57.5 236.0Q82 284 109 335Q89 332 71.5 340.0Q54 348 47 367Q39 388 53.5 409.5Q68 431 93.0 449.0Q118 467 141 477Q155 484 188 494Q200 519 209.5 538.5Q219 558 224 569Q246 619 273.5 641.5Q301 664 326 652Q352 640 353.5 613.5Q355 587 337 547Q334 540 329 530Q384 541 436.0 546.0Q488 551 520 542Q566 530 601.0 495.5Q636 461 649.0 411.5Q662 362 641 305Q628 271 603.0 224.0Q578 177 545.5 129.0Q513 81 477.0 43.0Q441 5 407.0 -13.0Q373 -31 345 -16Q317 -1 319.5 22.0Q322 45 341.0 72.0Q360 99 385.0 126.0Q410 153 427 176Q439 191 458.0 219.5Q477 248 494.5 281.5Q512 315 520.5 346.5Q529 378 520.5 401.0Q512 424 477 430Q432 438 374.0 426.0Q316 414 263 396Q239 348 212.5 296.5Q186 245 161.0 198.0Q136 151 116.5 116.5Q97 82 87 68Q62 34 41.0 18.0Q20 2 -5 12Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="104.6" y1="45.8" x2="100.5" y2="64.3"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ahet)"/>
+  <circle cx="107.8" cy="31.1" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="107.8" y="35.3" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

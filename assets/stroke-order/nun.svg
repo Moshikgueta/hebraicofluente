@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Nun">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra נ (Nun).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Nun: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Nun: 1 movimento</title>
+  <defs>
+    <marker id="anun" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(120.53,120.20) scale(0.16555,-0.16555)">
+    <path d="M-345 -319Q-414 -314 -448.5 -290.0Q-483 -266 -479 -232Q-477 -214 -460.5 -208.0Q-444 -202 -421.5 -202.0Q-399 -202 -380 -204Q-348 -206 -308.0 -203.0Q-268 -200 -224.0 -182.0Q-180 -164 -135.0 -122.5Q-90 -81 -47.0 -8.0Q-4 65 33.0 178.5Q70 292 97 455Q103 489 116.0 516.0Q129 543 150.5 556.0Q172 569 202 558Q224 551 229.5 531.5Q235 512 231.0 485.5Q227 459 218.5 429.0Q210 399 204 370Q197 335 183.0 279.5Q169 224 147.0 157.5Q125 91 93.5 21.5Q62 -48 20.0 -111.5Q-22 -175 -75.5 -224.0Q-129 -273 -196.0 -299.0Q-263 -325 -345 -319Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="150.7" y1="47.6" x2="139.7" y2="63.1"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#anun)"/>
+  <circle cx="159.4" cy="35.4" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="159.4" y="39.6" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

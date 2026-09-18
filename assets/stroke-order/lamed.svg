@@ -1,5 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Lámed">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ל (Lámed).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Lámed: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Lámed: 1 movimento</title>
+  <defs>
+    <marker id="alamed" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(46.80,171.74) scale(0.16122,-0.16122)">
+    <path d="M27 -13Q-13 -9 -30.5 21.5Q-48 52 -43 98Q-37 147 -14.0 175.0Q9 203 38.5 216.5Q68 230 93 234Q106 307 129.5 395.5Q153 484 189 595Q240 752 323.5 825.0Q407 898 509 902Q547 904 590.0 890.5Q633 877 662 853Q696 825 702.0 798.0Q708 771 696 760Q679 745 659.5 749.5Q640 754 618.5 767.0Q597 780 573.5 792.0Q550 804 526 805Q473 807 430.5 774.5Q388 742 354.5 687.0Q321 632 295.5 565.5Q270 499 251.5 431.0Q233 363 220.5 304.5Q208 246 200 208Q184 129 162.0 83.5Q140 38 115.5 17.0Q91 -4 68.0 -9.0Q45 -14 27 -13Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="143.3" y1="45.2" x2="130.2" y2="59.0"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#alamed)"/>
+  <circle cx="153.5" cy="34.2" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="153.5" y="38.4" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

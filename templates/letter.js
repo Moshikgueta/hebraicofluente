@@ -219,6 +219,21 @@ function page3a(L, { bdg, T, name, ctx }) {
       </div>
     </div>
 
+    ${L.finalForm ? `
+    <h2>${mixed(['A forma final — ', H(L.finalForm)])}</h2>
+    <p class="lead">${mixed(['No fim da palavra a letra vira ', H(L.finalForm),
+      '. É o mesmo som, com outro desenho e outro traçado — repare que ela desce abaixo da linha.'])}</p>
+    <div class="model-pair">
+      <div>
+        <h3>Modelo final</h3>
+        <div class="model-box">${he(L.finalForm, { size: 'display', cursive: true })}</div>
+      </div>
+      <div>
+        <h3>Ordem dos movimentos</h3>
+        <div class="model-box">${strokeOrder(L, ctx, 'final')}</div>
+      </div>
+    </div>` : ''}
+
     <h2>Impressa e cursiva</h2>
     <table>
       <thead><tr><th>Impressa</th><th>Cursiva</th>${L.finalForm ? '<th>Final — impressa</th><th>Final — cursiva</th>' : ''}</tr></thead>

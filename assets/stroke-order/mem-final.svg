@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Mem final: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Mem final: 1 movimento</title>
+  <defs>
+    <marker id="amem-final" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(39.45,160.05) scale(0.24916,-0.24916)">
+    <path d="M24 -39Q8 -54 -10.0 -54.0Q-28 -54 -41.0 -42.5Q-54 -31 -54 -10Q-54 4 -42.0 42.0Q-30 80 -11.5 133.0Q7 186 27.0 244.0Q47 302 62 355Q70 381 82.0 392.5Q94 404 114 404Q119 404 123 403Q128 432 149 453Q163 467 196.5 487.5Q230 508 276.0 522.0Q322 536 371 530Q407 526 446.0 496.5Q485 467 512.5 417.0Q540 367 540 299Q540 237 514.5 187.5Q489 138 444.5 109.0Q400 80 344 80Q298 80 259.5 102.5Q221 125 192.0 157.5Q163 190 143 222Q129 186 112.0 144.0Q95 102 77.5 63.0Q60 24 46.0 -4.0Q32 -32 24 -39ZM348 191Q371 189 390.0 205.0Q409 221 421.0 250.0Q433 279 433 315Q434 349 419.0 373.0Q404 397 384.0 410.5Q364 424 348 425Q321 427 296.0 417.0Q271 407 250.0 393.0Q229 379 215.5 367.0Q202 355 199 352Q194 347 186 344Q197 326 212.5 301.5Q228 277 248.0 253.0Q268 229 293.0 211.5Q318 194 348 191Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="131.7" y1="40.8" x2="120.0" y2="55.9"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#amem-final)"/>
+  <circle cx="140.9" cy="29.0" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="140.9" y="33.2" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
+</svg>

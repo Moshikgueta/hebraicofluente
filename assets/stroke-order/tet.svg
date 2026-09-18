@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Tet">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ט (Tet).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Tet: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Tet: 1 movimento</title>
+  <defs>
+    <marker id="atet" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(29.93,170.07) scale(0.18734,-0.18734)">
+    <path d="M244 -21Q188 -21 139.5 5.0Q91 31 61.0 79.5Q31 128 31 193Q31 290 64.0 373.0Q97 456 153.0 523.5Q209 591 279.0 640.5Q349 690 423.5 720.5Q498 751 567 761Q626 769 667.0 764.5Q708 760 713 723Q717 692 693.0 678.0Q669 664 637 659Q581 651 515.5 630.0Q450 609 386.5 573.0Q323 537 270.0 483.0Q217 429 185.5 355.5Q154 282 154 186Q154 150 181.5 123.0Q209 96 246 96Q288 96 318.0 123.0Q348 150 367.5 192.0Q387 234 396 279Q404 315 424.5 329.5Q445 344 462 344Q496 344 511.0 313.5Q526 283 519 241Q515 219 502.0 186.0Q489 153 466.0 117.0Q443 81 410.5 49.5Q378 18 336.5 -1.5Q295 -21 244 -21Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="153.5" y1="45.8" x2="140.9" y2="60.0"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#atet)"/>
+  <circle cx="163.5" cy="34.6" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="163.5" y="38.8" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

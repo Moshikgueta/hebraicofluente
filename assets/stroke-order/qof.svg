@@ -1,6 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Qof">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ק (Qof).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Qof: 2 movimentos" data-strokes="2">
+  <title>Ordem de tracado da letra Qof: 2 movimentos</title>
+  <defs>
+    <marker id="aqof" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(63.55,128.27) scale(0.16876,-0.16876)">
+    <path d="M280 70Q253 95 263.5 124.5Q274 154 304 177Q359 220 387.5 275.0Q416 330 415.5 382.0Q415 434 383 468Q366 487 335.5 489.0Q305 491 272.5 485.5Q240 480 217 476Q185 471 162.0 461.5Q139 452 122.0 453.5Q105 455 88 480Q71 506 88.5 529.5Q106 553 149.5 571.0Q193 589 254 597Q321 606 366.0 596.0Q411 586 439.0 567.0Q467 548 482 528Q511 491 520.5 441.5Q530 392 522.5 338.5Q515 285 491.0 234.5Q467 184 429 145Q374 89 335.5 72.0Q297 55 280 70ZM-82 -239Q-95 -230 -96.5 -214.0Q-98 -198 -92.5 -179.5Q-87 -161 -80 -147Q-60 -108 -36.5 -49.5Q-13 9 11.5 74.0Q36 139 59.0 200.0Q82 261 99 305Q112 338 133.5 352.0Q155 366 181 354Q201 345 210.5 321.0Q220 297 203 255Q198 241 184.0 206.0Q170 171 152.0 124.5Q134 78 114.0 28.0Q94 -22 75.0 -67.5Q56 -113 41.0 -145.5Q26 -178 19 -189Q-34 -271 -82 -239Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="126.7" y1="43.0" x2="118.7" y2="60.3"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#aqof)"/>
+  <circle cx="132.9" cy="29.4" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="132.9" y="33.6" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
+  <line x1="90.9" y1="83.5" x2="82.6" y2="100.6"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#aqof)"/>
+  <circle cx="97.5" cy="70.0" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="97.5" y="74.2" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">2</text>
 </svg>

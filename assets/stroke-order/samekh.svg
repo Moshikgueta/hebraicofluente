@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Sámech">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ס (Sámech).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Sámech: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Sámech: 1 movimento</title>
+  <defs>
+    <marker id="asamekh" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(30.10,166.80) scale(0.24832,-0.24832)">
+    <path d="M216 -24Q182 -20 145.0 -5.0Q108 10 78.0 39.0Q48 68 32.5 115.5Q17 163 24 231Q31 301 56.5 345.5Q82 390 114.5 414.5Q147 439 175 450Q169 457 167 467Q161 494 172.5 510.5Q184 527 208 539Q243 556 292.5 561.5Q342 567 381 562Q422 558 461.0 533.5Q500 509 523.0 463.5Q546 418 538 348Q528 255 494.5 183.5Q461 112 414.0 64.0Q367 16 315.0 -6.5Q263 -29 216 -24ZM213 85Q255 80 288.5 99.0Q322 118 347.0 152.0Q372 186 389.5 225.0Q407 264 416.5 301.0Q426 338 429 362Q433 394 423.0 416.0Q413 438 396.5 450.0Q380 462 364 463Q345 465 314.5 456.5Q284 448 257 440Q258 432 257 421Q256 408 238.5 393.5Q221 379 199.0 360.0Q177 341 158.5 315.0Q140 289 137 253Q130 183 152.0 136.5Q174 90 213 85Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="126.3" y1="40.6" x2="115.5" y2="56.2"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#asamekh)"/>
+  <circle cx="134.9" cy="28.2" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="134.9" y="32.4" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

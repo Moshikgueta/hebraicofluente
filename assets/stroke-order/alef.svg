@@ -1,6 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Álef">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra א (Álef).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Álef: 2 movimentos" data-strokes="2">
+  <title>Ordem de tracado da letra Álef: 2 movimentos</title>
+  <defs>
+    <marker id="aalef" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(46.03,158.19) scale(0.21083,-0.21083)">
+    <path d="M-25 -72Q-43 -67 -48.5 -38.0Q-54 -9 -42 46Q-38 64 -24.0 106.5Q-10 149 10.5 205.0Q31 261 54.0 320.5Q77 380 98.5 434.0Q120 488 137.0 526.0Q154 564 162 575Q182 604 206.5 615.5Q231 627 256 619Q272 614 279.5 587.0Q287 560 270 525Q265 513 248.0 475.0Q231 437 208.5 383.5Q186 330 161.5 270.5Q137 211 114.5 155.0Q92 99 76.5 57.0Q61 15 57 -4Q49 -40 34.5 -55.5Q20 -71 3.5 -73.0Q-13 -75 -25 -72ZM339 -19Q321 -17 293.5 -5.5Q266 6 238.5 28.0Q211 50 194.0 84.0Q177 118 180 164Q184 217 210.5 259.5Q237 302 275.0 335.5Q313 369 352.0 392.0Q391 415 421.0 428.0Q451 441 461 444Q486 451 511.0 450.0Q536 449 550 428Q566 406 554.5 378.0Q543 350 502 336Q479 328 444.5 313.0Q410 298 376.0 276.0Q342 254 319.0 225.0Q296 196 296 160Q296 132 309.0 113.5Q322 95 341.0 84.0Q360 73 378.5 65.5Q397 58 410.0 51.5Q423 45 423 36Q423 11 399.0 -6.0Q375 -23 339 -19Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="152.6" y1="79.7" x2="140.8" y2="94.5"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#aalef)"/>
+  <circle cx="162.0" cy="68.0" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="162.0" y="72.2" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
+  <line x1="96.9" y1="42.3" x2="88.8" y2="59.4"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#aalef)"/>
+  <circle cx="103.4" cy="28.7" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="103.4" y="32.9" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">2</text>
 </svg>

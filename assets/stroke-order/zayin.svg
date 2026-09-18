@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Záyin">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ז (Záyin).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Záyin: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Záyin: 1 movimento</title>
+  <defs>
+    <marker id="azayin" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(62.55,155.19) scale(0.17918,-0.17918)">
+    <path d="M119 -84Q59 -105 10.0 -101.0Q-39 -97 -67.0 -76.5Q-95 -56 -90 -30Q-86 -11 -71.0 -6.0Q-56 -1 -38.5 -1.5Q-21 -2 -12 -1Q33 4 85.0 23.5Q137 43 187.0 70.0Q237 97 274 122Q309 145 338.5 175.5Q368 206 386.0 238.0Q404 270 404.5 297.5Q405 325 381 341Q362 354 333.0 352.5Q304 351 271.0 341.0Q238 331 206.5 318.0Q175 305 150.5 294.5Q126 284 115 282Q92 278 75.0 287.5Q58 297 49.5 314.5Q41 332 42.5 350.5Q44 369 58 383Q63 388 81.0 408.5Q99 429 124.0 459.0Q149 489 177.5 522.5Q206 556 232.0 587.5Q258 619 278.0 643.0Q298 667 306 677Q330 708 359.0 714.5Q388 721 413 704Q439 688 436.0 653.0Q433 618 403 589Q393 579 367.5 554.5Q342 530 311.5 500.0Q281 470 256 446Q294 455 338.5 457.0Q383 459 422.5 445.5Q462 432 487.5 397.0Q513 362 513 297Q513 238 485.0 186.5Q457 135 411.5 91.5Q366 48 313.0 13.5Q260 -21 209.0 -45.5Q158 -70 119 -84Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="134.1" y1="45.1" x2="125.1" y2="61.9"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#azayin)"/>
+  <circle cx="141.2" cy="31.9" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="141.2" y="36.1" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

@@ -42,16 +42,18 @@ export function exercise(n, title, inner) {
  * Missing or still-a-placeholder → the model letter plus an "em breve" note,
  * never a broken build. validate.js reports it as a warning (V11).
  */
-export function strokeOrder(L, ctx) {
-  const p = join(ROOT, 'assets/stroke-order', `${L.id}.svg`);
+export function strokeOrder(L, ctx, variant = '') {
+  const id = variant ? `${L.id}-${variant}` : L.id;
+  const p = join(ROOT, 'assets/stroke-order', `${id}.svg`);
   if (existsSync(p)) {
     const src = readFileSync(p, 'utf8');
     if (!src.includes('data-placeholder="true"')) {
       return `<div class="stroke-wrap">${src}</div>`;
     }
   }
+  const glyph = variant === 'final' ? L.finalForm : L.letter;
   return `<div class="stroke-wrap">
-    <span class="he he--display he--cursive" lang="he">${esc(L.letter)}</span>
+    <span class="he he--display he--cursive" lang="he">${esc(glyph)}</span>
     <p class="soon">Setas de ordem de traçado: em breve</p>
   </div>`;
 }

@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Resh">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ר (Resh).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Resh: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Resh: 1 movimento</title>
+  <defs>
+    <marker id="aresh" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(29.61,165.16) scale(0.23270,-0.23270)">
+    <path d="M252 -31Q232 -16 236.5 9.0Q241 34 271 56Q298 75 321.5 109.5Q345 144 363.0 186.0Q381 228 391.5 272.0Q402 316 402 354Q402 402 384.0 429.5Q366 457 337.0 468.0Q308 479 274.5 476.5Q241 474 210 461Q159 440 128.0 447.0Q97 454 89 481Q82 506 100.5 528.0Q119 550 155.0 566.5Q191 583 235.0 590.5Q279 598 322 592Q398 582 442.5 544.5Q487 507 505.0 453.0Q523 399 520.5 337.5Q518 276 499.0 217.0Q480 158 451 111Q408 42 365.5 9.0Q323 -24 292.5 -31.0Q262 -38 252 -31Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="117.6" y1="44.0" x2="111.7" y2="62.0"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#aresh)"/>
+  <circle cx="122.2" cy="29.7" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="122.2" y="33.9" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

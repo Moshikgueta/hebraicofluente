@@ -1,5 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Shin">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ש (Shin).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Shin: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Shin: 1 movimento</title>
+  <defs>
+    <marker id="ashin" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(40.23,167.70) scale(0.20330,-0.20330)">
+    <path d="M221 -22Q153 -12 106.5 24.5Q60 61 39 113Q33 112 29 111Q-4 106 -11.5 129.0Q-19 152 0 178Q6 186 22 197Q21 232 30 268Q53 366 95.5 438.5Q138 511 191.5 560.5Q245 610 301.0 640.0Q357 670 408.0 683.5Q459 697 496 697Q556 697 581.5 651.0Q607 605 596 531Q589 484 556.5 439.0Q524 394 474.5 352.0Q425 310 368.0 273.5Q311 237 253.5 207.0Q196 177 147 155Q154 130 166.0 112.5Q178 95 194 89Q229 76 261.5 82.5Q294 89 322.5 109.5Q351 130 373.5 158.0Q396 186 409 215Q425 249 447.0 268.5Q469 288 497 276Q523 266 525.0 239.0Q527 212 511 174Q483 106 437.0 58.5Q391 11 335.0 -10.0Q279 -31 221 -22ZM210 423Q181 387 164.5 344.5Q148 302 142 261Q177 278 213.0 298.0Q249 318 283 340Q370 397 420.0 449.0Q470 501 488.0 538.0Q506 575 496 588Q487 600 455.5 592.5Q424 585 380.5 561.5Q337 538 291.5 502.5Q246 467 210 423Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="145.4" y1="38.8" x2="135.4" y2="54.9"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ashin)"/>
+  <circle cx="153.3" cy="26.0" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="153.3" y="30.2" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

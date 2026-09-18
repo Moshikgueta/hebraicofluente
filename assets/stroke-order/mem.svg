@@ -1,5 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Mem">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra מ (Mem).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Mem: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Mem: 1 movimento</title>
+  <defs>
+    <marker id="amem" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(48.66,170.81) scale(0.22769,-0.22769)">
+    <path d="M212 -4Q187 6 166.5 40.0Q146 74 133 135Q127 164 126 187Q114 156 92.5 112.0Q71 68 47 36Q30 14 11.0 2.0Q-8 -10 -30 1Q-59 16 -51.0 48.5Q-43 81 -15 136Q14 192 39.0 253.5Q64 315 83 363Q106 419 122.5 442.0Q139 465 164 458Q187 452 195.5 436.5Q204 421 204.5 394.5Q205 368 205.5 330.0Q206 292 212 242Q214 222 215.5 205.5Q217 189 218 175Q230 209 249.0 256.0Q268 303 290.0 353.5Q312 404 333.0 450.0Q354 496 369.5 529.0Q385 562 391 573Q409 606 431.0 621.0Q453 636 479 622Q510 606 510.0 575.0Q510 544 492 500Q466 437 431.5 366.0Q397 295 362.5 218.5Q328 142 300 64Q285 21 260.5 3.5Q236 -14 212 -4Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="155.0" y1="44.2" x2="142.6" y2="58.6"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#amem)"/>
+  <circle cx="164.8" cy="32.8" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="164.8" y="37.0" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

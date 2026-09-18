@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Tsadi">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra צ (Tsadi).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Tsadi: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Tsadi: 1 movimento</title>
+  <defs>
+    <marker id="atsadi" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(51.03,165.13) scale(0.19707,-0.19707)">
+    <path d="M164 -38Q94 -45 59.0 -38.0Q24 -31 10 -25Q-15 -14 -30.5 4.5Q-46 23 -46.5 44.0Q-47 65 -27 82Q-12 95 4.5 95.5Q21 96 39.5 90.5Q58 85 81.0 80.0Q104 75 134 76Q209 79 260.5 98.5Q312 118 340.5 146.5Q369 175 374 203Q380 233 363.0 253.0Q346 273 315.0 283.0Q284 293 246 291Q188 288 170.5 303.0Q153 318 158 343Q163 369 185.5 380.5Q208 392 238 393Q250 394 273.5 402.5Q297 411 325.5 426.0Q354 441 379.5 459.0Q405 477 421.0 496.5Q437 516 436 535Q434 558 406.5 569.0Q379 580 338.5 582.0Q298 584 256.0 578.5Q214 573 183 564Q122 545 97.5 556.0Q73 567 73 591Q73 620 98.0 640.5Q123 661 163.5 674.0Q204 687 251.0 694.0Q298 701 341 703Q399 706 446.5 683.5Q494 661 519.0 619.5Q544 578 534 525Q526 482 503.0 449.0Q480 416 452.5 392.5Q425 369 402 358Q435 344 455.0 315.0Q475 286 483.0 253.5Q491 221 487 198Q471 117 422.5 67.5Q374 18 306.5 -6.5Q239 -31 164 -38Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="139.8" y1="47.2" x2="128.9" y2="62.7"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#atsadi)"/>
+  <circle cx="148.4" cy="34.9" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="148.4" y="39.1" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

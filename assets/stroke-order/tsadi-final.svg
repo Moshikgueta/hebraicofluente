@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Tsadi final: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Tsadi final: 1 movimento</title>
+  <defs>
+    <marker id="atsadi-final" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(54.86,172.02) scale(0.14149,-0.14149)">
+    <path d="M27 -13Q-13 -9 -30.5 21.5Q-48 52 -43 98Q-37 146 -14.5 174.0Q8 202 37.0 215.5Q66 229 91 234Q99 291 111.0 359.0Q123 427 139.0 499.5Q155 572 174 641Q111 655 75.0 689.0Q39 723 22.0 765.5Q5 808 2.0 849.5Q-1 891 2 920Q5 941 11.0 964.5Q17 988 29.5 1004.0Q42 1020 64 1020Q87 1020 95.5 1001.0Q104 982 104 950Q104 783 207 750Q261 899 346.0 965.5Q431 1032 533 1032Q683 1032 685 891Q686 837 644.5 789.0Q603 741 531.5 704.5Q460 668 370 648Q331 639 295 636Q271 561 253.5 482.0Q236 403 223.0 331.5Q210 260 200 208Q185 129 163.0 83.5Q141 38 116.5 17.0Q92 -4 68.5 -9.0Q45 -14 27 -13ZM355 783Q346 767 338 748Q362 753 388 761Q483 789 530.5 819.5Q578 850 578 875Q578 897 565.0 910.5Q552 924 529 924Q475 924 431.0 883.5Q387 843 355 783Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="140.5" y1="36.2" x2="126.6" y2="49.1"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#atsadi-final)"/>
+  <circle cx="151.5" cy="26.0" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="151.5" y="30.2" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
+</svg>

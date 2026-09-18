@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Pe / Fe final: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Pe / Fe final: 1 movimento</title>
+  <defs>
+    <marker id="ape-final" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(33.50,171.96) scale(0.14567,-0.14567)">
+    <path d="M202 -13Q162 -9 144.5 21.5Q127 52 132 98Q138 147 160.5 175.0Q183 203 212.5 216.5Q242 230 266 234Q278 307 296.0 396.0Q314 485 339 576Q284 549 247.5 517.5Q211 486 187 453Q175 437 162.0 417.0Q149 397 133.0 384.5Q117 372 95 377Q73 383 62.5 412.0Q52 441 63 472Q83 528 130.5 572.5Q178 617 242.5 651.0Q307 685 379 709Q432 864 518.5 933.0Q605 1002 709 1002Q789 1002 825.0 967.5Q861 933 861 874Q861 807 824.5 764.5Q788 722 719.5 695.5Q651 669 555 648Q512 639 474 628Q450 560 431.5 486.0Q413 412 399.0 340.5Q385 269 375 208Q362 129 340.5 83.5Q319 38 293.5 17.0Q268 -4 244.0 -9.0Q220 -14 202 -13ZM694 887Q643 887 601.5 848.5Q560 810 526 748Q535 749 543 751Q618 765 666.5 787.5Q715 810 735.0 833.0Q755 856 745.5 871.5Q736 887 694 887Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="148.0" y1="46.3" x2="134.1" y2="59.3"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ape-final)"/>
+  <circle cx="158.9" cy="36.1" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="158.9" y="40.3" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
+</svg>

@@ -1,5 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Tav">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ת (Tav).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Tav: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Tav: 1 movimento</title>
+  <defs>
+    <marker id="atav" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(101.32,122.50) scale(0.17577,-0.17577)">
+    <path d="M-351 -289Q-376 -287 -389.5 -275.5Q-403 -264 -401 -242Q-399 -219 -383.0 -207.5Q-367 -196 -341 -194Q-275 -188 -225.5 -180.5Q-176 -173 -135.0 -150.5Q-94 -128 -55 -79Q-23 -38 1.5 17.5Q26 73 44.0 136.0Q62 199 73.0 261.0Q84 323 89 375Q94 422 102.5 459.0Q111 496 128.5 519.0Q146 542 177 545Q210 549 242.0 536.5Q274 524 303.5 489.0Q333 454 357 389Q375 341 381.5 287.0Q388 233 384.5 185.5Q381 138 368.0 108.5Q355 79 334 79Q300 79 286.5 104.0Q273 129 274 169Q276 230 268.5 288.0Q261 346 244.0 386.0Q227 426 201 432Q201 381 190.5 310.5Q180 240 160.5 163.0Q141 86 114.5 14.0Q88 -58 54.5 -114.0Q21 -170 -17 -198Q-75 -240 -135.0 -261.0Q-195 -282 -250.5 -287.5Q-306 -293 -351 -289Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="142.4" y1="43.6" x2="133.4" y2="60.3"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#atav)"/>
+  <circle cx="149.5" cy="30.4" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="149.5" y="34.6" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

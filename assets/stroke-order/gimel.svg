@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Guímel">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ג (Guímel).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Guímel: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Guímel: 1 movimento</title>
+  <defs>
+    <marker id="agimel" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(55.56,139.17) scale(0.18830,-0.18830)">
+    <path d="M173 -172Q157 -185 127.5 -176.5Q98 -168 72 -148Q14 -103 -20.0 -42.5Q-54 18 -47 85Q-42 139 -16.5 184.0Q9 229 48.0 264.5Q87 300 132.5 328.0Q178 356 223 375Q198 399 179.0 427.0Q160 455 151 485Q143 512 143.0 538.5Q143 565 170 582Q199 601 229.5 579.5Q260 558 279 511Q294 474 314.5 452.0Q335 430 354 418Q392 427 412 427Q465 427 495.5 410.0Q526 393 526 369Q526 353 513.5 334.0Q501 315 474.0 301.5Q447 288 404 288Q374 288 338 302Q260 277 198.5 237.5Q137 198 101.0 153.0Q65 108 65 67Q65 15 94.0 -21.0Q123 -57 163 -86Q184 -101 190.0 -127.5Q196 -154 173 -172Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="102.7" y1="49.0" x2="100.3" y2="67.8"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#agimel)"/>
+  <circle cx="104.5" cy="34.1" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="104.5" y="38.3" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>

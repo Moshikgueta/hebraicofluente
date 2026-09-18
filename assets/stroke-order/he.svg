@@ -1,6 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra He">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ה (He).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra He: 2 movimentos" data-strokes="2">
+  <title>Ordem de tracado da letra He: 2 movimentos</title>
+  <defs>
+    <marker id="ahe" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(26.90,163.11) scale(0.22458,-0.22458)">
+    <path d="M403 5Q387 -5 367.5 -10.5Q348 -16 332.0 -12.0Q316 -8 308 10Q298 32 313.5 55.0Q329 78 352 99Q373 118 405.5 147.0Q438 176 470.0 212.0Q502 248 522.5 288.5Q543 329 540 370Q537 410 503.5 435.5Q470 461 414.5 469.0Q359 477 288.5 465.5Q218 454 141 420Q114 408 88.5 407.0Q63 406 48 429Q36 448 47.0 470.5Q58 493 89 512Q146 547 211.5 565.0Q277 583 342.5 583.5Q408 584 466.5 567.0Q525 550 568.5 515.5Q612 481 633 429Q655 375 647.0 321.5Q639 268 612.0 219.0Q585 170 547.5 128.0Q510 86 471.5 54.5Q433 23 403 5ZM29 -12Q14 -4 5.0 12.5Q-4 29 0.5 51.0Q5 73 31 95Q68 127 90.0 169.0Q112 211 126 272Q130 290 145.0 300.0Q160 310 178.0 312.0Q196 314 209 307Q229 298 236.5 276.0Q244 254 233 214Q224 181 205.0 142.5Q186 104 161.0 70.0Q136 36 109 15Q91 1 69.5 -10.5Q48 -22 29 -12Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="136.9" y1="52.3" x2="126.9" y2="68.5"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ahe)"/>
+  <circle cx="144.8" cy="39.6" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="144.8" y="43.8" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
+  <line x1="69.7" y1="108.5" x2="58.8" y2="124.0"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ahe)"/>
+  <circle cx="78.3" cy="96.2" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="78.3" y="100.4" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">2</text>
 </svg>

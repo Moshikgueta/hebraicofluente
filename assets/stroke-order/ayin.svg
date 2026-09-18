@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="stroke-svg" data-placeholder="true" role="img" aria-label="Ordem de tracado da letra Áyin">
-  <!-- Placeholder. Desenhe aqui o tracado numerado da letra ע (Áyin).
-       Convencao: viewBox 0 0 200 200, traco #9E2B1E largura 4, numeros em circulos de r=9.
-       Remova data-placeholder para o build parar de avisar. -->
-  <rect width="200" height="200" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"
+     class="stroke-svg" role="img" aria-label="Ordem de tracado da letra Áyin: 1 movimento" data-strokes="1">
+  <title>Ordem de tracado da letra Áyin: 1 movimento</title>
+  <defs>
+    <marker id="aayin" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#9E2B1E"/>
+    </marker>
+  </defs>
+  <g transform="translate(50.61,156.27) scale(0.17209,-0.17209)">
+    <path d="M249 -89Q209 -103 161.5 -98.5Q114 -94 73.5 -66.0Q33 -38 12 19Q-14 89 -7.0 156.0Q0 223 33.0 283.5Q66 344 118.5 394.5Q171 445 236 481Q233 489 230 497Q215 536 197.5 576.0Q180 616 168.5 651.0Q157 686 160.0 711.5Q163 737 191 747Q205 752 223.5 754.5Q242 757 261.5 742.5Q281 728 298 682Q304 664 318.0 623.5Q332 583 348 529Q417 550 486 553Q562 556 579 512Q588 489 576.5 477.0Q565 465 542.0 459.5Q519 454 494 451Q433 444 374 423Q387 363 394.5 299.5Q402 236 400.0 175.5Q398 115 383.0 62.0Q368 9 335.5 -30.0Q303 -69 249 -89ZM114 58Q137 -16 200 6Q213 11 233.5 33.0Q254 55 271.0 98.0Q288 141 290.0 209.0Q292 277 268 374Q208 337 166.5 287.5Q125 238 109.5 179.5Q94 121 114 58Z" fill="#C9C0AF"/>
+  </g>
+  <line x1="99.3" y1="46.0" x2="99.8" y2="65.0"
+        stroke="#9E2B1E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#aayin)"/>
+  <circle cx="99.0" cy="31.0" r="9" fill="#FFFFFF" stroke="#9E2B1E" stroke-width="2.4"/>
+  <text x="99.0" y="35.2" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700"
+        fill="#9E2B1E">1</text>
 </svg>
