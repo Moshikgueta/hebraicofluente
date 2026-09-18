@@ -60,6 +60,15 @@ if [ -z "$ACCOUNT" ]; then
   info "Não consegui ler o Account ID da saída do whoami — seguindo assim mesmo."
 else
   ok "Conta $ACCOUNT"
+  # O Account ID vem do PRÓPRIO TOKEN, e não de uma variável que alguém
+  # digitou. Um id colado errado (ou de outra conta da mesma pessoa) faz a
+  # Cloudflare responder 7003 — "could not route" — em vez de um erro de
+  # permissão, e a mensagem manda procurar no lugar errado. Derivando daqui,
+  # essa classe inteira de engano deixa de existir.
+  if [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] && [ "$CLOUDFLARE_ACCOUNT_ID" != "$ACCOUNT" ]; then
+    info "CLOUDFLARE_ACCOUNT_ID não bate com a conta do token — usando a do token."
+  fi
+  export CLOUDFLARE_ACCOUNT_ID="$ACCOUNT"
 fi
 
 # ── 1. o banco ────────────────────────────────────────────────────────────
@@ -83,12 +92,35 @@ else
   info "Criando '$DB_NAME'…"
   OUT="$($W d1 create "$DB_NAME" 2>&1)"
   DB_ID="$(printf '%s' "$OUT" | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | head -1)"
-  [ -n "$DB_ID" ] || morre "Não consegui criar o banco. O wrangler disse:
+
+  if [ -z "$DB_ID" ]; then
+    # 7003 / "could not route" na rota de D1 quase nunca é o que parece. A
+    # Cloudflare não responde 403 quando o token não carrega a permissão de
+    # D1: ela responde que a ROTA não existe, porque para aquele token ela
+    # realmente não existe. Quem lê a mensagem literal vai procurar id
+    # inválido e não acha nada.
+    if printf '%s' "$OUT" | grep -qE '7003|[Cc]ould not route'; then
+      morre "O token não tem permissão de D1.
+
+       A Cloudflare responde 'could not route ... [code: 7003]' em vez de um
+       erro de permissão, porque para um token sem D1 essa rota realmente
+       não existe. Não é id inválido." \
+            "Não precisa criar outro token — dá para editar o que existe:
+
+       1. https://dash.cloudflare.com/profile/api-tokens
+       2. Na linha do token, menu ⋯ à direita → 'Edit'
+       3. No quadro Permissions, clique em '+ Add more'
+       4. Preencha a linha:  Account  |  D1  |  Edit
+       5. 'Continue to summary' → 'Save'
+
+       O valor do token NÃO muda — não precisa colar de novo no GitHub."
+    fi
+    morre "Não consegui criar o banco. O wrangler disse:
 
 $(printf '%s' "$OUT" | sed 's/^/       /')" \
-        "Se a mensagem fala em limite de bancos, apague um D1 que não usa no
-       painel. Se fala em permissão, o token precisa de D1:Edit além de
-       Workers:Edit."
+          "Se a mensagem fala em limite de bancos, apague um D1 que não usa
+       no painel. Cole essa saída que eu resolvo."
+  fi
   ok "Criado: $DB_ID"
 fi
 

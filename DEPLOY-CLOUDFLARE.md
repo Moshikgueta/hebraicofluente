@@ -258,6 +258,17 @@ reaplica a lista `[vars]` do arquivo, e o choque derruba tudo.
 `SESSION_SECRET`, `MP_ACCESS_TOKEN` e `MP_WEBHOOK_SECRET` vivem **só** no
 painel. Apague do `wrangler.toml` e republique.
 
+**`Could not route to /client/v4/accounts/.../d1/database ... [code: 7003]`**
+O token não tem a permissão de **D1**. A Cloudflare não responde 403 nesse
+caso — ela responde que a **rota não existe**, porque para um token sem D1 ela
+realmente não existe. A mensagem fala em "object identifier is invalid", o que
+manda todo mundo procurar Account ID errado. Não é isso.
+
+Conserto sem criar token novo: https://dash.cloudflare.com/profile/api-tokens
+→ na linha do token, menu **⋯** → **Edit** → em *Permissions*, **+ Add more**
+→ `Account | D1 | Edit` → *Continue to summary* → **Save**. O valor do token
+não muda, então não precisa colar de novo no GitHub.
+
 **`Authentication error [code: 10000]`**
 O token não tem alcance suficiente. O modelo *Edit Cloudflare Workers* cobre o
 Worker e os ativos, mas **não** cobre D1 em algumas contas — acrescente
