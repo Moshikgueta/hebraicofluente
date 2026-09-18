@@ -181,6 +181,20 @@ export function validate({ checkDist = true } = {}) {
       }
     }
 
+    /* ── V17 — the letter has something to gap ─────────────────────────
+       The "complete a palavra" exercises need words that CONTAIN the target
+       letter. wordsToRead may legitimately hold a word that does not — אַתְּ
+       belongs on the He page as the partner of אַתָּה and has no he — so the
+       templates filter, and this warns when the filter leaves too little to
+       build an exercise from. */
+    {
+      const gappable = [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])]
+        .filter(w => w.he.includes(L.letter) || (L.finalForm && w.he.includes(L.finalForm)));
+      if (gappable.length < 2) {
+        warn('V17', at, `só ${gappable.length} palavra(s) contendo a própria letra — os exercícios de completar ficam curtos`);
+      }
+    }
+
     /* ── V15 — bridge words actually contain their letter ──────────────
        The whole point of a bridge word is that the reader finds the new
        letter inside a word they already know. קרם carries its mem only as

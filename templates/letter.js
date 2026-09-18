@@ -76,14 +76,26 @@ function gapParts(word, L) {
   return parts;
 }
 
+/* Words that actually CONTAIN the target letter, base or final form.
+   "Complete com ה" can only be set on a word that has a ה in it, and
+   wordsToRead is not guaranteed to: אַתְּ earns its place on the He page as the
+   feminine partner of אַתָּה, and carries no he at all. Without this filter
+   gapParts() fell back to blanking the first cluster, and the page asked the
+   reader to write a letter that was never there. */
+const hasTarget = (word, L) =>
+  word.includes(L.letter) || (!!L.finalForm && word.includes(L.finalForm));
+
 /* Gapping a SYLLABLE leaves only a combining mark, which renders as nothing at
    all, so the row comes out blank and unanswerable. Gap words the learner can
    read; with none available fall back to the recognition vocabulary, labelled
    as such — finding where מ sits inside מַיִם is a fair task at letter 1. */
 function gapSource(L) {
-  const read = L.wordsToRead || [];
+  const read = (L.wordsToRead || []).filter(w => hasTarget(w.he, L));
   if (read.length) return { items: read.slice(0, 4), recognition: false };
-  return { items: (L.wordsToRecognize || []).slice(0, 4), recognition: true };
+  return {
+    items: (L.wordsToRecognize || []).filter(w => hasTarget(w.he, L)).slice(0, 4),
+    recognition: true
+  };
 }
 
 function clozeTargetLetter(w, L) {
@@ -203,7 +215,7 @@ function stage2({ L, name, rand, bdg }) {
       <p>${prose(L.didYouKnow)}</p>`)}`;
 
   const circlePool = shuffled(words.map(w => w.he), rand).slice(0, 5);
-  const gapItems = readable.slice(0, 4);
+  const gapItems = readable.filter(w => hasTarget(w.he, L)).slice(0, 4);
 
   const b = `
     ${bdg(2, true)}

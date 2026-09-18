@@ -31,8 +31,9 @@ módulo 7  lições 19–21  os sons com gerech — צ׳ ג׳ ז׳
 
 Cada módulo abre com a sua própria página (o que cobre, em que lição, o que
 você vai conseguir ler ao fim) e fecha com uma revisão que carrega a lição de
-prática da unidade. **O vocabulário foi reautorado contra a nova ordem**: 94
-entradas em `wordsToRead`, todas passando pela V1.
+prática da unidade. **O vocabulário foi reautorado contra a nova ordem** e
+depois revisado palavra a palavra: 99 entradas em `wordsToRead`, todas passando
+pela V1.
 
 **Uma folha é uma página impressa.** Nenhuma etapa transborda: quando não cabe,
 ganha folha de continuação explícita. `npm run check-fit` mede todas e o
@@ -41,7 +42,7 @@ ganha folha de continuação explícita. `npm run check-fit` mede todas e o
 **E as folhas são preenchidas.** `npm run pack` mede as 860 peças e agrupa —
 81% de ocupação média, contra 69% quando cada peça tinha a sua folha.
 
-- `scripts/validate.js` — 16 regras. **V1, V10, V15 e V16 provadas com casos
+- `scripts/validate.js` — 17 regras. **V1, V10, V15 e V16 provadas com casos
   negativos**: adicionar שָׁלוֹם à letra 2, injetar צ na Revisão 1, pôr
   רדיו nas palavras-ponte do sámech ou mudar o módulo do guímel faz o build
   sair com código 1 nomeando o problema.
@@ -62,7 +63,7 @@ ganha folha de continuação explícita. `npm run check-fit` mede todas e o
   61 ícones Lucide (ISC) vendorizados. V14 falha o build se faltar alguma.
 - **27 SVG de ordem de traçado** (22 letras + 5 formas finais), gerados de
   `tools/gen-stroke-order.py` a partir do contorno real do glifo cursivo.
-- `data/translit.json` — 290 entradas, gerado a partir de `letters.json` e
+- `data/translit.json` — 294 entradas, gerado a partir de `letters.json` e
   provado consistente pela V3.
 
 ## A seguir

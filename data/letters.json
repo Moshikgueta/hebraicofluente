@@ -308,12 +308,12 @@
       {
         "he": "אֵם",
         "translit": "em",
-        "pt": "mãe (forma culta)"
+        "pt": "mãe (registro formal, em compostos)"
       },
       {
         "he": "תָּא",
         "translit": "ta",
-        "pt": "cabine / célula"
+        "pt": "compartimento · caixa postal"
       }
     ],
     "didYouKnow": "É a primeira letra e a origem de tudo: {{אָלֶף}} virou alpha em grego, e alpha mais beta deram \"alfabeto\". A palavra que você usa em português nasceu destas duas letras.",
@@ -436,7 +436,7 @@
       {
         "he": "מִן",
         "translit": "min",
-        "pt": "de / a partir de"
+        "pt": "de / a partir de (registro formal)"
       }
     ],
     "didYouKnow": "Em aramaico {{נוּן}} quer dizer peixe, e a forma antiga da letra era justamente o desenho de um peixe. Daí vem também o nome Nun, pai de Josué.",
@@ -552,9 +552,19 @@
         "pt": "você (para homem)"
       },
       {
+        "he": "אַתְּ",
+        "translit": "at",
+        "pt": "você (para mulher)"
+      },
+      {
         "he": "הֵם",
         "translit": "hem",
         "pt": "eles"
+      },
+      {
+        "he": "הֵן",
+        "translit": "hen",
+        "pt": "elas"
       },
       {
         "he": "הִנֵּה",
@@ -795,7 +805,12 @@
       {
         "he": "גַּן",
         "translit": "gan",
-        "pt": "jardim / creche"
+        "pt": "jardim · jardim de infância"
+      },
+      {
+        "he": "גַּג",
+        "translit": "gag",
+        "pt": "telhado"
       },
       {
         "he": "אֲגַם",
@@ -919,6 +934,11 @@
         "he": "אֲדָמָה",
         "translit": "adamá",
         "pt": "terra / solo"
+      },
+      {
+        "he": "מִדָּה",
+        "translit": "midá",
+        "pt": "medida / tamanho"
       }
     ],
     "didYouKnow": "O nome da letra é {{דֶּלֶת}}, que significa porta — e a forma da letra é o batente visto de lado. Muitos nomes de letras hebraicas são assim: a coisa que a letra desenhava originalmente.",
@@ -1173,6 +1193,11 @@
         "he": "יֶלֶד",
         "translit": "yéled",
         "pt": "menino"
+      },
+      {
+        "he": "יַלְדָּה",
+        "translit": "yaldá",
+        "pt": "menina"
       },
       {
         "he": "לַיְלָה",
@@ -1813,9 +1838,9 @@
         "pt": "fresco"
       },
       {
-        "he": "טַל",
-        "translit": "tal",
-        "pt": "orvalho"
+        "he": "מִטְרִיָּה",
+        "translit": "mitriyá",
+        "pt": "guarda-chuva"
       }
     ],
     "didYouKnow": "Com {{ט}} você lê {{טוֹב}}, \"bom\" — e portanto {{בֹּקֶר טוֹב}}, {{עֶרֶב טוֹב}} e {{מַזָּל טוֹב}} inteiros. Três cumprimentos completos numa letra só.",
@@ -1933,7 +1958,7 @@
       {
         "he": "סֵדֶר",
         "translit": "séder",
-        "pt": "ordem"
+        "pt": "ordem / sequência"
       },
       {
         "he": "סֶרֶט",

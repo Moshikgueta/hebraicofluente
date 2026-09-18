@@ -153,7 +153,7 @@ tools/
   gen-stroke-order.py   ferramenta de autoria; gera assets/stroke-order/*.svg
 scripts/
   build.js          data + templates → dist/
-  validate.js       as 16 regras
+  validate.js       as 17 regras
   lib/hebrew.js     codepoints: nikud, formas finais, normalização
   lib/render.js     o contrato de direção — he(), heList(), heCloze(), prose()
 styles/
@@ -190,6 +190,7 @@ assets/
 | V14 | Toda palavra de `wordsToRecognize` tem ilustração em `icons.json` | falha |
 | **V15** | **Toda palavra-ponte contém a sua letra** — base ou forma final | falha |
 | **V16** | **`modules.json` e `letters.json` contam a mesma história**: módulo, lição e blocos contínuos da ordem de leitura | falha |
+| V17 | A letra tem menos de 2 palavras que a contenham — os exercícios de completar ficam curtos | aviso |
 
 V1 é a razão de existir do arquivo. Para vê-la funcionando, adicione
 `שָׁלוֹם` ao `wordsToRead` da letra ת (ordem 2) e rode o build:
