@@ -3,12 +3,33 @@
 Do zero ao ar. Sete passos, uns vinte minutos, e o único que precisa de
 paciência é o do domínio.
 
-Tudo acontece na raiz do repositório. Antes de começar:
+## O caminho curto
 
 ```bash
-npm install          # instala o wrangler
-npx wrangler login   # abre o navegador e autoriza a sua conta
+npx wrangler login                  # abre o navegador, autoriza a conta
+bash scripts/cloudflare-setup.sh    # faz o resto
 ```
+
+O script cria o banco, cola o `database_id` no `wrangler.toml`, aplica o
+esquema, gera o `SESSION_SECRET`, constrói o site, publica, acerta o
+`SITE_ORIGIN` com a URL que saiu e roda as quinze verificações contra o que
+subiu.
+
+Pode rodar quantas vezes quiser: cada passo confere antes de agir e pula o que
+já estava feito. Quando falha, ele diz **o que** falhou e **o que fazer** —
+e continua de onde parou na próxima vez.
+
+Depois disso, commite a única coisa que ele mudou no repositório:
+
+```bash
+git add wrangler.toml && git commit -m "database_id e SITE_ORIGIN"
+```
+
+Sem esse commit, a publicação pelo GitHub Actions volta a falhar no binding do
+D1 — o `database_id` ficaria só na sua máquina.
+
+Os passos abaixo são o que o script faz, um a um, para quando você quiser
+entender ou consertar alguma coisa na mão.
 
 ---
 
@@ -129,10 +150,78 @@ repository secret**:
 | `CLOUDFLARE_API_TOKEN` | Painel → ícone da conta → *API Tokens* → *Create Token* → modelo **Edit Cloudflare Workers** |
 | `CLOUDFLARE_ACCOUNT_ID` | Painel → Workers & Pages → coluna da direita, *Account ID* |
 
-A partir daí, todo push em `main` que toque `app/`, `data/`, `worker/` ou
-`wrangler.toml` roda os testes e publica
+A partir daí, todo push nos ramos publicáveis que toque `app/`, `data/`,
+`worker/` ou `wrangler.toml` roda os testes e publica
 (`.github/workflows/deploy-worker.yml`). Sem o token, o job avisa e pula — não
 quebra.
+
+---
+
+## Quando a publicação não vai
+
+Cada uma destas já parou um primeiro deploy. A mensagem do wrangler à esquerda,
+o que ela realmente quer dizer à direita.
+
+**`Couldn't find a D1 DB with the name or binding` / `database_id` inválido**
+O `wrangler.toml` está com o `database_id` de exemplo
+(`PREENCHER-COM-O-ID-DE-...`) ou com o id de outra conta. É a causa mais comum
+de todas. `bash scripts/cloudflare-setup.sh` resolve — e **commite o
+`wrangler.toml` depois**, senão o GitHub Actions falha igual, porque para ele o
+arquivo do repositório é o que vale.
+
+**`You need to register a workers.dev subdomain`**
+O Worker subiu, mas a conta nunca escolheu um subdomínio, então ele não tem
+endereço. Painel → Workers & Pages → Overview → escolha o seu. Depois publique
+de novo.
+
+**`ENOENT: no such file or directory, scandir './app/out'`**
+O site não foi construído antes de publicar. `npm run deploy` faz as duas
+coisas na ordem certa; `npx wrangler deploy` sozinho, não.
+
+**`Running configuration file ... contains duplicate binding` ou
+`The following secrets are also defined as vars`**
+Um nome está em `wrangler.toml` **e** nos segredos do painel. Cada publicação
+reaplica a lista `[vars]` do arquivo, e o choque derruba tudo.
+`SESSION_SECRET`, `MP_ACCESS_TOKEN` e `MP_WEBHOOK_SECRET` vivem **só** no
+painel. Apague do `wrangler.toml` e republique.
+
+**`Authentication error [code: 10000]`**
+O token não tem alcance suficiente. O modelo *Edit Cloudflare Workers* cobre o
+Worker e os ativos, mas **não** cobre D1 em algumas contas — acrescente
+`D1:Edit` ao token. Se o erro for no GitHub Actions, confira também
+`CLOUDFLARE_ACCOUNT_ID`: um id errado dá exatamente esta mensagem.
+
+**`workers.dev` responde 522, 1101 ou 500 em tudo**
+O Worker subiu e está quebrando em execução. Veja o motivo ao vivo:
+
+```bash
+npx wrangler tail
+```
+
+Quase sempre é `SESSION_SECRET` ausente (todo `/api/*` que toca sessão falha)
+ou o esquema não aplicado (`no such table: accounts`). `npm run db:init`
+resolve o segundo.
+
+**O site abre, mas `/licao/alef/` também abre sem login**
+`run_worker_first = true` saiu do `[assets]` no `wrangler.toml`. Sem ele os
+arquivos são servidos antes de o Worker rodar, e o portão nunca é consultado.
+
+**A publicação passa, mas o site continua velho**
+Cache de borda. Force com uma aba anônima ou
+`curl -H 'Cache-Control: no-cache'`. Se persistir, confirme que publicou o
+Worker certo: `npx wrangler deployments list`.
+
+**O Actions diz "pulando a publicação"**
+`CLOUDFLARE_API_TOKEN` não está nos segredos do repositório. Não é falha do
+deploy — é o job avisando que não tem como publicar. Passo 7 acima.
+
+### Quando nada disso for
+
+Rode e me mande a saída — ela diz em qual dos oito passos parou e por quê:
+
+```bash
+bash scripts/cloudflare-setup.sh 2>&1 | tail -40
+```
 
 ---
 
