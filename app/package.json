@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "npm run export-content && vitest run"
   },
   "dependencies": {
     "next": "15.5.25",
