@@ -53,6 +53,7 @@ export function readingUsedBy(ex: Exercise): string[] {
     case 'syllable-reading':
     case 'word-meaning':
     case 'vowel-sound':
+    case 'scene-reading':
       out.push(ex.he);
       break;
     case 'complete-word':
@@ -267,7 +268,19 @@ export function buildLessonQuiz(
   return spread(fill([L], history, generatorsFor(skills, gens), rng(seed), count, audioAvailable, 4));
 }
 
-/** A checkpoint: the whole module, one generator per letter per round. */
+/**
+ * A checkpoint: the module, across every modality it taught.
+ *
+ * Twelve questions drawn at random from the same pool as a lesson is not a
+ * checkpoint, it is a longer lesson — and the old one was exactly that. What
+ * makes this feel like a demonstration of mastery is that it covers the
+ * DIMENSIONS deliberately: shape, sound, reading, and listening once there are
+ * recordings. A learner who can recognise every letter and hear none of them
+ * should not be able to pass by drawing twelve recognition questions.
+ *
+ * Nothing new is taught here, by design: a checkpoint that introduces material
+ * is a lesson wearing a badge.
+ */
 export function buildCheckpoint(
   letters: Letter[], history: Letter[], opts: BuildOptions = {}
 ): Exercise[] {
@@ -276,29 +289,38 @@ export function buildCheckpoint(
     seed = `cp-${letters.map(l => l.id).join('-')}`, skills, gens: only
   } = opts;
   const rand = rng(seed);
-  const gens = generatorsFor(skills, only);
+
+  /* An explicit narrowing wins: the reading gym and the tests ask for one. */
+  if (skills?.length || only?.length) {
+    const gens = generatorsFor(skills, only);
+    return spread(fill(letters, history, gens, rand, count, audioAvailable, 6));
+  }
+
+  const dimensions: Skill[] = audioAvailable
+    ? ['rec', 'som', 'ler', 'ouvir']
+    : ['rec', 'som', 'ler'];
+  /* Reading gets the remainder: it is what the course is for. */
+  const per = Math.floor(count / dimensions.length);
+
   const out: Exercise[] = [];
   const seen = new Set<string>();
+  const push = (list: Exercise[]) => {
+    for (const ex of list) {
+      if (out.length >= count) return;
+      if (seen.has(ex.id)) continue;
+      seen.add(ex.id);
+      out.push(ex);
+    }
+  };
 
-  /* One generator per letter per round, rotating — so a twelve-question
-     checkpoint covers six letters in six different ways rather than asking the
-     same thing six times. */
-  for (let round = 0; round < 6 && out.length < count; round++) {
-    for (const L of letters) {
-      if (out.length >= count) break;
-      const ctx = contextFor(L, history);
-      const gen = gens[(round * 3 + L.order) % gens.length]!;
-      if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
-      const ex = gen(L, ctx, rand, round);
-      if (ex && !seen.has(ex.id)) { seen.add(ex.id); out.push(ex); }
-    }
+  for (const skill of dimensions) {
+    const want = skill === 'ler' ? count - per * (dimensions.length - 1) : per;
+    push(fill(letters, history, generatorsFor([skill]), rand, want, audioAvailable, 6));
   }
-  /* If the rotation came up short — a module of two-letter lessons with few
-     words — fall back to the ordinary fill rather than a thin checkpoint. */
+  /* A dimension can come up short — a module with no words has little to read —
+     so the rest is topped up from everything. */
   if (out.length < count) {
-    for (const ex of fill(letters, history, gens, rand, count - out.length, audioAvailable, 4)) {
-      if (!seen.has(ex.id)) { seen.add(ex.id); out.push(ex); }
-    }
+    push(fill(letters, history, LESSON_GENERATORS, rand, count - out.length, audioAvailable, 6));
   }
   return spread(out.slice(0, count));
 }
@@ -355,6 +377,65 @@ export function buildReview(
     }
   }
   return spread(out.slice(0, count));
+}
+
+/**
+ * The final challenge: the alphabet, and then the street.
+ *
+ * It opens as a checkpoint over all 22 letters and ends on the real-world
+ * scenes — a word on a bottle, a word on a door, a word on a menu — because
+ * the question the last screen of this course has to answer is not "do you
+ * remember lesson 14" but "can you read the thing in front of you".
+ *
+ * Scenes go LAST and are never diluted: a learner who has just worked through
+ * twenty questions about letters should finish by reading Hebrew that was not
+ * written for them.
+ */
+export function buildFinalChallenge(
+  letters: Letter[], scenes: readonly SceneLike[], opts: BuildOptions = {}
+): Exercise[] {
+  const { audioAvailable = false, count = 20, seed = 'final' } = opts;
+  const rand = rng(seed);
+  /* A third of the run, at most six: enough to change what the challenge is
+     about, not so many that the letters stop being tested. */
+  const wanted = Math.min(6, Math.max(3, Math.round(count / 3)));
+  const sceneItems = buildScenes(scenes, rand, wanted);
+  const core = buildCheckpoint(letters, letters, {
+    audioAvailable, count: count - sceneItems.length, seed: `${seed}-core`
+  });
+  return [...core, ...sceneItems];
+}
+
+/** What a scene needs to be, so the engine does not import the content module. */
+export type SceneLike = {
+  id: string; he: string; pt: string; translit: string;
+  labelPt: string; contextPt: string; audioId: string; fromOrder: number;
+};
+
+export function buildScenes(
+  scenes: readonly SceneLike[], rand: Rand, count: number
+): Exercise[] {
+  const pool = shuffled(scenes, rand).slice(0, count);
+  return pool.map((s, i) => {
+    /* Distractors are other scenes' meanings: all plausible, all things a
+       learner might meet, none of them a giveaway. */
+    const others = shuffled(scenes.filter(x => x.id !== s.id), rand).slice(0, 3).map(x => x.pt);
+    const unique = [...new Set([s.pt, ...others])];
+    const options = shuffled(unique, rand);
+    return {
+      id: `scene-${s.id}-${i}`,
+      kind: 'scene-reading' as const,
+      letterId: 'final',
+      skill: 'ler' as const,
+      promptPt: 'Leia. O que está escrito?',
+      he: s.he,
+      wherePt: s.labelPt,
+      options,
+      answer: options.indexOf(s.pt),
+      audioId: s.audioId,
+      explainPt: `${s.he} — ${s.translit} — ${s.pt}. ${s.contextPt}`
+    };
+  }).filter(e => e.answer >= 0 && e.options.length >= 3);
 }
 
 /**

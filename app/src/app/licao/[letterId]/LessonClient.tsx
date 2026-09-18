@@ -23,13 +23,14 @@ import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { SoundLab } from '@/components/learn/SoundLab';
+import { CultureUnlock } from '@/components/learn/Culture';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
   RealWorldHebrew, SyllableTrainer, WordReveal, WorkbookLink
 } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
-import { allLetters, course, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
+import { allLetters, course, cultureAt, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
 import { buildLessonQuiz } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
 
@@ -74,6 +75,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
   }, [p, letter.id]);
 
   const stagesDone = p.state.lessons[letter.id]?.stagesDone ?? [];
+  const unlockedCard = cultureAt(p.mastered);
   const after = nextLetter(letter.id);
   const mod = course.modules.find(m => m.n === letter.module);
   const moduleFinished = !!mod && mod.letterIds.every(
@@ -93,6 +95,13 @@ export function LessonClient({ letter }: { letter: Letter }) {
           exercises={practice} letter={letter} onDone={() => done(4)}
         />
       )}
+      {/* A card earned by the letter just finished, shown where it was earned.
+          `cultureAt` fires on the exact count, so it appears once and then
+          lives in /historia. */}
+      {stage === 5 && quizResult && unlockedCard && (
+        <CultureUnlock card={unlockedCard} />
+      )}
+
       {stage === 5 && (
         <StageFixacao
           key={`q-${letter.id}-${quizRun}`}

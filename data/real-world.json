@@ -107,7 +107,10 @@
       "sceneType": "mensagem",
       "labelPt": "Mensagem de WhatsApp, oito da manhã",
       "he": "בֹּקֶר טוֹב",
-      "contextPt": "Duas palavras, seis letras, e o cumprimento mais comum de Israel antes do meio-dia."
+      "contextPt": "Duas palavras, seis letras, e o cumprimento mais comum de Israel antes do meio-dia.",
+      "pt": "bom dia",
+      "translit": "bóker tov",
+      "note": "Gloss explícito: a junção palavra a palavra dava 'manhã bom', que não é português."
     },
     {
       "id": "loja-shabat",

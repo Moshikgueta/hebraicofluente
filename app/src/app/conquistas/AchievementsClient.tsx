@@ -4,7 +4,8 @@ import { Card } from '@/components/ui/Card';
 import { AchievementBadge, ProgressBar } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
-import { course } from '@/lib/content';
+import { course, cultureCards, cultureUnlocked } from '@/lib/content';
+import Link from 'next/link';
 
 export function AchievementsClient() {
   const p = useProgress();
@@ -25,6 +26,25 @@ export function AchievementsClient() {
           <AchievementBadge key={a.id} id={a.id} unlocked={have.has(a.id)} />
         ))}
       </div>
+
+      {/* The other kind of unlock: not a badge for doing something, a card
+          worth reading. Kept next to the badges because both are the part of
+          the course that is not work. */}
+      <Link
+        href="/historia"
+        className="flex items-center justify-between gap-4 rounded-[var(--r-md)] border
+                   border-line bg-surface px-4 py-3.5 hover:bg-surface-2 transition-colors"
+      >
+        <span className="grid gap-0.5 min-w-0">
+          <span className="font-ui text-[14.5px] font-medium text-ink">
+            Viagem pela história do hebraico
+          </span>
+          <span className="font-ui text-[12.5px] text-ink-muted">
+            {cultureUnlocked(p.mastered).length} de {cultureCards().length} cartas abertas
+          </span>
+        </span>
+        <span aria-hidden className="text-ink-muted">→</span>
+      </Link>
 
       <Card className="p-5 grid gap-3">
         <h2 className="font-display text-[17px] font-semibold">Seus números</h2>

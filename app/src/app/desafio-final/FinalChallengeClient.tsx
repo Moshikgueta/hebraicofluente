@@ -11,8 +11,8 @@ import { Milestone, ProgressBar } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
-import { allLetters, course } from '@/lib/content';
-import { buildCheckpoint } from '@/lib/engine/exercises';
+import { allLetters, course, scenesUpTo } from '@/lib/content';
+import { buildFinalChallenge } from '@/lib/engine/exercises';
 import { isLessonComplete } from '@/lib/state/rules';
 
 export function FinalChallengeClient() {
@@ -22,11 +22,13 @@ export function FinalChallengeClient() {
 
   const letters = allLetters();
   const ready = letters.filter(l => isLessonComplete(p.state, l.id));
+  /* Every scene, because by here every letter is taught. */
+  const scenes = useMemo(() => scenesUpTo(course.totalLetters), []);
   const exercises = useMemo(
-    () => buildCheckpoint(letters, letters, {
+    () => buildFinalChallenge(letters, scenes, {
       audioAvailable: audioAvailable(), count: 20, seed: 'final'
     }),
-    [letters]
+    [letters, scenes]
   );
 
   if (phase === 'done' && result) {

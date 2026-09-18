@@ -207,7 +207,7 @@ export function ExercisePlayer({
 /* Reading a WHOLE WORD, as opposed to a letter or a syllable. These are the
    kinds where getting it right means the learner decoded something. */
 const UNAIDED_READ = new Set<Exercise['kind']>([
-  'word-meaning', 'type-answer', 'build-word', 'complete-word'
+  'word-meaning', 'type-answer', 'build-word', 'complete-word', 'scene-reading'
 ]);
 
 const GLYPH_CONFUSION = new Set<Exercise['kind']>([
@@ -330,6 +330,19 @@ function Stimulus({ ex }: { ex: Exercise }) {
           <AudioButton audioId={ex.audioId} label="Ouvir de novo" size="lg" slow />
         </div>
       );
+    case 'scene-reading':
+      /* The word alone on a plain surface, with the place named above it —
+         as close as a screen gets to seeing it on a bottle. */
+      return (
+        <div className="grid gap-3">
+          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted text-center">
+            {ex.wherePt}
+          </p>
+          <div className="rounded-[var(--r-lg)] bg-surface-2 py-10 px-4 flex items-center justify-center">
+            <He size="display">{ex.he}</He>
+          </div>
+        </div>
+      );
     default:
       return null;
   }
@@ -398,6 +411,7 @@ const hebrewOptionsOf = (ex: Exercise): boolean =>
   ex.kind === 'complete-word' || ex.kind === 'audio-recognition' ||
   ex.kind === 'sound-to-syllable' || ex.kind === 'listen-syllable' ||
   ex.kind === 'odd-one-out';
+  /* scene-reading answers in PORTUGUESE — the Hebrew is the question. */
 
 /* Tiles are for Hebrew short enough to read at a glance: a letter, a syllable,
    a two- or three-consonant word. Measured in CLUSTERS, not code units — a

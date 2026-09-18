@@ -106,6 +106,23 @@ export type Exercise =
       labelRight: string;
     })
 
+  /* ── the world outside the course ─────────────────────────────────── */
+  /**
+   * A word as it is actually met — on a bottle, a door, a menu — with the
+   * place named and the Hebrew alone on a plain surface.
+   *
+   * The final challenge is built from these, because the question it has to
+   * answer is not "do you remember lesson 14" but "can you read the thing in
+   * front of you". Every scene is drawn from vocabulary the course taught and
+   * carries the order of the letter that unlocked it, so it is always legible.
+   */
+  | (ChoiceBase & {
+      kind: 'scene-reading';
+      he: string;
+      /** Where it is met: "na garrafa d'água do supermercado". */
+      wherePt: string;
+    })
+
   /* ── production: typing, which is retrieval rather than recognition ─ */
   | (ExerciseBase & {
       kind: 'type-answer';

@@ -6,10 +6,10 @@
  * assemble, and that a lesson stops being the same gesture thirteen times. */
 
 import { describe, expect, it } from 'vitest';
-import { allLetters, course } from '@/lib/content';
+import { allLetters, course, scenesUpTo } from '@/lib/content';
 import {
-  buildCheckpoint, buildConfusionDrill, buildLessonQuiz, buildReview, isChoice, spread,
-  typedIsCorrect
+  buildCheckpoint, buildConfusionDrill, buildFinalChallenge, buildLessonQuiz, buildReview,
+  isChoice, spread, typedIsCorrect, violatesOrderRule
 } from '@/lib/engine/exercises';
 import { normalizeTyped } from '@/lib/engine/types';
 import { clean, clusters, joinSyllable, splitSyllable } from '@/lib/hebrew';
@@ -257,5 +257,77 @@ describe('a review is never empty', () => {
     });
     expect(rev.length).toBeGreaterThan(0);
     for (const ex of rev) expect(ex.skill).toBe('rec');
+  });
+});
+
+describe('the final challenge', () => {
+  const scenes = scenesUpTo(22).map(s => ({
+    id: s.id, he: s.he, pt: s.pt, translit: s.translit,
+    labelPt: s.labelPt, contextPt: s.contextPt, audioId: s.audioId, fromOrder: s.fromOrder
+  }));
+
+  it('ends on the street, not on the alphabet', () => {
+    const run = buildFinalChallenge(letters, scenes, { audioAvailable: false, count: 20 });
+    expect(run).toHaveLength(20);
+    const sceneCount = run.filter(e => e.kind === 'scene-reading').length;
+    expect(sceneCount).toBeGreaterThanOrEqual(3);
+    expect(sceneCount).toBeLessThanOrEqual(6);
+    /* And they come LAST: a learner who has just worked through twenty
+       questions about letters should finish by reading Hebrew that was not
+       written for them. */
+    const lastKinds = run.slice(-3).map(e => e.kind);
+    expect(new Set(lastKinds)).toEqual(new Set(['scene-reading']));
+  });
+
+  it('asks about real words with real places', () => {
+    const run = buildFinalChallenge(letters, scenes, { audioAvailable: false, count: 20 });
+    for (const ex of run) {
+      if (ex.kind !== 'scene-reading') continue;
+      expect(ex.he.length).toBeGreaterThan(0);
+      expect(ex.wherePt.length).toBeGreaterThan(0);
+      expect(ex.options).toContain(ex.options[ex.answer]);
+      expect(new Set(ex.options).size).toBe(ex.options.length);
+    }
+  });
+
+  it('never shows a word the course did not teach', () => {
+    const alphabet = letters.flatMap(l => l.finalForm ? [l.letter, l.finalForm] : [l.letter]);
+    const run = buildFinalChallenge(letters, scenes, { audioAvailable: true, count: 24 });
+    for (const ex of run) expect(violatesOrderRule(ex, alphabet), ex.id).toEqual([]);
+  });
+
+  it('is deterministic', () => {
+    expect(JSON.stringify(buildFinalChallenge(letters, scenes, { count: 20 })))
+      .toBe(JSON.stringify(buildFinalChallenge(letters, scenes, { count: 20 })));
+  });
+});
+
+describe('a checkpoint is a demonstration, not a longer lesson', () => {
+  it('covers shape, sound and reading in every module', () => {
+    for (const m of course.modules) {
+      if (!m.letterIds.length || m.upTo == null) continue;
+      const own = letters.filter(l => l.module === m.n);
+      const cp = buildCheckpoint(own, historyFor(m.upTo), { audioAvailable: false, count: 12 });
+      const skills = new Set(cp.map(e => e.skill));
+      for (const want of ['rec', 'som', 'ler'] as const) {
+        expect(skills.has(want), `cp${m.n} has no ${want}: ${[...skills].join(',')}`).toBe(true);
+      }
+    }
+  });
+
+  it('adds listening as a fourth dimension once there are recordings', () => {
+    const m = course.modules.find(x => x.n === 3)!;
+    const own = letters.filter(l => l.module === m.n);
+    const cp = buildCheckpoint(own, historyFor(m.upTo!), { audioAvailable: true, count: 12 });
+    expect(new Set(cp.map(e => e.skill)).has('ouvir')).toBe(true);
+  });
+
+  it('still fills the whole checkpoint', () => {
+    for (const m of course.modules) {
+      if (!m.letterIds.length || m.upTo == null) continue;
+      const own = letters.filter(l => l.module === m.n);
+      const cp = buildCheckpoint(own, historyFor(m.upTo), { audioAvailable: false, count: 12 });
+      expect(cp.length, `cp${m.n}`).toBe(12);
+    }
   });
 });

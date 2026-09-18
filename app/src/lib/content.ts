@@ -10,6 +10,7 @@ import lettersJson from '@content/letters.json';
 import extrasJson from '@content/extras.json';
 import realWorldJson from '@content/real-world.json';
 import strokeJson from '@content/stroke-paths.json';
+import cultureJson from '@content/culture.json';
 
 export type Word = {
   he: string;
@@ -147,6 +148,35 @@ const STROKES = (strokeJson as unknown as {
 
 /** `letterId`, or `${letterId}-final` for a final form. */
 export const strokesFor = (id: string): StrokeSet | null => STROKES[id] ?? null;
+
+/* ── culture and history ────────────────────────────────────────────────
+   Optional and unlockable. `unlockAt` is a letter count, not a lesson id: a
+   card appears once the learner has mastered that many letters, which keeps it
+   a reward for progress rather than another thing to do. Nothing in the main
+   path depends on any of it. */
+export type CultureCard = {
+  id: string;
+  titlePt: string;
+  kind: 'historia' | 'curiosidade' | 'cultura' | string;
+  /** Letters mastered before this card appears. */
+  unlockAt: number;
+  leadPt: string;
+  bodyPt: string[];
+  /** Where the claim comes from. Not shown to the learner; kept for review. */
+  sources?: string;
+};
+
+const CULTURE = (cultureJson as unknown as { cards: CultureCard[] }).cards;
+
+export const cultureCards = (): CultureCard[] => CULTURE;
+
+/** The cards this learner has earned, newest unlock first. */
+export const cultureUnlocked = (mastered: number): CultureCard[] =>
+  CULTURE.filter(c => c.unlockAt <= mastered).sort((a, b) => b.unlockAt - a.unlockAt);
+
+/** A card unlocked by crossing exactly this count, if any. */
+export const cultureAt = (mastered: number): CultureCard | undefined =>
+  CULTURE.find(c => c.unlockAt === mastered);
 
 export const nikud = nikudJson as unknown as {
   intro: NikudIntro;

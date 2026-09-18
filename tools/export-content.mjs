@@ -51,6 +51,11 @@ function lookupWord(letters, phrase, scene) {
   for (const L of letters) {
     for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) all.set(NFC(w.he), w);
   }
+  /* A gloss written ON the scene wins. Joining the dictionary entries of
+     בֹּקֶר and טוֹב gives "manhã bom", which is not Portuguese — a phrase means
+     something the words do not, and the scene is where that is recorded. */
+  if (scene.pt) return { translit: scene.translit ?? null, pt: scene.pt };
+
   const parts = NFC(phrase).split(/\s+/).filter(Boolean);
   const found = parts.map(p => all.get(p));
   if (found.every(Boolean)) {
@@ -250,6 +255,26 @@ function main() {
       ...lookupWord(letters, s2.he, s2)
     }))
   }, null, 2) + '\n');
+
+  /* ── culture and history ────────────────────────────────────────────
+     Optional, unlockable, and deliberately OUTSIDE the main path: the course
+     teaches reading, and a learner who wants to know where the pointinhos came
+     from should be able to find out without the alphabet turning into a
+     history class. Copied verbatim; the Hebrew inside it is normalised like
+     everything else. */
+  const culturePath = join(ROOT, 'data/culture.json');
+  if (existsSync(culturePath)) {
+    const culture = readJson('data/culture.json');
+    writeFileSync(join(OUT, 'culture.json'), JSON.stringify({
+      cards: culture.cards.map(c => ({
+        ...c,
+        leadPt: NFC(c.leadPt),
+        bodyPt: c.bodyPt.map(NFC)
+      }))
+    }, null, 2) + '\n');
+  } else {
+    writeFileSync(join(OUT, 'culture.json'), JSON.stringify({ cards: [] }, null, 2) + '\n');
+  }
 
   /* ── stroke geometry ────────────────────────────────────────────────
      The SVG in assets/stroke-order/ is the printed diagram: the whole letter,
