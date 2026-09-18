@@ -47,20 +47,9 @@ percorre tudo isso e confere o estado final.
 
 ## Publicar
 
-O curso vai para o GitHub Pages por `.github/workflows/deploy-app.yml`, a cada
-push que toque `app/`, `data/`, `assets/` ou o exportador. O workflow roda os
-testes antes de construir — um deploy verde que os pulasse poderia colocar uma
-lição na frente de alguém com uma letra que ela ainda não viu.
-
-**É preciso ligar o Pages uma vez, à mão:** Settings → Pages → Build and
-deployment → Source: **GitHub Actions**. O `GITHUB_TOKEN` do workflow não tem
-permissão para criar o site, então a primeira execução falha em
-`configure-pages` até que a chave seja virada. Depois disso, todo push publica.
-
-Endereço: **https://moshikgueta.github.io/hebraicofluente/**
-
-O repositório é público, então o site também é. Se isso não for desejado, o
-mesmo `out/` serve em qualquer host estático — é só `NEXT_PUBLIC_BASE_PATH`
-vazio e apontar para a pasta.
+Está no ar em **https://moshikgueta.github.io/hebraicofluente/** e se republica
+a cada push que toque `app/`, `data/`, `assets/` ou o exportador. Ver
+`../DEPLOY.md` — inclusive as armadilhas de caminho base que já custaram uma
+execução vermelha cada.
 
 Leia `ARCHITECTURE.md` antes de qualquer mudança estrutural.
