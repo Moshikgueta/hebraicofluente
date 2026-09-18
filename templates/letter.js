@@ -339,21 +339,15 @@ function page4(L, { bdg, T, name, rand, canRead }) {
     </div>`;
   }).join('');
 
-  const a3 = canRead
-    ? `<p>${mixed(['Insira a letra ', H(L.letter), ' no espaço correto para completar cada palavra.'])}</p>
+  const gap = gapSource(L);
+  const a3 = `
+       <p>${mixed(['Insira a letra ', H(L.letter), ' no espaço correto para completar cada palavra.'])}</p>
+       ${gap.recognition ? `<p class="hint">Você ainda não lê estas palavras inteiras — nesta atividade basta reconhecer onde a letra entra.</p>` : ''}
        <table>
          <thead><tr><th>Palavra incompleta</th><th>Significado</th><th>Palavra completa</th></tr></thead>
-         <tbody>${L.wordsToRead.slice(0, 4).map(w => `<tr>
-           <td class="he-cell">${heCloze([null, remainderOf(w.he)])}</td>
+         <tbody>${gap.items.map(w => `<tr>
+           <td class="he-cell">${heCloze([null, dropFirst(w.he)])}</td>
            <td>${esc(w.pt)}</td>
-           <td class="write-cell"></td></tr>`).join('')}</tbody>
-       </table>`
-    : `<p>${mixed(['Insira a letra ', H(L.letter), ' para completar cada sílaba.'])}</p>
-       <table>
-         <thead><tr><th>Sílaba incompleta</th><th>Leitura</th><th>Complete</th></tr></thead>
-         <tbody>${L.syllables.slice(0, 4).map(s => `<tr>
-           <td class="he-cell">${heCloze([null, remainderOf(s.he)])}</td>
-           <td>${esc(s.translit)}</td>
            <td class="write-cell"></td></tr>`).join('')}</tbody>
        </table>`;
 
@@ -399,15 +393,21 @@ function dropFirst(word) {
   return chars.slice(i).join('');
 }
 
-/* What is LEFT of a syllable once its consonant is removed is a bare combining
-   mark, and a combining mark with nothing to attach to renders as nothing at
-   all — the gap looks empty and the exercise becomes unanswerable. U+25CC
-   DOTTED CIRCLE is the Unicode-standard carrier for showing a mark on its own,
-   so the learner can see which vowel is being asked for. */
-function remainderOf(word) {
-  const rest = dropFirst(word);
-  if (!rest) return '';
-  return /^[֑-ׇ]/.test(rest) ? '◌' + rest : rest;
+/* A gap exercise needs something still visible beside the blank.
+   Gapping a SYLLABLE leaves only a combining mark, which renders as nothing at
+   all — and U+25CC, the usual carrier for showing a lone mark, is not in the
+   Hebrew subsets we ship, so it cannot rescue it either. The row comes out
+   blank and the exercise is unanswerable.
+
+   So: gap words the learner can read when there are any, and otherwise fall
+   back to the recognition vocabulary, clearly labelled as such. Finding where
+   מ goes inside מַיִם is a legitimate task at letter 1 — the learner is
+   matching a shape, not reading the word, which is exactly what
+   wordsToRecognize is for. */
+function gapSource(L) {
+  const read = L.wordsToRead || [];
+  if (read.length) return { items: read.slice(0, 4), recognition: false };
+  return { items: (L.wordsToRecognize || []).slice(0, 4), recognition: true };
 }
 
 /* ── P5 · Fixação + ditado ───────────────────────────────────────────────── */
@@ -415,10 +415,9 @@ function page5(L, { bdg, T, name, rand, canRead }) {
   const pool = canRead ? L.wordsToRead : [];
   const recog = L.wordsToRecognize || [];
 
-  const a1 = (pool.length ? pool : L.syllables.map(s => ({ he: s.he, pt: s.translit })))
-    .slice(0, 4)
+  const a1 = gapSource(L).items
     .map(w => `<tr>
-      <td class="he-cell">${heCloze([null, remainderOf(w.he)])}</td>
+      <td class="he-cell">${heCloze([null, dropFirst(w.he)])}</td>
       <td>${esc(w.pt)}</td>
       <td class="write-cell"></td>
     </tr>`).join('');
