@@ -30,7 +30,13 @@ function requested(): { id: string; where: string }[] {
     L.wordsToRecognize.forEach(w => out.push({ id: w.audioId, where: `${L.id}.recognize ${w.he}` }));
   }
   for (const s of nikud.sounds) {
-    s.signs.forEach(g => out.push({ id: g.audioId, where: `nikud ${g.namePt}` }));
+    s.signs.forEach(g => {
+      out.push({ id: g.audioId, where: `nikud ${g.namePt}` });
+      /* The sign's name said out loud, which the vowel cards play. Two clips
+         per sign, because the sound it makes and what it is called are two
+         different recordings. */
+      out.push({ id: g.nameAudioId, where: `nikud nome ${g.namePt}` });
+    });
   }
   for (const D of extras.dagesh.letters) {
     [...D.hardWords, ...D.softWords].forEach(w => out.push({ id: w.audioId, where: `mod6 ${w.he}` }));

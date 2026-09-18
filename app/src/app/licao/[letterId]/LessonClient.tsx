@@ -22,6 +22,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
+import { SoundLab } from '@/components/learn/SoundLab';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
@@ -83,7 +84,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
     <div className="grid gap-6 reading">
       <LessonHeader letter={letter} stage={stage} stagesDone={stagesDone} onStage={setStage} />
 
-      {stage === 1 && <StageConhecer letter={letter} onDone={() => done(1)} />}
+      {stage === 1 && <StageConhecer letter={letter} history={history} onDone={() => done(1)} />}
       {stage === 2 && <StagePalavras letter={letter} onDone={() => done(2)} />}
       {stage === 3 && <StageEscrever letter={letter} onDone={() => done(3)} />}
       {stage === 4 && (
@@ -161,7 +162,9 @@ function LessonHeader({
 }
 
 /* ── 1 · conhecer ───────────────────────────────────────────────────────── */
-function StageConhecer({ letter, onDone }: { letter: Letter; onDone: () => void }) {
+function StageConhecer({
+  letter, history, onDone
+}: { letter: Letter; history: Letter[]; onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <Card className="p-6 sm:p-8 grid gap-6">
@@ -196,6 +199,17 @@ function StageConhecer({ letter, onDone }: { letter: Letter; onDone: () => void 
         </div>
         <SyllableTrainer letter={letter} />
       </Card>
+
+      {/* The same five vowels on the letters already learned. Seeing the column
+          is what turns "מַ se lê ma" into "o patach faz a" — the generalisation
+          the course depends on and used to leave the learner to make alone. */}
+      {history.length > 1 && (
+        <SoundLab
+          letters={history}
+          compact
+          title="Compare com as letras que você já sabe"
+        />
+      )}
 
       <Button size="lg" onClick={onDone} full>Continuar para as palavras</Button>
     </div>

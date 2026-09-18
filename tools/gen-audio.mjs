@@ -99,6 +99,13 @@ function main() {
     for (const g of s.signs) {
       add({ he: g.demo, translit: null, gloss: `sinal ${g.namePt} — som ${s.sound}`,
             kind: 'silaba', wave: 1, where: 'sinais de vogal' });
+      /* The sign's NAME, said on its own. The app teaches the vowels as a
+         layer of their own — a patach is the same patach under any consonant —
+         and a learner who can say "patach" has a handle for it. Ten clips, and
+         they were the only thing the app referenced that the plan never asked
+         anyone to record. */
+      add({ he: g.nameHe, translit: g.namePt, gloss: `nome do sinal ${g.namePt}`,
+            kind: 'nome', wave: 1, where: 'sinais de vogal' });
     }
   }
 

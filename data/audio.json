@@ -8,13 +8,13 @@
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
   "generatedAt": "2026-09-18",
-  "total": 311,
+  "total": 321,
   "waves": [
     {
       "id": 1,
       "titlePt": "O essencial",
       "notePt": "Nomes das letras, sílabas e os sinais de vogal. Só com esta onda, toda lição já tem áudio no que importa: o som da letra.",
-      "count": 158
+      "count": 168
     },
     {
       "id": 2,
@@ -2039,8 +2039,21 @@
       "file": "he-8f22369f.mp3"
     },
     {
-      "num": 277,
+      "num": 327,
       "seq": 154,
+      "he": "פַּתָּח",
+      "translit": "patach",
+      "gloss": "nome do sinal patach",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-700337e8.mp3"
+    },
+    {
+      "num": 277,
+      "seq": 155,
       "he": "מָ",
       "translit": null,
       "gloss": "sinal kamats — som a",
@@ -2052,8 +2065,34 @@
       "file": "he-083ef306.mp3"
     },
     {
+      "num": 328,
+      "seq": 156,
+      "he": "קָמָץ",
+      "translit": "kamats",
+      "gloss": "nome do sinal kamats",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-c4e9c54a.mp3"
+    },
+    {
+      "num": 329,
+      "seq": 157,
+      "he": "סֶגּוֹל",
+      "translit": "segol",
+      "gloss": "nome do sinal segol",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-f6494bb7.mp3"
+    },
+    {
       "num": 278,
-      "seq": 155,
+      "seq": 158,
       "he": "מֵ",
       "translit": null,
       "gloss": "sinal tsere — som e",
@@ -2065,8 +2104,34 @@
       "file": "he-7f41f7ac.mp3"
     },
     {
+      "num": 330,
+      "seq": 159,
+      "he": "צֵירֵי",
+      "translit": "tsere",
+      "gloss": "nome do sinal tsere",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-95775526.mp3"
+    },
+    {
+      "num": 331,
+      "seq": 160,
+      "he": "חִירִיק",
+      "translit": "chirik",
+      "gloss": "nome do sinal chirik",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-ab0464b9.mp3"
+    },
+    {
       "num": 279,
-      "seq": 156,
+      "seq": 161,
       "he": "מֹ",
       "translit": null,
       "gloss": "sinal cholam — som o",
@@ -2078,8 +2143,34 @@
       "file": "he-e78eb2fd.mp3"
     },
     {
+      "num": 332,
+      "seq": 162,
+      "he": "חוֹלָם",
+      "translit": "cholam",
+      "gloss": "nome do sinal cholam",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-1584de5d.mp3"
+    },
+    {
+      "num": 333,
+      "seq": 163,
+      "he": "חוֹלָם מָלֵא",
+      "translit": "cholam malê",
+      "gloss": "nome do sinal cholam malê",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-ba7f0cac.mp3"
+    },
+    {
       "num": 280,
-      "seq": 157,
+      "seq": 164,
       "he": "מֻ",
       "translit": null,
       "gloss": "sinal kubuts — som u",
@@ -2091,8 +2182,47 @@
       "file": "he-d0cb4703.mp3"
     },
     {
+      "num": 334,
+      "seq": 165,
+      "he": "קֻבּוּץ",
+      "translit": "kubuts",
+      "gloss": "nome do sinal kubuts",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-18483448.mp3"
+    },
+    {
+      "num": 335,
+      "seq": 166,
+      "he": "שׁוּרוּק",
+      "translit": "shuruk",
+      "gloss": "nome do sinal shuruk",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-b492f6b5.mp3"
+    },
+    {
+      "num": 336,
+      "seq": 167,
+      "he": "שְׁוָא",
+      "translit": "sheva",
+      "gloss": "nome do sinal sheva",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
+      "file": "he-452a0bd5.mp3"
+    },
+    {
       "num": 117,
-      "seq": 158,
+      "seq": 168,
       "he": "אִמָּא",
       "translit": "imá",
       "gloss": "mãe",
@@ -2105,7 +2235,7 @@
     },
     {
       "num": 281,
-      "seq": 159,
+      "seq": 169,
       "he": "אֶמֶת",
       "translit": "emet",
       "gloss": "verdade",
@@ -2118,7 +2248,7 @@
     },
     {
       "num": 282,
-      "seq": 160,
+      "seq": 170,
       "he": "אֵם",
       "translit": "em",
       "gloss": "mãe (registro formal, em compostos)",
@@ -2131,7 +2261,7 @@
     },
     {
       "num": 283,
-      "seq": 161,
+      "seq": 171,
       "he": "תָּא",
       "translit": "ta",
       "gloss": "compartimento · caixa postal",
@@ -2144,7 +2274,7 @@
     },
     {
       "num": 284,
-      "seq": 162,
+      "seq": 172,
       "he": "אָמֵן",
       "translit": "amén",
       "gloss": "amém",
@@ -2157,7 +2287,7 @@
     },
     {
       "num": 285,
-      "seq": 163,
+      "seq": 173,
       "he": "נָתַן",
       "translit": "natan",
       "gloss": "deu",
@@ -2170,7 +2300,7 @@
     },
     {
       "num": 286,
-      "seq": 164,
+      "seq": 174,
       "he": "תֵּן",
       "translit": "ten",
       "gloss": "dá! (imperativo)",
@@ -2183,7 +2313,7 @@
     },
     {
       "num": 287,
-      "seq": 165,
+      "seq": 175,
       "he": "מִן",
       "translit": "min",
       "gloss": "de / a partir de (registro formal)",
@@ -2197,7 +2327,7 @@
     },
     {
       "num": 9,
-      "seq": 166,
+      "seq": 176,
       "he": "מָה",
       "translit": "ma",
       "gloss": "o quê / que",
@@ -2211,7 +2341,7 @@
     },
     {
       "num": 288,
-      "seq": 167,
+      "seq": 177,
       "he": "אַתָּה",
       "translit": "atá",
       "gloss": "você (para homem)",
@@ -2224,7 +2354,7 @@
     },
     {
       "num": 289,
-      "seq": 168,
+      "seq": 178,
       "he": "אַתְּ",
       "translit": "at",
       "gloss": "você (para mulher)",
@@ -2237,7 +2367,7 @@
     },
     {
       "num": 86,
-      "seq": 169,
+      "seq": 179,
       "he": "הֵם",
       "translit": "hem",
       "gloss": "eles",
@@ -2250,7 +2380,7 @@
     },
     {
       "num": 290,
-      "seq": 170,
+      "seq": 180,
       "he": "הֵן",
       "translit": "hen",
       "gloss": "elas",
@@ -2263,7 +2393,7 @@
     },
     {
       "num": 291,
-      "seq": 171,
+      "seq": 181,
       "he": "הִנֵּה",
       "translit": "hiné",
       "gloss": "eis aqui / aqui está",
@@ -2276,7 +2406,7 @@
     },
     {
       "num": 131,
-      "seq": 172,
+      "seq": 182,
       "he": "אֲנִי",
       "translit": "aní",
       "gloss": "eu",
@@ -2289,7 +2419,7 @@
     },
     {
       "num": 10,
-      "seq": 173,
+      "seq": 183,
       "he": "מִי",
       "translit": "mi",
       "gloss": "quem",
@@ -2304,7 +2434,7 @@
     },
     {
       "num": 8,
-      "seq": 174,
+      "seq": 184,
       "he": "מַיִם",
       "translit": "máyim",
       "gloss": "água",
@@ -2319,7 +2449,7 @@
     },
     {
       "num": 70,
-      "seq": 175,
+      "seq": 185,
       "he": "יָם",
       "translit": "yam",
       "gloss": "mar",
@@ -2332,7 +2462,7 @@
     },
     {
       "num": 205,
-      "seq": 176,
+      "seq": 186,
       "he": "גַּם",
       "translit": "gam",
       "gloss": "também",
@@ -2345,7 +2475,7 @@
     },
     {
       "num": 209,
-      "seq": 177,
+      "seq": 187,
       "he": "גַּן",
       "translit": "gan",
       "gloss": "jardim · jardim de infância",
@@ -2358,7 +2488,7 @@
     },
     {
       "num": 292,
-      "seq": 178,
+      "seq": 188,
       "he": "גַּג",
       "translit": "gag",
       "gloss": "telhado",
@@ -2371,7 +2501,7 @@
     },
     {
       "num": 293,
-      "seq": 179,
+      "seq": 189,
       "he": "אֲגַם",
       "translit": "agam",
       "gloss": "lago",
@@ -2384,7 +2514,7 @@
     },
     {
       "num": 155,
-      "seq": 180,
+      "seq": 190,
       "he": "יָד",
       "translit": "yad",
       "gloss": "mão",
@@ -2397,7 +2527,7 @@
     },
     {
       "num": 206,
-      "seq": 181,
+      "seq": 191,
       "he": "דָּג",
       "translit": "dag",
       "gloss": "peixe",
@@ -2410,7 +2540,7 @@
     },
     {
       "num": 294,
-      "seq": 182,
+      "seq": 192,
       "he": "אֲדָמָה",
       "translit": "adamá",
       "gloss": "terra / solo",
@@ -2423,7 +2553,7 @@
     },
     {
       "num": 295,
-      "seq": 183,
+      "seq": 193,
       "he": "מִדָּה",
       "translit": "midá",
       "gloss": "medida / tamanho",
@@ -2436,7 +2566,7 @@
     },
     {
       "num": 22,
-      "seq": 184,
+      "seq": 194,
       "he": "שֵׁם",
       "translit": "shem",
       "gloss": "nome",
@@ -2449,7 +2579,7 @@
     },
     {
       "num": 21,
-      "seq": 185,
+      "seq": 195,
       "he": "שָׁם",
       "translit": "sham",
       "gloss": "lá / ali",
@@ -2462,7 +2592,7 @@
     },
     {
       "num": 25,
-      "seq": 186,
+      "seq": 196,
       "he": "שָׁנָה",
       "translit": "shaná",
       "gloss": "ano",
@@ -2475,7 +2605,7 @@
     },
     {
       "num": 296,
-      "seq": 187,
+      "seq": 197,
       "he": "אִשָּׁה",
       "translit": "ishá",
       "gloss": "mulher",
@@ -2488,7 +2618,7 @@
     },
     {
       "num": 24,
-      "seq": 188,
+      "seq": 198,
       "he": "שֶׁמֶשׁ",
       "translit": "shémesh",
       "gloss": "sol",
@@ -2501,7 +2631,7 @@
     },
     {
       "num": 36,
-      "seq": 189,
+      "seq": 199,
       "he": "לֹא",
       "translit": "lo",
       "gloss": "não",
@@ -2514,7 +2644,7 @@
     },
     {
       "num": 33,
-      "seq": 190,
+      "seq": 200,
       "he": "שֶׁל",
       "translit": "shel",
       "gloss": "de (posse)",
@@ -2527,7 +2657,7 @@
     },
     {
       "num": 37,
-      "seq": 191,
+      "seq": 201,
       "he": "יֶלֶד",
       "translit": "yéled",
       "gloss": "menino",
@@ -2540,7 +2670,7 @@
     },
     {
       "num": 74,
-      "seq": 192,
+      "seq": 202,
       "he": "יַלְדָּה",
       "translit": "yaldá",
       "gloss": "menina",
@@ -2554,7 +2684,7 @@
     },
     {
       "num": 38,
-      "seq": 193,
+      "seq": 203,
       "he": "לַיְלָה",
       "translit": "láila",
       "gloss": "noite",
@@ -2567,7 +2697,7 @@
     },
     {
       "num": 105,
-      "seq": 194,
+      "seq": 204,
       "he": "שִׁיר",
       "translit": "shir",
       "gloss": "canção",
@@ -2580,7 +2710,7 @@
     },
     {
       "num": 297,
-      "seq": 195,
+      "seq": 205,
       "he": "אָמַר",
       "translit": "amar",
       "gloss": "disse",
@@ -2593,7 +2723,7 @@
     },
     {
       "num": 298,
-      "seq": 196,
+      "seq": 206,
       "he": "הַר",
       "translit": "har",
       "gloss": "montanha",
@@ -2606,7 +2736,7 @@
     },
     {
       "num": 299,
-      "seq": 197,
+      "seq": 207,
       "he": "נָהָר",
       "translit": "nahar",
       "gloss": "rio",
@@ -2619,7 +2749,7 @@
     },
     {
       "num": 23,
-      "seq": 198,
+      "seq": 208,
       "he": "שָׁלוֹם",
       "translit": "shalom",
       "gloss": "paz / olá / tchau",
@@ -2635,7 +2765,7 @@
     },
     {
       "num": 60,
-      "seq": 199,
+      "seq": 209,
       "he": "תּוֹדָה",
       "translit": "todá",
       "gloss": "obrigado",
@@ -2650,7 +2780,7 @@
     },
     {
       "num": 94,
-      "seq": 200,
+      "seq": 210,
       "he": "יוֹם",
       "translit": "yom",
       "gloss": "dia",
@@ -2664,7 +2794,7 @@
     },
     {
       "num": 12,
-      "seq": 201,
+      "seq": 211,
       "he": "מוֹרָה",
       "translit": "morá",
       "gloss": "professora",
@@ -2679,7 +2809,7 @@
     },
     {
       "num": 204,
-      "seq": 202,
+      "seq": 212,
       "he": "גָּדוֹל",
       "translit": "gadol",
       "gloss": "grande",
@@ -2692,7 +2822,7 @@
     },
     {
       "num": 119,
-      "seq": 203,
+      "seq": 213,
       "he": "הוּא",
       "translit": "hu",
       "gloss": "ele",
@@ -2705,7 +2835,7 @@
     },
     {
       "num": 120,
-      "seq": 204,
+      "seq": 214,
       "he": "הִיא",
       "translit": "hi",
       "gloss": "ela",
@@ -2718,7 +2848,7 @@
     },
     {
       "num": 245,
-      "seq": 205,
+      "seq": 215,
       "he": "זֶה",
       "translit": "ze",
       "gloss": "este / isto",
@@ -2731,7 +2861,7 @@
     },
     {
       "num": 300,
-      "seq": 206,
+      "seq": 216,
       "he": "זֹאת",
       "translit": "zot",
       "gloss": "esta",
@@ -2744,7 +2874,7 @@
     },
     {
       "num": 246,
-      "seq": 207,
+      "seq": 217,
       "he": "זְמַן",
       "translit": "zman",
       "gloss": "tempo",
@@ -2757,7 +2887,7 @@
     },
     {
       "num": 250,
-      "seq": 208,
+      "seq": 218,
       "he": "אֹזֶן",
       "translit": "ózen",
       "gloss": "orelha",
@@ -2770,7 +2900,7 @@
     },
     {
       "num": 248,
-      "seq": 209,
+      "seq": 219,
       "he": "מָזוֹן",
       "translit": "mazon",
       "gloss": "alimento",
@@ -2783,7 +2913,7 @@
     },
     {
       "num": 168,
-      "seq": 210,
+      "seq": 220,
       "he": "אָח",
       "translit": "ach",
       "gloss": "irmão",
@@ -2796,7 +2926,7 @@
     },
     {
       "num": 167,
-      "seq": 211,
+      "seq": 221,
       "he": "אֶחָד",
       "translit": "echad",
       "gloss": "um",
@@ -2809,7 +2939,7 @@
     },
     {
       "num": 35,
-      "seq": 212,
+      "seq": 222,
       "he": "לֶחֶם",
       "translit": "léchem",
       "gloss": "pão",
@@ -2824,7 +2954,7 @@
     },
     {
       "num": 134,
-      "seq": 213,
+      "seq": 223,
       "he": "חַלּוֹן",
       "translit": "chalon",
       "gloss": "janela",
@@ -2838,7 +2968,7 @@
     },
     {
       "num": 301,
-      "seq": 214,
+      "seq": 224,
       "he": "חָדָשׁ",
       "translit": "chadash",
       "gloss": "novo",
@@ -2852,7 +2982,7 @@
     },
     {
       "num": 260,
-      "seq": 215,
+      "seq": 225,
       "he": "מִטָּה",
       "translit": "mitá",
       "gloss": "cama",
@@ -2865,7 +2995,7 @@
     },
     {
       "num": 262,
-      "seq": 216,
+      "seq": 226,
       "he": "טִיּוּל",
       "translit": "tiyul",
       "gloss": "passeio",
@@ -2878,7 +3008,7 @@
     },
     {
       "num": 302,
-      "seq": 217,
+      "seq": 227,
       "he": "טָרִי",
       "translit": "tari",
       "gloss": "fresco",
@@ -2891,7 +3021,7 @@
     },
     {
       "num": 303,
-      "seq": 218,
+      "seq": 228,
       "he": "מִטְרִיָּה",
       "translit": "mitriyá",
       "gloss": "guarda-chuva",
@@ -2904,7 +3034,7 @@
     },
     {
       "num": 304,
-      "seq": 219,
+      "seq": 229,
       "he": "סוּס",
       "translit": "sus",
       "gloss": "cavalo",
@@ -2917,7 +3047,7 @@
     },
     {
       "num": 180,
-      "seq": 220,
+      "seq": 230,
       "he": "סוֹד",
       "translit": "sod",
       "gloss": "segredo",
@@ -2930,7 +3060,7 @@
     },
     {
       "num": 181,
-      "seq": 221,
+      "seq": 231,
       "he": "סֵדֶר",
       "translit": "séder",
       "gloss": "ordem / sequência",
@@ -2943,7 +3073,7 @@
     },
     {
       "num": 305,
-      "seq": 222,
+      "seq": 232,
       "he": "סֶרֶט",
       "translit": "séret",
       "gloss": "filme",
@@ -2956,7 +3086,7 @@
     },
     {
       "num": 306,
-      "seq": 223,
+      "seq": 233,
       "he": "סַל",
       "translit": "sal",
       "gloss": "cesta",
@@ -2969,7 +3099,7 @@
     },
     {
       "num": 218,
-      "seq": 224,
+      "seq": 234,
       "he": "עִיר",
       "translit": "ir",
       "gloss": "cidade",
@@ -2982,7 +3112,7 @@
     },
     {
       "num": 221,
-      "seq": 225,
+      "seq": 235,
       "he": "עַל",
       "translit": "al",
       "gloss": "sobre / em cima de",
@@ -2995,7 +3125,7 @@
     },
     {
       "num": 220,
-      "seq": 226,
+      "seq": 236,
       "he": "שָׁעָה",
       "translit": "shaá",
       "gloss": "hora",
@@ -3009,7 +3139,7 @@
     },
     {
       "num": 307,
-      "seq": 227,
+      "seq": 237,
       "he": "עוֹלָם",
       "translit": "olam",
       "gloss": "mundo",
@@ -3022,7 +3152,7 @@
     },
     {
       "num": 308,
-      "seq": 228,
+      "seq": 238,
       "he": "נָעִים",
       "translit": "naim",
       "gloss": "agradável",
@@ -3035,7 +3165,7 @@
     },
     {
       "num": 272,
-      "seq": 229,
+      "seq": 239,
       "he": "עֵץ",
       "translit": "ets",
       "gloss": "árvore",
@@ -3048,7 +3178,7 @@
     },
     {
       "num": 271,
-      "seq": 230,
+      "seq": 240,
       "he": "אֶרֶץ",
       "translit": "érets",
       "gloss": "terra / país",
@@ -3063,7 +3193,7 @@
     },
     {
       "num": 309,
-      "seq": 231,
+      "seq": 241,
       "he": "מִיץ",
       "translit": "mits",
       "gloss": "suco",
@@ -3077,7 +3207,7 @@
     },
     {
       "num": 273,
-      "seq": 232,
+      "seq": 242,
       "he": "רוֹצֶה",
       "translit": "rotsé",
       "gloss": "quer",
@@ -3090,7 +3220,7 @@
     },
     {
       "num": 310,
-      "seq": 233,
+      "seq": 243,
       "he": "צֵל",
       "translit": "tsel",
       "gloss": "sombra",
@@ -3103,7 +3233,7 @@
     },
     {
       "num": 144,
-      "seq": 234,
+      "seq": 244,
       "he": "רַק",
       "translit": "rak",
       "gloss": "só / apenas",
@@ -3116,7 +3246,7 @@
     },
     {
       "num": 143,
-      "seq": 235,
+      "seq": 245,
       "he": "קוֹל",
       "translit": "kol",
       "gloss": "voz",
@@ -3129,7 +3259,7 @@
     },
     {
       "num": 259,
-      "seq": 236,
+      "seq": 246,
       "he": "קָטָן",
       "translit": "katan",
       "gloss": "pequeno",
@@ -3142,7 +3272,7 @@
     },
     {
       "num": 145,
-      "seq": 237,
+      "seq": 247,
       "he": "תִּיק",
       "translit": "tik",
       "gloss": "bolsa / mochila",
@@ -3155,7 +3285,7 @@
     },
     {
       "num": 261,
-      "seq": 238,
+      "seq": 248,
       "he": "שֶׁקֶט",
       "translit": "shéket",
       "gloss": "silêncio",
@@ -3169,7 +3299,7 @@
     },
     {
       "num": 311,
-      "seq": 239,
+      "seq": 249,
       "he": "מָקוֹם",
       "translit": "makom",
       "gloss": "lugar",
@@ -3182,7 +3312,7 @@
     },
     {
       "num": 50,
-      "seq": 240,
+      "seq": 250,
       "he": "אַבָּא",
       "translit": "abá",
       "gloss": "pai",
@@ -3196,7 +3326,7 @@
     },
     {
       "num": 47,
-      "seq": 241,
+      "seq": 251,
       "he": "בַּיִת",
       "translit": "báyit",
       "gloss": "casa",
@@ -3210,7 +3340,7 @@
     },
     {
       "num": 258,
-      "seq": 242,
+      "seq": 252,
       "he": "טוֹב",
       "translit": "tov",
       "gloss": "bom",
@@ -3224,7 +3354,7 @@
     },
     {
       "num": 46,
-      "seq": 243,
+      "seq": 253,
       "he": "לֵב",
       "translit": "lev",
       "gloss": "coração",
@@ -3238,7 +3368,7 @@
     },
     {
       "num": 58,
-      "seq": 244,
+      "seq": 254,
       "he": "שַׁבָּת",
       "translit": "shabat",
       "gloss": "sábado / shabat",
@@ -3252,7 +3382,7 @@
     },
     {
       "num": 48,
-      "seq": 245,
+      "seq": 255,
       "he": "בֹּקֶר",
       "translit": "bóker",
       "gloss": "manhã",
@@ -3266,7 +3396,7 @@
     },
     {
       "num": 232,
-      "seq": 246,
+      "seq": 256,
       "he": "כֶּלֶב",
       "translit": "kélev",
       "gloss": "cachorro",
@@ -3280,7 +3410,7 @@
     },
     {
       "num": 233,
-      "seq": 247,
+      "seq": 257,
       "he": "כּוֹס",
       "translit": "kos",
       "gloss": "copo",
@@ -3294,7 +3424,7 @@
     },
     {
       "num": 121,
-      "seq": 248,
+      "seq": 258,
       "he": "אֹכֶל",
       "translit": "óchel",
       "gloss": "comida",
@@ -3310,7 +3440,7 @@
     },
     {
       "num": 13,
-      "seq": 249,
+      "seq": 259,
       "he": "מֶלֶךְ",
       "translit": "mélech",
       "gloss": "rei",
@@ -3325,7 +3455,7 @@
     },
     {
       "num": 312,
-      "seq": 250,
+      "seq": 260,
       "he": "דֶּרֶךְ",
       "translit": "dérech",
       "gloss": "caminho",
@@ -3339,7 +3469,7 @@
     },
     {
       "num": 234,
-      "seq": 251,
+      "seq": 261,
       "he": "כַּדּוּר",
       "translit": "kadur",
       "gloss": "bola",
@@ -3353,7 +3483,7 @@
     },
     {
       "num": 192,
-      "seq": 252,
+      "seq": 262,
       "he": "סֵפֶר",
       "translit": "séfer",
       "gloss": "livro",
@@ -3368,7 +3498,7 @@
     },
     {
       "num": 11,
-      "seq": 253,
+      "seq": 263,
       "he": "מִשְׁפָּחָה",
       "translit": "mishpachá",
       "gloss": "família",
@@ -3383,7 +3513,7 @@
     },
     {
       "num": 73,
-      "seq": 254,
+      "seq": 264,
       "he": "יָפֶה",
       "translit": "yafé",
       "gloss": "bonito",
@@ -3398,7 +3528,7 @@
     },
     {
       "num": 196,
-      "seq": 255,
+      "seq": 265,
       "he": "כֶּסֶף",
       "translit": "késef",
       "gloss": "dinheiro",
@@ -3413,7 +3543,7 @@
     },
     {
       "num": 193,
-      "seq": 256,
+      "seq": 266,
       "he": "סוֹף",
       "translit": "sof",
       "gloss": "fim",
@@ -3427,7 +3557,7 @@
     },
     {
       "num": 61,
-      "seq": 257,
+      "seq": 267,
       "he": "תֵּה",
       "translit": "te",
       "gloss": "chá",
@@ -3440,7 +3570,7 @@
     },
     {
       "num": 62,
-      "seq": 258,
+      "seq": 268,
       "he": "תַּפּוּחַ",
       "translit": "tapúach",
       "gloss": "maçã",
@@ -3453,7 +3583,7 @@
     },
     {
       "num": 122,
-      "seq": 259,
+      "seq": 269,
       "he": "אֶתְמוֹל",
       "translit": "etmol",
       "gloss": "ontem",
@@ -3466,7 +3596,7 @@
     },
     {
       "num": 123,
-      "seq": 260,
+      "seq": 270,
       "he": "אַחֲרֵי",
       "translit": "acharei",
       "gloss": "depois de",
@@ -3479,7 +3609,7 @@
     },
     {
       "num": 133,
-      "seq": 261,
+      "seq": 271,
       "he": "נָכוֹן",
       "translit": "nachon",
       "gloss": "correto",
@@ -3492,7 +3622,7 @@
     },
     {
       "num": 135,
-      "seq": 262,
+      "seq": 272,
       "he": "נֶחְמָד",
       "translit": "nechmad",
       "gloss": "simpático",
@@ -3505,7 +3635,7 @@
     },
     {
       "num": 84,
-      "seq": 263,
+      "seq": 273,
       "he": "הַיּוֹם",
       "translit": "hayom",
       "gloss": "hoje",
@@ -3518,7 +3648,7 @@
     },
     {
       "num": 85,
-      "seq": 264,
+      "seq": 274,
       "he": "הַכֹּל",
       "translit": "hakol",
       "gloss": "tudo",
@@ -3531,7 +3661,7 @@
     },
     {
       "num": 72,
-      "seq": 265,
+      "seq": 275,
       "he": "יִשְׂרָאֵל",
       "translit": "yisrael",
       "gloss": "Israel",
@@ -3544,7 +3674,7 @@
     },
     {
       "num": 208,
-      "seq": 266,
+      "seq": 276,
       "he": "גְּלִידָה",
       "translit": "glidá",
       "gloss": "sorvete",
@@ -3557,7 +3687,7 @@
     },
     {
       "num": 210,
-      "seq": 267,
+      "seq": 277,
       "he": "רֶגַע",
       "translit": "réga",
       "gloss": "um momento",
@@ -3570,7 +3700,7 @@
     },
     {
       "num": 157,
-      "seq": 268,
+      "seq": 278,
       "he": "דּוֹדָה",
       "translit": "dodá",
       "gloss": "tia",
@@ -3583,7 +3713,7 @@
     },
     {
       "num": 158,
-      "seq": 269,
+      "seq": 279,
       "he": "מְדַבֵּר",
       "translit": "medaber",
       "gloss": "falo, fala",
@@ -3596,7 +3726,7 @@
     },
     {
       "num": 159,
-      "seq": 270,
+      "seq": 280,
       "he": "עֶשְׂרִים",
       "translit": "esrim",
       "gloss": "vinte",
@@ -3609,7 +3739,7 @@
     },
     {
       "num": 107,
-      "seq": 271,
+      "seq": 281,
       "he": "רְחוֹב",
       "translit": "rechov",
       "gloss": "rua",
@@ -3622,7 +3752,7 @@
     },
     {
       "num": 108,
-      "seq": 272,
+      "seq": 282,
       "he": "חָבֵר",
       "translit": "chaver",
       "gloss": "amigo",
@@ -3636,7 +3766,7 @@
     },
     {
       "num": 109,
-      "seq": 273,
+      "seq": 283,
       "he": "אַרְבַּע",
       "translit": "arba",
       "gloss": "quatro",
@@ -3649,7 +3779,7 @@
     },
     {
       "num": 95,
-      "seq": 274,
+      "seq": 284,
       "he": "וְגַם",
       "translit": "vegam",
       "gloss": "e também",
@@ -3662,7 +3792,7 @@
     },
     {
       "num": 96,
-      "seq": 275,
+      "seq": 285,
       "he": "וֶרֶד",
       "translit": "véred",
       "gloss": "rosa (flor)",
@@ -3675,7 +3805,7 @@
     },
     {
       "num": 97,
-      "seq": 276,
+      "seq": 286,
       "he": "עַכְשָׁו",
       "translit": "achshav",
       "gloss": "agora",
@@ -3688,7 +3818,7 @@
     },
     {
       "num": 249,
-      "seq": 277,
+      "seq": 287,
       "he": "מַזָּל",
       "translit": "mazal",
       "gloss": "sorte",
@@ -3701,7 +3831,7 @@
     },
     {
       "num": 169,
-      "seq": 278,
+      "seq": 288,
       "he": "שִׂמְחָה",
       "translit": "simchá",
       "gloss": "alegria",
@@ -3714,7 +3844,7 @@
     },
     {
       "num": 170,
-      "seq": 279,
+      "seq": 289,
       "he": "חֲמִשָּׁה",
       "translit": "chamishá",
       "gloss": "cinco",
@@ -3727,7 +3857,7 @@
     },
     {
       "num": 263,
-      "seq": 280,
+      "seq": 290,
       "he": "סְטוּדֶנְט",
       "translit": "student",
       "gloss": "estudante",
@@ -3740,7 +3870,7 @@
     },
     {
       "num": 224,
-      "seq": 281,
+      "seq": 291,
       "he": "מְעַט",
       "translit": "meat",
       "gloss": "pouco",
@@ -3754,7 +3884,7 @@
     },
     {
       "num": 182,
-      "seq": 282,
+      "seq": 292,
       "he": "סְלִיחָה",
       "translit": "slichá",
       "gloss": "desculpe / com licença",
@@ -3767,7 +3897,7 @@
     },
     {
       "num": 183,
-      "seq": 283,
+      "seq": 293,
       "he": "אוֹטוֹבּוּס",
       "translit": "ótobus",
       "gloss": "ônibus",
@@ -3780,7 +3910,7 @@
     },
     {
       "num": 184,
-      "seq": 284,
+      "seq": 294,
       "he": "כִּסֵּא",
       "translit": "kisé",
       "gloss": "cadeira",
@@ -3793,7 +3923,7 @@
     },
     {
       "num": 222,
-      "seq": 285,
+      "seq": 295,
       "he": "עִבְרִית",
       "translit": "ivrit",
       "gloss": "hebraico",
@@ -3806,7 +3936,7 @@
     },
     {
       "num": 223,
-      "seq": 286,
+      "seq": 296,
       "he": "עוֹד",
       "translit": "od",
       "gloss": "mais, ainda",
@@ -3819,7 +3949,7 @@
     },
     {
       "num": 275,
-      "seq": 287,
+      "seq": 297,
       "he": "צָהֳרַיִם",
       "translit": "tsohoráyim",
       "gloss": "meio-dia",
@@ -3832,7 +3962,7 @@
     },
     {
       "num": 49,
-      "seq": 288,
+      "seq": 298,
       "he": "בְּבַקָּשָׁה",
       "translit": "bevakashá",
       "gloss": "por favor",
@@ -3847,7 +3977,7 @@
     },
     {
       "num": 276,
-      "seq": 289,
+      "seq": 299,
       "he": "מִצְוָה",
       "translit": "mitsvá",
       "gloss": "preceito, boa ação",
@@ -3860,7 +3990,7 @@
     },
     {
       "num": 146,
-      "seq": 290,
+      "seq": 300,
       "he": "קָפֶה",
       "translit": "kafé",
       "gloss": "café",
@@ -3873,7 +4003,7 @@
     },
     {
       "num": 147,
-      "seq": 291,
+      "seq": 301,
       "he": "קָשֶׁה",
       "translit": "kashé",
       "gloss": "difícil",
@@ -3886,7 +4016,7 @@
     },
     {
       "num": 235,
-      "seq": 292,
+      "seq": 302,
       "he": "כֵּן",
       "translit": "ken",
       "gloss": "sim",
@@ -3899,7 +4029,7 @@
     },
     {
       "num": 236,
-      "seq": 293,
+      "seq": 303,
       "he": "כִּתָּה",
       "translit": "kitá",
       "gloss": "sala de aula, turma",
@@ -3912,7 +4042,7 @@
     },
     {
       "num": 237,
-      "seq": 294,
+      "seq": 304,
       "he": "לָלֶכֶת",
       "translit": "laléchet",
       "gloss": "ir, caminhar",
@@ -3925,7 +4055,7 @@
     },
     {
       "num": 194,
-      "seq": 295,
+      "seq": 305,
       "he": "פֹּה",
       "translit": "po",
       "gloss": "aqui",
@@ -3938,7 +4068,7 @@
     },
     {
       "num": 195,
-      "seq": 296,
+      "seq": 306,
       "he": "טֶלֶפוֹן",
       "translit": "télefon",
       "gloss": "telefone",
@@ -3951,7 +4081,7 @@
     },
     {
       "num": 313,
-      "seq": 297,
+      "seq": 307,
       "he": "צ׳",
       "translit": "tch",
       "gloss": "a letra צ com gerech — som tch",
@@ -3964,7 +4094,7 @@
     },
     {
       "num": 314,
-      "seq": 298,
+      "seq": 308,
       "he": "צ׳ילה",
       "translit": null,
       "gloss": "Chile",
@@ -3977,7 +4107,7 @@
     },
     {
       "num": 315,
-      "seq": 299,
+      "seq": 309,
       "he": "צ׳כיה",
       "translit": null,
       "gloss": "Tchéquia",
@@ -3990,7 +4120,7 @@
     },
     {
       "num": 316,
-      "seq": 300,
+      "seq": 310,
       "he": "ואוצ׳ר",
       "translit": null,
       "gloss": "voucher",
@@ -4003,7 +4133,7 @@
     },
     {
       "num": 317,
-      "seq": 301,
+      "seq": 311,
       "he": "ג׳",
       "translit": "dj",
       "gloss": "a letra ג com gerech — som dj",
@@ -4016,7 +4146,7 @@
     },
     {
       "num": 318,
-      "seq": 302,
+      "seq": 312,
       "he": "ג׳ירף",
       "translit": null,
       "gloss": "girafa",
@@ -4029,7 +4159,7 @@
     },
     {
       "num": 319,
-      "seq": 303,
+      "seq": 313,
       "he": "פיג׳מה",
       "translit": null,
       "gloss": "pijama",
@@ -4042,7 +4172,7 @@
     },
     {
       "num": 320,
-      "seq": 304,
+      "seq": 314,
       "he": "ג׳ל",
       "translit": null,
       "gloss": "gel",
@@ -4055,7 +4185,7 @@
     },
     {
       "num": 321,
-      "seq": 305,
+      "seq": 315,
       "he": "ג׳וניור",
       "translit": null,
       "gloss": "júnior",
@@ -4068,7 +4198,7 @@
     },
     {
       "num": 322,
-      "seq": 306,
+      "seq": 316,
       "he": "ז׳",
       "translit": "j",
       "gloss": "a letra ז com gerech — som j",
@@ -4081,7 +4211,7 @@
     },
     {
       "num": 323,
-      "seq": 307,
+      "seq": 317,
       "he": "ז׳רגון",
       "translit": null,
       "gloss": "jargão",
@@ -4094,7 +4224,7 @@
     },
     {
       "num": 324,
-      "seq": 308,
+      "seq": 318,
       "he": "ז׳סטה",
       "translit": null,
       "gloss": "gesto",
@@ -4107,7 +4237,7 @@
     },
     {
       "num": 325,
-      "seq": 309,
+      "seq": 319,
       "he": "בֹּקֶר טוֹב",
       "translit": null,
       "kind": "palavra",
@@ -4119,7 +4249,7 @@
     },
     {
       "num": 326,
-      "seq": 310,
+      "seq": 320,
       "he": "הַמֶּלֶךְ",
       "translit": "hamélech",
       "gloss": "o rei",

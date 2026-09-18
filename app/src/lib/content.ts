@@ -85,10 +85,24 @@ export type Course = {
   letters: { id: string; order: number; module: number; letter: string; namePt: string; sound: string }[];
 };
 
+export type NikudSign = {
+  nameHe: string;
+  namePt: string;
+  /** The sign shown on mem, e.g. מַ. */
+  demo: string;
+  /** The mark alone, to put on another consonant. */
+  sign: string;
+  position: string;
+  /** The syllable said out loud. */
+  audioId: string;
+  /** The sign's own name said out loud — "patach". */
+  nameAudioId: string;
+};
+
 export type NikudSound = {
   sound: string;
   ptApprox: string | null;
-  signs: { nameHe: string; namePt: string; demo: string; position: string; audioId: string }[];
+  signs: NikudSign[];
 };
 
 export const course = courseJson as unknown as Course;

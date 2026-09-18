@@ -187,7 +187,16 @@ function main() {
       ptApprox: s.ptApprox ?? null,
       signs: s.signs.map(g => ({
         nameHe: NFC(g.nameHe), namePt: g.namePt,
-        demo: NFC(g.demo), position: g.position, audioId: audioIdFor(g.demo)
+        demo: NFC(g.demo), position: g.position,
+        /* Two clips, because they are two different things: the SOUND the sign
+           makes on a consonant, and the sign's own NAME. The lab plays the
+           first; the card that teaches the sign plays the second. */
+        audioId: audioIdFor(g.demo),
+        nameAudioId: audioIdFor(g.nameHe),
+        /* The vowel mark on its own, for the places that show the sign rather
+           than a syllable. Derived here so no component ever takes a Hebrew
+           string apart by hand. */
+        sign: NFC(g.demo).replace(/^[\u05D0-\u05EA]/, '')
       }))
     }))
   }, null, 2) + '\n');
