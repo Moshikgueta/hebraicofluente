@@ -107,46 +107,66 @@ function main() {
     bookPages = pm.pages || 0;
   } catch { /* first run — the contents shows dashes */ }
 
+  /* Sheets are numbered continuously across the whole book, contents first.
+     The templates number their own sheets 1..n because a module has to make
+     sense printed on its own; here that is rewritten from one running counter.
+
+     The contents is rendered before the numbering starts: its length depends
+     only on how many modules there are, never on the page numbers it shows,
+     so there is no circularity. */
+  const modules = [];
+  const rawBodies = [];
+  let probe = 1;
+  for (const sec of sections) {
+    const body = sec.body();
+    rawBodies.push(body);
+    const sheets = (body.match(/class="sheet"/g) || []).length;
+    modules.push({ href: sec.file, kind: sec.kind, order: sec.order, id: sec.id,
+                   title: sec.title, sub: sec.sub, letter: sec.letter,
+                   sheet: probe, page: pageMap[sec.id] || null });
+    probe += sheets;
+  }
+
+  const toc = renderIndex(modules, letters, probe - 1, bookPages);
+  const tocSheets = (toc.match(/class="sheet"/g) || []).length;
+
   let folio = 1;
   const renumber = html => html.replace(
     /<span class="folio">\d+<\/span>/g,
     () => `<span class="folio">${folio++}</span>`
   );
 
-  const modules = [];
+  const tocNumbered = renumber(toc);
+
   const bodies = [];
-  for (const sec of sections) {
-    const startPage = folio;
+  sections.forEach((sec, i) => {
+    const startSheet = folio;
     /* The marker goes BETWEEN the badge and the h1, not at the very top of the
        section. A zero-height box sitting immediately after a forced page break
        gets assigned to either side of it at Chromium's discretion, and several
-       sections came out reported one page early. Mid-flow, between two real
-       elements, it stays on their page. */
+       sections came out reported one page early. */
     const marker = `<span class="secmark" aria-hidden="true">\u00a7sec:${sec.id}\u00a7</span>`;
-    const body = renumber(sec.body()).replace('<h1', marker + '<h1');
+    const body = renumber(rawBodies[i]).replace('<h1', marker + '<h1');
     bodies.push(body);
+    modules[i].sheet = startSheet;
     writeFileSync(join(DIST, sec.file), document_({
       title: sec.docTitle, description: sec.desc, body
     }));
-    modules.push({ href: sec.file, kind: sec.kind, order: sec.order, id: sec.id,
-                   title: sec.title, sub: sec.sub, letter: sec.letter,
-                   sheet: startPage, page: pageMap[sec.id] || null });
-  }
+  });
   const totalPages = folio - 1;
 
   /* ── 5. The whole book as one file, for printing ────────────────────── */
-  const toc = renderIndex(modules, letters, totalPages, bookPages);
   writeFileSync(join(DIST, 'livro-completo.html'), document_({
     title: 'Hebraico Moderno — Workbook de Alfabetização',
     description: 'O workbook completo: sinais de vogal, 22 letras, 6 revisões e apêndice.',
-    body: [toc, ...bodies].join('\n')
+    body: [tocNumbered, ...bodies].join('\n')
   }));
 
   /* ── 6. Index ───────────────────────────────────────────────────────── */
   writeFileSync(join(DIST, 'index.html'), document_({
     title: 'Hebraico Moderno — Workbook de Alfabetização',
     description: 'Workbook de alfabetização em hebraico moderno para brasileiros adultos.',
-    body: toc
+    body: tocNumbered
   }));
 
   /* ── 7. Re-validate, now including the built HTML (V8/V9 — the bidi contract). */
@@ -167,8 +187,15 @@ function renderIndex(modules, letters, totalPages, bookPages) {
       <span class="toc-p">${m.page == null ? '—' : m.page}</span>
     </a>`;
 
-  return `<section class="sheet">
-  <span class="badge">Nível A0 — iniciante absoluto</span>
+  /* The contents is itself paginated: 30 entries do not fit one A4 page, and
+     the first sheet also carries the title block, so it holds fewer rows. */
+  const groups = [];
+  const FIRST = 12, REST = 17;
+  groups.push(modules.slice(0, FIRST));
+  for (let i = FIRST; i < modules.length; i += REST) groups.push(modules.slice(i, i + REST));
+
+  return groups.map((g, gi) => `<section class="sheet">
+  ${gi === 0 ? `<span class="badge">Nível A0 — iniciante absoluto</span>
   <h1>Hebraico Moderno<br>Workbook de Alfabetização</h1>
   <p class="lead">Guia para brasileiros adultos aprenderem a ler, pronunciar e escrever o hebraico moderno — do zero ao domínio do alfabeto.</p>
 
@@ -179,14 +206,12 @@ function renderIndex(modules, letters, totalPages, bookPages) {
     <span class="no-print"><a href="./livro-completo.html">Abrir o livro inteiro num arquivo só →</a></span>
   </div>
 
-  <h2>Sumário</h2>
-  <nav class="toc">${modules.map(row).join('')}</nav>
-
-  <aside class="callout callout--tip">
-    <span class="callout-icon" aria-hidden="true">💡</span>
-    <div><p>Estude uma letra por vez. Avance apenas quando sentir segurança na leitura e na escrita da letra atual — e não pule as revisões: elas são onde as letras antigas param de escapar.</p></div>
-  </aside>
-</section>`;
+  <h2>Sumário</h2>`
+  : `<span class="badge">Sumário · continuação</span>
+  <h1>Sumário</h1>`}
+  <nav class="toc">${g.map(row).join('')}</nav>
+  <span class="folio">0</span>
+</section>`).join('\n');
 }
 
 main();

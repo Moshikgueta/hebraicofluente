@@ -75,3 +75,12 @@ ${body}
 </body>
 </html>`;
 }
+
+/* Split a list into fixed-size groups. Used wherever a table grows with the
+   alphabet — the review's letter table runs from 4 rows to 22, and a single
+   sheet cannot hold the tall end of that. */
+export function chunk(arr, n) {
+  const out = [];
+  for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+  return out;
+}

@@ -4,7 +4,7 @@
    consoantes" claim. */
 
 import { he, heList, esc, mixed, H, prose } from '../scripts/lib/render.js';
-import { sheet, badge, callout } from './partials.js';
+import { sheet, badge, callout, chunk } from './partials.js';
 
 export function renderPage0(ctx) {
   const N = ctx.nikud;
@@ -25,7 +25,9 @@ export function renderPage0(ctx) {
       <p class="vowel-note">${prose(s.note)}</p>
     </div>`;
 
-  const p1 = `
+  const sheets = [];
+
+  sheets.push(`
     ${badge('Página 0 — antes da primeira letra')}
     <h1>${esc(N.intro.title)}</h1>
     <p class="lead">${prose(N.intro.lead)}</p>
@@ -34,16 +36,21 @@ export function renderPage0(ctx) {
       <h3>Uma correção importante</h3>
       <p>${prose(N.intro.correction)}</p>`)}
 
-    <h2>Os seis sons</h2>
-    <p>${mixed(['Todos os exemplos abaixo usam a letra ', H('מ'),
+    <h2>Como ler uma sílaba</h2>
+    <p>A ordem é sempre a mesma: primeiro a consoante, depois a vogal — mesmo quando o sinal da vogal aparece embaixo ou acima da letra. A letra vem antes no som, sempre.</p>
+    <p>${mixed(['Todos os exemplos das próximas páginas usam a letra ', H('מ'),
       ' apenas como apoio — você a estudará a seguir. Concentre-se no sinal, não na letra.'])}</p>
+    <p class="ex-task"><span>Leia em voz alta:</span> ${heList(['מַ', 'מֶ', 'מִ', 'מוֹ', 'מוּ'], { size: 'word' })}</p>`);
 
-    <div class="vowel-list">
-      ${N.sounds.map(soundBlock).join('')}
-    </div>
-  `;
+  /* Three sounds to a sheet: each one carries its signs, positions and note. */
+  chunk(N.sounds, 3).forEach((g, gi, all) => {
+    sheets.push(`
+    ${badge('Página 0 — os seis sons' + (gi ? ' · continuação' : ''))}
+    <h1>Os seis sons${all.length > 1 ? ` (${gi + 1} de ${all.length})` : ''}</h1>
+    <div class="vowel-list">${g.map(soundBlock).join('')}</div>`);
+  });
 
-  const p2 = `
+  sheets.push(`
     ${badge('Página 0 — continuação')}
     <h1>O ponto dentro da letra</h1>
     <p class="lead">${prose(N.dagesh.text)}</p>
@@ -60,16 +67,11 @@ export function renderPage0(ctx) {
       </tbody>
     </table>
 
-    <h2>Como ler uma sílaba</h2>
-    <p>A ordem é sempre a mesma: primeiro a consoante, depois a vogal — mesmo quando o sinal da vogal aparece embaixo ou acima da letra. A letra vem antes no som, sempre.</p>
-    <p class="ex-task"><span>Leia em voz alta:</span> ${heList(['מַ', 'מֶ', 'מִ', 'מוֹ', 'מוּ'], { size: 'word' })}</p>
-
     ${callout('tip', '💡', `
       <p>No hebraico do dia a dia — jornais, placas, mensagens — os sinais de vogal <strong>não são escritos</strong>. Eles existem para quem está aprendendo, para textos religiosos, poesia e livros infantis. Você vai começar com eles e deixá-los para trás naturalmente.</p>`)}
 
     ${callout('note', '📌', `
-      <p>Não decore os nomes dos sinais agora. Você precisa reconhecer o <strong>som</strong>. Os nomes estão no apêndice, para quando forem úteis.</p>`)}
-  `;
+      <p>Não decore os nomes dos sinais agora. Você precisa reconhecer o <strong>som</strong>. Os nomes estão no apêndice, para quando forem úteis.</p>`)}`);
 
-  return [sheet(p1, 1), sheet(p2, 2)].join('\n');
+  return sheets.map((body, i) => sheet(body, i + 1)).join('\n');
 }

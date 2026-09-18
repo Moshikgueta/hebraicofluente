@@ -119,6 +119,18 @@ async function main() {
                     '(pip install pymupdf)');
         break;
       }
+
+      /* The whole design rests on one sheet being one printed page. If that
+         stops holding, every page number in the contents is wrong and the
+         folio no longer matches the paper — so it is asserted, not assumed.
+         `npm run check-fit` says WHICH sheet overflowed. */
+      const html = readFileSync(join(DIST, src), 'utf8');
+      const sheets = (html.match(/class="sheet"/g) || []).length;
+      if (map.pages !== sheets) {
+        console.error(`\n  ✗ ${sheets} folhas viraram ${map.pages} páginas — ` +
+                      `alguma folha estourou a página.\n    rode: npm run check-fit\n`);
+        process.exitCode = 1;
+      }
       const next = JSON.stringify(map.sections);
       if (next === prev) break;
       prev = next;

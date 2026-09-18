@@ -6,13 +6,16 @@
 
 | | |
 |---|---|
-| Página 0 — Os sinais de vogal | 1 módulo, 2 folhas |
-| Letras 1–22 | 22 módulos, 7 folhas A4 cada |
-| Revisões (após as letras 4, 8, 12, 16, 20) | 5 módulos, 2 folhas cada |
-| Revisão final cumulativa | 1 módulo |
-| Apêndice (alfabeto · nikud · transliteração · cursiva) | 1 módulo, 4 folhas |
-| `index.html` (sumário) | 1 |
-| **Total** | **318 páginas A4** em `pdf/hebraico-moderno-workbook.pdf` |
+| Sumário | 2 folhas |
+| Página 0 — Os sinais de vogal | 4 folhas |
+| Letras 1–22 | 10–11 folhas cada |
+| Revisões (após as letras 4, 8, 12, 16, 20) + final | 6 módulos |
+| Apêndice (alfabeto · nikud · transliteração · cursiva) | 10 folhas |
+| **Total** | **344 folhas = 344 páginas A4**, verificado |
+
+**Uma folha é uma página impressa.** Nenhuma etapa transborda: quando não cabe,
+ganha folha de continuação explícita. `npm run check-fit` mede as 344 e o
+`npm run pdf` falha se a contagem do PDF não bater com a do HTML.
 
 **As 22 letras estão autoradas**, na ordem pedida:
 מ ש ל ב ת י ה ו ר א נ ק ד ח ס פ ג ע כ ז ט צ — com 78 entradas em

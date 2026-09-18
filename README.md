@@ -14,9 +14,38 @@ Nada aqui é escrito à mão página a página. Os 22 módulos de letra saem de
 
 ```bash
 npm run build      # valida, gera dist/, valida de novo (agora o HTML)
-npm run validate   # só as verificações
+npm run validate   # só as verificações de dados
+npm run check-fit  # mede: toda folha cabe numa página A4?
+npm run check      # as duas acima
 npm run serve      # constrói e serve dist/ em http://127.0.0.1:8080
 ```
+
+### Uma folha é uma página impressa
+
+Esse é o contrato do workbook, e tudo depende dele: se uma folha estoura a
+página por três milímetros ela vira duas páginas em silêncio, o fólio para de
+bater com o papel e o sumário passa a mentir.
+
+Por isso nenhuma etapa transborda. Quando o conteúdo não cabe, a etapa ganha
+uma **folha de continuação explícita** — o número da etapa continua o mesmo, a
+contagem de folhas é que cresce — exatamente como o PDF de referência faz com
+"PÁGINA 1 DE 5 — CONTINUAÇÃO".
+
+E isso é **medido**, não presumido. `npm run check-fit` abre cada página no
+Chromium com mídia de impressão emulada e a largura útil real, e compara a
+altura de cada `.sheet` com os 265mm que o `@page` deixa:
+
+```
+  344 folhas medidas · limite 265mm de altura útil
+  ✓ todas cabem em uma página A4
+```
+
+`npm run pdf` ainda confere o resultado: se a contagem de páginas do PDF não
+bater com a de folhas do HTML, ele falha e manda rodar o `check-fit`.
+
+As tabelas que crescem com o alfabeto — a da revisão vai de 4 a 22 linhas —
+são fatiadas por `chunk()` em `templates/partials.js`, então elas continuam
+cabendo à medida que o conteúdo aumenta.
 
 Não há dependências de runtime. Node 20+ é suficiente; as fontes estão
 versionadas em `assets/fonts/`.

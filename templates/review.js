@@ -3,7 +3,7 @@
    letter that has not been taught — V10 re-checks it on the built data. */
 
 import { he, heList, heCloze, esc, mixed, H } from '../scripts/lib/render.js';
-import { sheet, badge, callout } from './partials.js';
+import { sheet, badge, callout, chunk } from './partials.js';
 
 function rng(seed) {
   let h = 1779033703 ^ seed.length;
@@ -50,9 +50,17 @@ export function renderReview(R, ctx) {
                         : `Revisão ${R.n} — letras 1 a ${R.upTo}`;
   const label = R.final ? 'Revisão final · 22 letras'
                         : `Revisão ${R.n} · letras 1 a ${R.upTo}`;
+  const bdg = cont => badge(label + (cont ? ' · continuação' : ''));
 
-  /* ── page 1 — recognition and reading ──────────────────────────────── */
-  const alphaRows = learned.map(L => `<tr>
+  const sheets = [];
+
+  /* ── the alphabet so far ─────────────────────────────────────────────
+     Eight rows to a sheet: the letters print large, and at the final review
+     this table is 22 rows deep. */
+  const ROWS = 8;
+  const groups = chunk(learned, ROWS);
+  groups.forEach((g, gi) => {
+    const rows = g.map(L => `<tr>
       <td class="center">${he(L.letter, { size: 'big' })}</td>
       <td class="center">${he(L.letter, { size: 'big', cursive: true })}</td>
       <td class="center">${L.finalForm ? he(L.finalForm, { size: 'big' }) : '<span class="hint">—</span>'}</td>
@@ -61,71 +69,76 @@ export function renderReview(R, ctx) {
       <td class="write-cell"></td>
     </tr>`).join('\n');
 
-  const nameOptions = shuffled(learned.map(l => l.namePt), rand);
-
-  const p1 = `
-    ${badge(label)}
-    <h1>${esc(title)}</h1>
-    <p class="lead">${R.final
+    sheets.push(`
+    ${bdg(gi > 0)}
+    <h1>${gi === 0 ? esc(title) : 'O alfabeto até aqui'}</h1>
+    ${gi === 0 ? `<p class="lead">${R.final
       ? 'Você chegou ao fim do alfabeto. Esta revisão passa por todas as 22 letras, as 5 formas finais e todo o vocabulário que você já consegue ler.'
       : R.n === 1
         ? mixed(['Estas são as quatro primeiras letras do workbook: ', H(since.map(l => l.letter).join(' ')),
                  '. Revise-as com calma antes de seguir — tudo o que vem depois se apoia nelas.'])
         : mixed(['Revise tudo o que aprendeu até aqui. As quatro letras novas desta etapa são ',
                  H(since.map(l => l.letter).join(' ')),
-                 ' — dê atenção especial a elas.'])}</p>
+                 ' — dê atenção especial a elas.'])}</p>` : ''}
 
-    <h2>Atividade 1 — o alfabeto até aqui</h2>
+    <h2>Atividade 1 — leia e escreva${groups.length > 1 ? ` (${gi + 1} de ${groups.length})` : ''}</h2>
     <p>Leia cada letra em voz alta e escreva-a em cursivo na última coluna.</p>
     <table>
       <thead><tr><th>Impressa</th><th>Cursiva</th><th>Final</th><th>Nome</th><th>Som</th><th>Escreva</th></tr></thead>
-      <tbody>${alphaRows}</tbody>
-    </table>
+      <tbody>${rows}</tbody>
+    </table>`);
+  });
 
-    <h2>Atividade 2 — de que letra é este nome?</h2>
-    <p>Escreva a letra hebraica ao lado de cada nome.</p>
+  /* ── names ───────────────────────────────────────────────────────────── */
+  const nameOptions = shuffled(learned.map(l => l.namePt), rand);
+  chunk(nameOptions, 12).forEach((g, gi, all) => {
+    sheets.push(`
+    ${bdg(true)}
+    <h1>Atividade 2 — de que letra é este nome?${all.length > 1 ? ` (${gi + 1} de ${all.length})` : ''}</h1>
+    <p class="lead">Escreva a letra hebraica ao lado de cada nome.</p>
     <div class="name-grid">
-      ${nameOptions.map(n => `<div class="name-item"><span>${esc(n)}</span><span class="name-slot"></span></div>`).join('')}
-    </div>
-  `;
+      ${g.map(n => `<div class="name-item"><span>${esc(n)}</span><span class="name-slot"></span></div>`).join('')}
+    </div>`);
+  });
 
-  /* ── page 2 — reading, writing, dictation ──────────────────────────── */
+  /* ── reading ─────────────────────────────────────────────────────────── */
   const readList = shuffled(words, rand).slice(0, 16);
-  const writeList = shuffled(words, rand).slice(0, 6);
-  const gapList = shuffled(words, rand).slice(0, 5);
-
-  const finalsBlock = finals.length ? `
+  sheets.push(`
+    ${bdg(true)}
+    <h1>Atividade 3 — leia em voz alta</h1>
+    <p class="lead">Todas estas palavras usam apenas letras que você já conhece. Leia devagar, depois mais rápido.</p>
+    <p class="ex-task">${heList(readList.map(w => w.he), { size: 'word' })}</p>
+    ${finals.length ? `
     <h2>Atividade 4 — as formas finais</h2>
-    <p>${mixed(['Estas letras mudam de desenho no fim da palavra. Ligue cada uma à sua forma final.'])}</p>
+    <p>Estas letras mudam de desenho no fim da palavra.</p>
     <table>
       <thead><tr><th>No meio da palavra</th><th>No fim da palavra</th><th>Nome</th></tr></thead>
       <tbody>${finals.map(L => `<tr>
         <td class="center">${he(L.letter, { size: 'word' })}</td>
         <td class="center">${he(L.finalForm, { size: 'word' })}</td>
         <td>${esc(L.namePt)}</td></tr>`).join('')}</tbody>
-    </table>` : '';
+    </table>` : ''}`);
 
-  const p2 = `
-    ${badge(label + ' — continuação')}
-    <h1>Leitura, escrita e ditado</h1>
+  /* ── completing and writing ──────────────────────────────────────────── */
+  const gapList = shuffled(words, rand).slice(0, 5);
+  const writeList = shuffled(words, rand).slice(0, 6);
+  const n = finals.length ? 5 : 4;
 
-    <h2>Atividade 3 — leia em voz alta</h2>
-    <p>Todas estas palavras usam apenas letras que você já conhece. Leia devagar, depois mais rápido.</p>
-    <p class="ex-task">${heList(readList.map(w => w.he), { size: 'word' })}</p>
-
-    ${finalsBlock}
-
-    <h2>Atividade ${finals.length ? 5 : 4} — complete a palavra</h2>
-    <p>Falta uma letra em cada palavra. Escreva a palavra completa.</p>
+  sheets.push(`
+    ${bdg(true)}
+    <h1>Atividade ${n} — complete a palavra</h1>
+    <p class="lead">Falta uma letra em cada palavra. Escreva a palavra completa.</p>
     <table>
       <thead><tr><th>Incompleta</th><th>Significado</th><th>Palavra completa</th></tr></thead>
       <tbody>${gapList.map(w => `<tr>
         <td class="he-cell">${heCloze(gapFirst(w.he))}</td>
         <td>${esc(w.pt)}</td>
         <td class="write-cell"></td></tr>`).join('')}</tbody>
-    </table>
+    </table>`);
 
-    <h2>Atividade ${finals.length ? 6 : 5} — escreva em cursivo</h2>
+  sheets.push(`
+    ${bdg(true)}
+    <h1>Atividade ${n + 1} — escreva em cursivo</h1>
     <table>
       <thead><tr><th>Leitura</th><th>Significado</th><th>Escreva em cursivo</th></tr></thead>
       <tbody>${writeList.map(w => `<tr>
@@ -140,10 +153,9 @@ export function renderReview(R, ctx) {
 
     ${callout('note', '🌟', R.final
       ? `<p><strong>Você terminou o alfabeto.</strong> Sabe reconhecer, ler e escrever as 22 letras e as 5 formas finais, e lê ${words.length} palavras inteiras. O próximo passo é a gramática — e a partir daqui você lê tudo o que encontrar pela frente.</p>`
-      : `<p><strong>Bom trabalho.</strong> Se alguma letra ainda travou a leitura, volte ao módulo dela antes de seguir. Não há pressa: cada letra bem fixada torna a próxima mais fácil.</p>`)}
-  `;
+      : `<p><strong>Bom trabalho.</strong> Se alguma letra ainda travou a leitura, volte ao módulo dela antes de seguir. Não há pressa: cada letra bem fixada torna a próxima mais fácil.</p>`)}`);
 
-  return [sheet(p1, 1), sheet(p2, 2)].join('\n');
+  return sheets.map((body, i) => sheet(body, i + 1)).join('\n');
 }
 
 /* The word with its first (rightmost) cluster blanked — a generic review gap,
