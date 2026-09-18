@@ -8,8 +8,10 @@
 
 import { describe, expect, it } from 'vitest';
 import { allLetters, course } from '../src/lib/content';
-import { buildCheckpoint, buildLessonQuiz, buildReview, glyphOptionsOf, readingUsedBy, violatesOrderRule }
-  from '../src/lib/engine/exercises';
+import {
+  buildCheckpoint, buildLessonQuiz, buildReview, glyphOptionsOf, isChoice, readingUsedBy,
+  violatesOrderRule
+} from '../src/lib/engine/exercises';
 import { ALL_GLYPHS, isReadableWith } from '../src/lib/hebrew';
 
 const letters = allLetters();
@@ -20,7 +22,7 @@ describe('the order rule', () => {
     for (const L of letters) {
       const history = letters.filter(x => x.order <= L.order);
       for (const audioAvailable of [false, true]) {
-        for (const ex of buildLessonQuiz(L, history, { audioAvailable })) {
+        for (const ex of buildLessonQuiz(L, history, { audioAvailable, count: 25 })) {
           const bad = violatesOrderRule(ex, L.alphabetSoFar);
           if (bad.length) offences.push(`${L.id} · ${ex.id} · ${bad.join(', ')}`);
         }
@@ -36,7 +38,7 @@ describe('the order rule', () => {
       const own = letters.filter(l => l.module === m.n);
       const history = letters.filter(l => l.order <= m.upTo!);
       const alphabet = history.flatMap(l => l.finalForm ? [l.letter, l.finalForm] : [l.letter]);
-      for (const ex of buildCheckpoint(own, history, { audioAvailable: true })) {
+      for (const ex of buildCheckpoint(own, history, { audioAvailable: true, count: 30 })) {
         const bad = violatesOrderRule(ex, alphabet);
         if (bad.length) offences.push(`cp${m.n} · ${ex.id} · ${bad.join(', ')}`);
       }
@@ -50,7 +52,7 @@ describe('the order rule', () => {
       const learned = letters.filter(l => l.order <= upTo);
       const alphabet = learned.flatMap(l => l.finalForm ? [l.letter, l.finalForm] : [l.letter]);
       const weak = learned.slice(-3).map(l => l.id);
-      for (const ex of buildReview(weak, learned, { audioAvailable: true })) {
+      for (const ex of buildReview(weak, learned, { audioAvailable: true, count: 20 })) {
         const bad = violatesOrderRule(ex, alphabet);
         if (bad.length) offences.push(`rev@${upTo} · ${ex.id} · ${bad.join(', ')}`);
       }
@@ -70,12 +72,42 @@ describe('the order rule', () => {
   it('never generates an empty or single-option question', () => {
     for (const L of letters) {
       const history = letters.filter(x => x.order <= L.order);
-      for (const ex of buildLessonQuiz(L, history, { audioAvailable: true })) {
-        expect(ex.options.length, `${ex.id}`).toBeGreaterThanOrEqual(3);
-        expect(ex.answer, `${ex.id}`).toBeGreaterThanOrEqual(0);
-        expect(ex.answer, `${ex.id}`).toBeLessThan(ex.options.length);
-        expect(new Set(ex.options).size, `${ex.id} has duplicate options`).toBe(ex.options.length);
-        expect(readingUsedBy(ex).length + glyphOptionsOf(ex).length).toBeGreaterThan(0);
+      for (const ex of buildLessonQuiz(L, history, { audioAvailable: true, count: 20 })) {
+        if (isChoice(ex)) {
+          expect(ex.options.length, `${ex.id}`).toBeGreaterThanOrEqual(3);
+          expect(ex.answer, `${ex.id}`).toBeGreaterThanOrEqual(0);
+          expect(ex.answer, `${ex.id}`).toBeLessThan(ex.options.length);
+          /* Odd-one-out is the one kind whose options are DELIBERATELY the same
+             glyph over and over — that is the exercise. Everywhere else a
+             repeated option means the question has two right answers. */
+          if (ex.kind !== 'odd-one-out') {
+            expect(new Set(ex.options).size, `${ex.id} has duplicate options`)
+              .toBe(ex.options.length);
+          }
+        }
+        /* Something has to be presented. For most kinds that is Hebrew on
+           screen; for "escreva o que você ouviu" it is deliberately only the
+           recording, which is the whole point of that exercise. */
+        const presents =
+          readingUsedBy(ex).length + glyphOptionsOf(ex).length + (ex.audioId ? 1 : 0);
+        expect(presents, `${ex.id} presents nothing`).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  /* Every kind carries the two facts the adaptive layer depends on. They used
+     to be inferred — the letter by splitting the id on a hyphen, the skill not
+     at all — and an inferred fact is one that breaks silently. */
+  it('labels every exercise with its letter and its skill', () => {
+    const ids = new Set(letters.map(l => l.id));
+    const skills = new Set(['rec', 'som', 'ler', 'ouvir', 'escrever']);
+    for (const L of letters) {
+      const history = letters.filter(x => x.order <= L.order);
+      for (const ex of buildLessonQuiz(L, history, { audioAvailable: true, count: 20 })) {
+        expect(ids.has(ex.letterId), `${ex.id} letterId=${ex.letterId}`).toBe(true);
+        expect(skills.has(ex.skill), `${ex.id} skill=${ex.skill}`).toBe(true);
+        expect(ex.promptPt.length, `${ex.id} has no prompt`).toBeGreaterThan(0);
+        expect(ex.explainPt.length, `${ex.id} has no explanation`).toBeGreaterThan(0);
       }
     }
   });

@@ -86,6 +86,7 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
     out.push({
       id: `mod6-dag-${row.D.id}-${i}`,
       kind: 'word-meaning',
+      letterId: row.D.id, skill: 'ler',
       promptPt: `Nesta palavra, a letra tem que som?`,
       he: row.w.he,
       options,
@@ -104,6 +105,7 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
     out.push({
       id: `mod6-fin-${i}`,
       kind: 'final-form',
+      letterId: 'mod6', skill: 'rec',
       promptPt: `Qual destas é a forma final de ${F.namePt.replace(' sofit', '')}?`,
       letter: F.base,
       options,
@@ -119,6 +121,7 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
     out.push({
       id: `mod6-unp-${i}`,
       kind: 'word-meaning',
+      letterId: 'mod6', skill: 'ler',
       promptPt: 'Sem nikud, como num jornal. O que está escrito?',
       he: u.bare,
       options,
@@ -143,6 +146,7 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
     out.push({
       id: `mod7-snd-${i}`,
       kind: 'syllable-reading',
+      letterId: 'mod7', skill: 'som',
       promptPt: 'Que som esta letra tem?',
       he: g.he,
       options,
@@ -153,6 +157,7 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
     out.push({
       id: `mod7-base-${i}`,
       kind: 'syllable-reading',
+      letterId: 'mod7', skill: 'som',
       promptPt: 'E sem o sinal — que som ela tem?',
       he: g.base,
       options: bare.options,
@@ -169,6 +174,7 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
     out.push({
       id: `mod7-word-${i}`,
       kind: 'word-meaning',
+      letterId: 'mod7', skill: 'ler',
       promptPt: 'Leia em voz alta. Que palavra é esta?',
       he: w.he,
       options,

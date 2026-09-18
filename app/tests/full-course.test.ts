@@ -11,7 +11,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { allLetters, course, extras } from '../src/lib/content';
-import { buildCheckpoint, buildLessonQuiz, buildReview, violatesOrderRule } from '../src/lib/engine/exercises';
+import { buildCheckpoint, buildLessonQuiz, buildReview, isChoice, violatesOrderRule } from '../src/lib/engine/exercises';
 import { buildDageshQuiz, buildGerechQuiz } from '../src/lib/engine/extras';
 import {
   ACHIEVEMENTS, EXTRA_STAGE_COUNT, EXTRA_STAGE_UNITS, STAGE_COUNT, XP, applyPractice, completeStage,
@@ -193,8 +193,11 @@ describe('a learner who misses things', () => {
          what matters is that it never produces zero, or a broken one. */
       expect(rev.length, `review at ${upTo}`).toBeGreaterThan(0);
       for (const ex of rev) {
+        if (!isChoice(ex)) continue;   // built and typed answers have no options
         expect(ex.options.length).toBeGreaterThanOrEqual(2);
-        expect(new Set(ex.options).size).toBe(ex.options.length);
+        if (ex.kind !== 'odd-one-out') {
+          expect(new Set(ex.options).size).toBe(ex.options.length);
+        }
       }
     }
   });
