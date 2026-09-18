@@ -11,7 +11,10 @@
     "pdf": "node tools/build-pdf.mjs",
     "check-fit": "node tools/check-fit.mjs",
     "check": "npm run validate && npm run check-fit",
-    "pack": "node tools/pack.mjs"
+    "pack": "node tools/pack.mjs",
+    "audio-manifest": "node tools/gen-audio.mjs",
+    "audio-script": "node tools/gen-audio.mjs && node tools/audio-script.mjs",
+    "check-audio": "node tools/check-audio.mjs"
   },
   "devDependencies": {}
 }

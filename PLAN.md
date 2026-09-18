@@ -87,8 +87,11 @@ divergem**. Os módulos 6 e 7 saíram de dentro de `templates/extras.js` para
 
 ## Adiado de propósito
 
-- **Áudio.** `audioIds` existe e está vazio nas 22 letras; `tools/gen-audio.mjs`
-  já monta a lista de clipes, mas não está ligado ao build. Parado a pedido.
+- **Áudio — falta só gravar.** O kit está pronto: `npm run audio-script` gera
+  `audio/roteiro-de-gravacao.pdf` (19 páginas, 311 clipes em 3 ondas, ~78 min de
+  sessão, com briefing de voz e técnico), `npm run check-audio` confere o que
+  chegou, e largar os arquivos em `audio/` já faz o app tocar. Não há síntese
+  como substituto, de propósito — ver `app/ARCHITECTURE.md` §6.3.
 - **Edição para público cristão.** `biblicalWord` existe em cada letra, `null`.
 
 ## Problemas conhecidos

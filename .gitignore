@@ -9,3 +9,7 @@ app/public/fonts/
 app/public/stroke-order/
 app/public/audio/
 app/next-env.d.ts
+
+audio/*.mp3
+audio/*.wav
+audio/room-tone.*

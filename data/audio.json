@@ -1,2534 +1,4134 @@
 {
   "note": [
-    "GERADO por tools/gen-audio.mjs — não edite à mão.",
-    "O nome do arquivo vem de um hash do hebraico pontuado, não da posição:",
-    "acrescentar uma palavra não renomeia nada do que já foi gravado.",
-    "O número é impresso no livro ao lado de cada item, então também é estável:",
-    "números já atribuídos são preservados e só clipes novos recebem números novos.",
-    "Coloque os arquivos em assets/audio/ e rode `npm run check-audio`."
+    "GERADO por tools/gen-audio.mjs — nao edite a mao.",
+    "O nome do arquivo vem de um hash do hebraico pontuado, nao da posicao:",
+    "acrescentar uma palavra nao renomeia nada do que ja foi gravado.",
+    "O numero e impresso no roteiro de gravacao, entao tambem e estavel:",
+    "numeros ja atribuidos sao preservados e so clipes novos recebem numeros novos.",
+    "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
   "generatedAt": "2026-09-18",
-  "total": 280,
+  "total": 311,
+  "waves": [
+    {
+      "id": 1,
+      "titlePt": "O essencial",
+      "notePt": "Nomes das letras, sílabas e os sinais de vogal. Só com esta onda, toda lição já tem áudio no que importa: o som da letra.",
+      "count": 158
+    },
+    {
+      "id": 2,
+      "titlePt": "As palavras de leitura",
+      "notePt": "Todo o vocabulário que o aluno lê sozinho, na ordem do curso.",
+      "count": 99
+    },
+    {
+      "id": 3,
+      "titlePt": "Reconhecimento e os módulos finais",
+      "notePt": "Vocabulário de reconhecimento, os módulos 6 e 7, e as cenas de «no mundo real».",
+      "count": 54
+    }
+  ],
   "clips": [
     {
       "num": 1,
+      "seq": 0,
       "he": "מֵם",
       "translit": "Mem",
       "gloss": "nome da letra Mem",
       "kind": "nome",
-      "lesson": 1,
+      "wave": 1,
+      "where": [
+        "letra 1"
+      ],
       "file": "he-da15b870.mp3"
     },
     {
       "num": 2,
+      "seq": 1,
       "he": "מַ",
       "translit": "ma",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como o MA de \"má\"",
       "kind": "silaba",
-      "lesson": 1,
+      "wave": 1,
+      "where": [
+        "letra 1",
+        "sinais de vogal"
+      ],
       "file": "he-cdc46290.mp3"
     },
     {
       "num": 3,
+      "seq": 2,
       "he": "מֶ",
       "translit": "me",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como o ME de \"mesa\"",
       "kind": "silaba",
-      "lesson": 1,
+      "wave": 1,
+      "where": [
+        "letra 1",
+        "sinais de vogal"
+      ],
       "file": "he-769b1e44.mp3"
     },
     {
       "num": 4,
+      "seq": 3,
       "he": "מִ",
       "translit": "mi",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como o MI de \"milho\"",
       "kind": "silaba",
-      "lesson": 1,
+      "wave": 1,
+      "where": [
+        "letra 1",
+        "sinais de vogal"
+      ],
       "file": "he-792d46f6.mp3"
     },
     {
       "num": 5,
+      "seq": 4,
       "he": "מוֹ",
       "translit": "mo",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como o MO de \"motor\"",
       "kind": "silaba",
-      "lesson": 1,
+      "wave": 1,
+      "where": [
+        "letra 1",
+        "sinais de vogal"
+      ],
       "file": "he-a0105ed1.mp3"
     },
     {
       "num": 6,
+      "seq": 5,
       "he": "מוּ",
       "translit": "mu",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como o MU de \"muro\"",
       "kind": "silaba",
-      "lesson": 1,
+      "wave": 1,
+      "where": [
+        "letra 1",
+        "sinais de vogal"
+      ],
       "file": "he-4bf273e5.mp3"
     },
     {
       "num": 7,
+      "seq": 6,
       "he": "מְ",
       "translit": "m",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 1,
+      "wave": 1,
+      "where": [
+        "letra 1",
+        "sinais de vogal"
+      ],
       "file": "he-f9a95636.mp3"
     },
     {
-      "num": 8,
-      "he": "מַיִם",
-      "translit": "máyim",
-      "gloss": "água",
-      "kind": "palavra",
-      "lesson": 1,
-      "file": "he-f9c5c883.mp3"
-    },
-    {
-      "num": 9,
-      "he": "מָה",
-      "translit": "ma",
-      "gloss": "o quê / que",
-      "kind": "palavra",
-      "lesson": 1,
-      "file": "he-8f2861d4.mp3"
-    },
-    {
-      "num": 10,
-      "he": "מִי",
-      "translit": "mi",
-      "gloss": "quem",
-      "kind": "palavra",
-      "lesson": 1,
-      "file": "he-fad4ddb1.mp3"
-    },
-    {
-      "num": 11,
-      "he": "מִשְׁפָּחָה",
-      "translit": "mishpachá",
-      "gloss": "família",
-      "kind": "palavra",
-      "lesson": 1,
-      "file": "he-23cc1517.mp3"
-    },
-    {
-      "num": 12,
-      "he": "מוֹרָה",
-      "translit": "morá",
-      "gloss": "professora",
-      "kind": "palavra",
-      "lesson": 1,
-      "file": "he-03afe381.mp3"
-    },
-    {
-      "num": 13,
-      "he": "מֶלֶךְ",
-      "translit": "mélech",
-      "gloss": "rei",
-      "kind": "palavra",
-      "lesson": 1,
-      "file": "he-327a17ba.mp3"
-    },
-    {
-      "num": 14,
-      "he": "שִׁין",
-      "translit": "Shin",
-      "gloss": "nome da letra Shin",
-      "kind": "nome",
-      "lesson": 2,
-      "file": "he-b9809730.mp3"
-    },
-    {
-      "num": 15,
-      "he": "שַׁ",
-      "translit": "sha",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 2,
-      "file": "he-93723d4f.mp3"
-    },
-    {
-      "num": 16,
-      "he": "שֶׁ",
-      "translit": "she",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 2,
-      "file": "he-8d866b61.mp3"
-    },
-    {
-      "num": 17,
-      "he": "שִׁ",
-      "translit": "shi",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 2,
-      "file": "he-4115fbf2.mp3"
-    },
-    {
-      "num": 18,
-      "he": "שׁוֹ",
-      "translit": "sho",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 2,
-      "file": "he-1622dd40.mp3"
-    },
-    {
-      "num": 19,
-      "he": "שׁוּ",
-      "translit": "shu",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 2,
-      "file": "he-46ea582d.mp3"
-    },
-    {
-      "num": 20,
-      "he": "שְׁ",
-      "translit": "sh",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 2,
-      "file": "he-475a3ffb.mp3"
-    },
-    {
-      "num": 21,
-      "he": "שָׁם",
-      "translit": "sham",
-      "gloss": "lá / ali",
-      "kind": "palavra",
-      "lesson": 2,
-      "file": "he-b19b2b8c.mp3"
-    },
-    {
-      "num": 22,
-      "he": "שֵׁם",
-      "translit": "shem",
-      "gloss": "nome",
-      "kind": "palavra",
-      "lesson": 2,
-      "file": "he-805c8091.mp3"
-    },
-    {
-      "num": 23,
-      "he": "שָׁלוֹם",
-      "translit": "shalom",
-      "gloss": "paz / olá / tchau",
-      "kind": "palavra",
-      "lesson": 2,
-      "file": "he-e1e7fe52.mp3"
-    },
-    {
-      "num": 24,
-      "he": "שֶׁמֶשׁ",
-      "translit": "shémesh",
-      "gloss": "sol",
-      "kind": "palavra",
-      "lesson": 2,
-      "file": "he-736e502c.mp3"
-    },
-    {
-      "num": 25,
-      "he": "שָׁנָה",
-      "translit": "shaná",
-      "gloss": "ano",
-      "kind": "palavra",
-      "lesson": 2,
-      "file": "he-d4ba9479.mp3"
-    },
-    {
-      "num": 26,
-      "he": "לָמֶד",
-      "translit": "Lámed",
-      "gloss": "nome da letra Lámed",
-      "kind": "nome",
-      "lesson": 3,
-      "file": "he-90e6d522.mp3"
-    },
-    {
-      "num": 27,
-      "he": "לַ",
-      "translit": "la",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 3,
-      "file": "he-c0f0799c.mp3"
-    },
-    {
-      "num": 28,
-      "he": "לֶ",
-      "translit": "le",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 3,
-      "file": "he-1029e059.mp3"
-    },
-    {
-      "num": 29,
-      "he": "לִ",
-      "translit": "li",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 3,
-      "file": "he-fd8fabb2.mp3"
-    },
-    {
-      "num": 30,
-      "he": "לוֹ",
-      "translit": "lo",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 3,
-      "file": "he-987a33d9.mp3"
-    },
-    {
-      "num": 31,
-      "he": "לוּ",
-      "translit": "lu",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 3,
-      "file": "he-702c7365.mp3"
-    },
-    {
-      "num": 32,
-      "he": "לְ",
-      "translit": "l",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 3,
-      "file": "he-27e3b729.mp3"
-    },
-    {
-      "num": 33,
-      "he": "שֶׁל",
-      "translit": "shel",
-      "gloss": "de (posse)",
-      "kind": "palavra",
-      "lesson": 3,
-      "file": "he-64ab916e.mp3"
-    },
-    {
-      "num": 34,
-      "he": "מָשָׁל",
-      "translit": "mashal",
-      "gloss": "provérbio, fábula",
-      "kind": "palavra",
-      "lesson": 3,
-      "file": "he-2688589c.mp3"
-    },
-    {
-      "num": 35,
-      "he": "לֶחֶם",
-      "translit": "léchem",
-      "gloss": "pão",
-      "kind": "palavra",
-      "lesson": 3,
-      "file": "he-f059f3a3.mp3"
-    },
-    {
-      "num": 36,
-      "he": "לֹא",
-      "translit": "lo",
-      "gloss": "não",
-      "kind": "palavra",
-      "lesson": 3,
-      "file": "he-b3801088.mp3"
-    },
-    {
-      "num": 37,
-      "he": "יֶלֶד",
-      "translit": "yéled",
-      "gloss": "menino",
-      "kind": "palavra",
-      "lesson": 3,
-      "file": "he-0386b412.mp3"
-    },
-    {
-      "num": 38,
-      "he": "לַיְלָה",
-      "translit": "láila",
-      "gloss": "noite",
-      "kind": "palavra",
-      "lesson": 3,
-      "file": "he-0a955838.mp3"
-    },
-    {
-      "num": 39,
-      "he": "בֵּית",
-      "translit": "Bet / Vet",
-      "gloss": "nome da letra Bet / Vet",
-      "kind": "nome",
-      "lesson": 4,
-      "file": "he-2da94d33.mp3"
-    },
-    {
-      "num": 40,
-      "he": "בַּ",
-      "translit": "ba",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 4,
-      "file": "he-6f9bd8c0.mp3"
-    },
-    {
-      "num": 41,
-      "he": "בֶּ",
-      "translit": "be",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 4,
-      "file": "he-91ff3e15.mp3"
-    },
-    {
-      "num": 42,
-      "he": "בִּ",
-      "translit": "bi",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 4,
-      "file": "he-b76fc66b.mp3"
-    },
-    {
-      "num": 43,
-      "he": "בּוֹ",
-      "translit": "bo",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 4,
-      "file": "he-2e3828a7.mp3"
-    },
-    {
-      "num": 44,
-      "he": "בּוּ",
-      "translit": "bu",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 4,
-      "file": "he-1a47df36.mp3"
-    },
-    {
-      "num": 45,
-      "he": "בְּ",
-      "translit": "b",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 4,
-      "file": "he-00a10cf1.mp3"
-    },
-    {
-      "num": 46,
-      "he": "לֵב",
-      "translit": "lev",
-      "gloss": "coração",
-      "kind": "palavra",
-      "lesson": 4,
-      "file": "he-e65e6d76.mp3"
-    },
-    {
-      "num": 47,
-      "he": "בַּיִת",
-      "translit": "báyit",
-      "gloss": "casa",
-      "kind": "palavra",
-      "lesson": 4,
-      "file": "he-e3d8894c.mp3"
-    },
-    {
-      "num": 48,
-      "he": "בֹּקֶר",
-      "translit": "bóker",
-      "gloss": "manhã",
-      "kind": "palavra",
-      "lesson": 4,
-      "file": "he-0903eab6.mp3"
-    },
-    {
-      "num": 49,
-      "he": "בְּבַקָּשָׁה",
-      "translit": "bevakashá",
-      "gloss": "por favor",
-      "kind": "palavra",
-      "lesson": 4,
-      "file": "he-f2a28ac7.mp3"
-    },
-    {
-      "num": 50,
-      "he": "אַבָּא",
-      "translit": "abá",
-      "gloss": "pai",
-      "kind": "palavra",
-      "lesson": 4,
-      "file": "he-787bf52d.mp3"
-    },
-    {
       "num": 51,
+      "seq": 7,
       "he": "תָּו",
       "translit": "Tav",
       "gloss": "nome da letra Tav",
       "kind": "nome",
-      "lesson": 5,
+      "wave": 1,
+      "where": [
+        "letra 2"
+      ],
       "file": "he-34245f01.mp3"
     },
     {
       "num": 52,
+      "seq": 8,
       "he": "תַּ",
       "translit": "ta",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como \"tá\"",
       "kind": "silaba",
-      "lesson": 5,
+      "wave": 1,
+      "where": [
+        "letra 2"
+      ],
       "file": "he-6a972cef.mp3"
     },
     {
       "num": 53,
+      "seq": 9,
       "he": "תֶּ",
       "translit": "te",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como \"te\" de \"teto\"",
       "kind": "silaba",
-      "lesson": 5,
+      "wave": 1,
+      "where": [
+        "letra 2"
+      ],
       "file": "he-51ca9a48.mp3"
     },
     {
       "num": 54,
+      "seq": 10,
       "he": "תִּ",
       "translit": "ti",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como \"ti\" de \"tigre\" — nunca \"tchi\"",
       "kind": "silaba",
-      "lesson": 5,
+      "wave": 1,
+      "where": [
+        "letra 2"
+      ],
       "file": "he-d91e4885.mp3"
     },
     {
       "num": 55,
+      "seq": 11,
       "he": "תּוֹ",
       "translit": "to",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como \"to\" de \"topo\"",
       "kind": "silaba",
-      "lesson": 5,
+      "wave": 1,
+      "where": [
+        "letra 2"
+      ],
       "file": "he-68a01508.mp3"
     },
     {
       "num": 56,
+      "seq": 12,
       "he": "תּוּ",
       "translit": "tu",
-      "gloss": "sílaba",
+      "gloss": "sílaba — como \"tu\" de \"tudo\"",
       "kind": "silaba",
-      "lesson": 5,
+      "wave": 1,
+      "where": [
+        "letra 2"
+      ],
       "file": "he-cf527b1a.mp3"
     },
     {
       "num": 57,
+      "seq": 13,
       "he": "תְּ",
       "translit": "t",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 5,
+      "wave": 1,
+      "where": [
+        "letra 2"
+      ],
       "file": "he-cce46bea.mp3"
     },
     {
-      "num": 58,
-      "he": "שַׁבָּת",
-      "translit": "shabat",
-      "gloss": "sábado",
-      "kind": "palavra",
-      "lesson": 5,
-      "file": "he-e3a280e7.mp3"
-    },
-    {
-      "num": 59,
-      "he": "בַּת",
-      "translit": "bat",
-      "gloss": "filha",
-      "kind": "palavra",
-      "lesson": 5,
-      "file": "he-74c23940.mp3"
-    },
-    {
-      "num": 60,
-      "he": "תּוֹדָה",
-      "translit": "todá",
-      "gloss": "obrigado(a)",
-      "kind": "palavra",
-      "lesson": 5,
-      "file": "he-6c894906.mp3"
-    },
-    {
-      "num": 61,
-      "he": "תֵּה",
-      "translit": "te",
-      "gloss": "chá",
-      "kind": "palavra",
-      "lesson": 5,
-      "file": "he-c37d0ed0.mp3"
-    },
-    {
-      "num": 62,
-      "he": "תַּפּוּחַ",
-      "translit": "tapúach",
-      "gloss": "maçã",
-      "kind": "palavra",
-      "lesson": 5,
-      "file": "he-9cb80a37.mp3"
-    },
-    {
-      "num": 63,
-      "he": "יוֹד",
-      "translit": "Yod",
-      "gloss": "nome da letra Yod",
-      "kind": "nome",
-      "lesson": 6,
-      "file": "he-ff3455e9.mp3"
-    },
-    {
-      "num": 64,
-      "he": "יַ",
-      "translit": "ya",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 6,
-      "file": "he-2acd3a44.mp3"
-    },
-    {
-      "num": 65,
-      "he": "יֶ",
-      "translit": "ye",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 6,
-      "file": "he-dd1045bf.mp3"
-    },
-    {
-      "num": 66,
-      "he": "יִ",
-      "translit": "yi",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 6,
-      "file": "he-dd20467e.mp3"
-    },
-    {
-      "num": 67,
-      "he": "יוֹ",
-      "translit": "yo",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 6,
-      "file": "he-44aaa9ec.mp3"
-    },
-    {
-      "num": 68,
-      "he": "יוּ",
-      "translit": "yu",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 6,
-      "file": "he-52fe44d9.mp3"
-    },
-    {
-      "num": 69,
-      "he": "יְ",
-      "translit": "y",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 6,
-      "file": "he-f32bd38f.mp3"
-    },
-    {
-      "num": 70,
-      "he": "יָם",
-      "translit": "yam",
-      "gloss": "mar",
-      "kind": "palavra",
-      "lesson": 6,
-      "file": "he-b5d139d7.mp3"
-    },
-    {
-      "num": 71,
-      "he": "שְׁתַּיִם",
-      "translit": "shtáyim",
-      "gloss": "duas",
-      "kind": "palavra",
-      "lesson": 6,
-      "file": "he-82384e4f.mp3"
-    },
-    {
-      "num": 72,
-      "he": "יִשְׂרָאֵל",
-      "translit": "yisrael",
-      "gloss": "Israel",
-      "kind": "palavra",
-      "lesson": 6,
-      "file": "he-30688018.mp3"
-    },
-    {
-      "num": 73,
-      "he": "יָפֶה",
-      "translit": "yafé",
-      "gloss": "bonito",
-      "kind": "palavra",
-      "lesson": 6,
-      "file": "he-4e526c06.mp3"
-    },
-    {
-      "num": 74,
-      "he": "יַלְדָּה",
-      "translit": "yaldá",
-      "gloss": "menina",
-      "kind": "palavra",
-      "lesson": 6,
-      "file": "he-b74aea20.mp3"
-    },
-    {
-      "num": 75,
-      "he": "הֵא",
-      "translit": "He",
-      "gloss": "nome da letra He",
-      "kind": "nome",
-      "lesson": 7,
-      "file": "he-a53cb10d.mp3"
-    },
-    {
-      "num": 76,
-      "he": "הַ",
-      "translit": "ha",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 7,
-      "file": "he-6d3868b8.mp3"
-    },
-    {
-      "num": 77,
-      "he": "הֶ",
-      "translit": "he",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 7,
-      "file": "he-0064abb5.mp3"
-    },
-    {
-      "num": 78,
-      "he": "הִ",
-      "translit": "hi",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 7,
-      "file": "he-85afc57b.mp3"
-    },
-    {
-      "num": 79,
-      "he": "הוֹ",
-      "translit": "ho",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 7,
-      "file": "he-f058ad23.mp3"
-    },
-    {
-      "num": 80,
-      "he": "הוּ",
-      "translit": "hu",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 7,
-      "file": "he-31bf7079.mp3"
-    },
-    {
-      "num": 81,
-      "he": "הְ",
-      "translit": "h",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 7,
-      "file": "he-8c018233.mp3"
-    },
-    {
-      "num": 82,
-      "he": "לָמָּה",
-      "translit": "láma",
-      "gloss": "por quê",
-      "kind": "palavra",
-      "lesson": 7,
-      "file": "he-10e3b676.mp3"
-    },
-    {
-      "num": 83,
-      "he": "הַבַּיִת",
-      "translit": "habáyit",
-      "gloss": "a casa",
-      "kind": "palavra",
-      "lesson": 7,
-      "file": "he-0eda6f93.mp3"
-    },
-    {
-      "num": 84,
-      "he": "הַיּוֹם",
-      "translit": "hayom",
-      "gloss": "hoje",
-      "kind": "palavra",
-      "lesson": 7,
-      "file": "he-712ec1ea.mp3"
-    },
-    {
-      "num": 85,
-      "he": "הַכֹּל",
-      "translit": "hakol",
-      "gloss": "tudo",
-      "kind": "palavra",
-      "lesson": 7,
-      "file": "he-eb6524ab.mp3"
-    },
-    {
-      "num": 86,
-      "he": "הֵם",
-      "translit": "hem",
-      "gloss": "eles",
-      "kind": "palavra",
-      "lesson": 7,
-      "file": "he-f97442b5.mp3"
-    },
-    {
-      "num": 87,
-      "he": "וָו",
-      "translit": "Vav",
-      "gloss": "nome da letra Vav",
-      "kind": "nome",
-      "lesson": 8,
-      "file": "he-970b15f1.mp3"
-    },
-    {
-      "num": 88,
-      "he": "וַ",
-      "translit": "va",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 8,
-      "file": "he-cec45bf0.mp3"
-    },
-    {
-      "num": 89,
-      "he": "וֶ",
-      "translit": "ve",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 8,
-      "file": "he-468e6f2f.mp3"
-    },
-    {
-      "num": 90,
-      "he": "וִ",
-      "translit": "vi",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 8,
-      "file": "he-6f1a1ee4.mp3"
-    },
-    {
-      "num": 91,
-      "he": "ווֹ",
-      "translit": "vo",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 8,
-      "file": "he-57095a14.mp3"
-    },
-    {
-      "num": 92,
-      "he": "ווּ",
-      "translit": "vu",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 8,
-      "file": "he-abd29d29.mp3"
-    },
-    {
-      "num": 93,
-      "he": "וְ",
-      "translit": "v",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 8,
-      "file": "he-48b4a0f5.mp3"
-    },
-    {
-      "num": 94,
-      "he": "יוֹם",
-      "translit": "yom",
-      "gloss": "dia",
-      "kind": "palavra",
-      "lesson": 8,
-      "file": "he-ff312ee2.mp3"
-    },
-    {
-      "num": 95,
-      "he": "וְגַם",
-      "translit": "vegam",
-      "gloss": "e também",
-      "kind": "palavra",
-      "lesson": 8,
-      "file": "he-d303b67e.mp3"
-    },
-    {
-      "num": 96,
-      "he": "וֶרֶד",
-      "translit": "véred",
-      "gloss": "rosa (flor)",
-      "kind": "palavra",
-      "lesson": 8,
-      "file": "he-2309d153.mp3"
-    },
-    {
-      "num": 97,
-      "he": "עַכְשָׁו",
-      "translit": "achshav",
-      "gloss": "agora",
-      "kind": "palavra",
-      "lesson": 8,
-      "file": "he-fd9903d6.mp3"
-    },
-    {
-      "num": 98,
-      "he": "רֵישׁ",
-      "translit": "Resh",
-      "gloss": "nome da letra Resh",
-      "kind": "nome",
-      "lesson": 9,
-      "file": "he-a1ed895a.mp3"
-    },
-    {
-      "num": 99,
-      "he": "רַ",
-      "translit": "ra",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 9,
-      "file": "he-8e7d2bee.mp3"
-    },
-    {
-      "num": 100,
-      "he": "רֶ",
-      "translit": "re",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 9,
-      "file": "he-6fc0fb72.mp3"
-    },
-    {
-      "num": 101,
-      "he": "רִ",
-      "translit": "ri",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 9,
-      "file": "he-46b86dfa.mp3"
-    },
-    {
-      "num": 102,
-      "he": "רוֹ",
-      "translit": "ro",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 9,
-      "file": "he-6081af87.mp3"
-    },
-    {
-      "num": 103,
-      "he": "רוּ",
-      "translit": "ru",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 9,
-      "file": "he-3de9696d.mp3"
-    },
-    {
-      "num": 104,
-      "he": "רְ",
-      "translit": "r",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 9,
-      "file": "he-cbfeaad8.mp3"
-    },
-    {
-      "num": 105,
-      "he": "שִׁיר",
-      "translit": "shir",
-      "gloss": "canção",
-      "kind": "palavra",
-      "lesson": 9,
-      "file": "he-c057fc77.mp3"
-    },
-    {
-      "num": 106,
-      "he": "תּוֹרָה",
-      "translit": "torá",
-      "gloss": "Torá",
-      "kind": "palavra",
-      "lesson": 9,
-      "file": "he-425eba48.mp3"
-    },
-    {
-      "num": 107,
-      "he": "רְחוֹב",
-      "translit": "rechov",
-      "gloss": "rua",
-      "kind": "palavra",
-      "lesson": 9,
-      "file": "he-1972aacc.mp3"
-    },
-    {
-      "num": 108,
-      "he": "חָבֵר",
-      "translit": "chaver",
-      "gloss": "amigo",
-      "kind": "palavra",
-      "lesson": 9,
-      "file": "he-63795cfd.mp3"
-    },
-    {
-      "num": 109,
-      "he": "אַרְבַּע",
-      "translit": "arba",
-      "gloss": "quatro",
-      "kind": "palavra",
-      "lesson": 9,
-      "file": "he-26346b32.mp3"
-    },
-    {
       "num": 110,
+      "seq": 14,
       "he": "אָלֶף",
       "translit": "Álef",
       "gloss": "nome da letra Álef",
       "kind": "nome",
-      "lesson": 10,
+      "wave": 1,
+      "where": [
+        "letra 3"
+      ],
       "file": "he-3c3ac3e3.mp3"
     },
     {
       "num": 111,
+      "seq": 15,
       "he": "אַ",
       "translit": "a",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a vogal A",
       "kind": "silaba",
-      "lesson": 10,
+      "wave": 1,
+      "where": [
+        "letra 3"
+      ],
       "file": "he-7d989155.mp3"
     },
     {
       "num": 112,
+      "seq": 16,
       "he": "אֶ",
       "translit": "e",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a vogal E",
       "kind": "silaba",
-      "lesson": 10,
+      "wave": 1,
+      "where": [
+        "letra 3"
+      ],
       "file": "he-2e898b6f.mp3"
     },
     {
       "num": 113,
+      "seq": 17,
       "he": "אִ",
       "translit": "i",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a vogal I",
       "kind": "silaba",
-      "lesson": 10,
+      "wave": 1,
+      "where": [
+        "letra 3"
+      ],
       "file": "he-cb60d834.mp3"
     },
     {
       "num": 114,
+      "seq": 18,
       "he": "אוֹ",
       "translit": "o",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a vogal O",
       "kind": "silaba",
-      "lesson": 10,
+      "wave": 1,
+      "where": [
+        "letra 3"
+      ],
       "file": "he-9ef57af7.mp3"
     },
     {
       "num": 115,
+      "seq": 19,
       "he": "אוּ",
       "translit": "u",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a vogal U",
       "kind": "silaba",
-      "lesson": 10,
+      "wave": 1,
+      "where": [
+        "letra 3"
+      ],
       "file": "he-56e8723f.mp3"
     },
     {
       "num": 116,
+      "seq": 20,
       "he": "אֲ",
       "translit": "a",
-      "gloss": "sílaba",
+      "gloss": "sílaba — guturais não aceitam sheva — usam o hataf, um A ultrabreve",
       "kind": "silaba",
-      "lesson": 10,
+      "wave": 1,
+      "where": [
+        "letra 3"
+      ],
       "file": "he-06c3c65b.mp3"
     },
     {
-      "num": 117,
-      "he": "אִמָּא",
-      "translit": "imá",
-      "gloss": "mãe",
-      "kind": "palavra",
-      "lesson": 10,
-      "file": "he-febde9cc.mp3"
-    },
-    {
-      "num": 118,
-      "he": "אוֹר",
-      "translit": "or",
-      "gloss": "luz",
-      "kind": "palavra",
-      "lesson": 10,
-      "file": "he-2577e875.mp3"
-    },
-    {
-      "num": 119,
-      "he": "הוּא",
-      "translit": "hu",
-      "gloss": "ele",
-      "kind": "palavra",
-      "lesson": 10,
-      "file": "he-09e06dea.mp3"
-    },
-    {
-      "num": 120,
-      "he": "הִיא",
-      "translit": "hi",
-      "gloss": "ela",
-      "kind": "palavra",
-      "lesson": 10,
-      "file": "he-8ca5205d.mp3"
-    },
-    {
-      "num": 121,
-      "he": "אֹכֶל",
-      "translit": "óchel",
-      "gloss": "comida",
-      "kind": "palavra",
-      "lesson": 10,
-      "file": "he-e01dbc52.mp3"
-    },
-    {
-      "num": 122,
-      "he": "אֶתְמוֹל",
-      "translit": "etmol",
-      "gloss": "ontem",
-      "kind": "palavra",
-      "lesson": 10,
-      "file": "he-9386220e.mp3"
-    },
-    {
-      "num": 123,
-      "he": "אַחֲרֵי",
-      "translit": "acharei",
-      "gloss": "depois de",
-      "kind": "palavra",
-      "lesson": 10,
-      "file": "he-52e153b1.mp3"
-    },
-    {
       "num": 124,
+      "seq": 21,
       "he": "נוּן",
       "translit": "Nun",
       "gloss": "nome da letra Nun",
       "kind": "nome",
-      "lesson": 11,
+      "wave": 1,
+      "where": [
+        "letra 4"
+      ],
       "file": "he-a6f62f31.mp3"
     },
     {
       "num": 125,
+      "seq": 22,
       "he": "נַ",
       "translit": "na",
-      "gloss": "sílaba",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
       "kind": "silaba",
-      "lesson": 11,
+      "wave": 1,
+      "where": [
+        "letra 4"
+      ],
       "file": "he-2b7a4463.mp3"
     },
     {
       "num": 126,
+      "seq": 23,
       "he": "נֶ",
       "translit": "ne",
-      "gloss": "sílaba",
+      "gloss": "sílaba — E como em \"mesa\"",
       "kind": "silaba",
-      "lesson": 11,
+      "wave": 1,
+      "where": [
+        "letra 4"
+      ],
       "file": "he-0e0584a3.mp3"
     },
     {
       "num": 127,
+      "seq": 24,
       "he": "נִ",
       "translit": "ni",
-      "gloss": "sílaba",
+      "gloss": "sílaba — I como em \"milho\"",
       "kind": "silaba",
-      "lesson": 11,
+      "wave": 1,
+      "where": [
+        "letra 4"
+      ],
       "file": "he-7e045613.mp3"
     },
     {
       "num": 128,
+      "seq": 25,
       "he": "נוֹ",
       "translit": "no",
-      "gloss": "sílaba",
+      "gloss": "sílaba — O como em \"motor\"",
       "kind": "silaba",
-      "lesson": 11,
+      "wave": 1,
+      "where": [
+        "letra 4"
+      ],
       "file": "he-22ab12bb.mp3"
     },
     {
       "num": 129,
+      "seq": 26,
       "he": "נוּ",
       "translit": "nu",
-      "gloss": "sílaba",
+      "gloss": "sílaba — U como em \"muro\"",
       "kind": "silaba",
-      "lesson": 11,
+      "wave": 1,
+      "where": [
+        "letra 4"
+      ],
       "file": "he-d7580e52.mp3"
     },
     {
       "num": 130,
+      "seq": 27,
       "he": "נְ",
       "translit": "n",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 11,
+      "wave": 1,
+      "where": [
+        "letra 4"
+      ],
       "file": "he-58ec3bd0.mp3"
     },
     {
-      "num": 131,
-      "he": "אֲנִי",
-      "translit": "aní",
-      "gloss": "eu",
-      "kind": "palavra",
-      "lesson": 11,
-      "file": "he-eddf7041.mp3"
-    },
-    {
-      "num": 132,
-      "he": "בֵּן",
-      "translit": "ben",
-      "gloss": "filho",
-      "kind": "palavra",
-      "lesson": 11,
-      "file": "he-70042f52.mp3"
-    },
-    {
-      "num": 133,
-      "he": "נָכוֹן",
-      "translit": "nachon",
-      "gloss": "correto",
-      "kind": "palavra",
-      "lesson": 11,
-      "file": "he-a3d31803.mp3"
-    },
-    {
-      "num": 134,
-      "he": "חַלּוֹן",
-      "translit": "chalon",
-      "gloss": "janela",
-      "kind": "palavra",
-      "lesson": 11,
-      "file": "he-403a423d.mp3"
-    },
-    {
-      "num": 135,
-      "he": "נֶחְמָד",
-      "translit": "nechmad",
-      "gloss": "simpático",
-      "kind": "palavra",
-      "lesson": 11,
-      "file": "he-8edea6bd.mp3"
-    },
-    {
-      "num": 136,
-      "he": "קוֹף",
-      "translit": "Qof",
-      "gloss": "nome da letra Qof",
+      "num": 75,
+      "seq": 28,
+      "he": "הֵא",
+      "translit": "He",
+      "gloss": "nome da letra He",
       "kind": "nome",
-      "lesson": 12,
-      "file": "he-052b6d7c.mp3"
+      "wave": 1,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-a53cb10d.mp3"
     },
     {
-      "num": 137,
-      "he": "קַ",
-      "translit": "ka",
-      "gloss": "sílaba",
+      "num": 76,
+      "seq": 29,
+      "he": "הַ",
+      "translit": "ha",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
       "kind": "silaba",
-      "lesson": 12,
-      "file": "he-ec87aef0.mp3"
+      "wave": 1,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-6d3868b8.mp3"
     },
     {
-      "num": 138,
-      "he": "קֶ",
-      "translit": "ke",
-      "gloss": "sílaba",
+      "num": 77,
+      "seq": 30,
+      "he": "הֶ",
+      "translit": "he",
+      "gloss": "sílaba — E como em \"mesa\"",
       "kind": "silaba",
-      "lesson": 12,
-      "file": "he-1712f267.mp3"
+      "wave": 1,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-0064abb5.mp3"
     },
     {
-      "num": 139,
-      "he": "קִ",
-      "translit": "ki",
-      "gloss": "sílaba",
+      "num": 78,
+      "seq": 31,
+      "he": "הִ",
+      "translit": "hi",
+      "gloss": "sílaba — I como em \"milho\"",
       "kind": "silaba",
-      "lesson": 12,
-      "file": "he-9648c47e.mp3"
+      "wave": 1,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-85afc57b.mp3"
     },
     {
-      "num": 140,
-      "he": "קוֹ",
-      "translit": "ko",
-      "gloss": "sílaba",
+      "num": 79,
+      "seq": 32,
+      "he": "הוֹ",
+      "translit": "ho",
+      "gloss": "sílaba — O como em \"motor\"",
       "kind": "silaba",
-      "lesson": 12,
-      "file": "he-122a2bed.mp3"
+      "wave": 1,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-f058ad23.mp3"
     },
     {
-      "num": 141,
-      "he": "קוּ",
-      "translit": "ku",
-      "gloss": "sílaba",
+      "num": 80,
+      "seq": 33,
+      "he": "הוּ",
+      "translit": "hu",
+      "gloss": "sílaba — U como em \"muro\"",
       "kind": "silaba",
-      "lesson": 12,
-      "file": "he-663dc440.mp3"
+      "wave": 1,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-31bf7079.mp3"
     },
     {
-      "num": 142,
-      "he": "קְ",
-      "translit": "k",
-      "gloss": "sílaba",
+      "num": 81,
+      "seq": 34,
+      "he": "הְ",
+      "translit": "h",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 12,
-      "file": "he-d0a7a039.mp3"
+      "wave": 1,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-8c018233.mp3"
     },
     {
-      "num": 143,
-      "he": "קוֹל",
-      "translit": "kol",
-      "gloss": "voz",
-      "kind": "palavra",
-      "lesson": 12,
-      "file": "he-7d56d33c.mp3"
-    },
-    {
-      "num": 144,
-      "he": "רַק",
-      "translit": "rak",
-      "gloss": "só, apenas",
-      "kind": "palavra",
-      "lesson": 12,
-      "file": "he-0859becc.mp3"
-    },
-    {
-      "num": 145,
-      "he": "תִּיק",
-      "translit": "tik",
-      "gloss": "bolsa, mochila",
-      "kind": "palavra",
-      "lesson": 12,
-      "file": "he-8e835cc6.mp3"
-    },
-    {
-      "num": 146,
-      "he": "קָפֶה",
-      "translit": "kafé",
-      "gloss": "café",
-      "kind": "palavra",
-      "lesson": 12,
-      "file": "he-1b13ecef.mp3"
-    },
-    {
-      "num": 147,
-      "he": "קָשֶׁה",
-      "translit": "kashé",
-      "gloss": "difícil",
-      "kind": "palavra",
-      "lesson": 12,
-      "file": "he-4ea4f697.mp3"
-    },
-    {
-      "num": 148,
-      "he": "דָּלֶת",
-      "translit": "Dálet",
-      "gloss": "nome da letra Dálet",
+      "num": 63,
+      "seq": 35,
+      "he": "יוֹד",
+      "translit": "Yod",
+      "gloss": "nome da letra Yod",
       "kind": "nome",
-      "lesson": 13,
-      "file": "he-becfd64f.mp3"
+      "wave": 1,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-ff3455e9.mp3"
     },
     {
-      "num": 149,
-      "he": "דַ",
-      "translit": "da",
-      "gloss": "sílaba",
+      "num": 64,
+      "seq": 36,
+      "he": "יַ",
+      "translit": "ya",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
       "kind": "silaba",
-      "lesson": 13,
-      "file": "he-7f9a550b.mp3"
+      "wave": 1,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-2acd3a44.mp3"
     },
     {
-      "num": 150,
-      "he": "דֶ",
-      "translit": "de",
-      "gloss": "sílaba",
+      "num": 65,
+      "seq": 37,
+      "he": "יֶ",
+      "translit": "ye",
+      "gloss": "sílaba — E como em \"mesa\"",
       "kind": "silaba",
-      "lesson": 13,
-      "file": "he-d6c251b2.mp3"
+      "wave": 1,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-dd1045bf.mp3"
     },
     {
-      "num": 151,
-      "he": "דִ",
-      "translit": "di",
-      "gloss": "sílaba",
+      "num": 66,
+      "seq": 38,
+      "he": "יִ",
+      "translit": "yi",
+      "gloss": "sílaba — I como em \"milho\"",
       "kind": "silaba",
-      "lesson": 13,
-      "file": "he-2fc43653.mp3"
+      "wave": 1,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-dd20467e.mp3"
     },
     {
-      "num": 152,
-      "he": "דוֹ",
-      "translit": "do",
-      "gloss": "sílaba",
+      "num": 67,
+      "seq": 39,
+      "he": "יוֹ",
+      "translit": "yo",
+      "gloss": "sílaba — O como em \"motor\"",
       "kind": "silaba",
-      "lesson": 13,
-      "file": "he-fcf54107.mp3"
+      "wave": 1,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-44aaa9ec.mp3"
     },
     {
-      "num": 153,
-      "he": "דוּ",
-      "translit": "du",
-      "gloss": "sílaba",
+      "num": 68,
+      "seq": 40,
+      "he": "יוּ",
+      "translit": "yu",
+      "gloss": "sílaba — U como em \"muro\"",
       "kind": "silaba",
-      "lesson": 13,
-      "file": "he-aa0f5fd5.mp3"
+      "wave": 1,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-52fe44d9.mp3"
     },
     {
-      "num": 154,
-      "he": "דְ",
-      "translit": "d",
-      "gloss": "sílaba",
+      "num": 69,
+      "seq": 41,
+      "he": "יְ",
+      "translit": "y",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 13,
-      "file": "he-4c052920.mp3"
-    },
-    {
-      "num": 155,
-      "he": "יָד",
-      "translit": "yad",
-      "gloss": "mão",
-      "kind": "palavra",
-      "lesson": 13,
-      "file": "he-d6d6810e.mp3"
-    },
-    {
-      "num": 156,
-      "he": "דֶּלֶת",
-      "translit": "délet",
-      "gloss": "porta",
-      "kind": "palavra",
-      "lesson": 13,
-      "file": "he-d5812c2b.mp3"
-    },
-    {
-      "num": 157,
-      "he": "דּוֹדָה",
-      "translit": "dodá",
-      "gloss": "tia",
-      "kind": "palavra",
-      "lesson": 13,
-      "file": "he-8da70e33.mp3"
-    },
-    {
-      "num": 158,
-      "he": "מְדַבֵּר",
-      "translit": "medaber",
-      "gloss": "falo, fala",
-      "kind": "palavra",
-      "lesson": 13,
-      "file": "he-6d223a4d.mp3"
-    },
-    {
-      "num": 159,
-      "he": "עֶשְׂרִים",
-      "translit": "esrim",
-      "gloss": "vinte",
-      "kind": "palavra",
-      "lesson": 13,
-      "file": "he-89c714d2.mp3"
-    },
-    {
-      "num": 160,
-      "he": "חֵית",
-      "translit": "Het",
-      "gloss": "nome da letra Het",
-      "kind": "nome",
-      "lesson": 14,
-      "file": "he-9138f96a.mp3"
-    },
-    {
-      "num": 161,
-      "he": "חַ",
-      "translit": "cha",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 14,
-      "file": "he-44ed6f10.mp3"
-    },
-    {
-      "num": 162,
-      "he": "חֶ",
-      "translit": "che",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 14,
-      "file": "he-915fe127.mp3"
-    },
-    {
-      "num": 163,
-      "he": "חִ",
-      "translit": "chi",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 14,
-      "file": "he-be910601.mp3"
-    },
-    {
-      "num": 164,
-      "he": "חוֹ",
-      "translit": "cho",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 14,
-      "file": "he-421a52fc.mp3"
-    },
-    {
-      "num": 165,
-      "he": "חוּ",
-      "translit": "chu",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 14,
-      "file": "he-f09a16c7.mp3"
-    },
-    {
-      "num": 166,
-      "he": "חֲ",
-      "translit": "cha",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 14,
-      "file": "he-4013cc54.mp3"
-    },
-    {
-      "num": 167,
-      "he": "אֶחָד",
-      "translit": "echad",
-      "gloss": "um",
-      "kind": "palavra",
-      "lesson": 14,
-      "file": "he-c8990309.mp3"
-    },
-    {
-      "num": 168,
-      "he": "אָח",
-      "translit": "ach",
-      "gloss": "irmão",
-      "kind": "palavra",
-      "lesson": 14,
-      "file": "he-49a7d499.mp3"
-    },
-    {
-      "num": 169,
-      "he": "שִׂמְחָה",
-      "translit": "simchá",
-      "gloss": "alegria",
-      "kind": "palavra",
-      "lesson": 14,
-      "file": "he-f229c72b.mp3"
-    },
-    {
-      "num": 170,
-      "he": "חֲמִשָּׁה",
-      "translit": "chamishá",
-      "gloss": "cinco",
-      "kind": "palavra",
-      "lesson": 14,
-      "file": "he-a3de45d0.mp3"
-    },
-    {
-      "num": 171,
-      "he": "סָמֶךְ",
-      "translit": "Sámech",
-      "gloss": "nome da letra Sámech",
-      "kind": "nome",
-      "lesson": 15,
-      "file": "he-1af0f83f.mp3"
-    },
-    {
-      "num": 172,
-      "he": "סַ",
-      "translit": "sa",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 15,
-      "file": "he-d6d99810.mp3"
-    },
-    {
-      "num": 173,
-      "he": "סֶ",
-      "translit": "se",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 15,
-      "file": "he-f836bb32.mp3"
-    },
-    {
-      "num": 174,
-      "he": "סִ",
-      "translit": "si",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 15,
-      "file": "he-c68604a8.mp3"
-    },
-    {
-      "num": 175,
-      "he": "סוֹ",
-      "translit": "so",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 15,
-      "file": "he-922a1fae.mp3"
-    },
-    {
-      "num": 176,
-      "he": "סוּ",
-      "translit": "su",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 15,
-      "file": "he-8e3fb653.mp3"
-    },
-    {
-      "num": 177,
-      "he": "סְ",
-      "translit": "s",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 15,
-      "file": "he-a3b3e3a6.mp3"
-    },
-    {
-      "num": 178,
-      "he": "סָבָא",
-      "translit": "saba",
-      "gloss": "avô",
-      "kind": "palavra",
-      "lesson": 15,
-      "file": "he-1a9319fe.mp3"
-    },
-    {
-      "num": 179,
-      "he": "סָבְתָא",
-      "translit": "savta",
-      "gloss": "avó",
-      "kind": "palavra",
-      "lesson": 15,
-      "file": "he-7af1188c.mp3"
-    },
-    {
-      "num": 180,
-      "he": "סוֹד",
-      "translit": "sod",
-      "gloss": "segredo",
-      "kind": "palavra",
-      "lesson": 15,
-      "file": "he-5105d60b.mp3"
-    },
-    {
-      "num": 181,
-      "he": "סֵדֶר",
-      "translit": "séder",
-      "gloss": "ordem",
-      "kind": "palavra",
-      "lesson": 15,
-      "file": "he-39e2beb9.mp3"
-    },
-    {
-      "num": 182,
-      "he": "סְלִיחָה",
-      "translit": "slichá",
-      "gloss": "desculpe / com licença",
-      "kind": "palavra",
-      "lesson": 15,
-      "file": "he-5afd57ab.mp3"
-    },
-    {
-      "num": 183,
-      "he": "אוֹטוֹבּוּס",
-      "translit": "ótobus",
-      "gloss": "ônibus",
-      "kind": "palavra",
-      "lesson": 15,
-      "file": "he-ddf3f643.mp3"
-    },
-    {
-      "num": 184,
-      "he": "כִּסֵּא",
-      "translit": "kisé",
-      "gloss": "cadeira",
-      "kind": "palavra",
-      "lesson": 15,
-      "file": "he-bc55d5ff.mp3"
-    },
-    {
-      "num": 185,
-      "he": "פֵּא",
-      "translit": "Pe / Fe",
-      "gloss": "nome da letra Pe / Fe",
-      "kind": "nome",
-      "lesson": 16,
-      "file": "he-e1df53ea.mp3"
-    },
-    {
-      "num": 186,
-      "he": "פַּ",
-      "translit": "pa",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 16,
-      "file": "he-a2fa19b2.mp3"
-    },
-    {
-      "num": 187,
-      "he": "פֶּ",
-      "translit": "pe",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 16,
-      "file": "he-183e3dda.mp3"
-    },
-    {
-      "num": 188,
-      "he": "פִּ",
-      "translit": "pi",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 16,
-      "file": "he-79301076.mp3"
-    },
-    {
-      "num": 189,
-      "he": "פּוֹ",
-      "translit": "po",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 16,
-      "file": "he-9eab0cbc.mp3"
-    },
-    {
-      "num": 190,
-      "he": "פּוּ",
-      "translit": "pu",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 16,
-      "file": "he-d17fa8de.mp3"
-    },
-    {
-      "num": 191,
-      "he": "פְּ",
-      "translit": "p",
-      "gloss": "sílaba",
-      "kind": "silaba",
-      "lesson": 16,
-      "file": "he-8f22369f.mp3"
-    },
-    {
-      "num": 192,
-      "he": "סֵפֶר",
-      "translit": "séfer",
-      "gloss": "livro",
-      "kind": "palavra",
-      "lesson": 16,
-      "file": "he-2089809d.mp3"
-    },
-    {
-      "num": 193,
-      "he": "סוֹף",
-      "translit": "sof",
-      "gloss": "fim",
-      "kind": "palavra",
-      "lesson": 16,
-      "file": "he-9a43cf8f.mp3"
-    },
-    {
-      "num": 194,
-      "he": "פֹּה",
-      "translit": "po",
-      "gloss": "aqui",
-      "kind": "palavra",
-      "lesson": 16,
-      "file": "he-d8bd5b3d.mp3"
-    },
-    {
-      "num": 195,
-      "he": "טֶלֶפוֹן",
-      "translit": "télefon",
-      "gloss": "telefone",
-      "kind": "palavra",
-      "lesson": 16,
-      "file": "he-81846849.mp3"
-    },
-    {
-      "num": 196,
-      "he": "כֶּסֶף",
-      "translit": "késef",
-      "gloss": "dinheiro",
-      "kind": "palavra",
-      "lesson": 16,
-      "file": "he-befe5eaf.mp3"
+      "wave": 1,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-f32bd38f.mp3"
     },
     {
       "num": 197,
+      "seq": 42,
       "he": "גִּימֶל",
       "translit": "Guímel",
       "gloss": "nome da letra Guímel",
       "kind": "nome",
-      "lesson": 17,
+      "wave": 1,
+      "where": [
+        "letra 7"
+      ],
       "file": "he-8fb49afa.mp3"
     },
     {
       "num": 198,
+      "seq": 43,
       "he": "גַ",
       "translit": "ga",
-      "gloss": "sílaba",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
       "kind": "silaba",
-      "lesson": 17,
+      "wave": 1,
+      "where": [
+        "letra 7"
+      ],
       "file": "he-d9ca39a3.mp3"
     },
     {
       "num": 199,
+      "seq": 44,
       "he": "גֶ",
       "translit": "ge",
-      "gloss": "sílaba",
+      "gloss": "sílaba — E como em \"mesa\"",
       "kind": "silaba",
-      "lesson": 17,
+      "wave": 1,
+      "where": [
+        "letra 7"
+      ],
       "file": "he-ea623446.mp3"
     },
     {
       "num": 200,
+      "seq": 45,
       "he": "גִ",
       "translit": "gi",
-      "gloss": "sílaba",
+      "gloss": "sílaba — I como em \"milho\"",
       "kind": "silaba",
-      "lesson": 17,
+      "wave": 1,
+      "where": [
+        "letra 7"
+      ],
       "file": "he-075deb46.mp3"
     },
     {
       "num": 201,
+      "seq": 46,
       "he": "גוֹ",
       "translit": "go",
-      "gloss": "sílaba",
+      "gloss": "sílaba — O como em \"motor\"",
       "kind": "silaba",
-      "lesson": 17,
+      "wave": 1,
+      "where": [
+        "letra 7"
+      ],
       "file": "he-aabb4f7f.mp3"
     },
     {
       "num": 202,
+      "seq": 47,
       "he": "גוּ",
       "translit": "gu",
-      "gloss": "sílaba",
+      "gloss": "sílaba — U como em \"muro\"",
       "kind": "silaba",
-      "lesson": 17,
+      "wave": 1,
+      "where": [
+        "letra 7"
+      ],
       "file": "he-b1eaf4d8.mp3"
     },
     {
       "num": 203,
+      "seq": 48,
       "he": "גְ",
       "translit": "g",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 17,
+      "wave": 1,
+      "where": [
+        "letra 7"
+      ],
       "file": "he-c2d06c07.mp3"
     },
     {
-      "num": 204,
-      "he": "גָּדוֹל",
-      "translit": "gadol",
-      "gloss": "grande",
-      "kind": "palavra",
-      "lesson": 17,
-      "file": "he-5736dc0d.mp3"
-    },
-    {
-      "num": 205,
-      "he": "גַּם",
-      "translit": "gam",
-      "gloss": "também",
-      "kind": "palavra",
-      "lesson": 17,
-      "file": "he-3f291332.mp3"
-    },
-    {
-      "num": 206,
-      "he": "דָּג",
-      "translit": "dag",
-      "gloss": "peixe",
-      "kind": "palavra",
-      "lesson": 17,
-      "file": "he-eb8b8ff9.mp3"
-    },
-    {
-      "num": 207,
-      "he": "גֶּשֶׁם",
-      "translit": "géshem",
-      "gloss": "chuva",
-      "kind": "palavra",
-      "lesson": 17,
-      "file": "he-c3e6f5a5.mp3"
-    },
-    {
-      "num": 208,
-      "he": "גְּלִידָה",
-      "translit": "glidá",
-      "gloss": "sorvete",
-      "kind": "palavra",
-      "lesson": 17,
-      "file": "he-1e2c676b.mp3"
-    },
-    {
-      "num": 209,
-      "he": "גַּן",
-      "translit": "gan",
-      "gloss": "jardim, creche",
-      "kind": "palavra",
-      "lesson": 17,
-      "file": "he-e9285d28.mp3"
-    },
-    {
-      "num": 210,
-      "he": "רֶגַע",
-      "translit": "réga",
-      "gloss": "um momento",
-      "kind": "palavra",
-      "lesson": 17,
-      "file": "he-442c813e.mp3"
-    },
-    {
-      "num": 211,
-      "he": "עַיִן",
-      "translit": "Áyin",
-      "gloss": "nome da letra Áyin",
+      "num": 148,
+      "seq": 49,
+      "he": "דָּלֶת",
+      "translit": "Dálet",
+      "gloss": "nome da letra Dálet",
       "kind": "nome",
-      "lesson": 18,
-      "file": "he-4c10d35f.mp3"
+      "wave": 1,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-becfd64f.mp3"
     },
     {
-      "num": 212,
-      "he": "עַ",
-      "translit": "a",
-      "gloss": "sílaba",
+      "num": 149,
+      "seq": 50,
+      "he": "דַ",
+      "translit": "da",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
       "kind": "silaba",
-      "lesson": 18,
-      "file": "he-e5b66bfe.mp3"
+      "wave": 1,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-7f9a550b.mp3"
     },
     {
-      "num": 213,
-      "he": "עֶ",
-      "translit": "e",
-      "gloss": "sílaba",
+      "num": 150,
+      "seq": 51,
+      "he": "דֶ",
+      "translit": "de",
+      "gloss": "sílaba — E como em \"mesa\"",
       "kind": "silaba",
-      "lesson": 18,
-      "file": "he-f4331d43.mp3"
+      "wave": 1,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-d6c251b2.mp3"
     },
     {
-      "num": 214,
-      "he": "עִ",
-      "translit": "i",
-      "gloss": "sílaba",
+      "num": 151,
+      "seq": 52,
+      "he": "דִ",
+      "translit": "di",
+      "gloss": "sílaba — I como em \"milho\"",
       "kind": "silaba",
-      "lesson": 18,
-      "file": "he-e279befb.mp3"
+      "wave": 1,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-2fc43653.mp3"
     },
     {
-      "num": 215,
-      "he": "עוֹ",
-      "translit": "o",
-      "gloss": "sílaba",
+      "num": 152,
+      "seq": 53,
+      "he": "דוֹ",
+      "translit": "do",
+      "gloss": "sílaba — O como em \"motor\"",
       "kind": "silaba",
-      "lesson": 18,
-      "file": "he-bbc9e72a.mp3"
+      "wave": 1,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-fcf54107.mp3"
     },
     {
-      "num": 216,
-      "he": "עוּ",
-      "translit": "u",
-      "gloss": "sílaba",
+      "num": 153,
+      "seq": 54,
+      "he": "דוּ",
+      "translit": "du",
+      "gloss": "sílaba — U como em \"muro\"",
       "kind": "silaba",
-      "lesson": 18,
-      "file": "he-9e536fe0.mp3"
+      "wave": 1,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-aa0f5fd5.mp3"
     },
     {
-      "num": 217,
-      "he": "עֲ",
-      "translit": "a",
-      "gloss": "sílaba",
+      "num": 154,
+      "seq": 55,
+      "he": "דְ",
+      "translit": "d",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 18,
-      "file": "he-358c21fb.mp3"
+      "wave": 1,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-4c052920.mp3"
     },
     {
-      "num": 218,
-      "he": "עִיר",
-      "translit": "ir",
-      "gloss": "cidade",
-      "kind": "palavra",
-      "lesson": 18,
-      "file": "he-43b3f1c8.mp3"
-    },
-    {
-      "num": 219,
-      "he": "עֶרֶב",
-      "translit": "érev",
-      "gloss": "tarde, noite",
-      "kind": "palavra",
-      "lesson": 18,
-      "file": "he-70afb742.mp3"
-    },
-    {
-      "num": 220,
-      "he": "שָׁעָה",
-      "translit": "shaá",
-      "gloss": "hora",
-      "kind": "palavra",
-      "lesson": 18,
-      "file": "he-3210235e.mp3"
-    },
-    {
-      "num": 221,
-      "he": "עַל",
-      "translit": "al",
-      "gloss": "sobre, em cima de",
-      "kind": "palavra",
-      "lesson": 18,
-      "file": "he-2000bcb6.mp3"
-    },
-    {
-      "num": 222,
-      "he": "עִבְרִית",
-      "translit": "ivrit",
-      "gloss": "hebraico",
-      "kind": "palavra",
-      "lesson": 18,
-      "file": "he-63edeaab.mp3"
-    },
-    {
-      "num": 223,
-      "he": "עוֹד",
-      "translit": "od",
-      "gloss": "mais, ainda",
-      "kind": "palavra",
-      "lesson": 18,
-      "file": "he-54727e8c.mp3"
-    },
-    {
-      "num": 224,
-      "he": "מְעַט",
-      "translit": "meat",
-      "gloss": "pouco",
-      "kind": "palavra",
-      "lesson": 18,
-      "file": "he-3a7319f2.mp3"
-    },
-    {
-      "num": 225,
-      "he": "כַּף",
-      "translit": "Kaf / Chaf",
-      "gloss": "nome da letra Kaf / Chaf",
+      "num": 14,
+      "seq": 56,
+      "he": "שִׁין",
+      "translit": "Shin",
+      "gloss": "nome da letra Shin",
       "kind": "nome",
-      "lesson": 19,
-      "file": "he-f8929ab1.mp3"
+      "wave": 1,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-b9809730.mp3"
     },
     {
-      "num": 226,
-      "he": "כַּ",
-      "translit": "ka",
-      "gloss": "sílaba",
+      "num": 15,
+      "seq": 57,
+      "he": "שַׁ",
+      "translit": "sha",
+      "gloss": "sílaba — como \"chá\"",
       "kind": "silaba",
-      "lesson": 19,
-      "file": "he-99ec5254.mp3"
+      "wave": 1,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-93723d4f.mp3"
     },
     {
-      "num": 227,
-      "he": "כֶּ",
-      "translit": "ke",
-      "gloss": "sílaba",
+      "num": 16,
+      "seq": 58,
+      "he": "שֶׁ",
+      "translit": "she",
+      "gloss": "sílaba — como \"che\" de \"chegar\"",
       "kind": "silaba",
-      "lesson": 19,
-      "file": "he-82b1aeda.mp3"
+      "wave": 1,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-8d866b61.mp3"
     },
     {
-      "num": 228,
-      "he": "כִּ",
-      "translit": "ki",
-      "gloss": "sílaba",
+      "num": 17,
+      "seq": 59,
+      "he": "שִׁ",
+      "translit": "shi",
+      "gloss": "sílaba — como \"chi\" de \"chique\"",
       "kind": "silaba",
-      "lesson": 19,
-      "file": "he-200403cd.mp3"
+      "wave": 1,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-4115fbf2.mp3"
     },
     {
-      "num": 229,
-      "he": "כּוֹ",
-      "translit": "ko",
-      "gloss": "sílaba",
+      "num": 18,
+      "seq": 60,
+      "he": "שׁוֹ",
+      "translit": "sho",
+      "gloss": "sílaba — como \"cho\" de \"chocolate\"",
       "kind": "silaba",
-      "lesson": 19,
-      "file": "he-dc517d72.mp3"
+      "wave": 1,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-1622dd40.mp3"
     },
     {
-      "num": 230,
-      "he": "כּוּ",
-      "translit": "ku",
-      "gloss": "sílaba",
+      "num": 19,
+      "seq": 61,
+      "he": "שׁוּ",
+      "translit": "shu",
+      "gloss": "sílaba — como \"chu\" de \"chuva\"",
       "kind": "silaba",
-      "lesson": 19,
-      "file": "he-06f452be.mp3"
+      "wave": 1,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-46ea582d.mp3"
     },
     {
-      "num": 231,
-      "he": "כְּ",
-      "translit": "k",
-      "gloss": "sílaba",
+      "num": 20,
+      "seq": 62,
+      "he": "שְׁ",
+      "translit": "sh",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 19,
-      "file": "he-2cbd2862.mp3"
+      "wave": 1,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-475a3ffb.mp3"
     },
     {
-      "num": 232,
-      "he": "כֶּלֶב",
-      "translit": "kélev",
-      "gloss": "cachorro",
-      "kind": "palavra",
-      "lesson": 19,
-      "file": "he-4d6868ff.mp3"
+      "num": 26,
+      "seq": 63,
+      "he": "לָמֶד",
+      "translit": "Lámed",
+      "gloss": "nome da letra Lámed",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-90e6d522.mp3"
     },
     {
-      "num": 233,
-      "he": "כּוֹס",
-      "translit": "kos",
-      "gloss": "copo",
-      "kind": "palavra",
-      "lesson": 19,
-      "file": "he-fc626354.mp3"
+      "num": 27,
+      "seq": 64,
+      "he": "לַ",
+      "translit": "la",
+      "gloss": "sílaba — como \"lá\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-c0f0799c.mp3"
     },
     {
-      "num": 234,
-      "he": "כַּדּוּר",
-      "translit": "kadur",
-      "gloss": "bola",
-      "kind": "palavra",
-      "lesson": 19,
-      "file": "he-33ab5bed.mp3"
+      "num": 28,
+      "seq": 65,
+      "he": "לֶ",
+      "translit": "le",
+      "gloss": "sílaba — como \"le\" de \"leve\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-1029e059.mp3"
     },
     {
-      "num": 235,
-      "he": "כֵּן",
-      "translit": "ken",
-      "gloss": "sim",
-      "kind": "palavra",
-      "lesson": 19,
-      "file": "he-288bdbba.mp3"
+      "num": 29,
+      "seq": 66,
+      "he": "לִ",
+      "translit": "li",
+      "gloss": "sílaba — como \"li\" de \"livro\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-fd8fabb2.mp3"
     },
     {
-      "num": 236,
-      "he": "כִּתָּה",
-      "translit": "kitá",
-      "gloss": "sala de aula, turma",
-      "kind": "palavra",
-      "lesson": 19,
-      "file": "he-516eb6d0.mp3"
+      "num": 30,
+      "seq": 67,
+      "he": "לוֹ",
+      "translit": "lo",
+      "gloss": "sílaba — como \"lo\" de \"loja\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-987a33d9.mp3"
     },
     {
-      "num": 237,
-      "he": "לָלֶכֶת",
-      "translit": "laléchet",
-      "gloss": "ir, caminhar",
-      "kind": "palavra",
-      "lesson": 19,
-      "file": "he-80fe4371.mp3"
+      "num": 31,
+      "seq": 68,
+      "he": "לוּ",
+      "translit": "lu",
+      "gloss": "sílaba — como \"lu\" de \"luva\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-702c7365.mp3"
+    },
+    {
+      "num": 32,
+      "seq": 69,
+      "he": "לְ",
+      "translit": "l",
+      "gloss": "sílaba — só a consoante, sem vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-27e3b729.mp3"
+    },
+    {
+      "num": 98,
+      "seq": 70,
+      "he": "רֵישׁ",
+      "translit": "Resh",
+      "gloss": "nome da letra Resh",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-a1ed895a.mp3"
+    },
+    {
+      "num": 99,
+      "seq": 71,
+      "he": "רַ",
+      "translit": "ra",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-8e7d2bee.mp3"
+    },
+    {
+      "num": 100,
+      "seq": 72,
+      "he": "רֶ",
+      "translit": "re",
+      "gloss": "sílaba — E como em \"mesa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-6fc0fb72.mp3"
+    },
+    {
+      "num": 101,
+      "seq": 73,
+      "he": "רִ",
+      "translit": "ri",
+      "gloss": "sílaba — I como em \"milho\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-46b86dfa.mp3"
+    },
+    {
+      "num": 102,
+      "seq": 74,
+      "he": "רוֹ",
+      "translit": "ro",
+      "gloss": "sílaba — O como em \"motor\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-6081af87.mp3"
+    },
+    {
+      "num": 103,
+      "seq": 75,
+      "he": "רוּ",
+      "translit": "ru",
+      "gloss": "sílaba — U como em \"muro\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-3de9696d.mp3"
+    },
+    {
+      "num": 104,
+      "seq": 76,
+      "he": "רְ",
+      "translit": "r",
+      "gloss": "sílaba — só a consoante, sem vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-cbfeaad8.mp3"
+    },
+    {
+      "num": 87,
+      "seq": 77,
+      "he": "וָו",
+      "translit": "Vav",
+      "gloss": "nome da letra Vav",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-970b15f1.mp3"
+    },
+    {
+      "num": 88,
+      "seq": 78,
+      "he": "וַ",
+      "translit": "va",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-cec45bf0.mp3"
+    },
+    {
+      "num": 89,
+      "seq": 79,
+      "he": "וֶ",
+      "translit": "ve",
+      "gloss": "sílaba — E como em \"mesa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-468e6f2f.mp3"
+    },
+    {
+      "num": 90,
+      "seq": 80,
+      "he": "וִ",
+      "translit": "vi",
+      "gloss": "sílaba — I como em \"milho\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-6f1a1ee4.mp3"
+    },
+    {
+      "num": 91,
+      "seq": 81,
+      "he": "ווֹ",
+      "translit": "vo",
+      "gloss": "sílaba — precisa de dois vav: um consoante, um vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-57095a14.mp3"
+    },
+    {
+      "num": 92,
+      "seq": 82,
+      "he": "ווּ",
+      "translit": "vu",
+      "gloss": "sílaba — precisa de dois vav: um consoante, um vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-abd29d29.mp3"
+    },
+    {
+      "num": 93,
+      "seq": 83,
+      "he": "וְ",
+      "translit": "v",
+      "gloss": "sílaba — só a consoante, sem vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-48b4a0f5.mp3"
     },
     {
       "num": 238,
+      "seq": 84,
       "he": "זַיִן",
       "translit": "Záyin",
       "gloss": "nome da letra Záyin",
       "kind": "nome",
-      "lesson": 20,
+      "wave": 1,
+      "where": [
+        "letra 13"
+      ],
       "file": "he-72cdc8f0.mp3"
     },
     {
       "num": 239,
+      "seq": 85,
       "he": "זַ",
       "translit": "za",
-      "gloss": "sílaba",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
       "kind": "silaba",
-      "lesson": 20,
+      "wave": 1,
+      "where": [
+        "letra 13"
+      ],
       "file": "he-d3784054.mp3"
     },
     {
       "num": 240,
+      "seq": 86,
       "he": "זֶ",
       "translit": "ze",
-      "gloss": "sílaba",
+      "gloss": "sílaba — E como em \"mesa\"",
       "kind": "silaba",
-      "lesson": 20,
+      "wave": 1,
+      "where": [
+        "letra 13"
+      ],
       "file": "he-89f3a06c.mp3"
     },
     {
       "num": 241,
+      "seq": 87,
       "he": "זִ",
       "translit": "zi",
-      "gloss": "sílaba",
+      "gloss": "sílaba — I como em \"milho\"",
       "kind": "silaba",
-      "lesson": 20,
+      "wave": 1,
+      "where": [
+        "letra 13"
+      ],
       "file": "he-851735c1.mp3"
     },
     {
       "num": 242,
+      "seq": 88,
       "he": "זוֹ",
       "translit": "zo",
-      "gloss": "sílaba",
+      "gloss": "sílaba — O como em \"motor\"",
       "kind": "silaba",
-      "lesson": 20,
+      "wave": 1,
+      "where": [
+        "letra 13"
+      ],
       "file": "he-e185b6ad.mp3"
     },
     {
       "num": 243,
+      "seq": 89,
       "he": "זוּ",
       "translit": "zu",
-      "gloss": "sílaba",
+      "gloss": "sílaba — U como em \"muro\"",
       "kind": "silaba",
-      "lesson": 20,
+      "wave": 1,
+      "where": [
+        "letra 13"
+      ],
       "file": "he-7cd86dfe.mp3"
     },
     {
       "num": 244,
+      "seq": 90,
       "he": "זְ",
       "translit": "z",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 20,
+      "wave": 1,
+      "where": [
+        "letra 13"
+      ],
       "file": "he-70ae7621.mp3"
     },
     {
-      "num": 245,
-      "he": "זֶה",
-      "translit": "ze",
-      "gloss": "este, isto",
-      "kind": "palavra",
-      "lesson": 20,
-      "file": "he-c6060038.mp3"
+      "num": 160,
+      "seq": 91,
+      "he": "חֵית",
+      "translit": "Het",
+      "gloss": "nome da letra Het",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-9138f96a.mp3"
     },
     {
-      "num": 246,
-      "he": "זְמַן",
-      "translit": "zman",
-      "gloss": "tempo",
-      "kind": "palavra",
-      "lesson": 20,
-      "file": "he-9b646099.mp3"
+      "num": 161,
+      "seq": 92,
+      "he": "חַ",
+      "translit": "cha",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-44ed6f10.mp3"
     },
     {
-      "num": 247,
-      "he": "זָהָב",
-      "translit": "zahav",
-      "gloss": "ouro",
-      "kind": "palavra",
-      "lesson": 20,
-      "file": "he-2e7c8998.mp3"
+      "num": 162,
+      "seq": 93,
+      "he": "חֶ",
+      "translit": "che",
+      "gloss": "sílaba — E como em \"mesa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-915fe127.mp3"
     },
     {
-      "num": 248,
-      "he": "מָזוֹן",
-      "translit": "mazon",
-      "gloss": "alimento",
-      "kind": "palavra",
-      "lesson": 20,
-      "file": "he-74adf0c1.mp3"
+      "num": 163,
+      "seq": 94,
+      "he": "חִ",
+      "translit": "chi",
+      "gloss": "sílaba — I como em \"milho\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-be910601.mp3"
     },
     {
-      "num": 249,
-      "he": "מַזָּל",
-      "translit": "mazal",
-      "gloss": "sorte",
-      "kind": "palavra",
-      "lesson": 20,
-      "file": "he-fb6429db.mp3"
+      "num": 164,
+      "seq": 95,
+      "he": "חוֹ",
+      "translit": "cho",
+      "gloss": "sílaba — O como em \"motor\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-421a52fc.mp3"
     },
     {
-      "num": 250,
-      "he": "אֹזֶן",
-      "translit": "ózen",
-      "gloss": "orelha",
-      "kind": "palavra",
-      "lesson": 20,
-      "file": "he-e5085ad3.mp3"
+      "num": 165,
+      "seq": 96,
+      "he": "חוּ",
+      "translit": "chu",
+      "gloss": "sílaba — U como em \"muro\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-f09a16c7.mp3"
+    },
+    {
+      "num": 166,
+      "seq": 97,
+      "he": "חֲ",
+      "translit": "cha",
+      "gloss": "sílaba — guturais não aceitam sheva — usam o hataf, um A ultrabreve",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-4013cc54.mp3"
     },
     {
       "num": 251,
+      "seq": 98,
       "he": "טֵית",
       "translit": "Tet",
       "gloss": "nome da letra Tet",
       "kind": "nome",
-      "lesson": 21,
+      "wave": 1,
+      "where": [
+        "letra 15"
+      ],
       "file": "he-73f1ff66.mp3"
     },
     {
       "num": 252,
+      "seq": 99,
       "he": "טַ",
       "translit": "ta",
-      "gloss": "sílaba",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
       "kind": "silaba",
-      "lesson": 21,
+      "wave": 1,
+      "where": [
+        "letra 15"
+      ],
       "file": "he-c37fbf44.mp3"
     },
     {
       "num": 253,
+      "seq": 100,
       "he": "טֶ",
       "translit": "te",
-      "gloss": "sílaba",
+      "gloss": "sílaba — E como em \"mesa\"",
       "kind": "silaba",
-      "lesson": 21,
+      "wave": 1,
+      "where": [
+        "letra 15"
+      ],
       "file": "he-ba711565.mp3"
     },
     {
       "num": 254,
+      "seq": 101,
       "he": "טִ",
       "translit": "ti",
-      "gloss": "sílaba",
+      "gloss": "sílaba — I como em \"milho\"",
       "kind": "silaba",
-      "lesson": 21,
+      "wave": 1,
+      "where": [
+        "letra 15"
+      ],
       "file": "he-65a0befd.mp3"
     },
     {
       "num": 255,
+      "seq": 102,
       "he": "טוֹ",
       "translit": "to",
-      "gloss": "sílaba",
+      "gloss": "sílaba — O como em \"motor\"",
       "kind": "silaba",
-      "lesson": 21,
+      "wave": 1,
+      "where": [
+        "letra 15"
+      ],
       "file": "he-d37605f3.mp3"
     },
     {
       "num": 256,
+      "seq": 103,
       "he": "טוּ",
       "translit": "tu",
-      "gloss": "sílaba",
+      "gloss": "sílaba — U como em \"muro\"",
       "kind": "silaba",
-      "lesson": 21,
+      "wave": 1,
+      "where": [
+        "letra 15"
+      ],
       "file": "he-73c21cd0.mp3"
     },
     {
       "num": 257,
+      "seq": 104,
       "he": "טְ",
       "translit": "t",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 21,
+      "wave": 1,
+      "where": [
+        "letra 15"
+      ],
       "file": "he-fdf841f7.mp3"
     },
     {
-      "num": 258,
-      "he": "טוֹב",
-      "translit": "tov",
-      "gloss": "bom",
-      "kind": "palavra",
-      "lesson": 21,
-      "file": "he-d77ac2ce.mp3"
+      "num": 171,
+      "seq": 105,
+      "he": "סָמֶךְ",
+      "translit": "Sámech",
+      "gloss": "nome da letra Sámech",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-1af0f83f.mp3"
     },
     {
-      "num": 259,
-      "he": "קָטָן",
-      "translit": "katan",
-      "gloss": "pequeno",
-      "kind": "palavra",
-      "lesson": 21,
-      "file": "he-25b28be5.mp3"
+      "num": 172,
+      "seq": 106,
+      "he": "סַ",
+      "translit": "sa",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-d6d99810.mp3"
     },
     {
-      "num": 260,
-      "he": "מִטָּה",
-      "translit": "mitá",
-      "gloss": "cama",
-      "kind": "palavra",
-      "lesson": 21,
-      "file": "he-428f9204.mp3"
+      "num": 173,
+      "seq": 107,
+      "he": "סֶ",
+      "translit": "se",
+      "gloss": "sílaba — E como em \"mesa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-f836bb32.mp3"
     },
     {
-      "num": 261,
-      "he": "שֶׁקֶט",
-      "translit": "shéket",
-      "gloss": "silêncio",
-      "kind": "palavra",
-      "lesson": 21,
-      "file": "he-423a5e0a.mp3"
+      "num": 174,
+      "seq": 108,
+      "he": "סִ",
+      "translit": "si",
+      "gloss": "sílaba — I como em \"milho\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-c68604a8.mp3"
     },
     {
-      "num": 262,
-      "he": "טִיּוּל",
-      "translit": "tiyul",
-      "gloss": "passeio",
-      "kind": "palavra",
-      "lesson": 21,
-      "file": "he-d668c2a9.mp3"
+      "num": 175,
+      "seq": 109,
+      "he": "סוֹ",
+      "translit": "so",
+      "gloss": "sílaba — O como em \"motor\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-922a1fae.mp3"
     },
     {
-      "num": 263,
-      "he": "סְטוּדֶנְט",
-      "translit": "student",
-      "gloss": "estudante",
-      "kind": "palavra",
-      "lesson": 21,
-      "file": "he-d7a0542e.mp3"
+      "num": 176,
+      "seq": 110,
+      "he": "סוּ",
+      "translit": "su",
+      "gloss": "sílaba — U como em \"muro\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-8e3fb653.mp3"
+    },
+    {
+      "num": 177,
+      "seq": 111,
+      "he": "סְ",
+      "translit": "s",
+      "gloss": "sílaba — só a consoante, sem vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-a3b3e3a6.mp3"
+    },
+    {
+      "num": 211,
+      "seq": 112,
+      "he": "עַיִן",
+      "translit": "Áyin",
+      "gloss": "nome da letra Áyin",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-4c10d35f.mp3"
+    },
+    {
+      "num": 212,
+      "seq": 113,
+      "he": "עַ",
+      "translit": "a",
+      "gloss": "sílaba — só a vogal A",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-e5b66bfe.mp3"
+    },
+    {
+      "num": 213,
+      "seq": 114,
+      "he": "עֶ",
+      "translit": "e",
+      "gloss": "sílaba — só a vogal E",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-f4331d43.mp3"
+    },
+    {
+      "num": 214,
+      "seq": 115,
+      "he": "עִ",
+      "translit": "i",
+      "gloss": "sílaba — só a vogal I",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-e279befb.mp3"
+    },
+    {
+      "num": 215,
+      "seq": 116,
+      "he": "עוֹ",
+      "translit": "o",
+      "gloss": "sílaba — só a vogal O",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-bbc9e72a.mp3"
+    },
+    {
+      "num": 216,
+      "seq": 117,
+      "he": "עוּ",
+      "translit": "u",
+      "gloss": "sílaba — só a vogal U",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-9e536fe0.mp3"
+    },
+    {
+      "num": 217,
+      "seq": 118,
+      "he": "עֲ",
+      "translit": "a",
+      "gloss": "sílaba — guturais não aceitam sheva — usam o hataf, um A ultrabreve",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-358c21fb.mp3"
     },
     {
       "num": 264,
+      "seq": 119,
       "he": "צָדִי",
       "translit": "Tsadi",
       "gloss": "nome da letra Tsadi",
       "kind": "nome",
-      "lesson": 22,
+      "wave": 1,
+      "where": [
+        "letra 18"
+      ],
       "file": "he-09487236.mp3"
     },
     {
       "num": 265,
+      "seq": 120,
       "he": "צַ",
       "translit": "tsa",
-      "gloss": "sílaba",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
       "kind": "silaba",
-      "lesson": 22,
+      "wave": 1,
+      "where": [
+        "letra 18"
+      ],
       "file": "he-1cdded9f.mp3"
     },
     {
       "num": 266,
+      "seq": 121,
       "he": "צֶ",
       "translit": "tse",
-      "gloss": "sílaba",
+      "gloss": "sílaba — E como em \"mesa\"",
       "kind": "silaba",
-      "lesson": 22,
+      "wave": 1,
+      "where": [
+        "letra 18"
+      ],
       "file": "he-f6c0d861.mp3"
     },
     {
       "num": 267,
+      "seq": 122,
       "he": "צִ",
       "translit": "tsi",
-      "gloss": "sílaba",
+      "gloss": "sílaba — I como em \"milho\"",
       "kind": "silaba",
-      "lesson": 22,
+      "wave": 1,
+      "where": [
+        "letra 18"
+      ],
       "file": "he-d52ba322.mp3"
     },
     {
       "num": 268,
+      "seq": 123,
       "he": "צוֹ",
       "translit": "tso",
-      "gloss": "sílaba",
+      "gloss": "sílaba — O como em \"motor\"",
       "kind": "silaba",
-      "lesson": 22,
+      "wave": 1,
+      "where": [
+        "letra 18"
+      ],
       "file": "he-912a77a7.mp3"
     },
     {
       "num": 269,
+      "seq": 124,
       "he": "צוּ",
       "translit": "tsu",
-      "gloss": "sílaba",
+      "gloss": "sílaba — U como em \"muro\"",
       "kind": "silaba",
-      "lesson": 22,
+      "wave": 1,
+      "where": [
+        "letra 18"
+      ],
       "file": "he-9af95c61.mp3"
     },
     {
       "num": 270,
+      "seq": 125,
       "he": "צְ",
       "translit": "ts",
-      "gloss": "sílaba",
+      "gloss": "sílaba — só a consoante, sem vogal",
       "kind": "silaba",
-      "lesson": 22,
+      "wave": 1,
+      "where": [
+        "letra 18"
+      ],
       "file": "he-40b77273.mp3"
     },
     {
-      "num": 271,
-      "he": "אֶרֶץ",
-      "translit": "érets",
-      "gloss": "terra, país",
-      "kind": "palavra",
-      "lesson": 22,
-      "file": "he-007c9089.mp3"
+      "num": 136,
+      "seq": 126,
+      "he": "קוֹף",
+      "translit": "Qof",
+      "gloss": "nome da letra Qof",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-052b6d7c.mp3"
     },
     {
-      "num": 272,
-      "he": "עֵץ",
-      "translit": "ets",
-      "gloss": "árvore",
-      "kind": "palavra",
-      "lesson": 22,
-      "file": "he-af0decf1.mp3"
+      "num": 137,
+      "seq": 127,
+      "he": "קַ",
+      "translit": "ka",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-ec87aef0.mp3"
     },
     {
-      "num": 273,
-      "he": "רוֹצֶה",
-      "translit": "rotsé",
-      "gloss": "quer",
-      "kind": "palavra",
-      "lesson": 22,
-      "file": "he-66dc2846.mp3"
+      "num": 138,
+      "seq": 128,
+      "he": "קֶ",
+      "translit": "ke",
+      "gloss": "sílaba — E como em \"mesa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-1712f267.mp3"
     },
     {
-      "num": 274,
-      "he": "צָרִיךְ",
-      "translit": "tsarich",
-      "gloss": "é preciso, precisa",
-      "kind": "palavra",
-      "lesson": 22,
-      "file": "he-f4902eb4.mp3"
+      "num": 139,
+      "seq": 129,
+      "he": "קִ",
+      "translit": "ki",
+      "gloss": "sílaba — I como em \"milho\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-9648c47e.mp3"
     },
     {
-      "num": 275,
-      "he": "צָהֳרַיִם",
-      "translit": "tsohoráyim",
-      "gloss": "meio-dia",
-      "kind": "palavra",
-      "lesson": 22,
-      "file": "he-98577c5a.mp3"
+      "num": 140,
+      "seq": 130,
+      "he": "קוֹ",
+      "translit": "ko",
+      "gloss": "sílaba — O como em \"motor\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-122a2bed.mp3"
     },
     {
-      "num": 276,
-      "he": "מִצְוָה",
-      "translit": "mitsvá",
-      "gloss": "preceito, boa ação",
-      "kind": "palavra",
-      "lesson": 22,
-      "file": "he-1f43819c.mp3"
+      "num": 141,
+      "seq": 131,
+      "he": "קוּ",
+      "translit": "ku",
+      "gloss": "sílaba — U como em \"muro\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-663dc440.mp3"
+    },
+    {
+      "num": 142,
+      "seq": 132,
+      "he": "קְ",
+      "translit": "k",
+      "gloss": "sílaba — só a consoante, sem vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-d0a7a039.mp3"
+    },
+    {
+      "num": 39,
+      "seq": 133,
+      "he": "בֵּית",
+      "translit": "Bet / Vet",
+      "gloss": "nome da letra Bet / Vet",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 20"
+      ],
+      "file": "he-2da94d33.mp3"
+    },
+    {
+      "num": 40,
+      "seq": 134,
+      "he": "בַּ",
+      "translit": "ba",
+      "gloss": "sílaba — como \"bá\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 20"
+      ],
+      "file": "he-6f9bd8c0.mp3"
+    },
+    {
+      "num": 41,
+      "seq": 135,
+      "he": "בֶּ",
+      "translit": "be",
+      "gloss": "sílaba — como \"be\" de \"beber\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 20"
+      ],
+      "file": "he-91ff3e15.mp3"
+    },
+    {
+      "num": 42,
+      "seq": 136,
+      "he": "בִּ",
+      "translit": "bi",
+      "gloss": "sílaba — como \"bi\" de \"bicho\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 20"
+      ],
+      "file": "he-b76fc66b.mp3"
+    },
+    {
+      "num": 43,
+      "seq": 137,
+      "he": "בּוֹ",
+      "translit": "bo",
+      "gloss": "sílaba — como \"bo\" de \"bolo\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 20"
+      ],
+      "file": "he-2e3828a7.mp3"
+    },
+    {
+      "num": 44,
+      "seq": 138,
+      "he": "בּוּ",
+      "translit": "bu",
+      "gloss": "sílaba — como \"bu\" de \"buraco\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 20"
+      ],
+      "file": "he-1a47df36.mp3"
+    },
+    {
+      "num": 45,
+      "seq": 139,
+      "he": "בְּ",
+      "translit": "b",
+      "gloss": "sílaba — só a consoante, sem vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 20"
+      ],
+      "file": "he-00a10cf1.mp3"
+    },
+    {
+      "num": 225,
+      "seq": 140,
+      "he": "כַּף",
+      "translit": "Kaf / Chaf",
+      "gloss": "nome da letra Kaf / Chaf",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-f8929ab1.mp3"
+    },
+    {
+      "num": 226,
+      "seq": 141,
+      "he": "כַּ",
+      "translit": "ka",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-99ec5254.mp3"
+    },
+    {
+      "num": 227,
+      "seq": 142,
+      "he": "כֶּ",
+      "translit": "ke",
+      "gloss": "sílaba — E como em \"mesa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-82b1aeda.mp3"
+    },
+    {
+      "num": 228,
+      "seq": 143,
+      "he": "כִּ",
+      "translit": "ki",
+      "gloss": "sílaba — I como em \"milho\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-200403cd.mp3"
+    },
+    {
+      "num": 229,
+      "seq": 144,
+      "he": "כּוֹ",
+      "translit": "ko",
+      "gloss": "sílaba — O como em \"motor\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-dc517d72.mp3"
+    },
+    {
+      "num": 230,
+      "seq": 145,
+      "he": "כּוּ",
+      "translit": "ku",
+      "gloss": "sílaba — U como em \"muro\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-06f452be.mp3"
+    },
+    {
+      "num": 231,
+      "seq": 146,
+      "he": "כְּ",
+      "translit": "k",
+      "gloss": "sílaba — só a consoante, sem vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-2cbd2862.mp3"
+    },
+    {
+      "num": 185,
+      "seq": 147,
+      "he": "פֵּא",
+      "translit": "Pe / Fe",
+      "gloss": "nome da letra Pe / Fe",
+      "kind": "nome",
+      "wave": 1,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-e1df53ea.mp3"
+    },
+    {
+      "num": 186,
+      "seq": 148,
+      "he": "פַּ",
+      "translit": "pa",
+      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-a2fa19b2.mp3"
+    },
+    {
+      "num": 187,
+      "seq": 149,
+      "he": "פֶּ",
+      "translit": "pe",
+      "gloss": "sílaba — E como em \"mesa\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-183e3dda.mp3"
+    },
+    {
+      "num": 188,
+      "seq": 150,
+      "he": "פִּ",
+      "translit": "pi",
+      "gloss": "sílaba — I como em \"milho\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-79301076.mp3"
+    },
+    {
+      "num": 189,
+      "seq": 151,
+      "he": "פּוֹ",
+      "translit": "po",
+      "gloss": "sílaba — O como em \"motor\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-9eab0cbc.mp3"
+    },
+    {
+      "num": 190,
+      "seq": 152,
+      "he": "פּוּ",
+      "translit": "pu",
+      "gloss": "sílaba — U como em \"muro\"",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-d17fa8de.mp3"
+    },
+    {
+      "num": 191,
+      "seq": 153,
+      "he": "פְּ",
+      "translit": "p",
+      "gloss": "sílaba — só a consoante, sem vogal",
+      "kind": "silaba",
+      "wave": 1,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-8f22369f.mp3"
     },
     {
       "num": 277,
+      "seq": 154,
       "he": "מָ",
       "translit": null,
-      "gloss": "sinal kamats",
+      "gloss": "sinal kamats — som a",
       "kind": "silaba",
-      "lesson": 0,
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
       "file": "he-083ef306.mp3"
     },
     {
       "num": 278,
+      "seq": 155,
       "he": "מֵ",
       "translit": null,
-      "gloss": "sinal tsere",
+      "gloss": "sinal tsere — som e",
       "kind": "silaba",
-      "lesson": 0,
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
       "file": "he-7f41f7ac.mp3"
     },
     {
       "num": 279,
+      "seq": 156,
       "he": "מֹ",
       "translit": null,
-      "gloss": "sinal cholam",
+      "gloss": "sinal cholam — som o",
       "kind": "silaba",
-      "lesson": 0,
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
       "file": "he-e78eb2fd.mp3"
     },
     {
       "num": 280,
+      "seq": 157,
       "he": "מֻ",
       "translit": null,
-      "gloss": "sinal kubuts",
+      "gloss": "sinal kubuts — som u",
       "kind": "silaba",
-      "lesson": 0,
+      "wave": 1,
+      "where": [
+        "sinais de vogal"
+      ],
       "file": "he-d0cb4703.mp3"
+    },
+    {
+      "num": 117,
+      "seq": 158,
+      "he": "אִמָּא",
+      "translit": "imá",
+      "gloss": "mãe",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 3"
+      ],
+      "file": "he-febde9cc.mp3"
+    },
+    {
+      "num": 281,
+      "seq": 159,
+      "he": "אֶמֶת",
+      "translit": "emet",
+      "gloss": "verdade",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 3"
+      ],
+      "file": "he-ee83f8c6.mp3"
+    },
+    {
+      "num": 282,
+      "seq": 160,
+      "he": "אֵם",
+      "translit": "em",
+      "gloss": "mãe (registro formal, em compostos)",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 3"
+      ],
+      "file": "he-53aa1ad2.mp3"
+    },
+    {
+      "num": 283,
+      "seq": 161,
+      "he": "תָּא",
+      "translit": "ta",
+      "gloss": "compartimento · caixa postal",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 3"
+      ],
+      "file": "he-09752049.mp3"
+    },
+    {
+      "num": 284,
+      "seq": 162,
+      "he": "אָמֵן",
+      "translit": "amén",
+      "gloss": "amém",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 4"
+      ],
+      "file": "he-aa72fb38.mp3"
+    },
+    {
+      "num": 285,
+      "seq": 163,
+      "he": "נָתַן",
+      "translit": "natan",
+      "gloss": "deu",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 4"
+      ],
+      "file": "he-02a8919e.mp3"
+    },
+    {
+      "num": 286,
+      "seq": 164,
+      "he": "תֵּן",
+      "translit": "ten",
+      "gloss": "dá! (imperativo)",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 4"
+      ],
+      "file": "he-33e4974d.mp3"
+    },
+    {
+      "num": 287,
+      "seq": 165,
+      "he": "מִן",
+      "translit": "min",
+      "gloss": "de / a partir de (registro formal)",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 4",
+        "módulo 6"
+      ],
+      "file": "he-8161c0c6.mp3"
+    },
+    {
+      "num": 9,
+      "seq": 166,
+      "he": "מָה",
+      "translit": "ma",
+      "gloss": "o quê / que",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 5",
+        "letra 1"
+      ],
+      "file": "he-8f2861d4.mp3"
+    },
+    {
+      "num": 288,
+      "seq": 167,
+      "he": "אַתָּה",
+      "translit": "atá",
+      "gloss": "você (para homem)",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-2dcfcfd9.mp3"
+    },
+    {
+      "num": 289,
+      "seq": 168,
+      "he": "אַתְּ",
+      "translit": "at",
+      "gloss": "você (para mulher)",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-fc7c0593.mp3"
+    },
+    {
+      "num": 86,
+      "seq": 169,
+      "he": "הֵם",
+      "translit": "hem",
+      "gloss": "eles",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-f97442b5.mp3"
+    },
+    {
+      "num": 290,
+      "seq": 170,
+      "he": "הֵן",
+      "translit": "hen",
+      "gloss": "elas",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-6039eb15.mp3"
+    },
+    {
+      "num": 291,
+      "seq": 171,
+      "he": "הִנֵּה",
+      "translit": "hiné",
+      "gloss": "eis aqui / aqui está",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-adff9a40.mp3"
+    },
+    {
+      "num": 131,
+      "seq": 172,
+      "he": "אֲנִי",
+      "translit": "aní",
+      "gloss": "eu",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-eddf7041.mp3"
+    },
+    {
+      "num": 10,
+      "seq": 173,
+      "he": "מִי",
+      "translit": "mi",
+      "gloss": "quem",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 6",
+        "letra 1",
+        "no mundo real"
+      ],
+      "file": "he-fad4ddb1.mp3"
+    },
+    {
+      "num": 8,
+      "seq": 174,
+      "he": "מַיִם",
+      "translit": "máyim",
+      "gloss": "água",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 6",
+        "letra 1",
+        "no mundo real"
+      ],
+      "file": "he-f9c5c883.mp3"
+    },
+    {
+      "num": 70,
+      "seq": 175,
+      "he": "יָם",
+      "translit": "yam",
+      "gloss": "mar",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-b5d139d7.mp3"
+    },
+    {
+      "num": 205,
+      "seq": 176,
+      "he": "גַּם",
+      "translit": "gam",
+      "gloss": "também",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 7"
+      ],
+      "file": "he-3f291332.mp3"
+    },
+    {
+      "num": 209,
+      "seq": 177,
+      "he": "גַּן",
+      "translit": "gan",
+      "gloss": "jardim · jardim de infância",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 7"
+      ],
+      "file": "he-e9285d28.mp3"
+    },
+    {
+      "num": 292,
+      "seq": 178,
+      "he": "גַּג",
+      "translit": "gag",
+      "gloss": "telhado",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 7"
+      ],
+      "file": "he-8e09bc2e.mp3"
+    },
+    {
+      "num": 293,
+      "seq": 179,
+      "he": "אֲגַם",
+      "translit": "agam",
+      "gloss": "lago",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 7"
+      ],
+      "file": "he-673c0b85.mp3"
+    },
+    {
+      "num": 155,
+      "seq": 180,
+      "he": "יָד",
+      "translit": "yad",
+      "gloss": "mão",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-d6d6810e.mp3"
+    },
+    {
+      "num": 206,
+      "seq": 181,
+      "he": "דָּג",
+      "translit": "dag",
+      "gloss": "peixe",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-eb8b8ff9.mp3"
+    },
+    {
+      "num": 294,
+      "seq": 182,
+      "he": "אֲדָמָה",
+      "translit": "adamá",
+      "gloss": "terra / solo",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-ef219d8c.mp3"
+    },
+    {
+      "num": 295,
+      "seq": 183,
+      "he": "מִדָּה",
+      "translit": "midá",
+      "gloss": "medida / tamanho",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-8f4c85e6.mp3"
+    },
+    {
+      "num": 22,
+      "seq": 184,
+      "he": "שֵׁם",
+      "translit": "shem",
+      "gloss": "nome",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-805c8091.mp3"
+    },
+    {
+      "num": 21,
+      "seq": 185,
+      "he": "שָׁם",
+      "translit": "sham",
+      "gloss": "lá / ali",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-b19b2b8c.mp3"
+    },
+    {
+      "num": 25,
+      "seq": 186,
+      "he": "שָׁנָה",
+      "translit": "shaná",
+      "gloss": "ano",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-d4ba9479.mp3"
+    },
+    {
+      "num": 296,
+      "seq": 187,
+      "he": "אִשָּׁה",
+      "translit": "ishá",
+      "gloss": "mulher",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-59e65a97.mp3"
+    },
+    {
+      "num": 24,
+      "seq": 188,
+      "he": "שֶׁמֶשׁ",
+      "translit": "shémesh",
+      "gloss": "sol",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 9"
+      ],
+      "file": "he-736e502c.mp3"
+    },
+    {
+      "num": 36,
+      "seq": 189,
+      "he": "לֹא",
+      "translit": "lo",
+      "gloss": "não",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-b3801088.mp3"
+    },
+    {
+      "num": 33,
+      "seq": 190,
+      "he": "שֶׁל",
+      "translit": "shel",
+      "gloss": "de (posse)",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-64ab916e.mp3"
+    },
+    {
+      "num": 37,
+      "seq": 191,
+      "he": "יֶלֶד",
+      "translit": "yéled",
+      "gloss": "menino",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-0386b412.mp3"
+    },
+    {
+      "num": 74,
+      "seq": 192,
+      "he": "יַלְדָּה",
+      "translit": "yaldá",
+      "gloss": "menina",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 10",
+        "letra 6"
+      ],
+      "file": "he-b74aea20.mp3"
+    },
+    {
+      "num": 38,
+      "seq": 193,
+      "he": "לַיְלָה",
+      "translit": "láila",
+      "gloss": "noite",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 10"
+      ],
+      "file": "he-0a955838.mp3"
+    },
+    {
+      "num": 105,
+      "seq": 194,
+      "he": "שִׁיר",
+      "translit": "shir",
+      "gloss": "canção",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-c057fc77.mp3"
+    },
+    {
+      "num": 297,
+      "seq": 195,
+      "he": "אָמַר",
+      "translit": "amar",
+      "gloss": "disse",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-b86c99ad.mp3"
+    },
+    {
+      "num": 298,
+      "seq": 196,
+      "he": "הַר",
+      "translit": "har",
+      "gloss": "montanha",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-694ac70e.mp3"
+    },
+    {
+      "num": 299,
+      "seq": 197,
+      "he": "נָהָר",
+      "translit": "nahar",
+      "gloss": "rio",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-084e0e0e.mp3"
+    },
+    {
+      "num": 23,
+      "seq": 198,
+      "he": "שָׁלוֹם",
+      "translit": "shalom",
+      "gloss": "paz / olá / tchau",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 12",
+        "letra 9",
+        "módulo 6",
+        "no mundo real"
+      ],
+      "file": "he-e1e7fe52.mp3"
+    },
+    {
+      "num": 60,
+      "seq": 199,
+      "he": "תּוֹדָה",
+      "translit": "todá",
+      "gloss": "obrigado",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 12",
+        "letra 2",
+        "no mundo real"
+      ],
+      "file": "he-6c894906.mp3"
+    },
+    {
+      "num": 94,
+      "seq": 200,
+      "he": "יוֹם",
+      "translit": "yom",
+      "gloss": "dia",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 12",
+        "módulo 6"
+      ],
+      "file": "he-ff312ee2.mp3"
+    },
+    {
+      "num": 12,
+      "seq": 201,
+      "he": "מוֹרָה",
+      "translit": "morá",
+      "gloss": "professora",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 12",
+        "letra 1",
+        "no mundo real"
+      ],
+      "file": "he-03afe381.mp3"
+    },
+    {
+      "num": 204,
+      "seq": 202,
+      "he": "גָּדוֹל",
+      "translit": "gadol",
+      "gloss": "grande",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-5736dc0d.mp3"
+    },
+    {
+      "num": 119,
+      "seq": 203,
+      "he": "הוּא",
+      "translit": "hu",
+      "gloss": "ele",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-09e06dea.mp3"
+    },
+    {
+      "num": 120,
+      "seq": 204,
+      "he": "הִיא",
+      "translit": "hi",
+      "gloss": "ela",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-8ca5205d.mp3"
+    },
+    {
+      "num": 245,
+      "seq": 205,
+      "he": "זֶה",
+      "translit": "ze",
+      "gloss": "este / isto",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 13"
+      ],
+      "file": "he-c6060038.mp3"
+    },
+    {
+      "num": 300,
+      "seq": 206,
+      "he": "זֹאת",
+      "translit": "zot",
+      "gloss": "esta",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 13"
+      ],
+      "file": "he-abffd910.mp3"
+    },
+    {
+      "num": 246,
+      "seq": 207,
+      "he": "זְמַן",
+      "translit": "zman",
+      "gloss": "tempo",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 13"
+      ],
+      "file": "he-9b646099.mp3"
+    },
+    {
+      "num": 250,
+      "seq": 208,
+      "he": "אֹזֶן",
+      "translit": "ózen",
+      "gloss": "orelha",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 13"
+      ],
+      "file": "he-e5085ad3.mp3"
+    },
+    {
+      "num": 248,
+      "seq": 209,
+      "he": "מָזוֹן",
+      "translit": "mazon",
+      "gloss": "alimento",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 13"
+      ],
+      "file": "he-74adf0c1.mp3"
+    },
+    {
+      "num": 168,
+      "seq": 210,
+      "he": "אָח",
+      "translit": "ach",
+      "gloss": "irmão",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-49a7d499.mp3"
+    },
+    {
+      "num": 167,
+      "seq": 211,
+      "he": "אֶחָד",
+      "translit": "echad",
+      "gloss": "um",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-c8990309.mp3"
+    },
+    {
+      "num": 35,
+      "seq": 212,
+      "he": "לֶחֶם",
+      "translit": "léchem",
+      "gloss": "pão",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 14",
+        "letra 10",
+        "no mundo real"
+      ],
+      "file": "he-f059f3a3.mp3"
+    },
+    {
+      "num": 134,
+      "seq": 213,
+      "he": "חַלּוֹן",
+      "translit": "chalon",
+      "gloss": "janela",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 14",
+        "letra 4"
+      ],
+      "file": "he-403a423d.mp3"
+    },
+    {
+      "num": 301,
+      "seq": 214,
+      "he": "חָדָשׁ",
+      "translit": "chadash",
+      "gloss": "novo",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 14",
+        "no mundo real"
+      ],
+      "file": "he-01f7f771.mp3"
+    },
+    {
+      "num": 260,
+      "seq": 215,
+      "he": "מִטָּה",
+      "translit": "mitá",
+      "gloss": "cama",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 15"
+      ],
+      "file": "he-428f9204.mp3"
+    },
+    {
+      "num": 262,
+      "seq": 216,
+      "he": "טִיּוּל",
+      "translit": "tiyul",
+      "gloss": "passeio",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 15"
+      ],
+      "file": "he-d668c2a9.mp3"
+    },
+    {
+      "num": 302,
+      "seq": 217,
+      "he": "טָרִי",
+      "translit": "tari",
+      "gloss": "fresco",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 15"
+      ],
+      "file": "he-6abd4251.mp3"
+    },
+    {
+      "num": 303,
+      "seq": 218,
+      "he": "מִטְרִיָּה",
+      "translit": "mitriyá",
+      "gloss": "guarda-chuva",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 15"
+      ],
+      "file": "he-a2e1b33f.mp3"
+    },
+    {
+      "num": 304,
+      "seq": 219,
+      "he": "סוּס",
+      "translit": "sus",
+      "gloss": "cavalo",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-5b034b0b.mp3"
+    },
+    {
+      "num": 180,
+      "seq": 220,
+      "he": "סוֹד",
+      "translit": "sod",
+      "gloss": "segredo",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-5105d60b.mp3"
+    },
+    {
+      "num": 181,
+      "seq": 221,
+      "he": "סֵדֶר",
+      "translit": "séder",
+      "gloss": "ordem / sequência",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-39e2beb9.mp3"
+    },
+    {
+      "num": 305,
+      "seq": 222,
+      "he": "סֶרֶט",
+      "translit": "séret",
+      "gloss": "filme",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-a074f884.mp3"
+    },
+    {
+      "num": 306,
+      "seq": 223,
+      "he": "סַל",
+      "translit": "sal",
+      "gloss": "cesta",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-e3f584af.mp3"
+    },
+    {
+      "num": 218,
+      "seq": 224,
+      "he": "עִיר",
+      "translit": "ir",
+      "gloss": "cidade",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-43b3f1c8.mp3"
+    },
+    {
+      "num": 221,
+      "seq": 225,
+      "he": "עַל",
+      "translit": "al",
+      "gloss": "sobre / em cima de",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-2000bcb6.mp3"
+    },
+    {
+      "num": 220,
+      "seq": 226,
+      "he": "שָׁעָה",
+      "translit": "shaá",
+      "gloss": "hora",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 17",
+        "no mundo real"
+      ],
+      "file": "he-3210235e.mp3"
+    },
+    {
+      "num": 307,
+      "seq": 227,
+      "he": "עוֹלָם",
+      "translit": "olam",
+      "gloss": "mundo",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-c009613b.mp3"
+    },
+    {
+      "num": 308,
+      "seq": 228,
+      "he": "נָעִים",
+      "translit": "naim",
+      "gloss": "agradável",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-ae81f98b.mp3"
+    },
+    {
+      "num": 272,
+      "seq": 229,
+      "he": "עֵץ",
+      "translit": "ets",
+      "gloss": "árvore",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 18"
+      ],
+      "file": "he-af0decf1.mp3"
+    },
+    {
+      "num": 271,
+      "seq": 230,
+      "he": "אֶרֶץ",
+      "translit": "érets",
+      "gloss": "terra / país",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 18",
+        "módulo 6",
+        "no mundo real"
+      ],
+      "file": "he-007c9089.mp3"
+    },
+    {
+      "num": 309,
+      "seq": 231,
+      "he": "מִיץ",
+      "translit": "mits",
+      "gloss": "suco",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 18",
+        "no mundo real"
+      ],
+      "file": "he-797e00d5.mp3"
+    },
+    {
+      "num": 273,
+      "seq": 232,
+      "he": "רוֹצֶה",
+      "translit": "rotsé",
+      "gloss": "quer",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 18"
+      ],
+      "file": "he-66dc2846.mp3"
+    },
+    {
+      "num": 310,
+      "seq": 233,
+      "he": "צֵל",
+      "translit": "tsel",
+      "gloss": "sombra",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 18"
+      ],
+      "file": "he-fab5f261.mp3"
+    },
+    {
+      "num": 144,
+      "seq": 234,
+      "he": "רַק",
+      "translit": "rak",
+      "gloss": "só / apenas",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-0859becc.mp3"
+    },
+    {
+      "num": 143,
+      "seq": 235,
+      "he": "קוֹל",
+      "translit": "kol",
+      "gloss": "voz",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-7d56d33c.mp3"
+    },
+    {
+      "num": 259,
+      "seq": 236,
+      "he": "קָטָן",
+      "translit": "katan",
+      "gloss": "pequeno",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-25b28be5.mp3"
+    },
+    {
+      "num": 145,
+      "seq": 237,
+      "he": "תִּיק",
+      "translit": "tik",
+      "gloss": "bolsa / mochila",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-8e835cc6.mp3"
+    },
+    {
+      "num": 261,
+      "seq": 238,
+      "he": "שֶׁקֶט",
+      "translit": "shéket",
+      "gloss": "silêncio",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 19",
+        "no mundo real"
+      ],
+      "file": "he-423a5e0a.mp3"
+    },
+    {
+      "num": 311,
+      "seq": 239,
+      "he": "מָקוֹם",
+      "translit": "makom",
+      "gloss": "lugar",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-85dff43b.mp3"
+    },
+    {
+      "num": 50,
+      "seq": 240,
+      "he": "אַבָּא",
+      "translit": "abá",
+      "gloss": "pai",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 20",
+        "módulo 6"
+      ],
+      "file": "he-787bf52d.mp3"
+    },
+    {
+      "num": 47,
+      "seq": 241,
+      "he": "בַּיִת",
+      "translit": "báyit",
+      "gloss": "casa",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 20",
+        "módulo 6"
+      ],
+      "file": "he-e3d8894c.mp3"
+    },
+    {
+      "num": 258,
+      "seq": 242,
+      "he": "טוֹב",
+      "translit": "tov",
+      "gloss": "bom",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 20",
+        "módulo 6"
+      ],
+      "file": "he-d77ac2ce.mp3"
+    },
+    {
+      "num": 46,
+      "seq": 243,
+      "he": "לֵב",
+      "translit": "lev",
+      "gloss": "coração",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 20",
+        "módulo 6"
+      ],
+      "file": "he-e65e6d76.mp3"
+    },
+    {
+      "num": 58,
+      "seq": 244,
+      "he": "שַׁבָּת",
+      "translit": "shabat",
+      "gloss": "sábado / shabat",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 20",
+        "no mundo real"
+      ],
+      "file": "he-e3a280e7.mp3"
+    },
+    {
+      "num": 48,
+      "seq": 245,
+      "he": "בֹּקֶר",
+      "translit": "bóker",
+      "gloss": "manhã",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 20",
+        "módulo 6"
+      ],
+      "file": "he-0903eab6.mp3"
+    },
+    {
+      "num": 232,
+      "seq": 246,
+      "he": "כֶּלֶב",
+      "translit": "kélev",
+      "gloss": "cachorro",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 21",
+        "módulo 6"
+      ],
+      "file": "he-4d6868ff.mp3"
+    },
+    {
+      "num": 233,
+      "seq": 247,
+      "he": "כּוֹס",
+      "translit": "kos",
+      "gloss": "copo",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 21",
+        "módulo 6"
+      ],
+      "file": "he-fc626354.mp3"
+    },
+    {
+      "num": 121,
+      "seq": 248,
+      "he": "אֹכֶל",
+      "translit": "óchel",
+      "gloss": "comida",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 21",
+        "letra 3",
+        "módulo 6",
+        "no mundo real"
+      ],
+      "file": "he-e01dbc52.mp3"
+    },
+    {
+      "num": 13,
+      "seq": 249,
+      "he": "מֶלֶךְ",
+      "translit": "mélech",
+      "gloss": "rei",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 21",
+        "letra 1",
+        "módulo 6"
+      ],
+      "file": "he-327a17ba.mp3"
+    },
+    {
+      "num": 312,
+      "seq": 250,
+      "he": "דֶּרֶךְ",
+      "translit": "dérech",
+      "gloss": "caminho",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 21",
+        "módulo 6"
+      ],
+      "file": "he-4b8ae627.mp3"
+    },
+    {
+      "num": 234,
+      "seq": 251,
+      "he": "כַּדּוּר",
+      "translit": "kadur",
+      "gloss": "bola",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 21",
+        "módulo 6"
+      ],
+      "file": "he-33ab5bed.mp3"
+    },
+    {
+      "num": 192,
+      "seq": 252,
+      "he": "סֵפֶר",
+      "translit": "séfer",
+      "gloss": "livro",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 22",
+        "módulo 6",
+        "no mundo real"
+      ],
+      "file": "he-2089809d.mp3"
+    },
+    {
+      "num": 11,
+      "seq": 253,
+      "he": "מִשְׁפָּחָה",
+      "translit": "mishpachá",
+      "gloss": "família",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 22",
+        "letra 1",
+        "módulo 6"
+      ],
+      "file": "he-23cc1517.mp3"
+    },
+    {
+      "num": 73,
+      "seq": 254,
+      "he": "יָפֶה",
+      "translit": "yafé",
+      "gloss": "bonito",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 22",
+        "letra 6",
+        "módulo 6"
+      ],
+      "file": "he-4e526c06.mp3"
+    },
+    {
+      "num": 196,
+      "seq": 255,
+      "he": "כֶּסֶף",
+      "translit": "késef",
+      "gloss": "dinheiro",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 22",
+        "módulo 6",
+        "no mundo real"
+      ],
+      "file": "he-befe5eaf.mp3"
+    },
+    {
+      "num": 193,
+      "seq": 256,
+      "he": "סוֹף",
+      "translit": "sof",
+      "gloss": "fim",
+      "kind": "palavra",
+      "wave": 2,
+      "where": [
+        "letra 22",
+        "módulo 6"
+      ],
+      "file": "he-9a43cf8f.mp3"
+    },
+    {
+      "num": 61,
+      "seq": 257,
+      "he": "תֵּה",
+      "translit": "te",
+      "gloss": "chá",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 2"
+      ],
+      "file": "he-c37d0ed0.mp3"
+    },
+    {
+      "num": 62,
+      "seq": 258,
+      "he": "תַּפּוּחַ",
+      "translit": "tapúach",
+      "gloss": "maçã",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 2"
+      ],
+      "file": "he-9cb80a37.mp3"
+    },
+    {
+      "num": 122,
+      "seq": 259,
+      "he": "אֶתְמוֹל",
+      "translit": "etmol",
+      "gloss": "ontem",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 3"
+      ],
+      "file": "he-9386220e.mp3"
+    },
+    {
+      "num": 123,
+      "seq": 260,
+      "he": "אַחֲרֵי",
+      "translit": "acharei",
+      "gloss": "depois de",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 3"
+      ],
+      "file": "he-52e153b1.mp3"
+    },
+    {
+      "num": 133,
+      "seq": 261,
+      "he": "נָכוֹן",
+      "translit": "nachon",
+      "gloss": "correto",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 4"
+      ],
+      "file": "he-a3d31803.mp3"
+    },
+    {
+      "num": 135,
+      "seq": 262,
+      "he": "נֶחְמָד",
+      "translit": "nechmad",
+      "gloss": "simpático",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 4"
+      ],
+      "file": "he-8edea6bd.mp3"
+    },
+    {
+      "num": 84,
+      "seq": 263,
+      "he": "הַיּוֹם",
+      "translit": "hayom",
+      "gloss": "hoje",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-712ec1ea.mp3"
+    },
+    {
+      "num": 85,
+      "seq": 264,
+      "he": "הַכֹּל",
+      "translit": "hakol",
+      "gloss": "tudo",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 5"
+      ],
+      "file": "he-eb6524ab.mp3"
+    },
+    {
+      "num": 72,
+      "seq": 265,
+      "he": "יִשְׂרָאֵל",
+      "translit": "yisrael",
+      "gloss": "Israel",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 6"
+      ],
+      "file": "he-30688018.mp3"
+    },
+    {
+      "num": 208,
+      "seq": 266,
+      "he": "גְּלִידָה",
+      "translit": "glidá",
+      "gloss": "sorvete",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 7"
+      ],
+      "file": "he-1e2c676b.mp3"
+    },
+    {
+      "num": 210,
+      "seq": 267,
+      "he": "רֶגַע",
+      "translit": "réga",
+      "gloss": "um momento",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 7"
+      ],
+      "file": "he-442c813e.mp3"
+    },
+    {
+      "num": 157,
+      "seq": 268,
+      "he": "דּוֹדָה",
+      "translit": "dodá",
+      "gloss": "tia",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-8da70e33.mp3"
+    },
+    {
+      "num": 158,
+      "seq": 269,
+      "he": "מְדַבֵּר",
+      "translit": "medaber",
+      "gloss": "falo, fala",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-6d223a4d.mp3"
+    },
+    {
+      "num": 159,
+      "seq": 270,
+      "he": "עֶשְׂרִים",
+      "translit": "esrim",
+      "gloss": "vinte",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 8"
+      ],
+      "file": "he-89c714d2.mp3"
+    },
+    {
+      "num": 107,
+      "seq": 271,
+      "he": "רְחוֹב",
+      "translit": "rechov",
+      "gloss": "rua",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-1972aacc.mp3"
+    },
+    {
+      "num": 108,
+      "seq": 272,
+      "he": "חָבֵר",
+      "translit": "chaver",
+      "gloss": "amigo",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 11",
+        "letra 14"
+      ],
+      "file": "he-63795cfd.mp3"
+    },
+    {
+      "num": 109,
+      "seq": 273,
+      "he": "אַרְבַּע",
+      "translit": "arba",
+      "gloss": "quatro",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 11"
+      ],
+      "file": "he-26346b32.mp3"
+    },
+    {
+      "num": 95,
+      "seq": 274,
+      "he": "וְגַם",
+      "translit": "vegam",
+      "gloss": "e também",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-d303b67e.mp3"
+    },
+    {
+      "num": 96,
+      "seq": 275,
+      "he": "וֶרֶד",
+      "translit": "véred",
+      "gloss": "rosa (flor)",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-2309d153.mp3"
+    },
+    {
+      "num": 97,
+      "seq": 276,
+      "he": "עַכְשָׁו",
+      "translit": "achshav",
+      "gloss": "agora",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 12"
+      ],
+      "file": "he-fd9903d6.mp3"
+    },
+    {
+      "num": 249,
+      "seq": 277,
+      "he": "מַזָּל",
+      "translit": "mazal",
+      "gloss": "sorte",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 13"
+      ],
+      "file": "he-fb6429db.mp3"
+    },
+    {
+      "num": 169,
+      "seq": 278,
+      "he": "שִׂמְחָה",
+      "translit": "simchá",
+      "gloss": "alegria",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-f229c72b.mp3"
+    },
+    {
+      "num": 170,
+      "seq": 279,
+      "he": "חֲמִשָּׁה",
+      "translit": "chamishá",
+      "gloss": "cinco",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 14"
+      ],
+      "file": "he-a3de45d0.mp3"
+    },
+    {
+      "num": 263,
+      "seq": 280,
+      "he": "סְטוּדֶנְט",
+      "translit": "student",
+      "gloss": "estudante",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 15"
+      ],
+      "file": "he-d7a0542e.mp3"
+    },
+    {
+      "num": 224,
+      "seq": 281,
+      "he": "מְעַט",
+      "translit": "meat",
+      "gloss": "pouco",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 15",
+        "letra 17"
+      ],
+      "file": "he-3a7319f2.mp3"
+    },
+    {
+      "num": 182,
+      "seq": 282,
+      "he": "סְלִיחָה",
+      "translit": "slichá",
+      "gloss": "desculpe / com licença",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-5afd57ab.mp3"
+    },
+    {
+      "num": 183,
+      "seq": 283,
+      "he": "אוֹטוֹבּוּס",
+      "translit": "ótobus",
+      "gloss": "ônibus",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-ddf3f643.mp3"
+    },
+    {
+      "num": 184,
+      "seq": 284,
+      "he": "כִּסֵּא",
+      "translit": "kisé",
+      "gloss": "cadeira",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 16"
+      ],
+      "file": "he-bc55d5ff.mp3"
+    },
+    {
+      "num": 222,
+      "seq": 285,
+      "he": "עִבְרִית",
+      "translit": "ivrit",
+      "gloss": "hebraico",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-63edeaab.mp3"
+    },
+    {
+      "num": 223,
+      "seq": 286,
+      "he": "עוֹד",
+      "translit": "od",
+      "gloss": "mais, ainda",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 17"
+      ],
+      "file": "he-54727e8c.mp3"
+    },
+    {
+      "num": 275,
+      "seq": 287,
+      "he": "צָהֳרַיִם",
+      "translit": "tsohoráyim",
+      "gloss": "meio-dia",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 18"
+      ],
+      "file": "he-98577c5a.mp3"
+    },
+    {
+      "num": 49,
+      "seq": 288,
+      "he": "בְּבַקָּשָׁה",
+      "translit": "bevakashá",
+      "gloss": "por favor",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 18",
+        "letra 19",
+        "letra 20"
+      ],
+      "file": "he-f2a28ac7.mp3"
+    },
+    {
+      "num": 276,
+      "seq": 289,
+      "he": "מִצְוָה",
+      "translit": "mitsvá",
+      "gloss": "preceito, boa ação",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 18"
+      ],
+      "file": "he-1f43819c.mp3"
+    },
+    {
+      "num": 146,
+      "seq": 290,
+      "he": "קָפֶה",
+      "translit": "kafé",
+      "gloss": "café",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-1b13ecef.mp3"
+    },
+    {
+      "num": 147,
+      "seq": 291,
+      "he": "קָשֶׁה",
+      "translit": "kashé",
+      "gloss": "difícil",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 19"
+      ],
+      "file": "he-4ea4f697.mp3"
+    },
+    {
+      "num": 235,
+      "seq": 292,
+      "he": "כֵּן",
+      "translit": "ken",
+      "gloss": "sim",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-288bdbba.mp3"
+    },
+    {
+      "num": 236,
+      "seq": 293,
+      "he": "כִּתָּה",
+      "translit": "kitá",
+      "gloss": "sala de aula, turma",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-516eb6d0.mp3"
+    },
+    {
+      "num": 237,
+      "seq": 294,
+      "he": "לָלֶכֶת",
+      "translit": "laléchet",
+      "gloss": "ir, caminhar",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 21"
+      ],
+      "file": "he-80fe4371.mp3"
+    },
+    {
+      "num": 194,
+      "seq": 295,
+      "he": "פֹּה",
+      "translit": "po",
+      "gloss": "aqui",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-d8bd5b3d.mp3"
+    },
+    {
+      "num": 195,
+      "seq": 296,
+      "he": "טֶלֶפוֹן",
+      "translit": "télefon",
+      "gloss": "telefone",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "letra 22"
+      ],
+      "file": "he-81846849.mp3"
+    },
+    {
+      "num": 313,
+      "seq": 297,
+      "he": "צ׳",
+      "translit": "tch",
+      "gloss": "a letra צ com gerech — som tch",
+      "kind": "nome",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-4668e29b.mp3"
+    },
+    {
+      "num": 314,
+      "seq": 298,
+      "he": "צ׳ילה",
+      "translit": null,
+      "gloss": "Chile",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-5a122163.mp3"
+    },
+    {
+      "num": 315,
+      "seq": 299,
+      "he": "צ׳כיה",
+      "translit": null,
+      "gloss": "Tchéquia",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-b548336d.mp3"
+    },
+    {
+      "num": 316,
+      "seq": 300,
+      "he": "ואוצ׳ר",
+      "translit": null,
+      "gloss": "voucher",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-0e8af057.mp3"
+    },
+    {
+      "num": 317,
+      "seq": 301,
+      "he": "ג׳",
+      "translit": "dj",
+      "gloss": "a letra ג com gerech — som dj",
+      "kind": "nome",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-b79fc10c.mp3"
+    },
+    {
+      "num": 318,
+      "seq": 302,
+      "he": "ג׳ירף",
+      "translit": null,
+      "gloss": "girafa",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-7b264104.mp3"
+    },
+    {
+      "num": 319,
+      "seq": 303,
+      "he": "פיג׳מה",
+      "translit": null,
+      "gloss": "pijama",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-c13c6659.mp3"
+    },
+    {
+      "num": 320,
+      "seq": 304,
+      "he": "ג׳ל",
+      "translit": null,
+      "gloss": "gel",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-4051da10.mp3"
+    },
+    {
+      "num": 321,
+      "seq": 305,
+      "he": "ג׳וניור",
+      "translit": null,
+      "gloss": "júnior",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-d565da05.mp3"
+    },
+    {
+      "num": 322,
+      "seq": 306,
+      "he": "ז׳",
+      "translit": "j",
+      "gloss": "a letra ז com gerech — som j",
+      "kind": "nome",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-c16c585a.mp3"
+    },
+    {
+      "num": 323,
+      "seq": 307,
+      "he": "ז׳רגון",
+      "translit": null,
+      "gloss": "jargão",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-78b93e1d.mp3"
+    },
+    {
+      "num": 324,
+      "seq": 308,
+      "he": "ז׳סטה",
+      "translit": null,
+      "gloss": "gesto",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "módulo 7"
+      ],
+      "file": "he-6d56f9a4.mp3"
+    },
+    {
+      "num": 325,
+      "seq": 309,
+      "he": "בֹּקֶר טוֹב",
+      "translit": null,
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "no mundo real"
+      ],
+      "file": "he-564f6619.mp3"
+    },
+    {
+      "num": 326,
+      "seq": 310,
+      "he": "הַמֶּלֶךְ",
+      "translit": "hamélech",
+      "gloss": "o rei",
+      "kind": "palavra",
+      "wave": 3,
+      "where": [
+        "no mundo real"
+      ],
+      "file": "he-8bf4419d.mp3"
     }
   ]
 }

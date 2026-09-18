@@ -37,9 +37,9 @@ capaz de gerar e falha se algum escapar.
 | Checkpoints | 5 de módulo + os fechos de 6 e 7 + o desafio final |
 | Cenas «no mundo real» | 17, cada uma com a letra a partir da qual aparece |
 | Páginas estáticas | 48 |
-| Áudio | **nenhum**. Ver ARCHITECTURE §6.3 |
+| Áudio | **nenhum gravado**; o kit de produção está pronto — ARCHITECTURE §6.3 |
 | Persistência | localStorage. Supabase escrito, não conectado |
-| Testes | 65, incluindo o curso inteiro jogado do começo ao fim |
+| Testes | 71, incluindo o curso inteiro jogado do começo ao fim |
 
 O curso está completo: `/` → onboarding → `/inicio` → 22 lições → 5 checkpoints
 → módulos 6 e 7 → desafio final → `/concluido`. `tests/full-course.test.ts`

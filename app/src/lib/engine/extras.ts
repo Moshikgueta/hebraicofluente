@@ -39,6 +39,7 @@ export type FinalForm = {
 
 export type GerechLetter = {
   id: string; he: string; base: string; basePt: string; pt: string; likePt: string;
+  audioId: string;
   words: { he: string; pt: string; audioId: string }[];
 };
 

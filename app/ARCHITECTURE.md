@@ -302,21 +302,70 @@ mesma tela.
 
 ### 6.3 Áudio
 
-**Não existe áudio gravado.** O briefing é explícito: não gerar pronúncia falsa
-em silêncio. Então:
+**Não existe áudio gravado**, e o caminho até ele está pronto de ponta a ponta.
 
-- cada item de conteúdo carrega `audioId` (hash estável do hebraico pontuado,
-  já produzido por `tools/gen-audio.mjs`);
-- o `<AudioButton>` procura `/audio/<id>.mp3`, e **quando não existe mostra
-  estado "áudio em breve"** — desabilitado, rotulado, nunca silenciosamente
-  quebrado;
-- os exercícios de audição ficam **desativados e marcados** enquanto não houver
-  gravação, em vez de virarem adivinhação;
-- síntese do navegador **não** é usada como substituto: `he-IL` é fraca e a
-  maioria dos motores ignora o nikud, o que é inútil num curso cujo objetivo é
-  "esta letra faz este som".
+Não há síntese como substituto, de propósito. A voz `he-IL` dos navegadores
+ignora o nikud, e num curso cuja promessa inteira é *esta letra faz este som*
+uma pronúncia errada com ar de autoridade é pior do que silêncio: o aluno não
+tem como perceber o erro e passa a ensaiá-lo. Enquanto não houver gravação:
 
-Isto está sinalizado, não escondido.
+- cada item carrega `audioId` — hash estável do hebraico pontuado;
+- o `<AudioButton>` procura `/audio/<id>.mp3` e, não achando, mostra
+  **"áudio em breve"** — desabilitado, rotulado, nunca quebrado em silêncio;
+- os exercícios de audição são **retirados do quiz**, não transformados em
+  adivinhação (`buildLessonQuiz` recebe `audioAvailable` e um teste garante que
+  nenhum aparece enquanto o manifesto estiver vazio).
+
+**O kit de produção** (`npm run audio-script` · `npm run check-audio`):
+
+```
+data/audio.json               311 clipes em 3 ondas — GERADO
+audio/roteiro-de-gravacao.pdf 19 páginas: briefing de voz, briefing técnico,
+                              plano, e cada clipe numerado com o hebraico
+                              pontuado, a leitura, o significado e o NOME DO
+                              ARQUIVO que a tomada tem de virar
+audio/                        onde as gravações entram
+```
+
+Três decisões que valem explicar:
+
+1. **O nome do arquivo é um hash do hebraico pontuado, não uma posição.**
+   Numerar 001, 002, 003 quebraria tudo o que já foi gravado no dia em que uma
+   palavra entrasse na letra 3. Com hash, acrescentar palavra só cria um clipe
+   novo.
+2. **O número impresso é estável, a ordem do roteiro não.** O número vai para o
+   papel e não pode mudar no meio de uma sessão, então números já atribuídos são
+   lidos de volta e preservados. O roteiro, por outro lado, é ordenado pela
+   ordem do curso — o falante trabalha letra a letra, e os números simplesmente
+   saem fora de ordem.
+3. **Um clipe por som, não por aparição.** A lista sem nikud do módulo 6 aponta
+   para o gêmeo pontuado: `ספר` e `סֵפֶר` são a mesma palavra dita do mesmo
+   jeito, e pedir as duas desperdiça estúdio e convida a duas tomadas
+   diferentes de uma palavra só.
+
+**Ondas**, por ordem do que destrava mais:
+
+| Onda | Conteúdo | Clipes | Sessão |
+|---|---|---|---|
+| 1 | nomes das letras, sílabas, sinais de vogal | 158 | ~40 min |
+| 2 | o vocabulário de leitura | 99 | ~25 min |
+| 3 | reconhecimento, módulos 6 e 7, «no mundo real» | 54 | ~14 min |
+
+Só a onda 1 já faz toda lição ter áudio no que importa.
+
+**A ingestão é largar o arquivo.** `npm run check-audio` reporta cobertura por
+onda e três problemas, sendo o terceiro o que mais custa: *faltando*, *órfão*
+(a palavra saiu do curso — arquivar) e **desconhecido** — arquivo cujo nome não
+bate com clipe nenhum, quase sempre nome digitado errado, o que significa uma
+tomada que existe e está invisível. Depois disso, `npm run export-content` leva
+o que houver para o app e o botão vira play sozinho. Verificado: com um arquivo
+solto em `audio/`, o "áudio em breve" da letra Mem virou "Ouvir a letra" com
+0,7×, sem tocar em código.
+
+`tests/audio.test.ts` confere o contrato dos dois lados — `gen-audio.mjs` nomeia
+o que o falante grava e `export-content.mjs` nomeia o que o app pede; se os dois
+divergirem, o app pede arquivos que ninguém gravou e todo botão fica "em breve"
+para sempre.
 
 ### 6.4 Supabase
 

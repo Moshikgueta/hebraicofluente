@@ -153,6 +153,10 @@ templates/
   partials.js       badge, callout, tabela, exercício, documento
 tools/
   gen-stroke-order.py   ferramenta de autoria; gera assets/stroke-order/*.svg
+  gen-audio.mjs         o manifesto de clipes — data/audio.json
+  audio-script.mjs      o roteiro de gravação, para o estúdio
+  check-audio.mjs       o que chegou, o que falta, o que tem nome errado
+  export-content.mjs    data/ → app/content/, e as gravações → app/public/audio/
 scripts/
   build.js          data + templates → dist/
   validate.js       as 19 regras

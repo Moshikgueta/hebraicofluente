@@ -337,14 +337,15 @@ function GerechStage({ onDone }: { onDone: () => void }) {
 
       <div className="grid gap-3">
         {G.letters.map(g => (
-          <Card key={g.id} className="p-5 grid grid-cols-[auto_auto_auto_1fr] items-center gap-4">
+          <Card key={g.id} className="p-5 grid grid-cols-[auto_auto_auto_1fr_auto] items-center gap-4">
             <He size="lg" dim>{g.base}</He>
             <span aria-hidden className="text-ink-muted">→</span>
             <He size="lg">{g.he}</He>
-            <span className="grid gap-0.5">
+            <span className="grid gap-0.5 min-w-0">
               <span className="font-ui text-[16px] font-semibold text-[var(--teal-band)]">{g.pt}</span>
               <span className="font-ui text-[12.5px] text-ink-muted leading-snug">{g.likePt}</span>
             </span>
+            <AudioButton audioId={g.audioId} label="" size="sm" />
           </Card>
         ))}
       </div>
@@ -376,9 +377,10 @@ function GerechWordsStage({ onDone }: { onDone: () => void }) {
 
       {extras.gerech.letters.map(g => (
         <Card key={g.id} className="p-5 grid gap-3">
-          <div className="flex items-baseline gap-3">
+          <div className="flex items-center gap-3">
             <He size="lg">{g.he}</He>
             <span className="font-ui text-[15px] font-semibold text-[var(--teal-band)]">{g.pt}</span>
+            <span className="ml-auto"><AudioButton audioId={g.audioId} label="" size="sm" /></span>
           </div>
           <ul className="grid gap-2">
             {g.words.map(w => (

@@ -222,6 +222,9 @@ function main() {
       signHe: NFC(extras.gerech.signHe),
       letters: extras.gerech.letters.map(g => ({
         ...g, he: NFC(g.he), base: NFC(g.base),
+        /* The letter itself is a clip: module 7 is three SOUNDS, and hearing
+           צ׳ is the thing the module exists to teach. */
+        audioId: audioIdFor(g.he),
         words: g.words.map(w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) }))
       }))
     }
@@ -244,7 +247,22 @@ function main() {
   mkdirSync(pub, { recursive: true });
   cpSync(join(ROOT, 'assets/fonts'), join(pub, 'fonts'), { recursive: true });
   cpSync(join(ROOT, 'assets/stroke-order'), join(pub, 'stroke-order'), { recursive: true });
+
+  /* The recordings land in audio/ at the repo root — one obvious place for a
+     speaker to drop files — and are copied in from there. The app serves
+     whatever is present and marks the rest as "áudio em breve"; nothing has to
+     be edited when a wave arrives. */
+  const drop = join(ROOT, 'audio');
+  /* Cleared, not merged. Copying without clearing left a withdrawn recording in
+     app/public/audio/, so the app went on offering a clip that had been pulled —
+     and the manifest, which is built from this directory, went on claiming it. */
+  rmSync(join(pub, 'audio'), { recursive: true, force: true });
   mkdirSync(join(pub, 'audio'), { recursive: true });
+  if (existsSync(drop)) {
+    for (const f of readdirSync(drop).filter(f => f.endsWith('.mp3'))) {
+      cpSync(join(drop, f), join(pub, 'audio', f));
+    }
+  }
 
 
   /* The audio manifest is generated from what is actually on disk, so the app
