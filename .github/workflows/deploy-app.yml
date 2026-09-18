@@ -67,6 +67,15 @@ jobs:
       # Jekyll would otherwise swallow Next's _next/ directory.
       - run: touch app/out/.nojekyll
 
+      # Pages has to be switched on once, by hand, in the repository settings:
+      #   Settings → Pages → Build and deployment → Source: GitHub Actions
+      #
+      # `enablement: true` asks the action to do it, but the workflow's
+      # GITHUB_TOKEN cannot create a Pages site — that needs repo-admin rights
+      # the token is not granted. So the first run of this workflow fails with
+      # "Resource not accessible by integration" until the switch is flipped,
+      # and every run after it succeeds. Left in place because it costs nothing
+      # once Pages exists: the action finds the site and never tries to create.
       - uses: actions/configure-pages@v5
         with:
           enablement: true
