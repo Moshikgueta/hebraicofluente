@@ -80,6 +80,27 @@ for p in "/" "/metodo/" "/cursos/" "/cursos/alfabetizacao/" "/cursos/hebraico-a1
   espera "$p abre" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B$p")"
 done
 
+# Status 200 não prova que a página aparece. Um HTML vazio, um bundle que
+# some ou uma folha de estilo 404 devolvem 200 e mostram uma tela branca — que
+# do lado de quem abre é indistinguível de "o site não funciona". Estas três
+# checagens olham o CONTEÚDO.
+echo "A capa aparece de verdade"
+HOME_HTML="$(G --max-time 20 -H 'Sec-Fetch-Dest: document' "$B/")"
+espera "o HTML tem tamanho de página" true \
+  "$([ "${#HOME_HTML}" -gt 3000 ] && echo true || echo false)"
+espera "traz o texto da capa" true \
+  "$(printf '%s' "$HOME_HTML" | grep -q 'olha para o hebraico' && echo true || echo false)"
+
+# O primeiro script do Next referenciado pela capa. Se ele não vier, o
+# navegador mostra o texto mas nada funciona — e um erro de caminho de
+# ativos aparece exatamente assim.
+ASSET="$(printf '%s' "$HOME_HTML" | grep -oE '/_next/static/[^"]+\.js' | head -1)"
+if [ -n "$ASSET" ]; then
+  espera "o JavaScript da página carrega" 200 "$(code "$B$ASSET")"
+else
+  espera "a capa referencia o JavaScript do Next" true false
+fi
+
 echo "Sessão e portão"
 espera "/api/me sem sessão recusa"            401 "$(code $B/api/me)"
 espera "rota paga sem sessão manda ao login"  "$B/entrar/?next=%2Flicao%2Falef%2F" \
