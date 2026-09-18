@@ -610,3 +610,162 @@ passava em silêncio.
 Dez cartas opcionais, desbloqueadas por letras dominadas, fora do caminho.
 Escritas à mão (não geradas), cada uma com a base da afirmação em `sources`, e
 o arquivo está marcado como **precisando da sua revisão antes de publicar**.
+
+---
+
+## 10. O exame final e o certificado
+
+O curso terminava num desafio: trinta perguntas, uma nota, fim. Uma nota
+sozinha esconde a informação de que o aluno precisa, porque ler é várias
+habilidades empilhadas e dá para ir bem em três delas e mesmo assim não ler.
+
+**`lib/engine/exam.ts`** — cinco partes, seis quando houver gravações: as
+letras, os sinais de vogal, sílabas, palavras, escuta e *hebraico de verdade*
+(placas, rótulos, recibos). Cada uma com nota própria e, no relatório, um link
+para treinar exatamente aquilo na Academia.
+
+Três regras herdadas e uma própria:
+
+- a regra de ordem vale aqui como em todo lugar;
+- nada que dependa de gravação aparece antes de a gravação existir;
+- nada novo é ensinado — exame que apresenta matéria é aula;
+- **cada tentativa é um exame DIFERENTE.** A ordem das letras entra no seed,
+  não só o embaralhamento das opções. Sem isso a segunda tentativa era a mesma
+  prova (31 dos 35 itens repetidos) e o aluno estaria lembrando, não lendo.
+
+A banda de reprovação não usa a palavra "reprovado" — há um teste que o
+garante. Um adulto iniciante que ouve isso vai embora; o que ele precisa ouvir
+é qual parte derrubou a nota e que a retomada é livre.
+
+**`lib/certificate.ts` + `/certificado`** — sai de dois fatos e de mais nada:
+as 22 letras concluídas e o exame aprovado (70%). Desenhado em canvas no
+próprio aparelho, em quadrado ou paisagem; o Web Share leva o ARQUIVO no
+celular. A imagem diz o que ele é e o que ele não é — não é diploma nem
+certificação reconhecida.
+
+O estado guarda o dia da PRIMEIRA aprovação (uma tentativa pior depois não tira
+o certificado), a melhor nota, o número de tentativas e as partes da ÚLTIMA
+sessão — não um composto do melhor de cada uma, que descreveria um exame que
+nunca aconteceu.
+
+---
+
+## 11. A plataforma
+
+Hebraico Fluente deixou de ser um curso com uma capa e passou a ser uma
+plataforma: site público, catálogo, conta, compra e curso na mesma casa e no
+mesmo sistema visual. A trilha é Alfabetização → A1 → A2 → B1, na mesma conta.
+
+### 11.1 O catálogo é um arquivo
+
+`data/courses.json` → `tools/export-content.mjs` → `app/content/courses.json` →
+`lib/catalog.ts`. Quatro cursos com nível, objetivos, módulos, preço, parcelas,
+desconto do PIX e meses de acesso.
+
+Acrescentar um curso é acrescentar um objeto. `/cursos/<slug>` e
+`/checkout/<slug>` são geradas do catálogo por `generateStaticParams`, e o
+painel passa a oferecê-lo sozinho — nenhuma rota a escrever.
+
+Uma única coisa é resolvida na exportação em vez de copiada: um curso que diz
+`modulesFrom: "alfabetizacao"` recebe os módulos do `course.json` de verdade.
+A página de vendas não pode prometer módulos diferentes dos que o curso tem.
+
+`status: 'soon'` é conteúdo real, não marcador: um curso que ainda não existe
+tem página, módulos e objetivos, porque é assim que o aluno decide continuar
+depois da alfabetização. O que ele não tem é botão de compra. E `engine: null`
+fecha a porta mesmo que alguém marque o curso como disponível por engano.
+
+### 11.2 A conta
+
+`lib/account/` — uma interface (`PlatformApi`) e duas implementações:
+
+| | `worker` | `local` |
+|---|---|---|
+| onde | produção | `npm run dev`, GitHub Pages |
+| guarda | D1 | localStorage do visitante |
+| cobra | Mercado Pago | nada |
+| escolhido por | `NEXT_PUBLIC_PLATFORM_API=worker` | o padrão |
+
+O adaptador local guarda senha com o MESMO PBKDF2 de 310.000 iterações do
+servidor. Um mock que guarda senha em texto puro ensina o formato errado a quem
+for ler o código depois, e mais cedo ou mais tarde alguém copia o mock. E ele
+não se disfarça: `DemoNotice` diz, em toda página, que nada ali é cobrança real.
+
+**O portão espera.** Enquanto `/api/me` não respondeu, a resposta não é "não
+está logado" — é "ainda não sei". Confundir as duas manda para a página de
+vendas quem já pagou, toda vez que ele recarrega. É por isso que `ready` é
+separado de `session` em `account/store.tsx` e todo portão espera por ele.
+
+**O progresso continua sendo do APARELHO**, não da conta. É escolha, não
+esquecimento: o curso funciona sem conta desde o primeiro dia, e sincronizar
+exige decidir o que fazer quando dois aparelhos discordam — um problema de
+fusão, não de armazenamento. Está dito na FAQ e na página de perfil, onde a
+pessoa está olhando os próprios números.
+
+### 11.3 O servidor
+
+`worker/` — Cloudflare Worker à frente dos arquivos estáticos, D1, cookie de
+sessão assinado, Mercado Pago.
+
+O **cookie carrega só identidade**. Não carrega o que a pessoa comprou. Pôr os
+cursos dentro dele economizaria uma consulta por requisição e faria um estorno
+levar até sete dias para fechar a porta. O cookie diz QUEM; o banco diz O QUÊ.
+
+O **direito de acesso é uma linha por curso** (`entitlements`), não um campo
+`pago_ate` na conta. Com um campo só, o dia em que o A1 sair exige migrar todo
+mundo e reescrever cada consulta.
+
+O **preço sai de `data/courses.json`, lido pelo próprio Worker**. Nunca do
+corpo da requisição. Uma API que aceita `{ amount: 1 }` vende o curso por um
+real, e isso é o primeiro teste de qualquer um que abra as ferramentas de
+desenvolvedor.
+
+**Três caminhos, uma função de liberação.** Um pagamento chega por webhook
+(assinado), por `verify` (o comprador está com a tela aberta) ou pela varredura
+do cron (de cinco em cinco minutos). Os três chamam o mesmo `applyPayment`. Um
+caminho só não basta — webhook se perde, aba fecha, e o cron sozinho faria o
+comprador esperar dez minutos olhando para "aguardando". Três caminhos
+redundantes com UMA regra de liberação é resiliência sem divergência.
+
+Quatro travas em `applyPayment`, cada uma fechando um jeito conhecido de dar o
+curso de graça: evento repetido não faz nada (UNIQUE em `payment_events`);
+pedido já pago não faz nada; valor menor que o pedido não libera; moeda
+diferente não libera.
+
+**O webhook é verificado e mesmo assim não é acreditado.** A assinatura
+(`x-signature`, HMAC-SHA256, com janela de cinco minutos contra reenvio) prova
+QUEM mandou. O status vem de uma consulta nossa à API. Sem
+`MP_WEBHOOK_SECRET` configurado, a rota recusa tudo — falhar fechado, porque um
+webhook sem verificação é uma rota pública que libera curso.
+
+**Acesso nunca sai dos parâmetros do redirect.** A volta da Mercado Pago traz
+`status=approved` na URL e qualquer pessoa consegue digitar isso na barra de
+endereço. `ObrigadoClient` usa da URL apenas o id do pedido — qual conferir.
+
+### 11.4 O que o portão NÃO resolve  ⚠
+
+`worker/src/gate.js` recusa as rotas pagas sem cookie: ninguém abre
+`/licao/alef/` por um link e lê a lição.
+
+**Mas o conteúdo em si ainda viaja no pacote JavaScript.** O curso é um app
+estático, e as palavras, as lições e os exercícios estão dentro dos arquivos de
+`/_next/`, que são servidos livremente — têm de ser, porque a página pública os
+carrega. Quem souber abrir a aba de rede baixa o conteúdo sem pagar.
+
+Fechar isso exige a outra metade, planejada e não escrita: o conteúdo sair do
+pacote e passar a ser buscado em `/api/content/*`, atrás do mesmo cookie. Até
+lá, **isto é um portão de produto, não controle de acesso**, e não deve ser
+descrito a ninguém como proteção de conteúdo.
+
+### 11.5 Duas implantações
+
+| | produção | prévia |
+|---|---|---|
+| onde | Cloudflare Workers | GitHub Pages |
+| workflow | `deploy-worker.yml` | `deploy-app.yml` |
+| build | `NEXT_PUBLIC_PLATFORM_API=worker` | sem a variável |
+| contas | D1 | navegador do visitante |
+| tarja | não | sim |
+
+A prévia existe para revisar a interface inteira sem Cloudflare, sem banco e
+sem chave de pagamento. A mesma base de código, uma variável de diferença.

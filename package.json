@@ -14,7 +14,15 @@
     "pack": "node tools/pack.mjs",
     "audio-manifest": "node tools/gen-audio.mjs",
     "audio-script": "node tools/gen-audio.mjs && node tools/audio-script.mjs",
-    "check-audio": "node tools/check-audio.mjs"
+    "check-audio": "node tools/check-audio.mjs",
+
+    "build:platform": "cd app && NEXT_PUBLIC_PLATFORM_API=worker npm run build",
+    "deploy": "npm run build:platform && wrangler deploy",
+    "db:init": "wrangler d1 execute hebraico-fluente --file=worker/schema.sql --remote",
+    "db:init:local": "wrangler d1 execute hebraico-fluente --file=worker/schema.sql --local",
+    "dev:worker": "npm run build:platform && wrangler dev"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "wrangler": "^4.42.0"
+  }
 }

@@ -1,10 +1,20 @@
-# Deploys the interactive course to GitHub Pages.
+# Publica a PRÉVIA da plataforma no GitHub Pages.
 #
-# The whole app is static — 48 prerendered pages, and the only state is the
-# learner's own, in their browser — so there is nothing to run at the edge and
-# nothing to pay for. `npm run build` regenerates app/content/ from data/ first,
-# which is why the content directory is gitignored: the site is always built
-# from the same source the printed book is.
+# ⚠ Esta NÃO é a implantação de produção. Ela existe para revisar a interface
+# inteira — site, catálogo, telas de conta e de checkout — sem Cloudflare, sem
+# banco e sem chave de pagamento.
+#
+# Sem NEXT_PUBLIC_PLATFORM_API, o app usa o adaptador local: contas e pedidos
+# ficam no navegador de quem abre, nada é cobrado, e uma tarja diz isso em toda
+# página (app/src/components/shell/DemoNotice.tsx). O portão de rota aqui é só
+# do lado do cliente — não há Worker para aplicá-lo.
+#
+# A produção é .github/workflows/deploy-worker.yml (Cloudflare Workers + D1 +
+# Mercado Pago).
+#
+# `npm run build` regenera app/content/ a partir de data/ antes de tudo, que é
+# por que o diretório de conteúdo está no .gitignore: o site sai sempre da
+# mesma fonte que o livro impresso.
 #
 # NEXT_PUBLIC_BASE_PATH is what makes a project page work. Pages serves this at
 # /hebraicofluente, and every URL the app builds by hand — an audio clip, a

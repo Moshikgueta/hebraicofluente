@@ -1,0 +1,105 @@
+# Publica a PLATAFORMA no Cloudflare Workers.
+#
+# É esta a implantação de produção: o Worker serve o site, responde a /api/*,
+# guarda contas e pedidos no D1 e fala com a Mercado Pago.
+#
+# A outra (deploy-app.yml → GitHub Pages) continua existindo e publica a mesma
+# interface em MODO DEMONSTRAÇÃO, sem servidor. As duas não se atropelam
+# porque a diferença é uma variável de build: NEXT_PUBLIC_PLATFORM_API.
+#
+# ── ANTES DA PRIMEIRA EXECUÇÃO ────────────────────────────────────────────
+#
+#  1. Criar o banco e colar o id em wrangler.toml:
+#       npx wrangler d1 create hebraico-fluente
+#  2. Aplicar o esquema:
+#       npm run db:init
+#  3. Painel da Cloudflare → o Worker → Settings → Variables and Secrets,
+#     tipo Secret: SESSION_SECRET, MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET.
+#     (Ver .env.example. Nenhum deles pode estar também no wrangler.toml.)
+#  4. Segredos deste repositório (Settings → Secrets and variables → Actions):
+#       CLOUDFLARE_API_TOKEN   — permissão "Edit Cloudflare Workers"
+#       CLOUDFLARE_ACCOUNT_ID
+#  5. Painel da Mercado Pago → Webhooks → apontar para
+#       https://<seu-domínio>/api/pay/webhook
+#     e copiar a "assinatura secreta" para MP_WEBHOOK_SECRET.
+#
+# Sem o passo 4 o job não roda: ele verifica o segredo e para com uma
+# explicação, em vez de falhar no meio com um erro de autenticação do wrangler.
+
+name: Deploy platform to Cloudflare
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'data/**'
+      - 'worker/**'
+      - 'wrangler.toml'
+      - 'tools/export-content.mjs'
+      - '.github/workflows/deploy-worker.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Há credencial da Cloudflare?
+        id: guard
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::warning::CLOUDFLARE_API_TOKEN não está configurado — pulando a publicação. Ver o cabeçalho deste arquivo."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.guard.outputs.ok == 'true'
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: npm ci
+
+      # Os testes são o portão. A regra de ordem em particular: uma versão
+      # quebrada que ainda assim publicasse poria uma lição na frente de um
+      # aluno com uma letra que ele não aprendeu. E agora também o que decide
+      # preço e acesso (tests/platform.test.ts, tests/worker.test.ts).
+      - name: Test
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: npm test
+
+      # NEXT_PUBLIC_PLATFORM_API=worker é o que faz o app falar com /api/* em
+      # vez do adaptador local. Sem isto, a plataforma publicada guardaria
+      # contas no navegador de cada visitante — com uma tarja dizendo isso,
+      # mas ainda assim errado.
+      - name: Build (modo plataforma)
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        env:
+          NEXT_PUBLIC_PLATFORM_API: worker
+        run: npm run build
+
+      - name: Deploy
+        if: steps.guard.outputs.ok == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

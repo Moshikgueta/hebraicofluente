@@ -13,3 +13,8 @@ app/next-env.d.ts
 audio/*.mp3
 audio/*.wav
 audio/room-tone.*
+
+# Segredos locais do Worker (wrangler dev). Ver .env.example.
+.dev.vars
+.wrangler/
+app/out/

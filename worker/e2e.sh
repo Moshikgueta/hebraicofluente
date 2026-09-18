@@ -1,0 +1,98 @@
+#!/bin/bash
+# Prova de ponta a ponta do Worker, contra um `wrangler dev` local.
+# ──────────────────────────────────────────────────────────────────────────
+# O que ela cobre é o que não pode estar errado: quem entra, quem é barrado,
+# quanto é cobrado e o que acontece quando o acesso vence. O que ela NÃO cobre
+# é a Mercado Pago de verdade — com um token falso, criar um pedido tem de
+# falhar limpo (502) e deixar o pedido registrado, e é isso que o passo C
+# verifica.
+#
+# Rodar:
+#   npm run build:platform
+#   npx wrangler d1 execute hebraico-fluente --file=worker/schema.sql --local
+#   npx wrangler dev --local --port 8787 &
+#   bash worker/e2e.sh
+#
+# Precisa de um .dev.vars com SESSION_SECRET (ver .env.example). Os valores de
+# Mercado Pago podem ser falsos: nada aqui chega a cobrar.
+#
+# ⚠ Não use `curl -o /dev/stdout` neste arquivo. Quando a saída do script está
+# redirecionada para um arquivo, /dev/stdout É esse arquivo, e o curl o abre
+# truncando — cada chamada apagaria tudo que veio antes. Levou uma execução
+# inteira para descobrir isso.
+
+set -u
+B="${HF_BASE:-http://127.0.0.1:8787}"
+JAR="$(mktemp)"
+MAIL="teste$RANDOM@exemplo.br"
+fails=0
+
+G() { curl -s --noproxy '*' "$@"; }
+
+# espera <descrição> <esperado> <obtido>
+espera() {
+  if [ "$2" = "$3" ]; then
+    printf '  ✓ %s\n' "$1"
+  else
+    printf '  ✗ %s — esperava %s, veio %s\n' "$1" "$2" "$3"
+    fails=$((fails + 1))
+  fi
+}
+
+code()     { G -o /dev/null -w '%{http_code}' "$@"; }
+location() { G -o /dev/null -D - -H 'Sec-Fetch-Dest: document' "$@" \
+               | grep -i '^location:' | sed 's/^[Ll]ocation: *//' | tr -d '\r'; }
+
+echo "Sessão e portão"
+espera "/api/me sem sessão recusa"            401 "$(code $B/api/me)"
+espera "rota paga sem sessão manda ao login"  "$B/entrar/?next=%2Flicao%2Falef%2F" \
+       "$(location $B/licao/alef/)"
+espera "página pública abre"                  200 "$(code $B/cursos/alfabetizacao/)"
+
+echo "Conta"
+espera "criar conta" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
+  -H 'content-type: application/json' \
+  -d "{\"name\":\"Teste\",\"email\":\"$MAIL\",\"password\":\"cavalo correto\"}")"
+espera "/api/me com sessão" 200 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' $B/api/me)"
+espera "e-mail repetido" 409 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
+  -H 'content-type: application/json' \
+  -d "{\"name\":\"Outro\",\"email\":\"$MAIL\",\"password\":\"outra senha\"}")"
+espera "senha curta" 400 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
+  -H 'content-type: application/json' -d '{"email":"x@exemplo.br","password":"1234"}')"
+espera "senha errada" 401 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/login \
+  -H 'content-type: application/json' -d "{\"email\":\"$MAIL\",\"password\":\"errada!!\"}")"
+# O e-mail é normalizado: entrar com outra caixa e espaços tem de funcionar.
+espera "e-mail normalizado" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/auth/login \
+  -H 'content-type: application/json' \
+  -d "{\"email\":\"  $(echo "$MAIL" | tr '[:lower:]' '[:upper:]') \",\"password\":\"cavalo correto\"}")"
+
+echo "Portão com conta, sem compra"
+espera "vai para a página do curso" "$B/cursos/alfabetizacao/" "$(location -b "$JAR" $B/meu-hebraico/)"
+
+echo "Cobrança"
+# O valor cobrado sai do catálogo: R$147 com 10% de desconto no PIX = 13230
+# centavos. Com um token falso a chamada externa falha — mas o pedido nasce e
+# fica registrado, com o valor certo.
+G -b "$JAR" -o /dev/null -X POST $B/api/pay/create \
+  -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}'
+espera "o pedido ficou registrado com o preço do servidor" 13230 \
+  "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
+espera "curso fora de venda é recusado" 404 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' \
+  -X POST $B/api/pay/create -H 'content-type: application/json' \
+  -d '{"courseSlug":"hebraico-a1","method":"pix"}')"
+espera "pedido de outra pessoa não é lido" 404 "$(code -b "$JAR" "$B/api/pay/verify?order=HFNAOEXISTE")"
+
+echo "Webhook"
+espera "sem assinatura, recusa" 401 "$(code -X POST "$B/api/pay/webhook?type=payment&data.id=1")"
+
+echo "Saída"
+G -b "$JAR" -c "$JAR" -o /dev/null -X POST $B/api/auth/logout
+espera "depois de sair, /api/me recusa" 401 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' $B/api/me)"
+
+rm -f "$JAR"
+if [ "$fails" -eq 0 ]; then
+  echo "tudo certo."
+else
+  echo "$fails verificação(ões) falharam."
+  exit 1
+fi
