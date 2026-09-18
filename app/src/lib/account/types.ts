@@ -58,7 +58,7 @@ export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired'
 
 export type AuthErrorCode =
   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
-  | 'not-signed-in' | 'offline' | 'server' | 'rate-limited';
+  | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'payments-off';
 
 export class AuthError extends Error {
   constructor(readonly code: AuthErrorCode, message?: string) {
@@ -76,7 +76,11 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
   'not-signed-in': 'Você precisa entrar para continuar.',
   'offline': 'Sem conexão. Tente de novo em um instante.',
   'server': 'Alguma coisa quebrou do nosso lado. Tente de novo.',
-  'rate-limited': 'Tentativas demais. Espere um minuto.'
+  'rate-limited': 'Tentativas demais. Espere um minuto.',
+  /* Não é erro: é a plataforma no ar antes de o meio de pagamento estar
+     ligado. Dizer isso evita que alguém tente três vezes e conclua que o
+     cartão dele foi recusado. */
+  'payments-off': 'O pagamento ainda não está ativado. Escreva para contato@hebraicofluente.com.br e liberamos seu acesso.'
 };
 
 /* ── regras de acesso ────────────────────────────────────────────────────

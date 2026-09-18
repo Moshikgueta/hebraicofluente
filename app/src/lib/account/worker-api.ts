@@ -25,7 +25,7 @@ const BASE = process.env.NEXT_PUBLIC_API_BASE ?? '';
 
 const CODES: readonly string[] = [
   'bad-credentials', 'email-taken', 'weak-password', 'invalid-email',
-  'not-signed-in', 'offline', 'server', 'rate-limited'
+  'not-signed-in', 'offline', 'server', 'rate-limited', 'payments-off'
 ];
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {

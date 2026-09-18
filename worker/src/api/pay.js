@@ -60,6 +60,12 @@ export async function create({ request, env }) {
   const course = getCourse(body.courseSlug);
   if (!isSellable(course)) return fail('server', 404);
 
+  /* A plataforma pode estar no ar antes de a conta da Mercado Pago existir —
+     e esse é um estado normal, não uma falha. Sem token não se cria pedido
+     nenhum: melhor uma tela que diz "o pagamento ainda não está ligado" do
+     que um 502 genérico e um pedido pendente que nunca vai compensar. */
+  if (!env.MP_ACCESS_TOKEN) return fail('payments-off', 503);
+
   /* Já é dono: não cobra de novo. Vender duas vezes a mesma coisa para a mesma
      pessoa é estorno garantido — e é um erro fácil de cometer quando o
      comprador abre o checkout por um link antigo. */

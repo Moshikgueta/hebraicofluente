@@ -56,6 +56,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
   const [busy, setBusy] = useState(false);
   const [gaveUp, setGaveUp] = useState(false);
   const [copied, setCopied] = useState(false);
+  /* Estado próprio, e não uma mensagem de erro vermelha: a plataforma pode
+     estar no ar antes da conta da Mercado Pago existir, e isso não é falha. */
+  const [paymentsOff, setPaymentsOff] = useState(false);
 
   const owned = account.can(slug);
   const parcela = installment(c.price);
@@ -113,11 +116,40 @@ export function CheckoutClient({ slug }: { slug: string }) {
       }
       setOrder(created);
     } catch (e) {
-      setError(e instanceof AuthError ? e.message : MESSAGES.server);
+      if (e instanceof AuthError && e.code === 'payments-off') setPaymentsOff(true);
+      else setError(e instanceof AuthError ? e.message : MESSAGES.server);
     } finally {
       setBusy(false);
     }
   }, [account, slug, method, parcela.n]);
+
+  /* ── o pagamento ainda não foi ligado ────────────────────────────── */
+  if (paymentsOff) {
+    return (
+      <Shell course={c}>
+        <Card tone="amber" className="p-6 grid gap-3">
+          <Badge>Em configuração</Badge>
+          <h2 className="font-display text-[21px] font-bold text-ink">
+            O pagamento ainda não está ativado.
+          </h2>
+          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+            A plataforma já está no ar, mas o meio de pagamento está sendo
+            configurado. Sua conta ficou criada — escreva para o endereço abaixo
+            com este e-mail e liberamos o acesso na mão enquanto isso.
+          </p>
+          <p className="font-ui text-[14px] text-ink">
+            <a href="mailto:contato@hebraicofluente.com.br"
+               className="text-[var(--teal-band)] font-medium hover:underline">
+              contato@hebraicofluente.com.br
+            </a>
+          </p>
+          <LinkButton href={`/cursos/${c.slug}`} variant="secondary" className="justify-self-start">
+            Voltar ao curso
+          </LinkButton>
+        </Card>
+      </Shell>
+    );
+  }
 
   /* ── já é dono ───────────────────────────────────────────────────── */
   if (account.ready && owned && order?.status !== 'paid') {
