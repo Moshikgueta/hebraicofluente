@@ -77,7 +77,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
   const nextModule = course.modules.find(m => m.n === mod.n + 1);
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 reading">
       <header className="grid gap-4">
         <div className="flex items-center justify-between gap-3">
           <Link href={`/modulo/${mod.n}`}

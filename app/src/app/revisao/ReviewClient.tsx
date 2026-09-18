@@ -55,7 +55,7 @@ export function ReviewClient() {
 
   if (phase === 'done' && result) {
     return (
-      <div className="grid gap-5">
+      <div className="focus-col grid gap-5">
         <Milestone
           kicker={`${result.correct} de ${result.total}`}
           title="Revisão feita."
@@ -82,7 +82,7 @@ export function ReviewClient() {
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="focus-col grid gap-6">
       <header className="grid gap-2">
         <Badge tone="neutral">3 minutos</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold">Revisão rápida</h1>

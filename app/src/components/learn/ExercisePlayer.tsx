@@ -21,6 +21,7 @@ import { Card } from '@/components/ui/Card';
 import type { Exercise } from '@/lib/engine/exercises';
 import { letterIdOf } from '@/lib/engine/exercises';
 import { useProgress } from '@/lib/state/store';
+import { clusters } from '@/lib/hebrew';
 
 export type PlayerResult = { correct: number; total: number; score: number; missed: string[] };
 
@@ -80,6 +81,14 @@ export function ExercisePlayer({
 
   if (!ex) return null;
 
+  /* One column under the thumb — a phone has no width to give away. From sm up,
+     short Hebrew options become TILES instead of 800px-wide rows: a single
+     glyph parked at the left edge of a full-width bar makes the eye travel the
+     whole screen for nothing, and four of them cost four sweeps. Long options
+     (a Portuguese meaning, a whole sentence) stay stacked, where a list is
+     still the readable shape. */
+  const tiles = tileColumns(ex);
+
   return (
     <div className="grid gap-5">
       <header className="grid gap-3">
@@ -104,7 +113,7 @@ export function ExercisePlayer({
 
         <Stimulus ex={ex} />
 
-        <ul className="grid gap-2.5" role="list">
+        <ul className={`grid gap-2.5 ${tiles}`} role="list">
           {ex.options.map((opt, idx) => {
             const state = !settled ? 'idle'
               : idx === ex.answer ? 'right'
@@ -113,6 +122,7 @@ export function ExercisePlayer({
               <li key={`${ex.id}-${idx}`}>
                 <OptionButton
                   ex={ex} option={opt} index={idx} state={state}
+                  tile={tiles !== ''}
                   onClick={() => choose(idx)} disabled={settled}
                 />
               </li>
@@ -181,19 +191,36 @@ function Stimulus({ ex }: { ex: Exercise }) {
   }
 }
 
+/* Which exercises answer in Hebrew. Hoisted out of the button because the list
+   layout needs to know it too. */
+const hebrewOptionsOf = (ex: Exercise): boolean =>
+  ex.kind === 'letter-recognition' || ex.kind === 'final-form' ||
+  ex.kind === 'print-vs-cursive' || ex.kind === 'meaning-to-word' ||
+  ex.kind === 'complete-word' || ex.kind === 'audio-recognition';
+
+/* Tiles are for Hebrew that is short enough to read at a glance: a letter, a
+   syllable, a two- or three-consonant word. Measured in CLUSTERS, not code
+   units — a pointed letter is two to four codepoints and `.length` would call
+   מָ a long option. */
+function tileColumns(ex: Exercise): string {
+  if (!hebrewOptionsOf(ex)) return '';
+  const longest = Math.max(...ex.options.map(o => clusters(o).length));
+  if (longest <= 1) return 'sm:grid-cols-4';
+  if (longest <= 4) return 'sm:grid-cols-2 lg:grid-cols-4';
+  return '';
+}
+
 /* Options are Hebrew or Portuguese depending on the exercise, and the Hebrew
    ones must be big — the glyph IS the question. */
 function OptionButton({
-  ex, option, index, state, onClick, disabled
+  ex, option, index, state, tile, onClick, disabled
 }: {
   ex: Exercise; option: string; index: number;
   state: 'idle' | 'right' | 'wrong' | 'muted';
+  tile: boolean;
   onClick: () => void; disabled: boolean;
 }) {
-  const hebrewOption =
-    ex.kind === 'letter-recognition' || ex.kind === 'final-form' ||
-    ex.kind === 'print-vs-cursive' || ex.kind === 'meaning-to-word' ||
-    ex.kind === 'complete-word' || ex.kind === 'audio-recognition';
+  const hebrewOption = hebrewOptionsOf(ex);
   const cursive = ex.kind === 'print-vs-cursive';
 
   const TONE = {
@@ -208,13 +235,15 @@ function OptionButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-full min-h-[64px] rounded-[var(--r-md)] border-2 px-4 py-3
+      className={`relative w-full min-h-[64px] rounded-[var(--r-md)] border-2 px-4 py-3
         flex items-center gap-4 text-left transition-all duration-[var(--dur)] ease-[var(--ease)]
-        disabled:cursor-default ${TONE[state]}`}
+        disabled:cursor-default ${TONE[state]}
+        ${tile ? 'sm:h-full sm:min-h-[104px] sm:justify-center sm:gap-0 sm:px-3' : ''}`}
     >
       <span aria-hidden
-        className="shrink-0 w-7 h-7 rounded-md bg-surface-2 text-ink-muted
-                   font-ui text-[12px] font-semibold grid place-items-center">
+        className={`shrink-0 w-7 h-7 rounded-md bg-surface-2 text-ink-muted
+                   font-ui text-[12px] font-semibold grid place-items-center
+                   ${tile ? 'sm:absolute sm:top-2 sm:left-2' : ''}`}>
         {state === 'right' ? '✓' : state === 'wrong' ? '↻' : index + 1}
       </span>
       {hebrewOption

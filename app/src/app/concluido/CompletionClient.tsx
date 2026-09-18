@@ -29,7 +29,7 @@ export function CompletionClient() {
   const finished = !!p.state.finalChallenge.completedAt;
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 reading">
       <Card tone="mint" className="p-7 sm:p-10 grid gap-5 text-center">
         <Badge tone="mint">{finished ? 'Curso concluído' : 'Onde você está'}</Badge>
         <h1 className="text-[29px] sm:text-[38px] font-bold leading-[1.15]">

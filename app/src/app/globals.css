@@ -67,6 +67,26 @@ p { margin: 0; }
   gap: 0.35em 0.6em;
 }
 
+/* ── reading measure ────────────────────────────────────────────────────
+   A wide screen is not permission to set a 95-character line. Reading-heavy
+   routes — a lesson, a module opener, a checkpoint brief — cap the column and
+   then cap the paragraph inside it, so the text stays at a comfortable measure
+   while tables, syllable grids and the writing canvas still use the width.
+
+   The dashboard and the map deliberately do NOT carry this: their job is to
+   show a lot at once, and neither is prose. */
+.reading { max-width: 860px; }
+.reading p { max-width: 68ch; }
+.reading p.full { max-width: none; }
+
+/* One-decision screens — a review brief, a checkpoint brief, a result page —
+   are a short column of prose and a single button. At a desk they cap tighter
+   than a lesson does: an 840px-wide primary button is not a stronger call to
+   action, only a longer one. The exercise player itself never gets this; it
+   needs the width for its answer tiles. */
+.focus-col { max-width: 620px; }
+.focus-col p { max-width: 62ch; }
+
 *:focus-visible {
   outline: 2.5px solid var(--teal);
   outline-offset: 3px;

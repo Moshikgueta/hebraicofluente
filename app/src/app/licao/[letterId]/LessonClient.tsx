@@ -80,7 +80,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
   );
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 reading">
       <LessonHeader letter={letter} stage={stage} stagesDone={stagesDone} onStage={setStage} />
 
       {stage === 1 && <StageConhecer letter={letter} onDone={() => done(1)} />}

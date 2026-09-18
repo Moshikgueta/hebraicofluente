@@ -10,6 +10,7 @@ import { He } from '@/components/hebrew/He';
 import { Card, Badge, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { ProgressBar, StreakCard } from '@/components/game/Game';
+import { AlphabetGrid, ModuleProgress } from '@/components/game/AlphabetGrid';
 import { useProgress } from '@/lib/state/store';
 import { course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
@@ -135,39 +136,66 @@ export default function Dashboard() {
         )}
       </section>
 
-      <div className="grid sm:grid-cols-2 gap-4">
-        <StreakCard days={p.streak} goalUnits={p.goalUnits} goalTarget={p.goalTargetToday} />
-
-        <Card className="p-5 grid gap-3 content-start">
-          <div className="flex items-center gap-2.5">
-            <span aria-hidden className="text-[18px] text-ink-muted">↻</span>
-            <p className="font-display text-[19px] font-bold text-ink">Revisão rápida</p>
+      {/* Below lg this is the phone layout, unchanged: two cards, then the
+          progress summary. At lg it becomes the dashboard — the whole alphabet
+          on the left, the day's state on the right. */}
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(260px,1fr)] lg:gap-6 lg:items-start">
+        <section aria-labelledby="alfabeto" className="order-2 lg:order-1 grid gap-3">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 id="alfabeto" className="font-display text-[17px] font-bold text-ink">
+              O alfabeto
+            </h2>
+            <Link href="/mapa" className="font-ui text-[13px] text-[var(--teal-band)] hover:underline">
+              Ver o mapa →
+            </Link>
           </div>
-          {p.dueCount > 0 ? (
-            <>
-              <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-                Hoje vale revisar:{' '}
-                {p.weak.map(id => getLetter(id)).filter(Boolean).map((l, i) => (
-                  <span key={l!.id}>
-                    {i > 0 && <span className="text-ink-muted"> · </span>}
-                    <He size="inline">{l!.letter}</He>
-                  </span>
-                ))}
+          <Card className="p-4 sm:p-5">
+            <AlphabetGrid />
+          </Card>
+
+          <h2 className="font-display text-[17px] font-bold text-ink mt-2 lg:hidden">Módulos</h2>
+          <div className="lg:hidden"><ModuleProgress /></div>
+        </section>
+
+        <aside className="order-1 lg:order-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          <StreakCard days={p.streak} goalUnits={p.goalUnits} goalTarget={p.goalTargetToday} />
+
+          <Card className="p-5 grid gap-3 content-start">
+            <div className="flex items-center gap-2.5">
+              <span aria-hidden className="text-[18px] text-ink-muted">↻</span>
+              <p className="font-display text-[19px] font-bold text-ink">Revisão rápida</p>
+            </div>
+            {p.dueCount > 0 ? (
+              <>
+                <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+                  Hoje vale revisar:{' '}
+                  {p.weak.map(id => getLetter(id)).filter(Boolean).map((l, i) => (
+                    <span key={l!.id}>
+                      {i > 0 && <span className="text-ink-muted"> · </span>}
+                      <He size="inline">{l!.letter}</He>
+                    </span>
+                  ))}
+                </p>
+                <LinkButton href="/revisao" variant="secondary" size="sm" className="justify-self-start">
+                  Revisar · 3 minutos
+                </LinkButton>
+              </>
+            ) : (
+              <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
+                Nada pendente por enquanto. Quando você errar alguma coisa, ela aparece
+                aqui no dia certo para ser revista.
               </p>
-              <LinkButton href="/revisao" variant="secondary" size="sm" className="justify-self-start">
-                Revisar · 3 minutos
-              </LinkButton>
-            </>
-          ) : (
-            <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-              Nada pendente por enquanto. Quando você errar alguma coisa, ela aparece
-              aqui no dia certo para ser revista.
-            </p>
-          )}
-        </Card>
+            )}
+          </Card>
+
+          <div className="hidden lg:grid gap-2 sm:col-span-2 lg:col-span-1">
+            <h2 className="font-display text-[17px] font-bold text-ink">Módulos</h2>
+            <ModuleProgress />
+          </div>
+        </aside>
       </div>
 
-      <Card className="p-5 grid gap-4">
+      <Card className="p-5 grid gap-4 lg:hidden">
         <ProgressBar
           value={p.progress}
           label="Curso completo"

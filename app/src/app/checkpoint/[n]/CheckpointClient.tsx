@@ -51,7 +51,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       .filter((l): l is Letter => !!l);
 
     return (
-      <div className="grid gap-5">
+      <div className="focus-col grid gap-5">
         <Milestone
           kicker={`Checkpoint ${mod.n} · ${result.correct} de ${result.total}`}
           title={passed ? `${pct}% — checkpoint concluído.` : `${pct}% — quase lá.`}
@@ -117,7 +117,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="focus-col grid gap-6">
       <header className="grid gap-3">
         <Link href="/mapa" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">← Mapa</Link>
         <Badge tone="mint">Checkpoint {mod.n}</Badge>

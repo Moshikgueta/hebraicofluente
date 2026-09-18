@@ -1,25 +1,45 @@
 'use client';
 
+/* The shell, in two shapes.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Below 1024px the course is a single column with a bottom bar under the
+ * thumb — the phone is where most of the studying happens, and that layout is
+ * not a compromise.
+ *
+ * At 1024px and up it becomes a desk: a persistent sidebar carrying navigation
+ * AND standing progress, and a content area wide enough to put things side by
+ * side. That is the real argument for a desktop version — not more pixels for
+ * the same column, but more of the course visible at once. On a phone the
+ * question is "what now?"; at a desk it is "where am I in this?", and the
+ * sidebar answers that without a click.
+ *
+ * What does NOT change with width: the reading measure. Prose stays near 65
+ * characters and the Hebrew stays large. A 1100px line of Portuguese is harder
+ * to read than a 600px one, and the Hebrew is the subject at every size.
+ */
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { useProgress } from '@/lib/state/store';
-import { XPIndicator } from '@/components/game/Game';
+import { XPIndicator, ProgressBar } from '@/components/game/Game';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { He } from '@/components/hebrew/He';
+import { course } from '@/lib/content';
 
 const NAV = [
-  { href: '/', label: 'Hoje', icon: '◉' },
-  { href: '/mapa', label: 'Mapa', icon: '◎' },
-  { href: '/revisao', label: 'Revisão', icon: '↻' },
-  { href: '/conquistas', label: 'Conquistas', icon: '◆' }
+  { href: '/', label: 'Hoje', icon: '◉', desc: 'O que fazer agora' },
+  { href: '/mapa', label: 'Mapa', icon: '◎', desc: 'O caminho inteiro' },
+  { href: '/revisao', label: 'Revisão', icon: '↻', desc: 'O que deu trabalho' },
+  { href: '/conquistas', label: 'Conquistas', icon: '◆', desc: 'Seus números' }
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { state, ready, persistent, remember, pending, clearPending } = useProgress();
+  const p = useProgress();
   const pathname = usePathname();
+  const { remember } = p;
 
   useEffect(() => { if (pathname) remember(pathname); }, [pathname, remember]);
 
@@ -27,7 +47,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="min-h-[100dvh] flex flex-col">
       <header className="sticky top-0 z-30 border-b border-[color:var(--line-soft)]
                          bg-[color-mix(in_srgb,var(--paper)_88%,transparent)] backdrop-blur-md">
-        <div className="mx-auto w-full max-w-[880px] px-4 sm:px-6 h-[60px] flex items-center justify-between gap-4">
+        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 h-[60px] flex items-center justify-between gap-4">
           {/* Even the logo mark goes through <He>. An exception here is how a
               contract stops being a contract. The 44px target is the tap area,
               not the text. */}
@@ -35,12 +55,19 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="text-[var(--teal-band)]"><He size="inline">א</He></span>
             <span className="font-display text-[15px] font-bold text-ink truncate">Hebraico Fluente</span>
           </Link>
-          {ready && <XPIndicator xp={state.xp} />}
+          {p.ready && (
+            <div className="flex items-center gap-5">
+              <span className="hidden lg:inline font-ui text-[13px] text-ink-muted tabular-nums">
+                {p.mastered} / {course.totalLetters} letras
+              </span>
+              <XPIndicator xp={p.state.xp} />
+            </div>
+          )}
         </div>
       </header>
 
-      {!persistent && (
-        <div className="mx-auto w-full max-w-[880px] px-4 sm:px-6 pt-4">
+      {!p.persistent && (
+        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 pt-4">
           <Card tone="amber" className="p-4">
             <p className="font-ui text-[13px] leading-relaxed text-ink-body">
               O navegador está bloqueando o armazenamento local (janela anônima ou
@@ -51,42 +78,142 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       )}
 
-      <main className="flex-1 mx-auto w-full max-w-[880px] px-4 sm:px-6 py-6 sm:py-10 pb-[92px] sm:pb-10">
-        {children}
-      </main>
+      <div className="flex-1 w-full mx-auto max-w-[1180px] px-4 sm:px-6 lg:flex lg:gap-10">
+        <Sidebar pathname={pathname} />
+        <main className="flex-1 min-w-0 py-6 sm:py-10 pb-[92px] lg:pb-14">
+          {children}
+        </main>
+      </div>
 
-      {/* Bottom bar on phones, where the thumb is; a quiet row on desktop. */}
-      <nav
-        aria-label="Navegação principal"
-        className="fixed sm:static bottom-0 inset-x-0 z-30 border-t border-[color:var(--line-soft)]
-                   bg-[color-mix(in_srgb,var(--paper)_94%,transparent)] backdrop-blur-md
-                   pb-[env(safe-area-inset-bottom)]"
-      >
-        <ul className="mx-auto w-full max-w-[880px] px-2 sm:px-6 flex items-stretch justify-around sm:justify-start sm:gap-2">
-          {NAV.map(item => {
-            const active = pathname === item.href;
-            return (
-              <li key={item.href} className="flex-1 sm:flex-none">
-                <Link
-                  href={item.href}
-                  aria-current={active ? 'page' : undefined}
-                  className={`h-[60px] px-3 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2
-                    font-ui text-[11px] sm:text-[13px] transition-colors
-                    ${active ? 'text-[var(--teal-band)] font-semibold' : 'text-ink-muted hover:text-ink-body'}`}
-                >
-                  <span aria-hidden className="text-[15px] leading-none">{item.icon}</span>
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      <BottomBar pathname={pathname} />
 
-      {pending.length > 0 && (
-        <AchievementToast ids={pending.map(p => p.id)} onClose={clearPending} />
+      {p.pending.length > 0 && (
+        <AchievementToast ids={p.pending.map(a => a.id)} onClose={p.clearPending} />
       )}
     </div>
+  );
+}
+
+/* ── the desk ───────────────────────────────────────────────────────────
+   Sticky, so progress stays in view while the content scrolls. That is the
+   point: at a desk you can see where you are without leaving the page. */
+function Sidebar({ pathname }: { pathname: string | null }) {
+  const p = useProgress();
+
+  return (
+    <aside className="hidden lg:block w-[250px] shrink-0 py-10">
+      <div className="sticky top-[84px] grid gap-6">
+        <nav aria-label="Navegação principal">
+          <ul className="grid gap-1">
+            {NAV.map(item => {
+              const active = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={`flex items-start gap-3 rounded-[var(--r-md)] px-3 py-2.5 transition-colors
+                      ${active
+                        ? 'bg-[var(--teal-wash)] text-[var(--teal-band)]'
+                        : 'text-ink-body hover:bg-surface-2'}`}
+                  >
+                    <span aria-hidden className="text-[15px] leading-[1.45]">{item.icon}</span>
+                    <span className="grid gap-0.5 min-w-0">
+                      <span className={`font-ui text-[14px] ${active ? 'font-semibold' : 'font-medium'}`}>
+                        {item.label}
+                      </span>
+                      <span className="font-ui text-[11.5px] leading-snug text-ink-muted">
+                        {item.desc}
+                      </span>
+                    </span>
+                    {item.href === '/revisao' && p.dueCount > 0 && (
+                      <span className="ml-auto mt-[3px] min-w-[20px] h-[20px] px-1.5 rounded-full
+                                       bg-[var(--ember-wash)] text-[var(--ember)]
+                                       font-ui text-[11px] font-bold grid place-items-center tabular-nums">
+                        {p.dueCount}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        {p.ready && p.state.onboarding && (
+          <Card className="p-4 grid gap-4">
+            <ProgressBar
+              value={p.progress}
+              label="Curso"
+              sublabel={`${Math.round(p.progress * 100)}%`}
+            />
+            <dl className="grid grid-cols-2 gap-x-3 gap-y-3">
+              {([
+                ['Letras', `${p.mastered}/${course.totalLetters}`],
+                ['Sequência', p.streak === 0 ? '—' : `${p.streak} d`],
+                ['XP', p.state.xp.toLocaleString('pt-BR')],
+                ['Conquistas', `${p.state.achievements.length}/${ACHIEVEMENTS.length}`]
+              ] as const).map(([k, v]) => (
+                <div key={k} className="grid gap-0.5">
+                  <dt className="font-ui text-[10.5px] uppercase tracking-[.07em] text-ink-muted">{k}</dt>
+                  <dd className="font-display text-[16px] font-bold text-ink tabular-nums">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </Card>
+        )}
+
+        <p className="font-ui text-[11.5px] leading-relaxed text-ink-muted px-1">
+          Nos exercícios, <Key>1</Key>–<Key>4</Key> respondem e <Key>Enter</Key> avança.
+        </p>
+      </div>
+    </aside>
+  );
+}
+
+export function Key({ children }: { children: ReactNode }) {
+  return (
+    <kbd className="inline-block min-w-[18px] px-1.5 py-[1px] rounded-[5px] text-center
+                    border border-line bg-surface font-ui text-[11px] text-ink-body">
+      {children}
+    </kbd>
+  );
+}
+
+/* ── the thumb ──────────────────────────────────────────────────────────── */
+function BottomBar({ pathname }: { pathname: string | null }) {
+  const p = useProgress();
+  return (
+    <nav
+      aria-label="Navegação principal"
+      className="lg:hidden fixed bottom-0 inset-x-0 z-30 border-t border-[color:var(--line-soft)]
+                 bg-[color-mix(in_srgb,var(--paper)_94%,transparent)] backdrop-blur-md
+                 pb-[env(safe-area-inset-bottom)]"
+    >
+      <ul className="mx-auto w-full max-w-[680px] px-2 flex items-stretch justify-around">
+        {NAV.map(item => {
+          const active = pathname === item.href;
+          return (
+            <li key={item.href} className="flex-1">
+              <Link
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
+                className={`relative h-[60px] flex flex-col items-center justify-center gap-1
+                  font-ui text-[11px] transition-colors
+                  ${active ? 'text-[var(--teal-band)] font-semibold' : 'text-ink-muted'}`}
+              >
+                <span aria-hidden className="text-[15px] leading-none">{item.icon}</span>
+                {item.label}
+                {item.href === '/revisao' && p.dueCount > 0 && (
+                  <span aria-hidden
+                        className="absolute top-2 right-[24%] w-[7px] h-[7px] rounded-full bg-[var(--ember)]" />
+                )}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }
 

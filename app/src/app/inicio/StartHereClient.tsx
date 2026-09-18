@@ -23,7 +23,7 @@ const SOUND_LABEL: Record<string, string> = {
 
 export function StartHereClient({ sounds, intro }: { sounds: NikudSound[]; intro: NikudIntro }) {
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 reading">
       <header className="grid gap-3">
         <Link href="/mapa" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">← Mapa</Link>
         <Badge tone="teal">Comece aqui</Badge>

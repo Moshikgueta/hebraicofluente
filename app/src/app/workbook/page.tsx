@@ -7,7 +7,7 @@ import { LinkButton } from '@/components/ui/Button';
    numbers the lessons cite are always right. */
 export default function WorkbookPage() {
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 reading">
       <header className="grid gap-3">
         <h1 className="text-[27px] sm:text-[33px] font-bold">O workbook impresso</h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[54ch]">

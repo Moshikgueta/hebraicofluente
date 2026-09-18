@@ -1,18 +1,24 @@
 'use client';
 
-/* The course map.
+/* The course map, in two shapes.
  *
  * A vertical spine, not a winding cartoon path: the learner is an adult and
  * the question they are asking is "how far in am I, and what is left". The
  * whole journey is visible from the start — future lessons are dimmed, never
- * hidden, because hiding the road is what makes a course feel endless. */
+ * hidden, because hiding the road is what makes a course feel endless.
+ *
+ * On a phone the spine is right: one thing under another, scrolled with a
+ * thumb. On a desk it was 3,500 pixels tall — the whole journey existed and
+ * you could never see it. So at 1024px the same data becomes a BOARD: the
+ * seven units of the teaching plan side by side, each a panel with its letters
+ * and its checkpoint, the course in about a screen and a half. */
 
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
-import { course, type CourseModule, type MapNode } from '@/lib/content';
+import { course, getLetter, type CourseModule, type MapNode } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
 import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
 
@@ -41,7 +47,7 @@ export function CourseMapClient({ nodes }: { nodes: MapNode[] }) {
         />
       </header>
 
-      <ol className="relative grid gap-2 pl-[26px] sm:pl-[34px]">
+      <ol className="lg:hidden relative grid gap-2 pl-[26px] sm:pl-[34px]">
         {/* the spine */}
         <span aria-hidden className="absolute left-[11px] sm:left-[15px] top-3 bottom-3 w-[2px] bg-line-soft" />
 
@@ -50,7 +56,149 @@ export function CourseMapClient({ nodes }: { nodes: MapNode[] }) {
           return <MapRow key={keyOf(node, i)} node={node} state={state} />;
         })}
       </ol>
+
+      <div className="hidden lg:block"><Board /></div>
     </div>
+  );
+}
+
+/* ── the desk: a board ──────────────────────────────────────────────────── */
+function Board() {
+  return (
+    <div className="grid gap-4">
+      <Card className="hover:bg-surface-2 transition-colors">
+        <Link href="/inicio" className="p-4 flex items-center gap-4">
+          <span aria-hidden className="w-[34px] h-[34px] shrink-0 rounded-full border-2 border-[var(--green)]
+                                      text-[var(--green)] grid place-items-center text-[13px]">◇</span>
+          <span className="min-w-0">
+            <span className="block font-display text-[16px] font-semibold text-ink">
+              Comece aqui — como o hebraico funciona
+            </span>
+            <span className="block font-ui text-[13px] text-ink-muted">
+              Direção, os sinais de vogal, como praticar
+            </span>
+          </span>
+        </Link>
+      </Card>
+
+      {/* The five modules that teach letters, then — on their own row — the two
+          that teach no new letter. That split is the teaching plan's own, and
+          on a board it is worth showing rather than burying in the flow. */}
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 items-start">
+        {course.modules.filter(m => m.letterIds.length > 0)
+          .map(m => <ModulePanel key={m.id} module={m} />)}
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2 items-start">
+        {course.modules.filter(m => m.letterIds.length === 0)
+          .map(m => <ModulePanel key={m.id} module={m} />)}
+      </div>
+
+      <Card tone="wash">
+        <Link href="/desafio-final" className="p-5 flex items-center gap-4">
+          <span aria-hidden className="w-[34px] h-[34px] shrink-0 rounded-full border-2 border-[var(--teal-band)]
+                                      text-[var(--teal-band)] grid place-items-center text-[13px]">★</span>
+          <span className="min-w-0">
+            <span className="block font-display text-[17px] font-bold text-ink">O desafio final</span>
+            <span className="block font-ui text-[13px] text-ink-body">
+              As {course.totalLetters} letras, sem transliteração para se apoiar.
+            </span>
+          </span>
+        </Link>
+      </Card>
+    </div>
+  );
+}
+
+function ModulePanel({ module: m }: { module: CourseModule }) {
+  const p = useProgress();
+  const letters = m.letterIds.map(getLetter).filter(l => !!l);
+  const isExtra = letters.length === 0;
+  const cpPassed = !!p.state.checkpoints[`cp${m.n}`]?.passedAt;
+  const doneCount = isExtra
+    ? Math.min(3, p.state.lessons[m.id]?.stagesDone.length ?? 0)
+    : letters.filter(l => isLessonComplete(p.state, l.id)).length;
+  const total = isExtra ? 3 : letters.length;
+  const currentId = course.letters.find(x => !isLessonComplete(p.state, x.id))?.id;
+
+  return (
+    <Card className="overflow-hidden">
+      <div className="px-4 py-3 border-b border-[color:var(--line-soft)] grid gap-1.5">
+        <div className="flex items-center gap-2">
+          <Badge tone="teal">Módulo {m.n}</Badge>
+          <span className="ml-auto font-ui text-[12px] tabular-nums text-ink-muted">
+            {cpPassed ? 'concluído ✓' : `${doneCount}/${total}`}
+          </span>
+        </div>
+        <h2 className="font-display text-[15.5px] font-bold text-ink leading-snug">{m.titlePt}</h2>
+        <span className="h-1.5 rounded-full bg-surface-2 overflow-hidden">
+          <span
+            className={`block h-full rounded-full transition-[width] duration-500
+              ${cpPassed ? 'bg-[var(--green)]' : 'bg-[var(--teal-band)]'}`}
+            style={{ width: `${total ? (doneCount / total) * 100 : 0}%` }}
+          />
+        </span>
+      </div>
+
+      {isExtra ? (
+        <div className="p-4 grid gap-1">
+          {/* No new letter here, so the panel says what the module is FOR —
+              its own milestone, not a generic line repeated twice. */}
+          <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
+            <Prose text={m.milestonePt} />
+          </p>
+          <ExtraModuleRow module={m} />
+        </div>
+      ) : (
+        <ul className="p-2 grid gap-0.5">
+          {letters.map(L => {
+            const done = isLessonComplete(p.state, L.id);
+            const stages = p.state.lessons[L.id]?.stagesDone.length ?? 0;
+            const current = L.id === currentId;
+            return (
+              <li key={L.id}>
+                <Link
+                  href={`/licao/${L.id}`}
+                  className={`flex items-center gap-3 rounded-[var(--r-sm)] px-2 py-1.5 transition-colors
+                    ${current ? 'bg-[var(--teal-wash)]' : 'hover:bg-surface-2'}`}
+                >
+                  <span aria-hidden className={`w-4 text-center text-[11px]
+                    ${done ? 'text-[var(--green)]' : current ? 'text-[var(--teal-band)]' : 'text-ink-muted'}`}>
+                    {done ? '✓' : current ? '●' : '○'}
+                  </span>
+                  <He size="word" dim={!done && !current}>{L.letter}</He>
+                  <span className={`font-ui text-[13px] truncate
+                    ${done || current ? 'text-ink' : 'text-ink-muted'}`}>
+                    {L.order}. {L.namePt}
+                  </span>
+                  {stages > 0 && !done && (
+                    <span className="ml-auto font-ui text-[11px] tabular-nums text-[var(--teal-band)]">
+                      {stages}/{STAGE_COUNT}
+                    </span>
+                  )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      {m.checkpoint && (
+        <Link
+          href={`/checkpoint/${m.n}`}
+          className="flex items-center gap-3 px-4 py-3 border-t border-[color:var(--line-soft)]
+                     hover:bg-surface-2 transition-colors"
+        >
+          <span aria-hidden className={`text-[12px] ${cpPassed ? 'text-[var(--green)]' : 'text-ink-muted'}`}>◆</span>
+          <span className="font-ui text-[13px] font-medium text-ink">Checkpoint {m.n}</span>
+          <span className="ml-auto font-ui text-[12px] text-ink-muted tabular-nums">
+            {p.state.checkpoints[m.checkpoint.id]?.best != null
+              ? `${Math.round(p.state.checkpoints[m.checkpoint.id]!.best! * 100)}%`
+              : '—'}
+          </span>
+        </Link>
+      )}
+    </Card>
   );
 }
 

@@ -31,7 +31,7 @@ export function FinalChallengeClient() {
 
   if (phase === 'done' && result) {
     return (
-      <div className="grid gap-6">
+      <div className="focus-col grid gap-6">
         <Milestone
           kicker={`${result.correct} de ${result.total}`}
           title="Agora você consegue ler hebraico."
@@ -64,7 +64,7 @@ export function FinalChallengeClient() {
   const enough = ready.length >= course.totalLetters;
 
   return (
-    <div className="grid gap-6">
+    <div className="focus-col grid gap-6">
       <header className="grid gap-3">
         <Badge tone="teal">O desafio final</Badge>
         <h1 className="text-[28px] sm:text-[36px] font-bold leading-tight">
