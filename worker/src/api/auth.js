@@ -119,6 +119,49 @@ export async function me({ request, env }) {
   return json(await sessionBody(env, account));
 }
 
+/**
+ * GET /api/health — o que está configurado, sem dizer o quê.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Existe porque "500" não é diagnóstico. Quando a publicação vai ao ar com um
+ * pedaço faltando — a ligação com o banco, a tabela, o segredo da sessão —
+ * toda rota de conta responde igual, e descobrir qual dos três é o problema
+ * exige acesso ao painel que quem está depurando muitas vezes não tem à mão.
+ *
+ * Responde só BOOLEANOS. Nenhum valor, nenhum nome de variável, nenhuma
+ * mensagem de erro do banco. O que um curioso aprende com isto — que o site
+ * usa D1 e tem uma tabela `accounts` — já está no repositório, que é público.
+ * O que ele não aprende é nada que ajude a entrar.
+ */
+export async function health({ env }) {
+  const out = {
+    /* A ligação com o D1 existe no Worker? `false` = binding ausente ou
+       database_id errado no wrangler.toml. */
+    db: false,
+    /* As tabelas foram criadas? `false` = falta rodar worker/schema.sql. */
+    schema: false,
+    /* O cookie de sessão tem como ser assinado? `false` = SESSION_SECRET
+       não foi definido, e aí NENHUM login funciona. */
+    session: !!env.SESSION_SECRET,
+    /* Cobrança ligada? `false` é um estado legítimo — ver o checkout. */
+    payments: !!env.MP_ACCESS_TOKEN,
+    /* Webhook verificável? `false` faz /api/pay/webhook recusar tudo. */
+    webhook: !!env.MP_WEBHOOK_SECRET
+  };
+
+  if (env.DB) {
+    out.db = true;
+    try {
+      await env.DB.prepare('SELECT 1 FROM accounts LIMIT 1').first();
+      out.schema = true;
+    } catch {
+      /* A tabela não existe. É a resposta, não uma falha. */
+    }
+  }
+
+  out.ok = out.db && out.schema && out.session;
+  return json(out);
+}
+
 /** A conta desta requisição, ou null. Usado por tudo que exige sessão. */
 export async function requireAccount(request, env) {
   const sess = await readSession(request, env);

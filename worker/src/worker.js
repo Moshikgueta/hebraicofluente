@@ -24,6 +24,7 @@ const ROUTES = {
   'POST /api/auth/login': auth.login,
   'POST /api/auth/logout': auth.logout,
   'GET /api/me': auth.me,
+  'GET /api/health': auth.health,
 
   'POST /api/pay/create': pay.create,
   'GET /api/pay/verify': pay.verify,

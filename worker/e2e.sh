@@ -43,6 +43,25 @@ code()     { G -o /dev/null -w '%{http_code}' "$@"; }
 location() { G -o /dev/null -D - -H 'Sec-Fetch-Dest: document' "$@" \
                | grep -i '^location:' | sed 's/^[Ll]ocation: *//' | tr -d '\r'; }
 
+# Primeiro a saúde. Sem isto, uma publicação sem banco ou sem SESSION_SECRET
+# produz nove falhas idênticas — todas "veio 500" — e nenhuma delas diz qual
+# das três peças está faltando. Com isto, a causa aparece na primeira linha.
+echo "Saúde"
+HEALTH="$(G --max-time 15 "$B/api/health")"
+campo() { printf '%s' "$HEALTH" | grep -o "\"$1\":[a-z]*" | cut -d: -f2; }
+espera "ligação com o banco (D1)"      true "$(campo db)"
+espera "tabelas criadas (schema.sql)"  true "$(campo schema)"
+espera "SESSION_SECRET definido"       true "$(campo session)"
+if [ "$(campo payments)" != "true" ]; then
+  echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) — o site funciona assim"
+fi
+if [ "$(campo ok)" != "true" ]; then
+  echo
+  echo "  A publicação está incompleta. As falhas abaixo são consequência disso;"
+  echo "  conserte o que está marcado ✗ aqui em cima primeiro."
+  echo
+fi
+
 echo "Sessão e portão"
 espera "/api/me sem sessão recusa"            401 "$(code $B/api/me)"
 espera "rota paga sem sessão manda ao login"  "$B/entrar/?next=%2Flicao%2Falef%2F" \
