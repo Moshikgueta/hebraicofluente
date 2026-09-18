@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+content/
+public/fonts/
+public/stroke-order/
+public/audio/
+next-env.d.ts
+*.tsbuildinfo

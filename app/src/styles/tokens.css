@@ -1,0 +1,132 @@
+/* Design tokens.
+   ─────────────────────────────────────────────────────────────────────────
+   The palette is the workbook's, extracted from the reference PDF with
+   PyMuPDF (see ../../styles/tokens.css for the per-token provenance). What
+   changes here is scale, not identity: a screen needs a dark mode, larger
+   Hebrew and a touch-sized rhythm that a printed page does not. */
+
+@font-face {
+  font-family: 'DM Sans'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('/fonts/dm-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('/fonts/dm-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('/fonts/dm-sans-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('/fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('/fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('/fonts/inter-latin-700-normal.woff2') format('woff2');
+}
+/* Noto Sans Hebrew carries 55 nikud marks and a ccmp table — chosen over the
+   alternatives by inspecting the binaries, because a font that positions the
+   vowel points badly makes every reading exercise in the course wrong. */
+@font-face {
+  font-family: 'Noto Sans Hebrew'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('/fonts/noto-sans-hebrew-hebrew-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans Hebrew'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('/fonts/noto-sans-hebrew-hebrew-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans Hebrew'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('/fonts/noto-sans-hebrew-hebrew-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Gveret Levin'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('/fonts/gveret-levin-hebrew-400-normal.woff2') format('woff2');
+}
+
+:root {
+  /* ink */
+  --ink:        #0B0B0C;
+  --ink-body:   #45464A;
+  --ink-muted:  #74757B;
+
+  /* teal — the workbook's accent. The band tone is darkened from the PDF's
+     #1A99BA so white text on it clears WCAG AA (4.9:1 vs 2.75:1). */
+  --teal:       #1A99BA;
+  --teal-band:  #15788F;
+  --teal-deep:  #0E5568;
+  --teal-wash:  #EAF7FB;
+
+  /* mint — calm surfaces, correct answers */
+  --mint:       #D4F7EC;
+  --mint-ink:   #14513F;
+  --green:      #2F7D62;
+
+  /* the one warm accent: streak, milestones. Used sparingly on purpose. */
+  --ember:      #C2643A;
+  --ember-wash: #FBEFE9;
+
+  /* "not yet" — never red. An adult beginner reading Hebrew for the first
+     time does not need an alarm colour; they need a second look. */
+  --amber:      #9A6B15;
+  --amber-wash: #FDF4E3;
+
+  /* paper */
+  --paper:      #F6F6F4;
+  --surface:    #FFFFFF;
+  --surface-2:  #F1F0ED;
+  --line:       rgba(11, 11, 12, 0.10);
+  --line-soft:  rgba(11, 11, 12, 0.06);
+
+  --font-display: 'DM Sans', system-ui, sans-serif;
+  --font-ui:      'Inter', system-ui, sans-serif;
+  --font-he:      'Noto Sans Hebrew', 'Inter', sans-serif;
+  --font-he-cursive: 'Gveret Levin', 'Noto Sans Hebrew', cursive;
+
+  --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
+  --shadow-1: 0 1px 2px rgba(11,11,12,.05), 0 4px 16px rgba(11,11,12,.04);
+  --shadow-2: 0 2px 6px rgba(11,11,12,.07), 0 16px 40px rgba(11,11,12,.07);
+
+  --ease: cubic-bezier(.2, .7, .3, 1);
+  --dur:  180ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ink:       #F4F4F2;
+    --ink-body:  #C3C4C8;
+    --ink-muted: #8C8D93;
+    --teal:      #4FC3E0;
+    --teal-band: #2F9CBB;
+    --teal-deep: #BEE9F4;
+    --teal-wash: #12262D;
+    --mint:      #163A31;
+    --mint-ink:  #9BE7CE;
+    --green:     #6FC9A6;
+    --ember:     #E39468;
+    --ember-wash:#2E1E16;
+    --amber:     #E3B45F;
+    --amber-wash:#2B2312;
+    --paper:     #0E0F11;
+    --surface:   #17181B;
+    --surface-2: #1F2125;
+    --line:      rgba(244,244,242,.14);
+    --line-soft: rgba(244,244,242,.08);
+    --shadow-1:  0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+    --shadow-2:  0 2px 6px rgba(0,0,0,.5), 0 16px 40px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme='dark'] {
+  --ink: #F4F4F2; --ink-body: #C3C4C8; --ink-muted: #8C8D93;
+  --teal: #4FC3E0; --teal-band: #2F9CBB; --teal-deep: #BEE9F4; --teal-wash: #12262D;
+  --mint: #163A31; --mint-ink: #9BE7CE; --green: #6FC9A6;
+  --ember: #E39468; --ember-wash: #2E1E16;
+  --amber: #E3B45F; --amber-wash: #2B2312;
+  --paper: #0E0F11; --surface: #17181B; --surface-2: #1F2125;
+  --line: rgba(244,244,242,.14); --line-soft: rgba(244,244,242,.08);
+}

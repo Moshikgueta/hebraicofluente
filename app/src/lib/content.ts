@@ -1,0 +1,140 @@
+/* Typed access to the content generated from data/ by tools/export-content.mjs.
+ *
+ * Content is imported, not fetched: it is small, it never changes at runtime,
+ * and importing it lets every route prerender. The `alphabetSoFar` field on a
+ * letter is the load-bearing one — see lib/engine/exercises.ts. */
+
+import courseJson from '@content/course.json';
+import nikudJson from '@content/nikud.json';
+import lettersJson from '@content/letters.json';
+
+export type Word = {
+  he: string;
+  translit: string;
+  pt: string;
+  use: string | null;
+  audioId: string;
+};
+
+export type Syllable = {
+  vowel: 'a' | 'e' | 'i' | 'o' | 'u' | 'sheva' | string;
+  he: string;
+  translit: string;
+  ptApprox: string;
+  audioId: string;
+};
+
+export type Letter = {
+  id: string;
+  order: number;
+  module: number;
+  lesson: number;
+  letter: string;
+  finalForm: string | null;
+  nameHe: string;
+  namePt: string;
+  translit: string;
+  sound: string;
+  soundNotePt: string;
+  didYouKnow: string;
+  brazilianMistake: { wrong: string; right: string; why: string };
+  confusableWith: string[];
+  syllables: Syllable[];
+  wordsToRead: Word[];
+  wordsToRecognize: Word[];
+  bridgeWords: { he: string; pt: string }[];
+  /** Every glyph the learner may legally be shown at this point. */
+  alphabetSoFar: string[];
+  strokeOrder: { base: string | null; final: string | null };
+  workbookPages: { from: number; to: number } | null;
+  audioId: string;
+};
+
+export type Checkpoint = {
+  id: string;
+  module: number;
+  upTo: number;
+  letterIds: string[];
+  workbookPages: { from: number; to: number } | null;
+};
+
+export type CourseModule = {
+  n: number;
+  id: string;
+  kind: 'letters' | 'consolidation' | 'extra' | string;
+  titlePt: string;
+  subPt: string;
+  introPt: string;
+  goalsPt: string[];
+  milestonePt: string;
+  lessons: { n: number; kind?: string; letters?: string[]; topicPt?: string }[];
+  letterIds: string[];
+  upTo: number | null;
+  checkpoint: Checkpoint | null;
+  workbookPages: { from: number; to: number } | null;
+};
+
+export type Course = {
+  generatedAt: string;
+  source: string;
+  totalLetters: number;
+  modules: CourseModule[];
+  letters: { id: string; order: number; module: number; letter: string; namePt: string; sound: string }[];
+};
+
+export type NikudSound = {
+  sound: string;
+  ptApprox: string | null;
+  signs: { nameHe: string; namePt: string; demo: string; position: string; audioId: string }[];
+};
+
+export const course = courseJson as unknown as Course;
+export type NikudIntro = { title: string; lead: string; correction: string };
+
+export const nikud = nikudJson as unknown as {
+  intro: NikudIntro;
+  dagesh: { title?: string; body?: string } | null;
+  sounds: NikudSound[];
+};
+
+/* Bundled, not fetched: 58 KB of JSON that never changes at runtime, and every
+   screen that is not a single lesson needs most of it at once. */
+const LETTERS: Letter[] = (lettersJson as unknown as Letter[])
+  .slice()
+  .sort((a, b) => a.order - b.order);
+
+const BY_ID = new Map(LETTERS.map(l => [l.id, l]));
+
+export const allLetters = (): Letter[] => LETTERS;
+export const getLetter = (id: string): Letter | undefined => BY_ID.get(id);
+export const lettersOfModule = (n: number): Letter[] => LETTERS.filter(l => l.module === n);
+export const getModule = (n: number): CourseModule | undefined => course.modules.find(m => m.n === n);
+
+/** The letters of the whole course in teaching order, modules interleaved. */
+export type MapNode =
+  | { kind: 'intro' }
+  | { kind: 'module'; module: CourseModule }
+  | { kind: 'letter'; letter: Letter }
+  | { kind: 'checkpoint'; checkpoint: Checkpoint; module: CourseModule }
+  | { kind: 'final' };
+
+export function courseMap(): MapNode[] {
+  const nodes: MapNode[] = [{ kind: 'intro' }];
+  for (const m of course.modules) {
+    nodes.push({ kind: 'module', module: m });
+    for (const id of m.letterIds) {
+      const l = BY_ID.get(id);
+      if (l) nodes.push({ kind: 'letter', letter: l });
+    }
+    if (m.checkpoint) nodes.push({ kind: 'checkpoint', checkpoint: m.checkpoint, module: m });
+  }
+  nodes.push({ kind: 'final' });
+  return nodes;
+}
+
+/** The lesson that follows this one, for "continuar". */
+export function nextLetter(id: string): Letter | undefined {
+  const l = BY_ID.get(id);
+  if (!l) return undefined;
+  return LETTERS.find(x => x.order === l.order + 1);
+}
