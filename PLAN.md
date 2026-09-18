@@ -11,11 +11,15 @@
 | Letras 1–22 | 10–11 folhas cada |
 | Revisões (após as letras 4, 8, 12, 16, 20) + final | 6 módulos |
 | Apêndice (alfabeto · nikud · transliteração · cursiva) | 10 folhas |
-| **Total** | **344 folhas = 344 páginas A4**, verificado |
+| **Total** | **287 folhas = 287 páginas A4**, verificado |
 
 **Uma folha é uma página impressa.** Nenhuma etapa transborda: quando não cabe,
-ganha folha de continuação explícita. `npm run check-fit` mede as 344 e o
+ganha folha de continuação explícita. `npm run check-fit` mede todas e o
 `npm run pdf` falha se a contagem do PDF não bater com a do HTML.
+
+**E as folhas são preenchidas.** `npm run pack` mede as 764 peças e agrupa —
+81% de ocupação média, contra 69% quando cada peça tinha a sua folha. O livro
+encolheu 57 páginas sem perder nada e sem nenhuma folha estourando.
 
 **As 22 letras estão autoradas**, na ordem pedida:
 מ ש ל ב ת י ה ו ר א נ ק ד ח ס פ ג ע כ ז ט צ — com 78 entradas em

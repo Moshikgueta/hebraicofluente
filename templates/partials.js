@@ -10,8 +10,12 @@ export function sheet(inner, folio) {
   return `<section class="sheet">\n${inner}\n  <span class="folio">${folio}</span>\n</section>`;
 }
 
+/* The trailing comment is a parsing anchor, not decoration: when the packer
+   merges a unit onto a sheet that already has a heading, it has to strip this
+   badge, and the badge's own content contains nested spans — so matching to
+   the nearest </span> would cut in the wrong place. */
 export function badge(label) {
-  return `<span class="badge">${label}</span>`;
+  return `<span class="badge">${label}</span><!--/badge-->`;
 }
 
 export function callout(kind, icon, inner) {

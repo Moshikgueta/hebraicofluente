@@ -58,7 +58,8 @@ function serve() {
 }
 
 async function main() {
-  const only = process.argv[2];
+  const args = process.argv.slice(2).filter(a => !a.startsWith('--'));
+  const only = args[0];
   const files = readdirSync(DIST)
     .filter(f => f.endsWith('.html') && f !== 'livro-completo.html')
     .filter(f => !only || f.startsWith(only.replace(/\.html$/, '')))
@@ -72,6 +73,7 @@ async function main() {
   await page.emulateMedia({ media: 'print' });
 
   const over = [];
+  const all = [];
   let sheets = 0;
 
   for (const f of files) {
@@ -90,9 +92,10 @@ async function main() {
 
     measured.forEach((m, i) => {
       sheets++;
-      if (m.h > PX_H + 1) {
-        over.push({ file: f, n: i + 1, mm: m.h / MM, badge: m.badge, title: m.title });
-      }
+      const rec = { file: f, n: i + 1, mm: m.h / MM, badge: m.badge, title: m.title };
+      rec.fill = rec.mm / PRINT_H;
+      all.push(rec);
+      if (m.h > PX_H + 1) over.push(rec);
     });
   }
 
@@ -100,6 +103,28 @@ async function main() {
   srv.close();
 
   console.log(`\n  ${sheets} folhas medidas · limite ${PRINT_H}mm de altura útil\n`);
+
+  /* How full is the book? A page that is half empty is not a bug, but a lot of
+     them means the splits are in the wrong places and the book is longer than
+     it needs to be. */
+  const buckets = [[0, .4], [.4, .6], [.6, .8], [.8, 1.001], [1.001, 99]];
+  const names = ['< 40% cheia', '40–60%', '60–80%', '80–100%', 'estoura'];
+  console.log('  distribuição de ocupação:');
+  buckets.forEach((b, i) => {
+    const n = all.filter(r => r.fill >= b[0] && r.fill < b[1]).length;
+    const bar = '█'.repeat(Math.round(n / sheets * 44));
+    console.log(`    ${names[i].padEnd(12)} ${String(n).padStart(4)}  ${bar}`);
+  });
+  const avg = all.reduce((a, r) => a + r.fill, 0) / all.length;
+  console.log(`    média ${(avg * 100).toFixed(0)}%\n`);
+
+  if (process.argv.includes('--empty')) {
+    console.log('  folhas mais vazias:');
+    all.slice().sort((a, b) => a.mm - b.mm).slice(0, 25).forEach(r =>
+      console.log(`    ${(r.fill * 100).toFixed(0).padStart(3)}%  ${r.mm.toFixed(0).padStart(3)}mm  ` +
+                  `${r.file} folha ${r.n}  ${(r.title || r.badge).slice(0, 40)}`));
+    console.log();
+  }
   if (!over.length) {
     console.log('  ✓ todas cabem em uma página A4\n');
     process.exit(0);

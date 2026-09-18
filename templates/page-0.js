@@ -4,7 +4,7 @@
    consoantes" claim. */
 
 import { he, heList, esc, mixed, H, prose } from '../scripts/lib/render.js';
-import { sheet, badge, callout, chunk } from './partials.js';
+import { badge, callout, chunk } from './partials.js';
 
 export function renderPage0(ctx) {
   const N = ctx.nikud;
@@ -73,5 +73,5 @@ export function renderPage0(ctx) {
     ${callout('note', '📌', `
       <p>Não decore os nomes dos sinais agora. Você precisa reconhecer o <strong>som</strong>. Os nomes estão no apêndice, para quando forem úteis.</p>`)}`);
 
-  return sheets.map((body, i) => sheet(body, i + 1)).join('\n');
+  return sheets;
 }

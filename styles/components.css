@@ -419,3 +419,15 @@ ul.ticks li { margin-block-end: var(--s-3); }
   user-select: none;
   overflow: visible;
 }
+
+/* A unit merged onto a sheet that already has a title: its h1 becomes this.
+   Sized between h1 and h2 so the sheet still reads as one page with clearly
+   separated parts, and given room above so the join is obvious. */
+.unit-h {
+  font-size: var(--t-h2);
+  line-height: var(--lh-heading);
+  margin-block: var(--s-9) var(--s-5);
+  padding-block-start: var(--s-6);
+  border-block-start: var(--w-rule) solid var(--c-rule);
+}
+.sheet > .unit-h:first-child { margin-block-start: 0; padding-block-start: 0; border-block-start: 0; }

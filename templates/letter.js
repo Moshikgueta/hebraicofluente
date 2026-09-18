@@ -10,7 +10,7 @@
 
 import { he, heList, heCloze, pair, esc, mixed, H, prose } from '../scripts/lib/render.js';
 import { ALEFBET } from '../scripts/lib/hebrew.js';
-import { badge, sheet, callout, stepStrip, exercise, strokeOrder } from './partials.js';
+import { badge, callout, stepStrip, exercise, strokeOrder } from './partials.js';
 
 /* Deterministic shuffle — the build must be reproducible, so no Math.random. */
 function rng(seed) {
@@ -105,7 +105,7 @@ export function renderLetter(L, ctx) {
 
   const A = { L, name, rand, canRead, bdg, ctx };
   const sheets = [...stage1(A), ...stage2(A), ...stage3(A), ...stage4(A), ...stage5(A)];
-  return sheets.filter(Boolean).map((body, i) => sheet(body, i + 1)).join('\n');
+  return sheets.filter(Boolean);
 }
 
 /* ── Stage 1 · conhecer a letra, depois ler as sílabas ───────────────────── */

@@ -2,7 +2,7 @@
    so it can never drift from the lessons. */
 
 import { he, esc, mixed, H, prose } from '../scripts/lib/render.js';
-import { sheet, badge, callout, chunk } from './partials.js';
+import { badge, callout, chunk } from './partials.js';
 import { ALEFBET } from '../scripts/lib/hebrew.js';
 
 export function renderAppendix(ctx) {
@@ -132,5 +132,5 @@ export function renderAppendix(ctx) {
 
     ${callout('tip', '💡', `<p>Ninguém escreve hebraico à mão em letra de imprensa, do mesmo jeito que ninguém escreve português à mão em letra de fôrma o tempo todo. Se você pretende escrever, a cursiva é a que vale a pena treinar.</p>`)}`);
 
-  return sheets.map((body, i) => sheet(body, i + 1)).join('\n');
+  return sheets;
 }

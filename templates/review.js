@@ -3,7 +3,7 @@
    letter that has not been taught — V10 re-checks it on the built data. */
 
 import { he, heList, heCloze, esc, mixed, H } from '../scripts/lib/render.js';
-import { sheet, badge, callout, chunk } from './partials.js';
+import { badge, callout, chunk } from './partials.js';
 
 function rng(seed) {
   let h = 1779033703 ^ seed.length;
@@ -155,7 +155,7 @@ export function renderReview(R, ctx) {
       ? `<p><strong>Você terminou o alfabeto.</strong> Sabe reconhecer, ler e escrever as 22 letras e as 5 formas finais, e lê ${words.length} palavras inteiras. O próximo passo é a gramática — e a partir daqui você lê tudo o que encontrar pela frente.</p>`
       : `<p><strong>Bom trabalho.</strong> Se alguma letra ainda travou a leitura, volte ao módulo dela antes de seguir. Não há pressa: cada letra bem fixada torna a próxima mais fácil.</p>`)}`);
 
-  return sheets.map((body, i) => sheet(body, i + 1)).join('\n');
+  return sheets;
 }
 
 /* The word with its first (rightmost) cluster blanked — a generic review gap,

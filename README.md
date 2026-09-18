@@ -20,6 +20,40 @@ npm run check      # as duas acima
 npm run serve      # constrói e serve dist/ em http://127.0.0.1:8080
 ```
 
+### Empacotamento
+
+```bash
+npm run pack       # mede as peças e decide o agrupamento
+```
+
+Dividir o conteúdo em folhas que cabem é só metade do trabalho: só isso deixava
+o livro **69% cheio em média**, com dezenas de páginas pela metade — a tabela
+"impressa e cursiva" ocupa 110mm numa página de 265mm.
+
+Então o build **empacota**. Cada template emite *unidades*; o build corta cada
+uma nos próprios `<h2>`, cartões de exercício e linhas de traçado — pontos
+atômicos por construção — e preenche cada folha com as peças seguintes da mesma
+seção, em ordem, até o limite. Uma peça que não abre a folha perde o badge e o
+título, que o `<h2>` dela já substitui.
+
+As alturas vêm de `data/layout.json`, medido por `npm run pack`. Sem esse
+arquivo cada peça fica na sua própria folha: desperdiça papel, nunca erra — que
+é como uma entrada ausente deve falhar.
+
+**O empacotador é otimista de propósito.** Uma margem de segurança grande o
+bastante para a pior junção encolhe todas as outras folhas e custa mais páginas
+do que economiza. Em vez disso ele arrisca, e o `npm run pack` conserta o que
+de fato estourou: mede o resultado empacotado e força uma quebra antes da peça
+exata que passou do limite, repetindo até estabilizar (normalmente duas
+rodadas). O resultado:
+
+| | antes | depois |
+|---|---|---|
+| páginas A4 | 344 | **287** |
+| ocupação média | 69% | **81%** |
+| folhas abaixo de 60% | 93 | **16** |
+| folhas que estouram | 0 | **0** |
+
 ### Uma folha é uma página impressa
 
 Esse é o contrato do workbook, e tudo depende dele: se uma folha estoura a
