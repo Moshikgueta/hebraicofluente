@@ -7,24 +7,27 @@
 # interface em MODO DEMONSTRAÇÃO, sem servidor. As duas não se atropelam
 # porque a diferença é uma variável de build: NEXT_PUBLIC_PLATFORM_API.
 #
-# ── ANTES DA PRIMEIRA EXECUÇÃO ────────────────────────────────────────────
+# ── O QUE PRECISA EXISTIR ─────────────────────────────────────────────────
 #
-#  1. Criar o banco e colar o id em wrangler.toml:
-#       npx wrangler d1 create hebraico-fluente
-#  2. Aplicar o esquema:
-#       npm run db:init
-#  3. Painel da Cloudflare → o Worker → Settings → Variables and Secrets,
-#     tipo Secret: SESSION_SECRET, MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET.
-#     (Ver .env.example. Nenhum deles pode estar também no wrangler.toml.)
-#  4. Segredos deste repositório (Settings → Secrets and variables → Actions):
-#       CLOUDFLARE_API_TOKEN   — permissão "Edit Cloudflare Workers"
-#       CLOUDFLARE_ACCOUNT_ID
-#  5. Painel da Mercado Pago → Webhooks → apontar para
-#       https://<seu-domínio>/api/pay/webhook
-#     e copiar a "assinatura secreta" para MP_WEBHOOK_SECRET.
+# Só isto, nos segredos DESTE repositório (Settings → Secrets and variables →
+# Actions → aba Secrets):
 #
-# Sem o passo 4 o job não roda: ele verifica o segredo e para com uma
-# explicação, em vez de falhar no meio com um erro de autenticação do wrangler.
+#   CLOUDFLARE_API_TOKEN    modelo "Edit Cloudflare Workers" MAIS a permissão
+#                           D1:Edit — sem ela o Worker sobe e o banco falha
+#   CLOUDFLARE_ACCOUNT_ID   opcional hoje: o script deriva a conta do próprio
+#                           token, e um id divergente é ignorado com aviso
+#
+# O resto é feito por scripts/cloudflare-setup.sh a cada execução: criar o
+# banco, aplicar o esquema, gerar o SESSION_SECRET, publicar, acertar o
+# SITE_ORIGIN e conferir o que subiu.
+#
+# Sem o token o job não roda: ele verifica, explica na tabela do resumo o que
+# falta, e para — em vez de falhar no meio com um erro do wrangler.
+#
+# Para COBRAR, faltam dois segredos no painel da Cloudflare (Worker → Settings
+# → Variables and Secrets, tipo Secret): MP_ACCESS_TOKEN e MP_WEBHOOK_SECRET,
+# com o webhook da Mercado Pago apontado para /api/pay/webhook. Sem eles o site
+# funciona inteiro e só o checkout fica desligado, dizendo isso na tela.
 
 name: Deploy platform to Cloudflare
 
@@ -193,3 +196,32 @@ jobs:
           rc=$?
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           exit $rc
+
+      # A conferência cria uma conta de teste no banco DE PRODUÇÃO — é o que
+      # torna a verificação real. Sem esta limpeza, cada publicação deixa mais
+      # uma linha para sempre, e em um ano a tabela de contas está cheia de
+      # lixo que ninguém sabe de onde veio.
+      #
+      # O endereço usa o domínio .invalid, reservado pela RFC 2606: ele nunca
+      # resolve e ninguém recebe e-mail nele. É o que torna seguro apagar por
+      # padrão — um padrão capaz de casar com o e-mail de um aluno de verdade
+      # seria uma forma criativa de apagar cliente.
+      #
+      # Apaga por PADRÃO de e-mail, e não só a conta desta execução: uma
+      # publicação que falhou no meio não chegou a limpar a sua, e este passo
+      # recolhe as que ficaram.
+      #
+      # `always()` porque a limpeza importa ainda mais quando a conferência
+      # falhou. `continue-on-error` porque falhar ao limpar não pode
+      # transformar uma publicação boa em vermelha.
+      - name: Limpar as contas de teste
+        if: always() && steps.guard.outputs.ok == 'true'
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx --yes wrangler@4 d1 execute hebraico-fluente --remote --command \
+            "DELETE FROM orders WHERE account_id IN (SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid');
+             DELETE FROM entitlements WHERE account_id IN (SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid');
+             DELETE FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'" \
+            && echo "Contas de teste removidas." >> "$GITHUB_STEP_SUMMARY"

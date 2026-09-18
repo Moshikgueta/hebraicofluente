@@ -35,7 +35,7 @@ not_found_handling = "404-page"
 [[d1_databases]]
 binding = "DB"
 database_name = "hebraico-fluente"
-database_id = "PREENCHER-COM-O-ID-DE-wrangler-d1-create"
+database_id = "af5fad4b-8a1d-4512-8024-f13d698ddd73"
 
 # A varredura de pagamentos pendentes. O webhook da Mercado Pago é assinado e
 # confiável, e mesmo assim pode não chegar — ver worker/src/reconcile.js.
@@ -57,7 +57,7 @@ crons = ["*/5 * * * *"]
 # dois preços.
 [vars]
 # Origem absoluta do site. O cron não tem requisição de onde deduzi-la.
-SITE_ORIGIN = "https://hebraico-fluente.workers.dev"
+SITE_ORIGIN = "https://hebraico-fluente.moshikg10.workers.dev"
 # "1" usa o checkout de teste da Mercado Pago (não cobra nada). Em produção,
 # "0" — e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.

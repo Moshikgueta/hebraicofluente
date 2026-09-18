@@ -24,7 +24,11 @@
 set -u
 B="${HF_BASE:-http://127.0.0.1:8787}"
 JAR="$(mktemp)"
-MAIL="teste$RANDOM@exemplo.br"
+# Domínio .invalid (RFC 2606): reservado, jamais resolve, ninguém consegue
+# receber e-mail nele. Isso importa porque a limpeza automática no fim da
+# publicação apaga por PADRÃO de endereço — e um padrão que pudesse casar com
+# o e-mail de um aluno de verdade seria uma forma criativa de apagar cliente.
+MAIL="hf-e2e-$RANDOM@example.invalid"
 fails=0
 
 G() { curl -s --noproxy '*' "$@"; }
