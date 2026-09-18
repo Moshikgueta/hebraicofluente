@@ -3,6 +3,9 @@
 # É a ferramenta de operação da plataforma. Serve para:
 #
 #   · você mesmo entrar no curso antes de o pagamento estar ligado;
+#   · presentear alguém — uma amiga, um aluno beta — mesmo que ela AINDA NÃO
+#     tenha conta: o acesso fica guardado pelo e-mail e vira curso no momento
+#     do cadastro;
 #   · liberar um aluno que pagou por fora (transferência, dinheiro, brinde);
 #   · FECHAR o acesso depois de um estorno — que é a metade que todo mundo
 #     esquece: devolver o dinheiro na Mercado Pago não tira o curso de
@@ -136,9 +139,20 @@ jobs:
                  SELECT id, 'grant-manual', '$CURSO via GitHub Actions', unixepoch()*1000
                    FROM accounts WHERE email = '$SQLMAIL'"
 
-              say "Tentativa de liberar **$CURSO** por **$M meses** para \`$MAIL\`."
+              # Se a conta ainda não existe, o INSERT..SELECT acima não fez
+              # nada — e é aqui que entra o convite: o acesso fica guardado
+              # pelo E-MAIL e vira curso no momento em que a pessoa se
+              # cadastrar. É o que torna possível presentear alguém que ainda
+              # nem ouviu falar do site.
+              $W --command \
+                "INSERT INTO invites (email, course_slug, months, note, created_at)
+                 VALUES ('$SQLMAIL', '$CURSO', $M, 'GitHub Actions', unixepoch()*1000)
+                 ON CONFLICT(email, course_slug) DO UPDATE SET
+                   months = excluded.months, created_at = excluded.created_at,
+                   used_at = NULL"
+
+              say "Liberado **$CURSO** por **$M meses** para \`$MAIL\`."
               say ""
-              say "Conferindo o resultado:"
               say '```'
               $W --command \
                 "SELECT a.email, e.course_slug,
@@ -148,8 +162,9 @@ jobs:
                 | tee -a "$GITHUB_STEP_SUMMARY"
               say '```'
               say ""
-              say "Se a tabela acima veio vazia, **essa conta não existe**."
-              say "Crie-a primeiro em \`/criar-conta\` no site, com esse mesmo e-mail."
+              say "Tabela vazia acima significa que a conta ainda não existe —"
+              say "e está tudo certo: o convite ficou guardado. Peça para ela"
+              say "criar a conta com **esse mesmo e-mail** e o curso já estará lá."
               ;;
 
             revogar)
@@ -160,7 +175,12 @@ jobs:
                    FROM accounts WHERE email = '$SQLMAIL';
                  DELETE FROM entitlements
                   WHERE course_slug = '$CURSO'
-                    AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL')"
+                    AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL');
+                 -- O convite pendente morre junto. Sem isto, revogar e a
+                 -- pessoa se cadastrar depois devolveria o acesso — o
+                 -- convite ainda estaria lá, esperando.
+                 DELETE FROM invites
+                  WHERE email = '$SQLMAIL' AND course_slug = '$CURSO' AND used_at IS NULL"
               say "Acesso a **$CURSO** removido de \`$MAIL\`."
               say ""
               say "Fecha na hora: o cookie de sessão não carrega direito nenhum,"

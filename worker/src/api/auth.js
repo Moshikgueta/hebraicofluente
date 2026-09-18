@@ -26,7 +26,7 @@ import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/sessi
 import { isSandbox } from '../lib/mercadopago.js';
 import {
   activeEntitlements, createAccount, findAccountByEmail, findAccountById,
-  log, normalizeEmail, setPasswordHash, throttled
+  inviteRedeem, log, normalizeEmail, setPasswordHash, throttled
 } from '../lib/db.js';
 
 const MIN_PASSWORD = 8;
@@ -71,6 +71,11 @@ export async function signup({ request, env }) {
   const { hash, salt, iterations } = await hashPassword(password, null, itersFor(env));
   const account = await createAccount(env, { email, name, hash, salt, iterations });
   await log(env, account.id, 'signup', email);
+
+  /* Um presente esperando por este endereço vira acesso agora, antes de a
+     pessoa ver qualquer tela. É a diferença entre "bem-vinda, seu curso está
+     aqui" e "você não tem este curso — fale com quem te convidou". */
+  await inviteRedeem(env, account.id, email);
 
   return json(await sessionBody(env, account), 200,
     { 'Set-Cookie': await makeSessionCookie(env, account) });
@@ -117,6 +122,11 @@ export async function login({ request, env }) {
          causa de uma melhoria opcional. */
     }
   }
+
+  /* Rede de segurança: o convite pode ter sido criado DEPOIS de a conta
+     existir. Sem isto, presentear alguém já cadastrado não funcionaria, que é
+     metade dos casos reais. */
+  await inviteRedeem(env, account.id, email);
 
   return json(await sessionBody(env, account), 200,
     { 'Set-Cookie': await makeSessionCookie(env, account) });

@@ -103,6 +103,55 @@ export async function revokeAccess(env, accountId, courseSlug, why = '') {
   await log(env, accountId, 'revoke', `${courseSlug} ${why}`.trim());
 }
 
+/* ── convites ───────────────────────────────────────────────────────────── */
+
+/** Registra (ou atualiza) um convite. Vale mesmo sem conta existir ainda. */
+export async function inviteCreate(env, { email, courseSlug, months, note }) {
+  await env.DB.prepare(
+    `INSERT INTO invites (email, course_slug, months, note, created_at)
+     VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT(email, course_slug) DO UPDATE SET
+       months = excluded.months, note = excluded.note,
+       created_at = excluded.created_at, used_at = NULL`
+  ).bind(normalizeEmail(email), courseSlug, Number(months) || 12,
+         String(note || '').slice(0, 200), now()).run();
+}
+
+/**
+ * Transforma em acesso todos os convites pendentes deste e-mail.
+ *
+ * Chamado no cadastro, e de novo no login — o segundo é a rede de segurança
+ * para quem já tinha conta quando o convite foi criado. As duas chamadas são
+ * seguras de repetir: `used_at` faz o convite valer uma vez só.
+ *
+ * Nunca derruba o cadastro: um presente que falha não pode impedir alguém de
+ * criar a conta. Por isso o try, e por isso ele devolve quantos aplicou em vez
+ * de lançar.
+ */
+export async function inviteRedeem(env, accountId, email) {
+  try {
+    const { results } = await env.DB.prepare(
+      'SELECT course_slug, months FROM invites WHERE email = ? AND used_at IS NULL'
+    ).bind(normalizeEmail(email)).all();
+
+    let n = 0;
+    for (const row of results || []) {
+      await grantAccess(env, {
+        accountId, courseSlug: row.course_slug,
+        orderId: 'CONVITE', months: row.months
+      });
+      await env.DB.prepare(
+        'UPDATE invites SET used_at = ? WHERE email = ? AND course_slug = ?'
+      ).bind(now(), normalizeEmail(email), row.course_slug).run();
+      n++;
+    }
+    if (n) await log(env, accountId, 'convite-usado', `${n} curso(s)`);
+    return n;
+  } catch {
+    return 0;
+  }
+}
+
 /* ── pedidos ────────────────────────────────────────────────────────────── */
 
 export async function createOrder(env, o) {

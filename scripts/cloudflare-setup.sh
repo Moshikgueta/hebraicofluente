@@ -145,18 +145,22 @@ fi
 # ── 3. tabelas ────────────────────────────────────────────────────────────
 echo
 bold "3. Tabelas"
-if $W d1 execute "$DB_NAME" --remote --command \
-     "SELECT 1 FROM accounts LIMIT 1" >/dev/null 2>&1; then
-  ok "Esquema já aplicado"
+# Aplica SEMPRE, e não só quando o banco está vazio.
+#
+# A versão anterior pulava este passo se `accounts` já existisse — e com isso
+# uma tabela NOVA acrescentada ao esquema nunca seria criada num banco que já
+# estava no ar. O sintoma seria a funcionalidade nova falhando em silêncio, em
+# produção, com o esquema "já aplicado" no relatório.
+#
+# É seguro repetir: cada comando do arquivo é CREATE ... IF NOT EXISTS, então
+# rodar de novo não toca em nada que exista nem apaga um dado sequer.
+info "Aplicando worker/schema.sql…"
+if $W d1 execute "$DB_NAME" --remote --file=worker/schema.sql >/dev/null 2>&1; then
+  ok "Esquema em dia"
 else
-  info "Aplicando worker/schema.sql…"
-  if $W d1 execute "$DB_NAME" --remote --file=worker/schema.sql >/dev/null 2>&1; then
-    ok "Tabelas criadas"
-  else
-    morre "Falhou ao aplicar o esquema." \
-          "Rode à mão para ver a mensagem inteira:
+  morre "Falhou ao aplicar o esquema." \
+        "Rode à mão para ver a mensagem inteira:
        npx wrangler d1 execute $DB_NAME --remote --file=worker/schema.sql"
-  fi
 fi
 
 # ── 4. segredos ───────────────────────────────────────────────────────────

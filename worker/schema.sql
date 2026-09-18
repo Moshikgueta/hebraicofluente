@@ -99,3 +99,26 @@ CREATE TABLE IF NOT EXISTS access_log (
   detail     TEXT NOT NULL DEFAULT '',
   created_at INTEGER NOT NULL
 );
+
+-- ── convites ──────────────────────────────────────────────────────────────
+-- Acesso concedido a um E-MAIL antes de existir uma conta com ele.
+--
+-- Serve ao caso comum de presentear: cortesia para uma amiga, acesso para
+-- quem pagou por fora, aluno convidado para testar. Sem isto, presentear
+-- exige coordenação — a pessoa se cadastra, esbarra na tela de "você não tem
+-- este curso", avisa, e só então alguém libera. Com isto, ela cria a conta e
+-- o curso já está lá.
+--
+-- O convite é CONSUMIDO no cadastro (`used_at`), nunca apagado: quem deu o
+-- presente precisa continuar podendo ver que deu, e quando foi usado.
+CREATE TABLE IF NOT EXISTS invites (
+  email       TEXT    NOT NULL,
+  course_slug TEXT    NOT NULL,
+  months      INTEGER NOT NULL DEFAULT 12,
+  note        TEXT    NOT NULL DEFAULT '',
+  created_at  INTEGER NOT NULL,
+  used_at     INTEGER,
+  PRIMARY KEY (email, course_slug)
+);
+
+CREATE INDEX IF NOT EXISTS invites_pendentes ON invites(email) WHERE used_at IS NULL;
