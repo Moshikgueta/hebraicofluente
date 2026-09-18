@@ -10,13 +10,68 @@ Cole dois segredos no GitHub e o resto acontece sozinho, a cada push.
 GitHub → o repositório → **Settings → Secrets and variables → Actions → New
 repository secret**:
 
-| Nome | Onde achar |
-|---|---|
-| `CLOUDFLARE_API_TOKEN` | Painel da Cloudflare → ícone da conta → *API Tokens* → *Create Token* → modelo **Edit Cloudflare Workers**, e acrescente **`D1:Edit`** nas permissões |
-| `CLOUDFLARE_ACCOUNT_ID` | Painel → Workers & Pages → coluna da direita, *Account ID* |
+### Passo 1 — criar o token, clique a clique
 
-O `D1:Edit` não é opcional: sem ele o Action publica o Worker e falha ao criar
-o banco, que é a metade que guarda as contas.
+Esta é a tela mais confusa da Cloudflare, porque ela chama de "template" um
+formulário que ainda dá para editar. O caminho:
+
+1. Abra **https://dash.cloudflare.com/profile/api-tokens**
+2. Botão azul **Create Token**, no alto.
+3. Aparece uma lista de modelos. Ache a linha **Edit Cloudflare Workers** e
+   clique em **Use template**, do lado direito dela.
+   *(Não clique em "Get started" do Custom token — é outro caminho.)*
+4. Abre um formulário já preenchido. Desça até o quadro **Permissions**. Ele
+   tem várias linhas, cada uma com **três caixas**:
+
+   ```
+   Account  │  Workers Scripts        │  Edit
+   Account  │  Workers KV Storage     │  Edit
+   Zone     │  Workers Routes         │  Edit
+   ...
+   ```
+
+5. **Aqui é o que faltava.** Embaixo da última linha tem um link
+   **+ Add more**. Clique nele. Surge uma linha vazia com as três caixas.
+   Preencha assim:
+
+   ```
+   Account  │  D1                     │  Edit
+   ```
+
+   A caixa do meio é uma lista comprida em ordem alfabética — digite `D1` que
+   ela filtra.
+
+6. Desça mais. Em **Account Resources**, confira que está
+   `Include` → *a sua conta*. Se estiver "All accounts", também serve.
+7. Botão **Continue to summary**, embaixo.
+8. A tela de resumo lista as permissões. Confira que **D1:Edit** aparece.
+   Botão **Create Token**.
+9. A tela seguinte mostra o token: uma linha comprida de letras e números, com
+   um botão de copiar do lado.
+
+   ⚠ **Copie agora.** A Cloudflare mostra esse valor **uma única vez**. Se
+   fechar a página sem copiar, não dá para recuperar — só criar outro.
+
+### Passo 2 — achar o Account ID
+
+Painel → **Workers & Pages** (menu da esquerda) → na coluna da direita, embaixo
+de *Account Details*, tem **Account ID** com um botão de copiar. São 32
+caracteres hexadecimais.
+
+### Passo 3 — colar no GitHub
+
+| Nome | Valor |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | o token do passo 1 |
+| `CLOUDFLARE_ACCOUNT_ID` | o id do passo 2 |
+
+### Por que o D1:Edit
+
+O modelo *Edit Cloudflare Workers* cobre o Worker e os arquivos do site, mas
+**não** cobre o banco. Sem essa permissão a publicação sobe o site e falha na
+hora de criar o D1 — que é justamente a metade que guarda as contas dos alunos.
+O erro que aparece é `Authentication error [code: 10000]`, que não diz nada
+sobre D1 e já custou muita hora de gente procurando no lugar errado.
 
 A partir daí, todo push roda os testes e executa
 `scripts/cloudflare-setup.sh` dentro do Action — que cria o banco se não
