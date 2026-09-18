@@ -349,3 +349,25 @@ ul.ticks li { margin-block-end: var(--s-3); }
 .idx-card--wide { justify-items: start; margin-block-end: var(--s-6); }
 .idx-t { font: 600 var(--t-h4)/1.2 var(--font-display); color: var(--c-ink); }
 .idx-s { font-size: var(--t-small); color: var(--c-ink-muted); }
+
+/* ── review units ───────────────────────────────────────────────────────── */
+.name-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--s-5); }
+.name-item {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-5);
+  background: var(--c-surface); border: var(--w-rule) solid var(--c-rule);
+  border-radius: var(--radius-sm); padding: var(--s-5) var(--s-6);
+}
+.name-slot { inline-size: 54px; block-size: 30px; border-block-end: 1.5px solid var(--c-ink-body); }
+
+/* ── appendix · cursive chart ───────────────────────────────────────────── */
+.cursive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: var(--s-5); }
+.cursive-cell {
+  display: grid; justify-items: center; gap: var(--s-2);
+  background: var(--c-surface); border: var(--w-rule) solid var(--c-rule);
+  border-radius: var(--radius-md); padding: var(--s-5) var(--s-3);
+  break-inside: avoid;
+}
+.cursive-cell .he--display { font-size: 46px; }
+.cursive-print { opacity: .55; }
+
+.idx-grid--wide { grid-template-columns: 1fr; }

@@ -173,7 +173,7 @@ function page2(L, { bdg, T, name, rand }) {
 
     ${gapItems.length ? exercise(4, mixed(['Complete com ', H(L.letter)]), `
       <p>Escreva a letra que falta em cada palavra.</p>
-      <p class="ex-task">${gapItems.map(w => clozeFirstLetter(w, L)).join(' ')}</p>`)
+      <p class="ex-task">${gapItems.map(w => clozeTargetLetter(w, L)).join(' ')}</p>`)
       : exercise(4, mixed(['Escreva ', H(L.letter), ' com cada vogal']), `
       <p>Copie a sílaba ao lado do modelo.</p>
       <table>
@@ -194,16 +194,9 @@ function page2(L, { bdg, T, name, rand }) {
   return sheet(body, 2);
 }
 
-/* A word with its first (rightmost) letter removed. Parts are given in
-   reading order: blank first, then the rest of the word to its left. */
-function clozeFirstLetter(w, L) {
-  const chars = [...w.he];
-  // drop the leading consonant, keep any pointing that belongs to what remains
-  let i = 0;
-  if (/[א-ת]/.test(chars[0])) i = 1;
-  while (i < chars.length && /[֑-ׇ]/.test(chars[i])) i++;
-  const rest = chars.slice(i).join('');
-  return `<span class="gap-item">${heCloze([null, rest])} <span class="hint">(${esc(w.pt)})</span></span>`;
+/* One gapped word plus its meaning, for the inline exercise row. */
+function clozeTargetLetter(w, L) {
+  return `<span class="gap-item">${heCloze(gapParts(w.he, L))} <span class="hint">${esc(w.pt)}</span></span>`;
 }
 
 /* ── P3A · Modelo + ordem dos movimentos ─────────────────────────────────── */
@@ -346,7 +339,7 @@ function page4(L, { bdg, T, name, rand, canRead }) {
        <table>
          <thead><tr><th>Palavra incompleta</th><th>Significado</th><th>Palavra completa</th></tr></thead>
          <tbody>${gap.items.map(w => `<tr>
-           <td class="he-cell">${heCloze([null, dropFirst(w.he)])}</td>
+           <td class="he-cell">${heCloze(gapParts(w.he, L))}</td>
            <td>${esc(w.pt)}</td>
            <td class="write-cell"></td></tr>`).join('')}</tbody>
        </table>`;
@@ -386,11 +379,37 @@ function page4(L, { bdg, T, name, rand, canRead }) {
   return sheet(body, 6);
 }
 
-function dropFirst(word) {
-  const chars = [...word];
-  let i = /[א-ת]/.test(chars[0]) ? 1 : 0;
-  while (i < chars.length && /[֑-ׇ]/.test(chars[i])) i++;
-  return chars.slice(i).join('');
+/* A word split into clusters: each consonant plus the pointing that rides on
+   it. Hebrew has no contextual shaping, so a cluster is safe to isolate. */
+function clusters(word) {
+  const out = [];
+  for (const ch of [...word]) {
+    if (/[\u05D0-\u05EA]/.test(ch) || !out.length) out.push(ch);
+    else out[out.length - 1] += ch;
+  }
+  return out;
+}
+
+/* The word with the TARGET letter blanked, in reading order (right to left).
+   Blanking the first cluster blindly was wrong: at letter Kaf the word מֶלֶךְ
+   carries its kaf at the END, as ך, so the blank landed on the mem and the
+   exercise asked for the wrong letter. Final forms count as their base letter,
+   and consecutive kept clusters are merged so the word stays in as few spans
+   as possible. */
+function gapParts(word, L) {
+  const cl = clusters(word);
+  let idx = cl.findIndex(c => c[0] === L.letter);
+  if (idx < 0 && L.finalForm) idx = cl.findIndex(c => c[0] === L.finalForm);
+  if (idx < 0) idx = 0;
+
+  const parts = [];
+  cl.forEach((c, i) => {
+    if (i === idx) { parts.push(null); return; }
+    const last = parts[parts.length - 1];
+    if (typeof last === 'string') parts[parts.length - 1] = last + c;
+    else parts.push(c);
+  });
+  return parts;
 }
 
 /* A gap exercise needs something still visible beside the blank.
@@ -417,7 +436,7 @@ function page5(L, { bdg, T, name, rand, canRead }) {
 
   const a1 = gapSource(L).items
     .map(w => `<tr>
-      <td class="he-cell">${heCloze([null, dropFirst(w.he)])}</td>
+      <td class="he-cell">${heCloze(gapParts(w.he, L))}</td>
       <td>${esc(w.pt)}</td>
       <td class="write-cell"></td>
     </tr>`).join('');

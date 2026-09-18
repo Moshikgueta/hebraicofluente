@@ -180,13 +180,38 @@ export function validate({ checkDist = true } = {}) {
     }
   }
 
-  /* ── V8 / V9 — the bidi contract, checked on the built output ─────── */
+  /* ── V8 / V9 / V10 — checked on the built output ──────────────────── */
   if (checkDist) {
     const dist = join(ROOT, 'dist');
     if (existsSync(dist)) {
       for (const f of readdirSync(dist).filter(f => f.endsWith('.html'))) {
         const src = readFileSync(join(dist, f), 'utf8');
         checkBidi(src, f);
+
+        /* V10 — a review unit may only show letters already taught. The
+           content is derived from the letters in range so this should hold by
+           construction; it is checked anyway, because "by construction" is
+           exactly the kind of claim that stops being true after an edit. */
+        const rm = /^r(\d+)-revisao-(\d+|final)\.html$/.exec(f);
+        if (rm) {
+          const upTo = rm[2] === 'final' ? 22 : Number(rm[2]);
+          const allowed = new Set();
+          letters.filter(l => l.order <= upTo).forEach(l => {
+            allowed.add(l.letter);
+            if (l.finalForm) allowed.add(l.finalForm);
+          });
+          const used = new Set();
+          for (const m of src.matchAll(/<span class="he[^"]*"[^>]*>([\s\S]*?)<\/span>/g)) {
+            for (const ch of m[1].replace(/<[^>]*>/g, '')) {
+              if (/[\u05D0-\u05EA]/.test(ch)) used.add(ch);
+            }
+          }
+          const over = [...used].filter(c => !allowed.has(c));
+          if (over.length) {
+            fail('V10', f,
+              `mostra letras ainda não ensinadas na revisão até a ordem ${upTo}: ${over.map(c => JSON.stringify(c)).join(', ')}`);
+          }
+        }
       }
     }
   }

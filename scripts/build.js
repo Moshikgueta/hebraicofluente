@@ -7,6 +7,8 @@ import { join } from 'node:path';
 import { validate, report } from './validate.js';
 import { renderLetter } from '../templates/letter.js';
 import { renderPage0 } from '../templates/page-0.js';
+import { renderReview } from '../templates/review.js';
+import { renderAppendix } from '../templates/appendix.js';
 import { document_ } from '../templates/partials.js';
 import { esc } from './lib/render.js';
 
@@ -58,14 +60,48 @@ function main() {
     });
   }
 
-  /* 5. Index. */
+  /* 5. Review units — one after every four letters, then the cumulative one.
+     Only emitted when the letters they cover actually exist. */
+  const REVIEW_AT = [4, 8, 12, 16, 20];
+  const maxOrder = letters.length ? letters[letters.length - 1].order : 0;
+  REVIEW_AT.forEach((upTo, i) => {
+    if (upTo > maxOrder) return;
+    const R = { n: i + 1, upTo, final: false };
+    const file = `r${i + 1}-revisao-${upTo}.html`;
+    writeFileSync(join(DIST, file), document_({
+      title: `Revisão ${R.n} — letras 1 a ${upTo}`,
+      description: `Revisão cumulativa das letras 1 a ${upTo}: leitura, reconhecimento, escrita e ditado.`,
+      body: renderReview(R, ctx)
+    }));
+    modules.push({ href: file, kind: 'review', title: `Revisão ${R.n}`, sub: `letras 1 a ${upTo}` });
+  });
+
+  if (maxOrder >= 22) {
+    const R = { n: 6, upTo: 22, final: true };
+    writeFileSync(join(DIST, 'r6-revisao-final.html'), document_({
+      title: 'Revisão final — todo o alfabeto',
+      description: 'Revisão cumulativa das 22 letras, das 5 formas finais e de todo o vocabulário.',
+      body: renderReview(R, ctx)
+    }));
+    modules.push({ href: 'r6-revisao-final.html', kind: 'review', title: 'Revisão final', sub: 'as 22 letras' });
+  }
+
+  /* 6. Appendix. */
+  writeFileSync(join(DIST, 'apendice.html'), document_({
+    title: 'Apêndice — Hebraico Moderno',
+    description: 'Alfabeto completo, nomes dos sinais de vogal, chave de transliteração e quadro de cursiva.',
+    body: renderAppendix(ctx)
+  }));
+  modules.push({ href: 'apendice.html', kind: 'appendix', title: 'Apêndice', sub: 'tabelas de referência' });
+
+  /* 7. Index. */
   writeFileSync(join(DIST, 'index.html'), document_({
     title: 'Hebraico Moderno — Workbook de Alfabetização',
     description: 'Workbook de alfabetização em hebraico moderno para brasileiros adultos.',
     body: renderIndex(modules, letters)
   }));
 
-  /* 6. Re-validate, now including the built HTML (V8/V9 — the bidi contract). */
+  /* 8. Re-validate, now including the built HTML (V8/V9 — the bidi contract). */
   console.log('  validando saída…');
   const post = validate({ checkDist: true });
   const ok = report(post);
@@ -92,6 +128,17 @@ function renderIndex(modules, letters) {
     <span class="idx-t">Os sinais de vogal</span>
     <span class="idx-s">Os seis sons, apresentados pelo som e não pelo nome</span>
   </a>
+
+  ${modules.some(m => m.kind === 'review') ? `<h2>Revisões</h2>
+  <div class="idx-grid idx-grid--wide">${modules.filter(m => m.kind === 'review').map(m => `
+    <a class="idx-card idx-card--wide" href="./${m.href}">
+      <span class="idx-t">${esc(m.title)}</span><span class="idx-s">${esc(m.sub)}</span></a>`).join('')}
+  </div>` : ''}
+
+  ${modules.some(m => m.kind === 'appendix') ? `<h2>Referência</h2>
+  <a class="idx-card idx-card--wide" href="./apendice.html">
+    <span class="idx-t">Apêndice</span>
+    <span class="idx-s">Alfabeto completo · nomes dos sinais · chave de transliteração · quadro de cursiva</span></a>` : ''}
 
   <h2>As letras</h2>
   <p class="hint">${letters.length} de 22 letras prontas. Cada letra é um módulo de cinco páginas.</p>
