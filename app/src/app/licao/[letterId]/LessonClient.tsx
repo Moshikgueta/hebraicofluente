@@ -240,11 +240,7 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
               Tente decifrar antes de revelar. Todas usam só letras que você já aprendeu.
             </p>
           </div>
-          <div className="grid gap-3">
-            {letter.wordsToRead.map(w => (
-              <WordReveal key={w.he} word={w} mark={letter.letter} />
-            ))}
-          </div>
+          <WordList letter={letter} />
         </section>
       ) : (
         <Card tone="amber" className="p-6 grid gap-2">
@@ -271,13 +267,59 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
 
       {/* Only the scenes this letter unlocks, and only ones the learner can
           decode — a sign you cannot read is not a reward. Most letters have
-          none, which is what keeps the ones that do feeling earned. */}
-      {scenesForOrder(letter.order).map(scene => (
-        <RealWorldHebrew key={scene.id} scene={scene} />
-      ))}
+          none, which is what keeps the ones that do feeling earned.
+
+          One at a time: vav unlocks three at once, and three stacked sign
+          cards added 1,500px to a stage that was already five screens long.
+          The first is the reward; the rest are there for whoever wants them. */}
+      <Scenes letter={letter} />
 
       <WorkbookLink pages={letter.workbookPages} what="estas palavras" />
       <Button size="lg" onClick={onDone} full>Continuar para a escrita</Button>
+    </div>
+  );
+}
+
+function Scenes({ letter }: { letter: Letter }) {
+  const scenes = scenesForOrder(letter.order);
+  const [shown, setShown] = useState(1);
+  if (!scenes.length) return null;
+  const rest = scenes.length - shown;
+  return (
+    <div className="grid gap-4">
+      {scenes.slice(0, shown).map(scene => (
+        <RealWorldHebrew key={scene.id} scene={scene} />
+      ))}
+      {rest > 0 && (
+        <Button variant="secondary" onClick={() => setShown(scenes.length)} full>
+          Mais {rest} {rest === 1 ? 'lugar' : 'lugares'} onde você já consegue ler
+        </Button>
+      )}
+    </div>
+  );
+}
+
+/* Three at a time.
+   A letter with nine words made stage 2 a 4,400px scroll on a phone — five
+   screens of the same card, which is where a learner starts swiping instead of
+   reading. Three is about one screen: enough to work on, short enough to
+   finish, and the rest is one tap away for whoever wants it. */
+function WordList({ letter }: { letter: Letter }) {
+  const [shown, setShown] = useState(3);
+  const words = letter.wordsToRead;
+  const rest = words.length - shown;
+
+  return (
+    <div className="grid gap-3">
+      {words.slice(0, shown).map(w => (
+        <WordReveal key={w.he} word={w} mark={letter.letter} />
+      ))}
+      {rest > 0 && (
+        <Button variant="secondary" onClick={() => setShown(n => n + 3)} full>
+          Ver mais {Math.min(3, rest)} {rest === 1 ? 'palavra' : 'palavras'}
+          <span className="text-ink-muted"> · {rest} restantes</span>
+        </Button>
+      )}
     </div>
   );
 }

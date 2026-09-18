@@ -523,3 +523,90 @@ exige que **todo dia em que uma lição foi concluída bata a meta**.
    contextos reais (placa de rua, rótulo, recibo), mas escritos por nós a partir
    do vocabulário do curso — não fotografias nem transcrições. Vale a sua
    revisão de quem conhece Israel.
+
+---
+
+## 9. Segunda rodada — o que mudou (e por quê)
+
+Escrita depois da auditoria em `AUDIT.md`. Resumo do que passou a existir e das
+decisões que não são óbvias no código.
+
+### 9.1 O modelo de aprendizagem tem cinco dimensões
+
+`stagesDone.length >= 5` era todo o modelo de domínio. Ele não distingue quem
+reconhece ם e não sabe escrever de quem escreve e erra o som — e o curso então
+seguia com os dois.
+
+Agora cada letra tem cinco habilidades — `rec`, `som`, `ler`, `ouvir`,
+`escrever` — e **todo exercício declara qual delas testa**. Os níveis são
+grossos de propósito (`novo`, `aprendendo`, `praticando`, `forte`, `revisar`):
+"domínio 93,482%" é uma precisão que o dado não sustenta. O nível da letra é a
+**habilidade mais fraca com evidência**, nunca a média — a média deixa um bom
+leitor esconder um ouvido surdo.
+
+`confusableWith` já dizia quais pares tendem a se misturar; agora o sistema
+registra quais pares **este aluno** mistura, porque a alternativa errada
+escolhida sempre esteve disponível e era jogada fora.
+
+**Migração:** existe gente com estado v1 no navegador agora. `migrate.ts` é a
+única porta de entrada, a chave nunca muda, todo passo só acrescenta, estado de
+versão futura é recusado em vez de adivinhado, e os mapas novos começam
+**vazios** — chamar cinco etapas concluídas de "forte" seria uma mentira sobre
+a qual o sistema depois agiria, deixando de revisar letras que o aluno pode
+muito bem ter esquecido.
+
+### 9.2 Dezesseis tipos de exercício, oito deles gestos novos
+
+O motor tinha oito geradores e todos produziam o mesmo gesto. Os novos são
+ações diferentes: montar a sílaba (a operação central da leitura, que nunca era
+pedida), montar a palavra da direita para a esquerda, emparelhar com dois
+toques, digitar, achar a intrusa numa fileira, identificar a vogal, ouvir duas
+sílabas mínimas, ler o som e achar a grafia.
+
+Duas garantias novas: nenhum gesto se repete em duas questões seguidas
+(`spread()`), e o retorno é **por alternativa** onde há o que dizer.
+
+**Uma exceção à regra da ordem foi aberta, estreita e documentada:** o vav de
+מוֹ e מוּ é *mater lectionis*, um sinal de vogal com forma de letra. O curso
+sempre ensinou as seis sílabas desde a lição da própria letra; a regra agora
+não exige conhecer vav para ler "mo". Só isso: vav com holam ou shuruk, nunca
+no início da palavra, e nada equivalente para yod.
+
+### 9.3 Escrita: quatro passos e a página que não se mexe
+
+Ver a ordem dos traços (animada, a partir de `data/stroke-paths.json`, gerado do
+mesmo contorno da fonte que o diagrama impresso) → traçar por cima → guia fraco
+→ sem modelo. A correção é tolerante e mede duas coisas, porque uma só passa
+pelos dois casos errados: `dentro` sozinho aprova um risco curto e perfeito no
+meio da letra, `cobertura` sozinha aprova rabiscar tudo.
+
+O comportamento de toque é requisito, não detalhe: `touch-action: none`,
+`overscroll-behavior: contain`, pointer capture, e listeners **nativos e não
+passivos** — o React não promete não-passivo, e `preventDefault()` num listener
+passivo é ignorado em silêncio. Nada é desabilitado globalmente.
+
+### 9.4 Academia de Leitura
+
+Oito modos gerados pelo mesmo motor das lições, mais o laboratório de sons e a
+escrita. É o que faz o curso continuar existindo depois da vigésima segunda
+lição. O modo cronometrado corre contra **o próprio tempo anterior do aluno** e
+contra mais nada.
+
+### 9.5 Revisão que presta atenção
+
+Três fontes em vez de uma: a fila do SRS, qualquer habilidade que caiu para
+`revisar`, e os pares trocados — puxando **as duas letras** do par. E ela mira
+na habilidade que está falhando, quando dá: quem lê ק e não escuta recebe
+audição, não mais leitura.
+
+### 9.6 O momento que o curso vende
+
+A primeira palavra inteira lida com a transliteração já fora da tela é marcada,
+datada e dita em voz alta. Era o que o curso inteiro estava construindo e
+passava em silêncio.
+
+### 9.7 História e cultura
+
+Dez cartas opcionais, desbloqueadas por letras dominadas, fora do caminho.
+Escritas à mão (não geradas), cada uma com a base da afirmação em `sources`, e
+o arquivo está marcado como **precisando da sua revisão antes de publicar**.

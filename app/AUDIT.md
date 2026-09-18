@@ -173,6 +173,9 @@ comemorada** — que é justamente o momento emocional que o curso promete.
 
 ## 3. Plano priorizado
 
+> **Estado em 18/09/2026:** P0 inteiro e P1.1–P1.5 estão implementados e no ar.
+> O que sobrou está listado no fim deste documento, em §5.
+
 **P0 — fundações. Nada de valor se constrói sem elas.**
 
 | # | O quê | Por quê |
@@ -219,3 +222,33 @@ material verificado).
 4. **Progresso salvo não se perde.** Toda mudança de formato migra o estado v1.
 5. **Correção tolerante.** Um dedo num vidro de 6 polegadas não desenha
    caligrafia; reprovar um traço razoável é pior do que não corrigir.
+
+
+---
+
+## 5. O que ficou de fora (e por quê)
+
+Implementado nesta rodada: P0.1 a P0.4, P1.1 a P1.4, P2.1 e P2.2.
+
+Ainda aberto, em ordem de valor:
+
+| # | O quê | Por que não agora |
+| --- | --- | --- |
+| 1 | **As gravações** | Só você pode fazê-las. O kit está pronto: 321 clipes planejados, roteiro impresso, conferidor, e o app já sabe o que fazer quando cada arquivo chegar. Nada de audição existe até lá, por decisão. |
+| 2 | Leitura cronometrada com histórico por modo | O modo existe e guarda o tempo; falta o gráfico de evolução. |
+| 3 | Gravar e comparar a própria voz | Depende das gravações de referência. |
+| 4 | Nivelamento para quem já sabe alguma coisa | Precisa de uma decisão sua sobre o que pode ser pulado. |
+| 5 | Evolução histórica das letras, em imagens | Precisa de material verificado; o texto está escrito, a imagem não. |
+| 6 | Hebraico manuscrito como bônus separado | A cursiva já é o que se treina na escrita; um módulo de leitura de manuscrito é outra coisa. |
+| 7 | Revisão nativa da ordem dos traços e da cursiva | Continua pendente desde a primeira rodada. |
+
+### Riscos que continuam de pé
+
+1. **As 10 cartas de história e cultura precisam da sua revisão.** Cada uma traz
+   a base da afirmação, mas datas e formulações merecem uma conferência antes de
+   publicar.
+2. **As 17 cenas de «mundo real» são autoradas**, não coletadas — contextos
+   plausíveis escritos a partir do vocabulário do curso.
+3. **Sem áudio, três dos dezesseis tipos de exercício não existem.** O curso
+   funciona; a dimensão "ouvir" fica em branco no painel de domínio, o que é
+   honesto e visível.

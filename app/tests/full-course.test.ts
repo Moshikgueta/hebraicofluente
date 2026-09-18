@@ -15,7 +15,7 @@ import { buildCheckpoint, buildLessonQuiz, buildReview, isChoice, violatesOrderR
 import { buildDageshQuiz, buildGerechQuiz } from '../src/lib/engine/extras';
 import {
   ACHIEVEMENTS, EXTRA_STAGE_COUNT, EXTRA_STAGE_UNITS, STAGE_COUNT, XP, applyPractice, completeStage,
-  courseProgress, goalTarget, lettersMastered, recordCheckpoint, recordQuiz,
+  courseProgress, goalTarget, lettersMastered, markFirst, recordCheckpoint, recordQuiz,
   syncAchievements, addDays
 } from '../src/lib/state/rules';
 import { EMPTY_STATE, type LearnerState } from '../src/lib/state/types';
@@ -93,6 +93,14 @@ function playEverything() {
       practise(quiz.length);
       s = recordQuiz(s, id, 1, day);
       expectedXp += XP.perfectQuiz;
+
+      /* Past the eighth letter the course stops printing the transliteration,
+         so a learner answering a word question correctly has read Hebrew
+         unaided. The player records that moment; the simulation has to as
+         well, or it is not simulating a learner. */
+      if (lettersMastered(s) >= 8 && quiz.some(e => e.kind === 'word-meaning')) {
+        s = markFirst(s, 'leitura-sem-translit');
+      }
 
       /* The checkpoint runs on the same day as the module's last lesson,
          because that is what the dashboard actually sends the learner to. */

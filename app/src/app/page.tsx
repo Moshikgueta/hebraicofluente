@@ -164,7 +164,11 @@ export default function Dashboard() {
             <h2 id="alfabeto" className="font-display text-[17px] font-bold text-ink">
               O alfabeto
             </h2>
-            <Link href="/mapa" className="font-ui text-[13px] text-[var(--teal-band)] hover:underline">
+            {/* 44px of height even though the text is 13px: a link on a phone
+                is hit with a fingertip, not a cursor. */}
+            <Link href="/mapa"
+                  className="inline-flex items-center min-h-[44px] font-ui text-[13px]
+                             text-[var(--teal-band)] hover:underline">
               Ver o mapa →
             </Link>
           </div>
@@ -225,7 +229,9 @@ export default function Dashboard() {
           <span><strong className="text-ink font-semibold tabular-nums">{p.state.xp}</strong> XP</span>
           <span><strong className="text-ink font-semibold tabular-nums">{p.state.achievements.length}</strong> conquistas</span>
         </div>
-        <Link href="/mapa" className="font-ui text-[14px] font-medium text-[var(--teal-band)] hover:underline">
+        <Link href="/mapa"
+              className="inline-flex items-center min-h-[44px] font-ui text-[14px] font-medium
+                         text-[var(--teal-band)] hover:underline">
           Ver o mapa do curso →
         </Link>
       </Card>

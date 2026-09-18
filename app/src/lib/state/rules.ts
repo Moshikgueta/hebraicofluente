@@ -557,6 +557,10 @@ export const ACHIEVEMENTS: AchievementDef[] = [
     test: s => !!s.checkpoints['cp6']?.passedAt },
   { id: 'sons-modernos', titlePt: 'Os sons modernos', descPt: 'O gerech e as três letras que o hebraico moderno inventou sem inventar letra.',
     test: s => !!s.checkpoints['cp7']?.passedAt },
+  /* Not a count of anything. The one moment the course is actually selling:
+     a whole word decoded with no transliteration on the screen. */
+  { id: 'sem-apoio', titlePt: 'Sem apoio', descPt: 'Você leu uma palavra inteira sem transliteração.',
+    test: s => !!s.firsts['leitura-sem-translit'] },
   { id: 'leitor', titlePt: 'Leitor de hebraico', descPt: 'Você concluiu o desafio final.',
     test: s => !!s.finalChallenge.completedAt }
 ];

@@ -184,7 +184,9 @@ export function ReviewClient() {
         </Button>
       )}
 
-      <Link href="/mapa" className="font-ui text-[13.5px] text-ink-muted hover:text-ink-body justify-self-center">
+      <Link href="/mapa"
+            className="inline-flex items-center min-h-[44px] font-ui text-[13.5px]
+                       text-ink-muted hover:text-ink-body justify-self-center">
         Ver o mapa do curso
       </Link>
     </div>
