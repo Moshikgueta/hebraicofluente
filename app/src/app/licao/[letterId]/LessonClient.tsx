@@ -261,6 +261,7 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
 
 /* ── 3 · escrever ───────────────────────────────────────────────────────── */
 function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void }) {
+  const p = useProgress();
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
@@ -283,15 +284,17 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
 
       <WritingCanvas
         glyph={letter.letter}
-        strokeOrderSrc={letter.strokeOrder.base}
+        letterId={letter.id}
         label={letter.namePt}
+        onScored={score => p.recordWriting(letter.id, score)}
       />
 
       {letter.finalForm && (
         <WritingCanvas
           glyph={letter.finalForm}
-          strokeOrderSrc={letter.strokeOrder.final}
+          letterId={`${letter.id}-final`}
           label={`${letter.namePt} — forma final`}
+          onScored={score => p.recordWriting(letter.id, score)}
         />
       )}
 

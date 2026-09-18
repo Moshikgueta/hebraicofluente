@@ -9,6 +9,7 @@ import nikudJson from '@content/nikud.json';
 import lettersJson from '@content/letters.json';
 import extrasJson from '@content/extras.json';
 import realWorldJson from '@content/real-world.json';
+import strokeJson from '@content/stroke-paths.json';
 
 export type Word = {
   he: string;
@@ -110,6 +111,28 @@ export const scenesUpTo = (order: number): Scene[] =>
 /** The scenes a given letter unlocks. Most letters unlock none. */
 export const scenesForOrder = (order: number): Scene[] =>
   SCENES.filter(s => s.fromOrder === order);
+
+/* ── stroke geometry ────────────────────────────────────────────────────
+   Generated with the stroke-order diagrams, from the same font outline, in the
+   same run — so the count and the starting points can never disagree with the
+   printed page. `null` for a letter with no data is a normal answer: the
+   tracing screen falls back to the static diagram. */
+export type Stroke = {
+  /** The stroke's own outline, in the 200-unit box. */
+  d: string;
+  /** Where the pen lands. */
+  start: [number, number];
+  /** A unit vector into the form. Says "this way", not "round this way". */
+  dir: [number, number];
+};
+export type StrokeSet = { box: number; strokes: Stroke[] };
+
+const STROKES = (strokeJson as unknown as {
+  box: number; letters: Record<string, StrokeSet>;
+}).letters;
+
+/** `letterId`, or `${letterId}-final` for a final form. */
+export const strokesFor = (id: string): StrokeSet | null => STROKES[id] ?? null;
 
 export const nikud = nikudJson as unknown as {
   intro: NikudIntro;

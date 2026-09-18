@@ -43,6 +43,7 @@ import pathlib
 from fontTools.ttLib import TTFont
 from fontTools.pens.recordingPen import RecordingPen
 from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.pens.transformPen import TransformPen
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FONT = ROOT / 'assets/fonts/gveret-levin-hebrew-400-normal.woff2'
@@ -55,35 +56,56 @@ MARK = '#9E2B1E'   # crimson, the convention the placeholders documented
 
 
 def contours_of(glyph_set, gname):
+    """Every contour, as both flattened points and a replayable recording.
+
+    The points are what the geometry rules work on (bounding box, centroid,
+    where the pen lands). The recording is what produces an EXACT path for one
+    contour on its own — which is what the app animates, revealing the strokes
+    of he, alef and qof one at a time. Flattened points cannot be turned back
+    into curves, so both have to be carried."""
     pen = RecordingPen()
     glyph_set[gname].draw(pen)
-    out, cur = [], []
+    out, pts, rec = [], [], []
     for op, args in pen.value:
         if op == 'moveTo':
-            cur = [args[0]]
-        elif op == 'lineTo':
-            cur.append(args[0])
+            if rec:
+                out.append({'pts': pts, 'rec': rec})
+            pts, rec = [args[0]], [(op, args)]
+            continue
+        rec.append((op, args))
+        if op == 'lineTo':
+            pts.append(args[0])
         elif op == 'qCurveTo':
-            cur.extend([p for p in args if p])
+            pts.extend([q for q in args if q])
         elif op == 'curveTo':
-            cur.extend(args)
-        elif op in ('closePath', 'endPath'):
-            if cur:
-                out.append(cur)
-                cur = []
-    if cur:
-        out.append(cur)
-    return out
+            pts.extend(args)
+    if rec:
+        out.append({'pts': pts, 'rec': rec})
+    return [c for c in out if c['pts']]
+
+
+def contour_path(rec, transform, gs):
+    """One contour as an SVG path, already in the 200-box coordinate system.
+
+    One decimal place: the box is 200 units wide and this is drawn at a few
+    hundred pixels, so a tenth of a unit is well under a screen pixel. Full
+    float precision tripled the file for nothing a learner could ever see."""
+    spen = SVGPathPen(gs, ntos=lambda v: f'{v:.1f}')
+    tpen = TransformPen(spen, transform)
+    for op, args in rec:
+        getattr(tpen, op)(*args)
+    return spen.getCommands()
 
 
 def bbox(c):
-    xs = [p[0] for p in c]
-    ys = [p[1] for p in c]
+    xs = [p[0] for p in c['pts']]
+    ys = [p[1] for p in c['pts']]
     return min(xs), min(ys), max(xs), max(ys)
 
 
 def centroid(c):
-    return sum(p[0] for p in c) / len(c), sum(p[1] for p in c) / len(c)
+    pts = c['pts']
+    return sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts)
 
 
 def inside(a, b):
@@ -107,28 +129,30 @@ def start_point(c):
     letter that, like all of them, is entered from the upper right. Taking the
     rightmost point within 8% of the stroke's height of its apex keeps "start
     at the top" while respecting that Hebrew runs right to left."""
-    top = max(p[1] for p in c)
-    lo = min(p[1] for p in c)
+    pts = c['pts']
+    top = max(p[1] for p in pts)
+    lo = min(p[1] for p in pts)
     band = (top - lo) * 0.08
-    near_top = [p for p in c if p[1] >= top - band]
+    near_top = [p for p in pts if p[1] >= top - band]
     return max(near_top, key=lambda p: p[0])
 
 
 def build(tid, ch, name, font, cmap, gs):
+    """Returns (svg, meta) or (None, None). `meta` is what the APP animates."""
     gname = cmap.get(ord(ch))
     if not gname:
-        return None
+        return None, None
     cs = contours_of(gs, gname)
     if not cs:
-        return None
+        return None, None
 
     # exact path, in font units
     spen = SVGPathPen(gs)
     gs[gname].draw(spen)
     d = spen.getCommands()
 
-    xs = [p[0] for c in cs for p in c]
-    ys = [p[1] for c in cs for p in c]
+    xs = [p[0] for c in cs for p in c['pts']]
+    ys = [p[1] for c in cs for p in c['pts']]
     x0, y0, x1, y1 = min(xs), min(ys), max(xs), max(ys)
     w, h = max(x1 - x0, 1), max(y1 - y0, 1)
     s = (BOX - 2 * PAD) / max(w, h)
@@ -143,6 +167,31 @@ def build(tid, ch, name, font, cmap, gs):
     # two-stroke letter in this alphabet.
     strokes = outer_contours(cs)
     strokes.sort(key=lambda c: (-bbox(c)[2], -bbox(c)[3]))
+
+    # Per-stroke geometry for the APP, which reveals the strokes one at a time.
+    # Each entry carries that stroke's own outline (already in the 200-box
+    # coordinates the SVG uses, so the app can drop it straight into a
+    # viewBox="0 0 200 200"), where the pen lands, and which way it sets off.
+    # The curl of the stroke is deliberately absent: the outline cannot tell us
+    # that, and inventing it would teach a movement nobody verified.
+    transform = (s, 0, 0, -s, tx, ty)
+    inners = [c for c in cs if c not in strokes]
+    meta_strokes = []
+    for c in strokes:
+        # A counter — the hole in samekh, the eye of qof — belongs to the stroke
+        # that encloses it, or the stroke would animate in as a solid blob.
+        own = [c] + [h for h in inners if inside(bbox(h), bbox(c))]
+        d_stroke = ' '.join(contour_path(h['rec'], transform, gs) for h in own)
+        sx, sy = to_svg(start_point(c))
+        gx, gy = to_svg(centroid(c))
+        dx, dy = gx - sx, gy - sy
+        mag = (dx * dx + dy * dy) ** .5 or 1
+        meta_strokes.append({
+            'd': d_stroke,
+            'start': [round(sx, 1), round(sy, 1)],
+            'dir': [round(dx / mag, 3), round(dy / mag, 3)],
+        })
+    meta = {'box': BOX, 'strokes': meta_strokes}
 
     marks = []
     for i, c in enumerate(strokes, 1):
@@ -164,7 +213,7 @@ def build(tid, ch, name, font, cmap, gs):
 
     n = len(strokes)
     label = f'Ordem de tracado da letra {name}: {n} movimento' + ('s' if n > 1 else '')
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {BOX} {BOX}"
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {BOX} {BOX}"
      class="stroke-svg" role="img" aria-label="{label}" data-strokes="{n}">
   <title>{label}</title>
   <defs>
@@ -178,6 +227,7 @@ def build(tid, ch, name, font, cmap, gs):
   </g>{''.join(marks)}
 </svg>
 '''
+    return svg, meta
 
 
 def main():
@@ -193,14 +243,29 @@ def main():
             targets.append((L['id'] + '-final', L['finalForm'], L['namePt'] + ' final'))
 
     wrote = 0
+    meta_all = {}
     for tid, ch, name in targets:
-        svg = build(tid, ch, name, font, cmap, gs)
+        svg, meta = build(tid, ch, name, font, cmap, gs)
         if not svg:
             print(f'  ! {tid}: sem glifo')
             continue
         (OUT / f'{tid}.svg').write_text(svg)
+        meta_all[tid] = meta
         wrote += 1
+
+    # The SVG is the printed diagram; this is what the app animates. Same
+    # source, same run, so the two can never disagree about how many strokes a
+    # letter has or where they begin.
+    strokes_json = ROOT / 'data/stroke-paths.json'
+    strokes_json.write_text(json.dumps({
+        'note': 'GERADO por tools/gen-stroke-order.py. Nao editar a mao.',
+        'box': BOX,
+        'letters': meta_all,
+    }, ensure_ascii=False, indent=1) + '\n')
+
+    total = sum(len(m['strokes']) for m in meta_all.values())
     print(f'{wrote} SVG escritos em assets/stroke-order/')
+    print(f'{total} tracos em data/stroke-paths.json')
 
 
 if __name__ == '__main__':

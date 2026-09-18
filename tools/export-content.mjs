@@ -242,6 +242,23 @@ function main() {
     }))
   }, null, 2) + '\n');
 
+  /* ── stroke geometry ────────────────────────────────────────────────
+     The SVG in assets/stroke-order/ is the printed diagram: the whole letter,
+     with numbered start dots. This is the same run's machine-readable half —
+     one path per stroke, where the pen lands, which way it sets off — and it is
+     what the app animates, revealing he, alef and qof one stroke at a time.
+
+     Copied verbatim, and only if present. A missing file is not an error: the
+     tracing screen falls back to the static diagram, which is what it showed
+     before this existed. */
+  const strokePaths = join(ROOT, 'data/stroke-paths.json');
+  writeFileSync(
+    join(OUT, 'stroke-paths.json'),
+    existsSync(strokePaths)
+      ? readFileSync(strokePaths, 'utf8')
+      : JSON.stringify({ box: 200, letters: {} }, null, 2) + '\n'
+  );
+
   /* ── static assets the app serves ───────────────────────────────────── */
   const pub = join(ROOT, 'app/public');
   mkdirSync(pub, { recursive: true });

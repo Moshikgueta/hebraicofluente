@@ -62,6 +62,15 @@ type Ctx = {
   }) => void;
   /** Record a moment that can only happen once, and say so. */
   markFirst: (id: string) => void;
+  /**
+   * A traced or freehand attempt at a letter, scored 0–1 by the canvas.
+   *
+   * Writing is the one skill with no question to answer, so it needs its own
+   * door into the model — without it `escrever` would stay permanently 'novo'
+   * and the dashboard would keep claiming a letter is strong that the learner
+   * cannot actually produce.
+   */
+  recordWriting: (letterId: string, score: number) => void;
   finishQuiz: (letterId: string, score: number) => void;
   finishCheckpoint: (id: string, score: number) => void;
   finishReview: (score: number) => void;
@@ -154,6 +163,18 @@ export function ProgressProvider({
     if (!correct) track('exercise_wrong', { letterId, itemId, chosen });
   }, [commit, state]);
 
+  const recordWriting = useCallback((letterId: string, score: number) => {
+    const d = today();
+    /* The bar is 0.5, which is low, and that is the decision: a finger on glass
+       is not a pen on paper, and a learner told their readable ג is wrong stops
+       trusting the whole app. The canvas is generous; this agrees with it. */
+    let next = recordSkill(state, letterId, 'escrever', score >= 0.5, d);
+    /* Writing is practice even when it comes out badly — more so, in fact. */
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    commit(next);
+    track('exercise_answered', { letterId, skill: 'escrever', correct: score >= 0.5 });
+  }, [commit, state]);
+
   const doMarkFirst = useCallback((id: string) => {
     if (state.firsts[id]) return;
     commit(markFirst(state, id));
@@ -219,13 +240,13 @@ export function ProgressProvider({
       confusions: topConfusions(state),
       pending,
       clearPending: () => setPending([]),
-      setOnboarding, finishStage, answer, markFirst: doMarkFirst, finishQuiz,
-      finishCheckpoint, finishReview, finishFinalChallenge, remember, reset
+      setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting,
+      finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, remember, reset
     };
   }, [
     state, ready, persistent, day, totalLetters, extraKey, pending,
-    setOnboarding, finishStage, answer, doMarkFirst, finishQuiz, finishCheckpoint,
-    finishReview, finishFinalChallenge, remember, reset
+    setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishQuiz,
+    finishCheckpoint, finishReview, finishFinalChallenge, remember, reset
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
