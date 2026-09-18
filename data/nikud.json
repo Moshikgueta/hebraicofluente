@@ -1,0 +1,125 @@
+{
+  "intro": {
+    "title": "Os sinais de vogal",
+    "lead": "O hebraico escreve as consoantes com letras e as vogais com pequenos sinais — pontos e traços — que aparecem embaixo, dentro ou acima da letra. Você vai aprender os sinais pelo SOM que produzem, não pelo nome. Os nomes ficam no apêndice, para consultar depois.",
+    "correction": "O alfabeto hebraico tem 22 letras, e todas elas são consoantes. Quatro delas — {{א}}, {{ה}}, {{ו}} e {{י}} — também funcionam como apoio de vogal, aparecendo dentro da palavra para indicar um som vocálico. Por isso a frase \"todas consoantes\" é verdadeira sobre as letras, mas não conta a história inteira."
+  },
+  "sounds": [
+    {
+      "sound": "a",
+      "ptApprox": "como o A de \"casa\"",
+      "signs": [
+        {
+          "sign": "ַ",
+          "demo": "מַ",
+          "nameHe": "פַּתָּח",
+          "namePt": "patach",
+          "position": "embaixo"
+        },
+        {
+          "sign": "ָ",
+          "demo": "מָ",
+          "nameHe": "קָמָץ",
+          "namePt": "kamats",
+          "position": "embaixo"
+        }
+      ],
+      "note": "Dois sinais, um único som no hebraico moderno. Não se preocupe em distingui-los agora."
+    },
+    {
+      "sound": "e",
+      "ptApprox": "como o E de \"mesa\"",
+      "signs": [
+        {
+          "sign": "ֶ",
+          "demo": "מֶ",
+          "nameHe": "סֶגּוֹל",
+          "namePt": "segol",
+          "position": "embaixo"
+        },
+        {
+          "sign": "ֵ",
+          "demo": "מֵ",
+          "nameHe": "צֵירֵי",
+          "namePt": "tsere",
+          "position": "embaixo"
+        }
+      ],
+      "note": "Também dois sinais para um som só."
+    },
+    {
+      "sound": "i",
+      "ptApprox": "como o I de \"milho\"",
+      "signs": [
+        {
+          "sign": "ִ",
+          "demo": "מִ",
+          "nameHe": "חִירִיק",
+          "namePt": "chirik",
+          "position": "embaixo"
+        }
+      ],
+      "note": "Muitas vezes vem acompanhado da letra {{י}} depois: {{מִי}}."
+    },
+    {
+      "sound": "o",
+      "ptApprox": "como o O de \"motor\"",
+      "signs": [
+        {
+          "sign": "ֹ",
+          "demo": "מֹ",
+          "nameHe": "חוֹלָם",
+          "namePt": "cholam",
+          "position": "acima, à esquerda"
+        },
+        {
+          "sign": "וֹ",
+          "demo": "מוֹ",
+          "nameHe": "חוֹלָם מָלֵא",
+          "namePt": "cholam malê",
+          "position": "ponto sobre a letra {{ו}}"
+        }
+      ],
+      "note": "A forma com {{ו}} é a mais comum no hebraico moderno."
+    },
+    {
+      "sound": "u",
+      "ptApprox": "como o U de \"muro\"",
+      "signs": [
+        {
+          "sign": "ֻ",
+          "demo": "מֻ",
+          "nameHe": "קֻבּוּץ",
+          "namePt": "kubuts",
+          "position": "embaixo, três pontos na diagonal"
+        },
+        {
+          "sign": "וּ",
+          "demo": "מוּ",
+          "nameHe": "שׁוּרוּק",
+          "namePt": "shuruk",
+          "position": "ponto dentro da letra {{ו}}"
+        }
+      ],
+      "note": "A forma com {{ו}} é a mais comum no hebraico moderno."
+    },
+    {
+      "sound": "sheva",
+      "ptApprox": "sem vogal, ou um apoio muito breve",
+      "signs": [
+        {
+          "sign": "ְ",
+          "demo": "מְ",
+          "nameHe": "שְׁוָא",
+          "namePt": "sheva",
+          "position": "embaixo, dois pontos verticais"
+        }
+      ],
+      "note": "Não é uma vogal de verdade. Marca que a consoante vem sem vogal, ou com um apoio tão curto que quase não se ouve. Em {{מְנַהֵל}} soa como um \"e\" muito breve."
+    }
+  ],
+  "dagesh": {
+    "title": "O ponto dentro da letra",
+    "text": "Um ponto no meio da letra — o dagesh — muda o som de três delas: {{ב}} vira b ({{בּ}}), {{כ}} vira k ({{כּ}}) e {{פ}} vira p ({{פּ}}). Nas outras letras o ponto não muda nada que você precise ouvir agora."
+  }
+}

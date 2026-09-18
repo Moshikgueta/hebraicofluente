@@ -1,0 +1,44 @@
+/* Print geometry. A4, no browser-drawn header/footer, clean breaks.
+   The visual margin lives on the sheet's own padding so screen and print
+   match exactly. */
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  html, body { background: #FFFFFF; }
+
+  .sheet {
+    margin: 0;
+    box-shadow: none;
+    break-after: page;
+    background: var(--c-paper);
+  }
+  .sheet:last-child { break-after: auto; }
+
+  /* Nothing that carries pointing may be clipped. */
+  .he, .he-list, .he-cloze, .glyph { overflow: visible; }
+
+  table, .ex, .callout, .write-rule, .model-box, figure, .step {
+    break-inside: avoid;
+  }
+  thead { display: table-header-group; }
+  h1, h2, h3, h4 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+
+  /* Fills must survive the print pipeline — otherwise the teal bands and the
+     mint callouts vanish and the page loses its structure. */
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .no-print { display: none !important; }
+}
+
+@media screen {
+  body { padding-block: var(--s-8); }
+  .sheet {
+    box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 12px 32px -12px rgba(0,0,0,.18);
+    background: var(--c-paper);
+  }
+}

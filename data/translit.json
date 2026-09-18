@@ -1,0 +1,55 @@
+{
+  "system": "pt-BR-practical-v1",
+  "notes": [
+    "Transliteração PRÁTICA para leitores brasileiros, não acadêmica.",
+    "Regra de acento: o hebraico acentua a última sílaba por padrão (milrá).",
+    "Por isso NÃO marcamos acento quando a tônica é a última sílaba (shalom, mishpachá),",
+    "e marcamos com acento agudo quando a tônica NÃO é a última (máyim, mélech, bóker).",
+    "Assim o acento no texto sempre significa 'atenção: a tônica não está onde você espera'."
+  ],
+  "consonants": {
+    "א": "", "ב": "v", "בּ": "b", "ג": "g", "ד": "d", "ה": "h", "ו": "v",
+    "ז": "z", "ח": "ch", "ט": "t", "י": "y", "כ": "ch", "כּ": "k", "ך": "ch",
+    "ל": "l", "מ": "m", "ם": "m", "נ": "n", "ן": "n", "ס": "s", "ע": "",
+    "פ": "f", "פּ": "p", "ף": "f", "צ": "ts", "ץ": "ts", "ק": "k", "ר": "r",
+    "שׁ": "sh", "שׂ": "s", "ת": "t"
+  },
+  "vowels": {
+    "ַ": "a", "ָ": "a", "ֲ": "a",
+    "ֵ": "e", "ֶ": "e", "ֱ": "e",
+    "ִ": "i",
+    "ֹ": "o", "ֳ": "o",
+    "ֻ": "u",
+    "ְ": ""
+  },
+  "matres": {
+    "וֹ": "o", "וּ": "u", "ִי": "i", "ֵי": "ei"
+  },
+  "rules": [
+    "shva no fim de sílaba não é transliterado",
+    "he final sem mapiq não é transliterado (מוֹרָה = Morá, não Moráh)",
+    "alef e ayin não recebem letra; apenas a vogal que os acompanha",
+    "vav com holam (וֹ) = o; vav com shuruk (וּ) = u; vav consonantal = v",
+    "ch representa tanto ח quanto כ/ך — som de 'r' carioca raspado"
+  ],
+  "words": {
+    "מַיִם": "máyim",
+    "מָה": "ma",
+    "מִי": "mi",
+    "מִשְׁפָּחָה": "mishpachá",
+    "מוֹרָה": "morá",
+    "מֶלֶךְ": "mélech",
+    "מֵם": "mem",
+    "שָׁלוֹם": "shalom",
+    "שֵׁם": "shem",
+    "שָׁם": "sham",
+    "בַּיִת": "báyit",
+    "לֵב": "lev",
+    "מַ": "ma",
+    "מֶ": "me",
+    "מִ": "mi",
+    "מוֹ": "mo",
+    "מוּ": "mu",
+    "מְ": "m"
+  }
+}

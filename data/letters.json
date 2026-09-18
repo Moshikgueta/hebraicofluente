@@ -1,0 +1,507 @@
+[
+  {
+    "id": "mem",
+    "order": 1,
+    "letter": "מ",
+    "finalForm": "ם",
+    "nameHe": "מֵם",
+    "namePt": "Mem",
+    "translit": "m",
+    "sound": "/m/",
+    "soundNotePt": "Igual ao M do português, em mãe, mesa, música. Não há nada novo a aprender no som — só na forma.",
+    "confusableWith": [
+      "ס",
+      "ם"
+    ],
+    "syllables": [
+      {
+        "vowel": "a",
+        "he": "מַ",
+        "translit": "ma",
+        "ptApprox": "como o MA de \"má\""
+      },
+      {
+        "vowel": "e",
+        "he": "מֶ",
+        "translit": "me",
+        "ptApprox": "como o ME de \"mesa\""
+      },
+      {
+        "vowel": "i",
+        "he": "מִ",
+        "translit": "mi",
+        "ptApprox": "como o MI de \"milho\""
+      },
+      {
+        "vowel": "o",
+        "he": "מוֹ",
+        "translit": "mo",
+        "ptApprox": "como o MO de \"motor\""
+      },
+      {
+        "vowel": "u",
+        "he": "מוּ",
+        "translit": "mu",
+        "ptApprox": "como o MU de \"muro\""
+      },
+      {
+        "vowel": "sheva",
+        "he": "מְ",
+        "translit": "m",
+        "ptApprox": "só a consoante, sem vogal"
+      }
+    ],
+    "wordsToRecognize": [
+      {
+        "he": "מַיִם",
+        "translit": "máyim",
+        "pt": "água",
+        "use": "Substantivo muito comum"
+      },
+      {
+        "he": "מָה",
+        "translit": "ma",
+        "pt": "o quê / que",
+        "use": "Pergunta essencial"
+      },
+      {
+        "he": "מִי",
+        "translit": "mi",
+        "pt": "quem",
+        "use": "Pergunta essencial"
+      },
+      {
+        "he": "מִשְׁפָּחָה",
+        "translit": "mishpachá",
+        "pt": "família",
+        "use": "Substantivo muito comum"
+      },
+      {
+        "he": "מוֹרָה",
+        "translit": "morá",
+        "pt": "professora",
+        "use": "Substantivo cotidiano"
+      },
+      {
+        "he": "מֶלֶךְ",
+        "translit": "mélech",
+        "pt": "rei",
+        "use": "Substantivo cultural"
+      }
+    ],
+    "wordsToRead": [],
+    "didYouKnow": "Mem é a letra da água. O próprio nome vem de máyim — água — e a forma da letra foi desenhada, há milhares de anos, a partir do desenho de uma onda. Sempre que encontrar {{מ}}, pense em água corrente: ajuda a fixar a letra e a palavra ao mesmo tempo.",
+    "brazilianMistake": {
+      "wrong": "Ler {{מִי}} como \"mĩ\", com a vogal anasalada.",
+      "right": "Ler {{מִי}} como \"mi\", com a vogal limpa e aberta, como em \"milho\".",
+      "why": "Em português o M no fim da sílaba nasaliza a vogal antes dele — \"mim\", \"bom\", \"sim\". Em hebraico isso não acontece: o M é sempre pronunciado como consoante inteira, e a vogal continua oral."
+    },
+    "audioIds": [],
+    "biblicalWord": null
+  },
+  {
+    "id": "shin",
+    "order": 2,
+    "letter": "ש",
+    "finalForm": null,
+    "nameHe": "שִׁין",
+    "namePt": "Shin",
+    "translit": "sh",
+    "sound": "/ʃ/",
+    "soundNotePt": "Como o CH de \"chave\", \"chuva\", \"cachorro\". Com o ponto do lado esquerdo ({{שׂ}}, Sin) o som muda para S de \"sapo\".",
+    "confusableWith": [
+      "ע"
+    ],
+    "syllables": [
+      {
+        "vowel": "a",
+        "he": "שַׁ",
+        "translit": "sha",
+        "ptApprox": "como \"chá\""
+      },
+      {
+        "vowel": "e",
+        "he": "שֶׁ",
+        "translit": "she",
+        "ptApprox": "como \"che\" de \"chegar\""
+      },
+      {
+        "vowel": "i",
+        "he": "שִׁ",
+        "translit": "shi",
+        "ptApprox": "como \"chi\" de \"chique\""
+      },
+      {
+        "vowel": "o",
+        "he": "שׁוֹ",
+        "translit": "sho",
+        "ptApprox": "como \"cho\" de \"chocolate\""
+      },
+      {
+        "vowel": "u",
+        "he": "שׁוּ",
+        "translit": "shu",
+        "ptApprox": "como \"chu\" de \"chuva\""
+      },
+      {
+        "vowel": "sheva",
+        "he": "שְׁ",
+        "translit": "sh",
+        "ptApprox": "só a consoante, sem vogal"
+      }
+    ],
+    "wordsToRecognize": [
+      {
+        "he": "שָׁלוֹם",
+        "translit": "shalom",
+        "pt": "paz / olá / tchau",
+        "use": "A palavra mais usada do hebraico"
+      },
+      {
+        "he": "שֵׁם",
+        "translit": "shem",
+        "pt": "nome",
+        "use": "Substantivo essencial"
+      },
+      {
+        "he": "שֶׁמֶשׁ",
+        "translit": "shémesh",
+        "pt": "sol",
+        "use": "Substantivo cotidiano"
+      },
+      {
+        "he": "שָׁנָה",
+        "translit": "shaná",
+        "pt": "ano",
+        "use": "Substantivo essencial"
+      }
+    ],
+    "wordsToRead": [
+      {
+        "he": "שָׁם",
+        "translit": "sham",
+        "pt": "lá / ali"
+      },
+      {
+        "he": "שֵׁם",
+        "translit": "shem",
+        "pt": "nome"
+      }
+    ],
+    "didYouKnow": "{{שָׁלוֹם}} não é só \"paz\": é o olá e o tchau do dia a dia em Israel. A mesma palavra abre e fecha uma conversa — e é quase certo que seja a primeira que você vai usar de verdade.",
+    "brazilianMistake": {
+      "wrong": "Ler {{ש}} como S: \"salom\", \"sem\".",
+      "right": "Ler {{ש}} como CH de \"chave\": \"shalom\", \"shem\".",
+      "why": "A forma da letra não lembra nada do alfabeto latino, então o cérebro brasileiro tende a encaixá-la no S. Mas o som padrão de {{ש}} é o de \"chave\". O som de S só aparece quando o ponto está do lado esquerdo ({{שׂ}})."
+    },
+    "audioIds": [],
+    "biblicalWord": null
+  },
+  {
+    "id": "lamed",
+    "order": 3,
+    "letter": "ל",
+    "finalForm": null,
+    "nameHe": "לָמֶד",
+    "namePt": "Lámed",
+    "translit": "l",
+    "sound": "/l/",
+    "soundNotePt": "Como o L de \"lua\" e \"bola\" — sempre claro, nunca com som de U.",
+    "confusableWith": [],
+    "syllables": [
+      {
+        "vowel": "a",
+        "he": "לַ",
+        "translit": "la",
+        "ptApprox": "como \"lá\""
+      },
+      {
+        "vowel": "e",
+        "he": "לֶ",
+        "translit": "le",
+        "ptApprox": "como \"le\" de \"leve\""
+      },
+      {
+        "vowel": "i",
+        "he": "לִ",
+        "translit": "li",
+        "ptApprox": "como \"li\" de \"livro\""
+      },
+      {
+        "vowel": "o",
+        "he": "לוֹ",
+        "translit": "lo",
+        "ptApprox": "como \"lo\" de \"loja\""
+      },
+      {
+        "vowel": "u",
+        "he": "לוּ",
+        "translit": "lu",
+        "ptApprox": "como \"lu\" de \"luva\""
+      },
+      {
+        "vowel": "sheva",
+        "he": "לְ",
+        "translit": "l",
+        "ptApprox": "só a consoante, sem vogal"
+      }
+    ],
+    "wordsToRecognize": [
+      {
+        "he": "לֶחֶם",
+        "translit": "léchem",
+        "pt": "pão",
+        "use": "Substantivo cotidiano"
+      },
+      {
+        "he": "לֹא",
+        "translit": "lo",
+        "pt": "não",
+        "use": "Palavra essencial"
+      },
+      {
+        "he": "יֶלֶד",
+        "translit": "yéled",
+        "pt": "menino",
+        "use": "Substantivo comum"
+      },
+      {
+        "he": "לַיְלָה",
+        "translit": "láila",
+        "pt": "noite",
+        "use": "Substantivo cotidiano"
+      }
+    ],
+    "wordsToRead": [
+      {
+        "he": "שֶׁל",
+        "translit": "shel",
+        "pt": "de (posse)"
+      },
+      {
+        "he": "מָשָׁל",
+        "translit": "mashal",
+        "pt": "provérbio, fábula"
+      },
+      {
+        "he": "שָׁם",
+        "translit": "sham",
+        "pt": "lá / ali"
+      }
+    ],
+    "didYouKnow": "{{ל}} é a letra mais alta do alfabeto hebraico — a única que sobe acima da linha do texto. Em um texto corrido, ela é o ponto de referência que o olho usa para se situar.",
+    "brazilianMistake": {
+      "wrong": "Ler {{שֶׁל}} como \"shéu\", transformando o L final em U.",
+      "right": "Ler {{שֶׁל}} como \"shel\", com o L bem apoiado na ponta da língua.",
+      "why": "No português do Brasil o L no fim da sílaba virou U: falamos \"Brasiu\", \"sou\" por \"sol\", \"mau\" por \"mal\". Em hebraico o {{ל}} nunca faz isso. Ele é sempre um L claro, mesmo no fim da palavra."
+    },
+    "audioIds": [],
+    "biblicalWord": null
+  },
+  {
+    "id": "bet",
+    "order": 4,
+    "letter": "ב",
+    "finalForm": null,
+    "nameHe": "בֵּית",
+    "namePt": "Bet / Vet",
+    "translit": "b",
+    "sound": "/b/ ou /v/",
+    "soundNotePt": "Com o ponto dentro ({{בּ}}) soa B, como em \"bola\". Sem o ponto ({{ב}}) soa V, como em \"vaca\". É a mesma letra, com dois sons.",
+    "confusableWith": [
+      "כ"
+    ],
+    "syllables": [
+      {
+        "vowel": "a",
+        "he": "בַּ",
+        "translit": "ba",
+        "ptApprox": "como \"bá\""
+      },
+      {
+        "vowel": "e",
+        "he": "בֶּ",
+        "translit": "be",
+        "ptApprox": "como \"be\" de \"beber\""
+      },
+      {
+        "vowel": "i",
+        "he": "בִּ",
+        "translit": "bi",
+        "ptApprox": "como \"bi\" de \"bicho\""
+      },
+      {
+        "vowel": "o",
+        "he": "בּוֹ",
+        "translit": "bo",
+        "ptApprox": "como \"bo\" de \"bolo\""
+      },
+      {
+        "vowel": "u",
+        "he": "בּוּ",
+        "translit": "bu",
+        "ptApprox": "como \"bu\" de \"buraco\""
+      },
+      {
+        "vowel": "sheva",
+        "he": "בְּ",
+        "translit": "b",
+        "ptApprox": "só a consoante, sem vogal"
+      }
+    ],
+    "wordsToRecognize": [
+      {
+        "he": "בַּיִת",
+        "translit": "báyit",
+        "pt": "casa",
+        "use": "Substantivo essencial"
+      },
+      {
+        "he": "בֹּקֶר",
+        "translit": "bóker",
+        "pt": "manhã",
+        "use": "Usado no cumprimento do dia"
+      },
+      {
+        "he": "בְּבַקָּשָׁה",
+        "translit": "bevakashá",
+        "pt": "por favor",
+        "use": "Fórmula de cortesia"
+      },
+      {
+        "he": "אַבָּא",
+        "translit": "abá",
+        "pt": "pai",
+        "use": "Substantivo familiar"
+      }
+    ],
+    "wordsToRead": [
+      {
+        "he": "לֵב",
+        "translit": "lev",
+        "pt": "coração"
+      },
+      {
+        "he": "שֶׁל",
+        "translit": "shel",
+        "pt": "de (posse)"
+      },
+      {
+        "he": "מָשָׁל",
+        "translit": "mashal",
+        "pt": "provérbio, fábula"
+      }
+    ],
+    "didYouKnow": "{{בַּיִת}} quer dizer casa — e é a origem do nome da letra. Você já conhece essa palavra sem saber: ela está em \"Belém\", Beit Léchem, a casa do pão.",
+    "brazilianMistake": {
+      "wrong": "Ler todo {{ב}} como B, e dizer \"abav\" ou \"lebe\".",
+      "right": "Olhar o ponto antes de decidir: {{בּ}} é B, {{ב}} sem ponto é V. {{לֵב}} termina em V: \"lev\".",
+      "why": "O ponto dentro da letra — o daguesh — é fácil de ignorar porque é minúsculo, e a maioria dos textos israelenses reais nem o escreve. Enquanto você está aprendendo, procure o ponto sempre."
+    },
+    "audioIds": [],
+    "biblicalWord": null
+  },
+  {
+    "id": "tav",
+    "order": 5,
+    "letter": "ת",
+    "finalForm": null,
+    "nameHe": "תָּו",
+    "namePt": "Tav",
+    "translit": "t",
+    "sound": "/t/",
+    "soundNotePt": "Como o T de \"tatu\" — sempre seco, nunca com som de TCH.",
+    "confusableWith": [
+      "ח",
+      "ה"
+    ],
+    "syllables": [
+      {
+        "vowel": "a",
+        "he": "תַּ",
+        "translit": "ta",
+        "ptApprox": "como \"tá\""
+      },
+      {
+        "vowel": "e",
+        "he": "תֶּ",
+        "translit": "te",
+        "ptApprox": "como \"te\" de \"teto\""
+      },
+      {
+        "vowel": "i",
+        "he": "תִּ",
+        "translit": "ti",
+        "ptApprox": "como \"ti\" de \"tigre\" — nunca \"tchi\""
+      },
+      {
+        "vowel": "o",
+        "he": "תּוֹ",
+        "translit": "to",
+        "ptApprox": "como \"to\" de \"topo\""
+      },
+      {
+        "vowel": "u",
+        "he": "תּוּ",
+        "translit": "tu",
+        "ptApprox": "como \"tu\" de \"tudo\""
+      },
+      {
+        "vowel": "sheva",
+        "he": "תְּ",
+        "translit": "t",
+        "ptApprox": "só a consoante, sem vogal"
+      }
+    ],
+    "wordsToRecognize": [
+      {
+        "he": "תּוֹדָה",
+        "translit": "todá",
+        "pt": "obrigado(a)",
+        "use": "Fórmula de cortesia"
+      },
+      {
+        "he": "תֵּה",
+        "translit": "te",
+        "pt": "chá",
+        "use": "Substantivo cotidiano"
+      },
+      {
+        "he": "תַּפּוּחַ",
+        "translit": "tapúach",
+        "pt": "maçã",
+        "use": "Substantivo cotidiano"
+      }
+    ],
+    "wordsToRead": [
+      {
+        "he": "שַׁבָּת",
+        "translit": "shabat",
+        "pt": "sábado"
+      },
+      {
+        "he": "בַּת",
+        "translit": "bat",
+        "pt": "filha"
+      },
+      {
+        "he": "לֵב",
+        "translit": "lev",
+        "pt": "coração"
+      },
+      {
+        "he": "שָׁם",
+        "translit": "sham",
+        "pt": "lá / ali"
+      }
+    ],
+    "didYouKnow": "{{ת}} é a última letra do alfabeto. Por isso a expressão que equivale ao nosso \"do A ao Z\" em hebraico é {{מֵאָלֶף עַד תָּו}} — de Álef a Tav.",
+    "brazilianMistake": {
+      "wrong": "Ler {{תִּי}} como \"tchi\" e {{תֵּ}} como \"tche\".",
+      "right": "Ler {{תִּי}} como \"ti\" e {{תֵּ}} como \"te\", com o T seco.",
+      "why": "Na maior parte do Brasil o T antes de I e E vira TCH — \"tia\", \"noite\". Esse hábito é automático e passa despercebido. Em hebraico o {{ת}} é sempre seco: {{תֵּה}} é \"te\", não \"tchê\"."
+    },
+    "audioIds": [],
+    "biblicalWord": null
+  }
+]
