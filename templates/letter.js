@@ -10,7 +10,7 @@
 
 import { he, heList, heCloze, pair, esc, mixed, H, prose } from '../scripts/lib/render.js';
 import { ALEFBET } from '../scripts/lib/hebrew.js';
-import { badge, callout, stepStrip, exercise, strokeOrder } from './partials.js';
+import { badge, callout, stepStrip, exercise, strokeOrder, wordArt } from './partials.js';
 
 /* Deterministic shuffle — the build must be reproducible, so no Math.random. */
 function rng(seed) {
@@ -180,7 +180,7 @@ function stage2({ L, name, rand, bdg }) {
   const readable = L.wordsToRead || [];
 
   const rows = words.map(w => `<tr>
-      <td class="center"><span class="well-sm" aria-hidden="true"></span></td>
+      <td class="center">${wordArt(w.he, 'sm')}</td>
       <td class="he-cell">${he(w.he, { size: 'word', mark: L.letter })}</td>
       <td><strong class="kbd">${esc(w.translit)}</strong></td>
       <td>${esc(w.pt)}</td>
@@ -370,7 +370,7 @@ function stage4({ L, name, rand, bdg }) {
 
   const gallery = words.slice(0, 4).map(w => `
     <figure>
-      <div class="well" aria-hidden="true">imagem</div>
+      ${wordArt(w.he, 'lg')}
       ${he(w.he, { size: 'word' })}
       <figcaption>${esc(w.translit)} — ${esc(w.pt)}</figcaption>
     </figure>`).join('');
@@ -473,7 +473,7 @@ function stage5({ L, name, rand, canRead, bdg }) {
     <p>Trace uma linha ligando cada significado à sua palavra em hebraico.</p>
     <div class="cols-2">
       <div>${recog.slice(0, 4).map(w =>
-        `<p class="link-left"><span class="well-sm" aria-hidden="true"></span> ${esc(w.pt)}</p>`).join('')}</div>
+        `<p class="link-left">${wordArt(w.he, 'sm')} ${esc(w.pt)}</p>`).join('')}</div>
       <div class="link-right">
         <h4>Palavras</h4>
         ${linkItems.map(w => `<p>${he(w.he, { size: 'word' })}</p>`).join('')}

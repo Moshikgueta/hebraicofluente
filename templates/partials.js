@@ -88,3 +88,42 @@ export function chunk(arr, n) {
   for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
   return out;
 }
+
+/* ── word illustrations ────────────────────────────────────────────────────
+   The image slots are filled from data/icons.json: a Lucide icon per word, or
+   literal text where a picture would be worse than the thing itself — the
+   numbers read better as "4" than as four of anything.
+
+   Icons are inlined rather than linked so a printed page never depends on a
+   file fetch, and read `currentColor` so they inherit the surrounding ink. */
+let ICONS = null;
+const ICON_CACHE = new Map();
+
+function iconTable() {
+  if (!ICONS) ICONS = JSON.parse(readFileSync(join(ROOT, 'data/icons.json'), 'utf8')).words;
+  return ICONS;
+}
+
+function iconSvg(name) {
+  if (!ICON_CACHE.has(name)) {
+    const p = join(ROOT, 'assets/icons', `${name}.svg`);
+    ICON_CACHE.set(name, existsSync(p) ? readFileSync(p, 'utf8').trim() : null);
+  }
+  return ICON_CACHE.get(name);
+}
+
+/**
+ * The illustration for a Hebrew word, at a given size class.
+ * An unmapped word degrades to an empty well rather than breaking the build —
+ * validate.js (V14) is what reports it.
+ */
+export function wordArt(he_, size = 'sm') {
+  const v = iconTable()[he_];
+  const cls = `art art--${size}`;
+  if (!v) return `<span class="${cls}" aria-hidden="true"></span>`;
+  if (v.startsWith('#')) {
+    return `<span class="${cls} art--text" aria-hidden="true">${esc(v.slice(1))}</span>`;
+  }
+  const svg = iconSvg(v);
+  return `<span class="${cls}" aria-hidden="true">${svg || ''}</span>`;
+}

@@ -190,6 +190,32 @@ span" resolve o terceiro definitivamente.
 
 ---
 
+## Ilustrações
+
+Cada palavra de vocabulário tem um ícone, mapeado em `data/icons.json`:
+
+```jsonc
+"מַיִם": "droplet",       // ícone do conjunto Lucide
+"אַרְבַּע": "#4"            // "#" = texto literal
+```
+
+Os números são texto de propósito: "4" ilustra *quatro* melhor do que quatro de
+qualquer coisa. Palavras abstratas ganham o ícone que mais se aproxima —
+{{מִי}} (*quem*) é uma pessoa, {{מָה}} (*o quê*) é um ponto de interrogação.
+
+Os ícones vêm do **Lucide** (ISC), e `tools/gen-icons.mjs` vendoriza **só os
+usados** — 61 de 2112 — em `assets/icons/`, com a licença ao lado. São
+inseridos no HTML, não linkados: uma página impressa nunca deve depender de
+um arquivo externo. Herdam `currentColor` e o tamanho vem do CSS, então o
+mesmo arquivo serve o slot de 26px da tabela e o de 54px da galeria.
+
+```bash
+npm i -D lucide-static && node tools/gen-icons.mjs
+```
+
+A regra **V14** falha o build se uma palavra com slot ficar sem mapeamento ou
+apontar para um arquivo ausente — o tipo de buraco que ninguém mais reportaria.
+
 ## Fontes
 
 Todas auto-hospedadas em `assets/fonts/`, com a licença ao lado. Nada de CDN.

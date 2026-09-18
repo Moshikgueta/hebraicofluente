@@ -11,7 +11,7 @@
 | Letras 1–22 | 10–11 folhas cada |
 | Revisões (após as letras 4, 8, 12, 16, 20) + final | 6 módulos |
 | Apêndice (alfabeto · nikud · transliteração · cursiva) | 10 folhas |
-| **Total** | **287 folhas = 287 páginas A4**, verificado |
+| **Total** | **286 folhas = 286 páginas A4**, verificado |
 
 **Uma folha é uma página impressa.** Nenhuma etapa transborda: quando não cabe,
 ganha folha de continuação explícita. `npm run check-fit` mede todas e o
@@ -39,6 +39,9 @@ encolheu 57 páginas sem perder nada e sem nenhuma folha estourando.
 - **PDF do livro inteiro** (`npm run pdf`): 318 páginas A4, numeração contínua
   no rodapé, sumário com as páginas reais medidas do próprio PDF e conferidas
   marcador a marcador.
+- **Ilustrações do vocabulário**: 68 palavras mapeadas em `data/icons.json`,
+  61 ícones Lucide (ISC) vendorizados, 424 slots preenchidos. V14 falha o build
+  se faltar alguma.
 - **27 SVG de ordem de traçado** (22 letras + 5 formas finais), gerados de
   `tools/gen-stroke-order.py` a partir do contorno real do glifo cursivo. As
   letras com forma final mostram o traçado das duas na página 3A.
@@ -59,7 +62,7 @@ encolheu 57 páginas sem perder nada e sem nenhuma folha estourando.
    (he, álef e qof com dois; as demais com um). O ponto de partida segue a
    regra "começa no alto, o da direita primeiro" — vale um olhar de quem
    escreve hebraico à mão antes de imprimir. Ver README §Ordem dos traços.
-4. Ilustrações do vocabulário (os poços `.well`/`.well-sm` já reservam o espaço).
+4. Trocar algum ícone que não convença: é uma linha em `data/icons.json`.
 
 ## Adiado de propósito
 

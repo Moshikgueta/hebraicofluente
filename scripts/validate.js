@@ -136,6 +136,27 @@ export function validate({ checkDist = true } = {}) {
     }
   }
 
+  /* ── V14 — every word with an image slot has an illustration ────────
+     wordsToRecognize is what fills the picture slots, so an unmapped word
+     leaves a hole on the page that nothing else would report. */
+  let icons = null;
+  try { icons = readJson('data/icons.json').words; } catch { /* not authored yet */ }
+  if (icons) {
+    for (const L of letters) {
+      for (const w of L.wordsToRecognize || []) {
+        const v = icons[w.he];
+        if (v === undefined) {
+          fail('V14', L.id, `"${w.he}" (${w.translit}) não tem ilustração em data/icons.json`);
+        } else if (v && !v.startsWith('#') &&
+                   !existsSync(join(ROOT, 'assets/icons', `${v}.svg`))) {
+          fail('V14', L.id, `"${w.he}" aponta para o ícone "${v}", que não existe em assets/icons/`);
+        }
+      }
+    }
+  } else {
+    warn('V14', 'data/icons.json', 'ausente — os slots de imagem ficam vazios');
+  }
+
   /* ── V3 — one spelling per word, everywhere ────────────────────────
      Keyed on the POINTED string. Nikud is meaningful here: שָׁם (sham, "lá")
      and שֵׁם (shem, "nome") are different words that differ only by pointing,

@@ -259,10 +259,8 @@ td.center  { text-align: center; }
 /* ── word gallery (Atividade 1) ─────────────────────────────────────────── */
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--s-6); margin-block: var(--s-6); }
 .gallery figure { margin: 0; text-align: center; }
-.gallery .well {
-  background: var(--c-surface-alt); border-radius: var(--radius-sm);
-  aspect-ratio: 4 / 3; display: grid; place-items: center;
-  color: var(--c-neutral-600); font-size: var(--t-micro);
+.gallery .art--lg {
+  inline-size: 100%; block-size: 54px;
   margin-block-end: var(--s-4);
 }
 .gallery figcaption { font-size: var(--t-small); color: var(--c-ink-muted); margin-block-start: var(--s-2); }
@@ -285,11 +283,29 @@ ul.ticks li { margin-block-end: var(--s-3); }
    the reference PDF's title read "(מ Mem)". */
 .paren { direction: ltr; unicode-bidi: isolate; font-family: var(--font-display); }
 
-/* Image wells. The reference prints small illustrations here; until artwork
-   exists the well holds its own space so the table does not reflow later. */
+/* ── word illustrations ──────────────────────────────────────────────────
+   One line icon per vocabulary word, inlined by wordArt() in partials.js.
+   Sized here rather than in the SVG, so the same file serves the 34px slot in
+   a table cell and the 56px one in the word gallery. Drawn in the accent teal
+   at a hairline weight: the picture is a hint, never the subject — the word
+   beside it is. */
+.art {
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--c-teal);
+  vertical-align: middle;
+}
+.art svg { inline-size: 100%; block-size: 100%; stroke-width: 1.5; }
+.art--sm { inline-size: 26px; block-size: 26px; }
+.art--lg { inline-size: 54px; block-size: 54px; }
+.art--text {
+  font: 600 var(--t-h3)/1 var(--font-display);
+  color: var(--c-teal);
+}
+.art--lg.art--text { font-size: 34px; }
+
+/* Kept for anything still holding space without art. */
 .well-sm {
-  display: inline-block; inline-size: 44px; block-size: 34px;
-  background: var(--c-surface-alt); border-radius: var(--radius-sm);
+  display: inline-block; inline-size: 26px; block-size: 26px;
   vertical-align: middle;
 }
 
@@ -334,7 +350,7 @@ ul.ticks li { margin-block-end: var(--s-3); }
 .sign-alone { font-size: var(--t-he-word); }
 
 /* Fixação — ligue */
-.link-left { display: flex; align-items: center; gap: var(--s-5); margin-block-end: var(--s-5); }
+.link-left { display: flex; align-items: center; gap: var(--s-5); margin-block-end: var(--s-6); }
 .link-right { text-align: end; }
 .link-right p { margin-block-end: var(--s-4); }
 
