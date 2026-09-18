@@ -70,13 +70,29 @@ echo "Portão com conta, sem compra"
 espera "vai para a página do curso" "$B/cursos/alfabetizacao/" "$(location -b "$JAR" $B/meu-hebraico/)"
 
 echo "Cobrança"
-# O valor cobrado sai do catálogo: R$147 com 10% de desconto no PIX = 13230
-# centavos. Com um token falso a chamada externa falha — mas o pedido nasce e
-# fica registrado, com o valor certo.
-G -b "$JAR" -o /dev/null -X POST $B/api/pay/create \
-  -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}'
-espera "o pedido ficou registrado com o preço do servidor" 13230 \
-  "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
+# Duas situações legítimas, e a checagem se adapta:
+#
+#   · MP_ACCESS_TOKEN configurado → o pedido nasce, e o valor tem de ser o do
+#     catálogo: R$147 com 10% de desconto no PIX = 13230 centavos. É a prova de
+#     que o preço sai do servidor e não do navegador.
+#   · sem token → 503 `payments-off`, e NENHUM pedido é criado. Também é o
+#     comportamento certo: um pendente que nunca vai compensar é pior do que
+#     uma recusa clara.
+#
+# O que seria erro é qualquer outra coisa — e é isso que o `case` separa.
+pay_code=$(G -b "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
+  -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')
+case "$pay_code" in
+  503)
+    espera "pagamento ainda não ligado, e diz isso" 503 "$pay_code"
+    espera "e nenhum pedido órfão foi criado" "" \
+      "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
+    ;;
+  *)
+    espera "o pedido ficou registrado com o preço do servidor" 13230 \
+      "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
+    ;;
+esac
 espera "curso fora de venda é recusado" 404 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' \
   -X POST $B/api/pay/create -H 'content-type: application/json' \
   -d '{"courseSlug":"hebraico-a1","method":"pix"}')"
@@ -90,9 +106,29 @@ G -b "$JAR" -c "$JAR" -o /dev/null -X POST $B/api/auth/logout
 espera "depois de sair, /api/me recusa" 401 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' $B/api/me)"
 
 rm -f "$JAR"
+
+# Contra produção, a passagem deixa rastro: uma conta de teste e, se o
+# pagamento estiver ligado, um pedido. Nada disso é bonito num banco de
+# verdade, então o script entrega a limpeza pronta em vez de deixar para quem
+# lembrar depois — que é ninguém.
+if [ "$B" != "http://127.0.0.1:8787" ]; then
+  cat <<LIMPEZA
+
+Esta passagem criou a conta de teste $MAIL.
+Para apagá-la do banco de produção:
+
+  npx wrangler d1 execute hebraico-fluente --remote --command \\
+    "DELETE FROM orders WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM entitlements WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM accounts WHERE email = '$MAIL'"
+LIMPEZA
+fi
+
 if [ "$fails" -eq 0 ]; then
+  echo
   echo "tudo certo."
 else
+  echo
   echo "$fails verificação(ões) falharam."
   exit 1
 fi
