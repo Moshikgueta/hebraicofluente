@@ -145,7 +145,12 @@ const generatorsFor = (
   if (!skills?.length) return LESSON_GENERATORS;
   const wanted = new Set(skills.flatMap(s => BY_SKILL[s] ?? []));
   /* Keep LESSON_GENERATORS' order — it is the one that alternates gestures. */
-  return LESSON_GENERATORS.filter(g => wanted.has(g));
+  const narrowed = LESSON_GENERATORS.filter(g => wanted.has(g));
+  /* `escrever` has no generated question at all: writing is produced on a
+     canvas, not answered. Asking for it left this empty, and an empty
+     generator list made the builders index into nothing and throw. A narrowing
+     that cannot be honoured is dropped, not crashed on. */
+  return narrowed.length ? narrowed : LESSON_GENERATORS;
 };
 
 /**
@@ -334,6 +339,18 @@ export function buildReview(
   }
   if (out.length < count) {
     for (const ex of fill(pool, all, gens, rand, count - out.length, audioAvailable, 4)) {
+      if (!seen.has(ex.id)) { seen.add(ex.id); out.push(ex); }
+    }
+  }
+
+  /* Last resort: widen back to every generator.
+     A narrowed review can legitimately come up empty — asking for `ouvir`
+     before any recording exists leaves nothing at all — and an empty review is
+     the worst possible answer: the learner is told the course cannot build
+     them five questions when it plainly can. Aiming at the failing skill is a
+     preference, not a promise. */
+  if (!out.length && (skills?.length || only?.length)) {
+    for (const ex of fill(pool, all, LESSON_GENERATORS, rand, count, audioAvailable, 4)) {
       if (!seen.has(ex.id)) { seen.add(ex.id); out.push(ex); }
     }
   }

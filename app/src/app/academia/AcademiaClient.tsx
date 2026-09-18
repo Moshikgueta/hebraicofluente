@@ -23,6 +23,7 @@ import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePl
 import { SoundLab, VowelSigns } from '@/components/learn/SoundLab';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { audioAvailable } from '@/components/learn/AudioButton';
+import { ParaRevisar } from '@/components/game/Debt';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, type Letter } from '@/lib/content';
 import { onCarrier } from '@/lib/hebrew';
@@ -224,6 +225,10 @@ export function AcademiaClient() {
               </li>
             ))}
           </ul>
+
+          {/* What the course thinks you are bad at, said out loud. Without it,
+              "a revisão escolhe por você" is a claim taken on faith. */}
+          <ParaRevisar />
 
           {/* Not a quiz: the two reference surfaces. Kept at the bottom because
               a learner who came here to practise should not land on a table. */}

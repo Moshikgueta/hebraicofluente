@@ -8,8 +8,9 @@ import { describe, expect, it } from 'vitest';
 import { migrate } from '@/lib/state/migrate';
 import { EMPTY_STATE, type LearnerState } from '@/lib/state/types';
 import {
-  clearConfusion, confusionKey, letterMastery, recordAnswer, recordConfusion,
-  recordGym, recordSkill, skillLevel, topConfusions, weakestSkill
+  clearConfusion, confusionKey, dueItems, letterMastery, needsWarmUp, recordAnswer,
+  recordConfusion, recordGym, recordSkill, reviewDebt, skillLevel, topConfusions,
+  weakestSkill, weakLetters
 } from '@/lib/state/rules';
 
 /* A v1 save as an older build actually wrote it: no skills, no confusions, no
@@ -229,5 +230,88 @@ describe('the reading gym record', () => {
     s = recordGym(s, 'vogais', 0.5, 90, day);
     expect(s.gym['letras']!.runs).toBe(1);
     expect(s.gym['vogais']!.bestSeconds).toBe(90);
+  });
+});
+
+describe('what the review asks for', () => {
+  const day = '2026-04-10';
+  const byGlyph = new Map([['ד', 'dalet'], ['ר', 'resh'], ['מ', 'mem']]);
+
+  it('sees a skill that slipped even when the SRS queue is quiet', () => {
+    /* The old model only had the queue, which goes silent as soon as an
+       interval pushes an item past today — for a letter still being failed. */
+    let s: LearnerState = EMPTY_STATE;
+    for (let i = 0; i < 5; i++) s = recordSkill(s, 'qof', 'ouvir', true, day);
+    s = recordSkill(s, 'qof', 'ouvir', false, day);
+    expect(dueItems(s, day)).toHaveLength(0);
+    expect(weakLetters(s, day, 3)).toContain('qof');
+  });
+
+  it('pulls BOTH letters of a traded pair into the review', () => {
+    let s: LearnerState = EMPTY_STATE;
+    for (let i = 0; i < 3; i++) s = recordConfusion(s, 'ד', 'ר', day);
+    const weak = weakLetters(s, day, 4, byGlyph);
+    expect(weak).toContain('dalet');
+    expect(weak).toContain('resh');
+  });
+
+  it('says nothing when there is nothing', () => {
+    expect(weakLetters(EMPTY_STATE, day, 3, byGlyph)).toEqual([]);
+  });
+});
+
+describe('the mistake notebook', () => {
+  const day = '2026-04-10';
+  const byGlyph = new Map([['ד', 'dalet'], ['ר', 'resh']]);
+
+  it('names the reason, not just the letter', () => {
+    let s: LearnerState = EMPTY_STATE;
+    for (let i = 0; i < 4; i++) s = recordSkill(s, 'dalet', 'ler', true, day);
+    s = recordSkill(s, 'dalet', 'ler', false, day);
+    const debt = reviewDebt(s, day, byGlyph);
+    expect(debt[0]!.letterId).toBe('dalet');
+    expect(debt[0]!.skills).toEqual(['ler']);
+  });
+
+  it('shows which letter is being traded for which', () => {
+    let s: LearnerState = EMPTY_STATE;
+    for (let i = 0; i < 2; i++) s = recordConfusion(s, 'ד', 'ר', day);
+    const debt = reviewDebt(s, day, byGlyph);
+    const dalet = debt.find(d => d.letterId === 'dalet')!;
+    expect(dalet.confusedWith).toContain('ר');
+  });
+
+  it('is empty for a learner who has not missed anything', () => {
+    expect(reviewDebt(EMPTY_STATE, day, byGlyph)).toEqual([]);
+  });
+});
+
+describe('the warm-up', () => {
+  it('does not greet a learner who studied yesterday', () => {
+    const s: LearnerState = {
+      ...EMPTY_STATE,
+      streak: { current: 3, longest: 3, lastDay: '2026-04-09' },
+      srs: { x: { itemId: 'x', letterId: 'mem', box: 0, misses: 1, hits: 0,
+                  dueOn: '2026-01-01', lastSeen: '2026-01-01' } }
+    };
+    expect(needsWarmUp(s, '2026-04-10')).toBe(false);
+  });
+
+  it('greets one who has been away and owes something', () => {
+    const s: LearnerState = {
+      ...EMPTY_STATE,
+      streak: { current: 3, longest: 3, lastDay: '2026-04-01' },
+      srs: { x: { itemId: 'x', letterId: 'mem', box: 0, misses: 1, hits: 0,
+                  dueOn: '2026-01-01', lastSeen: '2026-01-01' } }
+    };
+    expect(needsWarmUp(s, '2026-04-10')).toBe(true);
+  });
+
+  it('does not invent a warm-up for someone with nothing to review', () => {
+    const s: LearnerState = {
+      ...EMPTY_STATE,
+      streak: { current: 3, longest: 3, lastDay: '2026-04-01' }
+    };
+    expect(needsWarmUp(s, '2026-04-10')).toBe(false);
   });
 });

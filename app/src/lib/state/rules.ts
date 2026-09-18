@@ -414,13 +414,119 @@ export const dueItems = (state: LearnerState, day: string): SrsItem[] =>
     .filter(i => i.dueOn <= day)
     .sort((a, b) => b.misses - a.misses || a.dueOn.localeCompare(b.dueOn));
 
-/** The letters worth reviewing today, most troublesome first. */
-export function weakLetters(state: LearnerState, day: string, limit = 3): string[] {
+/**
+ * The letters worth reviewing today, most troublesome first.
+ *
+ * Three sources, because one was not enough:
+ *
+ *   · the SRS queue — items due today, weighted by how often they were missed.
+ *     This was the whole of it, and it goes quiet as soon as an item's interval
+ *     pushes it past today, even for a letter the learner is still failing;
+ *   · any skill sitting at `revisar` — a letter that was strong and has just
+ *     slipped is the single most valuable thing a review can offer, and the
+ *     SRS entry for it may not be due for days;
+ *   · the confusion pairs — both letters of a pair this learner actually
+ *     trades, because drilling ד without ר beside it teaches nothing about the
+ *     distinction that is failing.
+ *
+ * `byGlyph` maps a glyph back to a letter id for that third source; callers
+ * that do not have the content pass nothing and get the first two.
+ */
+export function weakLetters(
+  state: LearnerState, day: string, limit = 3,
+  byGlyph?: ReadonlyMap<string, string>
+): string[] {
   const score = new Map<string, number>();
-  for (const i of dueItems(state, day)) {
-    score.set(i.letterId, (score.get(i.letterId) ?? 0) + i.misses);
+  const bump = (id: string, n: number) => score.set(id, (score.get(id) ?? 0) + n);
+
+  for (const i of dueItems(state, day)) bump(i.letterId, i.misses + 1);
+
+  for (const [letterId, skills] of Object.entries(state.skills)) {
+    for (const s of SKILLS) {
+      if (skillLevel(skills[s]) === 'revisar') bump(letterId, 2);
+    }
   }
+
+  if (byGlyph) {
+    for (const c of topConfusions(state, 3)) {
+      for (const glyph of [c.correct, c.chosen]) {
+        const id = byGlyph.get(glyph);
+        if (id) bump(id, c.n);
+      }
+    }
+  }
+
   return [...score.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit).map(e => e[0]);
+}
+
+/**
+ * Everything the learner currently owes, as a list they can look at.
+ *
+ * The review used to be a black box that produced five questions; a learner
+ * who wanted to know what it thought they were bad at had no way to find out.
+ * This is that list — and it is also what the "para revisar" panel renders.
+ */
+export type ReviewDebt = {
+  letterId: string;
+  /** Which skills are the problem, weakest first. */
+  skills: Skill[];
+  /** How many SRS items are due for it today. */
+  due: number;
+  /** Glyph pairs this learner trades that involve this letter. */
+  confusedWith: string[];
+};
+
+export function reviewDebt(
+  state: LearnerState, day: string, byGlyph?: ReadonlyMap<string, string>
+): ReviewDebt[] {
+  const ids = new Set<string>();
+  const due = new Map<string, number>();
+  for (const i of dueItems(state, day)) {
+    ids.add(i.letterId);
+    due.set(i.letterId, (due.get(i.letterId) ?? 0) + 1);
+  }
+  for (const [letterId, skills] of Object.entries(state.skills)) {
+    if (SKILLS.some(s => skillLevel(skills[s]) === 'revisar')) ids.add(letterId);
+  }
+
+  const confusedWith = new Map<string, string[]>();
+  if (byGlyph) {
+    for (const c of topConfusions(state, 6)) {
+      for (const [mine, theirs] of [[c.correct, c.chosen], [c.chosen, c.correct]] as const) {
+        const id = byGlyph.get(mine);
+        if (!id) continue;
+        ids.add(id);
+        confusedWith.set(id, [...(confusedWith.get(id) ?? []), theirs]);
+      }
+    }
+  }
+
+  return [...ids].map(letterId => {
+    const skills = state.skills[letterId] ?? {};
+    return {
+      letterId,
+      skills: SKILLS.filter(s => skillLevel(skills[s]) === 'revisar'),
+      due: due.get(letterId) ?? 0,
+      confusedWith: confusedWith.get(letterId) ?? []
+    };
+  }).sort((a, b) =>
+    (b.due + b.skills.length + b.confusedWith.length) -
+    (a.due + a.skills.length + a.confusedWith.length)
+  );
+}
+
+/**
+ * Has the learner been away long enough to want a warm-up?
+ *
+ * Two days, not one: a learner who studied yesterday does not need to be told
+ * they have been away, and being greeted with "vamos aquecer?" after a normal
+ * night is the app talking about itself rather than about them.
+ */
+export function needsWarmUp(state: LearnerState, day: string): boolean {
+  const last = state.streak.lastDay;
+  if (!last) return false;
+  const gap = daysBetween(last, day);
+  return gap >= 2 && dueItems(state, day).length > 0;
 }
 
 /* ── achievements ───────────────────────────────────────────────────────── */

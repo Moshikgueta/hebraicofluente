@@ -14,7 +14,7 @@ import { AlphabetGrid, ModuleProgress } from '@/components/game/AlphabetGrid';
 import { useProgress } from '@/lib/state/store';
 import { course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
-import { isExtraModuleDone, isLessonComplete } from '@/lib/state/rules';
+import { isExtraModuleDone, isLessonComplete, needsWarmUp } from '@/lib/state/rules';
 
 export default function Dashboard() {
   const p = useProgress();
@@ -68,6 +68,25 @@ export default function Dashboard() {
             : `Você já domina ${p.mastered} ${p.mastered === 1 ? 'letra' : 'letras'} de ${course.totalLetters}.`}
         </p>
       </header>
+
+      {/* Coming back after a gap: three questions on what was slipping, before
+          anything new. A learner who has been away for a week and is handed a
+          brand-new letter spends the lesson quietly discovering they have
+          forgotten the last one. */}
+      {needsWarmUp(p.state, p.day) && (
+        <Card tone="mint" className="p-5 sm:p-6 grid sm:grid-cols-[1fr_auto] items-center gap-4">
+          <div className="grid gap-1">
+            <p className="font-display text-[18px] font-bold text-ink">Vamos aquecer?</p>
+            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+              Você esteve fora alguns dias. Três minutos no que estava escapando e
+              a lição de hoje rende muito mais.
+            </p>
+          </div>
+          <LinkButton href="/revisao" className="justify-self-start sm:justify-self-end">
+            Aquecer
+          </LinkButton>
+        </Card>
+      )}
 
       {/* The primary action, alone and unmissable. */}
       <section aria-labelledby="continuar">

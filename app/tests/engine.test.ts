@@ -229,3 +229,33 @@ describe('the vav of מוֹ is a vowel, not a letter', () => {
     }
   });
 });
+
+describe('a review is never empty', () => {
+  /* It came back with nothing for a learner whose weakest skill was listening
+     while no recordings existed: the narrowing left no generator that could
+     run. The learner was told the course could not build five questions, which
+     it plainly could. Aiming at the failing skill is a preference, not a
+     promise. */
+  it('falls back to every generator rather than returning nothing', () => {
+    for (let upTo = 1; upTo <= letters.length; upTo++) {
+      const learned = historyFor(upTo);
+      const weak = learned.slice(-2).map(l => l.id);
+      for (const skills of [['ouvir'], ['escrever'], ['ouvir', 'escrever']] as const) {
+        const rev = buildReview(weak, learned, {
+          audioAvailable: false, count: 5, skills: skills as never
+        });
+        expect(rev.length, `@${upTo} skills=${skills.join(',')}`).toBeGreaterThan(0);
+        for (const ex of rev) expect(ex.skill).not.toBe('ouvir');
+      }
+    }
+  });
+
+  it('still honours the narrowing when it CAN be honoured', () => {
+    const learned = historyFor(12);
+    const rev = buildReview(learned.slice(-3).map(l => l.id), learned, {
+      audioAvailable: false, count: 6, skills: ['rec']
+    });
+    expect(rev.length).toBeGreaterThan(0);
+    for (const ex of rev) expect(ex.skill).toBe('rec');
+  });
+});

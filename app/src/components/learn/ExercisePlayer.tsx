@@ -31,6 +31,7 @@ import type { Exercise } from '@/lib/engine/exercises';
 import { isChoice } from '@/lib/engine/exercises';
 import { useProgress } from '@/lib/state/store';
 import { clusters } from '@/lib/hebrew';
+import { supportLevel } from '@/lib/state/rules';
 
 export type PlayerResult = { correct: number; total: number; score: number; missed: string[] };
 
@@ -45,8 +46,9 @@ export function ExercisePlayer({
   title?: string;
   compact?: boolean;
 }) {
-  const { answer } = useProgress();
+  const { answer, markFirst, mastered, state } = useProgress();
   const [i, setI] = useState(0);
+  const [firstUnaided, setFirstUnaided] = useState(false);
   const [settled, setSettled] = useState<Settled | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [missed, setMissed] = useState<string[]>([]);
@@ -70,6 +72,17 @@ export function ExercisePlayer({
     setSettled({ correct, chosen: opts.chosen ?? null, why: opts.why ?? null });
     if (correct) setCorrectCount(c => c + 1);
     else setMissed(m => [...m, ex.id]);
+
+    /* The moment the course is actually selling.
+       Reading a whole word right, correctly, at a point where the course has
+       stopped printing the transliteration — that is the first time the learner
+       decoded Hebrew rather than recognised it. It can only happen once, it is
+       dated, and it is said out loud when it does. */
+    if (correct && UNAIDED_READ.has(ex.kind) && supportLevel(mastered) !== 'always'
+        && !state.firsts['leitura-sem-translit']) {
+      setFirstUnaided(true);
+      markFirst('leitura-sem-translit');
+    }
     answer({
       itemId: ex.id, letterId: ex.letterId, correct, skill: ex.skill,
       expected: opts.expected, chosen: opts.chosenGlyph
@@ -98,6 +111,7 @@ export function ExercisePlayer({
     }
     setI(n => n + 1);
     setSettled(null);
+    setFirstUnaided(false);
   }, [i, exercises.length, correctCount, missed, onDone]);
 
   /* Keyboard: 1–9 to answer a choice, Enter to continue. Every exercise that
@@ -166,6 +180,14 @@ export function ExercisePlayer({
               <p className="mt-2 text-[15px] leading-relaxed text-ink font-medium">{settled.why}</p>
             )}
             <p className="mt-2 text-[15px] leading-relaxed text-ink-body">{ex.explainPt}</p>
+            {firstUnaided && (
+              <p className="mt-3 pt-3 border-t border-[color:var(--line-soft)]
+                            font-ui text-[14px] leading-relaxed text-[var(--mint-ink)]">
+                <strong>Você acabou de ler hebraico sem transliteração.</strong>{' '}
+                Sem o apoio embaixo, sem decorar — você decodificou. É isto que o
+                curso inteiro estava construindo.
+              </p>
+            )}
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <Button onClick={next} size="md">
                 {i + 1 >= exercises.length ? 'Ver resultado' : 'Continuar'}
@@ -182,6 +204,12 @@ export function ExercisePlayer({
 /* The kinds where the wrong OPTION is itself a letter, and so worth recording
    as a confusion. Choosing the wrong meaning of a word is a different kind of
    mistake and does not belong in the ד/ר pile. */
+/* Reading a WHOLE WORD, as opposed to a letter or a syllable. These are the
+   kinds where getting it right means the learner decoded something. */
+const UNAIDED_READ = new Set<Exercise['kind']>([
+  'word-meaning', 'type-answer', 'build-word', 'complete-word'
+]);
+
 const GLYPH_CONFUSION = new Set<Exercise['kind']>([
   'letter-recognition', 'print-vs-cursive', 'final-form', 'complete-word', 'odd-one-out'
 ]);

@@ -15,7 +15,8 @@ import { audioAvailable } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, getLetter } from '@/lib/content';
 import { buildReview } from '@/lib/engine/exercises';
-import { dueItems } from '@/lib/state/rules';
+import { dueItems, weakestSkill, weakLetters } from '@/lib/state/rules';
+import type { Skill } from '@/lib/state/types';
 import { track } from '@/lib/analytics';
 
 export function ReviewClient() {
@@ -31,11 +32,47 @@ export function ReviewClient() {
     [p.state.lessons]
   );
   const due = useMemo(() => dueItems(p.state, p.day), [p.state, p.day]);
-  const weak = p.weak.length ? p.weak : learned.slice(-3).map(l => l.id);
+
+  /* Glyph → letter id, so a confusion stored as "ד for ר" can pull BOTH
+     letters into the review. Drilling ד without ר beside it teaches nothing
+     about the distinction that is actually failing. */
+  const byGlyph = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const L of allLetters()) {
+      m.set(L.letter, L.id);
+      if (L.finalForm) m.set(L.finalForm, L.id);
+    }
+    return m;
+  }, []);
+
+  /* The store's `weak` sees only the SRS queue; this one also sees skills that
+     have slipped and pairs being traded. */
+  const weak = useMemo(() => {
+    const w = weakLetters(p.state, p.day, 5, byGlyph).filter(id => learned.some(l => l.id === id));
+    return w.length ? w : learned.slice(-3).map(l => l.id);
+  }, [p.state, p.day, byGlyph, learned]);
+
+  /* Aim at the failing skill where there is one: a learner who reads ק and
+     cannot hear it should get listening, not more reading. */
+  const skills = useMemo(() => {
+    const wanted = new Set<Skill>();
+    for (const id of weak) {
+      const s = weakestSkill(p.state.skills[id]);
+      /* `escrever` has no generated question — it is produced on a canvas —
+         and `ouvir` has none either until the recordings land. Asking for
+         either would narrow the review to nothing. */
+      if (!s || s === 'escrever') continue;
+      if (s === 'ouvir' && !audioAvailable()) continue;
+      wanted.add(s);
+    }
+    return wanted.size && wanted.size < 4 ? [...wanted] : undefined;
+  }, [weak, p.state.skills]);
 
   const exercises = useMemo(
-    () => buildReview(weak, learned, { audioAvailable: audioAvailable(), count: 5, seed: `rev-${p.day}-${run}` }),
-    [weak, learned, p.day, run]
+    () => buildReview(weak, learned, {
+      audioAvailable: audioAvailable(), count: 5, seed: `rev-${p.day}-${run}`, skills
+    }),
+    [weak, learned, p.day, run, skills]
   );
 
   if (!p.ready) return null;
@@ -90,6 +127,24 @@ export function ReviewClient() {
           Cinco questões tiradas do que deu mais trabalho até aqui.
         </p>
       </header>
+
+      {/* Naming the pair, kindly. "Percebemos que ר e ד ainda estão
+          confundindo você" is a fact about the work, not about the learner —
+          and it is the thing that makes the review feel like it is paying
+          attention rather than shuffling. */}
+      {p.confusions.length > 0 && (
+        <Card tone="wash" className="p-5 grid gap-2">
+          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+            Percebemos que <He size="inline">{p.confusions[0]!.correct}</He> e{' '}
+            <He size="inline">{p.confusions[0]!.chosen}</He> ainda estão se
+            misturando. Vamos praticar um pouco mais as duas.
+          </p>
+          <Link href="/academia"
+                className="font-ui text-[13px] text-[var(--teal-band)] hover:underline min-h-[44px] flex items-center">
+            Treinar só esse par na Academia →
+          </Link>
+        </Card>
+      )}
 
       <Card className="p-6 grid gap-4">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
