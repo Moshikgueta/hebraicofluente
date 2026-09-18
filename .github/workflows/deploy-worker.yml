@@ -41,6 +41,10 @@ on:
       - 'worker/**'
       - 'wrangler.toml'
       - 'tools/export-content.mjs'
+      # A publicação É este script agora (passo "Publicar e configurar"), então
+      # mexer nele tem de disparar uma publicação — senão uma correção no
+      # próprio caminho do deploy fica parada sem ninguém perceber.
+      - 'scripts/cloudflare-setup.sh'
       - '.github/workflows/deploy-worker.yml'
   workflow_dispatch:
 
