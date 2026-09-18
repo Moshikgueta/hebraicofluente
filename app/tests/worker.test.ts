@@ -14,7 +14,7 @@ import { describe, expect, it } from 'vitest';
 // @ts-expect-error — módulo JS do Worker, sem tipos
 import { clampInstallments, getCourse, isSellable, priceCents } from '../../worker/src/lib/catalog.js';
 // @ts-expect-error — idem
-import { mapStatus, verifyWebhookSignature } from '../../worker/src/lib/mercadopago.js';
+import { mapStatus, verifyWebhookSignature, isSandbox } from '../../worker/src/lib/mercadopago.js';
 // @ts-expect-error — idem
 import { isGatedPath } from '../../worker/src/gate.js';
 // @ts-expect-error — idem
@@ -82,6 +82,30 @@ describe('o que conta como pago', () => {
     for (const s of ['', 'whatever', 'approved_maybe', undefined as unknown as string]) {
       expect(mapStatus(s)).toBe('pending');
     }
+  });
+});
+
+describe('teste ou produção', () => {
+  it('decide pelo prefixo do token, não por uma variável', () => {
+    expect(isSandbox({ MP_ACCESS_TOKEN: 'TEST-123' })).toBe(true);
+    expect(isSandbox({ MP_ACCESS_TOKEN: 'APP_USR-123' })).toBe(false);
+  });
+
+  it('ignora MP_SANDBOX quando o token já respondeu', () => {
+    /* É o caso que custa caro: token de produção com o modo de teste esquecido
+       manda todo comprador para um checkout que NÃO COBRA — sem reclamação,
+       porque ninguém pagou, e por isso pode passar semanas despercebido. */
+    expect(isSandbox({ MP_ACCESS_TOKEN: 'APP_USR-123', MP_SANDBOX: '1' })).toBe(false);
+    expect(isSandbox({ MP_ACCESS_TOKEN: 'TEST-123', MP_SANDBOX: '0' })).toBe(true);
+  });
+
+  it('na dúvida, não cobra', () => {
+    /* Prefixo desconhecido: cai na variável, e o padrão dela é o modo que não
+       tira dinheiro de ninguém. */
+    expect(isSandbox({ MP_ACCESS_TOKEN: 'algo-estranho' })).toBe(true);
+    expect(isSandbox({})).toBe(true);
+    expect(isSandbox(undefined)).toBe(true);
+    expect(isSandbox({ MP_ACCESS_TOKEN: 'algo-estranho', MP_SANDBOX: '0' })).toBe(false);
   });
 });
 

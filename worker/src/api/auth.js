@@ -23,6 +23,7 @@
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { fakeVerify, hashPassword, itersFor, verifyPassword } from '../lib/crypto.js';
 import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/session.js';
+import { isSandbox } from '../lib/mercadopago.js';
 import {
   activeEntitlements, createAccount, findAccountByEmail, findAccountById,
   log, normalizeEmail, setPasswordHash, throttled
@@ -170,7 +171,11 @@ export async function health({ env }) {
     /* O custo do hash de senha em vigor. Não é segredo — está no repositório
        — e é a única forma de confirmar, de fora, que uma subida de custo
        realmente entrou em vigor. */
-    iterations: itersFor(env)
+    iterations: itersFor(env),
+    /* "teste" cobra nada; "producao" cobra de verdade. Deriva do prefixo do
+       token, então esta linha é a confirmação de qual credencial está no ar —
+       a pergunta que, errada, custa semanas de venda em silêncio. */
+    modo: env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado'
   };
 
   if (env.DB) {

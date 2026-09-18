@@ -26,6 +26,35 @@
 
 const API = 'https://api.mercadopago.com';
 
+/**
+ * Teste ou produção? O TOKEN responde, não uma variável.
+ * ─────────────────────────────────────────────────────────────────────────
+ * A Mercado Pago dá dois pares de credenciais, e o prefixo os distingue:
+ * `TEST-` é a de teste, `APP_USR-` é a de produção. Isso é informação que já
+ * está na credencial — pedir que alguém declare o modo num segundo lugar é
+ * criar a chance de os dois discordarem.
+ *
+ * E a discordância é cara nos dois sentidos:
+ *
+ *   · token de PRODUÇÃO com modo de teste → o comprador é mandado para um
+ *     checkout que NÃO COBRA. O pedido nunca compensa, ninguém reclama
+ *     (afinal não pagaram), e a falha pode passar semanas despercebida —
+ *     semanas de vendas perdidas sem nenhum sintoma;
+ *   · token de TESTE com modo de produção → o checkout recusa tudo, o que ao
+ *     menos aparece na hora.
+ *
+ * Derivando do token, nenhum dos dois pode acontecer. `MP_SANDBOX` no
+ * wrangler.toml só é consultado quando o prefixo é desconhecido, e o padrão
+ * nesse caso é o modo que não cobra: diante da dúvida, não tirar dinheiro de
+ * ninguém.
+ */
+export function isSandbox(env) {
+  const token = String((env && env.MP_ACCESS_TOKEN) || '');
+  if (token.startsWith('TEST-')) return true;
+  if (token.startsWith('APP_USR-')) return false;
+  return !env || env.MP_SANDBOX !== '0';
+}
+
 async function call(env, path, { method = 'GET', body, idempotencyKey } = {}) {
   const headers = {
     'Authorization': `Bearer ${env.MP_ACCESS_TOKEN}`,
@@ -137,9 +166,9 @@ export async function createCardPreference(env, { order, course, account, origin
   return {
     preferenceId: String(pref.id),
     /* `sandbox_init_point` só existe em conta de teste, e usá-lo em produção
-       manda o comprador para um checkout que não cobra. A escolha é explícita
-       e controlada por variável, não adivinhada. */
-    payUrl: env.MP_SANDBOX === '1' ? (pref.sandbox_init_point || pref.init_point) : pref.init_point
+       manda o comprador para um checkout que não cobra. Quem decide é o
+       prefixo do token — ver `isSandbox` no topo do arquivo. */
+    payUrl: isSandbox(env) ? (pref.sandbox_init_point || pref.init_point) : pref.init_point
   };
 }
 
