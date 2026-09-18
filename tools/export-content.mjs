@@ -183,6 +183,36 @@ function main() {
   };
   writeFileSync(join(OUT, 'course.json'), JSON.stringify(course, null, 2) + '\n');
 
+  /* ── the catalogue ──────────────────────────────────────────────────────
+     data/courses.json is the platform's product list: what /cursos shows,
+     what the checkout charges, and what a paid account is allowed to open.
+     Only one thing is resolved here rather than copied — a course that says
+     `modulesFrom: "alfabetizacao"` takes its module list from the course just
+     built above, so the sales page and the course itself cannot describe
+     different módulos. Everything else passes through verbatim: a price the
+     exporter "helped with" is a price nobody can trust. */
+  const catalogue = readJson('data/courses.json');
+  const builtModules = course.modules.map(m => ({
+    n: m.n, titlePt: m.titlePt, subPt: m.subPt, letters: m.letterIds.length
+  }));
+  writeFileSync(join(OUT, 'courses.json'), JSON.stringify({
+    currency: catalogue.currency,
+    courses: catalogue.courses.map(c => {
+      const { modulesFrom, ...rest } = c;
+      if (modulesFrom && modulesFrom !== 'alfabetizacao') {
+        throw new Error(`courses.json: modulesFrom "${modulesFrom}" não corresponde a nenhum curso construído`);
+      }
+      const modules = modulesFrom ? builtModules : (c.modules ?? []);
+      return {
+        ...rest,
+        modules,
+        stats: modulesFrom
+          ? { modules: course.modules.length, lessons: course.totalLetters }
+          : { modules: modules.length, lessons: null }
+      };
+    })
+  }, null, 2) + '\n');
+
   /* ── the vowel signs, taught by SOUND and not by name ───────────────── */
   writeFileSync(join(OUT, 'nikud.json'), JSON.stringify({
     intro: nikud.intro,

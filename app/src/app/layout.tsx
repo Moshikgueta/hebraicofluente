@@ -42,14 +42,15 @@ const cursive = localFont({
   src: [{ path: '../../public/fonts/gveret-levin-hebrew-400-normal.woff2', weight: '400', style: 'normal' }]
 });
 import { ProgressProvider } from '@/lib/state/store';
-import { AppShell } from '@/components/shell/AppShell';
+import { AccountProvider } from '@/lib/account/store';
+import { Chrome } from '@/components/shell/Chrome';
 import { course } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'Hebraico Fluente — aprenda a ler hebraico',
+  title: 'Hebraico Fluente — a plataforma de hebraico para brasileiros',
   description:
-    'Curso interativo de alfabetização em hebraico moderno para brasileiros adultos. ' +
-    'As 22 letras, os sinais de vogal, leitura e escrita — do zero.',
+    'Do alfabeto à conversa, numa plataforma só. Alfabetização, A1, A2 e B1 — ' +
+    'aulas interativas, correção na hora e progresso que continua de onde você parou.',
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
   applicationName: 'Hebraico Fluente'
@@ -80,17 +81,23 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Pular para o conteúdo
         </a>
-        {/* Modules 6 and 7 count toward completion: a bar that reads 100%
-            while the reader still cannot handle an unpointed word would be
-            lying about the thing the course exists to teach. */}
-        <ProgressProvider
-          totalLetters={course.totalLetters}
-          extraModuleIds={course.modules.filter(m => !m.letterIds.length).map(m => m.id)}
-        >
-          <AppShell>
-            <div id="conteudo">{children}</div>
-          </AppShell>
-        </ProgressProvider>
+        {/* A conta por fora do progresso, e não o contrário: quem decide se
+            esta rota pode ser vista é a sessão, e o progresso é o que se
+            mostra depois de ela ter deixado passar. O progresso continua
+            sendo do APARELHO — ver a nota em lib/account/store.tsx. */}
+        <AccountProvider>
+          {/* Modules 6 and 7 count toward completion: a bar that reads 100%
+              while the reader still cannot handle an unpointed word would be
+              lying about the thing the course exists to teach. */}
+          <ProgressProvider
+            totalLetters={course.totalLetters}
+            extraModuleIds={course.modules.filter(m => !m.letterIds.length).map(m => m.id)}
+          >
+            <Chrome>
+              <div id="conteudo">{children}</div>
+            </Chrome>
+          </ProgressProvider>
+        </AccountProvider>
       </body>
     </html>
   );

@@ -85,7 +85,7 @@ export function ReviewClient() {
           A revisão rápida se alimenta do que você erra. Faça a primeira lição e
           ela começa a aparecer aqui, no dia certo.
         </p>
-        <LinkButton href="/" className="justify-self-start">Ir para a primeira lição</LinkButton>
+        <LinkButton href="/meu-hebraico" className="justify-self-start">Ir para a primeira lição</LinkButton>
       </Card>
     );
   }
@@ -101,7 +101,7 @@ export function ReviewClient() {
           <Button variant="secondary" onClick={() => { setRun(n => n + 1); setResult(null); setPhase('running'); }}>
             Mais cinco
           </Button>
-          <LinkButton href="/" variant="primary">Voltar ao início</LinkButton>
+          <LinkButton href="/meu-hebraico" variant="primary">Voltar ao início</LinkButton>
         </Milestone>
       </div>
     );

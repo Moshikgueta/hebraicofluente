@@ -54,7 +54,7 @@ export default function OnboardingPage() {
       name: name.trim() || undefined,
       completedAt: new Date().toISOString()
     });
-    router.push('/');
+    router.push('/meu-hebraico');
   };
 
   return (

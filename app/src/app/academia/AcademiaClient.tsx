@@ -183,7 +183,7 @@ export function AcademiaClient() {
             A academia abre depois da primeira lição — ela só usa letras que você já viu,
             e por enquanto não há nenhuma.
           </p>
-          <LinkButton href="/" className="justify-self-start">Começar a primeira letra</LinkButton>
+          <LinkButton href="/meu-hebraico" className="justify-self-start">Começar a primeira letra</LinkButton>
         </Card>
       ) : (
         <>

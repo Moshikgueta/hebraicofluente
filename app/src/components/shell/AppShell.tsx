@@ -28,9 +28,13 @@ import { Button } from '@/components/ui/Button';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { He } from '@/components/hebrew/He';
 import { course } from '@/lib/content';
+import { useAccount } from '@/lib/account/store';
+import { DemoNotice } from '@/components/shell/DemoNotice';
 
+/* "Hoje" é /meu-hebraico e não mais "/": desde que existe site público, a
+   raiz é a página de vendas, e o painel do aluno tem endereço próprio. */
 const NAV = [
-  { href: '/', label: 'Hoje', icon: '◉', desc: 'O que fazer agora' },
+  { href: '/meu-hebraico', label: 'Hoje', icon: '◉', desc: 'O que fazer agora' },
   { href: '/mapa', label: 'Mapa', icon: '◎', desc: 'O caminho inteiro' },
   { href: '/revisao', label: 'Revisão', icon: '↻', desc: 'O que deu trabalho' },
   /* The gym is a destination, not a feature buried in a screen: a learner who
@@ -70,20 +74,25 @@ export function AppShell({ children }: { children: ReactNode }) {
           {/* Even the logo mark goes through <He>. An exception here is how a
               contract stops being a contract. The 44px target is the tap area,
               not the text. */}
-          <Link href="/" className="flex items-center gap-2.5 min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
+          <Link href="/meu-hebraico" className="flex items-center gap-2.5 min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
             <span className="text-[var(--teal-band)]"><He size="inline">א</He></span>
             <span className="font-display text-[15px] font-bold text-ink truncate">Hebraico Fluente</span>
           </Link>
-          {p.ready && (
-            <div className="flex items-center gap-5">
-              <span className="hidden lg:inline font-ui text-[13px] text-ink-muted tabular-nums">
-                {p.mastered} / {course.totalLetters} letras
-              </span>
-              <XPIndicator xp={p.state.xp} />
-            </div>
-          )}
+          <div className="flex items-center gap-4 sm:gap-5">
+            {p.ready && (
+              <>
+                <span className="hidden lg:inline font-ui text-[13px] text-ink-muted tabular-nums">
+                  {p.mastered} / {course.totalLetters} letras
+                </span>
+                <XPIndicator xp={p.state.xp} />
+              </>
+            )}
+            <ProfileLink />
+          </div>
         </div>
       </header>
+
+      <DemoNotice />
 
       {!p.persistent && (
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 pt-4">
@@ -187,6 +196,36 @@ function Sidebar({ pathname }: { pathname: string | null }) {
         </p>
       </div>
     </aside>
+  );
+}
+
+/* A porta do perfil, no topo, em todas as larguras.
+ *
+ * Uma inicial num círculo, e não um ícone genérico: é o único lugar da
+ * plataforma que confirma, de relance, EM QUAL CONTA a pessoa está. Numa
+ * casa com login isso não é enfeite — é a resposta para "será que comprei com
+ * outro e-mail?", que é a dúvida que gera metade dos pedidos de suporte. */
+function ProfileLink() {
+  const account = useAccount();
+  if (!account.ready || !account.signedIn) return null;
+  const name = account.session!.account.name.trim();
+  const initial = (name || account.session!.account.email)[0]!.toUpperCase();
+
+  return (
+    <Link
+      href="/perfil"
+      className="min-w-[44px] min-h-[44px] grid place-items-center rounded-full
+                 hover:bg-surface-2 transition-colors"
+      title={name || account.session!.account.email}
+    >
+      <span aria-hidden
+            className="w-[30px] h-[30px] rounded-full bg-[var(--teal-wash)]
+                       text-[var(--teal-band)] font-ui text-[13px] font-bold
+                       grid place-items-center">
+        {initial}
+      </span>
+      <span className="sr-only">Sua conta</span>
+    </Link>
   );
 }
 

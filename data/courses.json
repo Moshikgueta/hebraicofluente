@@ -1,0 +1,141 @@
+{
+  "_": [
+    "O catálogo da plataforma. Uma linha por curso — é daqui que saem a página",
+    "/cursos, a página de cada curso, o preço cobrado no checkout, o que a conta",
+    "libera depois do pagamento e o que o painel mostra como 'próximo curso'.",
+    "",
+    "Acrescentar um curso é acrescentar um objeto aqui. Nenhuma rota precisa ser",
+    "escrita: /cursos/<slug> é gerada para todo curso do arquivo.",
+    "",
+    "PREÇOS SÃO PROVISÓRIOS. Os valores abaixo são um ponto de partida plausível",
+    "para o mercado brasileiro, não uma decisão comercial — troque antes de",
+    "vender. O preço daqui é o que o checkout cobra: ele não é copiado para",
+    "nenhum outro lugar."
+  ],
+
+  "currency": "BRL",
+
+  "courses": [
+    {
+      "slug": "alfabetizacao",
+      "code": "01",
+      "n": 1,
+      "titlePt": "Alfabetização em Hebraico",
+      "levelPt": "Do zero",
+      "cefr": null,
+      "status": "available",
+      "engine": "alfabetizacao",
+      "modulesFrom": "alfabetizacao",
+      "taglinePt": "As 22 letras, os sinais de vogal e a leitura de palavras inteiras.",
+      "summaryPt": "O curso que resolve o problema que trava todo mundo: você olha para o hebraico e não sabe por onde começar. Aqui você aprende letra por letra, na ordem em que elas rendem mais, e lê uma palavra de verdade já na terceira lição.",
+      "outcomesPt": [
+        "Reconhecer as 22 letras — incluindo as cinco formas finais — fora de ordem e fora de contexto.",
+        "Ler qualquer palavra com nikud, mesmo sem saber o que ela significa.",
+        "Ler sem nikud as palavras mais frequentes, que é como o hebraico realmente aparece.",
+        "Escrever as letras à mão, na ordem certa dos traços, em letra de forma e cursiva.",
+        "Decodificar placas, rótulos e cardápios — o hebraico como ele aparece na rua."
+      ],
+      "forWhomPt": [
+        "Quem nunca viu o alfabeto hebraico e acha que não vai conseguir.",
+        "Quem já tentou aprender e parou na primeira parede de letras iguais.",
+        "Quem vai viajar, tem família israelense ou lê por motivo religioso e quer decodificar sozinho."
+      ],
+      "requiresPurchase": true,
+      "price": { "brl": 147, "listBrl": 247, "installments": 12, "pixDiscountPct": 10 },
+      "accessMonths": 12
+    },
+
+    {
+      "slug": "hebraico-a1",
+      "code": "02",
+      "n": 2,
+      "titlePt": "Hebraico A1",
+      "levelPt": "Iniciante",
+      "cefr": "A1",
+      "status": "soon",
+      "engine": null,
+      "taglinePt": "Falar de si, perguntar o básico e entender uma resposta curta.",
+      "summaryPt": "Depois de ler, falar. O A1 pega a leitura que você já tem e põe vocabulário e gramática por cima: presente dos verbos, gênero e número, as perguntas que resolvem o dia.",
+      "outcomesPt": [
+        "Se apresentar, dizer de onde é, o que faz e com quem mora.",
+        "Conjugar verbos no presente nos quatro padrões e reconhecer a raiz de três letras.",
+        "Pedir, comprar, perguntar preço e horário.",
+        "Entender frases curtas ditas devagar por um falante nativo."
+      ],
+      "forWhomPt": [
+        "Quem terminou a Alfabetização ou já lê hebraico com nikud."
+      ],
+      "requiresPurchase": true,
+      "price": { "brl": 297, "listBrl": 397, "installments": 12, "pixDiscountPct": 10 },
+      "accessMonths": 12,
+      "modules": [
+        { "n": 1, "titlePt": "Quem é você", "subPt": "Pronomes, gênero e a frase sem verbo" },
+        { "n": 2, "titlePt": "A raiz de três letras", "subPt": "O mecanismo que faz o hebraico inteiro" },
+        { "n": 3, "titlePt": "Presente", "subPt": "Os quatro padrões, um de cada vez" },
+        { "n": 4, "titlePt": "Números, horas e dias", "subPt": "Marcar, combinar, chegar na hora" },
+        { "n": 5, "titlePt": "Na rua", "subPt": "Comprar, pedir, perguntar o caminho" },
+        { "n": 6, "titlePt": "Sem nikud, de verdade", "subPt": "Ler o que está escrito nas placas" }
+      ]
+    },
+
+    {
+      "slug": "hebraico-a2",
+      "code": "03",
+      "n": 3,
+      "titlePt": "Hebraico A2",
+      "levelPt": "Básico",
+      "cefr": "A2",
+      "status": "soon",
+      "engine": null,
+      "taglinePt": "Contar o que aconteceu, dizer o que vai fazer, sustentar uma conversa.",
+      "summaryPt": "O nível em que o hebraico deixa de ser frases soltas. Passado e futuro, conectivos, e texto de verdade — notícia curta, mensagem, recado.",
+      "outcomesPt": [
+        "Contar o que você fez ontem e o que pretende fazer amanhã.",
+        "Ligar ideias: porque, então, mas, quando, se.",
+        "Ler um texto curto de jornal ou uma mensagem sem transliteração.",
+        "Escrever um parágrafo sobre a sua rotina."
+      ],
+      "forWhomPt": ["Quem concluiu o A1 ou equivalente."],
+      "requiresPurchase": true,
+      "price": { "brl": 297, "listBrl": 397, "installments": 12, "pixDiscountPct": 10 },
+      "accessMonths": 12,
+      "modules": [
+        { "n": 1, "titlePt": "Passado", "subPt": "O que aconteceu, e quem fez" },
+        { "n": 2, "titlePt": "Futuro", "subPt": "Planos, promessas e o imperativo" },
+        { "n": 3, "titlePt": "Ligando ideias", "subPt": "Conjunções e ordem da frase" },
+        { "n": 4, "titlePt": "Texto real", "subPt": "Notícia curta, mensagem, recado" },
+        { "n": 5, "titlePt": "Escrever", "subPt": "Do bilhete ao parágrafo" }
+      ]
+    },
+
+    {
+      "slug": "hebraico-b1",
+      "code": "04",
+      "n": 4,
+      "titlePt": "Hebraico B1",
+      "levelPt": "Intermediário",
+      "cefr": "B1",
+      "status": "soon",
+      "engine": null,
+      "taglinePt": "Opinar, discordar e entender hebraico falado em velocidade normal.",
+      "summaryPt": "O nível que separa quem estuda hebraico de quem usa hebraico: opinião, argumento, registro formal e informal, e escuta sem legenda.",
+      "outcomesPt": [
+        "Defender um ponto de vista e entender o contrário.",
+        "Usar os binyanim menos óbvios — hif'il, hitpa'el, nif'al — sem decorar tabela.",
+        "Acompanhar um áudio em velocidade normal.",
+        "Escrever um e-mail formal e uma mensagem informal, e saber a diferença."
+      ],
+      "forWhomPt": ["Quem concluiu o A2 ou já se vira em conversas simples."],
+      "requiresPurchase": true,
+      "price": { "brl": 397, "listBrl": 497, "installments": 12, "pixDiscountPct": 10 },
+      "accessMonths": 12,
+      "modules": [
+        { "n": 1, "titlePt": "Os binyanim que faltavam", "subPt": "Hif'il, hitpa'el, nif'al" },
+        { "n": 2, "titlePt": "Opinião e argumento", "subPt": "Concordar, discordar, justificar" },
+        { "n": 3, "titlePt": "Registro", "subPt": "Formal, informal e o que soa estranho" },
+        { "n": 4, "titlePt": "Escuta longa", "subPt": "Áudio em velocidade normal, sem legenda" },
+        { "n": 5, "titlePt": "Escrita", "subPt": "E-mail, carta, mensagem" }
+      ]
+    }
+  ]
+}

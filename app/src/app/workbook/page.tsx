@@ -38,7 +38,7 @@ export default function WorkbookPage() {
         </p>
       </Card>
 
-      <LinkButton href="/" variant="secondary" className="justify-self-start">Voltar</LinkButton>
+      <LinkButton href="/meu-hebraico" variant="secondary" className="justify-self-start">Voltar</LinkButton>
     </div>
   );
 }
