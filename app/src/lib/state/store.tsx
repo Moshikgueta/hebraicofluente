@@ -10,13 +10,17 @@
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode
 } from 'react';
-import { EMPTY_STATE, type Achievement, type LearnerState, type Onboarding, type ProgressStore } from './types';
+import {
+  EMPTY_STATE, type Achievement, type Confusion, type LearnerState, type Onboarding,
+  type ProgressStore, type Skill
+} from './types';
 import { LocalProgressStore, persistenceAvailable } from './local';
 import { SupabaseProgressStore, supabaseConfigured } from './supabase';
 import {
-  ANSWER_UNITS, applyPractice, awardXp, completeStage, courseProgress, displayStreak,
-  dueItems, goalTarget, lettersMastered, recordAnswer, recordCheckpoint, recordQuiz,
-  syncAchievements, today, weakLetters, XP
+  ANSWER_UNITS, applyPractice, awardXp, clearConfusion, completeStage, courseProgress,
+  displayStreak, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
+  recordCheckpoint, recordConfusion, recordQuiz, recordSkill, syncAchievements, today,
+  topConfusions, weakLetters, XP
 } from './rules';
 import { track } from '@/lib/analytics';
 
@@ -43,9 +47,21 @@ type Ctx = {
   pending: Achievement[];
   clearPending: () => void;
   /* actions */
+  /** The confusions this learner actually has, worst first. */
+  confusions: Confusion[];
   setOnboarding: (o: Onboarding) => void;
   finishStage: (letterId: string, stage: number, units?: number) => void;
-  answer: (args: { itemId: string; letterId: string; correct: boolean }) => void;
+  /**
+   * One answer, with everything the adaptive layer needs to learn from it:
+   * which skill it tested, and — on a miss — which wrong option was chosen, so
+   * ד answered for ר is recorded as that pair rather than as a generic slip.
+   */
+  answer: (args: {
+    itemId: string; letterId: string; correct: boolean;
+    skill?: Skill; expected?: string; chosen?: string;
+  }) => void;
+  /** Record a moment that can only happen once, and say so. */
+  markFirst: (id: string) => void;
   finishQuiz: (letterId: string, score: number) => void;
   finishCheckpoint: (id: string, score: number) => void;
   finishReview: (score: number) => void;
@@ -111,19 +127,37 @@ export function ProgressProvider({
     }
   }, [commit, state]);
 
-  const answer = useCallback(({ itemId, letterId, correct }: { itemId: string; letterId: string; correct: boolean }) => {
+  const answer = useCallback((args: {
+    itemId: string; letterId: string; correct: boolean;
+    skill?: Skill; expected?: string; chosen?: string;
+  }) => {
+    const { itemId, letterId, correct, skill, expected, chosen } = args;
     const d = today();
-    let next = recordAnswer(state, itemId, letterId, correct, d);
+    let next = recordAnswer(state, itemId, letterId, correct, d, skill);
     /* A miss always creates the review entry, even the first time. */
     if (!correct && !next.srs[itemId]) {
       next = { ...next, srs: { ...next.srs, [itemId]: {
-        itemId, letterId, box: 0, misses: 1, hits: 0, dueOn: d, lastSeen: d
+        itemId, letterId, box: 0, misses: 1, hits: 0, dueOn: d, lastSeen: d, skill
       } } };
+    }
+    if (skill) next = recordSkill(next, letterId, skill, correct, d);
+    /* The chosen option is the whole point: a wrong answer that names WHICH
+       letter was picked instead turns a generic miss into a drillable pair. */
+    if (expected && chosen) {
+      next = correct
+        ? clearConfusion(next, expected, chosen)
+        : recordConfusion(next, expected, chosen, d);
     }
     next = applyPractice(next, d, { answered: 1, units: ANSWER_UNITS });
     commit(next);
-    track('exercise_answered', { letterId, itemId, correct });
-    if (!correct) track('exercise_wrong', { letterId, itemId });
+    track('exercise_answered', { letterId, itemId, correct, skill });
+    if (!correct) track('exercise_wrong', { letterId, itemId, chosen });
+  }, [commit, state]);
+
+  const doMarkFirst = useCallback((id: string) => {
+    if (state.firsts[id]) return;
+    commit(markFirst(state, id));
+    track('first_reached', { id });
   }, [commit, state]);
 
   const finishQuiz = useCallback((letterId: string, score: number) => {
@@ -182,14 +216,15 @@ export function ProgressProvider({
       weak: weakLetters(state, day),
       goalUnits: state.days[day]?.units ?? 0,
       goalTargetToday: goalTarget(goal),
+      confusions: topConfusions(state),
       pending,
       clearPending: () => setPending([]),
-      setOnboarding, finishStage, answer, finishQuiz, finishCheckpoint,
-      finishReview, finishFinalChallenge, remember, reset
+      setOnboarding, finishStage, answer, markFirst: doMarkFirst, finishQuiz,
+      finishCheckpoint, finishReview, finishFinalChallenge, remember, reset
     };
   }, [
     state, ready, persistent, day, totalLetters, extraKey, pending,
-    setOnboarding, finishStage, answer, finishQuiz, finishCheckpoint,
+    setOnboarding, finishStage, answer, doMarkFirst, finishQuiz, finishCheckpoint,
     finishReview, finishFinalChallenge, remember, reset
   ]);
 

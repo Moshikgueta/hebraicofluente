@@ -6,8 +6,10 @@
  * from the React store. */
 
 import type {
-  Achievement, CheckpointProgress, DayRecord, LearnerState, LessonProgress, SrsItem
+  Achievement, CheckpointProgress, Confusion, DayRecord, LearnerState, LessonProgress,
+  LetterSkills, Skill, SkillStat, SrsItem
 } from './types';
+import { SKILLS } from './types';
 
 export const today = (d: Date = new Date()): string => {
   /* Local date, not UTC: a learner practising at 22h in São Paulo must get
@@ -200,15 +202,166 @@ export function recordCheckpoint(
   return next;
 }
 
+/* ── mastery, per skill ─────────────────────────────────────────────────
+   Five coarse states, and no percentage anywhere. "Forte" means four clean
+   answers in a row on that skill, which is a claim the data supports; "93,4%
+   de domínio" is a claim nothing supports, and a learner who is told it and
+   then fails the next question stops believing the whole screen.
+
+   `revisar` is deliberately reachable FROM `forte`: a letter that was strong
+   and has just been missed is the most valuable thing the review can offer, and
+   a model that cannot express "was strong, slipped" cannot ask for it. */
+export type MasteryLevel = 'novo' | 'aprendendo' | 'praticando' | 'forte' | 'revisar';
+
+export const MASTERY_LABEL: Record<MasteryLevel, string> = {
+  novo: 'ainda não visto',
+  aprendendo: 'aprendendo',
+  praticando: 'praticando',
+  forte: 'forte',
+  revisar: 'precisa de revisão'
+};
+
+export const emptySkill = (): SkillStat => ({ hits: 0, misses: 0, streak: 0, lastOn: null });
+
+export function skillLevel(stat: SkillStat | undefined): MasteryLevel {
+  if (!stat || stat.hits + stat.misses === 0) return 'novo';
+  /* A miss that has not yet been answered correctly again. One slip is enough:
+     the cost of offering an extra review is a few seconds, the cost of skipping
+     a needed one is a letter the learner keeps getting wrong. */
+  if (stat.streak === 0 && stat.misses > 0) return 'revisar';
+  if (stat.streak >= 4) return 'forte';
+  if (stat.streak >= 2) return 'praticando';
+  return 'aprendendo';
+}
+
+/** The letter's weakest skill that has any evidence — what to practise next. */
+export function weakestSkill(skills: LetterSkills | undefined): Skill | null {
+  if (!skills) return null;
+  const RANK: Record<MasteryLevel, number> = {
+    revisar: 0, aprendendo: 1, praticando: 2, forte: 3, novo: 4
+  };
+  let best: { skill: Skill; rank: number } | null = null;
+  for (const s of SKILLS) {
+    const lvl = skillLevel(skills[s]);
+    if (lvl === 'novo') continue;
+    const rank = RANK[lvl];
+    if (!best || rank < best.rank) best = { skill: s, rank };
+  }
+  return best?.skill ?? null;
+}
+
+/**
+ * One level for the whole letter, for the places that can only show one thing.
+ *
+ * It is the WEAKEST skill with evidence, not the average. Averaging would let a
+ * learner who reads ק perfectly and cannot hear it at all read as "praticando",
+ * and the course would move on — which is the exact failure the per-skill model
+ * exists to prevent.
+ */
+export function letterMastery(state: LearnerState, letterId: string): MasteryLevel {
+  const skills = state.skills[letterId];
+  if (!skills) return 'novo';
+  const levels = SKILLS.map(s => skillLevel(skills[s])).filter(l => l !== 'novo');
+  if (!levels.length) return 'novo';
+  if (levels.includes('revisar')) return 'revisar';
+  if (levels.includes('aprendendo')) return 'aprendendo';
+  if (levels.includes('praticando')) return 'praticando';
+  return 'forte';
+}
+
+export function recordSkill(
+  state: LearnerState, letterId: string, skill: Skill, correct: boolean, day: string
+): LearnerState {
+  const letter = state.skills[letterId] ?? {};
+  const prev = letter[skill] ?? emptySkill();
+  const stat: SkillStat = {
+    hits: prev.hits + (correct ? 1 : 0),
+    misses: prev.misses + (correct ? 0 : 1),
+    streak: correct ? prev.streak + 1 : 0,
+    lastOn: day
+  };
+  return { ...state, skills: { ...state.skills, [letterId]: { ...letter, [skill]: stat } } };
+}
+
+/* ── confusions ─────────────────────────────────────────────────────────
+   `confusableWith` in the content says which letters TEND to be mixed up. This
+   says which ones THIS learner mixes up, which is a different and more useful
+   fact — and it costs nothing to collect, because the player already knows
+   which wrong option was tapped. */
+
+export const confusionKey = (correct: string, chosen: string): string => `${correct}>${chosen}`;
+
+export function recordConfusion(
+  state: LearnerState, correct: string, chosen: string, day: string
+): LearnerState {
+  if (!correct || !chosen || correct === chosen) return state;
+  const key = confusionKey(correct, chosen);
+  const prev = state.confusions[key];
+  const next: Confusion = {
+    correct, chosen, n: (prev?.n ?? 0) + 1, lastOn: day
+  };
+  return { ...state, confusions: { ...state.confusions, [key]: next } };
+}
+
+/**
+ * The pairs worth drilling, worst first.
+ *
+ * Both directions of a pair count as one confusion: a learner who answers ר for
+ * ד and ד for ר does not have two problems, they have one, and drilling it once
+ * in both directions is the fix.
+ */
+export function topConfusions(state: LearnerState, limit = 3): Confusion[] {
+  const merged = new Map<string, Confusion>();
+  for (const c of Object.values(state.confusions)) {
+    const pairKey = [c.correct, c.chosen].sort().join('|');
+    const prev = merged.get(pairKey);
+    if (!prev) merged.set(pairKey, { ...c });
+    else merged.set(pairKey, {
+      ...(prev.n >= c.n ? prev : c),
+      n: prev.n + c.n,
+      lastOn: prev.lastOn > c.lastOn ? prev.lastOn : c.lastOn
+    });
+  }
+  return [...merged.values()]
+    .filter(c => c.n >= 2)          // one slip is noise; twice is a pattern
+    .sort((a, b) => b.n - a.n || b.lastOn.localeCompare(a.lastOn))
+    .slice(0, limit);
+}
+
+/** A confusion is settled once the learner answers it right twice running. */
+export function clearConfusion(state: LearnerState, correct: string, chosen: string): LearnerState {
+  const a = confusionKey(correct, chosen), b = confusionKey(chosen, correct);
+  if (!state.confusions[a] && !state.confusions[b]) return state;
+  const confusions = { ...state.confusions };
+  for (const key of [a, b]) {
+    const c = confusions[key];
+    if (!c) continue;
+    if (c.n <= 1) delete confusions[key];
+    else confusions[key] = { ...c, n: c.n - 1 };
+  }
+  return { ...state, confusions };
+}
+
+/* ── firsts ─────────────────────────────────────────────────────────────
+   A moment, not a badge: it happens once, it is dated, and the course can say
+   so out loud when it does. */
+export function markFirst(state: LearnerState, id: string): LearnerState {
+  if (state.firsts[id]) return state;
+  return { ...state, firsts: { ...state.firsts, [id]: new Date().toISOString() } };
+}
+
+export const hasFirst = (state: LearnerState, id: string): boolean => !!state.firsts[id];
+
 /* ── spaced review (Leitner) ────────────────────────────────────────────── */
 
 const INTERVALS = [1, 2, 4, 8, 16] as const;
 
 export function recordAnswer(
-  state: LearnerState, itemId: string, letterId: string, correct: boolean, day: string
+  state: LearnerState, itemId: string, letterId: string, correct: boolean, day: string,
+  skill?: Skill
 ): LearnerState {
   const prev: SrsItem = state.srs[itemId] ?? {
-    itemId, letterId, box: 0, misses: 0, hits: 0, dueOn: day, lastSeen: day
+    itemId, letterId, box: 0, misses: 0, hits: 0, dueOn: day, lastSeen: day, skill
   };
 
   /* A correct answer promotes one box; a miss drops to box 0. Getting it right
@@ -219,6 +372,7 @@ export function recordAnswer(
   const box = (correct ? Math.min(4, prev.box + 1) : 0) as SrsItem['box'];
   const item: SrsItem = {
     ...prev, box,
+    skill: prev.skill ?? skill,
     hits: prev.hits + (correct ? 1 : 0),
     misses: prev.misses + (correct ? 0 : 1),
     lastSeen: day,

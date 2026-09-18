@@ -7,7 +7,12 @@
  * progress", never to a broken page. */
 
 import { EMPTY_STATE, type LearnerState, type ProgressStore } from './types';
+import { migrate } from './migrate';
 
+/* The key is a name, not a version number, and it must never change: it is the
+   only way to find the progress a learner already has. Shape changes are
+   handled by migrate(), not by writing to a second key — which would leave the
+   old one behind, full of work, unreadable. */
 const KEY = 'hebraico-fluente-v1';
 
 export class LocalProgressStore implements ProgressStore {
@@ -15,9 +20,7 @@ export class LocalProgressStore implements ProgressStore {
     try {
       const raw = window.localStorage.getItem(KEY);
       if (!raw) return EMPTY_STATE;
-      const parsed = JSON.parse(raw) as LearnerState;
-      if (parsed.version !== 1) return EMPTY_STATE;
-      return { ...EMPTY_STATE, ...parsed };
+      return migrate(JSON.parse(raw));
     } catch {
       return EMPTY_STATE;
     }

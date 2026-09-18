@@ -17,6 +17,9 @@ export type EventName =
   | 'checkpoint_started' | 'checkpoint_completed'
   | 'streak_updated' | 'achievement_unlocked'
   | 'workbook_opened'
+  | 'first_reached'
+  | 'gym_started' | 'gym_completed'
+  | 'trace_completed' | 'trace_retried'
   | 'course_completed' | 'next_course_clicked';
 
 export type EventProps = {
@@ -31,6 +34,16 @@ export type EventProps = {
   reason?: string;
   audioId?: string;
   pages?: string;
+  /** Which of the five skills an answer exercised. */
+  skill?: string;
+  /** The wrong option a learner picked — a glyph, never free text. */
+  chosen?: string;
+  /** A one-time milestone id, e.g. 'leitura-sem-translit'. */
+  id?: string;
+  /** A reading-gym mode id. */
+  mode?: string;
+  /** Seconds, for the timed modes. */
+  seconds?: number;
 };
 
 export type LearningEvent = { name: EventName; props: EventProps; at: number };

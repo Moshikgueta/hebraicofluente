@@ -13,6 +13,7 @@
  * To turn it on: add the package, set the two env vars, run schema.sql. */
 
 import { EMPTY_STATE, type LearnerState, type ProgressStore } from './types';
+import { migrate } from './migrate';
 
 const URL_ENV = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const KEY_ENV = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -60,7 +61,9 @@ export class SupabaseProgressStore implements ProgressStore {
     const uid = await this.#userId();
     if (!c || !uid) return EMPTY_STATE;
     const { data } = await c.from('learner_state').select('state').eq('user_id', uid).maybeSingle();
-    return data?.state ? { ...EMPTY_STATE, ...data.state } : EMPTY_STATE;
+    /* Through the same migration as localStorage: a row written by an older
+       build of the app is exactly the case migrate() exists for. */
+    return data?.state ? migrate(data.state) : EMPTY_STATE;
   }
 
   async save(state: LearnerState): Promise<void> {
