@@ -19,7 +19,7 @@ import { SupabaseProgressStore, supabaseConfigured } from './supabase';
 import {
   ANSWER_UNITS, applyPractice, awardXp, clearConfusion, completeStage, courseProgress,
   displayStreak, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
-  recordCheckpoint, recordConfusion, recordQuiz, recordSkill, syncAchievements, today,
+  recordCheckpoint, recordConfusion, recordGym, recordQuiz, recordSkill, syncAchievements, today,
   topConfusions, weakLetters, XP
 } from './rules';
 import { track } from '@/lib/analytics';
@@ -71,6 +71,8 @@ type Ctx = {
    * cannot actually produce.
    */
   recordWriting: (letterId: string, score: number) => void;
+  /** One finished reading-gym run: its score and how long it took. */
+  finishGym: (modeId: string, score: number, seconds: number) => void;
   finishQuiz: (letterId: string, score: number) => void;
   finishCheckpoint: (id: string, score: number) => void;
   finishReview: (score: number) => void;
@@ -175,6 +177,16 @@ export function ProgressProvider({
     track('exercise_answered', { letterId, skill: 'escrever', correct: score >= 0.5 });
   }, [commit, state]);
 
+  const finishGym = useCallback((modeId: string, score: number, seconds: number) => {
+    const d = today();
+    /* XP for a gym run is the review award: it is the same kind of work, and
+       paying more for it would turn the gym into the cheapest way to farm. */
+    let next = recordGym(state, modeId, score, seconds, d);
+    next = awardXp(next, d, XP.review);
+    commit(next);
+    track('gym_completed', { mode: modeId, score, seconds });
+  }, [commit, state]);
+
   const doMarkFirst = useCallback((id: string) => {
     if (state.firsts[id]) return;
     commit(markFirst(state, id));
@@ -240,12 +252,12 @@ export function ProgressProvider({
       confusions: topConfusions(state),
       pending,
       clearPending: () => setPending([]),
-      setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting,
+      setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, remember, reset
     };
   }, [
     state, ready, persistent, day, totalLetters, extraKey, pending,
-    setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishQuiz,
+    setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, remember, reset
   ]);
 

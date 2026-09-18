@@ -33,8 +33,27 @@ const NAV = [
   { href: '/', label: 'Hoje', icon: '◉', desc: 'O que fazer agora' },
   { href: '/mapa', label: 'Mapa', icon: '◎', desc: 'O caminho inteiro' },
   { href: '/revisao', label: 'Revisão', icon: '↻', desc: 'O que deu trabalho' },
+  /* The gym is a destination, not a feature buried in a screen: a learner who
+     has finished the alphabet has nowhere else to go, and one who wants to
+     drill only the vowels should not have to find the door. */
+  { href: '/academia', label: 'Praticar', icon: '◈', desc: 'Treinar o que quiser' },
   { href: '/conquistas', label: 'Conquistas', icon: '◆', desc: 'Seus números' }
 ] as const;
+
+/**
+ * Is this nav item the page we are on?
+ *
+ * The export uses directory-style URLs (`trailingSlash: true`), so the browser
+ * reports `/mapa/` while the link says `/mapa` — and a plain equality check
+ * therefore matched nothing but the home page. Every screen except the
+ * dashboard was rendering with no item marked current, in the sidebar and in
+ * the bottom bar, and with no `aria-current` for a screen reader either.
+ */
+export function isActive(pathname: string | null, href: string): boolean {
+  const here = (pathname ?? '/').replace(/\/+$/, '') || '/';
+  const target = href.replace(/\/+$/, '') || '/';
+  return here === target;
+}
 
 export function AppShell({ children }: { children: ReactNode }) {
   const p = useProgress();
@@ -106,7 +125,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
         <nav aria-label="Navegação principal">
           <ul className="grid gap-1">
             {NAV.map(item => {
-              const active = pathname === item.href;
+              const active = isActive(pathname, item.href);
               return (
                 <li key={item.href}>
                   <Link
@@ -190,16 +209,16 @@ function BottomBar({ pathname }: { pathname: string | null }) {
                  bg-[color-mix(in_srgb,var(--paper)_94%,transparent)] backdrop-blur-md
                  pb-[env(safe-area-inset-bottom)]"
     >
-      <ul className="mx-auto w-full max-w-[680px] px-2 flex items-stretch justify-around">
+      <ul className="mx-auto w-full max-w-[680px] px-1 flex items-stretch justify-around">
         {NAV.map(item => {
-          const active = pathname === item.href;
+          const active = isActive(pathname, item.href);
           return (
             <li key={item.href} className="flex-1">
               <Link
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={`relative h-[60px] flex flex-col items-center justify-center gap-1
-                  font-ui text-[11px] transition-colors
+                  font-ui text-[10.5px] leading-none text-center px-0.5 transition-colors
                   ${active ? 'text-[var(--teal-band)] font-semibold' : 'text-ink-muted'}`}
               >
                 <span aria-hidden className="text-[15px] leading-none">{item.icon}</span>

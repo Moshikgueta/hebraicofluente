@@ -145,6 +145,32 @@ export type LearnerState = {
    *  no transliteration on screen, the first letter written from memory. Stored
    *  as ISO timestamps so each can only happen once. */
   firsts: Record<string, string>;
+  /** One record per reading-gym mode. See `GymRecord`. */
+  gym: Record<string, GymRecord>;
+};
+
+/**
+ * What a reading-gym mode remembers between sessions.
+ *
+ * `previousSeconds` exists so the result screen can say "da última vez, 41 s"
+ * AFTER this run has already been written — otherwise the comparison is
+ * against the run the learner just finished, which is always a tie.
+ *
+ * The times are the learner's own and nothing else. There is no target and no
+ * average: "you were faster than last time" is motivating, "you are slower
+ * than most people" is a reason to stop.
+ */
+export type GymRecord = {
+  runs: number;
+  /** Best score, 0–1. */
+  best: number | null;
+  /** Best time in seconds, for the timed modes only. */
+  bestSeconds: number | null;
+  /** How long the most recent run took. */
+  lastSeconds: number | null;
+  /** How long the run BEFORE that took — what the result screen compares to. */
+  previousSeconds: number | null;
+  lastOn: string;
 };
 
 export const EMPTY_STATE: LearnerState = {
@@ -161,7 +187,8 @@ export const EMPTY_STATE: LearnerState = {
   finalChallenge: { best: null, completedAt: null },
   skills: {},
   confusions: {},
-  firsts: {}
+  firsts: {},
+  gym: {}
 };
 
 export interface ProgressStore {

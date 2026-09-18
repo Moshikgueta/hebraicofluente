@@ -20,7 +20,7 @@
 import { EMPTY_STATE, STATE_VERSION, type LearnerState } from './types';
 
 /** v1: everything before per-skill mastery. */
-type V1 = Omit<LearnerState, 'version' | 'skills' | 'confusions' | 'firsts'> & { version: 1 };
+type V1 = Omit<LearnerState, 'version' | 'skills' | 'confusions' | 'firsts' | 'gym'> & { version: 1 };
 
 const isObject = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -39,7 +39,7 @@ const isObject = (v: unknown): v is Record<string, unknown> =>
  * achievements and the final challenge all carry over by value.
  */
 function v1ToV2(s: V1): LearnerState {
-  return { ...s, version: 2, skills: {}, confusions: {}, firsts: {} };
+  return { ...s, version: 2, skills: {}, confusions: {}, firsts: {}, gym: {} };
 }
 
 /**
@@ -75,6 +75,9 @@ export function migrate(raw: unknown): LearnerState {
     skills: merged.skills ?? {},
     confusions: merged.confusions ?? {},
     firsts: merged.firsts ?? {},
+    /* Added to v2 after it shipped. A save written between the two has no
+       such key, and every reader assumes the map exists. */
+    gym: merged.gym ?? {},
     streak: merged.streak ?? { current: 0, longest: 0, lastDay: null },
     finalChallenge: merged.finalChallenge ?? { best: null, completedAt: null }
   };

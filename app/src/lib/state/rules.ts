@@ -6,8 +6,8 @@
  * from the React store. */
 
 import type {
-  Achievement, CheckpointProgress, Confusion, DayRecord, LearnerState, LessonProgress,
-  LetterSkills, Skill, SkillStat, SrsItem
+  Achievement, CheckpointProgress, Confusion, DayRecord, GymRecord, LearnerState,
+  LessonProgress, LetterSkills, Skill, SkillStat, SrsItem
 } from './types';
 import { SKILLS } from './types';
 
@@ -340,6 +340,27 @@ export function clearConfusion(state: LearnerState, correct: string, chosen: str
     else confusions[key] = { ...c, n: c.n - 1 };
   }
   return { ...state, confusions };
+}
+
+/* ── the reading gym ────────────────────────────────────────────────────
+   One record per mode. The time comparison is the learner against their own
+   last run and nothing else — no target, no average, no other learners. */
+export function recordGym(
+  state: LearnerState, modeId: string, score: number, seconds: number, day: string
+): LearnerState {
+  const prev = state.gym[modeId];
+  const rec: GymRecord = {
+    runs: (prev?.runs ?? 0) + 1,
+    best: prev?.best == null ? score : Math.max(prev.best, score),
+    bestSeconds: prev?.bestSeconds == null ? seconds : Math.min(prev.bestSeconds, seconds),
+    /* The run before this one. Written here rather than derived on the result
+       screen, which by then is looking at the run that just finished and would
+       always compare it with itself. */
+    previousSeconds: prev?.lastSeconds ?? null,
+    lastSeconds: seconds,
+    lastOn: day
+  };
+  return { ...state, gym: { ...state.gym, [modeId]: rec } };
 }
 
 /* ── firsts ─────────────────────────────────────────────────────────────

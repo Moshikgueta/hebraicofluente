@@ -9,7 +9,7 @@ import { migrate } from '@/lib/state/migrate';
 import { EMPTY_STATE, type LearnerState } from '@/lib/state/types';
 import {
   clearConfusion, confusionKey, letterMastery, recordAnswer, recordConfusion,
-  recordSkill, skillLevel, topConfusions, weakestSkill
+  recordGym, recordSkill, skillLevel, topConfusions, weakestSkill
 } from '@/lib/state/rules';
 
 /* A v1 save as an older build actually wrote it: no skills, no confusions, no
@@ -198,5 +198,36 @@ describe('the SRS still behaves as it did', () => {
     } } };
     s = recordAnswer(s, 'mem-rec-0', 'mem', true, '2026-01-02', 'rec');
     expect(s.srs['mem-rec-0']?.skill).toBe('rec');
+  });
+});
+
+describe('the reading gym record', () => {
+  const day = '2026-03-01';
+
+  it('counts runs and keeps the best of each thing it measures', () => {
+    let s = recordGym(EMPTY_STATE, 'relogio', 0.8, 62, day);
+    s = recordGym(s, 'relogio', 0.6, 48, day);
+    const rec = s.gym['relogio']!;
+    expect(rec.runs).toBe(2);
+    expect(rec.best).toBe(0.8);        // best SCORE, not the latest
+    expect(rec.bestSeconds).toBe(48);  // best TIME is the smallest
+  });
+
+  it('remembers the run before this one, so the comparison is not with itself', () => {
+    let s = recordGym(EMPTY_STATE, 'relogio', 1, 70, day);
+    expect(s.gym['relogio']!.previousSeconds).toBeNull();   // nothing to compare yet
+    s = recordGym(s, 'relogio', 1, 55, day);
+    expect(s.gym['relogio']!.previousSeconds).toBe(70);
+    expect(s.gym['relogio']!.lastSeconds).toBe(55);
+    s = recordGym(s, 'relogio', 1, 59, day);
+    expect(s.gym['relogio']!.previousSeconds).toBe(55);
+    expect(s.gym['relogio']!.bestSeconds).toBe(55);         // a slower run is still kept
+  });
+
+  it('keeps modes apart', () => {
+    let s = recordGym(EMPTY_STATE, 'letras', 1, 30, day);
+    s = recordGym(s, 'vogais', 0.5, 90, day);
+    expect(s.gym['letras']!.runs).toBe(1);
+    expect(s.gym['vogais']!.bestSeconds).toBe(90);
   });
 });

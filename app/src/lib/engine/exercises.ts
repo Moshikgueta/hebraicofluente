@@ -121,6 +121,13 @@ export type BuildOptions = {
   seed?: string;
   /** Restrict to the generators that train these skills. */
   skills?: readonly Skill[];
+  /**
+   * Exactly these generators, in this order. Takes precedence over `skills`.
+   * The reading gym uses it: a mode is defined by the exercises it contains
+   * ("sílabas"), not by a skill taxonomy ("ler"), and round-tripping one
+   * through the other loses the distinction.
+   */
+  gens?: readonly Gen[];
 };
 
 function contextFor(L: Letter, history: Letter[]): Ctx {
@@ -131,7 +138,10 @@ function contextFor(L: Letter, history: Letter[]): Ctx {
   };
 }
 
-const generatorsFor = (skills: readonly Skill[] | undefined): readonly Gen[] => {
+const generatorsFor = (
+  skills: readonly Skill[] | undefined, gens?: readonly Gen[]
+): readonly Gen[] => {
+  if (gens?.length) return gens;
   if (!skills?.length) return LESSON_GENERATORS;
   const wanted = new Set(skills.flatMap(s => BY_SKILL[s] ?? []));
   /* Keep LESSON_GENERATORS' order — it is the one that alternates gestures. */
@@ -248,8 +258,8 @@ export function spread(list: Exercise[]): Exercise[] {
 export function buildLessonQuiz(
   L: Letter, history: Letter[], opts: BuildOptions = {}
 ): Exercise[] {
-  const { audioAvailable = false, count = 8, seed = `quiz-${L.id}`, skills } = opts;
-  return spread(fill([L], history, generatorsFor(skills), rng(seed), count, audioAvailable, 4));
+  const { audioAvailable = false, count = 8, seed = `quiz-${L.id}`, skills, gens } = opts;
+  return spread(fill([L], history, generatorsFor(skills, gens), rng(seed), count, audioAvailable, 4));
 }
 
 /** A checkpoint: the whole module, one generator per letter per round. */
@@ -258,10 +268,10 @@ export function buildCheckpoint(
 ): Exercise[] {
   const {
     audioAvailable = false, count = 12,
-    seed = `cp-${letters.map(l => l.id).join('-')}`, skills
+    seed = `cp-${letters.map(l => l.id).join('-')}`, skills, gens: only
   } = opts;
   const rand = rng(seed);
-  const gens = generatorsFor(skills);
+  const gens = generatorsFor(skills, only);
   const out: Exercise[] = [];
   const seen = new Set<string>();
 
@@ -301,14 +311,14 @@ export function buildReview(
 ): Exercise[] {
   const {
     audioAvailable = false, count = 5,
-    seed = `rev-${weak.join('-')}-${all.length}`, skills
+    seed = `rev-${weak.join('-')}-${all.length}`, skills, gens: only
   } = opts;
   const rand = rng(seed);
   const target = weak
     .map(id => all.find(l => l.id === id))
     .filter((l): l is Letter => !!l);
   const pool = target.length ? target : all;
-  const gens = generatorsFor(skills);
+  const gens = generatorsFor(skills, only);
   const out: Exercise[] = [];
   const seen = new Set<string>();
 
