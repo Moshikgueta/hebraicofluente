@@ -57,16 +57,70 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Não só "tem ou não tem": DIZ o que está errado.
+      #
+      # A tela de segredos do GitHub tem duas abas, *Secrets* e *Variables*, e
+      # colar na errada é o engano mais comum que existe ali — o valor fica
+      # salvo, visível, com o nome certo, e o workflow não enxerga. Como
+      # `vars.X` e `secrets.X` são espaços separados, dá para detectar
+      # exatamente esse caso e dizer o que fazer.
+      #
+      # Nada aqui imprime valor de segredo: só presença e comprimento, que é o
+      # bastante para achar um token truncado na hora de colar.
       - name: Há credencial da Cloudflare?
         id: guard
         env:
           TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          TOKEN_AS_VAR: ${{ vars.CLOUDFLARE_API_TOKEN }}
+          ACCT_AS_VAR: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          if [ -z "$TOKEN" ]; then
-            echo "::warning::CLOUDFLARE_API_TOKEN não está configurado — pulando a publicação. Ver o cabeçalho deste arquivo."
-            echo "ok=false" >> "$GITHUB_OUTPUT"
-          else
+          {
+            echo "## Credenciais"
+            echo
+            echo "| Segredo | Estado |"
+            echo "|---|---|"
+            if [ -n "$TOKEN" ]; then
+              echo "| \`CLOUDFLARE_API_TOKEN\` | ✅ presente (${#TOKEN} caracteres) |"
+            elif [ -n "$TOKEN_AS_VAR" ]; then
+              echo "| \`CLOUDFLARE_API_TOKEN\` | ⚠️ está na aba **Variables**, não em **Secrets** |"
+            else
+              echo "| \`CLOUDFLARE_API_TOKEN\` | ❌ ausente |"
+            fi
+            if [ -n "$ACCT" ]; then
+              echo "| \`CLOUDFLARE_ACCOUNT_ID\` | ✅ presente (${#ACCT} caracteres) |"
+            elif [ -n "$ACCT_AS_VAR" ]; then
+              echo "| \`CLOUDFLARE_ACCOUNT_ID\` | ⚠️ está na aba **Variables**, não em **Secrets** |"
+            else
+              echo "| \`CLOUDFLARE_ACCOUNT_ID\` | ❌ ausente |"
+            fi
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -n "$TOKEN_AS_VAR" ] || [ -n "$ACCT_AS_VAR" ]; then
+            {
+              echo "A tela de segredos tem duas abas. O valor foi colado em **Variables**,"
+              echo "e o workflow lê **Secrets**. Vá em Settings → Secrets and variables →"
+              echo "Actions → aba **Secrets** → *New repository secret*, e cole lá."
+              echo
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::A credencial está na aba Variables. Mova para Secrets."
+          fi
+
+          # Um token da Cloudflare tem 40 caracteres; o Account ID, 32 hex. Um
+          # valor muito curto quase sempre é cópia pela metade.
+          if [ -n "$TOKEN" ] && [ "${#TOKEN}" -lt 20 ]; then
+            echo "::warning::CLOUDFLARE_API_TOKEN tem só ${#TOKEN} caracteres — parece truncado."
+          fi
+          if [ -n "$ACCT" ] && [ "${#ACCT}" -ne 32 ]; then
+            echo "::warning::CLOUDFLARE_ACCOUNT_ID tem ${#ACCT} caracteres; o esperado são 32."
+          fi
+
+          if [ -n "$TOKEN" ]; then
             echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Sem CLOUDFLARE_API_TOKEN — publicação pulada. Ver o resumo desta execução."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
           fi
 
       - uses: actions/setup-node@v4
