@@ -213,8 +213,27 @@ fi
 # ── 6. publicar ───────────────────────────────────────────────────────────
 echo
 bold "6. Publicar"
+# Guardado antes de publicar, para a checagem logo abaixo.
+HAVE_BEFORE="$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml || true)"
 DEPLOY="$($W deploy 2>&1)"
-URL="$(printf '%s' "$DEPLOY" | grep -oE 'https://[a-z0-9.-]+\.workers\.dev' | head -1)"
+
+# Extrair a URL publicada é mais delicado do que parece, e o jeito ingênuo
+# (primeiro workers.dev que aparecer) está ERRADO: antes de publicar, o
+# wrangler imprime a tabela de bindings, e ela contém a nossa própria
+# variável SITE_ORIGIN —
+#
+#   env.SITE_ORIGIN ("https://hebraico-fluente.workers.dev")   Environment Variable
+#
+# — que é justamente o valor de exemplo que estamos tentando substituir. Pegar
+# essa linha faz o script "achar" uma URL que não existe, gravar o mesmo
+# placeholder de volta e conferir um endereço morto.
+#
+# A URL de verdade tem TRÊS rótulos antes de workers.dev
+# (<worker>.<subdomínio-da-conta>.workers.dev); o placeholder tem dois. É essa
+# diferença que separa as duas com segurança.
+URL="$(printf '%s' "$DEPLOY" \
+  | grep -vE 'env\.|Environment Variable' \
+  | grep -oE 'https://[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev' | tail -1)"
 
 if [ -z "$URL" ]; then
   if printf '%s' "$DEPLOY" | grep -qi 'workers\.dev.*subdomain\|register.*subdomain'; then
@@ -226,6 +245,16 @@ if [ -z "$URL" ]; then
 
 $(printf '%s' "$DEPLOY" | tail -25 | sed 's/^/       /')" \
         "Cole essa mensagem que eu resolvo."
+fi
+
+# Rede de segurança contra a armadilha descrita acima: se a URL extraída for
+# igual ao SITE_ORIGIN que já estava no arquivo, é sinal de que pegamos a
+# linha de binding em vez do endereço publicado. Parar aqui é melhor do que
+# seguir e conferir um endereço morto — que foi o sintoma original.
+if [ "$URL" = "${HAVE_BEFORE:-}" ] && [ "${HAVE_BEFORE:-}" = "https://hebraico-fluente.workers.dev" ]; then
+  morre "A URL extraída é o valor de exemplo, não o endereço publicado." \
+        "É um defeito deste script na leitura da saída do wrangler.
+       Me mande a saída inteira de 'npx wrangler deploy'."
 fi
 ok "No ar: $URL"
 
