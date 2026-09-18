@@ -66,11 +66,24 @@ if [ "$(campo ok)" != "true" ]; then
   echo
 fi
 
+# O site de vendas inteiro, SEM conta nenhuma. É o requisito mais óbvio da
+# plataforma e o mais fácil de quebrar sem perceber: basta um prefixo a mais na
+# lista do portão e uma página de vendas some atrás de um login. Quem não
+# consegue ver o curso não compra o curso.
+#
+# `code` não segue redirecionamento de propósito: 200 aqui significa "a página
+# abriu", e um 302 — mesmo que fosse para algum lugar bonito — é exatamente a
+# falha que este bloco existe para pegar.
+echo "Site público, sem conta"
+for p in "/" "/metodo/" "/cursos/" "/cursos/alfabetizacao/" "/cursos/hebraico-a1/" \
+         "/sobre/" "/faq/" "/entrar/" "/criar-conta/" "/checkout/alfabetizacao/"; do
+  espera "$p abre" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B$p")"
+done
+
 echo "Sessão e portão"
 espera "/api/me sem sessão recusa"            401 "$(code $B/api/me)"
 espera "rota paga sem sessão manda ao login"  "$B/entrar/?next=%2Flicao%2Falef%2F" \
        "$(location $B/licao/alef/)"
-espera "página pública abre"                  200 "$(code $B/cursos/alfabetizacao/)"
 
 echo "Conta"
 espera "criar conta" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
