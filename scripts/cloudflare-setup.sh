@@ -16,6 +16,11 @@ cd "$(dirname "$0")/.."
 
 DB_NAME="hebraico-fluente"
 W="npx --yes wrangler@4"
+# Vira 1 quando este script edita o wrangler.toml. No CI a edição é
+# descartável (o runner some), então a publicação funciona mesmo assim — mas
+# o arquivo do repositório continua com o valor de exemplo, e é isso que o
+# aviso do fim cobra.
+PATCHED=0
 
 bold()  { printf '\033[1m%s\033[0m\n' "$*"; }
 ok()    { printf '  \033[32m✓\033[0m %s\n' "$*"; }
@@ -38,13 +43,17 @@ bold "Hebraico Fluente → Cloudflare"
 echo
 
 # ── 0. wrangler e login ───────────────────────────────────────────────────
+# Roda igual na máquina de alguém e dentro do GitHub Actions. A única
+# diferença é de onde vem a credencial: `wrangler login` grava um perfil
+# local; no CI, o wrangler lê CLOUDFLARE_API_TOKEN do ambiente sozinho. Por
+# isso não há dois caminhos aqui — só uma mensagem que serve aos dois.
 bold "0. Conta"
 WHO="$($W whoami 2>&1)"
 if echo "$WHO" | grep -qi "not authenticated\|you are not logged in\|please run.*login"; then
   morre "O wrangler não está autenticado." \
-        "Rode 'npx wrangler login' (abre o navegador) e volte aqui.
-       Em servidor sem navegador, exporte CLOUDFLARE_API_TOKEN com um token
-       do modelo 'Edit Cloudflare Workers'."
+        "Na sua máquina: 'npx wrangler login' (abre o navegador).
+       No GitHub Actions ou em servidor sem navegador: defina
+       CLOUDFLARE_API_TOKEN (modelo 'Edit Cloudflare Workers', mais D1:Edit)."
 fi
 ACCOUNT="$(echo "$WHO" | grep -oE '[0-9a-f]{32}' | head -1)"
 if [ -z "$ACCOUNT" ]; then
@@ -98,7 +107,7 @@ s = re.sub(r'(database_id\s*=\s*")[^"]*(")', lambda m: m.group(1) + sys.argv[1] 
 open(p, 'w', encoding='utf8').write(s)
 PY
   ok "database_id ← $DB_ID"
-  info "COMMITE esta linha, senão a publicação pelo GitHub Actions falha de novo."
+  PATCHED=1
 fi
 
 # ── 3. tabelas ────────────────────────────────────────────────────────────
@@ -145,21 +154,28 @@ tem MP_WEBHOOK_SECRET && ok "MP_WEBHOOK_SECRET definido" \
   || info "MP_WEBHOOK_SECRET ausente — o webhook recusa tudo, de propósito."
 
 # ── 5. construir ──────────────────────────────────────────────────────────
+# HF_SKIP_BUILD=1 quando quem chama já construiu — é o caso do GitHub Actions,
+# que constrói num passo próprio para aproveitar o cache do npm e para que uma
+# falha de build apareça como falha de build, e não como falha de publicação.
 echo
 bold "5. Construir o site"
-if [ ! -d app/node_modules ]; then
-  info "Instalando dependências (demora na primeira vez)…"
-  (cd app && npm ci) >/dev/null 2>&1 || morre "npm ci falhou em app/." \
-    "Rode 'cd app && npm ci' para ver o erro."
-fi
-info "next build em modo plataforma…"
-if (cd app && NEXT_PUBLIC_PLATFORM_API=worker npm run build) >/tmp/hf-build.log 2>&1; then
-  ok "app/out pronto ($(find app/out -type f | wc -l | tr -d ' ') arquivos)"
+if [ "${HF_SKIP_BUILD:-0}" = "1" ] && [ -d app/out ]; then
+  ok "Já construído ($(find app/out -type f | wc -l | tr -d ' ') arquivos)"
 else
-  morre "O build falhou. Últimas linhas:
+  if [ ! -d app/node_modules ]; then
+    info "Instalando dependências (demora na primeira vez)…"
+    (cd app && npm ci) >/dev/null 2>&1 || morre "npm ci falhou em app/." \
+      "Rode 'cd app && npm ci' para ver o erro."
+  fi
+  info "next build em modo plataforma…"
+  if (cd app && NEXT_PUBLIC_PLATFORM_API=worker npm run build) >/tmp/hf-build.log 2>&1; then
+    ok "app/out pronto ($(find app/out -type f | wc -l | tr -d ' ') arquivos)"
+  else
+    morre "O build falhou. Últimas linhas:
 
 $(tail -20 /tmp/hf-build.log | sed 's/^/       /')" \
-        "O log inteiro está em /tmp/hf-build.log"
+          "O log inteiro está em /tmp/hf-build.log"
+  fi
 fi
 
 # ── 6. publicar ───────────────────────────────────────────────────────────
@@ -199,6 +215,7 @@ s = re.sub(r'(SITE_ORIGIN\s*=\s*")[^"]*(")', lambda m: m.group(1) + sys.argv[1] 
 open(p, 'w', encoding='utf8').write(s)
 PY
   info "SITE_ORIGIN ← $URL — republicando…"
+  PATCHED=1
   $W deploy >/dev/null 2>&1 && ok "Republicado" || info "A republicação falhou; rode 'npx wrangler deploy'."
 fi
 
@@ -215,14 +232,20 @@ RC=$?
 echo
 if [ $RC -eq 0 ]; then
   bold "Pronto. $URL"
-  echo
-  echo "  Falta, quando você quiser:"
-  echo "   · git add wrangler.toml && git commit -m 'database_id e SITE_ORIGIN'"
-  echo "   · Mercado Pago: os dois segredos e o webhook em $URL/api/pay/webhook"
-  echo "   · Domínio próprio: painel → o Worker → Settings → Domains & Routes"
 else
   bold "Subiu, mas alguma verificação falhou (acima)."
-  echo "  Me mande essa saída."
 fi
+
+echo
+if [ "$PATCHED" = "1" ]; then
+  echo "  O wrangler.toml foi editado (database_id e/ou SITE_ORIGIN):"
+  echo "    git add wrangler.toml && git commit -m 'database_id e SITE_ORIGIN'"
+  echo "  Sem esse commit, o arquivo do repositório continua com o valor de"
+  echo "  exemplo — funciona aqui e falha para quem publicar de outro lugar."
+  echo
+fi
+echo "  Falta, quando você quiser:"
+echo "   · Mercado Pago: os dois segredos e o webhook em $URL/api/pay/webhook"
+echo "   · Domínio próprio: painel → o Worker → Settings → Domains & Routes"
 echo
 exit $RC

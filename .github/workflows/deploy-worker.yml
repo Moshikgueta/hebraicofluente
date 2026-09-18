@@ -101,41 +101,37 @@ jobs:
           NEXT_PUBLIC_PLATFORM_API: worker
         run: npm run build
 
-      - name: Deploy
+      # Publicar É o script de configuração, e não um `wrangler deploy` seco.
+      #
+      # A diferença importa: um deploy seco pressupõe que o banco existe, que o
+      # database_id no wrangler.toml é o certo, que o esquema foi aplicado e
+      # que o SESSION_SECRET está definido — e falha de forma obscura quando
+      # qualquer um desses pressupostos não vale. O script CONFERE cada um e
+      # cria o que faltar. Resultado: a primeira publicação de uma conta nova
+      # funciona sem ninguém abrir um terminal.
+      #
+      # Ele é idempotente, então nas publicações seguintes os passos 1–4 só
+      # confirmam o que já existe e seguem adiante.
+      #
+      # O CLOUDFLARE_API_TOKEN vai no ambiente porque o wrangler o lê de lá
+      # sozinho — é assim que a mesma linha serve à máquina de alguém (onde a
+      # credencial vem do `wrangler login`) e ao CI.
+      - name: Publicar e configurar
         id: deploy
         if: steps.guard.outputs.ok == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
-      # A verificação depois de publicar, contra a URL que acabou de subir.
-      #
-      # É a única checagem do projeto que exercita o que está de fato no ar:
-      # cookie de sessão real, D1 real, portão real. Os testes unitários provam
-      # a lógica; isto prova a IMPLANTAÇÃO — que os segredos foram preenchidos,
-      # que o banco existe e tem as tabelas, que o portão está mesmo na frente
-      # das rotas pagas.
-      #
-      # Não derruba a publicação: quando ela falha, o código já está no ar de
-      # qualquer jeito, e o que importa é o aviso ficar visível em vez de um
-      # vermelho que faz alguém republicar sem saber o quê.
-      - name: Conferir o que subiu
-        if: steps.guard.outputs.ok == 'true'
-        continue-on-error: true
         env:
-          URL: ${{ steps.deploy.outputs.deployment-url }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # O build já aconteceu no passo anterior, com o cache do npm, para
+          # que uma falha de build apareça como falha de build.
+          HF_SKIP_BUILD: '1'
         run: |
-          BASE="${URL:-$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml)}"
-          echo "Conferindo $BASE"
-          echo "### Verificação pós-publicação" >> "$GITHUB_STEP_SUMMARY"
+          set -o pipefail
+          echo "## Publicação na Cloudflare" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
-          # A propagação da Cloudflare leva alguns segundos; sem esta espera a
-          # primeira passagem pega a versão anterior e confunde quem lê o log.
-          for i in $(seq 1 12); do
-            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$BASE/" || echo 000)
-            [ "$code" = "200" ] && break
-            sleep 5
-          done
-          HF_BASE="$BASE" bash worker/e2e.sh 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+          # `tee` para o log e para o resumo: quem abre a execução vê o
+          # resultado sem precisar expandir o passo.
+          bash scripts/cloudflare-setup.sh 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+          rc=$?
           echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc

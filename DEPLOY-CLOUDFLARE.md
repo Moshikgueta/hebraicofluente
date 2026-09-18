@@ -3,6 +3,34 @@
 Do zero ao ar. Sete passos, uns vinte minutos, e o único que precisa de
 paciência é o do domínio.
 
+## O caminho sem terminal
+
+Cole dois segredos no GitHub e o resto acontece sozinho, a cada push.
+
+GitHub → o repositório → **Settings → Secrets and variables → Actions → New
+repository secret**:
+
+| Nome | Onde achar |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Painel da Cloudflare → ícone da conta → *API Tokens* → *Create Token* → modelo **Edit Cloudflare Workers**, e acrescente **`D1:Edit`** nas permissões |
+| `CLOUDFLARE_ACCOUNT_ID` | Painel → Workers & Pages → coluna da direita, *Account ID* |
+
+O `D1:Edit` não é opcional: sem ele o Action publica o Worker e falha ao criar
+o banco, que é a metade que guarda as contas.
+
+A partir daí, todo push roda os testes e executa
+`scripts/cloudflare-setup.sh` dentro do Action — que cria o banco se não
+existir, aplica o esquema, gera o `SESSION_SECRET`, publica, acerta o
+`SITE_ORIGIN` e roda as quinze verificações contra o que subiu. O resultado
+aparece no resumo da execução, sem precisar abrir log.
+
+Uma pendência fica: a edição do `wrangler.toml` acontece dentro do runner, que
+some no fim. Funciona a cada execução porque o script relê o id do banco de
+verdade — mas o arquivo do repositório continua com o valor de exemplo. O
+script avisa disso no fim, e vale commitar o id uma vez.
+
+---
+
 ## O caminho curto
 
 ```bash
@@ -142,18 +170,8 @@ volte e atualize:
 
 ## 7. Publicar sozinho a cada push
 
-GitHub → o repositório → **Settings → Secrets and variables → Actions → New
-repository secret**:
-
-| Nome | Onde achar |
-|---|---|
-| `CLOUDFLARE_API_TOKEN` | Painel → ícone da conta → *API Tokens* → *Create Token* → modelo **Edit Cloudflare Workers** |
-| `CLOUDFLARE_ACCOUNT_ID` | Painel → Workers & Pages → coluna da direita, *Account ID* |
-
-A partir daí, todo push nos ramos publicáveis que toque `app/`, `data/`,
-`worker/` ou `wrangler.toml` roda os testes e publica
-(`.github/workflows/deploy-worker.yml`). Sem o token, o job avisa e pula — não
-quebra.
+É **O caminho sem terminal**, no topo deste arquivo. Sem os dois segredos, o
+job avisa e pula — não quebra.
 
 ---
 
