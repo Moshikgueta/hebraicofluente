@@ -36,117 +36,155 @@ function main() {
   cpSync(join(ROOT, 'styles'), join(DIST, 'styles'), { recursive: true });
   cpSync(join(ROOT, 'assets'), join(DIST, 'assets'), { recursive: true });
 
-  const modules = [];
-
-  /* 3. Página 0 — the vowel signs, before letter 1. */
-  writeFileSync(join(DIST, '00-vogais.html'), document_({
-    title: 'Os sinais de vogal — Hebraico Moderno',
-    description: 'Os seis sons vocálicos do hebraico, apresentados pelo som e não pelo nome.',
-    body: renderPage0(ctx)
-  }));
-  modules.push({ href: '00-vogais.html', kind: 'intro', title: 'Os sinais de vogal', sub: 'Antes da primeira letra' });
-
-  /* 4. One module per letter. */
-  for (const L of letters) {
-    const file = `${String(L.order).padStart(2, '0')}-${L.id}.html`;
-    writeFileSync(join(DIST, file), document_({
-      title: `Letra ${L.namePt} — Hebraico Moderno`,
-      description: `A letra ${L.namePt}: som, sílabas, palavras, escrita cursiva e exercícios.`,
-      body: renderLetter(L, ctx)
-    }));
-    modules.push({
-      href: file, kind: 'letter', order: L.order,
-      title: `${L.order}. ${L.namePt}`, letter: L.letter, sub: L.sound
-    });
-  }
-
-  /* 5. Review units — one after every four letters, then the cumulative one.
-     Only emitted when the letters they cover actually exist. */
+  /* ── 3. Assemble the book in READING ORDER ───────────────────────────
+     Reviews are interleaved where the learner actually meets them — after
+     letters 4, 8, 12, 16 and 20 — not bolted on at the end. This same order
+     drives the per-file output, the index, and the single-file book. */
   const REVIEW_AT = [4, 8, 12, 16, 20];
   const maxOrder = letters.length ? letters[letters.length - 1].order : 0;
-  REVIEW_AT.forEach((upTo, i) => {
-    if (upTo > maxOrder) return;
-    const R = { n: i + 1, upTo, final: false };
-    const file = `r${i + 1}-revisao-${upTo}.html`;
-    writeFileSync(join(DIST, file), document_({
-      title: `Revisão ${R.n} — letras 1 a ${upTo}`,
-      description: `Revisão cumulativa das letras 1 a ${upTo}: leitura, reconhecimento, escrita e ditado.`,
-      body: renderReview(R, ctx)
-    }));
-    modules.push({ href: file, kind: 'review', title: `Revisão ${R.n}`, sub: `letras 1 a ${upTo}` });
+
+  const sections = [];
+  sections.push({
+    kind: 'intro', id: 'vogais', file: '00-vogais.html',
+    title: 'Os sinais de vogal', sub: 'Antes da primeira letra',
+    docTitle: 'Os sinais de vogal — Hebraico Moderno',
+    desc: 'Os seis sons vocálicos do hebraico, apresentados pelo som e não pelo nome.',
+    body: () => renderPage0(ctx)
   });
+
+  for (const L of letters) {
+    sections.push({
+      kind: 'letter', id: L.id, order: L.order, letter: L.letter,
+      file: `${String(L.order).padStart(2, '0')}-${L.id}.html`,
+      title: `${L.order}. ${L.namePt}`, sub: L.sound,
+      docTitle: `Letra ${L.namePt} — Hebraico Moderno`,
+      desc: `A letra ${L.namePt}: som, sílabas, palavras, escrita cursiva e exercícios.`,
+      body: () => renderLetter(L, ctx)
+    });
+    const at = REVIEW_AT.indexOf(L.order);
+    if (at >= 0) {
+      const R = { n: at + 1, upTo: L.order, final: false };
+      sections.push({
+        kind: 'review', id: `rev${R.n}`, file: `r${R.n}-revisao-${R.upTo}.html`,
+        title: `Revisão ${R.n}`, sub: `letras 1 a ${R.upTo}`,
+        docTitle: `Revisão ${R.n} — letras 1 a ${R.upTo}`,
+        desc: `Revisão cumulativa das letras 1 a ${R.upTo}: leitura, reconhecimento, escrita e ditado.`,
+        body: () => renderReview(R, ctx)
+      });
+    }
+  }
 
   if (maxOrder >= 22) {
     const R = { n: 6, upTo: 22, final: true };
-    writeFileSync(join(DIST, 'r6-revisao-final.html'), document_({
-      title: 'Revisão final — todo o alfabeto',
-      description: 'Revisão cumulativa das 22 letras, das 5 formas finais e de todo o vocabulário.',
-      body: renderReview(R, ctx)
-    }));
-    modules.push({ href: 'r6-revisao-final.html', kind: 'review', title: 'Revisão final', sub: 'as 22 letras' });
+    sections.push({
+      kind: 'review', id: 'rev6', file: 'r6-revisao-final.html',
+      title: 'Revisão final', sub: 'as 22 letras',
+      docTitle: 'Revisão final — todo o alfabeto',
+      desc: 'Revisão cumulativa das 22 letras, das 5 formas finais e de todo o vocabulário.',
+      body: () => renderReview(R, ctx)
+    });
   }
 
-  /* 6. Appendix. */
-  writeFileSync(join(DIST, 'apendice.html'), document_({
-    title: 'Apêndice — Hebraico Moderno',
-    description: 'Alfabeto completo, nomes dos sinais de vogal, chave de transliteração e quadro de cursiva.',
-    body: renderAppendix(ctx)
-  }));
-  modules.push({ href: 'apendice.html', kind: 'appendix', title: 'Apêndice', sub: 'tabelas de referência' });
+  sections.push({
+    kind: 'appendix', id: 'apendice', file: 'apendice.html',
+    title: 'Apêndice', sub: 'tabelas de referência',
+    docTitle: 'Apêndice — Hebraico Moderno',
+    desc: 'Alfabeto completo, nomes dos sinais de vogal, chave de transliteração e quadro de cursiva.',
+    body: () => renderAppendix(ctx)
+  });
 
-  /* 7. Index. */
+  /* ── 4. Render, numbering the pages continuously across the whole book ──
+     The templates number their own sheets 1..n because a module has to make
+     sense printed on its own. In the book those numbers would restart thirty
+     times, so the folio is rewritten here from a single running counter — one
+     number, always the page of the book. */
+  /* Real page numbers for the contents, measured from a previous print run.
+     Absent on a first build — the contents then shows a dash. */
+  let pageMap = {}, bookPages = 0;
+  try {
+    const pm = readJson('data/page-map.json');
+    pageMap = pm.sections || {};
+    bookPages = pm.pages || 0;
+  } catch { /* first run — the contents shows dashes */ }
+
+  let folio = 1;
+  const renumber = html => html.replace(
+    /<span class="folio">\d+<\/span>/g,
+    () => `<span class="folio">${folio++}</span>`
+  );
+
+  const modules = [];
+  const bodies = [];
+  for (const sec of sections) {
+    const startPage = folio;
+    /* The marker goes BETWEEN the badge and the h1, not at the very top of the
+       section. A zero-height box sitting immediately after a forced page break
+       gets assigned to either side of it at Chromium's discretion, and several
+       sections came out reported one page early. Mid-flow, between two real
+       elements, it stays on their page. */
+    const marker = `<span class="secmark" aria-hidden="true">\u00a7sec:${sec.id}\u00a7</span>`;
+    const body = renumber(sec.body()).replace('<h1', marker + '<h1');
+    bodies.push(body);
+    writeFileSync(join(DIST, sec.file), document_({
+      title: sec.docTitle, description: sec.desc, body
+    }));
+    modules.push({ href: sec.file, kind: sec.kind, order: sec.order, id: sec.id,
+                   title: sec.title, sub: sec.sub, letter: sec.letter,
+                   sheet: startPage, page: pageMap[sec.id] || null });
+  }
+  const totalPages = folio - 1;
+
+  /* ── 5. The whole book as one file, for printing ────────────────────── */
+  const toc = renderIndex(modules, letters, totalPages, bookPages);
+  writeFileSync(join(DIST, 'livro-completo.html'), document_({
+    title: 'Hebraico Moderno — Workbook de Alfabetização',
+    description: 'O workbook completo: sinais de vogal, 22 letras, 6 revisões e apêndice.',
+    body: [toc, ...bodies].join('\n')
+  }));
+
+  /* ── 6. Index ───────────────────────────────────────────────────────── */
   writeFileSync(join(DIST, 'index.html'), document_({
     title: 'Hebraico Moderno — Workbook de Alfabetização',
     description: 'Workbook de alfabetização em hebraico moderno para brasileiros adultos.',
-    body: renderIndex(modules, letters)
+    body: toc
   }));
 
-  /* 8. Re-validate, now including the built HTML (V8/V9 — the bidi contract). */
+  /* ── 7. Re-validate, now including the built HTML (V8/V9 — the bidi contract). */
   console.log('  validando saída…');
   const post = validate({ checkDist: true });
   const ok = report(post);
 
-  console.log(`\n  ${modules.length} módulo(s) → dist/`);
+  console.log(`\n  ${modules.length} módulo(s), ${totalPages} folhas → dist/`);
   if (!ok) process.exit(1);
 }
 
-function renderIndex(modules, letters) {
-  const cards = modules.filter(m => m.kind === 'letter').map(m => `
-    <a class="idx-card" href="./${m.href}">
-      <span class="he he--big" lang="he">${esc(m.letter)}</span>
-      <span class="idx-t">${esc(m.title)}</span>
-      <span class="idx-s">${esc(m.sub)}</span>
-    </a>`).join('');
+function renderIndex(modules, letters, totalPages, bookPages) {
+  const row = m => `
+    <a class="toc-row toc-row--${m.kind}" href="./${m.href}">
+      <span class="toc-mark">${m.letter ? `<span class="he" lang="he">${esc(m.letter)}</span>` : ''}</span>
+      <span class="toc-t">${esc(m.title)}</span>
+      <span class="toc-s">${esc(m.sub)}</span>
+      <span class="toc-p">${m.page == null ? '—' : m.page}</span>
+    </a>`;
 
   return `<section class="sheet">
   <span class="badge">Nível A0 — iniciante absoluto</span>
   <h1>Hebraico Moderno<br>Workbook de Alfabetização</h1>
   <p class="lead">Guia para brasileiros adultos aprenderem a ler, pronunciar e escrever o hebraico moderno — do zero ao domínio do alfabeto.</p>
 
-  <h2>Antes de começar</h2>
-  <a class="idx-card idx-card--wide" href="./00-vogais.html">
-    <span class="idx-t">Os sinais de vogal</span>
-    <span class="idx-s">Os seis sons, apresentados pelo som e não pelo nome</span>
-  </a>
+  <div class="toc-meta">
+    <span><strong>${letters.length}</strong> letras</span>
+    <span><strong>${modules.filter(m => m.kind === 'review').length}</strong> revisões</span>
+    <span><strong>${bookPages || totalPages}</strong> páginas A4</span>
+    <span class="no-print"><a href="./livro-completo.html">Abrir o livro inteiro num arquivo só →</a></span>
+  </div>
 
-  ${modules.some(m => m.kind === 'review') ? `<h2>Revisões</h2>
-  <div class="idx-grid idx-grid--wide">${modules.filter(m => m.kind === 'review').map(m => `
-    <a class="idx-card idx-card--wide" href="./${m.href}">
-      <span class="idx-t">${esc(m.title)}</span><span class="idx-s">${esc(m.sub)}</span></a>`).join('')}
-  </div>` : ''}
-
-  ${modules.some(m => m.kind === 'appendix') ? `<h2>Referência</h2>
-  <a class="idx-card idx-card--wide" href="./apendice.html">
-    <span class="idx-t">Apêndice</span>
-    <span class="idx-s">Alfabeto completo · nomes dos sinais · chave de transliteração · quadro de cursiva</span></a>` : ''}
-
-  <h2>As letras</h2>
-  <p class="hint">${letters.length} de 22 letras prontas. Cada letra é um módulo de cinco páginas.</p>
-  <div class="idx-grid">${cards}</div>
+  <h2>Sumário</h2>
+  <nav class="toc">${modules.map(row).join('')}</nav>
 
   <aside class="callout callout--tip">
     <span class="callout-icon" aria-hidden="true">💡</span>
-    <div><p>Estude uma letra por vez. Avance apenas quando sentir segurança na leitura e na escrita da letra atual.</p></div>
+    <div><p>Estude uma letra por vez. Avance apenas quando sentir segurança na leitura e na escrita da letra atual — e não pule as revisões: elas são onde as letras antigas param de escapar.</p></div>
   </aside>
 </section>`;
 }

@@ -1,29 +1,48 @@
-/* Print geometry. A4, no browser-drawn header/footer, clean breaks.
-   The visual margin lives on the sheet's own padding so screen and print
-   match exactly. */
+/* Print geometry.
+   ─────────────────────────────────────────────────────────────────────────
+   The margin lives on @page, NOT on the sheet's padding.
+
+   Padding only applies at the top and bottom of a box, so when a long section
+   spills onto a second page the continuation page would start hard against
+   the paper edge with no margin at all. Putting the inset on @page gives every
+   page the same margin, including the middle pages of a section that runs
+   long — which several of them do, by design.
+
+   Chrome's own date/URL header is suppressed by the print tool
+   (displayHeaderFooter: false in tools/build-pdf.mjs), not by a zero margin,
+   so we are free to use a real margin here. */
 
 @page {
   size: A4 portrait;
-  margin: 0;
+  margin: 15mm 13.6mm 17mm;
 }
 
 @media print {
   html, body { background: #FFFFFF; }
 
+  /* Each section starts on a fresh page; a long one flows onto the next and
+     keeps its margins. */
   .sheet {
+    inline-size: auto;
+    min-block-size: 0;
     margin: 0;
+    padding: 0;
     box-shadow: none;
+    background: transparent;
     break-after: page;
-    background: var(--c-paper);
   }
   .sheet:last-child { break-after: auto; }
+
+  /* The on-screen folio is a per-sheet marker. In the PDF the real page
+     numbers come from the print tool's footer, so this would be a second,
+     conflicting number. */
+  .folio { display: none; }
 
   /* Nothing that carries pointing may be clipped. */
   .he, .he-list, .he-cloze, .glyph { overflow: visible; }
 
-  table, .ex, .callout, .write-rule, .model-box, figure, .step {
-    break-inside: avoid;
-  }
+  table, .ex, .callout, .write-rule, .model-box, figure, .step,
+  .cursive-cell, .vowel-row, .find-row, .toc-row { break-inside: avoid; }
   thead { display: table-header-group; }
   h1, h2, h3, h4 { break-after: avoid; }
   p, li { orphans: 3; widows: 3; }

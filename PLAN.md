@@ -11,8 +11,8 @@
 | Revisões (após as letras 4, 8, 12, 16, 20) | 5 módulos, 2 folhas cada |
 | Revisão final cumulativa | 1 módulo |
 | Apêndice (alfabeto · nikud · transliteração · cursiva) | 1 módulo, 4 folhas |
-| `index.html` | 1 |
-| **Total** | **≈ 170 páginas A4** |
+| `index.html` (sumário) | 1 |
+| **Total** | **318 páginas A4** em `pdf/hebraico-moderno-workbook.pdf` |
 
 **As 22 letras estão autoradas**, na ordem pedida:
 מ ש ל ב ת י ה ו ר א נ ק ד ח ס פ ג ע כ ז ט צ — com 78 entradas em
@@ -29,6 +29,9 @@
   origem.
 - Fontes auto-hospedadas com licença; cursiva Gveret Levin conferida nas 22
   letras e nas 5 formas finais (ver Apêndice D).
+- **PDF do livro inteiro** (`npm run pdf`): 318 páginas A4, numeração contínua
+  no rodapé, sumário com as páginas reais medidas do próprio PDF e conferidas
+  marcador a marcador.
 - **27 SVG de ordem de traçado** (22 letras + 5 formas finais), gerados de
   `tools/gen-stroke-order.py` a partir do contorno real do glifo cursivo. As
   letras com forma final mostram o traçado das duas na página 3A.

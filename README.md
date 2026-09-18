@@ -220,8 +220,56 @@ Dois, ambos revertíveis com uma linha:
 
 ---
 
+## PDF
+
+```bash
+npm run pdf              # o livro inteiro → pdf/hebraico-moderno-workbook.pdf
+npm run pdf -- 01-mem    # um módulo só
+```
+
+Precisa de Playwright + Chromium, e por isso **não faz parte de `npm run build`**
+— o build em si não tem dependência nenhuma e continua assim:
+
+```bash
+npm i -D playwright && npx playwright install chromium
+```
+
+O livro sai de `dist/livro-completo.html` numa **única passada de impressão**, e
+não de trinta arquivos juntados depois. A diferença é real: juntar reiniciaria a
+paginação a cada módulo e não deixaria uma tabela quebrar entre duas páginas de
+uma mesma seção. Num documento só, o Chromium pagina o livro como livro.
+
+**A margem mora no `@page`, não no padding da folha.** Padding só vale no topo e
+na base de uma caixa, então uma seção que passa de uma página começaria a
+segunda colada na borda do papel. Várias passam — de propósito.
+
+### Sumário com páginas reais
+
+Um sumário não tem como saber em que página cada seção cai antes de o livro ser
+paginado. Então `npm run pdf` imprime, mede e reconstrói:
+
+1. imprime o livro;
+2. `tools/page-map.py` lê o PDF e acha em que página cada seção começa;
+3. grava `data/page-map.json`, reconstrói o `dist/` e imprime de novo.
+
+Como a largura do número é fixa, a segunda passada não desloca nada e o laço
+converge na primeira tentativa. Sem Python ou PyMuPDF o livro sai igual — o
+sumário só fica com um traço no lugar do número, e a execução avisa.
+
+O marcador que torna isso possível é um `<span class="secmark">` invisível. Duas
+coisas nele são críticas, e cada uma esteve errada uma vez:
+
+- **não é `position: absolute`** — em mídia paginada o Chromium ancora elementos
+  absolutos na primeira página do documento, e todos os marcadores relatavam
+  página 1;
+- **não é `color: transparent` nem 1px** — o Chromium descarta texto totalmente
+  transparente ou sub-pixel da camada de texto, e aí não há o que ler.
+
+Ele também fica **entre o badge e o `<h1>`**, não no topo da seção: uma caixa de
+altura zero logo depois de uma quebra de página forçada cai de um lado ou do
+outro conforme o humor do motor, e várias seções saíam uma página adiantadas.
+
 ## Publicar
 
-`dist/` é estático. Qualquer host serve. Para PDF: abra `dist/index.html` no
-Chrome e imprima em A4 — `styles/print.css` já remove cabeçalho e rodapé do
-navegador e trata as quebras.
+`dist/` é estático, qualquer host serve. O PDF pronto fica em `pdf/` (ignorado
+pelo git — é artefato de build).
