@@ -42,7 +42,7 @@ ganha folha de continuação explícita. `npm run check-fit` mede todas e o
 **E as folhas são preenchidas.** `npm run pack` mede as 860 peças e agrupa —
 81% de ocupação média, contra 69% quando cada peça tinha a sua folha.
 
-- `scripts/validate.js` — 17 regras. **V1, V10, V15 e V16 provadas com casos
+- `scripts/validate.js` — 19 regras. **V1, V10, V15 e V16 provadas com casos
   negativos**: adicionar שָׁלוֹם à letra 2, injetar צ na Revisão 1, pôr
   רדיו nas palavras-ponte do sámech ou mudar o módulo do guímel faz o build
   sair com código 1 nomeando o problema.
@@ -65,6 +65,13 @@ ganha folha de continuação explícita. `npm run check-fit` mede todas e o
   `tools/gen-stroke-order.py` a partir do contorno real do glifo cursivo.
 - `data/translit.json` — 294 entradas, gerado a partir de `letters.json` e
   provado consistente pela V3.
+
+## O curso interativo
+
+Em `app/` — Next.js 15, TypeScript strict, 48 páginas estáticas, 65 testes.
+Lê `data/` pelo `tools/export-content.mjs`, então **o livro e o app nunca
+divergem**. Os módulos 6 e 7 saíram de dentro de `templates/extras.js` para
+`data/extras.json` pelo mesmo motivo. `app/ARCHITECTURE.md` é a referência.
 
 ## A seguir
 

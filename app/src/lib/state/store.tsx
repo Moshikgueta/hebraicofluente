@@ -14,8 +14,8 @@ import { EMPTY_STATE, type Achievement, type LearnerState, type Onboarding, type
 import { LocalProgressStore, persistenceAvailable } from './local';
 import { SupabaseProgressStore, supabaseConfigured } from './supabase';
 import {
-  applyPractice, awardXp, completeStage, courseProgress, displayStreak, dueItems,
-  goalTarget, lettersMastered, recordAnswer, recordCheckpoint, recordQuiz,
+  ANSWER_UNITS, applyPractice, awardXp, completeStage, courseProgress, displayStreak,
+  dueItems, goalTarget, lettersMastered, recordAnswer, recordCheckpoint, recordQuiz,
   syncAchievements, today, weakLetters, XP
 } from './rules';
 import { track } from '@/lib/analytics';
@@ -36,14 +36,15 @@ type Ctx = {
   progress: number;
   dueCount: number;
   weak: string[];
-  goalAnswered: number;
+  /** Practice credit today, in the same units as `goalTargetToday`. */
+  goalUnits: number;
   goalTargetToday: number;
   /* celebrations the shell shows and then clears */
   pending: Achievement[];
   clearPending: () => void;
   /* actions */
   setOnboarding: (o: Onboarding) => void;
-  finishStage: (letterId: string, stage: number) => void;
+  finishStage: (letterId: string, stage: number, units?: number) => void;
   answer: (args: { itemId: string; letterId: string; correct: boolean }) => void;
   finishQuiz: (letterId: string, score: number) => void;
   finishCheckpoint: (id: string, score: number) => void;
@@ -55,8 +56,13 @@ type Ctx = {
 
 const StoreContext = createContext<Ctx | null>(null);
 
-export function ProgressProvider({ children, totalLetters }: { children: ReactNode; totalLetters: number }) {
+export function ProgressProvider({
+  children, totalLetters, extraModuleIds = []
+}: { children: ReactNode; totalLetters: number; extraModuleIds?: string[] }) {
   const store = useMemo(createStore, []);
+  /* The caller passes a fresh array literal on every render; keying the memo on
+     its contents rather than its identity keeps the context value stable. */
+  const extraKey = extraModuleIds.join(',');
   const [state, setState] = useState<LearnerState>(EMPTY_STATE);
   const [ready, setReady] = useState(false);
   const [persistent, setPersistent] = useState(true);
@@ -93,13 +99,14 @@ export function ProgressProvider({ children, totalLetters }: { children: ReactNo
     track('onboarding_completed', { goalMinutes: o.goalMinutes, reason: o.reason });
   }, [commit, state]);
 
-  const finishStage = useCallback((letterId: string, stage: number) => {
+  const finishStage = useCallback((letterId: string, stage: number, units?: number) => {
     const d = today();
+    const total = units === undefined ? 5 : 3;
     const before = state.lessons[letterId]?.stagesDone.length ?? 0;
-    const next = completeStage(state, letterId, stage, d);
+    const next = completeStage(state, letterId, stage, d, units);
     commit(next);
     track('stage_completed', { letterId, stage });
-    if (before < 5 && (next.lessons[letterId]?.stagesDone.length ?? 0) >= 5) {
+    if (before < total && (next.lessons[letterId]?.stagesDone.length ?? 0) >= total) {
       track('lesson_completed', { letterId });
     }
   }, [commit, state]);
@@ -113,7 +120,7 @@ export function ProgressProvider({ children, totalLetters }: { children: ReactNo
         itemId, letterId, box: 0, misses: 1, hits: 0, dueOn: d, lastSeen: d
       } } };
     }
-    next = applyPractice(next, d, 1);
+    next = applyPractice(next, d, { answered: 1, units: ANSWER_UNITS });
     commit(next);
     track('exercise_answered', { letterId, itemId, correct });
     if (!correct) track('exercise_wrong', { letterId, itemId });
@@ -170,10 +177,10 @@ export function ProgressProvider({ children, totalLetters }: { children: ReactNo
       state, ready, persistent, day,
       streak: displayStreak(state, day),
       mastered: lettersMastered(state),
-      progress: courseProgress(state, totalLetters),
+      progress: courseProgress(state, totalLetters, extraKey ? extraKey.split(',') : []),
       dueCount: dueItems(state, day).length,
       weak: weakLetters(state, day),
-      goalAnswered: state.days[day]?.answered ?? 0,
+      goalUnits: state.days[day]?.units ?? 0,
       goalTargetToday: goalTarget(goal),
       pending,
       clearPending: () => setPending([]),
@@ -181,7 +188,7 @@ export function ProgressProvider({ children, totalLetters }: { children: ReactNo
       finishReview, finishFinalChallenge, remember, reset
     };
   }, [
-    state, ready, persistent, day, totalLetters, pending,
+    state, ready, persistent, day, totalLetters, extraKey, pending,
     setOnboarding, finishStage, answer, finishQuiz, finishCheckpoint,
     finishReview, finishFinalChallenge, remember, reset
   ]);

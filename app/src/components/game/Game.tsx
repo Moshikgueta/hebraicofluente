@@ -8,6 +8,7 @@
  * during a reading exercise competes with the reading. */
 
 import { ACHIEVEMENTS } from '@/lib/state/rules';
+import { Prose } from '@/components/learn/Blocks';
 import { Card } from '@/components/ui/Card';
 
 export function ProgressBar({
@@ -36,10 +37,10 @@ export function ProgressBar({
   );
 }
 
-export function StreakCard({ days, goalAnswered, goalTarget }: {
-  days: number; goalAnswered: number; goalTarget: number;
+export function StreakCard({ days, goalUnits, goalTarget }: {
+  days: number; goalUnits: number; goalTarget: number;
 }) {
-  const met = goalAnswered >= goalTarget;
+  const met = goalUnits >= goalTarget;
   return (
     <Card tone={days > 0 ? 'ember' : 'surface'} className="p-5 grid gap-3">
       <div className="flex items-center gap-2.5">
@@ -51,9 +52,9 @@ export function StreakCard({ days, goalAnswered, goalTarget }: {
         </p>
       </div>
       <ProgressBar
-        value={goalTarget ? goalAnswered / goalTarget : 0}
+        value={goalTarget ? goalUnits / goalTarget : 0}
         label={met ? 'Meta de hoje concluída' : 'Meta de hoje'}
-        sublabel={`${Math.min(goalAnswered, goalTarget)} / ${goalTarget}`}
+        sublabel={`${Math.round((Math.min(goalUnits, goalTarget) / goalTarget) * 100)}%`}
       />
       {days === 0 && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
@@ -90,7 +91,11 @@ export function AchievementBadge({
         </span>
         <p className="font-display text-[15px] font-semibold text-ink">{def.titlePt}</p>
       </div>
-      {!compact && <p className="font-ui text-[13px] leading-relaxed text-ink-muted">{def.descPt}</p>}
+      {!compact && (
+        <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
+          <Prose text={def.descPt} />
+        </p>
+      )}
     </div>
   );
 }

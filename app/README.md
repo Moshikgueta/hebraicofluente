@@ -32,14 +32,17 @@ capaz de gerar e falha se algum escapar.
 
 | | |
 |---|---|
-| Letras autoradas | 22 (as 7 unidades do plano de aulas) |
-| Vertical slice implementado | Módulo 1 — מ ת א נ ה י + Checkpoint 1 |
+| Letras | 22, nas 7 unidades do plano de aulas |
+| Módulos | 5 de letras + 6 (sem daguesh e as finais) + 7 (o gerech) |
+| Checkpoints | 5 de módulo + os fechos de 6 e 7 + o desafio final |
+| Cenas «no mundo real» | 17, cada uma com a letra a partir da qual aparece |
+| Páginas estáticas | 48 |
 | Áudio | **nenhum**. Ver ARCHITECTURE §6.3 |
 | Persistência | localStorage. Supabase escrito, não conectado |
-| Testes | 41 |
+| Testes | 65, incluindo o curso inteiro jogado do começo ao fim |
 
-O motor é o mesmo para as 22 letras: as outras 16 lições já funcionam por
-`/licao/<id>`, com o conteúdo completo. O que o slice fecha é o ciclo —
-dashboard, mapa, lição, checkpoint, revisão, conquistas, progresso persistido.
+O curso está completo: `/` → onboarding → `/inicio` → 22 lições → 5 checkpoints
+→ módulos 6 e 7 → desafio final → `/concluido`. `tests/full-course.test.ts`
+percorre tudo isso e confere o estado final.
 
 Leia `ARCHITECTURE.md` antes de qualquer mudança estrutural.

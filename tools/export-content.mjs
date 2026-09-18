@@ -43,10 +43,34 @@ const word = w => ({
   audioId: audioIdFor(w.he)
 });
 
+/* A scene names a word; its reading and meaning must come from the one place
+   that already holds them, or the two drift. A multi-word sign (בֹּקֶר טוֹב)
+   is looked up word by word and joined. */
+function lookupWord(letters, phrase, scene) {
+  const all = new Map();
+  for (const L of letters) {
+    for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) all.set(NFC(w.he), w);
+  }
+  const parts = NFC(phrase).split(/\s+/).filter(Boolean);
+  const found = parts.map(p => all.get(p));
+  if (found.every(Boolean)) {
+    return {
+      translit: found.map(w => w.translit).join(' '),
+      pt: found.map(w => w.pt).join(' ')
+    };
+  }
+  /* Not a plain vocabulary word (an inflected form such as הַמֶּלֶךְ). The
+     scene then carries its own gloss, and V18 has already proved it is
+     readable at that point. */
+  return { translit: scene.translit ?? null, pt: scene.pt ?? null };
+}
+
 function main() {
   const letters = readJson('data/letters.json').sort((a, b) => a.order - b.order);
   const modules = readJson('data/modules.json').modules;
   const nikud = readJson('data/nikud.json');
+  const extras = readJson('data/extras.json');
+  const realWorld = readJson('data/real-world.json');
 
   /* Where each letter's pages start in the printed workbook, so the app can
      say "quer praticar à mão? páginas X–Y". Absent before the first `npm run
@@ -165,6 +189,53 @@ function main() {
         nameHe: NFC(g.nameHe), namePt: g.namePt,
         demo: NFC(g.demo), position: g.position, audioId: audioIdFor(g.demo)
       }))
+    }))
+  }, null, 2) + '\n');
+
+  /* ── modules 6 and 7, and the real-world scenes ─────────────────────
+     Both are shared with the book verbatim; what is added here is the audio id
+     per item, computed the same way as everywhere else. */
+  const withAudio = w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) });
+
+  writeFileSync(join(OUT, 'extras.json'), JSON.stringify({
+    dagesh: {
+      ...extras.dagesh,
+      letters: extras.dagesh.letters.map(D => ({
+        ...D,
+        hard: NFC(D.hard), soft: NFC(D.soft),
+        hardWords: D.hardWords.map(withAudio),
+        softWords: D.softWords.map(withAudio)
+      }))
+    },
+    finals: extras.finals.map(F => ({
+      ...F, base: NFC(F.base), fin: NFC(F.fin),
+      word: NFC(F.word), nameHe: NFC(F.nameHe), audioId: audioIdFor(F.word)
+    })),
+    unpointed: {
+      ...extras.unpointed,
+      words: extras.unpointed.words.map(u => ({
+        ...u, bare: NFC(u.bare), pointed: NFC(u.pointed), audioId: audioIdFor(u.pointed)
+      }))
+    },
+    gerech: {
+      ...extras.gerech,
+      signHe: NFC(extras.gerech.signHe),
+      letters: extras.gerech.letters.map(g => ({
+        ...g, he: NFC(g.he), base: NFC(g.base),
+        words: g.words.map(w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) }))
+      }))
+    }
+  }, null, 2) + '\n');
+
+  writeFileSync(join(OUT, 'real-world.json'), JSON.stringify({
+    scenes: realWorld.scenes.map(s2 => ({
+      /* The translit and gloss come from the letter data, so a scene can never
+         disagree with the lesson that taught the word. A scene may override
+         them — an inflected form such as הַמֶּלֶךְ is not a dictionary entry. */
+      ...s2,
+      he: NFC(s2.he),
+      audioId: audioIdFor(s2.he),
+      ...lookupWord(letters, s2.he, s2)
     }))
   }, null, 2) + '\n');
 

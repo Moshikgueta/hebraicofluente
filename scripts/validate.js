@@ -266,6 +266,98 @@ export function validate({ checkDist = true } = {}) {
   }
   Object.entries(translit.words || {}).forEach(([h, t]) => record(h, t, 'translit.json'));
 
+  /* ── V18 — «Hebraico no mundo real» obeys the order rule ───────────
+     A scene is the reward for having learned the letters. A scene the reader
+     cannot decode is the opposite of a reward, so each one declares the
+     earliest point it may appear and this checks the claim. Spaces are
+     ignored: a two-word sign is still just its consonants. */
+  let realWorld = null;
+  try { realWorld = readJson('data/real-world.json').scenes; } catch { /* not authored */ }
+  if (realWorld) {
+    for (const s of realWorld) {
+      const allowed = new Set();
+      letters.filter(l => l.order <= s.fromOrder).forEach(l => {
+        allowed.add(l.letter);
+        if (l.finalForm) allowed.add(l.finalForm);
+      });
+      const unknown = consonantsOf(s.he).filter(ch => {
+        const base = FINAL_TO_BASE[ch] || ch;
+        return ![...allowed].some(a => (FINAL_TO_BASE[a] || a) === base);
+      });
+      if (unknown.length) {
+        fail('V18', `real-world/${s.id}`,
+          `"${s.he}" usa ${[...new Set(unknown)].map(c => JSON.stringify(c)).join(', ')} — ` +
+          `depois da ordem ${s.fromOrder}`);
+      }
+      if (!hasNikud(s.he)) fail('V18', `real-world/${s.id}`, `"${s.he}" sem nikud`);
+      const bad = unmarkedHebrew(s.contextPt);
+      if (bad.length) {
+        fail('V18', `real-world/${s.id}`, `contextPt: hebraico sem {{ }} — ${bad.slice(0, 2).join(', ')}`);
+      }
+    }
+  } else {
+    warn('V18', 'data/real-world.json', 'ausente — a seção «no mundo real» fica vazia');
+  }
+
+  /* ── V19 — modules 6 and 7 are consistent with the alphabet ────────
+     The dagesh pairs and the final forms are claims about the language, and
+     they are now shared by the book and the app. A typo here would be printed
+     in one and taught in the other. */
+  let extras = null;
+  try { extras = readJson('data/extras.json'); } catch { /* not authored */ }
+  if (extras) {
+    const byChar2 = new Map(letters.map(l => [l.letter, l]));
+    for (const D of extras.dagesh.letters) {
+      const L = letters.find(l => l.id === D.id);
+      if (!L) { fail('V19', `extras/${D.id}`, 'não existe em letters.json'); continue; }
+      if (stripNikud(D.soft) !== L.letter) {
+        fail('V19', `extras/${D.id}`, `soft "${D.soft}" não é a letra ${L.letter}`);
+      }
+      if (stripNikud(D.hard) !== L.letter) {
+        fail('V19', `extras/${D.id}`, `hard "${D.hard}" não é a letra ${L.letter}`);
+      }
+      for (const w of [...D.hardWords, ...D.softWords]) {
+        if (!hasNikud(w.he)) fail('V19', `extras/${D.id}`, `"${w.he}" sem nikud`);
+        record(w.he, w.translit, `extras.${D.id}`);
+      }
+    }
+    const EXPECT_FIN = { 'מ': 'ם', 'נ': 'ן', 'כ': 'ך', 'פ': 'ף', 'צ': 'ץ' };
+    if (extras.finals.length !== 5) {
+      fail('V19', 'extras.finals', `${extras.finals.length} formas finais, esperadas 5`);
+    }
+    for (const F of extras.finals) {
+      if (EXPECT_FIN[F.base] !== F.fin) {
+        fail('V19', 'extras.finals', `${F.base} → ${F.fin} está errado`);
+      }
+      if (!byChar2.has(F.base)) fail('V19', 'extras.finals', `${F.base} não é uma letra ensinada`);
+      if (!F.word.includes(F.fin)) {
+        fail('V19', 'extras.finals', `o exemplo "${F.word}" não contém ${F.fin}`);
+      }
+      record(F.word, F.translit, 'extras.finals');
+    }
+    for (const u of extras.unpointed.words) {
+      if (stripNikud(u.pointed) !== u.bare) {
+        fail('V19', 'extras.unpointed',
+          `"${u.bare}" não é "${u.pointed}" sem nikud (seria "${stripNikud(u.pointed)}")`);
+      }
+      record(u.pointed, u.translit, 'extras.unpointed');
+    }
+    const GERESH = '׳';
+    for (const g of extras.gerech.letters) {
+      if (g.he !== g.base + GERESH) {
+        fail('V19', `extras.gerech/${g.id}`, `"${g.he}" deveria ser ${g.base} + gerech U+05F3`);
+      }
+      for (const w of g.words) {
+        if (!w.he.includes(g.he)) {
+          fail('V19', `extras.gerech/${g.id}`, `"${w.he}" não contém ${g.he}`);
+        }
+      }
+    }
+  } else {
+    warn('V19', 'data/extras.json', 'ausente — os módulos 6 e 7 ficam sem conteúdo');
+  }
+
+
   /* V3b — a word written with two DIFFERENT pointings is usually a typo in one
      of them. Not fatal (שָׁם/שֵׁם are a real pair), but worth surfacing. */
   const byConsonants = new Map();

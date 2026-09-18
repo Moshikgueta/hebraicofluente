@@ -7,6 +7,8 @@
 import courseJson from '@content/course.json';
 import nikudJson from '@content/nikud.json';
 import lettersJson from '@content/letters.json';
+import extrasJson from '@content/extras.json';
+import realWorldJson from '@content/real-world.json';
 
 export type Word = {
   he: string;
@@ -90,6 +92,24 @@ export type NikudSound = {
 
 export const course = courseJson as unknown as Course;
 export type NikudIntro = { title: string; lead: string; correction: string };
+
+/** Modules 6 and 7, shared verbatim with the printed workbook. */
+export const extras = extrasJson as unknown as import('./engine/extras').Extras;
+
+export type Scene = {
+  id: string; fromOrder: number; sceneType: string; labelPt: string;
+  he: string; contextPt: string; translit: string; pt: string; audioId: string;
+};
+const SCENES = (realWorldJson as unknown as { scenes: Scene[] }).scenes;
+
+/** Scenes the learner can actually decode right now, newest first.
+ *  A sign they cannot read is not a reward. */
+export const scenesUpTo = (order: number): Scene[] =>
+  SCENES.filter(s => s.fromOrder <= order).sort((a, b) => b.fromOrder - a.fromOrder);
+
+/** The scenes a given letter unlocks. Most letters unlock none. */
+export const scenesForOrder = (order: number): Scene[] =>
+  SCENES.filter(s => s.fromOrder === order);
 
 export const nikud = nikudJson as unknown as {
   intro: NikudIntro;

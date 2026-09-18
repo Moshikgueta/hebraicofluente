@@ -8,7 +8,9 @@ import { He, HeSeq } from '@/components/hebrew/He';
 import { AudioButton } from './AudioButton';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import type { Letter, Syllable, Word } from '@/lib/content';
+import type { Letter, Scene, Syllable, Word } from '@/lib/content';
+import { supportLabel, supportLevel } from '@/lib/state/rules';
+import { useProgress } from '@/lib/state/store';
 import { track } from '@/lib/analytics';
 
 /* ── the Brazilian interference note ─────────────────────────────────────
@@ -109,7 +111,12 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
    appears, and the support arrives in two steps so that "como se lê" and "o
    que quer dizer" are separate acts. */
 export function WordReveal({ word, mark }: { word: Word; mark?: string | null }) {
-  const [step, setStep] = useState<0 | 1 | 2>(0);
+  const { mastered } = useProgress();
+  const level = supportLevel(mastered);
+  /* Early on the reading is simply printed: a learner who cannot decode
+     anything yet gains nothing from a hidden answer. Later it costs a tap, and
+     at the far end it has to be asked for. */
+  const [step, setStep] = useState<0 | 1 | 2>(level === 'always' ? 1 : 0);
 
   return (
     <Card className="p-5 flex flex-col gap-4">
@@ -136,7 +143,7 @@ export function WordReveal({ word, mark }: { word: Word; mark?: string | null })
           onClick={() => setStep(s => (s === 0 ? 1 : 2))}
           className="self-start"
         >
-          {step === 0 ? 'Mostrar leitura' : 'Mostrar significado'}
+          {step === 0 ? supportLabel(level) : 'Mostrar significado'}
         </Button>
       )}
     </Card>
@@ -178,10 +185,21 @@ export function BridgeWords({ letter }: { letter: Letter }) {
 /* ── Hebrew in the world ────────────────────────────────────────────────
    Only ever built from words the learner can already decode, so this reads as
    a reward rather than a wall. */
-export function RealWorldHebrew({
-  word, contextPt, sceneLabel
-}: { word: Word; contextPt: string; sceneLabel: string }) {
+const SCENE_ICON: Record<string, string> = {
+  placa: '▭', rotulo: '▤', cardapio: '▥', recibo: '▦', mensagem: '▣',
+  jornal: '▨', etiqueta: '▧', anuncio: '▩', vitrine: '▢', conversa: '❝'
+};
+
+export function RealWorldHebrew({ scene }: { scene: Scene }) {
+  const { mastered } = useProgress();
+  const level = supportLevel(mastered);
   const [shown, setShown] = useState(false);
+  const word: Word = {
+    he: scene.he, translit: scene.translit, pt: scene.pt, use: null, audioId: scene.audioId
+  };
+  const contextPt = scene.contextPt;
+  const sceneLabel = scene.labelPt;
+  const icon = SCENE_ICON[scene.sceneType] ?? '▭';
   return (
     <Card tone="surface" className="overflow-hidden">
       <div className="flex items-center gap-2.5 px-5 py-3 border-b border-[color:var(--line-soft)]">
@@ -189,21 +207,29 @@ export function RealWorldHebrew({
         <h3 className="font-ui text-[13px] font-semibold uppercase tracking-[.07em] text-ink-muted">
           Hebraico no mundo real
         </h3>
+        <span aria-hidden className="ml-auto text-ink-muted">{icon}</span>
       </div>
       <div className="p-5 sm:p-6 grid gap-4">
         <p className="font-ui text-[13.5px] text-ink-muted">{sceneLabel}</p>
-        <div className="rounded-[var(--r-md)] bg-surface-2 py-8 px-5 flex items-center justify-center">
+        {/* The word alone, big, on a plain surface — the closest a screen gets
+            to seeing it on a sign. */}
+        <div className="rounded-[var(--r-md)] bg-surface-2 py-9 px-5 flex items-center justify-center">
           <He size="display">{word.he}</He>
         </div>
-        <p className="text-[15px] text-ink-body">{contextPt}</p>
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <p className="text-[15px] leading-relaxed text-ink-body flex-1 min-w-[16ch]">
+            <Prose text={contextPt} />
+          </p>
+          <AudioButton audioId={word.audioId} label="Ouvir" size="sm" />
+        </div>
         {shown ? (
-          <div className="grid gap-1 animate-rise">
+          <div className="grid gap-1 animate-rise border-t border-[color:var(--line-soft)] pt-4">
             <p className="font-ui text-[16px] font-semibold text-[var(--teal-band)]">{word.translit}</p>
             <p className="text-[16px] text-ink">{word.pt}</p>
           </div>
         ) : (
           <Button variant="secondary" size="sm" className="self-start" onClick={() => setShown(true)}>
-            Você consegue ler? Mostrar resposta
+            {level === 'on-request' ? 'Você consegue ler? Conferir' : 'Você consegue ler? Mostrar resposta'}
           </Button>
         )}
       </div>

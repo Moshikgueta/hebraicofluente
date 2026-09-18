@@ -45,26 +45,50 @@ export const XP = {
   dailyGoal: 5
 } as const;
 
-/** How many answered exercises a daily goal is worth. ~20s per item. */
+/** Practice units in a daily goal. One unit is about twenty seconds. */
 export const goalTarget = (minutes: number): number => Math.max(3, Math.round(minutes * 3));
+
+/** What one answered question is worth. */
+export const ANSWER_UNITS = 1;
+
+/**
+ * What finishing one stage of a lesson is worth — about two minutes of
+ * reading, listening, tracing or writing. Without this the daily goal could
+ * only be met by answering questions, which is the smaller half of the course.
+ */
+export const STAGE_UNITS = 6;
+
+/**
+ * A lesson of module 6 or 7 is bigger than a letter stage — the dagesh lesson
+ * covers three letter pairs with their word lists, the finals lesson covers all
+ * five forms — so it is worth more. A single constant for "a stage" was the
+ * simplification; these two modules are where it stopped being true.
+ */
+export const EXTRA_STAGE_UNITS = 10;
 
 /* ── streak ─────────────────────────────────────────────────────────────
    A day counts when the learner meets the goal they chose. Breaking it costs
    nothing but the counter: no XP is removed, and the longest run is kept, so
    coming back is never a fresh start. */
 
+export const emptyDay = (): DayRecord => ({ answered: 0, units: 0, xp: 0, goalMet: false });
+
 export function applyPractice(
-  state: LearnerState, day: string, answered: number
+  state: LearnerState, day: string, practice: { answered?: number; units: number }
 ): LearnerState {
   const goal = state.onboarding?.goalMinutes ?? 10;
   const target = goalTarget(goal);
-  const prev: DayRecord = state.days[day] ?? { answered: 0, xp: 0, goalMet: false };
-  const next: DayRecord = { ...prev, answered: prev.answered + answered };
+  const prev: DayRecord = state.days[day] ?? emptyDay();
+  const next: DayRecord = {
+    ...prev,
+    answered: prev.answered + (practice.answered ?? 0),
+    units: prev.units + practice.units
+  };
 
   let xp = state.xp;
   let streak = state.streak;
 
-  if (!prev.goalMet && next.answered >= target) {
+  if (!prev.goalMet && next.units >= target) {
     next.goalMet = true;
     next.xp = prev.xp + XP.dailyGoal;
     xp += XP.dailyGoal;
@@ -87,7 +111,7 @@ export function displayStreak(state: LearnerState, day: string): number {
 }
 
 export function awardXp(state: LearnerState, day: string, amount: number): LearnerState {
-  const prev: DayRecord = state.days[day] ?? { answered: 0, xp: 0, goalMet: false };
+  const prev: DayRecord = state.days[day] ?? emptyDay();
   return {
     ...state,
     xp: state.xp + amount,
@@ -105,13 +129,17 @@ export const emptyLesson = (letterId: string): LessonProgress => ({
 export const STAGE_COUNT = 5;
 
 export function completeStage(
-  state: LearnerState, letterId: string, stage: number, day: string
+  state: LearnerState, letterId: string, stage: number, day: string,
+  units: number = STAGE_UNITS
 ): LearnerState {
   const prev = state.lessons[letterId] ?? emptyLesson(letterId);
   if (prev.stagesDone.includes(stage)) return state;
 
   const stagesDone = [...prev.stagesDone, stage].sort((a, b) => a - b);
-  const justFinished = stagesDone.length === STAGE_COUNT && !prev.completedAt;
+  /* Modules 6 and 7 have three lessons, not five stages; whichever total the
+     caller is working to, the lesson bonus is paid when it is reached. */
+  const total = units === STAGE_UNITS ? STAGE_COUNT : EXTRA_STAGE_COUNT;
+  const justFinished = stagesDone.length === total && !prev.completedAt;
   const lesson: LessonProgress = {
     ...prev, stagesDone,
     completedAt: justFinished ? new Date().toISOString() : prev.completedAt
@@ -119,6 +147,8 @@ export function completeStage(
 
   let next: LearnerState = { ...state, lessons: { ...state.lessons, [letterId]: lesson } };
   next = awardXp(next, day, XP.stage + (justFinished ? XP.lesson : 0));
+  /* A finished stage is practice, and the daily goal has to see it. */
+  next = applyPractice(next, day, { units });
   return next;
 }
 
@@ -242,6 +272,10 @@ export const ACHIEVEMENTS: AchievementDef[] = [
     test: s => Object.values(s.checkpoints).some(c => (c.best ?? 0) >= 1) },
   { id: 'vinte-e-duas', titlePt: '22 letras', descPt: 'O alfabeto inteiro.',
     test: s => lettersMastered(s) >= 22 },
+  { id: 'sem-o-ponto', titlePt: 'Sem o ponto', descPt: 'Você lê {{בּ}}, {{כּ}} e {{פּ}} sem o daguesh — como elas aparecem na rua.',
+    test: s => !!s.checkpoints['cp6']?.passedAt },
+  { id: 'sons-modernos', titlePt: 'Os sons modernos', descPt: 'O gerech e as três letras que o hebraico moderno inventou sem inventar letra.',
+    test: s => !!s.checkpoints['cp7']?.passedAt },
   { id: 'leitor', titlePt: 'Leitor de hebraico', descPt: 'Você concluiu o desafio final.',
     test: s => !!s.finalChallenge.completedAt }
 ];
@@ -260,12 +294,54 @@ export function syncAchievements(
   return { state: { ...state, achievements: [...state.achievements, ...unlocked] }, unlocked };
 }
 
+/* ── progressive reading support ────────────────────────────────────────
+   The support fades as the alphabet fills in. This is the single most visible
+   sign of progress the course has — a learner who needed the transliteration
+   on letter 3 and reads without it on letter 18 can SEE that they changed.
+
+   It is a function of letters mastered, not of a setting, because a setting
+   would let the learner keep the crutch forever without noticing. */
+export type SupportLevel = 'always' | 'on-tap' | 'on-request';
+
+export function supportLevel(mastered: number): SupportLevel {
+  if (mastered < 8) return 'always';        // the reading is simply there
+  if (mastered < 16) return 'on-tap';       // one tap
+  return 'on-request';                      // "Precisa de ajuda?"
+}
+
+export const supportLabel = (level: SupportLevel): string =>
+  level === 'on-request' ? 'Precisa de ajuda?' : 'Mostrar leitura';
+
 /* ── overall progress ───────────────────────────────────────────────────── */
 
-export function courseProgress(state: LearnerState, totalLetters: number): number {
+/**
+ * Course completion.
+ *
+ * `extraModuleIds` are modules 6 and 7 — three lessons each, no letters. They
+ * are part of the course, so leaving them out of the denominator would let the
+ * bar read 100% while the reader still cannot handle a word printed without
+ * its dots, which is most words.
+ */
+export function courseProgress(
+  state: LearnerState, totalLetters: number, extraModuleIds: readonly string[] = []
+): number {
   if (totalLetters <= 0) return 0;
-  const done = Object.values(state.lessons).reduce(
-    (a, l) => a + Math.min(STAGE_COUNT, l.stagesDone.length) / STAGE_COUNT, 0
+  const letterIds = new Set(
+    Object.keys(state.lessons).filter(id => !extraModuleIds.includes(id))
   );
-  return Math.min(1, done / totalLetters);
+  const letters = [...letterIds].reduce((a, id) => {
+    const l = state.lessons[id];
+    return a + (l ? Math.min(STAGE_COUNT, l.stagesDone.length) / STAGE_COUNT : 0);
+  }, 0);
+  const extras = extraModuleIds.reduce((a, id) => {
+    const l = state.lessons[id];
+    return a + (l ? Math.min(EXTRA_STAGE_COUNT, l.stagesDone.length) / EXTRA_STAGE_COUNT : 0);
+  }, 0);
+  return Math.min(1, (letters + extras) / (totalLetters + extraModuleIds.length));
 }
+
+/** Modules 6 and 7 have three lessons, not five stages. */
+export const EXTRA_STAGE_COUNT = 3;
+
+export const isExtraModuleDone = (state: LearnerState, id: string): boolean =>
+  (state.lessons[id]?.stagesDone.length ?? 0) >= EXTRA_STAGE_COUNT;

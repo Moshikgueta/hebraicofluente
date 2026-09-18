@@ -1,0 +1,155 @@
+{
+  "note": [
+    "«Hebraico no mundo real» — o momento em que o curso para de ser exercicio.",
+    "",
+    "Cada cena so aparece a partir de `fromOrder`, e a REGRA DA ORDEM vale aqui",
+    "como vale em wordsToRead: a V18 falha o build se uma cena usar letra que o",
+    "leitor ainda nao viu naquele ponto. Uma placa que o aluno nao consegue",
+    "decifrar nao e recompensa, e frustracao — o oposto do que esta secao existe",
+    "para produzir.",
+    "",
+    "As cenas sao contextos reais de Israel: placa, cardapio, rotulo, mensagem,",
+    "nome de rua. O texto hebraico e sempre uma palavra (ou frase) que o aluno ja",
+    "tem no vocabulario de leitura."
+  ],
+  "scenes": [
+    {
+      "id": "garrafa-mayim",
+      "fromOrder": 6,
+      "sceneType": "rotulo",
+      "labelPt": "Na garrafa d'água do supermercado",
+      "he": "מַיִם",
+      "contextPt": "Toda garrafa de água em Israel traz esta palavra. É provavelmente a primeira coisa que você vai ler sozinho numa prateleira."
+    },
+    {
+      "id": "quem-e",
+      "fromOrder": 6,
+      "sceneType": "conversa",
+      "labelPt": "A pergunta que abre qualquer apresentação",
+      "he": "מִי",
+      "contextPt": "Uma palavra de duas letras que você já lê inteira — e que serve para perguntar quem é alguém."
+    },
+    {
+      "id": "porta-loja",
+      "fromOrder": 12,
+      "sceneType": "placa",
+      "labelPt": "Na porta de uma loja, na chegada e na saída",
+      "he": "שָׁלוֹם",
+      "contextPt": "A mesma palavra abre e fecha uma conversa. Em Israel você vai ouvi-la umas quarenta vezes por dia."
+    },
+    {
+      "id": "recibo-toda",
+      "fromOrder": 12,
+      "sceneType": "recibo",
+      "labelPt": "No rodapé de um recibo de padaria",
+      "he": "תּוֹדָה",
+      "contextPt": "Impresso no fim de quase todo cupom fiscal do país."
+    },
+    {
+      "id": "aula-morá",
+      "fromOrder": 12,
+      "sceneType": "conversa",
+      "labelPt": "Como se chama a professora, na escola e no ulpan",
+      "he": "מוֹרָה",
+      "contextPt": "Se você fizer um ulpan em Israel, é assim que vai chamar quem está na frente da sala."
+    },
+    {
+      "id": "padaria-lechem",
+      "fromOrder": 14,
+      "sceneType": "etiqueta",
+      "labelPt": "Na etiqueta da prateleira de pães",
+      "he": "לֶחֶם",
+      "contextPt": "O {{ח}} raspado bem no meio da palavra. Vale ler em voz alta antes de conferir."
+    },
+    {
+      "id": "casa-nova",
+      "fromOrder": 14,
+      "sceneType": "anuncio",
+      "labelPt": "Num anúncio de imóvel",
+      "he": "חָדָשׁ",
+      "contextPt": "Aparece em anúncio de tudo: apartamento, carro, cardápio. Quer dizer \"novo\"."
+    },
+    {
+      "id": "horario-shaa",
+      "fromOrder": 17,
+      "sceneType": "placa",
+      "labelPt": "No ponto de ônibus, acima da tabela",
+      "he": "שָׁעָה",
+      "contextPt": "O {{ע}} é mudo: você lê só a vogal que vem com ele."
+    },
+    {
+      "id": "jornal-haaretz",
+      "fromOrder": 18,
+      "sceneType": "jornal",
+      "labelPt": "Na primeira página do jornal mais antigo do país",
+      "he": "אֶרֶץ",
+      "contextPt": "O jornal Haaretz é literalmente \"A Terra\". A palavra termina com o {{ץ}} final, que desce abaixo da linha."
+    },
+    {
+      "id": "caixa-mits",
+      "fromOrder": 18,
+      "sceneType": "rotulo",
+      "labelPt": "Na caixa de suco, na geladeira do mercado",
+      "he": "מִיץ",
+      "contextPt": "Três letras, e a última é uma forma final. Suco."
+    },
+    {
+      "id": "biblioteca-sheket",
+      "fromOrder": 19,
+      "sceneType": "placa",
+      "labelPt": "Numa placa de biblioteca",
+      "he": "שֶׁקֶט",
+      "contextPt": "Silêncio. Uma placa que você vai entender de relance."
+    },
+    {
+      "id": "whatsapp-boker",
+      "fromOrder": 20,
+      "sceneType": "mensagem",
+      "labelPt": "Mensagem de WhatsApp, oito da manhã",
+      "he": "בֹּקֶר טוֹב",
+      "contextPt": "Duas palavras, seis letras, e o cumprimento mais comum de Israel antes do meio-dia."
+    },
+    {
+      "id": "loja-shabat",
+      "fromOrder": 20,
+      "sceneType": "placa",
+      "labelPt": "No horário de funcionamento, na porta",
+      "he": "שַׁבָּת",
+      "contextPt": "Quase todo comércio de Israel fecha nesse dia. Saber ler a palavra evita uma viagem perdida."
+    },
+    {
+      "id": "praca-ochel",
+      "fromOrder": 21,
+      "sceneType": "placa",
+      "labelPt": "Na placa da praça de alimentação de um shopping",
+      "he": "אֹכֶל",
+      "contextPt": "O {{כ}} aqui está sem ponto, no meio da palavra — então é o som raspado, não K."
+    },
+    {
+      "id": "rua-hamelech",
+      "fromOrder": 21,
+      "sceneType": "placa",
+      "labelPt": "Numa placa de rua, em quase toda cidade do país",
+      "he": "הַמֶּלֶךְ",
+      "contextPt": "\"Do rei\". Termina com o {{ך}} final — e é a mesma palavra que esperava desde a primeira lição.",
+      "translit": "hamélech",
+      "pt": "o rei"
+    },
+    {
+      "id": "cambio-kesef",
+      "fromOrder": 22,
+      "sceneType": "vitrine",
+      "labelPt": "Na vitrine de uma casa de câmbio",
+      "he": "כֶּסֶף",
+      "contextPt": "Dinheiro — e, por acaso, também é a palavra para prata."
+    },
+    {
+      "id": "livraria-sefer",
+      "fromOrder": 22,
+      "sceneType": "vitrine",
+      "labelPt": "Na lombada de um livro, numa livraria de Tel Aviv",
+      "he": "סֵפֶר",
+      "contextPt": "Você fechou o alfabeto. Esta palavra usa a última letra que aprendeu."
+    }
+  ]
+}

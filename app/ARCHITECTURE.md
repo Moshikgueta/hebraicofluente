@@ -412,12 +412,65 @@ Auditoria atual: **limpa**. 41 testes, 45 páginas estáticas, 0 overflow.
 
 ---
 
+## 7.2 O curso inteiro (segunda rodada)
+
+As 16 letras restantes já funcionavam — são geradas dos mesmos dados. O que
+faltava de verdade eram os **módulos 6 e 7**, que tinham abertura e nenhum
+conteúdo, e três coisas que o briefing pede e que só fazem sentido com o curso
+inteiro no ar.
+
+**Módulos 6 e 7 viraram lições.** Não cabem no template de cinco etapas — não há
+glifo novo para traçar nem tabela de sílabas —, então seguem as três lições do
+próprio plano: 16/17/18 e 19/20/21. O conteúdo saiu de dentro de
+`templates/extras.js` para `data/extras.json`, porque o livro e o curso precisam
+exatamente das mesmas palavras e duas cópias de uma lista são duas chances de
+divergir. A **V19** confere esse arquivo contra `letters.json`: o par com/sem
+daguesh é mesmo daquela letra, as cinco finais são as cinco certas, a palavra
+sem nikud é mesmo a pontuada sem nikud, e o gerech é U+05F3 e não um apóstrofo
+ASCII.
+
+**Leitura com apoio decrescente** (§6 do briefing). A transliteração aparece
+sozinha até 8 letras, custa um toque até 16, e depois precisa ser pedida —
+`supportLevel()`, função das letras dominadas e não de uma preferência, porque
+uma preferência deixaria o aluno manter a muleta sem perceber.
+
+**«Hebraico no mundo real»** virou dado: `data/real-world.json`, 17 cenas
+(placa, rótulo, recibo, mensagem, jornal, vitrine), cada uma declarando a partir
+de que letra pode aparecer. A **V18** falha o build se uma cena usar letra ainda
+não ensinada — uma placa que o aluno não decifra é o oposto de uma recompensa.
+
+### O bug que a simulação do curso inteiro encontrou
+
+`tests/full-course.test.ts` joga o curso do começo ao fim — 24 dias, 22 letras,
+7 checkpoints, os dois módulos extras e o desafio final — e confere o estado
+final. Ele achou um defeito que nenhum teste unitário acharia:
+
+> **A meta diária era inalcançável fazendo o curso.** Ela contava só exercícios
+> respondidos, e uma lição de letra tem oito. Quem fizesse exatamente uma lição
+> por dia — cinco etapas de leitura, escuta, traçado e escrita — nunca batia uma
+> meta de dez minutos e nunca construía sequência. A maior parte do aprendizado
+> deste curso não é responder alternativa.
+
+A meta passou a contar **unidades de prática** de vinte segundos: um exercício
+vale 1, uma etapa de lição vale 6 (≈2 min), uma lição dos módulos 6 e 7 vale 10
+(elas são maiores — três pares de daguesh, cinco formas finais). Uma lição
+completa passou a valer 38 unidades ≈ 12,7 min, que é o que ela é. O teste hoje
+exige que **todo dia em que uma lição foi concluída bata a meta**.
+
+---
+
 ## 8. Sinalizado para a sua revisão
 
-1. **O slice é o Módulo 1 (6 letras), não Mem/Shin/Lámed/Bet.** Ver §0.
+1. **O slice começou no Módulo 1 (6 letras), não Mem/Shin/Lámed/Bet.** Ver §0.
+   Hoje o curso inteiro está implementado: 22 letras, 7 módulos, 5 checkpoints,
+   os dois módulos sem letra, revisão, desafio final e conclusão.
 2. **Não há áudio.** Exercícios de audição ficam marcados como indisponíveis.
 3. **Supabase não está conectado.** Progresso persiste em localStorage.
 4. **`ch` para ח e כ** continua como está — decisão sua, já registrada.
 5. **Letras 1 e 2 (מ, ת) não têm palavra inteira para ler.** No livro isso vira
    tabela de cópia de sílabas; no app, a etapa de leitura da lição 1 e 2 é
    substituída por sílabas, com a explicação na tela.
+6. **As 17 cenas de «no mundo real» são autoradas, não coletadas.** São
+   contextos reais (placa de rua, rótulo, recibo), mas escritos por nós a partir
+   do vocabulário do curso — não fotografias nem transcrições. Vale a sua
+   revisão de quem conhece Israel.

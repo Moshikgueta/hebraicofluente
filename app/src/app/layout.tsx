@@ -36,7 +36,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Pular para o conteúdo
         </a>
-        <ProgressProvider totalLetters={course.totalLetters}>
+        {/* Modules 6 and 7 count toward completion: a bar that reads 100%
+            while the reader still cannot handle an unpointed word would be
+            lying about the thing the course exists to teach. */}
+        <ProgressProvider
+          totalLetters={course.totalLetters}
+          extraModuleIds={course.modules.filter(m => !m.letterIds.length).map(m => m.id)}
+        >
           <AppShell>
             <div id="conteudo">{children}</div>
           </AppShell>

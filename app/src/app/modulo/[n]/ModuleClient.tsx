@@ -99,9 +99,15 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
 
       <WorkbookLink pages={mod.workbookPages} what="este módulo" />
 
-      {first && (
+      {first ? (
         <LinkButton href={`/licao/${first.id}`} size="lg" full>
           Começar pela letra {first.namePt}
+        </LinkButton>
+      ) : (
+        /* Modules 6 and 7 have no letters — they have their own three-lesson
+           route, and without this the opener was a dead end. */
+        <LinkButton href={`/extra/${mod.n === 6 ? 'sem-o-ponto' : 'sons-modernos'}`} size="lg" full>
+          Começar o módulo {mod.n}
         </LinkButton>
       )}
     </div>

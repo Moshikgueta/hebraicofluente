@@ -5,7 +5,8 @@ import { describe, expect, it } from 'vitest';
 import {
   addDays, applyPractice, ACHIEVEMENTS, awardXp, completeStage, courseProgress,
   daysBetween, displayStreak, dueItems, goalTarget, lettersMastered, PASS_MARK,
-  recordAnswer, recordCheckpoint, recordQuiz, STAGE_COUNT, syncAchievements, today, XP
+  recordAnswer, recordCheckpoint, recordQuiz, STAGE_COUNT, STAGE_UNITS,
+  syncAchievements, today, XP
 } from '../src/lib/state/rules';
 import { EMPTY_STATE, type LearnerState } from '../src/lib/state/types';
 
@@ -34,15 +35,20 @@ describe('XP', () => {
   it('pays per stage and once more for the finished lesson', () => {
     let s = base();
     for (let n = 1; n <= STAGE_COUNT; n++) s = completeStage(s, 'mem', n, '2026-01-05');
-    expect(s.xp).toBe(XP.stage * STAGE_COUNT + XP.lesson);
+    /* The daily-goal bonus rides along: five stages is 30 units, which is
+       exactly a ten-minute goal. That is the point of counting stages. */
+    expect(s.xp).toBe(XP.stage * STAGE_COUNT + XP.lesson + XP.dailyGoal);
     expect(lettersMastered(s)).toBe(1);
+    expect(s.days['2026-01-05']!.units).toBe(STAGE_COUNT * STAGE_UNITS);
   });
 
   it('does not pay twice for the same stage', () => {
     let s = completeStage(base(), 'mem', 1, '2026-01-05');
     const before = s.xp;
+    const units = s.days['2026-01-05']!.units;
     s = completeStage(s, 'mem', 1, '2026-01-05');
     expect(s.xp).toBe(before);
+    expect(s.days['2026-01-05']!.units).toBe(units);
   });
 
   it('pays the perfect-quiz bonus once per letter, not once per retry', () => {
@@ -71,7 +77,18 @@ describe('XP', () => {
 });
 
 describe('streak', () => {
-  const answerTimes = (s: LearnerState, day: string, n: number) => applyPractice(s, day, n);
+  const answerTimes = (s: LearnerState, day: string, n: number) =>
+    applyPractice(s, day, { answered: n, units: n });
+
+  it('lets one finished lesson meet a ten-minute goal', () => {
+    /* The regression the full-course simulation caught: with only answered
+       questions counting, a learner doing exactly one lesson a day never met
+       a ten-minute goal and never built a streak. */
+    let s = base(10);
+    for (let n = 1; n <= STAGE_COUNT; n++) s = completeStage(s, 'mem', n, '2026-01-05');
+    expect(s.days['2026-01-05']!.goalMet).toBe(true);
+    expect(s.streak.current).toBe(1);
+  });
 
   it('counts a day only when the chosen goal is met', () => {
     const target = goalTarget(10);
@@ -115,7 +132,7 @@ describe('streak', () => {
 
   it('shows yesterday-ended runs as still alive today', () => {
     const t = goalTarget(10);
-    const s = applyPractice(base(10), '2026-01-05', t);
+    const s = applyPractice(base(10), '2026-01-05', { answered: t, units: t });
     expect(displayStreak(s, '2026-01-05')).toBe(1);
     expect(displayStreak(s, '2026-01-06')).toBe(1);   // today is not over yet
     expect(displayStreak(s, '2026-01-07')).toBe(0);

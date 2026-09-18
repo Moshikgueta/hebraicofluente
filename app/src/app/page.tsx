@@ -13,7 +13,7 @@ import { ProgressBar, StreakCard } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
 import { course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
-import { isLessonComplete } from '@/lib/state/rules';
+import { isExtraModuleDone, isLessonComplete } from '@/lib/state/rules';
 
 export default function Dashboard() {
   const p = useProgress();
@@ -23,7 +23,14 @@ export default function Dashboard() {
      A checkpoint interrupts when its whole module is done and it is not. */
   const next = useMemo(() => {
     for (const m of course.modules) {
-      if (!m.letterIds.length) continue;
+      /* Modules 6 and 7 teach no letter but are not optional: they are where
+         reading without nikud starts. They sit in the sequence, in order. */
+      if (!m.letterIds.length) {
+        if (!isExtraModuleDone(p.state, m.id)) {
+          return { kind: 'extra' as const, module: m };
+        }
+        continue;
+      }
       for (const id of m.letterIds) {
         if (!isLessonComplete(p.state, id)) {
           return { kind: 'letter' as const, letter: getLetter(id)!, module: m };
@@ -101,6 +108,23 @@ export default function Dashboard() {
           </Card>
         )}
 
+        {next.kind === 'extra' && (
+          <Card tone="wash" className="p-6 sm:p-7 grid sm:grid-cols-[1fr_auto] items-center gap-5">
+            <div className="grid gap-1">
+              <Badge tone="teal">Módulo {next.module.n}</Badge>
+              <p className="font-display text-[21px] font-bold text-ink mt-1">
+                {next.module.titlePt}
+              </p>
+              <p className="font-ui text-[14px] text-ink-body">
+                Nenhuma letra nova — e é o módulo que separa quem decora de quem lê.
+              </p>
+            </div>
+            <LinkButton href={`/modulo/${next.module.n}`} size="lg" className="w-full sm:w-auto">
+              {(p.state.lessons[next.module.id]?.stagesDone.length ?? 0) > 0 ? 'Continuar' : 'Começar'}
+            </LinkButton>
+          </Card>
+        )}
+
         {next.kind === 'done' && (
           <Card tone="mint" className="p-6 sm:p-7 grid gap-3">
             <p className="font-display text-[21px] font-bold">Você chegou ao fim do alfabeto.</p>
@@ -112,7 +136,7 @@ export default function Dashboard() {
       </section>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <StreakCard days={p.streak} goalAnswered={p.goalAnswered} goalTarget={p.goalTargetToday} />
+        <StreakCard days={p.streak} goalUnits={p.goalUnits} goalTarget={p.goalTargetToday} />
 
         <Card className="p-5 grid gap-3 content-start">
           <div className="flex items-center gap-2.5">

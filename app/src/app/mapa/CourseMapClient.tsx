@@ -12,7 +12,7 @@ import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
-import { course, type MapNode } from '@/lib/content';
+import { course, type CourseModule, type MapNode } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
 import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
 
@@ -92,11 +92,7 @@ function MapRow({ node, state }: { node: MapNode; state: RowState }) {
           </p>
         )}
         {m.letterIds.length === 0 && (
-          <Link href={`/modulo/${m.n}`}
-                className="inline-flex items-center gap-2 min-h-[44px] font-ui text-[13px]
-                           text-[var(--teal-band)] hover:underline">
-            <Prose text={m.subPt} /> <span aria-hidden>→</span>
-          </Link>
+          <ExtraModuleRow module={m} />
         )}
       </li>
     );
@@ -158,6 +154,28 @@ function MapRow({ node, state }: { node: MapNode; state: RowState }) {
         <p className="font-ui text-[13px] text-ink-muted">Hebraico de verdade, sem apoio</p>
       </Link>
     </Row>
+  );
+}
+
+/* Modules 6 and 7 are real lessons with real progress, so they get a row that
+   reports it rather than a bare link. */
+function ExtraModuleRow({ module: m }: { module: CourseModule }) {
+  const p = useProgress();
+  const doneCount = p.state.lessons[m.id]?.stagesDone.length ?? 0;
+  const passed = !!p.state.checkpoints[`cp${m.n}`]?.passedAt;
+  return (
+    <Link href={`/modulo/${m.n}`}
+          className="mt-1 flex items-center gap-3 min-h-[44px] font-ui text-[13px]
+                     text-[var(--teal-band)] hover:underline">
+      <span aria-hidden className={passed ? 'text-[var(--green)]' : 'text-[var(--teal-band)]'}>
+        {passed ? '✓' : doneCount > 0 ? '●' : '○'}
+      </span>
+      <Prose text={m.subPt} />
+      {doneCount > 0 && !passed && (
+        <span className="text-ink-muted">· {doneCount} de 3</span>
+      )}
+      <span aria-hidden className="ml-auto">→</span>
+    </Link>
   );
 }
 

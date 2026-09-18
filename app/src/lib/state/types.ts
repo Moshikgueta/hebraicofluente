@@ -45,8 +45,18 @@ export type Achievement = {
 };
 
 export type DayRecord = {
-  /** Exercises answered that day — the unit of "meaningful practice". */
+  /** Questions answered that day. Kept for analytics and for honesty. */
   answered: number;
+  /**
+   * Practice credit toward the daily goal, in 20-second units.
+   *
+   * Counting only answered questions was wrong and the full-course simulation
+   * caught it: a complete letter lesson is eight questions, so a learner who
+   * did exactly one lesson a day — five stages of reading, listening, tracing
+   * and writing — never met a ten-minute goal and never built a streak. Most of
+   * the learning in this course is not a multiple-choice answer.
+   */
+  units: number;
   xp: number;
   goalMet: boolean;
 };

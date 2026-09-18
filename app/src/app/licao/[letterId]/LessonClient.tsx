@@ -28,7 +28,7 @@ import {
   RealWorldHebrew, SyllableTrainer, WordReveal, WorkbookLink
 } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
-import { allLetters, course, nextLetter, type Letter } from '@/lib/content';
+import { allLetters, course, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
 import { buildLessonQuiz } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
 
@@ -246,13 +246,12 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
         </Card>
       )}
 
-      {canRead && letter.wordsToRead[0] && (
-        <RealWorldHebrew
-          word={letter.wordsToRead[0]}
-          sceneLabel="Numa placa, numa embalagem, numa conversa."
-          contextPt="Esta é uma palavra que você vai encontrar de verdade em Israel."
-        />
-      )}
+      {/* Only the scenes this letter unlocks, and only ones the learner can
+          decode — a sign you cannot read is not a reward. Most letters have
+          none, which is what keeps the ones that do feeling earned. */}
+      {scenesForOrder(letter.order).map(scene => (
+        <RealWorldHebrew key={scene.id} scene={scene} />
+      ))}
 
       <WorkbookLink pages={letter.workbookPages} what="estas palavras" />
       <Button size="lg" onClick={onDone} full>Continuar para a escrita</Button>

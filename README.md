@@ -139,6 +139,8 @@ ainda não aprendeu, e é esse justamente o ponto. Por isso nunca entram em
 data/
   letters.json      um objeto por letra — a única fonte do conteúdo
   modules.json      o plano de aulas: 7 unidades, 22 lições, quem ensina o quê
+  extras.json       módulos 6 e 7 — daguesh, formas finais, sem nikud, gerech
+  real-world.json   as cenas de «Hebraico no mundo real», por letra
   translit.json     a única fonte das transliterações
   nikud.json        os seis sons vocálicos (Página 0) e o daguesh
 templates/
@@ -153,7 +155,7 @@ tools/
   gen-stroke-order.py   ferramenta de autoria; gera assets/stroke-order/*.svg
 scripts/
   build.js          data + templates → dist/
-  validate.js       as 17 regras
+  validate.js       as 19 regras
   lib/hebrew.js     codepoints: nikud, formas finais, normalização
   lib/render.js     o contrato de direção — he(), heList(), heCloze(), prose()
 styles/
@@ -191,6 +193,8 @@ assets/
 | **V15** | **Toda palavra-ponte contém a sua letra** — base ou forma final | falha |
 | **V16** | **`modules.json` e `letters.json` contam a mesma história**: módulo, lição e blocos contínuos da ordem de leitura | falha |
 | V17 | A letra tem menos de 2 palavras que a contenham — os exercícios de completar ficam curtos | aviso |
+| **V18** | **Cada cena de «no mundo real» é legível na letra em que aparece** | falha |
+| **V19** | **`extras.json` (módulos 6 e 7) bate com o alfabeto**: pares de daguesh, as 5 finais, a palavra sem nikud, o gerech em U+05F3 | falha |
 
 V1 é a razão de existir do arquivo. Para vê-la funcionando, adicione
 `שָׁלוֹם` ao `wordsToRead` da letra ת (ordem 2) e rode o build:

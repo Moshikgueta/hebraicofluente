@@ -37,11 +37,14 @@ export function FinalChallengeClient() {
           title="Agora você consegue ler hebraico."
           body="Há algumas semanas isto era um conjunto de símbolos. Você reconhece as 22 letras, as 5 formas finais e lê palavras inteiras com nikud."
         />
-        <Card className="p-7 grid gap-3 text-center">
+        <Card className="p-7 grid gap-4 text-center">
           <p className="font-display text-[44px] font-bold text-ink tabular-nums">
             {ready.length} / {course.totalLetters}
           </p>
           <p className="font-ui text-[14px] text-ink-muted">letras dominadas</p>
+          <LinkButton href="/concluido" size="lg" className="justify-self-center">
+            Ver o que você conquistou
+          </LinkButton>
         </Card>
         <NextCoursePreview />
       </div>
