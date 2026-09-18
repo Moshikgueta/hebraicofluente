@@ -91,16 +91,27 @@ jobs:
 
           case "$ACAO" in
             listar)
+              say "**Últimas contas**"
               say '```'
               $W --command \
                 "SELECT id, email, name, datetime(created_at/1000,'unixepoch') AS criada
                    FROM accounts ORDER BY created_at DESC LIMIT 25" \
                 | tee -a "$GITHUB_STEP_SUMMARY"
               say '```'
+              say ""
+              say "**Convites ainda não usados**"
+              say '```'
+              $W --command \
+                "SELECT email, course_slug, months AS meses,
+                        datetime(created_at/1000,'unixepoch') AS criado_em
+                   FROM invites WHERE used_at IS NULL ORDER BY created_at DESC LIMIT 25" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
               ;;
 
             consultar)
               [ -n "$MAIL" ] || { echo "::error::Informe o e-mail."; exit 1; }
+              say "**Conta e acessos**"
               say '```'
               $W --command \
                 "SELECT a.id, a.email,
@@ -112,6 +123,22 @@ jobs:
                   WHERE a.email = '$SQLMAIL'" \
                 | tee -a "$GITHUB_STEP_SUMMARY"
               say '```'
+              # Sem isto não havia como ver um presente pendente — o convite
+              # existia no banco e sumia da vista. "Eu liberei para ela?" é a
+              # pergunta seguinte a toda cortesia, e ficava sem resposta.
+              say ""
+              say "**Convites** (presente aguardando cadastro)"
+              say '```'
+              $W --command \
+                "SELECT course_slug, months AS meses,
+                        datetime(created_at/1000,'unixepoch') AS criado_em,
+                        CASE WHEN used_at IS NULL THEN 'AGUARDANDO CADASTRO'
+                             ELSE 'usado em ' || datetime(used_at/1000,'unixepoch') END AS estado
+                   FROM invites WHERE email = '$SQLMAIL'" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
+              say ""
+              say "Nada nas duas tabelas = ninguém com esse e-mail, e nenhum convite."
               ;;
 
             liberar)
