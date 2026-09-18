@@ -90,24 +90,70 @@ regra de ordem.
 
 ---
 
+## A ordem das letras — e por que ela não é a alfabética
+
+O workbook não ensina o alfabeto na ordem do dicionário, e também não inventa
+uma ordem própria. Ele segue o plano de aulas do guia do docente
+**«בא לי עברית!» (חוברת למורה)**: 22 lições de 1h30, reunidas em **7 unidades de
+três lições**. Dentro de uma unidade, a lição 1 apresenta letras, a lição 2
+apresenta letras e língua falada, e a lição 3 não traz letra nova — é a de
+jogos, correção e leitura.
+
+| Módulo | Lições | Letras | O que se destrava |
+|---|---|---|---|
+| 1 | 1–3 | מ ת א · נ ה י | אִמָּא, אֲנִי, מַיִם, אַתָּה |
+| 2 | 4–6 | ג ד ש · ל ר | שֵׁם, אִשָּׁה, יֶלֶד, שֶׁמֶשׁ |
+| 3 | 7–9 | ו ז · ח ט | שָׁלוֹם, תּוֹדָה, לֶחֶם |
+| 4 | 10–12 | ס ע · צ ק | עִיר, אֶרֶץ, מָקוֹם |
+| 5 | 13–15 | ב · כ פ | אַבָּא, בַּיִת, מֶלֶךְ, סֵפֶר |
+| 6 | 16–18 | — | as formas sem daguesh e as 5 finais |
+| 7 | 19–21 | — | os sons com gerech: צ׳ ג׳ ז׳ |
+
+As unidades 6 e 7 não introduzem letra nenhuma, e por isso são as mais fáceis
+de pular e as piores de pular: uma ensina a ler בּ כּ פּ **sem** o ponto, que é
+como elas aparecem na rua; a outra, os três sons que o hebraico moderno
+construiu sem inventar letra.
+
+**Trocar esta ordem custa caro, de propósito.** `wordsToRead` de cada letra é
+autorado contra o alfabeto acumulado até ali, e a V1 não deixa passar uma
+palavra com letra que o leitor ainda não viu. Mexer na ordem obriga a
+reescolher o vocabulário de quase todas as lições — que é exatamente a
+salvaguarda que se quer ter.
+
+### As palavras-ponte
+
+O guia ensina cada letra dentro de uma palavra emprestada que o aluno já
+conhece: o professor escreve *טרמינל* no quadro com a sílaba nova em branco, e
+o aluno completa. Quem estuda sozinho não tem professor no quadro, então a
+abertura de cada módulo faz isso impresso — a palavra, o que ela quer dizer, e
+uma coluna em branco para a letra. As palavras-ponte ficam em `bridgeWords` e
+são **reconhecimento, nunca leitura**: elas estão cheias de letras que o leitor
+ainda não aprendeu, e é esse justamente o ponto. Por isso nunca entram em
+`wordsToRead`, onde a V1 manda.
+
+---
+
 ## Estrutura
 
 ```
 data/
   letters.json      um objeto por letra — a única fonte do conteúdo
+  modules.json      o plano de aulas: 7 unidades, 22 lições, quem ensina o quê
   translit.json     a única fonte das transliterações
   nikud.json        os seis sons vocálicos (Página 0) e o daguesh
 templates/
   letter.js         as 5 etapas de uma letra; nunca cita uma letra específica
+  module.js         a abertura de módulo e a lição de prática que o fecha
+  extras.js         módulos 6 e 7 — daguesh/formas finais e os sons com gerech
   page-0.js         Os sinais de vogal, antes da letra 1
-  review.js         as 5 revisões + a revisão final cumulativa
+  review.js         as 5 revisões de módulo + a revisão final cumulativa
   appendix.js       alfabeto · nikud · transliteração · cursiva
   partials.js       badge, callout, tabela, exercício, documento
 tools/
   gen-stroke-order.py   ferramenta de autoria; gera assets/stroke-order/*.svg
 scripts/
   build.js          data + templates → dist/
-  validate.js       as 13 regras
+  validate.js       as 16 regras
   lib/hebrew.js     codepoints: nikud, formas finais, normalização
   lib/render.js     o contrato de direção — he(), heList(), heCloze(), prose()
 styles/
@@ -141,14 +187,22 @@ assets/
 | V11 | SVG de traçado ausente ou ainda placeholder | aviso |
 | V12 | `wordsToRead` vazio (esperado na letra 1) | aviso |
 | V13 | Hebraico em campo de prosa sem marcação `{{…}}` | falha |
+| V14 | Toda palavra de `wordsToRecognize` tem ilustração em `icons.json` | falha |
+| **V15** | **Toda palavra-ponte contém a sua letra** — base ou forma final | falha |
+| **V16** | **`modules.json` e `letters.json` contam a mesma história**: módulo, lição e blocos contínuos da ordem de leitura | falha |
 
 V1 é a razão de existir do arquivo. Para vê-la funcionando, adicione
-`שָׁלוֹם` ao `wordsToRead` da letra ש e rode o build:
+`שָׁלוֹם` ao `wordsToRead` da letra ת (ordem 2) e rode o build:
 
 ```
-✗ V1  shin (ש, ordem 2) — wordsToRead "שָׁלוֹם" (shalom) usa "ל" [ordem 3],
-      "ו" [não ensinada] — depois da ordem 2
+✗ V1  tav (ת, ordem 2) — wordsToRead "שָׁלוֹם" (shalom) usa "ש" [ordem 9],
+      "ל" [ordem 10], "ו" [ordem 12] — depois da ordem 2
 ```
+
+V15 e V16 também foram provadas com casos negativos: pôr `רדיו` nas
+palavras-ponte do sámech, ou mudar o `module` do guímel de 2 para 3, faz o
+build sair com código 1 nomeando o problema — e, no caso do V16, as duas
+faixas da ordem de leitura que deixaram de ser contínuas.
 
 ---
 

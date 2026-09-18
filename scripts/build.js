@@ -8,6 +8,8 @@ import { validate, report } from './validate.js';
 import { renderLetter } from '../templates/letter.js';
 import { renderPage0 } from '../templates/page-0.js';
 import { renderReview } from '../templates/review.js';
+import { renderModule, practiceSheet } from '../templates/module.js';
+import { renderDagesh, renderModernSounds } from '../templates/extras.js';
 import { renderAppendix } from '../templates/appendix.js';
 import { document_, sheet, badge } from '../templates/partials.js';
 import { esc } from './lib/render.js';
@@ -28,7 +30,8 @@ function main() {
   const letters = readJson('data/letters.json').sort((a, b) => a.order - b.order);
   const nikud = readJson('data/nikud.json');
   const translit = readJson('data/translit.json');
-  const ctx = { letters, nikud, translit };
+  const modules = readJson('data/modules.json').modules;
+  const ctx = { letters, nikud, translit, modules };
 
   /* 2. Clean and copy the static side. */
   rmSync(DIST, { recursive: true, force: true });
@@ -37,10 +40,16 @@ function main() {
   cpSync(join(ROOT, 'assets'), join(DIST, 'assets'), { recursive: true });
 
   /* ── 3. Assemble the book in READING ORDER ───────────────────────────
-     Reviews are interleaved where the learner actually meets them — after
-     letters 4, 8, 12, 16 and 20 — not bolted on at the end. This same order
-     drives the per-file output, the index, and the single-file book. */
-  const REVIEW_AT = [4, 8, 12, 16, 20];
+     The spine is the teaching plan of «בא לי עברית!»: seven units of three
+     lessons, five of which introduce the 22 letters. So a module opens with
+     its own page (what it covers, in which lesson, what you will read at the
+     end of it), then its letters in the plan's order, then a review that
+     closes the module and carries its practice lesson.
+
+     Reviews are therefore placed by MODULE, not every four letters: the units
+     hold three to six letters each, and a review that lands mid-unit reviews
+     nothing in particular. This same order drives the per-file output, the
+     index, and the single-file book. */
   const maxOrder = letters.length ? letters[letters.length - 1].order : 0;
 
   const sections = [];
@@ -52,32 +61,62 @@ function main() {
     body: () => renderPage0(ctx)
   });
 
-  for (const L of letters) {
-    sections.push({
-      kind: 'letter', id: L.id, order: L.order, letter: L.letter,
-      file: `${String(L.order).padStart(2, '0')}-${L.id}.html`,
-      title: `${L.order}. ${L.namePt}`, sub: L.sound,
-      docTitle: `Letra ${L.namePt} — Hebraico Moderno`,
-      desc: `A letra ${L.namePt}: som, sílabas, palavras, escrita cursiva e exercícios.`,
-      body: () => renderLetter(L, ctx)
-    });
-    const at = REVIEW_AT.indexOf(L.order);
-    if (at >= 0) {
-      const R = { n: at + 1, upTo: L.order, final: false };
+  let reviewN = 0;
+  for (const M of modules) {
+    const mLetters = letters.filter(l => l.module === M.n);
+    const lessonRange = M.lessons.map(l => l.n);
+    const lessonSub = `lições ${lessonRange[0]}–${lessonRange[lessonRange.length - 1]}`;
+
+    /* Modules 6 and 7 introduce no letter: they are one section each, built
+       from the alphabet the reader already has. */
+    if (M.kind === 'consolidation' || M.kind === 'extra') {
+      const render = M.kind === 'consolidation' ? renderDagesh : renderModernSounds;
       sections.push({
-        kind: 'review', id: `rev${R.n}`, file: `r${R.n}-revisao-${R.upTo}.html`,
-        title: `Revisão ${R.n}`, sub: `letras 1 a ${R.upTo}`,
-        docTitle: `Revisão ${R.n} — letras 1 a ${R.upTo}`,
-        desc: `Revisão cumulativa das letras 1 a ${R.upTo}: leitura, reconhecimento, escrita e ditado.`,
-        body: () => renderReview(R, ctx)
+        kind: 'module', id: M.id, file: `${M.id}.html`,
+        title: `Módulo ${M.n} — ${M.titlePt}`, sub: lessonSub,
+        docTitle: `Módulo ${M.n} — ${M.titlePt}`,
+        desc: `Módulo ${M.n} do workbook: ${M.titlePt.toLowerCase()}, sem letras novas.`,
+        body: () => render(M, ctx)
+      });
+      continue;
+    }
+
+    sections.push({
+      kind: 'module', id: M.id, file: `${M.id}.html`,
+      title: `Módulo ${M.n} — ${M.titlePt}`,
+      sub: `${lessonSub} · ${mLetters.length} letras`,
+      docTitle: `Módulo ${M.n} — ${M.titlePt}`,
+      desc: `Módulo ${M.n} do workbook: as letras ${mLetters.map(l => l.namePt).join(', ')}.`,
+      body: () => renderModule(M, ctx)
+    });
+
+    for (const L of mLetters) {
+      sections.push({
+        kind: 'letter', id: L.id, order: L.order, letter: L.letter,
+        file: `${String(L.order).padStart(2, '0')}-${L.id}.html`,
+        title: `${L.order}. ${L.namePt}`, sub: `${L.sound} · lição ${L.lesson}`,
+        docTitle: `Letra ${L.namePt} — Hebraico Moderno`,
+        desc: `A letra ${L.namePt}: som, sílabas, palavras, escrita cursiva e exercícios.`,
+        body: () => renderLetter(L, ctx)
       });
     }
+
+    if (!mLetters.length) continue;
+    const upTo = mLetters[mLetters.length - 1].order;
+    const R = { n: ++reviewN, upTo, final: false, moduleN: M.n };
+    sections.push({
+      kind: 'review', id: `rev${R.n}`, file: `r${R.n}-revisao-${upTo}.html`,
+      title: `Revisão do módulo ${M.n}`, sub: `letras 1 a ${upTo}`,
+      docTitle: `Revisão do módulo ${M.n} — letras 1 a ${upTo}`,
+      desc: `Revisão cumulativa das letras 1 a ${upTo}: leitura, reconhecimento, escrita e ditado.`,
+      body: () => [...renderReview(R, ctx), practiceSheet(M, ctx)].filter(Boolean)
+    });
   }
 
   if (maxOrder >= 22) {
-    const R = { n: 6, upTo: 22, final: true };
+    const R = { n: reviewN + 1, upTo: 22, final: true };
     sections.push({
-      kind: 'review', id: 'rev6', file: 'r6-revisao-final.html',
+      kind: 'review', id: `rev${R.n}`, file: `r${R.n}-revisao-final.html`,
       title: 'Revisão final', sub: 'as 22 letras',
       docTitle: 'Revisão final — todo o alfabeto',
       desc: 'Revisão cumulativa das 22 letras, das 5 formas finais e de todo o vocabulário.',
@@ -122,9 +161,9 @@ function main() {
      sense printed on its own; here that is rewritten from one running counter.
 
      The contents is rendered before the numbering starts: its length depends
-     only on how many modules there are, never on the page numbers it shows,
+     only on how many entries there are, never on the page numbers it shows,
      so there is no circularity. */
-  const modules = [];
+  const entries = [];
   const rawBodies = [];
   const sheetMap = [];
   let probe = 1;
@@ -136,14 +175,14 @@ function main() {
     const sheetsOf = packed.sheets;
     sheetMap.push({ id: sec.id, file: sec.file, pieces: packed.map });
     rawBodies.push(sheetsOf);
-    modules.push({ href: sec.file, kind: sec.kind, order: sec.order, id: sec.id,
+    entries.push({ href: sec.file, kind: sec.kind, order: sec.order, id: sec.id,
                    title: sec.title, sub: sec.sub, letter: sec.letter,
                    sheet: probe, page: pageMap[sec.id] || null,
                    units: units.length });
     probe += sheetsOf.length;
   }
 
-  const toc = renderIndex(modules, letters, probe - 1, bookPages);
+  const toc = renderIndex(entries, letters, probe - 1, bookPages);
   const tocSheets = (toc.match(/class="sheet"/g) || []).length;
 
   let folio = 1;
@@ -165,7 +204,7 @@ function main() {
     const marker = `<span class="secmark" aria-hidden="true">\u00a7sec:${sec.id}\u00a7</span>`;
     const body = renumber(sectionHtml).replace('<h1', marker + '<h1');
     bodies.push(body);
-    modules[i].sheet = startSheet;
+    entries[i].sheet = startSheet;
     writeFileSync(join(DIST, sec.file), document_({
       title: sec.docTitle, description: sec.desc, body
     }));
@@ -199,7 +238,7 @@ function main() {
   const post = validate({ checkDist: true });
   const ok = report(post);
 
-  console.log(`\n  ${modules.length} módulo(s), ${totalPages} folhas → dist/`);
+  console.log(`\n  ${entries.length} módulo(s), ${totalPages} folhas → dist/`);
   if (!ok) process.exit(1);
 }
 
@@ -290,7 +329,7 @@ function packPieces(pieces, heights, packing, breaks = []) {
   return { sheets, map };
 }
 
-function renderIndex(modules, letters, totalPages, bookPages) {
+function renderIndex(entries, letters, totalPages, bookPages) {
   const row = m => `
     <a class="toc-row toc-row--${m.kind}" href="./${m.href}">
       <span class="toc-mark">${m.letter ? `<span class="he" lang="he">${esc(m.letter)}</span>` : ''}</span>
@@ -302,14 +341,14 @@ function renderIndex(modules, letters, totalPages, bookPages) {
   /* The contents is itself paginated: 30 entries do not fit one A4 page, and
      the first sheet also carries the title block, so it holds fewer rows. */
   const FIRST = 12, REST = 17;
-  const sheetsNeeded = 1 + Math.max(0, Math.ceil((modules.length - FIRST) / REST));
+  const sheetsNeeded = 1 + Math.max(0, Math.ceil((entries.length - FIRST) / REST));
   const groups = [];
-  if (sheetsNeeded === 1) groups.push(modules);
+  if (sheetsNeeded === 1) groups.push(entries);
   else {
     /* Spread the remainder evenly instead of leaving a last sheet with one row. */
-    const after = Math.ceil((modules.length - FIRST) / (sheetsNeeded - 1));
-    groups.push(modules.slice(0, FIRST));
-    for (let i = FIRST; i < modules.length; i += after) groups.push(modules.slice(i, i + after));
+    const after = Math.ceil((entries.length - FIRST) / (sheetsNeeded - 1));
+    groups.push(entries.slice(0, FIRST));
+    for (let i = FIRST; i < entries.length; i += after) groups.push(entries.slice(i, i + after));
   }
 
   return groups.map((g, gi) => `<section class="sheet">
@@ -319,7 +358,7 @@ function renderIndex(modules, letters, totalPages, bookPages) {
 
   <div class="toc-meta">
     <span><strong>${letters.length}</strong> letras</span>
-    <span><strong>${modules.filter(m => m.kind === 'review').length}</strong> revisões</span>
+    <span><strong>${entries.filter(m => m.kind === 'review').length}</strong> revisões</span>
     <span><strong>${bookPages || totalPages}</strong> páginas A4</span>
     <span class="no-print"><a href="./livro-completo.html">Abrir o livro inteiro num arquivo só →</a></span>
   </div>

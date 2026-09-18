@@ -415,6 +415,22 @@ ul.ticks li { margin-block-end: var(--s-3); }
 .toc-row--review .toc-t { color: var(--c-green-darkest); }
 .toc-row--intro, .toc-row--appendix { background: var(--c-surface-alt); }
 
+/* A module opener is the divider of the contents: seven of them, one per unit
+   of the teaching plan. A left rule and a small-caps label read as a section
+   break without laying a solid ink band across the page seven times — this
+   page gets printed, and the letters under each module are the content. */
+.toc-row--module {
+  background: var(--c-surface-alt);
+  border-inline-start: var(--w-rule-accent) solid var(--c-teal-band);
+  border-block-start: var(--w-rule) solid var(--c-rule);
+}
+.toc-row--module .toc-t {
+  color: var(--c-teal-band);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-size: var(--t-small);
+}
+
 /* Section marker for the contents page. Read by tools/page-map.py out of the
    PDF's text layer; see README §Sumário com páginas reais.
 

@@ -26,13 +26,21 @@ const shuffled = (arr, rand) => {
 };
 
 /**
- * @param {object} R  { n, upTo, final }  — review number, highest letter order
+ * @param {object} R  { n, upTo, final, moduleN }  — review number, highest
+ *                    letter order, and the module it closes
  * @param {object} ctx { letters }
+ *
+ * A review closes a MODULE, so "the new letters" are that module's letters,
+ * however many it has — the units of the teaching plan hold between three and
+ * six. Deriving them from the module instead of a fixed window is what keeps
+ * the opening paragraph honest.
  */
 export function renderReview(R, ctx) {
   const rand = rng('review-' + R.n);
   const learned = ctx.letters.filter(l => l.order <= R.upTo);
-  const since = ctx.letters.filter(l => l.order > R.upTo - 4 && l.order <= R.upTo);
+  const since = R.moduleN
+    ? ctx.letters.filter(l => l.module === R.moduleN)
+    : ctx.letters.filter(l => l.order > R.upTo - 4 && l.order <= R.upTo);
   const finals = learned.filter(l => l.finalForm);
 
   /* Every readable word taught so far, de-duplicated by its pointed form. */
@@ -47,9 +55,9 @@ export function renderReview(R, ctx) {
   }
 
   const title = R.final ? 'Revisão final — todo o alfabeto'
-                        : `Revisão ${R.n} — letras 1 a ${R.upTo}`;
+                        : `Revisão do módulo ${R.moduleN} — letras 1 a ${R.upTo}`;
   const label = R.final ? 'Revisão final · 22 letras'
-                        : `Revisão ${R.n} · letras 1 a ${R.upTo}`;
+                        : `Revisão do módulo ${R.moduleN} · letras 1 a ${R.upTo}`;
   const bdg = cont => badge(label + (cont ? ' · continuação' : ''));
 
   const sheets = [];
@@ -75,9 +83,9 @@ export function renderReview(R, ctx) {
     ${gi === 0 ? `<p class="lead">${R.final
       ? 'Você chegou ao fim do alfabeto. Esta revisão passa por todas as 22 letras, as 5 formas finais e todo o vocabulário que você já consegue ler.'
       : R.n === 1
-        ? mixed(['Estas são as quatro primeiras letras do workbook: ', H(since.map(l => l.letter).join(' ')),
+        ? mixed([`Estas são as ${num(since.length)} primeiras letras do workbook: `, H(since.map(l => l.letter).join(' ')),
                  '. Revise-as com calma antes de seguir — tudo o que vem depois se apoia nelas.'])
-        : mixed(['Revise tudo o que aprendeu até aqui. As quatro letras novas desta etapa são ',
+        : mixed([`Revise tudo o que aprendeu até aqui. As ${num(since.length)} letras novas deste módulo são `,
                  H(since.map(l => l.letter).join(' ')),
                  ' — dê atenção especial a elas.'])}</p>` : ''}
 
@@ -157,6 +165,10 @@ export function renderReview(R, ctx) {
 
   return sheets;
 }
+
+/* Small counts read better spelled out in the opening line. */
+const num = n => ['zero', 'uma', 'duas', 'três', 'quatro', 'cinco', 'seis',
+                  'sete', 'oito'][n] || String(n);
 
 /* The word with its first (rightmost) cluster blanked — a generic review gap,
    not tied to any one target letter. */

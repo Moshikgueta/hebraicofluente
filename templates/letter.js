@@ -119,6 +119,7 @@ function stage1({ L, name, canRead, bdg }) {
   const a = `
     ${bdg(1)}
     <h1>${mixed([`A letra `, H(L.letter), ` — ${name} `])}<span class="paren">(</span>${he(L.nameHe)}<span class="paren">)</span></h1>
+    ${L.module ? `<p class="hint">Módulo ${L.module} · lição ${L.lesson} — letra ${L.order} de 22</p>` : ''}
 
     <h3>O que você vai aprender</h3>
     <ul class="ticks">
@@ -241,7 +242,9 @@ function stage2({ L, name, rand, bdg }) {
         <td><strong class="kbd">${esc(s.translit)}</strong></td>
         <td class="write-cell"></td></tr>`).join('')}</tbody>
     </table>
-    <p class="hint">Nesta primeira letra ainda não existem palavras inteiras para completar — você conhece uma consoante só. As palavras começam já na próxima letra.</p>`;
+    <p class="hint">Com as letras que você tem até aqui ainda não dá para montar
+       uma palavra inteira — são poucas consoantes e nenhuma combinação fecha.
+       Isso muda na próxima letra, e não volta a acontecer.</p>`;
 
   return [a, b, c];
 }

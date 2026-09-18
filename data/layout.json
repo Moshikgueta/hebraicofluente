@@ -23,10 +23,56 @@
         "chrome": 24
       }
     ],
+    "mod1": [
+      {
+        "full": 61,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 77,
+        "chrome": 30
+      },
+      {
+        "full": 200,
+        "chrome": 24
+      },
+      {
+        "full": 62,
+        "chrome": 24
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      }
+    ],
     "mem": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 109,
@@ -65,7 +111,7 @@
         "chrome": 24
       },
       {
-        "full": 166,
+        "full": 171,
         "chrome": 28
       },
       {
@@ -153,422 +199,10 @@
         "chrome": 30
       }
     ],
-    "shin": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 114,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 154,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 101,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 92,
-        "chrome": 30
-      },
-      {
-        "full": 110,
-        "chrome": 30
-      },
-      {
-        "full": 92,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "lamed": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 106,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 150,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 117,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 110,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "bet": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 116,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 150,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 117,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 110,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "rev1": [
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 150,
-        "chrome": 30
-      },
-      {
-        "full": 51,
-        "chrome": 24
-      },
-      {
-        "full": 54,
-        "chrome": 24
-      },
-      {
-        "full": 82,
-        "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 24
-      },
-      {
-        "full": 123,
-        "chrome": 24
-      },
-      {
-        "full": 139,
-        "chrome": 30
-      }
-    ],
     "tav": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 102,
@@ -603,12 +237,12 @@
         "chrome": 24
       },
       {
-        "full": 59,
+        "full": 75,
         "chrome": 24
       },
       {
-        "full": 75,
-        "chrome": 24
+        "full": 171,
+        "chrome": 28
       },
       {
         "full": 151,
@@ -643,10 +277,6 @@
         "chrome": 30
       },
       {
-        "full": 99,
-        "chrome": 30
-      },
-      {
         "full": 143,
         "chrome": 30
       },
@@ -663,545 +293,7 @@
         "chrome": 30
       },
       {
-        "full": 134,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 124,
-        "chrome": 30
-      },
-      {
-        "full": 97,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "yod": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 133,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 124,
-        "chrome": 30
-      },
-      {
-        "full": 97,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "he": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 105,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 136,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 117,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 97,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "vav": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 106,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 117,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 97,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "rev2": [
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 233,
-        "chrome": 30
-      },
-      {
-        "full": 69,
-        "chrome": 24
-      },
-      {
-        "full": 64,
-        "chrome": 24
-      },
-      {
-        "full": 82,
-        "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 24
-      },
-      {
-        "full": 140,
-        "chrome": 24
-      },
-      {
-        "full": 139,
-        "chrome": 30
-      }
-    ],
-    "resh": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 107,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 138,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 117,
+        "full": 129,
         "chrome": 30
       },
       {
@@ -1231,8 +323,8 @@
     ],
     "alef": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 108,
@@ -1357,8 +449,8 @@
     ],
     "nun": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 112,
@@ -1489,13 +581,13 @@
         "chrome": 30
       }
     ],
-    "qof": [
+    "he": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
-        "full": 106,
+        "full": 105,
         "chrome": 30
       },
       {
@@ -1511,7 +603,133 @@
         "chrome": 30
       },
       {
+        "full": 136,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 67,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
         "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "yod": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 133,
         "chrome": 28
       },
       {
@@ -1615,21 +833,17 @@
         "chrome": 30
       }
     ],
-    "rev3": [
+    "rev1": [
       {
         "full": 42,
         "chrome": 24
       },
       {
-        "full": 233,
+        "full": 191,
         "chrome": 30
       },
       {
-        "full": 150,
-        "chrome": 30
-      },
-      {
-        "full": 87,
+        "full": 69,
         "chrome": 24
       },
       {
@@ -1651,12 +865,196 @@
       {
         "full": 139,
         "chrome": 30
+      },
+      {
+        "full": 41,
+        "chrome": 24
+      },
+      {
+        "full": 114,
+        "chrome": 30
+      },
+      {
+        "full": 94,
+        "chrome": 30
+      },
+      {
+        "full": 104,
+        "chrome": 30
+      }
+    ],
+    "mod2": [
+      {
+        "full": 62,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 77,
+        "chrome": 30
+      },
+      {
+        "full": 179,
+        "chrome": 24
+      },
+      {
+        "full": 62,
+        "chrome": 24
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      }
+    ],
+    "gimel": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 117,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
       }
     ],
     "dalet": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 102,
@@ -1751,6 +1149,132 @@
         "chrome": 30
       },
       {
+        "full": 117,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "shin": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 114,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 154,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
         "full": 134,
         "chrome": 30
       },
@@ -1767,7 +1291,7 @@
         "chrome": 30
       },
       {
-        "full": 97,
+        "full": 110,
         "chrome": 30
       },
       {
@@ -1779,13 +1303,13 @@
         "chrome": 30
       }
     ],
-    "het": [
+    "lamed": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
-        "full": 110,
+        "full": 106,
         "chrome": 30
       },
       {
@@ -1801,7 +1325,133 @@
         "chrome": 30
       },
       {
+        "full": 150,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
         "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 110,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "resh": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 107,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 138,
         "chrome": 28
       },
       {
@@ -1905,269 +1555,9 @@
         "chrome": 30
       }
     ],
-    "samekh": [
+    "rev2": [
       {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 100,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 136,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 124,
-        "chrome": 30
-      },
-      {
-        "full": 97,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "pe": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 109,
-        "chrome": 30
-      },
-      {
-        "full": 121,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 136,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 123,
-        "chrome": 28
-      },
-      {
-        "full": 79,
-        "chrome": 30
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 70,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 124,
-        "chrome": 30
-      },
-      {
-        "full": 97,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
-    "rev4": [
-      {
-        "full": 42,
+        "full": 44,
         "chrome": 24
       },
       {
@@ -2175,23 +1565,19 @@
         "chrome": 30
       },
       {
-        "full": 233,
+        "full": 129,
         "chrome": 30
       },
       {
-        "full": 98,
-        "chrome": 36
-      },
-      {
-        "full": 62,
-        "chrome": 36
+        "full": 87,
+        "chrome": 24
       },
       {
         "full": 64,
         "chrome": 24
       },
       {
-        "full": 112,
+        "full": 97,
         "chrome": 30
       },
       {
@@ -2205,138 +1591,66 @@
       {
         "full": 139,
         "chrome": 30
+      },
+      {
+        "full": 41,
+        "chrome": 24
+      },
+      {
+        "full": 114,
+        "chrome": 30
+      },
+      {
+        "full": 94,
+        "chrome": 30
+      },
+      {
+        "full": 104,
+        "chrome": 30
       }
     ],
-    "gimel": [
+    "mod3": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 36
       },
       {
-        "full": 100,
-        "chrome": 30
+        "full": 120,
+        "chrome": 42
       },
       {
-        "full": 100,
-        "chrome": 30
+        "full": 88,
+        "chrome": 42
       },
       {
-        "full": 144,
+        "full": 163,
         "chrome": 24
       },
       {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 28
-      },
-      {
-        "full": 52,
+        "full": 62,
         "chrome": 24
       },
       {
-        "full": 55,
-        "chrome": 24
+        "full": 138,
+        "chrome": 42
       },
       {
-        "full": 56,
-        "chrome": 24
+        "full": 138,
+        "chrome": 42
       },
       {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 110,
-        "chrome": 24
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
+        "full": 122,
+        "chrome": 42
       },
       {
         "full": 127,
         "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 124,
-        "chrome": 30
-      },
-      {
-        "full": 97,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
       }
     ],
-    "ayin": [
+    "vav": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 106,
@@ -2371,7 +1685,7 @@
         "chrome": 24
       },
       {
-        "full": 59,
+        "full": 67,
         "chrome": 24
       },
       {
@@ -2459,144 +1773,10 @@
         "chrome": 30
       }
     ],
-    "kaf": [
-      {
-        "full": 64,
-        "chrome": 30
-      },
-      {
-        "full": 109,
-        "chrome": 30
-      },
-      {
-        "full": 121,
-        "chrome": 30
-      },
-      {
-        "full": 144,
-        "chrome": 24
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      },
-      {
-        "full": 141,
-        "chrome": 28
-      },
-      {
-        "full": 52,
-        "chrome": 24
-      },
-      {
-        "full": 55,
-        "chrome": 24
-      },
-      {
-        "full": 56,
-        "chrome": 24
-      },
-      {
-        "full": 59,
-        "chrome": 24
-      },
-      {
-        "full": 75,
-        "chrome": 24
-      },
-      {
-        "full": 151,
-        "chrome": 28
-      },
-      {
-        "full": 123,
-        "chrome": 28
-      },
-      {
-        "full": 79,
-        "chrome": 30
-      },
-      {
-        "full": 53,
-        "chrome": 28
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 68,
-        "chrome": 24
-      },
-      {
-        "full": 76,
-        "chrome": 24
-      },
-      {
-        "full": 45,
-        "chrome": 28
-      },
-      {
-        "full": 142,
-        "chrome": 30
-      },
-      {
-        "full": 99,
-        "chrome": 30
-      },
-      {
-        "full": 143,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 80,
-        "chrome": 30
-      },
-      {
-        "full": 127,
-        "chrome": 30
-      },
-      {
-        "full": 134,
-        "chrome": 30
-      },
-      {
-        "full": 74,
-        "chrome": 30
-      },
-      {
-        "full": 70,
-        "chrome": 30
-      },
-      {
-        "full": 42,
-        "chrome": 24
-      },
-      {
-        "full": 124,
-        "chrome": 30
-      },
-      {
-        "full": 97,
-        "chrome": 30
-      },
-      {
-        "full": 108,
-        "chrome": 30
-      },
-      {
-        "full": 113,
-        "chrome": 30
-      }
-    ],
     "zayin": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 105,
@@ -2719,34 +1899,98 @@
         "chrome": 30
       }
     ],
-    "rev5": [
+    "het": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
       {
         "full": 42,
         "chrome": 24
       },
       {
-        "full": 233,
-        "chrome": 30
-      },
-      {
-        "full": 233,
-        "chrome": 30
-      },
-      {
-        "full": 150,
-        "chrome": 30
-      },
-      {
-        "full": 98,
-        "chrome": 36
-      },
-      {
         "full": 80,
-        "chrome": 36
-      },
-      {
-        "full": 64,
-        "chrome": 24
+        "chrome": 30
       },
       {
         "full": 127,
@@ -2754,21 +1998,37 @@
       },
       {
         "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
         "chrome": 24
       },
       {
-        "full": 140,
-        "chrome": 24
+        "full": 124,
+        "chrome": 30
       },
       {
-        "full": 139,
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
         "chrome": 30
       }
     ],
     "tet": [
       {
-        "full": 64,
-        "chrome": 30
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 108,
@@ -2891,10 +2151,358 @@
         "chrome": 30
       }
     ],
-    "tsadi": [
+    "rev3": [
+      {
+        "full": 44,
+        "chrome": 24
+      },
+      {
+        "full": 233,
+        "chrome": 30
+      },
+      {
+        "full": 212,
+        "chrome": 30
+      },
+      {
+        "full": 98,
+        "chrome": 36
+      },
+      {
+        "full": 62,
+        "chrome": 36
+      },
       {
         "full": 64,
+        "chrome": 24
+      },
+      {
+        "full": 97,
         "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 24
+      },
+      {
+        "full": 140,
+        "chrome": 24
+      },
+      {
+        "full": 139,
+        "chrome": 30
+      },
+      {
+        "full": 41,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 94,
+        "chrome": 30
+      },
+      {
+        "full": 104,
+        "chrome": 30
+      }
+    ],
+    "mod4": [
+      {
+        "full": 61,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 77,
+        "chrome": 30
+      },
+      {
+        "full": 163,
+        "chrome": 24
+      },
+      {
+        "full": 62,
+        "chrome": 24
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 111,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      }
+    ],
+    "samekh": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 136,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "ayin": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 106,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "tsadi": [
+      {
+        "full": 72,
+        "chrome": 28
       },
       {
         "full": 110,
@@ -3025,6 +2633,796 @@
         "chrome": 30
       }
     ],
+    "qof": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 106,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 141,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "rev4": [
+      {
+        "full": 44,
+        "chrome": 24
+      },
+      {
+        "full": 233,
+        "chrome": 30
+      },
+      {
+        "full": 233,
+        "chrome": 30
+      },
+      {
+        "full": 129,
+        "chrome": 30
+      },
+      {
+        "full": 98,
+        "chrome": 36
+      },
+      {
+        "full": 80,
+        "chrome": 36
+      },
+      {
+        "full": 64,
+        "chrome": 24
+      },
+      {
+        "full": 112,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 24
+      },
+      {
+        "full": 140,
+        "chrome": 24
+      },
+      {
+        "full": 139,
+        "chrome": 30
+      },
+      {
+        "full": 41,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 94,
+        "chrome": 30
+      },
+      {
+        "full": 104,
+        "chrome": 30
+      }
+    ],
+    "mod5": [
+      {
+        "full": 62,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 75,
+        "chrome": 30
+      },
+      {
+        "full": 142,
+        "chrome": 24
+      },
+      {
+        "full": 62,
+        "chrome": 24
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 30
+      },
+      {
+        "full": 160,
+        "chrome": 30
+      }
+    ],
+    "bet": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 116,
+        "chrome": 30
+      },
+      {
+        "full": 100,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 150,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 110,
+        "chrome": 24
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 110,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "kaf": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 109,
+        "chrome": 30
+      },
+      {
+        "full": 121,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 141,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 123,
+        "chrome": 28
+      },
+      {
+        "full": 79,
+        "chrome": 30
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 70,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "pe": [
+      {
+        "full": 72,
+        "chrome": 28
+      },
+      {
+        "full": 109,
+        "chrome": 30
+      },
+      {
+        "full": 121,
+        "chrome": 30
+      },
+      {
+        "full": 144,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      },
+      {
+        "full": 136,
+        "chrome": 28
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 55,
+        "chrome": 24
+      },
+      {
+        "full": 56,
+        "chrome": 24
+      },
+      {
+        "full": 59,
+        "chrome": 24
+      },
+      {
+        "full": 75,
+        "chrome": 24
+      },
+      {
+        "full": 151,
+        "chrome": 28
+      },
+      {
+        "full": 123,
+        "chrome": 28
+      },
+      {
+        "full": 79,
+        "chrome": 30
+      },
+      {
+        "full": 53,
+        "chrome": 28
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 68,
+        "chrome": 24
+      },
+      {
+        "full": 76,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 28
+      },
+      {
+        "full": 142,
+        "chrome": 30
+      },
+      {
+        "full": 99,
+        "chrome": 30
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 80,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 30
+      },
+      {
+        "full": 74,
+        "chrome": 30
+      },
+      {
+        "full": 70,
+        "chrome": 30
+      },
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 124,
+        "chrome": 30
+      },
+      {
+        "full": 97,
+        "chrome": 30
+      },
+      {
+        "full": 108,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 30
+      }
+    ],
+    "rev5": [
+      {
+        "full": 42,
+        "chrome": 24
+      },
+      {
+        "full": 233,
+        "chrome": 30
+      },
+      {
+        "full": 233,
+        "chrome": 30
+      },
+      {
+        "full": 191,
+        "chrome": 30
+      },
+      {
+        "full": 98,
+        "chrome": 36
+      },
+      {
+        "full": 98,
+        "chrome": 36
+      },
+      {
+        "full": 64,
+        "chrome": 24
+      },
+      {
+        "full": 143,
+        "chrome": 30
+      },
+      {
+        "full": 134,
+        "chrome": 24
+      },
+      {
+        "full": 140,
+        "chrome": 24
+      },
+      {
+        "full": 139,
+        "chrome": 30
+      },
+      {
+        "full": 41,
+        "chrome": 24
+      },
+      {
+        "full": 114,
+        "chrome": 30
+      },
+      {
+        "full": 94,
+        "chrome": 30
+      },
+      {
+        "full": 104,
+        "chrome": 30
+      }
+    ],
+    "mod6": [
+      {
+        "full": 58,
+        "chrome": 24
+      },
+      {
+        "full": 109,
+        "chrome": 30
+      },
+      {
+        "full": 75,
+        "chrome": 30
+      },
+      {
+        "full": 113,
+        "chrome": 28
+      },
+      {
+        "full": 141,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 24
+      },
+      {
+        "full": 113,
+        "chrome": 28
+      },
+      {
+        "full": 157,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 24
+      },
+      {
+        "full": 111,
+        "chrome": 28
+      },
+      {
+        "full": 141,
+        "chrome": 24
+      },
+      {
+        "full": 108,
+        "chrome": 24
+      },
+      {
+        "full": 184,
+        "chrome": 24
+      },
+      {
+        "full": 52,
+        "chrome": 24
+      },
+      {
+        "full": 147,
+        "chrome": 24
+      },
+      {
+        "full": 45,
+        "chrome": 24
+      },
+      {
+        "full": 210,
+        "chrome": 24
+      }
+    ],
+    "mod7": [
+      {
+        "full": 61,
+        "chrome": 24
+      },
+      {
+        "full": 157,
+        "chrome": 30
+      },
+      {
+        "full": 75,
+        "chrome": 30
+      },
+      {
+        "full": 41,
+        "chrome": 24
+      },
+      {
+        "full": 111,
+        "chrome": 30
+      },
+      {
+        "full": 127,
+        "chrome": 30
+      },
+      {
+        "full": 94,
+        "chrome": 30
+      },
+      {
+        "full": 111,
+        "chrome": 24
+      },
+      {
+        "full": 93,
+        "chrome": 24
+      },
+      {
+        "full": 132,
+        "chrome": 24
+      }
+    ],
     "rev6": [
       {
         "full": 41,
@@ -3073,7 +3471,7 @@
     ],
     "apendice": [
       {
-        "full": 224,
+        "full": 228,
         "chrome": 24
       },
       {

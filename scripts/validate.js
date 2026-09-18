@@ -45,6 +45,59 @@ export function validate({ checkDist = true } = {}) {
     warn('V4', 'data/letters.json', `${letters.length} of 22 letters authored`);
   }
 
+  /* ── V16 — the teaching plan and the letters agree ──────────────────
+     data/modules.json says which letters a unit of «בא לי עברית!» covers;
+     data/letters.json stamps each letter with its module and lesson. Two
+     files, one fact — so they are checked against each other. The build
+     reads BOTH (the opener from one, the letter pages from the other), and
+     a drift between them would print a module whose contents page and whose
+     letters disagree. */
+  let modules = null;
+  try { modules = readJson('data/modules.json').modules; } catch { /* not authored */ }
+  if (!modules) {
+    warn('V16', 'data/modules.json', 'ausente — o livro sai sem aberturas de módulo');
+  } else {
+    const claimed = new Map();      // letter id -> module n
+    for (const M of modules) {
+      for (const id of M.letters || []) claimed.set(id, M.n);
+      for (const ls of M.lessons || []) {
+        for (const id of ls.letters || []) {
+          if (!(M.letters || []).includes(id)) {
+            fail('V16', `módulo ${M.n}`, `a lição ${ls.n} traz "${id}", que não está em letters do módulo`);
+          }
+        }
+      }
+    }
+    for (const L of letters) {
+      if (L.module == null) { fail('V16', L.id, 'sem módulo'); continue; }
+      const M = modules.find(m => m.n === L.module);
+      if (!M) { fail('V16', L.id, `módulo ${L.module} não existe em modules.json`); continue; }
+      if (claimed.get(L.id) !== L.module) {
+        fail('V16', L.id, `diz ser do módulo ${L.module}, que não o lista`);
+      }
+      if (!(M.lessons || []).some(ls => (ls.letters || []).includes(L.id))) {
+        fail('V16', L.id, `nenhuma lição do módulo ${L.module} o apresenta`);
+      }
+      const ls = (M.lessons || []).find(x => (x.letters || []).includes(L.id));
+      if (ls && ls.n !== L.lesson) {
+        fail('V16', L.id, `lesson ${L.lesson} não bate com a lição ${ls.n} do plano`);
+      }
+    }
+    /* A module must be a contiguous run of the reading order, or the opener
+       page ("as letras do módulo") describes a set the book never delivers
+       in one go. */
+    let prev = 0;
+    for (const M of modules) {
+      const own = letters.filter(l => l.module === M.n).sort((a, b) => a.order - b.order);
+      if (!own.length) continue;
+      if (own[0].order !== prev + 1 || own[own.length - 1].order !== prev + own.length) {
+        fail('V16', `módulo ${M.n}`,
+          `as ordens ${own.map(l => l.order).join(', ')} não formam um bloco contínuo a partir de ${prev + 1}`);
+      }
+      prev = own[own.length - 1].order;
+    }
+  }
+
   /* Order lookup, finals folded to their base letter. */
   const orderOf = new Map();
   letters.forEach(l => {
@@ -127,6 +180,20 @@ export function validate({ checkDist = true } = {}) {
         fail('V13', at, `${fname}: hebraico sem {{ }} — ${bad.slice(0, 3).map(b => JSON.stringify(b)).join(', ')}`);
       }
     }
+
+    /* ── V15 — bridge words actually contain their letter ──────────────
+       The whole point of a bridge word is that the reader finds the new
+       letter inside a word they already know. קרם carries its mem only as
+       the final ם, so a check on the base letter alone is not enough — and
+       without this rule the page silently printed a word with nothing
+       highlighted in it. */
+    (L.bridgeWords || []).forEach(w => {
+      const hasBase = w.he.includes(L.letter);
+      const hasFinal = !!L.finalForm && w.he.includes(L.finalForm);
+      if (!hasBase && !hasFinal) {
+        fail('V15', at, `bridgeWords "${w.he}" (${w.pt}) não contém ${JSON.stringify(L.letter)}`);
+      }
+    });
 
     /* ── V11 — stroke-order artwork ──────────────────────────────────── */
     const svg = join(ROOT, 'assets/stroke-order', `${L.id}.svg`);

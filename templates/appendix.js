@@ -25,6 +25,8 @@ export function renderAppendix(ctx) {
       <td><strong class="kbd">${esc(L.translit || '—')}</strong></td>
       <td>${esc(L.sound)}</td>
       <td class="center">${L.order}</td>
+      <td class="center">${L.module == null ? '—' : L.module}</td>
+      <td class="center">${L.lesson == null ? '—' : L.lesson}</td>
     </tr>`;
   };
 
@@ -32,11 +34,12 @@ export function renderAppendix(ctx) {
     sheets.push(`
     ${badge('Apêndice A — o alfabeto completo' + (gi ? ' · continuação' : ''))}
     <h1>O alfabeto hebraico${all.length > 1 ? ` (${gi + 1} de ${all.length})` : ''}</h1>
-    ${gi === 0 ? `<p class="lead">As 22 letras em ordem alfabética. A última coluna traz a ordem em que elas aparecem neste workbook, que é a ordem de frequência de uso, não a alfabética.</p>` : ''}
+    ${gi === 0 ? `<p class="lead">As 22 letras em ordem alfabética — a ordem do dicionário, que não é a ordem em que você as aprendeu. As três últimas colunas fazem a ponte: em que posição, em que módulo e em que lição do plano de aulas cada letra aparece.</p>` : ''}
     <table>
       <thead><tr>
         <th>Impressa</th><th>Cursiva</th><th>Final</th>
-        <th>Nome</th><th>Em português</th><th>Som</th><th>IPA</th><th>Lição</th>
+        <th>Nome</th><th>Em português</th><th>Som</th><th>IPA</th>
+        <th>Nº</th><th>Módulo</th><th>Lição</th>
       </tr></thead>
       <tbody>${g.map(alphaRow).join('\n')}</tbody>
     </table>
