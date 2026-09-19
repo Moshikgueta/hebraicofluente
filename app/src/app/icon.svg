@@ -1,17 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Hebraico Fluente">
-  <!-- O ícone da aba.
-       O site não tinha nenhum: o navegador pedia /favicon.ico em toda visita e
-       levava 404, e a aba ficava sem identidade - numa plataforma que vende
-       curso, as duas coisas contam.
+  <!-- O ícone da aba, e é a mesma marca do cabeçalho: quadrado navy com a
+       letra ע em teal claro.
 
-       Um א sobre o vermelho-romã da marca (--accent, #9E2B33). SVG porque ele tem de
-       continuar legível a 16 px na aba e nítido a 180 px no atalho de celular,
+       ע e não א: א é a marca de um concorrente. Além disso ע significa olho
+       e também fonte, nascente - as duas coisas que um curso de leitura faz -,
+       é uma letra muda, que abre espaço para a vogal, e tem forma aberta, que
+       continua legível a 16px.
+
+       SVG porque tem de servir a 16px na aba e a 180px no atalho de celular,
        e porque assim a letra é a MESMA que o curso ensina, e não um desenho
-       parecido com ela. Next injeta o <link rel="icon"> sozinho a partir deste
-       arquivo. -->
-  <rect width="64" height="64" rx="12" fill="#9E2B33"/>
-  <text x="32" y="46"
-        font-family="'Noto Sans Hebrew', 'David', serif"
-        font-size="42" font-weight="600"
-        fill="#ffffff" text-anchor="middle">&#x05D0;</text>
+       parecido com ela. Next injeta o <link rel="icon"> sozinho a partir
+       deste arquivo. -->
+  <rect width="64" height="64" rx="12" fill="#0E3B43"/>
+  <text x="32" y="45"
+        font-family="'Noto Serif Hebrew', 'David', serif"
+        font-size="38" font-weight="600"
+        fill="#8FD6C8" text-anchor="middle">&#x05E2;</text>
 </svg>

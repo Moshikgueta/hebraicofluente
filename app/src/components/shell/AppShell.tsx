@@ -26,7 +26,7 @@ import { XPIndicator, ProgressBar } from '@/components/game/Game';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
-import { He } from '@/components/hebrew/He';
+import { Logo } from '@/components/shell/Logo';
 import { course } from '@/lib/content';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
@@ -74,9 +74,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           {/* Even the logo mark goes through <He>. An exception here is how a
               contract stops being a contract. The 44px target is the tap area,
               not the text. */}
-          <Link href="/meu-hebraico" className="flex items-center gap-2.5 min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
-            <span className="text-[var(--accent)]"><He size="inline">א</He></span>
-            <span className="font-display text-[15px] font-bold text-ink truncate">Hebraico Fluente</span>
+          <Link href="/meu-hebraico" className="flex items-center min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
+            <Logo size={30} />
           </Link>
           <div className="flex items-center gap-4 sm:gap-5">
             {p.ready && (

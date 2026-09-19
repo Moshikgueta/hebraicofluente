@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+Hebrew:wght@400;500;600&display=swap">
+<style>
+  body { margin:0; background:#FBF9F5; }
+  * { box-sizing: border-box; }
+  a { color:#0E3B43; text-decoration:none; }
+  a:hover { color:#1F8A7D; }
+  ::selection { background:#CDE8E3; }
+  .he { font-family:"Noto Serif Hebrew", serif; direction:rtl; unicode-bidi:isolate; }
+  .dsp { font-family:"Bricolage Grotesque", system-ui, sans-serif; }
+  :focus-visible { outline:2px solid #1F8A7D; outline-offset:3px; border-radius:4px; }
+  @keyframes hf-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+  @keyframes hf-pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.11);opacity:.72} }
+  @keyframes hf-xp { 0%{opacity:0;transform:translateY(6px) scale(.9)} 25%{opacity:1;transform:translateY(-4px) scale(1)} 100%{opacity:0;transform:translateY(-34px) scale(1)} }
+  @keyframes hf-pop { 0%{transform:scale(.82);opacity:0} 60%{transform:scale(1.06);opacity:1} 100%{transform:scale(1);opacity:1} }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.001ms !important; transition-duration:.001ms !important; } }
+</style>
+</helmet>
+
+<div style="--navy:#0E3B43; --navy-2:#155059; --teal:#1F8A7D; --teal-soft:#E4F1EE; --gold:#B8862F; --gold-soft:#F7EFDF; --cream:#FBF9F5; --sand:#F3F0E9; --ink:#1B211F; --muted:#66716D; --line:#E4E0D6; --card:#FFFFFF; --sh:0 1px 2px rgba(27,33,31,.04), 0 8px 24px -12px rgba(27,33,31,.14); font-family:'Instrument Sans',system-ui,sans-serif; background:var(--cream); color:var(--ink); font-size:17px; line-height:1.55; overflow-x:hidden;">
+
+  <!-- NAV -->
+  <nav style="position:sticky; top:0; z-index:100; background:rgba(251,249,245,.82); backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid rgba(228,224,214,.8);">
+    <div style="max-width:1200px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; gap:14px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-right:16px;">
+        <div style="width:34px; height:34px; border-radius:10px; background:var(--navy); display:flex; align-items:center; justify-content:center;">
+          <span class="he" style="font-size:20px; line-height:1; color:#8FD6C8; margin-top:-2px;">ע</span>
+        </div>
+        <span class="dsp" style="font-weight:600; font-size:18px; letter-spacing:-0.02em;">Hebraico Fluente</span>
+      </div>
+      <div style="flex:1; display:flex; gap:26px; align-items:center;">
+        <a href="#como" style="font-size:15px; color:var(--muted);" style-hover="color:var(--ink);">Como funciona</a>
+        <a href="#curso" style="font-size:15px; color:var(--muted);" style-hover="color:var(--ink);">O curso</a>
+        <a href="#metodo" style="font-size:15px; color:var(--muted);" style-hover="color:var(--ink);">Metodologia</a>
+        <a href="#sobre" style="font-size:15px; color:var(--muted);" style-hover="color:var(--ink);">Sobre</a>
+        <a href="#duvidas" style="font-size:15px; color:var(--muted);" style-hover="color:var(--ink);">Dúvidas</a>
+      </div>
+      <a href="#preco" style="font-size:15px; font-weight:500; color:var(--muted); padding:9px 6px;" style-hover="color:var(--ink);">Entrar</a>
+      <a href="#preco" style="background:var(--navy); color:#fff; font-weight:600; font-size:15px; padding:11px 20px; border-radius:11px; box-shadow:var(--sh); transition:transform .18s ease, background .18s ease;" style-hover="background:var(--navy-2); transform:translateY(-1px);">Começar agora</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header style="position:relative; overflow:hidden;">
+    <div style="position:absolute; inset:0; background:radial-gradient(120% 90% at 82% -10%, #EAF4F1 0%, rgba(234,244,241,0) 58%); pointer-events:none;"></div>
+    <div style="position:relative; max-width:1200px; margin:0 auto; padding:78px 28px 96px; display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,1fr); gap:60px; align-items:center;">
+      <div>
+        <div style="opacity:{{ h1o }}; transform:translateY({{ h1y }}); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);">
+          <div style="display:inline-flex; align-items:center; gap:8px; background:var(--teal-soft); color:#12665C; font-size:13.5px; font-weight:600; padding:7px 13px; border-radius:100px; margin-bottom:22px;">
+            <span style="width:6px; height:6px; border-radius:50%; background:var(--teal);"></span>
+            Alfabetização Hebraica · turma aberta
+          </div>
+          <h1 class="dsp" style="font-size:clamp(40px,5.1vw,62px); line-height:1.02; letter-spacing:-0.036em; font-weight:600; margin:0 0 20px; text-wrap:balance;">Do <span class="he" style="font-family:'Noto Serif Hebrew',serif; color:var(--teal);">א</span> ao hebraico de verdade.</h1>
+        </div>
+        <p style="font-size:19.5px; line-height:1.6; color:var(--muted); max-width:44ch; margin:0 0 30px; opacity:{{ h2o }}; transform:translateY({{ h2y }}); transition:opacity .6s ease .12s, transform .6s cubic-bezier(.2,.7,.3,1) .12s;">Aprenda a ler, entender e avançar no hebraico com explicações em português, exercícios interativos e uma jornada de estudos clara.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:28px; opacity:{{ h3o }}; transform:translateY({{ h3y }}); transition:opacity .5s ease .26s, transform .5s cubic-bezier(.2,.7,.3,1) .26s;">
+          <a href="#aula" style="background:var(--navy); color:#fff; font-weight:600; font-size:17px; padding:15px 28px; border-radius:13px; box-shadow:var(--sh); transition:transform .18s ease, background .18s ease;" style-hover="background:var(--navy-2); transform:translateY(-2px);">Começar a aprender</a>
+          <a href="#como" style="background:#fff; border:1px solid var(--line); color:var(--ink); font-weight:600; font-size:17px; padding:15px 24px; border-radius:13px; transition:transform .18s ease, border-color .18s ease;" style-hover="border-color:#C9C3B4; transform:translateY(-2px);">Ver como funciona</a>
+        </div>
+        <div style="display:flex; gap:20px; flex-wrap:wrap; opacity:{{ h3o }}; transition:opacity .5s ease .4s;">
+          <sc-for list="{{ trust }}" as="t" hint-placeholder-count="4">
+            <div style="display:flex; align-items:center; gap:7px; font-size:14.5px; color:var(--muted);">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.4 8.4 6.3 11.2 12.6 4.9" stroke="#1F8A7D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              {{ t }}
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- HERO MOCKUP -->
+      <div style="position:relative; opacity:{{ h4o }}; transform:translateY({{ h4y }}); transition:opacity .7s ease .34s, transform .7s cubic-bezier(.2,.7,.3,1) .34s;">
+        <div style="background:var(--card); border:1px solid var(--line); border-radius:26px; box-shadow:0 2px 4px rgba(27,33,31,.04), 0 30px 60px -28px rgba(14,59,67,.32); padding:26px 24px 24px; position:relative; z-index:2;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+            <button type="button" aria-label="Voltar" style="background:none; border:none; padding:0; cursor:pointer; color:var(--muted); font-size:19px; line-height:1;">‹</button>
+            <div style="flex:1; height:7px; border-radius:100px; background:var(--sand); overflow:hidden;">
+              <div style="height:100%; border-radius:100px; background:linear-gradient(90deg,var(--teal),#2FB39F); width:{{ heroPct }}; transition:width 1.3s cubic-bezier(.3,.8,.3,1);"></div>
+            </div>
+            <span style="font-size:13px; font-weight:600; color:var(--teal); font-variant-numeric:tabular-nums; min-width:34px; text-align:right;">{{ heroPctLabel }}</span>
+          </div>
+
+          <div style="font-size:15px; color:var(--muted); margin-bottom:14px;">Qual é o som desta letra?</div>
+          <div style="background:var(--sand); border-radius:18px; padding:26px 20px; text-align:center; margin-bottom:16px;">
+            <div class="he" style="font-size:88px; line-height:1.1; color:var(--navy); animation:hf-pop .5s cubic-bezier(.2,.8,.3,1) both;">ש</div>
+            <button type="button" style="margin-top:12px; display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line); border-radius:100px; padding:9px 17px; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--ink); cursor:pointer; transition:transform .18s ease;" style-hover="transform:translateY(-1px);">
+              <span style="width:9px; height:9px; border-radius:50%; background:var(--teal); animation:hf-pulse 1.5s ease-in-out infinite; display:inline-block;"></span>
+              Ouvir
+            </button>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div style="border:1.5px solid {{ shBorder }}; background:{{ shBg }}; border-radius:14px; padding:13px; text-align:center; font-weight:600; font-size:16px; color:{{ shFg }}; display:flex; align-items:center; justify-content:center; gap:8px; transition:all .35s ease;">
+              SH <span style="opacity:{{ shTick }}; transition:opacity .3s ease .1s;">✓</span>
+            </div>
+            <div style="border:1.5px solid var(--line); border-radius:14px; padding:13px; text-align:center; font-weight:600; font-size:16px; color:var(--muted);">M</div>
+            <div style="border:1.5px solid var(--line); border-radius:14px; padding:13px; text-align:center; font-weight:600; font-size:16px; color:var(--muted);">L</div>
+            <div style="border:1.5px solid var(--line); border-radius:14px; padding:13px; text-align:center; font-weight:600; font-size:16px; color:var(--muted);">V</div>
+          </div>
+
+          <div style="position:absolute; right:26px; bottom:96px; font-weight:700; font-size:17px; color:var(--teal); pointer-events:none; opacity:0; animation:{{ xpAnim }};">+10 XP</div>
+        </div>
+
+        <div style="position:absolute; top:-22px; right:-14px; z-index:3; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--sh); padding:12px 16px; display:flex; align-items:center; gap:11px; animation:hf-float 5.5s ease-in-out infinite;">
+          <div style="width:32px; height:32px; border-radius:9px; background:var(--gold-soft); display:flex; align-items:center; justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.8c1.5 2.4.6 3.6-.5 4.8-1 1.1-1.9 2.2-1.9 3.7a2.4 2.4 0 0 0 4.8 0c0-.7-.2-1.2-.5-1.8 1.6.8 2.6 2 2.6 3.6A4.5 4.5 0 0 1 8 14.3a4.5 4.5 0 0 1-4.5-4.5C3.5 6.3 6.6 5 8 1.8Z" stroke="#B8862F" stroke-width="1.3" stroke-linejoin="round"></path></svg>
+          </div>
+          <div>
+            <div style="font-size:12.5px; color:var(--muted); line-height:1.3;">Sequência</div>
+            <div style="font-weight:700; font-size:15px; line-height:1.3; font-variant-numeric:tabular-nums;">{{ streak }} dias</div>
+          </div>
+        </div>
+
+        <div style="position:absolute; left:-26px; bottom:56px; z-index:3; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--sh); padding:12px 16px; display:flex; align-items:center; gap:11px; animation:hf-float 6.5s ease-in-out .8s infinite;">
+          <div style="width:32px; height:32px; border-radius:9px; background:var(--teal-soft); display:flex; align-items:center; justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.2 8.3 6.2 11.3 12.8 4.7" stroke="#1F8A7D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+          <div>
+            <div style="font-size:12.5px; color:var(--muted); line-height:1.3;">Lição concluída</div>
+            <div style="font-weight:700; font-size:15px; line-height:1.3;">5 novas letras</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROBLEMA -->
+  <section id="como" style="background:var(--sand); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div style="max-width:1200px; margin:0 auto; padding:88px 28px;">
+      <h2 class="dsp" data-reveal="1" style="font-size:clamp(30px,3.7vw,44px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 44px; max-width:20ch; text-wrap:balance; opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);">Aprender hebraico não deveria parecer um quebra-cabeça.</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(235px,1fr)); gap:16px;">
+        <sc-for list="{{ problems }}" as="p" hint-placeholder-count="4">
+          <div data-reveal="1" style="background:var(--card); border:1px solid var(--line); border-radius:18px; padding:26px 24px; opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1), box-shadow .25s ease; transition-delay:{{ p.delay }};" style-hover="box-shadow:var(--sh);">
+            <div style="width:36px; height:36px; border-radius:11px; background:var(--sand); display:flex; align-items:center; justify-content:center; margin-bottom:16px; font-weight:700; color:var(--muted); font-size:14px;">{{ p.n }}</div>
+            <div style="font-size:17px; line-height:1.5; font-weight:500;">{{ p.t }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div data-reveal="1" style="margin-top:40px; display:flex; gap:14px; align-items:flex-start; max-width:62ch; opacity:0; transform:translateY(18px); transition:opacity .6s ease .2s, transform .6s cubic-bezier(.2,.7,.3,1) .2s;">
+        <div style="width:3px; align-self:stretch; border-radius:100px; background:var(--teal); flex-shrink:0;"></div>
+        <p class="dsp" style="font-size:22px; line-height:1.4; font-weight:500; letter-spacing:-0.015em; margin:0;">Por isso criamos um caminho claro, progressivo e pensado para quem fala português.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMONSTRAÇÃO -->
+  <section id="curso" style="max-width:1200px; margin:0 auto; padding:96px 28px 0;">
+    <h2 class="dsp" data-reveal="1" style="font-size:clamp(30px,3.7vw,44px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 12px; opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);">Veja como você vai aprender.</h2>
+    <p data-reveal="1" style="font-size:18px; color:var(--muted); margin:0 0 32px; max-width:52ch; opacity:0; transform:translateY(18px); transition:opacity .6s ease .08s, transform .6s cubic-bezier(.2,.7,.3,1) .08s;">Quatro momentos que se repetem em toda lição. Um de cada vez, sempre na mesma ordem.</p>
+
+    <div style="display:inline-flex; gap:4px; background:var(--sand); border:1px solid var(--line); border-radius:14px; padding:4px; margin-bottom:26px; flex-wrap:wrap;">
+      <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="4">
+        <button type="button" onClick="{{ tb.on }}" style="background:{{ tb.bg }}; color:{{ tb.fg }}; border:none; border-radius:10px; padding:9px 18px; font-family:inherit; font-size:15px; font-weight:600; cursor:pointer; box-shadow:{{ tb.sh }}; transition:all .22s ease;">{{ tb.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="background:var(--navy); border-radius:26px; padding:34px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,420px); gap:40px; align-items:center;">
+      <div>
+        <div style="display:inline-block; background:rgba(255,255,255,.1); color:#8FD6C8; font-size:13px; font-weight:600; padding:6px 12px; border-radius:100px; margin-bottom:16px;">{{ demo.kicker }}</div>
+        <h3 class="dsp" style="font-size:30px; line-height:1.12; letter-spacing:-0.025em; font-weight:600; color:#fff; margin:0 0 14px;">{{ demo.title }}</h3>
+        <p style="font-size:17px; line-height:1.6; color:rgba(255,255,255,.72); margin:0 0 22px; max-width:42ch;">{{ demo.body }}</p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <sc-for list="{{ demo.points }}" as="pt" hint-placeholder-count="3">
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:15.5px; color:rgba(255,255,255,.88);">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style="margin-top:4px; flex-shrink:0;" aria-hidden="true"><path d="M3.2 8.3 6.2 11.3 12.8 4.7" stroke="#8FD6C8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              {{ pt }}
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="background:var(--card); border-radius:20px; padding:24px; min-height:330px; display:flex; flex-direction:column;">{{ demoPanel }}</div>
+    </div>
+  </section>
+
+  <!-- MÉTODO -->
+  <section id="metodo" style="max-width:1200px; margin:0 auto; padding:96px 28px 0;">
+    <h2 class="dsp" data-reveal="1" style="font-size:clamp(30px,3.7vw,44px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 12px; max-width:20ch; text-wrap:balance; opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);">Um método simples para transformar símbolos em leitura.</h2>
+    <p data-reveal="1" style="font-size:18px; color:var(--muted); margin:0 0 46px; max-width:50ch; opacity:0; transform:translateY(18px); transition:opacity .6s ease .08s, transform .6s cubic-bezier(.2,.7,.3,1) .08s;">Seis passos, sempre nesta sequência. Nenhuma letra avança sem passar por todos.</p>
+    <div style="position:relative;">
+      <div data-reveal="line" style="position:absolute; left:0; right:0; top:27px; height:2px; background:linear-gradient(90deg,var(--teal),#8FD6C8); transform-origin:left; transform:scaleX(0); transition:transform 1.1s cubic-bezier(.3,.8,.3,1);"></div>
+      <div style="position:relative; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:18px;">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="6">
+          <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity .5s ease, transform .5s cubic-bezier(.2,.7,.3,1); transition-delay:{{ s.delay }};">
+            <div style="width:56px; height:56px; border-radius:16px; background:var(--card); border:1.5px solid var(--teal); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:var(--teal); margin-bottom:16px;">{{ s.n }}</div>
+            <div class="dsp" style="font-size:19px; font-weight:600; letter-spacing:-0.015em; margin-bottom:6px;">{{ s.t }}</div>
+            <div style="font-size:15px; line-height:1.55; color:var(--muted);">{{ s.d }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRÍCULO -->
+  <section style="max-width:1200px; margin:0 auto; padding:96px 28px 0;">
+    <h2 class="dsp" data-reveal="1" style="font-size:clamp(30px,3.7vw,44px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 12px; opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);">O que você estuda, módulo a módulo.</h2>
+    <p data-reveal="1" style="font-size:18px; color:var(--muted); margin:0 0 34px; max-width:50ch; opacity:0; transform:translateY(18px); transition:opacity .6s ease .08s, transform .6s cubic-bezier(.2,.7,.3,1) .08s;">Seis módulos. As letras aparecem por utilidade, não por ordem alfabética — você lê palavras reais já na primeira semana.</p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <sc-for list="{{ curriculum }}" as="m" hint-placeholder-count="6">
+        <div style="background:var(--card); border:1px solid {{ m.border }}; border-radius:18px; overflow:hidden; transition:border-color .25s ease, box-shadow .25s ease; box-shadow:{{ m.shadow }};">
+          <button type="button" onClick="{{ m.on }}" aria-expanded="{{ m.expanded }}" style="width:100%; background:none; border:none; padding:22px 24px; display:flex; align-items:center; gap:18px; cursor:pointer; font-family:inherit; text-align:left;">
+            <div style="width:44px; height:44px; border-radius:13px; background:{{ m.chipBg }}; color:{{ m.chipFg }}; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; flex-shrink:0;">{{ m.num }}</div>
+            <div style="flex:1; min-width:0;">
+              <div class="dsp" style="font-size:19px; font-weight:600; letter-spacing:-0.018em; color:var(--ink);">{{ m.title }}</div>
+              <div style="font-size:14.5px; color:var(--muted); margin-top:2px;">{{ m.meta }}</div>
+            </div>
+            <div style="display:flex; gap:7px; flex-shrink:0;">
+              <sc-for list="{{ m.letters }}" as="l" hint-placeholder-count="4">
+                <span class="he" style="font-size:21px; line-height:1.1; color:var(--muted);">{{ l }}</span>
+              </sc-for>
+            </div>
+            <span style="color:var(--muted); font-size:16px; transform:rotate({{ m.rot }}); transition:transform .28s cubic-bezier(.2,.7,.3,1); flex-shrink:0; display:inline-block;">⌄</span>
+          </button>
+          <div style="max-height:{{ m.maxH }}; overflow:hidden; transition:max-height .34s cubic-bezier(.2,.7,.3,1);">
+            <div style="padding:0 24px 24px 86px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:18px;">
+              <sc-for list="{{ m.skills }}" as="sk" hint-placeholder-count="3">
+                <div style="display:flex; gap:9px; align-items:flex-start; font-size:15px; line-height:1.5; color:var(--muted);">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-top:4px; flex-shrink:0;" aria-hidden="true"><path d="M3.2 8.3 6.2 11.3 12.8 4.7" stroke="#1F8A7D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  {{ sk }}
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- JORNADA -->
+  <section style="margin-top:96px; background:var(--sand); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div style="max-width:1200px; margin:0 auto; padding:88px 28px;">
+      <h2 class="dsp" data-reveal="1" style="font-size:clamp(30px,3.7vw,44px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 12px; opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);">Seu hebraico começa aqui. Não termina aqui.</h2>
+      <p data-reveal="1" style="font-size:18px; color:var(--muted); margin:0 0 42px; max-width:52ch; opacity:0; transform:translateY(18px); transition:opacity .6s ease .08s, transform .6s cubic-bezier(.2,.7,.3,1) .08s;">A Alfabetização é o primeiro degrau de uma trilha que continua. Quem entra agora acompanha os próximos níveis conforme saem.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(176px,1fr)); gap:14px;">
+        <sc-for list="{{ journey }}" as="j" hint-placeholder-count="5">
+          <div data-reveal="1" style="background:{{ j.bg }}; border:1.5px solid {{ j.border }}; border-radius:18px; padding:24px 22px; opacity:0; transform:translateY(18px); transition:opacity .5s ease, transform .5s cubic-bezier(.2,.7,.3,1); transition-delay:{{ j.delay }};">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+              <span style="font-size:12.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:{{ j.tagFg }};">{{ j.tag }}</span>
+              {{ j.icon }}
+            </div>
+            <div class="dsp" style="font-size:20px; font-weight:600; letter-spacing:-0.02em; color:{{ j.fg }}; margin-bottom:6px;">{{ j.name }}</div>
+            <div style="font-size:14.5px; line-height:1.5; color:{{ j.subFg }};">{{ j.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFESSOR -->
+  <section id="sobre" style="max-width:1200px; margin:0 auto; padding:96px 28px 0;">
+    <div style="display:grid; grid-template-columns:minmax(0,340px) minmax(0,1fr); gap:56px; align-items:center;">
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);">
+        <div style="aspect-ratio:4/5; border-radius:22px; border:1px solid var(--line); background:var(--sand); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:var(--muted); text-align:center; padding:24px;">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.6" r="4" stroke="#66716D" stroke-width="1.4"></circle><path d="M4.4 20c.7-3.8 3.9-5.8 7.6-5.8s6.9 2 7.6 5.8" stroke="#66716D" stroke-width="1.4" stroke-linecap="round"></path></svg>
+          <div style="font-size:14px; line-height:1.5; max-width:22ch;">Retrato profissional do professor entra aqui</div>
+        </div>
+      </div>
+      <div data-reveal="1" style="opacity:0; transform:translateY(18px); transition:opacity .6s ease .1s, transform .6s cubic-bezier(.2,.7,.3,1) .1s;">
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.11em; text-transform:uppercase; color:var(--teal); margin-bottom:14px;">Quem criou o Hebraico Fluente</div>
+        <h2 class="dsp" style="font-size:clamp(28px,3.4vw,40px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 18px;">Moshik Gueta</h2>
+        <p style="font-size:18px; line-height:1.65; color:var(--muted); margin:0 0 16px; max-width:52ch;">Professor de hebraico e idiomas, com experiência no ensino de hebraico para brasileiros. Ensinar nas duas direções — hebraico para quem fala português e português para quem fala hebraico — mostrou exatamente onde o aluno brasileiro trava.</p>
+        <p class="dsp" style="font-size:21px; line-height:1.45; font-weight:500; letter-spacing:-0.015em; margin:0 0 26px; max-width:46ch;">O método nasceu da experiência de ensinar hebraico especificamente para quem fala português.</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px;">
+          <sc-for list="{{ credentials }}" as="c" hint-placeholder-count="4">
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:15px; line-height:1.5; color:var(--muted);">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style="margin-top:3px; flex-shrink:0;" aria-hidden="true"><path d="M3.2 8.3 6.2 11.3 12.8 4.7" stroke="#1F8A7D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              {{ c }}
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECURSOS -->
+  <section style="max-width:1200px; margin:0 auto; padding:96px 28px 0;">
+    <h2 class="dsp" data-reveal="1" style="font-size:clamp(30px,3.7vw,44px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 34px; opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);">O que vem junto com o curso.</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px;">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="8">
+        <div data-reveal="1" style="background:var(--card); border:1px solid var(--line); border-radius:18px; padding:24px 22px; opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s cubic-bezier(.2,.7,.3,1), box-shadow .25s ease, border-color .25s ease; transition-delay:{{ f.delay }};" style-hover="box-shadow:var(--sh); border-color:#D3CEC0;">
+          <div style="width:40px; height:40px; border-radius:12px; background:var(--teal-soft); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">{{ f.icon }}</div>
+          <div class="dsp" style="font-size:18px; font-weight:600; letter-spacing:-0.015em; margin-bottom:6px;">{{ f.t }}</div>
+          <div style="font-size:15px; line-height:1.55; color:var(--muted);">{{ f.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- AULA DE AMOSTRA -->
+  <section id="aula" style="max-width:1200px; margin:0 auto; padding:96px 28px 0;">
+    <div style="background:var(--navy); border-radius:30px; padding:52px 44px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,440px); gap:52px; align-items:center;">
+      <div>
+        <h2 class="dsp" style="font-size:clamp(30px,3.6vw,42px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; color:#fff; margin:0 0 16px;">Experimente antes de começar.</h2>
+        <p style="font-size:18px; line-height:1.6; color:rgba(255,255,255,.72); margin:0 0 26px; max-width:40ch;">Uma questão real da Lição 3, do jeito que ela aparece dentro da plataforma. Escolha uma opção.</p>
+        <a href="#preco" style="display:inline-block; background:#fff; color:var(--navy); font-weight:600; font-size:17px; padding:15px 28px; border-radius:13px; transition:transform .18s ease;" style-hover="transform:translateY(-2px);">Experimentar uma aula grátis</a>
+      </div>
+      <div style="background:var(--card); border-radius:22px; padding:28px 26px;">
+        <div style="font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">Lição 3 · Reconhecimento</div>
+        <div class="dsp" style="font-size:22px; font-weight:600; letter-spacing:-0.02em; margin-bottom:20px;">Qual letra representa o som SH?</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px;">
+          <sc-for list="{{ sampleOptions }}" as="o" hint-placeholder-count="4">
+            <button type="button" onClick="{{ o.on }}" style="background:{{ o.bg }}; border:2px solid {{ o.border }}; border-radius:16px; padding:20px 12px; cursor:pointer; font-family:inherit; transition:all .22s ease; display:flex; flex-direction:column; align-items:center; gap:6px;" style-hover="transform:translateY(-2px);">
+              <span class="he" style="font-size:44px; line-height:1.1; color:{{ o.fg }};">{{ o.he }}</span>
+              <span style="font-size:13px; font-weight:600; color:{{ o.labelFg }};">{{ o.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="min-height:74px;">{{ sampleFeedback }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section style="max-width:1200px; margin:0 auto; padding:96px 28px 0;">
+    <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:8px;">
+      <h2 class="dsp" style="font-size:clamp(30px,3.7vw,44px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0;">Quem já está lendo.</h2>
+    </div>
+    <p style="font-size:15px; color:var(--gold); font-weight:600; margin:0 0 34px;">Espaço reservado — os cartões abaixo mostram o formato; os depoimentos reais entram no lugar.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(275px,1fr)); gap:16px;">
+      <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
+        <div data-reveal="1" style="background:var(--card); border:1px solid var(--line); border-radius:18px; padding:26px 24px; opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s cubic-bezier(.2,.7,.3,1); transition-delay:{{ t.delay }};">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+            <div style="width:42px; height:42px; border-radius:50%; background:{{ t.avBg }}; color:{{ t.avFg }}; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px;">{{ t.initials }}</div>
+            <div>
+              <div style="font-weight:600; font-size:16px;">{{ t.name }}</div>
+              <div style="font-size:13.5px; color:var(--muted);">{{ t.context }}</div>
+            </div>
+          </div>
+          <div style="display:inline-block; background:var(--teal-soft); color:#12665C; font-size:13px; font-weight:600; padding:5px 11px; border-radius:100px; margin-bottom:14px;">{{ t.result }}</div>
+          <p style="font-size:15.5px; line-height:1.6; color:var(--muted); margin:0;">{{ t.quote }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- PREÇO -->
+  <section id="preco" style="max-width:1200px; margin:0 auto; padding:96px 28px 0;">
+    <div style="background:var(--card); border:1px solid var(--line); border-radius:30px; box-shadow:0 2px 4px rgba(27,33,31,.04), 0 34px 70px -40px rgba(14,59,67,.3); padding:48px 44px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,330px); gap:52px; align-items:center;">
+      <div>
+        <div style="display:inline-block; background:var(--teal-soft); color:#12665C; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:6px 12px; border-radius:100px; margin-bottom:18px;">Curso 1 de uma trilha</div>
+        <h2 class="dsp" style="font-size:clamp(28px,3.4vw,40px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 14px;">Curso de Alfabetização Hebraica</h2>
+        <p style="font-size:17.5px; line-height:1.6; color:var(--muted); margin:0 0 26px; max-width:46ch;">Acesso completo à plataforma, com progresso salvo e revisões liberadas conforme você avança.</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;">
+          <sc-for list="{{ included }}" as="i" hint-placeholder-count="6">
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:15.5px; line-height:1.5;">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style="margin-top:4px; flex-shrink:0;" aria-hidden="true"><path d="M3.2 8.3 6.2 11.3 12.8 4.7" stroke="#1F8A7D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              {{ i }}
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="background:var(--sand); border-radius:22px; padding:32px 28px; text-align:center;">
+        <div style="font-size:14.5px; color:var(--muted); margin-bottom:6px;">Acesso completo</div>
+        <div class="dsp" style="font-size:48px; font-weight:600; letter-spacing:-0.035em; line-height:1; margin-bottom:4px;">R$&nbsp;XXX</div>
+        <div style="font-size:14.5px; color:var(--muted); margin-bottom:24px;">ou 12× de R$&nbsp;XX</div>
+        <a href="#preco" style="display:block; background:var(--navy); color:#fff; font-weight:600; font-size:17px; padding:15px; border-radius:13px; margin-bottom:14px; transition:transform .18s ease, background .18s ease;" style-hover="background:var(--navy-2); transform:translateY(-2px);">Começar agora</a>
+        <div style="font-size:13.5px; color:var(--muted); line-height:1.5;">Valores a definir. Acesso imediato após a confirmação.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="duvidas" style="max-width:820px; margin:0 auto; padding:96px 28px 0;">
+    <h2 class="dsp" style="font-size:clamp(30px,3.7vw,44px); line-height:1.08; letter-spacing:-0.03em; font-weight:600; margin:0 0 34px;">Dúvidas frequentes</h2>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <sc-for list="{{ faq }}" as="f" hint-placeholder-count="8">
+        <div style="background:var(--card); border:1px solid {{ f.border }}; border-radius:16px; overflow:hidden; transition:border-color .25s ease;">
+          <button type="button" onClick="{{ f.on }}" aria-expanded="{{ f.expanded }}" style="width:100%; background:none; border:none; padding:19px 22px; display:flex; align-items:center; gap:16px; cursor:pointer; font-family:inherit; text-align:left;">
+            <span style="flex:1; font-size:17px; font-weight:600; color:var(--ink);">{{ f.q }}</span>
+            <span style="color:var(--muted); font-size:15px; transform:rotate({{ f.rot }}); transition:transform .28s cubic-bezier(.2,.7,.3,1); display:inline-block;">⌄</span>
+          </button>
+          <div style="max-height:{{ f.maxH }}; overflow:hidden; transition:max-height .32s cubic-bezier(.2,.7,.3,1);">
+            <div style="padding:0 22px 20px; font-size:16px; line-height:1.65; color:var(--muted);">{{ f.a }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section style="max-width:1200px; margin:96px auto 0; padding:0 28px;">
+    <div style="background:var(--navy); border-radius:30px; padding:72px 48px; text-align:center; position:relative; overflow:hidden;">
+      <div style="position:absolute; inset:0; background:radial-gradient(90% 120% at 50% 0%, rgba(143,214,200,.15), transparent 62%); pointer-events:none;"></div>
+      <div style="position:relative;">
+        <div style="display:flex; gap:26px; justify-content:center; flex-wrap:wrap; margin-bottom:34px;">
+          <sc-for list="{{ finalWords }}" as="w" hint-placeholder-count="3">
+            <div style="text-align:center;">
+              <div class="he" style="font-size:42px; line-height:1.35; color:#fff; font-weight:500;">{{ w.he }}</div>
+              <div style="font-size:13.5px; color:#8FD6C8; margin-top:2px;">{{ w.tr }}</div>
+              <div style="font-size:14.5px; color:rgba(255,255,255,.62);">{{ w.pt }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <h2 class="dsp" style="font-size:clamp(28px,3.9vw,46px); line-height:1.1; letter-spacing:-0.032em; font-weight:600; color:#fff; margin:0 auto 28px; max-width:19ch; text-wrap:balance;">A próxima palavra em hebraico pode ser a primeira que você realmente consegue ler.</h2>
+        <a href="#preco" style="display:inline-block; background:#fff; color:var(--navy); font-weight:600; font-size:18px; padding:16px 34px; border-radius:14px; transition:transform .18s ease;" style-hover="transform:translateY(-2px);">Começar meu hebraico</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="max-width:1200px; margin:0 auto; padding:56px 28px 64px; display:flex; gap:26px; flex-wrap:wrap; align-items:center; font-size:14.5px; color:var(--muted);">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div style="width:28px; height:28px; border-radius:8px; background:var(--navy); display:flex; align-items:center; justify-content:center;">
+        <span class="he" style="font-size:16px; line-height:1; color:#8FD6C8; margin-top:-1px;">ע</span>
+      </div>
+      <span style="font-weight:600; color:var(--ink);">Hebraico Fluente</span>
+    </div>
+    <span>@hebraicofluente</span>
+    <span style="flex:1;"></span>
+    <a href="#duvidas">Termos</a>
+    <a href="#duvidas">Privacidade</a>
+    <a href="#duvidas">Contato</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const E = React.createElement;
+
+class Component extends DCLogic {
+  state = { hero: 0, streak: 6, tab: 0, openMod: 0, openFaq: -1, pick: null };
+
+  componentDidMount() {
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const seq = reduce ? [[1,0],[2,0],[3,0],[4,0],[5,0]] : [[1,120],[2,420],[3,720],[4,1000],[5,1900]];
+    this._t = seq.map(([v, ms]) => setTimeout(() => {
+      this.setState({ hero: v, streak: v >= 5 ? 7 : 6 });
+    }, ms));
+
+    const reveal = (el) => { el.style.opacity = "1"; el.style.transform = "none"; };
+    const nodes = Array.from(document.querySelectorAll("[data-reveal]"));
+    if (reduce || !("IntersectionObserver" in window)) {
+      nodes.forEach((n) => { n.dataset.reveal === "line" ? (n.style.transform = "scaleX(1)") : reveal(n); });
+      return;
+    }
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const n = e.target;
+        if (n.dataset.reveal === "line") n.style.transform = "scaleX(1)"; else reveal(n);
+        this._io.unobserve(n);
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.1 });
+    nodes.forEach((n) => this._io.observe(n));
+  }
+
+  componentWillUnmount() {
+    (this._t || []).forEach(clearTimeout);
+    if (this._io) this._io.disconnect();
+  }
+
+  renderVals() {
+    const { hero, streak, tab, openMod, openFaq, pick } = this.state;
+    const on = (h) => hero >= h;
+    const correct = pick === 0;
+
+    const tabsData = [
+      {
+        label: "Aula", kicker: "Aprender", title: "A letra primeiro, sempre sozinha.",
+        body: "Uma forma por tela. O nome, o som, o áudio e a explicação em português — nada mais disputando atenção.",
+        points: ["Áudio gravado por falante nativo", "Explicação escrita em português", "Uma palavra de exemplo, já com nikud"],
+      },
+      {
+        label: "Prática", kicker: "Fixar", title: "Cinco tipos de exercício, alternados.",
+        body: "Múltipla escolha, digitação, associação, escuta e leitura. A alternância é o que impede a decoreba.",
+        points: ["Correção imediata, com explicação", "Erro não bloqueia: você tenta de novo", "Dificuldade sobe conforme você acerta"],
+      },
+      {
+        label: "Revisão", kicker: "Consolidar", title: "O que você errou volta na hora certa.",
+        body: "As letras que ainda escapam reaparecem em intervalos crescentes, até ficarem automáticas.",
+        points: ["Revisões curtas, de 3 a 5 minutos", "Só o que precisa — não repete o que já domina", "Aviso quando há revisão pendente"],
+      },
+      {
+        label: "Progresso", kicker: "Acompanhar", title: "Você vê exatamente onde está.",
+        body: "Letras dominadas, letras em progresso, letras a revisar. Sem pontuação inflada: o número reflete leitura real.",
+        points: ["Percentual por módulo", "Mapa de domínio das 22 letras", "Tempo de estudo por semana"],
+      },
+    ];
+    const d = tabsData[tab];
+
+    const panels = [
+      E("div", { style: { display: "flex", flexDirection: "column", height: "100%" } },
+        E("div", { style: { fontSize: 13, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "#66716D", marginBottom: 14 } }, "Lição 4 · Aprender"),
+        E("div", { style: { background: "#F3F0E9", borderRadius: 16, padding: "22px 16px", textAlign: "center", marginBottom: 16 } },
+          E("div", { className: "he", style: { fontSize: 76, lineHeight: 1.15, color: "#0E3B43" } }, "שׁ"),
+          E("div", { style: { fontSize: 17, fontWeight: 600, marginTop: 6 } }, "Shin"),
+          E("div", { style: { fontSize: 14.5, color: "#1F8A7D" } }, "som /ʃ/ — como o CH de «chave»")),
+        E("div", { style: { fontSize: 15.5, lineHeight: 1.6, color: "#66716D" } },
+          "O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma letra vira Sin, com som de S.")),
+      E("div", null,
+        E("div", { style: { fontSize: 13, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "#66716D", marginBottom: 14 } }, "Lição 4 · Escuta"),
+        E("div", { style: { fontSize: 18, fontWeight: 600, marginBottom: 16 } }, "Qual som você ouviu?"),
+        E("button", { type: "button", style: { display: "inline-flex", alignItems: "center", gap: 8, background: "#E4F1EE", border: "none", borderRadius: 100, padding: "10px 18px", fontFamily: "inherit", fontSize: 14.5, fontWeight: 600, color: "#12665C", cursor: "pointer", marginBottom: 18 } },
+          E("span", { style: { width: 9, height: 9, borderRadius: "50%", background: "#1F8A7D", animation: "hf-pulse 1.5s ease-in-out infinite", display: "inline-block" } }), "Reproduzir áudio"),
+        E("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 } },
+          [["ש", "SH", true], ["ס", "S", false], ["צ", "TS", false], ["ז", "Z", false]].map(([he, lbl, ok], i) =>
+            E("div", { key: i, style: { border: ok ? "2px solid #1F8A7D" : "1.5px solid #E4E0D6", background: ok ? "#E4F1EE" : "#fff", borderRadius: 14, padding: "12px 8px", textAlign: "center" } },
+              E("div", { className: "he", style: { fontSize: 30, lineHeight: 1.2, color: "#0E3B43" } }, he),
+              E("div", { style: { fontSize: 13, fontWeight: 600, color: ok ? "#12665C" : "#66716D" } }, lbl))))),
+      E("div", null,
+        E("div", { style: { fontSize: 13, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "#66716D", marginBottom: 6 } }, "Revisão de hoje"),
+        E("div", { style: { fontSize: 18, fontWeight: 600, marginBottom: 18 } }, "4 letras precisam voltar"),
+        E("div", { style: { display: "flex", flexDirection: "column", gap: 10 } },
+          [["ס", "Sámech", "Confundida com ם", "#B8862F", "#F7EFDF"], ["ע", "Áyin", "Confundida com א", "#B8862F", "#F7EFDF"], ["ט", "Tet", "3 erros seguidos", "#B8862F", "#F7EFDF"], ["ח", "Het", "Som gutural", "#B8862F", "#F7EFDF"]].map(([he, name, why, fg, bg], i) =>
+            E("div", { key: i, style: { display: "flex", alignItems: "center", gap: 14, padding: "11px 14px", border: "1px solid #E4E0D6", borderRadius: 14 } },
+              E("span", { className: "he", style: { fontSize: 27, lineHeight: 1.1, color: "#0E3B43", minWidth: 30, textAlign: "center" } }, he),
+              E("div", { style: { flex: 1 } },
+                E("div", { style: { fontSize: 15, fontWeight: 600 } }, name),
+                E("div", { style: { fontSize: 13.5, color: "#66716D" } }, why)),
+              E("span", { style: { fontSize: 12, fontWeight: 700, color: fg, background: bg, padding: "4px 9px", borderRadius: 100 } }, "Revisar"))))),
+      E("div", null,
+        E("div", { style: { fontSize: 13, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "#66716D", marginBottom: 14 } }, "Seu progresso"),
+        E("div", { style: { display: "flex", gap: 10, marginBottom: 18 } },
+          [["42%", "do curso"], ["9", "letras firmes"], ["7", "dias seguidos"]].map(([n, l], i) =>
+            E("div", { key: i, style: { flex: 1, background: "#F3F0E9", borderRadius: 14, padding: "14px 12px" } },
+              E("div", { className: "dsp", style: { fontSize: 25, fontWeight: 600, letterSpacing: "-.025em", lineHeight: 1.1 } }, n),
+              E("div", { style: { fontSize: 13, color: "#66716D", marginTop: 2 } }, l)))),
+        E("div", { style: { fontSize: 14, color: "#66716D", marginBottom: 10 } }, "Domínio das 22 letras"),
+        E("div", { style: { display: "flex", flexWrap: "wrap", gap: 6 } },
+          "מתאנהיגדשלרוזחטסעצקבכפ".split("").map((c, i) =>
+            E("span", { key: i, className: "he", style: { fontSize: 19, lineHeight: 1, width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 9, background: i < 9 ? "#E4F1EE" : i < 12 ? "#F7EFDF" : "#F3F0E9", color: i < 9 ? "#12665C" : i < 12 ? "#8A6520" : "#A8AFAB" } }, c)))),
+    ];
+
+    const icon = (paths) => E("svg", { width: 19, height: 19, viewBox: "0 0 20 20", fill: "none", "aria-hidden": "true" },
+      paths.map((dd, i) => E("path", { key: i, d: dd, stroke: "#1F8A7D", strokeWidth: 1.5, strokeLinecap: "round", strokeLinejoin: "round" })));
+
+    const featureData = [
+      ["Áudio e pronúncia", "Cada letra, sílaba e palavra gravada por falante nativo.", ["M4 8v4M7 5.5v9M10 3v14M13 5.5v9M16 8v4"]],
+      ["Correção imediata", "Você sabe na hora se acertou — e por que errou.", ["M4 10.5 8 14.5 16 5.5"]],
+      ["Sequência de estudos", "Um lembrete por dia, no horário que você escolher.", ["M10 2.5c1.9 3 .8 4.5-.6 6-1.3 1.4-2.4 2.7-2.4 4.6a3 3 0 0 0 6 0c0-.9-.3-1.6-.7-2.3 2 1 3.2 2.6 3.2 4.6"]],
+      ["Progresso visual", "Percentual por módulo e mapa de domínio das letras.", ["M4 16V9M9 16V4M14 16v-5"]],
+      ["Revisão inteligente", "O que escapa volta sozinho, no intervalo certo.", ["M16 6.5A6.5 6.5 0 1 0 17 10", "M16 3v3.5h-3.5"]],
+      ["Estude no celular", "Uma atividade por tela, botão de continuar sempre à mão.", ["M6.5 2.5h7a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 5 16V4a1.5 1.5 0 0 1 1.5-1.5Z", "M9 15h2"]],
+      ["Explicações em português", "Comparações com o som que você já conhece, sempre.", ["M3 10a7 7 0 1 1 7 7H3.5l1.8-2.1A6.97 6.97 0 0 1 3 10Z"]],
+      ["Hebraico desde o zero", "Nenhum conhecimento prévio. Começa na primeira letra.", ["M10 3.5 3 7l7 3.5L17 7l-7-3.5Z", "M3 13l7 3.5L17 13"]],
+    ];
+
+    const curriculumData = [
+      ["01", "Primeiros sons e letras", "4 lições · ~2h", ["מ","ת","א","נ"], ["Reconhecer as 4 primeiras formas", "Ler sílabas simples", "Primeiras 12 palavras"]],
+      ["02", "Construindo sílabas", "3 lições · ~1h30", ["ה","י","ל"], ["Juntar consoante e vogal", "Ler sem soletrar", "Palavras de duas sílabas"]],
+      ["03", "Nikud e vogais", "3 lições · ~2h", ["בָּ","בֵּ","בִּ"], ["Os cinco sinais principais", "Sheva e sua função", "Ler qualquer sílaba vocalizada"]],
+      ["04", "Palavras reais", "2 lições · ~1h30", ["ש","ר","ד"], ["Vocabulário do dia a dia", "Palavras-ponte do português", "Leitura de frases curtas"]],
+      ["05", "Leitura", "1 lição · ~1h", ["ח","ט","ע"], ["Textos curtos vocalizados", "Ritmo e pausa", "Leitura em voz alta"]],
+      ["06", "Revisão e consolidação", "1 lição · ~1h", ["ב","כ","פ"], ["As letras que mudam de som", "Revisão geral das 22", "Avaliação final de leitura"]],
+    ];
+
+    const faqData = [
+      ["Preciso saber hebraico?", "Não. O curso começa do zero absoluto, na primeira letra, e assume que você nunca viu o alfabeto."],
+      ["É hebraico moderno ou bíblico?", "A leitura é a mesma. O curso usa a pronúncia do hebraico moderno e vocabulário do dia a dia, o que abre os dois caminhos."],
+      ["Quanto tempo leva?", "Cerca de 9 horas de conteúdo, distribuídas em 14 lições. Em vinte minutos por dia, a maioria termina em seis a oito semanas."],
+      ["O curso funciona no celular?", "Sim. A plataforma foi desenhada primeiro para o celular: uma atividade por tela e botão de continuar fixo."],
+      ["Tem áudio?", "Cada letra, sílaba e palavra tem áudio gravado por falante nativo, com repetição livre."],
+      ["Por quanto tempo tenho acesso?", "Acesso vitalício, incluindo as atualizações que forem feitas no curso."],
+      ["Posso estudar no meu ritmo?", "Sim. Não há turmas nem prazos. O progresso fica salvo e você retoma exatamente de onde parou."],
+      ["O que acontece depois que termino?", "Você entra na trilha: Hebraico A1 é o próximo nível. Alunos da Alfabetização são avisados primeiro quando ele abre."],
+    ];
+
+    const journeyIcon = (unlocked) => unlocked
+      ? E("svg", { width: 17, height: 17, viewBox: "0 0 18 18", fill: "none", "aria-hidden": "true" },
+          E("path", { d: "M3.6 9.4 7 12.8 14.4 5.4", stroke: "#8FD6C8", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" }))
+      : E("svg", { width: 15, height: 15, viewBox: "0 0 18 18", fill: "none", "aria-hidden": "true" },
+          E("rect", { x: 3.6, y: 7.8, width: 10.8, height: 7.4, rx: 2, stroke: "#9AA29E", strokeWidth: 1.4 }),
+          E("path", { d: "M6.2 7.8V5.9a2.8 2.8 0 0 1 5.6 0v1.9", stroke: "#9AA29E", strokeWidth: 1.4, strokeLinecap: "round" }));
+
+    const journeyData = [
+      ["Disponível", "Alfabetização Hebraica", "Ler as 22 letras e o nikud.", true],
+      ["Em breve", "Hebraico A1", "Primeiras frases, presente, perguntas.", false],
+      ["Em breve", "Hebraico A2", "Passado e futuro, textos curtos.", false],
+      ["Em breve", "Conversação", "Falar sobre o dia a dia com fluidez.", false],
+      ["Em breve", "Níveis avançados", "Gramática, leitura e cultura israelense.", false],
+    ];
+
+    const sampleData = [["ש","Shin"],["מ","Mem"],["ל","Lámed"],["ב","Bet"]];
+
+    let feedback = E("div", { style: { fontSize: 14.5, color: "#66716D", lineHeight: 1.5, paddingTop: 6 } }, "Escolha uma das quatro letras acima.");
+    if (pick !== null && correct) {
+      feedback = E("div", { style: { background: "#E4F1EE", borderRadius: 14, padding: "14px 16px", animation: "hf-pop .34s cubic-bezier(.2,.8,.3,1) both" } },
+        E("div", { style: { display: "flex", alignItems: "center", gap: 9, marginBottom: 5 } },
+          E("svg", { width: 17, height: 17, viewBox: "0 0 18 18", fill: "none", "aria-hidden": "true" }, E("path", { d: "M3.6 9.4 7 12.8 14.4 5.4", stroke: "#12665C", strokeWidth: 2.2, strokeLinecap: "round", strokeLinejoin: "round" })),
+          E("span", { style: { fontWeight: 700, fontSize: 16, color: "#12665C" } }, "Muito bem!"),
+          E("span", { style: { marginLeft: "auto", fontWeight: 700, fontSize: 14, color: "#1F8A7D" } }, "+10 XP")),
+        E("div", { style: { fontSize: 14.5, lineHeight: 1.55, color: "#2C5F58" } }, "Shin é a única com o ponto em cima à direita. É esse ponto que faz o som SH."));
+    } else if (pick !== null) {
+      feedback = E("div", { style: { background: "#F7EFDF", borderRadius: 14, padding: "14px 16px", animation: "hf-pop .34s cubic-bezier(.2,.8,.3,1) both" } },
+        E("div", { style: { display: "flex", alignItems: "center", gap: 9, marginBottom: 5 } },
+          E("svg", { width: 17, height: 17, viewBox: "0 0 18 18", fill: "none", "aria-hidden": "true" }, E("path", { d: "M9 4.6v5.2M9 12.9v.1", stroke: "#8A6520", strokeWidth: 2, strokeLinecap: "round" })),
+          E("span", { style: { fontWeight: 700, fontSize: 16, color: "#8A6520" } }, "Quase.")),
+        E("div", { style: { fontSize: 14.5, lineHeight: 1.55, color: "#7A5A1C" } }, `${sampleData[pick][1]} tem outro som. Procure a letra de três hastes, com um ponto em cima à direita — pode tentar de novo.`));
+    }
+
+    return {
+      trust: ["Acesso imediato", "No seu ritmo", "Feito para brasileiros", "Curso interativo"],
+      h1o: on(1) ? 1 : 0, h1y: on(1) ? "0px" : "20px",
+      h2o: on(2) ? 1 : 0, h2y: on(2) ? "0px" : "16px",
+      h3o: on(3) ? 1 : 0, h3y: on(3) ? "0px" : "14px",
+      h4o: on(4) ? 1 : 0, h4y: on(4) ? "0px" : "26px",
+      heroPct: on(4) ? "72%" : "0%",
+      heroPctLabel: on(4) ? "72%" : "0%",
+      streak,
+      shBorder: on(5) ? "#1F8A7D" : "#E4E0D6",
+      shBg: on(5) ? "#E4F1EE" : "#FFFFFF",
+      shFg: on(5) ? "#12665C" : "#66716D",
+      shTick: on(5) ? 1 : 0,
+      xpAnim: on(5) ? "hf-xp 2.1s ease-out .15s both" : "none",
+
+      problems: [
+        { n: "01", t: "As letras parecem todas iguais.", delay: "0ms" },
+        { n: "02", t: "Você não sabe por onde começar.", delay: "80ms" },
+        { n: "03", t: "Os materiais explicam hebraico, mas não pensando em brasileiros.", delay: "160ms" },
+        { n: "04", t: "Você assiste vídeos, mas sente que não existe uma sequência.", delay: "240ms" },
+      ],
+
+      tabs: tabsData.map((t, i) => ({
+        label: t.label,
+        bg: tab === i ? "#FFFFFF" : "transparent",
+        fg: tab === i ? "#0E3B43" : "#66716D",
+        sh: tab === i ? "0 1px 2px rgba(27,33,31,.06), 0 4px 10px -6px rgba(27,33,31,.2)" : "none",
+        on: () => this.setState({ tab: i }),
+      })),
+      demo: d,
+      demoPanel: panels[tab],
+
+      steps: [
+        { n: "1", t: "Reconheça", d: "A forma isolada, grande, sem distração.", delay: "0ms" },
+        { n: "2", t: "Ouça", d: "O som gravado por falante nativo.", delay: "70ms" },
+        { n: "3", t: "Associe", d: "A comparação com um som do português.", delay: "140ms" },
+        { n: "4", t: "Pratique", d: "Cinco tipos de exercício, alternados.", delay: "210ms" },
+        { n: "5", t: "Leia", d: "A letra dentro de uma palavra real.", delay: "280ms" },
+        { n: "6", t: "Revise", d: "Ela volta depois, no intervalo certo.", delay: "350ms" },
+      ],
+
+      curriculum: curriculumData.map(([num, title, meta, letters, skills], i) => {
+        const open = openMod === i;
+        return {
+          num, title, meta, letters, skills,
+          expanded: open ? "true" : "false",
+          rot: open ? "180deg" : "0deg",
+          maxH: open ? "260px" : "0px",
+          border: open ? "#1F8A7D" : "#E4E0D6",
+          shadow: open ? "0 1px 2px rgba(27,33,31,.04), 0 8px 24px -12px rgba(27,33,31,.14)" : "none",
+          chipBg: open ? "#E4F1EE" : "#F3F0E9",
+          chipFg: open ? "#12665C" : "#66716D",
+          on: () => this.setState({ openMod: open ? -1 : i }),
+        };
+      }),
+
+      journey: journeyData.map(([tag, name, desc, unlocked], i) => ({
+        tag, name, desc,
+        icon: journeyIcon(unlocked),
+        bg: unlocked ? "#0E3B43" : "#FFFFFF",
+        border: unlocked ? "#0E3B43" : "#E4E0D6",
+        fg: unlocked ? "#FFFFFF" : "#1B211F",
+        subFg: unlocked ? "rgba(255,255,255,.66)" : "#66716D",
+        tagFg: unlocked ? "#8FD6C8" : "#9AA29E",
+        delay: i * 70 + "ms",
+      })),
+
+      credentials: [
+        "Experiência ensinando hebraico no Brasil",
+        "Atuação como shaliach da Agência Judaica",
+        "Formação acadêmica e pedagógica em ensino de idiomas",
+        "Alunos de diferentes países e níveis",
+      ],
+
+      features: featureData.map(([t, dd, paths], i) => ({ t, d: dd, icon: icon(paths), delay: i * 55 + "ms" })),
+
+      sampleOptions: sampleData.map(([he, label], i) => {
+        const chosen = pick === i;
+        const good = chosen && i === 0;
+        const bad = chosen && i !== 0;
+        return {
+          he, label,
+          bg: good ? "#E4F1EE" : bad ? "#F7EFDF" : "#FFFFFF",
+          border: good ? "#1F8A7D" : bad ? "#D9B872" : "#E4E0D6",
+          fg: good ? "#12665C" : "#0E3B43",
+          labelFg: good ? "#12665C" : bad ? "#8A6520" : "#66716D",
+          on: () => this.setState({ pick: i }),
+        };
+      }),
+      sampleFeedback: feedback,
+
+      testimonials: [
+        { initials: "AB", name: "Nome do aluno", context: "Contexto em uma linha", result: "Resultado específico", quote: "Depoimento real entra aqui. O mais forte costuma citar o que a pessoa conseguiu ler e em quanto tempo.", avBg: "#E4F1EE", avFg: "#12665C", delay: "0ms" },
+        { initials: "CD", name: "Nome do aluno", context: "Contexto em uma linha", result: "Resultado específico", quote: "Depoimento real entra aqui. Vale um de quem já tinha tentado outro curso antes e parou.", avBg: "#F7EFDF", avFg: "#8A6520", delay: "80ms" },
+        { initials: "EF", name: "Nome do aluno", context: "Contexto em uma linha", result: "Resultado específico", quote: "Depoimento real entra aqui. Um que mencione a correção de pronúncia funciona bem nesta posição.", avBg: "#EAEEF0", avFg: "#0E3B43", delay: "160ms" },
+      ],
+
+      included: [
+        "Curso completo, 14 lições",
+        "Exercícios interativos",
+        "Áudios de todas as letras e palavras",
+        "Revisões liberadas automaticamente",
+        "Acesso à plataforma, no celular e no computador",
+        "Progresso salvo, retoma de onde parou",
+      ],
+
+      faq: faqData.map(([q, a], i) => {
+        const open = openFaq === i;
+        return {
+          q, a,
+          expanded: open ? "true" : "false",
+          rot: open ? "180deg" : "0deg",
+          maxH: open ? "190px" : "0px",
+          border: open ? "#1F8A7D" : "#E4E0D6",
+          on: () => this.setState({ openFaq: open ? -1 : i }),
+        };
+      }),
+
+      finalWords: [
+        { he: "שָׁלוֹם", tr: "shalom", pt: "olá, paz" },
+        { he: "תּוֹדָה", tr: "todá", pt: "obrigado" },
+        { he: "מַיִם", tr: "máyim", pt: "água" },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

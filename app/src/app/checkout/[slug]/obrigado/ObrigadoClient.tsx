@@ -103,7 +103,7 @@ export function ObrigadoClient({ slug }: { slug: string }) {
     return (
       <Wrap>
         <Card tone="mint" className="p-8 grid gap-4 justify-items-center text-center">
-          <He size="lg" dim>א</He>
+          <He size="lg" dim>ע</He>
           <Badge tone="mint">Pagamento confirmado</Badge>
           <h1 className="font-display text-[26px] sm:text-[30px] font-bold text-ink max-w-[20ch]">
             Pronto. O curso é seu.

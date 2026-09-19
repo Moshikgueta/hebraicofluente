@@ -55,15 +55,15 @@ export const FORMATS: Record<CertificateFormat, { w: number; h: number; labelPt:
    Sempre o tema CLARO, mesmo para quem navega no escuro: a imagem sai daqui
    para um post, e um certificado preto não é um certificado. */
 const C = {
-  paper: '#F7F3EC',
-  surface: '#FFFDFA',
-  ink: '#17130F',
-  body: '#4A423B',
-  muted: '#7C736A',
-  accent: '#9E2B33',
-  accentSoft: '#FAEDEC',
-  mint: '#DDEFDF',
-  line: 'rgba(23,19,15,0.12)'
+  paper: '#FBF9F5',      // creme
+  surface: '#FFFFFF',    // cartão
+  ink: '#1B211F',
+  body: '#414A47',
+  muted: '#66716D',
+  accent: '#0E3B43',     // navy
+  accentSoft: '#E4F1EE', // teal-soft
+  mint: '#E4F1EE',
+  line: 'rgba(228,224,214,1)'
 };
 
 const fam = (v: string, fallback: string): string => {

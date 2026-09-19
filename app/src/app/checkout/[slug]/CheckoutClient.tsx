@@ -176,7 +176,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
     return (
       <Shell course={c}>
         <Card tone="mint" className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
-          <He size="lg" dim>א</He>
+          <He size="lg" dim>ע</He>
           <Badge tone="mint">Pagamento confirmado</Badge>
           <h2 className="font-display text-[24px] sm:text-[28px] font-bold text-ink max-w-[20ch]">
             Pronto. O curso é seu.

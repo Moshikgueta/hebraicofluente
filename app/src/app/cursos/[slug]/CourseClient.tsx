@@ -154,7 +154,7 @@ export function CourseClient({ slug }: { slug: string }) {
           </div>
 
           <Card tone="wash" className="p-6 grid gap-3 content-start">
-            <He size="lg" dim>א</He>
+            <He size="lg" dim>ע</He>
             <h3 className="font-display text-[18px] font-bold text-ink">
               E se não for para mim?
             </h3>

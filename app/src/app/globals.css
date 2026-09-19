@@ -2,6 +2,21 @@
 @import '../styles/tokens.css';
 
 @theme inline {
+  /* Os nomes do design, para escrever `bg-navy` e `text-teal-ink` em código
+     novo em vez de `bg-[var(--navy)]`. */
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-teal-ink: var(--teal-ink);
+  --color-teal-lite: var(--teal-lite);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-ink: var(--gold-ink);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-card: var(--card);
+
   --color-ink: var(--ink);
   --color-ink-body: var(--ink-body);
   --color-ink-muted: var(--ink-muted);
@@ -27,6 +42,8 @@
   --radius-md: var(--r-md);
   --radius-lg: var(--r-lg);
   --radius-xl: var(--r-xl);
+  --radius-2xl: var(--r-2xl);
+  --radius-pill: var(--r-pill);
 }
 
 html {
@@ -87,13 +104,14 @@ p { margin: 0; }
 .focus-col { max-width: 620px; }
 .focus-col p { max-width: 62ch; }
 
+/* O anel do design: teal, 2px, deslocado. Nunca o azul padrão do navegador. */
 *:focus-visible {
-  outline: 2.5px solid var(--accent-soft);
+  outline: 2px solid var(--teal);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-::selection { background: var(--mint); color: var(--mint-ink); }
+::selection { background: #CDE8E3; color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -104,12 +122,33 @@ p { margin: 0; }
   }
 }
 
-@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-@keyframes pop  { 0% { transform: scale(.94); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
-@keyframes sheen { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+/* ── os seis keyframes do design ────────────────────────────────────────
+   Nomes e valores vêm de design/README.md, "Animation". Tudo anima só
+   `opacity` e `transform`, então nada dispara layout. */
+@keyframes hf-rise  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes hf-pop   { 0% { transform: scale(.82); opacity: 0; } 60% { transform: scale(1.06); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes hf-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes hf-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.11); opacity: .72; } }
+@keyframes hf-xp    { 0% { opacity: 0; transform: translateY(6px) scale(.9); } 25% { opacity: 1; transform: translateY(-4px) scale(1); } 100% { opacity: 0; transform: translateY(-34px) scale(1); } }
+@keyframes hf-spark { 0% { transform: scale(0) rotate(0); opacity: 0; } 45% { transform: scale(1) rotate(22deg); opacity: 1; } 100% { transform: scale(.7) rotate(40deg); opacity: 0; } }
+@keyframes sheen    { from { background-position: 200% 0; } to { background-position: -200% 0; } }
 
-.animate-rise { animation: rise var(--dur) var(--ease) both; }
-.animate-pop  { animation: pop 240ms var(--ease) both; }
+.animate-rise  { animation: hf-rise .3s var(--ease) both; }
+.animate-pop   { animation: hf-pop .34s cubic-bezier(.2, .8, .3, 1) both; }
+.animate-float { animation: hf-float 5.5s ease-in-out infinite; }
+.animate-pulse-dot { animation: hf-pulse 1.5s ease-in-out infinite; }
+.animate-xp    { animation: hf-xp 2.1s ease-out .15s both; }
+.animate-spark { animation: hf-spark 1s ease-out both; }
+
+/* ── revelação por scroll ───────────────────────────────────────────────
+   O estado inicial mora no CSS para que o conteúdo já esteja escrito no HTML
+   exportado: o IntersectionObserver só acrescenta `.vis`. Sem JS, ou com
+   reduced-motion, nada fica invisível para sempre. */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.reveal.vis { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+}
 
 .skeleton {
   background: linear-gradient(90deg, var(--surface-2) 25%, var(--line-soft) 37%, var(--surface-2) 63%);

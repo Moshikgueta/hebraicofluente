@@ -31,22 +31,35 @@ const FORBIDDEN = /[()[\]{}:;/,<>«»"|]/;
 
 export type HeSize = 'inline' | 'word' | 'lg' | 'xl' | 'display' | 'hero';
 
+/* Os tamanhos, e a entrelinha que cada um pede.
+   O hebraico vocalizado precisa de mais entrelinha que o latino: o nikud
+   desce abaixo da linha de base e sobe acima do topo da letra, e a 1.2 ele
+   encosta na linha de cima. A especificação pede 1.35-1.4 em corpo grande e
+   1.1-1.15 em letra isolada grande - que é exatamente a diferença entre uma
+   palavra dentro de um parágrafo e a letra sozinha no cartão da lição.
+
+   Nada de ensino desce abaixo de 20px: menor que isso o nikud vira sujeira. */
 const SIZE: Record<HeSize, string> = {
   inline:  'text-[1.15em] leading-[1.6]',
-  word:    'text-[28px] sm:text-[32px]',
-  lg:      'text-[40px] sm:text-[48px]',
-  xl:      'text-[56px] sm:text-[68px]',
-  display: 'text-[84px] sm:text-[104px] leading-[1.25]',
-  hero:    'text-[120px] sm:text-[160px] leading-[1.2]'
+  word:    'text-[28px] sm:text-[32px] leading-[1.38]',
+  lg:      'text-[40px] sm:text-[48px] leading-[1.3]',
+  xl:      'text-[56px] sm:text-[68px] leading-[1.2]',
+  display: 'text-[84px] sm:text-[104px] leading-[1.15]',
+  hero:    'text-[120px] sm:text-[160px] leading-[1.1]'
 };
 
-/** As três cores em que o hebraico aparece. `paper` é para painel escuro, e
- *  segue o token do papel: no modo escuro ele vira quase preto e a letra
- *  acompanha, de modo que o contraste se mantém nos dois temas. */
+/** As cores em que o hebraico aparece. `paper` é para bloco navy - a letra
+ *  fica na cor do papel, que é o contraste que o design usa lá. `teal` é o
+ *  destaque (o א do hero, a sílaba marcada dentro de uma palavra). */
 const TONE = {
   ink:   'text-ink',
   muted: 'text-ink-muted',
-  paper: 'text-[var(--paper)]'
+  paper: 'text-[var(--cream)]',
+  teal:  'text-[var(--teal)]',
+  navy:  'text-[var(--navy)]',
+  /* Teal claro: existe SÓ sobre navy - a marca, os rótulos e os ícones
+     dentro dos blocos escuros. Sobre creme ele não passa em contraste. */
+  lite:  'text-[var(--teal-lite)]'
 } as const;
 
 export function He({

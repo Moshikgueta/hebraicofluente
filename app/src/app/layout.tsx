@@ -6,43 +6,54 @@ import './globals.css';
 /* Loaded through next/font/local rather than @font-face in CSS: Next then owns
    the URLs and rewrites them for whatever base path the site is served from.
    A hand-written url('/fonts/…') would 404 on a project page. */
-/* Fraunces nos títulos.
-   É a peça que mais muda a percepção da página: a DM Sans que estava aqui é
-   uma sans geométrica agradável e absolutamente neutra - a mesma de milhares
-   de sites. Uma serifa com contraste e um pouco de estranheza lê como livro,
-   e livro lê como considerado. Para um curso de LEITURA, descendente de um
-   material impresso, a escolha também é temática e não só estética.
+/* As três famílias do design (design/README.md, "Tipografia"). Servidas do
+   nosso próprio domínio em vez de fonts.googleapis.com: uma folha de estilo
+   de terceiro no caminho crítico atrasa a primeira pintura e entrega o IP de
+   cada leitor a outro servidor - e num curso de leitura a fonte não é enfeite
+   que pode chegar atrasado.
 
-   Só três pesos, e só latino: o hebraico nunca passa por esta fonte (ver
-   `hebrew` abaixo), então não há motivo para carregar mais bytes. */
+   Bricolage Grotesque nos títulos. Quatro pesos, só latino: o hebraico nunca
+   passa por esta fonte (ver `hebrew` abaixo). */
 const display = localFont({
   variable: '--font-display-loaded',
   display: 'swap',
   src: [
-    { path: '../../public/fonts/fraunces-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/fraunces-latin-600-normal.woff2', weight: '600', style: 'normal' },
-    { path: '../../public/fonts/fraunces-latin-700-normal.woff2', weight: '700', style: 'normal' }
+    { path: '../../public/fonts/bricolage-grotesque-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/bricolage-grotesque-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/bricolage-grotesque-latin-600-normal.woff2', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/bricolage-grotesque-latin-700-normal.woff2', weight: '700', style: 'normal' }
   ]
 });
 const ui = localFont({
   variable: '--font-ui-loaded',
   display: 'swap',
   src: [
-    { path: '../../public/fonts/inter-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/inter-latin-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/inter-latin-700-normal.woff2', weight: '700', style: 'normal' }
+    { path: '../../public/fonts/instrument-sans-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/instrument-sans-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/instrument-sans-latin-600-normal.woff2', weight: '600', style: 'normal' }
   ]
 });
-/* Noto Sans Hebrew carries 55 nikud marks and a ccmp table - chosen over the
-   alternatives by inspecting the binaries, because a font that positions the
-   vowel points badly makes every reading exercise in the course wrong. */
+/* Noto SERIF Hebrew - e a troca foi conferida ANTES de ser feita.
+   ─────────────────────────────────────────────────────────────────────────
+   A face hebraica não se troca por gosto: uma fonte que posiciona mal os
+   pontos de vogal torna ERRADO cada exercício de leitura do curso. Então o
+   binário foi aberto e comparado com o da Noto Sans Hebrew que estava aqui:
+
+     · 19 de 19 sinais de nikud no cmap, nas duas;
+     · 57 glifos classificados como marca no GDEF, nas duas;
+     · ccmp no GSUB e mark + mkmk no GPOS, nas duas (a serif ainda traz calt).
+
+   E depois renderizada num navegador de verdade, a 64px e a 104px: שָׁלוֹם,
+   מַיִם, מִשְׁפָּחָה e a coluna בָּ בֵּ בִּ בֹּ בֻּ בְּ שׁ שׂ saem com o ponto do shin à
+   direita, o daguesh dentro da letra e cada sinal centrado sob a sua
+   consoante. A troca é segura. */
 const hebrew = localFont({
   variable: '--font-he-loaded',
   display: 'swap',
   src: [
-    { path: '../../public/fonts/noto-sans-hebrew-hebrew-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/noto-sans-hebrew-hebrew-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/noto-sans-hebrew-hebrew-700-normal.woff2', weight: '700', style: 'normal' }
+    { path: '../../public/fonts/noto-serif-hebrew-hebrew-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/noto-serif-hebrew-hebrew-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/noto-serif-hebrew-hebrew-600-normal.woff2', weight: '600', style: 'normal' }
   ]
 });
 const cursive = localFont({
@@ -69,10 +80,9 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F6F6F4' },
-    { media: '(prefers-color-scheme: dark)', color: '#0E0F11' }
-  ]
+  /* Uma cor só: o design é uma identidade clara, e a barra do navegador
+     acompanha o papel creme em qualquer preferência de sistema. */
+  themeColor: '#FBF9F5'
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

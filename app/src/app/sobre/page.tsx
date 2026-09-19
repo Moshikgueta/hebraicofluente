@@ -54,7 +54,7 @@ export default function SobrePage() {
           </div>
 
           <Card tone="wash" className="p-8 grid gap-4 justify-items-center text-center">
-            <He size="xl" dim>א</He>
+            <He size="xl" dim>ע</He>
             <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
               O alfabeto é a porta. Depois dela, o hebraico deixa de ser um bloco
               e vira uma língua como qualquer outra.

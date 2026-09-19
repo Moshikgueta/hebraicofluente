@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, type ReactNode } from 'react';
-import { He } from '@/components/hebrew/He';
+import { Logo } from '@/components/shell/Logo';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
@@ -57,9 +57,8 @@ export function PublicShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-[color:var(--line-soft)]
                          bg-[color-mix(in_srgb,var(--paper)_88%,transparent)] backdrop-blur-md">
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 h-[64px] flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2.5 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md shrink-0">
-            <span className="text-[var(--accent)]"><He size="inline">א</He></span>
-            <span className="font-display text-[15px] font-bold text-ink">Hebraico Fluente</span>
+          <Link href="/" className="flex items-center min-h-[44px] -ml-1 pl-1 pr-2 rounded-md shrink-0">
+            <Logo />
           </Link>
 
           <nav aria-label="Navegação do site" className="hidden md:flex items-center gap-1 ml-4">
@@ -146,10 +145,7 @@ function Footer() {
       <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-10 grid gap-8
                       sm:grid-cols-2 lg:grid-cols-4">
         <div className="grid gap-2 content-start">
-          <div className="flex items-center gap-2.5">
-            <span className="text-[var(--accent)]"><He size="inline">א</He></span>
-            <span className="font-display text-[15px] font-bold text-ink">Hebraico Fluente</span>
-          </div>
+          <Logo size={28} />
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted max-w-[32ch]">
             Hebraico para brasileiros, do alfabeto à conversa. Feito para adulto
             que estuda sozinho, no celular, sem professor do lado.

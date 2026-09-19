@@ -97,7 +97,7 @@ export function CursosClient() {
 
       <Section labelledBy="ordem">
         <Card tone="wash" className="p-8 grid gap-4 justify-items-center text-center">
-          <He size="lg" dim>א</He>
+          <He size="lg" dim>ע</He>
           <h2 id="ordem" className="font-display text-[23px] sm:text-[27px] font-bold text-ink max-w-[26ch]">
             Não dá para pular a alfabetização.
           </h2>

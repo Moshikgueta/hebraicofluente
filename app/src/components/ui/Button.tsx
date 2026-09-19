@@ -6,9 +6,12 @@ import type { ReactNode } from 'react';
 type Variant = 'primary' | 'secondary' | 'ghost' | 'quiet';
 type Size = 'sm' | 'md' | 'lg';
 
+/* O hover do design é uma cor declarada (navy → navy-2) mais um levantar de
+   1-2px, e não um `brightness`: clarear um navy escuro dá um cinza azulado
+   que não é cor nenhuma do sistema. */
 const VARIANT: Record<Variant, string> = {
-  primary:   'bg-[var(--accent)] text-white hover:brightness-110 active:brightness-95 shadow-[var(--shadow-1)]',
-  secondary: 'bg-surface text-ink border border-line hover:bg-surface-2',
+  primary:   'bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0 shadow-[var(--sh)]',
+  secondary: 'bg-[var(--card)] text-ink border border-line hover:border-[#C9C3B4] hover:-translate-y-[2px] active:translate-y-0',
   ghost:     'bg-transparent text-ink-body hover:bg-surface-2',
   quiet:     'bg-surface-2 text-ink-body hover:bg-surface'
 };

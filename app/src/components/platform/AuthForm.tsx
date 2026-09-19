@@ -76,7 +76,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
   return (
     <div className="mx-auto w-full max-w-[460px] px-4 sm:px-6 py-12 sm:py-16 grid gap-6">
       <header className="grid gap-3 justify-items-center text-center">
-        <He size="lg" dim>א</He>
+        <He size="lg" dim>ע</He>
         <h1 className="font-display text-[27px] sm:text-[31px] font-bold leading-tight text-ink">
           {signup ? 'Criar sua conta' : 'Entrar'}
         </h1>

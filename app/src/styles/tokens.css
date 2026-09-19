@@ -1,141 +1,118 @@
-/* Design tokens - "manuscrito".
+/* Design tokens - o sistema de design/README.md.
    ─────────────────────────────────────────────────────────────────────────
-   A identidade anterior era um teal frio sobre cinza neutro: competente,
-   agradável e indistinguível de qualquer SaaS. Isso custava duas coisas de
-   uma vez - não ficava na memória de ninguém, e parecia um site de R$ 47
-   vendendo um curso de R$ 147.
+   Os valores desta folha são os da especificação, sem interpretação: navy
+   #0E3B43 como primária, teal #1F8A7D como acerto e progresso, gold #B8862F
+   como sequência e revisão, creme #FBF9F5 como papel. Nada de vermelho no
+   sistema inteiro - erro é gold, sempre com ícone e texto junto.
 
-   Esta parte de onde o produto veio. É um curso de LEITURA, descendente de um
-   material impresso, sobre uma escrita de três mil anos. Então: papel morno
-   em vez de cinza, tinta quente em vez de preto puro, e um acento de romã -
-   a cor da iluminura de manuscrito, e que praticamente ninguém usa em
-   educação, onde todo mundo é azul ou roxo. O latão faz o papel do ouro da
-   margem: sequência, conquista, o momento que vale marcar.
+   ── por que há dois nomes para a mesma cor ──────────────────────────────
+   Cada cor aparece duas vezes:
 
-   O que NÃO mudou, e não muda:
+     · com o nome do DESIGN (--navy, --teal, --gold, --cream, --sand, --card).
+       É o vocabulário da especificação, e é com ele que se escreve código
+       novo - quando o README diz "bloco --navy", o CSS diz --navy.
+     · com o nome SEMÂNTICO que a plataforma já usava (--accent, --mint,
+       --ember, --paper, --surface…). São 66 páginas e algumas dezenas de
+       componentes apontando para esses nomes; reapontá-los aqui reveste o
+       produto inteiro de uma vez, em vez de um mutirão de find-and-replace
+       que erraria em alguma tela que ninguém abriu.
 
-   · Noto Sans Hebrew continua sendo a fonte de todo hebraico. Ela foi
-     escolhida inspecionando os binários, porque carrega 55 marcas de nikud e
-     uma tabela ccmp - uma fonte que posiciona mal os pontos de vogal torna
-     ERRADO cada exercício de leitura do curso. Nenhuma questão estética
-     justifica trocá-la.
+   Os dois conjuntos são o MESMO valor. Um alias não é uma segunda decisão.
 
-   · Verde continua sendo "acertou" e âmbar continua sendo "ainda não".
-     Vermelho não existe como estado de erro neste curso: um adulto lendo
-     hebraico pela primeira vez não precisa de alarme, precisa de uma segunda
-     olhada. O acento de romã é escuro e saturado o bastante para nunca ser
-     confundido com um alerta.
+   ── o que não mudou ─────────────────────────────────────────────────────
+   · A face hebraica continua sendo escolhida por posicionamento de nikud e
+     não por estética - a troca para Noto Serif Hebrew foi conferida no
+     binário e renderizada antes de entrar (ver app/src/app/layout.tsx).
+   · Acerto e erro nunca são só cor: cor + ícone + palavra, sempre.
+   · Texto sobre fundo tingido usa a variante -ink (#12665C, #8A6520), nunca
+     a cor base.
 
-   · Todo par usado para texto passa em WCAG AA. O acento sobre o papel dá
-     6,5:1; branco sobre o acento dá 7,4:1. */
+   ── modo escuro ─────────────────────────────────────────────────────────
+   Não existe mais, e a remoção é deliberada. O design é uma identidade clara
+   só, e o seu recurso central é o BLOCO ESCURO sobre papel creme: o cartão
+   do curso, o painel da demonstração, o CTA final. Num tema escuro esse
+   contraste inverte e o recurso some. Um tema escuro honesto para este
+   sistema é um projeto de design à parte, não uma tabela de cores invertida
+   - e uma tabela invertida é o que havia aqui. */
 
 :root {
-  /* ── tinta ──────────────────────────────────────────────────────────
-     O preto pende para o quente. Um #000 puro sobre papel marfim parece um
-     buraco recortado; um preto amarronzado parece impressão. */
-  --ink:        #17130F;
-  --ink-body:   #4A423B;
-  --ink-muted:  #7C736A;
+  /* ── a paleta, com os nomes do design ──────────────────────────────── */
+  --navy:      #0E3B43;   /* primária: botões, blocos escuros, sidebar */
+  --navy-2:    #155059;   /* hover da primária */
+  --teal:      #1F8A7D;   /* progresso, acerto, bordas ativas */
+  --teal-soft: #E4F1EE;   /* fundo tingido de acerto/progresso */
+  --teal-ink:  #12665C;   /* texto sobre --teal-soft */
+  --teal-lite: #8FD6C8;   /* só sobre navy: rótulo, ícone, fim do gradiente */
+  --gold:      #B8862F;   /* sequência, revisão pendente */
+  --gold-soft: #F7EFDF;   /* fundo de revisão e de resposta incorreta */
+  --gold-ink:  #8A6520;   /* texto sobre --gold-soft */
+  --cream:     #FBF9F5;   /* fundo da página */
+  --sand:      #F3F0E9;   /* seções alternadas, trilhos, cartão neutro */
+  --card:      #FFFFFF;   /* superfície de cartão */
+  --line:      #E4E0D6;   /* bordas e divisórias */
 
-  /* ── romã: o acento ─────────────────────────────────────────────────
-     `--accent` carrega texto branco e botões. `--accent-soft` é a versão
-     clara, para ícones e traços. `--accent-deep` é para hover e para
-     hebraico grande, onde o peso da letra já é muito e a cor pode recuar. */
-  --accent:       #9E2B33;
-  --accent-soft:  #C0434B;
-  --accent-deep:  #6E1C22;
-  --accent-wash:  #FAEDEC;
+  /* Auxiliares nomeadas na especificação. */
+  --edge-teal: #BFE0D8;   /* borda de cartão "dominada" */
+  --edge-gold: #EADCC0;   /* borda de cartão "revisar" */
+  --locked:    #A8AFAB;   /* texto e ícone de estado bloqueado */
+  --gold-body: #7A5A1C;   /* corpo dentro da caixa gold */
+  --teal-body: #2C5F58;   /* corpo dentro da caixa teal */
 
-  /* ── latão: o ouro da margem ────────────────────────────────────────
-     Sequência de dias, conquistas, marcos. Com parcimônia - ouro em todo
-     lugar não é ouro, é amarelo. */
-  --ember:      #A97C2F;
-  --ember-wash: #F8F0DD;
+  /* ── tinta ─────────────────────────────────────────────────────────── */
+  --ink:       #1B211F;   /* texto principal, nunca preto puro */
+  --ink-body:  #414A47;   /* corpo longo: entre o título e o secundário */
+  --ink-muted: #66716D;   /* secundário; passa 4.5:1 sobre o creme */
 
-  /* ── verde: acertou ─────────────────────────────────────────────────── */
-  --mint:       #DDEFDF;
-  --mint-ink:   #1F4A2C;
-  --green:      #33734A;
+  /* ── os nomes semânticos, apontando para os de cima ────────────────── */
+  --accent:      var(--navy);
+  --accent-soft: var(--teal);
+  --accent-deep: var(--navy-2);
+  --accent-wash: var(--teal-soft);
 
-  /* ── âmbar: ainda não ───────────────────────────────────────────────
-     Nunca vermelho. Ver a nota do cabeçalho. */
-  --amber:      #8A6112;
-  --amber-wash: #FBF2DF;
+  --mint:     var(--teal-soft);
+  --mint-ink: var(--teal-ink);
+  --green:    var(--teal);
 
-  /* ── papel ──────────────────────────────────────────────────────────
-     Marfim, não branco-acinzentado. A diferença entre #F6F6F4 e #F7F3EC é
-     pequena no código e grande na tela: um é uma tela desligada, o outro é
-     uma página. */
-  --paper:      #F7F3EC;
-  --surface:    #FFFDFA;
-  --surface-2:  #F0EAE0;
-  --line:       rgba(23, 19, 15, 0.11);
-  --line-soft:  rgba(23, 19, 15, 0.06);
+  --ember:      var(--gold);
+  --ember-wash: var(--gold-soft);
 
-  /* ── tipografia ─────────────────────────────────────────────────────
-     Fraunces nos títulos é o que mais muda a percepção da página: uma
-     serifa com contraste e um pouco de estranheza lê como livro, e livro lê
-     como considerado. Inter continua na interface, onde o que se quer é que
-     a fonte não chame atenção.
+  /* Errar é gold, e o texto é a variante -ink. Vermelho não existe aqui. */
+  --amber:      var(--gold-ink);
+  --amber-wash: var(--gold-soft);
 
-     As variáveis -loaded vêm de next/font/local em app/layout.tsx, que é
-     quem controla as URLs para que sobrevivam a um base path. Os fallbacks
-     importam: uma face hebraica ausente não é uma regressão de estilo, é uma
-     página ilegível. */
-  --font-display: var(--font-display-loaded), Georgia, serif;
-  --font-ui:      var(--font-ui-loaded), system-ui, sans-serif;
-  --font-he:      var(--font-he-loaded), 'Noto Sans Hebrew', serif;
+  --paper:     var(--cream);
+  --surface:   var(--card);
+  --surface-2: var(--sand);
+  --line-soft: rgba(228, 224, 214, .62);
+
+  /* ── tipografia ────────────────────────────────────────────────────── */
+  --font-display: var(--font-display-loaded), 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-ui:      var(--font-ui-loaded), 'Instrument Sans', system-ui, sans-serif;
+  --font-he:      var(--font-he-loaded), 'Noto Serif Hebrew', serif;
   --font-he-cursive: var(--font-he-cursive-loaded), var(--font-he-loaded), cursive;
 
-  /* ── forma ──────────────────────────────────────────────────────────
-     Raios menores do que antes. Canto muito arredondado é a assinatura
-     visual de aplicativo genérico; canto quase reto é a de papel. */
-  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 22px;
+  /* ── forma ─────────────────────────────────────────────────────────── */
+  --r-sm:   10px;  /* chip, ícone quadrado */
+  --r-md:   13px;  /* botão padrão */
+  --r-lg:   18px;  /* cartão */
+  --r-xl:   24px;  /* cartão grande, bloco escuro */
+  --r-2xl:  30px;  /* seção de destaque, CTA */
+  --r-pill: 100px;
 
-  /* Sombras mornas e discretas. A elevação aqui vem da cor do cartão contra
-     a do papel, não de um borrão cinza. */
-  --shadow-1: 0 1px 2px rgba(23,19,15,.05), 0 4px 14px rgba(23,19,15,.045);
-  --shadow-2: 0 2px 6px rgba(23,19,15,.07), 0 14px 36px rgba(23,19,15,.08);
+  /* ── sombra ────────────────────────────────────────────────────────── */
+  /* Uma sombra base, reaproveitada. Tingida de tinta, nunca preta. */
+  --sh:       0 1px 2px rgba(27, 33, 31, .04), 0 8px 24px -12px rgba(27, 33, 31, .14);
+  --sh-mock:  0 2px 4px rgba(27, 33, 31, .04), 0 30px 60px -28px rgba(14, 59, 67, .32);
+  --sh-price: 0 2px 4px rgba(27, 33, 31, .04), 0 34px 70px -40px rgba(14, 59, 67, .3);
+  --sh-phone: 0 2px 6px rgba(27, 33, 31, .1), 0 44px 80px -40px rgba(14, 59, 67, .5);
+  --sh-tab:   0 1px 2px rgba(27, 33, 31, .06), 0 4px 10px -6px rgba(27, 33, 31, .2);
+  --shadow-1: var(--sh);
+  --shadow-2: var(--sh-mock);
 
-  --ease: cubic-bezier(.2, .7, .3, 1);
-  --dur:  180ms;
-}
-
-/* ── modo escuro ──────────────────────────────────────────────────────
-   Não é a versão clara invertida. O papel vira um marrom muito escuro (e
-   não cinza-azulado), e o acento CLAREIA para continuar legível: romã
-   escuro sobre fundo escuro some. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --ink:       #F5F1EA;
-    --ink-body:  #CBC3B9;
-    --ink-muted: #948C82;
-    --accent:      #E4727A;
-    --accent-soft: #F0959B;
-    --accent-deep: #F7C3C6;
-    --accent-wash: #2A1618;
-    --ember:      #D9AE5E;
-    --ember-wash: #2A2214;
-    --mint:       #1B3324;
-    --mint-ink:   #A8DCB4;
-    --green:      #6FBE87;
-    --amber:      #DDB565;
-    --amber-wash: #2A2213;
-    --paper:      #12100E;
-    --surface:    #1A1714;
-    --surface-2:  #23201C;
-    --line:       rgba(245,241,234,.14);
-    --line-soft:  rgba(245,241,234,.08);
-    --shadow-1:  0 1px 2px rgba(0,0,0,.45), 0 4px 16px rgba(0,0,0,.35);
-    --shadow-2:  0 2px 6px rgba(0,0,0,.55), 0 16px 40px rgba(0,0,0,.5);
-  }
-}
-:root[data-theme='dark'] {
-  --ink: #F5F1EA; --ink-body: #CBC3B9; --ink-muted: #948C82;
-  --accent: #E4727A; --accent-soft: #F0959B; --accent-deep: #F7C3C6; --accent-wash: #2A1618;
-  --ember: #D9AE5E; --ember-wash: #2A2214;
-  --mint: #1B3324; --mint-ink: #A8DCB4; --green: #6FBE87;
-  --amber: #DDB565; --amber-wash: #2A2213;
-  --paper: #12100E; --surface: #1A1714; --surface-2: #23201C;
-  --line: rgba(245,241,234,.14); --line-soft: rgba(245,241,234,.08);
+  /* ── movimento ─────────────────────────────────────────────────────── */
+  /* Duas curvas cobrem quase tudo: entradas e revelações na primeira,
+     preenchimento de barra e mudança de altura na segunda. */
+  --ease:      cubic-bezier(.2, .7, .3, 1);
+  --ease-fill: cubic-bezier(.3, .8, .3, 1);
+  --dur:       200ms;
 }

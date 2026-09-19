@@ -4,21 +4,21 @@ export function Card({
   children, className = '', as: As = 'div', tone = 'surface'
 }: {
   children: ReactNode; className?: string; as?: 'div' | 'section' | 'article';
-  tone?: 'surface' | 'wash' | 'ink' | 'mint' | 'ember' | 'amber';
+  tone?: 'surface' | 'wash' | 'ink' | 'navy' | 'mint' | 'ember' | 'amber' | 'sand';
 }) {
   const TONE = {
-    surface: 'bg-surface border-line',
-    wash:    'bg-[var(--accent-wash)] border-transparent',
-    /* O painel escuro. Existe para uma coisa só: pôr o hebraico em destaque
-       de verdade, claro sobre escuro, do tamanho de um espécime tipográfico.
-       É o contraste que faz uma página parecer desenhada em vez de montada -
-       e aqui ele cai sobre o ativo mais bonito que o produto tem.
-       `--ink` já inverte no modo escuro, então o painel continua sendo o
-       oposto do papel nos dois temas, em vez de sumir num deles. */
-    ink:     'bg-[var(--ink)] border-transparent',
-    mint:    'bg-mint border-transparent',
-    ember:   'bg-[var(--ember-wash)] border-transparent',
-    amber:   'bg-[var(--amber-wash)] border-transparent'
+    surface: 'bg-[var(--card)] border-line',
+    wash:    'bg-[var(--teal-soft)] border-transparent',
+    sand:    'bg-[var(--sand)] border-line',
+    /* O bloco escuro. É o recurso central do design: navy sobre papel creme,
+       para o cartão do curso em andamento, o painel da demonstração e o CTA
+       final. `ink` é o nome antigo e aponta para o mesmo lugar - não há dois
+       blocos escuros no sistema. */
+    navy:    'bg-[var(--navy)] border-transparent',
+    ink:     'bg-[var(--navy)] border-transparent',
+    mint:    'bg-[var(--teal-soft)] border-[var(--edge-teal)]',
+    ember:   'bg-[var(--gold-soft)] border-[var(--edge-gold)]',
+    amber:   'bg-[var(--gold-soft)] border-[var(--edge-gold)]'
   } as const;
   return (
     <As className={`rounded-[var(--r-lg)] border ${TONE[tone]} ${className}`}>
@@ -29,12 +29,16 @@ export function Card({
 
 export function Badge({
   children, tone = 'neutral'
-}: { children: ReactNode; tone?: 'neutral' | 'accent' | 'mint' | 'ember' }) {
+}: { children: ReactNode; tone?: 'neutral' | 'accent' | 'mint' | 'ember' | 'lite' }) {
+  /* Texto sobre fundo tingido usa sempre a variante -ink, nunca a cor base:
+     teal sobre teal-soft dá 2,4:1 e some. `lite` é a etiqueta dentro de um
+     bloco navy, onde a regra se inverte. */
   const TONE = {
-    neutral: 'bg-surface-2 text-ink-muted',
-    accent:    'bg-[var(--accent-wash)] text-[var(--accent)]',
-    mint:    'bg-mint text-[var(--mint-ink)]',
-    ember:   'bg-[var(--ember-wash)] text-[var(--ember)]'
+    neutral: 'bg-[var(--sand)] text-ink-muted',
+    accent:  'bg-[var(--teal-soft)] text-[var(--teal-ink)]',
+    mint:    'bg-[var(--teal-soft)] text-[var(--teal-ink)]',
+    ember:   'bg-[var(--gold-soft)] text-[var(--gold-ink)]',
+    lite:    'bg-white/10 text-[var(--teal-lite)]'
   } as const;
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px]
