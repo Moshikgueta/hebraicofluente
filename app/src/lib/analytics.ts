@@ -19,11 +19,15 @@ export type EventName =
   | 'workbook_opened'
   | 'first_reached'
   | 'gym_started' | 'gym_completed'
+  /* Match, Blast e Teste. `jogo` diz qual. */
+  | 'game_started' | 'game_completed'
   | 'trace_completed' | 'trace_retried'
   | 'certificate_downloaded' | 'certificate_shared'
   | 'course_completed' | 'next_course_clicked';
 
 export type EventProps = {
+  /** Qual dos três jogos da academia. */
+  jogo?: 'match' | 'blast' | 'teste';
   letterId?: string;
   itemId?: string;
   checkpointId?: string;

@@ -13,8 +13,9 @@
  * motivating; "o tempo médio é 28 s" is a reason to stop.
  */
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
@@ -28,14 +29,46 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, type Letter } from '@/lib/content';
 import { onCarrier } from '@/lib/hebrew';
 import { availableModes, buildGym, type GymMode } from '@/lib/engine/gym';
+import { Match, type ResultadoJogo } from '@/components/game/Match';
+import { Blast } from '@/components/game/Blast';
+import { TestRun, RelatorioTeste, type ResultadoTeste } from '@/components/game/TestRun';
+import {
+  deLetras, montarBaralho, perguntasDe, TIPOS_POR_JOGO, type Par, type Pergunta
+} from '@/lib/engine/deck';
+import { letterMastery } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
+
+type Jogo = 'match' | 'blast' | 'teste';
 
 type Screen =
   | { kind: 'menu' }
   | { kind: 'run'; mode: GymMode; startedAt: number }
   | { kind: 'done'; mode: GymMode; result: PlayerResult; seconds: number }
+  | { kind: 'jogo'; jogo: Jogo; rodada: number }
+  | { kind: 'jogoFim'; jogo: Jogo; rodada: number; r: ResultadoJogo }
+  | { kind: 'testeFim'; rodada: number; r: ResultadoTeste }
   | { kind: 'lab' }
   | { kind: 'escrita' };
+
+/* Os três jogos, descritos no mesmo formato dos modos da academia - é a
+   mesma prateleira, e eles não são um anexo. */
+export const JOGOS: Record<Jogo, { titlePt: string; descPt: string; minimo: number }> = {
+  match: {
+    titlePt: 'Match',
+    descPt: 'Junte cada letra ao seu nome, ao seu som ou a uma palavra.',
+    minimo: 3
+  },
+  blast: {
+    titlePt: 'Blast',
+    descPt: 'Rápido: aparece uma letra, você escolhe. Sequência de acertos na tela.',
+    minimo: 4
+  },
+  teste: {
+    titlePt: 'Teste',
+    descPt: 'Sem correção durante. No fim, a nota e a lista do que escapou.',
+    minimo: 4
+  }
+};
 
 export function AcademiaClient() {
   const p = useProgress();
@@ -59,6 +92,155 @@ export function AcademiaClient() {
     track('gym_started', { mode: mode.id });
     setScreen({ kind: 'run', mode, startedAt: Date.now() });
   }, []);
+
+  /* Deep-link: o painel manda para cá com o jogo já escolhido, para que
+     "Match" no painel seja um toque e não três. */
+  const busca = useSearchParams();
+  const pedido = busca?.get('jogo');
+  useEffect(() => {
+    if (pedido === 'match' || pedido === 'blast' || pedido === 'teste') {
+      setScreen({ kind: 'jogo', jogo: pedido, rodada: 0 });
+    }
+  }, [pedido]);
+
+  /* As letras que mais custam entram primeiro no baralho. É o mesmo sinal que
+     alimenta a revisão - aqui ele só decide a ORDEM, nunca o conteúdo. */
+  const peso = useCallback((letterId: string) => {
+    const m = letterMastery(p.state, letterId);
+    return m === 'novo' ? 1.6 : m === 'aprendendo' ? 1.4 : m === 'forte' ? 0.6 : 1;
+  }, [p.state]);
+
+  const fazerJogo = useCallback((jogo: Jogo, rodada: number): {
+    baralho: Par[]; perguntas: Pergunta[];
+  } => {
+    const semente = `${jogo}-${unlocked.length}-${rodada}`;
+    const fontes = deLetras(unlocked, TIPOS_POR_JOGO[jogo]);
+    const quantos = jogo === 'match' ? 6 : jogo === 'blast' ? 12 : 10;
+    const baralho = montarBaralho(fontes, { quantos, semente, peso });
+    const perguntas = jogo === 'match' ? [] : perguntasDe(baralho, fontes, {
+      semente: `${semente}-q`,
+      sentido: jogo === 'teste' ? 'misto' : 'he'
+    });
+    return { baralho, perguntas };
+  }, [unlocked, peso]);
+
+  /* Cada tentativa alimenta o mesmo modelo que as lições alimentam: o jogo
+     não tem placar próprio, ele escreve na mesma memória. */
+  const registrar = useCallback((a: { id: string; letterId: string; certo: boolean }) => {
+    if (!a.letterId) return;
+    p.answer({ itemId: `jogo:${a.id}`, letterId: a.letterId, correct: a.certo, skill: 'rec' });
+  }, [p]);
+
+  /* ── os três jogos ──────────────────────────────────────────────────── */
+  if (screen.kind === 'jogo') {
+    const { baralho, perguntas } = fazerJogo(screen.jogo, screen.rodada);
+    const info = JOGOS[screen.jogo];
+    const poucos = screen.jogo === 'match'
+      ? baralho.length < info.minimo
+      : perguntas.length < info.minimo;
+
+    if (poucos) {
+      return (
+        <Empty onBack={() => setScreen({ kind: 'menu' })}>
+          {screen.jogo === 'match'
+            ? 'O Match precisa de pelo menos três pares diferentes. Siga mais uma lição e volte.'
+            : 'Ainda não há letras suficientes para montar as alternativas. Siga mais uma lição e volte.'}
+        </Empty>
+      );
+    }
+
+    return (
+      <div className="focus-col grid gap-5">
+        <GymHeader
+          mode={{ titlePt: info.titlePt } as GymMode}
+          label={info.titlePt}
+          onBack={() => setScreen({ kind: 'menu' })}
+        />
+        {screen.jogo === 'match' && (
+          <Match
+            key={`m-${screen.rodada}`}
+            baralho={baralho}
+            semente={`match-${unlocked.length}-${screen.rodada}`}
+            onResposta={a => registrar({ id: a.parId, letterId: a.letterId, certo: a.certo })}
+            onFim={r => {
+              const score = r.total ? r.acertos / (r.acertos + r.erros || 1) : 0;
+              p.finishGym('match', score, r.segundos);
+              track('game_completed', { jogo: 'match', score: r.total ? r.acertos / (r.acertos + r.erros || 1) : 0, seconds: r.segundos });
+              setScreen({ kind: 'jogoFim', jogo: 'match', rodada: screen.rodada, r });
+            }}
+          />
+        )}
+        {screen.jogo === 'blast' && (
+          <Blast
+            key={`b-${screen.rodada}`}
+            perguntas={perguntas}
+            onResposta={registrar}
+            onFim={r => {
+              p.finishGym('blast', r.total ? r.acertos / r.total : 0, r.segundos);
+              track('game_completed', { jogo: 'blast', score: r.total ? r.acertos / r.total : 0, seconds: r.segundos });
+              setScreen({ kind: 'jogoFim', jogo: 'blast', rodada: screen.rodada, r });
+            }}
+          />
+        )}
+        {screen.jogo === 'teste' && (
+          <TestRun
+            key={`t-${screen.rodada}`}
+            perguntas={perguntas}
+            onResposta={registrar}
+            onFim={r => {
+              p.finishGym('teste', r.score, r.segundos);
+              track('game_completed', { jogo: 'teste', score: r.score, seconds: r.segundos });
+              setScreen({ kind: 'testeFim', rodada: screen.rodada, r });
+            }}
+          />
+        )}
+      </div>
+    );
+  }
+
+  if (screen.kind === 'testeFim') {
+    return (
+      <div className="focus-col grid gap-5">
+        <GymHeader mode={{ titlePt: 'Teste' } as GymMode} label="Resultado"
+                   onBack={() => setScreen({ kind: 'menu' })} />
+        <RelatorioTeste
+          r={screen.r}
+          onRefazer={() => setScreen({ kind: 'jogo', jogo: 'teste', rodada: screen.rodada + 1 })}
+        >
+          <Button variant="secondary" onClick={() => setScreen({ kind: 'menu' })}>
+            Voltar para a academia
+          </Button>
+          <LinkButton href="/meu-hebraico" variant="ghost">Continuar o curso</LinkButton>
+        </RelatorioTeste>
+      </div>
+    );
+  }
+
+  if (screen.kind === 'jogoFim') {
+    const { r, jogo } = screen;
+    const pct = r.total ? Math.round((r.acertos / r.total) * 100) : 0;
+    return (
+      <div className="focus-col grid gap-5">
+        <Milestone
+          kicker={jogo === 'match'
+            ? `${r.total} pares · ${r.erros} ${r.erros === 1 ? 'erro' : 'erros'} · ${r.segundos}s`
+            : `${r.acertos} de ${r.total} · ${pct}%`}
+          title={r.erros === 0 ? 'Sem um erro.' : pct >= 70 ? 'Boa sessão.' : 'Sessão feita.'}
+          body={r.erros === 0
+            ? 'Esse conjunto está firme. Vale aumentar o material: siga mais uma letra.'
+            : 'O que escapou já entrou na fila de revisão, no dia certo de voltar.'}
+        >
+          <Button onClick={() => setScreen({ kind: 'jogo', jogo, rodada: screen.rodada + 1 })}>
+            Mais uma
+          </Button>
+          <Button variant="secondary" onClick={() => setScreen({ kind: 'menu' })}>
+            Escolher outro
+          </Button>
+          <LinkButton href="/meu-hebraico" variant="ghost">Continuar o curso</LinkButton>
+        </Milestone>
+      </div>
+    );
+  }
 
   if (screen.kind === 'run') {
     const run = buildGym(screen.mode, p.state, unlocked, { audioAvailable: audio, day: p.day });
@@ -187,6 +369,44 @@ export function AcademiaClient() {
         </Card>
       ) : (
         <>
+          {/* Os três jogos primeiro, e em cartões maiores: são eles que
+              alguém abre quando tem cinco minutos e nenhuma paciência para
+              escolher um modo. Os treinos por assunto continuam logo abaixo,
+              para quem sabe o que quer. */}
+          <section aria-labelledby="jogos" className="grid gap-3">
+            <h2 id="jogos" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+              Jogos rápidos
+            </h2>
+            <ul className="grid gap-3 sm:grid-cols-3 list-none p-0 m-0">
+              {(['match', 'blast', 'teste'] as const).map(jogo => (
+                <li key={jogo}>
+                  <button
+                    type="button"
+                    onClick={() => setScreen({ kind: 'jogo', jogo, rodada: 0 })}
+                    className="w-full h-full text-left rounded-[18px] border border-line bg-[var(--card)]
+                               p-5 grid gap-1.5 content-start transition-[box-shadow,border-color]
+                               duration-[250ms] hover:shadow-[var(--sh)] hover:border-[var(--teal)]"
+                  >
+                    <span aria-hidden className="w-10 h-10 rounded-[12px] bg-[var(--teal-soft)]
+                                                 grid place-items-center mb-1">
+                      <IconeJogo jogo={jogo} />
+                    </span>
+                    <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+                      {JOGOS[jogo].titlePt}
+                    </span>
+                    <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
+                      {JOGOS[jogo].descPt}
+                    </span>
+                    <GymBest modeId={jogo} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <h2 className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mt-2">
+            Treinar por assunto
+          </h2>
           <ul className="grid gap-3 sm:grid-cols-2">
             {modes.map(({ mode, ready, whyNot }) => (
               <li key={mode.id}>
@@ -247,6 +467,33 @@ export function AcademiaClient() {
         </>
       )}
     </div>
+  );
+}
+
+/* Três desenhos de traço, no peso do resto do sistema: dois cartões que se
+   juntam, um raio e uma prancheta. */
+function IconeJogo({ jogo }: { jogo: 'match' | 'blast' | 'teste' }) {
+  const comum = {
+    width: 20, height: 20, viewBox: '0 0 20 20', fill: 'none',
+    stroke: 'var(--teal)', strokeWidth: 1.5,
+    strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const,
+    'aria-hidden': true
+  };
+  if (jogo === 'match') return (
+    <svg {...comum}>
+      <rect x="2.4" y="4" width="6.6" height="12" rx="2" />
+      <rect x="11" y="4" width="6.6" height="12" rx="2" />
+      <path d="M9 10h2" />
+    </svg>
+  );
+  if (jogo === 'blast') return (
+    <svg {...comum}><path d="M11.2 2.4 4.6 11h4.6l-.8 6.6L15.4 9h-4.6l.4-6.6Z" /></svg>
+  );
+  return (
+    <svg {...comum}>
+      <rect x="4" y="2.8" width="12" height="14.4" rx="2.4" />
+      <path d="M7.4 8.2h5.2M7.4 11.8h3.4" />
+    </svg>
   );
 }
 
