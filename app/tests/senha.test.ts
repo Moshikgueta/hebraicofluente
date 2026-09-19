@@ -20,6 +20,8 @@ import { envDeTeste, pedido, cookieDe } from './ajuda/d1';
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
 import { mailReady, mensagemDeRecuperacao } from '../../worker/src/lib/mail.js';
+// @ts-expect-error - idem
+import { isSandbox, tokenFormato } from '../../worker/src/lib/mercadopago.js';
 
 const SITE = 'https://hebraicofluente.com.br';
 
@@ -418,5 +420,43 @@ describe('de onde sai o endereço do link', () => {
 
     expect(enviados[0]!.text).toContain(`${SITE}/nova-senha/?token=`);
     expect(enviados[0]!.text).not.toContain('site-do-atacante');
+  });
+});
+
+/* ── que credencial da Mercado Pago foi colada ──────────────────────────── */
+
+describe('a forma do token da Mercado Pago', () => {
+  /* A Mercado Pago entrega dois valores por aplicação e os DOIS começam com
+     `APP_USR-`. Só o Access Token serve para a API do servidor; a Public Key
+     devolve 401 com uma mensagem que não menciona nada disso. Distinguir os
+     dois pela forma é o que transforma "tente de novo" em "você copiou o
+     campo de baixo". */
+  it('reconhece um Access Token de produção', () => {
+    expect(tokenFormato({ MP_ACCESS_TOKEN: 'APP_USR-1234567890123456-092012-abcdef0123456789abcdef0123456789-123456789' }))
+      .toBe('access-token');
+  });
+
+  it('reconhece um Access Token de teste', () => {
+    expect(tokenFormato({ MP_ACCESS_TOKEN: 'TEST-1234567890123456-092012-abcdef0123456789abcdef0123456789-123456789' }))
+      .toBe('access-token');
+  });
+
+  it('DENUNCIA a Public Key, que também começa com APP_USR-', () => {
+    expect(tokenFormato({ MP_ACCESS_TOKEN: 'APP_USR-12345678-1234-abcd-ef01-1234567890ab' }))
+      .toBe('chave-publica');
+  });
+
+  it('não confunde ausente com errado', () => {
+    expect(tokenFormato({})).toBe('ausente');
+    expect(tokenFormato({ MP_ACCESS_TOKEN: '   ' })).toBe('ausente');
+    expect(tokenFormato({ MP_ACCESS_TOKEN: 'qualquer-coisa' })).toBe('formato-desconhecido');
+  });
+
+  it('não se deixa enganar por espaço colado junto', () => {
+    /* Um segredo colado num formulário chega com espaço e às vezes com quebra
+       de linha, nenhum dos dois visível para quem colou. */
+    const t = '  APP_USR-1234567890123456-092012-abcdef0123456789abcdef0123456789-123456789\n';
+    expect(tokenFormato({ MP_ACCESS_TOKEN: t })).toBe('access-token');
+    expect(isSandbox({ MP_ACCESS_TOKEN: t })).toBe(false);
   });
 });

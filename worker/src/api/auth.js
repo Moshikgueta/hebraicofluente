@@ -25,7 +25,7 @@ import {
   b64url, fakeVerify, hashPassword, itersFor, sha256hex, verifyPassword
 } from '../lib/crypto.js';
 import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/session.js';
-import { isSandbox } from '../lib/mercadopago.js';
+import { isSandbox, tokenFormato } from '../lib/mercadopago.js';
 import { mailReady, mensagemDeRecuperacao, sendMail } from '../lib/mail.js';
 import {
   activeEntitlements, changePassword, createAccount, findAccountByEmail, findAccountById,
@@ -390,7 +390,17 @@ export async function health({ env }) {
     /* "teste" cobra nada; "producao" cobra de verdade. Deriva do prefixo do
        token, então esta linha é a confirmação de qual credencial está no ar -
        a pergunta que, errada, custa semanas de venda em silêncio. */
-    modo: env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado'
+    modo: env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado',
+    /* QUE credencial foi colada - `access-token`, `chave-publica`,
+       `formato-desconhecido` ou `ausente`. Nunca um pedaço do valor.
+
+       Existe porque a Mercado Pago entrega dois valores por aplicação e os
+       dois começam com `APP_USR-`: a Public Key e o Access Token. Só o
+       segundo serve para a API do servidor, e colar o primeiro devolve um
+       401 dizendo "authorization value not present" - uma frase que manda
+       conferir chave PIX, webhook e conta bancária antes de desconfiar do
+       campo que foi copiado. Ver tokenFormato em lib/mercadopago.js. */
+    tokenFormato: tokenFormato(env)
   };
 
   if (env.DB) {

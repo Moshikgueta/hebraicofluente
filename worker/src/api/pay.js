@@ -127,7 +127,16 @@ export async function create({ request, env }) {
     await log(env, account.id, 'pay-create-failed',
       `${order.id} ${method} ${e.message || e} ${detalhe}`.trim());
 
-    return fail('server', 502);
+    /* Código próprio, e não o `server` genérico.
+       ──────────────────────────────────────────────────────────────────
+       "Alguma coisa quebrou do nosso lado, tente de novo" é a frase certa
+       para quase toda falha e a errada para esta. Aqui a pessoa está com
+       o cartão na mão: ela tenta de novo, falha de novo, e vai embora -
+       e a falha é de configuração, então tentar de novo NUNCA vai
+       funcionar. O texto desse código (app/src/lib/account/types.ts) diz
+       que o problema é nosso e dá o endereço do suporte, que é o único
+       caminho que resolve para ela hoje. */
+    return fail('payment-failed', 502);
   }
 }
 

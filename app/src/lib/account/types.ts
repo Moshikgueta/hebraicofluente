@@ -61,7 +61,7 @@ export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired'
 export type AuthErrorCode =
   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
   | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'payments-off'
-  | 'bad-token';
+  | 'bad-token' | 'payment-failed';
 
 export class AuthError extends Error {
   constructor(readonly code: AuthErrorCode, message?: string) {
@@ -87,7 +87,13 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
   /* Um código para quatro situações - link errado, vencido, já usado e
      inexistente - porque distinguir só ajuda quem está tentando adivinhar. A
      frase diz o que fazer, que é a única coisa útil nas quatro. */
-  'bad-token': 'Esse link não vale mais. Peça outro - eles duram uma hora e funcionam uma vez só.'
+  'bad-token': 'Esse link não vale mais. Peça outro - eles duram uma hora e funcionam uma vez só.',
+  /* O pagamento não chegou a ser criado: o provedor recusou. NÃO manda tentar
+     de novo, ao contrário do `server` genérico - a causa é de configuração
+     nossa, e repetir vai falhar de novo. A pessoa está com o cartão na mão;
+     o que serve a ela é saber que o problema não é dela e ter para onde
+     escrever. */
+  'payment-failed': `Não conseguimos gerar o pagamento agora, e o problema é nosso, não seu. Escreva para ${empresa.contato.emailSuporte} que a gente resolve na hora - e nada foi cobrado.`
 };
 
 /* ── regras de acesso ────────────────────────────────────────────────────

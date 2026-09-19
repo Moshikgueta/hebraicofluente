@@ -48,16 +48,55 @@ const API = 'https://api.mercadopago.com';
  * nesse caso é o modo que não cobra: diante da dúvida, não tirar dinheiro de
  * ninguém.
  */
+/**
+ * O token, limpo.
+ *
+ * Um segredo colado num formulário chega com espaço na ponta e, às vezes, com
+ * quebra de linha. Nenhum dos dois é visível para quem colou, os dois viajam
+ * dentro do cabeçalho `Authorization`, e o servidor do outro lado responde com
+ * algo que não menciona espaço nenhum. É barato aparar aqui.
+ */
+const token = env => String((env && env.MP_ACCESS_TOKEN) || '').trim();
+
 export function isSandbox(env) {
-  const token = String((env && env.MP_ACCESS_TOKEN) || '');
-  if (token.startsWith('TEST-')) return true;
-  if (token.startsWith('APP_USR-')) return false;
+  const t = token(env);
+  if (t.startsWith('TEST-')) return true;
+  if (t.startsWith('APP_USR-')) return false;
   return !env || env.MP_SANDBOX !== '0';
+}
+
+/**
+ * QUE credencial é essa? Sem revelá-la.
+ * ─────────────────────────────────────────────────────────────────────────
+ * A Mercado Pago entrega DOIS valores por aplicação, e os dois começam com
+ * `APP_USR-`: a Public Key e o Access Token. Só o segundo serve para chamar a
+ * API do servidor. Colar o primeiro produz um 401 cuja mensagem
+ * ("authorization value not present") não faz a menor alusão ao erro real, e
+ * a pessoa vai conferir chave PIX, webhook e conta bancária antes de
+ * desconfiar do campo que copiou.
+ *
+ * As formas são distinguíveis:
+ *   Public Key    APP_USR-<8>-<4>-<4>-<4>-<12>   hexadecimal, como um UUID
+ *   Access Token  APP_USR-<dígitos>-<data>-<hex>-<dígitos>
+ *
+ * Devolve só o NOME da forma - nunca um pedaço do valor. Isto sai em
+ * /api/health, que é público.
+ */
+export function tokenFormato(env) {
+  const t = token(env);
+  if (!t) return 'ausente';
+  const corpo = t.replace(/^(TEST|APP_USR)-/, '');
+  if (t === corpo) return 'formato-desconhecido';
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(corpo)) {
+    return 'chave-publica';
+  }
+  if (/^\d+-\d+-[0-9a-f]+-\d+$/i.test(corpo)) return 'access-token';
+  return 'formato-desconhecido';
 }
 
 async function call(env, path, { method = 'GET', body, idempotencyKey } = {}) {
   const headers = {
-    'Authorization': `Bearer ${env.MP_ACCESS_TOKEN}`,
+    'Authorization': `Bearer ${token(env)}`,
     'Content-Type': 'application/json'
   };
   if (idempotencyKey) headers['X-Idempotency-Key'] = idempotencyKey;
