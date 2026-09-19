@@ -83,12 +83,20 @@ if (querido !== 'mercadopago') {
        não cria nem cobra nada, e devolve as formas de pagamento HABILITADAS
        nesta conta - de quebra respondendo se PIX e cartão estão liberados,
        que era outra dúvida em aberto. */
-    let res, corpo = '';
+    let res, corpo = '', inteiro = '';
     try {
       res = await fetch('https://api.mercadopago.com/v1/payment_methods', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      corpo = (await res.text()).slice(0, 400);
+      inteiro = await res.text();
+      /* O corpo cortado é para a MENSAGEM de erro, que não pode despejar
+         trezentas linhas de JSON no resumo da execução. A leitura da lista usa
+         o texto inteiro: cortar antes de interpretar deixava o JSON pela
+         metade, o `JSON.parse` estourava em silêncio, e a publicação bem
+         sucedida dizia só "confirmação automática ligada" sem nunca conseguir
+         responder quais formas estão habilitadas - que é metade do motivo de
+         perguntar justamente a esta rota. */
+      corpo = inteiro.slice(0, 400);
     } catch (e) {
       /* Uma falha de rede não prova nada sobre a credencial, mas a escolha
          ainda tem de ser feita, e vender por PIX é melhor do que publicar um
@@ -98,19 +106,29 @@ if (querido !== 'mercadopago') {
     }
 
     if (res && res.ok) {
-      let formas = '';
+      let formas = '', faltando = '';
       try {
-        const lista = JSON.parse(corpo);
+        const lista = JSON.parse(inteiro);
         const tem = tipo => lista.some(m => m.id === tipo || m.payment_type_id === tipo);
-        formas = [
-          tem('pix') ? 'PIX' : null,
-          tem('credit_card') ? 'cartão' : null
-        ].filter(Boolean).join(' e ');
-      } catch { /* o 200 já respondeu o que se perguntou */ }
+        const achadas = [
+          ['PIX', tem('pix')],
+          ['cartão', tem('credit_card')]
+        ];
+        formas = achadas.filter(([, v]) => v).map(([n]) => n).join(' e ');
+        faltando = achadas.filter(([, v]) => !v).map(([n]) => n).join(' e ');
+      } catch { /* o 200 já respondeu a pergunta que decide */ }
       diga('✓ Mercado Pago autenticou.');
       diga(formas
         ? `  Habilitados na conta: ${formas}. Confirmação automática ligada.`
         : '  Confirmação automática ligada.');
+      /* Uma forma que o checkout oferece e a conta não tem vira erro na cara
+         do comprador, e é o tipo de coisa que só aparece na primeira venda -
+         que é a pior hora possível para descobrir. */
+      if (faltando) {
+        diga(`⚠ A conta NÃO tem habilitado: ${faltando}.`);
+        diga('  O checkout oferece essa forma e ela vai falhar na hora da compra.');
+        diga('  Habilite em Mercado Pago → Seu negócio → Meios de pagamento.');
+      }
     } else if (res) {
       /* Quem classifica é o CORPO, não só o código.
          ──────────────────────────────────────────────────────────────────

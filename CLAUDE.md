@@ -74,19 +74,23 @@ vez do estado manda quem lê procurar no lugar errado:
   É o mesmo arquivo dos dois lados - o build do site, que decide o que
   oferecer, e o bundle do Worker, que decide o que criar -, e é por isso que a
   página nunca oferece cartão enquanto o servidor só sabe fazer PIX.
-- **Hoje a credencial NÃO autentica**, então na prática o que está no ar é o
-  PIX direto: BR Code gerado por nós (`worker/src/lib/pix.js`) a partir da
-  chave do CNPJ, sem adquirente nem gateway, dinheiro direto na conta - e
-  **nada confirma o pagamento sozinho**, a liberação é à mão em Actions →
-  Acesso → `liberar`, depois de olhar o extrato. É por isso que o checkout não
-  fica consultando o servidor e que a tela promete "em alguns minutos".
-- **O que falta para a Mercado Pago entrar:** o `MP_ACCESS_TOKEN` publicado
-  devolve `401 unauthorized` - é quase certamente a **Public Key**, porque os
-  dois valores começam com `APP_USR-`. `/api/health` responde qual dos dois
-  está lá, no campo `tokenFormato`. **Trocar o segredo é tudo**: a publicação
-  seguinte religa cartão, parcelamento e confirmação automática sozinha, e
-  devolve ao site todos os textos que falam deles - são condicionais, não
-  foram apagados.
+- **Desde 19/09/2026 a credencial autentica** e o que está no ar é a Mercado
+  Pago: PIX, cartão, parcelamento e confirmação automática. O caminho até aqui,
+  porque o sintoma vai voltar se a chave for trocada de novo: o segredo
+  carregava a **Public Key**, e a resposta que encerrou a dúvida foi
+  `400 {"message":"invalid_token"}` - um 400, não um 401, que lido pelo código
+  mandaria procurar erro na chamada. Os dois valores começam com `APP_USR-`; o
+  Access Token tem números com hífens, a Public Key tem o desenho de um UUID.
+- **O PIX direto continua pronto**, como rede por baixo: BR Code gerado por nós
+  (`worker/src/lib/pix.js`) a partir da chave do CNPJ, sem adquirente nem
+  gateway. É para onde a publicação cai sozinha se a credencial parar de
+  autenticar - e lá **nada confirma o pagamento sozinho**: a liberação é à mão
+  em Actions → Acesso → `liberar`, depois de olhar o extrato.
+- **Ainda não provado em produção:** que uma cobrança REAL nasce. O e2e pula a
+  criação quando o token é de produção, de propósito (senão cada publicação
+  deixaria um PIX pendente no painel). A prova é uma compra de verdade; o que
+  ela deu está em Actions → Acesso → `pagamento`, que lê `pay-create-failed`
+  com o motivo que a Mercado Pago devolveu.
 - **E-mail: LIGADO.** Resend, com `EMAIL_FROM` no `wrangler.toml` e
   `RESEND_API_KEY` nos segredos do repositório.
 - **Ainda por conferir:** a assinatura do webhook da Mercado Pago contra uma
