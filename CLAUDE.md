@@ -60,22 +60,33 @@ O que está LIGADO em produção, porque um documento que descreve a intenção 
 vez do estado manda quem lê procurar no lugar errado:
 
 - **Endereço:** `hebraicofluente.com.br`, com o `*.workers.dev` de conferência.
-- **Pagamento: PIX DIRETO.** `pagamento.modo` em `data/empresa.json` está em
-  `pix-direto`, e é ele que manda nos dois lados - o checkout, para saber o que
-  oferecer, e o Worker, para saber o que criar. O BR Code é gerado por nós
-  (`worker/src/lib/pix.js`) a partir da chave do CNPJ; não há adquirente,
-  gateway nem aprovação de ninguém no caminho, e o dinheiro cai direto na
-  conta. **Em troca, NADA CONFIRMA O PAGAMENTO SOZINHO**: ninguém avisa o site,
-  e a liberação é feita à mão em Actions → Acesso → `liberar`, depois de olhar
-  o extrato. É por isso que o checkout não fica consultando o servidor e que a
-  tela promete "em alguns minutos" em vez de "na hora".
-- **Mercado Pago: DESLIGADA, e por um motivo concreto.** O `MP_ACCESS_TOKEN`
-  publicado devolve `401 unauthorized` - é quase certamente a **Public Key**, e
-  não o Access Token, porque os dois começam com `APP_USR-`. `/api/health`
-  responde qual dos dois está lá, no campo `tokenFormato`. Trocar o segredo por
-  um Access Token de verdade e voltar `pagamento.modo` para `mercadopago`
-  religa cartão, parcelamento e confirmação automática, e devolve ao site todos
-  os textos que falam deles: são condicionais, não foram apagados.
+- **Pagamento: MERCADO PAGO pedida, resolvida a cada publicação.**
+  `pagamento.modo` em `data/empresa.json` está em `mercadopago` e diz como se
+  QUER cobrar. Quem decide o que VAI ao ar é `scripts/pagamento-ativo.mjs`, um
+  passo do deploy que roda **antes do build** e pergunta à Mercado Pago
+  (`/users/me`) se a credencial publicada autentica:
+  - autenticou → publica em `mercadopago`: PIX, cartão, parcelamento e
+    confirmação automática;
+  - não autenticou → reescreve o modo para `pix-direto` **só naquela
+    execução** (o repositório não muda) e diz no resumo por quê. O site vende
+    por PIX em vez de recusar toda compra.
+
+  É o mesmo arquivo dos dois lados - o build do site, que decide o que
+  oferecer, e o bundle do Worker, que decide o que criar -, e é por isso que a
+  página nunca oferece cartão enquanto o servidor só sabe fazer PIX.
+- **Hoje a credencial NÃO autentica**, então na prática o que está no ar é o
+  PIX direto: BR Code gerado por nós (`worker/src/lib/pix.js`) a partir da
+  chave do CNPJ, sem adquirente nem gateway, dinheiro direto na conta - e
+  **nada confirma o pagamento sozinho**, a liberação é à mão em Actions →
+  Acesso → `liberar`, depois de olhar o extrato. É por isso que o checkout não
+  fica consultando o servidor e que a tela promete "em alguns minutos".
+- **O que falta para a Mercado Pago entrar:** o `MP_ACCESS_TOKEN` publicado
+  devolve `401 unauthorized` - é quase certamente a **Public Key**, porque os
+  dois valores começam com `APP_USR-`. `/api/health` responde qual dos dois
+  está lá, no campo `tokenFormato`. **Trocar o segredo é tudo**: a publicação
+  seguinte religa cartão, parcelamento e confirmação automática sozinha, e
+  devolve ao site todos os textos que falam deles - são condicionais, não
+  foram apagados.
 - **E-mail: LIGADO.** Resend, com `EMAIL_FROM` no `wrangler.toml` e
   `RESEND_API_KEY` nos segredos do repositório.
 - **Ainda por conferir:** a assinatura do webhook da Mercado Pago contra uma
@@ -84,8 +95,8 @@ vez do estado manda quem lê procurar no lugar errado:
   independentes: webhook, `/api/pay/verify` na volta do comprador, e a
   varredura de 5 em 5 min em `worker/src/reconcile.js`.
 
-**O que o site promete tem de ser o que o site faz.** Trocar `pagamento.modo`
-muda texto corrido em nove páginas - rodapé, capa, página do curso, FAQ,
+**O que o site promete tem de ser o que o site faz.** O modo resolvido muda
+texto corrido em nove páginas - rodapé, capa, página do curso, FAQ,
 Termos, Privacidade, Reembolso, Suporte e o próprio checkout - e o tipo de
 defeito que isso gera é silencioso: o build passa, a página fica bonita, e o
 rodapé segue oferecendo "cartão em até 12x" numa loja que só processa PIX.

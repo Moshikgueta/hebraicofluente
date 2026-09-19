@@ -193,11 +193,16 @@ function main() {
      exporter "helped with" is a price nobody can trust. */
   /* ── quem vende ─────────────────────────────────────────────────────────
      Identificação do fornecedor, canais de atendimento e prazos das
-     políticas. Passa verbatim, menos o `_nota`, que é comentário para quem
-     edita o arquivo e não tem por que viajar até o navegador de um aluno. */
+     políticas. Passa verbatim, menos os campos `_nota…`, que são comentário
+     para quem edita o arquivo - às vezes descrevendo a operação por dentro,
+     como o `_notaPagamento` - e não têm por que viajar até o navegador de um
+     aluno. São TODOS eles, não só o primeiro: quando isto desestruturava
+     `_nota` pelo nome, um campo de nota criado depois ia junto para o
+     navegador sem ninguém notar. */
   {
-    const { _nota, ...empresa } = readJson('data/empresa.json');
-    void _nota;
+    const empresa = Object.fromEntries(
+      Object.entries(readJson('data/empresa.json')).filter(([k]) => !k.startsWith('_nota'))
+    );
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
   }
 
