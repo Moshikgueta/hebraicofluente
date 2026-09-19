@@ -343,6 +343,36 @@ export async function log(env, accountId, action, detail = '') {
   }
 }
 
+/**
+ * O último e-mail de recuperação SAIU?
+ *
+ * `true`, `false`, ou `null` quando ninguém pediu um link ainda.
+ *
+ * Existe porque "a chave está configurada" e "o e-mail está chegando" são
+ * duas perguntas diferentes, e a distância entre as duas é uma armadilha de
+ * verdade: a Resend recusa com 403 enquanto o domínio do remetente não
+ * estiver verificado, e o sintoma é NADA. A tela diz "o link está a
+ * caminho", o pedido responde 200, a saúde diz `email: true` - e ninguém
+ * recebe coisa nenhuma. Dá para ficar semanas assim sem desconfiar.
+ *
+ * Lê a trilha em vez de guardar estado novo: a informação já está lá,
+ * gravada por `forgot` a cada tentativa.
+ */
+export async function ultimoEnvioDeSenha(env) {
+  try {
+    const row = await env.DB.prepare(
+      `SELECT action FROM access_log
+        WHERE action IN ('forgot-enviado', 'forgot-falhou')
+        ORDER BY id DESC LIMIT 1`
+    ).first();
+    if (!row) return null;
+    return row.action === 'forgot-enviado';
+  } catch {
+    /* Sem tabela, sem resposta - e isso não é falha de saúde. */
+    return null;
+  }
+}
+
 /* ── progresso ──────────────────────────────────────────────────────────── */
 
 /** O estado gravado, ou `null` para quem nunca sincronizou. */

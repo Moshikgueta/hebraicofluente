@@ -338,6 +338,39 @@ describe('quando não há como mandar e-mail', () => {
     expect(saude.recuperacao).toBe(true);
   });
 
+  it('a saúde separa "configurado" de "entregando"', async () => {
+    /* A armadilha: a Resend recusa com 403 enquanto o domínio do remetente
+       não estiver verificado. A chave existe, `email` diz true, a tela diz "o
+       link está a caminho" - e ninguém recebe nada. `emailEntregue` é o campo
+       que desmente isso. */
+    const env = envComEmail();
+    const { email } = await comConta(env);
+
+    const antes = await (await auth.health({ env })).json();
+    expect(antes.email).toBe(true);
+    expect(antes.emailEntregue, 'ninguém pediu link ainda').toBe(null);
+
+    /* A Resend recusa o próximo envio, como faz com domínio não verificado. */
+    vi.stubGlobal('fetch', async () =>
+      new Response('{"message":"The domain is not verified."}', { status: 403 }));
+    await forgot(env, email);
+    await assentar();
+
+    const depois = await (await auth.health({ env })).json();
+    expect(depois.email, 'a chave continua lá').toBe(true);
+    expect(depois.emailEntregue, 'mas nada saiu').toBe(false);
+    /* E o site continua saudável: é uma porta fechada, não uma queda. */
+    expect(depois.ok).toBe(true);
+  });
+
+  it('volta a dizer que sim quando o envio funciona', async () => {
+    const env = envComEmail();
+    const { email } = await comConta(env);
+    await forgot(env, email);
+    await assentar();
+    expect((await (await auth.health({ env })).json()).emailEntregue).toBe(true);
+  });
+
   it('mailReady exige a chave E o remetente', () => {
     expect(mailReady({ RESEND_API_KEY: 'x', EMAIL_FROM: 'a@b.com' })).toBe(true);
     expect(mailReady({ RESEND_API_KEY: 'x' })).toBe(false);

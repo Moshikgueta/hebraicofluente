@@ -118,6 +118,15 @@ fi
 if [ "$(campo email)" != "true" ]; then
   echo "  · e-mail desligado (RESEND_API_KEY ou EMAIL_FROM ausente) - ninguém"
   echo "    recupera a senha sozinho. Ver .env.example."
+elif [ "$(campo emailEntregue)" = "false" ]; then
+  # O estado mais perigoso dos três, e o único que não se parece com um
+  # problema: a chave existe, a saúde diz que sim, a tela diz "o link está a
+  # caminho" - e o último envio foi RECUSADO. Quase sempre é o domínio do
+  # remetente ainda não verificado na Resend. Por isso vira ✗, e não aviso.
+  espera "o último e-mail de senha saiu" true false
+  echo "    A chave existe, mas a Resend recusou o último envio. Quase sempre é"
+  echo "    o domínio de EMAIL_FROM ainda não verificado. O motivo exato está no"
+  echo "    log do Worker e na trilha (access_log, ação 'forgot-falhou')."
 fi
 if [ "$(campo ok)" != "true" ]; then
   echo

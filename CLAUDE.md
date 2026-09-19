@@ -153,7 +153,7 @@ na conta de outra.
 
 ## Antes de commitar
 ```sh
-cd app && npm test        # 295 testes
+cd app && npm test        # 297 testes
 cd app && npm run build   # export estático
 npm run validate          # ordem das letras, nikud, palavras
 ```

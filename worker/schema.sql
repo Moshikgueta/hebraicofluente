@@ -133,6 +133,11 @@ CREATE TABLE IF NOT EXISTS access_log (
   created_at INTEGER NOT NULL
 );
 
+-- Para a pergunta "o último e-mail de senha saiu ou não?", que /api/health
+-- responde. Sem o índice é uma varredura da trilha inteira, e a trilha só
+-- cresce.
+CREATE INDEX IF NOT EXISTS access_log_acao ON access_log(action, id DESC);
+
 -- ── convites ──────────────────────────────────────────────────────────────
 -- Acesso concedido a um E-MAIL antes de existir uma conta com ele.
 --

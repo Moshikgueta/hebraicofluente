@@ -30,7 +30,7 @@ import { mailReady, mensagemDeRecuperacao, sendMail } from '../lib/mail.js';
 import {
   activeEntitlements, changePassword, createAccount, findAccountByEmail, findAccountById,
   inviteRedeem, log, normalizeEmail, resetCreate, resetFind, resetUse,
-  setPasswordHash, throttled
+  setPasswordHash, throttled, ultimoEnvioDeSenha
 } from '../lib/db.js';
 
 const MIN_PASSWORD = 8;
@@ -373,6 +373,12 @@ export async function health({ env }) {
        aqui significa que todo aluno que esquecer a senha vira um e-mail para
        o suporte. */
     email: mailReady(env),
+    /* E o último que TENTOU sair, saiu? `null` = ninguém pediu link ainda.
+       A diferença entre este campo e o de cima é a armadilha inteira: a
+       Resend recusa com 403 enquanto o domínio do remetente não estiver
+       verificado, e aí `email` diz `true`, a tela diz "o link está a
+       caminho", e ninguém recebe nada. Ver ultimoEnvioDeSenha em lib/db.js. */
+    emailEntregue: null,
     /* Cobrança ligada? `false` é um estado legítimo - ver o checkout. */
     payments: !!env.MP_ACCESS_TOKEN,
     /* Webhook verificável? `false` faz /api/pay/webhook recusar tudo. */
@@ -407,6 +413,7 @@ export async function health({ env }) {
     } catch {
       /* idem */
     }
+    out.emailEntregue = await ultimoEnvioDeSenha(env);
   }
 
   /* `progresso`, `recuperacao` e `email` ficam FORA do `ok` de propósito: sem
