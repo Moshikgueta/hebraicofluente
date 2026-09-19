@@ -1,7 +1,7 @@
 /* The exercise engine v2: variety, construction, and typed answers.
  *
  * The order rule is proved elsewhere, over every exercise the course can
- * generate. This file proves the other half — that the new kinds are actually
+ * generate. This file proves the other half - that the new kinds are actually
  * answerable, that the thing they ask the learner to assemble really does
  * assemble, and that a lesson stops being the same gesture thirteen times. */
 

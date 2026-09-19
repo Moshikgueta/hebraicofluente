@@ -1,4 +1,4 @@
--- Hebraico Fluente — esquema D1.
+-- Hebraico Fluente - esquema D1.
 --
 -- Aplicar com:
 --   npx wrangler d1 execute hebraico-fluente --file=worker/schema.sql --remote
@@ -10,7 +10,7 @@
 --     exige migrar todo mundo e reescrever cada consulta. Com uma linha por
 --     curso, lançar um curso novo não toca em nada.
 --
---  2. Todo pagamento que chega — webhook, verificação, varredura — é gravado
+--  2. Todo pagamento que chega - webhook, verificação, varredura - é gravado
 --     cru em `payment_events` ANTES de qualquer coisa acontecer. O UNIQUE em
 --     event_id é o que torna a entrega repetida inofensiva: a Mercado Pago
 --     reenvia o mesmo aviso várias vezes por desenho, e sem isso um pedido
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS payment_events (
 
 -- Freio de tentativa. Uma linha por (chave, janela); a janela é um minuto.
 -- Sem isto, /auth/login é um teste de senhas com 310.000 iterações pagas pelo
--- servidor — caro para nós, barato para quem tenta.
+-- servidor - caro para nós, barato para quem tenta.
 CREATE TABLE IF NOT EXISTS throttle (
   key        TEXT    NOT NULL,
   window_at  INTEGER NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS access_log (
 --
 -- Serve ao caso comum de presentear: cortesia para uma amiga, acesso para
 -- quem pagou por fora, aluno convidado para testar. Sem isto, presentear
--- exige coordenação — a pessoa se cadastra, esbarra na tela de "você não tem
+-- exige coordenação - a pessoa se cadastra, esbarra na tela de "você não tem
 -- este curso", avisa, e só então alguém libera. Com isto, ela cria a conta e
 -- o curso já está lá.
 --

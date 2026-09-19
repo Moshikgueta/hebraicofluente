@@ -2,7 +2,7 @@
  * ─────────────────────────────────────────────────────────────────────────
  * There are learners with v1 state in their browser right now. Their XP,
  * streak, finished lessons and review queue are the only record that the work
- * happened — localStorage is the database here — so a shape change that drops
+ * happened - localStorage is the database here - so a shape change that drops
  * them is data loss, not a refactor.
  *
  * The rules this file follows:
@@ -28,7 +28,7 @@ const isObject = (v: unknown): v is Record<string, unknown> =>
 /**
  * v1 → v2. The three new maps start empty on purpose.
  *
- * It is tempting to seed `skills` from the finished lessons — five stages done,
+ * It is tempting to seed `skills` from the finished lessons - five stages done,
  * so call every skill strong. That would be a lie the system then acts on: it
  * would stop offering review for letters this learner may well have forgotten,
  * and the first thing they would notice is that the course thinks they are
@@ -45,7 +45,7 @@ function v1ToV2(s: V1): LearnerState {
 /**
  * Parse whatever is in storage into the current shape.
  *
- * Returns EMPTY_STATE for anything it cannot vouch for — including state from a
+ * Returns EMPTY_STATE for anything it cannot vouch for - including state from a
  * FUTURE version, which happens when a learner opens a stale cached build after
  * using a newer one. Overwriting newer data with our guess at its meaning would
  * be worse than starting the session empty, and the newer build will still find

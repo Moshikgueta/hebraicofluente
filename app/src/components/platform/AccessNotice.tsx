@@ -5,7 +5,7 @@
  * Aparece nos últimos 30 dias, e só então. A regra: avisar cedo o bastante
  * para renovar sem susto e tarde o bastante para não virar paisagem. Um
  * banner permanente de "seu acesso vai acabar" é lido uma vez e ignorado
- * para sempre — inclusive no dia em que importa.
+ * para sempre - inclusive no dia em que importa.
  *
  * Nos últimos 7 dias ele muda de tom, porque aí já é urgente de verdade.
  */

@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   tokens.css — extracted from the reference PDF, not invented.
+   tokens.css - extracted from the reference PDF, not invented.
 
    Every value below was measured out of
    "Hebraico Moderno: Workbook de Alfabetização" (12pp, A4 595.92×841.92pt)
@@ -12,10 +12,10 @@
 
 :root {
   /* ── Brand green ──────────────────────────────────────────────────────
-     PDF fill #1C9770 (19 occurrences) — the "Você sabia?" left rule, the
+     PDF fill #1C9770 (19 occurrences) - the "Você sabia?" left rule, the
      01/02/03 step rules, the icon strokes. Stroke width 1.21pt ≈ 1.6px.
      The darker/lighter steps come from the diamond figure on p12.          */
-  --c-green:            #1C9770;   /* primary        — fill ×19, stroke ×43 */
+  --c-green:            #1C9770;   /* primary        - fill ×19, stroke ×43 */
   --c-green-dark:       #188160;   /* fill ×7                               */
   --c-green-darkest:    #146C50;   /* p12 diamond                           */
   --c-green-mid:        #1A8C68;   /* p12 diamond                           */
@@ -23,11 +23,11 @@
   --c-green-lightest:   #26CD98;   /* p12 diamond                           */
 
   /* ── Teal ─────────────────────────────────────────────────────────────
-     PDF fill #1A99BA (22 occurrences) — every table header band, and the
+     PDF fill #1A99BA (22 occurrences) - every table header band, and the
      text colour of the highlighted target letter inside a word.            */
   --c-teal:             #1A99BA;
   /* DEVIATION FROM THE REFERENCE, on purpose.
-     The PDF sets its table-header labels in #464646 on #1A99BA — a contrast
+     The PDF sets its table-header labels in #464646 on #1A99BA - a contrast
      ratio of 2.75:1, which fails WCAG AA (4.5:1) and is the first thing to
      disappear in a photocopy or a cheap inkjet print. This is a printed
      workbook for adults, so the band is darkened just enough to carry white
@@ -38,7 +38,7 @@
   --c-teal-on:          #FFFFFF;
 
   /* ── Mint ─────────────────────────────────────────────────────────────
-     PDF fill #D4F7EC (17 occurrences) — the page badge and the footer
+     PDF fill #D4F7EC (17 occurrences) - the page badge and the footer
      "Dica" callout.                                                        */
   --c-mint:             #D4F7EC;
 
@@ -67,11 +67,11 @@
 
   /* ── Rules ────────────────────────────────────────────────────────────
      Table borders are #000000 at stroke-opacity 0.0784, width 0.5pt.
-     That is rgba(0,0,0,.078) — deliberately near-invisible hairlines.      */
+     That is rgba(0,0,0,.078) - deliberately near-invisible hairlines.      */
   --c-rule:             rgba(0, 0, 0, .078);
   --c-rule-strong:      var(--c-green);
   --w-rule:             0.67px;    /* 0.5pt                                 */
-  --w-rule-accent:      1.6px;     /* 1.21pt — the green left rule          */
+  --w-rule-accent:      1.6px;     /* 1.21pt - the green left rule          */
 
   /* ── Typography ───────────────────────────────────────────────────────
      The PDF sets three families:
@@ -87,7 +87,7 @@
   --font-he:      'Noto Sans Hebrew', 'Inter', sans-serif;
   --font-he-cursive: 'Gveret Levin AlefAlefAlef', 'Noto Sans Hebrew', cursive;
 
-  /* Type scale — measured sizes, in pt, converted to px.
+  /* Type scale - measured sizes, in pt, converted to px.
      8.7pt body is the workhorse (205 spans); 27.3pt is the page title.     */
   --t-title:      36.4px;  /* 27.3pt  DM Sans 600  page h1                  */
   --t-h2:         26.8px;  /* 20.1pt  DM Sans 600  section heading          */
@@ -98,7 +98,7 @@
   --t-micro:      10.5px;  /*  7.9pt  Inter 500    footnotes                */
   --t-badge:      11.6px;  /*  8.7pt  Inter 500    page badge, letterspaced */
 
-  /* Hebrew runs larger than the Latin around it — the PDF sets Hebrew at
+  /* Hebrew runs larger than the Latin around it - the PDF sets Hebrew at
      the same nominal size but Hebrew reads small, and pointed Hebrew needs
      room for the marks. These are our sizes, and the ONE place we depart
      from the PDF on purpose. Documented in README §Desvios.                */

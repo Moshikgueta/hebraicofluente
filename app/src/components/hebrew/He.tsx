@@ -4,16 +4,16 @@
  * the app that wants to show Hebrew goes through it or through one of the
  * three wrappers below.
  *
- * Why this is a rule and not a preference — three real bugs from the printed
+ * Why this is a rule and not a preference - three real bugs from the printed
  * reference this course is built from:
  *
- *   · "A letra מ — Mem (מֵם)" printed with the closing paren on the wrong
+ *   · "A letra מ - Mem (מֵם)" printed with the closing paren on the wrong
  *     side, because a neutral character between an RTL run and the line end
  *     goes wherever the algorithm sends it;
  *   · "Encontre todas as letras מ: מים / בית / מה" printed with the whole list
  *     reversed, because the colon and the slashes joined the RTL run;
- *   · worst, a matching exercise that re-paired itself — Mayim shown against
- *     מי and Mi against מים — silently teaching the wrong answer.
+ *   · worst, a matching exercise that re-paired itself - Mayim shown against
+ *     מי and Mi against מים - silently teaching the wrong answer.
  *
  * Two invariants prevent all three:
  *   1. every Hebrew run is its own bidi isolate;
@@ -74,8 +74,8 @@ export function He({
   }
 
   /* A cor é do componente, e por isso ela precisa ser uma OPÇÃO do
-     componente. Envolver um <He> numa span colorida não funciona — a classe
-     de cor daqui ganha — e tentar vencer por `className` depende da ordem em
+     componente. Envolver um <He> numa span colorida não funciona - a classe
+     de cor daqui ganha - e tentar vencer por `className` depende da ordem em
      que o Tailwind gera as regras, que não é uma coisa para se apostar.
      Já custou o hebraico sumir, preto sobre preto, num painel escuro. */
   const cls = [
@@ -129,7 +129,7 @@ export function HeSeq({
 }
 
 /**
- * A word with letters missing. `parts` is in READING order — right to left —
+ * A word with letters missing. `parts` is in READING order - right to left -
  * with `null` for each blank, exactly as `gapAtLetter` returns it.
  */
 export function HeCloze({

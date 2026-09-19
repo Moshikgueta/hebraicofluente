@@ -1,17 +1,17 @@
 {
-  "note": "Conteúdo cultural e histórico. NÃO é gerado — escrito à mão e precisa de revisão do autor antes de publicar. Cada carta traz `sources` com a base da afirmação. Nada aqui entra no caminho principal do curso: são desbloqueáveis opcionais.",
-  "reviewStatus": "rascunho — conferir datas e formulações com uma fonte acadêmica antes da publicação",
+  "note": "Conteúdo cultural e histórico. NÃO é gerado - escrito à mão e precisa de revisão do autor antes de publicar. Cada carta traz `sources` com a base da afirmação. Nada aqui entra no caminho principal do curso: são desbloqueáveis opcionais.",
+  "reviewStatus": "rascunho - conferir datas e formulações com uma fonte acadêmica antes da publicação",
   "cards": [
     {
       "id": "de-onde-vem",
       "titlePt": "De onde vem este alfabeto",
       "kind": "historia",
       "unlockAt": 3,
-      "leadPt": "As 22 letras que você está aprendendo têm cerca de três mil anos — e não nasceram em Israel.",
+      "leadPt": "As 22 letras que você está aprendendo têm cerca de três mil anos - e não nasceram em Israel.",
       "bodyPt": [
-        "O alfabeto hebraico descende do alfabeto fenício, usado no litoral do Mediterrâneo oriental a partir de mais ou menos 1050 a.C. O mesmo alfabeto fenício deu origem ao grego, e do grego veio o latino — o que você está lendo agora.",
+        "O alfabeto hebraico descende do alfabeto fenício, usado no litoral do Mediterrâneo oriental a partir de mais ou menos 1050 a.C. O mesmo alfabeto fenício deu origem ao grego, e do grego veio o latino - o que você está lendo agora.",
         "Ou seja: o alfabeto hebraico e o nosso são primos. Eles se separaram há uns três mil anos e seguiram caminhos diferentes, um para a direita e o outro para a esquerda.",
-        "Isso explica uma coisa que costuma incomodar no começo: as letras hebraicas não se parecem com nada que você conhece, mas a ideia por trás delas — um símbolo para cada som — é exatamente a mesma."
+        "Isso explica uma coisa que costuma incomodar no começo: as letras hebraicas não se parecem com nada que você conhece, mas a ideia por trás delas - um símbolo para cada som - é exatamente a mesma."
       ],
       "sources": "Consenso acadêmico sobre a origem fenícia dos alfabetos grego e aramaico/hebraico."
     },
@@ -23,7 +23,7 @@
       "leadPt": "As letras do Primeiro Templo não são as que você está aprendendo.",
       "bodyPt": [
         "Até o exílio na Babilônia, o hebraico era escrito no chamado paleo-hebraico, um desenho bem mais próximo do fenício.",
-        "Depois do exílio, os judeus passaram a usar a escrita aramaica quadrada — o aramaico era a língua franca do império, e a escrita dele acabou adotada para escrever hebraico. É essa escrita quadrada que virou o alfabeto hebraico moderno.",
+        "Depois do exílio, os judeus passaram a usar a escrita aramaica quadrada - o aramaico era a língua franca do império, e a escrita dele acabou adotada para escrever hebraico. É essa escrita quadrada que virou o alfabeto hebraico moderno.",
         "Por isso o hebraico tem duas histórias visuais: a língua é a mesma, o desenho das letras mudou."
       ],
       "sources": "Consenso acadêmico: adoção da escrita aramaica quadrada no período do Segundo Templo."
@@ -35,11 +35,11 @@
       "unlockAt": 9,
       "leadPt": "O nikud é mais de mil anos mais novo do que as letras.",
       "bodyPt": [
-        "Durante a maior parte da sua história, o hebraico foi escrito só com consoantes. Quem lia sabia a língua e completava as vogais de cabeça — como um brasileiro lê \"vc\" sem hesitar.",
-        "Entre os séculos VII e X, estudiosos conhecidos como massoretas criaram sistemas de sinais para fixar a pronúncia do texto bíblico, que estava sendo transmitido de geração em geração. O sistema que se tornou padrão foi o desenvolvido em Tiberíades, na Galileia — é o que você está aprendendo.",
+        "Durante a maior parte da sua história, o hebraico foi escrito só com consoantes. Quem lia sabia a língua e completava as vogais de cabeça - como um brasileiro lê \"vc\" sem hesitar.",
+        "Entre os séculos VII e X, estudiosos conhecidos como massoretas criaram sistemas de sinais para fixar a pronúncia do texto bíblico, que estava sendo transmitido de geração em geração. O sistema que se tornou padrão foi o desenvolvido em Tiberíades, na Galileia - é o que você está aprendendo.",
         "Então o nikud não é uma muleta para estrangeiros: foi inventado por falantes nativos, para preservar uma leitura que corria o risco de se perder."
       ],
-      "sources": "Consenso acadêmico sobre a vocalização massorética tiberiense (c. séc. VII–X)."
+      "sources": "Consenso acadêmico sobre a vocalização massorética tiberiense (c. séc. VII-X)."
     },
     {
       "id": "por-que-finais",
@@ -49,7 +49,7 @@
       "leadPt": "As formas finais não foram inventadas. Elas são as formas antigas.",
       "bodyPt": [
         "Repare no que ם, ן, ך, ף e ץ têm em comum: quatro delas descem abaixo da linha, e a quinta se fecha.",
-        "A explicação mais aceita é que, ao escrever rápido, as letras no meio da palavra foram sendo encurtadas para emendar na próxima — e só no fim da palavra, onde não havia o que emendar, o traço original continuou inteiro.",
+        "A explicação mais aceita é que, ao escrever rápido, as letras no meio da palavra foram sendo encurtadas para emendar na próxima - e só no fim da palavra, onde não havia o que emendar, o traço original continuou inteiro.",
         "Ou seja: a forma \"estranha\" é a original, e a comum é a abreviada. Saber disso não ajuda a ler mais rápido, mas ajuda a parar de achar que são dez letras em vez de cinco."
       ],
       "sources": "Explicação paleográfica corrente para as formas finais; conferir formulação antes de publicar."
@@ -61,8 +61,8 @@
       "unlockAt": 15,
       "leadPt": "Nenhuma outra língua fez o que o hebraico fez.",
       "bodyPt": [
-        "Por cerca de mil e setecentos anos o hebraico foi lido, rezado, estudado e escrito — mas não era a língua do dia a dia de quase ninguém. Judeus falavam iídiche, ladino, árabe, português.",
-        "No fim do século XIX isso começou a mudar. Eliezer Ben-Yehuda (1858–1922) mudou-se para Jerusalém em 1881 decidido a criar palavras para o que faltava e a criar o filho falando só hebraico. Seu filho Itamar é lembrado como a primeira criança em séculos a ter o hebraico como língua materna.",
+        "Por cerca de mil e setecentos anos o hebraico foi lido, rezado, estudado e escrito - mas não era a língua do dia a dia de quase ninguém. Judeus falavam iídiche, ladino, árabe, português.",
+        "No fim do século XIX isso começou a mudar. Eliezer Ben-Yehuda (1858-1922) mudou-se para Jerusalém em 1881 decidido a criar palavras para o que faltava e a criar o filho falando só hebraico. Seu filho Itamar é lembrado como a primeira criança em séculos a ter o hebraico como língua materna.",
         "Ben-Yehuda virou o símbolo da história, mas o trabalho foi coletivo: escolas, professores, jornais e famílias inteiras decidiram falar uma língua que ninguém falava em casa. Hoje são milhões de falantes nativos.",
         "Quando você lê uma placa em Tel Aviv, está lendo o resultado dessa decisão."
       ],
@@ -75,9 +75,9 @@
       "unlockAt": 8,
       "leadPt": "Algumas ausências facilitam a sua vida.",
       "bodyPt": [
-        "Não há letras maiúsculas. Nenhuma. Nomes próprios, começo de frase, títulos — tudo com as mesmas 22 letras.",
+        "Não há letras maiúsculas. Nenhuma. Nomes próprios, começo de frase, títulos - tudo com as mesmas 22 letras.",
         "Não há uma letra para cada vogal: as vogais são os sinais, e na maior parte dos textos do dia a dia elas nem aparecem.",
-        "E não há \"c\", \"x\", \"w\" nem \"y\" como letras separadas — os sons que o português escreve com elas são resolvidos por letras que você já conhece, ou pelo gerech de ג׳, צ׳ e ז׳."
+        "E não há \"c\", \"x\", \"w\" nem \"y\" como letras separadas - os sons que o português escreve com elas são resolvidos por letras que você já conhece, ou pelo gerech de ג׳, צ׳ e ז׳."
       ],
       "sources": "Fatos elementares da ortografia hebraica."
     },
@@ -89,8 +89,8 @@
       "leadPt": "א é 1, ב é 2, ל é 30.",
       "bodyPt": [
         "Antes de existirem algarismos, as letras faziam esse trabalho: as nove primeiras valem de 1 a 9, as seguintes de 10 a 90, e as últimas as centenas.",
-        "Isso não é só história. Você vai encontrar letras como números no calendário hebraico, na numeração de capítulos, em andares de prédio e em listas — do mesmo jeito que usamos algarismos romanos.",
-        "Um exemplo que aparece muito: י״ד é 14 — dez mais quatro."
+        "Isso não é só história. Você vai encontrar letras como números no calendário hebraico, na numeração de capítulos, em andares de prédio e em listas - do mesmo jeito que usamos algarismos romanos.",
+        "Um exemplo que aparece muito: י״ד é 14 - dez mais quatro."
       ],
       "sources": "Sistema numérico hebraico (gematria). י״ד = 10 + 4."
     },
@@ -101,7 +101,7 @@
       "unlockAt": 20,
       "leadPt": "₪ não é um desenho aleatório: são duas letras que você já sabe ler.",
       "bodyPt": [
-        "O símbolo junta ש e ח — as iniciais de שֶׁקֶל חָדָשׁ, \"shekel novo\", a moeda israelense adotada em 1986.",
+        "O símbolo junta ש e ח - as iniciais de שֶׁקֶל חָדָשׁ, \"shekel novo\", a moeda israelense adotada em 1986.",
         "Depois de ler isto, o símbolo deixa de ser um rabisco e passa a ser uma abreviação. É mais ou menos o que acontece com o alfabeto inteiro: a partir de certo ponto, você para de ver desenhos e começa a ver palavras.",
         "A palavra שקל é muito mais antiga do que a moeda: era uma unidade de peso, e aparece na Bíblia com esse sentido."
       ],
@@ -115,7 +115,7 @@
       "leadPt": "Placas de rua costumam vir em três alfabetos.",
       "bodyPt": [
         "Hebraico, árabe e latino, um embaixo do outro. Isso quer dizer que, mesmo lendo devagar, você sempre tem como conferir se leu certo.",
-        "Muito do que está escrito na rua é mais fácil do que parece: nomes de lugares, palavras importadas do inglês escritas com letras hebraicas, e as mesmas dez ou quinze palavras se repetindo — entrada, saída, aberto, fechado, ônibus, farmácia.",
+        "Muito do que está escrito na rua é mais fácil do que parece: nomes de lugares, palavras importadas do inglês escritas com letras hebraicas, e as mesmas dez ou quinze palavras se repetindo - entrada, saída, aberto, fechado, ônibus, farmácia.",
         "Nenhuma delas leva nikud. É por isso que os módulos finais deste curso treinam leitura sem os pontinhos: é assim que o hebraico aparece de verdade."
       ],
       "sources": "Prática de sinalização trilíngue em Israel; ausência de nikud em texto corrente."
@@ -125,7 +125,7 @@
       "titlePt": "Ninguém escreve como está impresso",
       "kind": "cultura",
       "unlockAt": 10,
-      "leadPt": "A letra de mão hebraica é outro desenho — e é a que você aprende a escrever aqui.",
+      "leadPt": "A letra de mão hebraica é outro desenho - e é a que você aprende a escrever aqui.",
       "bodyPt": [
         "A letra de imprensa é para ler. Para escrever à mão, israelenses usam uma cursiva que em várias letras não se parece nada com a impressa.",
         "É por isso que as etapas de escrita deste curso treinam a cursiva, e não a impressa: ninguém escreve um bilhete em letra de forma.",

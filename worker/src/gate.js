@@ -2,7 +2,7 @@
  * ─────────────────────────────────────────────────────────────────────────
  * A lista abaixo é de prefixos de rota que exigem o curso pago. Sem cookie
  * válido, ou com cookie sem o direito de acesso, a resposta é um 302 para a
- * página de vendas — o HTML da aula não sai do servidor.
+ * página de vendas - o HTML da aula não sai do servidor.
  *
  * ⚠ O QUE ISTO RESOLVE E O QUE NÃO RESOLVE
  *
@@ -11,13 +11,13 @@
  *
  * NÃO resolve: o conteúdo em si. O curso é um app estático, e as palavras, as
  * lições e os exercícios viajam dentro dos pacotes JavaScript de /_next/, que
- * são servidos livremente — têm de ser, porque a página pública os carrega.
+ * são servidos livremente - têm de ser, porque a página pública os carrega.
  * Quem souber abrir a aba de rede baixa o conteúdo sem pagar.
  *
  * Fechar isso de verdade exige a outra metade, que está planejada e não
  * escrita: o conteúdo sair do pacote e passar a ser buscado em
  * /api/content/*, atrás deste mesmo cookie. Enquanto isso não acontecer, esta
- * limitação está escrita aqui, no README e em ARCHITECTURE.md §11.4 — e não
+ * limitação está escrita aqui, no README e em ARCHITECTURE.md §11.4 - e não
  * deve ser descrita a ninguém como proteção de conteúdo.
  *
  * O que ela é de verdade: um portão de produto que manda a pessoa certa para
@@ -29,7 +29,7 @@ import { hasEntitlement, findAccountById } from './lib/db.js';
 
 /* As rotas do curso pago. Uma lista de prefixos, e não uma de rotas livres:
    uma rota nova nasce protegida, e o erro possível é pedir login onde não
-   precisava — nunca o contrário. */
+   precisava - nunca o contrário. */
 const GATED = [
   '/licao', '/modulo', '/checkpoint', '/extra', '/revisao', '/academia',
   '/mapa', '/desafio-final', '/certificado', '/concluido', '/conquistas',
@@ -53,7 +53,7 @@ export async function gate(request, env) {
   if (!isGatedPath(path)) return null;
 
   /* Só documentos. Uma fonte, um ícone ou um JSON pedido de dentro de uma
-     página já liberada não deve ser redirecionado para HTML — isso quebra a
+     página já liberada não deve ser redirecionado para HTML - isso quebra a
      página em vez de proteger alguma coisa. */
   const dest = request.headers.get('Sec-Fetch-Dest');
   if (dest && dest !== 'document') return null;

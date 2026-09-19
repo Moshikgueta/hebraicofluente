@@ -11,7 +11,7 @@
  *   · até quando vai o acesso, em data, por curso;
  *   · que o progresso é deste aparelho. Isso é uma limitação real de hoje
  *     (ver lib/account/store.tsx) e o lugar de contá-la é aqui, onde a pessoa
- *     está olhando os próprios números — não numa nota de rodapé que ela
+ *     está olhando os próprios números - não numa nota de rodapé que ela
  *     descobre no dia em que troca de celular.
  *
  * "Sair" pede confirmação porque, como o progresso é local e a sessão é o que
@@ -66,7 +66,7 @@ export function PerfilClient() {
       <Card className="p-5 grid gap-4">
         <h2 className="font-display text-[17px] font-bold text-ink">Dados</h2>
         <dl className="grid gap-3 sm:grid-cols-2">
-          <Row k="Nome" v={me.name || '—'} />
+          <Row k="Nome" v={me.name || '-'} />
           <Row k="E-mail" v={me.email} />
           <Row k="Conta criada em" v={date(me.createdAt)} />
         </dl>
@@ -77,7 +77,7 @@ export function PerfilClient() {
              className="text-[var(--accent)] hover:underline">
             contato@hebraicofluente.com.br
           </a>
-          . A edição pela própria tela ainda não está no ar — e dizer isso é
+          . A edição pela própria tela ainda não está no ar - e dizer isso é
           melhor do que um botão que não faz nada.
         </p>
       </Card>
@@ -124,7 +124,7 @@ export function PerfilClient() {
           {([
             ['Letras', `${p.mastered}/${course.totalLetters}`],
             ['Curso', `${Math.round(p.progress * 100)}%`],
-            ['Sequência', p.streak === 0 ? '—' : `${p.streak} d`],
+            ['Sequência', p.streak === 0 ? '-' : `${p.streak} d`],
             ['Conquistas', `${p.state.achievements.length}/${ACHIEVEMENTS.length}`]
           ] as const).map(([k, v]) => (
             <div key={k} className="grid gap-0.5">
@@ -136,7 +136,7 @@ export function PerfilClient() {
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
                       border-t border-[color:var(--line-soft)] pt-3">
           Estes números são deste aparelho. Hoje o progresso é guardado no
-          navegador e não viaja com a conta — se você abrir o curso no
+          navegador e não viaja com a conta - se você abrir o curso no
           computador, o acesso vai junto, o progresso não. A sincronização está
           no plano.
         </p>

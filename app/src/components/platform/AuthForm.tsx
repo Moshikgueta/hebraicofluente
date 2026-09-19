@@ -1,6 +1,6 @@
 'use client';
 
-/* Entrar e criar conta — um componente para os dois.
+/* Entrar e criar conta - um componente para os dois.
  * ─────────────────────────────────────────────────────────────────────────
  * São o mesmo formulário com um campo a mais, e separá-los em dois arquivos
  * significaria manter duas versões da mesma validação, do mesmo tratamento de
@@ -11,10 +11,10 @@
  *
  *   · `?next=` volta para onde a pessoa queria ir. Quem clicou em "continuar
  *     a lição" e caiu no login tem de voltar para a lição, não para a home.
- *     O destino é validado: só caminho interno, nunca uma URL de fora — um
+ *     O destino é validado: só caminho interno, nunca uma URL de fora - um
  *     `?next=https://outro-site` é um redirecionamento aberto de manual.
  *   · O erro aparece perto do botão, é lido por leitor de tela (role=alert) e
- *     não some quando a pessoa começa a corrigir — ele some quando ela
+ *     não some quando a pessoa começa a corrigir - ele some quando ela
  *     reenvia.
  *   · Nada de "senha forte": oito caracteres, e pronto. Medidor de força
  *     produz senha pior e post-it.
@@ -150,7 +150,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
              className="text-[var(--accent)] hover:underline">
             contato@hebraicofluente.com.br
           </a>{' '}
-          — a recuperação automática ainda não está no ar, e a gente resolve na mão.
+          - a recuperação automática ainda não está no ar, e a gente resolve na mão.
         </p>
       )}
     </div>

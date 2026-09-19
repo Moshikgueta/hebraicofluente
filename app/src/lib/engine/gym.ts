@@ -1,6 +1,6 @@
 /* The Academia de Leitura: practice that is not a lesson.
  * ─────────────────────────────────────────────────────────────────────────
- * The course had exactly one path — lesson, checkpoint, lesson — and a
+ * The course had exactly one path - lesson, checkpoint, lesson - and a
  * five-question review of whatever was missed. Which means a learner who wants
  * to drill only the vowels, or only the letters that look alike, or who has
  * finished all 22 and wants to keep their reading warm, has nowhere to go. A
@@ -12,7 +12,7 @@
  *   · nothing that needs a recording appears until the recording exists.
  *
  * What a mode chooses is which generators to draw from and which letters to
- * aim at — never a separate pool of hand-written questions, which would drift
+ * aim at - never a separate pool of hand-written questions, which would drift
  * from the lessons within a month.
  */
 
@@ -47,7 +47,7 @@ export type GymMode = {
 };
 
 /* The generator sets, named by what a learner would call them rather than by
-   the skill taxonomy — "sílabas" is a thing to practise; "ler" is not. */
+   the skill taxonomy - "sílabas" is a thing to practise; "ler" is not. */
 const GENS: Record<GymModeId, readonly Gen[]> = {
   letras: [exLetterRecognition, exOddOneOut, exFinalForm, exPrintVsCursive],
   vogais: [exVowelSound, exBuildSyllable, exSoundToSyllable],
@@ -85,7 +85,7 @@ export const GYM_MODES: GymMode[] = [
   },
   {
     id: 'silabas', titlePt: 'Sílabas', icon: 'מַ',
-    descPt: 'Consoante mais vogal — a operação da leitura.',
+    descPt: 'Consoante mais vogal - a operação da leitura.',
     skills: ['ler'], count: 10
   },
   {
@@ -125,7 +125,7 @@ export function availableModes(
       return { mode, ready: false, whyNot: 'Faça a primeira lição.' };
     }
     if (mode.id === 'revisao' && !weakLetters(state, day, 5).length) {
-      return { mode, ready: false, whyNot: 'Nada pendente — você está em dia.' };
+      return { mode, ready: false, whyNot: 'Nada pendente - você está em dia.' };
     }
     if (mode.id === 'parecidas' && !confusionPair(state, unlocked)) {
       return { mode, ready: false, whyNot: 'Nenhuma troca registrada ainda.' };
@@ -141,7 +141,7 @@ export function availableModes(
  * The pair to drill: the one this learner actually trades, if there is one.
  *
  * Falls back to the content's own `confusableWith` among letters already
- * learned — a learner who has not yet confused anything can still practise the
+ * learned - a learner who has not yet confused anything can still practise the
  * pairs that are about to confuse them, which is cheaper than waiting for the
  * mistake.
  */
@@ -169,7 +169,7 @@ export type GymRun = { exercises: Exercise[]; label: string };
 /**
  * Build a run.
  *
- * `letters` is what the learner has unlocked — the caller decides that, and
+ * `letters` is what the learner has unlocked - the caller decides that, and
  * passing more than they have met is the one way to break the order rule from
  * outside the engine.
  */
@@ -217,7 +217,7 @@ export function buildGym(
   };
 }
 
-/* The gym hands the engine a generator list directly — a mode is defined by
+/* The gym hands the engine a generator list directly - a mode is defined by
    the exercises it contains, and mapping that through the skill taxonomy and
    back would turn "vogais" into "everything that trains som". */
 function buildFromGens(

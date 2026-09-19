@@ -1,7 +1,7 @@
 /* A régua do site público.
  *
  * Todas as faixas da página usam esta largura e este respiro. Um site cujas
- * seções escolhem cada uma o seu padding parece três sites empilhados — e é
+ * seções escolhem cada uma o seu padding parece três sites empilhados - e é
  * assim que a maioria das páginas de venda parece. O `tone` existe para
  * alternar o fundo e separar as faixas sem desenhar uma linha entre elas.
  */

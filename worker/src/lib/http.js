@@ -19,7 +19,7 @@ export function json(body, status = 200, headers = {}) {
     'X-Content-Type-Options': 'nosniff'
   });
   for (const [k, v] of Object.entries(headers || {})) {
-    /* Um array vira vários cabeçalhos em vez de um só — é assim que uma
+    /* Um array vira vários cabeçalhos em vez de um só - é assim que uma
        resposta consegue mandar mais de um Set-Cookie. Espalhar num objeto
        colapsaria para o último. */
     if (Array.isArray(v)) for (const one of v) h.append(k, one);

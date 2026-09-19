@@ -8,7 +8,7 @@
  *
  * O checkout manda o curso e a forma de pagamento. Quanto custa é decidido
  * aqui. Uma API que aceita `{ amount: 1 }` do cliente é uma API que vende o
- * curso por um real, e isso não é hipótese — é o primeiro teste de qualquer
+ * curso por um real, e isso não é hipótese - é o primeiro teste de qualquer
  * um que abra as ferramentas de desenvolvedor.
  *
  * O mesmo vale para `accessMonths` e para `status`: nada que a compra decida

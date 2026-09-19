@@ -45,7 +45,7 @@ export function BrazilianTip({ mistake }: { mistake: Letter['brazilianMistake'] 
 
 /* Prose from the data files marks Hebrew as {{…}}. Authors never write a
    direction span by hand; this wraps it, and everything outside the braces
-   stays ordinary Portuguese — so the quotes and parentheses that bled into the
+   stays ordinary Portuguese - so the quotes and parentheses that bled into the
    reference PDF's Hebrew runs physically cannot get inside a span. */
 export function Prose({ text }: { text: string }) {
   const parts: React.ReactNode[] = [];
@@ -88,7 +88,7 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
           >
             <He size="lg">{s.he}</He>
             <span className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
-              {s.translit || '—'}
+              {s.translit || '-'}
             </span>
             <span className="font-ui text-[12px] text-ink-muted leading-snug">
               {active === i ? s.ptApprox : 'toque para a dica'}
@@ -152,7 +152,7 @@ export function WordReveal({ word, mark }: { word: Word; mark?: string | null })
 
 /* ── the bridge words ───────────────────────────────────────────────────
    The teacher's-guide device: meet the letter inside a loanword you already
-   know. Recognition only — these are full of letters not yet taught, and the
+   know. Recognition only - these are full of letters not yet taught, and the
    copy says so, because a learner who tries to read them and fails learns the
    wrong lesson. */
 export function BridgeWords({ letter }: { letter: Letter }) {
@@ -162,7 +162,7 @@ export function BridgeWords({ letter }: { letter: Letter }) {
       <Badge tone="accent">Você já conhece estas palavras</Badge>
       <p className="mt-3 text-[15px] leading-relaxed text-ink-body">
         O hebraico moderno importou centenas de palavras. Você já sabe o que elas
-        querem dizer — só nunca as viu escritas assim. Ache o{' '}
+        querem dizer - só nunca as viu escritas assim. Ache o{' '}
         <He size="inline">{letter.letter}</He> dentro de cada uma.
       </p>
       <ul className="mt-4 grid gap-2">
@@ -176,7 +176,7 @@ export function BridgeWords({ letter }: { letter: Letter }) {
         ))}
       </ul>
       <p className="mt-3 font-ui text-[12.5px] text-ink-muted">
-        Não tente ler a palavra inteira ainda — ela usa letras que você ainda não aprendeu.
+        Não tente ler a palavra inteira ainda - ela usa letras que você ainda não aprendeu.
       </p>
     </Card>
   );
@@ -211,7 +211,7 @@ export function RealWorldHebrew({ scene }: { scene: Scene }) {
       </div>
       <div className="p-5 sm:p-6 grid gap-4">
         <p className="font-ui text-[13.5px] text-ink-muted">{sceneLabel}</p>
-        {/* The word alone, big, on a plain surface — the closest a screen gets
+        {/* The word alone, big, on a plain surface - the closest a screen gets
             to seeing it on a sign. */}
         <div className="rounded-[var(--r-md)] bg-surface-2 py-9 px-5 flex items-center justify-center">
           <He size="display">{word.he}</He>
@@ -250,7 +250,7 @@ export function WorkbookLink({ pages, what }: { pages: { from: number; to: numbe
                  border-line px-4 py-3 text-ink-body hover:bg-surface-2 transition-colors"
     >
       <span className="font-ui text-[14px]">
-        Quer praticar {what} à mão? Workbook impresso, páginas {pages.from}–{pages.to}
+        Quer praticar {what} à mão? Workbook impresso, páginas {pages.from}-{pages.to}
       </span>
       <span aria-hidden className="text-ink-muted">→</span>
     </Link>

@@ -1,4 +1,4 @@
-/* gen-icons.mjs — author's tool. Vendors the icons data/icons.json actually
+/* gen-icons.mjs - author's tool. Vendors the icons data/icons.json actually
  * uses into assets/icons/, and nothing else.
  *
  *   npm i -D lucide-static && node tools/gen-icons.mjs
@@ -7,7 +7,7 @@
  * needs about 60, and a repo should carry what it ships rather than a library
  * it mostly ignores. The licence travels with them.
  *
- * width/height are stripped so the size is decided by CSS at the point of use —
+ * width/height are stripped so the size is decided by CSS at the point of use -
  * the same icon appears at 34px in a table cell and 56px in the word gallery.
  */
 

@@ -1,11 +1,11 @@
 'use client';
 
-/* "Para revisar" — the mistake notebook.
+/* "Para revisar" - the mistake notebook.
  * ─────────────────────────────────────────────────────────────────────────
  * The review used to be a black box: it produced five questions and a learner
  * who wanted to know what the course thought they were bad at had no way to
  * ask. That is a strange thing for a study tool to withhold, and it is also
- * the screen that makes the adaptive part visible — without it, "a revisão
+ * the screen that makes the adaptive part visible - without it, "a revisão
  * escolheu por você" is a claim the learner has to take on faith.
  *
  * It names three different debts, because they need three different answers:
@@ -47,7 +47,7 @@ export function ParaRevisar({ limit = 6 }: { limit?: number }) {
       <Card className="p-5 grid gap-2">
         <h3 className="font-display text-[16px] font-bold text-ink">Para revisar</h3>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-          Nada pendente. Quando você errar alguma coisa, ela aparece aqui — com o
+          Nada pendente. Quando você errar alguma coisa, ela aparece aqui - com o
           motivo, não só a letra.
         </p>
       </Card>

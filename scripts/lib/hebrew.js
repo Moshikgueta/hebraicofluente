@@ -1,15 +1,15 @@
 /* Hebrew text primitives. Every other module goes through this one.
-   No direction decisions live here — those are in render.js. This file only
+   No direction decisions live here - those are in render.js. This file only
    knows about codepoints. */
 
 /* Pointing: nikud + the shin/sin dots + dagesh + meteg + maqaf + sof pasuq.
-   U+0591–U+05AF are cantillation marks (te'amim) — not used in this workbook,
+   U+0591-U+05AF are cantillation marks (te'amim) - not used in this workbook,
    but stripped alongside the vowels so a pasted biblical string normalises. */
 export const POINTING = /[֑-ׇ]/g;
 
 /* Invisible direction marks. A string pasted from a word processor routinely
    carries these, and they are the classic source of a bidi bug nobody can
-   reproduce — they are invisible in every editor. Stripped at data load. */
+   reproduce - they are invisible in every editor. Stripped at data load. */
 export const INVISIBLES = /[‎‏؜‪-‮⁦-⁩]/g;
 
 export const HEBREW_CHAR = /[֐-׿יִ-ﭏ]/;
@@ -23,7 +23,7 @@ export const BASE_TO_FINAL = {
   'כ': 'ך', 'מ': 'ם', 'נ': 'ן', 'פ': 'ף', 'צ': 'ץ'
 };
 
-/* The 22 consonants in alphabetical (not teaching) order — for the appendix. */
+/* The 22 consonants in alphabetical (not teaching) order - for the appendix. */
 export const ALEFBET = [
   'א','ב','ג','ד','ה','ו','ז','ח','ט','י','כ','ל',
   'מ','נ','ס','ע','פ','צ','ק','ר','ש','ת'
@@ -61,7 +61,7 @@ export function consonantsOf(word) {
 }
 
 /**
- * Normalised form for comparison. Nikud-insensitive by default — the single
+ * Normalised form for comparison. Nikud-insensitive by default - the single
  * most important default in the project. `strict` keeps the pointing, for the
  * rare exercise that is explicitly about the vowels themselves.
  *

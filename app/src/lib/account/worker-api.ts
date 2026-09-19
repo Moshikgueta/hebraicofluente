@@ -2,14 +2,14 @@
  * ─────────────────────────────────────────────────────────────────────────
  * Três decisões que aparecem em cada método:
  *
- *   1. `credentials: 'same-origin'`. A sessão é um cookie assinado, HttpOnly —
+ *   1. `credentials: 'same-origin'`. A sessão é um cookie assinado, HttpOnly -
  *      o JavaScript desta página não consegue lê-lo, e é exatamente por isso
  *      que ele é seguro. Não há token em localStorage; um XSS aqui não leva
  *      sessão nenhuma embora.
  *
  *   2. Erro é um código, não um texto. O servidor devolve
  *      `{ error: 'bad-credentials' }` e a frase em português sai de
- *      types.ts — um só lugar para reescrever o que o aluno lê.
+ *      types.ts - um só lugar para reescrever o que o aluno lê.
  *
  *   3. Nada de confiar em parâmetro de redirect. `orderStatus` sempre pergunta
  *      ao servidor, que por sua vez reconfere com a Mercado Pago. É a regra

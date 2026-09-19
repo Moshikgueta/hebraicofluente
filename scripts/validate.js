@@ -1,4 +1,4 @@
-/* validate.js — the build gate.
+/* validate.js - the build gate.
    Runs before every build. Collects ALL violations, prints them together,
    exits non-zero if any are fatal. Warnings never fail the build.
 
@@ -27,12 +27,12 @@ export function validate({ checkDist = true } = {}) {
   const letters = readJson('data/letters.json');
   const translit = readJson('data/translit.json');
 
-  /* ── V4 — identity and ordering ────────────────────────────────────── */
+  /* ── V4 - identity and ordering ────────────────────────────────────── */
   const orders = letters.map(l => l.order);
   const ids = letters.map(l => l.id);
   const chars = letters.map(l => l.letter);
   orders.slice().sort((a, b) => a - b).forEach((o, i) => {
-    if (o !== i + 1) fail('V4', `order ${o}`, `orders must be contiguous from 1 — expected ${i + 1}`);
+    if (o !== i + 1) fail('V4', `order ${o}`, `orders must be contiguous from 1 - expected ${i + 1}`);
   });
   [['id', ids], ['letter', chars], ['order', orders]].forEach(([name, arr]) => {
     const seen = new Set();
@@ -45,17 +45,17 @@ export function validate({ checkDist = true } = {}) {
     warn('V4', 'data/letters.json', `${letters.length} of 22 letters authored`);
   }
 
-  /* ── V16 — the teaching plan and the letters agree ──────────────────
+  /* ── V16 - the teaching plan and the letters agree ──────────────────
      data/modules.json says which letters a unit of «בא לי עברית!» covers;
      data/letters.json stamps each letter with its module and lesson. Two
-     files, one fact — so they are checked against each other. The build
+     files, one fact - so they are checked against each other. The build
      reads BOTH (the opener from one, the letter pages from the other), and
      a drift between them would print a module whose contents page and whose
      letters disagree. */
   let modules = null;
   try { modules = readJson('data/modules.json').modules; } catch { /* not authored */ }
   if (!modules) {
-    warn('V16', 'data/modules.json', 'ausente — o livro sai sem aberturas de módulo');
+    warn('V16', 'data/modules.json', 'ausente - o livro sai sem aberturas de módulo');
   } else {
     const claimed = new Map();      // letter id -> module n
     for (const M of modules) {
@@ -110,13 +110,13 @@ export function validate({ checkDist = true } = {}) {
   for (const L of letters) {
     const at = `${L.id} (${L.letter}, ordem ${L.order})`;
 
-    /* ── V5 — final forms ────────────────────────────────────────────── */
+    /* ── V5 - final forms ────────────────────────────────────────────── */
     const expected = EXPECTED_FINALS[L.letter] || null;
     if ((L.finalForm || null) !== expected) {
       fail('V5', at, `finalForm should be ${expected ? JSON.stringify(expected) : 'null'}, got ${JSON.stringify(L.finalForm)}`);
     }
 
-    /* ── V6 — syllable table ─────────────────────────────────────────── */
+    /* ── V6 - syllable table ─────────────────────────────────────────── */
     const WANT = ['a', 'e', 'i', 'o', 'u', 'sheva'];
     if (!Array.isArray(L.syllables) || L.syllables.length !== 6) {
       fail('V6', at, `expected 6 syllables, got ${L.syllables ? L.syllables.length : 0}`);
@@ -129,14 +129,14 @@ export function validate({ checkDist = true } = {}) {
       });
     }
 
-    /* ── V7 — confusables are real letters ───────────────────────────── */
+    /* ── V7 - confusables are real letters ───────────────────────────── */
     (L.confusableWith || []).forEach(c => {
       if (!orderOf.has(c) && !FINAL_TO_BASE[c] && !/[א-ת]/.test(c)) {
         fail('V7', at, `confusableWith contains "${c}", which is not a Hebrew letter`);
       }
     });
 
-    /* ── V1 — THE ORDER RULE ─────────────────────────────────────────── */
+    /* ── V1 - THE ORDER RULE ─────────────────────────────────────────── */
     (L.wordsToRead || []).forEach(w => {
       const used = consonantsOf(w.he);
       const unknown = used.filter(ch => {
@@ -147,22 +147,22 @@ export function validate({ checkDist = true } = {}) {
         fail('V1', at,
           `wordsToRead "${w.he}" (${w.translit}) uses ${unknown.map(c => `"${c}"` +
             (orderOf.has(c) ? ` [ordem ${orderOf.get(c)}]` : ' [não ensinada]')).join(', ')} ` +
-          `— depois da ordem ${L.order}`);
+          `- depois da ordem ${L.order}`);
       }
     });
 
-    /* ── V2 — pointing present ───────────────────────────────────────── */
+    /* ── V2 - pointing present ───────────────────────────────────────── */
     [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])].forEach(w => {
       if (!hasNikud(w.he)) fail('V2', at, `"${w.he}" has no nikud`);
     });
     if (L.nameHe && !hasNikud(L.nameHe)) fail('V2', at, `nameHe "${L.nameHe}" has no nikud`);
 
-    /* ── V12 — empty reading list (expected for letter 1) ────────────── */
+    /* ── V12 - empty reading list (expected for letter 1) ────────────── */
     if (!L.wordsToRead || !L.wordsToRead.length) {
-      warn('V12', at, 'wordsToRead is empty — the templates fall back to syllable-only practice');
+      warn('V12', at, 'wordsToRead is empty - the templates fall back to syllable-only practice');
     }
 
-    /* ── V13 — Hebrew in prose must be marked {{…}} ──────────────────
+    /* ── V13 - Hebrew in prose must be marked {{…}} ──────────────────
        An unmarked Hebrew run in a prose field reaches the page with no
        direction span, which is exactly how the reference PDF ends up with
        "(מ Mem)" and reversed exercise lines. */
@@ -177,28 +177,28 @@ export function validate({ checkDist = true } = {}) {
       if (!val) continue;
       const bad = unmarkedHebrew(val);
       if (bad.length) {
-        fail('V13', at, `${fname}: hebraico sem {{ }} — ${bad.slice(0, 3).map(b => JSON.stringify(b)).join(', ')}`);
+        fail('V13', at, `${fname}: hebraico sem {{ }} - ${bad.slice(0, 3).map(b => JSON.stringify(b)).join(', ')}`);
       }
     }
 
-    /* ── V17 — the letter has something to gap ─────────────────────────
+    /* ── V17 - the letter has something to gap ─────────────────────────
        The "complete a palavra" exercises need words that CONTAIN the target
-       letter. wordsToRead may legitimately hold a word that does not — אַתְּ
-       belongs on the He page as the partner of אַתָּה and has no he — so the
+       letter. wordsToRead may legitimately hold a word that does not - אַתְּ
+       belongs on the He page as the partner of אַתָּה and has no he - so the
        templates filter, and this warns when the filter leaves too little to
        build an exercise from. */
     {
       const gappable = [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])]
         .filter(w => w.he.includes(L.letter) || (L.finalForm && w.he.includes(L.finalForm)));
       if (gappable.length < 2) {
-        warn('V17', at, `só ${gappable.length} palavra(s) contendo a própria letra — os exercícios de completar ficam curtos`);
+        warn('V17', at, `só ${gappable.length} palavra(s) contendo a própria letra - os exercícios de completar ficam curtos`);
       }
     }
 
-    /* ── V15 — bridge words actually contain their letter ──────────────
+    /* ── V15 - bridge words actually contain their letter ──────────────
        The whole point of a bridge word is that the reader finds the new
        letter inside a word they already know. קרם carries its mem only as
-       the final ם, so a check on the base letter alone is not enough — and
+       the final ם, so a check on the base letter alone is not enough - and
        without this rule the page silently printed a word with nothing
        highlighted in it. */
     (L.bridgeWords || []).forEach(w => {
@@ -209,15 +209,15 @@ export function validate({ checkDist = true } = {}) {
       }
     });
 
-    /* ── V11 — stroke-order artwork ──────────────────────────────────── */
+    /* ── V11 - stroke-order artwork ──────────────────────────────────── */
     const svg = join(ROOT, 'assets/stroke-order', `${L.id}.svg`);
-    if (!existsSync(svg)) warn('V11', at, `no stroke-order SVG — the page shows "em breve"`);
+    if (!existsSync(svg)) warn('V11', at, `no stroke-order SVG - the page shows "em breve"`);
     else if (readFileSync(svg, 'utf8').includes('data-placeholder="true"')) {
       warn('V11', at, `stroke-order SVG is still the placeholder`);
     }
   }
 
-  /* ── V14 — every word with an image slot has an illustration ────────
+  /* ── V14 - every word with an image slot has an illustration ────────
      wordsToRecognize is what fills the picture slots, so an unmapped word
      leaves a hole on the page that nothing else would report. */
   let icons = null;
@@ -235,10 +235,10 @@ export function validate({ checkDist = true } = {}) {
       }
     }
   } else {
-    warn('V14', 'data/icons.json', 'ausente — os slots de imagem ficam vazios');
+    warn('V14', 'data/icons.json', 'ausente - os slots de imagem ficam vazios');
   }
 
-  /* ── V3 — one spelling per word, everywhere ────────────────────────
+  /* ── V3 - one spelling per word, everywhere ────────────────────────
      Keyed on the POINTED string. Nikud is meaningful here: שָׁם (sham, "lá")
      and שֵׁם (shem, "nome") are different words that differ only by pointing,
      and must be allowed to transliterate differently. What must never differ
@@ -266,7 +266,7 @@ export function validate({ checkDist = true } = {}) {
   }
   Object.entries(translit.words || {}).forEach(([h, t]) => record(h, t, 'translit.json'));
 
-  /* ── V18 — «Hebraico no mundo real» obeys the order rule ───────────
+  /* ── V18 - «Hebraico no mundo real» obeys the order rule ───────────
      A scene is the reward for having learned the letters. A scene the reader
      cannot decode is the opposite of a reward, so each one declares the
      earliest point it may appear and this checks the claim. Spaces are
@@ -286,20 +286,20 @@ export function validate({ checkDist = true } = {}) {
       });
       if (unknown.length) {
         fail('V18', `real-world/${s.id}`,
-          `"${s.he}" usa ${[...new Set(unknown)].map(c => JSON.stringify(c)).join(', ')} — ` +
+          `"${s.he}" usa ${[...new Set(unknown)].map(c => JSON.stringify(c)).join(', ')} - ` +
           `depois da ordem ${s.fromOrder}`);
       }
       if (!hasNikud(s.he)) fail('V18', `real-world/${s.id}`, `"${s.he}" sem nikud`);
       const bad = unmarkedHebrew(s.contextPt);
       if (bad.length) {
-        fail('V18', `real-world/${s.id}`, `contextPt: hebraico sem {{ }} — ${bad.slice(0, 2).join(', ')}`);
+        fail('V18', `real-world/${s.id}`, `contextPt: hebraico sem {{ }} - ${bad.slice(0, 2).join(', ')}`);
       }
     }
   } else {
-    warn('V18', 'data/real-world.json', 'ausente — a seção «no mundo real» fica vazia');
+    warn('V18', 'data/real-world.json', 'ausente - a seção «no mundo real» fica vazia');
   }
 
-  /* ── V19 — modules 6 and 7 are consistent with the alphabet ────────
+  /* ── V19 - modules 6 and 7 are consistent with the alphabet ────────
      The dagesh pairs and the final forms are claims about the language, and
      they are now shared by the book and the app. A typo here would be printed
      in one and taught in the other. */
@@ -354,11 +354,11 @@ export function validate({ checkDist = true } = {}) {
       }
     }
   } else {
-    warn('V19', 'data/extras.json', 'ausente — os módulos 6 e 7 ficam sem conteúdo');
+    warn('V19', 'data/extras.json', 'ausente - os módulos 6 e 7 ficam sem conteúdo');
   }
 
 
-  /* V3b — a word written with two DIFFERENT pointings is usually a typo in one
+  /* V3b - a word written with two DIFFERENT pointings is usually a typo in one
      of them. Not fatal (שָׁם/שֵׁם are a real pair), but worth surfacing. */
   const byConsonants = new Map();
   for (const [pointed, rec] of seenTranslit) {
@@ -374,7 +374,7 @@ export function validate({ checkDist = true } = {}) {
     }
   }
 
-  /* ── V8 / V9 / V10 — checked on the built output ──────────────────── */
+  /* ── V8 / V9 / V10 - checked on the built output ──────────────────── */
   if (checkDist) {
     const dist = join(ROOT, 'dist');
     if (existsSync(dist)) {
@@ -382,7 +382,7 @@ export function validate({ checkDist = true } = {}) {
         const src = readFileSync(join(dist, f), 'utf8');
         checkBidi(src, f);
 
-        /* V10 — a review unit may only show letters already taught. The
+        /* V10 - a review unit may only show letters already taught. The
            content is derived from the letters in range so this should hold by
            construction; it is checked anyway, because "by construction" is
            exactly the kind of claim that stops being true after an edit. */
@@ -415,10 +415,10 @@ export function validate({ checkDist = true } = {}) {
 
 /* The bidi contract, checked against the built HTML.
 
-   V8 — every Hebrew codepoint sits inside an element whose class list contains
+   V8 - every Hebrew codepoint sits inside an element whose class list contains
         the bare token `he` (the leaf Hebrew holder). Containers like .he-list
         and .he-cloze do not count: their Hebrew lives in .he children.
-   V9 — no bidi-neutral punctuation inside such a leaf span.
+   V9 - no bidi-neutral punctuation inside such a leaf span.
 
    Spans nest (.he-list > .he, .he > b.he-mark), so this walks the tag stream
    and matches closings by depth rather than regexing for the nearest </span>. */
@@ -450,7 +450,7 @@ function checkBidi(src, file) {
     }
   }
 
-  /* V9 — punctuation inside a leaf span (nested <b class="he-mark"> stripped). */
+  /* V9 - punctuation inside a leaf span (nested <b class="he-mark"> stripped). */
   for (const lf of leaves) {
     const inner = blanked.slice(lf.innerStart, lf.innerEnd).replace(/<[^>]*>/g, '');
     if (NEUTRAL.test(inner)) {
@@ -458,7 +458,7 @@ function checkBidi(src, file) {
     }
   }
 
-  /* V8 — blank every leaf span; anything Hebrew still standing is a violation. */
+  /* V8 - blank every leaf span; anything Hebrew still standing is a violation. */
   const arr = blanked.split('');
   for (const lf of leaves) for (let i = lf.start; i < lf.end; i++) arr[i] = ' ';
   let rest = arr.join('');
@@ -485,8 +485,8 @@ function checkBidi(src, file) {
 }
 
 export function report({ fails, warns }) {
-  for (const w of warns) console.log(`  ! ${w.rule}  ${w.where} — ${w.detail}`);
-  for (const f of fails) console.log(`  ✗ ${f.rule}  ${f.where} — ${f.detail}`);
+  for (const w of warns) console.log(`  ! ${w.rule}  ${w.where} - ${w.detail}`);
+  for (const f of fails) console.log(`  ✗ ${f.rule}  ${f.where} - ${f.detail}`);
   if (fails.length) console.log(`\n  ${fails.length} violação(ões), ${warns.length} aviso(s)`);
   else console.log(`  ✓ validate: 0 violações, ${warns.length} aviso(s)`);
   return fails.length === 0;

@@ -2,7 +2,7 @@
  *
  * This is the single most important test in the app. The workbook guarantees
  * it for authored vocabulary (validate.js V1); nothing but this guarantees it
- * for a GENERATED distractor, which is where it would break silently — a
+ * for a GENERATED distractor, which is where it would break silently - a
  * plausible-looking wrong option carrying a letter the learner has never seen,
  * on a screen nobody reviewed because there are 22 × 8 of them. */
 
@@ -78,7 +78,7 @@ describe('the order rule', () => {
           expect(ex.answer, `${ex.id}`).toBeGreaterThanOrEqual(0);
           expect(ex.answer, `${ex.id}`).toBeLessThan(ex.options.length);
           /* Odd-one-out is the one kind whose options are DELIBERATELY the same
-             glyph over and over — that is the exercise. Everywhere else a
+             glyph over and over - that is the exercise. Everywhere else a
              repeated option means the question has two right answers. */
           if (ex.kind !== 'odd-one-out') {
             expect(new Set(ex.options).size, `${ex.id} has duplicate options`)
@@ -96,8 +96,8 @@ describe('the order rule', () => {
   });
 
   /* Every kind carries the two facts the adaptive layer depends on. They used
-     to be inferred — the letter by splitting the id on a hyphen, the skill not
-     at all — and an inferred fact is one that breaks silently. */
+     to be inferred - the letter by splitting the id on a hyphen, the skill not
+     at all - and an inferred fact is one that breaks silently. */
   it('labels every exercise with its letter and its skill', () => {
     const ids = new Set(letters.map(l => l.id));
     const skills = new Set(['rec', 'som', 'ler', 'ouvir', 'escrever']);
@@ -112,7 +112,7 @@ describe('the order rule', () => {
     }
   });
 
-  it('is deterministic — the same lesson yields the same quiz', () => {
+  it('is deterministic - the same lesson yields the same quiz', () => {
     const L = letters[8]!;
     const history = letters.filter(x => x.order <= L.order);
     const a = buildLessonQuiz(L, history, { audioAvailable: false });
@@ -121,7 +121,7 @@ describe('the order rule', () => {
   });
 
   /* The other half of the contract: a single-letter distractor MAY be a letter
-     the learner has not met — telling מ from ס needs no knowledge of ס, and the
+     the learner has not met - telling מ from ס needs no knowledge of ס, and the
      printed workbook draws distractors the same way from its first page. What
      it may never be is something that is not a Hebrew letter. */
   it('offers only real Hebrew letters as glyph distractors', () => {

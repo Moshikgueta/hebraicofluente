@@ -4,14 +4,14 @@
  * ─────────────────────────────────────────────────────────────────────────
  * Earned by two facts and nothing else: every letter finished, and the final
  * exam passed. No payment, no e-mail, no account. A certificate issued for
- * anything less is worth nothing — including to the person holding it.
+ * anything less is worth nothing - including to the person holding it.
  *
  * It is drawn in the browser as a PNG, so it never leaves the device unless
  * the learner posts it. Web Share carries the FILE on a phone, which is the
  * one place this is actually shared from; everywhere else it downloads, which
  * is what a desktop expects anyway.
  *
- * The name is editable here even though onboarding asked for one — people put
+ * The name is editable here even though onboarding asked for one - people put
  * "Mo" into an onboarding field and their full name on a certificate, and
  * making them re-run onboarding to fix it would be absurd.
  */
@@ -45,7 +45,7 @@ export function CertificadoClient() {
   const date = passedAt ? new Date(passedAt) : new Date();
   const score = p.state.finalChallenge.best;
 
-  /* Prefill from onboarding once state has loaded, and then stop touching it —
+  /* Prefill from onboarding once state has loaded, and then stop touching it -
      a learner who cleared the field means it. */
   useEffect(() => {
     if (!touched && p.ready) setName(p.state.onboarding?.name?.trim() ?? '');
@@ -105,7 +105,7 @@ export function CertificadoClient() {
       await navigator.clipboard.writeText(SHARE_TEXT);
       setSaid('Texto copiado.');
     } catch {
-      setSaid('Não deu para copiar — selecione o texto acima.');
+      setSaid('Não deu para copiar - selecione o texto acima.');
     }
   }, []);
 
@@ -137,7 +137,7 @@ export function CertificadoClient() {
               titlePt="O exame final"
               detailPt={
                 p.state.finalChallenge.best != null
-                  ? `Melhor resultado: ${Math.round(p.state.finalChallenge.best * 100)}% — aprovação a partir de ${Math.round(EXAM_PASS * 100)}%`
+                  ? `Melhor resultado: ${Math.round(p.state.finalChallenge.best * 100)}% - aprovação a partir de ${Math.round(EXAM_PASS * 100)}%`
                   : `Aprovação a partir de ${Math.round(EXAM_PASS * 100)}%`
               }
               href="/desafio-final"
@@ -147,7 +147,7 @@ export function CertificadoClient() {
         </Card>
 
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-          Um certificado por participação não vale nada — nem para quem o recebe.
+          Um certificado por participação não vale nada - nem para quem o recebe.
           Por isso este depende de ler, e não de terminar.
         </p>
       </div>
@@ -254,7 +254,7 @@ export function CertificadoClient() {
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
           <strong>O que ele não é:</strong> um certificado oficial, um diploma ou uma
-          avaliação de proficiência reconhecida. Isso está escrito na própria imagem —
+          avaliação de proficiência reconhecida. Isso está escrito na própria imagem -
           quem recebe merece saber, e você também.
         </p>
       </Card>
@@ -303,7 +303,7 @@ export function CertificateCallout() {
       </h2>
       <p className="text-[15px] leading-relaxed text-ink-body">
         Com o seu nome, a data da aprovação e as 22 letras{' '}
-        <He size="inline">א</He> — em quadrado ou paisagem.
+        <He size="inline">א</He> - em quadrado ou paisagem.
       </p>
       <LinkButton href="/certificado" className="justify-self-start">
         Ver o certificado

@@ -1,4 +1,4 @@
-/* Roteiro de gravação — the studio deliverable.
+/* Roteiro de gravação - the studio deliverable.
    Printed and handed to the speaker: every clip in reading order, Hebrew large
    and pointed, with the reading, the meaning and the filename the take must
    end up as. Generated from data/audio.json, so it cannot drift from what the
@@ -14,7 +14,7 @@ export function renderAudioScript(ctx) {
 
   const brief = `
     ${badge('Roteiro de gravação')}
-    <h1>Áudio do workbook — roteiro de gravação</h1>
+    <h1>Áudio do workbook - roteiro de gravação</h1>
     <p class="lead">${A.total} clipes. Estimativa: cerca de duas horas de estúdio com três tomadas por item, mais edição.</p>
 
     <h2>Quem grava</h2>
@@ -47,13 +47,13 @@ export function renderAudioScript(ctx) {
   chunk(A.clips, 16).forEach((g, gi, all) => {
     sheets.push(`
     ${badge(`Roteiro · ${gi + 1} de ${all.length}`)}
-    <h1>Clipes ${g[0].num}–${g[g.length - 1].num}</h1>
+    <h1>Clipes ${g[0].num}-${g[g.length - 1].num}</h1>
     <table class="script-table">
       <thead><tr><th>Nº</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>Arquivo</th></tr></thead>
       <tbody>${g.map(c => `<tr>
         <td class="center"><strong class="kbd">${c.num}</strong></td>
         <td class="he-cell">${he(c.he, { size: 'word' })}</td>
-        <td>${c.translit ? `<strong class="kbd">${esc(c.translit)}</strong>` : '<span class="hint">—</span>'}</td>
+        <td>${c.translit ? `<strong class="kbd">${esc(c.translit)}</strong>` : '<span class="hint">-</span>'}</td>
         <td>${esc(c.gloss)}</td>
         <td><code class="file">${esc(c.file)}</code></td>
       </tr>`).join('')}</tbody>

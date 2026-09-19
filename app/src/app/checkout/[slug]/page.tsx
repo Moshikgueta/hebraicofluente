@@ -15,7 +15,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const c = getCourse((await params).slug);
   return {
-    title: c ? `Comprar ${c.titlePt} — Hebraico Fluente` : 'Checkout — Hebraico Fluente',
+    title: c ? `Comprar ${c.titlePt} - Hebraico Fluente` : 'Checkout - Hebraico Fluente',
     /* Uma página de pagamento não tem por que ser indexada, e um preço
        aparecendo no Google fora de contexto só gera reclamação. */
     robots: { index: false, follow: false }

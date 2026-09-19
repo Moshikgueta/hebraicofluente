@@ -2,9 +2,9 @@
  * ─────────────────────────────────────────────────────────────────────────
  * Duas implementações, uma interface:
  *
- *   · `worker`  — fala com /api/* (Cloudflare Worker + D1 + Mercado Pago).
+ *   · `worker`  - fala com /api/* (Cloudflare Worker + D1 + Mercado Pago).
  *                 É o que roda em produção.
- *   · `local`   — guarda tudo no localStorage do próprio navegador. É o que
+ *   · `local`   - guarda tudo no localStorage do próprio navegador. É o que
  *                 roda em `npm run dev` e no export estático do GitHub Pages,
  *                 onde não existe /api nenhum.
  *
@@ -12,7 +12,7 @@
  * em silêncio. `mode` é público, a interface toda devolve ele, e a UI mostra
  * uma tarja dizendo que nada ali é cobrança real. Um checkout que parece ter
  * funcionado e não cobrou nada é a pior forma de bug que um produto pago pode
- * ter — vale mais um aviso feio.
+ * ter - vale mais um aviso feio.
  *
  * Qual dos dois entra é decidido em tempo de build por NEXT_PUBLIC_PLATFORM_API
  * (o padrão é 'local', porque é o que um clone recém-baixado consegue rodar).
@@ -40,7 +40,7 @@ export interface PlatformApi {
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number }):
     Promise<Order & { redirectUrl?: string }>;
 
-  /** O estado de um pedido, do servidor — nunca dos parâmetros de redirect.
+  /** O estado de um pedido, do servidor - nunca dos parâmetros de redirect.
    *  É esta chamada, e só ela, que diz se o acesso foi liberado. */
   orderStatus(orderId: string): Promise<Order>;
 
@@ -54,7 +54,7 @@ const MODE: ApiMode =
 
 let instance: PlatformApi | null = null;
 
-/** O adaptador desta build. Criado uma vez, tarde — nada de tocar em
+/** O adaptador desta build. Criado uma vez, tarde - nada de tocar em
  *  localStorage no topo do módulo, que quebraria o prerender. */
 export async function api(): Promise<PlatformApi> {
   if (instance) return instance;

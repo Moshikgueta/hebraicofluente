@@ -7,8 +7,8 @@
  * rule or the truth.
  *
  * Distractors are chosen with intent, never at random. `confusableWith` holds
- * the letters that actually get mixed up — ד against ר, מ against ס, ב against
- * ו — so a wrong option teaches the distinction the learner needs instead of
+ * the letters that actually get mixed up - ד against ר, מ against ס, ב against
+ * ו - so a wrong option teaches the distinction the learner needs instead of
  * being obviously wrong.
  */
 
@@ -21,7 +21,7 @@ import { shuffled, take, type Rand } from './rng';
 import type { Exercise } from './types';
 
 export type Ctx = {
-  /** The letters taught so far, in order — the pool WORD distractors come from. */
+  /** The letters taught so far, in order - the pool WORD distractors come from. */
   history: Letter[];
   /** Glyphs (base + final) the learner has met. Governs reading material. */
   alphabet: string[];
@@ -103,7 +103,7 @@ export const exFinalForm: Gen = (L, ctx, rand, i) => {
     promptPt: `Qual é a forma final de ${L.namePt}, a que aparece no fim da palavra?`,
     letter: L.letter, options, answer,
     hintsPt: ['Quase todas as formas finais descem abaixo da linha.'],
-    explainPt: 'Mesmo som, outro desenho — e quase sempre descendo abaixo da linha.'
+    explainPt: 'Mesmo som, outro desenho - e quase sempre descendo abaixo da linha.'
   };
 };
 
@@ -125,7 +125,7 @@ export const exOddOneOut: Gen = (L, _ctx, rand, i) => {
     promptPt: `Uma destas não é ${L.namePt}. Qual?`,
     options, answer,
     whyPt: options.map((o, k) => k === answer ? null : `Essa é ${L.namePt}.`),
-    explainPt: `A intrusa era ${intruder} — repare no que muda no desenho.`
+    explainPt: `A intrusa era ${intruder} - repare no que muda no desenho.`
   };
 };
 
@@ -135,7 +135,7 @@ export const exOddOneOut: Gen = (L, _ctx, rand, i) => {
  * The syllable is on screen; which vowel is it?
  *
  * The course had 132 syllables in its data and tested them once, with
- * transliterations as the options — which asks about the whole syllable. This
+ * transliterations as the options - which asks about the whole syllable. This
  * asks about the SIGN, which is the half a learner has to generalise: the
  * patach under מ is the same patach under ק.
  */
@@ -158,7 +158,7 @@ export const exVowelSound: Gen = (L, _ctx, rand, i) => {
     whyPt: options.map(v => v === target.vowel ? null
       : `${byVowel.get(v)?.translit ?? v} se escreve de outro jeito.`),
     hintsPt: ['Olhe só o sinal, ignore a consoante.'],
-    explainPt: `${target.translit} — ${target.ptApprox}.`
+    explainPt: `${target.translit} - ${target.ptApprox}.`
   };
 };
 
@@ -176,7 +176,7 @@ export const exSoundToSyllable: Gen = (L, _ctx, rand, i) => {
     sound: target.translit,
     options, answer,
     whyPt: options.map(o => o === target.he ? null : `Essa lê-se “${byHe.get(o)?.translit ?? '?'}”.`),
-    explainPt: `${target.translit} — ${target.ptApprox}.`
+    explainPt: `${target.translit} - ${target.ptApprox}.`
   };
 };
 
@@ -202,7 +202,7 @@ export const exListenSyllable: Gen = (L, _ctx, rand, i) => {
     whyPt: options.map(o => o === target.he ? null
       : `Você escolheu “${byHe.get(o)?.translit}”, mas o som era “${target.translit}”.`),
     hintsPt: ['Ouça de novo e preste atenção só na vogal.'],
-    explainPt: `${target.he} — ${target.translit}. ${target.ptApprox}.`
+    explainPt: `${target.he} - ${target.translit}. ${target.ptApprox}.`
   };
 };
 
@@ -232,7 +232,7 @@ export const exBuildSyllable: Gen = (L, _ctx, rand, i) => {
     target: target.he, consonant, vowels: options, answer, sound: target.translit,
     audioId: target.audioId,
     hintsPt: [`${target.ptApprox}.`],
-    explainPt: `${target.he} — ${target.translit}. O sinal vale o mesmo em qualquer consoante.`
+    explainPt: `${target.he} - ${target.translit}. O sinal vale o mesmo em qualquer consoante.`
   };
 };
 
@@ -240,8 +240,8 @@ export const exBuildSyllable: Gen = (L, _ctx, rand, i) => {
  * The word, in pieces, in the wrong order.
  *
  * Right to left is not a decoration here: a learner who assembles שָׁלוֹם from
- * the left has not read it. The tiles are CLUSTERS — consonant plus its own
- * marks — because anything smaller would put a vowel sign on the table with
+ * the left has not read it. The tiles are CLUSTERS - consonant plus its own
+ * marks - because anything smaller would put a vowel sign on the table with
  * nothing to sit on.
  */
 export const exBuildWord: Gen = (L, _ctx, rand, i) => {
@@ -262,8 +262,8 @@ export const exBuildWord: Gen = (L, _ctx, rand, i) => {
     promptPt: `Monte a palavra “${target.pt}”.`,
     target: target.he, tiles: shuffledTiles, hintPt: target.translit,
     audioId: target.audioId,
-    hintsPt: ['Comece pela direita — a primeira letra da palavra fica desse lado.'],
-    explainPt: `${target.he} — ${target.translit} — ${target.pt}`
+    hintsPt: ['Comece pela direita - a primeira letra da palavra fica desse lado.'],
+    explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
 
@@ -287,7 +287,7 @@ export const exMatchLetterSound: Gen = (L, ctx, rand, i) => {
     pairs: chosen.map(x => ({ left: x.letter, right: x.sound })),
     leftKind: 'glyph', rightKind: 'text',
     labelLeft: 'Letra', labelRight: 'Som',
-    explainPt: 'O som é a única coisa que a forma da letra não mostra — é o que precisa ser decorado.'
+    explainPt: 'O som é a única coisa que a forma da letra não mostra - é o que precisa ser decorado.'
   };
 };
 
@@ -324,7 +324,7 @@ export const exMatchSyllable: Gen = (L, _ctx, rand, i) => {
 /* ── production ─────────────────────────────────────────────────────────── */
 
 /**
- * Typing, which is retrieval rather than recognition — and much harder, so it
+ * Typing, which is retrieval rather than recognition - and much harder, so it
  * is offered only where the answer is short and unambiguous, with a hint ladder
  * that starts with the first letter.
  *
@@ -348,7 +348,7 @@ export const exTypeTranslit: Gen = (L, _ctx, rand, i) => {
       `Começa com “${target.translit[0]}”.`,
       `São ${target.translit.length} letras.`
     ],
-    explainPt: `${target.he} — ${target.translit} — ${target.pt}`
+    explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
 
@@ -364,7 +364,7 @@ export const exTypeHeard: Gen = (L, _ctx, rand, i) => {
     want: 'translit',
     audioId: target.audioId,
     hintsPt: [`Começa com “${target.translit[0]}”.`, `Quer dizer “${target.pt}”.`],
-    explainPt: `${target.he} — ${target.translit} — ${target.pt}`
+    explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
 
@@ -399,7 +399,7 @@ export const exWordMeaning: Gen = (L, ctx, rand, i) => {
     he: target.he, options, answer,
     audioId: target.audioId,
     hintsPt: [`Começa com o som “${target.translit[0]}”.`],
-    explainPt: `${target.he} — ${target.translit} — ${target.pt}`
+    explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
 
@@ -414,7 +414,7 @@ export const exMeaningToWord: Gen = (L, ctx, rand, i) => {
     id: `${L.id}-m2w-${i}`, kind: 'meaning-to-word', letterId: L.id, skill: 'ler',
     promptPt: `Qual destas palavras quer dizer “${target.pt}”?`,
     pt: target.pt, options, answer,
-    explainPt: `${target.he} — ${target.translit}`
+    explainPt: `${target.he} - ${target.translit}`
   };
 };
 
@@ -432,7 +432,7 @@ export const exCompleteWord: Gen = (L, ctx, rand, i) => {
     parts: gapAtLetter(target.he, L.letter),
     hintPt: target.pt, options, answer,
     audioId: target.audioId,
-    explainPt: `${target.he} — ${target.translit} — ${target.pt}`
+    explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
 
@@ -447,7 +447,7 @@ export const exAudioWord: Gen = (L, ctx, rand, i) => {
     id: `${L.id}-aud-${i}`, kind: 'audio-recognition', letterId: L.id, skill: 'ouvir',
     promptPt: 'Qual palavra você ouviu?',
     audioId: target.audioId, options, answer,
-    explainPt: `${target.he} — ${target.translit} — ${target.pt}`
+    explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
 
@@ -491,7 +491,7 @@ export const BY_SKILL: Record<string, readonly Gen[]> = {
         exCompleteWord, exBuildWord, exMeaningToWord, exMatchSyllable,
         exMatchWordMeaning, exTypeTranslit],
   ouvir: [exListenSyllable, exAudioWord, exTypeHeard],
-  /* Writing is produced on a canvas, not generated as a question — see
+  /* Writing is produced on a canvas, not generated as a question - see
      components/learn/Tracing.tsx. The key exists so callers can ask for any
      skill without a special case. */
   escrever: []

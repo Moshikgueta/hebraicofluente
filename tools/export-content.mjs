@@ -1,18 +1,18 @@
-/* export-content.mjs — data/ → app/content/
+/* export-content.mjs - data/ → app/content/
  * ─────────────────────────────────────────────────────────────────────────
  * The app does NOT read data/letters.json directly, and it does not read the
  * PDF at all. This is the one bridge between the two, and it exists for three
  * reasons:
  *
  *   1. The order rule has to be a value, not a convention. Every letter here
- *      carries `alphabetSoFar` — the exact set of glyphs the learner may be
+ *      carries `alphabetSoFar` - the exact set of glyphs the learner may be
  *      shown at that point. The exercise generator receives only that set, so
  *      it CANNOT produce a distractor with an unlearned letter. In the book
  *      that guarantee is validate.js V1; in the app it is this field.
  *
  *   2. Nikud must not be normalised, reordered or trimmed on its way to the
- *      browser. Everything is written NFC and copied verbatim — no cleaning,
- *      no "helpful" whitespace handling. A pointed Hebrew word is 2–4
+ *      browser. Everything is written NFC and copied verbatim - no cleaning,
+ *      no "helpful" whitespace handling. A pointed Hebrew word is 2-4
  *      codepoints per letter and any string surgery corrupts it.
  *
  *   3. The book and the app must never drift. One source, two outputs: change
@@ -52,7 +52,7 @@ function lookupWord(letters, phrase, scene) {
     for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) all.set(NFC(w.he), w);
   }
   /* A gloss written ON the scene wins. Joining the dictionary entries of
-     בֹּקֶר and טוֹב gives "manhã bom", which is not Portuguese — a phrase means
+     בֹּקֶר and טוֹב gives "manhã bom", which is not Portuguese - a phrase means
      something the words do not, and the scene is where that is recorded. */
   if (scene.pt) return { translit: scene.translit ?? null, pt: scene.pt };
 
@@ -78,7 +78,7 @@ function main() {
   const realWorld = readJson('data/real-world.json');
 
   /* Where each letter's pages start in the printed workbook, so the app can
-     say "quer praticar à mão? páginas X–Y". Absent before the first `npm run
+     say "quer praticar à mão? páginas X-Y". Absent before the first `npm run
      pdf`; the link is then simply not shown. */
   let pageMap = {};
   try { pageMap = readJson('data/page-map.json').sections || {}; } catch { /* no pdf yet */ }
@@ -145,7 +145,7 @@ function main() {
 
   /* One bundle as well as one file per letter. The per-letter files are for
      reading and diffing; this is what the app imports, because every screen
-     that is not a single lesson — the map, a checkpoint, the review — needs
+     that is not a single lesson - the map, a checkpoint, the review - needs
      most of them at once, and 96 KB of JSON split 22 ways would be 22 requests
      to show one page. */
   writeFileSync(join(OUT, 'letters.json'), JSON.stringify(exported) + '\n');
@@ -153,7 +153,7 @@ function main() {
   /* ── the course spine ───────────────────────────────────────────────── */
   const course = {
     generatedAt: new Date().toISOString().slice(0, 10),
-    source: 'data/letters.json + data/modules.json — «בא לי עברית!» חוברת למורה',
+    source: 'data/letters.json + data/modules.json - «בא לי עברית!» חוברת למורה',
     totalLetters: letters.length,
     modules: modules.map(M => {
       const own = letters.filter(l => l.module === M.n);
@@ -186,7 +186,7 @@ function main() {
   /* ── the catalogue ──────────────────────────────────────────────────────
      data/courses.json is the platform's product list: what /cursos shows,
      what the checkout charges, and what a paid account is allowed to open.
-     Only one thing is resolved here rather than copied — a course that says
+     Only one thing is resolved here rather than copied - a course that says
      `modulesFrom: "alfabetizacao"` takes its module list from the course just
      built above, so the sales page and the course itself cannot describe
      different módulos. Everything else passes through verbatim: a price the
@@ -278,7 +278,7 @@ function main() {
     scenes: realWorld.scenes.map(s2 => ({
       /* The translit and gloss come from the letter data, so a scene can never
          disagree with the lesson that taught the word. A scene may override
-         them — an inflected form such as הַמֶּלֶךְ is not a dictionary entry. */
+         them - an inflected form such as הַמֶּלֶךְ is not a dictionary entry. */
       ...s2,
       he: NFC(s2.he),
       audioId: audioIdFor(s2.he),
@@ -308,8 +308,8 @@ function main() {
 
   /* ── stroke geometry ────────────────────────────────────────────────
      The SVG in assets/stroke-order/ is the printed diagram: the whole letter,
-     with numbered start dots. This is the same run's machine-readable half —
-     one path per stroke, where the pen lands, which way it sets off — and it is
+     with numbered start dots. This is the same run's machine-readable half -
+     one path per stroke, where the pen lands, which way it sets off - and it is
      what the app animates, revealing he, alef and qof one stroke at a time.
 
      Copied verbatim, and only if present. A missing file is not an error: the
@@ -329,13 +329,13 @@ function main() {
   cpSync(join(ROOT, 'assets/fonts'), join(pub, 'fonts'), { recursive: true });
   cpSync(join(ROOT, 'assets/stroke-order'), join(pub, 'stroke-order'), { recursive: true });
 
-  /* The recordings land in audio/ at the repo root — one obvious place for a
-     speaker to drop files — and are copied in from there. The app serves
+  /* The recordings land in audio/ at the repo root - one obvious place for a
+     speaker to drop files - and are copied in from there. The app serves
      whatever is present and marks the rest as "áudio em breve"; nothing has to
      be edited when a wave arrives. */
   const drop = join(ROOT, 'audio');
   /* Cleared, not merged. Copying without clearing left a withdrawn recording in
-     app/public/audio/, so the app went on offering a clip that had been pulled —
+     app/public/audio/, so the app went on offering a clip that had been pulled -
      and the manifest, which is built from this directory, went on claiming it. */
   rmSync(join(pub, 'audio'), { recursive: true, force: true });
   mkdirSync(join(pub, 'audio'), { recursive: true });
@@ -356,15 +356,15 @@ function main() {
     `/* GENERATED by tools/export-content.mjs from the contents of public/audio/.\n` +
     ` *\n` +
     ` * Empty means there are no recordings yet. That is the current, honest state\n` +
-    ` * of the course: see ARCHITECTURE.md \u00a76.3. Everything downstream \u2014 the audio\n` +
-    ` * button, the listening exercises, the quiz composition \u2014 reads this array and\n` +
+    ` * of the course: see ARCHITECTURE.md \u00a76.3. Everything downstream - the audio\n` +
+    ` * button, the listening exercises, the quiz composition - reads this array and\n` +
     ` * degrades visibly rather than inventing a pronunciation. */\n` +
     `export const AUDIO_MANIFEST: readonly string[] = ${JSON.stringify(clips)};\n`);
 
   const words = letters.reduce((a, l) => a + l.wordsToRead.length + l.wordsToRecognize.length, 0);
   console.log(`  ${letters.length} letras · ${modules.length} módulos · ${words} palavras → app/content/`);
   console.log(`  áudio: ${clips.length} arquivo(s) em app/public/audio` +
-    (clips.length ? '' : ' — os exercícios de audição ficam marcados como indisponíveis'));
+    (clips.length ? '' : ' - os exercícios de audição ficam marcados como indisponíveis'));
 }
 
 main();

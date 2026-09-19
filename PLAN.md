@@ -7,26 +7,26 @@
 | | |
 |---|---|
 | Sumário | 3 folhas |
-| Página 0 — Os sinais de vogal | 3 folhas |
-| 5 aberturas de módulo (plano de aulas) | 4–5 folhas cada |
-| Letras 1–22 | 11–12 folhas cada |
-| Revisões (uma por módulo) + revisão final | 5–7 folhas cada |
-| Módulo 6 — sem daguesh e as 5 finais | 9 folhas |
-| Módulo 7 — os sons com gerech | 4 folhas |
+| Página 0 - Os sinais de vogal | 3 folhas |
+| 5 aberturas de módulo (plano de aulas) | 4-5 folhas cada |
+| Letras 1-22 | 11-12 folhas cada |
+| Revisões (uma por módulo) + revisão final | 5-7 folhas cada |
+| Módulo 6 - sem daguesh e as 5 finais | 9 folhas |
+| Módulo 7 - os sons com gerech | 4 folhas |
 | Apêndice (alfabeto · nikud · transliteração · cursiva) | 10 folhas |
 | **Total** | **331 folhas = 331 páginas A4**, verificado |
 
 **A ordem das letras é a do plano de aulas**, não a alfabética e não uma ordem
-inventada: as 7 unidades de «בא לי עברית!» — חוברת למורה, 22 lições de 1h30.
+inventada: as 7 unidades de «בא לי עברית!» - חוברת למורה, 22 lições de 1h30.
 
 ```
-módulo 1  lições 1–3    מ ת א · נ ה י
-módulo 2  lições 4–6    ג ד ש · ל ר
-módulo 3  lições 7–9    ו ז · ח ט
-módulo 4  lições 10–12  ס ע · צ ק
-módulo 5  lições 13–15  ב · כ פ
-módulo 6  lições 16–18  sem daguesh · as 5 formas finais
-módulo 7  lições 19–21  os sons com gerech — צ׳ ג׳ ז׳
+módulo 1  lições 1-3    מ ת א · נ ה י
+módulo 2  lições 4-6    ג ד ש · ל ר
+módulo 3  lições 7-9    ו ז · ח ט
+módulo 4  lições 10-12  ס ע · צ ק
+módulo 5  lições 13-15  ב · כ פ
+módulo 6  lições 16-18  sem daguesh · as 5 formas finais
+módulo 7  lições 19-21  os sons com gerech - צ׳ ג׳ ז׳
 ```
 
 Cada módulo abre com a sua própria página (o que cobre, em que lição, o que
@@ -39,14 +39,14 @@ pela V1.
 ganha folha de continuação explícita. `npm run check-fit` mede todas e o
 `npm run pdf` falha se a contagem do PDF não bater com a do HTML.
 
-**E as folhas são preenchidas.** `npm run pack` mede as 860 peças e agrupa —
+**E as folhas são preenchidas.** `npm run pack` mede as 860 peças e agrupa -
 81% de ocupação média, contra 69% quando cada peça tinha a sua folha.
 
-- `scripts/validate.js` — 19 regras. **V1, V10, V15 e V16 provadas com casos
+- `scripts/validate.js` - 19 regras. **V1, V10, V15 e V16 provadas com casos
   negativos**: adicionar שָׁלוֹם à letra 2, injetar צ na Revisão 1, pôr
   רדיו nas palavras-ponte do sámech ou mudar o módulo do guímel faz o build
   sair com código 1 nomeando o problema.
-- **Palavras-ponte** (`bridgeWords`): o método do guia — encontrar a letra nova
+- **Palavras-ponte** (`bridgeWords`): o método do guia - encontrar a letra nova
   dentro de uma palavra emprestada que o brasileiro já conhece. 89 palavras,
   uma tabela por letra na abertura do módulo. A V15 garante que cada uma
   realmente contém a sua letra, em forma base ou final.
@@ -63,12 +63,12 @@ ganha folha de continuação explícita. `npm run check-fit` mede todas e o
   61 ícones Lucide (ISC) vendorizados. V14 falha o build se faltar alguma.
 - **27 SVG de ordem de traçado** (22 letras + 5 formas finais), gerados de
   `tools/gen-stroke-order.py` a partir do contorno real do glifo cursivo.
-- `data/translit.json` — 294 entradas, gerado a partir de `letters.json` e
+- `data/translit.json` - 294 entradas, gerado a partir de `letters.json` e
   provado consistente pela V3.
 
 ## O curso interativo
 
-Em `app/` — Next.js 15, TypeScript strict, 48 páginas estáticas, 65 testes.
+Em `app/` - Next.js 15, TypeScript strict, 48 páginas estáticas, 65 testes.
 Lê `data/` pelo `tools/export-content.mjs`, então **o livro e o app nunca
 divergem**. Os módulos 6 e 7 saíram de dentro de `templates/extras.js` para
 `data/extras.json` pelo mesmo motivo. `app/ARCHITECTURE.md` é a referência.
@@ -76,9 +76,9 @@ divergem**. Os módulos 6 e 7 saíram de dentro de `templates/extras.js` para
 ## A seguir
 
 1. **Sua revisão do conteúdo.** Vale olhar, em `data/letters.json`:
-   - `wordsToRead` de cada letra — todo o vocabulário foi reescolhido na
+   - `wordsToRead` de cada letra - todo o vocabulário foi reescolhido na
      reordenação, e é a parte mais nova do livro;
-   - `bridgeWords` — as palavras emprestadas, tiradas do guia do docente;
+   - `bridgeWords` - as palavras emprestadas, tiradas do guia do docente;
    - `brazilianMistake` e `didYouKnow`.
 2. **Três decisões pendentes:** a regra de acento na transliteração, a
    aprovação da cursiva, e se o teal escurecido do cabeçalho fica.
@@ -87,11 +87,11 @@ divergem**. Os módulos 6 e 7 saíram de dentro de `templates/extras.js` para
 
 ## Adiado de propósito
 
-- **Áudio — falta só gravar.** O kit está pronto: `npm run audio-script` gera
+- **Áudio - falta só gravar.** O kit está pronto: `npm run audio-script` gera
   `audio/roteiro-de-gravacao.pdf` (19 páginas, 311 clipes em 3 ondas, ~78 min de
   sessão, com briefing de voz e técnico), `npm run check-audio` confere o que
   chegou, e largar os arquivos em `audio/` já faz o app tocar. Não há síntese
-  como substituto, de propósito — ver `app/ARCHITECTURE.md` §6.3.
+  como substituto, de propósito - ver `app/ARCHITECTURE.md` §6.3.
 - **Edição para público cristão.** `biblicalWord` existe em cada letra, `null`.
 
 ## Problemas conhecidos
@@ -104,6 +104,6 @@ divergem**. Os módulos 6 e 7 saíram de dentro de `templates/extras.js` para
   exercício de verdade. Diga se prefere mudar.
 - `V3b` sinaliza שָׁם/שֵׁם. Par legítimo do hebraico, só registrado.
 - A lição 5 do guia também apresenta שׂ (sin) ao lado de ל e ר. Como
-  שׂ não é uma letra separada — é o mesmo ש com o ponto do outro lado —
+  שׂ não é uma letra separada - é o mesmo ש com o ponto do outro lado -
   ela é tratada na própria letra 9 e na abertura do módulo 2, não como uma
   23ª lição.

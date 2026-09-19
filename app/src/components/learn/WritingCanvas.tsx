@@ -4,10 +4,10 @@
  * ─────────────────────────────────────────────────────────────────────────
  * Four steps, in this order, and they are the point of the component:
  *
- *   1 ver     — watch the stroke order (StrokeOrderPlayer, above this)
- *   2 traçar  — the model at full strength, trace over it
- *   3 guia    — the model faded to a hint
- *   4 livre   — nothing but the line
+ *   1 ver     - watch the stroke order (StrokeOrderPlayer, above this)
+ *   2 traçar  - the model at full strength, trace over it
+ *   3 guia    - the model faded to a hint
+ *   4 livre   - nothing but the line
  *
  * Support is removed gradually because that is how a motor skill is learned,
  * and because the moment a learner draws ג with nothing on the screen is worth
@@ -17,11 +17,11 @@
  * While a finger is on the drawing area the PAGE MUST NOT MOVE. Not scroll,
  * not bounce, not pull to refresh, not zoom. Everything below does one job:
  *
- *   · `touch-action: none` on the canvas — the browser stops treating the
+ *   · `touch-action: none` on the canvas - the browser stops treating the
  *     gesture as a possible scroll or pinch before it starts;
- *   · `overscroll-behavior: contain` on the frame — a gesture that reaches an
+ *   · `overscroll-behavior: contain` on the frame - a gesture that reaches an
  *     edge does not chain to the page and trigger pull-to-refresh;
- *   · `setPointerCapture` — the stroke survives the finger leaving the canvas
+ *   · `setPointerCapture` - the stroke survives the finger leaving the canvas
  *     mid-letter, which otherwise ends the line in the middle of a ג;
  *   · non-passive listeners with preventDefault, attached natively. React
  *     cannot promise non-passive here, and a passive listener's
@@ -31,7 +31,7 @@
  *
  * Two more details that are not obvious and were each got wrong once:
  *   · resizing a canvas ERASES it, and a ResizeObserver fires when a phone's
- *     URL bar collapses — which is to say, in the middle of writing. The
+ *     URL bar collapses - which is to say, in the middle of writing. The
  *     bitmap is saved and put back around every resize, and a resize to the
  *     same CSS size is skipped entirely;
  *   · `getCoalescedEvents()` returns the points the browser batched between
@@ -62,7 +62,7 @@ export function WritingCanvas({
   /** For the stroke data: `mem`, or `mem-final`. */
   letterId: string;
   label: string;
-  /** Called once per attempt with a 0–1 score, for skill tracking. */
+  /** Called once per attempt with a 0-1 score, for skill tracking. */
   onScored?: (score: number) => void;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -104,7 +104,7 @@ export function WritingCanvas({
     if (!ctx) return;
     if (keep) {
       /* Best effort: put the old bitmap back at the top left. It is not
-         rescaled — a stretched stroke would be a lie about what was drawn —
+         rescaled - a stretched stroke would be a lie about what was drawn -
          and on a few-pixel change nothing visible moves. */
       try { ctx.putImageData(keep, 0, 0); } catch { /* size grew: nothing to restore */ }
     }
@@ -154,7 +154,7 @@ export function WritingCanvas({
       pointsRef.current.push(p);
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-      /* A dot, so a tap leaves a mark — a learner writing a yod makes one. */
+      /* A dot, so a tap leaves a mark - a learner writing a yod makes one. */
       ctx.beginPath();
       ctx.arc(p.x, p.y, ctx.lineWidth / 2, 0, Math.PI * 2);
       ctx.fillStyle = ctx.strokeStyle as string;
@@ -271,7 +271,7 @@ export function WritingCanvas({
         <div className="p-5 sm:p-6 grid gap-4 justify-items-center">
           <StrokeOrderPlayer letterId={letterId} label={label} />
           <p className="font-ui text-[13.5px] text-ink-muted text-center max-w-[40ch]">
-            {current.hint} A cursiva é a que se escreve à mão — ninguém escreve
+            {current.hint} A cursiva é a que se escreve à mão - ninguém escreve
             hebraico em letra de imprensa.
           </p>
           <Button onClick={() => goStep(2)} size="md">Começar a traçar</Button>
@@ -281,13 +281,13 @@ export function WritingCanvas({
           <div
             ref={wrapRef}
             /* overscroll-behavior stops a gesture that reaches the edge from
-               chaining to the page — which is what fires pull-to-refresh. */
+               chaining to the page - which is what fires pull-to-refresh. */
             className="relative h-[280px] sm:h-[340px] overscroll-contain select-none
                        [-webkit-touch-callout:none]
                        bg-[repeating-linear-gradient(to_bottom,transparent,transparent_calc(50%-1px),var(--line-soft)_calc(50%-1px),var(--line-soft)_calc(50%),transparent_calc(50%),transparent)]"
           >
-            {/* The model, under the ink. It is always in the DOM — the scorer
-                measures against it — and simply invisible at step 4, so what
+            {/* The model, under the ink. It is always in the DOM - the scorer
+                measures against it - and simply invisible at step 4, so what
                 the learner is judged against never changes between steps. */}
             <div className="absolute inset-0 grid place-items-center pointer-events-none select-none">
               <span ref={guideRef} style={{ opacity: current.guide }}>
@@ -352,8 +352,8 @@ export function WritingCanvas({
    synthetic letter instead of by drawing on a phone and squinting. This half
    only renders the model and reads its pixels.
 
-   If anything at all goes wrong — no context, a font that has not loaded, a
-   browser without canvas filters — it returns the encouraging verdict rather
+   If anything at all goes wrong - no context, a font that has not loaded, a
+   browser without canvas filters - it returns the encouraging verdict rather
    than a false negative. None of those are the learner's fault. */
 type Verdict = { score: number; tone: 'good' | 'try'; message: string };
 
@@ -373,7 +373,7 @@ function scoreAttempt(
     if (!w || !h || !guide) return ENCOURAGE;
 
     /* The model, drawn where the visible guide is and at the same size, then
-       BLURRED — the blur is the tolerance, and it is about a finger wide. */
+       BLURRED - the blur is the tolerance, and it is about a finger wide. */
     const mask = document.createElement('canvas');
     mask.width = w; mask.height = h;
     const mctx = mask.getContext('2d', { willReadFrequently: true });

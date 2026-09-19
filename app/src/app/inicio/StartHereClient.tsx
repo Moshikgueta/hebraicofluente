@@ -1,6 +1,6 @@
 'use client';
 
-/* "Comece aqui" — before the first letter.
+/* "Comece aqui" - before the first letter.
  *
  * This is the workbook's Página 0, and its central choice carries over: the
  * vowel signs are taught BY SOUND, not by name. A beginner needs to know that
@@ -34,7 +34,7 @@ export function StartHereClient({ sounds, intro }: { sounds: NikudSound[]; intro
         <h2 className="font-display text-[19px] font-semibold">Da direita para a esquerda</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           O hebraico se lê e se escreve da direita para a esquerda. A primeira letra
-          de uma palavra é a que está mais à direita — o contrário do português, e é
+          de uma palavra é a que está mais à direita - o contrário do português, e é
           a única coisa que você precisa desaprender.
         </p>
         <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
@@ -64,7 +64,7 @@ export function StartHereClient({ sounds, intro }: { sounds: NikudSound[]; intro
           <h2 className="text-[21px] font-bold">Os sinais de vogal</h2>
           <p className="font-ui text-[14px] text-ink-muted max-w-[52ch]">
             Aprenda pelo SOM, não pelo nome. Vários sinais diferentes fazem o mesmo
-            som — é essa a dificuldade de verdade, e é ela que este quadro resolve.
+            som - é essa a dificuldade de verdade, e é ela que este quadro resolve.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export function StartHereClient({ sounds, intro }: { sounds: NikudSound[]; intro
           <Card key={s.sound} className="p-5 grid gap-3">
             <div className="flex items-baseline gap-3">
               <span className="font-display text-[22px] font-bold text-[var(--accent)]">
-                {s.sound === 'sheva' ? '—' : s.sound}
+                {s.sound === 'sheva' ? '-' : s.sound}
               </span>
               <span className="font-ui text-[14px] text-ink-muted">{SOUND_LABEL[s.sound] ?? s.sound}</span>
             </div>

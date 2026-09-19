@@ -6,9 +6,9 @@ import { flagship, brl, installment, pixPrice } from '@/lib/catalog';
 import { course } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'Dúvidas frequentes — Hebraico Fluente',
+  title: 'Dúvidas frequentes - Hebraico Fluente',
   description:
-    'Pagamento, acesso, prazo, celular, áudio, certificado e reembolso — as perguntas ' +
+    'Pagamento, acesso, prazo, celular, áudio, certificado e reembolso - as perguntas ' +
     'que aparecem antes da compra, respondidas sem enrolação.'
 };
 
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
  *      respostas que empurram o problema para o suporte e para a avaliação
  *      ruim depois da compra.
  *   2. O que ainda não existe é dito. Hoje o áudio do curso é sintetizado
- *      pelo próprio navegador, e isso está escrito aqui — porque um aluno que
+ *      pelo próprio navegador, e isso está escrito aqui - porque um aluno que
  *      descobre sozinho acha que foi enganado, e com razão.
  *
  * Preço e prazo vêm do catálogo. Uma FAQ com o preço digitado à mão é a
@@ -52,7 +52,7 @@ const FAQ: { q: string; a: string[] }[] = [
   {
     q: 'Quando o acesso é liberado?',
     a: [
-      'No cartão, na hora — a confirmação vem em segundos. No PIX, assim que o pagamento compensa, que costuma levar menos de um minuto.',
+      'No cartão, na hora - a confirmação vem em segundos. No PIX, assim que o pagamento compensa, que costuma levar menos de um minuto.',
       'A liberação é automática. Não existe aprovação manual, e você não precisa mandar comprovante para ninguém.'
     ]
   },
@@ -60,7 +60,7 @@ const FAQ: { q: string; a: string[] }[] = [
     q: 'Por quanto tempo eu tenho acesso?',
     a: [
       `${c.accessMonths} meses a partir da compra, com tudo que for acrescentado ao curso nesse período.`,
-      'Perto do fim, a plataforma avisa — com trinta dias de antecedência, e de novo na última semana.'
+      'Perto do fim, a plataforma avisa - com trinta dias de antecedência, e de novo na última semana.'
     ]
   },
   {
@@ -73,14 +73,14 @@ const FAQ: { q: string; a: string[] }[] = [
   {
     q: 'O curso tem áudio com voz de verdade?',
     a: [
-      'Ainda não. Hoje a pronúncia é falada pelo sintetizador do próprio navegador, com voz de espanhol latino quando existe — serve para conferir a sílaba, mas não é uma gravação.',
+      'Ainda não. Hoje a pronúncia é falada pelo sintetizador do próprio navegador, com voz de espanhol latino quando existe - serve para conferir a sílaba, mas não é uma gravação.',
       'As gravações com falante nativo estão planejadas e entram sem que você precise fazer nada: os mesmos botões passam a tocar o arquivo quando ele existir. Os exercícios que dependem só de escutar ficam marcados como indisponíveis até lá, em vez de te fazerem adivinhar.'
     ]
   },
   {
     q: 'Preciso saber escrever à mão?',
     a: [
-      'Não precisa, mas o curso ensina. Você traça a letra com o dedo na tela, na ordem certa dos traços, e recebe uma avaliação do traço — não uma nota, um comentário.',
+      'Não precisa, mas o curso ensina. Você traça a letra com o dedo na tela, na ordem certa dos traços, e recebe uma avaliação do traço - não uma nota, um comentário.',
       'Quem não quiser escrever pode pular essa etapa: ela não bloqueia o resto da lição.'
     ]
   },
@@ -88,14 +88,14 @@ const FAQ: { q: string; a: string[] }[] = [
     q: 'Meu progresso fica salvo?',
     a: [
       'Fica, e a plataforma volta exatamente na lição e na questão em que você parou.',
-      'Uma ressalva honesta: hoje o progresso é guardado no próprio aparelho, não na conta. Ou seja, se você estudar no celular e depois abrir no computador, o progresso não viaja junto — o acesso, sim. Sincronizar entre aparelhos está no plano.'
+      'Uma ressalva honesta: hoje o progresso é guardado no próprio aparelho, não na conta. Ou seja, se você estudar no celular e depois abrir no computador, o progresso não viaja junto - o acesso, sim. Sincronizar entre aparelhos está no plano.'
     ]
   },
   {
     q: 'Tem certificado?',
     a: [
       'Tem, e ele não é por participação. Sai quando duas coisas estiverem feitas: todas as letras concluídas e o exame final aprovado, com pelo menos 70%.',
-      'É uma imagem com o seu nome e a data, pronta para postar. Ela diz, na própria imagem, que não é um certificado oficial nem uma avaliação de proficiência reconhecida — porque não é, e quem recebe merece saber.'
+      'É uma imagem com o seu nome e a data, pronta para postar. Ela diz, na própria imagem, que não é um certificado oficial nem uma avaliação de proficiência reconhecida - porque não é, e quem recebe merece saber.'
     ]
   },
   {
@@ -109,7 +109,7 @@ const FAQ: { q: string; a: string[] }[] = [
     q: 'Vocês vão lançar os outros níveis mesmo?',
     a: [
       'O A1 está em produção e é o próximo. O A2 e o B1 vêm depois, nessa ordem.',
-      'Quando saírem, entram na mesma conta e na mesma plataforma — você não recomeça em outro lugar, e o que já fez continua onde está.'
+      'Quando saírem, entram na mesma conta e na mesma plataforma - você não recomeça em outro lugar, e o que já fez continua onde está.'
     ]
   }
 ];

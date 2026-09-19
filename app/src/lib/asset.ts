@@ -1,7 +1,7 @@
 /* Asset URLs under a base path.
  *
  * GitHub Pages serves a project site from /<repo>/, so every absolute URL the
- * app builds by hand — an audio clip, a stroke-order SVG — has to carry that
+ * app builds by hand - an audio clip, a stroke-order SVG - has to carry that
  * prefix. Next rewrites what it controls (its own chunks, next/font, next/image
  * with the default loader); it cannot rewrite a string this code concatenates.
  *

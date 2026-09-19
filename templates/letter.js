@@ -2,7 +2,7 @@
    No letter is ever named in this file. Changing anything here changes all 22.
 
    ONE SHEET IS ONE PRINTED PAGE. A stage that does not fit gets an explicit
-   continuation sheet, the way the reference workbook does it — the stage
+   continuation sheet, the way the reference workbook does it - the stage
    number stays, the sheet count grows. Nothing is allowed to spill silently:
    a sheet that overflows by a few millimetres quietly becomes two pages, the
    folio stops matching the real page, and the contents page starts lying.
@@ -12,7 +12,7 @@ import { he, heList, heCloze, pair, esc, mixed, H, prose } from '../scripts/lib/
 import { ALEFBET } from '../scripts/lib/hebrew.js';
 import { badge, callout, stepStrip, exercise, strokeOrder, wordArt } from './partials.js';
 
-/* Deterministic shuffle — the build must be reproducible, so no Math.random. */
+/* Deterministic shuffle - the build must be reproducible, so no Math.random. */
 function rng(seed) {
   let h = 1779033703 ^ seed.length;
   for (let i = 0; i < seed.length; i++) {
@@ -88,7 +88,7 @@ const hasTarget = (word, L) =>
 /* Gapping a SYLLABLE leaves only a combining mark, which renders as nothing at
    all, so the row comes out blank and unanswerable. Gap words the learner can
    read; with none available fall back to the recognition vocabulary, labelled
-   as such — finding where מ sits inside מַיִם is a fair task at letter 1. */
+   as such - finding where מ sits inside מַיִם is a fair task at letter 1. */
 function gapSource(L) {
   const read = (L.wordsToRead || []).filter(w => hasTarget(w.he, L));
   if (read.length) return { items: read.slice(0, 4), recognition: false };
@@ -112,7 +112,7 @@ export function renderLetter(L, ctx) {
   /* `bdg(stage)` labels the sheet; `cont` marks a continuation of the same
      stage, so the learner always knows which of the five they are in. */
   const bdg = (stage, cont) => badge(mixed([
-    `Página ${stage} de 5 — letra `, H(L.letter), cont ? ' · continuação' : ''
+    `Página ${stage} de 5 - letra `, H(L.letter), cont ? ' · continuação' : ''
   ]));
 
   const A = { L, name, rand, canRead, bdg, ctx };
@@ -130,8 +130,8 @@ function stage1({ L, name, canRead, bdg }) {
 
   const a = `
     ${bdg(1)}
-    <h1>${mixed([`A letra `, H(L.letter), ` — ${name} `])}<span class="paren">(</span>${he(L.nameHe)}<span class="paren">)</span></h1>
-    ${L.module ? `<p class="hint">Módulo ${L.module} · lição ${L.lesson} — letra ${L.order} de 22</p>` : ''}
+    <h1>${mixed([`A letra `, H(L.letter), ` - ${name} `])}<span class="paren">(</span>${he(L.nameHe)}<span class="paren">)</span></h1>
+    ${L.module ? `<p class="hint">Módulo ${L.module} · lição ${L.lesson} - letra ${L.order} de 22</p>` : ''}
 
     <h3>O que você vai aprender</h3>
     <ul class="ticks">
@@ -145,7 +145,7 @@ function stage1({ L, name, canRead, bdg }) {
     <p>${prose(L.soundNotePt)}</p>
 
     ${callout('warn', '⚠️', `
-      <h3>Cuidado — erro comum de brasileiro</h3>
+      <h3>Cuidado - erro comum de brasileiro</h3>
       <p><strong>O que costuma sair:</strong> ${prose(L.brazilianMistake.wrong)}</p>
       <p><strong>O certo:</strong> ${prose(L.brazilianMistake.right)}</p>
       <p class="hint">${prose(L.brazilianMistake.why)}</p>`)}
@@ -203,7 +203,7 @@ function stage2({ L, name, rand, bdg }) {
   const a = `
     ${bdg(2)}
     <h1>${mixed(['Palavras úteis com ', H(L.letter), ` `])}<span class="paren">(</span>${esc(name)}<span class="paren">)</span></h1>
-    <p class="lead">${mixed(['Palavras frequentes no hebraico moderno — a letra ', H(L.letter), ' está destacada em cada uma.'])}</p>
+    <p class="lead">${mixed(['Palavras frequentes no hebraico moderno - a letra ', H(L.letter), ' está destacada em cada uma.'])}</p>
 
     <table>
       <thead><tr><th>Imagem</th><th>Palavra</th><th>Leitura</th><th>Significado</th><th>Uso</th></tr></thead>
@@ -242,7 +242,7 @@ function stage2({ L, name, rand, bdg }) {
     ${callout('tip', '💡', `<p>Repita cada exercício pelo menos duas vezes. A repetição é a chave da memorização.</p>`)}`;
 
   /* Letter 1 has no readable word, so its "complete" exercise becomes a copy
-     table — too tall to share a sheet with the others. */
+     table - too tall to share a sheet with the others. */
   const c = gapItems.length ? null : `
     ${bdg(2, true)}
     <h1>${mixed(['Escreva ', H(L.letter), ' com cada vogal'])}</h1>
@@ -255,7 +255,7 @@ function stage2({ L, name, rand, bdg }) {
         <td class="write-cell"></td></tr>`).join('')}</tbody>
     </table>
     <p class="hint">Com as letras que você tem até aqui ainda não dá para montar
-       uma palavra inteira — são poucas consoantes e nenhuma combinação fecha.
+       uma palavra inteira - são poucas consoantes e nenhuma combinação fecha.
        Isso muda na próxima letra, e não volta a acontecer.</p>`;
 
   return [a, b, c];
@@ -267,7 +267,7 @@ function stage3({ L, name, canRead, bdg, ctx }) {
 
   out.push(`
     ${bdg(3)}
-    <h1>${mixed(['Aprendendo a escrever — ', H(L.letter), ` `])}<span class="paren">(</span>${esc(name)}<span class="paren">)</span></h1>
+    <h1>${mixed(['Aprendendo a escrever - ', H(L.letter), ` `])}<span class="paren">(</span>${esc(name)}<span class="paren">)</span></h1>
     <p class="lead">A escrita hebraica corre da direita para a esquerda. Observe os modelos antes de começar.</p>
 
     <div class="model-pair">
@@ -288,9 +288,9 @@ function stage3({ L, name, canRead, bdg, ctx }) {
   if (L.finalForm) {
     out.push(`
     ${bdg(3, true)}
-    <h1>${mixed(['A forma final — ', H(L.finalForm)])}</h1>
+    <h1>${mixed(['A forma final - ', H(L.finalForm)])}</h1>
     <p class="lead">${mixed(['No fim da palavra a letra vira ', H(L.finalForm),
-      '. É o mesmo som, com outro desenho e outro traçado — repare que ela desce abaixo da linha.'])}</p>
+      '. É o mesmo som, com outro desenho e outro traçado - repare que ela desce abaixo da linha.'])}</p>
     <div class="model-pair">
       <div>
         <h3>Modelo final</h3>
@@ -304,7 +304,7 @@ function stage3({ L, name, canRead, bdg, ctx }) {
 
     <h2>Impressa e cursiva</h2>
     <table>
-      <thead><tr><th>Impressa</th><th>Cursiva</th><th>Final — impressa</th><th>Final — cursiva</th></tr></thead>
+      <thead><tr><th>Impressa</th><th>Cursiva</th><th>Final - impressa</th><th>Final - cursiva</th></tr></thead>
       <tbody><tr>
         <td class="center">${he(L.letter, { size: 'big' })}</td>
         <td class="center">${he(L.letter, { size: 'big', cursive: true })}</td>
@@ -327,14 +327,14 @@ function stage3({ L, name, canRead, bdg, ctx }) {
     ${callout('tip', '💡', `<p>Ninguém escreve hebraico à mão em letra de imprensa. A cursiva é a que vale a pena treinar.</p>`)}`);
   }
 
-  /* 3B — tracing. */
+  /* 3B - tracing. */
   const glyphs = L.finalForm ? [L.letter, L.letter, L.finalForm] : [L.letter, L.letter, L.letter];
   out.push(`
     ${bdg(3, true)}
-    <h1>${mixed(['Trace por cima — ', H(L.letter)])}</h1>
+    <h1>${mixed(['Trace por cima - ', H(L.letter)])}</h1>
     <p class="lead">Trace sobre as letras claras. Siga sempre a direção indicada e repita cada linha com calma.</p>
     ${glyphs.map((g, i) => `
-    <h3>${['③', '④', '⑤'][i]} Linha ${i + 1} — trace por cima</h3>
+    <h3>${['③', '④', '⑤'][i]} Linha ${i + 1} - trace por cima</h3>
     <div class="write-rule">
       <div class="write-rule-head">← escreva nesta direção ←</div>
       <div class="write-row">
@@ -343,10 +343,10 @@ function stage3({ L, name, canRead, bdg, ctx }) {
     </div>`).join('\n')}
     ${callout('tip', '💡', `<p>Trace da direita para a esquerda, em movimento fluido e contínuo.</p>`)}`);
 
-  /* 3C — copy, then free writing. Two sheets: the ruled grids are tall. */
+  /* 3C - copy, then free writing. Two sheets: the ruled grids are tall. */
   out.push(`
     ${bdg(3, true)}
-    <h1>${mixed(['Copie — ', H(L.letter)])}</h1>
+    <h1>${mixed(['Copie - ', H(L.letter)])}</h1>
     <p class="lead">Copie a letra ao lado do modelo em cada linha, mantendo o mesmo tamanho e proporção.</p>
     <h2>⑥ Copie a letra</h2>
     <table class="copy-table">
@@ -374,7 +374,7 @@ function stage3({ L, name, canRead, bdg, ctx }) {
     <p>${mixed(['Escreva a letra ', H(L.letter), ' em cursivo nas linhas abaixo, com fluidez.'])}</p>
     <div class="free-lines"><div></div><div></div><div></div></div>
 
-    ${callout('note', '🌟', `<p>Muito bem. Você completou a prática de escrita da letra ${mixed([H(L.letter), ` (${esc(name)})`])} — a fluência vem com a repetição.</p>`)}`);
+    ${callout('note', '🌟', `<p>Muito bem. Você completou a prática de escrita da letra ${mixed([H(L.letter), ` (${esc(name)})`])} - a fluência vem com a repetição.</p>`)}`);
 
   return out;
 }
@@ -387,7 +387,7 @@ function stage4({ L, name, rand, bdg }) {
     <figure>
       ${wordArt(w.he, 'lg')}
       ${he(w.he, { size: 'word' })}
-      <figcaption>${esc(w.translit)} — ${esc(w.pt)}</figcaption>
+      <figcaption>${esc(w.translit)} - ${esc(w.pt)}</figcaption>
     </figure>`).join('');
 
   const a2 = L.syllables.slice(0, 4).map(s => {
@@ -402,12 +402,12 @@ function stage4({ L, name, rand, bdg }) {
   const a = `
     ${bdg(4)}
     <h1>Praticando a leitura</h1>
-    <p class="lead">${mixed(['Leia as palavras abaixo com a letra ', H(L.letter), ` (${esc(name)}) em voz alta — ouvir o próprio som é parte essencial do aprendizado.`])}</p>
+    <p class="lead">${mixed(['Leia as palavras abaixo com a letra ', H(L.letter), ` (${esc(name)}) em voz alta - ouvir o próprio som é parte essencial do aprendizado.`])}</p>
 
-    <h2>Atividade 1 — leitura de palavras</h2>
+    <h2>Atividade 1 - leitura de palavras</h2>
     <div class="gallery">${gallery}</div>
 
-    <h2>Atividade 2 — escolha a leitura correta</h2>
+    <h2>Atividade 2 - escolha a leitura correta</h2>
     <p>Marque com X a transliteração correta de cada sílaba hebraica.</p>
     <table>
       <thead><tr><th>Sílaba</th><th>Opção A</th><th>Opção B</th><th>Opção C</th></tr></thead>
@@ -417,7 +417,7 @@ function stage4({ L, name, rand, bdg }) {
   const gap = gapSource(L);
   const a3 = `
     <p>${mixed(['Insira a letra ', H(L.letter), ' no espaço correto para completar cada palavra.'])}</p>
-    ${gap.recognition ? `<p class="hint">Você ainda não lê estas palavras inteiras — nesta atividade basta reconhecer onde a letra entra.</p>` : ''}
+    ${gap.recognition ? `<p class="hint">Você ainda não lê estas palavras inteiras - nesta atividade basta reconhecer onde a letra entra.</p>` : ''}
     <table>
       <thead><tr><th>Palavra incompleta</th><th>Significado</th><th>Palavra completa</th></tr></thead>
       <tbody>${gap.items.map(w => `<tr>
@@ -437,9 +437,9 @@ function stage4({ L, name, rand, bdg }) {
   }).join('');
 
   const finalEx = L.finalForm ? `
-    <h2>Atividade 5 — a forma final</h2>
+    <h2>Atividade 5 - a forma final</h2>
     <p>${mixed(['A letra ', H(L.letter), ' muda de forma no fim da palavra: vira ', H(L.finalForm),
-        '. É a mesma letra e o mesmo som — só o desenho muda. Circule apenas as formas finais:'])}</p>
+        '. É a mesma letra e o mesmo som - só o desenho muda. Circule apenas as formas finais:'])}</p>
     <p class="ex-task">${heList(
       shuffled([L.finalForm, L.letter, L.letter, L.finalForm, L.letter, L.finalForm], rand),
       { size: 'word' })}</p>` : '';
@@ -448,10 +448,10 @@ function stage4({ L, name, rand, bdg }) {
     ${bdg(4, true)}
     <h1>Praticando a leitura</h1>
 
-    <h2>Atividade 3 — complete</h2>
+    <h2>Atividade 3 - complete</h2>
     ${a3}
 
-    <h2>Atividade 4 — encontre a letra diferente</h2>
+    <h2>Atividade 4 - encontre a letra diferente</h2>
     <p>Em cada linha, uma letra é diferente das outras. Circule-a.</p>
     <div class="find-grid">${a4}</div>
 
@@ -475,16 +475,16 @@ function stage5({ L, name, rand, canRead, bdg }) {
 
   const a = `
     ${bdg(5)}
-    <h1>Fixação — revisão completa</h1>
+    <h1>Fixação - revisão completa</h1>
     <p class="lead">${mixed(['Revise tudo o que aprendeu sobre a letra ', H(L.letter), ` (${esc(name)}): leitura, escrita, reconhecimento e vocabulário.`])}</p>
 
-    <h2>Atividade 1 — complete</h2>
+    <h2>Atividade 1 - complete</h2>
     <table>
       <thead><tr><th>Incompleta</th><th>Significado</th><th>Complete</th></tr></thead>
       <tbody>${a1}</tbody>
     </table>
 
-    <h2>Atividade 2 — ligue significado e palavra</h2>
+    <h2>Atividade 2 - ligue significado e palavra</h2>
     <p>Trace uma linha ligando cada significado à sua palavra em hebraico.</p>
     <div class="cols-2">
       <div>${recog.slice(0, 4).map(w =>
@@ -504,7 +504,7 @@ function stage5({ L, name, rand, canRead, bdg }) {
     ${bdg(5, true)}
     <h1>Escrita e ditado</h1>
 
-    <h2>Atividade 3 — escreva em hebraico cursivo</h2>
+    <h2>Atividade 3 - escreva em hebraico cursivo</h2>
     <table>
       <thead><tr><th>Leitura</th><th>Escreva em cursivo</th></tr></thead>
       <tbody>${a3}</tbody>
@@ -514,7 +514,7 @@ function stage5({ L, name, rand, canRead, bdg }) {
     <p>Peça a alguém para ler as palavras em voz alta e escreva o que ouvir. Se estiver estudando sozinho, grave a si mesmo e escute depois.</p>
     <div class="dict-lines"><div>1.</div><div>2.</div><div>3.</div></div>
 
-    ${callout('note', '🌟', `<p><strong>Parabéns.</strong> Você concluiu o estudo da letra ${mixed([H(L.letter), ` (${esc(name)})`])} — continue praticando.</p>`)}`;
+    ${callout('note', '🌟', `<p><strong>Parabéns.</strong> Você concluiu o estudo da letra ${mixed([H(L.letter), ` (${esc(name)})`])} - continue praticando.</p>`)}`;
 
   return [a, b];
 }

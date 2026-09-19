@@ -1,7 +1,7 @@
 /* O exame final.
  * ─────────────────────────────────────────────────────────────────────────
- * Not a longer quiz. An exam has to answer a question a quiz cannot — "can
- * this person read Hebrew?" — and that question has parts, because reading is
+ * Not a longer quiz. An exam has to answer a question a quiz cannot - "can
+ * this person read Hebrew?" - and that question has parts, because reading is
  * several skills stacked and a learner can be strong in three of them and
  * still not read.
  *
@@ -13,7 +13,7 @@
  * Three rules it inherits from the rest of the engine and one of its own:
  *   · every item is generated, so the order rule holds here as everywhere;
  *   · nothing needing a recording appears before the recording exists;
- *   · nothing new is taught — an exam that introduces material is a lesson;
+ *   · nothing new is taught - an exam that introduces material is a lesson;
  *   · and each attempt is a DIFFERENT exam. Retries are free and unlimited in
  *     this course, so the seed moves with the attempt: a learner who repeats
  *     it is answering new questions, not remembering the last set.
@@ -51,7 +51,7 @@ export const EXAM_PARTS: ExamPart[] = [
   },
   {
     id: 'sinais', titlePt: 'Os sinais de vogal', skill: 'som', count: 5, practiceMode: 'vogais',
-    descPt: 'Que som cada sinal faz — independente da consoante em que ele está.'
+    descPt: 'Que som cada sinal faz - independente da consoante em que ele está.'
   },
   {
     id: 'silabas', titlePt: 'Sílabas', skill: 'ler', count: 5, practiceMode: 'silabas',
@@ -99,7 +99,7 @@ export function partsFor(audioAvailable: boolean): ExamPart[] {
  *
  * `attempt` seeds it, so the second sitting is a different exam. `letters` is
  * the whole alphabet by the time anyone reaches this, but it is still passed
- * in rather than imported — the engine never decides for itself what a learner
+ * in rather than imported - the engine never decides for itself what a learner
  * has met.
  */
 export function buildExam(
@@ -168,7 +168,7 @@ export function examReport(results: PartResult[]): ExamReport {
  * Three bands, and the failing one is written carefully.
  *
  * "Reprovado" is a word that ends courses. What a learner who scored 60% needs
- * to hear is which part was weak and that the exam is free to retake — both of
+ * to hear is which part was weak and that the exam is free to retake - both of
  * which are true, and neither of which is a consolation prize.
  */
 function band(score: number, weakCount: number): { titlePt: string; bodyPt: string } {
@@ -181,15 +181,15 @@ function band(score: number, weakCount: number): { titlePt: string; bodyPt: stri
   }
   if (score >= EXAM_PASS) {
     return {
-      titlePt: 'Aprovado — e dá para ver onde apertar.',
+      titlePt: 'Aprovado - e dá para ver onde apertar.',
       bodyPt: weakCount
         ? 'Você lê. Uma parte ficou abaixo do resto, e ela está marcada aqui embaixo ' +
           'com o link para treinar exatamente isso.'
-        : 'Você lê, e de forma equilibrada — nenhuma parte ficou para trás.'
+        : 'Você lê, e de forma equilibrada - nenhuma parte ficou para trás.'
     };
   }
   return {
-    titlePt: 'Ainda não — e isso é informação, não veredito.',
+    titlePt: 'Ainda não - e isso é informação, não veredito.',
     bodyPt: 'O exame não tem limite de tentativas e não custa nada. Abaixo está ' +
       'exatamente qual parte derrubou a nota e onde treinar. Volte quando quiser: ' +
       'quase sempre é uma parte só.'

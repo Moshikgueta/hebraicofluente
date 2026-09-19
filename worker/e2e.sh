@@ -3,7 +3,7 @@
 # ──────────────────────────────────────────────────────────────────────────
 # O que ela cobre é o que não pode estar errado: quem entra, quem é barrado,
 # quanto é cobrado e o que acontece quando o acesso vence. O que ela NÃO cobre
-# é a Mercado Pago de verdade — com um token falso, criar um pedido tem de
+# é a Mercado Pago de verdade - com um token falso, criar um pedido tem de
 # falhar limpo (502) e deixar o pedido registrado, e é isso que o passo C
 # verifica.
 #
@@ -18,7 +18,7 @@
 #
 # ⚠ Não use `curl -o /dev/stdout` neste arquivo. Quando a saída do script está
 # redirecionada para um arquivo, /dev/stdout É esse arquivo, e o curl o abre
-# truncando — cada chamada apagaria tudo que veio antes. Levou uma execução
+# truncando - cada chamada apagaria tudo que veio antes. Levou uma execução
 # inteira para descobrir isso.
 
 set -u
@@ -26,7 +26,7 @@ B="${HF_BASE:-http://127.0.0.1:8787}"
 JAR="$(mktemp)"
 # Domínio .invalid (RFC 2606): reservado, jamais resolve, ninguém consegue
 # receber e-mail nele. Isso importa porque a limpeza automática no fim da
-# publicação apaga por PADRÃO de endereço — e um padrão que pudesse casar com
+# publicação apaga por PADRÃO de endereço - e um padrão que pudesse casar com
 # o e-mail de um aluno de verdade seria uma forma criativa de apagar cliente.
 MAIL="hf-e2e-$RANDOM@example.invalid"
 fails=0
@@ -38,7 +38,7 @@ espera() {
   if [ "$2" = "$3" ]; then
     printf '  ✓ %s\n' "$1"
   else
-    printf '  ✗ %s — esperava %s, veio %s\n' "$1" "$2" "$3"
+    printf '  ✗ %s - esperava %s, veio %s\n' "$1" "$2" "$3"
     fails=$((fails + 1))
   fi
 }
@@ -48,7 +48,7 @@ location() { G -o /dev/null -D - -H 'Sec-Fetch-Dest: document' "$@" \
                | grep -i '^location:' | sed 's/^[Ll]ocation: *//' | tr -d '\r'; }
 
 # Primeiro a saúde. Sem isto, uma publicação sem banco ou sem SESSION_SECRET
-# produz nove falhas idênticas — todas "veio 500" — e nenhuma delas diz qual
+# produz nove falhas idênticas - todas "veio 500" - e nenhuma delas diz qual
 # das três peças está faltando. Com isto, a causa aparece na primeira linha.
 echo "Saúde"
 HEALTH="$(G --max-time 15 "$B/api/health")"
@@ -57,7 +57,7 @@ espera "ligação com o banco (D1)"      true "$(campo db)"
 espera "tabelas criadas (schema.sql)"  true "$(campo schema)"
 espera "SESSION_SECRET definido"       true "$(campo session)"
 if [ "$(campo payments)" != "true" ]; then
-  echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) — o site funciona assim"
+  echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) - o site funciona assim"
 fi
 if [ "$(campo ok)" != "true" ]; then
   echo
@@ -72,7 +72,7 @@ fi
 # consegue ver o curso não compra o curso.
 #
 # `code` não segue redirecionamento de propósito: 200 aqui significa "a página
-# abriu", e um 302 — mesmo que fosse para algum lugar bonito — é exatamente a
+# abriu", e um 302 - mesmo que fosse para algum lugar bonito - é exatamente a
 # falha que este bloco existe para pegar.
 echo "Site público, sem conta"
 for p in "/" "/metodo/" "/cursos/" "/cursos/alfabetizacao/" "/cursos/hebraico-a1/" \
@@ -81,7 +81,7 @@ for p in "/" "/metodo/" "/cursos/" "/cursos/alfabetizacao/" "/cursos/hebraico-a1
 done
 
 # Status 200 não prova que a página aparece. Um HTML vazio, um bundle que
-# some ou uma folha de estilo 404 devolvem 200 e mostram uma tela branca — que
+# some ou uma folha de estilo 404 devolvem 200 e mostram uma tela branca - que
 # do lado de quem abre é indistinguível de "o site não funciona". Estas três
 # checagens olham o CONTEÚDO.
 echo "A capa aparece de verdade"
@@ -92,7 +92,7 @@ espera "traz o texto da capa" true \
   "$(printf '%s' "$HOME_HTML" | grep -q 'olha para o hebraico' && echo true || echo false)"
 
 # O primeiro script do Next referenciado pela capa. Se ele não vier, o
-# navegador mostra o texto mas nada funciona — e um erro de caminho de
+# navegador mostra o texto mas nada funciona - e um erro de caminho de
 # ativos aparece exatamente assim.
 ASSET="$(printf '%s' "$HOME_HTML" | grep -oE '/_next/static/[^"]+\.js' | head -1)"
 if [ -n "$ASSET" ]; then
@@ -136,7 +136,7 @@ echo "Cobrança"
 #     comportamento certo: um pendente que nunca vai compensar é pior do que
 #     uma recusa clara.
 #
-# O que seria erro é qualquer outra coisa — e é isso que o `case` separa.
+# O que seria erro é qualquer outra coisa - e é isso que o `case` separa.
 pay_code=$(G -b "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
   -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')
 case "$pay_code" in
@@ -167,7 +167,7 @@ rm -f "$JAR"
 # Contra produção, a passagem deixa rastro: uma conta de teste e, se o
 # pagamento estiver ligado, um pedido. Nada disso é bonito num banco de
 # verdade, então o script entrega a limpeza pronta em vez de deixar para quem
-# lembrar depois — que é ninguém.
+# lembrar depois - que é ninguém.
 if [ "$B" != "http://127.0.0.1:8787" ]; then
   cat <<LIMPEZA
 

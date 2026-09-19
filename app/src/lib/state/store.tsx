@@ -33,7 +33,7 @@ function createStore(): ProgressStore {
 type Ctx = {
   state: LearnerState;
   ready: boolean;
-  /** False in a private window with storage blocked — the UI says so. */
+  /** False in a private window with storage blocked - the UI says so. */
   persistent: boolean;
   day: string;
   /* derived */
@@ -55,7 +55,7 @@ type Ctx = {
   finishStage: (letterId: string, stage: number, units?: number) => void;
   /**
    * One answer, with everything the adaptive layer needs to learn from it:
-   * which skill it tested, and — on a miss — which wrong option was chosen, so
+   * which skill it tested, and - on a miss - which wrong option was chosen, so
    * ד answered for ר is recorded as that pair rather than as a generic slip.
    */
   answer: (args: {
@@ -65,10 +65,10 @@ type Ctx = {
   /** Record a moment that can only happen once, and say so. */
   markFirst: (id: string) => void;
   /**
-   * A traced or freehand attempt at a letter, scored 0–1 by the canvas.
+   * A traced or freehand attempt at a letter, scored 0-1 by the canvas.
    *
    * Writing is the one skill with no question to answer, so it needs its own
-   * door into the model — without it `escrever` would stay permanently 'novo'
+   * door into the model - without it `escrever` would stay permanently 'novo'
    * and the dashboard would keep claiming a letter is strong that the learner
    * cannot actually produce.
    */
@@ -177,7 +177,7 @@ export function ProgressProvider({
        is not a pen on paper, and a learner told their readable ג is wrong stops
        trusting the whole app. The canvas is generous; this agrees with it. */
     let next = recordSkill(state, letterId, 'escrever', score >= 0.5, d);
-    /* Writing is practice even when it comes out badly — more so, in fact. */
+    /* Writing is practice even when it comes out badly - more so, in fact. */
     next = applyPractice(next, d, { units: ANSWER_UNITS });
     commit(next);
     track('exercise_answered', { letterId, skill: 'escrever', correct: score >= 0.5 });

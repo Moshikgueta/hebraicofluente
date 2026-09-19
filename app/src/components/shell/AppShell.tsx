@@ -3,12 +3,12 @@
 /* The shell, in two shapes.
  * ─────────────────────────────────────────────────────────────────────────
  * Below 1024px the course is a single column with a bottom bar under the
- * thumb — the phone is where most of the studying happens, and that layout is
+ * thumb - the phone is where most of the studying happens, and that layout is
  * not a compromise.
  *
  * At 1024px and up it becomes a desk: a persistent sidebar carrying navigation
  * AND standing progress, and a content area wide enough to put things side by
- * side. That is the real argument for a desktop version — not more pixels for
+ * side. That is the real argument for a desktop version - not more pixels for
  * the same column, but more of the course visible at once. On a phone the
  * question is "what now?"; at a desk it is "where am I in this?", and the
  * sidebar answers that without a click.
@@ -48,7 +48,7 @@ const NAV = [
  * Is this nav item the page we are on?
  *
  * The export uses directory-style URLs (`trailingSlash: true`), so the browser
- * reports `/mapa/` while the link says `/mapa` — and a plain equality check
+ * reports `/mapa/` while the link says `/mapa` - and a plain equality check
  * therefore matched nothing but the home page. Every screen except the
  * dashboard was rendering with no item marked current, in the sidebar and in
  * the bottom bar, and with no `aria-current` for a screen reader either.
@@ -178,7 +178,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
             <dl className="grid grid-cols-2 gap-x-3 gap-y-3">
               {([
                 ['Letras', `${p.mastered}/${course.totalLetters}`],
-                ['Sequência', p.streak === 0 ? '—' : `${p.streak} d`],
+                ['Sequência', p.streak === 0 ? '-' : `${p.streak} d`],
                 ['XP', p.state.xp.toLocaleString('pt-BR')],
                 ['Conquistas', `${p.state.achievements.length}/${ACHIEVEMENTS.length}`]
               ] as const).map(([k, v]) => (
@@ -192,7 +192,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
         )}
 
         <p className="font-ui text-[11.5px] leading-relaxed text-ink-muted px-1">
-          Nos exercícios, <Key>1</Key>–<Key>4</Key> respondem e <Key>Enter</Key> avança.
+          Nos exercícios, <Key>1</Key>-<Key>4</Key> respondem e <Key>Enter</Key> avança.
         </p>
       </div>
     </aside>
@@ -203,7 +203,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
  *
  * Uma inicial num círculo, e não um ícone genérico: é o único lugar da
  * plataforma que confirma, de relance, EM QUAL CONTA a pessoa está. Numa
- * casa com login isso não é enfeite — é a resposta para "será que comprei com
+ * casa com login isso não é enfeite - é a resposta para "será que comprei com
  * outro e-mail?", que é a dúvida que gera metade dos pedidos de suporte. */
 function ProfileLink() {
   const account = useAccount();
@@ -285,7 +285,7 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
 
   return (
     /* Under the header, not above the bottom bar. Anchored low it landed on
-       top of the answer feedback and the Continuar button — the two things the
+       top of the answer feedback and the Continuar button - the two things the
        learner is looking at when an achievement fires. */
     <div
       role="status"

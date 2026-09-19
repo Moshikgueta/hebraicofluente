@@ -4,7 +4,7 @@
  * an invented milestone: the units of the teaching plan hold three to six
  * letters each, and the review lands where the plan puts it.
  *
- * Passing is 70%. Failing is not a failure — it is a suggestion to revisit one
+ * Passing is 70%. Failing is not a failure - it is a suggestion to revisit one
  * or two letters, named specifically, and the retry is unlimited. */
 
 import { useMemo, useState } from 'react';
@@ -54,17 +54,17 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       <div className="focus-col grid gap-5">
         <Milestone
           kicker={`Checkpoint ${mod.n} · ${result.correct} de ${result.total}`}
-          title={passed ? `${pct}% — checkpoint concluído.` : `${pct}% — quase lá.`}
+          title={passed ? `${pct}% - checkpoint concluído.` : `${pct}% - quase lá.`}
           body={passed
             ? `Você agora conhece ${history.length} letras do alfabeto hebraico.`
-            : 'Faltou pouco. Vale rever as letras abaixo e refazer — sem pressa e sem penalidade.'}
+            : 'Faltou pouco. Vale rever as letras abaixo e refazer - sem pressa e sem penalidade.'}
         >
           <Button variant={passed ? 'secondary' : 'primary'} onClick={() => { setRun(n => n + 1); setResult(null); setPhase('running'); }}>
             Refazer
           </Button>
           {passed && nextModule && (
             <Button onClick={() => router.push(`/modulo/${nextModule.n}`)}>
-              Módulo {nextModule.n} — {nextModule.titlePt}
+              Módulo {nextModule.n} - {nextModule.titlePt}
             </Button>
           )}
           {passed && !nextModule && (
@@ -165,7 +165,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body">
           12 questões misturando reconhecimento, leitura, vocabulário e as formas
-          finais — só com letras que você já viu. Passa com 70%, e dá para refazer
+          finais - só com letras que você já viu. Passa com 70%, e dá para refazer
           quantas vezes quiser.
         </p>
         <div className="pt-1">

@@ -1,6 +1,6 @@
 /* O banco: todas as consultas num lugar só.
  * ─────────────────────────────────────────────────────────────────────────
- * Nenhum handler escreve SQL. Não é gosto por camada — é que duas dessas
+ * Nenhum handler escreve SQL. Não é gosto por camada - é que duas dessas
  * funções decidem quem tem acesso ao curso, e regra de acesso espalhada por
  * seis arquivos é regra que diverge.
  *
@@ -33,7 +33,7 @@ export async function createAccount(env, { email, name, hash, salt, iterations }
 }
 
 /** Regrava o hash da senha. Usado só pela re-hasheamento no login, quando o
- *  custo do PBKDF2 sobe — ver a nota em lib/crypto.js. */
+ *  custo do PBKDF2 sobe - ver a nota em lib/crypto.js. */
 export async function setPasswordHash(env, accountId, { hash, salt, iterations }) {
   await env.DB.prepare(
     'UPDATE accounts SET pass_hash = ?, pass_salt = ?, pass_iter = ? WHERE id = ?'
@@ -94,7 +94,7 @@ export async function grantAccess(env, { accountId, courseSlug, orderId, months 
   return until.getTime();
 }
 
-/** Usado por um estorno. Fecha a porta imediatamente — o cookie de sessão não
+/** Usado por um estorno. Fecha a porta imediatamente - o cookie de sessão não
  *  carrega direito nenhum, então não há atraso de sete dias. */
 export async function revokeAccess(env, accountId, courseSlug, why = '') {
   await env.DB.prepare(
@@ -120,7 +120,7 @@ export async function inviteCreate(env, { email, courseSlug, months, note }) {
 /**
  * Transforma em acesso todos os convites pendentes deste e-mail.
  *
- * Chamado no cadastro, e de novo no login — o segundo é a rede de segurança
+ * Chamado no cadastro, e de novo no login - o segundo é a rede de segurança
  * para quem já tinha conta quando o convite foi criado. As duas chamadas são
  * seguras de repetir: `used_at` faz o convite valer uma vez só.
  *
@@ -203,7 +203,7 @@ export function stalePendingOrders(env, { olderThanMs = 60_000, limit = 25 } = {
 /**
  * Grava o que o provedor disse e responde se ESTE aviso é novo.
  *
- * `false` significa "já processado" — a Mercado Pago reenvia o mesmo aviso por
+ * `false` significa "já processado" - a Mercado Pago reenvia o mesmo aviso por
  * desenho, e sem esta trava um pedido poderia liberar acesso duas vezes.
  */
 export async function recordEvent(env, { eventId, orderId, status, raw, source }) {
@@ -226,7 +226,7 @@ export async function recordEvent(env, { eventId, orderId, status, raw, source }
  * Verdadeiro quando a chave estourou o limite nesta janela de um minuto.
  *
  * Contagem simples, e de propósito: um freio exato exigiria coordenação, e o
- * que este precisa impedir é uma máquina tentando mil senhas — não um humano
+ * que este precisa impedir é uma máquina tentando mil senhas - não um humano
  * digitando errado três vezes.
  */
 export async function throttled(env, key, limit = 10) {

@@ -1,10 +1,10 @@
-# Hebraico Fluente — Alfabetização workbook generator
-## SPEC (STEP 1) — for approval
+# Hebraico Fluente - Alfabetização workbook generator
+## SPEC (STEP 1) - for approval
 
 > **Blocked item:** the reference PDF (letter Mem, 5 pages) never arrived in this
 > environment. `/mnt/attach` is empty and the only PDFs on disk are the Spanish project's
 > own chapter designs. Everything below that does **not** depend on seeing the PDF is
-> specified in full. §2 (design tokens) is deliberately left unfilled rather than invented —
+> specified in full. §2 (design tokens) is deliberately left unfilled rather than invented -
 > the brief says "Match the PDF, do not invent a new look", so I have not.
 > Please re-attach `mem.pdf` (or paste it anywhere under `/home/user/`).
 
@@ -20,7 +20,7 @@ hebraico-fluente/
 │   ├── nikud.json            the 6 vowel signs (Página 0 + appendix)
 │   └── reviews.json          the 6 review units' composition rules
 ├── templates/
-│   ├── letter/               p1.js … p5.js  — one per stage
+│   ├── letter/               p1.js … p5.js  - one per stage
 │   ├── page-0.js             Os sinais de vogal
 │   ├── review.js             parameterised by letter range
 │   ├── appendix.js
@@ -38,13 +38,13 @@ hebraico-fluente/
 │   ├── validate.js           fails the build (see §5)
 │   └── lib/
 │       ├── hebrew.js         normalise, strip-nikud, order-of-letter, final-form map
-│       └── render.js         `he()` — the ONLY way Hebrew reaches the page
+│       └── render.js         `he()` - the ONLY way Hebrew reaches the page
 ├── dist/                     generated, gitignored
 ├── README.md   PLAN.md   SPEC.md
 ```
 
 **Templates are plain JS template functions returning strings.** No framework, no runtime
-compiler, no client-side JS in the output at all — these are printable pages. `npm run
+compiler, no client-side JS in the output at all - these are printable pages. `npm run
 build` is `node scripts/build.js`, which runs `validate.js` first and exits non-zero on any
 violation.
 
@@ -55,7 +55,7 @@ change all 22 outputs.
 
 ---
 
-## 2. Design tokens — BLOCKED, awaiting the PDF
+## 2. Design tokens - BLOCKED, awaiting the PDF
 
 `styles/tokens.css` will be a flat `:root` block extracted from the reference, covering at
 minimum the items the brief names:
@@ -106,7 +106,7 @@ One object per letter. Types are strict; `validate.js` enforces them.
   "wordsToRead": [                // MUST contain only letters of order <= this.order
     { "he": "שֵׁם", "translit": "shem", "pt": "nome" }
   ],
-  "didYouKnow": "…",              // pt-BR, 1–3 sentences, "Você sabia?" box
+  "didYouKnow": "…",              // pt-BR, 1-3 sentences, "Você sabia?" box
   "brazilianMistake": {           // "Cuidado" box
     "wrong": "…",                 // what a pt-BR speaker typically does
     "right": "…",                 // the correction
@@ -121,16 +121,16 @@ One object per letter. Types are strict; `validate.js` enforces them.
 
 | # | Letter | id | Final | # | Letter | id | Final |
 |---|---|---|---|---|---|---|---|
-| 1 | מ | mem | **ם** | 12 | ק | qof | — |
-| 2 | ש | shin | — | 13 | ד | dalet | — |
-| 3 | ל | lamed | — | 14 | ח | het | — |
-| 4 | ב | bet | — | 15 | ס | samekh | — |
-| 5 | ת | tav | — | 16 | פ | pe | **ף** |
-| 6 | י | yod | — | 17 | ג | gimel | — |
-| 7 | ה | he | — | 18 | ע | ayin | — |
-| 8 | ו | vav | — | 19 | כ | kaf | **ך** |
-| 9 | ר | resh | — | 20 | ז | zayin | — |
-| 10 | א | alef | — | 21 | ט | tet | — |
+| 1 | מ | mem | **ם** | 12 | ק | qof | - |
+| 2 | ש | shin | - | 13 | ד | dalet | - |
+| 3 | ל | lamed | - | 14 | ח | het | - |
+| 4 | ב | bet | - | 15 | ס | samekh | - |
+| 5 | ת | tav | - | 16 | פ | pe | **ף** |
+| 6 | י | yod | - | 17 | ג | gimel | - |
+| 7 | ה | he | - | 18 | ע | ayin | - |
+| 8 | ו | vav | - | 19 | כ | kaf | **ך** |
+| 9 | ר | resh | - | 20 | ז | zayin | - |
+| 10 | א | alef | - | 21 | ט | tet | - |
 | 11 | נ | nun | **ן** | 22 | צ | tsadi | **ץ** |
 
 Five letters carry a final form → five dedicated final-form recognition exercises (brief
@@ -145,17 +145,17 @@ I traced the `wordsToRead` constraint forward against this exact sequence:
   syllable-level reading and writing. This is a template requirement, not an authoring gap.
 - Letter 2 (ש) → **שָׁם** ("lá"). First real word.
 - Letter 3 (ל) → **שֶׁל** ("de"), **מָשָׁל** ("parábola").
-- Letter 4 (ב) → **לֵב** ("coração"), **בֹּשֶׂם** ("perfume") — and **review unit 1** lands here.
+- Letter 4 (ב) → **לֵב** ("coração"), **בֹּשֶׂם** ("perfume") - and **review unit 1** lands here.
 - Letter 5 (ת) → **שַׁבָּת**. Letter 6 (י) → **בַּיִת** ("casa"), **יָם** ("mar").
 - Letter 7 (ה) → **מַה**. Letter 8 (ו) → **שָׁלוֹם**, exactly at **review unit 2**.
 
-The order you gave is well constructed — high-frequency words unlock early and שלום lands
+The order you gave is well constructed - high-frequency words unlock early and שלום lands
 on a review boundary. I am not proposing changes. I am flagging that **letter 1 is
 structurally special** and the template must handle an empty `wordsToRead` without breaking.
 
 ---
 
-## 4. `data/translit.json` — single source of truth (brief §3.6)
+## 4. `data/translit.json` - single source of truth (brief §3.6)
 
 Two layers, because a per-word table alone will drift:
 
@@ -180,12 +180,12 @@ transliteration is ever typed into `letters.json` free-hand except as a `words` 
 Decision needed from you: accent marks. Portuguese readers read stress from accents, so
 `báyit`/`shalóm` is more useful than `bayit`/`shalom`, but it is less conventional. My
 recommendation: **mark stress with a Portuguese acute only when the stress is not final**,
-since Hebrew default stress is final (milra) — so `shalom`, `máyim`, `bóker`. Say the word
+since Hebrew default stress is final (milra) - so `shalom`, `máyim`, `bóker`. Say the word
 and I will fix the rule before any content is generated.
 
 ---
 
-## 5. `scripts/validate.js` — the build gate
+## 5. `scripts/validate.js` - the build gate
 
 Ordered, all run, all failures reported together, exit 1 on any.
 
@@ -198,11 +198,11 @@ Ordered, all run, all failures reported together, exit 1 on any.
 | V5 | `finalForm` is non-null exactly for מ נ כ פ צ and matches the correct codepoint | fail |
 | V6 | `syllables` has exactly 6 entries, vowels `a e i o u sheva` in that order, each `he` starts with this letter | fail |
 | V7 | Every `confusableWith` entry is a real Hebrew letter or final form | fail |
-| V8 | No Hebrew appears in output outside a `he()` call — checked by scanning `dist/*.html` for Hebrew codepoints not inside `<span class="he"` (§6) | fail |
+| V8 | No Hebrew appears in output outside a `he()` call - checked by scanning `dist/*.html` for Hebrew codepoints not inside `<span class="he"` (§6) | fail |
 | V9 | No Hebrew-adjacent `( ) : / , .` inside a `.he` span (brief §3.1) | fail |
 | V10 | Review unit N's content draws only from letters of `order <= 4N` | fail |
-| V11 | Stroke-order SVG missing for a letter | **warn** — build continues, page shows "em breve" (brief §4) |
-| V12 | `wordsToRead` empty | **warn** — expected for letter 1, template degrades |
+| V11 | Stroke-order SVG missing for a letter | **warn** - build continues, page shows "em breve" (brief §4) |
+| V12 | `wordsToRead` empty | **warn** - expected for letter 1, template degrades |
 
 `npm run build` reports: `✓ 30 modules, 0 violations, 2 warnings` or the full failure list.
 
@@ -236,11 +236,11 @@ Enforced rules, all machine-checked (V8, V9):
    surrounding pt-BR layout stays LTR.
 4. **Never rely on the browser guessing.** No content is emitted without an explicit
    direction decision made by the generator.
-5. `U+200E/U+200F/U+061C` are stripped from all input data at load — invisible marks pasted
+5. `U+200E/U+200F/U+061C` are stripped from all input data at load - invisible marks pasted
    from a word processor are a classic source of irreproducible bidi bugs.
 
 The brief's §3.3 wording correction is a content constant, not per-page:
-> *"O hebraico tem 22 letras. Todas são consoantes — mas quatro delas (א ה ו י) também
+> *"O hebraico tem 22 letras. Todas são consoantes - mas quatro delas (א ה ו י) também
 > funcionam como apoio de vogal."*
 
 ---
@@ -261,18 +261,18 @@ Three states generated in CSS from **the same character**, no images:
 `mask-image` are not guaranteed in print in every engine. The build will render the tracing
 row at A4 through headless Chromium and assert visible stroke output; if it fails I will
 fall back to a generated per-letter outline SVG (extracted from the font with `fontTools`,
-which is already available here) — same data, no hand drawing.
+which is already available here) - same data, no hand drawing.
 
 **Stroke order:** `assets/stroke-order/<id>.svg`, 22 empty placeholders with a documented
 viewBox and numbering convention so you can draw them later without touching templates. The
-build must not break when one is missing — it shows the model letter and an "em breve" note
+build must not break when one is missing - it shows the model letter and an "em breve" note
 (V11 warns).
 
-### Fonts — verified, not assumed
+### Fonts - verified, not assumed
 
 I inspected the actual binaries with `fontTools` rather than trusting descriptions:
 
-| Font | Source | Licence | Hebrew block | **Nikud** (U+0591–05C7) | Finals | GPOS | GSUB |
+| Font | Source | Licence | Hebrew block | **Nikud** (U+0591-05C7) | Finals | GPOS | GSUB |
 |---|---|---|---|---|---|---|---|
 | **Frank Ruhl Libre** | `@fontsource/frank-ruhl-libre` | OFL-1.1 | 53 | **21 ✓** | 5/5 | `kern` **`mark` `mkmk`** | **`ccmp` ✓** |
 | Assistant | `@fontsource/assistant` | OFL-1.1 | 49 | 20 ✓ | 5/5 | `kern` `mark` `mkmk` | *(none)* |
@@ -284,15 +284,15 @@ Conclusions:
   with `ccmp`, which is what composes shin + shin-dot + dagesh (שּׁ) and hataf vowels
   correctly. Assistant lacks `ccmp` and must never carry nikud.
 - **`--font-he-cursive` = Gveret Levin AlefAlefAlef**, OFL-1.1, self-hostable from npm,
-  with the full nikud repertoire and all five finals — which is rare and is why I checked.
+  with the full nikud repertoire and all five finals - which is rare and is why I checked.
   **Two caveats you should decide on:** it has `mark` but **no `mkmk`**, so two stacked
   marks (dagesh + shin-dot) may collide slightly; and I cannot render it here, so **whether
   its hand matches Israeli school cursive (כתב מחובר) is a judgement only your eye can
-  make.** I will produce a one-page font proof as the first artefact of STEP 4 — all 22
-  letters, 5 finals, and the worst-case nikud stacks at 14px/48px/96px — for you to approve
+  make.** I will produce a one-page font proof as the first artefact of STEP 4 - all 22
+  letters, 5 finals, and the worst-case nikud stacks at 14px/48px/96px - for you to approve
   or reject before anything is generated with it.
 - Alternatives if you reject it: the **Culmus** faces (Ellinia CLM / Caladings CLM, GPL
-  with font exception — needs manual sourcing, this environment's egress blocks
+  with font exception - needs manual sourcing, this environment's egress blocks
   fonts.google.com but npm is reachable), or a commercial cursive you license and drop in.
 - **Nikud clips at tight leading.** Points descend below the baseline; any box holding
   pointed Hebrew gets `line-height: 1.65` minimum and never `overflow: hidden`. The test
@@ -304,12 +304,12 @@ Conclusions:
 
 | Module | Files | Print pages |
 |---|---|---|
-| Página 0 — Os sinais de vogal (brief §3.2, by **sound** not name) | 1 | 1–2 |
+| Página 0 - Os sinais de vogal (brief §3.2, by **sound** not name) | 1 | 1-2 |
 | 22 letter modules × 5 stages (P1 conhecer/sílabas · P2 palavras+leitura · P3 escrever 3A/3B/3C · P4 praticando 4 atividades · P5 fixação+ditado) | 22 | 110 |
-| Review units after letters 4, 8, 12, 16, 20 — cumulative, all letters so far | 5 | 10–15 |
-| Final cumulative review (all 22) | 1 | 3–4 |
-| Appendix — alphabet table · **nikud names** · transliteration key · cursive chart | 1 | 4–6 |
-| `dist/index.html` | 1 | — |
+| Review units after letters 4, 8, 12, 16, 20 - cumulative, all letters so far | 5 | 10-15 |
+| Final cumulative review (all 22) | 1 | 3-4 |
+| Appendix - alphabet table · **nikud names** · transliteration key · cursive chart | 1 | 4-6 |
+| `dist/index.html` | 1 | - |
 | **Total** | **31 HTML files** | **≈ 130 A4 pages** |
 
 Print CSS: A4 portrait, `@page { size: A4; margin: 0 }` with the visual margin on the
@@ -330,9 +330,9 @@ immediate use. No childish framing, no academic register, no "vamos aprender jun
 
 1. **The Mem PDF.** Blocks §2 entirely, and I will not generate a page for side-by-side
    comparison without it.
-2. **Transliteration stress rule** (§4) — acute accents on non-final stress, or none?
-3. **Cursive font** (§7) — proceed on Gveret Levin subject to your approval of a font proof,
+2. **Transliteration stress rule** (§4) - acute accents on non-final stress, or none?
+3. **Cursive font** (§7) - proceed on Gveret Levin subject to your approval of a font proof,
    or do you have a licensed cursive you want used?
 
 Once the PDF lands I will deliver `styles/tokens.css` with each token's derivation, then
-stop again for your approval before writing any letter data — as the brief requires.
+stop again for your approval before writing any letter data - as the brief requires.

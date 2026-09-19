@@ -1,10 +1,10 @@
-/* check-fit.mjs — does every sheet fit on one A4 page?
+/* check-fit.mjs - does every sheet fit on one A4 page?
  *
  *   npm run check-fit            # all modules
  *   npm run check-fit -- 01-mem  # one module
  *
  * The workbook's contract is one stage, one sheet, one printed page. That only
- * holds if the content actually fits, and "looks about right" is not a check —
+ * holds if the content actually fits, and "looks about right" is not a check -
  * a sheet that overflows by 3mm silently becomes two pages, the folio stops
  * matching the real page, and the contents page starts lying.
  *
@@ -65,7 +65,7 @@ async function main() {
     .filter(f => !only || f.startsWith(only.replace(/\.html$/, '')))
     .sort();
 
-  if (!files.length) { console.error('nada para medir — rode `npm run build`'); process.exit(1); }
+  if (!files.length) { console.error('nada para medir - rode `npm run build`'); process.exit(1); }
 
   const srv = await serve();
   const browser = await (await chromium()).launch();
@@ -108,7 +108,7 @@ async function main() {
      them means the splits are in the wrong places and the book is longer than
      it needs to be. */
   const buckets = [[0, .4], [.4, .6], [.6, .8], [.8, 1.001], [1.001, 99]];
-  const names = ['< 40% cheia', '40–60%', '60–80%', '80–100%', 'estoura'];
+  const names = ['< 40% cheia', '40-60%', '60-80%', '80-100%', 'estoura'];
   console.log('  distribuição de ocupação:');
   buckets.forEach((b, i) => {
     const n = all.filter(r => r.fill >= b[0] && r.fill < b[1]).length;

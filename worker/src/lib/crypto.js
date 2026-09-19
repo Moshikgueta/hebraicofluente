@@ -10,7 +10,7 @@
  *
  * 2. `fakeVerify` queima o mesmo trabalho quando a conta não existe. Sem isso,
  *    o tempo de resposta responde "esse e-mail é cliente?" para qualquer um
- *    com um formulário e paciência — e a mensagem de erro cuidadosamente
+ *    com um formulário e paciência - e a mensagem de erro cuidadosamente
  *    genérica não adianta nada.
  *
  * 3. Toda assinatura HMAC leva um PREFIXO de domínio ('sess:', 'mp:'). Sem
@@ -32,7 +32,7 @@ const enc = new TextEncoder();
  *      50.000 →  8,6 ms
  *
  * Ou seja: qualquer coisa acima de ~50.000 é morta no meio do cálculo, e a
- * rota devolve 500. Foi exatamente o que aconteceu na primeira publicação —
+ * rota devolve 500. Foi exatamente o que aconteceu na primeira publicação -
  * tudo que calculava hash falhava, tudo que não calculava funcionava. (O
  * `wrangler dev` local não aplica esse limite, então o erro só aparece em
  * produção, que é a pior hora para aparecer.)

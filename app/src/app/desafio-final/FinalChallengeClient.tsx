@@ -5,12 +5,12 @@
  * Five parts, six once there are recordings, each scored on its own. A single
  * percentage cannot answer "can this person read Hebrew?", because reading is
  * several skills stacked and a learner can be strong in three of them and
- * still not read — so the report says WHICH part was weak and links straight
+ * still not read - so the report says WHICH part was weak and links straight
  * to the drill for it.
  *
  * It is gated by real progress rather than by a paywall: it only makes sense
  * with the whole alphabet in hand, and it says so. Retries are unlimited, free,
- * and generate a DIFFERENT exam each time — remembering last week's answers is
+ * and generate a DIFFERENT exam each time - remembering last week's answers is
  * not the skill being examined.
  *
  * Passing is what issues the certificate, which is why the date of the first
@@ -179,7 +179,7 @@ export function FinalChallengeClient() {
               Seu certificado está pronto.
             </h2>
             <p className="text-[15px] leading-relaxed text-ink-body">
-              Com o seu nome, a data e as 22 letras — para baixar ou postar.
+              Com o seu nome, a data e as 22 letras - para baixar ou postar.
             </p>
             <div className="flex flex-wrap gap-3 pt-1">
               <LinkButton href="/certificado" size="lg">Ver o certificado</LinkButton>
@@ -190,7 +190,7 @@ export function FinalChallengeClient() {
           <Card className="p-6 grid gap-3">
             <p className="text-[15px] leading-relaxed text-ink-body">
               O certificado sai a partir de {Math.round(EXAM_PASS * 100)}%. Faltaram{' '}
-              {Math.max(1, Math.ceil(report.total * EXAM_PASS) - report.correct)} questões —
+              {Math.max(1, Math.ceil(report.total * EXAM_PASS) - report.correct)} questões -
               e a próxima tentativa é um exame novo, não o mesmo.
             </p>
             <Button onClick={restart} className="justify-self-start">Refazer o exame</Button>
@@ -220,7 +220,7 @@ export function FinalChallengeClient() {
         </h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[52ch]">
           {parts.reduce((n, x) => n + x.count, 0)} questões em {parts.length} partes, com as
-          22 letras e sem transliteração. Cada parte tem a sua própria nota — no fim
+          22 letras e sem transliteração. Cada parte tem a sua própria nota - no fim
           você vê exatamente o que está firme e o que não está.
         </p>
       </header>
@@ -299,7 +299,7 @@ export function FinalChallengeClient() {
         <Card tone="amber" className="p-5 grid gap-3">
           <p className="text-[15px] leading-relaxed text-ink-body">
             Faltam {course.totalLetters - ready.length} letras. O exame só faz sentido
-            com o alfabeto inteiro — e ele fica aqui esperando, sem prazo.
+            com o alfabeto inteiro - e ele fica aqui esperando, sem prazo.
           </p>
           <LinkButton href="/mapa" variant="secondary" className="justify-self-start">
             Voltar ao mapa

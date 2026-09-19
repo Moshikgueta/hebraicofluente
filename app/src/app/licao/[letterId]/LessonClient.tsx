@@ -2,16 +2,16 @@
 
 /* The lesson: one template, 22 letters, five stages.
  *
- * The five stages are the workbook's own P1–P5, in the same order and for the
+ * The five stages are the workbook's own P1-P5, in the same order and for the
  * same reasons. What changes on screen is the medium, not the sequence:
- *   1 conhecer   — the letter, its sound, its syllables
- *   2 palavras   — vocabulary, discovered rather than listed
- *   3 escrever   — model, stroke order, tracing
- *   4 praticar   — mixed recognition and reading
- *   5 fixação    — the quiz that closes the letter
+ *   1 conhecer   - the letter, its sound, its syllables
+ *   2 palavras   - vocabulary, discovered rather than listed
+ *   3 escrever   - model, stroke order, tracing
+ *   4 praticar   - mixed recognition and reading
+ *   5 fixação    - the quiz that closes the letter
  *
  * A stage is marked done when the learner reaches its end, and XP is awarded
- * there — never on navigation. */
+ * there - never on navigation. */
 
 import { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -117,7 +117,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
           }}
           nextLabel={
             moduleFinished && mod?.checkpoint ? `Ir para o Checkpoint ${mod.n}`
-              : after ? `Próxima letra — ${after.namePt}` : 'Voltar ao mapa'
+              : after ? `Próxima letra - ${after.namePt}` : 'Voltar ao mapa'
           }
         />
       )}
@@ -150,7 +150,7 @@ function LessonHeader({
                 type="button"
                 onClick={() => onStage(s.n)}
                 aria-current={isNow ? 'step' : undefined}
-                aria-label={`Etapa ${s.n} de 5 — ${s.label}`}
+                aria-label={`Etapa ${s.n} de 5 - ${s.label}`}
                 className="w-full min-h-[44px] grid content-center gap-1.5 group"
               >
                 <span
@@ -185,7 +185,7 @@ function StageConhecer({
           <p className="text-[16px] leading-relaxed text-ink-body">
             Você vai conseguir reconhecer, pronunciar, ler e escrever{' '}
             <He size="inline">{letter.letter}</He>
-            {letter.finalForm && <> — e a sua forma final, <He size="inline">{letter.finalForm}</He></>}.
+            {letter.finalForm && <> - e a sua forma final, <He size="inline">{letter.finalForm}</He></>}.
           </p>
         </div>
       </Card>
@@ -210,7 +210,7 @@ function StageConhecer({
       </Card>
 
       {/* The same five vowels on the letters already learned. Seeing the column
-          is what turns "מַ se lê ma" into "o patach faz a" — the generalisation
+          is what turns "מַ se lê ma" into "o patach faz a" - the generalisation
           the course depends on and used to leave the learner to make alone. */}
       {history.length > 1 && (
         <SoundLab
@@ -248,7 +248,7 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
           <p className="text-[15px] leading-relaxed text-ink-body">
             Com {letter.alphabetSoFar.filter(c => c.length === 1).length === 2 ? 'uma consoante só' : 'as poucas letras que você tem até aqui'},
             nenhuma combinação fecha uma palavra de verdade. Isso muda já na próxima
-            letra — e não volta a acontecer. Por enquanto, leia as sílabas.
+            letra - e não volta a acontecer. Por enquanto, leia as sílabas.
           </p>
           <div className="pt-2">
             <HeSeq items={letter.syllables.map(s => s.he)} size="word" />
@@ -266,7 +266,7 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
       )}
 
       {/* Only the scenes this letter unlocks, and only ones the learner can
-          decode — a sign you cannot read is not a reward. Most letters have
+          decode - a sign you cannot read is not a reward. Most letters have
           none, which is what keeps the ones that do feeling earned.
 
           One at a time: vav unlocks three at once, and three stacked sign
@@ -300,7 +300,7 @@ function Scenes({ letter }: { letter: Letter }) {
 }
 
 /* Three at a time.
-   A letter with nine words made stage 2 a 4,400px scroll on a phone — five
+   A letter with nine words made stage 2 a 4,400px scroll on a phone - five
    screens of the same card, which is where a learner starts swiping instead of
    reading. Three is about one screen: enough to work on, short enough to
    finish, and the rest is one tap away for whoever wants it. */
@@ -358,7 +358,7 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
         <WritingCanvas
           glyph={letter.finalForm}
           letterId={`${letter.id}-final`}
-          label={`${letter.namePt} — forma final`}
+          label={`${letter.namePt} - forma final`}
           onScored={score => p.recordWriting(letter.id, score)}
         />
       )}
@@ -396,7 +396,7 @@ function StagePraticar({
   ) : (
     <ExercisePlayer
       exercises={exercises}
-      title="Prática — sem nota"
+      title="Prática - sem nota"
       onDone={() => setFinished(true)}
     />
   );
@@ -442,7 +442,7 @@ function StageFixacao({
   return (
     <ExercisePlayer
       exercises={exercises}
-      title={`Fixação — letra ${letter.namePt}`}
+      title={`Fixação - letra ${letter.namePt}`}
       onDone={r => { track('quiz_completed', { letterId: letter.id, score: r.score }); onResult(r); }}
     />
   );

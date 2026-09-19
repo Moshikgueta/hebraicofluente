@@ -1,13 +1,13 @@
-/* Modules 6 and 7 — the two units of the teaching plan that introduce no new
+/* Modules 6 and 7 - the two units of the teaching plan that introduce no new
    letter and are, for that reason, the easiest to skip and the worst to skip.
 
-   Module 6 (lessons 16–18) is the soft side of the three dotted letters plus
+   Module 6 (lessons 16-18) is the soft side of the three dotted letters plus
    the five final forms. The guide teaches בּ כּ פּ with the dot first, because
-   that is the shape a Brazilian recognises inside a loanword — אמבולנס,
-   סופרמרקט — and only then takes the dot away. Real Hebrew almost never
+   that is the shape a Brazilian recognises inside a loanword - אמבולנס,
+   סופרמרקט - and only then takes the dot away. Real Hebrew almost never
    prints the dot, so this is where reading actually starts.
 
-   Module 7 (lessons 19–21) is the gerech: three sounds the language needed and
+   Module 7 (lessons 19-21) is the gerech: three sounds the language needed and
    built without inventing a letter.
 
    THE CONTENT LIVES IN data/extras.json, not here. It used to be three consts
@@ -24,7 +24,7 @@ const ROOT = new URL('..', import.meta.url).pathname;
 const EXTRAS = JSON.parse(readFileSync(join(ROOT, 'data/extras.json'), 'utf8'));
 
 /* מֶלֶךְ and דֶּרֶךְ carry their kaf as the final ך, so highlighting the base
-   letter alone would leave those rows unmarked — the same trap as the bridge
+   letter alone would leave those rows unmarked - the same trap as the bridge
    words on the module openers. */
 const FINAL_OF = { 'מ': 'ם', 'נ': 'ן', 'כ': 'ך', 'פ': 'ף', 'צ': 'ץ' };
 const markFor = (word, base) =>
@@ -37,12 +37,12 @@ export function renderDagesh(M, ctx) {
 
   sheets.push(`
     ${bdg()}
-    <h1>${`Módulo ${M.n} — ${esc(M.titlePt)}`}</h1>
+    <h1>${`Módulo ${M.n} - ${esc(M.titlePt)}`}</h1>
     <p class="lead">${prose(M.subPt)}</p>
     <p>${prose(M.introPt)}</p>
 
     <h2>A regra, em uma frase</h2>
-    <p>${mixed(['Três letras — ', H('ב'), ', ', H('כ'), ' e ', H('פ'), ' — têm dois sons. '])}${prose(D_ALL.rulePt)}</p>
+    <p>${mixed(['Três letras - ', H('ב'), ', ', H('כ'), ' e ', H('פ'), ' - têm dois sons. '])}${prose(D_ALL.rulePt)}</p>
 
     ${callout('warn', '⚠️', `
       <h3>Isto não é detalhe de acabamento</h3>
@@ -60,7 +60,7 @@ export function renderDagesh(M, ctx) {
 
     sheets.push(`
     ${bdg(true)}
-    <h1>${mixed([H(D.hard), ' e ', H(D.soft), ` — ${esc(L ? L.namePt : D.namePt)}`])}</h1>
+    <h1>${mixed([H(D.hard), ' e ', H(D.soft), ` - ${esc(L ? L.namePt : D.namePt)}`])}</h1>
 
     <table>
       <thead><tr><th>Forma</th><th>Impressa</th><th>Cursiva</th><th>Som</th><th>Palavras</th></tr></thead>
@@ -81,7 +81,7 @@ export function renderDagesh(M, ctx) {
         </tr>
       </tbody>
     </table>
-    <p class="hint">A cursiva é a mesma nos dois casos — à mão ninguém escreve o
+    <p class="hint">A cursiva é a mesma nos dois casos - à mão ninguém escreve o
        daguesh. Só o contexto distingue.</p>
     <p>${prose(D.notePt)}</p>
 
@@ -113,7 +113,7 @@ export function renderDagesh(M, ctx) {
     ${bdg(true)}
     <h1>As cinco formas finais</h1>
     <p class="lead">Você conheceu cada uma junto com a sua letra. Aqui elas estão
-       juntas pela primeira vez — e é assim, em bloco, que elas se fixam.</p>
+       juntas pela primeira vez - e é assim, em bloco, que elas se fixam.</p>
     <table>
       <thead><tr><th>No meio</th><th>No fim</th><th>Cursiva final</th><th>Nome</th><th>Exemplo</th><th>Significado</th></tr></thead>
       <tbody>${F.map(x => `<tr>
@@ -127,7 +127,7 @@ export function renderDagesh(M, ctx) {
     </table>
 
     ${callout('tip', '💡', `<p>Quatro das cinco descem abaixo da linha
-      ${mixed([' — ', H(F.filter(x => x.descends).map(x => x.fin).join(' ')), ' — '])} e só
+      ${mixed([' - ', H(F.filter(x => x.descends).map(x => x.fin).join(' ')), ' - '])} e só
       ${mixed([H(F.filter(x => !x.descends).map(x => x.fin).join(' '))])} fecha em cima.
       Esse é o atalho visual: se desceu, é fim de palavra.</p>`)}
 
@@ -147,7 +147,7 @@ export function renderDagesh(M, ctx) {
   const U = EXTRAS.unpointed;
   sheets.push(`
     ${bdg(true)}
-    <h1>Lição 18 — ler sem nikud</h1>
+    <h1>Lição 18 - ler sem nikud</h1>
     <p class="lead">${esc(U.introPt)}</p>
 
     ${exercise(5, 'Leia sem os pontos', `
@@ -173,7 +173,7 @@ export function renderModernSounds(M) {
 
   const a = `
     ${bdg()}
-    <h1>${`Módulo ${M.n} — ${esc(M.titlePt)}`}</h1>
+    <h1>${`Módulo ${M.n} - ${esc(M.titlePt)}`}</h1>
     <p class="lead">${prose(M.subPt)}</p>
     <p>${prose(G.introPt)}</p>
 
@@ -191,7 +191,7 @@ export function renderModernSounds(M) {
     </table>
 
     ${callout('note', '💡', `<p>Estes três sons quase só aparecem em nomes próprios
-      e em palavras importadas — que é exatamente onde um brasileiro mais acerta,
+      e em palavras importadas - que é exatamente onde um brasileiro mais acerta,
       porque já sabe como elas soam.</p>`)}
 
     <h2>Ao terminar este módulo você vai conseguir</h2>
@@ -206,7 +206,7 @@ export function renderModernSounds(M) {
        Leia cada uma em voz alta antes de olhar o significado.</p>
 
     ${G.letters.map(x => `
-    <h2>${mixed([H(x.he), ` — ${x.pt}`])}</h2>
+    <h2>${mixed([H(x.he), ` - ${x.pt}`])}</h2>
     <table>
       <thead><tr><th>Palavra</th><th>Significado</th><th>Escreva em cursiva</th></tr></thead>
       <tbody>${x.words.map(w => `<tr>
@@ -217,10 +217,10 @@ export function renderModernSounds(M) {
 
   const c = `
     ${bdg(true)}
-    <h1>Lição 21 — fecho do alfabeto</h1>
+    <h1>Lição 21 - fecho do alfabeto</h1>
 
     ${exercise(1, 'Com gerech ou sem?', `
-      <p>Leia cada par em voz alta. O gerech muda o som — e às vezes a palavra inteira.</p>
+      <p>Leia cada par em voz alta. O gerech muda o som - e às vezes a palavra inteira.</p>
       <table>
         <thead><tr><th>Sem gerech</th><th>Som</th><th>Com gerech</th><th>Som</th></tr></thead>
         <tbody>${G.letters.map(x => `<tr>

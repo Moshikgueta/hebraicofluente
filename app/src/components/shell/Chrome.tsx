@@ -2,8 +2,8 @@
 
 /* Qual casca envolve esta rota.
  * ─────────────────────────────────────────────────────────────────────────
- * Duas: o site público (PublicShell — cabeçalho de marketing, rodapé) e a
- * plataforma do aluno (AppShell — navegação do curso, progresso, barra do
+ * Duas: o site público (PublicShell - cabeçalho de marketing, rodapé) e a
+ * plataforma do aluno (AppShell - navegação do curso, progresso, barra do
  * polegar). O que decide é a rota, e a decisão é escrita uma vez aqui em vez
  * de ser repetida em cada layout de pasta.
  *

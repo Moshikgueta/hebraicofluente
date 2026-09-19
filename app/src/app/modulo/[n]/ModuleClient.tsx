@@ -38,7 +38,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
           Este módulo corresponde a uma unidade do plano de aulas: duas lições com
           conteúdo novo e uma terceira de prática. Estudando sozinho, trate cada
-          lição como uma sessão — e não pule a terceira.
+          lição como uma sessão - e não pule a terceira.
         </p>
         <ol className="grid gap-2">
           {mod.lessons.map(ls => (
@@ -48,7 +48,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
               </span>
               <span className="text-[15px] text-ink-body">
                 {ls.kind === 'practice'
-                  ? 'Sem letra nova — jogos, correção e leitura em voz alta.'
+                  ? 'Sem letra nova - jogos, correção e leitura em voz alta.'
                   : ls.letters?.length
                     ? ls.letters.map(id => letters.find(l => l.id === id))
                         .filter((l): l is Letter => !!l)
@@ -104,7 +104,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
           Começar pela letra {first.namePt}
         </LinkButton>
       ) : (
-        /* Modules 6 and 7 have no letters — they have their own three-lesson
+        /* Modules 6 and 7 have no letters - they have their own three-lesson
            route, and without this the opener was a dead end. */
         <LinkButton href={`/extra/${mod.n === 6 ? 'sem-o-ponto' : 'sons-modernos'}`} size="lg" full>
           Começar o módulo {mod.n}

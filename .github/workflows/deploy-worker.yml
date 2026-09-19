@@ -13,7 +13,7 @@
 # Actions → aba Secrets):
 #
 #   CLOUDFLARE_API_TOKEN    modelo "Edit Cloudflare Workers" MAIS a permissão
-#                           D1:Edit — sem ela o Worker sobe e o banco falha
+#                           D1:Edit - sem ela o Worker sobe e o banco falha
 #   CLOUDFLARE_ACCOUNT_ID   opcional hoje: o script deriva a conta do próprio
 #                           token, e um id divergente é ignorado com aviso
 #
@@ -22,7 +22,7 @@
 # SITE_ORIGIN e conferir o que subiu.
 #
 # Sem o token o job não roda: ele verifica, explica na tabela do resumo o que
-# falta, e para — em vez de falhar no meio com um erro do wrangler.
+# falta, e para - em vez de falhar no meio com um erro do wrangler.
 #
 # Para COBRAR, faltam dois segredos no painel da Cloudflare (Worker → Settings
 # → Variables and Secrets, tipo Secret): MP_ACCESS_TOKEN e MP_WEBHOOK_SECRET,
@@ -34,7 +34,7 @@ name: Deploy platform to Cloudflare
 on:
   push:
     # A mesma lista de deploy-app.yml. O repositório ainda não tem `main`, e um
-    # workflow que só dispara num ramo inexistente nunca rodou uma vez sequer —
+    # workflow que só dispara num ramo inexistente nunca rodou uma vez sequer -
     # é o tipo de erro que só aparece quando alguém pergunta por que a
     # publicação não aconteceu.
     branches: [claude/practical-babbage-veufcz, main]
@@ -45,7 +45,7 @@ on:
       - 'wrangler.toml'
       - 'tools/export-content.mjs'
       # A publicação É este script agora (passo "Publicar e configurar"), então
-      # mexer nele tem de disparar uma publicação — senão uma correção no
+      # mexer nele tem de disparar uma publicação - senão uma correção no
       # próprio caminho do deploy fica parada sem ninguém perceber.
       - 'scripts/cloudflare-setup.sh'
       - '.github/workflows/deploy-worker.yml'
@@ -67,7 +67,7 @@ jobs:
       # Não só "tem ou não tem": DIZ o que está errado.
       #
       # A tela de segredos do GitHub tem duas abas, *Secrets* e *Variables*, e
-      # colar na errada é o engano mais comum que existe ali — o valor fica
+      # colar na errada é o engano mais comum que existe ali - o valor fica
       # salvo, visível, com o nome certo, e o workflow não enxerga. Como
       # `vars.X` e `secrets.X` são espaços separados, dá para detectar
       # exatamente esse caso e dizer o que fazer.
@@ -117,7 +117,7 @@ jobs:
           # Um token da Cloudflare tem 40 caracteres; o Account ID, 32 hex. Um
           # valor muito curto quase sempre é cópia pela metade.
           if [ -n "$TOKEN" ] && [ "${#TOKEN}" -lt 20 ]; then
-            echo "::warning::CLOUDFLARE_API_TOKEN tem só ${#TOKEN} caracteres — parece truncado."
+            echo "::warning::CLOUDFLARE_API_TOKEN tem só ${#TOKEN} caracteres - parece truncado."
           fi
           if [ -n "$ACCT" ] && [ "${#ACCT}" -ne 32 ]; then
             echo "::warning::CLOUDFLARE_ACCOUNT_ID tem ${#ACCT} caracteres; o esperado são 32."
@@ -126,7 +126,7 @@ jobs:
           if [ -n "$TOKEN" ]; then
             echo "ok=true" >> "$GITHUB_OUTPUT"
           else
-            echo "::warning::Sem CLOUDFLARE_API_TOKEN — publicação pulada. Ver o resumo desta execução."
+            echo "::warning::Sem CLOUDFLARE_API_TOKEN - publicação pulada. Ver o resumo desta execução."
             echo "ok=false" >> "$GITHUB_OUTPUT"
           fi
 
@@ -153,7 +153,7 @@ jobs:
 
       # NEXT_PUBLIC_PLATFORM_API=worker é o que faz o app falar com /api/* em
       # vez do adaptador local. Sem isto, a plataforma publicada guardaria
-      # contas no navegador de cada visitante — com uma tarja dizendo isso,
+      # contas no navegador de cada visitante - com uma tarja dizendo isso,
       # mas ainda assim errado.
       - name: Build (modo plataforma)
         if: steps.guard.outputs.ok == 'true'
@@ -166,16 +166,16 @@ jobs:
       #
       # A diferença importa: um deploy seco pressupõe que o banco existe, que o
       # database_id no wrangler.toml é o certo, que o esquema foi aplicado e
-      # que o SESSION_SECRET está definido — e falha de forma obscura quando
+      # que o SESSION_SECRET está definido - e falha de forma obscura quando
       # qualquer um desses pressupostos não vale. O script CONFERE cada um e
       # cria o que faltar. Resultado: a primeira publicação de uma conta nova
       # funciona sem ninguém abrir um terminal.
       #
-      # Ele é idempotente, então nas publicações seguintes os passos 1–4 só
+      # Ele é idempotente, então nas publicações seguintes os passos 1-4 só
       # confirmam o que já existe e seguem adiante.
       #
       # O CLOUDFLARE_API_TOKEN vai no ambiente porque o wrangler o lê de lá
-      # sozinho — é assim que a mesma linha serve à máquina de alguém (onde a
+      # sozinho - é assim que a mesma linha serve à máquina de alguém (onde a
       # credencial vem do `wrangler login`) e ao CI.
       - name: Publicar e configurar
         id: deploy
@@ -186,7 +186,7 @@ jobs:
           # Os segredos da Mercado Pago vivem AQUI, nos segredos deste
           # repositório, e o script os empurra para o Worker a cada
           # publicação. Assim há um lugar só para guardar chave, e rotacionar
-          # uma é editar e dar push — em vez de abrir dois painéis e lembrar
+          # uma é editar e dar push - em vez de abrir dois painéis e lembrar
           # qual está com o valor velho.
           #
           # Vazios enquanto a conta não existir: o site sobe inteiro e só o
@@ -208,7 +208,7 @@ jobs:
           exit $rc
 
       # O e2e pergunta "o servidor mandou a página?". Esta etapa pergunta "a
-      # página APARECE?" — que é outra coisa, e é a que o aluno faz.
+      # página APARECE?" - que é outra coisa, e é a que o aluno faz.
       #
       # Entre as duas cabem um erro de script que apaga a tela, uma fonte ou um
       # chunk que não vem, uma chamada de API que trava o app num estado vazio.
@@ -243,14 +243,14 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      # A conferência cria uma conta de teste no banco DE PRODUÇÃO — é o que
+      # A conferência cria uma conta de teste no banco DE PRODUÇÃO - é o que
       # torna a verificação real. Sem esta limpeza, cada publicação deixa mais
       # uma linha para sempre, e em um ano a tabela de contas está cheia de
       # lixo que ninguém sabe de onde veio.
       #
       # O endereço usa o domínio .invalid, reservado pela RFC 2606: ele nunca
       # resolve e ninguém recebe e-mail nele. É o que torna seguro apagar por
-      # padrão — um padrão capaz de casar com o e-mail de um aluno de verdade
+      # padrão - um padrão capaz de casar com o e-mail de um aluno de verdade
       # seria uma forma criativa de apagar cliente.
       #
       # Apaga por PADRÃO de e-mail, e não só a conta desta execução: uma

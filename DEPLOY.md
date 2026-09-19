@@ -1,6 +1,6 @@
 # Publicar o curso
 
-O app é estático — 48 páginas pré-renderizadas, e o único estado é o do aluno,
+O app é estático - 48 páginas pré-renderizadas, e o único estado é o do aluno,
 no navegador dele. Não há servidor, não há banco, não há custo. Ele mora no
 GitHub Pages e se republica sozinho a cada push.
 
@@ -28,7 +28,7 @@ Leva cerca de **um minuto** do push ao ar.
 
 ## O passo a passo, do zero
 
-Se um dia for preciso refazer isto — outro repositório, outra conta:
+Se um dia for preciso refazer isto - outro repositório, outra conta:
 
 **1. Ligar o Pages, uma vez.**
 Settings → Pages → Build and deployment → Source: **GitHub Actions**.
@@ -61,7 +61,7 @@ domínio próprio, deixe a variável **vazia**.
 
 Uma execução verde significa que os **72 testes passaram** antes do build. Isso
 é de propósito: um deploy que pulasse os testes poderia pôr uma lição na frente
-de alguém com uma letra que ela ainda não viu — que é exatamente o erro que este
+de alguém com uma letra que ela ainda não viu - que é exatamente o erro que este
 curso existe para não cometer.
 
 ---
@@ -100,7 +100,7 @@ há nada para configurar.
 
 ---
 
-## Armadilhas já resolvidas — não as reintroduza
+## Armadilhas já resolvidas - não as reintroduza
 
 **Não adicione outro workflow de Pages.** O template *"Deploy Next.js site to
 Pages"* que o GitHub oferece na aba Actions constrói a **raiz do repositório**,
@@ -109,7 +109,7 @@ grupo de concorrência `pages`, então disputa a publicação com o workflow cer
 Um foi adicionado e removido; se aparecer de novo, apague.
 
 **Fontes só por `next/font/local`.** Um `url('/fonts/…')` escrito à mão no CSS
-não é reescrito para o caminho base e dá 404 no Pages — a página carrega, o
+não é reescrito para o caminho base e dá 404 no Pages - a página carrega, o
 hebraico aparece numa fonte de sistema, e o nikud sai fora de lugar. É a falha
 que mais importa e a menos visível.
 
@@ -126,5 +126,5 @@ não encontra o `index.html`. Sem o segundo, o Jekyll engole a pasta `_next/`.
 
 O repositório é público, então o Pages também é: qualquer pessoa com o endereço
 abre o curso. Para testar no celular, tudo bem. Se um dia isso não servir, a
-mesma pasta `app/out/` sobe em qualquer host estático — Cloudflare Pages,
-Netlify, um bucket — com `NEXT_PUBLIC_BASE_PATH` vazio.
+mesma pasta `app/out/` sobe em qualquer host estático - Cloudflare Pages,
+Netlify, um bucket - com `NEXT_PUBLIC_BASE_PATH` vazio.

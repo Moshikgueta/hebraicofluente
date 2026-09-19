@@ -2,7 +2,7 @@
 
 /* The sound lab: every consonant you know, against every vowel.
  * ─────────────────────────────────────────────────────────────────────────
- * Reading Hebrew is one operation repeated fast — consonant plus vowel — and
+ * Reading Hebrew is one operation repeated fast - consonant plus vowel - and
  * the course taught the pieces without ever laying them out as a system. The
  * lab is that system on one screen: the patach under מ is the same patach
  * under ק, and a learner who can see the column realises it in a second
@@ -60,7 +60,7 @@ export function SoundLab({
       </div>
 
       {/* All five vowel columns fit a 360px phone once the letter NAME is
-          dropped — the glyph is the row label that matters, and the name is
+          dropped - the glyph is the row label that matters, and the name is
           two taps away in the lesson. Scrolls horizontally below that rather
           than shrinking the Hebrew, which is the one thing this component must
           never do. */}
@@ -136,7 +136,7 @@ export function SoundLab({
           </>
         ) : (
           <p className="font-ui text-[13.5px] text-ink-muted">
-            A consoante muda de linha para linha. O sinal é o mesmo em toda a coluna —
+            A consoante muda de linha para linha. O sinal é o mesmo em toda a coluna -
             é isso que faz a leitura ficar automática.
           </p>
         )}
@@ -147,7 +147,7 @@ export function SoundLab({
 
 /* ── the signs themselves ───────────────────────────────────────────────
    The lab shows what the signs DO. This says what they are called and where
-   they sit, which is the other half — and it is the only place in the course
+   they sit, which is the other half - and it is the only place in the course
    where a learner can hear "patach" said out loud. */
 export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
   return (

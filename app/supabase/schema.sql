@@ -1,11 +1,11 @@
--- Hebraico Fluente — learner state.
+-- Hebraico Fluente - learner state.
 -- Not applied to any project yet; see app/src/lib/state/supabase.ts.
 --
 -- The whole learner state is one JSONB document per user rather than a table
 -- per concept. That is the right shape here: it is read once on load and
 -- written on change, it is never queried across users, and it lets the client
 -- evolve the schema (state.version) without a migration per release.
--- The analytics table is the opposite — append-only, queried in aggregate.
+-- The analytics table is the opposite - append-only, queried in aggregate.
 
 create table if not exists public.learner_state (
   user_id    uuid primary key references auth.users(id) on delete cascade,

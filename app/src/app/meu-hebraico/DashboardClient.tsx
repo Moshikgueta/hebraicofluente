@@ -1,8 +1,8 @@
 'use client';
 
-/* Meu Hebraico — o painel do aluno.
+/* Meu Hebraico - o painel do aluno.
  * ─────────────────────────────────────────────────────────────────────────
- * Responde a uma pergunta — "o que eu faço hoje?" — e responde com UMA ação
+ * Responde a uma pergunta - "o que eu faço hoje?" - e responde com UMA ação
  * principal, porque fadiga de decisão é o que faz curso de auto-estudo não
  * terminar.
  *
@@ -135,7 +135,7 @@ export function DashboardClient() {
             <div className="grid gap-1">
               <Badge tone="mint">Checkpoint {next.module.n}</Badge>
               <p className="font-display text-[21px] font-bold text-ink mt-1">
-                {next.module.titlePt} — hora de conferir
+                {next.module.titlePt} - hora de conferir
               </p>
               <p className="font-ui text-[14px] text-ink-body">
                 As {next.module.letterIds.length} letras do módulo, juntas.
@@ -155,7 +155,7 @@ export function DashboardClient() {
                 {next.module.titlePt}
               </p>
               <p className="font-ui text-[14px] text-ink-body">
-                Nenhuma letra nova — e é o módulo que separa quem decora de quem lê.
+                Nenhuma letra nova - e é o módulo que separa quem decora de quem lê.
               </p>
             </div>
             <LinkButton href={`/modulo/${next.module.n}`} size="lg" className="w-full sm:w-auto">
@@ -175,7 +175,7 @@ export function DashboardClient() {
       </section>
 
       {/* Below lg this is the phone layout, unchanged: two cards, then the
-          progress summary. At lg it becomes the dashboard — the whole alphabet
+          progress summary. At lg it becomes the dashboard - the whole alphabet
           on the left, the day's state on the right. */}
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(260px,1fr)] lg:gap-6 lg:items-start">
         <section aria-labelledby="alfabeto" className="order-2 lg:order-1 grid gap-3">
@@ -270,7 +270,7 @@ function greeting(): string {
 
 /* A primeira vez depois da compra.
  *
- * Não é mais uma página de vendas — quem chega aqui já pagou, e repetir o
+ * Não é mais uma página de vendas - quem chega aqui já pagou, e repetir o
  * argumento de venda para quem já comprou soa a cobrança. O texto diz o que
  * vai acontecer agora e manda para o onboarding, que é onde a pessoa escolhe
  * o nome e a meta diária. */

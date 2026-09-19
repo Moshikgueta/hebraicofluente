@@ -48,11 +48,11 @@ export type SrsItem = {
    five dimensions the course actually teaches, and every exercise declares
    which one it is testing.
 
-     rec      — pick this letter out of a row (shape)
-     som      — which sound it makes (letter ↔ sound, both directions)
-     ler      — decode it inside a syllable or a word
-     ouvir    — identify it from a recording
-     escrever — produce the shape by hand
+     rec      - pick this letter out of a row (shape)
+     som      - which sound it makes (letter ↔ sound, both directions)
+     ler      - decode it inside a syllable or a word
+     ouvir    - identify it from a recording
+     escrever - produce the shape by hand
 
    Kept deliberately coarse. A learner never sees "domínio: 93,482%", and the
    system never pretends to a precision it does not have. */
@@ -71,7 +71,7 @@ export const SKILL_LABEL: Record<Skill, string> = {
 export type SkillStat = {
   hits: number;
   misses: number;
-  /** Consecutive correct answers. Resets to 0 on a miss — the honest signal
+  /** Consecutive correct answers. Resets to 0 on a miss - the honest signal
    *  that something was relearned rather than merely met often. */
   streak: number;
   lastOn: string | null;         // YYYY-MM-DD
@@ -108,8 +108,8 @@ export type DayRecord = {
    *
    * Counting only answered questions was wrong and the full-course simulation
    * caught it: a complete letter lesson is eight questions, so a learner who
-   * did exactly one lesson a day — five stages of reading, listening, tracing
-   * and writing — never met a ten-minute goal and never built a streak. Most of
+   * did exactly one lesson a day - five stages of reading, listening, tracing
+   * and writing - never met a ten-minute goal and never built a streak. Most of
    * the learning in this course is not a multiple-choice answer.
    */
   units: number;
@@ -117,7 +117,7 @@ export type DayRecord = {
   goalMet: boolean;
 };
 
-/** The current shape. Bump this and add a step to `migrate()` — never both
+/** The current shape. Bump this and add a step to `migrate()` - never both
  *  silently, and never a shape change without a migration. */
 export const STATE_VERSION = 2;
 
@@ -135,7 +135,7 @@ export type LearnerState = {
   /**
    * The final exam.
    *
-   * `completedAt` is the first sitting of any score — the course was finished.
+   * `completedAt` is the first sitting of any score - the course was finished.
    * `passedAt` is the first sitting at or above the pass mark, and it is what
    * the certificate is issued against; the two are deliberately different
    * dates, because finishing and passing are different facts.
@@ -171,7 +171,7 @@ export type LearnerState = {
  * What a reading-gym mode remembers between sessions.
  *
  * `previousSeconds` exists so the result screen can say "da última vez, 41 s"
- * AFTER this run has already been written — otherwise the comparison is
+ * AFTER this run has already been written - otherwise the comparison is
  * against the run the learner just finished, which is always a tie.
  *
  * The times are the learner's own and nothing else. There is no target and no
@@ -180,13 +180,13 @@ export type LearnerState = {
  */
 export type GymRecord = {
   runs: number;
-  /** Best score, 0–1. */
+  /** Best score, 0-1. */
   best: number | null;
   /** Best time in seconds, for the timed modes only. */
   bestSeconds: number | null;
   /** How long the most recent run took. */
   lastSeconds: number | null;
-  /** How long the run BEFORE that took — what the result screen compares to. */
+  /** How long the run BEFORE that took - what the result screen compares to. */
   previousSeconds: number | null;
   lastOn: string;
 };

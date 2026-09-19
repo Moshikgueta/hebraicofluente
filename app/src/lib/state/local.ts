@@ -11,7 +11,7 @@ import { migrate } from './migrate';
 
 /* The key is a name, not a version number, and it must never change: it is the
    only way to find the progress a learner already has. Shape changes are
-   handled by migrate(), not by writing to a second key — which would leave the
+   handled by migrate(), not by writing to a second key - which would leave the
    old one behind, full of work, unreadable. */
 const KEY = 'hebraico-fluente-v1';
 

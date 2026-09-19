@@ -3,7 +3,7 @@
  * Two reasons, both pedagogical rather than technical:
  *
  *   · a learner who leaves a lesson and comes back must find the same
- *     exercise, not a new one — otherwise "tentar de novo" silently becomes
+ *     exercise, not a new one - otherwise "tentar de novo" silently becomes
  *     "tentar outra coisa", and the retry teaches nothing about the item that
  *     was missed;
  *   · two learners must be able to talk about question 3.

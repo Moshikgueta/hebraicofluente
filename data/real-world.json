@@ -1,11 +1,11 @@
 {
   "note": [
-    "«Hebraico no mundo real» — o momento em que o curso para de ser exercicio.",
+    "«Hebraico no mundo real» - o momento em que o curso para de ser exercicio.",
     "",
     "Cada cena so aparece a partir de `fromOrder`, e a REGRA DA ORDEM vale aqui",
     "como vale em wordsToRead: a V18 falha o build se uma cena usar letra que o",
     "leitor ainda nao viu naquele ponto. Uma placa que o aluno nao consegue",
-    "decifrar nao e recompensa, e frustracao — o oposto do que esta secao existe",
+    "decifrar nao e recompensa, e frustracao - o oposto do que esta secao existe",
     "para produzir.",
     "",
     "As cenas sao contextos reais de Israel: placa, cardapio, rotulo, mensagem,",
@@ -27,7 +27,7 @@
       "sceneType": "conversa",
       "labelPt": "A pergunta que abre qualquer apresentação",
       "he": "מִי",
-      "contextPt": "Uma palavra de duas letras que você já lê inteira — e que serve para perguntar quem é alguém."
+      "contextPt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém."
     },
     {
       "id": "porta-loja",
@@ -126,7 +126,7 @@
       "sceneType": "placa",
       "labelPt": "Na placa da praça de alimentação de um shopping",
       "he": "אֹכֶל",
-      "contextPt": "O {{כ}} aqui está sem ponto, no meio da palavra — então é o som raspado, não K."
+      "contextPt": "O {{כ}} aqui está sem ponto, no meio da palavra - então é o som raspado, não K."
     },
     {
       "id": "rua-hamelech",
@@ -134,7 +134,7 @@
       "sceneType": "placa",
       "labelPt": "Numa placa de rua, em quase toda cidade do país",
       "he": "הַמֶּלֶךְ",
-      "contextPt": "\"Do rei\". Termina com o {{ך}} final — e é a mesma palavra que esperava desde a primeira lição.",
+      "contextPt": "\"Do rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
       "translit": "hamélech",
       "pt": "o rei"
     },
@@ -144,7 +144,7 @@
       "sceneType": "vitrine",
       "labelPt": "Na vitrine de uma casa de câmbio",
       "he": "כֶּסֶף",
-      "contextPt": "Dinheiro — e, por acaso, também é a palavra para prata."
+      "contextPt": "Dinheiro - e, por acaso, também é a palavra para prata."
     },
     {
       "id": "livraria-sefer",

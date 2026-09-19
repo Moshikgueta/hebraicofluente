@@ -38,7 +38,7 @@ export function CultureShelf() {
         <Card tone="wash" className="p-5">
           <p className="font-ui text-[14px] leading-relaxed text-ink-body">
             A primeira carta abre quando você dominar 3 letras. Elas não valem XP
-            e não desbloqueiam nada — são só o que dá vontade de saber depois de
+            e não desbloqueiam nada - são só o que dá vontade de saber depois de
             começar a ler.
           </p>
         </Card>

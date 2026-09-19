@@ -2,7 +2,7 @@
  *
  * The unit tests each check one rule. This checks that the rules compose: that
  * a learner who does every lesson, every checkpoint and both extra modules ends
- * up with a coherent state — 22 letters mastered, 100% progress, every
+ * up with a coherent state - 22 letters mastered, 100% progress, every
  * achievement, and XP that adds up to the sum of what was earned rather than to
  * whatever the code happened to do.
  *
@@ -36,7 +36,7 @@ function playEverything() {
   let answered = 0;
   const target = goalTarget(10);
   /* Days on which a whole lesson was done. A day of only a checkpoint, or only
-     the final challenge, is legitimately shorter than the goal — the claim
+     the final challenge, is legitimately shorter than the goal - the claim
      being tested is that doing a LESSON is enough. */
   const lessonDays = new Set<string>();
 
@@ -176,7 +176,7 @@ describe('the whole course, played through', () => {
 
   it('meets the daily goal on every day a lesson was completed', () => {
     /* Doing the course as designed must be enough. If this fails, the goal is
-       asking for work the course does not contain — which is exactly the bug
+       asking for work the course does not contain - which is exactly the bug
        this simulation was written to catch. */
     for (const d of lessonDays) {
       const rec = state.days[d]!;
@@ -197,7 +197,7 @@ describe('a learner who misses things', () => {
       const learned = letters.filter(l => l.order <= upTo);
       const weak = learned.slice(-3).map(l => l.id);
       const rev = buildReview(weak, learned, { audioAvailable: false, count: 5 });
-      /* Letter 1 alone cannot fill five distinct questions, and that is fine —
+      /* Letter 1 alone cannot fill five distinct questions, and that is fine -
          what matters is that it never produces zero, or a broken one. */
       expect(rev.length, `review at ${upTo}`).toBeGreaterThan(0);
       for (const ex of rev) {

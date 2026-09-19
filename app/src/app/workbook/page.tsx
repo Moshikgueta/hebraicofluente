@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 
-/* The printed workbook is not replaced by the app — writing Hebrew by hand on
+/* The printed workbook is not replaced by the app - writing Hebrew by hand on
    paper is still the best way to learn to write it. This page is the honest
    handoff: the PDF is generated from the same data as the course, so the page
    numbers the lessons cite are always right. */
@@ -13,7 +13,7 @@ export default function WorkbookPage() {
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[54ch]">
           As 331 páginas do livro saem exatamente dos mesmos dados que este curso:
           as mesmas letras, na mesma ordem, com o mesmo vocabulário. O que muda é
-          o meio — no papel você escreve à mão, e é lá que a cursiva realmente
+          o meio - no papel você escreve à mão, e é lá que a cursiva realmente
           entra na memória.
         </p>
       </header>

@@ -1,4 +1,4 @@
-/* Exercises for modules 6 and 7 — the two units that teach no new letter.
+/* Exercises for modules 6 and 7 - the two units that teach no new letter.
  *
  * They need question types the 22 letter lessons never do, and the difference
  * is not cosmetic:
@@ -13,7 +13,7 @@
  *
  * The order rule does not constrain anything here: these modules come after
  * letter 22, so the whole alphabet is available. What still holds is that the
- * words are the ones the learner already met — they come from data/extras.json,
+ * words are the ones the learner already met - they come from data/extras.json,
  * which validate.js V19 checks against data/letters.json.
  */
 
@@ -91,7 +91,7 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       he: row.w.he,
       options,
       answer,
-      explainPt: `${row.w.he} — ${row.w.translit} — ${row.w.pt}. ` +
+      explainPt: `${row.w.he} - ${row.w.translit} - ${row.w.pt}. ` +
         (row.isHard
           ? 'Com daguesh: no começo da palavra ou depois de consoante.'
           : 'Sem daguesh: entre vogais, ou no fim da palavra.')
@@ -110,7 +110,7 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       letter: F.base,
       options,
       answer,
-      explainPt: `${F.base} vira ${F.fin} no fim da palavra — como em ${F.word} (${F.translit}), "${F.pt}".`
+      explainPt: `${F.base} vira ${F.fin} no fim da palavra - como em ${F.word} (${F.translit}), "${F.pt}".`
     });
   }
 
@@ -126,7 +126,7 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       he: u.bare,
       options,
       answer,
-      explainPt: `${u.bare} é ${u.pointed} — ${u.translit} — "${u.pt}".`
+      explainPt: `${u.bare} é ${u.pointed} - ${u.translit} - "${u.pt}".`
     });
   }
 
@@ -151,14 +151,14 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       he: g.he,
       options,
       answer,
-      explainPt: `${g.he} é ${g.pt} — ${g.likePt}. Sem o gerech, ${g.base} é ${g.basePt}.`
+      explainPt: `${g.he} é ${g.pt} - ${g.likePt}. Sem o gerech, ${g.base} é ${g.basePt}.`
     });
     const bare = optionsWith(g.basePt, G.map(x => x.pt), rand);
     out.push({
       id: `mod7-base-${i}`,
       kind: 'syllable-reading',
       letterId: 'mod7', skill: 'som',
-      promptPt: 'E sem o sinal — que som ela tem?',
+      promptPt: 'E sem o sinal - que som ela tem?',
       he: g.base,
       options: bare.options,
       answer: bare.answer,
@@ -179,7 +179,7 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       he: w.he,
       options,
       answer,
-      explainPt: `${w.he} — "${w.pt}". O ${g.he} faz o som ${g.pt}.`
+      explainPt: `${w.he} - "${w.pt}". O ${g.he} faz o som ${g.pt}.`
     });
   }
 

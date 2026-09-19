@@ -1,8 +1,8 @@
 {
   "intro": {
     "title": "Os sinais de vogal",
-    "lead": "O hebraico escreve as consoantes com letras e as vogais com pequenos sinais — pontos e traços — que aparecem embaixo, dentro ou acima da letra. Você vai aprender os sinais pelo SOM que produzem, não pelo nome. Os nomes ficam no apêndice, para consultar depois.",
-    "correction": "O alfabeto hebraico tem 22 letras, e todas elas são consoantes. Quatro delas — {{א}}, {{ה}}, {{ו}} e {{י}} — também funcionam como apoio de vogal, aparecendo dentro da palavra para indicar um som vocálico. Por isso a frase \"todas consoantes\" é verdadeira sobre as letras, mas não conta a história inteira."
+    "lead": "O hebraico escreve as consoantes com letras e as vogais com pequenos sinais - pontos e traços - que aparecem embaixo, dentro ou acima da letra. Você vai aprender os sinais pelo SOM que produzem, não pelo nome. Os nomes ficam no apêndice, para consultar depois.",
+    "correction": "O alfabeto hebraico tem 22 letras, e todas elas são consoantes. Quatro delas - {{א}}, {{ה}}, {{ו}} e {{י}} - também funcionam como apoio de vogal, aparecendo dentro da palavra para indicar um som vocálico. Por isso a frase \"todas consoantes\" é verdadeira sobre as letras, mas não conta a história inteira."
   },
   "sounds": [
     {
@@ -120,6 +120,6 @@
   ],
   "dagesh": {
     "title": "O ponto dentro da letra",
-    "text": "Um ponto no meio da letra — o dagesh — muda o som de três delas: {{ב}} vira b ({{בּ}}), {{כ}} vira k ({{כּ}}) e {{פ}} vira p ({{פּ}}). Nas outras letras o ponto não muda nada que você precise ouvir agora."
+    "text": "Um ponto no meio da letra - o dagesh - muda o som de três delas: {{ב}} vira b ({{בּ}}), {{כ}} vira k ({{כּ}}) e {{פ}} vira p ({{פּ}}). Nas outras letras o ponto não muda nada que você precise ouvir agora."
   }
 }

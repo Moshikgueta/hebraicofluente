@@ -1,13 +1,13 @@
 # Publica a PRÉVIA da plataforma no GitHub Pages.
 #
 # ⚠ Esta NÃO é a implantação de produção. Ela existe para revisar a interface
-# inteira — site, catálogo, telas de conta e de checkout — sem Cloudflare, sem
+# inteira - site, catálogo, telas de conta e de checkout - sem Cloudflare, sem
 # banco e sem chave de pagamento.
 #
 # Sem NEXT_PUBLIC_PLATFORM_API, o app usa o adaptador local: contas e pedidos
 # ficam no navegador de quem abre, nada é cobrado, e uma tarja diz isso em toda
 # página (app/src/components/shell/DemoNotice.tsx). O portão de rota aqui é só
-# do lado do cliente — não há Worker para aplicá-lo.
+# do lado do cliente - não há Worker para aplicá-lo.
 #
 # A produção é .github/workflows/deploy-worker.yml (Cloudflare Workers + D1 +
 # Mercado Pago).
@@ -17,8 +17,8 @@
 # mesma fonte que o livro impresso.
 #
 # NEXT_PUBLIC_BASE_PATH is what makes a project page work. Pages serves this at
-# /hebraicofluente, and every URL the app builds by hand — an audio clip, a
-# stroke-order SVG — needs that prefix. Fonts go through next/font/local so Next
+# /hebraicofluente, and every URL the app builds by hand - an audio clip, a
+# stroke-order SVG - needs that prefix. Fonts go through next/font/local so Next
 # rewrites them; a hand-written url('/fonts/…') in CSS would 404.
 
 name: Deploy app to Pages
@@ -81,7 +81,7 @@ jobs:
       #   Settings → Pages → Build and deployment → Source: GitHub Actions
       #
       # `enablement: true` asks the action to do it, but the workflow's
-      # GITHUB_TOKEN cannot create a Pages site — that needs repo-admin rights
+      # GITHUB_TOKEN cannot create a Pages site - that needs repo-admin rights
       # the token is not granted. So the first run of this workflow fails with
       # "Resource not accessible by integration" until the switch is flipped,
       # and every run after it succeeds. Left in place because it costs nothing

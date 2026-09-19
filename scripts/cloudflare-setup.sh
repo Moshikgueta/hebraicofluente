@@ -4,11 +4,11 @@
 #   bash scripts/cloudflare-setup.sh
 #
 # Pode rodar quantas vezes quiser: cada passo verifica antes de agir. Se
-# parar no meio, conserte o que ele apontou e rode de novo — ele pula tudo
+# parar no meio, conserte o que ele apontou e rode de novo - ele pula tudo
 # que já estava feito.
 #
 # Não faz nada escondido. Cada passo diz o que vai fazer, e quando falha diz
-# O QUE deu errado e O QUE fazer — um script de implantação que morre com
+# O QUE deu errado e O QUE fazer - um script de implantação que morre com
 # "Error: 10021" é pior do que nenhum.
 
 set -uo pipefail
@@ -17,7 +17,7 @@ cd "$(dirname "$0")/.."
 DB_NAME="hebraico-fluente"
 W="npx --yes wrangler@4"
 # Vira 1 quando este script edita o wrangler.toml. No CI a edição é
-# descartável (o runner some), então a publicação funciona mesmo assim — mas
+# descartável (o runner some), então a publicação funciona mesmo assim - mas
 # o arquivo do repositório continua com o valor de exemplo, e é isso que o
 # aviso do fim cobra.
 PATCHED=0
@@ -34,7 +34,7 @@ morre() {
   echo
   printf '  \033[1mO que fazer:\033[0m %s\n' "$2"
   echo
-  echo "  Depois de resolver, rode este script de novo — ele continua de onde parou."
+  echo "  Depois de resolver, rode este script de novo - ele continua de onde parou."
   exit 1
 }
 
@@ -46,7 +46,7 @@ echo
 # Roda igual na máquina de alguém e dentro do GitHub Actions. A única
 # diferença é de onde vem a credencial: `wrangler login` grava um perfil
 # local; no CI, o wrangler lê CLOUDFLARE_API_TOKEN do ambiente sozinho. Por
-# isso não há dois caminhos aqui — só uma mensagem que serve aos dois.
+# isso não há dois caminhos aqui - só uma mensagem que serve aos dois.
 bold "0. Conta"
 WHO="$($W whoami 2>&1)"
 if echo "$WHO" | grep -qi "not authenticated\|you are not logged in\|please run.*login"; then
@@ -57,16 +57,16 @@ if echo "$WHO" | grep -qi "not authenticated\|you are not logged in\|please run.
 fi
 ACCOUNT="$(echo "$WHO" | grep -oE '[0-9a-f]{32}' | head -1)"
 if [ -z "$ACCOUNT" ]; then
-  info "Não consegui ler o Account ID da saída do whoami — seguindo assim mesmo."
+  info "Não consegui ler o Account ID da saída do whoami - seguindo assim mesmo."
 else
   ok "Conta $ACCOUNT"
   # O Account ID vem do PRÓPRIO TOKEN, e não de uma variável que alguém
   # digitou. Um id colado errado (ou de outra conta da mesma pessoa) faz a
-  # Cloudflare responder 7003 — "could not route" — em vez de um erro de
+  # Cloudflare responder 7003 - "could not route" - em vez de um erro de
   # permissão, e a mensagem manda procurar no lugar errado. Derivando daqui,
   # essa classe inteira de engano deixa de existir.
   if [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] && [ "$CLOUDFLARE_ACCOUNT_ID" != "$ACCOUNT" ]; then
-    info "CLOUDFLARE_ACCOUNT_ID não bate com a conta do token — usando a do token."
+    info "CLOUDFLARE_ACCOUNT_ID não bate com a conta do token - usando a do token."
   fi
   export CLOUDFLARE_ACCOUNT_ID="$ACCOUNT"
 fi
@@ -75,7 +75,7 @@ fi
 echo
 bold "1. Banco D1"
 
-# `d1 list` cobre o caso de o banco já existir de uma tentativa anterior —
+# `d1 list` cobre o caso de o banco já existir de uma tentativa anterior -
 # `d1 create` falharia com "already exists" e o script pararia por nada.
 LIST="$($W d1 list --json 2>/dev/null)"
 DB_ID="$(printf '%s' "$LIST" \
@@ -105,7 +105,7 @@ else
        A Cloudflare responde 'could not route ... [code: 7003]' em vez de um
        erro de permissão, porque para um token sem D1 essa rota realmente
        não existe. Não é id inválido." \
-            "Não precisa criar outro token — dá para editar o que existe:
+            "Não precisa criar outro token - dá para editar o que existe:
 
        1. https://dash.cloudflare.com/profile/api-tokens
        2. Na linha do token, menu ⋯ à direita → 'Edit'
@@ -113,7 +113,7 @@ else
        4. Preencha a linha:  Account  |  D1  |  Edit
        5. 'Continue to summary' → 'Save'
 
-       O valor do token NÃO muda — não precisa colar de novo no GitHub."
+       O valor do token NÃO muda - não precisa colar de novo no GitHub."
     fi
     morre "Não consegui criar o banco. O wrangler disse:
 
@@ -147,7 +147,7 @@ echo
 bold "3. Tabelas"
 # Aplica SEMPRE, e não só quando o banco está vazio.
 #
-# A versão anterior pulava este passo se `accounts` já existisse — e com isso
+# A versão anterior pulava este passo se `accounts` já existisse - e com isso
 # uma tabela NOVA acrescentada ao esquema nunca seria criada num banco que já
 # estava no ar. O sintoma seria a funcionalidade nova falhando em silêncio, em
 # produção, com o esquema "já aplicado" no relatório.
@@ -172,7 +172,7 @@ tem() { printf '%s' "$SECRETS" | grep -q "\"$1\"\|^$1\b"; }
 if tem SESSION_SECRET; then
   ok "SESSION_SECRET definido"
 else
-  info "SESSION_SECRET não existe — gerando um e enviando…"
+  info "SESSION_SECRET não existe - gerando um e enviando…"
   if openssl rand -base64 48 | $W secret put SESSION_SECRET >/dev/null 2>&1; then
     ok "SESSION_SECRET criado"
   else
@@ -184,7 +184,7 @@ fi
 
 # Os da Mercado Pago: se o valor estiver no AMBIENTE (segredo do GitHub, ou
 # exportado na sua máquina), ele é empurrado para o Worker. É o que evita a
-# viagem ao painel da Cloudflare — os segredos ficam num lugar só, o mesmo
+# viagem ao painel da Cloudflare - os segredos ficam num lugar só, o mesmo
 # onde já estão os da Cloudflare, e uma troca de chave é uma edição e um push.
 #
 # Empurra SEMPRE que o valor existe no ambiente, mesmo que o Worker já tenha
@@ -196,7 +196,7 @@ empurra() {
     if printf '%s' "$valor" | $W secret put "$nome" >/dev/null 2>&1; then
       ok "$nome enviado ao Worker"
     else
-      info "Não consegui enviar $nome — rode 'npx wrangler secret put $nome'."
+      info "Não consegui enviar $nome - rode 'npx wrangler secret put $nome'."
     fi
   elif tem "$nome"; then
     ok "$nome já definido no Worker"
@@ -206,12 +206,12 @@ empurra() {
 }
 
 empurra MP_ACCESS_TOKEN   "${MP_ACCESS_TOKEN:-}" \
-  || info "MP_ACCESS_TOKEN ausente — pagamento fica desligado (o site funciona)."
+  || info "MP_ACCESS_TOKEN ausente - pagamento fica desligado (o site funciona)."
 empurra MP_WEBHOOK_SECRET "${MP_WEBHOOK_SECRET:-}" \
-  || info "MP_WEBHOOK_SECRET ausente — o webhook recusa tudo, de propósito."
+  || info "MP_WEBHOOK_SECRET ausente - o webhook recusa tudo, de propósito."
 
 # ── 5. construir ──────────────────────────────────────────────────────────
-# HF_SKIP_BUILD=1 quando quem chama já construiu — é o caso do GitHub Actions,
+# HF_SKIP_BUILD=1 quando quem chama já construiu - é o caso do GitHub Actions,
 # que constrói num passo próprio para aproveitar o cache do npm e para que uma
 # falha de build apareça como falha de build, e não como falha de publicação.
 echo
@@ -245,11 +245,11 @@ DEPLOY="$($W deploy 2>&1)"
 # Extrair a URL publicada é mais delicado do que parece, e o jeito ingênuo
 # (primeiro workers.dev que aparecer) está ERRADO: antes de publicar, o
 # wrangler imprime a tabela de bindings, e ela contém a nossa própria
-# variável SITE_ORIGIN —
+# variável SITE_ORIGIN -
 #
 #   env.SITE_ORIGIN ("https://hebraico-fluente.workers.dev")   Environment Variable
 #
-# — que é justamente o valor de exemplo que estamos tentando substituir. Pegar
+# - que é justamente o valor de exemplo que estamos tentando substituir. Pegar
 # essa linha faz o script "achar" uma URL que não existe, gravar o mesmo
 # placeholder de volta e conferir um endereço morto.
 #
@@ -275,7 +275,7 @@ fi
 # Rede de segurança contra a armadilha descrita acima: se a URL extraída for
 # igual ao SITE_ORIGIN que já estava no arquivo, é sinal de que pegamos a
 # linha de binding em vez do endereço publicado. Parar aqui é melhor do que
-# seguir e conferir um endereço morto — que foi o sintoma original.
+# seguir e conferir um endereço morto - que foi o sintoma original.
 if [ "$URL" = "${HAVE_BEFORE:-}" ] && [ "${HAVE_BEFORE:-}" = "https://hebraico-fluente.workers.dev" ]; then
   morre "A URL extraída é o valor de exemplo, não o endereço publicado." \
         "É um defeito deste script na leitura da saída do wrangler.
@@ -300,7 +300,7 @@ s = open(p, encoding='utf8').read()
 s = re.sub(r'(SITE_ORIGIN\s*=\s*")[^"]*(")', lambda m: m.group(1) + sys.argv[1] + m.group(2), s, count=1)
 open(p, 'w', encoding='utf8').write(s)
 PY
-  info "SITE_ORIGIN ← $URL — republicando…"
+  info "SITE_ORIGIN ← $URL - republicando…"
   PATCHED=1
   $W deploy >/dev/null 2>&1 && ok "Republicado" || info "A republicação falhou; rode 'npx wrangler deploy'."
 fi
@@ -327,7 +327,7 @@ if [ "$PATCHED" = "1" ]; then
   echo "  O wrangler.toml foi editado (database_id e/ou SITE_ORIGIN):"
   echo "    git add wrangler.toml && git commit -m 'database_id e SITE_ORIGIN'"
   echo "  Sem esse commit, o arquivo do repositório continua com o valor de"
-  echo "  exemplo — funciona aqui e falha para quem publicar de outro lugar."
+  echo "  exemplo - funciona aqui e falha para quem publicar de outro lugar."
   echo
 fi
 echo "  Falta, quando você quiser:"

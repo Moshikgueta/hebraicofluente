@@ -16,7 +16,7 @@
  *
  * Esta tela também é a rede de segurança do caso chato: o pagamento cai mas a
  * confirmação demora. Ela espera, com limite, e explica o que fazer quando
- * desiste — nunca gira para sempre.
+ * desiste - nunca gira para sempre.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -127,7 +127,7 @@ export function ObrigadoClient({ slug }: { slug: string }) {
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
             Acontece com alguns cartões e com boleto: o banco leva um tempo para
-            responder. Você não precisa fazer nada — assim que a confirmação
+            responder. Você não precisa fazer nada - assim que a confirmação
             chegar, o acesso entra sozinho e o curso aparece em Meu Hebraico.
           </p>
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
@@ -157,7 +157,7 @@ export function ObrigadoClient({ slug }: { slug: string }) {
         </h1>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
           {phase === 'failed'
-            ? 'Nada foi cobrado. Pode ter sido o limite, um dado digitado errado ou uma recusa do banco — dá para tentar de novo com outro cartão ou por PIX.'
+            ? 'Nada foi cobrado. Pode ter sido o limite, um dado digitado errado ou uma recusa do banco - dá para tentar de novo com outro cartão ou por PIX.'
             : 'Se você já pagou, o acesso entra sozinho assim que a confirmação chegar: abra Meu Hebraico daqui a alguns minutos. Se não pagou, é só refazer.'}
         </p>
         <div className="flex flex-wrap gap-3">

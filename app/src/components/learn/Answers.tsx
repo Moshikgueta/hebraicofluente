@@ -3,7 +3,7 @@
 /* The answer surfaces: one per gesture.
  * ─────────────────────────────────────────────────────────────────────────
  * Each of these is how a learner ANSWERS, and they are deliberately different
- * physical actions — tapping one of four, assembling a syllable, ordering
+ * physical actions - tapping one of four, assembling a syllable, ordering
  * tiles right to left, pairing two columns, typing. A course whose every
  * question is answered the same way stops being read after the third lesson;
  * the eye learns the layout and the brain follows the shape of the options.
@@ -15,7 +15,7 @@
  *     size, and is also the only version that works from a keyboard;
  *   · every target is at least 44px on its shortest side;
  *   · nothing is undoable only by getting it right. There is always a way back
- *     — remove a tile, clear the build, change the pairing.
+ *     - remove a tile, clear the build, change the pairing.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -28,7 +28,7 @@ import { rng, shuffled } from '@/lib/engine/rng';
 
 /* ── build a syllable ───────────────────────────────────────────────────
    The consonant is on screen. Tapping a vowel puts it ON the consonant, in
-   place, at full size — so the learner watches the sign attach instead of
+   place, at full size - so the learner watches the sign attach instead of
    being told that it does. That is the whole lesson of nikud in one gesture. */
 export function BuildSyllable({
   consonant, vowels, answer, sound, settled, onAnswer
@@ -77,7 +77,7 @@ export function BuildSyllable({
    left has not read it, so the tray builds into an RTL row: the first tile
    tapped lands on the RIGHT, where the first letter of a Hebrew word goes.
 
-   The tiles are CLUSTERS — a consonant with its own marks — because anything
+   The tiles are CLUSTERS - a consonant with its own marks - because anything
    smaller would put a vowel sign on the table with nothing to sit on. */
 export function BuildWord({
   tiles, target, hintPt, settled, onAnswer
@@ -103,7 +103,7 @@ export function BuildWord({
       >
         {built.length === 0 ? (
           <span className="font-ui text-[13px] text-ink-muted">
-            toque nas peças na ordem — a primeira letra fica à direita
+            toque nas peças na ordem - a primeira letra fica à direita
           </span>
         ) : built.map((t, pos) => (
           <button
@@ -152,7 +152,7 @@ export function BuildWord({
 
 /* ── match ──────────────────────────────────────────────────────────────
    Tap one, tap its pair. A wrong pairing is not a failure state: it flashes,
-   it is remembered for the score, and the exercise carries on — the learner is
+   it is remembered for the score, and the exercise carries on - the learner is
    here to finish the pairing, not to be stopped by it. */
 export function MatchPairs({
   pairs, leftKind, rightKind, labelLeft, labelRight, settled, seed, onAnswer
@@ -164,7 +164,7 @@ export function MatchPairs({
   settled: boolean;
   /** The exercise id. The right column is shuffled FROM it, not from
    *  Math.random(), so a learner who leaves and comes back finds the same
-   *  board — the same rule the generators follow. */
+   *  board - the same rule the generators follow. */
   seed: string;
   onAnswer: (correct: boolean, misses: [string, string][]) => void;
 }) {
@@ -254,7 +254,7 @@ export function MatchPairs({
 }
 
 /* ── type it ────────────────────────────────────────────────────────────
-   Retrieval, not recognition, and much harder — so the answer is short, the
+   Retrieval, not recognition, and much harder - so the answer is short, the
    matching is forgiving (accents are a stress hint in this course, not part of
    the answer), and the field scrolls itself into view, because a phone keyboard
    covers the bottom half of the screen and an input the learner cannot see is
@@ -323,7 +323,7 @@ export function TypeAnswer({
 /* ── the hint ladder ────────────────────────────────────────────────────
    Hints cost nothing and are never the answer. The first is a nudge, the
    second is concrete, and after that the learner is invited to answer and be
-   told why — which teaches more than a third hint would. */
+   told why - which teaches more than a third hint would. */
 export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string | null }) {
   const [shown, setShown] = useState(0);
   const available = hints?.length ?? 0;

@@ -7,7 +7,7 @@
  *
  * O que NÃO está aqui, de propósito:
  *   · senha, em qualquer forma. O hash vive no servidor e não sai de lá.
- *   · progresso. O progresso é do aparelho (lib/state), não da conta — ver
+ *   · progresso. O progresso é do aparelho (lib/state), não da conta - ver
  *     a nota em account/store.tsx sobre por que ainda é assim.
  *   · cartão, CPF, endereço. A plataforma nunca vê: quem processa é a
  *     Mercado Pago, e o que volta é um id de pagamento.
@@ -16,7 +16,7 @@
 export type Account = {
   id: string;
   name: string;
-  /** Sempre em minúsculas e sem espaços nas pontas — normalizado na entrada. */
+  /** Sempre em minúsculas e sem espaços nas pontas - normalizado na entrada. */
   email: string;
   createdAt: string;
 };

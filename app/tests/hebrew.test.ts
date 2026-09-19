@@ -10,7 +10,7 @@ import {
 describe('clusters', () => {
   it('keeps a consonant and its pointing together', () => {
     /* מַיִם is 5 codepoints and 3 letters. Anything that treats it as 5 units
-       — including [...str] — puts a vowel mark on its own. */
+       - including [...str] - puts a vowel mark on its own. */
     expect([...'מַיִם'].length).toBe(5);
     expect(clusters('מַיִם')).toEqual(['מַ', 'יִ', 'ם']);
   });

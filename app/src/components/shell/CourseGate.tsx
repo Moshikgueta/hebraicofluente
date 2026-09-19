@@ -18,8 +18,8 @@
  * Ele é do lado do cliente. Na build estática de hoje, o conteúdo do curso
  * está DENTRO do pacote JavaScript que o navegador baixa: quem souber abrir
  * as ferramentas de desenvolvedor lê tudo sem pagar. Isto é um portão de
- * produto — evita que alguém entre por engano e dá o caminho certo a quem
- * não comprou —, não um controle de acesso.
+ * produto - evita que alguém entre por engano e dá o caminho certo a quem
+ * não comprou -, não um controle de acesso.
  *
  * O controle de verdade tem duas metades e as duas estão planejadas:
  *   · o Worker recusa as ROTAS pagas sem cookie de sessão (worker/, §2);
@@ -63,7 +63,7 @@ export function CourseGate({ children }: { children: ReactNode }) {
   if (allowed) return <>{children}</>;
 
   /* O redirect já foi disparado; isto é o que se vê no intervalo de um quadro
-     — e o que fica na tela se o roteador falhar. Por isso tem link, e não um
+     - e o que fica na tela se o roteador falhar. Por isso tem link, e não um
      "carregando" eterno. */
   return (
     <div className="focus-col grid gap-5 py-6">

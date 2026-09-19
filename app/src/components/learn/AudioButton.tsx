@@ -1,12 +1,12 @@
 'use client';
 
-/* Audio playback — and, more often today, the honest absence of it.
+/* Audio playback - and, more often today, the honest absence of it.
  * ─────────────────────────────────────────────────────────────────────────
  * There is no recorded audio for this course yet. Two things this component
  * refuses to do about that:
  *
  *   · it does not fall back to the browser's speech engine. `he-IL` synthesis
- *     is poor and most engines ignore nikud entirely — which makes it worse
+ *     is poor and most engines ignore nikud entirely - which makes it worse
  *     than useless in a course whose whole claim is "this letter makes this
  *     sound". A learner would rehearse a wrong pronunciation and never know.
  *   · it does not pretend. A missing clip renders as a labelled, disabled
@@ -37,7 +37,7 @@ export function AudioButton({
   audioId: string | null;
   label?: string;
   size?: 'sm' | 'md' | 'lg';
-  /** Offer a 0.7× pass as well — useful on syllables and long words. */
+  /** Offer a 0.7× pass as well - useful on syllables and long words. */
   slow?: boolean;
 }) {
   const ref = useRef<HTMLAudioElement | null>(null);

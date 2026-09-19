@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { AuthForm } from '@/components/platform/AuthForm';
 
 export const metadata: Metadata = {
-  title: 'Criar conta — Hebraico Fluente',
+  title: 'Criar conta - Hebraico Fluente',
   description: 'Crie sua conta no Hebraico Fluente.'
 };
 

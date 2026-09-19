@@ -10,7 +10,7 @@
  * preço sem obrigar a clicar para descobrir.
  *
  * Não faz: contagem regressiva falsa, "restam 3 vagas", depoimento inventado.
- * Não porque seja feio — porque é mentira, e porque o produto aqui é um curso
+ * Não porque seja feio - porque é mentira, e porque o produto aqui é um curso
  * que a pessoa vai usar por meses. Quem compra por pressão pede reembolso.
  *
  * Os números vêm do catálogo e do curso construído, nunca escritos à mão: uma
@@ -52,7 +52,7 @@ export function HomeClient() {
               Você olha para o hebraico e vê um monte de letra igual.
             </h1>
             <p className="text-[17px] sm:text-[18px] leading-relaxed text-ink-body max-w-[52ch]">
-              São {course.totalLetters} letras — e elas não são iguais, só ainda não foram
+              São {course.totalLetters} letras - e elas não são iguais, só ainda não foram
               separadas. Aqui você aprende uma de cada vez, na ordem em que cada
               uma rende mais, e lê uma palavra de verdade já na terceira lição.
             </p>
@@ -71,7 +71,7 @@ export function HomeClient() {
           {/* O espécime.
               Nada de imagem de banco: as letras de verdade, na fonte de
               verdade, com os sinais de vogal posicionados como vão aparecer na
-              aula. É a prova mais barata que existe — e agora ela ocupa o
+              aula. É a prova mais barata que existe - e agora ela ocupa o
               lugar que merece.
 
               Claro sobre escuro, e grande. O hebraico é o ativo mais bonito
@@ -94,7 +94,7 @@ export function HomeClient() {
               <p className="font-ui text-[13.5px] leading-relaxed text-center
                             text-[color-mix(in_srgb,var(--paper)_78%,transparent)]">
                 Três letras e dois sinais. Você já consegue ler isto sozinho
-                depois de dois dias — e é assim que o resto do curso vai.
+                depois de dois dias - e é assim que o resto do curso vai.
               </p>
             </div>
           </Card>
@@ -113,7 +113,7 @@ export function HomeClient() {
           {[
             {
               t: 'Tudo de uma vez',
-              b: 'A tabela com as 22 letras na primeira página. Ninguém decora 22 formas novas num dia — e ninguém precisa.'
+              b: 'A tabela com as 22 letras na primeira página. Ninguém decora 22 formas novas num dia - e ninguém precisa.'
             },
             {
               t: 'Letras que se parecem',
@@ -140,7 +140,7 @@ export function HomeClient() {
           id="plataforma"
           eyebrowPt="Dentro da plataforma"
           titlePt="Não é um PDF com vídeo em cima."
-          leadPt="Cada lição termina com você fazendo alguma coisa — e o curso sabe o que você errou."
+          leadPt="Cada lição termina com você fazendo alguma coisa - e o curso sabe o que você errou."
         />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
           {[
@@ -153,7 +153,7 @@ export function HomeClient() {
             { i: '◎', t: 'O mapa inteiro visível',
               b: 'Sete módulos, sempre à vista. Você sabe onde está, o que falta e o que vem depois.' },
             { i: '◆', t: 'Sequência e conquistas',
-              b: 'Marca os dias seguidos sem te punir por faltar. Perder um dia não zera nada — isso afasta adulto.' },
+              b: 'Marca os dias seguidos sem te punir por faltar. Perder um dia não zera nada - isso afasta adulto.' },
             { i: '★', t: 'Exame e certificado',
               b: 'No fim, um exame em cinco partes com nota por parte. Passou, sai um certificado com o seu nome, para compartilhar.' }
           ].map(x => (
@@ -240,7 +240,7 @@ export function HomeClient() {
           </h2>
           <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[46ch]">
             Depois dela você já não olha para o alfabeto do mesmo jeito. É esse o
-            objetivo do primeiro dia — e o resto do curso é feito para o segundo.
+            objetivo do primeiro dia - e o resto do curso é feito para o segundo.
           </p>
           <LinkButton href={primary.href} size="lg">{primary.label}</LinkButton>
           <p className="font-ui text-[13px] text-ink-muted">

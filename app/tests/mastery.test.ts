@@ -2,7 +2,7 @@
  *
  * The migration tests are the ones that matter most. There are learners with v1
  * state in a browser right now, and that state is the only record their work
- * exists — so "the upgrade lost my streak" is not a bug report we can answer. */
+ * exists - so "the upgrade lost my streak" is not a bug report we can answer. */
 
 import { describe, expect, it } from 'vitest';
 import { migrate } from '@/lib/state/migrate';
@@ -69,7 +69,7 @@ describe('migration v1 → v2', () => {
     expect(letterMastery(s, 'mem')).toBe('novo');
   });
 
-  it('is idempotent — migrating twice changes nothing', () => {
+  it('is idempotent - migrating twice changes nothing', () => {
     expect(migrate(s)).toEqual(s);
   });
 });
@@ -239,7 +239,7 @@ describe('what the review asks for', () => {
 
   it('sees a skill that slipped even when the SRS queue is quiet', () => {
     /* The old model only had the queue, which goes silent as soon as an
-       interval pushes an item past today — for a letter still being failed. */
+       interval pushes an item past today - for a letter still being failed. */
     let s: LearnerState = EMPTY_STATE;
     for (let i = 0; i < 5; i++) s = recordSkill(s, 'qof', 'ouvir', true, day);
     s = recordSkill(s, 'qof', 'ouvir', false, day);

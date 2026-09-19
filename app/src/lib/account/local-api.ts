@@ -7,7 +7,7 @@
  * nenhum, então sem isto as telas de conta e checkout não teriam como ser
  * vistas, revisadas ou testadas.
  *
- * Honestidade: ele guarda senha com o MESMO PBKDF2 do servidor — 310.000
+ * Honestidade: ele guarda senha com o MESMO PBKDF2 do servidor - 310.000
  * iterações, SHA-256, sal de 16 bytes, aleatório por conta. Um mock que
  * guarda senha em texto puro ensina o formato errado para quem for ler o
  * código depois, e mais cedo ou mais tarde alguém copia o mock.
@@ -26,7 +26,7 @@ import { cents } from '@/lib/catalog';
 
 const KEY = 'hf-platform-local-v1';
 
-/* Os mesmos parâmetros do Worker. Se um dos dois mudar, os dois mudam — o
+/* Os mesmos parâmetros do Worker. Se um dos dois mudar, os dois mudam - o
    hash gravado carrega o número de iterações justamente para que uma conta
    antiga continue abrindo depois de uma subida de custo. */
 const ITERATIONS = 310_000;
@@ -87,7 +87,7 @@ async function verifyPassword(password: string, stored: string): Promise<boolean
   if (scheme !== 'pbkdf2') return false;
   const got = await derive(password, unb64(salt!), Number(iter));
   /* Comparação de tempo constante. Aqui, num mock de navegador, não protege
-     de nada — mas é o formato que o Worker copia, e lá protege. */
+     de nada - mas é o formato que o Worker copia, e lá protege. */
   if (got.length !== hash!.length) return false;
   let diff = 0;
   for (let i = 0; i < got.length; i++) diff |= got.charCodeAt(i) ^ hash!.charCodeAt(i);
@@ -171,7 +171,7 @@ export class LocalApi implements PlatformApi {
       amountCents: cents(course.price.brl),
       method,
       /* Pendente, e não pago. O acesso é liberado por `orderStatus`, exatamente
-         como no servidor — a tela de checkout não ganha um caminho especial
+         como no servidor - a tela de checkout não ganha um caminho especial
          que só ela conhece. */
       status: 'pending',
       createdAt: new Date().toISOString(),
@@ -189,7 +189,7 @@ export class LocalApi implements PlatformApi {
   }
 
   /** No modo demonstração o pedido "compensa" na primeira consulta feita pelo
-   *  menos três segundos depois — tempo de a tela de PIX existir e ser vista,
+   *  menos três segundos depois - tempo de a tela de PIX existir e ser vista,
    *  sem transformar a revisão do produto numa espera. */
   async orderStatus(orderId: string): Promise<Order> {
     const s = read();

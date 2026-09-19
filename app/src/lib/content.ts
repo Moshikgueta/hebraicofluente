@@ -2,7 +2,7 @@
  *
  * Content is imported, not fetched: it is small, it never changes at runtime,
  * and importing it lets every route prerender. The `alphabetSoFar` field on a
- * letter is the load-bearing one — see lib/engine/exercises.ts. */
+ * letter is the load-bearing one - see lib/engine/exercises.ts. */
 
 import courseJson from '@content/course.json';
 import nikudJson from '@content/nikud.json';
@@ -96,7 +96,7 @@ export type NikudSign = {
   position: string;
   /** The syllable said out loud. */
   audioId: string;
-  /** The sign's own name said out loud — "patach". */
+  /** The sign's own name said out loud - "patach". */
   nameAudioId: string;
 };
 
@@ -129,7 +129,7 @@ export const scenesForOrder = (order: number): Scene[] =>
 
 /* ── stroke geometry ────────────────────────────────────────────────────
    Generated with the stroke-order diagrams, from the same font outline, in the
-   same run — so the count and the starting points can never disagree with the
+   same run - so the count and the starting points can never disagree with the
    printed page. `null` for a letter with no data is a normal answer: the
    tracing screen falls back to the static diagram. */
 export type Stroke = {

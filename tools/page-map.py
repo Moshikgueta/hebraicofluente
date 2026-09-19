@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""page-map.py — reads a printed book and reports the real first page of each
+"""page-map.py - reads a printed book and reports the real first page of each
 section, so the table of contents can carry true page numbers.
 
     python3 tools/page-map.py pdf/hebraico-moderno-workbook.pdf > data/page-map.json

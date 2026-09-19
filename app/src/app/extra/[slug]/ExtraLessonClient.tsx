@@ -2,15 +2,15 @@
 
 /* Modules 6 and 7 as lessons.
  *
- * They introduce no letter, so they do not fit the five-stage letter template —
+ * They introduce no letter, so they do not fit the five-stage letter template -
  * and forcing them into it would be worse than useless: there is no new glyph
  * to trace and no new syllable table. What they do have is the plan's own three
  * lessons, so that is the shape:
  *
- *   module 6 — 16: the three letters without their dot
+ *   module 6 - 16: the three letters without their dot
  *              17: the five final forms, together for the first time
  *              18: read without nikud
- *   module 7 — 19: the gerech
+ *   module 7 - 19: the gerech
  *              20: read the loanwords
  *              21: the quiz that closes the alphabet
  *
@@ -97,7 +97,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
                   type="button"
                   onClick={() => setStage(s.n)}
                   aria-current={isNow ? 'step' : undefined}
-                  aria-label={`Etapa ${s.n} de 3 — ${s.label}`}
+                  aria-label={`Etapa ${s.n} de 3 - ${s.label}`}
                   className="w-full min-h-[44px] grid content-center gap-1.5"
                 >
                   <span className={`block h-1.5 rounded-full transition-colors
@@ -126,7 +126,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
               else router.push('/desafio-final');
             }}
             nextLabel={nextModule && nextModule.n <= 7
-              ? `Módulo ${nextModule.n} — ${nextModule.titlePt}`
+              ? `Módulo ${nextModule.n} - ${nextModule.titlePt}`
               : 'Ir para o desafio final'}
           />
         ) : slug === 'sem-o-ponto' ? (
@@ -165,8 +165,8 @@ function DageshStage({ onDone }: { onDone: () => void }) {
       <div className="grid gap-2">
         <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Sem o ponto</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
-          Três letras — <He size="inline">ב</He>, <He size="inline">כ</He> e{' '}
-          <He size="inline">פ</He> — têm dois sons. <Prose text={D.rulePt} />
+          Três letras - <He size="inline">ב</He>, <He size="inline">כ</He> e{' '}
+          <He size="inline">פ</He> - têm dois sons. <Prose text={D.rulePt} />
         </p>
       </div>
 
@@ -209,7 +209,7 @@ function DageshStage({ onDone }: { onDone: () => void }) {
 
           <p className="text-[14.5px] leading-relaxed text-ink-body"><Prose text={L.notePt} /></p>
           <p className="font-ui text-[12.5px] text-ink-muted">
-            À mão ninguém escreve o daguesh — a cursiva é a mesma nos dois casos.
+            À mão ninguém escreve o daguesh - a cursiva é a mesma nos dois casos.
             Só o contexto distingue.
           </p>
         </Card>
@@ -231,7 +231,7 @@ function FinalsStage({ onDone }: { onDone: () => void }) {
         <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">As cinco formas finais</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
           Você conheceu cada uma junto com a sua letra. Aqui elas estão juntas pela
-          primeira vez — e é assim, em bloco, que elas se fixam.
+          primeira vez - e é assim, em bloco, que elas se fixam.
         </p>
       </div>
 
@@ -257,14 +257,14 @@ function FinalsStage({ onDone }: { onDone: () => void }) {
           O atalho visual
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body">
-          Quatro das cinco descem abaixo da linha —{' '}
-          <HeSeq items={descends.map(x => x.fin)} size="word" sep={null} /> — e só{' '}
+          Quatro das cinco descem abaixo da linha -{' '}
+          <HeSeq items={descends.map(x => x.fin)} size="word" sep={null} /> - e só{' '}
           <He size="word">{stays[0]?.fin ?? ''}</He> fecha em cima.
           Se desceu, é fim de palavra.
         </p>
       </Card>
 
-      <Button size="lg" full onClick={onDone}>Continuar — ler sem nikud</Button>
+      <Button size="lg" full onClick={onDone}>Continuar - ler sem nikud</Button>
     </div>
   );
 }
@@ -277,7 +277,7 @@ function UnpointedStage({
   const U = extras.unpointed;
 
   if (phase === 'quiz') {
-    return <ExercisePlayer exercises={quiz} title="Módulo 6 — fecho" onDone={onDone} />;
+    return <ExercisePlayer exercises={quiz} title="Módulo 6 - fecho" onDone={onDone} />;
   }
 
   return (
@@ -292,7 +292,7 @@ function UnpointedStage({
       </div>
 
       <Button size="lg" full onClick={() => { track('checkpoint_started', { checkpointId: 'cp6' }); setPhase('quiz'); }}>
-        Estou pronto — fazer o fecho do módulo
+        Estou pronto - fazer o fecho do módulo
       </Button>
     </div>
   );
@@ -353,12 +353,12 @@ function GerechStage({ onDone }: { onDone: () => void }) {
       <Card tone="wash" className="p-5">
         <p className="text-[15px] leading-relaxed text-ink-body">
           Estes três sons quase só aparecem em nomes próprios e em palavras
-          importadas — que é exatamente onde um brasileiro mais acerta, porque já
+          importadas - que é exatamente onde um brasileiro mais acerta, porque já
           sabe como elas soam.
         </p>
       </Card>
 
-      <Button size="lg" full onClick={onDone}>Continuar — ler as palavras</Button>
+      <Button size="lg" full onClick={onDone}>Continuar - ler as palavras</Button>
     </div>
   );
 }
@@ -415,7 +415,7 @@ function ClosingResult({
         title={strong ? 'Módulo concluído.' : 'Vale repetir antes de seguir.'}
         body={strong
           ? 'Este é o módulo que separa quem decora de quem lê.'
-          : 'Sem pressa e sem penalidade — refaça e veja o que ainda escapa.'}
+          : 'Sem pressa e sem penalidade - refaça e veja o que ainda escapa.'}
       >
         <Button variant={strong ? 'secondary' : 'primary'} onClick={onRetry}>Refazer</Button>
         <Button variant={strong ? 'primary' : 'secondary'} onClick={onNext}>{nextLabel}</Button>

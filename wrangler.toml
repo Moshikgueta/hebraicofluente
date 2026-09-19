@@ -1,4 +1,4 @@
-# Hebraico Fluente — Cloudflare Worker.
+# Hebraico Fluente - Cloudflare Worker.
 #
 # O Worker roda ANTES dos arquivos estáticos e faz três coisas: responde a
 # /api/*, aplica o portão das rotas pagas e entrega o export do Next.
@@ -22,7 +22,7 @@ compatibility_date = "2026-09-01"
 directory = "./app/out"
 binding = "ASSETS"
 run_worker_first = true
-# O 404 do próprio site, com o layout do site — e não a página crua do
+# O 404 do próprio site, com o layout do site - e não a página crua do
 # servidor.
 not_found_handling = "404-page"
 
@@ -38,11 +38,11 @@ database_name = "hebraico-fluente"
 database_id = "af5fad4b-8a1d-4512-8024-f13d698ddd73"
 
 # A varredura de pagamentos pendentes. O webhook da Mercado Pago é assinado e
-# confiável, e mesmo assim pode não chegar — ver worker/src/reconcile.js.
+# confiável, e mesmo assim pode não chegar - ver worker/src/reconcile.js.
 [triggers]
 crons = ["*/5 * * * *"]
 
-# ⚠ REGRA DE PROPRIEDADE — cada nome de variável vive em UM lugar só.
+# ⚠ REGRA DE PROPRIEDADE - cada nome de variável vive em UM lugar só.
 #
 #   · Os nomes abaixo pertencem a ESTE ARQUIVO. Nunca os acrescente também
 #     como variável ou segredo no painel: cada publicação reaplica esta lista,
@@ -59,11 +59,11 @@ crons = ["*/5 * * * *"]
 # Origem absoluta do site. O cron não tem requisição de onde deduzi-la.
 SITE_ORIGIN = "https://hebraico-fluente.moshikg10.workers.dev"
 # "1" usa o checkout de teste da Mercado Pago (não cobra nada). Em produção,
-# "0" — e a diferença é visível: o sandbox manda o comprador para uma tela
+# "0" - e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.
 MP_SANDBOX = "1"
 # Custo do hash de senha. O padrão do código (25.000) foi dimensionado para o
-# limite de 10 ms de CPU do plano GRATUITO — acima disso o Worker é morto no
+# limite de 10 ms de CPU do plano GRATUITO - acima disso o Worker é morto no
 # meio do cálculo e toda conta/login devolve 500.
 #
 # No Workers Paid, descomente as duas linhas abaixo e o bloco [limits] acima

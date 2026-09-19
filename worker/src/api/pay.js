@@ -4,9 +4,9 @@
  * coisa no sistema inteiro que libera acesso, e ela é chamada pelos três
  * caminhos pelos quais um pagamento pode chegar até nós:
  *
- *   webhook    — a Mercado Pago avisa;
- *   verify     — o comprador está com a tela aberta e perguntamos;
- *   reconcile  — o cron varre pendentes antigos.
+ *   webhook    - a Mercado Pago avisa;
+ *   verify     - o comprador está com a tela aberta e perguntamos;
+ *   reconcile  - o cron varre pendentes antigos.
  *
  * Um caminho só não basta: webhook se perde, aba fecha, e o cron sozinho
  * faria o comprador esperar dez minutos olhando para "aguardando". Três
@@ -60,14 +60,14 @@ export async function create({ request, env }) {
   const course = getCourse(body.courseSlug);
   if (!isSellable(course)) return fail('server', 404);
 
-  /* A plataforma pode estar no ar antes de a conta da Mercado Pago existir —
+  /* A plataforma pode estar no ar antes de a conta da Mercado Pago existir -
      e esse é um estado normal, não uma falha. Sem token não se cria pedido
      nenhum: melhor uma tela que diz "o pagamento ainda não está ligado" do
      que um 502 genérico e um pedido pendente que nunca vai compensar. */
   if (!env.MP_ACCESS_TOKEN) return fail('payments-off', 503);
 
   /* Já é dono: não cobra de novo. Vender duas vezes a mesma coisa para a mesma
-     pessoa é estorno garantido — e é um erro fácil de cometer quando o
+     pessoa é estorno garantido - e é um erro fácil de cometer quando o
      comprador abre o checkout por um link antigo. */
   if (await hasEntitlement(env, account.id, course.slug)) {
     return fail('server', 409);
@@ -122,7 +122,7 @@ export async function verify({ request, env }) {
   const id = new URL(request.url).searchParams.get('order');
   const order = await getOrder(env, id);
   /* O pedido de outra pessoa responde igual a um pedido inexistente. Um id de
-     pedido não é credencial — ele aparece na URL, no histórico, na captura de
+     pedido não é credencial - ele aparece na URL, no histórico, na captura de
      tela colada num chamado de suporte. */
   if (!order || order.account_id !== account.id) return fail('server', 404);
 
@@ -164,7 +164,7 @@ export async function webhook({ request, env }) {
     /* 401, e não 200: um remetente legítimo com segredo errado precisa saber
        que está sendo recusado, em vez de achar que entregou. E o código é
        específico, porque quem lê esta resposta é o painel da Mercado Pago e um
-       operador humano — não o app. */
+       operador humano - não o app. */
     return json({ error: 'bad-signature' }, 401);
   }
 
@@ -172,7 +172,7 @@ export async function webhook({ request, env }) {
      consulta nossa. */
   await settleFromPaymentId(env, String(dataId), 'webhook');
   /* 200 sempre, depois de processar. Um erro nosso devolvido aqui faz a
-     Mercado Pago reenviar — o que é bom — mas devolver erro por um pagamento
+     Mercado Pago reenviar - o que é bom - mas devolver erro por um pagamento
      que simplesmente não é nosso a faria reenviar para sempre. */
   return json({ ok: true });
 }
@@ -247,7 +247,7 @@ async function applyPayment(env, order, payment, source) {
   if (order.status === 'paid') return 'paid';
 
   /* O valor. Um pagamento aprovado de R$ 1,00 apontando para um pedido de
-     R$ 147,00 não é um pagamento deste pedido — é alguém que montou o próprio
+     R$ 147,00 não é um pagamento deste pedido - é alguém que montou o próprio
      link com o nosso external_reference. */
   const paidCents = Math.round(Number(payment.transaction_amount || 0) * 100);
   const currency = String(payment.currency_id || 'BRL');

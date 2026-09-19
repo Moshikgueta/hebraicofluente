@@ -4,11 +4,11 @@
  *
  * A vertical spine, not a winding cartoon path: the learner is an adult and
  * the question they are asking is "how far in am I, and what is left". The
- * whole journey is visible from the start — future lessons are dimmed, never
+ * whole journey is visible from the start - future lessons are dimmed, never
  * hidden, because hiding the road is what makes a course feel endless.
  *
  * On a phone the spine is right: one thing under another, scrolled with a
- * thumb. On a desk it was 3,500 pixels tall — the whole journey existed and
+ * thumb. On a desk it was 3,500 pixels tall - the whole journey existed and
  * you could never see it. So at 1024px the same data becomes a BOARD: the
  * seven units of the teaching plan side by side, each a panel with its letters
  * and its checkpoint, the course in about a screen and a half. */
@@ -38,7 +38,7 @@ export function CourseMapClient({ nodes }: { nodes: MapNode[] }) {
         <h1 className="text-[27px] sm:text-[33px] font-bold">O caminho inteiro</h1>
         <p className="font-ui text-[15px] text-ink-muted max-w-[52ch]">
           {course.totalLetters} letras em {course.modules.filter(m => m.letterIds.length).length} módulos,
-          na ordem do plano de aulas — não na ordem do dicionário.
+          na ordem do plano de aulas - não na ordem do dicionário.
         </p>
         <ProgressBar
           value={p.progress}
@@ -72,7 +72,7 @@ function Board() {
                                       text-[var(--green)] grid place-items-center text-[13px]">◇</span>
           <span className="min-w-0">
             <span className="block font-display text-[16px] font-semibold text-ink">
-              Comece aqui — como o hebraico funciona
+              Comece aqui - como o hebraico funciona
             </span>
             <span className="block font-ui text-[13px] text-ink-muted">
               Direção, os sinais de vogal, como praticar
@@ -81,7 +81,7 @@ function Board() {
         </Link>
       </Card>
 
-      {/* The five modules that teach letters, then — on their own row — the two
+      {/* The five modules that teach letters, then - on their own row - the two
           that teach no new letter. That split is the teaching plan's own, and
           on a board it is worth showing rather than burying in the flow. */}
       <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 items-start">
@@ -142,7 +142,7 @@ function ModulePanel({ module: m }: { module: CourseModule }) {
 
       {isExtra ? (
         <div className="p-4 grid gap-1">
-          {/* No new letter here, so the panel says what the module is FOR —
+          {/* No new letter here, so the panel says what the module is FOR -
               its own milestone, not a generic line repeated twice. */}
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
             <Prose text={m.milestonePt} />
@@ -194,7 +194,7 @@ function ModulePanel({ module: m }: { module: CourseModule }) {
           <span className="ml-auto font-ui text-[12px] text-ink-muted tabular-nums">
             {p.state.checkpoints[m.checkpoint.id]?.best != null
               ? `${Math.round(p.state.checkpoints[m.checkpoint.id]!.best! * 100)}%`
-              : '—'}
+              : '-'}
           </span>
         </Link>
       )}
@@ -236,7 +236,7 @@ function MapRow({ node, state }: { node: MapNode; state: RowState }) {
         </div>
         {m.letterIds.length > 0 && (
           <p className="font-ui text-[13px] text-ink-muted mt-1">
-            {m.letterIds.length} letras · lições {m.lessons[0]?.n}–{m.lessons[m.lessons.length - 1]?.n}
+            {m.letterIds.length} letras · lições {m.lessons[0]?.n}-{m.lessons[m.lessons.length - 1]?.n}
           </p>
         )}
         {m.letterIds.length === 0 && (

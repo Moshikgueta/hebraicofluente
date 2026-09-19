@@ -13,7 +13,7 @@ const glyphsUpTo = (order: number) =>
   letters.filter(l => l.order <= order)
     .flatMap(l => (l.finalForm ? [l.letter, l.finalForm] : [l.letter]));
 
-describe('module 6 — dagesh and the final forms', () => {
+describe('module 6 - dagesh and the final forms', () => {
   it('pairs each dotted letter with a letter that exists', () => {
     for (const D of extras.dagesh.letters) {
       const L = letters.find(x => x.id === D.id);
@@ -79,7 +79,7 @@ describe('module 6 — dagesh and the final forms', () => {
   });
 });
 
-describe('module 7 — the gerech', () => {
+describe('module 7 - the gerech', () => {
   it('spells each letter as base + U+05F3, not an ASCII apostrophe', () => {
     for (const g of extras.gerech.letters) {
       expect(g.he).toBe(g.base + '׳');

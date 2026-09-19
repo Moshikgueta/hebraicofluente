@@ -1,17 +1,17 @@
 'use client';
 
-/* A página de um curso — a mesma para o que está à venda e para o que não está.
+/* A página de um curso - a mesma para o que está à venda e para o que não está.
  * ─────────────────────────────────────────────────────────────────────────
  * É aqui que cai quem clica num curso trancado, e o desenho parte de uma
- * escolha: a página de um curso "em breve" mostra TUDO — o que ensina, os
- * módulos, o resultado no fim — e no lugar do botão de compra diz o que
+ * escolha: a página de um curso "em breve" mostra TUDO - o que ensina, os
+ * módulos, o resultado no fim - e no lugar do botão de compra diz o que
  * acontece quando ele sair. O contrário (uma página vazia com "aguarde")
  * desperdiça a única visita em que a pessoa estava interessada.
  *
  * O botão muda com o estado da conta e nunca mente:
  *   já tem      → Continuar (vai para o painel)
  *   à venda     → Desbloquear curso (vai para o checkout)
- *   em breve    → Avise-me — que hoje é um link para a página de dúvidas,
+ *   em breve    → Avise-me - que hoje é um link para a página de dúvidas,
  *                 porque prometer aviso por e-mail sem ter a lista montada
  *                 é uma promessa que ninguém cumpre.
  */
@@ -89,7 +89,7 @@ export function CourseClient({ slug }: { slug: string }) {
           id="resultado"
           eyebrowPt="No fim deste curso"
           titlePt="O que você vai conseguir fazer."
-          leadPt="Escrito como coisa que se faz, não como tema que se estuda — é assim que dá para conferir se aconteceu."
+          leadPt="Escrito como coisa que se faz, não como tema que se estuda - é assim que dá para conferir se aconteceu."
         />
         <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0">
           {c.outcomesPt.map(o => (
@@ -180,7 +180,7 @@ export function CourseClient({ slug }: { slug: string }) {
             </h2>
             <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[52ch]">
               {open
-                ? 'O acesso é liberado assim que o pagamento é confirmado — sem espera, sem liberação manual, sem e-mail para procurar na caixa de spam.'
+                ? 'O acesso é liberado assim que o pagamento é confirmado - sem espera, sem liberação manual, sem e-mail para procurar na caixa de spam.'
                 : 'Este curso está em produção. Quando sair, entra na mesma conta e continua de onde o anterior parou.'}
             </p>
           </div>
@@ -191,7 +191,7 @@ export function CourseClient({ slug }: { slug: string }) {
   );
 }
 
-/* A caixa de decisão, repetida no topo e no fim — o mesmo componente nos dois
+/* A caixa de decisão, repetida no topo e no fim - o mesmo componente nos dois
    lugares, para que nunca discordem de preço. */
 function BuyBox({ slug }: { slug: string }) {
   const account = useAccount();

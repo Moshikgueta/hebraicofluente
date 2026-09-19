@@ -1,13 +1,13 @@
-# Dar, tirar e conferir acesso — pelo GitHub, sem terminal.
+# Dar, tirar e conferir acesso - pelo GitHub, sem terminal.
 #
 # É a ferramenta de operação da plataforma. Serve para:
 #
 #   · você mesmo entrar no curso antes de o pagamento estar ligado;
-#   · presentear alguém — uma amiga, um aluno beta — mesmo que ela AINDA NÃO
+#   · presentear alguém - uma amiga, um aluno beta - mesmo que ela AINDA NÃO
 #     tenha conta: o acesso fica guardado pelo e-mail e vira curso no momento
 #     do cadastro;
 #   · liberar um aluno que pagou por fora (transferência, dinheiro, brinde);
-#   · FECHAR o acesso depois de um estorno — que é a metade que todo mundo
+#   · FECHAR o acesso depois de um estorno - que é a metade que todo mundo
 #     esquece: devolver o dinheiro na Mercado Pago não tira o curso de
 #     ninguém, e sem isto a pessoa estudaria de graça por doze meses;
 #   · olhar o que existe no banco quando algo não bate.
@@ -83,10 +83,10 @@ jobs:
           MAIL="$(printf '%s' "${EMAIL:-}" | tr '[:upper:]' '[:lower:]' | xargs || true)"
 
           # Aspas simples viram o fim da string no SQL. Dobrar é o escape do
-          # SQLite — e um e-mail é entrada de usuário como qualquer outra.
+          # SQLite - e um e-mail é entrada de usuário como qualquer outra.
           SQLMAIL="$(printf '%s' "$MAIL" | sed "s/'/''/g")"
 
-          say "## Acesso — \`$ACAO\`"
+          say "## Acesso - \`$ACAO\`"
           say ""
 
           case "$ACAO" in
@@ -123,7 +123,7 @@ jobs:
                   WHERE a.email = '$SQLMAIL'" \
                 | tee -a "$GITHUB_STEP_SUMMARY"
               say '```'
-              # Sem isto não havia como ver um presente pendente — o convite
+              # Sem isto não havia como ver um presente pendente - o convite
               # existia no banco e sumia da vista. "Eu liberei para ela?" é a
               # pergunta seguinte a toda cortesia, e ficava sem resposta.
               say ""
@@ -152,7 +152,7 @@ jobs:
               # consulta escolheria a errada.
               #
               # O SELECT no VALUES resolve o e-mail para o id da conta, e some
-              # sem fazer nada se a conta não existir — por isso o conferimento
+              # sem fazer nada se a conta não existir - por isso o conferimento
               # logo abaixo, que é o que diz se funcionou.
               $W --command \
                 "INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
@@ -167,7 +167,7 @@ jobs:
                    FROM accounts WHERE email = '$SQLMAIL'"
 
               # Se a conta ainda não existe, o INSERT..SELECT acima não fez
-              # nada — e é aqui que entra o convite: o acesso fica guardado
+              # nada - e é aqui que entra o convite: o acesso fica guardado
               # pelo E-MAIL e vira curso no momento em que a pessoa se
               # cadastrar. É o que torna possível presentear alguém que ainda
               # nem ouviu falar do site.
@@ -189,7 +189,7 @@ jobs:
                 | tee -a "$GITHUB_STEP_SUMMARY"
               say '```'
               say ""
-              say "Tabela vazia acima significa que a conta ainda não existe —"
+              say "Tabela vazia acima significa que a conta ainda não existe -"
               say "e está tudo certo: o convite ficou guardado. Peça para ela"
               say "criar a conta com **esse mesmo e-mail** e o curso já estará lá."
               ;;
@@ -204,7 +204,7 @@ jobs:
                   WHERE course_slug = '$CURSO'
                     AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL');
                  -- O convite pendente morre junto. Sem isto, revogar e a
-                 -- pessoa se cadastrar depois devolveria o acesso — o
+                 -- pessoa se cadastrar depois devolveria o acesso - o
                  -- convite ainda estaria lá, esperando.
                  DELETE FROM invites
                   WHERE email = '$SQLMAIL' AND course_slug = '$CURSO' AND used_at IS NULL"

@@ -9,7 +9,7 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: 'Confirmando seu pagamento — Hebraico Fluente',
+  title: 'Confirmando seu pagamento - Hebraico Fluente',
   robots: { index: false, follow: false }
 };
 

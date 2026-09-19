@@ -1,6 +1,6 @@
 {
   "_": [
-    "O catálogo da plataforma. Uma linha por curso — é daqui que saem a página",
+    "O catálogo da plataforma. Uma linha por curso - é daqui que saem a página",
     "/cursos, a página de cada curso, o preço cobrado no checkout, o que a conta",
     "libera depois do pagamento e o que o painel mostra como 'próximo curso'.",
     "",
@@ -8,7 +8,7 @@
     "escrita: /cursos/<slug> é gerada para todo curso do arquivo.",
     "",
     "PREÇOS SÃO PROVISÓRIOS. Os valores abaixo são um ponto de partida plausível",
-    "para o mercado brasileiro, não uma decisão comercial — troque antes de",
+    "para o mercado brasileiro, não uma decisão comercial - troque antes de",
     "vender. O preço daqui é o que o checkout cobra: ele não é copiado para",
     "nenhum outro lugar."
   ],
@@ -29,11 +29,11 @@
       "taglinePt": "As 22 letras, os sinais de vogal e a leitura de palavras inteiras.",
       "summaryPt": "O curso que resolve o problema que trava todo mundo: você olha para o hebraico e não sabe por onde começar. Aqui você aprende letra por letra, na ordem em que elas rendem mais, e lê uma palavra de verdade já na terceira lição.",
       "outcomesPt": [
-        "Reconhecer as 22 letras — incluindo as cinco formas finais — fora de ordem e fora de contexto.",
+        "Reconhecer as 22 letras - incluindo as cinco formas finais - fora de ordem e fora de contexto.",
         "Ler qualquer palavra com nikud, mesmo sem saber o que ela significa.",
         "Ler sem nikud as palavras mais frequentes, que é como o hebraico realmente aparece.",
         "Escrever as letras à mão, na ordem certa dos traços, em letra de forma e cursiva.",
-        "Decodificar placas, rótulos e cardápios — o hebraico como ele aparece na rua."
+        "Decodificar placas, rótulos e cardápios - o hebraico como ele aparece na rua."
       ],
       "forWhomPt": [
         "Quem nunca viu o alfabeto hebraico e acha que não vai conseguir.",
@@ -88,7 +88,7 @@
       "status": "soon",
       "engine": null,
       "taglinePt": "Contar o que aconteceu, dizer o que vai fazer, sustentar uma conversa.",
-      "summaryPt": "O nível em que o hebraico deixa de ser frases soltas. Passado e futuro, conectivos, e texto de verdade — notícia curta, mensagem, recado.",
+      "summaryPt": "O nível em que o hebraico deixa de ser frases soltas. Passado e futuro, conectivos, e texto de verdade - notícia curta, mensagem, recado.",
       "outcomesPt": [
         "Contar o que você fez ontem e o que pretende fazer amanhã.",
         "Ligar ideias: porque, então, mas, quando, se.",
@@ -121,7 +121,7 @@
       "summaryPt": "O nível que separa quem estuda hebraico de quem usa hebraico: opinião, argumento, registro formal e informal, e escuta sem legenda.",
       "outcomesPt": [
         "Defender um ponto de vista e entender o contrário.",
-        "Usar os binyanim menos óbvios — hif'il, hitpa'el, nif'al — sem decorar tabela.",
+        "Usar os binyanim menos óbvios - hif'il, hitpa'el, nif'al - sem decorar tabela.",
         "Acompanhar um áudio em velocidade normal.",
         "Escrever um e-mail formal e uma mensagem informal, e saber a diferença."
       ],

@@ -11,7 +11,7 @@ export function Card({
     wash:    'bg-[var(--accent-wash)] border-transparent',
     /* O painel escuro. Existe para uma coisa só: pôr o hebraico em destaque
        de verdade, claro sobre escuro, do tamanho de um espécime tipográfico.
-       É o contraste que faz uma página parecer desenhada em vez de montada —
+       É o contraste que faz uma página parecer desenhada em vez de montada -
        e aqui ele cai sobre o ativo mais bonito que o produto tem.
        `--ink` já inverte no modo escuro, então o painel continua sendo o
        oposto do papel nos dois temas, em vez de sumir num deles. */

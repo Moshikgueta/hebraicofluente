@@ -5,7 +5,7 @@
  * · Criar conta e entrar demoram O MESMO TEMPO quando o e-mail não existe.
  *   `fakeVerify` queima exatamente as mesmas iterações do caminho real. Sem
  *   isso, a diferença de tempo de resposta responde "esse endereço é
- *   cliente?" — e a mensagem de erro genérica, que existe justamente para não
+ *   cliente?" - e a mensagem de erro genérica, que existe justamente para não
  *   responder, vira decoração.
  *
  * · O freio conta por IP E por e-mail. Só por IP, uma rede grande inteira
@@ -15,7 +15,7 @@
  *   uma escolha consciente: ela ENTREGA que o endereço tem conta. A
  *   alternativa (mandar um e-mail dizendo "alguém tentou criar conta com o
  *   seu endereço") exige uma fila de mensagens que esta plataforma ainda não
- *   tem, e a versão silenciosa — fingir que criou — deixaria o comprador numa
+ *   tem, e a versão silenciosa - fingir que criou - deixaria o comprador numa
  *   conta que não é dele, no meio de um pagamento. Entre vazar a existência
  *   do endereço e perder uma compra, escolhemos o primeiro, e está escrito.
  */
@@ -35,7 +35,7 @@ const emailOk = s => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(s || '').trim()
 const ip = request =>
   request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'unknown';
 
-/** O que o app recebe como sessão. Os direitos vêm do BANCO, sempre — o
+/** O que o app recebe como sessão. Os direitos vêm do BANCO, sempre - o
  *  cookie não os carrega, justamente para que um estorno feche na hora. */
 async function sessionBody(env, account) {
   return {
@@ -74,7 +74,7 @@ export async function signup({ request, env }) {
 
   /* Um presente esperando por este endereço vira acesso agora, antes de a
      pessoa ver qualquer tela. É a diferença entre "bem-vinda, seu curso está
-     aqui" e "você não tem este curso — fale com quem te convidou". */
+     aqui" e "você não tem este curso - fale com quem te convidou". */
   await inviteRedeem(env, account.id, email);
 
   return json(await sessionBody(env, account), 200,
@@ -104,12 +104,12 @@ export async function login({ request, env }) {
   }
 
   /* Subiu o custo do hash? Esta conta se atualiza sozinha, agora, com a senha
-     que acabou de ser digitada — o único instante em que ela existe em claro.
+     que acabou de ser digitada - o único instante em que ela existe em claro.
      Sem isto, elevar PBKDF2_ITERATIONS só protegeria quem se cadastrasse
      depois, e as contas antigas ficariam para trás para sempre.
 
      Só quando o alvo é MAIOR: nunca enfraquece um hash existente. E é feito
-     depois de responder ao aluno estar garantido — se falhar, ele entra do
+     depois de responder ao aluno estar garantido - se falhar, ele entra do
      mesmo jeito e a próxima vez tenta de novo. */
   const target = itersFor(env);
   if (Number(account.pass_iter) < target) {
@@ -143,7 +143,7 @@ export async function me({ request, env }) {
   const account = await findAccountById(env, sess.uid);
   /* A conta sumiu, ou a versão de sessão foi subida (troca de senha, suspeita
      de vazamento). O cookie ainda tem assinatura válida e mesmo assim não
-     vale mais — é para isto que `sv` existe. */
+     vale mais - é para isto que `sv` existe. */
   if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)) {
     return json({ error: 'not-signed-in' }, 401, { 'Set-Cookie': clearSessionCookie });
   }
@@ -152,16 +152,16 @@ export async function me({ request, env }) {
 }
 
 /**
- * GET /api/health — o que está configurado, sem dizer o quê.
+ * GET /api/health - o que está configurado, sem dizer o quê.
  * ─────────────────────────────────────────────────────────────────────────
  * Existe porque "500" não é diagnóstico. Quando a publicação vai ao ar com um
- * pedaço faltando — a ligação com o banco, a tabela, o segredo da sessão —
+ * pedaço faltando - a ligação com o banco, a tabela, o segredo da sessão -
  * toda rota de conta responde igual, e descobrir qual dos três é o problema
  * exige acesso ao painel que quem está depurando muitas vezes não tem à mão.
  *
  * Responde só BOOLEANOS. Nenhum valor, nenhum nome de variável, nenhuma
- * mensagem de erro do banco. O que um curioso aprende com isto — que o site
- * usa D1 e tem uma tabela `accounts` — já está no repositório, que é público.
+ * mensagem de erro do banco. O que um curioso aprende com isto - que o site
+ * usa D1 e tem uma tabela `accounts` - já está no repositório, que é público.
  * O que ele não aprende é nada que ajude a entrar.
  */
 export async function health({ env }) {
@@ -174,16 +174,16 @@ export async function health({ env }) {
     /* O cookie de sessão tem como ser assinado? `false` = SESSION_SECRET
        não foi definido, e aí NENHUM login funciona. */
     session: !!env.SESSION_SECRET,
-    /* Cobrança ligada? `false` é um estado legítimo — ver o checkout. */
+    /* Cobrança ligada? `false` é um estado legítimo - ver o checkout. */
     payments: !!env.MP_ACCESS_TOKEN,
     /* Webhook verificável? `false` faz /api/pay/webhook recusar tudo. */
     webhook: !!env.MP_WEBHOOK_SECRET,
-    /* O custo do hash de senha em vigor. Não é segredo — está no repositório
-       — e é a única forma de confirmar, de fora, que uma subida de custo
+    /* O custo do hash de senha em vigor. Não é segredo - está no repositório
+       - e é a única forma de confirmar, de fora, que uma subida de custo
        realmente entrou em vigor. */
     iterations: itersFor(env),
     /* "teste" cobra nada; "producao" cobra de verdade. Deriva do prefixo do
-       token, então esta linha é a confirmação de qual credencial está no ar —
+       token, então esta linha é a confirmação de qual credencial está no ar -
        a pergunta que, errada, custa semanas de venda em silêncio. */
     modo: env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado'
   };

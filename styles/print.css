@@ -6,7 +6,7 @@
    spills onto a second page the continuation page would start hard against
    the paper edge with no margin at all. Putting the inset on @page gives every
    page the same margin, including the middle pages of a section that runs
-   long — which several of them do, by design.
+   long - which several of them do, by design.
 
    Chrome's own date/URL header is suppressed by the print tool
    (displayHeaderFooter: false in tools/build-pdf.mjs), not by a zero margin,
@@ -47,7 +47,7 @@
   h1, h2, h3, h4 { break-after: avoid; }
   p, li { orphans: 3; widows: 3; }
 
-  /* Fills must survive the print pipeline — otherwise the teal bands and the
+  /* Fills must survive the print pipeline - otherwise the teal bands and the
      mint callouts vanish and the page loses its structure. */
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 

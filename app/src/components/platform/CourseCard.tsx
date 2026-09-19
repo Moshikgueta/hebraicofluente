@@ -1,18 +1,18 @@
 'use client';
 
-/* O card de curso — o mesmo objeto no site e dentro da plataforma.
+/* O card de curso - o mesmo objeto no site e dentro da plataforma.
  * ─────────────────────────────────────────────────────────────────────────
  * Quatro estados, e o que muda entre eles é só a faixa e o botão:
  *
- *   · seu        — a conta tem acesso. Botão: continuar.
- *   · disponível — existe e está à venda. Botão: ver o curso.
- *   · em breve   — existe como página, não como aula. Botão: ver o que vem.
- *   · trancado   — o curso está pronto mas a conta não comprou.
+ *   · seu        - a conta tem acesso. Botão: continuar.
+ *   · disponível - existe e está à venda. Botão: ver o curso.
+ *   · em breve   - existe como página, não como aula. Botão: ver o que vem.
+ *   · trancado   - o curso está pronto mas a conta não comprou.
  *
  * O curso trancado CONTINUA VISÍVEL. Esconder o que a pessoa ainda não tem é
  * o instinto errado: ninguém compra o que não sabe que existe, e um aluno que
  * terminou a alfabetização precisa ver o A1 esperando por ele. O que o
- * trancado não faz é fingir que abre — ele leva à página do curso, que é onde
+ * trancado não faz é fingir que abre - ele leva à página do curso, que é onde
  * se decide, e o cadeado é visível.
  */
 
@@ -39,7 +39,7 @@ export function CourseCard({
 }: {
   course: CatalogCourse;
   state: CourseCardState;
-  /** 0–1, só para o curso que a pessoa já tem. */
+  /** 0-1, só para o curso que a pessoa já tem. */
   progress?: number;
 }) {
   const badge = BADGE[state];

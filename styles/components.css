@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   components.css — the page furniture, built from tokens.css.
+   components.css - the page furniture, built from tokens.css.
    Physical properties are avoided in favour of logical ones wherever the
    element can contain mixed-direction content.
    ───────────────────────────────────────────────────────────────────────── */
@@ -95,7 +95,7 @@ body {
   margin-inline: .08em;
 }
 
-/* Latin • Hebrew pair — each side isolated so a row cannot re-pair itself. */
+/* Latin • Hebrew pair - each side isolated so a row cannot re-pair itself. */
 .pair { display: inline-flex; align-items: baseline; gap: .45em; direction: ltr; unicode-bidi: isolate; }
 .pair-a { font-weight: 700; color: var(--c-ink); }
 .pair-dot { color: var(--c-neutral-600); }
@@ -279,7 +279,7 @@ ul.ticks li { margin-block-end: var(--s-3); }
 /* ── classes referenced by the templates ────────────────────────────────── */
 
 /* Parentheses that sit beside a Hebrew span. Held in their own LTR element so
-   they can never be absorbed into the adjacent RTL run — the defect that makes
+   they can never be absorbed into the adjacent RTL run - the defect that makes
    the reference PDF's title read "(מ Mem)". */
 .paren { direction: ltr; unicode-bidi: isolate; font-family: var(--font-display); }
 
@@ -287,7 +287,7 @@ ul.ticks li { margin-block-end: var(--s-3); }
    One line icon per vocabulary word, inlined by wordArt() in partials.js.
    Sized here rather than in the SVG, so the same file serves the 34px slot in
    a table cell and the 56px one in the word gallery. Drawn in the accent teal
-   at a hairline weight: the picture is a hint, never the subject — the word
+   at a hairline weight: the picture is a hint, never the subject - the word
    beside it is. */
 .art {
   display: inline-flex; align-items: center; justify-content: center;
@@ -327,7 +327,7 @@ ul.ticks li { margin-block-end: var(--s-3); }
 /* Stroke-order well */
 .stroke-wrap { display: grid; place-items: center; gap: var(--s-3); }
 
-/* Página 0 — the vowel sounds */
+/* Página 0 - the vowel sounds */
 .vowel-list { display: grid; gap: var(--s-6); }
 .vowel-row {
   display: grid; grid-template-columns: 130px 1fr; gap: var(--s-6) var(--s-7);
@@ -349,7 +349,7 @@ ul.ticks li { margin-block-end: var(--s-3); }
    combining mark on its own. */
 .sign-alone { font-size: var(--t-he-word); }
 
-/* Fixação — ligue */
+/* Fixação - ligue */
 .link-left { display: flex; align-items: center; gap: var(--s-5); margin-block-end: var(--s-6); }
 .link-right { text-align: end; }
 .link-right p { margin-block-end: var(--s-4); }
@@ -417,7 +417,7 @@ ul.ticks li { margin-block-end: var(--s-3); }
 
 /* A module opener is the divider of the contents: seven of them, one per unit
    of the teaching plan. A left rule and a small-caps label read as a section
-   break without laying a solid ink band across the page seven times — this
+   break without laying a solid ink band across the page seven times - this
    page gets printed, and the letters under each module are the content. */
 .toc-row--module {
   background: var(--c-surface-alt);

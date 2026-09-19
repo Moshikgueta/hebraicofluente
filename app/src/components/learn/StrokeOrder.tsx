@@ -9,7 +9,7 @@
  *
  * What is claimed and what is not, carefully:
  *
- *   · the stroke COUNT is derived — outer contours, counters excluded. It
+ *   · the stroke COUNT is derived - outer contours, counters excluded. It
  *     gives he, alef and qof two strokes and everything else one, which is the
  *     real count of Israeli cursive;
  *   · the ORDER and the START POINT follow two rules that hold for Hebrew:
@@ -54,7 +54,7 @@ export function StrokeOrderPlayer({
   }, [set, stop]);
 
   /* Plays once on arrival, then on demand. Respecting prefers-reduced-motion by
-     showing the finished letter instead of animating it — the information is
+     showing the finished letter instead of animating it - the information is
      the stroke order, and the numbers carry that without movement. */
   useEffect(() => {
     if (!set) return;

@@ -8,7 +8,7 @@
  *   3. o resto  → entregar o export do Next, que é o site inteiro.
  *
  * O site é `output: 'export'` com `trailingSlash: true`, então cada rota é uma
- * pasta com index.html. Os ativos cuidam disso sozinhos — o que este arquivo
+ * pasta com index.html. Os ativos cuidam disso sozinhos - o que este arquivo
  * garante é que uma rota desconhecida caia no 404 do próprio site, e não num
  * 404 sem estilo do servidor.
  */
@@ -29,7 +29,7 @@ const ROUTES = {
   'POST /api/pay/create': pay.create,
   'GET /api/pay/verify': pay.verify,
   /* A Mercado Pago manda o aviso como POST, mas alguns testes do painel dela
-     disparam um GET na mesma URL. Os dois caem no mesmo lugar — e a validação
+     disparam um GET na mesma URL. Os dois caem no mesmo lugar - e a validação
      de assinatura recusa o que não for legítimo, seja qual for o verbo. */
   'POST /api/pay/webhook': pay.webhook,
   'GET /api/pay/webhook': pay.webhook,
@@ -62,7 +62,7 @@ export default {
     /* ── o portão ───────────────────────────────────────────────────── */
     const blocked = await gate(request, env).catch(e => {
       /* Um erro aqui não pode virar porta aberta. Se o banco está fora, a
-         resposta certa é mandar para o login — nunca entregar a aula. */
+         resposta certa é mandar para o login - nunca entregar a aula. */
       console.error('gate', path, e && e.stack || e);
       return new Response(null, {
         status: 302,

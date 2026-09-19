@@ -1,7 +1,7 @@
 /* Learning analytics.
  *
  * The question this exists to answer is "which letters cost learners the
- * most, and where do they stop" — not "who is this person". So: a closed
+ * most, and where do they stop" - not "who is this person". So: a closed
  * event vocabulary, no free text, no identifiers beyond what the course
  * already knows (a letter id, an exercise id, a score), and no third-party
  * script. Events queue in memory and are flushed by a sink that is not
@@ -37,7 +37,7 @@ export type EventProps = {
   pages?: string;
   /** Which of the five skills an answer exercised. */
   skill?: string;
-  /** The wrong option a learner picked — a glyph, never free text. */
+  /** The wrong option a learner picked - a glyph, never free text. */
   chosen?: string;
   /** A one-time milestone id, e.g. 'leitura-sem-translit'. */
   id?: string;
@@ -55,7 +55,7 @@ const queue: LearningEvent[] = [];
 let sink: Sink | null = null;
 
 /** Install a destination. Without one, events stay in memory and are dropped
- *  on reload — which is the correct default for a course nobody has consented
+ *  on reload - which is the correct default for a course nobody has consented
  *  to be measured in yet. */
 export function setAnalyticsSink(next: Sink | null): void {
   sink = next;

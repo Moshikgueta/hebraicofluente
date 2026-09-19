@@ -101,7 +101,7 @@ export function AchievementBadge({
 }
 
 /* The one strong celebration. Reserved for a completed letter, a checkpoint
-   and the end of the course — nothing smaller earns it. */
+   and the end of the course - nothing smaller earns it. */
 export function Milestone({
   kicker, title, body, children
 }: { kicker: string; title: string; body: string; children?: React.ReactNode }) {

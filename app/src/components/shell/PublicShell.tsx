@@ -4,12 +4,12 @@
  * ─────────────────────────────────────────────────────────────────────────
  * A mesma casa do curso, não uma casa ao lado dele. Mesmas fontes, mesmas
  * cores, mesmo <He> para o hebraico, mesma régua de leitura. Um visitante que
- * compra não deve ter a sensação de ter mudado de produto ao entrar — é
+ * compra não deve ter a sensação de ter mudado de produto ao entrar - é
  * exatamente essa sensação que faz o aluno duvidar se a compra funcionou.
  *
  * O cabeçalho tem duas formas. No desktop, os links à esquerda e as duas
  * ações à direita: "Entrar" (quem já é aluno) e "Começar agora" (quem não é).
- * No celular, um menu que abre por cima — e a ação principal fica FORA dele,
+ * No celular, um menu que abre por cima - e a ação principal fica FORA dele,
  * visível sempre, porque esconder o botão de comprar atrás de um hambúrguer é
  * a forma mais cara de economizar espaço.
  *
@@ -43,7 +43,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
      nova com o menu ainda por cima dela. */
   useEffect(() => { setOpen(false); }, [pathname]);
 
-  /* Trava o scroll do fundo enquanto o menu está aberto, e só então — o
+  /* Trava o scroll do fundo enquanto o menu está aberto, e só então - o
      curso tem uma regra dura de nunca desabilitar o scroll globalmente. */
   useEffect(() => {
     if (!open) return;

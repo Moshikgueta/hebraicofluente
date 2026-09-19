@@ -4,7 +4,7 @@
  *
  * What they are for, and what they are NOT for: the answers personalise the
  * daily goal and the encouragement copy. They do not change the curriculum.
- * A beginner who says "reconheço algumas letras" still starts at letter 1 —
+ * A beginner who says "reconheço algumas letras" still starts at letter 1 -
  * the order rule means every later lesson depends on the earlier ones, so
  * skipping ahead would break the reading progression, not accelerate it. */
 
@@ -84,7 +84,7 @@ export default function OnboardingPage() {
       {step === 1 && (
         <Question
           title="Quanto tempo por dia?"
-          hint="É a sua meta diária. Dá para mudar depois — e ninguém é punido por não bater."
+          hint="É a sua meta diária. Dá para mudar depois - e ninguém é punido por não bater."
         >
           {GOALS.map(g => (
             <Choice key={g.m} selected={goal === g.m}

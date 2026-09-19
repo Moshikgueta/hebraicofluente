@@ -1,4 +1,4 @@
-/* build.js — data + templates → dist/
+/* build.js - data + templates → dist/
    Validates first. A fatal violation stops the build before a single file is
    written, so dist/ never holds a page that breaks the order rule. */
 
@@ -19,13 +19,13 @@ const DIST = join(ROOT, 'dist');
 const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
 
 function main() {
-  console.log('\nhebraico-fluente — build\n');
+  console.log('\nhebraico-fluente - build\n');
 
   /* 1. Validate the data. dist/ is not checked yet (it is about to be rebuilt). */
   console.log('  validando dados…');
   const pre = validate({ checkDist: false });
   if (pre.fails.length) { report(pre); process.exit(1); }
-  pre.warns.forEach(w => console.log(`  ! ${w.rule}  ${w.where} — ${w.detail}`));
+  pre.warns.forEach(w => console.log(`  ! ${w.rule}  ${w.where} - ${w.detail}`));
 
   const letters = readJson('data/letters.json').sort((a, b) => a.order - b.order);
   const nikud = readJson('data/nikud.json');
@@ -56,7 +56,7 @@ function main() {
   sections.push({
     kind: 'intro', id: 'vogais', file: '00-vogais.html',
     title: 'Os sinais de vogal', sub: 'Antes da primeira letra',
-    docTitle: 'Os sinais de vogal — Hebraico Moderno',
+    docTitle: 'Os sinais de vogal - Hebraico Moderno',
     desc: 'Os seis sons vocálicos do hebraico, apresentados pelo som e não pelo nome.',
     body: () => renderPage0(ctx)
   });
@@ -65,7 +65,7 @@ function main() {
   for (const M of modules) {
     const mLetters = letters.filter(l => l.module === M.n);
     const lessonRange = M.lessons.map(l => l.n);
-    const lessonSub = `lições ${lessonRange[0]}–${lessonRange[lessonRange.length - 1]}`;
+    const lessonSub = `lições ${lessonRange[0]}-${lessonRange[lessonRange.length - 1]}`;
 
     /* Modules 6 and 7 introduce no letter: they are one section each, built
        from the alphabet the reader already has. */
@@ -73,8 +73,8 @@ function main() {
       const render = M.kind === 'consolidation' ? renderDagesh : renderModernSounds;
       sections.push({
         kind: 'module', id: M.id, file: `${M.id}.html`,
-        title: `Módulo ${M.n} — ${M.titlePt}`, sub: lessonSub,
-        docTitle: `Módulo ${M.n} — ${M.titlePt}`,
+        title: `Módulo ${M.n} - ${M.titlePt}`, sub: lessonSub,
+        docTitle: `Módulo ${M.n} - ${M.titlePt}`,
         desc: `Módulo ${M.n} do workbook: ${M.titlePt.toLowerCase()}, sem letras novas.`,
         body: () => render(M, ctx)
       });
@@ -83,9 +83,9 @@ function main() {
 
     sections.push({
       kind: 'module', id: M.id, file: `${M.id}.html`,
-      title: `Módulo ${M.n} — ${M.titlePt}`,
+      title: `Módulo ${M.n} - ${M.titlePt}`,
       sub: `${lessonSub} · ${mLetters.length} letras`,
-      docTitle: `Módulo ${M.n} — ${M.titlePt}`,
+      docTitle: `Módulo ${M.n} - ${M.titlePt}`,
       desc: `Módulo ${M.n} do workbook: as letras ${mLetters.map(l => l.namePt).join(', ')}.`,
       body: () => renderModule(M, ctx)
     });
@@ -95,7 +95,7 @@ function main() {
         kind: 'letter', id: L.id, order: L.order, letter: L.letter,
         file: `${String(L.order).padStart(2, '0')}-${L.id}.html`,
         title: `${L.order}. ${L.namePt}`, sub: `${L.sound} · lição ${L.lesson}`,
-        docTitle: `Letra ${L.namePt} — Hebraico Moderno`,
+        docTitle: `Letra ${L.namePt} - Hebraico Moderno`,
         desc: `A letra ${L.namePt}: som, sílabas, palavras, escrita cursiva e exercícios.`,
         body: () => renderLetter(L, ctx)
       });
@@ -107,7 +107,7 @@ function main() {
     sections.push({
       kind: 'review', id: `rev${R.n}`, file: `r${R.n}-revisao-${upTo}.html`,
       title: `Revisão do módulo ${M.n}`, sub: `letras 1 a ${upTo}`,
-      docTitle: `Revisão do módulo ${M.n} — letras 1 a ${upTo}`,
+      docTitle: `Revisão do módulo ${M.n} - letras 1 a ${upTo}`,
       desc: `Revisão cumulativa das letras 1 a ${upTo}: leitura, reconhecimento, escrita e ditado.`,
       body: () => [...renderReview(R, ctx), practiceSheet(M, ctx)].filter(Boolean)
     });
@@ -118,7 +118,7 @@ function main() {
     sections.push({
       kind: 'review', id: `rev${R.n}`, file: `r${R.n}-revisao-final.html`,
       title: 'Revisão final', sub: 'as 22 letras',
-      docTitle: 'Revisão final — todo o alfabeto',
+      docTitle: 'Revisão final - todo o alfabeto',
       desc: 'Revisão cumulativa das 22 letras, das 5 formas finais e de todo o vocabulário.',
       body: () => renderReview(R, ctx)
     });
@@ -127,7 +127,7 @@ function main() {
   sections.push({
     kind: 'appendix', id: 'apendice', file: 'apendice.html',
     title: 'Apêndice', sub: 'tabelas de referência',
-    docTitle: 'Apêndice — Hebraico Moderno',
+    docTitle: 'Apêndice - Hebraico Moderno',
     desc: 'Alfabeto completo, nomes dos sinais de vogal, chave de transliteração e quadro de cursiva.',
     body: () => renderAppendix(ctx)
   });
@@ -135,10 +135,10 @@ function main() {
   /* ── 4. Render, numbering the pages continuously across the whole book ──
      The templates number their own sheets 1..n because a module has to make
      sense printed on its own. In the book those numbers would restart thirty
-     times, so the folio is rewritten here from a single running counter — one
+     times, so the folio is rewritten here from a single running counter - one
      number, always the page of the book. */
   /* Real page numbers for the contents, measured from a previous print run.
-     Absent on a first build — the contents then shows a dash. */
+     Absent on a first build - the contents then shows a dash. */
   /* Measured unit heights from `npm run pack`. Without them every unit gets
      its own sheet, which is correct but leaves pages half empty. */
   let layout = {}, breaks = {};
@@ -154,7 +154,7 @@ function main() {
     const pm = readJson('data/page-map.json');
     pageMap = pm.sections || {};
     bookPages = pm.pages || 0;
-  } catch { /* first run — the contents shows dashes */ }
+  } catch { /* first run - the contents shows dashes */ }
 
   /* Sheets are numbered continuously across the whole book, contents first.
      The templates number their own sheets 1..n because a module has to make
@@ -213,7 +213,7 @@ function main() {
 
   /* ── 5. The whole book as one file, for printing ────────────────────── */
   writeFileSync(join(DIST, 'livro-completo.html'), document_({
-    title: 'Hebraico Moderno — Workbook de Alfabetização',
+    title: 'Hebraico Moderno - Workbook de Alfabetização',
     description: 'O workbook completo: sinais de vogal, 22 letras, 6 revisões e apêndice.',
     body: [tocNumbered, ...bodies].join('\n')
   }));
@@ -228,12 +228,12 @@ function main() {
 
   /* ── 6. Index ───────────────────────────────────────────────────────── */
   writeFileSync(join(DIST, 'index.html'), document_({
-    title: 'Hebraico Moderno — Workbook de Alfabetização',
+    title: 'Hebraico Moderno - Workbook de Alfabetização',
     description: 'Workbook de alfabetização em hebraico moderno para brasileiros adultos.',
     body: tocNumbered
   }));
 
-  /* ── 7. Re-validate, now including the built HTML (V8/V9 — the bidi contract). */
+  /* ── 7. Re-validate, now including the built HTML (V8/V9 - the bidi contract). */
   console.log('  validando saída…');
   const post = validate({ checkDist: true });
   const ok = report(post);
@@ -244,32 +244,32 @@ function main() {
 
 /* ── the packer ────────────────────────────────────────────────────────────
    Templates emit UNITS: a badge, an h1, and the content under it. Packing
-   whole units only got the book to 75% full, because a unit is 110–200mm and
-   two of them rarely fit in 265mm — the slack had nowhere to go.
+   whole units only got the book to 75% full, because a unit is 110-200mm and
+   two of them rarely fit in 265mm - the slack had nowhere to go.
 
    So a unit is first EXPLODED at its own <h2> boundaries. An h2 already marks
    a self-contained part ("Como ela aparece", "Atividade 3"), so cutting there
-   is safe, and it gives the packer 60–130mm pieces that actually combine.
+   is safe, and it gives the packer 60-130mm pieces that actually combine.
    Pieces are then filled onto sheets in order, never reordered.
 
    A piece that starts a sheet carries a heading: the unit's own badge and h1
    for the first piece, a continuation badge for the rest. A piece that follows
-   another on the same sheet carries none — its h2 is heading enough. That is
+   another on the same sheet carries none - its h2 is heading enough. That is
    also why the height used for a non-leading piece subtracts the heading it
    will not print.
 
    With no measurements (a first build, or PACK=0) each piece gets its own
-   sheet. Wasteful, never wrong — the right failure mode for a missing input. */
+   sheet. Wasteful, never wrong - the right failure mode for a missing input. */
 const FIT_MM = 265;
 
 /* A piece measured on its own sits at the top of its sheet, where its first
    heading's top margin collapses against the sheet edge. Stacked under another
-   piece that margin applies, and the piece is taller than it measured — by up
+   piece that margin applies, and the piece is taller than it measured - by up
    to 15mm in the worst case observed. JOIN_MM is that cost, charged to every
    piece after the first on a sheet.
 
    It is deliberately SMALL. A global penalty large enough for the worst join
-   under-packs every other sheet in the book — that costs more pages than it
+   under-packs every other sheet in the book - that costs more pages than it
    saves. Instead the packer is optimistic and `npm run pack` repairs what
    actually overflows, recording a forced break for those exact pieces. */
 const JOIN_MM = 4;
@@ -282,8 +282,8 @@ function explode(unitHtml, contHead) {
   const head = m[1], rest = m[2];
 
   /* Cut points. An h2 marks a self-contained part by definition. Exercise
-     cards and ruled writing rows are atomic by construction — each carries its
-     own number and instruction — so they are safe to start a sheet with, and
+     cards and ruled writing rows are atomic by construction - each carries its
+     own number and instruction - so they are safe to start a sheet with, and
      without them a page of five exercises is one 180mm lump that can never
      share a sheet with anything. */
   const cuts = [];
@@ -335,7 +335,7 @@ function renderIndex(entries, letters, totalPages, bookPages) {
       <span class="toc-mark">${m.letter ? `<span class="he" lang="he">${esc(m.letter)}</span>` : ''}</span>
       <span class="toc-t">${esc(m.title)}</span>
       <span class="toc-s">${esc(m.sub)}</span>
-      <span class="toc-p">${m.page == null ? '—' : m.page}</span>
+      <span class="toc-p">${m.page == null ? '-' : m.page}</span>
     </a>`;
 
   /* The contents is itself paginated: 30 entries do not fit one A4 page, and
@@ -352,9 +352,9 @@ function renderIndex(entries, letters, totalPages, bookPages) {
   }
 
   return groups.map((g, gi) => `<section class="sheet">
-  ${gi === 0 ? `<span class="badge">Nível A0 — iniciante absoluto</span>
+  ${gi === 0 ? `<span class="badge">Nível A0 - iniciante absoluto</span>
   <h1>Hebraico Moderno<br>Workbook de Alfabetização</h1>
-  <p class="lead">Guia para brasileiros adultos aprenderem a ler, pronunciar e escrever o hebraico moderno — do zero ao domínio do alfabeto.</p>
+  <p class="lead">Guia para brasileiros adultos aprenderem a ler, pronunciar e escrever o hebraico moderno - do zero ao domínio do alfabeto.</p>
 
   <div class="toc-meta">
     <span><strong>${letters.length}</strong> letras</span>

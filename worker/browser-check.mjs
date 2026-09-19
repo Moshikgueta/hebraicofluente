@@ -8,11 +8,11 @@
  *   · uma chamada de API que falha e deixa o app preso num estado vazio.
  *
  * Nenhum desses aparece num código 200, e todos os três chegam ao aluno como
- * "o site não abre" — que foi exatamente o relato que este arquivo existe
+ * "o site não abre" - que foi exatamente o relato que este arquivo existe
  * para investigar.
  *
  * O que ele faz: abre a capa num Chromium, espera a rede sossegar, e então
- * mede o que um olho mediria — quanto texto visível existe no corpo da
+ * mede o que um olho mediria - quanto texto visível existe no corpo da
  * página. Junto, recolhe tudo que o navegador reclamou: erro de script,
  * requisição que falhou, resposta 4xx/5xx.
  *
@@ -37,7 +37,7 @@ const MIN_TEXTO = 200;
 
 /* Em ambientes que já trazem um Chromium (sandboxes de desenvolvimento, e
    imagens de CI que o preinstalam), a versão do pacote `playwright` raramente
-   casa com a do navegador que está lá — e a mensagem que o Playwright dá
+   casa com a do navegador que está lá - e a mensagem que o Playwright dá
    nesse caso ("run npx playwright install") manda baixar outro, o que nem
    sempre é possível nem desejado. HF_CHROMIUM aponta para o executável
    existente e resolve. No GitHub Actions ele não é definido, e o padrão vale. */
@@ -76,9 +76,9 @@ for (const path of PAGES) {
   if (!ok) falhas++;
 
   console.log(`${ok ? '  ✓' : '  ✗'} ${path}` +
-    (erroDeIda ? ` — não carregou: ${erroDeIda}`
-      : vazia ? ` — página em branco (${texto.length} caracteres de texto visível)`
-      : ` — ${texto.length} caracteres, título "${titulo}"`));
+    (erroDeIda ? ` - não carregou: ${erroDeIda}`
+      : vazia ? ` - página em branco (${texto.length} caracteres de texto visível)`
+      : ` - ${texto.length} caracteres, título "${titulo}"`));
 
   /* Os problemas do navegador saem SEMPRE, mesmo quando a página passou: um
      erro de console numa página que renderizou é o aviso que antecede a que

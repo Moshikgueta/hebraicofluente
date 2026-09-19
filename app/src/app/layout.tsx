@@ -8,7 +8,7 @@ import './globals.css';
    A hand-written url('/fonts/…') would 404 on a project page. */
 /* Fraunces nos títulos.
    É a peça que mais muda a percepção da página: a DM Sans que estava aqui é
-   uma sans geométrica agradável e absolutamente neutra — a mesma de milhares
+   uma sans geométrica agradável e absolutamente neutra - a mesma de milhares
    de sites. Uma serifa com contraste e um pouco de estranheza lê como livro,
    e livro lê como considerado. Para um curso de LEITURA, descendente de um
    material impresso, a escolha também é temática e não só estética.
@@ -33,7 +33,7 @@ const ui = localFont({
     { path: '../../public/fonts/inter-latin-700-normal.woff2', weight: '700', style: 'normal' }
   ]
 });
-/* Noto Sans Hebrew carries 55 nikud marks and a ccmp table — chosen over the
+/* Noto Sans Hebrew carries 55 nikud marks and a ccmp table - chosen over the
    alternatives by inspecting the binaries, because a font that positions the
    vowel points badly makes every reading exercise in the course wrong. */
 const hebrew = localFont({
@@ -56,9 +56,9 @@ import { Chrome } from '@/components/shell/Chrome';
 import { course } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'Hebraico Fluente — a plataforma de hebraico para brasileiros',
+  title: 'Hebraico Fluente - a plataforma de hebraico para brasileiros',
   description:
-    'Do alfabeto à conversa, numa plataforma só. Alfabetização, A1, A2 e B1 — ' +
+    'Do alfabeto à conversa, numa plataforma só. Alfabetização, A1, A2 e B1 - ' +
     'aulas interativas, correção na hora e progresso que continua de onde você parou.',
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
@@ -93,7 +93,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* A conta por fora do progresso, e não o contrário: quem decide se
             esta rota pode ser vista é a sessão, e o progresso é o que se
             mostra depois de ela ter deixado passar. O progresso continua
-            sendo do APARELHO — ver a nota em lib/account/store.tsx. */}
+            sendo do APARELHO - ver a nota em lib/account/store.tsx. */}
         <AccountProvider>
           {/* Modules 6 and 7 count toward completion: a bar that reads 100%
               while the reader still cannot handle an unpointed word would be

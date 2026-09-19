@@ -1,10 +1,10 @@
-/* gen-audio.mjs — builds data/audio.json: every clip the course needs, with a
+/* gen-audio.mjs - builds data/audio.json: every clip the course needs, with a
  * stable filename and a stable printed number for each.
  *
  *   npm run audio-manifest
  *
- * FILENAMES ARE CONTENT-DERIVED, NOT POSITIONAL. The obvious design — number
- * the clips 001, 002, 003 in reading order — breaks the moment a word is added
+ * FILENAMES ARE CONTENT-DERIVED, NOT POSITIONAL. The obvious design - number
+ * the clips 001, 002, 003 in reading order - breaks the moment a word is added
  * to letter 3: everything after it shifts and every file already recorded is
  * misnamed. So the filename is a short hash of the pointed Hebrew itself. Add a
  * word, reorder a lesson, drop a letter: the existing recordings keep working
@@ -14,7 +14,7 @@
  * recording script, and a speaker halfway through a session cannot be
  * renumbered. Numbers already handed out are read back from the previous
  * data/audio.json and kept; only new clips take the next free number. Reordering
- * a lesson therefore leaves every printed number correct — the script simply
+ * a lesson therefore leaves every printed number correct - the script simply
  * stops being in numeric order, which costs the speaker nothing.
  *
  * NIKUD IS PART OF THE HASH on purpose: שָׁם and שֵׁם are different words that
@@ -22,7 +22,7 @@
  *
  * ONE CLIP PER SOUND, NOT PER APPEARANCE. The same word in three places gets
  * one clip, because the hash is the same. The unpointed reading list in module
- * 6 is deliberately mapped onto its pointed twin — ספר and סֵפֶר are the same
+ * 6 is deliberately mapped onto its pointed twin - ספר and סֵפֶר are the same
  * word said the same way, and asking a speaker to read it twice wastes studio
  * time and invites two different takes of one word.
  */
@@ -62,9 +62,9 @@ function main() {
     if (!key) return;
     const prev = seen.get(key);
     if (prev) {
-      /* Same sound, second home. Keep the earliest wave — a clip needed by
+      /* Same sound, second home. Keep the earliest wave - a clip needed by
          wave 1 must not be scheduled for wave 3 because it also appears
-         there — and record both places for the script's "onde aparece". */
+         there - and record both places for the script's "onde aparece". */
       prev.wave = Math.min(prev.wave, c.wave);
       if (!prev.where.includes(c.where)) prev.where.push(c.where);
       return;
@@ -91,16 +91,16 @@ function main() {
     add({ he: L.nameHe, translit: L.namePt, gloss: `nome da letra ${L.namePt}`,
           kind: 'nome', wave: 1, where: `letra ${L.order}` });
     for (const s of L.syllables) {
-      add({ he: s.he, translit: s.translit, gloss: `sílaba — ${s.ptApprox}`,
+      add({ he: s.he, translit: s.translit, gloss: `sílaba - ${s.ptApprox}`,
             kind: 'silaba', wave: 1, where: `letra ${L.order}` });
     }
   }
   for (const s of nikud.sounds) {
     for (const g of s.signs) {
-      add({ he: g.demo, translit: null, gloss: `sinal ${g.namePt} — som ${s.sound}`,
+      add({ he: g.demo, translit: null, gloss: `sinal ${g.namePt} - som ${s.sound}`,
             kind: 'silaba', wave: 1, where: 'sinais de vogal' });
       /* The sign's NAME, said on its own. The app teaches the vowels as a
-         layer of their own — a patach is the same patach under any consonant —
+         layer of their own - a patach is the same patach under any consonant -
          and a learner who can say "patach" has a handle for it. Ten clips, and
          they were the only thing the app referenced that the plan never asked
          anyone to record. */
@@ -141,7 +141,7 @@ function main() {
           kind: 'palavra', wave: 3, where: 'módulo 6' });
   }
   for (const g of extras.gerech.letters) {
-    add({ he: g.he, translit: g.pt, gloss: `a letra ${g.base} com gerech — som ${g.pt}`,
+    add({ he: g.he, translit: g.pt, gloss: `a letra ${g.base} com gerech - som ${g.pt}`,
           kind: 'nome', wave: 3, where: 'módulo 7' });
     for (const w of g.words) {
       add({ he: w.he, translit: null, gloss: w.pt,
@@ -182,7 +182,7 @@ function main() {
 
   writeFileSync(join(ROOT, 'data/audio.json'), JSON.stringify({
     note: [
-      'GERADO por tools/gen-audio.mjs — nao edite a mao.',
+      'GERADO por tools/gen-audio.mjs - nao edite a mao.',
       'O nome do arquivo vem de um hash do hebraico pontuado, nao da posicao:',
       'acrescentar uma palavra nao renomeia nada do que ja foi gravado.',
       'O numero e impresso no roteiro de gravacao, entao tambem e estavel:',
@@ -201,11 +201,11 @@ function main() {
   console.log(`\n  ${clips.length} clipes → data/audio.json`);
   console.log(`    ${by('nome')} nomes · ${by('silaba')} sílabas · ${by('palavra')} palavras`);
   for (const w of Object.values(WAVES)) {
-    console.log(`    onda ${w.id} — ${w.titlePt}: ${clips.filter(c => c.wave === w.id).length}`);
+    console.log(`    onda ${w.id} - ${w.titlePt}: ${clips.filter(c => c.wave === w.id).length}`);
   }
   if (reused) console.log(`    ${reused} número(s) preservado(s), ${clips.length - reused} novo(s)`);
   if (orphans.length) {
-    console.log(`    ! ${orphans.length} clipe(s) não são mais usados — os arquivos podem ser arquivados`);
+    console.log(`    ! ${orphans.length} clipe(s) não são mais usados - os arquivos podem ser arquivados`);
   }
   console.log('');
 }

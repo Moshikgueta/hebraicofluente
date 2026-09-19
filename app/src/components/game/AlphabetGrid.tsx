@@ -5,10 +5,10 @@
  * This is the panel that justifies a desktop version. On a phone the course
  * answers "what now?" with one card, because one card is all that fits and all
  * that a bus ride needs. At a desk the useful question is "where am I in this
- * alphabet?" — and the honest answer is the whole alphabet with your progress
+ * alphabet?" - and the honest answer is the whole alphabet with your progress
  * written on it, not a percentage.
  *
- * Three states, and the third matters: done, current, and not yet — drawn but
+ * Three states, and the third matters: done, current, and not yet - drawn but
  * never hidden. Hiding the road is what makes a course feel endless, and a
  * beginner staring at 22 unknown shapes needs to watch them turn over one by
  * one. A letter part-way through shows its stage count rather than a tick,
@@ -26,7 +26,7 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
   const letters = allLetters();
 
   /* The first unfinished letter is "current". Everything before it is open for
-     revisiting, everything after is reachable — nothing is locked, because a
+     revisiting, everything after is reachable - nothing is locked, because a
      lock is a promise the course does not need to make. */
   const currentId = letters.find(l => !isLessonComplete(p.state, l.id))?.id;
 
@@ -84,7 +84,7 @@ function LetterCell({
   return (
     <Link
       href={`/licao/${L.id}`}
-      title={`${L.order}. ${L.namePt} — ${state}`}
+      title={`${L.order}. ${L.namePt} - ${state}`}
       aria-label={`Letra ${L.order}, ${L.namePt}: ${state}`}
       className={`group relative rounded-[var(--r-md)] border-2 transition-colors
         ${compact ? 'min-h-[56px] p-1.5' : 'min-h-[74px] p-2'}

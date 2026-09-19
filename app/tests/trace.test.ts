@@ -1,7 +1,7 @@
 /* Judging handwriting, against a letter we can describe exactly.
  *
  * The real mask is a blurred cursive glyph; here it is a thick L-shaped stroke
- * in a 200×200 grid, which has the properties that matter — a long run, a
+ * in a 200×200 grid, which has the properties that matter - a long run, a
  * corner, and a lot of empty space around it. What is being checked is not
  * "does it recognise ג", which nothing here claims to do, but that the verdict
  * moves in the right direction and that a reasonable attempt is never called
@@ -24,7 +24,7 @@ function model(): Uint8ClampedArray {
       for (let dx = -14; dx <= 14; dx++) {
         const d = Math.hypot(dx, dy);
         if (d > 14) continue;
-        /* Core in the middle, a soft edge outside it — the same shape the
+        /* Core in the middle, a soft edge outside it - the same shape the
            blur gives the real glyph. */
         put(cx + dx, cy + dy, d < 8 ? 255 : 120);
       }
@@ -37,7 +37,7 @@ function model(): Uint8ClampedArray {
 
 const alpha = model();
 
-/** Points along the model's own path — a learner tracing it well. */
+/** Points along the model's own path - a learner tracing it well. */
 const goodTrace = () => {
   const pts: { x: number; y: number }[] = [];
   for (let y = 40; y <= 150; y += 3) pts.push({ x: 100, y });
@@ -101,7 +101,7 @@ describe('what is not a letter', () => {
 
   it('does not accept half a letter as the whole letter', () => {
     /* Every point dead on the model, but only the vertical arm drawn. High
-       precision, low coverage — the case a single number would wave through. */
+       precision, low coverage - the case a single number would wave through. */
     const pts = [];
     for (let y = 40; y <= 100; y += 2) pts.push({ x: 100, y });
     const v = scoreTrace({ alpha, w: W, h: H, points: pts });

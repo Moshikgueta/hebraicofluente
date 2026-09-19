@@ -2,7 +2,7 @@
  *
  * Isto é a camada que decide quem entra e quanto se cobra. Os testes aqui não
  * são sobre React: são sobre as duas maneiras conhecidas de perder dinheiro
- * ou perder aluno — um preço que diverge de si mesmo, e um acesso que não
+ * ou perder aluno - um preço que diverge de si mesmo, e um acesso que não
  * expira (ou que expira cedo demais). */
 
 import { describe, expect, it } from 'vitest';
@@ -35,7 +35,7 @@ describe('o catálogo', () => {
   it('nunca deixa abrir um curso sem conteúdo, mesmo marcado como disponível', () => {
     /* O par (status, engine) é o que decide. Um curso anunciado como pronto
        mas sem motor é um erro de dados, e o efeito tem de ser uma porta
-       fechada — não uma tela em branco. */
+       fechada - não uma tela em branco. */
     for (const c of courses) {
       if (c.engine === null) expect(isPlayable(c)).toBe(false);
     }

@@ -1,4 +1,4 @@
-/* Supabase adapter — WRITTEN, NOT CONNECTED.
+/* Supabase adapter - WRITTEN, NOT CONNECTED.
  *
  * There is no Supabase project provisioned for this app: creating one needs
  * your credentials. So this file exists to make the swap a one-line change

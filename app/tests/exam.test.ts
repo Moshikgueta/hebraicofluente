@@ -1,7 +1,7 @@
 /* The final exam and the certificate it issues.
  *
- * The exam is the one assessment whose result leaves the app — a learner posts
- * the certificate — so the things checked here are the things that would be
+ * The exam is the one assessment whose result leaves the app - a learner posts
+ * the certificate - so the things checked here are the things that would be
  * embarrassing in public: an exam that does not cover what it claims, a pass
  * mark that moves, a certificate issued to someone who did not pass. */
 
@@ -41,7 +41,7 @@ describe('the exam covers what it says it covers', () => {
   it('tests each part with the skill that part is about', () => {
     const exam = buildExam(letters, scenes, { audioAvailable: true });
     for (const s of exam.sections) {
-      /* `mundo` is reading, and so is `silabas` and `palavras` — what matters
+      /* `mundo` is reading, and so is `silabas` and `palavras` - what matters
          is that a part never quietly tests something else. */
       for (const ex of s.exercises) {
         expect(ex.skill, `${s.part.id} → ${ex.id}`).toBe(s.part.skill);
@@ -81,8 +81,8 @@ describe('a retry is a different exam', () => {
     const idsA = a.sections.flatMap(s => s.exercises.map(e => e.id));
     const idsB = b.sections.flatMap(s => s.exercises.map(e => e.id));
     const shared = idsA.filter(id => idsB.includes(id)).length;
-    /* Some overlap is unavoidable — there are only so many ways to ask about
-       22 letters — but it must not be the same paper. */
+    /* Some overlap is unavoidable - there are only so many ways to ask about
+       22 letters - but it must not be the same paper. */
     expect(shared).toBeLessThan(idsA.length * 0.75);
   });
 

@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 
 /* The whole course is static: 48 prerendered pages, and the only state is the
    learner's own, in their browser. So it exports to plain files and can be
-   served from anywhere — no Node process, no server. */
+   served from anywhere - no Node process, no server. */
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 const nextConfig: NextConfig = {

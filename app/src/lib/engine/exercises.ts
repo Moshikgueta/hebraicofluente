@@ -1,7 +1,7 @@
 /* The exercise engine: what to ask, and in what order.
  * ─────────────────────────────────────────────────────────────────────────
  * Exercises are GENERATED from a letter's content plus the alphabet available
- * at that point in the course — never authored per lesson — for three reasons:
+ * at that point in the course - never authored per lesson - for three reasons:
  *
  *   1. It is the only way the order rule can be guaranteed. A generator that
  *      is only ever handed `alphabetSoFar` cannot produce a distractor with an
@@ -38,7 +38,7 @@ export { letterIdOf, isChoice, normalizeTyped, typedIsCorrect } from './types';
    course's central promise breaks.
 
    It does NOT govern a single-letter DISTRACTOR. "Qual destas é מ?" with ס as
-   a wrong option is the exercise working as intended — telling מ from ס is
+   a wrong option is the exercise working as intended - telling מ from ס is
    precisely the skill, and it needs no knowledge of ס. The printed workbook
    does the same thing from its first page.
 
@@ -145,7 +145,7 @@ const generatorsFor = (
   if (gens?.length) return gens;
   if (!skills?.length) return LESSON_GENERATORS;
   const wanted = new Set(skills.flatMap(s => BY_SKILL[s] ?? []));
-  /* Keep LESSON_GENERATORS' order — it is the one that alternates gestures. */
+  /* Keep LESSON_GENERATORS' order - it is the one that alternates gestures. */
   const narrowed = LESSON_GENERATORS.filter(g => wanted.has(g));
   /* `escrever` has no generated question at all: writing is produced on a
      canvas, not answered. Asking for it left this empty, and an empty
@@ -173,7 +173,7 @@ function fill(
   /* Both indices advance together. The generator index moves every step, so no
      two consecutive questions share a gesture; the letter index also moves
      every step, so a set covering six letters does not spend its first six
-     questions on the first letter — which is what a generator-per-letter loop
+     questions on the first letter - which is what a generator-per-letter loop
      produced, and it made every checkpoint feel like a lesson about one thing. */
   const steps = gens.length * Math.max(letters.length, 1) * rounds;
   const ctxCache = new Map<string, Ctx>();
@@ -192,8 +192,8 @@ function fill(
 /**
  * Break up runs of the same gesture.
  *
- * The generator walk alternates kinds by construction, but the fallback pass —
- * the one that tops up a checkpoint whose rotation came up short — does not,
+ * The generator walk alternates kinds by construction, but the fallback pass -
+ * the one that tops up a checkpoint whose rotation came up short - does not,
  * and it produced "ligue cada letra ao seu som" twice in a row at the end of a
  * checkpoint. Two identical gestures back to back is the exact thing the new
  * engine exists to prevent, so it is fixed here rather than hoped away.
@@ -204,7 +204,7 @@ function fill(
  * questions all typing. Emptying the biggest pile first is what guarantees a
  * gap-free arrangement whenever one exists at all.
  *
- * If every remaining item is the same kind, it stays — a set of six matches
+ * If every remaining item is the same kind, it stays - a set of six matches
  * really is six matches, and reordering cannot change that.
  */
 const hasRun = (list: Exercise[]): boolean =>
@@ -212,7 +212,7 @@ const hasRun = (list: Exercise[]): boolean =>
 
 export function spread(list: Exercise[]): Exercise[] {
   /* The generator walk usually gets this right on its own, and its order is
-     also the pedagogical one — recognition early, typing late. Leave it alone
+     also the pedagogical one - recognition early, typing late. Leave it alone
      unless it actually broke. */
   if (!hasRun(list)) return list;
 
@@ -231,8 +231,8 @@ export function spread(list: Exercise[]): Exercise[] {
   }
   if (!hasRun(stable)) return stable;
 
-  /* Only if that still leaves a run — which happens when the varied items were
-     spent early and the tail is all one kind — fall back to emptying the
+  /* Only if that still leaves a run - which happens when the varied items were
+     spent early and the tail is all one kind - fall back to emptying the
      biggest pile first, which finds an arrangement whenever one exists. */
   const byKind = new Map<string, Exercise[]>();
   for (const ex of list) {
@@ -272,7 +272,7 @@ export function buildLessonQuiz(
  * A checkpoint: the module, across every modality it taught.
  *
  * Twelve questions drawn at random from the same pool as a lesson is not a
- * checkpoint, it is a longer lesson — and the old one was exactly that. What
+ * checkpoint, it is a longer lesson - and the old one was exactly that. What
  * makes this feel like a demonstration of mastery is that it covers the
  * DIMENSIONS deliberately: shape, sound, reading, and listening once there are
  * recordings. A learner who can recognise every letter and hear none of them
@@ -317,7 +317,7 @@ export function buildCheckpoint(
     const want = skill === 'ler' ? count - per * (dimensions.length - 1) : per;
     push(fill(letters, history, generatorsFor([skill]), rand, want, audioAvailable, 6));
   }
-  /* A dimension can come up short — a module with no words has little to read —
+  /* A dimension can come up short - a module with no words has little to read -
      so the rest is topped up from everything. */
   if (out.length < count) {
     push(fill(letters, history, LESSON_GENERATORS, rand, count - out.length, audioAvailable, 6));
@@ -329,7 +329,7 @@ export function buildCheckpoint(
  * The quick review, built from what this learner actually missed.
  *
  * `weak` is a list of letter ids ordered by how much trouble they gave;
- * `focusSkills`, when given, narrows to the dimension that is failing — a
+ * `focusSkills`, when given, narrows to the dimension that is failing - a
  * learner who reads ק and cannot hear it should get listening, not more
  * reading.
  */
@@ -366,8 +366,8 @@ export function buildReview(
   }
 
   /* Last resort: widen back to every generator.
-     A narrowed review can legitimately come up empty — asking for `ouvir`
-     before any recording exists leaves nothing at all — and an empty review is
+     A narrowed review can legitimately come up empty - asking for `ouvir`
+     before any recording exists leaves nothing at all - and an empty review is
      the worst possible answer: the learner is told the course cannot build
      them five questions when it plainly can. Aiming at the failing skill is a
      preference, not a promise. */
@@ -383,7 +383,7 @@ export function buildReview(
  * The final challenge: the alphabet, and then the street.
  *
  * It opens as a checkpoint over all 22 letters and ends on the real-world
- * scenes — a word on a bottle, a word on a door, a word on a menu — because
+ * scenes - a word on a bottle, a word on a door, a word on a menu - because
  * the question the last screen of this course has to answer is not "do you
  * remember lesson 14" but "can you read the thing in front of you".
  *
@@ -433,7 +433,7 @@ export function buildScenes(
       options,
       answer: options.indexOf(s.pt),
       audioId: s.audioId,
-      explainPt: `${s.he} — ${s.translit} — ${s.pt}. ${s.contextPt}`
+      explainPt: `${s.he} - ${s.translit} - ${s.pt}. ${s.contextPt}`
     };
   }).filter(e => e.answer >= 0 && e.options.length >= 3);
 }

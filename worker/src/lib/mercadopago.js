@@ -6,7 +6,7 @@
  *            copia-e-cola e o QR; o comprador nunca sai da nossa página.
  *   CARTÃO → Checkout Pro (`POST /checkout/preferences`). O comprador vai
  *            para a tela da Mercado Pago, digita o cartão lá e volta. É por
- *            isso que esta plataforma nunca vê um número de cartão — e não
+ *            isso que esta plataforma nunca vê um número de cartão - e não
  *            ver é a única forma barata de não ter de proteger.
  *
  * Três regras que valem mais do que o resto do arquivo:
@@ -31,14 +31,14 @@ const API = 'https://api.mercadopago.com';
  * ─────────────────────────────────────────────────────────────────────────
  * A Mercado Pago dá dois pares de credenciais, e o prefixo os distingue:
  * `TEST-` é a de teste, `APP_USR-` é a de produção. Isso é informação que já
- * está na credencial — pedir que alguém declare o modo num segundo lugar é
+ * está na credencial - pedir que alguém declare o modo num segundo lugar é
  * criar a chance de os dois discordarem.
  *
  * E a discordância é cara nos dois sentidos:
  *
  *   · token de PRODUÇÃO com modo de teste → o comprador é mandado para um
  *     checkout que NÃO COBRA. O pedido nunca compensa, ninguém reclama
- *     (afinal não pagaram), e a falha pode passar semanas despercebida —
+ *     (afinal não pagaram), e a falha pode passar semanas despercebida -
  *     semanas de vendas perdidas sem nenhum sintoma;
  *   · token de TESTE com modo de produção → o checkout recusa tudo, o que ao
  *     menos aparece na hora.
@@ -102,7 +102,7 @@ export async function createPix(env, { order, course, account, origin }) {
     idempotencyKey: order.id,
     body: {
       transaction_amount: order.amount_cents / 100,
-      description: `${course.titlePt} — Hebraico Fluente`,
+      description: `${course.titlePt} - Hebraico Fluente`,
       payment_method_id: 'pix',
       external_reference: order.id,
       notification_url: `${origin}/api/pay/webhook`,
@@ -133,7 +133,7 @@ export async function createCardPreference(env, { order, course, account, origin
     body: {
       items: [{
         id: course.slug,
-        title: `${course.titlePt} — Hebraico Fluente`,
+        title: `${course.titlePt} - Hebraico Fluente`,
         description: course.taglinePt,
         quantity: 1,
         currency_id: 'BRL',
@@ -144,7 +144,7 @@ export async function createCardPreference(env, { order, course, account, origin
       notification_url: `${origin}/api/pay/webhook`,
       /* Voltar para a NOSSA página de confirmação, que reconfere com o
          servidor. Os parâmetros que a Mercado Pago acrescenta a esta URL não
-         são acreditados por ninguém — ver ObrigadoClient.tsx. */
+         são acreditados por ninguém - ver ObrigadoClient.tsx. */
       back_urls: {
         success: `${origin}/checkout/${course.slug}/obrigado/?order=${order.id}`,
         pending: `${origin}/checkout/${course.slug}/obrigado/?order=${order.id}`,
@@ -153,7 +153,7 @@ export async function createCardPreference(env, { order, course, account, origin
       auto_return: 'approved',
       payment_methods: {
         /* PIX sai daqui: quem quer PIX usa o caminho de cima, que mostra o
-           código na nossa própria tela. Boleto também sai — três dias de
+           código na nossa própria tela. Boleto também sai - três dias de
            espera com o aluno achando que já comprou gera mais suporte do que
            venda. */
         excluded_payment_types: [{ id: 'ticket' }, { id: 'bank_transfer' }],
@@ -167,7 +167,7 @@ export async function createCardPreference(env, { order, course, account, origin
     preferenceId: String(pref.id),
     /* `sandbox_init_point` só existe em conta de teste, e usá-lo em produção
        manda o comprador para um checkout que não cobra. Quem decide é o
-       prefixo do token — ver `isSandbox` no topo do arquivo. */
+       prefixo do token - ver `isSandbox` no topo do arquivo. */
     payUrl: isSandbox(env) ? (pref.sandbox_init_point || pref.init_point) : pref.init_point
   };
 }
@@ -188,7 +188,7 @@ export async function paymentsFor(env, orderId) {
 /**
  * Confere o `x-signature` da Mercado Pago.
  *
- * O manifesto é fixo — `id:<data.id>;request-id:<x-request-id>;ts:<ts>;` — e
+ * O manifesto é fixo - `id:<data.id>;request-id:<x-request-id>;ts:<ts>;` - e
  * assinado em HMAC-SHA256 com o segredo do webhook. `ts` entra no manifesto
  * justamente para que uma entrega gravada não possa ser reenviada por outra
  * pessoa depois; a janela de tolerância abaixo é o que transforma isso em

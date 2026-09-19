@@ -1,20 +1,20 @@
-/* pack.mjs — author's tool. Measures each unit and writes data/layout.json,
+/* pack.mjs - author's tool. Measures each unit and writes data/layout.json,
  * so the build can group units onto sheets instead of giving every one its own
  * half-empty page.
  *
  *   npm run pack
  *
  * A "unit" is what a template emits: a self-contained block with its own badge
- * and heading — the syllable table, the tracing rows, one chunk of the alphabet
+ * and heading - the syllable table, the tracing rows, one chunk of the alphabet
  * table. Splitting at those boundaries is what keeps every sheet printable, but
  * splitting alone leaves pages 69% full on average, because a unit like the
  * two-row "impressa e cursiva" comparison is 110mm on a 265mm page.
  *
  * So: build with packing off (one unit per sheet), measure every sheet, and
  * hand those heights back to the build, which then fills each sheet up to the
- * printable height. The heights are a safe overestimate — a unit that is not
+ * printable height. The heights are a safe overestimate - a unit that is not
  * first on its sheet loses its badge and its h1 becomes an h2, which only makes
- * it shorter — so a group that fits by the sum certainly fits on paper.
+ * it shorter - so a group that fits by the sum certainly fits on paper.
  *
  * `npm run check-fit` is still the proof; this only decides the grouping.
  */
@@ -81,9 +81,9 @@ async function main() {
   for (const { id, file } of files) {
     await page.goto(`http://127.0.0.1:${PORT}/${file}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
-    /* `full` is the sheet as printed. `chrome` is what the badge + h1 cost —
+    /* `full` is the sheet as printed. `chrome` is what the badge + h1 cost -
        the distance from the top of the sheet to the first thing under the
-       heading — because a piece that follows another on a sheet drops exactly
+       heading - because a piece that follows another on a sheet drops exactly
        that and nothing else. Measuring it beats guessing a constant. */
     const hs = await page.evaluate(() =>
       [...document.querySelectorAll('.sheet')].map(el => {
@@ -117,7 +117,7 @@ async function main() {
      for the worst join costs more pages across the book than the few bad
      joins do. So pack, measure the PACKED result, and for every sheet that
      came out over, force a break before the last piece on it. Repeat until
-     nothing overflows — usually two rounds. */
+     nothing overflows - usually two rounds. */
   const LIMIT = 265 * MM;
   for (let round = 1; round <= 6; round++) {
     build({});

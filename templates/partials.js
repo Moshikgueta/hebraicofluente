@@ -12,7 +12,7 @@ export function sheet(inner, folio) {
 
 /* The trailing comment is a parsing anchor, not decoration: when the packer
    merges a unit onto a sheet that already has a heading, it has to strip this
-   badge, and the badge's own content contains nested spans — so matching to
+   badge, and the badge's own content contains nested spans - so matching to
    the nearest </span> would cut in the wrong place. */
 export function badge(label) {
   return `<span class="badge">${label}</span><!--/badge-->`;
@@ -81,7 +81,7 @@ ${body}
 }
 
 /* Split a list into fixed-size groups. Used wherever a table grows with the
-   alphabet — the review's letter table runs from 4 rows to 22, and a single
+   alphabet - the review's letter table runs from 4 rows to 22, and a single
    sheet cannot hold the tall end of that. */
 export function chunk(arr, n) {
   const out = [];
@@ -91,7 +91,7 @@ export function chunk(arr, n) {
 
 /* ── word illustrations ────────────────────────────────────────────────────
    The image slots are filled from data/icons.json: a Lucide icon per word, or
-   literal text where a picture would be worse than the thing itself — the
+   literal text where a picture would be worse than the thing itself - the
    numbers read better as "4" than as four of anything.
 
    Icons are inlined rather than linked so a printed page never depends on a
@@ -114,7 +114,7 @@ function iconSvg(name) {
 
 /**
  * The illustration for a Hebrew word, at a given size class.
- * An unmapped word degrades to an empty well rather than breaking the build —
+ * An unmapped word degrades to an empty well rather than breaking the build -
  * validate.js (V14) is what reports it.
  */
 export function wordArt(he_, size = 'sm') {

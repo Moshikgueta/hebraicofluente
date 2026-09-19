@@ -10,7 +10,7 @@ Cole dois segredos no GitHub e o resto acontece sozinho, a cada push.
 GitHub → o repositório → **Settings → Secrets and variables → Actions → New
 repository secret**:
 
-### Passo 1 — criar o token, clique a clique
+### Passo 1 - criar o token, clique a clique
 
 Esta é a tela mais confusa da Cloudflare, porque ela chama de "template" um
 formulário que ainda dá para editar. O caminho:
@@ -19,7 +19,7 @@ formulário que ainda dá para editar. O caminho:
 2. Botão azul **Create Token**, no alto.
 3. Aparece uma lista de modelos. Ache a linha **Edit Cloudflare Workers** e
    clique em **Use template**, do lado direito dela.
-   *(Não clique em "Get started" do Custom token — é outro caminho.)*
+   *(Não clique em "Get started" do Custom token - é outro caminho.)*
 4. Abre um formulário já preenchido. Desça até o quadro **Permissions**. Ele
    tem várias linhas, cada uma com **três caixas**:
 
@@ -38,7 +38,7 @@ formulário que ainda dá para editar. O caminho:
    Account  │  D1                     │  Edit
    ```
 
-   A caixa do meio é uma lista comprida em ordem alfabética — digite `D1` que
+   A caixa do meio é uma lista comprida em ordem alfabética - digite `D1` que
    ela filtra.
 
 6. Desça mais. Em **Account Resources**, confira que está
@@ -50,15 +50,15 @@ formulário que ainda dá para editar. O caminho:
    um botão de copiar do lado.
 
    ⚠ **Copie agora.** A Cloudflare mostra esse valor **uma única vez**. Se
-   fechar a página sem copiar, não dá para recuperar — só criar outro.
+   fechar a página sem copiar, não dá para recuperar - só criar outro.
 
-### Passo 2 — achar o Account ID
+### Passo 2 - achar o Account ID
 
 Painel → **Workers & Pages** (menu da esquerda) → na coluna da direita, embaixo
 de *Account Details*, tem **Account ID** com um botão de copiar. São 32
 caracteres hexadecimais.
 
-### Passo 3 — colar no GitHub
+### Passo 3 - colar no GitHub
 
 | Nome | Valor |
 |---|---|
@@ -69,19 +69,19 @@ caracteres hexadecimais.
 
 O modelo *Edit Cloudflare Workers* cobre o Worker e os arquivos do site, mas
 **não** cobre o banco. Sem essa permissão a publicação sobe o site e falha na
-hora de criar o D1 — que é justamente a metade que guarda as contas dos alunos.
+hora de criar o D1 - que é justamente a metade que guarda as contas dos alunos.
 O erro que aparece é `Authentication error [code: 10000]`, que não diz nada
 sobre D1 e já custou muita hora de gente procurando no lugar errado.
 
 A partir daí, todo push roda os testes e executa
-`scripts/cloudflare-setup.sh` dentro do Action — que cria o banco se não
+`scripts/cloudflare-setup.sh` dentro do Action - que cria o banco se não
 existir, aplica o esquema, gera o `SESSION_SECRET`, publica, acerta o
 `SITE_ORIGIN` e roda as quinze verificações contra o que subiu. O resultado
 aparece no resumo da execução, sem precisar abrir log.
 
 Uma pendência fica: a edição do `wrangler.toml` acontece dentro do runner, que
 some no fim. Funciona a cada execução porque o script relê o id do banco de
-verdade — mas o arquivo do repositório continua com o valor de exemplo. O
+verdade - mas o arquivo do repositório continua com o valor de exemplo. O
 script avisa disso no fim, e vale commitar o id uma vez.
 
 ---
@@ -99,7 +99,7 @@ esquema, gera o `SESSION_SECRET`, constrói o site, publica, acerta o
 subiu.
 
 Pode rodar quantas vezes quiser: cada passo confere antes de agir e pula o que
-já estava feito. Quando falha, ele diz **o que** falhou e **o que fazer** —
+já estava feito. Quando falha, ele diz **o que** falhou e **o que fazer** -
 e continua de onde parou na próxima vez.
 
 Depois disso, commite a única coisa que ele mudou no repositório:
@@ -109,7 +109,7 @@ git add wrangler.toml && git commit -m "database_id e SITE_ORIGIN"
 ```
 
 Sem esse commit, a publicação pelo GitHub Actions volta a falhar no binding do
-D1 — o `database_id` ficaria só na sua máquina.
+D1 - o `database_id` ficaria só na sua máquina.
 
 Os passos abaixo são o que o script faz, um a um, para quando você quiser
 entender ou consertar alguma coisa na mão.
@@ -141,7 +141,7 @@ precisa mudar.
 npm run db:init
 ```
 
-Isso aplica `worker/schema.sql` no banco remoto. Roda quantas vezes quiser —
+Isso aplica `worker/schema.sql` no banco remoto. Roda quantas vezes quiser -
 tudo é `CREATE TABLE IF NOT EXISTS`.
 
 ## 3. Publicar uma primeira vez
@@ -155,7 +155,7 @@ publica. No fim, o wrangler imprime a URL:
 `https://hebraico-fluente.<sua-conta>.workers.dev`.
 
 **Ela ainda não funciona direito**, e é esperado: faltam os segredos. Guarde a
-URL — os próximos dois passos precisam dela.
+URL - os próximos dois passos precisam dela.
 
 ## 4. Os segredos
 
@@ -186,9 +186,9 @@ publicação falhar. O motivo está escrito no próprio arquivo.
 **Credenciais.** Em https://www.mercadopago.com.br/developers → *Suas
 integrações* → crie (ou abra) a aplicação → *Credenciais*. Existem dois pares:
 
-- **teste** — o token começa com `TEST-`. Use enquanto estiver montando.
+- **teste** - o token começa com `TEST-`. Use enquanto estiver montando.
   Deixe `MP_SANDBOX = "1"` em `wrangler.toml`.
-- **produção** — use quando for vender de verdade, e troque para
+- **produção** - use quando for vender de verdade, e troque para
   `MP_SANDBOX = "0"`.
 
 Subir o token de produção esquecendo `MP_SANDBOX = "1"` manda todo comprador
@@ -226,7 +226,7 @@ volte e atualize:
 ## 7. Publicar sozinho a cada push
 
 É **O caminho sem terminal**, no topo deste arquivo. Sem os dois segredos, o
-job avisa e pula — não quebra.
+job avisa e pula - não quebra.
 
 ---
 
@@ -238,7 +238,7 @@ o que ela realmente quer dizer à direita.
 **`Couldn't find a D1 DB with the name or binding` / `database_id` inválido**
 O `wrangler.toml` está com o `database_id` de exemplo
 (`PREENCHER-COM-O-ID-DE-...`) ou com o id de outra conta. É a causa mais comum
-de todas. `bash scripts/cloudflare-setup.sh` resolve — e **commite o
+de todas. `bash scripts/cloudflare-setup.sh` resolve - e **commite o
 `wrangler.toml` depois**, senão o GitHub Actions falha igual, porque para ele o
 arquivo do repositório é o que vale.
 
@@ -260,7 +260,7 @@ painel. Apague do `wrangler.toml` e republique.
 
 **`Could not route to /client/v4/accounts/.../d1/database ... [code: 7003]`**
 O token não tem a permissão de **D1**. A Cloudflare não responde 403 nesse
-caso — ela responde que a **rota não existe**, porque para um token sem D1 ela
+caso - ela responde que a **rota não existe**, porque para um token sem D1 ela
 realmente não existe. A mensagem fala em "object identifier is invalid", o que
 manda todo mundo procurar Account ID errado. Não é isso.
 
@@ -271,7 +271,7 @@ não muda, então não precisa colar de novo no GitHub.
 
 **`Authentication error [code: 10000]`**
 O token não tem alcance suficiente. O modelo *Edit Cloudflare Workers* cobre o
-Worker e os ativos, mas **não** cobre D1 em algumas contas — acrescente
+Worker e os ativos, mas **não** cobre D1 em algumas contas - acrescente
 `D1:Edit` ao token. Se o erro for no GitHub Actions, confira também
 `CLOUDFLARE_ACCOUNT_ID`: um id errado dá exatamente esta mensagem.
 
@@ -297,11 +297,11 @@ Worker certo: `npx wrangler deployments list`.
 
 **O Actions diz "pulando a publicação"**
 `CLOUDFLARE_API_TOKEN` não está nos segredos do repositório. Não é falha do
-deploy — é o job avisando que não tem como publicar. Passo 7 acima.
+deploy - é o job avisando que não tem como publicar. Passo 7 acima.
 
 ### Quando nada disso for
 
-Rode e me mande a saída — ela diz em qual dos oito passos parou e por quê:
+Rode e me mande a saída - ela diz em qual dos oito passos parou e por quê:
 
 ```bash
 bash scripts/cloudflare-setup.sh 2>&1 | tail -40
@@ -329,7 +329,7 @@ curl -i https://<sua-url>/               # 200, a página de vendas
 **O teste que importa de verdade** é uma compra inteira com as credenciais de
 teste da Mercado Pago: criar conta → PIX → pagar no simulador → o acesso
 aparecer sozinho. Se o acesso não sair em cinco minutos, a varredura do cron
-pega — e `worker/src/reconcile.js` explica por que ela existe.
+pega - e `worker/src/reconcile.js` explica por que ela existe.
 
 ---
 
@@ -344,7 +344,7 @@ npx wrangler dev --local --port 8787
 
 Em outro terminal: `bash worker/e2e.sh`.
 
-Com token falso da Mercado Pago tudo funciona menos cobrar — e criar um pedido
+Com token falso da Mercado Pago tudo funciona menos cobrar - e criar um pedido
 falha limpo com 502, deixando o pedido registrado. É assim que tem de ser.
 
 ---
@@ -368,7 +368,7 @@ npx wrangler d1 execute hebraico-fluente --remote --command \
   "DELETE FROM entitlements WHERE account_id = <id> AND course_slug = 'alfabetizacao'"
 ```
 
-Fecha na hora — o cookie de sessão não carrega direito nenhum.
+Fecha na hora - o cookie de sessão não carrega direito nenhum.
 
 **Achar uma conta:**
 
@@ -401,10 +401,10 @@ npx wrangler d1 execute hebraico-fluente --remote --command \
   contato, e a página de login diz isso em vez de oferecer um botão que não
   funciona. Precisa de um provedor de e-mail antes de existir.
 - **E-mail de confirmação de compra.** Mesmo motivo. O acesso é liberado na
-  hora e a tela diz isso, então nada fica preso — mas uma compra sem recibo por
+  hora e a tela diz isso, então nada fica preso - mas uma compra sem recibo por
   e-mail gera contato de suporte.
 - **Proteção do conteúdo.** O portão recusa as rotas pagas; o conteúdo do curso
-  ainda viaja dentro do pacote JavaScript. Ver `app/ARCHITECTURE.md` §11.4 —
+  ainda viaja dentro do pacote JavaScript. Ver `app/ARCHITECTURE.md` §11.4 -
   não descreva isto a ninguém como proteção de conteúdo.
 - **Sincronizar progresso entre aparelhos.** O acesso viaja com a conta; o
   progresso ainda é do navegador.

@@ -3,14 +3,14 @@
     "A ORDEM DAS LETRAS E O AGRUPAMENTO EM MODULOS SEGUEM O PLANO DE AULAS DO",
     "guia do docente «בא לי עברית!» (חוברת למורה): 22 licoes de 1h30, reunidas em",
     "7 unidades de tres licoes cada. Na unidade, a licao 1 apresenta letras, a",
-    "licao 2 apresenta letras e lingua falada, e a licao 3 nao traz letra nova —",
+    "licao 2 apresenta letras e lingua falada, e a licao 3 nao traz letra nova -",
     "e a de jogos, correcao e leitura.",
     "As cinco primeiras unidades introduzem as 22 letras. A sexta trata das formas",
     "suaves (sem daguesh) e das finais; a setima, dos sons modernos com gerech.",
     "Trocar a ordem aqui obriga a reautorar wordsToRead: a regra V1 so deixa uma",
     "palavra entrar depois que TODAS as suas letras foram ensinadas."
   ],
-  "source": "«בא לי עברית!» — חוברת למורה (guia do docente), unidades 1–7, licoes 1–22.",
+  "source": "«בא לי עברית!» - חוברת למורה (guia do docente), unidades 1-7, licoes 1-22.",
   "modules": [
     {
       "n": 1,
@@ -23,14 +23,14 @@
         { "n": 2, "letters": ["nun", "he", "yod"] },
         { "n": 3, "kind": "practice" }
       ],
-      "introPt": "Seis letras escolhidas por uma razão só: juntas elas já formam palavras que você vai usar no primeiro dia. Duas delas — {{מ}} e {{נ}} — trazem de brinde as suas formas finais, {{ם}} e {{ן}}, e com isso você aprende, logo de entrada, que uma letra hebraica pode mudar de desenho no fim da palavra.",
+      "introPt": "Seis letras escolhidas por uma razão só: juntas elas já formam palavras que você vai usar no primeiro dia. Duas delas - {{מ}} e {{נ}} - trazem de brinde as suas formas finais, {{ם}} e {{ן}}, e com isso você aprende, logo de entrada, que uma letra hebraica pode mudar de desenho no fim da palavra.",
       "goalsPt": [
         "Ler e escrever {{מ ת א נ ה י}} em letra de imprensa e em cursiva",
         "Reconhecer as formas finais {{ם}} e {{ן}}",
         "Ler sem ajuda {{אִמָּא}}, {{אֲנִי}}, {{מַיִם}}, {{אַתָּה}} e {{הִנֵּה}}",
         "Dizer quem você é: {{אֲנִי}} + o seu nome"
       ],
-      "milestonePt": "No fim deste módulo você lê a palavra {{אֲנִי}} — \"eu\" — e a escreve à mão."
+      "milestonePt": "No fim deste módulo você lê a palavra {{אֲנִי}} - \"eu\" - e a escreve à mão."
     },
     {
       "n": 2,
@@ -43,14 +43,14 @@
         { "n": 5, "letters": ["lamed", "resh"] },
         { "n": 6, "kind": "practice" }
       ],
-      "introPt": "Nenhum destes cinco sons é novo para um brasileiro: G de \"gato\", D de \"dado\", X de \"xícara\", L de \"lua\", R de \"caro\". O que é novo é o desenho — e, no caso do {{ש}}, um ponto que decide tudo: com o ponto à direita ele é {{שׁ}} (sh), com o ponto à esquerda é {{שׂ}} (s).",
+      "introPt": "Nenhum destes cinco sons é novo para um brasileiro: G de \"gato\", D de \"dado\", X de \"xícara\", L de \"lua\", R de \"caro\". O que é novo é o desenho - e, no caso do {{ש}}, um ponto que decide tudo: com o ponto à direita ele é {{שׁ}} (sh), com o ponto à esquerda é {{שׂ}} (s).",
       "goalsPt": [
         "Ler e escrever {{ג ד ש ל ר}}",
         "Distinguir {{שׁ}} de {{שׂ}} pelo lado do ponto",
         "Ler {{שֵׁם}}, {{אִשָּׁה}}, {{יֶלֶד}}, {{לַיְלָה}} e {{שֶׁמֶשׁ}}",
-        "Não confundir {{ד}} com {{ר}} — a diferença é o canto superior direito"
+        "Não confundir {{ד}} com {{ר}} - a diferença é o canto superior direito"
       ],
-      "milestonePt": "No fim deste módulo você lê {{שֶׁמֶשׁ}} — \"sol\" — que usa a mesma letra duas vezes."
+      "milestonePt": "No fim deste módulo você lê {{שֶׁמֶשׁ}} - \"sol\" - que usa a mesma letra duas vezes."
     },
     {
       "n": 3,
@@ -63,14 +63,14 @@
         { "n": 8, "letters": ["het", "tet"] },
         { "n": 9, "kind": "practice" }
       ],
-      "introPt": "O {{ו}} é a letra mais versátil do alfabeto: sozinha vale V, com um ponto em cima vira o som O, com um ponto no meio vira U. É por causa dela que este módulo abre a porta para metade do vocabulário básico. O {{ח}} traz o primeiro som que o português não tem — o raspado da garganta, como o J espanhol de \"Juan\".",
+      "introPt": "O {{ו}} é a letra mais versátil do alfabeto: sozinha vale V, com um ponto em cima vira o som O, com um ponto no meio vira U. É por causa dela que este módulo abre a porta para metade do vocabulário básico. O {{ח}} traz o primeiro som que o português não tem - o raspado da garganta, como o J espanhol de \"Juan\".",
       "goalsPt": [
         "Ler e escrever {{ו ז ח ט}}",
         "Ler {{ו}} nos três papéis: consoante V, vogal {{וֹ}} (o) e vogal {{וּ}} (u)",
         "Produzir o {{ח}} raspado sem trocá-lo por R",
         "Ler {{שָׁלוֹם}}, {{תּוֹדָה}}, {{לֶחֶם}} e {{אֶחָד}}"
       ],
-      "milestonePt": "No fim deste módulo você lê {{שָׁלוֹם}} e {{תּוֹדָה}} — e já consegue cumprimentar e agradecer por escrito."
+      "milestonePt": "No fim deste módulo você lê {{שָׁלוֹם}} e {{תּוֹדָה}} - e já consegue cumprimentar e agradecer por escrito."
     },
     {
       "n": 4,
@@ -83,14 +83,14 @@
         { "n": 11, "letters": ["tsadi", "qof"] },
         { "n": 12, "kind": "practice" }
       ],
-      "introPt": "Quatro letras que aparecem em quase toda placa de rua em Israel. Duas delas exigem atenção redobrada: o {{ע}} é mudo no hebraico moderno — só segura a vogal —, e o {{ק}} soa exatamente igual ao {{כּ}}, que você ainda vai conhecer. Ouvir não basta para escolher entre os dois: é preciso saber a palavra.",
+      "introPt": "Quatro letras que aparecem em quase toda placa de rua em Israel. Duas delas exigem atenção redobrada: o {{ע}} é mudo no hebraico moderno - só segura a vogal -, e o {{ק}} soa exatamente igual ao {{כּ}}, que você ainda vai conhecer. Ouvir não basta para escolher entre os dois: é preciso saber a palavra.",
       "goalsPt": [
         "Ler e escrever {{ס ע צ ק}} e a forma final {{ץ}}",
         "Entender que {{ע}} não tem som próprio no hebraico moderno",
         "Ler {{עִיר}}, {{אֶרֶץ}}, {{מָקוֹם}} e {{שֶׁקֶט}}",
         "Não confundir {{ס}} com a forma final {{ם}}"
       ],
-      "milestonePt": "No fim deste módulo você lê {{אֶרֶץ}} — \"terra\", \"país\" — a palavra que abre o nome do jornal e o do país."
+      "milestonePt": "No fim deste módulo você lê {{אֶרֶץ}} - \"terra\", \"país\" - a palavra que abre o nome do jornal e o do país."
     },
     {
       "n": 5,
@@ -103,14 +103,14 @@
         { "n": 14, "letters": ["kaf", "pe"] },
         { "n": 15, "kind": "practice" }
       ],
-      "introPt": "Aqui o alfabeto se fecha, e com a sua regra mais elegante: três letras mudam de som conforme levem ou não um ponto no meio — o daguesh. Com ponto são oclusivas, {{בּ}} b, {{כּ}} k, {{פּ}} p; sem ponto são fricativas, {{ב}} v, {{כ}} ch, {{פ}} f. O guia ensina as formas COM ponto primeiro, porque são as que o brasileiro reconhece nas palavras emprestadas.",
+      "introPt": "Aqui o alfabeto se fecha, e com a sua regra mais elegante: três letras mudam de som conforme levem ou não um ponto no meio - o daguesh. Com ponto são oclusivas, {{בּ}} b, {{כּ}} k, {{פּ}} p; sem ponto são fricativas, {{ב}} v, {{כ}} ch, {{פ}} f. O guia ensina as formas COM ponto primeiro, porque são as que o brasileiro reconhece nas palavras emprestadas.",
       "goalsPt": [
         "Ler e escrever {{ב כ פ}} e as formas finais {{ך}} e {{ף}}",
         "Ouvir e ver a diferença entre {{בּ}}/{{ב}}, {{כּ}}/{{כ}}, {{פּ}}/{{פ}}",
         "Ler {{אַבָּא}}, {{בַּיִת}}, {{טוֹב}}, {{כֶּלֶב}}, {{סֵפֶר}} e {{מִשְׁפָּחָה}}",
         "Completar o alfabeto: 22 letras e 5 formas finais"
       ],
-      "milestonePt": "No fim deste módulo você conhece as 22 letras — e lê {{מֶלֶךְ}}, que estava esperando desde a primeira lição."
+      "milestonePt": "No fim deste módulo você conhece as 22 letras - e lê {{מֶלֶךְ}}, que estava esperando desde a primeira lição."
     },
     {
       "n": 6,
@@ -124,10 +124,10 @@
         { "n": 17, "topicPt": "{{פ}} suave e a final {{ף}}" },
         { "n": 18, "kind": "practice" }
       ],
-      "introPt": "Nenhuma letra nova neste módulo — e ainda assim ele é o que separa quem decora de quem lê. Você já viu as três letras do daguesh com o ponto; agora vai vê-las sem ele, no meio e no fim da palavra, onde o ponto quase nunca aparece. É aqui também que as cinco formas finais deixam de ser curiosidade e viram hábito de leitura.",
+      "introPt": "Nenhuma letra nova neste módulo - e ainda assim ele é o que separa quem decora de quem lê. Você já viu as três letras do daguesh com o ponto; agora vai vê-las sem ele, no meio e no fim da palavra, onde o ponto quase nunca aparece. É aqui também que as cinco formas finais deixam de ser curiosidade e viram hábito de leitura.",
       "goalsPt": [
         "Ler {{ב}}, {{כ}} e {{פ}} sem daguesh, do jeito que aparecem na rua",
-        "Saber quando o ponto some — e por que isso não é opcional",
+        "Saber quando o ponto some - e por que isso não é opcional",
         "Reconhecer {{ם ן ך ף ץ}} de relance, sem pensar",
         "Ler {{דֶּרֶךְ}}, {{כֶּסֶף}}, {{סוֹף}} e {{מֶלֶךְ}}"
       ],
@@ -141,11 +141,11 @@
       "subPt": "{{צ׳}} tch · {{ג׳}} dj · {{ז׳}} j",
       "letters": [],
       "lessons": [
-        { "n": 19, "topicPt": "{{צ׳}} — o som de \"tchau\"" },
-        { "n": 20, "topicPt": "{{ג׳}} e {{ז׳}} — \"gee\" e \"j\"" },
+        { "n": 19, "topicPt": "{{צ׳}} - o som de \"tchau\"" },
+        { "n": 20, "topicPt": "{{ג׳}} e {{ז׳}} - \"gee\" e \"j\"" },
         { "n": 21, "kind": "practice" }
       ],
-      "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha — os do português \"tchau\", \"gelo\" e \"jarro\" — e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
+      "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"gelo\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
       "goalsPt": [
         "Ler e escrever {{צ׳}}, {{ג׳}} e {{ז׳}}",
         "Reconhecer o {{גֶּרֶשׁ}} e saber que ele muda o som, não a letra",

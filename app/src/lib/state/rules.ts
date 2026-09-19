@@ -1,6 +1,6 @@
 /* The learning-state rules: XP, streak, progress, achievements.
  *
- * Every function here is pure — state in, state out, with the day passed as an
+ * Every function here is pure - state in, state out, with the day passed as an
  * argument rather than read from the clock. That is what makes the streak
  * testable without mocking time, and it is the reason these rules live apart
  * from the React store. */
@@ -54,16 +54,16 @@ export const goalTarget = (minutes: number): number => Math.max(3, Math.round(mi
 export const ANSWER_UNITS = 1;
 
 /**
- * What finishing one stage of a lesson is worth — about two minutes of
+ * What finishing one stage of a lesson is worth - about two minutes of
  * reading, listening, tracing or writing. Without this the daily goal could
  * only be met by answering questions, which is the smaller half of the course.
  */
 export const STAGE_UNITS = 6;
 
 /**
- * A lesson of module 6 or 7 is bigger than a letter stage — the dagesh lesson
+ * A lesson of module 6 or 7 is bigger than a letter stage - the dagesh lesson
  * covers three letter pairs with their word lists, the finals lesson covers all
- * five forms — so it is worth more. A single constant for "a stage" was the
+ * five forms - so it is worth more. A single constant for "a stage" was the
  * simplification; these two modules are where it stopped being true.
  */
 export const EXTRA_STAGE_UNITS = 10;
@@ -234,7 +234,7 @@ export function skillLevel(stat: SkillStat | undefined): MasteryLevel {
   return 'aprendendo';
 }
 
-/** The letter's weakest skill that has any evidence — what to practise next. */
+/** The letter's weakest skill that has any evidence - what to practise next. */
 export function weakestSkill(skills: LetterSkills | undefined): Skill | null {
   if (!skills) return null;
   const RANK: Record<MasteryLevel, number> = {
@@ -255,7 +255,7 @@ export function weakestSkill(skills: LetterSkills | undefined): Skill | null {
  *
  * It is the WEAKEST skill with evidence, not the average. Averaging would let a
  * learner who reads ק perfectly and cannot hear it at all read as "praticando",
- * and the course would move on — which is the exact failure the per-skill model
+ * and the course would move on - which is the exact failure the per-skill model
  * exists to prevent.
  */
 export function letterMastery(state: LearnerState, letterId: string): MasteryLevel {
@@ -286,7 +286,7 @@ export function recordSkill(
 /* ── confusions ─────────────────────────────────────────────────────────
    `confusableWith` in the content says which letters TEND to be mixed up. This
    says which ones THIS learner mixes up, which is a different and more useful
-   fact — and it costs nothing to collect, because the player already knows
+   fact - and it costs nothing to collect, because the player already knows
    which wrong option was tapped. */
 
 export const confusionKey = (correct: string, chosen: string): string => `${correct}>${chosen}`;
@@ -343,7 +343,7 @@ export function clearConfusion(state: LearnerState, correct: string, chosen: str
 }
 
 /* ── the final exam ─────────────────────────────────────────────────────
-   Unlimited attempts, no penalty, and the best score is kept — the same
+   Unlimited attempts, no penalty, and the best score is kept - the same
    policy as every other assessment in the course. What is NOT overwritten is
    `passedAt`: the day a learner first passed is a fact about them, and a
    later worse attempt does not take it away. */
@@ -386,7 +386,7 @@ export function certificateReady(
 
 /* ── the reading gym ────────────────────────────────────────────────────
    One record per mode. The time comparison is the learner against their own
-   last run and nothing else — no target, no average, no other learners. */
+   last run and nothing else - no target, no average, no other learners. */
 export function recordGym(
   state: LearnerState, modeId: string, score: number, seconds: number, day: string
 ): LearnerState {
@@ -461,13 +461,13 @@ export const dueItems = (state: LearnerState, day: string): SrsItem[] =>
  *
  * Three sources, because one was not enough:
  *
- *   · the SRS queue — items due today, weighted by how often they were missed.
+ *   · the SRS queue - items due today, weighted by how often they were missed.
  *     This was the whole of it, and it goes quiet as soon as an item's interval
  *     pushes it past today, even for a letter the learner is still failing;
- *   · any skill sitting at `revisar` — a letter that was strong and has just
+ *   · any skill sitting at `revisar` - a letter that was strong and has just
  *     slipped is the single most valuable thing a review can offer, and the
  *     SRS entry for it may not be due for days;
- *   · the confusion pairs — both letters of a pair this learner actually
+ *   · the confusion pairs - both letters of a pair this learner actually
  *     trades, because drilling ד without ר beside it teaches nothing about the
  *     distinction that is failing.
  *
@@ -506,7 +506,7 @@ export function weakLetters(
  *
  * The review used to be a black box that produced five questions; a learner
  * who wanted to know what it thought they were bad at had no way to find out.
- * This is that list — and it is also what the "para revisar" panel renders.
+ * This is that list - and it is also what the "para revisar" panel renders.
  */
 export type ReviewDebt = {
   letterId: string;
@@ -595,7 +595,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
     test: s => Object.values(s.checkpoints).some(c => (c.best ?? 0) >= 1) },
   { id: 'vinte-e-duas', titlePt: '22 letras', descPt: 'O alfabeto inteiro.',
     test: s => lettersMastered(s) >= 22 },
-  { id: 'sem-o-ponto', titlePt: 'Sem o ponto', descPt: 'Você lê {{בּ}}, {{כּ}} e {{פּ}} sem o daguesh — como elas aparecem na rua.',
+  { id: 'sem-o-ponto', titlePt: 'Sem o ponto', descPt: 'Você lê {{בּ}}, {{כּ}} e {{פּ}} sem o daguesh - como elas aparecem na rua.',
     test: s => !!s.checkpoints['cp6']?.passedAt },
   { id: 'sons-modernos', titlePt: 'Os sons modernos', descPt: 'O gerech e as três letras que o hebraico moderno inventou sem inventar letra.',
     test: s => !!s.checkpoints['cp7']?.passedAt },
@@ -623,7 +623,7 @@ export function syncAchievements(
 
 /* ── progressive reading support ────────────────────────────────────────
    The support fades as the alphabet fills in. This is the single most visible
-   sign of progress the course has — a learner who needed the transliteration
+   sign of progress the course has - a learner who needed the transliteration
    on letter 3 and reads without it on letter 18 can SEE that they changed.
 
    It is a function of letters mastered, not of a setting, because a setting
@@ -644,7 +644,7 @@ export const supportLabel = (level: SupportLevel): string =>
 /**
  * Course completion.
  *
- * `extraModuleIds` are modules 6 and 7 — three lessons each, no letters. They
+ * `extraModuleIds` are modules 6 and 7 - three lessons each, no letters. They
  * are part of the course, so leaving them out of the denominator would let the
  * bar read 100% while the reader still cannot handle a word printed without
  * its dots, which is most words.

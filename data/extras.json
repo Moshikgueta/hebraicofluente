@@ -1,6 +1,6 @@
 {
   "note": [
-    "Conteudo dos modulos 6 e 7 — as duas unidades do plano de aulas que NAO",
+    "Conteudo dos modulos 6 e 7 - as duas unidades do plano de aulas que NAO",
     "introduzem letra nova, e por isso sao as mais faceis de pular e as piores",
     "de pular.",
     "",
@@ -10,7 +10,7 @@
     "tools/export-content.mjs.",
     "",
     "Tudo aqui vem DEPOIS da letra 22, entao a regra da ordem nao restringe",
-    "nada — todas as 22 letras ja foram ensinadas."
+    "nada - todas as 22 letras ja foram ensinadas."
   ],
 
   "dagesh": {
@@ -34,7 +34,7 @@
           { "he": "טוֹב", "translit": "tov", "pt": "bom" },
           { "he": "לֵב", "translit": "lev", "pt": "coração" }
         ],
-        "notePt": "O som suave é o V do português, idêntico ao de {{ו}}. Duas letras, um som só — e é por isso que o hebraico se escreve com dicionário na cabeça."
+        "notePt": "O som suave é o V do português, idêntico ao de {{ו}}. Duas letras, um som só - e é por isso que o hebraico se escreve com dicionário na cabeça."
       },
       {
         "id": "kaf",
@@ -107,7 +107,7 @@
     "titlePt": "Os sons modernos",
     "signNamePt": "gerech",
     "signHe": "גֶּרֶשׁ",
-    "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha — os do português \"tchau\", \"gelo\" e \"jarro\" — e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
+    "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"gelo\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
     "signNotePt": "O {{גֶּרֶשׁ}} é o traço que se põe à esquerda da letra, no alto. Ele não é acento nem pontuação: é parte da escrita da palavra, e sem ele a palavra tem outro som.",
     "letters": [
       {
@@ -143,7 +143,7 @@
         "base": "ז",
         "basePt": "z",
         "pt": "j",
-        "likePt": "como o J do francês \"jour\" — o nosso J de \"jarro\"",
+        "likePt": "como o J do francês \"jour\" - o nosso J de \"jarro\"",
         "words": [
           { "he": "ז׳רגון", "pt": "jargão" },
           { "he": "ז׳סטה", "pt": "gesto" }

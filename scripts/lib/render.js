@@ -6,14 +6,14 @@
 
    Why this exists, concretely. In the reference PDF:
 
-     · the title renders as  "A letra מ — Mem (מֵם)"  with the closing paren
+     · the title renders as  "A letra מ - Mem (מֵם)"  with the closing paren
        on the wrong side, because the paren is a neutral character sitting
        between an RTL run and the line end;
      · "Encontre todas as letras מ: מים / בית / מה / שלום / מי" renders with
        the whole list reversed, because the colons and slashes are neutrals
        that join the RTL run;
      · worst, the matching exercise "Ma • מה / Mayim • מים / Mi • מי" renders
-       re-paired as Mayim•מי and Mi•מים — a bidi artefact that silently
+       re-paired as Mayim•מי and Mi•מים - a bidi artefact that silently
        teaches the wrong answer.
 
    `unicode-bidi: isolate` on every Hebrew span makes each run its own bidi
@@ -46,7 +46,7 @@ export function he(text, opts = {}) {
   if (!raw) return '';
   if (FORBIDDEN_IN_SPAN.test(raw)) {
     throw new Error(
-      `he(): punctuation inside a Hebrew span — ${JSON.stringify(raw)}\n` +
+      `he(): punctuation inside a Hebrew span - ${JSON.stringify(raw)}\n` +
       `      Put the Hebrew in its own he() call and the punctuation outside it.`
     );
   }
@@ -85,8 +85,8 @@ export const raw = html => ({ __html: String(html) });
 /**
  * A Hebrew sequence to be read in order.
  *
- * The container is its own RTL isolate, so items run right-to-left — the
- * order a Hebrew reader actually reads — with items[0] rightmost, and the
+ * The container is its own RTL isolate, so items run right-to-left - the
+ * order a Hebrew reader actually reads - with items[0] rightmost, and the
  * separators sit between them instead of drifting. Because the container is
  * isolated, nothing outside it (a Portuguese label, a colon) can join the
  * run. That is precisely the reference PDF's "Encontre todas as letras מ:"
@@ -115,8 +115,8 @@ export function pair(latin, hebrew) {
 /**
  * A word with letters missing.
  *
- * `parts` is given in READING order — right to left, the order a Hebrew
- * reader meets the letters — with `null` for each blank. The container is an
+ * `parts` is given in READING order - right to left, the order a Hebrew
+ * reader meets the letters - with `null` for each blank. The container is an
  * RTL isolate and children lay out in DOM order, so parts[0] is rightmost and
  * the blanks land exactly where the author put them.
  *

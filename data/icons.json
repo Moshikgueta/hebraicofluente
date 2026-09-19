@@ -2,11 +2,11 @@
   "note": [
     "Ilustração de cada palavra com slot de imagem.",
     "O valor é o nome de um ícone do conjunto Lucide (ISC), vendorizado em assets/icons/.",
-    "Um valor iniciado por # é texto literal — os números ficam mais claros como algarismo.",
+    "Um valor iniciado por # é texto literal - os números ficam mais claros como algarismo.",
     "Rode tools/gen-icons.mjs depois de mexer aqui: ele copia só os ícones usados.",
     "A regra V14 falha o build se uma palavra com slot ficar sem mapeamento ou apontar para um arquivo ausente."
   ],
-  "source": "lucide-static (ISC) — https://lucide.dev",
+  "source": "lucide-static (ISC) - https://lucide.dev",
   "words": {
     "מַיִם": "droplet",
     "מָה": "circle-help",

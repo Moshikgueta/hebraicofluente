@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-gen-stroke-order.py — author's tool. Writes assets/stroke-order/*.svg.
+gen-stroke-order.py - author's tool. Writes assets/stroke-order/*.svg.
 
 NOT part of `npm run build`. Run it once, commit the SVGs:
 
@@ -17,7 +17,7 @@ here can never drift apart.
 The stroke COUNT is derived, not guessed. A glyph's outline is split into
 contours; a contour whose bounding box sits inside another's is a counter (the
 hole in a closed loop like samekh), not a separate pen stroke. Counting only
-outer contours gives: he, alef and qof at two strokes, everything else at one —
+outer contours gives: he, alef and qof at two strokes, everything else at one -
 which is the real stroke count of Israeli cursive.
 
 The stroke ORDER and START POINT follow two rules that hold for Hebrew cursive:
@@ -26,7 +26,7 @@ stroke the rightmost comes first, because Hebrew is written right to left.
 Both rules agree on all three two-stroke letters (he: body then left leg;
 alef: right curve then left stroke; qof: head then descender).
 
-The ARROW points from the start dot toward the stroke's centroid — "begin here
+The ARROW points from the start dot toward the stroke's centroid - "begin here
 and move into the form". It deliberately does not claim a curl direction,
 because that is the one thing the outline cannot tell us.
 
@@ -60,7 +60,7 @@ def contours_of(glyph_set, gname):
 
     The points are what the geometry rules work on (bounding box, centroid,
     where the pen lands). The recording is what produces an EXACT path for one
-    contour on its own — which is what the app animates, revealing the strokes
+    contour on its own - which is what the app animates, revealing the strokes
     of he, alef and qof one at a time. Flattened points cannot be turned back
     into curves, so both have to be carried."""
     pen = RecordingPen()
@@ -125,7 +125,7 @@ def start_point(c):
     """Where the pen lands: the RIGHTMOST point within the top band of the stroke.
 
     Strictly-topmost was wrong for het, whose left hump happens to sit a few
-    units higher than its right one — the marker landed on the wrong end of a
+    units higher than its right one - the marker landed on the wrong end of a
     letter that, like all of them, is entered from the upper right. Taking the
     rightmost point within 8% of the stroke's height of its apex keeps "start
     at the top" while respecting that Hebrew runs right to left."""
@@ -163,7 +163,7 @@ def build(tid, ch, name, font, cmap, gs):
     def to_svg(p):
         return tx + s * p[0], ty - s * p[1]
 
-    # strokes: rightmost first, then topmost — both rules agree on every
+    # strokes: rightmost first, then topmost - both rules agree on every
     # two-stroke letter in this alphabet.
     strokes = outer_contours(cs)
     strokes.sort(key=lambda c: (-bbox(c)[2], -bbox(c)[3]))
@@ -178,7 +178,7 @@ def build(tid, ch, name, font, cmap, gs):
     inners = [c for c in cs if c not in strokes]
     meta_strokes = []
     for c in strokes:
-        # A counter — the hole in samekh, the eye of qof — belongs to the stroke
+        # A counter - the hole in samekh, the eye of qof - belongs to the stroke
         # that encloses it, or the stroke would animate in as a solid blob.
         own = [c] + [h for h in inners if inside(bbox(h), bbox(c))]
         d_stroke = ' '.join(contour_path(h['rec'], transform, gs) for h in own)

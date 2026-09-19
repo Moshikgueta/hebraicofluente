@@ -1,7 +1,7 @@
 import { DashboardClient } from './DashboardClient';
 
 export const metadata = {
-  title: 'Meu Hebraico — Hebraico Fluente',
+  title: 'Meu Hebraico - Hebraico Fluente',
   description: 'Seus cursos, seu progresso e a aula de hoje.'
 };
 

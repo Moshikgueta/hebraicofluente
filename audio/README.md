@@ -1,7 +1,7 @@
 # audio/
 
 As gravações do curso vão aqui. Um arquivo `.mp3` por clipe, com o nome exato
-que o roteiro manda — o nome é um hash do hebraico pontuado, então ele não muda
+que o roteiro manda - o nome é um hash do hebraico pontuado, então ele não muda
 quando o curso muda de ordem.
 
 ```bash
@@ -18,5 +18,5 @@ navegadores ignora o nikud, e num curso cuja promessa é "esta letra faz este
 som" uma pronúncia errada com ar de autoridade é pior do que silêncio. Ver
 `app/ARCHITECTURE.md` §6.3.
 
-Os `.mp3` não entram no git (ver `.gitignore`) — são binários grandes e o
+Os `.mp3` não entram no git (ver `.gitignore`) - são binários grandes e o
 repositório não é o lugar deles. O roteiro, sim.

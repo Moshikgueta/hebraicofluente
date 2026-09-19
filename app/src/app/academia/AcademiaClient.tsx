@@ -1,11 +1,11 @@
 'use client';
 
-/* Academia de Leitura — the practice room.
+/* Academia de Leitura - the practice room.
  * ─────────────────────────────────────────────────────────────────────────
  * Everything here is generated from what the learner has already unlocked, by
  * the same engine that builds the lessons. Nothing is authored twice, nothing
  * can show a letter they have not met, and the room stays useful after the
- * twenty-second lesson — which is the point. A course you cannot practise is a
+ * twenty-second lesson - which is the point. A course you cannot practise is a
  * course you finish once and close.
  *
  * The timed mode races the learner against their OWN last time and nothing
@@ -172,7 +172,7 @@ export function AcademiaClient() {
         <Badge tone="accent">Academia de Leitura</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold">Praticar</h1>
         <p className="font-ui text-[15px] text-ink-muted">
-          Tudo aqui é montado com as letras que você já aprendeu — {unlocked.length} até
+          Tudo aqui é montado com as letras que você já aprendeu - {unlocked.length} até
           agora. Escolha o que quer treinar, ou deixe a revisão escolher por você.
         </p>
       </header>
@@ -180,7 +180,7 @@ export function AcademiaClient() {
       {!unlocked.length ? (
         <Card tone="amber" className="p-6 grid gap-3">
           <p className="text-[15px] leading-relaxed text-ink-body">
-            A academia abre depois da primeira lição — ela só usa letras que você já viu,
+            A academia abre depois da primeira lição - ela só usa letras que você já viu,
             e por enquanto não há nenhuma.
           </p>
           <LinkButton href="/meu-hebraico" className="justify-self-start">Começar a primeira letra</LinkButton>

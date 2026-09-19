@@ -1,4 +1,4 @@
-/* audio-script.mjs — the studio deliverable.
+/* audio-script.mjs - the studio deliverable.
  *
  *   npm run audio-script   →   audio/roteiro-de-gravacao.html
  *
@@ -9,7 +9,7 @@
  *
  * Two things here are load-bearing:
  *
- *   · The Hebrew goes through `he()` — the same direction contract as the book
+ *   · The Hebrew goes through `he()` - the same direction contract as the book
  *     and the app. A recording script is the worst place to discover a bidi bug:
  *     the speaker would read a reordered word and nobody in the room would know.
  *   · The filename is printed on every row. The whole ingestion pipeline is
@@ -39,7 +39,7 @@ function main() {
     <tr>
       <td class="num">${c.num}</td>
       <td class="he-cell">${he(c.he, { size: 'word' })}</td>
-      <td class="tr">${c.translit ? `<strong>${esc(c.translit)}</strong>` : '<span class="dim">—</span>'}</td>
+      <td class="tr">${c.translit ? `<strong>${esc(c.translit)}</strong>` : '<span class="dim">-</span>'}</td>
       <td class="gloss">${esc(c.gloss)}</td>
       <td class="where">${esc(c.where.join(' · '))}</td>
       <td class="file"><code>${esc(c.file)}</code></td>
@@ -48,7 +48,7 @@ function main() {
 
   const waveSection = w => `
   <section class="sheet">
-    <h2>Onda ${w.id} — ${esc(w.titlePt)}</h2>
+    <h2>Onda ${w.id} - ${esc(w.titlePt)}</h2>
     <p class="lead">${esc(w.notePt)}</p>
     <p class="meta"><strong>${w.count}</strong> clipes · cerca de <strong>${mins(w.count)} min</strong> de sessão</p>
     <table>
@@ -68,7 +68,7 @@ function main() {
 <html lang="pt-BR" dir="ltr">
 <head>
 <meta charset="utf-8">
-<title>Roteiro de gravacao — Hebraico Fluente</title>
+<title>Roteiro de gravacao - Hebraico Fluente</title>
 <style>
   @font-face { font-family: 'Noto Sans Hebrew'; src: url('../assets/fonts/noto-sans-hebrew-hebrew-400-normal.woff2') format('woff2'); font-weight: 400; }
   @font-face { font-family: 'Noto Sans Hebrew'; src: url('../assets/fonts/noto-sans-hebrew-hebrew-700-normal.woff2') format('woff2'); font-weight: 700; }
@@ -122,7 +122,7 @@ function main() {
 
 <section class="sheet">
   <h1>Roteiro de gravação</h1>
-  <p class="lead">Hebraico Fluente — curso de alfabetização. <strong>${total} clipes</strong>,
+  <p class="lead">Hebraico Fluente - curso de alfabetização. <strong>${total} clipes</strong>,
      divididos em três ondas. Estimativa total: cerca de <strong>${mins(total)} minutos</strong>
      de sessão, sem contar montagem e pausas.</p>
 
@@ -132,7 +132,7 @@ function main() {
       <ul>
         <li>Hebraico <strong>israelense moderno</strong>, falante nativo.</li>
         <li>Sotaque neutro de Israel central. Sem pronúncia litúrgica ou ashkenazi.</li>
-        <li>Adulto, tom calmo e claro — é material de alfabetização para adultos,
+        <li>Adulto, tom calmo e claro - é material de alfabetização para adultos,
             não locução publicitária e não voz infantil.</li>
         <li>Ritmo <strong>pausado</strong>: cada clipe é ouvido por quem ainda não
             distingue os sons. Uma palavra por clipe, sem frase em volta.</li>
@@ -160,7 +160,7 @@ function main() {
   <div class="box warn" style="margin-top:14px">
     <h3 style="color:#9A6B15">Duas coisas que decidem a qualidade do curso</h3>
     <p style="margin:0 0 6px"><strong>1. O nikud manda.</strong> Cada palavra está
-       escrita com os sinais de vogal, e é essa a pronúncia que queremos — não a
+       escrita com os sinais de vogal, e é essa a pronúncia que queremos - não a
        pronúncia corrente se ela divergir. Duas palavras deste roteiro têm as
        mesmas consoantes e vogais diferentes; elas são clipes diferentes de
        propósito.</p>

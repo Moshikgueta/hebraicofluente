@@ -3,7 +3,7 @@
  * Two independent pieces of code compute the clip id: tools/gen-audio.mjs, which
  * names what the speaker records, and tools/export-content.mjs, which names what
  * the app asks for. They use the same hash, but they are separate
- * implementations — and if they ever drift the app requests files nobody
+ * implementations - and if they ever drift the app requests files nobody
  * recorded and every button silently reads "áudio em breve" forever.
  *
  * So the app's view of the world is checked against the recording manifest. */
@@ -58,7 +58,7 @@ describe('the audio manifest and the app agree', () => {
   });
 
   it('plans no clip the app never asks for', () => {
-    /* An orphan is not an error — vocabulary changes leave them behind — but a
+    /* An orphan is not an error - vocabulary changes leave them behind - but a
        large number means the manifest was not regenerated, and the speaker
        would be recording words the course dropped. */
     const asked = new Set(requested().map(r => r.id));
@@ -86,7 +86,7 @@ describe('the audio manifest and the app agree', () => {
     for (const c of manifest.clips) expect([1, 2, 3]).toContain(c.wave);
     const w1 = manifest.clips.filter(c => c.wave === 1);
     /* Wave 1 must carry every letter name and every syllable: it is the wave
-       that makes the course's central claim — this letter makes this sound —
+       that makes the course's central claim - this letter makes this sound -
        actually audible. */
     expect(w1.filter(c => c.kind === 'nome').length).toBeGreaterThanOrEqual(22);
     expect(w1.filter(c => c.kind === 'silaba').length).toBeGreaterThanOrEqual(132);
@@ -104,8 +104,8 @@ describe('the audio manifest and the app agree', () => {
   });
 
   it('reports coverage honestly', () => {
-    /* Not an assertion about how much audio exists — that changes as waves
-       arrive — but about the two states being consistent: every id present is a
+    /* Not an assertion about how much audio exists - that changes as waves
+       arrive - but about the two states being consistent: every id present is a
        real clip, and the count is what the app will actually be able to play. */
     expect(AUDIO_MANIFEST.length).toBeLessThanOrEqual(manifest.clips.length);
     expect(new Set(AUDIO_MANIFEST).size).toBe(AUDIO_MANIFEST.length);

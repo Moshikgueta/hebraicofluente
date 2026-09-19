@@ -1,7 +1,7 @@
 'use client';
 
-/* The quick review. Built from what this learner actually missed — never a
-   generic drill — which is the whole reason the SRS pool stores misses rather
+/* The quick review. Built from what this learner actually missed - never a
+   generic drill - which is the whole reason the SRS pool stores misses rather
    than a log of everything seen. */
 
 import { useMemo, useState } from 'react';
@@ -58,7 +58,7 @@ export function ReviewClient() {
     const wanted = new Set<Skill>();
     for (const id of weak) {
       const s = weakestSkill(p.state.skills[id]);
-      /* `escrever` has no generated question — it is produced on a canvas —
+      /* `escrever` has no generated question - it is produced on a canvas -
          and `ouvir` has none either until the recordings land. Asking for
          either would narrow the review to nothing. */
       if (!s || s === 'escrever') continue;
@@ -129,7 +129,7 @@ export function ReviewClient() {
       </header>
 
       {/* Naming the pair, kindly. "Percebemos que ר e ד ainda estão
-          confundindo você" is a fact about the work, not about the learner —
+          confundindo você" is a fact about the work, not about the learner -
           and it is the thing that makes the review feel like it is paying
           attention rather than shuffling. */}
       {p.confusions.length > 0 && (
@@ -148,7 +148,7 @@ export function ReviewClient() {
 
       <Card className="p-6 grid gap-4">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-          {due.length ? 'Hoje vale revisar' : 'Nada pendente — vamos reforçar as últimas'}
+          {due.length ? 'Hoje vale revisar' : 'Nada pendente - vamos reforçar as últimas'}
         </p>
         <ul className="grid gap-2">
           {weak.map(id => {

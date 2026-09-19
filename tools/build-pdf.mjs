@@ -1,4 +1,4 @@
-/* build-pdf.mjs — author's tool. Prints dist/ to a single A4 PDF.
+/* build-pdf.mjs - author's tool. Prints dist/ to a single A4 PDF.
  *
  *   npm run pdf                 # the whole book
  *   npm run pdf -- 01-mem       # one module
@@ -14,7 +14,7 @@
  * PDF page numbers.
  *
  * Page geometry comes from styles/print.css (@page { size: A4; margin: 0 }),
- * so nothing here sets margins — printBackground is on because the teal bands
+ * so nothing here sets margins - printBackground is on because the teal bands
  * and mint callouts carry the page structure.
  */
 
@@ -64,7 +64,7 @@ function serve() {
 
 async function main() {
   if (!existsSync(join(DIST, 'livro-completo.html'))) {
-    console.error('dist/ está vazio ou desatualizado — rode `npm run build` primeiro.');
+    console.error('dist/ está vazio ou desatualizado - rode `npm run build` primeiro.');
     process.exit(1);
   }
   mkdirSync(OUT, { recursive: true });
@@ -115,19 +115,19 @@ async function main() {
     for (let pass = 1; pass <= 2; pass++) {
       const map = measure(join(OUT, dest));
       if (!map) {
-        console.log('  ! page-map.py indisponível — o sumário fica sem números ' +
+        console.log('  ! page-map.py indisponível - o sumário fica sem números ' +
                     '(pip install pymupdf)');
         break;
       }
 
       /* The whole design rests on one sheet being one printed page. If that
          stops holding, every page number in the contents is wrong and the
-         folio no longer matches the paper — so it is asserted, not assumed.
+         folio no longer matches the paper - so it is asserted, not assumed.
          `npm run check-fit` says WHICH sheet overflowed. */
       const html = readFileSync(join(DIST, src), 'utf8');
       const sheets = (html.match(/class="sheet"/g) || []).length;
       if (map.pages !== sheets) {
-        console.error(`\n  ✗ ${sheets} folhas viraram ${map.pages} páginas — ` +
+        console.error(`\n  ✗ ${sheets} folhas viraram ${map.pages} páginas - ` +
                       `alguma folha estourou a página.\n    rode: npm run check-fit\n`);
         process.exitCode = 1;
       }
@@ -136,7 +136,7 @@ async function main() {
       prev = next;
       writeFileSync(join(ROOT, 'data/page-map.json'), JSON.stringify(map, null, 2) + '\n');
       console.log(`  sumário: ${Object.keys(map.sections).length} seções mapeadas ` +
-                  `em ${map.pages} páginas — reconstruindo`);
+                  `em ${map.pages} páginas - reconstruindo`);
       rebuild();
       await print(src, dest);
     }
@@ -152,7 +152,7 @@ async function main() {
    been paginated, and adding the numbers changes nothing about the layout
    (the slot is fixed width), so one measure-then-rebuild pass is enough.
    The loop below runs at most twice and stops as soon as the map stops
-   changing. If Python or PyMuPDF is missing the book still builds — the
+   changing. If Python or PyMuPDF is missing the book still builds - the
    contents just keeps its dashes, and the run says so. */
 function measure(pdfPath) {
   const r = spawnSync('python3', [join(ROOT, 'tools/page-map.py'), pdfPath],

@@ -25,7 +25,7 @@
  */
 
 export type TraceVerdict = {
-  /** 0–1, for the skill model. */
+  /** 0-1, for the skill model. */
   score: number;
   dentro: number;
   cobertura: number;
@@ -47,7 +47,7 @@ export type TraceInput = {
 
 /** Anything at all is "on the model" above this; the blur makes it generous. */
 const ON_MODEL = 24;
-/** The model's core — the part that really has to be covered. */
+/** The model's core - the part that really has to be covered. */
 const CORE = 90;
 
 export function scoreTrace(input: TraceInput): TraceVerdict {
@@ -96,7 +96,7 @@ export function scoreTrace(input: TraceInput): TraceVerdict {
   if (dentro >= 0.5) {
     return {
       score, dentro, cobertura, tone: 'try',
-      message: 'Quase! Faltou parte da letra — tente cobrir o modelo inteiro.'
+      message: 'Quase! Faltou parte da letra - tente cobrir o modelo inteiro.'
     };
   }
   if (cobertura >= 0.35 || dentro >= 0.3) {

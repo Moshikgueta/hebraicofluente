@@ -88,7 +88,7 @@ export function CompletionClient() {
             'Reconhecer as 22 letras, impressas e em cursiva',
             'Reconhecer as cinco formas finais de relance',
             'Ler palavras vocalizadas com os sinais que o curso ensinou',
-            <>Ler sem nikud, do jeito que aparece na rua — <He size="inline">ספר</He>, <He size="inline">בית</He>, <He size="inline">שלום</He></>,
+            <>Ler sem nikud, do jeito que aparece na rua - <He size="inline">ספר</He>, <He size="inline">בית</He>, <He size="inline">שלום</He></>,
             'Escrever as letras à mão, na direção certa',
             'Pronunciar os sons que o português não tem, sem trocá-los'
           ].map((s, i) => (

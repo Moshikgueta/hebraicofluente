@@ -6,7 +6,7 @@ import { Section, SectionHead } from '@/components/platform/Section';
 import { course } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'Sobre o Moshik — Hebraico Fluente',
+  title: 'Sobre o Moshik - Hebraico Fluente',
   description: 'Quem faz o Hebraico Fluente e por que o curso é do jeito que é.'
 };
 
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
  * ─────────────────────────────────────────────────────────────────────────
  * O que está escrito abaixo foi montado a partir do que o REPOSITÓRIO prova:
  * as decisões de método, o manuscrito de origem, a caderneta de exercícios, o
- * público a que o curso se dirige. Nada aqui afirma um fato biográfico —
- * nenhuma data, cidade, formação, tempo de sala de aula ou número de alunos —
+ * público a que o curso se dirige. Nada aqui afirma um fato biográfico -
+ * nenhuma data, cidade, formação, tempo de sala de aula ou número de alunos -
  * porque nenhum desses fatos existe no projeto, e inventá-los numa página
  * "Sobre" é o tipo de mentira pequena que derruba a confiança inteira quando
  * um aluno pergunta.
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
  * Os dois blocos marcados com BIO abaixo são esqueleto: substitua pelo texto
  * de verdade, em primeira pessoa. Onde houver credencial, cite a credencial.
  * Onde houver número de alunos, cite o número. Se não houver, deixe como está
- * — a página funciona sem, e funciona mal com um número inventado.
+ * - a página funciona sem, e funciona mal com um número inventado.
  */
 
 export default function SobrePage() {
@@ -39,11 +39,11 @@ export default function SobrePage() {
             <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[18ch]">
               Oi, eu sou o Moshik.
             </h1>
-            {/* BIO — substituir */}
+            {/* BIO - substituir */}
             <p className="text-[17px] leading-relaxed text-ink-body max-w-[56ch]">
               Eu ensino hebraico para brasileiros. O Hebraico Fluente nasceu de uma
               coisa que eu via acontecer sempre: gente motivada, que queria muito
-              aprender, desistindo na primeira semana — não por falta de esforço,
+              aprender, desistindo na primeira semana - não por falta de esforço,
               mas porque o material que existia começava pelo lugar errado.
             </p>
             <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[58ch]">
@@ -78,11 +78,11 @@ export default function SobrePage() {
             },
             {
               t: 'Não deixar a transliteração virar muleta',
-              b: 'Ela ajuda no começo e atrapalha depois. Então ela sai — em etapas, avisando, e com exercícios feitos para o momento em que ela sair.'
+              b: 'Ela ajuda no começo e atrapalha depois. Então ela sai - em etapas, avisando, e com exercícios feitos para o momento em que ela sair.'
             },
             {
               t: 'Não fingir que você tem professor do lado',
-              b: 'Você não tem. Por isso cada exercício se corrige sozinho, cada erro explica o motivo, e o exame final tem gabarito, transcrição e critério — tudo o que um professor faria, escrito.'
+              b: 'Você não tem. Por isso cada exercício se corrige sozinho, cada erro explica o motivo, e o exame final tem gabarito, transcrição e critério - tudo o que um professor faria, escrito.'
             }
           ].map(x => (
             <li key={x.t}>
@@ -108,7 +108,7 @@ export default function SobrePage() {
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
               As {course.totalLetters} lições, as palavras de cada letra e os exercícios
               saíram do material impresso e passaram para o aplicativo pela mesma
-              fonte — se uma palavra muda, muda nos dois. O livro e a plataforma
+              fonte - se uma palavra muda, muda nos dois. O livro e a plataforma
               não podem divergir, e não divergem por construção.
             </p>
           </Card>

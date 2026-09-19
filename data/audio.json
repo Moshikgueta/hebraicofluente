@@ -1,6 +1,6 @@
 {
   "note": [
-    "GERADO por tools/gen-audio.mjs — nao edite a mao.",
+    "GERADO por tools/gen-audio.mjs - nao edite a mao.",
     "O nome do arquivo vem de um hash do hebraico pontuado, nao da posicao:",
     "acrescentar uma palavra nao renomeia nada do que ja foi gravado.",
     "O numero e impresso no roteiro de gravacao, entao tambem e estavel:",
@@ -48,7 +48,7 @@
       "seq": 1,
       "he": "מַ",
       "translit": "ma",
-      "gloss": "sílaba — como o MA de \"má\"",
+      "gloss": "sílaba - como o MA de \"má\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -62,7 +62,7 @@
       "seq": 2,
       "he": "מֶ",
       "translit": "me",
-      "gloss": "sílaba — como o ME de \"mesa\"",
+      "gloss": "sílaba - como o ME de \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -76,7 +76,7 @@
       "seq": 3,
       "he": "מִ",
       "translit": "mi",
-      "gloss": "sílaba — como o MI de \"milho\"",
+      "gloss": "sílaba - como o MI de \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -90,7 +90,7 @@
       "seq": 4,
       "he": "מוֹ",
       "translit": "mo",
-      "gloss": "sílaba — como o MO de \"motor\"",
+      "gloss": "sílaba - como o MO de \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -104,7 +104,7 @@
       "seq": 5,
       "he": "מוּ",
       "translit": "mu",
-      "gloss": "sílaba — como o MU de \"muro\"",
+      "gloss": "sílaba - como o MU de \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -118,7 +118,7 @@
       "seq": 6,
       "he": "מְ",
       "translit": "m",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -145,7 +145,7 @@
       "seq": 8,
       "he": "תַּ",
       "translit": "ta",
-      "gloss": "sílaba — como \"tá\"",
+      "gloss": "sílaba - como \"tá\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -158,7 +158,7 @@
       "seq": 9,
       "he": "תֶּ",
       "translit": "te",
-      "gloss": "sílaba — como \"te\" de \"teto\"",
+      "gloss": "sílaba - como \"te\" de \"teto\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -171,7 +171,7 @@
       "seq": 10,
       "he": "תִּ",
       "translit": "ti",
-      "gloss": "sílaba — como \"ti\" de \"tigre\" — nunca \"tchi\"",
+      "gloss": "sílaba - como \"ti\" de \"tigre\" - nunca \"tchi\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -184,7 +184,7 @@
       "seq": 11,
       "he": "תּוֹ",
       "translit": "to",
-      "gloss": "sílaba — como \"to\" de \"topo\"",
+      "gloss": "sílaba - como \"to\" de \"topo\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -197,7 +197,7 @@
       "seq": 12,
       "he": "תּוּ",
       "translit": "tu",
-      "gloss": "sílaba — como \"tu\" de \"tudo\"",
+      "gloss": "sílaba - como \"tu\" de \"tudo\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -210,7 +210,7 @@
       "seq": 13,
       "he": "תְּ",
       "translit": "t",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -236,7 +236,7 @@
       "seq": 15,
       "he": "אַ",
       "translit": "a",
-      "gloss": "sílaba — só a vogal A",
+      "gloss": "sílaba - só a vogal A",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -249,7 +249,7 @@
       "seq": 16,
       "he": "אֶ",
       "translit": "e",
-      "gloss": "sílaba — só a vogal E",
+      "gloss": "sílaba - só a vogal E",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -262,7 +262,7 @@
       "seq": 17,
       "he": "אִ",
       "translit": "i",
-      "gloss": "sílaba — só a vogal I",
+      "gloss": "sílaba - só a vogal I",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -275,7 +275,7 @@
       "seq": 18,
       "he": "אוֹ",
       "translit": "o",
-      "gloss": "sílaba — só a vogal O",
+      "gloss": "sílaba - só a vogal O",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -288,7 +288,7 @@
       "seq": 19,
       "he": "אוּ",
       "translit": "u",
-      "gloss": "sílaba — só a vogal U",
+      "gloss": "sílaba - só a vogal U",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -301,7 +301,7 @@
       "seq": 20,
       "he": "אֲ",
       "translit": "a",
-      "gloss": "sílaba — guturais não aceitam sheva — usam o hataf, um A ultrabreve",
+      "gloss": "sílaba - guturais não aceitam sheva - usam o hataf, um A ultrabreve",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -327,7 +327,7 @@
       "seq": 22,
       "he": "נַ",
       "translit": "na",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -340,7 +340,7 @@
       "seq": 23,
       "he": "נֶ",
       "translit": "ne",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -353,7 +353,7 @@
       "seq": 24,
       "he": "נִ",
       "translit": "ni",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -366,7 +366,7 @@
       "seq": 25,
       "he": "נוֹ",
       "translit": "no",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -379,7 +379,7 @@
       "seq": 26,
       "he": "נוּ",
       "translit": "nu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -392,7 +392,7 @@
       "seq": 27,
       "he": "נְ",
       "translit": "n",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -418,7 +418,7 @@
       "seq": 29,
       "he": "הַ",
       "translit": "ha",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -431,7 +431,7 @@
       "seq": 30,
       "he": "הֶ",
       "translit": "he",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -444,7 +444,7 @@
       "seq": 31,
       "he": "הִ",
       "translit": "hi",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -457,7 +457,7 @@
       "seq": 32,
       "he": "הוֹ",
       "translit": "ho",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -470,7 +470,7 @@
       "seq": 33,
       "he": "הוּ",
       "translit": "hu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -483,7 +483,7 @@
       "seq": 34,
       "he": "הְ",
       "translit": "h",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -509,7 +509,7 @@
       "seq": 36,
       "he": "יַ",
       "translit": "ya",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -522,7 +522,7 @@
       "seq": 37,
       "he": "יֶ",
       "translit": "ye",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -535,7 +535,7 @@
       "seq": 38,
       "he": "יִ",
       "translit": "yi",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -548,7 +548,7 @@
       "seq": 39,
       "he": "יוֹ",
       "translit": "yo",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -561,7 +561,7 @@
       "seq": 40,
       "he": "יוּ",
       "translit": "yu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -574,7 +574,7 @@
       "seq": 41,
       "he": "יְ",
       "translit": "y",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -600,7 +600,7 @@
       "seq": 43,
       "he": "גַ",
       "translit": "ga",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -613,7 +613,7 @@
       "seq": 44,
       "he": "גֶ",
       "translit": "ge",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -626,7 +626,7 @@
       "seq": 45,
       "he": "גִ",
       "translit": "gi",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -639,7 +639,7 @@
       "seq": 46,
       "he": "גוֹ",
       "translit": "go",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -652,7 +652,7 @@
       "seq": 47,
       "he": "גוּ",
       "translit": "gu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -665,7 +665,7 @@
       "seq": 48,
       "he": "גְ",
       "translit": "g",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -691,7 +691,7 @@
       "seq": 50,
       "he": "דַ",
       "translit": "da",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -704,7 +704,7 @@
       "seq": 51,
       "he": "דֶ",
       "translit": "de",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -717,7 +717,7 @@
       "seq": 52,
       "he": "דִ",
       "translit": "di",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -730,7 +730,7 @@
       "seq": 53,
       "he": "דוֹ",
       "translit": "do",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -743,7 +743,7 @@
       "seq": 54,
       "he": "דוּ",
       "translit": "du",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -756,7 +756,7 @@
       "seq": 55,
       "he": "דְ",
       "translit": "d",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -782,7 +782,7 @@
       "seq": 57,
       "he": "שַׁ",
       "translit": "sha",
-      "gloss": "sílaba — como \"chá\"",
+      "gloss": "sílaba - como \"chá\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -795,7 +795,7 @@
       "seq": 58,
       "he": "שֶׁ",
       "translit": "she",
-      "gloss": "sílaba — como \"che\" de \"chegar\"",
+      "gloss": "sílaba - como \"che\" de \"chegar\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -808,7 +808,7 @@
       "seq": 59,
       "he": "שִׁ",
       "translit": "shi",
-      "gloss": "sílaba — como \"chi\" de \"chique\"",
+      "gloss": "sílaba - como \"chi\" de \"chique\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -821,7 +821,7 @@
       "seq": 60,
       "he": "שׁוֹ",
       "translit": "sho",
-      "gloss": "sílaba — como \"cho\" de \"chocolate\"",
+      "gloss": "sílaba - como \"cho\" de \"chocolate\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -834,7 +834,7 @@
       "seq": 61,
       "he": "שׁוּ",
       "translit": "shu",
-      "gloss": "sílaba — como \"chu\" de \"chuva\"",
+      "gloss": "sílaba - como \"chu\" de \"chuva\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -847,7 +847,7 @@
       "seq": 62,
       "he": "שְׁ",
       "translit": "sh",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -873,7 +873,7 @@
       "seq": 64,
       "he": "לַ",
       "translit": "la",
-      "gloss": "sílaba — como \"lá\"",
+      "gloss": "sílaba - como \"lá\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -886,7 +886,7 @@
       "seq": 65,
       "he": "לֶ",
       "translit": "le",
-      "gloss": "sílaba — como \"le\" de \"leve\"",
+      "gloss": "sílaba - como \"le\" de \"leve\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -899,7 +899,7 @@
       "seq": 66,
       "he": "לִ",
       "translit": "li",
-      "gloss": "sílaba — como \"li\" de \"livro\"",
+      "gloss": "sílaba - como \"li\" de \"livro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -912,7 +912,7 @@
       "seq": 67,
       "he": "לוֹ",
       "translit": "lo",
-      "gloss": "sílaba — como \"lo\" de \"loja\"",
+      "gloss": "sílaba - como \"lo\" de \"loja\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -925,7 +925,7 @@
       "seq": 68,
       "he": "לוּ",
       "translit": "lu",
-      "gloss": "sílaba — como \"lu\" de \"luva\"",
+      "gloss": "sílaba - como \"lu\" de \"luva\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -938,7 +938,7 @@
       "seq": 69,
       "he": "לְ",
       "translit": "l",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -964,7 +964,7 @@
       "seq": 71,
       "he": "רַ",
       "translit": "ra",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -977,7 +977,7 @@
       "seq": 72,
       "he": "רֶ",
       "translit": "re",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -990,7 +990,7 @@
       "seq": 73,
       "he": "רִ",
       "translit": "ri",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1003,7 +1003,7 @@
       "seq": 74,
       "he": "רוֹ",
       "translit": "ro",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1016,7 +1016,7 @@
       "seq": 75,
       "he": "רוּ",
       "translit": "ru",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1029,7 +1029,7 @@
       "seq": 76,
       "he": "רְ",
       "translit": "r",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1055,7 +1055,7 @@
       "seq": 78,
       "he": "וַ",
       "translit": "va",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1068,7 +1068,7 @@
       "seq": 79,
       "he": "וֶ",
       "translit": "ve",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1081,7 +1081,7 @@
       "seq": 80,
       "he": "וִ",
       "translit": "vi",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1094,7 +1094,7 @@
       "seq": 81,
       "he": "ווֹ",
       "translit": "vo",
-      "gloss": "sílaba — precisa de dois vav: um consoante, um vogal",
+      "gloss": "sílaba - precisa de dois vav: um consoante, um vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1107,7 +1107,7 @@
       "seq": 82,
       "he": "ווּ",
       "translit": "vu",
-      "gloss": "sílaba — precisa de dois vav: um consoante, um vogal",
+      "gloss": "sílaba - precisa de dois vav: um consoante, um vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1120,7 +1120,7 @@
       "seq": 83,
       "he": "וְ",
       "translit": "v",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1146,7 +1146,7 @@
       "seq": 85,
       "he": "זַ",
       "translit": "za",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1159,7 +1159,7 @@
       "seq": 86,
       "he": "זֶ",
       "translit": "ze",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1172,7 +1172,7 @@
       "seq": 87,
       "he": "זִ",
       "translit": "zi",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1185,7 +1185,7 @@
       "seq": 88,
       "he": "זוֹ",
       "translit": "zo",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1198,7 +1198,7 @@
       "seq": 89,
       "he": "זוּ",
       "translit": "zu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1211,7 +1211,7 @@
       "seq": 90,
       "he": "זְ",
       "translit": "z",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1237,7 +1237,7 @@
       "seq": 92,
       "he": "חַ",
       "translit": "cha",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1250,7 +1250,7 @@
       "seq": 93,
       "he": "חֶ",
       "translit": "che",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1263,7 +1263,7 @@
       "seq": 94,
       "he": "חִ",
       "translit": "chi",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1276,7 +1276,7 @@
       "seq": 95,
       "he": "חוֹ",
       "translit": "cho",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1289,7 +1289,7 @@
       "seq": 96,
       "he": "חוּ",
       "translit": "chu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1302,7 +1302,7 @@
       "seq": 97,
       "he": "חֲ",
       "translit": "cha",
-      "gloss": "sílaba — guturais não aceitam sheva — usam o hataf, um A ultrabreve",
+      "gloss": "sílaba - guturais não aceitam sheva - usam o hataf, um A ultrabreve",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1328,7 +1328,7 @@
       "seq": 99,
       "he": "טַ",
       "translit": "ta",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1341,7 +1341,7 @@
       "seq": 100,
       "he": "טֶ",
       "translit": "te",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1354,7 +1354,7 @@
       "seq": 101,
       "he": "טִ",
       "translit": "ti",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1367,7 +1367,7 @@
       "seq": 102,
       "he": "טוֹ",
       "translit": "to",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1380,7 +1380,7 @@
       "seq": 103,
       "he": "טוּ",
       "translit": "tu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1393,7 +1393,7 @@
       "seq": 104,
       "he": "טְ",
       "translit": "t",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1419,7 +1419,7 @@
       "seq": 106,
       "he": "סַ",
       "translit": "sa",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1432,7 +1432,7 @@
       "seq": 107,
       "he": "סֶ",
       "translit": "se",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1445,7 +1445,7 @@
       "seq": 108,
       "he": "סִ",
       "translit": "si",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1458,7 +1458,7 @@
       "seq": 109,
       "he": "סוֹ",
       "translit": "so",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1471,7 +1471,7 @@
       "seq": 110,
       "he": "סוּ",
       "translit": "su",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1484,7 +1484,7 @@
       "seq": 111,
       "he": "סְ",
       "translit": "s",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1510,7 +1510,7 @@
       "seq": 113,
       "he": "עַ",
       "translit": "a",
-      "gloss": "sílaba — só a vogal A",
+      "gloss": "sílaba - só a vogal A",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1523,7 +1523,7 @@
       "seq": 114,
       "he": "עֶ",
       "translit": "e",
-      "gloss": "sílaba — só a vogal E",
+      "gloss": "sílaba - só a vogal E",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1536,7 +1536,7 @@
       "seq": 115,
       "he": "עִ",
       "translit": "i",
-      "gloss": "sílaba — só a vogal I",
+      "gloss": "sílaba - só a vogal I",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1549,7 +1549,7 @@
       "seq": 116,
       "he": "עוֹ",
       "translit": "o",
-      "gloss": "sílaba — só a vogal O",
+      "gloss": "sílaba - só a vogal O",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1562,7 +1562,7 @@
       "seq": 117,
       "he": "עוּ",
       "translit": "u",
-      "gloss": "sílaba — só a vogal U",
+      "gloss": "sílaba - só a vogal U",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1575,7 +1575,7 @@
       "seq": 118,
       "he": "עֲ",
       "translit": "a",
-      "gloss": "sílaba — guturais não aceitam sheva — usam o hataf, um A ultrabreve",
+      "gloss": "sílaba - guturais não aceitam sheva - usam o hataf, um A ultrabreve",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1601,7 +1601,7 @@
       "seq": 120,
       "he": "צַ",
       "translit": "tsa",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1614,7 +1614,7 @@
       "seq": 121,
       "he": "צֶ",
       "translit": "tse",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1627,7 +1627,7 @@
       "seq": 122,
       "he": "צִ",
       "translit": "tsi",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1640,7 +1640,7 @@
       "seq": 123,
       "he": "צוֹ",
       "translit": "tso",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1653,7 +1653,7 @@
       "seq": 124,
       "he": "צוּ",
       "translit": "tsu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1666,7 +1666,7 @@
       "seq": 125,
       "he": "צְ",
       "translit": "ts",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1692,7 +1692,7 @@
       "seq": 127,
       "he": "קַ",
       "translit": "ka",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1705,7 +1705,7 @@
       "seq": 128,
       "he": "קֶ",
       "translit": "ke",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1718,7 +1718,7 @@
       "seq": 129,
       "he": "קִ",
       "translit": "ki",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1731,7 +1731,7 @@
       "seq": 130,
       "he": "קוֹ",
       "translit": "ko",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1744,7 +1744,7 @@
       "seq": 131,
       "he": "קוּ",
       "translit": "ku",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1757,7 +1757,7 @@
       "seq": 132,
       "he": "קְ",
       "translit": "k",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1783,7 +1783,7 @@
       "seq": 134,
       "he": "בַּ",
       "translit": "ba",
-      "gloss": "sílaba — como \"bá\"",
+      "gloss": "sílaba - como \"bá\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1796,7 +1796,7 @@
       "seq": 135,
       "he": "בֶּ",
       "translit": "be",
-      "gloss": "sílaba — como \"be\" de \"beber\"",
+      "gloss": "sílaba - como \"be\" de \"beber\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1809,7 +1809,7 @@
       "seq": 136,
       "he": "בִּ",
       "translit": "bi",
-      "gloss": "sílaba — como \"bi\" de \"bicho\"",
+      "gloss": "sílaba - como \"bi\" de \"bicho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1822,7 +1822,7 @@
       "seq": 137,
       "he": "בּוֹ",
       "translit": "bo",
-      "gloss": "sílaba — como \"bo\" de \"bolo\"",
+      "gloss": "sílaba - como \"bo\" de \"bolo\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1835,7 +1835,7 @@
       "seq": 138,
       "he": "בּוּ",
       "translit": "bu",
-      "gloss": "sílaba — como \"bu\" de \"buraco\"",
+      "gloss": "sílaba - como \"bu\" de \"buraco\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1848,7 +1848,7 @@
       "seq": 139,
       "he": "בְּ",
       "translit": "b",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1874,7 +1874,7 @@
       "seq": 141,
       "he": "כַּ",
       "translit": "ka",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1887,7 +1887,7 @@
       "seq": 142,
       "he": "כֶּ",
       "translit": "ke",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1900,7 +1900,7 @@
       "seq": 143,
       "he": "כִּ",
       "translit": "ki",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1913,7 +1913,7 @@
       "seq": 144,
       "he": "כּוֹ",
       "translit": "ko",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1926,7 +1926,7 @@
       "seq": 145,
       "he": "כּוּ",
       "translit": "ku",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1939,7 +1939,7 @@
       "seq": 146,
       "he": "כְּ",
       "translit": "k",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1965,7 +1965,7 @@
       "seq": 148,
       "he": "פַּ",
       "translit": "pa",
-      "gloss": "sílaba — A aberto, como em \"casa\"",
+      "gloss": "sílaba - A aberto, como em \"casa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1978,7 +1978,7 @@
       "seq": 149,
       "he": "פֶּ",
       "translit": "pe",
-      "gloss": "sílaba — E como em \"mesa\"",
+      "gloss": "sílaba - E como em \"mesa\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -1991,7 +1991,7 @@
       "seq": 150,
       "he": "פִּ",
       "translit": "pi",
-      "gloss": "sílaba — I como em \"milho\"",
+      "gloss": "sílaba - I como em \"milho\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -2004,7 +2004,7 @@
       "seq": 151,
       "he": "פּוֹ",
       "translit": "po",
-      "gloss": "sílaba — O como em \"motor\"",
+      "gloss": "sílaba - O como em \"motor\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -2017,7 +2017,7 @@
       "seq": 152,
       "he": "פּוּ",
       "translit": "pu",
-      "gloss": "sílaba — U como em \"muro\"",
+      "gloss": "sílaba - U como em \"muro\"",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -2030,7 +2030,7 @@
       "seq": 153,
       "he": "פְּ",
       "translit": "p",
-      "gloss": "sílaba — só a consoante, sem vogal",
+      "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -2056,7 +2056,7 @@
       "seq": 155,
       "he": "מָ",
       "translit": null,
-      "gloss": "sinal kamats — som a",
+      "gloss": "sinal kamats - som a",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -2095,7 +2095,7 @@
       "seq": 158,
       "he": "מֵ",
       "translit": null,
-      "gloss": "sinal tsere — som e",
+      "gloss": "sinal tsere - som e",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -2134,7 +2134,7 @@
       "seq": 161,
       "he": "מֹ",
       "translit": null,
-      "gloss": "sinal cholam — som o",
+      "gloss": "sinal cholam - som o",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -2173,7 +2173,7 @@
       "seq": 164,
       "he": "מֻ",
       "translit": null,
-      "gloss": "sinal kubuts — som u",
+      "gloss": "sinal kubuts - som u",
       "kind": "silaba",
       "wave": 1,
       "where": [
@@ -4084,7 +4084,7 @@
       "seq": 307,
       "he": "צ׳",
       "translit": "tch",
-      "gloss": "a letra צ com gerech — som tch",
+      "gloss": "a letra צ com gerech - som tch",
       "kind": "nome",
       "wave": 3,
       "where": [
@@ -4136,7 +4136,7 @@
       "seq": 311,
       "he": "ג׳",
       "translit": "dj",
-      "gloss": "a letra ג com gerech — som dj",
+      "gloss": "a letra ג com gerech - som dj",
       "kind": "nome",
       "wave": 3,
       "where": [
@@ -4201,7 +4201,7 @@
       "seq": 316,
       "he": "ז׳",
       "translit": "j",
-      "gloss": "a letra ז com gerech — som j",
+      "gloss": "a letra ז com gerech - som j",
       "kind": "nome",
       "wave": 3,
       "where": [

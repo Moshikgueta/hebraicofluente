@@ -8,7 +8,7 @@
  *
  * Então, de cinco em cinco minutos: pega os pedidos pendentes com mais de um
  * minuto de vida e pergunta ao provedor o que aconteceu com cada um. É a rede
- * por baixo das outras duas — e é ela que garante que "paguei e não liberou"
+ * por baixo das outras duas - e é ela que garante que "paguei e não liberou"
  * seja um atraso de minutos, nunca um chamado de suporte.
  *
  * O que ela NÃO faz: liberar acesso por conta própria. Ela chama exatamente a
@@ -16,7 +16,7 @@
  * segunda regra, e a segunda regra é sempre a que tem o bug.
  *
  * Um pendente de mais de 24 horas vira `expired`. Não é desistência: o PIX
- * expira em 30 minutos e a preferência de cartão deixa de aceitar pagamento —
+ * expira em 30 minutos e a preferência de cartão deixa de aceitar pagamento -
  * continuar perguntando por eles seria gastar chamada com pedido morto. Se um
  * pagamento chegar mesmo assim, o webhook o encontra pelo id do pedido e o
  * `settle` o processa do mesmo jeito: `expired` não fecha porta nenhuma.

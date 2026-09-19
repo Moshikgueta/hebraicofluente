@@ -4,7 +4,7 @@
  * ─────────────────────────────────────────────────────────────────────────
  * Duas leituras da mesma lista: a prateleira de cards (rápida, para escolher)
  * e a trilha numerada logo abaixo (lenta, para entender a ordem). A segunda
- * existe porque a pergunta de quem chega aqui raramente é "qual eu compro" —
+ * existe porque a pergunta de quem chega aqui raramente é "qual eu compro" -
  * é "por onde eu começo e até onde isso vai".
  */
 
@@ -27,7 +27,7 @@ export function CursosClient() {
           id="cursos"
           eyebrowPt="Cursos de hebraico"
           titlePt="Do primeiro alfabeto à conversa."
-          leadPt="Quatro cursos, uma conta. Cada um começa exatamente onde o anterior parou — nada de recomeçar do zero em outra plataforma."
+          leadPt="Quatro cursos, uma conta. Cada um começa exatamente onde o anterior parou - nada de recomeçar do zero em outra plataforma."
         />
         <CourseShelf />
       </Section>

@@ -6,7 +6,7 @@ import { Section, SectionHead } from '@/components/platform/Section';
 import { course } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'O método — Hebraico Fluente',
+  title: 'O método - Hebraico Fluente',
   description:
     'Uma letra por vez, na ordem que rende mais; nada de palavra com letra que você ' +
     'ainda não viu; revisão no dia certo; e a transliteração sai de propósito.'
@@ -52,14 +52,14 @@ export default function MetodoPage() {
           <div className="grid gap-4 sm:grid-cols-2">
             <p className="font-ui text-[15px] leading-relaxed text-ink-body">
               Parece óbvio. Quase nenhum curso faz. É comum a lição 2 trazer
-              שָׁלוֹם como exemplo — quatro letras e um sinal que você ainda não
+              שָׁלוֹם como exemplo - quatro letras e um sinal que você ainda não
               tem. O efeito é sempre o mesmo: em vez de ler, você decora a forma
               inteira como se fosse um desenho, e a leitura nunca começa.
             </p>
             <p className="font-ui text-[15px] leading-relaxed text-ink-body">
               Aqui isso não é um cuidado editorial, é uma trava no programa. Cada
               letra carrega a lista exata de sinais que já foram ensinados, e o
-              gerador de exercícios só pode usar aquela lista — inclusive nas
+              gerador de exercícios só pode usar aquela lista - inclusive nas
               alternativas erradas. Um exercício fora da regra não chega ao ar
               porque a verificação automática não deixa a versão subir.
             </p>
@@ -70,7 +70,7 @@ export default function MetodoPage() {
               <He size="lg">מַיִם</He>
             </div>
             <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted max-w-[34ch]">
-              Três letras, dois sinais — e todos já ensinados. Por isso ela pode
+              Três letras, dois sinais - e todos já ensinados. Por isso ela pode
               aparecer tão cedo: ela é legível, não decorável.
             </p>
           </div>
@@ -84,7 +84,7 @@ export default function MetodoPage() {
             {
               n: 2,
               t: 'A ordem é por utilidade, não pelo alfabeto',
-              b: `As letras não vêm de א a ת. Vêm na ordem que abre mais palavras mais cedo — por isso a terceira lição já lê uma palavra inteira em vez de ainda estar na segunda letra. São ${letterModules} módulos de letras e ${course.totalLetters} lições.`
+              b: `As letras não vêm de א a ת. Vêm na ordem que abre mais palavras mais cedo - por isso a terceira lição já lê uma palavra inteira em vez de ainda estar na segunda letra. São ${letterModules} módulos de letras e ${course.totalLetters} lições.`
             },
             {
               n: 3,
@@ -94,12 +94,12 @@ export default function MetodoPage() {
             {
               n: 4,
               t: 'A revisão é por habilidade, não por lição',
-              b: 'Reconhecer a forma, saber o som, ler a sílaba, ouvir e escrever são cinco coisas diferentes. O curso guarda as cinco separadas por letra, e a revisão traz de volta exatamente a que está fraca — não a lição inteira de novo.'
+              b: 'Reconhecer a forma, saber o som, ler a sílaba, ouvir e escrever são cinco coisas diferentes. O curso guarda as cinco separadas por letra, e a revisão traz de volta exatamente a que está fraca - não a lição inteira de novo.'
             },
             {
               n: 5,
               t: 'A transliteração sai',
-              b: 'Enquanto houver "shalom" embaixo da palavra, você lê o português. O curso usa transliteração no começo e a retira de propósito, em etapas anunciadas, até você estar lendo sem apoio nenhum — que é a única definição de ler.'
+              b: 'Enquanto houver "shalom" embaixo da palavra, você lê o português. O curso usa transliteração no começo e a retira de propósito, em etapas anunciadas, até você estar lendo sem apoio nenhum - que é a única definição de ler.'
             }
           ].map(x => (
             <li key={x.n}>
@@ -127,7 +127,7 @@ export default function MetodoPage() {
         />
         <ol className="grid gap-3 sm:grid-cols-5 list-none p-0 m-0">
           {[
-            ['Conheça', 'A forma, o nome e o som — com o que ela parece e o que ela não é.'],
+            ['Conheça', 'A forma, o nome e o som - com o que ela parece e o que ela não é.'],
             ['Escute', 'O som isolado, depois na sílaba, depois na palavra.'],
             ['Leia', 'Sílabas e palavras montadas só com o que você já tem.'],
             ['Escreva', 'Com o dedo na tela, na ordem certa dos traços.'],

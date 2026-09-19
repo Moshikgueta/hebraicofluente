@@ -4,9 +4,9 @@
  * ─────────────────────────────────────────────────────────────────────────
  * Três passos numa página só, com o resumo do pedido sempre à vista:
  *
- *   1. conta      — entrar ou criar, sem sair daqui;
- *   2. pagamento  — PIX, cartão à vista ou parcelado;
- *   3. confirmação— o servidor diz que o acesso saiu, e só ele.
+ *   1. conta      - entrar ou criar, sem sair daqui;
+ *   2. pagamento  - PIX, cartão à vista ou parcelado;
+ *   3. confirmação- o servidor diz que o acesso saiu, e só ele.
  *
  * Decisões que valem a pena registrar:
  *
@@ -20,12 +20,12 @@
  *
  * · O acesso é confirmado perguntando ao servidor (`orderStatus`), nunca pelo
  *   que volta na URL. A Mercado Pago manda o comprador de volta com
- *   parâmetros na query — e qualquer pessoa consegue digitar esses parâmetros
+ *   parâmetros na query - e qualquer pessoa consegue digitar esses parâmetros
  *   na barra de endereço. É exatamente o erro que o projeto irmão em espanhol
  *   documenta no IMPLEMENTATION.md dele.
  *
  * · A consulta tem limite. Se o pagamento não cair em cinco minutos, a tela
- *   para de perguntar e explica o que fazer — em vez de girar para sempre e
+ *   para de perguntar e explica o que fazer - em vez de girar para sempre e
  *   deixar a pessoa achando que travou.
  */
 
@@ -134,7 +134,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
           </h2>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
             A plataforma já está no ar, mas o meio de pagamento está sendo
-            configurado. Sua conta ficou criada — escreva para o endereço abaixo
+            configurado. Sua conta ficou criada - escreva para o endereço abaixo
             com este e-mail e liberamos o acesso na mão enquanto isso.
           </p>
           <p className="font-ui text-[14px] text-ink">
@@ -205,7 +205,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
           </p>
         </Card>
         {/* O mesmo formulário do /criar-conta, com o retorno apontando de volta
-            para cá — quem cria a conta no meio da compra volta para a compra. */}
+            para cá - quem cria a conta no meio da compra volta para a compra. */}
         <div className="-mx-4 sm:-mx-6">
           <AuthFormInline slug={slug} />
         </div>
@@ -229,7 +229,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             checked={method === 'pix'} onSelect={() => setMethod('pix')}
             titlePt="PIX"
             detailPt={c.price.pixDiscountPct > 0
-              ? `${brl(pixPrice(c.price))} — ${c.price.pixDiscountPct}% de desconto. Cai em segundos.`
+              ? `${brl(pixPrice(c.price))} - ${c.price.pixDiscountPct}% de desconto. Cai em segundos.`
               : `${brl(c.price.brl)}. Cai em segundos.`}
           />
 
@@ -280,7 +280,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             </Button>
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted text-center">
               Acesso liberado automaticamente assim que o pagamento for confirmado.
-              Sete dias para desistir, pela lei — {' '}
+              Sete dias para desistir, pela lei - {' '}
               <Link href="/faq" className="text-[var(--accent)] hover:underline">como funciona</Link>.
             </p>
           </>
@@ -317,14 +317,14 @@ function PixPanel({
           <p role="alert" className="font-ui text-[14px] leading-relaxed text-ink-body
                                      bg-[var(--amber-wash)] rounded-[var(--r-md)] px-4 py-3">
             O pagamento ainda não apareceu por aqui. Se você já pagou, o acesso
-            entra sozinho assim que o banco confirmar — recarregue esta página
+            entra sozinho assim que o banco confirmar - recarregue esta página
             em alguns minutos. Se não pagou, dá para gerar um código novo.
           </p>
           <Button variant="secondary" onClick={onRetry} full>Gerar outro código</Button>
         </div>
       ) : (
         <p aria-live="polite" className="font-ui text-[14px] leading-relaxed text-ink-body">
-          Esperando o pagamento cair. Pode deixar esta página aberta — ela se
+          Esperando o pagamento cair. Pode deixar esta página aberta - ela se
           atualiza sozinha.
         </p>
       )}
@@ -357,7 +357,7 @@ function MethodOption({
 function AuthFormInline({ slug }: { slug: string }) {
   /* AuthForm lê `?next=` da URL, e aqui a URL é a do checkout. Em vez de
      duplicar o formulário com outra prop, o link de retorno é o endereço
-     atual — que é exatamente o que a pessoa quer: voltar para a compra. */
+     atual - que é exatamente o que a pessoa quer: voltar para a compra. */
   return <AuthForm mode="signup" key={slug} />;
 }
 
@@ -381,7 +381,7 @@ function Shell({ course, children }: {
       </div>
 
       {/* O resumo fica visível o tempo todo, inclusive no celular, onde ele
-          vai para cima do formulário e não para baixo dele — ninguém paga o
+          vai para cima do formulário e não para baixo dele - ninguém paga o
           que não consegue ver. */}
       <Card tone="wash" className="p-5 grid gap-3 content-start order-first lg:order-last">
         <p className="font-ui text-[11px] uppercase tracking-[.08em] text-[var(--accent)]">

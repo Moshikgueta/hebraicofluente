@@ -1,8 +1,8 @@
 /* Hebrew string handling. The ONLY place in the app that inspects a Hebrew
  * string character by character.
  *
- * The rule that everything else follows: a pointed Hebrew letter is 2–4
- * codepoints — the consonant plus the marks that ride on it — so any operation
+ * The rule that everything else follows: a pointed Hebrew letter is 2-4
+ * codepoints - the consonant plus the marks that ride on it - so any operation
  * that treats the string as an array of characters corrupts it. There is no
  * `.split('').reverse()` anywhere in this codebase, and there never can be:
  * direction is the browser's job (unicode-bidi: isolate), not ours.
@@ -12,7 +12,7 @@
 const POINTING = /[֑-ׇ]/;
 
 /**
- * VOWEL marks only — sheva through qubuts, plus qamats qatan.
+ * VOWEL marks only - sheva through qubuts, plus qamats qatan.
  *
  * Deliberately excludes three marks that look like pointing and are not vowels:
  * dagesh (U+05BC), which decides בּ from ב, and the shin and sin dots
@@ -22,7 +22,7 @@ const POINTING = /[֑-ׇ]/;
  */
 const VOWEL = /[ְ-ׇֻ]/;
 
-/** Base consonants א–ת, finals included. */
+/** Base consonants א-ת, finals included. */
 const CONSONANT = /[א-ת]/;
 
 /** Invisible direction marks. They must never reach the DOM: they defeat
@@ -30,7 +30,7 @@ const CONSONANT = /[א-ת]/;
 const INVISIBLE = /[‎‏؜​﻿]/g;
 
 /** The 22 letters in alphabetical order, plus the five final forms. This is a
- *  property of the language, not of the course, so it is a constant — the
+ *  property of the language, not of the course, so it is a constant - the
  *  course's own teaching order lives in the content. */
 export const ALEFBET = [
   'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל',
@@ -64,14 +64,14 @@ export function consonantsOf(text: string): string[] {
   return out;
 }
 
-/** The word without its pointing — how Hebrew is actually printed in the wild. */
+/** The word without its pointing - how Hebrew is actually printed in the wild. */
 export function stripNikud(text: string): string {
   return [...clean(text)].filter(ch => !POINTING.test(ch)).join('');
 }
 
 /**
  * A word split into CLUSTERS: each consonant plus the marks that belong to it.
- * This is the only safe unit to move, hide or blank — and the reason the
+ * This is the only safe unit to move, hide or blank - and the reason the
  * "complete the word" exercise can put a gap in the right place instead of
  * leaving a bare vowel mark floating with nothing to sit on.
  */
@@ -87,7 +87,7 @@ export function clusters(text: string): string[] {
 /* ── taking a syllable apart ────────────────────────────────────────────
    A Hebrew syllable is a consonant and a vowel, and the course's central claim
    is that a reader combines them. To ASK the learner to combine them, the app
-   has to be able to separate them first — and the separation is not "first
+   has to be able to separate them first - and the separation is not "first
    character, rest", because a vowel can be written as a mark under the
    consonant (מַ), as a following letter carrying a mark (מוֹ, מוּ), or as
    nothing at all (shevá, which is a mark that says "no vowel").
@@ -182,7 +182,7 @@ export function gappedGlyph(word: string, letter: string): string {
  * The vav of מוֹ and מוּ is not the letter vav.
  *
  * It is a *mater lectionis*: a vowel sign that happens to be shaped like a
- * letter. A learner reading מוֹ at lesson 1 is reading "mo" — they are not
+ * letter. A learner reading מוֹ at lesson 1 is reading "mo" - they are not
  * reading a vav, and they need to know nothing about vav to do it. The course
  * has always taught it that way: every letter in the content carries all six
  * of its syllables from its own lesson, including the two built on vav, and
@@ -191,7 +191,7 @@ export function gappedGlyph(word: string, letter: string): string {
  * So the order rule does not demand vav for a vav carrying holam or shuruk,
  * and this is the ONLY exemption in it. Two conditions, both required:
  *   · the vav carries holam (U+05B9) or the dagesh that makes shuruk (U+05BC),
- *     and no vowel of its own — וַ is a consonant and stays one;
+ *     and no vowel of its own - וַ is a consonant and stays one;
  *   · something precedes it. A word-initial וֹ has no consonant to be the
  *     vowel of, so it is read as vav and must be known.
  *

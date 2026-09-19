@@ -1,4 +1,4 @@
-# Hebraico Fluente — o curso interativo
+# Hebraico Fluente - o curso interativo
 
 O workbook impresso virou curso. Mesmos dados, dois produtos.
 
@@ -15,7 +15,7 @@ npm run build      # 45 páginas estáticas
 `../data/modules.json`, junto com o livro, e entra neste app por
 `tools/export-content.mjs` (`npm run export-content`, que o `dev` e o `build`
 rodam sozinhos). Editar `content/` à mão é jogar trabalho fora: o próximo build
-apaga. Para mudar uma palavra, mude nos dados — o livro e o curso mudam juntos,
+apaga. Para mudar uma palavra, mude nos dados - o livro e o curso mudam juntos,
 ou nenhum dos dois muda.
 
 **A regra da ordem é o produto.** Nenhuma palavra pode usar uma letra que o
@@ -37,7 +37,7 @@ capaz de gerar e falha se algum escapar.
 | Checkpoints | 5 de módulo + os fechos de 6 e 7 + o desafio final |
 | Cenas «no mundo real» | 17, cada uma com a letra a partir da qual aparece |
 | Páginas estáticas | 48 |
-| Áudio | **nenhum gravado**; o kit de produção está pronto — ARCHITECTURE §6.3 |
+| Áudio | **nenhum gravado**; o kit de produção está pronto - ARCHITECTURE §6.3 |
 | Persistência | localStorage. Supabase escrito, não conectado |
 | Testes | 71, incluindo o curso inteiro jogado do começo ao fim |
 
@@ -49,7 +49,7 @@ percorre tudo isso e confere o estado final.
 
 Está no ar em **https://moshikgueta.github.io/hebraicofluente/** e se republica
 a cada push que toque `app/`, `data/`, `assets/` ou o exportador. Ver
-`../DEPLOY.md` — inclusive as armadilhas de caminho base que já custaram uma
+`../DEPLOY.md` - inclusive as armadilhas de caminho base que já custaram uma
 execução vermelha cada.
 
 Leia `ARCHITECTURE.md` antes de qualquer mudança estrutural.

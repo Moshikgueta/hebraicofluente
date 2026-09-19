@@ -1,7 +1,7 @@
 'use client';
 
-/* The one exercise runner. Every tested moment in the course — lesson quiz,
- * checkpoint, quick review, reading gym, final challenge — is this component
+/* The one exercise runner. Every tested moment in the course - lesson quiz,
+ * checkpoint, quick review, reading gym, final challenge - is this component
  * with a different list of exercises.
  *
  * Feedback rules, from the brief and worth stating because they shape the code:
@@ -9,9 +9,9 @@
  *     The colour is amber, the copy is "quase", and the right answer is shown
  *     and explained on the spot;
  *   · the explanation is about the OPTION THE LEARNER CHOSE where the exercise
- *     can say something specific — "você escolheu מִ, mas o som era מַ" teaches,
+ *     can say something specific - "você escolheu מִ, mas o som era מַ" teaches,
  *     "errado" does not;
- *   · correctness is never signalled by colour alone — there is an icon and a
+ *   · correctness is never signalled by colour alone - there is an icon and a
  *     word in every state;
  *   · retry is unlimited and costs nothing, and so does a hint, and so does
  *     replaying the audio.
@@ -75,7 +75,7 @@ export function ExercisePlayer({
 
     /* The moment the course is actually selling.
        Reading a whole word right, correctly, at a point where the course has
-       stopped printing the transliteration — that is the first time the learner
+       stopped printing the transliteration - that is the first time the learner
        decoded Hebrew rather than recognised it. It can only happen once, it is
        dated, and it is said out loud when it does. */
     if (correct && UNAIDED_READ.has(ex.kind) && supportLevel(mastered) !== 'always'
@@ -114,7 +114,7 @@ export function ExercisePlayer({
     setFirstUnaided(false);
   }, [i, exercises.length, correctCount, missed, onDone]);
 
-  /* Keyboard: 1–9 to answer a choice, Enter to continue. Every exercise that
+  /* Keyboard: 1-9 to answer a choice, Enter to continue. Every exercise that
      can be answered without a pointer, is. */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -184,7 +184,7 @@ export function ExercisePlayer({
               <p className="mt-3 pt-3 border-t border-[color:var(--line-soft)]
                             font-ui text-[14px] leading-relaxed text-[var(--mint-ink)]">
                 <strong>Você acabou de ler hebraico sem transliteração.</strong>{' '}
-                Sem o apoio embaixo, sem decorar — você decodificou. É isto que o
+                Sem o apoio embaixo, sem decorar - você decodificou. É isto que o
                 curso inteiro estava construindo.
               </p>
             )}
@@ -331,7 +331,7 @@ function Stimulus({ ex }: { ex: Exercise }) {
         </div>
       );
     case 'scene-reading':
-      /* The word alone on a plain surface, with the place named above it —
+      /* The word alone on a plain surface, with the place named above it -
          as close as a screen gets to seeing it on a bottle. */
       return (
         <div className="grid gap-3">
@@ -356,7 +356,7 @@ function Options({
   if (!isChoice(ex)) return null;
 
   /* A row of nearly identical glyphs is the exercise itself, so it is laid out
-     as a row and never as a list — the learner has to scan it the way they will
+     as a row and never as a list - the learner has to scan it the way they will
      scan a word. */
   if (ex.kind === 'odd-one-out') {
     return (
@@ -411,10 +411,10 @@ const hebrewOptionsOf = (ex: Exercise): boolean =>
   ex.kind === 'complete-word' || ex.kind === 'audio-recognition' ||
   ex.kind === 'sound-to-syllable' || ex.kind === 'listen-syllable' ||
   ex.kind === 'odd-one-out';
-  /* scene-reading answers in PORTUGUESE — the Hebrew is the question. */
+  /* scene-reading answers in PORTUGUESE - the Hebrew is the question. */
 
 /* Tiles are for Hebrew short enough to read at a glance: a letter, a syllable,
-   a two- or three-consonant word. Measured in CLUSTERS, not code units — a
+   a two- or three-consonant word. Measured in CLUSTERS, not code units - a
    pointed letter is two to four codepoints and `.length` would call מָ a long
    option. One column under the thumb, always: a phone has no width to give
    away, and the phone is where most of the studying happens. */

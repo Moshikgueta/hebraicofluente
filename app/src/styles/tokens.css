@@ -1,13 +1,13 @@
-/* Design tokens — "manuscrito".
+/* Design tokens - "manuscrito".
    ─────────────────────────────────────────────────────────────────────────
    A identidade anterior era um teal frio sobre cinza neutro: competente,
    agradável e indistinguível de qualquer SaaS. Isso custava duas coisas de
-   uma vez — não ficava na memória de ninguém, e parecia um site de R$ 47
+   uma vez - não ficava na memória de ninguém, e parecia um site de R$ 47
    vendendo um curso de R$ 147.
 
    Esta parte de onde o produto veio. É um curso de LEITURA, descendente de um
    material impresso, sobre uma escrita de três mil anos. Então: papel morno
-   em vez de cinza, tinta quente em vez de preto puro, e um acento de romã —
+   em vez de cinza, tinta quente em vez de preto puro, e um acento de romã -
    a cor da iluminura de manuscrito, e que praticamente ninguém usa em
    educação, onde todo mundo é azul ou roxo. O latão faz o papel do ouro da
    margem: sequência, conquista, o momento que vale marcar.
@@ -16,7 +16,7 @@
 
    · Noto Sans Hebrew continua sendo a fonte de todo hebraico. Ela foi
      escolhida inspecionando os binários, porque carrega 55 marcas de nikud e
-     uma tabela ccmp — uma fonte que posiciona mal os pontos de vogal torna
+     uma tabela ccmp - uma fonte que posiciona mal os pontos de vogal torna
      ERRADO cada exercício de leitura do curso. Nenhuma questão estética
      justifica trocá-la.
 
@@ -47,7 +47,7 @@
   --accent-wash:  #FAEDEC;
 
   /* ── latão: o ouro da margem ────────────────────────────────────────
-     Sequência de dias, conquistas, marcos. Com parcimônia — ouro em todo
+     Sequência de dias, conquistas, marcos. Com parcimônia - ouro em todo
      lugar não é ouro, é amarelo. */
   --ember:      #A97C2F;
   --ember-wash: #F8F0DD;

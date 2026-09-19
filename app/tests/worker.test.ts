@@ -2,8 +2,8 @@
  *
  * O que dá para testar sem Cloudflare é justamente o que não pode estar
  * errado: de onde sai o preço, o que conta como "pago", quais rotas ficam
- * atrás do portão e como a assinatura do webhook é conferida. O resto —
- * consultas ao D1, chamadas à Mercado Pago — é integração e fica para o
+ * atrás do portão e como a assinatura do webhook é conferida. O resto -
+ * consultas ao D1, chamadas à Mercado Pago - é integração e fica para o
  * ambiente de verdade.
  *
  * Os módulos são .js e vivem fora de app/. Isso é de propósito: o Worker roda
@@ -11,13 +11,13 @@
  * realmente é publicado vale mais do que testar uma cópia compilada. */
 
 import { describe, expect, it } from 'vitest';
-// @ts-expect-error — módulo JS do Worker, sem tipos
+// @ts-expect-error - módulo JS do Worker, sem tipos
 import { clampInstallments, getCourse, isSellable, priceCents } from '../../worker/src/lib/catalog.js';
-// @ts-expect-error — idem
+// @ts-expect-error - idem
 import { mapStatus, verifyWebhookSignature, isSandbox } from '../../worker/src/lib/mercadopago.js';
-// @ts-expect-error — idem
+// @ts-expect-error - idem
 import { isGatedPath } from '../../worker/src/gate.js';
-// @ts-expect-error — idem
+// @ts-expect-error - idem
 import { hmacHex, timingSafeEqual, hashPassword, verifyPassword, PBKDF2_ITER, itersFor }
   from '../../worker/src/lib/crypto.js';
 
@@ -93,7 +93,7 @@ describe('teste ou produção', () => {
 
   it('ignora MP_SANDBOX quando o token já respondeu', () => {
     /* É o caso que custa caro: token de produção com o modo de teste esquecido
-       manda todo comprador para um checkout que NÃO COBRA — sem reclamação,
+       manda todo comprador para um checkout que NÃO COBRA - sem reclamação,
        porque ninguém pagou, e por isso pode passar semanas despercebido. */
     expect(isSandbox({ MP_ACCESS_TOKEN: 'APP_USR-123', MP_SANDBOX: '1' })).toBe(false);
     expect(isSandbox({ MP_ACCESS_TOKEN: 'TEST-123', MP_SANDBOX: '0' })).toBe(true);
@@ -195,7 +195,7 @@ describe('o portão', () => {
 describe('senhas', () => {
   it('cabe no limite de CPU do plano gratuito', () => {
     /* 10 ms de CPU por requisição no plano gratuito, e 310.000 iterações
-       custam 53 ms — foi assim que a primeira publicação devolveu 500 em toda
+       custam 53 ms - foi assim que a primeira publicação devolveu 500 em toda
        rota que calculava hash. O padrão tem de caber com folga. */
     expect(PBKDF2_ITER).toBeLessThanOrEqual(50_000);
     /* E mesmo assim não pode ser simbólico. */
@@ -207,7 +207,7 @@ describe('senhas', () => {
     expect(itersFor({})).toBe(PBKDF2_ITER);
     expect(itersFor(undefined)).toBe(PBKDF2_ITER);
     /* Um valor absurdamente baixo não pode enfraquecer tudo por engano de
-       digitação — cai no padrão. */
+       digitação - cai no padrão. */
     expect(itersFor({ PBKDF2_ITERATIONS: '1' })).toBe(PBKDF2_ITER);
     expect(itersFor({ PBKDF2_ITERATIONS: 'muitas' })).toBe(PBKDF2_ITER);
   });

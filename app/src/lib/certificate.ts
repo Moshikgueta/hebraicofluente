@@ -1,6 +1,6 @@
 /* The certificate, drawn.
  * ─────────────────────────────────────────────────────────────────────────
- * A PNG made in the browser, because the whole course is static — there is no
+ * A PNG made in the browser, because the whole course is static - there is no
  * server to render one and nothing to upload to. Which turns out to be the
  * right architecture for this anyway: the image never leaves the learner's
  * device unless they post it themselves.
@@ -8,7 +8,7 @@
  * Three things this file is careful about.
  *
  * **The Hebrew.** Every letter is positioned individually, right to left, at
- * a measured advance — not drawn as one string. Canvas does apply bidi, but
+ * a measured advance - not drawn as one string. Canvas does apply bidi, but
  * "it usually works" is not a standard this codebase accepts for Hebrew, and
  * per-glyph placement also gives even spacing, which a string does not.
  *
@@ -31,7 +31,7 @@ export type CertificateInput = {
   date: Date;
   /** The 22 letters, in teaching order. */
   letters: string[];
-  /** 0–1, shown only when present. */
+  /** 0-1, shown only when present. */
   score?: number | null;
   format: CertificateFormat;
 };
@@ -49,7 +49,7 @@ export const FORMATS: Record<CertificateFormat, { w: number; h: number; labelPt:
    look identical in light mode, dark mode and print. */
 /* Os valores estão escritos à mão, e não lidos dos tokens, porque o
    certificado é desenhado em canvas: não há CSS ali. O preço disso é que uma
-   mudança de identidade precisa passar por aqui também — e é por isso que
+   mudança de identidade precisa passar por aqui também - e é por isso que
    este comentário existe, para quem for mexer na paleta amanhã.
 
    Sempre o tema CLARO, mesmo para quem navega no escuro: a imagem sai daqui
@@ -75,7 +75,7 @@ const fam = (v: string, fallback: string): string => {
  * Wait for the faces this drawing needs.
  *
  * Canvas silently falls back when a webfont has not loaded, so the
- * certificate would come out in a system font with no error anywhere — the
+ * certificate would come out in a system font with no error anywhere - the
  * kind of bug that is only ever found by the person who already posted it.
  */
 async function ensureFonts(display: string, ui: string, he: string): Promise<void> {
@@ -86,7 +86,7 @@ async function ensureFonts(display: string, ui: string, he: string): Promise<voi
     await Promise.all(wanted.map(f => document.fonts.load(f)));
     await document.fonts.ready;
   } catch {
-    /* A browser that refuses the API still draws — just possibly in a
+    /* A browser that refuses the API still draws - just possibly in a
        fallback face. Better a certificate than an exception. */
   }
 }
@@ -177,7 +177,7 @@ export async function drawCertificate(
   ctx.font = `400 ${wide ? 19 : 22}px ${ui}`;
   const claim = [
     'leu as 22 letras do alfabeto hebraico,',
-    'os sinais de vogal e palavras inteiras —',
+    'os sinais de vogal e palavras inteiras -',
     'sem transliteração para se apoiar.'
   ];
   for (const line of claim) {
@@ -232,7 +232,7 @@ function drawAlphabet(
 
   ctx.fillStyle = C.accent;
   /* index 0 is the first letter taught, and in Hebrew the first thing goes on
-     the RIGHT — so the row is laid out from the right edge leftwards. */
+     the RIGHT - so the row is laid out from the right edge leftwards. */
   const right = cx + total / 2;
   letters.forEach((l, i) => {
     ctx.fillText(l, right - i * step, y);
@@ -269,7 +269,7 @@ const MESES = [
   'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
 ];
 
-/** "18 de setembro de 2026" — written out, the way a document does it. */
+/** "18 de setembro de 2026" - written out, the way a document does it. */
 export function formatDate(d: Date): string {
   return `${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`;
 }
@@ -287,5 +287,5 @@ export const canvasToBlob = (canvas: HTMLCanvasElement): Promise<Blob | null> =>
 
 /** What the learner posts with it. Theirs to edit; this is only a start. */
 export const SHARE_TEXT =
-  'Eu não sabia ler uma letra do alfabeto hebraico. Hoje leio as 22 — ' +
+  'Eu não sabia ler uma letra do alfabeto hebraico. Hoje leio as 22 - ' +
   'e palavras inteiras, sem transliteração. 🎉';

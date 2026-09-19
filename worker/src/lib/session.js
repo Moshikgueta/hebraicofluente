@@ -1,16 +1,16 @@
 /* A sessão: um cookie assinado, sem estado no servidor.
  * ─────────────────────────────────────────────────────────────────────────
- * O cookie carrega só a identidade — quem é, e até quando este cookie vale.
+ * O cookie carrega só a identidade - quem é, e até quando este cookie vale.
  * O que ele NÃO carrega é o que a pessoa comprou.
  *
  * Isso é a decisão importante do arquivo e vale contra o instinto: pôr os
  * cursos dentro do cookie economizaria uma consulta por requisição, e faria
- * um estorno levar até sete dias para fechar a porta — o tempo de o cookie
+ * um estorno levar até sete dias para fechar a porta - o tempo de o cookie
  * antigo expirar. Direito de acesso é lido do banco, toda vez. O cookie diz
  * QUEM, o banco diz O QUÊ.
  *
  * `sv` (session version) é a saída de emergência: subir o número na linha da
- * conta invalida todo cookie já emitido para ela — troca de senha, suspeita de
+ * conta invalida todo cookie já emitido para ela - troca de senha, suspeita de
  * vazamento, conta compartilhada aos montes.
  *
  * HttpOnly porque o JavaScript da página não tem por que ler isto (e um XSS

@@ -1,4 +1,4 @@
-/* O catálogo — a lista de produtos da plataforma.
+/* O catálogo - a lista de produtos da plataforma.
  * ─────────────────────────────────────────────────────────────────────────
  * Hebraico Fluente não é um curso com um site na frente; é uma plataforma em
  * que a mesma conta vai abrindo cursos: Alfabetização → A1 → A2 → B1. Este
@@ -12,14 +12,14 @@
  *      campo. Um preço escrito duas vezes vira dois preços.
  *
  *   2. `status: 'soon'` é conteúdo de verdade, não um placeholder. Um curso
- *      que ainda não existe tem página, módulos e objetivos — é assim que o
+ *      que ainda não existe tem página, módulos e objetivos - é assim que o
  *      aluno decide continuar depois da alfabetização. O que ele não tem é
  *      botão de compra.
  *
  *   3. `engine` diz qual motor de curso renderiza as aulas. Hoje só a
  *      alfabetização tem um (`'alfabetizacao'`, as rotas /licao, /mapa,
  *      /modulo…). Um curso com `engine: null` nunca abre, mesmo que alguém
- *      tenha entitlement — o conteúdo não existe, e mentir sobre isso é pior
+ *      tenha entitlement - o conteúdo não existe, e mentir sobre isso é pior
  *      do que a página de "em breve".
  *
  * Acrescentar um curso é acrescentar um objeto em data/courses.json. Nenhuma
@@ -34,7 +34,7 @@ export type CourseStatus = 'available' | 'soon';
 export type CoursePrice = {
   /** O que é cobrado hoje, em reais inteiros. */
   brl: number;
-  /** O "de", riscado. `null` quando não há âncora — e aí nada é riscado. */
+  /** O "de", riscado. `null` quando não há âncora - e aí nada é riscado. */
   listBrl: number | null;
   /** Número máximo de parcelas no cartão. */
   installments: number;
@@ -46,13 +46,13 @@ export type CatalogModule = {
   n: number;
   titlePt: string;
   subPt: string;
-  /** Quantas letras o módulo ensina — só a alfabetização usa isto. */
+  /** Quantas letras o módulo ensina - só a alfabetização usa isto. */
   letters?: number;
 };
 
 export type CatalogCourse = {
   slug: string;
-  /** "01".."04" — o número que aparece na capa do card. */
+  /** "01".."04" - o número que aparece na capa do card. */
   code: string;
   n: number;
   titlePt: string;
@@ -96,7 +96,7 @@ export const flagship = (): CatalogCourse => getCourse(FLAGSHIP)!;
  * Dá para entrar neste curso?
  *
  * Duas condições, e as duas são necessárias: existir conteúdo (`engine`) e o
- * curso estar publicado. Um entitlement não entra nesta conta — quem tem
+ * curso estar publicado. Um entitlement não entra nesta conta - quem tem
  * direito é outra pergunta, respondida em lib/account.
  */
 export const isPlayable = (c: CatalogCourse): boolean =>
@@ -126,7 +126,7 @@ export const pixPrice = (p: CoursePrice): number =>
 
 /**
  * A parcela. Sem juros, que é o que "12x de R$ 12,25" significa em português
- * de site brasileiro — e o que a plataforma tem de bancar de fato.
+ * de site brasileiro - e o que a plataforma tem de bancar de fato.
  *
  * Arredonda PARA CIMA: 147 / 12 = 12,25 exatos, mas 100 / 3 daria 33,33 e
  * 3 × 33,33 é 99,99. A parcela anunciada nunca pode ser menor do que a que
