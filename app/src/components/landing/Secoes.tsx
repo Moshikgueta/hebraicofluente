@@ -17,6 +17,7 @@
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/learn/Blocks';
+import { StrokeOrderPlayer } from '@/components/learn/StrokeOrder';
 import { course } from '@/lib/content';
 import { allCourses, isPlayable } from '@/lib/catalog';
 import { Container, H2, Lead, Reveal, Check, CheckList, Chevron } from './base';
@@ -68,6 +69,11 @@ const ABAS = [
     points: ['Áudio gravado por falante nativo', 'Explicação escrita em português', 'Uma palavra de exemplo, já com nikud']
   },
   {
+    label: 'Escrita', kicker: 'Escrever', title: 'Você escreve a letra, com o dedo na tela.',
+    body: 'O curso mostra a ordem dos traços e depois devolve a caneta para você. Escrever é o que separa reconhecer de saber - a mão aprende o que o olho só reconhece.',
+    points: ['A ordem dos traços, movimento a movimento', 'Traçado com o dedo, direto no celular', 'A forma exata da cursiva israelense, e não um desenho aproximado']
+  },
+  {
     label: 'Prática', kicker: 'Fixar', title: 'Cinco tipos de exercício, alternados.',
     body: 'Múltipla escolha, digitação, associação, escuta e leitura. A alternância é o que impede a decoreba.',
     points: ['Correção imediata, com explicação', 'Erro não bloqueia: você tenta de novo', 'Dificuldade sobe conforme você acerta']
@@ -93,7 +99,7 @@ export function Demonstracao() {
       <Container className="pt-16 sm:pt-24">
         <Reveal><H2 className="mb-3">Veja como você vai aprender.</H2></Reveal>
         <Reveal delay={80}><Lead className="mb-8">
-          Quatro momentos que se repetem em toda lição. Um de cada vez, sempre na mesma ordem.
+          Cinco momentos que se repetem em toda lição. Um de cada vez, sempre na mesma ordem.
         </Lead></Reveal>
 
         <div role="tablist" aria-label="Momentos de uma lição"
@@ -134,9 +140,10 @@ export function Demonstracao() {
           </div>
           <div className="rounded-[20px] bg-[var(--card)] p-6 min-h-[330px] flex flex-col">
             {aba === 0 && <PainelAula />}
-            {aba === 1 && <PainelPratica />}
-            {aba === 2 && <PainelRevisao />}
-            {aba === 3 && <PainelProgresso />}
+            {aba === 1 && <PainelEscrita />}
+            {aba === 2 && <PainelPratica />}
+            {aba === 3 && <PainelRevisao />}
+            {aba === 4 && <PainelProgresso />}
           </div>
         </div>
       </Container>
@@ -164,6 +171,27 @@ function PainelAula() {
       <p className="font-ui text-[15.5px] leading-[1.6] text-ink-muted">
         O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma
         letra vira Sin, com som de S.
+      </p>
+    </>
+  );
+}
+
+/* A escrita, com o componente DE VERDADE do curso.
+ *
+ * `StrokeOrderPlayer` é o mesmo que roda dentro da lição, lendo os mesmos
+ * traços - que saíram da própria fonte cursiva (tools/gen-stroke-order.py lê
+ * o contorno do woff2). Uma landing que desenha uma imitação do exercício
+ * promete uma coisa e entrega outra no primeiro dia; esta mostra o exercício.
+ */
+function PainelEscrita() {
+  return (
+    <>
+      <Rotulo>Lição 4 · Escrever</Rotulo>
+      <StrokeOrderPlayer letterId="shin" label="Shin" className="mb-3" />
+      <p className="font-ui text-[15px] leading-[1.55] text-ink-muted">
+        Depois de ver o movimento, você traça a letra com o dedo e o curso
+        confere. A forma é a da cursiva que se escreve em Israel - a que a
+        pessoa vai ver num bilhete, e não a de imprensa.
       </p>
     </>
   );

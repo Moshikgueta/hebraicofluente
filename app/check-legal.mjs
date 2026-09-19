@@ -132,6 +132,13 @@ const fontes = [];
 })('src');
 
 const CNPJ_SOLTO = /\b\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}\b/;
+/* Qualquer e-mail literal, e não um domínio específico: o endereço de contato
+   já mudou uma vez nesta sessão, e um check preso a um domínio deixaria de
+   cobrar exatamente quando o dado passasse a divergir. Os de teste ficam de
+   fora - `.invalid` e `.test` são reservados para isso -, e `@exemplo.` também:
+   é o texto-fantasma de um campo de formulário, não um canal de atendimento. */
+const EMAIL_SOLTO = /[\w.%+-]+@[\w.-]+\.[a-z]{2,}/i;
+const EMAIL_DE_TESTE = /@(?:[\w.-]*\.)?(?:invalid|test|example\.com)\b|@exemplo\./i;
 let soltos = 0;
 for (const f of fontes) {
   const txt = readFileSync(f, 'utf8');
@@ -141,9 +148,13 @@ for (const f of fontes) {
   if (CNPJ_SOLTO.test(txt)) { falha(`CNPJ escrito à mão em ${f}`); soltos++; }
   /* O e-mail aparece legitimamente em data/ e no módulo que o lê. Em
      qualquer outro lugar é uma segunda fonte da verdade. */
-  if (txt.includes('@hebraicofluente.com.br')) {
-    aviso(`e-mail escrito à mão em ${f} - devia vir de lib/empresa.ts`);
-    soltos++;
+  for (const linha of txt.split('\n')) {
+    const m = linha.match(EMAIL_SOLTO);
+    if (m && !EMAIL_DE_TESTE.test(m[0])) {
+      aviso(`e-mail escrito à mão em ${f}: ${m[0]} - devia vir de lib/empresa.ts`);
+      soltos++;
+      break;
+    }
   }
 }
 if (!soltos) ok('nenhum dado de identificação escrito à mão fora de data/empresa.json');

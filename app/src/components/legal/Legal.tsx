@@ -15,6 +15,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
+import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto, whatsappUrl } from '@/lib/empresa';
 
 /** A data de atualização, por extenso, como se lê em português. */
@@ -50,6 +51,17 @@ export function LegalPage({
         <div className="grid gap-6">{children}</div>
 
         <Identificacao />
+
+        {/* Um CTA no fim de uma política não é oportunismo: quem chegou aqui
+            estava decidindo, e leu justamente a parte que responde "e se eu me
+            arrepender?". Sair dessa leitura sem ter para onde ir é perder a
+            pessoa no momento em que ela mais confia. Some sozinho para quem já
+            comprou - ver lib/cta.ts. */}
+        <FaixaCta
+          onde="legal"
+          titulo="Tudo isso respondido? Então comece."
+          linha="A primeira letra leva dez minutos, e você tem sete dias para desistir sem precisar explicar por quê."
+        />
 
         <nav className="flex flex-wrap gap-x-5 gap-y-2 pt-2">
           {[

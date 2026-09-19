@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
 import { Identificacao } from '@/components/legal/Legal';
+import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { empresa, whatsappUrl } from '@/lib/empresa';
 
 export const metadata: Metadata = {
@@ -134,6 +135,12 @@ export default function Page() {
         </Card>
 
         <Identificacao />
+
+        <FaixaCta
+          onde="suporte"
+          titulo="Ainda não é aluno?"
+          linha="A primeira letra leva dez minutos, e você tem sete dias para desistir sem precisar explicar por quê."
+        />
       </div>
     </Section>
   );
