@@ -27,6 +27,7 @@ import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
+import { empresa } from '@/lib/empresa';
 import {
   AuthError, emailLooksValid, MESSAGES, MIN_PASSWORD, passwordOk
 } from '@/lib/account/types';
@@ -146,9 +147,9 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
       {!signup && (
         <p className="font-ui text-[12.5px] text-center leading-relaxed text-ink-muted">
           Esqueceu a senha? Escreva para{' '}
-          <a href="mailto:contato@hebraicofluente.com.br"
+          <a href={`mailto:${empresa.contato.emailSuporte}`}
              className="text-[var(--accent)] hover:underline">
-            contato@hebraicofluente.com.br
+            {empresa.contato.emailSuporte}
           </a>{' '}
           - a recuperação automática ainda não está no ar, e a gente resolve na mão.
         </p>

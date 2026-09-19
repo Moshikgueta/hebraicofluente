@@ -24,6 +24,7 @@ import { Logo } from '@/components/shell/Logo';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
+import { empresa, enderecoLinha, nomeLegalCompleto } from '@/lib/empresa';
 
 /* Os rótulos são os do design. Os destinos são páginas de verdade, e não
    âncoras: `#como` funciona na capa e vira link morto em /cursos, que usa
@@ -182,24 +183,56 @@ function Footer() {
           { href: '/entrar', label: 'Entrar' }
         ]} />
 
+        {/* Legal ao lado de Cursos e Plataforma, e não escondido numa linha
+            miúda embaixo. Quem procura "tem política de reembolso?" antes de
+            comprar está decidindo: achar em dois segundos converte, caçar
+            não. */}
+        <FooterCol title="Legal" links={[
+          { href: '/termos', label: 'Termos de Uso' },
+          { href: '/privacidade', label: 'Política de Privacidade' },
+          { href: '/reembolso', label: 'Reembolso e Cancelamento' },
+          { href: '/suporte', label: 'Suporte' }
+        ]} />
+
         <div className="grid gap-2 content-start">
           <p className="font-ui text-[11px] uppercase tracking-[.08em] text-ink-muted">Contato</p>
-          <a href="mailto:contato@hebraicofluente.com.br"
+          <a href={`mailto:${empresa.contato.emailSuporte}`}
              className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
-                        text-ink-body hover:text-[var(--accent)]">
-            contato@hebraicofluente.com.br
+                        text-ink-body hover:text-[var(--accent)] break-all">
+            {empresa.contato.emailSuporte}
           </a>
+          {empresa.contato.whatsapp && (
+            <span className="font-ui text-[13.5px] text-ink-body">
+              WhatsApp {empresa.contato.whatsapp}
+            </span>
+          )}
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2">
+            {empresa.atendimento.horarioPt}. Resposta em até{' '}
+            {empresa.atendimento.prazoRespostaUteis} dias úteis.
+          </p>
+          <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
             Pagamento por PIX ou cartão, em até 12x. Acesso liberado na hora.
           </p>
         </div>
       </div>
 
+      {/* A identificação do fornecedor.
+          No Brasil ela não é decoração de rodapé: o Decreto 7.962/2013 pede
+          nome, CNPJ e endereço em local de destaque, antes da compra. Cada
+          pedaço só aparece se existir - ver a nota em lib/empresa.ts sobre
+          por que um dado ausente some em vez de virar um travessão. */}
       <div className="border-t border-[color:var(--line-soft)]">
-        <p className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-5
-                      font-ui text-[12px] text-ink-muted">
-          © {new Date().getFullYear()} Hebraico Fluente. Todos os direitos reservados.
-        </p>
+        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-5 grid gap-1.5">
+          <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
+            {[nomeLegalCompleto(),
+              empresa.cnpj && `CNPJ ${empresa.cnpj}`,
+              enderecoLinha()
+            ].filter(Boolean).join(' · ')}
+          </p>
+          <p className="font-ui text-[12px] text-ink-muted">
+            © {new Date().getFullYear()} {empresa.nomeFantasia}. Todos os direitos reservados.
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -37,7 +37,8 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, type Order, type PaymentMethod } from '@/lib/account/types';
-import { brl, getCourse, installment, pixPrice } from '@/lib/catalog';
+import { brl, getCourse, installment, pixPrice, type CatalogCourse } from '@/lib/catalog';
+import { empresa } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 
@@ -138,9 +139,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
             com este e-mail e liberamos o acesso na mão enquanto isso.
           </p>
           <p className="font-ui text-[14px] text-ink">
-            <a href="mailto:contato@hebraicofluente.com.br"
+            <a href={`mailto:${empresa.contato.emailSuporte}`}
                className="text-[var(--accent)] font-medium hover:underline">
-              contato@hebraicofluente.com.br
+              {empresa.contato.emailSuporte}
             </a>
           </p>
           <LinkButton href={`/cursos/${c.slug}`} variant="secondary" className="justify-self-start">
@@ -275,18 +276,68 @@ export function CheckoutClient({ slug }: { slug: string }) {
           </p>
         ) : (
           <>
+            <CondicoesDaCompra curso={c} />
             <Button size="lg" full onClick={pay} disabled={busy}>
               {busy ? 'Gerando…' : `Pagar ${brl(total)}`}
             </Button>
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted text-center">
-              Acesso liberado automaticamente assim que o pagamento for confirmado.
-              Sete dias para desistir, pela lei - {' '}
-              <Link href="/faq" className="text-[var(--accent)] hover:underline">como funciona</Link>.
+              Ao continuar você concorda com os{' '}
+              <Link href="/termos" className="text-[var(--accent)] hover:underline">
+                Termos de Uso
+              </Link>{' '}
+              e com a{' '}
+              <Link href="/privacidade" className="text-[var(--accent)] hover:underline">
+                Política de Privacidade
+              </Link>.
             </p>
           </>
         )}
       </Card>
     </Shell>
+  );
+}
+
+/* ── as condições da compra ─────────────────────────────────────────────
+ *
+ * O Decreto 7.962/2013 pede que as condições da oferta apareçam de forma
+ * clara ANTES de fechar a compra - não escondidas num link, não depois. São
+ * quatro perguntas, e todas as respostas saem de data/: o que você leva, por
+ * quanto tempo, quando o acesso abre, e como desistir.
+ *
+ * Fica logo acima do botão de propósito. Uma condição que o leitor teria de
+ * rolar para trás para encontrar não foi informada; foi arquivada.
+ */
+function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
+  const LINHAS: [string, React.ReactNode][] = [
+    ['O que você leva', `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
+    ['Por quanto tempo', `${curso.accessMonths} meses, contados da confirmação do pagamento.`],
+    ['Quando abre', 'Na hora em que o pagamento for confirmado - em minutos, no PIX.'],
+    ['Se você desistir', <>
+      {empresa.politicas.arrependimentoDias} dias para cancelar e receber 100% de volta,
+      sem justificar.{' '}
+      <Link href="/reembolso" className="text-[var(--accent)] hover:underline">
+        Política de reembolso
+      </Link>.
+    </>]
+  ];
+
+  return (
+    <div className="rounded-[var(--r-md)] bg-surface-2 px-4 py-3.5 grid gap-2">
+      <p className="font-ui text-[11.5px] uppercase tracking-[.08em] text-ink-muted">
+        Condições desta compra
+      </p>
+      <dl className="grid gap-1.5 m-0">
+        {LINHAS.map(([rotulo, valor]) => (
+          <div key={rotulo}
+               className="grid sm:grid-cols-[minmax(0,130px)_minmax(0,1fr)] gap-x-3 gap-y-0.5">
+            <dt className="font-ui text-[12.5px] text-ink-muted">{rotulo}</dt>
+            <dd className="m-0 min-w-0 font-ui text-[13px] leading-[1.5] text-ink-body">
+              {valor}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   );
 }
 

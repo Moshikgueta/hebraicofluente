@@ -1,0 +1,50 @@
+{
+  "_nota": [
+    "Identificação do fornecedor e canais de atendimento. FONTE ÚNICA: o rodapé,",
+    "os Termos, a Política de Privacidade e a de Reembolso leem tudo daqui.",
+    "",
+    "Um campo em null é um campo QUE AINDA NÃO SE SABE, e é tratado assim em",
+    "todo lugar: some da tela em vez de virar um travessão ou um 'a definir'.",
+    "Identificação de fornecedor inventada é pior do que identificação ausente,",
+    "porque ausente é uma pendência e inventada é uma declaração falsa.",
+    "`npm run check-legal` lista o que falta e falha quando falta o essencial."
+  ],
+
+  "nomeFantasia": "Hebraico Fluente",
+
+  "razaoSocial": null,
+  "cnpj": "51.041.290/0001-52",
+
+  "endereco": {
+    "logradouro": null,
+    "cidade": "Curitiba",
+    "uf": "PR",
+    "cep": null,
+    "pais": "Brasil"
+  },
+
+  "contato": {
+    "email": "contato@hebraicofluente.com.br",
+    "emailSuporte": "contato@hebraicofluente.com.br",
+    "emailPrivacidade": "contato@hebraicofluente.com.br",
+    "telefone": null,
+    "whatsapp": null
+  },
+
+  "atendimento": {
+    "horarioPt": "Segunda a sexta, das 9h às 18h (horário de Brasília)",
+    "prazoRespostaUteis": 2
+  },
+
+  "privacidade": {
+    "encarregadoNome": null,
+    "prazoLgpdDias": 15
+  },
+
+  "politicas": {
+    "arrependimentoDias": 7,
+    "garantiaDias": 7,
+    "prazoReembolsoUteis": 10,
+    "atualizadoEm": "2026-09-19"
+  }
+}

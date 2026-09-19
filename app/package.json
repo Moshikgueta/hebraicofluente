@@ -18,6 +18,7 @@
     "ctas": "node ctas.mjs",
     "sincronia": "node sincronia.mjs",
     "exame": "node exame.mjs",
+    "check-legal": "node check-legal.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {

@@ -26,7 +26,13 @@ const PUBLIC_PREFIXES = [
   /* O checkout é público de propósito: quem chega por um link de venda
      precisa ver o preço antes de ter conta. Quem paga tem de estar logado, e
      essa exigência é da própria tela, não do portão. */
-  '/checkout'
+  '/checkout',
+  /* As páginas de confiança são públicas por definição: uma Política de
+     Privacidade que exige login não informa o visitante, informa o cliente -
+     e é justamente o visitante que precisa dela para decidir comprar. O
+     mesmo vale para o atendimento: quem não consegue entrar é exatamente
+     quem mais precisa escrever. */
+  '/termos', '/privacidade', '/reembolso', '/suporte'
 ] as const;
 
 export function isPublicRoute(pathname: string | null): boolean {

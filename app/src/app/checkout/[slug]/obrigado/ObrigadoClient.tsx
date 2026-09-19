@@ -27,6 +27,7 @@ import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { getCourse } from '@/lib/catalog';
 import type { OrderStatus } from '@/lib/account/types';
+import { empresa } from '@/lib/empresa';
 
 const POLL_MS = 3_000;
 const GIVE_UP_MS = 3 * 60_000;
@@ -132,9 +133,9 @@ export function ObrigadoClient({ slug }: { slug: string }) {
           </p>
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
             Se em algumas horas nada acontecer, escreva para{' '}
-            <a href="mailto:contato@hebraicofluente.com.br"
+            <a href={`mailto:${empresa.contato.emailSuporte}`}
                className="text-[var(--accent)] hover:underline">
-              contato@hebraicofluente.com.br
+              {empresa.contato.emailSuporte}
             </a>{' '}
             com o e-mail da compra.
           </p>

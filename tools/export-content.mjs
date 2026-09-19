@@ -191,6 +191,16 @@ function main() {
      built above, so the sales page and the course itself cannot describe
      different módulos. Everything else passes through verbatim: a price the
      exporter "helped with" is a price nobody can trust. */
+  /* ── quem vende ─────────────────────────────────────────────────────────
+     Identificação do fornecedor, canais de atendimento e prazos das
+     políticas. Passa verbatim, menos o `_nota`, que é comentário para quem
+     edita o arquivo e não tem por que viajar até o navegador de um aluno. */
+  {
+    const { _nota, ...empresa } = readJson('data/empresa.json');
+    void _nota;
+    writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
+  }
+
   const catalogue = readJson('data/courses.json');
   const builtModules = course.modules.map(m => ({
     n: m.n, titlePt: m.titlePt, subPt: m.subPt, letters: m.letterIds.length

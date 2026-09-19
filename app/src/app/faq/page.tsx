@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
+import { empresa } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { flagship, brl, installment, pixPrice } from '@/lib/catalog';
 import { course } from '@/lib/content';
@@ -102,7 +103,7 @@ const FAQ: { q: string; a: string[] }[] = [
     q: 'E se eu não gostar?',
     a: [
       'O Código de Defesa do Consumidor te dá sete dias para desistir de uma compra feita pela internet, contados a partir do acesso. Dentro desse prazo, basta pedir: o valor volta integral, sem pergunta e sem etapa.',
-      'Escreva para contato@hebraicofluente.com.br com o e-mail da compra.'
+      `Escreva para ${empresa.contato.emailSuporte} com o e-mail da compra.`
     ]
   },
   {
@@ -170,9 +171,9 @@ export default function FaqPage() {
           linha={
             <>
               Escreva para{' '}
-              <a href="mailto:contato@hebraicofluente.com.br"
+              <a href={`mailto:${empresa.contato.emailSuporte}`}
                  className="text-[var(--accent)] hover:underline">
-                contato@hebraicofluente.com.br
+                {empresa.contato.emailSuporte}
               </a>
               . Respondemos antes de você comprar, não depois.
             </>

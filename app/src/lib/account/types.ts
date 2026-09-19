@@ -13,6 +13,8 @@
  *     Mercado Pago, e o que volta é um id de pagamento.
  */
 
+import { empresa } from '@/lib/empresa';
+
 export type Account = {
   id: string;
   name: string;
@@ -80,7 +82,7 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
   /* Não é erro: é a plataforma no ar antes de o meio de pagamento estar
      ligado. Dizer isso evita que alguém tente três vezes e conclua que o
      cartão dele foi recusado. */
-  'payments-off': 'O pagamento ainda não está ativado. Escreva para contato@hebraicofluente.com.br e liberamos seu acesso.'
+  'payments-off': `O pagamento ainda não está ativado. Escreva para ${empresa.contato.emailSuporte} e liberamos seu acesso.`
 };
 
 /* ── regras de acesso ────────────────────────────────────────────────────

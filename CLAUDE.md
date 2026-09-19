@@ -55,6 +55,23 @@ cabeçalhos de comentário não são travessões e ficam como estão.
   de desfazer alguma coisa. Um campo novo no estado precisa de uma regra aqui,
   e de um teste em `app/tests/merge.test.ts`.
 
+## Camada de confiança (Brasil)
+`data/empresa.json` é a FONTE ÚNICA da identificação do fornecedor: razão social,
+CNPJ, endereço, canais de atendimento e os prazos das políticas. O rodapé,
+/termos, /privacidade, /reembolso, /suporte e o checkout leem todos de lá, via
+`app/src/lib/empresa.ts`.
+
+**A regra que não se quebra:** um campo em `null` é um campo que ainda não se
+sabe, e ele SOME da tela - nunca vira travessão, "a definir" ou um CNPJ de
+exemplo. Identificação de fornecedor inventada não é rascunho, é declaração
+falsa num documento que existe para ser confiável. `npm run check-legal` cobra
+o que falta e recusa CNPJ fora do formato, política não linkada na capa e
+qualquer e-mail ou CNPJ escrito à mão fora de `data/empresa.json`.
+
+As quatro rotas novas precisam estar em `PUBLIC_PREFIXES`
+(`components/shell/Chrome.tsx`): uma Política de Privacidade atrás de login
+informa o cliente, e não o visitante - que é justamente quem precisa dela.
+
 ## Progresso: onde mora
 Três camadas, nesta ordem, e `createStore()` (`app/src/lib/state/store.tsx`)
 escolhe:
@@ -89,6 +106,7 @@ cd app && npm run ctas        # visitante vs aluno: quem já comprou não vê ch
 cd app && npm run trancado    # o cadeado do teste final nos três estados
 cd app && npm run portao      # o portão de domínio da lição não tranca ninguém
 cd app && npm run exame       # o exame final abre e responde (para nos pareamentos)
+cd app && npm run check-legal # identificação do fornecedor, políticas e checkout
 
 # a sincronia precisa do Worker no ar, com o D1 local:
 npm run db:init:local

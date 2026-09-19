@@ -3,6 +3,7 @@ import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
+import { empresa } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { course } from '@/lib/content';
 
@@ -129,7 +130,7 @@ export default function SobrePage() {
         <FaixaCta
           onde="sobre"
           titulo="Tem uma dúvida antes de começar?"
-          linha="As mais comuns já estão respondidas. O que não estiver, escreva para contato@hebraicofluente.com.br."
+          linha={`As mais comuns já estão respondidas. O que não estiver, escreva para ${empresa.contato.emailSuporte}.`}
         >
           <LinkButton href="/faq" variant="secondary">Dúvidas frequentes</LinkButton>
         </FaixaCta>

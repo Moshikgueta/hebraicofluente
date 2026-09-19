@@ -30,6 +30,7 @@ import { allCourses, brl, FLAGSHIP, getCourse } from '@/lib/catalog';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { course } from '@/lib/content';
 import { api } from '@/lib/account/api';
+import { empresa } from '@/lib/empresa';
 
 const date = (iso: string) =>
   new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -74,9 +75,9 @@ export function PerfilClient() {
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
                       border-t border-[color:var(--line-soft)] pt-3">
           Para trocar o e-mail ou a senha, escreva para{' '}
-          <a href="mailto:contato@hebraicofluente.com.br"
+          <a href={`mailto:${empresa.contato.emailSuporte}`}
              className="text-[var(--accent)] hover:underline">
-            contato@hebraicofluente.com.br
+            {empresa.contato.emailSuporte}
           </a>
           . A edição pela própria tela ainda não está no ar - e dizer isso é
           melhor do que um botão que não faz nada.
