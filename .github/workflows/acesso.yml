@@ -10,7 +10,11 @@
 #   · FECHAR o acesso depois de um estorno - que é a metade que todo mundo
 #     esquece: devolver o dinheiro na Mercado Pago não tira o curso de
 #     ninguém, e sem isto a pessoa estudaria de graça por doze meses;
-#   · olhar o que existe no banco quando algo não bate.
+#   · olhar o que existe no banco quando algo não bate;
+#   · ler o MOTIVO de um e-mail de senha não ter saído (ação "envios"). Existe
+#     porque /api/health só consegue dizer SE o último envio falhou - a frase
+#     que a Resend devolveu ("The domain is not verified", "Invalid from
+#     field") fica na trilha, e é ela que diz o que consertar.
 #
 # Como usar: aba Actions → "Acesso" → Run workflow → escolha a ação, digite o
 # e-mail → Run.
@@ -28,9 +32,9 @@ on:
         required: true
         default: liberar
         type: choice
-        options: [liberar, revogar, consultar, listar]
+        options: [liberar, revogar, consultar, listar, envios]
       email:
-        description: 'E-mail da conta (não precisa em "listar")'
+        description: 'E-mail da conta (não precisa em "listar" nem "envios")'
         required: false
         type: string
       curso:
@@ -107,6 +111,32 @@ jobs:
                    FROM invites WHERE used_at IS NULL ORDER BY created_at DESC LIMIT 25" \
                 | tee -a "$GITHUB_STEP_SUMMARY"
               say '```'
+              ;;
+
+            # Por que o e-mail de senha não saiu.
+            #
+            # /api/health responde SE o último envio falhou, e só isso - de
+            # propósito, porque é uma rota pública e a mensagem de erro da
+            # Resend cita o remetente e o domínio. A frase inteira fica na
+            # trilha, e é ela que diz o que consertar: "The domain is not
+            # verified" pede o passo de DNS, "Invalid from field" pede outro
+            # EMAIL_FROM, um 429 pede esperar.
+            envios)
+              say "**Últimas tentativas de e-mail de senha**"
+              say '```'
+              $W --command \
+                "SELECT datetime(created_at/1000,'unixepoch') AS quando,
+                        action AS resultado, detail AS motivo
+                   FROM access_log
+                  WHERE action IN ('forgot-enviado','forgot-falhou')
+                  ORDER BY id DESC LIMIT 15" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
+              say ""
+              say "\`forgot-enviado\` = a Resend aceitou. \`forgot-falhou\` = recusou,"
+              say "e o motivo está na coluna ao lado."
+              say ""
+              say "Tabela vazia = ninguém pediu link de senha ainda."
               ;;
 
             consultar)
