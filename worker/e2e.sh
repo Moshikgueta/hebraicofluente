@@ -224,9 +224,30 @@ echo "Cobrança"
 #     uma recusa clara.
 #
 # O que seria erro é qualquer outra coisa - e é isso que o `case` separa.
-pay_code=$(G -b "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
-  -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')
+#
+# ⚠ COM TOKEN DE PRODUÇÃO, ESTA CHAMADA NÃO É SIMULAÇÃO. Ela cria uma cobrança
+# PIX de verdade na Mercado Pago, a cada publicação. Ninguém é cobrado - um PIX
+# que ninguém paga expira em trinta minutos sozinho, e a linha do pedido é
+# apagada no fim da publicação - mas o painel da Mercado Pago acumularia uma
+# cobrança pendente por deploy, e é do painel que sai a conferência de caixa.
+#
+# Então: com token de PRODUÇÃO a criação é pulada e só se confere que a rota
+# está de pé. Com token de TESTE, que não toca em dinheiro nenhum, o pedido é
+# criado e o preço é conferido - que é onde essa prova vale alguma coisa.
+MODO="$(grep -o '"modo":"[a-z]*"' <<<"$HEALTH" | cut -d'"' -f4)"
+if [ "$MODO" = "producao" ]; then
+  echo "  · token de PRODUÇÃO: pulando a criação de pedido para não deixar"
+  echo "    uma cobrança pendente no painel a cada publicação."
+  espera "a rota de pagamento exige sessão" 401 \
+    "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
+       -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')"
+  pay_code=pulado
+else
+  pay_code=$(G -b "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
+    -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')
+fi
 case "$pay_code" in
+  pulado) ;;
   503)
     espera "pagamento ainda não ligado, e diz isso" 503 "$pay_code"
     espera "e nenhum pedido órfão foi criado" "" \
