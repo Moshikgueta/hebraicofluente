@@ -48,10 +48,17 @@ on:
       - 'worker/**'
       - 'wrangler.toml'
       - 'tools/export-content.mjs'
-      # A publicação É este script agora (passo "Publicar e configurar"), então
-      # mexer nele tem de disparar uma publicação - senão uma correção no
-      # próprio caminho do deploy fica parada sem ninguém perceber.
-      - 'scripts/cloudflare-setup.sh'
+      # A publicação É feita por estes scripts (os passos "Mercado Pago
+      # autentica?" e "Publicar e configurar"), então mexer neles tem de
+      # disparar uma publicação - senão uma correção no próprio caminho do
+      # deploy fica parada sem ninguém perceber.
+      #
+      # A pasta inteira, e não um arquivo por nome: quando isto listava só o
+      # `cloudflare-setup.sh`, o `pagamento-ativo.mjs` nasceu de fora da lista
+      # e a correção dele não publicou nada. O push ficou verde, o Actions
+      # ficou quieto, e o script antigo seguiu no ar - que é a forma mais cara
+      # de errar, porque não parece erro nenhum.
+      - 'scripts/**'
       - '.github/workflows/deploy-worker.yml'
   workflow_dispatch:
 
