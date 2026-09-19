@@ -179,6 +179,21 @@ export const isLessonComplete = (state: LearnerState, letterId: string): boolean
 export const lettersMastered = (state: LearnerState): number =>
   Object.values(state.lessons).filter(l => l.stagesDone.length >= STAGE_COUNT).length;
 
+/**
+ * O alfabeto inteiro fechado - a condição do teste final.
+ *
+ * Conta as letras REAIS, e não `lessons`: os módulos 6 e 7 também gravam
+ * progresso em `lessons` com ids próprios, e contar as chaves daria o
+ * alfabeto por concluído duas letras antes do fim.
+ */
+export function alphabetComplete(state: LearnerState, letterIds: readonly string[]): boolean {
+  return letterIds.length > 0 && letterIds.every(id => isLessonComplete(state, id));
+}
+
+/** Quantas faltam, para a frase do cadeado dizer um número em vez de "algumas". */
+export const lettersLeft = (state: LearnerState, letterIds: readonly string[]): number =>
+  letterIds.filter(id => !isLessonComplete(state, id)).length;
+
 /* ── checkpoints ────────────────────────────────────────────────────────── */
 
 export const PASS_MARK = 0.7;

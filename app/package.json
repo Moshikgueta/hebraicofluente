@@ -14,6 +14,7 @@
     "varrer": "node varrer-site.mjs && node varrer-curso.mjs",
     "audit-letras": "node audit-letras.mjs",
     "portao": "node portao.mjs",
+    "trancado": "node trancado.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {

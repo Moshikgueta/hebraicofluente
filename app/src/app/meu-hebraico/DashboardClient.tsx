@@ -22,6 +22,7 @@ import {
   IconeLetras, IconeLicoes, IconeRevisar, IconeTempo
 } from '@/components/platform/Painel';
 import { flagship } from '@/lib/catalog';
+import { TesteFinalCard } from '@/components/game/TesteFinal';
 import { AlphabetGrid, ModuleProgress } from '@/components/game/AlphabetGrid';
 import { useProgress } from '@/lib/state/store';
 import { course, getLetter, getModule } from '@/lib/content';
@@ -211,6 +212,43 @@ export function DashboardClient() {
         <CartaoRevisao />
         <CartaoSemana />
       </div>
+
+      {/* Os exercícios disponíveis, num lugar só. Antes eles existiam apenas
+          dentro da Academia, a dois toques de distância - e um jogo que é
+          preciso procurar não é jogado. O teste final fecha a fileira, com o
+          cadeado dizendo quantas letras faltam. */}
+      <section aria-labelledby="praticar" className="grid gap-3">
+        <div className="flex items-baseline justify-between gap-3">
+          <h2 id="praticar" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+            Praticar agora
+          </h2>
+          <Link href="/academia"
+                className="inline-flex items-center min-h-[44px] font-ui text-[13px]
+                           text-[var(--teal)] hover:underline">
+            Ver tudo →
+          </Link>
+        </div>
+        <ul className="grid gap-3 sm:grid-cols-3 list-none p-0 m-0">
+          {([
+            ['match', 'Match', 'Junte letra, nome e som.'],
+            ['blast', 'Blast', 'Rápido, com sequência de acertos.'],
+            ['teste', 'Teste', 'Nota no fim e revisão dos erros.']
+          ] as const).map(([id, titulo, desc]) => (
+            <li key={id}>
+              <Link href={`/academia?jogo=${id}`}
+                    className="h-full flex flex-col gap-1 rounded-[16px] border border-line
+                               bg-[var(--card)] p-4 transition-[box-shadow,border-color]
+                               duration-[250ms] hover:shadow-[var(--sh)] hover:border-[var(--teal)]">
+                <span className="font-display text-[16px] font-semibold tracking-[-0.018em] text-ink">
+                  {titulo}
+                </span>
+                <span className="font-ui text-[13px] leading-[1.45] text-ink-muted">{desc}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <TesteFinalCard compacto />
+      </section>
 
       {/* A grade do alfabeto e a lista de módulos. Ficam DEPOIS dos números
           e do cartão de revisão: são a resposta para "onde estou no curso

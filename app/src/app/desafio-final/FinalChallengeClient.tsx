@@ -29,7 +29,7 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, course, scenesUpTo } from '@/lib/content';
 import { buildExam, examReport, partsFor, EXAM_PASS, type Exam, type PartResult }
   from '@/lib/engine/exam';
-import { isLessonComplete } from '@/lib/state/rules';
+import { alphabetComplete, lettersLeft, isLessonComplete } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
 type Phase =
@@ -78,6 +78,43 @@ export function FinalChallengeClient() {
     setResults([]);
     setPhase({ kind: 'brief', index: 0 });
   }, []);
+
+  /* ── o cadeado ────────────────────────────────────────────────────────
+     O cartão no painel já não deixa entrar aqui sem o alfabeto fechado, mas
+     a rota é pública e alguém pode chegar por link, por histórico ou por
+     curiosidade. Um cadeado que só existe no botão não é um cadeado - e o
+     motivo dele aqui é pedagógico: um exame do alfabeto inteiro feito na
+     letra 7 pergunta sobre quinze letras que a pessoa nunca viu e devolve
+     um número que não mede nada. */
+  if (p.ready && !alphabetComplete(p.state, letters.map(l => l.id))) {
+    const faltam = lettersLeft(p.state, letters.map(l => l.id));
+    return (
+      <div className="focus-col grid gap-5 py-4">
+        <Card tone="sand" className="p-6 sm:p-8 grid gap-4 text-center">
+          <span aria-hidden className="justify-self-center w-12 h-12 rounded-[14px] bg-[var(--card)]
+                                       border border-line grid place-items-center">
+            <svg width="20" height="20" viewBox="0 0 18 18" fill="none">
+              <rect x="3.6" y="7.8" width="10.8" height="7.4" rx="2" stroke="var(--locked)" strokeWidth="1.5" />
+              <path d="M6.2 7.8V5.9a2.8 2.8 0 0 1 5.6 0v1.9" stroke="var(--locked)" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </span>
+          <h1 className="text-[24px] sm:text-[28px] font-bold leading-tight">
+            O teste final ainda está trancado.
+          </h1>
+          <p className="text-[16px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
+            Complete todas as letras para desbloquear o teste final.{' '}
+            {faltam === 1 ? 'Falta 1 letra.' : `Faltam ${faltam} letras.`} Ele mede o
+            alfabeto inteiro - feito antes da hora, ele pergunta sobre letras que você
+            ainda não viu e o número não diz nada.
+          </p>
+          <div className="flex flex-wrap gap-3 justify-center pt-1">
+            <LinkButton href="/meu-hebraico">Continuar de onde parei</LinkButton>
+            <LinkButton href="/mapa" variant="secondary">Ver o mapa</LinkButton>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   /* ── running a part ───────────────────────────────────────────────────── */
   if (phase.kind === 'running') {
