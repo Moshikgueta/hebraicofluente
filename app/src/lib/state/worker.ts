@@ -60,6 +60,26 @@ async function pedir(caminho: string, init?: RequestInit): Promise<Response | nu
   }
 }
 
+/**
+ * Descarta o corpo de uma resposta que não vai ser lida.
+ *
+ * Sem isto a requisição fica PENDURADA no navegador. Um `fetch` cujo corpo
+ * ninguém consome nem cancela continua aberto para sempre: a barra de carga
+ * da aba não para, a conexão ocupa um dos poucos slots do domínio, e a página
+ * nunca chega a `networkidle`. Todo visitante deslogado pegava uma dessas na
+ * capa, porque o 401 de `/api/progress` era o caso mais comum do mundo aqui e
+ * era exatamente o que saía cedo sem ler nada.
+ *
+ * LÊ o corpo em vez de cancelá-lo, de propósito. Cancelar também resolve o
+ * pendurado, mas deixa um `net::ERR_ABORTED` no console de toda visita - um
+ * erro vermelho numa requisição que funcionou exatamente como devia. Estes
+ * corpos são de uma linha (`{"error":"not-signed-in"}`), então lê-los custa
+ * nada e não mente sobre o que aconteceu.
+ */
+async function descartar(r: Response): Promise<void> {
+  try { await r.text(); } catch { /* já consumido, ou sem corpo */ }
+}
+
 export class WorkerProgressStore implements ProgressStore {
   #local = new LocalProgressStore();
   /** A revisão que este aparelho leu por último. 0 = nunca leu nada. */
@@ -72,8 +92,8 @@ export class WorkerProgressStore implements ProgressStore {
   async #ler(): Promise<Resposta> {
     const r = await pedir('/api/progress');
     if (!r) return VAZIO;
-    if (r.status === 401) { this.#comSessao = false; return VAZIO; }
-    if (!r.ok) return VAZIO;
+    if (r.status === 401) { await descartar(r); this.#comSessao = false; return VAZIO; }
+    if (!r.ok) { await descartar(r); return VAZIO; }
     this.#comSessao = true;
     const corpo = await r.json().catch(() => null) as
       { state?: unknown; rev?: number; uid?: unknown } | null;
@@ -143,7 +163,9 @@ export class WorkerProgressStore implements ProgressStore {
     gravarDono(null);
     if (!this.#comSessao) return;
     const r = await pedir('/api/progress', { method: 'DELETE' });
-    if (r && r.status === 401) this.#comSessao = false;
+    if (!r) return;
+    await descartar(r);
+    if (r.status === 401) this.#comSessao = false;
   }
 
   /** Sobe o estado, fundindo e repetindo se outro aparelho chegou antes. */
@@ -156,7 +178,7 @@ export class WorkerProgressStore implements ProgressStore {
         body: JSON.stringify({ state: atual, rev: this.#rev, version: atual.version })
       });
       if (!r) return;                       /* sem rede: fica no aparelho */
-      if (r.status === 401) { this.#comSessao = false; return; }
+      if (r.status === 401) { await descartar(r); this.#comSessao = false; return; }
 
       const corpo = await r.json().catch(() => null) as
         { rev?: number; state?: unknown } | null;
