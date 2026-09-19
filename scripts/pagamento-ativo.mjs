@@ -70,51 +70,70 @@ if (querido !== 'mercadopago') {
   if (!token) {
     rebaixar('O segredo MP_ACCESS_TOKEN está vazio.');
   } else {
-    /* `/users/me` é a pergunta mais barata que existe para "esta credencial
-       autentica?": não cria nada, não cobra nada, e responde 401 para a
-       Public Key exatamente como responderia para um token inventado. */
+    /* A pergunta certa é a que o checkout vai fazer.
+       ──────────────────────────────────────────────────────────────────────
+       A primeira versão disto perguntava `/users/me`, e levou um
+       `403 PA_UNAUTHORIZED_RESULT_FROM_POLICIES` - o PolicyAgent, a camada de
+       autorização deles. Isso NÃO quer dizer que a credencial não presta:
+       `/users/me` é dado de conta, e um Access Token pode não ter permissão
+       para ler a conta e ainda assim cobrar perfeitamente. Reprovar o token
+       por causa disso seria manter o cartão desligado para sempre por causa
+       de uma pergunta que o produto nunca faz.
+       `/v1/payment_methods` é a pergunta que importa: exige autenticação,
+       não cria nem cobra nada, e devolve as formas de pagamento HABILITADAS
+       nesta conta - de quebra respondendo se PIX e cartão estão liberados,
+       que era outra dúvida em aberto. */
     let res, corpo = '';
     try {
-      res = await fetch('https://api.mercadopago.com/users/me', {
+      res = await fetch('https://api.mercadopago.com/v1/payment_methods', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      corpo = (await res.text()).slice(0, 300);
+      corpo = (await res.text()).slice(0, 400);
     } catch (e) {
-      /* Uma falha de rede aqui não prova nada sobre a credencial, mas a
-         escolha ainda tem de ser feita, e vender por PIX é melhor do que
-         publicar um checkout que talvez não funcione. */
+      /* Uma falha de rede não prova nada sobre a credencial, mas a escolha
+         ainda tem de ser feita, e vender por PIX é melhor do que publicar um
+         checkout que talvez não funcione. */
       rebaixar(`Não consegui falar com a Mercado Pago: ${e.message || e}`);
       res = null;
     }
 
     if (res && res.ok) {
-      let quem = '';
+      let formas = '';
       try {
-        const u = JSON.parse(corpo);
-        /* Só o apelido e o país. Nada de e-mail nem de id - isto vai para o
-           resumo público da execução. */
-        quem = [u.nickname, u.site_id].filter(Boolean).join(' · ');
-      } catch { /* o importante já foi respondido pelo 200 */ }
-      diga(`✓ Mercado Pago autenticou${quem ? ` (${quem})` : ''}.`);
-      diga('  PIX, cartão e parcelamento ligados, com confirmação automática.');
+        const lista = JSON.parse(corpo);
+        const tem = tipo => lista.some(m => m.id === tipo || m.payment_type_id === tipo);
+        formas = [
+          tem('pix') ? 'PIX' : null,
+          tem('credit_card') ? 'cartão' : null
+        ].filter(Boolean).join(' e ');
+      } catch { /* o 200 já respondeu o que se perguntou */ }
+      diga('✓ Mercado Pago autenticou.');
+      diga(formas
+        ? `  Habilitados na conta: ${formas}. Confirmação automática ligada.`
+        : '  Confirmação automática ligada.');
     } else if (res) {
-      /* Só o 401 é uma resposta SOBRE a credencial. Qualquer outro código diz
-         que a chamada não chegou ao fim - um proxy no caminho, uma pane do
-         lado deles - e chamar isso de "credencial recusada" manda quem lê
-         trocar uma chave que talvez esteja certa. O corpo vai junto nos dois
-         casos, porque é ele que encerra a dúvida. */
-      const recusa = res.status === 401;
-      const publica = recusa
-        && /^APP_USR-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token);
+      /* 401 e 403 são as duas respostas SOBRE a credencial, e são diferentes:
+         401 é "não reconheço isto", 403 é "reconheço e não deixo". Qualquer
+         outro código diz que a chamada não chegou ao fim - um proxy no
+         caminho, uma pane do lado deles - e chamar isso de credencial
+         recusada manda quem lê trocar uma chave que talvez esteja certa. O
+         corpo vai junto nos três casos, porque é ele que encerra a dúvida. */
+      const publica =
+        /^APP_USR-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token);
+      const cabecalho =
+        res.status === 401 ? 'A Mercado Pago não reconheceu a credencial: 401. '
+        : res.status === 403 ? 'A Mercado Pago reconheceu e não autorizou: 403. '
+        : `A chamada à Mercado Pago não passou: ${res.status}. `;
       rebaixar(
-        (recusa
-          ? `A Mercado Pago recusou a credencial: 401. `
-          : `A chamada à Mercado Pago não passou: ${res.status}. `)
-        + corpo.replace(/\s+/g, ' ').trim()
+        cabecalho + corpo.replace(/\s+/g, ' ').trim()
         + (publica
-          ? '\n  O formato do valor é o da PUBLIC KEY, não o do Access Token.'
+          ? '\n  O valor tem o formato da PUBLIC KEY, não o do Access Token.'
             + '\n  Os dois começam com APP_USR-, e só o segundo serve aqui.'
-          : '')
+          : res.status === 403
+            ? '\n  Um 403 aqui costuma ser aplicação sem as credenciais de'
+              + '\n  PRODUÇÃO ativadas, ou conta ainda sem meio de pagamento'
+              + '\n  habilitado - não necessariamente a chave errada.'
+            : '')
       );
     }
   }
