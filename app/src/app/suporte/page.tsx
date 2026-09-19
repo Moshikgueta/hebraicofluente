@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
 import { Identificacao } from '@/components/legal/Legal';
-import { empresa } from '@/lib/empresa';
+import { empresa, whatsappUrl } from '@/lib/empresa';
 
 export const metadata: Metadata = {
   title: 'Suporte - Hebraico Fluente',
@@ -94,7 +94,15 @@ export default function Page() {
             <p className="font-ui text-[15px] text-ink-body">Telefone: {contato.telefone}</p>
           )}
           {contato.whatsapp && (
-            <p className="font-ui text-[15px] text-ink-body">WhatsApp: {contato.whatsapp}</p>
+            <p className="font-ui text-[15px] text-ink-body">
+              WhatsApp:{' '}
+              {whatsappUrl()
+                ? <a href={whatsappUrl()!} target="_blank" rel="noopener noreferrer"
+                     className="font-semibold text-[var(--accent)] hover:underline">
+                    {contato.whatsapp}
+                  </a>
+                : contato.whatsapp}
+            </p>
           )}
         </Card>
 

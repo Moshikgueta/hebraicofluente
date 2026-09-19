@@ -15,7 +15,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
-import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto } from '@/lib/empresa';
+import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto, whatsappUrl } from '@/lib/empresa';
 
 /** A data de atualização, por extenso, como se lê em português. */
 export function dataPt(iso: string): string {
@@ -103,6 +103,7 @@ export const Lista = ({ itens }: { itens: ReactNode[] }) => (
  */
 export function Identificacao() {
   const endereco = enderecoLinha();
+  const zap = whatsappUrl();
   const { contato, atendimento } = empresa;
 
   return (
@@ -117,7 +118,12 @@ export function Identificacao() {
              className="text-[var(--accent)] hover:underline break-all">{contato.emailSuporte}</a>
         } />
         {contato.telefone && <Linha rotulo="Telefone" valor={contato.telefone} />}
-        {contato.whatsapp && <Linha rotulo="WhatsApp" valor={contato.whatsapp} />}
+        {contato.whatsapp && <Linha rotulo="WhatsApp" valor={
+          zap
+            ? <a href={zap} target="_blank" rel="noopener noreferrer"
+                 className="text-[var(--accent)] hover:underline">{contato.whatsapp}</a>
+            : contato.whatsapp
+        } />}
         <Linha rotulo="Horário" valor={atendimento.horarioPt} />
         <Linha rotulo="Prazo de resposta" valor={
           `até ${atendimento.prazoRespostaUteis} dias úteis`

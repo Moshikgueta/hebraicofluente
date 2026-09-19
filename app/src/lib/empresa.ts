@@ -95,6 +95,23 @@ export function enderecoLinha(): string | null {
  */
 export const nomeLegal = (): string => empresa.razaoSocial ?? empresa.nomeFantasia;
 
+/**
+ * O link que abre a conversa no WhatsApp, ou `null` se não houver número.
+ *
+ * O `wa.me` quer só dígitos, com o país na frente e sem sinal nem separador -
+ * o número na tela fica legível para humano, e o link fica legível para o
+ * WhatsApp. Escrever os dois à mão é como um deles fica desatualizado.
+ */
+export function whatsappUrl(): string | null {
+  const n = empresa.contato.whatsapp;
+  if (!n) return null;
+  const digitos = n.replace(/\D/g, '');
+  /* Doze ou treze dígitos com o 55 na frente (fixo ou celular com o nono).
+     Menos do que isso é número local, e um link errado é pior do que texto. */
+  if (digitos.length < 12 || digitos.length > 13) return null;
+  return `https://wa.me/${digitos}`;
+}
+
 /** Os dois juntos, quando são diferentes: "Fulano LTDA (Hebraico Fluente)". */
 export function nomeLegalCompleto(): string {
   if (!empresa.razaoSocial || empresa.razaoSocial === empresa.nomeFantasia) {

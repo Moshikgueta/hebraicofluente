@@ -24,7 +24,7 @@ import { Logo } from '@/components/shell/Logo';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
-import { empresa, enderecoLinha, nomeLegalCompleto } from '@/lib/empresa';
+import { empresa, enderecoLinha, nomeLegalCompleto, whatsappUrl } from '@/lib/empresa';
 
 /* Os rótulos são os do design. Os destinos são páginas de verdade, e não
    âncoras: `#como` funciona na capa e vira link morto em /cursos, que usa
@@ -202,9 +202,15 @@ function Footer() {
             {empresa.contato.emailSuporte}
           </a>
           {empresa.contato.whatsapp && (
-            <span className="font-ui text-[13.5px] text-ink-body">
-              WhatsApp {empresa.contato.whatsapp}
-            </span>
+            whatsappUrl()
+              ? <a href={whatsappUrl()!} target="_blank" rel="noopener noreferrer"
+                   className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
+                              text-ink-body hover:text-[var(--accent)]">
+                  WhatsApp {empresa.contato.whatsapp}
+                </a>
+              : <span className="font-ui text-[13.5px] text-ink-body">
+                  WhatsApp {empresa.contato.whatsapp}
+                </span>
           )}
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2">
             {empresa.atendimento.horarioPt}. Resposta em até{' '}
