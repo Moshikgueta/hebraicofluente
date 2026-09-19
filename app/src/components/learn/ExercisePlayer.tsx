@@ -144,7 +144,7 @@ export function ExercisePlayer({
         <div className="flex items-center gap-3">
           <div className="h-1.5 flex-1 rounded-full bg-surface-2 overflow-hidden">
             <div
-              className="h-full rounded-full bg-[var(--teal-band)] transition-[width] duration-300 ease-[var(--ease)]"
+              className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-300 ease-[var(--ease)]"
               style={{ width: `${((i + (settled ? 1 : 0)) / exercises.length) * 100}%` }}
             />
           </div>
@@ -310,7 +310,7 @@ function Stimulus({ ex }: { ex: Exercise }) {
     case 'sound-to-syllable':
       return (
         <div className="grid gap-1 justify-items-center py-2">
-          <span className="font-display text-[44px] sm:text-[56px] font-bold text-[var(--teal-band)]">
+          <span className="font-display text-[44px] sm:text-[56px] font-bold text-[var(--accent)]">
             {ex.sound}
           </span>
           <p className="font-ui text-[13px] text-ink-muted">é assim que soa</p>
@@ -373,7 +373,7 @@ function Options({
                 ${settled && idx === ex.answer ? 'border-[var(--green)] bg-mint'
                   : settled && idx === chosen ? 'border-[var(--amber)] bg-[var(--amber-wash)]'
                   : settled ? 'border-line bg-surface opacity-55'
-                  : 'border-line bg-surface hover:border-[var(--teal)] hover:bg-[var(--teal-wash)]'}`}
+                  : 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'}`}
             >
               <He size="lg">{opt}</He>
             </button>
@@ -438,7 +438,7 @@ function OptionButton({
   const cursive = ex.kind === 'print-vs-cursive';
 
   const TONE = {
-    idle:  'border-line bg-surface hover:border-[var(--teal)] hover:bg-[var(--teal-wash)]',
+    idle:  'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]',
     right: 'border-[var(--green)] bg-mint',
     wrong: 'border-[var(--amber)] bg-[var(--amber-wash)]',
     muted: 'border-line bg-surface opacity-55'

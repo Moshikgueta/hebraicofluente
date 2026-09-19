@@ -96,8 +96,8 @@ function Board() {
 
       <Card tone="wash">
         <Link href="/desafio-final" className="p-5 flex items-center gap-4">
-          <span aria-hidden className="w-[34px] h-[34px] shrink-0 rounded-full border-2 border-[var(--teal-band)]
-                                      text-[var(--teal-band)] grid place-items-center text-[13px]">★</span>
+          <span aria-hidden className="w-[34px] h-[34px] shrink-0 rounded-full border-2 border-[var(--accent)]
+                                      text-[var(--accent)] grid place-items-center text-[13px]">★</span>
           <span className="min-w-0">
             <span className="block font-display text-[17px] font-bold text-ink">O desafio final</span>
             <span className="block font-ui text-[13px] text-ink-body">
@@ -125,7 +125,7 @@ function ModulePanel({ module: m }: { module: CourseModule }) {
     <Card className="overflow-hidden">
       <div className="px-4 py-3 border-b border-[color:var(--line-soft)] grid gap-1.5">
         <div className="flex items-center gap-2">
-          <Badge tone="teal">Módulo {m.n}</Badge>
+          <Badge tone="accent">Módulo {m.n}</Badge>
           <span className="ml-auto font-ui text-[12px] tabular-nums text-ink-muted">
             {cpPassed ? 'concluído ✓' : `${doneCount}/${total}`}
           </span>
@@ -134,7 +134,7 @@ function ModulePanel({ module: m }: { module: CourseModule }) {
         <span className="h-1.5 rounded-full bg-surface-2 overflow-hidden">
           <span
             className={`block h-full rounded-full transition-[width] duration-500
-              ${cpPassed ? 'bg-[var(--green)]' : 'bg-[var(--teal-band)]'}`}
+              ${cpPassed ? 'bg-[var(--green)]' : 'bg-[var(--accent)]'}`}
             style={{ width: `${total ? (doneCount / total) * 100 : 0}%` }}
           />
         </span>
@@ -160,10 +160,10 @@ function ModulePanel({ module: m }: { module: CourseModule }) {
                 <Link
                   href={`/licao/${L.id}`}
                   className={`flex items-center gap-3 rounded-[var(--r-sm)] px-2 py-1.5 transition-colors
-                    ${current ? 'bg-[var(--teal-wash)]' : 'hover:bg-surface-2'}`}
+                    ${current ? 'bg-[var(--accent-wash)]' : 'hover:bg-surface-2'}`}
                 >
                   <span aria-hidden className={`w-4 text-center text-[11px]
-                    ${done ? 'text-[var(--green)]' : current ? 'text-[var(--teal-band)]' : 'text-ink-muted'}`}>
+                    ${done ? 'text-[var(--green)]' : current ? 'text-[var(--accent)]' : 'text-ink-muted'}`}>
                     {done ? '✓' : current ? '●' : '○'}
                   </span>
                   <He size="word" dim={!done && !current}>{L.letter}</He>
@@ -172,7 +172,7 @@ function ModulePanel({ module: m }: { module: CourseModule }) {
                     {L.order}. {L.namePt}
                   </span>
                   {stages > 0 && !done && (
-                    <span className="ml-auto font-ui text-[11px] tabular-nums text-[var(--teal-band)]">
+                    <span className="ml-auto font-ui text-[11px] tabular-nums text-[var(--accent)]">
                       {stages}/{STAGE_COUNT}
                     </span>
                   )}
@@ -231,7 +231,7 @@ function MapRow({ node, state }: { node: MapNode; state: RowState }) {
         <span aria-hidden
           className="absolute left-[-26px] sm:left-[-34px] top-[30px] w-[24px] sm:w-[32px] h-[2px] bg-line-soft" />
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <Badge tone="teal">Módulo {m.n}</Badge>
+          <Badge tone="accent">Módulo {m.n}</Badge>
           <h2 className="font-display text-[17px] font-bold text-ink">{m.titlePt}</h2>
         </div>
         {m.letterIds.length > 0 && (
@@ -254,7 +254,7 @@ function MapRow({ node, state }: { node: MapNode; state: RowState }) {
       <Row dot={complete ? '✓' : state === 'now' ? '●' : '○'} state={state}>
         <Link href={`/licao/${L.id}`} className="flex items-center gap-4">
           <span className={`w-[52px] h-[52px] rounded-[var(--r-md)] grid place-items-center shrink-0
-            ${state === 'now' ? 'bg-[var(--teal-wash)]' : 'bg-surface-2'}`}>
+            ${state === 'now' ? 'bg-[var(--accent-wash)]' : 'bg-surface-2'}`}>
             <He size="lg" dim={state === 'ahead'}>{L.letter}</He>
           </span>
           <span className="min-w-0 flex-1">
@@ -266,7 +266,7 @@ function MapRow({ node, state }: { node: MapNode; state: RowState }) {
               <span className="font-ui text-[13px] text-ink-muted">{L.sound}</span>
             </span>
             {doneCount > 0 && !complete && (
-              <span className="block font-ui text-[12px] text-[var(--teal-band)] mt-0.5">
+              <span className="block font-ui text-[12px] text-[var(--accent)] mt-0.5">
                 {doneCount} de {STAGE_COUNT} etapas
               </span>
             )}
@@ -314,8 +314,8 @@ function ExtraModuleRow({ module: m }: { module: CourseModule }) {
   return (
     <Link href={`/modulo/${m.n}`}
           className="mt-1 flex items-center gap-3 min-h-[44px] font-ui text-[13px]
-                     text-[var(--teal-band)] hover:underline">
-      <span aria-hidden className={passed ? 'text-[var(--green)]' : 'text-[var(--teal-band)]'}>
+                     text-[var(--accent)] hover:underline">
+      <span aria-hidden className={passed ? 'text-[var(--green)]' : 'text-[var(--accent)]'}>
         {passed ? '✓' : doneCount > 0 ? '●' : '○'}
       </span>
       <Prose text={m.subPt} />
@@ -336,14 +336,14 @@ function Row({ children, dot, state }: { children: React.ReactNode; dot: string;
           w-[24px] h-[24px] rounded-full grid place-items-center text-[11px] font-bold
           border-2 bg-paper
           ${state === 'done' ? 'border-[var(--green)] text-[var(--green)]'
-            : state === 'now' ? 'border-[var(--teal-band)] text-[var(--teal-band)]'
+            : state === 'now' ? 'border-[var(--accent)] text-[var(--accent)]'
             : 'border-line text-ink-muted'}`}
       >
         {dot}
       </span>
       <Card
         className={`p-3.5 transition-colors ${state === 'ahead' ? 'opacity-70' : ''}
-          ${state === 'now' ? 'border-[var(--teal)]' : ''} hover:bg-surface-2`}
+          ${state === 'now' ? 'border-[var(--accent-soft)]' : ''} hover:bg-surface-2`}
       >
         {children}
       </Card>

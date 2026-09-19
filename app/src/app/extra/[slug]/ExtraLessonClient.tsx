@@ -85,7 +85,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
                            text-ink-muted hover:text-ink-body">
             ← Módulo {mod.n}
           </Link>
-          <Badge tone="teal">Módulo {mod.n} · lição {steps[stage - 1]?.lesson}</Badge>
+          <Badge tone="accent">Módulo {mod.n} · lição {steps[stage - 1]?.lesson}</Badge>
         </div>
         <ol className="flex items-center gap-1.5" aria-label="Etapas do módulo">
           {steps.map(s => {
@@ -101,7 +101,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
                   className="w-full min-h-[44px] grid content-center gap-1.5"
                 >
                   <span className={`block h-1.5 rounded-full transition-colors
-                    ${isNow ? 'bg-[var(--teal-band)]' : isDone ? 'bg-[var(--green)]' : 'bg-surface-2'}`} />
+                    ${isNow ? 'bg-[var(--accent)]' : isDone ? 'bg-[var(--green)]' : 'bg-surface-2'}`} />
                   <span className={`font-ui text-[11px] sm:text-[12px]
                     ${isNow ? 'text-ink font-semibold' : 'text-ink-muted'}`}>{s.label}</span>
                 </button>
@@ -192,7 +192,7 @@ function DageshStage({ onDone }: { onDone: () => void }) {
               <div key={label} className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-3">
                 <div className="flex items-center gap-3">
                   <He size="lg">{glyph}</He>
-                  <span className="font-ui text-[15px] font-semibold text-[var(--teal-band)]">{sound}</span>
+                  <span className="font-ui text-[15px] font-semibold text-[var(--accent)]">{sound}</span>
                   <span className="font-ui text-[12px] text-ink-muted ml-auto">{label}</span>
                 </div>
                 <ul className="grid gap-1.5">
@@ -253,7 +253,7 @@ function FinalsStage({ onDone }: { onDone: () => void }) {
       </div>
 
       <Card tone="wash" className="p-5 grid gap-3">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--teal-band)]">
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">
           O atalho visual
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body">
@@ -342,7 +342,7 @@ function GerechStage({ onDone }: { onDone: () => void }) {
             <span aria-hidden className="text-ink-muted">→</span>
             <He size="lg">{g.he}</He>
             <span className="grid gap-0.5 min-w-0">
-              <span className="font-ui text-[16px] font-semibold text-[var(--teal-band)]">{g.pt}</span>
+              <span className="font-ui text-[16px] font-semibold text-[var(--accent)]">{g.pt}</span>
               <span className="font-ui text-[12.5px] text-ink-muted leading-snug">{g.likePt}</span>
             </span>
             <AudioButton audioId={g.audioId} label="" size="sm" />
@@ -379,7 +379,7 @@ function GerechWordsStage({ onDone }: { onDone: () => void }) {
         <Card key={g.id} className="p-5 grid gap-3">
           <div className="flex items-center gap-3">
             <He size="lg">{g.he}</He>
-            <span className="font-ui text-[15px] font-semibold text-[var(--teal-band)]">{g.pt}</span>
+            <span className="font-ui text-[15px] font-semibold text-[var(--accent)]">{g.pt}</span>
             <span className="ml-auto"><AudioButton audioId={g.audioId} label="" size="sm" /></span>
           </div>
           <ul className="grid gap-2">

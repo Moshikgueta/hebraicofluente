@@ -20,7 +20,7 @@ export function Section({
   const TONE = {
     paper: '',
     surface: 'bg-surface-2',
-    wash: 'bg-[var(--teal-wash)]'
+    wash: 'bg-[var(--accent-wash)]'
   } as const;
   return (
     <section id={id} aria-labelledby={labelledBy}
@@ -41,7 +41,7 @@ export function SectionHead({
   return (
     <header className={`grid gap-3 mb-8 ${center ? 'text-center justify-items-center' : ''}`}>
       {eyebrowPt && (
-        <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--teal-band)]">
+        <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
           {eyebrowPt}
         </p>
       )}

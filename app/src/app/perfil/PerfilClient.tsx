@@ -74,7 +74,7 @@ export function PerfilClient() {
                       border-t border-[color:var(--line-soft)] pt-3">
           Para trocar o e-mail ou a senha, escreva para{' '}
           <a href="mailto:contato@hebraicofluente.com.br"
-             className="text-[var(--teal-band)] hover:underline">
+             className="text-[var(--accent)] hover:underline">
             contato@hebraicofluente.com.br
           </a>
           . A edição pela própria tela ainda não está no ar — e dizer isso é

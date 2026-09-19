@@ -169,7 +169,7 @@ export function AcademiaClient() {
   return (
     <div className="grid gap-6">
       <header className="grid gap-3 reading">
-        <Badge tone="teal">Academia de Leitura</Badge>
+        <Badge tone="accent">Academia de Leitura</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold">Praticar</h1>
         <p className="font-ui text-[15px] text-ink-muted">
           Tudo aqui é montado com as letras que você já aprendeu — {unlocked.length} até
@@ -197,7 +197,7 @@ export function AcademiaClient() {
                   className={`w-full h-full text-left rounded-[var(--r-lg)] border p-4 grid gap-1.5
                     transition-colors
                     ${ready
-                      ? 'border-line bg-surface hover:border-[var(--teal)] hover:bg-[var(--teal-wash)]'
+                      ? 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'
                       : 'border-line-soft bg-surface-2 opacity-70 cursor-default'}`}
                 >
                   <span className="flex items-center gap-2.5">
@@ -214,7 +214,7 @@ export function AcademiaClient() {
                     <span className="font-display text-[16px] font-bold text-ink">{mode.titlePt}</span>
                     {mode.timed && (
                       <span className="ml-auto font-ui text-[11px] uppercase tracking-[.07em]
-                                       text-[var(--teal-band)]">tempo</span>
+                                       text-[var(--accent)]">tempo</span>
                     )}
                   </span>
                   <span className="font-ui text-[13.5px] leading-relaxed text-ink-muted">

@@ -140,7 +140,7 @@ export function ReviewClient() {
             misturando. Vamos praticar um pouco mais as duas.
           </p>
           <Link href="/academia"
-                className="font-ui text-[13px] text-[var(--teal-band)] hover:underline min-h-[44px] flex items-center">
+                className="font-ui text-[13px] text-[var(--accent)] hover:underline min-h-[44px] flex items-center">
             Treinar só esse par na Academia →
           </Link>
         </Card>

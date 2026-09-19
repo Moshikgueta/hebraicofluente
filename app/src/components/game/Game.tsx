@@ -29,7 +29,7 @@ export function ProgressBar({
         aria-label={label ?? 'Progresso'}
       >
         <div
-          className="h-full rounded-full bg-[var(--teal-band)] transition-[width] duration-500 ease-[var(--ease)]"
+          className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-500 ease-[var(--ease)]"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -68,7 +68,7 @@ export function StreakCard({ days, goalUnits, goalTarget }: {
 export function XPIndicator({ xp }: { xp: number }) {
   return (
     <span className="inline-flex items-center gap-1.5 font-ui text-[13px] font-semibold text-ink-body">
-      <span aria-hidden className="text-[var(--teal-band)]">◆</span>
+      <span aria-hidden className="text-[var(--accent)]">◆</span>
       <span className="tabular-nums">{xp.toLocaleString('pt-BR')}</span>
       <span className="text-ink-muted font-normal">XP</span>
     </span>
@@ -83,10 +83,10 @@ export function AchievementBadge({
   return (
     <div
       className={`rounded-[var(--r-md)] border p-4 grid gap-1 transition-opacity
-        ${unlocked ? 'border-[var(--teal)] bg-[var(--teal-wash)]' : 'border-line bg-surface opacity-55'}`}
+        ${unlocked ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]' : 'border-line bg-surface opacity-55'}`}
     >
       <div className="flex items-center gap-2">
-        <span aria-hidden className={unlocked ? 'text-[var(--teal-band)]' : 'text-ink-muted'}>
+        <span aria-hidden className={unlocked ? 'text-[var(--accent)]' : 'text-ink-muted'}>
           {unlocked ? '◆' : '◇'}
         </span>
         <p className="font-display text-[15px] font-semibold text-ink">{def.titlePt}</p>

@@ -116,7 +116,7 @@ export function DashboardClient() {
               <He size="xl">{next.letter.letter}</He>
             </div>
             <div className="grid gap-1 min-w-0">
-              <Badge tone="teal">Módulo {next.module.n} · lição {next.letter.lesson}</Badge>
+              <Badge tone="accent">Módulo {next.module.n} · lição {next.letter.lesson}</Badge>
               <p className="font-display text-[21px] font-bold text-ink mt-1">
                 Letra {next.letter.namePt}
               </p>
@@ -150,7 +150,7 @@ export function DashboardClient() {
         {next.kind === 'extra' && (
           <Card tone="wash" className="p-6 sm:p-7 grid sm:grid-cols-[1fr_auto] items-center gap-5">
             <div className="grid gap-1">
-              <Badge tone="teal">Módulo {next.module.n}</Badge>
+              <Badge tone="accent">Módulo {next.module.n}</Badge>
               <p className="font-display text-[21px] font-bold text-ink mt-1">
                 {next.module.titlePt}
               </p>
@@ -187,7 +187,7 @@ export function DashboardClient() {
                 is hit with a fingertip, not a cursor. */}
             <Link href="/mapa"
                   className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                             text-[var(--teal-band)] hover:underline">
+                             text-[var(--accent)] hover:underline">
               Ver o mapa →
             </Link>
           </div>
@@ -250,7 +250,7 @@ export function DashboardClient() {
         </div>
         <Link href="/mapa"
               className="inline-flex items-center min-h-[44px] font-ui text-[14px] font-medium
-                         text-[var(--teal-band)] hover:underline">
+                         text-[var(--accent)] hover:underline">
           Ver o mapa do curso →
         </Link>
       </Card>
@@ -279,7 +279,7 @@ function Welcome() {
   return (
     <>
       <Card tone="wash" className="p-7 sm:p-10 grid gap-5 text-center">
-        <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--teal-band)]">
+        <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
           Bem-vindo ao Hebraico Fluente
         </p>
         <div className="flex justify-center gap-3 py-2">
@@ -302,7 +302,7 @@ function Welcome() {
 
       {m1 && (
         <Card className="p-6 grid gap-3">
-          <Badge tone="teal">Começa assim</Badge>
+          <Badge tone="accent">Começa assim</Badge>
           <p className="font-display text-[18px] font-semibold">{m1.titlePt}</p>
           <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={m1.milestonePt} /></p>
         </Card>

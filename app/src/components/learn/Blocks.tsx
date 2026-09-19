@@ -83,11 +83,11 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
               duration-[var(--dur)] ease-[var(--ease)] min-h-[128px]
               flex flex-col items-center justify-center gap-2
               ${active === i
-                ? 'border-[var(--teal)] bg-[var(--teal-wash)]'
-                : 'border-line bg-surface hover:border-[var(--teal)]'}`}
+                ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
+                : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}
           >
             <He size="lg">{s.he}</He>
-            <span className="font-ui text-[15px] font-semibold text-[var(--teal-band)] tracking-wide">
+            <span className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
               {s.translit || '—'}
             </span>
             <span className="font-ui text-[12px] text-ink-muted leading-snug">
@@ -127,7 +127,7 @@ export function WordReveal({ word, mark }: { word: Word; mark?: string | null })
 
       <div className="grid gap-2" aria-live="polite">
         {step >= 1 ? (
-          <p className="font-ui text-[17px] font-semibold text-[var(--teal-band)] tracking-wide">
+          <p className="font-ui text-[17px] font-semibold text-[var(--accent)] tracking-wide">
             {word.translit}
           </p>
         ) : null}
@@ -159,7 +159,7 @@ export function BridgeWords({ letter }: { letter: Letter }) {
   if (!letter.bridgeWords.length) return null;
   return (
     <Card tone="wash" className="p-5 sm:p-6">
-      <Badge tone="teal">Você já conhece estas palavras</Badge>
+      <Badge tone="accent">Você já conhece estas palavras</Badge>
       <p className="mt-3 text-[15px] leading-relaxed text-ink-body">
         O hebraico moderno importou centenas de palavras. Você já sabe o que elas
         querem dizer — só nunca as viu escritas assim. Ache o{' '}
@@ -224,7 +224,7 @@ export function RealWorldHebrew({ scene }: { scene: Scene }) {
         </div>
         {shown ? (
           <div className="grid gap-1 animate-rise border-t border-[color:var(--line-soft)] pt-4">
-            <p className="font-ui text-[16px] font-semibold text-[var(--teal-band)]">{word.translit}</p>
+            <p className="font-ui text-[16px] font-semibold text-[var(--accent)]">{word.translit}</p>
             <p className="text-[16px] text-ink">{word.pt}</p>
           </div>
         ) : (
@@ -273,7 +273,7 @@ export function HebrewLetterCard({ letter }: { letter: Letter }) {
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           <h1 className="text-[28px] sm:text-[34px] font-bold">{letter.namePt}</h1>
-          <span className="font-ui text-[17px] text-[var(--teal-band)] font-semibold">{letter.sound}</span>
+          <span className="font-ui text-[17px] text-[var(--accent)] font-semibold">{letter.sound}</span>
           <He size="word" dim>{letter.nameHe}</He>
         </div>
       </div>

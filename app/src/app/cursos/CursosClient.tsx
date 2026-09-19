@@ -48,7 +48,7 @@ export function CursosClient() {
                 <Card className="p-5 sm:p-6 grid gap-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-start">
                   <span aria-hidden
                         className="font-display text-[30px] font-bold leading-none tabular-nums
-                                   text-[color-mix(in_srgb,var(--teal-band)_35%,transparent)]">
+                                   text-[color-mix(in_srgb,var(--accent)_35%,transparent)]">
                     {c.code}
                   </span>
 
@@ -56,7 +56,7 @@ export function CursosClient() {
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="font-display text-[19px] font-bold text-ink">{c.titlePt}</h3>
                       {owned ? <Badge tone="mint">Seu curso</Badge>
-                        : open ? <Badge tone="teal">Disponível</Badge>
+                        : open ? <Badge tone="accent">Disponível</Badge>
                         : <Badge>Em breve</Badge>}
                     </div>
                     <p className="font-ui text-[12.5px] text-ink-muted">
@@ -69,7 +69,7 @@ export function CursosClient() {
                     <ul className="grid gap-1 list-none p-0 m-0 pt-1">
                       {c.outcomesPt.slice(0, 3).map(o => (
                         <li key={o} className="flex gap-2.5">
-                          <span aria-hidden className="text-[var(--teal-band)] text-[13px] mt-[3px]">✓</span>
+                          <span aria-hidden className="text-[var(--accent)] text-[13px] mt-[3px]">✓</span>
                           <span className="font-ui text-[13.5px] leading-relaxed text-ink-body">{o}</span>
                         </li>
                       ))}

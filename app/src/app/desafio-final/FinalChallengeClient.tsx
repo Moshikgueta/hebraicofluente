@@ -102,7 +102,7 @@ export function FinalChallengeClient() {
       <div className="focus-col grid gap-5">
         <ExamProgress exam={exam} index={phase.index} results={results} />
         <Card className="p-6 sm:p-8 grid gap-4">
-          <Badge tone="teal">Parte {phase.index + 1} de {exam.sections.length}</Badge>
+          <Badge tone="accent">Parte {phase.index + 1} de {exam.sections.length}</Badge>
           <h1 className="text-[26px] sm:text-[32px] font-bold leading-tight">
             {section.part.titlePt}
           </h1>
@@ -161,7 +161,7 @@ export function FinalChallengeClient() {
                     <Link
                       href="/academia"
                       className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                                 text-[var(--teal-band)] hover:underline"
+                                 text-[var(--accent)] hover:underline"
                     >
                       Treinar {part.titlePt.toLowerCase()} na Academia →
                     </Link>
@@ -214,7 +214,7 @@ export function FinalChallengeClient() {
   return (
     <div className="focus-col grid gap-6">
       <header className="grid gap-3">
-        <Badge tone="teal">Exame final</Badge>
+        <Badge tone="accent">Exame final</Badge>
         <h1 className="text-[28px] sm:text-[36px] font-bold leading-tight">
           Hebraico de verdade, sem apoio
         </h1>
@@ -324,7 +324,7 @@ function ExamProgress({
           <li key={s.part.id} className="flex-1 grid gap-1.5">
             <span
               className={`block h-1.5 rounded-full ${
-                done ? 'bg-[var(--green)]' : now ? 'bg-[var(--teal-band)]' : 'bg-surface-2'}`}
+                done ? 'bg-[var(--green)]' : now ? 'bg-[var(--accent)]' : 'bg-surface-2'}`}
             />
             <span className={`font-ui text-[10.5px] sm:text-[11.5px] leading-none truncate
               ${now ? 'text-ink font-semibold' : 'text-ink-muted'}`}>

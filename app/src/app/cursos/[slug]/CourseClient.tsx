@@ -40,14 +40,14 @@ export function CourseClient({ slug }: { slug: string }) {
                         grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
           <div className="grid gap-4">
             <nav aria-label="Você está em" className="font-ui text-[13px] text-ink-muted">
-              <Link href="/cursos" className="hover:text-[var(--teal-band)]">Cursos</Link>
+              <Link href="/cursos" className="hover:text-[var(--accent)]">Cursos</Link>
               <span aria-hidden> · </span>
               <span>Curso {c.code}</span>
             </nav>
 
             <div className="flex flex-wrap items-center gap-2">
               {owned ? <Badge tone="mint">Seu curso</Badge>
-                : open ? <Badge tone="teal">Disponível</Badge>
+                : open ? <Badge tone="accent">Disponível</Badge>
                 : <Badge>Em breve</Badge>}
               <span className="font-ui text-[12.5px] text-ink-muted">
                 {c.levelPt}{c.cefr ? ` · ${c.cefr}` : ''}
@@ -95,7 +95,7 @@ export function CourseClient({ slug }: { slug: string }) {
           {c.outcomesPt.map(o => (
             <li key={o}>
               <Card className="p-4 flex gap-3 h-full">
-                <span aria-hidden className="text-[var(--teal-band)] text-[15px] mt-[2px]">✓</span>
+                <span aria-hidden className="text-[var(--accent)] text-[15px] mt-[2px]">✓</span>
                 <span className="font-ui text-[14.5px] leading-relaxed text-ink-body">{o}</span>
               </Card>
             </li>
@@ -118,8 +118,8 @@ export function CourseClient({ slug }: { slug: string }) {
             <li key={m.n}>
               <Card className="p-4 sm:p-5 flex items-start gap-4">
                 <span aria-hidden
-                      className="w-[34px] h-[34px] shrink-0 rounded-full bg-[var(--teal-wash)]
-                                 text-[var(--teal-band)] font-ui text-[14px] font-bold
+                      className="w-[34px] h-[34px] shrink-0 rounded-full bg-[var(--accent-wash)]
+                                 text-[var(--accent)] font-ui text-[14px] font-bold
                                  grid place-items-center tabular-nums">
                   {m.n}
                 </span>
@@ -146,7 +146,7 @@ export function CourseClient({ slug }: { slug: string }) {
             <ul className="grid gap-2.5 list-none p-0 m-0">
               {c.forWhomPt.map(f => (
                 <li key={f} className="flex gap-3">
-                  <span aria-hidden className="text-[var(--teal-band)] text-[14px] mt-[3px]">→</span>
+                  <span aria-hidden className="text-[var(--accent)] text-[14px] mt-[3px]">→</span>
                   <span className="font-ui text-[14.5px] leading-relaxed text-ink-body">{f}</span>
                 </li>
               ))}
@@ -163,7 +163,7 @@ export function CourseClient({ slug }: { slug: string }) {
               fazer em três semanas ou em três meses. O curso guarda onde você
               parou e volta exatamente ali.
             </p>
-            <Link href="/faq" className="font-ui text-[13.5px] text-[var(--teal-band)] hover:underline
+            <Link href="/faq" className="font-ui text-[13.5px] text-[var(--accent)] hover:underline
                                           inline-flex items-center min-h-[36px]">
               Ver as dúvidas mais comuns →
             </Link>
@@ -240,7 +240,7 @@ function BuyBox({ slug }: { slug: string }) {
           ou {parcela.n}x de {brl(parcela.brl)} sem juros
         </p>
         {c.price.pixDiscountPct > 0 && (
-          <p className="font-ui text-[13.5px] font-medium text-[var(--teal-band)]">
+          <p className="font-ui text-[13.5px] font-medium text-[var(--accent)]">
             {brl(pixPrice(c.price))} no PIX ({c.price.pixDiscountPct}% off)
           </p>
         )}
@@ -257,7 +257,7 @@ function BuyBox({ slug }: { slug: string }) {
       {!account.signedIn && (
         <p className="font-ui text-[12.5px] text-ink-muted border-t border-[color:var(--line-soft)] pt-3">
           Já comprou?{' '}
-          <Link href="/entrar" className="text-[var(--teal-band)] hover:underline">Entre na sua conta</Link>
+          <Link href="/entrar" className="text-[var(--accent)] hover:underline">Entre na sua conta</Link>
         </p>
       )}
     </Card>

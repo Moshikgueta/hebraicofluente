@@ -78,7 +78,7 @@ export function CultureCardView({ card, open: initial = false }: { card: Culture
         className="w-full text-left px-5 py-4 grid gap-2 hover:bg-surface-2 transition-colors"
       >
         <span className="flex items-center gap-2.5">
-          <Badge tone="teal">{KIND_LABEL[card.kind] ?? 'Curiosidade'}</Badge>
+          <Badge tone="accent">{KIND_LABEL[card.kind] ?? 'Curiosidade'}</Badge>
           <span aria-hidden className="ml-auto text-ink-muted text-[13px]">
             {open ? '−' : '+'}
           </span>

@@ -136,7 +136,7 @@ function LessonHeader({
                          text-ink-muted hover:text-ink-body">
           ← Mapa
         </Link>
-        <Badge tone="teal">
+        <Badge tone="accent">
           Módulo {letter.module} · lição {letter.lesson} · letra {letter.order}/22
         </Badge>
       </div>
@@ -155,7 +155,7 @@ function LessonHeader({
               >
                 <span
                   className={`block h-1.5 rounded-full transition-colors
-                    ${isNow ? 'bg-[var(--teal-band)]' : isDone ? 'bg-[var(--green)]' : 'bg-surface-2'}`}
+                    ${isNow ? 'bg-[var(--accent)]' : isDone ? 'bg-[var(--green)]' : 'bg-surface-2'}`}
                 />
                 <span className={`font-ui text-[11px] sm:text-[12px] transition-colors
                   ${isNow ? 'text-ink font-semibold' : 'text-ink-muted'}`}>
@@ -258,7 +258,7 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
 
       {letter.wordsToRecognize.length > 0 && (
         <Card tone="wash" className="p-6 grid gap-3">
-          <Badge tone="teal">Você sabia?</Badge>
+          <Badge tone="accent">Você sabia?</Badge>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
             <Prose text={letter.didYouKnow} />
           </p>

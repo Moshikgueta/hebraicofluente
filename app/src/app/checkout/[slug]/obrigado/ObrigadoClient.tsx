@@ -133,7 +133,7 @@ export function ObrigadoClient({ slug }: { slug: string }) {
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
             Se em algumas horas nada acontecer, escreva para{' '}
             <a href="mailto:contato@hebraicofluente.com.br"
-               className="text-[var(--teal-band)] hover:underline">
+               className="text-[var(--accent)] hover:underline">
               contato@hebraicofluente.com.br
             </a>{' '}
             com o e-mail da compra.

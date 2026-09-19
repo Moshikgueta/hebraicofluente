@@ -26,7 +26,7 @@ export function StartHereClient({ sounds, intro }: { sounds: NikudSound[]; intro
     <div className="grid gap-6 reading">
       <header className="grid gap-3">
         <Link href="/mapa" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">← Mapa</Link>
-        <Badge tone="teal">Comece aqui</Badge>
+        <Badge tone="accent">Comece aqui</Badge>
         <h1 className="text-[27px] sm:text-[34px] font-bold leading-tight">Como o hebraico funciona</h1>
       </header>
 
@@ -71,7 +71,7 @@ export function StartHereClient({ sounds, intro }: { sounds: NikudSound[]; intro
         {sounds.map(s => (
           <Card key={s.sound} className="p-5 grid gap-3">
             <div className="flex items-baseline gap-3">
-              <span className="font-display text-[22px] font-bold text-[var(--teal-band)]">
+              <span className="font-display text-[22px] font-bold text-[var(--accent)]">
                 {s.sound === 'sheva' ? '—' : s.sound}
               </span>
               <span className="font-ui text-[14px] text-ink-muted">{SOUND_LABEL[s.sound] ?? s.sound}</span>
@@ -98,13 +98,13 @@ export function StartHereClient({ sounds, intro }: { sounds: NikudSound[]; intro
       <Card tone="wash" className="p-6 grid gap-3">
         <h2 className="font-display text-[18px] font-semibold">Como praticar de verdade</h2>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
-          <li className="flex gap-3"><span aria-hidden className="text-[var(--teal-band)]">→</span>
+          <li className="flex gap-3"><span aria-hidden className="text-[var(--accent)]">→</span>
             Leia em voz alta. Sempre. Ouvir o próprio som é metade do aprendizado.</li>
-          <li className="flex gap-3"><span aria-hidden className="text-[var(--teal-band)]">→</span>
+          <li className="flex gap-3"><span aria-hidden className="text-[var(--accent)]">→</span>
             Pouco e todo dia bate muito de vez em quando.</li>
-          <li className="flex gap-3"><span aria-hidden className="text-[var(--teal-band)]">→</span>
+          <li className="flex gap-3"><span aria-hidden className="text-[var(--accent)]">→</span>
             Errar faz parte: o que você erra volta na revisão, no dia certo.</li>
-          <li className="flex gap-3"><span aria-hidden className="text-[var(--teal-band)]">→</span>
+          <li className="flex gap-3"><span aria-hidden className="text-[var(--accent)]">→</span>
             Escreva à mão. É o que fixa a forma da letra.</li>
         </ul>
       </Card>

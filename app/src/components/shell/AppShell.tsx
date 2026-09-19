@@ -75,7 +75,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               contract stops being a contract. The 44px target is the tap area,
               not the text. */}
           <Link href="/meu-hebraico" className="flex items-center gap-2.5 min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
-            <span className="text-[var(--teal-band)]"><He size="inline">א</He></span>
+            <span className="text-[var(--accent)]"><He size="inline">א</He></span>
             <span className="font-display text-[15px] font-bold text-ink truncate">Hebraico Fluente</span>
           </Link>
           <div className="flex items-center gap-4 sm:gap-5">
@@ -142,7 +142,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
                     aria-current={active ? 'page' : undefined}
                     className={`flex items-start gap-3 rounded-[var(--r-md)] px-3 py-2.5 transition-colors
                       ${active
-                        ? 'bg-[var(--teal-wash)] text-[var(--teal-band)]'
+                        ? 'bg-[var(--accent-wash)] text-[var(--accent)]'
                         : 'text-ink-body hover:bg-surface-2'}`}
                   >
                     <span aria-hidden className="text-[15px] leading-[1.45]">{item.icon}</span>
@@ -219,8 +219,8 @@ function ProfileLink() {
       title={name || account.session!.account.email}
     >
       <span aria-hidden
-            className="w-[30px] h-[30px] rounded-full bg-[var(--teal-wash)]
-                       text-[var(--teal-band)] font-ui text-[13px] font-bold
+            className="w-[30px] h-[30px] rounded-full bg-[var(--accent-wash)]
+                       text-[var(--accent)] font-ui text-[13px] font-bold
                        grid place-items-center">
         {initial}
       </span>
@@ -258,7 +258,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
                 aria-current={active ? 'page' : undefined}
                 className={`relative h-[60px] flex flex-col items-center justify-center gap-1
                   font-ui text-[10.5px] leading-none text-center px-0.5 transition-colors
-                  ${active ? 'text-[var(--teal-band)] font-semibold' : 'text-ink-muted'}`}
+                  ${active ? 'text-[var(--accent)] font-semibold' : 'text-ink-muted'}`}
               >
                 <span aria-hidden className="text-[15px] leading-none">{item.icon}</span>
                 {item.label}

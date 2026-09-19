@@ -139,7 +139,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
           </p>
           <p className="font-ui text-[14px] text-ink">
             <a href="mailto:contato@hebraicofluente.com.br"
-               className="text-[var(--teal-band)] font-medium hover:underline">
+               className="text-[var(--accent)] font-medium hover:underline">
               contato@hebraicofluente.com.br
             </a>
           </p>
@@ -195,7 +195,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
     return (
       <Shell course={c}>
         <Card className="p-5 grid gap-2">
-          <Badge tone="teal">Passo 1 de 2</Badge>
+          <Badge tone="accent">Passo 1 de 2</Badge>
           <h2 className="font-display text-[19px] font-bold text-ink">
             Primeiro, sua conta.
           </h2>
@@ -218,7 +218,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
     <Shell course={c}>
       <Card className="p-5 sm:p-6 grid gap-5">
         <div className="grid gap-1">
-          <Badge tone="teal">Passo 2 de 2</Badge>
+          <Badge tone="accent">Passo 2 de 2</Badge>
           <h2 className="font-display text-[19px] font-bold text-ink mt-1">Como você quer pagar?</h2>
         </div>
 
@@ -281,7 +281,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted text-center">
               Acesso liberado automaticamente assim que o pagamento for confirmado.
               Sete dias para desistir, pela lei — {' '}
-              <Link href="/faq" className="text-[var(--teal-band)] hover:underline">como funciona</Link>.
+              <Link href="/faq" className="text-[var(--accent)] hover:underline">como funciona</Link>.
             </p>
           </>
         )}
@@ -339,11 +339,11 @@ function MethodOption({
 }: { checked: boolean; onSelect: () => void; titlePt: string; detailPt: string }) {
   return (
     <label className={`flex items-start gap-3 rounded-[var(--r-md)] border-2 p-4 cursor-pointer
-      transition-colors ${checked ? 'border-[var(--teal)] bg-[var(--teal-wash)]'
-                                  : 'border-line bg-surface hover:border-[var(--teal)]'}`}>
+      transition-colors ${checked ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
+                                  : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}>
       <input
         type="radio" name="metodo" checked={checked} onChange={onSelect}
-        className="mt-1 w-[18px] h-[18px] accent-[var(--teal-band)]"
+        className="mt-1 w-[18px] h-[18px] accent-[var(--accent)]"
       />
       <span className="grid gap-0.5 min-w-0">
         <span className="font-ui text-[15px] font-semibold text-ink">{titlePt}</span>
@@ -371,7 +371,7 @@ function Shell({ course, children }: {
                     grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
       <div className="grid gap-5">
         <nav aria-label="Você está em" className="font-ui text-[13px] text-ink-muted">
-          <Link href={`/cursos/${c.slug}`} className="hover:text-[var(--teal-band)]">
+          <Link href={`/cursos/${c.slug}`} className="hover:text-[var(--accent)]">
             {c.titlePt}
           </Link>
           <span aria-hidden> · </span>
@@ -384,7 +384,7 @@ function Shell({ course, children }: {
           vai para cima do formulário e não para baixo dele — ninguém paga o
           que não consegue ver. */}
       <Card tone="wash" className="p-5 grid gap-3 content-start order-first lg:order-last">
-        <p className="font-ui text-[11px] uppercase tracking-[.08em] text-[var(--teal-band)]">
+        <p className="font-ui text-[11px] uppercase tracking-[.08em] text-[var(--accent)]">
           Seu pedido
         </p>
         <p className="font-display text-[17px] font-bold text-ink leading-snug">{c.titlePt}</p>
@@ -401,7 +401,7 @@ function Shell({ course, children }: {
             ou {parcela.n}x de {brl(parcela.brl)}
           </p>
           {c.price.pixDiscountPct > 0 && (
-            <p className="font-ui text-[12.5px] font-medium text-[var(--teal-band)]">
+            <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">
               {brl(pixPrice(c.price))} no PIX
             </p>
           )}

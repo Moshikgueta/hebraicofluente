@@ -12,7 +12,7 @@ export function HistoriaClient() {
   return (
     <div className="grid gap-6">
       <header className="grid gap-3 reading">
-        <Badge tone="teal">Bônus</Badge>
+        <Badge tone="accent">Bônus</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold">
           Viagem pela história do hebraico
         </h1>

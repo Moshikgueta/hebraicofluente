@@ -128,7 +128,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
           <>
             Já tem conta?{' '}
             <Link href={`/entrar?next=${encodeURIComponent(next)}`}
-                  className="text-[var(--teal-band)] font-medium hover:underline">
+                  className="text-[var(--accent)] font-medium hover:underline">
               Entrar
             </Link>
           </>
@@ -136,7 +136,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
           <>
             Ainda não comprou?{' '}
             <Link href="/cursos/alfabetizacao"
-                  className="text-[var(--teal-band)] font-medium hover:underline">
+                  className="text-[var(--accent)] font-medium hover:underline">
               Ver o curso
             </Link>
           </>
@@ -147,7 +147,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
         <p className="font-ui text-[12.5px] text-center leading-relaxed text-ink-muted">
           Esqueceu a senha? Escreva para{' '}
           <a href="mailto:contato@hebraicofluente.com.br"
-             className="text-[var(--teal-band)] hover:underline">
+             className="text-[var(--accent)] hover:underline">
             contato@hebraicofluente.com.br
           </a>{' '}
           — a recuperação automática ainda não está no ar, e a gente resolve na mão.
@@ -181,7 +181,7 @@ function Field({
         aria-describedby={hint ? `${id}-hint` : undefined}
         className="min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                    font-ui text-[16px] text-ink placeholder:text-ink-muted
-                   focus:border-[var(--teal)] focus:outline-none"
+                   focus:border-[var(--accent-soft)] focus:outline-none"
       />
       {hint && (
         <p id={`${id}-hint`} className="font-ui text-[12.5px] text-ink-muted">{hint}</p>

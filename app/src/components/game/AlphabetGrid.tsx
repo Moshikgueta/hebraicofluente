@@ -51,7 +51,7 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
 
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 font-ui text-[11.5px] text-ink-muted">
         <Legend swatch="bg-mint border-[var(--green)]" label={`${p.mastered} dominadas`} />
-        <Legend swatch="bg-[var(--teal-wash)] border-[var(--teal)]" label="onde você está" />
+        <Legend swatch="bg-[var(--accent-wash)] border-[var(--accent-soft)]" label="onde você está" />
         <Legend swatch="bg-surface border-line" label={`${course.totalLetters - p.mastered} pela frente`} />
       </div>
     </div>
@@ -73,8 +73,8 @@ function LetterCell({
   const tone = done
     ? 'bg-mint border-[var(--green)]'
     : current
-      ? 'bg-[var(--teal-wash)] border-[var(--teal)]'
-      : 'bg-surface border-line hover:border-[var(--teal)]';
+      ? 'bg-[var(--accent-wash)] border-[var(--accent-soft)]'
+      : 'bg-surface border-line hover:border-[var(--accent-soft)]';
 
   const state = done ? 'concluída'
     : current ? 'onde você está'
@@ -149,7 +149,7 @@ export function ModuleProgress() {
               <div className="h-1.5 rounded-full bg-surface-2 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-[width] duration-500
-                    ${cpPassed ? 'bg-[var(--green)]' : 'bg-[var(--teal-band)]'}`}
+                    ${cpPassed ? 'bg-[var(--green)]' : 'bg-[var(--accent)]'}`}
                   style={{ width: `${total ? (doneCount / total) * 100 : 0}%` }}
                 />
               </div>

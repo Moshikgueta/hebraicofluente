@@ -119,7 +119,7 @@ export default function FaqPage() {
     <>
       <div className="border-b border-[color:var(--line-soft)]">
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-18 grid gap-5">
-          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--teal-band)]">
+          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
             Dúvidas frequentes
           </p>
           <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[20ch]">
@@ -171,7 +171,7 @@ export default function FaqPage() {
           <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[48ch]">
             Escreva para{' '}
             <a href="mailto:contato@hebraicofluente.com.br"
-               className="text-[var(--teal-band)] hover:underline">
+               className="text-[var(--accent)] hover:underline">
               contato@hebraicofluente.com.br
             </a>
             . Respondemos antes de você comprar, não depois.

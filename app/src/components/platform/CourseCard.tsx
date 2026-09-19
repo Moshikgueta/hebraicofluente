@@ -27,10 +27,10 @@ export function courseCardState(c: CatalogCourse, owned: boolean): CourseCardSta
   return owned ? 'owned' : 'locked';
 }
 
-const BADGE: Record<CourseCardState, { label: string; tone: 'teal' | 'mint' | 'neutral' }> = {
+const BADGE: Record<CourseCardState, { label: string; tone: 'accent' | 'mint' | 'neutral' }> = {
   owned:     { label: 'Seu curso', tone: 'mint' },
-  available: { label: 'Disponível', tone: 'teal' },
-  locked:    { label: 'Disponível', tone: 'teal' },
+  available: { label: 'Disponível', tone: 'accent' },
+  locked:    { label: 'Disponível', tone: 'accent' },
   soon:      { label: 'Em breve', tone: 'neutral' }
 };
 
@@ -57,7 +57,7 @@ export function CourseCard({
     >
       <div className="flex items-start justify-between gap-3">
         <span aria-hidden className="font-display text-[28px] font-bold leading-none
-                                      text-[color-mix(in_srgb,var(--teal-band)_35%,transparent)]
+                                      text-[color-mix(in_srgb,var(--accent)_35%,transparent)]
                                       tabular-nums">
           {course.code}
         </span>
@@ -90,7 +90,7 @@ export function CourseCard({
       {state === 'owned' && progress !== undefined && (
         <div className="grid gap-1.5 pt-1">
           <div className="h-[6px] rounded-full bg-surface-2 overflow-hidden">
-            <div className="h-full rounded-full bg-[var(--teal-band)] transition-[width]"
+            <div className="h-full rounded-full bg-[var(--accent)] transition-[width]"
                  style={{ width: `${Math.round(progress * 100)}%` }} />
           </div>
           <p className="font-ui text-[12px] text-ink-muted tabular-nums">

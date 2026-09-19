@@ -144,7 +144,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
                 {!done && (
                   <Link href={`/licao/${l.id}`}
                         className="ml-auto inline-flex items-center min-h-[44px] pl-3 font-ui text-[13px]
-                                   text-[var(--teal-band)] hover:underline">
+                                   text-[var(--accent)] hover:underline">
                     fazer a lição
                   </Link>
                 )}
@@ -160,7 +160,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-3">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--teal-band)]">
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">
           O que vem no checkpoint
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body">

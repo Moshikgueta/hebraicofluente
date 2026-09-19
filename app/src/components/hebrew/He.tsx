@@ -40,8 +40,18 @@ const SIZE: Record<HeSize, string> = {
   hero:    'text-[120px] sm:text-[160px] leading-[1.2]'
 };
 
+/** As três cores em que o hebraico aparece. `paper` é para painel escuro, e
+ *  segue o token do papel: no modo escuro ele vira quase preto e a letra
+ *  acompanha, de modo que o contraste se mantém nos dois temas. */
+const TONE = {
+  ink:   'text-ink',
+  muted: 'text-ink-muted',
+  paper: 'text-[var(--paper)]'
+} as const;
+
 export function He({
-  children, size = 'inline', cursive = false, mark, className = '', dim = false
+  children, size = 'inline', cursive = false, mark, className = '', dim = false,
+  tone = 'ink'
 }: {
   children: string;
   size?: HeSize;
@@ -49,7 +59,9 @@ export function He({
   /** Highlight the first occurrence of this glyph inside the word. */
   mark?: string | null;
   className?: string;
+  /** Atalho antigo para `tone="muted"`. Mantido: está em muitas telas. */
   dim?: boolean;
+  tone?: keyof typeof TONE;
 }) {
   const raw = clean(children);
   if (!raw) return null;
@@ -61,9 +73,14 @@ export function He({
     );
   }
 
+  /* A cor é do componente, e por isso ela precisa ser uma OPÇÃO do
+     componente. Envolver um <He> numa span colorida não funciona — a classe
+     de cor daqui ganha — e tentar vencer por `className` depende da ordem em
+     que o Tailwind gera as regras, que não é uma coisa para se apostar.
+     Já custou o hebraico sumir, preto sobre preto, num painel escuro. */
   const cls = [
     'he', cursive && 'he-cursive', SIZE[size],
-    dim ? 'text-ink-muted' : 'text-ink', className
+    TONE[dim ? 'muted' : tone], className
   ].filter(Boolean).join(' ');
 
   const m = mark ? clean(mark) : '';
@@ -74,7 +91,7 @@ export function He({
       {at >= 0 ? (
         <>
           {raw.slice(0, at)}
-          <b className="font-normal text-teal">{m}</b>
+          <b className="font-normal text-[var(--accent-soft)]">{m}</b>
           {raw.slice(at + m.length)}
         </>
       ) : raw}
@@ -132,7 +149,7 @@ export function HeCloze({
             className={[
               'inline-block align-baseline mx-[.12em] rounded-[4px] border-b-[3px]',
               'min-w-[.9em] text-center',
-              filled ? 'border-teal' : 'border-dashed border-ink-muted'
+              filled ? 'border-[var(--accent-soft)]' : 'border-dashed border-ink-muted'
             ].join(' ')}
           >
             {filled ? <He size={size}>{filled}</He> : <span className="opacity-0">.</span>}

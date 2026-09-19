@@ -29,7 +29,7 @@ export default function MetodoPage() {
     <>
       <div className="border-b border-[color:var(--line-soft)]">
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-18 grid gap-5">
-          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--teal-band)]">
+          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
             O método
           </p>
           <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[20ch]">
@@ -45,7 +45,7 @@ export default function MetodoPage() {
       {/* A regra que sustenta tudo, sozinha, antes das outras. */}
       <Section labelledBy="regra">
         <Card tone="wash" className="p-6 sm:p-10 grid gap-5">
-          <Badge tone="teal">A regra número um</Badge>
+          <Badge tone="accent">A regra número um</Badge>
           <h2 id="regra" className="font-display text-[25px] sm:text-[31px] font-bold leading-tight text-ink max-w-[26ch]">
             Você nunca vê uma palavra com uma letra que ainda não aprendeu.
           </h2>
@@ -105,8 +105,8 @@ export default function MetodoPage() {
             <li key={x.n}>
               <Card className="p-5 grid gap-2 h-full content-start">
                 <span aria-hidden
-                      className="w-[30px] h-[30px] rounded-full bg-[var(--teal-wash)]
-                                 text-[var(--teal-band)] font-ui text-[13px] font-bold
+                      className="w-[30px] h-[30px] rounded-full bg-[var(--accent-wash)]
+                                 text-[var(--accent)] font-ui text-[13px] font-bold
                                  grid place-items-center tabular-nums">
                   {x.n}
                 </span>

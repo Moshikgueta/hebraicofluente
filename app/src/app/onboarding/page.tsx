@@ -60,9 +60,9 @@ export default function OnboardingPage() {
   return (
     <div className="grid gap-6 max-w-[560px] mx-auto">
       <header className="grid gap-2">
-        <Badge tone="teal">{step + 1} de 4</Badge>
+        <Badge tone="accent">{step + 1} de 4</Badge>
         <div className="h-1.5 rounded-full bg-surface-2 overflow-hidden">
-          <div className="h-full bg-[var(--teal-band)] transition-[width] duration-300"
+          <div className="h-full bg-[var(--accent)] transition-[width] duration-300"
                style={{ width: `${((step + 1) / 4) * 100}%` }} />
         </div>
       </header>
@@ -161,7 +161,7 @@ function Choice({
   return (
     <Card
       as="div"
-      className={`transition-colors ${selected ? 'border-[var(--teal)] bg-[var(--teal-wash)]' : ''}`}
+      className={`transition-colors ${selected ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]' : ''}`}
     >
       <button
         type="button"
@@ -171,7 +171,7 @@ function Choice({
       >
         <span aria-hidden
           className={`w-5 h-5 rounded-full border-2 shrink-0
-            ${selected ? 'border-[var(--teal-band)] bg-[var(--teal-band)]' : 'border-line'}`} />
+            ${selected ? 'border-[var(--accent)] bg-[var(--accent)]' : 'border-line'}`} />
         {children}
       </button>
     </Card>

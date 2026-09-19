@@ -6,13 +6,22 @@ import './globals.css';
 /* Loaded through next/font/local rather than @font-face in CSS: Next then owns
    the URLs and rewrites them for whatever base path the site is served from.
    A hand-written url('/fonts/…') would 404 on a project page. */
+/* Fraunces nos títulos.
+   É a peça que mais muda a percepção da página: a DM Sans que estava aqui é
+   uma sans geométrica agradável e absolutamente neutra — a mesma de milhares
+   de sites. Uma serifa com contraste e um pouco de estranheza lê como livro,
+   e livro lê como considerado. Para um curso de LEITURA, descendente de um
+   material impresso, a escolha também é temática e não só estética.
+
+   Só três pesos, e só latino: o hebraico nunca passa por esta fonte (ver
+   `hebrew` abaixo), então não há motivo para carregar mais bytes. */
 const display = localFont({
   variable: '--font-display-loaded',
   display: 'swap',
   src: [
-    { path: '../../public/fonts/dm-sans-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/dm-sans-latin-600-normal.woff2', weight: '600', style: 'normal' },
-    { path: '../../public/fonts/dm-sans-latin-700-normal.woff2', weight: '700', style: 'normal' }
+    { path: '../../public/fonts/fraunces-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/fraunces-latin-600-normal.woff2', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/fraunces-latin-700-normal.woff2', weight: '700', style: 'normal' }
   ]
 });
 const ui = localFont({

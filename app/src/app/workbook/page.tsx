@@ -21,11 +21,11 @@ export default function WorkbookPage() {
       <Card className="p-6 grid gap-3">
         <h2 className="font-display text-[18px] font-semibold">Como usar os dois juntos</h2>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
-          <li className="flex gap-3"><span aria-hidden className="text-[var(--teal-band)]">1</span>
+          <li className="flex gap-3"><span aria-hidden className="text-[var(--accent)]">1</span>
             Faça a lição aqui: som, sílabas, palavras e exercícios corrigidos na hora.</li>
-          <li className="flex gap-3"><span aria-hidden className="text-[var(--teal-band)]">2</span>
+          <li className="flex gap-3"><span aria-hidden className="text-[var(--accent)]">2</span>
             Imprima as páginas que a lição indica e escreva à mão, sem pressa.</li>
-          <li className="flex gap-3"><span aria-hidden className="text-[var(--teal-band)]">3</span>
+          <li className="flex gap-3"><span aria-hidden className="text-[var(--accent)]">3</span>
             Volte para o checkpoint no fim do módulo.</li>
         </ul>
       </Card>

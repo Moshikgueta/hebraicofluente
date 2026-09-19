@@ -4,11 +4,18 @@ export function Card({
   children, className = '', as: As = 'div', tone = 'surface'
 }: {
   children: ReactNode; className?: string; as?: 'div' | 'section' | 'article';
-  tone?: 'surface' | 'wash' | 'mint' | 'ember' | 'amber';
+  tone?: 'surface' | 'wash' | 'ink' | 'mint' | 'ember' | 'amber';
 }) {
   const TONE = {
     surface: 'bg-surface border-line',
-    wash:    'bg-[var(--teal-wash)] border-transparent',
+    wash:    'bg-[var(--accent-wash)] border-transparent',
+    /* O painel escuro. Existe para uma coisa só: pôr o hebraico em destaque
+       de verdade, claro sobre escuro, do tamanho de um espécime tipográfico.
+       É o contraste que faz uma página parecer desenhada em vez de montada —
+       e aqui ele cai sobre o ativo mais bonito que o produto tem.
+       `--ink` já inverte no modo escuro, então o painel continua sendo o
+       oposto do papel nos dois temas, em vez de sumir num deles. */
+    ink:     'bg-[var(--ink)] border-transparent',
     mint:    'bg-mint border-transparent',
     ember:   'bg-[var(--ember-wash)] border-transparent',
     amber:   'bg-[var(--amber-wash)] border-transparent'
@@ -22,10 +29,10 @@ export function Card({
 
 export function Badge({
   children, tone = 'neutral'
-}: { children: ReactNode; tone?: 'neutral' | 'teal' | 'mint' | 'ember' }) {
+}: { children: ReactNode; tone?: 'neutral' | 'accent' | 'mint' | 'ember' }) {
   const TONE = {
     neutral: 'bg-surface-2 text-ink-muted',
-    teal:    'bg-[var(--teal-wash)] text-[var(--teal-band)]',
+    accent:    'bg-[var(--accent-wash)] text-[var(--accent)]',
     mint:    'bg-mint text-[var(--mint-ink)]',
     ember:   'bg-[var(--ember-wash)] text-[var(--ember)]'
   } as const;

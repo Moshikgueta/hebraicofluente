@@ -61,7 +61,7 @@ export function BuildSyllable({
                 ${settled && i === answer ? 'border-[var(--green)] bg-mint'
                   : settled && i === picked ? 'border-[var(--amber)] bg-[var(--amber-wash)]'
                   : settled ? 'border-line bg-surface opacity-55'
-                  : 'border-line bg-surface hover:border-[var(--teal)] hover:bg-[var(--teal-wash)]'}`}
+                  : 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'}`}
             >
               <He size="lg">{onCarrier(v)}</He>
             </button>
@@ -131,7 +131,7 @@ export function BuildWord({
                 grid place-items-center transition-colors
                 ${used.has(i)
                   ? 'border-line-soft bg-surface-2 opacity-35'
-                  : 'border-line bg-surface hover:border-[var(--teal)] hover:bg-[var(--teal-wash)]'}`}
+                  : 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'}`}
             >
               <He size="word" dim={used.has(i)}>{t}</He>
             </button>
@@ -235,8 +235,8 @@ export function MatchPairs({
                       grid place-items-center transition-colors disabled:cursor-default
                       ${isMatched ? 'border-[var(--green)] bg-mint'
                         : isWrong ? 'border-[var(--amber)] bg-[var(--amber-wash)]'
-                        : isPicked ? 'border-[var(--teal)] bg-[var(--teal-wash)]'
-                        : 'border-line bg-surface hover:border-[var(--teal)]'}`}
+                        : isPicked ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
+                        : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}
                   >
                     <Side
                       kind={side === 'left' ? leftKind : rightKind}
@@ -307,7 +307,7 @@ export function TypeAnswer({
             bg-surface font-ui text-[17px] text-ink placeholder:text-ink-muted
             ${settled && correct === true ? 'border-[var(--green)]'
               : settled && correct === false ? 'border-[var(--amber)]'
-              : 'border-line focus:border-[var(--teal)]'}`}
+              : 'border-line focus:border-[var(--accent-soft)]'}`}
         />
         <Button onClick={submit} disabled={settled || !value.trim()} size="md">Conferir</Button>
       </div>
@@ -339,7 +339,7 @@ export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string |
         <ul className="grid gap-1.5" aria-live="polite">
           {hints?.slice(0, shown).map((h, i) => (
             <li key={i} className="font-ui text-[13.5px] leading-relaxed text-ink-muted
-                                   border-l-2 border-[var(--teal-band)] pl-3">
+                                   border-l-2 border-[var(--accent)] pl-3">
               {h}
             </li>
           ))}
@@ -350,7 +350,7 @@ export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string |
           <button
             type="button"
             onClick={() => setShown(s => s + 1)}
-            className="min-h-[44px] font-ui text-[13px] text-[var(--teal-band)] hover:underline"
+            className="min-h-[44px] font-ui text-[13px] text-[var(--accent)] hover:underline"
           >
             {shown === 0 ? 'Precisa de uma dica?' : 'Mais uma dica'}
           </button>

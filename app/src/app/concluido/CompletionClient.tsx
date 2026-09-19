@@ -101,14 +101,14 @@ export function CompletionClient() {
       </Card>
 
       <Card tone="wash" className="p-6 sm:p-8 grid gap-4">
-        <Badge tone="teal">Hebraico A1</Badge>
+        <Badge tone="accent">Hebraico A1</Badge>
         <h2 className="text-[22px] font-bold leading-snug">
           Você aprendeu a ler. Agora está pronto para começar a entender e falar.
         </h2>
         <ul className="grid sm:grid-cols-2 gap-2 text-[15px] leading-relaxed text-ink-body">
           {A1_SKILLS.map(s => (
             <li key={s} className="flex gap-3">
-              <span aria-hidden className="text-[var(--teal-band)]">→</span>{s}
+              <span aria-hidden className="text-[var(--accent)]">→</span>{s}
             </li>
           ))}
         </ul>
@@ -120,7 +120,7 @@ export function CompletionClient() {
             type="button"
             onClick={() => track('next_course_clicked')}
             className="inline-flex items-center justify-center min-h-[48px] px-5 rounded-[var(--r-md)]
-                       bg-[var(--teal-band)] text-white font-ui font-medium text-[15px]"
+                       bg-[var(--accent)] text-white font-ui font-medium text-[15px]"
           >
             Conhecer o próximo nível
           </button>

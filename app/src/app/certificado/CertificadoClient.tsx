@@ -193,7 +193,7 @@ export function CertificadoClient() {
             autoComplete="name"
             className="min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                        font-ui text-[17px] text-ink placeholder:text-ink-muted
-                       focus:border-[var(--teal)]"
+                       focus:border-[var(--accent-soft)]"
           />
         </div>
 
@@ -211,8 +211,8 @@ export function CertificadoClient() {
                 className={`min-h-[52px] px-4 rounded-[var(--r-md)] border-2 text-left
                   transition-colors grid
                   ${format === f
-                    ? 'border-[var(--teal)] bg-[var(--teal-wash)]'
-                    : 'border-line bg-surface hover:border-[var(--teal)]'}`}
+                    ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
+                    : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}
               >
                 <span className="font-ui text-[14px] font-medium text-ink">
                   {FORMATS[f].labelPt}

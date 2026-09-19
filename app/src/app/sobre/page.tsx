@@ -33,7 +33,7 @@ export default function SobrePage() {
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-18
                         grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-center">
           <div className="grid gap-5">
-            <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--teal-band)]">
+            <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
               Sobre
             </p>
             <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[18ch]">

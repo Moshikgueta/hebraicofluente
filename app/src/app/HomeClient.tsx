@@ -45,7 +45,7 @@ export function HomeClient() {
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-20
                         grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,.95fr)] lg:items-center">
           <div className="grid gap-5">
-            <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--teal-band)]">
+            <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
               Hebraico para brasileiros
             </p>
             <h1 className="font-display text-[34px] sm:text-[46px] font-bold leading-[1.1] text-ink">
@@ -68,20 +68,31 @@ export function HomeClient() {
             </p>
           </div>
 
-          {/* A demonstração. Nada de imagem de banco: as letras de verdade,
-              na fonte de verdade, com os sinais de vogal posicionados como
-              vão aparecer na aula. É a prova mais barata que existe. */}
-          <Card tone="wash" className="p-6 sm:p-8 grid gap-6 justify-items-center">
-            <p className="font-ui text-[12px] uppercase tracking-[.1em] text-[var(--teal-band)]">
+          {/* O espécime.
+              Nada de imagem de banco: as letras de verdade, na fonte de
+              verdade, com os sinais de vogal posicionados como vão aparecer na
+              aula. É a prova mais barata que existe — e agora ela ocupa o
+              lugar que merece.
+
+              Claro sobre escuro, e grande. O hebraico é o ativo mais bonito
+              que este produto tem, e antes aparecia uma vez, pequeno, dentro
+              de um cartão pastel: decoração. Invertido, ele conduz a página. */}
+          <Card tone="ink" className="p-8 sm:p-10 grid gap-7 justify-items-center
+                                      shadow-[var(--shadow-2)]">
+            <p className="font-ui text-[11.5px] uppercase tracking-[.16em]
+                          text-[color-mix(in_srgb,var(--paper)_62%,transparent)]">
               A terceira lição
             </p>
-            <He size="display">מַיִם</He>
-            <div className="grid gap-1 text-center">
-              <p className="font-ui text-[15px] font-semibold text-ink">máyim</p>
-              <p className="font-ui text-[14px] text-ink-muted">água</p>
+            <He size="display" tone="paper">מַיִם</He>
+            <div className="grid gap-1.5 text-center">
+              <p className="font-display text-[19px] font-semibold text-[var(--paper)]">máyim</p>
+              <p className="font-ui text-[14px]
+                            text-[color-mix(in_srgb,var(--paper)_60%,transparent)]">água</p>
             </div>
-            <div className="w-full border-t border-[color:var(--line-soft)] pt-5 grid gap-2">
-              <p className="font-ui text-[13px] leading-relaxed text-ink-body text-center">
+            <div className="w-full border-t pt-6
+                            border-[color-mix(in_srgb,var(--paper)_18%,transparent)]">
+              <p className="font-ui text-[13.5px] leading-relaxed text-center
+                            text-[color-mix(in_srgb,var(--paper)_78%,transparent)]">
                 Três letras e dois sinais. Você já consegue ler isto sozinho
                 depois de dois dias — e é assim que o resto do curso vai.
               </p>
@@ -148,7 +159,7 @@ export function HomeClient() {
           ].map(x => (
             <li key={x.t}>
               <Card className="p-5 grid gap-2 h-full content-start">
-                <span aria-hidden className="text-[18px] text-[var(--teal-band)]">{x.i}</span>
+                <span aria-hidden className="text-[18px] text-[var(--accent)]">{x.i}</span>
                 <h3 className="font-display text-[16.5px] font-bold text-ink">{x.t}</h3>
                 <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">{x.b}</p>
               </Card>
@@ -181,7 +192,7 @@ export function HomeClient() {
             <ul className="grid gap-2.5 list-none p-0 m-0">
               {c.outcomesPt.map(o => (
                 <li key={o} className="flex gap-3">
-                  <span aria-hidden className="text-[var(--teal-band)] text-[14px] mt-[3px]">✓</span>
+                  <span aria-hidden className="text-[var(--accent)] text-[14px] mt-[3px]">✓</span>
                   <span className="font-ui text-[14.5px] leading-relaxed text-ink-body">{o}</span>
                 </li>
               ))}
@@ -189,7 +200,7 @@ export function HomeClient() {
           </div>
 
           <Card className="p-6 grid gap-4 content-start">
-            <Badge tone="teal">Curso {c.code}</Badge>
+            <Badge tone="accent">Curso {c.code}</Badge>
             <div className="grid gap-1">
               {c.price.listBrl && (
                 <p className="font-ui text-[14px] text-ink-muted line-through">
@@ -203,7 +214,7 @@ export function HomeClient() {
                 ou {parcela.n}x de {brl(parcela.brl)} sem juros
               </p>
               {c.price.pixDiscountPct > 0 && (
-                <p className="font-ui text-[13.5px] text-[var(--teal-band)] font-medium">
+                <p className="font-ui text-[13.5px] text-[var(--accent)] font-medium">
                   {brl(pixPrice(c.price))} no PIX ({c.price.pixDiscountPct}% de desconto)
                 </p>
               )}
@@ -234,7 +245,7 @@ export function HomeClient() {
           <LinkButton href={primary.href} size="lg">{primary.label}</LinkButton>
           <p className="font-ui text-[13px] text-ink-muted">
             Já é aluno?{' '}
-            <Link href="/entrar" className="text-[var(--teal-band)] hover:underline">Entrar na sua conta</Link>
+            <Link href="/entrar" className="text-[var(--accent)] hover:underline">Entrar na sua conta</Link>
           </p>
         </Card>
       </Section>

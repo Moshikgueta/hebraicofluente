@@ -58,7 +58,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                          bg-[color-mix(in_srgb,var(--paper)_88%,transparent)] backdrop-blur-md">
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 h-[64px] flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2.5 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md shrink-0">
-            <span className="text-[var(--teal-band)]"><He size="inline">א</He></span>
+            <span className="text-[var(--accent)]"><He size="inline">א</He></span>
             <span className="font-display text-[15px] font-bold text-ink">Hebraico Fluente</span>
           </Link>
 
@@ -72,7 +72,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                   aria-current={active ? 'page' : undefined}
                   className={`inline-flex items-center min-h-[44px] px-3 rounded-[var(--r-md)]
                     font-ui text-[14px] transition-colors
-                    ${active ? 'text-[var(--teal-band)] font-semibold bg-[var(--teal-wash)]'
+                    ${active ? 'text-[var(--accent)] font-semibold bg-[var(--accent-wash)]'
                              : 'text-ink-body hover:bg-surface-2'}`}
                 >
                   {l.label}
@@ -147,7 +147,7 @@ function Footer() {
                       sm:grid-cols-2 lg:grid-cols-4">
         <div className="grid gap-2 content-start">
           <div className="flex items-center gap-2.5">
-            <span className="text-[var(--teal-band)]"><He size="inline">א</He></span>
+            <span className="text-[var(--accent)]"><He size="inline">א</He></span>
             <span className="font-display text-[15px] font-bold text-ink">Hebraico Fluente</span>
           </div>
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted max-w-[32ch]">
@@ -174,7 +174,7 @@ function Footer() {
           <p className="font-ui text-[11px] uppercase tracking-[.08em] text-ink-muted">Contato</p>
           <a href="mailto:contato@hebraicofluente.com.br"
              className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
-                        text-ink-body hover:text-[var(--teal-band)]">
+                        text-ink-body hover:text-[var(--accent)]">
             contato@hebraicofluente.com.br
           </a>
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2">
@@ -202,7 +202,7 @@ function FooterCol({ title, links }: {
       {links.map(l => (
         <Link key={l.href} href={l.href}
               className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
-                         text-ink-body hover:text-[var(--teal-band)]">
+                         text-ink-body hover:text-[var(--accent)]">
           {l.label}
         </Link>
       ))}

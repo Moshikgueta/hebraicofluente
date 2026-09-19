@@ -1,95 +1,141 @@
-/* Design tokens.
+/* Design tokens — "manuscrito".
    ─────────────────────────────────────────────────────────────────────────
-   The palette is the workbook's, extracted from the reference PDF with
-   PyMuPDF (see ../../styles/tokens.css for the per-token provenance). What
-   changes here is scale, not identity: a screen needs a dark mode, larger
-   Hebrew and a touch-sized rhythm that a printed page does not. */
+   A identidade anterior era um teal frio sobre cinza neutro: competente,
+   agradável e indistinguível de qualquer SaaS. Isso custava duas coisas de
+   uma vez — não ficava na memória de ninguém, e parecia um site de R$ 47
+   vendendo um curso de R$ 147.
 
-/* Noto Sans Hebrew carries 55 nikud marks and a ccmp table — chosen over the
-   alternatives by inspecting the binaries, because a font that positions the
-   vowel points badly makes every reading exercise in the course wrong. */
+   Esta parte de onde o produto veio. É um curso de LEITURA, descendente de um
+   material impresso, sobre uma escrita de três mil anos. Então: papel morno
+   em vez de cinza, tinta quente em vez de preto puro, e um acento de romã —
+   a cor da iluminura de manuscrito, e que praticamente ninguém usa em
+   educação, onde todo mundo é azul ou roxo. O latão faz o papel do ouro da
+   margem: sequência, conquista, o momento que vale marcar.
+
+   O que NÃO mudou, e não muda:
+
+   · Noto Sans Hebrew continua sendo a fonte de todo hebraico. Ela foi
+     escolhida inspecionando os binários, porque carrega 55 marcas de nikud e
+     uma tabela ccmp — uma fonte que posiciona mal os pontos de vogal torna
+     ERRADO cada exercício de leitura do curso. Nenhuma questão estética
+     justifica trocá-la.
+
+   · Verde continua sendo "acertou" e âmbar continua sendo "ainda não".
+     Vermelho não existe como estado de erro neste curso: um adulto lendo
+     hebraico pela primeira vez não precisa de alarme, precisa de uma segunda
+     olhada. O acento de romã é escuro e saturado o bastante para nunca ser
+     confundido com um alerta.
+
+   · Todo par usado para texto passa em WCAG AA. O acento sobre o papel dá
+     6,5:1; branco sobre o acento dá 7,4:1. */
 
 :root {
-  /* ink */
-  --ink:        #0B0B0C;
-  --ink-body:   #45464A;
-  --ink-muted:  #74757B;
+  /* ── tinta ──────────────────────────────────────────────────────────
+     O preto pende para o quente. Um #000 puro sobre papel marfim parece um
+     buraco recortado; um preto amarronzado parece impressão. */
+  --ink:        #17130F;
+  --ink-body:   #4A423B;
+  --ink-muted:  #7C736A;
 
-  /* teal — the workbook's accent. The band tone is darkened from the PDF's
-     #1A99BA so white text on it clears WCAG AA (4.9:1 vs 2.75:1). */
-  --teal:       #1A99BA;
-  --teal-band:  #15788F;
-  --teal-deep:  #0E5568;
-  --teal-wash:  #EAF7FB;
+  /* ── romã: o acento ─────────────────────────────────────────────────
+     `--accent` carrega texto branco e botões. `--accent-soft` é a versão
+     clara, para ícones e traços. `--accent-deep` é para hover e para
+     hebraico grande, onde o peso da letra já é muito e a cor pode recuar. */
+  --accent:       #9E2B33;
+  --accent-soft:  #C0434B;
+  --accent-deep:  #6E1C22;
+  --accent-wash:  #FAEDEC;
 
-  /* mint — calm surfaces, correct answers */
-  --mint:       #D4F7EC;
-  --mint-ink:   #14513F;
-  --green:      #2F7D62;
+  /* ── latão: o ouro da margem ────────────────────────────────────────
+     Sequência de dias, conquistas, marcos. Com parcimônia — ouro em todo
+     lugar não é ouro, é amarelo. */
+  --ember:      #A97C2F;
+  --ember-wash: #F8F0DD;
 
-  /* the one warm accent: streak, milestones. Used sparingly on purpose. */
-  --ember:      #C2643A;
-  --ember-wash: #FBEFE9;
+  /* ── verde: acertou ─────────────────────────────────────────────────── */
+  --mint:       #DDEFDF;
+  --mint-ink:   #1F4A2C;
+  --green:      #33734A;
 
-  /* "not yet" — never red. An adult beginner reading Hebrew for the first
-     time does not need an alarm colour; they need a second look. */
-  --amber:      #9A6B15;
-  --amber-wash: #FDF4E3;
+  /* ── âmbar: ainda não ───────────────────────────────────────────────
+     Nunca vermelho. Ver a nota do cabeçalho. */
+  --amber:      #8A6112;
+  --amber-wash: #FBF2DF;
 
-  /* paper */
-  --paper:      #F6F6F4;
-  --surface:    #FFFFFF;
-  --surface-2:  #F1F0ED;
-  --line:       rgba(11, 11, 12, 0.10);
-  --line-soft:  rgba(11, 11, 12, 0.06);
+  /* ── papel ──────────────────────────────────────────────────────────
+     Marfim, não branco-acinzentado. A diferença entre #F6F6F4 e #F7F3EC é
+     pequena no código e grande na tela: um é uma tela desligada, o outro é
+     uma página. */
+  --paper:      #F7F3EC;
+  --surface:    #FFFDFA;
+  --surface-2:  #F0EAE0;
+  --line:       rgba(23, 19, 15, 0.11);
+  --line-soft:  rgba(23, 19, 15, 0.06);
 
-  /* The -loaded variables come from next/font/local in app/layout.tsx, which
-     owns the font URLs so they survive a base path. The fallbacks matter: a
-     missing Hebrew face is not a style regression, it is an unreadable page. */
-  --font-display: var(--font-display-loaded), system-ui, sans-serif;
+  /* ── tipografia ─────────────────────────────────────────────────────
+     Fraunces nos títulos é o que mais muda a percepção da página: uma
+     serifa com contraste e um pouco de estranheza lê como livro, e livro lê
+     como considerado. Inter continua na interface, onde o que se quer é que
+     a fonte não chame atenção.
+
+     As variáveis -loaded vêm de next/font/local em app/layout.tsx, que é
+     quem controla as URLs para que sobrevivam a um base path. Os fallbacks
+     importam: uma face hebraica ausente não é uma regressão de estilo, é uma
+     página ilegível. */
+  --font-display: var(--font-display-loaded), Georgia, serif;
   --font-ui:      var(--font-ui-loaded), system-ui, sans-serif;
   --font-he:      var(--font-he-loaded), 'Noto Sans Hebrew', serif;
   --font-he-cursive: var(--font-he-cursive-loaded), var(--font-he-loaded), cursive;
 
-  --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
-  --shadow-1: 0 1px 2px rgba(11,11,12,.05), 0 4px 16px rgba(11,11,12,.04);
-  --shadow-2: 0 2px 6px rgba(11,11,12,.07), 0 16px 40px rgba(11,11,12,.07);
+  /* ── forma ──────────────────────────────────────────────────────────
+     Raios menores do que antes. Canto muito arredondado é a assinatura
+     visual de aplicativo genérico; canto quase reto é a de papel. */
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 22px;
+
+  /* Sombras mornas e discretas. A elevação aqui vem da cor do cartão contra
+     a do papel, não de um borrão cinza. */
+  --shadow-1: 0 1px 2px rgba(23,19,15,.05), 0 4px 14px rgba(23,19,15,.045);
+  --shadow-2: 0 2px 6px rgba(23,19,15,.07), 0 14px 36px rgba(23,19,15,.08);
 
   --ease: cubic-bezier(.2, .7, .3, 1);
   --dur:  180ms;
 }
 
+/* ── modo escuro ──────────────────────────────────────────────────────
+   Não é a versão clara invertida. O papel vira um marrom muito escuro (e
+   não cinza-azulado), e o acento CLAREIA para continuar legível: romã
+   escuro sobre fundo escuro some. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --ink:       #F4F4F2;
-    --ink-body:  #C3C4C8;
-    --ink-muted: #8C8D93;
-    --teal:      #4FC3E0;
-    --teal-band: #2F9CBB;
-    --teal-deep: #BEE9F4;
-    --teal-wash: #12262D;
-    --mint:      #163A31;
-    --mint-ink:  #9BE7CE;
-    --green:     #6FC9A6;
-    --ember:     #E39468;
-    --ember-wash:#2E1E16;
-    --amber:     #E3B45F;
-    --amber-wash:#2B2312;
-    --paper:     #0E0F11;
-    --surface:   #17181B;
-    --surface-2: #1F2125;
-    --line:      rgba(244,244,242,.14);
-    --line-soft: rgba(244,244,242,.08);
-    --shadow-1:  0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
-    --shadow-2:  0 2px 6px rgba(0,0,0,.5), 0 16px 40px rgba(0,0,0,.45);
+    --ink:       #F5F1EA;
+    --ink-body:  #CBC3B9;
+    --ink-muted: #948C82;
+    --accent:      #E4727A;
+    --accent-soft: #F0959B;
+    --accent-deep: #F7C3C6;
+    --accent-wash: #2A1618;
+    --ember:      #D9AE5E;
+    --ember-wash: #2A2214;
+    --mint:       #1B3324;
+    --mint-ink:   #A8DCB4;
+    --green:      #6FBE87;
+    --amber:      #DDB565;
+    --amber-wash: #2A2213;
+    --paper:      #12100E;
+    --surface:    #1A1714;
+    --surface-2:  #23201C;
+    --line:       rgba(245,241,234,.14);
+    --line-soft:  rgba(245,241,234,.08);
+    --shadow-1:  0 1px 2px rgba(0,0,0,.45), 0 4px 16px rgba(0,0,0,.35);
+    --shadow-2:  0 2px 6px rgba(0,0,0,.55), 0 16px 40px rgba(0,0,0,.5);
   }
 }
 :root[data-theme='dark'] {
-  --ink: #F4F4F2; --ink-body: #C3C4C8; --ink-muted: #8C8D93;
-  --teal: #4FC3E0; --teal-band: #2F9CBB; --teal-deep: #BEE9F4; --teal-wash: #12262D;
-  --mint: #163A31; --mint-ink: #9BE7CE; --green: #6FC9A6;
-  --ember: #E39468; --ember-wash: #2E1E16;
-  --amber: #E3B45F; --amber-wash: #2B2312;
-  --paper: #0E0F11; --surface: #17181B; --surface-2: #1F2125;
-  --line: rgba(244,244,242,.14); --line-soft: rgba(244,244,242,.08);
+  --ink: #F5F1EA; --ink-body: #CBC3B9; --ink-muted: #948C82;
+  --accent: #E4727A; --accent-soft: #F0959B; --accent-deep: #F7C3C6; --accent-wash: #2A1618;
+  --ember: #D9AE5E; --ember-wash: #2A2214;
+  --mint: #1B3324; --mint-ink: #A8DCB4; --green: #6FBE87;
+  --amber: #DDB565; --amber-wash: #2A2213;
+  --paper: #12100E; --surface: #1A1714; --surface-2: #23201C;
+  --line: rgba(245,241,234,.14); --line-soft: rgba(245,241,234,.08);
 }

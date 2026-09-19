@@ -85,7 +85,7 @@ export function AudioButton({
         onClick={() => play(1)}
         aria-label={label}
         className={`inline-flex items-center justify-center gap-2 rounded-[var(--r-md)]
-          bg-[var(--teal-wash)] text-[var(--teal-band)] font-ui font-medium
+          bg-[var(--accent-wash)] text-[var(--accent)] font-ui font-medium
           transition-transform duration-[var(--dur)] ease-[var(--ease)]
           hover:brightness-95 active:scale-[.97] ${SIZE[size]}
           ${playing ? 'animate-pop' : ''}`}

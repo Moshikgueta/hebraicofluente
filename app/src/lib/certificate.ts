@@ -47,16 +47,23 @@ export const FORMATS: Record<CertificateFormat, { w: number; h: number; labelPt:
 /* The course palette, hard-coded rather than read from CSS: this image is
    posted somewhere else, where the site's variables do not exist, and it must
    look identical in light mode, dark mode and print. */
+/* Os valores estão escritos à mão, e não lidos dos tokens, porque o
+   certificado é desenhado em canvas: não há CSS ali. O preço disso é que uma
+   mudança de identidade precisa passar por aqui também — e é por isso que
+   este comentário existe, para quem for mexer na paleta amanhã.
+
+   Sempre o tema CLARO, mesmo para quem navega no escuro: a imagem sai daqui
+   para um post, e um certificado preto não é um certificado. */
 const C = {
-  paper: '#F6F6F4',
-  surface: '#FFFFFF',
-  ink: '#0B0B0C',
-  body: '#45464A',
-  muted: '#74757B',
-  teal: '#15788F',
-  tealSoft: '#EAF7FB',
-  mint: '#D4F7EC',
-  line: 'rgba(11,11,12,0.12)'
+  paper: '#F7F3EC',
+  surface: '#FFFDFA',
+  ink: '#17130F',
+  body: '#4A423B',
+  muted: '#7C736A',
+  accent: '#9E2B33',
+  accentSoft: '#FAEDEC',
+  mint: '#DDEFDF',
+  line: 'rgba(23,19,15,0.12)'
 };
 
 const fam = (v: string, fallback: string): string => {
@@ -115,13 +122,13 @@ export async function drawCertificate(
   ctx.lineWidth = 2;
   roundRect(ctx, pad, pad, w - pad * 2, h - pad * 2, 28);
   ctx.stroke();
-  ctx.strokeStyle = C.tealSoft;
+  ctx.strokeStyle = C.accentSoft;
   ctx.lineWidth = 3;
   roundRect(ctx, pad + 14, pad + 14, w - (pad + 14) * 2, h - (pad + 14) * 2, 18);
   ctx.stroke();
 
-  /* The teal rule at the top, the one piece of the site's colour. */
-  ctx.fillStyle = C.teal;
+  /* O filete de romã no topo, o único pedaço de cor da marca. */
+  ctx.fillStyle = C.accent;
   roundRect(ctx, w / 2 - 44, pad + 44, 88, 5, 3);
   ctx.fill();
 
@@ -223,7 +230,7 @@ function drawAlphabet(
   const step = Math.min(widest + size * 0.5, maxWidth / letters.length);
   const total = step * (letters.length - 1);
 
-  ctx.fillStyle = C.teal;
+  ctx.fillStyle = C.accent;
   /* index 0 is the first letter taught, and in Hebrew the first thing goes on
      the RIGHT — so the row is laid out from the right edge leftwards. */
   const right = cx + total / 2;

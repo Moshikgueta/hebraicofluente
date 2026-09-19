@@ -21,7 +21,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
     <div className="grid gap-6 reading">
       <header className="grid gap-3">
         <Link href="/mapa" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">← Mapa</Link>
-        <Badge tone="teal">Módulo {mod.n} de 7</Badge>
+        <Badge tone="accent">Módulo {mod.n} de 7</Badge>
         <h1 className="text-[27px] sm:text-[34px] font-bold leading-tight">{mod.titlePt}</h1>
         <p className="font-ui text-[15px] text-ink-muted"><Prose text={mod.subPt} /></p>
         {letters.length > 0 && (
@@ -65,7 +65,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         <ul className="grid gap-2">
           {mod.goalsPt.map((g, i) => (
             <li key={i} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink-body">
-              <span aria-hidden className="text-[var(--teal-band)] pt-0.5">✓</span>
+              <span aria-hidden className="text-[var(--accent)] pt-0.5">✓</span>
               <span><Prose text={g} /></span>
             </li>
           ))}

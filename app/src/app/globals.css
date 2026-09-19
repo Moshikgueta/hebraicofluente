@@ -5,10 +5,10 @@
   --color-ink: var(--ink);
   --color-ink-body: var(--ink-body);
   --color-ink-muted: var(--ink-muted);
-  --color-teal: var(--teal);
-  --color-teal-band: var(--teal-band);
-  --color-teal-deep: var(--teal-deep);
-  --color-teal-wash: var(--teal-wash);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-wash: var(--accent-wash);
   --color-mint: var(--mint);
   --color-mint-ink: var(--mint-ink);
   --color-green: var(--green);
@@ -88,7 +88,7 @@ p { margin: 0; }
 .focus-col p { max-width: 62ch; }
 
 *:focus-visible {
-  outline: 2.5px solid var(--teal);
+  outline: 2.5px solid var(--accent-soft);
   outline-offset: 3px;
   border-radius: 4px;
 }

@@ -4,12 +4,12 @@
        levava 404, e a aba ficava sem identidade — numa plataforma que vende
        curso, as duas coisas contam.
 
-       Um א sobre o azul da marca (--teal-band, #15788F). SVG porque ele tem de
+       Um א sobre o vermelho-romã da marca (--accent, #9E2B33). SVG porque ele tem de
        continuar legível a 16 px na aba e nítido a 180 px no atalho de celular,
        e porque assim a letra é a MESMA que o curso ensina, e não um desenho
        parecido com ela. Next injeta o <link rel="icon"> sozinho a partir deste
        arquivo. -->
-  <rect width="64" height="64" rx="14" fill="#15788F"/>
+  <rect width="64" height="64" rx="12" fill="#9E2B33"/>
   <text x="32" y="46"
         font-family="'Noto Sans Hebrew', 'David', serif"
         font-size="42" font-weight="600"

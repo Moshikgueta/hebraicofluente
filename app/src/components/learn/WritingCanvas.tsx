@@ -113,7 +113,7 @@ export function WritingCanvas({
     ctx.lineJoin = 'round';
     ctx.lineWidth = 8;
     ctx.strokeStyle = getComputedStyle(document.documentElement)
-      .getPropertyValue('--teal-band').trim() || '#15788F';
+      .getPropertyValue('--accent').trim() || '#15788F';
   }, []);
 
   /* Keyed on `step` as well as on `resize`: at step 1 there is no canvas in
@@ -257,7 +257,7 @@ export function WritingCanvas({
                 className={`min-h-[44px] px-2.5 sm:px-3 rounded-full font-ui text-[12.5px] font-medium
                   transition-colors
                   ${step === s.n
-                    ? 'bg-[var(--teal-wash)] text-[var(--teal-band)]'
+                    ? 'bg-[var(--accent-wash)] text-[var(--accent)]'
                     : 'text-ink-muted hover:bg-surface-2'}`}
               >
                 {s.label}

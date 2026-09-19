@@ -73,7 +73,7 @@ export function SoundLab({
                 Letra
               </th>
               {VOWELS.map(v => (
-                <th key={v} className="px-1 py-2 font-ui text-[13px] font-semibold text-[var(--teal-band)]">
+                <th key={v} className="px-1 py-2 font-ui text-[13px] font-semibold text-[var(--accent)]">
                   {VOWEL_LABEL[v]}
                 </th>
               ))}
@@ -103,7 +103,7 @@ export function SoundLab({
                         aria-pressed={on}
                         className={`w-full min-h-[56px] rounded-[var(--r-md)] border-2 px-1
                           grid place-items-center transition-colors
-                          ${on ? 'border-[var(--teal)] bg-[var(--teal-wash)]'
+                          ${on ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
                                : 'border-transparent hover:border-line hover:bg-surface-2'}`}
                       >
                         <He size="word">{syl.he}</He>
@@ -125,7 +125,7 @@ export function SoundLab({
           <>
             <He size="lg">{picked.syl.he}</He>
             <div className="grid gap-0.5 min-w-0">
-              <p className="font-ui text-[17px] font-semibold text-[var(--teal-band)]">
+              <p className="font-ui text-[17px] font-semibold text-[var(--accent)]">
                 {picked.syl.translit}
               </p>
               <p className="font-ui text-[13px] text-ink-muted">{picked.syl.ptApprox}</p>
@@ -155,7 +155,7 @@ export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
       {nikud.sounds.map(s => (
         <Card key={s.sound} className="p-4 grid gap-3">
           <div className="flex items-baseline gap-3">
-            <span className="font-display text-[22px] font-bold text-[var(--teal-band)]">
+            <span className="font-display text-[22px] font-bold text-[var(--accent)]">
               {s.sound}
             </span>
             {s.ptApprox && (
