@@ -51,6 +51,17 @@ type AccountValue = {
 
 const Ctx = createContext<AccountValue | null>(null);
 
+/** O nome do evento que diz "a sessão mudou de dono". */
+export const SESSAO_MUDOU = 'hf-sessao';
+
+/* Entrar e sair mudam DE QUEM é o progresso, e o provider de progresso não
+   conhece este módulo (nem deve: o curso funciona sem conta nenhuma). Um
+   evento no `window` é o acoplamento mais fino que resolve isso - quem se
+   importa escuta, quem não se importa nem sabe que existe. */
+const avisar = () => {
+  try { window.dispatchEvent(new Event(SESSAO_MUDOU)); } catch { /* SSR */ }
+};
+
 export function AccountProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [ready, setReady] = useState(false);
@@ -74,9 +85,9 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     mode: apiMode(),
     demo: isDemo(),
 
-    async signUp(i) { setSession(await (await api()).signUp(i)); setReady(true); },
-    async signIn(i) { setSession(await (await api()).signIn(i)); setReady(true); },
-    async signOut() { await (await api()).signOut(); setSession(null); },
+    async signUp(i) { setSession(await (await api()).signUp(i)); setReady(true); avisar(); },
+    async signIn(i) { setSession(await (await api()).signIn(i)); setReady(true); avisar(); },
+    async signOut() { await (await api()).signOut(); setSession(null); avisar(); },
     refresh,
 
     startOrder: async i => (await api()).startOrder(i),

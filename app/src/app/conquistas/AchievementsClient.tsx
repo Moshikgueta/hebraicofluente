@@ -65,9 +65,13 @@ export function AchievementsClient() {
 
       <Card className="p-5 grid gap-3">
         <h2 className="font-display text-[17px] font-semibold">Recomeçar do zero</h2>
+        {/* "Da conta" e não "deste navegador": agora o apagar também limpa o
+            servidor, e prometer menos do que o botão faz é pior do que o
+            contrário - a pessoa acharia que o progresso volta noutro
+            aparelho. */}
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted max-w-[52ch]">
-          Apaga todo o progresso guardado neste navegador: XP, sequência, lições e
-          revisões. Não dá para desfazer.
+          Apaga todo o seu progresso, em todos os aparelhos: XP, sequência,
+          lições e revisões. Não dá para desfazer.
         </p>
         <button
           type="button"

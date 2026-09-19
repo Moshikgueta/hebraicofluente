@@ -48,10 +48,49 @@ cabeçalhos de comentário não são travessões e ficam como estão.
 - **Limite de 10 ms de CPU** por requisição no plano gratuito do Workers. É por
   isso que o PBKDF2 roda 25.000 iterações (`worker/src/lib/crypto.js`) e não
   310.000. `wrangler dev` não aplica o limite: o erro só aparece em produção.
+- **A fusão de progresso é monotônica** (`app/src/lib/state/merge.ts`). Todo
+  campo tem um "mais adiantado dos dois" e é ele que fica; contagem é MÁXIMO e
+  nunca soma, senão o mesmo dia sincronizado duas vezes dobra o XP. É essa
+  propriedade que deixa o adaptador repetir a fusão depois de um 409 sem medo
+  de desfazer alguma coisa. Um campo novo no estado precisa de uma regra aqui,
+  e de um teste em `app/tests/merge.test.ts`.
+
+## Progresso: onde mora
+Três camadas, nesta ordem, e `createStore()` (`app/src/lib/state/store.tsx`)
+escolhe:
+
+1. **Worker + D1** (`NEXT_PUBLIC_PLATFORM_API=worker`, que é a build publicada).
+   Tabela `progress`, uma linha por conta, o estado inteiro em JSON. O
+   adaptador (`app/src/lib/state/worker.ts`) **embrulha** o localStorage em vez
+   de substituí-lo: o curso continua funcionando sem sinal, e a sincronização
+   é uma fusão nos dois sentidos.
+2. **Supabase** - porta escrita e nunca ligada, só entra com as duas variáveis.
+3. **localStorage** - o padrão do `npm run dev` e de qualquer export sem API.
+
+A coluna `rev` é o que impede um aparelho de apagar o outro: toda escrita
+declara a revisão que leu, o servidor recusa com 409 quem pisar numa revisão
+vencida e devolve o estado atual junto, e o cliente funde e repete. `uid` volta
+no GET para que um notebook compartilhado não funda o progresso de uma pessoa
+na conta de outra.
 
 ## Antes de commitar
 ```sh
-cd app && npm test        # 212 testes
+cd app && npm test        # 263 testes
 cd app && npm run build   # export estático
 npm run validate          # ordem das letras, nikud, palavras
+```
+
+Verificações em navegador de verdade (a 390px, com `HF_CHROMIUM` apontando
+para o Chromium já instalado - nunca `playwright install`):
+
+```sh
+cd app && npm run varrer      # rolagem lateral e erros de console em todas as rotas
+cd app && npm run ctas        # visitante vs aluno: quem já comprou não vê checkout
+cd app && npm run trancado    # o cadeado do teste final nos três estados
+cd app && npm run portao      # o portão de domínio da lição não tranca ninguém
+
+# a sincronia precisa do Worker no ar, com o D1 local:
+npm run db:init:local
+SESSION_SECRET=qualquer-coisa npx wrangler dev --port 8788 --local
+cd app && npm run sincronia   # dois aparelhos, uma conta, ninguém perde trabalho
 ```

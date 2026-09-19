@@ -9,13 +9,14 @@
  * Duas coisas que esta página diz e quase nenhuma diz:
  *
  *   · até quando vai o acesso, em data, por curso;
- *   · que o progresso é deste aparelho. Isso é uma limitação real de hoje
- *     (ver lib/account/store.tsx) e o lugar de contá-la é aqui, onde a pessoa
- *     está olhando os próprios números - não numa nota de rodapé que ela
- *     descobre no dia em que troca de celular.
+ *   · onde o progresso mora DE VERDADE nesta build. Com servidor (Worker +
+ *     D1) ele viaja com a conta; no export estático de demonstração ele fica
+ *     no navegador. O lugar de contar isso é aqui, onde a pessoa está olhando
+ *     os próprios números - não numa nota de rodapé que ela descobre no dia
+ *     em que troca de celular.
  *
- * "Sair" pede confirmação porque, como o progresso é local e a sessão é o que
- * dá acesso, sair no aparelho errado é chato de desfazer sem a senha.
+ * "Sair" pede confirmação porque a sessão é o que dá acesso, e sair no
+ * aparelho errado é chato de desfazer sem a senha.
  */
 
 import { useEffect, useState } from 'react';
@@ -133,12 +134,19 @@ export function PerfilClient() {
             </div>
           ))}
         </dl>
+        {/* O texto acompanha onde o progresso REALMENTE está nesta build. Uma
+            página de perfil que promete sincronização num export estático sem
+            servidor está mentindo, e é a pessoa que descobre - no dia em que
+            troca de celular. */}
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
                       border-t border-[color:var(--line-soft)] pt-3">
-          Estes números são deste aparelho. Hoje o progresso é guardado no
-          navegador e não viaja com a conta - se você abrir o curso no
-          computador, o acesso vai junto, o progresso não. A sincronização está
-          no plano.
+          {account.demo
+            ? <>Estes números são deste aparelho. Nesta versão o progresso é
+                guardado no navegador e não viaja com a conta.</>
+            : <>Seu progresso fica na sua conta e é sincronizado entre os
+                aparelhos: o que você fizer no celular aparece no computador.
+                Uma cópia continua neste aparelho, para o curso funcionar
+                mesmo sem internet.</>}
         </p>
         <div className="flex flex-wrap gap-2">
           <LinkButton href="/conquistas" variant="secondary" size="sm">Ver conquistas</LinkButton>

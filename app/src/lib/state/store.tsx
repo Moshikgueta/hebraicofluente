@@ -16,6 +16,9 @@ import {
 } from './types';
 import { LocalProgressStore, persistenceAvailable } from './local';
 import { SupabaseProgressStore, supabaseConfigured } from './supabase';
+import { WorkerProgressStore } from './worker';
+import { apiMode } from '@/lib/account/api';
+import { SESSAO_MUDOU } from '@/lib/account/store';
 import {
   ANSWER_UNITS, applyPractice, awardXp, clearConfusion, completeStage, courseProgress,
   displayStreak, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
@@ -26,7 +29,18 @@ import {
 import { track } from '@/lib/analytics';
 import { EXAM_PASS } from '@/lib/engine/exam';
 
+/* Onde o progresso mora, nesta build.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O Worker vem primeiro porque é o único dos três que resolve o problema de
+ * verdade: o aluno que troca de aparelho, ou limpa o navegador, e encontra o
+ * curso onde deixou. Ele não abandona o localStorage - embrulha (ver
+ * ./worker.ts), porque o curso tem de continuar funcionando sem sinal.
+ *
+ * O Supabase continua aqui por ser uma porta escrita e nunca ligada; só entra
+ * se alguém configurar as duas variáveis, e numa build de Worker isso seria
+ * duas fontes de verdade para o mesmo progresso. */
 function createStore(): ProgressStore {
+  if (apiMode() === 'worker') return new WorkerProgressStore();
   return supabaseConfigured() ? new SupabaseProgressStore() : new LocalProgressStore();
 }
 
@@ -102,12 +116,35 @@ export function ProgressProvider({
   const [pending, setPending] = useState<Achievement[]>([]);
   const [day, setDay] = useState(() => today());
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /* O estado de agora, legível de dentro de um ouvinte de evento que foi
+     registrado uma vez só. Sem o ref, o ouvinte guardaria o estado do
+     primeiro render para sempre. */
+  const stateRef = useRef(state);
+  stateRef.current = state;
 
   useEffect(() => {
     let alive = true;
     setPersistent(supabaseConfigured() || persistenceAvailable());
     store.load().then(s => { if (alive) { setState(s); setReady(true); } });
     return () => { alive = false; };
+  }, [store]);
+
+  /* Entrar ou sair muda de quem é o progresso: o que estava só neste aparelho
+     passa a ser da conta, e o que estava na conta chega aqui. Uma recarga
+     resolve as duas coisas de uma vez, porque `load()` é quem funde.
+     O `save` antes dela existe por causa do debounce de 250 ms: sem ele, a
+     resposta dada um instante antes de clicar em "entrar" ainda não chegou ao
+     armazenamento e a fusão não a encontraria. */
+  useEffect(() => {
+    let alive = true;
+    const aoMudar = () => {
+      if (saveTimer.current) { clearTimeout(saveTimer.current); saveTimer.current = null; }
+      void store.save(stateRef.current)
+        .then(() => store.load())
+        .then(s => { if (alive) setState(s); });
+    };
+    window.addEventListener(SESSAO_MUDOU, aoMudar);
+    return () => { alive = false; window.removeEventListener(SESSAO_MUDOU, aoMudar); };
   }, [store]);
 
   /* A session left open across midnight must not keep crediting yesterday. */

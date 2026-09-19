@@ -18,6 +18,7 @@ import { gate } from './gate.js';
 import { runReconcile } from './reconcile.js';
 import * as auth from './api/auth.js';
 import * as pay from './api/pay.js';
+import * as progress from './api/progress.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -34,7 +35,13 @@ const ROUTES = {
   'POST /api/pay/webhook': pay.webhook,
   'GET /api/pay/webhook': pay.webhook,
 
-  'GET /api/orders': pay.orders
+  'GET /api/orders': pay.orders,
+
+  /* O progresso do aluno. `rev` na escrita é o que impede o celular e o
+     notebook de se apagarem - ver api/progress.js. */
+  'GET /api/progress': progress.read,
+  'PUT /api/progress': progress.write,
+  'DELETE /api/progress': progress.drop
 };
 
 export default {

@@ -122,3 +122,30 @@ CREATE TABLE IF NOT EXISTS invites (
 );
 
 CREATE INDEX IF NOT EXISTS invites_pendentes ON invites(email) WHERE used_at IS NULL;
+
+-- ── progresso ─────────────────────────────────────────────────────────────
+-- O estado de aprendizagem do aluno, do lado do servidor.
+--
+-- Um BLOB de JSON e não vinte tabelas normalizadas, por três motivos que
+-- valem mais do que a elegância do modelo:
+--
+--  1. Ninguém consulta isto por dentro. O servidor nunca pergunta "quem
+--     domina o Shin"; ele guarda e devolve. Normalizar pagaria o custo de um
+--     esquema sem comprar nenhuma consulta.
+--  2. A forma do estado muda com o curso, e ela já tem migração versionada no
+--     app (lib/state/migrate.ts). Uma segunda migração, em SQL, que tem de
+--     concordar com a primeira, é a garantia de que um dia elas discordam.
+--  3. Uma linha por aluno é uma escrita por sincronização, e o plano gratuito
+--     do Workers dá 10 ms de CPU por requisição.
+--
+-- `rev` é o que impede um aparelho de apagar o outro: toda escrita declara a
+-- revisão que leu, e o servidor recusa (409) quem escreve por cima de uma
+-- revisão que já mudou. Quem levou 409 funde e tenta de novo - a fusão é
+-- monotônica, então repetir é seguro. Ver app/src/lib/state/merge.ts.
+CREATE TABLE IF NOT EXISTS progress (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  state      TEXT    NOT NULL,              -- LearnerState serializado
+  version    INTEGER NOT NULL DEFAULT 2,    -- STATE_VERSION de quem gravou
+  rev        INTEGER NOT NULL DEFAULT 1,    -- sobe a cada escrita aceita
+  updated_at INTEGER NOT NULL
+);

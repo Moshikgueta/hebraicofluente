@@ -258,3 +258,65 @@ export async function log(env, accountId, action, detail = '') {
     /* A trilha nunca derruba a operação que ela registra. */
   }
 }
+
+/* ── progresso ──────────────────────────────────────────────────────────── */
+
+/** O estado gravado, ou `null` para quem nunca sincronizou. */
+export async function getProgress(env, accountId) {
+  const row = await env.DB.prepare(
+    'SELECT state, version, rev, updated_at FROM progress WHERE account_id = ?'
+  ).bind(accountId).first();
+  if (!row) return null;
+  let state = null;
+  /* Um JSON quebrado aqui não pode derrubar a carga do curso. Vale o mesmo
+     que "nunca sincronizou": o aparelho manda o que tem e a linha se
+     conserta na próxima escrita. */
+  try { state = JSON.parse(row.state); } catch { return null; }
+  return { state, version: row.version, rev: row.rev, updatedAt: row.updated_at };
+}
+
+/**
+ * Grava, mas só por cima da revisão que o cliente declara ter lido.
+ *
+ * Devolve `{ ok: true, rev }` quando gravou, e `{ ok: false, atual }` quando
+ * outro aparelho escreveu no meio - aí quem chamou funde e tenta de novo. É
+ * a trava que faz o celular e o notebook somarem em vez de se sobrescreverem.
+ *
+ * `expected === 0` significa "não li nada, esta linha deveria não existir":
+ * é o primeiro envio de um aparelho. Se a linha já existir, é conflito.
+ */
+export async function putProgress(env, accountId, { state, version, expected }) {
+  const t = now();
+  const texto = JSON.stringify(state);
+
+  if (!expected) {
+    try {
+      await env.DB.prepare(
+        `INSERT INTO progress (account_id, state, version, rev, updated_at)
+         VALUES (?, ?, ?, 1, ?)`
+      ).bind(accountId, texto, Number(version) || 2, t).run();
+      return { ok: true, rev: 1, updatedAt: t };
+    } catch {
+      /* A chave primária recusou: já existe linha. É conflito, não erro. */
+      const atual = await getProgress(env, accountId);
+      return { ok: false, atual };
+    }
+  }
+
+  /* O `rev = ?` no WHERE é a comparação e a escrita no mesmo comando - é
+     isso que torna a troca atômica sem precisar de transação. */
+  const r = await env.DB.prepare(
+    `UPDATE progress SET state = ?, version = ?, rev = rev + 1, updated_at = ?
+      WHERE account_id = ? AND rev = ?`
+  ).bind(texto, Number(version) || 2, t, accountId, Number(expected)).run();
+
+  if (r.meta && r.meta.changes) {
+    return { ok: true, rev: Number(expected) + 1, updatedAt: t };
+  }
+  return { ok: false, atual: await getProgress(env, accountId) };
+}
+
+/** Apaga o progresso do servidor. O "apagar meu progresso" do perfil. */
+export async function clearProgress(env, accountId) {
+  await env.DB.prepare('DELETE FROM progress WHERE account_id = ?').bind(accountId).run();
+}

@@ -16,6 +16,7 @@
     "portao": "node portao.mjs",
     "trancado": "node trancado.mjs",
     "ctas": "node ctas.mjs",
+    "sincronia": "node sincronia.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {
