@@ -32,7 +32,7 @@ on:
         required: true
         default: liberar
         type: choice
-        options: [liberar, revogar, consultar, listar, envios]
+        options: [liberar, revogar, consultar, listar, envios, webhook]
       email:
         description: 'E-mail da conta (não precisa em "listar" nem "envios")'
         required: false
@@ -137,6 +137,53 @@ jobs:
               say "e o motivo está na coluna ao lado."
               say ""
               say "Tabela vazia = ninguém pediu link de senha ainda."
+              ;;
+
+            # O webhook da Mercado Pago está funcionando?
+            #
+            # A pergunta parece exigir um teste no painel deles, e não exige:
+            # o tráfego real já responde, e a resposta está gravada em dois
+            # lugares desde sempre.
+            #
+            #   · `payment_events.source` diz QUEM resolveu cada pagamento.
+            #     Uma linha com source='webhook' é a prova de que a assinatura
+            #     confere - nenhuma outra coisa cria essa linha. Só 'verify' e
+            #     'reconcile' significa que o webhook não está entregando e os
+            #     outros dois caminhos estão cobrindo por ele (com atraso de
+            #     até cinco minutos, mas sem perder venda).
+            #   · `webhook-bad-signature` na trilha é o contrário: a Mercado
+            #     Pago bateu à porta e foi recusada. Uma linha dessas é
+            #     MP_WEBHOOK_SECRET diferente do que está no painel.
+            webhook)
+              say "**Quem resolveu cada pagamento**"
+              say '```'
+              $W --command \
+                "SELECT source AS quem, COUNT(*) AS quantos,
+                        datetime(MAX(created_at)/1000,'unixepoch') AS mais_recente
+                   FROM payment_events GROUP BY source ORDER BY quantos DESC" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
+              say ""
+              say "**Avisos recusados por assinatura errada**"
+              say '```'
+              $W --command \
+                "SELECT datetime(created_at/1000,'unixepoch') AS quando,
+                        detail AS id_do_pagamento
+                   FROM access_log WHERE action = 'webhook-bad-signature'
+                  ORDER BY id DESC LIMIT 10" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
+              say ""
+              say "Como ler:"
+              say ""
+              say "· uma linha \`webhook\` na primeira tabela = assinatura certa,"
+              say "  webhook entregando. É a prova, e nada mais a produz."
+              say "· só \`verify\` e \`reconcile\` = o webhook não chega, e os outros"
+              say "  dois caminhos estão cobrindo. Ninguém fica sem o curso; a"
+              say "  liberação demora até cinco minutos em vez de ser imediata."
+              say "· qualquer linha na segunda tabela = MP_WEBHOOK_SECRET não bate"
+              say "  com a assinatura secreta da aplicação na Mercado Pago."
+              say "· as duas vazias = nenhum pagamento passou por aqui ainda."
               ;;
 
             consultar)
