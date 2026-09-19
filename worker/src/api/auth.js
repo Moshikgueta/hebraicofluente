@@ -367,7 +367,7 @@ export async function health({ env }) {
     /* O cookie de sessão tem como ser assinado? `false` = SESSION_SECRET
        não foi definido, e aí NENHUM login funciona. */
     session: !!env.SESSION_SECRET,
-    /* Dá para mandar e-mail? `false` = falta RESEND_API_KEY ou MAIL_FROM, e
+    /* Dá para mandar e-mail? `false` = falta RESEND_API_KEY ou EMAIL_FROM, e
        aí o link de recuperação nunca chega a ninguém. O site continua
        funcionando inteiro, e por isso isto fica fora do `ok` - mas um `false`
        aqui significa que todo aluno que esquecer a senha vira um e-mail para

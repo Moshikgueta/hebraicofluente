@@ -50,7 +50,7 @@ afterEach(() => { vi.unstubAllGlobals(); });
 
 const envComEmail = (extra: Record<string, unknown> = {}) => envDeTeste({
   RESEND_API_KEY: 're_de_teste',
-  MAIL_FROM: 'Hebraico Fluente <contato@hebraicofluente.com.br>',
+  EMAIL_FROM: 'Hebraico Fluente <contato@hebraicofluente.com.br>',
   RESEND_BASE: 'https://api.resend.test',
   ...extra
 });
@@ -339,9 +339,9 @@ describe('quando não há como mandar e-mail', () => {
   });
 
   it('mailReady exige a chave E o remetente', () => {
-    expect(mailReady({ RESEND_API_KEY: 'x', MAIL_FROM: 'a@b.com' })).toBe(true);
+    expect(mailReady({ RESEND_API_KEY: 'x', EMAIL_FROM: 'a@b.com' })).toBe(true);
     expect(mailReady({ RESEND_API_KEY: 'x' })).toBe(false);
-    expect(mailReady({ MAIL_FROM: 'a@b.com' })).toBe(false);
+    expect(mailReady({ EMAIL_FROM: 'a@b.com' })).toBe(false);
     expect(mailReady({})).toBe(false);
   });
 });

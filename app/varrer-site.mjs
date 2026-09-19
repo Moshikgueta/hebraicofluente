@@ -6,10 +6,20 @@ import { chromium } from 'playwright';
 const T={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.woff2':'font/woff2','.svg':'image/svg+xml','.json':'application/json','.png':'image/png'};
 const s=createServer((q,r)=>{const c=decodeURIComponent(q.url.split('?')[0]);for(const f of [`out${c}`,`out${c}/index.html`,`out${c}.html`,'out/404.html']){if(!existsSync(f))continue;try{const b=readFileSync(f);r.writeHead(200,{'Content-Type':T[f.slice(f.lastIndexOf('.'))]||'application/octet-stream'});return r.end(b)}catch{}}r.writeHead(404);r.end('404')});
 await new Promise(r=>s.listen(4402,r));
-const ROTAS = ['/','/metodo/','/cursos/','/cursos/alfabetizacao/','/sobre/','/faq/','/entrar/','/criar-conta/','/checkout/alfabetizacao/','/termos/','/privacidade/','/reembolso/','/suporte/'];
+const ROTAS = ['/','/metodo/','/cursos/','/cursos/alfabetizacao/','/sobre/','/faq/','/entrar/','/criar-conta/','/esqueci-senha/','/nova-senha/','/checkout/alfabetizacao/','/termos/','/privacidade/','/reembolso/','/suporte/'];
 const b=await chromium.launch({executablePath:process.env.HF_CHROMIUM});
 let ruim = 0;
-for (const w of [390, 1280]) {
+/* Quatro larguras, e as duas do meio foram acrescentadas por um motivo:
+   a varredura media 390 e 1280 e não via NADA entre as duas. O cabeçalho
+   estourava a tela em 118px a 768 - um iPad em pé, e também um celular
+   deitado - porque a navegação aparecia na mesma largura em que os rótulos
+   dos botões ficavam longos. Uma faixa inteira de aparelhos sem medição é
+   uma faixa inteira de aparelhos onde o defeito mora até alguém reclamar.
+     · 360  o Android pequeno, mais apertado que o iPhone
+     · 390  o iPhone comum
+     · 768  iPad em pé, e a fronteira onde os pontos de corte se cruzam
+     · 1280 o desktop */
+for (const w of [360, 390, 768, 1280]) {
   const p=await b.newPage({viewport:{width:w,height:900}});
   for (const rota of ROTAS) {
     const erros=[];

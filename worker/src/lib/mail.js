@@ -33,7 +33,7 @@
  * de um domínio verificado na Resend - senão ela recusa a entrega com 403.
  */
 export const mailFrom = env =>
-  String((env && env.MAIL_FROM) || '').trim();
+  String((env && env.EMAIL_FROM) || '').trim();
 
 /** Dá para mandar e-mail nesta implantação? É o que /api/health reporta. */
 export const mailReady = env => !!(env && env.RESEND_API_KEY && mailFrom(env));
@@ -48,7 +48,7 @@ const base = env => String((env && env.RESEND_BASE) || 'https://api.resend.com')
  * Nunca lança: quem chama está no meio de um fluxo de conta, e a decisão de
  * o que fazer com a falha é de lá. Devolve
  *   { ok: true }                         entregue à Resend
- *   { ok: false, motivo: 'sem-provedor' } falta RESEND_API_KEY ou MAIL_FROM
+ *   { ok: false, motivo: 'sem-provedor' } falta RESEND_API_KEY ou EMAIL_FROM
  *   { ok: false, motivo: 'recusado', detalhe, status }
  *   { ok: false, motivo: 'rede', detalhe }
  */

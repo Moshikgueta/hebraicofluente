@@ -271,14 +271,24 @@ jobs:
       # `always()` porque a limpeza importa ainda mais quando a conferência
       # falhou. `continue-on-error` porque falhar ao limpar não pode
       # transformar uma publicação boa em vermelha.
+      #
+      # ⚠ TODA tabela que aponta para `accounts` precisa estar nesta lista,
+      # ANTES do DELETE das contas. Uma que falte faz a limpeza inteira
+      # falhar com "FOREIGN KEY constraint failed" e deixa a conta de teste
+      # no banco de produção - foi o que aconteceu quando `password_resets`
+      # nasceu. A lista de hoje: orders, entitlements, progress,
+      # password_resets. Ver worker/schema.sql.
       - name: Limpar as contas de teste
         if: always() && steps.guard.outputs.ok == 'true'
         continue-on-error: true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
+          ALVO="SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'"
           npx --yes wrangler@4 d1 execute hebraico-fluente --remote --command \
-            "DELETE FROM orders WHERE account_id IN (SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid');
-             DELETE FROM entitlements WHERE account_id IN (SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid');
+            "DELETE FROM orders           WHERE account_id IN ($ALVO);
+             DELETE FROM entitlements     WHERE account_id IN ($ALVO);
+             DELETE FROM progress         WHERE account_id IN ($ALVO);
+             DELETE FROM password_resets  WHERE account_id IN ($ALVO);
              DELETE FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'" \
             && echo "Contas de teste removidas." >> "$GITHUB_STEP_SUMMARY"

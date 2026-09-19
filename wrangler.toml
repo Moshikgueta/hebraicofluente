@@ -92,7 +92,7 @@ SITE_ORIGIN = "https://hebraicofluente.com.br"
 # De quem sai o e-mail de recuperação de senha. Precisa ser de um domínio
 # verificado na Resend: sem a verificação ela recusa a entrega com 403, e o
 # sintoma é "ninguém recebe o link" com tudo o mais funcionando.
-MAIL_FROM = "Hebraico Fluente <contato@hebraicofluente.com.br>"
+EMAIL_FROM = "Hebraico Fluente <contato@hebraicofluente.com.br>"
 # Aparece dentro do e-mail, como "qualquer dúvida, escreva para". É o mesmo
 # endereço do rodapé do site (data/empresa.json) - repetido aqui porque o
 # Worker não lê o JSON do app.

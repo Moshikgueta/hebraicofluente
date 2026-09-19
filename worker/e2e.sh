@@ -116,7 +116,7 @@ fi
 # entrega o link a ninguém. Não é falha de publicação - é uma peça que falta,
 # e ela precisa aparecer no log em vez de ficar implícita.
 if [ "$(campo email)" != "true" ]; then
-  echo "  · e-mail desligado (RESEND_API_KEY ou MAIL_FROM ausente) - ninguém"
+  echo "  · e-mail desligado (RESEND_API_KEY ou EMAIL_FROM ausente) - ninguém"
   echo "    recupera a senha sozinho. Ver .env.example."
 fi
 if [ "$(campo ok)" != "true" ]; then
@@ -309,9 +309,15 @@ Esta passagem criou a conta de teste $MAIL.
 Para apagá-la do banco de produção:
 
   npx wrangler d1 execute hebraico-fluente --remote --command \\
-    "DELETE FROM orders WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
-     DELETE FROM entitlements WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+    "DELETE FROM orders          WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM entitlements    WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM progress        WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM password_resets WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM accounts WHERE email = '$MAIL'"
+
+(Toda tabela que aponta para accounts precisa estar aí, antes do DELETE das
+contas - senão o banco recusa tudo com "FOREIGN KEY constraint failed" e a
+conta fica. Ver worker/schema.sql.)
 LIMPEZA
 fi
 

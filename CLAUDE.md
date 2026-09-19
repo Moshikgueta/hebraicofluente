@@ -80,7 +80,7 @@ escolhido por quem chama, e um pedido forjado faria a plataforma mandar, para o
 endereço certo do dono, um e-mail legítimo com o token dentro.
 
 Entregar o e-mail é a Resend (`worker/src/lib/mail.js`): `RESEND_API_KEY` no
-painel, `MAIL_FROM` no `wrangler.toml`, e os dois precisam existir -
+painel, `EMAIL_FROM` no `wrangler.toml`, e os dois precisam existir -
 `/api/health` reporta `email`. **Sem eles o site funciona inteiro e ninguém
 recupera senha sozinho**, então isso fica fora do `ok` da saúde e aparece como
 aviso no `e2e.sh`. Como conseguir a chave está em `.env.example`.

@@ -23,6 +23,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { brl, getCourse, installment, isPlayable, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
+import { empresa } from '@/lib/empresa';
 
 export function CourseClient({ slug }: { slug: string }) {
   const account = useAccount();
@@ -230,7 +231,51 @@ function BuyBox({ slug }: { slug: string }) {
   }
 
   return (
-    <Card className="p-6 grid gap-4 content-start">
+    <div className="grid gap-4 content-start">
+      {/* Conectado, e mesmo assim sem o curso.
+          ──────────────────────────────────────────────────────────────────
+          É o estado mais cruel da plataforma, e até agora ele era MUDO: o
+          portão manda para cá quem tenta abrir uma aula sem ter o direito, e
+          a pessoa via uma página de preço. Quem pagou e cai numa página de
+          pagamento não conclui "falta liberar meu acesso" - conclui que foi
+          cobrado por nada, ou que o site quebrou. E aí ou paga de novo, ou
+          some.
+
+          Então, havendo sessão sem curso, a página diz as três coisas que
+          resolvem: COM QUAL CONTA a pessoa está conectada (o caso mais comum
+          é ter comprado com outro e-mail), como trocar de conta, e para onde
+          escrever. O preço continua logo abaixo, para quem de fato ainda não
+          comprou. */}
+      {account.signedIn && (
+        <Card tone="wash" className="p-5 grid gap-2.5">
+          <p className="font-display text-[17px] font-bold text-ink leading-snug">
+            Esta conta ainda não tem o curso
+          </p>
+          <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+            Você está conectado como{' '}
+            <strong className="break-all">{account.session?.account.email}</strong>.
+            Se a compra foi feita com outro e-mail, entre com ele: o acesso
+            fica na conta do e-mail que pagou.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <LinkButton href="/entrar" variant="secondary" size="sm">
+              Entrar com outro e-mail
+            </LinkButton>
+          </div>
+          <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
+                        border-t border-[color:var(--line-soft)] pt-3">
+            Já pagou e continua vendo esta tela? <strong>Não pague de novo.</strong>{' '}
+            Escreva para{' '}
+            <a href={`mailto:${empresa.contato.emailSuporte}`}
+               className="text-[var(--accent)] hover:underline break-all">
+              {empresa.contato.emailSuporte}
+            </a>{' '}
+            com o e-mail da compra que a gente libera.
+          </p>
+        </Card>
+      )}
+
+      <Card className="p-6 grid gap-4 content-start">
       <div className="grid gap-1">
         {c.price.listBrl && (
           <p className="font-ui text-[14px] text-ink-muted line-through">{brl(c.price.listBrl)}</p>
@@ -260,6 +305,7 @@ function BuyBox({ slug }: { slug: string }) {
           <Link href="/entrar" className="text-[var(--accent)] hover:underline">Entre na sua conta</Link>
         </p>
       )}
-    </Card>
+      </Card>
+    </div>
   );
 }
