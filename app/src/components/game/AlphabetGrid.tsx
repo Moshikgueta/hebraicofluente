@@ -32,10 +32,15 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
 
   return (
     <div className="grid gap-3">
+      {/* Célula menor no telefone, com o mesmo componente. Em quatro colunas
+          de 135px a grade ocupava 1.100px - mais de uma tela inteira só para
+          a tabela de referência, dentro do painel que existe para dizer o que
+          fazer agora. Em cinco ou seis colunas curtas ela vira o que sempre
+          foi: um cartaz do alfabeto, lido de relance. */}
       <div
         className={`grid gap-2 ${compact
           ? 'grid-cols-[repeat(auto-fill,minmax(52px,1fr))]'
-          : 'grid-cols-[repeat(auto-fill,minmax(64px,1fr))]'}`}
+          : 'grid-cols-[repeat(auto-fill,minmax(52px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(64px,1fr))]'}`}
       >
         {letters.map(L => (
           <LetterCell
@@ -87,7 +92,7 @@ function LetterCell({
       title={`${L.order}. ${L.namePt} - ${state}`}
       aria-label={`Letra ${L.order}, ${L.namePt}: ${state}`}
       className={`group relative rounded-[var(--r-md)] border-2 transition-colors
-        ${compact ? 'min-h-[56px] p-1.5' : 'min-h-[74px] p-2'}
+        ${compact ? 'min-h-[56px] p-1.5' : 'min-h-[56px] p-1.5 sm:min-h-[74px] sm:p-2'}
         grid place-items-center gap-0.5 ${tone} ${!done && !current && stages === 0 ? 'opacity-70' : ''}`}
     >
       <span aria-hidden className="absolute top-1 left-1.5 font-ui text-[9.5px] tabular-nums text-ink-muted">
@@ -95,8 +100,18 @@ function LetterCell({
       </span>
       <He size={compact ? 'word' : 'lg'} dim={!done && !current && stages === 0}>{L.letter}</He>
       {!compact && (
-        <span className="font-ui text-[10px] leading-none text-ink-muted truncate max-w-full">
+        /* O nome da letra só a partir de sm. Num telefone ele é 10px debaixo
+           de cada uma das 22 células, e o nome de cada letra está no mapa e
+           na lição - aqui ele custava mais altura do que informava. O `title`
+           e o `aria-label` da célula continuam dizendo tudo. */
+        <span className="hidden sm:block font-ui text-[10px] leading-none text-ink-muted truncate max-w-full">
           {stages > 0 && !done ? `${stages}/${STAGE_COUNT}` : L.namePt}
+        </span>
+      )}
+      {!compact && stages > 0 && !done && (
+        <span aria-hidden
+              className="sm:hidden absolute bottom-0.5 font-ui text-[9px] leading-none text-[var(--accent)] tabular-nums">
+          {stages}/{STAGE_COUNT}
         </span>
       )}
       {done && (

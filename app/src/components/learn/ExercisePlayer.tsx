@@ -21,7 +21,7 @@
  * system can learn that THIS learner trades ד for ר.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { He, HeCloze } from '@/components/hebrew/He';
 import { AudioButton, hasAudio } from './AudioButton';
 import { BuildSyllable, BuildWord, Hints, MatchPairs, TypeAnswer } from './Answers';
@@ -52,7 +52,8 @@ export function ExercisePlayer({
   const [settled, setSettled] = useState<Settled | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [missed, setMissed] = useState<string[]>([]);
-  const liveRef = useRef<HTMLParagraphElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const [sheetH, setSheetH] = useState(0);
 
   const ex = exercises[i];
   const isRight = settled?.correct ?? false;
@@ -131,15 +132,49 @@ export function ExercisePlayer({
     return () => window.removeEventListener('keydown', onKey);
   }, [ex, settled, choose, next]);
 
-  useEffect(() => { if (settled) liveRef.current?.focus(); }, [settled]);
+  /* Depois de responder, a alternativa CERTA é trazida para o meio da tela.
+     A folha de retorno cobre o rodapé do telefone, e o que ela cobria era
+     justamente o ✓ - a pessoa lia "quase" sem ver qual era a resposta.
+     O anúncio para leitor de tela é o `aria-live` da folha; nada aqui rouba
+     o foco, que é o que desenhava um anel vermelho em volta da frase.
+
+     Depende de `sheetH`, e não só de `settled`: a folha é `fixed` e não ocupa
+     altura, então até o `padding` medido entrar a página é mais curta que a
+     tela e não há rolagem nenhuma para fazer - era por isso que a primeira
+     versão disto movia dez pixels e parava. */
+  useEffect(() => {
+    if (!settled || !sheetH || typeof window === 'undefined') return;
+    if (window.matchMedia('(min-width: 1024px)').matches) return;
+    const alvo = document.querySelector('[data-resposta="right"]');
+    alvo?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }, [settled, sheetH]);
+
+  /* Quanto espaço a folha de retorno ocupa no rodapé do telefone. Medido, e
+     não chutado: a mensagem tem uma, três ou seis linhas dependendo do erro,
+     e um valor fixo ou esconde o fim da questão ou deixa um buraco. */
+  useLayoutEffect(() => {
+    const el = sheetRef.current;
+    if (!settled || !el) { setSheetH(0); return; }
+    const medir = () => setSheetH(el.getBoundingClientRect().height);
+    medir();
+    const ro = new ResizeObserver(medir);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [settled, i]);
 
   if (!ex) return null;
 
   return (
-    <div className="grid gap-5">
+    <div
+      className="grid gap-5 pb-[var(--sheet-h)] lg:pb-0"
+      style={{ '--sheet-h': `${sheetH ? sheetH + 16 : 0}px` } as React.CSSProperties}
+    >
       <header className="grid gap-3">
+        {/* No telefone a etapa já está escrita na barra de etapas logo acima, e
+            repetir "prática - sem nota" custa uma linha inteira do pouco que
+            cabe antes da pergunta. */}
         {title && !compact && (
-          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">{title}</p>
+          <p className="hidden sm:block font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">{title}</p>
         )}
         <div className="flex items-center gap-3">
           <div className="h-1.5 flex-1 rounded-full bg-surface-2 overflow-hidden">
@@ -162,12 +197,29 @@ export function ExercisePlayer({
         {!settled && <Hints hints={ex.hintsPt} audioId={ex.audioId ?? null} />}
       </Card>
 
-      <div aria-live="polite" className="min-h-[92px]">
+      {/* O retorno da resposta, no lugar onde a pessoa está olhando.
+          ─────────────────────────────────────────────────────────────────
+          No telefone isto ficava no fim do documento, abaixo de quatro
+          alternativas de 64px - fora da tela, atrás da barra de navegação.
+          Medido: depois de responder, a rolagem continuava em 1px e nem o
+          "certo/quase" nem o botão Continuar apareciam. Eram duas rolagens
+          por questão, oito questões por letra, vinte e duas letras.
+
+          Então no telefone ele é uma FOLHA presa acima da barra inferior, e
+          o `padding` medido acima garante que o fim da questão continue
+          alcançável por baixo dela. Num desktop nada disso é necessário: a
+          folha volta a ser o último bloco da coluna. */}
+      <div aria-live="polite" className="lg:min-h-[92px]">
         {settled && (
-          <Card tone={isRight ? 'mint' : 'amber'} className="p-5 animate-rise">
+          <div
+            ref={sheetRef}
+            className="fixed inset-x-0 bottom-[calc(60px_+_env(safe-area-inset-bottom))] z-20
+                       px-3 pb-2 mx-auto w-full max-w-[720px]
+                       lg:static lg:w-auto lg:max-w-none lg:px-0 lg:pb-0 lg:z-auto"
+          >
+          <Card tone={isRight ? 'mint' : 'amber'}
+                className="p-5 animate-rise shadow-[var(--shadow-2)] lg:shadow-[var(--shadow-1)]">
             <p
-              ref={liveRef}
-              tabIndex={-1}
               className={`flex items-center gap-2 font-ui text-[15px] font-semibold outline-none
                 ${isRight ? 'text-[var(--mint-ink)]' : 'text-[var(--amber)]'}`}
             >
@@ -195,6 +247,7 @@ export function ExercisePlayer({
               {hasAudio(ex.audioId) && <AudioButton audioId={ex.audioId!} label="Ouvir" size="sm" slow />}
             </div>
           </Card>
+          </div>
         )}
       </div>
     </div>
@@ -367,6 +420,7 @@ function Options({
               type="button"
               disabled={settled}
               onClick={() => onChoose(idx)}
+              data-resposta={settled && idx === ex.answer ? 'right' : undefined}
               aria-label={`Posição ${idx + 1}`}
               className={`min-h-[76px] min-w-[72px] px-3 rounded-[var(--r-md)] border-2
                 grid place-items-center transition-colors disabled:cursor-default
@@ -449,6 +503,7 @@ function OptionButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
+      data-resposta={state}
       className={`relative w-full min-h-[64px] rounded-[var(--r-md)] border-2 px-4 py-3
         flex items-center gap-4 text-left transition-all duration-[var(--dur)] ease-[var(--ease)]
         disabled:cursor-default ${TONE[state]}

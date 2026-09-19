@@ -18,3 +18,4 @@ audio/room-tone.*
 .dev.vars
 .wrangler/
 app/out/
+app/.shots/

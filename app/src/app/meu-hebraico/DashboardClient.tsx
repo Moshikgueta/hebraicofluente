@@ -195,8 +195,29 @@ export function DashboardClient() {
             <AlphabetGrid />
           </Card>
 
-          <h2 className="font-display text-[17px] font-bold text-ink mt-2 lg:hidden">Módulos</h2>
-          <div className="lg:hidden"><ModuleProgress /></div>
+          {/* Fechado no telefone. A grade logo acima já responde "onde estou" -
+              a lista de sete módulos abaixo dela repetia a mesma informação
+              por mais 600px, e é a terceira barra de progresso da mesma tela.
+              Quem quer o detalhe abre; ninguém mais rola por cima dele. */}
+          <details className="lg:hidden group">
+            <summary className="flex items-center gap-2 min-h-[44px] cursor-pointer
+                                font-display text-[17px] font-bold text-ink list-none
+                                [&::-webkit-details-marker]:hidden">
+              Módulos
+              <span aria-hidden className="font-ui text-[13px] font-normal text-ink-muted
+                                           transition-transform group-open:rotate-180">▾</span>
+            </summary>
+            <div className="pt-2"><ModuleProgress /></div>
+          </details>
+
+          {/* Dentro da coluna da esquerda, e não embaixo das duas.
+              A lista de módulos faz a coluna da direita passar de 900px; solta
+              embaixo, a prateleira deixava um vão branco do tamanho de meia
+              tela entre a grade e ela. Aqui as duas colunas terminam juntas.
+              No telefone só existe uma coluna e a ordem não muda. */}
+          <div className="mt-2 lg:mt-4">
+            <CourseShelf headingPt="Seus cursos" variant="rows" />
+          </div>
         </section>
 
         <aside className="order-1 lg:order-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
@@ -248,15 +269,7 @@ export function DashboardClient() {
           <span><strong className="text-ink font-semibold tabular-nums">{p.state.xp}</strong> XP</span>
           <span><strong className="text-ink font-semibold tabular-nums">{p.state.achievements.length}</strong> conquistas</span>
         </div>
-        <Link href="/mapa"
-              className="inline-flex items-center min-h-[44px] font-ui text-[14px] font-medium
-                         text-[var(--accent)] hover:underline">
-          Ver o mapa do curso →
-        </Link>
       </Card>
-
-      {/* No fim, e não no topo. Ver a nota no cabeçalho do arquivo. */}
-      <CourseShelf headingPt="Seus cursos" />
     </div>
   );
 }

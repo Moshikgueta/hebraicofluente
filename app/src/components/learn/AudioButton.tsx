@@ -65,15 +65,20 @@ export function AudioButton({
     lg: 'min-h-[56px] min-w-[56px] px-5 text-base'
   } as const;
 
+  /* A ausência continua dita - ver o cabeçalho -, mas dita baixo.
+     Desenhada como botão (48px de altura, borda tracejada) ela aparecia duas
+     ou três vezes por etapa, e um controle desligado repetido desse tamanho
+     lê como aplicativo quebrado, não como gravação que ainda vem. Uma linha
+     de texto com o ícone diz a mesma coisa e não disputa a atenção com o que
+     dá para fazer agora. */
   if (!available) {
     return (
       <span
-        className={`inline-flex items-center gap-2 rounded-[var(--r-md)] border border-dashed
-          border-line text-ink-muted font-ui ${SIZE[size]}`}
+        className="inline-flex items-center gap-1.5 text-ink-muted font-ui text-[12.5px]"
         title="As gravações ainda não foram feitas. Nenhuma voz sintética é usada aqui, de propósito."
       >
         <SpeakerOff />
-        <span className="text-[13px]">Áudio em breve</span>
+        <span>Áudio em breve</span>
       </span>
     );
   }
@@ -120,7 +125,7 @@ function SpeakerOn() {
 }
 function SpeakerOff() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M11 5 6 9H2v6h4l5 4V5Z" />
       <path d="m17 9 4 6M21 9l-4 6" />

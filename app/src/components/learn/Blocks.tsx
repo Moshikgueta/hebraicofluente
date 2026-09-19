@@ -80,8 +80,8 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
             onClick={() => setActive(active === i ? null : i)}
             aria-expanded={active === i}
             className={`group rounded-[var(--r-lg)] border p-4 text-center transition-all
-              duration-[var(--dur)] ease-[var(--ease)] min-h-[128px]
-              flex flex-col items-center justify-center gap-2
+              duration-[var(--dur)] ease-[var(--ease)] min-h-[108px]
+              flex flex-col items-center justify-center gap-1.5
               ${active === i
                 ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
                 : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}
@@ -90,9 +90,14 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
             <span className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
               {s.translit || '-'}
             </span>
-            <span className="font-ui text-[12px] text-ink-muted leading-snug">
-              {active === i ? s.ptApprox : 'toque para a dica'}
-            </span>
+            {/* A instrução vive uma vez, acima da grade. Repetida em baixo de
+                cada uma das seis sílabas ela virava ruído - seis linhas de
+                texto idêntico numa tela em que o assunto é a letra. */}
+            {active === i && (
+              <span className="font-ui text-[12px] text-ink-muted leading-snug">
+                {s.ptApprox}
+              </span>
+            )}
           </button>
         ))}
       </div>

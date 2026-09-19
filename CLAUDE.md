@@ -2,8 +2,12 @@
 
 ## Escrita: nada de travessão
 O texto do site, dos comentários, dos commits e da documentação usa **hífen `-`**.
-Nunca `—` (travessão, U+2014) nem `–` (meia-risca, U+2013), nem escapados
-(`—`). Travessão é a assinatura mais visível de texto gerado por IA, e este
+Nunca o travessão (U+2014) nem a meia-risca (U+2013), nem as formas escapadas
+delas (`\u` seguido do código). Este arquivo cita os dois só pelo número de
+propósito: escrever o caractere aqui faria a própria verificação abaixo
+acusar o documento que explica a regra.
+
+Travessão é a assinatura mais visível de texto gerado por IA, e este
 projeto é vendido como material de um autor. A regra vale para:
 
 - todo arquivo sob `app/`, `data/`, `worker/`, `scripts/`, `tools/`, `.github/`

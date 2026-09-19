@@ -14,6 +14,7 @@
  * and its checkpoint, the course in about a screen and a half. */
 
 import Link from 'next/link';
+import { Fragment, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/game/Game';
@@ -47,18 +48,143 @@ export function CourseMapClient({ nodes }: { nodes: MapNode[] }) {
         />
       </header>
 
-      <ol className="lg:hidden relative grid gap-2 pl-[26px] sm:pl-[34px]">
-        {/* the spine */}
-        <span aria-hidden className="absolute left-[11px] sm:left-[15px] top-3 bottom-3 w-[2px] bg-line-soft" />
-
-        {nodes.map((node, i) => {
-          const state = i < currentIndex ? 'done' : i === currentIndex ? 'now' : 'ahead';
-          return <MapRow key={keyOf(node, i)} node={node} state={state} />;
-        })}
-      </ol>
+      <Spine nodes={nodes} currentIndex={currentIndex} />
 
       <div className="hidden lg:block"><Board /></div>
     </div>
+  );
+}
+
+/* ── o telefone: a espinha, com um módulo aberto ────────────────────────
+ * O mapa mostra o caminho inteiro, e isso não muda - esconder a estrada é o
+ * que faz um curso parecer infinito. O que muda é o PESO de cada trecho.
+ *
+ * Aberta de ponta a ponta, a espinha eram 27 cartões idênticos e 3.689px de
+ * rolagem no telefone: sete telas em que tudo tem a mesma importância e a
+ * única linha que interessa - onde eu parei - passa voando no meio. Agora o
+ * módulo em que a pessoa está fica aberto e os outros viram uma faixa com as
+ * letras dele, que continua dizendo o que vem e abre num toque.
+ *
+ * No desktop nada disso existe: lá o espaço é horizontal e o quadro mostra o
+ * curso inteiro de uma vez, que é a vantagem real de uma tela grande.
+ */
+type Linha = { node: MapNode; index: number };
+type Trecho =
+  | { kind: 'solo'; node: MapNode; index: number }
+  | { kind: 'modulo'; module: CourseModule; index: number; linhas: Linha[] };
+
+function agrupar(nodes: MapNode[]): Trecho[] {
+  const out: Trecho[] = [];
+  let aberto: Extract<Trecho, { kind: 'modulo' }> | null = null;
+  nodes.forEach((node, index) => {
+    if (node.kind === 'module') {
+      aberto = { kind: 'modulo', module: node.module, index, linhas: [] };
+      out.push(aberto);
+      return;
+    }
+    if (node.kind === 'letter' || node.kind === 'checkpoint') {
+      if (aberto) { aberto.linhas.push({ node, index }); return; }
+    } else {
+      aberto = null;
+    }
+    out.push({ kind: 'solo', node, index });
+  });
+  return out;
+}
+
+function Spine({ nodes, currentIndex }: { nodes: MapNode[]; currentIndex: number }) {
+  const trechos = agrupar(nodes);
+  const [abertos, setAbertos] = useState<Record<string, boolean>>({});
+
+  const estado = (i: number) => (i < currentIndex ? 'done' : i === currentIndex ? 'now' : 'ahead');
+
+  return (
+    <ol className="lg:hidden relative grid gap-2 pl-[26px] sm:pl-[34px]">
+      {/* the spine */}
+      <span aria-hidden className="absolute left-[11px] sm:left-[15px] top-3 bottom-3 w-[2px] bg-line-soft" />
+
+      {trechos.map(t => {
+        if (t.kind === 'solo') {
+          return <MapRow key={keyOf(t.node, t.index)} node={t.node} state={estado(t.index)} />;
+        }
+        /* Aberto: onde a pessoa está, ou o que ela mandou abrir. */
+        const contemAtual = currentIndex >= t.index
+          && currentIndex <= (t.linhas[t.linhas.length - 1]?.index ?? t.index);
+        const aberto = abertos[t.module.id] ?? contemAtual;
+        return (
+          /* Um fragmento, e não um <li> em volta: cabeçalho e linhas são
+             irmãos dentro do <ol>, que é o que a lista significa. */
+          <Fragment key={t.module.id}>
+            <ModuloCabecalho
+              module={t.module}
+              aberto={aberto}
+              atual={contemAtual}
+              onToggle={() => setAbertos(a => ({ ...a, [t.module.id]: !aberto }))}
+            />
+            {aberto && t.linhas.map(l => (
+              <MapRow key={keyOf(l.node, l.index)} node={l.node} state={estado(l.index)} />
+            ))}
+          </Fragment>
+        );
+      })}
+    </ol>
+  );
+}
+
+function ModuloCabecalho({
+  module: m, aberto, atual, onToggle
+}: {
+  module: CourseModule; aberto: boolean; atual: boolean; onToggle: () => void;
+}) {
+  const p = useProgress();
+  const letras = m.letterIds.map(getLetter).filter(l => !!l);
+  const feitas = letras.filter(l => isLessonComplete(p.state, l.id)).length;
+
+  return (
+    <li className="relative pt-6 pb-1">
+      <span aria-hidden
+        className="absolute left-[-26px] sm:left-[-34px] top-[30px] w-[24px] sm:w-[32px] h-[2px] bg-line-soft" />
+
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <Badge tone="accent">Módulo {m.n}</Badge>
+        <h2 className="font-display text-[17px] font-bold text-ink">{m.titlePt}</h2>
+      </div>
+
+      {m.letterIds.length === 0 ? (
+        <ExtraModuleRow module={m} />
+      ) : aberto ? (
+        <p className="font-ui text-[13px] text-ink-muted mt-1">
+          {m.letterIds.length} letras · lições {m.lessons[0]?.n}-{m.lessons[m.lessons.length - 1]?.n}
+          {!atual && (
+            <>
+              {' · '}
+              <button type="button" onClick={onToggle}
+                      className="font-ui text-[13px] text-[var(--accent)] hover:underline">
+                fechar
+              </button>
+            </>
+          )}
+        </p>
+      ) : (
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={false}
+          className="mt-2 w-full flex items-center gap-3 rounded-[var(--r-md)] border border-line
+                     bg-surface px-3 min-h-[56px] text-left hover:bg-surface-2 transition-colors"
+        >
+          <span className="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
+            {letras.map(L => (
+              <He key={L.id} size="word" dim={!isLessonComplete(p.state, L.id)}>{L.letter}</He>
+            ))}
+          </span>
+          <span className="font-ui text-[12px] tabular-nums text-ink-muted shrink-0">
+            {feitas === letras.length && letras.length > 0 ? 'concluído ✓' : `${feitas}/${letras.length}`}
+          </span>
+          <span aria-hidden className="font-ui text-[13px] text-ink-muted shrink-0">▾</span>
+        </button>
+      )}
+    </li>
   );
 }
 
@@ -224,27 +350,8 @@ function MapRow({ node, state }: { node: MapNode; state: RowState }) {
     );
   }
 
-  if (node.kind === 'module') {
-    const m = node.module;
-    return (
-      <li className="relative pt-6 pb-2">
-        <span aria-hidden
-          className="absolute left-[-26px] sm:left-[-34px] top-[30px] w-[24px] sm:w-[32px] h-[2px] bg-line-soft" />
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <Badge tone="accent">Módulo {m.n}</Badge>
-          <h2 className="font-display text-[17px] font-bold text-ink">{m.titlePt}</h2>
-        </div>
-        {m.letterIds.length > 0 && (
-          <p className="font-ui text-[13px] text-ink-muted mt-1">
-            {m.letterIds.length} letras · lições {m.lessons[0]?.n}-{m.lessons[m.lessons.length - 1]?.n}
-          </p>
-        )}
-        {m.letterIds.length === 0 && (
-          <ExtraModuleRow module={m} />
-        )}
-      </li>
-    );
-  }
+  /* `module` não chega aqui: na espinha ele é o cabeçalho do trecho, desenhado
+     por `ModuloCabecalho`, que é quem sabe abrir e fechar. */
 
   if (node.kind === 'letter') {
     const L = node.letter;

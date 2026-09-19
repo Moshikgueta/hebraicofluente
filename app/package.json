@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "shots": "node shot.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {
