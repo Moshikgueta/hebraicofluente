@@ -29,22 +29,27 @@ import {
 } from '@/components/landing/Fecho';
 import { FLAGSHIP } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
+import { proximoPasso } from '@/lib/cta';
 
 export function HomeClient() {
   const account = useAccount();
 
   /* Um aluno que já entrou não deve ser mandado para o checkout pela própria
-     capa do site dele. Enquanto a sessão não respondeu, vale o destino de
-     visitante: mandar quem está logado para a página do curso custa um
-     clique, e mandar quem não está para o painel custa um portão na cara. */
-  const comprar = account.ready && account.signedIn
-    ? '/meu-hebraico'
-    : `/checkout/${FLAGSHIP}`;
+     capa do site dele. A regra de quem recebe qual oferta mora em lib/cta.ts,
+     porque ela vale também no fim de /metodo, de /faq e do curso - e escrita
+     em cada tela ela se contradiz na terceira. */
+  const passo = proximoPasso(account);
+  const comprar = passo.href;
   const curso = `/cursos/${FLAGSHIP}`;
 
   return (
     <>
-      <Hero primaryHref={comprar} secondaryHref="#como" />
+      <Hero
+        primaryHref={passo.href}
+        primaryLabel={passo.label}
+        primaryMicro={passo.micro}
+        secondaryHref="#como"
+      />
       <Problema />
       <Demonstracao />
       <Metodo />
@@ -54,9 +59,9 @@ export function HomeClient() {
       <Recursos />
       <AulaAmostra href={curso} />
       <Depoimentos />
-      <Preco href={comprar} />
+      <Preco href={comprar} label={passo.label} owned={account.ready && account.can(FLAGSHIP)} />
       <Faq />
-      <CtaFinal href={comprar} />
+      <CtaFinal href={comprar} label={passo.label} />
     </>
   );
 }

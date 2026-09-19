@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
-import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
+import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { course } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -147,15 +147,11 @@ export default function MetodoPage() {
       </Section>
 
       <Section tone="wash">
-        <Card className="p-8 grid gap-4 justify-items-center text-center">
-          <h2 className="font-display text-[25px] sm:text-[30px] font-bold text-ink max-w-[24ch]">
-            O método só existe na prática.
-          </h2>
-          <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[48ch]">
-            A primeira letra leva dez minutos e responde melhor do que esta página.
-          </p>
-          <LinkButton href="/cursos/alfabetizacao" size="lg">Ver o curso</LinkButton>
-        </Card>
+        <FaixaCta
+          onde="metodo"
+          titulo="O método só existe na prática."
+          linha="A primeira letra leva dez minutos e responde melhor do que esta página."
+        />
       </Section>
     </>
   );

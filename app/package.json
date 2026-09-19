@@ -15,6 +15,7 @@
     "audit-letras": "node audit-letras.mjs",
     "portao": "node portao.mjs",
     "trancado": "node trancado.mjs",
+    "ctas": "node ctas.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {

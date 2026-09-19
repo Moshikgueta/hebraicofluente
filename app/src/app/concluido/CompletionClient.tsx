@@ -15,13 +15,8 @@ import { AchievementBadge } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
-import { track } from '@/lib/analytics';
 import { CertificateCallout } from '@/app/certificado/CertificadoClient';
-
-const A1_SKILLS = [
-  'Apresentação pessoal', 'Perguntas básicas', 'Verbos essenciais',
-  'Situações do dia a dia', 'Conversação', 'Compreensão'
-];
+import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 
 export function CompletionClient() {
   const p = useProgress();
@@ -100,34 +95,19 @@ export function CompletionClient() {
         </ul>
       </Card>
 
-      <Card tone="wash" className="p-6 sm:p-8 grid gap-4">
-        <Badge tone="accent">Hebraico A1</Badge>
-        <h2 className="text-[22px] font-bold leading-snug">
-          Você aprendeu a ler. Agora está pronto para começar a entender e falar.
-        </h2>
-        <ul className="grid sm:grid-cols-2 gap-2 text-[15px] leading-relaxed text-ink-body">
-          {A1_SKILLS.map(s => (
-            <li key={s} className="flex gap-3">
-              <span aria-hidden className="text-[var(--accent)]">→</span>{s}
-            </li>
-          ))}
-        </ul>
-        <div className="flex flex-wrap gap-3 pt-1">
-          <LinkButton href="/mapa" variant="secondary">
-            Continuar revisando
-          </LinkButton>
-          <button
-            type="button"
-            onClick={() => track('next_course_clicked')}
-            className="inline-flex items-center justify-center min-h-[48px] px-5 rounded-[var(--r-md)]
-                       bg-[var(--accent)] text-white font-ui font-medium text-[15px]"
-          >
-            Conhecer o próximo nível
-          </button>
-        </div>
-        <p className="font-ui text-[12.5px] text-ink-muted">
+      {/* "E depois?" vem do catálogo e some sozinho para quem já comprou o
+          curso seguinte - o botão daqui era fixo no A1 e não levava a lugar
+          nenhum. A lista do que o próximo nível entrega mora em
+          data/courses.json, junto do preço que o checkout cobra. */}
+      <OfertaProximoCurso />
+
+      <Card className="p-6 grid gap-3 justify-items-start">
+        <p className="font-ui text-[15px] leading-relaxed text-ink-body">
           O curso de alfabetização continua aberto, sem prazo. Nada aqui é bloqueado.
         </p>
+        <LinkButton href="/mapa" variant="secondary">
+          Continuar revisando
+        </LinkButton>
       </Card>
     </div>
   );

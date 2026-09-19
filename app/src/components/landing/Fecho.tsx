@@ -279,7 +279,12 @@ export function Depoimentos() {
 }
 
 /* ── 12 · o preço ───────────────────────────────────────────────────────── */
-export function Preco({ href }: { href: string }) {
+/* `owned` troca a coluna da direita inteira.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Mostrar o preço e um "Começar agora" a quem já pagou é a plataforma
+ * esquecendo o cliente na própria capa - e no lugar mais constrangedor
+ * possível, a caixa de preço. Quem já tem o curso vê a porta dele. */
+export function Preco({ href, label, owned }: { href: string; label: string; owned: boolean }) {
   const c = flagship();
   const parcela = installment(c.price);
   const pix = pixPrice(c.price);
@@ -316,23 +321,40 @@ export function Preco({ href }: { href: string }) {
           </div>
 
           <div className="rounded-[22px] bg-[var(--sand)] px-7 py-8 text-center">
-            <p className="font-ui text-[14.5px] text-ink-muted mb-1.5">Acesso completo</p>
-            <p className="font-display text-[44px] sm:text-[48px] font-semibold tracking-[-0.035em]
-                          leading-none text-ink mb-1">
-              {brl(c.price.brl)}
-            </p>
-            <p className="font-ui text-[14.5px] text-ink-muted mb-6">
-              ou {parcela.n}× de {brl(parcela.brl)}
-            </p>
+            {owned ? (
+              <>
+                <p className="font-ui text-[14.5px] text-ink-muted mb-1.5">Na sua conta</p>
+                <p className="font-display text-[26px] sm:text-[29px] font-semibold tracking-[-0.025em]
+                              leading-[1.15] text-ink mb-6">
+                  Este curso já é seu.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="font-ui text-[14.5px] text-ink-muted mb-1.5">Acesso completo</p>
+                <p className="font-display text-[44px] sm:text-[48px] font-semibold tracking-[-0.035em]
+                              leading-none text-ink mb-1">
+                  {brl(c.price.brl)}
+                </p>
+                <p className="font-ui text-[14.5px] text-ink-muted mb-6">
+                  ou {parcela.n}× de {brl(parcela.brl)}
+                </p>
+              </>
+            )}
             <Link href={href}
-                  className="block rounded-[13px] bg-[var(--navy)] text-white font-ui font-semibold
-                             text-[17px] py-[15px] mb-3.5 transition-[background-color,transform]
-                             duration-[180ms] hover:bg-[var(--navy-2)] hover:-translate-y-[2px]">
-              Começar agora
+                  className="group flex items-center justify-center gap-2 rounded-[13px] bg-[var(--navy)]
+                             text-white font-ui font-semibold text-[17px] py-[15px] mb-3.5
+                             transition-[background-color,transform] duration-[180ms]
+                             hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0">
+              {label}
+              <span aria-hidden
+                    className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
             </Link>
             <p className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
-              No PIX sai por {brl(pix)}. Acesso liberado na hora da confirmação,
-              por {c.accessMonths} meses.
+              {owned
+                ? 'Seu progresso continua exatamente onde você parou.'
+                : <>No PIX sai por {brl(pix)}. Acesso liberado na hora da confirmação,
+                   por {c.accessMonths} meses.</>}
             </p>
           </div>
         </div>
@@ -413,7 +435,7 @@ const PALAVRAS: readonly { he: string; tr: string; pt: string }[] = [
   { he: 'מַיִם', tr: 'máyim', pt: 'água' }
 ];
 
-export function CtaFinal({ href }: { href: string }) {
+export function CtaFinal({ href, label }: { href: string; label: string }) {
   return (
     <section>
       <Container className="mt-16 sm:mt-24">
@@ -435,10 +457,13 @@ export function CtaFinal({ href }: { href: string }) {
               A próxima palavra em hebraico pode ser a primeira que você realmente consegue ler.
             </h2>
             <Link href={href}
-                  className="inline-flex items-center rounded-[14px] bg-white text-[var(--navy)]
+                  className="group inline-flex items-center gap-2 rounded-[14px] bg-white text-[var(--navy)]
                              font-ui font-semibold text-[18px] px-[34px] py-4
-                             transition-transform duration-[180ms] hover:-translate-y-[2px]">
-              Começar meu hebraico
+                             transition-transform duration-[180ms] hover:-translate-y-[2px]
+                             active:translate-y-0">
+              {label}
+              <span aria-hidden
+                    className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
             </Link>
           </div>
         </div>

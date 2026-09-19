@@ -126,9 +126,14 @@ export function LessonClient({ letter }: { letter: Letter }) {
             else if (after) router.push(`/licao/${after.id}`);
             else router.push('/mapa');
           }}
-          nextLabel={
-            moduleFinished && mod?.checkpoint ? `Ir para o Checkpoint ${mod.n}`
-              : after ? `Próxima letra - ${after.namePt}` : 'Voltar ao mapa'
+          /* O botão diz o ATO, e a linha embaixo dele diz o destino. Antes o
+             botão dizia só o destino ("Próxima letra - Bet"), e a lição
+             terminava sem nunca dizer que tinha terminado: o fim de uma
+             etapa precisa soar como fim, senão ele é só mais um clique. */
+          nextLabel="Concluir e continuar"
+          nextHint={
+            moduleFinished && mod?.checkpoint ? `Em seguida: Checkpoint ${mod.n}`
+              : after ? `Em seguida: letra ${after.namePt}` : 'De volta ao mapa do curso'
           }
         />
       )}
@@ -429,7 +434,7 @@ function StagePraticar({
 const PASSA = 0.8;
 
 function StageFixacao({
-  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel
+  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel, nextHint
 }: {
   exercises: Exercise[];
   letter: Letter;
@@ -439,6 +444,8 @@ function StageFixacao({
   onRetry: () => void;
   onNext: () => void;
   nextLabel: string;
+  /** Para onde o botão leva, em uma linha, embaixo dele. */
+  nextHint: string;
 }) {
   /* 'teste' → 'reforco' → 'fechado'. O reforço só existe quando a nota
      ficou abaixo do portão. */
@@ -507,6 +514,7 @@ function StageFixacao({
           <Button variant={strong || fezReforco ? 'primary' : 'secondary'} onClick={onNext}>
             {nextLabel}
           </Button>
+          <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{nextHint}</p>
         </Milestone>
       </div>
     );

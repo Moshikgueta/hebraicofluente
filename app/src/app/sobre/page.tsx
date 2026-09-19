@@ -3,6 +3,7 @@ import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
+import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { course } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -125,19 +126,13 @@ export default function SobrePage() {
       </Section>
 
       <Section tone="wash">
-        <Card className="p-8 grid gap-4 justify-items-center text-center">
-          <h2 className="font-display text-[25px] sm:text-[30px] font-bold text-ink max-w-[24ch]">
-            Tem uma dúvida antes de começar?
-          </h2>
-          <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[48ch]">
-            As mais comuns já estão respondidas. O que não estiver, escreva para
-            contato@hebraicofluente.com.br.
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <LinkButton href="/faq" variant="secondary">Dúvidas frequentes</LinkButton>
-            <LinkButton href="/cursos/alfabetizacao">Ver o curso</LinkButton>
-          </div>
-        </Card>
+        <FaixaCta
+          onde="sobre"
+          titulo="Tem uma dúvida antes de começar?"
+          linha="As mais comuns já estão respondidas. O que não estiver, escreva para contato@hebraicofluente.com.br."
+        >
+          <LinkButton href="/faq" variant="secondary">Dúvidas frequentes</LinkButton>
+        </FaixaCta>
       </Section>
     </>
   );

@@ -23,7 +23,28 @@ const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1
 
 const CONFIANCA = ['Acesso imediato', 'No seu ritmo', 'Feito para brasileiros', 'Curso interativo'];
 
-export function Hero({ primaryHref, secondaryHref }: { primaryHref: string; secondaryHref: string }) {
+/* A mensagem central é em PORTUGUÊS, inteira.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O título antes começava com uma letra hebraica, e lia bonito para quem já
+ * sabe o que ela é. O problema é exatamente esse: quem chega aqui não sabe.
+ * A primeira linha da página tem um trabalho só - dizer, na língua de quem
+ * está lendo, o que a pessoa vai conseguir fazer -, e um caractere que ela
+ * não consegue decifrar no meio da frase trabalha contra isso.
+ *
+ * O hebraico continua na página, e de sobra: ele está no mockup, na aula de
+ * amostra, no fecho. Ali ele é DEMONSTRAÇÃO, que é o papel certo dele numa
+ * página de venda - mostra o que se vai aprender em vez de exigir que já se
+ * saiba.
+ */
+export function Hero({
+  primaryHref, primaryLabel, primaryMicro, secondaryHref
+}: {
+  primaryHref: string;
+  primaryLabel: string;
+  /** A linha curta embaixo do botão: o que se leva ao clicar. */
+  primaryMicro: string;
+  secondaryHref: string;
+}) {
   const [etapa, setEtapa] = useState(0);
 
   useEffect(() => {
@@ -58,7 +79,7 @@ export function Hero({ primaryHref, secondaryHref }: { primaryHref: string; seco
             </p>
             <h1 className="font-display font-semibold text-[clamp(40px,5.1vw,62px)] leading-[1.02]
                            tracking-[-0.036em] text-balance m-0 mb-5">
-              Do <He size="inline" tone="teal">א</He> ao hebraico de verdade.
+              Da primeira letra ao hebraico de verdade.
             </h1>
           </div>
 
@@ -72,27 +93,38 @@ export function Hero({ primaryHref, secondaryHref }: { primaryHref: string; seco
           </p>
 
           <div
-            className="flex flex-wrap gap-3 mb-7 transition-[opacity,transform] duration-500 delay-[260ms] ease-[var(--ease)]"
+            className="grid gap-2.5 justify-items-start mb-7
+                       transition-[opacity,transform] duration-500 delay-[260ms] ease-[var(--ease)]"
             style={{ opacity: em(3) ? 1 : 0, transform: em(3) ? 'none' : 'translateY(14px)' }}
           >
-            <Link
-              href={primaryHref}
-              className="inline-flex items-center justify-center rounded-[13px] bg-[var(--navy)] text-white
-                         font-ui font-semibold text-[17px] px-7 py-[15px] shadow-[var(--sh)]
-                         transition-[background-color,transform] duration-[180ms]
-                         hover:bg-[var(--navy-2)] hover:-translate-y-[2px]"
-            >
-              Começar a aprender
-            </Link>
-            <Link
-              href={secondaryHref}
-              className="inline-flex items-center justify-center rounded-[13px] bg-[var(--card)] text-ink
-                         border border-line font-ui font-semibold text-[17px] px-6 py-[15px]
-                         transition-[border-color,transform] duration-[180ms]
-                         hover:border-[#C9C3B4] hover:-translate-y-[2px]"
-            >
-              Ver como funciona
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href={primaryHref}
+                className="group inline-flex items-center justify-center gap-2 rounded-[13px]
+                           bg-[var(--navy)] text-white font-ui font-semibold text-[17px] px-7 py-[15px]
+                           shadow-[var(--sh)] transition-[background-color,transform] duration-[180ms]
+                           hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0"
+              >
+                {primaryLabel}
+                {/* A seta anda 3px no hover. Micro-interação, não animação: o
+                    botão responde ao ponteiro sem chamar atenção para si. */}
+                <span aria-hidden
+                      className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
+              </Link>
+              <Link
+                href={secondaryHref}
+                className="inline-flex items-center justify-center rounded-[13px] bg-[var(--card)] text-ink
+                           border border-line font-ui font-semibold text-[17px] px-6 py-[15px]
+                           transition-[border-color,transform] duration-[180ms]
+                           hover:border-[#C9C3B4] hover:-translate-y-[2px]"
+              >
+                Ver como funciona
+              </Link>
+            </div>
+            {/* A microcópia responde a pergunta que trava o clique: "e o que
+                acontece depois que eu clicar?". Fica embaixo do botão, no
+                tamanho de nota de rodapé, porque é resposta e não promessa. */}
+            <p className="font-ui text-[13.5px] text-ink-muted m-0">{primaryMicro}</p>
           </div>
 
           <ul

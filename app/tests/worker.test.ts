@@ -17,9 +17,10 @@ import { clampInstallments, getCourse, isSellable, priceCents } from '../../work
 import { mapStatus, verifyWebhookSignature, isSandbox } from '../../worker/src/lib/mercadopago.js';
 // @ts-expect-error - idem
 import { isGatedPath } from '../../worker/src/gate.js';
+/* Numa linha só: o `@ts-expect-error` cobre a linha seguinte, e o erro de um
+   import quebrado em duas é reportado na linha do `from`. */
 // @ts-expect-error - idem
-import { hmacHex, timingSafeEqual, hashPassword, verifyPassword, PBKDF2_ITER, itersFor }
-  from '../../worker/src/lib/crypto.js';
+import { hmacHex, timingSafeEqual, hashPassword, verifyPassword, PBKDF2_ITER, itersFor } from '../../worker/src/lib/crypto.js';
 
 describe('o preço vem do servidor', () => {
   it('lê o mesmo catálogo que o app', () => {

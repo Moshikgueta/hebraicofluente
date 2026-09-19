@@ -9,6 +9,15 @@ import { buildDageshQuiz, buildGerechQuiz } from '../src/lib/engine/extras';
 import { clusters, consonantsOf, isReadableWith, stripNikud } from '../src/lib/hebrew';
 
 const letters = allLetters();
+
+/* Os dois quizzes destes módulos devolvem `Exercise`, que é uma união: nem
+   todo membro dela tem `options`. Este filtro é o que diz ao TypeScript (e ao
+   leitor) que o teste está examinando os de escolha. */
+type ComOpcoes = { options: string[]; answer: number };
+const escolhas = (xs: readonly unknown[]): ComOpcoes[] =>
+  xs.filter((x): x is ComOpcoes =>
+    !!x && typeof x === 'object' && Array.isArray((x as ComOpcoes).options));
+
 const glyphsUpTo = (order: number) =>
   letters.filter(l => l.order <= order)
     .flatMap(l => (l.finalForm ? [l.letter, l.finalForm] : [l.letter]));
@@ -65,7 +74,9 @@ describe('module 6 - dagesh and the final forms', () => {
   it('builds a quiz of the requested size, with no duplicate options', () => {
     const quiz = buildDageshQuiz(extras, 10, 'test');
     expect(quiz).toHaveLength(10);
-    for (const ex of quiz) {
+    const comOpcoes = escolhas(quiz);
+    expect(comOpcoes).toHaveLength(quiz.length);
+    for (const ex of comOpcoes) {
       expect(new Set(ex.options).size).toBe(ex.options.length);
       expect(ex.options.length).toBeGreaterThanOrEqual(2);
       expect(ex.answer).toBeGreaterThanOrEqual(0);
@@ -98,7 +109,9 @@ describe('module 7 - the gerech', () => {
   it('builds a usable quiz', () => {
     const quiz = buildGerechQuiz(extras, 8, 'test');
     expect(quiz).toHaveLength(8);
-    for (const ex of quiz) {
+    const comOpcoes = escolhas(quiz);
+    expect(comOpcoes).toHaveLength(quiz.length);
+    for (const ex of comOpcoes) {
       expect(new Set(ex.options).size).toBe(ex.options.length);
       expect(ex.options.length).toBeGreaterThanOrEqual(2);
     }

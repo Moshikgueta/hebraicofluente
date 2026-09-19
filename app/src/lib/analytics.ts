@@ -23,7 +23,9 @@ export type EventName =
   | 'game_started' | 'game_completed'
   | 'trace_completed' | 'trace_retried'
   | 'certificate_downloaded' | 'certificate_shared'
-  | 'course_completed' | 'next_course_clicked';
+  | 'course_completed' | 'next_course_clicked'
+  /* Um dos CTAs de lib/cta.ts. `itemId` diz onde ele estava e se vendia. */
+  | 'cta_clicked';
 
 export type EventProps = {
   /** Qual dos três jogos da academia. */

@@ -36,7 +36,7 @@ const nota = await p.locator('text=/de 5 ·/').first().innerText().catch(()=>'?'
 console.log('nota:', nota);
 const ofereceu = await p.getByRole('button',{name:/Praticar mais um pouco/}).count();
 console.log('ofereceu reforço:', ofereceu ? 'sim' : 'não');
-const podeSeguir = await p.getByRole('button',{name:/Próxima letra|Ir para o Checkpoint|Voltar ao mapa/}).count();
+const podeSeguir = await p.getByRole('button',{name:/Concluir e continuar/}).count();
 console.log('segue sem travar:', podeSeguir ? 'sim' : 'NÃO - travou');
 if (ofereceu) {
   await p.getByRole('button',{name:/Praticar mais um pouco/}).click();

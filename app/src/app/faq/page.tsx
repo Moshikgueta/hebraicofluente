@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Card } from '@/components/ui/Card';
-import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
+import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { flagship, brl, installment, pixPrice } from '@/lib/catalog';
 import { course } from '@/lib/content';
 
@@ -164,20 +164,20 @@ export default function FaqPage() {
       </Section>
 
       <Section tone="wash">
-        <Card className="p-8 grid gap-4 justify-items-center text-center">
-          <h2 className="font-display text-[25px] sm:text-[30px] font-bold text-ink max-w-[26ch]">
-            Ficou alguma pergunta de fora?
-          </h2>
-          <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[48ch]">
-            Escreva para{' '}
-            <a href="mailto:contato@hebraicofluente.com.br"
-               className="text-[var(--accent)] hover:underline">
-              contato@hebraicofluente.com.br
-            </a>
-            . Respondemos antes de você comprar, não depois.
-          </p>
-          <LinkButton href="/cursos/alfabetizacao">Ver o curso</LinkButton>
-        </Card>
+        <FaixaCta
+          onde="faq"
+          titulo="Ficou alguma pergunta de fora?"
+          linha={
+            <>
+              Escreva para{' '}
+              <a href="mailto:contato@hebraicofluente.com.br"
+                 className="text-[var(--accent)] hover:underline">
+                contato@hebraicofluente.com.br
+              </a>
+              . Respondemos antes de você comprar, não depois.
+            </>
+          }
+        />
       </Section>
     </>
   );

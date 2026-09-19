@@ -25,11 +25,12 @@ import { flagship } from '@/lib/catalog';
 import { TesteFinalCard } from '@/components/game/TesteFinal';
 import { AlphabetGrid, ModuleProgress } from '@/components/game/AlphabetGrid';
 import { useProgress } from '@/lib/state/store';
-import { course, getLetter, getModule } from '@/lib/content';
+import { allLetters, course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
-import { isExtraModuleDone, isLessonComplete, needsWarmUp } from '@/lib/state/rules';
+import { alphabetComplete, isExtraModuleDone, isLessonComplete, needsWarmUp } from '@/lib/state/rules';
 import { useAccount } from '@/lib/account/store';
 import { CourseShelf } from '@/components/platform/CourseShelf';
+import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
 
 export function DashboardClient() {
@@ -60,6 +61,8 @@ export function DashboardClient() {
     }
     return { kind: 'done' as const };
   }, [p.state]);
+
+  const alfabetoFechado = alphabetComplete(p.state, allLetters().map(l => l.id));
 
   /* Lições concluídas: uma lição do curso são as cinco etapas de uma letra,
      e os módulos sem letra contam pelas três etapas próprias. */
@@ -291,6 +294,13 @@ export function DashboardClient() {
           <ModuleProgress />
         </aside>
       </div>
+
+      {/* A oferta do curso seguinte aparece num momento só: quando as 22
+          letras estão fechadas. Antes disso o aluno está no meio de uma
+          coisa, e vender a próxima no meio da atual é o que faz o painel de
+          um curso pago parecer um panfleto. Depois disso "e agora?" é a
+          pergunta que ele mesmo está fazendo. */}
+      {alfabetoFechado && <OfertaProximoCurso />}
 
       {/* No fim, e não no topo: o painel é de quem já comprou. Em linhas, e
           não em cards de venda. */}
