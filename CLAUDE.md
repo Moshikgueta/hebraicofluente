@@ -55,6 +55,29 @@ cabeçalhos de comentário não são travessões e ficam como estão.
   de desfazer alguma coisa. Um campo novo no estado precisa de uma regra aqui,
   e de um teste em `app/tests/merge.test.ts`.
 
+## Estado da operação (19/09/2026)
+O que está LIGADO em produção, porque um documento que descreve a intenção em
+vez do estado manda quem lê procurar no lugar errado:
+
+- **Endereço:** `hebraicofluente.com.br`, com o `*.workers.dev` de conferência.
+- **Pagamento: LIGADO EM PRODUÇÃO.** O token é `APP_USR-`, e quem decide o modo
+  é o prefixo dele (`isSandbox` em `worker/src/lib/mercadopago.js`), nunca
+  `MP_SANDBOX` - essa variável só entra quando o prefixo é desconhecido, e aí o
+  padrão é não cobrar. **O site cobra de verdade.**
+- **E-mail: LIGADO.** Resend, com `EMAIL_FROM` no `wrangler.toml` e
+  `RESEND_API_KEY` nos segredos do repositório.
+- **Ainda por conferir:** a assinatura do webhook da Mercado Pago contra uma
+  notificação real. Não é bloqueante - o acesso tem três caminhos
+  independentes (webhook, `/api/pay/verify` na volta do comprador, e a
+  varredura de 5 em 5 min em `worker/src/reconcile.js`), e o webhook é o mais
+  rápido, não o único.
+
+**Operação sem terminal:** aba Actions → **Acesso**. `liberar` e `revogar`
+mexem no acesso de alguém (o segundo é a metade que se esquece depois de um
+estorno: devolver o dinheiro na Mercado Pago NÃO tira o curso). `consultar`,
+`listar` e `envios` só leem - `envios` mostra o motivo que a Resend devolveu
+quando um e-mail de senha não saiu.
+
 ## Conta e senha
 Criar conta, entrar, sair, **esquecer a senha** e **trocar a senha** - tudo em
 `worker/src/api/auth.js`, com as consultas em `worker/src/lib/db.js`.
@@ -84,6 +107,17 @@ painel, `EMAIL_FROM` no `wrangler.toml`, e os dois precisam existir -
 `/api/health` reporta `email`. **Sem eles o site funciona inteiro e ninguém
 recupera senha sozinho**, então isso fica fora do `ok` da saúde e aparece como
 aviso no `e2e.sh`. Como conseguir a chave está em `.env.example`.
+
+"A chave existe" e "o e-mail chega" são **duas perguntas**, e a saúde responde
+as duas: `email` (configurado) e `emailEntregue` (o último envio foi aceito).
+A distância entre elas é real - a Resend recusa com 403 enquanto o domínio do
+remetente não estiver verificado, e aí tudo *parece* funcionar. O motivo exato
+que ela devolveu sai em Actions → Acesso → `envios`.
+
+⚠ A checagem de `emailEntregue` no `e2e.sh` fica DEPOIS da seção "Senha", não
+junto do resto da saúde. Medida antes dos envios daquela execução, ela só pode
+responder sobre a anterior - e acusou uma recusa inexistente na primeira
+publicação depois de a chave entrar, mandando conferir DNS à toa.
 
 Provado em três alturas: `app/tests/senha.test.ts` (o ciclo inteiro contra um
 SQLite de verdade carregado com o `schema.sql` de produção, e-mail interceptado
