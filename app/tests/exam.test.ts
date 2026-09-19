@@ -49,6 +49,41 @@ describe('the exam covers what it says it covers', () => {
     }
   });
 
+  /* As cinco famílias que a parte "difíceis" existe para cobrar. São lidas do
+     ID e não do `kind` porque `exConfusablePick` emite kind 'letter-recognition'
+     - é o mesmo gesto -, e contar por kind esconderia exatamente o que se quer
+     verificar. */
+  const FAMILIAS_DIFICEIS = ['conf', 'cur2', 'inword', 'pos', 'finword'];
+  const familia = (id: string) => id.replace(/^[a-z]+-/, '').replace(/-\d+$/, '');
+
+  it('cobra as parecidas, a outra fonte e a letra dentro da palavra', () => {
+    /* Uma prova que só mostra a letra isolada aprova quem decorou vinte e
+       duas figuras. Cinco tentativas porque cada uma sorteia cinco das cinco
+       famílias: o que se exige é que NADA fora dessa lista entre na parte. */
+    const vistas = new Set<string>();
+    for (const attempt of [1, 2, 3, 4, 5]) {
+      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt });
+      const parte = exam.sections.find(s => s.part.id === 'dificeis');
+      expect(parte, `tentativa ${attempt}`).toBeTruthy();
+      for (const ex of parte!.exercises) {
+        const f = familia(ex.id);
+        expect(FAMILIAS_DIFICEIS, `${attempt} → ${ex.id}`).toContain(f);
+        vistas.add(f);
+      }
+    }
+    /* E que, ao longo de cinco tentativas, todas as cinco apareçam - senão
+       uma delas está morta no exame sem ninguém perceber. */
+    expect([...vistas].sort()).toEqual([...FAMILIAS_DIFICEIS].sort());
+  });
+
+  it('não repete em "As letras" o que já é cobrado em "As letras difíceis"', () => {
+    const exam = buildExam(letters, scenes, { audioAvailable: true });
+    const parte = exam.sections.find(s => s.part.id === 'letras')!;
+    for (const ex of parte.exercises) {
+      expect(FAMILIAS_DIFICEIS, ex.id).not.toContain(familia(ex.id));
+    }
+  });
+
   it('ends on real-world reading', () => {
     const exam = buildExam(letters, scenes, { audioAvailable: true });
     const last = exam.sections[exam.sections.length - 1]!;
@@ -69,8 +104,11 @@ describe('the exam covers what it says it covers', () => {
   });
 
   it('is about thirty questions, not twelve and not ninety', () => {
-    expect(buildExam(letters, scenes, { audioAvailable: false }).total).toBe(30);
-    expect(buildExam(letters, scenes, { audioAvailable: true }).total).toBe(35);
+    /* Subiu de 30/35 quando "As letras difíceis" virou uma parte própria: as
+       parecidas, a outra fonte e a letra dentro da palavra passaram a ter uma
+       linha só delas no relatório, que é o produto do exame. */
+    expect(buildExam(letters, scenes, { audioAvailable: false }).total).toBe(32);
+    expect(buildExam(letters, scenes, { audioAvailable: true }).total).toBe(37);
   });
 });
 

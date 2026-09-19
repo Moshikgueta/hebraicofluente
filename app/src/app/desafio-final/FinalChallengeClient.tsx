@@ -363,8 +363,13 @@ function ExamProgress({
               className={`block h-1.5 rounded-full ${
                 done ? 'bg-[var(--green)]' : now ? 'bg-[var(--accent)]' : 'bg-surface-2'}`}
             />
+            {/* No telefone só a parte ATUAL diz o nome. Com sete partes numa
+                linha de 390px cada rótulo fica com uns 50px, e "As letras
+                difíceis" vira "As le..." sete vezes - sete etiquetas
+                ilegíveis informam menos do que uma legível. As barras
+                continuam mostrando onde a pessoa está. */}
             <span className={`font-ui text-[10.5px] sm:text-[11.5px] leading-none truncate
-              ${now ? 'text-ink font-semibold' : 'text-ink-muted'}`}>
+              ${now ? 'text-ink font-semibold' : 'text-ink-muted hidden sm:block'}`}>
               {s.part.titlePt}
             </span>
           </li>

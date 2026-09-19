@@ -17,6 +17,7 @@
     "trancado": "node trancado.mjs",
     "ctas": "node ctas.mjs",
     "sincronia": "node sincronia.mjs",
+    "exame": "node exame.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {

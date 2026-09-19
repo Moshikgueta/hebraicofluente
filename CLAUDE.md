@@ -75,7 +75,7 @@ na conta de outra.
 
 ## Antes de commitar
 ```sh
-cd app && npm test        # 263 testes
+cd app && npm test        # 265 testes
 cd app && npm run build   # export estático
 npm run validate          # ordem das letras, nikud, palavras
 ```
@@ -88,6 +88,7 @@ cd app && npm run varrer      # rolagem lateral e erros de console em todas as r
 cd app && npm run ctas        # visitante vs aluno: quem já comprou não vê checkout
 cd app && npm run trancado    # o cadeado do teste final nos três estados
 cd app && npm run portao      # o portão de domínio da lição não tranca ninguém
+cd app && npm run exame       # o exame final abre e responde (para nos pareamentos)
 
 # a sincronia precisa do Worker no ar, com o D1 local:
 npm run db:init:local

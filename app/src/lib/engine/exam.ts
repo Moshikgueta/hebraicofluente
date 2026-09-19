@@ -25,12 +25,15 @@ import {
   exBuildSyllable, exBuildWord, exCompleteWord, exFinalForm, exLetterRecognition,
   exListenSyllable, exMatchLetterSound, exMatchSyllable, exMeaningToWord, exOddOneOut,
   exPrintVsCursive, exSoundToSyllable, exSyllableReading, exTypeHeard, exTypeTranslit,
-  exVowelSound, exAudioWord, type Gen
+  exVowelSound, exAudioWord,
+  exConfusablePick, exCursiveToPrint, exFinalInWord, exLetterInWord, exLetterPosition,
+  type Gen
 } from './generators';
 import { buildReview, buildScenes, spread, type Exercise, type SceneLike } from './exercises';
 import { rng, shuffled } from './rng';
 
-export type ExamPartId = 'letras' | 'sinais' | 'silabas' | 'palavras' | 'mundo' | 'escuta';
+export type ExamPartId =
+  'letras' | 'dificeis' | 'sinais' | 'silabas' | 'palavras' | 'mundo' | 'escuta';
 
 export type ExamPart = {
   id: ExamPartId;
@@ -46,8 +49,22 @@ export type ExamPart = {
 
 export const EXAM_PARTS: ExamPart[] = [
   {
-    id: 'letras', titlePt: 'As letras', skill: 'rec', count: 8, practiceMode: 'letras',
+    id: 'letras', titlePt: 'As letras', skill: 'rec', count: 5, practiceMode: 'letras',
     descPt: 'Reconhecer a forma, fora de ordem, incluindo as cinco formas finais.'
+  },
+  /* A parte que separa reconhecer de ter decorado.
+   *
+   * Ela existe SEPARADA da anterior porque o relatório é o produto do exame:
+   * "sua parte fraca são as letras" não diz o que fazer, e era só isso que o
+   * exame conseguia dizer quando tudo isto vivia dentro de "As letras". Quem
+   * acerta a letra isolada e erra aqui tem um problema nomeável - confunde as
+   * parecidas, ou não reconhece a mesma letra noutra fonte - e é esse nome que
+   * a pessoa leva para a Academia. */
+  {
+    id: 'dificeis', titlePt: 'As letras difíceis', skill: 'rec', count: 5,
+    practiceMode: 'letras',
+    descPt: 'As que se parecem entre si, a mesma letra em outra fonte, e achar ' +
+      'uma letra dentro de uma palavra - no começo, no meio ou no fim.'
   },
   {
     id: 'sinais', titlePt: 'Os sinais de vogal', skill: 'som', count: 5, practiceMode: 'vogais',
@@ -59,7 +76,8 @@ export const EXAM_PARTS: ExamPart[] = [
   },
   {
     id: 'palavras', titlePt: 'Palavras', skill: 'ler', count: 7, practiceMode: 'palavras',
-    descPt: 'Palavras inteiras: ler, completar, montar e escrever.'
+    descPt: 'Palavras inteiras: ler, completar, montar, escrever - e achar uma ' +
+      'letra dentro delas, no começo, no meio ou no fim.'
   },
   {
     id: 'escuta', titlePt: 'Escuta', skill: 'ouvir', count: 5, practiceMode: 'ouvir',
@@ -76,7 +94,16 @@ export const EXAM_PARTS: ExamPart[] = [
    for the same reason the gym does it: "sílabas" is a thing to be examined on;
    "ler" is a taxonomy. */
 const GENS: Record<ExamPartId, readonly Gen[]> = {
+  /* A letra sozinha, na fonte em que foi ensinada. */
   letras: [exLetterRecognition, exOddOneOut, exFinalForm, exPrintVsCursive],
+  /* A letra sob pressão. Uma prova que mostra a letra sempre isolada, sempre
+     na mesma fonte e nunca ao lado da parecida aprova quem memorizou vinte e
+     duas figuras - e essa pessoa trava na primeira placa de rua. Achar a
+     letra DENTRO de uma palavra é `rec` e não `ler` de propósito: o que se
+     pede não é decodificar a palavra, é enxergar a letra nela. */
+  dificeis: [
+    exConfusablePick, exCursiveToPrint, exLetterInWord, exLetterPosition, exFinalInWord
+  ],
   sinais: [exVowelSound, exMatchLetterSound],
   silabas: [exSyllableReading, exSoundToSyllable, exBuildSyllable, exMatchSyllable],
   palavras: [exCompleteWord, exBuildWord, exMeaningToWord, exTypeTranslit],

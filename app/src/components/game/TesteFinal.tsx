@@ -19,10 +19,15 @@ import { useEffect, useRef, useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course } from '@/lib/content';
+import { partsFor } from '@/lib/engine/exam';
+import { audioAvailable } from '@/components/learn/AudioButton';
 import { alphabetComplete, lettersLeft } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
 const LETRAS = allLetters().map(l => l.id);
+
+/** Quantas partes o exame tem hoje - a parte de escuta só existe com áudio. */
+const PARTES = partsFor(audioAvailable()).length;
 
 /** A chave do "já avisei uma vez" - o aviso de desbloqueio aparece uma vez só. */
 const AVISADO = 'hf-teste-final-avisado';
@@ -99,9 +104,14 @@ export function TesteFinalCard({ compacto = false }: { compacto?: boolean }) {
       </p>
       <p className={`font-ui text-[14px] leading-[1.5] relative
         ${celebrar ? 'text-[var(--teal-body)]' : 'text-white/70'}`}>
+        {/* Quantas partes sai do próprio exame. Escrito à mão, este número
+            fica errado no dia em que uma parte entra ou sai - e foi o que
+            aconteceu quando "As letras difíceis" virou uma parte própria. */}
         {celebrar
-          ? 'Você fechou as 22 letras. O teste final mede o alfabeto inteiro, em cinco partes.'
-          : 'As 22 letras, em cinco partes, sem transliteração para se apoiar.'}
+          ? `Você fechou as ${course.totalLetters} letras. O teste final mede o alfabeto
+             inteiro, em ${PARTES} partes.`
+          : `As ${course.totalLetters} letras, em ${PARTES} partes, sem transliteração
+             para se apoiar.`}
       </p>
       <Link
         href="/desafio-final"
