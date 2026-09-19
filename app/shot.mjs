@@ -60,7 +60,7 @@ const STATE = {
     'tav': { itemId: 'tav', letterId: 'tav', box: 1, misses: 2, hits: 1, dueOn: hoje, lastSeen: hoje, skill: 'ler' },
     'mem': { itemId: 'mem', letterId: 'mem', box: 0, misses: 1, hits: 0, dueOn: hoje, lastSeen: hoje, skill: 'som' }
   },
-  achievements: ['primeira-letra'],
+  achievements: [{ id: 'primeira-letra', unlockedAt: new Date().toISOString() }],
   days: { [hoje]: { day: hoje, units: 2, xp: 120, minutes: 8 } },
   streak: { current: 3, longest: 5, lastDay: hoje },
   lastRoute: null, finalChallenge: { best: null, completedAt: null },
@@ -97,5 +97,26 @@ for (const rota of ROTAS) {
   });
   console.log(`${rota.padEnd(18)} ${String(m.h).padStart(5)}px  w=${m.largura} ${m.culpados.join(' | ')} ${erros.length ? 'erros: ' + erros[0].slice(0, 80) : ''}`);
 }
+/* A folha de retorno depois de responder: é a tela mais repetida do curso
+   inteiro, e o que ela precisa provar é que a explicação e o Continuar
+   cabem na tela sem rolar. A prática da lição 3 é determinística (semente
+   `practice-alef`), então dá para responder pelo teclado. */
+await page.goto(`http://127.0.0.1:4321/licao/alef/`, { waitUntil: 'networkidle' });
+await page.getByRole('button', { name: /Etapa 4 de 5/ }).click();
+await page.waitForTimeout(400);
+await page.keyboard.press('1');
+await page.waitForTimeout(1200);
+await page.screenshot({ path: `${DIR}/${W}-licao-resposta.png` });
+console.log('depois de responder:', await page.evaluate(() => {
+  const b = [...document.querySelectorAll('button')]
+    .find(e => /^(Continuar|Ver resultado)$/.test((e.textContent || '').trim()));
+  const certa = document.querySelector('[data-resposta="right"]');
+  const cabe = el => { const r = el.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight; };
+  return {
+    continuarNaTela: b ? cabe(b) : 'sem botão',
+    respostaCertaNaTela: certa ? cabe(certa) : 'sem alternativa'
+  };
+}));
+
 await browser.close();
 server.close();
