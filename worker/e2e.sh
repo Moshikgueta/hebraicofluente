@@ -51,8 +51,22 @@ location() { G -o /dev/null -D - -H 'Sec-Fetch-Dest: document' "$@" \
 # produz nove falhas idênticas - todas "veio 500" - e nenhuma delas diz qual
 # das três peças está faltando. Com isto, a causa aparece na primeira linha.
 echo "Saúde"
-HEALTH="$(G --max-time 15 "$B/api/health")"
-campo() { printf '%s' "$HEALTH" | grep -o "\"$1\":[a-z]*" | cut -d: -f2; }
+
+# A saúde é consultada com algumas tentativas, e não uma vez só.
+#
+# Quando esta conferência roda logo depois de uma publicação - que é o caso no
+# CI -, os primeiros segundos ainda podem ser respondidos pela versão ANTERIOR
+# do Worker. Um campo que acabou de nascer volta ausente, e a checagem acusa
+# uma falha que não existe: foi exatamente isso que aconteceu quando `progresso`
+# entrou. Quinze segundos de paciência cobrem a propagação; passado isso, o
+# campo ausente é falha de verdade e é assim que ela aparece.
+HEALTH=''
+for _ in 1 2 3 4 5; do
+  HEALTH="$(G --max-time 15 "$B/api/health")"
+  case "$HEALTH" in *'"progresso"'*) break ;; esac
+  sleep 3
+done
+campo() { grep -o "\"$1\":[a-z]*" <<<"$HEALTH" | cut -d: -f2; }
 espera "ligação com o banco (D1)"      true "$(campo db)"
 espera "tabelas criadas (schema.sql)"  true "$(campo schema)"
 espera "tabela de progresso criada"    true "$(campo progresso)"
@@ -100,10 +114,14 @@ espera "o HTML tem tamanho de página" true \
 #   · um <h1> com texto dentro - a capa renderizou conteúdo, e não um casco;
 #   · a marca - é o site certo, e não uma página de erro do provedor.
 # Os dois sobrevivem a qualquer reescrita de copy e falham em toda falha real.
+#
+# `<<<` e não `printf | grep -q`: o `-q` sai no primeiro acerto e fecha o
+# cano, e aí o printf do outro lado imprime "write error: Broken pipe" no log
+# de uma verificação que PASSOU. Ruído desse tipo ensina a ignorar log.
 espera "a capa tem um título com texto" true \
-  "$(printf '%s' "$HOME_HTML" | grep -qE '<h1[^>]*>[^<]{12,}' && echo true || echo false)"
+  "$(grep -qE '<h1[^>]*>[^<]{12,}' <<<"$HOME_HTML" && echo true || echo false)"
 espera "a capa traz a marca" true \
-  "$(printf '%s' "$HOME_HTML" | grep -q 'Hebraico Fluente' && echo true || echo false)"
+  "$(grep -q 'Hebraico Fluente' <<<"$HOME_HTML" && echo true || echo false)"
 
 # O primeiro script do Next referenciado pela capa. Se ele não vier, o
 # navegador mostra o texto mas nada funciona - e um erro de caminho de
