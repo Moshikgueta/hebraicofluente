@@ -23,7 +23,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { brl, getCourse, installment, isPlayable, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
-import { empresa } from '@/lib/empresa';
+import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 
 export function CourseClient({ slug }: { slug: string }) {
   const account = useAccount();
@@ -180,8 +180,15 @@ export function CourseClient({ slug }: { slug: string }) {
               {open ? 'Comece hoje, na primeira lição.' : 'Ainda não, mas está vindo.'}
             </h2>
             <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[52ch]">
+              {/* A promessa de "sem liberação manual" só pode ser feita onde
+                  ela é verdade. No PIX direto a liberação É manual, e prometer
+                  o contrário na página de venda é o pior lugar possível para
+                  errar: a pessoa compra por causa da frase e descobre a
+                  diferença depois de pagar. */}
               {open
-                ? 'O acesso é liberado assim que o pagamento é confirmado - sem espera, sem liberação manual, sem e-mail para procurar na caixa de spam.'
+                ? confirmaSozinho()
+                  ? 'O acesso é liberado assim que o pagamento é confirmado - sem espera, sem liberação manual, sem e-mail para procurar na caixa de spam.'
+                  : 'Você paga no PIX pelo aplicativo do seu banco e entra com o mesmo e-mail e senha. O acesso abre assim que o pagamento cai, normalmente em alguns minutos.'
                 : 'Este curso está em produção. Quando sair, entra na mesma conta e continua de onde o anterior parou.'}
             </p>
           </div>
@@ -280,22 +287,49 @@ function BuyBox({ slug }: { slug: string }) {
         {c.price.listBrl && (
           <p className="font-ui text-[14px] text-ink-muted line-through">{brl(c.price.listBrl)}</p>
         )}
-        <p className="font-display text-[38px] font-bold text-ink leading-none">{brl(c.price.brl)}</p>
-        <p className="font-ui text-[13.5px] text-ink-body">
-          ou {parcela.n}x de {brl(parcela.brl)} sem juros
-        </p>
-        {c.price.pixDiscountPct > 0 && (
-          <p className="font-ui text-[13.5px] font-medium text-[var(--accent)]">
-            {brl(pixPrice(c.price))} no PIX ({c.price.pixDiscountPct}% off)
-          </p>
+        {/* O preço em destaque é o preço que vai ser cobrado. Com só PIX no ar,
+            o desconto deixa de ser alternativa e passa a ser o preço, e o valor
+            cheio fica como referência - anunciar "12x sem juros" numa loja que
+            não aceita cartão é oferecer o que não se entrega. */}
+        {soPix() ? (
+          <>
+            <p className="font-display text-[38px] font-bold text-ink leading-none">
+              {brl(pixPrice(c.price))}
+            </p>
+            <p className="font-ui text-[13.5px] text-ink-body">
+              no PIX
+              {c.price.pixDiscountPct > 0
+                && ` · ${c.price.pixDiscountPct}% de desconto sobre ${brl(c.price.brl)}`}
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="font-display text-[38px] font-bold text-ink leading-none">{brl(c.price.brl)}</p>
+            <p className="font-ui text-[13.5px] text-ink-body">
+              ou {parcela.n}x de {brl(parcela.brl)} sem juros
+            </p>
+            {c.price.pixDiscountPct > 0 && (
+              <p className="font-ui text-[13.5px] font-medium text-[var(--accent)]">
+                {brl(pixPrice(c.price))} no PIX ({c.price.pixDiscountPct}% off)
+              </p>
+            )}
+          </>
         )}
       </div>
 
       <LinkButton href={`/checkout/${c.slug}`} size="lg" full>Desbloquear curso</LinkButton>
 
       <ul className="grid gap-1.5 list-none p-0 m-0 font-ui text-[13px] text-ink-muted">
-        <li>PIX, cartão ou parcelado em até {parcela.n}x.</li>
-        <li>Acesso liberado automaticamente.</li>
+        <li>
+          {soPix()
+            ? 'Pagamento por PIX, pelo aplicativo do seu banco.'
+            : `PIX, cartão ou parcelado em até ${parcela.n}x.`}
+        </li>
+        <li>
+          {confirmaSozinho()
+            ? 'Acesso liberado automaticamente.'
+            : 'Acesso liberado em alguns minutos, depois do pagamento.'}
+        </li>
         <li>{c.accessMonths} meses, do celular ao computador.</li>
       </ul>
 

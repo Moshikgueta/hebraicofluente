@@ -27,6 +27,7 @@ import { audioAvailable } from '@/components/learn/AudioButton';
 import { brl, flagship, installment, pixPrice } from '@/lib/catalog';
 import { course } from '@/lib/content';
 import { DEPOIMENTOS } from '@/lib/testimonials';
+import { confirmaSozinho, soPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
 
 const TEM_AUDIO = audioAvailable();
@@ -334,10 +335,12 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 <p className="font-ui text-[14.5px] text-ink-muted mb-1.5">Acesso completo</p>
                 <p className="font-display text-[44px] sm:text-[48px] font-semibold tracking-[-0.035em]
                               leading-none text-ink mb-1">
-                  {brl(c.price.brl)}
+                  {brl(soPix() ? pix : c.price.brl)}
                 </p>
                 <p className="font-ui text-[14.5px] text-ink-muted mb-6">
-                  ou {parcela.n}× de {brl(parcela.brl)}
+                  {soPix()
+                    ? <>no PIX, à vista</>
+                    : <>ou {parcela.n}× de {brl(parcela.brl)}</>}
                 </p>
               </>
             )}
@@ -353,8 +356,11 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
             <p className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
               {owned
                 ? 'Seu progresso continua exatamente onde você parou.'
-                : <>No PIX sai por {brl(pix)}. Acesso liberado na hora da confirmação,
-                   por {c.accessMonths} meses.</>}
+                : confirmaSozinho()
+                  ? <>No PIX sai por {brl(pix)}. Acesso liberado na hora da confirmação,
+                     por {c.accessMonths} meses.</>
+                  : <>No PIX sai por {brl(pix)}. Acesso liberado em alguns minutos,
+                     por {c.accessMonths} meses.</>}
             </p>
           </div>
         </div>

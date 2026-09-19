@@ -46,5 +46,37 @@
     "garantiaDias": 7,
     "prazoReembolsoUteis": 10,
     "atualizadoEm": "2026-09-19"
+  },
+
+  "_notaPagamento": [
+    "COMO O SITE COBRA. `modo` decide, e é lido pelos dois lados: o checkout,",
+    "para saber o que oferecer, e o Worker, para saber o que criar.",
+    "",
+    "  pix-direto   BR Code gerado por nós, a partir da chave abaixo. Não",
+    "               depende de adquirente, gateway nem aprovação de ninguém -",
+    "               o dinheiro cai direto na conta. Em troca, NINGUÉM CONFIRMA",
+    "               O PAGAMENTO SOZINHO: o acesso é liberado à mão, por",
+    "               Actions → Acesso → liberar, depois de olhar o extrato.",
+    "  mercadopago  PIX e cartão com confirmação automática. Exige",
+    "               MP_ACCESS_TOKEN válido (o Access Token, NÃO a Public Key -",
+    "               os dois começam com APP_USR-).",
+    "",
+    "A chave PIX não é segredo: ela é impressa na tela de pagamento, que é o",
+    "propósito dela. Por isso mora aqui, junto do resto da identificação do",
+    "fornecedor, e não nos segredos do repositório.",
+    "",
+    "`titular` e `cidade` vão DENTRO do código PIX e aparecem no aplicativo do",
+    "comprador na hora de confirmar. Precisam bater com a conta que recebe -",
+    "um nome diferente do esperado é o que faz alguém desistir de pagar."
+  ],
+
+  "pagamento": {
+    "modo": "pix-direto",
+    "pix": {
+      "chave": "51041290000152",
+      "tipoChave": "cnpj",
+      "titular": "Mhg Treinamentos e Idiomas",
+      "cidade": "Curitiba"
+    }
   }
 }

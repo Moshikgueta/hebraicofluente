@@ -24,6 +24,14 @@
 
 import { settleFromProvider } from './api/pay.js';
 import { log, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
+import empresa from '../../data/empresa.json';
+
+/* No PIX direto não existe provedor a quem perguntar: o dinheiro cai na conta
+   do recebedor sem avisar ninguém, e a liberação é feita à mão. Varrer
+   pendentes contra a Mercado Pago aqui seria bater numa porta que não existe,
+   de cinco em cinco minutos, para sempre. A faxina de senhas no fim continua
+   valendo - ela não tem nada a ver com pagamento. */
+const PIX_DIRETO = ((empresa.pagamento && empresa.pagamento.modo) || '') === 'pix-direto';
 
 const MIN_AGE_MS = 60_000;
 const GIVE_UP_MS = 24 * 3_600_000;
@@ -42,6 +50,10 @@ export async function runReconcile(env) {
       expired++;
       continue;
     }
+    /* Expirar continua valendo no PIX direto - um pedido de ontem não pode
+       ficar pendente para sempre. Perguntar ao provedor, não: não há
+       provedor. */
+    if (PIX_DIRETO) continue;
     const status = await settleFromProvider(env, order, 'reconcile');
     if (status === 'paid') settled++;
   }

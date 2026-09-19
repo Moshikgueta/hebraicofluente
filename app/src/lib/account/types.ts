@@ -61,7 +61,7 @@ export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired'
 export type AuthErrorCode =
   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
   | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'payments-off'
-  | 'bad-token' | 'payment-failed';
+  | 'bad-token' | 'payment-failed' | 'card-off';
 
 export class AuthError extends Error {
   constructor(readonly code: AuthErrorCode, message?: string) {
@@ -93,7 +93,12 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
      nossa, e repetir vai falhar de novo. A pessoa está com o cartão na mão;
      o que serve a ela é saber que o problema não é dela e ter para onde
      escrever. */
-  'payment-failed': `Não conseguimos gerar o pagamento agora, e o problema é nosso, não seu. Escreva para ${empresa.contato.emailSuporte} que a gente resolve na hora - e nada foi cobrado.`
+  'payment-failed': `Não conseguimos gerar o pagamento agora, e o problema é nosso, não seu. Escreva para ${empresa.contato.emailSuporte} que a gente resolve na hora - e nada foi cobrado.`,
+  /* O checkout não oferece cartão quando só existe PIX, então em uso normal
+     ninguém vê esta frase: ela é a rede para um pedido antigo aberto numa aba
+     esquecida, ou para alguém chamando a API na mão. Diz o que fazer em vez de
+     dizer que deu erro, porque o caminho que funciona está na mesma tela. */
+  'card-off': 'No momento só aceitamos PIX. Volte e escolha PIX - o código sai na hora.'
 };
 
 /* ── regras de acesso ────────────────────────────────────────────────────

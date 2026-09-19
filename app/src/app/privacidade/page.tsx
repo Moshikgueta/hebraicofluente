@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
-import { empresa } from '@/lib/empresa';
+import { empresa, soPix } from '@/lib/empresa';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidade - Hebraico Fluente',
@@ -113,8 +113,16 @@ export default function Page() {
           Com o mínimo possível, e nunca para venda de dados - não vendemos, alugamos
           nem cedemos dados pessoais a ninguém.
         </p>
+        {/* Quem recebe dado pessoal muda com o trilho de cobrança. No PIX
+            direto não existe intermediário: o pagamento acontece entre o banco
+            do comprador e o nosso, e nenhum dado dele sai daqui por causa da
+            cobrança. Listar um processador que não recebe nada é descrever um
+            compartilhamento que não existe, e uma política de privacidade só
+            vale pelo que ela descreve com precisão. */}
         <Lista itens={[
-          <><strong>Meio de pagamento</strong>: processa a cobrança e nos devolve apenas o resultado. Os dados do seu cartão são digitados no ambiente dele e <strong>nunca passam pelos nossos servidores</strong>.</>,
+          soPix()
+            ? <><strong>Seu banco e o nosso</strong>: o PIX é pago dentro do aplicativo do seu banco. Nós só geramos o código de cobrança - <strong>nenhum dado seu é enviado a um processador de pagamento</strong>, e dados de cartão não são pedidos nem recebidos em lugar nenhum.</>
+            : <><strong>Meio de pagamento</strong>: processa a cobrança e nos devolve apenas o resultado. Os dados do seu cartão são digitados no ambiente dele e <strong>nunca passam pelos nossos servidores</strong>.</>,
           <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site e o banco de dados.</>,
           <><strong>Autoridades</strong>, quando houver ordem legal para isso.</>
         ]} />

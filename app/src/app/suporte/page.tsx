@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
 import { Identificacao } from '@/components/legal/Legal';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { empresa, whatsappUrl } from '@/lib/empresa';
+import { empresa, soPix, whatsappUrl } from '@/lib/empresa';
 
 export const metadata: Metadata = {
   title: 'Suporte - Hebraico Fluente',
@@ -34,9 +34,13 @@ export default function Page() {
   const ATALHOS: { titulo: string; corpo: React.ReactNode; acao: React.ReactNode }[] = [
     {
       titulo: 'Paguei e o acesso não liberou',
-      corpo: <>No PIX o acesso costuma sair em minutos; no cartão, assim que a operadora
-             aprova. Passou disso, é falha nossa e resolvemos sem custo - escreva do
-             e-mail que você usou na compra.</>,
+      corpo: soPix()
+        ? <>O acesso costuma sair em alguns minutos depois que o PIX cai. Passou
+           disso, é falha nossa e resolvemos sem custo - escreva do e-mail que
+           você usou na compra.</>
+        : <>No PIX o acesso costuma sair em minutos; no cartão, assim que a operadora
+           aprova. Passou disso, é falha nossa e resolvemos sem custo - escreva do
+           e-mail que você usou na compra.</>,
       acao: <a href={mail('Paguei e o acesso não liberou')}
                className="font-ui font-semibold text-[var(--accent)] hover:underline">
                Avisar sobre acesso não liberado →</a>

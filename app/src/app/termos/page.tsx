@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { brl, flagship, installment, pixPrice } from '@/lib/catalog';
-import { empresa } from '@/lib/empresa';
+import { empresa, soPix } from '@/lib/empresa';
 
 export const metadata: Metadata = {
   title: 'Termos de Uso - Hebraico Fluente',
@@ -39,9 +39,17 @@ export default function Page() {
           físico, e não há aula ao vivo ou acompanhamento individual de professor, salvo
           se isso estiver escrito na página do curso que você comprou.
         </p>
+        {/* As formas de pagamento descritas aqui são as que o checkout aceita
+            de verdade. Um contrato que oferece parcelamento no cartão enquanto
+            a loja só processa PIX não é um contrato desatualizado: é uma oferta
+            que o fornecedor não cumpre, e ela está escrita por ele. */}
         <p>
-          O {c.titlePt} custa {brl(c.price.brl)} à vista, {brl(pix)} no PIX,
-          ou {parcela.n}× de {brl(parcela.brl)} no cartão, e dá{' '}
+          O {c.titlePt} custa {brl(c.price.brl)}
+          {soPix()
+            ? <>, ou {brl(pix)} pagando por <strong>PIX</strong>, que é a forma
+                de pagamento aceita hoje</>
+            : <> à vista, {brl(pix)} no PIX, ou {parcela.n}× de {brl(parcela.brl)} no cartão</>}
+          , e dá{' '}
           <strong>{c.accessMonths} meses de acesso</strong> contados da confirmação do
           pagamento. O preço vigente é sempre o exibido na página do curso e no
           checkout no momento da compra.
@@ -51,7 +59,9 @@ export default function Page() {
       <Artigo n={2} titulo="Como o acesso é liberado">
         <Lista itens={[
           <>No <strong>PIX</strong>, o acesso é liberado assim que o pagamento é confirmado - normalmente em minutos.</>,
-          <>No <strong>cartão</strong>, assim que a operadora aprova a transação.</>,
+          ...(soPix() ? [] : [
+            <>No <strong>cartão</strong>, assim que a operadora aprova a transação.</>
+          ]),
           <>O acesso fica vinculado à <strong>conta</strong> criada com o seu e-mail, e não ao aparelho: você pode entrar no celular e no computador com o mesmo login.</>,
           <>Seu progresso é salvo na sua conta e acompanha você entre os aparelhos.</>
         ]} />

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
 import { flagship } from '@/lib/catalog';
-import { empresa } from '@/lib/empresa';
+import { empresa, soPix } from '@/lib/empresa';
 
 export const metadata: Metadata = {
   title: 'Reembolso e Cancelamento - Hebraico Fluente',
@@ -80,10 +80,15 @@ export default function Page() {
       </Artigo>
 
       <Artigo n={3} titulo="Quando o dinheiro volta">
+        {/* As formas de devolução acompanham as formas de cobrança: enquanto
+            só entra PIX, só sai PIX, e descrever um estorno de cartão que
+            ninguém vai pedir só faz o documento parecer genérico. */}
         <Lista itens={[
           <><strong>PIX</strong>: devolvemos para a mesma chave ou conta de origem, em até {politicas.prazoReembolsoUteis} dias úteis a partir da confirmação.</>,
-          <><strong>Cartão de crédito</strong>: o estorno é solicitado na hora, e aparece na fatura conforme o prazo da operadora - em geral na fatura seguinte, às vezes na outra. Esse tempo é do banco, não nosso.</>,
-          <><strong>Parcelado</strong>: o estorno é do valor total. A administradora pode lançar as parcelas restantes e estornar em seguida; o saldo final é zero.</>
+          ...(soPix() ? [] : [
+            <><strong>Cartão de crédito</strong>: o estorno é solicitado na hora, e aparece na fatura conforme o prazo da operadora - em geral na fatura seguinte, às vezes na outra. Esse tempo é do banco, não nosso.</>,
+            <><strong>Parcelado</strong>: o estorno é do valor total. A administradora pode lançar as parcelas restantes e estornar em seguida; o saldo final é zero.</>
+          ])
         ]} />
       </Artigo>
 

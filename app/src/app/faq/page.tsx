@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { empresa } from '@/lib/empresa';
+import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { flagship, brl, installment, pixPrice } from '@/lib/catalog';
 import { course } from '@/lib/content';
@@ -43,19 +43,35 @@ const FAQ: { q: string; a: string[] }[] = [
       `São ${course.totalLetters} lições de cerca de dez minutos. Quem faz uma por dia termina em menos de um mês; quem faz três por semana leva uns dois. Não há prazo interno nem turma: o curso espera por você.`
     ]
   },
+  /* As duas respostas abaixo mudam com `pagamento.modo` em data/empresa.json,
+     e é de propósito: uma FAQ que promete parcelamento no cartão enquanto o
+     checkout só aceita PIX é lida ANTES da compra, que é exatamente quando
+     ela mais atrapalha - a pessoa decide pelo parcelamento e descobre no
+     checkout que ele não existe. */
   {
     q: 'Como eu pago?',
-    a: [
-      `PIX, cartão de crédito à vista ou em até ${installment(c.price).n}x sem juros.`,
-      `À vista o curso sai por ${brl(c.price.brl)}${c.price.pixDiscountPct > 0 ? `, ou ${brl(pixPrice(c.price))} no PIX` : ''}. Parcelado, ${installment(c.price).n}x de ${brl(installment(c.price).brl)}.`
-    ]
+    a: soPix()
+      ? [
+          'Por PIX, pelo aplicativo do seu banco. O checkout mostra o código copia e cola.',
+          `O curso sai por ${brl(pixPrice(c.price))}${c.price.pixDiscountPct > 0 ? ` no PIX (${c.price.pixDiscountPct}% de desconto sobre os ${brl(c.price.brl)})` : ''}.`,
+          'Cartão de crédito ainda não. Quando entrar, aparece no checkout.'
+        ]
+      : [
+          `PIX, cartão de crédito à vista ou em até ${installment(c.price).n}x sem juros.`,
+          `À vista o curso sai por ${brl(c.price.brl)}${c.price.pixDiscountPct > 0 ? `, ou ${brl(pixPrice(c.price))} no PIX` : ''}. Parcelado, ${installment(c.price).n}x de ${brl(installment(c.price).brl)}.`
+        ]
   },
   {
     q: 'Quando o acesso é liberado?',
-    a: [
-      'No cartão, na hora - a confirmação vem em segundos. No PIX, assim que o pagamento compensa, que costuma levar menos de um minuto.',
-      'A liberação é automática. Não existe aprovação manual, e você não precisa mandar comprovante para ninguém.'
-    ]
+    a: confirmaSozinho()
+      ? [
+          'No cartão, na hora - a confirmação vem em segundos. No PIX, assim que o pagamento compensa, que costuma levar menos de um minuto.',
+          'A liberação é automática. Não existe aprovação manual, e você não precisa mandar comprovante para ninguém.'
+        ]
+      : [
+          'Assim que o pagamento cai, normalmente em alguns minutos. Você não precisa deixar nenhuma página aberta nem mandar comprovante: é só entrar com o mesmo e-mail e a mesma senha que você usou para comprar.',
+          `Se passar disso, escreva para ${empresa.contato.emailSuporte} com o e-mail da compra. É falha nossa e se resolve na hora.`
+        ]
   },
   {
     q: 'Por quanto tempo eu tenho acesso?',

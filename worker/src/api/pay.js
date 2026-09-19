@@ -28,6 +28,18 @@ import {
   createCardPreference, createPix, getPayment, mapStatus, paymentsFor,
   verifyWebhookSignature
 } from '../lib/mercadopago.js';
+import { brCode, confereBrCode } from '../lib/pix.js';
+import empresa from '../../../data/empresa.json';
+
+/* ── qual trilho de cobrança está ligado ──────────────────────────────────
+ * Sai de data/empresa.json, e não de uma variável de ambiente, porque os
+ * DOIS lados precisam da mesma resposta: o Worker, para saber o que criar, e
+ * o checkout, para saber o que oferecer. Em dois lugares eles divergem, e a
+ * divergência aqui é uma tela que oferece cartão e um servidor que não sabe
+ * cobrar no cartão.
+ */
+const PAGAMENTO = (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago';
+const pixDireto = () => PAGAMENTO === 'pix-direto';
 
 /** Um pedido, no formato que o app espera (app/src/lib/account/types.ts). */
 const toOrder = row => ({
@@ -63,8 +75,11 @@ export async function create({ request, env }) {
   /* A plataforma pode estar no ar antes de a conta da Mercado Pago existir -
      e esse é um estado normal, não uma falha. Sem token não se cria pedido
      nenhum: melhor uma tela que diz "o pagamento ainda não está ligado" do
-     que um 502 genérico e um pedido pendente que nunca vai compensar. */
-  if (!env.MP_ACCESS_TOKEN) return fail('payments-off', 503);
+     que um 502 genérico e um pedido pendente que nunca vai compensar.
+
+     No modo `pix-direto` isso não se aplica: o BR Code não depende de token
+     nenhum, que é exatamente o motivo de esse modo existir. */
+  if (!pixDireto() && !env.MP_ACCESS_TOKEN) return fail('payments-off', 503);
 
   /* Já é dono: não cobra de novo. Vender duas vezes a mesma coisa para a mesma
      pessoa é estorno garantido - e é um erro fácil de cometer quando o
@@ -72,6 +87,11 @@ export async function create({ request, env }) {
   if (await hasEntitlement(env, account.id, course.slug)) {
     return fail('server', 409);
   }
+
+  /* No modo `pix-direto` só existe PIX, e um pedido de cartão é recusado em
+     vez de virar um pedido que nunca vai ser pago. O checkout já não oferece
+     a opção; isto é para quem chamar a API direto. */
+  if (pixDireto() && body.method === 'card') return fail('card-off', 409);
 
   const method = body.method === 'card' ? 'card' : 'pix';
   const installments = method === 'card' ? clampInstallments(course, body.installments) : 1;
@@ -84,6 +104,42 @@ export async function create({ request, env }) {
   });
 
   try {
+    /* ── PIX direto ────────────────────────────────────────────────────
+       Nenhuma chamada de rede: o BR Code é montado aqui, a partir da chave
+       do recebedor em data/empresa.json. Não há `provider_ref` porque não
+       há provedor, e o pedido nasce e fica `pending` até alguém olhar o
+       extrato e liberar - o que a tela diz com todas as letras.
+
+       O código é RELIDO antes de sair. Um BR Code errado não falha aqui:
+       falha no aplicativo do banco do comprador, com "QR Code inválido" e
+       nenhuma pista, no pior momento possível. */
+    if (pixDireto()) {
+      const { pix: conf } = empresa.pagamento;
+      const codigo = brCode({
+        chave: conf.chave,
+        nome: conf.titular,
+        cidade: conf.cidade,
+        valor: amountCents / 100,
+        txid: order.id
+      });
+
+      const conferido = confereBrCode(codigo);
+      if (!conferido.ok) throw new Error(`br code invalido: ${conferido.erro}`);
+
+      /* Trinta minutos, como o PIX da Mercado Pago. Não é o banco que
+         expira o código - é a nossa tela que para de mostrá-lo, para que
+         ninguém pague um pedido esquecido de ontem. */
+      const expira = Date.now() + 30 * 60_000;
+      await updateOrder(env, order.id, {
+        provider_ref: null,
+        pix_code: codigo,
+        pix_expires_at: expira,
+        status: 'pending'
+      });
+      await log(env, account.id, 'pix-direto', `${order.id} ${amountCents}`);
+      return json(toOrder(await getOrder(env, order.id)));
+    }
+
     if (method === 'pix') {
       const pix = await createPix(env, { order, course, account, origin: origin(request) });
       await updateOrder(env, order.id, {
@@ -153,7 +209,11 @@ export async function verify({ request, env }) {
      tela colada num chamado de suporte. */
   if (!order || order.account_id !== account.id) return fail('server', 404);
 
-  if (order.status === 'pending') {
+  /* No PIX direto não há a quem perguntar: o BR Code é nosso e o dinheiro cai
+     na conta sem avisar ninguém. O pedido fica `pending` até alguém liberar à
+     mão, e a tela do comprador precisa saber disso para parar de girar em vez
+     de prometer uma confirmação que não vem. */
+  if (order.status === 'pending' && !pixDireto()) {
     await settleFromProvider(env, order, 'verify');
     return json(toOrder(await getOrder(env, order.id)));
   }

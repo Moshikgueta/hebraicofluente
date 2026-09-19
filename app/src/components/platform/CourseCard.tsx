@@ -18,7 +18,8 @@
 
 import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
-import { brl, installment, isPlayable, type CatalogCourse } from '@/lib/catalog';
+import { brl, installment, isPlayable, pixPrice, type CatalogCourse } from '@/lib/catalog';
+import { soPix } from '@/lib/empresa';
 
 export type CourseCardState = 'owned' | 'available' | 'soon' | 'locked';
 
@@ -101,8 +102,17 @@ export function CourseCard({
 
       {state === 'locked' && (
         <p className="font-ui text-[13px] text-ink-body">
-          <strong className="font-semibold text-ink">{brl(course.price.brl)}</strong>
-          {' '}ou {installment(course.price).n}x de {brl(installment(course.price).brl)}
+          {soPix() ? (
+            <>
+              <strong className="font-semibold text-ink">{brl(pixPrice(course.price))}</strong>
+              {' '}no PIX
+            </>
+          ) : (
+            <>
+              <strong className="font-semibold text-ink">{brl(course.price.brl)}</strong>
+              {' '}ou {installment(course.price).n}x de {brl(installment(course.price).brl)}
+            </>
+          )}
         </p>
       )}
 

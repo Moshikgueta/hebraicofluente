@@ -60,23 +60,46 @@ O que está LIGADO em produção, porque um documento que descreve a intenção 
 vez do estado manda quem lê procurar no lugar errado:
 
 - **Endereço:** `hebraicofluente.com.br`, com o `*.workers.dev` de conferência.
-- **Pagamento: LIGADO EM PRODUÇÃO.** O token é `APP_USR-`, e quem decide o modo
-  é o prefixo dele (`isSandbox` em `worker/src/lib/mercadopago.js`), nunca
-  `MP_SANDBOX` - essa variável só entra quando o prefixo é desconhecido, e aí o
-  padrão é não cobrar. **O site cobra de verdade.**
+- **Pagamento: PIX DIRETO.** `pagamento.modo` em `data/empresa.json` está em
+  `pix-direto`, e é ele que manda nos dois lados - o checkout, para saber o que
+  oferecer, e o Worker, para saber o que criar. O BR Code é gerado por nós
+  (`worker/src/lib/pix.js`) a partir da chave do CNPJ; não há adquirente,
+  gateway nem aprovação de ninguém no caminho, e o dinheiro cai direto na
+  conta. **Em troca, NADA CONFIRMA O PAGAMENTO SOZINHO**: ninguém avisa o site,
+  e a liberação é feita à mão em Actions → Acesso → `liberar`, depois de olhar
+  o extrato. É por isso que o checkout não fica consultando o servidor e que a
+  tela promete "em alguns minutos" em vez de "na hora".
+- **Mercado Pago: DESLIGADA, e por um motivo concreto.** O `MP_ACCESS_TOKEN`
+  publicado devolve `401 unauthorized` - é quase certamente a **Public Key**, e
+  não o Access Token, porque os dois começam com `APP_USR-`. `/api/health`
+  responde qual dos dois está lá, no campo `tokenFormato`. Trocar o segredo por
+  um Access Token de verdade e voltar `pagamento.modo` para `mercadopago`
+  religa cartão, parcelamento e confirmação automática, e devolve ao site todos
+  os textos que falam deles: são condicionais, não foram apagados.
 - **E-mail: LIGADO.** Resend, com `EMAIL_FROM` no `wrangler.toml` e
   `RESEND_API_KEY` nos segredos do repositório.
 - **Ainda por conferir:** a assinatura do webhook da Mercado Pago contra uma
-  notificação real. Não é bloqueante - o acesso tem três caminhos
-  independentes (webhook, `/api/pay/verify` na volta do comprador, e a
-  varredura de 5 em 5 min em `worker/src/reconcile.js`), e o webhook é o mais
-  rápido, não o único.
+  notificação real. Não é bloqueante hoje (o webhook não é usado no PIX
+  direto), e quando a Mercado Pago voltar o acesso continua tendo três caminhos
+  independentes: webhook, `/api/pay/verify` na volta do comprador, e a
+  varredura de 5 em 5 min em `worker/src/reconcile.js`.
+
+**O que o site promete tem de ser o que o site faz.** Trocar `pagamento.modo`
+muda texto corrido em nove páginas - rodapé, capa, página do curso, FAQ,
+Termos, Privacidade, Reembolso, Suporte e o próprio checkout - e o tipo de
+defeito que isso gera é silencioso: o build passa, a página fica bonita, e o
+rodapé segue oferecendo "cartão em até 12x" numa loja que só processa PIX.
+`npm run pagamento` (em `app/`) lê o modo, abre as nove páginas num navegador e
+falha na frase que o modo não cumpre; leva o checkout até o código PIX e
+confere o prazo prometido a quem já pagou. Rodar depois de mexer no modo.
 
 **Operação sem terminal:** aba Actions → **Acesso**. `liberar` e `revogar`
-mexem no acesso de alguém (o segundo é a metade que se esquece depois de um
-estorno: devolver o dinheiro na Mercado Pago NÃO tira o curso). `consultar`,
-`listar` e `envios` só leem - `envios` mostra o motivo que a Resend devolveu
-quando um e-mail de senha não saiu.
+mexem no acesso de alguém - e no PIX direto `liberar` **não é exceção, é o
+processo**: é assim que cada compra vira acesso. `revogar` é a metade que se
+esquece depois de um estorno: devolver o dinheiro NÃO tira o curso.
+`consultar`, `listar`, `envios` e `pagamento` só leem - `envios` mostra o
+motivo que a Resend devolveu quando um e-mail de senha não saiu, e `pagamento`
+mostra os pedidos que falharam, com a razão que o provedor deu.
 
 ## Conta e senha
 Criar conta, entrar, sair, **esquecer a senha** e **trocar a senha** - tudo em

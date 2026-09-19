@@ -64,6 +64,25 @@ export type Empresa = {
     /** ISO curto, `YYYY-MM-DD`. Sai no rodapé de cada política. */
     atualizadoEm: string;
   };
+  pagamento: {
+    /**
+     * Qual trilho de cobrança está ligado.
+     *
+     * `pix-direto`  BR Code gerado por nós. Não depende de adquirente nem de
+     *               aprovação de ninguém - e NÃO CONFIRMA SOZINHO: o acesso
+     *               é liberado à mão depois de olhar o extrato.
+     * `mercadopago` PIX e cartão, com confirmação automática.
+     */
+    modo: 'pix-direto' | 'mercadopago';
+    pix: {
+      /** Só os caracteres da chave: CNPJ vai sem ponto, barra nem traço. */
+      chave: string;
+      tipoChave: 'cnpj' | 'cpf' | 'email' | 'telefone' | 'aleatoria';
+      /** Vai DENTRO do código PIX e aparece no app do comprador. */
+      titular: string;
+      cidade: string;
+    };
+  };
 };
 
 export const empresa = empresaJson as Empresa;
@@ -119,6 +138,29 @@ export function nomeLegalCompleto(): string {
   }
   return `${empresa.razaoSocial} (${empresa.nomeFantasia})`;
 }
+
+/* ── como o site cobra ──────────────────────────────────────────────────── */
+
+/**
+ * Só existe PIX nesta implantação?
+ *
+ * Quando sim, o checkout não oferece cartão - e isso não é uma limitação
+ * escondida, é a única escolha honesta: o cartão depende da Mercado Pago, e
+ * oferecer uma opção que falha é pior do que oferecer só a que funciona. Quem
+ * escolhe cartão, recebe erro e conclui que o site está quebrado; não volta
+ * para tentar o PIX.
+ */
+export const soPix = (): boolean => empresa.pagamento.modo === 'pix-direto';
+
+/**
+ * O pagamento se confirma sozinho?
+ *
+ * `false` no PIX direto: o dinheiro cai na conta do recebedor sem avisar
+ * ninguém, e alguém libera o acesso depois de ver o extrato. A tela PRECISA
+ * dizer isso - prometer liberação instantânea e entregar em duas horas gera
+ * mais suporte do que prometer "em algumas horas" e entregar em dez minutos.
+ */
+export const confirmaSozinho = (): boolean => empresa.pagamento.modo === 'mercadopago';
 
 /* ── o que ainda falta ──────────────────────────────────────────────────── */
 

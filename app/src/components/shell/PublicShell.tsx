@@ -29,7 +29,7 @@ import { Logo } from '@/components/shell/Logo';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
-import { empresa, enderecoLinha, nomeLegalCompleto, whatsappUrl } from '@/lib/empresa';
+import { empresa, enderecoLinha, nomeLegalCompleto, soPix, whatsappUrl } from '@/lib/empresa';
 
 /* Os rótulos são os do design. Os destinos são páginas de verdade, e não
    âncoras: `#como` funciona na capa e vira link morto em /cursos, que usa
@@ -247,8 +247,13 @@ function Footer() {
             {empresa.atendimento.horarioPt}. Resposta em até{' '}
             {empresa.atendimento.prazoRespostaUteis} dias úteis.
           </p>
+          {/* Esta linha aparece em TODA página pública, o que faz dela a
+              promessa de pagamento mais repetida do site - e a mais cara de
+              deixar errada. Sai de data/empresa.json, como o resto. */}
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
-            Pagamento por PIX ou cartão, em até 12x. Acesso liberado na hora.
+            {soPix()
+              ? 'Pagamento por PIX. Acesso liberado em alguns minutos.'
+              : 'Pagamento por PIX ou cartão, em até 12x. Acesso liberado na hora.'}
           </p>
         </div>
       </div>

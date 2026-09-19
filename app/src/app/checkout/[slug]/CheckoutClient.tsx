@@ -38,7 +38,7 @@ import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, type Order, type PaymentMethod } from '@/lib/account/types';
 import { brl, getCourse, installment, pixPrice, type CatalogCourse } from '@/lib/catalog';
-import { empresa } from '@/lib/empresa';
+import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 
@@ -50,6 +50,10 @@ export function CheckoutClient({ slug }: { slug: string }) {
   const account = useAccount();
   const router = useRouter();
   const c = getCourse(slug)!;
+
+  /* Lidos uma vez: vêm de data/empresa.json, que é fixo no momento da build. */
+  const SO_PIX = soPix();
+  const CONFIRMA_SOZINHO = confirmaSozinho();
 
   const [method, setMethod] = useState<PaymentMethod>('pix');
   const [order, setOrder] = useState<Order | null>(null);
@@ -69,6 +73,12 @@ export function CheckoutClient({ slug }: { slug: string }) {
   const startedAt = useRef<number>(0);
   useEffect(() => {
     if (!order || order.status !== 'pending') return;
+    /* No PIX direto ninguém vai responder esta pergunta: o dinheiro cai na
+       conta do recebedor sem avisar o site, e a liberação é feita à mão. Uma
+       consulta que roda cinco minutos para depois dizer "não apareceu" não
+       informa nada - só ensina que o site não funciona. Ver `pagamento.modo`
+       em data/empresa.json. */
+    if (!CONFIRMA_SOZINHO) return;
     startedAt.current = startedAt.current || Date.now();
     let stop = false;
 
@@ -97,7 +107,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
     }, POLL_MS);
 
     return () => { stop = true; clearInterval(timer); };
-  }, [order, account, slug]);
+  }, [order, account, slug, CONFIRMA_SOZINHO]);
 
   const pay = useCallback(async () => {
     setBusy(true);
@@ -223,25 +233,42 @@ export function CheckoutClient({ slug }: { slug: string }) {
           <h2 className="font-display text-[19px] font-bold text-ink mt-1">Como você quer pagar?</h2>
         </div>
 
-        <fieldset className="grid gap-3" disabled={order?.status === 'pending'}>
-          <legend className="sr-only">Forma de pagamento</legend>
+        {/* A escolha só aparece quando existe escolha.
+            ──────────────────────────────────────────────────────────────
+            No modo `pix-direto` o cartão não tem como funcionar, e oferecer
+            uma opção que falha é pior do que oferecer só a que funciona:
+            quem escolhe cartão recebe um erro, conclui que o site está
+            quebrado, e não volta para tentar o PIX. No dia em que a Mercado
+            Pago entrar, a escolha volta sozinha - ver `pagamento.modo` em
+            data/empresa.json. */}
+        {SO_PIX ? (
+          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body
+                        bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
+            <strong>PIX</strong> · {brl(total)}
+            {c.price.pixDiscountPct > 0 && ` (${c.price.pixDiscountPct}% de desconto)`}.
+            Você paga pelo aplicativo do seu banco.
+          </p>
+        ) : (
+          <fieldset className="grid gap-3" disabled={order?.status === 'pending'}>
+            <legend className="sr-only">Forma de pagamento</legend>
 
-          <MethodOption
-            checked={method === 'pix'} onSelect={() => setMethod('pix')}
-            titlePt="PIX"
-            detailPt={c.price.pixDiscountPct > 0
-              ? `${brl(pixPrice(c.price))} - ${c.price.pixDiscountPct}% de desconto. Cai em segundos.`
-              : `${brl(c.price.brl)}. Cai em segundos.`}
-          />
+            <MethodOption
+              checked={method === 'pix'} onSelect={() => setMethod('pix')}
+              titlePt="PIX"
+              detailPt={c.price.pixDiscountPct > 0
+                ? `${brl(pixPrice(c.price))} - ${c.price.pixDiscountPct}% de desconto. Cai em segundos.`
+                : `${brl(c.price.brl)}. Cai em segundos.`}
+            />
 
-          <MethodOption
-            checked={method === 'card'} onSelect={() => setMethod('card')}
-            titlePt="Cartão de crédito"
-            detailPt={`${brl(c.price.brl)} à vista, ou até ${parcela.n}x de ${brl(parcela.brl)} sem juros.`}
-          />
-        </fieldset>
+            <MethodOption
+              checked={method === 'card'} onSelect={() => setMethod('card')}
+              titlePt="Cartão de crédito"
+              detailPt={`${brl(c.price.brl)} à vista, ou até ${parcela.n}x de ${brl(parcela.brl)} sem juros.`}
+            />
+          </fieldset>
+        )}
 
-        {method === 'card' && (
+        {method === 'card' && !SO_PIX && (
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted
                         bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
             O número do cartão é digitado na tela da Mercado Pago, não aqui. Esta
@@ -260,7 +287,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
         {/* ── esperando o PIX ──────────────────────────────────────── */}
         {order?.status === 'pending' && order.pix ? (
           <PixPanel
-            order={order} copied={copied} gaveUp={gaveUp}
+            order={order} copied={copied} gaveUp={gaveUp} automatico={CONFIRMA_SOZINHO}
             onCopy={async () => {
               try {
                 await navigator.clipboard.writeText(order.pix!.code);
@@ -311,7 +338,14 @@ function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
   const LINHAS: [string, React.ReactNode][] = [
     ['O que você leva', `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
     ['Por quanto tempo', `${curso.accessMonths} meses, contados da confirmação do pagamento.`],
-    ['Quando abre', 'Na hora em que o pagamento for confirmado - em minutos, no PIX.'],
+    /* O prazo prometido aqui é o prazo que a plataforma consegue cumprir, e
+       ele muda com o trilho de cobrança: com confirmação automática o acesso
+       abre sozinho; no PIX direto alguém confere o extrato e libera. Uma
+       condição de oferta que promete o que o sistema não faz é justamente o
+       que o Decreto 7.962 existe para impedir. */
+    ['Quando abre', confirmaSozinho()
+      ? 'Na hora em que o pagamento for confirmado - em minutos, no PIX.'
+      : 'Depois que o pagamento cair, normalmente em alguns minutos. Você entra na plataforma com seu e-mail e senha.'],
     ['Se você desistir', <>
       {empresa.politicas.arrependimentoDias} dias para cancelar e receber 100% de volta,
       sem justificar.{' '}
@@ -341,11 +375,28 @@ function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
   );
 }
 
-/* ── o painel do PIX ──────────────────────────────────────────────────── */
+/* ── o painel do PIX ──────────────────────────────────────────────────────
+ *
+ * Tem dois textos porque tem dois mundos, e a diferença entre eles é grande o
+ * bastante para justificar dizer coisas diferentes:
+ *
+ * · `automatico` (Mercado Pago)  o provedor avisa, a tela pergunta de três em
+ *   três segundos, e o acesso abre com a pessoa olhando. Aí "pode deixar esta
+ *   página aberta" é verdade, e é a melhor instrução.
+ *
+ * · PIX direto  nada avisa ninguém. Alguém olha o extrato e libera. Prometer
+ *   que a página se atualiza sozinha seria uma mentira que a própria pessoa
+ *   descobre em trinta segundos, e o que ela conclui não é "o pagamento
+ *   demora", é "o site está quebrado".
+ *
+ * Por isso o segundo texto diz o prazo real e diz o que fazer com ele: fechar
+ * a página e voltar entrando na conta. Prometer menos e entregar antes gera
+ * menos suporte do que o contrário.
+ */
 function PixPanel({
-  order, copied, gaveUp, onCopy, onRetry
+  order, copied, gaveUp, automatico, onCopy, onRetry
 }: {
-  order: Order; copied: boolean; gaveUp: boolean;
+  order: Order; copied: boolean; gaveUp: boolean; automatico: boolean;
   onCopy: () => void; onRetry: () => void;
 }) {
   return (
@@ -363,7 +414,25 @@ function PixPanel({
         </Button>
       </div>
 
-      {gaveUp ? (
+      {!automatico ? (
+        <div className="grid gap-2">
+          <p aria-live="polite" className="font-ui text-[14px] leading-relaxed text-ink-body
+                                           bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
+            Pague pelo aplicativo do seu banco. Assim que o pagamento cair,
+            liberamos seu acesso - normalmente em alguns minutos. Você pode
+            fechar esta página: para ver o curso, entre com o mesmo e-mail e a
+            mesma senha que você acabou de usar.
+          </p>
+          <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted">
+            Se demorar mais do que isso, escreva para{' '}
+            <a href={`mailto:${empresa.contato.emailSuporte}`}
+               className="text-[var(--accent)] hover:underline">
+              {empresa.contato.emailSuporte}
+            </a>{' '}
+            com o número do pedido: <code className="font-mono">{order.id}</code>.
+          </p>
+        </div>
+      ) : gaveUp ? (
         <div className="grid gap-3">
           <p role="alert" className="font-ui text-[14px] leading-relaxed text-ink-body
                                      bg-[var(--amber-wash)] rounded-[var(--r-md)] px-4 py-3">
@@ -444,19 +513,39 @@ function Shell({ course, children }: {
           {c.stats.lessons ? ` · ${c.stats.lessons} lições` : ''}
           {' · '}{c.accessMonths} meses de acesso
         </p>
-        <div className="border-t border-[color:var(--line-soft)] pt-3 grid gap-1">
-          <p className="font-display text-[26px] font-bold text-ink leading-none">
-            {brl(c.price.brl)}
-          </p>
-          <p className="font-ui text-[12.5px] text-ink-body">
-            ou {parcela.n}x de {brl(parcela.brl)}
-          </p>
-          {c.price.pixDiscountPct > 0 && (
-            <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">
-              {brl(pixPrice(c.price))} no PIX
+        {/* O número grande é o número que vai ser cobrado.
+            ──────────────────────────────────────────────────────────────
+            Quando só existe PIX, o valor cheio em destaque e um "ou 12x" logo
+            abaixo descrevem uma compra que não está à venda - e o resumo do
+            pedido é justamente onde a pessoa confere quanto vai sair. Aqui o
+            desconto do PIX deixa de ser uma alternativa e passa a ser o preço,
+            com o valor cheio ficando como referência. */}
+        {soPix() ? (
+          <div className="border-t border-[color:var(--line-soft)] pt-3 grid gap-1">
+            <p className="font-display text-[26px] font-bold text-ink leading-none">
+              {brl(pixPrice(c.price))}
             </p>
-          )}
-        </div>
+            <p className="font-ui text-[12.5px] text-ink-body">
+              no PIX
+              {c.price.pixDiscountPct > 0
+                && ` · ${c.price.pixDiscountPct}% de desconto sobre ${brl(c.price.brl)}`}
+            </p>
+          </div>
+        ) : (
+          <div className="border-t border-[color:var(--line-soft)] pt-3 grid gap-1">
+            <p className="font-display text-[26px] font-bold text-ink leading-none">
+              {brl(c.price.brl)}
+            </p>
+            <p className="font-ui text-[12.5px] text-ink-body">
+              ou {parcela.n}x de {brl(parcela.brl)}
+            </p>
+            {c.price.pixDiscountPct > 0 && (
+              <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">
+                {brl(pixPrice(c.price))} no PIX
+              </p>
+            )}
+          </div>
+        )}
       </Card>
     </div>
   );
