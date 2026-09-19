@@ -32,7 +32,7 @@ on:
         required: true
         default: liberar
         type: choice
-        options: [liberar, revogar, consultar, listar, envios, webhook]
+        options: [liberar, revogar, consultar, listar, envios, pagamento]
       email:
         description: 'E-mail da conta (não precisa em "listar" nem "envios")'
         required: false
@@ -139,11 +139,22 @@ jobs:
               say "Tabela vazia = ninguém pediu link de senha ainda."
               ;;
 
-            # O webhook da Mercado Pago está funcionando?
+            # O pagamento está funcionando? E, quando não está, POR QUÊ?
             #
-            # A pergunta parece exigir um teste no painel deles, e não exige:
-            # o tráfego real já responde, e a resposta está gravada em dois
-            # lugares desde sempre.
+            # Três perguntas numa ação só, porque quem abre isto está com o
+            # checkout na frente e não sabe qual das três é a dele:
+            #
+            #   1. o PIX/cartão chega a nascer? (`pay-create-failed`)
+            #   2. quem resolveu os pagamentos que existiram? (`payment_events`)
+            #   3. algum aviso foi recusado por assinatura? (`webhook-bad-signature`)
+            #
+            # A primeira é a que faltava, e é a mais comum no primeiro dia: a
+            # Mercado Pago recusa a criação com um 400 cujo motivo está no
+            # corpo da resposta - conta sem chave PIX habilitada, e-mail do
+            # comprador inválido, ou o vendedor tentando comprar de si mesmo.
+            #
+            # As outras duas não exigem teste no painel deles: o tráfego real
+            # responde, e a resposta já está gravada.
             #
             #   · `payment_events.source` diz QUEM resolveu cada pagamento.
             #     Uma linha com source='webhook' é a prova de que a assinatura
@@ -154,7 +165,29 @@ jobs:
             #   · `webhook-bad-signature` na trilha é o contrário: a Mercado
             #     Pago bateu à porta e foi recusada. Uma linha dessas é
             #     MP_WEBHOOK_SECRET diferente do que está no painel.
-            webhook)
+            pagamento)
+              say "**Pedidos que nem chegaram a nascer**"
+              say '```'
+              $W --command \
+                "SELECT datetime(created_at/1000,'unixepoch') AS quando,
+                        detail AS pedido_metodo_e_motivo
+                   FROM access_log WHERE action = 'pay-create-failed'
+                  ORDER BY id DESC LIMIT 10" \
+                | tee -a "$GITHUB_STEP_SUMMARY"
+              say '```'
+              say ""
+              say "Linha aqui = o checkout mostrou erro e nenhum PIX/cartão saiu."
+              say "O motivo vem da própria Mercado Pago, no fim da coluna. Os três"
+              say "mais comuns no primeiro dia:"
+              say ""
+              say "· conta sem **chave PIX** habilitada → cadastre uma em"
+              say "  mercadopago.com.br → Seu negócio → Configurações → PIX;"
+              say "· \`cannot operate between same user\` → você está tentando"
+              say "  comprar com o e-mail da SUA conta Mercado Pago. Use outro;"
+              say "· \`invalid_payer_email\` → o e-mail da conta do site não é"
+              say "  aceito por eles (endereço de teste, domínio inválido)."
+              say ""
+
               say "**Quem resolveu cada pagamento**"
               say '```'
               $W --command \

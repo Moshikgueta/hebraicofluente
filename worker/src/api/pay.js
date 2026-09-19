@@ -108,7 +108,25 @@ export async function create({ request, env }) {
     /* O pedido fica registrado como falho e não some: um pedido apagado é um
        pagamento que pode cair depois sem ter onde encaixar. */
     await updateOrder(env, order.id, { status: 'failed' });
-    await log(env, account.id, 'pay-create-failed', `${order.id} ${e.message || e}`);
+
+    /* O MOTIVO, e não só o código.
+       ──────────────────────────────────────────────────────────────────
+       `e.message` é "mercadopago 400" - verdadeiro e inútil. O que diz o
+       que consertar está em `e.data`, o corpo que eles devolvem:
+       `invalid_payer_email`, conta sem chave PIX habilitada, "cannot
+       operate between same user" (comprar do próprio vendedor). São
+       consertos diferentes atrás do mesmo 400, e sem isto a única saída
+       é adivinhar qual.
+
+       Vai para a trilha, e não só para o console: ler o log do Worker
+       exige alguém com o painel da Cloudflare aberto na hora exata. A
+       trilha espera. */
+    let detalhe = '';
+    try { detalhe = e && e.data ? JSON.stringify(e.data).slice(0, 400) : ''; }
+    catch { /* objeto com ciclo, ou getter que lança */ }
+    await log(env, account.id, 'pay-create-failed',
+      `${order.id} ${method} ${e.message || e} ${detalhe}`.trim());
+
     return fail('server', 502);
   }
 }
