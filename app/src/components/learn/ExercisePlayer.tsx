@@ -266,6 +266,9 @@ const UNAIDED_READ = new Set<Exercise['kind']>([
 const GLYPH_CONFUSION = new Set<Exercise['kind']>([
   'letter-recognition', 'print-vs-cursive', 'final-form', 'complete-word', 'odd-one-out'
 ]);
+/* `letter-in-word` e `letter-position` não entram: ali a opção errada é uma
+   palavra ou um lugar, e registrar "escolheu שָׁלוֹם" no monte de confusões
+   entre letras estragaria o sinal que separa ד de ר. */
 
 /* ── what the learner looks at, and how they answer ──────────────────────── */
 
@@ -358,6 +361,32 @@ function Stimulus({ ex }: { ex: Exercise }) {
       return (
         <div className="flex justify-center py-2">
           <He size="display">{ex.he}</He>
+        </div>
+      );
+
+    /* A letra é o enunciado, e as alternativas são PALAVRAS. Mostrá-la grande
+       é o exercício: a pessoa tem de segurar a forma na cabeça enquanto varre
+       quatro palavras atrás dela. */
+    case 'letter-in-word':
+      return (
+        <div className="flex justify-center py-2">
+          <He size="display">{ex.letter}</He>
+        </div>
+      );
+
+    /* Aqui o contrário: a palavra é o enunciado e a letra é a pista. A seta
+       existe porque a pergunta é sobre POSIÇÃO, e quem está aprendendo ainda
+       não tem automático que o começo fica à direita. */
+    case 'letter-position':
+      return (
+        <div className="grid gap-2 justify-items-center py-2">
+          <He size="display">{ex.he}</He>
+          <p className="font-ui text-[13px] text-ink-muted flex items-center gap-2">
+            <span>procure</span>
+            <He size="inline" className="!text-[20px]">{ex.letter}</He>
+            <span aria-hidden className="text-ink-muted">·</span>
+            <span>leitura ←</span>
+          </p>
         </div>
       );
     case 'sound-to-syllable':
@@ -464,7 +493,9 @@ const hebrewOptionsOf = (ex: Exercise): boolean =>
   ex.kind === 'print-vs-cursive' || ex.kind === 'meaning-to-word' ||
   ex.kind === 'complete-word' || ex.kind === 'audio-recognition' ||
   ex.kind === 'sound-to-syllable' || ex.kind === 'listen-syllable' ||
-  ex.kind === 'odd-one-out';
+  ex.kind === 'odd-one-out' || ex.kind === 'letter-in-word';
+  /* `letter-position` responde em PORTUGUÊS - começo, meio, fim -, então
+     fica de fora: a pergunta é sobre a palavra, a resposta é sobre lugar. */
   /* scene-reading answers in PORTUGUESE - the Hebrew is the question. */
 
 /* Tiles are for Hebrew short enough to read at a glance: a letter, a syllable,

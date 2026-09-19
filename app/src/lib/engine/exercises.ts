@@ -25,7 +25,12 @@ import type { Skill } from '@/lib/state/types';
 import { ALL_GLYPHS, isReadableWith } from '@/lib/hebrew';
 import { rng, shuffled, type Rand } from './rng';
 import {
-  BY_SKILL, LESSON_GENERATORS, NEEDS_AUDIO, type Ctx, type Gen
+  BY_SKILL, LESSON_GENERATORS, NEEDS_AUDIO,
+  exBuildSyllable, exBuildWord, exCompleteWord, exConfusablePick, exCursiveToPrint,
+  exFinalForm, exFinalInWord, exLetterInWord, exLetterPosition, exLetterRecognition,
+  exMatchLetterSound, exMeaningToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
+  exSyllableReading, exVowelSound, exWordMeaning,
+  type Ctx, type Gen
 } from './generators';
 import type { Exercise } from './types';
 
@@ -64,6 +69,17 @@ export function readingUsedBy(ex: Exercise): string[] {
     case 'sound-to-syllable':
     case 'listen-syllable':
       out.push(...ex.options);
+      break;
+    /* As alternativas SÃO palavras, e a pessoa tem de ler as quatro para
+       achar a letra - então as quatro passam pela regra da ordem, não só a
+       certa. Foi o teste da regra que cobrou isto, e com razão: sem esta
+       linha um `letter-in-word` podia oferecer uma palavra com uma letra
+       que a pessoa ainda não viu, e ninguém perceberia. */
+    case 'letter-in-word':
+      out.push(...ex.options);
+      break;
+    case 'letter-position':
+      out.push(ex.he);
       break;
     case 'build-syllable':
       out.push(ex.target);
@@ -258,6 +274,227 @@ export function spread(list: Exercise[]): Exercise[] {
     prev = pick;
   }
   return out;
+}
+
+
+/* ── a unidade de prática de uma letra ──────────────────────────────────
+ * O que a auditoria mostrou, em números: cada letra recebia 13 itens, de 8
+ * tipos, e TODOS OS 13 eram da própria letra. Zero revisão cumulativa dentro
+ * da lição. A forma final só aparecia na primeira letra, porque a rotação de
+ * geradores é posicional e `exFinalForm` está no meio da lista - as outras
+ * quatro letras com forma final nunca a exercitavam na própria aula. A letra
+ * em outra fonte, idem: só o Tav a via.
+ *
+ * A causa é a rotação: ela alterna GESTO muito bem, mas não garante
+ * COBERTURA. Com treze passos e vinte e quatro geradores, metade da lista
+ * nunca chega a ser chamada.
+ *
+ * Então esta função não sorteia: ela monta camadas, na ordem em que uma
+ * habilidade sustenta a seguinte.
+ *
+ *   1 reconhecer      a forma isolada
+ *   2 o som           a letra ↔ o som que ela faz
+ *   3 discriminar     contra as letras que se parecem com ela
+ *   4 no contexto     dentro de uma palavra, e onde na palavra
+ *   5 forma final     quando a letra tem uma
+ *   6 outra fonte     imprensa ↔ cursiva
+ *   7 ler             sílaba, palavra, montar
+ *   8 cumulativo      ~30% de letras anteriores
+ *
+ * Cada camada tenta os seus geradores em ordem e aceita o primeiro que
+ * produzir alguma coisa. Uma camada que não pode existir - a forma final de
+ * uma letra que não tem - simplesmente não entra, e o lugar dela vai para a
+ * leitura, que é o que o curso existe para treinar.
+ */
+export function buildLetterPractice(
+  L: Letter, history: Letter[], opts: BuildOptions & {
+    /** Letras que andaram custando, para escolher as do bloco cumulativo. */
+    weak?: readonly string[];
+  } = {}
+): Exercise[] {
+  const { audioAvailable = false, count = 10, seed = `pratica-${L.id}`, weak = [] } = opts;
+  const rand = rng(seed);
+  const ctx = contextFor(L, history);
+  const out: Exercise[] = [];
+  const seen = new Set<string>();
+
+  const tentar = (gens: readonly Gen[], quantos = 1) => {
+    let postos = 0;
+    for (let round = 0; round < 4 && postos < quantos; round++) {
+      for (const gen of gens) {
+        if (postos >= quantos || out.length >= count) return;
+        if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
+        const ex = gen(L, ctx, rand, round);
+        if (!ex || seen.has(ex.id)) continue;
+        seen.add(ex.id);
+        out.push(ex);
+        postos++;
+      }
+    }
+  };
+
+  tentar([exLetterRecognition], 1);
+  tentar([exMatchLetterSound, exVowelSound, exSoundToSyllable], 1);
+  tentar([exConfusablePick, exOddOneOut], 1);
+  tentar([exLetterInWord, exCompleteWord], 1);
+  tentar([exLetterPosition, exLetterInWord], 1);
+  if (L.finalForm) tentar([exFinalInWord, exFinalForm], 1);
+  tentar([exPrintVsCursive, exCursiveToPrint], 1);
+  tentar([exSyllableReading, exBuildSyllable, exWordMeaning, exBuildWord, exMeaningToWord], 2);
+
+  /* ── cumulativo ──────────────────────────────────────────────────────
+     Aproximadamente 30% do bloco, tirado das letras ANTERIORES - as que
+     custaram primeiro, se o chamador souber quais. Sem isto, uma letra
+     aprendida na lição 3 não volta a aparecer até o checkpoint, e o curso
+     ensina vinte e duas coisas isoladas em vez de um alfabeto. */
+  const anteriores = history.filter(x => x.id !== L.id);
+  if (anteriores.length) {
+    const ordenadas = [
+      ...anteriores.filter(x => weak.includes(x.id)),
+      ...shuffled(anteriores.filter(x => !weak.includes(x.id)), rand)
+    ];
+    const quantos = Math.max(1, Math.round(count * 0.3));
+    const gensCumulativo = [exLetterRecognition, exLetterInWord, exSyllableReading,
+                            exConfusablePick, exVowelSound, exWordMeaning];
+    let postos = 0;
+    for (let k = 0; k < ordenadas.length * 3 && postos < quantos && out.length < count; k++) {
+      const P = ordenadas[k % ordenadas.length]!;
+      const gen = gensCumulativo[k % gensCumulativo.length]!;
+      if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
+      const ex = gen(P, contextFor(P, history), rand, Math.floor(k / ordenadas.length));
+      if (!ex || seen.has(ex.id)) continue;
+      seen.add(ex.id);
+      out.push(ex);
+      postos++;
+    }
+  }
+
+  /* Sobrou espaço: completa com a rotação normal, que já alterna gesto.
+     Pede o TRIPLO do que falta: `fill` tem o próprio controle de repetidos e
+     devolve itens que este bloco já tem, então pedir exatamente o que falta
+     costuma trazer zero novos - foi o que deixou o Mem com onze. */
+  if (out.length < count) {
+    for (const ex of fill([L], history, LESSON_GENERATORS, rand, (count - out.length) * 3 + 6, audioAvailable, 6)) {
+      if (out.length >= count) break;
+      if (seen.has(ex.id)) continue;
+      seen.add(ex.id);
+      out.push(ex);
+    }
+  }
+  /* Ainda curto - acontece nas duas primeiras letras, onde o alfabeto
+     disponível é minúsculo: repete os geradores com outra rodada, que muda
+     sílaba, palavra e distratores. Melhor uma segunda passada honesta do que
+     uma lição de oito itens. */
+  if (out.length < count) {
+    for (let round = 1; round < 8 && out.length < count; round++) {
+      for (const gen of LESSON_GENERATORS) {
+        if (out.length >= count) break;
+        if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
+        const ex = gen(L, ctx, rand, round * 3);
+        if (!ex || seen.has(ex.id)) continue;
+        seen.add(ex.id); out.push(ex);
+      }
+    }
+  }
+
+  return spread(out.slice(0, count));
+}
+
+/**
+ * O mini-teste que fecha uma letra. Cinco itens, um de cada coisa que
+ * "saber a letra" quer dizer - e o quinto é de uma letra ANTERIOR, porque
+ * saber a letra de hoje e ter esquecido a de ontem não é saber ler.
+ *
+ * É o mesmo motor da prática, com outra semente: quem refaz responde OUTRAS
+ * cinco questões, não as mesmas cinco.
+ */
+export function buildMiniTest(
+  L: Letter, history: Letter[], opts: BuildOptions = {}
+): Exercise[] {
+  const { audioAvailable = false, seed = `mini-${L.id}`, count = 5 } = opts;
+  const rand = rng(seed);
+  const ctx = contextFor(L, history);
+  const out: Exercise[] = [];
+  const seen = new Set<string>();
+
+  const tentar = (gens: readonly Gen[]) => {
+    for (let round = 0; round < 4; round++) {
+      for (const gen of gens) {
+        if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
+        const ex = gen(L, ctx, rand, round);
+        if (!ex || seen.has(ex.id)) continue;
+        seen.add(ex.id); out.push(ex); return;
+      }
+    }
+  };
+
+  tentar([exLetterRecognition]);
+  tentar([exMatchLetterSound, exVowelSound, exSoundToSyllable]);
+  tentar([exLetterInWord, exLetterPosition, exCompleteWord]);
+  tentar([L.finalForm ? exFinalInWord : exConfusablePick, exConfusablePick, exOddOneOut]);
+
+  const anteriores = history.filter(x => x.id !== L.id);
+  if (anteriores.length) {
+    const P = shuffled(anteriores, rand)[0]!;
+    for (const gen of [exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound]) {
+      const ex = gen(P, contextFor(P, history), rand, 1);
+      if (ex && !seen.has(ex.id)) { seen.add(ex.id); out.push(ex); break; }
+    }
+  }
+
+  /* Uma camada pode não render - letra sem palavra legível, alfabeto pequeno
+     demais para distratores. O mini-teste tem tamanho fixo, então completa,
+     pedindo folga pelo mesmo motivo do bloco de prática. */
+  if (out.length < count) {
+    for (const ex of fill([L], history, LESSON_GENERATORS, rand, count * 4, audioAvailable, 6)) {
+      if (out.length >= count) break;
+      if (seen.has(ex.id)) continue;
+      seen.add(ex.id); out.push(ex);
+    }
+  }
+  if (out.length < count) {
+    for (let round = 1; round < 8 && out.length < count; round++) {
+      for (const gen of LESSON_GENERATORS) {
+        if (out.length >= count) break;
+        if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
+        const ex = gen(L, ctx, rand, round * 2);
+        if (!ex || seen.has(ex.id)) continue;
+        seen.add(ex.id); out.push(ex);
+      }
+    }
+  }
+  return out.slice(0, count);
+}
+
+/**
+ * As três a cinco questões do "vamos praticar mais um pouco".
+ *
+ * Construídas a partir do que a pessoa ERROU no mini-teste - e não de um
+ * sorteio novo. Um reforço que pergunta outra coisa não é reforço.
+ */
+export function buildRemedial(
+  L: Letter, history: Letter[], missedLetterIds: readonly string[], opts: BuildOptions = {}
+): Exercise[] {
+  const { audioAvailable = false, seed = `reforco-${L.id}`, count = 4 } = opts;
+  const rand = rng(seed);
+  const alvos = [...new Set([...missedLetterIds, L.id])]
+    .map(id => history.find(x => x.id === id) ?? (id === L.id ? L : null))
+    .filter((x): x is Letter => !!x);
+
+  const out: Exercise[] = [];
+  const seen = new Set<string>();
+  const gens = [exLetterRecognition, exConfusablePick, exLetterInWord,
+                exMatchLetterSound, exLetterPosition, exOddOneOut];
+
+  for (let k = 0; k < alvos.length * gens.length && out.length < count; k++) {
+    const A = alvos[k % alvos.length]!;
+    const gen = gens[Math.floor(k / alvos.length) % gens.length]!;
+    if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
+    const ex = gen(A, contextFor(A, history), rand, Math.floor(k / alvos.length));
+    if (!ex || seen.has(ex.id)) continue;
+    seen.add(ex.id); out.push(ex);
+  }
+  return spread(out.slice(0, count));
 }
 
 /** The quiz that closes a letter lesson. Mixed by design. */

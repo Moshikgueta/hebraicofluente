@@ -103,11 +103,18 @@ export function AchievementBadge({
 /* The one strong celebration. Reserved for a completed letter, a checkpoint
    and the end of the course - nothing smaller earns it. */
 export function Milestone({
-  kicker, title, body, children
-}: { kicker: string; title: string; body: string; children?: React.ReactNode }) {
+  kicker, title, body, children, tone = 'bom'
+}: {
+  kicker: string; title: string; body: string; children?: React.ReactNode;
+  /** `bom` é teal, `parcial` é gold. Um resultado de 0% num cartão verde
+   *  diz a coisa errada antes de alguém ler uma palavra. */
+  tone?: 'bom' | 'parcial';
+}) {
+  const parcial = tone === 'parcial';
   return (
-    <Card tone="mint" className="p-7 sm:p-9 grid gap-4 text-center animate-rise">
-      <p className="font-ui text-[12px] uppercase tracking-[.12em] text-[var(--mint-ink)]">{kicker}</p>
+    <Card tone={parcial ? 'ember' : 'mint'} className="p-7 sm:p-9 grid gap-4 text-center animate-rise">
+      <p className={`font-ui text-[12px] uppercase tracking-[.12em]
+        ${parcial ? 'text-[var(--gold-ink)]' : 'text-[var(--mint-ink)]'}`}>{kicker}</p>
       <h2 className="text-[26px] sm:text-[32px] font-bold leading-tight text-ink">{title}</h2>
       <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">{body}</p>
       {children && <div className="pt-2 flex flex-wrap gap-3 justify-center">{children}</div>}

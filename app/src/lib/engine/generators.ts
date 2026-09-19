@@ -14,8 +14,8 @@
 
 import type { Letter, Syllable, Word } from '@/lib/content';
 import {
-  BASE_TO_FINAL, clusters, containsLetter, gapAtLetter, gappedGlyph, onCarrier,
-  splitSyllable
+  BASE_TO_FINAL, clean, clusters, containsLetter, gapAtLetter, gappedGlyph,
+  isReadableWith, onCarrier, splitSyllable
 } from '@/lib/hebrew';
 import { shuffled, take, type Rand } from './rng';
 import type { Exercise } from './types';
@@ -51,6 +51,20 @@ function letterDistractors(L: Letter, ctx: Ctx, rand: Rand, n: number): string[]
 
 const wordDistractors = (target: Word, pool: readonly Word[], rand: Rand, n: number): Word[] =>
   take(pool.filter(w => w.he !== target.he), n, rand);
+
+/**
+ * Palavras que a pessoa PODE LER agora.
+ *
+ * `wordsToRead` já respeita a regra da ordem por construção, mas
+ * `wordsToRecognize` não: são palavras que o curso mostra inteiras, para
+ * reconhecer de vista, e elas usam letras que ainda não foram ensinadas. Pôr
+ * as duas listas no mesmo balde foi exatamente o que o teste da regra da
+ * ordem pegou - a lição do Mem oferecia מַיִם, que precisa de yod.
+ *
+ * Então a leitura de verdade sai daqui, e daqui só.
+ */
+const legiveis = (ctx: Ctx): Word[] =>
+  ctx.history.flatMap(x => x.wordsToRead).filter(w => isReadableWith(w.he, ctx.alphabet));
 
 /** Syllables that spell a vowel. Shevá is excluded: it is the absence of one. */
 const vowelSyllables = (L: Letter): Syllable[] => L.syllables.filter(s => s.vowel !== 'sheva');
@@ -451,6 +465,165 @@ export const exAudioWord: Gen = (L, ctx, rand, i) => {
   };
 };
 
+
+/* ── a letra dentro da palavra ──────────────────────────────────────────
+ * O buraco que a auditoria mediu: numa passagem pela letra, TODAS as treze
+ * questões mostravam a forma isolada ou uma sílaba. Reconhecer מ num cartão e
+ * reconhecer מ dentro de מִשְׁפָּחָה são duas habilidades diferentes, e só a
+ * segunda serve para ler uma placa.
+ */
+
+/** Em qual destas palavras a letra aparece? Opções em hebraico. */
+export const exLetterInWord: Gen = (L, ctx, rand, i) => {
+  const pool = legiveis(ctx);
+  const com = pool.filter(w => containsLetter(w.he, L.letter));
+  const sem = pool.filter(w => !containsLetter(w.he, L.letter));
+  const alvo = at(com, i);
+  if (!alvo || sem.length < 2) return null;
+
+  const wrong = take(sem, 3, rand).map(w => w.he);
+  if (wrong.length < 2) return null;
+  const { options, answer } = optionsWith(alvo.he, wrong, rand);
+  const final = L.finalForm && clean(alvo.he).includes(L.finalForm);
+
+  return {
+    id: `${L.id}-inword-${i}`, kind: 'letter-in-word', letterId: L.id, skill: 'rec',
+    promptPt: `Em qual destas palavras aparece a letra ${L.namePt}?`,
+    letter: L.letter, options, answer,
+    whyPt: options.map(o => {
+      if (o === alvo.he) return null;
+      const w = pool.find(x => x.he === o);
+      return w ? `${w.pt} não tem ${L.namePt}.` : null;
+    }),
+    hintsPt: [final
+      ? `Cuidado: no fim da palavra ela muda de desenho.`
+      : `Procure a forma ${L.letter} dentro da palavra.`],
+    explainPt: final
+      ? `${alvo.pt} termina com ${L.finalForm}, que é a forma final de ${L.namePt}.`
+      : `${alvo.pt} tem ${L.namePt}.`
+  };
+};
+
+/** Onde a letra aparece nesta palavra: começo, meio ou fim? */
+export const exLetterPosition: Gen = (L, ctx, rand, i) => {
+  const pool = legiveis(ctx).filter(w => containsLetter(w.he, L.letter));
+  const alvo = at(pool, i);
+  if (!alvo) return null;
+
+  /* Posição CONTADA EM LETRAS, da direita para a esquerda - que é a ordem em
+     que se lê. `clusters` já devolve na ordem de leitura. */
+  const cl = clusters(alvo.he);
+  const fin = L.finalForm;
+  let idx = cl.findIndex(c => c[0] === L.letter);
+  if (idx < 0 && fin) idx = cl.findIndex(c => c[0] === fin);
+  if (idx < 0) return null;
+
+  const OPCOES = ['No começo', 'No meio', 'No fim'];
+  const certa = idx === 0 ? 0 : idx === cl.length - 1 ? 2 : 1;
+
+  return {
+    id: `${L.id}-pos-${i}`, kind: 'letter-position', letterId: L.id, skill: 'rec',
+    promptPt: `Onde está a letra ${L.namePt} nesta palavra?`,
+    he: alvo.he, letter: L.letter,
+    options: OPCOES, answer: certa,
+    whyPt: OPCOES.map((_, k) => k === certa ? null
+      : 'O hebraico se lê da direita para a esquerda - o começo da palavra é o lado direito.'),
+    hintsPt: ['Lembre: o começo da palavra é a letra mais à DIREITA.'],
+    explainPt: certa === 2 && fin
+      ? `${alvo.pt}: no fim, ${L.namePt} vira ${fin}.`
+      : `${alvo.pt} - ${alvo.translit}.`
+  };
+};
+
+/**
+ * Discriminação entre as letras que se confundem, com a razão escrita.
+ *
+ * Diferente de `exLetterRecognition`: ali os distratores são "o que sobrou",
+ * aqui eles são EXATAMENTE os confundíveis declarados no conteúdo, e cada
+ * opção errada explica a diferença de desenho. É o exercício que separa ד de
+ * ר, e ele não pode ser deixado ao acaso da rotação.
+ */
+export const exConfusablePick: Gen = (L, ctx, rand, i) => {
+  const confusos = L.confusableWith.filter(c => c !== L.letter && ctx.allGlyphs.includes(c));
+  if (confusos.length < 2) return null;
+  const wrong = take(confusos, 3, rand);
+  const { options, answer } = optionsWith(L.letter, wrong, rand);
+  const nomeDe = (g: string) => ctx.history.find(x => x.letter === g || x.finalForm === g)?.namePt;
+
+  return {
+    id: `${L.id}-conf-${i}`, kind: 'letter-recognition', letterId: L.id, skill: 'rec',
+    promptPt: `Entre estas parecidas, qual é ${L.namePt}?`,
+    letter: L.letter, options, answer,
+    whyPt: options.map(o => {
+      if (o === L.letter) return null;
+      const nome = nomeDe(o);
+      return nome ? `Essa é ${nome}. Olhe o desenho de novo.` : 'Essa é outra letra, bem parecida.';
+    }),
+    hintsPt: [L.soundNotePt],
+    explainPt: `${L.namePt} faz ${L.sound}. As outras aqui são as que mais se parecem com ela.`
+  };
+};
+
+/**
+ * A forma final, perguntada ao contrário: dada a palavra, qual forma entra?
+ *
+ * `exFinalForm` pergunta "qual é a forma final de X" - reconhecimento. Esta
+ * pergunta POR QUE ela aparece ali, que é a regra que o aluno precisa levar
+ * para a leitura.
+ */
+export const exFinalInWord: Gen = (L, ctx, rand, i) => {
+  if (!L.finalForm) return null;
+  const pool = legiveis(ctx).filter(w => clean(w.he).includes(L.finalForm!));
+  const alvo = at(pool, i);
+  if (!alvo) return null;
+
+  /* Três alternativas, e a terceira não é enfeite: a forma final de OUTRA
+     letra. Com duas - a base e a final desta letra - a questão é cara ou
+     coroa, e o teste da engine cobra três justamente por isso. Com a final de
+     outra letra junto, a pergunta passa a ser "qual destas é a final DESTA
+     letra", que é a confusão real de quem vê ם ן ך ף ץ pela primeira vez. */
+  const outraFinal = Object.values(BASE_TO_FINAL)
+    .filter(f => f !== L.finalForm && ctx.alphabet.includes(f));
+  const alheia = take(outraFinal.length ? outraFinal : Object.values(BASE_TO_FINAL)
+    .filter(f => f !== L.finalForm), 1, rand);
+  const { options, answer } = optionsWith(L.finalForm, [L.letter, ...alheia], rand);
+
+  const nomeFinal = (g: string) =>
+    ctx.history.find(x => x.finalForm === g)?.namePt;
+
+  return {
+    id: `${L.id}-finword-${i}`, kind: 'final-form', letterId: L.id, skill: 'rec',
+    promptPt: `Qual forma de ${L.namePt} aparece no FIM desta palavra?`,
+    letter: alvo.he, options, answer,
+    whyPt: options.map(o => {
+      if (o === L.finalForm) return null;
+      if (o === L.letter) {
+        return `${L.letter} é a forma de começo e meio. No fim da palavra ela vira ${L.finalForm}.`;
+      }
+      const nome = nomeFinal(o);
+      return nome ? `Essa é a forma final de ${nome}, não de ${L.namePt}.`
+                  : 'Essa é a forma final de outra letra.';
+    }),
+    hintsPt: ['A forma final quase sempre desce abaixo da linha.'],
+    explainPt: `${alvo.pt} termina em ${L.finalForm}. Mesma letra, mesmo som - só o desenho muda no fim da palavra.`
+  };
+};
+
+/** A mesma letra escrita à mão: qual das cursivas é esta letra de imprensa? */
+export const exCursiveToPrint: Gen = (L, ctx, rand, i) => {
+  const wrong = letterDistractors(L, ctx, rand, 3);
+  if (wrong.length < 2) return null;
+  const { options, answer } = optionsWith(L.letter, wrong, rand);
+  return {
+    id: `${L.id}-cur2-${i}`, kind: 'print-vs-cursive', letterId: L.id, skill: 'rec',
+    promptPt: `Esta é ${L.namePt} em letra de imprensa. Qual é ela na escrita à mão?`,
+    letter: L.letter, options, answer,
+    whyPt: options.map(o => o === L.letter ? null : 'Essa é outra letra.'),
+    hintsPt: ['A cursiva é mais redonda: vale olhar a direção dos traços, não o contorno.'],
+    explainPt: `Ninguém escreve hebraico à mão em letra de imprensa - a cursiva é a que se vê num bilhete.`
+  };
+};
+
 /* ── the catalogue ──────────────────────────────────────────────────────── */
 
 /** Every generator that needs a recording to be honest. */
@@ -464,20 +637,25 @@ export const NEEDS_AUDIO = new Set<Gen>([exAudioWord, exListenSyllable, exTypeHe
 export const LESSON_GENERATORS: readonly Gen[] = [
   exLetterRecognition,
   exSyllableReading,
+  exLetterInWord,
   exBuildSyllable,
+  exConfusablePick,
   exWordMeaning,
   exOddOneOut,
   exVowelSound,
+  exLetterPosition,
   exCompleteWord,
+  exFinalInWord,
   exMatchSyllable,
   exSoundToSyllable,
   exBuildWord,
   exFinalForm,
+  exPrintVsCursive,
   exListenSyllable,
   exMeaningToWord,
   exTypeTranslit,
   exMatchWordMeaning,
-  exPrintVsCursive,
+  exCursiveToPrint,
   exAudioWord,
   exMatchLetterSound,
   exTypeHeard
@@ -485,7 +663,8 @@ export const LESSON_GENERATORS: readonly Gen[] = [
 
 /** Skill → the generators that exercise it, for targeted practice. */
 export const BY_SKILL: Record<string, readonly Gen[]> = {
-  rec: [exLetterRecognition, exOddOneOut, exFinalForm, exPrintVsCursive],
+  rec: [exLetterRecognition, exOddOneOut, exLetterInWord, exConfusablePick,
+        exLetterPosition, exFinalForm, exFinalInWord, exPrintVsCursive, exCursiveToPrint],
   som: [exVowelSound, exMatchLetterSound],
   ler: [exSyllableReading, exBuildSyllable, exSoundToSyllable, exWordMeaning,
         exCompleteWord, exBuildWord, exMeaningToWord, exMatchSyllable,

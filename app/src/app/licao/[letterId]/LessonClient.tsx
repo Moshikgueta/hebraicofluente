@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
-import { Button, LinkButton } from '@/components/ui/Button';
+import { Button } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
@@ -31,7 +31,9 @@ import {
 } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, cultureAt, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
-import { buildLessonQuiz } from '@/lib/engine/exercises';
+import {
+  buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
+} from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
 
 const STAGES = [
@@ -54,17 +56,25 @@ export function LessonClient({ letter }: { letter: Letter }) {
     [letter.order]
   );
 
-  /* Two separate exercise sets: stage 4 practises, stage 5 tests. Reusing one
-     set would let the learner memorise the answers rather than the letters. */
+  /* Dois conjuntos diferentes: a etapa 4 pratica, a 5 mede. Reaproveitar um
+     só deixaria a pessoa decorar as respostas em vez das letras.
+
+     A prática é montada em CAMADAS - reconhecer, som, discriminar, dentro da
+     palavra, forma final, outra fonte, ler - e reserva ~30% para letras
+     anteriores. O motor faz essa composição; aqui só se diz quantas e quais
+     letras andaram custando. */
   const practice = useMemo(
-    () => buildLessonQuiz(letter, history, {
-      audioAvailable: audioAvailable(), count: 5, seed: `practice-${letter.id}`
+    () => buildLetterPractice(letter, history, {
+      audioAvailable: audioAvailable(), count: 10,
+      seed: `pratica-${letter.id}`, weak: p.weak
     }),
-    [letter, history]
+    [letter, history, p.weak]
   );
+  /* O mini-teste: cinco itens, um de cada coisa que "saber a letra" quer
+     dizer, e o quinto de uma letra anterior. Outra semente a cada tentativa. */
   const quiz = useMemo(
-    () => buildLessonQuiz(letter, history, {
-      audioAvailable: audioAvailable(), count: 8, seed: `quiz-${letter.id}-${quizRun}`
+    () => buildMiniTest(letter, history, {
+      audioAvailable: audioAvailable(), seed: `mini-${letter.id}-${quizRun}`
     }),
     [letter, history, quizRun]
   );
@@ -107,6 +117,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
           key={`q-${letter.id}-${quizRun}`}
           exercises={quiz}
           letter={letter}
+          history={history}
           result={quizResult}
           onResult={r => { setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5); }}
           onRetry={() => { setQuizResult(null); setQuizRun(n => n + 1); }}
@@ -372,7 +383,7 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
 /* ── 4 · praticar ───────────────────────────────────────────────────────── */
 function StagePraticar({
   exercises, letter, onDone
-}: { exercises: ReturnType<typeof buildLessonQuiz>; letter: Letter; onDone: () => void }) {
+}: { exercises: Exercise[]; letter: Letter; onDone: () => void }) {
   const [finished, setFinished] = useState(false);
 
   if (!exercises.length) {
@@ -402,36 +413,98 @@ function StagePraticar({
   );
 }
 
-/* ── 5 · fixação ────────────────────────────────────────────────────────── */
+/* ── 5 · fixação: o mini-teste, com portão de domínio ───────────────────
+ *
+ * Aqui a lição deixa de ser "rolei até o fim" e passa a ser "mostrei que
+ * sei". Cinco questões, e 80% para fechar a letra.
+ *
+ * O portão NÃO tranca. Quem fica abaixo dos 80% recebe "vamos praticar mais
+ * um pouco" e quatro questões montadas a partir dos PRÓPRIOS erros - não um
+ * sorteio novo, que seria outra coisa e não reforço. Depois disso a letra
+ * fecha de qualquer jeito, com a nota registrada e os itens errados na fila
+ * de revisão: travar um adulto na letra 7 é como se perde um aluno, e o
+ * sistema de revisão existe justamente para que nada fique para trás sem
+ * voltar.
+ */
+const PASSA = 0.8;
+
 function StageFixacao({
-  exercises, letter, result, onResult, onRetry, onNext, nextLabel
+  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel
 }: {
-  exercises: ReturnType<typeof buildLessonQuiz>;
+  exercises: Exercise[];
   letter: Letter;
+  history: Letter[];
   result: PlayerResult | null;
   onResult: (r: PlayerResult) => void;
   onRetry: () => void;
   onNext: () => void;
   nextLabel: string;
 }) {
+  /* 'teste' → 'reforco' → 'fechado'. O reforço só existe quando a nota
+     ficou abaixo do portão. */
+  const [fase, setFase] = useState<'teste' | 'reforco' | 'fechado'>('teste');
+
+  const reforco = useMemo(
+    () => result && result.score < PASSA
+      ? buildRemedial(letter, history, result.missed.map(id => id.split('-')[0] ?? letter.id), {
+          audioAvailable: audioAvailable(), seed: `reforco-${letter.id}-${result.correct}`, count: 4
+        })
+      : [],
+    [result, letter, history]
+  );
+
+  if (result && fase === 'reforco' && reforco.length > 0) {
+    return (
+      <div className="grid gap-5">
+        <Card tone="ember" className="p-5 grid gap-1.5">
+          <p className="font-display text-[17px] font-semibold text-[var(--gold-ink)]">
+            Vamos praticar mais um pouco.
+          </p>
+          <p className="font-ui text-[14.5px] leading-relaxed text-[var(--gold-body)]">
+            Estas {reforco.length} questões saem do que escapou agora há pouco.
+            Nada aqui vale nota.
+          </p>
+        </Card>
+        <ExercisePlayer
+          key={`ref-${letter.id}-${result.correct}`}
+          exercises={reforco}
+          title="Reforço"
+          onDone={() => setFase('fechado')}
+        />
+      </div>
+    );
+  }
+
   if (result) {
     const pct = Math.round(result.score * 100);
-    const strong = result.score >= 0.8;
+    const strong = result.score >= PASSA;
+    const fezReforco = fase === 'fechado';
     return (
       <div className="grid gap-5">
         <Milestone
+          tone={strong || fezReforco ? 'bom' : 'parcial'}
           kicker={`${result.correct} de ${result.total} · ${pct}%`}
-          title={strong
-            ? `Mais uma letra dominada.`
-            : 'Vale repetir antes de avançar.'}
+          title={strong ? 'Mais uma letra dominada.'
+            : fezReforco ? 'Reforço feito.'
+            : result.score >= 0.6 ? 'Quase lá.'
+            : `Vamos firmar ${letter.namePt}.`}
+          /* A mensagem acompanha a nota de verdade. "Faltou pouco" num
+             resultado de zero é a plataforma fingindo que não viu. */
           body={strong
-            ? `Você reconhece, lê e escreve ${letter.namePt}. Pode seguir com segurança.`
-            : 'Não tem pressa nem penalidade: refaça e veja o que ainda escapa. Cada letra bem fixada torna a próxima mais fácil.'}
+            ? `Você reconhece ${letter.namePt} sozinha, dentro de uma palavra e entre as parecidas. Pode seguir com segurança.`
+            : fezReforco
+              ? `${letter.namePt} entrou na fila de revisão e volta em poucos dias, no dia certo. Pode seguir.`
+              : result.score >= 0.6
+                ? 'Faltou pouco. Quatro questões rápidas, montadas a partir do que escapou, e seguimos.'
+                : 'Esta letra ainda não está firme, e tudo bem - é para isso que existe a prática. Quatro questões montadas a partir do que escapou.'}
         >
-          <Button variant={strong ? 'secondary' : 'primary'} onClick={onRetry}>
-            Refazer
+          {!strong && !fezReforco && reforco.length > 0 && (
+            <Button onClick={() => setFase('reforco')}>Praticar mais um pouco</Button>
+          )}
+          <Button variant={strong ? 'secondary' : 'ghost'} onClick={() => { setFase('teste'); onRetry(); }}>
+            Refazer o teste
           </Button>
-          <Button variant={strong ? 'primary' : 'secondary'} onClick={onNext}>
+          <Button variant={strong || fezReforco ? 'primary' : 'secondary'} onClick={onNext}>
             {nextLabel}
           </Button>
         </Milestone>
@@ -442,19 +515,8 @@ function StageFixacao({
   return (
     <ExercisePlayer
       exercises={exercises}
-      title={`Fixação - letra ${letter.namePt}`}
+      title={`Mini-teste - letra ${letter.namePt}`}
       onDone={r => { track('quiz_completed', { letterId: letter.id, score: r.score }); onResult(r); }}
     />
-  );
-}
-
-export function LessonNotFound() {
-  return (
-    <Card className="p-8 grid gap-3">
-      <h1 className="text-[22px] font-bold">Lição não encontrada</h1>
-      <LinkButton href="/mapa" variant="secondary" className="justify-self-start">
-        Voltar ao mapa
-      </LinkButton>
-    </Card>
   );
 }

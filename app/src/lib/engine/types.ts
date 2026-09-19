@@ -66,6 +66,14 @@ export type Exercise =
   /** A row of the same glyph with one intruder. Options ARE the row. */
   | (ChoiceBase & { kind: 'odd-one-out' })
 
+  /* ── a letra dentro de uma palavra ────────────────────────────────────
+     Reconhecer a forma isolada e reconhecê-la dentro de uma palavra são duas
+     habilidades, e a segunda é a que serve para ler. Estes dois tipos são a
+     ponte entre elas: no primeiro a letra é dada e as opções são palavras;
+     no segundo a palavra é dada e a pergunta é ONDE a letra está. */
+  | (ChoiceBase & { kind: 'letter-in-word'; letter: string })
+  | (ChoiceBase & { kind: 'letter-position'; he: string; letter: string })
+
   /* ── construction: the learner assembles, rather than recognises ──── */
   | (ExerciseBase & {
       kind: 'build-syllable';
