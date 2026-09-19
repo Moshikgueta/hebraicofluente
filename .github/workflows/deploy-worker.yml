@@ -220,9 +220,12 @@ jobs:
       - name: A capa aparece num navegador?
         if: steps.guard.outputs.ok == 'true'
         continue-on-error: true
-        env:
-          HF_BASE: https://hebraico-fluente.moshikg10.workers.dev
         run: |
+          # O endereço sai do wrangler.toml, e não escrito aqui à mão: no dia
+          # em que um domínio próprio entrar, esta etapa continuaria olhando
+          # para o workers.dev e dizendo "a capa aparece" sobre o site antigo.
+          export HF_BASE="$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml)"
+          echo "conferindo $HF_BASE"
           npm install --no-save playwright >/dev/null 2>&1
           npx --yes playwright install --with-deps chromium >/dev/null 2>&1
           {

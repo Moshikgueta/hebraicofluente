@@ -290,6 +290,23 @@ ok "No ar: $URL"
 echo
 bold "7. SITE_ORIGIN"
 HAVE="$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml || true)"
+
+# Um SITE_ORIGIN que NÃO é workers.dev é uma escolha, não um resíduo.
+#
+# Este passo existe para preencher o endereço na primeira publicação de uma
+# conta nova, quando o único endereço que existe é o workers.dev. No dia em
+# que um domínio próprio entra, o endereço passa a ser o domínio - e um
+# script que continuasse "corrigindo" o arquivo para o workers.dev desfaria a
+# mudança em toda publicação, silenciosamente. O sintoma seria caro e
+# indireto: o comprador voltaria da Mercado Pago para o endereço errado.
+case "$HAVE" in
+  https://*.workers.dev|'') ;;                 # ainda no endereço de fábrica
+  *)
+    ok "Domínio próprio em uso: $HAVE (o workers.dev continua respondendo)"
+    URL="$HAVE"
+    ;;
+esac
+
 if [ "$HAVE" = "$URL" ]; then
   ok "Já aponta para $URL"
 else
