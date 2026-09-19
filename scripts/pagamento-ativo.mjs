@@ -112,23 +112,34 @@ if (querido !== 'mercadopago') {
         ? `  Habilitados na conta: ${formas}. Confirmação automática ligada.`
         : '  Confirmação automática ligada.');
     } else if (res) {
-      /* 401 e 403 são as duas respostas SOBRE a credencial, e são diferentes:
-         401 é "não reconheço isto", 403 é "reconheço e não deixo". Qualquer
-         outro código diz que a chamada não chegou ao fim - um proxy no
-         caminho, uma pane do lado deles - e chamar isso de credencial
-         recusada manda quem lê trocar uma chave que talvez esteja certa. O
-         corpo vai junto nos três casos, porque é ele que encerra a dúvida. */
+      /* Quem classifica é o CORPO, não só o código.
+         ──────────────────────────────────────────────────────────────────
+         A Mercado Pago responde `invalid_token` com status 400 - um código
+         que, sozinho, qualquer um leria como "requisição malformada" e
+         mandaria procurar erro na chamada. Ela também usa 401 para "não
+         reconheço" e 403 para "reconheço e não deixo". Três códigos, e o
+         que separa "a credencial está errada" de "a chamada não chegou ao
+         fim" está escrito na resposta, não no número.
+         A distinção não é preciosismo: dizer "a chamada não passou" sobre
+         uma chave errada manda quem lê procurar rede e proxy; dizer
+         "credencial recusada" sobre uma pane deles manda trocar uma chave
+         que estava certa. */
+      const texto = corpo.replace(/\s+/g, ' ').trim();
       const publica =
         /^APP_USR-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token);
+      const credencial =
+        res.status === 401 || res.status === 403 || /invalid_token|unauthorized/i.test(texto);
       const cabecalho =
-        res.status === 401 ? 'A Mercado Pago não reconheceu a credencial: 401. '
+        !credencial ? `A chamada à Mercado Pago não passou: ${res.status}. `
         : res.status === 403 ? 'A Mercado Pago reconheceu e não autorizou: 403. '
-        : `A chamada à Mercado Pago não passou: ${res.status}. `;
+        : `A Mercado Pago recusou a credencial: ${res.status}. `;
       rebaixar(
-        cabecalho + corpo.replace(/\s+/g, ' ').trim()
+        cabecalho + texto
         + (publica
           ? '\n  O valor tem o formato da PUBLIC KEY, não o do Access Token.'
             + '\n  Os dois começam com APP_USR-, e só o segundo serve aqui.'
+            + '\n  Public Key:   APP_USR- + 8-4-4-4-12 em hexadecimal.'
+            + '\n  Access Token: APP_USR- + números, hífen, mais números.'
           : res.status === 403
             ? '\n  Um 403 aqui costuma ser aplicação sem as credenciais de'
               + '\n  PRODUÇÃO ativadas, ou conta ainda sem meio de pagamento'
