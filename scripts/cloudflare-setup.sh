@@ -205,8 +205,14 @@ empurra() {
   fi
 }
 
+# PAGAMENTO_LIGADO guarda a resposta para o aviso do fim do script. Sem ele,
+# a última linha da publicação continuava dizendo "falta: Mercado Pago" muito
+# depois de a credencial ter entrado - e um relatório que pede uma coisa já
+# feita ensina a não ler o relatório.
+PAGAMENTO_LIGADO=1
 empurra MP_ACCESS_TOKEN   "${MP_ACCESS_TOKEN:-}" \
-  || info "MP_ACCESS_TOKEN ausente - pagamento fica desligado (o site funciona)."
+  || { PAGAMENTO_LIGADO=0
+       info "MP_ACCESS_TOKEN ausente - pagamento fica desligado (o site funciona)."; }
 empurra MP_WEBHOOK_SECRET "${MP_WEBHOOK_SECRET:-}" \
   || info "MP_WEBHOOK_SECRET ausente - o webhook recusa tudo, de propósito."
 empurra RESEND_API_KEY    "${RESEND_API_KEY:-}" \
@@ -499,7 +505,12 @@ if [ "$PATCHED" = "1" ]; then
   echo "  exemplo - funciona aqui e falha para quem publicar de outro lugar."
   echo
 fi
-echo "  Falta, quando você quiser:"
-echo "   · Mercado Pago: os dois segredos e o webhook em $URL/api/pay/webhook"
+if [ "$PAGAMENTO_LIGADO" = "0" ]; then
+  echo "  Falta, quando você quiser:"
+  echo "   · Mercado Pago: os dois segredos e o webhook em $URL/api/pay/webhook"
+else
+  echo "  Pagamento ligado. O webhook da Mercado Pago aponta para:"
+  echo "   · $URL/api/pay/webhook"
+fi
 echo
 exit $RC
