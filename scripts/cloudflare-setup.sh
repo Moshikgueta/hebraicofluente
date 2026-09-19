@@ -356,9 +356,87 @@ PY
   $W deploy >/dev/null 2>&1 && ok "Republicado" || info "A republicação falhou; rode 'npx wrangler deploy'."
 fi
 
-# ── 8. conferir ───────────────────────────────────────────────────────────
+# ── 8. o desafio de bot da zona ───────────────────────────────────────────
+# O "Bot Fight Mode" da Cloudflare desafia o que ela julga automatizado. Isso
+# soa bom até lembrar que ESTE SITE É UMA API: /api/auth/login, /api/me,
+# /api/progress e o webhook de pagamento são todas requisições sem navegador
+# do outro lado, e todas passam pela mesma porta.
+#
+# O que aconteceu aqui: o domínio entrou, a zona veio com o desafio ligado, e
+# a publicação seguinte recebeu 403 em TUDO - capa, API, saúde. Nas trinta e
+# uma linhas vermelhas não havia uma palavra sobre Cloudflare; o motivo só
+# apareceu quando o navegador tentou carregar
+# `challenges.cloudflare.com/cdn-cgi/challenge-platform` e falhou.
+#
+# Por isso isto é parte da publicação, e não um lembrete no README: é uma
+# configuração que quebra o produto e que ninguém associa ao produto.
+#
+# Nunca derruba a publicação. O token padrão de Workers não tem permissão de
+# zona, e nesse caso o passo diz exatamente o que acrescentar - do mesmo
+# jeito que o passo do D1 faz com o erro 7003.
 echo
-bold "8. Conferir o que subiu"
+bold "8. Desafio de bot na zona"
+ZONA="$(printf '%s' "$URL" | sed -e 's#^https\?://##' -e 's#/.*##')"
+case "$ZONA" in
+  ''|*.workers.dev)
+    info "Sem domínio próprio - a zona não é nossa, nada a fazer."
+    ;;
+  *)
+    CFAPI="https://api.cloudflare.com/client/v4"
+    cf() { curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN:-}" \
+                   -H "Content-Type: application/json" "$@"; }
+    # O nome da zona é o domínio registrável: `hebraicofluente.com.br` tem
+    # três rótulos, e é ele que a Cloudflare conhece - não um subdomínio.
+    ZID="$(cf "$CFAPI/zones?name=$ZONA" | python3 -c "
+import sys,json
+try: d=json.load(sys.stdin)
+except Exception: d={}
+r=(d.get('result') or [])
+print(r[0]['id'] if r else '')
+" 2>/dev/null)"
+
+    if [ -z "$ZID" ]; then
+      info "Não consegui ler a zona $ZONA com este token."
+      info "Se o site responder 403 a tudo, é quase certo ser o Bot Fight Mode."
+      info "Acrescente ao token: Zone | Zone | Read  e  Zone | Bot Management | Edit"
+      info "(ou desligue à mão: painel → $ZONA → Security → Bots)."
+    else
+      ATUAL="$(cf "$CFAPI/zones/$ZID/bot_management" | python3 -c "
+import sys,json
+try: d=json.load(sys.stdin)
+except Exception: d={}
+print(str((d.get('result') or {}).get('fight_mode','?')).lower())
+" 2>/dev/null)"
+
+      case "$ATUAL" in
+        false)
+          ok "Bot Fight Mode já está desligado"
+          ;;
+        true)
+          info "Bot Fight Mode está LIGADO - ele desafia a nossa própria API. Desligando…"
+          RESP="$(cf -X PUT "$CFAPI/zones/$ZID/bot_management" --data '{"fight_mode":false}')"
+          if printf '%s' "$RESP" | grep -q '"success":true'; then
+            ok "Bot Fight Mode desligado"
+          else
+            erro "Não consegui desligar. A Cloudflare respondeu:"
+            printf '%s\n' "$RESP" | head -c 400 | sed 's/^/       /'
+            echo
+            info "Falta permissão no token: Zone | Bot Management | Edit."
+            info "Ou desligue à mão: painel → $ZONA → Security → Bots."
+          fi
+          ;;
+        *)
+          info "Não consegui ler o estado do Bot Fight Mode (token sem Bot Management)."
+          info "Se o site responder 403 a tudo, desligue à mão em Security → Bots."
+          ;;
+      esac
+    fi
+    ;;
+esac
+
+# ── 9. conferir ───────────────────────────────────────────────────────────
+echo
+bold "9. Conferir o que subiu"
 
 # Espera o endereço começar a responder. Um domínio próprio recém-criado leva
 # alguns minutos até o certificado sair e a rota valer - conferir antes disso
