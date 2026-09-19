@@ -17,7 +17,11 @@ import { useMemo } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
-import { ProgressBar, StreakCard } from '@/components/game/Game';
+import {
+  CartaoCurso, CartaoNumero, CartaoRevisao, CartaoSemana,
+  IconeLetras, IconeLicoes, IconeRevisar, IconeTempo
+} from '@/components/platform/Painel';
+import { flagship } from '@/lib/catalog';
 import { AlphabetGrid, ModuleProgress } from '@/components/game/AlphabetGrid';
 import { useProgress } from '@/lib/state/store';
 import { course, getLetter, getModule } from '@/lib/content';
@@ -56,6 +60,23 @@ export function DashboardClient() {
     return { kind: 'done' as const };
   }, [p.state]);
 
+  /* Lições concluídas: uma lição do curso são as cinco etapas de uma letra,
+     e os módulos sem letra contam pelas três etapas próprias. */
+  const licoesFeitas = Object.values(p.state.lessons)
+    .filter(l => (l?.stagesDone.length ?? 0) >= 5).length;
+
+  /* `units` são blocos de 20 segundos - ver a nota em Painel.tsx. */
+  const minutosSemana = Math.round(
+    Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(`${p.day}T12:00:00Z`);
+      d.setUTCDate(d.getUTCDate() - i);
+      return p.state.days[d.toISOString().slice(0, 10)]?.units ?? 0;
+    }).reduce((a, b) => a + b, 0) / 3
+  );
+  const tempoSemana = minutosSemana >= 60
+    ? `${Math.floor(minutosSemana / 60)}h${String(minutosSemana % 60).padStart(2, '0')}`
+    : `${minutosSemana}min`;
+
   if (!p.ready) return <DashboardSkeleton />;
 
   if (!p.state.onboarding) {
@@ -75,15 +96,31 @@ export function DashboardClient() {
 
   return (
     <div className="grid gap-6 sm:gap-8">
-      <header className="grid gap-1.5">
-        <h1 className="text-[27px] sm:text-[33px] font-bold leading-tight">
-          {greeting()}{name ? `, ${name}` : ''} 👋
-        </h1>
-        <p className="font-ui text-[15px] text-ink-muted">
-          {p.mastered === 0
-            ? 'Vamos continuar seu hebraico? Começamos pela primeira letra.'
-            : `Você já domina ${p.mastered} ${p.mastered === 1 ? 'letra' : 'letras'} de ${course.totalLetters}.`}
-        </p>
+      <header className="flex items-start gap-5 flex-wrap">
+        <div className="flex-1 min-w-[240px]">
+          <h1 className="font-display text-[27px] sm:text-[31px] font-semibold leading-[1.1] tracking-[-0.028em] mb-1">
+            {greeting()}{name ? `, ${name}` : ''} 👋
+          </h1>
+          <p className="font-ui text-[16px] sm:text-[16.5px] text-ink-muted">
+            {p.mastered === 0
+              ? 'Vamos continuar seu hebraico? Começamos pela primeira letra.'
+              : 'Continue de onde você parou.'}
+          </p>
+        </div>
+        {/* A sequência sai do cartão e vira pílula no cabeçalho: é o número
+            que a pessoa quer ver primeiro, e ele não precisa de um cartão
+            inteiro para ser lido. */}
+        {p.streak > 0 && (
+          <p className="flex items-center gap-2.5 rounded-full bg-[var(--gold-soft)] px-4 py-2.5">
+            <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden>
+              <path d="M9 2c1.8 2.8.7 4.3-.6 5.7-1.2 1.3-2.2 2.5-2.2 4.3a2.8 2.8 0 0 0 5.6 0c0-.8-.2-1.4-.6-2.1 1.9.9 3 2.4 3 4.2A5.2 5.2 0 0 1 9 16a5.2 5.2 0 0 1-5.2-5.2C3.8 7 7.4 5.6 9 2Z"
+                    stroke="var(--gold)" strokeWidth="1.35" strokeLinejoin="round" />
+            </svg>
+            <span className="font-ui text-[15px] font-bold text-[var(--gold-ink)] tabular-nums">
+              {p.streak} {p.streak === 1 ? 'dia seguido' : 'dias seguidos'}
+            </span>
+          </p>
+        )}
       </header>
 
       <AccessNotice />
@@ -111,83 +148,84 @@ export function DashboardClient() {
       <section aria-labelledby="continuar">
         <h2 id="continuar" className="sr-only">Continuar aprendendo</h2>
         {next.kind === 'letter' && (
-          <Card tone="wash" className="p-6 sm:p-7 grid sm:grid-cols-[auto_1fr_auto] items-center gap-5">
-            <div className="w-[76px] h-[76px] rounded-[var(--r-lg)] bg-surface grid place-items-center shrink-0">
-              <He size="xl">{next.letter.letter}</He>
-            </div>
-            <div className="grid gap-1 min-w-0">
-              <Badge tone="accent">Módulo {next.module.n} · lição {next.letter.lesson}</Badge>
-              <p className="font-display text-[21px] font-bold text-ink mt-1">
-                Letra {next.letter.namePt}
-              </p>
-              <p className="font-ui text-[14px] text-ink-muted">
-                Letra {next.letter.order} de {course.totalLetters} · som {next.letter.sound}
-              </p>
-            </div>
-            <LinkButton href={`/licao/${next.letter.id}`} size="lg" className="w-full sm:w-auto">
-              {(p.state.lessons[next.letter.id]?.stagesDone.length ?? 0) > 0 ? 'Continuar' : 'Começar'}
-            </LinkButton>
-          </Card>
+          <CartaoCurso
+            kicker="Curso em andamento"
+            titulo={flagship().titlePt}
+            sub={`Módulo ${next.module.n} · lição ${next.letter.lesson} - letra ${next.letter.namePt}, som ${next.letter.sound}`}
+            pct={p.progress}
+            href={`/licao/${next.letter.id}`}
+            cta={(p.state.lessons[next.letter.id]?.stagesDone.length ?? 0) > 0
+              ? 'Continuar aprendendo' : 'Começar a lição'}
+          />
         )}
 
         {next.kind === 'checkpoint' && (
-          <Card tone="mint" className="p-6 sm:p-7 grid sm:grid-cols-[1fr_auto] items-center gap-5">
-            <div className="grid gap-1">
-              <Badge tone="mint">Checkpoint {next.module.n}</Badge>
-              <p className="font-display text-[21px] font-bold text-ink mt-1">
-                {next.module.titlePt} - hora de conferir
-              </p>
-              <p className="font-ui text-[14px] text-ink-body">
-                As {next.module.letterIds.length} letras do módulo, juntas.
-              </p>
-            </div>
-            <LinkButton href={`/checkpoint/${next.module.n}`} size="lg" className="w-full sm:w-auto">
-              Fazer o checkpoint
-            </LinkButton>
-          </Card>
+          <CartaoCurso
+            kicker={`Checkpoint ${next.module.n}`}
+            titulo={next.module.titlePt}
+            sub={`As ${next.module.letterIds.length} letras do módulo, juntas.`}
+            pct={p.progress}
+            href={`/checkpoint/${next.module.n}`}
+            cta="Fazer o checkpoint"
+          />
         )}
 
         {next.kind === 'extra' && (
-          <Card tone="wash" className="p-6 sm:p-7 grid sm:grid-cols-[1fr_auto] items-center gap-5">
-            <div className="grid gap-1">
-              <Badge tone="accent">Módulo {next.module.n}</Badge>
-              <p className="font-display text-[21px] font-bold text-ink mt-1">
-                {next.module.titlePt}
-              </p>
-              <p className="font-ui text-[14px] text-ink-body">
-                Nenhuma letra nova - e é o módulo que separa quem decora de quem lê.
-              </p>
-            </div>
-            <LinkButton href={`/modulo/${next.module.n}`} size="lg" className="w-full sm:w-auto">
-              {(p.state.lessons[next.module.id]?.stagesDone.length ?? 0) > 0 ? 'Continuar' : 'Começar'}
-            </LinkButton>
-          </Card>
+          <CartaoCurso
+            kicker={`Módulo ${next.module.n}`}
+            titulo={next.module.titlePt}
+            sub="Nenhuma letra nova - e é o módulo que separa quem decora de quem lê."
+            pct={p.progress}
+            href={`/modulo/${next.module.n}`}
+            cta={(p.state.lessons[next.module.id]?.stagesDone.length ?? 0) > 0
+              ? 'Continuar aprendendo' : 'Começar o módulo'}
+          />
         )}
 
         {next.kind === 'done' && (
-          <Card tone="mint" className="p-6 sm:p-7 grid gap-3">
-            <p className="font-display text-[21px] font-bold">Você chegou ao fim do alfabeto.</p>
-            <LinkButton href="/desafio-final" size="lg" className="justify-self-start">
-              Ir para o desafio final
-            </LinkButton>
-          </Card>
+          <CartaoCurso
+            kicker="Alfabeto concluído"
+            titulo="Você chegou ao fim do alfabeto."
+            sub="As 22 letras, sem transliteração para se apoiar."
+            pct={1}
+            href="/desafio-final"
+            cta="Ir para o desafio final"
+          />
         )}
       </section>
 
-      {/* Below lg this is the phone layout, unchanged: two cards, then the
-          progress summary. At lg it becomes the dashboard - the whole alphabet
-          on the left, the day's state on the right. */}
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(260px,1fr)] lg:gap-6 lg:items-start">
-        <section aria-labelledby="alfabeto" className="order-2 lg:order-1 grid gap-3">
+      {/* Os quatro números, e depois revisar e a semana. É a ordem do design,
+          e ela responde na sequência certa: o que eu já fiz, o que está
+          pendente, e como foi a semana. */}
+      <section aria-label="Seus números" className="grid gap-3
+                          [grid-template-columns:repeat(auto-fit,minmax(168px,1fr))]">
+        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? 'letra dominada' : 'letras dominadas'}
+                      tom="teal" icone={<IconeLetras />} />
+        <CartaoNumero n={licoesFeitas} rotulo={licoesFeitas === 1 ? 'lição concluída' : 'lições concluídas'}
+                      tom="teal" icone={<IconeLicoes />} />
+        <CartaoNumero n={p.dueCount} rotulo="a revisar" tom="gold" icone={<IconeRevisar />} />
+        <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />
+      </section>
+
+      <div className="grid gap-3.5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-start">
+        <CartaoRevisao />
+        <CartaoSemana />
+      </div>
+
+      {/* A grade do alfabeto e a lista de módulos. Ficam DEPOIS dos números
+          e do cartão de revisão: são a resposta para "onde estou no curso
+          inteiro", que é uma pergunta mais calma do que "o que faço agora". */}
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(250px,1fr)] lg:gap-6 lg:items-start">
+        <section aria-labelledby="alfabeto" className="grid gap-3">
           <div className="flex items-baseline justify-between gap-3">
-            <h2 id="alfabeto" className="font-display text-[17px] font-bold text-ink">
+            <h2 id="alfabeto" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
               O alfabeto
             </h2>
-            {/* 44px of height even though the text is 13px: a link on a phone
-                is hit with a fingertip, not a cursor. */}
+            {/* 44px de altura mesmo com texto de 13px: um link no telefone é
+                acertado com a ponta do dedo, e não com um cursor. */}
             <Link href="/mapa"
                   className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                             text-[var(--accent)] hover:underline">
+                             text-[var(--teal)] hover:underline">
               Ver o mapa →
             </Link>
           </div>
@@ -195,13 +233,12 @@ export function DashboardClient() {
             <AlphabetGrid />
           </Card>
 
-          {/* Fechado no telefone. A grade logo acima já responde "onde estou" -
-              a lista de sete módulos abaixo dela repetia a mesma informação
-              por mais 600px, e é a terceira barra de progresso da mesma tela.
-              Quem quer o detalhe abre; ninguém mais rola por cima dele. */}
+          {/* Fechado no telefone: a grade logo acima já responde "onde estou",
+              e a lista de sete módulos repetia a mesma informação por mais
+              600px. Quem quer o detalhe abre. */}
           <details className="lg:hidden group">
             <summary className="flex items-center gap-2 min-h-[44px] cursor-pointer
-                                font-display text-[17px] font-bold text-ink list-none
+                                font-display text-[18px] font-semibold text-ink list-none
                                 [&::-webkit-details-marker]:hidden">
               Módulos
               <span aria-hidden className="font-ui text-[13px] font-normal text-ink-muted
@@ -209,67 +246,17 @@ export function DashboardClient() {
             </summary>
             <div className="pt-2"><ModuleProgress /></div>
           </details>
-
-          {/* Dentro da coluna da esquerda, e não embaixo das duas.
-              A lista de módulos faz a coluna da direita passar de 900px; solta
-              embaixo, a prateleira deixava um vão branco do tamanho de meia
-              tela entre a grade e ela. Aqui as duas colunas terminam juntas.
-              No telefone só existe uma coluna e a ordem não muda. */}
-          <div className="mt-2 lg:mt-4">
-            <CourseShelf headingPt="Seus cursos" variant="rows" />
-          </div>
         </section>
 
-        <aside className="order-1 lg:order-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-          <StreakCard days={p.streak} goalUnits={p.goalUnits} goalTarget={p.goalTargetToday} />
-
-          <Card className="p-5 grid gap-3 content-start">
-            <div className="flex items-center gap-2.5">
-              <span aria-hidden className="text-[18px] text-ink-muted">↻</span>
-              <p className="font-display text-[19px] font-bold text-ink">Revisão rápida</p>
-            </div>
-            {p.dueCount > 0 ? (
-              <>
-                <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-                  Hoje vale revisar:{' '}
-                  {p.weak.map(id => getLetter(id)).filter(Boolean).map((l, i) => (
-                    <span key={l!.id}>
-                      {i > 0 && <span className="text-ink-muted"> · </span>}
-                      <He size="inline">{l!.letter}</He>
-                    </span>
-                  ))}
-                </p>
-                <LinkButton href="/revisao" variant="secondary" size="sm" className="justify-self-start">
-                  Revisar · 3 minutos
-                </LinkButton>
-              </>
-            ) : (
-              <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-                Nada pendente por enquanto. Quando você errar alguma coisa, ela aparece
-                aqui no dia certo para ser revista.
-              </p>
-            )}
-          </Card>
-
-          <div className="hidden lg:grid gap-2 sm:col-span-2 lg:col-span-1">
-            <h2 className="font-display text-[17px] font-bold text-ink">Módulos</h2>
-            <ModuleProgress />
-          </div>
+        <aside className="hidden lg:grid gap-2 content-start">
+          <h2 className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">Módulos</h2>
+          <ModuleProgress />
         </aside>
       </div>
 
-      <Card className="p-5 grid gap-4 lg:hidden">
-        <ProgressBar
-          value={p.progress}
-          label="Curso completo"
-          sublabel={`${Math.round(p.progress * 100)}%`}
-        />
-        <div className="flex flex-wrap gap-x-6 gap-y-2 font-ui text-[13px] text-ink-muted">
-          <span><strong className="text-ink font-semibold tabular-nums">{p.mastered}</strong> / {course.totalLetters} letras</span>
-          <span><strong className="text-ink font-semibold tabular-nums">{p.state.xp}</strong> XP</span>
-          <span><strong className="text-ink font-semibold tabular-nums">{p.state.achievements.length}</strong> conquistas</span>
-        </div>
-      </Card>
+      {/* No fim, e não no topo: o painel é de quem já comprou. Em linhas, e
+          não em cards de venda. */}
+      <CourseShelf headingPt="Seus cursos" variant="rows" />
     </div>
   );
 }

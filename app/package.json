@@ -11,6 +11,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "shots": "node shot.mjs",
+    "varrer": "node varrer-site.mjs && node varrer-curso.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {

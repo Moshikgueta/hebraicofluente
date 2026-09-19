@@ -21,14 +21,38 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, course, type Letter } from '@/lib/content';
 import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
 
+/* Os quatro estados do mapa de domínio, com os nomes e as cores do design.
+   Cada um é cor + ícone + palavra, nunca cor sozinha - a mesma regra do
+   retorno de resposta, e pelo mesmo motivo. */
+export type EstadoLetra = 'dominada' | 'revisar' | 'progresso' | 'nova';
+
+const ESTADO: Record<EstadoLetra, { fundo: string; borda: string; tinta: string; rotulo: string }> = {
+  dominada:  { fundo: 'var(--teal-soft)', borda: 'var(--edge-teal)', tinta: 'var(--teal-ink)', rotulo: 'Dominada' },
+  revisar:   { fundo: 'var(--gold-soft)', borda: 'var(--edge-gold)', tinta: 'var(--gold)',     rotulo: 'Revisar' },
+  progresso: { fundo: 'var(--card)',      borda: 'var(--line)',      tinta: 'var(--teal)',     rotulo: 'Em progresso' },
+  nova:      { fundo: 'var(--sand)',      borda: 'var(--line)',      tinta: 'var(--locked)',   rotulo: 'Não vista' }
+};
+
 export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
   const p = useProgress();
   const letters = allLetters();
+
+  /* Quais letras pedem revisão hoje. `weakLetters` já ordena por quanto
+     custaram; aqui só interessa a pertinência ao conjunto. */
+  const aRevisar = new Set(p.weak);
 
   /* The first unfinished letter is "current". Everything before it is open for
      revisiting, everything after is reachable - nothing is locked, because a
      lock is a promise the course does not need to make. */
   const currentId = letters.find(l => !isLessonComplete(p.state, l.id))?.id;
+
+  const estadoDe = (L: Letter): EstadoLetra => {
+    const feita = isLessonComplete(p.state, L.id);
+    if (aRevisar.has(L.id)) return 'revisar';
+    if (feita) return 'dominada';
+    if ((p.state.lessons[L.id]?.stagesDone.length ?? 0) > 0 || L.id === currentId) return 'progresso';
+    return 'nova';
+  };
 
   return (
     <div className="grid gap-3">
@@ -46,8 +70,8 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
           <LetterCell
             key={L.id}
             letter={L}
-            done={isLessonComplete(p.state, L.id)}
-            current={L.id === currentId}
+            estado={estadoDe(L)}
+            feita={isLessonComplete(p.state, L.id)}
             stages={p.state.lessons[L.id]?.stagesDone.length ?? 0}
             compact={compact}
           />
@@ -55,69 +79,97 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
       </div>
 
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 font-ui text-[11.5px] text-ink-muted">
-        <Legend swatch="bg-mint border-[var(--green)]" label={`${p.mastered} dominadas`} />
-        <Legend swatch="bg-[var(--accent-wash)] border-[var(--accent-soft)]" label="onde você está" />
-        <Legend swatch="bg-surface border-line" label={`${course.totalLetters - p.mastered} pela frente`} />
+        {(['dominada', 'revisar', 'progresso', 'nova'] as const).map(e => {
+          const quantas = letters.filter(L => estadoDe(L) === e).length;
+          if (quantas === 0) return null;
+          return <Legend key={e} estado={e} label={`${quantas} ${ESTADO[e].rotulo.toLowerCase()}`} />;
+        })}
       </div>
     </div>
   );
 }
 
-function Legend({ swatch, label }: { swatch: string; label: string }) {
+function Legend({ estado, label }: { estado: EstadoLetra; label: string }) {
+  const e = ESTADO[estado];
   return (
     <span className="inline-flex items-center gap-1.5">
-      <span aria-hidden className={`w-3 h-3 rounded-[4px] border ${swatch}`} />
+      <span aria-hidden className="w-3 h-3 rounded-[4px] border"
+            style={{ background: e.fundo, borderColor: e.borda }} />
       {label}
     </span>
   );
 }
 
-function LetterCell({
-  letter: L, done, current, stages, compact
-}: { letter: Letter; done: boolean; current: boolean; stages: number; compact: boolean }) {
-  const tone = done
-    ? 'bg-mint border-[var(--green)]'
-    : current
-      ? 'bg-[var(--accent-wash)] border-[var(--accent-soft)]'
-      : 'bg-surface border-line hover:border-[var(--accent-soft)]';
+/** O sinal de cada estado. Cor nunca sozinha: o ícone diz o mesmo. */
+function SinalEstado({ estado }: { estado: EstadoLetra }) {
+  const cor = ESTADO[estado].tinta;
+  if (estado === 'dominada') return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path d="M3.2 8.3 6.2 11.3 12.8 4.7" stroke={cor} strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+  if (estado === 'revisar') return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path d="M8 3v8M4.8 8.2 8 11.4l3.2-3.2" stroke={cor} strokeWidth="1.8"
+            strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+  if (estado === 'progresso') return (
+    <span aria-hidden className="w-[7px] h-[7px] rounded-full" style={{ background: cor }} />
+  );
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <rect x="3.4" y="7" width="9.2" height="6.2" rx="1.6" stroke={cor} strokeWidth="1.4" />
+      <path d="M5.6 7V5.4a2.4 2.4 0 0 1 4.8 0V7" stroke={cor} strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
 
-  const state = done ? 'concluída'
-    : current ? 'onde você está'
-    : stages > 0 ? `${stages} de ${STAGE_COUNT} etapas`
-    : 'ainda não estudada';
+function LetterCell({
+  letter: L, estado, feita, stages, compact
+}: { letter: Letter; estado: EstadoLetra; feita: boolean; stages: number; compact: boolean }) {
+  const e = ESTADO[estado];
+  /* A contagem de etapas só faz sentido enquanto a lição não fechou. Uma
+     letra concluída que voltou para revisão mostra o NOME, e não "5/5" - o
+     5/5 diria a coisa certa pelo motivo errado. */
+  const parcial = !feita && stages > 0;
+  const dito = estado === 'progresso' && stages > 0
+    ? `${stages} de ${STAGE_COUNT} etapas`
+    : e.rotulo.toLowerCase();
 
   return (
     <Link
       href={`/licao/${L.id}`}
-      title={`${L.order}. ${L.namePt} - ${state}`}
-      aria-label={`Letra ${L.order}, ${L.namePt}: ${state}`}
-      className={`group relative rounded-[var(--r-md)] border-2 transition-colors
+      title={`${L.order}. ${L.namePt} - ${dito}`}
+      aria-label={`Letra ${L.order}, ${L.namePt}: ${dito}`}
+      style={{ background: e.fundo, borderColor: e.borda }}
+      className={`group relative rounded-[var(--r-md)] border transition-colors
         ${compact ? 'min-h-[56px] p-1.5' : 'min-h-[56px] p-1.5 sm:min-h-[74px] sm:p-2'}
-        grid place-items-center gap-0.5 ${tone} ${!done && !current && stages === 0 ? 'opacity-70' : ''}`}
+        grid place-items-center gap-0.5`}
     >
       <span aria-hidden className="absolute top-1 left-1.5 font-ui text-[9.5px] tabular-nums text-ink-muted">
         {L.order}
       </span>
-      <He size={compact ? 'word' : 'lg'} dim={!done && !current && stages === 0}>{L.letter}</He>
+      <He size={compact ? 'word' : 'lg'} dim={estado === 'nova'}>{L.letter}</He>
       {!compact && (
         /* O nome da letra só a partir de sm. Num telefone ele é 10px debaixo
            de cada uma das 22 células, e o nome de cada letra está no mapa e
            na lição - aqui ele custava mais altura do que informava. O `title`
            e o `aria-label` da célula continuam dizendo tudo. */
         <span className="hidden sm:block font-ui text-[10px] leading-none text-ink-muted truncate max-w-full">
-          {stages > 0 && !done ? `${stages}/${STAGE_COUNT}` : L.namePt}
+          {parcial ? `${stages}/${STAGE_COUNT}` : L.namePt}
         </span>
       )}
-      {!compact && stages > 0 && !done && (
+      {!compact && parcial && (
         <span aria-hidden
-              className="sm:hidden absolute bottom-0.5 font-ui text-[9px] leading-none text-[var(--accent)] tabular-nums">
+              className="sm:hidden absolute bottom-0.5 font-ui text-[9px] leading-none text-[var(--teal)] tabular-nums">
           {stages}/{STAGE_COUNT}
         </span>
       )}
-      {done && (
-        <span aria-hidden
-              className="absolute top-1 right-1.5 text-[10px] leading-none text-[var(--green)]">✓</span>
-      )}
+      <span aria-hidden className="absolute top-1 right-1.5 grid place-items-center">
+        <SinalEstado estado={estado} />
+      </span>
     </Link>
   );
 }

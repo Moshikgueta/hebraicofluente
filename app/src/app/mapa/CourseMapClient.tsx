@@ -1,459 +1,209 @@
 'use client';
 
-/* The course map, in two shapes.
+/* O mapa do curso: uma linha do tempo vertical.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Um marcador por módulo, ligado ao seguinte por um fio, e ao lado um cartão
+ * com as letras daquele módulo. O caminho inteiro é visível desde o começo -
+ * esconder a estrada é o que faz um curso parecer infinito -, mas o peso é
+ * desigual de propósito: o módulo concluído tem o marcador cheio, o atual
+ * tem borda teal e barra de progresso, e o que vem tem cadeado e 72% de
+ * opacidade.
  *
- * A vertical spine, not a winding cartoon path: the learner is an adult and
- * the question they are asking is "how far in am I, and what is left". The
- * whole journey is visible from the start - future lessons are dimmed, never
- * hidden, because hiding the road is what makes a course feel endless.
+ * Uma forma só, do telefone ao desktop. Antes eram duas - uma espinha no
+ * telefone e um quadro de painéis no desktop -, dois desenhos para o mesmo
+ * dado, e cada mudança de conteúdo tinha de ser feita nos dois. Os cartões
+ * de letra são uma grade que embrulha sozinha, então a linha do tempo cabe
+ * em 390px sem virar outra tela.
  *
- * On a phone the spine is right: one thing under another, scrolled with a
- * thumb. On a desk it was 3,500 pixels tall - the whole journey existed and
- * you could never see it. So at 1024px the same data becomes a BOARD: the
- * seven units of the teaching plan side by side, each a panel with its letters
- * and its checkpoint, the course in about a screen and a half. */
+ * Nada aqui é bloqueado de verdade: o cadeado diz "você ainda não chegou",
+ * não "não pode entrar". Um adulto que quer espiar o módulo 6 pode.
+ */
 
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
 import { He } from '@/components/hebrew/He';
-import { Card, Badge } from '@/components/ui/Card';
-import { ProgressBar } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
-import { course, getLetter, type CourseModule, type MapNode } from '@/lib/content';
+import { course, getLetter, type CourseModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
 import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
+import { flagship } from '@/lib/catalog';
 
-export function CourseMapClient({ nodes }: { nodes: MapNode[] }) {
+type Estado = 'feito' | 'agora' | 'adiante';
+
+export function CourseMapClient() {
   const p = useProgress();
+  const modulos = course.modules;
+  const licoes = modulos.reduce((n, m) => n + m.lessons.length, 0);
 
-  /* "Current" is the first thing not finished. Everything before it is open
-     for revisiting; everything after is reachable but visually quiet. */
-  const currentIndex = nodes.findIndex(n =>
-    (n.kind === 'letter' && !isLessonComplete(p.state, n.letter.id)) ||
-    (n.kind === 'checkpoint' && !p.state.checkpoints[n.checkpoint.id]?.passedAt)
-  );
+  /* O módulo atual é o primeiro que ainda não fechou. */
+  const indiceAtual = modulos.findIndex(m => !moduloCompleto(p.state, m));
 
   return (
-    <div className="grid gap-6">
-      <header className="grid gap-3">
-        <h1 className="text-[27px] sm:text-[33px] font-bold">O caminho inteiro</h1>
-        <p className="font-ui text-[15px] text-ink-muted max-w-[52ch]">
-          {course.totalLetters} letras em {course.modules.filter(m => m.letterIds.length).length} módulos,
-          na ordem do plano de aulas - não na ordem do dicionário.
+    <div className="lg:rounded-[24px] lg:bg-[var(--card)] lg:border lg:border-line lg:shadow-[var(--sh)]
+                    lg:p-10 lg:pb-11">
+      <header className="flex items-end gap-5 flex-wrap mb-8">
+        <div className="flex-1 min-w-[240px]">
+          <p className="font-ui text-[13px] font-bold uppercase tracking-[.1em] text-[var(--teal)] mb-2">
+            Meu curso
+          </p>
+          <h1 className="font-display text-[27px] sm:text-[31px] font-semibold leading-[1.1]
+                         tracking-[-0.028em] mb-1">
+            {flagship().titlePt}
+          </h1>
+          <p className="font-ui text-[16px] text-ink-muted">
+            {modulos.length} módulos · {licoes} lições · {course.totalLetters} letras
+          </p>
+        </div>
+        <p className="text-right">
+          <span className="block font-display text-[34px] sm:text-[38px] font-semibold
+                           tracking-[-0.03em] leading-none text-[var(--teal)] tabular-nums">
+            {Math.round(p.progress * 100)}%
+          </span>
+          <span className="block font-ui text-[14px] text-ink-muted">concluído</span>
         </p>
-        <ProgressBar
-          value={p.progress}
-          label={`${p.mastered} de ${course.totalLetters} letras`}
-          sublabel={`${Math.round(p.progress * 100)}%`}
-        />
       </header>
 
-      <Spine nodes={nodes} currentIndex={currentIndex} />
-
-      <div className="hidden lg:block"><Board /></div>
+      <ol className="list-none p-0 m-0">
+        {modulos.map((m, i) => {
+          const estado: Estado = i < indiceAtual ? 'feito'
+            : i === indiceAtual || indiceAtual === -1 ? 'agora'
+            : 'adiante';
+          return (
+            <Trecho key={m.id} module={m} estado={estado} ultimo={i === modulos.length - 1} />
+          );
+        })}
+      </ol>
     </div>
   );
 }
 
-/* ── o telefone: a espinha, com um módulo aberto ────────────────────────
- * O mapa mostra o caminho inteiro, e isso não muda - esconder a estrada é o
- * que faz um curso parecer infinito. O que muda é o PESO de cada trecho.
- *
- * Aberta de ponta a ponta, a espinha eram 27 cartões idênticos e 3.689px de
- * rolagem no telefone: sete telas em que tudo tem a mesma importância e a
- * única linha que interessa - onde eu parei - passa voando no meio. Agora o
- * módulo em que a pessoa está fica aberto e os outros viram uma faixa com as
- * letras dele, que continua dizendo o que vem e abre num toque.
- *
- * No desktop nada disso existe: lá o espaço é horizontal e o quadro mostra o
- * curso inteiro de uma vez, que é a vantagem real de uma tela grande.
- */
-type Linha = { node: MapNode; index: number };
-type Trecho =
-  | { kind: 'solo'; node: MapNode; index: number }
-  | { kind: 'modulo'; module: CourseModule; index: number; linhas: Linha[] };
-
-function agrupar(nodes: MapNode[]): Trecho[] {
-  const out: Trecho[] = [];
-  let aberto: Extract<Trecho, { kind: 'modulo' }> | null = null;
-  nodes.forEach((node, index) => {
-    if (node.kind === 'module') {
-      aberto = { kind: 'modulo', module: node.module, index, linhas: [] };
-      out.push(aberto);
-      return;
-    }
-    if (node.kind === 'letter' || node.kind === 'checkpoint') {
-      if (aberto) { aberto.linhas.push({ node, index }); return; }
-    } else {
-      aberto = null;
-    }
-    out.push({ kind: 'solo', node, index });
-  });
-  return out;
+function moduloCompleto(state: Parameters<typeof isLessonComplete>[0], m: CourseModule): boolean {
+  if (m.letterIds.length === 0) return (state.lessons[m.id]?.stagesDone.length ?? 0) >= 3;
+  const letras = m.letterIds.every(id => isLessonComplete(state, id));
+  const cp = m.checkpoint ? !!state.checkpoints[m.checkpoint.id]?.passedAt : true;
+  return letras && cp;
 }
 
-function Spine({ nodes, currentIndex }: { nodes: MapNode[]; currentIndex: number }) {
-  const trechos = agrupar(nodes);
-  const [abertos, setAbertos] = useState<Record<string, boolean>>({});
-
-  const estado = (i: number) => (i < currentIndex ? 'done' : i === currentIndex ? 'now' : 'ahead');
-
-  return (
-    <ol className="lg:hidden relative grid gap-2 pl-[26px] sm:pl-[34px]">
-      {/* the spine */}
-      <span aria-hidden className="absolute left-[11px] sm:left-[15px] top-3 bottom-3 w-[2px] bg-line-soft" />
-
-      {trechos.map(t => {
-        if (t.kind === 'solo') {
-          return <MapRow key={keyOf(t.node, t.index)} node={t.node} state={estado(t.index)} />;
-        }
-        /* Aberto: onde a pessoa está, ou o que ela mandou abrir. */
-        const contemAtual = currentIndex >= t.index
-          && currentIndex <= (t.linhas[t.linhas.length - 1]?.index ?? t.index);
-        const aberto = abertos[t.module.id] ?? contemAtual;
-        return (
-          /* Um fragmento, e não um <li> em volta: cabeçalho e linhas são
-             irmãos dentro do <ol>, que é o que a lista significa. */
-          <Fragment key={t.module.id}>
-            <ModuloCabecalho
-              module={t.module}
-              aberto={aberto}
-              atual={contemAtual}
-              onToggle={() => setAbertos(a => ({ ...a, [t.module.id]: !aberto }))}
-            />
-            {aberto && t.linhas.map(l => (
-              <MapRow key={keyOf(l.node, l.index)} node={l.node} state={estado(l.index)} />
-            ))}
-          </Fragment>
-        );
-      })}
-    </ol>
-  );
-}
-
-function ModuloCabecalho({
-  module: m, aberto, atual, onToggle
-}: {
-  module: CourseModule; aberto: boolean; atual: boolean; onToggle: () => void;
+function Trecho({ module: m, estado, ultimo }: {
+  module: CourseModule; estado: Estado; ultimo: boolean;
 }) {
   const p = useProgress();
   const letras = m.letterIds.map(getLetter).filter(l => !!l);
-  const feitas = letras.filter(l => isLessonComplete(p.state, l.id)).length;
+  const feitas = letras.filter(l => isLessonComplete(p.state, l!.id)).length;
+  const extra = letras.length === 0;
+  const etapas = extra ? Math.min(3, p.state.lessons[m.id]?.stagesDone.length ?? 0) : feitas;
+  const total = extra ? 3 : letras.length;
+  const pct = total ? Math.round((etapas / total) * 100) : 0;
+  const destino = extra
+    ? `/modulo/${m.n}`
+    : `/licao/${m.letterIds.find(id => !isLessonComplete(p.state, id)) ?? m.letterIds[0]}`;
+
+  const TAG = {
+    feito: { texto: 'Concluído', cor: 'text-[var(--teal-ink)]' },
+    agora: { texto: 'Em andamento', cor: 'text-[var(--teal)]' },
+    adiante: { texto: 'Em breve', cor: 'text-[#9AA29E]' }
+  }[estado];
 
   return (
-    <li className="relative pt-6 pb-1">
-      <span aria-hidden
-        className="absolute left-[-26px] sm:left-[-34px] top-[30px] w-[24px] sm:w-[32px] h-[2px] bg-line-soft" />
-
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <Badge tone="accent">Módulo {m.n}</Badge>
-        <h2 className="font-display text-[17px] font-bold text-ink">{m.titlePt}</h2>
-      </div>
-
-      {m.letterIds.length === 0 ? (
-        <ExtraModuleRow module={m} />
-      ) : aberto ? (
-        <p className="font-ui text-[13px] text-ink-muted mt-1">
-          {m.letterIds.length} letras · lições {m.lessons[0]?.n}-{m.lessons[m.lessons.length - 1]?.n}
-          {!atual && (
-            <>
-              {' · '}
-              <button type="button" onClick={onToggle}
-                      className="font-ui text-[13px] text-[var(--accent)] hover:underline">
-                fechar
-              </button>
-            </>
+    <li className="grid grid-cols-[38px_minmax(0,1fr)] sm:grid-cols-[52px_minmax(0,1fr)] gap-4 sm:gap-5">
+      <div className="flex flex-col items-center">
+        <span
+          aria-hidden
+          className={`w-[38px] h-[38px] sm:w-11 sm:h-11 rounded-[14px] border-2 grid place-items-center shrink-0
+            ${estado === 'feito' ? 'bg-[var(--teal)] border-[var(--teal)]'
+              : estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
+              : 'bg-[var(--sand)] border-line'}`}
+        >
+          {estado === 'feito' && (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M3.6 9.4 7 12.8 14.4 5.4" stroke="#fff" strokeWidth="2.2"
+                    strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           )}
-        </p>
-      ) : (
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-expanded={false}
-          className="mt-2 w-full flex items-center gap-3 rounded-[var(--r-md)] border border-line
-                     bg-surface px-3 min-h-[56px] text-left hover:bg-surface-2 transition-colors"
-        >
-          <span className="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
-            {letras.map(L => (
-              <He key={L.id} size="word" dim={!isLessonComplete(p.state, L.id)}>{L.letter}</He>
-            ))}
-          </span>
-          <span className="font-ui text-[12px] tabular-nums text-ink-muted shrink-0">
-            {feitas === letras.length && letras.length > 0 ? 'concluído ✓' : `${feitas}/${letras.length}`}
-          </span>
-          <span aria-hidden className="font-ui text-[13px] text-ink-muted shrink-0">▾</span>
-        </button>
-      )}
-    </li>
-  );
-}
-
-/* ── the desk: a board ──────────────────────────────────────────────────── */
-function Board() {
-  return (
-    <div className="grid gap-4">
-      <Card className="hover:bg-surface-2 transition-colors">
-        <Link href="/inicio" className="p-4 flex items-center gap-4">
-          <span aria-hidden className="w-[34px] h-[34px] shrink-0 rounded-full border-2 border-[var(--green)]
-                                      text-[var(--green)] grid place-items-center text-[13px]">◇</span>
-          <span className="min-w-0">
-            <span className="block font-display text-[16px] font-semibold text-ink">
-              Comece aqui - como o hebraico funciona
-            </span>
-            <span className="block font-ui text-[13px] text-ink-muted">
-              Direção, os sinais de vogal, como praticar
-            </span>
-          </span>
-        </Link>
-      </Card>
-
-      {/* The five modules that teach letters, then - on their own row - the two
-          that teach no new letter. That split is the teaching plan's own, and
-          on a board it is worth showing rather than burying in the flow. */}
-      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 items-start">
-        {course.modules.filter(m => m.letterIds.length > 0)
-          .map(m => <ModulePanel key={m.id} module={m} />)}
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-2 items-start">
-        {course.modules.filter(m => m.letterIds.length === 0)
-          .map(m => <ModulePanel key={m.id} module={m} />)}
-      </div>
-
-      <Card tone="wash">
-        <Link href="/desafio-final" className="p-5 flex items-center gap-4">
-          <span aria-hidden className="w-[34px] h-[34px] shrink-0 rounded-full border-2 border-[var(--accent)]
-                                      text-[var(--accent)] grid place-items-center text-[13px]">★</span>
-          <span className="min-w-0">
-            <span className="block font-display text-[17px] font-bold text-ink">O desafio final</span>
-            <span className="block font-ui text-[13px] text-ink-body">
-              As {course.totalLetters} letras, sem transliteração para se apoiar.
-            </span>
-          </span>
-        </Link>
-      </Card>
-    </div>
-  );
-}
-
-function ModulePanel({ module: m }: { module: CourseModule }) {
-  const p = useProgress();
-  const letters = m.letterIds.map(getLetter).filter(l => !!l);
-  const isExtra = letters.length === 0;
-  const cpPassed = !!p.state.checkpoints[`cp${m.n}`]?.passedAt;
-  const doneCount = isExtra
-    ? Math.min(3, p.state.lessons[m.id]?.stagesDone.length ?? 0)
-    : letters.filter(l => isLessonComplete(p.state, l.id)).length;
-  const total = isExtra ? 3 : letters.length;
-  const currentId = course.letters.find(x => !isLessonComplete(p.state, x.id))?.id;
-
-  return (
-    <Card className="overflow-hidden">
-      <div className="px-4 py-3 border-b border-[color:var(--line-soft)] grid gap-1.5">
-        <div className="flex items-center gap-2">
-          <Badge tone="accent">Módulo {m.n}</Badge>
-          <span className="ml-auto font-ui text-[12px] tabular-nums text-ink-muted">
-            {cpPassed ? 'concluído ✓' : `${doneCount}/${total}`}
-          </span>
-        </div>
-        <h2 className="font-display text-[15.5px] font-bold text-ink leading-snug">{m.titlePt}</h2>
-        <span className="h-1.5 rounded-full bg-surface-2 overflow-hidden">
-          <span
-            className={`block h-full rounded-full transition-[width] duration-500
-              ${cpPassed ? 'bg-[var(--green)]' : 'bg-[var(--accent)]'}`}
-            style={{ width: `${total ? (doneCount / total) * 100 : 0}%` }}
-          />
+          {estado === 'agora' && <span className="w-[11px] h-[11px] rounded-full bg-[var(--teal)]" />}
+          {estado === 'adiante' && (
+            <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
+              <rect x="3.6" y="7.8" width="10.8" height="7.4" rx="2" stroke="var(--locked)" strokeWidth="1.4" />
+              <path d="M6.2 7.8V5.9a2.8 2.8 0 0 1 5.6 0v1.9" stroke="var(--locked)" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          )}
         </span>
+        {!ultimo && (
+          <span aria-hidden className="flex-1 w-[2px] min-h-[26px]"
+                style={{ background: estado === 'feito' ? 'var(--teal)' : 'var(--line)' }} />
+        )}
       </div>
 
-      {isExtra ? (
-        <div className="p-4 grid gap-1">
-          {/* No new letter here, so the panel says what the module is FOR -
-              its own milestone, not a generic line repeated twice. */}
-          <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-            <Prose text={m.milestonePt} />
-          </p>
-          <ExtraModuleRow module={m} />
-        </div>
-      ) : (
-        <ul className="p-2 grid gap-0.5">
-          {letters.map(L => {
-            const done = isLessonComplete(p.state, L.id);
-            const stages = p.state.lessons[L.id]?.stagesDone.length ?? 0;
-            const current = L.id === currentId;
-            return (
-              <li key={L.id}>
-                <Link
-                  href={`/licao/${L.id}`}
-                  className={`flex items-center gap-3 rounded-[var(--r-sm)] px-2 py-1.5 transition-colors
-                    ${current ? 'bg-[var(--accent-wash)]' : 'hover:bg-surface-2'}`}
-                >
-                  <span aria-hidden className={`w-4 text-center text-[11px]
-                    ${done ? 'text-[var(--green)]' : current ? 'text-[var(--accent)]' : 'text-ink-muted'}`}>
-                    {done ? '✓' : current ? '●' : '○'}
-                  </span>
-                  <He size="word" dim={!done && !current}>{L.letter}</He>
-                  <span className={`font-ui text-[13px] truncate
-                    ${done || current ? 'text-ink' : 'text-ink-muted'}`}>
-                    {L.order}. {L.namePt}
-                  </span>
-                  {stages > 0 && !done && (
-                    <span className="ml-auto font-ui text-[11px] tabular-nums text-[var(--accent)]">
-                      {stages}/{STAGE_COUNT}
-                    </span>
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-
-      {m.checkpoint && (
+      <div className="pb-6 sm:pb-[26px]">
         <Link
-          href={`/checkpoint/${m.n}`}
-          className="flex items-center gap-3 px-4 py-3 border-t border-[color:var(--line-soft)]
-                     hover:bg-surface-2 transition-colors"
+          href={destino}
+          className={`block rounded-[18px] border p-5 sm:px-6 sm:py-[22px] transition-shadow duration-[250ms]
+            hover:shadow-[var(--sh)]
+            ${estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
+              : estado === 'adiante' ? 'bg-[#FBFAF7] border-line opacity-[.72]'
+              : 'bg-[var(--card)] border-line'}`}
         >
-          <span aria-hidden className={`text-[12px] ${cpPassed ? 'text-[var(--green)]' : 'text-ink-muted'}`}>◆</span>
-          <span className="font-ui text-[13px] font-medium text-ink">Checkpoint {m.n}</span>
-          <span className="ml-auto font-ui text-[12px] text-ink-muted tabular-nums">
-            {p.state.checkpoints[m.checkpoint.id]?.best != null
-              ? `${Math.round(p.state.checkpoints[m.checkpoint.id]!.best! * 100)}%`
-              : '-'}
-          </span>
-        </Link>
-      )}
-    </Card>
-  );
-}
-
-const keyOf = (n: MapNode, i: number): string =>
-  n.kind === 'letter' ? n.letter.id
-  : n.kind === 'module' ? n.module.id
-  : n.kind === 'checkpoint' ? n.checkpoint.id
-  : `${n.kind}-${i}`;
-
-type RowState = 'done' | 'now' | 'ahead';
-
-function MapRow({ node, state }: { node: MapNode; state: RowState }) {
-  const p = useProgress();
-
-  if (node.kind === 'intro') {
-    return (
-      <Row dot="◇" state="done">
-        <Link href="/inicio" className="block">
-          <p className="font-display text-[16px] font-semibold text-ink">Como o hebraico funciona</p>
-          <p className="font-ui text-[13px] text-ink-muted">Direção, sinais de vogal, como praticar</p>
-        </Link>
-      </Row>
-    );
-  }
-
-  /* `module` não chega aqui: na espinha ele é o cabeçalho do trecho, desenhado
-     por `ModuloCabecalho`, que é quem sabe abrir e fechar. */
-
-  if (node.kind === 'letter') {
-    const L = node.letter;
-    const doneCount = p.state.lessons[L.id]?.stagesDone.length ?? 0;
-    const complete = doneCount >= STAGE_COUNT;
-    return (
-      <Row dot={complete ? '✓' : state === 'now' ? '●' : '○'} state={state}>
-        <Link href={`/licao/${L.id}`} className="flex items-center gap-4">
-          <span className={`w-[52px] h-[52px] rounded-[var(--r-md)] grid place-items-center shrink-0
-            ${state === 'now' ? 'bg-[var(--accent-wash)]' : 'bg-surface-2'}`}>
-            <He size="lg" dim={state === 'ahead'}>{L.letter}</He>
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="flex items-baseline gap-2 flex-wrap">
-              <span className={`font-display text-[16px] font-semibold
-                ${state === 'ahead' ? 'text-ink-muted' : 'text-ink'}`}>
-                {L.order}. {L.namePt}
-              </span>
-              <span className="font-ui text-[13px] text-ink-muted">{L.sound}</span>
+          <div className="flex items-center gap-3.5 flex-wrap mb-2.5">
+            <span className={`font-ui text-[12.5px] font-bold uppercase tracking-[.1em] ${TAG.cor}`}>
+              {TAG.texto}
             </span>
-            {doneCount > 0 && !complete && (
-              <span className="block font-ui text-[12px] text-[var(--accent)] mt-0.5">
-                {doneCount} de {STAGE_COUNT} etapas
+            <span className="font-ui text-[13.5px] text-ink-muted">
+              Módulo {m.n} · {m.lessons.length} {m.lessons.length === 1 ? 'lição' : 'lições'}
+            </span>
+            <span className="flex-1" />
+            {estado !== 'adiante' && (
+              <span className="flex items-center gap-2.5 min-w-[150px]">
+                <span className="flex-1 h-1.5 rounded-full bg-[var(--sand)] overflow-hidden">
+                  <span className="block h-full rounded-full bg-[var(--teal)] transition-[width] duration-500"
+                        style={{ width: `${pct}%` }} />
+                </span>
+                <span className="font-ui text-[13px] font-semibold text-[var(--teal)] tabular-nums">{pct}%</span>
               </span>
             )}
-          </span>
-        </Link>
-      </Row>
-    );
-  }
+          </div>
 
-  if (node.kind === 'checkpoint') {
-    const cp = node.checkpoint;
-    const rec = p.state.checkpoints[cp.id];
-    return (
-      <Row dot="◆" state={rec?.passedAt ? 'done' : state}>
-        <Link href={`/checkpoint/${node.module.n}`} className="block">
-          <p className="font-display text-[16px] font-semibold text-ink">
-            Checkpoint {node.module.n}
+          <p className={`font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-3.5
+                         ${estado === 'adiante' ? 'text-ink-muted' : 'text-ink'}`}>
+            {m.titlePt}
           </p>
-          <p className="font-ui text-[13px] text-ink-muted">
-            {rec?.best != null
-              ? `Melhor resultado: ${Math.round(rec.best * 100)}%`
-              : `As ${cp.letterIds.length} letras do módulo, juntas`}
-          </p>
+
+          {extra ? (
+            <p className="font-ui text-[14.5px] leading-[1.5] text-ink-muted">
+              <Prose text={m.subPt} />
+            </p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {letras.map(L => {
+                const feita = isLessonComplete(p.state, L!.id);
+                const etapasFeitas = p.state.lessons[L!.id]?.stagesDone.length ?? 0;
+                const comecada = etapasFeitas > 0 && !feita;
+                return (
+                  <span
+                    key={L!.id}
+                    title={`${L!.namePt}${feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas` : ''}`}
+                    className={`min-w-[46px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
+                      ${feita ? 'bg-[var(--teal-soft)] border-[var(--edge-teal)]'
+                        : comecada ? 'bg-[var(--card)] border-[var(--teal)]'
+                        : 'bg-[var(--sand)] border-line'}`}
+                  >
+                    <He size="inline" tone={feita ? 'teal' : estado === 'adiante' ? 'muted' : 'navy'}
+                        className="!text-[23px] !leading-[1.1]">
+                      {L!.letter}
+                    </He>
+                    <span className={`font-ui text-[9.5px] tracking-[.04em]
+                      ${feita ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
+                      {L!.namePt}
+                    </span>
+                  </span>
+                );
+              })}
+            </div>
+          )}
         </Link>
-      </Row>
-    );
-  }
-
-  return (
-    <Row dot="★" state={state}>
-      <Link href="/desafio-final" className="block">
-        <p className="font-display text-[16px] font-semibold text-ink">O desafio final</p>
-        <p className="font-ui text-[13px] text-ink-muted">Hebraico de verdade, sem apoio</p>
-      </Link>
-    </Row>
-  );
-}
-
-/* Modules 6 and 7 are real lessons with real progress, so they get a row that
-   reports it rather than a bare link. */
-function ExtraModuleRow({ module: m }: { module: CourseModule }) {
-  const p = useProgress();
-  const doneCount = p.state.lessons[m.id]?.stagesDone.length ?? 0;
-  const passed = !!p.state.checkpoints[`cp${m.n}`]?.passedAt;
-  return (
-    <Link href={`/modulo/${m.n}`}
-          className="mt-1 flex items-center gap-3 min-h-[44px] font-ui text-[13px]
-                     text-[var(--accent)] hover:underline">
-      <span aria-hidden className={passed ? 'text-[var(--green)]' : 'text-[var(--accent)]'}>
-        {passed ? '✓' : doneCount > 0 ? '●' : '○'}
-      </span>
-      <Prose text={m.subPt} />
-      {doneCount > 0 && !passed && (
-        <span className="text-ink-muted">· {doneCount} de 3</span>
-      )}
-      <span aria-hidden className="ml-auto">→</span>
-    </Link>
-  );
-}
-
-function Row({ children, dot, state }: { children: React.ReactNode; dot: string; state: RowState }) {
-  return (
-    <li className="relative">
-      <span
-        aria-hidden
-        className={`absolute left-[-26px] sm:left-[-34px] top-1/2 -translate-y-1/2
-          w-[24px] h-[24px] rounded-full grid place-items-center text-[11px] font-bold
-          border-2 bg-paper
-          ${state === 'done' ? 'border-[var(--green)] text-[var(--green)]'
-            : state === 'now' ? 'border-[var(--accent)] text-[var(--accent)]'
-            : 'border-line text-ink-muted'}`}
-      >
-        {dot}
-      </span>
-      <Card
-        className={`p-3.5 transition-colors ${state === 'ahead' ? 'opacity-70' : ''}
-          ${state === 'now' ? 'border-[var(--accent-soft)]' : ''} hover:bg-surface-2`}
-      >
-        {children}
-      </Card>
+      </div>
     </li>
   );
+}
+
+export function CourseMapNotFound() {
+  return <p className="font-ui text-[15px] text-ink-muted">Mapa não encontrado.</p>;
 }
