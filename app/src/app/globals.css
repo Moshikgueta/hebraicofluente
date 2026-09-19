@@ -46,19 +46,28 @@
   --radius-pill: var(--r-pill);
 }
 
-html {
-  background: var(--paper);
-  color: var(--ink-body);
-  font-family: var(--font-ui);
-  -webkit-text-size-adjust: 100%;
-  /* The course is a single LTR document with RTL islands. Never set dir="rtl"
-     on the page: the Portuguese is the frame, the Hebrew is the content. */
-  direction: ltr;
-}
-body { margin: 0; background: var(--paper); overflow-x: hidden; }
+/* ── estilos de elemento, DENTRO de @layer base ─────────────────────────
+   O `@layer` não é enfeite de organização: no Tailwind v4 tudo o que fica
+   FORA de uma camada vence tudo o que está DENTRO de uma, independentemente
+   de especificidade. Solto aqui, `h1,h2,h3 { color: var(--ink) }` ganhava de
+   `.text-white` - e todo título com cor declarada por utilitário voltava
+   para a cor de tinta. Foi assim que o H3 do painel escuro da landing saiu
+   navy sobre navy, quase ilegível. */
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink-body);
+    font-family: var(--font-ui);
+    -webkit-text-size-adjust: 100%;
+    /* The course is a single LTR document with RTL islands. Never set dir="rtl"
+       on the page: the Portuguese is the frame, the Hebrew is the content. */
+    direction: ltr;
+  }
+  body { margin: 0; background: var(--paper); overflow-x: hidden; }
 
-h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; }
-p { margin: 0; }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; }
+  p { margin: 0; }
+}
 
 /* ── the direction contract, in CSS ─────────────────────────────────────
    Every Hebrew run is its own bidi paragraph. A neutral character outside it

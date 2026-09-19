@@ -29,7 +29,7 @@ import { clean } from '@/lib/hebrew';
    the span they belong to the surrounding Portuguese and stay put. */
 const FORBIDDEN = /[()[\]{}:;/,<>«»"|]/;
 
-export type HeSize = 'inline' | 'word' | 'lg' | 'xl' | 'display' | 'hero';
+export type HeSize = 'inline' | 'word' | 'lg' | 'xl' | 'plate' | 'display' | 'hero';
 
 /* Os tamanhos, e a entrelinha que cada um pede.
    O hebraico vocalizado precisa de mais entrelinha que o latino: o nikud
@@ -44,6 +44,10 @@ const SIZE: Record<HeSize, string> = {
   word:    'text-[28px] sm:text-[32px] leading-[1.38]',
   lg:      'text-[40px] sm:text-[48px] leading-[1.3]',
   xl:      'text-[56px] sm:text-[68px] leading-[1.2]',
+  /* A letra sozinha dentro de um bloco de cor: o mockup do hero e o painel
+     da demonstração. É o tamanho em que a forma da letra vira o assunto da
+     tela, e o design usa 76-88px para isso. */
+  plate:   'text-[76px] sm:text-[88px] leading-[1.1]',
   display: 'text-[84px] sm:text-[104px] leading-[1.15]',
   hero:    'text-[120px] sm:text-[160px] leading-[1.1]'
 };

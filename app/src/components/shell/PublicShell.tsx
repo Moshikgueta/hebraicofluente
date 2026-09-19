@@ -25,10 +25,15 @@ import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
 
+/* Os rótulos são os do design. Os destinos são páginas de verdade, e não
+   âncoras: `#como` funciona na capa e vira link morto em /cursos, que usa
+   este mesmo cabeçalho. A capa tem as âncoras por dentro, para quem já está
+   rolando por ela. */
 const LINKS = [
-  { href: '/metodo', label: 'Método' },
-  { href: '/cursos', label: 'Cursos' },
-  { href: '/sobre', label: 'Sobre o Moshik' },
+  { href: '/#como', label: 'Como funciona' },
+  { href: '/cursos', label: 'O curso' },
+  { href: '/metodo', label: 'Metodologia' },
+  { href: '/sobre', label: 'Sobre' },
   { href: '/faq', label: 'Dúvidas' }
 ] as const;
 
@@ -85,10 +90,21 @@ export function PublicShell({ children }: { children: ReactNode }) {
               <LinkButton href="/meu-hebraico" size="sm">Meu Hebraico</LinkButton>
             ) : (
               <>
-                <LinkButton href="/entrar" variant="ghost" size="sm" className="hidden sm:inline-flex">
-                  Entrar
+                {/* O invólucro é que esconde, e não uma classe `hidden` no
+                    próprio botão: o `LinkButton` já traz `inline-flex` na
+                    base, e as duas regras de `display` brigam por ordem de
+                    folha de estilo em vez de por ordem no atributo - o
+                    "Entrar" continuava aparecendo no telefone e empurrava o
+                    menu para fora da tela. */}
+                <span className="hidden sm:block">
+                  <LinkButton href="/entrar" variant="ghost" size="sm">Entrar</LinkButton>
+                </span>
+                {/* "Começar agora" cabe a partir de sm; num aparelho de 390 o
+                    rótulo inteiro quebra em duas linhas e empurra o menu
+                    para fora da tela. A palavra que importa é a primeira. */}
+                <LinkButton href="/cursos/alfabetizacao" size="sm" className="whitespace-nowrap">
+                  Começar<span className="hidden sm:inline">&nbsp;agora</span>
                 </LinkButton>
-                <LinkButton href="/cursos/alfabetizacao" size="sm">Começar agora</LinkButton>
               </>
             )}
 

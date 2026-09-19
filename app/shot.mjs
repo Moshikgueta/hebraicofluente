@@ -75,7 +75,7 @@ await ctx.addInitScript(([acc, st]) => {
 }, [JSON.stringify(ACCOUNT), JSON.stringify(STATE)]);
 
 const page = await ctx.newPage();
-const ROTAS = ['/meu-hebraico/', '/licao/alef/', '/mapa/', '/revisao/', '/academia/', '/conquistas/'];
+const ROTAS = ['/', '/meu-hebraico/', '/licao/alef/', '/mapa/', '/revisao/', '/academia/', '/conquistas/'];
 for (const rota of ROTAS) {
   const erros = [];
   page.removeAllListeners('console');

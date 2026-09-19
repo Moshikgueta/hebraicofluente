@@ -35,7 +35,11 @@ export function Logo({ size = 34, words = true }: { size?: number; words?: boole
         </span>
       </span>
       {words && (
-        <span className="font-display font-semibold text-[18px] tracking-[-0.02em] text-ink">
+        /* 15px no telefone: a 18px o nome sozinho come 150 dos 358 pixels
+           úteis de um aparelho de 390, e empurra o botão de comprar para
+           fora da tela. */
+        <span className="font-display font-semibold text-[15px] sm:text-[18px]
+                         tracking-[-0.02em] text-ink whitespace-nowrap">
           Hebraico Fluente
         </span>
       )}
