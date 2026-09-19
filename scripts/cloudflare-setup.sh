@@ -359,10 +359,50 @@ fi
 # ── 8. conferir ───────────────────────────────────────────────────────────
 echo
 bold "8. Conferir o que subiu"
-for _ in $(seq 1 12); do
-  [ "$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$URL/" 2>/dev/null)" = "200" ] && break
-  sleep 5
-done
+
+# Espera o endereço começar a responder. Um domínio próprio recém-criado leva
+# alguns minutos até o certificado sair e a rota valer - conferir antes disso
+# produz uma tela de falhas que não são falhas.
+#
+# Deixa o último código em ULTIMO em vez de imprimi-lo: numa substituição de
+# comando, tudo que a função escrevesse na saída seria engolido - inclusive o
+# "respondeu depois de tantos segundos", que é a informação útil quando dá
+# certo na terceira tentativa.
+ULTIMO=''
+espera_subir() {
+  local alvo="$1" i
+  for i in $(seq 1 24); do
+    ULTIMO="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$alvo/" 2>/dev/null)"
+    if [ "$ULTIMO" = "200" ]; then
+      [ "$i" -gt 1 ] && info "Respondeu depois de $((i * 5))s."
+      return 0
+    fi
+    sleep 5
+  done
+  return 1
+}
+
+if ! espera_subir "$URL"; then
+  # Dois minutos sem 200. Antes de despejar trinta falhas iguais, a pergunta
+  # que importa é se o problema é o WORKER ou o ENDEREÇO - e é exatamente para
+  # isso que o workers.dev existe (ver `workers_dev` no wrangler.toml).
+  erro "$URL respondeu $ULTIMO por 2 minutos, e não 200."
+  DEV="$(printf '%s' "$DEPLOY" | grep -vE 'env\.|Environment Variable' \
+        | grep -oE 'https://[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev' | tail -1)"
+  if [ -n "$DEV" ]; then
+    DEVC="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$DEV/" 2>/dev/null)"
+    if [ "$DEVC" = "200" ]; then
+      info "Mas $DEV responde 200: o Worker está bom, o problema é o domínio."
+      info "Olhe a zona no painel: regra de segurança, Bot Fight Mode, modo"
+      info "\"Under Attack\", ou o certificado do domínio ainda saindo."
+      info "Conferindo pelo workers.dev, para que as checagens abaixo valham."
+      URL="$DEV"
+    else
+      info "E $DEV respondeu $DEVC: o problema está no Worker, não no domínio."
+    fi
+  fi
+fi
+
 HF_BASE="$URL" bash worker/e2e.sh
 RC=$?
 

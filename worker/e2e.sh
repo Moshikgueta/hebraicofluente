@@ -47,6 +47,41 @@ code()     { G -o /dev/null -w '%{http_code}' "$@"; }
 location() { G -o /dev/null -D - -H 'Sec-Fetch-Dest: document' "$@" \
                | grep -i '^location:' | sed 's/^[Ll]ocation: *//' | tr -d '\r'; }
 
+# Quem respondeu, quando não foi o nosso Worker.
+# ──────────────────────────────────────────────────────────────────────────
+# Uma publicação em que TODAS as verificações falham com o mesmo código não é
+# trinta e uma falhas: é uma só, e nenhuma das trinta e uma linhas diz qual.
+# Aconteceu com um 403 em tudo - e "403" sozinho não distingue o Worker
+# recusando, a Cloudflare bloqueando o curl, e um domínio que ainda não
+# entrega. A resposta está nos cabeçalhos e no <title>, e eles custam uma
+# chamada.
+#
+# Só roda quando alguma coisa já falhou, e uma vez.
+diagnostico_feito=0
+diagnostico() {
+  [ "$diagnostico_feito" = "1" ] && return 0
+  diagnostico_feito=1
+  local url="$1" cab corpo
+  echo
+  echo "  Quem está respondendo em $url:"
+  cab="$(G -o /dev/null -D - -H 'Sec-Fetch-Dest: document' "$url" 2>/dev/null)"
+  # Os cabeçalhos que dizem de quem é a resposta. `cf-mitigated` aparece
+  # quando é a Cloudflare barrando (WAF, Bot Fight Mode, Under Attack); a
+  # ausência dele com `server: cloudflare` aponta para o Worker ou para o
+  # roteamento do domínio.
+  printf '%s' "$cab" | grep -iE '^(HTTP/|server:|cf-ray:|cf-mitigated:|cf-cache-status:|content-type:)' \
+    | sed 's/^/    /' | tr -d '\r'
+  corpo="$(G -H 'Sec-Fetch-Dest: document' "$url" 2>/dev/null)"
+  local titulo
+  titulo="$(grep -oiE '<title[^>]*>[^<]*' <<<"$corpo" | head -1 | sed 's/<[^>]*>//')"
+  [ -n "$titulo" ] && echo "    título: $titulo"
+  # O texto visível das primeiras linhas, sem marcação. Numa página de bloqueio
+  # da Cloudflare é aqui que aparece o motivo em português claro.
+  sed -e 's/<[^>]*>/ /g' -e 's/  */ /g' <<<"$corpo" | grep -vE '^\s*$' | head -4 \
+    | sed 's/^ */    /'
+  echo
+}
+
 # Primeiro a saúde. Sem isto, uma publicação sem banco ou sem SESSION_SECRET
 # produz nove falhas idênticas - todas "veio 500" - e nenhuma delas diz qual
 # das três peças está faltando. Com isto, a causa aparece na primeira linha.
@@ -102,7 +137,11 @@ fi
 echo "Site público, sem conta"
 for p in "/" "/metodo/" "/cursos/" "/cursos/alfabetizacao/" "/cursos/hebraico-a1/" \
          "/sobre/" "/faq/" "/entrar/" "/criar-conta/" "/checkout/alfabetizacao/"; do
-  espera "$p abre" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B$p")"
+  c="$(code -H 'Sec-Fetch-Dest: document' "$B$p")"
+  espera "$p abre" 200 "$c"
+  # A primeira página que não abre já diz quem respondeu. Sem isto, as dez
+  # linhas seguintes repetem o mesmo código sem acrescentar nada.
+  [ "$c" = "200" ] || diagnostico "$B$p"
 done
 
 # Status 200 não prova que a página aparece. Um HTML vazio, um bundle que
