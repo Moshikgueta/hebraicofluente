@@ -55,6 +55,7 @@ HEALTH="$(G --max-time 15 "$B/api/health")"
 campo() { printf '%s' "$HEALTH" | grep -o "\"$1\":[a-z]*" | cut -d: -f2; }
 espera "ligação com o banco (D1)"      true "$(campo db)"
 espera "tabelas criadas (schema.sql)"  true "$(campo schema)"
+espera "tabela de progresso criada"    true "$(campo progresso)"
 espera "SESSION_SECRET definido"       true "$(campo session)"
 if [ "$(campo payments)" != "true" ]; then
   echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) - o site funciona assim"
@@ -88,8 +89,21 @@ echo "A capa aparece de verdade"
 HOME_HTML="$(G --max-time 20 -H 'Sec-Fetch-Dest: document' "$B/")"
 espera "o HTML tem tamanho de página" true \
   "$([ "${#HOME_HTML}" -gt 3000 ] && echo true || echo false)"
-espera "traz o texto da capa" true \
-  "$(printf '%s' "$HOME_HTML" | grep -q 'olha para o hebraico' && echo true || echo false)"
+# Duas perguntas, e nenhuma delas é "a frase X está lá".
+#
+# A checagem anterior procurava uma frase da página de vendas, e ficou vermelha
+# no dia em que a capa foi reescrita - sem que nada tivesse quebrado. Um teste
+# que cai quando o texto muda não está medindo o site: está medindo o texto, e
+# ensina a ignorar o vermelho.
+#
+# O que importa aqui é o que a tela branca NÃO tem:
+#   · um <h1> com texto dentro - a capa renderizou conteúdo, e não um casco;
+#   · a marca - é o site certo, e não uma página de erro do provedor.
+# Os dois sobrevivem a qualquer reescrita de copy e falham em toda falha real.
+espera "a capa tem um título com texto" true \
+  "$(printf '%s' "$HOME_HTML" | grep -qE '<h1[^>]*>[^<]{12,}' && echo true || echo false)"
+espera "a capa traz a marca" true \
+  "$(printf '%s' "$HOME_HTML" | grep -q 'Hebraico Fluente' && echo true || echo false)"
 
 # O primeiro script do Next referenciado pela capa. Se ele não vier, o
 # navegador mostra o texto mas nada funciona - e um erro de caminho de

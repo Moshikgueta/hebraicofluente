@@ -171,6 +171,12 @@ export async function health({ env }) {
     db: false,
     /* As tabelas foram criadas? `false` = falta rodar worker/schema.sql. */
     schema: false,
+    /* A tabela de progresso existe? Ela entrou depois das outras, e a falta
+       dela é SILENCIOSA: nada quebra, o app só volta a guardar progresso no
+       aparelho para sempre. É o tipo de migração esquecida que ninguém nota
+       até um aluno trocar de celular - então ela se reporta aqui, em vez de
+       ficar implícita no `schema`. */
+    progresso: false,
     /* O cookie de sessão tem como ser assinado? `false` = SESSION_SECRET
        não foi definido, e aí NENHUM login funciona. */
     session: !!env.SESSION_SECRET,
@@ -196,8 +202,17 @@ export async function health({ env }) {
     } catch {
       /* A tabela não existe. É a resposta, não uma falha. */
     }
+    try {
+      await env.DB.prepare('SELECT 1 FROM progress LIMIT 1').first();
+      out.progresso = true;
+    } catch {
+      /* idem */
+    }
   }
 
+  /* `progresso` fica FORA do `ok` de propósito: sem ela o curso funciona
+     inteiro, só não sincroniza entre aparelhos. Derrubar a saúde por isso
+     transformaria uma degradação em queda. */
   out.ok = out.db && out.schema && out.session;
   return json(out);
 }
