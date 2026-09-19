@@ -72,6 +72,24 @@ As quatro rotas novas precisam estar em `PUBLIC_PREFIXES`
 (`components/shell/Chrome.tsx`): uma Política de Privacidade atrás de login
 informa o cliente, e não o visitante - que é justamente quem precisa dela.
 
+## O endereço do site
+`hebraicofluente.com.br`, declarado em `wrangler.toml` (`routes` com
+`custom_domain = true`) e repetido em `SITE_ORIGIN`. O `*.workers.dev`
+continua respondendo, de propósito: é a rede de segurança quando há dúvida
+sobre DNS.
+
+O `www` **não serve o site** - o Worker devolve 301 para o apex, e isso é a
+primeira coisa que ele faz, antes da API e do portão. A ordem não é estética:
+`origin` das URLs de retorno da Mercado Pago sai da REQUISIÇÃO
+(`worker/src/api/pay.js`), então uma compra iniciada no www voltaria para o
+www depois de pagar, com o cookie de sessão emitido para o outro host.
+`app/tests/dominio.test.ts` trava isso.
+
+Trocar de endereço é editar `SITE_ORIGIN` e as `routes`. Dois lugares já
+tentaram desfazer essa troca sozinhos e foram consertados: o passo 7 do
+`scripts/cloudflare-setup.sh` (que sobrescrevia com o workers.dev) e o
+`HF_BASE` do workflow (que tinha o endereço escrito à mão).
+
 ## Progresso: onde mora
 Três camadas, nesta ordem, e `createStore()` (`app/src/lib/state/store.tsx`)
 escolhe:
@@ -92,7 +110,7 @@ na conta de outra.
 
 ## Antes de commitar
 ```sh
-cd app && npm test        # 265 testes
+cd app && npm test        # 271 testes
 cd app && npm run build   # export estático
 npm run validate          # ordem das letras, nikud, palavras
 ```

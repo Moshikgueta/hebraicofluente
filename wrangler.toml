@@ -16,6 +16,26 @@ name = "hebraico-fluente"
 main = "worker/src/worker.js"
 compatibility_date = "2026-09-01"
 
+# ── o endereço do site ────────────────────────────────────────────────────
+# O domínio próprio é declarado AQUI, e não apontado no painel, porque assim
+# ele é parte da publicação: quem clonar este repositório e publicar recebe o
+# mesmo endereço, e ninguém precisa lembrar de um passo manual.
+#
+# `custom_domain = true` faz o wrangler criar o registro DNS e emitir o
+# certificado sozinho - exige que a zona esteja na mesma conta Cloudflare.
+#
+# O www entra na lista para ser REDIRECIONADO, e não para servir o site: o
+# Worker devolve 301 para o endereço sem www (ver worker/src/worker.js). Sem
+# a rota, quem digitasse www receberia erro; com ela servindo o site, o mesmo
+# conteúdo existiria em dois endereços.
+#
+# O `*.workers.dev` continua respondendo de propósito: é a rede de segurança
+# para conferir a publicação quando houver dúvida sobre DNS.
+routes = [
+  { pattern = "hebraicofluente.com.br", custom_domain = true },
+  { pattern = "www.hebraicofluente.com.br", custom_domain = true }
+]
+
 [assets]
 # O export estático do Next. `run_worker_first` é obrigatório: sem ele os
 # arquivos são servidos antes de o portão rodar, e a aula sai sem cookie.
@@ -57,7 +77,7 @@ crons = ["*/5 * * * *"]
 # dois preços.
 [vars]
 # Origem absoluta do site. O cron não tem requisição de onde deduzi-la.
-SITE_ORIGIN = "https://hebraico-fluente.moshikg10.workers.dev"
+SITE_ORIGIN = "https://hebraicofluente.com.br"
 # "1" usa o checkout de teste da Mercado Pago (não cobra nada). Em produção,
 # "0" - e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.

@@ -49,6 +49,24 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, '') || '/';
 
+    /* ── um endereço só ─────────────────────────────────────────────────
+       O www redireciona para o endereço sem www, e isso acontece ANTES de
+       qualquer outra coisa - antes da API, antes do portão.
+
+       A ordem é o ponto. `origin` das URLs de retorno da Mercado Pago sai da
+       REQUISIÇÃO (worker/src/api/pay.js), então uma compra iniciada em
+       www.hebraicofluente.com.br mandaria o comprador de volta para o www
+       depois de pagar - e o cookie de sessão dele, emitido para o host sem
+       www, não viajaria junto. O sintoma seria "paguei e caí deslogado", no
+       pior momento possível.
+
+       301 e não 302: é permanente, e é o que faz o navegador e o buscador
+       pararem de perguntar. */
+    if (url.hostname.startsWith('www.')) {
+      url.hostname = url.hostname.slice(4);
+      return Response.redirect(url.toString(), 301);
+    }
+
     /* ── a API ──────────────────────────────────────────────────────── */
     if (path.startsWith('/api/')) {
       const handler = ROUTES[`${request.method} ${path}`];
