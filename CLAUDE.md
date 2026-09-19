@@ -76,7 +76,9 @@ informa o cliente, e não o visitante - que é justamente quem precisa dela.
 `hebraicofluente.com.br`, declarado em `wrangler.toml` (`routes` com
 `custom_domain = true`) e repetido em `SITE_ORIGIN`. O `*.workers.dev`
 continua respondendo, de propósito: é a rede de segurança quando há dúvida
-sobre DNS.
+sobre DNS ou certificado - e é por isso que `workers_dev = true` está escrito
+no arquivo. Sem essa linha, `routes` sozinho faz o wrangler desligar o
+workers.dev, avisando num WARNING dentro de uma publicação bem-sucedida.
 
 O `www` **não serve o site** - o Worker devolve 301 para o apex, e isso é a
 primeira coisa que ele faz, antes da API e do portão. A ordem não é estética:
@@ -85,10 +87,15 @@ primeira coisa que ele faz, antes da API e do portão. A ordem não é estética
 www depois de pagar, com o cookie de sessão emitido para o outro host.
 `app/tests/dominio.test.ts` trava isso.
 
-Trocar de endereço é editar `SITE_ORIGIN` e as `routes`. Dois lugares já
-tentaram desfazer essa troca sozinhos e foram consertados: o passo 7 do
-`scripts/cloudflare-setup.sh` (que sobrescrevia com o workers.dev) e o
-`HF_BASE` do workflow (que tinha o endereço escrito à mão).
+Trocar de endereço é editar `SITE_ORIGIN` e as `routes`. Três lugares já
+tentaram desfazer ou desmentir essa troca sozinhos, e foram consertados: o
+passo 7 do `scripts/cloudflare-setup.sh` (que sobrescrevia com o
+workers.dev), o `HF_BASE` do workflow (que tinha o endereço escrito à mão) e
+o passo 6 do mesmo script, que decidia se a publicação tinha dado certo
+procurando uma URL workers.dev na saída do wrangler - e chamou de falha a
+publicação que estreou o domínio, depois de ela ter criado os dois domínios e
+terminado em zero. Agora quem decide é o código de saída. Os três estão
+travados em `app/tests/dominio.test.ts`.
 
 ## Progresso: onde mora
 Três camadas, nesta ordem, e `createStore()` (`app/src/lib/state/store.tsx`)

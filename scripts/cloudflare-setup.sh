@@ -241,8 +241,34 @@ bold "6. Publicar"
 # Guardado antes de publicar, para a checagem logo abaixo.
 HAVE_BEFORE="$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml || true)"
 DEPLOY="$($W deploy 2>&1)"
+RC=$?
 
-# Extrair a URL publicada é mais delicado do que parece, e o jeito ingênuo
+# Quem diz se publicou é o CÓDIGO DE SAÍDA do wrangler, e mais nada.
+#
+# A versão anterior decidia pela presença de uma URL workers.dev na saída, e
+# isso quebrou no dia em que o domínio próprio entrou: com `routes` no
+# wrangler.toml e sem `workers_dev`, o wrangler desliga o endereço
+# workers.dev. A publicação correu inteira, criou os dois domínios e terminou
+# em zero - e o script a declarou falha por não achar um endereço que a
+# própria publicação tinha desativado. Ler o resultado de um comando pela
+# forma do texto que ele imprime funciona até o texto mudar.
+if [ "$RC" -ne 0 ]; then
+  if printf '%s' "$DEPLOY" | grep -qi 'workers\.dev.*subdomain\|register.*subdomain'; then
+    morre "O Worker subiu, mas a sua conta ainda não tem um subdomínio workers.dev." \
+          "Painel → Workers & Pages → Overview → escolha o seu subdomínio.
+       Depois rode este script de novo."
+  fi
+  morre "A publicação falhou. O wrangler disse:
+
+$(printf '%s' "$DEPLOY" | tail -25 | sed 's/^/       /')" \
+        "Cole essa mensagem que eu resolvo."
+fi
+
+# ── qual é o endereço, agora que publicou ────────────────────────────────
+# Um domínio próprio declarado em `routes` É o endereço do site; o workers.dev
+# ao lado dele é conferência. Sem domínio, o workers.dev é o endereço.
+#
+# Extrair a URL workers.dev é mais delicado do que parece, e o jeito ingênuo
 # (primeiro workers.dev que aparecer) está ERRADO: antes de publicar, o
 # wrangler imprime a tabela de bindings, e ela contém a nossa própria
 # variável SITE_ORIGIN -
@@ -260,18 +286,6 @@ URL="$(printf '%s' "$DEPLOY" \
   | grep -vE 'env\.|Environment Variable' \
   | grep -oE 'https://[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev' | tail -1)"
 
-if [ -z "$URL" ]; then
-  if printf '%s' "$DEPLOY" | grep -qi 'workers\.dev.*subdomain\|register.*subdomain'; then
-    morre "O Worker subiu, mas a sua conta ainda não tem um subdomínio workers.dev." \
-          "Painel → Workers & Pages → Overview → escolha o seu subdomínio.
-       Depois rode este script de novo."
-  fi
-  morre "A publicação falhou. O wrangler disse:
-
-$(printf '%s' "$DEPLOY" | tail -25 | sed 's/^/       /')" \
-        "Cole essa mensagem que eu resolvo."
-fi
-
 # Rede de segurança contra a armadilha descrita acima: se a URL extraída for
 # igual ao SITE_ORIGIN que já estava no arquivo, é sinal de que pegamos a
 # linha de binding em vez do endereço publicado. Parar aqui é melhor do que
@@ -281,7 +295,25 @@ if [ "$URL" = "${HAVE_BEFORE:-}" ] && [ "${HAVE_BEFORE:-}" = "https://hebraico-f
         "É um defeito deste script na leitura da saída do wrangler.
        Me mande a saída inteira de 'npx wrangler deploy'."
 fi
-ok "No ar: $URL"
+
+# O domínio próprio sai do wrangler.toml, e não da saída do wrangler: é o
+# arquivo que manda em qual endereço o site atende. O www é descartado aqui
+# porque ele existe para redirecionar, não para ser o endereço.
+DOMINIO="$(grep -oP 'pattern\s*=\s*"\K[^"]+(?="\s*,\s*custom_domain\s*=\s*true)' wrangler.toml \
+  | grep -v '^www\.' | head -1)"
+
+if [ -n "$DOMINIO" ]; then
+  ok "No ar: https://$DOMINIO"
+  [ -n "$URL" ] && info "Conferência: $URL"
+  URL="https://$DOMINIO"
+elif [ -n "$URL" ]; then
+  ok "No ar: $URL"
+else
+  morre "O wrangler publicou sem erro, mas não sobrou endereço nenhum: não há
+       domínio próprio em 'routes' e o workers.dev não apareceu na saída." \
+        "Acrescente 'workers_dev = true' ao wrangler.toml, ou declare o
+       domínio em 'routes'. Um dos dois precisa existir."
+fi
 
 # ── 7. SITE_ORIGIN ────────────────────────────────────────────────────────
 # O cron não tem requisição de onde deduzir a origem, e o back_urls da
@@ -349,6 +381,5 @@ if [ "$PATCHED" = "1" ]; then
 fi
 echo "  Falta, quando você quiser:"
 echo "   · Mercado Pago: os dois segredos e o webhook em $URL/api/pay/webhook"
-echo "   · Domínio próprio: painel → o Worker → Settings → Domains & Routes"
 echo
 exit $RC

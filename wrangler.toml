@@ -29,12 +29,21 @@ compatibility_date = "2026-09-01"
 # a rota, quem digitasse www receberia erro; com ela servindo o site, o mesmo
 # conteúdo existiria em dois endereços.
 #
-# O `*.workers.dev` continua respondendo de propósito: é a rede de segurança
-# para conferir a publicação quando houver dúvida sobre DNS.
 routes = [
   { pattern = "hebraicofluente.com.br", custom_domain = true },
   { pattern = "www.hebraicofluente.com.br", custom_domain = true }
 ]
+
+# O `*.workers.dev` continua respondendo de propósito: é a rede de segurança
+# para conferir a publicação quando houver dúvida sobre DNS ou certificado.
+#
+# A linha vira OBRIGATÓRIA no momento em que existe `routes`. Sem ela o
+# wrangler desliga o workers.dev por conta própria e avisa como um WARNING no
+# meio da saída ("Because 'workers_dev' is not in your Wrangler file, it will
+# be disabled for this deployment by default"). Foi o que aconteceu na
+# publicação que estreou o domínio: a rede de segurança sumiu exatamente no
+# deploy em que ela mais faria falta.
+workers_dev = true
 
 [assets]
 # O export estático do Next. `run_worker_first` é obrigatório: sem ele os

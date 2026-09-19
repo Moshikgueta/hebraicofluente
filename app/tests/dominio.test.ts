@@ -11,6 +11,7 @@
  * direto é o que mede a regra de verdade.
  */
 
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import worker from '../../worker/src/worker.js';
@@ -62,5 +63,40 @@ describe('o www redireciona para o endereço sem www', () => {
        dúvida sobre DNS. Redirecioná-lo tiraria justamente isso. */
     const r = await pedir('https://hebraico-fluente.moshikg10.workers.dev/api/health');
     expect(r.status).not.toBe(301);
+  });
+});
+
+/* O que o wrangler.toml declara.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Estas três regras nasceram de uma publicação real que correu inteira e foi
+ * relatada como falha. São baratas de conferir aqui e caras de descobrir lá.
+ */
+describe('o wrangler.toml declara o endereço por inteiro', () => {
+  const toml = readFileSync(new URL('../../wrangler.toml', import.meta.url), 'utf8');
+
+  const dominios = [...toml.matchAll(/pattern\s*=\s*"([^"]+)"\s*,\s*custom_domain\s*=\s*true/g)]
+    .map(m => m[1]!);
+  const apex = dominios.find(d => !d.startsWith('www.'));
+
+  it('tem um domínio próprio, e o www ao lado dele', () => {
+    expect(apex).toBeTruthy();
+    expect(dominios).toContain(`www.${apex}`);
+  });
+
+  it('o SITE_ORIGIN é esse mesmo domínio', () => {
+    /* Trocar o domínio em `routes` e esquecer o SITE_ORIGIN não quebra nada
+       na hora: o site sobe e responde. Só quebra depois do pagamento, quando
+       a Mercado Pago devolve o comprador para o endereço antigo. */
+    const origem = toml.match(/SITE_ORIGIN\s*=\s*"([^"]+)"/)?.[1];
+    expect(origem).toBe(`https://${apex}`);
+  });
+
+  it('declara workers_dev, porque `routes` sozinho o desliga', () => {
+    /* O wrangler desliga o endereço workers.dev por conta própria quando há
+       `routes` e nenhum `workers_dev` - e avisa disso num WARNING no meio de
+       uma publicação bem-sucedida, fácil de não ver. Perder esse endereço é
+       perder a única forma de conferir uma publicação quando o DNS ou o
+       certificado do domínio está em dúvida. */
+    expect(toml).toMatch(/^\s*workers_dev\s*=\s*true\s*$/m);
   });
 });
