@@ -118,16 +118,13 @@ fi
 if [ "$(campo email)" != "true" ]; then
   echo "  · e-mail desligado (RESEND_API_KEY ou EMAIL_FROM ausente) - ninguém"
   echo "    recupera a senha sozinho. Ver .env.example."
-elif [ "$(campo emailEntregue)" = "false" ]; then
-  # O estado mais perigoso dos três, e o único que não se parece com um
-  # problema: a chave existe, a saúde diz que sim, a tela diz "o link está a
-  # caminho" - e o último envio foi RECUSADO. Quase sempre é o domínio do
-  # remetente ainda não verificado na Resend. Por isso vira ✗, e não aviso.
-  espera "o último e-mail de senha saiu" true false
-  echo "    A chave existe, mas a Resend recusou o último envio. Quase sempre é"
-  echo "    o domínio de EMAIL_FROM ainda não verificado. O motivo exato está no"
-  echo "    log do Worker e na trilha (access_log, ação 'forgot-falhou')."
 fi
+# `emailEntregue` NÃO é conferido aqui, e a tentação de fazê-lo custou uma
+# falsa falha: este bloco roda ANTES de a seção "Senha" pedir qualquer link,
+# então o campo só pode refletir a execução ANTERIOR. Na primeira publicação
+# depois de a chave entrar, ele lê o estado de antes dela - "sem-provedor" - e
+# acusa uma recusa que não houve, mandando quem lê conferir DNS à toa.
+# A conferência de verdade está no fim, depois dos envios desta passagem.
 if [ "$(campo ok)" != "true" ]; then
   echo
   echo "  A publicação está incompleta. As falhas abaixo são consequência disso;"
@@ -300,6 +297,27 @@ espera "a senha nova entra" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' \
 espera "a senha antiga não entra mais" 401 "$(G -o /dev/null -w '%{http_code}' \
   -X POST "$B/api/auth/login" -H 'content-type: application/json' \
   -d "{\"email\":\"$MAIL\",\"password\":\"cavalo correto\"}")"
+
+# O e-mail SAIU DE VERDADE?
+# ──────────────────────────────────────────────────────────────────────────
+# Aqui, e não lá em cima com o resto da saúde, porque só agora esta execução
+# já pediu links de recuperação - e é dos envios DELA que se quer saber.
+# Perguntado antes, o campo responde sobre a execução anterior, e na primeira
+# publicação depois de a chave entrar ele acusa uma recusa que não houve.
+#
+# Vale para o estado mais perigoso dos três: a chave existe, a saúde diz que
+# sim, a tela diz "o link está a caminho" - e a Resend recusou. Quase sempre é
+# o domínio de EMAIL_FROM ainda não verificado, e nada na tela denuncia.
+if [ "$(campo email)" = "true" ]; then
+  ENTREGA="$(G --max-time 15 "$B/api/health" | grep -o '"emailEntregue":[a-z]*' | cut -d: -f2)"
+  if [ "$ENTREGA" = "false" ]; then
+    espera "o e-mail de recuperação saiu" true false
+    echo "    A Resend recusou. O motivo exato está em Actions → Acesso → 'envios'."
+    echo "    Quase sempre é o domínio de EMAIL_FROM ainda não verificado."
+  else
+    espera "o e-mail de recuperação saiu" true true
+  fi
+fi
 
 echo "Saída"
 G -b "$JAR" -c "$JAR" -o /dev/null -X POST $B/api/auth/logout
