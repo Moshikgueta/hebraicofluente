@@ -41,6 +41,14 @@ type AccountValue = {
   /** Recarrega a sessão do servidor - depois de um pagamento, por exemplo. */
   refresh(): Promise<Session | null>;
 
+  /** Pede o link de recuperação. Nunca diz se a conta existe. No modo
+   *  demonstração volta com `demoLink`, porque não há e-mail para mandar. */
+  requestPasswordReset(email: string): Promise<{ demoLink?: string }>;
+  /** Escolhe a senha nova pelo link do e-mail, e já entra. */
+  resetPassword(i: { token: string; password: string }): Promise<void>;
+  /** Troca a senha de quem já está dentro. Exige a senha atual. */
+  changePassword(i: { current: string; password: string }): Promise<void>;
+
   startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number }):
     Promise<Order & { redirectUrl?: string }>;
   orderStatus(id: string): Promise<Order>;
@@ -89,6 +97,22 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     async signIn(i) { setSession(await (await api()).signIn(i)); setReady(true); avisar(); },
     async signOut() { await (await api()).signOut(); setSession(null); avisar(); },
     refresh,
+
+    requestPasswordReset: async email => (await api()).requestPasswordReset(email),
+
+    /* Redefinir já entra - o servidor manda o cookie novo na mesma resposta.
+       `avisar()` porque isso É uma troca de dono do progresso: quem redefine
+       a senha muitas vezes está num aparelho onde nunca esteve logado. */
+    async resetPassword(i) {
+      setSession(await (await api()).resetPassword(i));
+      setReady(true);
+      avisar();
+    },
+
+    /* Trocar a senha estando dentro NÃO troca o dono - é a mesma pessoa, na
+       mesma conta. Por isso não avisa: um `avisar()` aqui faria o provider de
+       progresso recarregar o estado do zero no meio da sessão, à toa. */
+    async changePassword(i) { setSession(await (await api()).changePassword(i)); },
 
     startOrder: async i => (await api()).startOrder(i),
     orderStatus: async id => (await api()).orderStatus(id),

@@ -55,6 +55,42 @@ cabeçalhos de comentário não são travessões e ficam como estão.
   de desfazer alguma coisa. Um campo novo no estado precisa de uma regra aqui,
   e de um teste em `app/tests/merge.test.ts`.
 
+## Conta e senha
+Criar conta, entrar, sair, **esquecer a senha** e **trocar a senha** - tudo em
+`worker/src/api/auth.js`, com as consultas em `worker/src/lib/db.js`.
+
+Três regras que parecem excesso de zelo e são o produto:
+
+- **`/api/auth/forgot` responde igual para e-mail que existe e que não existe**,
+  e o envio sai por `ctx.waitUntil` para que o RELÓGIO também não responda. Sem
+  as duas coisas, o formulário de recuperação vira uma lista de quem comprou,
+  consultável por qualquer um. A tela (`components/platform/EsqueciSenha.tsx`)
+  diz "se existir uma conta com esse e-mail" pelo mesmo motivo - uma tela mais
+  simpática desfaz sozinha o que o servidor protege.
+- **O banco guarda o sha256 do token, nunca o token** (`password_resets`, e o
+  hash é a chave primária). Quem lê a tabela não consegue trocar a senha de
+  ninguém.
+- **Trocar a senha sobe `session_version`**, o que derruba todo cookie já
+  emitido, e a resposta traz um cookie novo. É uma consulta só
+  (`changePassword` em `lib/db.js`): trocar a senha porque alguém entrou na
+  conta e não expulsar esse alguém é não ter trocado nada.
+
+O link do e-mail sai de `SITE_ORIGIN`, **nunca do cabeçalho Host** - o Host é
+escolhido por quem chama, e um pedido forjado faria a plataforma mandar, para o
+endereço certo do dono, um e-mail legítimo com o token dentro.
+
+Entregar o e-mail é a Resend (`worker/src/lib/mail.js`): `RESEND_API_KEY` no
+painel, `MAIL_FROM` no `wrangler.toml`, e os dois precisam existir -
+`/api/health` reporta `email`. **Sem eles o site funciona inteiro e ninguém
+recupera senha sozinho**, então isso fica fora do `ok` da saúde e aparece como
+aviso no `e2e.sh`. Como conseguir a chave está em `.env.example`.
+
+Provado em três alturas: `app/tests/senha.test.ts` (o ciclo inteiro contra um
+SQLite de verdade carregado com o `schema.sql` de produção, e-mail interceptado
+na saída - ver `app/tests/ajuda/d1.ts`), `worker/e2e.sh` (as rotas contra o que
+está publicado, inclusive a igualdade das duas respostas de `forgot`) e
+`npm run senha` (o caminho da pessoa, num navegador, a 390px).
+
 ## Camada de confiança (Brasil)
 `data/empresa.json` é a FONTE ÚNICA da identificação do fornecedor: razão social,
 CNPJ, endereço, canais de atendimento e os prazos das políticas. O rodapé,
@@ -117,7 +153,7 @@ na conta de outra.
 
 ## Antes de commitar
 ```sh
-cd app && npm test        # 271 testes
+cd app && npm test        # 295 testes
 cd app && npm run build   # export estático
 npm run validate          # ordem das letras, nikud, palavras
 ```
@@ -132,6 +168,7 @@ cd app && npm run trancado    # o cadeado do teste final nos três estados
 cd app && npm run portao      # o portão de domínio da lição não tranca ninguém
 cd app && npm run exame       # o exame final abre e responde (para nos pareamentos)
 cd app && npm run check-legal # identificação do fornecedor, políticas e checkout
+cd app && npm run senha       # esquecer, redefinir e trocar a senha, de ponta a ponta
 
 # a sincronia precisa do Worker no ar, com o D1 local:
 npm run db:init:local

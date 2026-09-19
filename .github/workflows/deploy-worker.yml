@@ -24,10 +24,14 @@
 # Sem o token o job não roda: ele verifica, explica na tabela do resumo o que
 # falta, e para - em vez de falhar no meio com um erro do wrangler.
 #
-# Para COBRAR, faltam dois segredos no painel da Cloudflare (Worker → Settings
-# → Variables and Secrets, tipo Secret): MP_ACCESS_TOKEN e MP_WEBHOOK_SECRET,
-# com o webhook da Mercado Pago apontado para /api/pay/webhook. Sem eles o site
-# funciona inteiro e só o checkout fica desligado, dizendo isso na tela.
+# Para COBRAR, faltam dois segredos nos segredos DESTE repositório:
+# MP_ACCESS_TOKEN e MP_WEBHOOK_SECRET, com o webhook da Mercado Pago apontado
+# para /api/pay/webhook. Sem eles o site funciona inteiro e só o checkout fica
+# desligado, dizendo isso na tela.
+#
+# Para RECUPERAR SENHA, falta RESEND_API_KEY, no mesmo lugar. Sem ela o link
+# de "esqueci minha senha" não é entregue a ninguém, e /api/health reporta
+# "email": false. Ver .env.example.
 
 name: Deploy platform to Cloudflare
 
@@ -193,6 +197,10 @@ jobs:
           # checkout fica desligado, dizendo isso na tela.
           MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
           MP_WEBHOOK_SECRET: ${{ secrets.MP_WEBHOOK_SECRET }}
+          # A chave da Resend, pela mesma porta. Vazia, o site sobe inteiro e
+          # "esqueci minha senha" não entrega o link - /api/health reporta
+          # "email": false. Onde conseguir está em .env.example.
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           # O build já aconteceu no passo anterior, com o cache do npm, para
           # que uma falha de build apareça como falha de build.
           HF_SKIP_BUILD: '1'

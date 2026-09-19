@@ -90,6 +90,39 @@ CREATE TABLE IF NOT EXISTS throttle (
   PRIMARY KEY (key, window_at)
 );
 
+-- ── recuperação de senha ──────────────────────────────────────────────────
+-- Um pedido de "esqueci minha senha", enquanto ele vale.
+--
+-- O que está GRAVADO é o sha256 do token, nunca o token. A diferença importa:
+-- quem lê esta tabela - um vazamento de banco, um backup esquecido, uma
+-- consulta de suporte - não consegue trocar a senha de ninguém com o que
+-- encontra aqui. O token em claro existe em dois lugares: na URL que foi para
+-- a caixa de entrada do dono da conta, e na memória do Worker durante a
+-- requisição que o criou.
+--
+-- Por isso o hash é a CHAVE PRIMÁRIA: a busca é pelo hash do que chegou, e
+-- não existe consulta que responda "me dê um token válido do fulano".
+--
+-- `used_at` é o consumo. A linha não é apagada ao ser usada porque a pergunta
+-- "essa senha foi trocada por um link de recuperação, e quando?" é exatamente
+-- a que se faz depois de uma conta invadida.
+CREATE TABLE IF NOT EXISTS password_resets (
+  token_hash TEXT    PRIMARY KEY,
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  created_at INTEGER NOT NULL,
+  expires_at INTEGER NOT NULL,
+  used_at    INTEGER,
+  -- De onde veio o PEDIDO. Serve para investigar, não para decidir nada: quem
+  -- pede não precisa ser quem clica (pediu no computador, abriu o e-mail no
+  -- celular - e esse é o caso comum, não a exceção).
+  request_ip TEXT    NOT NULL DEFAULT ''
+);
+
+-- Para invalidar de uma vez os pedidos abertos de uma conta, que é o que
+-- acontece assim que a senha dela muda, por qualquer caminho.
+CREATE INDEX IF NOT EXISTS password_resets_abertos
+  ON password_resets(account_id) WHERE used_at IS NULL;
+
 -- Trilha do que mexeu em acesso. É o que responde "por que essa pessoa perdeu
 -- o curso?" três meses depois, quando ninguém lembra.
 CREATE TABLE IF NOT EXISTS access_log (

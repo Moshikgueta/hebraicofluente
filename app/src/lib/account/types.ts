@@ -60,7 +60,8 @@ export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired'
 
 export type AuthErrorCode =
   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
-  | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'payments-off';
+  | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'payments-off'
+  | 'bad-token';
 
 export class AuthError extends Error {
   constructor(readonly code: AuthErrorCode, message?: string) {
@@ -82,7 +83,11 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
   /* Não é erro: é a plataforma no ar antes de o meio de pagamento estar
      ligado. Dizer isso evita que alguém tente três vezes e conclua que o
      cartão dele foi recusado. */
-  'payments-off': `O pagamento ainda não está ativado. Escreva para ${empresa.contato.emailSuporte} e liberamos seu acesso.`
+  'payments-off': `O pagamento ainda não está ativado. Escreva para ${empresa.contato.emailSuporte} e liberamos seu acesso.`,
+  /* Um código para quatro situações - link errado, vencido, já usado e
+     inexistente - porque distinguir só ajuda quem está tentando adivinhar. A
+     frase diz o que fazer, que é a única coisa útil nas quatro. */
+  'bad-token': 'Esse link não vale mais. Peça outro - eles duram uma hora e funcionam uma vez só.'
 };
 
 /* ── regras de acesso ────────────────────────────────────────────────────

@@ -19,11 +19,13 @@
  * aparelho errado é chato de desfazer sem a senha.
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
+import { Campo, Aviso, Erro } from '@/components/platform/Campo';
 import { useAccount } from '@/lib/account/store';
+import { AuthError, MESSAGES, MIN_PASSWORD, passwordOk } from '@/lib/account/types';
 import { useProgress } from '@/lib/state/store';
 import { daysLeft, type Order } from '@/lib/account/types';
 import { allCourses, brl, FLAGSHIP, getCourse } from '@/lib/catalog';
@@ -74,15 +76,20 @@ export function PerfilClient() {
         </dl>
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
                       border-t border-[color:var(--line-soft)] pt-3">
-          Para trocar o e-mail ou a senha, escreva para{' '}
+          Para trocar o e-mail, escreva para{' '}
           <a href={`mailto:${empresa.contato.emailSuporte}`}
-             className="text-[var(--accent)] hover:underline">
+             className="text-[var(--accent)] hover:underline break-all">
             {empresa.contato.emailSuporte}
           </a>
-          . A edição pela própria tela ainda não está no ar - e dizer isso é
-          melhor do que um botão que não faz nada.
+          . O e-mail é o que identifica a conta e o que recebe o link de
+          recuperação, então trocá-lo sozinho pela tela é o caminho mais curto
+          para perder a conta por um erro de digitação.
         </p>
       </Card>
+
+      {/* ── senha ─────────────────────────────────────────────────── */}
+      <TrocarSenha />
+
 
       {/* ── cursos ────────────────────────────────────────────────── */}
       <Card className="p-5 grid gap-4">
@@ -225,6 +232,110 @@ export function PerfilClient() {
         </p>
       )}
     </div>
+  );
+}
+
+/**
+ * Trocar a senha sem sair da página.
+ *
+ * Começa fechado, atrás de um botão. Um formulário de senha sempre aberto no
+ * perfil é um campo a mais para o gerenciador de senhas preencher sozinho e
+ * para alguém enviar sem querer - e a operação aqui derruba todas as outras
+ * sessões da conta, então "sem querer" custa caro.
+ *
+ * Pede a senha atual porque a sessão sozinha não pode bastar: um celular
+ * emprestado, destrancado, viraria uma conta tomada em dois toques.
+ */
+function TrocarSenha() {
+  const account = useAccount();
+  const [aberto, setAberto] = useState(false);
+  const [current, setCurrent] = useState('');
+  const [senha, setSenha] = useState('');
+  const [repeat, setRepeat] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [pronto, setPronto] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  function fechar() {
+    setAberto(false);
+    setCurrent(''); setSenha(''); setRepeat('');
+    setError(null);
+  }
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (busy) return;
+    setError(null);
+
+    if (!passwordOk(senha)) { setError(MESSAGES['weak-password']); return; }
+    if (senha !== repeat) { setError('As duas senhas não são iguais.'); return; }
+    if (senha === current) { setError('A senha nova é igual à atual.'); return; }
+
+    setBusy(true);
+    try {
+      await account.changePassword({ current, password: senha });
+      /* Fecha e confirma. A confirmação fica na tela depois de o formulário
+         sumir: um formulário de senha que continua preenchido depois de
+         enviado é o que o navegador reoferece na próxima visita. */
+      setCurrent(''); setSenha(''); setRepeat('');
+      setAberto(false);
+      setPronto(true);
+    } catch (err) {
+      setError(err instanceof AuthError ? err.message : MESSAGES.server);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <Card className="p-5 grid gap-4">
+      <h2 className="font-display text-[17px] font-bold text-ink">Senha</h2>
+
+      {pronto && !aberto && (
+        <Aviso>
+          Senha trocada. Os outros aparelhos onde você estava logado foram
+          desconectados - este continua.
+        </Aviso>
+      )}
+
+      {aberto ? (
+        <form onSubmit={submit} className="grid gap-4 max-w-[420px]" noValidate>
+          <Campo
+            id="senha-atual" label="Senha atual" value={current} onChange={setCurrent}
+            type="password" autoComplete="current-password" required autoFocus
+          />
+          <Campo
+            id="senha-nova" label="Senha nova" value={senha} onChange={setSenha}
+            type="password" autoComplete="new-password" required
+            hint={`Pelo menos ${MIN_PASSWORD} caracteres.`}
+          />
+          <Campo
+            id="senha-nova2" label="Repita a senha nova" value={repeat} onChange={setRepeat}
+            type="password" autoComplete="new-password" required
+          />
+
+          {error && <Erro>{error}</Erro>}
+
+          <div className="flex flex-wrap gap-2">
+            <Button type="submit" disabled={busy}>
+              {busy ? 'Trocando…' : 'Trocar a senha'}
+            </Button>
+            <Button type="button" variant="ghost" onClick={fechar}>Cancelar</Button>
+          </div>
+        </form>
+      ) : (
+        <>
+          <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
+            Trocar a senha desconecta os outros aparelhos. É o que você quer se
+            achar que alguém entrou na sua conta.
+          </p>
+          <Button variant="secondary" className="justify-self-start"
+                  onClick={() => { setPronto(false); setAberto(true); }}>
+            Trocar a senha
+          </Button>
+        </>
+      )}
+    </Card>
   );
 }
 

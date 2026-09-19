@@ -85,8 +85,18 @@ crons = ["*/5 * * * *"]
 # próprio Worker (worker/src/lib/catalog.js). Um preço em dois lugares vira
 # dois preços.
 [vars]
-# Origem absoluta do site. O cron não tem requisição de onde deduzi-la.
+# Origem absoluta do site. O cron não tem requisição de onde deduzi-la - e o
+# link de recuperação de senha sai DAQUI, nunca do cabeçalho Host, que é
+# escolhido por quem chama (ver a nota em worker/src/api/auth.js).
 SITE_ORIGIN = "https://hebraicofluente.com.br"
+# De quem sai o e-mail de recuperação de senha. Precisa ser de um domínio
+# verificado na Resend: sem a verificação ela recusa a entrega com 403, e o
+# sintoma é "ninguém recebe o link" com tudo o mais funcionando.
+MAIL_FROM = "Hebraico Fluente <contato@hebraicofluente.com.br>"
+# Aparece dentro do e-mail, como "qualquer dúvida, escreva para". É o mesmo
+# endereço do rodapé do site (data/empresa.json) - repetido aqui porque o
+# Worker não lê o JSON do app.
+SUPPORT_EMAIL = "languageswithmoshik@gmail.com"
 # "1" usa o checkout de teste da Mercado Pago (não cobra nada). Em produção,
 # "0" - e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.

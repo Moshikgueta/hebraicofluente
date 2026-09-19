@@ -32,12 +32,96 @@ export async function createAccount(env, { email, name, hash, salt, iterations }
   return findAccountByEmail(env, mail);
 }
 
-/** Regrava o hash da senha. Usado só pela re-hasheamento no login, quando o
- *  custo do PBKDF2 sobe - ver a nota em lib/crypto.js. */
+/** Regrava o hash da senha, sem mexer em mais nada. Usado pelo re-hasheamento
+ *  do login, quando o custo do PBKDF2 sobe - ver a nota em lib/crypto.js. */
 export async function setPasswordHash(env, accountId, { hash, salt, iterations }) {
   await env.DB.prepare(
     'UPDATE accounts SET pass_hash = ?, pass_salt = ?, pass_iter = ? WHERE id = ?'
   ).bind(hash, salt, iterations, accountId).run();
+}
+
+/**
+ * Troca a senha DE VERDADE: grava o hash novo e derruba toda sessão aberta.
+ *
+ * O `session_version + 1` é a metade que se esquece. Trocar a senha porque
+ * alguém entrou na conta e não expulsar esse alguém é não ter trocado nada -
+ * o cookie dele continua assinado e válido por até sete dias. Quem troca a
+ * senha recebe um cookie novo na mesma resposta; todo o resto cai.
+ *
+ * É uma consulta só, e os dois campos andam juntos por isso: separados, um
+ * `await` entre eles é uma janela em que a senha é nova e a sessão é velha.
+ */
+export async function changePassword(env, accountId, { hash, salt, iterations }) {
+  await env.DB.prepare(
+    `UPDATE accounts
+        SET pass_hash = ?, pass_salt = ?, pass_iter = ?,
+            session_version = session_version + 1
+      WHERE id = ?`
+  ).bind(hash, salt, iterations, accountId).run();
+  /* Um pedido de recuperação que ainda não foi usado deixa de valer aqui.
+     Sem isto, um link pedido por um invasor continuaria de pé depois de o
+     dono trocar a senha - que é justamente a hora em que ele não pode
+     continuar. */
+  await resetInvalidateAll(env, accountId);
+  return findAccountById(env, accountId);
+}
+
+/* ── recuperação de senha ───────────────────────────────────────────────── */
+
+/**
+ * Registra um pedido. Recebe o HASH do token, nunca o token.
+ *
+ * Os pedidos anteriores da conta morrem aqui: pedir de novo invalida o link
+ * anterior. É o que a pessoa espera de "não chegou, mandei outro" - e fecha a
+ * janela em que três links válidos circulam por caixas de entrada diferentes.
+ */
+export async function resetCreate(env, { accountId, tokenHash, ttlMs, ip }) {
+  const t = now();
+  await resetInvalidateAll(env, accountId);
+  await env.DB.prepare(
+    `INSERT INTO password_resets (token_hash, account_id, created_at, expires_at, request_ip)
+     VALUES (?, ?, ?, ?, ?)`
+  ).bind(tokenHash, accountId, t, t + ttlMs, String(ip || '').slice(0, 60)).run();
+  return t + ttlMs;
+}
+
+/** O pedido, se ele existe. Vencido ou usado vem do mesmo jeito - quem chama
+ *  decide, e os dois casos respondem igual para quem está do outro lado. */
+export const resetFind = (env, tokenHash) =>
+  env.DB.prepare(
+    `SELECT token_hash, account_id, created_at, expires_at, used_at
+       FROM password_resets WHERE token_hash = ?`
+  ).bind(tokenHash).first();
+
+/**
+ * Consome o pedido, e responde se ELE ainda estava lá para ser consumido.
+ *
+ * O `used_at IS NULL` dentro do UPDATE é o que torna isso uma operação só.
+ * Conferir antes e marcar depois deixa uma janela entre as duas em que dois
+ * cliques simultâneos no mesmo link passam os dois - e o segundo troca a
+ * senha de novo, depois de o primeiro já ter entrado.
+ */
+export async function resetUse(env, tokenHash, at = now()) {
+  const r = await env.DB.prepare(
+    `UPDATE password_resets SET used_at = ?
+      WHERE token_hash = ? AND used_at IS NULL AND expires_at > ?`
+  ).bind(at, tokenHash, at).run();
+  return !!(r.meta && r.meta.changes);
+}
+
+/** Derruba os pedidos abertos da conta. Chamado ao criar um novo e ao trocar
+ *  a senha por qualquer caminho. */
+export async function resetInvalidateAll(env, accountId, at = now()) {
+  await env.DB.prepare(
+    'UPDATE password_resets SET used_at = ? WHERE account_id = ? AND used_at IS NULL'
+  ).bind(at, accountId).run();
+}
+
+/** Faxina dos vencidos. Roda junto com a varredura de pagamentos - um cron a
+ *  mais só para isto seria um cron a mais para manter. */
+export async function resetPurge(env, at = now()) {
+  await env.DB.prepare('DELETE FROM password_resets WHERE expires_at < ?')
+    .bind(at - 7 * 86_400_000).run();
 }
 
 /* ── direitos de acesso ─────────────────────────────────────────────────── */

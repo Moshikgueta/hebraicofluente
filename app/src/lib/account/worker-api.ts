@@ -25,7 +25,8 @@ const BASE = process.env.NEXT_PUBLIC_API_BASE ?? '';
 
 const CODES: readonly string[] = [
   'bad-credentials', 'email-taken', 'weak-password', 'invalid-email',
-  'not-signed-in', 'offline', 'server', 'rate-limited', 'payments-off'
+  'not-signed-in', 'offline', 'server', 'rate-limited', 'payments-off',
+  'bad-token'
 ];
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
@@ -83,6 +84,24 @@ export class WorkerApi implements PlatformApi {
 
   signOut(): Promise<void> {
     return call<void>('/auth/logout', { method: 'POST' });
+  }
+
+  async requestPasswordReset(email: string): Promise<{ demoLink?: string }> {
+    /* O servidor responde `{ ok: true }` para e-mail que existe e para e-mail
+       que não existe, de propósito. O retorno é descartado aqui para que
+       nenhuma tela seja tentada a olhar dentro dele. */
+    await call<{ ok: true }>('/auth/forgot', {
+      method: 'POST', body: JSON.stringify({ email })
+    });
+    return {};
+  }
+
+  resetPassword(input: { token: string; password: string }): Promise<Session> {
+    return call<Session>('/auth/reset', { method: 'POST', body: JSON.stringify(input) });
+  }
+
+  changePassword(input: { current: string; password: string }): Promise<Session> {
+    return call<Session>('/auth/password', { method: 'POST', body: JSON.stringify(input) });
   }
 
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number }) {

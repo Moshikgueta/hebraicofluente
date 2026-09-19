@@ -22,7 +22,11 @@ import { CourseGate } from '@/components/shell/CourseGate';
 /** Prefixos públicos. `/` é tratado à parte, senão casaria com tudo. */
 const PUBLIC_PREFIXES = [
   '/metodo', '/cursos', '/sobre', '/faq',
-  '/entrar', '/criar-conta', '/recuperar',
+  /* As telas de conta, incluindo as duas de recuperação de senha. Elas são
+     públicas pela definição do problema: quem não consegue entrar não pode
+     ter de entrar para voltar a entrar. (`/recuperar` estava nesta lista e
+     nunca existiu como página - virou estas duas.) */
+  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha',
   /* O checkout é público de propósito: quem chega por um link de venda
      precisa ver o preço antes de ter conta. Quem paga tem de estar logado, e
      essa exigência é da própria tela, não do portão. */

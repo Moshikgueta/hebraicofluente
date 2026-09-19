@@ -23,7 +23,7 @@
  */
 
 import { settleFromProvider } from './api/pay.js';
-import { log, stalePendingOrders, updateOrder } from './lib/db.js';
+import { log, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
 
 const MIN_AGE_MS = 60_000;
 const GIVE_UP_MS = 24 * 3_600_000;
@@ -50,5 +50,13 @@ export async function runReconcile(env) {
     await log(env, null, 'reconcile',
       `${pending.length} pendentes · ${settled} liberados · ${expired} expirados`);
   }
+
+  /* De carona: apaga os pedidos de senha vencidos há mais de uma semana. Não
+     tem nada a ver com pagamento, e é por isso que está aqui - um segundo
+     cron só para uma linha de DELETE é um segundo cron para configurar,
+     lembrar e conferir. Falhar aqui não pode derrubar a varredura, que é o
+     trabalho de verdade desta execução. */
+  try { await resetPurge(env); } catch { /* a faxina tenta de novo em 5 min */ }
+
   return { checked: pending.length, settled, expired };
 }

@@ -63,16 +63,26 @@ echo "Saúde"
 HEALTH=''
 for _ in 1 2 3 4 5; do
   HEALTH="$(G --max-time 15 "$B/api/health")"
-  case "$HEALTH" in *'"progresso"'*) break ;; esac
+  # O campo MAIS NOVO é o sinal de que a versão nova já está respondendo.
+  # Trocar quando um campo novo entra faz parte de acrescentá-lo.
+  case "$HEALTH" in *'"recuperacao"'*) break ;; esac
   sleep 3
 done
 campo() { grep -o "\"$1\":[a-z]*" <<<"$HEALTH" | cut -d: -f2; }
 espera "ligação com o banco (D1)"      true "$(campo db)"
 espera "tabelas criadas (schema.sql)"  true "$(campo schema)"
 espera "tabela de progresso criada"    true "$(campo progresso)"
+espera "tabela de recuperação criada"  true "$(campo recuperacao)"
 espera "SESSION_SECRET definido"       true "$(campo session)"
 if [ "$(campo payments)" != "true" ]; then
   echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) - o site funciona assim"
+fi
+# Sem provedor de e-mail o site sobe inteiro e "esqueci minha senha" não
+# entrega o link a ninguém. Não é falha de publicação - é uma peça que falta,
+# e ela precisa aparecer no log em vez de ficar implícita.
+if [ "$(campo email)" != "true" ]; then
+  echo "  · e-mail desligado (RESEND_API_KEY ou MAIL_FROM ausente) - ninguém"
+  echo "    recupera a senha sozinho. Ver .env.example."
 fi
 if [ "$(campo ok)" != "true" ]; then
   echo
@@ -189,6 +199,59 @@ espera "pedido de outra pessoa não é lido" 404 "$(code -b "$JAR" "$B/api/pay/v
 
 echo "Webhook"
 espera "sem assinatura, recusa" 401 "$(code -X POST "$B/api/pay/webhook?type=payment&data.id=1")"
+
+# ── senha ────────────────────────────────────────────────────────────────
+# O que dá para provar de FORA, sem ler a caixa de entrada de ninguém.
+#
+# O ciclo completo - pedir, receber o e-mail, redefinir - é provado contra um
+# SQLite de verdade em app/tests/senha.test.ts, com o e-mail interceptado na
+# saída. O que só aparece AQUI, contra o que está publicado, é se as rotas
+# existem, se as telas abrem, e - a mais importante - se a resposta de
+# `forgot` é idêntica para um e-mail que existe e um que não existe. Essa é a
+# propriedade que impede o formulário de recuperação de virar uma lista de
+# quem é cliente, e ela é observável exatamente de onde um curioso olharia.
+echo "Senha"
+for p in "/esqueci-senha/" "/nova-senha/"; do
+  espera "$p abre sem conta" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B$p")"
+done
+
+pede_link() {
+  G -X POST "$B/api/auth/forgot" -H 'content-type: application/json' -d "{\"email\":\"$1\"}"
+}
+EXISTE="$(pede_link "$MAIL")"
+NAO_EXISTE="$(pede_link "hf-e2e-fantasma-$RANDOM@example.invalid")"
+espera "pedir o link responde 200" 200 "$(G -o /dev/null -w '%{http_code}' \
+  -X POST "$B/api/auth/forgot" -H 'content-type: application/json' \
+  -d "{\"email\":\"$MAIL\"}")"
+espera "a resposta não diz se a conta existe" "$EXISTE" "$NAO_EXISTE"
+
+espera "token inventado é recusado" 400 "$(G -o /dev/null -w '%{http_code}' \
+  -X POST "$B/api/auth/reset" -H 'content-type: application/json' \
+  -d '{"token":"nao-existe-este-token","password":"outra senha boa"}')"
+
+espera "trocar a senha sem sessão recusa" 401 "$(G -o /dev/null -w '%{http_code}' \
+  -X POST "$B/api/auth/password" -H 'content-type: application/json' \
+  -d '{"current":"cavalo correto","password":"outra senha boa"}')"
+espera "trocar a senha com a atual errada recusa" 401 "$(G -b "$JAR" -o /dev/null \
+  -w '%{http_code}' -X POST "$B/api/auth/password" -H 'content-type: application/json' \
+  -d '{"current":"chute","password":"outra senha boa"}')"
+
+# A troca de verdade, e as duas consequências que importam. `-c` grava o
+# cookie novo que vem na resposta; `VELHO` guarda o anterior para provar que
+# ele morreu - que é o ponto inteiro de trocar a senha por desconfiança.
+VELHO="$(mktemp)"; cp "$JAR" "$VELHO"
+espera "trocar a senha com a atual certa" 200 "$(G -b "$JAR" -c "$JAR" -o /dev/null \
+  -w '%{http_code}' -X POST "$B/api/auth/password" -H 'content-type: application/json' \
+  -d '{"current":"cavalo correto","password":"outra senha boa"}')"
+espera "o cookie novo continua valendo" 200 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' "$B/api/me")"
+espera "o cookie antigo caiu" 401 "$(G -b "$VELHO" -o /dev/null -w '%{http_code}' "$B/api/me")"
+rm -f "$VELHO"
+espera "a senha nova entra" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' \
+  -X POST "$B/api/auth/login" -H 'content-type: application/json' \
+  -d "{\"email\":\"$MAIL\",\"password\":\"outra senha boa\"}")"
+espera "a senha antiga não entra mais" 401 "$(G -o /dev/null -w '%{http_code}' \
+  -X POST "$B/api/auth/login" -H 'content-type: application/json' \
+  -d "{\"email\":\"$MAIL\",\"password\":\"cavalo correto\"}")"
 
 echo "Saída"
 G -b "$JAR" -c "$JAR" -o /dev/null -X POST $B/api/auth/logout

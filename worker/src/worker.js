@@ -24,6 +24,13 @@ const ROUTES = {
   'POST /api/auth/signup': auth.signup,
   'POST /api/auth/login': auth.login,
   'POST /api/auth/logout': auth.logout,
+  /* Recuperar a senha são duas rotas porque são dois momentos: uma pede o
+     e-mail, a outra recebe o token que foi nele. Nenhuma das duas exige
+     sessão - quem esqueceu a senha não tem como ter uma. */
+  'POST /api/auth/forgot': auth.forgot,
+  'POST /api/auth/reset': auth.reset,
+  /* Esta, sim, exige sessão E a senha atual. Ver a nota em api/auth.js. */
+  'POST /api/auth/password': auth.password,
   'GET /api/me': auth.me,
   'GET /api/health': auth.health,
 

@@ -35,6 +35,30 @@ export interface PlatformApi {
   signIn(input: { email: string; password: string }): Promise<Session>;
   signOut(): Promise<void>;
 
+  /* ── senha ──────────────────────────────────────────────────────────────
+     Três métodos para um assunto só, porque são três momentos diferentes da
+     vida de uma conta. */
+
+  /**
+   * Pede o link de recuperação.
+   *
+   * **Nunca diz se a conta existe**, e a assinatura reflete isso: devolve
+   * `void`, não um booleano. Um `Promise<boolean>` aqui seria um convite para
+   * a tela mostrar "não achamos esse e-mail" - que é justamente transformar o
+   * formulário numa lista de quem é cliente.
+   *
+   * No adaptador local devolve o link na mão, porque não há e-mail para
+   * mandar; ver a nota lá.
+   */
+  requestPasswordReset(email: string): Promise<{ demoLink?: string }>;
+
+  /** Troca a senha com o token do e-mail e já entra. */
+  resetPassword(input: { token: string; password: string }): Promise<Session>;
+
+  /** Troca a senha de quem já está dentro. Exige a senha atual: uma tela
+   *  destrancada não pode bastar para tomar a conta. */
+  changePassword(input: { current: string; password: string }): Promise<Session>;
+
   /** Começa um pedido. Para PIX volta com o copia-e-cola; para cartão, com a
    *  URL do checkout da Mercado Pago em `redirectUrl`. */
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number }):

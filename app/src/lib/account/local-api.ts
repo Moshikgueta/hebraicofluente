@@ -42,9 +42,14 @@ type Stored = {
   }>;
   /** E-mail da conta logada, ou null. */
   current: string | null;
+  /** Pedidos de recuperação em aberto, por token. Em claro, e tudo bem: aqui
+   *  o "banco" é o localStorage de quem está desenvolvendo, e guardar só o
+   *  hash daria trabalho para proteger o dado de ninguém. O Worker guarda o
+   *  hash, e a nota está em worker/schema.sql. */
+  resets?: Record<string, { email: string; expiresAt: number; used?: boolean }>;
 };
 
-const EMPTY: Stored = { v: 1, accounts: {}, current: null };
+const EMPTY: Stored = { v: 1, accounts: {}, current: null, resets: {} };
 
 function read(): Stored {
   if (typeof localStorage === 'undefined') return { ...EMPTY };
@@ -153,6 +158,76 @@ export class LocalApi implements PlatformApi {
     const s = read();
     s.current = null;
     write(s);
+  }
+
+  /* ── senha ─────────────────────────────────────────────────────────────
+     Aqui não existe e-mail para mandar, e fingir que mandou deixaria o fluxo
+     impossível de percorrer em desenvolvimento - que é o único motivo deste
+     adaptador existir. Então o link volta na resposta, e a tela o mostra
+     dentro do aviso de demonstração que já está lá.
+
+     O que ele NÃO faz é encurtar o caminho: o token é sorteado, expira, vale
+     uma vez e é conferido igual. Um mock que aceita qualquer token ensina
+     que o fluxo funciona quando ninguém testou o fluxo. */
+
+  async requestPasswordReset(email: string): Promise<{ demoLink?: string }> {
+    await tick();
+    const mail = normalizeEmail(email);
+    const s = read();
+    s.resets ??= {};
+
+    /* Sem conta, a resposta é a mesma de com conta - e sem link. É a mesma
+       regra do servidor, e mantê-la aqui impede que a tela seja escrita
+       contra um comportamento que só o mock tem. */
+    if (!s.accounts[mail]) { write(s); return {}; }
+
+    /* Um pedido novo derruba os anteriores, como no servidor. */
+    for (const [t, r] of Object.entries(s.resets)) {
+      if (r.email === mail && !r.used) s.resets[t]!.used = true;
+    }
+
+    const token = crypto.randomUUID().replace(/-/g, '');
+    s.resets[token] = { email: mail, expiresAt: Date.now() + 60 * 60_000 };
+    write(s);
+    return { demoLink: `/nova-senha/?token=${encodeURIComponent(token)}` };
+  }
+
+  async resetPassword({ token, password }: { token: string; password: string }): Promise<Session> {
+    await tick();
+    if (!passwordOk(password)) throw new AuthError('weak-password');
+    const s = read();
+    const pedido = s.resets?.[token];
+    if (!pedido || pedido.used || pedido.expiresAt < Date.now()) {
+      throw new AuthError('bad-token');
+    }
+    const a = s.accounts[pedido.email];
+    if (!a) throw new AuthError('bad-token');
+
+    a.pw = await hashPassword(password);
+    pedido.used = true;
+    s.current = a.email;
+    write(s);
+    return this.session(s)!;
+  }
+
+  async changePassword(
+    { current, password }: { current: string; password: string }
+  ): Promise<Session> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    if (!passwordOk(password)) throw new AuthError('weak-password');
+    if (!(await verifyPassword(current, a.pw))) throw new AuthError('bad-credentials');
+
+    a.pw = await hashPassword(password);
+    /* Trocar a senha derruba os pedidos de recuperação em aberto, como no
+       servidor: um link pedido por outra pessoa não pode sobreviver à troca. */
+    for (const [t, r] of Object.entries(s.resets ?? {})) {
+      if (r.email === a.email && !r.used) s.resets![t]!.used = true;
+    }
+    write(s);
+    return this.session(s)!;
   }
 
   async startOrder(

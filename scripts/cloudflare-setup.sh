@@ -209,6 +209,8 @@ empurra MP_ACCESS_TOKEN   "${MP_ACCESS_TOKEN:-}" \
   || info "MP_ACCESS_TOKEN ausente - pagamento fica desligado (o site funciona)."
 empurra MP_WEBHOOK_SECRET "${MP_WEBHOOK_SECRET:-}" \
   || info "MP_WEBHOOK_SECRET ausente - o webhook recusa tudo, de propósito."
+empurra RESEND_API_KEY    "${RESEND_API_KEY:-}" \
+  || info "RESEND_API_KEY ausente - ninguém recupera a senha sozinho (ver .env.example)."
 
 # ── 5. construir ──────────────────────────────────────────────────────────
 # HF_SKIP_BUILD=1 quando quem chama já construiu - é o caso do GitHub Actions,

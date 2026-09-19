@@ -26,8 +26,8 @@ import { useState, type FormEvent } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Campo, Erro } from '@/components/platform/Campo';
 import { useAccount } from '@/lib/account/store';
-import { empresa } from '@/lib/empresa';
 import {
   AuthError, emailLooksValid, MESSAGES, MIN_PASSWORD, passwordOk
 } from '@/lib/account/types';
@@ -91,18 +91,18 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
       <Card className="p-6">
         <form onSubmit={submit} className="grid gap-4" noValidate>
           {signup && (
-            <Field
+            <Campo
               id="nome" label="Como você quer ser chamado" value={name} onChange={setName}
               type="text" autoComplete="name" placeholder="Daniel"
             />
           )}
 
-          <Field
+          <Campo
             id="email" label="E-mail" value={email} onChange={setEmail}
             type="email" autoComplete="email" placeholder="voce@exemplo.com.br" required
           />
 
-          <Field
+          <Campo
             id="senha" label="Senha" value={password} onChange={setPassword}
             type="password"
             autoComplete={signup ? 'new-password' : 'current-password'}
@@ -110,17 +110,25 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
             required
           />
 
-          {error && (
-            <p role="alert"
-               className="font-ui text-[13.5px] leading-relaxed text-[var(--ember)]
-                          bg-[var(--ember-wash)] rounded-[var(--r-md)] px-4 py-3">
-              {error}
-            </p>
-          )}
+          {error && <Erro>{error}</Erro>}
 
           <Button type="submit" size="lg" full disabled={busy}>
             {busy ? (signup ? 'Criando…' : 'Entrando…') : (signup ? 'Criar conta' : 'Entrar')}
           </Button>
+
+          {/* Dentro do formulário, logo abaixo do botão: é onde a pessoa
+              está olhando no momento exato em que a senha não funciona.
+              Leva o e-mail já digitado junto, para não pedir duas vezes. */}
+          {!signup && (
+            <p className="font-ui text-[13.5px] text-center">
+              <Link
+                href={email ? `/esqueci-senha?email=${encodeURIComponent(email)}` : '/esqueci-senha'}
+                className="text-[var(--accent)] hover:underline"
+              >
+                Esqueci minha senha
+              </Link>
+            </p>
+          )}
         </form>
       </Card>
 
@@ -144,49 +152,6 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
         )}
       </p>
 
-      {!signup && (
-        <p className="font-ui text-[12.5px] text-center leading-relaxed text-ink-muted">
-          Esqueceu a senha? Escreva para{' '}
-          <a href={`mailto:${empresa.contato.emailSuporte}`}
-             className="text-[var(--accent)] hover:underline">
-            {empresa.contato.emailSuporte}
-          </a>{' '}
-          - a recuperação automática ainda não está no ar, e a gente resolve na mão.
-        </p>
-      )}
-    </div>
-  );
-}
-
-function Field({
-  id, label, value, onChange, type, autoComplete, placeholder, hint, required
-}: {
-  id: string; label: string; value: string; onChange: (v: string) => void;
-  type: 'text' | 'email' | 'password'; autoComplete: string;
-  placeholder?: string; hint?: string; required?: boolean;
-}) {
-  return (
-    <div className="grid gap-1.5">
-      <label htmlFor={id}
-             className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-        {label}
-      </label>
-      <input
-        id={id}
-        type={type}
-        value={value}
-        required={required}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        onChange={e => onChange(e.target.value)}
-        aria-describedby={hint ? `${id}-hint` : undefined}
-        className="min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
-                   font-ui text-[16px] text-ink placeholder:text-ink-muted
-                   focus:border-[var(--accent-soft)] focus:outline-none"
-      />
-      {hint && (
-        <p id={`${id}-hint`} className="font-ui text-[12.5px] text-ink-muted">{hint}</p>
-      )}
     </div>
   );
 }
