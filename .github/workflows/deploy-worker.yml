@@ -171,20 +171,32 @@ jobs:
       # A escrita vale só para esta execução, nunca é commitada: o repositório
       # continua dizendo o que se quer, e no dia em que o Access Token certo
       # entrar no segredo a publicação seguinte religa a Mercado Pago sozinha.
+      # Os testes são o portão. A regra de ordem em particular: uma versão
+      # quebrada que ainda assim publicasse poria uma lição na frente de um
+      # aluno com uma letra que ele não aprendeu. E agora também o que decide
+      # preço e acesso (tests/platform.test.ts, tests/worker.test.ts).
+      #
+      # E vêm ANTES da sonda da Mercado Pago, de propósito.
+      # ────────────────────────────────────────────────────────────────────
+      # A sonda reescreve data/empresa.json para ESTA execução, com o que a
+      # conta aceita hoje. Rodando ela primeiro, a suíte passava a testar o
+      # estado da conta do provedor em vez do nosso código: no dia em que o
+      # PIX saiu de lá, os testes de pagamento - que criam pedidos PIX -
+      # começaram a falhar sem que uma linha de código tivesse mudado, e a
+      # publicação parou por um motivo que não era um defeito.
+      # Testes testam o código, contra o arquivo do repositório, que diz a
+      # intenção. A sonda resolve a realidade da implantação, e o que ela
+      # escreve é para o BUILD, logo abaixo.
+      - name: Test
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: npm test
+
       - name: Mercado Pago autentica?
         if: steps.guard.outputs.ok == 'true'
         env:
           MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
         run: node scripts/pagamento-ativo.mjs
-
-      # Os testes são o portão. A regra de ordem em particular: uma versão
-      # quebrada que ainda assim publicasse poria uma lição na frente de um
-      # aluno com uma letra que ele não aprendeu. E agora também o que decide
-      # preço e acesso (tests/platform.test.ts, tests/worker.test.ts).
-      - name: Test
-        if: steps.guard.outputs.ok == 'true'
-        working-directory: app
-        run: npm test
 
       # NEXT_PUBLIC_PLATFORM_API=worker é o que faz o app falar com /api/* em
       # vez do adaptador local. Sem isto, a plataforma publicada guardaria

@@ -697,58 +697,79 @@ describe('a tela e o servidor concordam sobre as formas de pagamento', () => {
   /* O defeito que isto fecha: em 20/09/2026 a conta da Mercado Pago tinha
      cartão habilitado e PIX não, e o checkout oferecia PIX assim mesmo. Quem
      escolhesse PIX chegava até a chamada ao provedor e recebia um erro. */
-  it('o leitor das formas é o mesmo dos dois lados', () => {
-    /* `formasAtivas` alimenta a tela; `aceita` (dentro de pay.js) alimenta o
-       servidor. Os dois leem `pagamento.formas` do mesmo arquivo, que é o
-       que impede a divergência - e é por isso que o campo mora em
-       data/empresa.json e não numa variável de ambiente. */
-    expect(formasAtivas()).toEqual(['pix', 'card']);
-    expect(temPix()).toBe(true);
-    expect(temCartao()).toBe(true);
-    /* O arquivo do repositório diz a intenção: os dois. Quem rebaixa é a
-       publicação, e só para aquela build. */
-    expect(empresa.pagamento.formas).toEqual({ pix: true, cartao: true });
+  /* ── por que nada aqui afirma "PIX ligado" ────────────────────────────
+     A primeira versão destes testes comparava com `{pix: true, cartao:
+     true}`, que é o que está no repositório - e quebrou na publicação, que
+     foi onde ficou claro o erro: a sonda roda ANTES dos testes e já
+     reescreveu o arquivo para o que a conta aceita naquele dia. Um teste que
+     só passa enquanto a Mercado Pago está de um certo jeito não testa o
+     nosso código, testa a conta deles.
+     O que vale em qualquer estado é o CONTRATO: os leitores concordam entre
+     si, sobra pelo menos uma forma, e o servidor recusa exatamente as que a
+     tela não oferece. */
+
+  it('os leitores da tela concordam entre si', () => {
+    expect(formasAtivas()).toEqual([
+      ...(temPix() ? ['pix'] : []),
+      ...(temCartao() ? ['card'] : [])
+    ]);
+    /* Um checkout sem forma nenhuma não é um estado válido: seria uma
+       página de pagamento sem como pagar. */
+    expect(formasAtivas().length).toBeGreaterThan(0);
+    const f = empresa.pagamento.formas;
+    if (f) {
+      expect(typeof f.pix).toBe('boolean');
+      expect(typeof f.cartao).toBe('boolean');
+    }
   });
 
-  it('a sonda reescreve as formas da build, e só elas', async () => {
-    const { readFileSync, writeFileSync, mkdtempSync } = await import('node:fs');
-    const { tmpdir } = await import('node:os');
-    const { join } = await import('node:path');
-    const arquivo = join(mkdtempSync(join(tmpdir(), 'hf-')), 'empresa.json');
+  it('a substituição que a sonda faz encontra o bloco no arquivo', async () => {
+    const { readFileSync } = await import('node:fs');
     const original = readFileSync(
       new URL('../../data/empresa.json', import.meta.url), 'utf8');
-    writeFileSync(arquivo, original);
 
-    /* A mesma substituição que scripts/pagamento-ativo.mjs faz. Copiada aqui
-       de propósito: o script roda antes do build, fora do vitest, e o que
-       este teste defende é o FORMATO do arquivo - um `formas` reescrito à
-       mão para uma forma só, ou renomeado, faria a substituição virar um
-       no-op silencioso e o PIX voltaria a ser oferecido. */
-    const reescrito = original.replace(
-      /("formas"\s*:\s*\{[^}]*"pix"\s*:\s*)(true|false)([^}]*"cartao"\s*:\s*)(true|false)/,
-      (_m, a, _p, b) => `${a}false${b}true`
-    );
-    expect(reescrito, 'a substituição da sonda não casou').not.toBe(original);
+    /* A mesma expressão de scripts/pagamento-ativo.mjs. Copiada de propósito:
+       o script roda antes do build, fora do vitest, e o que este teste
+       defende é o FORMATO do arquivo - renomear o campo, achatar o objeto ou
+       trocar a ordem das chaves faria a substituição virar um no-op
+       silencioso, e o PIX voltaria a ser oferecido sem ninguém notar. */
+    const RE = /("formas"\s*:\s*\{[^}]*"pix"\s*:\s*)(true|false)([^}]*"cartao"\s*:\s*)(true|false)/;
+    expect(RE.test(original), 'a substituição da sonda não casa mais').toBe(true);
 
-    const depois = JSON.parse(reescrito);
-    expect(depois.pagamento.formas).toEqual({ pix: false, cartao: true });
-    /* E nada mais se mexeu: modo, chave PIX, CNPJ, endereço. */
-    const antes = JSON.parse(original);
-    delete antes.pagamento.formas; delete depois.pagamento.formas;
-    expect(depois).toEqual(antes);
+    /* E ela troca SÓ as duas, para qualquer combinação. */
+    for (const [pix, cartao] of [[false, true], [true, false], [true, true], [false, false]]) {
+      const depois = JSON.parse(original.replace(RE, (_m, a, _p, b) => `${a}${pix}${b}${cartao}`));
+      expect(depois.pagamento.formas).toEqual({ pix, cartao });
+      const antes = JSON.parse(original);
+      delete antes.pagamento.formas; delete depois.pagamento.formas;
+      expect(depois, 'a substituição mexeu em outra coisa').toEqual(antes);
+    }
   });
 
-  it('o servidor recusa a forma que a build não cobra, com o código certo', async () => {
+  it('o servidor recusa exatamente as formas que a tela não oferece', async () => {
     const env = envSite({ MP_ACCESS_TOKEN: 'APP_USR-1234567890123456-092019-abcdef0123456789abcdef0123456789-123456789' });
     const { cookie } = await comConta(env);
-    /* Com as duas ligadas (o estado do repositório), nenhuma é recusada por
-       este motivo - o pedido segue e morre na Mercado Pago de mentira, que é
-       outro assunto. */
-    const r = await pay.create({
-      request: pedido(`${SITE}/api/pay/create`, { courseSlug: 'alfabetizacao', method: 'pix' }, { Cookie: cookie }),
+    const tentar = (method: string) => pay.create({
+      request: pedido(`${SITE}/api/pay/create`, { courseSlug: 'alfabetizacao', method }, { Cookie: cookie }),
       env, ctx
     });
-    expect(r.status).not.toBe(409);
+
+    for (const [method, oferecida, codigo] of [
+      ['pix', temPix(), 'pix-off'],
+      ['card', temCartao(), 'card-off']
+    ] as [string, boolean, string][]) {
+      const r = await tentar(method);
+      if (oferecida) {
+        /* Não é recusada POR ESTE MOTIVO. Pode morrer adiante, na Mercado
+           Pago de mentira, e isso é outro assunto. */
+        if (r.status === 409) {
+          expect(await r.json()).not.toMatchObject({ error: codigo });
+        }
+      } else {
+        expect(r.status, method).toBe(409);
+        expect(await r.json()).toMatchObject({ error: codigo });
+      }
+    }
   });
 });
 
