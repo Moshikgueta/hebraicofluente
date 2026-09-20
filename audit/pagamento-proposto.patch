@@ -1,0 +1,352 @@
+diff --git a/app/src/app/checkout/[slug]/CheckoutClient.tsx b/app/src/app/checkout/[slug]/CheckoutClient.tsx
+index 8aff652..5ce4384 100644
+--- a/app/src/app/checkout/[slug]/CheckoutClient.tsx
++++ b/app/src/app/checkout/[slug]/CheckoutClient.tsx
+@@ -36,7 +36,7 @@ import { Card, Badge } from '@/components/ui/Card';
+ import { Button, LinkButton } from '@/components/ui/Button';
+ import { He } from '@/components/hebrew/He';
+ import { useAccount } from '@/lib/account/store';
+-import { AuthError, MESSAGES, type Order, type PaymentMethod } from '@/lib/account/types';
++import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
+ import { brl, getCourse, installment, pixPrice, type CatalogCourse } from '@/lib/catalog';
+ import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
+ import { AuthForm } from '@/components/platform/AuthForm';
+@@ -65,7 +65,12 @@ export function CheckoutClient({ slug }: { slug: string }) {
+      estar no ar antes da conta da Mercado Pago existir, e isso não é falha. */
+   const [paymentsOff, setPaymentsOff] = useState(false);
+ 
+-  const owned = account.can(slug);
++  /* "Já é dono" só bloqueia a compra fora da janela de renovação: nos últimos
++     45 dias o servidor aceita um pedido novo e ESTENDE o prazo, e esta tela
++     precisa deixar a pessoa chegar até ele - era daqui que o botão "Renovar
++     acesso" do painel saía para bater num "nada a pagar". */
++  const restam = daysLeft(account.session, slug);
++  const owned = account.can(slug) && (restam === null || restam > 45);
+   const parcela = installment(c.price);
+   const total = method === 'pix' ? pixPrice(c.price) : c.price.brl;
+ 
+diff --git a/app/src/lib/account/types.ts b/app/src/lib/account/types.ts
+index 10d97aa..aeada75 100644
+--- a/app/src/lib/account/types.ts
++++ b/app/src/lib/account/types.ts
+@@ -61,7 +61,7 @@ export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired'
+ export type AuthErrorCode =
+   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
+   | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'payments-off'
+-  | 'bad-token' | 'payment-failed' | 'card-off';
++  | 'bad-token' | 'payment-failed' | 'card-off' | 'already-owned';
+ 
+ export class AuthError extends Error {
+   constructor(readonly code: AuthErrorCode, message?: string) {
+@@ -98,7 +98,10 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
+      ninguém vê esta frase: ela é a rede para um pedido antigo aberto numa aba
+      esquecida, ou para alguém chamando a API na mão. Diz o que fazer em vez de
+      dizer que deu erro, porque o caminho que funciona está na mesma tela. */
+-  'card-off': 'No momento só aceitamos PIX. Volte e escolha PIX - o código sai na hora.'
++  'card-off': 'No momento só aceitamos PIX. Volte e escolha PIX - o código sai na hora.',
++  /* Não é erro, é a compra repetida barrada. A renovação abre sozinha nos
++     últimos 45 dias; antes disso não há o que pagar. */
++  'already-owned': 'Este curso já está na sua conta. A renovação abre nos últimos 45 dias de acesso.'
+ };
+ 
+ /* ── regras de acesso ────────────────────────────────────────────────────
+diff --git a/app/src/lib/account/worker-api.ts b/app/src/lib/account/worker-api.ts
+index 30826c2..c8158c0 100644
+--- a/app/src/lib/account/worker-api.ts
++++ b/app/src/lib/account/worker-api.ts
+@@ -32,7 +32,7 @@ const BASE = '';
+ const CODES: readonly string[] = [
+   'bad-credentials', 'email-taken', 'weak-password', 'invalid-email',
+   'not-signed-in', 'offline', 'server', 'rate-limited', 'payments-off',
+-  'bad-token', 'payment-failed', 'card-off'
++  'bad-token', 'payment-failed', 'card-off', 'already-owned'
+ ];
+ 
+ async function call<T>(path: string, init?: RequestInit): Promise<T> {
+diff --git a/worker/src/api/auth.js b/worker/src/api/auth.js
+index e420ecc..741ff97 100644
+--- a/worker/src/api/auth.js
++++ b/worker/src/api/auth.js
+@@ -28,9 +28,9 @@ import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/sessi
+ import { isSandbox, tokenFormato } from '../lib/mercadopago.js';
+ import { mailReady, mensagemDeRecuperacao, sendMail } from '../lib/mail.js';
+ import {
+-  activeEntitlements, changePassword, createAccount, estourou, findAccountByEmail,
+-  findAccountById, inviteRedeem, log, normalizeEmail, resetCreate, resetFind, resetUse,
+-  setPasswordHash, throttled, ultimoEnvioDeSenha
++  activeEntitlements, bumpSessionVersion, changePassword, createAccount, estourou,
++  findAccountByEmail, findAccountById, inviteRedeem, log, normalizeEmail, resetCreate,
++  resetFind, resetUse, setPasswordHash, throttled, ultimoEnvioDeSenha
+ } from '../lib/db.js';
+ 
+ const MIN_PASSWORD = 8;
+@@ -211,7 +211,16 @@ export async function login({ request, env }) {
+     { 'Set-Cookie': await makeSessionCookie(env, account) });
+ }
+ 
+-export async function logout() {
++export async function logout({ request, env }) {
++  /* Sair de verdade: além de limpar o cookie do navegador, invalida o valor
++     dele no servidor. Antes só o navegador esquecia; o cookie continuava
++     valendo por sete dias para quem o tivesse copiado - de um computador
++     compartilhado, de uma captura de tela, de um log. */
++  const account = request && env ? await requireAccount(request, env) : null;
++  if (account) {
++    await bumpSessionVersion(env, account.id);
++    await log(env, account.id, 'logout');
++  }
+   return json({ ok: true }, 200, { 'Set-Cookie': clearSessionCookie });
+ }
+ 
+diff --git a/worker/src/api/pay.js b/worker/src/api/pay.js
+index b9c78b0..b4759fa 100644
+--- a/worker/src/api/pay.js
++++ b/worker/src/api/pay.js
+@@ -21,8 +21,8 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
+ import { ip, requireAccount } from './auth.js';
+ import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
+ import {
+-  createOrder, getOrder, grantAccess, hasEntitlement, log, ordersOf,
+-  recordEvent, throttled, updateOrder
++  createOrder, entitlementExpiry, getOrder, grantAccess, log, ordersOf,
++  recordEvent, revokeAccess, throttled, updateOrder
+ } from '../lib/db.js';
+ import {
+   createCardPreference, createPix, getPayment, mapStatus, paymentsFor,
+@@ -91,9 +91,16 @@ export async function create({ request, env }) {
+ 
+   /* Já é dono: não cobra de novo. Vender duas vezes a mesma coisa para a mesma
+      pessoa é estorno garantido - e é um erro fácil de cometer quando o
+-     comprador abre o checkout por um link antigo. */
+-  if (await hasEntitlement(env, account.id, course.slug)) {
+-    return fail('server', 409);
++     comprador abre o checkout por um link antigo.
++
++     Exceto nos últimos 45 dias: aí é RENOVAÇÃO, e `grantAccess` estende a
++     partir do vencimento, então pagar cedo não perde dia nenhum. Sem esta
++     janela o botão "Renovar acesso" do painel levava a um checkout que
++     respondia 409 - a renovação só era possível DEPOIS de perder o acesso. */
++  const vence = await entitlementExpiry(env, account.id, course.slug);
++  const RENOVACAO_MS = 45 * 86_400_000;
++  if (vence !== null && (vence === undefined || vence - Date.now() > RENOVACAO_MS)) {
++    return fail('already-owned', 409);
+   }
+ 
+   /* No modo `pix-direto` só existe PIX, e um pedido de cartão é recusado em
+@@ -285,10 +292,14 @@ export async function webhook({ request, env }) {
+ 
+   /* A assinatura prova QUEM mandou, não O QUE aconteceu. O status vem de uma
+      consulta nossa. */
+-  await settleFromPaymentId(env, String(dataId), 'webhook');
+-  /* 200 sempre, depois de processar. Um erro nosso devolvido aqui faz a
+-     Mercado Pago reenviar - o que é bom - mas devolver erro por um pagamento
+-     que simplesmente não é nosso a faria reenviar para sempre. */
++  const resultado = await settleFromPaymentId(env, String(dataId), 'webhook');
++  /* Duas respostas, para dois casos que a Mercado Pago trata diferente:
++     · um erro NOSSO (banco fora, consulta que caiu) devolve 500, e ela
++       reenvia - que é exatamente o que se quer de um aviso que não
++       conseguimos processar;
++     · um pagamento que não é nosso, ou já resolvido, devolve 200, senão
++       ela reenviaria para sempre um aviso que não tem o que fazer aqui. */
++  if (resultado === 'erro') return json({ error: 'retry' }, 500);
+   return json({ ok: true });
+ }
+ 
+@@ -309,14 +320,20 @@ export async function settleFromProvider(env, order, source) {
+     if (!found.length) return null;
+     /* Se houver mais de um (o comprador tentou duas vezes), o aprovado manda. */
+     const payment = found.find(p => mapStatus(p.status) === 'paid') || found[0];
+-    return applyPayment(env, order, payment, source);
++    /* `await` aqui, e não só `return`: uma promessa rejeitada devolvida de
++       dentro de um try NÃO é pega pelo catch dele. Sem o await, uma falha na
++       liberação escapava sem log e derrubava a varredura inteira. */
++    return await applyPayment(env, order, payment, source);
+   } catch (e) {
+     await log(env, order.account_id, 'settle-error', `${order.id} ${e.message || e}`);
+-    return null;
++    return 'erro';
+   }
+ }
+ 
+-/** O caminho do webhook: temos o id do pagamento e precisamos achar o pedido. */
++/** O caminho do webhook: temos o id do pagamento e precisamos achar o pedido.
++ *  Devolve `null` quando não há o que fazer (pagamento de outra loja, pedido
++ *  inexistente) e `'erro'` quando algo NOSSO falhou - a diferença decide se a
++ *  Mercado Pago deve reenviar o aviso. */
+ export async function settleFromPaymentId(env, paymentId, source) {
+   try {
+     const payment = await getPayment(env, paymentId);
+@@ -324,10 +341,10 @@ export async function settleFromPaymentId(env, paymentId, source) {
+     if (!orderId) return null;
+     const order = await getOrder(env, orderId);
+     if (!order) return null;
+-    return applyPayment(env, order, payment, source);
++    return await applyPayment(env, order, payment, source);
+   } catch (e) {
+     await log(env, null, 'settle-error', `pagamento ${paymentId} ${e.message || e}`);
+-    return null;
++    return 'erro';
+   }
+ }
+ 
+@@ -343,23 +360,55 @@ export const settle = (env, orderId, paymentId, source) =>
+  *   · pedido já pago não faz nada;
+  *   · valor menor do que o pedido não libera;
+  *   · moeda diferente não libera.
++ *
++ * E a lição da auditoria, que vale contra o instinto: a chave do evento é o
++ * pagamento E O ESTADO DELE. Um pagamento da Mercado Pago é um objeto que
++ * muda - o mesmo id é `pending` hoje e `approved` daqui a um minuto. Com a
++ * chave só no id, a PRIMEIRA vez que este código via um pagamento (a tela
++ * consultando três segundos depois de o QR aparecer) gastava a única vaga
++ * dele, e a aprovação que vinha depois batia no UNIQUE e era descartada.
++ * Todo PIX pago, sem exceção, ficaria pendente para sempre. A trava contra
++ * liberar duas vezes é `order.status === 'paid'`, logo abaixo - e sempre foi.
+  */
+ async function applyPayment(env, order, payment, source) {
+   const status = mapStatus(payment.status);
+ 
+   const fresh = await recordEvent(env, {
+-    eventId: String(payment.id), orderId: order.id, status, raw: payment, source
++    eventId: `${payment.id}:${status}`, orderId: order.id, status, raw: payment, source
+   });
+-  if (!fresh) return status;
++
++  /* O pedido, relido: o que chegou aqui pode ter sido lido antes de uma
++     liberação que aconteceu no meio do caminho. */
++  const atual = (await getOrder(env, order.id)) || order;
++
++  if (status === 'refunded') {
++    /* Estorno ou chargeback. Fecha a porta - o cookie não carrega direito
++       nenhum, então fecha na hora - e deixa o pedido dizendo o que aconteceu.
++       Antes, um estorno depois de pago não fazia NADA: nem revogava, nem
++       marcava, nem registrava. Quem pedia o dinheiro de volta ficava com os
++       doze meses. */
++    if (atual.status === 'paid') {
++      await updateOrder(env, order.id, { status: 'refunded' });
++      await revokeAccess(env, order.account_id, order.course_slug, `${payment.id} via ${source}`);
++      await log(env, order.account_id, 'estorno', `${order.id} ${payment.status} via ${source}`);
++    } else if (atual.status === 'pending') {
++      await updateOrder(env, order.id, { status: 'refunded' });
++    }
++    return status;
++  }
+ 
+   if (status !== 'paid') {
+-    if (order.status === 'pending' && (status === 'failed' || status === 'refunded')) {
++    if (fresh && atual.status === 'pending' && status === 'failed') {
+       await updateOrder(env, order.id, { status });
+     }
+     return status;
+   }
+ 
+-  if (order.status === 'paid') return 'paid';
++  /* Aprovado. Um aviso de aprovação repetido (`!fresh`) chega até aqui de
++     propósito: se o pedido já está pago, a linha seguinte encerra; se NÃO
++     está - uma liberação que caiu no meio, entre gravar o evento e gravar o
++     direito - o reenvio é justamente a chance de terminar o serviço. */
++  if (atual.status === 'paid') return 'paid';
+ 
+   /* O valor. Um pagamento aprovado de R$ 1,00 apontando para um pedido de
+      R$ 147,00 não é um pagamento deste pedido - é alguém que montou o próprio
+@@ -372,16 +421,22 @@ async function applyPayment(env, order, payment, source) {
+     return 'failed';
+   }
+ 
++  /* O direito PRIMEIRO, o pedido DEPOIS. A ordem é o que torna uma
++     liberação interrompida recuperável: se o banco cair entre as duas
++     escritas, o pedido continua `pending`, o reenvio do aviso chega até
++     aqui de novo e termina o serviço (`grantAccess` é um upsert). Na ordem
++     inversa - que era a de antes - o pedido ficava `paid` sem direito
++     nenhum, e cada reenvio parava na linha "já está pago" lá em cima. */
+   const course = getCourse(order.course_slug);
+-  await updateOrder(env, order.id, {
+-    status: 'paid', paid_at: Date.now(), provider_ref: String(payment.id)
+-  });
+   await grantAccess(env, {
+     accountId: order.account_id,
+     courseSlug: order.course_slug,
+     orderId: order.id,
+     months: course ? course.accessMonths : 12
+   });
++  await updateOrder(env, order.id, {
++    status: 'paid', paid_at: Date.now(), provider_ref: String(payment.id)
++  });
+   await log(env, order.account_id, 'paid', `${order.id} via ${source}`);
+   return 'paid';
+ }
+diff --git a/worker/src/lib/db.js b/worker/src/lib/db.js
+index be87bc3..da7722d 100644
+--- a/worker/src/lib/db.js
++++ b/worker/src/lib/db.js
+@@ -51,6 +51,21 @@ export async function setPasswordHash(env, accountId, { hash, salt, iterations }
+  * É uma consulta só, e os dois campos andam juntos por isso: separados, um
+  * `await` entre eles é uma janela em que a senha é nova e a sessão é velha.
+  */
++/**
++ * Derruba todo cookie já emitido para a conta, sem trocar a senha.
++ *
++ * É o que "sair" tem de fazer: limpar o cookie do navegador não invalida o
++ * VALOR dele, que continua conferindo por sete dias em qualquer outro lugar
++ * onde tenha sido copiado. Sobe a `session_version`, e a resposta do logout
++ * é a única coisa que muda para quem saiu. Efeito colateral deliberado: sai
++ * de todos os aparelhos ao mesmo tempo.
++ */
++export async function bumpSessionVersion(env, accountId) {
++  await env.DB.prepare(
++    'UPDATE accounts SET session_version = session_version + 1 WHERE id = ?'
++  ).bind(accountId).run();
++}
++
+ export async function changePassword(env, accountId, { hash, salt, iterations }) {
+   await env.DB.prepare(
+     `UPDATE accounts
+@@ -156,6 +171,19 @@ export async function activeEntitlements(env, accountId, at = now()) {
+   }));
+ }
+ 
++/**
++ * Quando o acesso a um curso vence: um instante em ms, `null` se não há
++ * direito nenhum (nem vencido), `undefined` se o direito não tem vencimento.
++ * É o que decide se um pedido novo é compra repetida ou renovação.
++ */
++export async function entitlementExpiry(env, accountId, slug) {
++  const row = await env.DB.prepare(
++    'SELECT expires_at FROM entitlements WHERE account_id = ? AND course_slug = ?'
++  ).bind(accountId, slug).first();
++  if (!row) return null;
++  return row.expires_at === null || row.expires_at === undefined ? undefined : Number(row.expires_at);
++}
++
+ export async function hasEntitlement(env, accountId, slug, at = now()) {
+   const row = await env.DB.prepare(
+     `SELECT 1 FROM entitlements
+diff --git a/worker/src/reconcile.js b/worker/src/reconcile.js
+index 121edea..ef80779 100644
+--- a/worker/src/reconcile.js
++++ b/worker/src/reconcile.js
+@@ -23,7 +23,7 @@
+  */
+ 
+ import { settleFromProvider } from './api/pay.js';
+-import { log, logPurge, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
++import { getOrder, log, logPurge, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
+ import empresa from '../../data/empresa.json';
+ 
+ /* No PIX direto não existe provedor a quem perguntar: o dinheiro cai na conta
+@@ -59,7 +59,14 @@ export async function runReconcile(env) {
+          provedor. */
+       if (PIX_DIRETO) continue;
+       const status = await settleFromProvider(env, order, 'reconcile');
+-      if (status === 'paid') settled++;
++      /* Conta como liberado só o que FOI liberado agora: o pedido era
++         pendente e saiu pago. Contar o valor devolvido pela função
++         registrava "1 liberados" para pedidos que continuavam pendentes -
++         foi assim que o defeito do evento repetido ficou invisível. */
++      if (status === 'paid') {
++        const depois = await getOrder(env, order.id);
++        if (depois && depois.status === 'paid') settled++;
++      }
+     } catch (e) {
+       await log(env, order.account_id, 'reconcile-error', `${order.id} ${e && e.message || e}`);
+     }
