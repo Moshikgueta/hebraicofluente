@@ -21,14 +21,17 @@ import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
 import * as pay from '../../worker/src/api/pay.js';
 // @ts-expect-error - idem
+import * as progress from '../../worker/src/api/progress.js';
+// @ts-expect-error - idem
 import { readJson } from '../../worker/src/lib/http.js';
 // @ts-expect-error - idem
 import { makeSessionCookie, readSession } from '../../worker/src/lib/session.js';
 // @ts-expect-error - idem
-import { enxuto, estourou, grantAccess, recordEvent, throttled } from '../../worker/src/lib/db.js';
+import { enxuto, estourou, grantAccess, hasEntitlement, inviteCreate, recordEvent, throttled } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
 import { getPayment } from '../../worker/src/lib/mercadopago.js';
 import { safeNext } from '../src/lib/safe-next';
+import { mergeStates } from '../src/lib/state/merge';
 
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
@@ -295,6 +298,22 @@ describe('o freio', () => {
     expect(row!.hits).toBeGreaterThanOrEqual(5);
   });
 
+  /* A limpeza oportunista apagava a linha que a própria chamada tinha
+     acabado de criar, para toda janela maior que o horizonte dela: a linha
+     de uma janela de 24 horas é carimbada no INÍCIO do dia, e às duas da
+     tarde já tinha "mais de duas horas". O contador nunca passava de um, e
+     o freio de 24 horas não freava nada. */
+  it('uma janela de 24 horas conta de verdade, e a limpeza não a come', async () => {
+    const env = envSite();
+    const dia = 24 * 3_600_000;
+    expect(await throttled(env, 'diario', 1, dia)).toBe(false);
+    for (let i = 0; i < 4; i++) expect(await throttled(env, 'diario', 1, dia)).toBe(true);
+    /* Uma chave nova de um minuto dispara a limpeza; a linha diária fica. */
+    await throttled(env, 'outra', 5);
+    expect(await throttled(env, 'diario', 1, dia)).toBe(true);
+    expect(linhas(env, "SELECT 1 AS x FROM throttle WHERE key LIKE 'diario%'")).toHaveLength(1);
+  });
+
   it('janelas diferentes não colidem, e a limpeza de uma não apaga a outra', async () => {
     const env = envSite();
     for (let i = 0; i < 5; i++) await throttled(env, 'h', 5, 3_600_000);
@@ -505,6 +524,145 @@ describe('o pagamento', () => {
     expect(row!.raw).not.toContain('payer');
     expect(row!.raw).not.toContain('1234');
     expect(row!.raw).not.toContain('Fulano');
+  });
+});
+
+/* ── o progresso ────────────────────────────────────────────────────────── */
+
+describe('o progresso recusa chave que não é dado', () => {
+  const salvar = async (env: Record<string, unknown>, cookie: string, state: unknown) =>
+    progress.write({
+      request: pedido(`${SITE}/api/progress`, { state, rev: 0 }, { Cookie: cookie }), env, ctx
+    });
+
+  it.each([
+    ['na raiz', () => JSON.parse('{"version":2,"__proto__":{"admin":true}}')],
+    ['no fundo', () => JSON.parse('{"version":2,"licoes":{"alef":{"__proto__":{"x":1}}}}')],
+    ['constructor', () => JSON.parse('{"version":2,"constructor":{"x":1}}')],
+    ['prototype', () => JSON.parse('{"version":2,"a":{"prototype":1}}')]
+  ])('%s → 400, e nada é gravado', async (_n, montar) => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const r = await salvar(env, cookie, montar());
+    expect(r.status).toBe(400);
+    expect(linhas(env, 'SELECT * FROM progress')).toEqual([]);
+  });
+
+  it('o progresso de verdade continua passando', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const r = await salvar(env, cookie, { version: 2, licoes: { alef: { stagesDone: [1, 2] } } });
+    expect(r.status).toBe(200);
+    expect((linhas(env, 'SELECT rev FROM progress') as { rev: number }[])[0]!.rev).toBe(1);
+  });
+
+  /* A fusão do cliente descarta as mesmas três chaves. */
+  it('a fusão do app não copia __proto__ para o objeto novo', () => {
+    const dia = (xp: number) => ({ answered: 1, units: 1, xp, goalMet: false });
+    const sujo = JSON.parse(JSON.stringify({
+      version: 2,
+      days: { '__proto__': { poluido: true }, '2026-09-20': dia(30) }
+    }));
+    const limpo = { version: 2, days: { '2026-09-20': dia(10) } };
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const r = mergeStates(sujo as any, limpo as any);
+    expect(Object.prototype.hasOwnProperty.call(r.days, '__proto__')).toBe(false);
+    expect(({} as Record<string, unknown>).poluido).toBeUndefined();
+    expect(r.days['2026-09-20']!.xp).toBe(30);
+  });
+});
+
+/* ── o presente ─────────────────────────────────────────────────────────── */
+
+describe('um convite não vira acesso sozinho', () => {
+  const convidar = (env: Record<string, unknown>, email: string) =>
+    inviteCreate(env, { email, courseSlug: 'alfabetizacao', months: 12, note: 'teste' });
+
+  const cadastrar = (env: Record<string, unknown>, email: string, c = ctx) =>
+    auth.signup({
+      request: pedido(`${SITE}/api/auth/signup`, { name: 'Quem', email, password: 'senha-boa-123' }),
+      env, ctx: c
+    });
+
+  it('quem chega primeiro no endereço presenteado NÃO leva o curso', async () => {
+    const env = envSite();
+    await convidar(env, 'presenteada@exemplo.com.br');
+
+    /* O impostor sabe o endereço e corre para o cadastro. */
+    const r = await cadastrar(env, 'presenteada@exemplo.com.br');
+    expect(r.status).toBe(200);
+    const { account } = await r.json() as { account: { id: string } };
+
+    expect(await hasEntitlement(env, Number(account.id), 'alfabetizacao'),
+      'o convite virou acesso sozinho').toBe(false);
+    /* O convite continua esperando o dono decidir. */
+    const [convite] = linhas(env, 'SELECT used_at FROM invites') as { used_at: number | null }[];
+    expect(convite!.used_at).toBeNull();
+  });
+
+  it('o dono é avisado, e o aviso não leva o endereço para a trilha', async () => {
+    const env = envSite({
+      RESEND_API_KEY: 're_x', EMAIL_FROM: 'HF <c@hebraicofluente.com.br>',
+      RESEND_BASE: 'https://api.resend.test', SUPPORT_EMAIL: 'dono@exemplo.com'
+    });
+    await convidar(env, 'presenteada@exemplo.com.br');
+
+    const enviados: { to: string[]; subject: string; text: string }[] = [];
+    vi.stubGlobal('fetch', async (_u: string, init?: RequestInit) => {
+      enviados.push(JSON.parse(String(init?.body)));
+      return new Response('{"id":"m"}', { status: 200 });
+    });
+    const esperar: Promise<unknown>[] = [];
+    await cadastrar(env, 'presenteada@exemplo.com.br',
+      { waitUntil: (p: Promise<unknown>) => { esperar.push(p); } });
+    await Promise.all(esperar);
+    vi.unstubAllGlobals();
+
+    expect(enviados).toHaveLength(1);
+    expect(enviados[0]!.to).toEqual(['dono@exemplo.com']);
+    expect(enviados[0]!.text).toContain('presenteada@exemplo.com.br');
+    expect(enviados[0]!.text).toContain('alfabetizacao');
+
+    const trilha = linhas(env, "SELECT action, detail FROM access_log WHERE action = 'convite-aguardando'") as { detail: string }[];
+    expect(trilha).toHaveLength(1);
+    expect(trilha[0]!.detail).toBe('alfabetizacao');
+    expect(trilha[0]!.detail).not.toContain('@');
+  });
+
+  it('entrar dez vezes não manda dez avisos', async () => {
+    const env = envSite({
+      RESEND_API_KEY: 're_x', EMAIL_FROM: 'HF <c@hebraicofluente.com.br>',
+      RESEND_BASE: 'https://api.resend.test', SUPPORT_EMAIL: 'dono@exemplo.com'
+    });
+    let envios = 0;
+    vi.stubGlobal('fetch', async () => { envios++; return new Response('{"id":"m"}', { status: 200 }); });
+    await convidar(env, 'presenteada@exemplo.com.br');
+    await cadastrar(env, 'presenteada@exemplo.com.br');
+    for (let i = 0; i < 5; i++) {
+      const r = await auth.login({
+        request: pedido(`${SITE}/api/auth/login`,
+          { email: 'presenteada@exemplo.com.br', password: 'senha-boa-123' }),
+        env, ctx
+      });
+      expect(r.status).toBe(200);
+    }
+    vi.unstubAllGlobals();
+    expect(envios).toBe(1);
+  });
+
+  it('sem provedor de e-mail, falha fechada: avisa na trilha e não libera', async () => {
+    const env = envSite();
+    await convidar(env, 'presenteada@exemplo.com.br');
+    const r = await cadastrar(env, 'presenteada@exemplo.com.br');
+    const { account } = await r.json() as { account: { id: string } };
+    expect(await hasEntitlement(env, Number(account.id), 'alfabetizacao')).toBe(false);
+    expect(linhas(env, "SELECT 1 AS x FROM access_log WHERE action = 'convite-aguardando'")).toHaveLength(1);
+  });
+
+  it('quem não tem convite nenhum não gera aviso', async () => {
+    const env = envSite();
+    await comConta(env, 'ninguem@exemplo.com.br');
+    expect(linhas(env, "SELECT 1 AS x FROM access_log WHERE action = 'convite-aguardando'")).toEqual([]);
   });
 });
 

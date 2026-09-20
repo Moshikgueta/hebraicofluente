@@ -283,37 +283,35 @@ export async function inviteCreate(env, { email, courseSlug, months, note }) {
 }
 
 /**
- * Transforma em acesso todos os convites pendentes deste e-mail.
+ * Os convites pendentes deste e-mail. Uma LEITURA, e só.
  *
- * Chamado no cadastro, e de novo no login - o segundo é a rede de segurança
- * para quem já tinha conta quando o convite foi criado. As duas chamadas são
- * seguras de repetir: `used_at` faz o convite valer uma vez só.
+ * ── por que não existe mais um `inviteRedeem` ────────────────────────────
+ * Existia, e virava acesso sozinho no cadastro e no login. A auditoria
+ * (F-18) mostrou o que isso significa: o convite é endereçado a um e-mail
+ * que ainda NÃO tem conta, e a única credencial exigida para resgatá-lo era
+ * escrever esse e-mail num formulário de cadastro. Quem soubesse que o
+ * endereço de alguém foi presenteado - e quem presenteia costuma contar -
+ * chegava primeiro e levava o curso.
  *
- * Nunca derruba o cadastro: um presente que falha não pode impedir alguém de
- * criar a conta. Por isso o try, e por isso ele devolve quantos aplicou em vez
- * de lançar.
+ * Fechar isso por automação exigiria provar a posse da caixa de entrada:
+ * mais uma tabela, mais uma tela, mais um e-mail, e uma janela de prefetch
+ * de cliente de e-mail para pensar. Só que o dono JÁ está no circuito de
+ * todo presente - é ele quem roda `liberar` - e ele sabe quem presenteou.
+ * Então o cadastro num endereço presenteado deixou de virar acesso e passou
+ * a AVISAR o dono (worker/src/api/auth.js), que confirma com um `liberar` -
+ * e aí o acesso é concedido direto, porque a conta agora existe.
+ *
+ * Nunca lança: é chamada no meio do cadastro, e um presente que falha não
+ * pode impedir alguém de criar a conta.
  */
-export async function inviteRedeem(env, accountId, email) {
+export async function invitesPendentes(env, email) {
   try {
     const { results } = await env.DB.prepare(
       'SELECT course_slug, months FROM invites WHERE email = ? AND used_at IS NULL'
     ).bind(normalizeEmail(email)).all();
-
-    let n = 0;
-    for (const row of results || []) {
-      await grantAccess(env, {
-        accountId, courseSlug: row.course_slug,
-        orderId: 'CONVITE', months: row.months
-      });
-      await env.DB.prepare(
-        'UPDATE invites SET used_at = ? WHERE email = ? AND course_slug = ?'
-      ).bind(now(), normalizeEmail(email), row.course_slug).run();
-      n++;
-    }
-    if (n) await log(env, accountId, 'convite-usado', `${n} curso(s)`);
-    return n;
+    return results || [];
   } catch {
-    return 0;
+    return [];
   }
 }
 
@@ -449,11 +447,20 @@ export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
   ).bind(k, window_at).first();
   const hits = row && Number.isFinite(Number(row.hits)) ? Number(row.hits) : limit + 1;
   /* Limpeza oportunista: sem ela a tabela cresce para sempre, e um cron só
-     para isso seria um cron a mais para manter. Duas horas atrás cobre a
-     maior janela em uso. */
+     para isso seria um cron a mais para manter.
+     ────────────────────────────────────────────────────────────────────
+     ⚠ O HORIZONTE PRECISA SER MAIOR QUE A MAIOR JANELA EM USO. A primeira
+     versão apagava tudo com mais de duas horas, o que era verdade enquanto
+     a maior janela era de uma hora. No dia em que entrou uma janela de 24
+     horas (o aviso de convite pendente), a linha recém-criada dessa janela
+     - carimbada no INÍCIO do dia, portanto com mais de duas horas às duas
+     da tarde - era apagada pela limpeza da própria chamada que a criou. O
+     contador nunca passava de um, e o freio de 24 horas não freava nada.
+     Duas vezes a maior janela, e a regra escrita aqui para a próxima. */
+  const FAXINA_MS = 48 * 3_600_000;
   if (hits === 1) {
     await env.DB.prepare('DELETE FROM throttle WHERE window_at < ?')
-      .bind(now() - 2 * 3_600_000).run();
+      .bind(now() - FAXINA_MS).run();
   }
   return hits > limit;
 }

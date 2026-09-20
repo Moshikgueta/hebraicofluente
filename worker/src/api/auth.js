@@ -26,10 +26,12 @@ import {
 } from '../lib/crypto.js';
 import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/session.js';
 import { isSandbox, tokenFormato } from '../lib/mercadopago.js';
-import { mailReady, mensagemDeRecuperacao, sendMail } from '../lib/mail.js';
+import {
+  mailReady, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
+} from '../lib/mail.js';
 import {
   activeEntitlements, bumpSessionVersion, changePassword, createAccount, estourou,
-  findAccountByEmail, findAccountById, inviteRedeem, log, normalizeEmail, resetCreate,
+  findAccountByEmail, findAccountById, invitesPendentes, log, normalizeEmail, resetCreate,
   resetFind, resetUse, setPasswordHash, throttled, ultimoEnvioDeSenha
 } from '../lib/db.js';
 
@@ -119,7 +121,63 @@ async function sessionBody(env, account) {
   };
 }
 
-export async function signup({ request, env }) {
+/* ── um presente esperando por este endereço ───────────────────────────────
+ * Avisa o DONO, e não libera nada.
+ *
+ * Antes, um convite pendente virava acesso no cadastro. O furo (F-18 da
+ * auditoria) é que o convite é endereçado a um e-mail que ainda NÃO tem
+ * conta, e a única coisa exigida para resgatá-lo era digitar esse e-mail num
+ * formulário de cadastro - então quem soubesse do presente chegava primeiro
+ * e o levava.
+ *
+ * Quem sabe para quem o presente foi dado é o dono, e ele já roda `liberar`
+ * em todo presente. Então o cadastro avisa, ele confere, e o `liberar`
+ * seguinte concede direto, porque a conta agora existe. Um presente legítimo
+ * custa uma mensagem a mais; um roubado custa o curso.
+ *
+ * Nunca derruba o cadastro nem o login: o que falha aqui é um aviso.
+ */
+async function avisarConvitePendente(env, ctx, account, email) {
+  const pendentes = await invitesPendentes(env, email);
+  if (!pendentes.length) return;
+
+  /* Um aviso por dia por endereço. Sem isto, quem tem convite pendente e
+     entra dez vezes manda dez e-mails iguais para o dono - e o décimo é o
+     que ele deixa de ler. */
+  if (await throttled(env, `convite-aviso:${email}`, 1, 24 * 3_600_000)) return;
+
+  const cursos = pendentes.map(p => p.course_slug);
+  /* A trilha guarda o id da conta e os cursos, nunca o endereço: ela é lida
+     num resumo do Actions, que num repositório público é público. O endereço
+     vai só no e-mail, que tem um destinatário só. */
+  await log(env, account.id, 'convite-aguardando', cursos.join(' '));
+
+  const destino = String((env && env.SUPPORT_EMAIL) || '').trim();
+  if (!mailReady(env) || !destino) {
+    /* Sem provedor de e-mail o aviso fica na trilha e o presente espera.
+       Falha fechada: ninguém ganha acesso porque um e-mail não saiu.
+       `Actions → Acesso → consultar` mostra o convite pendente. */
+    console.error('convite', 'sem e-mail para avisar o dono', cursos.join(' '));
+    return;
+  }
+
+  const msg = mensagemDeConvitePendente({
+    email: account.email,
+    nome: account.name || '',
+    cursos,
+    marca: 'Hebraico Fluente',
+    painel: 'GitHub → Actions → Acesso → liberar'
+  });
+
+  const entregar = async () => {
+    const r = await sendMail(env, { to: destino, ...msg });
+    if (!r.ok) console.error('mail', 'convite', r.motivo, r.detalhe || '');
+  };
+  if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(entregar());
+  else await entregar();
+}
+
+export async function signup({ request, env, ctx }) {
   /* O freio por IP antes de ler o corpo: quem já estourou não ganha nem a
      leitura. */
   if (await throttled(env, `signup:${ip(request)}`, 10)) return fail('rate-limited', 429);
@@ -148,16 +206,17 @@ export async function signup({ request, env }) {
      conta ser apagada. */
   await log(env, account.id, 'signup');
 
-  /* Um presente esperando por este endereço vira acesso agora, antes de a
-     pessoa ver qualquer tela. É a diferença entre "bem-vinda, seu curso está
-     aqui" e "você não tem este curso - fale com quem te convidou". */
-  await inviteRedeem(env, account.id, email);
+  /* Um presente esperando por este endereço avisa o dono. Não libera nada:
+     ver a nota em `avisarConvitePendente`. A pessoa não é informada, e isso
+     é deliberado - "há um presente reservado para este endereço" é a
+     confirmação que um impostor usaria para saber que acertou o alvo. */
+  await avisarConvitePendente(env, ctx, account, email);
 
   return json(await sessionBody(env, account), 200,
     { 'Set-Cookie': await makeSessionCookie(env, account) });
 }
 
-export async function login({ request, env }) {
+export async function login({ request, env, ctx }) {
   /* O freio por IP antes de ler o corpo, como no cadastro: quem já estourou
      não ganha nem a leitura. */
   const origem = ip(request);
@@ -218,10 +277,10 @@ export async function login({ request, env }) {
     }
   }
 
-  /* Rede de segurança: o convite pode ter sido criado DEPOIS de a conta
-     existir. Sem isto, presentear alguém já cadastrado não funcionaria, que é
-     metade dos casos reais. */
-  await inviteRedeem(env, account.id, email);
+  /* Rede de segurança para um convite que ficou pendente: hoje `liberar`
+     concede direto quando a conta existe, então isto cobre linhas antigas e
+     o caso de alguém ter criado o convite à mão. Avisa o dono, não libera. */
+  await avisarConvitePendente(env, ctx, account, email);
 
   return json(await sessionBody(env, account), 200,
     { 'Set-Cookie': await makeSessionCookie(env, account) });

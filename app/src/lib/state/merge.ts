@@ -50,9 +50,19 @@ const cedo = (a: string | null | undefined, b: string | null | undefined): strin
 const tarde = (a: string | null | undefined, b: string | null | undefined): string | null =>
   !a ? (b ?? null) : !b ? a : (a > b ? a : b);
 
-/** As chaves dos dois lados, sem repetir. */
+/* Três nomes que não são dado, são mecanismo: postos como CHAVE num objeto
+   que se está montando, mexem no protótipo dele em vez de guardar um valor.
+   `JSON.parse` cria `__proto__` como propriedade comum, e `Object.keys` a
+   devolve - então um estado vindo do servidor ou de outro aparelho pode
+   trazê-la, e a fusão a copiaria para o objeto novo. O estrago aqui seria
+   local (o objeto de uma conta, nesta aba), mas "local" é a única palavra
+   boa nessa frase. Nenhuma letra, caixa de Leitner ou dia de estudo se chama
+   assim; descartar é de graça. */
+const PERIGOSAS = new Set(['__proto__', 'constructor', 'prototype']);
+
+/** As chaves dos dois lados, sem repetir e sem as que mexem no protótipo. */
 const chaves = (a: object, b: object): string[] =>
-  [...new Set([...Object.keys(a), ...Object.keys(b)])];
+  [...new Set([...Object.keys(a), ...Object.keys(b)])].filter(k => !PERIGOSAS.has(k));
 
 /**
  * Funde dois dicionários chave a chave.

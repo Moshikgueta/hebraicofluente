@@ -34,16 +34,24 @@ routes = [
   { pattern = "www.hebraicofluente.com.br", custom_domain = true }
 ]
 
-# O `*.workers.dev` continua respondendo de propósito: é a rede de segurança
-# para conferir a publicação quando houver dúvida sobre DNS ou certificado.
+# O `*.workers.dev` fica DESLIGADO desde que a produção foi confirmada no
+# domínio próprio.
 #
-# A linha vira OBRIGATÓRIA no momento em que existe `routes`. Sem ela o
-# wrangler desliga o workers.dev por conta própria e avisa como um WARNING no
-# meio da saída ("Because 'workers_dev' is not in your Wrangler file, it will
-# be disabled for this deployment by default"). Foi o que aconteceu na
-# publicação que estreou o domínio: a rede de segurança sumiu exatamente no
-# deploy em que ela mais faria falta.
-workers_dev = true
+# Ele existia como rede de segurança para conferir a publicação quando
+# houvesse dúvida de DNS ou de certificado, e cumpriu esse papel. O motivo de
+# desligar é outro: as regras de proteção da Cloudflare (Rate Limiting, WAF)
+# valem para a ZONA `hebraicofluente.com.br`, e o endereço `workers.dev` não
+# está nela. Ele é o mesmo site, com o mesmo banco e o mesmo login, atrás de
+# uma porta onde essas regras não se aplicam.
+#
+# A linha é OBRIGATÓRIA enquanto existir `routes`: sem ela o wrangler decide
+# sozinho e avisa num WARNING no meio da saída ("Because 'workers_dev' is not
+# in your Wrangler file, it will be disabled for this deployment by default").
+# Escrita, a decisão é nossa e está aqui.
+#
+# Para reativar num aperto (conferir uma publicação com o DNS em dúvida):
+# troque para `true`, publique, confira, volte para `false`.
+workers_dev = false
 
 [assets]
 # O export estático do Next. `run_worker_first` é obrigatório: sem ele os
@@ -100,7 +108,20 @@ SUPPORT_EMAIL = "languageswithmoshik@gmail.com"
 # "1" usa o checkout de teste da Mercado Pago (não cobra nada). Em produção,
 # "0" - e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.
-MP_SANDBOX = "1"
+#
+# Esta variável é só o DESEMPATE. Quem decide é o prefixo do token (`TEST-` é
+# teste, `APP_USR-` é produção - ver `isSandbox` em
+# worker/src/lib/mercadopago.js), e ela só é consultada quando o prefixo é
+# DESCONHECIDO. Com a credencial de hoje, que começa com `APP_USR-`, trocar o
+# valor aqui não muda nada.
+#
+# Ficou em "1" enquanto não havia credencial de produção. Passou para "0"
+# porque, com um token de forma estranha na mão, os dois erros possíveis não
+# custam a mesma coisa: "1" mandaria o comprador para um checkout que não
+# cobra - ninguém reclama, afinal não pagaram, e são semanas de venda perdida
+# sem nenhum sintoma; "0" faz a Mercado Pago recusar na hora, na primeira
+# tentativa, onde dá para ver. Entre falhar calado e falhar alto, alto.
+MP_SANDBOX = "0"
 # Custo do hash de senha. O padrão do código (25.000) foi dimensionado para o
 # limite de 10 ms de CPU do plano GRATUITO - acima disso o Worker é morto no
 # meio do cálculo e toda conta/login devolve 500.

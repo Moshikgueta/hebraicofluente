@@ -345,10 +345,16 @@ jobs:
                    DELETE FROM invites
                     WHERE email = '$SQLMAIL' AND course_slug = '$CURSO' AND used_at IS NULL"
               else
-                # A conta ainda não existe: o acesso fica guardado pelo E-MAIL
-                # e vira curso no momento em que a pessoa se cadastrar. É o que
-                # torna possível presentear alguém que ainda nem ouviu falar
-                # do site.
+                # A conta ainda não existe: o acesso fica guardado pelo E-MAIL,
+                # que é o que torna possível presentear alguém que ainda nem
+                # ouviu falar do site.
+                #
+                # O convite NÃO vira curso sozinho quando a pessoa se cadastra.
+                # Virava, e era o furo F-18 da auditoria: bastava saber que um
+                # endereço foi presenteado para chegar na frente e levar o
+                # curso. Agora o cadastro manda um e-mail para SUPPORT_EMAIL
+                # avisando, e é rodar `liberar` de novo - aí a conta existe e o
+                # acesso é concedido direto, pelo ramo de cima.
                 grava \
                   "INSERT INTO invites (email, course_slug, months, note, created_at)
                    VALUES ('$SQLMAIL', '$CURSO', $M, 'GitHub Actions', unixepoch()*1000)
@@ -368,7 +374,12 @@ jobs:
               say ""
               say "Tabela vazia acima significa que a conta ainda não existe -"
               say "e está tudo certo: o convite ficou guardado. Peça para ela"
-              say "criar a conta com **esse mesmo e-mail** e o curso já estará lá."
+              say "criar a conta com **esse mesmo e-mail**."
+              say ""
+              say "Quando ela se cadastrar, você recebe um e-mail avisando, e aí"
+              say "roda este \`liberar\` outra vez - aí sim o curso é concedido."
+              say "O convite não vira curso sozinho de propósito: bastaria alguém"
+              say "saber o endereço presenteado para chegar na frente e levá-lo."
               ;;
 
             revogar)

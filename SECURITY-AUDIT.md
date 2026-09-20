@@ -187,11 +187,18 @@ Signup answers 409 `email-taken`: an account-existence oracle, throttled
 Accepting it is reasonable for a checkout flow; the edge rate limit below
 reduces bulk use.
 
-**F-18 · LOW · CONFIRMED · Open (product)** - `auth.js:99-105`, `db.js:215-237`
-No email verification at signup, and gifted invites redeem on bare email
-match: whoever registers a gifted address first takes the course. Mitigated
-operationally: `liberar` now creates an invite only when no account exists,
-and grants directly otherwise. Real fix: verify the address before redeeming.
+**F-18 · LOW · CONFIRMED · Applied (third pass)** - `auth.js:99-105`, `db.js:215-237`
+No email verification at signup, and gifted invites redeemed on bare email
+match: whoever registered a gifted address first took the course. Applied:
+`inviteRedeem` is gone. A signup or login on an address with a pending invite
+now notifies the **owner** (one email to `SUPPORT_EMAIL`, capped at one per
+address per day) and grants nothing; the owner confirms with `liberar`, which
+grants directly because the account then exists. The person is not told a gift
+is waiting - that confirmation is what an impostor would use. Fails closed:
+with no mail provider the trail records it and the gift keeps waiting. Note
+that full signup-time email verification was NOT added: it would put friction
+in front of every paying customer, who verifies themselves by paying, to close
+a hole that only exists for gifts.
 
 **F-19 · MEDIUM · CONFIRMED · Applied** - `worker/src/worker.js`
 No CSRF defence beyond `SameSite=Lax`; `readJson` ignored Content-Type, so a
@@ -314,8 +321,9 @@ Limiting rules: `/api/pay/webhook` 20/min/IP block; `/api/auth/*` 30/min/IP
 managed challenge (log mode for a day first); `/api/auth/signup` 10/hour/IP;
 `/api/auth/forgot` 5/hour/IP; `/api/pay/*` 30/min/IP; `/api/*` 300/min/IP.
 The `workers.dev` hostname is not covered by zone rules on the custom domain;
-disable it after launch verification or accept that the edge rules do not
-apply there.
+**disabled in the third pass** (`workers_dev = false`), so the rules below,
+once created, cover every way in. Turn it back on only to diagnose a DNS or
+certificate problem, then off again.
 
 **F-38 · LOW · CONFIRMED · Applied** - `scripts/cloudflare-setup.sh:227`
 With `HF_SKIP_BUILD=1` the script published whatever `app/out` held,
@@ -335,10 +343,23 @@ the resolved origin with the same parser.
 runtime lookup of `globalThis.process`; a script running first could point
 the login POST (with the password) at another host. Applied: `BASE = ''`.
 
-**F-41 · LOW · CONFIRMED · Open (minor)** - `app/src/lib/state/merge.ts:67-69`
-The client merge assigns `__proto__` from parsed state onto a fresh object
-(local, per-account, no global pollution). Filter `__proto__`, `constructor`,
-`prototype` in `chaves()`; reject them server-side in `progress.write`.
+**F-41 · LOW · CONFIRMED · Applied (third pass)** - `app/src/lib/state/merge.ts:67-69`
+The client merge assigned `__proto__` from parsed state onto a fresh object
+(local, per-account, no global pollution). Applied: `chaves()` drops
+`__proto__`, `constructor` and `prototype`, and `progress.write` rejects a
+state containing any of them anywhere (iterative walk with a node budget, so
+a deeply nested body cannot turn the check into a stack overflow).
+
+**F-42 · MEDIUM · CONFIRMED · Applied (third pass)** - `db.js:449-455`
+Found while adding the once-a-day cap for F-18, and latent until then: the
+throttle's opportunistic cleanup deleted every row older than two hours,
+while a row is stamped with the START of its window. Any window longer than
+two hours therefore had its own row deleted by the call that created it, so
+the counter never passed one and the cap never capped. The one-hour caps in
+use (`forgot-h`) were unaffected, which is why it had gone unnoticed. Applied:
+the horizon is 48 hours, with the invariant written in place - it must exceed
+the largest window in use - and a test that a 24-hour window survives the
+cleanup a one-minute key triggers.
 
 **F-42 · INFORMATIONAL** - `app/src/lib/state/supabase.ts` is dead code with
 no dependency and no env; it is what led the brief to assume Supabase. Delete
@@ -667,7 +688,7 @@ sweep, all green; deploy 55 green including the production e2e.
 | Error handling | [PASS] | closed-vocabulary error codes; exceptions logged server-side only |
 | Dependencies | [PASS] | one unreachable build-time advisory; Worker has zero deps |
 | HTTPS | [PASS] | Cloudflare TLS; HSTS now set; www → apex 301 |
-| Backup / recovery assumptions | [MANUAL CHECK] | relies on D1 Time Travel; no export, no rehearsed restore |
+| Backup / recovery assumptions | [PASS] tooling · [MANUAL CHECK] habit | `npm run db:backup` exports production to a gitignored, mode-600 file; `npm run db:backup:ensaio` restores it into a local database and counts the rows back. Run it, keep a copy off the machine, and repeat on a schedule you will actually keep |
 | Privacy policy accuracy | [MANUAL CHECK] | add Resend and provider-returned payment data (F-29) |
 
 ---

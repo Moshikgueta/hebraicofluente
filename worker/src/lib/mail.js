@@ -144,6 +144,56 @@ export function mensagemDeRecuperacao({ nome, link, minutos, marca, suporte }) {
   return { subject: `Redefinir sua senha - ${assinatura}`, text, html };
 }
 
+/* ── o aviso de presente aguardando ────────────────────────────────────── */
+
+/**
+ * Vai para o DONO, não para o aluno.
+ *
+ * Alguém acabou de criar conta com um endereço que tem presente reservado
+ * (`liberar` sem conta existente). Antes isso virava acesso sozinho, e era o
+ * furo F-18: bastava saber o endereço presenteado para chegar antes. Agora o
+ * dono confere e libera - ele é quem sabe para quem deu.
+ *
+ * O e-mail do aluno APARECE aqui de propósito: quem lê é o dono, e sem o
+ * endereço o aviso não serve para nada. É o único e-mail nosso que carrega
+ * endereço de cliente, e vai para um destinatário só.
+ */
+export function mensagemDeConvitePendente({ email, nome, cursos, marca, painel }) {
+  const assinatura = marca || 'Hebraico Fluente';
+  const lista = (cursos || []).join(', ');
+
+  const text = [
+    'Alguém se cadastrou com um endereço que tem presente reservado.',
+    '',
+    `Endereço: ${email}`,
+    nome ? `Nome no cadastro: ${nome}` : '',
+    `Presente aguardando: ${lista}`,
+    '',
+    'O acesso NÃO foi liberado sozinho, de propósito: quem sabe para quem',
+    'você deu o presente é você. Se for a pessoa certa, libere em',
+    '',
+    painel || 'GitHub → Actions → Acesso → liberar',
+    '',
+    'Se não for, não faça nada - o convite continua esperando.',
+    '',
+    assinatura
+  ].filter(l => l !== '').join('\n');
+
+  const html = [
+    '<p>Alguém se cadastrou com um endereço que tem presente reservado.</p>',
+    `<p>Endereço: <strong>${escapar(email)}</strong><br>`,
+    nome ? `Nome no cadastro: ${escapar(nome)}<br>` : '',
+    `Presente aguardando: ${escapar(lista)}</p>`,
+    '<p>O acesso <strong>não</strong> foi liberado sozinho, de propósito: quem',
+    ' sabe para quem você deu o presente é você. Se for a pessoa certa, libere',
+    ` em ${escapar(painel || 'GitHub → Actions → Acesso → liberar')}.</p>`,
+    '<p>Se não for, não faça nada - o convite continua esperando.</p>',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  return { subject: `Presente aguardando confirmação - ${assinatura}`, text, html };
+}
+
 /** O nome do aluno entra no HTML. Um nome com `<` não pode virar marcação. */
 function escapar(s) {
   return String(s === null || s === undefined ? '' : s)

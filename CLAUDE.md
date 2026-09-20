@@ -147,6 +147,18 @@ regras que ele fixou e que valem para todo commit daqui em diante:
   `app/tests/pagamento.test.ts` guarda os nove cenários; `audit/README.md` é o
   registro, com as duas decisões de produto embutidas (estorno parcial fecha o
   acesso; sair derruba todos os aparelhos) e o que conferir em produção.
+- **Um convite não vira curso sozinho.** Cadastro num endereço presenteado
+  AVISA o dono (e-mail para `SUPPORT_EMAIL`, um por endereço por dia) e não
+  concede nada; o dono confirma com `liberar`. Quem se cadastrou não é
+  informado de que havia presente. Ver a nota em `worker/src/lib/db.js`,
+  acima de `invitesPendentes`.
+- **O horizonte da faxina do freio precisa ser maior que a maior janela em
+  uso** (`throttled`, hoje 48h contra uma janela máxima de 24h). Menor, e a
+  limpeza apaga a linha que a própria chamada acabou de criar - o freio
+  conta até um para sempre.
+- **O backup é local e é segredo:** `npm run db:backup`, e
+  `npm run db:backup:ensaio` prova que a cópia restaura. Nunca num artefato
+  do Actions - tem e-mail e hash de senha de todo aluno.
 - `npm run csp` prova a CSP num navegador; `app/tests/auditoria.test.ts`
   guarda cada ataque fechado. Um achado novo entra lá antes do conserto.
 

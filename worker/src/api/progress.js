@@ -29,6 +29,39 @@ import { clearProgress, getProgress, putProgress, throttled } from '../lib/db.js
    que passava antes sem reabrir a torneira. */
 const MAX_BYTES = 512 * 1024;
 
+/* ── o que não é progresso ─────────────────────────────────────────────────
+ * Três nomes que, como CHAVE de um objeto, mexem no protótipo de quem os
+ * receber em vez de guardar um valor. O app já os descarta ao fundir
+ * (app/src/lib/state/merge.ts), mas a defesa do cliente protege o cliente:
+ * o que está guardado no banco é servido de volta para TODO aparelho daquela
+ * conta, e para qualquer código futuro que leia esta coluna sem desconfiar.
+ * Nenhuma letra, caixa de Leitner ou dia de estudo se chama `__proto__`.
+ *
+ * Em pilha, e não em recursão: um estado com dez mil níveis de aninhamento
+ * derrubaria a pilha de chamadas, e um 500 no salvamento de progresso é
+ * exatamente o que não pode acontecer no meio de uma lição.
+ */
+const PERIGOSAS = new Set(['__proto__', 'constructor', 'prototype']);
+
+function temChavePerigosa(raiz) {
+  const pilha = [raiz];
+  let nos = 0;
+  while (pilha.length) {
+    const o = pilha.pop();
+    if (!o || typeof o !== 'object') continue;
+    /* Um teto de nós: progresso de verdade tem alguns milhares. Acima disso
+       não é progresso, e percorrer o resto seria trabalho a pedido de quem
+       mandou. */
+    if (++nos > 50_000) return true;
+    for (const k of Object.keys(o)) {
+      if (PERIGOSAS.has(k)) return true;
+      const v = o[k];
+      if (v && typeof v === 'object') pilha.push(v);
+    }
+  }
+  return false;
+}
+
 /** GET /api/progress → `{ state, rev, updatedAt }`, ou `rev: 0` se não há. */
 export async function read({ request, env }) {
   const account = await requireAccount(request, env);
@@ -67,6 +100,7 @@ export async function write({ request, env }) {
      string, não `null`. Gravar lixo aqui é apagar o progresso de alguém. */
   if (!state || typeof state !== 'object' || Array.isArray(state)) return fail('estado', 400);
   if (typeof state.version !== 'number') return fail('estado', 400);
+  if (temChavePerigosa(state)) return fail('estado', 400);
 
   const r = await putProgress(env, account.id, {
     state, version: version ?? state.version, expected: Number(rev) || 0

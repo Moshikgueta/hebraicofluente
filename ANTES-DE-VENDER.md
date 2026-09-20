@@ -201,23 +201,47 @@ referência; nada do pagador). Eu escrevo, você lê e aprova.
 
 ---
 
-## Bloco 3 - pequenos, rápidos, meus
+## Bloco 3 - FEITO
 
-Faço todos numa tacada quando você disser, e nenhum muda comportamento visível.
+Os cinco saíram numa tacada, com testes, e estão no ar. Ficam registrados
+aqui porque dois deles mudam o que você vê acontecer.
 
-12. **`__proto__` na fusão de progresso** (F-41). Filtrar três chaves no
-    cliente e recusá-las no servidor.
-13. **Verificar o e-mail no cadastro** (F-18). Hoje quem registra primeiro um
-    endereço presenteado leva o curso. A liberação por Actions já cobre o caso
-    comum; a solução real é confirmar o endereço antes de resgatar.
-14. **`MP_SANDBOX = "1"` no `wrangler.toml`.** Não tem efeito (o modo sai do
-    prefixo do token, e o seu é de produção), mas ler "1" ali assusta. Trocar
-    para "0".
-15. **Desligar o `workers.dev`** depois que a produção estiver confirmada: as
-    regras de borda do item 9 não valem naquele endereço.
-16. **Backup do banco.** Hoje só existe o Time Travel da Cloudflare (trinta
-    dias, e nunca foi ensaiado). Vale um export semanal para um arquivo e uma
-    restauração de teste, uma vez, para saber que funciona.
+12. **`__proto__` na fusão de progresso** (F-41). O app descarta as três
+    chaves ao fundir, e o servidor recusa um progresso que as contenha em
+    qualquer profundidade. Nada muda para o aluno.
+13. **O convite deixou de virar curso sozinho** (F-18). Era o furo: bastava
+    saber que um endereço tinha presente reservado para se cadastrar com ele
+    e levar o curso. Agora, quando alguém se cadastra num endereço
+    presenteado, **você recebe um e-mail** e roda `liberar` de novo - aí a
+    conta existe e o acesso é concedido direto. A pessoa não é avisada de que
+    havia um presente (é a confirmação que um impostor usaria). Sem provedor
+    de e-mail configurado, o aviso fica na trilha e o presente espera:
+    ninguém ganha acesso porque um e-mail não saiu.
+    **O que muda para você:** presentear alguém passou a ter dois passos.
+14. **`MP_SANDBOX` foi para "0".** Continua sendo só o desempate (quem manda é
+    o prefixo do token), mas agora, com um token de forma estranha, a falha é
+    alta - a Mercado Pago recusa na hora - em vez de calada, mandando o
+    comprador para um checkout que não cobra.
+15. **`workers.dev` desligado.** O site respondia também em
+    `hebraico-fluente.<conta>.workers.dev`, fora da zona onde as regras do
+    item 9 valem. Agora só o domínio próprio responde. Se um dia precisar
+    conferir uma publicação com o DNS em dúvida, é uma linha no
+    `wrangler.toml` para religar.
+16. **Backup do banco, com a restauração ensaiada.** `npm run db:backup`
+    escreve um `.sql` da produção em `backups/` (fora do git, só você lê);
+    `npm run db:backup:ensaio` restaura essa cópia num banco local e conta as
+    linhas que voltaram, porque backup que nunca foi restaurado é esperança,
+    não backup. **Esse arquivo é segredo**: tem o e-mail de todo aluno e o
+    hash da senha de cada um. Guarde-o como guardaria a carteira, e nunca num
+    repositório ou num artefato do Actions.
+    Rode uma vez agora, com o `--ensaiar`, para saber que funciona.
+
+**De brinde**, um defeito que apareceu ao fazer o item 13: o freio de
+requisições apagava sozinho a própria contagem em toda janela maior que duas
+horas, então um limite "uma vez por dia" nunca limitava nada. Os limites em
+uso eram todos de um minuto ou de uma hora, e por isso nenhum estava
+quebrado - mas o primeiro limite diário teria nascido sem efeito. Consertado,
+com teste.
 
 ---
 
@@ -238,5 +262,7 @@ Faço todos numa tacada quando você disser, e nenhum muda comportamento visíve
 Hoje: 1, 2, 7 (me passe o endereço), 11.
 Amanhã: 5 (o DNS demora), 3, 4.
 Depois que o DNS propagar: 6, a compra de verdade.
-Antes de anunciar: decidir o 8, ligar o 9, e me pedir o bloco 3.
+Antes de anunciar: decidir o 8 e ligar o 9.
 Quando houver tempo: 10.
+
+O bloco 3 está feito.

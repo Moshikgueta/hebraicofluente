@@ -92,11 +92,14 @@ describe('o wrangler.toml declara o endereço por inteiro', () => {
   });
 
   it('declara workers_dev, porque `routes` sozinho o desliga', () => {
-    /* O wrangler desliga o endereço workers.dev por conta própria quando há
-       `routes` e nenhum `workers_dev` - e avisa disso num WARNING no meio de
-       uma publicação bem-sucedida, fácil de não ver. Perder esse endereço é
-       perder a única forma de conferir uma publicação quando o DNS ou o
-       certificado do domínio está em dúvida. */
-    expect(toml).toMatch(/^\s*workers_dev\s*=\s*true\s*$/m);
+    /* O wrangler decide sozinho quando há `routes` e nenhum `workers_dev`, e
+       avisa num WARNING no meio de uma publicação bem-sucedida, fácil de não
+       ver. Escrito, quem decide somos nós - qualquer que seja o valor.
+
+       Hoje é `false`: as regras de proteção da Cloudflare (Rate Limiting,
+       WAF) valem para a zona do domínio próprio, e o `workers.dev` é o mesmo
+       site, com o mesmo banco e o mesmo login, fora dela. Volta a `true` num
+       aperto de DNS ou de certificado, que é para o que ele serve. */
+    expect(toml).toMatch(/^\s*workers_dev\s*=\s*(true|false)\s*$/m);
   });
 });
