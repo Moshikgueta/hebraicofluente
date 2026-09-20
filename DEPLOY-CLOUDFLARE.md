@@ -187,18 +187,39 @@ publicação falhar. O motivo está escrito no próprio arquivo.
 integrações* → crie (ou abra) a aplicação → *Credenciais*. Existem dois pares:
 
 - **teste** - o token começa com `TEST-`. Use enquanto estiver montando.
-  Deixe `MP_SANDBOX = "1"` em `wrangler.toml`.
-- **produção** - use quando for vender de verdade, e troque para
-  `MP_SANDBOX = "0"`.
+- **produção** - o token começa com `APP_USR-`. Use para vender de verdade.
 
-Subir o token de produção esquecendo `MP_SANDBOX = "1"` manda todo comprador
-para um checkout que **não cobra**, e isso passa despercebido por semanas.
+Quem decide o modo é o PREFIXO do token, lido em `isSandbox`
+(`worker/src/lib/mercadopago.js`). O `MP_SANDBOX` do `wrangler.toml` é só o
+desempate para um token de forma desconhecida, e está em `"0"`: com um token
+estranho, a Mercado Pago recusa na hora - melhor do que mandar o comprador
+para um checkout que **não cobra**, o que passa semanas despercebido.
 
-**Webhook.** Na mesma aplicação → *Webhooks* → *Configurar notificações*:
+**Webhook.** Na mesma aplicação → *Webhooks* → *Configurar notificações*, na
+aba **Modo produtivo** (a de teste só notifica pagamento de teste):
 
 - URL: `https://<a-url-do-passo-3>/api/pay/webhook`
-- Evento: **Pagamentos** (`payment`)
-- Copie a *assinatura secreta* para `MP_WEBHOOK_SECRET` (passo 4).
+- Evento: só **Pagamentos** (`payment`)
+- Salve, e copie a **assinatura secreta** que ela mostra.
+
+**Onde esse segredo mora, e por que isso importa.** Ele vai em
+`Settings → Secrets and variables → Actions → MP_WEBHOOK_SECRET`, no GitHub,
+e não direto no painel da Cloudflare. O motivo está em
+`scripts/cloudflare-setup.sh`: toda publicação faz `empurra
+MP_WEBHOOK_SECRET`, que sobrescreve o valor do Worker com o do GitHub. Colado
+só na Cloudflare, o segredo certo sobrevive até a próxima publicação - e
+depois dela o webhook recusa tudo, sem nada na tela denunciar.
+
+Depois de salvar no GitHub, **publique de novo** (Actions → *Deploy platform
+to Cloudflare* → *Run workflow*). Trocar um segredo não dispara publicação
+sozinha, e é a publicação que leva o valor até o Worker.
+
+**Conferir.** No painel da Mercado Pago, *Simular notificação* → evento
+Pagamentos → enviar. O esperado é **200**. **401** é assinatura recusada,
+quase sempre segredo diferente dos dois lados. O 200 vale mesmo para um id de
+pagamento que não existe: a rota confere a assinatura, pergunta à Mercado Pago
+quem é aquele pagamento, ouve "não existe" e responde 200 de propósito - um
+500 ali faria ela reenviar o mesmo aviso para sempre.
 
 Sem esse segredo, `/api/pay/webhook` recusa tudo. É de propósito: um webhook
 sem verificação é uma rota pública que libera curso.
