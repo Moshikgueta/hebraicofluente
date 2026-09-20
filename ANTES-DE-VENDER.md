@@ -120,7 +120,23 @@ lá.
 **Pronto quando.** O teste do próprio painel da Mercado Pago responde 200, e
 `Actions → Acesso → pedido` mostra o pagamento de teste do item 6.
 
-### 5. Verificar o domínio na Resend
+### 5. Verificar o domínio na Resend - FEITO, e conferido a cada publicação
+
+A publicação de 20/09 às 04:16 passou no `✓ o e-mail de recuperação saiu`,
+contra a produção. Esse item não é enfeite: ele lê `emailEntregue` em
+`/api/health`, que só é `true` quando o último pedido de link virou
+`forgot-enviado` na trilha - e isso só acontece quando a Resend ACEITOU a
+mensagem. Domínio não verificado é 403 na hora, e viraria `forgot-falhou`.
+Ou seja, a chave está válida e o `EMAIL_FROM` está verificado.
+
+**O que isso ainda não prova:** que a mensagem cai na caixa de entrada e não
+no spam. O e2e manda para `hf-e2e-…@example.invalid`, que a Resend aceita e
+depois devolve. Vale pedir "esqueci minha senha" uma vez com um endereço seu
+de verdade (um Gmail, de preferência) e ver onde a mensagem cai. Se cair no
+spam, o conserto é DNS: um registro DMARC, que a Resend sugere na mesma tela
+do SPF e do DKIM.
+
+O que era o problema:
 
 **O que é.** O e-mail de "esqueci minha senha" sai de
 `contato@hebraicofluente.com.br`.
@@ -294,12 +310,15 @@ com teste.
 
 ---
 
-## A ordem que eu seguiria
+## Onde estamos (20/09/2026)
 
-Hoje: 1, 2, 7 (me passe o endereço), 11.
-Amanhã: 5 (o DNS demora), 3, 4.
-Depois que o DNS propagar: 6, a compra de verdade.
-Antes de anunciar: decidir o 8 e ligar o 9.
-Quando houver tempo: 10.
+Fechados: **1** (Pages fora do ar, confirme o 404), **2** (execuções
+apagadas, repositório privado), **5** (Resend verificada), o **bloco 3**
+inteiro e a correção do pagamento.
 
-O bloco 3 está feito.
+Faltam, em ordem: **3** e **4** na Mercado Pago (PIX e webhook), **6** a
+compra de verdade com estorno, **7** o endereço, **11** as três frases da
+privacidade, e então as decisões: **8** o conteúdo no pacote e **9** as
+regras de borda. O **10** quando houver tempo.
+
+Nada do que falta é código. O caminho crítico é a Mercado Pago.
