@@ -106,8 +106,21 @@ conta Mercado Pago**; o PIX foi habilitado em **outra conta** que não a da
 aplicação; ainda não propagou; ou o cadastro do CNPJ tem pendência de
 validação.
 
-**Enquanto isso, atenção:** o checkout oferece PIX primeiro. Um comprador que
-escolher PIX hoje recebe erro. Dá para vender no cartão, mas não anuncie.
+**O site já se protegeu disso** (20/09/2026): a publicação pergunta quais
+meios a credencial enxerga e o site passa a oferecer só o que dá para cobrar.
+Hoje, só cartão - no checkout, no rodapé de toda página, no preço da landing
+e na página do curso. Ninguém mais escolhe uma forma que falha.
+
+A lista que a credencial devolve hoje, útil para mostrar ao suporte deles
+quando disserem que está tudo certo do lado de lá:
+
+```
+account_money, amex, bolbradesco, debelo, elo, master, mp_card, visa
+```
+
+Nenhum `pix` aí dentro. **Quando eles habilitarem, a publicação seguinte
+religa o PIX sozinha** - não há nada comentado no código esperando alguém
+lembrar de descomentar.
 
 O que era o problema:
 
@@ -384,10 +397,11 @@ a correção do pagamento.
 
 Fechado também: **7** (endereço completo).
 
-Faltam: **3** o PIX, que a Mercado Pago ainda reporta como desabilitado;
-**6** a compra de verdade com estorno; e as decisões **8** (conteúdo no
-pacote), **9** (regras de borda) e **10** (branch protegida).
+Faltam: **6** a compra de verdade com estorno; **3** o PIX, que a Mercado
+Pago ainda não habilitou; e as decisões **8** (conteúdo no pacote), **9**
+(regras de borda) e **10** (branch protegida).
 
-Nada do que falta é código. O caminho crítico é o PIX: sem ele, o item 6 só
-dá para fazer no cartão, e o checkout continua oferecendo uma forma de
-pagamento que falha.
+**O PIX deixou de ser o caminho crítico.** O site agora oferece só o que
+consegue cobrar, e o cartão funciona ponta a ponta. Dá para fazer a compra
+de verdade (item 6) hoje, no cartão, e vender. O PIX entra quando eles
+liberarem, sozinho.
