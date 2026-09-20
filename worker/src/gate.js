@@ -49,7 +49,11 @@ const GATED = [
   '/mapa', '/desafio-final', '/certificado', '/concluido', '/conquistas',
   '/historia', '/workbook', '/inicio', '/onboarding', '/meu-hebraico',
   /* Os clipes de áudio ainda não existem; quando chegarem, nascem atrás do
-     portão em vez de serem descobertos públicos depois. */
+     portão em vez de serem descobertos públicos depois. Atenção: o
+     AudioButton também aparece em página livre (a landing, `Fecho.tsx`), e
+     um clipe pedido de lá vai receber 403. No dia em que houver clipes, os
+     das páginas livres saem por outro prefixo, ou esta linha vira uma
+     decisão por lição. */
   '/audio'
 ];
 

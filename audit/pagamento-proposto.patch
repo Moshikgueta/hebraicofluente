@@ -64,7 +64,7 @@ index 30826c2..c8158c0 100644
  
  async function call<T>(path: string, init?: RequestInit): Promise<T> {
 diff --git a/worker/src/api/auth.js b/worker/src/api/auth.js
-index e420ecc..741ff97 100644
+index e2994db..0177791 100644
 --- a/worker/src/api/auth.js
 +++ b/worker/src/api/auth.js
 @@ -28,9 +28,9 @@ import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/sessi
@@ -80,7 +80,7 @@ index e420ecc..741ff97 100644
  } from '../lib/db.js';
  
  const MIN_PASSWORD = 8;
-@@ -211,7 +211,16 @@ export async function login({ request, env }) {
+@@ -227,7 +227,16 @@ export async function login({ request, env }) {
      { 'Set-Cookie': await makeSessionCookie(env, account) });
  }
  
@@ -99,7 +99,7 @@ index e420ecc..741ff97 100644
  }
  
 diff --git a/worker/src/api/pay.js b/worker/src/api/pay.js
-index b9c78b0..b4759fa 100644
+index b9c78b0..bc54a6c 100644
 --- a/worker/src/api/pay.js
 +++ b/worker/src/api/pay.js
 @@ -21,8 +21,8 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
@@ -108,8 +108,8 @@ index b9c78b0..b4759fa 100644
  import {
 -  createOrder, getOrder, grantAccess, hasEntitlement, log, ordersOf,
 -  recordEvent, throttled, updateOrder
-+  createOrder, entitlementExpiry, getOrder, grantAccess, log, ordersOf,
-+  recordEvent, revokeAccess, throttled, updateOrder
++  createOrder, entitlementExpiry, getOrder, grantAccess, grantedBy, log, ordersOf,
++  recordEvent, rollbackAccess, throttled, updateOrder
  } from '../lib/db.js';
  import {
    createCardPreference, createPix, getPayment, mapStatus, paymentsFor,
@@ -162,8 +162,9 @@ index b9c78b0..b4759fa 100644
 +       liberação escapava sem log e derrubava a varredura inteira. */
 +    return await applyPayment(env, order, payment, source);
    } catch (e) {
-     await log(env, order.account_id, 'settle-error', `${order.id} ${e.message || e}`);
+-    await log(env, order.account_id, 'settle-error', `${order.id} ${e.message || e}`);
 -    return null;
++    await erroDeLiberacao(env, order.account_id, `${order.id} ${e.message || e}`);
 +    return 'erro';
    }
  }
@@ -176,20 +177,36 @@ index b9c78b0..b4759fa 100644
  export async function settleFromPaymentId(env, paymentId, source) {
    try {
      const payment = await getPayment(env, paymentId);
-@@ -324,10 +341,10 @@ export async function settleFromPaymentId(env, paymentId, source) {
+@@ -324,13 +341,25 @@ export async function settleFromPaymentId(env, paymentId, source) {
      if (!orderId) return null;
      const order = await getOrder(env, orderId);
      if (!order) return null;
 -    return applyPayment(env, order, payment, source);
 +    return await applyPayment(env, order, payment, source);
    } catch (e) {
-     await log(env, null, 'settle-error', `pagamento ${paymentId} ${e.message || e}`);
+-    await log(env, null, 'settle-error', `pagamento ${paymentId} ${e.message || e}`);
 -    return null;
++    /* Um id que a Mercado Pago não conhece (o simulador do painel, um
++       pagamento de outra conta) não é falha nossa: responder 500 faria ela
++       reenviar para sempre um aviso que nunca vai ter o que fazer aqui. */
++    if (e && e.status === 404) return null;
++    await erroDeLiberacao(env, null, `pagamento ${paymentId} ${e.message || e}`);
 +    return 'erro';
    }
  }
  
-@@ -343,23 +360,55 @@ export const settle = (env, orderId, paymentId, source) =>
++/** A trilha do erro de liberação, com teto: um provedor fora do ar durante
++ *  uma varredura, ou um aviso reenviado em laço, não pode virar uma linha
++ *  por tentativa até a cota de escrita acabar. */
++async function erroDeLiberacao(env, accountId, detalhe) {
++  console.error('settle', detalhe);
++  if (!await throttled(env, 'settle-error', 20)) await log(env, accountId, 'settle-error', detalhe);
++}
++
+ /** Atalho para quando já temos os dois lados. */
+ export const settle = (env, orderId, paymentId, source) =>
+   settleFromPaymentId(env, paymentId, source);
+@@ -343,45 +372,111 @@ export const settle = (env, orderId, paymentId, source) =>
   *   · pedido já pago não faz nada;
   *   · valor menor do que o pedido não libera;
   *   · moeda diferente não libera.
@@ -204,7 +221,21 @@ index b9c78b0..b4759fa 100644
 + * liberar duas vezes é `order.status === 'paid'`, logo abaixo - e sempre foi.
   */
  async function applyPayment(env, order, payment, source) {
-   const status = mapStatus(payment.status);
+-  const status = mapStatus(payment.status);
++  let status = mapStatus(payment.status);
++
++  /* Em centavos, sempre. */
++  const paidCents = Math.round(Number(payment.transaction_amount || 0) * 100);
++  const refundedCents = Math.round(Number(payment.transaction_amount_refunded || 0) * 100);
++  const currency = String(payment.currency_id || 'BRL');
++
++  /* Um estorno PARCIAL não muda o status na Mercado Pago: o pagamento continua
++     `approved`, com `transaction_amount_refunded` maior que zero. Se o que
++     ficou é menos do que o curso custa, o curso não está pago - é o mesmo
++     critério do valor a menor, logo abaixo, aplicado depois do fato. */
++  if (status === 'paid' && refundedCents > 0 && paidCents - refundedCents < order.amount_cents) {
++    status = 'refunded';
++  }
  
    const fresh = await recordEvent(env, {
 -    eventId: String(payment.id), orderId: order.id, status, raw: payment, source
@@ -215,17 +246,26 @@ index b9c78b0..b4759fa 100644
 +  /* O pedido, relido: o que chegou aqui pode ter sido lido antes de uma
 +     liberação que aconteceu no meio do caminho. */
 +  const atual = (await getOrder(env, order.id)) || order;
++  const course = getCourse(order.course_slug);
++  const months = course ? course.accessMonths : 12;
 +
 +  if (status === 'refunded') {
 +    /* Estorno ou chargeback. Fecha a porta - o cookie não carrega direito
 +       nenhum, então fecha na hora - e deixa o pedido dizendo o que aconteceu.
 +       Antes, um estorno depois de pago não fazia NADA: nem revogava, nem
 +       marcava, nem registrava. Quem pedia o dinheiro de volta ficava com os
-+       doze meses. */
++       doze meses.
++
++       Recua os meses DESTE pedido, e não apaga tudo: o estorno de uma
++       renovação não pode levar junto os meses da compra anterior, que
++       ninguém devolveu. Quando este pedido é o único, recuar e apagar dão no
++       mesmo. O recuo vem ANTES de marcar o pedido: se cair no meio, o pedido
++       continua `paid`, o reenvio chega aqui de novo e - com a linha já
++       apagada no caso comum - não encontra o que recuar. */
 +    if (atual.status === 'paid') {
++      await rollbackAccess(env, order.account_id, order.course_slug, months, `${payment.id} via ${source}`);
 +      await updateOrder(env, order.id, { status: 'refunded' });
-+      await revokeAccess(env, order.account_id, order.course_slug, `${payment.id} via ${source}`);
-+      await log(env, order.account_id, 'estorno', `${order.id} ${payment.status} via ${source}`);
++      await log(env, order.account_id, 'estorno', `${order.id} ${payment.status} ${refundedCents || paidCents} via ${source}`);
 +    } else if (atual.status === 'pending') {
 +      await updateOrder(env, order.id, { status: 'refunded' });
 +    }
@@ -249,34 +289,51 @@ index b9c78b0..b4759fa 100644
  
    /* O valor. Um pagamento aprovado de R$ 1,00 apontando para um pedido de
       R$ 147,00 não é um pagamento deste pedido - é alguém que montou o próprio
-@@ -372,16 +421,22 @@ async function applyPayment(env, order, payment, source) {
+      link com o nosso external_reference. */
+-  const paidCents = Math.round(Number(payment.transaction_amount || 0) * 100);
+-  const currency = String(payment.currency_id || 'BRL');
+   if (paidCents < order.amount_cents || currency !== order.currency) {
+     await log(env, order.account_id, 'pay-mismatch',
+       `${order.id}: cobrado ${order.amount_cents} ${order.currency}, pago ${paidCents} ${currency}`);
      return 'failed';
    }
  
+-  const course = getCourse(order.course_slug);
 +  /* O direito PRIMEIRO, o pedido DEPOIS. A ordem é o que torna uma
 +     liberação interrompida recuperável: se o banco cair entre as duas
 +     escritas, o pedido continua `pending`, o reenvio do aviso chega até
-+     aqui de novo e termina o serviço (`grantAccess` é um upsert). Na ordem
-+     inversa - que era a de antes - o pedido ficava `paid` sem direito
-+     nenhum, e cada reenvio parava na linha "já está pago" lá em cima. */
-   const course = getCourse(order.course_slug);
--  await updateOrder(env, order.id, {
--    status: 'paid', paid_at: Date.now(), provider_ref: String(payment.id)
--  });
-   await grantAccess(env, {
-     accountId: order.account_id,
-     courseSlug: order.course_slug,
-     orderId: order.id,
-     months: course ? course.accessMonths : 12
++     aqui de novo e termina o serviço. Na ordem inversa - que era a de antes
++     - o pedido ficava `paid` sem direito nenhum, e cada reenvio parava na
++     linha "já está pago" lá em cima.
++
++     E o reenvio não concede duas vezes: `grantAccess` ESTENDE a validade a
++     cada chamada, então a retomada de uma liberação que já tinha gravado o
++     direito daria vinte e quatro meses por doze. Se a linha de acesso já
++     aponta para este pedido, os meses já foram dados; falta só o pedido. */
++  const jaConcedido = await grantedBy(env, order.account_id, order.course_slug) === order.id
++    && atual.status === 'pending';
++  if (!jaConcedido) {
++    await grantAccess(env, {
++      accountId: order.account_id,
++      courseSlug: order.course_slug,
++      orderId: order.id,
++      months
++    });
++  }
+   await updateOrder(env, order.id, {
+     status: 'paid', paid_at: Date.now(), provider_ref: String(payment.id)
    });
-+  await updateOrder(env, order.id, {
-+    status: 'paid', paid_at: Date.now(), provider_ref: String(payment.id)
-+  });
+-  await grantAccess(env, {
+-    accountId: order.account_id,
+-    courseSlug: order.course_slug,
+-    orderId: order.id,
+-    months: course ? course.accessMonths : 12
+-  });
    await log(env, order.account_id, 'paid', `${order.id} via ${source}`);
    return 'paid';
  }
 diff --git a/worker/src/lib/db.js b/worker/src/lib/db.js
-index be87bc3..da7722d 100644
+index 08de8f1..5c9c93b 100644
 --- a/worker/src/lib/db.js
 +++ b/worker/src/lib/db.js
 @@ -51,6 +51,21 @@ export async function setPasswordHash(env, accountId, { hash, salt, iterations }
@@ -321,6 +378,65 @@ index be87bc3..da7722d 100644
  export async function hasEntitlement(env, accountId, slug, at = now()) {
    const row = await env.DB.prepare(
      `SELECT 1 FROM entitlements
+@@ -201,6 +229,45 @@ export async function revokeAccess(env, accountId, courseSlug, why = '') {
+   await log(env, accountId, 'revoke', `${courseSlug} ${why}`.trim());
+ }
+ 
++/** Qual pedido concedeu (ou renovou por último) o direito que existe hoje.
++ *  `null` se não há linha. É o que permite a uma liberação interrompida
++ *  retomar sem conceder os meses duas vezes. */
++export async function grantedBy(env, accountId, courseSlug) {
++  const row = await env.DB.prepare(
++    'SELECT order_id FROM entitlements WHERE account_id = ? AND course_slug = ?'
++  ).bind(accountId, courseSlug).first();
++  return row ? String(row.order_id) : null;
++}
++
++/**
++ * Desfaz os meses de UM pedido - o estorno de uma renovação.
++ *
++ * Apagar a linha inteira (`revokeAccess`) é certo quando o pedido estornado é
++ * o único; quando é a renovação de quem já tinha oito meses pagos, apagar
++ * tudo tira também os oito meses que ninguém devolveu. Aqui a validade
++ * recua os meses daquele pedido, e a linha só some se não sobrar nada.
++ */
++export async function rollbackAccess(env, accountId, courseSlug, months, why = '') {
++  const row = await env.DB.prepare(
++    'SELECT expires_at FROM entitlements WHERE account_id = ? AND course_slug = ?'
++  ).bind(accountId, courseSlug).first();
++  if (!row) return false;
++
++  const t = now();
++  const until = row.expires_at === null || row.expires_at === undefined ? null : new Date(Number(row.expires_at));
++  if (until) until.setMonth(until.getMonth() - (Number(months) || 12));
++
++  if (!until || until.getTime() <= t) {
++    await revokeAccess(env, accountId, courseSlug, why);
++    return true;
++  }
++  await env.DB.prepare(
++    'UPDATE entitlements SET expires_at = ? WHERE account_id = ? AND course_slug = ?'
++  ).bind(until.getTime(), accountId, courseSlug).run();
++  await log(env, accountId, 'revoke', `${courseSlug} recuou para ${until.toISOString()} ${why}`.trim());
++  return true;
++}
++
+ /* ── convites ───────────────────────────────────────────────────────────── */
+ 
+ /** Registra (ou atualiza) um convite. Vale mesmo sem conta existir ainda. */
+@@ -329,9 +396,9 @@ export async function recordEvent(env, { eventId, orderId, status, raw, source }
+  * Mercado Pago disse sobre este pagamento", que é o propósito da tabela.
+  */
+ const GUARDAR = [
+-  'id', 'status', 'status_detail', 'transaction_amount', 'currency_id',
+-  'external_reference', 'date_created', 'date_approved', 'payment_method_id',
+-  'payment_type_id', 'live_mode'
++  'id', 'status', 'status_detail', 'transaction_amount', 'transaction_amount_refunded',
++  'currency_id', 'external_reference', 'date_created', 'date_approved',
++  'payment_method_id', 'payment_type_id', 'live_mode'
+ ];
+ export function enxuto(raw) {
+   if (!raw || typeof raw !== 'object') return raw;
 diff --git a/worker/src/reconcile.js b/worker/src/reconcile.js
 index 121edea..ef80779 100644
 --- a/worker/src/reconcile.js

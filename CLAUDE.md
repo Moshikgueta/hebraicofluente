@@ -116,6 +116,41 @@ esquece depois de um estorno: devolver o dinheiro NÃO tira o curso.
 motivo que a Resend devolveu quando um e-mail de senha não saiu, e `pagamento`
 mostra os pedidos que falharam, com a razão que o provedor deu.
 
+## Auditoria de segurança (20/09/2026)
+`SECURITY-AUDIT.md` é o relatório: dez agentes independentes, achados com
+arquivo:linha, o que foi consertado e o que foi deixado como proposta. As
+regras que ele fixou e que valem para todo commit daqui em diante:
+
+- **Nenhuma decisão de acesso lê cabeçalho que o cliente escreve.** O portão
+  (`worker/src/gate.js`) autentica TODA rota paga; `Sec-Fetch-Dest` só decide
+  a forma da recusa. Foi um `curl -H 'Sec-Fetch-Dest: empty'` que abria a aula.
+- **O conteúdo do curso continua público** nos pacotes de `/_next/` - é a
+  limitação documentada em `gate.js`, e a única saída é o conteúdo sair do
+  pacote e vir de `/api/content/*` atrás do cookie. Até lá, nada pode ser
+  descrito a comprador como proteção de conteúdo.
+- **O repositório é público, e o resumo de cada execução do Actions também.**
+  `acesso.yml` mascara todo e-mail que imprime (`mascara`); a trilha
+  (`access_log`) não recebe e-mail; `payment_events` guarda só a projeção
+  `enxuto()` do pagamento. Nada novo pode imprimir dado de cliente num resumo.
+- **Freios decidem pela escrita atômica** (`throttled`: `INSERT ... ON CONFLICT
+  ... RETURNING hits`); a leitura prévia só poupa a escrita de quem já estourou
+  e nunca autoriza - ler e depois gravar deixava uma rajada em paralelo passar
+  inteira. O do login conta só falhas, e vem ANTES de ler o corpo. Um freio que
+  grava a cada tentativa barrada é o próprio amplificador.
+- **Toda resposta sai por `blindar()`** (`worker.js`): página, API, 301, 302 do
+  portão. Um caminho de resposta novo não pode contornar isso.
+- **Escrita na API só da própria origem** (`worker.js`), webhook à parte.
+- **A proposta de pagamento está em `audit/`**, não aplicada: chave do evento
+  `id:status`, estorno (inclusive parcial) recua os meses do pedido, direito
+  antes do pedido sem conceder duas vezes, renovação em 45 dias, 404 do
+  provedor não pede reenvio, logout invalida em todo aparelho. `npm run
+  proposta` reproduz os defeitos (14 de 16 falham hoje) e passa com `git apply
+  audit/pagamento-proposto.patch`. Aplicar é decisão do dono; o README de
+  `audit/` diz as duas decisões de produto embutidas e o que conferir em
+  produção depois.
+- `npm run csp` prova a CSP num navegador; `app/tests/auditoria.test.ts`
+  guarda cada ataque fechado. Um achado novo entra lá antes do conserto.
+
 ## Conta e senha
 Criar conta, entrar, sair, **esquecer a senha** e **trocar a senha** - tudo em
 `worker/src/api/auth.js`, com as consultas em `worker/src/lib/db.js`.

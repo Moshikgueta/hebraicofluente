@@ -36,18 +36,45 @@ independente, todos reproduzidos em `pagamento.test.ts`:
    partir do vencimento, então pagar cedo não perde dia nenhum.
 5. **Sair não invalidava o cookie.** Só o navegador esquecia; o valor
    continuava válido por sete dias para quem o tivesse copiado. Sair passa a
-   subir `session_version`, em todos os aparelhos.
+   subir `session_version`, em todos os aparelhos. É uma decisão de produto
+   embutida: sair num aparelho derruba os outros. A alternativa (uma tabela de
+   sessões, para derrubar só a atual) é mais código do que esta proposta
+   inteira; se preferir manter "sair só aqui", tire o `bumpSessionVersion` do
+   `logout` e o teste do bloco 5.
+
+E quatro que a verificação independente encontrou na PRIMEIRA versão desta
+proposta, também reproduzidos (blocos 6 a 9 do teste):
+
+6. **A retomada de uma liberação interrompida dava vinte e quatro meses.** Com
+   o direito gravado antes do pedido (item 3), uma queda ENTRE os dois fazia o
+   reenvio chamar `grantAccess` de novo - e `grantAccess` estende. Agora, se a
+   linha de acesso já aponta para este pedido e ele ainda está pendente, só o
+   pedido é marcado.
+7. **O estorno de uma renovação apagava tudo.** Quem tinha um mês da compra
+   anterior e estornava a renovação perdia também esse mês. `rollbackAccess`
+   recua os meses DAQUELE pedido; a linha só some se não sobrar nada.
+8. **Estorno parcial passava batido.** Na Mercado Pago um estorno parcial não
+   muda o status: o pagamento fica `approved` com `transaction_amount_refunded`
+   maior que zero. A regra agora é a mesma do valor a menor: se o que ficou é
+   menos do que o curso custa, o curso não está pago, e o acesso fecha.
+   **Isto é uma decisão sua:** um "desconto de cortesia" devolvido pelo painel
+   fecha o acesso do aluno. Se quiser devolver parte do valor sem fechar,
+   libere de novo por Actions → Acesso → liberar depois do estorno.
+9. **Um pagamento que a Mercado Pago não conhece virava reenvio eterno.** O
+   404 dela (o simulador do painel, um pagamento de outra conta) respondia 500,
+   e 500 pede reenvio; cada tentativa gravava uma linha na trilha. Agora o 404
+   responde 200, e a trilha de `settle-error` tem teto de vinte por minuto.
 
 ## Como aplicar
 
 ```
 git apply audit/pagamento-proposto.patch
-cd app && npm run proposta        # os 10 testes passam
+cd app && npm run proposta        # os 16 testes passam
 cd app && npm test                # a suíte inteira continua passando
 git commit -am "..." && git push  # publica
 ```
 
-Sem o patch, `npm run proposta` FALHA em 8 dos 10 testes. É o esperado, e é
+Sem o patch, `npm run proposta` FALHA em 14 dos 16 testes. É o esperado, e é
 a prova de que os defeitos existem hoje.
 
 ## O que conferir em produção depois de aplicar
@@ -63,4 +90,9 @@ a prova de que os defeitos existem hoje.
   abrir. É o teste que a publicação não faz de propósito (não cria cobrança
   com token de produção).
 - Um estorno de teste no painel: o acesso tem de fechar sozinho e o pedido
-  aparecer como `refunded`.
+  aparecer como `refunded`. Um estorno PARCIAL faz o mesmo (item 8).
+- O estorno só fecha a porta quando a Mercado Pago avisa. O webhook dela
+  cobre `refunded` e `charged_back` para o mesmo id de pagamento; confira no
+  painel (Suas integrações → Webhooks) que o evento `payment` está marcado, e
+  faça o teste acima com o webhook ligado. A varredura NÃO revisita pedidos
+  pagos, então sem o aviso o estorno continua sendo o `revogar` à mão.
