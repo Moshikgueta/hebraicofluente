@@ -27,7 +27,7 @@ import { audioAvailable } from '@/components/learn/AudioButton';
 import { brl, flagship, installment, pixPrice } from '@/lib/catalog';
 import { course } from '@/lib/content';
 import { DEPOIMENTOS } from '@/lib/testimonials';
-import { confirmaSozinho, soPix } from '@/lib/empresa';
+import { confirmaSozinho, soPix, temPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
 
 const TEM_AUDIO = audioAvailable();
@@ -353,14 +353,22 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
               <span aria-hidden
                     className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
             </Link>
+            {/* "No PIX sai por X" é a promessa de preço mais visível do site
+                inteiro, e ela só pode existir enquanto o PIX puder ser
+                cobrado. Sem PIX habilitado na conta do provedor (ver
+                `pagamento.formas`), a frase some e fica o prazo de acesso,
+                que continua verdadeiro. Anunciar um desconto que o checkout
+                não dá é o erro que só aparece depois do clique. */}
             <p className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
               {owned
                 ? 'Seu progresso continua exatamente onde você parou.'
-                : confirmaSozinho()
-                  ? <>No PIX sai por {brl(pix)}. Acesso liberado na hora da confirmação,
-                     por {c.accessMonths} meses.</>
-                  : <>No PIX sai por {brl(pix)}. Acesso liberado em alguns minutos,
-                     por {c.accessMonths} meses.</>}
+                : !temPix()
+                  ? <>Acesso liberado na hora da confirmação, por {c.accessMonths} meses.</>
+                  : confirmaSozinho()
+                    ? <>No PIX sai por {brl(pix)}. Acesso liberado na hora da confirmação,
+                       por {c.accessMonths} meses.</>
+                    : <>No PIX sai por {brl(pix)}. Acesso liberado em alguns minutos,
+                       por {c.accessMonths} meses.</>}
             </p>
           </div>
         </div>

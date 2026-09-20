@@ -61,7 +61,7 @@ export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired'
 export type AuthErrorCode =
   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
   | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'payments-off'
-  | 'bad-token' | 'payment-failed' | 'card-off' | 'already-owned';
+  | 'bad-token' | 'payment-failed' | 'card-off' | 'pix-off' | 'already-owned';
 
 export class AuthError extends Error {
   constructor(readonly code: AuthErrorCode, message?: string) {
@@ -99,6 +99,10 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
      esquecida, ou para alguém chamando a API na mão. Diz o que fazer em vez de
      dizer que deu erro, porque o caminho que funciona está na mesma tela. */
   'card-off': 'No momento só aceitamos PIX. Volte e escolha PIX - o código sai na hora.',
+  /* O espelho do de cima, para quando é o PIX que a conta do provedor não
+     tem habilitado. Mesma regra: dizer o caminho que funciona, que está na
+     mesma tela, em vez de anunciar um defeito. */
+  'pix-off': 'No momento só aceitamos cartão de crédito. Volte e escolha cartão - em até 12x sem juros.',
   /* Não é erro, é a compra repetida barrada. A renovação abre sozinha nos
      últimos 45 dias; antes disso não há o que pagar. */
   'already-owned': 'Este curso já está na sua conta. A renovação abre nos últimos 45 dias de acesso.'

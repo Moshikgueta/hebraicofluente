@@ -74,6 +74,16 @@ export type Empresa = {
      * `mercadopago` PIX e cartão, com confirmação automática.
      */
     modo: 'pix-direto' | 'mercadopago';
+    /**
+     * O que DÁ para oferecer nesta build.
+     *
+     * No arquivo do repositório os dois são `true` - é a intenção. A cada
+     * publicação, `scripts/pagamento-ativo.mjs` pergunta à Mercado Pago quais
+     * meios a credencial enxerga e reescreve isto para AQUELA build. Opcional
+     * no tipo porque uma build antiga não tem o campo, e ausente significa
+     * "oferece os dois", que era o comportamento de antes.
+     */
+    formas?: { pix: boolean; cartao: boolean };
     pix: {
       /** Só os caracteres da chave: CNPJ vai sem ponto, barra nem traço. */
       chave: string;
@@ -151,6 +161,30 @@ export function nomeLegalCompleto(): string {
  * para tentar o PIX.
  */
 export const soPix = (): boolean => empresa.pagamento.modo === 'pix-direto';
+
+/* ── o que esta build consegue cobrar ──────────────────────────────────────
+ * Diferente de `soPix()`, que é uma DECISÃO (o trilho escolhido), isto é um
+ * FATO: o que a credencial da Mercado Pago respondeu que a conta aceita, na
+ * hora da publicação. A distinção importa porque as duas coisas divergem, e
+ * foi exatamente o que aconteceu: modo `mercadopago` (queremos PIX e cartão)
+ * com uma conta que só tinha cartão habilitado. O checkout oferecia PIX, e
+ * quem escolhesse PIX recebia erro.
+ *
+ * A regra é a mesma do `soPix`: oferecer uma forma que falha é pior do que
+ * oferecer só a que funciona. Quem tenta e vê erro conclui que o site está
+ * quebrado, e não volta para tentar a outra.
+ */
+const formas = () => empresa.pagamento.formas;
+
+export const temPix = (): boolean =>
+  soPix() ? true : (formas() ? formas()!.pix : true);
+
+export const temCartao = (): boolean =>
+  soPix() ? false : (formas() ? formas()!.cartao : true);
+
+/** As formas que esta build oferece, na ordem em que aparecem na tela. */
+export const formasAtivas = (): ('pix' | 'card')[] =>
+  [...(temPix() ? ['pix' as const] : []), ...(temCartao() ? ['card' as const] : [])];
 
 /**
  * O pagamento se confirma sozinho?

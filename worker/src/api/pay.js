@@ -41,6 +41,22 @@ import empresa from '../../../data/empresa.json';
 const PAGAMENTO = (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago';
 const pixDireto = () => PAGAMENTO === 'pix-direto';
 
+/* E QUAIS FORMAS a conta do provedor aceita nesta build.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Resolvido na publicação por scripts/pagamento-ativo.mjs, que pergunta à
+ * Mercado Pago. Ausente (build antiga) significa os dois, que era o
+ * comportamento de antes do campo existir.
+ *
+ * O checkout já esconde o que não dá para cobrar; isto é para quem chama a
+ * API direto - e para o dia em que a tela e o servidor discordarem, que é o
+ * dia em que alguém mexe num e esquece o outro. */
+const FORMAS = (empresa.pagamento && empresa.pagamento.formas) || null;
+const aceita = forma => {
+  if (pixDireto()) return forma === 'pix';
+  if (!FORMAS) return true;
+  return forma === 'pix' ? !!FORMAS.pix : !!FORMAS.cartao;
+};
+
 /** Um pedido, no formato que o app espera (app/src/lib/account/types.ts). */
 const toOrder = row => ({
   id: row.id,
@@ -103,12 +119,21 @@ export async function create({ request, env }) {
     return fail('already-owned', 409);
   }
 
-  /* No modo `pix-direto` só existe PIX, e um pedido de cartão é recusado em
-     vez de virar um pedido que nunca vai ser pago. O checkout já não oferece
-     a opção; isto é para quem chamar a API direto. */
-  if (pixDireto() && body.method === 'card') return fail('card-off', 409);
+  /* Uma forma que esta implantação não consegue cobrar é recusada AQUI, em
+     vez de virar um pedido que nunca vai ser pago - ou, pior, uma chamada à
+     Mercado Pago que volta com um erro cru na cara do comprador.
 
-  const method = body.method === 'card' ? 'card' : 'pix';
+     Dois motivos possíveis, e o código de erro é o mesmo para os dois porque
+     a resposta para quem chamou também é: o modo `pix-direto`, em que não há
+     adquirente nenhum para o cartão; e a conta do provedor não ter aquele
+     meio habilitado, o que a publicação descobre perguntando a eles.
+
+     O checkout já esconde o que não dá para cobrar. Isto é para quem chama a
+     API direto, e para o dia em que a tela e o servidor discordarem. */
+  const pedido = body.method === 'card' ? 'card' : 'pix';
+  if (!aceita(pedido)) return fail(pedido === 'card' ? 'card-off' : 'pix-off', 409);
+
+  const method = pedido;
   const installments = method === 'card' ? clampInstallments(course, body.installments) : 1;
 
   /* O VALOR sai do catálogo. Nada do corpo da requisição chega até aqui. */

@@ -23,7 +23,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { brl, getCourse, installment, isPlayable, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
-import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
+import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
 
 export function CourseClient({ slug }: { slug: string }) {
   const account = useAccount();
@@ -308,7 +308,9 @@ function BuyBox({ slug }: { slug: string }) {
             <p className="font-ui text-[13.5px] text-ink-body">
               ou {parcela.n}x de {brl(parcela.brl)} sem juros
             </p>
-            {c.price.pixDiscountPct > 0 && (
+            {/* O preço do PIX some junto com a possibilidade de pagar no
+                PIX - ver a nota de `temPix` em app/src/lib/empresa.ts. */}
+            {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[13.5px] font-medium text-[var(--accent)]">
                 {brl(pixPrice(c.price))} no PIX ({c.price.pixDiscountPct}% off)
               </p>
@@ -323,7 +325,11 @@ function BuyBox({ slug }: { slug: string }) {
         <li>
           {soPix()
             ? 'Pagamento por PIX, pelo aplicativo do seu banco.'
-            : `PIX, cartão ou parcelado em até ${parcela.n}x.`}
+            : temPix() && temCartao()
+              ? `PIX, cartão ou parcelado em até ${parcela.n}x.`
+              : temCartao()
+                ? `Cartão de crédito, ou parcelado em até ${parcela.n}x.`
+                : 'Pagamento por PIX, pelo aplicativo do seu banco.'}
         </li>
         <li>
           {confirmaSozinho()

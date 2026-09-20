@@ -34,6 +34,7 @@ import { getPayment, verifyWebhookSignature } from '../../worker/src/lib/mercado
 import { hmacHex } from '../../worker/src/lib/crypto.js';
 import { safeNext } from '../src/lib/safe-next';
 import { mergeStates } from '../src/lib/state/merge';
+import { empresa, formasAtivas, temCartao, temPix } from '../src/lib/empresa';
 
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
@@ -687,6 +688,67 @@ describe('um convite não vira acesso sozinho', () => {
     const env = envSite();
     await comConta(env, 'ninguem@exemplo.com.br');
     expect(linhas(env, "SELECT 1 AS x FROM access_log WHERE action = 'convite-aguardando'")).toEqual([]);
+  });
+});
+
+/* ── só se oferece o que dá para cobrar ─────────────────────────────────── */
+
+describe('a tela e o servidor concordam sobre as formas de pagamento', () => {
+  /* O defeito que isto fecha: em 20/09/2026 a conta da Mercado Pago tinha
+     cartão habilitado e PIX não, e o checkout oferecia PIX assim mesmo. Quem
+     escolhesse PIX chegava até a chamada ao provedor e recebia um erro. */
+  it('o leitor das formas é o mesmo dos dois lados', () => {
+    /* `formasAtivas` alimenta a tela; `aceita` (dentro de pay.js) alimenta o
+       servidor. Os dois leem `pagamento.formas` do mesmo arquivo, que é o
+       que impede a divergência - e é por isso que o campo mora em
+       data/empresa.json e não numa variável de ambiente. */
+    expect(formasAtivas()).toEqual(['pix', 'card']);
+    expect(temPix()).toBe(true);
+    expect(temCartao()).toBe(true);
+    /* O arquivo do repositório diz a intenção: os dois. Quem rebaixa é a
+       publicação, e só para aquela build. */
+    expect(empresa.pagamento.formas).toEqual({ pix: true, cartao: true });
+  });
+
+  it('a sonda reescreve as formas da build, e só elas', async () => {
+    const { readFileSync, writeFileSync, mkdtempSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const { join } = await import('node:path');
+    const arquivo = join(mkdtempSync(join(tmpdir(), 'hf-')), 'empresa.json');
+    const original = readFileSync(
+      new URL('../../data/empresa.json', import.meta.url), 'utf8');
+    writeFileSync(arquivo, original);
+
+    /* A mesma substituição que scripts/pagamento-ativo.mjs faz. Copiada aqui
+       de propósito: o script roda antes do build, fora do vitest, e o que
+       este teste defende é o FORMATO do arquivo - um `formas` reescrito à
+       mão para uma forma só, ou renomeado, faria a substituição virar um
+       no-op silencioso e o PIX voltaria a ser oferecido. */
+    const reescrito = original.replace(
+      /("formas"\s*:\s*\{[^}]*"pix"\s*:\s*)(true|false)([^}]*"cartao"\s*:\s*)(true|false)/,
+      (_m, a, _p, b) => `${a}false${b}true`
+    );
+    expect(reescrito, 'a substituição da sonda não casou').not.toBe(original);
+
+    const depois = JSON.parse(reescrito);
+    expect(depois.pagamento.formas).toEqual({ pix: false, cartao: true });
+    /* E nada mais se mexeu: modo, chave PIX, CNPJ, endereço. */
+    const antes = JSON.parse(original);
+    delete antes.pagamento.formas; delete depois.pagamento.formas;
+    expect(depois).toEqual(antes);
+  });
+
+  it('o servidor recusa a forma que a build não cobra, com o código certo', async () => {
+    const env = envSite({ MP_ACCESS_TOKEN: 'APP_USR-1234567890123456-092019-abcdef0123456789abcdef0123456789-123456789' });
+    const { cookie } = await comConta(env);
+    /* Com as duas ligadas (o estado do repositório), nenhuma é recusada por
+       este motivo - o pedido segue e morre na Mercado Pago de mentira, que é
+       outro assunto. */
+    const r = await pay.create({
+      request: pedido(`${SITE}/api/pay/create`, { courseSlug: 'alfabetizacao', method: 'pix' }, { Cookie: cookie }),
+      env, ctx
+    });
+    expect(r.status).not.toBe(409);
   });
 });
 

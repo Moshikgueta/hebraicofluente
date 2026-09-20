@@ -43,6 +43,33 @@ const querido = (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago';
 const linhas = [];
 const diga = t => { linhas.push(t); console.log(t); };
 
+/**
+ * Escreve, no arquivo DESTA execução, o que a conta realmente aceita.
+ *
+ * O arquivo do repositório continua dizendo a intenção (os dois `true`); o
+ * que muda é o que esta build leva para o ar. O checkout e o Worker leem
+ * daqui, os dois, e é isso que impede a tela de oferecer uma forma que o
+ * servidor não consegue cobrar.
+ *
+ * Substituição exata, e não reserialização do JSON: reserializar perde os
+ * comentários `_nota…` de lugar e produz um diff ilegível.
+ */
+function gravarFormas(pix, cartao) {
+  const atual = readFileSync(ARQUIVO, 'utf8');
+  const novo = atual.replace(
+    /("formas"\s*:\s*\{[^}]*"pix"\s*:\s*)(true|false)([^}]*"cartao"\s*:\s*)(true|false)/,
+    (_m, a, _p, b, _c) => `${a}${pix}${b}${cartao}`
+  );
+  if (novo === atual) {
+    /* Sem o bloco `formas` (arquivo antigo), não há o que escrever - e isso
+       não é falha: `temPix`/`temCartao` tratam a ausência como "oferece os
+       dois", que é o comportamento de antes deste campo existir. */
+    return false;
+  }
+  writeFileSync(ARQUIVO, novo);
+  return true;
+}
+
 /** Rebaixa o modo no arquivo desta execução, por substituição exata - nada de
  *  reserializar o JSON inteiro e perder os comentários `_nota…` de lugar. */
 function rebaixar(porque) {
@@ -135,8 +162,24 @@ if (querido !== 'mercadopago') {
          que é a pior hora possível para descobrir. */
       if (faltando) {
         diga(`⚠ A conta NÃO tem habilitado: ${faltando}.`);
-        diga('  O checkout oferece essa forma e ela vai falhar na hora da compra.');
-        diga('  Habilite em Mercado Pago → Seu negócio → Meios de pagamento.');
+        /* E o checkout PARA de oferecer o que falta, nesta build.
+           ──────────────────────────────────────────────────────────────
+           Antes, aqui só havia o aviso - e o aviso ia para o resumo de uma
+           publicação que ninguém abre quando está tudo verde. A tela
+           continuava oferecendo a forma que a conta não tem, e o erro só
+           aparecia na primeira venda, na cara do comprador. */
+        const temPix = !/PIX/.test(faltando);
+        const temCartao = !/cartão/.test(faltando);
+        if (temPix || temCartao) {
+          if (gravarFormas(temPix, temCartao)) {
+            diga(`  Esta publicação oferece só: ${formas}.`);
+            diga('  Quando eles habilitarem, a publicação seguinte religa sozinha.');
+          }
+        } else {
+          /* Nenhuma das duas. Não dá para esconder tudo e deixar um checkout
+             vazio: aí o trilho inteiro é que não serve. */
+          diga('  Nenhuma forma conhecida está habilitada nesta conta.');
+        }
         if (inventario) {
           diga('  O que esta credencial enxerga hoje, para levar ao suporte deles:');
           diga(`  ${inventario.slice(0, 600)}`);

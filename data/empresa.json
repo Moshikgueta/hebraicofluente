@@ -48,6 +48,17 @@
     "atualizadoEm": "2026-09-20"
   },
 
+  "_notaFormas": [
+    "O que se QUER oferecer. O que DÁ para oferecer é resolvido a cada",
+    "publicação por scripts/pagamento-ativo.mjs, que pergunta à Mercado Pago",
+    "quais meios a credencial enxerga e reescreve estes dois campos para",
+    "aquela build - nunca neste arquivo, que continua dizendo a intenção.",
+    "",
+    "Foi assim que o PIX saiu do checkout em 20/09/2026: a conta tinha",
+    "cartão habilitado e PIX não, e oferecer uma forma que falha é pior do",
+    "que oferecer só a que funciona. No dia em que a Mercado Pago habilitar",
+    "o PIX, a publicação seguinte o traz de volta sozinha."
+  ],
   "_notaPagamento": [
     "COMO O SITE COBRA. `modo` decide, e é lido pelos dois lados: o checkout,",
     "para saber o que oferecer, e o Worker, para saber o que criar.",
@@ -83,6 +94,10 @@
 
   "pagamento": {
     "modo": "mercadopago",
+    "formas": {
+      "pix": true,
+      "cartao": true
+    },
     "pix": {
       "chave": "51041290000152",
       "tipoChave": "cnpj",

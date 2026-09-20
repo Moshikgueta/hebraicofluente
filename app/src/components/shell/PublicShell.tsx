@@ -29,7 +29,9 @@ import { Logo } from '@/components/shell/Logo';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
-import { empresa, enderecoLinha, nomeLegalCompleto, soPix, whatsappUrl } from '@/lib/empresa';
+import {
+  empresa, enderecoLinha, nomeLegalCompleto, soPix, temCartao, temPix, whatsappUrl
+} from '@/lib/empresa';
 
 /* Os rótulos são os do design. Os destinos são páginas de verdade, e não
    âncoras: `#como` funciona na capa e vira link morto em /cursos, que usa
@@ -249,11 +251,18 @@ function Footer() {
           </p>
           {/* Esta linha aparece em TODA página pública, o que faz dela a
               promessa de pagamento mais repetida do site - e a mais cara de
-              deixar errada. Sai de data/empresa.json, como o resto. */}
+              deixar errada. Sai de data/empresa.json, como o resto, e agora
+              também das FORMAS que a conta do provedor aceita: prometer PIX
+              no rodapé de todas as páginas e não ter PIX no checkout é a
+              versão mais visível do mesmo defeito. */}
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
             {soPix()
               ? 'Pagamento por PIX. Acesso liberado em alguns minutos.'
-              : 'Pagamento por PIX ou cartão, em até 12x. Acesso liberado na hora.'}
+              : temPix() && temCartao()
+                ? 'Pagamento por PIX ou cartão, em até 12x. Acesso liberado na hora.'
+                : temCartao()
+                  ? 'Pagamento por cartão de crédito, em até 12x. Acesso liberado na hora.'
+                  : 'Pagamento por PIX. Acesso liberado na hora.'}
           </p>
         </div>
       </div>

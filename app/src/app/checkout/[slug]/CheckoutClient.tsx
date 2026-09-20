@@ -38,7 +38,7 @@ import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
 import { brl, getCourse, installment, pixPrice, type CatalogCourse } from '@/lib/catalog';
-import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
+import { confirmaSozinho, empresa, formasAtivas, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 
@@ -52,10 +52,17 @@ export function CheckoutClient({ slug }: { slug: string }) {
   const c = getCourse(slug)!;
 
   /* Lidos uma vez: vêm de data/empresa.json, que é fixo no momento da build. */
-  const SO_PIX = soPix();
   const CONFIRMA_SOZINHO = confirmaSozinho();
+  /* O que a conta da Mercado Pago aceita NESTA build - resolvido na
+     publicação (scripts/pagamento-ativo.mjs), não escrito à mão. Sobrando uma
+     forma só, a tela para de perguntar e passa a informar: uma escolha com
+     uma opção não é uma escolha, e dá ao comprador a impressão de que ele
+     perdeu alguma coisa. */
+  const FORMAS = formasAtivas();
+  const UMA_FORMA = FORMAS.length === 1;
+  const SO_CARTAO = UMA_FORMA && FORMAS[0] === 'card';
 
-  const [method, setMethod] = useState<PaymentMethod>('pix');
+  const [method, setMethod] = useState<PaymentMethod>(FORMAS[0] ?? 'pix');
   const [order, setOrder] = useState<Order | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -240,18 +247,36 @@ export function CheckoutClient({ slug }: { slug: string }) {
 
         {/* A escolha só aparece quando existe escolha.
             ──────────────────────────────────────────────────────────────
-            No modo `pix-direto` o cartão não tem como funcionar, e oferecer
-            uma opção que falha é pior do que oferecer só a que funciona:
-            quem escolhe cartão recebe um erro, conclui que o site está
-            quebrado, e não volta para tentar o PIX. No dia em que a Mercado
-            Pago entrar, a escolha volta sozinha - ver `pagamento.modo` em
-            data/empresa.json. */}
-        {SO_PIX ? (
+            Duas coisas diferentes podem deixar uma forma só de pé, e as duas
+            caem aqui:
+
+            · o modo `pix-direto`, em que o cartão não tem como funcionar
+              porque não há adquirente nenhum;
+            · a conta da Mercado Pago não ter aquele meio habilitado, o que
+              a publicação descobre perguntando a eles e grava em
+              `pagamento.formas` (scripts/pagamento-ativo.mjs).
+
+            Em ambos, oferecer a opção que falha é pior do que oferecer só a
+            que funciona: quem escolhe e recebe erro conclui que o site está
+            quebrado, e não volta para tentar a outra. E, em ambos, a escolha
+            volta SOZINHA na publicação seguinte ao dia em que a forma voltar
+            a existir - não há nada comentado no código esperando alguém
+            lembrar de descomentar. */}
+        {UMA_FORMA ? (
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body
                         bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
-            <strong>PIX</strong> · {brl(total)}
-            {c.price.pixDiscountPct > 0 && ` (${c.price.pixDiscountPct}% de desconto)`}.
-            Você paga pelo aplicativo do seu banco.
+            {SO_CARTAO ? (
+              <>
+                <strong>Cartão de crédito</strong> · {brl(c.price.brl)} à vista,
+                ou até {parcela.n}x de {brl(parcela.brl)} sem juros.
+              </>
+            ) : (
+              <>
+                <strong>PIX</strong> · {brl(total)}
+                {c.price.pixDiscountPct > 0 && ` (${c.price.pixDiscountPct}% de desconto)`}.
+                Você paga pelo aplicativo do seu banco.
+              </>
+            )}
           </p>
         ) : (
           <fieldset className="grid gap-3" disabled={order?.status === 'pending'}>
@@ -273,7 +298,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
           </fieldset>
         )}
 
-        {method === 'card' && !SO_PIX && (
+        {method === 'card' && (
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted
                         bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
             O número do cartão é digitado na tela da Mercado Pago, não aqui. Esta
@@ -349,7 +374,9 @@ function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
        condição de oferta que promete o que o sistema não faz é justamente o
        que o Decreto 7.962 existe para impedir. */
     ['Quando abre', confirmaSozinho()
-      ? 'Na hora em que o pagamento for confirmado - em minutos, no PIX.'
+      ? (temPix()
+        ? 'Na hora em que o pagamento for confirmado - em minutos, no PIX.'
+        : 'Na hora em que o pagamento for confirmado.')
       : 'Depois que o pagamento cair, normalmente em alguns minutos. Você entra na plataforma com seu e-mail e senha.'],
     ['Se você desistir', <>
       {empresa.politicas.arrependimentoDias} dias para cancelar e receber 100% de volta,
@@ -524,7 +551,13 @@ function Shell({ course, children }: {
             abaixo descrevem uma compra que não está à venda - e o resumo do
             pedido é justamente onde a pessoa confere quanto vai sair. Aqui o
             desconto do PIX deixa de ser uma alternativa e passa a ser o preço,
-            com o valor cheio ficando como referência. */}
+            com o valor cheio ficando como referência.
+
+            E o inverso vale igual: sem PIX habilitado, a linha "R$ X no PIX"
+            anuncia um desconto que o checkout não tem como dar. Um preço
+            anunciado e não praticado não é detalhe de tela - é propaganda
+            enganosa, e o lugar onde ela apareceria é exatamente onde a
+            pessoa decide. */}
         {soPix() ? (
           <div className="border-t border-[color:var(--line-soft)] pt-3 grid gap-1">
             <p className="font-display text-[26px] font-bold text-ink leading-none">
@@ -544,7 +577,7 @@ function Shell({ course, children }: {
             <p className="font-ui text-[12.5px] text-ink-body">
               ou {parcela.n}x de {brl(parcela.brl)}
             </p>
-            {c.price.pixDiscountPct > 0 && (
+            {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">
                 {brl(pixPrice(c.price))} no PIX
               </p>
