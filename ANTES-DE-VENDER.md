@@ -26,13 +26,36 @@ sozinho em três segundos e libera doze meses.
 **Por que importa.** É o produto inteiro de graça, num endereço indexável.
 Qualquer pessoa que encontre o link nunca vai precisar pagar.
 
-**Como fazer.** GitHub → o repositório → Settings → Pages → **Unpublish
-site**. A publicação automática já foi desligada; o que resta é o site que
-ficou de pé.
+**Como fazer. SÓ VOCÊ CONSEGUE.** Tentei daqui e não dá: a API de Pages do
+GitHub é barrada para mim, e nenhum outro caminho despublica um site que já
+está de pé. São dois cliques:
 
-**Pronto quando.** `moshikgueta.github.io/hebraicofluente` responde 404.
+> GitHub → o repositório → **Settings** → **Pages** → role até o fim →
+> **Unpublish site** → confirmar.
 
-### 2. Fechar o que os logs públicos já mostraram
+Se não aparecer o botão, a fonte do site está em "GitHub Actions": troque
+**Source** para **Deploy from a branch** → **None**, salve, e o botão aparece.
+
+A publicação automática já foi desligada (o `deploy-app.yml` só roda à mão,
+e o `nextjs.yml` duplicado foi removido), então nada vai republicar sozinho.
+O que resta é o site que ficou de pé.
+
+**Pronto quando.** `moshikgueta.github.io/hebraicofluente` responde 404. Me
+avise quando fizer e eu confiro o que dá para conferir daqui.
+
+### 2. Fechar o que os logs públicos já mostraram - FEITO em 20/09/2026
+
+**As catorze execuções foram apagadas** (a execução inteira, não só o arquivo
+de log: o e-mail aparecia no RESUMO da execução, e apagar só os logs deixaria
+o resumo de pé). `Actions → Acesso` está vazio. As execuções de publicação
+continuam lá e foram conferidas: só carregam o endereço sintético
+`hf-e2e-…@example.invalid`, que é criado e apagado pela própria publicação.
+
+Continua valendo decidir se o repositório fica público: nada de cliente sai
+mais nos resumos, mas o código, os segredos que NÃO estão nele e a estrutura
+do banco são legíveis por qualquer pessoa. Isso é escolha, não risco aberto.
+
+O que era o problema:
 
 **O que é.** O repositório é público, e o resumo de cada execução do Actions
 também. Catorze execuções antigas da ação `Acesso` escreveram e-mails de

@@ -365,7 +365,15 @@ HAVE="$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml || true)"
 case "$HAVE" in
   https://*.workers.dev|'') ;;                 # ainda no endereço de fábrica
   *)
-    ok "Domínio próprio em uso: $HAVE (o workers.dev continua respondendo)"
+    # Se o workers.dev responde ou não é decisão do wrangler.toml, e a
+    # mensagem lê de lá: afirmar "continua respondendo" sem olhar foi
+    # verdade por um tempo e depois virou uma linha que mentia a cada
+    # publicação, no meio de uma saída que ninguém lê com desconfiança.
+    if grep -qE '^\s*workers_dev\s*=\s*true\s*$' wrangler.toml; then
+      ok "Domínio próprio em uso: $HAVE (o workers.dev também responde)"
+    else
+      ok "Domínio próprio em uso: $HAVE (só ele: workers_dev = false)"
+    fi
     URL="$HAVE"
     ;;
 esac
