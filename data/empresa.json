@@ -16,10 +16,10 @@
   "cnpj": "51.041.290/0001-52",
 
   "endereco": {
-    "logradouro": null,
+    "logradouro": "Rua Bom Jesus, 434",
     "cidade": "Curitiba",
     "uf": "PR",
-    "cep": null,
+    "cep": "80350-010",
     "pais": "Brasil"
   },
 
