@@ -29,7 +29,9 @@ import { makeSessionCookie, readSession } from '../../worker/src/lib/session.js'
 // @ts-expect-error - idem
 import { enxuto, estourou, grantAccess, hasEntitlement, inviteCreate, recordEvent, throttled } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
-import { getPayment } from '../../worker/src/lib/mercadopago.js';
+import { getPayment, verifyWebhookSignature } from '../../worker/src/lib/mercadopago.js';
+// @ts-expect-error - idem
+import { hmacHex } from '../../worker/src/lib/crypto.js';
 import { safeNext } from '../src/lib/safe-next';
 import { mergeStates } from '../src/lib/state/merge';
 
@@ -509,6 +511,28 @@ describe('o pagamento', () => {
 
   it('a consulta ao provedor recusa um id fora do formato antes de chamar', async () => {
     await expect(() => getPayment({ MP_ACCESS_TOKEN: 'x' }, '../../v1/account/settings')).toThrow();
+  });
+
+  /* Um segredo colado de um painel para outro chega com espaço na ponta, e
+     às vezes com quebra de linha. Sem aparar, a assinatura não confere
+     NUNCA: toda notificação legítima é recusada, e o sintoma aparece dias
+     depois como "paguei e não liberou" - com o segredo certo dos dois lados. */
+  it('o segredo do webhook é aparado antes de conferir a assinatura', async () => {
+    const segredo = 'segredo-do-webhook';
+    const id = 987654321;
+    const ts = Math.floor(Date.now() / 1000);
+    const v1 = await hmacHex(segredo, `id:${id};request-id:r1;ts:${ts};`);
+    const aviso = () => new Request(`${SITE}/api/pay/webhook?data.id=${id}&type=payment`, {
+      method: 'POST',
+      headers: { 'x-signature': `ts=${ts},v1=${v1}`, 'x-request-id': 'r1' }
+    });
+    for (const guardado of [segredo, ` ${segredo}`, `${segredo}\n`, `  ${segredo}  `]) {
+      expect(await verifyWebhookSignature({ MP_WEBHOOK_SECRET: guardado }, aviso(), id),
+        JSON.stringify(guardado)).toBe(true);
+    }
+    /* E continua recusando o que é outro segredo, não só espaço a mais. */
+    expect(await verifyWebhookSignature({ MP_WEBHOOK_SECRET: 'outro' }, aviso(), id)).toBe(false);
+    expect(await verifyWebhookSignature({ MP_WEBHOOK_SECRET: '   ' }, aviso(), id)).toBe(false);
   });
 
   it('o que fica guardado do pagamento não inclui o pagador', async () => {

@@ -245,7 +245,15 @@ export async function paymentsFor(env, orderId) {
  * passar". Um webhook não verificado é uma rota pública que concede acesso.
  */
 export async function verifyWebhookSignature(env, request, dataId) {
-  if (!env.MP_WEBHOOK_SECRET) return false;
+  /* Aparado, pela mesma razão do Access Token lá em cima: este valor é
+     COLADO de um painel para outro, e colar traz espaço na ponta e às vezes
+     quebra de linha. Nenhum dos dois é visível para quem colou, e o efeito
+     aqui é pior do que um 401 na hora: a assinatura passa a não conferir
+     NUNCA, toda notificação legítima da Mercado Pago é recusada, e o sintoma
+     é "paguei e não liberou" dias depois - com o segredo certo, à vista, nos
+     dois lados. */
+  const segredo = String((env && env.MP_WEBHOOK_SECRET) || '').trim();
+  if (!segredo) return false;
 
   const sig = request.headers.get('x-signature') || '';
   const requestId = request.headers.get('x-request-id') || '';
@@ -262,5 +270,5 @@ export async function verifyWebhookSignature(env, request, dataId) {
 
   const manifest = `id:${String(dataId).toLowerCase()};request-id:${requestId};ts:${ts};`;
   const { hmacHex, timingSafeEqual } = await import('./crypto.js');
-  return timingSafeEqual(await hmacHex(env.MP_WEBHOOK_SECRET, manifest), v1.toLowerCase());
+  return timingSafeEqual(await hmacHex(segredo, manifest), v1.toLowerCase());
 }
