@@ -64,7 +64,7 @@ const cursive = localFont({
 import { ProgressProvider } from '@/lib/state/store';
 import { AccountProvider } from '@/lib/account/store';
 import { Chrome } from '@/components/shell/Chrome';
-import { course } from '@/lib/content';
+import { course } from '@/lib/content-publico';
 
 export const metadata: Metadata = {
   title: 'Hebraico Fluente - a plataforma de hebraico para brasileiros',

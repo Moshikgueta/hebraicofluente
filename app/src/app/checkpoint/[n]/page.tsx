@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import { course, getModule, lettersOfModule } from '@/lib/content';
+import { course, getModule } from '@/lib/content-publico';
+import { letrasDoModulo } from '@/lib/content-servidor';
 import { CheckpointClient } from './CheckpointClient';
 
 export function generateStaticParams() {
@@ -11,5 +12,5 @@ export default async function CheckpointPage({ params }: { params: Promise<{ n: 
   const { n } = await params;
   const mod = getModule(Number(n));
   if (!mod?.checkpoint) notFound();
-  return <CheckpointClient module={mod} letters={lettersOfModule(mod.n)} />;
+  return <CheckpointClient module={mod} letters={letrasDoModulo(mod.n)} />;
 }

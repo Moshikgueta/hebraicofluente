@@ -18,6 +18,15 @@ rodam sozinhos). Editar `content/` à mão é jogar trabalho fora: o próximo bu
 apaga. Para mudar uma palavra, mude nos dados - o livro e o curso mudam juntos,
 ou nenhum dos dois muda.
 
+**O conteúdo pago não pode entrar no pacote do navegador.** Os seis JSONs do
+curso só podem ser importados por `lib/content-servidor.ts`, e só componente de
+SERVIDOR pode lê-lo - o HTML de uma rota paga já está atrás do portão. O que o
+navegador usa é `lib/content.ts`, um depósito que nasce vazio e se enche com
+`GET /api/content`, que o Worker só responde a quem tem sessão e direito de
+acesso. Uma página pública importa de `lib/content-publico.ts`, que traz só a
+grade do curso. `npm run pacote` (depois do build) prova isso contra o export
+publicado, e roda no deploy antes de qualquer coisa ir para o ar.
+
 **A regra da ordem é o produto.** Nenhuma palavra pode usar uma letra que o
 aluno ainda não viu. No livro isso é a regra V1 do `validate.js`; aqui é o campo
 `alphabetSoFar` de cada letra, que é a única coisa que o gerador de exercícios

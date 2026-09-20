@@ -22,6 +22,7 @@
     "senha": "node senha.mjs",
     "pagamento": "node pagamento.mjs",
     "csp": "node csp.mjs",
+    "pacote": "node pacote.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {

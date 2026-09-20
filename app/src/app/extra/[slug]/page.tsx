@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getModule } from '@/lib/content';
+import { getModule } from '@/lib/content-publico';
 import { ExtraLessonClient, type ExtraSlug } from './ExtraLessonClient';
 
 /* Modules 6 and 7 get their own route rather than /licao/[id]: they have three

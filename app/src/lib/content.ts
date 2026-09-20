@@ -1,203 +1,140 @@
-/* Typed access to the content generated from data/ by tools/export-content.mjs.
+/* O conteúdo PAGO do curso, no navegador - e ele não viaja no pacote.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Até 20/09/2026 este arquivo importava os seis JSONs do curso, e por isso
+ * eles iam para dentro do JavaScript que QUALQUER visitante baixa. A
+ * auditoria mediu o estrago: 48 de 60 amostras de `letters.json` num pedaço
+ * que a home carrega. Um `curl` naquele endereço levava a matéria-prima do
+ * produto, sem conta e sem pagar.
  *
- * Content is imported, not fetched: it is small, it never changes at runtime,
- * and importing it lets every route prerender. The `alphabetSoFar` field on a
- * letter is the load-bearing one - see lib/engine/exercises.ts. */
+ * Agora o conteúdo chega por `GET /api/content`, que o Worker só responde a
+ * quem tem cookie de sessão E direito de acesso ao curso.
+ *
+ * ── por que a API continua SÍNCRONA ──────────────────────────────────────
+ * `getLetter(id)` é chamado de dentro da renderização, em vinte lugares, e o
+ * motor de exercícios depende disso. Trocar tudo por `await` seria reescrever
+ * o curso inteiro para resolver um problema de empacotamento.
+ *
+ * Então o dado vira um DEPÓSITO que se enche uma vez, antes de qualquer tela
+ * de aluno existir: `CourseGate` é o ponto único por onde toda rota paga
+ * passa, e ele já sabia esperar - esperava a sessão, agora espera também o
+ * conteúdo. Quem lê daqui, lê depois.
+ *
+ * Ler antes de hidratar é erro de programação, não um estado possível em
+ * produção. Por isso as funções gritam (`naoHidratado`) em vez de devolver
+ * `undefined`: um `undefined` silencioso vira uma lição em branco três telas
+ * adiante, com o rastro já perdido.
+ *
+ * ── e a build de demonstração ────────────────────────────────────────────
+ * Ela não tem Worker para responder, e é ela que a varredura e o teste de
+ * CSP abrem. Nela, e só nela, o conteúdo é importado direto. O `if` é
+ * resolvido pelo empacotador na hora da build: na de produção esse ramo não
+ * existe no arquivo final - e é `tests/conteudo.test.ts` que prova isso,
+ * lendo o que foi publicado em vez de acreditar.
+ */
 
-import courseJson from '@content/course.json';
-import nikudJson from '@content/nikud.json';
-import lettersJson from '@content/letters.json';
-import extrasJson from '@content/extras.json';
-import realWorldJson from '@content/real-world.json';
-import strokeJson from '@content/stroke-paths.json';
-import cultureJson from '@content/culture.json';
+import { course, getModule, letterIds } from './content-publico';
+import type {
+  Checkpoint, Course, CourseModule, CultureCard, Letter, LetterSkel,
+  NikudIntro, NikudSign, NikudSound, Scene, Stroke, StrokeSet, Syllable, Word
+} from './content-publico';
 
-export type Word = {
-  he: string;
-  translit: string;
-  pt: string;
-  use: string | null;
-  audioId: string;
+/* Reexportados para os consumidores de sempre. O que mudou não é o nome, é
+   de onde a PÁGINA PÚBLICA tem de importar: ela importa de
+   `content-publico`, nunca daqui - importar daqui traz o curso junto. */
+export { course, getModule, letterIds };
+export type {
+  Checkpoint, Course, CourseModule, CultureCard, Letter, LetterSkel,
+  NikudIntro, NikudSign, NikudSound, Scene, Stroke, StrokeSet, Syllable, Word
 };
 
-export type Syllable = {
-  vowel: 'a' | 'e' | 'i' | 'o' | 'u' | 'sheva' | string;
-  he: string;
-  translit: string;
-  ptApprox: string;
-  audioId: string;
+/** A forma exata do que `/api/content` devolve. O mesmo contrato do modo
+ *  local (ver `content-servidor.ts`), para que os dois não divirjam. */
+export type ConteudoPago = {
+  letters: Letter[];
+  nikud: { intro: NikudIntro; dagesh: { title?: string; body?: string } | null; sounds: NikudSound[] };
+  extras: import('./engine/extras').Extras;
+  scenes: Scene[];
+  strokes: Record<string, StrokeSet>;
+  culture: CultureCard[];
 };
 
-export type Letter = {
-  id: string;
-  order: number;
-  module: number;
-  lesson: number;
-  letter: string;
-  finalForm: string | null;
-  nameHe: string;
-  namePt: string;
-  translit: string;
-  sound: string;
-  soundNotePt: string;
-  didYouKnow: string;
-  brazilianMistake: { wrong: string; right: string; why: string };
-  confusableWith: string[];
-  syllables: Syllable[];
-  wordsToRead: Word[];
-  wordsToRecognize: Word[];
-  bridgeWords: { he: string; pt: string }[];
-  /** Every glyph the learner may legally be shown at this point. */
-  alphabetSoFar: string[];
-  strokeOrder: { base: string | null; final: string | null };
-  workbookPages: { from: number; to: number } | null;
-  audioId: string;
-};
+/* ── o depósito ─────────────────────────────────────────────────────────── */
 
-export type Checkpoint = {
-  id: string;
-  module: number;
-  upTo: number;
-  letterIds: string[];
-  workbookPages: { from: number; to: number } | null;
-};
+let DADOS: ConteudoPago | null = null;
+let LETTERS: Letter[] = [];
+let BY_ID = new Map<string, Letter>();
 
-export type CourseModule = {
-  n: number;
-  id: string;
-  kind: 'letters' | 'consolidation' | 'extra' | string;
-  titlePt: string;
-  subPt: string;
-  introPt: string;
-  goalsPt: string[];
-  milestonePt: string;
-  lessons: { n: number; kind?: string; letters?: string[]; topicPt?: string }[];
-  letterIds: string[];
-  upTo: number | null;
-  checkpoint: Checkpoint | null;
-  workbookPages: { from: number; to: number } | null;
-};
+/** Já dá para ler? É o que `CourseGate` pergunta antes de renderizar. */
+export const conteudoPronto = (): boolean => DADOS !== null;
 
-export type Course = {
-  generatedAt: string;
-  source: string;
-  totalLetters: number;
-  modules: CourseModule[];
-  letters: { id: string; order: number; module: number; letter: string; namePt: string; sound: string }[];
-};
+/** Enche o depósito. Idempotente: duas telas montando juntas não custam
+ *  duas buscas. */
+export function hidratarConteudo(d: ConteudoPago): void {
+  DADOS = d;
+  LETTERS = (d.letters || []).slice().sort((a, b) => a.order - b.order);
+  BY_ID = new Map(LETTERS.map(l => [l.id, l]));
+}
 
-export type NikudSign = {
-  nameHe: string;
-  namePt: string;
-  /** The sign shown on mem, e.g. מַ. */
-  demo: string;
-  /** The mark alone, to put on another consonant. */
-  sign: string;
-  position: string;
-  /** The syllable said out loud. */
-  audioId: string;
-  /** The sign's own name said out loud - "patach". */
-  nameAudioId: string;
-};
+function naoHidratado(oQue: string): never {
+  throw new Error(
+    `conteúdo do curso lido antes de carregar (${oQue}). `
+    + 'Toda tela de aluno renderiza dentro de CourseGate, que espera; '
+    + 'se este erro apareceu, alguma coisa renderizou fora dele.'
+  );
+}
 
-export type NikudSound = {
-  sound: string;
-  ptApprox: string | null;
-  signs: NikudSign[];
-};
+const dados = (): ConteudoPago => DADOS ?? naoHidratado('dados');
 
-export const course = courseJson as unknown as Course;
-export type NikudIntro = { title: string; lead: string; correction: string };
+/* ── as letras ──────────────────────────────────────────────────────────── */
 
-/** Modules 6 and 7, shared verbatim with the printed workbook. */
-export const extras = extrasJson as unknown as import('./engine/extras').Extras;
+export const allLetters = (): Letter[] => (DADOS ? LETTERS : naoHidratado('allLetters'));
+export const getLetter = (id: string): Letter | undefined =>
+  DADOS ? BY_ID.get(id) : naoHidratado('getLetter');
+export const lettersOfModule = (n: number): Letter[] =>
+  DADOS ? LETTERS.filter(l => l.module === n) : naoHidratado('lettersOfModule');
 
-export type Scene = {
-  id: string; fromOrder: number; sceneType: string; labelPt: string;
-  he: string; contextPt: string; translit: string; pt: string; audioId: string;
-};
-const SCENES = (realWorldJson as unknown as { scenes: Scene[] }).scenes;
+/** A lição seguinte, para o "continuar". */
+export function nextLetter(id: string): Letter | undefined {
+  const l = getLetter(id);
+  if (!l) return undefined;
+  return LETTERS.find(x => x.order === l.order + 1);
+}
 
-/** Scenes the learner can actually decode right now, newest first.
- *  A sign they cannot read is not a reward. */
+/* ── o resto do material ────────────────────────────────────────────────── */
+
+/* `nikud` e `extras` eram constantes e viraram funções. É a única mudança de
+   forma que este arquivo impõe aos consumidores, e ela é inevitável: uma
+   constante é lida no momento em que o módulo carrega, que é justamente
+   antes de o conteúdo existir. */
+export const nikud = (): ConteudoPago['nikud'] => dados().nikud;
+
+/** Módulos 6 e 7, iguais aos da apostila impressa. */
+export const extras = (): ConteudoPago['extras'] => dados().extras;
+
+/** As cenas que o aluno JÁ consegue decifrar, da mais nova para a mais
+ *  velha. Uma placa que ele não sabe ler não é recompensa. */
 export const scenesUpTo = (order: number): Scene[] =>
-  SCENES.filter(s => s.fromOrder <= order).sort((a, b) => b.fromOrder - a.fromOrder);
+  dados().scenes.filter(s => s.fromOrder <= order).sort((a, b) => b.fromOrder - a.fromOrder);
 
-/** The scenes a given letter unlocks. Most letters unlock none. */
+/** As cenas que uma letra destrava. A maioria não destrava nenhuma. */
 export const scenesForOrder = (order: number): Scene[] =>
-  SCENES.filter(s => s.fromOrder === order);
+  dados().scenes.filter(s => s.fromOrder === order);
 
-/* ── stroke geometry ────────────────────────────────────────────────────
-   Generated with the stroke-order diagrams, from the same font outline, in the
-   same run - so the count and the starting points can never disagree with the
-   printed page. `null` for a letter with no data is a normal answer: the
-   tracing screen falls back to the static diagram. */
-export type Stroke = {
-  /** The stroke's own outline, in the 200-unit box. */
-  d: string;
-  /** Where the pen lands. */
-  start: [number, number];
-  /** A unit vector into the form. Says "this way", not "round this way". */
-  dir: [number, number];
-};
-export type StrokeSet = { box: number; strokes: Stroke[] };
+/** `letterId`, ou `${letterId}-final` para a forma final. */
+export const strokesFor = (id: string): StrokeSet | null => dados().strokes[id] ?? null;
 
-const STROKES = (strokeJson as unknown as {
-  box: number; letters: Record<string, StrokeSet>;
-}).letters;
+export const cultureCards = (): CultureCard[] => dados().culture;
 
-/** `letterId`, or `${letterId}-final` for a final form. */
-export const strokesFor = (id: string): StrokeSet | null => STROKES[id] ?? null;
-
-/* ── culture and history ────────────────────────────────────────────────
-   Optional and unlockable. `unlockAt` is a letter count, not a lesson id: a
-   card appears once the learner has mastered that many letters, which keeps it
-   a reward for progress rather than another thing to do. Nothing in the main
-   path depends on any of it. */
-export type CultureCard = {
-  id: string;
-  titlePt: string;
-  kind: 'historia' | 'curiosidade' | 'cultura' | string;
-  /** Letters mastered before this card appears. */
-  unlockAt: number;
-  leadPt: string;
-  bodyPt: string[];
-  /** Where the claim comes from. Not shown to the learner; kept for review. */
-  sources?: string;
-};
-
-const CULTURE = (cultureJson as unknown as { cards: CultureCard[] }).cards;
-
-export const cultureCards = (): CultureCard[] => CULTURE;
-
-/** The cards this learner has earned, newest unlock first. */
+/** As cartas que este aluno ganhou, da mais recente para a mais antiga. */
 export const cultureUnlocked = (mastered: number): CultureCard[] =>
-  CULTURE.filter(c => c.unlockAt <= mastered).sort((a, b) => b.unlockAt - a.unlockAt);
+  dados().culture.filter(c => c.unlockAt <= mastered).sort((a, b) => b.unlockAt - a.unlockAt);
 
-/** A card unlocked by crossing exactly this count, if any. */
+/** A carta destravada exatamente ao cruzar esta contagem, se houver. */
 export const cultureAt = (mastered: number): CultureCard | undefined =>
-  CULTURE.find(c => c.unlockAt === mastered);
+  dados().culture.find(c => c.unlockAt === mastered);
 
-export const nikud = nikudJson as unknown as {
-  intro: NikudIntro;
-  dagesh: { title?: string; body?: string } | null;
-  sounds: NikudSound[];
-};
+/* ── o mapa do curso ────────────────────────────────────────────────────── */
 
-/* Bundled, not fetched: 58 KB of JSON that never changes at runtime, and every
-   screen that is not a single lesson needs most of it at once. */
-const LETTERS: Letter[] = (lettersJson as unknown as Letter[])
-  .slice()
-  .sort((a, b) => a.order - b.order);
-
-const BY_ID = new Map(LETTERS.map(l => [l.id, l]));
-
-export const allLetters = (): Letter[] => LETTERS;
-export const getLetter = (id: string): Letter | undefined => BY_ID.get(id);
-export const lettersOfModule = (n: number): Letter[] => LETTERS.filter(l => l.module === n);
-export const getModule = (n: number): CourseModule | undefined => course.modules.find(m => m.n === n);
-
-/** The letters of the whole course in teaching order, modules interleaved. */
 export type MapNode =
   | { kind: 'intro' }
   | { kind: 'module'; module: CourseModule }
@@ -206,6 +143,7 @@ export type MapNode =
   | { kind: 'final' };
 
 export function courseMap(): MapNode[] {
+  if (!DADOS) naoHidratado('courseMap');
   const nodes: MapNode[] = [{ kind: 'intro' }];
   for (const m of course.modules) {
     nodes.push({ kind: 'module', module: m });
@@ -219,9 +157,54 @@ export function courseMap(): MapNode[] {
   return nodes;
 }
 
-/** The lesson that follows this one, for "continuar". */
-export function nextLetter(id: string): Letter | undefined {
-  const l = BY_ID.get(id);
-  if (!l) return undefined;
-  return LETTERS.find(x => x.order === l.order + 1);
+/* ── de onde o conteúdo vem ─────────────────────────────────────────────── */
+
+/** `true` na build que vai para produção, onde o conteúdo é do servidor. */
+export const CONTEUDO_DO_SERVIDOR = process.env.NEXT_PUBLIC_PLATFORM_API === 'worker';
+
+/**
+ * Carrega o conteúdo pago. Chamado uma vez, pelo `CourseGate`.
+ *
+ * Em produção é uma busca em `/api/content`, que exige cookie e direito de
+ * acesso: quem decide é o servidor, e é por isso que isto resolve o que um
+ * portão de tela nunca resolveu.
+ *
+ * Na build de demonstração o `if` é falso em tempo de build, e o empacotador
+ * apaga o ramo inteiro com os `import()` dentro dele - é o que mantém os
+ * JSONs fora do pacote de produção e, ao mesmo tempo, deixa a varredura
+ * abrir as telas de aluno sem um Worker por perto.
+ */
+export async function carregarConteudo(): Promise<void> {
+  if (DADOS) return;
+
+  /* Escrito com o `process.env` inteiro dentro do `if`, e não com a constante
+     acima: é ESTA forma literal que o Next troca pelo valor na hora da build
+     (`'worker' !== 'worker'`), e é isso que faz o empacotador apagar o bloco
+     com os `import()` dentro. A constante exportada é para quem lê; o ramo
+     tem de ser podado, e quem poda não segue exportação. */
+  if (process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker') {
+    const [letters, nikudJson, extrasJson, realWorld, strokeJson, cultureJson] = await Promise.all([
+      import('@content/letters.json'),
+      import('@content/nikud.json'),
+      import('@content/extras.json'),
+      import('@content/real-world.json'),
+      import('@content/stroke-paths.json'),
+      import('@content/culture.json')
+    ]);
+    const bruto = <T,>(m: unknown): T =>
+      ((m as { default?: unknown }).default ?? m) as T;
+    hidratarConteudo({
+      letters: bruto<Letter[]>(letters),
+      nikud: bruto<ConteudoPago['nikud']>(nikudJson),
+      extras: bruto<ConteudoPago['extras']>(extrasJson),
+      scenes: bruto<{ scenes: Scene[] }>(realWorld).scenes,
+      strokes: bruto<{ box: number; letters: Record<string, StrokeSet> }>(strokeJson).letters,
+      culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards
+    });
+    return;
+  }
+
+  const r = await fetch('/api/content', { credentials: 'same-origin' });
+  if (!r.ok) throw new Error(`conteudo ${r.status}`);
+  hidratarConteudo(await r.json() as ConteudoPago);
 }

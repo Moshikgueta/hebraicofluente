@@ -3,7 +3,7 @@ import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { course } from '@/lib/content';
+import { course } from '@/lib/content-publico';
 
 export const metadata: Metadata = {
   title: 'O método - Hebraico Fluente',

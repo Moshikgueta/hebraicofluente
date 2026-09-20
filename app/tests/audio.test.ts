@@ -29,7 +29,7 @@ function requested(): { id: string; where: string }[] {
     L.wordsToRead.forEach(w => out.push({ id: w.audioId, where: `${L.id}.read ${w.he}` }));
     L.wordsToRecognize.forEach(w => out.push({ id: w.audioId, where: `${L.id}.recognize ${w.he}` }));
   }
-  for (const s of nikud.sounds) {
+  for (const s of nikud().sounds) {
     s.signs.forEach(g => {
       out.push({ id: g.audioId, where: `nikud ${g.namePt}` });
       /* The sign's name said out loud, which the vowel cards play. Two clips
@@ -38,12 +38,12 @@ function requested(): { id: string; where: string }[] {
       out.push({ id: g.nameAudioId, where: `nikud nome ${g.namePt}` });
     });
   }
-  for (const D of extras.dagesh.letters) {
+  for (const D of extras().dagesh.letters) {
     [...D.hardWords, ...D.softWords].forEach(w => out.push({ id: w.audioId, where: `mod6 ${w.he}` }));
   }
-  extras.finals.forEach(F => out.push({ id: F.audioId, where: `mod6 final ${F.word}` }));
-  extras.unpointed.words.forEach(u => out.push({ id: u.audioId, where: `mod6 unpointed ${u.bare}` }));
-  extras.gerech.letters.forEach(g => {
+  extras().finals.forEach(F => out.push({ id: F.audioId, where: `mod6 final ${F.word}` }));
+  extras().unpointed.words.forEach(u => out.push({ id: u.audioId, where: `mod6 unpointed ${u.bare}` }));
+  extras().gerech.letters.forEach(g => {
     out.push({ id: g.audioId, where: `mod7 letter ${g.he}` });
     g.words.forEach(w => out.push({ id: w.audioId, where: `mod7 ${w.he}` }));
   });
@@ -69,7 +69,7 @@ describe('the audio manifest and the app agree', () => {
   it('maps the unpointed reading list onto its pointed twin', () => {
     /* ספר and סֵפֶר are the same word said the same way. Two clips would mean
        asking the speaker to read it twice and risking two different takes. */
-    for (const u of extras.unpointed.words) {
+    for (const u of extras().unpointed.words) {
       const pointed = allLetters()
         .flatMap(l => [...l.wordsToRead, ...l.wordsToRecognize])
         .find(w => w.he === u.pointed);

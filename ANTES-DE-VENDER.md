@@ -250,10 +250,10 @@ leem tudo desse arquivo, então não há texto a caçar.
 
 ## Bloco 2 - decisões suas, cada uma com um custo
 
-### 8. O conteúdo do curso está dentro do pacote público - MEDIDO, não resolvido
+### 8. O conteúdo do curso está dentro do pacote público - RESOLVIDO
 
-Em 20/09/2026 eu medi, em vez de estimar. O que está no arquivo que a home
-carrega (`/_next/static/chunks/26-*.js`, 114 KB):
+**Estava assim.** Em 20/09/2026 eu medi, em vez de estimar. O que estava no
+arquivo que a home carregava (`/_next/static/chunks/26-*.js`, 114 KB):
 
 ```
 letters.json   58 KB no disco · 48 de 60 amostras presentes
@@ -263,165 +263,49 @@ extras.json     5 KB          · 13 de 60
 real-world      4 KB          · 10 de 60
 ```
 
-Ou seja: o miolo do material está lá, e um `curl` naquele endereço baixa tudo.
+Ou seja: o miolo do material estava lá, e um `curl` naquele endereço baixava
+tudo, sem conta e sem pagar.
 
-**Por que não resolvi junto com o 9 e o 10.** Vinte e um arquivos importam
-esse conteúdo, e ele entra no pacote em tempo de build. Tirá-lo de lá muda
-como TODA lição carrega: o que hoje é síncrono (`getLetter(id)` devolve na
-hora) passa a depender de uma busca no servidor, com estado de carregamento,
-ordem de renderização e o caminho de prerender do Next no meio. É um trabalho
-de horas com risco real de quebrar um produto que está funcionando, e
-publicá-lo no fim de uma sessão longa seria a pior hora para fazê-lo.
+**O que foi feito.** O conteúdo saiu do pacote e passou a vir de
+`GET /api/content`, que o Worker só responde a quem tem cookie de sessão E
+direito de acesso ao curso no banco - lido a cada pedido, para que um estorno
+feche a porta na hora.
 
-**As duas saídas, com o tamanho honesto de cada uma:**
+A parte difícil era não reescrever o curso inteiro: `getLetter(id)` é chamado
+de dentro da renderização, em vinte lugares. A solução foi manter a API
+síncrona e transformar o dado num depósito que se enche uma vez, antes de
+qualquer tela de aluno existir. Quem espera é o `CourseGate`, o ponto único por
+onde toda rota paga passa - ele já esperava a sessão, agora espera também o
+conteúdo, e mostra "Não consegui carregar a aula" (com botão de tentar de novo)
+se a busca falhar. Nunca "entre para continuar": essa é a pior mensagem
+possível para quem já pagou.
 
-1. **Aceitar, sabendo.** Custo zero. O compromisso é nunca descrever o produto
-   como "conteúdo protegido" em anúncio nenhum. Quem baixa o JSON bruto leva a
-   matéria-prima - não leva o caminho, os exercícios corrigidos, o progresso,
-   a revisão espaçada nem o certificado, que é onde o curso está.
-2. **`/api/content/*` atrás do cookie.** Meio dia de trabalho, mais uma
-   passagem de testes e varredura. É a única saída que fecha de verdade.
+Três arquivos, três permissões:
 
-Enquanto for (1), isto fica escrito aqui para não virar esquecimento.
-
-O que era o problema:
-
-**O que é.** As 22 letras, os módulos, os exercícios e as cartas de cultura
-viajam num arquivo JavaScript que a home carrega. Um `curl` num endereço de
-`/_next/static/chunks/` baixa tudo, sem conta.
-
-**Por que importa.** É o único jeito que sobrou de pegar o material sem pagar.
-Não é o app, não é a plataforma, não é o progresso: é a matéria-prima.
-
-**As duas saídas.** (a) Aceitar, sabendo, e nunca descrever o produto como
-"conteúdo protegido" em nenhum anúncio. (b) Tirar o conteúdo do pacote e
-servi-lo por `/api/content/*` atrás do cookie. É trabalho de verdade, uns
-dois ou três dias, e mexe em como as lições carregam.
-
-**Minha leitura.** Para vender a 147 reais com garantia de sete dias, (a) é
-uma decisão defensável: quem baixa o JSON bruto não tem o caminho, os
-exercícios corrigidos, o progresso nem o certificado. Mas é uma decisão, e
-precisa ser tomada de olho aberto, não por esquecimento.
-
-### 9. Freio na borda da Cloudflare - PRONTO, falta uma permissão
-
-**As regras ainda NÃO estão no ar.** O passo existe na publicação
-(`scripts/cloudflare-setup.sh`, passo 8b), rodou em 20/09 e respondeu:
-
-```
-· Não consegui criar as regras de freio na borda.
-  {"code":10000,"message":"Authentication error"}
-· Quase sempre é permissão: Zone | Zone WAF | Edit
-```
-
-O token da Cloudflare não tem permissão de WAF. **Duas saídas, e eu
-recomendo a segunda:**
-
-1. **Dar a permissão ao token.** Cloudflare → My Profile → API Tokens → o
-   token da publicação → Edit → acrescentar `Zone | Zone WAF | Edit`. A
-   publicação seguinte cria as regras sozinha e mantém.
-2. **Criar as três à mão, uma vez.** Security → WAF → Rate limiting rules.
-   Elas não mudam nunca, e assim o token de publicação não ganha poder de
-   desligar proteção - um token que pode publicar E baixar o escudo é um
-   token que vale mais para quem o roubar.
-
-As regras, em qualquer dos dois caminhos:
-
-| Caminho | Teto | Ação |
+| arquivo | o que traz | quem pode ler |
 |---|---|---|
-| `/api/auth/*` | 30 por minuto por IP | bloquear |
-| `/api/pay/*` | 30 por minuto por IP | bloquear |
-| `/api/*` | 300 por minuto por IP | bloquear |
+| `lib/content-publico.ts` | só a grade do curso | qualquer página |
+| `lib/content-servidor.ts` | o curso inteiro | componente de SERVIDOR |
+| `lib/content.ts` | nada; é o depósito | o navegador, depois de encher |
 
-Da mais específica para a mais geral, nessa ordem: a Cloudflare aplica a
-primeira que casar, e `/api/*` antes das outras engoliria as duas.
+**Como fica provado.** `npm run pacote` abre o export PUBLICADO, procura 116
+trechos do material em todo arquivo de `/_next/static/` e em todo HTML de rota
+livre, e falha se achar um - e confere também o contrário, que o HTML pago
+continua trazendo o curso, porque um conserto que esvazia a lição não é
+conserto. Roda no deploy, depois do build e antes de publicar. Eu o validei
+pelo avesso: reintroduzi o vazamento numa seção da home, e ele acusou os dois
+lugares e parou a publicação.
 
-Duas decisões que valem saber:
+`tests/conteudo.test.ts` cobre o resto: nenhum import estático dos seis JSONs
+em `content.ts`, nenhum componente de cliente lendo `content-servidor`, o que o
+Worker manda igual ao que o depósito espera, e a rota recusando sem sessão
+(401), sem compra (403) e com o acesso vencido (403).
 
-- **Bloquear, e não "desafiar".** Um desafio devolve uma PÁGINA para um
-  `fetch()` que espera JSON: o login não mostraria "muitas tentativas",
-  mostraria um erro sem sentido. Bloquear é honesto - o app sabe ler um 429.
-- **Os tetos são altos de propósito.** Eles não substituem o freio do Worker
-  (que continua em 30 tentativas de senha por minuto); eles cortam o que é
-  ordens de grandeza maior. Teto apertado aqui derruba cliente de verdade em
-  rede corporativa, e ninguém descobre o porquê.
-
-O plano gratuito da Cloudflare permite **uma** regra; os pagos, mais. O script
-tenta as três, depois duas, depois uma - e se nenhuma couber, avisa e segue: o
-freio do Worker é a defesa que conta, esta é a que é barata.
-
-O que era o problema:
-
-**O que é.** Todo caminho da API tem freio dentro do Worker. Na borda, nada:
-o Bot Fight Mode foi desligado de propósito (ele barrava a própria API do
-site) e nada entrou no lugar.
-
-**Por que importa.** O freio do Worker gasta uma execução e uma escrita no
-banco para dizer "não". O freio da borda recusa antes de custar.
-
-**Como fazer.** Cloudflare → Security → WAF → Rate limiting rules. Sugestão,
-na ordem: `/api/pay/webhook` 20/min por IP (bloquear), `/api/auth/*` 30/min
-por IP (desafio), `/api/auth/signup` 10/hora por IP, `/api/auth/forgot` 5/hora
-por IP, `/api/pay/*` 30/min por IP, `/api/*` 300/min por IP. Deixe em modo de
-registro por um dia antes de ligar o bloqueio.
-
-**Pronto quando.** As regras aparecem ativas e o site continua funcionando
-normalmente para você.
-
-### 10. Uma branch de produção protegida - METADE FEITA
-
-`main` existe e é o único ramo que publica. Trabalha-se no ramo de sempre, e
-publicar é fundir (`git merge --ff-only` + push) - o passo a passo está em
-DEPLOY-CLOUDFLARE.md, seção 7.
-
-**Falta o seu clique**, uma vez: GitHub → Settings → **Branches** → regra para
-`main` com **Restrict deletions** e **Block force pushes**. Não marque
-exigência de revisão enquanto você for sozinho: ela só ia te obrigar a abrir
-PR para si mesmo. A API de proteção é barrada para mim, então essa metade não
-dá para automatizar daqui.
-
-O que era o problema:
-
-**O que é.** Hoje a publicação sai da branch de desenvolvimento, que é a
-única. Quem tem escrita no repositório publica em produção e alcança o banco.
-
-**Por que importa.** Enquanto é você sozinho, é conveniência. No dia em que
-houver mais alguém, é o caminho mais curto entre um engano e o ar.
-
-**Como fazer.** Criar `main`, proteger (Settings → Branches), apontar o
-`deploy-worker.yml` para ela e passar a publicar por merge. Eu faço. A ação
-`Acesso` já roda no ambiente `producao`: basta adicionar revisores em
-Settings → Environments para que ela peça aprovação.
-
-### 11. Três frases da política de privacidade - ESCRITAS, falta você ler
-
-Estão no ar em `/privacidade/`. Cinco mudanças, nenhuma delas cosmética:
-
-1. **A Resend passou a ser nomeada**, dizendo o que ela recebe: o seu endereço
-   de e-mail e o seu primeiro nome. Ela estava fora da lista, e a política
-   descrevia menos compartilhamento do que o sistema faz.
-2. **A frase do cartão deixou de prometer demais.** Dizia que os dados do
-   cartão "nunca passam pelos nossos servidores". A resposta da Mercado Pago a
-   uma consulta nossa pode trazer os primeiros e os últimos dígitos e o nome
-   impresso - eles são descartados antes de qualquer gravação, mas passam.
-   Agora diz o que o código sustenta: **não guardamos nenhum deles**, e a
-   resposta é filtrada antes de ser gravada. É a diferença entre uma promessa
-   que alguém pode desmentir e uma que se pode conferir no código.
-3. **O CPF.** Dizia "não pedimos documento", ponto. Continua sendo verdade
-   para nós, mas a Mercado Pago pede o CPF na tela dela. Agora está escrito:
-   nós não pedimos, ela pode pedir, e esse dado não chega aqui.
-4. **Uma linha nova na tabela**: o que a Mercado Pago devolve e nós guardamos
-   (situação, valor, moeda, forma e a referência do pedido - nada do pagador,
-   nada de cartão).
-5. **Transferência internacional**, que não estava lá de jeito nenhum: a
-   Resend e a Cloudflare são de fora, e o art. 33 da LGPD manda dizer isso e
-   em que base. Uma frase.
-
-A data do rodapé foi para 20/09/2026, porque a própria política promete que
-ela muda quando o texto muda.
-
-**O que falta:** você ler `/privacidade/` e me dizer se concorda com o tom.
-Nada aí é jurídico demais para você conferir - foi escrito para ser lido.
+**O que isto muda para a venda.** Nada mais impede descrever o material como
+protegido: ele agora exige conta e compra. O que continua verdade - e vale
+dizer - é que nenhum conteúdo entregue a um navegador é inviolável; um aluno
+pagante pode copiar o que ele mesmo vê. O que fechou foi o acesso de quem não
+pagou nada.
 
 ---
 

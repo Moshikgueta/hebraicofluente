@@ -19,6 +19,7 @@ import { runReconcile } from './reconcile.js';
 import * as auth from './api/auth.js';
 import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
+import { content } from './api/content.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -43,6 +44,12 @@ const ROUTES = {
   'GET /api/pay/webhook': pay.webhook,
 
   'GET /api/orders': pay.orders,
+
+  /* O curso em si. É a metade do controle de acesso que faltava: o portão
+     recusa as ROTAS pagas, e esta rota recusa o MATERIAL - que até 20/09/2026
+     viajava dentro do pacote que qualquer visitante baixava. Ver
+     api/content.js. */
+  'GET /api/content': content,
 
   /* O progresso do aluno. `rev` na escrita é o que impede o celular e o
      notebook de se apagarem - ver api/progress.js. */

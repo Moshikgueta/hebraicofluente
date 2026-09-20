@@ -4,24 +4,24 @@
  * válido, ou com cookie sem o direito de acesso, a resposta é um 302 para a
  * página de vendas - o HTML da aula não sai do servidor.
  *
- * ⚠ O QUE ISTO RESOLVE E O QUE NÃO RESOLVE
+ * ESTE É METADE DO CONTROLE DE ACESSO. A outra está em api/content.js.
  *
- * Resolve: o endereço direto. Ninguém abre /licao/alef/ com um link e lê a
- * lição.
+ * Este arquivo fecha o ENDEREÇO: ninguém abre /licao/alef/ com um link e lê a
+ * lição. Sozinho, ele nunca protegeu o MATERIAL - o curso é um app estático, e
+ * até 20/09/2026 as palavras, as lições e os exercícios viajavam dentro dos
+ * pacotes JavaScript de /_next/, servidos livremente e que têm de ser, porque
+ * a página pública os carrega. Um `curl` naquele endereço levava o conteúdo
+ * inteiro sem conta e sem pagar, e esta nota dizia exatamente isso.
  *
- * NÃO resolve: o conteúdo em si. O curso é um app estático, e as palavras, as
- * lições e os exercícios viajam dentro dos pacotes JavaScript de /_next/, que
- * são servidos livremente - têm de ser, porque a página pública os carrega.
- * Quem souber abrir a aba de rede baixa o conteúdo sem pagar.
+ * A metade que faltava foi escrita: o conteúdo saiu do pacote e agora é
+ * buscado em /api/content, atrás deste mesmo cookie E do direito de acesso
+ * lido do banco a cada pedido (worker/src/api/content.js; ARCHITECTURE.md
+ * §11.4). Quem garante que ele não volta para o pacote é `app/pacote.mjs`, que
+ * roda no deploy contra o export publicado.
  *
- * Fechar isso de verdade exige a outra metade, que está planejada e não
- * escrita: o conteúdo sair do pacote e passar a ser buscado em
- * /api/content/*, atrás deste mesmo cookie. Enquanto isso não acontecer, esta
- * limitação está escrita aqui, no README e em ARCHITECTURE.md §11.4 - e não
- * deve ser descrita a ninguém como proteção de conteúdo.
- *
- * O que ela é de verdade: um portão de produto que manda a pessoa certa para
- * o lugar certo, e a camada em que a metade que falta vai se encaixar.
+ * Então o que este arquivo é: o portão sem o qual o HTML já renderizado da
+ * aula - que traz o material, porque é gerado no servidor - sairia para
+ * qualquer um que soubesse o endereço.
  *
  * ── A lição da auditoria ──────────────────────────────────────────────────
  * Este portão já teve uma exceção: "se `Sec-Fetch-Dest` não for `document`,

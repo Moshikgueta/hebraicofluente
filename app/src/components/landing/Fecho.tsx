@@ -25,7 +25,7 @@ import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { brl, flagship, installment, pixPrice } from '@/lib/catalog';
-import { course } from '@/lib/content';
+import { course } from '@/lib/content-publico';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { confirmaSozinho, soPix, temPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';

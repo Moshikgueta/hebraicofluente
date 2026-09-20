@@ -24,7 +24,7 @@ const glyphsUpTo = (order: number) =>
 
 describe('module 6 - dagesh and the final forms', () => {
   it('pairs each dotted letter with a letter that exists', () => {
-    for (const D of extras.dagesh.letters) {
+    for (const D of extras().dagesh.letters) {
       const L = letters.find(x => x.id === D.id);
       expect(L, D.id).toBeDefined();
       expect(stripNikud(D.hard)).toBe(L!.letter);
@@ -42,7 +42,7 @@ describe('module 6 - dagesh and the final forms', () => {
        before the dagesh (ccc 21) and "the next character" is the vowel. That
        is what the first version of this test got wrong. */
     const DAGESH = '\u05BC';
-    for (const D of extras.dagesh.letters) {
+    for (const D of extras().dagesh.letters) {
       for (const w of D.hardWords) {
         const cl = clusters(w.he).find(c => c[0] === D.soft);
         expect(cl, `${w.he} (${D.id}) has no ${D.soft}`).toBeDefined();
@@ -57,22 +57,22 @@ describe('module 6 - dagesh and the final forms', () => {
   });
 
   it('has the right five final forms, each with an example that uses it', () => {
-    expect(extras.finals).toHaveLength(5);
+    expect(extras().finals).toHaveLength(5);
     const expected: Record<string, string> = { 'מ': 'ם', 'נ': 'ן', 'כ': 'ך', 'פ': 'ף', 'צ': 'ץ' };
-    for (const F of extras.finals) {
+    for (const F of extras().finals) {
       expect(expected[F.base], `${F.base}`).toBe(F.fin);
       expect(F.word.includes(F.fin), `${F.word} should contain ${F.fin}`).toBe(true);
     }
   });
 
   it('strips the nikud correctly for the unpointed reading list', () => {
-    for (const u of extras.unpointed.words) {
+    for (const u of extras().unpointed.words) {
       expect(stripNikud(u.pointed)).toBe(u.bare);
     }
   });
 
   it('builds a quiz of the requested size, with no duplicate options', () => {
-    const quiz = buildDageshQuiz(extras, 10, 'test');
+    const quiz = buildDageshQuiz(extras(), 10, 'test');
     expect(quiz).toHaveLength(10);
     const comOpcoes = escolhas(quiz);
     expect(comOpcoes).toHaveLength(quiz.length);
@@ -85,21 +85,21 @@ describe('module 6 - dagesh and the final forms', () => {
   });
 
   it('is deterministic', () => {
-    expect(JSON.stringify(buildDageshQuiz(extras, 10, 's')))
-      .toBe(JSON.stringify(buildDageshQuiz(extras, 10, 's')));
+    expect(JSON.stringify(buildDageshQuiz(extras(), 10, 's')))
+      .toBe(JSON.stringify(buildDageshQuiz(extras(), 10, 's')));
   });
 });
 
 describe('module 7 - the gerech', () => {
   it('spells each letter as base + U+05F3, not an ASCII apostrophe', () => {
-    for (const g of extras.gerech.letters) {
+    for (const g of extras().gerech.letters) {
       expect(g.he).toBe(g.base + '׳');
       expect(g.he).not.toContain("'");
     }
   });
 
   it('gives every loanword the letter it is meant to demonstrate', () => {
-    for (const g of extras.gerech.letters) {
+    for (const g of extras().gerech.letters) {
       for (const w of g.words) {
         expect(w.he.includes(g.he), `${w.he} should contain ${g.he}`).toBe(true);
       }
@@ -107,7 +107,7 @@ describe('module 7 - the gerech', () => {
   });
 
   it('builds a usable quiz', () => {
-    const quiz = buildGerechQuiz(extras, 8, 'test');
+    const quiz = buildGerechQuiz(extras(), 8, 'test');
     expect(quiz).toHaveLength(8);
     const comOpcoes = escolhas(quiz);
     expect(comOpcoes).toHaveLength(quiz.length);

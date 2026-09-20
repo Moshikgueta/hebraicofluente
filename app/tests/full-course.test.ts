@@ -64,8 +64,8 @@ function playEverything() {
       }
       lessonDays.add(day);
       const quiz = m.n === 6
-        ? buildDageshQuiz(extras, 10, `mod6`)
-        : buildGerechQuiz(extras, 8, `mod7`);
+        ? buildDageshQuiz(extras(), 10, `mod6`)
+        : buildGerechQuiz(extras(), 8, `mod7`);
       expect(quiz.length, `module ${m.n} quiz`).toBeGreaterThanOrEqual(8);
       practise(quiz.length);
       s = recordCheckpoint(s, `cp${m.n}`, 1, day);

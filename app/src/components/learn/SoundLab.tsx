@@ -152,7 +152,7 @@ export function SoundLab({
 export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
   return (
     <div className="grid gap-3">
-      {nikud.sounds.map(s => (
+      {nikud().sounds.map(s => (
         <Card key={s.sound} className="p-4 grid gap-3">
           <div className="flex items-baseline gap-3">
             <span className="font-display text-[22px] font-bold text-[var(--accent)]">

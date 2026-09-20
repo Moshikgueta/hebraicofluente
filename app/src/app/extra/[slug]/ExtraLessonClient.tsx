@@ -64,8 +64,8 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
 
   const quiz = useMemo(
     () => slug === 'sem-o-ponto'
-      ? buildDageshQuiz(extras, 10, `mod6-${run}`)
-      : buildGerechQuiz(extras, 8, `mod7-${run}`),
+      ? buildDageshQuiz(extras(), 10, `mod6-${run}`)
+      : buildGerechQuiz(extras(), 8, `mod7-${run}`),
     [slug, run]
   );
 
@@ -159,7 +159,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
 
 /* ── 6.1 · the three letters without their dot ──────────────────────────── */
 function DageshStage({ onDone }: { onDone: () => void }) {
-  const D = extras.dagesh;
+  const D = extras().dagesh;
   return (
     <div className="grid gap-5">
       <div className="grid gap-2">
@@ -222,7 +222,7 @@ function DageshStage({ onDone }: { onDone: () => void }) {
 
 /* ── 6.2 · the five finals, together ────────────────────────────────────── */
 function FinalsStage({ onDone }: { onDone: () => void }) {
-  const F = extras.finals;
+  const F = extras().finals;
   const descends = F.filter(x => x.descends);
   const stays = F.filter(x => !x.descends);
   return (
@@ -274,7 +274,7 @@ function UnpointedStage({
   quiz, onDone
 }: { quiz: ReturnType<typeof buildDageshQuiz>; onDone: (r: PlayerResult) => void }) {
   const [phase, setPhase] = useState<'study' | 'quiz'>('study');
-  const U = extras.unpointed;
+  const U = extras().unpointed;
 
   if (phase === 'quiz') {
     return <ExercisePlayer exercises={quiz} title="Módulo 6 - fecho" onDone={onDone} />;
@@ -322,7 +322,7 @@ function UnpointedRow({
 
 /* ── 7.1 · the gerech ───────────────────────────────────────────────────── */
 function GerechStage({ onDone }: { onDone: () => void }) {
-  const G = extras.gerech;
+  const G = extras().gerech;
   return (
     <div className="grid gap-5">
       <div className="grid gap-2">
@@ -375,7 +375,7 @@ function GerechWordsStage({ onDone }: { onDone: () => void }) {
         </p>
       </div>
 
-      {extras.gerech.letters.map(g => (
+      {extras().gerech.letters.map(g => (
         <Card key={g.id} className="p-5 grid gap-3">
           <div className="flex items-center gap-3">
             <He size="lg">{g.he}</He>

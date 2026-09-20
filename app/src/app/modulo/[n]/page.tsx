@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import { course, getModule, lettersOfModule } from '@/lib/content';
+import { course, getModule } from '@/lib/content-publico';
+import { letrasDoModulo } from '@/lib/content-servidor';
 import { ModuleClient } from './ModuleClient';
 
 export function generateStaticParams() {
@@ -11,5 +12,5 @@ export default async function ModulePage({ params }: { params: Promise<{ n: stri
   const { n } = await params;
   const mod = getModule(Number(n));
   if (!mod) notFound();
-  return <ModuleClient module={mod} letters={lettersOfModule(mod.n)} />;
+  return <ModuleClient module={mod} letters={letrasDoModulo(mod.n)} />;
 }

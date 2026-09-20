@@ -30,7 +30,7 @@ import { useProgress } from '@/lib/state/store';
 import { daysLeft, type Order } from '@/lib/account/types';
 import { allCourses, brl, FLAGSHIP, getCourse } from '@/lib/catalog';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
-import { course } from '@/lib/content';
+import { course } from '@/lib/content-publico';
 import { api } from '@/lib/account/api';
 import { empresa } from '@/lib/empresa';
 

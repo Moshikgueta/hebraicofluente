@@ -24,7 +24,15 @@ import { audioAvailable } from '@/components/learn/AudioButton';
 import { alphabetComplete, lettersLeft } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
-const LETRAS = allLetters().map(l => l.id);
+/* Função, e não constante.
+   ──────────────────────────────────────────────────────────────────────────
+   Uma constante aqui é calculada no instante em que o MÓDULO carrega, e desde
+   que o conteúdo passou a vir de /api/content (ver lib/content.ts) esse
+   instante é sempre antes de o conteúdo existir: o depósito ainda está vazio.
+   E como o empacotador junta este componente no mesmo pedaço de outras telas,
+   a explosão nem ficava na tela do exame - aparecia em /perfil e na página de
+   obrigado do checkout, que não têm nada a ver com ele. */
+const letras = () => allLetters().map(l => l.id);
 
 /** Quantas partes o exame tem hoje - a parte de escuta só existe com áudio. */
 const PARTES = partsFor(audioAvailable()).length;
@@ -34,8 +42,8 @@ const AVISADO = 'hf-teste-final-avisado';
 
 export function TesteFinalCard({ compacto = false }: { compacto?: boolean }) {
   const p = useProgress();
-  const liberado = alphabetComplete(p.state, LETRAS);
-  const faltam = lettersLeft(p.state, LETRAS);
+  const liberado = alphabetComplete(p.state, letras());
+  const faltam = lettersLeft(p.state, letras());
   const [celebrar, setCelebrar] = useState(false);
   const jaViu = useRef(true);
 

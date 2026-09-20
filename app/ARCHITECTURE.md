@@ -742,20 +742,44 @@ webhook sem verificação é uma rota pública que libera curso.
 `status=approved` na URL e qualquer pessoa consegue digitar isso na barra de
 endereço. `ObrigadoClient` usa da URL apenas o id do pedido - qual conferir.
 
-### 11.4 O que o portão NÃO resolve  ⚠
+### 11.4 As duas metades do controle de acesso
 
-`worker/src/gate.js` recusa as rotas pagas sem cookie: ninguém abre
-`/licao/alef/` por um link e lê a lição.
+O acesso ao curso é fechado em dois lugares, e cada um sozinho é insuficiente.
 
-**Mas o conteúdo em si ainda viaja no pacote JavaScript.** O curso é um app
-estático, e as palavras, as lições e os exercícios estão dentro dos arquivos de
-`/_next/`, que são servidos livremente - têm de ser, porque a página pública os
-carrega. Quem souber abrir a aba de rede baixa o conteúdo sem pagar.
+**A rota**, em `worker/src/gate.js`: ninguém abre `/licao/alef/` por um link e
+lê a lição. Toda requisição a uma rota paga passa pela sessão, e nenhuma
+decisão depende de cabeçalho que o cliente escreve.
 
-Fechar isso exige a outra metade, planejada e não escrita: o conteúdo sair do
-pacote e passar a ser buscado em `/api/content/*`, atrás do mesmo cookie. Até
-lá, **isto é um portão de produto, não controle de acesso**, e não deve ser
-descrito a ninguém como proteção de conteúdo.
+**O material**, em `worker/src/api/content.js`. Esta metade faltava até
+20/09/2026, e a auditoria mediu o estrago: o curso viajava dentro do JavaScript
+que a home carrega - 48 de 60 amostras de `letters.json` num pedaço que
+qualquer visitante baixa -, e um `curl` naquele endereço levava a matéria-prima
+do produto sem conta e sem pagar.
+
+Como ficou:
+
+| arquivo | o que importa | quem pode ler |
+|---|---|---|
+| `lib/content-publico.ts` | só `course.json`, a grade | qualquer página |
+| `lib/content-servidor.ts` | os seis JSONs do curso | componente de SERVIDOR |
+| `lib/content.ts` | nada - é um depósito vazio | o navegador, depois de encher |
+
+O depósito se enche uma vez por sessão do navegador, com o que
+`GET /api/content` devolve a quem tem cookie E direito de acesso no banco. A
+API continua SÍNCRONA (`getLetter(id)` devolve na hora), porque quem espera é
+o `CourseGate` - o ponto único por onde toda rota de aluno passa, e que já
+esperava a sessão.
+
+O componente de servidor PODE ler o curso inteiro: o que ele produz é o HTML de
+uma rota paga, que o portão acima já protege. O que não pode é o JavaScript do
+navegador, que mora em `/_next/static/` e não tem portão nenhum.
+
+Quem prova isso não é o código, é a build: `app/pacote.mjs` (`npm run pacote`)
+abre o export publicado, procura 116 trechos do material em todo arquivo de
+`/_next/static/` e em todo HTML de rota livre, e falha se achar um. Roda no
+`deploy-worker.yml` depois do build e antes de publicar. `tests/conteudo.test.ts`
+cobre o outro lado: a fonte, o contrato entre o Worker e o depósito, e as
+recusas da rota.
 
 ### 11.5 Duas implantações
 

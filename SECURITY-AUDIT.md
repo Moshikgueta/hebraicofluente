@@ -24,11 +24,12 @@ INFORMATIONAL; severities CRITICAL / HIGH / MEDIUM / LOW.
 ## 1. Executive launch verdict
 
 **NOT READY FOR PRODUCTION as the code stood at the start of the audit.
-READY AFTER REQUIRED FIXES now, with three items left, all listed in section 2
-(B2 was closed when the payment patch was approved and applied).**
+READY AFTER REQUIRED FIXES now, with two items left, all listed in section 2
+(B2 was closed when the payment patch was approved and applied; B4 was closed
+on 2026-09-20, when the content left the bundle).**
 
 Why not ready: three of the ways a person could get the course without paying
-were real and required no skill. The whole course content ships inside the
+were real and required no skill. The whole course content shipped inside the
 public JavaScript bundle that the free homepage loads; a second copy of the
 entire product, with a checkout that approves itself in three seconds, was
 being published automatically to a public `github.io` address on every push;
@@ -55,7 +56,7 @@ Only what should stop you publishing to paying customers today.
 | B1 | **The GitHub Pages copy is live** at `moshikgueta.github.io/hebraicofluente` with the full course and a self-approving demo checkout. The workflow no longer publishes automatically (fixed), but the site already published stays up. | **APPARENTLY CLOSED** - the API now reports `has_pages: false`, and the last successful Pages deployment was 2026-09-19 23:07, so the site was enabled until at least then. The likely cause is the repository turning private (B3): a Free-plan repo does not serve Pages once private, so making it private takes the site down with it. This was not done from here - the Pages API is blocked for this agent. **Confirm in a private browser window that `moshikgueta.github.io/hebraicofluente` gives 404**, and consider deleting `deploy-app.yml` so no manual run can put the demo back. | confirm in the browser |
 | B2 | **The payment defect** (`payment_events` keyed by payment id): with PIX enabled at Mercado Pago, every PIX purchase would be paid and never granted. Refunds and chargebacks never revoke access. | **CLOSED** - the patch was approved and applied the same day (section 9, "Applied on approval"). What remains is the production check in `audit/README.md`: one real PIX purchase with the screen open, one refund from the panel, and the query for orders wedged before the fix. | done; production check is yours |
 | B3 | **The repository is public** and 14 runs of the `Acesso` workflow already wrote customer emails into public run summaries (yours and test accounts, from what I saw). New runs are masked (fixed). | **CLOSED, both ways.** The repository now reads `private: true` (not done from here). And on 2026-09-20 all 14 `Acesso` runs were **deleted whole** - run, logs and summary - rather than having their logs deleted, because the addresses were printed into the step summary, which survives a log deletion; `Actions → Acesso` lists zero runs. The 58 deploy runs were read and kept: the only address in them is the synthetic `hf-e2e-…@example.invalid` the deploy creates and deletes itself. | done |
-| B4 | **The course content is public** in `/_next/static/chunks/26-*.js` (117 KB: all 22 letters, 7 modules, exercises data, culture cards). This is a known, documented limitation of a static-export app (`worker/src/gate.js:12-21`). The fix is architectural: content served from `/api/content/*` behind the session cookie. | Decide explicitly: (a) ship knowing the raw course data is downloadable by anyone who opens the network tab, and never describe the product as content-protected; or (b) do the `/api/content/*` work before launch. Under your own definition of CRITICAL, (a) is an accepted risk, not a fixed one. | you |
+| B4 | **The course content is public** in `/_next/static/chunks/26-*.js` (117 KB: all 22 letters, 7 modules, exercises data, culture cards). This is a known, documented limitation of a static-export app (`worker/src/gate.js:12-21`). The fix is architectural: content served from `/api/content/*` behind the session cookie. | **CLOSED on 2026-09-20** - option (b) was done. The six course JSONs left the browser bundle; `lib/content.ts` is now a store that fills once per browser session from `GET /api/content`, which the Worker answers only to a valid session **and** a live entitlement read from D1 per request. Server components read `lib/content-servidor.ts` (their output is gated HTML); public pages read `lib/content-publico.ts`, which carries only the course outline. Proven against the published export by `app/pacote.mjs` (`npm run pacote`), which runs in `deploy-worker.yml` after the build and before publishing, and validated in reverse by reintroducing the leak. `tests/conteudo.test.ts` covers the source contract and the route's 401/403. | done |
 
 Not blockers, but do them in the first week: enable PIX on the Mercado Pago
 account and run the production check in `audit/README.md`; confirm the
@@ -76,15 +77,25 @@ those items are now applied too, covered by `app/tests/pagamento.test.ts`
 
 ### 3.1 Access to paid content
 
-**F-01 · CRITICAL · CONFIRMED · Open (B4)** - `app/src/lib/content.ts:8-14`, `worker/src/gate.js`
+**F-01 · CRITICAL · CONFIRMED · FIXED 2026-09-20 (B4)** - `app/src/lib/content.ts:8-14`, `worker/src/gate.js`
 Course content is imported at build time and lands in a shared chunk that the
 public homepage loads. Attack: `curl https://hebraicofluente.com.br/_next/static/chunks/26-<hash>.js`,
 no account. Impact: 100 percent of the product. Remediation: move
 `letters/*`, `extras`, `real-world`, `culture` out of the bundle into
 `GET /api/content/:id` behind `requireAccount` + `hasEntitlement`; stop
 prerendering lesson bodies; add `/audio` to the gate before clips exist (done).
-Verification: the chunk no longer contains letter data; `/api/content?id=alef`
+Verification: the chunk no longer contains letter data; `/api/content`
 returns 401 without a cookie.
+
+**Fixed.** Done as described, with one deliberate difference: a single
+`GET /api/content` rather than one route per letter, because the client engine
+reads the course synchronously from twenty call sites and a per-letter fetch
+would have meant rewriting the course to resolve a packaging problem. The store
+fills once, inside `CourseGate`, which is the one component every student route
+passes through. Lesson bodies are still prerendered - they are gated HTML, and
+the gate does hold for them. Proof is `app/pacote.mjs`, which greps the
+published export for 116 samples of the teaching material and fails on one hit;
+it found the leak when it was deliberately reintroduced, and finds nothing now.
 
 **F-02 · CRITICAL · CONFIRMED · Open (B1)** - `.github/workflows/deploy-app.yml`
 A full copy of the app in demo mode (`LocalApi`: accounts in localStorage,
@@ -521,8 +532,9 @@ summaries, F-26): fixed going forward, existing runs open (B3).
 
 ## 8. Attack chains
 
-**Chain A - the course for free, no account.** Entry: any browser. Steps:
-open the homepage, read the chunk name from the HTML, fetch it (F-01); or
+**Chain A - the course for free, no account.** *(Closed on 2026-09-20 - see
+F-01. Kept here as the chain that was real at audit time.)* Entry: any browser.
+Steps: open the homepage, read the chunk name from the HTML, fetch it (F-01); or
 open the Pages copy and click buy (F-02). Impact: the whole product. Why
 defenses fail: the gate covers routes, not the bundle; the second deployment
 was automatic. Remediation: B1 today, B4 as an explicit decision.
@@ -679,7 +691,7 @@ sweep, all green; deploy 55 green including the production e2e.
 | Authentication | [PASS] | PBKDF2 per-row salt and cost, constant-time compare, fake verify on unknown accounts, session HMAC with `sv`, failure-only login throttling |
 | Authorization | [PASS] | every API scoped by the cookie's account id; no IDOR found by three agents; gate authenticates every paid route |
 | RLS / database access | [PASS] | no public database endpoint; 36/36 queries parameterised and scoped |
-| Paid course protection | [FAIL] | content in the public bundle (B4) and the Pages copy (B1); route gate now holds |
+| Paid course protection | [PASS] | content left the public bundle on 2026-09-20 (B4, F-01): `/api/content` behind session + entitlement, proven against the published export by `npm run pacote` in the deploy; the Pages copy is gone (B1); route gate holds |
 | Mercado Pago integration | [MANUAL CHECK] | credential authenticates (proven by the deploy probe); PIX not enabled on the account; no real purchase has been proven end to end |
 | Webhook verification | [PASS] | HMAC, replay window, fail-closed, status re-fetched, numeric id, log cap |
 | Payment integrity | [PASS] code · [MANUAL CHECK] production | the payment patch is applied (pending-first settles, refunds and partial refunds revoke, interrupted grants recover); one real PIX purchase and one panel refund still to be proven end to end |

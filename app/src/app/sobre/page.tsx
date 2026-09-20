@@ -5,7 +5,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { empresa } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { course } from '@/lib/content';
+import { course } from '@/lib/content-publico';
 
 export const metadata: Metadata = {
   title: 'Sobre o Moshik - Hebraico Fluente',

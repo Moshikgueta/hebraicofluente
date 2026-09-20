@@ -219,6 +219,37 @@ jobs:
           NEXT_PUBLIC_PLATFORM_API: worker
         run: npm run build
 
+      # O curso não pode viajar no pacote público, e só o arquivo PUBLICADO
+      # responde isso.
+      # ────────────────────────────────────────────────────────────────────
+      # Até 20/09/2026 o material de ensino ia inteiro para dentro do
+      # JavaScript que a home carrega, e um `curl` naquele endereço levava o
+      # produto sem conta e sem pagar. O conserto foi tirar o conteúdo do
+      # pacote e pô-lo atrás de /api/content (worker/src/api/content.js).
+      #
+      # A suíte prova a fonte; este passo prova o resultado, que é onde o
+      # defeito de verdade mora: basta um import estático novo, ou um ramo que
+      # o empacotador deixou de podar, para o vazamento voltar sem que uma
+      # linha de teste mude. Roda DEPOIS do build e ANTES de publicar - é a
+      # última porta antes de o pacote ir para o ar.
+      #
+      # Falha derruba a publicação de propósito: publicar o curso de graça é
+      # pior do que não publicar.
+      - name: O pacote público não leva o curso
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: |
+          set -o pipefail
+          echo "## O conteúdo pago está fora do pacote?" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          # `|| rc=$?` porque o shell do Actions roda com `-e`: sem isso, a
+          # falha aborta o passo aqui e o resumo fica com a cerca aberta,
+          # escondendo justamente o relatório que diz o que vazou.
+          rc=0
+          node pacote.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" || rc=$?
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
+
       # Publicar É o script de configuração, e não um `wrangler deploy` seco.
       #
       # A diferença importa: um deploy seco pressupõe que o banco existe, que o

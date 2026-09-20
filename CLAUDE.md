@@ -124,10 +124,13 @@ regras que ele fixou e que valem para todo commit daqui em diante:
 - **Nenhuma decisão de acesso lê cabeçalho que o cliente escreve.** O portão
   (`worker/src/gate.js`) autentica TODA rota paga; `Sec-Fetch-Dest` só decide
   a forma da recusa. Foi um `curl -H 'Sec-Fetch-Dest: empty'` que abria a aula.
-- **O conteúdo do curso continua público** nos pacotes de `/_next/` - é a
-  limitação documentada em `gate.js`, e a única saída é o conteúdo sair do
-  pacote e vir de `/api/content/*` atrás do cookie. Até lá, nada pode ser
-  descrito a comprador como proteção de conteúdo.
+- **O conteúdo do curso não pode voltar para o pacote público.** Desde
+  20/09/2026 ele sai de `/api/content`, atrás do cookie E do direito de acesso
+  no banco. Quem importa os seis JSONs é `lib/content-servidor.ts`, e só
+  componente de SERVIDOR pode lê-lo; o navegador lê o depósito de
+  `lib/content.ts`, que nasce vazio. Um import estático novo em código de
+  cliente desfaz tudo em silêncio - é o que `npm run pacote` (no deploy, contra
+  o export publicado) e `tests/conteudo.test.ts` existem para impedir.
 - **O repositório é público, e o resumo de cada execução do Actions também.**
   `acesso.yml` mascara todo e-mail que imprime (`mascara`); a trilha
   (`access_log`) não recebe e-mail; `payment_events` guarda só a projeção

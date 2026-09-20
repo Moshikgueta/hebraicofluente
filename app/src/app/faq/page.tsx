@@ -4,7 +4,7 @@ import { Section, SectionHead } from '@/components/platform/Section';
 import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { flagship, brl, installment, pixPrice } from '@/lib/catalog';
-import { course } from '@/lib/content';
+import { course } from '@/lib/content-publico';
 
 export const metadata: Metadata = {
   title: 'Dúvidas frequentes - Hebraico Fluente',
