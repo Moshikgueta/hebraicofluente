@@ -63,10 +63,23 @@ const emailOk = s => {
  * suprimento infinito de chaves novas.
  */
 export const ip = request => {
-  const raw = request.headers.get('CF-Connecting-IP') || '';
+  const raw = (request.headers.get('CF-Connecting-IP') || '').trim();
   if (!raw) return 'unknown';
   if (!raw.includes(':')) return raw;
-  return raw.split(':').slice(0, 4).join(':') + '::/64';
+  /* IPv4 embutido em IPv6 (`::ffff:203.0.113.5`) é o IPv4. */
+  const v4 = raw.match(/(\d{1,3}(?:\.\d{1,3}){3})$/);
+  if (v4) return v4[1];
+  /* A Cloudflare manda a forma comprimida (`2001:db8::1`). Expande o `::`
+     antes de cortar, senão um endereço com um grupo zero no prefixo
+     entregava menos de quatro hextetos e a chave ficava diferente para
+     vizinhos do mesmo /64 - que era o que se queria juntar. */
+  const [cabeca, cauda = ''] = raw.split('::');
+  const h = cabeca ? cabeca.split(':') : [];
+  const t = cauda ? cauda.split(':') : [];
+  const zeros = Math.max(0, 8 - h.length - t.length);
+  const cheio = [...h, ...Array(zeros).fill('0'), ...t]
+    .map(x => x.toLowerCase().padStart(4, '0'));
+  return cheio.slice(0, 4).join(':') + '::/64';
 };
 
 /* Uma hora. Curto o bastante para que um link esquecido numa caixa de entrada
@@ -145,6 +158,11 @@ export async function signup({ request, env }) {
 }
 
 export async function login({ request, env }) {
+  /* O freio por IP antes de ler o corpo, como no cadastro: quem já estourou
+     não ganha nem a leitura. */
+  const origem = ip(request);
+  if (await throttled(env, `login:${origem}`, 20)) return fail('rate-limited', 429);
+
   const body = await readJson(request);
   if (!body) return fail('server');
 
@@ -165,8 +183,6 @@ export async function login({ request, env }) {
      com qualquer senha, trancavam a dona da conta para fora com a senha certa
      na mão. Agora o estranho tranca a si mesmo, e precisa de trinta erros por
      minuto de trinta endereços para encostar na dona. */
-  const origem = ip(request);
-  if (await throttled(env, `login:${origem}`, 20)) return fail('rate-limited', 429);
   if (await estourou(env, `login:${email}:${origem}`, 5)) return fail('rate-limited', 429);
   if (await estourou(env, `login:${email}`, 30)) return fail('rate-limited', 429);
 
@@ -229,15 +245,16 @@ export async function logout() {
  * envio, o RELÓGIO responderia a pergunta que o texto se recusa a responder.
  */
 export async function forgot({ request, env, ctx }) {
+  /* Freio por IP antes de ler o corpo. */
+  if (await throttled(env, `forgot:${ip(request)}`, 6)) return fail('rate-limited', 429);
+
   const body = await readJson(request);
   if (!body) return fail('server');
 
   const email = normalizeEmail(body.email);
 
-  /* Freio por IP e por e-mail. O de e-mail é o que impede usar esta rota para
-     encher a caixa de entrada de alguém - o pedido é anônimo, e sem ele
-     bastaria um laço. */
-  if (await throttled(env, `forgot:${ip(request)}`, 6)) return fail('rate-limited', 429);
+  /* Freio por e-mail: é o que impede usar esta rota para encher a caixa de
+     entrada de alguém - o pedido é anônimo, e sem ele bastaria um laço. */
   if (await throttled(env, `forgot:${email}`, 3)) return fail('rate-limited', 429);
 
   const sempre = json({ ok: true, enviado: true });
@@ -311,13 +328,13 @@ export async function forgot({ request, env, ctx }) {
  * que só ajuda quem está tentando adivinhar.
  */
 export async function reset({ request, env }) {
+  if (await throttled(env, `reset:${ip(request)}`, 12)) return fail('rate-limited', 429);
+
   const body = await readJson(request);
   if (!body) return fail('server');
 
   const token = String(body.token || '');
   const password = String(body.password || '');
-
-  if (await throttled(env, `reset:${ip(request)}`, 12)) return fail('rate-limited', 429);
   if (!token) return fail('bad-token', 400);
   if (password.length < MIN_PASSWORD) return fail('weak-password');
 

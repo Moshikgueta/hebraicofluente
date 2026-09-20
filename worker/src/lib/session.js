@@ -55,11 +55,17 @@ export async function readSession(request, env) {
      o primeiro que aparece. Um cookie de mesmo nome plantado com um Path
      mais longo é enviado antes do legítimo, e ficar no primeiro achado
      transformava esse enxerto num logout permanente da vítima. */
+  /* O teto é de TRABALHO, não de contagem: um cookie legítimo tem uns 200
+     caracteres, então tudo acima de 512 é descartado sem gastar um HMAC, e
+     até 32 candidatos são conferidos. Um teto de quatro, que já esteve aqui,
+     reabria a porta que ele fechava - bastavam cinco enxertos para o
+     legítimo nunca entrar no laço. Conferir trinta HMACs curtos custa menos
+     de um milissegundo. */
   const candidatos = (request.headers.get('Cookie') || '')
     .split(/;\s*/)
-    .filter(c => c.startsWith(COOKIE + '='))
+    .filter(c => c.startsWith(COOKIE + '=') && c.length <= 512)
     .map(c => c.slice(COOKIE.length + 1))
-    .slice(0, 4);
+    .slice(0, 32);
 
   for (const val of candidatos) {
     const dot = val.lastIndexOf('.');

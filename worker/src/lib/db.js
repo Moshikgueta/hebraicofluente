@@ -358,20 +358,29 @@ export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
   const window_at = Math.floor(now() / janelaMs) * janelaMs;
   const k = janelaMs === 60_000 ? key : `${key}@${janelaMs}`;
 
-  /* Lê ANTES de gravar. Uma chave que já estourou não custa mais uma escrita
-     no D1 por tentativa - senão o freio é o próprio amplificador: quem está
-     sendo barrado continua gastando a cota de escrita da plataforma inteira,
-     uma linha por requisição, até ela acabar para os alunos de verdade. */
+  /* A leitura prévia só serve para POUPAR a escrita de quem já estourou -
+     senão o freio é o próprio amplificador: quem está sendo barrado continua
+     gastando a cota de escrita do D1, uma linha por requisição. Ela pode
+     NEGAR, nunca autorizar: a decisão de deixar passar sai da escrita
+     atômica logo abaixo. A primeira versão desta mudança decidia pela
+     leitura, e a verificação independente da auditoria mostrou o custo: uma
+     rajada de duzentas requisições em paralelo lia "zero" duzentas vezes e
+     passava inteira. Ler e depois gravar não é uma operação; gravar e
+     receber o valor de volta é. */
   const antes = await env.DB.prepare(
     'SELECT hits FROM throttle WHERE key = ? AND window_at = ?'
   ).bind(k, window_at).first();
   if (antes && antes.hits >= limit) return true;
 
-  await env.DB.prepare(
+  /* Um comando só, e o SQLite devolve o valor DEPOIS do incremento: duas
+     requisições simultâneas recebem números diferentes, e só as `limit`
+     primeiras recebem um número que passa. */
+  const row = await env.DB.prepare(
     `INSERT INTO throttle (key, window_at, hits) VALUES (?, ?, 1)
-     ON CONFLICT(key, window_at) DO UPDATE SET hits = hits + 1`
-  ).bind(k, window_at).run();
-  const hits = (antes ? antes.hits : 0) + 1;
+     ON CONFLICT(key, window_at) DO UPDATE SET hits = hits + 1
+     RETURNING hits`
+  ).bind(k, window_at).first();
+  const hits = row && Number.isFinite(Number(row.hits)) ? Number(row.hits) : limit + 1;
   /* Limpeza oportunista: sem ela a tabela cresce para sempre, e um cron só
      para isso seria um cron a mais para manter. Duas horas atrás cobre a
      maior janela em uso. */

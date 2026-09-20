@@ -90,6 +90,10 @@ jobs:
           PEDIDO: ${{ inputs.pedido }}
         run: |
           set -euo pipefail
+          # A máscara abaixo usa classes de caracteres, e classes dependem do
+          # locale: em `C`, um `é` não é letra e `josé@gmail.com` saía inteiro.
+          # O runner hoje vem em C.UTF-8; isto garante que continue.
+          export LC_ALL=C.UTF-8
 
           if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
             echo "::error::CLOUDFLARE_API_TOKEN não está nos segredos do repositório."
@@ -105,11 +109,18 @@ jobs:
           # Primeiro caractere, três asteriscos, domínio. Vale para tudo que
           # sai desta ação - inclusive um corpo de erro da Mercado Pago que
           # cite o e-mail do comprador.
+          # Tudo que vem antes de um `@` e não é separador vira `x***`, seja
+          # qual for a codificação - uma classe negada casa qualquer byte que
+          # não esteja na lista, o que vale para acento em qualquer locale.
           mascara() {
-            sed -E 's/([[:alnum:]._%+-])[[:alnum:]._%+-]*@([[:alnum:].-]+\.[[:alpha:]]{2,})/\1***@\2/g'
+            sed -E 's/([^[:space:]<>",;()|])[^[:space:]<>",;()|]*@/\1***@/g'
           }
           # Roda a consulta e mostra o resultado, mascarado, no resumo.
           mostra() { $W --command "$1" | mascara | tee -a "$GITHUB_STEP_SUMMARY"; }
+          # Roda uma escrita. A saída vai só para o log da execução - que num
+          # repositório público também é público - e vai mascarada, porque
+          # um erro de SQL ecoa o comando, e o comando tem o e-mail dentro.
+          grava() { $W --command "$1" | mascara; }
 
           # O e-mail é normalizado do mesmo jeito que na entrada da plataforma
           # (minúsculas, sem espaços). Sem isto, "Ana@Exemplo.BR " não acha a
@@ -291,13 +302,18 @@ jobs:
 
             liberar)
               [ -n "$MAIL" ] || { echo "::error::Informe o e-mail."; exit 1; }
-              M="$(printf '%s' "${MESES:-12}" | tr -cd '0-9')"
+              M="$(printf '%s' "${MESES:-12}" | xargs || true)"
               [ -n "$M" ] || M=12
-              # Entre 1 e 120. Um zero a mais (1200000000) estourava a conta
-              # de milissegundos, virava um número real no banco, e a partir
-              # daí TODO login dessa conta respondia 500 - com o portão ainda
-              # aberto para ela. Um erro de digitação não pode ser um estado.
-              if [ "$M" -lt 1 ] || [ "$M" -gt 120 ]; then
+              # Só dígitos, e entre 1 e 120. Um zero a mais (1200000000)
+              # estourava a conta de milissegundos, virava um número real no
+              # banco, e a partir daí TODO login dessa conta respondia 500 -
+              # com o portão ainda aberto para ela. E "1e9" ou "-5" não viram
+              # 19 ou 5 em silêncio: um erro de digitação é recusado, não
+              # reinterpretado.
+              case "$M" in
+                *[!0-9]*) echo "::error::meses precisa ser um número inteiro (recebi '$M')."; exit 1 ;;
+              esac
+              if [ "${#M}" -gt 3 ] || [ "$M" -lt 1 ] || [ "$M" -gt 120 ]; then
                 echo "::error::meses fora de 1..120 (recebi '$M')."; exit 1
               fi
 
@@ -309,14 +325,14 @@ jobs:
               # 12 meses liberados, 24 entregues. Agora: conta existente
               # recebe o acesso; conta inexistente recebe o convite. Um ou
               # outro, nunca os dois.
-              EXISTE="$($W --json --command "SELECT COUNT(*) AS n FROM accounts WHERE email = '$SQLMAIL'" \
-                        | grep -o '"n": *[0-9]*' | head -1 | tr -cd '0-9')"
+              EXISTE="$($W --json --command "SELECT COUNT(*) AS n FROM accounts WHERE email = '$SQLMAIL'" 2>&1 \
+                        | mascara | grep -o '"n": *[0-9]*' | head -1 | tr -cd '0-9')"
               [ -n "$EXISTE" ] || { echo "::error::Não consegui consultar a conta."; exit 1; }
 
               if [ "$EXISTE" != "0" ]; then
                 # ON CONFLICT porque a chave é (conta, curso): liberar duas
                 # vezes ESTENDE o prazo em vez de criar uma segunda linha.
-                $W --command \
+                grava \
                   "INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
                    SELECT id, '$CURSO', unixepoch()*1000,
                           unixepoch()*1000 + $M * 2629800000, 'MANUAL-ACTIONS'
@@ -333,7 +349,7 @@ jobs:
                 # e vira curso no momento em que a pessoa se cadastrar. É o que
                 # torna possível presentear alguém que ainda nem ouviu falar
                 # do site.
-                $W --command \
+                grava \
                   "INSERT INTO invites (email, course_slug, months, note, created_at)
                    VALUES ('$SQLMAIL', '$CURSO', $M, 'GitHub Actions', unixepoch()*1000)
                    ON CONFLICT(email, course_slug) DO UPDATE SET
@@ -357,7 +373,7 @@ jobs:
 
             revogar)
               [ -n "$MAIL" ] || { echo "::error::Informe o e-mail."; exit 1; }
-              $W --command \
+              grava \
                 "INSERT INTO access_log (account_id, action, detail, created_at)
                  SELECT id, 'revoke-manual', '$CURSO via GitHub Actions', unixepoch()*1000
                    FROM accounts WHERE email = '$SQLMAIL';

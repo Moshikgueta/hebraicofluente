@@ -47,7 +47,33 @@ export const serverError = () => fail('server', 500);
 export async function readJson(request, maxBytes = 8 * 1024) {
   const declarado = Number(request.headers.get('Content-Length') || 0);
   if (Number.isFinite(declarado) && declarado > maxBytes) return null;
-  const raw = await request.text();
-  if (raw.length > maxBytes || new TextEncoder().encode(raw).length > maxBytes) return null;
+
+  /* Lê aos pedaços e PARA no limite. Um corpo sem Content-Length (chunked)
+     passava pela conferência de cima e era lido inteiro antes da de baixo -
+     cem megabytes materializados para responder "grande demais". Agora o
+     leitor solta a conexão no byte seguinte ao teto. */
+  let raw = '';
+  if (request.body && typeof request.body.getReader === 'function') {
+    const reader = request.body.getReader();
+    const pedacos = [];
+    let total = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        try { await reader.cancel(); } catch { /* já era */ }
+        return null;
+      }
+      pedacos.push(value);
+    }
+    const tudo = new Uint8Array(total);
+    let at = 0;
+    for (const p of pedacos) { tudo.set(p, at); at += p.byteLength; }
+    raw = new TextDecoder().decode(tudo);
+  } else {
+    raw = await request.text();
+    if (new TextEncoder().encode(raw).length > maxBytes) return null;
+  }
   try { return JSON.parse(raw || '{}'); } catch { return null; }
 }

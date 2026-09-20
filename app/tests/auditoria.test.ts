@@ -130,6 +130,31 @@ describe('o site sai blindado', () => {
     expect(r.status).toBe(200);
     expect(r.headers.get('cache-control')).toBe('private, no-store');
   });
+
+  /* A verificação independente pegou: a primeira versão só blindava as
+     páginas, e o HSTS faltava no 301 do www, no 302 do portão e em toda
+     resposta da API - justamente as que carregam senha. */
+  it('o redirect do portão, o 301 do www e a API também saem blindados', async () => {
+    const env = envSite();
+    const portao = await worker.fetch(new Request(`${SITE}/licao/alef/`), env, ctx);
+    expect(portao.status).toBe(302);
+    expect(portao.headers.get('strict-transport-security')).toContain('max-age=31536000');
+    expect(portao.headers.get('x-content-type-options')).toBe('nosniff');
+    expect(portao.headers.get('cache-control')).toContain('no-store');
+
+    const www = await worker.fetch(new Request('https://www.hebraicofluente.com.br/entrar/'), env, ctx);
+    expect(www.status).toBe(301);
+    expect(www.headers.get('location')).toBe(`${SITE}/entrar/`);
+    expect(www.headers.get('strict-transport-security')).toContain('max-age=31536000');
+
+    const api = await worker.fetch(new Request(`${SITE}/api/me`), env, ctx);
+    expect(api.status).toBe(401);
+    expect(api.headers.get('strict-transport-security')).toContain('max-age=31536000');
+    expect(api.headers.get('x-content-type-options')).toBe('nosniff');
+    expect(api.headers.get('referrer-policy')).toBe('strict-origin-when-cross-origin');
+    /* JSON não leva CSP - a política é de página. */
+    expect(api.headers.get('content-security-policy')).toBeNull();
+  });
 });
 
 /* ── escrita só da própria origem ──────────────────────────────────────── */
@@ -173,6 +198,35 @@ describe('o limite do corpo é em bytes', () => {
     const r = new Request(`${SITE}/x`, { method: 'POST', headers: { 'Content-Length': '99999999' }, body: '{}' });
     expect(await readJson(r, 8 * 1024)).toBeNull();
   });
+
+  /* Sem Content-Length (chunked), a primeira versão lia o corpo INTEIRO
+     antes de medir - cem megabytes materializados para responder "grande
+     demais". O leitor agora para no pedaço que passa do teto. */
+  it('um corpo em pedaços, sem Content-Length, é largado no byte seguinte ao teto', async () => {
+    let entregues = 0;
+    const pedaco = new TextEncoder().encode('x'.repeat(1024));
+    const corpo = new ReadableStream<Uint8Array>({
+      pull(c) {
+        entregues++;
+        if (entregues > 200) c.close(); else c.enqueue(pedaco);
+      }
+    });
+    const r = new Request(`${SITE}/x`, { method: 'POST', body: corpo, duplex: 'half' } as RequestInit);
+    expect(r.headers.get('content-length')).toBeNull();
+    expect(await readJson(r, 8 * 1024)).toBeNull();
+    /* Oito cabem, o nono estoura; com folga de leitura antecipada, nunca 200. */
+    expect(entregues).toBeGreaterThanOrEqual(9);
+    expect(entregues).toBeLessThan(20);
+  });
+
+  it('um corpo em pedaços dentro do teto é lido inteiro', async () => {
+    const partes = ['{"a":', '"א', 'ב"', '}'].map(s => new TextEncoder().encode(s));
+    const corpo = new ReadableStream<Uint8Array>({
+      start(c) { for (const p of partes) c.enqueue(p); c.close(); }
+    });
+    const r = new Request(`${SITE}/x`, { method: 'POST', body: corpo, duplex: 'half' } as RequestInit);
+    expect(await readJson(r, 8 * 1024)).toEqual({ a: 'אב' });
+  });
 });
 
 /* ── a sessão ───────────────────────────────────────────────────────────── */
@@ -184,6 +238,21 @@ describe('a sessão', () => {
     const enxerto = `hf_session=lixo.lixo; ${cookie}; outro=1`;
     const r = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: enxerto } }), env });
     expect(r.status).toBe(200);
+  });
+
+  /* O teto de quatro candidatos reabria a porta: cinco enxertos e o
+     legítimo nunca entrava no laço. Agora o teto é de trabalho - até 32
+     candidatos de tamanho plausível - e um enxerto gigante nem é conferido. */
+  it('cinco, vinte enxertos ou um enxerto gigante não derrubam o cookie legítimo', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const me = (c: string) => auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: c } }), env });
+    const lixo = (n: number) => Array.from({ length: n }, (_, i) => `hf_session=lixo${i}.lixo`).join('; ');
+    expect((await me(`${lixo(5)}; ${cookie}`)).status).toBe(200);
+    expect((await me(`${lixo(20)}; ${cookie}`)).status).toBe(200);
+    expect((await me(`hf_session=${'a'.repeat(3000)}.b; ${cookie}`)).status).toBe(200);
+    /* Sem o legítimo, nada disso vira sessão. */
+    expect((await me(lixo(20))).status).toBe(401);
   });
 
   it('não carrega e-mail nem nome', async () => {
@@ -211,6 +280,19 @@ describe('o freio', () => {
     expect(row!.hits).toBe(2);   // e não 5
     expect(await estourou(env, 'k', 2)).toBe(true);
     expect(await estourou(env, 'outra', 2)).toBe(false);
+  });
+
+  /* A verificação independente mostrou que ler-e-depois-gravar não é uma
+     operação: uma rajada em paralelo lia "zero" N vezes e passava inteira.
+     Aqui as cinquenta chamadas são disparadas de uma vez, e só `limit`
+     recebem passagem. */
+  it('uma rajada em paralelo não passa inteira', async () => {
+    const env = envSite();
+    const veredictos: boolean[] = await Promise.all(Array.from({ length: 50 }, () => throttled(env, 'rajada', 5)));
+    expect(veredictos.filter(v => v === false)).toHaveLength(5);
+    expect(veredictos.filter(v => v === true)).toHaveLength(45);
+    const [row] = linhas(env, "SELECT hits FROM throttle WHERE key = 'rajada'") as { hits: number }[];
+    expect(row!.hits).toBeGreaterThanOrEqual(5);
   });
 
   it('janelas diferentes não colidem, e a limpeza de uma não apaga a outra', async () => {
@@ -252,6 +334,39 @@ describe('o login', () => {
   it('recusa corpo que não é string sem virar 500', async () => {
     const r = await auth.login({ request: pedido(`${SITE}/api/auth/login`, { email: { toString: 1 }, password: [] }), env: envSite(), ctx });
     expect(r.status).toBe(401);
+  });
+
+  /* Quem já estourou o freio por IP não ganha nem a leitura do corpo - nem
+     no login, nem no esqueci-a-senha, nem no reset. */
+  it.each([
+    ['login', 'login', 20, (env: Record<string, unknown>, r: Request) => auth.login({ request: r, env, ctx })],
+    ['forgot', 'forgot', 6, (env: Record<string, unknown>, r: Request) => auth.forgot({ request: r, env, ctx })],
+    ['reset', 'reset', 12, (env: Record<string, unknown>, r: Request) => auth.reset({ request: r, env, ctx })]
+  ])('%s: o freio por IP vem antes do corpo', async (rota, chave, teto, chamar) => {
+    const env = envSite();
+    for (let i = 0; i < teto; i++) await throttled(env, `${chave}:203.0.113.9`, teto);
+    const r = new Request(`${SITE}/api/auth/${rota}`, {
+      method: 'POST', body: '{"email":"a@b.co","password":"x","token":"t"}',
+      headers: { 'content-type': 'application/json', 'CF-Connecting-IP': '203.0.113.9' }
+    });
+    expect((await chamar(env, r)).status).toBe(429);
+    /* O corpo continua intocado: a recusa veio antes da leitura. */
+    expect(r.bodyUsed).toBe(false);
+  });
+
+  /* A Cloudflare manda IPv6 comprimido; a primeira versão cortava antes de
+     expandir, e vizinhos do mesmo /64 ganhavam chaves diferentes - ou seja,
+     orçamentos separados. */
+  it('a chave de IPv6 é o /64 de verdade, expandido', () => {
+    const chave = (v: string) => auth.ip(new Request(SITE, { headers: { 'CF-Connecting-IP': v } }));
+    expect(chave('2001:db8::1')).toBe('2001:0db8:0000:0000::/64');
+    expect(chave('2001:db8:0:0:1:2:3:4')).toBe('2001:0db8:0000:0000::/64');
+    expect(chave('2001:DB8:0000:0000:ffff:ffff:ffff:ffff')).toBe('2001:0db8:0000:0000::/64');
+    expect(chave('2001:db8:0:1::5')).toBe('2001:0db8:0000:0001::/64');
+    expect(chave('::1')).toBe('0000:0000:0000:0000::/64');
+    expect(chave('::ffff:203.0.113.5')).toBe('203.0.113.5');
+    expect(chave('203.0.113.5')).toBe('203.0.113.5');
+    expect(chave('')).toBe('unknown');
   });
 });
 

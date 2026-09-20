@@ -52,7 +52,13 @@ const s = createServer((q, r) => {
 });
 await new Promise(r => s.listen(4409, r));
 
-const ROTAS = ['/', '/cursos/alfabetizacao/', '/entrar/', '/criar-conta/', '/checkout/alfabetizacao/', '/faq/', '/licao/alef/', '/meu-hebraico/', '/desafio-final/'];
+/* O que dá para abrir sem Worker: as páginas públicas e a CASCA das pagas.
+   As páginas pagas com conteúdo de verdade só existem para uma sessão com
+   o curso, e não há sessão aqui - o que este script prova sobre elas é que a
+   casca e o roteador não violam a política, não a aula inteira. */
+const ROTAS = ['/', '/cursos/alfabetizacao/', '/entrar/', '/criar-conta/', '/checkout/alfabetizacao/',
+               '/checkout/alfabetizacao/obrigado/', '/nova-senha/', '/perfil/', '/faq/',
+               '/licao/alef/', '/meu-hebraico/', '/desafio-final/'];
 const b = await chromium.launch({ executablePath: process.env.HF_CHROMIUM });
 let ruim = 0;
 for (const w of [390, 1280]) {

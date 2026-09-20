@@ -52,7 +52,24 @@ const ROUTES = {
 };
 
 export default {
+  /* Toda resposta - página, API, redirect, recusa do portão - sai pelo
+     `blindar`. A primeira versão só blindava as páginas, e o HSTS faltava
+     justamente onde mais importa: no 301 do www e nas rotas que carregam
+     senha. */
   async fetch(request, env, ctx) {
+    const path = new URL(request.url).pathname.replace(/\/+$/, '') || '/';
+    return blindar(await responder(request, env, ctx), path);
+  },
+
+  /* O cron (ver [triggers] no wrangler.toml). Esperado, e não solto com
+     waitUntil: a varredura É o trabalho desta execução, e reportá-la como
+     terminada com as chamadas ainda no ar mascararia toda falha dela. */
+  async scheduled(event, env) {
+    return runReconcile(env);
+  }
+};
+
+async function responder(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, '') || '/';
 
@@ -126,16 +143,8 @@ export default {
     if (blocked) return blocked;
 
     /* ── o site ─────────────────────────────────────────────────────── */
-    return blindar(await env.ASSETS.fetch(request), path);
-  },
-
-  /* O cron (ver [triggers] no wrangler.toml). Esperado, e não solto com
-     waitUntil: a varredura É o trabalho desta execução, e reportá-la como
-     terminada com as chamadas ainda no ar mascararia toda falha dela. */
-  async scheduled(event, env) {
-    return runReconcile(env);
-  }
-};
+    return env.ASSETS.fetch(request);
+}
 
 /* ── os cabeçalhos do site ─────────────────────────────────────────────────
  * O export do Next sai do servidor de ativos sem nenhum cabeçalho de
@@ -170,6 +179,8 @@ const CSP = [
 ].join('; ');
 
 function blindar(res, path) {
+  /* Uma resposta sem corpo (304, 302, 403) é reconstruída sem corpo: passar
+     um `body` nulo com esses status é permitido; passar um corpo em 304 não. */
   const out = new Response(res.body, res);
   const h = out.headers;
   h.set('X-Content-Type-Options', 'nosniff');
@@ -181,6 +192,6 @@ function blindar(res, path) {
     h.set('Content-Security-Policy', CSP);
     h.set('X-Frame-Options', 'DENY');
   }
-  if (isGatedPath(path)) h.set('Cache-Control', 'private, no-store');
+  if (!path.startsWith('/api/') && isGatedPath(path)) h.set('Cache-Control', 'private, no-store');
   return out;
 }
