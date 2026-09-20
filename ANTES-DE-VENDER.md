@@ -303,11 +303,38 @@ uma decisão defensável: quem baixa o JSON bruto não tem o caminho, os
 exercícios corrigidos, o progresso nem o certificado. Mas é uma decisão, e
 precisa ser tomada de olho aberto, não por esquecimento.
 
-### 9. Freio na borda da Cloudflare - FEITO em 20/09/2026
+### 9. Freio na borda da Cloudflare - PRONTO, falta uma permissão
 
-As regras entraram na publicação (`scripts/cloudflare-setup.sh`, passo 8b), e
-não num lembrete: `/api/auth/*` e `/api/pay/*` a 30 por minuto por IP,
-`/api/*` a 300 por minuto por IP, **bloqueando**.
+**As regras ainda NÃO estão no ar.** O passo existe na publicação
+(`scripts/cloudflare-setup.sh`, passo 8b), rodou em 20/09 e respondeu:
+
+```
+· Não consegui criar as regras de freio na borda.
+  {"code":10000,"message":"Authentication error"}
+· Quase sempre é permissão: Zone | Zone WAF | Edit
+```
+
+O token da Cloudflare não tem permissão de WAF. **Duas saídas, e eu
+recomendo a segunda:**
+
+1. **Dar a permissão ao token.** Cloudflare → My Profile → API Tokens → o
+   token da publicação → Edit → acrescentar `Zone | Zone WAF | Edit`. A
+   publicação seguinte cria as regras sozinha e mantém.
+2. **Criar as três à mão, uma vez.** Security → WAF → Rate limiting rules.
+   Elas não mudam nunca, e assim o token de publicação não ganha poder de
+   desligar proteção - um token que pode publicar E baixar o escudo é um
+   token que vale mais para quem o roubar.
+
+As regras, em qualquer dos dois caminhos:
+
+| Caminho | Teto | Ação |
+|---|---|---|
+| `/api/auth/*` | 30 por minuto por IP | bloquear |
+| `/api/pay/*` | 30 por minuto por IP | bloquear |
+| `/api/*` | 300 por minuto por IP | bloquear |
+
+Da mais específica para a mais geral, nessa ordem: a Cloudflare aplica a
+primeira que casar, e `/api/*` antes das outras engoliria as duas.
 
 Duas decisões que valem saber:
 
@@ -463,12 +490,13 @@ a correção do pagamento.
 
 Fechado também: **7** (endereço completo).
 
-Fechados também: **9** (freio na borda, dentro da publicação) e a parte
-automatizável do **10** (`main` é o único ramo que publica).
+Feito também: a parte automatizável do **10** (`main` é o único ramo que
+publica, provado por uma publicação verde vinda dele).
 
 Faltam: **6** a compra de verdade com estorno; **3** o PIX, que a Mercado
-Pago ainda não habilitou; **8**, que está medido e é uma decisão sua; e dois
-cliques seus - proteger o `main` e confirmar o 404 do Pages.
+Pago ainda não habilitou; **8**, medido e virou decisão sua; **9**, onde o
+código está pronto e falta permissão ou três regras à mão; e dois cliques -
+proteger o `main` e confirmar o 404 do Pages.
 
 **O PIX deixou de ser o caminho crítico.** O site agora oferece só o que
 consegue cobrar, e o cartão funciona ponta a ponta. Dá para fazer a compra
