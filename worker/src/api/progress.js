@@ -24,7 +24,10 @@ import { json, fail, notSignedIn, readJson } from '../lib/http.js';
 import { requireAccount } from './auth.js';
 import { clearProgress, getProgress, putProgress, throttled } from '../lib/db.js';
 
-const MAX_BYTES = 256 * 1024;
+/* Em bytes de verdade, agora que `readJson` mede bytes. O limite antigo media
+   unidades UTF-16 e deixava passar até o triplo em hebraico; 512 KB cobre o
+   que passava antes sem reabrir a torneira. */
+const MAX_BYTES = 512 * 1024;
 
 /** GET /api/progress → `{ state, rev, updatedAt }`, ou `rev: 0` se não há. */
 export async function read({ request, env }) {
@@ -81,6 +84,7 @@ export async function write({ request, env }) {
 export async function drop({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
+  if (await throttled(env, `prog:${account.id}`, 60)) return fail('devagar', 429);
   await clearProgress(env, account.id);
   return json({ ok: true, rev: 0 });
 }

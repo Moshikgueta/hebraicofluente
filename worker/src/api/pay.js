@@ -18,11 +18,11 @@
  */
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
-import { requireAccount } from './auth.js';
+import { ip, requireAccount } from './auth.js';
 import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
 import {
   createOrder, getOrder, grantAccess, hasEntitlement, log, ordersOf,
-  recordEvent, updateOrder
+  recordEvent, throttled, updateOrder
 } from '../lib/db.js';
 import {
   createCardPreference, createPix, getPayment, mapStatus, paymentsFor,
@@ -66,10 +66,18 @@ export async function create({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
 
-  const body = await readJson(request);
-  if (!body) return fail('server');
+  /* Cada pedido é uma linha aqui e uma cobrança de verdade na Mercado Pago,
+     com chave de idempotência nova. Sem freio, uma conta gratuita num laço
+     enchia o painel de cobranças fantasmas e a fila da varredura de pedidos
+     que nunca vão compensar. Seis por minuto é um humano indeciso; o de IP
+     segura quem cria contas descartáveis para contornar o primeiro. */
+  if (await throttled(env, `pay:${account.id}`, 6)) return fail('rate-limited', 429);
+  if (await throttled(env, `payip:${ip(request)}`, 12)) return fail('rate-limited', 429);
 
-  const course = getCourse(body.courseSlug);
+  const body = await readJson(request);
+  if (!body || typeof body !== 'object') return fail('server');
+
+  const course = getCourse(typeof body.courseSlug === 'string' ? body.courseSlug : '');
   if (!isSellable(course)) return fail('server', 404);
 
   /* A plataforma pode estar no ar antes de a conta da Mercado Pago existir -
@@ -214,7 +222,15 @@ export async function verify({ request, env }) {
      mão, e a tela do comprador precisa saber disso para parar de girar em vez
      de prometer uma confirmação que não vem. */
   if (order.status === 'pending' && !pixDireto()) {
-    await settleFromProvider(env, order, 'verify');
+    /* Cada consulta aqui é uma chamada à Mercado Pago com a nossa
+       credencial. A tela pergunta a cada três segundos; um laço perguntaria
+       mil vezes por minuto e gastaria a cota do vendedor com a conta de um
+       comprador. Vinte por minuto por conta, e uma consulta feita há menos
+       de cinco segundos vale como resposta. */
+    const recente = order.checked_at && Date.now() - Number(order.checked_at) < 5_000;
+    if (!recente && !await throttled(env, `verify:${account.id}`, 20)) {
+      await settleFromProvider(env, order, 'verify');
+    }
     return json(toOrder(await getOrder(env, order.id)));
   }
   return json(toOrder(order));
@@ -246,8 +262,20 @@ export async function webhook({ request, env }) {
     return json({ ok: true });
   }
 
+  /* Um id de pagamento da Mercado Pago é um número. Qualquer outra coisa não
+     é um aviso deles, e não chega nem à assinatura - nem, mais adiante, à
+     URL da consulta, onde um id escolhido por alguém viraria um caminho. */
+  if (typeof dataId !== 'string' && typeof dataId !== 'number') return json({ ok: true });
+  if (!/^\d{1,24}$/.test(String(dataId))) return json({ ok: true });
+
   if (!await verifyWebhookSignature(env, request, dataId)) {
-    await log(env, null, 'webhook-bad-signature', String(dataId));
+    /* A trilha guarda a recusa, mas não uma linha por requisição: esta é uma
+       rota pública, e uma escrita gratuita no D1 por chamada anônima é o
+       jeito mais barato de esgotar a cota de escrita da plataforma inteira.
+       Trinta por minuto por IP na trilha; o resto só leva o 401. */
+    if (!await throttled(env, `whk:${ip(request)}`, 30)) {
+      await log(env, null, 'webhook-bad-signature', String(dataId));
+    }
     /* 401, e não 200: um remetente legítimo com segredo errado precisa saber
        que está sendo recusado, em vez de achar que entregou. E o código é
        específico, porque quem lê esta resposta é o painel da Mercado Pago e um

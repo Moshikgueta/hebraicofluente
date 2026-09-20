@@ -213,7 +213,15 @@ export async function createCardPreference(env, { order, course, account, origin
 
 /* ── consulta ───────────────────────────────────────────────────────────── */
 
-export const getPayment = (env, paymentId) => call(env, `/v1/payments/${paymentId}`);
+export const getPayment = (env, paymentId) => {
+  /* O id entra no CAMINHO da URL. Sem isto, `../../outra-rota` no lugar de
+     um número viraria uma chamada a outro endpoint deles, com o nosso token.
+     A assinatura do webhook já barra isso antes; esta linha é para o dia em
+     que a assinatura não for a única coisa no caminho. */
+  const id = String(paymentId);
+  if (!/^\d{1,24}$/.test(id)) throw new Error('id de pagamento fora do formato');
+  return call(env, `/v1/payments/${encodeURIComponent(id)}`);
+};
 
 /** Todos os pagamentos ligados a um pedido nosso. É como a varredura encontra
  *  um pagamento cujo aviso nunca chegou. */

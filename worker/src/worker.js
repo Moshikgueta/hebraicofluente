@@ -14,7 +14,7 @@
  */
 
 import { json } from './lib/http.js';
-import { gate } from './gate.js';
+import { gate, isGatedPath } from './gate.js';
 import { runReconcile } from './reconcile.js';
 import * as auth from './api/auth.js';
 import * as pay from './api/pay.js';
@@ -76,6 +76,28 @@ export default {
 
     /* ── a API ──────────────────────────────────────────────────────── */
     if (path.startsWith('/api/')) {
+      /* Escrita só da nossa própria origem.
+         ──────────────────────────────────────────────────────────────
+         O cookie é SameSite=Lax, e isso já segura a maior parte do CSRF -
+         mas "a maior parte" inclui uma janela de dois minutos depois do
+         login em que o Chrome ainda manda o cookie num POST de topo vindo
+         de outro site, e não segura nada no dia em que alguém relaxar o
+         cookie para None por causa de um redirect do meio de pagamento.
+         Uma segunda trava, independente: um navegador declara de onde a
+         requisição veio (`Origin`, `Sec-Fetch-Site`), e uma escrita que
+         se declara de outro lugar é recusada. Quem não declara nada - o
+         curl do e2e, um script de operação - passa: a defesa é contra o
+         navegador da vítima, não contra ferramentas.
+         O webhook fica de fora porque a Mercado Pago é, legitimamente,
+         outra origem; a assinatura HMAC é a trava dele. */
+      if (request.method !== 'GET' && request.method !== 'HEAD' && path !== '/api/pay/webhook') {
+        const site = request.headers.get('Sec-Fetch-Site');
+        const origin = request.headers.get('Origin');
+        const cruzada = site === 'cross-site' || site === 'same-site'
+          || (origin && origin !== url.origin);
+        if (cruzada) return json({ error: 'server' }, 403);
+      }
+
       const handler = ROUTES[`${request.method} ${path}`];
       if (handler) {
         try {
@@ -104,7 +126,7 @@ export default {
     if (blocked) return blocked;
 
     /* ── o site ─────────────────────────────────────────────────────── */
-    return env.ASSETS.fetch(request);
+    return blindar(await env.ASSETS.fetch(request), path);
   },
 
   /* O cron (ver [triggers] no wrangler.toml). Esperado, e não solto com
@@ -114,3 +136,51 @@ export default {
     return runReconcile(env);
   }
 };
+
+/* ── os cabeçalhos do site ─────────────────────────────────────────────────
+ * O export do Next sai do servidor de ativos sem nenhum cabeçalho de
+ * segurança, e este é o único lugar por onde toda resposta passa.
+ *
+ * A CSP é apertada porque o site permite: nenhum script de terceiro, nenhuma
+ * fonte externa, nenhuma analítica. `'unsafe-inline'` em script fica porque o
+ * export estático do Next injeta o próprio bootstrap em <script> inline e um
+ * export não tem como carimbar nonce por requisição; o que a diretiva ainda
+ * garante é que nada saia do próprio domínio - `connect-src 'self'` é o que
+ * impede um script injetado de mandar uma senha para fora, e
+ * `frame-ancestors 'none'` é o que impede o checkout e o login de serem
+ * emoldurados por outro site.
+ *
+ * Uma página paga que passou pelo portão sai `private, no-store`: o servidor
+ * de ativos a marca `public`, e um cache compartilhado no caminho poderia
+ * entregar a aula de quem pagou para quem não pagou.
+ */
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "media-src 'self' blob:",
+  "worker-src 'self' blob:",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "base-uri 'none'",
+  "object-src 'none'"
+].join('; ');
+
+function blindar(res, path) {
+  const out = new Response(res.body, res);
+  const h = out.headers;
+  h.set('X-Content-Type-Options', 'nosniff');
+  h.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  h.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  h.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+  const tipo = h.get('Content-Type') || '';
+  if (tipo.startsWith('text/html')) {
+    h.set('Content-Security-Policy', CSP);
+    h.set('X-Frame-Options', 'DENY');
+  }
+  if (isGatedPath(path)) h.set('Cache-Control', 'private, no-store');
+  return out;
+}

@@ -28,16 +28,46 @@ import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/sessi
 import { isSandbox, tokenFormato } from '../lib/mercadopago.js';
 import { mailReady, mensagemDeRecuperacao, sendMail } from '../lib/mail.js';
 import {
-  activeEntitlements, changePassword, createAccount, findAccountByEmail, findAccountById,
-  inviteRedeem, log, normalizeEmail, resetCreate, resetFind, resetUse,
+  activeEntitlements, changePassword, createAccount, estourou, findAccountByEmail,
+  findAccountById, inviteRedeem, log, normalizeEmail, resetCreate, resetFind, resetUse,
   setPasswordHash, throttled, ultimoEnvioDeSenha
 } from '../lib/db.js';
 
 const MIN_PASSWORD = 8;
-const emailOk = s => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(s || '').trim());
 
-const ip = request =>
-  request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'unknown';
+/**
+ * Um e-mail plausível, dentro de limites.
+ *
+ * O formato é o de sempre. Os limites são o que faltava: 254 caracteres é o
+ * teto do próprio padrão, e um endereço de oito mil caracteres virava chave
+ * de freio e linha de trilha; um caractere de controle no meio criava uma
+ * segunda conta que se lê exatamente como a primeira em toda tela do sistema.
+ */
+const emailOk = s => {
+  const v = String(s || '').trim();
+  return v.length >= 6 && v.length <= 254
+    && !/[\u0000-\u001f\u007f]/.test(v)
+    && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+};
+
+/**
+ * De onde a requisição veio, para as chaves de freio.
+ *
+ * Só `CF-Connecting-IP`: a Cloudflare o escreve na borda e ele não é
+ * forjável por quem chama. `X-Forwarded-For` era o reserva e é exatamente o
+ * cabeçalho que quem chama controla - um reserva que só entraria quando a
+ * borda não estivesse lá, e aí seria uma porta.
+ *
+ * IPv6 é contado pelo /64, que é o bloco que um único cliente costuma ter
+ * inteiro para si: contar por endereço dava a quem tem um bloco desses um
+ * suprimento infinito de chaves novas.
+ */
+export const ip = request => {
+  const raw = request.headers.get('CF-Connecting-IP') || '';
+  if (!raw) return 'unknown';
+  if (!raw.includes(':')) return raw;
+  return raw.split(':').slice(0, 4).join(':') + '::/64';
+};
 
 /* Uma hora. Curto o bastante para que um link esquecido numa caixa de entrada
    compartilhada não seja uma chave permanente, e longo o bastante para
@@ -77,17 +107,20 @@ async function sessionBody(env, account) {
 }
 
 export async function signup({ request, env }) {
+  /* O freio por IP antes de ler o corpo: quem já estourou não ganha nem a
+     leitura. */
+  if (await throttled(env, `signup:${ip(request)}`, 10)) return fail('rate-limited', 429);
+
   const body = await readJson(request);
-  if (!body) return fail('server');
+  if (!body || typeof body !== 'object') return fail('server');
+  if (typeof body.email !== 'string' || typeof body.password !== 'string') return fail('invalid-email');
 
   const email = normalizeEmail(body.email);
-  const password = String(body.password || '');
+  const password = body.password;
   const name = String(body.name || '').trim();
 
   if (!emailOk(email)) return fail('invalid-email');
-  if (password.length < MIN_PASSWORD) return fail('weak-password');
-
-  if (await throttled(env, `signup:${ip(request)}`, 10)) return fail('rate-limited', 429);
+  if (password.length < MIN_PASSWORD || password.length > 1024) return fail('weak-password');
 
   const existing = await findAccountByEmail(env, email);
   if (existing) {
@@ -97,7 +130,10 @@ export async function signup({ request, env }) {
 
   const { hash, salt, iterations } = await hashPassword(password, null, itersFor(env));
   const account = await createAccount(env, { email, name, hash, salt, iterations });
-  await log(env, account.id, 'signup', email);
+  /* O id já identifica a conta. O e-mail não vai para a trilha: a trilha é
+     lida por operadores num resumo do Actions, e é o que sobra depois de a
+     conta ser apagada. */
+  await log(env, account.id, 'signup');
 
   /* Um presente esperando por este endereço vira acesso agora, antes de a
      pessoa ver qualquer tela. É a diferença entre "bem-vinda, seu curso está
@@ -112,13 +148,27 @@ export async function login({ request, env }) {
   const body = await readJson(request);
   if (!body) return fail('server');
 
+  if (typeof body.email !== 'string' || typeof body.password !== 'string') {
+    return fail('bad-credentials', 401);
+  }
   const email = normalizeEmail(body.email);
-  const password = String(body.password || '');
+  const password = body.password;
 
-  /* Dois freios. O de e-mail é mais apertado: mil tentativas contra UMA conta
-     é o ataque que importa. */
-  if (await throttled(env, `login:${ip(request)}`, 20)) return fail('rate-limited', 429);
-  if (await throttled(env, `login:${email}`, 8)) return fail('rate-limited', 429);
+  /* Três freios, e o que cada um conta importa.
+     · por IP: toda tentativa, 20 por minuto - uma máquina tentando senhas.
+     · por e-mail E IP: só as que ERRAM, 5 por minuto - a mesma máquina
+       contra uma conta específica.
+     · por e-mail, de qualquer lugar: só as que ERRAM, 30 por minuto - o
+       teto para quem troca de endereço a cada tentativa.
+     Os dois de e-mail são LIDOS aqui e GASTOS lá embaixo, na falha. Antes
+     contavam tudo, com teto de 8: nove pedidos por minuto de um estranho,
+     com qualquer senha, trancavam a dona da conta para fora com a senha certa
+     na mão. Agora o estranho tranca a si mesmo, e precisa de trinta erros por
+     minuto de trinta endereços para encostar na dona. */
+  const origem = ip(request);
+  if (await throttled(env, `login:${origem}`, 20)) return fail('rate-limited', 429);
+  if (await estourou(env, `login:${email}:${origem}`, 5)) return fail('rate-limited', 429);
+  if (await estourou(env, `login:${email}`, 30)) return fail('rate-limited', 429);
 
   const account = await findAccountByEmail(env, email);
   const ok = account
@@ -126,7 +176,9 @@ export async function login({ request, env }) {
     : await fakeVerify(password, itersFor(env));
 
   if (!account || !ok) {
-    await log(env, account ? account.id : null, 'login-failed', email);
+    await throttled(env, `login:${email}:${origem}`, 5);
+    await throttled(env, `login:${email}`, 30);
+    await log(env, account ? account.id : null, 'login-failed');
     return fail('bad-credentials', 401);
   }
 
@@ -191,9 +243,18 @@ export async function forgot({ request, env, ctx }) {
   const sempre = json({ ok: true, enviado: true });
   if (!emailOk(email)) return sempre;
 
+  /* O teto da hora. Três por minuto são cento e oitenta por hora numa caixa
+     de entrada, cada um assinado pelo nosso domínio - o bastante para a
+     vítima marcar tudo como spam e a reputação do remetente ir junto. Cinco
+     por hora, e a resposta continua IGUAL: um 429 aqui diria que o endereço
+     existe, e é justamente o que esta rota se recusa a dizer. */
+  if (await throttled(env, `forgot-h:${email}`, 5, 3_600_000)) return sempre;
+
   const account = await findAccountByEmail(env, email);
   if (!account) {
-    await log(env, null, 'forgot-sem-conta', email);
+    /* Nada que identifique: quem digitou um endereço errado aqui não é
+       cliente e não deu o endereço para guardar. */
+    await log(env, null, 'forgot-sem-conta');
     return sempre;
   }
 
@@ -219,8 +280,11 @@ export async function forgot({ request, env, ctx }) {
     /* O resultado vai para a trilha nos dois casos. "A pessoa diz que não
        recebeu" é a pergunta mais comum deste fluxo, e sem este registro a
        resposta é um palpite. */
+    /* No sucesso, nada: o id já diz para quem. Na falha, o motivo que a
+       Resend devolveu - que é o que diz o que consertar, e não cita o
+       destinatário. */
     await log(env, account.id, r.ok ? 'forgot-enviado' : 'forgot-falhou',
-      r.ok ? email : `${r.motivo}${r.detalhe ? ': ' + r.detalhe : ''}`);
+      r.ok ? '' : `${r.motivo}${r.detalhe ? ': ' + r.detalhe : ''}`);
     if (!r.ok) console.error('mail', r.motivo, r.status || '', r.detalhe || '');
   };
 
@@ -271,7 +335,7 @@ export async function reset({ request, env }) {
 
   const novo = await hashPassword(password, null, itersFor(env));
   const atualizada = await changePassword(env, account.id, novo);
-  await log(env, account.id, 'senha-redefinida', account.email);
+  await log(env, account.id, 'senha-redefinida');
 
   /* `changePassword` subiu a `session_version`, então todo cookie anterior
      morreu - inclusive o de quem eventualmente estivesse dentro da conta sem
@@ -304,13 +368,13 @@ export async function password({ request, env }) {
 
   const ok = await verifyPassword(atual, account.pass_salt, account.pass_hash, account.pass_iter);
   if (!ok) {
-    await log(env, account.id, 'senha-atual-errada', account.email);
+    await log(env, account.id, 'senha-atual-errada');
     return fail('bad-credentials', 401);
   }
 
   const novo = await hashPassword(nova, null, itersFor(env));
   const atualizada = await changePassword(env, account.id, novo);
-  await log(env, account.id, 'senha-trocada', account.email);
+  await log(env, account.id, 'senha-trocada');
 
   /* Um cookie novo na mesma resposta. Sem ele, quem acabou de trocar a senha
      com sucesso seria deslogado pela própria troca - a `session_version`
@@ -347,7 +411,12 @@ export async function me({ request, env }) {
  * usa D1 e tem uma tabela `accounts` - já está no repositório, que é público.
  * O que ele não aprende é nada que ajude a entrar.
  */
-export async function health({ env }) {
+export async function health({ request, env }) {
+  /* Rota pública que faz quatro consultas ao banco: dez por minuto por IP
+     é folgado para a conferência da publicação e apertado para um laço. */
+  if (request && env.DB && await throttled(env, `health:${ip(request)}`, 10)) {
+    return fail('rate-limited', 429);
+  }
   const out = {
     /* A ligação com o D1 existe no Worker? `false` = binding ausente ou
        database_id errado no wrangler.toml. */
@@ -383,10 +452,6 @@ export async function health({ env }) {
     payments: !!env.MP_ACCESS_TOKEN,
     /* Webhook verificável? `false` faz /api/pay/webhook recusar tudo. */
     webhook: !!env.MP_WEBHOOK_SECRET,
-    /* O custo do hash de senha em vigor. Não é segredo - está no repositório
-       - e é a única forma de confirmar, de fora, que uma subida de custo
-       realmente entrou em vigor. */
-    iterations: itersFor(env),
     /* "teste" cobra nada; "producao" cobra de verdade. Deriva do prefixo do
        token, então esta linha é a confirmação de qual credencial está no ar -
        a pergunta que, errada, custa semanas de venda em silêncio. */

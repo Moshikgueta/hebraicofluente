@@ -31,10 +31,12 @@ const DAYS = 7;
 const enc = new TextEncoder();
 
 export async function makeSessionCookie(env, account) {
+  /* Só o que o servidor lê de volta: quem, qual versão, até quando. O
+     e-mail e o nome já viajaram aqui dentro e ninguém os lia - e um cookie
+     é visível em captura de tela de suporte, em extensão de navegador, em
+     log de proxy. O que não está no cookie não vaza pelo cookie. */
   const payload = b64url(enc.encode(JSON.stringify({
     uid: account.id,
-    em: account.email,
-    nm: account.name || '',
     sv: Number(account.session_version) || 0,
     exp: Date.now() + DAYS * 86_400_000
   })));
@@ -49,21 +51,28 @@ export const clearSessionCookie =
  *  Não consulta o banco: quem precisa da conta de verdade usa `requireAccount`. */
 export async function readSession(request, env) {
   if (!env.SESSION_SECRET) return null;
-  const raw = (request.headers.get('Cookie') || '')
-    .split(/;\s*/).find(c => c.startsWith(COOKIE + '='));
-  if (!raw) return null;
+  /* Todos os candidatos com este nome, e vale o primeiro que CONFERE - não
+     o primeiro que aparece. Um cookie de mesmo nome plantado com um Path
+     mais longo é enviado antes do legítimo, e ficar no primeiro achado
+     transformava esse enxerto num logout permanente da vítima. */
+  const candidatos = (request.headers.get('Cookie') || '')
+    .split(/;\s*/)
+    .filter(c => c.startsWith(COOKIE + '='))
+    .map(c => c.slice(COOKIE.length + 1))
+    .slice(0, 4);
 
-  const val = raw.slice(COOKIE.length + 1);
-  const dot = val.lastIndexOf('.');
-  if (dot < 0) return null;
-  const payload = val.slice(0, dot), sig = val.slice(dot + 1);
+  for (const val of candidatos) {
+    const dot = val.lastIndexOf('.');
+    if (dot < 0) continue;
+    const payload = val.slice(0, dot), sig = val.slice(dot + 1);
+    if (!timingSafeEqual(sig, await hmacB64(env.SESSION_SECRET, 'sess:' + payload))) continue;
 
-  if (!timingSafeEqual(sig, await hmacB64(env.SESSION_SECRET, 'sess:' + payload))) return null;
+    let data;
+    try { data = JSON.parse(new TextDecoder().decode(b64urlDecode(payload))); }
+    catch { continue; }
 
-  let data;
-  try { data = JSON.parse(new TextDecoder().decode(b64urlDecode(payload))); }
-  catch { return null; }
-
-  if (!data || typeof data.exp !== 'number' || data.exp < Date.now()) return null;
-  return data;
+    if (!data || typeof data.exp !== 'number' || data.exp < Date.now()) continue;
+    return data;
+  }
+  return null;
 }

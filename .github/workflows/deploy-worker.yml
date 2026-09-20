@@ -309,6 +309,10 @@ jobs:
       # no banco de produção - foi o que aconteceu quando `password_resets`
       # nasceu. A lista de hoje: orders, entitlements, progress,
       # password_resets. Ver worker/schema.sql.
+      #
+      # `access_log` não tem chave estrangeira e por isso não quebrava nada -
+      # e por isso mesmo ficava para trás: cada publicação deixava meia dúzia
+      # de linhas da conta de teste na trilha, para sempre. Vai junto.
       - name: Limpar as contas de teste
         if: always() && steps.guard.outputs.ok == 'true'
         continue-on-error: true
@@ -316,8 +320,9 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           ALVO="SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'"
-          npx --yes wrangler@4 d1 execute hebraico-fluente --remote --command \
-            "DELETE FROM orders           WHERE account_id IN ($ALVO);
+          npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --command \
+            "DELETE FROM access_log       WHERE account_id IN ($ALVO);
+             DELETE FROM orders           WHERE account_id IN ($ALVO);
              DELETE FROM entitlements     WHERE account_id IN ($ALVO);
              DELETE FROM progress         WHERE account_id IN ($ALVO);
              DELETE FROM password_resets  WHERE account_id IN ($ALVO);

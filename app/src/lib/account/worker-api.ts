@@ -21,7 +21,13 @@
 import type { PlatformApi } from './api';
 import { AuthError, type AuthErrorCode, type Order, type PaymentMethod, type Session } from './types';
 
-const BASE = process.env.NEXT_PUBLIC_API_BASE ?? '';
+/* Sempre a própria origem. Isto já foi `process.env.NEXT_PUBLIC_API_BASE`, e
+   como a variável nunca era definida no build o empacotador não a congelava:
+   ficava uma leitura em tempo de execução de `globalThis.process`, que
+   qualquer script rodando antes do nosso podia definir - e aí o login inteiro,
+   senha incluída, ia para o endereço que esse script escolhesse. Um valor que
+   nunca mudou não precisa de variável. */
+const BASE = '';
 
 const CODES: readonly string[] = [
   'bad-credentials', 'email-taken', 'weak-password', 'invalid-email',

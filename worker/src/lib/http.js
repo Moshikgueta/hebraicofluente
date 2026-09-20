@@ -34,9 +34,20 @@ export const fail = (code, status = 400) => json({ error: code }, status);
 export const notSignedIn = () => fail('not-signed-in', 401);
 export const serverError = () => fail('server', 500);
 
-/** Corpo JSON com limite de tamanho. Um POST de 10 MB não é um cadastro. */
+/**
+ * Corpo JSON com limite de tamanho. Um POST de 10 MB não é um cadastro.
+ *
+ * O limite é em BYTES e é conferido duas vezes: antes de ler, pelo
+ * `Content-Length` que o cliente declarou - o que poupa o trabalho de
+ * materializar um corpo que já se sabe grande demais -, e depois de ler, em
+ * bytes de verdade. A versão anterior media `raw.length`, que conta unidades
+ * UTF-16: um corpo em hebraico passava com o dobro do tamanho nominal, e um
+ * corpo de 100 MB era lido inteiro antes de ser recusado.
+ */
 export async function readJson(request, maxBytes = 8 * 1024) {
+  const declarado = Number(request.headers.get('Content-Length') || 0);
+  if (Number.isFinite(declarado) && declarado > maxBytes) return null;
   const raw = await request.text();
-  if (raw.length > maxBytes) return null;
+  if (raw.length > maxBytes || new TextEncoder().encode(raw).length > maxBytes) return null;
   try { return JSON.parse(raw || '{}'); } catch { return null; }
 }

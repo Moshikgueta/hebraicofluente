@@ -15,7 +15,11 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 
 DB_NAME="hebraico-fluente"
-W="npx --yes wrangler@4"
+# Versão fixa. Este script roda com TODOS os segredos de produção no ambiente
+# (token da Cloudflare, Mercado Pago, Resend); `wrangler@4` resolvia para a
+# versão mais nova a cada execução, e um pacote comprometido rodaria com tudo
+# isso nas mãos. Subir de versão é uma edição deliberada, testada, aqui.
+W="npx --yes wrangler@4.135.0"
 # Vira 1 quando este script edita o wrangler.toml. No CI a edição é
 # descartável (o runner some), então a publicação funciona mesmo assim - mas
 # o arquivo do repositório continua com o valor de exemplo, e é isso que o
@@ -166,7 +170,16 @@ fi
 # ── 4. segredos ───────────────────────────────────────────────────────────
 echo
 bold "4. Segredos"
-SECRETS="$($W secret list 2>/dev/null || true)"
+# Falha aqui é falha, e não "lista vazia". A versão anterior engolia o erro
+# (`|| true`), lia a lista como vazia, concluía que SESSION_SECRET não existia
+# e gerava OUTRO - e cada aluno logado caía fora no meio de uma publicação
+# verde. Uma listagem que não deu certo não prova ausência de nada.
+if ! SECRETS="$($W secret list 2>&1)"; then
+  morre "Não consegui listar os segredos do Worker." \
+        "Sem a lista não dá para saber se SESSION_SECRET existe, e gerar um
+       novo por engano derruba a sessão de todo mundo. A resposta foi:
+       $(printf '%s' "$SECRETS" | tail -5)"
+fi
 tem() { printf '%s' "$SECRETS" | grep -q "\"$1\"\|^$1\b"; }
 
 if tem SESSION_SECRET; then
@@ -225,6 +238,16 @@ empurra RESEND_API_KEY    "${RESEND_API_KEY:-}" \
 echo
 bold "5. Construir o site"
 if [ "${HF_SKIP_BUILD:-0}" = "1" ] && [ -d app/out ]; then
+  # Um app/out construído sem NEXT_PUBLIC_PLATFORM_API é a DEMONSTRAÇÃO: as
+  # contas moram no navegador e qualquer pedido se aprova sozinho. Publicar
+  # isso por cima da loja seria entregar o curso de graça com a tarja de
+  # "demonstração" como único aviso. A tarja é prerenderizada no HTML, então
+  # ela mesma é a prova.
+  if grep -q 'Ambiente de demonstra' app/out/index.html 2>/dev/null; then
+    morre "app/out é um build de DEMONSTRAÇÃO, não de plataforma." \
+          "Reconstrua com: cd app && NEXT_PUBLIC_PLATFORM_API=worker npm run build
+       (ou rode este script sem HF_SKIP_BUILD, que ele constrói certo)."
+  fi
   ok "Já construído ($(find app/out -type f | wc -l | tr -d ' ') arquivos)"
 else
   if [ ! -d app/node_modules ]; then
@@ -389,8 +412,13 @@ case "$ZONA" in
     ;;
   *)
     CFAPI="https://api.cloudflare.com/client/v4"
-    cf() { curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN:-}" \
-                   -H "Content-Type: application/json" "$@"; }
+    # O token vai por um arquivo de configuração do curl, e não em `-H` na
+    # linha de comando: argumentos de processo são legíveis por qualquer
+    # outro processo da máquina enquanto o curl roda.
+    CFCONF="$(mktemp)"; trap 'rm -f "$CFCONF"' EXIT
+    printf 'header = "Authorization: Bearer %s"\nheader = "Content-Type: application/json"\n' \
+      "${CLOUDFLARE_API_TOKEN:-}" > "$CFCONF"
+    cf() { curl -s -K "$CFCONF" "$@"; }
     # O nome da zona é o domínio registrável: `hebraicofluente.com.br` tem
     # três rótulos, e é ele que a Cloudflare conhece - não um subdomínio.
     ZID="$(cf "$CFAPI/zones?name=$ZONA" | python3 -c "

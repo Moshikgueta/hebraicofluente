@@ -124,6 +124,20 @@ export async function resetPurge(env, at = now()) {
     .bind(at - 7 * 86_400_000).run();
 }
 
+/**
+ * Faxina da trilha. Cento e oitenta dias, e depois some.
+ *
+ * A trilha existe para responder "o que aconteceu com esta conta" na semana
+ * em que alguém pergunta - não para guardar, para sempre, cada login que
+ * falhou e cada aviso de webhook recusado. Uma tabela que só cresce é a que
+ * vira o maior arquivo de dados pessoais do sistema sem ninguém decidir isso,
+ * e é a que qualquer um pode encher de graça pela rota do webhook.
+ */
+export async function logPurge(env, at = now()) {
+  await env.DB.prepare('DELETE FROM access_log WHERE created_at < ?')
+    .bind(at - 180 * 86_400_000).run();
+}
+
 /* ── direitos de acesso ─────────────────────────────────────────────────── */
 
 /** Só os que ainda valem. Um direito vencido não é devolvido: nada acima
@@ -296,12 +310,32 @@ export async function recordEvent(env, { eventId, orderId, status, raw, source }
       `INSERT INTO payment_events (event_id, order_id, status, raw, source, created_at)
        VALUES (?, ?, ?, ?, ?, ?)`
     ).bind(String(eventId), orderId || null, status || null,
-           JSON.stringify(raw).slice(0, 8000), source, now()).run();
+           JSON.stringify(enxuto(raw)).slice(0, 8000), source, now()).run();
     return true;
   } catch {
     /* Violação do UNIQUE: aviso repetido. Não é erro, é o caso normal. */
     return false;
   }
+}
+
+/**
+ * O que do pagamento vale a pena guardar.
+ *
+ * O objeto inteiro que a Mercado Pago devolve traz o e-mail do pagador, o
+ * CPF dele e, num cartão, o nome do titular e os primeiros e últimos dígitos.
+ * Nada disso é lido por ninguém aqui - a liberação usa status, valor, moeda
+ * e referência - e guardá-lo para sempre numa tabela sem faxina é um dossiê
+ * de identidade esperando um vazamento. Fica só o que responde "o que a
+ * Mercado Pago disse sobre este pagamento", que é o propósito da tabela.
+ */
+const GUARDAR = [
+  'id', 'status', 'status_detail', 'transaction_amount', 'currency_id',
+  'external_reference', 'date_created', 'date_approved', 'payment_method_id',
+  'payment_type_id', 'live_mode'
+];
+export function enxuto(raw) {
+  if (!raw || typeof raw !== 'object') return raw;
+  return Object.fromEntries(GUARDAR.filter(k => k in raw).map(k => [k, raw[k]]));
 }
 
 /* ── freio ──────────────────────────────────────────────────────────────── */
@@ -313,22 +347,56 @@ export async function recordEvent(env, { eventId, orderId, status, raw, source }
  * que este precisa impedir é uma máquina tentando mil senhas - não um humano
  * digitando errado três vezes.
  */
-export async function throttled(env, key, limit = 10) {
-  const window_at = Math.floor(now() / 60_000);
+export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
+  /* `window_at` é o INÍCIO da janela, em milissegundos - a mesma escala para
+     toda janela, de um minuto ou de uma hora. Já foi um índice
+     (`floor(now / janela)`), e aí a limpeza feita por uma chave de um minuto
+     apagava as linhas das chaves de uma hora, cujos índices são cem vezes
+     menores: o teto de uma hora do pedido de senha sumia a cada login. A
+     janela também vai na chave, para que dois tetos sobre o mesmo nome não
+     colidam. */
+  const window_at = Math.floor(now() / janelaMs) * janelaMs;
+  const k = janelaMs === 60_000 ? key : `${key}@${janelaMs}`;
+
+  /* Lê ANTES de gravar. Uma chave que já estourou não custa mais uma escrita
+     no D1 por tentativa - senão o freio é o próprio amplificador: quem está
+     sendo barrado continua gastando a cota de escrita da plataforma inteira,
+     uma linha por requisição, até ela acabar para os alunos de verdade. */
+  const antes = await env.DB.prepare(
+    'SELECT hits FROM throttle WHERE key = ? AND window_at = ?'
+  ).bind(k, window_at).first();
+  if (antes && antes.hits >= limit) return true;
+
   await env.DB.prepare(
     `INSERT INTO throttle (key, window_at, hits) VALUES (?, ?, 1)
      ON CONFLICT(key, window_at) DO UPDATE SET hits = hits + 1`
-  ).bind(key, window_at).run();
+  ).bind(k, window_at).run();
+  const hits = (antes ? antes.hits : 0) + 1;
+  /* Limpeza oportunista: sem ela a tabela cresce para sempre, e um cron só
+     para isso seria um cron a mais para manter. Duas horas atrás cobre a
+     maior janela em uso. */
+  if (hits === 1) {
+    await env.DB.prepare('DELETE FROM throttle WHERE window_at < ?')
+      .bind(now() - 2 * 3_600_000).run();
+  }
+  return hits > limit;
+}
+
+/**
+ * A chave já estourou? Só lê, não conta.
+ *
+ * É a metade "pergunta" do freio, para quando gastar o orçamento tem de ser
+ * uma decisão separada de conferi-lo: o login gasta o orçamento do e-mail só
+ * quando a senha ERRA. Antes, nove tentativas erradas de um estranho
+ * trancavam a dona da conta para fora com a senha certa na mão.
+ */
+export async function estourou(env, key, limit = 10, janelaMs = 60_000) {
+  const window_at = Math.floor(now() / janelaMs) * janelaMs;
+  const k = janelaMs === 60_000 ? key : `${key}@${janelaMs}`;
   const row = await env.DB.prepare(
     'SELECT hits FROM throttle WHERE key = ? AND window_at = ?'
-  ).bind(key, window_at).first();
-  /* Limpeza oportunista: sem ela a tabela cresce para sempre, e um cron só
-     para isso seria um cron a mais para manter. */
-  if (row && row.hits === 1) {
-    await env.DB.prepare('DELETE FROM throttle WHERE window_at < ?')
-      .bind(window_at - 10).run();
-  }
-  return !!row && row.hits > limit;
+  ).bind(k, window_at).first();
+  return !!row && row.hits >= limit;
 }
 
 /* ── trilha ─────────────────────────────────────────────────────────────── */

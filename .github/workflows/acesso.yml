@@ -21,6 +21,19 @@
 #
 # Toda execução fica registrada no histórico do Actions, com quem disparou e
 # quando. Isso é de propósito: mexer no acesso de alguém tem de deixar rastro.
+#
+# ⚠ O REPOSITÓRIO É PÚBLICO, E O RESUMO DE CADA EXECUÇÃO TAMBÉM.
+# Qualquer pessoa, sem login no GitHub, abre o resumo de uma execução desta
+# ação. Por isso NADA aqui imprime um endereço de e-mail inteiro: toda saída
+# passa por `mascara`, que reduz `ana.silva@gmail.com` a `a***@gmail.com`.
+# O operador reconhece a conta; um estranho não ganha a lista de clientes.
+# O e-mail digitado no campo de entrada aparece nos metadados da execução, o
+# que não há como esconder num repositório público - a única forma de fechar
+# isso é o repositório deixar de ser público.
+#
+# `environment: producao` deixa o dono exigir aprovação para rodar isto
+# (Settings → Environments → producao → Required reviewers). Sem configurar
+# nada, não muda nada; configurado, ninguém libera um curso sozinho.
 
 name: Acesso
 
@@ -32,9 +45,9 @@ on:
         required: true
         default: liberar
         type: choice
-        options: [liberar, revogar, consultar, listar, envios, pagamento]
+        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido]
       email:
-        description: 'E-mail da conta (não precisa em "listar" nem "envios")'
+        description: 'E-mail da conta (não precisa em "listar", "envios", "pagamento" nem "pedido")'
         required: false
         type: string
       curso:
@@ -44,9 +57,13 @@ on:
         type: choice
         options: [alfabetizacao, hebraico-a1, hebraico-a2, hebraico-b1]
       meses:
-        description: 'Meses de acesso (só em "liberar")'
+        description: 'Meses de acesso (só em "liberar"; de 1 a 120)'
         required: false
         default: '12'
+        type: string
+      pedido:
+        description: 'Id do pedido, ou o começo dele (só em "pedido")'
+        required: false
         type: string
 
 permissions:
@@ -59,6 +76,7 @@ concurrency:
 jobs:
   acesso:
     runs-on: ubuntu-latest
+    environment: producao
     steps:
       - uses: actions/checkout@v4
 
@@ -69,6 +87,7 @@ jobs:
           EMAIL: ${{ inputs.email }}
           CURSO: ${{ inputs.curso }}
           MESES: ${{ inputs.meses }}
+          PEDIDO: ${{ inputs.pedido }}
         run: |
           set -euo pipefail
 
@@ -77,8 +96,20 @@ jobs:
             exit 1
           fi
 
-          W="npx --yes wrangler@4 d1 execute hebraico-fluente --remote"
+          # Versão fixa. `wrangler@4` resolvia para a mais nova a cada execução,
+          # com o token da Cloudflare no ambiente - um pacote comprometido
+          # rodaria com acesso de escrita ao banco inteiro.
+          W="npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote"
           say() { echo "$*" >> "$GITHUB_STEP_SUMMARY"; }
+
+          # Primeiro caractere, três asteriscos, domínio. Vale para tudo que
+          # sai desta ação - inclusive um corpo de erro da Mercado Pago que
+          # cite o e-mail do comprador.
+          mascara() {
+            sed -E 's/([[:alnum:]._%+-])[[:alnum:]._%+-]*@([[:alnum:].-]+\.[[:alpha:]]{2,})/\1***@\2/g'
+          }
+          # Roda a consulta e mostra o resultado, mascarado, no resumo.
+          mostra() { $W --command "$1" | mascara | tee -a "$GITHUB_STEP_SUMMARY"; }
 
           # O e-mail é normalizado do mesmo jeito que na entrada da plataforma
           # (minúsculas, sem espaços). Sem isto, "Ana@Exemplo.BR " não acha a
@@ -95,22 +126,41 @@ jobs:
 
           case "$ACAO" in
             listar)
-              say "**Últimas contas**"
+              say "**Últimas contas** (e-mails mascarados: o resumo é público)"
               say '```'
-              $W --command \
-                "SELECT id, email, name, datetime(created_at/1000,'unixepoch') AS criada
-                   FROM accounts ORDER BY created_at DESC LIMIT 25" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT id, email, datetime(created_at/1000,'unixepoch') AS criada
+                        FROM accounts ORDER BY created_at DESC LIMIT 25"
               say '```'
               say ""
               say "**Convites ainda não usados**"
               say '```'
-              $W --command \
-                "SELECT email, course_slug, months AS meses,
-                        datetime(created_at/1000,'unixepoch') AS criado_em
-                   FROM invites WHERE used_at IS NULL ORDER BY created_at DESC LIMIT 25" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT email, course_slug, months AS meses,
+                             datetime(created_at/1000,'unixepoch') AS criado_em
+                        FROM invites WHERE used_at IS NULL ORDER BY created_at DESC LIMIT 25"
               say '```'
+              ;;
+
+            # Um pedido pelo id - ou pelo começo dele.
+            #
+            # No PIX direto o identificador que aparece no extrato do banco é
+            # o começo do id do pedido (25 caracteres). Antes disto não havia
+            # como cruzar o extrato com o banco: `consultar` mostrava contas e
+            # acessos, nunca pedidos, e `liberar` rodava na palavra de quem
+            # dizia ter pago. Agora a pergunta "este PIX de R$ 132,30 é de
+            # quem?" tem resposta antes de alguém apertar liberar.
+            pedido)
+              P="$(printf '%s' "${PEDIDO:-}" | tr -cd 'A-Za-z0-9')"
+              [ -n "$P" ] || { echo "::error::Informe o id do pedido (ou o começo dele)."; exit 1; }
+              say "**Pedido(s) começando com \`$P\`**"
+              say '```'
+              mostra "SELECT o.id, o.status, o.amount_cents/100.0 AS valor, o.method AS metodo,
+                             datetime(o.created_at/1000,'unixepoch') AS criado,
+                             a.email
+                        FROM orders o JOIN accounts a ON a.id = o.account_id
+                       WHERE o.id LIKE '$P%' ORDER BY o.created_at DESC LIMIT 10"
+              say '```'
+              say ""
+              say "Confere valor, data e conta com o extrato ANTES de liberar."
               ;;
 
             # Por que o e-mail de senha não saiu.
@@ -124,13 +174,11 @@ jobs:
             envios)
               say "**Últimas tentativas de e-mail de senha**"
               say '```'
-              $W --command \
-                "SELECT datetime(created_at/1000,'unixepoch') AS quando,
-                        action AS resultado, detail AS motivo
-                   FROM access_log
-                  WHERE action IN ('forgot-enviado','forgot-falhou')
-                  ORDER BY id DESC LIMIT 15" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT datetime(created_at/1000,'unixepoch') AS quando,
+                             action AS resultado, detail AS motivo
+                        FROM access_log
+                       WHERE action IN ('forgot-enviado','forgot-falhou')
+                       ORDER BY id DESC LIMIT 15"
               say '```'
               say ""
               say "\`forgot-enviado\` = a Resend aceitou. \`forgot-falhou\` = recusou,"
@@ -168,12 +216,10 @@ jobs:
             pagamento)
               say "**Pedidos que nem chegaram a nascer**"
               say '```'
-              $W --command \
-                "SELECT datetime(created_at/1000,'unixepoch') AS quando,
-                        detail AS pedido_metodo_e_motivo
-                   FROM access_log WHERE action = 'pay-create-failed'
-                  ORDER BY id DESC LIMIT 10" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT datetime(created_at/1000,'unixepoch') AS quando,
+                             detail AS pedido_metodo_e_motivo
+                        FROM access_log WHERE action = 'pay-create-failed'
+                       ORDER BY id DESC LIMIT 10"
               say '```'
               say ""
               say "Linha aqui = o checkout mostrou erro e nenhum PIX/cartão saiu."
@@ -190,21 +236,17 @@ jobs:
 
               say "**Quem resolveu cada pagamento**"
               say '```'
-              $W --command \
-                "SELECT source AS quem, COUNT(*) AS quantos,
-                        datetime(MAX(created_at)/1000,'unixepoch') AS mais_recente
-                   FROM payment_events GROUP BY source ORDER BY quantos DESC" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT source AS quem, COUNT(*) AS quantos,
+                             datetime(MAX(created_at)/1000,'unixepoch') AS mais_recente
+                        FROM payment_events GROUP BY source ORDER BY quantos DESC"
               say '```'
               say ""
               say "**Avisos recusados por assinatura errada**"
               say '```'
-              $W --command \
-                "SELECT datetime(created_at/1000,'unixepoch') AS quando,
-                        detail AS id_do_pagamento
-                   FROM access_log WHERE action = 'webhook-bad-signature'
-                  ORDER BY id DESC LIMIT 10" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT datetime(created_at/1000,'unixepoch') AS quando,
+                             detail AS id_do_pagamento
+                        FROM access_log WHERE action = 'webhook-bad-signature'
+                       ORDER BY id DESC LIMIT 10"
               say '```'
               say ""
               say "Como ler:"
@@ -223,15 +265,13 @@ jobs:
               [ -n "$MAIL" ] || { echo "::error::Informe o e-mail."; exit 1; }
               say "**Conta e acessos**"
               say '```'
-              $W --command \
-                "SELECT a.id, a.email,
-                        e.course_slug,
-                        datetime(e.expires_at/1000,'unixepoch') AS vence_em,
-                        CASE WHEN e.expires_at > unixepoch()*1000 THEN 'ATIVO' ELSE 'vencido' END AS estado
-                   FROM accounts a
-                   LEFT JOIN entitlements e ON e.account_id = a.id
-                  WHERE a.email = '$SQLMAIL'" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT a.id, a.email,
+                             e.course_slug,
+                             datetime(e.expires_at/1000,'unixepoch') AS vence_em,
+                             CASE WHEN e.expires_at > unixepoch()*1000 THEN 'ATIVO' ELSE 'vencido' END AS estado
+                        FROM accounts a
+                        LEFT JOIN entitlements e ON e.account_id = a.id
+                       WHERE a.email = '$SQLMAIL'"
               say '```'
               # Sem isto não havia como ver um presente pendente - o convite
               # existia no banco e sumia da vista. "Eu liberei para ela?" é a
@@ -239,13 +279,11 @@ jobs:
               say ""
               say "**Convites** (presente aguardando cadastro)"
               say '```'
-              $W --command \
-                "SELECT course_slug, months AS meses,
-                        datetime(created_at/1000,'unixepoch') AS criado_em,
-                        CASE WHEN used_at IS NULL THEN 'AGUARDANDO CADASTRO'
-                             ELSE 'usado em ' || datetime(used_at/1000,'unixepoch') END AS estado
-                   FROM invites WHERE email = '$SQLMAIL'" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT course_slug, months AS meses,
+                             datetime(created_at/1000,'unixepoch') AS criado_em,
+                             CASE WHEN used_at IS NULL THEN 'AGUARDANDO CADASTRO'
+                                  ELSE 'usado em ' || datetime(used_at/1000,'unixepoch') END AS estado
+                        FROM invites WHERE email = '$SQLMAIL'"
               say '```'
               say ""
               say "Nada nas duas tabelas = ninguém com esse e-mail, e nenhum convite."
@@ -255,48 +293,61 @@ jobs:
               [ -n "$MAIL" ] || { echo "::error::Informe o e-mail."; exit 1; }
               M="$(printf '%s' "${MESES:-12}" | tr -cd '0-9')"
               [ -n "$M" ] || M=12
+              # Entre 1 e 120. Um zero a mais (1200000000) estourava a conta
+              # de milissegundos, virava um número real no banco, e a partir
+              # daí TODO login dessa conta respondia 500 - com o portão ainda
+              # aberto para ela. Um erro de digitação não pode ser um estado.
+              if [ "$M" -lt 1 ] || [ "$M" -gt 120 ]; then
+                echo "::error::meses fora de 1..120 (recebi '$M')."; exit 1
+              fi
 
-              # ON CONFLICT porque a chave é (conta, curso): liberar duas vezes
-              # ESTENDE o prazo em vez de criar uma segunda linha. Duas linhas
-              # para o mesmo curso seriam duas datas de validade, e alguma
-              # consulta escolheria a errada.
+              # A conta existe? Decide o caminho abaixo.
               #
-              # O SELECT no VALUES resolve o e-mail para o id da conta, e some
-              # sem fazer nada se a conta não existir - por isso o conferimento
-              # logo abaixo, que é o que diz se funcionou.
-              $W --command \
-                "INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
-                 SELECT id, '$CURSO', unixepoch()*1000,
-                        unixepoch()*1000 + $M * 2629800000, 'MANUAL-ACTIONS'
-                   FROM accounts WHERE email = '$SQLMAIL'
-                 ON CONFLICT(account_id, course_slug) DO UPDATE SET
-                   expires_at = excluded.expires_at,
-                   order_id   = excluded.order_id;
-                 INSERT INTO access_log (account_id, action, detail, created_at)
-                 SELECT id, 'grant-manual', '$CURSO via GitHub Actions', unixepoch()*1000
-                   FROM accounts WHERE email = '$SQLMAIL'"
+              # Antes, o convite era gravado SEMPRE, mesmo para quem já tinha
+              # conta e acabara de receber o acesso. No login seguinte o
+              # convite pendente era resgatado e ESTENDIA o prazo de novo:
+              # 12 meses liberados, 24 entregues. Agora: conta existente
+              # recebe o acesso; conta inexistente recebe o convite. Um ou
+              # outro, nunca os dois.
+              EXISTE="$($W --json --command "SELECT COUNT(*) AS n FROM accounts WHERE email = '$SQLMAIL'" \
+                        | grep -o '"n": *[0-9]*' | head -1 | tr -cd '0-9')"
+              [ -n "$EXISTE" ] || { echo "::error::Não consegui consultar a conta."; exit 1; }
 
-              # Se a conta ainda não existe, o INSERT..SELECT acima não fez
-              # nada - e é aqui que entra o convite: o acesso fica guardado
-              # pelo E-MAIL e vira curso no momento em que a pessoa se
-              # cadastrar. É o que torna possível presentear alguém que ainda
-              # nem ouviu falar do site.
-              $W --command \
-                "INSERT INTO invites (email, course_slug, months, note, created_at)
-                 VALUES ('$SQLMAIL', '$CURSO', $M, 'GitHub Actions', unixepoch()*1000)
-                 ON CONFLICT(email, course_slug) DO UPDATE SET
-                   months = excluded.months, created_at = excluded.created_at,
-                   used_at = NULL"
+              if [ "$EXISTE" != "0" ]; then
+                # ON CONFLICT porque a chave é (conta, curso): liberar duas
+                # vezes ESTENDE o prazo em vez de criar uma segunda linha.
+                $W --command \
+                  "INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
+                   SELECT id, '$CURSO', unixepoch()*1000,
+                          unixepoch()*1000 + $M * 2629800000, 'MANUAL-ACTIONS'
+                     FROM accounts WHERE email = '$SQLMAIL'
+                   ON CONFLICT(account_id, course_slug) DO UPDATE SET
+                     expires_at = excluded.expires_at;
+                   INSERT INTO access_log (account_id, action, detail, created_at)
+                   SELECT id, 'grant-manual', '$CURSO via GitHub Actions', unixepoch()*1000
+                     FROM accounts WHERE email = '$SQLMAIL';
+                   DELETE FROM invites
+                    WHERE email = '$SQLMAIL' AND course_slug = '$CURSO' AND used_at IS NULL"
+              else
+                # A conta ainda não existe: o acesso fica guardado pelo E-MAIL
+                # e vira curso no momento em que a pessoa se cadastrar. É o que
+                # torna possível presentear alguém que ainda nem ouviu falar
+                # do site.
+                $W --command \
+                  "INSERT INTO invites (email, course_slug, months, note, created_at)
+                   VALUES ('$SQLMAIL', '$CURSO', $M, 'GitHub Actions', unixepoch()*1000)
+                   ON CONFLICT(email, course_slug) DO UPDATE SET
+                     months = excluded.months, created_at = excluded.created_at,
+                     used_at = NULL"
+              fi
 
-              say "Liberado **$CURSO** por **$M meses** para \`$MAIL\`."
+              say "Liberado **$CURSO** por **$M meses** para \`$(printf '%s' "$MAIL" | mascara)\`."
               say ""
               say '```'
-              $W --command \
-                "SELECT a.email, e.course_slug,
-                        datetime(e.expires_at/1000,'unixepoch') AS vence_em
-                   FROM accounts a JOIN entitlements e ON e.account_id = a.id
-                  WHERE a.email = '$SQLMAIL' AND e.course_slug = '$CURSO'" \
-                | tee -a "$GITHUB_STEP_SUMMARY"
+              mostra "SELECT a.email, e.course_slug,
+                             datetime(e.expires_at/1000,'unixepoch') AS vence_em
+                        FROM accounts a JOIN entitlements e ON e.account_id = a.id
+                       WHERE a.email = '$SQLMAIL' AND e.course_slug = '$CURSO'"
               say '```'
               say ""
               say "Tabela vazia acima significa que a conta ainda não existe -"
@@ -318,7 +369,7 @@ jobs:
                  -- convite ainda estaria lá, esperando.
                  DELETE FROM invites
                   WHERE email = '$SQLMAIL' AND course_slug = '$CURSO' AND used_at IS NULL"
-              say "Acesso a **$CURSO** removido de \`$MAIL\`."
+              say "Acesso a **$CURSO** removido de \`$(printf '%s' "$MAIL" | mascara)\`."
               say ""
               say "Fecha na hora: o cookie de sessão não carrega direito nenhum,"
               say "então não há atraso até ele expirar."

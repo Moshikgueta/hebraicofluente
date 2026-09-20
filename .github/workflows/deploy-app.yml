@@ -23,15 +23,22 @@
 
 name: Deploy app to Pages
 
+# ⚠ SÓ À MÃO, desde a auditoria de segurança de 20/09/2026.
+#
+# Isto publicava, a cada push, o CURSO INTEIRO num endereço público do
+# github.io - com o adaptador local, em que qualquer visitante "compra" e o
+# pedido se aprova sozinho três segundos depois. Uma cópia gratuita e
+# indexável do produto pago, gerada automaticamente pelo mesmo commit que
+# publica a loja.
+#
+# A prévia continua possível (Run workflow), mas é uma decisão de alguém, e
+# quem a toma sabe o que está pondo no ar. Antes de voltar a publicar isto de
+# forma automática, o build de prévia precisa sair sem o conteúdo pago (só o
+# módulo 1, por exemplo) - ver SECURITY-AUDIT.md.
+#
+# O site que JÁ está publicado no Pages não some com esta mudança: para
+# tirá-lo do ar, Settings → Pages → Unpublish site.
 on:
-  push:
-    branches: [claude/practical-babbage-veufcz, main]
-    paths:
-      - 'app/**'
-      - 'data/**'
-      - 'assets/**'
-      - 'tools/export-content.mjs'
-      - '.github/workflows/deploy-app.yml'
   workflow_dispatch:
 
 permissions:

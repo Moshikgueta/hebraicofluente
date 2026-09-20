@@ -23,7 +23,7 @@
  */
 
 import { settleFromProvider } from './api/pay.js';
-import { log, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
+import { log, logPurge, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
 import empresa from '../../data/empresa.json';
 
 /* No PIX direto não existe provedor a quem perguntar: o dinheiro cai na conta
@@ -45,17 +45,24 @@ export async function runReconcile(env) {
   let settled = 0, expired = 0;
 
   for (const order of pending) {
-    if (Date.now() - order.created_at > GIVE_UP_MS) {
-      await updateOrder(env, order.id, { status: 'expired' });
-      expired++;
-      continue;
+    /* Cada pedido no seu próprio try: um pedido que estoura não pode
+       encerrar a varredura para os dezenove atrás dele, nem pular a faxina
+       no fim. O erro vai para a trilha, com o pedido que o causou. */
+    try {
+      if (Date.now() - order.created_at > GIVE_UP_MS) {
+        await updateOrder(env, order.id, { status: 'expired' });
+        expired++;
+        continue;
+      }
+      /* Expirar continua valendo no PIX direto - um pedido de ontem não pode
+         ficar pendente para sempre. Perguntar ao provedor, não: não há
+         provedor. */
+      if (PIX_DIRETO) continue;
+      const status = await settleFromProvider(env, order, 'reconcile');
+      if (status === 'paid') settled++;
+    } catch (e) {
+      await log(env, order.account_id, 'reconcile-error', `${order.id} ${e && e.message || e}`);
     }
-    /* Expirar continua valendo no PIX direto - um pedido de ontem não pode
-       ficar pendente para sempre. Perguntar ao provedor, não: não há
-       provedor. */
-    if (PIX_DIRETO) continue;
-    const status = await settleFromProvider(env, order, 'reconcile');
-    if (status === 'paid') settled++;
   }
 
   if (settled || expired) {
@@ -69,6 +76,7 @@ export async function runReconcile(env) {
      lembrar e conferir. Falhar aqui não pode derrubar a varredura, que é o
      trabalho de verdade desta execução. */
   try { await resetPurge(env); } catch { /* a faxina tenta de novo em 5 min */ }
+  try { await logPurge(env); } catch { /* idem */ }
 
   return { checked: pending.length, settled, expired };
 }

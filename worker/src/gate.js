@@ -22,6 +22,20 @@
  *
  * O que ela é de verdade: um portão de produto que manda a pessoa certa para
  * o lugar certo, e a camada em que a metade que falta vai se encaixar.
+ *
+ * ── A lição da auditoria ──────────────────────────────────────────────────
+ * Este portão já teve uma exceção: "se `Sec-Fetch-Dest` não for `document`,
+ * deixa passar", para não redirecionar um sub-recurso para HTML. Só que o
+ * cabeçalho é escolhido por quem chama. Fora de um navegador ele é uma linha
+ * de curl, e `curl -H 'Sec-Fetch-Dest: empty' /licao/alef/` recebia a aula
+ * inteira, sem cookie, antes de a sessão ser sequer lida. Uma decisão de
+ * acesso não pode depender de um dado que o cliente escreve.
+ *
+ * Agora TODA requisição a uma rota paga passa pela sessão. O cabeçalho só
+ * decide a FORMA da recusa: um documento é redirecionado para o login; um
+ * sub-recurso (o `index.txt` que o Next busca ao navegar sem recarregar)
+ * recebe um 403 seco - o app trata um RSC recusado como navegação de página
+ * inteira, e ela cai no 302 como qualquer link.
  */
 
 import { readSession } from './lib/session.js';
@@ -33,47 +47,70 @@ import { hasEntitlement, findAccountById } from './lib/db.js';
 const GATED = [
   '/licao', '/modulo', '/checkpoint', '/extra', '/revisao', '/academia',
   '/mapa', '/desafio-final', '/certificado', '/concluido', '/conquistas',
-  '/historia', '/workbook', '/inicio', '/onboarding', '/meu-hebraico'
+  '/historia', '/workbook', '/inicio', '/onboarding', '/meu-hebraico',
+  /* Os clipes de áudio ainda não existem; quando chegarem, nascem atrás do
+     portão em vez de serem descobertos públicos depois. */
+  '/audio'
 ];
 
 /* O curso que essas rotas pertencem. Quando o A1 tiver as próprias rotas,
    esta constante vira um mapa de prefixo → curso. */
 const COURSE = 'alfabetizacao';
 
+/**
+ * O caminho, canonizado antes de comparar.
+ *
+ * Decodifica o percent-encoding, colapsa barras repetidas, ignora
+ * maiúsculas. O servidor de ativos da Cloudflare já normaliza essas formas
+ * antes de resolver o arquivo (`//licao/alef/` vira `/licao/alef/`), e é
+ * exatamente por isso que a comparação aqui tem de ver a mesma coisa que ele
+ * vê - senão o portão julga uma grafia e o ativo é servido por outra. Um
+ * caminho que não decodifica é tratado como pago: na dúvida, o portão fecha.
+ */
+export function canonical(path) {
+  let p = String(path || '/');
+  try { p = decodeURIComponent(p); } catch { return null; }
+  p = p.toLowerCase().replace(/\/{2,}/g, '/').replace(/\/+$/, '');
+  return p || '/';
+}
+
 export function isGatedPath(path) {
-  const p = String(path || '/').replace(/\/+$/, '') || '/';
+  const p = canonical(path);
+  if (p === null) return true;
   return GATED.some(prefix => p === prefix || p.startsWith(prefix + '/'));
 }
 
-/** `null` quando pode passar; uma Response de redirecionamento quando não. */
+/** `null` quando pode passar; uma Response de recusa quando não. */
 export async function gate(request, env) {
   const url = new URL(request.url);
   const path = url.pathname;
 
   if (!isGatedPath(path)) return null;
 
-  /* Só documentos. Uma fonte, um ícone ou um JSON pedido de dentro de uma
-     página já liberada não deve ser redirecionado para HTML - isso quebra a
-     página em vez de proteger alguma coisa. */
   const dest = request.headers.get('Sec-Fetch-Dest');
-  if (dest && dest !== 'document') return null;
+  const documento = !dest || dest === 'document';
 
   const sess = await readSession(request, env);
-  if (!sess) return redirect(url, `/entrar/?next=${encodeURIComponent(path)}`);
+  if (!sess) return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}`);
 
   const account = await findAccountById(env, sess.uid);
   if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)) {
-    return redirect(url, `/entrar/?next=${encodeURIComponent(path)}`);
+    return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}`);
   }
 
   if (!await hasEntitlement(env, account.id, COURSE)) {
-    return redirect(url, `/cursos/${COURSE}/`);
+    return recusa(url, documento, `/cursos/${COURSE}/`);
   }
 
   return null;
 }
 
-function redirect(url, to) {
+function recusa(url, documento, to) {
+  if (!documento) {
+    /* Um sub-recurso recusado não ganha HTML de login no lugar do que pediu:
+       ganha um código, e o app decide o que fazer com ele. */
+    return new Response(null, { status: 403, headers: { 'Cache-Control': 'no-store' } });
+  }
   return new Response(null, {
     status: 302,
     headers: {

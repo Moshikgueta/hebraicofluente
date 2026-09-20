@@ -28,18 +28,15 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Campo, Erro } from '@/components/platform/Campo';
 import { useAccount } from '@/lib/account/store';
+import { safeNext } from '@/lib/safe-next';
 import {
   AuthError, emailLooksValid, MESSAGES, MIN_PASSWORD, passwordOk
 } from '@/lib/account/types';
 
-/** Só caminho interno. Qualquer outra coisa vira o painel. */
-export function safeNext(raw: string | null): string {
-  if (!raw) return '/meu-hebraico';
-  /* Uma barra, e a segunda posição não pode ser barra nem contrabarra:
-     "//evil.com" e "/\evil.com" são absolutas para o navegador. */
-  if (!/^\/[^/\\]/.test(raw)) return '/meu-hebraico';
-  return raw;
-}
+/* `safeNext` mora em lib/safe-next.ts, sem React, para ser testado contra a
+   lista inteira de truques de redirecionamento. Reexportado daqui para quem
+   já importava deste arquivo. */
+export { safeNext };
 
 export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
   const account = useAccount();

@@ -21,6 +21,7 @@
     "check-legal": "node check-legal.mjs",
     "senha": "node senha.mjs",
     "pagamento": "node pagamento.mjs",
+    "csp": "node csp.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {
