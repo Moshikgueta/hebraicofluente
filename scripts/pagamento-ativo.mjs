@@ -106,7 +106,7 @@ if (querido !== 'mercadopago') {
     }
 
     if (res && res.ok) {
-      let formas = '', faltando = '';
+      let formas = '', faltando = '', inventario = '';
       try {
         const lista = JSON.parse(inteiro);
         const tem = tipo => lista.some(m => m.id === tipo || m.payment_type_id === tipo);
@@ -116,6 +116,15 @@ if (querido !== 'mercadopago') {
         ];
         formas = achadas.filter(([, v]) => v).map(([n]) => n).join(' e ');
         faltando = achadas.filter(([, v]) => !v).map(([n]) => n).join(' e ');
+        /* O inventário do que ESTA credencial enxerga.
+           ────────────────────────────────────────────────────────────────
+           "O PIX não está habilitado" é uma conclusão, e conclusão não
+           convence o outro lado do balcão: o atendimento responde que a
+           conta tem Pix - e tem, para RECEBER na carteira - enquanto a API
+           responde outra coisa para este token. A lista crua transforma a
+           discussão em fato verificável, e é o que se leva para o suporte
+           em vez de "o meu sistema diz que não". */
+        inventario = lista.map(m => m.id).filter(Boolean).sort().join(', ');
       } catch { /* o 200 já respondeu a pergunta que decide */ }
       diga('✓ Mercado Pago autenticou.');
       diga(formas
@@ -128,6 +137,10 @@ if (querido !== 'mercadopago') {
         diga(`⚠ A conta NÃO tem habilitado: ${faltando}.`);
         diga('  O checkout oferece essa forma e ela vai falhar na hora da compra.');
         diga('  Habilite em Mercado Pago → Seu negócio → Meios de pagamento.');
+        if (inventario) {
+          diga('  O que esta credencial enxerga hoje, para levar ao suporte deles:');
+          diga(`  ${inventario.slice(0, 600)}`);
+        }
       }
     } else if (res) {
       /* Quem classifica é o CORPO, não só o código.
