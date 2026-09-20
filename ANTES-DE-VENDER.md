@@ -204,7 +204,20 @@ acesso fechou. Repita a compra com cartão.
 **Pronto quando.** As duas formas de pagamento abriram o acesso, e o estorno
 fechou sozinho, sem você tocar em nada.
 
-### 7. Endereço completo nos dados da empresa
+### 7. Endereço completo nos dados da empresa - FEITO em 20/09/2026
+
+`Rua Bom Jesus, 434 · Curitiba, PR · 80350-010`, nas quatro páginas legais de
+uma vez, porque as quatro leem `data/empresa.json`. O `check-legal` saiu de
+três avisos para um.
+
+O aviso que sobrou é `privacidade.encarregadoNome`, e **é opcional para
+você**: a LGPD pede um encarregado (art. 41), mas a Resolução CD/ANPD nº
+2/2022 dispensa agentes de tratamento de pequeno porte, desde que exista um
+canal de comunicação com o titular - que existe, é o
+`languageswithmoshik@gmail.com` na página de privacidade. Se um dia quiser
+pôr um nome ali, é uma linha no JSON.
+
+O que era o problema:
 
 **O que é.** `data/empresa.json` está sem logradouro e sem CEP (o checador
 `npm run check-legal` avisa). Cidade, UF, CNPJ e razão social já estão lá.
@@ -369,10 +382,11 @@ apagadas, repositório privado), **4** (webhook, simulador em 200), **5**
 (Resend verificada), **11** (privacidade reescrita), o **bloco 3** inteiro e
 a correção do pagamento.
 
+Fechado também: **7** (endereço completo).
+
 Faltam: **3** o PIX, que a Mercado Pago ainda reporta como desabilitado;
-**6** a compra de verdade com estorno; **7** o endereço; e as decisões
-**8** (conteúdo no pacote), **9** (regras de borda) e **10** (branch
-protegida).
+**6** a compra de verdade com estorno; e as decisões **8** (conteúdo no
+pacote), **9** (regras de borda) e **10** (branch protegida).
 
 Nada do que falta é código. O caminho crítico é o PIX: sem ele, o item 6 só
 dá para fazer no cartão, e o checkout continua oferecendo uma forma de
