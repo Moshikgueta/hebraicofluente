@@ -37,11 +37,21 @@ name: Deploy platform to Cloudflare
 
 on:
   push:
-    # A mesma lista de deploy-app.yml. O repositório ainda não tem `main`, e um
-    # workflow que só dispara num ramo inexistente nunca rodou uma vez sequer -
-    # é o tipo de erro que só aparece quando alguém pergunta por que a
-    # publicação não aconteceu.
-    branches: [claude/practical-babbage-veufcz, main]
+    # SÓ `main`. Produção tem um ramo, e é este.
+    # ────────────────────────────────────────────────────────────────────────
+    # Até 20/09/2026 o ramo de trabalho também publicava, e enquanto havia uma
+    # pessoa só isso era conveniência. Deixa de ser no dia em que houver
+    # outra: com dois ramos publicando, escrever no repositório É publicar em
+    # produção e alcançar o banco, sem revisão e sem etapa intermediária.
+    #
+    # O fluxo agora tem um passo a mais, e o passo é o ponto: trabalha-se no
+    # ramo de sempre, e RELEASE é fundir em `main`. Ver "Publicar" em
+    # DEPLOY-CLOUDFLARE.md.
+    #
+    # `main` protegido contra force-push e apagamento é a outra metade, e é
+    # clique no painel do GitHub (Settings → Branches) - a API de proteção não
+    # é alcançável de onde este repositório é mantido.
+    branches: [main]
     paths:
       - 'app/**'
       - 'data/**'

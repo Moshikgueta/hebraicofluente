@@ -472,6 +472,88 @@ print(str((d.get('result') or {}).get('fight_mode','?')).lower())
           info "Se o site responder 403 a tudo, desligue à mão em Security → Bots."
           ;;
       esac
+
+      # ── freio na BORDA ───────────────────────────────────────────────
+      # O Worker já freia toda rota da API, e isso é a defesa que conta: ela
+      # sabe de quem é a conta, quantas falhas houve, e responde um código
+      # que o app entende. O que ela não faz é ser barata: cada recusa custa
+      # uma execução do Worker e uma escrita no D1. A borda recusa ANTES,
+      # sem gastar nada nosso.
+      #
+      # Duas decisões que valem a nota:
+      #
+      # · A ação é `block`, nunca `managed_challenge`. Um desafio devolve uma
+      #   PÁGINA para um `fetch()` que espera JSON - o login não mostraria
+      #   "muitas tentativas", mostraria um erro incompreensível, e o
+      #   comprador legítimo atrás de um IP compartilhado ficaria de fora sem
+      #   entender o quê. Bloquear é honesto: o app já sabe ler um 429.
+      #
+      # · Os tetos são altos de propósito. Estes números não existem para
+      #   substituir o freio do Worker (30 tentativas de senha por minuto ali
+      #   continuam valendo); existem para cortar o que é ordens de grandeza
+      #   maior - o laço que tenta dez mil senhas, não a pessoa que errou a
+      #   sua três vezes. Um teto apertado aqui derruba cliente de verdade em
+      #   rede corporativa, e ninguém descobre o motivo.
+      #
+      # O plano gratuito da Cloudflare permite UMA regra de rate limiting, e
+      # os pagos permitem mais. Por isso as regras vão em ordem de valor e o
+      # script tenta do conjunto inteiro para baixo, até o que couber -
+      # nunca derrubando a publicação se nenhuma couber.
+      echo
+      bold "8b. Freio na borda"
+      RLSET="$CFAPI/zones/$ZID/rulesets/phases/http_ratelimit/entrypoint"
+
+      regra() { # caminho teto segundos descricao
+        python3 - "$1" "$2" "$3" "$4" <<'PY'
+import json,sys
+caminho,teto,janela,desc=sys.argv[1:5]
+print(json.dumps({
+  "description": desc,
+  "expression": f'(http.request.uri.path wildcard "{caminho}")',
+  "action": "block",
+  "ratelimit": {
+    "characteristics": ["ip.src", "cf.colo.id"],
+    "period": int(janela),
+    "requests_per_period": int(teto),
+    "mitigation_timeout": int(janela),
+  },
+}))
+PY
+      }
+
+      # Da mais específica para a mais geral: a Cloudflare aplica a primeira
+      # que casar, então `/api/*` por último ou ele engoliria as outras.
+      R1="$(regra '/api/auth/*' 30 60 'HF: freio em /api/auth/* (30/min por IP)')"
+      R2="$(regra '/api/pay/*'  30 60 'HF: freio em /api/pay/* (30/min por IP)')"
+      R3="$(regra '/api/*'     300 60 'HF: freio em /api/* (300/min por IP)')"
+
+      posta() { # rules-json
+        cf -X PUT "$RLSET" --data "{\"rules\":[$1]}"
+      }
+
+      APLICOU=0
+      for TENTATIVA in "$R1,$R2,$R3" "$R1,$R3" "$R1"; do
+        RESP="$(posta "$TENTATIVA")"
+        if printf '%s' "$RESP" | grep -q '"success":true'; then
+          APLICOU="$(printf '%s' "$TENTATIVA" | grep -o '"description"' | wc -l | tr -d ' ')"
+          ok "Freio na borda ativo: $APLICOU regra(s)."
+          break
+        fi
+      done
+
+      if [ "$APLICOU" = "0" ]; then
+        # Nunca derruba a publicação: é defesa em profundidade, e a camada
+        # que conta (o Worker) já está de pé.
+        info "Não consegui criar as regras de freio na borda."
+        printf '%s\n' "${RESP:-}" | head -c 300 | sed 's/^/       /'
+        echo
+        info "Quase sempre é permissão: acrescente ao token"
+        info "  Zone | Zone WAF | Edit   (ou Rulesets | Edit)"
+        info "Ou crie à mão em Security → WAF → Rate limiting rules:"
+        info "  /api/auth/* e /api/pay/*  30/min por IP · bloquear"
+        info "  /api/*                   300/min por IP · bloquear"
+        info "O freio do Worker continua valendo de qualquer jeito."
+      fi
     fi
     ;;
 esac

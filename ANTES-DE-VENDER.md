@@ -250,7 +250,41 @@ leem tudo desse arquivo, então não há texto a caçar.
 
 ## Bloco 2 - decisões suas, cada uma com um custo
 
-### 8. O conteúdo do curso está dentro do pacote público
+### 8. O conteúdo do curso está dentro do pacote público - MEDIDO, não resolvido
+
+Em 20/09/2026 eu medi, em vez de estimar. O que está no arquivo que a home
+carrega (`/_next/static/chunks/26-*.js`, 114 KB):
+
+```
+letters.json   58 KB no disco · 48 de 60 amostras presentes
+course.json    10 KB          · 31 de 60
+culture.json    7 KB          · 12 de 60
+extras.json     5 KB          · 13 de 60
+real-world      4 KB          · 10 de 60
+```
+
+Ou seja: o miolo do material está lá, e um `curl` naquele endereço baixa tudo.
+
+**Por que não resolvi junto com o 9 e o 10.** Vinte e um arquivos importam
+esse conteúdo, e ele entra no pacote em tempo de build. Tirá-lo de lá muda
+como TODA lição carrega: o que hoje é síncrono (`getLetter(id)` devolve na
+hora) passa a depender de uma busca no servidor, com estado de carregamento,
+ordem de renderização e o caminho de prerender do Next no meio. É um trabalho
+de horas com risco real de quebrar um produto que está funcionando, e
+publicá-lo no fim de uma sessão longa seria a pior hora para fazê-lo.
+
+**As duas saídas, com o tamanho honesto de cada uma:**
+
+1. **Aceitar, sabendo.** Custo zero. O compromisso é nunca descrever o produto
+   como "conteúdo protegido" em anúncio nenhum. Quem baixa o JSON bruto leva a
+   matéria-prima - não leva o caminho, os exercícios corrigidos, o progresso,
+   a revisão espaçada nem o certificado, que é onde o curso está.
+2. **`/api/content/*` atrás do cookie.** Meio dia de trabalho, mais uma
+   passagem de testes e varredura. É a única saída que fecha de verdade.
+
+Enquanto for (1), isto fica escrito aqui para não virar esquecimento.
+
+O que era o problema:
 
 **O que é.** As 22 letras, os módulos, os exercícios e as cartas de cultura
 viajam num arquivo JavaScript que a home carrega. Um `curl` num endereço de
@@ -269,7 +303,27 @@ uma decisão defensável: quem baixa o JSON bruto não tem o caminho, os
 exercícios corrigidos, o progresso nem o certificado. Mas é uma decisão, e
 precisa ser tomada de olho aberto, não por esquecimento.
 
-### 9. Freio na borda da Cloudflare
+### 9. Freio na borda da Cloudflare - FEITO em 20/09/2026
+
+As regras entraram na publicação (`scripts/cloudflare-setup.sh`, passo 8b), e
+não num lembrete: `/api/auth/*` e `/api/pay/*` a 30 por minuto por IP,
+`/api/*` a 300 por minuto por IP, **bloqueando**.
+
+Duas decisões que valem saber:
+
+- **Bloquear, e não "desafiar".** Um desafio devolve uma PÁGINA para um
+  `fetch()` que espera JSON: o login não mostraria "muitas tentativas",
+  mostraria um erro sem sentido. Bloquear é honesto - o app sabe ler um 429.
+- **Os tetos são altos de propósito.** Eles não substituem o freio do Worker
+  (que continua em 30 tentativas de senha por minuto); eles cortam o que é
+  ordens de grandeza maior. Teto apertado aqui derruba cliente de verdade em
+  rede corporativa, e ninguém descobre o porquê.
+
+O plano gratuito da Cloudflare permite **uma** regra; os pagos, mais. O script
+tenta as três, depois duas, depois uma - e se nenhuma couber, avisa e segue: o
+freio do Worker é a defesa que conta, esta é a que é barata.
+
+O que era o problema:
 
 **O que é.** Todo caminho da API tem freio dentro do Worker. Na borda, nada:
 o Bot Fight Mode foi desligado de propósito (ele barrava a própria API do
@@ -287,7 +341,19 @@ registro por um dia antes de ligar o bloqueio.
 **Pronto quando.** As regras aparecem ativas e o site continua funcionando
 normalmente para você.
 
-### 10. Uma branch de produção protegida
+### 10. Uma branch de produção protegida - METADE FEITA
+
+`main` existe e é o único ramo que publica. Trabalha-se no ramo de sempre, e
+publicar é fundir (`git merge --ff-only` + push) - o passo a passo está em
+DEPLOY-CLOUDFLARE.md, seção 7.
+
+**Falta o seu clique**, uma vez: GitHub → Settings → **Branches** → regra para
+`main` com **Restrict deletions** e **Block force pushes**. Não marque
+exigência de revisão enquanto você for sozinho: ela só ia te obrigar a abrir
+PR para si mesmo. A API de proteção é barrada para mim, então essa metade não
+dá para automatizar daqui.
+
+O que era o problema:
 
 **O que é.** Hoje a publicação sai da branch de desenvolvimento, que é a
 única. Quem tem escrita no repositório publica em produção e alcança o banco.
@@ -397,9 +463,12 @@ a correção do pagamento.
 
 Fechado também: **7** (endereço completo).
 
+Fechados também: **9** (freio na borda, dentro da publicação) e a parte
+automatizável do **10** (`main` é o único ramo que publica).
+
 Faltam: **6** a compra de verdade com estorno; **3** o PIX, que a Mercado
-Pago ainda não habilitou; e as decisões **8** (conteúdo no pacote), **9**
-(regras de borda) e **10** (branch protegida).
+Pago ainda não habilitou; **8**, que está medido e é uma decisão sua; e dois
+cliques seus - proteger o `main` e confirmar o 404 do Pages.
 
 **O PIX deixou de ser o caminho crítico.** O site agora oferece só o que
 consegue cobrar, e o cartão funciona ponta a ponta. Dá para fazer a compra

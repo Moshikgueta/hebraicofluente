@@ -244,10 +244,35 @@ volte e atualize:
 - `SITE_ORIGIN` em `wrangler.toml`,
 - a URL do webhook no painel da Mercado Pago.
 
-## 7. Publicar sozinho a cada push
+## 7. Publicar: `main` é produção
 
 É **O caminho sem terminal**, no topo deste arquivo. Sem os dois segredos, o
 job avisa e pula - não quebra.
+
+**Quem publica é `main`, e só ele.** Trabalha-se no ramo de sempre; publicar é
+fundir:
+
+```
+git checkout main
+git merge --ff-only claude/practical-babbage-veufcz
+git push origin main
+```
+
+O `--ff-only` é de propósito: se ele recusar, é porque `main` tem alguma coisa
+que o ramo de trabalho não tem, e fundir às cegas nessa hora é como se apaga
+um conserto publicado às pressas. Recusou, pare e olhe.
+
+Até 20/09/2026 o ramo de trabalho também publicava. Com uma pessoa só isso era
+conveniência; deixa de ser na hora em que houver outra, porque escrever no
+repositório passa a ser publicar em produção e alcançar o banco, sem revisão
+nem etapa intermediária.
+
+**A outra metade é clique seu**, uma vez: GitHub → Settings → **Branches** →
+*Add branch ruleset* (ou *Add rule*) para `main`, marcando **Restrict
+deletions** e **Block force pushes**. Não marque exigência de revisão enquanto
+você for sozinho - ela só ia te obrigar a abrir PR para si mesmo. A API de
+proteção não é alcançável de onde este repositório é mantido, então este passo
+não dá para automatizar daqui.
 
 ---
 
