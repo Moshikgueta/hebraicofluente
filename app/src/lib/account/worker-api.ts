@@ -32,7 +32,7 @@ const BASE = '';
 const CODES: readonly string[] = [
   'bad-credentials', 'email-taken', 'weak-password', 'invalid-email',
   'not-signed-in', 'offline', 'server', 'rate-limited', 'payments-off',
-  'bad-token', 'payment-failed', 'card-off'
+  'bad-token', 'payment-failed', 'card-off', 'already-owned'
 ];
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {

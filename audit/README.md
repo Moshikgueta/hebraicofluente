@@ -1,9 +1,14 @@
-# Proposta de correção do pagamento - NÃO aplicada
+# Correção do pagamento - APLICADA em 20/09/2026
 
 Esta pasta é a metade da auditoria de segurança de 20/09/2026 que mexe em
 regra de pagamento e de acesso, e que por isso NÃO foi publicada sozinha.
 A regra combinada foi: o que é seguro consertar, consertado; o que muda como
 o dinheiro vira acesso, explicado primeiro e aplicado depois de uma decisão.
+A decisão veio no mesmo dia, e a correção está no código: o patch que vivia
+aqui foi aplicado e apagado (está no histórico do git), e os testes que o
+provavam moram agora em `app/tests/pagamento.test.ts`, na suíte normal - um
+deles falhando é uma regressão em quem recebe o curso. O que segue é o
+registro do que mudou e do que conferir em produção.
 O relatório inteiro está em `../SECURITY-AUDIT.md`.
 
 ## O que a proposta corrige
@@ -65,19 +70,15 @@ proposta, também reproduzidos (blocos 6 a 9 do teste):
    e 500 pede reenvio; cada tentativa gravava uma linha na trilha. Agora o 404
    responde 200, e a trilha de `settle-error` tem teto de vinte por minuto.
 
-## Como aplicar
+## Como foi aplicada
 
-```
-git apply audit/pagamento-proposto.patch
-cd app && npm run proposta        # os 16 testes passam
-cd app && npm test                # a suíte inteira continua passando
-git commit -am "..." && git push  # publica
-```
+`git apply` do patch, os 16 testes movidos para `app/tests/pagamento.test.ts`,
+a suíte inteira (378 testes), o typecheck, o build, a CSP no navegador e a
+varredura de páginas, e o deploy com o e2e de produção. Antes de aplicar,
+14 dos 16 testes falhavam no código de então - a prova de que os defeitos
+existiam.
 
-Sem o patch, `npm run proposta` FALHA em 14 dos 16 testes. É o esperado, e é
-a prova de que os defeitos existem hoje.
-
-## O que conferir em produção depois de aplicar
+## O que conferir em produção
 
 - Os pedidos já presos: `SELECT o.id FROM orders o JOIN payment_events e ON
   e.order_id = o.id WHERE o.status <> 'paid' AND e.status = 'pending'`. Cada

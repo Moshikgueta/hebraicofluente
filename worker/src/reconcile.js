@@ -23,7 +23,7 @@
  */
 
 import { settleFromProvider } from './api/pay.js';
-import { log, logPurge, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
+import { getOrder, log, logPurge, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
 import empresa from '../../data/empresa.json';
 
 /* No PIX direto não existe provedor a quem perguntar: o dinheiro cai na conta
@@ -59,7 +59,14 @@ export async function runReconcile(env) {
          provedor. */
       if (PIX_DIRETO) continue;
       const status = await settleFromProvider(env, order, 'reconcile');
-      if (status === 'paid') settled++;
+      /* Conta como liberado só o que FOI liberado agora: o pedido era
+         pendente e saiu pago. Contar o valor devolvido pela função
+         registrava "1 liberados" para pedidos que continuavam pendentes -
+         foi assim que o defeito do evento repetido ficou invisível. */
+      if (status === 'paid') {
+        const depois = await getOrder(env, order.id);
+        if (depois && depois.status === 'paid') settled++;
+      }
     } catch (e) {
       await log(env, order.account_id, 'reconcile-error', `${order.id} ${e && e.message || e}`);
     }

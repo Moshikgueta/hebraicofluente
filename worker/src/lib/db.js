@@ -41,6 +41,21 @@ export async function setPasswordHash(env, accountId, { hash, salt, iterations }
 }
 
 /**
+ * Derruba todo cookie já emitido para a conta, sem trocar a senha.
+ *
+ * É o que "sair" tem de fazer: limpar o cookie do navegador não invalida o
+ * VALOR dele, que continua conferindo por sete dias em qualquer outro lugar
+ * onde tenha sido copiado. Sobe a `session_version`, e a resposta do logout
+ * é a única coisa que muda para quem saiu. Efeito colateral deliberado: sai
+ * de todos os aparelhos ao mesmo tempo.
+ */
+export async function bumpSessionVersion(env, accountId) {
+  await env.DB.prepare(
+    'UPDATE accounts SET session_version = session_version + 1 WHERE id = ?'
+  ).bind(accountId).run();
+}
+
+/**
  * Troca a senha DE VERDADE: grava o hash novo e derruba toda sessão aberta.
  *
  * O `session_version + 1` é a metade que se esquece. Trocar a senha porque
@@ -156,6 +171,19 @@ export async function activeEntitlements(env, accountId, at = now()) {
   }));
 }
 
+/**
+ * Quando o acesso a um curso vence: um instante em ms, `null` se não há
+ * direito nenhum (nem vencido), `undefined` se o direito não tem vencimento.
+ * É o que decide se um pedido novo é compra repetida ou renovação.
+ */
+export async function entitlementExpiry(env, accountId, slug) {
+  const row = await env.DB.prepare(
+    'SELECT expires_at FROM entitlements WHERE account_id = ? AND course_slug = ?'
+  ).bind(accountId, slug).first();
+  if (!row) return null;
+  return row.expires_at === null || row.expires_at === undefined ? undefined : Number(row.expires_at);
+}
+
 export async function hasEntitlement(env, accountId, slug, at = now()) {
   const row = await env.DB.prepare(
     `SELECT 1 FROM entitlements
@@ -199,6 +227,45 @@ export async function revokeAccess(env, accountId, courseSlug, why = '') {
     'DELETE FROM entitlements WHERE account_id = ? AND course_slug = ?'
   ).bind(accountId, courseSlug).run();
   await log(env, accountId, 'revoke', `${courseSlug} ${why}`.trim());
+}
+
+/** Qual pedido concedeu (ou renovou por último) o direito que existe hoje.
+ *  `null` se não há linha. É o que permite a uma liberação interrompida
+ *  retomar sem conceder os meses duas vezes. */
+export async function grantedBy(env, accountId, courseSlug) {
+  const row = await env.DB.prepare(
+    'SELECT order_id FROM entitlements WHERE account_id = ? AND course_slug = ?'
+  ).bind(accountId, courseSlug).first();
+  return row ? String(row.order_id) : null;
+}
+
+/**
+ * Desfaz os meses de UM pedido - o estorno de uma renovação.
+ *
+ * Apagar a linha inteira (`revokeAccess`) é certo quando o pedido estornado é
+ * o único; quando é a renovação de quem já tinha oito meses pagos, apagar
+ * tudo tira também os oito meses que ninguém devolveu. Aqui a validade
+ * recua os meses daquele pedido, e a linha só some se não sobrar nada.
+ */
+export async function rollbackAccess(env, accountId, courseSlug, months, why = '') {
+  const row = await env.DB.prepare(
+    'SELECT expires_at FROM entitlements WHERE account_id = ? AND course_slug = ?'
+  ).bind(accountId, courseSlug).first();
+  if (!row) return false;
+
+  const t = now();
+  const until = row.expires_at === null || row.expires_at === undefined ? null : new Date(Number(row.expires_at));
+  if (until) until.setMonth(until.getMonth() - (Number(months) || 12));
+
+  if (!until || until.getTime() <= t) {
+    await revokeAccess(env, accountId, courseSlug, why);
+    return true;
+  }
+  await env.DB.prepare(
+    'UPDATE entitlements SET expires_at = ? WHERE account_id = ? AND course_slug = ?'
+  ).bind(until.getTime(), accountId, courseSlug).run();
+  await log(env, accountId, 'revoke', `${courseSlug} recuou para ${until.toISOString()} ${why}`.trim());
+  return true;
 }
 
 /* ── convites ───────────────────────────────────────────────────────────── */
@@ -329,9 +396,9 @@ export async function recordEvent(env, { eventId, orderId, status, raw, source }
  * Mercado Pago disse sobre este pagamento", que é o propósito da tabela.
  */
 const GUARDAR = [
-  'id', 'status', 'status_detail', 'transaction_amount', 'currency_id',
-  'external_reference', 'date_created', 'date_approved', 'payment_method_id',
-  'payment_type_id', 'live_mode'
+  'id', 'status', 'status_detail', 'transaction_amount', 'transaction_amount_refunded',
+  'currency_id', 'external_reference', 'date_created', 'date_approved',
+  'payment_method_id', 'payment_type_id', 'live_mode'
 ];
 export function enxuto(raw) {
   if (!raw || typeof raw !== 'object') return raw;

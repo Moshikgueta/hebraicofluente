@@ -28,9 +28,9 @@ import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/sessi
 import { isSandbox, tokenFormato } from '../lib/mercadopago.js';
 import { mailReady, mensagemDeRecuperacao, sendMail } from '../lib/mail.js';
 import {
-  activeEntitlements, changePassword, createAccount, estourou, findAccountByEmail,
-  findAccountById, inviteRedeem, log, normalizeEmail, resetCreate, resetFind, resetUse,
-  setPasswordHash, throttled, ultimoEnvioDeSenha
+  activeEntitlements, bumpSessionVersion, changePassword, createAccount, estourou,
+  findAccountByEmail, findAccountById, inviteRedeem, log, normalizeEmail, resetCreate,
+  resetFind, resetUse, setPasswordHash, throttled, ultimoEnvioDeSenha
 } from '../lib/db.js';
 
 const MIN_PASSWORD = 8;
@@ -227,7 +227,16 @@ export async function login({ request, env }) {
     { 'Set-Cookie': await makeSessionCookie(env, account) });
 }
 
-export async function logout() {
+export async function logout({ request, env }) {
+  /* Sair de verdade: além de limpar o cookie do navegador, invalida o valor
+     dele no servidor. Antes só o navegador esquecia; o cookie continuava
+     valendo por sete dias para quem o tivesse copiado - de um computador
+     compartilhado, de uma captura de tela, de um log. */
+  const account = request && env ? await requireAccount(request, env) : null;
+  if (account) {
+    await bumpSessionVersion(env, account.id);
+    await log(env, account.id, 'logout');
+  }
   return json({ ok: true }, 200, { 'Set-Cookie': clearSessionCookie });
 }
 

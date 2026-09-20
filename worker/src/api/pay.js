@@ -21,8 +21,8 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { ip, requireAccount } from './auth.js';
 import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
 import {
-  createOrder, getOrder, grantAccess, hasEntitlement, log, ordersOf,
-  recordEvent, throttled, updateOrder
+  createOrder, entitlementExpiry, getOrder, grantAccess, grantedBy, log, ordersOf,
+  recordEvent, rollbackAccess, throttled, updateOrder
 } from '../lib/db.js';
 import {
   createCardPreference, createPix, getPayment, mapStatus, paymentsFor,
@@ -91,9 +91,16 @@ export async function create({ request, env }) {
 
   /* Já é dono: não cobra de novo. Vender duas vezes a mesma coisa para a mesma
      pessoa é estorno garantido - e é um erro fácil de cometer quando o
-     comprador abre o checkout por um link antigo. */
-  if (await hasEntitlement(env, account.id, course.slug)) {
-    return fail('server', 409);
+     comprador abre o checkout por um link antigo.
+
+     Exceto nos últimos 45 dias: aí é RENOVAÇÃO, e `grantAccess` estende a
+     partir do vencimento, então pagar cedo não perde dia nenhum. Sem esta
+     janela o botão "Renovar acesso" do painel levava a um checkout que
+     respondia 409 - a renovação só era possível DEPOIS de perder o acesso. */
+  const vence = await entitlementExpiry(env, account.id, course.slug);
+  const RENOVACAO_MS = 45 * 86_400_000;
+  if (vence !== null && (vence === undefined || vence - Date.now() > RENOVACAO_MS)) {
+    return fail('already-owned', 409);
   }
 
   /* No modo `pix-direto` só existe PIX, e um pedido de cartão é recusado em
@@ -285,10 +292,14 @@ export async function webhook({ request, env }) {
 
   /* A assinatura prova QUEM mandou, não O QUE aconteceu. O status vem de uma
      consulta nossa. */
-  await settleFromPaymentId(env, String(dataId), 'webhook');
-  /* 200 sempre, depois de processar. Um erro nosso devolvido aqui faz a
-     Mercado Pago reenviar - o que é bom - mas devolver erro por um pagamento
-     que simplesmente não é nosso a faria reenviar para sempre. */
+  const resultado = await settleFromPaymentId(env, String(dataId), 'webhook');
+  /* Duas respostas, para dois casos que a Mercado Pago trata diferente:
+     · um erro NOSSO (banco fora, consulta que caiu) devolve 500, e ela
+       reenvia - que é exatamente o que se quer de um aviso que não
+       conseguimos processar;
+     · um pagamento que não é nosso, ou já resolvido, devolve 200, senão
+       ela reenviaria para sempre um aviso que não tem o que fazer aqui. */
+  if (resultado === 'erro') return json({ error: 'retry' }, 500);
   return json({ ok: true });
 }
 
@@ -309,14 +320,20 @@ export async function settleFromProvider(env, order, source) {
     if (!found.length) return null;
     /* Se houver mais de um (o comprador tentou duas vezes), o aprovado manda. */
     const payment = found.find(p => mapStatus(p.status) === 'paid') || found[0];
-    return applyPayment(env, order, payment, source);
+    /* `await` aqui, e não só `return`: uma promessa rejeitada devolvida de
+       dentro de um try NÃO é pega pelo catch dele. Sem o await, uma falha na
+       liberação escapava sem log e derrubava a varredura inteira. */
+    return await applyPayment(env, order, payment, source);
   } catch (e) {
-    await log(env, order.account_id, 'settle-error', `${order.id} ${e.message || e}`);
-    return null;
+    await erroDeLiberacao(env, order.account_id, `${order.id} ${e.message || e}`);
+    return 'erro';
   }
 }
 
-/** O caminho do webhook: temos o id do pagamento e precisamos achar o pedido. */
+/** O caminho do webhook: temos o id do pagamento e precisamos achar o pedido.
+ *  Devolve `null` quando não há o que fazer (pagamento de outra loja, pedido
+ *  inexistente) e `'erro'` quando algo NOSSO falhou - a diferença decide se a
+ *  Mercado Pago deve reenviar o aviso. */
 export async function settleFromPaymentId(env, paymentId, source) {
   try {
     const payment = await getPayment(env, paymentId);
@@ -324,11 +341,23 @@ export async function settleFromPaymentId(env, paymentId, source) {
     if (!orderId) return null;
     const order = await getOrder(env, orderId);
     if (!order) return null;
-    return applyPayment(env, order, payment, source);
+    return await applyPayment(env, order, payment, source);
   } catch (e) {
-    await log(env, null, 'settle-error', `pagamento ${paymentId} ${e.message || e}`);
-    return null;
+    /* Um id que a Mercado Pago não conhece (o simulador do painel, um
+       pagamento de outra conta) não é falha nossa: responder 500 faria ela
+       reenviar para sempre um aviso que nunca vai ter o que fazer aqui. */
+    if (e && e.status === 404) return null;
+    await erroDeLiberacao(env, null, `pagamento ${paymentId} ${e.message || e}`);
+    return 'erro';
   }
+}
+
+/** A trilha do erro de liberação, com teto: um provedor fora do ar durante
+ *  uma varredura, ou um aviso reenviado em laço, não pode virar uma linha
+ *  por tentativa até a cota de escrita acabar. */
+async function erroDeLiberacao(env, accountId, detalhe) {
+  console.error('settle', detalhe);
+  if (!await throttled(env, 'settle-error', 20)) await log(env, accountId, 'settle-error', detalhe);
 }
 
 /** Atalho para quando já temos os dois lados. */
@@ -343,44 +372,110 @@ export const settle = (env, orderId, paymentId, source) =>
  *   · pedido já pago não faz nada;
  *   · valor menor do que o pedido não libera;
  *   · moeda diferente não libera.
+ *
+ * E a lição da auditoria, que vale contra o instinto: a chave do evento é o
+ * pagamento E O ESTADO DELE. Um pagamento da Mercado Pago é um objeto que
+ * muda - o mesmo id é `pending` hoje e `approved` daqui a um minuto. Com a
+ * chave só no id, a PRIMEIRA vez que este código via um pagamento (a tela
+ * consultando três segundos depois de o QR aparecer) gastava a única vaga
+ * dele, e a aprovação que vinha depois batia no UNIQUE e era descartada.
+ * Todo PIX pago, sem exceção, ficaria pendente para sempre. A trava contra
+ * liberar duas vezes é `order.status === 'paid'`, logo abaixo - e sempre foi.
  */
 async function applyPayment(env, order, payment, source) {
-  const status = mapStatus(payment.status);
+  let status = mapStatus(payment.status);
+
+  /* Em centavos, sempre. */
+  const paidCents = Math.round(Number(payment.transaction_amount || 0) * 100);
+  const refundedCents = Math.round(Number(payment.transaction_amount_refunded || 0) * 100);
+  const currency = String(payment.currency_id || 'BRL');
+
+  /* Um estorno PARCIAL não muda o status na Mercado Pago: o pagamento continua
+     `approved`, com `transaction_amount_refunded` maior que zero. Se o que
+     ficou é menos do que o curso custa, o curso não está pago - é o mesmo
+     critério do valor a menor, logo abaixo, aplicado depois do fato. */
+  if (status === 'paid' && refundedCents > 0 && paidCents - refundedCents < order.amount_cents) {
+    status = 'refunded';
+  }
 
   const fresh = await recordEvent(env, {
-    eventId: String(payment.id), orderId: order.id, status, raw: payment, source
+    eventId: `${payment.id}:${status}`, orderId: order.id, status, raw: payment, source
   });
-  if (!fresh) return status;
+
+  /* O pedido, relido: o que chegou aqui pode ter sido lido antes de uma
+     liberação que aconteceu no meio do caminho. */
+  const atual = (await getOrder(env, order.id)) || order;
+  const course = getCourse(order.course_slug);
+  const months = course ? course.accessMonths : 12;
+
+  if (status === 'refunded') {
+    /* Estorno ou chargeback. Fecha a porta - o cookie não carrega direito
+       nenhum, então fecha na hora - e deixa o pedido dizendo o que aconteceu.
+       Antes, um estorno depois de pago não fazia NADA: nem revogava, nem
+       marcava, nem registrava. Quem pedia o dinheiro de volta ficava com os
+       doze meses.
+
+       Recua os meses DESTE pedido, e não apaga tudo: o estorno de uma
+       renovação não pode levar junto os meses da compra anterior, que
+       ninguém devolveu. Quando este pedido é o único, recuar e apagar dão no
+       mesmo. O recuo vem ANTES de marcar o pedido: se cair no meio, o pedido
+       continua `paid`, o reenvio chega aqui de novo e - com a linha já
+       apagada no caso comum - não encontra o que recuar. */
+    if (atual.status === 'paid') {
+      await rollbackAccess(env, order.account_id, order.course_slug, months, `${payment.id} via ${source}`);
+      await updateOrder(env, order.id, { status: 'refunded' });
+      await log(env, order.account_id, 'estorno', `${order.id} ${payment.status} ${refundedCents || paidCents} via ${source}`);
+    } else if (atual.status === 'pending') {
+      await updateOrder(env, order.id, { status: 'refunded' });
+    }
+    return status;
+  }
 
   if (status !== 'paid') {
-    if (order.status === 'pending' && (status === 'failed' || status === 'refunded')) {
+    if (fresh && atual.status === 'pending' && status === 'failed') {
       await updateOrder(env, order.id, { status });
     }
     return status;
   }
 
-  if (order.status === 'paid') return 'paid';
+  /* Aprovado. Um aviso de aprovação repetido (`!fresh`) chega até aqui de
+     propósito: se o pedido já está pago, a linha seguinte encerra; se NÃO
+     está - uma liberação que caiu no meio, entre gravar o evento e gravar o
+     direito - o reenvio é justamente a chance de terminar o serviço. */
+  if (atual.status === 'paid') return 'paid';
 
   /* O valor. Um pagamento aprovado de R$ 1,00 apontando para um pedido de
      R$ 147,00 não é um pagamento deste pedido - é alguém que montou o próprio
      link com o nosso external_reference. */
-  const paidCents = Math.round(Number(payment.transaction_amount || 0) * 100);
-  const currency = String(payment.currency_id || 'BRL');
   if (paidCents < order.amount_cents || currency !== order.currency) {
     await log(env, order.account_id, 'pay-mismatch',
       `${order.id}: cobrado ${order.amount_cents} ${order.currency}, pago ${paidCents} ${currency}`);
     return 'failed';
   }
 
-  const course = getCourse(order.course_slug);
+  /* O direito PRIMEIRO, o pedido DEPOIS. A ordem é o que torna uma
+     liberação interrompida recuperável: se o banco cair entre as duas
+     escritas, o pedido continua `pending`, o reenvio do aviso chega até
+     aqui de novo e termina o serviço. Na ordem inversa - que era a de antes
+     - o pedido ficava `paid` sem direito nenhum, e cada reenvio parava na
+     linha "já está pago" lá em cima.
+
+     E o reenvio não concede duas vezes: `grantAccess` ESTENDE a validade a
+     cada chamada, então a retomada de uma liberação que já tinha gravado o
+     direito daria vinte e quatro meses por doze. Se a linha de acesso já
+     aponta para este pedido, os meses já foram dados; falta só o pedido. */
+  const jaConcedido = await grantedBy(env, order.account_id, order.course_slug) === order.id
+    && atual.status === 'pending';
+  if (!jaConcedido) {
+    await grantAccess(env, {
+      accountId: order.account_id,
+      courseSlug: order.course_slug,
+      orderId: order.id,
+      months
+    });
+  }
   await updateOrder(env, order.id, {
     status: 'paid', paid_at: Date.now(), provider_ref: String(payment.id)
-  });
-  await grantAccess(env, {
-    accountId: order.account_id,
-    courseSlug: order.course_slug,
-    orderId: order.id,
-    months: course ? course.accessMonths : 12
   });
   await log(env, order.account_id, 'paid', `${order.id} via ${source}`);
   return 'paid';

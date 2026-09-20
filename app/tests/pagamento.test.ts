@@ -1,31 +1,30 @@
-/* O que a proposta de correção do pagamento tem de fazer valer.
+/* Como o dinheiro vira acesso - e como deixa de ser.
  * ─────────────────────────────────────────────────────────────────────────
- * Cinco defeitos confirmados pela auditoria de 20/09/2026, mais quatro que a
- * verificação independente achou na PRIMEIRA versão desta proposta (blocos
- * 6 a 9), cada um com o cenário que o dispara, contra os handlers reais e o
- * esquema de produção, com uma Mercado Pago de mentira que muda de ideia
- * sobre um pagamento do jeito que a de verdade muda: `pending` hoje,
- * `approved` daqui a pouco, `refunded` na semana que vem - sempre com o
- * MESMO id.
+ * Nove defeitos que a auditoria de segurança de 20/09/2026 encontrou na
+ * liberação de acesso (cinco na primeira passada, quatro na verificação
+ * independente da correção), cada um com o cenário que o disparava, contra
+ * os handlers reais e o esquema de produção, com uma Mercado Pago de mentira
+ * que muda de ideia sobre um pagamento do jeito que a de verdade muda:
+ * `pending` hoje, `approved` daqui a pouco, `refunded` na semana que vem -
+ * sempre com o MESMO id.
  *
- * No código de hoje a maior parte destes testes FALHA. É o esperado, e é a
- * prova. Com audit/pagamento-proposto.patch aplicado, todos passam.
- *
- *   cd app && npm run proposta
+ * Viveu em audit/ como proposta, falhando de propósito, até a correção ser
+ * aprovada e aplicada; desde então mora aqui, e um destes testes falhando
+ * é uma regressão em quem recebe o curso. A história está em audit/README.md.
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cookieDe, envDeTeste, pedido } from '../app/tests/ajuda/d1';
+import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
-import * as auth from '../worker/src/api/auth.js';
+import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
-import * as pay from '../worker/src/api/pay.js';
+import * as pay from '../../worker/src/api/pay.js';
 // @ts-expect-error - idem
-import { runReconcile } from '../worker/src/reconcile.js';
+import { runReconcile } from '../../worker/src/reconcile.js';
 // @ts-expect-error - idem
-import { grantAccess, hasEntitlement } from '../worker/src/lib/db.js';
+import { grantAccess, hasEntitlement } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
-import { hmacHex } from '../worker/src/lib/crypto.js';
+import { hmacHex } from '../../worker/src/lib/crypto.js';
 
 const SITE = 'https://hebraicofluente.com.br';
 const SEGREDO = 'segredo-do-webhook-de-teste';

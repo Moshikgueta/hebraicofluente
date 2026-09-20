@@ -36,7 +36,7 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
-import { AuthError, MESSAGES, type Order, type PaymentMethod } from '@/lib/account/types';
+import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
 import { brl, getCourse, installment, pixPrice, type CatalogCourse } from '@/lib/catalog';
 import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
@@ -65,7 +65,12 @@ export function CheckoutClient({ slug }: { slug: string }) {
      estar no ar antes da conta da Mercado Pago existir, e isso não é falha. */
   const [paymentsOff, setPaymentsOff] = useState(false);
 
-  const owned = account.can(slug);
+  /* "Já é dono" só bloqueia a compra fora da janela de renovação: nos últimos
+     45 dias o servidor aceita um pedido novo e ESTENDE o prazo, e esta tela
+     precisa deixar a pessoa chegar até ele - era daqui que o botão "Renovar
+     acesso" do painel saía para bater num "nada a pagar". */
+  const restam = daysLeft(account.session, slug);
+  const owned = account.can(slug) && (restam === null || restam > 45);
   const parcela = installment(c.price);
   const total = method === 'pix' ? pixPrice(c.price) : c.price.brl;
 

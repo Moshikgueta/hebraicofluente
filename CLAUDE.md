@@ -140,14 +140,13 @@ regras que ele fixou e que valem para todo commit daqui em diante:
 - **Toda resposta sai por `blindar()`** (`worker.js`): página, API, 301, 302 do
   portão. Um caminho de resposta novo não pode contornar isso.
 - **Escrita na API só da própria origem** (`worker.js`), webhook à parte.
-- **A proposta de pagamento está em `audit/`**, não aplicada: chave do evento
-  `id:status`, estorno (inclusive parcial) recua os meses do pedido, direito
-  antes do pedido sem conceder duas vezes, renovação em 45 dias, 404 do
-  provedor não pede reenvio, logout invalida em todo aparelho. `npm run
-  proposta` reproduz os defeitos (14 de 16 falham hoje) e passa com `git apply
-  audit/pagamento-proposto.patch`. Aplicar é decisão do dono; o README de
-  `audit/` diz as duas decisões de produto embutidas e o que conferir em
-  produção depois.
+- **A correção do pagamento está aplicada** (decisão do dono, 20/09/2026):
+  chave do evento `id:status`, estorno (inclusive parcial) recua os meses do
+  pedido, direito antes do pedido sem conceder duas vezes, renovação em 45
+  dias, 404 do provedor não pede reenvio, logout invalida em todo aparelho.
+  `app/tests/pagamento.test.ts` guarda os nove cenários; `audit/README.md` é o
+  registro, com as duas decisões de produto embutidas (estorno parcial fecha o
+  acesso; sair derruba todos os aparelhos) e o que conferir em produção.
 - `npm run csp` prova a CSP num navegador; `app/tests/auditoria.test.ts`
   guarda cada ataque fechado. Um achado novo entra lá antes do conserto.
 

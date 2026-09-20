@@ -8,7 +8,8 @@ different adversarial brief, working from source and from local execution of
 the real handlers against the production schema; findings merged by a lead,
 every material claim re-read in the code by the lead before it entered this
 document; safe fixes applied and tested; sensitive fixes prepared as a patch
-and not applied; a fresh eleventh agent then tried to defeat the fixes.
+and held for the owner's decision (approved and applied the same day); a
+fresh eleventh agent then tried to defeat the fixes.
 
 One correction to the brief before anything else: **this platform has no
 Supabase.** The database is Cloudflare D1, reachable only from the Worker.
@@ -23,7 +24,8 @@ INFORMATIONAL; severities CRITICAL / HIGH / MEDIUM / LOW.
 ## 1. Executive launch verdict
 
 **NOT READY FOR PRODUCTION as the code stood at the start of the audit.
-READY AFTER REQUIRED FIXES now, with four items left, all listed in section 2.**
+READY AFTER REQUIRED FIXES now, with three items left, all listed in section 2
+(B2 was closed when the payment patch was approved and applied).**
 
 Why not ready: three of the ways a person could get the course without paying
 were real and required no skill. The whole course content ships inside the
@@ -51,12 +53,14 @@ Only what should stop you publishing to paying customers today.
 | # | Blocker | What to do | Who |
 |---|---|---|---|
 | B1 | **The GitHub Pages copy is live** at `moshikgueta.github.io/hebraicofluente` with the full course and a self-approving demo checkout. The workflow no longer publishes automatically (fixed), but the site already published stays up. | Settings → Pages → **Unpublish site**. Two clicks. | you |
-| B2 | **The payment defect** (`payment_events` keyed by payment id): with PIX enabled at Mercado Pago, every PIX purchase would be paid and never granted. Refunds and chargebacks never revoke access. | Apply `audit/pagamento-proposto.patch` (section 9 explains it; `npm run proposta` proves it), or keep PIX **disabled** at Mercado Pago until it is applied and handle refunds with Actions → Acesso → revogar by hand. | you decide, I apply on your word |
+| B2 | **The payment defect** (`payment_events` keyed by payment id): with PIX enabled at Mercado Pago, every PIX purchase would be paid and never granted. Refunds and chargebacks never revoke access. | **CLOSED** - the patch was approved and applied the same day (section 9, "Applied on approval"). What remains is the production check in `audit/README.md`: one real PIX purchase with the screen open, one refund from the panel, and the query for orders wedged before the fix. | done; production check is yours |
 | B3 | **The repository is public** and 14 runs of the `Acesso` workflow already wrote customer emails into public run summaries (yours and test accounts, from what I saw; still public). New runs are masked (fixed). | Either make the repository private (closes this entirely), or delete the logs of those 14 runs (`Actions → Acesso → each run → Delete logs`; I can do it if you say so). | you |
 | B4 | **The course content is public** in `/_next/static/chunks/26-*.js` (117 KB: all 22 letters, 7 modules, exercises data, culture cards). This is a known, documented limitation of a static-export app (`worker/src/gate.js:12-21`). The fix is architectural: content served from `/api/content/*` behind the session cookie. | Decide explicitly: (a) ship knowing the raw course data is downloadable by anyone who opens the network tab, and never describe the product as content-protected; or (b) do the `/api/content/*` work before launch. Under your own definition of CRITICAL, (a) is an accepted risk, not a fixed one. | you |
 
 Not blockers, but do them in the first week: enable PIX on the Mercado Pago
-account only after B2; add a Cloudflare rate-limiting rule on `/api/*` (Bot
+account and run the production check in `audit/README.md`; confirm the
+webhook in the Mercado Pago panel covers `payment` events on the production
+URL (refund revocation depends on it); add a Cloudflare rate-limiting rule on `/api/*` (Bot
 Fight Mode is off by design, and nothing replaced it at the edge); create a
 protected `main` branch and point the deploy at it.
 
@@ -65,8 +69,10 @@ protected `main` branch and point the deploy at it.
 ## 3. Security findings
 
 Grouped by area. "Applied" means fixed in commits `36e9126` and `2cb7551` and
-covered by `app/tests/auditoria.test.ts`; "Proposed" means in
-`audit/pagamento-proposto.patch`; "Open" means for you to act on.
+covered by `app/tests/auditoria.test.ts`; "Proposed" means it was held in
+`audit/` as a patch until the owner approved it - it was, the same day, and
+those items are now applied too, covered by `app/tests/pagamento.test.ts`
+(section 9); "Open" means for you to act on.
 
 ### 3.1 Access to paid content
 
@@ -105,7 +111,7 @@ violation, no blank page.
 
 ### 3.2 Payments (detail in section 4)
 
-**F-05 · CRITICAL (business) · CONFIRMED by four agents and by the lead · Proposed (B2)** - `worker/schema.sql:75`, `worker/src/lib/db.js:293-305`, `worker/src/api/pay.js:322-326`
+**F-05 · CRITICAL (business) · CONFIRMED by four agents and by the lead · Proposed (B2), now Applied** - `worker/schema.sql:75`, `worker/src/lib/db.js:293-305`, `worker/src/api/pay.js:322-326`
 `payment_events.event_id` is the Mercado Pago payment id. The first
 observation of a payment (the checkout polls `/api/pay/verify` 3 s after the
 QR appears, while it is `pending`) consumes the only row; the `approved`
@@ -114,12 +120,12 @@ The cron counts it as settled. Proposed fix: key on `id:status`; the
 double-grant guard is the order status; grant the entitlement before marking
 the order paid so an interrupted settlement is recoverable on retry.
 
-**F-06 · HIGH · CONFIRMED · Proposed (B2)** - `pay.js:327-332`
+**F-06 · HIGH · CONFIRMED · Proposed (B2), now Applied** - `pay.js:327-332`
 `refunded`/`charged_back` after a paid order do nothing: no revoke, no status
 change, no log. `revokeAccess` had no caller. Proposed: revoke, mark
 `refunded`, log `estorno`.
 
-**F-07 · MEDIUM · CONFIRMED · Proposed** - `pay.js:284,299` (old)
+**F-07 · MEDIUM · CONFIRMED · Proposed, now Applied** - `pay.js:284,299` (old)
 `return applyPayment(...)` inside try/catch without `await`: a rejected
 promise escapes the catch, is never logged, and aborts the whole reconcile
 batch. Proposed: `return await`; per-order try/catch in reconcile (applied);
@@ -137,7 +143,7 @@ Every bad-signature request wrote an `access_log` row: an unauthenticated,
 unthrottled D1 write. Applied: `data.id` must be 1-24 digits before the
 signature is even checked; bad-signature logging capped at 30/min/IP.
 
-**F-10 · MEDIUM · CONFIRMED · Proposed** - `pay.js:95`
+**F-10 · MEDIUM · CONFIRMED · Proposed, now Applied** - `pay.js:95`
 Renewal impossible while any entitlement is active: "Renovar acesso" is shown
 for 30 days and led to a 409 rendered as "alguma coisa quebrou". Proposed: a
 new order is accepted in the last 45 days (`grantAccess` already extends from
@@ -159,7 +165,7 @@ enable it before B2.
 
 ### 3.3 Authentication and sessions
 
-**F-14 · MEDIUM · CONFIRMED · Proposed** - `worker/src/api/auth.js:214`
+**F-14 · MEDIUM · CONFIRMED · Proposed, now Applied** - `worker/src/api/auth.js:214`
 Logout only cleared the browser cookie; the value stayed valid for 7 days.
 Proposed: bump `session_version` on logout (all devices).
 
@@ -569,23 +575,26 @@ production e2e), after the independent verification in section 10:
 - `.github/workflows/deploy-worker.yml` - e2e cleanup deletes `payment_events`.
 - `app/csp.mjs` - three more routes. `app/tests/auditoria.test.ts` - 44 tests.
 
-**Proposed, not applied** (commit `audit/`): `audit/pagamento-proposto.patch`
-touching `worker/src/api/pay.js`, `worker/src/lib/db.js`,
-`worker/src/api/auth.js`, `worker/src/reconcile.js`,
+**Applied on approval** (same day, after the report was delivered and the
+owner asked for it): the payment patch, previously held in `audit/` as
+`pagamento-proposto.patch`, touching `worker/src/api/pay.js`,
+`worker/src/lib/db.js`, `worker/src/api/auth.js`, `worker/src/reconcile.js`,
 `app/src/lib/account/types.ts`, `app/src/lib/account/worker-api.ts`,
 `app/src/app/checkout/[slug]/CheckoutClient.tsx`. Covers F-05, F-06, F-07,
 F-10, F-14, plus the four concerns the verification raised against its first
-version (section 10, C1-C4). `audit/pagamento.test.ts` reproduces the defects
-(14 of 16 fail today, 16 of 16 pass with the patch; the regular 362-test suite
-passes with and without it). `audit/README.md` lists what to check in
-production after applying, including the query that finds orders already
-wedged, and the two product decisions the patch embeds (partial refunds close
-access; logout closes every device).
+version (section 10, C1-C4). Its 16 tests now live in
+`app/tests/pagamento.test.ts` in the regular suite (378 tests); before the
+patch 14 of them failed. The patch file itself was removed once applied (it
+is in the git history); `audit/README.md` stays as the record, with the
+production check to run (one real PIX purchase with the screen open, one
+refund from the panel, the query for orders wedged before the fix) and the
+two product decisions it embeds (partial refunds below the course price
+close access; logout closes every device).
 
-Why this batch was held: the brief said not to redesign payment,
+Why this batch was held until asked: the brief said not to redesign payment,
 authentication or entitlement logic silently. Everything in it changes when
-access is granted or removed. Apply it with one word from you; I will run the
-suite, push, and watch the deploy.
+access is granted or removed, so it was explained here first and applied on
+an explicit word.
 
 ---
 
@@ -646,7 +655,7 @@ sweep, all green; deploy 55 green including the production e2e.
 | Paid course protection | [FAIL] | content in the public bundle (B4) and the Pages copy (B1); route gate now holds |
 | Mercado Pago integration | [MANUAL CHECK] | credential authenticates (proven by the deploy probe); PIX not enabled on the account; no real purchase has been proven end to end |
 | Webhook verification | [PASS] | HMAC, replay window, fail-closed, status re-fetched, numeric id, log cap |
-| Payment integrity | [FAIL] until B2 | pending-first payments never settle; refunds do not revoke |
+| Payment integrity | [PASS] code · [MANUAL CHECK] production | the payment patch is applied (pending-first settles, refunds and partial refunds revoke, interrupted grants recover); one real PIX purchase and one panel refund still to be proven end to end |
 | Replay protection | [PASS] | `ts` window, event uniqueness, order-status guard |
 | Secrets | [PASS] | none in code, history, bundle or logs |
 | CORS | [PASS] | no CORS headers emitted; cross-origin JS cannot read responses; origin check on writes |
@@ -682,8 +691,12 @@ honest list, ordered by how a determined person would actually try:
    unpublish it (B1). They get the complete app, every lesson, the exam and
    the certificate, in their browser, forever.
 3. **Buy with a card, then refund or charge back within the 7 days you
-   advertise.** SUCCEEDS at keeping access until the payment patch is applied
-   (B2), unless you run `revogar` by hand after every refund.
+   advertise.** FAILS now that the payment patch is applied: the `refunded`
+   or `charged_back` notification rolls back that order's months and marks
+   the order. One dependency remains: the Mercado Pago webhook must be
+   configured for `payment` events on the production URL, because the cron
+   does not revisit paid orders - without the notification, the refund is
+   still `revogar` by hand. Prove it once with a panel refund.
 4. **Fetch a lesson URL directly, with or without header tricks, path tricks
    or a decoy cookie.** FAILS. 302 or 403, verified against the real Worker
    with every variant the agents could think of.
@@ -698,8 +711,8 @@ honest list, ordered by how a determined person would actually try:
    `pedido` action to match the statement before granting.
 
 Everything in 4 and 5 is what the payment and auth layers were built to stop,
-and they stop it. Everything in 1 to 3 is outside those layers and is fixed by
-two clicks, one patch you approve, and one decision.
+and they stop it. Item 3 is closed by the applied patch. Items 1 and 2 are
+outside those layers and are fixed by two clicks and one decision.
 
 ---
 

@@ -22,7 +22,6 @@
     "senha": "node senha.mjs",
     "pagamento": "node pagamento.mjs",
     "csp": "node csp.mjs",
-    "proposta": "vitest run --config vitest.proposta.config.mts",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {
