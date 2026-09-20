@@ -86,7 +86,30 @@ vez; ou apagar os logs das catorze execuções (Actions → Acesso → cada exec
 **Pronto quando.** Abrir uma execução antiga de `Acesso` numa janela anônima e
 não ver nenhum endereço de e-mail.
 
-### 3. Habilitar o PIX na Mercado Pago
+### 3. Habilitar o PIX na Mercado Pago - AINDA NÃO ESTÁ VALENDO
+
+Conferido às 14:19 de 20/09, com o token que está em produção. A resposta da
+própria Mercado Pago:
+
+```
+✓ Mercado Pago autenticou.
+  Habilitados na conta: cartão.
+⚠ A conta NÃO tem habilitado: PIX.
+```
+
+Ou seja: as credenciais de produção estão certas e o cartão funciona, mas o
+PIX não entrou. Isso é lido da API deles (`/v1/payment_methods`) a cada
+publicação, então não é palpite nem cache nosso.
+
+Causas, da mais comum para a menos: falta cadastrar a **chave PIX dentro da
+conta Mercado Pago**; o PIX foi habilitado em **outra conta** que não a da
+aplicação; ainda não propagou; ou o cadastro do CNPJ tem pendência de
+validação.
+
+**Enquanto isso, atenção:** o checkout oferece PIX primeiro. Um comprador que
+escolher PIX hoje recebe erro. Dá para vender no cartão, mas não anuncie.
+
+O que era o problema:
 
 **O que é.** A conta hoje tem cartão habilitado e **PIX não**. O checkout
 oferece PIX primeiro.
@@ -100,7 +123,19 @@ PIX (pede a chave e a conta bancária de recebimento).
 
 **Pronto quando.** O item 6 abaixo (compra de teste) passar com PIX.
 
-### 4. Apontar o webhook da Mercado Pago para produção
+### 4. Apontar o webhook da Mercado Pago para produção - FEITO em 20/09/2026
+
+O simulador da Mercado Pago respondeu **200**, com o segredo novo no ar. Isso
+prova a corrente inteira: a URL está certa, a notificação atravessa até o
+Worker, e a assinatura confere - que é a única coisa que separa um aviso
+legítimo de qualquer um batendo naquela rota.
+
+Fica registrado o susto, porque ele vai se repetir: o primeiro teste deu 401
+porque foi disparado **25 segundos antes** de a publicação instalar o segredo.
+Trocar o segredo no GitHub não muda nada sozinho; é a publicação que o leva
+até o Worker. Espere ela ficar verde antes de testar.
+
+O que era o problema:
 
 **O que é.** O aviso que a Mercado Pago manda quando um pagamento muda de
 estado.
@@ -330,12 +365,15 @@ com teste.
 ## Onde estamos (20/09/2026)
 
 Fechados: **1** (Pages fora do ar, confirme o 404), **2** (execuções
-apagadas, repositório privado), **5** (Resend verificada), o **bloco 3**
-inteiro e a correção do pagamento.
+apagadas, repositório privado), **4** (webhook, simulador em 200), **5**
+(Resend verificada), **11** (privacidade reescrita), o **bloco 3** inteiro e
+a correção do pagamento.
 
-Faltam, em ordem: **3** e **4** na Mercado Pago (PIX e webhook), **6** a
-compra de verdade com estorno, **7** o endereço, **11** as três frases da
-privacidade, e então as decisões: **8** o conteúdo no pacote e **9** as
-regras de borda. O **10** quando houver tempo.
+Faltam: **3** o PIX, que a Mercado Pago ainda reporta como desabilitado;
+**6** a compra de verdade com estorno; **7** o endereço; e as decisões
+**8** (conteúdo no pacote), **9** (regras de borda) e **10** (branch
+protegida).
 
-Nada do que falta é código. O caminho crítico é a Mercado Pago.
+Nada do que falta é código. O caminho crítico é o PIX: sem ele, o item 6 só
+dá para fazer no cartão, e o checkout continua oferecendo uma forma de
+pagamento que falha.
