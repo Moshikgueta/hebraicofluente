@@ -17,7 +17,20 @@ fechado, testado (378 testes) e no ar.
 
 ## Bloco 1 - sem isto não dá para vender
 
-### 1. Despublicar a cópia do GitHub Pages
+### 1. Despublicar a cópia do GitHub Pages - PELO JEITO JÁ FOI
+
+Em 20/09/2026 a API do GitHub passou a responder `has_pages: false` para este
+repositório, e a última publicação bem-sucedida no Pages foi em 19/09 às
+23:07. Não fui eu: a API de Pages é barrada para mim. A explicação mais
+provável é o repositório ter virado privado (item 2) - no plano gratuito o
+Pages não serve repositório privado, então torná-lo privado derruba o site
+junto.
+
+**Confirme você**, numa janela anônima: `moshikgueta.github.io/hebraicofluente`
+tem de dar 404. E vale apagar o `.github/workflows/deploy-app.yml`, que era o
+único jeito de a cópia de demonstração voltar (ele só roda à mão, mas existe).
+
+O que era o problema:
 
 **O que é.** `moshikgueta.github.io/hebraicofluente` tem o curso inteiro no
 modo de demonstração: conta no próprio navegador, checkout que se aprova
@@ -51,9 +64,10 @@ o resumo de pé). `Actions → Acesso` está vazio. As execuções de publicaç�
 continuam lá e foram conferidas: só carregam o endereço sintético
 `hf-e2e-…@example.invalid`, que é criado e apagado pela própria publicação.
 
-Continua valendo decidir se o repositório fica público: nada de cliente sai
-mais nos resumos, mas o código, os segredos que NÃO estão nele e a estrutura
-do banco são legíveis por qualquer pessoa. Isso é escolha, não risco aberto.
+**E o repositório está privado** - a API responde `private: true`. Também não
+fui eu; imagino que tenha sido você depois de ler o relatório. Com as duas
+coisas, este item está fechado pelos dois lados: não há mais o que ler, e não
+há mais quem leia.
 
 O que era o problema:
 
