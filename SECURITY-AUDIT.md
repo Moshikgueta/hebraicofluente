@@ -267,13 +267,19 @@ cardholder name, card BIN and last four. Applied: `enxuto()` keeps only id,
 status, amounts, currency, reference, dates, method. Verify after the first
 real payment: `SELECT raw FROM payment_events LIMIT 1` must show no `payer`.
 
-**F-29 · MEDIUM · CONFIRMED · Open (text)** - `app/src/app/privacidade/page.tsx`
+**F-29 · MEDIUM · CONFIRMED · Applied (third pass)** - `app/src/app/privacidade/page.tsx`
 Three mismatches between policy and code: Resend (US sub-processor receiving
-email and first name) is not named; "não pedimos documento" was contradicted
+email and first name) was not named; "não pedimos documento" was contradicted
 by F-28 (now fixed in code); "os dados do seu cartão nunca passam pelos nossos
-servidores" was too absolute (BIN/last4/name did, now not stored). Add a
-Resend bullet to "Com quem compartilhamos" and a row for payment data
-returned by the provider.
+servidores" was too absolute (BIN/last4/name do transit, they are simply never
+stored). Applied: a Resend bullet naming exactly what it receives; the card
+sentence rewritten to the claim the code actually supports ("não guardamos
+nenhum deles - a resposta é filtrada antes de ser gravada", which `GUARDAR` in
+`db.js` makes verifiable); the CPF sentence now says Mercado Pago may ask for
+it on their own screen and that it never reaches us; a table row for what the
+provider returns and we keep; and a paragraph on international transfer (LGPD
+art. 33) for Resend and Cloudflare, which was missing entirely. The policy date
+moved to 2026-09-20, because the document itself promises that it does.
 
 **F-30 · LOW · CONFIRMED · Applied** - `worker/src/api/auth.js`
 Reset-token URLs on `/nova-senha/?token=` had no `Referrer-Policy`; now

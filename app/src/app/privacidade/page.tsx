@@ -31,6 +31,16 @@ export default function Page() {
      'enquanto a conta existir, ou até você apagar'],
     ['Dados do pedido', 'registrar a compra, liberar o acesso e cumprir obrigação fiscal',
      'pelo prazo legal de guarda fiscal'],
+    /* O que o provedor nos devolve, e que fica gravado. A lista exata é
+       GUARDAR, em worker/src/lib/db.js: tudo que não está nela é descartado
+       antes de a linha existir - inclusive e-mail do pagador, CPF e os
+       dígitos do cartão. Descrever isto aqui é o que permite dizer, na
+       seção 3, que não guardamos dado de cartão sem estar exagerando. */
+    ...(soPix() ? [] : [[
+      'Resultado do pagamento',
+      'confirmar a compra, liberar o acesso e tratar estorno - o que a Mercado Pago responde sobre o pagamento: situação, valor, moeda, forma e a referência do pedido. Sem dados do pagador e sem dados de cartão',
+      'pelo prazo legal de guarda fiscal'
+    ] as [string, string, string]]),
     ['Endereço de IP e dados do navegador', 'segurança: limitar tentativas de login e identificar abuso',
      'poucos dias, em registro técnico']
   ];
@@ -67,8 +77,13 @@ export default function Page() {
       <Artigo n={2} titulo="O que coletamos, e por quê">
         <p>
           Só o necessário para o curso funcionar e para a compra existir. Não há
-          coleta de dado sensível, não pedimos documento, e não há perfilamento para
-          publicidade.
+          coleta de dado sensível e não há perfilamento para publicidade.{' '}
+          {soPix()
+            ? 'Não pedimos CPF nem nenhum outro documento em lugar nenhum.'
+            : <>Não pedimos CPF nem nenhum outro documento em nenhuma tela nossa
+                - a Mercado Pago pode pedir o seu CPF na tela de pagamento dela,
+                por exigência do meio de pagamento, e esse dado fica com ela:
+                não é enviado para nós nem guardado aqui.</>}
         </p>
         <Card className="overflow-x-auto p-0">
           <table className="w-full border-collapse font-ui text-[14px]">
@@ -122,10 +137,33 @@ export default function Page() {
         <Lista itens={[
           soPix()
             ? <><strong>Seu banco e o nosso</strong>: o PIX é pago dentro do aplicativo do seu banco. Nós só geramos o código de cobrança - <strong>nenhum dado seu é enviado a um processador de pagamento</strong>, e dados de cartão não são pedidos nem recebidos em lugar nenhum.</>
-            : <><strong>Meio de pagamento</strong>: processa a cobrança e nos devolve apenas o resultado. Os dados do seu cartão são digitados no ambiente dele e <strong>nunca passam pelos nossos servidores</strong>.</>,
+            /* A frase antiga dizia que os dados do cartão "nunca passam pelos
+               nossos servidores". A resposta da Mercado Pago a uma consulta
+               nossa PODE trazer os primeiros e os últimos dígitos e o nome
+               impresso no cartão - eles são descartados antes de qualquer
+               gravação (a lista GUARDAR em worker/src/lib/db.js), mas passam.
+               "Não guardamos" é verdade e é verificável; "nunca passam" era
+               uma promessa mais forte do que o código sustenta. */
+            : <><strong>Mercado Pago</strong>: recebe o seu <strong>e-mail</strong> e o seu <strong>nome</strong> para emitir a cobrança, processa o pagamento e nos devolve o resultado. O número do cartão, a validade e o código de segurança são digitados no ambiente dela: nós não pedimos esses dados e <strong>não guardamos nenhum deles</strong> - o que a resposta dela traz é filtrado antes de ser gravado, e só ficam os campos listados na tabela acima.</>,
+          /* A Resend estava fora desta lista, e é um operador como os outros:
+             recebe endereço e primeiro nome de todo mundo que pede um link de
+             senha. Omiti-la deixava a política descrevendo menos
+             compartilhamento do que o sistema faz. */
+          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o seu primeiro nome</strong>. Não mandamos e-mail de propaganda.</>,
           <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site e o banco de dados.</>,
           <><strong>Autoridades</strong>, quando houver ordem legal para isso.</>
         ]} />
+        {/* Transferência internacional (LGPD, art. 33). A Resend e a
+            Cloudflare são empresas de fora, e a base é a execução do contrato
+            - dizer isso em uma frase custa uma frase, e a ausência dela é
+            achado de auditoria. */}
+        <p>
+          A Resend e a Cloudflare são empresas sediadas fora do Brasil, e parte
+          do tratamento acontece em servidores no exterior. Essa transferência
+          é necessária para a execução do contrato que você fez conosco - é o
+          que permite o site responder e o e-mail de senha chegar - e está
+          amparada no art. 33 da LGPD.
+        </p>
       </Artigo>
 
       <Artigo n={4} titulo="Cookies e medição">

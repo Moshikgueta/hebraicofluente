@@ -239,18 +239,35 @@ houver mais alguém, é o caminho mais curto entre um engano e o ar.
 `Acesso` já roda no ambiente `producao`: basta adicionar revisores em
 Settings → Environments para que ela peça aprovação.
 
-### 11. Três frases da política de privacidade
+### 11. Três frases da política de privacidade - ESCRITAS, falta você ler
 
-**O que é.** A política diz menos do que o sistema faz: não nomeia a Resend
-(que recebe e-mail e primeiro nome, nos Estados Unidos), e a frase sobre dados
-de cartão está absoluta demais.
+Estão no ar em `/privacidade/`. Cinco mudanças, nenhuma delas cosmética:
 
-**Por que importa.** Política que não bate com o código é o tipo de detalhe
-que só aparece quando alguém reclama, e aí aparece do pior jeito.
+1. **A Resend passou a ser nomeada**, dizendo o que ela recebe: o seu endereço
+   de e-mail e o seu primeiro nome. Ela estava fora da lista, e a política
+   descrevia menos compartilhamento do que o sistema faz.
+2. **A frase do cartão deixou de prometer demais.** Dizia que os dados do
+   cartão "nunca passam pelos nossos servidores". A resposta da Mercado Pago a
+   uma consulta nossa pode trazer os primeiros e os últimos dígitos e o nome
+   impresso - eles são descartados antes de qualquer gravação, mas passam.
+   Agora diz o que o código sustenta: **não guardamos nenhum deles**, e a
+   resposta é filtrada antes de ser gravada. É a diferença entre uma promessa
+   que alguém pode desmentir e uma que se pode conferir no código.
+3. **O CPF.** Dizia "não pedimos documento", ponto. Continua sendo verdade
+   para nós, mas a Mercado Pago pede o CPF na tela dela. Agora está escrito:
+   nós não pedimos, ela pode pedir, e esse dado não chega aqui.
+4. **Uma linha nova na tabela**: o que a Mercado Pago devolve e nós guardamos
+   (situação, valor, moeda, forma e a referência do pedido - nada do pagador,
+   nada de cartão).
+5. **Transferência internacional**, que não estava lá de jeito nenhum: a
+   Resend e a Cloudflare são de fora, e o art. 33 da LGPD manda dizer isso e
+   em que base. Uma frase.
 
-**Como fazer.** Acrescentar a Resend em "Com quem compartilhamos" e uma linha
-sobre o que a Mercado Pago devolve e nós guardamos (status, valor, moeda,
-referência; nada do pagador). Eu escrevo, você lê e aprova.
+A data do rodapé foi para 20/09/2026, porque a própria política promete que
+ela muda quando o texto muda.
+
+**O que falta:** você ler `/privacidade/` e me dizer se concorda com o tom.
+Nada aí é jurídico demais para você conferir - foi escrito para ser lido.
 
 ---
 
