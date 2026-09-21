@@ -736,10 +736,14 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           os dois hebraicos são fases da mesma língua quer saber o que
           aconteceu no meio.
 
-          O texto é curto de propósito. A versão inteira mora em
-          data/culture.json e aparece em /historia/, e duas cópias da mesma
-          história é uma que vai ficar desatualizada. As datas daqui são as
-          de lá. */}
+          O texto é curto de propósito, e escrito daqui: a versão da aula
+          mora em data/culture.json e aparece em /historia/, que é conteúdo
+          do curso. Os FATOS são os mesmos - as datas daqui são as de lá -,
+          a redação não, e isso não é estilo: um chunk de /_next/static não
+          tem portão, e `pacote.mjs` recusa a build que leva a prosa paga
+          para dentro dele. A primeira versão deste quadro copiava a frase
+          de abertura da carta e derrubou o deploy 93, que é exatamente o
+          trabalho daquele verificador. */}
       <details className="rounded-[var(--r-lg)] border border-line bg-surface overflow-hidden">
         <summary className="cursor-pointer list-none p-5 font-ui text-[15px] font-semibold text-ink
                             hover:bg-surface-2 flex items-center justify-between gap-3">
@@ -749,28 +753,29 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         <div className="px-5 pb-5 grid gap-3 border-t border-[color:var(--line-soft)] pt-4
                         text-[15px] leading-relaxed text-ink-body">
           <p>
-            Por cerca de mil e setecentos anos o hebraico foi lido, rezado, estudado e
-            escrito - mas não era a língua em que as pessoas pediam o almoço. Judeus
-            falavam iídiche, ladino, árabe, português, e guardavam o hebraico para o
-            livro e para a reza.
+            Entre as duas fases há um intervalo de uns mil e setecentos anos em que
+            ninguém crescia falando esta língua. Ela não sumiu: seguiu no livro, na
+            reza e nas cartas entre comunidades distantes. O que ela não era é a língua
+            em que se pede o almoço - essa era o iídiche, o ladino, o árabe ou o
+            português, conforme o lugar.
           </p>
           <p>
-            No fim do século XIX isso começou a mudar. Eliezer Ben-Yehuda (1858-1922)
-            mudou-se para Jerusalém em 1881 decidido a criar as palavras que faltavam e
-            a criar o filho falando só hebraico; Itamar, esse filho, é lembrado como a
-            primeira criança em séculos a ter o hebraico como língua materna.
+            A virada começa no fim do século XIX. O nome mais lembrado é o de Eliezer
+            Ben-Yehuda (1858-1922), que se instalou em Jerusalém em 1881 e criou o
+            próprio filho ouvindo hebraico e mais nada; Itamar entrou para a história
+            como a primeira criança em séculos a ter o hebraico como primeira língua.
           </p>
           <p>
-            Ben-Yehuda virou o símbolo da história, e vale dizer o resto dela: o
-            trabalho foi coletivo. Escolas, professores, jornais e famílias inteiras
-            decidiram falar uma língua que ninguém falava em casa. Hoje são milhões de
-            falantes nativos.
+            Só que uma língua não volta pela decisão de uma família. Voltou porque
+            escolas resolveram dar aula assim, professores resolveram ensinar assim,
+            jornais resolveram sair assim, e muita gente resolveu falar em casa um
+            idioma que ninguém ali tinha como materno. Hoje há milhões de pessoas para
+            quem ele é a primeira língua.
           </p>
           <p className="border-t border-[color:var(--line-soft)] pt-3">
-            É por isso que o hebraico de hoje tem palavra para computador e o antigo
-            não: uma foi criada, a outra não precisava existir. E é por isso também que
-            as letras não mudaram - ninguém inventou uma escrita nova, só voltou a
-            falar a que estava guardada.
+            É daí que vem o que você leu no quadro de cima. A palavra para computador
+            precisou ser inventada, porque não havia; as letras, não - ninguém desenhou
+            um alfabeto novo, só voltou a falar em voz alta o que já estava escrito.
           </p>
           <Link href="/historia"
                 className="font-ui text-[14px] font-semibold text-[var(--accent)]
