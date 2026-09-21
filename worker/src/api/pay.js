@@ -21,9 +21,10 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { ip, requireAccount } from './auth.js';
 import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
 import {
-  createOrder, entitlementExpiry, getOrder, grantAccess, grantedBy, log, ordersOf,
-  recordEvent, rollbackAccess, throttled, updateOrder
+  createOrder, entitlementExpiry, findAccountById, getOrder, grantAccess, grantedBy,
+  hasEntitlement, log, ordersOf, recordEvent, rollbackAccess, throttled, updateOrder
 } from '../lib/db.js';
+import { dataBR, mailReady, mensagemDeCompra, reaisBR, sendMail } from '../lib/mail.js';
 import {
   createCardPreference, createPix, getPayment, mapStatus, paymentsFor,
   verifyWebhookSignature
@@ -491,6 +492,16 @@ async function applyPayment(env, order, payment, source) {
      aponta para este pedido, os meses já foram dados; falta só o pedido. */
   const jaConcedido = await grantedBy(env, order.account_id, order.course_slug) === order.id
     && atual.status === 'pending';
+
+  /* Lido ANTES de conceder, porque `grantAccess` apaga a diferença: depois
+     dele toda conta tem acesso, e não haveria como saber se esta compra abriu
+     a porta ou esticou um prazo que já existia. É só o que decide o texto do
+     e-mail - "seu acesso está liberado" contra "foi renovado" -, e mandar a
+     primeira frase a quem já estudava há meses é o tipo de detalhe que faz a
+     mensagem inteira parecer automática. */
+  const jaTinhaAcesso = !jaConcedido
+    && await hasEntitlement(env, order.account_id, order.course_slug);
+
   if (!jaConcedido) {
     await grantAccess(env, {
       accountId: order.account_id,
@@ -503,5 +514,61 @@ async function applyPayment(env, order, payment, source) {
     status: 'paid', paid_at: Date.now(), provider_ref: String(payment.id)
   });
   await log(env, order.account_id, 'paid', `${order.id} via ${source}`);
+  await confirmarPorEmail(env, order, !jaTinhaAcesso);
   return 'paid';
+}
+
+/**
+ * O recibo, na caixa de entrada de quem pagou.
+ *
+ * ── por que AQUI, e exatamente aqui ─────────────────────────────────────
+ * Este ponto roda uma vez por pedido, e não por acaso: a linha
+ * `if (atual.status === 'paid') return 'paid'` lá em cima faz toda segunda
+ * passagem sair antes de chegar aqui. E há três caminhos que levam um
+ * pagamento a ser liquidado - o retorno do navegador, o aviso da Mercado
+ * Pago e a varredura de dez em dez minutos -, então um disparo colocado
+ * mais acima mandaria o mesmo e-mail três vezes.
+ *
+ * ── e por que ele NUNCA derruba a compra ────────────────────────────────
+ * Falha aberta, como todo o resto do módulo de e-mail. O acesso já foi
+ * concedido e o pedido já está pago quando esta função começa; um provedor
+ * fora do ar não pode desfazer isso nem devolver erro a quem pagou. O que
+ * acontece na falha é o que tem de acontecer: fica registrado na trilha,
+ * com o motivo, para que "não recebi o e-mail" tenha resposta em vez de
+ * palpite.
+ */
+async function confirmarPorEmail(env, order, primeiraCompra) {
+  try {
+    if (!mailReady(env)) return;
+
+    const account = await findAccountById(env, order.account_id);
+    if (!account?.email) return;
+
+    const curso = getCourse(order.course_slug);
+    const vence = await entitlementExpiry(env, account.id, order.course_slug);
+    const site = String(env.SITE_ORIGIN || '').replace(/\/+$/, '');
+
+    const msg = mensagemDeCompra({
+      nome: account.name || '',
+      curso: curso?.titlePt || order.course_slug,
+      valor: reaisBR(order.amount_cents, order.currency),
+      pedido: order.id,
+      expiraEm: dataBR(vence),
+      link: `${site}/meu-hebraico/`,
+      marca: empresa.nomeFantasia || 'Hebraico Fluente',
+      suporte: empresa.contato?.emailSuporte || '',
+      arrependimentoDias: empresa.politicas?.arrependimentoDias || 0,
+      /* Uma renovação não diz "seu acesso está liberado" a quem já estava
+         estudando: diz que foi estendido. É a mesma compra e outra notícia. */
+      renovacao: !primeiraCompra
+    });
+
+    const r = await sendMail(env, { to: account.email, ...msg });
+    await log(env, account.id, r.ok ? 'compra-enviada' : 'compra-email-falhou',
+      r.ok ? order.id : `${order.id} ${r.motivo}${r.detalhe ? ': ' + r.detalhe : ''}`);
+    if (!r.ok) console.error('mail-compra', r.motivo, r.status || '', r.detalhe || '');
+  } catch (e) {
+    /* Um erro aqui é um e-mail que não saiu, nunca uma compra desfeita. */
+    console.error('mail-compra', e && e.stack || e);
+  }
 }

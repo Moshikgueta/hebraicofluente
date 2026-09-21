@@ -38,8 +38,16 @@ let proximoId = 700001;
 
 function mercadoPagoFalsa() {
   pagamentos = new Map();
+  enviados = [];
+  recusarEmail = false;
   vi.stubGlobal('fetch', async (url: string, init?: RequestInit) => {
     const u = new URL(url);
+    if (u.host === 'api.resend.test') {
+      if (recusarEmail) return new Response('{"message":"nope"}', { status: 422 });
+      const b = JSON.parse(String(init?.body ?? '{}'));
+      enviados.push({ to: String(b.to?.[0] ?? ''), subject: b.subject, text: b.text, html: b.html });
+      return new Response('{"id":"m1"}', { status: 200 });
+    }
     if (u.pathname === '/v1/payments' && init?.method === 'POST') {
       const body = JSON.parse(String(init.body));
       const p: Pagamento = {
@@ -63,6 +71,14 @@ function mercadoPagoFalsa() {
   });
 }
 
+/* ── o provedor de e-mail de mentira ───────────────────────────────────
+   Mora dentro do mesmo `fetch` falso da Mercado Pago, e não num segundo:
+   um `stubGlobal` sobrescreve o outro, e quem chegasse depois apagaria a
+   Mercado Pago inteira. */
+type Enviado = { to: string; subject: string; text: string; html: string };
+let enviados: Enviado[] = [];
+let recusarEmail = false;
+
 /** Um aviso assinado como a Mercado Pago assina. */
 async function avisoAssinado(id: number) {
   const ts = Math.floor(Date.now() / 1000);
@@ -75,6 +91,13 @@ async function avisoAssinado(id: number) {
 }
 
 const envPagamento = () => envDeTeste({ MP_ACCESS_TOKEN: TOKEN, MP_WEBHOOK_SECRET: SEGREDO });
+
+/** O mesmo, com o provedor de e-mail ligado. */
+const envComEmail = () => envDeTeste({
+  MP_ACCESS_TOKEN: TOKEN, MP_WEBHOOK_SECRET: SEGREDO,
+  RESEND_API_KEY: 're_teste', EMAIL_FROM: 'Hebraico Fluente <c@hebraicofluente.com.br>',
+  RESEND_BASE: 'https://api.resend.test'
+});
 
 async function compradora(env: Record<string, unknown>, email = 'compradora@exemplo.com.br') {
   const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
@@ -374,5 +397,140 @@ describe('9. um pagamento que a Mercado Pago não conhece não vira reenvio eter
     const n = Number(linha(env, "SELECT COUNT(*) AS n FROM access_log WHERE action = 'settle-error'")!.n);
     expect(n).toBeGreaterThan(0);
     expect(n).toBeLessThanOrEqual(20);
+  });
+});
+
+/* ── o recibo na caixa de entrada ────────────────────────────────────────
+   Faltava inteiro: a pessoa pagava, o acesso abria na tela, e o e-mail dela
+   ficava vazio. Sem recibo, sem link de volta, sem nada. */
+
+describe('a confirmação de compra', () => {
+  it('chega no endereço de quem pagou, com o que ela precisa saber', async () => {
+    const env = envComEmail();
+    const { cookie, id } = await compradora(env, 'ana@exemplo.com.br');
+    const ordem = await pedidoPix(env, cookie);
+    const p = [...pagamentos.values()][0]!;
+    p.status = 'approved';
+    await pay.webhook({ request: await avisoAssinado(p.id), env });
+
+    expect(enviados.length, 'nenhum e-mail saiu').toBe(1);
+    const m = enviados[0]!;
+    expect(m.to).toBe('ana@exemplo.com.br');
+    expect(m.subject).toContain('Alfabetização');
+
+    /* O que a mensagem tem de carregar, item por item. */
+    expect(m.text, 'sem link para voltar').toContain('https://hebraicofluente.com.br/meu-hebraico/');
+    expect(m.text, 'sem o número do pedido').toContain(ordem.id);
+    expect(m.text, 'sem o valor').toMatch(/R\$\s?\d/);
+    expect(m.text, 'sem a data de vencimento').toMatch(/Acesso até: \d{2}\/\d{2}\/\d{4}/);
+    expect(m.text, 'sem os sete dias do CDC').toContain('7 dias para desistir');
+    expect(m.text, 'sem o suporte').toContain('@');
+    /* E diz que abriu, não que renovou. */
+    expect(m.text).toContain('está liberado');
+
+    void id;
+  });
+
+  it('sai UMA vez só, por mais avisos que cheguem', async () => {
+    /* É o ponto em que isto poderia dar errado feio: três caminhos liquidam
+       o mesmo pagamento - o retorno do navegador, o aviso da Mercado Pago e
+       a varredura de dez em dez minutos. Um disparo no lugar errado manda o
+       mesmo recibo três vezes. */
+    const env = envComEmail();
+    const { cookie } = await compradora(env);
+    const ordem = await pedidoPix(env, cookie);
+    const p = [...pagamentos.values()][0]!;
+    p.status = 'approved';
+
+    for (let i = 0; i < 3; i++) await pay.webhook({ request: await avisoAssinado(p.id), env });
+    await verify(env, cookie, ordem.id);
+    await runReconcile(env);
+
+    expect(enviados.length, 'o recibo saiu mais de uma vez').toBe(1);
+  });
+
+  it('um provedor fora do ar não desfaz a compra', async () => {
+    /* Falha aberta: quando esta função começa, o acesso já foi concedido e o
+       pedido já está pago. Um e-mail que não sai não pode devolver erro a
+       quem pagou nem deixar o pedido pendente. */
+    const env = envComEmail();
+    recusarEmail = true;
+    const { cookie, id } = await compradora(env);
+    const ordem = await pedidoPix(env, cookie);
+    const p = [...pagamentos.values()][0]!;
+    p.status = 'approved';
+
+    const w = await pay.webhook({ request: await avisoAssinado(p.id), env });
+    expect(w.status).toBe(200);
+    expect(await hasEntitlement(env, id, 'alfabetizacao'), 'a compra foi desfeita').toBe(true);
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${ordem.id}'`)!.status).toBe('paid');
+
+    /* E a falha fica registrada, para que "não recebi o e-mail" tenha
+       resposta em vez de palpite. */
+    const rows = (env.DB as { bruto: { prepare(s: string): { all(): unknown[] } } }).bruto
+      .prepare("SELECT action FROM access_log WHERE action LIKE 'compra-%'").all() as { action: string }[];
+    expect(rows.map(r => r.action)).toContain('compra-email-falhou');
+  });
+
+  it('sem provedor configurado, nada quebra e nada é fingido', async () => {
+    const env = envPagamento();          // sem RESEND_API_KEY
+    const { cookie, id } = await compradora(env);
+    await pedidoPix(env, cookie);
+    const p = [...pagamentos.values()][0]!;
+    p.status = 'approved';
+    await pay.webhook({ request: await avisoAssinado(p.id), env });
+
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
+    expect(enviados.length).toBe(0);
+    /* Nem sucesso registrado: não se anota um envio que não houve. */
+    const rows = (env.DB as { bruto: { prepare(s: string): { all(): unknown[] } } }).bruto
+      .prepare("SELECT action FROM access_log WHERE action = 'compra-enviada'").all();
+    expect(rows.length).toBe(0);
+  });
+
+  it('a trilha do recibo não guarda o endereço', async () => {
+    const env = envComEmail();
+    await (async () => {
+      const { cookie } = await compradora(env, 'discreta@exemplo.com.br');
+      await pedidoPix(env, cookie);
+      const p = [...pagamentos.values()][0]!;
+      p.status = 'approved';
+      await pay.webhook({ request: await avisoAssinado(p.id), env });
+    })();
+    const rows = (env.DB as { bruto: { prepare(s: string): { all(): unknown[] } } }).bruto
+      .prepare("SELECT detail FROM access_log WHERE action LIKE 'compra-%'").all() as { detail: string }[];
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows.every(r => !String(r.detail).includes('@'))).toBe(true);
+  });
+});
+
+describe('a renovação não é tratada como primeira compra', () => {
+  it('diz que o acesso foi renovado, e não que acabou de abrir', async () => {
+    /* Mandar "seu acesso está liberado" a quem já estuda há meses é o tipo de
+       detalhe que faz a mensagem inteira parecer automática - e ela é o único
+       contato escrito que a plataforma tem com quem pagou. */
+    const env = envComEmail();
+    const { cookie, id } = await compradora(env, 'veterana@exemplo.com.br');
+
+    /* Acesso vencendo em vinte dias: dentro da janela de renovação, que é o
+       que o checkout aceita cobrar de novo. */
+    await grantAccess(env, {
+      accountId: id, courseSlug: 'alfabetizacao', orderId: 'pedido-antigo', months: 0
+    });
+    (env.DB as { bruto: { prepare(s: string): { run(...a: unknown[]): unknown } } }).bruto
+      .prepare('UPDATE entitlements SET expires_at = ? WHERE account_id = ?')
+      .run(Date.now() + 20 * 86_400_000, id);
+
+    const ordem = await pedidoPix(env, cookie);
+    const p = [...pagamentos.values()][0]!;
+    p.status = 'approved';
+    await pay.webhook({ request: await avisoAssinado(p.id), env });
+
+    expect(enviados.length).toBe(1);
+    const m = enviados[0]!;
+    expect(m.subject, 'o assunto trata como compra nova').toContain('renovado');
+    expect(m.text).toContain('foi renovado');
+    expect(m.text).not.toContain('está liberado');
+    void ordem;
   });
 });

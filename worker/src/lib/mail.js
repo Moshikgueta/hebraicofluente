@@ -194,6 +194,134 @@ export function mensagemDeConvitePendente({ email, nome, cursos, marca, painel }
   return { subject: `Presente aguardando confirmação - ${assinatura}`, text, html };
 }
 
+/* ── a confirmação de compra ───────────────────────────────────────────── */
+
+/**
+ * Vai para o ALUNO, quando o pagamento é aprovado.
+ *
+ * Havia um buraco aqui que ninguém tinha visto: a pessoa pagava, o acesso
+ * abria na tela, e a caixa de entrada dela ficava vazia. Sem recibo, sem link
+ * para voltar, sem nada. Quem fechasse a aba precisava lembrar o nome do
+ * site; quem quisesse conferir o que comprou não tinha onde.
+ *
+ * Com uma venda por semana isso não aparece. Com trinta, vira fila de suporte
+ * com "paguei e não recebi nada" - e quem escreve isso não está enganado.
+ *
+ * ── o que esta mensagem carrega, e por quê ──────────────────────────────
+ *
+ *   O QUE ABRIU       o curso pelo nome e o link para começar. É a única
+ *                     coisa que a pessoa quer nos primeiros dez segundos;
+ *   COM QUE ENTRAR    o endereço desta mensagem. É a dúvida número um do
+ *                     suporte de qualquer plataforma com conta;
+ *   ATÉ QUANDO        a data, escrita. "12 meses" obriga a pessoa a fazer
+ *                     conta a partir de um dia que ela já não lembra;
+ *   QUANTO            o valor e o número do pedido. É o recibo, e o número é
+ *                     o que torna uma dúvida respondível pelo suporte;
+ *   O ARREPENDIMENTO  os sete dias do Código de Defesa do Consumidor. Não
+ *                     está aqui por obrigação e sim porque dizer isso em voz
+ *                     alta, por escrito, na hora da compra, é o que separa um
+ *                     curso de um golpe aos olhos de quem acabou de pagar.
+ *                     Quem confia pede menos reembolso, não mais.
+ *
+ * Sem anexo e sem imagem: a primeira mensagem de um remetente novo é a mais
+ * provável de cair no spam, e HTML pesado com imagem remota é o que faz cair.
+ */
+export function mensagemDeCompra({
+  nome, curso, valor, pedido, expiraEm, link, marca, suporte, arrependimentoDias, renovacao
+}) {
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  /* "ao CURSO X", e não "ao X": o título vem do catálogo e pode começar com
+     palavra de qualquer gênero - "ao Alfabetização em Hebraico" não é
+     português. O substantivo no meio resolve para qualquer título futuro. */
+  const abertura = renovacao
+    ? `Seu acesso ao curso ${curso} foi renovado.`
+    : `Seu acesso ao curso ${curso} está liberado.`;
+
+  const text = [
+    ola,
+    '',
+    abertura,
+    '',
+    `Comece por aqui: ${link}`,
+    '',
+    'Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
+    'compra. Seu progresso fica na conta, então dá para estudar no celular e',
+    'continuar no computador de onde parou.',
+    '',
+    '---',
+    `Curso: ${curso}`,
+    `Valor: ${valor}`,
+    expiraEm ? `Acesso até: ${expiraEm}` : null,
+    `Pedido: ${pedido}`,
+    '---',
+    '',
+    arrependimentoDias
+      ? `Você tem ${arrependimentoDias} dias para desistir, contados a partir de agora, sem ` +
+        'precisar justificar. É o Código de Defesa do Consumidor, e basta pedir: o valor volta integral.'
+      : null,
+    '',
+    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    '',
+    assinatura
+  /* `null` para a linha que não sai, `''` para a linha em branco que fica.
+     Filtrar por `''` comia as duas e a mensagem chegava num bloco só. */
+  ].filter(l => l !== null).join('\n');
+
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p><strong>${escapar(abertura)}</strong></p>`,
+    `<p><a href="${escapar(link)}">Começar o curso</a></p>`,
+    '<p>Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
+    ' compra. Seu progresso fica na conta, então dá para estudar no celular e',
+    ' continuar no computador de onde parou.</p>',
+    '<hr>',
+    `<p>Curso: ${escapar(curso)}<br>`,
+    `Valor: ${escapar(valor)}<br>`,
+    expiraEm ? `Acesso até: ${escapar(expiraEm)}<br>` : '',
+    `Pedido: ${escapar(pedido)}</p>`,
+    '<hr>',
+    arrependimentoDias
+      ? `<p>Você tem ${arrependimentoDias} dias para desistir, contados a partir de agora,` +
+        ' sem precisar justificar. É o Código de Defesa do Consumidor, e basta pedir:' +
+        ' o valor volta integral.</p>'
+      : '',
+    suporte
+      ? `<p>Qualquer dúvida, responda esta mensagem ou escreva para ${escapar(suporte)}.</p>`
+      : '',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  return {
+    subject: renovacao ? `Acesso renovado - ${curso}` : `Seu acesso está liberado - ${curso}`,
+    text,
+    html
+  };
+}
+
+/**
+ * A data em português, no fuso de quem compra.
+ *
+ * `toLocaleDateString` não é usado de propósito: o Worker roda em UTC, e um
+ * acesso que vence às 23h de uma terça em São Paulo sairia escrito como
+ * quarta - um dia a mais numa data que a pessoa vai cobrar. O Brasil não tem
+ * horário de verão desde 2019, então o deslocamento fixo de três horas é
+ * exato, e não uma aproximação.
+ */
+export function dataBR(ms) {
+  if (ms === null || ms === undefined || !Number.isFinite(Number(ms))) return '';
+  const d = new Date(Number(ms) - 3 * 60 * 60 * 1000);
+  const dois = n => String(n).padStart(2, '0');
+  return `${dois(d.getUTCDate())}/${dois(d.getUTCMonth() + 1)}/${d.getUTCFullYear()}`;
+}
+
+/** Centavos em reais, como o site escreve. */
+export function reaisBR(centavos, moeda = 'BRL') {
+  const v = Number(centavos || 0) / 100;
+  const n = v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return moeda === 'BRL' ? `R$ ${n}` : `${n} ${moeda}`;
+}
+
 /** O nome do aluno entra no HTML. Um nome com `<` não pode virar marcação. */
 function escapar(s) {
   return String(s === null || s === undefined ? '' : s)
