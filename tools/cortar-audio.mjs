@@ -448,7 +448,13 @@ function main() {
   };
   const comValor = new Set(['--onda', '--de', '--ate', '--letra']);
   const wav = argv.find((a, i) => !a.startsWith('--') && !comValor.has(argv[i - 1]));
-  const onda = Number(arg('--onda') ?? 1);
+  /* `--onda todas` existe por causa da página de gravação guiada: ela pede um
+     arquivo por LETRA com tudo o que aquela letra tem - o nome e as sílabas da
+     onda 1 e as palavras de leitura da 2 -, porque gravar o alfabeto uma vez é
+     melhor do que percorrê-lo três vezes. O padrão continua sendo a onda 1. */
+  const ondaCru = arg('--onda') ?? '1';
+  const todasOndas = String(ondaCru).toLowerCase() === 'todas';
+  const onda = todasOndas ? null : Number(ondaCru);
   const de = arg('--de') ? Number(arg('--de')) : null;
   const ate = arg('--ate') ? Number(arg('--ate')) : null;
   const letra = arg('--letra') ? Number(arg('--letra')) : null;
@@ -456,17 +462,18 @@ function main() {
 
   if (!wav || !existsSync(wav)) {
     console.log(`
-  uso:  npm run cortar-audio -- --letra 1 alef.m4a
+  uso:  npm run cortar-audio -- --letra 1 --onda todas letra-01.m4a
+        npm run cortar-audio -- --letra 1 alef.m4a
         npm run cortar-audio -- --vogais sinais.m4a
         npm run cortar-audio -- --onda 1 gravacao-inteira.wav
         npm run cortar-audio -- --onda 1 --de 40 --ate 80 parte2.wav
         npm run cortar-audio -- --ensaiar
 
-  --letra  um arquivo com os 7 itens de UMA letra: o nome e as 6 sílabas.
-           É o jeito recomendado de gravar no celular - se uma letra sair
-           errada, só ela é refeita.
+  --letra  um arquivo com os itens de UMA letra. É o jeito recomendado de
+           gravar no celular - se uma letra sair errada, só ela é refeita.
   --vogais o arquivo com os 14 nomes de sinais de vogal
-  --onda   a gravação cobre uma onda inteira (1, 2 ou 3)
+  --onda   1, 2, 3 ou "todas". "todas" é o que a página de gravação guiada
+           pede: um arquivo por letra com tudo o que aquela letra tem.
   --de     primeiro número do roteiro neste arquivo
   --ate    último número do roteiro neste arquivo
 `);
@@ -485,15 +492,16 @@ function main() {
      leitura na 2 - e pedir "letra 1" sem a onda juntava as três num alvo de
      nove clipes numerados de 1 a 269. Um arquivo com os sete itens da onda 1
      nunca casaria com isso, e a recusa pareceria erro da gravação. */
-  let alvo = audio.clips.filter(c => c.wave === onda);
-  let rotulo = `onda ${onda}`;
+  const daOnda = todasOndas ? 'todas as ondas' : `onda ${onda}`;
+  let alvo = todasOndas ? audio.clips.slice() : audio.clips.filter(c => c.wave === onda);
+  let rotulo = daOnda;
 
   if (letra !== null) {
     alvo = alvo.filter(c => grupoDe(c) === `letra ${letra}`);
-    rotulo = `letra ${letra} · onda ${onda}`;
+    rotulo = `letra ${letra} · ${daOnda}`;
   } else if (vogais) {
     alvo = alvo.filter(c => grupoDe(c) === 'sinais de vogal');
-    rotulo = `sinais de vogal · onda ${onda}`;
+    rotulo = `sinais de vogal · ${daOnda}`;
   } else {
     if (de !== null) alvo = alvo.filter(c => c.num >= de);
     if (ate !== null) alvo = alvo.filter(c => c.num <= ate);
