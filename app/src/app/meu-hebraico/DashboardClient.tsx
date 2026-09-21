@@ -32,6 +32,7 @@ import { useAccount } from '@/lib/account/store';
 import { CourseShelf } from '@/components/platform/CourseShelf';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
+import { AntesEDepois } from '@/components/platform/AntesEDepois';
 
 export function DashboardClient() {
   const p = useProgress();
@@ -197,6 +198,12 @@ export function DashboardClient() {
           />
         )}
       </section>
+
+      {/* Logo depois da ação de hoje, e antes dos números: os quatro
+          contadores dizem QUANTO foi feito, e este cartão diz o que aquilo
+          virou. Ele só aparece quando há frase legível - por volta da metade
+          do alfabeto - e some sozinho antes disso. */}
+      <AntesEDepois />
 
       {/* Os quatro números, e depois revisar e a semana. É a ordem do design,
           e ela responde na sequência certa: o que eu já fiz, o que está
