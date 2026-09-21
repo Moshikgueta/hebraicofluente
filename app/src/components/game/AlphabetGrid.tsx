@@ -19,18 +19,25 @@ import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, type Letter } from '@/lib/content';
-import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
+import {
+  isLessonComplete, isLessonMastered, letraLiberada, LIBERA_MARK, porQueTrancada, STAGE_COUNT
+} from '@/lib/state/rules';
 
 /* Os quatro estados do mapa de domínio, com os nomes e as cores do design.
    Cada um é cor + ícone + palavra, nunca cor sozinha - a mesma regra do
    retorno de resposta, e pelo mesmo motivo. */
-export type EstadoLetra = 'dominada' | 'revisar' | 'progresso' | 'nova';
+export type EstadoLetra = 'dominada' | 'revisar' | 'progresso' | 'nova' | 'bloqueada';
 
 const ESTADO: Record<EstadoLetra, { fundo: string; borda: string; tinta: string; rotulo: string }> = {
   dominada:  { fundo: 'var(--teal-soft)', borda: 'var(--edge-teal)', tinta: 'var(--teal-ink)', rotulo: 'Dominada' },
   revisar:   { fundo: 'var(--gold-soft)', borda: 'var(--edge-gold)', tinta: 'var(--gold)',     rotulo: 'Revisar' },
   progresso: { fundo: 'var(--card)',      borda: 'var(--line)',      tinta: 'var(--teal)',     rotulo: 'Em progresso' },
-  nova:      { fundo: 'var(--sand)',      borda: 'var(--line)',      tinta: 'var(--locked)',   rotulo: 'Não vista' }
+  /* "Aberta" e "bloqueada" são coisas diferentes, e misturá-las era o que
+     fazia o mapa parecer um cartaz em vez de um caminho: a próxima letra,
+     que o aluno PODE estudar agora, tinha a mesma cara das dezesseis que
+     ele ainda não pode. */
+  nova:      { fundo: 'var(--card)',      borda: 'var(--line)',      tinta: 'var(--ink-muted)', rotulo: 'Aberta' },
+  bloqueada: { fundo: 'var(--sand)',      borda: 'var(--line)',      tinta: 'var(--locked)',   rotulo: 'Bloqueada' }
 };
 
 export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
@@ -41,18 +48,20 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
      custaram; aqui só interessa a pertinência ao conjunto. */
   const aRevisar = new Set(p.weak);
 
-  /* The first unfinished letter is "current". Everything before it is open for
-     revisiting, everything after is reachable - nothing is locked, because a
-     lock is a promise the course does not need to make. */
-  const currentId = letters.find(l => !isLessonComplete(p.state, l.id))?.id;
+  const ordem = letters.map(l => l.id);
 
   const estadoDe = (L: Letter): EstadoLetra => {
-    const feita = isLessonComplete(p.state, L.id);
     if (aRevisar.has(L.id)) return 'revisar';
-    if (feita) return 'dominada';
-    if ((p.state.lessons[L.id]?.stagesDone.length ?? 0) > 0 || L.id === currentId) return 'progresso';
+    if (isLessonMastered(p.state, L.id)) return 'dominada';
+    if ((p.state.lessons[L.id]?.stagesDone.length ?? 0) > 0) return 'progresso';
+    if (!letraLiberada(p.state, ordem, L.id)) return 'bloqueada';
     return 'nova';
   };
+
+  /* "Você está aqui": a primeira que ainda não fechou E está aberta. */
+  const atual = letters.find(L => !isLessonComplete(p.state, L.id)
+                                 && letraLiberada(p.state, ordem, L.id))?.id;
+  const dominadas = letters.filter(L => isLessonMastered(p.state, L.id)).length;
 
   return (
     <div className="grid gap-3">
@@ -74,12 +83,37 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
             feita={isLessonComplete(p.state, L.id)}
             stages={p.state.lessons[L.id]?.stagesDone.length ?? 0}
             compact={compact}
+            atual={L.id === atual}
+            porque={porQueTrancada(p.state, ordem, L.id)}
+            nomeAnterior={id => letters.find(x => x.id === id)?.namePt ?? id}
           />
         ))}
       </div>
 
+      {/* Quantas letras o aluno DOMINA - não quantas visitou.
+          ──────────────────────────────────────────────────────────────
+          A diferença não é detalhe: visitar é abrir a tela, dominar é ter
+          feito as cinco etapas e passado na fixação. Uma barra que enche
+          com visita mede clique, e é a primeira coisa que um aluno percebe
+          que está mentindo. */}
+      <div className="grid gap-1.5">
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="font-ui text-[13px] text-ink-body">
+            <strong className="font-semibold text-ink tabular-nums">{dominadas}</strong>
+            {' '}de {letters.length} letras dominadas
+          </p>
+          <p className="font-ui text-[12px] tabular-nums text-ink-muted">
+            {Math.round((dominadas / letters.length) * 100)}%
+          </p>
+        </div>
+        <div className="h-1.5 rounded-full bg-surface-2 overflow-hidden">
+          <div className="h-full rounded-full bg-[var(--teal)] transition-[width] duration-500 ease-[var(--ease)]"
+               style={{ width: `${(dominadas / letters.length) * 100}%` }} />
+        </div>
+      </div>
+
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 font-ui text-[11.5px] text-ink-muted">
-        {(['dominada', 'revisar', 'progresso', 'nova'] as const).map(e => {
+        {(['dominada', 'revisar', 'progresso', 'nova', 'bloqueada'] as const).map(e => {
           const quantas = letters.filter(L => estadoDe(L) === e).length;
           if (quantas === 0) return null;
           return <Legend key={e} estado={e} label={`${quantas} ${ESTADO[e].rotulo.toLowerCase()}`} />;
@@ -127,8 +161,13 @@ function SinalEstado({ estado }: { estado: EstadoLetra }) {
 }
 
 function LetterCell({
-  letter: L, estado, feita, stages, compact
-}: { letter: Letter; estado: EstadoLetra; feita: boolean; stages: number; compact: boolean }) {
+  letter: L, estado, feita, stages, compact, atual, porque, nomeAnterior
+}: {
+  letter: Letter; estado: EstadoLetra; feita: boolean; stages: number; compact: boolean;
+  atual: boolean;
+  porque: ReturnType<typeof porQueTrancada>;
+  nomeAnterior: (id: string) => string;
+}) {
   const e = ESTADO[estado];
   /* A contagem de etapas só faz sentido enquanto a lição não fechou. Uma
      letra concluída que voltou para revisão mostra o NOME, e não "5/5" - o
@@ -138,25 +177,28 @@ function LetterCell({
     ? `${stages} de ${STAGE_COUNT} etapas`
     : e.rotulo.toLowerCase();
 
-  return (
-    <Link
-      href={`/licao/${L.id}`}
-      title={`${L.order}. ${L.namePt} - ${dito}`}
-      aria-label={`Letra ${L.order}, ${L.namePt}: ${dito}`}
-      style={{ background: e.fundo, borderColor: e.borda }}
-      className={`group relative rounded-[var(--r-md)] border transition-colors
-        ${compact ? 'min-h-[56px] p-1.5' : 'min-h-[56px] p-1.5 sm:min-h-[74px] sm:p-2'}
-        grid place-items-center gap-0.5`}
-    >
+  const trancada = estado === 'bloqueada';
+  /* O cadeado diz o que FALTA, e não só que está fechado. Uma porta sem
+     maçaneta é a forma mais rápida de alguém achar que o produto quebrou. */
+  const motivo = porque
+    ? porque.falta === 'licao'
+      ? `Termine a lição de ${nomeAnterior(porque.anterior)} para abrir esta.`
+      : `Sua melhor nota em ${nomeAnterior(porque.anterior)} foi ${Math.round((porque.nota ?? 0) * 100)}%. `
+        + `Refaça a fixação e chegue a ${Math.round(LIBERA_MARK * 100)}% para abrir esta.`
+    : null;
+
+  const dizer = trancada && motivo ? motivo : dito;
+
+  const dentro = (
+    <>
       <span aria-hidden className="absolute top-1 left-1.5 font-ui text-[9.5px] tabular-nums text-ink-muted">
         {L.order}
       </span>
-      <He size={compact ? 'word' : 'lg'} dim={estado === 'nova'}>{L.letter}</He>
+      <He size={compact ? 'word' : 'lg'} dim={trancada}>{L.letter}</He>
       {!compact && (
         /* O nome da letra só a partir de sm. Num telefone ele é 10px debaixo
            de cada uma das 22 células, e o nome de cada letra está no mapa e
-           na lição - aqui ele custava mais altura do que informava. O `title`
-           e o `aria-label` da célula continuam dizendo tudo. */
+           na lição - aqui ele custava mais altura do que informava. */
         <span className="hidden sm:block font-ui text-[10px] leading-none text-ink-muted truncate max-w-full">
           {parcial ? `${stages}/${STAGE_COUNT}` : L.namePt}
         </span>
@@ -170,6 +212,47 @@ function LetterCell({
       <span aria-hidden className="absolute top-1 right-1.5 grid place-items-center">
         <SinalEstado estado={estado} />
       </span>
+    </>
+  );
+
+  /* O anel de "você está aqui". Fora da célula, para não mexer na borda que
+     já carrega o estado - duas informações, dois desenhos. */
+  const comum = `group relative rounded-[var(--r-md)] border transition-colors
+    ${compact ? 'min-h-[56px] p-1.5' : 'min-h-[56px] p-1.5 sm:min-h-[74px] sm:p-2'}
+    grid place-items-center gap-0.5
+    ${atual ? 'outline outline-2 outline-offset-2 outline-[var(--teal)]' : ''}`;
+
+  if (trancada) {
+    /* Trancada NÃO é link. Um `<a>` desabilitado continua sendo um endereço:
+       abre em aba nova, aparece no menu do botão direito, e o teclado passa
+       por ele. Aqui é um botão que não leva a lugar nenhum e diz por quê. */
+    return (
+      <button
+        type="button"
+        title={`${L.order}. ${L.namePt} - ${dizer}`}
+        aria-label={`Letra ${L.order}, ${L.namePt}: bloqueada. ${motivo ?? ''}`}
+        onClick={e => {
+          const el = e.currentTarget.nextElementSibling as HTMLElement | null;
+          el?.classList.toggle('hidden');
+        }}
+        style={{ background: ESTADO.bloqueada.fundo, borderColor: ESTADO.bloqueada.borda }}
+        className={`${comum} cursor-default`}
+      >
+        {dentro}
+      </button>
+    );
+  }
+
+  return (
+    <Link
+      href={`/licao/${L.id}`}
+      title={`${L.order}. ${L.namePt} - ${dizer}`}
+      aria-label={`Letra ${L.order}, ${L.namePt}: ${dizer}${atual ? '. Você está aqui' : ''}`}
+      aria-current={atual ? 'step' : undefined}
+      style={{ background: e.fundo, borderColor: e.borda }}
+      className={comum}
+    >
+      {dentro}
     </Link>
   );
 }

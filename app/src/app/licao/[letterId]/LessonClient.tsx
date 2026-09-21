@@ -13,12 +13,12 @@
  * A stage is marked done when the learner reaches its end, and XP is awarded
  * there - never on navigation. */
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
@@ -31,7 +31,7 @@ import {
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { useProgress } from '@/lib/state/store';
-import { MASTERY_MARK } from '@/lib/state/rules';
+import { letraAtual, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
 import { allLetters, course, cultureAt, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
 import {
   buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
@@ -50,6 +50,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
   const p = useProgress();
   const router = useRouter();
   const [stage, setStage] = useState(1);
+  const [trancada, setTrancada] = useState<ReturnType<typeof porQueTrancada>>(null);
   const [quizResult, setQuizResult] = useState<PlayerResult | null>(null);
   const [quizRun, setQuizRun] = useState(0);
 
@@ -81,6 +82,28 @@ export function LessonClient({ letter }: { letter: Letter }) {
     [letter, history, quizRun]
   );
 
+  /* A trava de progressão, do lado da rota.
+   * ─────────────────────────────────────────────────────────────────────
+   * O cadeado no mapa é o aviso; isto é a porta. Sem isto, `/licao/kaf/`
+   * digitado na barra de endereços abre a lição 21 para quem está na
+   * terceira - e o que essa pessoa encontra é uma tela onde a maior parte
+   * dos símbolos é ruído. A ordem do curso não é burocracia: é a condição
+   * para as palavras fazerem sentido.
+   *
+   * SÓ DEPOIS DE `p.ready`. O progresso chega do servidor de forma
+   * assíncrona, e um aluno que estuda há meses não pode ser expulso da
+   * própria lição durante o instante em que o estado ainda está vazio -
+   * seria a trava confundindo "não carregou" com "não pode". É a mesma
+   * razão pela qual um erro de rede nunca rebaixa uma letra dominada.
+   *
+   * E não é segurança de CONTEÚDO: quem protege o material é o portão de
+   * pagamento, no Worker. Esta trava protege o CAMINHO de aprendizagem. */
+  useEffect(() => {
+    if (!p.ready) return;
+    const ordem = allLetters().map(l => l.id);
+    setTrancada(porQueTrancada(p.state, ordem, letter.id));
+  }, [p.ready, p.state, letter.id]);
+
   const done = useCallback((n: number) => {
     p.finishStage(letter.id, n);
     if (n < 5) setStage(n + 1);
@@ -93,6 +116,8 @@ export function LessonClient({ letter }: { letter: Letter }) {
   const moduleFinished = !!mod && mod.letterIds.every(
     id => id === letter.id || (p.state.lessons[id]?.stagesDone.length ?? 0) >= 5
   );
+
+  if (trancada) return <PortaTrancada letter={letter} porque={trancada} />;
 
   return (
     <div className="grid gap-6 reading">
@@ -635,5 +660,69 @@ function StageFixacao({
       title={`Mini-teste - letra ${letter.namePt}`}
       onDone={r => { track('quiz_completed', { letterId: letter.id, score: r.score }); onResult(r); }}
     />
+  );
+}
+
+/* ── a porta trancada ──────────────────────────────────────────────────────
+   Não é um erro, e não é castigo: é o curso explicando a própria ordem. A
+   tela diz QUAL letra falta, O QUE falta nela, e leva até lá com um clique -
+   um "bloqueado" seco é a forma mais rápida de alguém achar que o produto
+   quebrou.
+
+   Ela aparece depois do progresso ter carregado (ver a nota do `useEffect`
+   lá em cima), então nunca pisca na frente de quem tem acesso. */
+function PortaTrancada({ letter, porque }: {
+  letter: Letter;
+  porque: NonNullable<ReturnType<typeof porQueTrancada>>;
+}) {
+  const p = useProgress();
+  const anterior = allLetters().find(l => l.id === porque.anterior);
+  const ordem = allLetters().map(l => l.id);
+  const atual = letraAtual(p.state, ordem);
+  const atualL = allLetters().find(l => l.id === atual);
+
+  return (
+    <div className="grid gap-5 focus-col">
+      <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
+        <span aria-hidden className="w-12 h-12 rounded-full bg-surface-2 grid place-items-center">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
+            <rect x="3.4" y="7" width="9.2" height="6.2" rx="1.6"
+                  stroke="var(--locked)" strokeWidth="1.5" />
+            <path d="M5.6 7V5.4a2.4 2.4 0 0 1 4.8 0V7"
+                  stroke="var(--locked)" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </span>
+        <div className="grid gap-2">
+          <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">
+            A letra <He size="inline">{letter.letter}</He> ainda não abriu
+          </h1>
+          <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
+            {porque.falta === 'licao' ? (
+              <>Ela vem depois de <strong className="font-semibold text-ink">{anterior?.namePt}</strong>,
+              e essa lição ainda não foi concluída. Cada letra usa as anteriores nas
+              palavras - é por isso que a ordem importa.</>
+            ) : (
+              <>Falta a fixação de <strong className="font-semibold text-ink">{anterior?.namePt}</strong>.
+              Sua melhor nota lá foi {Math.round((porque.nota ?? 0) * 100)}%, e esta letra abre
+              a partir de {Math.round(LIBERA_MARK * 100)}%. Dá para refazer quantas vezes quiser -
+              as perguntas mudam a cada tentativa.</>
+            )}
+          </p>
+        </div>
+        <div className="grid gap-2 w-full max-w-[320px] pt-1">
+          <LinkButton href={`/licao/${porque.anterior}`} size="lg" full>
+            {porque.falta === 'licao'
+              ? `Ir para ${anterior?.namePt}`
+              : `Refazer a fixação de ${anterior?.namePt}`}
+          </LinkButton>
+          {atual !== porque.anterior && atualL && (
+            <LinkButton href={`/licao/${atual}`} variant="secondary" full>
+              Continuar de onde parei ({atualL.namePt})
+            </LinkButton>
+          )}
+          <LinkButton href="/mapa" variant="ghost" full>Ver o mapa</LinkButton>
+        </div>
+      </Card>
+    </div>
   );
 }

@@ -734,3 +734,84 @@ export const EXTRA_STAGE_COUNT = 3;
 
 export const isExtraModuleDone = (state: LearnerState, id: string): boolean =>
   (state.lessons[id]?.stagesDone.length ?? 0) >= EXTRA_STAGE_COUNT;
+
+/* ── a trava de progressão ────────────────────────────────────────────────
+ * Uma letra por vez, e a seguinte abre quando a anterior foi DOMINADA.
+ *
+ * O curso sempre teve a ordem; o que não tinha era a trava. O mapa dizia
+ * "você ainda não chegou" e deixava entrar, e a razão escrita na época era
+ * boa: um adulto que quer espiar o módulo 6 pode. O que essa liberdade
+ * custava, medido no conteúdo, é que a lição 9 usa palavras com as letras 1
+ * a 8 - quem pula chega numa tela onde metade dos símbolos é ruído, conclui
+ * que não está entendendo e some. A ordem não é burocracia: é a condição
+ * para as palavras fazerem sentido.
+ *
+ * ── três decisões, e por quê ─────────────────────────────────────────────
+ *
+ * 1. NUNCA TIRA O QUE JÁ FOI DADO. Se o aluno tem qualquer progresso numa
+ *    letra, ela continua aberta, e tudo antes dela também. Isso protege
+ *    quem já estava estudando quando esta trava entrou, e protege de um
+ *    critério mais duro no futuro: subir a régua trava letra NOVA, nunca
+ *    fecha porta por onde alguém já passou. É a regra 50 do escopo -
+ *    progresso é dado importante, e dado importante não desaparece.
+ *
+ * 2. O CRITÉRIO É A FIXAÇÃO, NÃO A VISITA. Cinco etapas feitas e nota de
+ *    fixação no mínimo. Clicar em "continuar" cinco vezes não é aprender, e
+ *    uma trava que abre com isso não trava nada.
+ *
+ * 3. A MENSAGEM DIZ O QUE FALTA. "Bloqueado" sozinho é uma porta sem
+ *    maçaneta. `porQueTrancada` devolve a letra que falta e o que falta
+ *    nela - terminar as etapas ou melhorar a nota.
+ */
+
+/** A nota de fixação que libera a letra seguinte. Um número, num lugar só. */
+export const LIBERA_MARK = 0.8;
+
+/** A letra foi dominada para efeito de DESTRAVAR a próxima. */
+export const liberaSeguinte = (state: LearnerState, letterId: string): boolean => {
+  const l = state.lessons[letterId];
+  return !!l && l.stagesDone.length >= STAGE_COUNT && (l.quizBest ?? 0) >= LIBERA_MARK;
+};
+
+/**
+ * Esta letra está aberta para este aluno?
+ *
+ * `ordem` é a lista de ids na ordem de ensino - a mesma de `course.letters`
+ * ordenada por `order`. A primeira está sempre aberta.
+ */
+export function letraLiberada(
+  state: LearnerState, ordem: readonly string[], letterId: string
+): boolean {
+  const i = ordem.indexOf(letterId);
+  if (i <= 0) return i === 0;
+
+  /* Já entrou alguma vez, aqui ou mais adiante: a porta continua aberta.
+     Ver a decisão 1 acima - e note que basta UMA letra posterior com
+     progresso para tudo até ela seguir liberado. */
+  if (state.lessons[letterId]) return true;
+  for (let k = i + 1; k < ordem.length; k++) if (state.lessons[ordem[k]!]) return true;
+
+  return liberaSeguinte(state, ordem[i - 1]!);
+}
+
+/** O que falta para abrir. `null` quando já está aberta. */
+export function porQueTrancada(
+  state: LearnerState, ordem: readonly string[], letterId: string
+): { anterior: string; falta: 'licao' | 'nota'; nota: number | null } | null {
+  if (letraLiberada(state, ordem, letterId)) return null;
+  const i = ordem.indexOf(letterId);
+  const anterior = ordem[i - 1]!;
+  const l = state.lessons[anterior];
+  const completa = (l?.stagesDone.length ?? 0) >= STAGE_COUNT;
+  return { anterior, falta: completa ? 'nota' : 'licao', nota: l?.quizBest ?? null };
+}
+
+/** A última letra aberta - para onde mandar quem bateu numa porta trancada. */
+export function letraAtual(state: LearnerState, ordem: readonly string[]): string {
+  let ultima = ordem[0]!;
+  for (const id of ordem) {
+    if (!letraLiberada(state, ordem, id)) break;
+    ultima = id;
+  }
+  return ultima;
+}

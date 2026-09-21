@@ -24,6 +24,7 @@
     "csp": "node csp.mjs",
     "a11y": "node a11y.mjs",
     "toque": "node toque.mjs",
+    "trava": "node trava.mjs",
     "pacote": "node pacote.mjs",
     "promessas": "node promessas.mjs",
     "test": "npm run export-content && vitest run"
