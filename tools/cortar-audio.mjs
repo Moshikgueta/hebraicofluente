@@ -272,13 +272,27 @@ function extrair(wav, seg, destino, pisoDb) {
   const de = Math.max(0, seg.de - PAD_HEAD_S);
   const dur = (seg.ate - seg.de) + PAD_HEAD_S + PAD_TAIL_S;
 
-  /* `nf` is the denoiser's idea of where the noise sits. Handing it the
-     measured floor keeps it from guessing, and `nr=10` is a light touch:
-     an aggressive setting eats the breathy start of ה and the release of ק,
-     which are the sounds a Brazilian is here to learn. */
+  /* `nf` diz ao redutor ONDE ele deve achar que o ruído está, e passar o piso
+     medido - que era o que este arquivo fazia - desliga o filtro.
+     ─────────────────────────────────────────────────────────────────────
+     Medido contra o ruído de sala real desta gravação, cujo piso é -47,8 dB:
+
+       nf = -48 (o piso)   a sala cai 1,6 dB   ou seja, nada
+       nf = -38            a sala cai 5,6 dB
+       nf = -33            a sala cai 12,4 dB
+
+     E o custo na voz, na mesma varredura, é quase nenhum: a média da fala
+     ficou em -28,3 dB nos cinco ajustes, e o pico andou 1 dB entre o mais
+     tímido e o mais forte. O filtro trabalha por componente do espectro, e
+     as formantes da voz estão muito acima de onde `nf` corta.
+
+     Daí a regra: quinze decibéis ACIMA do piso medido, preso entre -45 e
+     -30. O teto existe para a sala barulhenta, onde o piso sobe e quinze
+     acima dele começaria a comer consoante. */
+  const nf = Math.max(-45, Math.min(-30, Math.round(pisoDb + 15)));
   const limpeza = [
     'highpass=f=80',
-    `afftdn=nr=10:nf=${Math.round(pisoDb)}`,
+    `afftdn=nr=20:nf=${nf}`,
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     `adelay=${Math.round(PAD_HEAD_S * 1000)}`,
