@@ -231,8 +231,17 @@ function main() {
       return {
         ...rest,
         modules,
+        /* `lessons` já foi `course.totalLetters`, e era o começo do defeito: o
+           catálogo passou a anunciar 22 lições onde há 21, e o número errado
+           saiu daqui para o cartão de curso, para /cursos e para o CHECKOUT -
+           a última tela antes de cobrar. Letra e lição são grandezas
+           diferentes; 22 e 21 serem parecidos é o que fez o erro durar.
+           app/numeros.mjs reprova o build se ele voltar. */
         stats: modulesFrom
-          ? { modules: course.modules.length, lessons: course.totalLetters }
+          ? {
+              modules: course.modules.length,
+              lessons: course.modules.reduce((n, m) => n + m.lessons.length, 0)
+            }
           : { modules: modules.length, lessons: null }
       };
     })

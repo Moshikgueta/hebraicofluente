@@ -1,16 +1,18 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { course } from '@/lib/content-publico';
+import { course, totalLicoes } from '@/lib/content-publico';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/metodo',
   title: 'O método - Hebraico Fluente',
   description:
     'Uma letra por vez, na ordem que rende mais; nada de palavra com letra que você ' +
     'ainda não viu; revisão no dia certo; e a transliteração sai de propósito.'
-};
+});
 
 /* O método, explicado de verdade.
  * ─────────────────────────────────────────────────────────────────────────
@@ -84,7 +86,7 @@ export default function MetodoPage() {
             {
               n: 2,
               t: 'A ordem é por utilidade, não pelo alfabeto',
-              b: `As letras não vêm de א a ת. Vêm na ordem que abre mais palavras mais cedo - por isso a terceira lição já lê uma palavra inteira em vez de ainda estar na segunda letra. São ${letterModules} módulos de letras e ${course.totalLetters} lições.`
+              b: `As letras não vêm de א a ת. Vêm na ordem que abre mais palavras mais cedo - por isso a terceira lição já lê uma palavra inteira em vez de ainda estar na segunda letra. São ${letterModules} módulos de letras, em ${totalLicoes()} lições.`
             },
             {
               n: 3,

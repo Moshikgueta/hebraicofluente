@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { brl, flagship, installment, pixPrice } from '@/lib/catalog';
 import { empresa, soPix } from '@/lib/empresa';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/termos',
   title: 'Termos de Uso - Hebraico Fluente',
   description:
     'O que você contrata, por quanto tempo, como o acesso é liberado, o que pode ' +
     'e o que não pode ser feito com o conteúdo, e como cancelar.'
-};
+});
 
 /* Os Termos.
  * ─────────────────────────────────────────────────────────────────────────

@@ -231,3 +231,19 @@ export const getModule = (n: number): CourseModule | undefined =>
  *  segredo, o que está dentro de cada uma é. */
 export const letterIds = (): string[] =>
   course.letters.slice().sort((a, b) => a.order - b.order).map(l => l.id);
+
+/**
+ * Quantas lições o curso tem.
+ *
+ * Existe como função por uma razão que já custou caro: a soma estava
+ * copiada em cinco arquivos, e num deles alguém escreveu `course.totalLetters`
+ * no lugar dela. O site passou a anunciar "21 lições" na capa e "São 22
+ * lições" no FAQ - dois números diferentes para a mesma coisa, na página que
+ * a pessoa lê logo antes de decidir comprar.
+ *
+ * Letra e lição são grandezas diferentes e por acaso parecidas (22 e 21), que
+ * é o pior caso: erra em silêncio e ninguém confere. Agora a soma mora aqui,
+ * e `tests/numeros.test.ts` recusa a volta da cópia.
+ */
+export const totalLicoes = (): number =>
+  course.modules.reduce((n, m) => n + m.lessons.length, 0);

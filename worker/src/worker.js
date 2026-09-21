@@ -199,6 +199,16 @@ function blindar(res, path) {
     h.set('Content-Security-Policy', CSP);
     h.set('X-Frame-Options', 'DENY');
   }
-  if (!path.startsWith('/api/') && isGatedPath(path)) h.set('Cache-Control', 'private, no-store');
+  if (!path.startsWith('/api/') && isGatedPath(path)) {
+    h.set('Cache-Control', 'private, no-store');
+    /* E não entra em buscador. Isto é cinto e suspensório, de propósito: um
+       rastreador já leva 302 do portão e nunca vê o HTML da aula. Mas o
+       portão JÁ teve uma brecha - a exceção de `Sec-Fetch-Dest`, contada em
+       gate.js -, e num dia em que ele volte a deixar passar, o endereço não
+       pode virar resultado de busca. Sai daqui, e não de um `metadata` por
+       página: assim uma rota nova do curso nasce fora do índice pelo mesmo
+       motivo que nasce atrás do login, sem depender de alguém lembrar. */
+    h.set('X-Robots-Tag', 'noindex, nofollow');
+  }
   return out;
 }

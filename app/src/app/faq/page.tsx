@@ -1,18 +1,20 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { flagship, brl, installment, pixPrice } from '@/lib/catalog';
-import { course } from '@/lib/content-publico';
+import { course, totalLicoes } from '@/lib/content-publico';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/faq',
   title: 'Dúvidas frequentes - Hebraico Fluente',
   description:
     'Pagamento, acesso, prazo, celular, áudio, certificado e reembolso - as perguntas ' +
     'que aparecem antes da compra, respondidas sem enrolação.'
-};
+});
 
 /* As dúvidas.
  * ─────────────────────────────────────────────────────────────────────────
@@ -42,9 +44,14 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
     ]
   },
   {
+    /* Dizia `course.totalLetters` lições. São 22 LETRAS e 21 LIÇÕES - duas
+       grandezas diferentes, e por azar parecidas, então o erro passou: a capa
+       anunciava "21 lições" e esta página, "São 22 lições". Dois números para
+       a mesma coisa, na página que se lê logo antes de comprar. A soma agora
+       é `totalLicoes()`, uma função só para o site inteiro. */
     q: 'Quanto tempo leva?',
     a: [
-      `São ${course.totalLetters} lições de cerca de dez minutos. Quem faz uma por dia termina em menos de um mês; quem faz três por semana leva uns dois. Não há prazo interno nem turma: o curso espera por você.`
+      `São ${totalLicoes()} lições de cerca de dez minutos, que ensinam as ${course.totalLetters} letras. Quem faz uma por dia termina em menos de um mês; quem faz três por semana leva uns dois. Não há prazo interno nem turma: o curso espera por você.`
     ]
   },
   /* As duas respostas abaixo mudam com `pagamento.modo` em data/empresa.json,

@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
 import { empresa, soPix } from '@/lib/empresa';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/privacidade',
   title: 'Política de Privacidade - Hebraico Fluente',
   description:
     'Quais dados são coletados, para quê, com quem são compartilhados, por quanto ' +
     'tempo ficam guardados, e como exercer seus direitos de titular pela LGPD.'
-};
+});
 
 /* A Política de Privacidade.
  * ─────────────────────────────────────────────────────────────────────────

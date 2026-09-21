@@ -25,7 +25,7 @@ import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { brl, flagship, installment, pixPrice } from '@/lib/catalog';
-import { course } from '@/lib/content-publico';
+import { course, totalLicoes } from '@/lib/content-publico';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { confirmaSozinho, soPix, temPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
@@ -310,7 +310,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
   const pix = pixPrice(c.price);
 
   const inclui = [
-    `Curso completo, ${course.modules.reduce((n, m) => n + m.lessons.length, 0)} lições`,
+    `Curso completo, ${totalLicoes()} lições`,
     'Exercícios interativos',
     TEM_AUDIO ? 'Áudios de todas as letras e palavras' : 'Explicação de som para cada letra',
     'Revisões liberadas automaticamente',
@@ -399,7 +399,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
 /* ── 13 · as dúvidas ────────────────────────────────────────────────────── */
 export function Faq() {
   const c = flagship();
-  const licoes = course.modules.reduce((n, m) => n + m.lessons.length, 0);
+  const licoes = totalLicoes();
 
   const PERGUNTAS: readonly [string, string][] = [
     ['Preciso saber hebraico?',

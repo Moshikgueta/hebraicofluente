@@ -212,12 +212,24 @@ jobs:
       # vez do adaptador local. Sem isto, a plataforma publicada guardaria
       # contas no navegador de cada visitante - com uma tarja dizendo isso,
       # mas ainda assim errado.
+      # O SITE_ORIGIN sai do wrangler.toml e entra no build.
+      # ────────────────────────────────────────────────────────────────────
+      # É o que faz do arquivo o ÚNICO lugar com o domínio: o Worker já o lia
+      # de lá, e agora os canonicals e os og:url do HTML também. Trocar de
+      # domínio é uma edição. `checa-seo.mjs` reprova se os dois divergirem,
+      # que é o que aconteceria se este `export` sumisse - o Next cairia no
+      # padrão embutido em lib/seo.ts e passaria a anunciar o domínio velho.
       - name: Build (modo plataforma)
         if: steps.guard.outputs.ok == 'true'
         working-directory: app
         env:
           NEXT_PUBLIC_PLATFORM_API: worker
-        run: npm run build
+        run: |
+          NEXT_PUBLIC_SITE_ORIGIN="$(sed -n 's/^[[:space:]]*SITE_ORIGIN[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' ../wrangler.toml | head -1)"
+          echo "SITE_ORIGIN do wrangler.toml: ${NEXT_PUBLIC_SITE_ORIGIN:-(não encontrado)}"
+          test -n "$NEXT_PUBLIC_SITE_ORIGIN"
+          export NEXT_PUBLIC_SITE_ORIGIN
+          npm run build
 
       # O curso não pode viajar no pacote público, e só o arquivo PUBLICADO
       # responde isso.
@@ -270,6 +282,41 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           rc=0
           node promessas.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" || rc=$?
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
+
+      # Duas páginas livres já anunciaram números diferentes para a mesma
+      # coisa - "21 lições" na capa e "22 lições" no FAQ, no checkout e em
+      # /cursos - porque a contagem de LETRAS foi usada como contagem de
+      # LIÇÕES. Cada arquivo estava coerente consigo mesmo, então nenhum teste
+      # de unidade viu; o defeito só existe olhando duas páginas juntas, que é
+      # o que um comprador faz. Este passo olha o HTML publicado inteiro.
+      - name: A vitrine anuncia os números do curso
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: |
+          set -o pipefail
+          echo "## Os números anunciados batem com o curso?" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          rc=0
+          node numeros.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" || rc=$?
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
+
+      # O sitemap e o robots são GERADOS a cada publicação, das rotas que o
+      # build de fato produziu e do `GATED` do portão. Nenhuma lista escrita à
+      # mão: uma rota nova do curso nasce fora do índice pelo mesmo motivo que
+      # nasce atrás do login. O checador roda logo depois e reprova qualquer
+      # divergência entre o sitemap, o HTML publicado e o SITE_ORIGIN.
+      - name: Sitemap, robots e Open Graph
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: |
+          set -o pipefail
+          echo "## O que o site anuncia a buscador e a rede social" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          rc=0
+          { node seo.mjs && node checa-seo.mjs; } 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" || rc=$?
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           exit $rc
 

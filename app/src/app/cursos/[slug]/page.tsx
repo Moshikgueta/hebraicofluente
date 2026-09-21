@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import { allCourses, getCourse } from '@/lib/catalog';
 import { CourseClient } from './CourseClient';
@@ -14,10 +15,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const c = getCourse((await params).slug);
   if (!c) return { title: 'Curso não encontrado - Hebraico Fluente' };
-  return {
+  return meta({
+    rota: `/cursos/${c.slug}`,
     title: `${c.titlePt} - Hebraico Fluente`,
     description: `${c.taglinePt} ${c.summaryPt}`.slice(0, 180)
-  };
+  });
 }
 
 export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {

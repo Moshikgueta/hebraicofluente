@@ -65,8 +65,15 @@ import { ProgressProvider } from '@/lib/state/store';
 import { AccountProvider } from '@/lib/account/store';
 import { Chrome } from '@/components/shell/Chrome';
 import { course } from '@/lib/content-publico';
+import { ORIGEM } from '@/lib/seo';
 
 export const metadata: Metadata = {
+  /* `metadataBase` é o que transforma "/media/og.jpg" em uma URL absoluta.
+     Sem ele o Next emite o caminho relativo, e um caminho relativo num
+     `og:image` não é resolvido por nenhum leitor de cartão - o link continua
+     chegando sem imagem no WhatsApp, que é o problema que esta camada existe
+     para resolver. Ver lib/seo.ts. */
+  metadataBase: new URL(ORIGEM),
   title: 'Hebraico Fluente - a plataforma de hebraico para brasileiros',
   description:
     'Do alfabeto à conversa, numa plataforma só. Alfabetização, A1, A2 e B1 - ' +

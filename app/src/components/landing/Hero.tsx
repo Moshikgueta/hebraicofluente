@@ -20,7 +20,7 @@ import { He } from '@/components/hebrew/He';
 import { Container, Check } from './base';
 import { TEM_AUDIO } from './copy';
 import { SEM_MIDIA, type HeroMedia } from './media';
-import { course } from '@/lib/content-publico';
+import { course, totalLicoes } from '@/lib/content-publico';
 import { flagship } from '@/lib/catalog';
 
 
@@ -34,9 +34,8 @@ const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1
    entra é uma oferta que não bate com o produto. O mesmo motivo pelo qual a
    seção do método passou a contar o próprio array. */
 function fatos(): string[] {
-  const licoes = course.modules.reduce((n, m) => n + m.lessons.length, 0);
   return [
-    `${licoes} lições`,
+    `${totalLicoes()} lições`,
     'exercícios interativos',
     'progresso salvo',
     `acesso por ${flagship().accessMonths} meses`

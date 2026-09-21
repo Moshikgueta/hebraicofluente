@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
 import { flagship } from '@/lib/catalog';
 import { empresa, soPix } from '@/lib/empresa';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/reembolso',
   title: 'Reembolso e Cancelamento - Hebraico Fluente',
   description:
     'Sete dias para desistir, sem justificativa, com o dinheiro de volta. Como pedir, ' +
     'em quanto tempo o valor retorna, e o que acontece com o acesso.'
-};
+});
 
 /* Reembolso e cancelamento.
  * ─────────────────────────────────────────────────────────────────────────

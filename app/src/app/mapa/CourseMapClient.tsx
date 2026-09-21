@@ -23,6 +23,7 @@ import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
 import { course, getLetter, type CourseModule } from '@/lib/content';
+import { totalLicoes } from '@/lib/content-publico';
 import { Prose } from '@/components/learn/Blocks';
 import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
 import { flagship } from '@/lib/catalog';
@@ -32,7 +33,7 @@ type Estado = 'feito' | 'agora' | 'adiante';
 export function CourseMapClient() {
   const p = useProgress();
   const modulos = course.modules;
-  const licoes = modulos.reduce((n, m) => n + m.lessons.length, 0);
+  const licoes = totalLicoes();
 
   /* O módulo atual é o primeiro que ainda não fechou. */
   const indiceAtual = modulos.findIndex(m => !moduloCompleto(p.state, m));

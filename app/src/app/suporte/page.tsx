@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
@@ -6,12 +7,13 @@ import { Identificacao } from '@/components/legal/Legal';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { empresa, soPix, whatsappUrl } from '@/lib/empresa';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/suporte',
   title: 'Suporte - Hebraico Fluente',
   description:
     'Como falar com quem faz o curso: e-mail de atendimento, horário, prazo de ' +
     'resposta, e os atalhos para os problemas mais comuns.'
-};
+});
 
 /* O canal de atendimento.
  * ─────────────────────────────────────────────────────────────────────────

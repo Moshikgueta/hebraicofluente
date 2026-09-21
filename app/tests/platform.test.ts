@@ -14,6 +14,7 @@ import {
   daysLeft, emailLooksValid, entitlementFor, hasAccess, MESSAGES,
   normalizeEmail, passwordOk, type Session
 } from '@/lib/account/types';
+import { course, totalLicoes } from '@/lib/content-publico';
 
 describe('o catálogo', () => {
   const courses = allCourses();
@@ -61,11 +62,27 @@ describe('o catálogo', () => {
 
   it('descreve a alfabetização com os módulos do curso de verdade', () => {
     /* A página de vendas não pode prometer módulos diferentes dos que o curso
-       tem. Os dois saem do mesmo course.json, e é isto que garante. */
+       tem. Os dois saem do mesmo course.json, e é isto que garante.
+
+       Este caso dizia `expect(c.stats.lessons).toBe(22)`, com o 22 digitado -
+       e assim não só deixou passar como PROTEGEU o defeito: o exportador
+       escrevia `course.totalLetters` no lugar da soma de lições, e o catálogo
+       anunciava 22 lições onde há 21, no cartão de curso, em /cursos e no
+       checkout. Um número escrito à mão dentro do teste que existe para
+       provar que nada é escrito à mão.
+
+       Agora os dois lados derivam do curso construído, e cada `stats` é
+       comparado com a grandeza CERTA - trocar uma pela outra foi exatamente o
+       que aconteceu. */
     const c = flagship();
-    expect(c.stats.modules).toBe(c.modules.length);
-    expect(c.stats.lessons).toBe(22);
-    expect(c.modules.reduce((n, m) => n + (m.letters ?? 0), 0)).toBe(22);
+
+    expect(c.stats.modules).toBe(course.modules.length);
+    expect(c.stats.lessons).toBe(totalLicoes());
+    expect(c.modules.reduce((n, m) => n + (m.letters ?? 0), 0)).toBe(course.totalLetters);
+
+    /* E a armadilha, nomeada: letra não é lição. Enquanto os dois totais
+       forem diferentes, trocar um pelo outro tem de reprovar aqui. */
+    expect(c.stats.lessons).not.toBe(course.totalLetters);
   });
 });
 

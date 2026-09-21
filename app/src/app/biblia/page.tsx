@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
@@ -6,13 +7,14 @@ import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { Versiculo } from '@/components/landing/Versiculo';
 import { bibleVerses, course } from '@/lib/content-publico';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/biblia',
   title: 'Vou conseguir ler a Bíblia em hebraico? - Hebraico Fluente',
   description:
     'A resposta honesta tem duas metades: sim, você vai decodificar o texto em voz ' +
     'alta; não, você não vai entender o que leu sem vocabulário e gramática. Aqui ' +
     'está Gênesis 1:1, palavra por palavra, para você julgar por si.'
-};
+});
 
 /* «Vou conseguir ler a Bíblia?»
  * ─────────────────────────────────────────────────────────────────────────

@@ -1,16 +1,19 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { empresa } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { course } from '@/lib/content-publico';
+import { totalLicoes } from '@/lib/content-publico';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/sobre',
   title: 'Sobre o Moshik - Hebraico Fluente',
-  description: 'Quem faz o Hebraico Fluente e por que o curso é do jeito que é.'
-};
+  description:
+    'Quem faz o Hebraico Fluente e por que o curso é do jeito que é.'
+});
 
 /* ⚠ ESTA PÁGINA PRECISA DA MÃO DO MOSHIK ANTES DE IR AO AR.
  * ─────────────────────────────────────────────────────────────────────────
@@ -108,7 +111,7 @@ export default function SobrePage() {
           <Card className="p-5 grid gap-2 content-start">
             <h3 className="font-display text-[16.5px] font-bold text-ink">Um manuscrito e uma caderneta</h3>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              As {course.totalLetters} lições, as palavras de cada letra e os exercícios
+              As {totalLicoes()} lições, as palavras de cada letra e os exercícios
               saíram do material impresso e passaram para o aplicativo pela mesma
               fonte - se uma palavra muda, muda nos dois. O livro e a plataforma
               não podem divergir, e não divergem por construção.

@@ -28,7 +28,7 @@ import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/learn/Blocks';
 import { StrokeOrderPlayer } from '@/components/learn/StrokeOrder';
-import { course } from '@/lib/content-publico';
+import { course, totalLicoes } from '@/lib/content-publico';
 import { allCourses, isPlayable } from '@/lib/catalog';
 import { Container, H2, Lead, Reveal, Check, CheckList, Chevron } from './base';
 import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from './copy';
@@ -371,7 +371,7 @@ function useLinha() {
  */
 function Percurso() {
   const mods = course.modules;
-  const licoes = mods.reduce((n, m) => n + m.lessons.length, 0);
+  const licoes = totalLicoes();
   const comLetras = mods.filter(m => m.letterIds.length > 0);
   const depois = mods.filter(m => m.letterIds.length === 0);
 

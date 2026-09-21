@@ -1,17 +1,19 @@
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import { HomeClient } from './HomeClient';
 import { CANDIDATOS } from '@/components/landing/media';
 import { primeiroQueExiste } from '@/lib/midia-publica';
 
 /* O título começa pelo que a pessoa digitou na busca - "aprender a ler
    hebraico" -, e não pelo nome da marca, que ninguém procura ainda. */
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/',
   title: 'Aprenda a ler hebraico do zero - Hebraico Fluente',
   description:
     'Curso interativo de alfabetização em hebraico para brasileiros: as 22 letras, os sons e a ' +
     'leitura de palavras reais, com explicações em português, exercícios corrigidos na hora e ' +
     'progresso salvo na sua conta.'
-};
+});
 
 /* A capa é uma página de SERVIDOR que renderiza um cliente.
  * ─────────────────────────────────────────────────────────────────────────

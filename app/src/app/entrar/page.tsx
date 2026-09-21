@@ -1,11 +1,14 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import { meta } from '@/lib/seo';
 import { AuthForm } from '@/components/platform/AuthForm';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = meta({
+  rota: '/entrar',
   title: 'Entrar - Hebraico Fluente',
-  description: 'Entre na sua conta e continue de onde parou.'
-};
+  description:
+    'Entre na sua conta e continue de onde parou.'
+});
 
 /* O Suspense é obrigatório, não decorativo: `useSearchParams` (que lê o
    ?next=) suspende durante a exportação estática, e sem esta fronteira o
