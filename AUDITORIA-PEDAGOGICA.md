@@ -555,6 +555,21 @@ normalizadas em NFC), o tipo `Letter` e chega ao `whyPt` de cada alternativa do
 vezes. Sem frase declarada, o retorno degrada para "Essa é a letra X, olhe o
 desenho de novo", que ainda nomeia a letra errada em vez de só negar.
 
+### 6 e 10 - as frases e o "sem nikud", feitos depois
+
+Os dois itens que a lista acima punha em "primeiro mês" e "depois" entraram
+antes, e a seção B desta auditoria está desatualizada por causa deles:
+
+- **frases**: `data/sentences.json` traz **23 frases**, com gerador próprio
+  (`exSentenceReading`) que entra no bloco de prática a partir da letra que as
+  fecha. O "NÃO ALCANÇADO" de "ler frases básicas" na seção B deixou de valer;
+- **sem nikud**: de 8 para **24 palavras**, em três grupos de dificuldade
+  crescente, mais o par ambíguo `שם` que é mostrado e deliberadamente NÃO vira
+  exercício. O "PARCIAL" de "ler sem nikud" também deixou de valer.
+
+O que ficou pendente dos dois: o exame final **não tem parte de frases**
+(item 19), então o curso passou a ensinar uma habilidade que ele não mede.
+
 ### O que isso mudou nos números
 
 ```
