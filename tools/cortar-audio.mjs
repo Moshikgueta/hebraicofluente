@@ -138,6 +138,62 @@ function marcasDeSilencio(wav, limiar, gap) {
   return marcas;
 }
 
+/* ── how long one item can be ───────────────────────────────────────────
+   Measured on a real take of this script: 147 of 171 pieces landed between
+   0.30 and 0.90 s, and the median was 0.56. Anything past this is not one
+   syllable being said slowly - it is two items with no usable gap between
+   them, and it has to be opened rather than counted as one. */
+const PALAVRA_MAX_S = 1.1;
+
+/* ── opening a glued piece ───────────────────────────────────────────────
+   A single global setting cannot serve a real recording. The first take of
+   this script had pauses ranging from 0.30 s to 2.13 s: loose enough to keep
+   words whole and some items stayed glued in chunks of almost five seconds;
+   tight enough to separate those and single syllables started splitting at
+   their own internal stops. Counting once at one setting gave 171 against a
+   target of 168 - three off, and only by luck, because 15 glued pieces were
+   hiding some 54 items while spurious splits added others back.
+
+   So the cut goes in two movements, and the order is the whole idea:
+
+     1. cut LOOSE, at a gap no word survives crossing. This never splits an
+        item in two, which is the error that cannot be seen afterwards;
+     2. then open, one by one, only the pieces too long to be one item -
+        each in its own window, with the tightest gap that opens it.
+
+   A piece that will not open stays whole and is reported. Better a piece the
+   person has to cut by hand than a piece the tool split down the middle of a
+   letter. */
+function abrirPeca(wav, seg, nivel = 0) {
+  const fala = seg.ate - seg.de;
+  if (fala <= PALAVRA_MAX_S || nivel >= 3) return [seg];
+
+  for (const gap of [0.3, 0.22, 0.16, 0.12]) {
+    for (const limiar of [-30, -35, -40, -25]) {
+      const saida = ffMeasure([
+        '-ss', String(seg.de), '-t', String(fala), '-i', wav,
+        '-af', `silencedetect=noise=${limiar}dB:d=${gap}`
+      ]);
+      const marcas = [];
+      for (const linha of saida.split('\n')) {
+        const i = linha.match(/silence_start:\s*(-?\d+(?:\.\d+)?)/);
+        const f = linha.match(/silence_end:\s*(-?\d+(?:\.\d+)?)/);
+        if (i) marcas.push({ t: Number(i[1]), tipo: 'inicio' });
+        if (f) marcas.push({ t: Number(f[1]), tipo: 'fim' });
+      }
+      const dentro = segmentos(marcas, fala);
+      if (dentro.length > 1) {
+        /* Coordinates come back relative to the window; put them back on the
+           recording's own clock before anything downstream sees them. */
+        return dentro
+          .map(d => ({ de: seg.de + d.de, ate: seg.de + d.ate }))
+          .flatMap(d => abrirPeca(wav, d, nivel + 1));
+      }
+    }
+  }
+  return [seg];
+}
+
 /* ── choosing the threshold ──────────────────────────────────────────────
    A single threshold derived from the noise floor is a guess, and a guess is
    the wrong instrument here, because this tool knows something rare: HOW MANY
@@ -158,29 +214,38 @@ function acharCorte(wav, pisoDb, esperados) {
   const perto = Math.min(-25, Math.max(-50, pisoDb + 12));
   /* Around the hint first, then the whole sensible range, then a shorter
      gap for a speaker who did not pause as long as the brief asked. */
-  const limiares = [...new Set([perto, perto - 5, perto + 5, -30, -35, -40, -45, -25, -50])]
+  const limiares = [...new Set([perto, perto - 5, perto + 5, -30, -35, -40, -25, -45])]
     .filter(v => v >= -50 && v <= -20);
-  const gaps = [GAP_MIN_S, 0.3, 0.25];
+  const total = duracao(wav);
 
+  /* O INTERVALO NÃO ENTRA NA VARREDURA, e isso é decisão, não esquecimento.
+     Apertá-lo é o que parte um item ao meio, que é o erro impossível de ver
+     depois. Ele fica largo, e quem abre o que ficou grudado é `abrirPeca`,
+     peça por peça, onde o risco é contido. */
   const tentativas = [];
-  for (const gap of gaps) {
-    for (const limiar of limiares) {
-      const marcas = marcasDeSilencio(wav, limiar, gap);
-      const segs = segmentos(marcas, duracao(wav));
-      tentativas.push({ limiar, gap, n: segs.length });
-      if (segs.length === esperados) return { limiar, gap, segs, tentativas, bateu: true };
-    }
-  }
-  /* Nothing agreed. Hand back the attempt that came closest, so the report
-     can say how far off it is instead of just "no". */
   let melhor = null;
-  for (const t of tentativas) {
-    if (!melhor || Math.abs(t.n - esperados) < Math.abs(melhor.n - esperados)) melhor = t;
+
+  for (const limiar of limiares) {
+    const largos = segmentos(marcasDeSilencio(wav, limiar, GAP_MIN_S), total);
+    const segs = largos.flatMap(s => abrirPeca(wav, s));
+    const grudadas = segs.filter(s => s.ate - s.de > PALAVRA_MAX_S).length;
+    tentativas.push({ limiar, n: segs.length, grudadas });
+    if (segs.length === esperados) {
+      return { limiar, gap: GAP_MIN_S, segs, tentativas, grudadas, bateu: true };
+    }
+    /* Vence a contagem mais próxima; empate vai para a que deixou menos
+       peças grudadas, porque essas são as que sobram para a mão humana. */
+    const atual = { limiar, n: segs.length, grudadas, segs };
+    const melhorQue = !melhor
+      || Math.abs(atual.n - esperados) < Math.abs(melhor.n - esperados)
+      || (Math.abs(atual.n - esperados) === Math.abs(melhor.n - esperados)
+          && atual.grudadas < melhor.grudadas);
+    if (melhorQue) melhor = atual;
   }
-  const marcas = marcasDeSilencio(wav, melhor.limiar, melhor.gap);
+
   return {
-    limiar: melhor.limiar, gap: melhor.gap,
-    segs: segmentos(marcas, duracao(wav)), tentativas, bateu: false
+    limiar: melhor.limiar, gap: GAP_MIN_S, segs: melhor.segs,
+    tentativas, grudadas: melhor.grudadas, bateu: false
   };
 }
 
@@ -451,6 +516,9 @@ function main() {
   console.log(`    piso de ruído   ${piso.db.toFixed(1)} dB  (medido em ${piso.fonte})`);
   console.log(`    corte usado     ${corte.limiar} dB, pausa de ${corte.gap}s  (${corte.tentativas.length} ajuste(s) tentado(s))`);
   console.log(`    trechos achados ${segs.length}`);
+  if (corte.grudadas) {
+    console.log(`    ✗ ${corte.grudadas} peça(s) com mais de ${PALAVRA_MAX_S}s: itens lidos sem pausa entre eles, que não abriram`);
+  }
   console.log(`    ${rotulo.padEnd(15)} ${alvo.length} clipe(s)  (nº ${alvo[0].num} a ${alvo[alvo.length - 1].num})\n`);
 
   const ok = segs.length === alvo.length;
