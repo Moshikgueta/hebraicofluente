@@ -495,17 +495,23 @@ print(str((d.get('result') or {}).get('fight_mode','?')).lower())
       #   sua três vezes. Um teto apertado aqui derruba cliente de verdade em
       #   rede corporativa, e ninguém descobre o motivo.
       #
-      # DUAS coisas variam com o plano da zona, e as duas foram descobertas
-      # do jeito caro - publicando e lendo o erro:
+      # TRÊS coisas variam com o plano da zona, e cada uma foi descoberta do
+      # jeito caro - publicando e lendo o erro. Por isso aqui não há um chute:
+      # há uma ESCADA, e o script desce por ela até achar o degrau que a zona
+      # aceita. O que varia:
       #
-      # · QUANTAS regras cabem. O plano gratuito permite uma; os pagos, mais.
-      #   Por isso as regras vão em ordem de valor e o script tenta do
-      #   conjunto inteiro para baixo, até o que couber.
+      # · QUANTAS regras cabem. O gratuito permite uma; os pagos, mais. As
+      #   regras vão em ordem de valor e o script tenta do conjunto inteiro
+      #   para baixo.
       #
-      # · QUE JANELA cabe. O gratuito só aceita 10 segundos, e recusa 60 com
+      # · QUE JANELA cabe. O gratuito só aceita 10 segundos, e recusou 60 com
       #   "not entitled to use the period 60, can only use a period among
-      #   [10]". Então o script tenta 60 e, se a recusa disser quais períodos
-      #   existem, tenta de novo com o que a própria API ofereceu.
+      #   [10]" - a recusa DIZ o que existe, então o script lê e usa.
+      #
+      # · QUAIS CARACTERÍSTICAS de contagem cabem. Aqui eu não sei de cor qual
+      #   plano aceita o quê, e é justamente por isso que é escada: tenta
+      #   `ip.src + cf.colo.id` (que é o que um plano pago quer) e, se recusar,
+      #   `ip.src` sozinho.
       #
       # O TETO não encolhe junto com a janela, de propósito. Converter
       # "30 por minuto" para "5 por 10 segundos" manteria a taxa média e
@@ -514,20 +520,27 @@ print(str((d.get('result') or {}).get('fight_mode','?')).lower())
       # Esta camada não existe para ser o freio fino (esse é o do Worker, que
       # continua valendo); existe para cortar o que é ordens de grandeza
       # maior. 30 pedidos em 10 segundos já é muito além de qualquer pessoa.
+      #
+      # E o relato NUNCA fica calado. Uma versão anterior deste passo imprimia
+      # os primeiros 300 bytes do JSON cru (que não cabia a resposta formatada
+      # da Cloudflare) e depois passou a imprimir as mensagens do JSON - que
+      # numa das recusas vieram vazias, deixando na tela "A Cloudflare disse:"
+      # seguido de nada. Um diagnóstico que pode ficar em branco é pior do que
+      # nenhum, porque parece que não houve erro.
       echo
       bold "8b. Freio na borda"
       RLSET="$CFAPI/zones/$ZID/rulesets/phases/http_ratelimit/entrypoint"
 
-      regra() { # caminho teto segundos descricao
-        python3 - "$1" "$2" "$3" "$4" <<'PY'
+      regra() { # caminho teto segundos descricao caracteristicas-separadas-por-virgula
+        python3 - "$1" "$2" "$3" "$4" "$5" <<'PY'
 import json,sys
-caminho,teto,janela,desc=sys.argv[1:5]
+caminho,teto,janela,desc,caract=sys.argv[1:6]
 print(json.dumps({
   "description": desc,
   "expression": f'(http.request.uri.path wildcard "{caminho}")',
   "action": "block",
   "ratelimit": {
-    "characteristics": ["ip.src", "cf.colo.id"],
+    "characteristics": [c for c in caract.split(',') if c],
     "period": int(janela),
     "requests_per_period": int(teto),
     "mitigation_timeout": int(janela),
@@ -551,55 +564,80 @@ print(' '.join(m.group(1).replace(' ','').split(',')) if m else '')
 " 2>/dev/null
       }
 
-      # As mensagens da recusa, uma por linha. O primeiro 300 bytes do JSON
-      # cru não cabia a resposta pretty-printed da Cloudflare, e o motivo real
-      # ("período 60 não existe no seu plano") ficava cortado fora da tela -
-      # enquanto o script seguia dizendo "quase sempre é permissão", que era
-      # falso e mandou alguém mexer em token à toa.
-      motivos() { # resposta-json
+      # O motivo da recusa, em uma linha, e NUNCA em branco.
+      #
+      # Primeiro tenta as mensagens do JSON, que é a forma legível. Se não vier
+      # nenhuma - resposta vazia, um 502 do caminho, um HTML de portal - cai
+      # para a resposta crua encolhida numa linha. Uma versão anterior deste
+      # passo imprimia "A Cloudflare disse:" e nada, e passar a impressão de
+      # que não houve erro é o pior resultado possível para um diagnóstico.
+      motivo() { # resposta-json → uma linha
         printf '%s' "$1" | python3 -c "
-import sys,json
-try: d=json.load(sys.stdin)
+import sys,json,re
+t=sys.stdin.read()
+try: d=json.loads(t)
 except Exception: d={}
+ms=[]
 for e in (d.get('errors') or []):
     p=(e.get('source') or {}).get('pointer','')
-    print(f\"{e.get('message','?')}{' (' + p + ')' if p else ''}\")
+    ms.append(f\"{e.get('message','?')}{' at ' + p if p else ''}\")
+if ms: print(' | '.join(ms))
+else:
+    cru=re.sub(r'\s+',' ',t).strip()
+    print(cru[:220] if cru else '(resposta vazia - a chamada não chegou a responder)')
 " 2>/dev/null
       }
 
       # Da mais específica para a mais geral: a Cloudflare aplica a primeira
       # que casar, então `/api/*` por último ou ele engoliria as outras.
-      tentar() { # janela-em-segundos → 0 e imprime, ou 1
-        local J="$1"
+      tentar() { # janela caracteristicas → 0 e imprime, ou 1
+        local J="$1" CAR="$2"
         local A B C
-        A="$(regra '/api/auth/*' 30 "$J" "HF: freio em /api/auth/* (30 por ${J}s por IP)")"
-        B="$(regra '/api/pay/*'  30 "$J" "HF: freio em /api/pay/* (30 por ${J}s por IP)")"
-        C="$(regra '/api/*'     300 "$J" "HF: freio em /api/* (300 por ${J}s por IP)")"
+        A="$(regra '/api/auth/*' 30 "$J" "HF: freio em /api/auth/* (30 por ${J}s por IP)" "$CAR")"
+        B="$(regra '/api/pay/*'  30 "$J" "HF: freio em /api/pay/* (30 por ${J}s por IP)" "$CAR")"
+        C="$(regra '/api/*'     300 "$J" "HF: freio em /api/* (300 por ${J}s por IP)" "$CAR")"
         for TENTATIVA in "$A,$B,$C" "$A,$C" "$A"; do
           RESP="$(posta "$TENTATIVA")"
           if printf '%s' "$RESP" | grep -q '"success":true'; then
             APLICOU="$(printf '%s' "$TENTATIVA" | grep -o '"description"' | wc -l | tr -d ' ')"
-            ok "Freio na borda ativo: $APLICOU regra(s), janela de ${J}s."
+            ok "Freio na borda ativo: $APLICOU regra(s), janela de ${J}s, contando por ${CAR}."
             return 0
           fi
+          # Guarda o que a zona disse, uma vez por motivo distinto. É este
+          # registro que fica no resumo quando nenhum degrau serve.
+          local M; M="$(motivo "$RESP")"
+          case "$VISTOS" in
+            *"$M"*) ;;
+            *) VISTOS="${VISTOS}${VISTOS:+
+}${J}s · ${CAR} → ${M}" ;;
+          esac
         done
         return 1
       }
 
+      # A escada, do degrau que um plano pago aceita para o que o gratuito
+      # aceita. `periodos_oferecidos` entra no meio: quando a recusa de 60s diz
+      # quais janelas existem, é essa a próxima tentada - a API sabe melhor que
+      # uma lista escrita aqui.
       APLICOU=0
-      if ! tentar 60; then
-        for J in $(periodos_oferecidos "${RESP:-}"); do
-          info "A zona não aceita janela de 60s; tentando ${J}s, que é o que ela oferece."
-          tentar "$J" && break
+      VISTOS=""
+      for CAR in 'ip.src,cf.colo.id' 'ip.src'; do
+        JANELAS="60"
+        tentar 60 "$CAR" && break
+        for J in $(periodos_oferecidos "${RESP:-}") 10; do
+          case " $JANELAS " in *" $J "*) continue ;; esac
+          JANELAS="$JANELAS $J"
+          tentar "$J" "$CAR" && break 2
         done
-      fi
+      done
 
       if [ "$APLICOU" = "0" ]; then
         # Nunca derruba a publicação: é defesa em profundidade, e a camada
         # que conta (o Worker) já está de pé.
-        info "Não consegui criar as regras de freio na borda. A Cloudflare disse:"
-        motivos "${RESP:-}" | sed 's/^/       /'
-        info "Se falar em permissão, acrescente ao token:"
+        info "Não consegui criar as regras de freio na borda. Cada degrau tentado,"
+        info "e o que a Cloudflare respondeu:"
+        printf '%s\n' "$VISTOS" | sed 's/^/       /'
+        info "Se algum motivo falar em permissão, acrescente ao token:"
         info "  Zone | Zone WAF | Edit   (ou Rulesets | Edit)"
         info "Ou crie à mão em Security → WAF → Rate limiting rules:"
         info "  /api/auth/* e /api/pay/*  30 por janela, por IP · bloquear"
