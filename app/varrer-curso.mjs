@@ -27,5 +27,43 @@ for (const w of [390,1280]) {
   }
   await ctx.close();
 }
+/* ── a aula 0 não pode voltar a ser órfã ──────────────────────────────────
+   `/inicio` existiu desde o começo e nenhuma tela linkava para ela: o único
+   jeito de chegar era digitar o endereço. Uma página de "leia antes de
+   começar" que ninguém alcança antes de começar não é uma página, é um
+   arquivo. E o botão dela apontava para `mem`, a SEGUNDA letra - a tela que
+   existe para não assustar ninguém mandava o iniciante pular a primeira
+   lição, e nada reclamava: o endereço existe e a página abre.
+
+   As duas falhas são invisíveis. Só aparecem para quem conhece a ordem do
+   alfabeto e esteve nas duas telas. Por isso são conferidas aqui. */
+{
+  const curso = JSON.parse(readFileSync('content/course.json', 'utf8'));
+  const primeira = curso.letters.slice().sort((a, b) => a.order - b.order)[0].id;
+
+  const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } });
+  await ctx.addInitScript(([a, st]) => {
+    localStorage.setItem('hf-platform-local-v1', a);
+    localStorage.setItem('hebraico-fluente-v1', st);
+  }, [JSON.stringify(ACC), JSON.stringify(ST)]);
+  const p = await ctx.newPage();
+
+  await p.goto('http://127.0.0.1:4403/meu-hebraico/', { waitUntil: 'networkidle' });
+  const linkada = await p.locator('a[href="/inicio/"], a[href="/inicio"]').count() > 0;
+  console.log(`      ${'aula 0'.padEnd(20)} ${linkada ? 'linkada no painel' : 'ÓRFÃ: o painel não linka /inicio'}`);
+  if (!linkada) ruim++;
+
+  await p.goto('http://127.0.0.1:4403/inicio/', { waitUntil: 'networkidle' });
+  const destino = await p.locator('a', { hasText: 'Ir para a primeira letra' }).first().getAttribute('href');
+  const certo = !!destino && destino.replace(/\/$/, '').endsWith(`/licao/${primeira}`);
+  console.log(`      ${'aula 0'.padEnd(20)} ${certo
+    ? `manda para ${destino} (primeira letra: ${primeira})`
+    : `MANDA PARA ${destino}, e a primeira letra é ${primeira}`}`);
+  if (!certo) ruim++;
+
+  await ctx.close();
+}
+
 console.log(ruim===0?'tudo limpo':`${ruim} problema(s)`);
 await b.close(); s.close();
+if (ruim) process.exit(1);

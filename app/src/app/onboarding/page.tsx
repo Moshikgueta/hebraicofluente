@@ -54,7 +54,18 @@ export default function OnboardingPage() {
       name: name.trim() || undefined,
       completedAt: new Date().toISOString()
     });
-    router.push('/meu-hebraico');
+    /* Para a explicação, e não direto para o painel.
+       ──────────────────────────────────────────────────────────────────
+       Quem acaba de responder as quatro perguntas está a um clique da
+       primeira letra, e é exatamente aí que faltam cinco minutos de "como
+       esta escrita funciona": para que lado se lê, por que as vogais não
+       são letras, o que o curso vai fazer com ele. Mandado direto ao
+       painel, o aluno encontra um "Começar a lição" e descobre a direção
+       do texto errando.
+
+       A página /inicio existia desde o começo e não era linkada de lugar
+       nenhum: o único jeito de chegar nela era digitar o endereço. */
+    router.push('/inicio');
   };
 
   return (

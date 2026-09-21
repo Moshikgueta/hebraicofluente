@@ -199,6 +199,39 @@ export function DashboardClient() {
         )}
       </section>
 
+      {/* A aula 0, e o peso dela muda com o momento.
+          ──────────────────────────────────────────────────────────────
+          Para quem ainda não abriu lição nenhuma é um cartão de verdade,
+          logo abaixo da ação principal: as cinco coisas que ninguém explica
+          a um brasileiro antes da primeira letra - para que lado se lê, por
+          que as vogais não são letras, por que uma letra muda de desenho no
+          fim da palavra, e como o curso funciona.
+
+          Para quem já começou vira uma linha discreta, porque aí é consulta
+          e não caminho. Em nenhum dos dois casos ela é obrigatória. */}
+      {licoesFeitas === 0 ? (
+        <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
+          <div className="grid gap-1 min-w-0">
+            <Badge tone="accent">Antes da primeira letra</Badge>
+            <p className="font-display text-[17px] font-semibold text-ink mt-1">
+              Como o hebraico funciona
+            </p>
+            <p className="text-[14.5px] leading-relaxed text-ink-body">
+              Cinco minutos de leitura: a direção, o alfabeto, o que muda em relação
+              ao português e como este curso funciona.
+            </p>
+          </div>
+          <LinkButton href="/inicio" variant="secondary" className="shrink-0">Ler agora</LinkButton>
+        </Card>
+      ) : (
+        <p className="font-ui text-[13.5px] text-ink-muted">
+          <Link href="/inicio" className="hover:text-[var(--accent)]">
+            Como o hebraico funciona
+          </Link>{' '}
+          · a explicação de antes da primeira letra, para reler quando quiser.
+        </p>
+      )}
+
       {/* Logo depois da ação de hoje, e antes dos números: os quatro
           contadores dizem QUANTO foi feito, e este cartão diz o que aquilo
           virou. Ele só aparece quando há frase legível - por volta da metade
@@ -346,7 +379,10 @@ function Welcome() {
           Seu curso está liberado.
         </h1>
         <p className="text-[17px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
-          São 22 letras, em {course.modules.filter(m => m.letterIds.length).length} módulos.
+          {/* O "22" estava escrito à mão aqui. É o mesmo defeito que pôs dois
+              números diferentes na vitrine: letra e lição são grandezas
+              parecidas, e a cópia manual erra em silêncio. */}
+          São {course.totalLetters} letras, em {course.modules.filter(m => m.letterIds.length).length} módulos.
           Antes da primeira, duas perguntas rápidas: como você quer ser chamado e
           quanto tempo por dia dá para estudar.
         </p>
