@@ -27,11 +27,26 @@
  *    que todas as letras são consoantes" - a contradição aparente é
  *    prevista, nomeada, e adiada para o lugar onde ela é ensinada.
  *
+ * 4. O ALUNO PRECISA SABER QUE HEBRAICO ELE ESTÁ APRENDENDO. "Bíblico ou
+ *    moderno?" é uma dúvida que quase ninguém faz em voz alta e quase todo
+ *    mundo tem - e as duas versões dela são medo: quem quer ler a Torah teme
+ *    estar aprendendo uma língua que não serve para isso, e quem quer falar
+ *    com a família teme o contrário. A resposta é a mesma para os dois: o
+ *    alfabeto é um só. Descobrir isso na lição 12 é descobrir tarde.
+ *
  * ── o que esta tela NÃO é ───────────────────────────────────────────────
  * Aula de linguística. Nada aqui precisa ser memorizado, e o quadro completo
  * dos sinais de vogal - que existia solto no meio da página - foi para
  * dentro de um "Quer saber mais?" fechado: ele é excelente para consultar e
  * péssimo como terceira tela de quem nunca viu hebraico.
+ *
+ * ── índice, porque ela é longa ──────────────────────────────────────────
+ * Onze quadros, e num telefone isso passa de dezessete mil pixels. Uma
+ * página de "leia antes de começar" também é uma página para VOLTAR - o
+ * próprio texto convida a isso quando um assunto reaparece numa lição -, e
+ * voltar sem índice é rolar procurando. Os destinos dos itens são conferidos
+ * num navegador por `varrer-curso.mjs`: um item apontando para um id que não
+ * existe não quebra nada, e é por isso que ninguém o encontraria.
  *
  * ── e ela não pode voltar a ser órfã ────────────────────────────────────
  * Esta página existiu desde o começo e nenhuma tela linkava para ela. O fim
@@ -125,6 +140,27 @@ const PERGUNTAS_NIQQUD: ItemCompreensao[] = [
   }
 ];
 
+/* ── o índice da página ────────────────────────────────────
+   Cada `id` é o id de um <h2> lá embaixo, e a ordem é a ordem em que os
+   quadros aparecem. O que NÃO está aqui é o que está fechado num "Quer
+   saber mais?": listar conteúdo opcional num índice é a maneira mais rápida
+   de ele deixar de ser opcional. */
+const INDICE: { id: string; t: string }[] = [
+  { id: 'o-sistema',         t: 'Não é o mesmo sistema do português' },
+  { id: 'a-comparacao',      t: 'Uma comparação para sentir a diferença' },
+  { id: 'as-vogais',         t: 'Então onde estão as vogais?' },
+  { id: 'o-niqqud',          t: 'O niqqud, os pontinhos das vogais' },
+  { id: 'checagem-niqqud',   t: 'Checagem: entendeu o niqqud?' },
+  { id: 'as-quatro-letras',  t: 'Quatro letras especiais' },
+  { id: 'a-direcao',         t: 'Da direita para a esquerda' },
+  { id: 'duas-direcoes',     t: 'Quando a linha tem duas direções' },
+  { id: 'maiuscula-e-finais', t: 'Maiúscula, formas finais e "letra muda"' },
+  { id: 'que-hebraico',      t: 'Que hebraico é este?' },
+  { id: 'o-caminho',         t: 'O caminho, do início ao fim' },
+  { id: 'atividade',         t: 'Checagem final: catorze perguntas' },
+  { id: 'como-funciona',     t: 'Como este curso funciona' }
+];
+
 const SOUND_LABEL: Record<string, string> = {
   a: 'o som A', e: 'o som E', i: 'o som I', o: 'o som O', u: 'o som U',
   sheva: 'sem vogal'
@@ -162,9 +198,41 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </p>
       </header>
 
+      {/* ── o índice ────────────────────────────────────────
+          Esta página passou de oito quadros para onze, e num telefone isso é
+          um rolo de dúzias de telas. Uma página de "leia antes de começar"
+          também é uma página para VOLTAR - o próprio texto convida a isso
+          quando um assunto reaparece numa lição - e voltar sem índice é
+          rolar procurando.
+
+          Os destinos são conferidos por varrer-curso.mjs: um item de índice
+          que aponta para um id que não existe leva a lugar nenhum e não
+          quebra nada, que é a definição do defeito que ninguém encontra. */}
+      <nav aria-labelledby="indice"
+           className="rounded-[var(--r-lg)] border border-line bg-surface p-5 grid gap-3">
+        <h2 id="indice" className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-ink-muted">
+          O que tem nesta página
+        </h2>
+        <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-0.5 list-none p-0 m-0">
+          {INDICE.map((it, i) => (
+            <li key={it.id}>
+              <a href={`#${it.id}`}
+                 className="flex items-baseline gap-2.5 min-h-[36px] py-1 font-ui text-[14.5px]
+                            leading-snug text-ink-body hover:text-[var(--accent)]">
+                <span aria-hidden className="font-ui text-[12px] text-ink-muted tabular-nums w-4 shrink-0">
+                  {i + 1}
+                </span>
+                <span>{it.t}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+
       {/* ── 1 · o sistema é outro ─────────────────────────────────────── */}
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[19px] font-semibold">
+        <h2 id="o-sistema"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
           Não é o mesmo sistema do português
         </h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
@@ -195,7 +263,8 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
       {/* ── 2 · a analogia, marcada como analogia ─────────────────────── */}
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[19px] font-semibold">
+        <h2 id="a-comparacao"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
           Uma comparação para sentir a diferença
         </h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
@@ -215,7 +284,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
       {/* ── 3 e 5 · onde estão as vogais, e o que NÃO dizer ───────────── */}
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[19px] font-semibold">Então onde estão as vogais?</h2>
+        <h2 id="as-vogais"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
+          Então onde estão as vogais?
+        </h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           Esta é a primeira pergunta de quase todo mundo, e ela tem resposta. O
           hebraico <strong className="font-semibold text-ink">tem sons de vogal como
@@ -260,7 +332,8 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
       {/* ── 4 · o niqqud ──────────────────────────────────────────────── */}
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[19px] font-semibold">
+        <h2 id="o-niqqud"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
           O niqqud: os pontinhos que marcam as vogais
         </h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
@@ -338,7 +411,8 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
       {/* ── 6 · as quatro letras especiais ────────────────────────────── */}
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[19px] font-semibold">
+        <h2 id="as-quatro-letras"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
           Quatro letras se comportam de um jeito especial
         </h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
@@ -371,7 +445,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
       {/* ── 7 · a direção, com atividade ──────────────────────────────── */}
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[19px] font-semibold">Da direita para a esquerda</h2>
+        <h2 id="a-direcao"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
+          Da direita para a esquerda
+        </h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           O hebraico se lê e se escreve da direita para a esquerda. A primeira letra de
           uma palavra é a que está mais à direita - o contrário do português, e é a
@@ -396,16 +473,66 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
           Os <strong className="font-semibold text-ink">números</strong> são a exceção:
-          continuam sendo escritos e lidos da esquerda para a direita, como aqui. Num
-          cardápio israelense o texto corre para um lado e o preço para o outro - e
-          isso é normal, não é erro de impressão.
+          continuam sendo escritos e lidos da esquerda para a direita, como aqui. É o
+          que faz uma linha ter duas direções ao mesmo tempo - e o próximo quadro
+          mostra isso acontecendo.
         </p>
+      </Card>
+
+      {/* ── 7b · a linha com duas direções ─────────────────────────
+          "Os números vão para o outro lado" era uma frase solta, e frase solta
+          sobre direção não ensina nada: a pessoa só entende quando VÊ o
+          endereço com o número parado na ponta ESQUERDA de uma linha que corre
+          para a direita. E ela vai ver isso antes de terminar o curso - numa
+          placa, num preço, num site. Sem este quadro, o primeiro encontro com
+          uma linha assim parece erro de impressão ou defeito da tela. */}
+      <Card className="p-6 grid gap-4">
+        <h2 id="duas-direcoes"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
+          Quando a linha tem duas direções
+        </h2>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">
+          Número, preço, telefone, endereço de site: tudo isso continua correndo da
+          esquerda para a direita dentro de uma linha hebraica. Não é mistura errada
+          nem defeito - é assim que se escreve. Veja onde cada pedaço vai parar:
+        </p>
+        <ul className="grid gap-3 list-none p-0 m-0">
+          {LINHAS_MISTAS.map(l => (
+            <li key={l.nota} className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-2">
+              <LinhaMista partes={l.partes} />
+              <p className="font-ui text-[13px] leading-snug text-ink-muted">{l.nota}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="font-ui text-[13px] text-ink-muted flex flex-wrap items-center gap-x-4 gap-y-1">
+          <span className="inline-flex items-center gap-1.5">
+            <span aria-hidden className="w-3 h-3 rounded-[3px] bg-[var(--accent-wash)]
+                                         border border-[color:var(--accent-soft)]" />
+            trecho que corre da esquerda para a direita
+          </span>
+        </p>
+        <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-4">
+          <p className="text-[15px] leading-relaxed text-ink-body">
+            A regra é uma só: <strong className="font-semibold text-ink">cada trecho mantém
+            a sua própria direção</strong>. O que a linha hebraica decide é a ORDEM em que
+            os trechos entram nela - da direita para a esquerda. Por isso o número, que
+            você lê normalmente, aparece na ponta que aqui pareceria a errada.
+          </p>
+          <p className="text-[15px] leading-relaxed text-ink-body">
+            Duas consequências práticas, para você não achar que quebrou alguma coisa.
+            Digitando, o cursor pula de um lado para o outro quando você passa do
+            hebraico para o número - é o normal. E copiando uma linha dessas para um
+            lugar que não é hebraico, as peças podem aparecer noutra ordem na tela:
+            o texto guardado continua o mesmo, só a montagem visual mudou.
+          </p>
+        </div>
       </Card>
 
       {/* ── 8, 9 e 10 · maiúscula, formas finais, letra muda ──────────── */}
       <Card className="p-6 grid gap-5">
         <div className="grid gap-3">
-          <h2 className="font-display text-[19px] font-semibold">
+          <h2 id="maiuscula-e-finais"
+              className="font-display text-[19px] font-semibold scroll-mt-4">
             Não existe maiúscula e minúscula
           </h2>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
@@ -461,9 +588,133 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </div>
       </Card>
 
+      {/* ── 10b · que hebraico é este ──────────────────────────────────
+          A pergunta que quase todo aluno traz e quase nunca faz em voz alta:
+          "o hebraico da Torah e o hebraico de Tel Aviv são a mesma coisa?
+          Estou aprendendo o certo?". Quem quer ler a Torah teme estar
+          aprendendo uma língua moderna que não serve para isso; quem quer
+          falar com a família teme estar aprendendo uma língua antiga que
+          ninguém usa. Os dois medos têm a mesma resposta - as letras são as
+          mesmas -, e ela é melhor dada aqui do que descoberta na lição 12.
+
+          O que NENHUMA linha aqui faz é prometer compreensão: ler e entender
+          são trabalhos diferentes, e um curso de alfabetização entrega o
+          primeiro. Dizer o contrário venderia melhor e seria mentira. */}
+      <Card className="p-6 grid gap-4">
+        <h2 id="que-hebraico"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
+          Que hebraico é este que você vai aprender?
+        </h2>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">
+          Talvez você tenha ouvido falar em "hebraico bíblico" e "hebraico moderno" e
+          esteja se perguntando qual dos dois está nesta tela. A resposta começa pela
+          parte que resolve quase tudo:{' '}
+          <strong className="font-semibold text-ink">o alfabeto é o mesmo</strong>. As
+          {' '}{alfabeto.total} letras que aparecem num rolo da Torah são as mesmas
+          {' '}{alfabeto.total} letras da placa de ônibus em Tel Aviv. Nenhuma foi
+          criada, nenhuma se aposentou.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
+            <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
+              O que é igual
+            </p>
+            <ul className="grid gap-1.5 text-[14.5px] leading-relaxed text-ink-body">
+              {[
+                'As letras, o desenho delas e a direção da escrita.',
+                'O niqqud, quando aparece.',
+                'A maior parte das raízes: as letras que carregam o sentido de uma família inteira de palavras.'
+              ].map(t => <li key={t}>{t}</li>)}
+            </ul>
+          </div>
+          <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
+            <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
+              O que mudou
+            </p>
+            <ul className="grid gap-1.5 text-[14.5px] leading-relaxed text-ink-body">
+              {[
+                'Milhares de palavras que o mundo antigo não tinha - avião, computador, eletricidade.',
+                'O sistema dos verbos, que funciona de outro jeito.',
+                'A pronúncia, que se acomodou numa forma padrão no último século.'
+              ].map(t => <li key={t}>{t}</li>)}
+            </ul>
+          </div>
+        </div>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">
+          Um e outro são a mesma língua em fases diferentes - como o português de
+          Camões e o daqui, só que com um intervalo bem maior no meio.{' '}
+          <strong className="font-semibold text-ink">Este curso ensina a LER</strong>: as
+          letras, os sinais, e a juntada delas em palavras. As palavras dos exercícios
+          são do hebraico de hoje, porque são as que você vai encontrar - mas a leitura
+          que você ganha serve para os dois textos, porque o alfabeto é um só.
+        </p>
+        <p className="text-[15px] leading-relaxed text-ink-body rounded-[var(--r-md)]
+                      bg-surface-2 px-4 py-3">
+          Uma honestidade, para você não se decepcionar depois:{' '}
+          <strong className="font-semibold text-ink">ler e entender são dois
+          trabalhos</strong>. Ao fim daqui você lê em voz alta o que estiver escrito -
+          inclusive um versículo. Entender tudo o que leu é o passo seguinte, e a
+          poesia bíblica é difícil até para quem nasceu falando hebraico - por isso as
+          edições israelenses costumam vir com notas.
+        </p>
+      </Card>
+
+      {/* ── 10c · a história, fechada ──────────────────────────────────
+          Fechada porque é história, e história não é pré-requisito de ler:
+          quem quer começar pelas letras não deve ter de rolar por cima dela.
+          E fica AQUI porque é onde a pergunta nasce - quem acabou de ler que
+          os dois hebraicos são fases da mesma língua quer saber o que
+          aconteceu no meio.
+
+          O texto é curto de propósito. A versão inteira mora em
+          data/culture.json e aparece em /historia/, e duas cópias da mesma
+          história é uma que vai ficar desatualizada. As datas daqui são as
+          de lá. */}
+      <details className="rounded-[var(--r-lg)] border border-line bg-surface overflow-hidden">
+        <summary className="cursor-pointer list-none p-5 font-ui text-[15px] font-semibold text-ink
+                            hover:bg-surface-2 flex items-center justify-between gap-3">
+          <span>Quer saber mais? Como uma língua voltou a ser falada</span>
+          <span aria-hidden className="text-ink-muted">▾</span>
+        </summary>
+        <div className="px-5 pb-5 grid gap-3 border-t border-[color:var(--line-soft)] pt-4
+                        text-[15px] leading-relaxed text-ink-body">
+          <p>
+            Por cerca de mil e setecentos anos o hebraico foi lido, rezado, estudado e
+            escrito - mas não era a língua em que as pessoas pediam o almoço. Judeus
+            falavam iídiche, ladino, árabe, português, e guardavam o hebraico para o
+            livro e para a reza.
+          </p>
+          <p>
+            No fim do século XIX isso começou a mudar. Eliezer Ben-Yehuda (1858-1922)
+            mudou-se para Jerusalém em 1881 decidido a criar as palavras que faltavam e
+            a criar o filho falando só hebraico; Itamar, esse filho, é lembrado como a
+            primeira criança em séculos a ter o hebraico como língua materna.
+          </p>
+          <p>
+            Ben-Yehuda virou o símbolo da história, e vale dizer o resto dela: o
+            trabalho foi coletivo. Escolas, professores, jornais e famílias inteiras
+            decidiram falar uma língua que ninguém falava em casa. Hoje são milhões de
+            falantes nativos.
+          </p>
+          <p className="border-t border-[color:var(--line-soft)] pt-3">
+            É por isso que o hebraico de hoje tem palavra para computador e o antigo
+            não: uma foi criada, a outra não precisava existir. E é por isso também que
+            as letras não mudaram - ninguém inventou uma escrita nova, só voltou a
+            falar a que estava guardada.
+          </p>
+          <Link href="/historia"
+                className="font-ui text-[14px] font-semibold text-[var(--accent)]
+                           underline underline-offset-4 min-h-[44px] inline-flex items-center">
+            A história inteira, em cartas →
+          </Link>
+        </div>
+      </details>
       {/* ── 11 · o mapa ───────────────────────────────────────────────── */}
       <Card tone="wash" className="p-6 grid gap-4">
-        <h2 className="font-display text-[19px] font-semibold">O caminho, do início ao fim</h2>
+        <h2 id="o-caminho"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
+          O caminho, do início ao fim
+        </h2>
         <ol className="grid gap-2.5 list-none p-0 m-0">
           {[
             ['Aprender as letras', 'uma por vez, com a forma e o nome'],
@@ -497,8 +748,8 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
       {/* ── 13 · a atividade rápida, agora sobre a página inteira ─────── */}
       <Compreensao
         id="atividade"
-        titulo="E o resto? Seis perguntas"
-        intro="A última conferência antes das letras, agora sobre tudo o que esta página explicou."
+        titulo="E o resto? Catorze perguntas"
+        intro="A última conferência antes das letras, sobre tudo o que esta página explicou. Nada aqui vale nota nem tranca nada - errar só faz aparecer a explicação."
         perguntas={PERGUNTAS_GERAIS}
         fecho={{
           bom: 'O mapa está na cabeça. Pode começar pelas letras.',
@@ -508,7 +759,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
       {/* ── como o curso funciona ─────────────────────────────────────── */}
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[19px] font-semibold">Como este curso funciona</h2>
+        <h2 id="como-funciona"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
+          Como este curso funciona
+        </h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           São {curso.licoes} lições em {curso.modulos} módulos, e uma regra que vale do
           começo ao fim: nada aparece na tela antes de ter sido ensinado. Você nunca vê
@@ -618,6 +872,58 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
   );
 }
 
+/* ── a linha que tem duas direções ──────────────────────────────
+   As partes vêm em ORDEM DE LEITURA: a primeira da lista é a que aparece mais
+   à DIREITA. O contêiner é `he-seq`, que é um isolado rtl - então a ordem do
+   DOM é a ordem em que um leitor de hebraico encontra os pedaços, e quem
+   escreve o dado escreve do jeito que se lê.
+
+   Cada pedaço latino é o seu próprio isolado, marcado com `dir="ltr"`. É o
+   que o <He> já faz do lado hebraico, e pelo mesmo motivo: sem isolar, um
+   hífen ou um ponto entre os dois se junta ao trecho errado e a linha se
+   remonta sozinha na tela - foi assim que a referência impressa deste curso
+   publicou uma lista de palavras invertida. Aqui seria pior: a tela que
+   ENSINA direção mostrando a direção errada. */
+type PedacoLinha = { t: 'he' | 'lat'; s: string };
+
+function LinhaMista({ partes }: { partes: readonly PedacoLinha[] }) {
+  return (
+    <p className="he-seq justify-center gap-x-3 py-1">
+      {partes.map((p, i) => p.t === 'he'
+        ? <He key={i} size="word">{p.s}</He>
+        : (
+          <span key={i} dir="ltr"
+                className="font-ui text-[22px] sm:text-[24px] font-semibold text-ink
+                           rounded-[4px] bg-[var(--accent-wash)] px-1.5
+                           [unicode-bidi:isolate]">
+            {p.s}
+          </span>
+        ))}
+    </p>
+  );
+}
+
+/* Três linhas que qualquer pessoa encontra em Israel na primeira semana: uma
+   placa de rua, um preço e um contato. O número é sempre o pedaço marcado. */
+const LINHAS_MISTAS: { partes: PedacoLinha[]; nota: string }[] = [
+  {
+    partes: [{ t: 'he', s: '\u05e8\u05d7\u05d5\u05d1 \u05d4\u05e8\u05e6\u05dc' }, { t: 'lat', s: '42' }],
+    nota: 'Uma placa de rua. O nome começa na direita; o número da casa fica na ponta esquerda, e continua sendo quarenta e dois.'
+  },
+  {
+    /* Um letreiro de ônibus, e não um preço: o preço pedia a preposição
+       {{ב}}, que em hebraico gruda no que vem depois e antes de número se
+       escreve com traço. Ela apareceria solta na linha, e a tela que ensina
+       direção estaria ensinando ortografia errada de passagem. */
+    partes: [{ t: 'he', s: '\u05e7\u05d5' }, { t: 'lat', s: '18' }, { t: 'he', s: '\u05dc\u05ea\u05dc \u05d0\u05d1\u05d9\u05d1' }],
+    nota: 'Um letreiro de ônibus: linha 18 para Tel Aviv. O número fica no meio, com hebraico dos dois lados - e cada lado corre para onde é dele.'
+  },
+  {
+    partes: [{ t: 'he', s: '\u05d8\u05dc\u05e4\u05d5\u05df' }, { t: 'lat', s: '050-1234567' }],
+    nota: 'Um telefone. O traço no meio não muda de lugar: o número inteiro é um bloco só, lido da esquerda para a direita.'
+  }
+];
+
 /* ── a micro-atividade da direção ──────────────────────────────────────────
    Uma pergunta só, respondida com o dedo: em qual ponta desta palavra a
    leitura começa? Ler sobre a direção e APONTAR a direção são coisas
@@ -666,11 +972,21 @@ function PorOndeComeca() {
   );
 }
 
-/* ── as seis perguntas gerais ─────────────────────────────────────────────
+/* ── as catorze perguntas gerais ──────────────────────────────────────────
    A conferência do fim, sobre a página inteira. Elas usam o mesmo componente
    da checagem do niqqud: um conceito novo nunca é seguido de "próximo" sem
    uma pergunta no meio, e isso vale em todo o curso - ver
-   components/learn/Compreensao.tsx. */
+   components/learn/Compreensao.tsx.
+
+   Eram seis para uma página de oito quadros, e seis perguntas cobrindo oito
+   assuntos significa que dois passam sem ser conferidos - que é o mesmo que
+   não ter conferido, porque não dá para saber QUAIS dois. Agora há pelo
+   menos uma por quadro do caminho principal.
+
+   Nenhuma delas cobra o que está dentro de um "Quer saber mais?". Conferir
+   conteúdo opcional é transformá-lo em obrigatório pela porta dos fundos, e
+   quem não abriu o quadro erraria uma pergunta sobre algo que o curso disse
+   que ele não precisava ler. */
 const PERGUNTAS_GERAIS: ItemCompreensao[] = [
   {
     t: 'escolha',
@@ -716,5 +1032,73 @@ const PERGUNTAS_GERAIS: ItemCompreensao[] = [
     ],
     certa: 1,
     porque: 'Ela não está sobrando: pode estar segurando um sinal de vogal, marcando o início da palavra, ou ali por história da língua. E não é "sempre muda" - depende da palavra.'
+  },
+  {
+    t: 'vf',
+    q: 'Uma letra na forma final virou outra letra, com outro som.',
+    certa: false,
+    porque: 'É a mesma letra e normalmente o mesmo som. O que muda é o formato quando ela fecha a palavra - como um M que ganhasse outro desenho só no fim.'
+  },
+  {
+    t: 'escolha',
+    q: 'Por que {{א}}, {{ה}}, {{ו}} e {{י}} ganharam um aviso nesta página?',
+    opcoes: [
+      'Porque são as mais difíceis de desenhar à mão',
+      'Porque, dependendo da palavra, podem participar de um som de vogal em vez de soar como consoante',
+      'Porque só aparecem no fim da palavra'
+    ],
+    certa: 1,
+    porque: 'O aviso existe para que, lá na frente, você não pense "mas você disse que todas as letras são consoantes". Cada uma dessas quatro tem a sua lição, e a regra é ensinada lá.'
+  },
+  {
+    t: 'vf',
+    q: 'Numa linha hebraica, um número também é lido da direita para a esquerda.',
+    certa: false,
+    porque: 'Cada trecho mantém a sua própria direção: o número continua da esquerda para a direita, e você o lê normalmente. O que a linha hebraica decide é a ORDEM em que os trechos entram nela.'
+  },
+  {
+    t: 'escolha',
+    q: 'Numa placa hebraica que diz "rua Herzl 42", onde aparece o 42?',
+    opcoes: [
+      'Na ponta esquerda da linha',
+      'Na ponta direita da linha, que é onde a leitura começa',
+      'Em cima do nome da rua'
+    ],
+    certa: 0,
+    porque: 'O nome da rua começa na direita e corre para a esquerda, então o número, que vem depois, para na ponta esquerda. Continua sendo quarenta e dois.'
+  },
+  {
+    t: 'vf',
+    q: 'O alfabeto do hebraico antigo é diferente do alfabeto do hebraico de hoje.',
+    certa: false,
+    porque: 'São as mesmas letras num rolo da Torah e numa placa de ônibus em Tel Aviv. O que mudou de uma fase para a outra foi a língua por cima delas: palavras novas, outro sistema de verbos, a pronúncia.'
+  },
+  {
+    t: 'escolha',
+    q: 'O que você consegue fazer ao terminar este curso?',
+    opcoes: [
+      'Ler em voz alta o que estiver escrito, inclusive um versículo',
+      'Entender qualquer texto bíblico sem ajuda nenhuma',
+      'Conversar em hebraico sobre qualquer assunto'
+    ],
+    certa: 0,
+    porque: 'Ler e entender são dois trabalhos. Este curso entrega o primeiro, que é a porta para os outros dois - e a poesia bíblica é difícil até para quem nasceu falando hebraico.'
+  },
+  {
+    t: 'escolha',
+    q: 'Por que o curso começa com niqqud e vai tirando os sinais aos poucos?',
+    opcoes: [
+      'Porque o niqqud é mais bonito no começo',
+      'Porque com os sinais dá para ler sem adivinhar, e o hebraico do dia a dia vem sem eles',
+      'Porque o niqqud só existe em material para criança'
+    ],
+    certa: 1,
+    porque: 'Os sinais são o apoio que permite ler antes de conhecer a palavra. Como placa, jornal e mensagem vêm sem eles, o objetivo é você depender cada vez menos do apoio.'
+  },
+  {
+    t: 'vf',
+    q: 'Num exercício, pode aparecer uma palavra com uma letra que você ainda não estudou.',
+    certa: false,
+    porque: 'É uma regra do curso, do começo ao fim: nada aparece na tela antes de ter sido ensinado. Toda palavra de um exercício é feita só com as letras que já passaram.'
   }
 ];

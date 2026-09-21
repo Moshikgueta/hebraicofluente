@@ -26,7 +26,14 @@ for (const w of [390,1280]) {
          ele mostra as chaves ao aluno, e some no meio de uma página longa
          sem quebrar nada. Foi o que aconteceu com o enunciado da checagem
          da letra {{ב}}: "Como se lê {{לֵב}}?" com chaves e tudo. */
-      cru:(document.body.innerText.match(/\{\{[^}]{1,40}\}\}/g)||[])[0]||null}));
+      cru:(document.body.innerText.match(/\{\{[^}]{1,40}\}\}/g)||[])[0]
+          /* E sobra de substituição. Um `\\1` ou `\\2` no meio de um título
+             é um "replace" que tratou o texto de substituição como literal:
+             a regra visual não quebra nada, a página monta, e o título sai
+             com "aprender?\\3" escrito na tela. Aconteceu aqui, num script
+             que pôs `id` em onze <h2> de uma vez - e passou pelo tsc, pelo
+             build e pela própria varredura, que só procurava chaves. */
+          ||(document.body.innerText.match(/\\[1-9]/g)||[])[0]||null}));
     const over=m.sw>m.iw+1;
     if(over||erros.length||m.cru) ruim++;
     if(m.cru) console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} MARCAÇÃO CRUA NA TELA: ${m.cru}`);
@@ -67,6 +74,70 @@ for (const w of [390,1280]) {
     ? `manda para ${destino} (primeira letra: ${primeira})`
     : `MANDA PARA ${destino}, e a primeira letra é ${primeira}`}`);
   if (!certo) ruim++;
+
+  await ctx.close();
+}
+
+/* ── o módulo 0: o índice e o que ele promete ─────────────────────
+   A aula 0 é a página mais longa do curso - dezessete mil pixels num
+   telefone - e por isso ganhou um índice. Um item de índice apontando para um
+   id que não existe não quebra nada: o clique simplesmente não leva a lugar
+   nenhum, nenhum teste vê, e só um aluno percebe. É exatamente o tipo de
+   defeito que precisa de um navegador para ser visto.
+
+   Junto vai o que a página PRECISA ter: o índice desenhado, a checagem final
+   com o número de perguntas que ela anuncia, e o quadro que ensina a linha
+   de duas direções - o único lugar do curso em que o aluno vê um número
+   dentro de hebraico antes de encontrar um na rua. */
+{
+  const ctx = await b.newContext({ viewport: { width: 390, height: 900 } });
+  await ctx.addInitScript(([a, st]) => {
+    localStorage.setItem('hf-platform-local-v1', a);
+    localStorage.setItem('hebraico-fluente-v1', st);
+  }, [JSON.stringify(ACC), JSON.stringify(ST)]);
+  const p = await ctx.newPage();
+  await p.goto('http://127.0.0.1:4403/inicio/', { waitUntil: 'networkidle' });
+
+  const indice = await p.locator('nav[aria-labelledby="indice"] a').evaluateAll(
+    as => as.map(a => a.getAttribute('href')));
+  const quebrados = [];
+  for (const href of indice) {
+    const id = (href || '').replace(/^#/, '');
+    if (!id || await p.locator(`[id="${id}"]`).count() === 0) quebrados.push(href);
+  }
+  console.log(`      ${'aula 0'.padEnd(20)} ${indice.length} itens de índice` +
+              (quebrados.length ? ` - QUEBRADOS: ${quebrados.join(', ')}` : ', todos com destino'));
+  if (!indice.length || quebrados.length) ruim++;
+
+  /* A checagem final anuncia o próprio tamanho no título. Se alguém tirar
+     uma pergunta e esquecer o título, a página passa a mentir por conta
+     própria - e o pedido era de 12 a 18. */
+  const cartoes = await p.evaluate(() => {
+    const sec = document.querySelector('section[aria-labelledby="atividade"]');
+    if (!sec) return 0;
+    return [...sec.children].filter(el => /^\d+\./.test(el.textContent || '')).length;
+  });
+  const faixa = cartoes >= 12 && cartoes <= 18;
+  console.log(`      ${'aula 0'.padEnd(20)} checagem final com ${cartoes} perguntas ` +
+              `${faixa ? '(entre 12 e 18)' : 'FORA DA FAIXA 12-18'}`);
+  if (!faixa) ruim++;
+
+  const txt = (await p.innerText('body')).replace(/\s+/g, ' ');
+  for (const [o_que, marca] of [
+    ['a linha de duas direções', 'Quando a linha tem duas direções'],
+    ['moderno × antigo', 'Que hebraico é este'],
+    ['a história, fechada', 'Como uma língua voltou a ser falada']
+  ]) {
+    const tem = txt.includes(marca);
+    console.log(`      ${'aula 0'.padEnd(20)} ${tem ? '✓' : 'FALTA'} ${o_que}`);
+    if (!tem) ruim++;
+  }
+
+  /* O bloco da história é OPCIONAL, e opcional quer dizer fechado ao chegar:
+     aberto por engano, ele empurra o caminho principal para baixo. */
+  const aberto = await p.locator('details[open] summary', { hasText: 'voltou a ser falada' }).count();
+  console.log(`      ${'aula 0'.padEnd(20)} ${aberto ? 'A HISTÓRIA CHEGA ABERTA' : 'a história chega fechada'}`);
+  if (aberto) ruim++;
 
   await ctx.close();
 }
