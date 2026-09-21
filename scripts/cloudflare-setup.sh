@@ -495,10 +495,25 @@ print(str((d.get('result') or {}).get('fight_mode','?')).lower())
       #   sua três vezes. Um teto apertado aqui derruba cliente de verdade em
       #   rede corporativa, e ninguém descobre o motivo.
       #
-      # O plano gratuito da Cloudflare permite UMA regra de rate limiting, e
-      # os pagos permitem mais. Por isso as regras vão em ordem de valor e o
-      # script tenta do conjunto inteiro para baixo, até o que couber -
-      # nunca derrubando a publicação se nenhuma couber.
+      # DUAS coisas variam com o plano da zona, e as duas foram descobertas
+      # do jeito caro - publicando e lendo o erro:
+      #
+      # · QUANTAS regras cabem. O plano gratuito permite uma; os pagos, mais.
+      #   Por isso as regras vão em ordem de valor e o script tenta do
+      #   conjunto inteiro para baixo, até o que couber.
+      #
+      # · QUE JANELA cabe. O gratuito só aceita 10 segundos, e recusa 60 com
+      #   "not entitled to use the period 60, can only use a period among
+      #   [10]". Então o script tenta 60 e, se a recusa disser quais períodos
+      #   existem, tenta de novo com o que a própria API ofereceu.
+      #
+      # O TETO não encolhe junto com a janela, de propósito. Converter
+      # "30 por minuto" para "5 por 10 segundos" manteria a taxa média e
+      # apertaria a rajada seis vezes - e um teto apertado aqui derruba um
+      # escritório inteiro atrás de um IP só, sem ninguém descobrir o motivo.
+      # Esta camada não existe para ser o freio fino (esse é o do Worker, que
+      # continua valendo); existe para cortar o que é ordens de grandeza
+      # maior. 30 pedidos em 10 segundos já é muito além de qualquer pessoa.
       echo
       bold "8b. Freio na borda"
       RLSET="$CFAPI/zones/$ZID/rulesets/phases/http_ratelimit/entrypoint"
@@ -521,37 +536,74 @@ print(json.dumps({
 PY
       }
 
-      # Da mais específica para a mais geral: a Cloudflare aplica a primeira
-      # que casar, então `/api/*` por último ou ele engoliria as outras.
-      R1="$(regra '/api/auth/*' 30 60 'HF: freio em /api/auth/* (30/min por IP)')"
-      R2="$(regra '/api/pay/*'  30 60 'HF: freio em /api/pay/* (30/min por IP)')"
-      R3="$(regra '/api/*'     300 60 'HF: freio em /api/* (300/min por IP)')"
-
       posta() { # rules-json
         cf -X PUT "$RLSET" --data "{\"rules\":[$1]}"
       }
 
+      # As janelas que a recusa disser que existem, na ordem em que vieram.
+      # Vazio quando o erro for outro - e aí não há segunda tentativa a fazer.
+      periodos_oferecidos() { # resposta-json
+        printf '%s' "$1" | python3 -c "
+import sys,re
+t=sys.stdin.read()
+m=re.search(r'can only use a period among \[([0-9, ]+)\]', t)
+print(' '.join(m.group(1).replace(' ','').split(',')) if m else '')
+" 2>/dev/null
+      }
+
+      # As mensagens da recusa, uma por linha. O primeiro 300 bytes do JSON
+      # cru não cabia a resposta pretty-printed da Cloudflare, e o motivo real
+      # ("período 60 não existe no seu plano") ficava cortado fora da tela -
+      # enquanto o script seguia dizendo "quase sempre é permissão", que era
+      # falso e mandou alguém mexer em token à toa.
+      motivos() { # resposta-json
+        printf '%s' "$1" | python3 -c "
+import sys,json
+try: d=json.load(sys.stdin)
+except Exception: d={}
+for e in (d.get('errors') or []):
+    p=(e.get('source') or {}).get('pointer','')
+    print(f\"{e.get('message','?')}{' (' + p + ')' if p else ''}\")
+" 2>/dev/null
+      }
+
+      # Da mais específica para a mais geral: a Cloudflare aplica a primeira
+      # que casar, então `/api/*` por último ou ele engoliria as outras.
+      tentar() { # janela-em-segundos → 0 e imprime, ou 1
+        local J="$1"
+        local A B C
+        A="$(regra '/api/auth/*' 30 "$J" "HF: freio em /api/auth/* (30 por ${J}s por IP)")"
+        B="$(regra '/api/pay/*'  30 "$J" "HF: freio em /api/pay/* (30 por ${J}s por IP)")"
+        C="$(regra '/api/*'     300 "$J" "HF: freio em /api/* (300 por ${J}s por IP)")"
+        for TENTATIVA in "$A,$B,$C" "$A,$C" "$A"; do
+          RESP="$(posta "$TENTATIVA")"
+          if printf '%s' "$RESP" | grep -q '"success":true'; then
+            APLICOU="$(printf '%s' "$TENTATIVA" | grep -o '"description"' | wc -l | tr -d ' ')"
+            ok "Freio na borda ativo: $APLICOU regra(s), janela de ${J}s."
+            return 0
+          fi
+        done
+        return 1
+      }
+
       APLICOU=0
-      for TENTATIVA in "$R1,$R2,$R3" "$R1,$R3" "$R1"; do
-        RESP="$(posta "$TENTATIVA")"
-        if printf '%s' "$RESP" | grep -q '"success":true'; then
-          APLICOU="$(printf '%s' "$TENTATIVA" | grep -o '"description"' | wc -l | tr -d ' ')"
-          ok "Freio na borda ativo: $APLICOU regra(s)."
-          break
-        fi
-      done
+      if ! tentar 60; then
+        for J in $(periodos_oferecidos "${RESP:-}"); do
+          info "A zona não aceita janela de 60s; tentando ${J}s, que é o que ela oferece."
+          tentar "$J" && break
+        done
+      fi
 
       if [ "$APLICOU" = "0" ]; then
         # Nunca derruba a publicação: é defesa em profundidade, e a camada
         # que conta (o Worker) já está de pé.
-        info "Não consegui criar as regras de freio na borda."
-        printf '%s\n' "${RESP:-}" | head -c 300 | sed 's/^/       /'
-        echo
-        info "Quase sempre é permissão: acrescente ao token"
+        info "Não consegui criar as regras de freio na borda. A Cloudflare disse:"
+        motivos "${RESP:-}" | sed 's/^/       /'
+        info "Se falar em permissão, acrescente ao token:"
         info "  Zone | Zone WAF | Edit   (ou Rulesets | Edit)"
         info "Ou crie à mão em Security → WAF → Rate limiting rules:"
-        info "  /api/auth/* e /api/pay/*  30/min por IP · bloquear"
-        info "  /api/*                   300/min por IP · bloquear"
+        info "  /api/auth/* e /api/pay/*  30 por janela, por IP · bloquear"
+        info "  /api/*                   300 por janela, por IP · bloquear"
         info "O freio do Worker continua valendo de qualquer jeito."
       fi
     fi
