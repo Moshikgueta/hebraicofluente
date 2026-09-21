@@ -17,9 +17,9 @@
       "id": "mod1",
       "titlePt": "As seis primeiras letras",
       "subPt": "e as primeiras palavras inteiras",
-      "letters": ["mem", "tav", "alef", "nun", "he", "yod"],
+      "letters": ["alef", "mem", "tav", "nun", "he", "yod"],
       "lessons": [
-        { "n": 1, "letters": ["mem", "tav", "alef"] },
+        { "n": 1, "letters": ["alef", "mem", "tav"] },
         { "n": 2, "letters": ["nun", "he", "yod"] },
         { "n": 3, "kind": "practice" }
       ],

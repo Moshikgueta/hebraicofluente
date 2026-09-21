@@ -60,6 +60,9 @@ export type Letter = {
   didYouKnow: string;
   brazilianMistake: { wrong: string; right: string; why: string };
   confusableWith: string[];
+  /** O traço visual que separa esta letra de uma parecida, por glifo do outro.
+   *  Escrito de um lado só do par; quem lê procura nos dois sentidos. */
+  contrastes: Record<string, string>;
   syllables: Syllable[];
   wordsToRead: Word[];
   wordsToRecognize: Word[];

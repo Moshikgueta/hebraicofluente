@@ -545,10 +545,31 @@ export const exLetterPosition: Gen = (L, ctx, rand, i) => {
  */
 export const exConfusablePick: Gen = (L, ctx, rand, i) => {
   const confusos = L.confusableWith.filter(c => c !== L.letter && ctx.allGlyphs.includes(c));
-  if (confusos.length < 2) return null;
-  const wrong = take(confusos, 3, rand);
+  /* UM parecido já basta.
+     ──────────────────────────────────────────────────────────────────────
+     Exigia dois, e por isso cinco letras atravessavam o curso inteiro sem
+     nunca receber este exercício: Lámed (nenhum declarado), Pe, Álef, Shin e
+     Bet (um cada). Justo as duas últimas são metade do par que mais engana -
+     ב contra כ. Inventar um segundo parecido para cada uma seria pior: um par
+     falso ensina uma diferença que não existe. Então o parecido de verdade
+     entra como distrator principal e o resto é completado com o alfabeto. */
+  if (!confusos.length) return null;
+  const enchimento = ctx.allGlyphs.filter(c => c !== L.letter && !confusos.includes(c));
+  const wrong = [...take(confusos, 3, rand), ...shuffled(enchimento, rand)].slice(0, 3);
+  if (wrong.length < 2) return null;
   const { options, answer } = optionsWith(L.letter, wrong, rand);
   const nomeDe = (g: string) => ctx.history.find(x => x.letter === g || x.finalForm === g)?.namePt;
+
+  /* A frase que diz a DIFERENÇA, não só o nome.
+     "Essa é Dálet" informa e não corrige: a pessoa erra de novo pelo mesmo
+     motivo, porque ninguém disse onde olhar. O contraste é escrito de um lado
+     só do par no conteúdo, então procura-se nos dois sentidos. */
+  const contraste = (outro: string): string | null => {
+    const meu = L.contrastes?.[outro];
+    if (meu) return meu;
+    const dono = ctx.history.find(x => x.letter === outro || x.finalForm === outro);
+    return dono?.contrastes?.[L.letter] ?? null;
+  };
 
   return {
     id: `${L.id}-conf-${i}`, kind: 'letter-recognition', letterId: L.id, skill: 'rec',
@@ -556,6 +577,8 @@ export const exConfusablePick: Gen = (L, ctx, rand, i) => {
     letter: L.letter, options, answer,
     whyPt: options.map(o => {
       if (o === L.letter) return null;
+      const traco = contraste(o);
+      if (traco) return traco;
       const nome = nomeDe(o);
       return nome ? `Essa é ${nome}. Olhe o desenho de novo.` : 'Essa é outra letra, bem parecida.';
     }),

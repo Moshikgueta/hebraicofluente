@@ -60,7 +60,7 @@ produção em hebraico: o aluno digita sempre em alfabeto latino.
 | Decodificar sílabas | **ALCANÇADO** | 132 sílabas, `exSyllableReading` + `exBuildSyllable` + `exMatchSyllable`, parte própria no exame |
 | Ler palavras simples | **ALCANÇADO** | 99 palavras para ler, distribuídas pela ordem das letras |
 | Ler frases básicas | **NÃO ALCANÇADO** | não existe nenhuma frase. O item mais longo do curso é `בֹּקֶר טוֹב`, duas palavras, numa cena |
-| Distinguir letras parecidas | **PARCIAL** | forte na maioria, mas **Lámed não tem par declarado** e por isso nunca recebe esse exercício |
+| Distinguir letras parecidas | **PARCIAL** | forte na maioria, mas **cinco letras (ל א ש ב פ) nunca recebem esse exercício**: o gerador exige dois pares declarados e elas têm zero ou um |
 | Associar letra e som | **PARCIAL** | associação visual sim; sem gravação, o vínculo é letra↔descrição escrita, não letra↔som |
 | Digitar hebraico | **NÃO INCLUÍDO** | toda digitação é transliteração. Não existe teclado hebraico em lugar nenhum |
 | Escrever hebraico à mão | **ALCANÇADO** | etapa 3 de toda lição, cursiva, com 27 traçados de geometria real |
@@ -140,14 +140,30 @@ visual. Quinze frases resolvem o alfabeto inteiro. Exemplos:
 | ט / מ | "O ט é uma panela aberta em cima. O מ é fechado." |
 | ע / צ | "O צ tem o braço colado no alto. O ע tem os dois braços soltos." |
 
-### C4. Lámed nunca recebe discriminação visual
+### C4. Cinco letras nunca recebem discriminação visual
 
-`exConfusablePick` exige `confusableWith.length >= 2`. Lámed tem zero. Das 22
-letras, é a única que atravessa o curso sem nenhum exercício de contraste.
+`exConfusablePick` exige `confusableWith.length >= 2` e desiste abaixo disso.
+Cinco letras ficam de fora, não uma:
 
-**Recomendação:** declarar `["ן", "ו"]`. ל é a única letra que sobe acima da
-linha, e contrastá-la com as duas que são traços verticais ensina exatamente
-esse traço distintivo.
+| letra | pares declarados hoje |
+|---|---|
+| Lámed ל | nenhum |
+| Álef א | `["ע"]` |
+| Shin ש | `["ע"]` |
+| Bet ב | `["כ"]` |
+| Pe פ | `["ם"]` |
+
+Quem tem um par só é castigado justamente por ter a confusão bem mapeada: o
+motor precisa de três alternativas erradas para montar a pergunta e, achando
+uma, não monta nenhuma. É uma regra de implementação virando buraco
+pedagógico.
+
+**Recomendação, em duas partes.** Declarar `["ן", "ו"]` para Lámed - ל é a
+única letra que sobe acima da linha, e contrastá-la com dois traços verticais
+ensina exatamente esse traço distintivo. E baixar a exigência do gerador para
+**um** par declarado, completando as alternativas que faltam com letras já
+vistas: o par declarado continua sendo o distrator que importa, e as outras
+duas opções só precisam ser plausíveis.
 
 ### C5. Os pares base/final não são contrastados
 
@@ -376,8 +392,8 @@ Nada além disso. O sistema já é mais fino do que precisa ser.
 | 5 | Par de confusão com n>=3 injeta 3 itens na próxima prática | fecha o laço entre diagnóstico e tratamento | `exercises.ts` | pequeno |
 | 6 | 12 frases curtas a partir da letra 12 | é a habilidade que o aluno acha que comprou e não recebe | `data/` + novo gerador | médio |
 | 7 | Pares mínimos de vogal (patach/kamats etc.) | a dificuldade real do nikud, hoje não treinada | novo `exVowelPair` | pequeno |
-| 8 | Ordem A-M-T no módulo 1 | adianta a primeira palavra lida em uma lição inteira | `letters.json` | minúsculo |
-| 9 | Declarar par de Lámed e os pares base/final | seis letras sem discriminação visual hoje | `letters.json` | minúsculo |
+| 8 | Ordem A-M-T no módulo 1 | adianta a primeira palavra lida em uma lição inteira | `letters.json` + `modules.json` | pequeno |
+| 9 | Pares de Lámed e base/final, e gerador aceitando um par | cinco letras sem discriminação visual hoje | `letters.json` + `generators.ts` | pequeno |
 | 10 | Sem nikud de 8 para 24 palavras, antecipadas nos checkpoints | maior mudança de hábito, menor dose atual | `extras.json` | médio |
 | 11 | Etapa 1 encolhida a partir da letra 12 | tempo cobrado de quem já sabe o ritual | `LessonClient` | pequeno |
 | 12 | "Ainda lembra?" na abertura da lição | recuperação distribuída, 8 segundos por lição | `LessonClient` | pequeno |
@@ -435,10 +451,11 @@ Nada além disso. O sistema já é mais fino do que precisa ser.
 
 Custo baixo, dano alto se faltar.
 
-- 2, 3 (domínio e caixa 0) - acaba com a falsa confiança
-- 8, 9 (ordem A-M-T, pares de Lámed e base/final) - duas edições de dado
-- 4 (campo `contrastes` e retorno com a diferença) - 15 frases
-- 13 (fim de lição com "palavras que você já lê")
+- ~~2, 3 (domínio e caixa 0)~~ - **feito**, ver P
+- ~~8~~ (ordem A-M-T) - **feito**, ver P
+- ~~9~~ (pares de Lámed e base/final, e o gerador) - **feito**, ver P
+- ~~4~~ (campo `contrastes` e retorno com a diferença) - **feito**, ver P
+- 13 (fim de lição com "palavras que você já lê") - pendente
 
 ### Primeiro mês
 
@@ -452,6 +469,104 @@ Depois de ver onde as pessoas param de verdade.
 
 - 10, 11, 15, 16, 18, 19, 20
 - Desafio diário e qualquer coisa de ritmo: só com dados de abandono na mão
+
+---
+
+## P. O que já foi feito depois desta auditoria
+
+Quatro dos itens da lista "antes de vender" estão no código. Cada um é
+descrito aqui pelo que mudou de verdade, não pela intenção.
+
+### 2 e 3 - domínio e caixa 0 (`rules.ts`, `LessonClient.tsx`)
+
+Havia duas definições de "dominada" convivendo. A tela dizia `dominada` com
+80% na fixação; o sistema contava a letra como dominada só por ter cumprido as
+cinco etapas, com qualquer nota. O exame final, o mapa e a conquista do
+alfabeto liam a contagem do sistema. Quem passasse com 3/8 fechava o alfabeto.
+
+Agora:
+
+- `MASTERY_MARK = 0.75` é a única régua, exportada de `rules.ts`;
+- `isLessonMastered` exige as cinco etapas **e** `quizBest >= MASTERY_MARK`;
+- `lettersMastered`, `alphabetComplete` e `lettersLeft` passam a contar
+  domínio, não conclusão - é o que destranca o exame final;
+- `PASSA` na tela deixou de ser um `0.8` solto e passou a importar
+  `MASTERY_MARK`, para que a palavra na tela e o número do sistema não voltem a
+  divergir;
+- quem termina abaixo da marca entra na **caixa 0** do SRS (`recordAnswer`
+  com acerto `false`), o que traz a letra de volta no dia seguinte. Antes a
+  letra fraca simplesmente sumia da revisão;
+- a mensagem de fim de lição diz o que aconteceu: a letra volta amanhã e ainda
+  não conta.
+
+Os testes: duas provas antigas quebraram com a mudança - e quebraram certo,
+porque testavam a contagem velha. Foram corrigidas, e entrou um bloco novo de
+cinco casos (`concluir e dominar são coisas diferentes`), incluindo o que fixa
+a caixa 0 e o `dueOn` de amanhã, e o que prova que o exame final exige domínio.
+
+### 8 - ordem Álef-Mem-Tav (`letters.json`, `modules.json`)
+
+A lição 1 ensinava מ, ת, א nessa ordem, e as palavras `אִמָּא` e `אֵם` estavam
+penduradas em Álef, a terceira letra. Resultado: as duas primeiras letras do
+curso não tinham nenhuma palavra legível, e o motor preenchia a lição repetindo
+geradores.
+
+Agora a ordem é א, מ, ת, e as palavras foram movidas para a letra que as
+fecha: `אִמָּא` e `אֵם` para Mem, `אֶמֶת` e `תָּא` para Tav. A primeira palavra
+inteira aparece na **segunda** letra do curso, uma lição inteira mais cedo.
+
+Álef fica sem palavra própria, e isso está certo: é uma letra muda, um apoio de
+vogal, e sozinha não forma palavra nenhuma. O `validate` emite o aviso V12 por
+isso - aviso, não violação, e agora com razão declarada.
+
+Medida: `audit-letras` saiu de **2 letras sem palavra legível** (Mem e Tav) para
+**1** (Álef).
+
+### 9 - discriminação visual (`letters.json`, `generators.ts`)
+
+Duas partes, como a recomendação em C4 pede.
+
+Dado: Lámed recebeu `["ן", "ו"]`; Nun ganhou `ן`, Kaf ganhou `ך`, Pe ganhou
+`ף` e Tsadi ganhou `ץ` - os pares base/final que faltavam (C5).
+
+Motor: `exConfusablePick` passou a exigir **um** par declarado em vez de dois,
+completando as alternativas que faltam com letras já vistas. O par declarado
+continua entrando primeiro, então é sempre ele o distrator que conta.
+
+Medida: `audit-letras` saiu de **1 letra sem par declarado** para **0**, e os
+cinco casos de C4 (ל א ש ב פ) passaram a receber o exercício - o que uma prova
+verificou letra por letra.
+
+### 4 - `contrastes`: o retorno que nomeia a diferença
+
+Errar `ד` por `ר` devolvia "resposta errada" e mais nada. O aluno repetia o
+erro pelo mesmo motivo, porque ninguém tinha dito qual é o motivo.
+
+Entrou um campo `contrastes` em `letters.json`: um mapa de letra confundível
+para a frase que diz onde olhar. **24 frases em 15 letras.** Exemplo, em ד:
+
+> O ד tem um canto vivo no alto e um pezinho que avança para a direita. O ר é
+> uma curva só, sem canto e sem pé.
+
+O campo atravessa o exportador (`export-content.mjs`, com as chaves
+normalizadas em NFC), o tipo `Letter` e chega ao `whyPt` de cada alternativa do
+`exConfusablePick`. A busca é **nos dois sentidos**: se ד declara a frase sobre
+ר, quem errar ר por ד também a recebe, sem precisar escrever a mesma frase duas
+vezes. Sem frase declarada, o retorno degrada para "Essa é a letra X, olhe o
+desenho de novo", que ainda nomeia a letra errada em vez de só negar.
+
+### O que isso mudou nos números
+
+```
+geradores aplicáveis por letra: média 14,7 -> 14,9
+letras sem palavra legível:         2 -> 1  (e a que sobra é muda)
+letras sem par confundível:         1 -> 0
+suíte:                            418 provas, todas passando
+validate:                         0 violações, 2 avisos (V12 esperado, V3b pré-existente)
+```
+
+O que **não** mudou: nada do item 1. O curso continua sem uma gravação, e essa
+continua sendo a maior lacuna do produto.
 
 ---
 

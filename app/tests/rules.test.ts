@@ -6,6 +6,7 @@ import {
   addDays, applyPractice, ACHIEVEMENTS, awardXp, completeStage, courseProgress,
   daysBetween, displayStreak, dueItems, goalTarget, lettersMastered, PASS_MARK,
   recordAnswer, recordCheckpoint, recordQuiz, STAGE_COUNT, STAGE_UNITS,
+  alphabetComplete, isLessonComplete, isLessonMastered, MASTERY_MARK,
   syncAchievements, today, XP
 } from '../src/lib/state/rules';
 import { EMPTY_STATE, type LearnerState } from '../src/lib/state/types';
@@ -38,6 +39,11 @@ describe('XP', () => {
     /* The daily-goal bonus rides along: five stages is 30 units, which is
        exactly a ten-minute goal. That is the point of counting stages. */
     expect(s.xp).toBe(XP.stage * STAGE_COUNT + XP.lesson + XP.dailyGoal);
+    /* As cinco etapas CONCLUEM a letra. Não a dominam: para isso falta a nota
+       da fixação, e é ela que alimenta a contagem. */
+    expect(isLessonComplete(s, 'mem')).toBe(true);
+    expect(lettersMastered(s)).toBe(0);
+    s = recordQuiz(s, 'mem', 1, '2026-01-05');
     expect(lettersMastered(s)).toBe(1);
     expect(s.days['2026-01-05']!.units).toBe(STAGE_COUNT * STAGE_UNITS);
   });
@@ -186,6 +192,7 @@ describe('progress and achievements', () => {
   it('unlocks the first-letter achievement exactly once', () => {
     let s = base();
     for (let n = 1; n <= STAGE_COUNT; n++) s = completeStage(s, 'mem', n, '2026-01-05');
+    s = recordQuiz(s, 'mem', 1, '2026-01-05');
     const first = syncAchievements(s, '2026-01-05');
     expect(first.unlocked.map(a => a.id)).toContain('primeira-letra');
     const second = syncAchievements(first.state, '2026-01-05');
@@ -203,5 +210,62 @@ describe('progress and achievements', () => {
     const s = awardXp(base(), '2026-01-05', 30);
     expect(s.days['2026-01-05']!.xp).toBe(30);
     expect(s.xp).toBe(30);
+  });
+});
+
+describe('concluir e dominar são coisas diferentes', () => {
+  /* Até 21/09/2026 eram a mesma coisa, e por isso dava para zerar os vinte e
+     dois quizzes e terminar com a conquista "22 letras" e o exame destravado.
+     O sistema construía a falsa confiança sozinho. Estes quatro casos são o
+     contrato novo. */
+
+  it('concluir as cinco etapas não domina a letra', () => {
+    let s = base();
+    for (let n = 1; n <= STAGE_COUNT; n++) s = completeStage(s, 'mem', n, '2026-01-05');
+    expect(isLessonComplete(s, 'mem')).toBe(true);
+    expect(isLessonMastered(s, 'mem')).toBe(false);
+    expect(lettersMastered(s)).toBe(0);
+  });
+
+  it('uma nota baixa na fixação também não domina', () => {
+    let s = base();
+    for (let n = 1; n <= STAGE_COUNT; n++) s = completeStage(s, 'mem', n, '2026-01-05');
+    s = recordQuiz(s, 'mem', 0.5, '2026-01-05');
+    expect(isLessonMastered(s, 'mem')).toBe(false);
+  });
+
+  it('a MELHOR tentativa é a que vale - refazer conta', () => {
+    /* Refazer gera outras perguntas (outra semente), então melhorar é aprender
+       e não decorar o gabarito. Punir a primeira tentativa seria punir tentar. */
+    let s = base();
+    for (let n = 1; n <= STAGE_COUNT; n++) s = completeStage(s, 'mem', n, '2026-01-05');
+    s = recordQuiz(s, 'mem', 0.25, '2026-01-05');
+    expect(isLessonMastered(s, 'mem')).toBe(false);
+    s = recordQuiz(s, 'mem', MASTERY_MARK, '2026-01-06');
+    expect(isLessonMastered(s, 'mem')).toBe(true);
+  });
+
+  it('a letra que passou raspando entra na fila de revisão', () => {
+    /* Sem isto, quem termina com 3 de 8 sai da lição no mesmo estado de quem
+       fez 8 de 8, e a revisão nunca fica sabendo. */
+    let s = base();
+    for (let n = 1; n <= STAGE_COUNT; n++) s = completeStage(s, 'mem', n, '2026-01-05');
+    expect(Object.keys(s.srs)).toHaveLength(0);
+    s = recordQuiz(s, 'mem', 0.25, '2026-01-05');
+    const item = Object.values(s.srs).find(x => x.letterId === 'mem');
+    expect(item).toBeDefined();
+    expect(item!.box).toBe(0);
+    expect(item!.dueOn).toBe('2026-01-06');
+  });
+
+  it('e o exame final exige domínio, não conclusão', () => {
+    let s = base();
+    const ids = ['alef', 'mem'];
+    for (const id of ids) {
+      for (let n = 1; n <= STAGE_COUNT; n++) s = completeStage(s, id, n, '2026-01-05');
+    }
+    expect(alphabetComplete(s, ids)).toBe(false);
+    for (const id of ids) s = recordQuiz(s, id, 1, '2026-01-05');
+    expect(alphabetComplete(s, ids)).toBe(true);
   });
 });

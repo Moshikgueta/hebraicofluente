@@ -170,14 +170,55 @@ export function recordQuiz(
 
   let next: LearnerState = { ...state, lessons: { ...state.lessons, [letterId]: lesson } };
   if (payBonus) next = awardXp(next, day, XP.perfectQuiz);
+
+  /* Passou raspando? A letra entra na fila de revisão, hoje.
+     ──────────────────────────────────────────────────────────────────────
+     Registrada como uma RESPOSTA ERRADA num item sintético, de propósito: é a
+     mesma máquina do resto (`recordAnswer` põe na caixa 0, com vencimento
+     amanhã), então a letra aparece na "Revisão personalizada" e no aquecimento
+     sem nenhum conceito novo. Sem isto, quem termina a lição com 3 de 8 sai
+     dela com o mesmo estado de quem fez 8 de 8, e a revisão nunca fica sabendo.
+
+     Só no primeiro fracasso: quem refaz e melhora não é castigado duas vezes,
+     e a marca some sozinha quando a letra for respondida certo. */
+  if (score < MASTERY_MARK && (prev.quizBest ?? 0) < MASTERY_MARK) {
+    next = recordAnswer(next, `fixacao-${letterId}`, letterId, false, day);
+  }
   return next;
 }
+
+/**
+ * CONCLUÍDA e DOMINADA são coisas diferentes, e a diferença é o ponto.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Até 21/09/2026 só existia a primeira: a etapa 5 era marcada com QUALQUER
+ * nota, e como tudo o mais lia `stagesDone`, dava para zerar os vinte e dois
+ * quizzes e terminar com 100% de progresso, a conquista "22 letras" e o exame
+ * final destravado. O sistema construía a falsa confiança sozinho.
+ *
+ * O conserto não é trancar a lição. Trancar frustra, e este curso não é um
+ * portão - quem quer seguir adiante e voltar depois tem esse direito. O que
+ * muda é o que CONTA:
+ *
+ *   · concluir  - as cinco etapas, sem nota. Libera a próxima letra.
+ *   · dominar   - as cinco etapas E 6 de 8 na fixação, em QUALQUER tentativa.
+ *                 É isto que alimenta a barra, as conquistas e o exame final.
+ *
+ * "Qualquer tentativa" importa: refazer gera outras perguntas (outra semente),
+ * então melhorar é aprender, não decorar o gabarito.
+ */
+export const MASTERY_MARK = 0.75;
 
 export const isLessonComplete = (state: LearnerState, letterId: string): boolean =>
   (state.lessons[letterId]?.stagesDone.length ?? 0) >= STAGE_COUNT;
 
+export function isLessonMastered(state: LearnerState, letterId: string): boolean {
+  const l = state.lessons[letterId];
+  if (!l) return false;
+  return l.stagesDone.length >= STAGE_COUNT && (l.quizBest ?? 0) >= MASTERY_MARK;
+}
+
 export const lettersMastered = (state: LearnerState): number =>
-  Object.values(state.lessons).filter(l => l.stagesDone.length >= STAGE_COUNT).length;
+  Object.keys(state.lessons).filter(id => isLessonMastered(state, id)).length;
 
 /**
  * O alfabeto inteiro fechado - a condição do teste final.
@@ -185,14 +226,20 @@ export const lettersMastered = (state: LearnerState): number =>
  * Conta as letras REAIS, e não `lessons`: os módulos 6 e 7 também gravam
  * progresso em `lessons` com ids próprios, e contar as chaves daria o
  * alfabeto por concluído duas letras antes do fim.
+ *
+ * E exige DOMÍNIO, não conclusão: um exame final liberado para quem errou a
+ * maior parte de todas as fixações mede a paciência de clicar, não a leitura.
  */
 export function alphabetComplete(state: LearnerState, letterIds: readonly string[]): boolean {
-  return letterIds.length > 0 && letterIds.every(id => isLessonComplete(state, id));
+  return letterIds.length > 0 && letterIds.every(id => isLessonMastered(state, id));
 }
 
-/** Quantas faltam, para a frase do cadeado dizer um número em vez de "algumas". */
+/** Quantas faltam, para a frase do cadeado dizer um número em vez de "algumas".
+ *  Conta pela mesma régua que destrava o exame (`alphabetComplete`): um cadeado
+ *  que diz "falta 1" e não abre quando essa 1 é concluída sem nota é pior do
+ *  que um cadeado sem número. */
 export const lettersLeft = (state: LearnerState, letterIds: readonly string[]): number =>
-  letterIds.filter(id => !isLessonComplete(state, id)).length;
+  letterIds.filter(id => !isLessonMastered(state, id)).length;
 
 /* ── checkpoints ────────────────────────────────────────────────────────── */
 

@@ -127,6 +127,13 @@ function main() {
       didYouKnow: L.didYouKnow,
       brazilianMistake: L.brazilianMistake,
       confusableWith: (L.confusableWith || []).map(NFC),
+      /* O traço visual que separa esta letra de uma parecida, por glifo.
+         Escrito de um lado só: o gerador procura nos dois sentidos. Sem isto o
+         retorno do erro dizia "Essa é Dálet" e não dizia COMO distinguir, e a
+         pessoa errava de novo pelo mesmo motivo. */
+      contrastes: Object.fromEntries(
+        Object.entries(L.contrastes || {}).map(([g, frase]) => [NFC(g), frase])
+      ),
       syllables: (L.syllables || []).map(s => ({
         vowel: s.vowel, he: NFC(s.he), translit: s.translit,
         ptApprox: s.ptApprox, audioId: audioIdFor(s.he)

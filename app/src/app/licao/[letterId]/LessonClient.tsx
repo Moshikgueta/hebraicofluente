@@ -30,6 +30,7 @@ import {
   RealWorldHebrew, SyllableTrainer, WordReveal, WorkbookLink
 } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
+import { MASTERY_MARK } from '@/lib/state/rules';
 import { allLetters, course, cultureAt, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
 import {
   buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
@@ -421,17 +422,26 @@ function StagePraticar({
 /* ── 5 · fixação: o mini-teste, com portão de domínio ───────────────────
  *
  * Aqui a lição deixa de ser "rolei até o fim" e passa a ser "mostrei que
- * sei". Cinco questões, e 80% para fechar a letra.
+ * sei". Oito questões, e 6 delas para a letra contar como dominada.
  *
- * O portão NÃO tranca. Quem fica abaixo dos 80% recebe "vamos praticar mais
- * um pouco" e quatro questões montadas a partir dos PRÓPRIOS erros - não um
- * sorteio novo, que seria outra coisa e não reforço. Depois disso a letra
- * fecha de qualquer jeito, com a nota registrada e os itens errados na fila
- * de revisão: travar um adulto na letra 7 é como se perde um aluno, e o
- * sistema de revisão existe justamente para que nada fique para trás sem
- * voltar.
+ * O portão NÃO tranca. Quem fica abaixo recebe "vamos praticar mais um pouco"
+ * e quatro questões montadas a partir dos PRÓPRIOS erros - não um sorteio
+ * novo, que seria outra coisa e não reforço. Depois disso a letra fecha de
+ * qualquer jeito, com a nota registrada e os itens errados na fila de revisão:
+ * travar um adulto na letra 7 é como se perde um aluno, e o sistema de revisão
+ * existe justamente para que nada fique para trás sem voltar.
+ *
+ * ── a barra é UMA ────────────────────────────────────────────────────────
+ * Até 21/09/2026 eram duas, e a de cima era decorativa: esta tela dizia "Mais
+ * uma letra dominada" a partir de 0,8, e o estado não olhava nota nenhuma -
+ * qualquer resultado marcava a etapa 5 e a letra entrava na contagem. A
+ * palavra na tela não significava coisa alguma.
+ *
+ * Agora significa. `MASTERY_MARK` é a mesma constante que decide a contagem de
+ * letras, as conquistas e o destravamento do exame final. O que a pessoa lê e
+ * o que o sistema acredita passaram a ser a mesma frase.
  */
-const PASSA = 0.8;
+const PASSA = MASTERY_MARK;
 
 function StageFixacao({
   exercises, letter, history, result, onResult, onRetry, onNext, nextLabel, nextHint
@@ -500,7 +510,9 @@ function StageFixacao({
           body={strong
             ? `Você reconhece ${letter.namePt} sozinha, dentro de uma palavra e entre as parecidas. Pode seguir com segurança.`
             : fezReforco
-              ? `${letter.namePt} entrou na fila de revisão e volta em poucos dias, no dia certo. Pode seguir.`
+              ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
+                + 'Ela ainda não conta como dominada - refaça o teste quando quiser, '
+                + 'com outras perguntas, e ela passa a contar. Pode seguir.'
               : result.score >= 0.6
                 ? 'Faltou pouco. Quatro questões rápidas, montadas a partir do que escapou, e seguimos.'
                 : 'Esta letra ainda não está firme, e tudo bem - é para isso que existe a prática. Quatro questões montadas a partir do que escapou.'}
