@@ -17,6 +17,8 @@ import {
 import { LocalProgressStore, persistenceAvailable } from './local';
 import { SupabaseProgressStore, supabaseConfigured } from './supabase';
 import { WorkerProgressStore } from './worker';
+import { criarGravador } from './gravador';
+import { mergeStates, sameState } from './merge';
 import { apiMode } from '@/lib/account/api';
 import { SESSAO_MUDOU } from '@/lib/account/store';
 import {
@@ -114,20 +116,51 @@ export function ProgressProvider({
   const [ready, setReady] = useState(false);
   const [persistent, setPersistent] = useState(true);
   const [pending, setPending] = useState<Achievement[]>([]);
+  /* A última rota avisada pelo AppShell. Guardada num ref porque ela chega
+     antes de o estado carregar, e naquele momento não há estado onde pô-la. */
+  const rotaPendente = useRef<string | null>(null);
   const [day, setDay] = useState(() => today());
-  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   /* O estado de agora, legível de dentro de um ouvinte de evento que foi
      registrado uma vez só. Sem o ref, o ouvinte guardaria o estado do
      primeiro render para sempre. */
   const stateRef = useRef(state);
   stateRef.current = state;
 
+  /* Toda gravação passa por aqui, e por um motivo só: ver ./gravador.ts.
+     Em resumo, ele grava o estado DE AGORA em vez de uma cópia velha, e não
+     grava nada antes de a leitura terminar - que juntos eram o apagamento
+     silencioso do progresso a cada troca de página. */
+  const gravador = useMemo(() => criarGravador(store, () => stateRef.current), [store]);
+  useEffect(() => () => gravador.cancelar(), [gravador]);
+
   useEffect(() => {
     let alive = true;
     setPersistent(supabaseConfigured() || persistenceAvailable());
-    store.load().then(s => { if (alive) { setState(s); setReady(true); } });
+    store.load().then(s => {
+      if (!alive) return;
+      /* O que a pessoa fez ENQUANTO isto carregava não pode ser jogado fora.
+         Com o adaptador do Worker a leitura espera a rede, e numa conexão
+         ruim cabe uma lição inteira nesse intervalo. `mergeStates` é a mesma
+         fusão que concilia dois aparelhos, e ela não desfaz nada. */
+      const emMemoria = stateRef.current;
+      const inicial = sameState(emMemoria, EMPTY_STATE) ? s : mergeStates(emMemoria, s);
+      stateRef.current = inicial;
+      setState(inicial);
+      setReady(true);
+      /* Só agora a gravação é liberada, e nesta ordem: liberar antes de o
+         estado estar em mãos é reabrir o defeito que este arquivo conserta. */
+      gravador.liberar();
+      /* A rota que o AppShell avisou enquanto o estado carregava ficou de
+         fora da fusão; se ela não chegou a entrar, entra agora. */
+      if (rotaPendente.current && inicial.lastRoute !== rotaPendente.current) {
+        const comRota = { ...inicial, lastRoute: rotaPendente.current };
+        stateRef.current = comRota;
+        setState(comRota);
+        gravador.agendar(400);
+      }
+    });
     return () => { alive = false; };
-  }, [store]);
+  }, [store, gravador]);
 
   /* Entrar ou sair muda de quem é o progresso: o que estava só neste aparelho
      passa a ser da conta, e o que estava na conta chega aqui. Uma recarga
@@ -138,14 +171,13 @@ export function ProgressProvider({
   useEffect(() => {
     let alive = true;
     const aoMudar = () => {
-      if (saveTimer.current) { clearTimeout(saveTimer.current); saveTimer.current = null; }
-      void store.save(stateRef.current)
+      void gravador.agora()
         .then(() => store.load())
-        .then(s => { if (alive) setState(s); });
+        .then(s => { if (alive) { stateRef.current = s; setState(s); } });
     };
     window.addEventListener(SESSAO_MUDOU, aoMudar);
     return () => { alive = false; window.removeEventListener(SESSAO_MUDOU, aoMudar); };
-  }, [store]);
+  }, [store, gravador]);
 
   /* A session left open across midnight must not keep crediting yesterday. */
   useEffect(() => {
@@ -159,10 +191,10 @@ export function ProgressProvider({
       setPending(p => [...p, ...synced.unlocked]);
       synced.unlocked.forEach(a => track('achievement_unlocked', { achievementId: a.id }));
     }
+    stateRef.current = synced.state;
     setState(synced.state);
-    if (saveTimer.current) clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => { void store.save(synced.state); }, 250);
-  }, [store]);
+    gravador.agendar(250);
+  }, [gravador]);
 
   const setOnboarding = useCallback((o: Onboarding) => {
     commit({ ...state, onboarding: o });
@@ -272,21 +304,29 @@ export function ProgressProvider({
     track('course_completed', { score });
   }, [commit, state]);
 
+  /* Trocar de tela é a ação mais barata do app e era a mais cara: era ela
+     que disparava a gravação do estado vazio por cima do progresso guardado.
+     Agora, enquanto o estado não chegou, a rota só é anotada - quem a aplica
+     é o efeito de carga, depois de ter o progresso em mãos. */
   const remember = useCallback((route: string) => {
+    rotaPendente.current = route;
+    if (!gravador.liberado) return;
     setState(s => {
       if (s.lastRoute === route) return s;
       const next = { ...s, lastRoute: route };
-      if (saveTimer.current) clearTimeout(saveTimer.current);
-      saveTimer.current = setTimeout(() => { void store.save(next); }, 400);
+      stateRef.current = next;
       return next;
     });
-  }, [store]);
+    gravador.agendar(400);
+  }, [gravador]);
 
   const reset = useCallback(() => {
+    gravador.cancelar();
     void store.clear();
+    stateRef.current = EMPTY_STATE;
     setState(EMPTY_STATE);
     setPending([]);
-  }, [store]);
+  }, [store, gravador]);
 
   const value = useMemo<Ctx>(() => {
     const goal = state.onboarding?.goalMinutes ?? 10;
