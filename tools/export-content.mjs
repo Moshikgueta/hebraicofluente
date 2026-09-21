@@ -127,6 +127,10 @@ function main() {
       translit: L.translit,
       sound: L.sound,
       soundNotePt: L.soundNotePt,
+      /* A camada pedagógica, inteira. Passa como está: o que ela tem de
+         obrigatório é cobrado pela V23 do validate.js, na FONTE - um
+         exportador que conserta dado ruim esconde dado ruim. */
+      ensino: L.ensino,
       didYouKnow: L.didYouKnow,
       brazilianMistake: L.brazilianMistake,
       confusableWith: (L.confusableWith || []).map(NFC),

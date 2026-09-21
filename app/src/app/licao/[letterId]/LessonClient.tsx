@@ -29,6 +29,7 @@ import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
   RealWorldHebrew, SyllableTrainer, WordReveal, WorkbookLink
 } from '@/components/learn/Blocks';
+import { Compreensao } from '@/components/learn/Compreensao';
 import { useProgress } from '@/lib/state/store';
 import { MASTERY_MARK } from '@/lib/state/rules';
 import { allLetters, course, cultureAt, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
@@ -208,11 +209,21 @@ function StageConhecer({
       </Card>
 
       <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">Conhecendo a letra</h2>
+        <h2 className="text-[19px] font-semibold">Como pronunciar</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <Prose text={letter.soundNotePt} />
         </p>
       </Card>
+
+      {/* O que a letra FAZ, e não só que som ela tem.
+          ──────────────────────────────────────────────────────────────
+          Era o buraco da lição: o curso dizia "esta letra faz /m/" e
+          seguia para as sílabas. As perguntas que o adulto brasileiro
+          realmente tem - "por que essa letra está aí se eu não a escuto?",
+          "por que ela mudou de formato?", "isso é vogal ou consoante?" -
+          não eram respondidas em lugar nenhum, e a conclusão que sobrava
+          era a de que o hebraico é arbitrário. */}
+      <Ensinamento letter={letter} />
 
       <BrazilianTip mistake={letter.brazilianMistake} />
 
@@ -237,7 +248,93 @@ function StageConhecer({
         />
       )}
 
+      {/* Explicação → exemplo → PERGUNTAS → prática. A checagem fecha a
+          etapa: duas a quatro perguntas sobre o que foi EXPLICADO, e não
+          sobre o desenho da letra - reconhecer a forma o resto da lição já
+          cobra. Ver components/learn/Compreensao.tsx. */}
+      {letter.ensino?.checagem?.length > 0 && (
+        <Compreensao
+          id={`checagem-${letter.id}`}
+          titulo="Entendeu? Perguntas rápidas"
+          intro="Não vale nota e não tranca nada. Se errar, a explicação aparece na hora."
+          perguntas={letter.ensino.checagem}
+          fecho={{
+            bom: 'Boa. Agora as palavras que esta letra abre.',
+            parcial: 'Vale reler os quadros acima - são duas ou três ideias, e elas voltam nas próximas letras.'
+          }}
+        />
+      )}
+
       <Button size="lg" onClick={onDone} full>Continuar para as palavras</Button>
+    </div>
+  );
+}
+
+/* ── o que a letra faz ─────────────────────────────────────────────────────
+   Quatro quadros, e três deles só aparecem quando há o que dizer. Uma letra
+   sem particularidade nenhuma não ganha um "detalhe importante" escrito para
+   preencher espaço - o aluno aprende rápido a pular quadro que nunca traz
+   nada, e aí ele pula o que traz.
+
+   Os rótulos com emoji foram pedidos assim, e o emoji é `aria-hidden`: quem
+   usa leitor de tela não precisa ouvir "lâmpada" antes de cada título. */
+function Ensinamento({ letter }: { letter: Letter }) {
+  const e = letter.ensino;
+  if (!e) return null;
+
+  return (
+    <div className="grid gap-4">
+      <Card className="p-6 grid gap-3">
+        <h2 className="text-[19px] font-semibold">O que esta letra faz</h2>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">
+          <Prose text={e.funcaoPt} />
+        </p>
+      </Card>
+
+      {e.detalhePt && (
+        <Card className="p-6 grid gap-3">
+          <h2 className="text-[19px] font-semibold">Detalhe importante</h2>
+          {/* A forma final MOSTRADA, e não só descrita: o par lado a lado
+              diz em dois segundos o que um parágrafo não diz. */}
+          {letter.finalForm && (
+            <div className="flex items-center justify-center gap-5 rounded-[var(--r-md)]
+                            bg-surface-2 px-4 py-4">
+              <span className="grid justify-items-center gap-1">
+                <He size="lg">{letter.letter}</He>
+                <span className="font-ui text-[12px] text-ink-muted">no meio</span>
+              </span>
+              <span aria-hidden className="text-ink-muted text-[20px]">→</span>
+              <span className="grid justify-items-center gap-1">
+                <He size="lg">{letter.finalForm}</He>
+                <span className="font-ui text-[12px] text-ink-muted">no fim</span>
+              </span>
+            </div>
+          )}
+          <p className="text-[15.5px] leading-relaxed text-ink-body">
+            <Prose text={e.detalhePt} />
+          </p>
+        </Card>
+      )}
+
+      {e.paraBrasileiroPt && (
+        <Card tone="wash" className="p-6 grid gap-2">
+          <h2 className="text-[17px] font-semibold">
+            <span aria-hidden>🇧🇷 </span>Para quem fala português
+          </h2>
+          <p className="text-[15.5px] leading-relaxed text-ink-body">
+            <Prose text={e.paraBrasileiroPt} />
+          </p>
+        </Card>
+      )}
+
+      <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
+        <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
+          <span aria-hidden>💡 </span>O que você precisa lembrar
+        </h2>
+        <p className="text-[16px] leading-relaxed text-ink">
+          <Prose text={e.lembrePt} />
+        </p>
+      </Card>
     </div>
   );
 }

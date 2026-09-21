@@ -46,6 +46,63 @@ export type Syllable = {
   audioId: string;
 };
 
+/* Um item de checagem de compreensão.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O padrão do curso é explicação → exemplo → PERGUNTAS → prática: um
+ * conceito importante nunca é seguido de "próximo" sem uma pergunta no
+ * meio. Ler e achar que entendeu é a forma mais comum de não entender, e a
+ * conta chega três lições depois.
+ *
+ * Isto NÃO é exercício do motor: não vale XP, não entra na revisão
+ * espaçada, não tranca nada, e por isso aceita verdadeiro/falso - que o
+ * motor recusa, com razão, porque num item de prova 50% de chute não mede
+ * nada. Aqui não se mede: confronta-se uma frase que a pessoa já ouviu.
+ *
+ * `visual` existe porque "qual destes tem niqqud?" não é uma pergunta de
+ * texto: as alternativas são hebraico, renderizado.
+ */
+export type ItemCompreensao =
+  | { t: 'escolha'; q: string; opcoes: string[]; certa: number; porque: string }
+  | { t: 'vf'; q: string; certa: boolean; porque: string }
+  | { t: 'visual'; q: string; opcoes: string[]; certa: number; porque: string }
+  | {
+      t: 'assoc';
+      q: string;
+      rotulos: string[];
+      linhas: { item: string; he?: boolean; certa: number }[];
+      porque: string;
+    };
+
+/* A camada pedagógica de uma letra.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O curso já dizia QUAL É O SOM de cada letra. Isto diz o que a letra FAZ
+ * dentro do sistema de escrita - que é a pergunta que um adulto brasileiro
+ * realmente tem, e que ninguém respondia:
+ *
+ *   funcaoPt          como a letra aparece e funciona na leitura real;
+ *   detalhePt         a particularidade dela, quando existe: forma final,
+ *                     dois sons com e sem daguesh, quando pode ser muda,
+ *                     quando participa de um som de vogal;
+ *   paraBrasileiroPt  a comparação com o português, quando ela ajuda -
+ *                     inclusive para dizer que o som NÃO existe aqui;
+ *   lembrePt          uma ou duas frases: o que fica se tudo o mais sumir;
+ *   checagem          duas a quatro perguntas de compreensão, que conferem
+ *                     a EXPLICAÇÃO e não o reconhecimento da forma.
+ *
+ * Só `funcaoPt`, `lembrePt` e `checagem` são obrigatórios: uma letra sem
+ * particularidade nenhuma não deve ganhar um quadro "detalhe importante"
+ * escrito para preencher espaço. A V23 do validate.js cobra os três, e
+ * cobra `detalhePt` nas letras que TÊM forma final ou dois sons - ali a
+ * ausência é omissão, não economia.
+ */
+export type Ensino = {
+  funcaoPt: string;
+  detalhePt?: string;
+  paraBrasileiroPt?: string;
+  lembrePt: string;
+  checagem: ItemCompreensao[];
+};
+
 export type Letter = {
   id: string;
   order: number;
@@ -58,6 +115,8 @@ export type Letter = {
   translit: string;
   sound: string;
   soundNotePt: string;
+  /** A camada pedagógica: o que a letra FAZ, e a checagem. Ver `Ensino`. */
+  ensino: Ensino;
   didYouKnow: string;
   brazilianMistake: { wrong: string; right: string; why: string };
   confusableWith: string[];

@@ -215,6 +215,129 @@ export function validate({ checkDist = true } = {}) {
     else if (readFileSync(svg, 'utf8').includes('data-placeholder="true"')) {
       warn('V11', at, `stroke-order SVG is still the placeholder`);
     }
+
+    /* ── V23 - a camada pedagógica da letra ────────────────────────────
+       O curso sempre disse QUAL É O SOM de cada letra. O bloco `ensino`
+       diz o que a letra FAZ dentro do sistema de escrita, que é a pergunta
+       que o aluno realmente tem, e fecha com uma checagem de compreensão.
+
+       A regra existe porque conteúdo pela metade não quebra nada: uma
+       letra sem `funcaoPt` renderiza uma tela sem o quadro, ninguém vê
+       erro, e a lição fica pior do que as vizinhas sem que nada avise. */
+    const E = L.ensino;
+    if (!E || typeof E !== 'object') {
+      fail('V23', at, 'sem bloco `ensino` - a lição fica sem a explicação do que a letra faz');
+    } else {
+      for (const campo of ['funcaoPt', 'lembrePt']) {
+        if (!E[campo] || String(E[campo]).trim().length < 40) {
+          fail('V23', at, `ensino.${campo} ausente ou curto demais para explicar algo`);
+        }
+      }
+
+      /* Onde a ausência é OMISSÃO, e não economia: uma letra com forma
+         final ou com dois sons tem uma particularidade que o aluno vai
+         encontrar na leitura, e não explicá-la é deixá-lo descobrir
+         sozinho que a mesma letra "mudou". */
+      const doisSons = /\bou\b/.test(String(L.sound || '')) || /\//.test(String(L.namePt || ''));
+      if ((L.finalForm || doisSons) && !E.detalhePt) {
+        fail('V23', at,
+          `tem ${L.finalForm ? 'forma final' : 'mais de um som'} e não tem ensino.detalhePt`);
+      }
+
+      /* O hebraico em prosa continua precisando de {{ }} - mesma razão da
+         V13. As alternativas de uma pergunta `visual` são a exceção: ali o
+         hebraico É o conteúdo, renderizado pelo <He>, e marcá-lo com
+         chaves poria as chaves na tela. */
+      const prosa = [
+        ['funcaoPt', E.funcaoPt], ['detalhePt', E.detalhePt],
+        ['paraBrasileiroPt', E.paraBrasileiroPt], ['lembrePt', E.lembrePt]
+      ];
+      for (const [nome, val] of prosa) {
+        if (!val) continue;
+        const bad = unmarkedHebrew(val);
+        if (bad.length) {
+          fail('V23', at, `ensino.${nome}: hebraico sem {{ }} - ${bad.slice(0, 3).map(b => JSON.stringify(b)).join(', ')}`);
+        }
+      }
+
+      /* A REGRA DE ORDEM VALE AQUI TAMBÉM, e é o erro mais fácil de
+         cometer escrevendo esta camada: a explicação mais clara do mundo
+         não serve se ela usa, de exemplo, uma letra que o aluno só vai
+         conhecer daqui a nove lições. O mesmo princípio da V1, agora
+         sobre a prosa de ensino e as alternativas em hebraico. */
+      /* O {{ו}} de {{וֹ}} e {{וּ}} NÃO conta como consoante aqui.
+         ──────────────────────────────────────────────────────────────
+         Nesses dois casos ele não é a letra vav: é parte do SINAL de
+         vogal - "o" e "u" -, e o curso mostra essas vogais desde a
+         primeira lição, na tabela de sílabas de toda letra. Tratá-lo como
+         consoante faria a regra acusar {{אוֹ}} na lição 1, que é
+         exatamente o que o curso ensina ali.
+
+         A letra vav de verdade continua valendo: {{ו}} sozinho, ou com
+         outro sinal, é a letra da ordem 12 e não pode aparecer antes. */
+      const semVogalVav = txt => String(txt || '').replace(/ו[ֹּ]/g, '');
+      const foraDeOrdem = txt => consonantsOf(semVogalVav(txt)).filter(ch => {
+        const o = orderOf.get(ch);
+        return o === undefined || o > L.order;
+      });
+      for (const [nome, val] of prosa) {
+        if (!val) continue;
+        /* Só o hebraico marcado: o resto é português. */
+        const runs = [...String(val).matchAll(/\{\{(.+?)\}\}/g)].map(m => m[1]).join(' ');
+        const tarde = foraDeOrdem(runs);
+        if (tarde.length) {
+          fail('V23', at, `ensino.${nome}: usa ${tarde.map(c => `"${c}"`).join(', ')} antes de ensiná-la(s)`);
+        }
+      }
+
+      const C = Array.isArray(E.checagem) ? E.checagem : [];
+      if (C.length < 2) {
+        fail('V23', at, `ensino.checagem tem ${C.length} pergunta(s) - o mínimo é 2`);
+      }
+      C.forEach((p, i) => {
+        const ondeP = `${at} checagem[${i}]`;
+        if (!p.q || !p.porque) {
+          fail('V23', ondeP, 'sem enunciado ou sem o motivo da resposta');
+        }
+        /* "Incorreto" sozinho não é dito em lugar nenhum do curso: o motivo
+           aparece sempre, inclusive no acerto. Um motivo de meia dúzia de
+           palavras é um "incorreto" disfarçado. */
+        if (p.porque && String(p.porque).trim().length < 40) {
+          fail('V23', ondeP, 'o motivo é curto demais para explicar o erro');
+        }
+        for (const [nome, val] of [['q', p.q], ['porque', p.porque]]) {
+          const bad = unmarkedHebrew(val || '');
+          if (bad.length) fail('V23', ondeP, `${nome}: hebraico sem {{ }}`);
+        }
+        for (const [nome, val] of [['q', p.q], ['porque', p.porque]]) {
+          const runs = [...String(val || '').matchAll(/\{\{(.+?)\}\}/g)].map(m => m[1]).join(' ');
+          const tarde = foraDeOrdem(runs);
+          if (tarde.length) {
+            fail('V23', ondeP, `${nome}: usa ${tarde.map(c => `"${c}"`).join(', ')} antes de ensiná-la(s)`);
+          }
+        }
+        if (p.t === 'escolha' || p.t === 'visual') {
+          const n = Array.isArray(p.opcoes) ? p.opcoes.length : 0;
+          if (n < 2) fail('V23', ondeP, `só ${n} alternativa(s)`);
+          /* Numa pergunta `visual` as alternativas SÃO hebraico, sem chaves
+             - mas continuam sujeitas à ordem. */
+          if (p.t === 'visual') {
+            const tarde = foraDeOrdem((p.opcoes || []).join(' '));
+            if (tarde.length) {
+              fail('V23', ondeP, `alternativas usam ${tarde.map(c => `"${c}"`).join(', ')} antes de ensiná-la(s)`);
+            }
+          }
+          if (!(p.certa >= 0 && p.certa < n)) {
+            fail('V23', ondeP, `certa=${p.certa} fora das ${n} alternativas`);
+          }
+          if (new Set(p.opcoes || []).size !== n) fail('V23', ondeP, 'alternativas repetidas');
+        } else if (p.t === 'vf') {
+          if (typeof p.certa !== 'boolean') fail('V23', ondeP, 'verdadeiro/falso sem `certa` booleano');
+        } else {
+          fail('V23', ondeP, `tipo "${p.t}" desconhecido`);
+        }
+      });
+    }
   }
 
   /* ── V14 - every word with an image slot has an illustration ────────

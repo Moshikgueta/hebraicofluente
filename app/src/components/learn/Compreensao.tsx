@@ -37,19 +37,12 @@
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
+/* O tipo mora em content-publico.ts com todos os outros: os itens de
+   checagem de cada letra vêm do data/letters.json, e um tipo definido aqui
+   obrigaria o dado a importar de um componente. */
+import type { ItemCompreensao } from '@/lib/content-publico';
 
-export type ItemCompreensao =
-  | { t: 'escolha'; q: string; opcoes: string[]; certa: number; porque: string }
-  | { t: 'vf'; q: string; certa: boolean; porque: string }
-  | { t: 'visual'; q: string; opcoes: string[]; certa: number; porque: string }
-  | {
-      t: 'assoc';
-      q: string;
-      rotulos: string[];
-      /** `he` marca a linha cujo enunciado é hebraico e precisa do <He>. */
-      linhas: { item: string; he?: boolean; certa: number }[];
-      porque: string;
-    };
+export type { ItemCompreensao };
 
 /* A cor de uma alternativa depois de respondida. A certa fica verde mesmo
    quando a pessoa escolheu outra - ver a nota do topo. */
