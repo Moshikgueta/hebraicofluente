@@ -25,7 +25,7 @@ import {
   b64url, fakeVerify, hashPassword, itersFor, sha256hex, verifyPassword
 } from '../lib/crypto.js';
 import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/session.js';
-import { isSandbox, tokenFormato } from '../lib/mercadopago.js';
+import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
 import {
   mailReady, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
 } from '../lib/mail.js';
@@ -550,7 +550,19 @@ export async function health({ request, env }) {
        401 dizendo "authorization value not present" - uma frase que manda
        conferir chave PIX, webhook e conta bancária antes de desconfiar do
        campo que foi copiado. Ver tokenFormato em lib/mercadopago.js. */
-    tokenFormato: tokenFormato(env)
+    tokenFormato: tokenFormato(env),
+    /* DE QUEM é a credencial - `real`, `usuario-de-teste`, `outro-pais`,
+       `recusado`, `indisponivel` ou `desligado`. Só o veredicto: nunca o
+       apelido, o e-mail ou o id da conta.
+
+       O campo acima diz que credencial foi colada; este diz se a conta dona
+       dela consegue receber dinheiro de verdade. São perguntas diferentes, e
+       a segunda não tem como ser respondida daqui: os usuários de teste da
+       Mercado Pago também têm credenciais `APP_USR-`, então `modo` diz
+       "producao", o comprador é mandado ao checkout real, e lá encontra "uma
+       das partes é de teste" sem que nada deste lado pareça errado.
+       Ver vendedorFormato em lib/mercadopago.js. */
+    vendedor: await vendedorFormato(env)
   };
 
   if (env.DB) {
@@ -580,7 +592,11 @@ export async function health({ request, env }) {
      eles o curso funciona inteiro - um não sincroniza entre aparelhos, os
      outros dois fecham a porta de quem esqueceu a senha. São degradações, e
      derrubar a saúde por elas apagaria a diferença entre "o site caiu" e "o
-     site está no ar com um pedaço a menos". */
+     site está no ar com um pedaço a menos".
+
+     `vendedor` fica de fora pelo mesmo motivo e por mais um: ele depende de
+     uma resposta da Mercado Pago, e um servidor de terceiro fora do ar não
+     torna este site doente. */
   out.ok = out.db && out.schema && out.session;
   return json(out);
 }

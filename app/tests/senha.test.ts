@@ -21,7 +21,7 @@ import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
 import { mailReady, mensagemDeRecuperacao } from '../../worker/src/lib/mail.js';
 // @ts-expect-error - idem
-import { isSandbox, tokenFormato } from '../../worker/src/lib/mercadopago.js';
+import { esquecerVendedor, isSandbox, tokenFormato, vendedorFormato } from '../../worker/src/lib/mercadopago.js';
 
 const SITE = 'https://hebraicofluente.com.br';
 
@@ -458,5 +458,108 @@ describe('a forma do token da Mercado Pago', () => {
     const t = '  APP_USR-1234567890123456-092012-abcdef0123456789abcdef0123456789-123456789\n';
     expect(tokenFormato({ MP_ACCESS_TOKEN: t })).toBe('access-token');
     expect(isSandbox({ MP_ACCESS_TOKEN: t })).toBe(false);
+  });
+});
+
+/* ── de QUEM é a credencial da Mercado Pago ─────────────────────────────── */
+
+describe('a conta dona do token da Mercado Pago', () => {
+  /* Em 21/09/2026 o primeiro pagamento de verdade foi recusado com "uma das
+     partes com as quais você está tentando efetuar o pagamento é de teste",
+     e /api/health não tinha como ajudar: ele dizia `modo: producao` e
+     `tokenFormato: access-token`, os dois corretos, porque os usuários de
+     TESTE da Mercado Pago também recebem credenciais `APP_USR-`.
+
+     A diferença só aparece perguntando a eles de quem é o token. Estes casos
+     são as respostas que a Mercado Pago dá, e o veredicto de cada uma. */
+
+  /* Um token com forma de produção, o mesmo em todos os casos: o que muda
+     aqui é a CONTA que ele representa, nunca a forma dele. */
+  const TOKEN = 'APP_USR-1234567890123456-092112-abcdef0123456789abcdef0123456789-123456789';
+  const env = { MP_ACCESS_TOKEN: TOKEN };
+
+  /* `/users/me` respondendo o que se pede, e contando quantas vezes foi
+     chamada - o cache é metade do contrato. */
+  let chamadas = 0;
+  function mercadoPagoResponde(corpo: unknown, status = 200) {
+    chamadas = 0;
+    vi.stubGlobal('fetch', async (url: string) => {
+      expect(new URL(url).pathname).toBe('/users/me');
+      chamadas++;
+      return new Response(JSON.stringify(corpo), { status });
+    });
+  }
+
+  beforeEach(() => { esquecerVendedor(); });
+  afterEach(() => { vi.unstubAllGlobals(); });
+
+  it('uma conta comum no Brasil é vendedora de verdade', async () => {
+    mercadoPagoResponde({ nickname: 'MOSHIKG', email: 'eu@exemplo.com.br', site_id: 'MLB' });
+    expect(await vendedorFormato(env)).toBe('real');
+  });
+
+  it('DENUNCIA o usuário de teste, que também tem credencial APP_USR-', async () => {
+    /* O caso que custou o primeiro pagamento. O apelido é o que a Mercado
+       Pago gera para um usuário de teste. */
+    mercadoPagoResponde({ nickname: 'TESTUSER83610294', email: 'test_user_836@testuser.com', site_id: 'MLB' });
+    expect(await vendedorFormato(env)).toBe('usuario-de-teste');
+  });
+
+  it('e o denuncia também quando só o e-mail entrega', async () => {
+    /* Uma marca basta: a Mercado Pago já mudou a forma do apelido antes. */
+    mercadoPagoResponde({ nickname: 'Comprador', email: 'test_user_991@testuser.com', site_id: 'MLB' });
+    expect(await vendedorFormato(env)).toBe('usuario-de-teste');
+  });
+
+  it('conta de outro país não cobra em reais', async () => {
+    mercadoPagoResponde({ nickname: 'ALGUEM', email: 'eu@exemplo.com.ar', site_id: 'MLA' });
+    expect(await vendedorFormato(env)).toBe('outro-pais');
+  });
+
+  it('401 é token recusado, e não "não deu para perguntar"', async () => {
+    /* A diferença importa: `recusado` manda conferir a credencial,
+       `indisponivel` manda tentar de novo daqui a pouco. */
+    mercadoPagoResponde({ message: 'invalid access token' }, 401);
+    expect(await vendedorFormato(env)).toBe('recusado');
+  });
+
+  it('a Mercado Pago fora do ar não vira diagnóstico', async () => {
+    mercadoPagoResponde({ message: 'internal error' }, 500);
+    expect(await vendedorFormato(env)).toBe('indisponivel');
+  });
+
+  it('sem token não pergunta nada a ninguém', async () => {
+    mercadoPagoResponde({ nickname: 'NUNCA' });
+    expect(await vendedorFormato({})).toBe('desligado');
+    expect(chamadas).toBe(0);
+  });
+
+  it('pergunta uma vez só: a saúde é consultada em laço durante a publicação', async () => {
+    mercadoPagoResponde({ nickname: 'MOSHIKG', email: 'eu@exemplo.com.br', site_id: 'MLB' });
+    for (let i = 0; i < 5; i++) expect(await vendedorFormato(env)).toBe('real');
+    expect(chamadas).toBe(1);
+  });
+
+  it('mas trocar o token faz perguntar de novo, senão o conserto não apareceria', async () => {
+    /* O cenário inteiro deste campo termina numa troca de segredo. Se o
+       veredicto velho sobrevivesse a ela, a saúde continuaria acusando um
+       problema já resolvido - e ninguém acreditaria mais nela. */
+    mercadoPagoResponde({ nickname: 'TESTUSER83610294', email: 't@testuser.com', site_id: 'MLB' });
+    expect(await vendedorFormato(env)).toBe('usuario-de-teste');
+
+    vi.unstubAllGlobals();
+    mercadoPagoResponde({ nickname: 'MOSHIKG', email: 'eu@exemplo.com.br', site_id: 'MLB' });
+    const outro = { MP_ACCESS_TOKEN: 'APP_USR-9999999999999999-092112-abcdef0123456789abcdef0123456789-987654321' };
+    expect(await vendedorFormato(outro)).toBe('real');
+    expect(chamadas).toBe(1);
+  });
+
+  it('e o veredicto NUNCA carrega o apelido nem o e-mail da conta', async () => {
+    /* /api/health é público. Saber que o vendedor é real não abre porta
+       nenhuma; saber o e-mail dele, talvez. */
+    mercadoPagoResponde({ nickname: 'MOSHIKG', email: 'eu@exemplo.com.br', site_id: 'MLB', id: 99887766 });
+    const v = await vendedorFormato(env);
+    expect(typeof v).toBe('string');
+    expect(v).not.toMatch(/MOSHIKG|exemplo\.com|99887766/);
   });
 });

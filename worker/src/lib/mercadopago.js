@@ -94,7 +94,98 @@ export function tokenFormato(env) {
   return 'formato-desconhecido';
 }
 
-async function call(env, path, { method = 'GET', body, idempotencyKey } = {}) {
+/**
+ * De QUEM é essa credencial? Sem dizer de quem.
+ * ─────────────────────────────────────────────────────────────────────────
+ * `tokenFormato` responde QUE credencial foi colada. Esta responde a outra
+ * pergunta, que custou uma rodada de depuração para aparecer: a conta dona da
+ * credencial consegue receber dinheiro de verdade de um comprador brasileiro?
+ *
+ * O prefixo não basta. Os usuários de teste que a Mercado Pago cria no painel
+ * de desenvolvedor têm credenciais que começam com `APP_USR-` igualzinho às de
+ * produção - então `isSandbox` diz "produção", o checkout manda o comprador
+ * para o `init_point` real, e lá ele encontra:
+ *
+ *   Uma das partes com as quais você está tentando efetuar o pagamento
+ *   é de teste.
+ *
+ * Do lado de cá nada parece errado. A única coisa que distingue as duas contas
+ * é PERGUNTAR à Mercado Pago de quem é o token, e é isso que esta função faz.
+ *
+ * Os veredictos:
+ *
+ *   real             a conta é uma conta comum, no Brasil. Pode cobrar.
+ *   usuario-de-teste a conta é um usuário de teste. Comprador real é recusado.
+ *   outro-pais       conta de outro país: `site_id` diferente de MLB, e uma
+ *                    cobrança em BRL não vai completar.
+ *   recusado         a Mercado Pago respondeu 401/403 - token revogado, ou a
+ *                    Public Key colada no lugar do Access Token.
+ *   indisponivel     não deu para perguntar agora (rede, 5xx). NÃO é um
+ *                    diagnóstico; é a ausência de um.
+ *   desligado        não há token nenhum, que é um estado legítimo.
+ *
+ * Sai em /api/health, que é público, então **só o veredicto viaja** - nunca o
+ * apelido, nunca o e-mail, nunca o id da conta. Saber que o vendedor é real
+ * não ajuda ninguém a entrar em lugar nenhum; saber o e-mail dele, talvez.
+ */
+let vendedorLembrado = { chave: '', verdito: '', ate: 0 };
+
+export async function vendedorFormato(env) {
+  const t = token(env);
+  if (!t) return 'desligado';
+
+  /* A chave do cache é uma IMPRESSÃO do token, não o token: o veredicto é
+     guardado fora do tempo de vida da requisição, e não há motivo para uma
+     segunda cópia do segredo morar lá. Trocar o token muda a impressão e o
+     veredicto velho deixa de casar sozinho. */
+  const chave = `${t.length}:${t.slice(-6)}`;
+  const agora = Date.now();
+  if (vendedorLembrado.chave === chave && vendedorLembrado.ate > agora) {
+    return vendedorLembrado.verdito;
+  }
+
+  let verdito;
+  /* Com prazo. Este campo é um diagnóstico dentro de um endpoint de SAÚDE, e
+     um diagnóstico que pendura a saúde é pior do que nenhum: quem consulta
+     /api/health durante uma publicação precisa de resposta, não de uma espera
+     por um servidor de terceiro. Passados três segundos, `indisponivel`. */
+  const prazoDaPergunta = AbortSignal.timeout ? AbortSignal.timeout(3000) : undefined;
+  try {
+    const eu = await call(env, '/users/me', { signal: prazoDaPergunta });
+    const apelido = String((eu && eu.nickname) || '');
+    const correio = String((eu && eu.email) || '');
+    const pais = String((eu && eu.site_id) || '');
+    /* As duas marcas de um usuário de teste, e basta uma: o apelido que a
+       Mercado Pago gera (`TESTUSER83610294`) e o domínio do e-mail que ela
+       inventa para ele. */
+    if (/^TESTUSER/i.test(apelido) || /@testuser\.com$/i.test(correio)) {
+      verdito = 'usuario-de-teste';
+    } else if (pais && pais !== 'MLB') {
+      verdito = 'outro-pais';
+    } else {
+      verdito = 'real';
+    }
+  } catch (e) {
+    const status = e && e.status;
+    verdito = (status === 401 || status === 403) ? 'recusado' : 'indisponivel';
+  }
+
+  /* Dez minutos para um veredicto, meio minuto para a falta de um: guardar
+     `indisponivel` pelo prazo cheio transformaria uma oscilação de rede em dez
+     minutos de saúde dizendo que não sabe. */
+  const prazo = verdito === 'indisponivel' ? 30_000 : 10 * 60_000;
+  vendedorLembrado = { chave, verdito, ate: agora + prazo };
+  return verdito;
+}
+
+/** Só para os ensaios: o cache vive no módulo e atravessaria um caso para o
+ *  seguinte. Em produção ele se dissolve sozinho, porque trocar um segredo no
+ *  painel da Cloudflare reinicia o Worker. */
+export function esquecerVendedor() {
+  vendedorLembrado = { chave: '', verdito: '', ate: 0 };
+}
+
+async function call(env, path, { method = 'GET', body, idempotencyKey, signal } = {}) {
   const headers = {
     'Authorization': `Bearer ${token(env)}`,
     'Content-Type': 'application/json'
@@ -102,7 +193,7 @@ async function call(env, path, { method = 'GET', body, idempotencyKey } = {}) {
   if (idempotencyKey) headers['X-Idempotency-Key'] = idempotencyKey;
 
   const res = await fetch(API + path, {
-    method, headers, body: body ? JSON.stringify(body) : undefined
+    method, headers, body: body ? JSON.stringify(body) : undefined, signal
   });
 
   let data = null;
