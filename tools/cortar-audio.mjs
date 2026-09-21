@@ -381,21 +381,28 @@ function main() {
     const i = argv.indexOf(nome);
     return i >= 0 ? argv[i + 1] : null;
   };
-  const wav = argv.find(a => !a.startsWith('--') && argv[argv.indexOf(a) - 1] !== '--onda'
-                                                && argv[argv.indexOf(a) - 1] !== '--de'
-                                                && argv[argv.indexOf(a) - 1] !== '--ate');
+  const comValor = new Set(['--onda', '--de', '--ate', '--letra']);
+  const wav = argv.find((a, i) => !a.startsWith('--') && !comValor.has(argv[i - 1]));
   const onda = Number(arg('--onda') ?? 1);
   const de = arg('--de') ? Number(arg('--de')) : null;
   const ate = arg('--ate') ? Number(arg('--ate')) : null;
+  const letra = arg('--letra') ? Number(arg('--letra')) : null;
+  const vogais = argv.includes('--vogais');
 
   if (!wav || !existsSync(wav)) {
     console.log(`
-  uso:  npm run cortar-audio -- --onda 1 gravacao.wav
+  uso:  npm run cortar-audio -- --letra 1 alef.m4a
+        npm run cortar-audio -- --vogais sinais.m4a
+        npm run cortar-audio -- --onda 1 gravacao-inteira.wav
         npm run cortar-audio -- --onda 1 --de 40 --ate 80 parte2.wav
         npm run cortar-audio -- --ensaiar
 
-  --onda   qual onda a gravação cobre (1, 2 ou 3)
-  --de     primeiro número do roteiro neste arquivo, se a sessão foi partida
+  --letra  um arquivo com os 7 itens de UMA letra: o nome e as 6 sílabas.
+           É o jeito recomendado de gravar no celular - se uma letra sair
+           errada, só ela é refeita.
+  --vogais o arquivo com os 14 nomes de sinais de vogal
+  --onda   a gravação cobre uma onda inteira (1, 2 ou 3)
+  --de     primeiro número do roteiro neste arquivo
   --ate    último número do roteiro neste arquivo
 `);
     process.exitCode = 1;
@@ -403,13 +410,34 @@ function main() {
   }
 
   const audio = readJson('data/audio.json');
+  /* Quem manda no agrupamento é o `where` do manifesto, o mesmo texto que sai
+     impresso na coluna "Onde aparece" do roteiro - assim o que a ferramenta
+     chama de "letra 7" é exatamente o que a pessoa leu na página. */
+  const grupoDe = c => (c.where || []).find(w => /^letra \d+$/.test(w)) || (c.where || [])[0] || '';
+
+  /* A onda filtra SEMPRE, inclusive quando se pede uma letra. Uma letra
+     aparece nas três ondas - o nome e as sílabas na 1, as palavras de
+     leitura na 2 - e pedir "letra 1" sem a onda juntava as três num alvo de
+     nove clipes numerados de 1 a 269. Um arquivo com os sete itens da onda 1
+     nunca casaria com isso, e a recusa pareceria erro da gravação. */
   let alvo = audio.clips.filter(c => c.wave === onda);
-  if (de !== null) alvo = alvo.filter(c => c.num >= de);
-  if (ate !== null) alvo = alvo.filter(c => c.num <= ate);
+  let rotulo = `onda ${onda}`;
+
+  if (letra !== null) {
+    alvo = alvo.filter(c => grupoDe(c) === `letra ${letra}`);
+    rotulo = `letra ${letra} · onda ${onda}`;
+  } else if (vogais) {
+    alvo = alvo.filter(c => grupoDe(c) === 'sinais de vogal');
+    rotulo = `sinais de vogal · onda ${onda}`;
+  } else {
+    if (de !== null) alvo = alvo.filter(c => c.num >= de);
+    if (ate !== null) alvo = alvo.filter(c => c.num <= ate);
+    if (de !== null) rotulo += ` (nº ${de} a ${ate ?? '∞'})`;
+  }
   alvo.sort((a, b) => a.num - b.num);
 
   if (!alvo.length) {
-    console.log(`\n  ✗ nenhum clipe na onda ${onda}${de !== null ? ` entre ${de} e ${ate ?? '∞'}` : ''}\n`);
+    console.log(`\n  ✗ nenhum clipe em "${rotulo}"\n`);
     process.exitCode = 1;
     return;
   }
@@ -423,7 +451,7 @@ function main() {
   console.log(`    piso de ruído   ${piso.db.toFixed(1)} dB  (medido em ${piso.fonte})`);
   console.log(`    corte usado     ${corte.limiar} dB, pausa de ${corte.gap}s  (${corte.tentativas.length} ajuste(s) tentado(s))`);
   console.log(`    trechos achados ${segs.length}`);
-  console.log(`    clipes na onda  ${alvo.length}  (nº ${alvo[0].num} a ${alvo[alvo.length - 1].num})\n`);
+  console.log(`    ${rotulo.padEnd(15)} ${alvo.length} clipe(s)  (nº ${alvo[0].num} a ${alvo[alvo.length - 1].num})\n`);
 
   const ok = segs.length === alvo.length;
 
@@ -433,8 +461,13 @@ function main() {
   const pares = [];
   for (let i = 0; i < segs.length; i++) {
     const clipe = alvo[i] ?? null;
+    /* O acento sai por decomposição, e não por `[^\w]`: aquilo apagava o
+       próprio `Á` de "Álef" e o arquivo de conferência saía como `001-lef`,
+       que é justamente o tipo de nome que faz alguém desconfiar do corte
+       quando o corte está certo. */
+    const semAcento = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w]/g, '');
     const rotulo = String(i + 1).padStart(3, '0') +
-      (clipe && clipe.translit ? '-' + clipe.translit.replace(/[^\w]/g, '') : '');
+      (clipe && clipe.translit ? '-' + semAcento(clipe.translit) : '');
     const arquivo = rotulo + '.mp3';
     extrair(wav, segs[i], join(CONF, arquivo), piso.db);
     pares.push({ ...segs[i], clipe, arquivo });
