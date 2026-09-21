@@ -350,6 +350,99 @@ function useLinha() {
 }
 
 /* ── 6 · o currículo ────────────────────────────────────────────────────── */
+
+/* O percurso, antes do acordeão.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Sete módulos fechados num acordeão contam a matéria, mas escondem a FORMA
+ * do curso. E a forma aqui tem uma notícia dentro: as letras acabam no
+ * módulo 5. Os dois últimos não ensinam letra nenhuma - ensinam a ler o que
+ * já se sabe sem as muletas (o ponto que some na rua, o apóstrofo dos sons
+ * importados). Quem só vê a lista pensa que o curso perdeu o fôlego no fim;
+ * quem vê a barra entende que o fim é outra coisa.
+ *
+ * Por isso a divisão não está escrita aqui: ela é LIDA de course.json, pelo
+ * único critério que a define (`letterIds.length > 0`). No dia em que um
+ * módulo novo trouxer letras, a barra se redesenha sozinha - e continua
+ * verdadeira, que é o ponto do arquivo inteiro.
+ *
+ * A largura de cada trecho é proporcional às lições, não igual: um módulo
+ * de seis lições ocupando o mesmo espaço de um de duas seria um gráfico
+ * mentindo sobre a própria escala.
+ */
+function Percurso() {
+  const mods = course.modules;
+  const licoes = mods.reduce((n, m) => n + m.lessons.length, 0);
+  const comLetras = mods.filter(m => m.letterIds.length > 0);
+  const depois = mods.filter(m => m.letterIds.length === 0);
+
+  /* "Módulos 1-5" / "Módulo 6" - o rótulo acompanha o que o dado disser. */
+  const faixa = (lista: typeof mods) => {
+    const ns = lista.map(m => m.n);
+    const a = Math.min(...ns), b = Math.max(...ns);
+    return a === b ? `Módulo ${a}` : `Módulos ${a}-${b}`;
+  };
+
+  if (comLetras.length === 0 || depois.length === 0) return null;
+
+  return (
+    <Reveal delay={120}>
+      <div className="mb-9 sm:mb-11 rounded-[22px] bg-[var(--card)] border border-line p-6 sm:p-7">
+        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1.5 mb-5">
+          {([
+            [mods.length, 'módulos'],
+            [licoes, 'lições'],
+            [course.letters.length, 'letras']
+          ] as const).map(([n, r]) => (
+            <p key={r} className="font-ui text-[15px] text-ink-muted m-0">
+              <b className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink
+                            tabular-nums align-baseline mr-1.5">{n}</b>
+              {r}
+            </p>
+          ))}
+        </div>
+
+        <div className="flex gap-1 h-[10px] mb-4" aria-hidden>
+          {mods.map(m => (
+            <span
+              key={m.id}
+              style={{ flexGrow: m.lessons.length || 1 }}
+              className={`rounded-full ${m.letterIds.length > 0
+                ? 'bg-[var(--teal)]' : 'bg-[var(--gold)]'}`}
+            />
+          ))}
+        </div>
+
+        <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0">
+          <li className="flex gap-2.5 items-start">
+            <span aria-hidden className="mt-[5px] w-2.5 h-2.5 rounded-full bg-[var(--teal)] shrink-0" />
+            <span className="min-w-0">
+              <span className="block font-ui text-[15px] font-semibold text-ink">
+                {faixa(comLetras)} · as {course.letters.length} letras
+              </span>
+              <span className="block font-ui text-[14.5px] leading-[1.5] text-ink-muted">
+                Uma de cada vez, na ordem em que aparecem nas palavras - e cada uma
+                já entra numa palavra de verdade.
+              </span>
+            </span>
+          </li>
+          <li className="flex gap-2.5 items-start">
+            <span aria-hidden className="mt-[5px] w-2.5 h-2.5 rounded-full bg-[var(--gold)] shrink-0" />
+            <span className="min-w-0">
+              <span className="block font-ui text-[15px] font-semibold text-ink">
+                {faixa(depois)} · ler sem apoio
+              </span>
+              <span className="block font-ui text-[14.5px] leading-[1.5] text-ink-muted">
+                O alfabeto já está completo. Aqui o texto perde as marcas que
+                facilitavam, do jeito que ele aparece numa placa ou num cardápio.
+              </span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </Reveal>
+  );
+}
+
 export function Curriculo() {
   const [aberto, setAberto] = useState(0);
   const modulos = course.modules;
@@ -362,6 +455,8 @@ export function Curriculo() {
           {modulos.length} módulos. As letras aparecem por utilidade, não por ordem
           alfabética - você lê palavras reais já na primeira semana.
         </Lead></Reveal>
+
+        <Percurso />
 
         <div className="grid gap-2.5">
           {modulos.map((m, i) => {

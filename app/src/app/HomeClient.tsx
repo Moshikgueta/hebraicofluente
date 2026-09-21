@@ -25,6 +25,8 @@
 import { Hero } from '@/components/landing/Hero';
 import { Problema, Demonstracao, Metodo, Curriculo, Jornada } from '@/components/landing/Secoes';
 import { Transformacao } from '@/components/landing/Transformacao';
+import { AlemDoAlfabeto } from '@/components/landing/AlemDoAlfabeto';
+import { BarraFixa } from '@/components/landing/BarraFixa';
 import {
   Professor, Recursos, AulaAmostra, Depoimentos, Preco, Faq, CtaFinal
 } from '@/components/landing/Fecho';
@@ -62,10 +64,15 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
       <Professor retrato={retrato} />
       <Recursos />
       <AulaAmostra href={curso} />
+      <AlemDoAlfabeto />
       <Depoimentos />
       <Preco href={comprar} label={passo.label} owned={account.ready && account.can(FLAGSHIP)} />
       <Faq />
       <CtaFinal href={comprar} label={passo.label} />
+      {/* Só para quem ainda pode comprar. `vende` é a mesma regra que decide
+          os outros botões - um aluno pagante não recebe uma faixa de preço
+          colada no rodapé do site dele. */}
+      {passo.vende && <BarraFixa href={comprar} label={passo.label} />}
     </>
   );
 }

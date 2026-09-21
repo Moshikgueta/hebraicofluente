@@ -87,6 +87,7 @@ export function Hero({
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(120% 90% at 82% -10%, #EAF4F1 0%, rgba(234,244,241,0) 58%)' }}
       />
+      <AtmosferaFundo midia={midia} />
       <Container className="relative pt-14 pb-16 sm:pt-[78px] sm:pb-24
                             grid gap-12 lg:gap-[60px] lg:grid-cols-[minmax(0,1.04fr)_minmax(0,1fr)] lg:items-center">
         <div>
@@ -199,7 +200,7 @@ export function Hero({
           className="relative transition-[opacity,transform] duration-700 delay-[340ms] ease-[var(--ease)]"
           style={{ opacity: em(4) ? 1 : 0, transform: em(4) ? 'none' : 'translateY(26px)' }}
         >
-          <Atmosfera midia={midia} />
+          {!midia.imagem && !midia.video && <HaloDesenhado />}
           <Mockup ativo={em(4)} certo={certo} />
           <CartaoFlutuante
             className="top-[-22px] right-[-6px] sm:right-[-14px]"
@@ -228,27 +229,33 @@ export function Hero({
   );
 }
 
-/* A camada de atmosfera, atrás do produto.
+/* A camada de atmosfera: a foto atrás de TODO o hero.
  * ─────────────────────────────────────────────────────────────────────────
- * Ela fica ATRÁS e transbordando do mockup, nunca por cima: o que vende esta
- * página é a interface de verdade, e uma foto na frente dela seria decoração
- * escondendo o argumento.
+ * A primeira versão punha a foto só em volta do mockup, num anel de 50px.
+ * Não funcionou, e o motivo é instrutivo: a imagem foi composta em 16:9 com
+ * o meio vazio de propósito - parede clara à esquerda, luz de cortina e
+ * xícara à direita, tampo de madeira embaixo. Espremida num anel estreito e
+ * cortada pelo `object-cover`, o que sobrava não era uma mesa: eram manchas
+ * cinzentas nos cantos, com a aresta reta do retângulo aparecendo.
  *
- * Três estados, nesta ordem de preferência:
+ * Então ela ocupa o hero inteiro, que é para o que foi feita - e a
+ * composição da foto cai exatamente em cima da composição da página:
  *
- *   vídeo   laço curto, mudo, só quando existe poster E a pessoa não pediu
- *           menos movimento. `preload="none"` para não custar nada a quem
- *           está no 4G e nunca vai ver o laço inteiro;
- *   imagem  o mesmo enquadramento, parado. É o estado normal do celular;
- *   nada    a composição desenhada abaixo - dois halos e uma letra hebraica
- *           gigante, cortada pela borda. Não é um placeholder esperando
- *           alguém: é o que a maioria vai ver, e foi desenhado para isso.
+ *   à esquerda   parede vazia, onde fica o texto. O creme cobre quase tudo,
+ *                e o título continua com o contraste que tinha;
+ *   à direita    a luz e a xícara, atrás do mockup, onde a profundidade é
+ *                bem-vinda;
+ *   embaixo      a madeira, que dissolve na faixa seguinte.
+ *
+ * Sem o arquivo, entra a composição desenhada - dois halos e um א gigante
+ * cortado pela borda. Não é placeholder esperando alguém: enquanto não houve
+ * foto, foi isso que o site mostrou, e foi desenhado para ser visto.
  *
  * O hebraico NUNCA vem do arquivo gerado. Ele é desenhado aqui, com a fonte
  * do produto - um gerador de imagem erra a grafia, e uma palavra errada na
  * primeira tela de um curso de hebraico é o pior defeito possível.
  */
-function Atmosfera({ midia }: { midia: HeroMedia }) {
+function AtmosferaFundo({ midia }: { midia: HeroMedia }) {
   const [move, setMove] = useState(false);
 
   useEffect(() => {
@@ -258,41 +265,85 @@ function Atmosfera({ midia }: { midia: HeroMedia }) {
   }, []);
 
   const temVideo = !!midia.video && !!midia.poster && move;
+  if (!temVideo && !midia.imagem) return null;
 
+  return (
+    <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+      {temVideo ? (
+        <video
+          className="w-full h-full object-cover object-[68%_50%] opacity-[.55]"
+          src={midia.video!}
+          poster={midia.poster!}
+          autoPlay muted loop playsInline preload="none"
+        />
+      ) : (
+        /* `<picture>` e não `<img>` sozinho: o recorte de 640px pesa 4,7 KB
+           contra 15 KB do grande, e esta imagem está acima da dobra - é o
+           tipo de byte que atrasa a primeira tela num 4G. Sem o arquivo
+           pequeno o `<source>` não é emitido e todo mundo recebe o grande.
+
+           `object-[68%_50%]`: quando a janela é mais alta que 16:9, o corte
+           tem de puxar para a direita, onde estão a cortina e a xícara. No
+           centro a foto é parede, e parede cortada é um fundo liso. */
+        <picture>
+          {midia.imagemMobile && <source media="(max-width: 700px)" srcSet={midia.imagemMobile} />}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={midia.imagem!}
+            alt=""
+            width={1280}
+            height={725}
+            className="w-full h-full object-cover object-[68%_50%] opacity-[.55]"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
+      )}
+
+      {/* O creme por cima, em duas passadas. A primeira é horizontal e existe
+          para o TEXTO: à esquerda ela é quase sólida, e o título fica com o
+          mesmo contraste que tinha sem foto nenhuma. A segunda é vertical e
+          existe para as BORDAS: sem ela a faixa teria uma aresta reta contra
+          o cabeçalho em cima e contra a seção seguinte embaixo. */}
+      <div className="absolute inset-0"
+           style={{
+             background: 'linear-gradient(95deg, var(--cream) 0%, rgba(251,249,245,.97) 30%, ' +
+                         'rgba(251,249,245,.72) 48%, rgba(251,249,245,.42) 70%, rgba(251,249,245,.6) 100%)'
+           }} />
+      <div className="absolute inset-0"
+           style={{
+             background: 'linear-gradient(to bottom, var(--cream) 0%, rgba(251,249,245,0) 22%, ' +
+                         'rgba(251,249,245,0) 58%, var(--cream) 100%)'
+           }} />
+    </div>
+  );
+}
+
+/* O halo desenhado, quando não há arquivo de mídia.
+   Fica preso à coluna do mockup, e não ao hero inteiro: ele foi composto
+   para transbordar do cartão, com o א entrando pela borda direita. */
+function HaloDesenhado() {
   return (
     <div
       aria-hidden
       className="absolute -inset-x-6 -inset-y-10 sm:-inset-x-12 sm:-inset-y-14 z-[1]
                  rounded-[36px] overflow-hidden pointer-events-none select-none"
     >
-      {temVideo ? (
-        <video
-          className="w-full h-full object-cover opacity-[.42]"
-          src={midia.video!}
-          poster={midia.poster!}
-          autoPlay muted loop playsInline preload="none"
-        />
-      ) : midia.imagem ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={midia.imagem} alt="" className="w-full h-full object-cover opacity-[.42]" loading="eager" />
-      ) : (
-        <div className="absolute inset-0">
-          {/* Dois halos que se cruzam: o teal do produto e a areia do papel.
-              Dão profundidade sem desenhar nada que precise ser explicado. */}
-          <div className="absolute inset-0"
-               style={{ background: 'radial-gradient(70% 60% at 78% 18%, #DCEDE8 0%, rgba(220,237,232,0) 64%)' }} />
-          <div className="absolute inset-0"
-               style={{ background: 'radial-gradient(60% 55% at 12% 92%, #F1EADA 0%, rgba(241,234,218,0) 62%)' }} />
-          <span
-            className="he absolute -right-[6%] top-[-8%] leading-none select-none
-                       text-[clamp(200px,26vw,340px)] text-[var(--navy)] opacity-[.055]"
-          >
-            א
-          </span>
-        </div>
-      )}
-      {/* O creme volta nas bordas para o retângulo não ter arestas: a
-          atmosfera dissolve no papel em vez de virar uma caixa. */}
+      {/* Dois halos que se cruzam: o teal do produto e a areia do papel.
+          Dão profundidade sem desenhar nada que precise ser explicado. */}
+      <div className="absolute inset-0"
+           style={{ background: 'radial-gradient(70% 60% at 78% 18%, #DCEDE8 0%, rgba(220,237,232,0) 64%)' }} />
+      <div className="absolute inset-0"
+           style={{ background: 'radial-gradient(60% 55% at 12% 92%, #F1EADA 0%, rgba(241,234,218,0) 62%)' }} />
+      <span
+        className="he absolute -right-[6%] top-[-8%] leading-none select-none
+                   text-[clamp(200px,26vw,340px)] text-[var(--navy)] opacity-[.055]"
+      >
+        א
+      </span>
+      {/* O creme volta nas bordas para o retângulo não ter arestas: o halo
+          dissolve no papel em vez de virar uma caixa. */}
       <div className="absolute inset-0"
            style={{ background: 'radial-gradient(75% 65% at 50% 45%, rgba(251,249,245,0) 0%, var(--cream) 88%)' }} />
     </div>

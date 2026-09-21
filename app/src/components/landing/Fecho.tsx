@@ -468,9 +468,11 @@ const PALAVRAS: readonly { he: string; tr: string; pt: string }[] = [
   { he: 'מַיִם', tr: 'máyim', pt: 'água' }
 ];
 
+/* O `id` não é para link nenhum: é o alvo que a barra fixa do celular
+   observa para sumir de cima do último pedido da página. Ver BarraFixa.tsx. */
 export function CtaFinal({ href, label }: { href: string; label: string }) {
   return (
-    <section>
+    <section id="fecho">
       <Container className="mt-16 sm:mt-24">
         <div className="relative overflow-hidden rounded-[30px] bg-[var(--navy)] px-7 py-14 sm:px-12 sm:py-[72px] text-center">
           <span aria-hidden className="absolute inset-0 pointer-events-none"

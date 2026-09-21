@@ -25,6 +25,7 @@ export default function HomePage() {
     <HomeClient
       midia={{
         imagem: primeiroQueExiste(CANDIDATOS.imagem),
+        imagemMobile: primeiroQueExiste(CANDIDATOS.imagemMobile),
         video: primeiroQueExiste(CANDIDATOS.video),
         poster: primeiroQueExiste(CANDIDATOS.poster)
       }}

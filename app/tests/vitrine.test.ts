@@ -156,4 +156,33 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
       expect(rotas, r).toContain(r);
     }
   });
+
+  it('a barra fixa do celular não vende para quem já comprou', () => {
+    /* A barra é a única chamada da capa que acompanha a rolagem, e por isso
+       a única que um aluno pagante levaria na cara por doze seções. A regra
+       de quem recebe oferta é `vende`, de lib/cta.ts - a mesma que decide os
+       outros botões -, e a prova é de FORMA: a barra tem de estar atrás
+       dela. Um `<BarraFixa>` solto no JSX passa despercebido numa revisão e
+       só aparece no site do cliente. */
+    const capa = readFileSync(
+      new URL('../src/app/HomeClient.tsx', import.meta.url), 'utf8');
+    expect(capa).toContain('passo.vende && <BarraFixa');
+
+    /* E o preço que ela mostra sai do catálogo, nunca escrito à mão: é o
+       mesmo arquivo que o checkout cobra. */
+    const barra = readFileSync(
+      new URL('../src/components/landing/BarraFixa.tsx', import.meta.url), 'utf8');
+    expect(barra).toContain("from '@/lib/catalog'");
+    expect(barra).not.toMatch(/R\$\s?\d/);
+  });
+
+  it('a seção do conteúdo extra não manda visitante para rota paga', () => {
+    /* /biblia é pública e vira link. /historia é do curso: um link para ela
+       numa página de vendas leva a um 302 de login, que é a pior coisa que
+       um botão de landing pode fazer. */
+    const alem = readFileSync(
+      new URL('../src/components/landing/AlemDoAlfabeto.tsx', import.meta.url), 'utf8');
+    expect(alem).toContain('href="/biblia"');
+    expect(alem).not.toContain('href="/historia"');
+  });
 });
