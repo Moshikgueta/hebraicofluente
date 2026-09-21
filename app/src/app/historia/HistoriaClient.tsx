@@ -5,6 +5,7 @@
 
 import { Badge } from '@/components/ui/Card';
 import { CultureShelf } from '@/components/learn/Culture';
+import { ErasShelf } from '@/components/learn/Eras';
 import { useProgress } from '@/lib/state/store';
 
 export function HistoriaClient() {
@@ -22,6 +23,11 @@ export function HistoriaClient() {
           conforme você domina letras - {p.mastered} até agora.
         </p>
       </header>
+      {/* Antes das cartas, e não depois: as cartas são texto para ler sobre o
+          hebraico; este bloco é hebraico para ler. Numa página opcional, o que
+          se faz vem antes do que se lê sobre. */}
+      <ErasShelf />
+
       <CultureShelf />
     </div>
   );

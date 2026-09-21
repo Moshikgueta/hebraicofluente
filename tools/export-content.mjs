@@ -77,6 +77,7 @@ function main() {
   const extras = readJson('data/extras.json');
   const realWorld = readJson('data/real-world.json');
   const sentences = readJson('data/sentences.json');
+  const eras = readJson('data/eras.json');
 
   /* Where each letter's pages start in the printed workbook, so the app can
      say "quer praticar à mão? páginas X-Y". Absent before the first `npm run
@@ -308,6 +309,15 @@ function main() {
       audioId: audioIdFor(s2.he),
       words: s2.words.map(w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) }))
     }))
+  }, null, 2) + '\n');
+
+  /* ── as duas eras ───────────────────────────────────────────────────
+     Só os pares, sem a nota do arquivo de origem. As frases NÃO são copiadas
+     para cá: o par guarda os ids e a tela busca em `sentences.json`, para que
+     corrigir uma frase num lugar não deixe uma cópia velha no outro. A raiz
+     declarada é conferida contra as duas frases pela V21 do validate.js. */
+  writeFileSync(join(OUT, 'eras.json'), JSON.stringify({
+    pairs: eras.pairs.map(p => ({ ...p, raiz: NFC(p.raiz) }))
   }, null, 2) + '\n');
 
   writeFileSync(join(OUT, 'real-world.json'), JSON.stringify({

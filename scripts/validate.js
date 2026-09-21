@@ -351,6 +351,47 @@ export function validate({ checkDist = true } = {}) {
     warn('V20', 'data/sentences.json', 'ausente - o curso volta a não ter nenhuma frase inteira');
   }
 
+  /* ── V21 - a raiz compartilhada entre as duas eras é DE VERDADE ─────
+     `data/eras.json` põe uma linha bíblica ao lado de uma frase de rua e diz
+     que as duas têm a mesma raiz. É a afirmação mais forte que o curso faz
+     sobre a língua, e a mais fácil de inventar: basta escolher duas frases
+     bonitas e declarar um parentesco.
+
+     Então aqui a afirmação é conferida letra por letra. Cada consoante da
+     raiz tem de aparecer NAS DUAS frases; se não aparecer, o par não entra.
+     A ordem não é exigida - raiz hebraica é um esqueleto, não uma sequência
+     literal - mas a presença é. */
+  let eras = null;
+  try { eras = readJson('data/eras.json').pairs; } catch { /* not authored */ }
+  if (eras && sentences) {
+    const porId = new Map(sentences.map(s => [s.id, s]));
+    for (const p of eras) {
+      const at = `eras/${p.id}`;
+      const A = porId.get(p.antigo);
+      const M = porId.get(p.moderno);
+      if (!A) { fail('V21', at, `"${p.antigo}" não é uma frase de sentences.json`); continue; }
+      if (!M) { fail('V21', at, `"${p.moderno}" não é uma frase de sentences.json`); continue; }
+      if (A.era !== 'antigo') fail('V21', at, `"${p.antigo}" não está marcada «antigo»`);
+      if (M.era !== 'moderno') fail('V21', at, `"${p.moderno}" não está marcada «moderno»`);
+
+      const raiz = [...new Set(consonantsOf(p.raiz))];
+      if (raiz.length < 2) fail('V21', at, `a raiz "${p.raiz}" não tem consoantes suficientes`);
+      for (const [rotulo, s] of [['antiga', A], ['moderna', M]]) {
+        const tem = new Set(consonantsOf(s.he));
+        const falta = raiz.filter(c => !tem.has(c));
+        if (falta.length) {
+          fail('V21', at,
+            `a raiz ${p.raiz} não está na frase ${rotulo} "${s.he}" - falta ${falta.join(', ')}`);
+        }
+      }
+      if (!p.fontePt) fail('V21', at, 'citação antiga sem fonte');
+      const bad = unmarkedHebrew(p.notePt || '');
+      if (bad.length) fail('V21', at, `notePt: hebraico sem {{ }} - ${bad.slice(0, 2).join(', ')}`);
+    }
+  } else if (!eras) {
+    warn('V21', 'data/eras.json', 'ausente - a página de história perde o lado a lado das duas eras');
+  }
+
   /* ── V19 - modules 6 and 7 are consistent with the alphabet ────────
      The dagesh pairs and the final forms are claims about the language, and
      they are now shared by the book and the app. A typo here would be printed

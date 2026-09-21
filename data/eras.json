@@ -1,0 +1,39 @@
+{
+  "note": [
+    "ERAS - a mesma raiz, com mais de dois mil anos entre uma ponta e outra.",
+    "",
+    "O curso já ensina que o alfabeto é antigo. Dizer isso é fácil e não",
+    "convence ninguém: é a mesma frase que está na contracapa de qualquer",
+    "livro. O que convence é o aluno ler as DUAS linhas e reconhecer as letras",
+    "nas duas.",
+    "",
+    "CUIDADO com o que se afirma aqui. A frase tentadora - «o alfabeto não",
+    "mudou desde que estes textos foram escritos» - é falsa, e a carta «O",
+    "hebraico já teve outro desenho», em culture.json, explica por quê: o texto",
+    "antigo nasceu em paleo-hebraico, e a escrita quadrada veio depois do",
+    "exílio. O que é verdade, e basta, é que é NESTA escrita que o texto é",
+    "copiado e lido desde então.",
+    "",
+    "Cada par aqui aponta para duas frases de `sentences.json` pelo id - uma",
+    "marcada «antigo» e outra «moderno» - e declara a raiz que as duas",
+    "compartilham. A raiz NÃO é decorativa: `npm run validate` confere que cada",
+    "consoante dela aparece de verdade nas duas frases, então um par com uma",
+    "ligação inventada não entra no curso.",
+    "",
+    "`fontePt` e `idadePt` existem porque uma citação antiga sem fonte é só uma",
+    "frase bonita. Só entram aqui textos cuja grafia dá para conferir palavra",
+    "por palavra."
+  ],
+  "pairs": [
+    {
+      "id": "shama",
+      "antigo": "shma-israel",
+      "moderno": "ma-nishma",
+      "raiz": "שׁ־מ־ע",
+      "raizPt": "ouvir",
+      "fontePt": "Deuteronômio 6:4",
+      "idadePt": "mais de dois mil anos",
+      "notePt": "A mesma raiz, nas duas pontas. Na linha antiga ela é uma ordem - «ouve». Na linha de hoje ela virou a pergunta mais banal que existe em Israel: {{מָה נִשְׁמָע}}, ao pé da letra «o que se ouve?», que é o nosso «e aí?». Mais de dois mil anos entre uma e outra, e são as mesmas três letras."
+    }
+  ]
+}

@@ -23,7 +23,7 @@
  * invisible in code review and only shows up as a wrong answer on a page.
  */
 
-import { clean } from '@/lib/hebrew';
+import { clean, clusters, consonantsOf } from '@/lib/hebrew';
 
 /* Bidi-neutral characters. Adjacent to an RTL run they reorder; kept outside
    the span they belong to the surrounding Portuguese and stay put. */
@@ -67,7 +67,7 @@ const TONE = {
 } as const;
 
 export function He({
-  children, size = 'inline', cursive = false, mark, className = '', dim = false,
+  children, size = 'inline', cursive = false, mark, marks, className = '', dim = false,
   tone = 'ink'
 }: {
   children: string;
@@ -75,6 +75,15 @@ export function He({
   cursive?: boolean;
   /** Highlight the first occurrence of this glyph inside the word. */
   mark?: string | null;
+  /**
+   * Destaca TODAS as ocorrências destas consoantes, cada uma com o nikud que
+   * a acompanha. É o que mostra uma raiz atravessando uma frase - as três
+   * letras de {{שׁ־מ־ע}} dentro de «shemá Yisraél» e dentro de «ma nishmá».
+   *
+   * Separado de `mark` de propósito: `mark` marca um TRECHO, uma vez, e há
+   * telas que dependem disso.
+   */
+  marks?: readonly string[] | null;
   className?: string;
   /** Atalho antigo para `tone="muted"`. Mantido: está em muitas telas. */
   dim?: boolean;
@@ -99,6 +108,25 @@ export function He({
     'he', cursive && 'he-cursive', SIZE[size],
     TONE[dim ? 'muted' : tone], className
   ].filter(Boolean).join(' ');
+
+  /* Por CLUSTER, e não por caractere: o nikud viaja junto da consoante, ou o
+     ponto fica órfão e a letra perde o som na tela. E pela consoante de base,
+     porque a raiz não muda quando a letra aparece na forma final - o מ de
+     «nishmá» é o mesmo מ que vira ם no fim de uma palavra. */
+  const alvos = marks?.length
+    ? new Set(marks.flatMap(x => consonantsOf(x)))
+    : null;
+  if (alvos?.size) {
+    return (
+      <span className={cls} lang="he">
+        {clusters(raw).map((g, i) =>
+          alvos.has(consonantsOf(g)[0] ?? '')
+            ? <b key={i} className="font-normal text-[var(--accent-soft)]">{g}</b>
+            : <span key={i}>{g}</span>
+        )}
+      </span>
+    );
+  }
 
   const m = mark ? clean(mark) : '';
   const at = m ? raw.indexOf(m) : -1;

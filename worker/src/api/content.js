@@ -37,6 +37,7 @@ import nikud from '../../../app/content/nikud.json';
 import extras from '../../../app/content/extras.json';
 import realWorld from '../../../app/content/real-world.json';
 import sentences from '../../../app/content/sentences.json';
+import eras from '../../../app/content/eras.json';
 import strokes from '../../../app/content/stroke-paths.json';
 import culture from '../../../app/content/culture.json';
 
@@ -50,6 +51,7 @@ const CONTEUDO = JSON.stringify({
   extras,
   scenes: realWorld.scenes,
   sentences: sentences.sentences,
+  eras: eras.pairs,
   strokes: strokes.letters,
   culture: culture.cards
 });

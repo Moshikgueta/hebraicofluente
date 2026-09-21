@@ -34,7 +34,7 @@
 
 import { course, getModule, letterIds } from './content-publico';
 import type {
-  Checkpoint, Course, CourseModule, CultureCard, Letter, LetterSkel,
+  Checkpoint, Course, CourseModule, CultureCard, EraPair, Letter, LetterSkel,
   NikudIntro, NikudSign, NikudSound, Scene, Sentence, SentenceWord, Stroke, StrokeSet,
   Syllable, Word
 } from './content-publico';
@@ -44,7 +44,7 @@ import type {
    `content-publico`, nunca daqui - importar daqui traz o curso junto. */
 export { course, getModule, letterIds };
 export type {
-  Checkpoint, Course, CourseModule, CultureCard, Letter, LetterSkel,
+  Checkpoint, Course, CourseModule, CultureCard, EraPair, Letter, LetterSkel,
   NikudIntro, NikudSign, NikudSound, Scene, Sentence, SentenceWord, Stroke, StrokeSet,
   Syllable, Word
 };
@@ -57,6 +57,7 @@ export type ConteudoPago = {
   extras: import('./engine/extras').Extras;
   scenes: Scene[];
   sentences: Sentence[];
+  eras: EraPair[];
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
 };
@@ -149,6 +150,26 @@ export const sentencesByEra = (era: Sentence['era']): Sentence[] =>
 export const getSentence = (id: string): Sentence | undefined =>
   dados().sentences.find(s => s.id === id);
 
+/* ── as duas eras ───────────────────────────────────────────────────────
+   Um par só faz sentido quando o aluno consegue ler AS DUAS linhas. Abrir a
+   antiga com a moderna ainda fechada transforma o lado a lado num teaser, e
+   o lado a lado existe justamente para ele reconhecer as letras nas duas.
+   Quem decide, portanto, é a frase mais tardia do par. */
+export const eraPairs = (): EraPair[] => dados().eras;
+
+/** A partir de que ordem este par abre. `null` quando aponta para uma frase
+ *  que não existe - o que a V21 impede, e que a tela ignora em vez de quebrar. */
+export const eraPairOpensAt = (p: EraPair): number | null => {
+  const a = getSentence(p.antigo), m = getSentence(p.moderno);
+  return a && m ? Math.max(a.after, m.after) : null;
+};
+
+export const eraPairsUpTo = (order: number): EraPair[] =>
+  dados().eras.filter(p => {
+    const abre = eraPairOpensAt(p);
+    return abre !== null && abre <= order;
+  });
+
 export const cultureCards = (): CultureCard[] => dados().culture;
 
 /** As cartas que este aluno ganhou, da mais recente para a mais antiga. */
@@ -209,12 +230,13 @@ export async function carregarConteudo(): Promise<void> {
      com os `import()` dentro. A constante exportada é para quem lê; o ramo
      tem de ser podado, e quem poda não segue exportação. */
   if (process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker') {
-    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, strokeJson, cultureJson] = await Promise.all([
+    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, erasJson, strokeJson, cultureJson] = await Promise.all([
       import('@content/letters.json'),
       import('@content/nikud.json'),
       import('@content/extras.json'),
       import('@content/real-world.json'),
       import('@content/sentences.json'),
+      import('@content/eras.json'),
       import('@content/stroke-paths.json'),
       import('@content/culture.json')
     ]);
@@ -226,6 +248,7 @@ export async function carregarConteudo(): Promise<void> {
       extras: bruto<ConteudoPago['extras']>(extrasJson),
       scenes: bruto<{ scenes: Scene[] }>(realWorld).scenes,
       sentences: bruto<{ sentences: Sentence[] }>(sentencesJson).sentences,
+      eras: bruto<{ pairs: EraPair[] }>(erasJson).pairs,
       strokes: bruto<{ box: number; letters: Record<string, StrokeSet> }>(strokeJson).letters,
       culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards
     });

@@ -146,6 +146,18 @@ export type Sentence = {
   words: SentenceWord[]; notePt: string; audioId: string;
 };
 
+/* Uma linha antiga e uma linha de hoje que dividem a mesma raiz.
+
+   `antigo` e `moderno` são IDS de `Sentence`, e não cópias das frases: uma
+   correção feita na frase não pode deixar uma versão velha escondida aqui. E
+   a `raiz` é conferida consoante por consoante contra as duas frases pela V21
+   do validate.js - o parentesco que a tela anuncia não é opinião do autor. */
+export type EraPair = {
+  id: string; antigo: string; moderno: string;
+  raiz: string; raizPt: string;
+  fontePt: string; idadePt: string; notePt: string;
+};
+
 export type Scene = {
   id: string; fromOrder: number; sceneType: string; labelPt: string;
   he: string; contextPt: string; translit: string; pt: string; audioId: string;
