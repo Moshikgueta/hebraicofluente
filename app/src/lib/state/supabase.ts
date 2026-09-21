@@ -82,4 +82,12 @@ export class SupabaseProgressStore implements ProgressStore {
     if (!c || !uid) return;
     await c.from('learner_state').delete().eq('user_id', uid);
   }
+
+  /* Esta porta nunca guarda nada no aparelho - toda leitura vai ao Supabase -
+     então sair da conta já não deixa rastro local para esquecer. */
+  async esquecerAqui(): Promise<void> { /* nada guardado aqui */ }
+
+  /* Toda escrita aqui é síncrona: ou gravou no servidor, ou lançou. Não
+     existe a fila pendente que o adaptador do Worker precisa relatar. */
+  sincronizado(): boolean { return true; }
 }

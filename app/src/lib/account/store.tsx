@@ -66,8 +66,15 @@ export const SESSAO_MUDOU = 'hf-sessao';
    conhece este módulo (nem deve: o curso funciona sem conta nenhuma). Um
    evento no `window` é o acoplamento mais fino que resolve isso - quem se
    importa escuta, quem não se importa nem sabe que existe. */
-const avisar = () => {
-  try { window.dispatchEvent(new Event(SESSAO_MUDOU)); } catch { /* SSR */ }
+/* `saiu` separa as duas trocas de dono, que pedem coisas opostas do provider
+   de progresso: quem ENTRA quer que o aparelho funda com a conta; quem SAI
+   quer que o aparelho esqueça. Sem a distinção, sair recarregava o estado e o
+   deixava no navegador - o estudo de quem saiu, legível para quem sentar
+   depois num computador compartilhado. */
+const avisar = (saiu = false) => {
+  try {
+    window.dispatchEvent(new CustomEvent(SESSAO_MUDOU, { detail: { saiu } }));
+  } catch { /* SSR */ }
 };
 
 export function AccountProvider({ children }: { children: ReactNode }) {
@@ -95,7 +102,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 
     async signUp(i) { setSession(await (await api()).signUp(i)); setReady(true); avisar(); },
     async signIn(i) { setSession(await (await api()).signIn(i)); setReady(true); avisar(); },
-    async signOut() { await (await api()).signOut(); setSession(null); avisar(); },
+    async signOut() { await (await api()).signOut(); setSession(null); avisar(true); },
     refresh,
 
     requestPasswordReset: async email => (await api()).requestPasswordReset(email),

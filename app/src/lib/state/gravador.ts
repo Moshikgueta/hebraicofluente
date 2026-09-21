@@ -57,7 +57,10 @@ export function criarGravador(
   store: ProgressStore,
   /* Lido NA HORA de gravar. É esta indireção que impede a gravação de uma
      cópia velha - ver o defeito 1 no topo do arquivo. */
-  estadoDeAgora: () => LearnerState
+  estadoDeAgora: () => LearnerState,
+  /* Chamado DEPOIS de cada tentativa de gravar, com ou sem sucesso. É por
+     aqui que a interface fica sabendo que a última lição ainda não subiu. */
+  aoGravar: () => void = () => {}
 ): Gravador {
   let timer: ReturnType<typeof setTimeout> | null = null;
   let liberado = false;
@@ -77,14 +80,14 @@ export function criarGravador(
            se o estado já chegou no momento da gravação - não se tinha
            chegado no momento em que alguém pediu para gravar. */
         if (!liberado) return;
-        void store.save(estadoDeAgora());
+        void store.save(estadoDeAgora()).then(aoGravar, aoGravar);
       }, ms);
     },
 
     async agora() {
       limpar();
       if (!liberado) return;
-      await store.save(estadoDeAgora());
+      try { await store.save(estadoDeAgora()); } finally { aoGravar(); }
     },
 
     liberar() { liberado = true; },

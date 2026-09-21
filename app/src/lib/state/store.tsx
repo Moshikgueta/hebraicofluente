@@ -51,6 +51,14 @@ type Ctx = {
   ready: boolean;
   /** False in a private window with storage blocked - the UI says so. */
   persistent: boolean;
+  /**
+   * O servidor já confirmou o que este aparelho tem?
+   *
+   * Verdadeiro também quando não há conta: aí o aparelho é o único lugar, e
+   * não há sincronização prometida a ninguém. Serve para a interface dizer
+   * que algo ainda NÃO subiu - nunca para afirmar que subiu.
+   */
+  sincronizado: boolean;
   day: string;
   /* derived */
   streak: number;
@@ -115,6 +123,9 @@ export function ProgressProvider({
   const [state, setState] = useState<LearnerState>(EMPTY_STATE);
   const [ready, setReady] = useState(false);
   const [persistent, setPersistent] = useState(true);
+  /* Começa em `true` para que a tela não pisque um aviso de "não sincronizado"
+     no primeiro render, antes de haver o que sincronizar. */
+  const [sincronizado, setSincronizado] = useState(true);
   const [pending, setPending] = useState<Achievement[]>([]);
   /* A última rota avisada pelo AppShell. Guardada num ref porque ela chega
      antes de o estado carregar, e naquele momento não há estado onde pô-la. */
@@ -130,7 +141,10 @@ export function ProgressProvider({
      Em resumo, ele grava o estado DE AGORA em vez de uma cópia velha, e não
      grava nada antes de a leitura terminar - que juntos eram o apagamento
      silencioso do progresso a cada troca de página. */
-  const gravador = useMemo(() => criarGravador(store, () => stateRef.current), [store]);
+  const gravador = useMemo(
+    () => criarGravador(store, () => stateRef.current, () => setSincronizado(store.sincronizado())),
+    [store]
+  );
   useEffect(() => () => gravador.cancelar(), [gravador]);
 
   useEffect(() => {
@@ -170,10 +184,34 @@ export function ProgressProvider({
      armazenamento e a fusão não a encontraria. */
   useEffect(() => {
     let alive = true;
-    const aoMudar = () => {
+    const aoMudar = (e: Event) => {
+      const saiu = !!(e as CustomEvent<{ saiu?: boolean }>).detail?.saiu;
+
+      /* SAIR é o oposto de entrar, e tratá-los igual era o defeito: uma
+         recarga depois do logout relia o aparelho, achava o progresso de quem
+         saiu e o deixava lá. Numa máquina compartilhada, o próximo a sentar
+         lê o estudo do anterior. O progresso não se perde - ele está na conta
+         e volta no login. */
+      if (saiu) {
+        gravador.cancelar();
+        void store.esquecerAqui().then(() => {
+          if (!alive) return;
+          stateRef.current = EMPTY_STATE;
+          setState(EMPTY_STATE);
+          setPending([]);
+          setSincronizado(true);
+        });
+        return;
+      }
+
       void gravador.agora()
         .then(() => store.load())
-        .then(s => { if (alive) { stateRef.current = s; setState(s); } });
+        .then(s => {
+          if (!alive) return;
+          stateRef.current = s;
+          setState(s);
+          setSincronizado(store.sincronizado());
+        });
     };
     window.addEventListener(SESSAO_MUDOU, aoMudar);
     return () => { alive = false; window.removeEventListener(SESSAO_MUDOU, aoMudar); };
@@ -331,7 +369,7 @@ export function ProgressProvider({
   const value = useMemo<Ctx>(() => {
     const goal = state.onboarding?.goalMinutes ?? 10;
     return {
-      state, ready, persistent, day,
+      state, ready, persistent, sincronizado, day,
       streak: displayStreak(state, day),
       mastered: lettersMastered(state),
       progress: courseProgress(state, totalLetters, extraKey ? extraKey.split(',') : []),
@@ -347,7 +385,7 @@ export function ProgressProvider({
       remember, reset
     };
   }, [
-    state, ready, persistent, day, totalLetters, extraKey, pending,
+    state, ready, persistent, sincronizado, day, totalLetters, extraKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset
   ]);

@@ -38,6 +38,13 @@ export class LocalProgressStore implements ProgressStore {
   async clear(): Promise<void> {
     try { window.localStorage.removeItem(KEY); } catch { /* nothing to do */ }
   }
+
+  /* Aqui os dois são a mesma coisa: este aparelho É o único lugar. */
+  async esquecerAqui(): Promise<void> { await this.clear(); }
+
+  /* Não há servidor a quem perguntar, então não há nada pendente e a
+     interface não desenha aviso nenhum. */
+  sincronizado(): boolean { return true; }
 }
 
 export function persistenceAvailable(): boolean {

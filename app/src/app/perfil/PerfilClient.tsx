@@ -203,9 +203,17 @@ export function PerfilClient() {
         <h2 className="font-display text-[17px] font-bold text-ink">Sair</h2>
         {confirming ? (
           <>
+            {/* Esta frase dizia "seu progresso neste aparelho continua onde
+                está". Desde que sair passou a limpar o cache local, ela
+                mentiria - e de um jeito que assusta. O que é verdade agora: o
+                progresso mora na CONTA, sai deste navegador, e volta inteiro
+                no próximo login. */}
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
               Você vai precisar do e-mail e da senha para voltar. Seu progresso
-              neste aparelho continua onde está.
+              fica guardado na sua conta e volta assim que você entrar de novo,
+              aqui ou em qualquer outro aparelho. Ele sai deste navegador para
+              que ninguém que use este computador depois de você veja o que
+              você estudou.
             </p>
             <div className="flex flex-wrap gap-2">
               <Button

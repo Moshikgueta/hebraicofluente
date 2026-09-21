@@ -212,5 +212,23 @@ export const EMPTY_STATE: LearnerState = {
 export interface ProgressStore {
   load(): Promise<LearnerState>;
   save(state: LearnerState): Promise<void>;
+  /** Apaga em todo lugar: é o "apagar meu progresso" do perfil. */
   clear(): Promise<void>;
+  /**
+   * Esquece o que está guardado NESTE aparelho, sem tocar no servidor.
+   *
+   * Sair da conta não é apagar o progresso: ele continua na conta e volta no
+   * próximo login. Mas deixá-lo no navegador entrega o estudo de quem saiu a
+   * quem sentar depois, que numa máquina compartilhada é outra pessoa.
+   * Por isso existe separado de `clear()`, que apaga dos dois lados.
+   */
+  esquecerAqui(): Promise<void>;
+  /**
+   * O servidor já confirmou tudo o que este aparelho tem?
+   *
+   * Só faz sentido com sessão: sem conta, o aparelho é o único lugar onde o
+   * progresso mora e não há nada a sincronizar. Quem não fala com servidor
+   * nenhum responde sempre `true`, e a interface não inventa um aviso.
+   */
+  sincronizado(): boolean;
 }

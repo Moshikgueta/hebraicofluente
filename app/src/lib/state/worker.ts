@@ -156,6 +156,37 @@ export class WorkerProgressStore implements ProgressStore {
     await this.#subir(state);
   }
 
+  /**
+   * Sair da conta: esquece o cache deste aparelho e NÃO toca no servidor.
+   *
+   * O progresso continua na conta e volta no próximo login - é `clear()` que
+   * apaga de verdade, e ele é outro botão. O que se resolve aqui é o
+   * notebook da biblioteca: sem isto, o estudo de quem acabou de sair fica
+   * legível para quem sentar em seguida, e só é substituído se outra conta
+   * entrar. Quem não entra, lê.
+   */
+  async esquecerAqui(): Promise<void> {
+    await this.#local.clear();
+    this.#rev = 0;
+    this.#enviado = null;
+    this.#comSessao = true;   /* a próxima conta que entrar merece uma tentativa */
+    gravarDono(null);
+  }
+
+  /**
+   * Tudo o que este aparelho tem já foi confirmado pelo servidor?
+   *
+   * `#enviado` é o último estado que o servidor aceitou. Enquanto ele for o
+   * estado de agora, não há nada pendente. Sem sessão a pergunta não se
+   * aplica: o aparelho é o único lugar, e responder `false` faria a
+   * interface avisar um visitante deslogado sobre uma sincronização que
+   * nunca foi prometida a ele.
+   */
+  sincronizado(): boolean {
+    if (!this.#comSessao) return true;
+    return this.#enviado !== null;
+  }
+
   async clear(): Promise<void> {
     await this.#local.clear();
     this.#rev = 0;
@@ -170,6 +201,12 @@ export class WorkerProgressStore implements ProgressStore {
 
   /** Sobe o estado, fundindo e repetindo se outro aparelho chegou antes. */
   async #subir(state: LearnerState, tentativas = 2): Promise<void> {
+    /* A partir daqui há trabalho que o servidor ainda não aceitou, e é isso
+       que `sincronizado()` lê. Zerar ANTES de tentar é o que torna a resposta
+       honesta: se a subida falhar, `#enviado` fica nulo e a interface tem
+       como dizer que ainda não foi. Deixá-lo com o valor antigo faria a tela
+       jurar que está tudo salvo enquanto a última lição não subiu. */
+    this.#enviado = null;
     let atual = state;
     for (let i = 0; i < tentativas; i++) {
       const r = await pedir('/api/progress', {

@@ -25,12 +25,15 @@ import { EMPTY_STATE, type LearnerState, type ProgressStore } from '@/lib/state/
 function armazem(inicial: LearnerState = EMPTY_STATE) {
   const gravou: LearnerState[] = [];
   let guardado = inicial;
+  let subiu = true;
   const store: ProgressStore = {
     async load() { return guardado; },
-    async save(s) { guardado = s; gravou.push(s); },
-    async clear() { guardado = EMPTY_STATE; }
+    async save(s) { guardado = s; gravou.push(s); subiu = true; },
+    async clear() { guardado = EMPTY_STATE; },
+    async esquecerAqui() { /* o dublê não tem cache separado do servidor */ },
+    sincronizado() { return subiu; }
   };
-  return { store, gravou, ultimo: () => guardado };
+  return { store, gravou, ultimo: () => guardado, falhar: () => { subiu = false; } };
 }
 
 const comXp = (xp: number, extra: Partial<LearnerState> = {}): LearnerState =>
@@ -143,6 +146,38 @@ describe('o gravador do progresso', () => {
 
     expect(a.gravou).toHaveLength(0);
     expect(a.ultimo().xp).toBe(999);
+  });
+
+  it('avisa depois de cada gravação, dando certo ou dando errado', async () => {
+    /* É por este aviso que a tela fica sabendo que a última lição não subiu.
+       Ele tem de disparar nos DOIS casos: só no sucesso, e uma falha de rede
+       deixaria a interface parada dizendo que está tudo em dia. */
+    const a = armazem();
+    const avisos: boolean[] = [];
+    const g = criarGravador(a.store, () => comXp(1), () => avisos.push(a.store.sincronizado()));
+    g.liberar();
+
+    g.agendar(250);
+    await vi.advanceTimersByTimeAsync(300);
+    expect(avisos).toEqual([true]);
+
+    a.falhar();
+    await g.agora();
+    expect(avisos).toHaveLength(2);
+  });
+
+  it('não avisa por uma gravação que nem chegou a acontecer', async () => {
+    /* Antes de a leitura terminar nada é gravado - e nada deve ser anunciado,
+       ou a tela piscaria um aviso sobre uma escrita que não houve. */
+    const a = armazem();
+    const avisos: boolean[] = [];
+    const g = criarGravador(a.store, () => comXp(1), () => avisos.push(true));
+
+    g.agendar(250);
+    await vi.advanceTimersByTimeAsync(400);
+    await g.agora();
+
+    expect(avisos).toHaveLength(0);
   });
 
   it('e agora() cancela o que estava pendente, em vez de gravar duas vezes', async () => {

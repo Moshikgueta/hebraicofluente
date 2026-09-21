@@ -85,6 +85,25 @@ export function AppShell({ children }: { children: ReactNode }) {
           </p>
         </Card>
       )}
+      {/* O que ainda não subiu.
+          ─────────────────────────────────────────────────────────────────
+          Um aviso que só aparece quando há conta E a última gravação não foi
+          aceita pelo servidor. Ele diz o que é verdade e para de dizer: o
+          trabalho está no aparelho, e vai subir sozinho. Não é erro, não pede
+          ação, e por isso não é vermelho.
+          Sem isto, quem estuda no avião e nunca mais abre o app naquele
+          celular só descobre a diferença abrindo o notebook e achando menos
+          do que deixou. */}
+      {p.ready && !p.sincronizado && (
+        <Card tone="ember" className="p-4 mb-4">
+          <p className="font-ui text-[13px] leading-relaxed text-[var(--gold-body)]">
+            O que você acabou de fazer está salvo neste aparelho, mas ainda não
+            chegou à sua conta. Assim que a conexão voltar, ele sobe sozinho.
+            Se for trocar de aparelho agora, abra o curso uma vez com internet
+            antes.
+          </p>
+        </Card>
+      )}
     </>
   );
 
