@@ -58,6 +58,13 @@ export type Exercise =
   /* ── vowels, which the course taught and never tested ─────────────── */
   /** A syllable is shown; which vowel sound is it. Tests the SIGN, not the letter. */
   | (ChoiceBase & { kind: 'vowel-sound'; he: string })
+  /* Duas grafias lado a lado, e uma pergunta de sim ou não: elas escrevem o
+     mesmo som? É a única dificuldade do nikud que o curso NOMEIA ao aluno
+     ("dois sinais para um som") e não treinava - `vowel-sound` não consegue
+     fazer esta pergunta, porque com duas grafias do mesmo som ela teria duas
+     respostas certas. Renderiza como `vowel-sound`: o `he` traz as duas
+     sílabas separadas por espaço. */
+  | (ChoiceBase & { kind: 'vowel-pair'; he: string })
   /** The sound is given; find the syllable that spells it. The reverse direction. */
   | (ChoiceBase & { kind: 'sound-to-syllable'; sound: string })
   /** Two syllables that differ only in their vowel, played. */

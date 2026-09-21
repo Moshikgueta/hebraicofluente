@@ -25,15 +25,18 @@ import {
   exBuildSyllable, exBuildWord, exCompleteWord, exFinalForm, exLetterRecognition,
   exListenSyllable, exMatchLetterSound, exMatchSyllable, exMeaningToWord, exOddOneOut,
   exPrintVsCursive, exSoundToSyllable, exSyllableReading, exTypeHeard, exTypeTranslit,
-  exVowelSound, exAudioWord,
+  exVowelSound, exVowelPair, exAudioWord,
   exConfusablePick, exCursiveToPrint, exFinalInWord, exLetterInWord, exLetterPosition,
   type Gen
 } from './generators';
-import { buildReview, buildScenes, spread, type Exercise, type SceneLike } from './exercises';
+import {
+  buildReview, buildScenes, buildSentences, spread,
+  type Exercise, type SceneLike, type SentenceLike
+} from './exercises';
 import { rng, shuffled } from './rng';
 
 export type ExamPartId =
-  'letras' | 'dificeis' | 'sinais' | 'silabas' | 'palavras' | 'mundo' | 'escuta';
+  'letras' | 'dificeis' | 'sinais' | 'silabas' | 'palavras' | 'frases' | 'mundo' | 'escuta';
 
 export type ExamPart = {
   id: ExamPartId;
@@ -79,6 +82,18 @@ export const EXAM_PARTS: ExamPart[] = [
     descPt: 'Palavras inteiras: ler, completar, montar, escrever - e achar uma ' +
       'letra dentro delas, no começo, no meio ou no fim.'
   },
+  /* A frase entrou no curso depois do exame, e por um tempo o curso ensinou
+     uma coisa que não media. Ela fica DEPOIS de palavras e antes do mundo
+     real, que é a ordem em que a dificuldade cresce: decodificar uma palavra,
+     depois amarrar duas ou três, depois ler o que está numa placa.
+
+     Três itens, e não cinco: são 23 frases no curso inteiro, e uma parte de
+     cinco pegaria quase um quarto do acervo numa prova só - o que faz a
+     segunda tentativa virar memória em vez de leitura. */
+  {
+    id: 'frases', titlePt: 'Frases', skill: 'ler', count: 3, practiceMode: 'palavras',
+    descPt: 'Duas ou três palavras juntas. Sem transliteração.'
+  },
   {
     id: 'escuta', titlePt: 'Escuta', skill: 'ouvir', count: 5, practiceMode: 'ouvir',
     needsAudio: true,
@@ -104,9 +119,12 @@ const GENS: Record<ExamPartId, readonly Gen[]> = {
   dificeis: [
     exConfusablePick, exCursiveToPrint, exLetterInWord, exLetterPosition, exFinalInWord
   ],
-  sinais: [exVowelSound, exMatchLetterSound],
+  /* `exVowelPair` entra aqui porque a parte se chama "os sinais de vogal" e
+     a pergunta de duas grafias para um som é justamente sobre o SINAL. */
+  sinais: [exVowelSound, exVowelPair, exMatchLetterSound],
   silabas: [exSyllableReading, exSoundToSyllable, exBuildSyllable, exMatchSyllable],
   palavras: [exCompleteWord, exBuildWord, exMeaningToWord, exTypeTranslit],
+  frases: [],        // montado das frases, como `mundo` das cenas
   escuta: [exListenSyllable, exAudioWord, exTypeHeard],
   mundo: []          // built from the real-world scenes instead
 };
@@ -131,9 +149,9 @@ export function partsFor(audioAvailable: boolean): ExamPart[] {
  */
 export function buildExam(
   letters: Letter[], scenes: readonly SceneLike[],
-  opts: { audioAvailable: boolean; attempt?: number }
+  opts: { audioAvailable: boolean; attempt?: number; sentences?: readonly SentenceLike[] }
 ): Exam {
-  const { audioAvailable, attempt = 1 } = opts;
+  const { audioAvailable, attempt = 1, sentences = [] } = opts;
 
   const sections = partsFor(audioAvailable).map(part => {
     const seed = `exam-${attempt}-${part.id}`;
@@ -145,6 +163,8 @@ export function buildExam(
     const pool = shuffled(letters, rng(`${seed}-pool`)).map(l => l.id);
     const exercises = part.id === 'mundo'
       ? buildScenes(scenes, rng(seed), part.count)
+      : part.id === 'frases'
+      ? buildSentences(sentences, rng(seed), part.count)
       : spread(buildReview(pool, letters, {
           audioAvailable, count: part.count, seed, gens: GENS[part.id]
         }));

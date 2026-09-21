@@ -21,7 +21,7 @@
  */
 
 import type { Letter } from '@/lib/content';
-import { sentencesUpTo } from '@/lib/content';
+import { nikud, sentencesUpTo } from '@/lib/content';
 import type { Skill } from '@/lib/state/types';
 import { ALL_GLYPHS, isReadableWith } from '@/lib/hebrew';
 import { rng, shuffled, type Rand } from './rng';
@@ -59,6 +59,12 @@ export function readingUsedBy(ex: Exercise): string[] {
     case 'syllable-reading':
     case 'word-meaning':
     case 'vowel-sound':
+    /* `vowel-pair` traz DUAS sílabas separadas por espaço, e precisa estar
+       aqui pelo mesmo motivo que as outras: é por esta função que passa a
+       regra de ordem, a que impede um exercício de mostrar glifo que o aluno
+       ainda não viu. Fora da lista, a regra não se aplicaria a ele - em
+       silêncio, que é como esse tipo de furo costuma durar. */
+    case 'vowel-pair':
     case 'scene-reading':
       out.push(ex.he);
       break;
@@ -153,7 +159,8 @@ function contextFor(L: Letter, history: Letter[]): Ctx {
     history: history.filter(x => x.order <= L.order),
     alphabet: L.alphabetSoFar,
     allGlyphs: [...ALL_GLYPHS],
-    sentences: sentencesUpTo(L.order)
+    sentences: sentencesUpTo(L.order),
+    nikud: nikud().sounds
   };
 }
 
@@ -664,6 +671,12 @@ export type SceneLike = {
   labelPt: string; contextPt: string; audioId: string; fromOrder: number;
 };
 
+/** Idem para a frase: o motor não importa o módulo de conteúdo. */
+export type SentenceLike = {
+  id: string; he: string; pt: string; translit: string; audioId: string;
+  words: readonly { he: string; translit: string; pt: string }[];
+};
+
 export function buildScenes(
   scenes: readonly SceneLike[], rand: Rand, count: number
 ): Exercise[] {
@@ -686,6 +699,50 @@ export function buildScenes(
       answer: options.indexOf(s.pt),
       audioId: s.audioId,
       explainPt: `${s.he} - ${s.translit} - ${s.pt}. ${s.contextPt}`
+    };
+  }).filter(e => e.answer >= 0 && e.options.length >= 3);
+}
+
+/**
+ * As frases do exame, sem repetir nenhuma.
+ *
+ * Espelha `buildScenes` por um motivo concreto, e não por simetria. Deixar o
+ * exame chamar `exSentenceReading` pelo caminho normal de `buildReview` daria
+ * a MESMA frase três vezes: aquele gerador recebe uma letra e devolve a frase
+ * que ela acabou de destravar, ou, quando a letra não destrava nenhuma, a mais
+ * tardia da lista. Como o exame varre as 22 letras e quase nenhuma delas
+ * destrava frase, as três perguntas cairiam na mesma - com ids diferentes,
+ * então nem a proteção contra repetido pegaria.
+ *
+ * Aqui a unidade sorteada é a FRASE, que é o que a parte examina.
+ */
+export function buildSentences(
+  sentences: readonly SentenceLike[], rand: Rand, count: number
+): Exercise[] {
+  const pool = shuffled(sentences, rand).slice(0, count);
+  return pool.map((s, i) => {
+    /* Distratores são significados de OUTRAS frases do curso, nunca
+       inventados: um distrator absurdo se elimina sem ler o hebraico, e aí a
+       pergunta mede outra coisa. É a mesma regra do gerador da lição. */
+    const outras = shuffled(sentences.filter(x => x.id !== s.id), rand).slice(0, 3).map(x => x.pt);
+    const unique = [...new Set([s.pt, ...outras])];
+    const options = shuffled(unique, rand);
+    return {
+      id: `exam-frase-${s.id}-${i}`,
+      kind: 'sentence-reading' as const,
+      letterId: 'final',
+      skill: 'ler' as const,
+      promptPt: s.words.length > 1
+        ? 'Leia a frase inteira. O que ela quer dizer?'
+        : 'Leia. O que está escrito?',
+      he: s.he,
+      words: s.words.map(w => ({ he: w.he, translit: w.translit, pt: w.pt })),
+      options,
+      answer: options.indexOf(s.pt),
+      audioId: s.audioId,
+      /* Sem transliteração na pergunta, como no gerador da lição: ela é a
+         muleta que faz ler o alfabeto latino e achar que se leu hebraico. */
+      explainPt: `${s.he} - ${s.translit} - ${s.pt}.`
     };
   }).filter(e => e.answer >= 0 && e.options.length >= 3);
 }

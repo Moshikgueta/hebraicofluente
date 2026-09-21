@@ -19,8 +19,7 @@ import { exSentenceReading, type Ctx } from '@/lib/engine/generators';
 import type { Exercise } from '@/lib/engine/types';
 import { buildLetterPractice } from '@/lib/engine/exercises';
 import {
-  allLetters, sentencesUpTo, sentencesForOrder, sentencesByEra, type Letter
-} from '@/lib/content';
+  allLetters, sentencesUpTo, sentencesForOrder, sentencesByEra, type Letter, nikud } from '@/lib/content';
 import { rng } from '@/lib/engine/rng';
 
 const letras = allLetters();
@@ -34,7 +33,8 @@ const ctxNa = (ordem: number): Ctx => ({
   history: letras.filter(l => l.order <= ordem),
   alphabet: letraNa(ordem).alphabetSoFar,
   allGlyphs: letras.flatMap(l => (l.finalForm ? [l.letter, l.finalForm] : [l.letter])),
-  sentences: sentencesUpTo(ordem)
+  sentences: sentencesUpTo(ordem),
+  nikud: nikud().sounds
 });
 
 const rand = () => rng('frases');

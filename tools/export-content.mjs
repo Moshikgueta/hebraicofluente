@@ -179,10 +179,27 @@ function main() {
         lessons: M.lessons,
         letterIds: own.map(l => l.id),
         upTo: own.length ? own[own.length - 1].order : null,
-        checkpoint: own.length
-          ? { id: `cp${M.n}`, module: M.n, upTo: own[own.length - 1].order,
-              letterIds: own.map(l => l.id), workbookPages: pagesFor(`rev${M.n}`) }
-          : null,
+        /* Um módulo sem letras PRÓPRIAS também tem checkpoint - e por um bom
+           tempo não teve, o que deixou os dois últimos módulos do curso sem
+           nenhuma verificação antes do exame final. O seis é justamente o mais
+           difícil (ler sem os pontos).
+
+           A regra `own.length ? ... : null` não era descuido: ela descreve
+           bem um módulo de letras, cujo checkpoint fecha o que ELE ensinou. O
+           que faltava era o outro caso. Um módulo de consolidação não ensina
+           letra nova; ele cobra o que veio antes. Então o checkpoint dele é
+           CUMULATIVO: todas as letras até ali. */
+        checkpoint: (() => {
+          const escopo = own.length ? own : letters.filter(l => l.module <= M.n);
+          if (!escopo.length) return null;
+          return {
+            id: `cp${M.n}`, module: M.n,
+            upTo: escopo[escopo.length - 1].order,
+            letterIds: escopo.map(l => l.id),
+            cumulativo: !own.length,
+            workbookPages: pagesFor(`rev${M.n}`)
+          };
+        })(),
         workbookPages: pagesFor(M.id)
       };
     }),

@@ -367,6 +367,23 @@ function Stimulus({ ex }: { ex: Exercise }) {
         </div>
       );
 
+    /* As duas grafias, em caixas separadas.
+       ──────────────────────────────────────────────────────────────────
+       Não numa linha só: a pergunta é se as DUAS escrevem o mesmo som, e
+       espaço em branco entre sinais de vogal colapsa - o aluno veria um
+       borrão e não dois desenhos para comparar. Cada uma na sua caixa é o
+       que torna a comparação possível. */
+    case 'vowel-pair':
+      return (
+        <div className="flex justify-center items-center gap-4 py-2">
+          {ex.he.split(/\s+/).filter(Boolean).map((sil, i) => (
+            <span key={i} className="rounded-[var(--r-md)] bg-surface-2 px-6 py-3">
+              <He size="display">{sil}</He>
+            </span>
+          ))}
+        </div>
+      );
+
     /* A frase inteira, palavra por palavra e SEM transliteração.
        ──────────────────────────────────────────────────────────────────
        Cada palavra numa caixa própria, com espaço entre elas: é o que

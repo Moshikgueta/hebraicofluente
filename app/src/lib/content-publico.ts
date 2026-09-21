@@ -80,6 +80,9 @@ export type Checkpoint = {
   module: number;
   upTo: number;
   letterIds: string[];
+  /** Verdadeiro nos módulos que consolidam em vez de ensinar letra nova: o
+   *  escopo passa a ser tudo o que veio antes, e não o que o módulo trouxe. */
+  cumulativo?: boolean;
   workbookPages: { from: number; to: number } | null;
 };
 

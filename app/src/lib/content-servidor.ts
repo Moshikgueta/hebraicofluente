@@ -81,3 +81,17 @@ export const letraDoServidor = (id: string): Letter | undefined =>
   conteudoPago.letters.find(l => l.id === id);
 export const letrasDoModulo = (n: number): Letter[] =>
   conteudoPago.letters.filter(l => l.module === n);
+
+/**
+ * As letras que um checkpoint cobra.
+ *
+ * Não é o mesmo que `letrasDoModulo`, e a diferença tem consequência: os
+ * módulos de consolidação (6 e 7) não ensinam letra nenhuma, então pedir as
+ * letras DELES devolve lista vazia e o checkpoint não teria o que perguntar.
+ * O escopo já está resolvido no `checkpoint.letterIds`, que o exportador
+ * monta - cumulativo quando o módulo não tem letras próprias. Aqui só se lê.
+ */
+export const letrasDoCheckpoint = (ids: readonly string[]): Letter[] => {
+  const porId = new Map(conteudoPago.letters.map(l => [l.id, l]));
+  return ids.map(id => porId.get(id)).filter((l): l is Letter => !!l);
+};

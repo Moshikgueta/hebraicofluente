@@ -14,6 +14,9 @@
     "confusableWith": [
       "ע"
     ],
+    "contrastes": {
+      "ע": "O א tem um traço diagonal no meio, ligando os dois cantos. O ע é aberto em cima, com dois braços que descem para um pé só."
+    },
     "syllables": [
       {
         "vowel": "a",
@@ -251,6 +254,9 @@
       "ח",
       "ה"
     ],
+    "contrastes": {
+      "ח": "O ת tem o pé esquerdo virado para dentro, como um ganchinho. No ח as duas pernas descem retas até o fim."
+    },
     "syllables": [
       {
         "vowel": "a",
@@ -629,6 +635,9 @@
       "ו",
       "ן"
     ],
+    "contrastes": {
+      "ן": "O י é curto e fica lá em cima, sem tocar a linha de baixo. O ן é comprido e passa abaixo dela."
+    },
     "syllables": [
       {
         "vowel": "a",
@@ -752,6 +761,9 @@
       "נ",
       "ז"
     ],
+    "contrastes": {
+      "ז": "O ג tem duas pernas, e a da esquerda chuta para fora. O ז tem um traço só, com o chapéu centrado em cima dele."
+    },
     "syllables": [
       {
         "vowel": "a",
@@ -982,6 +994,7 @@
       }
     ],
     "contrastes": {
+      "ך": "O ד para na linha de baixo. O ך continua descendo abaixo dela.",
       "ר": "O ד tem um canto vivo no alto e um pezinho que avança para a direita. O ר é uma curva só, sem canto e sem pé."
     }
   },
@@ -1275,6 +1288,9 @@
       "ד",
       "ך"
     ],
+    "contrastes": {
+      "ך": "O ר para na linha de baixo. O ך desce abaixo dela. O desenho de cima é quase o mesmo; o que muda é onde termina."
+    },
     "syllables": [
       {
         "vowel": "a",
@@ -1521,6 +1537,7 @@
       }
     ],
     "contrastes": {
+      "נ": "O ו é um traço reto de cima a baixo. O נ dobra no pé e sai para a direita.",
       "ז": "O ז tem um chapéu que passa dos dois lados do traço. O ו é um traço limpo, sem chapéu.",
       "ן": "O ן desce abaixo da linha. O ו para em cima dela.",
       "י": "O י é curtinho e fica no alto. O ו desce até a linha de base."
@@ -1543,6 +1560,9 @@
       "ן",
       "ג"
     ],
+    "contrastes": {
+      "ן": "O ז tem chapéu no alto e para na linha. O ן não tem chapéu e desce abaixo dela."
+    },
     "syllables": [
       {
         "vowel": "a",
@@ -1671,6 +1691,9 @@
       "ה",
       "ת"
     ],
+    "contrastes": {
+      "ת": "O ח é fechado em cima e tem as duas pernas retas. O ת tem o pé esquerdo virado para dentro."
+    },
     "syllables": [
       {
         "vowel": "a",
@@ -1902,6 +1925,7 @@
       }
     ],
     "contrastes": {
+      "ע": "O ט é fechado embaixo, como uma panela, com a ponta enrolada para dentro. O ע é aberto em cima, com dois braços.",
       "מ": "O ט é uma panela aberta em cima, com a borda esquerda enrolada para dentro. O מ é fechado no alto."
     }
   },
@@ -2033,6 +2057,7 @@
       }
     ],
     "contrastes": {
+      "צ": "O ס é fechado por todos os lados, como um anel. O צ tem um braço solto no alto, que sai do corpo para cima.",
       "ם": "O ס é redondo. O ם é quadrado, de cantos retos."
     }
   },
@@ -2429,6 +2454,7 @@
       }
     ],
     "contrastes": {
+      "ך": "Os dois descem abaixo da linha. No ק a perna que desce é solta, separada do teto; no ך o traço é um só, contínuo.",
       "ר": "O ק desce abaixo da linha com a perna esquerda. O ר para na linha."
     }
   },

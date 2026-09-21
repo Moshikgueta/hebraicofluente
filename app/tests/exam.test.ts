@@ -6,7 +6,7 @@
  * mark that moves, a certificate issued to someone who did not pass. */
 
 import { describe, expect, it } from 'vitest';
-import { allLetters, course, scenesUpTo } from '@/lib/content';
+import { allLetters, course, scenesUpTo, sentencesUpTo } from '@/lib/content';
 import { buildExam, examReport, partsFor, EXAM_PASS, EXAM_PARTS } from '@/lib/engine/exam';
 import { violatesOrderRule } from '@/lib/engine/exercises';
 import { certificateReady, recordExam } from '@/lib/state/rules';
@@ -18,10 +18,16 @@ const scenes = scenesUpTo(22).map(s => ({
   id: s.id, he: s.he, pt: s.pt, translit: s.translit,
   labelPt: s.labelPt, contextPt: s.contextPt, audioId: s.audioId, fromOrder: s.fromOrder
 }));
+/* Todas as frases: quem faz o exame fechou o alfabeto. Passar isto não é
+   detalhe de teste - a parte de frases só existe quando o acervo chega, e um
+   exame construído sem ele mede uma prova que nenhum aluno vai ver. */
+const sentences = sentencesUpTo(22).map(x => ({
+  id: x.id, he: x.he, pt: x.pt, translit: x.translit, audioId: x.audioId, words: x.words
+}));
 
 describe('the exam covers what it says it covers', () => {
   it('builds every part it promises, with no recordings', () => {
-    const exam = buildExam(letters, scenes, { audioAvailable: false });
+    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences });
     const promised = partsFor(false).map(p => p.id);
     expect(exam.sections.map(s => s.part.id)).toEqual(promised);
     for (const s of exam.sections) {
@@ -32,14 +38,14 @@ describe('the exam covers what it says it covers', () => {
   it('withholds the listening part until there are recordings, and says so', () => {
     expect(partsFor(false).some(p => p.id === 'escuta')).toBe(false);
     expect(partsFor(true).some(p => p.id === 'escuta')).toBe(true);
-    const exam = buildExam(letters, scenes, { audioAvailable: false });
+    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences });
     for (const s of exam.sections) {
       for (const ex of s.exercises) expect(ex.skill).not.toBe('ouvir');
     }
   });
 
   it('tests each part with the skill that part is about', () => {
-    const exam = buildExam(letters, scenes, { audioAvailable: true });
+    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences });
     for (const s of exam.sections) {
       /* `mundo` is reading, and so is `silabas` and `palavras` - what matters
          is that a part never quietly tests something else. */
@@ -62,7 +68,7 @@ describe('the exam covers what it says it covers', () => {
        famílias: o que se exige é que NADA fora dessa lista entre na parte. */
     const vistas = new Set<string>();
     for (const attempt of [1, 2, 3, 4, 5]) {
-      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt });
+      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt, sentences });
       const parte = exam.sections.find(s => s.part.id === 'dificeis');
       expect(parte, `tentativa ${attempt}`).toBeTruthy();
       for (const ex of parte!.exercises) {
@@ -77,7 +83,7 @@ describe('the exam covers what it says it covers', () => {
   });
 
   it('não repete em "As letras" o que já é cobrado em "As letras difíceis"', () => {
-    const exam = buildExam(letters, scenes, { audioAvailable: true });
+    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences });
     const parte = exam.sections.find(s => s.part.id === 'letras')!;
     for (const ex of parte.exercises) {
       expect(FAMILIAS_DIFICEIS, ex.id).not.toContain(familia(ex.id));
@@ -85,7 +91,7 @@ describe('the exam covers what it says it covers', () => {
   });
 
   it('ends on real-world reading', () => {
-    const exam = buildExam(letters, scenes, { audioAvailable: true });
+    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences });
     const last = exam.sections[exam.sections.length - 1]!;
     expect(last.part.id).toBe('mundo');
     for (const ex of last.exercises) expect(ex.kind).toBe('scene-reading');
@@ -94,7 +100,7 @@ describe('the exam covers what it says it covers', () => {
   it('never shows a word the course did not teach', () => {
     const alphabet = letters.flatMap(l => l.finalForm ? [l.letter, l.finalForm] : [l.letter]);
     for (const attempt of [1, 2, 3, 7]) {
-      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt });
+      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt, sentences });
       for (const s of exam.sections) {
         for (const ex of s.exercises) {
           expect(violatesOrderRule(ex, alphabet), `${attempt} ${ex.id}`).toEqual([]);
@@ -103,19 +109,50 @@ describe('the exam covers what it says it covers', () => {
     }
   });
 
-  it('is about thirty questions, not twelve and not ninety', () => {
-    /* Subiu de 30/35 quando "As letras difíceis" virou uma parte própria: as
-       parecidas, a outra fonte e a letra dentro da palavra passaram a ter uma
-       linha só delas no relatório, que é o produto do exame. */
-    expect(buildExam(letters, scenes, { audioAvailable: false }).total).toBe(32);
-    expect(buildExam(letters, scenes, { audioAvailable: true }).total).toBe(37);
+  it('entrega exatamente o número de itens que as partes prometem', () => {
+    /* O número era escrito à mão (32 e 37) e ficou velho duas vezes: quando
+       "As letras difíceis" virou parte própria, e de novo quando as frases
+       entraram. Um total digitado dentro do teste que existe para provar que
+       o exame cumpre o que promete é o mesmo defeito do catálogo que anunciava
+       22 lições onde havia 21.
+
+       Agora ele DERIVA de EXAM_PARTS, que é a fonte, e a única coisa escrita à
+       mão é a faixa de sanidade: um exame de doze itens não mede um curso, e
+       um de noventa ninguém termina. */
+    for (const audio of [false, true]) {
+      const esperado = partsFor(audio).reduce((n, p) => n + p.count, 0);
+      const exam = buildExam(letters, scenes, { audioAvailable: audio, sentences });
+      expect(exam.total, `áudio=${audio}`).toBe(esperado);
+      expect(exam.total).toBeGreaterThanOrEqual(25);
+      expect(exam.total).toBeLessThanOrEqual(60);
+    }
+    /* E a parte de escuta é a única diferença entre os dois. */
+    const semAudio = buildExam(letters, scenes, { audioAvailable: false, sentences }).total;
+    const comAudio = buildExam(letters, scenes, { audioAvailable: true, sentences }).total;
+    expect(comAudio - semAudio).toBe(EXAM_PARTS.find(p => p.id === 'escuta')!.count);
+  });
+
+  it('mede a frase, que o curso passou a ensinar', () => {
+    /* As 23 frases e o gerador entraram no curso DEPOIS do exame, e por um
+       tempo o curso ensinou uma habilidade que não verificava. */
+    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences });
+    const parte = exam.sections.find(s => s.part.id === 'frases');
+    expect(parte, 'o exame não tem parte de frases').toBeTruthy();
+    expect(parte!.exercises.length).toBe(3);
+    for (const ex of parte!.exercises) expect(ex.kind).toBe('sentence-reading');
+
+    /* E nunca a mesma frase duas vezes. É o defeito que `buildSentences`
+       existe para evitar: pelo caminho normal do gerador, as 22 letras do
+       exame cairiam quase todas na mesma frase, com ids diferentes. */
+    const hebraico = parte!.exercises.map(e => (e as { he: string }).he);
+    expect(new Set(hebraico).size).toBe(hebraico.length);
   });
 });
 
 describe('a retry is a different exam', () => {
   it('asks different questions on the second sitting', () => {
-    const a = buildExam(letters, scenes, { audioAvailable: true, attempt: 1 });
-    const b = buildExam(letters, scenes, { audioAvailable: true, attempt: 2 });
+    const a = buildExam(letters, scenes, { audioAvailable: true, attempt: 1, sentences });
+    const b = buildExam(letters, scenes, { audioAvailable: true, attempt: 2, sentences });
     const idsA = a.sections.flatMap(s => s.exercises.map(e => e.id));
     const idsB = b.sections.flatMap(s => s.exercises.map(e => e.id));
     const shared = idsA.filter(id => idsB.includes(id)).length;
@@ -125,8 +162,8 @@ describe('a retry is a different exam', () => {
   });
 
   it('is deterministic within one attempt', () => {
-    const a = buildExam(letters, scenes, { audioAvailable: true, attempt: 4 });
-    const b = buildExam(letters, scenes, { audioAvailable: true, attempt: 4 });
+    const a = buildExam(letters, scenes, { audioAvailable: true, attempt: 4, sentences });
+    const b = buildExam(letters, scenes, { audioAvailable: true, attempt: 4, sentences });
     expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 });

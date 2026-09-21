@@ -26,7 +26,7 @@ import { Milestone, ProgressBar } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
-import { allLetters, course, scenesUpTo } from '@/lib/content';
+import { allLetters, course, scenesUpTo, sentencesUpTo } from '@/lib/content';
 import { buildExam, examReport, partsFor, EXAM_PASS, type Exam, type PartResult }
   from '@/lib/engine/exam';
 import { alphabetComplete, lettersLeft, isLessonComplete } from '@/lib/state/rules';
@@ -48,12 +48,15 @@ export function FinalChallengeClient() {
   const ready = letters.filter(l => isLessonComplete(p.state, l.id));
   const audio = audioAvailable();
   const scenes = useMemo(() => scenesUpTo(course.totalLetters), []);
+  /* Todas as frases do curso: quem chega aqui fechou o alfabeto, então
+     `sentencesUpTo` da última letra é o acervo inteiro. */
+  const sentences = useMemo(() => sentencesUpTo(course.totalLetters), []);
 
   /* One exam per attempt. Rebuilt only when the attempt number changes, so
      leaving a part and coming back does not reshuffle the questions. */
   const exam = useMemo(
-    () => buildExam(letters, scenes, { audioAvailable: audio, attempt }),
-    [letters, scenes, audio, attempt]
+    () => buildExam(letters, scenes, { audioAvailable: audio, attempt, sentences }),
+    [letters, scenes, sentences, audio, attempt]
   );
 
   const finishPart = useCallback((r: PlayerResult, index: number) => {

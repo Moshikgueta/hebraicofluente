@@ -12,7 +12,7 @@
  * being obviously wrong.
  */
 
-import type { Letter, Sentence, Syllable, Word } from '@/lib/content';
+import type { Letter, NikudSound, Sentence, Syllable, Word } from '@/lib/content';
 import {
   BASE_TO_FINAL, clean, clusters, containsLetter, gapAtLetter, gappedGlyph,
   isReadableWith, onCarrier, splitSyllable
@@ -35,6 +35,15 @@ export type Ctx = {
    * verbo, e verbo precisa de letras que só chegam no meio do alfabeto.
    */
   sentences: Sentence[];
+  /**
+   * Os sons do nikud com TODOS os sinais que os escrevem.
+   *
+   * As sílabas de uma letra trazem um sinal por som - `מַ` e nunca `מָ` -, o
+   * que basta para ler e não basta para a dificuldade que o próprio curso
+   * anuncia ao aluno: dois desenhos para o mesmo som. Este campo é o que
+   * permite montar os dois lados do par.
+   */
+  nikud: NikudSound[];
 };
 
 export type Gen = (L: Letter, ctx: Ctx, rand: Rand, round: number) => Exercise | null;
@@ -181,6 +190,53 @@ export const exVowelSound: Gen = (L, _ctx, rand, i) => {
       : `${byVowel.get(v)?.translit ?? v} se escreve de outro jeito.`),
     hintsPt: ['Olhe só o sinal, ignore a consoante.'],
     explainPt: `${target.translit} - ${target.ptApprox}.`
+  };
+};
+
+/**
+ * Duas grafias, um som.
+ * ─────────────────────────────────────────────────────────────────────────
+ * A introdução do nikud diz ao aluno, com todas as letras, que a dificuldade
+ * de verdade é haver dois sinais para o mesmo som. Nenhum exercício treinava
+ * isso, e não por esquecimento: as sílabas de uma letra trazem UM sinal por
+ * som - `מַ` e nunca `מָ` -, então a segunda grafia simplesmente não era
+ * mostrada em lugar nenhum. O aluno saía do curso sem nunca ter visto kamats.
+ *
+ * Aqui as duas aparecem lado a lado e a pergunta é o som. A resposta é uma
+ * só, e as opções são os sons do nikud - a mesma régua do `exVowelSound`,
+ * inclusive no mínimo de três alternativas: uma pergunta de sim ou não seria
+ * 50% de acerto no chute, e este é um item que entra em prova.
+ *
+ * As sílabas são COMPOSTAS (consoante + sinal solto de `nikud.json`) em vez
+ * de lidas da letra, porque é justamente a grafia que falta na letra.
+ */
+export const exVowelPair: Gen = (L, ctx, rand, i) => {
+  /* Só os sons escritos de dois jeitos: a, e, o, u. `i` e `sheva` têm um
+     sinal cada e não têm par para mostrar. */
+  const comDois = ctx.nikud.filter(s => s.signs.length >= 2);
+  const som = at(comDois, i);
+  if (!som) return null;
+
+  const [a, b] = shuffled(som.signs, rand);
+  if (!a || !b) return null;
+
+  /* As cinco vogais, na ordem de sempre. `sheva` fica de fora das opções: ele
+     não é uma vogal a escolher, é a ausência de uma. */
+  const options: string[] = VOWEL_ORDER.filter(v => ctx.nikud.some(s => s.sound === v));
+  const answer = options.indexOf(som.sound);
+  if (answer < 0 || options.length < 3) return null;
+
+  return {
+    id: `${L.id}-parvogal-${som.sound}`,
+    kind: 'vowel-pair', letterId: L.id, skill: 'som',
+    promptPt: 'Estas duas escrevem o MESMO som. Qual é?',
+    he: `${L.letter}${a.sign} ${L.letter}${b.sign}`,
+    options, answer,
+    whyPt: options.map(v => v === som.sound ? null : `Esse som se escreve de outro jeito.`),
+    hintsPt: ['Os dois desenhos são diferentes. O som que sai é o mesmo.'],
+    explainPt: `${a.namePt} e ${b.namePt} escrevem o mesmo som. ` +
+      'Dois desenhos para um som é a parte do nikud que mais confunde no começo - ' +
+      'e é por isso que não adianta decorar o desenho sozinho.'
   };
 };
 
@@ -728,6 +784,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exSentenceReading,
   exOddOneOut,
   exVowelSound,
+  exVowelPair,
   exLetterPosition,
   exCompleteWord,
   exFinalInWord,
@@ -750,7 +807,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
 export const BY_SKILL: Record<string, readonly Gen[]> = {
   rec: [exLetterRecognition, exOddOneOut, exLetterInWord, exConfusablePick,
         exLetterPosition, exFinalForm, exFinalInWord, exPrintVsCursive, exCursiveToPrint],
-  som: [exVowelSound, exMatchLetterSound],
+  som: [exVowelSound, exVowelPair, exMatchLetterSound],
   ler: [exSyllableReading, exBuildSyllable, exSoundToSyllable, exWordMeaning,
         exCompleteWord, exBuildWord, exMeaningToWord, exMatchSyllable,
         exMatchWordMeaning, exTypeTranslit, exSentenceReading],

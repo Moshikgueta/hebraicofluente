@@ -47,6 +47,10 @@ for (const L of letters) {
     ['palavra-sentido', ler > 0],
     ['diferente', true],
     ['vogal-som', silabas > 0],
+    /* As duas grafias do mesmo som. Não depende das sílabas DA LETRA: os
+       sinais vêm de nikud.json e são compostos com a consoante, que é
+       justamente o que torna o exercício possível numa letra qualquer. */
+    ['vogal-par', true],
     ['completar', ler > 0],
     ['parear-silaba', silabas >= 3],
     ['som-silaba', silabas > 0],
