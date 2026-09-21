@@ -60,8 +60,12 @@ import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { AudioButton } from '@/components/learn/AudioButton';
-import { Prose } from '@/components/learn/Blocks';
+import { Prose, RegraCursiva } from '@/components/learn/Blocks';
 import { Compreensao, type ItemCompreensao } from '@/components/learn/Compreensao';
+import {
+  ANALOGIA_CURSIVA, CURSIVA_NO_CURSO, MESMA_LETRA,
+  ONDE_CURSIVA, ONDE_IMPRESSA
+} from '@/lib/cursiva';
 import type { NikudIntro, NikudSound } from '@/lib/content';
 
 /* ── as oito perguntas do niqqud ──────────────────────────────────────────
@@ -155,9 +159,10 @@ const INDICE: { id: string; t: string }[] = [
   { id: 'a-direcao',         t: 'Da direita para a esquerda' },
   { id: 'duas-direcoes',     t: 'Quando a linha tem duas direções' },
   { id: 'maiuscula-e-finais', t: 'Maiúscula, formas finais e "letra muda"' },
+  { id: 'impressa-e-cursiva', t: 'Impressa e cursiva: dois desenhos' },
   { id: 'que-hebraico',      t: 'Que hebraico é este?' },
   { id: 'o-caminho',         t: 'O caminho, do início ao fim' },
-  { id: 'atividade',         t: 'Checagem final: catorze perguntas' },
+  { id: 'atividade',         t: 'Checagem final: dezesseis perguntas' },
   { id: 'como-funciona',     t: 'Como este curso funciona' }
 ];
 
@@ -588,6 +593,71 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </div>
       </Card>
 
+      {/* ── 10d · impressa e cursiva ────────────────────────────────────
+          O aluno brasileiro não desconfia que isto exista. Ele vai estudar
+          a forma impressa a lição inteira e, na etapa de escrever, ser
+          mandado treinar um desenho que nunca viu - e a lição dizia só a
+          conclusão ("ninguém escreve à mão em letra de imprensa"), que sem
+          o argumento soa a capricho.
+
+          Fica ANTES do quadro do hebraico moderno porque é sobre o mesmo
+          assunto que os dois anteriores: o que muda de forma sem mudar de
+          letra. Maiúscula não existe, a forma final existe, e a cursiva é
+          a terceira peça dessa mesma ideia.
+
+          O texto vem de lib/cursiva.ts, que é o mesmo que a etapa
+          "Escrever" de cada lição lê. */}
+      <Card className="p-6 grid gap-4">
+        <h2 id="impressa-e-cursiva"
+            className="font-display text-[19px] font-semibold scroll-mt-4">
+          A mesma letra tem dois desenhos: impressa e cursiva
+        </h2>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">
+          Tudo o que você viu até aqui está em <strong className="font-semibold text-ink">letra
+          impressa</strong> - a forma dos livros e das telas. Existe uma segunda forma, a{' '}
+          <strong className="font-semibold text-ink">cursiva</strong>, que é a que os
+          israelenses usam para escrever à mão. Elas não se parecem muito:
+        </p>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
+            <He size="lg">{alfabeto.exemplo}</He>
+            <p className="font-ui text-[12.5px] text-ink-muted text-center">impressa</p>
+          </div>
+          <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
+            <He size="lg" cursive>{alfabeto.exemplo}</He>
+            <p className="font-ui text-[12.5px] text-ink-muted text-center">cursiva</p>
+          </div>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
+            <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
+              A impressa aparece em
+            </p>
+            <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+              {ONDE_IMPRESSA.join(', ')}.
+            </p>
+          </div>
+          <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
+            <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
+              A cursiva aparece em
+            </p>
+            <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+              {ONDE_CURSIVA.join(', ')}.
+            </p>
+          </div>
+        </div>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">{ANALOGIA_CURSIVA}</p>
+
+        <RegraCursiva />
+
+        <p className="text-[15px] leading-relaxed text-ink-body">{MESMA_LETRA}</p>
+        <p className="text-[15px] leading-relaxed text-ink-body rounded-[var(--r-md)]
+                      bg-surface-2 px-4 py-3">
+          {CURSIVA_NO_CURSO}
+        </p>
+
+        <NoCaderno />
+      </Card>
       {/* ── 10b · que hebraico é este ──────────────────────────────────
           A pergunta que quase todo aluno traz e quase nunca faz em voz alta:
           "o hebraico da Torah e o hebraico de Tel Aviv são a mesma coisa?
@@ -748,7 +818,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
       {/* ── 13 · a atividade rápida, agora sobre a página inteira ─────── */}
       <Compreensao
         id="atividade"
-        titulo="E o resto? Catorze perguntas"
+        titulo="E o resto? Dezesseis perguntas"
         intro="A última conferência antes das letras, sobre tudo o que esta página explicou. Nada aqui vale nota nem tranca nada - errar só faz aparecer a explicação."
         perguntas={PERGUNTAS_GERAIS}
         fecho={{
@@ -907,7 +977,7 @@ function LinhaMista({ partes }: { partes: readonly PedacoLinha[] }) {
    placa de rua, um preço e um contato. O número é sempre o pedaço marcado. */
 const LINHAS_MISTAS: { partes: PedacoLinha[]; nota: string }[] = [
   {
-    partes: [{ t: 'he', s: '\u05e8\u05d7\u05d5\u05d1 \u05d4\u05e8\u05e6\u05dc' }, { t: 'lat', s: '42' }],
+    partes: [{ t: 'he', s: 'רחוב הרצל' }, { t: 'lat', s: '42' }],
     nota: 'Uma placa de rua. O nome começa na direita; o número da casa fica na ponta esquerda, e continua sendo quarenta e dois.'
   },
   {
@@ -915,11 +985,11 @@ const LINHAS_MISTAS: { partes: PedacoLinha[]; nota: string }[] = [
        {{ב}}, que em hebraico gruda no que vem depois e antes de número se
        escreve com traço. Ela apareceria solta na linha, e a tela que ensina
        direção estaria ensinando ortografia errada de passagem. */
-    partes: [{ t: 'he', s: '\u05e7\u05d5' }, { t: 'lat', s: '18' }, { t: 'he', s: '\u05dc\u05ea\u05dc \u05d0\u05d1\u05d9\u05d1' }],
+    partes: [{ t: 'he', s: 'קו' }, { t: 'lat', s: '18' }, { t: 'he', s: 'לתל אביב' }],
     nota: 'Um letreiro de ônibus: linha 18 para Tel Aviv. O número fica no meio, com hebraico dos dois lados - e cada lado corre para onde é dele.'
   },
   {
-    partes: [{ t: 'he', s: '\u05d8\u05dc\u05e4\u05d5\u05df' }, { t: 'lat', s: '050-1234567' }],
+    partes: [{ t: 'he', s: 'טלפון' }, { t: 'lat', s: '050-1234567' }],
     nota: 'Um telefone. O traço no meio não muda de lugar: o número inteiro é um bloco só, lido da esquerda para a direita.'
   }
 ];
@@ -972,7 +1042,53 @@ function PorOndeComeca() {
   );
 }
 
-/* ── as catorze perguntas gerais ──────────────────────────────────────────
+/* ── a microatividade da cursiva ───────────────────────────────
+   Uma pergunta só, logo depois da explicação, do mesmo jeito que a da
+   direção: o aluno escolhe uma das duas formas e descobre na hora se a
+   regra ficou. Ler a regra e APLICAR a regra são coisas diferentes. */
+function NoCaderno() {
+  const [escolha, setEscolha] = useState<'imp' | 'cur' | null>(null);
+
+  return (
+    <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-3">
+      <p className="font-ui text-[14px] font-semibold text-ink">
+        Rápido: qual forma você usaria para escrever no caderno?
+      </p>
+      <div className="grid grid-cols-2 gap-2.5">
+        {([['imp', 'impressa'], ['cur', 'cursiva']] as const).map(([k, rotulo]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setEscolha(k)}
+            aria-pressed={escolha === k}
+            className={`min-h-[48px] px-4 rounded-[var(--r-sm)] border-2 font-ui
+                        text-[14.5px] font-semibold transition-colors
+                        ${escolha === k
+                          ? (k === 'cur'
+                             ? 'border-[var(--teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)]'
+                             : 'border-[var(--gold)] bg-[var(--gold-soft)] text-[var(--gold-ink)]')
+                          : 'border-line bg-surface hover:bg-surface-2 text-ink-body'}`}
+          >
+            {rotulo}
+          </button>
+        ))}
+      </div>
+      {escolha && (
+        <p role="status"
+           className={`font-ui text-[14px] leading-relaxed rounded-[var(--r-sm)] px-4 py-3
+                       ${escolha === 'cur'
+                         ? 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'
+                         : 'bg-[var(--gold-soft)] text-[var(--gold-ink)]'}`}>
+          {escolha === 'cur'
+            ? 'Isso. Caderno, recado, formulário, lista: tudo o que é escrito à mão vai em cursiva.'
+            : 'A impressa é a forma de LER - livro, site, placa. Para escrever à mão, a forma é a cursiva.'}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ── as dezesseis perguntas gerais ──────────────────────────────────────────
    A conferência do fim, sobre a página inteira. Elas usam o mesmo componente
    da checagem do niqqud: um conceito novo nunca é seguido de "próximo" sem
    uma pergunta no meio, e isso vale em todo o curso - ver
@@ -1100,5 +1216,22 @@ const PERGUNTAS_GERAIS: ItemCompreensao[] = [
     q: 'Num exercício, pode aparecer uma palavra com uma letra que você ainda não estudou.',
     certa: false,
     porque: 'É uma regra do curso, do começo ao fim: nada aparece na tela antes de ter sido ensinado. Toda palavra de um exercício é feita só com as letras que já passaram.'
+  },
+  {
+    t: 'escolha',
+    q: 'Você vai anotar um telefone num papel, em hebraico. Que forma de letra você usa?',
+    opcoes: [
+      'A cursiva, que é a forma de escrever à mão',
+      'A impressa, igual à do livro',
+      'Tanto faz: as duas são usadas para escrever à mão'
+    ],
+    certa: 0,
+    porque: 'Para ler, impressa; para escrever à mão, cursiva. Dá para desenhar a impressa à mão, mas ninguém faz - seria como copiar a fonte do livro letra por letra.'
+  },
+  {
+    t: 'vf',
+    q: 'A impressa e a cursiva são dois alfabetos diferentes, com nomes e sons diferentes.',
+    certa: false,
+    porque: 'São dois desenhos da MESMA letra. Mesmo nome, mesmo som, mesmo lugar no alfabeto - como a letra de forma e a letra de mão em português.'
   }
 ];

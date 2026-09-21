@@ -32,8 +32,13 @@ for (const w of [390,1280]) {
              a regra visual não quebra nada, a página monta, e o título sai
              com "aprender?\\3" escrito na tela. Aconteceu aqui, num script
              que pôs `id` em onze <h2> de uma vez - e passou pelo tsc, pelo
-             build e pela própria varredura, que só procurava chaves. */
-          ||(document.body.innerText.match(/\\[1-9]/g)||[])[0]||null}));
+             build e pela própria varredura, que só procurava chaves.
+
+             O `u` está na lista pela mesma razão, e pelo mesmo acidente:
+             `\\u00e1` escrito no TEXTO de um JSX não é escape nenhum - JSX
+             não interpreta escapes fora de string -, então o aluno lê
+             "R\\u00e1pido" na tela. */
+          ||(document.body.innerText.match(/\\[1-9u]/g)||[])[0]||null}));
     const over=m.sw>m.iw+1;
     if(over||erros.length||m.cru) ruim++;
     if(m.cru) console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} MARCAÇÃO CRUA NA TELA: ${m.cru}`);
@@ -126,7 +131,10 @@ for (const w of [390,1280]) {
   for (const [o_que, marca] of [
     ['a linha de duas direções', 'Quando a linha tem duas direções'],
     ['moderno × antigo', 'Que hebraico é este'],
-    ['a história, fechada', 'Como uma língua voltou a ser falada']
+    ['a história, fechada', 'Como uma língua voltou a ser falada'],
+    ['impressa × cursiva', 'impressa e cursiva'],
+    ['a regra em duas linhas', 'Para escrever à mão'],
+    ['a microatividade do caderno', 'escrever no caderno']
   ]) {
     const tem = txt.includes(marca);
     console.log(`      ${'aula 0'.padEnd(20)} ${tem ? '✓' : 'FALTA'} ${o_que}`);

@@ -25,9 +25,10 @@ import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { SoundLab } from '@/components/learn/SoundLab';
 import { CultureUnlock } from '@/components/learn/Culture';
 import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioButton';
+import { ANALOGIA_CURSIVA, MESMA_LETRA } from '@/lib/cursiva';
 import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
-  RealWorldHebrew, SyllableTrainer, WordReveal, WorkbookLink
+  RealWorldHebrew, RegraCursiva, SyllableTrainer, WordReveal, WorkbookLink
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { useProgress } from '@/lib/state/store';
@@ -73,8 +74,9 @@ export function LessonClient({ letter }: { letter: Letter }) {
     }),
     [letter, history, p.weak]
   );
-  /* O mini-teste: cinco itens, um de cada coisa que "saber a letra" quer
-     dizer, e o quinto de uma letra anterior. Outra semente a cada tentativa. */
+  /* O mini-teste: seis itens, um de cada coisa que "saber a letra" quer
+     dizer - reconhecer, o som, dentro de uma palavra, a forma que confunde,
+     a CURSIVA, e um de uma letra anterior. Outra semente a cada tentativa. */
   const quiz = useMemo(
     () => buildMiniTest(letter, history, {
       audioAvailable: audioAvailable(), seed: `mini-${letter.id}-${quizRun}`
@@ -481,18 +483,34 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
       <div className="grid gap-1">
         <h2 className="text-[21px] font-bold">Aprendendo a escrever</h2>
         <p className="font-ui text-[14px] text-ink-muted">
-          Ninguém escreve hebraico à mão em letra de imprensa. A cursiva é a que vale a pena treinar.
+          A mesma letra, no desenho que se usa à mão.
         </p>
       </div>
 
-      <Card className="p-6 grid sm:grid-cols-2 gap-6">
-        <div className="grid gap-2 justify-items-center">
-          <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Impressa</p>
-          <He size="display">{letter.letter}</He>
+      <Card className="p-6 grid gap-5">
+        <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid gap-2 justify-items-center">
+            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Impressa</p>
+            <He size="display">{letter.letter}</He>
+          </div>
+          <div className="grid gap-2 justify-items-center">
+            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Cursiva</p>
+            <He size="display" cursive>{letter.letter}</He>
+          </div>
         </div>
-        <div className="grid gap-2 justify-items-center">
-          <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Cursiva</p>
-          <He size="display" cursive>{letter.letter}</He>
+        {/* O PORQUÊ, e não só a conclusão.
+            ────────────────────────────────────────────────
+            Aqui dizia "ninguém escreve hebraico à mão em letra de imprensa",
+            que é a conclusão sem o argumento. O aluno passou duas etapas
+            lendo um desenho e é mandado treinar outro; sem o motivo, isso
+            soa a capricho - e quem acha que é capricho pula a etapa.
+
+            O texto vem de lib/cursiva.ts, o mesmo que o módulo 0 lê: as
+            duas telas dizem a mesma coisa porque é a mesma frase. */}
+        <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-5">
+          <RegraCursiva />
+          <p className="font-ui text-[14px] leading-relaxed text-ink-body">{ANALOGIA_CURSIVA}</p>
+          <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">{MESMA_LETRA}</p>
         </div>
       </Card>
 
@@ -554,7 +572,9 @@ function StagePraticar({
 /* ── 5 · fixação: o mini-teste, com portão de domínio ───────────────────
  *
  * Aqui a lição deixa de ser "rolei até o fim" e passa a ser "mostrei que
- * sei". Oito questões, e 6 delas para a letra contar como dominada.
+ * sei". Seis questões, e 80% delas - cinco - para a letra contar como
+ * dominada. (Dizia "oito questões" aqui, e eram cinco: um comentário que
+ * envelheceu sozinho porque não havia nada medindo se ele era verdade.)
  *
  * O portão NÃO tranca. Quem fica abaixo recebe "vamos praticar mais um pouco"
  * e quatro questões montadas a partir dos PRÓPRIOS erros - não um sorteio

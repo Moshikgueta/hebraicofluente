@@ -11,6 +11,8 @@ import {
   buildCheckpoint, buildConfusionDrill, buildFinalChallenge, buildLessonQuiz, buildReview,
   isChoice, spread, typedIsCorrect, violatesOrderRule
 } from '@/lib/engine/exercises';
+import { exCursiveToPrint, exPrintVsCursive } from '@/lib/engine/generators';
+import { rng } from '@/lib/engine/rng';
 import { normalizeTyped } from '@/lib/engine/types';
 import { clean, clusters, joinSyllable, splitSyllable } from '@/lib/hebrew';
 
@@ -147,6 +149,37 @@ describe('build the word', () => {
         expect(ex.tiles.join(''), ex.id).not.toBe(clean(ex.target));
       }
     }
+  });
+});
+
+describe('impressa e cursiva, nas duas direções', () => {
+  /* O estímulo está numa forma e as alternativas na OUTRA - é disso que a
+     pergunta é feita. Quem desenha a tela lê `mostra` para saber qual lado
+     leva a fonte cursiva, então um gerador que esqueça o campo, ou que
+     repita a direção do outro, põe as duas colunas na mesma fonte e a
+     pergunta deixa de ter pergunta. */
+  it('os dois geradores existem e vão em direções opostas', () => {
+    for (const L of letters) {
+      const ctx = { history: letters.filter(x => x.order <= L.order), alphabet: [],
+                    allGlyphs: [], sentences: [], nikud: [] };
+      const ida = exPrintVsCursive(L, ctx as never, rng(`i-${L.id}`), 0);
+      const volta = exCursiveToPrint(L, ctx as never, rng(`v-${L.id}`), 0);
+      if (!ida || !volta) continue;
+      expect(ida.kind).toBe('print-vs-cursive');
+      expect(volta.kind).toBe('print-vs-cursive');
+      expect('mostra' in ida && ida.mostra, L.id).toBe('impressa');
+      expect('mostra' in volta && volta.mostra, L.id).toBe('cursiva');
+    }
+  });
+
+  it('e o enunciado diz de que lado a letra está', () => {
+    /* Uma tela que mostra a cursiva perguntando "qual é ela na escrita à
+       mão?" está pedindo o que já está na tela. */
+    const L = letters[5]!;
+    const ctx = { history: letters, alphabet: [], allGlyphs: [], sentences: [], nikud: [] };
+    const volta = exCursiveToPrint(L, ctx as never, rng('v'), 0)!;
+    expect(volta.promptPt).toMatch(/imprensa/);
+    expect(volta.promptPt).not.toMatch(/escrita à mão\?/);
   });
 });
 

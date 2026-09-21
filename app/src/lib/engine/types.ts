@@ -46,7 +46,14 @@ export type ChoiceBase = ExerciseBase & {
 export type Exercise =
   /* ── pick one of four (the original eight, now typed) ─────────────── */
   | (ChoiceBase & { kind: 'letter-recognition'; letter: string })
-  | (ChoiceBase & { kind: 'print-vs-cursive'; letter: string })
+  /* A mesma letra nos dois desenhos. `mostra` diz em QUE forma está o
+     estímulo - as alternativas estão sempre na outra, porque a pergunta é
+     justamente atravessar de uma para a outra. As duas direções existem:
+     "qual é esta letra à mão" treina escrever, "qual é esta letra no livro"
+     treina LER um bilhete - e só a primeira existia. */
+  | (ChoiceBase & {
+      kind: 'print-vs-cursive'; letter: string; mostra: 'impressa' | 'cursiva';
+    })
   | (ChoiceBase & { kind: 'final-form'; letter: string })
   | (ChoiceBase & { kind: 'syllable-reading'; he: string })
   | (ChoiceBase & { kind: 'word-meaning'; he: string })

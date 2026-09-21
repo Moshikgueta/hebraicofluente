@@ -12,6 +12,28 @@ import type { Letter, Scene, Syllable, Word } from '@/lib/content';
 import { supportLabel, supportLevel } from '@/lib/state/rules';
 import { useProgress } from '@/lib/state/store';
 import { track } from '@/lib/analytics';
+import { REGRA_CURSIVA } from '@/lib/cursiva';
+
+/* ── a regra da cursiva, em duas linhas ─────────────────────────
+   Aparece no módulo 0, onde o aluno encontra a ideia, e na etapa "Escrever"
+   de cada uma das 22 lições, onde ela vira ação. Um componente, e não duas
+   cópias do mesmo markup: texto compartilhado com a marcação duplicada é a
+   mesma drift de sempre, só que mais difícil de ver. */
+export function RegraCursiva() {
+  return (
+    <div className="rounded-[var(--r-md)] border border-[color:var(--edge-teal)]
+                    bg-[var(--teal-soft)] p-4 grid sm:grid-cols-2 gap-3">
+      {[['Para ler', REGRA_CURSIVA.ler], ['Para escrever à mão', REGRA_CURSIVA.escrever]].map(
+        ([o_que, forma]) => (
+          <p key={o_que} className="font-ui text-[15px] leading-snug text-[var(--teal-ink)]">
+            <span className="font-semibold">{o_que}</span>
+            <span aria-hidden> → </span>
+            <span className="font-bold">{forma}</span>
+          </p>
+        ))}
+    </div>
+  );
+}
 
 /* ── the Brazilian interference note ─────────────────────────────────────
    Not a generic study tip: every letter carries the specific way Portuguese

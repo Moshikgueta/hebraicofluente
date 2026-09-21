@@ -353,9 +353,11 @@ function Stimulus({ ex }: { ex: Exercise }) {
     case 'odd-one-out':
       return null;
     case 'print-vs-cursive':
+      /* O estímulo está numa forma e as alternativas na outra - qual é qual
+         vem do próprio exercício, porque as duas direções existem. */
       return (
         <div className="flex justify-center py-2">
-          <He size="display">{ex.letter}</He>
+          <He size="display" cursive={ex.mostra === 'cursiva'}>{ex.letter}</He>
         </div>
       );
     /* O som está no enunciado e as ALTERNATIVAS são os desenhos: não há
@@ -573,7 +575,9 @@ function OptionButton({
   onClick: () => void; disabled: boolean;
 }) {
   const hebrewOption = hebrewOptionsOf(ex);
-  const cursive = ex.kind === 'print-vs-cursive';
+  /* Nas duas formas da mesma letra, a alternativa está sempre no desenho
+     CONTRÁRIO ao do estímulo. */
+  const cursive = ex.kind === 'print-vs-cursive' && ex.mostra === 'impressa';
 
   const TONE = {
     idle:  'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]',

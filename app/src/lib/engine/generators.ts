@@ -115,7 +115,7 @@ export const exPrintVsCursive: Gen = (L, ctx, rand, i) => {
   return {
     id: `${L.id}-cur-${i}`, kind: 'print-vs-cursive', letterId: L.id, skill: 'rec',
     promptPt: 'Qual destas é a mesma letra, escrita à mão?',
-    letter: L.letter, options, answer,
+    letter: L.letter, mostra: 'impressa', options, answer,
     explainPt: 'A cursiva é o que se escreve à mão; a de imprensa é o que se lê.'
   };
 };
@@ -904,18 +904,28 @@ export const exFinalInWord: Gen = (L, ctx, rand, i) => {
   };
 };
 
-/** A mesma letra escrita à mão: qual das cursivas é esta letra de imprensa? */
+/**
+ * A direção contrária: a letra chega escrita à mão e a pergunta é que letra
+ * é aquela no livro.
+ *
+ * Ela não existia. Este gerador tinha o nome da volta e fazia a ida - mesmo
+ * estímulo impresso, mesmas alternativas cursivas do `exPrintVsCursive` -, e
+ * assim o curso treinava escrever a cursiva e nunca treinava LER a cursiva.
+ * São habilidades diferentes: reconhecer o bilhete de outra pessoa é a que
+ * se usa primeiro, e era a que faltava.
+ */
 export const exCursiveToPrint: Gen = (L, ctx, rand, i) => {
   const wrong = letterDistractors(L, ctx, rand, 3);
   if (wrong.length < 2) return null;
   const { options, answer } = optionsWith(L.letter, wrong, rand);
   return {
     id: `${L.id}-cur2-${i}`, kind: 'print-vs-cursive', letterId: L.id, skill: 'rec',
-    promptPt: `Esta é ${L.namePt} em letra de imprensa. Qual é ela na escrita à mão?`,
-    letter: L.letter, options, answer,
+    promptPt: 'Esta letra está escrita à mão. Qual é ela em letra de imprensa?',
+    letter: L.letter, mostra: 'cursiva', options, answer,
     whyPt: options.map(o => o === L.letter ? null : 'Essa é outra letra.'),
-    hintsPt: ['A cursiva é mais redonda: vale olhar a direção dos traços, não o contorno.'],
-    explainPt: `Ninguém escreve hebraico à mão em letra de imprensa - a cursiva é a que se vê num bilhete.`
+    hintsPt: ['Na cursiva vale olhar a direção dos traços, e não o contorno.'],
+    explainPt: `${L.namePt} à mão e ${L.namePt} no livro são a mesma letra em dois desenhos - `
+      + 'e ler o bilhete de alguém pede a primeira.'
   };
 };
 

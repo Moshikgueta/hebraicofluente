@@ -121,12 +121,43 @@ describe('a unidade de prática de cada letra', () => {
 });
 
 describe('o mini-teste que fecha a letra', () => {
-  it('tem sempre cinco questões', () => {
+  it('tem sempre seis questões', () => {
+    /* Cinco até 21/09/2026, e a sexta é a cursiva - ver a nota no gerador.
+       Com seis, o portão de 80% continua perdoando um erro e recusando
+       dois, que era a forma que ele já tinha com cinco. */
     const fora = letters
       .map(L => ({ L, n: buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-0` }).length }))
-      .filter(x => x.n !== 5)
+      .filter(x => x.n !== 6)
       .map(x => `${x.L.namePt}: ${x.n}`);
     expect(fora).toEqual([]);
+  });
+
+  it('e cobra a direção CONTRÁRIA à da prática, em todas as 22', () => {
+    /* Prática: impressa → cursiva, que é escrever. Checkpoint: cursiva →
+       impressa, que é ler o bilhete de alguém. Eram a mesma pergunta duas
+       vezes - o gerador `exCursiveToPrint` tinha o nome da volta e fazia a
+       ida -, e o curso nunca pedia para LER uma cursiva. */
+    const fora = letters.map(L => {
+      const hist = historyOf(L.order);
+      const pratica = buildLetterPractice(L, hist, { count: 10, seed: `pratica-${L.id}` });
+      const mini = buildMiniTest(L, hist, { seed: `mini-${L.id}-0` });
+      const ida = pratica.some(e => /-cur-/.test(e.id));
+      const volta = mini.some(e => /-cur2-/.test(e.id));
+      return { L, ida, volta };
+    }).filter(x => !x.ida || !x.volta)
+      .map(x => `${x.L.namePt}: prática ${x.ida ? 'ok' : 'SEM ida'}, checkpoint ${x.volta ? 'ok' : 'SEM volta'}`);
+    expect(fora).toEqual([]);
+  });
+
+  it('cobra a cursiva em todas as 22 - a etapa que ninguém conferia', () => {
+    /* Medido antes da correção: 0 de 22. A lição ensinava a cursiva numa
+       etapa inteira e a prova que decide o domínio - e, com a trava, a
+       abertura da próxima letra - nunca perguntava nada sobre ela. */
+    const sem = letters
+      .map(L => ({ L, q: buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-0` }) }))
+      .filter(x => !x.q.some(e => /-cur2?-/.test(e.id)))
+      .map(x => x.L.namePt);
+    expect(sem).toEqual([]);
   });
 
   it('inclui uma questão de letra anterior, da segunda letra em diante', () => {

@@ -456,7 +456,7 @@ export function buildLetterPractice(
 export function buildMiniTest(
   L: Letter, history: Letter[], opts: BuildOptions = {}
 ): Exercise[] {
-  const { audioAvailable = false, seed = `mini-${L.id}`, count = 5 } = opts;
+  const { audioAvailable = false, seed = `mini-${L.id}`, count = 6 } = opts;
   const rand = rng(seed);
   const ctx = contextFor(L, history);
   const out: Exercise[] = [];
@@ -477,6 +477,26 @@ export function buildMiniTest(
   tentar([exMatchLetterSound, exVowelSound, exSoundToSyllable]);
   tentar([exLetterInWord, exLetterPosition, exCompleteWord]);
   tentar([L.finalForm ? exFinalInWord : exConfusablePick, exConfusablePick, exOddOneOut]);
+  /* A CURSIVA, que o checkpoint nunca cobrava.
+     ─────────────────────────────────────────────────────────────────────
+     A lição gasta uma etapa inteira nela: mostra o desenho, anima a ordem
+     dos traços e faz o aluno escrever quatro vezes, do modelo cheio até a
+     folha vazia. E a prova que decidia se a letra estava DOMINADA - e,
+     desde a trava de progressão, se a próxima abre - passava por cima
+     disso em todas as 22: medido, zero dos 22 mini-testes tinha um item de
+     cursiva.
+
+     Uma etapa que nunca é cobrada é uma etapa que o aluno aprende a pular,
+     e ele estaria certo: o sistema estava dizendo que ela não conta.
+
+     A direção aqui é a CONTRÁRIA à da prática, de propósito. A etapa de
+     escrever e o bloco de prática vão da impressa para a cursiva - “esta é
+     a letra, é assim que você a escreve”. O checkpoint vem da cursiva para
+     a impressa, que é o gesto de LER o bilhete de outra pessoa, e só se
+     cobra depois de o aluno ter desenhado a letra quatro vezes na etapa
+     anterior. Assim as duas direções existem na unidade de cada letra, em
+     vez de o curso treinar uma e chamar a outra de aprendida. */
+  tentar([exCursiveToPrint, exPrintVsCursive]);
 
   const anteriores = history.filter(x => x.id !== L.id);
   if (anteriores.length) {
