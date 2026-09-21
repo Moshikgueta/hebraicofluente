@@ -1,0 +1,482 @@
+/* cortar-audio.mjs - one long take in, 168 named clips out.
+ *
+ *   npm run cortar-audio -- --onda 1 gravacao.wav
+ *   npm run cortar-audio -- --ensaiar          (proves the whole chain offline)
+ *
+ * The problem this solves is not editing. It is NAMING.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Every clip is named after a hash of its pointed Hebrew (`he-3c3ac3e3.mp3`),
+ * which is what keeps a recording valid when the course changes order. The
+ * cost of that is that nobody can name 168 takes by hand without a mistake,
+ * and a mistake here is invisible: `check-audio` reports UNKNOWN for a file
+ * whose name matches no clip, but a file named after the WRONG clip is
+ * reported as present, and the course teaches one letter with another
+ * letter's sound until a learner notices.
+ *
+ * So the speaker records ONE continuous file, reading the script top to
+ * bottom, and this tool cuts on the silences and names the pieces in order.
+ * Position is the only thing that has to be right, and position is the one
+ * thing a person reading down a printed page gets right.
+ *
+ * THE ALIGNMENT IS CHECKED, NEVER ASSUMED
+ * ─────────────────────────────────────────────────────────────────────────
+ * If the take has 167 segments and the wave wants 168, every clip from the
+ * gap onwards is named after its neighbour. That is the failure that ruins a
+ * session, and it is silent. Three things stand against it:
+ *
+ *   1. the count must match exactly, or nothing is written under a real name;
+ *   2. `conferir/NNN-<translit>.mp3` is written anyway, numbered by position,
+ *      so a mismatch can be inspected instead of re-recorded;
+ *   3. `conferir/conferencia.html` plays every segment beside the Hebrew it
+ *      was matched to. Listening to eight rows of that page is the only
+ *      proof that the alignment is right, and it takes a minute.
+ *
+ * THE CLEANUP, AND WHAT IS DELIBERATELY NOT IN IT
+ * ─────────────────────────────────────────────────────────────────────────
+ * High-pass at 80 Hz (rumble, air conditioning, plosive thump), gentle
+ * denoise measured against the room tone, edges trimmed to a fixed pad, 10 ms
+ * fades so no clip starts with a click, and one gain per clip so all 168 sit
+ * at the same loudness. Uneven loudness across a word list is the single
+ * thing that makes a home recording sound like a home recording.
+ *
+ * What is NOT here, on purpose: no de-esser and no compressor. This course
+ * teaches ש, ס, צ and ת by their sound; a de-esser dulls exactly the band
+ * that distinguishes them, and a compressor flattens the difference between
+ * a stressed and an unstressed syllable. The recording is one voice saying
+ * isolated words in a quiet room - it has no dynamics problem to solve.
+ */
+
+import { execFileSync, spawnSync } from 'node:child_process';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync, readdirSync, statSync } from 'node:fs';
+import { join, basename } from 'node:path';
+
+const ROOT = new URL('..', import.meta.url).pathname;
+const DROP = join(ROOT, 'audio');
+const CONF = join(DROP, 'conferir');
+
+/* ── the cut ─────────────────────────────────────────────────────────────
+   A silence has to be longer than this to count as a gap between clips. The
+   speaker is told to leave a second; half of that is the floor, which leaves
+   room for someone who rushes without turning a breath inside a word into a
+   cut. */
+const GAP_MIN_S = 0.45;
+
+/* A segment shorter than this is a cough, a page turn or a chair. Hebrew
+   letter names are the longest thing in wave 1 and none is near this short. */
+const SEG_MIN_S = 0.12;
+
+/* ── the pads ───────────────────────────────────────────────────────────
+   Trimmed edges plus a fixed pad, rather than whatever the take happened to
+   have: the player fires on a click and a clip that starts 300 ms late feels
+   broken, while one that starts instantly feels clipped. */
+const PAD_HEAD_S = 0.08;
+const PAD_TAIL_S = 0.22;
+const FADE_S = 0.01;
+
+/* ── the loudness ───────────────────────────────────────────────────────
+   Mean level every clip is brought to, and the ceiling no clip may cross.
+   -20 dB mean is ordinary for speech; -1.5 dBFS of headroom keeps the MP3
+   encoder from clipping on a peak that was legal in the WAV. */
+const TARGET_MEAN_DB = -20;
+const PEAK_CEIL_DB = -1.5;
+
+/* MP3 at 96 kbps mono: about 10 KB for a syllable, so the whole of wave 1 is
+   under two megabytes. Below this, sibilants start to smear, and sibilants
+   are half of what this course teaches. */
+const MP3_KBPS = 96;
+
+const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+
+function ff(args) {
+  return execFileSync('ffmpeg', ['-hide_banner', '-nostdin', ...args],
+    { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+}
+
+/* ffmpeg writes every measurement to STDERR - volumedetect's levels,
+   silencedetect's marks, all of it - and a run that measures into `-f null -`
+   exits with SUCCESS. So this cannot be `execFileSync`, which hands back
+   stdout alone and keeps stderr only on a throw: the first version of this
+   file did exactly that, read an empty string every time, fell back to the
+   default noise floor and found one segment in a take that had twelve. The
+   rehearsal caught it. `spawnSync` returns both streams either way. */
+function ffMeasure(args) {
+  const r = spawnSync('ffmpeg', ['-hide_banner', '-nostdin', ...args, '-f', 'null', '-'],
+    { encoding: 'utf8' });
+  return String(r.stderr ?? '') + String(r.stdout ?? '');
+}
+
+const duracao = file => Number(execFileSync('ffprobe',
+  ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', file],
+  { encoding: 'utf8' }).trim());
+
+/* ── noise floor ─────────────────────────────────────────────────────────
+   Measured from room-tone.wav when the speaker recorded one, which is why
+   the brief asks for it. Without it, the first two seconds of the take are
+   used: the speaker has not started, so it is room tone by another name. */
+function pisoDeRuido(wav) {
+  const tone = join(DROP, 'room-tone.wav');
+  const fonte = existsSync(tone) ? tone : wav;
+  const recorte = existsSync(tone) ? [] : ['-t', '2'];
+  const saida = ffMeasure(['-i', fonte, ...recorte, '-af', 'volumedetect']);
+  const m = saida.match(/mean_volume:\s*(-?\d+(?:\.\d+)?) dB/);
+  return {
+    db: m ? Number(m[1]) : -60,
+    fonte: existsSync(tone) ? 'room-tone.wav' : 'os 2 primeiros segundos'
+  };
+}
+
+/* ── where the silences are ─────────────────────────────────────────────── */
+function marcasDeSilencio(wav, limiar, gap) {
+  const saida = ffMeasure(['-i', wav, '-af', `silencedetect=noise=${limiar}dB:d=${gap}`]);
+  const marcas = [];
+  for (const linha of saida.split('\n')) {
+    const ini = linha.match(/silence_start:\s*(-?\d+(?:\.\d+)?)/);
+    const fim = linha.match(/silence_end:\s*(-?\d+(?:\.\d+)?)/);
+    if (ini) marcas.push({ t: Number(ini[1]), tipo: 'inicio' });
+    if (fim) marcas.push({ t: Number(fim[1]), tipo: 'fim' });
+  }
+  return marcas;
+}
+
+/* ── choosing the threshold ──────────────────────────────────────────────
+   A single threshold derived from the noise floor is a guess, and a guess is
+   the wrong instrument here, because this tool knows something rare: HOW MANY
+   pieces the answer has. The script says the wave is 168 clips; a cut that
+   yields 168 segments is the cut that agrees with the page the speaker read.
+   So it sweeps, from tight to loose, and stops at the first setting that
+   agrees.
+
+   The floor still matters: it decides WHERE the sweep starts, so a quiet
+   booth and a noisy kitchen are not tried in the same order. It is a hint,
+   not a verdict.
+
+   This does not make the alignment certain, and nothing here pretends it
+   does: a threshold that splits one word in two while merging two others
+   would land on the same total. That is exactly what conferencia.html is
+   for, and why it is not optional. */
+function acharCorte(wav, pisoDb, esperados) {
+  const perto = Math.min(-25, Math.max(-50, pisoDb + 12));
+  /* Around the hint first, then the whole sensible range, then a shorter
+     gap for a speaker who did not pause as long as the brief asked. */
+  const limiares = [...new Set([perto, perto - 5, perto + 5, -30, -35, -40, -45, -25, -50])]
+    .filter(v => v >= -50 && v <= -20);
+  const gaps = [GAP_MIN_S, 0.3, 0.25];
+
+  const tentativas = [];
+  for (const gap of gaps) {
+    for (const limiar of limiares) {
+      const marcas = marcasDeSilencio(wav, limiar, gap);
+      const segs = segmentos(marcas, duracao(wav));
+      tentativas.push({ limiar, gap, n: segs.length });
+      if (segs.length === esperados) return { limiar, gap, segs, tentativas, bateu: true };
+    }
+  }
+  /* Nothing agreed. Hand back the attempt that came closest, so the report
+     can say how far off it is instead of just "no". */
+  let melhor = null;
+  for (const t of tentativas) {
+    if (!melhor || Math.abs(t.n - esperados) < Math.abs(melhor.n - esperados)) melhor = t;
+  }
+  const marcas = marcasDeSilencio(wav, melhor.limiar, melhor.gap);
+  return {
+    limiar: melhor.limiar, gap: melhor.gap,
+    segs: segmentos(marcas, duracao(wav)), tentativas, bateu: false
+  };
+}
+
+/* Speech is what is left between the silences. */
+function segmentos(marcas, total) {
+  const segs = [];
+  let aberto = 0;
+  for (const m of marcas) {
+    if (m.tipo === 'inicio') {
+      if (m.t - aberto >= SEG_MIN_S) segs.push({ de: aberto, ate: m.t });
+      aberto = null;
+    } else if (aberto === null) {
+      aberto = m.t;
+    }
+  }
+  if (aberto !== null && total - aberto >= SEG_MIN_S) segs.push({ de: aberto, ate: total });
+  return segs;
+}
+
+/* ── one clip ────────────────────────────────────────────────────────────
+   Two passes, because the gain cannot be chosen before the level is known,
+   and the level cannot be known before the filters that change it have run. */
+function extrair(wav, seg, destino, pisoDb) {
+  const de = Math.max(0, seg.de - PAD_HEAD_S);
+  const dur = (seg.ate - seg.de) + PAD_HEAD_S + PAD_TAIL_S;
+
+  /* `nf` is the denoiser's idea of where the noise sits. Handing it the
+     measured floor keeps it from guessing, and `nr=10` is a light touch:
+     an aggressive setting eats the breathy start of ה and the release of ק,
+     which are the sounds a Brazilian is here to learn. */
+  const limpeza = [
+    'highpass=f=80',
+    `afftdn=nr=10:nf=${Math.round(pisoDb)}`,
+    'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
+    'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
+    `adelay=${Math.round(PAD_HEAD_S * 1000)}`,
+    `apad=pad_dur=${PAD_TAIL_S}`,
+    'aresample=44100', 'aformat=channel_layouts=mono'
+  ].join(',');
+
+  const bruto = destino + '.tmp.wav';
+  ff(['-y', '-ss', String(de), '-t', String(dur), '-i', wav, '-af', limpeza, bruto]);
+
+  const medido = ffMeasure(['-i', bruto, '-af', 'volumedetect']);
+  const mean = Number((medido.match(/mean_volume:\s*(-?\d+(?:\.\d+)?)/) ?? [])[1] ?? TARGET_MEAN_DB);
+  const peak = Number((medido.match(/max_volume:\s*(-?\d+(?:\.\d+)?)/) ?? [])[1] ?? 0);
+
+  /* Same loudness for all 168, without letting the loudest one clip: the
+     gain that hits the mean target, capped by the gain that keeps the peak
+     under the ceiling. */
+  const ganho = Math.min(TARGET_MEAN_DB - mean, PEAK_CEIL_DB - peak);
+
+  ff(['-y', '-i', bruto,
+    '-af', `volume=${ganho.toFixed(2)}dB,afade=t=in:d=${FADE_S},afade=t=out:st=${Math.max(0, dur - FADE_S).toFixed(3)}:d=${FADE_S}`,
+    '-ac', '1', '-ar', '44100', '-b:a', `${MP3_KBPS}k`, destino]);
+
+  rmSync(bruto, { force: true });
+  return { ganho, mean, peak };
+}
+
+/* ── the page that proves the alignment ─────────────────────────────────── */
+function conferencia(pares, info) {
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const linhas = pares.map((p, i) => `
+    <tr>
+      <td class="n">${i + 1}</td>
+      <td class="he" dir="rtl" lang="he">${esc(p.clipe ? p.clipe.he : '?')}</td>
+      <td class="tr">${esc(p.clipe ? (p.clipe.translit ?? '') : '')}</td>
+      <td class="gl">${esc(p.clipe ? p.clipe.gloss : 'sem clipe correspondente')}</td>
+      <td class="t">${p.de.toFixed(1)}s</td>
+      <td><audio controls preload="none" src="${esc(p.arquivo)}"></audio></td>
+    </tr>`).join('\n');
+
+  return `<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8">
+<title>Conferência do corte</title>
+<style>
+  body { font: 15px/1.5 system-ui, sans-serif; margin: 0; padding: 24px; color: #1a1a1a; background: #fafafa; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .aviso { background: #FFF6E0; border: 1px solid #E8C97A; border-radius: 8px; padding: 12px 14px; margin: 14px 0 20px; }
+  .erro { background: #FDECEA; border-color: #E8A8A0; }
+  table { border-collapse: collapse; width: 100%; background: #fff; }
+  th, td { border-bottom: 1px solid #eee; padding: 7px 10px; text-align: left; vertical-align: middle; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #666; }
+  .n { color: #999; font-variant-numeric: tabular-nums; width: 46px; }
+  .he { font-size: 28px; direction: rtl; unicode-bidi: isolate; width: 140px; }
+  .tr { font-weight: 600; color: #1F6F63; width: 90px; }
+  .gl { color: #444; }
+  .t { color: #999; font-variant-numeric: tabular-nums; width: 70px; }
+  audio { height: 32px; }
+</style>
+<h1>Conferência do corte</h1>
+<p>${esc(info.resumo)}</p>
+<div class="aviso ${info.ok ? '' : 'erro'}">
+  ${info.ok
+    ? 'Os números batem. <strong>Ouça pelo menos oito linhas espalhadas</strong>, inclusive a última: se o áudio combina com o hebraico ao lado, o corte inteiro está alinhado, porque um desencontro empurra tudo o que vem depois.'
+    : '<strong>Os números NÃO batem</strong>, então nenhum arquivo foi gravado com o nome final. Ouça daqui e ache onde o corte se perdeu: onde o áudio deixar de combinar com o hebraico, é ali.'}
+</div>
+<table>
+  <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>Em</th><th>Ouvir</th></tr></thead>
+  <tbody>${linhas}</tbody>
+</table>
+</html>`;
+}
+
+/* ── the rehearsal ───────────────────────────────────────────────────────
+   Builds a fake take with a known number of segments and runs the real cut
+   over it. It proves the part that has no other way of being proved before a
+   session exists: that N spoken chunks separated by silence come out as
+   exactly N files, in order. */
+function ensaiar() {
+  const tmp = join(DROP, '.ensaio');
+  rmSync(tmp, { recursive: true, force: true });
+  mkdirSync(tmp, { recursive: true });
+
+  /* A "word" is a short tone burst; a "gap" is near-silence with a little
+     hiss, because a digital-zero gap would make the detector's job easier
+     than any room ever will. The take opens with silence, the way a real one
+     does - the speaker is told to record room tone first. */
+  function gravacaoFalsa(nome, palavras, pausa = 1.0) {
+    const partes = ['anoisesrc=amplitude=0.001:duration=1.5'];
+    for (let i = 0; i < palavras; i++) {
+      partes.push(`sine=frequency=${180 + i * 20}:duration=0.45`);
+      partes.push(`anoisesrc=amplitude=0.001:duration=${pausa}`);
+    }
+    const filtro = partes.map((p, i) => `${p}[a${i}]`).join(';') +
+      ';' + partes.map((_, i) => `[a${i}]`).join('') + `concat=n=${partes.length}:v=0:a=1[out]`;
+    const f = join(tmp, nome);
+    ff(['-y', '-filter_complex', filtro, '-map', '[out]', '-ac', '1', '-ar', '44100', f]);
+    return f;
+  }
+
+  const N = 12;
+  let falhas = 0;
+  const erro = msg => { console.log(`\n  ✗ ${msg}`); falhas++; };
+
+  console.log(`\n  ENSAIO\n`);
+
+  /* 1. O caso normal: N trechos entram, N trechos saem. */
+  const falso = gravacaoFalsa('ensaio.wav', N);
+  const piso = pisoDeRuido(falso);
+  const corte = acharCorte(falso, piso.db, N);
+  console.log(`  uma gravação de mentira com ${N} trechos`);
+  console.log(`    piso de ruído    ${piso.db.toFixed(1)} dB  (de ${piso.fonte})`);
+  console.log(`    corte escolhido  ${corte.limiar} dB, pausa ${corte.gap}s`);
+  console.log(`    trechos achados  ${corte.segs.length} de ${N}`);
+  if (!corte.bateu) erro('o corte não achou o número certo de trechos');
+
+  if (corte.bateu) {
+    const alvo = join(tmp, 'p3.mp3');
+    extrair(falso, corte.segs[3], alvo, piso.db);
+    const bytes = statSync(alvo).size;
+    if (bytes < 1500) erro(`o clipe cortado saiu pequeno demais (${bytes} bytes)`);
+    else console.log(`    clipe 4 cortado  ${bytes} bytes`);
+
+    /* A nivelação tem de ter mexido: uma cadeia que silenciosamente não faz
+       nada passaria em tudo o que está acima. */
+    const medido = ffMeasure(['-i', alvo, '-af', 'volumedetect']);
+    const mean = Number((medido.match(/mean_volume:\s*(-?\d+(?:\.\d+)?)/) ?? [])[1] ?? 0);
+    if (Math.abs(mean - TARGET_MEAN_DB) > 4) {
+      erro(`a nivelação não chegou ao alvo: ${mean} dB, queria ${TARGET_MEAN_DB} dB`);
+    } else {
+      console.log(`    nivelado em      ${mean.toFixed(1)} dB  (alvo ${TARGET_MEAN_DB})`);
+    }
+  }
+
+  /* 2. O caso que decide se esta ferramenta é segura: uma gravação com um
+     trecho A MENOS do que o roteiro pede. A escada NÃO pode "achar" um jeito
+     de chegar ao número - se ela chegasse, os nomes seriam atribuídos todos
+     deslocados a partir do buraco, e o curso ensinaria uma letra com o som
+     de outra sem ninguém perceber. */
+  console.log(`\n  uma gravação com um trecho faltando (${N - 1} para ${N} clipes)`);
+  const curto = gravacaoFalsa('curto.wav', N - 1);
+  const corteCurto = acharCorte(curto, pisoDeRuido(curto).db, N);
+  console.log(`    trechos achados  ${corteCurto.segs.length}, esperados ${N}`);
+  if (corteCurto.bateu) erro('a escada inventou um trecho que não existe - alinhamento cego');
+  else console.log(`    recusado, como tem de ser`);
+
+  /* 3. E uma com pausas curtas, que a escada tem de alcançar descendo o
+     tempo de pausa em vez de desistir. */
+  console.log(`\n  uma gravação com pausas de 0,3s`);
+  const rapido = gravacaoFalsa('rapido.wav', N, 0.32);
+  const corteRapido = acharCorte(rapido, pisoDeRuido(rapido).db, N);
+  console.log(`    trechos achados  ${corteRapido.segs.length} de ${N}  (pausa ${corteRapido.gap}s)`);
+  if (!corteRapido.bateu) erro('a escada não alcançou uma gravação de pausas curtas');
+
+  rmSync(tmp, { recursive: true, force: true });
+  console.log(falhas ? `\n  ${falhas} falha(s)\n` : '\n  ✓ o corte, a limpeza e a recusa funcionam\n');
+  process.exitCode = falhas ? 1 : 0;
+}
+
+/* ── main ────────────────────────────────────────────────────────────────── */
+function main() {
+  const argv = process.argv.slice(2);
+  if (argv.includes('--ensaiar')) return ensaiar();
+
+  const arg = nome => {
+    const i = argv.indexOf(nome);
+    return i >= 0 ? argv[i + 1] : null;
+  };
+  const wav = argv.find(a => !a.startsWith('--') && argv[argv.indexOf(a) - 1] !== '--onda'
+                                                && argv[argv.indexOf(a) - 1] !== '--de'
+                                                && argv[argv.indexOf(a) - 1] !== '--ate');
+  const onda = Number(arg('--onda') ?? 1);
+  const de = arg('--de') ? Number(arg('--de')) : null;
+  const ate = arg('--ate') ? Number(arg('--ate')) : null;
+
+  if (!wav || !existsSync(wav)) {
+    console.log(`
+  uso:  npm run cortar-audio -- --onda 1 gravacao.wav
+        npm run cortar-audio -- --onda 1 --de 40 --ate 80 parte2.wav
+        npm run cortar-audio -- --ensaiar
+
+  --onda   qual onda a gravação cobre (1, 2 ou 3)
+  --de     primeiro número do roteiro neste arquivo, se a sessão foi partida
+  --ate    último número do roteiro neste arquivo
+`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const audio = readJson('data/audio.json');
+  let alvo = audio.clips.filter(c => c.wave === onda);
+  if (de !== null) alvo = alvo.filter(c => c.num >= de);
+  if (ate !== null) alvo = alvo.filter(c => c.num <= ate);
+  alvo.sort((a, b) => a.num - b.num);
+
+  if (!alvo.length) {
+    console.log(`\n  ✗ nenhum clipe na onda ${onda}${de !== null ? ` entre ${de} e ${ate ?? '∞'}` : ''}\n`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const total = duracao(wav);
+  const piso = pisoDeRuido(wav);
+  const corte = acharCorte(wav, piso.db, alvo.length);
+  const segs = corte.segs;
+
+  console.log(`\n  ${basename(wav)} - ${(total / 60).toFixed(1)} min`);
+  console.log(`    piso de ruído   ${piso.db.toFixed(1)} dB  (medido em ${piso.fonte})`);
+  console.log(`    corte usado     ${corte.limiar} dB, pausa de ${corte.gap}s  (${corte.tentativas.length} ajuste(s) tentado(s))`);
+  console.log(`    trechos achados ${segs.length}`);
+  console.log(`    clipes na onda  ${alvo.length}  (nº ${alvo[0].num} a ${alvo[alvo.length - 1].num})\n`);
+
+  const ok = segs.length === alvo.length;
+
+  rmSync(CONF, { recursive: true, force: true });
+  mkdirSync(CONF, { recursive: true });
+
+  const pares = [];
+  for (let i = 0; i < segs.length; i++) {
+    const clipe = alvo[i] ?? null;
+    const rotulo = String(i + 1).padStart(3, '0') +
+      (clipe && clipe.translit ? '-' + clipe.translit.replace(/[^\w]/g, '') : '');
+    const arquivo = rotulo + '.mp3';
+    extrair(wav, segs[i], join(CONF, arquivo), piso.db);
+    pares.push({ ...segs[i], clipe, arquivo });
+    if ((i + 1) % 20 === 0) console.log(`    ${i + 1}/${segs.length} cortados`);
+  }
+
+  const resumo = `${basename(wav)} · ${segs.length} trecho(s) para ${alvo.length} clipe(s) da onda ${onda}`;
+  writeFileSync(join(CONF, 'conferencia.html'), conferencia(pares, { ok, resumo }));
+
+  if (!ok) {
+    console.log(`
+  ✗ ${segs.length} trechos para ${alvo.length} clipes - NADA foi nomeado.
+
+    Um trecho a mais ou a menos desloca todos os nomes daí em diante, e o
+    erro é mudo: o curso passaria a ensinar uma letra com o som de outra.
+
+    Abra audio/conferir/conferencia.html e ouça até achar onde o corte se
+    perdeu. ${segs.length > alvo.length
+      ? 'Sobrando: quase sempre é um pigarro ou uma tomada repetida que virou trecho.'
+      : 'Faltando: quase sempre são dois itens lidos juntos, sem pausa entre eles.'}
+
+    Ache o ponto, corte o trecho problemático do WAV, e rode de novo. Ou use
+    --de e --ate para tratar os pedaços separadamente.
+`);
+    process.exitCode = 1;
+    return;
+  }
+
+  for (const p of pares) {
+    execFileSync('cp', [join(CONF, p.arquivo), join(DROP, p.clipe.file)]);
+  }
+
+  console.log(`
+  ✓ ${pares.length} clipe(s) cortados, limpos, nivelados e nomeados.
+
+    ANTES de publicar, abra audio/conferir/conferencia.html e ouça oito
+    linhas espalhadas, inclusive a última. É o único jeito de provar que o
+    corte não escorregou - e um escorregão silencioso é o defeito que leva
+    o curso ao ar ensinando uma letra com o som de outra.
+
+    Depois:  npm run check-audio
+`);
+}
+
+main();

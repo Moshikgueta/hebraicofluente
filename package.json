@@ -15,6 +15,7 @@
     "audio-manifest": "node tools/gen-audio.mjs",
     "audio-script": "node tools/gen-audio.mjs && node tools/audio-script.mjs",
     "check-audio": "node tools/check-audio.mjs",
+    "cortar-audio": "node tools/cortar-audio.mjs",
 
     "build:platform": "cd app && NEXT_PUBLIC_PLATFORM_API=worker npm run build",
     "deploy": "npm run build:platform && wrangler deploy",
