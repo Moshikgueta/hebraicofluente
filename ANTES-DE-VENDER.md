@@ -250,6 +250,68 @@ leem tudo desse arquivo, então não há texto a caçar.
 
 ## Bloco 2 - decisões suas, cada uma com um custo
 
+### 8b. O site vendia um áudio que não existe - CONSERTADO, mas a decisão é sua
+
+**O que estava errado.** O manifesto de gravações está vazio: **321 clipes
+planejados, zero gravados**. O curso lida bem com isso - desliga os exercícios
+de escuta e mostra "áudio em breve" em vez de usar voz sintética -, e o FAQ
+dizia a verdade, com duas versões da frase e o manifesto escolhendo qual sai.
+
+A parte que vende, não. No ar, hoje de manhã:
+
+- `Áudio gravado por falante nativo`, como item de uma lista de entregas
+- `Múltipla escolha, digitação, associação, escuta e leitura` - cinco tipos,
+  um deles desligado
+- uma maquete `Lição 4 · Escuta` com o botão `Reproduzir áudio`
+- um passo do método: `Ouça · O som gravado por falante nativo`
+- e um botão `Ouvir` na **primeira tela** do site
+
+Ou seja: o site se contradizia, e a parte que contradizia era justamente a que
+vende. No Brasil a oferta vincula (CDC art. 30) - quem comprasse por causa
+daquela lista e não achasse áudio teria razão em pedir o dinheiro de volta,
+dentro da sua própria garantia de sete dias. Reembolso que não precisava
+existir.
+
+**O que foi feito.** Toda frase sobre gravação passou a ter duas versões, e
+quem escolhe é o manifesto - nunca quem escreve. Com o manifesto vazio, o site
+agora diz: quatro tipos de exercício, "o som comparado com um som do
+português", cinco passos no método em vez de seis, a maquete mostra um
+exercício de reconhecimento (que existe), e o "Ouvir" do herói não aparece.
+No dia em que as gravações entrarem, tudo volta sozinho.
+
+O texto de venda saiu de dentro do JSX e foi para `components/landing/copy.ts`,
+um arquivo só, que dá para ler de uma vez - porque enquanto estava espalhado no
+meio da marcação, ninguém conferia.
+
+**Como fica provado, e o que o conserto NÃO cobre.** `npm run promessas` lê o
+HTML publicado e falha se achar promessa de gravação sem gravação; roda no
+deploy. Ele só vê o que renderiza, e o HTML da home traz apenas a primeira das
+cinco abas - então `tests/vitrine.test.ts` cobre o texto das outras quatro e do
+método, lendo os mesmos dados que a página usa. Os dois foram ensaiados pelo
+avesso: com o texto antigo, o script acusa duas promessas e o teste reprova
+três dos cinco casos.
+
+Uma coisa que tentei e não deu: fazer as frases descartadas desaparecerem do
+pacote de JavaScript. O empacotador não dobra `audioAvailable()` (chamada de
+função), nem um booleano literal importado de outro módulo - os dois lados de
+cada condicional sobrevivem no arquivo final. Ninguém vê uma string morta num
+JavaScript minificado, e ela não é oferta; mas está escrito aqui para não
+parecer descuido.
+
+**A decisão que sobra é sua.** O conserto deixou o site honesto. Ele não deixou
+o produto completo:
+
+1. **Gravar a onda 1** (168 clipes: nomes das letras, sílabas, sinais de
+   vogal). Só com ela, toda lição já tem áudio no que importa - o som da letra.
+   É o caminho que faz o produto valer o que a página prometia antes.
+2. **Vender assim, dizendo assim.** Custo zero, e agora é verdade: quem compra
+   lê "o som comparado com um som do português" e é isso que recebe. O curso
+   não fica mentiroso - fica menor do que vai ser.
+
+Enquanto for (2), isto fica escrito aqui para não virar esquecimento.
+
+
+
 ### 8. O conteúdo do curso está dentro do pacote público - RESOLVIDO
 
 **Estava assim.** Em 20/09/2026 eu medi, em vez de estimar. O que estava no

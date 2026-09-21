@@ -18,6 +18,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Container, Check } from './base';
+import { TEM_AUDIO } from './copy';
+
 
 const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1000], [5, 1900]];
 
@@ -190,13 +192,22 @@ function Mockup({ ativo, certo }: { ativo: boolean; certo: boolean }) {
 
       <div className="rounded-[18px] bg-[var(--sand)] px-5 py-[26px] text-center mb-4">
         {/* A letra num bloco próprio: <He> é um span, e sem isto o botão
-            "Ouvir" fica ao lado dela em vez de embaixo. */}
+            "Ouvir" fica ao lado dela em vez de embaixo.
+
+            E o botão só aparece quando há o que tocar. Esta é a PRIMEIRA tela
+            do site, e um "Ouvir" aqui é a promessa mais visível que a página
+            faz - enquanto o manifesto de áudio está vazio, é uma promessa que
+            a lição não cumpre. A pergunta acima ("qual é o som desta letra?")
+            continua valendo nos dois casos: ela é respondida pelas opções, e
+            é exercício que existe hoje. Ver a nota em Fecho.tsx. */}
         <div><He size="plate" tone="navy" className="animate-pop">ש</He></div>
-        <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--card)] border border-line
-                         px-[17px] py-[9px] font-ui text-[14.5px] font-semibold text-ink">
-          <span aria-hidden className="w-[9px] h-[9px] rounded-full bg-[var(--teal)] animate-pulse-dot" />
-          Ouvir
-        </span>
+        {TEM_AUDIO && (
+          <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--card)] border border-line
+                           px-[17px] py-[9px] font-ui text-[14.5px] font-semibold text-ink">
+            <span aria-hidden className="w-[9px] h-[9px] rounded-full bg-[var(--teal)] animate-pulse-dot" />
+            Ouvir
+          </span>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-2.5">

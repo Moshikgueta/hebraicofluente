@@ -12,6 +12,16 @@
  *   de reembolso com passos extras.
  * · Todo hebraico passa por <He>, inclusive as letras soltas nos cabeçalhos
  *   dos módulos. É o contrato do projeto e não abre exceção para enfeite.
+ * · O ÁUDIO É CONDICIONAL, pelo mesmo motivo que em Fecho.tsx - e aqui a
+ *   lição foi aprendida mais tarde, o que é o registro honesto. O Fecho já
+ *   tinha duas versões de cada frase sobre gravação; este arquivo não, e por
+ *   isso o site se contradizia: o FAQ dizia "as gravações estão em produção"
+ *   enquanto esta seção listava "Áudio gravado por falante nativo" como coisa
+ *   entregue, punha "escuta" entre os tipos de exercício e desenhava uma
+ *   maquete de exercício de escuta com botão de tocar. A parte que vendia era
+ *   justamente a que estava errada, e no Brasil a oferta vincula.
+ *   Quem decide é o manifesto: no dia em que as gravações entrarem, estas
+ *   frases voltam sozinhas.
  */
 
 import { useState } from 'react';
@@ -21,6 +31,8 @@ import { StrokeOrderPlayer } from '@/components/learn/StrokeOrder';
 import { course } from '@/lib/content-publico';
 import { allCourses, isPlayable } from '@/lib/catalog';
 import { Container, H2, Lead, Reveal, Check, CheckList, Chevron } from './base';
+import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from './copy';
+
 
 /* ── 3 · o problema ─────────────────────────────────────────────────────── */
 const PROBLEMAS = [
@@ -62,33 +74,6 @@ export function Problema() {
 }
 
 /* ── 4 · a demonstração ─────────────────────────────────────────────────── */
-const ABAS = [
-  {
-    label: 'Aula', kicker: 'Aprender', title: 'A letra primeiro, sempre sozinha.',
-    body: 'Uma forma por tela. O nome, o som, o áudio e a explicação em português - nada mais disputando atenção.',
-    points: ['Áudio gravado por falante nativo', 'Explicação escrita em português', 'Uma palavra de exemplo, já com nikud']
-  },
-  {
-    label: 'Escrita', kicker: 'Escrever', title: 'Você escreve a letra, com o dedo na tela.',
-    body: 'O curso mostra a ordem dos traços e depois devolve a caneta para você. Escrever é o que separa reconhecer de saber - a mão aprende o que o olho só reconhece.',
-    points: ['A ordem dos traços, movimento a movimento', 'Traçado com o dedo, direto no celular', 'A forma exata da cursiva israelense, e não um desenho aproximado']
-  },
-  {
-    label: 'Prática', kicker: 'Fixar', title: 'Cinco tipos de exercício, alternados.',
-    body: 'Múltipla escolha, digitação, associação, escuta e leitura. A alternância é o que impede a decoreba.',
-    points: ['Correção imediata, com explicação', 'Erro não bloqueia: você tenta de novo', 'Dificuldade sobe conforme você acerta']
-  },
-  {
-    label: 'Revisão', kicker: 'Consolidar', title: 'O que você errou volta na hora certa.',
-    body: 'As letras que ainda escapam reaparecem em intervalos crescentes, até ficarem automáticas.',
-    points: ['Revisões curtas, de 3 a 5 minutos', 'Só o que precisa - não repete o que já domina', 'Aviso quando há revisão pendente']
-  },
-  {
-    label: 'Progresso', kicker: 'Acompanhar', title: 'Você vê exatamente onde está.',
-    body: 'Letras dominadas, letras em progresso, letras a revisar. Sem pontuação inflada: o número reflete leitura real.',
-    points: ['Percentual por módulo', 'Mapa de domínio das 22 letras', 'Tempo de estudo por semana']
-  }
-] as const;
 
 export function Demonstracao() {
   const [aba, setAba] = useState(0);
@@ -197,19 +182,30 @@ function PainelEscrita() {
   );
 }
 
+/* A maquete do exercício, e ela mostra um exercício que EXISTE hoje.
+ *
+ * Com gravação, é o de escuta: toca o clipe e pergunta qual som foi. Sem
+ * gravação, esse exercício está desligado no curso - então a maquete vira o
+ * de reconhecimento, que faz a pergunta ao contrário e é o que o aluno vai
+ * encontrar de verdade. As quatro opções são as mesmas nos dois casos, porque
+ * a confusão entre ש · ס · צ · ז é a mesma. */
 function PainelPratica() {
   const opcoes: readonly [string, string, boolean][] = [
     ['ש', 'SH', true], ['ס', 'S', false], ['צ', 'TS', false], ['ז', 'Z', false]
   ];
   return (
     <>
-      <Rotulo>Lição 4 · Escuta</Rotulo>
-      <p className="font-ui text-[18px] font-semibold text-ink mb-4">Qual som você ouviu?</p>
-      <span className="self-start inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)]
-                       px-[18px] py-2.5 font-ui text-[14.5px] font-semibold text-[var(--teal-ink)] mb-4">
-        <span aria-hidden className="w-[9px] h-[9px] rounded-full bg-[var(--teal)] animate-pulse-dot" />
-        Reproduzir áudio
-      </span>
+      <Rotulo>Lição 4 · {MAQUETE.praticaRotulo}</Rotulo>
+      <p className="font-ui text-[18px] font-semibold text-ink mb-4">
+        {MAQUETE.praticaPergunta}
+      </p>
+      {TEM_AUDIO && (
+        <span className="self-start inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)]
+                         px-[18px] py-2.5 font-ui text-[14.5px] font-semibold text-[var(--teal-ink)] mb-4">
+          <span aria-hidden className="w-[9px] h-[9px] rounded-full bg-[var(--teal)] animate-pulse-dot" />
+          Reproduzir áudio
+        </span>
+      )}
       <div className="grid grid-cols-2 gap-2.5">
         {opcoes.map(([he, rot, ok]) => (
           <div key={rot}
@@ -290,14 +286,6 @@ function PainelProgresso() {
 }
 
 /* ── 5 · o método ───────────────────────────────────────────────────────── */
-const PASSOS = [
-  ['Reconheça', 'A forma isolada, grande, sem distração.'],
-  ['Ouça', 'O som gravado por falante nativo.'],
-  ['Associe', 'A comparação com um som do português.'],
-  ['Pratique', 'Cinco tipos de exercício, alternados.'],
-  ['Leia', 'A letra dentro de uma palavra real.'],
-  ['Revise', 'Ela volta depois, no intervalo certo.']
-] as const;
 
 export function Metodo() {
   const { ref, cls } = useLinha();

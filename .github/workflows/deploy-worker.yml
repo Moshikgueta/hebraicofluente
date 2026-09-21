@@ -250,6 +250,29 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           exit $rc
 
+      # A vitrine não pode prometer o que o curso não entrega.
+      # ────────────────────────────────────────────────────────────────────
+      # Em 21/09/2026 o site vendia um áudio que não existe: o manifesto de
+      # gravações estava vazio, o curso desligava os exercícios de escuta, o FAQ
+      # dizia a verdade - e a seção que vende listava "Áudio gravado por falante
+      # nativo" como coisa entregue. No Brasil a oferta vincula, então isso não
+      # é detalhe de texto: é reembolso que o comprador tem razão em pedir.
+      #
+      # Roda contra o HTML PUBLICADO, e não contra a fonte, pelo mesmo motivo do
+      # passo acima: o que vende é o que foi publicado. O texto das abas que só
+      # aparecem ao clicar é coberto por tests/vitrine.test.ts, na suíte.
+      - name: A vitrine não promete o que não existe
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: |
+          set -o pipefail
+          echo "## A vitrine e o produto dizem a mesma coisa?" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          rc=0
+          node promessas.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" || rc=$?
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
+
       # Publicar É o script de configuração, e não um `wrangler deploy` seco.
       #
       # A diferença importa: um deploy seco pressupõe que o banco existe, que o
