@@ -8,7 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import * as catalogo from '@/lib/catalog';
 import {
-  allCourses, brl, cents, courseHref, flagship, getCourse,
+  allCourses, ancora, brl, cents, courseHref, flagship, getCourse,
   isPlayable, parcelasMax, pixPrice
 } from '@/lib/catalog';
 import {
@@ -114,6 +114,29 @@ describe('dinheiro', () => {
        consegue anunciá-lo por descuido. Quem recusa a conta refeita à mão no
        HTML publicado é o app/numeros.mjs. */
     expect(Object.keys(catalogo)).not.toContain('installment');
+  });
+
+  it('só risca um preço que é MAIOR do que o cobrado', () => {
+    const p = (brl: number, listBrl: number | null) =>
+      ({ brl, listBrl, installments: 12, pixDiscountPct: 10 });
+    expect(ancora(p(147, 297))).toBe(297);
+    expect(ancora(p(147, null))).toBeNull();
+    /* Os dois casos que um erro de digitação em data/courses.json produz, e
+       que montam a página do mesmo jeito: um "de R$ 100 por R$ 147" riscado
+       anuncia um aumento como se fosse desconto, e um "de R$ 147 por R$ 147"
+       é um desconto de nada. Nenhum dos dois chega à tela. */
+    expect(ancora(p(147, 100))).toBeNull();
+    expect(ancora(p(147, 147))).toBeNull();
+  });
+
+  it('o preço de pré-lançamento do curso 1 está no catálogo', () => {
+    const c = flagship();
+    /* Não é um teste de "o número é 147": é o par que a vitrine anuncia. Se
+       um dia o pré-lançamento acabar, este caso cai junto com a promoção -
+       e é para cair, porque a frase "depois passa a custar X" sai da tela no
+       mesmo movimento. */
+    expect(c.price.brl).toBeLessThan(c.price.listBrl!);
+    expect(ancora(c.price)).toBe(c.price.listBrl);
   });
 
   it('aplica o desconto do PIX, e não inventa um quando não há', () => {

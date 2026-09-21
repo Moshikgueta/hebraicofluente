@@ -24,7 +24,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
-import { brl, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
@@ -323,6 +323,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
   const c = flagship();
   const parcelas = parcelasMax(c.price);
   const pix = pixPrice(c.price);
+  const cheio = ancora(c.price);
 
   const inclui = [
     `Curso completo, ${totalLicoes()} lições`,
@@ -366,7 +367,18 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
               </>
             ) : (
               <>
-                <p className="font-ui text-[14.5px] text-ink-muted mb-1.5">Acesso completo</p>
+                {/* O rótulo diz POR QUE o preço é este. "Acesso completo" em
+                    cima de um número riscado não explica nada; "preço de
+                    pré-lançamento" explica, e é o que está sendo praticado. */}
+                <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em]
+                              text-[var(--teal-ink)] mb-1.5">
+                  {cheio ? 'Preço de pré-lançamento' : 'Acesso completo'}
+                </p>
+                {cheio && (
+                  <p className="font-ui text-[16px] text-ink-muted line-through leading-none mb-1">
+                    {brl(cheio)}
+                  </p>
+                )}
                 <p className="font-display text-[44px] sm:text-[48px] font-semibold tracking-[-0.035em]
                               leading-none text-ink mb-1">
                   {brl(soPix() ? pix : c.price.brl)}
@@ -407,6 +419,15 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                     : <>No PIX sai por {brl(pix)}. Acesso liberado em alguns minutos,
                        por {c.accessMonths} meses.</>}
             </p>
+            {/* O número riscado diz "é mais barato"; esta linha diz o que ele
+                É. Sem ela, o riscado vira preço de referência inventado - e no
+                Brasil isso é publicidade enganosa, não licença poética. Some
+                sozinha no dia em que o listBrl virar null. */}
+            {!owned && cheio && (
+              <p className="mt-2 font-ui text-[13.5px] leading-[1.5] font-medium text-[var(--teal-ink)]">
+                Depois do pré-lançamento, o curso passa a custar {brl(cheio)}.
+              </p>
+            )}
           </div>
         </div>
       </Container>

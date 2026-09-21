@@ -34,7 +34,9 @@ export type CourseStatus = 'available' | 'soon';
 export type CoursePrice = {
   /** O que é cobrado hoje, em reais inteiros. */
   brl: number;
-  /** O "de", riscado. `null` quando não há âncora - e aí nada é riscado. */
+  /** O preço CHEIO do curso, quando o de hoje é promocional: hoje, o valor
+   *  que passa a valer quando o pré-lançamento terminar. `null` quando o
+   *  preço cobrado já é o cheio - e aí nada é riscado. Ver `ancora()`. */
   listBrl: number | null;
   /** Número máximo de parcelas no cartão. */
   installments: number;
@@ -142,3 +144,22 @@ export const pixPrice = (p: CoursePrice): number =>
  * vitrine, para o caso de alguém reescrever a conta à mão.
  */
 export const parcelasMax = (p: CoursePrice): number => Math.max(1, p.installments);
+
+/**
+ * O preço cheio, para a tela mostrar riscado ao lado do que se cobra hoje.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Devolve `null` quando não há o que riscar - e, de propósito, também quando
+ * o "cheio" é MENOR ou IGUAL ao cobrado. Um "de R$ 100 por R$ 147" riscado
+ * na tela é o defeito que um erro de digitação em data/courses.json produz
+ * sozinho, e ele não aparece em teste nenhum: a página continua montando,
+ * só que anunciando um aumento como se fosse desconto.
+ *
+ * O que o número SIGNIFICA importa tanto quanto o número. Aqui ele é o preço
+ * que o curso passa a custar quando o pré-lançamento acabar, e não um "de"
+ * inventado para o 147 parecer barato - por isso as telas escrevem "depois
+ * do pré-lançamento, R$ 297" em vez de deixarem um número riscado sozinho,
+ * que no Brasil é preço de referência e precisa ser praticado de fato
+ * (CDC art. 37, publicidade enganosa por indução).
+ */
+export const ancora = (p: CoursePrice): number | null =>
+  p.listBrl !== null && p.listBrl > p.brl ? p.listBrl : null;

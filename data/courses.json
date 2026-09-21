@@ -7,10 +7,19 @@
     "Acrescentar um curso é acrescentar um objeto aqui. Nenhuma rota precisa ser",
     "escrita: /cursos/<slug> é gerada para todo curso do arquivo.",
     "",
-    "PREÇOS SÃO PROVISÓRIOS. Os valores abaixo são um ponto de partida plausível",
+    "O preço daqui é o que o checkout cobra: ele não é copiado para nenhum",
+    "outro lugar.",
+    "",
+    "ALFABETIZAÇÃO: preço decidido. R$ 147 é o preço de PRÉ-LANÇAMENTO, e os",
+    "R$ 297 do listBrl são o preço cheio, que passa a valer quando o",
+    "pré-lançamento terminar. O listBrl não é um 'de' inventado para fazer",
+    "número: é o que o curso vai custar, e o site diz isso com essas palavras.",
+    "Quando o pré-lançamento acabar, brl vira 297 e listBrl vira null - e",
+    "nenhuma tela precisa ser editada junto.",
+    "",
+    "OS OUTROS TRÊS PREÇOS SÃO PROVISÓRIOS. São um ponto de partida plausível",
     "para o mercado brasileiro, não uma decisão comercial - troque antes de",
-    "vender. O preço daqui é o que o checkout cobra: ele não é copiado para",
-    "nenhum outro lugar."
+    "vender."
   ],
 
   "currency": "BRL",
@@ -41,7 +50,7 @@
         "Quem vai viajar, tem família israelense ou lê por motivo religioso e quer decodificar sozinho."
       ],
       "requiresPurchase": true,
-      "price": { "brl": 147, "listBrl": 247, "installments": 12, "pixDiscountPct": 10 },
+      "price": { "brl": 147, "listBrl": 297, "installments": 12, "pixDiscountPct": 10 },
       "accessMonths": 12
     },
 

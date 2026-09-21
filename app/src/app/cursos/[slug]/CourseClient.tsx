@@ -21,7 +21,7 @@ import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { brl, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
 
@@ -207,6 +207,7 @@ function BuyBox({ slug }: { slug: string }) {
   const owned = account.can(c.slug);
   const open = isPlayable(c);
   const parcelas = parcelasMax(c.price);
+  const cheio = ancora(c.price);
 
   if (owned) {
     return (
@@ -284,8 +285,15 @@ function BuyBox({ slug }: { slug: string }) {
 
       <Card className="p-6 grid gap-4 content-start">
       <div className="grid gap-1">
-        {c.price.listBrl && (
-          <p className="font-ui text-[14px] text-ink-muted line-through">{brl(c.price.listBrl)}</p>
+        {/* O rótulo e o riscado andam juntos: um número riscado sozinho não
+            diz o que é. Ver `ancora()` em lib/catalog.ts. */}
+        {cheio && (
+          <p className="font-ui text-[12px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
+            Preço de pré-lançamento
+          </p>
+        )}
+        {cheio && (
+          <p className="font-ui text-[14px] text-ink-muted line-through">{brl(cheio)}</p>
         )}
         {/* O preço em destaque é o preço que vai ser cobrado. Com só PIX no ar,
             o desconto deixa de ser alternativa e passa a ser o preço, e o valor

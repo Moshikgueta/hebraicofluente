@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { flagship, brl, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, flagship, brl, parcelasMax, pixPrice } from '@/lib/catalog';
 import { course, totalLicoes } from '@/lib/content-publico';
 
 export const metadata: Metadata = meta({
@@ -70,6 +70,11 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
       : [
           `PIX, cartão de crédito à vista ou parcelado em até ${parcelasMax(c.price)}x.`,
           `À vista o curso sai por ${brl(c.price.brl)}${c.price.pixDiscountPct > 0 ? `, ou ${brl(pixPrice(c.price))} no PIX` : ''}.`,
+          /* A frase só existe enquanto o preço for promocional: quando o
+             listBrl virar null, ela some sozinha. Ver `ancora()`. */
+          ...(ancora(c.price)
+            ? [`Esse é o preço de pré-lançamento. Depois dele, o curso passa a custar ${brl(ancora(c.price)!)}. Quem compra agora paga uma vez e fica com os ${c.accessMonths} meses de acesso.`]
+            : []),
           /* O valor da parcela não é anunciado aqui de propósito: os juros do
              cartão são repassados, então quem fecha esse número é a operadora.
              Ver `parcelasMax` em lib/catalog.ts. */
