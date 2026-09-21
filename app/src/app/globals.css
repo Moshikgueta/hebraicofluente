@@ -165,3 +165,130 @@
   animation: sheen 1.4s ease infinite;
   border-radius: var(--r-sm);
 }
+
+/* ── a camada de acessibilidade ─────────────────────────────────────────
+   Cinco preferências do leitor, carimbadas no <html> por
+   lib/acessibilidade.ts e aplicadas aqui. Nenhum componente sabe que elas
+   existem - é o mesmo princípio dos tokens de cor, e é o que faz uma tela
+   nova entrar revestida sem ninguém lembrar dela.
+
+   Tudo isto está FORA do @layer base de propósito: são preferências
+   explícitas do leitor, e têm de ganhar dos utilitários do Tailwind. É a
+   única parte da folha em que vencer a cascata é o comportamento correto. */
+
+/* 1 · TAMANHO DO TEXTO. `zoom` no contêiner, e não font-size: o design
+       escreve px, e px ignora `html { font-size }`. Ver a nota longa em
+       lib/acessibilidade.ts. O botão flutuante fica FORA deste contêiner,
+       senão o controle do zoom cresce junto e sai da tela em 150%. */
+html[data-a11y-texto='115'] #hf-zoom { zoom: 1.15; }
+html[data-a11y-texto='130'] #hf-zoom { zoom: 1.3; }
+html[data-a11y-texto='150'] #hf-zoom { zoom: 1.5; }
+
+/* 2 · MAIS CONTRASTE. Redefine os tokens, e não os componentes: as mesmas
+       dez linhas revestem as 66 páginas. Preto puro aqui é deliberado - o
+       "nunca preto puro" do design é uma decisão estética do tema padrão, e
+       quem liga o alto contraste está pedindo exatamente o que ela recusa. */
+html[data-a11y-contraste='alto'] {
+  --ink:       #000000;
+  --ink-body:  #141917;
+  --ink-muted: #2C3330;
+  --cream:     #FFFFFF;
+  --sand:      #F0F0EE;
+  --card:      #FFFFFF;
+  --line:      #6A6F6C;
+  --line-soft: #6A6F6C;
+  --navy:      #062A30;
+  --navy-2:    #0B3A42;
+  --teal:      #0B5F55;
+  --teal-ink:  #08483F;
+  --teal-soft: #DDEFEB;
+  --gold:      #6E4F12;
+  --gold-ink:  #5A3F0C;
+  --gold-soft: #F6EEDC;
+  --locked:    #454A48;
+}
+/* A sombra deixa de separar superfícies quando o contraste é o que separa:
+   sem borda visível, dois cartões brancos viram um bloco só. */
+html[data-a11y-contraste='alto'] .shadow-\[var\(--sh\)\],
+html[data-a11y-contraste='alto'] [class*='shadow-'] {
+  box-shadow: none;
+}
+html[data-a11y-contraste='alto'] *:focus-visible {
+  outline: 3px solid #000000;
+  outline-offset: 2px;
+}
+
+/* 3 · MAIS ESPAÇO (WCAG 1.4.12). O hebraico fica DE FORA, e isto não é
+       detalhe de gosto: os sinais de vogal são posicionados pela fonte, e
+       letter-spacing desloca o ponto para fora da consoante. Numa plataforma
+       que ensina a ler esses pontos, seria uma lição errada. */
+html[data-a11y-espaco='amplo'] p,
+html[data-a11y-espaco='amplo'] li,
+html[data-a11y-espaco='amplo'] dd,
+html[data-a11y-espaco='amplo'] dt,
+html[data-a11y-espaco='amplo'] label,
+html[data-a11y-espaco='amplo'] figcaption {
+  line-height: 1.85;
+  letter-spacing: 0.012em;
+  word-spacing: 0.14em;
+}
+html[data-a11y-espaco='amplo'] h1,
+html[data-a11y-espaco='amplo'] h2,
+html[data-a11y-espaco='amplo'] h3,
+html[data-a11y-espaco='amplo'] h4 {
+  line-height: 1.3;
+}
+html[data-a11y-espaco='amplo'] .he,
+html[data-a11y-espaco='amplo'] .he-cursive,
+html[data-a11y-espaco='amplo'] .he-seq,
+html[data-a11y-espaco='amplo'] .he * {
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+
+/* 4 · SUBLINHAR LINKS. Só no corpo: um botão que é <a> com fundo próprio já
+       se anuncia, e sublinhá-lo só suja o rótulo. */
+html[data-a11y-links='sublinhado'] a:not([class*='rounded']):not([class*='bg-']) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 5 · MENOS ANIMAÇÃO. As mesmas regras do prefers-reduced-motion, agora por
+       escolha explícita - para quem usa um sistema que não oferece a opção. */
+html[data-a11y-movimento='reduzido'] *,
+html[data-a11y-movimento='reduzido'] *::before,
+html[data-a11y-movimento='reduzido'] *::after {
+  animation-duration: .001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .001ms !important;
+  scroll-behavior: auto !important;
+}
+html[data-a11y-movimento='reduzido'] .reveal { opacity: 1; transform: none; }
+
+/* ── o botão flutuante ──────────────────────────────────────────────────
+   Embaixo à direita, acima da barra do polegar (que existe nas duas cascas
+   abaixo de lg: a barra fixa de compra no site e a navegação do curso na
+   plataforma). Em telas grandes não há barra nenhuma, e ele desce. */
+.hf-a11y {
+  position: fixed;
+  right: 16px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 78px);
+  z-index: 70;
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+@media (min-width: 1024px) {
+  .hf-a11y { bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); }
+}
+/* O painel abre PARA CIMA, porque o botão mora embaixo. `max-height` com
+   rolagem própria: em 150% de zoom e num telefone deitado, ele é mais alto
+   do que a tela. */
+.hf-a11y-painel {
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media print {
+  .hf-a11y { display: none !important; }
+}

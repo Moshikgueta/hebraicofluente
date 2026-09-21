@@ -166,9 +166,9 @@ export default function SobrePage() {
       <Section labelledBy="metodo-origem">
         <SectionHead
           id="metodo-origem"
-          eyebrowPt="De onde vem o método"
-          titlePt="O método não é meu."
-          leadPt="A plataforma é uma adaptação, e a adaptação começa reconhecendo de onde ela partiu."
+          eyebrowPt="Crédito"
+          titlePt="De onde vem o método."
+          leadPt="O caminho que este curso segue tem autor, e o crédito é dele."
         />
         <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <Card tone="wash" className="p-6 grid gap-3 content-start">
@@ -194,11 +194,9 @@ export default function SobrePage() {
               a base do que a plataforma ensina.
             </p>
             <p className="font-ui text-[15px] leading-relaxed text-ink-body">
-              O que eu acrescentei foi a adaptação para o aluno brasileiro: as
-              comparações com os sons do português, os erros que só quem fala
-              português comete, os exercícios que se corrigem sozinhos e tudo o que
-              acontece na tela. Dizer isso é mais honesto do que apresentar como meu
-              um caminho que eu percorri antes de ensinar.
+              A adaptação para o aluno brasileiro é minha: as comparações com os sons
+              do português, os erros que só quem fala português comete, os exercícios
+              que se corrigem sozinhos e tudo o que acontece na tela.
             </p>
           </div>
         </div>

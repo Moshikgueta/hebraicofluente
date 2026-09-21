@@ -72,7 +72,23 @@ export function PublicShell({ children }: { children: ReactNode }) {
     <div className="min-h-[100dvh] flex flex-col">
       <header className="sticky top-0 z-40 border-b border-[color:var(--line-soft)]
                          bg-[color-mix(in_srgb,var(--paper)_88%,transparent)] backdrop-blur-md">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 h-[64px] flex items-center gap-4">
+        {/* `flex-wrap` e altura MÍNIMA, e não altura fixa.
+            ──────────────────────────────────────────────────────────────
+            Em uso normal nada quebra linha: a barra continua com os mesmos
+            64px de sempre. Ela existe para o leitor que aumenta o texto.
+
+            O aumento é `zoom` num contêiner (ver lib/acessibilidade.ts), e
+            zoom não mexe nas media queries: em 150% num telefone de 390px a
+            barra tem 260px úteis, mas as classes `sm:` continuam achando que
+            estão em 390 e mantêm as escolhas de lá. O resultado era o menu
+            sanduíche 46px para fora da tela, com a página rolando de lado -
+            exatamente o que a WCAG 1.4.10 proíbe, e logo para quem mais
+            precisa do recurso.
+
+            Quebrar linha resolve sem esconder nada: o par "Entrar" e
+            "Começar" desce para uma segunda linha e continua clicável. */}
+        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 min-h-[64px] py-1.5
+                        flex flex-wrap items-center gap-x-4 gap-y-1">
           {/* No telefone só o quadrado ע: o nome escrito come 110 dos 358
               pixels úteis, e esses 110 são o que faz caber o "Entrar" ao
               lado do "Começar". Entre mostrar a marca e deixar o aluno

@@ -320,6 +320,31 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           exit $rc
 
+      # Num navegador de verdade, e ANTES de publicar.
+      #
+      # É o único passo que vê a camada de acessibilidade funcionar: entre o
+      # atributo carimbado no <html> e o pixel que muda há a cascata do
+      # Tailwind, um seletor escrito errado e um `zoom` que pode não pegar -
+      # e nada disso aparece em teste de unidade. Uma regressão aqui é
+      # invisível para todo mundo que não precisa do recurso, que é
+      # justamente por que ela ficaria no ar.
+      #
+      # Custa um minuto de instalação do Chromium por publicação. O passo
+      # depois deste sobe o site; este é a última chance de barrar.
+      - name: A acessibilidade funciona num navegador?
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: |
+          set -o pipefail
+          npm install --no-save playwright >/dev/null 2>&1
+          npx --yes playwright install --with-deps chromium >/dev/null 2>&1
+          echo "## Tamanho do texto, contraste, espaçamento e o olho da senha" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          rc=0
+          node a11y.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" || rc=$?
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
+
       # Publicar É o script de configuração, e não um `wrangler deploy` seco.
       #
       # A diferença importa: um deploy seco pressupõe que o banco existe, que o

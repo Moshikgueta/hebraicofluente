@@ -64,6 +64,8 @@ const cursive = localFont({
 import { ProgressProvider } from '@/lib/state/store';
 import { AccountProvider } from '@/lib/account/store';
 import { Chrome } from '@/components/shell/Chrome';
+import { BotaoAcessibilidade } from '@/components/shell/BotaoAcessibilidade';
+import { SCRIPT_DE_ARRANQUE } from '@/lib/acessibilidade';
 import { course } from '@/lib/content-publico';
 import { ORIGEM } from '@/lib/seo';
 
@@ -99,6 +101,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       dir="ltr"
       className={`${display.variable} ${ui.variable} ${hebrew.variable} ${cursive.variable}`}
     >
+      <head>
+        {/* Antes da primeira pintura: carimba no <html> a preferência de
+            acessibilidade guardada no aparelho. Sem isto, quem escolheu alto
+            contraste vê um lampejo do tema claro a cada navegação - um
+            defeito pequeno para quem não usa o recurso, e cansativo para o
+            público inteiro que usa. Ver lib/acessibilidade.ts. */}
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_DE_ARRANQUE }} />
+      </head>
       <body>
         <a
           href="#conteudo"
@@ -111,19 +121,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             esta rota pode ser vista é a sessão, e o progresso é o que se
             mostra depois de ela ter deixado passar. O progresso continua
             sendo do APARELHO - ver a nota em lib/account/store.tsx. */}
-        <AccountProvider>
-          {/* Modules 6 and 7 count toward completion: a bar that reads 100%
-              while the reader still cannot handle an unpointed word would be
-              lying about the thing the course exists to teach. */}
-          <ProgressProvider
-            totalLetters={course.totalLetters}
-            extraModuleIds={course.modules.filter(m => !m.letterIds.length).map(m => m.id)}
-          >
-            <Chrome>
-              <div id="conteudo">{children}</div>
-            </Chrome>
-          </ProgressProvider>
-        </AccountProvider>
+        {/* `#hf-zoom` envolve TUDO o que o leitor lê: é este contêiner que
+            recebe o zoom da preferência de tamanho de texto. O botão de
+            acessibilidade fica de fora dele de propósito - um controle de
+            zoom que cresce junto com o zoom sai da tela em 150% e prende a
+            pessoa no ajuste que ela acabou de fazer. */}
+        <div id="hf-zoom">
+          <AccountProvider>
+            {/* Modules 6 and 7 count toward completion: a bar that reads 100%
+                while the reader still cannot handle an unpointed word would be
+                lying about the thing the course exists to teach. */}
+            <ProgressProvider
+              totalLetters={course.totalLetters}
+              extraModuleIds={course.modules.filter(m => !m.letterIds.length).map(m => m.id)}
+            >
+              <Chrome>
+                <div id="conteudo">{children}</div>
+              </Chrome>
+            </ProgressProvider>
+          </AccountProvider>
+        </div>
+        <BotaoAcessibilidade />
       </body>
     </html>
   );
