@@ -9,10 +9,13 @@
  *     is poor and most engines ignore nikud entirely - which makes it worse
  *     than useless in a course whose whole claim is "this letter makes this
  *     sound". A learner would rehearse a wrong pronunciation and never know.
- *   · it does not pretend. A missing clip renders as a labelled, disabled
- *     control that says "áudio em breve", so the gap is visible to the learner
- *     and to us, and the listening exercises that depend on it are withheld
- *     rather than turned into guesswork.
+ *   · it does not pretend. A missing clip renders NOTHING, and the listening
+ *     exercises that depend on it are withheld rather than turned into
+ *     guesswork. It used to render "áudio em breve"; that read as a promise
+ *     rather than as information, twenty-two letters in a row - see the note
+ *     at the early return below. The gap stays visible where it is a business
+ *     decision (`npm run check-audio`, the manifest, the sales page) instead
+ *     of where it is only noise to someone learning a letter.
  *
  * Clip ids are content hashes of the pointed Hebrew (tools/gen-audio.mjs), so
  * a recording made for the printed workbook plays here with no second naming
@@ -65,23 +68,27 @@ export function AudioButton({
     lg: 'min-h-[56px] min-w-[56px] px-5 text-base'
   } as const;
 
-  /* A ausência continua dita - ver o cabeçalho -, mas dita baixo.
-     Desenhada como botão (48px de altura, borda tracejada) ela aparecia duas
-     ou três vezes por etapa, e um controle desligado repetido desse tamanho
-     lê como aplicativo quebrado, não como gravação que ainda vem. Uma linha
-     de texto com o ícone diz a mesma coisa e não disputa a atenção com o que
-     dá para fazer agora. */
-  if (!available) {
-    return (
-      <span
-        className="inline-flex items-center gap-1.5 text-ink-muted font-ui text-[12.5px]"
-        title="As gravações ainda não foram feitas. Nenhuma voz sintética é usada aqui, de propósito."
-      >
-        <SpeakerOff />
-        <span>Áudio em breve</span>
-      </span>
-    );
-  }
+  /* A AUSÊNCIA NÃO É DITA NA TELA DO ALUNO.
+     ─────────────────────────────────────────────────────────────────────
+     Até aqui, um clipe que falta rendia a linha "Áudio em breve". A ideia
+     era honestidade, e a régua era a nossa: mostrar a lacuna para não
+     parecer que havia som onde não há.
+
+     Mas quem paga não está auditando o curso, está aprendendo uma letra, e
+     para essa pessoa a linha não informava - prometia. Aparecia duas ou três
+     vezes por etapa, vinte e duas letras seguidas, sempre dizendo que o bom
+     ainda vem. Uma promessa repetida que não tem data é pior do que silêncio:
+     ela transforma o que existe em versão incompleta do que não existe.
+
+     Então não se diz nada. O que a etapa tem - a forma, a comparação com um
+     som do português, o traçado - fica sozinho, que é como deve ser julgado.
+
+     Isto NÃO relaxa nenhuma das duas recusas do cabeçalho: continua sem voz
+     sintética, e os exercícios de escuta continuam retirados em vez de
+     virarem adivinhação. A ausência segue visível onde precisa ser vista -
+     em `npm run check-audio`, no manifesto e na vitrine, que é onde ela vira
+     decisão de negócio em vez de ruído para o aluno. */
+  if (!available) return null;
 
   return (
     <span className="inline-flex items-center gap-2">
@@ -120,15 +127,6 @@ function SpeakerOn() {
       <path d="M11 5 6 9H2v6h4l5 4V5Z" />
       <path d="M15.5 8.5a5 5 0 0 1 0 7" />
       <path d="M18.5 5.5a9 9 0 0 1 0 13" />
-    </svg>
-  );
-}
-function SpeakerOff() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M11 5 6 9H2v6h4l5 4V5Z" />
-      <path d="m17 9 4 6M21 9l-4 6" />
     </svg>
   );
 }

@@ -327,9 +327,10 @@ export function TypeAnswer({
 export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string | null }) {
   const [shown, setShown] = useState(0);
   const available = hints?.length ?? 0;
-  /* A hint row is not the place to advertise a missing recording. The lesson
-     pages say "áudio em breve" where the gap is the point; here it would be
-     one more disabled control between the learner and the answer. */
+  /* Sem gravação e sem dica, a linha inteira some: não há o que mostrar, e um
+     controle desligado entre o aluno e a resposta não é informação. A regra
+     valia só aqui, porque as lições diziam "áudio em breve"; hoje elas também
+     não dizem nada - ver a nota no AudioButton. */
   const playable = hasAudio(audioId);
   if (!available && !playable) return null;
 
