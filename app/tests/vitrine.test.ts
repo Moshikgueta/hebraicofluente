@@ -96,3 +96,50 @@ describe('a landing e o áudio dizem a mesma coisa', () => {
     expect(fonte.match(/TEM_AUDIO/g)?.length ?? 0).toBeGreaterThan(6);
   });
 });
+
+/* ── o outro lado do mesmo erro ──────────────────────────────────────────
+   Os casos acima impedem a vitrine de PROMETER o que o curso não entrega.
+   Este impede o contrário, que é igualmente uma divergência entre o texto e o
+   código, e que passou meses no ar sem ninguém ver: o FAQ dizia que o
+   progresso ficava "no próprio aparelho, não na conta" e que sincronizar
+   entre aparelhos "está no plano".
+
+   Era verdade quando foi escrito. Deixou de ser quando `WorkerProgressStore`
+   e as três rotas de /api/progress entraram, e ninguém voltou para apagar a
+   ressalva. O resultado é pior do que parece: uma desvantagem INVENTADA, na
+   resposta que alguém lê logo antes de decidir comprar.
+
+   Prometer a mais custa reembolso; prometer a menos custa a venda. As duas
+   são o mesmo defeito - texto e código discordando -, então moram no mesmo
+   arquivo. */
+describe('a vitrine também não NEGA o que o curso entrega', () => {
+  const faq = () => readFileSync(
+    new URL('../src/app/faq/page.tsx', import.meta.url), 'utf8');
+
+  it('não diz que o progresso fica preso num aparelho só', () => {
+    const NEGACOES = [
+      'não viaja junto',
+      'no próprio aparelho, não na conta',
+      'Sincronizar entre aparelhos está no plano'
+    ];
+    const achadas = NEGACOES.filter(n => faq().includes(n));
+    expect(achadas).toEqual([]);
+  });
+
+  it('e a sincronização que ele anuncia existe mesmo', () => {
+    /* O par do caso acima: apagar a ressalva sem ter a função seria trocar
+       uma mentira por outra, na direção que dá reembolso. Então a prova é do
+       CÓDIGO - o adaptador escolhido em modo plataforma e as três rotas que o
+       servidor registra. */
+    const store = readFileSync(
+      new URL('../src/lib/state/store.tsx', import.meta.url), 'utf8');
+    expect(store).toContain("apiMode() === 'worker'");
+    expect(store).toContain('new WorkerProgressStore()');
+
+    const rotas = readFileSync(
+      new URL('../../worker/src/worker.js', import.meta.url), 'utf8');
+    for (const r of ['GET /api/progress', 'PUT /api/progress', 'DELETE /api/progress']) {
+      expect(rotas, r).toContain(r);
+    }
+  });
+});

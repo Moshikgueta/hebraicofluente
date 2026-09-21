@@ -106,10 +106,17 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
     ]
   },
   {
+    /* Esta resposta já disse o contrário, e continuou dizendo depois de deixar
+       de ser verdade: que o progresso morava só no aparelho e que sincronizar
+       "estava no plano". O plano virou código - lib/state/worker.ts e as três
+       rotas de /api/progress - e o texto ficou para trás, inventando uma
+       desvantagem na pergunta que se faz ANTES de comprar. O caso em
+       tests/vitrine.test.ts quebra se a frase voltar. */
     q: 'Meu progresso fica salvo?',
     a: [
       'Fica, e a plataforma volta exatamente na lição e na questão em que você parou.',
-      'Uma ressalva honesta: hoje o progresso é guardado no próprio aparelho, não na conta. Ou seja, se você estudar no celular e depois abrir no computador, o progresso não viaja junto - o acesso, sim. Sincronizar entre aparelhos está no plano.'
+      'Ele é da sua conta, e não do aparelho: estude no celular, abra no computador e continue de onde estava. O que você fizer sem internet fica guardado no aparelho e sobe sozinho quando a conexão voltar - o curso funciona no ônibus.',
+      'E se você já tinha estudado neste aparelho antes de entrar na conta, nada se perde: as duas coisas são juntadas no login.'
     ]
   },
   {
