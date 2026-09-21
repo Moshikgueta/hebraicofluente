@@ -28,10 +28,23 @@ falhou=0
 
 # ── as respostas reais que a Cloudflare já devolveu ──────────────────────
 R_PERIODO='{"result":null,"success":false,"errors":[{"message":"not entitled to use the period 60, can only use a period among [10]","source":{"pointer":"/rules/0/ratelimit/period"}}],"messages":[]}'
-R_CARACT='{"result":null,"success":false,"errors":[{"message":"not entitled to use the characteristic cf.colo.id","source":{"pointer":"/rules/0/ratelimit/characteristics"}}],"messages":[]}'
+R_CARACT='{"result":null,"success":false,"errors":[{"message":"'"'"'[ip.src]'"'"' is not a valid value for characteristics because characteristics field is missing '"'"'cf.colo.id'"'"', this is required as ratelimiting counting is processed at colocation level only","source":{"pointer":"/rules/0/ratelimit/characteristics"}}],"messages":[]}'
 R_QUANTAS='{"result":null,"success":false,"errors":[{"message":"exceeded maximum number of rules for this plan","source":{"pointer":"/rules"}}],"messages":[]}'
 R_AUTH='{"success":false,"errors":[{"code":10000,"message":"Authentication error"}],"messages":[],"result":null}'
-R_OK='{"result":{"rules":[{"id":"abc"}]},"success":true,"errors":[],"messages":[]}'
+# A Cloudflare responde JSON FORMATADO - com espaço depois dos dois-pontos.
+# Foi exatamente isso que um `grep '"success":true'` não reconheceu, fazendo o
+# script relatar fracasso sobre uma escrita que tinha funcionado. A resposta de
+# sucesso deste ensaio é formatada de propósito.
+R_OK='{
+  "result": {
+    "id": "9891b3d8e2a045c7998e6452f9ea8830",
+    "phase": "http_ratelimit",
+    "rules": [ { "action": "block", "description": "HF: freio em /api/auth/*" } ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}'
 R_VAZIA=''
 R_HTML='<!DOCTYPE html><html><head><title>502</title></head><body>bad gateway</body></html>'
 
@@ -83,24 +96,34 @@ else:
 " 2>/dev/null
 }
 
+sucesso() {
+  printf '%s' "$1" | python3 -c "
+import sys,json
+try: sys.exit(0 if json.load(sys.stdin).get('success') is True else 1)
+except Exception: sys.exit(1)
+" 2>/dev/null
+}
+
+CARACT='ip.src,cf.colo.id'
+
 tentar() {
-  local J="$1" CAR="$2"
+  local J="$1"
   local A B C
-  A="$(regra '/api/auth/*' 30 "$J" "HF: freio em /api/auth/* (30 por ${J}s por IP)" "$CAR")"
-  B="$(regra '/api/pay/*'  30 "$J" "HF: freio em /api/pay/* (30 por ${J}s por IP)" "$CAR")"
-  C="$(regra '/api/*'     300 "$J" "HF: freio em /api/* (300 por ${J}s por IP)" "$CAR")"
+  A="$(regra '/api/auth/*' 30 "$J" "HF: freio em /api/auth/* (30 por ${J}s por IP)" "$CARACT")"
+  B="$(regra '/api/pay/*'  30 "$J" "HF: freio em /api/pay/* (30 por ${J}s por IP)" "$CARACT")"
+  C="$(regra '/api/*'     300 "$J" "HF: freio em /api/* (300 por ${J}s por IP)" "$CARACT")"
   for TENTATIVA in "$A,$B,$C" "$A,$C" "$A"; do
     RESP="$(posta "$TENTATIVA")"
-    if printf '%s' "$RESP" | grep -q '"success":true'; then
+    if sucesso "$RESP"; then
       APLICOU="$(printf '%s' "$TENTATIVA" | grep -o '"description"' | wc -l | tr -d ' ')"
-      ok "Freio na borda ativo: $APLICOU regra(s), janela de ${J}s, contando por ${CAR}."
+      ok "Freio na borda: $APLICOU regra(s) enviada(s), janela de ${J}s."
       return 0
     fi
     local M; M="$(motivo "$RESP")"
     case "$VISTOS" in
       *"$M"*) ;;
       *) VISTOS="${VISTOS}${VISTOS:+
-}${J}s · ${CAR} → ${M}" ;;
+}${J}s → ${M}" ;;
     esac
   done
   return 1
@@ -109,20 +132,19 @@ tentar() {
 escada() {
   APLICOU=0
   VISTOS=""
-  for CAR in 'ip.src,cf.colo.id' 'ip.src'; do
-    JANELAS="60"
-    tentar 60 "$CAR" && break
+  JANELAS="60"
+  if ! tentar 60; then
     for J in $(periodos_oferecidos "${RESP:-}") 10; do
       case " $JANELAS " in *" $J "*) continue ;; esac
       JANELAS="$JANELAS $J"
-      tentar "$J" "$CAR" && break 2
+      tentar "$J" && break
     done
-  done
+  fi
 }
 
 # ── 1. zona gratuita: recusa 60s, recusa cf.colo.id, aceita ip.src + 10s ──
 echo
-echo "1. zona gratuita (recusa 60s e cf.colo.id; uma regra só, de 10s, por IP)"
+echo "1. zona gratuita (recusa janela de 60s; aceita uma regra de 10s)"
 # O contador vai para um ARQUIVO, não para uma variável: `posta` é chamada
 # dentro de `$( )`, que é subshell, e um incremento ali não volta para cá.
 : > "$CONTA"
@@ -130,8 +152,11 @@ posta() {
   echo x >> "$CONTA"
   local n; n="$(printf '%s' "$1" | grep -o '"description"' | wc -l | tr -d ' ')"
   # A janela e as características saem do próprio corpo enviado.
+  # `cf.colo.id` é obrigatório em qualquer plano: um corpo sem ele é recusado,
+  # e o nosso sempre o inclui. Esta é a condição que o simulador anterior tinha
+  # ao contrário, por um palpite meu - e foi o palpite que o caso reprovou.
+  if ! printf '%s' "$1" | grep -q 'cf.colo.id'; then printf '%s' "$R_CARACT"; return; fi
   if printf '%s' "$1" | grep -q '"period": 60'; then printf '%s' "$R_PERIODO"; return; fi
-  if printf '%s' "$1" | grep -q 'cf.colo.id';      then printf '%s' "$R_CARACT";  return; fi
   if [ "$n" -gt 1 ]; then printf '%s' "$R_QUANTAS"; return; fi
   printf '%s' "$R_OK"
 }
@@ -159,9 +184,21 @@ if [ "$APLICOU" = "0" ] && printf '%s' "$VISTOS" | grep -q 'Authentication error
   printf '%s\n' "$VISTOS" | sed 's/^/        /'
 else info "FALHOU: relatório vazio ou sem o motivo"; falhou=1; fi
 
-# ── 4. respostas que não são JSON não podem silenciar ────────────────────
+# ── 4. o defeito que custou duas publicações ─────────────────────────────
 echo
-echo "4. resposta vazia, e um 502 em HTML"
+echo "4. a resposta de sucesso vem FORMATADA (foi o que o grep não leu)"
+if printf '%s' "$R_OK" | grep -q '"success":true'; then
+  info "FALHOU: a resposta do ensaio não está formatada - o caso não vale nada"
+  falhou=1
+else
+  ok "o grep antigo NÃO reconhece esta resposta (era o defeito)"
+fi
+if sucesso "$R_OK"; then ok "o leitor de JSON reconhece"
+else info "FALHOU: o leitor novo também não reconheceu"; falhou=1; fi
+
+# ── 5. respostas que não são JSON não podem silenciar ────────────────────
+echo
+echo "5. resposta vazia, e um 502 em HTML"
 for R in "$R_VAZIA" "$R_HTML"; do
   M="$(motivo "$R")"
   if [ -n "$M" ]; then ok "descreveu: ${M:0:60}"
@@ -170,7 +207,7 @@ done
 
 echo
 if [ "$falhou" = "0" ]; then
-  echo "Os quatro casos passaram."
+  echo "Os cinco casos passaram."
 else
   echo "Algum caso falhou."
   exit 1

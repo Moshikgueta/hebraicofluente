@@ -495,10 +495,9 @@ print(str((d.get('result') or {}).get('fight_mode','?')).lower())
       #   sua três vezes. Um teto apertado aqui derruba cliente de verdade em
       #   rede corporativa, e ninguém descobre o motivo.
       #
-      # TRÊS coisas variam com o plano da zona, e cada uma foi descoberta do
-      # jeito caro - publicando e lendo o erro. Por isso aqui não há um chute:
-      # há uma ESCADA, e o script desce por ela até achar o degrau que a zona
-      # aceita. O que varia:
+      # DUAS coisas variam com o plano da zona, e as duas foram descobertas do
+      # jeito caro - publicando e lendo o erro. Por isso aqui não há chute: há
+      # uma ESCADA, e o script desce até o degrau que a zona aceita.
       #
       # · QUANTAS regras cabem. O gratuito permite uma; os pagos, mais. As
       #   regras vão em ordem de valor e o script tenta do conjunto inteiro
@@ -508,10 +507,18 @@ print(str((d.get('result') or {}).get('fight_mode','?')).lower())
       #   "not entitled to use the period 60, can only use a period among
       #   [10]" - a recusa DIZ o que existe, então o script lê e usa.
       #
-      # · QUAIS CARACTERÍSTICAS de contagem cabem. Aqui eu não sei de cor qual
-      #   plano aceita o quê, e é justamente por isso que é escada: tenta
-      #   `ip.src + cf.colo.id` (que é o que um plano pago quer) e, se recusar,
-      #   `ip.src` sozinho.
+      # O que NÃO varia, e por um tempo eu achei que variava: as
+      # características de contagem. `cf.colo.id` é OBRIGATÓRIO, em qualquer
+      # plano, e a API é explícita -
+      #
+      #   '[ip.src]' is not a valid value for characteristics because
+      #   characteristics field is missing 'cf.colo.id', this is required as
+      #   ratelimiting counting is processed at colocation level only
+      #
+      # - porque a contagem acontece por datacenter, não globalmente. Houve um
+      # degrau de "ip.src sozinho" nesta escada, baseado num palpite meu de que
+      # o plano gratuito talvez não aceitasse cf.colo.id. Era o contrário, e o
+      # degrau nunca poderia dar certo. Saiu.
       #
       # O TETO não encolhe junto com a janela, de propósito. Converter
       # "30 por minuto" para "5 por 10 segundos" manteria a taxa média e
@@ -527,6 +534,19 @@ print(str((d.get('result') or {}).get('fight_mode','?')).lower())
       # numa das recusas vieram vazias, deixando na tela "A Cloudflare disse:"
       # seguido de nada. Um diagnóstico que pode ficar em branco é pior do que
       # nenhum, porque parece que não houve erro.
+      #
+      # ── o erro mais caro desta história ──────────────────────────────
+      # O sucesso era conferido com `grep '"success":true'`. A Cloudflare
+      # responde JSON FORMATADO, com `"success": true` - um espaço. Então o
+      # script criou as regras, leu a confirmação, não a reconheceu, e relatou
+      # fracasso. Duas publicações seguidas disseram "não consegui" sobre uma
+      # coisa que tinha funcionado, e me levaram a inventar teoria sobre planos
+      # e características que não existia.
+      #
+      # Agora quem decide é um analisador de JSON, não um casamento de texto. E
+      # o passo termina PERGUNTANDO à zona quantas regras estão lá - porque a
+      # resposta de uma escrita é o que o servidor diz que fez, e uma leitura
+      # depois é o que ele realmente tem.
       echo
       bold "8b. Freio na borda"
       RLSET="$CFAPI/zones/$ZID/rulesets/phases/http_ratelimit/entrypoint"
@@ -588,19 +608,48 @@ else:
 " 2>/dev/null
       }
 
+      # Deu certo? Quem responde é um analisador de JSON.
+      #
+      # `grep '"success":true'` parecia equivalente e não era: a resposta vem
+      # formatada, com espaço depois dos dois-pontos, e o casamento de texto
+      # falhava numa escrita que tinha funcionado. Ver a nota acima.
+      sucesso() { # resposta-json → 0 se a API disse que sim
+        printf '%s' "$1" | python3 -c "
+import sys,json
+try: sys.exit(0 if json.load(sys.stdin).get('success') is True else 1)
+except Exception: sys.exit(1)
+" 2>/dev/null
+      }
+
+      # Quantas regras a zona TEM agora, perguntando a ela. A resposta de uma
+      # escrita diz o que o servidor afirma ter feito; uma leitura depois diz o
+      # que ele tem. Para um passo que já mentiu nos dois sentidos, vale a
+      # chamada a mais.
+      quantas_no_ar() {
+        cf "$RLSET" | python3 -c "
+import sys,json
+try: d=json.load(sys.stdin)
+except Exception: print('?'); sys.exit()
+r=(d.get('result') or {}).get('rules') or []
+print(len([x for x in r if 'HF:' in (x.get('description') or '')]))
+" 2>/dev/null
+      }
+
+      CARACT='ip.src,cf.colo.id'
+
       # Da mais específica para a mais geral: a Cloudflare aplica a primeira
       # que casar, então `/api/*` por último ou ele engoliria as outras.
-      tentar() { # janela caracteristicas → 0 e imprime, ou 1
-        local J="$1" CAR="$2"
+      tentar() { # janela → 0 e imprime, ou 1
+        local J="$1"
         local A B C
-        A="$(regra '/api/auth/*' 30 "$J" "HF: freio em /api/auth/* (30 por ${J}s por IP)" "$CAR")"
-        B="$(regra '/api/pay/*'  30 "$J" "HF: freio em /api/pay/* (30 por ${J}s por IP)" "$CAR")"
-        C="$(regra '/api/*'     300 "$J" "HF: freio em /api/* (300 por ${J}s por IP)" "$CAR")"
+        A="$(regra '/api/auth/*' 30 "$J" "HF: freio em /api/auth/* (30 por ${J}s por IP)" "$CARACT")"
+        B="$(regra '/api/pay/*'  30 "$J" "HF: freio em /api/pay/* (30 por ${J}s por IP)" "$CARACT")"
+        C="$(regra '/api/*'     300 "$J" "HF: freio em /api/* (300 por ${J}s por IP)" "$CARACT")"
         for TENTATIVA in "$A,$B,$C" "$A,$C" "$A"; do
           RESP="$(posta "$TENTATIVA")"
-          if printf '%s' "$RESP" | grep -q '"success":true'; then
+          if sucesso "$RESP"; then
             APLICOU="$(printf '%s' "$TENTATIVA" | grep -o '"description"' | wc -l | tr -d ' ')"
-            ok "Freio na borda ativo: $APLICOU regra(s), janela de ${J}s, contando por ${CAR}."
+            ok "Freio na borda: $APLICOU regra(s) enviada(s), janela de ${J}s."
             return 0
           fi
           # Guarda o que a zona disse, uma vez por motivo distinto. É este
@@ -609,27 +658,33 @@ else:
           case "$VISTOS" in
             *"$M"*) ;;
             *) VISTOS="${VISTOS}${VISTOS:+
-}${J}s · ${CAR} → ${M}" ;;
+}${J}s → ${M}" ;;
           esac
         done
         return 1
       }
 
-      # A escada, do degrau que um plano pago aceita para o que o gratuito
-      # aceita. `periodos_oferecidos` entra no meio: quando a recusa de 60s diz
-      # quais janelas existem, é essa a próxima tentada - a API sabe melhor que
-      # uma lista escrita aqui.
+      # A escada de janelas. `periodos_oferecidos` entra no meio: quando a
+      # recusa de 60s diz quais existem, é essa a próxima tentada - a API sabe
+      # melhor do que uma lista escrita aqui.
       APLICOU=0
       VISTOS=""
-      for CAR in 'ip.src,cf.colo.id' 'ip.src'; do
-        JANELAS="60"
-        tentar 60 "$CAR" && break
+      JANELAS="60"
+      if ! tentar 60; then
         for J in $(periodos_oferecidos "${RESP:-}") 10; do
           case " $JANELAS " in *" $J "*) continue ;; esac
           JANELAS="$JANELAS $J"
-          tentar "$J" "$CAR" && break 2
+          tentar "$J" && break
         done
-      done
+      fi
+
+      # A confirmação, lida da zona. Roda mesmo quando a escada achou que
+      # falhou: se as regras estiverem lá, é isso que interessa saber.
+      NO_AR="$(quantas_no_ar)"
+      case "$NO_AR" in
+        ''|'?'|0) ;;
+        *) ok "Confirmado na zona: $NO_AR regra(s) de freio no ar." ; APLICOU="$NO_AR" ;;
+      esac
 
       if [ "$APLICOU" = "0" ]; then
         # Nunca derruba a publicação: é defesa em profundidade, e a camada
