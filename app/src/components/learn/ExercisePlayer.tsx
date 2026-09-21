@@ -260,7 +260,10 @@ export function ExercisePlayer({
 /* Reading a WHOLE WORD, as opposed to a letter or a syllable. These are the
    kinds where getting it right means the learner decoded something. */
 const UNAIDED_READ = new Set<Exercise['kind']>([
-  'word-meaning', 'type-answer', 'build-word', 'complete-word', 'scene-reading'
+  'word-meaning', 'type-answer', 'build-word', 'complete-word', 'scene-reading',
+  /* Ler uma frase inteira sem apoio é o teto desta escala, não um caso à
+     parte: se há um momento em que o curso cumpriu o que prometeu, é este. */
+  'sentence-reading'
 ]);
 
 const GLYPH_CONFUSION = new Set<Exercise['kind']>([
@@ -361,6 +364,35 @@ function Stimulus({ ex }: { ex: Exercise }) {
       return (
         <div className="flex justify-center py-2">
           <He size="display">{ex.he}</He>
+        </div>
+      );
+
+    /* A frase inteira, palavra por palavra e SEM transliteração.
+       ──────────────────────────────────────────────────────────────────
+       Cada palavra numa caixa própria, com espaço entre elas: é o que
+       permite ao olho parar numa e voltar, que é como se lê uma língua nova.
+       Uma linha corrida de hebraico apontado, para quem tem três semanas de
+       curso, é uma parede.
+       A transliteração fica de fora de propósito - ela aparece na explicação,
+       depois de responder. Antes disso ela não ajuda a ler: ela substitui a
+       leitura, e o aluno sai achando que leu hebraico quando leu português. */
+    case 'sentence-reading':
+      return (
+        /* `dir="rtl"` já coloca a primeira palavra à direita; o wrap é o
+           normal, e não o reverso, porque a linha que sobra vai ABAIXO - em
+           hebraico inverte-se a horizontal, nunca a vertical. */
+        <div className="flex flex-wrap justify-center items-baseline gap-x-3 gap-y-2 py-3"
+             dir="rtl" lang="he">
+          {ex.words.map((w, k) => (
+            <span key={k} className="inline-block rounded-[var(--r-sm)] px-1.5 py-0.5">
+              {/* Uma palavra sozinha é uma placa e recebe o corpo de sempre;
+                  duas e três descem um degrau cada, para caberem numa linha de
+                  telefone. A 84px, `בְּבַקָּשָׁה` sozinha já ocupa a tela toda. */}
+              <He size={ex.words.length > 2 ? 'lg' : ex.words.length > 1 ? 'xl' : 'display'}>
+                {w.he}
+              </He>
+            </span>
+          ))}
         </div>
       );
 

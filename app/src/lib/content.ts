@@ -35,7 +35,8 @@
 import { course, getModule, letterIds } from './content-publico';
 import type {
   Checkpoint, Course, CourseModule, CultureCard, Letter, LetterSkel,
-  NikudIntro, NikudSign, NikudSound, Scene, Stroke, StrokeSet, Syllable, Word
+  NikudIntro, NikudSign, NikudSound, Scene, Sentence, SentenceWord, Stroke, StrokeSet,
+  Syllable, Word
 } from './content-publico';
 
 /* Reexportados para os consumidores de sempre. O que mudou não é o nome, é
@@ -44,7 +45,8 @@ import type {
 export { course, getModule, letterIds };
 export type {
   Checkpoint, Course, CourseModule, CultureCard, Letter, LetterSkel,
-  NikudIntro, NikudSign, NikudSound, Scene, Stroke, StrokeSet, Syllable, Word
+  NikudIntro, NikudSign, NikudSound, Scene, Sentence, SentenceWord, Stroke, StrokeSet,
+  Syllable, Word
 };
 
 /** A forma exata do que `/api/content` devolve. O mesmo contrato do modo
@@ -54,6 +56,7 @@ export type ConteudoPago = {
   nikud: { intro: NikudIntro; dagesh: { title?: string; body?: string } | null; sounds: NikudSound[] };
   extras: import('./engine/extras').Extras;
   scenes: Scene[];
+  sentences: Sentence[];
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
 };
@@ -123,6 +126,29 @@ export const scenesForOrder = (order: number): Scene[] =>
 /** `letterId`, ou `${letterId}-final` para a forma final. */
 export const strokesFor = (id: string): StrokeSet | null => dados().strokes[id] ?? null;
 
+/* ── as frases ──────────────────────────────────────────────────────────
+   Uma frase só aparece depois de TODAS as suas letras, como as cenas. A
+   diferença é que a frase é o objetivo declarado do curso - "ler hebraico" -
+   e mostrá-la cedo demais não frustra um pouco: frustra na coisa pela qual a
+   pessoa pagou. */
+
+/** Tudo o que este aluno já consegue ler, da mais simples para a mais tardia. */
+export const sentencesUpTo = (order: number): Sentence[] =>
+  dados().sentences.filter(s => s.after <= order).sort((a, b) => a.after - b.after);
+
+/** As frases que ESTA letra acabou de destravar. É o momento de dizer
+ *  "você já consegue ler isto", que vale mais do que dizer "letra concluída". */
+export const sentencesForOrder = (order: number): Sentence[] =>
+  dados().sentences.filter(s => s.after === order);
+
+/** Só o hebraico de hoje, ou só o texto antigo - para a leitura paralela do
+ *  fim do curso, onde o ponto é justamente o contraste. */
+export const sentencesByEra = (era: Sentence['era']): Sentence[] =>
+  dados().sentences.filter(s => s.era === era).sort((a, b) => a.after - b.after);
+
+export const getSentence = (id: string): Sentence | undefined =>
+  dados().sentences.find(s => s.id === id);
+
 export const cultureCards = (): CultureCard[] => dados().culture;
 
 /** As cartas que este aluno ganhou, da mais recente para a mais antiga. */
@@ -183,11 +209,12 @@ export async function carregarConteudo(): Promise<void> {
      com os `import()` dentro. A constante exportada é para quem lê; o ramo
      tem de ser podado, e quem poda não segue exportação. */
   if (process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker') {
-    const [letters, nikudJson, extrasJson, realWorld, strokeJson, cultureJson] = await Promise.all([
+    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, strokeJson, cultureJson] = await Promise.all([
       import('@content/letters.json'),
       import('@content/nikud.json'),
       import('@content/extras.json'),
       import('@content/real-world.json'),
+      import('@content/sentences.json'),
       import('@content/stroke-paths.json'),
       import('@content/culture.json')
     ]);
@@ -198,6 +225,7 @@ export async function carregarConteudo(): Promise<void> {
       nikud: bruto<ConteudoPago['nikud']>(nikudJson),
       extras: bruto<ConteudoPago['extras']>(extrasJson),
       scenes: bruto<{ scenes: Scene[] }>(realWorld).scenes,
+      sentences: bruto<{ sentences: Sentence[] }>(sentencesJson).sentences,
       strokes: bruto<{ box: number; letters: Record<string, StrokeSet> }>(strokeJson).letters,
       culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards
     });

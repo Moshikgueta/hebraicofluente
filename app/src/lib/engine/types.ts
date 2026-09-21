@@ -50,6 +50,7 @@ export type Exercise =
   | (ChoiceBase & { kind: 'final-form'; letter: string })
   | (ChoiceBase & { kind: 'syllable-reading'; he: string })
   | (ChoiceBase & { kind: 'word-meaning'; he: string })
+  | (ChoiceBase & { kind: 'sentence-reading'; he: string; words: { he: string; translit: string; pt: string }[] })
   | (ChoiceBase & { kind: 'meaning-to-word'; pt: string })
   | (ChoiceBase & { kind: 'complete-word'; parts: (string | null)[]; hintPt: string })
   | (ChoiceBase & { kind: 'audio-recognition'; audioId: string })

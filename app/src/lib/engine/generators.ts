@@ -12,7 +12,7 @@
  * being obviously wrong.
  */
 
-import type { Letter, Syllable, Word } from '@/lib/content';
+import type { Letter, Sentence, Syllable, Word } from '@/lib/content';
 import {
   BASE_TO_FINAL, clean, clusters, containsLetter, gapAtLetter, gappedGlyph,
   isReadableWith, onCarrier, splitSyllable
@@ -27,6 +27,14 @@ export type Ctx = {
   alphabet: string[];
   /** Every glyph in the language, for single-letter distractors. */
   allGlyphs: string[];
+  /**
+   * As frases que este aluno já consegue ler, por ordem de letra.
+   *
+   * Vazio enquanto ele não tiver letras suficientes - até a letra 11 não há
+   * frase nenhuma, e isso é o desenho, não uma falha: uma frase precisa de
+   * verbo, e verbo precisa de letras que só chegam no meio do alfabeto.
+   */
+  sentences: Sentence[];
 };
 
 export type Gen = (L: Letter, ctx: Ctx, rand: Rand, round: number) => Exercise | null;
@@ -417,6 +425,59 @@ export const exWordMeaning: Gen = (L, ctx, rand, i) => {
   };
 };
 
+/**
+ * Ler uma FRASE inteira e dizer o que ela quer dizer.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O exercício que faltava. Até aqui o item mais longo do curso eram duas
+ * palavras, e o aluno chegava ao fim com 22 letras, 99 palavras soltas e
+ * nenhuma linha lida - que é exatamente o que ele acha que comprou.
+ *
+ * Três decisões, e as três são sobre NÃO facilitar:
+ *
+ * · a transliteração não aparece. Ela é a muleta que faz o aluno ler o
+ *   alfabeto latino e achar que leu hebraico. Fica na explicação, depois de
+ *   responder, que é quando ela ensina em vez de substituir;
+ * · a frase recém-destravada vem primeiro. Ela é a que produz o "eu li isto
+ *   sozinho", e esse momento vale mais quando chega no dia em que a última
+ *   letra dela foi aprendida;
+ * · os distratores são significados de OUTRAS frases do curso, nunca
+ *   inventados. Um distrator absurdo se elimina sem ler o hebraico, e aí o
+ *   exercício mede outra coisa.
+ */
+export const exSentenceReading: Gen = (L, ctx, rand, i) => {
+  if (!ctx.sentences.length) return null;
+  /* A que esta letra acabou de destravar tem prioridade; depois as outras,
+     da mais tardia para a mais antiga, porque as tardias são as que o aluno
+     ainda não viu. */
+  const recem = ctx.sentences.filter(s => s.after === L.order);
+  const resto = ctx.sentences.filter(s => s.after !== L.order).sort((a, b) => b.after - a.after);
+  const fila = [...recem, ...resto];
+  const alvo = at(fila, i);
+  if (!alvo) return null;
+
+  const outras = ctx.sentences.filter(s => s.id !== alvo.id);
+  const wrong = take(shuffled(outras, rand).map(s => s.pt), 3, rand);
+  if (wrong.length < 2) return null;
+  const { options, answer } = optionsWith(alvo.pt, wrong, rand);
+
+  return {
+    id: `${L.id}-frase-${alvo.id}`, kind: 'sentence-reading', letterId: L.id, skill: 'ler',
+    promptPt: alvo.words.length > 1
+      ? 'Leia a frase inteira. O que ela quer dizer?'
+      : 'Leia. O que está escrito?',
+    he: alvo.he,
+    words: alvo.words.map(w => ({ he: w.he, translit: w.translit, pt: w.pt })),
+    options, answer,
+    audioId: alvo.audioId,
+    /* A dica dá a PRIMEIRA palavra, não a frase. Quem trava numa palavra
+       destrava com ela; quem não leu nada continua sem ler. */
+    hintsPt: alvo.words.length > 1
+      ? [`A primeira palavra é “${alvo.words[0]!.pt}”.`]
+      : undefined,
+    explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. ${alvo.notePt}`
+  };
+};
+
 export const exMeaningToWord: Gen = (L, ctx, rand, i) => {
   const target = at(L.wordsToRead, i + 1);
   if (!target) return null;
@@ -664,6 +725,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exBuildSyllable,
   exConfusablePick,
   exWordMeaning,
+  exSentenceReading,
   exOddOneOut,
   exVowelSound,
   exLetterPosition,
@@ -691,7 +753,7 @@ export const BY_SKILL: Record<string, readonly Gen[]> = {
   som: [exVowelSound, exMatchLetterSound],
   ler: [exSyllableReading, exBuildSyllable, exSoundToSyllable, exWordMeaning,
         exCompleteWord, exBuildWord, exMeaningToWord, exMatchSyllable,
-        exMatchWordMeaning, exTypeTranslit],
+        exMatchWordMeaning, exTypeTranslit, exSentenceReading],
   ouvir: [exListenSyllable, exAudioWord, exTypeHeard],
   /* Writing is produced on a canvas, not generated as a question - see
      components/learn/Tracing.tsx. The key exists so callers can ask for any

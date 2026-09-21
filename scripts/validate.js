@@ -299,6 +299,58 @@ export function validate({ checkDist = true } = {}) {
     warn('V18', 'data/real-world.json', 'ausente - a seção «no mundo real» fica vazia');
   }
 
+  /* ── V20 - as frases só aparecem depois das letras que usam ────────
+     Mesma regra da V1, e pelo mesmo motivo: uma frase mostrada antes da hora
+     não é desafio, é parede.
+
+     A diferença é que aqui o `after` é CALCULADO e comparado com o que está
+     escrito, em vez de apenas conferido. Um número folgado passaria numa
+     verificação como a V1 - uma frase declarada para a letra 17 que só
+     precisa da 11 não mostra nada errado ao aluno, apenas o faz esperar seis
+     letras à toa. Das dezesseis frases escritas à mão, DUAS tinham esse erro.
+
+     E a soma das `words` tem de reconstruir a frase: é ela que a leitura
+     palavra a palavra percorre, e uma palavra esquecida ali some da tela sem
+     avisar ninguém. */
+  let sentences = null;
+  try { sentences = readJson('data/sentences.json').sentences; } catch { /* not authored */ }
+  if (sentences) {
+    const ordemDe = new Map();
+    for (const l of letters) {
+      ordemDe.set(l.letter, l.order);
+      if (l.finalForm) ordemDe.set(l.finalForm, l.order);
+    }
+    const igual = t => clean(t).replace(/[,.;!?]/g, '').replace(/\s+/g, ' ').trim();
+    for (const s of sentences) {
+      const at = `sentences/${s.id}`;
+      const cs = consonantsOf(s.he);
+      const fora = cs.filter(c => !ordemDe.has(c));
+      if (fora.length) {
+        fail('V20', at,
+          `"${s.he}" usa ${[...new Set(fora)].map(c => JSON.stringify(c)).join(', ')} - não é letra do curso`);
+        continue;
+      }
+      const real = Math.max(...cs.map(c => ordemDe.get(c)));
+      if (real !== s.after) {
+        fail('V20', at, `after declarado ${s.after}, mas a letra mais tardia é a de ordem ${real}`);
+      }
+      if (!hasNikud(s.he)) fail('V20', at, `"${s.he}" sem nikud`);
+
+      const junta = (s.words || []).map(w => w.he).join(' ');
+      if (igual(junta) !== igual(s.he)) {
+        fail('V20', at, `as words não reconstroem a frase: "${junta}" ≠ "${s.he}"`);
+      }
+      const bad = unmarkedHebrew(s.notePt || '');
+      if (bad.length) fail('V20', at, `notePt: hebraico sem {{ }} - ${bad.slice(0, 2).join(', ')}`);
+    }
+    if (!sentences.some(s => s.era === 'antigo')) {
+      warn('V20', 'data/sentences.json',
+        'nenhuma frase marcada «antigo» - a leitura paralela do fim fica sem o lado bíblico');
+    }
+  } else {
+    warn('V20', 'data/sentences.json', 'ausente - o curso volta a não ter nenhuma frase inteira');
+  }
+
   /* ── V19 - modules 6 and 7 are consistent with the alphabet ────────
      The dagesh pairs and the final forms are claims about the language, and
      they are now shared by the book and the app. A typo here would be printed

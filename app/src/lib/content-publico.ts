@@ -134,6 +134,18 @@ export type NikudSound = {
 
 export type NikudIntro = { title: string; lead: string; correction: string };
 
+/* Uma frase inteira, que era o que o curso não tinha.
+   `after` é a ordem da letra mais tardia que ela usa - calculada e conferida
+   pela V20 do validate.js, nunca escrita à mão sem conferência. `era` separa
+   o hebraico de hoje do texto antigo, que é o que permite pô-los lado a lado
+   no fim sem misturá-los antes. */
+export type SentenceWord = { he: string; translit: string; pt: string; audioId: string };
+export type Sentence = {
+  id: string; he: string; translit: string; pt: string;
+  after: number; era: 'moderno' | 'antigo';
+  words: SentenceWord[]; notePt: string; audioId: string;
+};
+
 export type Scene = {
   id: string; fromOrder: number; sceneType: string; labelPt: string;
   he: string; contextPt: string; translit: string; pt: string; audioId: string;

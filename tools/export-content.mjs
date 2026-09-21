@@ -76,6 +76,7 @@ function main() {
   const nikud = readJson('data/nikud.json');
   const extras = readJson('data/extras.json');
   const realWorld = readJson('data/real-world.json');
+  const sentences = readJson('data/sentences.json');
 
   /* Where each letter's pages start in the printed workbook, so the app can
      say "quer praticar à mão? páginas X-Y". Absent before the first `npm run
@@ -294,6 +295,19 @@ function main() {
         words: g.words.map(w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) }))
       }))
     }
+  }, null, 2) + '\n');
+
+  /* ── as frases ──────────────────────────────────────────────────────
+     Copiadas com o hebraico normalizado e com o id de áudio já calculado,
+     como tudo o mais: uma gravação futura encaixa sem renomear nada. O
+     `after` vem do dado e é conferido pela V20 do validate.js. */
+  writeFileSync(join(OUT, 'sentences.json'), JSON.stringify({
+    sentences: sentences.sentences.map(s2 => ({
+      ...s2,
+      he: NFC(s2.he),
+      audioId: audioIdFor(s2.he),
+      words: s2.words.map(w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) }))
+    }))
   }, null, 2) + '\n');
 
   writeFileSync(join(OUT, 'real-world.json'), JSON.stringify({

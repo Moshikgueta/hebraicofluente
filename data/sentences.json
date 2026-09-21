@@ -1,0 +1,322 @@
+{
+  "note": [
+    "FRASES - a matéria-prima que faltava ao curso.",
+    "",
+    "Até aqui o item mais longo do curso eram duas palavras. Um aluno chegava",
+    "ao fim sabendo 22 letras e 99 palavras soltas, e nunca tinha lido uma",
+    "linha inteira - que é justamente o que ele acha que comprou.",
+    "",
+    "`after` NÃO é escrito à mão: `npm run validate` calcula a ordem da letra",
+    "mais tardia de cada frase e recusa o arquivo se o número gravado aqui",
+    "discordar. Mexer na ordem das letras, portanto, não pode deixar uma frase",
+    "aparecer antes da hora em silêncio.",
+    "",
+    "`words` é a frase quebrada para a leitura palavra a palavra. A soma dos",
+    "`he` tem de reconstruir a frase - o validador confere isso também.",
+    "",
+    "`era` separa o que é hebraico de hoje do que é texto antigo. É o que",
+    "permite pôr os dois lado a lado no fim do curso sem misturá-los antes."
+  ],
+  "sentences": [
+    {
+      "id": "ani-lomed",
+      "he": "אֲנִי לוֹמֵד",
+      "translit": "aní loméd",
+      "pt": "eu estudo",
+      "after": 12,
+      "era": "moderno",
+      "words": [
+        { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
+        { "he": "לוֹמֵד", "translit": "loméd", "pt": "estudo" }
+      ],
+      "notePt": "A primeira frase inteira do curso. Se você leu isto sozinho, já não está decorando letras."
+    },
+    {
+      "id": "hi-mora",
+      "he": "הִיא מוֹרָה",
+      "translit": "hi morá",
+      "pt": "ela é professora",
+      "after": 12,
+      "era": "moderno",
+      "words": [
+        { "he": "הִיא", "translit": "hi", "pt": "ela" },
+        { "he": "מוֹרָה", "translit": "morá", "pt": "professora" }
+      ],
+      "notePt": "O hebraico não tem o verbo \"é\" no presente. Duas palavras já formam a frase inteira."
+    },
+    {
+      "id": "david-ve-sara",
+      "he": "דָּוִד וְשָׂרָה",
+      "translit": "David ve-Sará",
+      "pt": "David e Sara",
+      "after": 12,
+      "era": "moderno",
+      "words": [
+        { "he": "דָּוִד", "translit": "David", "pt": "David" },
+        { "he": "וְשָׂרָה", "translit": "ve-Sará", "pt": "e Sara" }
+      ],
+      "notePt": "O \"e\" não é palavra solta: é a letra {{ו}} colada na frente da palavra seguinte."
+    },
+    {
+      "id": "yerushalayim",
+      "he": "יְרוּשָׁלַיִם",
+      "translit": "Yerushaláyim",
+      "pt": "Jerusalém",
+      "after": 12,
+      "era": "moderno",
+      "words": [
+        { "he": "יְרוּשָׁלַיִם", "translit": "Yerushaláyim", "pt": "Jerusalém" }
+      ],
+      "notePt": "Uma palavra que você já viu a vida inteira em português - agora no desenho original."
+    },
+    {
+      "id": "ani-mi-israel",
+      "he": "אֲנִי מִיִּשְׂרָאֵל",
+      "translit": "aní mi-Yisraél",
+      "pt": "eu sou de Israel",
+      "after": 11,
+      "era": "moderno",
+      "words": [
+        { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
+        { "he": "מִיִּשְׂרָאֵל", "translit": "mi-Yisraél", "pt": "de Israel" }
+      ],
+      "notePt": "O {{מ}} colado na frente faz o \"de\". Hebraico prende partículas na palavra em vez de soltá-las."
+    },
+    {
+      "id": "ha-yam-gadol",
+      "he": "הַיָּם גָּדוֹל",
+      "translit": "ha-yám gadól",
+      "pt": "o mar é grande",
+      "after": 12,
+      "era": "moderno",
+      "words": [
+        { "he": "הַיָּם", "translit": "ha-yám", "pt": "o mar" },
+        { "he": "גָּדוֹל", "translit": "gadól", "pt": "grande" }
+      ],
+      "notePt": "O {{ה}} na frente é o \"o/a\". Também vem colado."
+    },
+    {
+      "id": "ma-hashaa",
+      "he": "מָה הַשָּׁעָה",
+      "translit": "ma ha-shaá",
+      "pt": "que horas são",
+      "after": 17,
+      "era": "moderno",
+      "words": [
+        { "he": "מָה", "translit": "ma", "pt": "que" },
+        { "he": "הַשָּׁעָה", "translit": "ha-shaá", "pt": "a hora" }
+      ],
+      "notePt": "Literalmente \"que a hora\". É assim que se pergunta as horas em Israel."
+    },
+    {
+      "id": "ma-nishma",
+      "he": "מָה נִשְׁמָע",
+      "translit": "ma nishmá",
+      "pt": "como vai",
+      "after": 17,
+      "era": "moderno",
+      "words": [
+        { "he": "מָה", "translit": "ma", "pt": "que" },
+        { "he": "נִשְׁמָע", "translit": "nishmá", "pt": "se ouve" }
+      ],
+      "notePt": "Ao pé da letra é \"o que se ouve?\". É o \"e aí?\" do dia a dia israelense."
+    },
+    {
+      "id": "slicha",
+      "he": "סְלִיחָה",
+      "translit": "slichá",
+      "pt": "desculpe",
+      "after": 16,
+      "era": "moderno",
+      "words": [
+        { "he": "סְלִיחָה", "translit": "slichá", "pt": "desculpe" }
+      ],
+      "notePt": "Serve para pedir desculpa e para chamar a atenção de alguém na rua."
+    },
+    {
+      "id": "shma-israel",
+      "he": "שְׁמַע יִשְׂרָאֵל",
+      "translit": "shemá Yisraél",
+      "pt": "ouve, Israel",
+      "after": 17,
+      "era": "antigo",
+      "words": [
+        { "he": "שְׁמַע", "translit": "shemá", "pt": "ouve" },
+        { "he": "יִשְׂרָאֵל", "translit": "Yisraél", "pt": "Israel" }
+      ],
+      "notePt": "Duas palavras escritas há milhares de anos, com as mesmas letras que você acabou de aprender."
+    },
+    {
+      "id": "boker-tov",
+      "he": "בֹּקֶר טוֹב",
+      "translit": "bóker tov",
+      "pt": "bom dia",
+      "after": 20,
+      "era": "moderno",
+      "words": [
+        { "he": "בֹּקֶר", "translit": "bóker", "pt": "manhã" },
+        { "he": "טוֹב", "translit": "tov", "pt": "bom" }
+      ],
+      "notePt": "\"Manhã boa\". O adjetivo vem DEPOIS do substantivo, ao contrário do português."
+    },
+    {
+      "id": "toda-raba",
+      "he": "תּוֹדָה רַבָּה",
+      "translit": "todá rabá",
+      "pt": "muito obrigado",
+      "after": 20,
+      "era": "moderno",
+      "words": [
+        { "he": "תּוֹדָה", "translit": "todá", "pt": "obrigado" },
+        { "he": "רַבָּה", "translit": "rabá", "pt": "muita" }
+      ],
+      "notePt": "\"Agradecimento muito\". De novo o adjetivo atrás."
+    },
+    {
+      "id": "ken-bevakasha",
+      "he": "כֵּן, בְּבַקָּשָׁה",
+      "translit": "ken, bevakashá",
+      "pt": "sim, por favor",
+      "after": 21,
+      "era": "moderno",
+      "words": [
+        { "he": "כֵּן", "translit": "ken", "pt": "sim" },
+        { "he": "בְּבַקָּשָׁה", "translit": "bevakashá", "pt": "por favor" }
+      ],
+      "notePt": "A mesma palavra serve para \"por favor\", \"de nada\" e \"aqui está\"."
+    },
+    {
+      "id": "ani-medaber-ivrit",
+      "he": "אֲנִי מְדַבֵּר עִבְרִית",
+      "translit": "aní medabér ivrít",
+      "pt": "eu falo hebraico",
+      "after": 20,
+      "era": "moderno",
+      "words": [
+        { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
+        { "he": "מְדַבֵּר", "translit": "medabér", "pt": "falo" },
+        { "he": "עִבְרִית", "translit": "ivrít", "pt": "hebraico" }
+      ],
+      "notePt": "Três palavras. A última é o nome da própria língua que você está lendo."
+    },
+    {
+      "id": "shalom-ma-shlomcha",
+      "he": "שָׁלוֹם, מָה שְׁלוֹמְךָ",
+      "translit": "shalóm, ma shlomchá",
+      "pt": "olá, como você está",
+      "after": 21,
+      "era": "moderno",
+      "words": [
+        { "he": "שָׁלוֹם", "translit": "shalóm", "pt": "olá" },
+        { "he": "מָה", "translit": "ma", "pt": "que" },
+        { "he": "שְׁלוֹמְךָ", "translit": "shlomchá", "pt": "a sua paz" }
+      ],
+      "notePt": "Pergunta-se pela \"paz\" da pessoa. A mesma raiz de {{שָׁלוֹם}} aparece nas duas palavras."
+    },
+    {
+      "id": "tel-aviv",
+      "he": "תֵּל אָבִיב",
+      "translit": "Tel Avív",
+      "pt": "Tel Aviv",
+      "after": 20,
+      "era": "moderno",
+      "words": [
+        { "he": "תֵּל", "translit": "tel", "pt": "colina" },
+        { "he": "אָבִיב", "translit": "avív", "pt": "primavera" }
+      ],
+      "notePt": "O nome da cidade quer dizer \"colina da primavera\" - antigo e moderno na mesma placa."
+    },
+    {
+      "id": "ma-ze",
+      "he": "מָה זֶה",
+      "translit": "ma ze",
+      "pt": "o que é isto",
+      "after": 13,
+      "era": "moderno",
+      "words": [
+        { "he": "מָה", "translit": "ma", "pt": "que" },
+        { "he": "זֶה", "translit": "ze", "pt": "isto" }
+      ],
+      "notePt": "A pergunta que resolve qualquer cardápio e qualquer prateleira. Aponte e diga."
+    },
+    {
+      "id": "chag-sameach",
+      "he": "חַג שָׂמֵחַ",
+      "translit": "chag saméach",
+      "pt": "boas festas",
+      "after": 14,
+      "era": "moderno",
+      "words": [
+        { "he": "חַג", "translit": "chag", "pt": "festa" },
+        { "he": "שָׂמֵחַ", "translit": "saméach", "pt": "alegre" }
+      ],
+      "notePt": "\"Festa alegre\". Serve para qualquer feriado judaico, como o nosso \"boas festas\"."
+    },
+    {
+      "id": "leat",
+      "he": "לְאַט",
+      "translit": "le'at",
+      "pt": "devagar",
+      "after": 15,
+      "era": "moderno",
+      "words": [
+        { "he": "לְאַט", "translit": "le'at", "pt": "devagar" }
+      ],
+      "notePt": "Está escrito nas placas de trânsito em Israel. Dobrada, {{לְאַט לְאַט}}, vira \"calma, uma coisa de cada vez\"."
+    },
+    {
+      "id": "ani-rotse-maim",
+      "he": "אֲנִי רוֹצֶה מַיִם",
+      "translit": "aní rotsé máyim",
+      "pt": "eu quero água",
+      "after": 18,
+      "era": "moderno",
+      "words": [
+        { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
+        { "he": "רוֹצֶה", "translit": "rotsé", "pt": "quero" },
+        { "he": "מַיִם", "translit": "máyim", "pt": "água" }
+      ],
+      "notePt": "Três palavras que já pedem alguma coisa. Uma mulher diz {{רוֹצָה}}, rotsá."
+    },
+    {
+      "id": "rak-rega",
+      "he": "רַק רֶגַע",
+      "translit": "rak réga",
+      "pt": "só um momento",
+      "after": 19,
+      "era": "moderno",
+      "words": [
+        { "he": "רַק", "translit": "rak", "pt": "só" },
+        { "he": "רֶגַע", "translit": "réga", "pt": "momento" }
+      ],
+      "notePt": "O \"peraí\" israelense. Você vai ouvir isto no telefone, na fila e no caixa."
+    },
+    {
+      "id": "bereshit",
+      "he": "בְּרֵאשִׁית בָּרָא",
+      "translit": "bereshít bará",
+      "pt": "no princípio, criou",
+      "after": 20,
+      "era": "antigo",
+      "words": [
+        { "he": "בְּרֵאשִׁית", "translit": "bereshít", "pt": "no princípio" },
+        { "he": "בָּרָא", "translit": "bará", "pt": "criou" }
+      ],
+      "notePt": "As duas primeiras palavras da Bíblia hebraica. A frase continua com {{אֱלֹהִים}}, Elohim."
+    },
+    {
+      "id": "ani-rotse-kafe",
+      "he": "אֲנִי רוֹצֶה קָפֶה",
+      "translit": "aní rotsé kafé",
+      "pt": "eu quero um café",
+      "after": 22,
+      "era": "moderno",
+      "words": [
+        { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
+        { "he": "רוֹצֶה", "translit": "rotsé", "pt": "quero" },
+        { "he": "קָפֶה", "translit": "kafé", "pt": "café" }
+      ],
+      "notePt": "A última letra do alfabeto está aqui dentro. Com ela você lê um pedido inteiro."
+    }
+  ]
+}

@@ -27,10 +27,11 @@ import lettersJson from '@content/letters.json';
 import nikudJson from '@content/nikud.json';
 import extrasJson from '@content/extras.json';
 import realWorldJson from '@content/real-world.json';
+import sentencesJson from '@content/sentences.json';
 import strokeJson from '@content/stroke-paths.json';
 import cultureJson from '@content/culture.json';
 import type {
-  CultureCard, Letter, NikudIntro, NikudSound, Scene, StrokeSet
+  CultureCard, Letter, NikudIntro, NikudSound, Scene, Sentence, StrokeSet
 } from './content-publico';
 
 export type ConteudoPago = {
@@ -38,6 +39,7 @@ export type ConteudoPago = {
   nikud: { intro: NikudIntro; dagesh: { title?: string; body?: string } | null; sounds: NikudSound[] };
   extras: import('./engine/extras').Extras;
   scenes: Scene[];
+  sentences: Sentence[];
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
 };
@@ -54,6 +56,7 @@ export const conteudoPago: ConteudoPago = {
   nikud: nikudJson as unknown as ConteudoPago['nikud'],
   extras: extrasJson as unknown as ConteudoPago['extras'],
   scenes: (realWorldJson as unknown as { scenes: Scene[] }).scenes,
+  sentences: (sentencesJson as unknown as { sentences: Sentence[] }).sentences,
   strokes: (strokeJson as unknown as { box: number; letters: Record<string, StrokeSet> }).letters,
   culture: (cultureJson as unknown as { cards: CultureCard[] }).cards
 };

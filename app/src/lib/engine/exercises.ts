@@ -21,6 +21,7 @@
  */
 
 import type { Letter } from '@/lib/content';
+import { sentencesUpTo } from '@/lib/content';
 import type { Skill } from '@/lib/state/types';
 import { ALL_GLYPHS, isReadableWith } from '@/lib/hebrew';
 import { rng, shuffled, type Rand } from './rng';
@@ -29,7 +30,7 @@ import {
   exBuildSyllable, exBuildWord, exCompleteWord, exConfusablePick, exCursiveToPrint,
   exFinalForm, exFinalInWord, exLetterInWord, exLetterPosition, exLetterRecognition,
   exMatchLetterSound, exMeaningToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
-  exSyllableReading, exVowelSound, exWordMeaning,
+  exSentenceReading, exSyllableReading, exVowelSound, exWordMeaning,
   type Ctx, type Gen
 } from './generators';
 import type { Exercise } from './types';
@@ -151,7 +152,8 @@ function contextFor(L: Letter, history: Letter[]): Ctx {
   return {
     history: history.filter(x => x.order <= L.order),
     alphabet: L.alphabetSoFar,
-    allGlyphs: [...ALL_GLYPHS]
+    allGlyphs: [...ALL_GLYPHS],
+    sentences: sentencesUpTo(L.order)
   };
 }
 
@@ -340,7 +342,20 @@ export function buildLetterPractice(
   tentar([exLetterPosition, exLetterInWord], 1);
   if (L.finalForm) tentar([exFinalInWord, exFinalForm], 1);
   tentar([exPrintVsCursive, exCursiveToPrint], 1);
-  tentar([exSyllableReading, exBuildSyllable, exWordMeaning, exBuildWord, exMeaningToWord], 2);
+  /* A frase é DECIDIDA aqui e COLOCADA depois das sílabas.
+     Decidida antes porque ela é um item de leitura e ocupa o lugar de um: com
+     frase o bloco lê uma sílaba e uma frase, sem frase lê duas sílabas. Somá-la
+     ao que já havia empurrava a revisão cumulativa para fora de um bloco de dez,
+     e uma letra voltava a ser ensinada isolada - foi o que tests/cobertura
+     cobrou. Colocada depois porque é o item mais difícil e o mais gratificante:
+     antes das sílabas o aluno bate nele sem aquecimento. */
+  const frase = exSentenceReading(L, ctx, rand, 0);
+  tentar([exSyllableReading, exBuildSyllable, exWordMeaning, exBuildWord, exMeaningToWord],
+         frase ? 1 : 2);
+  if (frase && !seen.has(frase.id) && out.length < count) {
+    seen.add(frase.id);
+    out.push(frase);
+  }
 
   /* ── cumulativo ──────────────────────────────────────────────────────
      Aproximadamente 30% do bloco, tirado das letras ANTERIORES - as que
