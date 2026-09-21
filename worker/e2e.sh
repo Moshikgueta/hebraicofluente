@@ -155,7 +155,16 @@ done
 # do lado de quem abre é indistinguível de "o site não funciona". Estas três
 # checagens olham o CONTEÚDO.
 echo "A capa aparece de verdade"
-HOME_HTML="$(G --max-time 20 -H 'Sec-Fetch-Dest: document' "$B/")"
+# A capa é buscada com um parâmetro descartável no fim.
+# ─────────────────────────────────────────────────────────────────────────
+# Sem ele esta verificação tem uma corrida embutida, e ela apareceu de
+# verdade: a borda ainda servia o HTML da publicação ANTERIOR, cujos nomes
+# de arquivo JavaScript acabaram de ser substituídos, e a checagem seguinte
+# pedia um arquivo que já não existia - 404 numa publicação inteiramente
+# sadia. O parâmetro faz a borda ir buscar a versão nova, que é a que este
+# passo existe para conferir. O servidor de ativos ignora a query e resolve
+# o mesmo index.html.
+HOME_HTML="$(G --max-time 20 -H 'Sec-Fetch-Dest: document' "$B/?publicacao=$$")"
 espera "o HTML tem tamanho de página" true \
   "$([ "${#HOME_HTML}" -gt 3000 ] && echo true || echo false)"
 # Duas perguntas, e nenhuma delas é "a frase X está lá".
@@ -183,7 +192,18 @@ espera "a capa traz a marca" true \
 # ativos aparece exatamente assim.
 ASSET="$(printf '%s' "$HOME_HTML" | grep -oE '/_next/static/[^"]+\.js' | head -1)"
 if [ -n "$ASSET" ]; then
-  espera "o JavaScript da página carrega" 200 "$(code "$B$ASSET")"
+  # Uma segunda tentativa depois de três segundos, e só uma. Publicar não é
+  # atômico entre os pontos de presença da Cloudflare: o HTML novo pode
+  # chegar a este ponto alguns segundos antes dos arquivos que ele cita. O
+  # que a verificação quer saber é se o ativo EXISTE, não em que milésimo
+  # ele apareceu - e uma tentativa que continua 404 três segundos depois é
+  # falha de verdade, não propagação.
+  ASSET_CODE="$(code "$B$ASSET")"
+  if [ "$ASSET_CODE" != "200" ]; then
+    sleep 3
+    ASSET_CODE="$(code "$B$ASSET")"
+  fi
+  espera "o JavaScript da página carrega" 200 "$ASSET_CODE"
 else
   espera "a capa referencia o JavaScript do Next" true false
 fi
