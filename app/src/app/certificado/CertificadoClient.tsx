@@ -23,6 +23,7 @@ import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course } from '@/lib/content';
 import { certificateReady } from '@/lib/state/rules';
+import { CompartilharCertificado } from '@/components/platform/CompartilharCertificado';
 import { EXAM_PASS } from '@/lib/engine/exam';
 import {
   canvasToBlob, certificateFileName, drawCertificate, formatDate, FORMATS, SHARE_TEXT,
@@ -59,13 +60,17 @@ export function CertificadoClient() {
 
   useEffect(() => { redraw(); }, [redraw]);
 
-  const download = useCallback(async () => {
+  /* Devolve se o arquivo saiu mesmo. O botão de baixar não precisava saber,
+     mas a seção de redes sim: ela promete "a imagem foi salva" na linha
+     seguinte, e prometer isso quando o canvas falhou manda a pessoa procurar
+     na pasta um arquivo que não existe. */
+  const download = useCallback(async (): Promise<boolean> => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return false;
     setBusy(true);
     const blob = await canvasToBlob(canvas);
     setBusy(false);
-    if (!blob) return;
+    if (!blob) return false;
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -76,6 +81,7 @@ export function CertificadoClient() {
     setTimeout(() => URL.revokeObjectURL(url), 2000);
     track('certificate_downloaded', { mode: format });
     setSaid('Imagem salva.');
+    return true;
   }, [name, format]);
 
   const share = useCallback(async () => {
@@ -236,6 +242,14 @@ export function CertificadoClient() {
         <p aria-live="polite" className="font-ui text-[13px] text-ink-muted min-h-[20px]">
           {said}
         </p>
+
+        {/* Abaixo dos dois botões, e não no lugar deles: no celular a folha
+            nativa continua sendo o melhor caminho, porque é a única que anexa
+            a imagem sozinha. Estas quatro existem para o computador, onde
+            aquela folha não existe. */}
+        <div className="border-t border-line pt-4">
+          <CompartilharCertificado texto={SHARE_TEXT} baixar={download} formato={format} />
+        </div>
       </Card>
 
       <Card className="p-5 grid gap-3">
