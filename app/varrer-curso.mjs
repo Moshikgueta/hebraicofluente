@@ -8,7 +8,7 @@ await new Promise(r=>s.listen(4403,r));
 const hoje=new Date().toISOString().slice(0,10);
 const ACC={v:1,accounts:{'demo@hf.test':{id:'acc_demo',name:'Moshik',email:'demo@hf.test',createdAt:new Date().toISOString(),pw:'x',entitlements:[{courseSlug:'alfabetizacao',grantedAt:new Date().toISOString(),expiresAt:new Date(Date.now()+3e10).toISOString(),orderId:'demo'}],orders:[]}},current:'demo@hf.test'};
 const ST={version:2,onboarding:{reason:'familia',goalMinutes:10,startingPoint:'zero',name:'Moshik',completedAt:new Date().toISOString()},xp:340,lessons:{mem:{letterId:'mem',stagesDone:[1,2,3,4,5],quizBest:1,quizAttempts:1,perfectBonusPaid:true,completedAt:new Date().toISOString()},tav:{letterId:'tav',stagesDone:[1,2,3,4,5],quizBest:.9,quizAttempts:2,perfectBonusPaid:false,completedAt:new Date().toISOString()},alef:{letterId:'alef',stagesDone:[1,2],quizBest:null,quizAttempts:0,perfectBonusPaid:false,completedAt:null}},checkpoints:{},srs:{tav:{itemId:'tav',letterId:'tav',box:1,misses:2,hits:1,dueOn:hoje,lastSeen:hoje,skill:'ler'},mem:{itemId:'mem',letterId:'mem',box:0,misses:1,hits:0,dueOn:hoje,lastSeen:hoje,skill:'som'}},achievements:[{id:'primeira-letra',unlockedAt:new Date().toISOString()}],days:{[hoje]:{answered:12,units:3,xp:120,goalMet:false}},streak:{current:3,longest:5,lastDay:hoje},lastRoute:null,finalChallenge:{best:null,completedAt:null},skills:{},confusions:{},firsts:{},gym:{}};
-const ROTAS=['/meu-hebraico/','/mapa/','/revisao/','/academia/','/conquistas/','/perfil/','/licao/alef/','/modulo/6/','/inicio/','/historia/','/desafio-final/','/onboarding/'];
+const ROTAS=['/meu-hebraico/','/mapa/','/revisao/','/academia/','/conquistas/','/perfil/','/licao/alef/','/licao/bet/','/licao/he/','/modulo/6/','/inicio/','/historia/','/desafio-final/','/onboarding/'];
 const b=await chromium.launch({executablePath:process.env.HF_CHROMIUM});
 let ruim=0;
 for (const w of [390,1280]) {
@@ -20,9 +20,16 @@ for (const w of [390,1280]) {
     p.on('console', m=>{ if(m.type()==='error') erros.push(m.text()); });
     await p.goto(`http://127.0.0.1:4403${rota}`,{waitUntil:'networkidle'});
     await p.waitForTimeout(500);
-    const m=await p.evaluate(()=>({sw:document.documentElement.scrollWidth,iw:innerWidth,h:document.documentElement.scrollHeight}));
+    const m=await p.evaluate(()=>({sw:document.documentElement.scrollWidth,iw:innerWidth,h:document.documentElement.scrollHeight,
+      /* Marcação crua na tela. O hebraico em prosa é escrito {{assim}} e
+         convertido pelo <Prose>; um texto que chega à tela sem passar por
+         ele mostra as chaves ao aluno, e some no meio de uma página longa
+         sem quebrar nada. Foi o que aconteceu com o enunciado da checagem
+         da letra {{ב}}: "Como se lê {{לֵב}}?" com chaves e tudo. */
+      cru:(document.body.innerText.match(/\{\{[^}]{1,40}\}\}/g)||[])[0]||null}));
     const over=m.sw>m.iw+1;
-    if(over||erros.length) ruim++;
+    if(over||erros.length||m.cru) ruim++;
+    if(m.cru) console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} MARCAÇÃO CRUA NA TELA: ${m.cru}`);
     console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} ${String(m.h).padStart(6)}px ${over?'OVERFLOW '+m.sw:'ok'} ${erros[0]?'ERRO: '+erros[0].slice(0,70):''}`);
   }
   await ctx.close();

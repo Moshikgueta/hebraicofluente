@@ -37,6 +37,11 @@
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
+/* O enunciado e o retorno são PROSA: o hebraico dentro deles vem marcado
+   com {{ }} e precisa passar por aqui para virar um <He> de verdade. Sem
+   isto a tela mostra as chaves - foi o que aconteceu na primeira captura
+   da lição do {{ב}}, com "Como se lê {{לֵב}}?" escrito com chaves e tudo. */
+import { Prose } from '@/components/learn/Blocks';
 /* O tipo mora em content-publico.ts com todos os outros: os itens de
    checagem de cada letra vêm do data/letters.json, e um tipo definido aqui
    obrigaria o dado a importar de um componente. */
@@ -95,7 +100,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho }: {
         return (
           <Card key={p.q} className="p-5 grid gap-3">
             <p className="font-ui text-[15px] font-semibold text-ink leading-snug">
-              {i + 1}. {p.q}
+              {i + 1}. <Prose text={p.q} />
             </p>
 
             {p.t === 'escolha' && (
@@ -208,7 +213,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho }: {
                 <strong className="font-semibold text-ink">
                   {certo ? 'Isso. ' : 'A resposta certa é a marcada em verde. '}
                 </strong>
-                {p.porque}
+                <Prose text={p.porque} />
               </p>
             )}
           </Card>
