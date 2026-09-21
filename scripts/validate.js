@@ -216,6 +216,53 @@ export function validate({ checkDist = true } = {}) {
       warn('V11', at, `stroke-order SVG is still the placeholder`);
     }
 
+    /* ── V24 - as leituras de uma letra que tem mais de uma ────────────
+       {{שׁ}} e {{שׂ}} são o mesmo desenho com o ponto de lados diferentes, e
+       o curso ensinava isso em prosa sem NUNCA dar ao aluno os dois sons
+       separados: um botão de áudio só, para uma letra que tem duas
+       leituras. O mesmo valia para o daguesh de {{בּ}}, {{כּ}} e {{פּ}}.
+
+       Cada variante vira um `audioId` próprio no exportador, derivado do
+       próprio texto hebraico - então a regra aqui é sobre o DADO existir e
+       ser coerente. Sem ela, uma letra de dois sons volta a ter um botão
+       só e ninguém percebe até um aluno perguntar. */
+    {
+      const V = L.variantes || [];
+      const doisSons = / ou /.test(String(L.sound || ''));
+      if (doisSons && V.length < 2) {
+        fail('V24', at, `o som é "${L.sound}" e não há variantes descritas`);
+      }
+      const vistos = new Set();
+      V.forEach((v, i) => {
+        const onde = `${at} variante[${i}]`;
+        for (const campo of ['he', 'nomePt', 'som', 'translit', 'comoPt', 'ondePt']) {
+          if (!v[campo]) fail('V24', onde, `sem ${campo}`);
+        }
+        /* A variante tem de ser ESTA letra: ou a forma base, ou a final. */
+        const base = [...String(v.he || '')].some(c => c === L.letter || c === L.finalForm);
+        if (!base) fail('V24', onde, `"${v.he}" não contém ${JSON.stringify(L.letter)}`);
+        if (vistos.has(v.he)) fail('V24', onde, `"${v.he}" repetida`);
+        vistos.add(v.he);
+        /* A transliteração desta leitura entra numa sílaba montada pelo
+           exercício - "sh" + "a" = "sha". Uma maiúscula ou um espaço aqui
+           sai impresso na alternativa, e ninguém confere alternativa. */
+        if (!/^[a-z]{1,3}$/.test(String(v.translit || ''))) {
+          fail('V24', onde, `translit "${v.translit}" não é letra minúscula nossa`);
+        }
+        /* O hebraico no texto continua precisando de chaves. */
+        for (const campo of ['comoPt', 'ondePt']) {
+          if (unmarkedHebrew(v[campo] || '').length) {
+            fail('V24', onde, `${campo}: hebraico sem {{ }}`);
+          }
+        }
+      });
+      /* Duas variantes com o mesmo desenho E o mesmo som não são duas
+         leituras: são uma linha duplicada. */
+      if (V.length >= 2 && new Set(V.map(v => v.som)).size === 1) {
+        warn('V24', at, 'todas as variantes têm o mesmo som - confira se elas são mesmo duas leituras');
+      }
+    }
+
     /* ── V23 - a camada pedagógica da letra ────────────────────────────
        O curso sempre disse QUAL É O SOM de cada letra. O bloco `ensino`
        diz o que a letra FAZ dentro do sistema de escrita, que é a pergunta

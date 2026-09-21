@@ -240,6 +240,72 @@ export const exVowelPair: Gen = (L, ctx, rand, i) => {
   };
 };
 
+/* ── as leituras de uma letra que tem mais de uma ──────────────────────────
+ * Dá o SOM e pede o desenho: "qual destas se lê com o som do CH de chave?",
+ * com {{שׁ}}, {{שׂ}} e o {{ש}} sem sinal nenhum na mesa.
+ *
+ * Era o buraco mais concreto do curso: {{ש}} tem duas leituras, a lição
+ * explicava a diferença em prosa, e nenhum exercício jamais pedia ao aluno
+ * para usá-la. Dava para terminar a lição do shin sem nunca ter decidido,
+ * uma vez que fosse, se aquele ponto estava à direita ou à esquerda.
+ *
+ * ── por que esta direção, e não "que som tem este desenho" ───────────────
+ * A primeira versão mostrava um desenho e pedia o som, com uma alternativa
+ * por leitura. O invariante da suíte a rejeitou, e com razão: shin tem dois
+ * sons, duas alternativas são 50% no chute, e um item de 50% não mede nada.
+ * Virando a pergunta, as alternativas passam a ser DESENHOS - e aí entra o
+ * terceiro, que é o mais instrutivo de todos: a letra sem sinal, do jeito
+ * que ela aparece num texto sem niqqud, onde nada diz qual leitura é.
+ */
+export const exLetterVariant: Gen = (L, _ctx, rand, i) => {
+  const V = L.variantes ?? [];
+  if (V.length < 2) return null;
+
+  const alvo = at(V, i);
+  if (!alvo) return null;
+
+  /* Os desenhos: as leituras, mais a letra crua. Nenhum repetido - em
+     {{כ}} a forma sem ponto JÁ É a letra crua, e duas alternativas iguais
+     fazem a pergunta não ter resposta certa. */
+  const desenhos: string[] = [];
+  for (const v of V) if (!desenhos.includes(v.he)) desenhos.push(v.he);
+  if (!desenhos.includes(L.letter)) desenhos.push(L.letter);
+  if (desenhos.length < 3) return null;
+
+  /* A pergunta dá o SOM e pede o desenho, então dois desenhos do mesmo som
+     na mesa tiram a resposta única: em {{כ}} e {{פ}} a forma final soa
+     igual à forma sem ponto, e perguntar “qual se lê F, sempre?” com {{פ}} e
+     {{ף}} lado a lado só se responde lendo o enunciado com lupa. Quando é
+     esse o alvo, este formato não serve - e quem serve é o de sílaba. */
+  const somDe = new Map(V.map(v => [v.he, v.som]));
+  if (desenhos.some(g => g !== alvo.he && somDe.get(g) === alvo.som)) return null;
+
+  const options = shuffled(desenhos, rand);
+  const answer = options.indexOf(alvo.he);
+  if (answer < 0) return null;
+
+  const crua = (g: string) => g === L.letter;
+  return {
+    /* O id leva o índice, e não o desenho: o SRS guarda ids, e um id com
+       niqqud dentro é um id que muda de forma conforme quem o normaliza. */
+    id: `${L.id}-variante-${i}`,
+    kind: 'letter-variant', letterId: L.id, skill: 'som',
+    promptPt: `Qual destas se lê com ${alvo.comoPt}?`,
+    /* O enunciado já traz o som; o estímulo grande seria repetir. */
+    he: '',
+    options, answer,
+    whyPt: options.map(g => g === alvo.he ? null
+      : crua(g)
+        ? 'Essa é a letra sem sinal nenhum: ela não diz qual das leituras é. '
+          + `Para ${alvo.comoPt}, o sinal é ${alvo.ondePt}.`
+        : `Essa é a outra leitura. Para ${alvo.comoPt}, o sinal é ${alvo.ondePt}.`),
+    hintsPt: [`O sinal de ${alvo.nomePt} é ${alvo.ondePt}.`],
+    explainPt: `${alvo.nomePt}: ${alvo.ondePt}, e o som é ${alvo.comoPt}. `
+      + 'A letra é a mesma nas duas - quem decide é o sinal. Sem sinal, é o '
+      + 'contexto da palavra que diz, e é por isso que ler sem niqqud vem depois.'
+  };
+};
+
 /** The sound is given; find the spelling. The direction the course never asked. */
 export const exSoundToSyllable: Gen = (L, _ctx, rand, i) => {
   const pool = vowelSyllables(L);
@@ -366,6 +432,95 @@ export const exMatchLetterSound: Gen = (L, ctx, rand, i) => {
     leftKind: 'glyph', rightKind: 'text',
     labelLeft: 'Letra', labelRight: 'Som',
     explainPt: 'O som é a única coisa que a forma da letra não mostra - é o que precisa ser decorado.'
+  };
+};
+
+/* A mesma diferença, agora dentro de uma sílaba.
+ * ────────────────────────────────────────────────────────────────────────
+ * O companheiro do `exLetterVariant`, e o único formato possível em {{ב}},
+ * {{כ}} e {{פ}}: nelas a forma SEM ponto JÁ É uma das leituras, então não
+ * existe um terceiro desenho para pôr na mesa e a pergunta de escolha entre
+ * dois vira cara ou coroa - que a suíte recusa, com razão.
+ *
+ * A saída não é baixar a exigência: é mudar de nível. A mesma letra com dois
+ * sinais e duas vogais dá quatro sílabas diferentes - {{בָּ}}, {{בָ}},
+ * {{בִּ}}, {{בִ}} -, cada uma com a sua leitura, nenhuma repetida. E é o
+ * gesto que o aluno vai precisar de verdade: o ponto nunca aparece sozinho
+ * numa página, aparece numa sílaba, ao lado de uma vogal.
+ *
+ * Também serve ao {{ש}}, e por isso os dois geradores são tentados na ordem:
+ * primeiro o desenho puro, que ensina o LADO do ponto, e este quando aquele
+ * não tem três desenhos para oferecer.
+ */
+
+/* As marcas que distinguem uma leitura da outra: daguesh, ponto de shin,
+   ponto de sin. São as únicas que este gerador troca. */
+const MARCA_DE_LEITURA = /[\u05BC\u05C1\u05C2]/;
+/* Todo sinal que gruda numa letra. Serve para achar onde a PRIMEIRA letra
+   da sílaba termina - e é por isso que existe: em {{שׁוּ}} o ponto do shuruk
+   é o mesmo caractere do daguesh, mas está no vav, e trocar o do vav
+   destruiria a vogal em vez de trocar a leitura. */
+const SINAL = /[\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7]/;
+
+/** A sílaba reescrita na outra leitura da mesma letra, ou `null`. */
+function comLeitura(silaba: string, base: string, leitura: string): string | null {
+  if (silaba[0] !== base) return null;
+  let k = 1;
+  while (k < silaba.length && SINAL.test(silaba[k]!)) k++;
+  const vogal = [...silaba.slice(1, k)].filter(c => !MARCA_DE_LEITURA.test(c)).join('');
+  /* NFC porque a ordem canônica dos sinais não é a ordem em que eles foram
+     concatenados aqui, e o dado do curso está em NFC. */
+  return (leitura + vogal + silaba.slice(k)).normalize('NFC');
+}
+
+export const exVariantSyllable: Gen = (L, _ctx, rand, i) => {
+  /* A forma final fica de fora: ela só existe no fim de uma palavra, e uma
+     sílaba solta começada por ela não é hebraico. */
+  const V = (L.variantes ?? []).filter(v => v.he !== L.finalForm);
+  if (V.length < 2) return null;
+
+  const silabas = vowelSyllables(L);
+  if (silabas.length < 2) return null;
+
+  const alvo = at(V, i);
+  const primeira = at(silabas, i);
+  const segunda = at(silabas, i + 1);
+  if (!alvo || !primeira || !segunda || primeira.vowel === segunda.vowel) return null;
+
+  /* Duas leituras × duas vogais. A resposta é uma só porque nenhuma outra
+     combinação se lê igual. */
+  const montadas: { he: string; leitura: string; v: typeof V[number] }[] = [];
+  for (const s of [primeira, segunda]) {
+    for (const v of V.slice(0, 2)) {
+      const he = comLeitura(s.he, L.letter, v.he);
+      if (he) montadas.push({ he, leitura: v.translit + s.vowel, v });
+    }
+  }
+  const certa = montadas.find(m => m.v.he === alvo.he && m.leitura.endsWith(primeira.vowel));
+  if (!certa) return null;
+  /* Um desenho repetido ou uma leitura repetida tiraria a resposta única. */
+  if (new Set(montadas.map(m => m.he)).size !== montadas.length) return null;
+  if (new Set(montadas.map(m => m.leitura)).size !== montadas.length) return null;
+  if (montadas.length < 3) return null;
+
+  const opcoes = shuffled(montadas, rand);
+  const options = opcoes.map(m => m.he);
+  const answer = opcoes.findIndex(m => m.he === certa.he);
+  if (answer < 0) return null;
+
+  return {
+    id: `${L.id}-varsil-${i}`,
+    kind: 'letter-variant', letterId: L.id, skill: 'ler',
+    promptPt: `Qual destas se lê “${certa.leitura}”?`,
+    he: '',
+    options, answer,
+    whyPt: opcoes.map(m => m.he === certa.he ? null
+      : m.v.he === alvo.he
+        ? `A leitura está certa, a vogal não: essa lê-se “${m.leitura}”.`
+        : `Essa lê-se “${m.leitura}” - é a outra leitura da letra, ${m.v.ondePt}.`),
+    hintsPt: [`${alvo.nomePt}: ${alvo.ondePt}.`],
+    explainPt: `${alvo.nomePt} é ${alvo.ondePt}, e soa ${alvo.comoPt}. `
+      + 'A letra é a mesma nas duas - quem decide é o sinal, e a vogal vem depois dele.'
   };
 };
 
@@ -785,6 +940,8 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exOddOneOut,
   exVowelSound,
   exVowelPair,
+  exLetterVariant,
+  exVariantSyllable,
   exLetterPosition,
   exCompleteWord,
   exFinalInWord,
@@ -807,8 +964,8 @@ export const LESSON_GENERATORS: readonly Gen[] = [
 export const BY_SKILL: Record<string, readonly Gen[]> = {
   rec: [exLetterRecognition, exOddOneOut, exLetterInWord, exConfusablePick,
         exLetterPosition, exFinalForm, exFinalInWord, exPrintVsCursive, exCursiveToPrint],
-  som: [exVowelSound, exVowelPair, exMatchLetterSound],
-  ler: [exSyllableReading, exBuildSyllable, exSoundToSyllable, exWordMeaning,
+  som: [exVowelSound, exVowelPair, exLetterVariant, exMatchLetterSound],
+  ler: [exVariantSyllable, exSyllableReading, exBuildSyllable, exSoundToSyllable, exWordMeaning,
         exCompleteWord, exBuildWord, exMeaningToWord, exMatchSyllable,
         exMatchWordMeaning, exTypeTranslit, exSentenceReading],
   ouvir: [exListenSyllable, exAudioWord, exTypeHeard],

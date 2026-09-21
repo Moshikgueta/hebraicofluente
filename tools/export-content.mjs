@@ -126,6 +126,14 @@ function main() {
       namePt: L.namePt,
       translit: L.translit,
       sound: L.sound,
+      /* As leituras de uma letra que tem mais de uma, cada uma com o SEU
+         audioId - e são ids diferentes porque o id sai do próprio texto
+         hebraico. É o que permite as gravações de Shin e Sin entrarem
+         separadas, sem um botão tocar o som da outra. */
+      variantes: (L.variantes || []).map(v => ({
+        he: NFC(v.he), nomePt: v.nomePt, som: v.som, translit: v.translit,
+        comoPt: v.comoPt, ondePt: v.ondePt, audioId: audioIdFor(v.he)
+      })),
       soundNotePt: L.soundNotePt,
       /* A camada pedagógica, inteira. Passa como está: o que ela tem de
          obrigatório é cobrado pela V23 do validate.js, na FONTE - um

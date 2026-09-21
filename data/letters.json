@@ -1258,6 +1258,24 @@
     "namePt": "Shin",
     "translit": "sh",
     "sound": "/ʃ/",
+    "variantes": [
+      {
+        "he": "שׁ",
+        "nomePt": "Shin",
+        "som": "/ʃ/",
+        "translit": "sh",
+        "comoPt": "o CH de \"chave\"",
+        "ondePt": "ponto no alto, à DIREITA"
+      },
+      {
+        "he": "שׂ",
+        "nomePt": "Sin",
+        "som": "/s/",
+        "translit": "s",
+        "comoPt": "o S de \"sapo\"",
+        "ondePt": "ponto no alto, à ESQUERDA"
+      }
+    ],
     "soundNotePt": "Como o CH de \"chave\", \"chuva\", \"cachorro\". Com o ponto do lado esquerdo ({{שׂ}}, Sin) o som muda para S de \"sapo\".",
     "ensino": {
       "funcaoPt": "{{ש}} é a letra do som CH de \"chave\" - e é a primeira letra do curso em que um ponto decide QUAL letra você está lendo. Com o ponto no alto à direita ({{שׁ}}) o som é \"ch\"; com o ponto no alto à esquerda ({{שׂ}}) o som é o S de \"sapo\". O desenho é o mesmo; o lado do ponto é que manda.",
@@ -3044,6 +3062,24 @@
     "namePt": "Bet / Vet",
     "translit": "b",
     "sound": "/b/ ou /v/",
+    "variantes": [
+      {
+        "he": "בּ",
+        "nomePt": "Bet",
+        "som": "/b/",
+        "translit": "b",
+        "comoPt": "o B de \"bola\"",
+        "ondePt": "com o ponto DENTRO da letra"
+      },
+      {
+        "he": "ב",
+        "nomePt": "Vet",
+        "som": "/v/",
+        "translit": "v",
+        "comoPt": "o V de \"vaca\"",
+        "ondePt": "sem o ponto"
+      }
+    ],
     "soundNotePt": "Com o ponto dentro ({{בּ}}) soa B, como em \"bola\". Sem o ponto ({{ב}}) soa V, como em \"vaca\". É a mesma letra, com dois sons.",
     "ensino": {
       "funcaoPt": "{{ב}} é a primeira letra do curso que muda de SOM conforme um ponto. Com o ponto dentro ({{בּ}}) ela é B, como em \"bola\". Sem o ponto ({{ב}}) ela é V, como em \"vaca\". É a mesma letra nas duas: quem decide é o ponto, e ele é pequeno - procure antes de pronunciar.",
@@ -3220,6 +3256,32 @@
     "namePt": "Kaf / Chaf",
     "translit": "k",
     "sound": "/k/ ou /χ/",
+    "variantes": [
+      {
+        "he": "כּ",
+        "nomePt": "Kaf",
+        "som": "/k/",
+        "translit": "k",
+        "comoPt": "o C de \"casa\"",
+        "ondePt": "com o ponto DENTRO da letra"
+      },
+      {
+        "he": "כ",
+        "nomePt": "Chaf",
+        "som": "/χ/",
+        "translit": "ch",
+        "comoPt": "raspado na garganta, como o {{ח}}",
+        "ondePt": "sem o ponto"
+      },
+      {
+        "he": "ך",
+        "nomePt": "Chaf final",
+        "som": "/χ/",
+        "translit": "ch",
+        "comoPt": "raspado, sempre",
+        "ondePt": "no fim da palavra - e nunca leva ponto"
+      }
+    ],
     "soundNotePt": "Com o ponto ({{כּ}}) soa K, igual a {{ק}}. Sem o ponto ({{כ}}) soa raspado, igual a {{ח}}. No fim da palavra vira {{ך}}, e aí é sempre raspado.",
     "ensino": {
       "funcaoPt": "{{כ}} funciona como o {{ב}}: um ponto decide o som. Com o ponto ({{כּ}}) ela é K, igual ao {{ק}}. Sem o ponto ({{כ}}) ela é raspada na garganta, igual ao {{ח}}. Duas letras familiares, num desenho só.",
@@ -3397,6 +3459,32 @@
     "namePt": "Pe / Fe",
     "translit": "p",
     "sound": "/p/ ou /f/",
+    "variantes": [
+      {
+        "he": "פּ",
+        "nomePt": "Pe",
+        "som": "/p/",
+        "translit": "p",
+        "comoPt": "o P de \"pato\"",
+        "ondePt": "com o ponto DENTRO da letra"
+      },
+      {
+        "he": "פ",
+        "nomePt": "Fe",
+        "som": "/f/",
+        "translit": "f",
+        "comoPt": "o F de \"faca\"",
+        "ondePt": "sem o ponto"
+      },
+      {
+        "he": "ף",
+        "nomePt": "Fe final",
+        "som": "/f/",
+        "translit": "f",
+        "comoPt": "o F, sempre",
+        "ondePt": "no fim da palavra - e nunca leva ponto"
+      }
+    ],
     "soundNotePt": "Com o ponto dentro ({{פּ}}) soa P, como em \"pato\". Sem o ponto ({{פ}}) soa F, como em \"faca\". No fim da palavra vira {{ף}}, e aí é sempre F.",
     "ensino": {
       "funcaoPt": "{{פ}} é a terceira e última letra do curso em que um ponto decide o som. Com o ponto ({{פּ}}) ela é P, como em \"pato\". Sem o ponto ({{פ}}) ela é F, como em \"faca\". Você já conhece o mecanismo do {{ב}} e do {{כ}} - é exatamente o mesmo.",

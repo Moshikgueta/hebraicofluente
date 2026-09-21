@@ -24,7 +24,7 @@ import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePl
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { SoundLab } from '@/components/learn/SoundLab';
 import { CultureUnlock } from '@/components/learn/Culture';
-import { audioAvailable } from '@/components/learn/AudioButton';
+import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioButton';
 import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
   RealWorldHebrew, SyllableTrainer, WordReveal, WorkbookLink
@@ -239,6 +239,16 @@ function StageConhecer({
           <Prose text={letter.soundNotePt} />
         </p>
       </Card>
+
+      {/* As duas (ou três) leituras, com um botão de som para cada uma.
+          ──────────────────────────────────────────────────────────────
+          O curso explicava em prosa que {{ש}} tem duas leituras e dava ao
+          aluno UM botão de áudio - o da letra. Quem precisa ouvir a
+          diferença entre "ch" e "s" não tinha onde ouvir a diferença.
+          Cada variante tem `audioId` próprio; enquanto não há gravação,
+          o botão simplesmente não aparece, e o quadro continua ensinando
+          pelo desenho e pelo texto. */}
+      <Leituras letter={letter} />
 
       {/* O que a letra FAZ, e não só que som ela tem.
           ──────────────────────────────────────────────────────────────
@@ -724,5 +734,50 @@ function PortaTrancada({ letter, porque }: {
         </div>
       </Card>
     </div>
+  );
+}
+
+/* ── as leituras de uma letra que tem mais de uma ──────────────────────────
+   Uma linha por leitura: o desenho grande, o nome, ONDE está o sinal que a
+   distingue, e o som. A coluna "onde olhar" é a que ensina - "ponto no alto
+   à direita" é acionável, "/ʃ/" não é. */
+function Leituras({ letter }: { letter: Letter }) {
+  if (!letter.variantes?.length) return null;
+
+  return (
+    <Card className="p-6 grid gap-4">
+      <div className="grid gap-1">
+        <h2 className="text-[19px] font-semibold">
+          {letter.variantes.length === 2 ? 'As duas leituras' : 'As leituras desta letra'}
+        </h2>
+        <p className="font-ui text-[13.5px] text-ink-muted">
+          Mesmo desenho de letra. O que muda é o sinal - e é nele que você olha
+          antes de pronunciar.
+        </p>
+      </div>
+      <ul className="grid gap-2.5 list-none p-0 m-0">
+        {letter.variantes.map(v => (
+          <li key={v.he}
+              className="flex items-center gap-4 rounded-[var(--r-md)] bg-surface-2 px-4 py-3">
+            <span className="shrink-0 w-[58px] grid place-items-center">
+              <He size="lg">{v.he}</He>
+            </span>
+            <span className="min-w-0 grid gap-0.5">
+              <span className="font-ui text-[15px] font-semibold text-ink">
+                {v.nomePt} · <Prose text={v.comoPt} />
+              </span>
+              <span className="font-ui text-[13px] leading-snug text-ink-muted">
+                <Prose text={v.ondePt} />
+              </span>
+            </span>
+            {hasAudio(v.audioId) && (
+              <span className="ml-auto shrink-0">
+                <AudioButton audioId={v.audioId} label="" size="sm" />
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </Card>
   );
 }

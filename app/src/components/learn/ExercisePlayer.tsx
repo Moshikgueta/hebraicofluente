@@ -358,6 +358,10 @@ function Stimulus({ ex }: { ex: Exercise }) {
           <He size="display">{ex.letter}</He>
         </div>
       );
+    /* O som está no enunciado e as ALTERNATIVAS são os desenhos: não há
+       estímulo para mostrar em cima. */
+    case 'letter-variant':
+      return null;
     case 'syllable-reading':
     case 'word-meaning':
     case 'vowel-sound':
@@ -489,7 +493,7 @@ function Options({
   /* A row of nearly identical glyphs is the exercise itself, so it is laid out
      as a row and never as a list - the learner has to scan it the way they will
      scan a word. */
-  if (ex.kind === 'odd-one-out') {
+  if (ex.kind === 'odd-one-out' || ex.kind === 'letter-variant') {
     return (
       <ul className="flex flex-wrap justify-center gap-2.5" role="list">
         {ex.options.map((opt, idx) => (

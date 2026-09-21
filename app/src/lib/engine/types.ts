@@ -65,6 +65,13 @@ export type Exercise =
      respostas certas. Renderiza como `vowel-sound`: o `he` traz as duas
      sílabas separadas por espaço. */
   | (ChoiceBase & { kind: 'vowel-pair'; he: string })
+  /* A letra que tem mais de uma leitura. Dá o SOM e pede o desenho - nunca
+     o contrário: {{ש}} sozinho tem dois sons, e perguntar “como se lê?”
+     sobre ele é uma pergunta sem resposta certa. As alternativas são os
+     desenhos ({{שׁ}}, {{שׂ}}, {{ש}}) ou, onde só há dois desenhos, sílabas
+     inteiras. É o exercício que faltava: o curso explicava a diferença em
+     prosa e nunca pedia ao aluno para USÁ-LA. */
+  | (ChoiceBase & { kind: 'letter-variant'; he: string })
   /** The sound is given; find the syllable that spells it. The reverse direction. */
   | (ChoiceBase & { kind: 'sound-to-syllable'; sound: string })
   /** Two syllables that differ only in their vowel, played. */

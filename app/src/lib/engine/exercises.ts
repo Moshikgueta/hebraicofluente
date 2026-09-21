@@ -29,6 +29,8 @@ import {
   BY_SKILL, LESSON_GENERATORS, NEEDS_AUDIO,
   exBuildSyllable, exBuildWord, exCompleteWord, exConfusablePick, exCursiveToPrint,
   exFinalForm, exFinalInWord, exLetterInWord, exLetterPosition, exLetterRecognition,
+  exLetterVariant,
+  exVariantSyllable,
   exMatchLetterSound, exMeaningToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
   exSentenceReading, exSyllableReading, exVowelSound, exWordMeaning,
   type Ctx, type Gen
@@ -70,6 +72,11 @@ export function readingUsedBy(ex: Exercise): string[] {
       break;
     case 'complete-word':
       out.push(...ex.parts.filter((p): p is string => p != null));
+      break;
+    /* Aqui o hebraico está nas ALTERNATIVAS, e não no enunciado: a regra
+       de ordem tem de olhar para elas. */
+    case 'letter-variant':
+      out.push(...ex.options);
       break;
     case 'meaning-to-word':
     case 'audio-recognition':
@@ -343,7 +350,23 @@ export function buildLetterPractice(
   };
 
   tentar([exLetterRecognition], 1);
-  tentar([exMatchLetterSound, exVowelSound, exSoundToSyllable], 1);
+  /* A letra que tem mais de uma leitura pratica ESSA diferença, e pratica
+     cedo. Sem isto dava para terminar a prática do {{ש}} sem nunca ter
+     decidido de que lado estava o ponto - a lição explicava e o exercício
+     nunca cobrava. E tinha de vir aqui, e não no fim: nas letras tardias
+     como {{ב}} e {{פ}} as camadas anteriores já lotavam o bloco de dez, e a
+     diferença que DEFINE a letra ficava de fora justamente nelas.
+
+     Ela OCUPA O LUGAR da camada de som, e não um lugar a mais - pela mesma
+     razão da frase mais abaixo: o bloco tem dez itens, e somar um aqui
+     empurrava a revisão cumulativa para fora dele justamente nas quatro
+     letras em questão. E a troca é honesta antes de ser aritmética: numa
+     letra de duas leituras, “que som esta letra faz?” é a pergunta errada -
+     a resposta é “depende do ponto”, que é exatamente o que a camada de
+     variante cobra. */
+  const antes = out.length;
+  if ((L.variantes?.length ?? 0) >= 2) tentar([exLetterVariant, exVariantSyllable], 1);
+  if (out.length === antes) tentar([exMatchLetterSound, exVowelSound, exSoundToSyllable], 1);
   tentar([exConfusablePick, exOddOneOut], 1);
   tentar([exLetterInWord, exCompleteWord], 1);
   tentar([exLetterPosition, exLetterInWord], 1);

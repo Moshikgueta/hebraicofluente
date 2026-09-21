@@ -103,6 +103,32 @@ export type Ensino = {
   checagem: ItemCompreensao[];
 };
 
+/* Uma leitura de uma letra que tem mais de uma.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Shin e Sin são o caso que mais custa: o mesmo desenho, e o lado do ponto
+ * decide se o som é "ch" ou "s". Bet/Vet, Kaf/Chaf e Pe/Fe seguem o mesmo
+ * princípio com o daguesh.
+ *
+ * Cada uma tem `audioId` PRÓPRIO, derivado do próprio texto hebraico - é o
+ * que impede um botão de tocar o som da outra quando as gravações entrarem,
+ * e é a diferença entre "esta letra tem dois sons" escrito na tela e o
+ * aluno conseguir ouvir os dois.
+ */
+export type VarianteLetra = {
+  he: string;
+  nomePt: string;
+  som: string;
+  /** Como esta leitura se escreve em letra nossa: o "sh" de {{שׁ}}, o "s" de
+   *  {{שׂ}}. É o que permite montar a sílaba desta leitura - "sha" e "sa" -
+   *  em vez de só nomear o som. */
+  translit: string;
+  /** A que som do português ela corresponde, quando corresponde. */
+  comoPt: string;
+  /** Onde está o sinal que a distingue - é nisto que o aluno olha. */
+  ondePt: string;
+  audioId: string;
+};
+
 export type Letter = {
   id: string;
   order: number;
@@ -114,6 +140,8 @@ export type Letter = {
   namePt: string;
   translit: string;
   sound: string;
+  /** As leituras, quando há mais de uma. Vazio na maioria das letras. */
+  variantes: VarianteLetra[];
   soundNotePt: string;
   /** A camada pedagógica: o que a letra FAZ, e a checagem. Ver `Ensino`. */
   ensino: Ensino;
