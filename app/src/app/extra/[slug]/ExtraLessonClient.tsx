@@ -31,7 +31,7 @@ import { AudioButton } from '@/components/learn/AudioButton';
 import { Prose, WorkbookLink } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import { course, extras, type CourseModule } from '@/lib/content';
-import { buildDageshQuiz, buildGerechQuiz } from '@/lib/engine/extras';
+import { buildDageshQuiz, buildGerechQuiz, type Extras } from '@/lib/engine/extras';
 import { EXTRA_STAGE_UNITS } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
@@ -280,21 +280,72 @@ function UnpointedStage({
     return <ExercisePlayer exercises={quiz} title="Módulo 6 - fecho" onDone={onDone} />;
   }
 
+  /* Eram oito palavras numa lista corrida, lidas em menos de um minuto - e o
+     aluno saía do módulo achando que sabia ler sem nikud. São 24, em três
+     blocos que sobem de dificuldade, e um par ambíguo no fim que é a lição de
+     verdade: sem os pontos, o contexto é que decide. */
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-6">
       <div className="grid gap-2">
         <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Ler sem nikud</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">{U.introPt}</p>
       </div>
 
-      <div className="grid gap-2.5">
-        {U.words.map(w => <UnpointedRow key={w.bare} word={w} />)}
-      </div>
+      {U.groups.map((g, i) => (
+        <section key={g.id} aria-labelledby={`unp-${g.id}`} className="grid gap-2.5">
+          <div className="grid gap-1">
+            <p className="font-ui text-[11.5px] uppercase tracking-[.1em] text-ink-muted tabular-nums">
+              {i + 1} de {U.groups.length} · {g.words.length} palavras
+            </p>
+            <h2 id={`unp-${g.id}`} className="font-display text-[18px] font-bold text-ink">
+              {g.titlePt}
+            </h2>
+            <p className="font-ui text-[14px] leading-relaxed text-ink-body max-w-[60ch]">
+              {g.notePt}
+            </p>
+          </div>
+          {g.words.map(w => <UnpointedRow key={w.bare} word={w} />)}
+        </section>
+      ))}
+
+      <AmbiguousCard a={U.ambiguous} />
 
       <Button size="lg" full onClick={() => { track('checkpoint_started', { checkpointId: 'cp6' }); setPhase('quiz'); }}>
         Estou pronto - fazer o fecho do módulo
       </Button>
     </div>
+  );
+}
+
+/* A única palavra do curso que, sem os pontos, é duas coisas.
+   ───────────────────────────────────────────────────────────────────────
+   Ela não vira exercício de propósito: não há resposta certa para dar. O que
+   ela ensina é justamente que ler hebraico não é decodificar palavra solta -
+   e uma questão de múltipla escolha diria o contrário. */
+function AmbiguousCard({ a }: { a: Extras['unpointed']['ambiguous'] }) {
+  return (
+    <Card tone="wash" className="p-5 sm:p-6 grid gap-4">
+      <div className="grid gap-1 justify-items-center text-center">
+        <p className="font-ui text-[11.5px] uppercase tracking-[.1em] text-ink-muted">
+          E uma que é duas
+        </p>
+        <He size="lg">{a.bare}</He>
+      </div>
+
+      <div className="grid gap-2.5 sm:grid-cols-2">
+        {a.readings.map(r => (
+          <Card key={r.pointed} className="p-4 grid gap-1 justify-items-center text-center">
+            <He size="word">{r.pointed}</He>
+            <span className="font-ui text-[13px] text-ink-muted">{r.translit}</span>
+            <span className="font-ui text-[14.5px] font-semibold text-ink">{r.pt}</span>
+          </Card>
+        ))}
+      </div>
+
+      <p className="font-ui text-[14px] leading-relaxed text-ink-body max-w-[60ch] mx-auto text-center">
+        {a.notePt}
+      </p>
+    </Card>
   );
 }
 

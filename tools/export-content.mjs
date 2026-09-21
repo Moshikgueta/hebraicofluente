@@ -280,12 +280,44 @@ function main() {
       ...F, base: NFC(F.base), fin: NFC(F.fin),
       word: NFC(F.word), nameHe: NFC(F.nameHe), audioId: audioIdFor(F.word)
     })),
-    unpointed: {
-      ...extras.unpointed,
-      words: extras.unpointed.words.map(u => ({
-        ...u, bare: NFC(u.bare), pointed: NFC(u.pointed), audioId: audioIdFor(u.pointed)
-      }))
-    },
+    /* ── ler sem nikud ─────────────────────────────────────────────────
+       A fonte lista só a forma APONTADA; a forma nua, a transliteração e a
+       glosa saem daqui. `bare` é calculado (tirar o nikud é uma operação, não
+       uma opinião) e o resto vem de letters.json, que é onde a palavra foi
+       ensinada - é isso que impede a glosa desta lista de divergir da lição,
+       e é o que torna verdadeira a frase "você já conhece todas elas". A V19
+       recusa o arquivo se alguma palavra daqui não estiver no vocabulário.
+
+       `words` continua saindo achatado, com os três grupos em ordem: o
+       gerador de exercícios do módulo 6 sorteia daí, e ele não precisa saber
+       que a TELA agrupa. */
+    unpointed: (() => {
+      const semNikud = t => [...NFC(t)].filter(c => !/[֑-ׇ]/.test(c)).join('');
+      const vocab = new Map();
+      for (const L of letters) {
+        for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) vocab.set(NFC(w.he), w);
+      }
+      const resolver = pointed => {
+        const p = NFC(pointed);
+        const w = vocab.get(p);
+        if (!w) throw new Error(`extras.unpointed: "${p}" não está em letters.json`);
+        return {
+          bare: semNikud(p), pointed: p,
+          translit: w.translit, pt: w.pt, audioId: audioIdFor(p)
+        };
+      };
+      const groups = extras.unpointed.groups.map(g => ({
+        id: g.id, titlePt: g.titlePt, notePt: g.notePt, words: g.words.map(resolver)
+      }));
+      const A = extras.unpointed.ambiguous;
+      const readings = A.readings.map(resolver);
+      return {
+        introPt: extras.unpointed.introPt,
+        groups,
+        ambiguous: { bare: readings[0].bare, notePt: A.notePt, readings },
+        words: groups.flatMap(g => g.words)
+      };
+    })(),
     gerech: {
       ...extras.gerech,
       signHe: NFC(extras.gerech.signHe),

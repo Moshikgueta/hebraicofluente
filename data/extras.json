@@ -90,17 +90,42 @@
   ],
 
   "unpointed": {
-    "introPt": "O teste real deste módulo. As palavras abaixo estão como aparecem num jornal israelense: sem nikud, sem daguesh, sem nenhuma ajuda. Você já conhece todas elas.",
-    "words": [
-      { "bare": "ספר", "pointed": "סֵפֶר", "translit": "séfer", "pt": "livro" },
-      { "bare": "בית", "pointed": "בַּיִת", "translit": "báyit", "pt": "casa" },
-      { "bare": "מלך", "pointed": "מֶלֶךְ", "translit": "mélech", "pt": "rei" },
-      { "bare": "כסף", "pointed": "כֶּסֶף", "translit": "késef", "pt": "dinheiro" },
-      { "bare": "טוב", "pointed": "טוֹב", "translit": "tov", "pt": "bom" },
-      { "bare": "דרך", "pointed": "דֶּרֶךְ", "translit": "dérech", "pt": "caminho" },
-      { "bare": "שלום", "pointed": "שָׁלוֹם", "translit": "shalom", "pt": "paz / olá" },
-      { "bare": "ארץ", "pointed": "אֶרֶץ", "translit": "érets", "pt": "terra / país" }
-    ]
+    "_nota": [
+      "Eram oito palavras, e oito não fazem um módulo: o aluno lia a lista",
+      "inteira em menos de um minuto e saía achando que sabia ler sem nikud.",
+      "São 24, em três grupos que sobem de dificuldade, mais UM par ambíguo.",
+      "",
+      "Aqui só entra a forma APONTADA. `bare`, `translit` e `pt` são achados",
+      "pelo exportador em letters.json - é o que garante que a glosa aqui não",
+      "possa divergir da lição que ensinou a palavra, e é também o que sustenta",
+      "a frase do introPt: toda palavra desta lista foi ensinada em alguma",
+      "lição. A V19 recusa o arquivo se alguma não for."
+    ],
+    "introPt": "O teste real deste módulo. As palavras abaixo estão como aparecem num jornal israelense, numa placa e num rolo de Torá: sem nikud, sem daguesh, sem nenhuma ajuda. Você já conhece todas elas - cada uma foi ensinada em alguma lição deste curso, com os pontos. Leia primeiro; confira depois.",
+    "groups": [
+      {
+        "id": "curtas",
+        "titlePt": "Curtas, e todas conhecidas",
+        "notePt": "Comece por estas. São palavras que você já leu apontadas e que aparecem o tempo todo - o olho reconhece a forma antes de a cabeça reconstruir a vogal.",
+        "words": ["שָׁלוֹם", "טוֹב", "בַּיִת", "יוֹם", "סוּס", "קוֹל", "שִׁיר", "עִיר"]
+      },
+      {
+        "id": "sem-vogal",
+        "titlePt": "Estas não trazem nenhuma vogal escrita",
+        "notePt": "Três consoantes e mais nada. Quem lê hebraico não adivinha a vogal: reconhece a palavra inteira, e a vogal vem junto. É exatamente isso que você está treinando aqui.",
+        "words": ["מֶלֶךְ", "סֵפֶר", "כֶּסֶף", "דֶּרֶךְ", "אֶרֶץ", "לֶחֶם", "יֶלֶד", "שֶׁמֶשׁ"]
+      },
+      {
+        "id": "rua",
+        "titlePt": "As que resolvem uma rua em Israel",
+        "notePt": "Mais longas, e nenhuma delas vai aparecer com pontinhos onde você vai encontrá-las: numa placa, num ônibus, numa conversa escrita.",
+        "words": ["תּוֹדָה", "סְלִיחָה", "בְּבַקָּשָׁה", "רְחוֹב", "אוֹטוֹבּוּס", "עִבְרִית", "עַכְשָׁו", "טֶלֶפוֹן"]
+      }
+    ],
+    "ambiguous": {
+      "notePt": "Sem os pontos, estas duas palavras têm o mesmo desenho. Não é defeito da escrita: é o motivo pelo qual ninguém lê hebraico palavra solta. Quem decide qual das duas é a frase em volta - e é assim desde sempre, inclusive nos rolos.",
+      "readings": ["שֵׁם", "שָׁם"]
+    }
   },
 
   "gerech": {

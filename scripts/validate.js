@@ -471,12 +471,70 @@ export function validate({ checkDist = true } = {}) {
       }
       record(F.word, F.translit, 'extras.finals');
     }
-    for (const u of extras.unpointed.words) {
-      if (stripNikud(u.pointed) !== u.bare) {
-        fail('V19', 'extras.unpointed',
-          `"${u.bare}" não é "${u.pointed}" sem nikud (seria "${stripNikud(u.pointed)}")`);
+    /* ── ler sem nikud ───────────────────────────────────────────────
+       A lista tinha oito palavras, que se liam em menos de um minuto. São 24,
+       em três grupos, e a fonte agora traz só a forma APONTADA - a nua, a
+       transliteração e a glosa saem de letters.json no exportador.
+
+       O que se confere aqui é a frase que o próprio módulo diz ao aluno:
+       "você já conhece todas elas". Ela é uma promessa verificável, e uma
+       palavra que ninguém ensinou transformaria a etapa final do módulo 6
+       numa adivinhação. Também se confere o par ambíguo: as duas leituras
+       precisam MESMO ter o mesmo desenho sem os pontos, ou a lição sobre
+       ambiguidade está ensinando uma ambiguidade que não existe. */
+    {
+      const U = extras.unpointed;
+      const vocab = new Map();
+      for (const L of letters) {
+        for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) vocab.set(clean(w.he), w);
       }
-      record(u.pointed, u.translit, 'extras.unpointed');
+      const confere = (pointed, onde) => {
+        const p = clean(pointed);
+        const w = vocab.get(p);
+        if (!w) {
+          fail('V19', onde, `"${p}" não foi ensinada em lição nenhuma - o módulo 6 promete que foi`);
+          return null;
+        }
+        record(p, w.translit, onde);
+        return p;
+      };
+
+      const grupos = U.groups || [];
+      const total = grupos.reduce((n, g) => n + (g.words?.length || 0), 0);
+      if (!grupos.length) fail('V19', 'extras.unpointed', 'sem grupos');
+      /* Um piso, e não um número exato: o ponto é que oito era pouco. */
+      if (total < 18) {
+        fail('V19', 'extras.unpointed', `${total} palavras sem nikud - poucas para fechar o módulo`);
+      }
+      const vistas = new Set();
+      for (const g of grupos) {
+        if (!g.id || !g.titlePt || !g.notePt) fail('V19', `extras.unpointed/${g.id}`, 'grupo sem id, título ou nota');
+        for (const pointed of g.words || []) {
+          const p = confere(pointed, `extras.unpointed/${g.id}`);
+          if (!p) continue;
+          if (vistas.has(p)) fail('V19', `extras.unpointed/${g.id}`, `"${p}" aparece em dois grupos`);
+          vistas.add(p);
+        }
+      }
+
+      const A = U.ambiguous;
+      if (!A || (A.readings || []).length < 2) {
+        fail('V19', 'extras.unpointed.ambiguous', 'sem o par que mostra a ambiguidade');
+      } else {
+        const nuas = new Set();
+        for (const pointed of A.readings) {
+          const p = confere(pointed, 'extras.unpointed.ambiguous');
+          if (p) nuas.add(stripNikud(p));
+        }
+        if (nuas.size !== 1) {
+          fail('V19', 'extras.unpointed.ambiguous',
+            `as leituras não têm o mesmo desenho sem os pontos: ${[...nuas].join(' ≠ ')}`);
+        }
+        const pontuadas = new Set(A.readings.map(clean));
+        if (pontuadas.size !== A.readings.length) {
+          fail('V19', 'extras.unpointed.ambiguous', 'as leituras são a mesma palavra apontada');
+        }
+      }
     }
     const GERESH = '׳';
     for (const g of extras.gerech.letters) {
@@ -495,7 +553,12 @@ export function validate({ checkDist = true } = {}) {
 
 
   /* V3b - a word written with two DIFFERENT pointings is usually a typo in one
-     of them. Not fatal (שָׁם/שֵׁם are a real pair), but worth surfacing. */
+     of them. Not fatal (שָׁם/שֵׁם are a real pair), but worth surfacing.
+
+     ATENÇÃO antes de "consertar" um aviso destes apagando uma das duas: o par
+     שָׁם/שֵׁם é conteúdo, e o módulo 6 o usa para ensinar que, sem os pontos, o
+     contexto é que decide (`extras.unpointed.ambiguous`). Apagar um dos dois
+     derruba a V19, que exige que as leituras tenham o mesmo desenho nu. */
   const byConsonants = new Map();
   for (const [pointed, rec] of seenTranslit) {
     if (rec.isSyllable) continue;   // a consonant + each vowel is not a clash

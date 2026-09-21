@@ -43,12 +43,25 @@ export type GerechLetter = {
   words: { he: string; pt: string; audioId: string }[];
 };
 
+/** Uma palavra da lista sem nikud. `bare`, `translit` e `pt` são preenchidos
+ *  pelo exportador a partir de letters.json - a fonte lista só a apontada. */
+export type UnpointedWord = {
+  bare: string; pointed: string; translit: string; pt: string; audioId: string;
+};
+
 export type Extras = {
   dagesh: { titlePt: string; rulePt: string; warningPt: string; letters: DageshLetter[] };
   finals: FinalForm[];
   unpointed: {
     introPt: string;
-    words: { bare: string; pointed: string; translit: string; pt: string; audioId: string }[];
+    /** Três blocos que sobem de dificuldade. É a TELA que usa isto. */
+    groups: { id: string; titlePt: string; notePt: string; words: UnpointedWord[] }[];
+    /** O par que tem o mesmo desenho sem os pontos - a lição de verdade sobre
+     *  ler sem nikud, e a única do curso em que a resposta é "depende". */
+    ambiguous: { bare: string; notePt: string; readings: UnpointedWord[] };
+    /** Os três grupos achatados, em ordem. O gerador de exercícios sorteia
+     *  daqui e não precisa saber que a tela agrupa. */
+    words: UnpointedWord[];
   };
   gerech: {
     titlePt: string; signNamePt: string; signHe: string;

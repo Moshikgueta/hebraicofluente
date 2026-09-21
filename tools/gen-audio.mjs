@@ -135,9 +135,20 @@ function main() {
           kind: 'palavra', wave: 3, where: 'módulo 6' });
   }
   /* The unpointed list is the pointed list, said the same way. Mapping rather
-     than adding is what keeps the speaker from reading ספר twice. */
-  for (const u of extras.unpointed.words) {
-    add({ he: u.pointed, translit: u.translit, gloss: u.pt,
+     than adding is what keeps the speaker from reading ספר twice.
+
+     A fonte passou a listar só a forma apontada, em três grupos - e todas
+     elas saem de letters.json, então na prática este laço não acrescenta
+     clipe nenhum hoje. Fica porque a garantia é essa: qualquer palavra que a
+     lista use está no roteiro, venha ela de onde vier. */
+  for (const g of extras.unpointed.groups) {
+    for (const pointed of g.words) {
+      add({ he: pointed, translit: null, gloss: null,
+            kind: 'palavra', wave: 3, where: 'módulo 6' });
+    }
+  }
+  for (const pointed of extras.unpointed.ambiguous.readings) {
+    add({ he: pointed, translit: null, gloss: null,
           kind: 'palavra', wave: 3, where: 'módulo 6' });
   }
   for (const g of extras.gerech.letters) {
