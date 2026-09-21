@@ -135,7 +135,23 @@ export function AppShell({ children }: { children: ReactNode }) {
                         lg:bg-[var(--card)] lg:border lg:border-line lg:shadow-[var(--sh)]
                         lg:overflow-hidden">
           <Sidebar pathname={pathname} />
-          <main className="min-w-0 py-6 sm:py-8 lg:px-9 lg:py-[34px] pb-[92px] lg:pb-10">
+          {/* O espaço embaixo é do TAMANHO DA BARRA, e o `pb` não divide
+              classe com nenhum `py`.
+              ──────────────────────────────────────────────────────────
+              Estava `py-6 sm:py-8 … pb-[92px]`, e a partir de 640px o
+              `sm:py-8` vencia: a media query vem depois na folha gerada,
+              e um `py` sobrescreve o `pb` sem aviso. O resultado, medido:
+              32px de espaço para uma barra de 60px. O último botão de cada
+              página - "Continuar para as palavras", os cartões dos módulos
+              6 e 7, "Ver todos os cursos" - terminava POR BAIXO da
+              navegação fixa, e o toque ia para o link da barra em vez de
+              para o botão. Só sumia acima de 1024px, onde a barra não
+              existe, que é exatamente onde ninguém testa com o dedo.
+
+              Agora o topo é `pt-*` e o rodapé é `pb-*`: eles não se
+              cruzam mais, e `app/toque.mjs` mede a tela de verdade. */}
+          <main className="min-w-0 pt-6 sm:pt-8 lg:px-9 lg:pt-[34px]
+                           pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-10">
             {avisos}
             {children}
           </main>

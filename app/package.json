@@ -23,6 +23,7 @@
     "pagamento": "node pagamento.mjs",
     "csp": "node csp.mjs",
     "a11y": "node a11y.mjs",
+    "toque": "node toque.mjs",
     "pacote": "node pacote.mjs",
     "promessas": "node promessas.mjs",
     "test": "npm run export-content && vitest run"
