@@ -78,6 +78,7 @@ function main() {
   const realWorld = readJson('data/real-world.json');
   const sentences = readJson('data/sentences.json');
   const eras = readJson('data/eras.json');
+  const biblia = readJson('data/biblia.json');
 
   /* Where each letter's pages start in the printed workbook, so the app can
      say "quer praticar à mão? páginas X-Y". Absent before the first `npm run
@@ -310,6 +311,37 @@ function main() {
       words: s2.words.map(w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) }))
     }))
   }, null, 2) + '\n');
+
+  /* ── o versículo da página pública ──────────────────────────────────
+     Duas coisas são CALCULADAS aqui e nunca escritas à mão: a versão sem
+     nikud - que é como o texto aparece num rolo de sinagoga, e o argumento
+     inteiro da última seção da página - e `after`, a ordem da letra mais
+     tardia, que é o que permite dizer "faltam duas letras e você lê isto"
+     sem ninguém recontar na mão a cada mudança na ordem do alfabeto. */
+  {
+    const ordemDe = new Map();
+    for (const L of letters) {
+      ordemDe.set(NFC(L.letter), L.order);
+      if (L.finalForm) ordemDe.set(NFC(L.finalForm), L.order);
+    }
+    const semNikud = t => [...NFC(t)].filter(c => !/[֑-ׇ]/.test(c)).join('');
+    const ordemDe_ = t => {
+      const os = [...NFC(t)].filter(c => /[א-ת]/.test(c)).map(c => ordemDe.get(c) ?? 0);
+      return os.length ? Math.max(...os) : 0;
+    };
+    writeFileSync(join(OUT, 'biblia.json'), JSON.stringify({
+      verses: biblia.verses.map(v => ({
+        ...v,
+        he: NFC(v.he),
+        bare: semNikud(v.he),
+        after: ordemDe_(v.he),
+        audioId: audioIdFor(v.he),
+        words: v.words.map(w => ({
+          ...w, he: NFC(w.he), bare: semNikud(w.he), audioId: audioIdFor(w.he)
+        }))
+      }))
+    }, null, 2) + '\n');
+  }
 
   /* ── as duas eras ───────────────────────────────────────────────────
      Só os pares, sem a nota do arquivo de origem. As frases NÃO são copiadas

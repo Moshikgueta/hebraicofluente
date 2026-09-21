@@ -94,6 +94,19 @@ por('extras.unpointed.introPt', extras.unpointed?.introPt);
 por('extras.gerech.introPt', extras.gerech?.introPt);
 por('extras.gerech.signNotePt', extras.gerech?.signNotePt);
 
+/* As frases e os pares de era nasceram depois deste script e ficaram de fora
+   da amostragem - conteúdo pago sem conferência nenhuma, que é exatamente o
+   buraco que a auditoria de 20/09 encontrou da primeira vez. A amostra é a
+   PROSA em português (`notePt`), e não o hebraico: a frase em si é curta, e
+   um trecho curto acusaria uma página livre que está certa.
+
+   `biblia.json` NÃO entra aqui, e é decisão e não esquecimento: ele é público
+   de propósito, como `course.json` - a página /biblia mostra um versículo de
+   domínio público justamente para quem ainda não comprou. A régua é a mesma
+   de lib/content-publico.ts, e os dois têm de continuar concordando. */
+for (const s of j('sentences.json').sentences) por(`frase/${s.id}`, s.notePt);
+for (const p of j('eras.json').pairs) por(`era/${p.id}`, p.notePt);
+
 for (const s of j('real-world.json').scenes) por(`cena/${s.id}`, s.contextPt);
 for (const c of j('culture.json').cards) {
   por(`cultura/${c.id}.leadPt`, c.leadPt);

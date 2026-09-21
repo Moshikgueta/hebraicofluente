@@ -21,7 +21,7 @@ import { CourseGate } from '@/components/shell/CourseGate';
 
 /** Prefixos públicos. `/` é tratado à parte, senão casaria com tudo. */
 const PUBLIC_PREFIXES = [
-  '/metodo', '/cursos', '/sobre', '/faq',
+  '/metodo', '/cursos', '/sobre', '/faq', '/biblia',
   /* As telas de conta, incluindo as duas de recuperação de senha. Elas são
      públicas pela definição do problema: quem não consegue entrar não pode
      ter de entrar para voltar a entrar. (`/recuperar` estava nesta lista e

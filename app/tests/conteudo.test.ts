@@ -39,12 +39,22 @@ import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
 const SITE = 'https://hebraicofluente.com.br';
 const src = (p: string) => readFileSync(new URL(`../src/${p}`, import.meta.url), 'utf8');
 
-const OS_SEIS = ['letters', 'nikud', 'extras', 'real-world', 'stroke-paths', 'culture'];
+/* Os JSONs PAGOS. A lista era de seis e ficou de seis enquanto `sentences` e
+   `eras` nasciam - dois arquivos de conteúdo pago sem nenhum caso os
+   cobrindo, que é a mesma forma do buraco original. Um JSON novo do curso
+   entra AQUI no mesmo commit em que entra no exportador.
+
+   `course.json` e `biblia.json` não estão nesta lista de propósito: os dois
+   são públicos, e o caso logo abaixo é quem diz isso em voz alta. */
+const OS_PAGOS = [
+  'letters', 'nikud', 'extras', 'real-world', 'sentences', 'eras',
+  'stroke-paths', 'culture'
+];
 
 /* ── 1. a fonte do vazamento ─────────────────────────────────────────────── */
 
 describe('o depósito do navegador não carrega o curso', () => {
-  it('não importa nenhum dos seis JSONs de forma estática', () => {
+  it('não importa nenhum dos JSONs pagos de forma estática', () => {
     const texto = src('lib/content.ts');
     const estaticos = [...texto.matchAll(/^\s*import\s[^\n]*from\s+'@content\/([a-z-]+)\.json'/gm)]
       .map(m => m[1]);
@@ -60,7 +70,7 @@ describe('o depósito do navegador não carrega o curso', () => {
     expect(texto).toContain("process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker'");
 
     const corte = texto.indexOf("process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker'");
-    for (const nome of OS_SEIS) {
+    for (const nome of OS_PAGOS) {
       const onde = texto.indexOf(`@content/${nome}.json`);
       expect(onde, `${nome}.json fora do ramo local`).toBeGreaterThan(corte);
     }
@@ -69,9 +79,17 @@ describe('o depósito do navegador não carrega o curso', () => {
   it('lê o conteúdo público de content-publico, e o público é só o esqueleto', () => {
     const publico = src('lib/content-publico.ts');
     const importados = [...publico.matchAll(/'@content\/([a-z-]+)\.json'/g)].map(m => m[1]);
-    /* `course.json` é a grade: títulos de módulo, ids de letra, páginas da
-       apostila. É o que a landing mostra de propósito - e não ensina nada. */
-    expect(importados).toEqual(['course']);
+    /* DOIS arquivos podem estar aqui, e a lista é fechada de propósito: um
+       terceiro que apareça sem passar por este caso é uma aula indo para o
+       pacote público.
+
+       `course.json` é a grade - títulos de módulo, ids de letra, páginas da
+       apostila -, que a landing mostra de propósito e que não ensina nada.
+       `biblia.json` é um versículo de domínio público com a fonte ao lado,
+       na página que responde «vou conseguir ler a Bíblia?»: quem faz essa
+       pergunta ainda não comprou, e é antes da compra que a expectativa
+       precisa ser ajustada. */
+    expect(importados.sort()).toEqual(['biblia', 'course']);
   });
 });
 
@@ -104,7 +122,7 @@ describe('content-servidor só é lido no servidor', () => {
     for (const p of arquivos('src')) {
       if (permitidos.includes(p)) continue;
       const t = readFileSync(p, 'utf8');
-      if (OS_SEIS.some(n => t.includes(`@content/${n}.json`))) culpados.push(p);
+      if (OS_PAGOS.some(n => t.includes(`@content/${n}.json`))) culpados.push(p);
     }
     expect(culpados).toEqual([]);
   });

@@ -211,6 +211,7 @@ function Footer() {
 
         <FooterCol title="A plataforma" links={[
           { href: '/metodo', label: 'O método' },
+          { href: '/biblia', label: 'Ler a Bíblia?' },
           { href: '/sobre', label: 'Sobre o Moshik' },
           { href: '/faq', label: 'Dúvidas' },
           { href: '/entrar', label: 'Entrar' }

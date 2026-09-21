@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
@@ -30,7 +31,10 @@ export const metadata: Metadata = {
 
 const c = flagship();
 
-const FAQ: { q: string; a: string[] }[] = [
+/* `link` existe para uma resposta só: a da Bíblia. Ela é longa demais para
+   caber aqui sem virar um texto, e curta demais aqui para ser honesta -
+   então a resposta curta fica, e o resto mora numa página própria. */
+const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] = [
   {
     q: 'Preciso saber alguma coisa de hebraico para começar?',
     a: [
@@ -109,6 +113,14 @@ const FAQ: { q: string; a: string[] }[] = [
     ]
   },
   {
+    q: 'Vou conseguir ler a Bíblia em hebraico?',
+    a: [
+      'Ler em voz alta, sim. O texto hebraico da Bíblia vem com os sinais de vogal, que são exatamente os que este curso ensina - com as 22 letras você decodifica qualquer versículo, sem transliteração.',
+      'Entender o que leu, não. Isso pede vocabulário e gramática, e é outro curso. Vale dizer que as duas coisas são diferentes antes da compra, e não depois.'
+    ],
+    link: { href: '/biblia', label: 'Gênesis 1:1, palavra por palavra' }
+  },
+  {
     q: 'Tem certificado?',
     a: [
       'Tem, e ele não é por participação. Sai quando duas coisas estiverem feitas: todas as letras concluídas e o exame final aprovado, com pelo menos 70%.',
@@ -173,6 +185,13 @@ export default function FaqPage() {
                       {p}
                     </p>
                   ))}
+                  {item.link && (
+                    <Link href={item.link.href}
+                          className="inline-flex items-center min-h-[44px] font-ui text-[14px]
+                                     font-semibold text-[var(--teal)] hover:underline">
+                      {item.link.label} →
+                    </Link>
+                  )}
                 </div>
               </details>
             </Card>

@@ -392,6 +392,49 @@ export function validate({ checkDist = true } = {}) {
     warn('V21', 'data/eras.json', 'ausente - a página de história perde o lado a lado das duas eras');
   }
 
+  /* ── V22 - o versículo da página «vou conseguir ler a Bíblia?» ──────
+     Esta página é pública, e é a única do site onde um visitante que ainda
+     não comprou vê um texto antigo palavra por palavra. Um erro de grafia
+     aqui é um erro na vitrine, na frente de gente que conhece o versículo de
+     cor - e um erro de grafia num texto sagrado não é um typo qualquer.
+
+     Confere o mesmo que a V20 confere numa frase, pelos mesmos motivos: toda
+     consoante é letra do curso, o texto tem nikud, e a soma das palavras
+     reconstrói o versículo (é ela que a tela percorre - uma palavra esquecida
+     ali some da tela sem avisar ninguém). */
+  let biblia = null;
+  try { biblia = readJson('data/biblia.json').verses; } catch { /* not authored */ }
+  if (biblia) {
+    const doCurso = new Set();
+    for (const l of letters) {
+      doCurso.add(l.letter);
+      if (l.finalForm) doCurso.add(l.finalForm);
+    }
+    const igual = t => clean(t).replace(/[,.;!?]/g, '').replace(/\s+/g, ' ').trim();
+    for (const v of biblia) {
+      const at = `biblia/${v.id}`;
+      const fora = [...new Set([...clean(v.he)].filter(c => /[א-ת]/.test(c)))]
+        .filter(c => !doCurso.has(c));
+      if (fora.length) {
+        fail('V22', at, `"${v.he}" usa ${fora.map(c => JSON.stringify(c)).join(', ')} - não é letra do curso`);
+      }
+      if (!hasNikud(v.he)) fail('V22', at, `"${v.he}" sem nikud`);
+      if (!v.fontePt) fail('V22', at, 'versículo sem fonte - capítulo e verso');
+      if (!v.pt) fail('V22', at, 'versículo sem tradução');
+
+      const junta = (v.words || []).map(w => w.he).join(' ');
+      if (igual(junta) !== igual(v.he)) {
+        fail('V22', at, `as words não reconstroem o versículo: "${junta}" ≠ "${v.he}"`);
+      }
+      for (const w of v.words || []) {
+        if (!hasNikud(w.he)) fail('V22', at, `a palavra "${w.he}" está sem nikud`);
+        if (!w.translit || !w.pt) fail('V22', at, `a palavra "${w.he}" está sem transliteração ou sem glosa`);
+      }
+    }
+  } else {
+    warn('V22', 'data/biblia.json', 'ausente - a página «vou conseguir ler a Bíblia?» fica sem o versículo');
+  }
+
   /* ── V19 - modules 6 and 7 are consistent with the alphabet ────────
      The dagesh pairs and the final forms are claims about the language, and
      they are now shared by the book and the app. A typo here would be printed

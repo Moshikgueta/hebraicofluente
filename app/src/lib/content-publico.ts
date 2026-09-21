@@ -28,6 +28,7 @@
  */
 
 import courseJson from '@content/course.json';
+import bibliaJson from '@content/biblia.json';
 
 export type Word = {
   he: string;
@@ -193,6 +194,30 @@ export type CultureCard = {
   /** De onde vem a afirmação. Não vai para o aluno; fica para revisão. */
   sources?: string;
 };
+
+/* ── o versículo da página «vou conseguir ler a Bíblia?» ────────────────
+   Público de propósito, junto de `course.json`, e pela mesma régua: a página
+   que responde essa pergunta é de VENDAS. Quem faz a pergunta ainda não
+   comprou, e a resposta honesta - sim para decodificar, não para entender -
+   vale mais mostrada do que afirmada.
+
+   Não é material de aula: é um versículo de domínio público, com a fonte ao
+   lado, para a pessoa julgar por si. `bare` e `after` são calculados pelo
+   exportador; a grafia é conferida pela V22 do validate.js. */
+export type BibleWord = {
+  he: string; bare: string; translit: string; pt: string; audioId: string;
+};
+export type BibleVerse = {
+  id: string; fontePt: string;
+  he: string; bare: string; translit: string; pt: string;
+  /** A ordem da letra mais tardia do versículo - em que lição ele fica legível. */
+  after: number;
+  words: BibleWord[];
+  audioId: string;
+};
+
+export const bibleVerses = (): BibleVerse[] =>
+  (bibliaJson as unknown as { verses: BibleVerse[] }).verses;
 
 export const course = courseJson as unknown as Course;
 

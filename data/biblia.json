@@ -1,0 +1,41 @@
+{
+  "note": [
+    "BÍBLIA - o versículo da página que responde «vou conseguir ler a Bíblia?».",
+    "",
+    "É a pergunta que mais chega antes da compra, e a resposta honesta tem duas",
+    "metades que precisam vir juntas: sim, você vai DECODIFICAR o texto; não,",
+    "você não vai ENTENDER o que leu. Um curso de alfabetização dá a porta, não",
+    "a casa - e prometer a casa é a forma mais rápida de perder a confiança de",
+    "quem pagou.",
+    "",
+    "Este arquivo é PÚBLICO de propósito: ele vai para o pacote que qualquer",
+    "visitante baixa, junto de `course.json`, porque a página que responde a",
+    "pergunta é de vendas. Não é material de aula - é um versículo de domínio",
+    "público, mostrado para a pessoa julgar por si.",
+    "",
+    "O que NÃO se escreve à mão aqui: `after` (a letra mais tardia do",
+    "versículo) e a versão sem nikud são CALCULADAS pelo exportador. O",
+    "`validate.js` confere que as palavras reconstroem o versículo, que ele tem",
+    "nikud e que toda consoante é letra do curso.",
+    "",
+    "Só entra aqui texto cuja grafia dá para conferir palavra por palavra."
+  ],
+  "verses": [
+    {
+      "id": "genesis-1-1",
+      "fontePt": "Gênesis 1:1",
+      "he": "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ",
+      "translit": "bereshít bará Elohím et ha-shamáyim ve-et ha-árets",
+      "pt": "No princípio, Deus criou os céus e a terra.",
+      "words": [
+        { "he": "בְּרֵאשִׁית", "translit": "bereshít", "pt": "no princípio" },
+        { "he": "בָּרָא", "translit": "bará", "pt": "criou" },
+        { "he": "אֱלֹהִים", "translit": "Elohím", "pt": "Deus" },
+        { "he": "אֵת", "translit": "et", "pt": "marca o objeto direto, e não se traduz" },
+        { "he": "הַשָּׁמַיִם", "translit": "ha-shamáyim", "pt": "os céus" },
+        { "he": "וְאֵת", "translit": "ve-et", "pt": "e, com a mesma marca" },
+        { "he": "הָאָרֶץ", "translit": "ha-árets", "pt": "a terra" }
+      ]
+    }
+  ]
+}

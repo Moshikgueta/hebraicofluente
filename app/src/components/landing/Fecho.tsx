@@ -386,7 +386,7 @@ export function Faq() {
     ['Preciso saber hebraico?',
      'Não. O curso começa do zero absoluto, na primeira letra, e assume que você nunca viu o alfabeto.'],
     ['É hebraico moderno ou bíblico?',
-     'A leitura é a mesma. O curso usa a pronúncia do hebraico moderno e vocabulário do dia a dia, o que abre os dois caminhos.'],
+     'A leitura é a mesma: as letras e os sinais de vogal do texto bíblico são os que este curso ensina. O curso usa a pronúncia do hebraico moderno e vocabulário do dia a dia, o que abre os dois caminhos. Ler em voz alta e entender, porém, são coisas diferentes - a página /biblia responde isso por inteiro.'],
     ['Quanto tempo leva?',
      `São ${course.totalLetters} letras em ${licoes} lições, mais os checkpoints. Em vinte minutos por dia, a maioria termina em seis a oito semanas.`],
     ['O curso funciona no celular?',
