@@ -29,6 +29,9 @@ import { Logo } from '@/components/shell/Logo';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
+import { He } from '@/components/hebrew/He';
+import { METODO_ORIGINAL } from '@/lib/credito';
+import { flagship, parcelasMax } from '@/lib/catalog';
 import {
   empresa, enderecoLinha, nomeLegalCompleto, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
@@ -200,6 +203,14 @@ function Footer() {
             Hebraico para brasileiros, do alfabeto à conversa. Feito para adulto
             que estuda sozinho, no celular, sem professor do lado.
           </p>
+          {/* O crédito ao método de origem, em toda página pública. Fica aqui,
+              e não escondido numa página interna, porque é assim que um
+              crédito cumpre o que se espera dele. Ver lib/credito.ts. */}
+          <p className="font-ui text-[12px] leading-relaxed text-ink-muted max-w-[32ch]">
+            Método inspirado em{' '}
+            <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
+            ({METODO_ORIGINAL.obraTranslit}), de {METODO_ORIGINAL.autor}.
+          </p>
         </div>
 
         <FooterCol title="Cursos" links={[
@@ -257,12 +268,17 @@ function Footer() {
               no rodapé de todas as páginas e não ter PIX no checkout é a
               versão mais visível do mesmo defeito. */}
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
+            {/* O "12x" era escrito à mão aqui. Passou a sair do catálogo pelo
+                mesmo motivo de todo número do site: o dia em que o
+                parcelamento mudar em data/courses.json, esta linha muda
+                junto, em vez de continuar prometendo o número velho no pé de
+                todas as páginas. */}
             {soPix()
               ? 'Pagamento por PIX. Acesso liberado em alguns minutos.'
               : temPix() && temCartao()
-                ? 'Pagamento por PIX ou cartão, em até 12x. Acesso liberado na hora.'
+                ? `Pagamento por PIX ou cartão, em até ${parcelasMax(flagship().price)}x. Acesso liberado na hora.`
                 : temCartao()
-                  ? 'Pagamento por cartão de crédito, em até 12x. Acesso liberado na hora.'
+                  ? `Pagamento por cartão de crédito, em até ${parcelasMax(flagship().price)}x. Acesso liberado na hora.`
                   : 'Pagamento por PIX. Acesso liberado na hora.'}
           </p>
         </div>

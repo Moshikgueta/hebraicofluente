@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { flagship, brl, installment, pixPrice } from '@/lib/catalog';
+import { flagship, brl, parcelasMax, pixPrice } from '@/lib/catalog';
 import { course, totalLicoes } from '@/lib/content-publico';
 
 export const metadata: Metadata = meta({
@@ -68,8 +68,12 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
           'Cartão de crédito ainda não. Quando entrar, aparece no checkout.'
         ]
       : [
-          `PIX, cartão de crédito à vista ou em até ${installment(c.price).n}x sem juros.`,
-          `À vista o curso sai por ${brl(c.price.brl)}${c.price.pixDiscountPct > 0 ? `, ou ${brl(pixPrice(c.price))} no PIX` : ''}. Parcelado, ${installment(c.price).n}x de ${brl(installment(c.price).brl)}.`
+          `PIX, cartão de crédito à vista ou parcelado em até ${parcelasMax(c.price)}x.`,
+          `À vista o curso sai por ${brl(c.price.brl)}${c.price.pixDiscountPct > 0 ? `, ou ${brl(pixPrice(c.price))} no PIX` : ''}.`,
+          /* O valor da parcela não é anunciado aqui de propósito: os juros do
+             cartão são repassados, então quem fecha esse número é a operadora.
+             Ver `parcelasMax` em lib/catalog.ts. */
+          `No parcelamento, os juros são os da operadora do seu cartão. O valor de cada parcela aparece na tela de pagamento antes de você confirmar.`
         ]
   },
   {

@@ -7,6 +7,14 @@ import { Section, SectionHead } from '@/components/platform/Section';
 import { empresa } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { totalLicoes } from '@/lib/content-publico';
+import { METODO_ORIGINAL } from '@/lib/credito';
+import { primeiroQueExiste } from '@/lib/midia-publica';
+
+/* O retrato é o MESMO arquivo da capa, achado do mesmo jeito: olhando o disco
+   na hora da build. Uma página de servidor pode fazer isso - por isso esta
+   continua sem 'use client'. Sem o arquivo, o lugar mostra a marca, e nunca
+   um aviso interno para quem está decidindo comprar. */
+const RETRATO = ['media/moshik.avif', 'media/moshik.webp', 'media/moshik.jpg'];
 
 export const metadata: Metadata = meta({
   rota: '/sobre',
@@ -32,6 +40,7 @@ export const metadata: Metadata = meta({
  */
 
 export default function SobrePage() {
+  const retrato = primeiroQueExiste(RETRATO);
   return (
     <>
       <div className="border-b border-[color:var(--line-soft)]">
@@ -58,13 +67,33 @@ export default function SobrePage() {
             </p>
           </div>
 
-          <Card tone="wash" className="p-8 grid gap-4 justify-items-center text-center">
-            <He size="xl" dim>ע</He>
-            <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-              O alfabeto é a porta. Depois dela, o hebraico deixa de ser um bloco
-              e vira uma língua como qualquer outra.
-            </p>
-          </Card>
+          {/* O retrato, e a frase como legenda dele.
+              `object-top`: num retrato de rua o rosto fica no terço de cima,
+              e o corte centralizado do object-cover o decapitaria no 4/5. */}
+          {retrato ? (
+            <figure className="m-0 grid gap-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={retrato}
+                alt="Moshik Gueta, professor e criador do Hebraico Fluente"
+                width={680} height={850} loading="lazy" decoding="async"
+                className="aspect-[4/5] w-full rounded-[var(--r-lg)] border border-line
+                           object-cover object-top bg-surface-2"
+              />
+              <figcaption className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+                O alfabeto é a porta. Depois dela, o hebraico deixa de ser um bloco
+                e vira uma língua como qualquer outra.
+              </figcaption>
+            </figure>
+          ) : (
+            <Card tone="wash" className="p-8 grid gap-4 justify-items-center text-center">
+              <He size="xl" dim>ע</He>
+              <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+                O alfabeto é a porta. Depois dela, o hebraico deixa de ser um bloco
+                e vira uma língua como qualquer outra.
+              </p>
+            </Card>
+          )}
         </div>
       </div>
 
@@ -126,6 +155,52 @@ export default function SobrePage() {
               único componente que garante a direção e a integridade do texto.
             </p>
           </Card>
+        </div>
+      </Section>
+
+      {/* ── o crédito ────────────────────────────────────────────────────
+          Seção própria, e não uma nota de rodapé dentro de outra: o método
+          que esta plataforma ensina não foi inventado aqui, e quem o criou
+          tem nome. Ver lib/credito.ts - o texto do crédito sai de um arquivo
+          só, para não divergir entre o rodapé, a capa e esta página. */}
+      <Section labelledBy="metodo-origem">
+        <SectionHead
+          id="metodo-origem"
+          eyebrowPt="De onde vem o método"
+          titlePt="O método não é meu."
+          leadPt="A plataforma é uma adaptação, e a adaptação começa reconhecendo de onde ela partiu."
+        />
+        <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <Card tone="wash" className="p-6 grid gap-3 content-start">
+            <p className="font-ui text-[12px] uppercase tracking-[.12em] text-[var(--accent)]">
+              Obra de origem
+            </p>
+            <p className="font-display text-[26px] font-bold text-ink leading-tight">
+              <He size="inline">{METODO_ORIGINAL.obraHe}</He>
+            </p>
+            <p className="font-ui text-[14px] text-ink-body">
+              {METODO_ORIGINAL.obraTranslit}
+            </p>
+            <p className="font-display text-[17px] font-bold text-ink">
+              {METODO_ORIGINAL.autor}
+            </p>
+          </Card>
+          <div className="grid gap-3 content-start">
+            <p className="text-[16px] leading-relaxed text-ink-body">
+              O caminho que este curso segue - a ordem em que as letras entram, a
+              decisão de ler antes de falar, o cuidado com quem estuda sozinho - vem do
+              método do {METODO_ORIGINAL.autor}, autor de{' '}
+              <He size="inline">{METODO_ORIGINAL.obraHe}</He>. O conteúdo do livro dele é
+              a base do que a plataforma ensina.
+            </p>
+            <p className="font-ui text-[15px] leading-relaxed text-ink-body">
+              O que eu acrescentei foi a adaptação para o aluno brasileiro: as
+              comparações com os sons do português, os erros que só quem fala
+              português comete, os exercícios que se corrigem sozinhos e tudo o que
+              acontece na tela. Dizer isso é mais honesto do que apresentar como meu
+              um caminho que eu percorri antes de ensinar.
+            </p>
+          </div>
         </div>
       </Section>
 

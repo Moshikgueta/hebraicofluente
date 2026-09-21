@@ -37,7 +37,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
-import { brl, getCourse, installment, pixPrice, type CatalogCourse } from '@/lib/catalog';
+import { brl, getCourse, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
 import { confirmaSozinho, empresa, formasAtivas, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
@@ -78,7 +78,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
      acesso" do painel saía para bater num "nada a pagar". */
   const restam = daysLeft(account.session, slug);
   const owned = account.can(slug) && (restam === null || restam > 45);
-  const parcela = installment(c.price);
+  const parcelas = parcelasMax(c.price);
   const total = method === 'pix' ? pixPrice(c.price) : c.price.brl;
 
   /* ── a consulta ──────────────────────────────────────────────────── */
@@ -129,7 +129,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
     try {
       const created = await account.startOrder({
         courseSlug: slug, method,
-        ...(method === 'card' ? { installments: parcela.n } : {})
+        ...(method === 'card' ? { installments: parcelas } : {})
       });
       /* O cartão sai daqui: quem coleta o número é a Mercado Pago, e é assim
          que esta plataforma nunca vê um dado de cartão. */
@@ -144,7 +144,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
     } finally {
       setBusy(false);
     }
-  }, [account, slug, method, parcela.n]);
+  }, [account, slug, method, parcelas]);
 
   /* ── o pagamento ainda não foi ligado ────────────────────────────── */
   if (paymentsOff) {
@@ -268,7 +268,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             {SO_CARTAO ? (
               <>
                 <strong>Cartão de crédito</strong> · {brl(c.price.brl)} à vista,
-                ou até {parcela.n}x de {brl(parcela.brl)} sem juros.
+                ou parcelado em até {parcelas}x.
               </>
             ) : (
               <>
@@ -293,7 +293,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             <MethodOption
               checked={method === 'card'} onSelect={() => setMethod('card')}
               titlePt="Cartão de crédito"
-              detailPt={`${brl(c.price.brl)} à vista, ou até ${parcela.n}x de ${brl(parcela.brl)} sem juros.`}
+              detailPt={`${brl(c.price.brl)} à vista, ou parcelado em até ${parcelas}x.`}
             />
           </fieldset>
         )}
@@ -302,7 +302,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted
                         bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
             O número do cartão é digitado na tela da Mercado Pago, não aqui. Esta
-            plataforma nunca recebe os dados do seu cartão.
+            plataforma nunca recebe os dados do seu cartão. É lá também que você
+            escolhe em quantas vezes pagar e vê o valor de cada parcela, com os
+            juros da operadora, antes de confirmar.
           </p>
         )}
 
@@ -517,7 +519,7 @@ function Shell({ course, children }: {
   course: ReturnType<typeof getCourse>; children: React.ReactNode;
 }) {
   const c = course!;
-  const parcela = installment(c.price);
+  const parcelas = parcelasMax(c.price);
   return (
     <div className="mx-auto w-full max-w-[880px] px-4 sm:px-6 py-10 sm:py-14
                     grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
@@ -575,7 +577,7 @@ function Shell({ course, children }: {
               {brl(c.price.brl)}
             </p>
             <p className="font-ui text-[12.5px] text-ink-body">
-              ou {parcela.n}x de {brl(parcela.brl)}
+              ou em até {parcelas}x no cartão
             </p>
             {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">

@@ -94,11 +94,13 @@ export function Hero({
             className="transition-[opacity,transform] duration-[600ms] ease-[var(--ease)]"
             style={{ opacity: em(1) ? 1 : 0, transform: em(1) ? 'none' : 'translateY(20px)' }}
           >
-            <p className="inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)]
-                          px-[13px] py-[7px] font-ui text-[13.5px] font-semibold text-[var(--teal-ink)] mb-[22px]">
-              <span aria-hidden className="w-[6px] h-[6px] rounded-full bg-[var(--teal)]" />
-              Alfabetização Hebraica · turma aberta
-            </p>
+            {/* A pílula "Alfabetização Hebraica · turma aberta" saiu daqui.
+                Ela dizia duas coisas que a página já diz melhor logo abaixo:
+                o nome do curso está no título e na caixa de preço, e "turma
+                aberta" sugeria justamente o que o produto NÃO é - não há
+                turma, não há data de início, e o FAQ responde isso em uma
+                linha. Um selo acima do título custa a primeira leitura da
+                página inteira, e este não estava pagando por ela. */}
             {/* O título diz o RESULTADO, com o verbo que a pessoa procurou no
                 Google: "ler hebraico". "Da primeira letra ao hebraico de
                 verdade" era bonito e vago - quem chega aqui precisa saber, na

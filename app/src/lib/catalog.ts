@@ -125,14 +125,20 @@ export const pixPrice = (p: CoursePrice): number =>
     : p.brl;
 
 /**
- * A parcela. Sem juros, que é o que "12x de R$ 12,25" significa em português
- * de site brasileiro - e o que a plataforma tem de bancar de fato.
+ * Em quantas vezes dá para parcelar no cartão. Só o NÚMERO DE PARCELAS.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Esta função já devolveu também o valor de cada parcela, e as telas
+ * anunciavam "12x de R$ 12,25 sem juros". Isso descrevia uma loja que banca
+ * a taxa do cartão. A nossa repassa a taxa ao comprador, e aí o valor da
+ * parcela não é o preço dividido por doze: quem calcula é a operadora, no
+ * momento da compra, e o número depende da bandeira e do prazo.
  *
- * Arredonda PARA CIMA: 147 / 12 = 12,25 exatos, mas 100 / 3 daria 33,33 e
- * 3 × 33,33 é 99,99. A parcela anunciada nunca pode ser menor do que a que
- * o cartão cobra.
+ * Então o valor da parcela não sai mais daqui - não por descuido, mas para
+ * que nenhuma tela consiga anunciá-lo. O único lugar honesto para ele é a
+ * tela da Mercado Pago, que cobra o que mostra. O site diz em quantas vezes
+ * dá para dividir; o valor de cada vez aparece antes de confirmar.
+ *
+ * `app/numeros.mjs` recusa a volta de "Nx de R$ …" em qualquer página da
+ * vitrine, para o caso de alguém reescrever a conta à mão.
  */
-export const installment = (p: CoursePrice): { n: number; brl: number } => {
-  const n = Math.max(1, p.installments);
-  return { n, brl: Math.ceil((p.brl / n) * 100) / 100 };
-};
+export const parcelasMax = (p: CoursePrice): number => Math.max(1, p.installments);

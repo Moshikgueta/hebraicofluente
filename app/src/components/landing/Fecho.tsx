@@ -24,8 +24,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
-import { brl, flagship, installment, pixPrice } from '@/lib/catalog';
+import { brl, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
 import { course, totalLicoes } from '@/lib/content-publico';
+import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { confirmaSozinho, soPix, temPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
@@ -92,10 +93,24 @@ export function Professor({ retrato }: { retrato: string | null }) {
             </p>
             <p className="font-display text-[20px] sm:text-[21px] leading-[1.45] font-medium
                           tracking-[-0.015em] text-ink max-w-[46ch] mb-6">
-              Depois de ver os mesmos obstáculos aparecerem sempre, criei um método pensado
+              Depois de ver os mesmos obstáculos aparecerem sempre, montei um curso pensado
               especificamente para quem fala português.
             </p>
             <CheckList items={CREDENCIAIS} columns={2} textClass="text-ink-muted" />
+            {/* O crédito ao método de origem fica NESTA seção, e não numa
+                nota de rodapé: é aqui que a página fala de quem fez o curso,
+                e de onde o método veio faz parte da mesma resposta. Ver
+                lib/credito.ts. */}
+            <p className="mt-6 pt-5 border-t border-[color:var(--line-soft)]
+                          font-ui text-[14.5px] leading-[1.6] text-ink-muted max-w-[52ch]">
+              O método parte do trabalho de <strong className="font-semibold text-ink">
+              {METODO_ORIGINAL.autor}</strong>, autor de{' '}
+              <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
+              ({METODO_ORIGINAL.obraTranslit}). O conteúdo do livro dele é a base do
+              que esta plataforma ensina, e a adaptação para o aluno brasileiro -
+              as comparações com o português, os exercícios e o que aparece na tela -
+              é minha.
+            </p>
           </Reveal>
         </div>
       </Container>
@@ -306,7 +321,7 @@ export function Depoimentos() {
  * possível, a caixa de preço. Quem já tem o curso vê a porta dele. */
 export function Preco({ href, label, owned }: { href: string; label: string; owned: boolean }) {
   const c = flagship();
-  const parcela = installment(c.price);
+  const parcelas = parcelasMax(c.price);
   const pix = pixPrice(c.price);
 
   const inclui = [
@@ -357,9 +372,12 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                   {brl(soPix() ? pix : c.price.brl)}
                 </p>
                 <p className="font-ui text-[14.5px] text-ink-muted mb-6">
+                  {/* Em quantas vezes, e não quanto por vez: a taxa do cartão
+                      é repassada ao comprador, então quem fecha o valor da
+                      parcela é a operadora. Ver `parcelasMax` em catalog.ts. */}
                   {soPix()
                     ? <>no PIX, à vista</>
-                    : <>ou {parcela.n}× de {brl(parcela.brl)}</>}
+                    : <>ou em até {parcelas}× no cartão</>}
                 </p>
               </>
             )}

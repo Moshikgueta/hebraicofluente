@@ -28,7 +28,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { brl, flagship, installment } from '@/lib/catalog';
+import { brl, flagship, parcelasMax } from '@/lib/catalog';
 
 /* Os alvos que apagam a barra. Ficam aqui, e não espalhados, porque são os
    ids que as seções de Fecho.tsx já expõem - se um sumir, o efeito abaixo
@@ -71,7 +71,7 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
   }, []);
 
   const c = flagship();
-  const parcela = installment(c.price);
+  const parcelas = parcelasMax(c.price);
   const visivel = passou && !tapando;
 
   /* Fica sempre no DOM e muda de opacidade: montar e desmontar a cada
@@ -96,7 +96,7 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
             {brl(c.price.brl)}
           </span>
           <span className="block text-[12.5px] text-ink-muted tabular-nums">
-            ou {parcela.n}x de {brl(parcela.brl)}
+            ou em até {parcelas}x no cartão
           </span>
         </p>
         <Link

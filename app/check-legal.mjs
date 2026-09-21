@@ -159,6 +159,49 @@ for (const f of fontes) {
 }
 if (!soltos) ok('nenhum dado de identificação escrito à mão fora de data/empresa.json');
 
+/* ── 5. o crédito ao método de origem ───────────────────────────────────── */
+console.log('\n  O CRÉDITO AO MÉTODO DE ORIGEM\n');
+
+/* O curso parte do método do autor de בא לי עברית, e o site reconhece isso no
+   rodapé de toda página pública. Um crédito assim não pode depender de
+   ninguém lembrar dele: some num refatoramento de rodapé sem que nenhum teste
+   de unidade note, e some em silêncio - que é a única forma de sumir que
+   importa aqui. Então é conferido no HTML publicado, página por página.
+
+   O nome sai de src/lib/credito.ts, lido aqui como texto: este script não
+   monta o TypeScript, e um segundo lugar com o nome digitado à mão é
+   exatamente o que a última regra abaixo existe para impedir. */
+const credito = readFileSync('src/lib/credito.ts', 'utf8');
+const AUTOR = credito.match(/autor:\s*'([^']+)'/)?.[1];
+const OBRA = credito.match(/obraHe:\s*'([^']+)'/)?.[1];
+
+if (!AUTOR || !OBRA) {
+  falha('não consegui ler autor/obraHe de src/lib/credito.ts');
+} else {
+  /* As mesmas páginas livres do numeros.mjs: a vitrine, que é onde o rodapé
+     público aparece. As pagas ficam de fora porque usam outra casca. */
+  const LIVRES = [
+    '/', '/metodo/', '/cursos/', '/cursos/alfabetizacao/', '/sobre/', '/faq/',
+    '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/'
+  ];
+  const sem = LIVRES.filter(r => { const p = html(r); return p && !p.includes(AUTOR); });
+  if (sem.length) falha(`o crédito a ${AUTOR} não aparece em: ${sem.join(' ')}`);
+  else ok(`o crédito a ${AUTOR} aparece nas ${LIVRES.length} páginas livres`);
+
+  /* A página Sobre é onde o crédito é explicado, e não só assinado. */
+  const sobre = html('/sobre/');
+  if (sobre && sobre.includes(OBRA)) ok('/sobre/ nomeia a obra de origem em hebraico');
+  else falha('a página /sobre/ não nomeia a obra de origem em hebraico');
+
+  /* E o nome mora num arquivo só. Escrevê-lo direto numa tela é o mesmo
+     defeito do CNPJ em dois lugares, com o agravante de ser o nome de uma
+     pessoa. */
+  const copias = fontes.filter(f =>
+    !f.endsWith('lib/credito.ts') && readFileSync(f, 'utf8').includes(AUTOR));
+  if (copias.length) falha(`o nome do autor está escrito à mão em: ${copias.join(' ')}`);
+  else ok('o nome do autor vem de src/lib/credito.ts, e de lugar nenhum mais');
+}
+
 /* ── o veredito ─────────────────────────────────────────────────────────── */
 console.log('');
 if (erros) {

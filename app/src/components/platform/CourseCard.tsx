@@ -18,7 +18,7 @@
 
 import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
-import { brl, installment, isPlayable, pixPrice, type CatalogCourse } from '@/lib/catalog';
+import { brl, isPlayable, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
 import { soPix } from '@/lib/empresa';
 
 export type CourseCardState = 'owned' | 'available' | 'soon' | 'locked';
@@ -110,7 +110,7 @@ export function CourseCard({
           ) : (
             <>
               <strong className="font-semibold text-ink">{brl(course.price.brl)}</strong>
-              {' '}ou {installment(course.price).n}x de {brl(installment(course.price).brl)}
+              {' '}ou em até {parcelasMax(course.price)}x no cartão
             </>
           )}
         </p>

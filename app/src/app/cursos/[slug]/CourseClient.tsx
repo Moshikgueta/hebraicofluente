@@ -21,7 +21,7 @@ import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { brl, getCourse, installment, isPlayable, pixPrice } from '@/lib/catalog';
+import { brl, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
 
@@ -206,7 +206,7 @@ function BuyBox({ slug }: { slug: string }) {
   const c = getCourse(slug)!;
   const owned = account.can(c.slug);
   const open = isPlayable(c);
-  const parcela = installment(c.price);
+  const parcelas = parcelasMax(c.price);
 
   if (owned) {
     return (
@@ -289,7 +289,7 @@ function BuyBox({ slug }: { slug: string }) {
         )}
         {/* O preço em destaque é o preço que vai ser cobrado. Com só PIX no ar,
             o desconto deixa de ser alternativa e passa a ser o preço, e o valor
-            cheio fica como referência - anunciar "12x sem juros" numa loja que
+            cheio fica como referência - anunciar parcelamento numa loja que
             não aceita cartão é oferecer o que não se entrega. */}
         {soPix() ? (
           <>
@@ -306,7 +306,7 @@ function BuyBox({ slug }: { slug: string }) {
           <>
             <p className="font-display text-[38px] font-bold text-ink leading-none">{brl(c.price.brl)}</p>
             <p className="font-ui text-[13.5px] text-ink-body">
-              ou {parcela.n}x de {brl(parcela.brl)} sem juros
+              ou em até {parcelas}x no cartão
             </p>
             {/* O preço do PIX some junto com a possibilidade de pagar no
                 PIX - ver a nota de `temPix` em app/src/lib/empresa.ts. */}
@@ -326,9 +326,9 @@ function BuyBox({ slug }: { slug: string }) {
           {soPix()
             ? 'Pagamento por PIX, pelo aplicativo do seu banco.'
             : temPix() && temCartao()
-              ? `PIX, cartão ou parcelado em até ${parcela.n}x.`
+              ? `PIX, cartão ou parcelado em até ${parcelas}x.`
               : temCartao()
-                ? `Cartão de crédito, ou parcelado em até ${parcela.n}x.`
+                ? `Cartão de crédito, ou parcelado em até ${parcelas}x.`
                 : 'Pagamento por PIX, pelo aplicativo do seu banco.'}
         </li>
         <li>

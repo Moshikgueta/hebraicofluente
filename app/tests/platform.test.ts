@@ -6,9 +6,10 @@
  * expira (ou que expira cedo demais). */
 
 import { describe, expect, it } from 'vitest';
+import * as catalogo from '@/lib/catalog';
 import {
   allCourses, brl, cents, courseHref, flagship, getCourse,
-  installment, isPlayable, pixPrice
+  isPlayable, parcelasMax, pixPrice
 } from '@/lib/catalog';
 import {
   daysLeft, emailLooksValid, entitlementFor, hasAccess, MESSAGES,
@@ -99,14 +100,20 @@ describe('dinheiro', () => {
     expect(brl(12.25).replace(/ /g, ' ')).toBe('R$ 12,25');
   });
 
-  it('nunca anuncia uma parcela menor do que a cobrada', () => {
+  /* Antes daqui havia um caso chamado "nunca anuncia uma parcela menor do que
+     a cobrada": ele conferia que 12 × R$ 12,25 fecha os R$ 147. Essa conta
+     descrevia uma loja que banca a taxa do cartão, e esta não banca - a taxa
+     é repassada, então o valor da parcela é decidido pela operadora e não por
+     nós. Um número que não é nosso não pode ser anunciado como se fosse. */
+  it('diz em quantas vezes dá para parcelar, e não quanto é cada parcela', () => {
     for (const c of allCourses()) {
-      const { n, brl: parcela } = installment(c.price);
-      expect(parcela * n, c.slug).toBeGreaterThanOrEqual(c.price.brl);
-      /* E nem tão maior a ponto de virar juros disfarçado: no máximo um
-         centavo por parcela de arredondamento. */
-      expect(parcela * n, c.slug).toBeLessThan(c.price.brl + n * 0.01 + 0.001);
+      expect(parcelasMax(c.price), c.slug).toBe(Math.max(1, c.price.installments));
+      expect(parcelasMax(c.price), c.slug).toBeGreaterThanOrEqual(1);
     }
+    /* O valor da parcela não sai do catálogo, e é assim que nenhuma tela
+       consegue anunciá-lo por descuido. Quem recusa a conta refeita à mão no
+       HTML publicado é o app/numeros.mjs. */
+    expect(Object.keys(catalogo)).not.toContain('installment');
   });
 
   it('aplica o desconto do PIX, e não inventa um quando não há', () => {

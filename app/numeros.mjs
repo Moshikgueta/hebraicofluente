@@ -15,6 +15,10 @@
    o número do course.json. Um número que o site anuncia e o curso não
    entrega é oferta que não bate com o produto.
 
+   Pelo mesmo motivo, e desde que a taxa do cartão passou a ser repassada ao
+   comprador, ele também recusa "Nx de R$ …" e "sem juros" em qualquer
+   página da vitrine: são condições de pagamento que o checkout não dá.
+
    Precisa do `out/` construído. node numeros.mjs (de dentro de app/). */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -103,6 +107,24 @@ for (const [rota, arquivo] of paginas('out').sort()) {
     if (queixa) problemas.push(`${rota.padEnd(28)} diz "${chave}", que ${queixa}`);
   }
 
+  /* A segunda regra: o valor da parcela.
+     ─────────────────────────────────────────────────────────────────────
+     A taxa do cartão é repassada ao comprador, então o valor de cada
+     parcela é fechado pela operadora no momento da compra - não pelo
+     preço dividido por doze. Uma página que escreve "12x de R$ 12,25" ou
+     "sem juros" está anunciando uma condição que o checkout não dá, e é a
+     página lida logo antes de decidir.
+
+     `parcelasMax` em lib/catalog.ts já não devolve o valor, então o
+     defeito só pode voltar por uma conta refeita à mão. É essa que a regra
+     aqui pega - no HTML publicado, que é o que o comprador lê. */
+  for (const [trecho] of t.matchAll(/\d+\s*[x×]\s*de\s*R\$/gi)) {
+    problemas.push(`${rota.padEnd(28)} anuncia o valor da parcela ("${trecho.trim()}…")`);
+  }
+  for (const [trecho] of t.matchAll(/sem\s+juros/gi)) {
+    problemas.push(`${rota.padEnd(28)} promete "${trecho.trim()}", e os juros são repassados`);
+  }
+
   const lista = [...vistos.keys()].join(' · ');
   console.log(`  ${rota.padEnd(28)} ${lista || '(nenhum número)'}`);
 }
@@ -118,3 +140,4 @@ if (problemas.length) {
   process.exit(1);
 }
 console.log('✓ todo número anunciado na vitrine bate com o course.json');
+console.log('✓ nenhuma página anuncia o valor da parcela nem "sem juros"');

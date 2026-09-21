@@ -102,7 +102,7 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
   /* O espelho do de cima, para quando é o PIX que a conta do provedor não
      tem habilitado. Mesma regra: dizer o caminho que funciona, que está na
      mesma tela, em vez de anunciar um defeito. */
-  'pix-off': 'No momento só aceitamos cartão de crédito. Volte e escolha cartão - em até 12x sem juros.',
+  'pix-off': 'No momento só aceitamos cartão de crédito. Volte e escolha cartão - dá para parcelar.',
   /* Não é erro, é a compra repetida barrada. A renovação abre sozinha nos
      últimos 45 dias; antes disso não há o que pagar. */
   'already-owned': 'Este curso já está na sua conta. A renovação abre nos últimos 45 dias de acesso.'

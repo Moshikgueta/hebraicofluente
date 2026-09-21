@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
-import { brl, flagship, installment, pixPrice } from '@/lib/catalog';
+import { brl, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
 import { empresa, soPix } from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
@@ -22,7 +22,7 @@ export const metadata: Metadata = meta({
  */
 export default function Page() {
   const c = flagship();
-  const parcela = installment(c.price);
+  const parcelas = parcelasMax(c.price);
   const pix = pixPrice(c.price);
   const { politicas, contato } = empresa;
 
@@ -50,7 +50,9 @@ export default function Page() {
           {soPix()
             ? <>, ou {brl(pix)} pagando por <strong>PIX</strong>, que é a forma
                 de pagamento aceita hoje</>
-            : <> à vista, {brl(pix)} no PIX, ou {parcela.n}× de {brl(parcela.brl)} no cartão</>}
+            : <> à vista, {brl(pix)} no PIX, ou em até {parcelas}× no cartão de
+                crédito, com os juros da operadora por conta do comprador e o valor
+                de cada parcela exibido no checkout antes da confirmação</>}
           , e dá{' '}
           <strong>{c.accessMonths} meses de acesso</strong> contados da confirmação do
           pagamento. O preço vigente é sempre o exibido na página do curso e no
