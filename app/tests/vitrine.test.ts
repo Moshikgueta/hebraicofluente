@@ -126,6 +126,20 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
     expect(achadas).toEqual([]);
   });
 
+  it('não escreve à mão um número que o array decide', () => {
+    /* A seção do método dizia "Seis passos" e renderizava CINCO: `PASSOS`
+       perde o passo "Ouça" enquanto não há gravação, e a frase ficou. Um
+       número errado justamente na seção que existe para dizer "aqui a gente
+       é exato" - o mesmo defeito das promessas de áudio, com outra roupa.
+
+       A verificação é de FORMA, como a do manifesto: a frase tem de derivar
+       do array. Conferir só o texto de hoje passaria de novo no dia em que a
+       gravação entrar e o array voltar a ter seis. */
+    const fonte = readFileSync(
+      new URL('../src/components/landing/Secoes.tsx', import.meta.url), 'utf8');
+    expect(fonte).toContain('PASSOS.length === 6');
+  });
+
   it('e a sincronização que ele anuncia existe mesmo', () => {
     /* O par do caso acima: apagar a ressalva sem ter a função seria trocar
        uma mentira por outra, na direção que dá reembolso. Então a prova é do

@@ -293,8 +293,14 @@ export function Metodo() {
     <section id="metodo">
       <Container className="pt-16 sm:pt-24">
         <Reveal><H2 className="max-w-[20ch] mb-3">Um método simples para transformar símbolos em leitura.</H2></Reveal>
+        {/* O número vem do ARRAY, nunca escrito à mão. Ele estava: a página
+            dizia "Seis passos" e renderizava cinco, porque `PASSOS` perde o
+            "Ouça" enquanto não há gravação e ninguém voltou na frase. Um
+            número errado na página que explica o método é pequeno e caro -
+            é a seção que existe para dizer "aqui a gente é exato". */}
         <Reveal delay={80}><Lead className="mb-10 sm:mb-[46px]">
-          Seis passos, sempre nesta sequência. Nenhuma letra avança sem passar por todos.
+          {PASSOS.length === 6 ? 'Seis passos' : 'Cinco passos'}, sempre nesta sequência.
+          Nenhuma letra avança sem passar por todos.
         </Lead></Reveal>
 
         <div className="relative">

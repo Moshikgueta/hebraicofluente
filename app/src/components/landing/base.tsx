@@ -65,9 +65,12 @@ export function Reveal({
 }
 
 /** O H2 de seção: 30-44px, entrelinha curta, letter-spacing negativo. */
-export function H2({ children, className = '' }: { children: ReactNode; className?: string }) {
+export function H2({
+  children, className = '', id
+}: { children: ReactNode; className?: string; id?: string }) {
   return (
-    <h2 className={`font-display font-semibold text-[clamp(30px,3.7vw,44px)] leading-[1.08]
+    <h2 id={id}
+        className={`font-display font-semibold text-[clamp(30px,3.7vw,44px)] leading-[1.08]
                     tracking-[-0.03em] text-balance ${className}`}>
       {children}
     </h2>

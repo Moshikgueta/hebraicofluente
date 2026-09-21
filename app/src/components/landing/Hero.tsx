@@ -19,11 +19,29 @@ import { useEffect, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Container, Check } from './base';
 import { TEM_AUDIO } from './copy';
+import { SEM_MIDIA, type HeroMedia } from './media';
+import { course } from '@/lib/content-publico';
+import { flagship } from '@/lib/catalog';
 
 
 const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1000], [5, 1900]];
 
-const CONFIANCA = ['Acesso imediato', 'No seu ritmo', 'Feito para brasileiros', 'Curso interativo'];
+
+/* Os quatro fatos do produto, lidos do CURSO e do CATÁLOGO.
+   ─────────────────────────────────────────────────────────────────────────
+   Esta linha é a mais fácil de escrever à mão e a mais cara de errar: ela
+   está acima da dobra, e um "21 lições" que vira 24 no dia em que um módulo
+   entra é uma oferta que não bate com o produto. O mesmo motivo pelo qual a
+   seção do método passou a contar o próprio array. */
+function fatos(): string[] {
+  const licoes = course.modules.reduce((n, m) => n + m.lessons.length, 0);
+  return [
+    `${licoes} lições`,
+    'exercícios interativos',
+    'progresso salvo',
+    `acesso por ${flagship().accessMonths} meses`
+  ];
+}
 
 /* A mensagem central é em PORTUGUÊS, inteira.
  * ─────────────────────────────────────────────────────────────────────────
@@ -39,13 +57,15 @@ const CONFIANCA = ['Acesso imediato', 'No seu ritmo', 'Feito para brasileiros', 
  * saiba.
  */
 export function Hero({
-  primaryHref, primaryLabel, primaryMicro, secondaryHref
+  primaryHref, primaryLabel, primaryMicro, secondaryHref, midia = SEM_MIDIA
 }: {
   primaryHref: string;
   primaryLabel: string;
   /** A linha curta embaixo do botão: o que se leva ao clicar. */
   primaryMicro: string;
   secondaryHref: string;
+  /** A camada de atmosfera, quando o arquivo existe. Ver ./media.ts. */
+  midia?: HeroMedia;
 }) {
   const [etapa, setEtapa] = useState(0);
 
@@ -79,20 +99,51 @@ export function Hero({
               <span aria-hidden className="w-[6px] h-[6px] rounded-full bg-[var(--teal)]" />
               Alfabetização Hebraica · turma aberta
             </p>
+            {/* O título diz o RESULTADO, com o verbo que a pessoa procurou no
+                Google: "ler hebraico". "Da primeira letra ao hebraico de
+                verdade" era bonito e vago - quem chega aqui precisa saber, na
+                primeira linha, o que vai conseguir fazer. */}
             <h1 className="font-display font-semibold text-[clamp(40px,5.1vw,62px)] leading-[1.02]
                            tracking-[-0.036em] text-balance m-0 mb-5">
-              Da primeira letra ao hebraico de verdade.
+              Aprenda a ler hebraico do zero.
             </h1>
           </div>
 
           <p
-            className="font-ui text-[18px] sm:text-[19.5px] leading-[1.6] text-ink-muted max-w-[44ch] mb-7
+            className="font-ui text-[18px] sm:text-[19.5px] leading-[1.6] text-ink-muted max-w-[46ch] mb-6
                        transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
             style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
           >
-            Aprenda a ler, entender e avançar no hebraico com explicações em português,
-            exercícios interativos e uma jornada de estudos clara.
+            Um curso interativo feito para brasileiros aprenderem as {course.totalLetters} letras,
+            os sons e a leitura de palavras reais - mesmo sem nunca ter estudado hebraico.
           </p>
+
+          {/* Os quatro fatos. Respondem "o que exatamente eu estou comprando?"
+              antes do botão, que é onde a pergunta aparece.
+
+              Grade de dois no celular, linha única com separadores a partir
+              do sm. A primeira versão era sempre uma linha com um ponto ANTES
+              de cada item, e ao quebrar no telefone o ponto ia junto - a
+              segunda linha começava com "· progresso salvo", um marcador
+              órfão. Separador que quebra tem de ser o do fim da linha, não o
+              do começo da seguinte; num telefone estreito, não ter separador
+              nenhum é mais limpo do que resolver isso. */}
+          <ul
+            className="grid grid-cols-2 gap-x-4 gap-y-1.5 sm:flex sm:flex-wrap sm:items-center sm:gap-x-2.5
+                       list-none p-0 m-0 mb-7 font-ui text-[14.5px] text-ink-body
+                       transition-[opacity,transform] duration-[600ms] delay-[180ms] ease-[var(--ease)]"
+            style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(12px)' }}
+          >
+            {fatos().map((f, i) => (
+              <li key={f} className="flex items-center gap-2.5">
+                {i > 0 && (
+                  <span aria-hidden
+                        className="hidden sm:block w-[3px] h-[3px] rounded-full bg-[var(--line)]" />
+                )}
+                <span className="font-medium">{f}</span>
+              </li>
+            ))}
+          </ul>
 
           <div
             className="grid gap-2.5 justify-items-start mb-7
@@ -120,7 +171,10 @@ export function Hero({
                            transition-[border-color,transform] duration-[180ms]
                            hover:border-[#C9C3B4] hover:-translate-y-[2px]"
               >
-                Ver como funciona
+                {/* Leva à demonstração jogável, e não a um texto sobre ela:
+                    o segundo botão de um hero existe para quem quer VER antes
+                    de decidir, e mandá-lo para mais copy desperdiça o clique. */}
+                Ver o curso por dentro
               </Link>
             </div>
             {/* A microcópia responde a pergunta que trava o clique: "e o que
@@ -129,23 +183,23 @@ export function Hero({
             <p className="font-ui text-[13.5px] text-ink-muted m-0">{primaryMicro}</p>
           </div>
 
-          <ul
-            className="flex flex-wrap gap-x-5 gap-y-2 list-none p-0 m-0
-                       transition-opacity duration-500 delay-[400ms]"
-            style={{ opacity: em(3) ? 1 : 0 }}
-          >
-            {CONFIANCA.map(t => (
-              <li key={t} className="flex items-center gap-[7px] font-ui text-[14.5px] text-ink-muted">
-                <Check /> {t}
-              </li>
-            ))}
-          </ul>
+          {/* Os quatro chips de confiança ("Acesso imediato", "No seu ritmo",
+              "Feito para brasileiros", "Curso interativo") saíram daqui. Eram
+              uma segunda lista de quatro itens dizendo quase o mesmo que a
+              linha de fatos acima, e duas listas paralelas na primeira tela
+              não somam confiança - elas dividem a atenção e empurram o
+              produto para baixo da dobra no celular.
+
+              O que elas diziam de único continua na página: "acesso imediato"
+              está na microcópia do botão, e "feito para brasileiros" é a
+              frase inteira do subtítulo. */}
         </div>
 
         <div
           className="relative transition-[opacity,transform] duration-700 delay-[340ms] ease-[var(--ease)]"
           style={{ opacity: em(4) ? 1 : 0, transform: em(4) ? 'none' : 'translateY(26px)' }}
         >
+          <Atmosfera midia={midia} />
           <Mockup ativo={em(4)} certo={certo} />
           <CartaoFlutuante
             className="top-[-22px] right-[-6px] sm:right-[-14px]"
@@ -155,8 +209,13 @@ export function Hero({
             rotulo="Sequência"
             valor={`${certo ? 7 : 6} dias`}
           />
+          {/* Abaixo do mockup, e não por cima dele.
+              Em `bottom-[56px]` este cartão caía exatamente sobre a linha das
+              alternativas e escondia o "SH ✓" - que é o desfecho da cena e o
+              único lugar da primeira tela onde a página mostra uma resposta
+              sendo corrigida. Um enfeite flutuante tapando o argumento. */}
           <CartaoFlutuante
-            className="left-[-10px] sm:left-[-26px] bottom-[56px]"
+            className="left-[-10px] sm:left-[-26px] bottom-[-26px]"
             style={{ animationDuration: '6.5s', animationDelay: '.8s' }}
             icone={<Check size={16} color="var(--teal)" />}
             fundo="var(--teal-soft)"
@@ -166,6 +225,77 @@ export function Hero({
         </div>
       </Container>
     </header>
+  );
+}
+
+/* A camada de atmosfera, atrás do produto.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Ela fica ATRÁS e transbordando do mockup, nunca por cima: o que vende esta
+ * página é a interface de verdade, e uma foto na frente dela seria decoração
+ * escondendo o argumento.
+ *
+ * Três estados, nesta ordem de preferência:
+ *
+ *   vídeo   laço curto, mudo, só quando existe poster E a pessoa não pediu
+ *           menos movimento. `preload="none"` para não custar nada a quem
+ *           está no 4G e nunca vai ver o laço inteiro;
+ *   imagem  o mesmo enquadramento, parado. É o estado normal do celular;
+ *   nada    a composição desenhada abaixo - dois halos e uma letra hebraica
+ *           gigante, cortada pela borda. Não é um placeholder esperando
+ *           alguém: é o que a maioria vai ver, e foi desenhado para isso.
+ *
+ * O hebraico NUNCA vem do arquivo gerado. Ele é desenhado aqui, com a fonte
+ * do produto - um gerador de imagem erra a grafia, e uma palavra errada na
+ * primeira tela de um curso de hebraico é o pior defeito possível.
+ */
+function Atmosfera({ midia }: { midia: HeroMedia }) {
+  const [move, setMove] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const fino = window.matchMedia?.('(min-width: 1024px)');
+    setMove(!mq?.matches && !!fino?.matches);
+  }, []);
+
+  const temVideo = !!midia.video && !!midia.poster && move;
+
+  return (
+    <div
+      aria-hidden
+      className="absolute -inset-x-6 -inset-y-10 sm:-inset-x-12 sm:-inset-y-14 z-[1]
+                 rounded-[36px] overflow-hidden pointer-events-none select-none"
+    >
+      {temVideo ? (
+        <video
+          className="w-full h-full object-cover opacity-[.42]"
+          src={midia.video!}
+          poster={midia.poster!}
+          autoPlay muted loop playsInline preload="none"
+        />
+      ) : midia.imagem ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={midia.imagem} alt="" className="w-full h-full object-cover opacity-[.42]" loading="eager" />
+      ) : (
+        <div className="absolute inset-0">
+          {/* Dois halos que se cruzam: o teal do produto e a areia do papel.
+              Dão profundidade sem desenhar nada que precise ser explicado. */}
+          <div className="absolute inset-0"
+               style={{ background: 'radial-gradient(70% 60% at 78% 18%, #DCEDE8 0%, rgba(220,237,232,0) 64%)' }} />
+          <div className="absolute inset-0"
+               style={{ background: 'radial-gradient(60% 55% at 12% 92%, #F1EADA 0%, rgba(241,234,218,0) 62%)' }} />
+          <span
+            className="he absolute -right-[6%] top-[-8%] leading-none select-none
+                       text-[clamp(200px,26vw,340px)] text-[var(--navy)] opacity-[.055]"
+          >
+            א
+          </span>
+        </div>
+      )}
+      {/* O creme volta nas bordas para o retângulo não ter arestas: a
+          atmosfera dissolve no papel em vez de virar uma caixa. */}
+      <div className="absolute inset-0"
+           style={{ background: 'radial-gradient(75% 65% at 50% 45%, rgba(251,249,245,0) 0%, var(--cream) 88%)' }} />
+    </div>
   );
 }
 
@@ -230,8 +360,12 @@ function Mockup({ ativo, certo }: { ativo: boolean; certo: boolean }) {
         ))}
       </div>
 
+      {/* Sai POR CIMA da borda do cartão, subindo. Dentro dele não há canto
+          livre: em `bottom-[96px]` pousava sobre a opção "M" e em
+          `top-[52px]` pousava sobre o "72%" do progresso - nos dois casos
+          um enfeite sujando um número que a página quer que seja lido. */}
       {certo && (
-        <span className="absolute right-[26px] bottom-[96px] font-ui font-bold text-[17px]
+        <span className="absolute right-[22px] top-[-13px] z-[4] font-ui font-bold text-[17px]
                          text-[var(--teal)] pointer-events-none animate-xp">
           +10 XP
         </span>

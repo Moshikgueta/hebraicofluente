@@ -40,23 +40,38 @@ const CREDENCIAIS = [
   'Alunos de diferentes países e níveis'
 ];
 
-export function Professor() {
+export function Professor({ retrato }: { retrato: string | null }) {
   return (
     <section id="sobre">
       <Container className="pt-16 sm:pt-24">
         <div className="grid gap-10 lg:gap-[56px] lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:items-center">
           <Reveal>
-            {/* Sem foto ainda. Em vez do aviso "retrato entra aqui", que é um
-                bilhete para nós exibido a quem está comprando, o espaço mostra
-                a marca. Trocar é pôr o arquivo e apontar um <Image> aqui. */}
-            <div className="aspect-[4/5] rounded-[22px] border border-line bg-[var(--sand)]
-                            grid place-items-center">
-              <span className="grid place-items-center w-24 h-24 rounded-[26px] bg-[var(--navy)]">
-                <span style={{ fontSize: 46, marginTop: -3, lineHeight: 1 }}>
-                  <He size="inline" tone="lite" className="leading-none">ע</He>
+            {/* O retrato aparece quando o arquivo existe (ver app/page.tsx);
+                sem ele, o espaço mostra a marca em vez de um aviso interno
+                exibido a quem está comprando.
+
+                `object-top` de propósito: num retrato de rua o rosto fica no
+                terço de cima, e o corte centralizado do object-cover o
+                decapitaria no formato 4/5. */}
+            {retrato ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={retrato}
+                alt="Moshik Gueta, professor e criador do Hebraico Fluente"
+                width={680} height={850} loading="lazy" decoding="async"
+                className="aspect-[4/5] w-full rounded-[22px] border border-line
+                           object-cover object-top bg-[var(--sand)]"
+              />
+            ) : (
+              <div className="aspect-[4/5] rounded-[22px] border border-line bg-[var(--sand)]
+                              grid place-items-center">
+                <span className="grid place-items-center w-24 h-24 rounded-[26px] bg-[var(--navy)]">
+                  <span style={{ fontSize: 46, marginTop: -3, lineHeight: 1 }}>
+                    <He size="inline" tone="lite" className="leading-none">ע</He>
+                  </span>
                 </span>
-              </span>
-            </div>
+              </div>
+            )}
           </Reveal>
           <Reveal delay={100}>
             <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
@@ -66,15 +81,19 @@ export function Professor() {
                            tracking-[-0.03em] m-0 mb-4">
               Moshik Gueta
             </h2>
+            {/* Primeira pessoa. A seção que existe para gerar confiança é a
+                única da página em que falar "eu" custa menos do que falar "o
+                professor" - ninguém confia numa biografia em terceira pessoa
+                escrita pela própria pessoa. */}
             <p className="font-ui text-[17px] sm:text-[18px] leading-[1.65] text-ink-muted max-w-[52ch] mb-4">
-              Professor de hebraico e idiomas, com experiência no ensino de hebraico para
-              brasileiros. Ensinar nas duas direções - hebraico para quem fala português e
-              português para quem fala hebraico - mostrou exatamente onde o aluno brasileiro trava.
+              Sou israelense e ensino hebraico para brasileiros. Ensinar nas duas direções -
+              hebraico para quem fala português e português para quem fala hebraico - mostrou
+              exatamente onde o aluno brasileiro trava.
             </p>
             <p className="font-display text-[20px] sm:text-[21px] leading-[1.45] font-medium
                           tracking-[-0.015em] text-ink max-w-[46ch] mb-6">
-              O método nasceu da experiência de ensinar hebraico especificamente para quem
-              fala português.
+              Depois de ver os mesmos obstáculos aparecerem sempre, criei um método pensado
+              especificamente para quem fala português.
             </p>
             <CheckList items={CREDENCIAIS} columns={2} textClass="text-ink-muted" />
           </Reveal>

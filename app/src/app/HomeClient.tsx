@@ -24,14 +24,16 @@
 
 import { Hero } from '@/components/landing/Hero';
 import { Problema, Demonstracao, Metodo, Curriculo, Jornada } from '@/components/landing/Secoes';
+import { Transformacao } from '@/components/landing/Transformacao';
 import {
   Professor, Recursos, AulaAmostra, Depoimentos, Preco, Faq, CtaFinal
 } from '@/components/landing/Fecho';
 import { FLAGSHIP } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { proximoPasso } from '@/lib/cta';
+import type { HeroMedia } from '@/components/landing/media';
 
-export function HomeClient() {
+export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: string | null }) {
   const account = useAccount();
 
   /* Um aluno que já entrou não deve ser mandado para o checkout pela própria
@@ -48,14 +50,16 @@ export function HomeClient() {
         primaryHref={passo.href}
         primaryLabel={passo.label}
         primaryMicro={passo.micro}
-        secondaryHref="#como"
+        secondaryHref="#curso"
+        midia={midia}
       />
+      <Transformacao />
       <Problema />
       <Demonstracao />
       <Metodo />
       <Curriculo />
       <Jornada />
-      <Professor />
+      <Professor retrato={retrato} />
       <Recursos />
       <AulaAmostra href={curso} />
       <Depoimentos />
