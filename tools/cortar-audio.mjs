@@ -125,9 +125,23 @@ function pisoDeRuido(wav) {
   };
 }
 
-/* ── where the silences are ─────────────────────────────────────────────── */
+/* ── where the silences are ──────────────────────────────────────────────
+   A DETECÇÃO OUVE O MESMO SINAL QUE A LIMPEZA VAI PRODUZIR.
+   ─────────────────────────────────────────────────────────────────────────
+   O passa-alta não está aqui por capricho de simetria. Na primeira gravação
+   de uma letra, o corte achou OITO trechos onde há sete itens, e o oitavo
+   era um clique de 0,04 s no início - o dedo no botão de gravar. Ele passou
+   pela detecção porque tem energia grave, e desapareceu na limpeza porque o
+   passa-alta come justamente isso. Resultado: uma peça fantasma, contagem
+   errada, e uma letra inteira recusada por causa de um toque na tela.
+
+   Detectar no sinal cru e cortar no sinal limpo é medir uma coisa e entregar
+   outra. Com o mesmo filtro nos dois lados, o que a contagem promete é o que
+   o arquivo tem. */
+const PRE_FILTRO = 'highpass=f=80';
+
 function marcasDeSilencio(wav, limiar, gap) {
-  const saida = ffMeasure(['-i', wav, '-af', `silencedetect=noise=${limiar}dB:d=${gap}`]);
+  const saida = ffMeasure(['-i', wav, '-af', `${PRE_FILTRO},silencedetect=noise=${limiar}dB:d=${gap}`]);
   const marcas = [];
   for (const linha of saida.split('\n')) {
     const ini = linha.match(/silence_start:\s*(-?\d+(?:\.\d+)?)/);
@@ -136,6 +150,46 @@ function marcasDeSilencio(wav, limiar, gap) {
     if (fim) marcas.push({ t: Number(fim[1]), tipo: 'fim' });
   }
   return marcas;
+}
+
+/* ── o que não é voz ────────────────────────────────────────────────────
+   Um trecho pode ter a duração de uma palavra e não ter palavra nenhuma
+   dentro. O dedo no botão de gravar, a mesa batida, a porta: são eventos
+   curtos e graves que a detecção conta como fala e a limpeza depois esvazia,
+   deixando um arquivo de 0,04 s a -91 dB - silêncio digital com nome de
+   letra.
+   Isso aconteceu duas vezes na primeira gravação de uma letra, e das duas a
+   CONTAGEM BATEU: sete trechos para sete itens, com um fantasma dentro e um
+   item de verdade faltando. É a pior coisa que esta ferramenta pode fazer,
+   porque é o erro que ela existe para impedir e que passa pela sua única
+   defesa automática.
+   Daí esta segunda peneira, depois do corte e antes de contar: mede-se cada
+   trecho com o mesmo filtro da limpeza, e o que não tiver voz por cima do
+   piso da sala não é trecho. */
+const VOZ_ACIMA_DO_PISO_DB = 14;
+
+/* Mede um trecho como a limpeza o entregará: mesmo filtro, mesmas bordas
+   aparadas. Devolve o pico - que diz se há voz - e a duração DEPOIS da
+   aparagem, que é a única que se pode comparar com o tamanho de uma palavra.
+   Medir a extensão crua era avisar "itens grudados" sobre uma peça que sai
+   com 0,82 s, e um aviso que grita à toa é um aviso que ninguém lê. */
+function medir(wav, seg, pisoDb) {
+  const dur = seg.ate - seg.de;
+  /* Sem aparar as bordas aqui, de propósito. A versão que aparava media com
+     `areverse` + `silenceremove` e devolvia `n_samples: 0` para TODO trecho,
+     rejeitando a gravação inteira - o `areverse` sobre uma janela cortada com
+     `-ss`/`-t` não entrega o que esta medição precisa. O pico sobre o trecho
+     inteiro responde a única pergunta que importa aqui, que é se há voz; o
+     tamanho de verdade quem confere é a trava do fim, sobre o arquivo pronto. */
+  const saida = ffMeasure([
+    '-ss', String(seg.de), '-t', String(dur), '-i', wav, '-af', `${PRE_FILTRO},volumedetect`
+  ]);
+  const pico = saida.match(/max_volume:\s*(-?\d+(?:\.\d+)?) dB/);
+  return {
+    /* Sem medida não se descarta nada: a dúvida não pode apagar uma letra. */
+    temVoz: pico ? Number(pico[1]) > pisoDb + VOZ_ACIMA_DO_PISO_DB : true,
+    limpa: dur
+  };
 }
 
 /* ── how long one item can be ───────────────────────────────────────────
@@ -172,7 +226,7 @@ function abrirPeca(wav, seg, nivel = 0) {
     for (const limiar of [-30, -35, -40, -25]) {
       const saida = ffMeasure([
         '-ss', String(seg.de), '-t', String(fala), '-i', wav,
-        '-af', `silencedetect=noise=${limiar}dB:d=${gap}`
+        '-af', `${PRE_FILTRO},silencedetect=noise=${limiar}dB:d=${gap}`
       ]);
       const marcas = [];
       for (const linha of saida.split('\n')) {
@@ -227,8 +281,10 @@ function acharCorte(wav, pisoDb, esperados) {
 
   for (const limiar of limiares) {
     const largos = segmentos(marcasDeSilencio(wav, limiar, GAP_MIN_S), total);
-    const segs = largos.flatMap(s => abrirPeca(wav, s));
-    const grudadas = segs.filter(s => s.ate - s.de > PALAVRA_MAX_S).length;
+    const segs = largos.flatMap(s => abrirPeca(wav, s))
+      .map(s => ({ ...s, ...medir(wav, s, pisoDb) }))
+      .filter(s => s.temVoz);
+    const grudadas = segs.filter(s => s.limpa > PALAVRA_MAX_S).length;
     tentativas.push({ limiar, n: segs.length, grudadas });
     if (segs.length === esperados) {
       return { limiar, gap: GAP_MIN_S, segs, tentativas, grudadas, bateu: true };
@@ -581,6 +637,34 @@ function main() {
 
     Ache o ponto, corte o trecho problemático do WAV, e rode de novo. Ou use
     --de e --ate para tratar os pedaços separadamente.
+`);
+    process.exitCode = 1;
+    return;
+  }
+
+  /* ── a última trava, e a única que mede o que SAI ────────────────────
+     Tudo o que veio antes julga trechos do original. Isto julga os arquivos
+     prontos, que são os que o curso vai tocar - e um arquivo mudo com nome
+     de letra já passou por todas as peneiras anteriores duas vezes nesta
+     sessão. Um clipe sem som não é um defeito de corte a ser relatado: é
+     uma letra que o aluno vai clicar e não ouvir nada. */
+  const mudos = pares.filter(p => {
+    const saida = ffMeasure(['-i', join(CONF, p.arquivo), '-af', 'volumedetect']);
+    const m = saida.match(/max_volume:\s*(-?\d+(?:\.\d+)?) dB/);
+    return !m || Number(m[1]) < -60;
+  });
+
+  if (mudos.length) {
+    console.log(`
+  ✗ ${mudos.length} peça(s) saíram SEM SOM, e por isso nada foi nomeado:
+${mudos.map(p => `      ${p.arquivo}  (seria ${p.clipe.he})`).join('\n')}
+
+    Um trecho que a detecção contou como fala e a limpeza esvaziou: quase
+    sempre o dedo no botão de gravar, uma batida na mesa ou uma porta.
+    Como ele ocupou o lugar de um item de verdade, a contagem bateu com um
+    fantasma dentro - e um item real ficou de fora.
+
+    Os arquivos numerados estão em audio/conferir/ para você ouvir.
 `);
     process.exitCode = 1;
     return;
