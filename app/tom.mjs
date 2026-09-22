@@ -97,6 +97,29 @@ await ctx.addInitScript(([a, s]) => {
 }, [JSON.stringify(ACC), JSON.stringify(ST)]);
 const p = await ctx.newPage();
 
+/* ── esta varredura precisa do out/ em modo LOCAL ─────────────────────────
+   Em modo plataforma as rotas do curso ficam atrás do portão e devolvem a
+   tela de entrar. Um verificador de tom apontado para telas de login não
+   acha promessa de facilidade nenhuma e passa - e passar sem ter olhado é
+   pior do que não existir, porque alguém vai confiar no verde.
+
+   Então ele confere que ENTROU antes de medir qualquer coisa. */
+const daParaEntrar = async () => {
+  await p.goto('http://127.0.0.1:4492/meu-hebraico/', { waitUntil: 'networkidle' });
+  await p.waitForTimeout(400);
+  const txt = await p.innerText('body');
+  return !/Entrar na sua conta|Criar conta|Esqueci a senha/i.test(txt)
+    && /Meu curso|Hoje/.test(txt);
+};
+if (!(await daParaEntrar())) {
+  console.log('');
+  console.log('  ✗ não consegui abrir o curso: esta build parece ser a de');
+  console.log('    plataforma, onde as rotas ficam atrás do portão.');
+  console.log('    Rode `npm run build` (modo local) antes de tom.mjs.');
+  await b.close(); srv.close();
+  process.exit(1);
+}
+
 for (const rota of ROTAS) {
   await p.goto(`http://127.0.0.1:4492${rota}`, { waitUntil: 'networkidle' });
   await p.waitForTimeout(350);
