@@ -35,7 +35,12 @@ const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1
    seção do método passou a contar o próprio array. */
 function fatos(): string[] {
   return [
-    `${totalLicoes()} lições`,
+    /* Os dois números numa linha só, e não dois itens: a contagem de letras
+       saiu do parágrafo de apoio quando ele foi reescrito, e ela é o número
+       que responde «o que exatamente eu vou aprender?». Como item separado
+       faria cinco fatos numa grade de dois - uma terceira linha com um item
+       órfão no telefone. */
+    `${course.totalLetters} letras em ${totalLicoes()} lições`,
     'exercícios interativos',
     'progresso salvo',
     `acesso por ${flagship().accessMonths} meses`
@@ -117,30 +122,33 @@ export function Hero({
                 na semana seguinte; esta diz uma coisa que o curso entrega
                 mesmo - que o estranho vira legível - e deixa o tempo para o
                 FAQ, onde ele está medido. */}
-            {/* Medido numa captura: a 62px a frase ocupava QUATRO linhas no
-                desktop e empurrava os botões para fora da primeira tela. A
+            {/* O tamanho é MEDIDO, não escolhido pelo efeito.
+                ──────────────────────────────────────────────────────────
+                A 62px uma frase mais curta que esta já ocupava quatro linhas
+                no desktop e empurrava os botões para fora da primeira tela. A
                 promessa só funciona se o convite estiver visível junto com
                 ela - um título imponente que esconde o botão custa a conversão
-                que ele foi escrito para criar. */}
-            <h1 className="font-display font-semibold text-[clamp(35px,4.3vw,54px)] leading-[1.04]
-                           tracking-[-0.034em] text-balance m-0 mb-4">
-              O hebraico parece impossível{' '}
-              <span className="text-[var(--teal)]">até começar a fazer sentido.</span>
+                que ele foi escrito para criar. Esta frase é mais longa, então
+                o corpo desce junto. */}
+            <h1 className="font-display font-semibold text-[clamp(30px,3.35vw,42px)] leading-[1.07]
+                           tracking-[-0.03em] text-balance m-0 mb-3.5">
+              Dê seus primeiros passos até conseguir{' '}
+              <span className="text-[var(--teal)]">ler e escrever hebraico com segurança.</span>
             </h1>
-            <p className="font-display text-[clamp(20px,2.1vw,26px)] leading-[1.28] font-medium
-                          tracking-[-0.02em] text-ink text-balance max-w-[24ch] m-0 mb-5">
-              Aprenda a ler e escrever hebraico do zero, uma letra de cada vez.
+            <p className="font-display text-[clamp(18px,1.85vw,22px)] leading-[1.32] font-medium
+                          tracking-[-0.02em] text-ink text-balance max-w-[36ch] m-0 mb-4">
+              Aprenda do zero, uma letra de cada vez, até reconhecer os sons, formar
+              palavras e começar a ler hebraico de verdade.
             </p>
           </div>
 
           <p
-            className="font-ui text-[18px] sm:text-[19.5px] leading-[1.6] text-ink-muted max-w-[46ch] mb-6
+            className="font-ui text-[18px] sm:text-[19.5px] leading-[1.6] text-ink-muted max-w-[48ch] mb-5
                        transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
             style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
           >
-            Um curso interativo feito para brasileiros: as {course.totalLetters} letras, os sons e a
-            leitura de palavras reais, com correção na hora. Não é um PDF nem uma sequência de
-            videoaulas - você pratica em cada passo.
+            Um curso interativo criado especialmente para brasileiros, com prática em cada
+            etapa e correção imediata para você saber exatamente quando está avançando.
           </p>
 
           {/* Os quatro fatos. Respondem "o que exatamente eu estou comprando?"
@@ -153,20 +161,27 @@ export function Hero({
               órfão. Separador que quebra tem de ser o do fim da linha, não o
               do começo da seguinte; num telefone estreito, não ter separador
               nenhum é mais limpo do que resolver isso. */}
+          {/* Duas colunas em TODA largura, e sem os pontinhos.
+              ──────────────────────────────────────────────────────────────
+              A linha antes era flex com um separador ANTES de cada item, e
+              isso funcionava enquanto os quatro fatos cabiam numa linha só.
+              Quando o primeiro passou a dizer "22 letras em 21 lições" eles
+              deixaram de caber, a linha quebrou, e o ponto foi junto: a
+              segunda linha começava com "· acesso por 12 meses", um marcador
+              órfão. A nota antiga deste arquivo já dizia a saída - separador
+              que quebra tem de ser o do fim da linha, e num espaço estreito
+              não ter separador nenhum é mais limpo do que resolver isso.
+
+              Numa grade de duas colunas o problema não existe em largura
+              nenhuma, e os quatro fatos ficam alinhados em vez de corridos. */}
           <ul
-            className="grid grid-cols-2 gap-x-4 gap-y-1.5 sm:flex sm:flex-wrap sm:items-center sm:gap-x-2.5
-                       list-none p-0 m-0 mb-7 font-ui text-[14.5px] text-ink-body
+            className="grid grid-cols-2 gap-x-6 gap-y-1.5 max-w-[440px]
+                       list-none p-0 m-0 mb-6 font-ui text-[14.5px] text-ink-body
                        transition-[opacity,transform] duration-[600ms] delay-[180ms] ease-[var(--ease)]"
             style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(12px)' }}
           >
-            {fatos().map((f, i) => (
-              <li key={f} className="flex items-center gap-2.5">
-                {i > 0 && (
-                  <span aria-hidden
-                        className="hidden sm:block w-[3px] h-[3px] rounded-full bg-[var(--line)]" />
-                )}
-                <span className="font-medium">{f}</span>
-              </li>
+            {fatos().map(f => (
+              <li key={f} className="font-medium">{f}</li>
             ))}
           </ul>
 
@@ -175,11 +190,18 @@ export function Hero({
                        transition-[opacity,transform] duration-500 delay-[260ms] ease-[var(--ease)]"
             style={{ opacity: em(3) ? 1 : 0, transform: em(3) ? 'none' : 'translateY(14px)' }}
           >
-            <div className="flex flex-wrap gap-3">
+            {/* Medido: a coluna tem 553px e os dois botões somavam 573.
+                Cortar o respiro interno dos dois deixou 555 - dois pixels
+                de fora, o que é a pior distância possível. Então o secundário
+                cede meio ponto de corpo também, que é hierarquia normal para
+                um botão secundário e traz a soma para 547. Se numa fonte de
+                reserva eles voltarem a não caber, o `flex-wrap` empilha - que
+                é a degradação certa, e não um defeito. */}
+            <div className="flex flex-wrap gap-2.5">
               <Link
                 href={primaryHref}
                 className="group inline-flex items-center justify-center gap-2 rounded-[13px]
-                           bg-[var(--navy)] text-white font-ui font-semibold text-[17px] px-7 py-[15px]
+                           bg-[var(--navy)] text-white font-ui font-semibold text-[16.5px] px-5 py-[15px]
                            shadow-[var(--sh)] transition-[background-color,transform] duration-[180ms]
                            hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0"
               >
@@ -192,7 +214,7 @@ export function Hero({
               <Link
                 href={secondaryHref}
                 className="inline-flex items-center justify-center rounded-[13px] bg-[var(--card)] text-ink
-                           border border-line font-ui font-semibold text-[17px] px-6 py-[15px]
+                           border border-line font-ui font-semibold text-[16px] px-4 py-[15px]
                            transition-[border-color,transform] duration-[180ms]
                            hover:border-[#C9C3B4] hover:-translate-y-[2px]"
               >
