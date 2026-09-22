@@ -28,6 +28,7 @@
     "tom": "node tom.mjs",
     "apagar-conta": "node apagar-conta.mjs",
     "escuro": "node escuro.mjs",
+    "jogos": "node jogos.mjs",
     "exercicios": "node exercicios.mjs",
     "pacote": "node pacote.mjs",
     "promessas": "node promessas.mjs",

@@ -28,9 +28,17 @@ import { ParaRevisar } from '@/components/game/Debt';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, type Letter } from '@/lib/content';
 import { onCarrier } from '@/lib/hebrew';
-import { availableModes, buildGym, type GymMode } from '@/lib/engine/gym';
+import { availableModes, buildGym, confusionPair, type GymMode } from '@/lib/engine/gym';
+import {
+  montarBatalha, montarCaca, montarCursiva, nivelDe, NIVEL_LABEL, type Nivel
+} from '@/lib/engine/jogos';
+import type { LearnerState } from '@/lib/state/types';
+import { rng } from '@/lib/engine/rng';
 import { Match, type ResultadoJogo } from '@/components/game/Match';
 import { Blast } from '@/components/game/Blast';
+import { CacaLetra } from '@/components/game/CacaLetra';
+import { Batalha } from '@/components/game/Batalha';
+import { ImpressaCursiva } from '@/components/game/ImpressaCursiva';
 import { TestRun, RelatorioTeste, type ResultadoTeste } from '@/components/game/TestRun';
 import {
   deLetras, montarBaralho, perguntasDe, TIPOS_POR_JOGO, type Par, type Pergunta
@@ -38,13 +46,32 @@ import {
 import { letterMastery } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
-type Jogo = 'match' | 'blast' | 'teste';
+/* Os que saem do BARALHO (lib/engine/deck.ts) e os que saem do motor de
+   reconhecimento (lib/engine/jogos.ts). São duas famílias de verdade, e o
+   tipo separado é o que impede alguém de passar 'caca' para `fazerJogo` e
+   descobrir isso num `undefined` em produção. */
+type DadosDeJogo = ReturnType<typeof montarNovo>;
+type JogoDeBaralho = 'match' | 'blast' | 'teste';
+type JogoNovo = 'caca' | 'batalha' | 'cursiva';
+type Jogo = JogoDeBaralho | JogoNovo;
+const DE_BARALHO = (j: Jogo): j is JogoDeBaralho =>
+  j === 'match' || j === 'blast' || j === 'teste';
 
 type Screen =
   | { kind: 'menu' }
   | { kind: 'run'; mode: GymMode; startedAt: number }
   | { kind: 'done'; mode: GymMode; result: PlayerResult; seconds: number }
-  | { kind: 'jogo'; jogo: Jogo; rodada: number }
+  /* `dados` guarda a rodada dos jogos de reconhecimento, construída UMA vez.
+     ──────────────────────────────────────────────────────────────────────
+     Ela morava no corpo do render, e isso era um defeito de verdade: a
+     rodada é montada a partir do PROGRESSO, e o progresso muda a cada
+     resposta - então cada toque remontava a grade, com outro alvo e outras
+     letras, debaixo do dedo de quem estava jogando. Medido: uma caça de três
+     alvos travava em "2 de 3" e trocava o {{נ}} por um {{ה}} no meio da
+     partida.
+     Guardada aqui, a rodada é imutável enquanto durar - que é o que uma
+     rodada é. */
+  | { kind: 'jogo'; jogo: Jogo; rodada: number; dados?: DadosDeJogo }
   | { kind: 'jogoFim'; jogo: Jogo; rodada: number; r: ResultadoJogo }
   | { kind: 'testeFim'; rodada: number; r: ResultadoTeste }
   | { kind: 'lab' }
@@ -67,6 +94,24 @@ export const JOGOS: Record<Jogo, { titlePt: string; descPt: string; minimo: numb
     titlePt: 'Teste',
     descPt: 'Sem correção durante. No fim, a nota e a lista do que escapou.',
     minimo: 4
+  },
+  /* Os três que entraram em 22/09/2026. Entram NESTA prateleira, e não numa
+     tela nova: já existia um lugar para praticar, e um segundo seria dois
+     lugares onde o aluno procura a mesma coisa. */
+  caca: {
+    titlePt: 'Caça à letra',
+    descPt: 'Encontre a letra certa no meio da confusão.',
+    minimo: 3
+  },
+  batalha: {
+    titlePt: 'Batalha das parecidas',
+    descPt: 'Duas letras que se parecem, cara a cara, até a diferença ficar óbvia.',
+    minimo: 2
+  },
+  cursiva: {
+    titlePt: 'Impressa × cursiva',
+    descPt: 'A mesma letra nos dois alfabetos: o do livro e o da mão.',
+    minimo: 3
   }
 };
 
@@ -98,8 +143,8 @@ export function AcademiaClient() {
   const busca = useSearchParams();
   const pedido = busca?.get('jogo');
   useEffect(() => {
-    if (pedido === 'match' || pedido === 'blast' || pedido === 'teste') {
-      setScreen({ kind: 'jogo', jogo: pedido, rodada: 0 });
+    if (pedido && pedido in JOGOS) {
+      setScreen({ kind: 'jogo', jogo: pedido as Jogo, rodada: 0 });
     }
   }, [pedido]);
 
@@ -110,7 +155,7 @@ export function AcademiaClient() {
     return m === 'novo' ? 1.6 : m === 'aprendendo' ? 1.4 : m === 'forte' ? 0.6 : 1;
   }, [p.state]);
 
-  const fazerJogo = useCallback((jogo: Jogo, rodada: number): {
+  const fazerJogo = useCallback((jogo: JogoDeBaralho, rodada: number): {
     baralho: Par[]; perguntas: Pergunta[];
   } => {
     const semente = `${jogo}-${unlocked.length}-${rodada}`;
@@ -124,15 +169,88 @@ export function AcademiaClient() {
     return { baralho, perguntas };
   }, [unlocked, peso]);
 
-  /* Cada tentativa alimenta o mesmo modelo que as lições alimentam: o jogo
-     não tem placar próprio, ele escreve na mesma memória. */
-  const registrar = useCallback((a: { id: string; letterId: string; certo: boolean }) => {
-    if (!a.letterId) return;
-    p.answer({ itemId: `jogo:${a.id}`, letterId: a.letterId, correct: a.certo, skill: 'rec' });
-  }, [p]);
+  /* O nível sai do progresso, e não de um seletor na tela. Ver `nivelDe`. */
+  const nivel = useMemo(() => nivelDe(p.state, unlocked), [p.state, unlocked]);
 
-  /* ── os três jogos ──────────────────────────────────────────────────── */
-  if (screen.kind === 'jogo') {
+  const fazerNovo = useCallback(
+    (jogo: Jogo, rodada: number) => montarNovo(jogo, rodada, p.state, unlocked, nivel),
+    [p.state, unlocked, nivel]);
+
+  /* Cada tentativa alimenta o mesmo modelo que as lições alimentam: o jogo
+     não tem placar próprio, ele escreve na mesma memória.
+
+     `escolhida` é o que os jogos novos acrescentaram, e não é detalhe: com
+     ela o erro deixa de ser "errou o dálet" e passa a ser "trocou ד por ר",
+     que é o par treinável. É exatamente isso que a Batalha lê depois para
+     saber quais são as inimigas de hoje - o jogo alimenta o critério que
+     escolhe o próprio jogo. */
+  const registrar = useCallback((a: {
+    id: string; letterId: string; certo: boolean; escolhida?: string;
+  }) => {
+    if (!a.letterId) return;
+    const L = unlocked.find(l => l.id === a.letterId);
+    p.answer({
+      itemId: `jogo:${a.id}`, letterId: a.letterId, correct: a.certo, skill: 'rec',
+      ...(L && a.escolhida ? { expected: L.letter, chosen: a.escolhida } : {})
+    });
+  }, [p, unlocked]);
+
+  /* ── os jogos de reconhecimento ─────────────────────────────────────── */
+  if (screen.kind === 'jogo' && !DE_BARALHO(screen.jogo)) {
+    const jogo = screen.jogo;
+    /* Se a tela já carrega a rodada, é ela que vale. A construção aqui só
+       serve ao primeiro render e ao deep-link, e o `setScreen` logo abaixo
+       congela o resultado - a partir daí nada a remonta. */
+    const dados = screen.dados ?? fazerNovo(jogo, screen.rodada);
+    if (!screen.dados) setScreen({ ...screen, dados });
+    const info = JOGOS[jogo];
+
+    const vazio = jogo === 'caca' ? !dados.caca
+      : jogo === 'cursiva' ? !dados.cursiva?.length
+      : !dados.batalha;
+
+    if (vazio || unlocked.length < info.minimo) {
+      return (
+        <Empty onBack={() => setScreen({ kind: 'menu' })}>
+          {jogo === 'batalha'
+            ? 'Ainda não há duas letras parecidas entre as que você aprendeu. Siga mais uma lição e volte.'
+            : 'Ainda não há letras suficientes para montar a rodada. Siga mais uma lição e volte.'}
+        </Empty>
+      );
+    }
+
+    const fim = (r: ResultadoJogo) => {
+      const score = r.total ? r.acertos / r.total : 0;
+      p.finishGym(jogo, score, r.segundos);
+      track('game_completed', { jogo, score, seconds: r.segundos });
+      setScreen({ kind: 'jogoFim', jogo, rodada: screen.rodada, r });
+    };
+
+    return (
+      <div className="focus-col grid gap-5">
+        <GymHeader
+          mode={{ titlePt: info.titlePt } as GymMode}
+          label={NIVEL_LABEL[nivel]}
+          onBack={() => setScreen({ kind: 'menu' })}
+        />
+        {jogo === 'caca' && dados.caca && (
+          <CacaLetra key={`ca-${screen.rodada}`} caca={dados.caca} unlocked={unlocked}
+                     onResposta={registrar} onFim={fim} />
+        )}
+        {jogo === 'batalha' && dados.batalha && (
+          <Batalha key={`ba-${screen.rodada}`} dados={dados.batalha}
+                   onResposta={registrar} onFim={fim} />
+        )}
+        {jogo === 'cursiva' && dados.cursiva && (
+          <ImpressaCursiva key={`cu-${screen.rodada}`} rodadas={dados.cursiva}
+                           onResposta={registrar} onFim={fim} />
+        )}
+      </div>
+    );
+  }
+
+  /* ── os três jogos de baralho ───────────────────────────────────────── */
+  if (screen.kind === 'jogo' && DE_BARALHO(screen.jogo)) {
     const { baralho, perguntas } = fazerJogo(screen.jogo, screen.rodada);
     const info = JOGOS[screen.jogo];
     const poucos = screen.jogo === 'match'
@@ -219,13 +337,25 @@ export function AcademiaClient() {
   if (screen.kind === 'jogoFim') {
     const { r, jogo } = screen;
     const pct = r.total ? Math.round((r.acertos / r.total) * 100) : 0;
+
+    /* O arco da Batalha: o que mudou desde que ele trocava estas duas.
+       ────────────────────────────────────────────────────────────────────
+       É a única frase do jogo que compara passado e presente, e por isso ela
+       só aparece quando existe passado - um par que veio dos erros DELE, e
+       uma rodada que foi bem. Dita para todo mundo, em toda rodada, ela
+       viraria enfeite e pararia de significar alguma coisa. */
+    const par = jogo === 'batalha' ? confusionPair(p.state, unlocked) : null;
+    const arco = par && pct >= 70 && Object.keys(p.state.confusions).length > 0
+      ? `Você confundia ${par[0].namePt} e ${par[1].namePt}. Agora acertou ${r.acertos} de ${r.total}.`
+      : null;
+
     return (
       <div className="focus-col grid gap-5">
         <Milestone
           kicker={jogo === 'match'
             ? `${r.total} pares · ${r.erros} ${r.erros === 1 ? 'erro' : 'erros'} · ${r.segundos}s`
             : `${r.acertos} de ${r.total} · ${pct}%`}
-          title={r.erros === 0 ? 'Sem um erro.' : pct >= 70 ? 'Boa sessão.' : 'Sessão feita.'}
+          title={arco ?? (r.erros === 0 ? 'Sem um erro.' : pct >= 70 ? 'Boa sessão.' : 'Sessão feita.')}
           body={r.erros === 0
             ? 'Esse conjunto está firme. Vale aumentar o material: siga mais uma letra.'
             : 'O que escapou já entrou na fila de revisão, no dia certo de voltar.'}
@@ -369,16 +499,21 @@ export function AcademiaClient() {
         </Card>
       ) : (
         <>
-          {/* Os três jogos primeiro, e em cartões maiores: são eles que
-              alguém abre quando tem cinco minutos e nenhuma paciência para
-              escolher um modo. Os treinos por assunto continuam logo abaixo,
-              para quem sabe o que quer. */}
+          {/* Os jogos primeiro, e em cartões maiores: são eles que alguém
+              abre quando tem cinco minutos e nenhuma paciência para escolher
+              um modo. Os treinos por assunto continuam logo abaixo, para quem
+              sabe o que quer.
+
+              Os seis numa prateleira só, e não dois grupos: para o aluno não
+              existe "jogo de baralho" e "jogo de reconhecimento" - existe o
+              que ele quer jogar agora. A divisão é do código, e o código não
+              é assunto dele. */}
           <section aria-labelledby="jogos" className="grid gap-3">
             <h2 id="jogos" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-              Jogos rápidos
+              Jogos de prática
             </h2>
-            <ul className="grid gap-3 sm:grid-cols-3 list-none p-0 m-0">
-              {(['match', 'blast', 'teste'] as const).map(jogo => (
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
+              {(['caca', 'batalha', 'cursiva', 'match', 'blast', 'teste'] as const).map(jogo => (
                 <li key={jogo}>
                   <button
                     type="button"
@@ -470,9 +605,34 @@ export function AcademiaClient() {
   );
 }
 
-/* Três desenhos de traço, no peso do resto do sistema: dois cartões que se
-   juntam, um raio e uma prancheta. */
-function IconeJogo({ jogo }: { jogo: 'match' | 'blast' | 'teste' }) {
+/**
+ * A rodada de um jogo de reconhecimento, montada de uma vez.
+ *
+ * Fora do componente e sem estado próprio: recebe o progresso, devolve a
+ * rodada. Quem a chama guarda o resultado (ver `dados` no tipo `Screen`), e
+ * essa é a parte que importa - chamá-la a cada render remonta o tabuleiro a
+ * cada resposta, porque o progresso muda a cada resposta.
+ *
+ * Semeada como todo o resto do motor: sair e voltar devolve a MESMA rodada, e
+ * "tentar de novo" não vira silenciosamente "tentar outra coisa".
+ */
+function montarNovo(
+  jogo: Jogo, rodada: number, state: LearnerState, unlocked: Letter[], nivel: Nivel
+) {
+  const rand = rng(`${jogo}-${unlocked.length}-${rodada}`);
+  if (jogo === 'caca') return { caca: montarCaca(state, unlocked, rand, nivel) };
+  if (jogo === 'cursiva') return { cursiva: montarCursiva(state, unlocked, rand, nivel) };
+  const par = confusionPair(state, unlocked);
+  if (!par) return {};
+  /* `doAluno` distingue o par que ELE trocou do par que o conteúdo prevê - e
+     é o que autoriza, no fim, a frase "você confundia estas duas". */
+  return { batalha: montarBatalha(par, Object.keys(state.confusions).length > 0, rand) };
+}
+
+/* Seis desenhos de traço, no peso do resto do sistema. Traço e não emoji: o
+   emoji muda de desenho em cada sistema operacional, e dois deles aqui
+   ficariam coloridos no meio de uma paleta que tem três cores. */
+function IconeJogo({ jogo }: { jogo: Jogo }) {
   const comum = {
     width: 20, height: 20, viewBox: '0 0 20 20', fill: 'none',
     stroke: 'var(--teal)', strokeWidth: 1.5,
@@ -488,6 +648,28 @@ function IconeJogo({ jogo }: { jogo: 'match' | 'blast' | 'teste' }) {
   );
   if (jogo === 'blast') return (
     <svg {...comum}><path d="M11.2 2.4 4.6 11h4.6l-.8 6.6L15.4 9h-4.6l.4-6.6Z" /></svg>
+  );
+  /* Caça: a lupa sobre a grade. */
+  if (jogo === 'caca') return (
+    <svg {...comum}>
+      <circle cx="8.6" cy="8.6" r="5.2" />
+      <path d="m12.6 12.6 4.2 4.2" />
+    </svg>
+  );
+  /* Batalha: duas formas quase iguais, encostadas, e o traço que as separa. */
+  if (jogo === 'batalha') return (
+    <svg {...comum}>
+      <path d="M7.6 3.6v9a2.6 2.6 0 0 1-2.6 2.6H3.4" />
+      <path d="M16.6 3.6v9a2.6 2.6 0 0 1-2.6 2.6h-1.6" />
+      <path d="M10.1 2.6v14.8" strokeDasharray="2 2.4" />
+    </svg>
+  );
+  /* Impressa × cursiva: o quadrado do tipo e a curva da mão. */
+  if (jogo === 'cursiva') return (
+    <svg {...comum}>
+      <rect x="2.6" y="5" width="6.4" height="10" rx="1.2" />
+      <path d="M12 14.6c2.6-.6 4.4-2.6 4.4-5.2 0-2-1.2-3.4-2.6-3.4-1.2 0-2 1-2 2.4 0 3 3.4 4.2 5.2 4.2" />
+    </svg>
   );
   return (
     <svg {...comum}>

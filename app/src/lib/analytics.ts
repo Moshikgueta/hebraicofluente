@@ -28,8 +28,9 @@ export type EventName =
   | 'cta_clicked';
 
 export type EventProps = {
-  /** Qual dos três jogos da academia. */
-  jogo?: 'match' | 'blast' | 'teste';
+  /** Qual jogo da academia. Os três primeiros saem do baralho; os três de
+   *  22/09/2026 saem do motor de reconhecimento (lib/engine/jogos.ts). */
+  jogo?: 'match' | 'blast' | 'teste' | 'caca' | 'batalha' | 'cursiva';
   letterId?: string;
   itemId?: string;
   checkpointId?: string;
