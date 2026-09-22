@@ -218,12 +218,18 @@ export function Hero({
                            transition-[border-color,transform] duration-[180ms]
                            hover:border-[#C9C3B4] hover:-translate-y-[2px]"
               >
-                {/* Leva à AULA ABERTA, e não a um texto sobre ela: o segundo
-                    botão de um hero existe para quem quer experimentar antes
-                    de decidir, e mandá-lo para mais copy desperdiça o clique.
+                {/* Leva ao TESTE, e não a um texto sobre ele: o segundo botão
+                    de um hero existe para quem quer experimentar antes de
+                    decidir, e mandá-lo para mais copy desperdiça o clique.
                     "Saiba mais" seria o pior dos dois mundos - não diz o que
-                    acontece e não promete nada. */}
-                Experimentar uma aula grátis
+                    acontece e não promete nada.
+
+                    E é «teste», não «aula»: o curso não vende aula ao vivo
+                    nem videoaula, e um botão que promete uma cria a
+                    expectativa errada antes mesmo da compra. O que está do
+                    outro lado é o produto, em pequeno - que é exatamente o
+                    que «teste» diz. */}
+                Fazer um teste grátis
               </Link>
             </div>
             {/* A microcópia responde a pergunta que trava o clique: "e o que

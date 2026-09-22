@@ -171,7 +171,7 @@ export function DemoAlef({
       <Container className="pt-16 sm:pt-24">
         <Reveal>
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
-            Aula aberta · 2 minutos
+            Teste grátis · 2 minutos
           </p>
           <H2 id="experimente-titulo" className="mb-3">
             Experimente aprender sua primeira letra.
@@ -623,7 +623,7 @@ export function DemoAlef({
                                focus-visible:outline focus-visible:outline-2
                                focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]"
                   >
-                    Ver a aula de novo
+                    Fazer o teste de novo
                   </button>
                 </div>
               )}
