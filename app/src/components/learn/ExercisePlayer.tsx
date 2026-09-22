@@ -183,7 +183,13 @@ export function ExercisePlayer({
               style={{ width: `${((i + (settled ? 1 : 0)) / exercises.length) * 100}%` }}
             />
           </div>
-          <span className="font-ui text-[13px] tabular-nums text-ink-muted shrink-0">
+          {/* `data-progresso` é para a varredura de exercícios, do mesmo jeito
+              que `data-resposta` já é lá embaixo: o contador aparece como
+              "3 / 10" no texto, e o cabeçalho da lição mostra "LETRA 7/22"
+              logo acima - um robô que lê o primeiro "n/m" da tela pega o
+              errado, e foi o que aconteceu na primeira execução. */}
+          <span data-progresso={`${i + 1}/${exercises.length}`}
+                className="font-ui text-[13px] tabular-nums text-ink-muted shrink-0">
             {i + 1} / {exercises.length}
           </span>
         </div>

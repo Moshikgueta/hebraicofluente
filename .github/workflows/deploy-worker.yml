@@ -345,6 +345,24 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           exit $rc
 
+      # O tom e o tamanho das telas. Fica junto do passo acima porque usa o
+      # mesmo navegador já instalado, e vem antes de publicar pela razão de
+      # sempre: "hebraico é super fácil!" numa tela é uma promessa que o
+      # produto não cumpre, e uma página que virou parede de texto afasta em
+      # silêncio. Nenhum dos dois quebra nada - é por isso que precisam de
+      # alguém conferindo.
+      - name: O tom e o tamanho das telas
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: |
+          set -o pipefail
+          echo "## Promessa de facilidade e parede de texto" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          rc=0
+          node tom.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" || rc=$?
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
+
       # Publicar É o script de configuração, e não um `wrangler deploy` seco.
       #
       # A diferença importa: um deploy seco pressupõe que o banco existe, que o
