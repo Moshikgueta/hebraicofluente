@@ -192,7 +192,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
           ← Mapa
         </Link>
-        <Badge tone="accent">Antes da primeira letra</Badge>
+        {/* O nome aparece aqui porque agora ele também está na navegação:
+            quem toca em "Aula 0" na barra de baixo precisa chegar numa tela
+            que se chama assim, ou o rótulo é de outra coisa. */}
+        <Badge tone="accent">Aula 0 · antes da primeira letra</Badge>
         <h1 className="text-[27px] sm:text-[34px] font-bold leading-tight">
           Como o alfabeto hebraico funciona
         </h1>

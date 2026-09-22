@@ -30,25 +30,50 @@ import { Logo } from '@/components/shell/Logo';
 import { He } from '@/components/hebrew/He';
 import { allCourses, isPlayable } from '@/lib/catalog';
 import {
-  IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil
+  IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil, IconeAula0
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
 
-/* "Hoje" é /meu-hebraico e não mais "/": desde que existe site público, a
-   raiz é a página de vendas, e o painel do aluno tem endereço próprio. */
+/* A navegação, e ONDE cada item aparece no telefone.
+ * ─────────────────────────────────────────────────────────────────────────
+ * "Hoje" é /meu-hebraico e não mais "/": desde que existe site público, a
+ * raiz é a página de vendas, e o painel do aluno tem endereço próprio.
+ *
+ * O campo `movel` existe porque antes disto a barra de baixo era
+ * `NAV.slice(0, 5)` - uma regra de POSIÇÃO. Ela funcionava por acidente: o
+ * sexto item por acaso era o perfil, que no telefone já mora no cabeçalho.
+ * Um item novo inserido em qualquer lugar antes do fim empurrava outro para
+ * fora da barra, e nada reclamava: a tela do desktop continuava completa, e
+ * só o telefone perdia um destino. Agora cada item DIZ onde aparece, e
+ * `varrer-curso.mjs` compara os dois conjuntos num navegador de verdade.
+ *
+ *   'barra' - na barra inferior, sob o polegar, e na sidebar
+ *   'conta' - no cabeçalho do telefone, como a inicial da conta, e na sidebar
+ */
 const NAV = [
-  { href: '/meu-hebraico', label: 'Hoje', icon: IconeHoje },
-  { href: '/mapa', label: 'Meu curso', icon: IconeMapa },
-  { href: '/revisao', label: 'Revisão', icon: IconeRevisao },
+  { href: '/meu-hebraico', label: 'Hoje', icon: IconeHoje, movel: 'barra' },
+  { href: '/mapa', label: 'Meu curso', icon: IconeMapa, movel: 'barra' },
+  { href: '/revisao', label: 'Revisão', icon: IconeRevisao, movel: 'barra' },
   /* The gym is a destination, not a feature buried in a screen: a learner who
      has finished the alphabet has nowhere else to go, and one who wants to
      drill only the vowels should not have to find the door. */
-  { href: '/academia', label: 'Praticar', icon: IconePraticar },
-  { href: '/conquistas', label: 'Progresso', icon: IconeConquistas },
-  /* Perfil mora na sidebar no desktop; no telefone ele já está no topo, e
-     por isso a barra de baixo mostra só os cinco primeiros. */
-  { href: '/perfil', label: 'Perfil', icon: IconePerfil }
+  { href: '/academia', label: 'Praticar', icon: IconePraticar, movel: 'barra' },
+  { href: '/conquistas', label: 'Progresso', icon: IconeConquistas, movel: 'barra' },
+  /* A aula 0 fica na navegação, e não só no painel.
+     ──────────────────────────────────────────────────────────────────────
+     Ela nasceu como uma etapa: o painel oferecia, o onboarding terminava
+     nela, e depois disso ela sumia do caminho. Só que a página não é uma
+     etapa - é referência. Quem esbarra no {{ה}} mudo na décima lição, ou
+     descobre na aula de cursiva que o desenho do livro não é o da mão,
+     precisa dela NAQUELE momento, e o que existia era um link solto no
+     painel que só aparece para quem volta ao painel.
+     Última posição de propósito: material de consulta, e nenhum dos cinco
+     destinos do dia muda de lugar. */
+  { href: '/inicio', label: 'Aula 0', icon: IconeAula0, movel: 'barra' },
+  /* Perfil mora na sidebar no desktop; no telefone ele é a inicial da conta
+     no cabeçalho, que diz de relance EM QUAL conta a pessoa está. */
+  { href: '/perfil', label: 'Perfil', icon: IconePerfil, movel: 'conta' }
 ] as const;
 
 /**
@@ -291,17 +316,22 @@ function BottomBar({ pathname }: { pathname: string | null }) {
                  bg-[color-mix(in_srgb,var(--paper)_94%,transparent)] backdrop-blur-md
                  pb-[env(safe-area-inset-bottom)]"
     >
+      {/* Seis alvos num aparelho de 390px dão 65px cada, e o rótulo mais
+          largo ("Progresso") mede 52. O `min-w-0` é o que impede um deles de
+          esticar a linha: sem ele, `flex-1` respeita a largura do conteúdo e
+          a barra fica mais larga que a tela. */}
       <ul className="mx-auto w-full max-w-[680px] px-1 flex items-stretch justify-around">
-        {NAV.slice(0, 5).map(item => {
+        {NAV.filter(item => item.movel === 'barra').map(item => {
           const active = isActive(pathname, item.href);
           const Icone = item.icon;
           return (
-            <li key={item.href} className="flex-1">
+            <li key={item.href} className="flex-1 min-w-0">
               <Link
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={`relative h-[60px] flex flex-col items-center justify-center gap-1.5
                   font-ui text-[10.5px] leading-none text-center px-0.5 transition-colors
+                  whitespace-nowrap
                   ${active ? 'text-[var(--navy)] font-semibold' : 'text-ink-muted'}`}
               >
                 <Icone size={19} />

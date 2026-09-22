@@ -97,9 +97,20 @@ A auditoria de verdade fica pendente de alguém gravar.
 | O que | Resultado | Provado por |
 |---|---|---|
 | Mapa, práticas, checkpoints, cards, navegação | passa | `varrer-curso.mjs` a 390 e 1280 |
+| O celular oferece os MESMOS destinos que o computador | passa | `varrer-curso.mjs`, regra da navegação |
 | Botões e toque | passa | `toque.mjs` - nenhum alvo por baixo da barra fixa |
 | Cursiva (traçado a dedo) | passa | `tests/trace`, e o canvas não deixa a página rolar sob o dedo |
 | Áudios | sem arquivo |
+
+A plataforma tem duas navegações desenhadas separadamente - a sidebar acima
+de 1024px e a barra inferior abaixo -, e enquanto forem duas listas um
+destino pode entrar numa e não na outra. O defeito é invisível de dentro:
+quem trabalha no notebook vê a tela completa, e é o aluno, no telefone, que
+perde a metade que ninguém conferiu. A barra era literalmente
+`NAV.slice(0, 5)`, uma regra de posição: um item inserido antes do fim
+empurrava outro para fora do celular, em silêncio. Agora cada item declara
+onde aparece, e a varredura mede os dois conjuntos num navegador de verdade,
+nas duas larguras, exigindo que sejam iguais.
 
 ---
 

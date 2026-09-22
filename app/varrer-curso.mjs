@@ -11,6 +11,9 @@ const ST={version:2,onboarding:{reason:'familia',goalMinutes:10,startingPoint:'z
 const ROTAS=['/meu-hebraico/','/mapa/','/revisao/','/academia/','/conquistas/','/perfil/','/licao/alef/','/licao/bet/','/licao/he/','/modulo/6/','/inicio/','/historia/','/desafio-final/','/onboarding/'];
 const b=await chromium.launch({executablePath:process.env.HF_CHROMIUM});
 let ruim=0;
+/* O que a navegação OFERECE, por largura e por rota. Ver as duas regras
+   logo depois do laço. */
+const navegacao={390:{},1280:{}};
 for (const w of [390,1280]) {
   const ctx=await b.newContext({viewport:{width:w,height:900}});
   await ctx.addInitScript(([a,st])=>{localStorage.setItem('hf-platform-local-v1',a);localStorage.setItem('hebraico-fluente-v1',st)},[JSON.stringify(ACC),JSON.stringify(ST)]);
@@ -39,6 +42,19 @@ for (const w of [390,1280]) {
              não interpreta escapes fora de string -, então o aluno lê
              "R\\u00e1pido" na tela. */
           ||(document.body.innerText.match(/\\[1-9u]/g)||[])[0]||null}));
+    /* Os destinos que a navegação principal mostra AQUI, nesta largura.
+       Só conta link que ocupa espaço na tela: nas duas barras o HTML das
+       duas existe sempre, e é o CSS que esconde uma delas. A inicial da
+       conta, no cabeçalho do telefone, é a versão móvel do item "Perfil" e
+       por isso entra na conta. */
+    navegacao[w][rota]=await p.evaluate(()=>{
+      const visivel=el=>!!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+      const fora=new Set();
+      for (const a of document.querySelectorAll(
+             'nav[aria-label="Navegação principal"] a[href^="/"], header a[href^="/perfil"]'))
+        if (visivel(a)) fora.add(new URL(a.href).pathname.replace(/\/+$/,'')||'/');
+      return [...fora].sort();
+    });
     const over=m.sw>m.iw+1;
     if(over||erros.length||m.cru) ruim++;
     if(m.cru) console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} MARCAÇÃO CRUA NA TELA: ${m.cru}`);
@@ -46,6 +62,63 @@ for (const w of [390,1280]) {
   }
   await ctx.close();
 }
+
+/* ── o computador e o celular oferecem OS MESMOS destinos ─────────────────
+   A plataforma tem duas navegações desenhadas separadamente: uma sidebar
+   acima de 1024px e uma barra inferior abaixo. Enquanto elas forem duas
+   listas, um destino novo pode entrar numa e não na outra - e o defeito é
+   invisível de dentro: quem trabalha no notebook vê a tela completa, e é o
+   aluno, no telefone, que perde a metade que ninguém conferiu. A barra
+   inferior era literalmente `NAV.slice(0, 5)`: qualquer item inserido antes
+   do fim empurrava outro para fora do telefone, em silêncio.
+
+   Aqui os dois conjuntos são medidos num navegador de verdade, nas duas
+   larguras, e têm de ser iguais. */
+{
+  const chaves=r=>navegacao[390][r].join(' | ');
+  let divergiu=0;
+  for (const rota of ROTAS) {
+    const no_celular=navegacao[390][rota], no_desktop=navegacao[1280][rota];
+    /* Hoje toda rota do curso tem a casca, e nenhuma cai aqui. A saída
+       existe para uma tela que um dia seja desenhada SEM navegação de
+       propósito - um funil, por exemplo. O que ela não permite é o caso
+       que importa: navegação numa largura e não na outra. */
+    if (!no_celular.length && !no_desktop.length) continue;
+    const so_no_celular=no_celular.filter(h=>!no_desktop.includes(h));
+    const so_no_desktop=no_desktop.filter(h=>!no_celular.includes(h));
+    if (so_no_celular.length||so_no_desktop.length) {
+      divergiu++; ruim++;
+      console.log(`      ${'navegação'.padEnd(20)} ${rota} DIVERGE:` +
+        (so_no_desktop.length?` só no computador: ${so_no_desktop.join(', ')}`:'') +
+        (so_no_celular.length?` só no celular: ${so_no_celular.join(', ')}`:''));
+    }
+  }
+  console.log(`      ${'navegação'.padEnd(20)} ${divergiu
+    ? `${divergiu} rota(s) com navegação diferente entre computador e celular`
+    : `os mesmos destinos nas duas larguras (${chaves(ROTAS[0])})`}`);
+}
+
+/* ── a aula 0 fica ao alcance do curso inteiro ────────────────────────────
+   Ela era uma ETAPA: o painel oferecia, o onboarding terminava nela, e
+   depois sumia do caminho. Mas a página é referência - quem esbarra no ה
+   mudo na décima lição precisa dela ali, não no painel. Agora ela é um
+   destino da navegação, e isto recusa a volta atrás: em toda rota que tem
+   navegação, nas duas larguras, existe um link visível para /inicio. */
+{
+  let sem=0;
+  for (const w of [390,1280]) for (const rota of ROTAS) {
+    const tem=navegacao[w][rota];
+    if (!tem.length) continue;
+    if (!tem.includes('/inicio')) {
+      sem++; ruim++;
+      console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} SEM CAMINHO PARA A AULA 0`);
+    }
+  }
+  console.log(`      ${'aula 0'.padEnd(20)} ${sem
+    ? `fora da navegação em ${sem} tela(s)`
+    : 'ao alcance de toda tela do curso, nas duas larguras'}`);
+}
+
 /* ── a aula 0 não pode voltar a ser órfã ──────────────────────────────────
    `/inicio` existiu desde o começo e nenhuma tela linkava para ela: o único
    jeito de chegar era digitar o endereço. Uma página de "leia antes de

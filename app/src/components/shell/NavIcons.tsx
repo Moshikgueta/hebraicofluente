@@ -53,6 +53,15 @@ export const IconeConquistas = (p: P) => wrap(
     <path d="M4 16V9.2M10 16V4M16 16v-4.6" stroke="currentColor" />
   </>, p);
 
+/** Aula 0: o livro aberto. O que se lê antes, e se relê depois. */
+export const IconeAula0 = (p: P) => wrap(
+  <>
+    <path d="M10 5.9C8.7 4.7 7 4.2 4.7 4.2a.8.8 0 0 0-.8.8v8.6c0 .45.35.8.8.8 2.3 0 4 .5 5.3 1.7
+             1.3-1.2 3-1.7 5.3-1.7a.8.8 0 0 0 .8-.8V5a.8.8 0 0 0-.8-.8c-2.3 0-4 .5-5.3 1.7Z"
+          stroke="currentColor" />
+    <path d="M10 5.9v10.2" stroke="currentColor" />
+  </>, p);
+
 /** Perfil: a pessoa. */
 export const IconePerfil = (p: P) => wrap(
   <>
