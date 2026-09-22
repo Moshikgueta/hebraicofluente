@@ -1,50 +1,36 @@
 'use client';
 
-/* Writing a Hebrew letter with a finger.
+/* Escrever uma letra hebraica com o dedo.
  * ─────────────────────────────────────────────────────────────────────────
- * Four steps, in this order, and they are the point of the component:
+ * Quatro etapas, nesta ordem, e elas são o ponto do componente:
  *
- *   1 ver     - watch the stroke order (StrokeOrderPlayer, above this)
- *   2 traçar  - the model at full strength, trace over it
- *   3 guia    - the model faded to a hint
- *   4 livre   - nothing but the line
+ *   1 ver     - assistir à ordem dos traços (StrokeOrderPlayer, acima)
+ *   2 traçar  - o modelo em força total, passar por cima
+ *   3 guia    - o modelo esmaecido até virar dica
+ *   4 livre   - nada além da linha
  *
- * Support is removed gradually because that is how a motor skill is learned,
- * and because the moment a learner draws ג with nothing on the screen is worth
- * more than any badge.
+ * O apoio sai aos poucos porque é assim que uma habilidade motora se aprende,
+ * e porque o momento em que alguém desenha um {{ג}} com a tela vazia vale mais
+ * do que qualquer selo.
  *
- * ── the mobile rule, which is absolute ──────────────────────────────────
- * While a finger is on the drawing area the PAGE MUST NOT MOVE. Not scroll,
- * not bounce, not pull to refresh, not zoom. Everything below does one job:
+ * ── o que mora aqui e o que mora no quadro ──────────────────────────────
+ * O QUADRO - o canvas, a conta de coordenadas, a regra do celular e o
+ * cálculo da nota - foi extraído para `TraceBoard.tsx` quando a capa passou a
+ * oferecer uma etapa de escrita na aula aberta da Álef. Ele é público por
+ * construção: não lê conteúdo pago, e é isso que permite à página de vendas
+ * usá-lo sem derrubar a árvore do React.
  *
- *   · `touch-action: none` on the canvas - the browser stops treating the
- *     gesture as a possible scroll or pinch before it starts;
- *   · `overscroll-behavior: contain` on the frame - a gesture that reaches an
- *     edge does not chain to the page and trigger pull-to-refresh;
- *   · `setPointerCapture` - the stroke survives the finger leaving the canvas
- *     mid-letter, which otherwise ends the line in the middle of a ג;
- *   · non-passive listeners with preventDefault, attached natively. React
- *     cannot promise non-passive here, and a passive listener's
- *     preventDefault() is ignored silently;
- *   · nothing is disabled globally. Scrolling works normally everywhere else
- *     on the page, and the instant the finger lifts it works here too.
- *
- * Two more details that are not obvious and were each got wrong once:
- *   · resizing a canvas ERASES it, and a ResizeObserver fires when a phone's
- *     URL bar collapses - which is to say, in the middle of writing. The
- *     bitmap is saved and put back around every resize, and a resize to the
- *     same CSS size is skipped entirely;
- *   · `getCoalescedEvents()` returns the points the browser batched between
- *     frames. Without it a fast finger draws a polygon.
+ * O que sobrou aqui é o que é do CURSO: a progressão das quatro etapas, a
+ * ordem dos traços lida da geometria paga, e o registro da nota no progresso
+ * do aluno.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { He } from '@/components/hebrew/He';
+import { useCallback, useRef, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { StrokeOrderPlayer } from './StrokeOrder';
+import { TraceBoard, type QuadroHandle, type Veredito } from './TraceBoard';
 import { track } from '@/lib/analytics';
-import { scoreTrace } from '@/lib/trace-score';
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -59,217 +45,31 @@ export function WritingCanvas({
   glyph, letterId, label, onScored
 }: {
   glyph: string;
-  /** For the stroke data: `mem`, or `mem-final`. */
+  /** Para a geometria dos traços: `mem`, ou `mem-final`. */
   letterId: string;
   label: string;
-  /** Called once per attempt with a 0-1 score, for skill tracking. */
+  /** Chamado uma vez por tentativa com uma nota de 0 a 1, para as habilidades. */
   onScored?: (score: number) => void;
 }) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const guideRef = useRef<HTMLSpanElement>(null);
-  const drawing = useRef(false);
-  const last = useRef<{ x: number; y: number } | null>(null);
-  const sizeRef = useRef({ w: 0, h: 0 });
-
+  const quadro = useRef<QuadroHandle>(null);
   const [step, setStep] = useState<Step>(1);
   const [hasInk, setHasInk] = useState(false);
-  const [verdict, setVerdict] = useState<Verdict | null>(null);
+  const [verdict, setVerdict] = useState<Veredito | null>(null);
 
   const current = STEPS.find(s => s.n === step)!;
 
-  /* ── the canvas, at device resolution, without losing the ink ──────────
-     Two coordinate systems meet here, and confusing them was a real bug.
-
-       · `clientWidth` is the canvas measured in ITS OWN CSS pixels - the same
-         unit the guide's font size is in, and the unit this component draws,
-         scores and stores points in;
-       · `getBoundingClientRect()` is the same box measured in SCREEN pixels,
-         which is the unit `pointerEvent.clientX` arrives in.
-
-     They are equal until something zooms. The accessibility menu's text size
-     does exactly that: `zoom` on `#hf-zoom`, an ancestor of this card. At 130%
-     the frame measures 789 screen pixels while still being 607 of its own, and
-     the old code took the 789, wrote it back as `style.width = "789px"` - read
-     as 789 of its OWN pixels, so 1025 on screen - and then drew at the raw
-     screen offset. The line appeared a third of the way away from the finger,
-     and past 3/4 across the frame it left the bitmap and vanished.
-
-     So: the element is never given a pixel size (`w-full h-full` keeps it on
-     the frame, whatever the unit), the drawing space is its own CSS pixels,
-     and the only place screen pixels appear is `at()`, which converts. */
-  const resize = useCallback(() => {
-    const canvas = canvasRef.current, wrap = wrapRef.current;
-    if (!canvas || !wrap) return;
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (!w || !h) return;
-    /* Real device pixels per CSS pixel: the screen's own ratio, times whatever
-       an ancestor's `zoom` adds. Without the second half a zoomed canvas is
-       drawn at the unzoomed resolution and looks soft. */
-    const rect = canvas.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 3) * (rect.width / w || 1);
-    const bw = Math.round(w * dpr), bh = Math.round(h * dpr);
-    /* The URL bar collapsing changes the height by a few pixels and fires the
-       observer. Redrawing for that would wipe a letter in progress. */
-    if (sizeRef.current.w === bw && sizeRef.current.h === bh) return;
-
-    const keep = sizeRef.current.w
-      ? canvas.getContext('2d')?.getImageData(0, 0, canvas.width, canvas.height)
-      : null;
-
-    sizeRef.current = { w: bw, h: bh };
-    canvas.width = bw;
-    canvas.height = bh;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    if (keep) {
-      /* Best effort: put the old bitmap back at the top left. It is not
-         rescaled - a stretched stroke would be a lie about what was drawn -
-         and on a few-pixel change nothing visible moves. */
-      try { ctx.putImageData(keep, 0, 0); } catch { /* size grew: nothing to restore */ }
-    }
-    /* One bitmap pixel per CSS pixel of THIS element, so everything below -
-       line width, the dot of a yod, the scorer's mask - is written in the one
-       unit the rest of the component thinks in. */
-    ctx.setTransform(bw / w, 0, 0, bh / h, 0, 0);
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.lineWidth = 8;
-    ctx.strokeStyle = getComputedStyle(document.documentElement)
-      .getPropertyValue('--accent').trim() || '#15788F';
-  }, []);
-
-  /* Keyed on `step` as well as on `resize`: at step 1 there is no canvas in
-     the tree at all, so an effect that only ran on mount would measure null and
-     the canvas would keep its default 300×150 when it finally appeared. */
-  useEffect(() => {
-    if (step === 1) return;
-    sizeRef.current = { w: 0, h: 0 };     // remeasure: this is a new canvas
-    resize();
-    const ro = new ResizeObserver(resize);
-    if (wrapRef.current) ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, [resize, step]);
-
-  /* ── drawing ─────────────────────────────────────────────────────────── */
-  const pointsRef = useRef<{ x: number; y: number }[]>([]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    /* Screen pixels in, the canvas's own CSS pixels out. The ratio is 1 until
-       an ancestor zooms - see the note on `resize` - and reading it from the
-       box itself means this keeps working for page zoom and any future
-       container the card is dropped into, without knowing about either.
-
-       The rect is passed in rather than read here: one `pointermove` carries
-       up to a dozen coalesced points, and measuring the box once per event
-       instead of once per point keeps a fast stroke off the layout path. */
-    const at = (e: PointerEvent | { clientX: number; clientY: number }, r: DOMRect) => ({
-      x: (e.clientX - r.left) * (canvas.clientWidth / r.width || 1),
-      y: (e.clientY - r.top) * (canvas.clientHeight / r.height || 1)
-    });
-
-    const down = (e: PointerEvent) => {
-      /* A second finger while drawing is a pinch attempt, not a second pen.
-         Ignoring it keeps the stroke and lets touch-action refuse the zoom. */
-      if (drawing.current) return;
-      e.preventDefault();
-      canvas.setPointerCapture(e.pointerId);
-      drawing.current = true;
-      setHasInk(true);
-      setVerdict(null);
-      const p = at(e, canvas.getBoundingClientRect());
-      last.current = p;
-      pointsRef.current.push(p);
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      /* A dot, so a tap leaves a mark - a learner writing a yod makes one. */
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, ctx.lineWidth / 2, 0, Math.PI * 2);
-      ctx.fillStyle = ctx.strokeStyle as string;
-      ctx.fill();
-    };
-
-    const move = (e: PointerEvent) => {
-      if (!drawing.current) return;
-      e.preventDefault();
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      /* Every point the browser batched since the last frame, not just the
-         latest one. A fast finger otherwise draws a polygon. */
-      const events = typeof e.getCoalescedEvents === 'function'
-        ? e.getCoalescedEvents() : [e];
-      const r = canvas.getBoundingClientRect();
-      for (const ev of events.length ? events : [e]) {
-        const p = at(ev, r);
-        const prev = last.current;
-        if (!prev) { last.current = p; continue; }
-        /* Through the midpoint with a quadratic: joins two segments into a
-           curve instead of a corner, which is what a pen actually leaves. */
-        const mid = { x: (prev.x + p.x) / 2, y: (prev.y + p.y) / 2 };
-        ctx.lineWidth = 5 + (ev.pressure && ev.pressure !== 0.5 ? ev.pressure * 7 : 3);
-        ctx.beginPath();
-        ctx.moveTo(prev.x, prev.y);
-        ctx.quadraticCurveTo(prev.x, prev.y, mid.x, mid.y);
-        ctx.lineTo(p.x, p.y);
-        ctx.stroke();
-        last.current = p;
-        pointsRef.current.push(p);
-      }
-    };
-
-    const up = (e: PointerEvent) => {
-      if (!drawing.current) return;
-      drawing.current = false;
-      last.current = null;
-      if (canvas.hasPointerCapture(e.pointerId)) canvas.releasePointerCapture(e.pointerId);
-    };
-
-    /* Native and non-passive. React makes no promise about passivity here, and
-       a passive listener's preventDefault() is ignored without a word. */
-    const opts = { passive: false } as AddEventListenerOptions;
-    canvas.addEventListener('pointerdown', down, opts);
-    canvas.addEventListener('pointermove', move, opts);
-    canvas.addEventListener('pointerup', up, opts);
-    canvas.addEventListener('pointercancel', up, opts);
-    /* Belt and braces for the one browser that still needs it: an iOS Safari
-       that has not enabled pointer events falls back to touch, and this stops
-       the page scrolling under the finger. */
-    const swallow = (e: TouchEvent) => { if (drawing.current) e.preventDefault(); };
-    canvas.addEventListener('touchmove', swallow, opts);
-    return () => {
-      canvas.removeEventListener('pointerdown', down, opts);
-      canvas.removeEventListener('pointermove', move, opts);
-      canvas.removeEventListener('pointerup', up, opts);
-      canvas.removeEventListener('pointercancel', up, opts);
-      canvas.removeEventListener('touchmove', swallow, opts);
-    };
-  }, [step]);
-
   const clear = useCallback(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-    ctx.save();
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.restore();
-    pointsRef.current = [];
-    setHasInk(false);
+    quadro.current?.limpar();
     setVerdict(null);
   }, []);
 
   const check = useCallback(() => {
-    const canvas = canvasRef.current, guide = guideRef.current;
-    if (!canvas) return;
-    const v = scoreAttempt(canvas, guide, glyph, pointsRef.current);
+    const v = quadro.current?.conferir();
+    if (!v) return;
     setVerdict(v);
     onScored?.(v.score);
     track('trace_completed', { letterId, score: v.score, stage: step });
-  }, [glyph, letterId, step, onScored]);
+  }, [letterId, step, onScored]);
 
   const goStep = (n: Step) => { setStep(n); clear(); };
 
@@ -311,43 +111,18 @@ export function WritingCanvas({
         </div>
       ) : (
         <>
-          <div
-            ref={wrapRef}
-            /* overscroll-behavior stops a gesture that reaches the edge from
-               chaining to the page - which is what fires pull-to-refresh. */
-            className="relative h-[280px] sm:h-[340px] overscroll-contain select-none
-                       [-webkit-touch-callout:none]
-                       bg-[repeating-linear-gradient(to_bottom,transparent,transparent_calc(50%-1px),var(--line-soft)_calc(50%-1px),var(--line-soft)_calc(50%),transparent_calc(50%),transparent)]"
-          >
-            {/* The model, under the ink. It is always in the DOM - the scorer
-                measures against it - and simply invisible at step 4, so what
-                the learner is judged against never changes between steps. */}
-            <div className="absolute inset-0 grid place-items-center pointer-events-none select-none">
-              <span ref={guideRef} style={{ opacity: current.guide }}>
-                <He size="hero" cursive>{glyph}</He>
-              </span>
-            </div>
-
-            <canvas
-              ref={canvasRef}
-              /* `w-full h-full` and not a measured pixel size: a canvas is a
-                 replaced element, so with `inset-0` alone and no width it
-                 falls back to its bitmap's own size instead of filling the
-                 frame - and a measured size is wrong the moment the page is
-                 zoomed. A percentage is always resolved in the frame's unit. */
-              className="absolute inset-0 w-full h-full touch-none cursor-crosshair"
-              aria-label={`Área de escrita para a letra ${label}`}
-              role="img"
-            />
-
-            <p className="absolute top-3 right-4 font-ui text-[11px] uppercase tracking-[.12em]
-                          text-ink-muted pointer-events-none">
-              ← escreva nesta direção ←
-            </p>
-          </div>
+          <TraceBoard
+            ref={quadro}
+            glyph={glyph}
+            guia={current.guide}
+            label={label}
+            onTinta={setHasInk}
+          />
 
           <div className="p-4 sm:p-5 grid gap-3 border-t border-[color:var(--line-soft)]">
-            <p className="font-ui text-[13.5px] text-ink-muted">{current.hint}</p>
+            <p className="font-ui text-[13.5px] text-ink-muted">
+              {current.hint} <span className="whitespace-nowrap">← escreva nesta direção ←</span>
+            </p>
 
             {verdict && (
               <div
@@ -383,59 +158,4 @@ export function WritingCanvas({
       )}
     </Card>
   );
-}
-
-/* ── scoring ────────────────────────────────────────────────────────────
-   The maths lives in lib/trace-score.ts, where it can be tested against a
-   synthetic letter instead of by drawing on a phone and squinting. This half
-   only renders the model and reads its pixels.
-
-   If anything at all goes wrong - no context, a font that has not loaded, a
-   browser without canvas filters - it returns the encouraging verdict rather
-   than a false negative. None of those are the learner's fault. */
-type Verdict = { score: number; tone: 'good' | 'try'; message: string };
-
-const ENCOURAGE: Verdict = {
-  score: 1, tone: 'good',
-  message: 'Feito. Compare com o modelo e veja o que você mudaria.'
-};
-
-function scoreAttempt(
-  canvas: HTMLCanvasElement,
-  guide: HTMLSpanElement | null,
-  glyph: string,
-  points: { x: number; y: number }[]
-): Verdict {
-  try {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (!w || !h || !guide) return ENCOURAGE;
-
-    /* The model, drawn where the visible guide is and at the same size, then
-       BLURRED - the blur is the tolerance, and it is about a finger wide. */
-    const mask = document.createElement('canvas');
-    mask.width = w; mask.height = h;
-    const mctx = mask.getContext('2d', { willReadFrequently: true });
-    if (!mctx) return ENCOURAGE;
-
-    const target = guide.firstElementChild ?? guide;
-    const cs = getComputedStyle(target);
-    const size = parseFloat(cs.fontSize) || h * 0.6;
-    const family = cs.fontFamily || 'serif';
-    mctx.filter = 'blur(13px)';
-    mctx.fillStyle = '#000';
-    mctx.textAlign = 'center';
-    mctx.textBaseline = 'middle';
-    mctx.font = `${size}px ${family}`;
-    mctx.fillText(glyph, w / 2, h / 2);
-
-    const img = mctx.getImageData(0, 0, w, h).data;
-    /* One byte per cell instead of four: the scorer only needs the alpha. */
-    const alpha = new Uint8ClampedArray(w * h);
-    for (let i = 0; i < alpha.length; i++) alpha[i] = img[i * 4 + 3]!;
-
-    const v = scoreTrace({ alpha, w, h, points });
-    return { score: v.score, tone: v.tone, message: v.message };
-  } catch {
-    return ENCOURAGE;
-  }
 }

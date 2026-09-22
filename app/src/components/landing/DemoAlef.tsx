@@ -7,9 +7,16 @@
  * impossível". Nenhuma frase desfaz isso - nem "é mais fácil do que parece",
  * nem "milhares de alunos já conseguiram". O que desfaz é ele conseguir.
  *
- * Então a página para de descrever o curso e passa a ser o curso, por
- * quarenta segundos: ver a letra, achá-la entre outras parecidas, encontrá-la
- * dentro de uma palavra de verdade. Sai do outro lado tendo aprendido algo.
+ * Então a página para de descrever o curso e passa a ser o curso, por dois
+ * minutos: ver a letra, achá-la entre outras parecidas, ESCREVÊ-LA com o
+ * dedo e encontrá-la dentro de uma palavra de verdade. Sai do outro lado
+ * tendo aprendido algo.
+ *
+ * A etapa de escrita foi acrescentada depois, e ela é a que mais muda a
+ * conversa: reconhecer uma letra numa grade é agradável e não convence
+ * ninguém de que aprendeu, porque o dedo não fez nada. Escrever é onde a
+ * pessoa opera o produto - e onde descobre sozinha que a letra de mão não é
+ * a mesma que ela viu, que é metade do que o curso existe para ensinar.
  *
  * ── o que aqui é promessa cumprida, e não enfeite ───────────────────────
  * A landing afirma três coisas sobre o método logo acima desta seção. As três
@@ -17,6 +24,8 @@
  *
  *   «uma letra de cada vez»  → a demo ensina UMA. Nenhuma tabela, nenhuma
  *                              segunda letra para decorar junto;
+ *   «experiência interativa» → o quadro de escrita é o MESMO da lição, e não
+ *                              uma captura dele;
  *   «apoio que sai sozinho»  → a leitura mostra a transliteração e diz, na
  *                              tela, que ela vai embora;
  *   «retorno imediato»       → o erro não é uma cruz vermelha: é uma frase
@@ -45,6 +54,9 @@ import { useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { course } from '@/lib/content-publico';
 import { brl, flagship } from '@/lib/catalog';
+import { MESMA_LETRA } from '@/lib/cursiva';
+import { TraceBoard, type QuadroHandle, type Veredito } from '@/components/learn/TraceBoard';
+import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { track } from '@/lib/analytics';
 import { Container, H2, Lead, Reveal, Check } from './base';
 
@@ -77,9 +89,21 @@ const OPCOES: readonly { he: string; certa: boolean; porque: string }[] = [
    E ela é uma palavra que um brasileiro reconhece de ouvido. */
 const PALAVRA = { he: 'אַבָּא', translit: 'abá', pt: 'pai' } as const;
 
-type Etapa = 0 | 1 | 2 | 3;
-const TOTAL_ETAPAS = 4;
-const ROTULOS = ['Conhecer', 'Reconhecer', 'Ler', 'Pronto'] as const;
+/* Cinco etapas, e a terceira é a que mais decide a compra.
+   ─────────────────────────────────────────────────────────────────────────
+   Reconhecer uma letra numa grade é agradável e não convence ninguém de que
+   aprendeu: o dedo não fez nada. ESCREVER é o momento em que a pessoa deixa
+   de assistir ao produto e opera o produto - e é também onde ela descobre,
+   sem que ninguém precise afirmar, que a letra que se escreve à mão não é a
+   mesma que ela acabou de ver. Essa descoberta vale mais do que o parágrafo
+   que a explica, e é justamente o que o curso existe para ensinar.
+
+   O quadro é o MESMO da lição (components/learn/TraceBoard.tsx), não uma
+   imitação dele - inclusive a conta de coordenadas que sobrevive ao zoom do
+   menu de acessibilidade. */
+type Etapa = 0 | 1 | 2 | 3 | 4;
+const TOTAL_ETAPAS = 5;
+const ROTULOS = ['Conhecer', 'Reconhecer', 'Escrever', 'Ler', 'Pronto'] as const;
 
 export function DemoAlef({
   href, micro, label, vende
@@ -96,6 +120,9 @@ export function DemoAlef({
   const [tentativas, setTentativas] = useState(0);
   const comecou = useRef(false);
   const foco = useRef<HTMLDivElement>(null);
+  const quadro = useRef<QuadroHandle>(null);
+  const [temTinta, setTemTinta] = useState(false);
+  const [veredito, setVeredito] = useState<Veredito | null>(null);
 
   /* Uma letra sem glifo é uma seção que não pode existir. Nunca acontece - o
      catálogo sempre traz as 22 -, e mesmo assim a seção some inteira em vez
@@ -125,9 +152,18 @@ export function DemoAlef({
     track('demo_answered', { letterId: 'alef', correct: certa, chosen: OPCOES[i]?.he });
   };
 
+  const limpar = () => { quadro.current?.limpar(); setVeredito(null); };
+
+  const conferirEscrita = () => {
+    const v = quadro.current?.conferir();
+    if (!v) return;
+    setVeredito(v);
+    track('trace_completed', { letterId: 'alef', score: v.score, stage: 2 });
+  };
+
   const concluir = () => {
     track('demo_completed', { letterId: 'alef' });
-    avancar(3);
+    avancar(4);
   };
 
   return (
@@ -135,7 +171,7 @@ export function DemoAlef({
       <Container className="pt-16 sm:pt-24">
         <Reveal>
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
-            Aula aberta · 1 minuto
+            Aula aberta · 2 minutos
           </p>
           <H2 id="experimente-titulo" className="mb-3">
             Experimente aprender sua primeira letra.
@@ -143,8 +179,9 @@ export function DemoAlef({
         </Reveal>
         <Reveal delay={80}>
           <Lead className="mb-8">
-            Sem cadastro e sem cartão. É a primeira letra do alfabeto, do mesmo jeito que
-            ela aparece dentro do curso.
+            Sem cadastro e sem cartão. Você conhece a letra, encontra ela entre outras,
+            escreve com o dedo e lê dentro de uma palavra - do mesmo jeito que acontece
+            dentro do curso.
           </Lead>
         </Reveal>
 
@@ -291,7 +328,7 @@ export function DemoAlef({
                                        focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                        motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                           >
-                            Agora leia uma palavra →
+                            Agora escreva você →
                           </button>
                         </div>
                       </div>
@@ -319,8 +356,144 @@ export function DemoAlef({
                 </div>
               )}
 
-              {/* ── 3 · ler ──────────────────────────────────────────── */}
+              {/* ── 3 · escrever ─────────────────────────────────────
+                  A etapa em que a pessoa deixa de assistir e opera.
+
+                  Duas decisões que valem registrar:
+
+                  · O MODELO APARECE, em 22% - é a etapa «traçar» da lição, e
+                    não a de memória. Pedir a alguém que desenhe de cabeça uma
+                    forma vista há quarenta segundos é montar um fracasso numa
+                    página cujo trabalho é dizer «você consegue».
+
+                  · CONFERIR É OPCIONAL, e seguir adiante nunca depende de ter
+                    desenhado. Um canvas não é alcançável por teclado, e uma
+                    demo que exigisse o traço prenderia ali quem navega por
+                    teclado, quem usa leitor de tela e quem simplesmente não
+                    quer rabiscar. O botão de seguir está sempre vivo. */}
               {etapa === 2 && (
+                <div className="grid gap-5">
+                  {/* O título e a frase que muda a percepção ficam em cima, em
+                      largura cheia. Tudo o mais é secundário e desce.
+
+                      Medido numa captura de 390px: com os três parágrafos e o
+                      diagrama antes do quadro, o celular pedia três rolagens
+                      para chegar ao lugar onde se escreve - numa etapa cujo
+                      trabalho inteiro é fazer a pessoa escrever AGORA. Agora o
+                      quadro vem logo abaixo do título (`order-1`), e o resto
+                      do texto o segue; no desktop, onde as duas colunas cabem
+                      lado a lado, a ordem visual volta a ser texto à esquerda
+                      e quadro à direita. */}
+                  <div className="grid gap-3">
+                    <p className="font-display text-[22px] sm:text-[25px] font-semibold
+                                  tracking-[-0.02em] text-ink m-0">
+                      Agora escreva o Álef com o dedo.
+                    </p>
+                    <p className="font-ui text-[16px] leading-[1.65] text-ink-muted max-w-[56ch] m-0">
+                      Repare que a letra à mão não tem o mesmo desenho da que você viu: em
+                      hebraico se lê na forma impressa e se escreve na cursiva, que é a que
+                      aparece num bilhete em Israel.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-start">
+                  <div className="order-2 lg:order-1 grid gap-4 content-start">
+                    <p className="font-ui text-[15px] leading-[1.6] text-ink-muted max-w-[44ch] m-0">
+                      {MESMA_LETRA}
+                    </p>
+
+                    {/* O diagrama público: onde a caneta encosta e quantos
+                        movimentos são. É o mesmo desenho que vai no livro. */}
+                    <div className="rounded-[16px] border border-line bg-[var(--sand)] p-4
+                                    grid gap-1 justify-items-center max-w-[240px]">
+                      <DiagramaDeTracado letterId="alef" label="Álef" movimentos={2} />
+                    </div>
+                  </div>
+
+                  <div className="order-1 lg:order-2 grid gap-3">
+                    <div className="rounded-[18px] border border-line overflow-hidden bg-[var(--card)]">
+                      <TraceBoard
+                        ref={quadro}
+                        glyph={ALEF.letter}
+                        guia={0.22}
+                        label="Álef"
+                        onTinta={setTemTinta}
+                        alturaClass="h-[240px] sm:h-[280px]"
+                      />
+                    </div>
+                    <p className="font-ui text-[13.5px] text-ink-muted m-0">
+                      Passe o dedo por cima do modelo.{' '}
+                      <span className="whitespace-nowrap">← escreva nesta direção ←</span>
+                    </p>
+
+                    {/* Altura reservada, como no resto da demo: o cartão não
+                        pode saltar quando o retorno entra. */}
+                    <div className="min-h-[62px]" aria-live="polite">
+                      {veredito && (
+                        <div className={`rounded-[13px] px-4 py-3 animate-pop motion-reduce:animate-none
+                          ${veredito.tone === 'good'
+                            ? 'bg-[var(--teal-soft)]' : 'bg-[var(--gold-soft)]'}`}>
+                          <p className={`font-ui text-[14.5px] leading-[1.55] m-0
+                            ${veredito.tone === 'good'
+                              ? 'text-[var(--teal-body)]' : 'text-[var(--gold-body)]'}`}>
+                            <span aria-hidden className="font-bold mr-1.5">
+                              {veredito.tone === 'good' ? '✓' : '✕'}
+                            </span>
+                            {veredito.message}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <button
+                        type="button"
+                        onClick={conferirEscrita}
+                        disabled={!temTinta}
+                        className="inline-flex items-center justify-center min-h-[48px] px-5
+                                   rounded-[13px] border border-line bg-[var(--card)] text-ink
+                                   font-ui text-[15.5px] font-semibold
+                                   disabled:opacity-45 disabled:cursor-not-allowed
+                                   enabled:hover:bg-[var(--sand)]
+                                   focus-visible:outline focus-visible:outline-2
+                                   focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]"
+                      >
+                        Conferir
+                      </button>
+                      <button
+                        type="button"
+                        onClick={limpar}
+                        disabled={!temTinta}
+                        className="inline-flex items-center justify-center min-h-[48px] px-4
+                                   rounded-[13px] font-ui text-[15px] font-semibold text-ink-muted
+                                   disabled:opacity-45 disabled:cursor-not-allowed
+                                   enabled:hover:text-ink
+                                   focus-visible:outline focus-visible:outline-2
+                                   focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]"
+                      >
+                        Limpar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => avancar(3)}
+                        className="ml-auto inline-flex items-center justify-center min-h-[48px] px-6
+                                   rounded-[13px] bg-[var(--navy)] text-white
+                                   font-ui text-[16px] font-semibold
+                                   transition-transform duration-[180ms] hover:-translate-y-[2px]
+                                   focus-visible:outline focus-visible:outline-2
+                                   focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
+                                   motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                      >
+                        Agora leia uma palavra →
+                      </button>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ── 4 · ler ──────────────────────────────────────────── */}
+              {etapa === 3 && (
                 <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,300px)] sm:items-center">
                   <div className="grid gap-4">
                     <p className="font-display text-[22px] sm:text-[25px] font-semibold
@@ -366,8 +539,8 @@ export function DemoAlef({
                 </div>
               )}
 
-              {/* ── 4 · a conquista, e o próximo passo ───────────────── */}
-              {etapa === 3 && (
+              {/* ── 5 · a conquista, e o próximo passo ───────────────── */}
+              {etapa === 4 && (
                 <div className="grid gap-6 justify-items-center text-center">
                   <div className="grid justify-items-center gap-3">
                     <span className="grid place-items-center w-[84px] h-[84px] rounded-[26px]
@@ -440,7 +613,11 @@ export function DemoAlef({
 
                   <button
                     type="button"
-                    onClick={() => { setEscolha(null); setTentativas(0); avancar(0); }}
+                    onClick={() => {
+                      setEscolha(null); setTentativas(0); setVeredito(null);
+                      quadro.current?.limpar();
+                      avancar(0);
+                    }}
                     className="min-h-[44px] px-4 font-ui text-[14.5px] font-semibold text-ink-muted
                                hover:text-ink rounded-[10px]
                                focus-visible:outline focus-visible:outline-2

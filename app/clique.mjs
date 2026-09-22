@@ -203,7 +203,7 @@ for (const width of LARGURAS) {
   if (!(await secao.count())) { erro(`${width}px: a seção da demo não existe`); await ctx.close(); continue; }
   await secao.scrollIntoViewIfNeeded();
 
-  /* 1 · conhecer → reconhecer */
+  /* 1 · conhecer → reconhecer. São cinco etapas desde que a escrita entrou. */
   const comecar = secao.locator('button', { hasText: /testar agora/i }).first();
   if (!(await comecar.count())) { erro(`${width}px: não achei o botão que abre a demo`); await ctx.close(); continue; }
   await comecar.click();
@@ -240,7 +240,73 @@ for (const width of LARGURAS) {
     if (!/Isso!/.test(ok2)) erro(`${width}px: o acerto não recebeu retorno`);
     else log(`  ✓ ${String(width).padStart(4)}px  o acerto confirma`);
 
-    /* 3 · ler */
+    /* 3 · escrever - a etapa em que o dedo faz alguma coisa.
+       ──────────────────────────────────────────────────────────────────
+       O que se prova aqui é o que nenhuma captura mostra: que a tinta cai
+       SOB O PONTEIRO. É a mesma conta de coordenadas que a lição usa, e ela
+       já saiu errada uma vez - por isso a demo é medida do mesmo jeito que
+       `escrita.mjs` mede o curso, e não só «o canvas existe». */
+    await secao.locator('button', { hasText: /Agora escreva você/ }).first().click();
+    await p.waitForTimeout(400);
+
+    const canvas = secao.locator('canvas').first();
+    if (!(await canvas.count())) {
+      erro(`${width}px: a etapa de escrita não tem quadro`);
+    } else {
+      await canvas.scrollIntoViewIfNeeded();
+      await p.waitForTimeout(200);
+      const cx = await canvas.evaluate(c => {
+        const r = c.getBoundingClientRect();
+        return { x: r.x, y: r.y, w: r.width, h: r.height };
+      });
+      const px = cx.x + cx.w * 0.68, py = cx.y + cx.h * 0.68;
+      await p.mouse.move(px, py);
+      await p.mouse.down();
+      await p.mouse.move(px + 22, py + 22, { steps: 6 });
+      await p.mouse.up();
+      await p.waitForTimeout(250);
+
+      const tinta = await canvas.evaluate((c, alvo) => {
+        const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+        let sx = 0, sy = 0, n = 0;
+        for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) {
+          if (d[(y * c.width + x) * 4 + 3] > 40) { sx += x; sy += y; n++; }
+        }
+        if (!n) return null;
+        const r = c.getBoundingClientRect();
+        return { n, x: r.x + (sx / n) * (r.width / c.width), y: r.y + (sy / n) * (r.height / c.height) };
+      }, null);
+
+      if (!tinta) erro(`${width}px: o traço na demo não deixou tinta nenhuma`);
+      else {
+        /* O centro do traço fica no meio do segmento desenhado. */
+        const alvoX = px + 11, alvoY = py + 11;
+        const dx = tinta.x - alvoX, dy = tinta.y - alvoY;
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          erro(`${width}px: a tinta da demo caiu a Δx=${dx.toFixed(1)} Δy=${dy.toFixed(1)} do ponteiro`);
+        } else {
+          log(`  ✓ ${String(width).padStart(4)}px  a escrita desenha sob o dedo (Δ ${dx.toFixed(1)}, ${dy.toFixed(1)})`);
+        }
+      }
+
+      /* E o retorno de «Conferir». */
+      const conferir = secao.locator('button', { hasText: /^Conferir$/ }).first();
+      if (!(await conferir.count())) erro(`${width}px: a escrita não tem botão de conferir`);
+      else {
+        await conferir.click();
+        await p.waitForTimeout(300);
+        const dito = (await secao.innerText()).replace(/\s+/g, ' ');
+        if (!/(Compare com o modelo|traço|forma|linha|Quase|Boa|Isso)/i.test(dito)) {
+          erro(`${width}px: conferir a escrita não disse nada`);
+        } else {
+          log(`  ✓ ${String(width).padStart(4)}px  conferir a escrita responde`);
+        }
+      }
+    }
+
+    /* 4 · ler. O botão de seguir NUNCA depende de ter desenhado: um canvas
+       não é alcançável por teclado, e prender a demo ali seria fechá-la para
+       quem navega sem ponteiro. */
     await secao.locator('button', { hasText: /Agora leia uma palavra/ }).first().click();
     await p.waitForTimeout(300);
     const leitura = (await secao.innerText()).replace(/\s+/g, ' ');
