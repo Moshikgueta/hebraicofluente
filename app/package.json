@@ -29,6 +29,8 @@
     "apagar-conta": "node apagar-conta.mjs",
     "escuro": "node escuro.mjs",
     "jogos": "node jogos.mjs",
+    "escrita": "node escrita.mjs",
+    "licao": "node licao.mjs",
     "exercicios": "node exercicios.mjs",
     "pacote": "node pacote.mjs",
     "promessas": "node promessas.mjs",

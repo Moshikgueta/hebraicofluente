@@ -137,6 +137,27 @@ export function ProgressProvider({
   const stateRef = useRef(state);
   stateRef.current = state;
 
+  /* O estado de AGORA, e é por isto que todo mutador abaixo passa por aqui.
+     ──────────────────────────────────────────────────────────────────────
+     Um mutador que lê o `state` do render em que foi criado lê o estado de
+     ANTES. Sozinho isso não aparece: o React redesenha e o próximo já vê o
+     novo. O defeito nasce quando dois mutadores são chamados no MESMO
+     manipulador, que é exatamente o que o fim de uma lição faz:
+
+         p.finishQuiz(letra, nota);   // grava a nota  → S1
+         p.finishStage(letra, 5);     // parte de S0!  → S2, sem a nota
+
+     O segundo não viu o primeiro, porque entre os dois não houve render.
+     Resultado medido: `quizBest` continuava `null` depois de uma fixação
+     perfeita, `isLessonMastered` dava falso para sempre, e a letra recém
+     concluída nunca entrava na conta de "letras dominadas" - nem ali, nem
+     no mapa, nem no cadeado do exame final.
+
+     `commit` já mantinha `stateRef` em dia justamente para o gravador. Ler
+     dele custa nada e fecha a classe inteira do defeito, não só esta
+     ocorrência: qualquer par de chamadas seguidas passa a compor. */
+  const agora = useCallback(() => stateRef.current, []);
+
   /* Toda gravação passa por aqui, e por um motivo só: ver ./gravador.ts.
      Em resumo, ele grava o estado DE AGORA em vez de uma cópia velha, e não
      grava nada antes de a leitura terminar - que juntos eram o apagamento
@@ -235,21 +256,21 @@ export function ProgressProvider({
   }, [gravador]);
 
   const setOnboarding = useCallback((o: Onboarding) => {
-    commit({ ...state, onboarding: o });
+    commit({ ...agora(), onboarding: o });
     track('onboarding_completed', { goalMinutes: o.goalMinutes, reason: o.reason });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const finishStage = useCallback((letterId: string, stage: number, units?: number) => {
     const d = today();
     const total = units === undefined ? 5 : 3;
-    const before = state.lessons[letterId]?.stagesDone.length ?? 0;
-    const next = completeStage(state, letterId, stage, d, units);
+    const before = agora().lessons[letterId]?.stagesDone.length ?? 0;
+    const next = completeStage(agora(), letterId, stage, d, units);
     commit(next);
     track('stage_completed', { letterId, stage });
     if (before < total && (next.lessons[letterId]?.stagesDone.length ?? 0) >= total) {
       track('lesson_completed', { letterId });
     }
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const answer = useCallback((args: {
     itemId: string; letterId: string; correct: boolean;
@@ -257,7 +278,7 @@ export function ProgressProvider({
   }) => {
     const { itemId, letterId, correct, skill, expected, chosen } = args;
     const d = today();
-    let next = recordAnswer(state, itemId, letterId, correct, d, skill);
+    let next = recordAnswer(agora(), itemId, letterId, correct, d, skill);
     /* A miss always creates the review entry, even the first time. */
     if (!correct && !next.srs[itemId]) {
       next = { ...next, srs: { ...next.srs, [itemId]: {
@@ -276,71 +297,72 @@ export function ProgressProvider({
     commit(next);
     track('exercise_answered', { letterId, itemId, correct, skill });
     if (!correct) track('exercise_wrong', { letterId, itemId, chosen });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const recordWriting = useCallback((letterId: string, score: number) => {
     const d = today();
     /* The bar is 0.5, which is low, and that is the decision: a finger on glass
        is not a pen on paper, and a learner told their readable ג is wrong stops
        trusting the whole app. The canvas is generous; this agrees with it. */
-    let next = recordSkill(state, letterId, 'escrever', score >= 0.5, d);
+    let next = recordSkill(agora(), letterId, 'escrever', score >= 0.5, d);
     /* Writing is practice even when it comes out badly - more so, in fact. */
     next = applyPractice(next, d, { units: ANSWER_UNITS });
     commit(next);
     track('exercise_answered', { letterId, skill: 'escrever', correct: score >= 0.5 });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const finishGym = useCallback((modeId: string, score: number, seconds: number) => {
     const d = today();
     /* XP for a gym run is the review award: it is the same kind of work, and
        paying more for it would turn the gym into the cheapest way to farm. */
-    let next = recordGym(state, modeId, score, seconds, d);
+    let next = recordGym(agora(), modeId, score, seconds, d);
     next = awardXp(next, d, XP.review);
     commit(next);
     track('gym_completed', { mode: modeId, score, seconds });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const doMarkFirst = useCallback((id: string) => {
-    if (state.firsts[id]) return;
-    commit(markFirst(state, id));
+    if (agora().firsts[id]) return;
+    commit(markFirst(agora(), id));
     track('first_reached', { id });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const finishQuiz = useCallback((letterId: string, score: number) => {
-    commit(recordQuiz(state, letterId, score, today()));
+    commit(recordQuiz(agora(), letterId, score, today()));
     track('quiz_completed', { letterId, score });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const finishCheckpoint = useCallback((id: string, score: number) => {
-    commit(recordCheckpoint(state, id, score, today()));
+    commit(recordCheckpoint(agora(), id, score, today()));
     track('checkpoint_completed', { checkpointId: id, score });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const finishReview = useCallback((score: number) => {
-    commit(awardXp(state, today(), XP.review));
+    commit(awardXp(agora(), today(), XP.review));
     track('review_completed', { score });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const finishFinalChallenge = useCallback((score: number) => {
     const d = today();
+    const s = agora();
     let next: LearnerState = {
-      ...state,
+      ...s,
       finalChallenge: {
-        best: state.finalChallenge.best == null ? score : Math.max(state.finalChallenge.best, score),
-        completedAt: state.finalChallenge.completedAt ?? new Date().toISOString()
+        best: s.finalChallenge.best == null ? score : Math.max(s.finalChallenge.best, score),
+        completedAt: s.finalChallenge.completedAt ?? new Date().toISOString()
       }
     };
     next = awardXp(next, d, XP.checkpoint);
     commit(next);
     track('course_completed', { score });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   const finishExam = useCallback((
     score: number, parts: Record<string, { correct: number; total: number }>
   ) => {
-    commit(recordExam(state, score, parts, today(), EXAM_PASS));
+    commit(recordExam(agora(), score, parts, today(), EXAM_PASS));
     track('course_completed', { score });
-  }, [commit, state]);
+  }, [commit, agora]);
 
   /* Trocar de tela é a ação mais barata do app e era a mais cara: era ela
      que disparava a gravação do estado vazio por cima do progresso guardado.

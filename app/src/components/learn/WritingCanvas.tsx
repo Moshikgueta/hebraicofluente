@@ -78,27 +78,48 @@ export function WritingCanvas({
 
   const current = STEPS.find(s => s.n === step)!;
 
-  /* ── the canvas, at device resolution, without losing the ink ────────── */
+  /* ── the canvas, at device resolution, without losing the ink ──────────
+     Two coordinate systems meet here, and confusing them was a real bug.
+
+       · `clientWidth` is the canvas measured in ITS OWN CSS pixels - the same
+         unit the guide's font size is in, and the unit this component draws,
+         scores and stores points in;
+       · `getBoundingClientRect()` is the same box measured in SCREEN pixels,
+         which is the unit `pointerEvent.clientX` arrives in.
+
+     They are equal until something zooms. The accessibility menu's text size
+     does exactly that: `zoom` on `#hf-zoom`, an ancestor of this card. At 130%
+     the frame measures 789 screen pixels while still being 607 of its own, and
+     the old code took the 789, wrote it back as `style.width = "789px"` - read
+     as 789 of its OWN pixels, so 1025 on screen - and then drew at the raw
+     screen offset. The line appeared a third of the way away from the finger,
+     and past 3/4 across the frame it left the bitmap and vanished.
+
+     So: the element is never given a pixel size (`w-full h-full` keeps it on
+     the frame, whatever the unit), the drawing space is its own CSS pixels,
+     and the only place screen pixels appear is `at()`, which converts. */
   const resize = useCallback(() => {
     const canvas = canvasRef.current, wrap = wrapRef.current;
     if (!canvas || !wrap) return;
-    const rect = wrap.getBoundingClientRect();
-    const w = Math.round(rect.width), h = Math.round(rect.height);
+    const w = canvas.clientWidth, h = canvas.clientHeight;
     if (!w || !h) return;
+    /* Real device pixels per CSS pixel: the screen's own ratio, times whatever
+       an ancestor's `zoom` adds. Without the second half a zoomed canvas is
+       drawn at the unzoomed resolution and looks soft. */
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 3) * (rect.width / w || 1);
+    const bw = Math.round(w * dpr), bh = Math.round(h * dpr);
     /* The URL bar collapsing changes the height by a few pixels and fires the
        observer. Redrawing for that would wipe a letter in progress. */
-    if (sizeRef.current.w === w && sizeRef.current.h === h) return;
+    if (sizeRef.current.w === bw && sizeRef.current.h === bh) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 3);
     const keep = sizeRef.current.w
       ? canvas.getContext('2d')?.getImageData(0, 0, canvas.width, canvas.height)
       : null;
 
-    sizeRef.current = { w, h };
-    canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(h * dpr);
-    canvas.style.width = `${w}px`;
-    canvas.style.height = `${h}px`;
+    sizeRef.current = { w: bw, h: bh };
+    canvas.width = bw;
+    canvas.height = bh;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -108,7 +129,10 @@ export function WritingCanvas({
          and on a few-pixel change nothing visible moves. */
       try { ctx.putImageData(keep, 0, 0); } catch { /* size grew: nothing to restore */ }
     }
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    /* One bitmap pixel per CSS pixel of THIS element, so everything below -
+       line width, the dot of a yod, the scorer's mask - is written in the one
+       unit the rest of the component thinks in. */
+    ctx.setTransform(bw / w, 0, 0, bh / h, 0, 0);
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.lineWidth = 8;
@@ -135,10 +159,18 @@ export function WritingCanvas({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const at = (e: PointerEvent) => {
-      const r = canvas.getBoundingClientRect();
-      return { x: e.clientX - r.left, y: e.clientY - r.top };
-    };
+    /* Screen pixels in, the canvas's own CSS pixels out. The ratio is 1 until
+       an ancestor zooms - see the note on `resize` - and reading it from the
+       box itself means this keeps working for page zoom and any future
+       container the card is dropped into, without knowing about either.
+
+       The rect is passed in rather than read here: one `pointermove` carries
+       up to a dozen coalesced points, and measuring the box once per event
+       instead of once per point keeps a fast stroke off the layout path. */
+    const at = (e: PointerEvent | { clientX: number; clientY: number }, r: DOMRect) => ({
+      x: (e.clientX - r.left) * (canvas.clientWidth / r.width || 1),
+      y: (e.clientY - r.top) * (canvas.clientHeight / r.height || 1)
+    });
 
     const down = (e: PointerEvent) => {
       /* A second finger while drawing is a pinch attempt, not a second pen.
@@ -149,7 +181,7 @@ export function WritingCanvas({
       drawing.current = true;
       setHasInk(true);
       setVerdict(null);
-      const p = at(e);
+      const p = at(e, canvas.getBoundingClientRect());
       last.current = p;
       pointsRef.current.push(p);
       const ctx = canvas.getContext('2d');
@@ -170,8 +202,9 @@ export function WritingCanvas({
          latest one. A fast finger otherwise draws a polygon. */
       const events = typeof e.getCoalescedEvents === 'function'
         ? e.getCoalescedEvents() : [e];
+      const r = canvas.getBoundingClientRect();
       for (const ev of events.length ? events : [e]) {
-        const p = at(ev);
+        const p = at(ev, r);
         const prev = last.current;
         if (!prev) { last.current = p; continue; }
         /* Through the midpoint with a quadratic: joins two segments into a
@@ -297,7 +330,12 @@ export function WritingCanvas({
 
             <canvas
               ref={canvasRef}
-              className="absolute inset-0 touch-none cursor-crosshair"
+              /* `w-full h-full` and not a measured pixel size: a canvas is a
+                 replaced element, so with `inset-0` alone and no width it
+                 falls back to its bitmap's own size instead of filling the
+                 frame - and a measured size is wrong the moment the page is
+                 zoomed. A percentage is always resolved in the frame's unit. */
+              className="absolute inset-0 w-full h-full touch-none cursor-crosshair"
               aria-label={`Área de escrita para a letra ${label}`}
               role="img"
             />
