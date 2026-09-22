@@ -23,20 +23,30 @@ export const metadata: Metadata = meta({
     'Quem faz o Hebraico Fluente e por que o curso é do jeito que é.'
 });
 
-/* ⚠ ESTA PÁGINA PRECISA DA MÃO DO MOSHIK ANTES DE IR AO AR.
+/* A trajetória, e o que dela pode ser afirmado.
  * ─────────────────────────────────────────────────────────────────────────
- * O que está escrito abaixo foi montado a partir do que o REPOSITÓRIO prova:
- * as decisões de método, o manuscrito de origem, a caderneta de exercícios, o
- * público a que o curso se dirige. Nada aqui afirma um fato biográfico -
- * nenhuma data, cidade, formação, tempo de sala de aula ou número de alunos -
- * porque nenhum desses fatos existe no projeto, e inventá-los numa página
- * "Sobre" é o tipo de mentira pequena que derruba a confiança inteira quando
- * um aluno pergunta.
+ * Esta página passou meses com um aviso no lugar deste comentário: nada nela
+ * podia afirmar um fato biográfico, porque nenhum existia no projeto, e uma
+ * credencial inventada numa página «Sobre» é a mentira pequena que derruba a
+ * confiança inteira no dia em que um aluno pergunta.
  *
- * Os dois blocos marcados com BIO abaixo são esqueleto: substitua pelo texto
- * de verdade, em primeira pessoa. Onde houver credencial, cite a credencial.
- * Onde houver número de alunos, cite o número. Se não houver, deixe como está
- * - a página funciona sem, e funciona mal com um número inventado.
+ * Em 22/09/2026 o dono do curso passou os fatos, e eles são estes - nenhum a
+ * mais:
+ *
+ *   · professor de hebraico no Brasil, com alunos brasileiros de níveis
+ *     diferentes;
+ *   · shaliach da Agência Judaica em Curitiba;
+ *   · trajetória no ensino de idiomas, no Brasil e fora;
+ *   · gestão pedagógica e criação de material didático.
+ *
+ * A regra continua valendo para tudo o que NÃO está nessa lista: sem datas,
+ * sem número de alunos, sem nome de instituição que ninguém confirmou, sem
+ * título acadêmico. Quem for acrescentar alguma coisa aqui precisa ter
+ * ouvido do Moshik, e não deduzido do repositório.
+ *
+ * A mesma trajetória aparece resumida na capa (Fecho.tsx, seção do
+ * professor). As duas dizem o mesmo porque saíram da mesma lista; se um dia
+ * divergirem, esta é a longa e aquela é a curta - nunca duas biografias.
  */
 
 export default function SobrePage() {
@@ -53,16 +63,23 @@ export default function SobrePage() {
             <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[18ch]">
               Oi, eu sou o Moshik.
             </h1>
-            {/* BIO - substituir */}
             <p className="text-[17px] leading-relaxed text-ink-body max-w-[56ch]">
-              Eu ensino hebraico para brasileiros. O Hebraico Fluente nasceu de uma
-              coisa que eu via acontecer sempre: gente motivada, que queria muito
-              aprender, desistindo na primeira semana - não por falta de esforço,
-              mas porque o material que existia começava pelo lugar errado.
+              Sou israelense e ensino hebraico para brasileiros. Dei aula em
+              comunidade e em sala, trabalhei como shaliach da Agência Judaica em
+              Curitiba, e antes disso já vinha do ensino de idiomas - no Brasil e
+              fora dele, também cuidando da parte pedagógica e do material que os
+              alunos tinham na mão.
             </p>
             <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[58ch]">
-              Este curso é a tentativa de resolver isso de uma vez: começar pela
-              leitura, uma letra por vez, sem pular nada e sem pedir que ninguém
+              Foi nessa convivência que eu vi o mesmo padrão se repetir: gente
+              motivada, que queria muito aprender, desistindo na primeira semana.
+              Quase nunca por falta de esforço. O material que existia tinha sido
+              pensado para outro público e traduzido depois - e traduzir um método
+              não é adaptá-lo.
+            </p>
+            <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[58ch]">
+              O Hebraico Fluente é o que eu aprendi ali, virado plataforma: começar
+              pela leitura, uma letra por vez, sem pular nada e sem pedir que ninguém
               decore o que ainda não consegue ler.
             </p>
           </div>
@@ -97,26 +114,38 @@ export default function SobrePage() {
         </div>
       </div>
 
+      {/* As mesmas três decisões de sempre, contadas do lado do aluno.
+          ──────────────────────────────────────────────────────────────────
+          Elas nasceram como «três coisas que eu me recusei a fazer», e cada
+          cartão abria com um «não». O argumento era bom; o começo, não. Três
+          negações seguidas fazem a seção falar dos outros métodos em vez de
+          falar do que a pessoa vai viver - e quem está decidindo comprar não
+          tem opinião formada sobre os outros métodos.
+
+          A ideia pedagógica de cada uma ficou intacta: progressão gradual,
+          retirada gradual da transliteração, correção e autocorreção. A versão
+          com demonstração de cada uma mora na capa (components/landing/
+          Decisoes.tsx); aqui fica a versão curta. */}
       <Section labelledBy="porque">
         <SectionHead
           id="porque"
-          eyebrowPt="Por que este curso existe"
-          titlePt="Três coisas que eu me recusei a fazer."
-          leadPt="Quase tudo neste curso é consequência de uma dessas três."
+          eyebrowPt="Como o curso foi pensado"
+          titlePt="Três decisões que tornam o aprendizado mais leve."
+          leadPt="Cada parte do curso foi organizada para evitar sobrecarga e deixar você avançar com confiança."
         />
         <ul className="grid gap-4 sm:grid-cols-3 list-none p-0 m-0">
           {[
             {
-              t: 'Não mostrar a tabela inteira no primeiro dia',
-              b: 'As 22 letras de uma vez é a forma mais rápida de convencer um adulto de que ele não tem talento para línguas. Uma por vez, com tempo, resolve o mesmo problema sem esse custo.'
+              t: 'Uma letra de cada vez',
+              b: 'Você conhece a letra, pratica com ela e só então avança. O que começa como um alfabeto completamente estranho vai ficando familiar aos poucos - e o que parecia impossível vira uma sequência de passos curtos.'
             },
             {
-              t: 'Não deixar a transliteração virar muleta',
-              b: 'Ela ajuda no começo e atrapalha depois. Então ela sai - em etapas, avisando, e com exercícios feitos para o momento em que ela sair.'
+              t: 'O apoio aparece e depois sai',
+              b: 'A transliteração ajuda no começo, e o objetivo nunca foi você depender dela. Ela diminui junto com o seu progresso, com exercícios feitos para cada etapa dessa retirada, até você ler direto do hebraico.'
             },
             {
-              t: 'Não fingir que você tem professor do lado',
-              b: 'Você não tem. Por isso cada exercício se corrige sozinho, cada erro explica o motivo, e o exame final tem gabarito, transcrição e critério - tudo o que um professor faria, escrito.'
+              t: 'Retorno na hora, em cada passo',
+              b: 'Você não precisa esperar por um professor para saber se acertou. Cada exercício corrige na hora, cada erro explica onde olhar, e o exame final vem com gabarito, transcrição e critérios à vista.'
             }
           ].map(x => (
             <li key={x.t}>
@@ -129,76 +158,57 @@ export default function SobrePage() {
         </ul>
       </Section>
 
-      <Section tone="surface" labelledBy="feito">
-        <SectionHead
-          id="feito"
-          eyebrowPt="Como foi feito"
-          titlePt="O curso veio de um material impresso."
-          leadPt="Não é um aplicativo que inventou um conteúdo: é um material que já existia, virado plataforma sem perder o rigor de livro."
-        />
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Card className="p-5 grid gap-2 content-start">
-            <h3 className="font-display text-[16.5px] font-bold text-ink">Um manuscrito e uma caderneta</h3>
-            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              As {totalLicoes()} lições, as palavras de cada letra e os exercícios
-              saíram do material impresso e passaram para o aplicativo pela mesma
-              fonte - se uma palavra muda, muda nos dois. O livro e a plataforma
-              não podem divergir, e não divergem por construção.
-            </p>
-          </Card>
-          <Card className="p-5 grid gap-2 content-start">
-            <h3 className="font-display text-[16.5px] font-bold text-ink">Hebraico escrito com cuidado</h3>
-            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              Os sinais de vogal são frágeis: um espaço no lugar errado, uma
-              pontuação encostada, e a palavra aparece invertida ou com o ponto
-              fora do lugar. Cada trecho em hebraico da plataforma passa por um
-              único componente que garante a direção e a integridade do texto.
-            </p>
-          </Card>
-        </div>
-      </Section>
+      {/* A origem do método, ENCOLHIDA - e o porquê.
+          ──────────────────────────────────────────────────────────────────
+          Isto ocupava duas seções inteiras: uma sobre o material impresso de
+          origem e outra, em duas colunas com cartão destacado, sobre o método
+          do autor. Somadas, davam mais espaço à procedência do que à pessoa
+          que ensina - e a pergunta que traz alguém a esta página é «por que
+          eu aprenderia com ele?», não «de onde veio a bibliografia».
 
-      {/* ── o crédito ────────────────────────────────────────────────────
-          Seção própria, e não uma nota de rodapé dentro de outra: o método
-          que esta plataforma ensina não foi inventado aqui, e quem o criou
-          tem nome. Ver lib/credito.ts - o texto do crédito sai de um arquivo
-          só, para não divergir entre o rodapé, a capa e esta página. */}
-      <Section labelledBy="metodo-origem">
+          Encolher não é apagar. O crédito continua aqui por inteiro, com o
+          nome do autor e o título da obra em hebraico, porque o caminho que
+          este curso segue não foi inventado aqui e quem o criou tem nome -
+          e `check-legal.mjs` confere que esta página continua nomeando os
+          dois. O que sai é o peso visual, não a informação.
+
+          E o enquadramento mudou junto: o que esta plataforma oferece é uma
+          ADAPTAÇÃO - princípios de aprendizagem de idiomas que já existiam,
+          mais o que o Moshik viu ensinando brasileiros. Apresentá-la como
+          uma ciência nova inventada do zero seria uma afirmação que ninguém
+          pediu e que não se sustenta. */}
+      <Section tone="surface" labelledBy="metodo-origem">
         <SectionHead
           id="metodo-origem"
-          eyebrowPt="Crédito"
-          titlePt="De onde vem o método."
-          leadPt="O caminho que este curso segue tem autor, e o crédito é dele."
+          eyebrowPt="O método"
+          titlePt="Um método adaptado para brasileiros."
+          leadPt="Princípios consolidados de aprendizagem de idiomas, mais o que eu aprendi ensinando hebraico a quem fala português."
         />
-        <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-          <Card tone="wash" className="p-6 grid gap-3 content-start">
-            <p className="font-ui text-[12px] uppercase tracking-[.12em] text-[var(--accent)]">
-              Obra de origem
-            </p>
-            <p className="font-display text-[26px] font-bold text-ink leading-tight">
-              <He size="inline">{METODO_ORIGINAL.obraHe}</He>
-            </p>
-            <p className="font-ui text-[14px] text-ink-body">
-              {METODO_ORIGINAL.obraTranslit}
-            </p>
-            <p className="font-display text-[17px] font-bold text-ink">
-              {METODO_ORIGINAL.autor}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Card className="p-5 grid gap-2.5 content-start">
+            <h3 className="font-display text-[16.5px] font-bold text-ink">O que é adaptação minha</h3>
+            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+              A sequência em que as letras entram, o ritmo com que a transliteração se
+              retira, os tipos de exercício e as explicações foram organizados pensando
+              nas dificuldades de quem parte do português - as comparações com os nossos
+              sons, os erros que só um brasileiro comete, e tudo o que acontece na tela.
             </p>
           </Card>
-          <div className="grid gap-3 content-start">
-            <p className="text-[16px] leading-relaxed text-ink-body">
-              O caminho que este curso segue - a ordem em que as letras entram, a
-              decisão de ler antes de falar, o cuidado com quem estuda sozinho - vem do
-              método do {METODO_ORIGINAL.autor}, autor de{' '}
-              <He size="inline">{METODO_ORIGINAL.obraHe}</He>. O conteúdo do livro dele é
-              a base do que a plataforma ensina.
+          <Card tone="wash" className="p-5 grid gap-2.5 content-start">
+            <h3 className="font-display text-[16.5px] font-bold text-ink">De onde vem o método</h3>
+            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+              O caminho que este curso segue parte do método do{' '}
+              {METODO_ORIGINAL.autor}, autor de{' '}
+              <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
+              ({METODO_ORIGINAL.obraTranslit}). O conteúdo do livro dele é a base do que a
+              plataforma ensina.
             </p>
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body">
-              A adaptação para o aluno brasileiro é minha: as comparações com os sons
-              do português, os erros que só quem fala português comete, os exercícios
-              que se corrigem sozinhos e tudo o que acontece na tela.
+            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+              As {totalLicoes()} lições, as palavras de cada letra e os exercícios vieram
+              de material impresso e passaram para a plataforma pela mesma fonte: se uma
+              palavra muda, muda nos dois.
             </p>
-          </div>
+          </Card>
         </div>
       </Section>
 

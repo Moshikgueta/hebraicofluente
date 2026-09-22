@@ -33,12 +33,25 @@ import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
 
 const TEM_AUDIO = audioAvailable();
 
-/* ── 8 · o professor ────────────────────────────────────────────────────── */
+/* ── 8 · o professor ──────────────────────────────────────────────────────
+   A seção que responde, em silêncio, «por que eu aprenderia hebraico com
+   ele?». Três regras para o que está escrito aqui:
+
+   1. só entra fato que o dono do curso confirmou. Nenhuma data, nenhum
+      número de alunos, nenhum nome de instituição além dos que ele deu -
+      uma credencial inventada é a mentira pequena que derruba a confiança
+      inteira no dia em que alguém pergunta;
+   2. trajetória, e não currículo. Quatro linhas que se leem de relance
+      valem mais do que doze que ninguém termina;
+   3. tudo aponta para o mesmo lugar: ensinar hebraico A BRASILEIROS. É a
+      única credencial que decide a compra nesta página - experiência de
+      sala de aula em geral não diz nada sobre saber onde um falante de
+      português trava. */
 const CREDENCIAIS = [
-  'Experiência ensinando hebraico no Brasil',
-  'Atuação como shaliach da Agência Judaica',
-  'Formação acadêmica e pedagógica em ensino de idiomas',
-  'Alunos de diferentes países e níveis'
+  'Professor de hebraico no Brasil, com alunos brasileiros de todos os níveis',
+  'Shaliach da Agência Judaica em Curitiba',
+  'Anos de sala de aula no ensino de idiomas, no Brasil e fora dele',
+  'Gestão pedagógica e criação de material didático'
 ];
 
 export function Professor({ retrato }: { retrato: string | null }) {
@@ -76,25 +89,32 @@ export function Professor({ retrato }: { retrato: string | null }) {
           </Reveal>
           <Reveal delay={100}>
             <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
-              Quem criou o Hebraico Fluente
+              Moshik Gueta · professor de hebraico
             </p>
+            {/* O H2 diz a CREDENCIAL, não o nome. O nome já está no rótulo
+                acima, e "Moshik Gueta" em corpo 40 não responde nada a quem
+                nunca ouviu falar dele - enquanto "hebraico ensinado para quem
+                fala português" responde a pergunta inteira da seção. */}
             <h2 className="font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08]
-                           tracking-[-0.03em] m-0 mb-4">
-              Moshik Gueta
+                           tracking-[-0.03em] text-balance m-0 mb-4">
+              Hebraico ensinado para quem fala português.
             </h2>
             {/* Primeira pessoa. A seção que existe para gerar confiança é a
                 única da página em que falar "eu" custa menos do que falar "o
                 professor" - ninguém confia numa biografia em terceira pessoa
                 escrita pela própria pessoa. */}
             <p className="font-ui text-[17px] sm:text-[18px] leading-[1.65] text-ink-muted max-w-[52ch] mb-4">
-              Sou israelense e ensino hebraico para brasileiros. Ensinar nas duas direções -
-              hebraico para quem fala português e português para quem fala hebraico - mostrou
-              exatamente onde o aluno brasileiro trava.
+              Sou israelense e passei os últimos anos ensinando hebraico a brasileiros - em
+              sala de aula, na comunidade e como shaliach da Agência Judaica em Curitiba.
+              Nesse tempo vi os mesmos alunos travarem sempre nos mesmos pontos, e quase
+              nunca por falta de esforço: o material que eles tinham na mão foi escrito
+              para outro público e traduzido depois.
             </p>
             <p className="font-display text-[20px] sm:text-[21px] leading-[1.45] font-medium
                           tracking-[-0.015em] text-ink max-w-[46ch] mb-6">
-              Depois de ver os mesmos obstáculos aparecerem sempre, montei um curso pensado
-              especificamente para quem fala português.
+              O Hebraico Fluente é o que eu aprendi ali, virado plataforma: a ordem das
+              letras, as comparações com o português e os exercícios saíram de ver onde o
+              aluno brasileiro para.
             </p>
             <CheckList items={CREDENCIAIS} columns={2} textClass="text-ink-muted" />
             {/* O crédito ao método de origem fica NESTA seção, e não numa
@@ -466,7 +486,14 @@ export function Faq() {
   return (
     <section id="duvidas">
       <div className="mx-auto w-full max-w-[820px] px-5 sm:px-7 pt-16 sm:pt-24">
-        <H2 className="mb-8">Dúvidas frequentes</H2>
+        <H2 className="mb-3">Dúvidas frequentes</H2>
+        {/* Uma linha de apoio, e ela diz o ESCOPO - não pede desculpa por
+            nada e não anuncia o que falta. Onde há limitação, ela está na
+            resposta que a pergunta pede. */}
+        <p className="font-ui text-[17px] leading-[1.6] text-ink-muted max-w-[48ch] mb-8">
+          Antes de começar, vale saber: o que o curso cobre, como funciona o acesso e o
+          que esperar por dentro da plataforma.
+        </p>
         <div className="grid gap-2">
           {PERGUNTAS.map(([q, a], i) => {
             const open = aberta === i;

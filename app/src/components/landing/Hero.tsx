@@ -104,11 +104,33 @@ export function Hero({
             {/* O título diz o RESULTADO, com o verbo que a pessoa procurou no
                 Google: "ler hebraico". "Da primeira letra ao hebraico de
                 verdade" era bonito e vago - quem chega aqui precisa saber, na
-                primeira linha, o que vai conseguir fazer. */}
-            <h1 className="font-display font-semibold text-[clamp(40px,5.1vw,62px)] leading-[1.02]
-                           tracking-[-0.036em] text-balance m-0 mb-5">
-              Aprenda a ler hebraico do zero.
+                primeira linha, o que vai conseguir fazer.
+
+                ── e agora diz o que ela SENTE, primeiro ──────────────────
+                O visitante brasileiro chega com uma frase na cabeça, e não é
+                "quero aprender a ler hebraico": é "isso parece impossível". A
+                primeira linha responde exatamente essa frase, e o resultado
+                vem logo abaixo, na segunda.
+
+                A promessa é de PERCURSO, não de prazo. "Aprenda hebraico em 7
+                dias" converte melhor numa tarde e cobra o preço em reembolso
+                na semana seguinte; esta diz uma coisa que o curso entrega
+                mesmo - que o estranho vira legível - e deixa o tempo para o
+                FAQ, onde ele está medido. */}
+            {/* Medido numa captura: a 62px a frase ocupava QUATRO linhas no
+                desktop e empurrava os botões para fora da primeira tela. A
+                promessa só funciona se o convite estiver visível junto com
+                ela - um título imponente que esconde o botão custa a conversão
+                que ele foi escrito para criar. */}
+            <h1 className="font-display font-semibold text-[clamp(35px,4.3vw,54px)] leading-[1.04]
+                           tracking-[-0.034em] text-balance m-0 mb-4">
+              O hebraico parece impossível{' '}
+              <span className="text-[var(--teal)]">até começar a fazer sentido.</span>
             </h1>
+            <p className="font-display text-[clamp(20px,2.1vw,26px)] leading-[1.28] font-medium
+                          tracking-[-0.02em] text-ink text-balance max-w-[24ch] m-0 mb-5">
+              Aprenda a ler e escrever hebraico do zero, uma letra de cada vez.
+            </p>
           </div>
 
           <p
@@ -116,8 +138,9 @@ export function Hero({
                        transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
             style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
           >
-            Um curso interativo feito para brasileiros aprenderem as {course.totalLetters} letras,
-            os sons e a leitura de palavras reais - mesmo sem nunca ter estudado hebraico.
+            Um curso interativo feito para brasileiros: as {course.totalLetters} letras, os sons e a
+            leitura de palavras reais, com correção na hora. Não é um PDF nem uma sequência de
+            videoaulas - você pratica em cada passo.
           </p>
 
           {/* Os quatro fatos. Respondem "o que exatamente eu estou comprando?"
@@ -173,10 +196,12 @@ export function Hero({
                            transition-[border-color,transform] duration-[180ms]
                            hover:border-[#C9C3B4] hover:-translate-y-[2px]"
               >
-                {/* Leva à demonstração jogável, e não a um texto sobre ela:
-                    o segundo botão de um hero existe para quem quer VER antes
-                    de decidir, e mandá-lo para mais copy desperdiça o clique. */}
-                Ver o curso por dentro
+                {/* Leva à AULA ABERTA, e não a um texto sobre ela: o segundo
+                    botão de um hero existe para quem quer experimentar antes
+                    de decidir, e mandá-lo para mais copy desperdiça o clique.
+                    "Saiba mais" seria o pior dos dois mundos - não diz o que
+                    acontece e não promete nada. */}
+                Experimentar uma aula grátis
               </Link>
             </div>
             {/* A microcópia responde a pergunta que trava o clique: "e o que

@@ -25,6 +25,8 @@
 import { Hero } from '@/components/landing/Hero';
 import { Problema, Demonstracao, Metodo, Curriculo, Jornada } from '@/components/landing/Secoes';
 import { Transformacao } from '@/components/landing/Transformacao';
+import { DemoAlef } from '@/components/landing/DemoAlef';
+import { Decisoes } from '@/components/landing/Decisoes';
 import { AlemDoAlfabeto } from '@/components/landing/AlemDoAlfabeto';
 import { BarraFixa } from '@/components/landing/BarraFixa';
 import {
@@ -50,14 +52,34 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
     <>
       <Hero
         primaryHref={passo.href}
-        primaryLabel={passo.label}
+        /* O rótulo do hero é o único da página que fala em PRIMEIRA PESSOA.
+           A regra de quem recebe qual oferta continua em lib/cta.ts - um
+           aluno pagante segue lendo "Continuar de onde parei" -, e o que
+           muda aqui é só a voz do botão para quem ainda não comprou: na
+           primeira dobra ele é a resposta do visitante à promessa logo
+           acima, e não uma instrução do site para ele. */
+        primaryLabel={passo.vende ? 'Quero começar a ler hebraico' : passo.label}
         primaryMicro={passo.micro}
-        secondaryHref="#curso"
+        secondaryHref="#experimente"
         midia={midia}
       />
+      {/* A ordem da narrativa, e por que ela é esta.
+          ──────────────────────────────────────────────────────────────────
+          A promessa do hero cria uma dúvida ("será que EU consigo?"), e a
+          página responde antes de qualquer outra coisa: a transformação em
+          quatro segundos, e logo depois a aula aberta, onde a pessoa aprende
+          o Álef de verdade. Tudo o que vem depois - o método, o currículo, o
+          professor, o preço - é lido por alguém que já provou a si mesmo que
+          consegue, o que é uma pessoa diferente da que chegou.
+
+          As três decisões pedagógicas ficam logo abaixo da demo, e nessa
+          ordem de propósito: elas AFIRMAM o que a demo acabou de FAZER. Na
+          ordem inversa seriam três promessas à espera de prova. */}
       <Transformacao />
+      <DemoAlef href={comprar} micro={passo.micro} label={passo.label} vende={passo.vende} />
       <Problema />
       <Demonstracao />
+      <Decisoes />
       <Metodo />
       <Curriculo />
       <Jornada />

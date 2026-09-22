@@ -31,6 +31,7 @@
     "jogos": "node jogos.mjs",
     "escrita": "node escrita.mjs",
     "licao": "node licao.mjs",
+    "clique": "node clique.mjs",
     "exercicios": "node exercicios.mjs",
     "pacote": "node pacote.mjs",
     "promessas": "node promessas.mjs",

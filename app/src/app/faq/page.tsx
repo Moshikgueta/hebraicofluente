@@ -174,18 +174,32 @@ export default function FaqPage() {
           <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
             Dúvidas frequentes
           </p>
+          {/* O cabeçalho NÃO antecipa objeção.
+              ──────────────────────────────────────────────────────────────
+              Aqui se lia «Perguntado antes de comprar» e, abaixo, «inclusive
+              o que ainda não está pronto - preferimos perder uma venda aqui a
+              perder a confiança depois». A intenção era honestidade, e o
+              efeito era o contrário: a primeira coisa que o visitante lia
+              nesta página era a palavra «venda» e a sugestão de que havia
+              algo faltando, antes mesmo de ele ter pensado nisso.
+
+              O conteúdo não mudou - a resposta sobre as gravações continua
+              inteira, e a do reembolso também. O que mudou é onde ele mora:
+              dentro da pergunta que o pede, e não no título da seção. Uma
+              limitação respondida com clareza tranquiliza; a mesma limitação
+              anunciada em corpo 44 assusta. */}
           <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[20ch]">
-            Perguntado antes de comprar.
+            Tudo o que vale saber antes de começar.
           </h1>
           <p className="text-[17px] leading-relaxed text-ink-body max-w-[54ch]">
-            Inclusive o que ainda não está pronto. Preferimos perder uma venda
-            aqui a perder a confiança depois.
+            Respostas diretas sobre o curso, o acesso, o conteúdo e o que esperar da
+            experiência dentro da plataforma.
           </p>
         </div>
       </div>
 
       <Section labelledBy="perguntas">
-        <SectionHead id="perguntas" titlePt="As perguntas." />
+        <SectionHead id="perguntas" titlePt="Dúvidas frequentes" />
         <div className="grid gap-3 max-w-[820px]">
           {FAQ.map(item => (
             <Card key={item.q} as="article" className="overflow-hidden">
@@ -233,7 +247,7 @@ export default function FaqPage() {
                  className="text-[var(--accent)] hover:underline">
                 {empresa.contato.emailSuporte}
               </a>
-              . Respondemos antes de você comprar, não depois.
+              . Costumamos responder no mesmo dia útil.
             </>
           }
         />

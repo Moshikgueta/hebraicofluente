@@ -345,6 +345,31 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           exit $rc
 
+      # As páginas públicas, CLICADAS.
+      #
+      # Roda aqui, contra a build de plataforma, porque é essa que vai ao ar e
+      # porque as páginas livres são as mesmas nos dois modos - ao contrário
+      # do `tom.mjs` logo abaixo, que precisa entrar no curso.
+      #
+      # O que ele cobre não é coberto por mais nada no fluxo: `varrer-site`
+      # CARREGA as páginas, e a capa carrega perfeitamente mesmo quando um
+      # clique numa aba derruba a árvore inteira do React. Foi assim que a aba
+      # «Escrita» chegou à produção transformando a página de vendas em
+      # «Application error» - verde em tudo, quebrada no primeiro toque.
+      - name: As páginas públicas sobrevivem a ser usadas?
+        if: steps.guard.outputs.ok == 'true'
+        working-directory: app
+        run: |
+          set -o pipefail
+          npm install --no-save playwright >/dev/null 2>&1
+          npx --yes playwright install --with-deps chromium >/dev/null 2>&1
+          echo "## Todo controle de toda página livre, em desktop e celular" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          rc=0
+          node clique.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY" || rc=$?
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
+
       # POR QUE `tom.mjs` NÃO ESTÁ AQUI.
       # ────────────────────────────────────────────────────────────────────
       # Ele confere o tom das telas do CURSO ("hebraico é super fácil!") e o

@@ -25,7 +25,11 @@ export type EventName =
   | 'certificate_downloaded' | 'certificate_shared'
   | 'course_completed' | 'next_course_clicked'
   /* Um dos CTAs de lib/cta.ts. `itemId` diz onde ele estava e se vendia. */
-  | 'cta_clicked';
+  | 'cta_clicked'
+  /* A aula aberta da landing: o visitante aprende o Álef antes de comprar.
+     Três eventos e nada mais - começou, respondeu, terminou -, que é o que
+     responde "a demo converte?" sem virar um funil de rastreamento. */
+  | 'demo_started' | 'demo_answered' | 'demo_completed';
 
 export type EventProps = {
   /** Qual jogo da academia. Os três primeiros saem do baralho; os três de

@@ -27,7 +27,7 @@
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/learn/Blocks';
-import { StrokeOrderPlayer } from '@/components/learn/StrokeOrder';
+import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { allCourses, isPlayable } from '@/lib/catalog';
 import { Container, H2, Lead, Reveal, Check, CheckList, Chevron } from './base';
@@ -161,22 +161,38 @@ function PainelAula() {
   );
 }
 
-/* A escrita, com o componente DE VERDADE do curso.
+/* A escrita, com o diagrama DE VERDADE - e não com o leitor do curso.
  *
- * `StrokeOrderPlayer` é o mesmo que roda dentro da lição, lendo os mesmos
- * traços - que saíram da própria fonte cursiva (tools/gen-stroke-order.py lê
- * o contorno do woff2). Uma landing que desenha uma imitação do exercício
- * promete uma coisa e entrega outra no primeiro dia; esta mostra o exercício.
+ * ── o que esta aba já derrubou ──────────────────────────────────────────
+ * Aqui ficava `StrokeOrderPlayer`, o componente que roda dentro da lição. A
+ * intenção era boa - mostrar o exercício em vez de uma imitação dele -, mas
+ * ele lê `strokesFor()`, que lê o depósito de conteúdo PAGO. Esse depósito só
+ * é enchido pelo `CourseGate`, e a landing é pública: nunca passa por um.
+ *
+ * Então `dados()` fazia o que foi escrito para fazer - lançava -, e como isso
+ * acontecia durante o render, o React derrubava a ÁRVORE INTEIRA. Quem
+ * clicasse em «Escrita» não via um painel vazio: via a landing inteira virar
+ * «Application error: a client-side exception has occurred». Medido no
+ * navegador, em 1280px e em 390px, na build local e na de plataforma - não
+ * era um defeito só de produção.
+ *
+ * O diagrama estático resolve sem abrir exceção nenhuma na fronteira: ele sai
+ * do MESMO contorno de fonte, na mesma execução do exportador, e já é um
+ * arquivo público servido em `/stroke-order/`. A regra da casa continua
+ * inteira - página pública lê de `content-publico`, nunca de `content` -, e
+ * `tests/conteudo.test.ts` agora percorre o grafo de imports para que a volta
+ * disto não dependa de alguém lembrar.
  */
 function PainelEscrita() {
   return (
     <>
       <Rotulo>Lição 4 · Escrever</Rotulo>
-      <StrokeOrderPlayer letterId="shin" label="Shin" className="mb-3" />
+      <DiagramaDeTracado letterId="shin" label="Shin" movimentos={1} className="mb-3" />
       <p className="font-ui text-[15px] leading-[1.55] text-ink-muted">
-        Depois de ver o movimento, você traça a letra com o dedo e o curso
-        confere. A forma é a da cursiva que se escreve em Israel - a que a
-        pessoa vai ver num bilhete, e não a de imprensa.
+        Este é o diagrama que a lição mostra. Depois de ver o movimento, você
+        traça a letra com o dedo e o curso confere. A forma é a da cursiva que
+        se escreve em Israel - a que você vai ver num bilhete, e não a de
+        imprensa.
       </p>
     </>
   );

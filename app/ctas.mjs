@@ -34,7 +34,7 @@ async function cenario(nome, aluno) {
   await p.goto('http://127.0.0.1:4409/',{waitUntil:'networkidle'});
   await p.waitForTimeout(2400);           /* a sequência do hero leva 1,9s */
   const h1 = (await p.locator('h1').first().innerText()).replace(/\s+/g,' ');
-  const botao = (await p.locator('header a').filter({hasText:/Começar|Continuar|Liberar/}).first().innerText()).replace(/\s+/g,' ').trim();
+  const botao = (await p.locator('header a').filter({hasText:/Quero começar|Começar|Continuar|Liberar/}).first().innerText()).replace(/\s+/g,' ').trim();
   const micro = await p.locator('text=/Acesso imediato · 12 meses|Seu progresso está salvo/').first().innerText().catch(()=>'(sem microcópia)');
   const precoVisivel = await p.locator('text=/R\\$/').count();
   const jaSeu = await p.locator('text=/Este curso já é seu/').count();
@@ -52,7 +52,7 @@ async function cenario(nome, aluno) {
   for (const rota of ['metodo','faq','sobre']) {
     await p.goto(`http://127.0.0.1:4409/${rota}/`,{waitUntil:'networkidle'});
     await p.waitForTimeout(700);
-    const fecho = await p.locator('a').filter({hasText:/Começar a aprender|Continuar de onde parei|Liberar meu acesso/}).first().innerText().catch(()=>'(nenhum)');
+    const fecho = await p.locator('a').filter({hasText:/Quero começar a ler hebraico|Começar a aprender|Continuar de onde parei|Liberar meu acesso/}).first().innerText().catch(()=>'(nenhum)');
     const vende = await p.locator('a[href*="/checkout/"]').count();
     console.log(`    /${rota.padEnd(7)} fecho: ${fecho.replace(/\s+/g,' ').trim().padEnd(26)} checkout: ${vende}`);
   }
