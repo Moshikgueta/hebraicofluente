@@ -19,7 +19,7 @@ Duas regras que valem para o documento inteiro:
 
 | O que | Resultado | Provado por |
 |---|---|---|
-| O módulo inicial não trava as letras (ele ORIENTA, não bloqueia) | ver nota | decisão de projeto, abaixo |
+| O módulo inicial não trava as letras (ele ORIENTA, não bloqueia) | decidido assim | decisão do dono do curso, abaixo |
 | A primeira letra abre | passa | `trava.mjs` |
 | A próxima só abre depois de dominar a atual | passa | `trava.mjs`, `tests/progressao` |
 | O critério de 80% funciona | passa | `tests/rules`, `tests/progressao` |
@@ -36,7 +36,17 @@ Isso é decisão, e não esquecimento: a trava de progressão existe para que o
 aluno não encontre uma tela onde metade dos símbolos é ruído - e a lição do
 alef não tem esse problema para quem pulou a introdução. Trancá-la custaria
 uma porta a mais na primeira visita, que é o momento em que se perde gente.
-Se a preferência for trancar, é uma linha em `porQueTrancada`.
+
+**Decidido em 22/09/2026, pelo dono do curso: não tranca.** A pergunta está
+fechada e não é mais pendência. O que sustenta a escolha, em vez da trava:
+
+- a aula 0 é OFERECIDA em todo lugar - o painel, o fim do onboarding, e
+  desde 22/09 um destino fixo da navegação, em toda tela e nas duas
+  larguras (`varrer-curso.mjs`, regra da aula 0);
+- `varrer-curso.mjs` recusa a volta ao estado em que ela era órfã.
+
+Ou seja: quem pula, pula sabendo que ela existe e sabendo voltar - que é o
+que a trava compraria, sem a porta fechada na primeira visita.
 
 ### Rotas
 
@@ -198,8 +208,8 @@ letras numa tela. A aula 0 avisa que a explicação existe e linka para ela.
    desligado: ids por leitura, botão que some, exercícios de escuta que não
    são oferecidos. Precisa de gravação, não de código.
 
-2. **O bloqueio da primeira letra pelo módulo 0** - hoje é orientação e não
-   trava. Está explicado acima; é uma linha, se a decisão mudar.
+E só. O bloqueio da primeira letra pelo módulo 0 saiu desta lista em
+22/09/2026: foi decidido que não tranca, e a razão está na Parte 19.
 
 ---
 

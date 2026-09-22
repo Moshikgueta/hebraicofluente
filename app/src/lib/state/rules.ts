@@ -783,6 +783,20 @@ export function letraLiberada(
   state: LearnerState, ordem: readonly string[], letterId: string
 ): boolean {
   const i = ordem.indexOf(letterId);
+  /* A primeira letra abre sempre, e NÃO depende da aula 0.
+     ──────────────────────────────────────────────────────────────────────
+     Esta é a linha que mudaria se a aula 0 passasse a trancar o alef, e ela
+     fica como está por decisão do dono do curso, em 22/09/2026. Não é
+     esquecimento, e quem vier depois não precisa reabrir a pergunta: a
+     razão inteira está em AUDITORIA-FINAL.md, na Parte 19.
+
+     Em resumo: a trava de progressão existe para o aluno não cair numa tela
+     onde metade dos símbolos é ruído, e a lição do alef não tem esse
+     problema para quem pulou a introdução. O que a trava compraria - que a
+     pessoa saiba que a aula 0 existe e saiba voltar a ela - já vem da
+     navegação, onde ela é um destino fixo em toda tela e nas duas larguras.
+     Sobraria só uma porta a mais na primeira visita, que é o momento em que
+     se perde gente. */
   if (i <= 0) return i === 0;
 
   /* Já entrou alguma vez, aqui ou mais adiante: a porta continua aberta.
