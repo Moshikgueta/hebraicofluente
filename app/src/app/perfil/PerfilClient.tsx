@@ -239,7 +239,136 @@ export function PerfilClient() {
           <LinkButton href={`/cursos/${FLAGSHIP}`} variant="ghost" size="sm">Ver os cursos</LinkButton>
         </p>
       )}
+
+      <ApagarConta />
     </div>
+  );
+}
+
+/**
+ * Apagar a conta, pelo próprio titular.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O direito de exclusão da LGPD (art. 18, VI). Até aqui ele existia no papel:
+ * a página de reembolso mandava escrever um e-mail. Um direito que depende de
+ * alguém do outro lado responder é um direito com horário de atendimento, e
+ * uma pessoa que quer sumir dos seus registros não deveria ter de pedir por
+ * favor.
+ *
+ * Três travas, e cada uma para um acidente diferente:
+ *
+ *   1. Fechado atrás de um botão, como a troca de senha. Um formulário
+ *      destrancado no fim do perfil é um clique errado de distância.
+ *   2. A SENHA ATUAL. É o que separa o dono de quem pegou o celular
+ *      destrancado em cima da mesa.
+ *   3. Escrever APAGAR. Serve contra um caso que a senha não cobre: a pessoa
+ *      que sabe a senha, está apressada e clica sem ler. Digitar uma palavra
+ *      obriga a olhar a tela, que é onde está escrito o que vai acontecer.
+ *
+ * O que some e o que fica está dito ANTES do formulário, e não depois. Uma
+ * confirmação que explica as consequências na tela seguinte é uma armadilha.
+ */
+function ApagarConta() {
+  const account = useAccount();
+  const [aberto, setAberto] = useState(false);
+  const [senha, setSenha] = useState('');
+  const [palavra, setPalavra] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  const PALAVRA = 'APAGAR';
+
+  function fechar() {
+    setAberto(false);
+    setSenha(''); setPalavra(''); setError(null);
+  }
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (busy) return;
+    setError(null);
+
+    if (palavra.trim().toUpperCase() !== PALAVRA) {
+      setError(`Escreva ${PALAVRA} no campo acima para confirmar.`);
+      return;
+    }
+
+    setBusy(true);
+    try {
+      await account.deleteAccount({ password: senha });
+      setSenha(''); setPalavra('');
+      /* Uma PÁGINA, e uma navegação DURA. Duas correções, cada uma para uma
+         coisa que foi medida no navegador e falhou:
+
+         1. Uma confirmação renderizada aqui dentro nunca aparece: assim que a
+            sessão some, o CourseGate vê /perfil sem dono e manda para
+            /entrar. Por isso /conta-apagada é uma rota pública de verdade.
+         2. E `router.replace` também perdia - é navegação do cliente, então o
+            efeito do portão continuava vivo e corria junto, empurrando para
+            /entrar?next=/perfil. Medido: a pessoa apagava a conta e caía na
+            tela de login, sem nenhuma confirmação.
+
+         `location.replace` sai do aplicativo inteiro, o que aqui não é um
+         truque para ganhar a corrida: apagar a conta é exatamente o momento
+         em que nada do estado antigo deve sobreviver em memória. E `replace`,
+         e não `assign`, para o botão "voltar" não levar de volta ao perfil de
+         uma conta que não existe mais. */
+      window.location.replace('/conta-apagada/');
+    } catch (err) {
+      setError(err instanceof AuthError ? err.message : MESSAGES.server);
+      setBusy(false);
+    }
+  }
+
+  return (
+    <Card tone="ember" className="p-5 grid gap-4">
+      <h2 className="font-display text-[17px] font-bold text-ink">Apagar minha conta</h2>
+
+      {aberto ? (
+        <form onSubmit={submit} className="grid gap-4 max-w-[420px]" noValidate>
+          {/* Um aviso, curto. A versão anterior tinha três parágrafos, um
+              deles mandando pedir reembolso antes - e isso era assunto de
+              outra tela, dito no pior momento possível. Aqui o que importa é
+              uma frase: o que acontece, e que não volta. O detalhe do que
+              fica guardado, e por quê, está na tela de confirmação e na
+              Política de Privacidade, que é onde ele é procurado. */}
+          <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+            <strong className="font-semibold">Isto não tem volta.</strong> Somem o seu
+            e-mail, o seu nome, a sua senha, todo o seu progresso e o seu acesso ao
+            curso.
+          </p>
+
+          <Campo
+            id="apagar-senha" label="Sua senha" value={senha} onChange={setSenha}
+            type="password" autoComplete="current-password" required autoFocus
+          />
+          <Campo
+            id="apagar-palavra" label={`Escreva ${PALAVRA}`} value={palavra}
+            onChange={setPalavra} type="text" autoComplete="off" required
+            hint="Para ter certeza de que não foi um clique sem querer."
+          />
+
+          {error && <Erro>{error}</Erro>}
+
+          <div className="flex flex-wrap gap-2">
+            <Button type="submit" disabled={busy}>
+              {busy ? 'Apagando…' : 'Apagar minha conta para sempre'}
+            </Button>
+            <Button type="button" variant="ghost" onClick={fechar}>Cancelar</Button>
+          </div>
+        </form>
+      ) : (
+        <>
+          <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
+            Você pode apagar a sua conta e todos os seus dados aqui mesmo, sem
+            precisar pedir a ninguém. É definitivo.
+          </p>
+          <Button variant="ghost" className="justify-self-start"
+                  onClick={() => setAberto(true)}>
+            Apagar minha conta
+          </Button>
+        </>
+      )}
+    </Card>
   );
 }
 

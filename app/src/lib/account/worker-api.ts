@@ -110,6 +110,10 @@ export class WorkerApi implements PlatformApi {
     return call<Session>('/auth/password', { method: 'POST', body: JSON.stringify(input) });
   }
 
+  async deleteAccount(input: { password: string }): Promise<void> {
+    await call<{ ok: true }>('/auth/delete', { method: 'POST', body: JSON.stringify(input) });
+  }
+
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number }) {
     return call<Order & { redirectUrl?: string }>('/pay/create', {
       method: 'POST', body: JSON.stringify(input)

@@ -36,7 +36,19 @@ const PUBLIC_PREFIXES = [
      e é justamente o visitante que precisa dela para decidir comprar. O
      mesmo vale para o atendimento: quem não consegue entrar é exatamente
      quem mais precisa escrever. */
-  '/termos', '/privacidade', '/reembolso', '/suporte'
+  '/termos', '/privacidade', '/reembolso', '/suporte',
+  /* A confirmação de que a conta foi apagada.
+     ──────────────────────────────────────────────────────────────────────
+     Pública por necessidade, e não por conveniência: quem chega nela acabou
+     de deixar de ter conta. A primeira versão mostrava a confirmação dentro
+     do próprio /perfil, e ela nunca aparecia - o CourseGate via a sessão
+     sumir e mandava a pessoa para /entrar no mesmo instante. O sintoma era o
+     pior possível justamente nesta operação: a tela pulava para a página de
+     vendas sem dizer nada, e a pessoa ficava sem saber se a conta dela tinha
+     sido apagada ou não. Encontrado no navegador, e não nos testes, porque
+     no teste a exclusão é uma chamada - na tela ela é uma chamada seguida de
+     um portão. */
+  '/conta-apagada'
 ] as const;
 
 export function isPublicRoute(pathname: string | null): boolean {

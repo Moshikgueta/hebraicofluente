@@ -110,7 +110,10 @@ function Trecho({ module: m, estado, ultimo }: {
   const TAG = {
     feito: { texto: 'Concluído', cor: 'text-[var(--teal-ink)]' },
     agora: { texto: 'Em andamento', cor: 'text-[var(--teal)]' },
-    adiante: { texto: 'Em breve', cor: 'text-[#9AA29E]' }
+    /* `--locked` e não um cinza escrito à mão: o cinza literal era o mesmo
+       nos dois temas, e no escuro ele nem é o cinza certo nem acompanha o
+       alto contraste. */
+    adiante: { texto: 'Em breve', cor: 'text-[var(--locked)]' }
   }[estado];
 
   return (
@@ -149,7 +152,15 @@ function Trecho({ module: m, estado, ultimo }: {
           className={`block rounded-[18px] border p-5 sm:px-6 sm:py-[22px] transition-shadow duration-[250ms]
             hover:shadow-[var(--sh)]
             ${estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
-              : estado === 'adiante' ? 'bg-[#FBFAF7] border-line opacity-[.72]'
+              /* O módulo trancado RECUA, e é por isso que ele usa o papel e
+                 não uma cor escrita à mão. O literal `#FBFAF7` que estava
+                 aqui é quase o creme, então no tema claro ele fazia o certo
+                 por acaso - e no escuro virou o bloco MAIS CLARO da tela: os
+                 módulos que o aluno ainda não pode abrir gritavam, e o único
+                 que ele podia estudar ficava mais quieto que eles.
+                 Com `--paper` o cartão tem a cor do fundo nos dois temas, e
+                 quem o separa é a borda. Que é o que "ainda não" deve ser. */
+              : estado === 'adiante' ? 'bg-[var(--paper)] border-line opacity-[.72]'
               : 'bg-[var(--card)] border-line'}`}
         >
           <div className="flex items-center gap-3.5 flex-wrap mb-2.5">

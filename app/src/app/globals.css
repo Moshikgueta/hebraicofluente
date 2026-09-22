@@ -120,7 +120,10 @@
   border-radius: 6px;
 }
 
-::selection { background: #CDE8E3; color: var(--ink); }
+/* Tokens, e não valores à mão: escrita assim ela acompanha o tema. No escuro,
+   o #CDE8E3 que estava aqui dava tinta clara sobre fundo claro - texto
+   selecionado ilegível, e ninguém encontra isso sem selecionar. */
+::selection { background: var(--sel-bg); color: var(--sel-ink); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -216,6 +219,62 @@ html[data-a11y-contraste='alto'] [class*='shadow-'] {
 html[data-a11y-contraste='alto'] *:focus-visible {
   outline: 3px solid #000000;
   outline-offset: 2px;
+}
+
+/* 2b · MAIS CONTRASTE, NO ESCURO.
+        ──────────────────────────────────────────────────────────────────
+        Sem este bloco, ligar as duas preferências ao mesmo tempo dava um
+        resultado absurdo e silencioso: o bloco de alto contraste vem depois
+        na folha, então ele vencia e devolvia o tema CLARO de alto contraste
+        a quem tinha acabado de pedir escuro. Alto contraste não é sinônimo
+        de fundo branco - é sinônimo de separar mais, e no escuro isso quer
+        dizer preto puro embaixo e branco puro em cima.
+
+        Vem depois dos dois de propósito: é a interseção, e interseção
+        precisa vencer as duas metades. */
+@media screen {
+  html[data-a11y-tema='escuro'][data-a11y-contraste='alto']:has([data-plataforma]) {
+    --ink:       #FFFFFF;
+    --ink-body:  #F0F3F2;
+    --ink-muted: #D6DEDC;
+    --cream:     #000000;
+    --sand:      #1A1A1A;
+    --card:      #0C0C0C;
+    --line:      #9AA5A2;
+    --line-soft: #9AA5A2;
+    --navy:      #2E7A87;
+    --navy-2:    #3C8F9D;
+    --teal:      #66D9C6;
+    --teal-ink:  #A8EEE0;
+    --teal-soft: #0B2A27;
+    --gold:      #F0C468;
+    --gold-ink:  #F7DBA4;
+    --gold-soft: #2A2110;
+    --locked:    #B4BDBA;
+    --sel-bg:    #FFFFFF;
+    --sel-ink:   #000000;
+  }
+  html[data-a11y-tema='escuro'][data-a11y-contraste='alto']:has([data-plataforma]) *:focus-visible {
+    outline: 3px solid #FFFFFF;
+  }
+}
+
+/* 2c · O DESENHO DA ORDEM DE TRAÇADO fica na sua própria placa clara.
+        ──────────────────────────────────────────────────────────────────
+        Os 27 SVG de public/stroke-order têm cor gravada dentro: o contorno
+        da letra em #C9C0AF e as setas de movimento em #9E2B1E. As setas são
+        um vermelho escuro, e sobre um cartão escuro elas praticamente somem
+        - justo elas, que são a informação do desenho.
+
+        Reescrever os 27 arquivos para `currentColor` seria o conserto de
+        raiz, e custaria regerar tudo por um gerador que não é desta camada.
+        Enquanto isso, a placa: o desenho ganha o papel claro de volta, só
+        ele, e continua sendo lido do mesmo jeito nos dois temas. */
+@media screen {
+  html[data-a11y-tema='escuro']:has([data-plataforma]) .stroke-svg {
+    background: #F3F0E9;
+    border-radius: var(--r-md);
+  }
 }
 
 /* 3 · MAIS ESPAÇO (WCAG 1.4.12). O hebraico fica DE FORA, e isto não é

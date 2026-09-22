@@ -48,6 +48,8 @@ type AccountValue = {
   resetPassword(i: { token: string; password: string }): Promise<void>;
   /** Troca a senha de quem já está dentro. Exige a senha atual. */
   changePassword(i: { current: string; password: string }): Promise<void>;
+  /** Apaga a conta do próprio titular, e sai. Exige a senha atual. */
+  deleteAccount(i: { password: string }): Promise<void>;
 
   startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number }):
     Promise<Order & { redirectUrl?: string }>;
@@ -120,6 +122,18 @@ export function AccountProvider({ children }: { children: ReactNode }) {
        mesma conta. Por isso não avisa: um `avisar()` aqui faria o provider de
        progresso recarregar o estado do zero no meio da sessão, à toa. */
     async changePassword(i) { setSession(await (await api()).changePassword(i)); },
+
+    /* Apagar a conta termina como SAIR, e não como trocar a senha: `avisar
+       (true)` é o que faz o aparelho esquecer o estudo em vez de recarregá-lo.
+       Sem isso, o progresso de quem acabou de apagar a conta continuaria no
+       localStorage, legível para a próxima pessoa que sentasse no mesmo
+       computador - e uma exclusão que deixa rastro no aparelho não é uma
+       exclusão. */
+    async deleteAccount(i) {
+      await (await api()).deleteAccount(i);
+      setSession(null);
+      avisar(true);
+    },
 
     startOrder: async i => (await api()).startOrder(i),
     orderStatus: async id => (await api()).orderStatus(id),

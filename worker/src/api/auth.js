@@ -30,9 +30,9 @@ import {
   mailReady, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
 } from '../lib/mail.js';
 import {
-  activeEntitlements, bumpSessionVersion, changePassword, createAccount, estourou,
-  findAccountByEmail, findAccountById, invitesPendentes, log, normalizeEmail, resetCreate,
-  resetFind, resetUse, setPasswordHash, throttled, ultimoEnvioDeSenha
+  activeEntitlements, bumpSessionVersion, changePassword, createAccount, deleteAccount,
+  estourou, findAccountByEmail, findAccountById, invitesPendentes, log, normalizeEmail,
+  resetCreate, resetFind, resetUse, setPasswordHash, throttled, ultimoEnvioDeSenha
 } from '../lib/db.js';
 
 const MIN_PASSWORD = 8;
@@ -466,6 +466,51 @@ export async function password({ request, env }) {
      subiu e o cookie do navegador é o da versão anterior. */
   return json(await sessionBody(env, atualizada), 200,
     { 'Set-Cookie': await makeSessionCookie(env, atualizada) });
+}
+
+/**
+ * POST /api/auth/delete - o titular apaga a própria conta.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O direito de exclusão da LGPD (art. 18, VI) atendido pela própria pessoa.
+ * Até aqui ele existia no papel - a página de reembolso mandava escrever um
+ * e-mail -, e um direito que depende de alguém do outro lado responder é um
+ * direito com horário de atendimento.
+ *
+ * Exige SESSÃO E SENHA ATUAL, como a troca de senha. O motivo é o mesmo e
+ * vale mais aqui: um cookie roubado, um notebook emprestado ou um celular
+ * esquecido aberto num café não podem apagar a conta de ninguém. A senha é o
+ * que prova que quem está apagando é o dono, e não quem pegou a cadeira.
+ *
+ * O que some e o que fica está em `deleteAccount`, em lib/db.js, junto com o
+ * porquê de cada um. Resumo: some a pessoa, ficam os pedidos - anônimos -,
+ * porque a nota fiscal não é minha para apagar.
+ *
+ * Responde com o cookie limpo. A sessão já estava morta de qualquer forma
+ * (`session_version` subiu dentro do apagamento), mas mandar a limpeza junto
+ * é a diferença entre a pessoa ver a tela de "conta apagada" e ver um erro.
+ */
+export async function apagar({ request, env }) {
+  const account = await requireAccount(request, env);
+  if (!account) return notSignedIn();
+
+  const body = await readJson(request);
+  if (!body) return fail('server');
+
+  /* Mais apertado que o freio da troca de senha: adivinhar a senha aqui custa
+     a conta inteira, e ninguém apaga a própria conta cinco vezes. */
+  if (await throttled(env, `apagar:${account.id}`, 5)) return fail('rate-limited', 429);
+
+  const ok = await verifyPassword(
+    String(body.password || ''), account.pass_salt, account.pass_hash, account.pass_iter);
+  if (!ok) {
+    await log(env, account.id, 'apagar-senha-errada');
+    return fail('bad-credentials', 401);
+  }
+
+  const r = await deleteAccount(env, account.id);
+  if (!r.ok) return fail('server', 500);
+
+  return json({ ok: true }, 200, { 'Set-Cookie': clearSessionCookie });
 }
 
 export async function me({ request, env }) {

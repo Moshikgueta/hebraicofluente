@@ -585,3 +585,76 @@ export async function putProgress(env, accountId, { state, version, expected }) 
 export async function clearProgress(env, accountId) {
   await env.DB.prepare('DELETE FROM progress WHERE account_id = ?').bind(accountId).run();
 }
+
+/* ── apagar a conta ───────────────────────────────────────────────────────
+ * O direito de exclusão da LGPD (art. 18, VI), atendido pelo próprio titular
+ * e não por um pedido de suporte.
+ *
+ * ── por que a linha da conta não é DELETADA ──────────────────────────────
+ * Ela é ESVAZIADA. A diferença é o que fica em pé depois.
+ *
+ * `orders` referencia `accounts(id)`, e a lei brasileira não deixa apagar o
+ * registro de uma venda junto com o cliente: a nota, o valor, a data e o
+ * estorno são obrigação fiscal e contábil, e sobrevivem ao pedido de
+ * exclusão - a própria LGPD prevê isso (art. 16, II). Apagar a linha da conta
+ * deixaria todo pedido dela apontando para um id que não existe mais, e o
+ * livro caixa viraria um monte de órfãos que ninguém consegue conferir.
+ *
+ * Então some tudo o que é PESSOA - e-mail, nome, senha - e fica um número
+ * opaco, ao qual os pedidos continuam presos. O que resta não identifica
+ * ninguém, que é a definição de dado anonimizado: fora do alcance da lei
+ * justamente porque não aponta mais para uma pessoa.
+ *
+ * ── o e-mail some de verdade, e libera o cadastro ────────────────────────
+ * O `UNIQUE` em `email` impede duas contas com o mesmo endereço, então um
+ * e-mail deixado na linha esvaziada trancaria para sempre a pessoa que um dia
+ * quisesse voltar. Ele vira `apagada+<id>@invalido.local` - único por
+ * construção, num domínio reservado que não existe e para onde nada é
+ * enviado. Voltar depois é criar uma conta nova, do zero, com o mesmo
+ * endereço.
+ *
+ * ── e a senha ────────────────────────────────────────────────────────────
+ * O hash é substituído por lixo aleatório em vez de ficar vazio. Um campo
+ * vazio é um valor que alguma verificação futura pode achar que casa com
+ * alguma coisa; 32 bytes de aleatório não casam com senha nenhuma, nem com a
+ * antiga. E `session_version` sobe, o que derruba na hora todo cookie já
+ * emitido - inclusive o da aba ao lado, e o do celular que ficou logado.
+ *
+ * `payment_events` não entra na lista porque já nasce sem dado pessoal: o
+ * `enxuto()` acima guarda status e valor, e joga fora o e-mail, o CPF e o
+ * nome do titular que a Mercado Pago manda.
+ */
+export async function deleteAccount(env, accountId) {
+  const id = Number(accountId);
+  const conta = await env.DB.prepare('SELECT email FROM accounts WHERE id = ?').bind(id).first();
+  if (!conta) return { ok: false };
+
+  const hex = n => [...crypto.getRandomValues(new Uint8Array(n))]
+    .map(b => b.toString(16).padStart(2, '0')).join('');
+  /* Hash E sal aleatórios, e não campos vazios: a linha esvaziada continua
+     tendo a FORMA de uma linha normal, então nenhum caminho de verificação
+     precisa aprender um caso especial para ela. */
+  const hashMorto = hex(32), salMorto = hex(16);
+
+  /* Numa transação só: metade apagada é pior do que nada apagado - seria uma
+     conta sem acesso, sem progresso e ainda com o e-mail da pessoa dentro. */
+  await env.DB.batch([
+    env.DB.prepare('DELETE FROM progress      WHERE account_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM entitlements  WHERE account_id = ?').bind(id),
+    env.DB.prepare('DELETE FROM password_resets WHERE account_id = ?').bind(id),
+    /* Convites são chaveados por E-MAIL, e não por conta: um presente
+       pendente guarda o endereço de quem ia recebê-lo. */
+    env.DB.prepare('DELETE FROM invites       WHERE email = ?').bind(conta.email),
+    env.DB.prepare(
+      `UPDATE accounts
+          SET email = ?, name = '', pass_hash = ?, pass_salt = ?,
+              session_version = session_version + 1
+        WHERE id = ?`
+    ).bind(`apagada+${id}@invalido.local`, hashMorto, salMorto, id)
+  ]);
+
+  /* A trilha fica, e é justamente ela que responde "por que este pedido não
+     tem cliente?" daqui a um ano. Não guarda o e-mail: guarda que houve. */
+  await log(env, id, 'conta-apagada');
+  return { ok: true };
+}

@@ -230,6 +230,31 @@ export class LocalApi implements PlatformApi {
     return this.session(s)!;
   }
 
+  /* Apagar a conta, na versão de demonstração.
+     ────────────────────────────────────────────────────────────────────────
+     Aqui a conta é uma chave num objeto do localStorage, então apagar é
+     apagar mesmo - não existe pedido para manter, não existe obrigação
+     fiscal, e não existe nota de venda: nada foi cobrado.
+
+     O que este adaptador precisa fazer igual ao servidor é o CAMINHO: exigir
+     a senha, recusar a errada com o mesmo código, e sair da conta no fim. É
+     isso que a tela do perfil usa, e é isso que precisa se comportar do mesmo
+     jeito nas duas builds. */
+  async deleteAccount({ password }: { password: string }): Promise<void> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    if (!(await verifyPassword(password, a.pw))) throw new AuthError('bad-credentials');
+
+    delete s.accounts[a.email];
+    for (const [t, r] of Object.entries(s.resets ?? {})) {
+      if (r.email === a.email) delete s.resets![t];
+    }
+    s.current = null;
+    write(s);
+  }
+
   async startOrder(
     { courseSlug, method }: { courseSlug: string; method: PaymentMethod; installments?: number }
   ): Promise<Order & { redirectUrl?: string }> {

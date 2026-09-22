@@ -30,8 +30,11 @@ const ROUTES = {
      sessão - quem esqueceu a senha não tem como ter uma. */
   'POST /api/auth/forgot': auth.forgot,
   'POST /api/auth/reset': auth.reset,
-  /* Esta, sim, exige sessão E a senha atual. Ver a nota em api/auth.js. */
+  /* Estas duas, sim, exigem sessão E a senha atual. Ver as notas em
+     api/auth.js. A segunda apaga a conta do próprio titular, que é o direito
+     de exclusão da LGPD sem passar por um pedido de suporte. */
   'POST /api/auth/password': auth.password,
+  'POST /api/auth/delete': auth.apagar,
   'GET /api/me': auth.me,
   'GET /api/health': auth.health,
 

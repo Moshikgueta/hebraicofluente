@@ -31,6 +31,16 @@
 export type Prefs = {
   /** Percentual do zoom do conteúdo. 100 é o normal. */
   texto: 100 | 115 | 130 | 150;
+  /**
+   * Tema da PLATAFORMA. O site de vendas é claro sempre - ver a nota do
+   * modo escuro em styles/tokens.css.
+   *
+   * `auto` segue o aparelho, e é o padrão: quem deixou o celular no escuro
+   * espera o escuro sem pedir duas vezes. `claro` e `escuro` são a saída para
+   * quem quer o contrário do que o sistema diz, que é o caso de todo mundo
+   * que lê à noite num aparelho configurado de dia.
+   */
+  tema: 'auto' | 'claro' | 'escuro';
   /** Tinta mais escura, bordas visíveis, fundos sem tingimento. */
   contraste: boolean;
   /** Desliga animação e revelação por rolagem. */
@@ -42,8 +52,10 @@ export type Prefs = {
 };
 
 export const PADRAO: Prefs = {
-  texto: 100, contraste: false, movimento: false, links: false, espaco: false
+  texto: 100, tema: 'auto', contraste: false, movimento: false, links: false, espaco: false
 };
+
+export const TEMAS = ['auto', 'claro', 'escuro'] as const;
 
 export const TAMANHOS = [100, 115, 130, 150] as const;
 
@@ -54,6 +66,7 @@ export const CHAVE = 'hf-acessibilidade-v1';
  *  Uma fonte só - o script de arranque lá embaixo é gerado a partir daqui. */
 export const ATRIBUTOS = {
   texto: 'data-a11y-texto',
+  tema: 'data-a11y-tema',
   contraste: 'data-a11y-contraste',
   movimento: 'data-a11y-movimento',
   links: 'data-a11y-links',
@@ -78,6 +91,8 @@ export function normalizar(bruto: unknown): Prefs {
   const n = Number(o.texto);
   return {
     texto: (TAMANHOS as readonly number[]).includes(n) ? (n as Prefs['texto']) : 100,
+    tema: (TEMAS as readonly string[]).includes(String(o.tema))
+      ? (o.tema as Prefs['tema']) : 'auto',
     contraste: o.contraste === true,
     movimento: o.movimento === true,
     links: o.links === true,
@@ -112,9 +127,35 @@ export function aplicar(p: Prefs, raiz?: HTMLElement): void {
   if (p.texto === 100) el.removeAttribute(ATRIBUTOS.texto);
   else el.setAttribute(ATRIBUTOS.texto, String(p.texto));
 
+  /* O tema é RESOLVIDO antes de virar atributo, e só o escuro carimba.
+     ──────────────────────────────────────────────────────────────────────
+     A preferência guardada tem três valores; o CSS conhece um. `auto` é
+     traduzido aqui, consultando o aparelho, e o que chega ao <html> é sempre
+     a resposta: `data-a11y-tema="escuro"`, ou nada.
+
+     Duas razões para resolver em vez de carimbar os três. O CSS fica com UM
+     bloco em vez de dois (o do `auto` teria de ser uma cópia dentro de um
+     `@media prefers-color-scheme`, e cópia de paleta é paleta que diverge).
+     E a ausência continua sendo o padrão, como nas outras preferências. */
+  if (temaEscuro(p)) el.setAttribute(ATRIBUTOS.tema, 'escuro');
+  else el.removeAttribute(ATRIBUTOS.tema);
+
   for (const chave of ['contraste', 'movimento', 'links', 'espaco'] as const) {
     if (p[chave]) el.setAttribute(ATRIBUTOS[chave], LIGADO[chave]);
     else el.removeAttribute(ATRIBUTOS[chave]);
+  }
+}
+
+/** A conta que traduz os três estados em "escuro, sim ou não". */
+export function temaEscuro(p: Prefs): boolean {
+  if (p.tema === 'escuro') return true;
+  if (p.tema === 'claro') return false;
+  try {
+    return !!window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+  } catch {
+    /* Sem matchMedia - navegador antigo, ambiente de teste. O claro é o
+       padrão do design, então é ele que responde na dúvida. */
+    return false;
   }
 }
 
@@ -133,6 +174,9 @@ export const SCRIPT_DE_ARRANQUE = `(function(){try{
 var p=JSON.parse(localStorage.getItem(${JSON.stringify(CHAVE)})||'{}');
 var e=document.documentElement;
 if([${TAMANHOS.join(',')}].indexOf(Number(p.texto))>0)e.setAttribute(${JSON.stringify(ATRIBUTOS.texto)},String(p.texto));
+var m=typeof window!=='undefined'&&window.matchMedia
+  ?window.matchMedia('(prefers-color-scheme: dark)').matches:false;
+if(p.tema==='escuro'||(p.tema!=='claro'&&m))e.setAttribute(${JSON.stringify(ATRIBUTOS.tema)},'escuro');
 ${(['contraste', 'movimento', 'links', 'espaco'] as const)
     .map(k => `if(p.${k}===true)e.setAttribute(${JSON.stringify(ATRIBUTOS[k])},${JSON.stringify(LIGADO[k])});`)
     .join('\n')}

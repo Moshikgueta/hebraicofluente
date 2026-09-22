@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
@@ -123,8 +124,12 @@ export default function Page() {
           portanto, o que cancelar para "parar de ser cobrado".
         </p>
         <p>
-          Se você quiser apenas encerrar a conta e sair, isso é um pedido de exclusão
-          de dados, e o caminho está na Política de Privacidade.
+          Se você quiser apenas encerrar a conta e sair, isso você faz sozinho, na{' '}
+          <Link href="/perfil" className="font-semibold text-[var(--accent)] hover:underline">
+            página da sua conta
+          </Link>
+          , a qualquer momento. É definitivo, e leva junto o seu progresso e o seu
+          acesso ao curso.
         </p>
       </Artigo>
     </LegalPage>

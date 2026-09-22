@@ -60,6 +60,7 @@ class Preparada {
 
 export type D1Falso = {
   prepare(sql: string): Preparada;
+  batch(stmts: Preparada[]): Promise<{ meta: { changes: number; last_row_id: number } }[]>;
   /** Para o teste espiar o banco sem passar pela API. */
   bruto: DatabaseSync;
 };
@@ -71,6 +72,25 @@ export function bancoDeTeste(): D1Falso {
   db.exec(schema);
   return {
     prepare: (sql: string) => new Preparada(db, sql),
+
+    /* `batch` do D1: a lista roda como UMA transação, e um erro no meio
+       desfaz tudo. Apagar uma conta depende disso - metade apagada é uma
+       conta sem acesso e sem progresso, ainda com o e-mail da pessoa dentro.
+       Aqui é BEGIN/COMMIT do SQLite, que é a mesma garantia; o que o D1 tem a
+       mais e isto não tem são os limites de tamanho e tempo dele. */
+    async batch(stmts: Preparada[]) {
+      db.exec('BEGIN');
+      try {
+        const out = [];
+        for (const s of stmts) out.push(await s.run());
+        db.exec('COMMIT');
+        return out;
+      } catch (e) {
+        db.exec('ROLLBACK');
+        throw e;
+      }
+    },
+
     bruto: db
   };
 }

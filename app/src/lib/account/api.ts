@@ -59,6 +59,17 @@ export interface PlatformApi {
    *  destrancada não pode bastar para tomar a conta. */
   changePassword(input: { current: string; password: string }): Promise<Session>;
 
+  /** Apaga a conta do próprio titular, e desloga.
+   *
+   *  Exige a senha atual pelo mesmo motivo da troca de senha, que aqui pesa
+   *  mais: um cookie roubado, um notebook emprestado ou um celular esquecido
+   *  aberto não podem apagar a conta de ninguém.
+   *
+   *  Some a PESSOA - e-mail, nome, senha, progresso, acesso. Ficam os
+   *  pedidos, sem dono identificável: registro de venda é obrigação fiscal, e
+   *  a própria LGPD prevê a guarda (art. 16, II). */
+  deleteAccount(input: { password: string }): Promise<void>;
+
   /** Começa um pedido. Para PIX volta com o copia-e-cola; para cartão, com a
    *  URL do checkout da Mercado Pago em `redirectUrl`. */
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number }):

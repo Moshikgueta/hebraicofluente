@@ -14,6 +14,8 @@ let ruim=0;
 /* O que a navegação OFERECE, por largura e por rota. Ver as duas regras
    logo depois do laço. */
 const navegacao={390:{},1280:{}};
+/* E todo link visível, para a regra da ajuda. */
+const ajuda={390:{},1280:{}};
 for (const w of [390,1280]) {
   const ctx=await b.newContext({viewport:{width:w,height:900}});
   await ctx.addInitScript(([a,st])=>{localStorage.setItem('hf-platform-local-v1',a);localStorage.setItem('hebraico-fluente-v1',st)},[JSON.stringify(ACC),JSON.stringify(ST)]);
@@ -47,6 +49,15 @@ for (const w of [390,1280]) {
        duas existe sempre, e é o CSS que esconde uma delas. A inicial da
        conta, no cabeçalho do telefone, é a versão móvel do item "Perfil" e
        por isso entra na conta. */
+    /* E o que a tela oferece a quem precisa de SOCORRO. Medido junto porque
+       é a mesma pergunta: o que esta tela alcança. */
+    ajuda[w][rota]=await p.evaluate(()=>{
+      const visivel=el=>!!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+      const fora=new Set();
+      for (const a of document.querySelectorAll('a[href^="/"]'))
+        if (visivel(a)) fora.add(new URL(a.href).pathname.replace(/\/+$/,'')||'/');
+      return [...fora].sort();
+    });
     navegacao[w][rota]=await p.evaluate(()=>{
       const visivel=el=>!!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
       const fora=new Set();
@@ -117,6 +128,34 @@ for (const w of [390,1280]) {
   console.log(`      ${'aula 0'.padEnd(20)} ${sem
     ? `fora da navegação em ${sem} tela(s)`
     : 'ao alcance de toda tela do curso, nas duas larguras'}`);
+}
+
+/* ── quem precisa de socorro tem por onde pedir ───────────────────────────
+   Medido em 22/09/2026, listando todo link visível das telas do curso: de
+   dentro do curso não havia caminho nenhum para suporte, dúvidas, termos,
+   privacidade ou reembolso. As páginas existiam, ligadas só à casca do SITE
+   DE VENDAS - o lugar onde quem já comprou nunca mais entra. O único contato
+   era um endereço de e-mail solto no perfil.
+
+   O defeito é do tipo que nenhum teste de unidade vê, porque nada está
+   quebrado: cada página abre, cada rota responde. O que faltava era o
+   caminho até elas, e caminho só se mede olhando a tela. */
+{
+  const EXIGIDAS = ['/suporte', '/faq', '/reembolso', '/termos', '/privacidade'];
+  let sem = 0;
+  for (const w of [390, 1280]) for (const rota of ROTAS) {
+    /* O onboarding é a única tela do curso sem o rodapé, porque ela não usa a
+       casca - e é um funil de quatro passos, não um lugar onde se mora. */
+    if (!navegacao[w][rota].length) continue;
+    const faltam = EXIGIDAS.filter(h => !ajuda[w][rota].includes(h));
+    if (faltam.length) {
+      sem++; ruim++;
+      console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} SEM AJUDA: falta ${faltam.join(', ')}`);
+    }
+  }
+  console.log(`      ${'ajuda'.padEnd(20)} ${sem
+    ? `${sem} tela(s) sem caminho para pedir ajuda`
+    : `suporte, dúvidas, reembolso, termos e privacidade em toda tela, nas duas larguras`}`);
 }
 
 /* ── a aula 0 não pode voltar a ser órfã ──────────────────────────────────

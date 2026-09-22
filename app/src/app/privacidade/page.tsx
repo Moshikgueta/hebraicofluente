@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
@@ -218,10 +219,30 @@ export default function Page() {
             problema que esta política existe para evitar.
           </p>
         </Card>
+        {/* Desde 22/09/2026 a exclusão é self-service, e este parágrafo mudou
+            junto. Ele dizia que apagar a conta passava pelo canal de e-mail -
+            uma política que descreve um produto que não existe mais é pior do
+            que não ter política, porque é a promessa escrita que vale. */}
         <p>
-          Apagar o progresso você pode fazer sozinho, a qualquer momento, na página de
-          conquistas dentro da plataforma. A exclusão da conta inteira passa pelo canal
-          acima, porque é irreversível.
+          <strong>Apagar a conta você faz sozinho</strong>, a qualquer momento, na{' '}
+          <Link href="/perfil" className="font-semibold text-[var(--accent)] hover:underline">
+            página da sua conta
+          </Link>
+          . Pedimos a sua senha na hora - é o que garante que quem está apagando é
+          você - e a exclusão vale na mesma hora, sem esperar por ninguém. Apagar só
+          o progresso, mantendo a conta, também é seu, na página de conquistas.
+        </p>
+        <p>
+          O que a exclusão leva: e-mail, nome, senha, progresso e acesso ao curso. O
+          que ela não leva, e a lei não deixa levar: o registro das compras, que fica
+          sem o seu nome e sem o seu e-mail, porque guardar nota de venda é obrigação
+          de quem vende e a própria LGPD prevê essa guarda (art. 16, II). O que sobra
+          é valor, data e situação do pagamento, e não aponta para você.
+        </p>
+        <p>
+          O canal de e-mail acima continua valendo para todo o resto - acesso,
+          correção, portabilidade -, e também se você preferir que a exclusão seja
+          feita por nós.
         </p>
       </Artigo>
 

@@ -24,7 +24,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  PADRAO, TAMANHOS, aplicar, carregar, guardar, type Prefs
+  PADRAO, TAMANHOS, TEMAS, aplicar, carregar, guardar, type Prefs
 } from '@/lib/acessibilidade';
 
 export function BotaoAcessibilidade() {
@@ -45,6 +45,21 @@ export function BotaoAcessibilidade() {
        exemplo) - o painel continua sendo a fonte da verdade. */
     aplicar(p);
   }, []);
+
+  /* Com o tema em `auto`, a troca acontece FORA da página: a pessoa muda o
+     sistema para escuro, ou o telefone entra no modo noturno sozinho às seis
+     da tarde. Sem este ouvinte a mudança só apareceria na próxima navegação
+     - e a aula aberta na mesa continuaria branca justamente quando escureceu
+     o quarto. Nos dois outros estados não há o que ouvir: a escolha explícita
+     ganha do sistema, por definição. */
+  useEffect(() => {
+    if (!pronto || prefs.tema !== 'auto') return;
+    let mq: MediaQueryList;
+    try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch { return; }
+    const aoTrocar = () => aplicar(prefs);
+    mq.addEventListener('change', aoTrocar);
+    return () => mq.removeEventListener('change', aoTrocar);
+  }, [pronto, prefs]);
 
   const mudar = useCallback((patch: Partial<Prefs>) => {
     setPrefs(atual => {
@@ -85,8 +100,8 @@ export function BotaoAcessibilidade() {
   }, [aberto]);
 
   const ligadas = pronto
-    ? Number(prefs.texto !== 100) + Number(prefs.contraste) + Number(prefs.movimento)
-      + Number(prefs.links) + Number(prefs.espaco)
+    ? Number(prefs.texto !== 100) + Number(prefs.tema !== 'auto') + Number(prefs.contraste)
+      + Number(prefs.movimento) + Number(prefs.links) + Number(prefs.espaco)
     : 0;
 
   return (
@@ -133,6 +148,52 @@ export function BotaoAcessibilidade() {
                 );
               })}
             </div>
+          </fieldset>
+
+          {/* O tema.
+              ──────────────────────────────────────────────────────────────
+              Mora aqui, e não num interruptor separado no cabeçalho, porque
+              é da mesma natureza das outras cinco: uma preferência do leitor,
+              guardada no aparelho, que reveste o produto por atributo no
+              <html>. Um segundo lugar para ajustar cor seria um segundo lugar
+              para procurar.
+
+              Três estados e não um interruptor: "automático" é o padrão e
+              resolve o caso comum sem ninguém tocar em nada, e os outros dois
+              existem para quem quer o contrário do que o sistema diz - que é
+              todo mundo que lê à noite num aparelho configurado de dia.
+
+              A nota embaixo é uma promessa que precisa ser dita, porque a
+              pessoa pode ligar o escuro aqui, ir para a página de preços e
+              achar que quebrou: a vitrine é clara de propósito. */}
+          <fieldset className="grid gap-2 m-0 p-0 border-0">
+            <legend className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted p-0 mb-1">
+              Tema
+            </legend>
+            <div className="grid grid-cols-3 gap-1.5">
+              {TEMAS.map(t => {
+                const ativo = prefs.tema === t;
+                const rotulo = { auto: 'Automático', claro: 'Claro', escuro: 'Escuro' }[t];
+                return (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => mudar({ tema: t })}
+                    aria-pressed={ativo}
+                    className={`min-h-[40px] px-1 rounded-[var(--r-sm)] border font-ui text-[12.5px]
+                                font-semibold transition-colors
+                                ${ativo
+                                  ? 'border-[var(--teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)]'
+                                  : 'border-line bg-surface text-ink-body hover:bg-surface-2'}`}
+                  >
+                    {rotulo}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="font-ui text-[11.5px] leading-relaxed text-ink-muted">
+              Vale nas telas do curso. As páginas de venda são claras sempre.
+            </p>
           </fieldset>
 
           <div className="grid gap-1.5">

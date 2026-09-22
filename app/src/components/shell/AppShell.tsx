@@ -133,7 +133,20 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="min-h-[100dvh] flex flex-col">
+    /* `data-plataforma` é a fronteira do tema escuro.
+       ────────────────────────────────────────────────────────────────────
+       O escuro vale nas telas do aluno e não na vitrine (ver a nota do modo
+       escuro em styles/tokens.css), e o CSS descobre onde está por
+       `html:has([data-plataforma])`. A marca é posta aqui, na casca do aluno,
+       porque é exatamente ela que define "isto é a plataforma" - o mesmo
+       lugar que já decide se há sidebar ou barra do polegar.
+
+       Ela vem no HTML GERADO, e não é acrescentada pelo React depois: o
+       `:has()` casa já na primeira pintura, junto com o carimbo do script de
+       arranque, e por isso não existe lampejo claro antes de a página montar.
+       Numa navegação para o site público a marca simplesmente sai do
+       documento, e a página volta a ser clara sozinha. */
+    <div data-plataforma className="min-h-[100dvh] flex flex-col">
       {/* No telefone o topo carrega a marca e a conta; a navegação fica
           embaixo, sob o polegar. Num desktop o cabeçalho some inteiro: a
           sidebar navy já carrega marca, navegação e perfil, e uma segunda
@@ -179,6 +192,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                            pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-10">
             {avisos}
             {children}
+            <RodapeDeAjuda />
           </main>
         </div>
       </div>
@@ -189,6 +203,54 @@ export function AppShell({ children }: { children: ReactNode }) {
         <AchievementToast ids={p.pending.map(a => a.id)} onClose={p.clearPending} />
       )}
     </div>
+  );
+}
+
+/* ── a saída de emergência ───────────────────────────────────────────────
+   Medido em 22/09/2026, listando todo link visível das telas do curso: de
+   dentro do curso NÃO havia caminho nenhum para suporte, dúvidas, termos,
+   privacidade ou reembolso. Eles existem, e estavam ligados só ao site de
+   vendas - que é exatamente o lugar onde quem já comprou nunca mais entra.
+   O único contato era um endereço de e-mail solto no perfil.
+
+   Quem trava numa lição, quem quer cancelar ou quem tem uma dúvida de
+   cobrança tinha de adivinhar o endereço do site para pedir ajuda. É o mesmo
+   defeito da aula 0, na parte que mais custa: a pessoa que precisa de socorro
+   é a que menos deveria ter de procurar.
+
+   Fica no rodapé de TODA tela do curso, no fim do conteúdo e dentro do
+   mesmo <main>, por dois motivos. É onde a convenção da web manda procurar
+   ajuda e o que lá está não disputa atenção com a lição. E, por ser uma
+   marcação só - e não uma para o telefone e outra para o computador -, ele
+   não tem como aparecer numa largura e faltar na outra.
+
+   Some na impressão: numa folha impressa da lição, uma fileira de links é
+   tinta gasta. */
+function RodapeDeAjuda() {
+  return (
+    <footer className="print:hidden mt-10 pt-5 border-t border-[color:var(--line-soft)]">
+      <nav aria-label="Ajuda e informações">
+        <ul className="flex flex-wrap gap-x-5 gap-y-2 list-none p-0 m-0">
+          {[
+            ['/suporte', 'Precisa de ajuda?'],
+            ['/faq', 'Dúvidas frequentes'],
+            ['/reembolso', 'Reembolso e cancelamento'],
+            ['/termos', 'Termos'],
+            ['/privacidade', 'Privacidade']
+          ].map(([href, label]) => (
+            <li key={href}>
+              {/* Alvo de 44px de altura também aqui: um link de 13px em cima
+                  da barra fixa é o tipo de alvo que se erra com o polegar. */}
+              <Link href={href!}
+                    className="inline-flex items-center min-h-[44px] font-ui text-[13px]
+                               text-ink-muted hover:text-[var(--accent)] hover:underline">
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </footer>
   );
 }
 

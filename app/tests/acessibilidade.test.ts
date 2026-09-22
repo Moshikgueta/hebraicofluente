@@ -45,20 +45,54 @@ function viaReact(p: Prefs) {
   return el.mapa();
 }
 
+/**
+ * Finge o que o APARELHO diz sobre tema escuro, para os dois caminhos.
+ *
+ * Sem isto, o tema `auto` responderia o que a máquina do teste responde - e o
+ * caso mais importante do tema (`auto` com o sistema no escuro) nunca seria
+ * exercitado, porque o ambiente de teste não tem `matchMedia` nenhum.
+ */
+function comSistema<T>(escuro: boolean, corpo: () => T): T {
+  const antes = (globalThis as { window?: unknown }).window;
+  (globalThis as { window?: unknown }).window = {
+    matchMedia: (q: string) => ({ matches: escuro && q.includes('dark') })
+  };
+  try { return corpo(); } finally {
+    if (antes === undefined) delete (globalThis as { window?: unknown }).window;
+    else (globalThis as { window?: unknown }).window = antes;
+  }
+}
+
 describe('os dois caminhos carimbam a mesma coisa', () => {
   const CASOS: Prefs[] = [
     { ...PADRAO },
-    { texto: 150, contraste: true, movimento: true, links: true, espaco: true },
-    { texto: 115, contraste: true, movimento: false, links: false, espaco: false },
-    { texto: 100, contraste: false, movimento: true, links: false, espaco: true },
-    { texto: 130, contraste: false, movimento: false, links: true, espaco: false }
+    { texto: 150, tema: 'escuro', contraste: true, movimento: true, links: true, espaco: true },
+    { texto: 115, tema: 'claro', contraste: true, movimento: false, links: false, espaco: false },
+    { texto: 100, tema: 'auto', contraste: false, movimento: true, links: false, espaco: true },
+    { texto: 130, tema: 'auto', contraste: false, movimento: false, links: true, espaco: false }
   ];
 
-  for (const caso of CASOS) {
-    it(`texto ${caso.texto}, contraste ${caso.contraste}, espaço ${caso.espaco}`, () => {
-      expect(rodarArranque(JSON.stringify(caso))).toEqual(viaReact(caso));
+  for (const caso of CASOS) for (const escuro of [false, true]) {
+    it(`texto ${caso.texto}, tema ${caso.tema}, sistema ${escuro ? 'escuro' : 'claro'}`, () => {
+      comSistema(escuro, () => {
+        expect(rodarArranque(JSON.stringify(caso))).toEqual(viaReact(caso));
+      });
     });
   }
+
+  /* O tema é o único que RESOLVE antes de carimbar: três estados guardados,
+     um atributo possível. Estas quatro linhas são a tabela inteira. */
+  it('resolve os três estados contra o que o aparelho diz', () => {
+    const escuro = { [ATRIBUTOS.tema]: 'escuro' };
+    comSistema(true, () => {
+      expect(viaReact({ ...PADRAO, tema: 'auto' })).toEqual(escuro);
+      expect(viaReact({ ...PADRAO, tema: 'claro' })).toEqual({});
+    });
+    comSistema(false, () => {
+      expect(viaReact({ ...PADRAO, tema: 'auto' })).toEqual({});
+      expect(viaReact({ ...PADRAO, tema: 'escuro' })).toEqual(escuro);
+    });
+  });
 
   it('o tamanho normal não deixa atributo nenhum', () => {
     /* `data-a11y-texto="100"` faria a regra de zoom existir para todo mundo,
@@ -93,11 +127,20 @@ describe('o que estava guardado pode ser qualquer coisa', () => {
 
   it('um campo novo não apaga as preferências antigas', () => {
     /* O caso da versão seguinte deste arquivo: quem tinha contraste alto não
-       pode perdê-lo porque uma preferência nova entrou na lista. */
+       pode perdê-lo porque uma preferência nova entrou na lista.
+       Deixou de ser hipótese em 22/09/2026, quando `tema` entrou: este objeto
+       é literalmente o que está guardado no navegador de quem usou a versão
+       anterior, e ele tem de continuar valendo, ganhando `auto` no lugar
+       vazio - que é o padrão, e por isso não muda nada para essa pessoa. */
     const velho = { texto: 130, contraste: true };
     expect(normalizar(velho)).toEqual({
-      texto: 130, contraste: true, movimento: false, links: false, espaco: false
+      texto: 130, tema: 'auto', contraste: true, movimento: false, links: false, espaco: false
     });
+  });
+
+  it('um tema desconhecido vira automático, e não derruba o resto', () => {
+    expect(normalizar({ texto: 115, tema: 'sepia', contraste: true }))
+      .toEqual({ texto: 115, tema: 'auto', contraste: true, movimento: false, links: false, espaco: false });
   });
 
   it('só aceita os tamanhos que o CSS conhece', () => {
