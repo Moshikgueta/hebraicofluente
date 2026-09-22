@@ -297,7 +297,8 @@ export function validate({ checkDist = true } = {}) {
          chaves poria as chaves na tela. */
       const prosa = [
         ['funcaoPt', E.funcaoPt], ['detalhePt', E.detalhePt],
-        ['paraBrasileiroPt', E.paraBrasileiroPt], ['lembrePt', E.lembrePt]
+        ['paraBrasileiroPt', E.paraBrasileiroPt], ['lembrePt', E.lembrePt],
+        ['padraoPt', E.padraoPt]
       ];
       for (const [nome, val] of prosa) {
         if (!val) continue;
@@ -334,6 +335,57 @@ export function validate({ checkDist = true } = {}) {
         const tarde = foraDeOrdem(runs);
         if (tarde.length) {
           fail('V23', at, `ensino.${nome}: usa ${tarde.map(c => `"${c}"`).join(', ')} antes de ensiná-la(s)`);
+        }
+      }
+
+      /* ── V25 · a dica de leitura ────────────────────────────────────
+         Um bloco 💡 diz "você vai encontrar isto, e é assim que se lê" -
+         e a parte que mais importa é o LIMITE dele. Uma pista de leitura
+         sem ressalva vira lei na cabeça de quem está começando: "{{ה}} no
+         fim é sempre A" é falso, e quem acredita nisso lê errado e não
+         descobre por quê. Por isso `notaPt` é obrigatória.
+
+         E os exemplos passam pela regra de ordem como todo o resto - com
+         um agravante: aqui o exemplo é a única coisa que o aluno vai
+         LER de verdade no quadro. Um exemplo com letra que ele ainda não
+         tem é uma palavra que ele não consegue decifrar, bem no lugar
+         onde o curso prometeu que ele conseguiria. */
+      const D = E.dicaLeitura;
+      if (D !== undefined) {
+        if (!D || typeof D !== 'object') {
+          fail('V25', at, 'ensino.dicaLeitura existe mas não é um bloco');
+        } else {
+          if (!D.tituloPt) fail('V25', at, 'dicaLeitura sem tituloPt');
+          if (!D.notaPt || String(D.notaPt).trim().length < 40) {
+            fail('V25', at, 'dicaLeitura sem a ressalva (notaPt) - uma dica sem limite vira regra falsa');
+          }
+          const passos = Array.isArray(D.passos) ? D.passos : [];
+          if (passos.length < 3 || passos.length > 5) {
+            fail('V25', at, `dicaLeitura tem ${passos.length} passo(s) - o card pede de 3 a 5`);
+          }
+          const exemplos = Array.isArray(D.exemplos) ? D.exemplos : [];
+          if (exemplos.length < 2) {
+            fail('V25', at, `dicaLeitura tem ${exemplos.length} exemplo(s) - um só não mostra padrão nenhum`);
+          }
+          for (const [nome, val] of [['tituloPt', D.tituloPt], ['notaPt', D.notaPt], ...passos.map((p, i) => [`passos[${i}]`, p])]) {
+            const bad = unmarkedHebrew(val || '');
+            if (bad.length) fail('V25', at, `dicaLeitura.${nome}: hebraico sem {{ }}`);
+            const runs = [...String(val || '').matchAll(/\{\{(.+?)\}\}/g)].map(m => m[1]).join(' ');
+            const tarde = foraDeOrdem(runs);
+            if (tarde.length) {
+              fail('V25', at, `dicaLeitura.${nome}: usa ${tarde.map(c => `"${c}"`).join(', ')} antes de ensiná-la(s)`);
+            }
+          }
+          exemplos.forEach((ex, i) => {
+            const onde = `${at} dicaLeitura.exemplos[${i}]`;
+            for (const campo of ['he', 'translitPt', 'ptPt']) {
+              if (!ex?.[campo]) fail('V25', onde, `sem ${campo}`);
+            }
+            const tarde = foraDeOrdem(ex?.he || '');
+            if (tarde.length) {
+              fail('V25', onde, `"${ex.he}" usa ${tarde.map(c => `"${c}"`).join(', ')}, que o aluno ainda não viu`);
+            }
+          });
         }
       }
 

@@ -13,6 +13,24 @@ import { supportLabel, supportLevel } from '@/lib/state/rules';
 import { useProgress } from '@/lib/state/store';
 import { track } from '@/lib/analytics';
 import { REGRA_CURSIVA } from '@/lib/cursiva';
+import { SELOS, type Selo } from '@/lib/selos';
+
+/* ── o cabeçalho de um bloco com selo ──────────────────────────────────────
+   Um componente, e não cinco títulos escritos à mão: o símbolo e o texto
+   vêm de lib/selos.ts, e é assim que ⚠️ continua querendo dizer uma coisa
+   só. O `aria-hidden` no emoji é deliberado - um leitor de tela anunciando
+   "emoji de livro aberto Curiosidade" atrapalha em vez de informar. */
+export function TituloComSelo({ selo, className = '' }: {
+  selo: Selo;
+  className?: string;
+}) {
+  const { emoji, titulo } = SELOS[selo];
+  return (
+    <h3 className={`font-ui text-[13px] font-bold uppercase tracking-[.07em] ${className}`}>
+      <span aria-hidden>{emoji} </span>{titulo}
+    </h3>
+  );
+}
 
 /* ── a regra da cursiva, em duas linhas ─────────────────────────
    Aparece no módulo 0, onde o aluno encontra a ideia, e na etapa "Escrever"
@@ -42,11 +60,12 @@ export function RegraCursiva() {
 export function BrazilianTip({ mistake }: { mistake: Letter['brazilianMistake'] }) {
   return (
     <Card tone="amber" className="p-5 sm:p-6">
-      <div className="flex items-center gap-2.5 mb-3">
-        <span aria-hidden className="text-lg">🇧🇷</span>
-        <h3 className="text-[15px] font-semibold text-[var(--amber)] uppercase tracking-[.06em]">
-          Cuidado para brasileiros
-        </h3>
+      {/* ⚠️, e não 🇧🇷: esta caixa e o bloco "Para quem fala português"
+          usavam a mesma bandeira, e um selo que marca duas coisas não
+          marca nenhuma. Aqui o assunto é o erro que vai acontecer; lá é a
+          comparação entre os dois idiomas. */}
+      <div className="mb-3">
+        <TituloComSelo selo="erro" className="text-[var(--amber)] text-[15px]" />
       </div>
       <dl className="grid gap-3">
         <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 items-start">

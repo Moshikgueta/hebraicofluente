@@ -28,7 +28,8 @@ import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioB
 import { ANALOGIA_CURSIVA, MESMA_LETRA } from '@/lib/cursiva';
 import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
-  RealWorldHebrew, RegraCursiva, SyllableTrainer, WordReveal, WorkbookLink
+  RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal,
+  WorkbookLink
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { useProgress } from '@/lib/state/store';
@@ -315,6 +316,65 @@ function StageConhecer({
 
    Os rótulos com emoji foram pedidos assim, e o emoji é `aria-hidden`: quem
    usa leitor de tela não precisa ouvir "lâmpada" antes de cada título. */
+/* ── 💡 a dica de leitura ──────────────────────────────────────────────────
+   Quatro passos e dois exemplos. O formato é fixo porque a dica é sempre a
+   mesma coisa: você vai encontrar ISTO, e quando encontrar, faça ASSIM.
+
+   O último passo de toda dica é "leia a palavra como uma unidade", e ele
+   não é enfeite: decifrar letra por letra é o hábito que o curso inteiro
+   está tentando substituir, e uma dica que termina numa regra mecânica
+   reforça exatamente o contrário.
+
+   A `notaPt` existe para impedir a leitura literal da dica. Uma pista de
+   leitura vira superstição no instante em que o aluno a trata como lei -
+   "{{ה}} no fim é sempre A" é falso, e um aluno que acredita nisso lê
+   {{גָּבוֹהַּ}} errado e não entende por quê. */
+function DicaDeLeitura({ dica }: { dica: NonNullable<Letter['ensino']['dicaLeitura']> }) {
+  return (
+    <Card tone="wash" className="p-6 grid gap-4">
+      <div className="grid gap-1">
+        <TituloComSelo selo="dica" className="text-[var(--teal-ink)]" />
+        {/* Pelo <Prose>, e não cru: o título cita a letra, e a primeira
+            captura desta tela mostrava "Viu {'{{'}ה{'}}'} no final?" com as
+            chaves. É o mesmo descuido da checagem do {{ב}}, duas semanas
+            atrás - toda prosa do dado passa por aqui, sem exceção. */}
+        <h2 className="text-[18px] font-semibold"><Prose text={dica.tituloPt} /></h2>
+      </div>
+
+      <ol className="grid gap-2 list-none p-0 m-0">
+        {dica.passos.map((p, i) => (
+          <li key={p} className="flex gap-3 text-[15.5px] leading-relaxed text-ink-body">
+            <span aria-hidden
+                  className="shrink-0 w-6 h-6 rounded-full bg-surface text-[var(--teal-ink)]
+                             font-ui text-[12.5px] font-bold grid place-items-center">
+              {i + 1}
+            </span>
+            <span><Prose text={p} /></span>
+          </li>
+        ))}
+      </ol>
+
+      <ul className="grid gap-2.5 list-none p-0 m-0">
+        {dica.exemplos.map(ex => (
+          <li key={ex.he}
+              className="flex items-center gap-4 rounded-[var(--r-md)] bg-surface px-4 py-3">
+            <He size="word">{ex.he}</He>
+            <span className="min-w-0 grid gap-0.5">
+              <span className="font-ui text-[15px] font-semibold text-ink">{ex.translitPt}</span>
+              <span className="font-ui text-[13px] text-ink-muted leading-snug">{ex.ptPt}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <p className="text-[14.5px] leading-relaxed text-ink-body border-t
+                    border-[color:var(--line-soft)] pt-3">
+        <Prose text={dica.notaPt} />
+      </p>
+    </Card>
+  );
+}
+
 function Ensinamento({ letter }: { letter: Letter }) {
   const e = letter.ensino;
   if (!e) return null;
@@ -355,18 +415,34 @@ function Ensinamento({ letter }: { letter: Letter }) {
 
       {e.paraBrasileiroPt && (
         <Card tone="wash" className="p-6 grid gap-2">
-          <h2 className="text-[17px] font-semibold">
-            <span aria-hidden>🇧🇷 </span>Para quem fala português
-          </h2>
+          <TituloComSelo selo="brasileiro" className="text-[var(--teal-ink)]" />
           <p className="text-[15.5px] leading-relaxed text-ink-body">
             <Prose text={e.paraBrasileiroPt} />
           </p>
         </Card>
       )}
 
+      {/* 🧠 - o padrão que volta o curso inteiro. Opcional de propósito: a
+          maioria das letras não tem um, e inventar um para preencher o
+          quadro ensina o aluno a pular o quadro. */}
+      {e.padraoPt && (
+        <Card className="p-6 grid gap-2">
+          <TituloComSelo selo="padrao" className="text-ink-muted" />
+          <p className="text-[15.5px] leading-relaxed text-ink-body">
+            <Prose text={e.padraoPt} />
+          </p>
+        </Card>
+      )}
+
+      {e.dicaLeitura && <DicaDeLeitura dica={e.dicaLeitura} />}
+
+      {/* Sem selo, e isto é decisão: este quadro é o FECHO da explicação, e
+          não um dos cinco tipos. Ele carregava 💡, que agora pertence à
+          dica de leitura - um símbolo, um dono. O destaque continua o
+          mesmo, que é o que fazia ele funcionar. */}
       <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
         <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
-          <span aria-hidden>💡 </span>O que você precisa lembrar
+          O que você precisa lembrar
         </h2>
         <p className="text-[16px] leading-relaxed text-ink">
           <Prose text={e.lembrePt} />
@@ -407,9 +483,13 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
         </Card>
       )}
 
+      {/* 📖 - era uma etiqueta "Você sabia?" sem selo, embora o conteúdo
+          fosse exatamente o quinto tipo da lista. O texto não mudou: só
+          passou a se anunciar com o mesmo símbolo em toda tela onde
+          aparece curiosidade. */}
       {letter.wordsToRecognize.length > 0 && (
-        <Card tone="wash" className="p-6 grid gap-3">
-          <Badge tone="accent">Você sabia?</Badge>
+        <Card tone="wash" className="p-6 grid gap-2">
+          <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
           <p className="text-[15.5px] leading-relaxed text-ink-body">
             <Prose text={letter.didYouKnow} />
           </p>

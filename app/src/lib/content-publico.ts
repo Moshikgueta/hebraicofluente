@@ -95,10 +95,33 @@ export type ItemCompreensao =
  * cobra `detalhePt` nas letras que TÊM forma final ou dois sons - ali a
  * ausência é omissão, não economia.
  */
+/* A dica de leitura: 💡 "você vai encontrar ISTO, e é assim que se lê".
+ *
+ * Existe porque há coisas que não são regra de letra nenhuma e mesmo assim
+ * decidem a leitura de centenas de palavras - o {{ה}} no fim, o {{וֹ}}. Sem
+ * um lugar para elas, o aluno só descobre o padrão por conta própria, e
+ * tarde.
+ *
+ * `notaPt` é obrigatória, e é a parte mais importante do bloco: uma pista
+ * de leitura vira superstição no instante em que alguém a toma por lei. */
+export type DicaLeitura = {
+  tituloPt: string;
+  /** Os passos, na ordem em que a pessoa deve fazê-los ao ver a palavra. */
+  passos: string[];
+  /** Palavras que o aluno JÁ CONSEGUE ler nesta altura do curso. */
+  exemplos: { he: string; translitPt: string; ptPt: string }[];
+  /** O limite da dica, dito na mesma tela. */
+  notaPt: string;
+};
+
 export type Ensino = {
   funcaoPt: string;
   detalhePt?: string;
   paraBrasileiroPt?: string;
+  /** 🧠 O padrão que volta o curso inteiro. Só onde existe um de verdade. */
+  padraoPt?: string;
+  /** 💡 Como ler uma coisa que se repete. Só onde existe uma de verdade. */
+  dicaLeitura?: DicaLeitura;
   lembrePt: string;
   checagem: ItemCompreensao[];
 };

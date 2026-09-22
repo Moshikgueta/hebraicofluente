@@ -15,6 +15,7 @@
       "funcaoPt": "{{א}} é um suporte. Ela não tem som próprio: existe para segurar o sinal de vogal que vem com ela. Quando você encontra {{א}} numa palavra, pronuncia a vogal que está nela e mais nada. Por isso ela aparece tanto no começo de palavras que, para nós, começam com som de vogal - o hebraico não escreve uma vogal solta, então alguém precisa segurá-la, e esse alguém costuma ser o {{א}}.",
       "detalhePt": "Dizer que {{א}} é muda quer dizer que ela aparece escrita mas não tem som próprio perceptível na pronúncia. Ela não está sobrando: sem ela a vogal não teria onde se apoiar. No hebraico antigo o {{א}} marcava uma paradinha na garganta, como o corte que a gente faz entre as duas vogais de \"co-operar\"; no hebraico falado hoje essa parada praticamente desapareceu, e o que sobra é o apoio.",
       "paraBrasileiroPt": "O nome da letra começa com A, e isso engana: {{א}} não é a vogal A. Ela segura QUALQUER vogal - {{אִ}} se lê \"i\", {{אוֹ}} se lê \"o\", {{אוּ}} se lê \"u\". Em português não existe nada parecido, porque as nossas vogais são letras e se viram sozinhas.",
+      "padraoPt": "Esta é a primeira letra que aparece escrita sem um som próprio, e não vai ser a última - há outra mais adiante que faz a mesma coisa. Quando encontrar uma delas, não procure um som: procure a vogal que a letra está segurando. Esse comportamento volta o curso inteiro.",
       "lembrePt": "{{א}} não tem som. Você lê só a vogal que estiver junto dela.",
       "checagem": [
         {
@@ -627,6 +628,28 @@
       "funcaoPt": "{{ה}} tem duas vidas, e é a primeira letra do curso em que isso acontece. No começo e no meio da palavra ela é consoante: um sopro leve de ar, como o H do inglês em \"house\". No FIM da palavra ela quase sempre não é pronunciada - e não está ali à toa: é ela que indica que a palavra termina com som de vogal, quase sempre \"a\". Em {{מָה}} (o quê) você lê \"ma\", e o {{ה}} do fim não vira sopro nenhum.",
       "detalhePt": "Quando {{ה}} fecha a palavra e não é pronunciada, ela está muda: aparece escrita, mas você não ouve som próprio. Isto é diferente do {{א}}, que é apoio de vogal em qualquer posição - o {{ה}} sopra no começo e cala no fim. Guarde a ideia geral, porque ela volta: uma letra pode ter comportamento diferente dependendo de onde está na palavra, e algumas letras participam da representação de uma vogal em vez de soar como consoante.",
       "paraBrasileiroPt": "O H do português é sempre mudo - \"hora\", \"homem\". O {{ה}} no começo da palavra NÃO é mudo: é um sopro de ar de verdade, o som que o inglês faz em \"hat\". Já no fim da palavra ele se comporta como o nosso H: está escrito e não se ouve.",
+      "dicaLeitura": {
+        "tituloPt": "Viu {{ה}} no final da palavra?",
+        "passos": [
+          "Não coloque um \"h\" no fim. Quase nunca é isso que se ouve ali.",
+          "Olhe o niqqud embaixo da letra ANTERIOR - é ele que manda.",
+          "Veja qual som de vogal aparece. Com o traço {{◌ָ}} embaixo, o fim costuma soar \"á\".",
+          "Leia a palavra inteira de uma vez, e não letra por letra."
+        ],
+        "exemplos": [
+          {
+            "he": "מָה",
+            "translitPt": "má",
+            "ptPt": "o quê"
+          },
+          {
+            "he": "אַתָּה",
+            "translitPt": "atá",
+            "ptPt": "você (para homem)"
+          }
+        ],
+        "notaPt": "Isto é uma pista, e não uma lei. Não existe \"{{ה}} no fim significa sempre A\": existem palavras em que ele soa, e existem outras vogais no fim. O que vale sempre é olhar o niqqud e ler a palavra como uma unidade."
+      },
       "lembrePt": "No começo da palavra, {{ה}} é um sopro. No fim, quase sempre é muda e marca o som de \"a\".",
       "checagem": [
         {
@@ -1780,6 +1803,28 @@
       "funcaoPt": "{{ו}} é a letra que faz três coisas, e é a mais importante desta parte do curso. Como consoante, ela é o V de \"vaca\". Com um ponto EM CIMA ({{וֹ}}), ela não é consoante nenhuma: é a vogal \"o\". Com um ponto DENTRO ({{וּ}}), é a vogal \"u\". Você já vinha lendo essas duas vogais desde a primeira lição, em {{אוֹ}} e {{אוּ}} - agora sabe que letra estava ali.",
       "detalhePt": "Lembra do módulo de introdução, quando o curso avisou que algumas letras participam da representação de vogais? Esta é a mais frequente delas. O que decide é o ponto, e o ponto é pequeno: procure-o ANTES de pronunciar. Sem ponto nenhum e com sinal de vogal próprio, o {{ו}} é consoante; com ponto em cima é \"o\"; com ponto dentro é \"u\". Em {{שָׁלוֹם}} ele é a vogal \"o\"; em {{הוּא}} (ele), a vogal \"u\".",
       "paraBrasileiroPt": "Não existe nada parecido em português: as nossas vogais O e U são letras próprias e não dependem de ponto nenhum. Aqui a MESMA letra é consoante ou vogal conforme o sinal, e esse é o tipo de coisa que parece estranha por uma semana e depois vira automática.",
+      "padraoPt": "Esta letra faz três trabalhos, e distinguir os três é o padrão mais útil desta altura do curso: sozinha ela é consoante; com ponto em cima é a vogal \"ô\"; com ponto no meio é \"u\". O desenho é o mesmo nos três casos, e quem decide é o sinal.",
+      "dicaLeitura": {
+        "tituloPt": "Duas pistas na mesma palavra",
+        "passos": [
+          "Ache o {{וֹ}}: o ponto em cima do {{ו}} faz o som \"ô\".",
+          "Olhe o fim da palavra. Se terminar em {{ה}}, volte a pista da lição do {{ה}}.",
+          "Junte as duas e leia a palavra inteira, sem soletrar."
+        ],
+        "exemplos": [
+          {
+            "he": "תּוֹדָה",
+            "translitPt": "todá",
+            "ptPt": "obrigado"
+          },
+          {
+            "he": "מוֹרָה",
+            "translitPt": "morá",
+            "ptPt": "professora"
+          }
+        ],
+        "notaPt": "Estas duas palavras você vai ouvir no primeiro dia em Israel, e agora consegue ler as duas sem ajuda. Continua valendo o mesmo aviso: o {{ה}} do fim é pista, não regra, e quem decide é o niqqud."
+      },
       "lembrePt": "{{ו}} sozinha com vogal própria é V. {{וֹ}} é \"o\". {{וּ}} é \"u\". O ponto decide.",
       "checagem": [
         {
@@ -3085,6 +3130,7 @@
       "funcaoPt": "{{ב}} é a primeira letra do curso que muda de SOM conforme um ponto. Com o ponto dentro ({{בּ}}) ela é B, como em \"bola\". Sem o ponto ({{ב}}) ela é V, como em \"vaca\". É a mesma letra nas duas: quem decide é o ponto, e ele é pequeno - procure antes de pronunciar.",
       "detalhePt": "Esse ponto tem nome, daguesh, e é o mesmo tipo de sinal que você viu no {{ג}}, no {{ד}} e no {{ת}} sem mudar nada. Aqui ele muda tudo: {{אַבָּא}} é \"aba\" (pai), com B, e {{לֵב}} é \"lev\" (coração), com V. E há uma consequência prática importante: a maioria dos textos israelenses reais não escreve o daguesh, do mesmo jeito que não escreve vogais. Enquanto você aprende, o ponto está aí para ajudar; depois, é a palavra conhecida que diz o som.",
       "paraBrasileiroPt": "Os dois sons já existem em português e são fáceis - o problema é só lembrar de OLHAR. O reflexo de ler todo {{ב}} como B produz coisas como \"lebe\" no lugar de \"lev\", e é o erro mais comum desta letra.",
+      "padraoPt": "Guarde a ideia do ponto dentro da letra: ele muda o SOM da consoante, e não a vogal. Esta é a primeira de três letras do alfabeto em que isso acontece, e as outras duas vêm logo adiante, com a mesma lógica. Reconhecendo o padrão aqui, elas vêm de graça.",
       "lembrePt": "Com ponto, {{בּ}} é B. Sem ponto, {{ב}} é V. Mesma letra, dois sons.",
       "checagem": [
         {
@@ -3287,6 +3333,7 @@
       "funcaoPt": "{{כ}} funciona como o {{ב}}: um ponto decide o som. Com o ponto ({{כּ}}) ela é K, igual ao {{ק}}. Sem o ponto ({{כ}}) ela é raspada na garganta, igual ao {{ח}}. Duas letras familiares, num desenho só.",
       "detalhePt": "Ela tem forma final - {{ך}}, que desce abaixo da linha - e aqui vem a regra que mais derruba iniciante: o {{ך}} final NUNCA leva ponto, então ele é sempre o som raspado. {{מֶלֶךְ}} é \"melech\", com a garganta raspando no fim, e nunca \"melek\". É o erro mais audível desta letra.",
       "paraBrasileiroPt": "O som raspado é o mesmo do {{ח}}, que você já treinou: comece pelo R de \"rato\" e raspe mais fundo. O que o brasileiro tende a fazer é terminar a palavra com K, porque é o som que ele reconhece - e é justamente esse que não vale no fim.",
+      "padraoPt": "É o mesmo ponto do {{ב}}: dentro da letra, ele troca o som da consoante. Você já viu isso uma vez e vai ver mais uma, na última letra do curso. Três letras, uma regra só.",
       "lembrePt": "Com ponto, {{כּ}} é K. Sem ponto, {{כ}} é raspado. E {{ך}} no fim da palavra é sempre raspado, porque ele nunca leva ponto.",
       "checagem": [
         {
@@ -3490,6 +3537,7 @@
       "funcaoPt": "{{פ}} é a terceira e última letra do curso em que um ponto decide o som. Com o ponto ({{פּ}}) ela é P, como em \"pato\". Sem o ponto ({{פ}}) ela é F, como em \"faca\". Você já conhece o mecanismo do {{ב}} e do {{כ}} - é exatamente o mesmo.",
       "detalhePt": "Ela também tem forma final: {{ף}}, que desce abaixo da linha. E vale a mesma regra do {{ך}}: a forma final não leva ponto, então ela é sempre F. {{סוֹף}} é \"sof\" (fim), e \"sop\" não existe em hebraico nenhum.",
       "paraBrasileiroPt": "Os dois sons são fáceis para quem fala português - de novo, o trabalho é OLHAR antes de pronunciar. O reflexo de ler todo {{פ}} como P produz \"séper\" no lugar de \"sefer\" ({{סֵפֶר}}, livro), que é a palavra mais comum onde isso acontece.",
+      "padraoPt": "A terceira e última letra do grupo do ponto: {{ב}}, {{כ}} e esta. Se você reconheceu o padrão nas outras duas, aqui não há nada novo para decorar - só a letra.",
       "lembrePt": "Com ponto, {{פּ}} é P. Sem ponto, {{פ}} é F. E {{ף}} no fim da palavra é sempre F.",
       "checagem": [
         {
