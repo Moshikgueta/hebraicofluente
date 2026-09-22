@@ -162,7 +162,7 @@ const INDICE: { id: string; t: string }[] = [
   { id: 'impressa-e-cursiva', t: 'Impressa e cursiva: dois desenhos' },
   { id: 'que-hebraico',      t: 'Que hebraico é este?' },
   { id: 'o-caminho',         t: 'O caminho, do início ao fim' },
-  { id: 'atividade',         t: 'Checagem final: dezesseis perguntas' },
+  { id: 'atividade',         t: 'Checagem final: dezessete perguntas' },
   { id: 'como-funciona',     t: 'Como este curso funciona' }
 ];
 
@@ -790,40 +790,85 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             className="font-display text-[19px] font-semibold scroll-mt-4">
           O caminho, do início ao fim
         </h2>
-        <ol className="grid gap-2.5 list-none p-0 m-0">
+        {/* Uma CORRENTE, e não dez cartões empilhados.
+            ──────────────────────────────────────────────────────────────
+            Eram cinco cartões, e o caminho de verdade tem dez passos - os
+            dois que faltavam são os que mais interessam a quem está
+            começando: reconhecer padrões, e ir precisando cada vez menos
+            do niqqud. Dez cartões custariam meia tela numa página que já é
+            a mais longa do curso; em corrente, os dez ocupam menos que os
+            cinco de antes e leem como o que são: um percurso. */}
+        <ol className="flex flex-wrap items-center gap-x-2 gap-y-2 list-none p-0 m-0">
           {[
-            ['Aprender as letras', 'uma por vez, com a forma e o nome'],
-            ['Reconhecer os sons', 'cada letra comparada com um som que você já faz'],
-            ['Entender o niqqud', 'os sinais que marcam as vogais'],
-            ['Juntar e ler palavras', 'sílabas primeiro, palavras inteiras depois'],
-            ['Ler hebraico de verdade', 'sem niqqud, como aparece na rua']
-          ].map(([t, d], i) => (
-            <li key={t} className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface px-4 py-3">
-              <span aria-hidden
-                    className="shrink-0 w-7 h-7 rounded-full bg-[var(--accent)] text-white
-                               font-ui text-[13px] font-bold grid place-items-center">
-                {i + 1}
+            'Entender o sistema', 'Aprender as letras', 'Ligar forma e som',
+            'Entender o niqqud', 'Combinar letras', 'Ler sílabas',
+            'Ler palavras', 'Reconhecer padrões', 'Depender menos do niqqud',
+            'Ler hebraico de verdade'
+          ].map((t, i, todos) => (
+            <li key={t} className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-surface
+                               px-3 py-1.5 font-ui text-[13.5px] text-ink">
+                <span aria-hidden className="font-bold text-[11px] text-[var(--teal)] tabular-nums">
+                  {i + 1}
+                </span>
+                {t}
               </span>
-              <span className="min-w-0">
-                <span className="font-ui text-[15px] font-semibold text-ink">{t}</span>
-                <span className="font-ui text-[13.5px] text-ink-muted"> · {d}</span>
-              </span>
+              {i < todos.length - 1 && (
+                <span aria-hidden className="text-ink-muted text-[13px]">→</span>
+              )}
             </li>
           ))}
         </ol>
-        {/* ── 12 · a mensagem que acalma, sem promessa de venda ──────── */}
-        <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
-          Você não precisa entender todas essas regras agora - nem é para entender. O
-          objetivo desta introdução é mostrar o mapa: a escrita hebraica parece muito
-          diferente do português à primeira vista, e tem uma lógica que se aprende aos
-          poucos. Cada parte vem na sua vez.
+        <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
+          O último passo é o que o curso persegue desde o primeiro: ler sem os sinais de
+          apoio, como está escrito na rua.
+        </p>
+        {/* ── 12 · a mensagem que acalma, sem promessa de venda ──────────
+            Era um parágrafo dizendo "você não precisa entender tudo agora".
+            Virou a lista do que especificamente parece estranho, porque a
+            tranquilização genérica não tranquiliza: quem está com medo de
+            uma coisa concreta precisa ver a SUA coisa escrita ali, e as
+            cinco abaixo são as que este módulo acabou de apresentar. */}
+        <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-4">
+          <h3 className="font-ui text-[15px] font-semibold text-ink">
+            Cinco coisas que parecem estranhas agora, e logo vão fazer sentido
+          </h3>
+          <ul className="grid gap-2 list-none p-0 m-0">
+            {[
+              'Ler da direita para a esquerda.',
+              'Nem todas as vogais aparecerem como letras.',
+              'Algumas letras mudarem de desenho no fim da palavra.',
+              'Pontinhos pequenos mudarem a leitura.',
+              'Uma letra poder ter mais de uma função.'
+            ].map(t => (
+              <li key={t} className="flex gap-3 text-[15px] leading-relaxed text-ink-body">
+                <span aria-hidden className="text-[var(--accent)] shrink-0">→</span>
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[15px] leading-relaxed text-ink-body">
+            Você não precisa dominar nada disso agora - nem é para dominar. Cada uma
+            dessas ideias volta no momento certo, dentro da lição que precisa dela.
+          </p>
+        </div>
+
+        {/* A ordem das letras é a última coisa que o aluno estranha, e ele
+            estranha DEPOIS - quando abre o mapa e vê {{מ}} em segundo. A
+            resposta mora lá, e aqui fica o aviso de que ela existe. */}
+        <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
+          As letras não vêm em ordem alfabética, e isso é de propósito:{' '}
+          <Link href="/mapa"
+                className="font-semibold text-[var(--accent)] underline underline-offset-4">
+            o mapa explica por quê
+          </Link>.
         </p>
       </Card>
 
       {/* ── 13 · a atividade rápida, agora sobre a página inteira ─────── */}
       <Compreensao
         id="atividade"
-        titulo="E o resto? Dezesseis perguntas"
+        titulo="E o resto? Dezessete perguntas"
         intro="A última conferência antes das letras, sobre tudo o que esta página explicou. Nada aqui vale nota nem tranca nada - errar só faz aparecer a explicação."
         perguntas={PERGUNTAS_GERAIS}
         fecho={{
@@ -1093,7 +1138,7 @@ function NoCaderno() {
   );
 }
 
-/* ── as dezesseis perguntas gerais ──────────────────────────────────────────
+/* ── as dezessete perguntas gerais ──────────────────────────────────────────
    A conferência do fim, sobre a página inteira. Elas usam o mesmo componente
    da checagem do niqqud: um conceito novo nunca é seguido de "próximo" sem
    uma pergunta no meio, e isso vale em todo o curso - ver
@@ -1238,5 +1283,16 @@ const PERGUNTAS_GERAIS: ItemCompreensao[] = [
     q: 'A impressa e a cursiva são dois alfabetos diferentes, com nomes e sons diferentes.',
     certa: false,
     porque: 'São dois desenhos da MESMA letra. Mesmo nome, mesmo som, mesmo lugar no alfabeto - como a letra de forma e a letra de mão em português.'
+  },
+  {
+    t: 'escolha',
+    q: 'O curso ensina as letras em ordem alfabética?',
+    opcoes: [
+      'Não: a ordem é outra, escolhida para você começar a ler mais cedo',
+      'Sim, começando pela primeira letra do alfabeto',
+      'Não, a ordem é sorteada para cada aluno'
+    ],
+    certa: 0,
+    porque: 'A ordem alfabética continua existindo e importando - é a do dicionário -, mas começar por ela atrasa a leitura: as primeiras letras dela não formam palavra entre si. O mapa do curso explica a troca em detalhe.'
   }
 ];

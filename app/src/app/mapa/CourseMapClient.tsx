@@ -25,6 +25,7 @@ import { useProgress } from '@/lib/state/store';
 import { course, getLetter, type CourseModule } from '@/lib/content';
 import { totalLicoes } from '@/lib/content-publico';
 import { Prose } from '@/components/learn/Blocks';
+import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
 import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
 import { flagship } from '@/lib/catalog';
 
@@ -73,6 +74,14 @@ export function CourseMapClient() {
           );
         })}
       </ol>
+
+      {/* Depois do caminho inteiro, e não antes: a pergunta "por que {{מ}}
+          vem antes de {{ב}}?" só existe para quem acabou de VER a ordem.
+          Pô-la em cima seria responder algo que o aluno ainda não perguntou,
+          e empurrar o mapa - que é o assunto desta tela - para baixo. */}
+      <div className="mt-8">
+        <OrdemPedagogica />
+      </div>
     </div>
   );
 }

@@ -63,10 +63,11 @@ Se a preferência for trancar, é uma linha em `porQueTrancada`.
 | Sequência pedagógica correta | passa | `tests/curriculo` |
 | Estados corretos (dominada, revisar, atual, nova, bloqueada) | passa | `trava.mjs` |
 | A barra conta letras DOMINADAS, não visitadas | passa | `trava.mjs`, `tests/mastery` |
-| **Ordem tradicional disponível** | **NÃO EXISTE** | - |
+| Ordem tradicional disponível | passa | `/mapa`, quadro "Por que as letras não estão em ordem alfabética?" |
 
-A ordem tradicional é parte da PARTE 3, que não foi feita. Ver "o que
-continua em aberto", no fim.
+Fechado em 22/09/2026, junto com a PARTE 3. A ordem tradicional aparece
+inteira, com o número da lição em que cada letra entra neste curso - que é
+a ponte entre as duas ordens, e não só uma tabela de referência.
 
 ### Áudios
 
@@ -166,28 +167,27 @@ cada uma é respondida:
 | Por que letras diferentes com o mesmo som? | Dez lições tratam disso; {{ט}}/{{ת}} e {{ק}}/{{כּ}} explicitamente |
 | Por que preciso aprender cursiva? | Aula 0, "A mesma letra tem dois desenhos", e a etapa Escrever de toda lição |
 | Por que não posso escrever igual ao livro? | A analogia da fonte do livro, nas duas telas acima |
-| **Por que não estamos aprendendo א, ב, ג em ordem?** | **NINGUÉM RESPONDE** |
+| Por que não estamos aprendendo א, ב, ג em ordem? | `/mapa`, depois do caminho inteiro: o contraste entre as duas ordens, o que a ordem do curso compra, e o alfabeto tradicional com a lição de cada letra |
 | Como israelenses leem sem Nikud? | Aula 0, e é uma das oito perguntas de checagem |
 | Qual é a diferença entre Shin e Sin? | Lição do {{ש}}: quadro das duas leituras, exercício dedicado e item no checkpoint |
 | Por que não posso abrir a próxima letra? | A porta trancada diz qual letra falta, o que falta nela, e leva até lá |
 | Por que respondi certo e o sistema marcou errado? | `tests/tipos` (2.400 itens, 19 invariantes) e `exercicios.mjs` (responder num navegador) |
 
-**13 de 14.** A que falta é a ordem pedagógica, que é a PARTE 3.
+**14 de 14**, desde 22/09/2026. A última a fechar foi a ordem pedagógica.
+
+A resposta mora no mapa, e não na aula 0, porque é lá que a pergunta
+nasce: o estranhamento com a ORDEM só existe depois de o aluno ver as 22
+letras numa tela. A aula 0 avisa que a explicação existe e linka para ela.
 
 ---
 
 ## O que continua em aberto
 
-1. **Parte 3 inteira** - por que o curso não segue a ordem alfabética. Não
-   existe a mensagem que antecipa a estranheza, nem a ordem tradicional no
-   mapa, nem a seção "5 coisas que parecem estranhas agora". É a única
-   pergunta pedagógica sem resposta e o único item do mapa que falta.
-
-2. **Áudio** - zero arquivos. Tudo o que depende de ouvir está preparado e
+1. **Áudio** - zero arquivos. Tudo o que depende de ouvir está preparado e
    desligado: ids por leitura, botão que some, exercícios de escuta que não
    são oferecidos. Precisa de gravação, não de código.
 
-3. **O bloqueio da primeira letra pelo módulo 0** - hoje é orientação e não
+2. **O bloqueio da primeira letra pelo módulo 0** - hoje é orientação e não
    trava. Está explicado acima; é uma linha, se a decisão mudar.
 
 ---
