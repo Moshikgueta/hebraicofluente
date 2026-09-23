@@ -36,6 +36,13 @@ export type Word = {
   pt: string;
   use: string | null;
   audioId: string;
+  /* A ilustração, quando a palavra é concreta e tem entrada em
+     data/imagens-vocabulario.json. `image` é null até o arquivo existir;
+     `imageAlt` descreve a CENA para leitor de tela; `imagePrompt` é o pedido
+     completo (estilo + cena) para quem for gerar a imagem. */
+  image?: string | null;
+  imageAlt?: string;
+  imagePrompt?: string;
 };
 
 export type Syllable = {

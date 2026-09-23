@@ -35,13 +35,55 @@ const NFC = s => String(s ?? '').normalize('NFC');
    the app without a second naming scheme. Content-derived, never positional. */
 const audioIdFor = he => 'he-' + createHash('sha256').update(NFC(he)).digest('hex').slice(0, 8);
 
-const word = w => ({
-  he: NFC(w.he),
-  translit: w.translit,
-  pt: w.pt,
-  use: w.use ?? null,
-  audioId: audioIdFor(w.he)
-});
+/* As imagens do vocabulário moram num arquivo próprio (data/imagens-
+   vocabulario.json) e entram aqui, na palavra. Só as palavras concretas têm
+   entrada; as outras saem sem os campos, e a tela sabe que não há imagem.
+   Preenchido por `carregarImagens`, antes da primeira palavra. */
+let IMAGENS = new Map();
+let ESTILO_IMAGEM = '';
+
+const word = w => {
+  const img = IMAGENS.get(NFC(w.he));
+  return {
+    he: NFC(w.he),
+    translit: w.translit,
+    pt: w.pt,
+    use: w.use ?? null,
+    audioId: audioIdFor(w.he),
+    ...(img ? {
+      image: img.image ?? null,
+      imageAlt: img.imageAlt,
+      /* O prompt completo: o estilo comum na frente da cena. Vai junto para
+         quem for gerar as imagens trabalhar a partir do conteúdo exportado. */
+      imagePrompt: `${ESTILO_IMAGEM} Subject: ${img.imagePrompt}`
+    } : {})
+  };
+};
+
+/**
+ * Lê e VALIDA as imagens. Duas recusas, e as duas protegem o aluno:
+ *   · chave que não é palavra do curso - uma imagem órfã nunca aparece, e
+ *     esconde um erro de digitação na palavra;
+ *   · `image` apontando para arquivo que não existe - a tela mostraria um
+ *     ícone quebrado no lugar da ilustração.
+ */
+function carregarImagens(letters) {
+  const caminho = join(ROOT, 'data/imagens-vocabulario.json');
+  if (!existsSync(caminho)) return;
+  const d = JSON.parse(readFileSync(caminho, 'utf8'));
+  ESTILO_IMAGEM = d.estilo ?? '';
+  const doCurso = new Set(letters.flatMap(L =>
+    [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])].map(w => NFC(w.he))));
+  for (const [he, img] of Object.entries(d.palavras ?? {})) {
+    const k = NFC(he);
+    if (!doCurso.has(k)) throw new Error(`imagens-vocabulario: "${he}" não é palavra do curso`);
+    if (!img.imageAlt) throw new Error(`imagens-vocabulario: "${he}" sem imageAlt`);
+    if (img.image && !existsSync(join(ROOT, 'app/public', img.image.replace(/^\//, '')))) {
+      throw new Error(`imagens-vocabulario: "${he}" aponta para ${img.image}, que não existe em app/public`);
+    }
+    IMAGENS.set(k, img);
+  }
+}
 
 /* A scene names a word; its reading and meaning must come from the one place
    that already holds them, or the two drift. A multi-word sign (בֹּקֶר טוֹב)
@@ -72,6 +114,7 @@ function lookupWord(letters, phrase, scene) {
 
 function main() {
   const letters = readJson('data/letters.json').sort((a, b) => a.order - b.order);
+  carregarImagens(letters);
   const modules = readJson('data/modules.json').modules;
   const nikud = readJson('data/nikud.json');
   const extras = readJson('data/extras.json');

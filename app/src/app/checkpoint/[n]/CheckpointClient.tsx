@@ -9,6 +9,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
 import { useRouter } from 'next/navigation';
 import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
@@ -77,6 +78,9 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
             <p className="text-[16px] leading-relaxed text-ink"><Prose text={mod.milestonePt} /></p>
           </Card>
         )}
+        {/* O fim de um módulo é o melhor momento para o número: "conheço seis
+            letras" vira "leio N palavras". */}
+        {passed && <ContadorDeLeitura />}
 
         {weak.length > 0 && (
           <Card className="p-5 grid gap-3">

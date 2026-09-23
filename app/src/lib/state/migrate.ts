@@ -78,6 +78,9 @@ export function migrate(raw: unknown): LearnerState {
     /* Added to v2 after it shipped. A save written between the two has no
        such key, and every reader assumes the map exists. */
     gym: merged.gym ?? {},
+    /* Os dois de 23/09/2026, pelo mesmo motivo do `gym`. */
+    nomeHebraico: merged.nomeHebraico ?? null,
+    kinds: merged.kinds ?? {},
     streak: merged.streak ?? { current: 0, longest: 0, lastDay: null },
     finalChallenge: merged.finalChallenge ?? { best: null, completedAt: null }
   };

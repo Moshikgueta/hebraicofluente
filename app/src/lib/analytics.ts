@@ -28,7 +28,10 @@ export type EventName =
   /* A aula aberta da landing: o visitante aprende o Álef antes de comprar.
      Três eventos e nada mais - começou, respondeu, terminou -, que é o que
      responde "a demo converte?" sem virar um funil de rastreamento. */
-  | 'demo_started' | 'demo_answered' | 'demo_completed';
+  | 'demo_started' | 'demo_answered' | 'demo_completed'
+  /* 23/09/2026: as atividades de produção e o vocabulário. Sessão e marco,
+     nunca resposta a resposta - essas já vão por `exercise_answered`. */
+  | 'keyboard_confirmed' | 'name_completed' | 'glossary_opened' | 'reading_milestone';
 
 export type EventProps = {
   /** Qual jogo da academia. Os três primeiros saem do baralho; os três de
@@ -54,6 +57,10 @@ export type EventProps = {
   mode?: string;
   /** Seconds, for the timed modes. */
   seconds?: number;
+  /** Quantas palavras o aluno consegue ler - o número, nunca a lista. */
+  words?: number;
+  /** O tipo do exercício respondido, para o erro por tipo no painel. */
+  kind?: string;
 };
 
 export type LearningEvent = { name: EventName; props: EventProps; at: number };

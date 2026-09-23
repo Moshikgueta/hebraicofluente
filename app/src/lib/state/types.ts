@@ -165,6 +165,26 @@ export type LearnerState = {
   firsts: Record<string, string>;
   /** One record per reading-gym mode. See `GymRecord`. */
   gym: Record<string, GymRecord>;
+
+  /* ── acrescentados à v2 em 23/09/2026, como o `gym` antes deles ───── */
+
+  /**
+   * O nome do aluno em hebraico, como ELE o confirmou.
+   *
+   * Transliterar nome não tem resposta única - Gabriel pode ser גבריאל ou
+   * גבריאֵל, Moshik pode ser מושיק ou מושיק׳ - então o curso sugere e o aluno
+   * decide. O que fica gravado é a decisão dele, com a data, e é isso que o
+   * certificado usa. `null` enquanto ele não confirmou nenhuma.
+   */
+  nomeHebraico: { texto: string; confirmadoEm: string } | null;
+  /**
+   * Acertos e erros por TIPO de exercício (`letter-recognition`,
+   * `build-letters`, `cursive-word`...). As habilidades dizem O QUE o aluno
+   * sabe; isto diz em QUE FORMATO ele erra - "ele lê bem e erra montando",
+   * "a cursiva em palavra está custando". É o dado que o painel de alunos
+   * precisa para mostrar erro por exercício sem guardar resposta a resposta.
+   */
+  kinds: Record<string, { h: number; m: number }>;
 };
 
 /**
@@ -206,7 +226,9 @@ export const EMPTY_STATE: LearnerState = {
   skills: {},
   confusions: {},
   firsts: {},
-  gym: {}
+  gym: {},
+  nomeHebraico: null,
+  kinds: {}
 };
 
 export interface ProgressStore {

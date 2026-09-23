@@ -27,10 +27,14 @@ import {
   type Gen
 } from './generators';
 import { buildConfusionDrill, buildReview, type Exercise } from './exercises';
+import {
+  GENS_CURSIVA_PALAVRA, exBuildLetters, exBuildLettersCursive, exTypeHebrew, todasAsLetrasEnsinadas
+} from './palavras';
 
 export type GymModeId =
   | 'letras' | 'vogais' | 'silabas' | 'palavras' | 'ouvir'
-  | 'parecidas' | 'relogio' | 'revisao';
+  | 'parecidas' | 'relogio' | 'revisao'
+  | 'construir' | 'palavras-cursiva' | 'digitar';
 
 export type GymMode = {
   id: GymModeId;
@@ -43,6 +47,9 @@ export type GymMode = {
   needsAudio?: boolean;
   /** Against the clock, against your own previous time. */
   timed?: boolean;
+  /** Pede o teclado hebraico instalado - e a confirmação dele antes. É o
+   *  ÚNICO lugar do curso que pede: ler e reconhecer nunca trocam de teclado. */
+  needsKeyboard?: boolean;
   count: number;
 };
 
@@ -56,7 +63,13 @@ const GENS: Record<GymModeId, readonly Gen[]> = {
   ouvir: [exListenSyllable, exAudioWord, exTypeHeard],
   parecidas: [exLetterRecognition, exOddOneOut, exCompleteWord],
   relogio: [exLetterRecognition, exSyllableReading, exOddOneOut, exVowelSound, exSoundToSyllable],
-  revisao: []          // built from the SRS instead
+  revisao: [],         // built from the SRS instead
+  /* Montar letra por letra, impressa e à mão. O nível (inicial,
+     intermediário, avançado) vem da letra de cada item, então a mesma sessão
+     mistura palavras curtas das letras antigas e longas das novas. */
+  construir: [exBuildLetters, exBuildLettersCursive],
+  'palavras-cursiva': [...GENS_CURSIVA_PALAVRA, exBuildLettersCursive],
+  digitar: [exTypeHebrew]
 };
 
 /* Kept out of the list above only because the import would shadow the name. */
@@ -104,6 +117,21 @@ export const GYM_MODES: GymMode[] = [
     skills: ['rec'], count: 8
   },
   {
+    id: 'construir', titlePt: 'Construir palavras', icon: '⌂',
+    descPt: 'O som na tela, as letras na mesa: monte a palavra, da direita para a esquerda.',
+    skills: ['ler'], count: 8
+  },
+  {
+    id: 'palavras-cursiva', titlePt: 'Palavras à mão', icon: '✎',
+    descPt: 'Palavras inteiras em cursiva: reconhecer, entender e montar.',
+    skills: ['ler'], count: 10
+  },
+  {
+    id: 'digitar', titlePt: 'Digitar em hebraico', icon: '⌨',
+    descPt: 'Escreva palavras no teclado hebraico do seu aparelho.',
+    skills: ['escrever'], needsKeyboard: true, count: 8
+  },
+  {
     id: 'relogio', titlePt: 'Contra o relógio', icon: '◷',
     descPt: 'O mesmo que você já sabe, mais rápido que da última vez.',
     skills: ['rec', 'ler'], timed: true, count: 12
@@ -132,6 +160,16 @@ export function availableModes(
     }
     if (mode.id === 'palavras' && !unlocked.some(l => l.wordsToRead.length)) {
       return { mode, ready: false, whyNot: 'Ainda não há palavras para ler.' };
+    }
+    /* Montar, ver à mão e digitar pedem uma palavra cujas letras TODAS o
+       aluno já tem - inclusive o ו que numa leitura seria só vogal. */
+    if (mode.id === 'construir' || mode.id === 'palavras-cursiva' || mode.id === 'digitar') {
+      const alfabeto = unlocked.flatMap(l => (l.finalForm ? [l.letter, l.finalForm] : [l.letter]));
+      const temPalavra = unlocked.some(l => l.wordsToRead.some(w => todasAsLetrasEnsinadas(w.he, alfabeto)));
+      if (!temPalavra) return { mode, ready: false, whyNot: 'Chega com a primeira palavra, na lição do Mem.' };
+      if (mode.id === 'palavras-cursiva' && unlocked.length < 3) {
+        return { mode, ready: false, whyNot: 'Chega na lição do Tav.' };
+      }
     }
     return { mode, ready: true };
   });

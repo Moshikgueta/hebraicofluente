@@ -153,6 +153,45 @@ export type Exercise =
       wherePt: string;
     })
 
+  /* ── a palavra como coisa que se CONSTRÓI ─────────────────────────────
+     Letras soltas da grafia, sem vogal, na mesa; o aluno as põe na ordem de
+     leitura. `letras` é a resposta, na ordem; `tiles` é a mesa, embaralhada,
+     com os distratores do nível. Ver lib/engine/palavras.ts. */
+  | (ExerciseBase & {
+      kind: 'build-letters';
+      target: string;
+      letras: string[];
+      tiles: string[];
+      translit: string;
+      /** O significado, quando o nível ainda dá esse apoio. */
+      pt: string | null;
+      /** As peças e a palavra montada em letra cursiva. */
+      cursiva: boolean;
+      nivel: 'inicial' | 'intermediario' | 'avancado';
+    })
+
+  /* ── a palavra em cursiva ─────────────────────────────────────────────
+     Um tipo com quatro modos, porque é UMA habilidade em quatro graus: ver a
+     letra dentro da palavra cursiva, reconhecer a palavra, ir da impressa
+     para a cursiva, e entender a cursiva sozinha. `escrita` é a palavra sem
+     vogal, que é como ela aparece à mão. */
+  | (ChoiceBase & {
+      kind: 'cursive-word';
+      modo: 'letra' | 'qual-palavra' | 'para-cursiva' | 'significado';
+      he: string;
+      escrita: string;
+      /** No modo `letra`, a letra destacada dentro da palavra cursiva. */
+      marca?: string;
+    })
+
+  /* ── digitar EM HEBRAICO, no teclado hebraico ─────────────────────────
+     Produção escrita, e só na academia, atrás da confirmação do teclado. */
+  | (ExerciseBase & {
+      kind: 'type-hebrew';
+      accept: string[];
+      translit: string;
+    })
+
   /* ── production: typing, which is retrieval rather than recognition ─ */
   | (ExerciseBase & {
       kind: 'type-answer';

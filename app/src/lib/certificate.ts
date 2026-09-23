@@ -34,6 +34,12 @@ export type CertificateInput = {
   /** 0-1, shown only when present. */
   score?: number | null;
   format: CertificateFormat;
+  /**
+   * O nome em hebraico, abaixo do nome em português. Só chega aqui depois de
+   * o aluno CONFERIR a grafia na tela do certificado - nome tem mais de uma
+   * transliteração, e o certificado não escolhe por ele.
+   */
+  nameHe?: string | null;
 };
 
 export const FORMATS: Record<CertificateFormat, { w: number; h: number; labelPt: string; hintPt: string }> = {
@@ -163,6 +169,21 @@ export async function drawCertificate(
   ctx.fillText(name, cx, y);
   y += wide ? 18 : 24;
 
+  /* O nome em hebraico, quando o aluno pediu e conferiu. O canvas recebe a
+     direção explícita: sem ela o bidi da plataforma decide, e com um espaço
+     no meio ("מושיק גטה") ele pode inverter a ordem das duas palavras. */
+  const nameHe = (input.nameHe ?? '').trim();
+  if (nameHe) {
+    y += wide ? 30 : 40;
+    const heSize = fitText(ctx, nameHe, w - pad * 2 - 160, wide ? 36 : 46, he, 400);
+    ctx.font = `400 ${heSize}px ${he}`;
+    ctx.fillStyle = C.accent;
+    ctx.direction = 'rtl';
+    ctx.fillText(nameHe, cx, y);
+    ctx.direction = 'ltr';
+    y += wide ? 16 : 20;
+  }
+
   ctx.strokeStyle = C.line;
   ctx.lineWidth = 1.5;
   const ruleW = Math.min(w - pad * 2 - 140, Math.max(320, ctx.measureText(name).width + 120));
@@ -170,7 +191,9 @@ export async function drawCertificate(
   ctx.moveTo(cx - ruleW / 2, y);
   ctx.lineTo(cx + ruleW / 2, y);
   ctx.stroke();
-  y += wide ? 40 : 56;
+  /* No formato largo, a linha do nome em hebraico sai do respiro daqui, e
+     não do rodapé, que já está perto. */
+  y += nameHe && wide ? 30 : (wide ? 40 : 56);
 
   /* ── the claim ────────────────────────────────────────────────────── */
   ctx.fillStyle = C.body;
@@ -184,7 +207,9 @@ export async function drawCertificate(
     ctx.fillText(line, cx, y);
     y += wide ? 28 : 33;
   }
-  y += wide ? 18 : 30;
+  /* Só o formato largo precisa ceder espaço: no quadrado sobra área embaixo,
+     e apertar ali só colaria o alfabeto no texto. */
+  y += nameHe && wide ? 6 : (wide ? 18 : 30);
 
   /* ── the alphabet ─────────────────────────────────────────────────── */
   drawAlphabet(ctx, input.letters, cx, y, w - pad * 2 - 80, wide ? 34 : 44, he);

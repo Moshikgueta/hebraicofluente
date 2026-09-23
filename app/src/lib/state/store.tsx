@@ -85,7 +85,11 @@ type Ctx = {
   answer: (args: {
     itemId: string; letterId: string; correct: boolean;
     skill?: Skill; expected?: string; chosen?: string;
+    /** O tipo do exercício, para o acerto por tipo (`state.kinds`). */
+    kind?: string;
   }) => void;
+  /** O nome em hebraico, como o aluno o confirmou. `null` apaga. */
+  setNomeHebraico: (texto: string | null) => void;
   /** Record a moment that can only happen once, and say so. */
   markFirst: (id: string) => void;
   /**
@@ -274,9 +278,9 @@ export function ProgressProvider({
 
   const answer = useCallback((args: {
     itemId: string; letterId: string; correct: boolean;
-    skill?: Skill; expected?: string; chosen?: string;
+    skill?: Skill; expected?: string; chosen?: string; kind?: string;
   }) => {
-    const { itemId, letterId, correct, skill, expected, chosen } = args;
+    const { itemId, letterId, correct, skill, expected, chosen, kind } = args;
     const d = today();
     let next = recordAnswer(agora(), itemId, letterId, correct, d, skill);
     /* A miss always creates the review entry, even the first time. */
@@ -293,10 +297,20 @@ export function ProgressProvider({
         ? clearConfusion(next, expected, chosen)
         : recordConfusion(next, expected, chosen, d);
     }
+    if (kind) {
+      const k = next.kinds?.[kind] ?? { h: 0, m: 0 };
+      next = { ...next, kinds: { ...(next.kinds ?? {}),
+        [kind]: { h: k.h + (correct ? 1 : 0), m: k.m + (correct ? 0 : 1) } } };
+    }
     next = applyPractice(next, d, { answered: 1, units: ANSWER_UNITS });
     commit(next);
-    track('exercise_answered', { letterId, itemId, correct, skill });
+    track('exercise_answered', { letterId, itemId, correct, skill, kind });
     if (!correct) track('exercise_wrong', { letterId, itemId, chosen });
+  }, [commit, agora]);
+
+  const setNomeHebraico = useCallback((texto: string | null) => {
+    const limpo = texto?.trim() ?? '';
+    commit({ ...agora(), nomeHebraico: limpo ? { texto: limpo, confirmadoEm: new Date().toISOString() } : null });
   }, [commit, agora]);
 
   const recordWriting = useCallback((letterId: string, score: number) => {
@@ -404,12 +418,13 @@ export function ProgressProvider({
       clearPending: () => setPending([]),
       setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
-      remember, reset
+      remember, reset, setNomeHebraico
     };
   }, [
     state, ready, persistent, sincronizado, day, totalLetters, extraKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
-    finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset
+    finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
+    setNomeHebraico
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

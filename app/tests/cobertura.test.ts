@@ -168,7 +168,10 @@ describe('o mini-teste que fecha a letra', () => {
       const pratica = buildLetterPractice(L, hist, { count: 10, seed: `pratica-${L.id}` });
       const mini = buildMiniTest(L, hist, { seed: `mini-${L.id}-0` });
       const ida = pratica.some(e => /-cur-/.test(e.id));
-      const volta = mini.some(e => /-cur2-/.test(e.id));
+      /* Desde 23/09 a volta também pode ser a PALAVRA inteira à mão
+         (`-curw-qual-palavra-`): a mesma direção - ler a cursiva de alguém -,
+         num grau acima. */
+      const volta = mini.some(e => /-cur2-|-curw-(qual-palavra|significado|letra)-/.test(e.id));
       return { L, ida, volta };
     }).filter(x => !x.ida || !x.volta)
       .map(x => `${x.L.namePt}: prática ${x.ida ? 'ok' : 'SEM ida'}, checkpoint ${x.volta ? 'ok' : 'SEM volta'}`);
@@ -181,7 +184,7 @@ describe('o mini-teste que fecha a letra', () => {
        abertura da próxima letra - nunca perguntava nada sobre ela. */
     const sem = letters
       .map(L => ({ L, q: buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-0` }) }))
-      .filter(x => !x.q.some(e => /-cur2?-/.test(e.id)))
+      .filter(x => !x.q.some(e => /-cur2?-|-curw-/.test(e.id)))
       .map(x => x.L.namePt);
     expect(sem).toEqual([]);
   });

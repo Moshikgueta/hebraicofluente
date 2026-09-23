@@ -27,6 +27,8 @@ import { AlphabetGrid, ModuleProgress } from '@/components/game/AlphabetGrid';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
+import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
+import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { alphabetComplete, isExtraModuleDone, isLessonComplete, needsWarmUp } from '@/lib/state/rules';
 import { useAccount } from '@/lib/account/store';
 import { CourseShelf } from '@/components/platform/CourseShelf';
@@ -250,6 +252,12 @@ export function DashboardClient() {
         <CartaoNumero n={p.dueCount} rotulo="a revisar" tom="gold" icone={<IconeRevisar />} />
         <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />
       </section>
+
+      {/* "Letras dominadas" é o que o curso mede; "palavras que você lê" é o
+          que o aluno sente. Os dois ficam juntos, e o segundo leva ao
+          vocabulário. Some enquanto não há letra concluída. */}
+      {licoesFeitas > 0 && <ContadorDeLeitura />}
+      <CartaoMeuNome />
 
       <div className="grid gap-3.5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-start">
         <CartaoRevisao />

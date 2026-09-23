@@ -37,6 +37,9 @@ import {
 } from './generators';
 import type { Exercise } from './types';
 import {
+  GENS_CURSIVA_PALAVRA, exBuildCursiveGated, exBuildLetters, exCursivaQualPalavra
+} from './palavras';
+import {
   contrastesDoConteudo, exContraste, exIntrusaDoPar, exPalavraDoPar, type Contraste
 } from './pares';
 
@@ -112,6 +115,20 @@ export function readingUsedBy(ex: Exercise): string[] {
       break;
     case 'type-answer':
       if (ex.he) out.push(ex.he);
+      break;
+    /* MONTAR e a CURSIVA mostram letras soltas e palavras sem vogal - o ו
+       aparece como letra, e por isso cada peça entra aqui sozinha: uma peça
+       é uma letra na mesa, e a regra é que nenhuma letra aparece antes da
+       hora. Ver a nota das "duas réguas" em lib/engine/palavras.ts. */
+    case 'build-letters':
+      out.push(ex.target, ...ex.tiles);
+      break;
+    case 'cursive-word':
+      out.push(ex.he, ex.escrita);
+      if (ex.modo !== 'significado') out.push(...ex.options);
+      break;
+    case 'type-hebrew':
+      out.push(...ex.accept);
       break;
     default:
       break;
@@ -468,7 +485,13 @@ export function buildLetterPractice(
     weak?: readonly string[];
   } = {}
 ): Exercise[] {
-  const { audioAvailable = false, count = 14, seed = `pratica-${L.id}`, weak = [] } = opts;
+  /* DEZESSEIS a partir do Mem, e não catorze: é a letra em que existe a
+     primeira palavra para MONTAR, e o bloco ganha dois gestos de produção -
+     montar a palavra letra por letra e ler a palavra em cursiva. Eles não
+     tiram lugar de nada: a revisão continua calculada sobre catorze (ver a
+     reserva abaixo), e as camadas antigas continuam todas. */
+  const { audioAvailable = false, count = L.order >= 2 ? 16 : 14,
+          seed = `pratica-${L.id}`, weak = [] } = opts;
   const rand = rng(seed);
   const ctx = contextFor(L, history);
   const out: Exercise[] = [];
@@ -521,7 +544,10 @@ export function buildLetterPractice(
      ideia de sempre - uma letra ensinada sozinha não é um alfabeto -, agora
      escrita em vez de esperada. */
   const anteriores = history.filter(x => x.id !== L.id);
-  const reservaRevisao = anteriores.length ? Math.max(1, Math.round(count * 0.3)) : 0;
+  /* Sobre no máximo catorze: os dois itens a mais do bloco de dezesseis são
+     de PRODUÇÃO, e não de revisão - a revisão por intervalo (P0-6) já cabe
+     inteira em quatro lugares mais a letra de ontem na fixação. */
+  const reservaRevisao = anteriores.length ? Math.max(1, Math.round(Math.min(count, 14) * 0.3)) : 0;
   const frase = exSentenceReading(L, ctx, rand, giro);
 
   /* O PISO das camadas fixas, e por que ele é `Math.max` e não subtração.
@@ -587,6 +613,14 @@ export function buildLetterPractice(
   tentar([exLetterPosition, exLetterInWord], 1);
   if (L.finalForm) tentar([exFinalInWord, exFinalForm], 1);
   tentar([exPrintVsCursive, exCursiveToPrint], 1);
+  /* A CURSIVA EM PALAVRA, e não só a letra.
+     ─────────────────────────────────────────────────────────────────────
+     A camada de cima ensina que {{א}} impressa é {{א}} à mão. Isso não basta
+     para ler um bilhete: à mão as letras vêm juntas, sem vogal, e a palavra
+     tem de ser reconhecida inteira. Os quatro modos entram aos poucos (ver
+     CURSIVA_DESDE) e giram pela ordem da letra; antes do primeiro, a camada
+     simplesmente não existe. */
+  tentar(girar(GENS_CURSIVA_PALAVRA, L.order), 1);
   /* A frase foi DECIDIDA lá em cima, junto da reserva, e é COLOCADA aqui.
      Decidida antes porque o teto das camadas depende dela; colocada depois
      porque é o item mais difícil e o mais gratificante - antes das sílabas o
@@ -606,6 +640,11 @@ export function buildLetterPractice(
      encontro do aluno com a caixa de texto. Gira com fase oposta à da
      fixação: quem digita a palavra na prática digita a sílaba na prova, e
      vice-versa. */
+  /* MONTAR A PALAVRA LETRA POR LETRA - o som na tela, as letras soltas na
+     mesa, a primeira à direita. É o gesto de produção que o curso não tinha:
+     `build-word` monta por sílabas pontuadas, que é ler; este soletra. A
+     partir da letra 11 ele gira com a versão em cursiva. */
+  tentar(girar([exBuildLetters, exBuildCursiveGated], L.order), 1);
   tentar(girar([exTypeTranslit, exTypeSyllable], L.order), 1);
   tentar(girar([exSyllableReading, exWordMeaning, exMeaningToWord], L.order), frase ? 1 : 2);
   /* A frase NÃO entra aqui: ela é acrescentada no fim, depois do arranjo.
@@ -799,7 +838,9 @@ export function buildMiniTest(
      cobra depois de o aluno ter desenhado a letra quatro vezes na etapa
      anterior. Assim as duas direções existem na unidade de cada letra, em
      vez de o curso treinar uma e chamar a outra de aprendida. */
-  tentar([exCursiveToPrint, exPrintVsCursive]);
+  /* Da cursiva para a impressa, sempre - e a partir da letra 5 alternando
+     entre a LETRA e a PALAVRA inteira à mão. */
+  tentar([...girar([exCursiveToPrint, exCursivaQualPalavra], L.order + 1), exPrintVsCursive]);
 
   /* ── três gestos que a fixação nunca cobrava ─────────────────────────
      As camadas acima são todas de ESCOLHER: quatro alternativas, um toque,
@@ -821,7 +862,7 @@ export function buildMiniTest(
      Cada camada é uma LISTA em ordem de preferência, e não um gerador fixo:
      nas primeiras letras não há palavra legível nem frase, e a camada cai
      para o que existe em vez de sumir. */
-  tentar([...girar([exBuildSyllable, exBuildWord], L.order + 1), exSoundToSyllable]);
+  tentar([...girar([exBuildSyllable, exBuildWord, exBuildLetters], L.order + 1), exSoundToSyllable]);
   /* A frase fica SEMPRE na frente quando existe: ler uma linha inteira é o
      que o curso promete, e é a pergunta que mais vale numa prova. */
   tentar([exSentenceReading, ...girar([exSyllableReading, exVowelSound], L.order + 1)]);

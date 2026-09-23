@@ -31,6 +31,8 @@ import {
   RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
+import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
+import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { useProgress } from '@/lib/state/store';
 import { letraAtual, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
 import { allLetters, course, cultureAt, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
@@ -142,6 +144,12 @@ export function LessonClient({ letter }: { letter: Letter }) {
       {stage === 5 && quizResult && unlockedCard && (
         <CultureUnlock card={unlockedCard} />
       )}
+      {/* O número de palavras, com quantas ESTA letra abriu. Só depois da
+          fixação: antes disso a letra ainda não conta como concluída. */}
+      {stage === 5 && quizResult && <ContadorDeLeitura letra={letter} />}
+      {/* Aparece uma vez na vida: no fim da letra que torna o nome do aluno
+          escrevível, e enquanto ele não o escreveu. */}
+      {stage === 5 && quizResult && <CartaoMeuNome contexto="licao" />}
 
       {stage === 5 && (
         <StageFixacao

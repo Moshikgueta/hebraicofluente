@@ -15,6 +15,31 @@ sessões e o acerto por tipo de exercício. Não é preciso um sistema paralelo;
 
 ---
 
+## Atualização - rodada de 23/09
+
+Parte do que este documento propõe já existe no estado do aluno, e a rodada
+das atividades de produção acrescentou sinais que o painel pode ler sem
+nenhuma tabela nova. Tudo abaixo sobe junto com o progresso, já sincronizado
+entre aparelhos:
+
+| sinal | onde está | serve para |
+|---|---|---|
+| acerto e erro **por tipo de exercício** | `state.kinds` (a proposta da seção 6.4, feita) | erro em cursiva (`cursive-word`), em montar (`build-letters`), em digitação (`type-hebrew`) |
+| letras que ele troca **ao montar** | `state.confusions`, a mesma fila das outras trocas | "37% dos alunos trocam ד por ר" |
+| marcos de leitura: 10, 25, 50, 100 palavras, com data | `state.firsts['le-10']` ... `['le-100']` | a curva de "palavras que consegue ler" por aluno |
+| o teclado hebraico confirmado, com data | `state.firsts['teclado-hebraico']` | quantos chegaram à digitação |
+| o nome em hebraico feito, com data e a grafia | `state.firsts['meu-nome']` e `state.nomeHebraico` | a atividade bônus concluída ou não |
+
+**O número exato de palavras legíveis não é gravado**, de propósito: ele é
+calculado das letras concluídas e do vocabulário do curso (`lib/leitura.ts`),
+e gravá-lo congelaria a regra do dia. Para o painel, o resumo do servidor
+(seção 6.1) precisa calcular a mesma coisa - e a forma de não duplicar a regra
+é o exportador de conteúdo gerar, junto do resto, uma tabela "quais letras
+cada palavra exige", que o Worker lê. Nenhuma palavra em hebraico precisa ir
+para o servidor para isso: só os ids das letras.
+
+---
+
 ## 1. Como o progresso funciona hoje
 
 Todo o estado de aprendizagem de um aluno é **um objeto só**, o `LearnerState`

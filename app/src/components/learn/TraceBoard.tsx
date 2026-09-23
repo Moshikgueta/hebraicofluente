@@ -79,8 +79,14 @@ export const TraceBoard = forwardRef<QuadroHandle, {
   /** Altura da moldura. O padrão é o do curso. */
   alturaClass?: string;
   className?: string;
+  /** O corpo do modelo. O padrão, `hero`, é para UMA letra; uma palavra
+   *  inteira - o nome do aluno - precisa de um corpo menor para caber na
+   *  largura de um telefone. A nota mede contra o corpo que estiver na tela,
+   *  então trocar o tamanho não muda a régua. */
+  tamanhoGuia?: 'hero' | 'display' | 'xl';
 }>(function TraceBoard(
-  { glyph, guia, label, onTinta, alturaClass = 'h-[280px] sm:h-[340px]', className = '' },
+  { glyph, guia, label, onTinta, alturaClass = 'h-[280px] sm:h-[340px]', className = '',
+    tamanhoGuia = 'hero' },
   ref
 ) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -286,7 +292,7 @@ export const TraceBoard = forwardRef<QuadroHandle, {
           zero, para que aquilo contra o que a pessoa é julgada nunca mude. */}
       <div className="absolute inset-0 grid place-items-center pointer-events-none select-none">
         <span ref={guideRef} style={{ opacity: guia }}>
-          <He size="hero" cursive>{glyph}</He>
+          <He size={tamanhoGuia} cursive>{glyph}</He>
         </span>
       </div>
 

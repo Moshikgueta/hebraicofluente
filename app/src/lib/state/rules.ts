@@ -666,7 +666,20 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: 'sem-apoio', titlePt: 'Sem apoio', descPt: 'Você leu uma palavra inteira sem transliteração.',
     test: s => !!s.firsts['leitura-sem-translit'] },
   { id: 'leitor', titlePt: 'Leitor de hebraico', descPt: 'Você concluiu o desafio final.',
-    test: s => !!s.finalChallenge.completedAt }
+    test: s => !!s.finalChallenge.completedAt },
+  /* As palavras que ele consegue ler. A CONTA é feita em lib/vocabulario.ts,
+     nas telas do curso, porque precisa do vocabulário - que não pode ser lido
+     numa página pública. Aqui só se lê o marco que ela gravou. */
+  { id: 'le-10', titlePt: '10 palavras', descPt: 'Você já consegue ler 10 palavras em hebraico.',
+    test: s => !!s.firsts['le-10'] },
+  { id: 'le-25', titlePt: '25 palavras', descPt: 'Você já consegue ler 25 palavras em hebraico.',
+    test: s => !!s.firsts['le-25'] },
+  { id: 'le-50', titlePt: '50 palavras', descPt: 'Você já consegue ler 50 palavras em hebraico.',
+    test: s => !!s.firsts['le-50'] },
+  { id: 'le-100', titlePt: '100 palavras', descPt: 'Você já consegue ler 100 palavras em hebraico.',
+    test: s => !!s.firsts['le-100'] },
+  { id: 'meu-nome', titlePt: 'Meu nome em hebraico', descPt: 'Você escreveu o seu nome com as letras que aprendeu.',
+    test: s => !!s.firsts['meu-nome'] }
 ];
 
 /** Returns the state plus the achievements unlocked by this change. */

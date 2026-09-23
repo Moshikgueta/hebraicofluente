@@ -24,7 +24,9 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { He, HeCloze } from '@/components/hebrew/He';
 import { AudioButton, hasAudio } from './AudioButton';
-import { BuildSyllable, BuildWord, Hints, MatchPairs, TypeAnswer } from './Answers';
+import {
+  BuildLetters, BuildSyllable, BuildWord, Hints, MatchPairs, TypeAnswer, TypeHebrew
+} from './Answers';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import type { Exercise } from '@/lib/engine/exercises';
@@ -116,7 +118,7 @@ export function ExercisePlayer({
     }
     answer({
       itemId: ex.id, letterId: ex.letterId, correct, skill: ex.skill,
-      expected: opts.expected, chosen: opts.chosenGlyph
+      expected: opts.expected, chosen: opts.chosenGlyph, kind: ex.kind
     });
   }, [settled, ex, i, answer]);
 
@@ -125,7 +127,9 @@ export function ExercisePlayer({
   const choose = useCallback((idx: number) => {
     if (settled || !ex || !isChoice(ex)) return;
     const correct = idx === ex.answer;
-    const glyphLevel = GLYPH_CONFUSION.has(ex.kind);
+    const glyphLevel = GLYPH_CONFUSION.has(ex.kind)
+      /* Na palavra cursiva, só o modo `letra` responde com uma LETRA. */
+      || (ex.kind === 'cursive-word' && ex.modo === 'letra');
     settle(correct, {
       chosen: idx,
       why: correct ? null : (ex.whyPt?.[idx] ?? null),
@@ -233,7 +237,16 @@ export function ExercisePlayer({
       <Card className="p-5 sm:p-7 grid gap-6">
         <h2 className="text-[19px] sm:text-[21px] font-semibold leading-snug">{ex.promptPt}</h2>
 
-        <Body ex={ex} settled={!!settled} settledState={settled} onChoose={choose} onSettle={settle} />
+        {/* A CHAVE é o item, e não é enfeite. Sem ela o React reaproveita o
+            componente de resposta quando dois itens seguidos são do mesmo
+            tipo, e o estado de um vaza para o outro: as peças postas na
+            palavra anterior apareciam como usadas na seguinte, e o texto
+            digitado continuava na caixa. Nas lições isso não aparecia porque
+            `spread` nunca põe dois tipos iguais lado a lado; nos modos da
+            academia que são de um tipo só - construir, digitar - aparecia no
+            segundo item. Pego por `rodada2.mjs`. */}
+        <Body key={`${i}:${ex.id}`} ex={ex} settled={!!settled} settledState={settled}
+              onChoose={choose} onSettle={settle} />
 
         {!settled && <Hints hints={ex.hintsPt} audioId={ex.audioId ?? null} />}
       </Card>
@@ -366,6 +379,31 @@ function Body({
         />
       );
 
+    case 'build-letters':
+      return (
+        <BuildLetters
+          tiles={ex.tiles} letras={ex.letras} pt={ex.pt}
+          cursiva={ex.cursiva} settled={settled}
+          onAnswer={(correct, erro) => onSettle(correct, {
+            why: correct ? null : erro
+              ? `Na primeira tentativa, a ${erro.posicao + 1}ª letra era ${erro.esperada}, e não ${erro.posta}.`
+              : null,
+            /* A troca que conta é a da PRIMEIRA tentativa: é ela que diz o que
+               o aluno confunde. Vai para o mesmo monte das outras trocas de
+               letra, e a Batalha a lê depois. */
+            expected: erro?.esperada, chosenGlyph: erro?.posta
+          })}
+        />
+      );
+
+    case 'type-hebrew':
+      return (
+        <TypeHebrew
+          accept={ex.accept} settled={settled} correct={settledState?.correct ?? null}
+          onAnswer={correct => onSettle(correct)}
+        />
+      );
+
     case 'type-answer':
       return (
         <TypeAnswer
@@ -393,6 +431,19 @@ function Stimulus({ ex }: { ex: Exercise }) {
     case 'meaning-to-word':
     case 'odd-one-out':
       return null;
+    /* A palavra à mão, sem vogais - ou, no modo que vai da impressa para a
+       cursiva, a palavra impressa, com elas. No modo `letra`, uma letra da
+       palavra cursiva vem destacada. */
+    case 'cursive-word':
+      return (
+        <div className="flex justify-center py-3">
+          {ex.modo === 'para-cursiva'
+            ? <He size="display">{ex.he}</He>
+            : <He size="display" cursive mark={ex.modo === 'letra' ? ex.marca ?? null : null}>
+                {ex.escrita}
+              </He>}
+        </div>
+      );
     case 'print-vs-cursive':
       /* O estímulo está numa forma e as alternativas na outra - qual é qual
          vem do próprio exercício, porque as duas direções existem. */
@@ -589,7 +640,8 @@ const hebrewOptionsOf = (ex: Exercise): boolean =>
   ex.kind === 'print-vs-cursive' || ex.kind === 'meaning-to-word' ||
   ex.kind === 'complete-word' || ex.kind === 'audio-recognition' ||
   ex.kind === 'sound-to-syllable' || ex.kind === 'listen-syllable' ||
-  ex.kind === 'odd-one-out' || ex.kind === 'letter-in-word';
+  ex.kind === 'odd-one-out' || ex.kind === 'letter-in-word' ||
+  (ex.kind === 'cursive-word' && ex.modo !== 'significado');
   /* `letter-position` responde em PORTUGUÊS - começo, meio, fim -, então
      fica de fora: a pergunta é sobre a palavra, a resposta é sobre lugar. */
   /* scene-reading answers in PORTUGUESE - the Hebrew is the question. */
@@ -618,7 +670,8 @@ function OptionButton({
   const hebrewOption = hebrewOptionsOf(ex);
   /* Nas duas formas da mesma letra, a alternativa está sempre no desenho
      CONTRÁRIO ao do estímulo. */
-  const cursive = ex.kind === 'print-vs-cursive' && ex.mostra === 'impressa';
+  const cursive = (ex.kind === 'print-vs-cursive' && ex.mostra === 'impressa')
+    || (ex.kind === 'cursive-word' && ex.modo === 'para-cursiva');
 
   const TONE = {
     idle:  'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]',

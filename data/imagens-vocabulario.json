@@ -1,0 +1,288 @@
+{
+ "_leia": "Imagens do vocabulário. Chave = a palavra em hebraico, exatamente como em data/letters.json. 'image' fica null até o arquivo existir em app/public/vocabulario/; o exportador recusa caminho para arquivo inexistente e chave que não é palavra do curso. 'imagePrompt' descreve só a CENA; o estilo comum está em 'estilo' e é juntado na frente de todo prompt. Direção visual: DIRECAO-VISUAL-VOCABULARIO.md.",
+ "estilo": "Flat editorial illustration for an adult language-learning app. Simple geometric shapes, soft rounded corners, thin or no outlines. Limited palette taken from the product: deep petrol navy #0E3B43, teal #1F8A7D, pale teal #E4F1EE, warm sand #F3F0E9, one muted gold accent #B8862F, near-black #1B211F for small details. Plain off-white background #FBF9F5, generous empty space, one subject centred, no text, no letters, no logos, no gradients, no photorealism, not childish, no cartoon faces with big eyes. Square 1:1, 1024x1024.",
+ "palavras": {
+  "אִמָּא": {
+   "pt": "mãe",
+   "image": null,
+   "imageAlt": "Uma mulher adulta sorrindo, de mãos dadas com uma criança pequena.",
+   "imagePrompt": "a mother holding the hand of a small child, both smiling"
+  },
+  "מַיִם": {
+   "pt": "água",
+   "image": null,
+   "imageAlt": "Um copo transparente cheio de água, com uma gota caindo.",
+   "imagePrompt": "a clear glass full of water with a single drop falling into it"
+  },
+  "מִשְׁפָּחָה": {
+   "pt": "família",
+   "image": null,
+   "imageAlt": "Quatro pessoas de idades diferentes, lado a lado, abraçadas.",
+   "imagePrompt": "a family of four of different ages standing side by side, arms around each other"
+  },
+  "מֶלֶךְ": {
+   "pt": "rei",
+   "image": null,
+   "imageAlt": "Uma coroa dourada simples sobre uma almofada.",
+   "imagePrompt": "a simple golden crown resting on a cushion"
+  },
+  "תֵּה": {
+   "pt": "chá",
+   "image": null,
+   "imageAlt": "Uma xícara de chá fumegante com um saquinho pendurado.",
+   "imagePrompt": "a steaming cup of tea with a tea bag tag hanging over the rim"
+  },
+  "תַּפּוּחַ": {
+   "pt": "maçã",
+   "image": null,
+   "imageAlt": "Uma maçã vermelha com uma folha no cabo.",
+   "imagePrompt": "a single red apple with one leaf on the stem"
+  },
+  "חַלּוֹן": {
+   "pt": "janela",
+   "image": null,
+   "imageAlt": "Uma janela aberta com cortina leve e céu ao fundo.",
+   "imagePrompt": "an open window with a light curtain and sky behind it"
+  },
+  "יָם": {
+   "pt": "mar",
+   "image": null,
+   "imageAlt": "Ondas do mar sob um céu claro, com a linha do horizonte.",
+   "imagePrompt": "gentle sea waves under a clear sky, horizon line visible"
+  },
+  "יַלְדָּה": {
+   "pt": "menina",
+   "image": null,
+   "imageAlt": "Uma menina de uns oito anos, de mochila, acenando.",
+   "imagePrompt": "a girl about eight years old wearing a backpack, waving"
+  },
+  "גַּן": {
+   "pt": "jardim · jardim de infância",
+   "image": null,
+   "imageAlt": "Um pequeno jardim com flores e um banco.",
+   "imagePrompt": "a small garden with flowers and a wooden bench"
+  },
+  "גַּג": {
+   "pt": "telhado",
+   "image": null,
+   "imageAlt": "O telhado de uma casa, com telhas e uma chaminé.",
+   "imagePrompt": "the tiled roof of a house with a chimney"
+  },
+  "אֲגַם": {
+   "pt": "lago",
+   "image": null,
+   "imageAlt": "Um lago calmo cercado de árvores, com um barquinho.",
+   "imagePrompt": "a calm lake surrounded by trees with a small rowing boat"
+  },
+  "גְּלִידָה": {
+   "pt": "sorvete",
+   "image": null,
+   "imageAlt": "Uma casquinha de sorvete com duas bolas.",
+   "imagePrompt": "an ice cream cone with two scoops"
+  },
+  "יָד": {
+   "pt": "mão",
+   "image": null,
+   "imageAlt": "Uma mão aberta, palma para a frente.",
+   "imagePrompt": "an open hand, palm facing forward"
+  },
+  "דָּג": {
+   "pt": "peixe",
+   "image": null,
+   "imageAlt": "Um peixe nadando, de perfil.",
+   "imagePrompt": "a single fish swimming, side view"
+  },
+  "דּוֹדָה": {
+   "pt": "tia",
+   "image": null,
+   "imageAlt": "Uma mulher adulta abaixada para abraçar uma sobrinha.",
+   "imagePrompt": "an adult woman bending down to hug her young niece"
+  },
+  "אִשָּׁה": {
+   "pt": "mulher",
+   "image": null,
+   "imageAlt": "Uma mulher adulta em pé, sorrindo.",
+   "imagePrompt": "an adult woman standing and smiling"
+  },
+  "שֶׁמֶשׁ": {
+   "pt": "sol",
+   "image": null,
+   "imageAlt": "Um sol redondo e brilhante num céu limpo.",
+   "imagePrompt": "a round bright sun in a clear sky"
+  },
+  "יֶלֶד": {
+   "pt": "menino",
+   "image": null,
+   "imageAlt": "Um menino de uns oito anos segurando uma bola.",
+   "imagePrompt": "a boy about eight years old holding a ball"
+  },
+  "לַיְלָה": {
+   "pt": "noite",
+   "image": null,
+   "imageAlt": "Um céu noturno com lua crescente e estrelas sobre casas.",
+   "imagePrompt": "a night sky with a crescent moon and stars over rooftops"
+  },
+  "לֶחֶם": {
+   "pt": "pão",
+   "image": null,
+   "imageAlt": "Um pão redondo e dourado, com uma fatia cortada.",
+   "imagePrompt": "a round golden loaf of bread with one slice cut"
+  },
+  "הַר": {
+   "pt": "montanha",
+   "image": null,
+   "imageAlt": "Uma montanha com o pico nevado.",
+   "imagePrompt": "a mountain with a snowy peak"
+  },
+  "נָהָר": {
+   "pt": "rio",
+   "image": null,
+   "imageAlt": "Um rio correndo entre margens verdes.",
+   "imagePrompt": "a river flowing between green banks"
+  },
+  "רְחוֹב": {
+   "pt": "rua",
+   "image": null,
+   "imageAlt": "Uma rua de cidade com calçada, poste e casas.",
+   "imagePrompt": "a city street with a sidewalk, a street lamp and houses"
+  },
+  "חָבֵר": {
+   "pt": "amigo",
+   "image": null,
+   "imageAlt": "Dois amigos adultos rindo, um com a mão no ombro do outro.",
+   "imagePrompt": "two adult friends laughing, one with a hand on the other shoulder"
+  },
+  "וֶרֶד": {
+   "pt": "rosa (flor)",
+   "image": null,
+   "imageAlt": "Uma rosa vermelha com o cabo e duas folhas.",
+   "imagePrompt": "a single red rose with its stem and two leaves"
+  },
+  "אֹזֶן": {
+   "pt": "orelha",
+   "image": null,
+   "imageAlt": "O perfil de uma cabeça com a orelha em destaque.",
+   "imagePrompt": "a head in profile with the ear highlighted"
+  },
+  "אָח": {
+   "pt": "irmão",
+   "image": null,
+   "imageAlt": "Dois irmãos, um mais velho e um mais novo, lado a lado.",
+   "imagePrompt": "two brothers, one older and one younger, side by side"
+  },
+  "מִטָּה": {
+   "pt": "cama",
+   "image": null,
+   "imageAlt": "Uma cama arrumada com travesseiro e cobertor.",
+   "imagePrompt": "a made bed with a pillow and a blanket"
+  },
+  "מִטְרִיָּה": {
+   "pt": "guarda-chuva",
+   "image": null,
+   "imageAlt": "Um guarda-chuva aberto sob gotas de chuva.",
+   "imagePrompt": "an open umbrella under falling raindrops"
+  },
+  "סוּס": {
+   "pt": "cavalo",
+   "image": null,
+   "imageAlt": "Um cavalo marrom em pé, de perfil.",
+   "imagePrompt": "a brown horse standing, side view"
+  },
+  "סַל": {
+   "pt": "cesta",
+   "image": null,
+   "imageAlt": "Uma cesta de vime com frutas.",
+   "imagePrompt": "a wicker basket with fruit"
+  },
+  "אוֹטוֹבּוּס": {
+   "pt": "ônibus",
+   "image": null,
+   "imageAlt": "Um ônibus urbano de frente.",
+   "imagePrompt": "a city bus seen from the front"
+  },
+  "כִּסֵּא": {
+   "pt": "cadeira",
+   "image": null,
+   "imageAlt": "Uma cadeira de madeira simples.",
+   "imagePrompt": "a simple wooden chair"
+  },
+  "עִיר": {
+   "pt": "cidade",
+   "image": null,
+   "imageAlt": "Prédios de uma cidade vistos de longe.",
+   "imagePrompt": "a city skyline seen from a distance"
+  },
+  "עֵץ": {
+   "pt": "árvore",
+   "image": null,
+   "imageAlt": "Uma árvore frondosa com tronco grosso.",
+   "imagePrompt": "a leafy tree with a thick trunk"
+  },
+  "מִיץ": {
+   "pt": "suco",
+   "image": null,
+   "imageAlt": "Um copo de suco de laranja com uma laranja cortada ao lado.",
+   "imagePrompt": "a glass of orange juice with a halved orange beside it"
+  },
+  "קָפֶה": {
+   "pt": "café",
+   "image": null,
+   "imageAlt": "Uma xícara de café com fumaça.",
+   "imagePrompt": "a steaming cup of coffee"
+  },
+  "אַבָּא": {
+   "pt": "pai",
+   "image": null,
+   "imageAlt": "Um homem adulto carregando uma criança nos ombros.",
+   "imagePrompt": "a father carrying a young child on his shoulders"
+  },
+  "בַּיִת": {
+   "pt": "casa",
+   "image": null,
+   "imageAlt": "Uma casa simples com porta, janelas e telhado.",
+   "imagePrompt": "a simple house with a door, windows and a roof"
+  },
+  "לֵב": {
+   "pt": "coração",
+   "image": null,
+   "imageAlt": "Um coração vermelho desenhado.",
+   "imagePrompt": "a red heart shape"
+  },
+  "כֶּלֶב": {
+   "pt": "cachorro",
+   "image": null,
+   "imageAlt": "Um cachorro sentado, olhando para a frente.",
+   "imagePrompt": "a dog sitting and looking forward"
+  },
+  "כּוֹס": {
+   "pt": "copo",
+   "image": null,
+   "imageAlt": "Um copo de vidro vazio.",
+   "imagePrompt": "an empty drinking glass"
+  },
+  "כַּדּוּר": {
+   "pt": "bola",
+   "image": null,
+   "imageAlt": "Uma bola de futebol.",
+   "imagePrompt": "a football (soccer ball)"
+  },
+  "סֵפֶר": {
+   "pt": "livro",
+   "image": null,
+   "imageAlt": "Um livro aberto.",
+   "imagePrompt": "an open book"
+  },
+  "כֶּסֶף": {
+   "pt": "dinheiro",
+   "image": null,
+   "imageAlt": "Algumas moedas e uma nota dobrada.",
+   "imagePrompt": "a few coins and a folded banknote"
+  },
+  "טֶלֶפוֹן": {
+   "pt": "telefone",
+   "image": null,
+   "imageAlt": "Um celular com a tela acesa.",
+   "imagePrompt": "a smartphone with its screen lit"
+  }
+ }
+}

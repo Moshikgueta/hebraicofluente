@@ -61,7 +61,9 @@ const ST = { version: 2, onboarding: { reason: 'familia', goalMinutes: 10, start
    ou desktop", e as duas estavam quebradas. */
 const LARGURAS = [390, 430, 834, 1000];
 const ROTAS = ['/meu-hebraico/', '/mapa/', '/licao/zayin/', '/licao/alef/', '/inicio/',
-               '/revisao/', '/academia/', '/conquistas/', '/perfil/', '/modulo/6/'];
+               '/revisao/', '/academia/', '/conquistas/', '/perfil/', '/modulo/6/',
+               /* 23/09/2026: as telas das atividades de produção. */
+               '/vocabulario/', '/meu-nome/', '/teclado-hebraico/'];
 
 let falhas = 0;
 const navegador = await chromium.launch();

@@ -168,7 +168,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
     const tipo =
       e.temCampo ? 'digitar'
       : /Ligue cada/.test(e.txt) ? 'ligar'
-      : /Monte a s[íi]laba|Monte a palavra|Toque nas .* na ordem/.test(e.txt) ? 'montar'
+      : /Monte a s[íi]laba|Monte a palavra|Monte em cursiva|Toque nas .* na ordem/.test(e.txt) ? 'montar'
       : 'escolher';
     vistos.set(tipo, (vistos.get(tipo) ?? 0) + 1);
 
@@ -216,6 +216,18 @@ async function percorre(letraId, etapa, rotulo, abrir) {
       continue;
     }
 
+    /* MONTAR POR LETRAS não aceita chute eterno: o erro devolve as peças à
+       mesa para refazer, e o robô, que monta sempre na ordem das peças,
+       erraria igual para sempre (a primeira execução deu «montar×988»).
+       O aluno que não sabe tem, a partir do segundo erro, "Mostrar a
+       resposta" - e o robô faz o mesmo que ele. */
+    const desistir = e.botoes.find(x => !x.off && /^Mostrar a resposta/.test(x.txt));
+    if (desistir) {
+      await p.locator('main button').nth(desistir.i).click();
+      await p.waitForTimeout(300);
+      continue;
+    }
+
     const alvos = e.botoes.filter(x => !x.off && !x.etapa && x.txt
       && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt)
       /* Na academia o "← Academia" é BOTÃO, e é o primeiro da tela: tocar
@@ -223,7 +235,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
          «respondi 0 de 8» num treino que funcionava. */
       && !/^←/.test(x.txt)
       /* Ver a nota em `rotulo`: desfazer o próprio trabalho é um laço. */
-      && !/^Tirar a peça/i.test(x.rotulo));
+      && !/^Tirar a (peça|letra)/i.test(x.rotulo));
     if (!alvos.length) {
       if (++travas > 3) { erro(`${letraId}/${rotulo}: travei sem alternativa para tocar`); break; }
       await p.waitForTimeout(400);

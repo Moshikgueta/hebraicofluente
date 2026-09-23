@@ -247,7 +247,20 @@ export function mergeStates(local: LearnerState, remoto: LearnerState): LearnerS
     /* Um "primeiro" é sempre o mais antigo: a primeira palavra lida sem
        transliteração aconteceu uma vez, no aparelho em que aconteceu. */
     firsts: fundirMapa(a.firsts, b.firsts, (x, y) => cedo(x, y)!),
-    gym: fundirMapa(a.gym, b.gym, fundirGym)
+    gym: fundirMapa(a.gym, b.gym, fundirGym),
+    /* O nome é uma DECISÃO do aluno, e vale a mais recente - ao contrário do
+       onboarding, ele pode ser revisto (o certificado pede para conferir).
+       Empate de data fica com o lado local, e a data é o critério, então
+       dois aparelhos não ficam trocando o nome um do outro. */
+    nomeHebraico: !a.nomeHebraico ? b.nomeHebraico ?? null
+      : !b.nomeHebraico ? a.nomeHebraico
+      : (a.nomeHebraico.confirmadoEm >= b.nomeHebraico.confirmadoEm ? a.nomeHebraico : b.nomeHebraico),
+    /* Contadores que só sobem: o maior de cada lado, como os acertos das
+       habilidades. Somar contaria duas vezes o que os dois aparelhos já
+       trocaram numa sincronização anterior. */
+    kinds: fundirMapa(a.kinds ?? {}, b.kinds ?? {}, (x, y) => ({
+      h: Math.max(x.h, y.h), m: Math.max(x.m, y.m)
+    }))
   };
 }
 

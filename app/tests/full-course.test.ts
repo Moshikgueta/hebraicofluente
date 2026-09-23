@@ -19,6 +19,8 @@ import {
   syncAchievements, addDays
 } from '../src/lib/state/rules';
 import { EMPTY_STATE, type LearnerState } from '../src/lib/state/types';
+import { leituraDe } from '../src/lib/leitura';
+import { MARCOS_DE_LEITURA, marcoId } from '../src/lib/engine/palavras';
 
 const letters = allLetters();
 const EXTRA_IDS = course.modules.filter(m => !m.letterIds.length).map(m => m.id);
@@ -102,6 +104,13 @@ function playEverything() {
         s = markFirst(s, 'leitura-sem-translit');
       }
 
+      /* O fim da lição mostra quantas palavras ele lê, e é essa tela que
+         grava os marcos (lib/vocabulario.ts). A simulação faz o mesmo. */
+      const lidas = leituraDe(s).legiveis.length;
+      for (const marco of MARCOS_DE_LEITURA) {
+        if (lidas >= marco && !s.firsts[marcoId(marco)]) s = markFirst(s, marcoId(marco));
+      }
+
       /* The checkpoint runs on the same day as the module's last lesson,
          because that is what the dashboard actually sends the learner to. */
       if (li < m.letterIds.length - 1) day = addDays(day, 1);
@@ -118,6 +127,9 @@ function playEverything() {
       day = addDays(day, 1);
     }
   }
+
+  /* O bônus do nome, que um aluno que faz o curso inteiro também faz. */
+  s = markFirst(s, 'meu-nome');
 
   /* The final challenge. */
   const final = buildCheckpoint(letters, letters, { audioAvailable: false, count: 20 });

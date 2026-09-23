@@ -38,6 +38,7 @@ export const PAGAS = [
   '/licao', '/modulo', '/checkpoint', '/extra', '/revisao', '/academia',
   '/mapa', '/desafio-final', '/certificado', '/concluido', '/conquistas',
   '/historia', '/inicio', '/onboarding', '/meu-hebraico',
+  '/vocabulario', '/meu-nome', '/teclado-hebraico',
   '/audio'
 ] as const;
 

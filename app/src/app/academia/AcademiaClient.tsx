@@ -29,6 +29,7 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, type Letter } from '@/lib/content';
 import { onCarrier } from '@/lib/hebrew';
 import { availableModes, buildGym, confusionPair, type GymMode } from '@/lib/engine/gym';
+import { GuiaTeclado } from '@/components/learn/GuiaTeclado';
 import {
   montarBatalha, montarCacada, montarCursiva, paresParaTreinar,
   nivelDe, NIVEL_LABEL, type Nivel
@@ -61,6 +62,8 @@ const DE_BARALHO = (j: Jogo): j is JogoDeBaralho =>
 type Screen =
   | { kind: 'menu' }
   | { kind: 'run'; mode: GymMode; startedAt: number }
+  /* O guia do teclado, entre o toque no modo de digitação e o modo. */
+  | { kind: 'teclado'; mode: GymMode }
   | { kind: 'done'; mode: GymMode; result: PlayerResult; seconds: number }
   /* `dados` guarda a rodada dos jogos de reconhecimento, construída UMA vez.
      ──────────────────────────────────────────────────────────────────────
@@ -134,10 +137,18 @@ export function AcademiaClient() {
     [p.state, unlocked, audio, p.day]
   );
 
+  const tecladoOk = !!p.state.firsts['teclado-hebraico'];
   const start = useCallback((mode: GymMode) => {
+    /* A digitação pede o teclado hebraico, e o aluno confirma UMA vez que o
+       instalou. Sem isso o primeiro exercício seria uma caixa que recebe
+       letras latinas e não há o que corrigir. */
+    if (mode.needsKeyboard && !tecladoOk) {
+      setScreen({ kind: 'teclado', mode });
+      return;
+    }
     track('gym_started', { mode: mode.id });
     setScreen({ kind: 'run', mode, startedAt: Date.now() });
-  }, []);
+  }, [tecladoOk]);
 
   /* Deep-link: o painel manda para cá com o jogo já escolhido, para que
      "Match" no painel seja um toque e não três. */
@@ -375,6 +386,25 @@ export function AcademiaClient() {
           </Button>
           <LinkButton href="/meu-hebraico" variant="ghost">Continuar o curso</LinkButton>
         </Milestone>
+      </div>
+    );
+  }
+
+  if (screen.kind === 'teclado') {
+    const mode = screen.mode;
+    return (
+      <div className="focus-col grid gap-5">
+        <GymHeader mode={mode} label="Antes: o teclado hebraico" onBack={() => setScreen({ kind: 'menu' })} />
+        <p className="font-ui text-[16px] leading-relaxed text-ink-body m-0">
+          Este é o único exercício do curso que pede o teclado hebraico do seu aparelho.
+          Adicione uma vez - leva um minuto - e ele fica disponível ao lado do português.
+        </p>
+        <GuiaTeclado onConfirmar={() => {
+          p.markFirst('teclado-hebraico');
+          track('keyboard_confirmed', {});
+          track('gym_started', { mode: mode.id });
+          setScreen({ kind: 'run', mode, startedAt: Date.now() });
+        }} />
       </div>
     );
   }

@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/Button';
 import { AudioButton, hasAudio } from './AudioButton';
 import { clean, joinSyllable, onCarrier } from '@/lib/hebrew';
 import { typedIsCorrect } from '@/lib/engine/types';
+import { hebraicoDigitadoCerto, pareceTecladoLatino } from '@/lib/engine/palavras';
 import { rng, shuffled } from '@/lib/engine/rng';
 
 /* ── build a syllable ───────────────────────────────────────────────────
@@ -146,6 +147,201 @@ export function BuildWord({
         )}
         <span className="font-ui text-[13px] text-ink-muted ml-auto">soa “{hintPt}”</span>
       </div>
+    </div>
+  );
+}
+
+/* ── montar a palavra letra por letra ───────────────────────────────────
+   O mesmo gesto do `BuildWord` - tocar para pôr, tocar na peça posta para
+   tirar -, com três diferenças que são o exercício:
+
+   · há letras na mesa que NÃO são da palavra (nos níveis de cima), então a
+     palavra está pronta quando tem o número certo de letras, e não quando a
+     mesa acaba;
+   · o erro NÃO entrega a resposta. Ele diz em que posição a primeira letra
+     errada está, qual letra deveria estar lá, e devolve à mesa tudo dali
+     para a frente - o aluno reconstrói a partir do erro. Só na terceira
+     tentativa aparece "mostrar a resposta";
+   · a nota é a da PRIMEIRA tentativa, e a troca registrada é a primeira
+     letra errada: é essa que diz o que o aluno confunde. Refazer ensina,
+     mas não apaga o erro do registro. */
+export type ErroDeConstrucao = { posicao: number; esperada: string; posta: string };
+
+export function BuildLetters({
+  tiles, letras, pt, cursiva, settled, onAnswer
+}: {
+  tiles: string[]; letras: string[]; pt: string | null; cursiva: boolean;
+  settled: boolean;
+  /** `correct` é a primeira tentativa; `erro` é o primeiro erro, se houve. */
+  onAnswer: (correct: boolean, erro: ErroDeConstrucao | null) => void;
+}) {
+  const [built, setBuilt] = useState<number[]>([]);
+  const [tentativa, setTentativa] = useState(0);
+  const [aviso, setAviso] = useState<string | null>(null);
+  const primeiroErro = useRef<ErroDeConstrucao | null>(null);
+  const used = new Set(built);
+  const cheia = built.length === letras.length;
+
+  const conferir = () => {
+    const postas = built.map(i => tiles[i]!);
+    const p = postas.findIndex((g, k) => g !== letras[k]);
+    if (p < 0) {
+      onAnswer(tentativa === 0, primeiroErro.current);
+      setAviso(null);
+      return;
+    }
+    const erro = { posicao: p, esperada: letras[p]!, posta: postas[p]! };
+    if (!primeiroErro.current) primeiroErro.current = erro;
+    setTentativa(t => t + 1);
+    /* Fica o que estava certo antes do erro; o resto volta para a mesa. */
+    setBuilt(b => b.slice(0, p));
+    setAviso(`A ${p + 1}ª letra, contando da direita, é ${letras[p]} - você pôs ${postas[p]}. `
+      + 'As letras certas ficaram; continue dali.');
+  };
+
+  const desistir = () => {
+    /* A resposta montada com as peças da mesa, para o aluno VER a palavra
+       feita com as mesmas letras que ele tinha. Uma peça por posição: אמא
+       usa os dois א, e não o mesmo duas vezes. */
+    setBuilt(letras.reduce<number[]>(
+      (acc, g) => [...acc, tiles.findIndex((t, j) => t === g && !acc.includes(j))], []));
+    onAnswer(false, primeiroErro.current);
+  };
+
+  return (
+    <div className="grid gap-4">
+      {/* O som já está no enunciado; aqui só o que ajuda além dele. No nível
+          avançado não há significado, e a linha some se não houver nada. */}
+      {(pt || cursiva) && (
+        <p className="font-ui text-[14px] text-ink-muted m-0">
+          {pt ? <>Quer dizer <strong className="text-ink">{pt}</strong></> : null}
+          {pt && cursiva ? ' · ' : null}
+          {cursiva ? (pt ? 'as letras estão escritas à mão' : 'As letras estão escritas à mão.') : null}
+        </p>
+      )}
+      <div
+        className="he-seq min-h-[96px] rounded-[var(--r-lg)] border-2 border-dashed border-line
+                   bg-surface-2 px-4 py-3 justify-center"
+        aria-label={`Palavra em construção: ${built.length} de ${letras.length} letras`}
+      >
+        {built.length === 0 ? (
+          <span className="font-ui text-[13px] text-ink-muted" dir="ltr">
+            toque nas letras na ordem - a primeira fica à direita
+          </span>
+        ) : built.map((t, pos) => (
+          <button
+            key={`${t}-${pos}`}
+            type="button"
+            disabled={settled}
+            onClick={() => setBuilt(b => b.filter((_, k) => k !== pos))}
+            aria-label={`Tirar a letra ${pos + 1}`}
+            className="min-h-[56px] min-w-[48px] px-2 rounded-[var(--r-md)] bg-surface
+                       border border-line grid place-items-center disabled:cursor-default"
+          >
+            <He size="word" cursive={cursiva}>{tiles[t]!}</He>
+          </button>
+        ))}
+      </div>
+
+      {aviso && !settled && (
+        <p role="status" className="rounded-[var(--r-md)] bg-[var(--amber-wash)] text-[var(--amber)]
+                                    px-4 py-3 font-ui text-[14px] leading-relaxed m-0">
+          {aviso}
+        </p>
+      )}
+
+      <ul className="flex flex-wrap gap-2.5 justify-center list-none p-0 m-0" dir="rtl"
+          aria-label="Letras para montar">
+        {tiles.map((t, i) => (
+          <li key={`${t}-${i}`}>
+            <button
+              type="button"
+              disabled={settled || used.has(i) || cheia}
+              onClick={() => setBuilt(b => (b.length < letras.length ? [...b, i] : b))}
+              aria-label={`Letra ${t}`}
+              className={`min-h-[64px] min-w-[60px] px-3 rounded-[var(--r-md)] border-2
+                grid place-items-center transition-colors
+                ${used.has(i)
+                  ? 'border-line-soft bg-surface-2 opacity-35'
+                  : 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'}`}
+            >
+              <He size="word" cursive={cursiva} dim={used.has(i)}>{t}</He>
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      <div className="flex flex-wrap items-center gap-3">
+        <Button onClick={conferir} disabled={!cheia || settled} size="md">Conferir</Button>
+        {built.length > 0 && !settled && (
+          <Button variant="ghost" size="sm" onClick={() => setBuilt([])}>Recomeçar</Button>
+        )}
+        {tentativa >= 2 && !settled && (
+          <Button variant="ghost" size="sm" onClick={desistir}>Mostrar a resposta</Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── digitar em hebraico ────────────────────────────────────────────────
+   A caixa do `TypeAnswer`, com três ajustes: ela é RTL e hebraica; aceita a
+   letra de meio no lugar da final e ignora vogais (ver `hebraicoDigitadoCerto`);
+   e percebe quando o que chegou é alfabeto latino - o teclado não trocou -,
+   que é um tropeço de aparelho e não de hebraico, e por isso não conta como
+   resposta: a caixa só avisa. */
+export function TypeHebrew({
+  accept, settled, correct, onAnswer
+}: {
+  accept: string[]; settled: boolean; correct: boolean | null;
+  onAnswer: (correct: boolean) => void;
+}) {
+  const [value, setValue] = useState('');
+  const [latino, setLatino] = useState(false);
+
+  const submit = () => {
+    if (settled || !value.trim()) return;
+    if (pareceTecladoLatino(value)) { setLatino(true); return; }
+    setLatino(false);
+    onAnswer(hebraicoDigitadoCerto(value, accept));
+  };
+
+  return (
+    <div className="grid gap-3">
+      <div className="flex flex-wrap items-center gap-3">
+        <input
+          value={value}
+          onChange={e => { setValue(e.target.value); if (latino) setLatino(false); }}
+          onKeyDown={e => {
+            if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); submit(); }
+          }}
+          disabled={settled}
+          dir="rtl"
+          lang="he"
+          autoComplete="off" autoCapitalize="off" autoCorrect="off" spellCheck={false}
+          aria-label="Sua resposta, em hebraico"
+          /* Em português: um exemplo em hebraico usaria letras que o aluno
+             ainda não aprendeu - a digitação abre na lição do Mem. */
+          placeholder="digite aqui, em hebraico"
+          className={`flex-1 min-w-[180px] min-h-[56px] px-4 rounded-[var(--r-md)] border-2
+            bg-surface he text-[24px] text-ink placeholder:text-ink-muted placeholder:text-[16px]
+            ${settled && correct === true ? 'border-[var(--green)]'
+              : settled && correct === false ? 'border-[var(--amber)]'
+              : 'border-line focus:border-[var(--accent-soft)]'}`}
+        />
+        <Button onClick={submit} disabled={settled || !value.trim()} size="md">Conferir</Button>
+      </div>
+      {latino && (
+        <p role="status" className="font-ui text-[14px] text-[var(--amber)] m-0">
+          Isso chegou em letras latinas: o teclado ainda está em português. Troque para
+          o hebraico (o globo ou a tecla de idioma) e digite de novo.
+        </p>
+      )}
+      {settled && correct === false && (
+        <p className="font-ui text-[14px] text-ink-body m-0">
+          O certo era <He size="word">{accept[0]!}</He>.
+        </p>
+      )}
     </div>
   );
 }

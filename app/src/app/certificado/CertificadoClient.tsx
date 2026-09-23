@@ -30,6 +30,8 @@ import {
   type CertificateFormat
 } from '@/lib/certificate';
 import { track } from '@/lib/analytics';
+import { EditorDeNome } from '@/components/learn/MeuNome';
+import { sugerirNome } from '@/lib/nome-hebraico';
 
 export function CertificadoClient() {
   const p = useProgress();
@@ -39,6 +41,13 @@ export function CertificadoClient() {
   const [touched, setTouched] = useState(false);
   const [busy, setBusy] = useState(false);
   const [said, setSaid] = useState<string | null>(null);
+  /* O nome em hebraico: opcional, e só entra no desenho depois de CONFERIDO.
+     Vem preenchido com o que o aluno já confirmou na atividade do nome, ou
+     com a primeira sugestão - e mesmo assim precisa da confirmação aqui,
+     porque um certificado é o lugar em que um erro de grafia fica. */
+  const [comHebraico, setComHebraico] = useState(false);
+  const [grafiaHe, setGrafiaHe] = useState('');
+  const [conferida, setConferida] = useState(false);
 
   const gate = certificateReady(p.state, course.totalLetters);
   const letters = allLetters().map(l => l.letter);
@@ -55,8 +64,9 @@ export function CertificadoClient() {
   const redraw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas || !gate.ready) return;
-    void drawCertificate(canvas, { name, date, letters, score, format });
-  }, [name, date, letters, score, format, gate.ready]);
+    const nameHe = comHebraico && conferida ? grafiaHe : null;
+    void drawCertificate(canvas, { name, date, letters, score, format, nameHe });
+  }, [name, date, letters, score, format, gate.ready, comHebraico, conferida, grafiaHe]);
 
   useEffect(() => { redraw(); }, [redraw]);
 
@@ -201,6 +211,62 @@ export function CertificadoClient() {
                        font-ui text-[17px] text-ink placeholder:text-ink-muted
                        focus:border-[var(--accent-soft)]"
           />
+        </div>
+
+        <div className="grid gap-3 rounded-[var(--r-lg)] border border-line p-4">
+          <label className="flex items-center gap-3 min-h-[44px] font-ui text-[15px] text-ink cursor-pointer">
+            <input
+              type="checkbox" checked={comHebraico}
+              onChange={e => {
+                const liga = e.target.checked;
+                setComHebraico(liga);
+                setConferida(false);
+                if (liga && !grafiaHe) {
+                  setGrafiaHe(p.state.nomeHebraico?.texto ?? sugerirNome(name)[0] ?? '');
+                }
+              }}
+              className="w-5 h-5"
+            />
+            Adicionar o meu nome em hebraico ao certificado
+          </label>
+          {comHebraico && (
+            <>
+              <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
+                Nome não tem grafia única em hebraico. Confira como ficou e ajuste se
+                precisar - o certificado usa exatamente o que estiver aqui.
+              </p>
+              {sugerirNome(name).length > 1 && (
+                <div className="flex flex-wrap gap-2" role="group" aria-label="Grafias sugeridas">
+                  {sugerirNome(name).map(g => (
+                    <button key={g} type="button" aria-pressed={grafiaHe === g}
+                            onClick={() => { setGrafiaHe(g); setConferida(false); }}
+                            className={`min-h-[48px] px-3 rounded-[var(--r-md)] border-2
+                              ${grafiaHe === g ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]' : 'border-line bg-surface'}`}>
+                      <He size="word">{g}</He>
+                    </button>
+                  ))}
+                </div>
+              )}
+              <EditorDeNome
+                valor={grafiaHe}
+                onChange={v => { setGrafiaHe(v); setConferida(false); }}
+                letras={allLetters()}
+              />
+              <label className="flex items-center gap-3 min-h-[44px] font-ui text-[15px] text-ink cursor-pointer">
+                <input
+                  type="checkbox" checked={conferida} disabled={!grafiaHe.trim()}
+                  onChange={e => {
+                    setConferida(e.target.checked);
+                    if (e.target.checked && grafiaHe.trim() !== p.state.nomeHebraico?.texto) {
+                      p.setNomeHebraico(grafiaHe);
+                    }
+                  }}
+                  className="w-5 h-5"
+                />
+                Conferi: é assim que se escreve o meu nome
+              </label>
+            </>
+          )}
         </div>
 
         <fieldset className="grid gap-2">
