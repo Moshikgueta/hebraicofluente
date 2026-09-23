@@ -69,14 +69,15 @@ export function LessonClient({ letter }: { letter: Letter }) {
      letras andaram custando. */
   const practice = useMemo(
     () => buildLetterPractice(letter, history, {
-      audioAvailable: audioAvailable(), count: 10,
+      audioAvailable: audioAvailable(),
       seed: `pratica-${letter.id}`, weak: p.weak
     }),
     [letter, history, p.weak]
   );
-  /* O mini-teste: seis itens, um de cada coisa que "saber a letra" quer
-     dizer - reconhecer, o som, dentro de uma palavra, a forma que confunde,
-     a CURSIVA, e um de uma letra anterior. Outra semente a cada tentativa. */
+  /* O mini-teste: dez itens, um de cada coisa que "saber a letra" quer dizer
+     - reconhecer, o som ou a variante, dentro de uma palavra, a forma que
+     confunde, a CURSIVA, montar, ler, o significado, e um de uma letra
+     anterior. Outra semente a cada tentativa. */
   const quiz = useMemo(
     () => buildMiniTest(letter, history, {
       audioAvailable: audioAvailable(), seed: `mini-${letter.id}-${quizRun}`

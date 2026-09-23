@@ -17,7 +17,7 @@
  * semente da tentativa - decorar o gabarito não é a habilidade em jogo.
  */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
@@ -36,21 +36,70 @@ export type ResultadoTeste = {
 };
 
 export function TestRun({
-  perguntas, onFim, onResposta
+  perguntas, onFim, onResposta, cronometro = false
 }: {
   perguntas: readonly Pergunta[];
   onFim: (r: ResultadoTeste) => void;
   onResposta?: (a: { id: string; letterId: string; certo: boolean }) => void;
+  /** Mostra o tempo correndo. Os modos `timed` da academia pedem isto. */
+  cronometro?: boolean;
 }) {
   const [i, setI] = useState(0);
   const [escolha, setEscolha] = useState<number | null>(null);
   const [dadas, setDadas] = useState<RespostaTeste[]>([]);
   const [inicio] = useState(() => Date.now());
 
+  /* ── A TRAVA, e o defeito que ela conserta ───────────────────────────
+     Relato do aluno: «pressiono uma alternativa e o sistema registra ou
+     avança como se eu tivesse respondido outra carta».
+
+     A causa não era o índice nem o botão - era a guarda. `confirmar` lia
+     `escolha` e `i` do FECHO do render em que foi criado, e dois toques
+     dentro do mesmo quadro veem os dois o mesmo fecho: para o segundo,
+     `escolha` ainda não é nula e `i` ainda é o anterior. Então ele passava
+     pela guarda e fazia tudo de novo - gravava a MESMA pergunta duas vezes
+     em `onResposta`, e chamava `setI(n => n + 1)` duas vezes, que é
+     funcional e portanto avança DOIS. Uma pergunta era pulada, e a resposta
+     que o aluno deu ficava contada na carta errada.
+
+     Pior: `setDadas([...dadas, X])` não é funcional. Com o disparo duplo,
+     as duas chamadas partem do mesmo `dadas` e a segunda sobrescreve a
+     primeira - o teste perdia uma resposta inteira sem avisar.
+
+     Estado de React não serve de trava porque ele é assíncrono por
+     contrato. Um `ref` é síncrono: a segunda chamada, no mesmo quadro, já
+     lê o valor que a primeira escreveu. A trava guarda o ÍNDICE já
+     confirmado, e não um booleano, para que ela se solte sozinha na
+     pergunta seguinte sem precisar de ninguém para limpá-la. */
+  const confirmado = useRef(-1);
+
+  /* O cronômetro, quando o modo pede um.
+     ─────────────────────────────────────────────────────────────────────
+     Um `setInterval` só, criado quando a rodada começa e desligado no
+     desmonte - é o `return` do efeito que garante que ele não continua
+     correndo depois de a tela fechar, e a lista de dependências vazia que
+     garante que não nasce um segundo a cada render.
+
+     A CONTA do tempo não vem do contador: vem de `Date.now() - inicio`, que
+     é o relógio do sistema. Um contador incrementado a cada tique atrasa -
+     o navegador suspende temporizadores em aba de fundo -, e um cronômetro
+     que atrasa num exercício cujo nome é «contra o relógio» mede a atenção
+     do navegador em vez da do aluno. O tique aqui serve só para redesenhar. */
+  const [agora, setAgora] = useState(() => Date.now());
+  useEffect(() => {
+    if (!cronometro) return;
+    const t = setInterval(() => setAgora(Date.now()), 250);
+    return () => clearInterval(t);
+  }, [cronometro]);
+
   const q = perguntas[i];
 
   const confirmar = useCallback(() => {
     if (escolha === null || !q) return;
+    /* A trava, antes de qualquer efeito. */
+    if (confirmado.current === i) return;
+    confirmado.current = i;
+
     const certo = escolha === q.resposta;
     onResposta?.({ id: q.id, letterId: q.letterId, certo });
     const proximas = [...dadas, { q, escolhida: escolha }];
@@ -72,6 +121,7 @@ export function TestRun({
   }, [escolha, q, dadas, i, perguntas.length, onFim, onResposta, inicio]);
 
   if (!q) return null;
+  const decorridos = Math.max(0, Math.round((agora - inicio) / 1000));
   const emHebraico = q.sentido === 'he';
 
   return (
@@ -84,6 +134,12 @@ export function TestRun({
         <span className="font-ui text-[13px] tabular-nums text-ink-muted">
           {i + 1} / {perguntas.length}
         </span>
+        {cronometro && (
+          <span className="font-ui text-[13px] font-semibold tabular-nums text-ink shrink-0"
+                aria-label={`Tempo decorrido: ${decorridos} segundos`}>
+            {Math.floor(decorridos / 60)}:{String(decorridos % 60).padStart(2, '0')}
+          </span>
+        )}
       </div>
 
       <Card className="p-5 sm:p-7 grid gap-5">

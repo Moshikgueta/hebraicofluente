@@ -121,15 +121,37 @@ describe('a unidade de prática de cada letra', () => {
 });
 
 describe('o mini-teste que fecha a letra', () => {
-  it('tem sempre seis questões', () => {
-    /* Cinco até 21/09/2026, e a sexta é a cursiva - ver a nota no gerador.
-       Com seis, o portão de 80% continua perdoando um erro e recusando
-       dois, que era a forma que ele já tinha com cinco. */
+  it('tem sempre dez questões', () => {
+    /* Cinco até 21/09/2026; seis quando a cursiva ganhou camada própria; dez
+       desde 23/09/2026, quando a fixação passou a cobrar também os gestos de
+       MONTAR, de LER e de ligar palavra a significado - a prova media um
+       quarto do que a lição ensina, e ensinava ao aluno que os outros três
+       gestos não valiam nota.
+
+       E dez não é escolha estética: é o único tamanho que mantém as duas
+       réguas coerentes. Dominar pede 75% e destravar a próxima pede 80%. Com
+       nove itens, 7 acertos dão 78% - dominada e mesmo assim trancada, um
+       estado que nenhuma tela consegue explicar. Com dez, 8 dão 80% e passam
+       nas duas; 7 dão 70% e falham nas duas. Não sobra nota no meio, e o
+       aluno passa a ter dois erros perdoados em vez de um. */
     const fora = letters
       .map(L => ({ L, n: buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-0` }).length }))
-      .filter(x => x.n !== 6)
+      .filter(x => x.n !== 10)
       .map(x => `${x.L.namePt}: ${x.n}`);
     expect(fora).toEqual([]);
+  });
+
+  it('e nenhuma nota cai entre as duas réguas', () => {
+    /* A regra que justifica o dez, medida em vez de afirmada: para todo
+       número de acertos possível, "dominou" e "destravou" têm de dar a mesma
+       resposta. Uma prova em que dá para dominar a letra e continuar com a
+       seguinte trancada é a pior forma de travar alguém - ela não tem tela
+       que explique. */
+    const n = 10;
+    const ambiguos = Array.from({ length: n + 1 }, (_, k) => k / n)
+      .filter(nota => nota >= 0.75 && nota < 0.8)
+      .map(nota => `${Math.round(nota * n)}/${n} = ${Math.round(nota * 100)}%`);
+    expect(ambiguos, 'notas que dominam a letra sem destravar a próxima').toEqual([]);
   });
 
   it('e cobra a direção CONTRÁRIA à da prática, em todas as 22', () => {

@@ -384,6 +384,7 @@ export function AcademiaClient() {
     return (
       <div className="focus-col grid gap-5">
         <GymHeader mode={screen.mode} label={run.label} onBack={() => setScreen({ kind: 'menu' })} />
+        {screen.mode.timed && <Cronometro desde={screen.startedAt} />}
         <ExercisePlayer
           key={screen.mode.id + screen.startedAt}
           exercises={run.exercises}
@@ -705,6 +706,57 @@ function ReferenceCard({
       <span className="font-display text-[15.5px] font-bold text-ink">{title}</span>
       <span className="font-ui text-[13px] leading-relaxed text-ink-muted">{desc}</span>
     </button>
+  );
+}
+
+/* O cronômetro do modo «contra o relógio».
+ * ─────────────────────────────────────────────────────────────────────────
+ * O modo existia com `timed: true` no catálogo desde o começo, e a bandeira
+ * não fazia nada: o tempo era medido no fim, por subtração, e o aluno jogava
+ * um exercício chamado «contra o relógio» sem relógio nenhum na tela. Um
+ * cronômetro que só aparece depois não apressa ninguém.
+ *
+ * Três decisões, e as três são sobre confiabilidade:
+ *
+ * · UM temporizador só. Ele nasce com a tela da rodada e morre no `return`
+ *   do efeito - é isso que garante que ele não continua correndo depois de o
+ *   aluno sair, e a lista de dependências com `desde` é o que garante que
+ *   uma partida nova não herda o relógio da anterior. A tela da rodada é
+ *   recriada a cada partida (`key` com `startedAt`), então não há acúmulo.
+ *
+ * · A CONTA NÃO VEM DO TIQUE. Vem de `Date.now() - desde`, que é o relógio
+ *   do sistema. Um contador incrementado a cada 250 ms atrasa - o navegador
+ *   suspende temporizadores em aba de fundo -, e um cronômetro que atrasa
+ *   mede a atenção do navegador em vez da do aluno. O tique só serve para
+ *   redesenhar.
+ *
+ * · Ele SOBE, e não desce. Não há tempo limite: a pressa aqui é contra o
+ *   próprio tempo da última vez, e um relógio em contagem regressiva
+ *   transformaria um exercício de reconhecimento num exercício de chute.
+ */
+function Cronometro({ desde }: { desde: number }) {
+  const [agora, setAgora] = useState(() => Date.now());
+  useEffect(() => {
+    setAgora(Date.now());
+    const t = setInterval(() => setAgora(Date.now()), 250);
+    return () => clearInterval(t);
+  }, [desde]);
+
+  const s = Math.max(0, Math.round((agora - desde) / 1000));
+  return (
+    <div className="flex items-center justify-center gap-2.5 rounded-[var(--r-md)]
+                    border border-line bg-surface px-4 py-2.5">
+      <span aria-hidden className="font-ui text-[15px] text-ink-muted">◷</span>
+      <span className="font-ui text-[13px] uppercase tracking-[.08em] text-ink-muted">Tempo</span>
+      {/* `aria-live="off"`: o número muda quatro vezes por segundo, e um
+          leitor de tela que o anuncie toda vez cobre a pergunta. Quem precisa
+          do tempo o encontra pelo rótulo; quem não precisa não é
+          interrompido. O total aparece de novo, uma vez, no fim da rodada. */}
+      <span aria-live="off"
+            className="font-ui text-[18px] font-bold tabular-nums text-ink">
+        {Math.floor(s / 60)}:{String(s % 60).padStart(2, '0')}
+      </span>
+    </div>
   );
 }
 

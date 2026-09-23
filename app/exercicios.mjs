@@ -87,7 +87,20 @@ const estado = () => p.evaluate(() => {
   const botoes = [...main.querySelectorAll('button')].map((el, i) => ({
     i, txt: (el.innerText || '').replace(/\s+/g, ' ').trim(),
     off: el.disabled, etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa'),
-    resposta: el.getAttribute('data-resposta')
+    resposta: el.getAttribute('data-resposta'),
+    /* O rótulo acessível, e ele é necessário por causa de um laço infinito.
+       ────────────────────────────────────────────────────────────────────
+       Num item de MONTAR, as peças já colocadas continuam sendo botões - e
+       têm de ser: tocar numa peça posta é como se tira ela de volta, que é a
+       única forma de corrigir a ordem sem recomeçar. Só que elas vêm ANTES
+       das peças disponíveis no documento.
+
+       A varredura tocava sempre o primeiro botão habilitado. Então ela punha
+       uma peça, via a peça posta como primeiro botão, tirava a peça, punha de
+       novo - para sempre. Resultado na saída: «mem/Praticar: respondi 9 de 14
+       itens», que lia como defeito da lição e era o robô brigando consigo
+       mesmo. Um verificador que não sabe operar a tela acusa a tela. */
+    rotulo: el.getAttribute('aria-label') || ''
   }));
   return {
     txt: txt.slice(0, 400),
@@ -126,7 +139,19 @@ async function percorre(letraId, etapa, rotulo) {
      junto - contando no clique, o item 10 de 10 nunca entrava. */
   const julgados = new Set();
 
-  for (let passo = 0; passo < total * 8 + 20; passo++) {
+  /* O TETO DE PASSOS, e por que ele subiu.
+     ──────────────────────────────────────────────────────────────────────
+     Era `total * 8 + 20`, calibrado quando o bloco de prática tinha dez
+     itens e quase todos eram de ESCOLHER, que custam dois passos: tocar e
+     seguir. Em 23/09/2026 o bloco foi para catorze e ganhou os gestos de
+     MONTAR - que custam um toque por peça, mais o de seguir: quatro a cinco
+     passos cada.
+
+     Com o teto antigo a varredura ficava sem passos no meio do bloco e
+     acusava «respondi 9 de 14», que lia como defeito do produto e era
+     defeito da régua. É o mesmo engano de sempre neste projeto: um
+     verificador que não consegue operar a tela acusa a tela. */
+  for (let passo = 0; passo < total * 12 + 30; passo++) {
     const e = await estado();
     /* Acabou quando o player sai da tela: o contador some junto com ele. */
     if (!e.total) break;
@@ -163,7 +188,9 @@ async function percorre(letraId, etapa, rotulo) {
     }
 
     const alvos = e.botoes.filter(x => !x.off && !x.etapa && x.txt
-      && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt));
+      && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt)
+      /* Ver a nota em `rotulo`: desfazer o próprio trabalho é um laço. */
+      && !/^Tirar a peça/i.test(x.rotulo));
     if (!alvos.length) {
       if (++travas > 3) { erro(`${letraId}/${rotulo}: travei sem alternativa para tocar`); break; }
       await p.waitForTimeout(400);

@@ -55,6 +55,34 @@ export function ExercisePlayer({
   const sheetRef = useRef<HTMLDivElement>(null);
   const [sheetH, setSheetH] = useState(0);
 
+  /* ── DUAS TRAVAS, e o defeito que elas consertam ─────────────────────
+     Relato do aluno, no modo «contra o relógio»: «pressiono uma alternativa
+     e o sistema registra ou avança como se eu tivesse respondido outra
+     carta».
+
+     A causa não é o índice nem o botão: é que `settled` e `i` são lidos do
+     FECHO do render. Dois toques dentro do mesmo quadro - toque duplo de
+     polegar, clique repetido, Enter segurado - veem os dois o mesmo fecho,
+     onde `settled` ainda é nulo e `i` ainda é o anterior. Os dois passam
+     pela guarda, e o estragado é o seguinte:
+
+       · `settle` chama `answer()` DUAS vezes para o mesmo item, contando
+         dois acertos no registro de habilidades e, quando o segundo toque
+         cai numa alternativa errada, gravando uma confusão que não houve;
+       · `next` chama `setI(n => n + 1)` duas vezes, e como a atualização é
+         funcional as duas contam: o jogo PULA uma pergunta, e o que o aluno
+         responde em seguida fica contado na carta errada.
+
+     O `disabled` dos botões não salva, porque ele também é do render
+     anterior. Estado de React é assíncrono por contrato; um `ref` é
+     síncrono - a segunda chamada, no mesmo quadro, já lê o que a primeira
+     escreveu.
+
+     As duas travas guardam o ÍNDICE, e não um booleano, para se soltarem
+     sozinhas na pergunta seguinte sem depender de ninguém para limpá-las. */
+  const julgado = useRef(-1);
+  const avancado = useRef(-1);
+
   const ex = exercises[i];
   const isRight = settled?.correct ?? false;
 
@@ -70,6 +98,8 @@ export function ExercisePlayer({
     opts: { chosen?: number | null; why?: string | null; expected?: string; chosenGlyph?: string } = {}
   ) => {
     if (settled || !ex) return;
+    if (julgado.current === i) return;
+    julgado.current = i;
     setSettled({ correct, chosen: opts.chosen ?? null, why: opts.why ?? null });
     if (correct) setCorrectCount(c => c + 1);
     else setMissed(m => [...m, ex.id]);
@@ -88,7 +118,7 @@ export function ExercisePlayer({
       itemId: ex.id, letterId: ex.letterId, correct, skill: ex.skill,
       expected: opts.expected, chosen: opts.chosenGlyph
     });
-  }, [settled, ex, answer]);
+  }, [settled, ex, i, answer]);
 
   /* Choice kinds go through here so option feedback and confusion reporting
      happen in one place. */
@@ -105,6 +135,8 @@ export function ExercisePlayer({
   }, [settled, ex, settle]);
 
   const next = useCallback(() => {
+    if (avancado.current === i) return;
+    avancado.current = i;
     if (i + 1 >= exercises.length) {
       const total = exercises.length;
       onDone({ correct: correctCount, total, score: total ? correctCount / total : 0, missed });

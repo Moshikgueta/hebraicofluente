@@ -44,6 +44,34 @@ export function Blast({
   const inicio = useRef(Date.now());
   const avanco = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  /* A TRAVA, e o defeito que ela conserta.
+     ─────────────────────────────────────────────────────────────────────
+     `responder` guardava com `if (escolha !== null) return`, e `escolha` vem
+     do FECHO do render. Dois toques dentro do mesmo quadro - em alternativas
+     DIFERENTES, que é o que acontece num toque duplo de polegar - veem os
+     dois o mesmo fecho, com `escolha` ainda nula. O segundo passava:
+
+       · gravava um segundo `onResposta` para a MESMA carta, com a letra
+         errada, sujando o registro de confusões que a revisão usa depois;
+       · marcava mais um acerto, porque `setAcertos(n => n + 1)` é funcional
+         e roda as duas vezes;
+       · e agendava um SEGUNDO temporizador por cima do primeiro sem limpá-lo,
+         então os dois disparavam e o jogo pulava uma carta.
+
+     O `disabled` do botão não salva: ele também é do render anterior.
+
+     Estado de React é assíncrono por contrato; um `ref` é síncrono. A trava
+     guarda o índice já respondido, e não um booleano, para se soltar sozinha
+     na carta seguinte. */
+  const respondido = useRef(-1);
+
+  /** Um temporizador por vez: agendar sem limpar o anterior era o outro meio
+   *  do pulo de carta. */
+  const agendar = useCallback((fn: () => void, ms: number) => {
+    if (avanco.current) clearTimeout(avanco.current);
+    avanco.current = setTimeout(fn, ms);
+  }, []);
+
   useEffect(() => () => { if (avanco.current) clearTimeout(avanco.current); }, []);
 
   const q = perguntas[i];
@@ -64,6 +92,8 @@ export function Blast({
 
   const responder = useCallback((idx: number) => {
     if (escolha !== null || !q) return;
+    if (respondido.current === i) return;
+    respondido.current = i;
     const certo = idx === q.resposta;
     setEscolha(idx);
     onResposta?.({ id: q.id, letterId: q.letterId, certo, escolhida: q.opcoes[idx] ?? '' });
@@ -74,7 +104,7 @@ export function Blast({
       setSequencia(nova);
       const marco = ELOGIO.filter(([n]) => n === nova).map(([, t]) => t)[0];
       if (marco) setElogio(marco);
-      avanco.current = setTimeout(() => {
+      agendar(() => {
         setEscolha(null);
         setElogio(null);
         if (i + 1 >= perguntas.length) {
@@ -90,8 +120,8 @@ export function Blast({
 
     setSequencia(0);
     setErradas(l => [...l, q.letterId]);
-    avanco.current = setTimeout(seguinte, 1400);
-  }, [escolha, q, sequencia, i, perguntas.length, acertos, erradas, onFim, onResposta, seguinte]);
+    agendar(seguinte, 1400);
+  }, [escolha, q, sequencia, i, perguntas.length, acertos, erradas, onFim, onResposta, seguinte, agendar]);
 
   /* Teclado: 1-4 respondem. O mesmo atalho do resto do curso. */
   useEffect(() => {

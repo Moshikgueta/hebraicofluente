@@ -239,6 +239,24 @@ function fill(
  * If every remaining item is the same kind, it stays - a set of six matches
  * really is six matches, and reordering cannot change that.
  */
+/* Duas perguntas IGUAIS com ids diferentes.
+   ─────────────────────────────────────────────────────────────────────────
+   O `seen` dos construtores dedupe por `id`, e o id de um exercício carrega o
+   número da rodada: `mem-syl-0` e `mem-syl-3` são ids diferentes. Só que o
+   gerador escolhe o item com `at(pool, i)`, que é modular - então numa letra
+   com três sílabas legíveis a rodada 0 e a rodada 3 devolvem A MESMA sílaba,
+   com a mesma pergunta e as mesmas alternativas, e o dedupe por id não vê
+   nada.
+
+   Isso já podia acontecer nas passadas de preenchimento; passou a importar
+   quando o bloco de prática cresceu, porque um bloco maior chega mais longe
+   na rotação. Então o dedupe passou a ser por CONTEÚDO: o que o aluno lê na
+   tela, e não o nome interno do item. */
+export function assinatura(ex: Exercise): string {
+  const o = (ex as { options?: string[] }).options;
+  return [ex.kind, ex.promptPt, o ? o.join('\u0001') : ''].join('\u0002');
+}
+
 const hasRun = (list: Exercise[]): boolean =>
   list.some((ex, i) => i > 0 && ex.kind === list[i - 1]!.kind);
 
@@ -328,21 +346,92 @@ export function buildLetterPractice(
     weak?: readonly string[];
   } = {}
 ): Exercise[] {
-  const { audioAvailable = false, count = 10, seed = `pratica-${L.id}`, weak = [] } = opts;
+  const { audioAvailable = false, count = 14, seed = `pratica-${L.id}`, weak = [] } = opts;
   const rand = rng(seed);
   const ctx = contextFor(L, history);
   const out: Exercise[] = [];
   const seen = new Set<string>();
+  const ditos = new Set<string>();
+
+  /* O GIRO, e por que ele existe.
+     ─────────────────────────────────────────────────────────────────────
+     Todo gerador escolhe o seu item com `at(pool, i)` - a sílaba, a palavra,
+     o par de vogais -, e `i` é o número da rodada. Nas camadas abaixo a
+     rodada só avança quando um gerador falha ou repete, então na prática ela
+     era ZERO quase sempre.
+
+     `at(pool, 0)` é o primeiro item de cada lista, e a primeira sílaba de
+     toda letra é a do A: מַ, בַּ, שַׁ. Resultado medido nas 22 lições: a
+     prática inteira do curso girava em torno do mesmo som, e a única coisa
+     que mudava de uma letra para outra era a consoante. Quem fazia duas
+     lições seguidas via o mesmo exercício duas vezes - e tinha razão.
+
+     O conserto é uma linha de ideia: cada bloco começa numa posição
+     diferente da rotação, e cada item avança mais um passo dentro dela. Duas
+     consequências, e as duas são o que se queria:
+
+       · letras diferentes caem em vogais diferentes, porque a semente é
+         própria de cada letra;
+       · dentro do MESMO bloco, a segunda sílaba nunca é a mesma da
+         primeira.
+
+     E continua determinístico: a mesma semente devolve o mesmo bloco, que é
+     o que faz "refazer" gerar outras perguntas em vez de perguntas ao acaso.
+
+     O intervalo é 97 e não 5 de propósito. Com cinco valores, duas sementes
+     caem no mesmo giro uma vez em cinco - e `tests/vogais.test.ts` pegou isso
+     na primeira execução: o gimel devolvia as NOVE mesmas perguntas ao
+     refazer. 97 é primo e maior que qualquer lista de sílabas, palavras ou
+     pares, o que espalha o resto em vez de coincidir. */
+  const giro = Math.floor(rand() * 97);
+
+  /* AS CAMADAS NÃO PODEM COMER A REVISÃO.
+     ─────────────────────────────────────────────────────────────────────
+     Enquanto o bloco tinha dez itens e as camadas próprias somavam sete, o
+     que sobrava para a revisão cumulativa e para a frase sobrava por sorte.
+     Ao subir o bloco para catorze e dar mais espaço à leitura, a sorte
+     acabou: `tests/cobertura` mediu o Mem com UM item cumulativo em vez de
+     quatro, e `tests/frases` viu a frase sumir de dez letras.
+
+     Então o espaço deixou de ser resto e virou reserva. O teto das camadas
+     próprias é o bloco MENOS o que a revisão e a frase vão ocupar, e as duas
+     passam a ter lugar garantido em vez de disputar o que sobrou. É a mesma
+     ideia de sempre - uma letra ensinada sozinha não é um alfabeto -, agora
+     escrita em vez de esperada. */
+  const anteriores = history.filter(x => x.id !== L.id);
+  const reservaRevisao = anteriores.length ? Math.max(1, Math.round(count * 0.3)) : 0;
+  const frase = exSentenceReading(L, ctx, rand, giro);
+
+  /* O PISO das camadas fixas, e por que ele é `Math.max` e não subtração.
+     ─────────────────────────────────────────────────────────────────────
+     As sete camadas abaixo são o currículo de uma letra - reconhecer, o som
+     ou a variante, discriminar, dentro da palavra, a posição, a forma final
+     e a cursiva. Elas não são preenchimento: cada uma existe porque alguma
+     coisa que o curso ensina não era cobrada em lugar nenhum.
+
+     A primeira versão desta reserva subtraía e pronto, e `tests/cobertura`
+     pegou o resultado: num bloco de dez, com três reservados para a revisão
+     e um para a frase, sobravam seis lugares para sete camadas - e a que
+     caía era sempre a ÚLTIMA, a cursiva, nas três letras que têm variante e
+     forma final ao mesmo tempo. Ou seja, a etapa de escrita deixava de ser
+     cobrada exatamente no Tsadi, no Kaf e no Pe.
+
+     Com o piso, um bloco pequeno perde revisão cumulativa antes de perder
+     currículo - e um bloco do tamanho que a lição pede hoje tem espaço para
+     as duas coisas. */
+  const CAMADAS_FIXAS = 7;
+  const tetoProprio = Math.max(CAMADAS_FIXAS, count - reservaRevisao - (frase ? 1 : 0));
 
   const tentar = (gens: readonly Gen[], quantos = 1) => {
     let postos = 0;
-    for (let round = 0; round < 4 && postos < quantos; round++) {
+    for (let round = 0; round < 6 && postos < quantos; round++) {
       for (const gen of gens) {
-        if (postos >= quantos || out.length >= count) return;
+        if (postos >= quantos || out.length >= tetoProprio) return;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
-        const ex = gen(L, ctx, rand, round);
-        if (!ex || seen.has(ex.id)) continue;
+        const ex = gen(L, ctx, rand, giro + round + out.length);
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
         seen.add(ex.id);
+        ditos.add(assinatura(ex));
         out.push(ex);
         postos++;
       }
@@ -372,33 +461,31 @@ export function buildLetterPractice(
   tentar([exLetterPosition, exLetterInWord], 1);
   if (L.finalForm) tentar([exFinalInWord, exFinalForm], 1);
   tentar([exPrintVsCursive, exCursiveToPrint], 1);
-  /* A frase é DECIDIDA aqui e COLOCADA depois das sílabas.
-     Decidida antes porque ela é um item de leitura e ocupa o lugar de um: com
-     frase o bloco lê uma sílaba e uma frase, sem frase lê duas sílabas. Somá-la
-     ao que já havia empurrava a revisão cumulativa para fora de um bloco de dez,
-     e uma letra voltava a ser ensinada isolada - foi o que tests/cobertura
-     cobrou. Colocada depois porque é o item mais difícil e o mais gratificante:
-     antes das sílabas o aluno bate nele sem aquecimento. */
-  const frase = exSentenceReading(L, ctx, rand, 0);
+  /* A frase foi DECIDIDA lá em cima, junto da reserva, e é COLOCADA aqui.
+     Decidida antes porque o teto das camadas depende dela; colocada depois
+     porque é o item mais difícil e o mais gratificante - antes das sílabas o
+     aluno bate nele sem aquecimento.
+
+     DOIS itens de leitura e montagem, e não um: com o bloco em catorze cabem
+     os dois gestos, ler a sílaba pronta e MONTAR a sílaba. Antes só cabia um
+     deles, e qual dos dois era sorte da ordem da lista. */
   tentar([exSyllableReading, exBuildSyllable, exWordMeaning, exBuildWord, exMeaningToWord],
-         frase ? 1 : 2);
-  if (frase && !seen.has(frase.id) && out.length < count) {
-    seen.add(frase.id);
-    out.push(frase);
-  }
+         frase ? 2 : 3);
+  /* A frase NÃO entra aqui: ela é acrescentada no fim, depois do arranjo.
+     Ver a nota do `return`. */
 
   /* ── cumulativo ──────────────────────────────────────────────────────
      Aproximadamente 30% do bloco, tirado das letras ANTERIORES - as que
      custaram primeiro, se o chamador souber quais. Sem isto, uma letra
      aprendida na lição 3 não volta a aparecer até o checkpoint, e o curso
-     ensina vinte e duas coisas isoladas em vez de um alfabeto. */
-  const anteriores = history.filter(x => x.id !== L.id);
+     ensina vinte e duas coisas isoladas em vez de um alfabeto. O tamanho da
+     reserva foi calculado lá em cima, antes das camadas. */
   if (anteriores.length) {
     const ordenadas = [
       ...anteriores.filter(x => weak.includes(x.id)),
       ...shuffled(anteriores.filter(x => !weak.includes(x.id)), rand)
     ];
-    const quantos = Math.max(1, Math.round(count * 0.3));
+    const quantos = reservaRevisao;
     const gensCumulativo = [exLetterRecognition, exLetterInWord, exSyllableReading,
                             exConfusablePick, exVowelSound, exWordMeaning];
     let postos = 0;
@@ -406,9 +493,10 @@ export function buildLetterPractice(
       const P = ordenadas[k % ordenadas.length]!;
       const gen = gensCumulativo[k % gensCumulativo.length]!;
       if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
-      const ex = gen(P, contextFor(P, history), rand, Math.floor(k / ordenadas.length));
-      if (!ex || seen.has(ex.id)) continue;
+      const ex = gen(P, contextFor(P, history), rand, giro + Math.floor(k / ordenadas.length));
+      if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
       seen.add(ex.id);
+      ditos.add(assinatura(ex));
       out.push(ex);
       postos++;
     }
@@ -421,8 +509,9 @@ export function buildLetterPractice(
   if (out.length < count) {
     for (const ex of fill([L], history, LESSON_GENERATORS, rand, (count - out.length) * 3 + 6, audioAvailable, 6)) {
       if (out.length >= count) break;
-      if (seen.has(ex.id)) continue;
+      if (seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
       seen.add(ex.id);
+      ditos.add(assinatura(ex));
       out.push(ex);
     }
   }
@@ -431,18 +520,40 @@ export function buildLetterPractice(
      sílaba, palavra e distratores. Melhor uma segunda passada honesta do que
      uma lição de oito itens. */
   if (out.length < count) {
-    for (let round = 1; round < 8 && out.length < count; round++) {
+    for (let round = 1; round < 12 && out.length < count; round++) {
       for (const gen of LESSON_GENERATORS) {
         if (out.length >= count) break;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
-        const ex = gen(L, ctx, rand, round * 3);
-        if (!ex || seen.has(ex.id)) continue;
-        seen.add(ex.id); out.push(ex);
+        const ex = gen(L, ctx, rand, giro + round * 3);
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
       }
     }
   }
 
-  return spread(out.slice(0, count));
+  /* DEVOLVE O QUE HOUVER, e não o número pedido a qualquer custo.
+     Nas duas primeiras letras o alfabeto disponível é minúsculo e não existem
+     catorze perguntas honestas - existiriam catorze itens, alguns deles a
+     mesma pergunta com outro nome. Um bloco curto de perguntas diferentes
+     ensina mais do que um bloco cheio com repetição, e agora o dedupe por
+     conteúdo garante que o que sai é sempre o primeiro caso.
+
+     E A FRASE FECHA O BLOCO, acrescentada depois do `spread`.
+     ─────────────────────────────────────────────────────────────────────
+     Ela é o item mais difícil e o mais gratificante, e a regra pedagógica é
+     que o aluno chegue nele aquecido - por isso ela vem depois das sílabas.
+     Isso era esperado da ordem em que os itens eram empilhados, e sobrevivia
+     por sorte: `spread` existe justamente para REORDENAR, e com o bloco maior
+     ele passou a jogar a frase para antes da leitura de sílaba. `tests/frases`
+     mediu o Vav com a frase na sexta posição e a sílaba na décima.
+
+     Empilhar não é ordenar. Então a frase sai do arranjo e é posta no fim, de
+     onde nada a tira - e o bloco termina com «você acabou de ler uma frase em
+     hebraico», que é o melhor lugar para terminar. */
+  const teto = frase ? count - 1 : count;
+  const arranjado = spread(out.slice(0, teto));
+  if (frase && !seen.has(frase.id) && !ditos.has(assinatura(frase))) arranjado.push(frase);
+  return arranjado;
 }
 
 /**
@@ -456,19 +567,35 @@ export function buildLetterPractice(
 export function buildMiniTest(
   L: Letter, history: Letter[], opts: BuildOptions = {}
 ): Exercise[] {
-  const { audioAvailable = false, seed = `mini-${L.id}`, count = 6 } = opts;
+  /* DEZ, e o número não é estético: ele é o único que mantém as duas notas
+     de corte coerentes entre si.
+
+     Dominar uma letra pede 75% e destravar a próxima pede 80% (rules.ts).
+     Com nove itens, 7 acertos dão 78% - a letra conta como dominada e mesmo
+     assim NÃO abre a seguinte, que é um estado que nenhuma tela consegue
+     explicar. Com dez, 8 acertos dão 80% e passam nas duas, 7 dão 70% e
+     falham nas duas: não existe nota entre as duas réguas. E o aluno passa a
+     ter dois erros perdoados em vez de um, o que é justo num teste que
+     cresceu de seis para dez itens e ganhou três gestos novos. */
+  const { audioAvailable = false, seed = `mini-${L.id}`, count = 10 } = opts;
   const rand = rng(seed);
   const ctx = contextFor(L, history);
   const out: Exercise[] = [];
   const seen = new Set<string>();
+  const ditos = new Set<string>();
+
+  /* O mesmo giro do bloco de prática, e pela mesma razão - ver a nota longa
+     lá em cima. Sem ele a fixação de toda letra media a sílaba do A, e a
+     prova cobrava uma vogal das cinco que a lição ensina. */
+  const giro = Math.floor(rand() * 97);
 
   const tentar = (gens: readonly Gen[]) => {
-    for (let round = 0; round < 4; round++) {
+    for (let round = 0; round < 6; round++) {
       for (const gen of gens) {
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
-        const ex = gen(L, ctx, rand, round);
-        if (!ex || seen.has(ex.id)) continue;
-        seen.add(ex.id); out.push(ex); return;
+        const ex = gen(L, ctx, rand, giro + round + out.length);
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); return;
       }
     }
   };
@@ -498,12 +625,38 @@ export function buildMiniTest(
      vez de o curso treinar uma e chamar a outra de aprendida. */
   tentar([exCursiveToPrint, exPrintVsCursive]);
 
+  /* ── três gestos que a fixação nunca cobrava ─────────────────────────
+     As camadas acima são todas de ESCOLHER: quatro alternativas, um toque,
+     pronto. A lição, porém, ensina em quatro gestos diferentes - escolher,
+     montar, ler e ligar sentido a palavra -, e uma prova que só cobra um
+     deles mede um quarto do que foi ensinado. Pior: ensina ao aluno que os
+     outros três não valem nota, que é a mesma lição que a cursiva aprendeu
+     a dar antes de ganhar a camada dela.
+
+     Então entram os três que faltavam:
+
+       · MONTAR - a sílaba ou a palavra construída peça por peça, que é o
+         gesto da lição que mais se parece com escrever;
+       · LER - a sílaba pronta, ou a frase quando já existe uma legível,
+         que é o objetivo declarado do curso;
+       · SIGNIFICADO - ligar a palavra ao que ela quer dizer, nos dois
+         sentidos.
+
+     Cada camada é uma LISTA em ordem de preferência, e não um gerador fixo:
+     nas primeiras letras não há palavra legível nem frase, e a camada cai
+     para o que existe em vez de sumir. */
+  tentar([exBuildSyllable, exBuildWord, exSoundToSyllable]);
+  tentar([exSentenceReading, exSyllableReading, exVowelSound]);
+  tentar([exWordMeaning, exMeaningToWord, exCompleteWord, exOddOneOut]);
+
   const anteriores = history.filter(x => x.id !== L.id);
   if (anteriores.length) {
     const P = shuffled(anteriores, rand)[0]!;
     for (const gen of [exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound]) {
-      const ex = gen(P, contextFor(P, history), rand, 1);
-      if (ex && !seen.has(ex.id)) { seen.add(ex.id); out.push(ex); break; }
+      const ex = gen(P, contextFor(P, history), rand, giro + 1);
+      if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {
+        seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); break;
+      }
     }
   }
 
@@ -513,22 +666,24 @@ export function buildMiniTest(
   if (out.length < count) {
     for (const ex of fill([L], history, LESSON_GENERATORS, rand, count * 4, audioAvailable, 6)) {
       if (out.length >= count) break;
-      if (seen.has(ex.id)) continue;
-      seen.add(ex.id); out.push(ex);
+      if (seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+      seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
     }
   }
   if (out.length < count) {
-    for (let round = 1; round < 8 && out.length < count; round++) {
+    for (let round = 1; round < 12 && out.length < count; round++) {
       for (const gen of LESSON_GENERATORS) {
         if (out.length >= count) break;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
-        const ex = gen(L, ctx, rand, round * 2);
-        if (!ex || seen.has(ex.id)) continue;
-        seen.add(ex.id); out.push(ex);
+        const ex = gen(L, ctx, rand, giro + round * 2);
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
       }
     }
   }
-  return out.slice(0, count);
+  /* `spread` aqui também: com nove itens e três camadas novas, duas escolhas
+     seguidas do mesmo gesto deixaram de ser improváveis. */
+  return spread(out.slice(0, count));
 }
 
 /**
