@@ -42,11 +42,11 @@ const PASSOS: Record<Sistema, { titulo: string; texto: string }[]> = {
   ],
   android: [
     { titulo: 'Abra as configurações do teclado',
-      texto: 'Com o teclado aberto, toque na engrenagem ⚙ do Gboard. Ou: Configurações → Sistema → Idiomas e entrada → Teclado na tela → Gboard.' },
+      texto: 'Com o teclado aberto, toque na engrenagem ⚙ do Gboard. Ou: Configurações → Sistema → Teclado → Teclado na tela → Gboard (em aparelhos mais antigos, “Idiomas e entrada” no lugar de “Teclado”). Em Samsung, o teclado de fábrica é o Teclado Samsung: Configurações → Gerenciamento geral → Configurações do Teclado Samsung.' },
     { titulo: 'Adicione o hebraico',
-      texto: 'Idiomas → Adicionar teclado → procure “Hebraico” (עברית) → Concluído.' },
+      texto: 'No Gboard: Idiomas → Adicionar teclado → procure “Hebraico” (עברית) → Concluído. No Teclado Samsung: Idiomas e tipos → Gerenciar idiomas de entrada → ative “עברית”.' },
     { titulo: 'Alterne entre os teclados',
-      texto: 'Toque no globo 🌐 do teclado, ou deslize o dedo sobre a barra de espaço para o lado.' },
+      texto: 'Toque no globo 🌐 do teclado, ou toque e segure a barra de espaço e escolha o idioma. No Teclado Samsung, segure a barra de espaço e deslize para o lado.' },
     { titulo: 'Confira que está ativo',
       texto: 'A barra de espaço mostra “עברית” e as teclas trazem letras hebraicas.' }
   ],

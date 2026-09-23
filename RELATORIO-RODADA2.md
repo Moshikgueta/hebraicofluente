@@ -122,12 +122,17 @@ reconstrução de memória.
   nenhuma imagem foi gerada. Veja `DIRECAO-VISUAL-VOCABULARIO.md`.
 - **Áudio**: continua 0 de ~321. O glossário mostra o botão sozinho quando
   a gravação existir.
-- **Revisão das transliterações de nomes**: as regras cobrem bem nomes
-  comuns (Gabriel, Daniel, Mariana, Sofia, José), mas "João" sai ז׳ואו (em
-  Israel também se vê ז׳ואאו), e nomes com h, x ou lh merecem um olhar de
-  falante nativo. Como o aluno edita e confirma, o risco é baixo.
-- **Guia do teclado**: os caminhos dos menus são os atuais; vale conferir num
-  aparelho de cada sistema, porque os fabricantes mudam os nomes.
+- **Revisão das transliterações de nomes**: feita sobre ~90 nomes comuns
+  (23/09, à tarde). Corrigidos: v do meio como ב (Gustavo saía com três vavs),
+  ç como s (Graça saía גרקה), z final como s, o hiato de Luís/Luiz (לואיס),
+  ז׳ואאו como variante de João, ה como variante do h inicial (הלנה), e a
+  variante do u de "gue" restrita ao começo do nome (Miguel e Raquel
+  ganhavam מיגואל e רקואל). Um falante nativo ainda pode discordar de uma ou
+  outra; o aluno edita e confirma.
+- **Guia do teclado**: conferido em fontes em português. O Android ganhou o
+  Teclado Samsung (o de fábrica na maioria dos celulares no Brasil) e a troca
+  de idioma do Gboard passou a ser segurando a barra de espaço. Os fabricantes
+  mudam os nomes dos menus; um teste em aparelho real continua valendo.
 
 ## 7. Sugestões (não implementadas)
 

@@ -9,8 +9,14 @@
  *      nome estrangeiro - vogal do meio da palavra quase sempre sem letra, a
  *      no fim vira ה, o/u viram ו, i vira י, e as formas finais no fim;
  *   2. propõe VARIANTES quando há uma escolha real (a vogal do meio escrita
- *      ou não; o u de "gu"/"qu" pronunciado ou não), para a tela dizer com
- *      honestidade que existe mais de um jeito.
+ *      ou não; o "ão" como או ou אאו; o h do começo mudo, como no Brasil, ou
+ *      escrito com ה, como um israelense leria "Helena"; o u de "gue" no
+ *      começo do nome pronunciado ou não), para a tela dizer com honestidade
+ *      que existe mais de um jeito.
+ *
+ * O v do meio do nome é ב, como a imprensa israelense escreve os nomes
+ * brasileiros (סילבה, גוסטבו, אלברו): com ו ficaria וו colado ao ו do o, e
+ * "Gustavo" viraria três vavs seguidos. No começo continua ו (ויטוריה).
  *
  * O som de J de "João" e o G de "Gisele" (/ʒ/) não existe no alfabeto
  * básico: o hebraico moderno escreve ז׳ - o zayin com o gerech, que o curso
@@ -24,8 +30,10 @@ export const GERESH = '׳';
 type Opcoes = {
   /** Escrever o a do meio da palavra com א, como em לוקאס. */
   plena: boolean;
-  /** Pronunciar o u de "gu"/"qu" antes de e/i, como em גואטה. */
+  /** Pronunciar o u de "gue" no começo do nome, como em גואטה. */
   uAudivel: boolean;
+  /** Escrever o h do começo com ה, como em הלנה. */
+  hEscrito: boolean;
 };
 
 const VOGAL = /[aeiouáàâãéêíóôõúü]/;
@@ -33,8 +41,20 @@ const tirarAcento = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '');
 
 /** Uma palavra do nome, em hebraico, por uma das convenções. */
 function palavra(original: string, o: Opcoes): string {
-  /* O acento some, MAS antes o "ão"/"õe" nasal é lembrado: "João" é o-a-o. */
-  const w = tirarAcento(original.toLowerCase()).replace(/[^a-z]/g, '');
+  /* O acento some, mas antes ficam anotados o ã (o "ão" de João) e o í
+     (o hiato de Luís, que se escreve לואיס). O ç vira "ss" - soa s mesmo
+     entre vogais (Graça), e o ss já é tratado como um s só. */
+  let w = '';
+  const nasal = new Set<number>();
+  const iTonico = new Set<number>();
+  for (const ch of original.toLowerCase()) {
+    if (ch === 'ç') { w += 'ss'; continue; }
+    const base = tirarAcento(ch);
+    if (!/^[a-z]$/.test(base)) continue;
+    if (ch === 'ã') nasal.add(w.length);
+    if (ch === 'í') iTonico.add(w.length);
+    w += base;
+  }
   const out: string[] = [];
   const ehVogal = (i: number) => i >= 0 && i < w.length && VOGAL.test(w[i]!);
   let i = 0;
@@ -55,7 +75,9 @@ function palavra(original: string, o: Opcoes): string {
     if (c === 't' && d === 'h') { poe('ט'); i += 2; continue; }
     if ((c === 'g' || c === 'q') && d === 'u' && (e === 'e' || e === 'i')) {
       poe(c === 'g' ? 'ג' : 'ק');
-      if (o.uAudivel) { poe('ו'); poe(e === 'i' ? 'י' : 'א'); i += 3; continue; }
+      /* O u que soa é raro em português; a variante só vale para "gue" no
+         começo do nome (Gueta), nunca para Miguel, Raquel ou Guilherme. */
+      if (o.uAudivel && inicio && c === 'g' && e === 'e') { poe('ו'); poe('א'); i += 3; continue; }
       /* O u é mudo: a vogal que vem depois é a primeira depois de uma
          CONSOANTE, e é tratada aqui mesmo - senão o u, que não soa, contaria
          como vogal e "Gueta" viraria גאטה. */
@@ -67,6 +89,11 @@ function palavra(original: string, o: Opcoes): string {
     if ((c === 's' || c === 'r' || c === 'l' || c === 't' || c === 'n' || c === 'm' || c === 'p' || c === 'f')
         && d === c) { i += 1; continue; }
 
+    /* O i de "gio"/"gia" não soa no Brasil: Giovanna é jo-VA-na. */
+    if (c === 'g' && d === 'i' && (e === 'a' || e === 'o' || e === 'u')) {
+      poe(`ז${GERESH}`); i += 2; continue;
+    }
+
     /* ── vogais ── */
     if (VOGAL.test(c)) {
       /* "Início" é não ter escrito nada ainda: o h mudo de Helena não conta,
@@ -74,7 +101,16 @@ function palavra(original: string, o: Opcoes): string {
       const abre = out.length === 0;
       const depoisDeVogal = ehVogal(i - 1);
       const antesDeVogal = ehVogal(i + 1);
-      if (c === 'i') { if (abre) poe('א'); poe('י'); i++; continue; }
+      if (c === 'i') {
+        if (abre) poe('א');
+        /* O hiato de Luís, Heloísa: o í tônico depois de vogal ganha um א
+           na frente (לואיס). "Luiz", sem acento, soa igual. Em Caio e Rui,
+           ditongo, o i vai sozinho. */
+        const hiato = depoisDeVogal && !ultimaFoiAlef &&
+          (iTonico.has(i) || (w[i - 1] === 'u' && i + 1 === w.length - 1 && (d === 's' || d === 'z')));
+        if (hiato) poe('א');
+        poe('י'); i++; continue;
+      }
       if (c === 'o' || c === 'u') {
         if (abre) poe('א');
         poe('ו'); i++; continue;
@@ -82,7 +118,13 @@ function palavra(original: string, o: Opcoes): string {
       /* a, e */
       if (abre) { poe('א'); i++; continue; }
       if (fim) { poe('ה'); i++; continue; }
-      if (depoisDeVogal) { if (!ultimaFoiAlef) poe('א'); i++; continue; }
+      /* "ão": a variante plena escreve o a duas vezes, como a imprensa
+         israelense faz com João (ז׳ואאו). */
+      if (depoisDeVogal) {
+        if (!ultimaFoiAlef) poe('א');
+        if (o.plena && nasal.has(i)) out.push('א');
+        i++; continue;
+      }
       if (antesDeVogal) { poe('א'); i++; continue; }
       /* A vogal do meio, entre consoantes, fica sem letra - é a convenção.
          A variante "plena" escreve o a com א (לוקאס); o e continua sem letra
@@ -99,7 +141,8 @@ function palavra(original: string, o: Opcoes): string {
       case 'f': poe('פ'); break;
       /* g antes de e/i é /ʒ/ no Brasil: Gisele, Gérson. */
       case 'g': poe(d === 'e' || d === 'i' ? `ז${GERESH}` : 'ג'); break;
-      case 'h': break;                               // mudo, como em Helena
+      /* Mudo, como no Brasil. A variante escreve o do começo com ה. */
+      case 'h': if (inicio && o.hEscrito) poe('ה'); break;
       case 'j': poe(`ז${GERESH}`); break;
       case 'k': poe('ק'); break;
       case 'l': poe('ל'); break;
@@ -112,12 +155,13 @@ function palavra(original: string, o: Opcoes): string {
       case 's': poe(ehVogal(i - 1) && ehVogal(i + 1) ? 'ז' : 'ס'); break;
       /* t estrangeiro é ט na convenção israelense: טום, מרטין. */
       case 't': poe('ט'); break;
-      case 'v': poe(inicio ? 'ו' : 'וו'); break;
+      case 'v': poe(inicio ? 'ו' : 'ב'); break;
       case 'w': poe('ו'); break;
       /* x: "Xavier" é ch; "Alex", "Félix", no fim, é ks. */
       case 'x': poe(fim || (d && !VOGAL.test(d)) ? 'קס' : 'ש'); break;
       case 'y': poe('י'); break;
-      case 'z': poe('ז'); break;
+      /* z no fim soa s no Brasil: Luiz, Beatriz, Cruz. */
+      case 'z': poe(fim ? 'ס' : 'ז'); break;
       default: break;
     }
     i++;
@@ -139,16 +183,17 @@ export function sugerirNome(nome: string): string[] {
   const partes = nome.trim().split(/\s+/).filter(p => /[a-zA-ZÀ-ÿ]/.test(p));
   if (!partes.length) return [];
   const conv: Opcoes[] = [
-    { plena: false, uAudivel: false },
-    { plena: true, uAudivel: false },
-    { plena: false, uAudivel: true }
+    { plena: false, uAudivel: false, hEscrito: false },
+    { plena: true, uAudivel: false, hEscrito: false },
+    { plena: false, uAudivel: false, hEscrito: true },
+    { plena: false, uAudivel: true, hEscrito: false }
   ];
   const out: string[] = [];
   for (const o of conv) {
     const g = partes.map(p => palavra(p, o)).filter(Boolean).join(' ');
     if (g && !out.includes(g)) out.push(g);
   }
-  return out;
+  return out.slice(0, 3);
 }
 
 /** As letras BASE que a grafia usa - o que o aluno precisa ter aprendido. */

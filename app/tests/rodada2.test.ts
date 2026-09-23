@@ -273,6 +273,45 @@ describe('o nome em hebraico', () => {
     expect(sugerirNome('Juliana')[0]!.startsWith(`ז${GERESH}`)).toBe(true);
   });
 
+  /* A revisão de 23/09, sobre ~90 nomes brasileiros comuns: cada caso aqui
+     saía errado antes. */
+  it('v do meio é ב, e nunca junta três vavs', () => {
+    expect(sugerirNome('Gustavo')[0]).toBe('גוסטבו');
+    expect(sugerirNome('Silva')[0]).toBe('סילבה');
+    expect(sugerirNome('Vitória')[0]).toBe('ויטוריה');
+    const nomes = ['Gustavo', 'Giovanna', 'Otávio', 'Álvaro', 'Davi', 'Lívia', 'Xavier'];
+    for (const n of nomes) for (const g of sugerirNome(n)) expect(g).not.toContain('ווו');
+  });
+
+  it('ç soa s, z no fim soa s, e o hiato de Luís leva א', () => {
+    expect(sugerirNome('Graça')[0]).toBe('גרסה');
+    expect(sugerirNome('Beatriz')[0]).toBe('באטריס');
+    expect(sugerirNome('Luiz')[0]).toBe('לואיס');
+    expect(sugerirNome('Luís')[0]).toBe('לואיס');
+    expect(sugerirNome('Heloísa')[0]).toBe('אלואיזה');
+    expect(sugerirNome('Caio')[0]).toBe('קאיו');
+    expect(sugerirNome('Rui')[0]).toBe('רוי');
+  });
+
+  it('oferece ז׳ואאו para João e ה para o h do começo', () => {
+    expect(sugerirNome('João')).toEqual([`ז${GERESH}ואו`, `ז${GERESH}ואאו`]);
+    expect(sugerirNome('Helena')).toContain('הלנה');
+    expect(sugerirNome('Giovanna')[0]).toBe(`ז${GERESH}ובנה`);
+  });
+
+  it('o u que soa só é variante em "gue" no começo, nunca em Miguel ou Raquel', () => {
+    expect(sugerirNome('Miguel')).toEqual(['מיגל']);
+    expect(sugerirNome('Raquel')).toEqual(['רקל', 'ראקל']);
+    expect(sugerirNome('Guilherme')).toEqual(['גילירמה']);
+    expect(sugerirNome('Gueta')).toEqual(['גטה', 'גואטה']);
+  });
+
+  it('nunca passa de três sugestões', () => {
+    for (const n of ['Helena Gueta', 'Heitor Guedes Gonçalves', 'Sebastião']) {
+      expect(sugerirNome(n).length).toBeLessThanOrEqual(3);
+    }
+  });
+
   it('só abre quando as letras do nome já foram concluídas, e diz quantas faltam', () => {
     const poucas = letters.slice(0, 5).map(l => l.letter);
     const d = disponibilidade('Gabriel', poucas);
