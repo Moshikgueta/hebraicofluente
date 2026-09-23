@@ -126,9 +126,12 @@ const vistos = new Map();
 const gabaritos = new Map();
 let digitadasCertas = 0;
 
-async function percorre(letraId, etapa, rotulo) {
-  await p.goto(`${BASE}/licao/${letraId}/`, { waitUntil: 'networkidle' });
-  await p.getByLabel(`Etapa ${etapa} de 5 - ${rotulo}`).click();
+async function percorre(letraId, etapa, rotulo, abrir) {
+  if (abrir) await abrir();
+  else {
+    await p.goto(`${BASE}/licao/${letraId}/`, { waitUntil: 'networkidle' });
+    await p.getByLabel(`Etapa ${etapa} de 5 - ${rotulo}`).click();
+  }
   await p.waitForTimeout(500);
 
   const inicial = await estado();
@@ -215,6 +218,10 @@ async function percorre(letraId, etapa, rotulo) {
 
     const alvos = e.botoes.filter(x => !x.off && !x.etapa && x.txt
       && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt)
+      /* Na academia o "← Academia" é BOTÃO, e é o primeiro da tela: tocar
+         nele sai do treino. A primeira execução desta passada acusou
+         «respondi 0 de 8» num treino que funcionava. */
+      && !/^←/.test(x.txt)
       /* Ver a nota em `rotulo`: desfazer o próprio trabalho é um laço. */
       && !/^Tirar a peça/i.test(x.rotulo));
     if (!alvos.length) {
@@ -300,6 +307,14 @@ for (const [id, etapa, rotulo] of [
 ]) {
   await percorre(id, etapa, rotulo);
 }
+/* O modo "Letras parecidas" da academia. Ele mudou de formato em 23/09 -
+   todo item passou a mostrar as duas letras do par, com três exercícios
+   novos (lib/engine/pares.ts) -, e nenhuma varredura passava por ele. */
+await percorre('academia', 0, 'Letras parecidas', async () => {
+  await p.goto(`${BASE}/academia/`, { waitUntil: 'networkidle' });
+  await p.getByRole('button', { name: /Letras parecidas/ }).first().click();
+});
+
 /* A segunda passada, agora sabendo o gabarito dos itens digitados. */
 for (const id of ['alef', 'vav']) await percorre(id, 4, 'Praticar');
 if (!digitadasCertas) erro('nenhuma resposta digitada certa foi conferida - a segunda passada não achou o item');

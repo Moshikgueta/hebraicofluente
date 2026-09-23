@@ -36,6 +36,9 @@ import {
   type Ctx, type Gen
 } from './generators';
 import type { Exercise } from './types';
+import {
+  contrastesDoConteudo, exContraste, exIntrusaDoPar, exPalavraDoPar, type Contraste
+} from './pares';
 
 export type { Exercise, ExerciseKind, ChoiceBase, ExerciseBase } from './types';
 export { letterIdOf, isChoice, normalizeTyped, typedIsCorrect } from './types';
@@ -347,6 +350,50 @@ export function girar<T>(lista: readonly T[], passo: number): T[] {
   return [...lista.slice(k), ...lista.slice(0, k)];
 }
 
+/* ── o par como unidade de revisão ───────────────────────────────────────
+ * Ver `pares.ts` para o porquê. Aqui fica só o COMO: os pares não ganham
+ * espaço novo no bloco - isso comeria as revisões por intervalo, que o teste
+ * da P0-6 garante. Eles mudam o FORMATO de espaços que já existem:
+ *
+ *   · a camada de parecidas da própria letra, quando ela tem uma gêmea já
+ *     ensinada, treina exatamente aquele par;
+ *   · as duas primeiras revisões de letras antigas que têm gêmea viram
+ *     contraste com a gêmea - de preferência a letra de hoje;
+ *   · a letra de ontem, na fixação, idem.
+ */
+
+/** Os três exercícios de par, com a assinatura de um gerador comum. */
+function gensDoPar(c: Contraste): Gen[] {
+  return [
+    (_L, cx, r, i) => exContraste(c, cx, r, i),
+    (_L, cx, r, i) => exIntrusaDoPar(c, cx, r, i),
+    (_L, cx, r, i) => exPalavraDoPar(c, cx, r, i)
+  ];
+}
+
+/**
+ * A gêmea de `L` que vale treinar hoje: a PRIMEIRA parecida que o conteúdo
+ * declara para ela e que já foi ensinada antes. A ordem da declaração não é
+ * acaso - o conteúdo põe primeiro a que mais engana (כ antes de ר no Bet).
+ */
+function gemeaDe(L: Letter, contrastes: readonly Contraste[]): Contraste | null {
+  for (const g of L.confusableWith) {
+    const c = contrastes.find(x => x.alvo.id === L.id && x.glifoRival === g && x.rival.order < L.order);
+    if (c) return c;
+  }
+  return null;
+}
+
+/** O contraste com que revisar `P` hoje: contra a letra de hoje, se forem
+ *  gêmeas; senão girando entre as gêmeas de `P` já ensinadas. */
+function contrasteDe(
+  P: Letter, L: Letter, contrastes: readonly Contraste[], passo: number
+): Contraste | null {
+  const meus = contrastes.filter(c => c.alvo.id === P.id && c.rival.order <= L.order);
+  if (!meus.length) return null;
+  return meus.find(c => c.rival.id === L.id) ?? meus[passo % meus.length]!;
+}
+
 /* ── a ordem da revisão cumulativa ───────────────────────────────────────
  * Quais letras anteriores voltam nesta lição, e em que ordem.
  *
@@ -531,7 +578,11 @@ export function buildLetterPractice(
   const antes = out.length;
   if ((L.variantes?.length ?? 0) >= 2) tentar([exLetterVariant, exVariantSyllable], 1);
   if (out.length === antes) tentar(girar([exMatchLetterSound, exVowelSound, exSoundToSyllable], L.order), 1);
-  tentar(girar([exConfusablePick, exOddOneOut], L.order), 1);
+  const contrastes = contrastesDoConteudo(history.filter(x => x.order <= L.order));
+  const gemea = gemeaDe(L, contrastes);
+  tentar(gemea
+    ? [...girar(gensDoPar(gemea), L.order), exConfusablePick]
+    : girar([exConfusablePick, exOddOneOut], L.order), 1);
   tentar(girar([exLetterInWord, exCompleteWord], L.order), 1);
   tentar([exLetterPosition, exLetterInWord], 1);
   if (L.finalForm) tentar([exFinalInWord, exFinalForm], 1);
@@ -572,6 +623,7 @@ export function buildLetterPractice(
     const gensCumulativo = [exLetterRecognition, exLetterInWord, exSyllableReading,
                             exConfusablePick, exVowelSound, exWordMeaning];
     let postos = 0;
+    let emPar = 0;
     /* Uma letra por vez, na ordem de urgência, e cada uma tenta os geradores
        até um servir. O laço antigo andava letra e gerador juntos: quando o
        gerador da vez falhava para aquela letra - "em qual palavra aparece",
@@ -580,6 +632,19 @@ export function buildLetterPractice(
        revisão que estava devida. */
     for (const [n, P] of ordenadas.entries()) {
       if (postos >= quantos || out.length >= count) break;
+      /* As duas primeiras revisões que têm gêmea são revisadas CONTRA ela. */
+      const c = emPar < 2 ? contrasteDe(P, L, contrastes, L.order + n) : null;
+      if (c) {
+        let feito = false;
+        for (const gen of girar(gensDoPar(c), L.order + n)) {
+          const ex = gen(L, ctx, rand, giro + n);
+          if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+          seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
+          postos++; emPar++; feito = true;
+          break;
+        }
+        if (feito) continue;
+      }
       for (let g = 0; g < gensCumulativo.length; g++) {
         const gen = gensCumulativo[(n + L.order + g) % gensCumulativo.length]!;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
@@ -708,9 +773,13 @@ export function buildMiniTest(
   if ((L.variantes?.length ?? 0) >= 2) tentar([exLetterVariant, exVariantSyllable]);
   if (out.length === antesDoSom) tentar(girar([exMatchLetterSound, exVowelSound, exSoundToSyllable], L.order + 1));
   tentar(girar([exLetterInWord, exLetterPosition, exCompleteWord], L.order + 1));
+  const contrastes = contrastesDoConteudo(history.filter(x => x.order <= L.order));
+  const gemea = gemeaDe(L, contrastes);
   tentar(L.finalForm
     ? [exFinalInWord, exConfusablePick, exOddOneOut]
-    : girar([exConfusablePick, exOddOneOut], L.order + 1));
+    : gemea
+      ? [...girar(gensDoPar(gemea), L.order + 1), exConfusablePick]
+      : girar([exConfusablePick, exOddOneOut], L.order + 1));
   /* A CURSIVA, que o checkpoint nunca cobrava.
      ─────────────────────────────────────────────────────────────────────
      A lição gasta uma etapa inteira nela: mostra o desenho, anima a ordem
@@ -779,8 +848,15 @@ export function buildMiniTest(
   if (anteriores.length) {
     const ontem = anteriores.find(x => x.order === L.order - 1);
     const P = ontem ?? ordemDeRevisao(L, anteriores, [], rand)[0]!;
-    for (const gen of [exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound]) {
-      const ex = gen(P, contextFor(P, history), rand, giro + 1);
+    /* Se ontem tem gêmea já ensinada - e em especial se a gêmea é a letra de
+       HOJE, como Bet e Kaf -, a revisão de ontem é o contraste. */
+    const c = contrasteDe(P, L, contrastes, L.order);
+    const doPar = c ? girar(gensDoPar(c), L.order).map(g => ({ g, cx: ctx })) : [];
+    const comuns = [exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound]
+      .map(g => ({ g, cx: contextFor(P, history) }));
+    for (const { g: gen, cx } of [...doPar, ...comuns]) {
+      /* Os geradores de par ignoram o primeiro argumento: o par já vem no fecho. */
+      const ex = gen(P, cx, rand, giro + 1);
       if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); break;
       }
@@ -1073,19 +1149,56 @@ export function buildSentences(
 }
 
 /**
- * A drill for one confusion pair this learner actually has.
+ * O treino de UM par, para o modo "Letras parecidas" da academia.
+ * ─────────────────────────────────────────────────────────────────────────
+ * A tela promete "as que você está trocando, lado a lado". A versão anterior
+ * preenchia o treino com a rotação geral de exercícios sobre as duas letras -
+ * ler uma sílaba de uma, uma palavra da outra, uma frase - e a auditoria de
+ * 23/09 mediu: só 2 dos 8 itens punham as duas na tela ao mesmo tempo.
  *
- * Both letters, both directions, mixed gestures: find it in a row, tell it from
- * its twin, read a word that contains it. `a` is the letter whose place the
- * learner keeps giving to `b`.
+ * Agora TODO item tem as duas: entre as parecidas com a gêmea garantida, a
+ * fileira com a gêmea escondida, e a palavra com a letra contra palavras que
+ * têm a gêmea. Nos dois sentidos, alternados - quem troca ד por ר também lê
+ * ד onde está escrito ר.
+ *
+ * `history` são as letras que o aluno já tem, para as palavras: sem ele só
+ * existiriam as palavras das duas letras do par, e o formato de palavra quase
+ * nunca teria material.
  */
 export function buildConfusionDrill(
-  a: Letter, b: Letter, opts: BuildOptions = {}
+  a: Letter, b: Letter, opts: BuildOptions & { history?: Letter[] } = {}
 ): Exercise[] {
-  const { audioAvailable = false, count = 6, seed = `conf-${a.id}-${b.id}` } = opts;
+  const { count = 6, seed = `conf-${a.id}-${b.id}` } = opts;
   const rand = rng(seed);
-  const history = [a, b].sort((x, y) => x.order - y.order);
-  const gens = generatorsFor(['rec', 'ler']);
-  const out = fill(shuffled([a, b], rand), history, gens, rand, count, audioAvailable, 4);
+  const [antes, depois] = [a, b].sort((x, y) => x.order - y.order) as [Letter, Letter];
+  const history = (opts.history ?? [a, b]).filter(x => x.order <= depois.order);
+  if (!history.some(x => x.id === a.id)) history.push(a);
+  if (!history.some(x => x.id === b.id)) history.push(b);
+  history.sort((x, y) => x.order - y.order);
+  const ctx = contextFor(depois, history);
+
+  /* O contraste declarado no conteúdo, quando existe - ele diz se a parecida
+     é a forma base ou a final ({{ד}} se confunde com {{ך}}, não com {{כ}}).
+     Sem declaração, as formas base. */
+  const declarados = contrastesDoConteudo([antes, depois]);
+  const sentido = (x: Letter, y: Letter): Contraste =>
+    declarados.find(c => c.alvo.id === x.id && c.rival.id === y.id)
+      ?? { alvo: x, rival: y, glifoRival: y.letter };
+  const lados = [sentido(a, b), sentido(b, a)];
+
+  const out: Exercise[] = [];
+  const seen = new Set<string>();
+  const formatos = [exContraste, exIntrusaDoPar, exPalavraDoPar] as const;
+  for (let rodada = 0; rodada < 6 && out.length < count; rodada++) {
+    for (let f = 0; f < formatos.length && out.length < count; f++) {
+      for (const c of lados) {
+        if (out.length >= count) break;
+        const ex = formatos[(f + rodada) % formatos.length]!(c, ctx, rand, rodada);
+        if (!ex || seen.has(assinatura(ex))) continue;
+        seen.add(assinatura(ex));
+        out.push(ex);
+      }
+    }
+  }
   return spread(out.slice(0, count));
 }

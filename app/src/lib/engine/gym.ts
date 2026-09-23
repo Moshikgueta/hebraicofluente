@@ -192,7 +192,7 @@ export function buildGym(
     if (!pair) return { exercises: [], label: '' };
     return {
       exercises: buildConfusionDrill(pair[0], pair[1], {
-        audioAvailable, count: mode.count, seed
+        audioAvailable, count: mode.count, seed, history: letters
       }),
       label: `${pair[0].namePt} e ${pair[1].namePt}`
     };

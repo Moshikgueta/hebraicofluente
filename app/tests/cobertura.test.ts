@@ -114,7 +114,11 @@ describe('a unidade de prática de cada letra', () => {
     const faltando = letters
       .filter(L => L.confusableWith.filter(c => c !== L.letter).length >= 2)
       .map(L => unidade(L.order))
-      .filter(u => !u.familias.has('conf') && !u.familias.has('odd'))
+      /* `par-*`, `parodd-*` e `parword-*` são os exercícios de PAR
+         (lib/engine/pares.ts): discriminação com a gêmea garantida na tela,
+         que é a versão mais exigente da mesma coisa. */
+      .filter(u => !u.familias.has('conf') && !u.familias.has('odd')
+        && ![...u.familias].some(f => f.startsWith('par')))
       .map(u => u.L.namePt);
     expect(faltando).toEqual([]);
   });

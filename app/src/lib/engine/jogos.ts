@@ -384,7 +384,10 @@ export type Batalha = {
  * o que se parece com o quê, e um dia as duas discordariam.
  */
 export function paresParaTreinar(
-  state: LearnerState, unlocked: readonly Letter[], quantos = 4
+  state: LearnerState, unlocked: readonly Letter[], quantos = 4,
+  /** Gira a escolha entre os pares ANTIGOS, para duas partidas seguidas não
+   *  trazerem os mesmos. Quem chama passa um número tirado da semente. */
+  giro = 0
 ): [Letter, Letter][] {
   const porGlifo = new Map<string, Letter>();
   for (const l of unlocked) {
@@ -408,9 +411,50 @@ export function paresParaTreinar(
     junta(porGlifo.get(c.correct), porGlifo.get(c.chosen));
     if (out.length >= quantos) return out.slice(0, quantos);
   }
+  /* RECENTES E ANTIGOS, alternados.
+     ────────────────────────────────────────────────────────────────────
+     Só os recentes era a regra até 23/09, e ela tem uma boa razão - a letra
+     de ontem ainda não assentou -, mas uma consequência ruim que a auditoria
+     mediu: com o alfabeto inteiro e nenhum erro registrado, os quatro pares
+     eram sempre פ/מ, כ/ב, כ/ר e ק/ר. Quem terminava o curso sem errar nunca
+     mais via {{ד}}/{{ר}} nem {{ה}}/{{ח}}, que são exatamente os pares que o
+     curso ensina a temer.
+
+     Agora a lista de pares do conteúdo é lida nos dois sentidos e as duas
+     pontas se alternam: um recente, um antigo, um recente, um antigo. Os
+     antigos giram com `giro`, então cada partida traz outros. */
+  const doConteudo: [Letter, Letter][] = [];
+  const vistosConteudo = new Set<string>();
   for (const L of [...unlocked].reverse()) {
-    for (const glifo of L.confusableWith) junta(L, porGlifo.get(glifo));
+    for (const glifo of L.confusableWith) {
+      const o = porGlifo.get(glifo);
+      if (!o || o.id === L.id) continue;
+      const k = chave(L, o);
+      if (vistosConteudo.has(k)) continue;
+      vistosConteudo.add(k);
+      doConteudo.push([L, o]);
+    }
+  }
+  /* As duas METADES da lista, e não a lista inteira lida ao contrário: o
+     giro sobre a lista inteira às vezes trazia recentes dos dois lados, e a
+     partida voltava a ser só de pares recentes. */
+  /* A idade de um par é a da letra MAIS NOVA dele - é quando ele passa a
+     existir para o aluno. {{ד}} declara {{ך}}: o par nasce no Kaf (21), e não
+     no Dálet (8), e ordenar pela letra que declara o punha entre os antigos. */
+  const idade = ([a, b]: [Letter, Letter]) => Math.max(a.order, b.order);
+  doConteudo.sort((p, q) => idade(q) - idade(p)
+    || Math.min(q[0].order, q[1].order) - Math.min(p[0].order, p[1].order));
+  const meio = Math.ceil(doConteudo.length / 2);
+  const recentes = doConteudo.slice(0, meio);
+  const antigos = doConteudo.slice(meio).reverse();
+  const n = antigos.length;
+  const girados = n ? [...antigos.slice(giro % n), ...antigos.slice(0, giro % n)] : [];
+  for (let i = 0; out.length < quantos && i < doConteudo.length; i++) {
+    const r = recentes[i];
+    if (r) junta(r[0], r[1]);
     if (out.length >= quantos) break;
+    const a = girados[i];
+    if (a) junta(a[0], a[1]);
   }
   return out.slice(0, quantos);
 }

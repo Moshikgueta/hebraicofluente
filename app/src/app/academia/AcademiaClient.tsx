@@ -672,7 +672,9 @@ function montarNovo(
   if (jogo === 'cursiva') return { cursiva: montarCursiva(state, unlocked, rand, nivel) };
   /* Vários pares por partida, e não um. `paresParaTreinar` põe primeiro o que
      ELE trocou de verdade e depois o que o conteúdo prevê. */
-  const pares = paresParaTreinar(state, unlocked, 4);
+  /* O giro sai da mesma semente da rodada: cada partida nova traz outros
+     pares antigos, e voltar à mesma rodada devolve os mesmos. */
+  const pares = paresParaTreinar(state, unlocked, 4, Math.floor(rand() * 97));
   if (!pares.length) return {};
   /* `doAluno` distingue o par que ELE trocou do par que o conteúdo prevê - e
      é o que autoriza, no fim, a frase "você confundia estas duas". */
