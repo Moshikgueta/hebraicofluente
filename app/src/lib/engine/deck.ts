@@ -51,6 +51,24 @@ export type Fonte = {
   letterId: string;
 };
 
+/**
+ * Que habilidade uma resposta de jogo exercitou, lida do id do par.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Os seis jogos gravavam TUDO como `rec`. Um Match de palavras, um Teste de
+ * sílabas e um Blast de sons escreviam na mesma conta, e essa conta decide
+ * coisas: o nível dos jogos, a letra "forte" do painel, o que a revisão
+ * oferece. Jogar muito inflava o reconhecimento e não tocava na leitura.
+ *
+ * O id já carrega o tipo - `som:mem`, `sil:mem:a`, `pal:mem:...` -, então
+ * não é preciso passar nada novo pelos componentes. O que não é de baralho
+ * (Caça, Batalha, Impressa × Cursiva) é reconhecimento de forma, e fica `rec`.
+ */
+export function habilidadeDoJogo(id: string): 'rec' | 'som' | 'ler' {
+  if (id.startsWith('som:')) return 'som';
+  if (id.startsWith('sil:') || id.startsWith('pal:')) return 'ler';
+  return 'rec';
+}
+
 export const ROTULO_TIPO: Record<TipoPar, string> = {
   nome: 'Nome da letra',
   som: 'Som',

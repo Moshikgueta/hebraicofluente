@@ -122,6 +122,9 @@ const estado = () => p.evaluate(() => {
 });
 
 const vistos = new Map();
+/* O gabarito de cada item digitado, lido da tela no primeiro erro. */
+const gabaritos = new Map();
+let digitadasCertas = 0;
 
 async function percorre(letraId, etapa, rotulo) {
   await p.goto(`${BASE}/licao/${letraId}/`, { waitUntil: 'networkidle' });
@@ -180,10 +183,33 @@ async function percorre(letraId, etapa, rotulo) {
       continue;
     }
 
+    /* DIGITAR, e as duas coisas que ele tem de fazer.
+       ──────────────────────────────────────────────────────────────────
+       1. O Enter que CORRIGE não pode também SEGUIR. Até 23/09/2026 o Enter
+          do campo subia até o atalho do player («Enter = próxima») e o mesmo
+          toque corrigia e pulava: o aluno nunca via se tinha acertado. Esta
+          varredura acusava «respondi 13 de 14» em todo bloco, e era verdade.
+       2. A resposta certa tem de ser ACEITA. Na primeira passada o robô não
+          sabe a resposta: digita "x", erra, e lê o gabarito que a tela
+          mostra. A prática usa semente fixa, então a segunda passada pelo
+          mesmo bloco traz o mesmo item - e aí ele digita o gabarito e cobra o
+          acerto. */
     if (e.temCampo) {
-      await p.locator('main input').first().fill('x');
+      const chave = `${letraId}/${rotulo}/${e.feito}`;
+      const sabida = gabaritos.get(chave);
+      await p.locator('main input').first().fill(sabida ?? 'x');
       await p.keyboard.press('Enter');
       await p.waitForTimeout(350);
+      const d = await estado();
+      if (d.feito !== e.feito || !d.julgado) {
+        erro(`${letraId}/${rotulo}: o Enter que corrige o item digitado também pulou para o próximo`);
+      } else if (sabida) {
+        if (/O certo era/.test(d.txt)) erro(`${letraId}/${rotulo}: a resposta certa digitada ("${sabida}") foi recusada`);
+        else digitadasCertas++;
+      } else {
+        const m = d.txt.match(/O certo era (\S+?)\./);
+        if (m) gabaritos.set(chave, m[1]);
+      }
       continue;
     }
 
@@ -274,10 +300,14 @@ for (const [id, etapa, rotulo] of [
 ]) {
   await percorre(id, etapa, rotulo);
 }
+/* A segunda passada, agora sabendo o gabarito dos itens digitados. */
+for (const id of ['alef', 'vav']) await percorre(id, 4, 'Praticar');
+if (!digitadasCertas) erro('nenhuma resposta digitada certa foi conferida - a segunda passada não achou o item');
+else console.log(`  ✓ ${digitadasCertas} resposta(s) digitada(s) certa(s) aceita(s)`);
 
 console.log('');
 console.log('  formatos exercitados:', [...vistos.entries()].map(([k, n]) => `${k}×${n}`).join('  '));
-for (const f of ['escolher', 'ligar', 'montar']) {
+for (const f of ['escolher', 'ligar', 'montar', 'digitar']) {
   if (!vistos.get(f)) erro(`o formato "${f}" não apareceu em nenhuma varredura`);
 }
 if (consoleErros.length) erro(`erro de console: ${consoleErros[0].slice(0, 120)}`);

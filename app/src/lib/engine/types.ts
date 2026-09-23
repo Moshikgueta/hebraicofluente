@@ -193,7 +193,35 @@ export function normalizeTyped(text: string): string {
     .trim();
 }
 
+/**
+ * A segunda régua, mais frouxa: as grafias que um brasileiro usa para O MESMO
+ * som, e que a transliteração do curso escreve de um jeito só.
+ *
+ *   · consoante dobrada vira uma - "imma", "abba" e "shabbat" são o que o
+ *     daguesh sugere, e o som é o mesmo de "imá", "abá", "shabat";
+ *   · y vira i - "iam", "iom", "tiul" é como se escreve esse som em português,
+ *     e o "ii" que isso cria em "tiyul" vira um i só;
+ *   · kh vira ch, tz vira ts - as duas convenções de transliteração que o
+ *     aluno encontra fora do curso.
+ *
+ * O que ela NÃO faz é o mesmo que `normalizeTyped` não faz: sh continua
+ * diferente de s e de ch. O "ch" do português soa como o שׁ, e aceitar
+ * "chalom" para שָׁלוֹם apagaria a diferença entre שׁ e ח que o curso ensina.
+ */
+export function normalizeLoose(text: string): string {
+  return normalizeTyped(text)
+    .replace(/kh/g, 'ch')
+    .replace(/tz/g, 'ts')
+    .replace(/y/g, 'i')
+    /* "tiyul" vira "tiiul" na linha de cima; "tiul" é o mesmo som. */
+    .replace(/i{2,}/g, 'i')
+    .replace(/([^aeiou])\1+/g, '$1');
+}
+
 export const typedIsCorrect = (typed: string, accept: readonly string[]): boolean => {
   const t = normalizeTyped(typed);
-  return t.length > 0 && accept.some(a => normalizeTyped(a) === t);
+  if (!t.length) return false;
+  if (accept.some(a => normalizeTyped(a) === t)) return true;
+  const f = normalizeLoose(typed);
+  return accept.some(a => normalizeLoose(a) === f);
 };

@@ -42,7 +42,7 @@ import { Batalha } from '@/components/game/Batalha';
 import { ImpressaCursiva } from '@/components/game/ImpressaCursiva';
 import { TestRun, RelatorioTeste, type ResultadoTeste } from '@/components/game/TestRun';
 import {
-  deLetras, montarBaralho, perguntasDe, TIPOS_POR_JOGO, type Par, type Pergunta
+  deLetras, habilidadeDoJogo, montarBaralho, perguntasDe, TIPOS_POR_JOGO, type Par, type Pergunta
 } from '@/lib/engine/deck';
 import { letterMastery } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
@@ -190,9 +190,15 @@ export function AcademiaClient() {
   }) => {
     if (!a.letterId) return;
     const L = unlocked.find(l => l.id === a.letterId);
+    /* Só um GLIFO vira troca registrada. No Blast e no Teste a alternativa
+       escolhida pode ser um nome ("Mem") ou um som ("m"), e gravar
+       `מ>Mem` como confusão sujava a lista que a Batalha lê para escolher os
+       pares - uma troca que nenhuma letra do alfabeto consegue resolver. */
+    const glifo = a.escolhida && /^[\u05D0-\u05EA]$/.test(a.escolhida) ? a.escolhida : null;
     p.answer({
-      itemId: `jogo:${a.id}`, letterId: a.letterId, correct: a.certo, skill: 'rec',
-      ...(L && a.escolhida ? { expected: L.letter, chosen: a.escolhida } : {})
+      itemId: `jogo:${a.id}`, letterId: a.letterId, correct: a.certo,
+      skill: habilidadeDoJogo(a.id),
+      ...(L && glifo ? { expected: L.letter, chosen: glifo } : {})
     });
   }, [p, unlocked]);
 

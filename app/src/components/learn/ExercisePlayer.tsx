@@ -152,7 +152,10 @@ export function ExercisePlayer({
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!ex) return;
-      if (e.key === 'Enter' && settled) { e.preventDefault(); next(); return; }
+      /* Um Enter que nasceu num campo de texto é do campo, nunca do player -
+         segunda trava da mesma porta, ver `TypeAnswer`. */
+      const doCampo = e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement;
+      if (e.key === 'Enter' && settled && !doCampo && !e.repeat) { e.preventDefault(); next(); return; }
       if (settled || !isChoice(ex)) return;
       /* Not while the learner is typing an answer. */
       const el = document.activeElement;

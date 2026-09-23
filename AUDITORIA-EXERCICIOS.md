@@ -23,6 +23,39 @@ A proposta de painel administrativo pedida no item 16 está em arquivo próprio:
 
 ---
 
+## Estado depois do P0 (23/09, mesmo dia)
+
+Os seis itens do P0 da seção 12 foram feitos. Medido com o mesmo censo, as
+mesmas sementes, os mesmos 528 itens:
+
+| medida | antes | depois |
+|---|---|---|
+| itens de escolha múltipla | 84,1% | **81,1%** |
+| habilidade `rec` / `ler` | 60% / 31% | **49% / 44%** |
+| famílias de exercício por letra | 10 a 14 | **11 a 16** |
+| fixações iguais à da letra anterior | 13 das 21 | **0** |
+| sequências de fixação diferentes | 7 para 22 letras | **22 para 22** |
+| "que vogal está escrita aqui?" | 8 | **24** |
+| "ache a intrusa" | 2 | **25** |
+| "complete a palavra" | 2 | **23** |
+| "monte a palavra" | 1 | **16** |
+| itens digitados nas lições | 0 | **44** (1 por prática, 1 por fixação) |
+| letras que nunca voltavam (Vav, Záyin) | 2 | **0** - toda letra volta em n+1, 2, 4, 8 e 16 |
+| fixação de Bet, Kaf, Pe, Shin com item de variante | 0 de 4 | **4 de 4** |
+| jogos que gravam a habilidade certa | 0 de 6 | **6 de 6** |
+
+Um defeito apareceu no caminho e foi corrigido junto: **o Enter que corrigia
+um item digitado também pulava para o próximo**, então o aluno nunca via se
+tinha acertado. Ele já existia na academia e no exame, onde "digitar"
+aparecia; quando o item entrou nas lições, `exercicios.mjs` o acusou em todo
+bloco. A varredura agora cobra as duas coisas - o Enter não pula, e a
+resposta certa digitada é aceita.
+
+Tudo travado em `app/tests/p0-exercicios.test.ts` (21 testes, 15 deles vistos
+falhando contra o motor anterior).
+
+---
+
 ## 1. Resumo executivo
 
 O conteúdo é muito bom. A arquitetura é muito boa. **A experiência de

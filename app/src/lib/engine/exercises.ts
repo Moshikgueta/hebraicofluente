@@ -32,7 +32,7 @@ import {
   exLetterVariant,
   exVariantSyllable,
   exMatchLetterSound, exMeaningToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
-  exSentenceReading, exSyllableReading, exVowelSound, exWordMeaning,
+  exSentenceReading, exSyllableReading, exTypeSyllable, exTypeTranslit, exVowelSound, exWordMeaning,
   type Ctx, type Gen
 } from './generators';
 import type { Exercise } from './types';
@@ -254,7 +254,15 @@ function fill(
    tela, e não o nome interno do item. */
 export function assinatura(ex: Exercise): string {
   const o = (ex as { options?: string[] }).options;
-  return [ex.kind, ex.promptPt, o ? o.join('\u0001') : ''].join('\u0002');
+  /* O item de LIGAR não tem `options` - tem pares. Sem esta linha, todo
+     "Ligue cada letra ao seu som" tinha a mesma assinatura, e o filtro era
+     cego justamente no item mais repetido do curso (36 vezes numa passagem,
+     medido na auditoria de 23/09). Os pares ordenados são o conteúdo que o
+     aluno vê: duas ligações com as mesmas letras são a mesma pergunta. */
+  const pares = ex.kind === 'match'
+    ? ex.pairs.map(p => `${p.left}=${p.right}`).sort().join('\u0001')
+    : '';
+  return [ex.kind, ex.promptPt, o ? o.join('\u0001') : pares].join('\u0002');
 }
 
 const hasRun = (list: Exercise[]): boolean =>
@@ -310,6 +318,73 @@ export function spread(list: Exercise[]): Exercise[] {
   return out;
 }
 
+
+/* ── a rotação das camadas ───────────────────────────────────────────────
+ * A causa da lição-carbono, e o conserto dela.
+ *
+ * Cada camada da prática e da fixação é uma lista de geradores, e a lista era
+ * lida sempre do começo: fica o primeiro que funcionar. Só que o primeiro
+ * quase sempre funciona. `exMatchLetterSound` só falha com menos de três
+ * letras no histórico - ou seja, no Álef e no Mem -, e a partir do Tav ele
+ * vencia a camada de som em TODAS as letras. A auditoria de 23/09 contou o
+ * efeito: as letras 3 a 11 recebiam exatamente as mesmas dez famílias, na
+ * mesma ordem; "que vogal está escrita aqui?" aparecia 8 vezes em 528 itens;
+ * "ache a intrusa", "complete a palavra" e "monte a palavra", uma ou duas.
+ *
+ * Girar a lista pela ordem da letra faz cada letra COMEÇAR por um gerador
+ * diferente da vizinha. Nada de sorteio: a mesma letra dá a mesma lição, e
+ * duas letras seguidas nunca abrem a camada pelo mesmo gesto. A lista
+ * continua sendo de preferência - se o da vez não serve para esta letra, o
+ * seguinte entra -, então nenhuma camada some por causa da rotação.
+ *
+ * A fixação gira com um passo a mais que a prática, de propósito: na mesma
+ * letra, a prova começa cada camada por um gesto que a prática não usou.
+ */
+export function girar<T>(lista: readonly T[], passo: number): T[] {
+  const n = lista.length;
+  if (n < 2) return [...lista];
+  const k = ((passo % n) + n) % n;
+  return [...lista.slice(k), ...lista.slice(0, k)];
+}
+
+/* ── a ordem da revisão cumulativa ───────────────────────────────────────
+ * Quais letras anteriores voltam nesta lição, e em que ordem.
+ *
+ * Era um sorteio: as fracas primeiro, depois as outras embaralhadas. Para um
+ * aluno que não erra - o caso em que a revisão mais precisa funcionar sozinha
+ * -, `weak` fica vazio e a escolha era acaso puro. A auditoria de 23/09 mediu o
+ * resultado: Vav e Záyin NUNCA voltavam em nenhuma das lições seguintes, e o
+ * Shin voltava uma vez em treze. Aprende ו, pratica ו, nunca mais vê ו.
+ *
+ * Agora é intervalo crescente, com a ordem da lição como relógio: a letra
+ * ensinada na lição n volta, com certeza, em n+1, n+2, n+4, n+8 e n+16. Não
+ * precisa de estado novo - a posição no alfabeto é o calendário.
+ *
+ *   1. até duas FRACAS, se o chamador souber quais. Não mais que duas: uma
+ *      lista longa de fracas empurrava as devidas para fora do bloco, e a
+ *      fraca de hoje também volta amanhã;
+ *   2. as DEVIDAS, do intervalo mais longo ao mais curto. A de ontem é a
+ *      última porque é a menos esquecida, e porque a fixação a cobra;
+ *   3. o resto das fracas, e depois o resto embaralhado, para o espaço que
+ *      sobrar.
+ */
+export const INTERVALOS_DE_REVISAO = [1, 2, 4, 8, 16] as const;
+
+export function ordemDeRevisao(
+  L: Letter, anteriores: readonly Letter[], weak: readonly string[], rand: Rand
+): Letter[] {
+  const fracas = anteriores.filter(x => weak.includes(x.id));
+  const devidas = anteriores
+    .filter(x => (INTERVALOS_DE_REVISAO as readonly number[]).includes(L.order - x.order))
+    .sort((a, b) => a.order - b.order);
+  const out: Letter[] = [];
+  const junta = (x: Letter) => { if (!out.includes(x)) out.push(x); };
+  fracas.slice(0, 2).forEach(junta);
+  devidas.forEach(junta);
+  fracas.forEach(junta);
+  shuffled(anteriores.filter(x => !out.includes(x)), rand).forEach(junta);
+  return out;
+}
 
 /* ── a unidade de prática de uma letra ──────────────────────────────────
  * O que a auditoria mostrou, em números: cada letra recebia 13 itens, de 8
@@ -455,9 +530,9 @@ export function buildLetterPractice(
      variante cobra. */
   const antes = out.length;
   if ((L.variantes?.length ?? 0) >= 2) tentar([exLetterVariant, exVariantSyllable], 1);
-  if (out.length === antes) tentar([exMatchLetterSound, exVowelSound, exSoundToSyllable], 1);
-  tentar([exConfusablePick, exOddOneOut], 1);
-  tentar([exLetterInWord, exCompleteWord], 1);
+  if (out.length === antes) tentar(girar([exMatchLetterSound, exVowelSound, exSoundToSyllable], L.order), 1);
+  tentar(girar([exConfusablePick, exOddOneOut], L.order), 1);
+  tentar(girar([exLetterInWord, exCompleteWord], L.order), 1);
   tentar([exLetterPosition, exLetterInWord], 1);
   if (L.finalForm) tentar([exFinalInWord, exFinalForm], 1);
   tentar([exPrintVsCursive, exCursiveToPrint], 1);
@@ -468,9 +543,20 @@ export function buildLetterPractice(
 
      DOIS itens de leitura e montagem, e não um: com o bloco em catorze cabem
      os dois gestos, ler a sílaba pronta e MONTAR a sílaba. Antes só cabia um
-     deles, e qual dos dois era sorte da ordem da lista. */
-  tentar([exSyllableReading, exBuildSyllable, exWordMeaning, exBuildWord, exMeaningToWord],
-         frase ? 2 : 3);
+     deles, e qual dos dois era sorte da ordem da lista.
+
+     Por isso MONTAR tem lugar próprio, antes do ler. Com a lista inteira
+     girando junta, a rotação deu variedade de família e tirou gesto: montar
+     a sílaba caiu de 46 para 23 aparições e a escolha múltipla subiu de 84%
+     para 91% do curso. Variar QUAL pergunta de escolher não é variar o gesto. */
+  tentar([...girar([exBuildSyllable, exBuildWord], L.order), exSoundToSyllable], 1);
+  /* DIGITAR, o único gesto do bloco que não oferece a resposta na tela.
+     Entra aqui para que a fixação - que também cobra - nunca seja o primeiro
+     encontro do aluno com a caixa de texto. Gira com fase oposta à da
+     fixação: quem digita a palavra na prática digita a sílaba na prova, e
+     vice-versa. */
+  tentar(girar([exTypeTranslit, exTypeSyllable], L.order), 1);
+  tentar(girar([exSyllableReading, exWordMeaning, exMeaningToWord], L.order), frase ? 1 : 2);
   /* A frase NÃO entra aqui: ela é acrescentada no fim, depois do arranjo.
      Ver a nota do `return`. */
 
@@ -481,24 +567,30 @@ export function buildLetterPractice(
      ensina vinte e duas coisas isoladas em vez de um alfabeto. O tamanho da
      reserva foi calculado lá em cima, antes das camadas. */
   if (anteriores.length) {
-    const ordenadas = [
-      ...anteriores.filter(x => weak.includes(x.id)),
-      ...shuffled(anteriores.filter(x => !weak.includes(x.id)), rand)
-    ];
+    const ordenadas = ordemDeRevisao(L, anteriores, weak, rand);
     const quantos = reservaRevisao;
     const gensCumulativo = [exLetterRecognition, exLetterInWord, exSyllableReading,
                             exConfusablePick, exVowelSound, exWordMeaning];
     let postos = 0;
-    for (let k = 0; k < ordenadas.length * 3 && postos < quantos && out.length < count; k++) {
-      const P = ordenadas[k % ordenadas.length]!;
-      const gen = gensCumulativo[k % gensCumulativo.length]!;
-      if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
-      const ex = gen(P, contextFor(P, history), rand, giro + Math.floor(k / ordenadas.length));
-      if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
-      seen.add(ex.id);
-      ditos.add(assinatura(ex));
-      out.push(ex);
-      postos++;
+    /* Uma letra por vez, na ordem de urgência, e cada uma tenta os geradores
+       até um servir. O laço antigo andava letra e gerador juntos: quando o
+       gerador da vez falhava para aquela letra - "em qual palavra aparece",
+       numa letra sem palavra legível -, a letra perdia a vez e a seguinte
+       entrava no lugar. Com a ordem por intervalo, perder a vez é perder a
+       revisão que estava devida. */
+    for (const [n, P] of ordenadas.entries()) {
+      if (postos >= quantos || out.length >= count) break;
+      for (let g = 0; g < gensCumulativo.length; g++) {
+        const gen = gensCumulativo[(n + L.order + g) % gensCumulativo.length]!;
+        if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
+        const ex = gen(P, contextFor(P, history), rand, giro + n);
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        seen.add(ex.id);
+        ditos.add(assinatura(ex));
+        out.push(ex);
+        postos++;
+        break;
+      }
     }
   }
 
@@ -601,9 +693,24 @@ export function buildMiniTest(
   };
 
   tentar([exLetterRecognition]);
-  tentar([exMatchLetterSound, exVowelSound, exSoundToSyllable]);
-  tentar([exLetterInWord, exLetterPosition, exCompleteWord]);
-  tentar([L.finalForm ? exFinalInWord : exConfusablePick, exConfusablePick, exOddOneOut]);
+  /* A VARIANTE, que a prática cobrava e a fixação não.
+     ─────────────────────────────────────────────────────────────────────
+     Bet, Kaf, Pe e Shin têm duas leituras, e é a coisa mais difícil delas -
+     a lição gasta mais tempo nisso do que em qualquer outra. A prática trazia
+     um item de variante; a fixação, que decide se a letra está dominada e se
+     a próxima abre, não trazia nenhum. Dava para passar no Bet sem nunca ter
+     decidido de que lado estava o ponto.
+
+     Ocupa o lugar da camada de som, como na prática: numa letra de duas
+     leituras "que som ela faz?" tem como resposta "depende do ponto", que é
+     exatamente o que esta camada cobra. */
+  const antesDoSom = out.length;
+  if ((L.variantes?.length ?? 0) >= 2) tentar([exLetterVariant, exVariantSyllable]);
+  if (out.length === antesDoSom) tentar(girar([exMatchLetterSound, exVowelSound, exSoundToSyllable], L.order + 1));
+  tentar(girar([exLetterInWord, exLetterPosition, exCompleteWord], L.order + 1));
+  tentar(L.finalForm
+    ? [exFinalInWord, exConfusablePick, exOddOneOut]
+    : girar([exConfusablePick, exOddOneOut], L.order + 1));
   /* A CURSIVA, que o checkpoint nunca cobrava.
      ─────────────────────────────────────────────────────────────────────
      A lição gasta uma etapa inteira nela: mostra o desenho, anima a ordem
@@ -645,13 +752,33 @@ export function buildMiniTest(
      Cada camada é uma LISTA em ordem de preferência, e não um gerador fixo:
      nas primeiras letras não há palavra legível nem frase, e a camada cai
      para o que existe em vez de sumir. */
-  tentar([exBuildSyllable, exBuildWord, exSoundToSyllable]);
-  tentar([exSentenceReading, exSyllableReading, exVowelSound]);
-  tentar([exWordMeaning, exMeaningToWord, exCompleteWord, exOddOneOut]);
+  tentar([...girar([exBuildSyllable, exBuildWord], L.order + 1), exSoundToSyllable]);
+  /* A frase fica SEMPRE na frente quando existe: ler uma linha inteira é o
+     que o curso promete, e é a pergunta que mais vale numa prova. */
+  tentar([exSentenceReading, ...girar([exSyllableReading, exVowelSound], L.order + 1)]);
+  tentar(girar([exWordMeaning, exMeaningToWord, exCompleteWord, exOddOneOut], L.order + 1));
+  /* RECUPERAÇÃO ATIVA, um item por prova.
+     ─────────────────────────────────────────────────────────────────────
+     Tudo acima é escolher: a resposta certa está na tela, e o aluno só
+     precisa reconhecê-la. A nota de 80% que abre a letra seguinte media,
+     portanto, reconhecimento - e um adulto reconhece a leitura de uma sílaba
+     muito antes de conseguir LEMBRÁ-LA. Este item pede a lembrança: a palavra
+     ou a sílaba na tela, e uma caixa vazia.
 
+     Um só, de dez. Digitar é mais difícil e mais lento, principalmente num
+     telefone, e a comparação é tolerante (ver `normalizeLoose`): o que se
+     cobra é a leitura, não a ortografia da transliteração. */
+  tentar(girar([exTypeTranslit, exTypeSyllable], L.order + 1));
+
+  /* A letra anterior da fixação é a de ONTEM - intervalo 1 -, e não uma
+     sorteada. A prática já cobre os intervalos longos (ver `ordemDeRevisao`),
+     e quando as cinco revisões devidas não cabem nela, a de intervalo 1 é a
+     que sobra: cai aqui, onde ela vale nota. Sem ontem (a primeira letra), a
+     mais antiga das devidas. */
   const anteriores = history.filter(x => x.id !== L.id);
   if (anteriores.length) {
-    const P = shuffled(anteriores, rand)[0]!;
+    const ontem = anteriores.find(x => x.order === L.order - 1);
+    const P = ontem ?? ordemDeRevisao(L, anteriores, [], rand)[0]!;
     for (const gen of [exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound]) {
       const ex = gen(P, contextFor(P, history), rand, giro + 1);
       if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {

@@ -286,7 +286,15 @@ export function TypeAnswer({
           ref={ref}
           value={value}
           onChange={e => setValue(e.target.value)}
-          onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); submit(); } }}
+          /* `stopPropagation` não é detalhe. O player tem um atalho na
+             janela - Enter segue para a próxima pergunta depois de corrigir
+             - e este Enter, depois de corrigir, continuava subindo até ele.
+             O mesmo toque corrigia e pulava: o aluno nunca via se tinha
+             acertado, nem a resposta certa. Pego pela varredura
+             `exercicios.mjs` quando o item digitado entrou nas lições. */
+          onKeyDown={e => {
+            if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); submit(); }
+          }}
           onFocus={() => setTimeout(
             () => ref.current?.scrollIntoView({ block: 'center', behavior: 'smooth' }), 250
           )}

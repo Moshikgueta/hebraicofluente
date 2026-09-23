@@ -76,8 +76,9 @@ export function LessonClient({ letter }: { letter: Letter }) {
   );
   /* O mini-teste: dez itens, um de cada coisa que "saber a letra" quer dizer
      - reconhecer, o som ou a variante, dentro de uma palavra, a forma que
-     confunde, a CURSIVA, montar, ler, o significado, e um de uma letra
-     anterior. Outra semente a cada tentativa. */
+     confunde, a CURSIVA, montar, ler, o significado, um DIGITADO - o único
+     que não mostra a resposta na tela - e um de uma letra anterior. Outra
+     semente a cada tentativa. */
   const quiz = useMemo(
     () => buildMiniTest(letter, history, {
       audioAvailable: audioAvailable(), seed: `mini-${letter.id}-${quizRun}`

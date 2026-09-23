@@ -585,6 +585,37 @@ export const exTypeTranslit: Gen = (L, _ctx, rand, i) => {
   };
 };
 
+/**
+ * A sílaba, digitada. O item de recuperação ativa que serve a TODA letra.
+ * ─────────────────────────────────────────────────────────────────────────
+ * `exTypeTranslit` pede uma palavra, e as duas primeiras letras não têm
+ * palavra legível nenhuma. A sílaba toda letra tem - seis delas -, e a
+ * transliteração de uma sílaba é curta e sem ambiguidade: "mo", "tsi", "ve".
+ *
+ * É o gesto que as quatro alternativas não conseguem pedir: LEMBRAR a leitura
+ * em vez de reconhecê-la numa lista. Quem escolhe "mo" entre "ma, mi, mo" só
+ * precisa saber que não é "ma" nem "mi"; quem digita precisa saber que é "mo".
+ */
+export const exTypeSyllable: Gen = (L, _ctx, _rand, i) => {
+  const pool = vowelSyllables(L);
+  const target = at(pool, i + 2);
+  if (!target || !target.translit) return null;
+  return {
+    id: `${L.id}-tsy-${i}`, kind: 'type-answer', letterId: L.id, skill: 'ler',
+    promptPt: 'Como se lê esta sílaba? Escreva.',
+    he: target.he,
+    accept: [target.translit],
+    placeholder: 'escreva aqui',
+    want: 'translit',
+    audioId: target.audioId,
+    hintsPt: [
+      'Primeiro o som da consoante, depois o da vogal.',
+      `Começa com “${target.translit[0]}”.`
+    ],
+    explainPt: `${target.he} - ${target.translit}. ${target.ptApprox}.`
+  };
+};
+
 export const exTypeHeard: Gen = (L, _ctx, rand, i) => {
   const usable = L.wordsToRead.filter(w => w.audioId && w.translit.length <= 9);
   const target = at(usable, i);
