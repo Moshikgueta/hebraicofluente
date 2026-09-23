@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
-import { Prose, WorkbookLink } from '@/components/learn/Blocks';
+import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import type { CourseModule, Letter } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
@@ -97,7 +97,6 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         </Card>
       )}
 
-      <WorkbookLink pages={mod.workbookPages} what="este módulo" />
 
       {first ? (
         <LinkButton href={`/licao/${first.id}`} size="lg" full>

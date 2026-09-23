@@ -3,7 +3,6 @@
 /* The teaching blocks: the pieces of a lesson that present rather than test. */
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
 import { AudioButton } from './AudioButton';
 import { Card, Badge } from '@/components/ui/Card';
@@ -11,7 +10,6 @@ import { Button } from '@/components/ui/Button';
 import type { Letter, Scene, Syllable, Word } from '@/lib/content';
 import { supportLabel, supportLevel } from '@/lib/state/rules';
 import { useProgress } from '@/lib/state/store';
-import { track } from '@/lib/analytics';
 import { REGRA_CURSIVA } from '@/lib/cursiva';
 import { SELOS, type Selo } from '@/lib/selos';
 
@@ -283,25 +281,27 @@ export function RealWorldHebrew({ scene }: { scene: Scene }) {
   );
 }
 
-/* ── the printed workbook ───────────────────────────────────────────────
-   The PDF is not replaced by the app; handwriting on paper is still the best
-   way to learn to write. The link names the exact pages. */
-export function WorkbookLink({ pages, what }: { pages: { from: number; to: number } | null; what: string }) {
-  if (!pages) return null;
-  return (
-    <Link
-      href="/workbook"
-      onClick={() => track('workbook_opened', { pages: `${pages.from}-${pages.to}` })}
-      className="flex items-center justify-between gap-4 rounded-[var(--r-md)] border border-dashed
-                 border-line px-4 py-3 text-ink-body hover:bg-surface-2 transition-colors"
-    >
-      <span className="font-ui text-[14px]">
-        Quer praticar {what} à mão? Workbook impresso, páginas {pages.from}-{pages.to}
-      </span>
-      <span aria-hidden className="text-ink-muted">→</span>
-    </Link>
-  );
-}
+/* ── o workbook impresso saiu daqui, e o motivo fica escrito ────────────
+   Aqui morava `WorkbookLink`, um cartão que aparecia cinco vezes dentro do
+   curso - na lição, no módulo, no checkpoint e nos extras - dizendo «quer
+   praticar à mão? Workbook impresso, páginas N-M», e levando a uma página que
+   descrevia um livro de 331 páginas.
+
+   Esse livro não existe para o aluno. A própria página /workbook admitia
+   isso no rodapé: «o arquivo ainda não está publicado nesta versão». Ou
+   seja, o curso apontava cinco vezes para uma porta que não abre, e o aviso
+   de que ela não abre só aparecia depois do clique.
+
+   Prometer material que não se entrega é o defeito mais caro que uma página
+   de curso pode ter, e ele não melhora por estar escrito em letra pequena
+   três telas adiante. Então saiu inteiro: a página, os cinco cartões e o
+   evento de analytics.
+
+   O que FICA é o campo `workbookPages` no conteúdo. Ele não é promessa: é a
+   correspondência entre cada letra e as páginas do manuscrito de origem, que
+   `tools/build-pdf.mjs` usa para gerar o livro do dono do curso. Nada disso
+   chega à tela do aluno. No dia em que houver um arquivo para distribuir, o
+   cartão volta - com um link que leva a alguma coisa. */
 
 /* ── a letter, big ──────────────────────────────────────────────────────── */
 export function HebrewLetterCard({ letter }: { letter: Letter }) {

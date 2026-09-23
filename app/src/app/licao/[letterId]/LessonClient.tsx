@@ -28,8 +28,7 @@ import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioB
 import { ANALOGIA_CURSIVA, MESMA_LETRA } from '@/lib/cursiva';
 import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
-  RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal,
-  WorkbookLink
+  RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { useProgress } from '@/lib/state/store';
@@ -505,7 +504,6 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
           The first is the reward; the rest are there for whoever wants them. */}
       <Scenes letter={letter} />
 
-      <WorkbookLink pages={letter.workbookPages} what="estas palavras" />
       <Button size="lg" onClick={onDone} full>Continuar para a escrita</Button>
     </div>
   );
@@ -610,7 +608,6 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
         />
       )}
 
-      <WorkbookLink pages={letter.workbookPages} what="a escrita" />
       <Button size="lg" onClick={onDone} full>Continuar para a prática</Button>
     </div>
   );

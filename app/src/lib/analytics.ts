@@ -16,7 +16,6 @@ export type EventName =
   | 'review_started' | 'review_completed'
   | 'checkpoint_started' | 'checkpoint_completed'
   | 'streak_updated' | 'achievement_unlocked'
-  | 'workbook_opened'
   | 'first_reached'
   | 'gym_started' | 'gym_completed'
   /* Match, Blast e Teste. `jogo` diz qual. */
@@ -45,7 +44,6 @@ export type EventProps = {
   goalMinutes?: number;
   reason?: string;
   audioId?: string;
-  pages?: string;
   /** Which of the five skills an answer exercised. */
   skill?: string;
   /** The wrong option a learner picked - a glyph, never free text. */

@@ -37,7 +37,7 @@ export const ORIGEM = (process.env.NEXT_PUBLIC_SITE_ORIGIN || 'https://hebraicof
 export const PAGAS = [
   '/licao', '/modulo', '/checkpoint', '/extra', '/revisao', '/academia',
   '/mapa', '/desafio-final', '/certificado', '/concluido', '/conquistas',
-  '/historia', '/workbook', '/inicio', '/onboarding', '/meu-hebraico',
+  '/historia', '/inicio', '/onboarding', '/meu-hebraico',
   '/audio'
 ] as const;
 

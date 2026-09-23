@@ -28,7 +28,7 @@ import { Button } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { AudioButton } from '@/components/learn/AudioButton';
-import { Prose, WorkbookLink } from '@/components/learn/Blocks';
+import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import { course, extras, type CourseModule } from '@/lib/content';
 import { buildDageshQuiz, buildGerechQuiz, type Extras } from '@/lib/engine/extras';
@@ -152,7 +152,6 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
         )
       )}
 
-      {stage < 3 && <WorkbookLink pages={mod.workbookPages} what="este módulo" />}
     </div>
   );
 }

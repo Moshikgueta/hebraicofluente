@@ -167,7 +167,7 @@ describe('o portão', () => {
     for (const p of [
       '/licao/alef', '/licao/alef/', '/modulo/1', '/checkpoint/2', '/extra/sem-o-ponto',
       '/revisao', '/academia', '/mapa', '/desafio-final', '/certificado',
-      '/concluido', '/conquistas', '/historia', '/workbook', '/inicio',
+      '/concluido', '/conquistas', '/historia', '/inicio',
       '/onboarding', '/meu-hebraico'
     ]) {
       expect(isGatedPath(p), p).toBe(true);

@@ -16,7 +16,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone, ProgressBar } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
-import { Prose, WorkbookLink } from '@/components/learn/Blocks';
+import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, type CourseModule, type Letter } from '@/lib/content';
 import { buildCheckpoint } from '@/lib/engine/exercises';
@@ -180,7 +180,6 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         </p>
       )}
 
-      <WorkbookLink pages={mod.checkpoint?.workbookPages ?? null} what="esta revisão" />
 
       {readyLetters.length < letters.length ? (
         <Card tone="amber" className="p-5 grid gap-3">
