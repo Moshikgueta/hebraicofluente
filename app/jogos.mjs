@@ -132,7 +132,10 @@ const progresso = async p => {
  * elemento nenhum; o clique vai pelo ÍNDICE, relido a cada volta. Segurar
  * uma referência entre voltas é segurar um nó que o React já trocou.
  */
-async function jogarAteOFim(p, { voltas = 60, espera = 260 } = {}) {
+/* `voltas` subiu de 60 para 140: a Batalha passou de 8 para 16 rodadas, e
+   cada rodada de fileira custa uma volta por célula. Uma varredura sem voltas
+   suficientes acusa «a partida não termina» num jogo que estava jogando. */
+async function jogarAteOFim(p, { voltas = 140, espera = 260 } = {}) {
   /* Só os botões DO JOGO.
      ──────────────────────────────────────────────────────────────────────
      Duas armadilhas, e a varredura caiu nas duas antes de ficar assim:
@@ -246,21 +249,52 @@ diga('\n── Caça à letra ────────────────�
     return el ? el.textContent.trim() : null;
   });
   if (!alvo) erro('não achei o alvo da caça na tela');
-  const idx = await p.locator('main ul li button').evaluateAll((bs, g) =>
+  let idx = await p.locator('main ul li button').evaluateAll((bs, g) =>
     bs.map((b, i) => [i, b.querySelector('.he')?.textContent.trim()])
       .filter(([, t]) => t === g).map(([i]) => i), alvo);
   conferir(idx.length >= 3 && idx.length <= 6,
     `entre 3 e 6 ocorrências para achar (${idx.length})`);
 
-  for (const i of idx) {
-    await p.locator('main ul li button').nth(i).click({ timeout: 3000 }).catch(() => {});
-    await p.waitForTimeout(90);
+  /* CINCO GRADES, e não uma.
+     ──────────────────────────────────────────────────────────────────────
+     A partida deixou de ser uma rodada em 23/09/2026, e esta varredura
+     achava que ainda era: ela limpava a primeira grade, procurava a frase de
+     fim e acusava «a rodada não fecha» num jogo que estava só começando.
+
+     Agora ela joga a partida inteira, e de quebra passou a medir o que
+     interessa de verdade neste jogo: que as grades usam letras DIFERENTES.
+     Era o defeito relatado - «praticamente usa apenas uma letra» -, e sem
+     uma regra aqui ele volta sem ninguém notar. */
+  const alvosVistos = [alvo];
+  for (let grade = 0; grade < 6; grade++) {
+    for (const i of idx) {
+      await p.locator('main ul li button').nth(i).click({ timeout: 3000 }).catch(() => {});
+      await p.waitForTimeout(90);
+    }
+    await p.waitForTimeout(1300);
+    if (await p.locator('text=Mais uma').count()) break;
+
+    const novo = await p.evaluate(() => {
+      const el = [...document.querySelectorAll('main .he')]
+        .find(x => !x.closest('ul') && !x.closest('header, aside, nav'));
+      return el ? el.textContent.trim() : null;
+    });
+    if (!novo) break;
+    alvosVistos.push(novo);
+    idx = await p.locator('main ul li button').evaluateAll((bs, g) =>
+      bs.map((b, i) => [i, b.querySelector('.he')?.textContent.trim()])
+        .filter(([, t]) => t === g).map(([i]) => i), novo);
+    if (!idx.length) break;
   }
-  await p.waitForTimeout(1200);
+
+  conferir(alvosVistos.length >= 4,
+    `a partida tem várias grades (${alvosVistos.length})`);
+  conferir(new Set(alvosVistos).size >= 3,
+    `e letras diferentes em cada uma (${[...new Set(alvosVistos)].join(' ')})`);
 
   const txt = (await p.innerText('body')).replace(/\s+/g, ' ');
-  conferir(/Perfeito! Você encontrou/.test(txt) || /Mais uma/.test(txt),
-    'a rodada fecha e confirma quantas foram');
+  conferir(/Fim da partida|Mais uma/.test(txt),
+    'a partida fecha e confirma quantas foram');
 
   const g = await progresso(p);
   conferir(!!g.gym?.caca, 'o resultado foi gravado no progresso (gym.caca)');

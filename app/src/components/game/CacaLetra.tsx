@@ -41,38 +41,75 @@ import { porQueErrou } from '@/lib/engine/jogos';
 import type { Letter } from '@/lib/content';
 import type { ResultadoJogo } from './Match';
 
+/* Uma CAÇADA, e não uma caça.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Relato do dono do curso: «essa atividade praticamente usa apenas uma letra
+ * ou um conjunto muito pequeno de letras». Era exato, e a causa não estava no
+ * sorteio - que sempre escolheu pelo peso - e sim aqui: a tela montava UMA
+ * grade e terminava nela. Uma rodada, uma letra, fim de jogo.
+ *
+ * Agora a partida percorre cinco grades, cada uma com outra letra, e o placar
+ * é o da partida inteira. O que muda para o aluno não é a quantidade: é que
+ * procurar {{מ}} e logo depois procurar {{ר}} exige TROCAR o alvo na cabeça,
+ * que é a habilidade que a leitura real cobra e que uma grade só nunca
+ * treinou.
+ */
 export function CacaLetra({
-  caca, unlocked, onFim, onResposta
+  cacas, unlocked, onFim, onResposta
 }: {
-  caca: Caca;
+  cacas: readonly Caca[];
   unlocked: readonly Letter[];
   onFim: (r: ResultadoJogo) => void;
   onResposta?: (a: { id: string; letterId: string; certo: boolean; escolhida?: string }) => void;
 }) {
+  const [rodada, setRodada] = useState(0);
   const [achadas, setAchadas] = useState<string[]>([]);
   const [enganos, setEnganos] = useState<string[]>([]);
   const [erros, setErros] = useState(0);
+  const [certas, setCertas] = useState(0);
   const [letrasErradas, setLetrasErradas] = useState<string[]>([]);
   const [dica, setDica] = useState<string | null>(null);
   const inicio = useRef(Date.now());
+  /* A trava do avanço, pela mesma razão dos outros jogos: `setRodada` é
+     assíncrono, e dois toques no mesmo quadro pulariam uma grade. */
+  const passou = useRef(-1);
 
-  const faltam = caca.quantas - achadas.length;
-  const acabou = faltam <= 0;
+  const caca = cacas[rodada];
+  const ultima = rodada + 1 >= cacas.length;
+  const faltam = (caca?.quantas ?? 0) - achadas.length;
+  const acabou = !!caca && faltam <= 0;
+
+  const total = cacas.reduce((n, c) => n + c.quantas, 0);
 
   useEffect(() => {
-    if (!acabou) return;
-    const t = setTimeout(() => onFim({
-      acertos: caca.quantas,
-      erros,
-      total: caca.quantas,
-      segundos: Math.round((Date.now() - inicio.current) / 1000),
-      letrasErradas: [...new Set(letrasErradas)]
-    }), 700);
+    if (!acabou || !caca) return;
+    const t = setTimeout(() => {
+      if (passou.current === rodada) return;
+      passou.current = rodada;
+      if (!ultima) {
+        /* O placar sobe quando a grade fecha, e não no fim da partida: o
+           número na tela nunca pode estar atrás do que já aconteceu. */
+        setCertas(n => n + caca.quantas);
+        setRodada(n => n + 1);
+        setAchadas([]);
+        setEnganos([]);
+        setDica(null);
+        return;
+      }
+      onFim({
+        acertos: certas + caca.quantas,
+        erros,
+        total,
+        segundos: Math.round((Date.now() - inicio.current) / 1000),
+        letrasErradas: [...new Set(letrasErradas)]
+      });
+    }, 900);
     return () => clearTimeout(t);
-  }, [acabou, caca.quantas, erros, letrasErradas, onFim]);
+  }, [acabou, caca, rodada, ultima, certas, erros, letrasErradas, total, onFim]);
+
 
   const tocar = useCallback((id: string) => {
-    if (acabou) return;
+    if (acabou || !caca) return;
     const cel = caca.celulas.find(c => c.id === id);
     if (!cel || achadas.includes(id)) return;
 
@@ -102,6 +139,8 @@ export function CacaLetra({
     setDica(outra ? porQueErrou(caca.alvo, outra) : null);
   }, [acabou, achadas, caca, onResposta, unlocked]);
 
+  if (!caca) return null;
+
   return (
     <div className="grid gap-4">
       {/* O alvo GRANDE, e não uma letra de corpo de texto.
@@ -123,10 +162,31 @@ export function CacaLetra({
             Encontre todas as letras iguais a esta.
           </p>
         </div>
-        <p className="font-ui text-[13px] text-ink-muted tabular-nums shrink-0" aria-live="polite">
-          {achadas.length} de {caca.quantas}
-        </p>
+        <div className="shrink-0 grid justify-items-end gap-0.5">
+          <p className="font-ui text-[13px] text-ink-muted tabular-nums" aria-live="polite">
+            {achadas.length} de {caca.quantas} nesta grade
+          </p>
+          {cacas.length > 1 && (
+            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted tabular-nums">
+              Letra {rodada + 1} de {cacas.length}
+            </p>
+          )}
+        </div>
       </div>
+
+      {/* A régua das letras da partida. Cinco traços dizem, sem texto, que o
+          jogo não acaba nesta grade - que é a informação que faltava quando a
+          partida era de uma rodada só. */}
+      {cacas.length > 1 && (
+        <ol aria-hidden className="flex items-center gap-1.5 list-none p-0 m-0">
+          {cacas.map((c, k) => (
+            <li key={c.alvo.id + k}
+                className={`h-[4px] flex-1 rounded-full transition-colors duration-500
+                  ${k < rodada ? 'bg-[var(--teal)]'
+                    : k === rodada ? 'bg-[var(--teal-lite)]' : 'bg-[var(--sand)]'}`} />
+          ))}
+        </ol>
+      )}
 
       {/* A grade. `auto-fit` com um mínimo de 58px dá cinco colunas num
           telefone de 390 e sete num desktop - sem media query, e sem nunca
@@ -183,9 +243,9 @@ export function CacaLetra({
              className="rounded-[var(--r-md)] border border-[color:var(--edge-teal)]
                         bg-[var(--teal-soft)] px-4 py-2.5
                         font-ui text-[14px] font-semibold text-[var(--teal-ink)]">
-            Perfeito! Você encontrou {caca.quantas}{' '}
-            {caca.quantas === 1 ? 'letra' : 'letras'}{' '}
-            <He size="inline" tone="teal">{caca.glifo}</He>.
+            Achou as {caca.quantas}{' '}
+            <He size="inline" tone="teal">{caca.glifo}</He>.{' '}
+            {ultima ? 'Fim da partida.' : 'Agora outra letra.'}
           </p>
         )}
       </div>
@@ -193,11 +253,11 @@ export function CacaLetra({
   );
 }
 
-/** O cabeçalho da rodada, para a tela que hospeda o jogo. */
-export function CacaResumo({ caca }: { caca: Caca }) {
+/** O cabeçalho da partida, para a tela que hospeda o jogo. */
+export function CacaResumo({ cacas }: { cacas: readonly Caca[] }) {
   return (
     <Button variant="ghost" size="sm" disabled className="pointer-events-none">
-      {caca.celulas.length} letras
+      {cacas.length} letras
     </Button>
   );
 }

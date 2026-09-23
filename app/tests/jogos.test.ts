@@ -22,7 +22,7 @@ import type { LearnerState } from '@/lib/state/types';
 import { EMPTY_STATE } from '@/lib/state/types';
 import { rng } from '@/lib/engine/rng';
 import {
-  distratores, montarBatalha, montarCaca, montarCursiva, nivelDe,
+  distratores, montarBatalha, montarCaca, montarCacada, paresParaTreinar, montarCursiva, nivelDe,
   parecidasCom, pesoDaLetra, porQueErrou, type Nivel
 } from '@/lib/engine/jogos';
 import { confusionPair } from '@/lib/engine/gym';
@@ -104,8 +104,12 @@ describe('nenhum jogo mostra letra que o aluno não viu', () => {
       expect(par[0].id).not.toBe(par[1].id);
 
       const ok = permitidos(unlocked);
-      for (const r of montarBatalha(par, false, rng(`bat-${n}`)).rodadas) {
-        const glifos = r.tipo === 'qual' ? [r.glifo, ...r.opcoes.map(o => o.letter)]
+      for (const r of montarBatalha([par], false, rng(`bat-${n}`)).rodadas) {
+        /* O relâmpago tem a mesma forma de `qual` - um glifo e duas opções -,
+           e a regra da ordem vale igual para ele: uma letra que o aluno nunca
+           viu piscando por 900 ms é ainda mais cruel do que parada. */
+        const glifos = r.tipo === 'qual' || r.tipo === 'relampago'
+          ? [r.glifo, ...r.opcoes.map(o => o.letter)]
           : r.fila.map(c => c.glifo);
         for (const g of glifos) expect(ok.has(g), `${g} com ${n} letras`).toBe(true);
       }
@@ -172,7 +176,7 @@ describe('a batalha é jogável, sempre', () => {
 
   it('toda fileira de "toque em todas" tem pelo menos uma certa e uma errada', () => {
     for (let s = 0; s < 40; s++) {
-      for (const r of montarBatalha(par, false, rng(`f-${s}`), 9).rodadas) {
+      for (const r of montarBatalha([par], false, rng(`f-${s}`), 9).rodadas) {
         if (r.tipo !== 'todas') continue;
         expect(r.fila.some(c => c.certa), 'fileira sem resposta').toBe(true);
         expect(r.fila.some(c => !c.certa), 'fileira só com respostas').toBe(true);
@@ -182,19 +186,19 @@ describe('a batalha é jogável, sempre', () => {
 
   it('o intruso aparece uma vez, e é a outra letra do par', () => {
     for (let s = 0; s < 40; s++) {
-      const b = montarBatalha(par, false, rng(`i-${s}`), 9);
+      const b = montarBatalha([par], false, rng(`i-${s}`), 9);
       for (const r of b.rodadas) {
         if (r.tipo !== 'intruso') continue;
         expect(r.fila.filter(c => c.intruso).length).toBe(1);
         expect(r.intruso.id).not.toBe(r.alvo.id);
-        expect([b.par[0].id, b.par[1].id]).toContain(r.intruso.id);
+        expect(b.pares.flat().map(l => l.id)).toContain(r.intruso.id);
       }
     }
   });
 
   it('"qual é esta" oferece as duas do par, e uma delas é a certa', () => {
     for (let s = 0; s < 30; s++) {
-      for (const r of montarBatalha(par, false, rng(`k-${s}`), 9).rodadas) {
+      for (const r of montarBatalha([par], false, rng(`k-${s}`), 9).rodadas) {
         if (r.tipo !== 'qual') continue;
         expect(r.opcoes).toHaveLength(2);
         expect(r.opcoes.map(o => o.id)).toContain(r.alvo.id);
@@ -291,5 +295,105 @@ describe('a letra que custa aparece mais', () => {
         .map(s => [s, { hits: 10, misses: 0, lastOn: hoje, streak: 10 }])) }
     } as Partial<LearnerState>).state;
     expect(pesoDaLetra(forte, 'mem')).toBeLessThan(pesoDaLetra(forte, 'tav'));
+  });
+});
+
+/* ── a segunda leva: variedade medida, e não afirmada ──────────────────── */
+
+describe('a caçada usa várias letras', () => {
+  it('cinco rodadas, e as letras não se repetem quando há alfabeto', () => {
+    const { state, unlocked } = alunoCom(TODAS.length);
+    for (let s = 0; s < 30; s++) {
+      const partida = montarCacada(state, unlocked, rng(`cc-${s}`), 'medio');
+      expect(partida.length, 'partida curta demais').toBe(5);
+      const alvos = partida.map(c => c.alvo.id);
+      expect(new Set(alvos).size, `repetiu letra: ${alvos.join(' ')}`).toBe(alvos.length);
+    }
+  });
+
+  it('e duas partidas seguidas não são a mesma', () => {
+    const { state, unlocked } = alunoCom(TODAS.length);
+    const a = montarCacada(state, unlocked, rng('cc-a'), 'medio').map(c => c.alvo.id).join(',');
+    const b = montarCacada(state, unlocked, rng('cc-b'), 'medio').map(c => c.alvo.id).join(',');
+    expect(a).not.toBe(b);
+  });
+
+  it('com pouco alfabeto ela encolhe em vez de inventar letra', () => {
+    /* Três letras não dão cinco alvos distintos, e a regra da ordem vale
+       acima de tudo: repetir é honesto, mostrar uma letra não ensinada não. */
+    const { state, unlocked } = alunoCom(3);
+    const partida = montarCacada(state, unlocked, rng('cc-min'), 'facil');
+    expect(partida.length).toBeGreaterThan(0);
+    const ok = new Set(unlocked.flatMap(l => [l.letter, l.finalForm].filter(Boolean) as string[]));
+    for (const c of partida) {
+      for (const cel of c.celulas) expect(ok.has(cel.glifo), `${cel.glifo} não ensinado`).toBe(true);
+    }
+  });
+});
+
+describe('a batalha cobre vários pares e quatro formatos', () => {
+  it('uma partida percorre mais de um par', () => {
+    const { state, unlocked } = alunoCom(TODAS.length);
+    const pares = paresParaTreinar(state, unlocked, 4);
+    expect(pares.length, 'menos de dois pares com o alfabeto inteiro').toBeGreaterThan(1);
+    const b = montarBatalha(pares, false, rng('bp'), 16);
+    const letras = new Set(b.rodadas.map(r => r.alvo.id));
+    expect(letras.size, 'a partida inteira gira em torno de duas letras').toBeGreaterThan(2);
+  });
+
+  it('e os quatro formatos aparecem', () => {
+    const { state, unlocked } = alunoCom(TODAS.length);
+    const pares = paresParaTreinar(state, unlocked, 4);
+    const tipos = new Set(montarBatalha(pares, false, rng('bf'), 16).rodadas.map(r => r.tipo));
+    for (const t of ['qual', 'todas', 'intruso', 'relampago']) {
+      expect(tipos.has(t as never), `o formato "${t}" não apareceu`).toBe(true);
+    }
+  });
+
+  it('nenhum par tem a mesma letra dos dois lados', () => {
+    for (let n = 3; n <= TODAS.length; n++) {
+      const { state, unlocked } = alunoCom(n);
+      for (const [a, b] of paresParaTreinar(state, unlocked, 4)) {
+        expect(a.id).not.toBe(b.id);
+        expect(unlocked.some(l => l.id === a.id), `${a.id} não desbloqueada`).toBe(true);
+        expect(unlocked.some(l => l.id === b.id), `${b.id} não desbloqueada`).toBe(true);
+      }
+    }
+  });
+
+  it('o relâmpago oferece duas opções distintas, uma delas certa', () => {
+    const { state, unlocked } = alunoCom(TODAS.length);
+    const pares = paresParaTreinar(state, unlocked, 4);
+    for (let s = 0; s < 20; s++) {
+      for (const r of montarBatalha(pares, false, rng(`rl-${s}`), 16).rodadas) {
+        if (r.tipo !== 'relampago') continue;
+        expect(r.opcoes).toHaveLength(2);
+        expect(new Set(r.opcoes.map(o => o.id)).size).toBe(2);
+        expect(r.opcoes.map(o => o.id)).toContain(r.alvo.id);
+        expect(r.ms).toBeGreaterThan(300);
+      }
+    }
+  });
+});
+
+describe('impressa × cursiva cresce com o aluno', () => {
+  it('doze rodadas, e elas usam mais de quatro letras', () => {
+    const { state, unlocked } = alunoCom(TODAS.length);
+    const rodadas = montarCursiva(state, unlocked, rng('cv'), 'medio');
+    expect(rodadas.length).toBe(12);
+    const letras = new Set(rodadas.flatMap(r =>
+      r.tipo === 'pares' ? r.esquerda.map(l => l.id) : [r.alvo.id]));
+    expect(letras.size, 'o jogo inteiro gira em quatro letras').toBeGreaterThan(4);
+  });
+
+  it('e nunca oferece a mesma letra duas vezes nas alternativas', () => {
+    const { state, unlocked } = alunoCom(TODAS.length);
+    for (let s = 0; s < 25; s++) {
+      for (const r of montarCursiva(state, unlocked, rng(`cvd-${s}`), 'dificil')) {
+        if (r.tipo === 'pares') continue;
+        const ids = r.opcoes.map(o => o.id);
+        expect(new Set(ids).size, `alternativa repetida: ${ids.join(' ')}`).toBe(ids.length);
+      }
+    }
   });
 });

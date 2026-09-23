@@ -30,7 +30,8 @@ import { allLetters, type Letter } from '@/lib/content';
 import { onCarrier } from '@/lib/hebrew';
 import { availableModes, buildGym, confusionPair, type GymMode } from '@/lib/engine/gym';
 import {
-  montarBatalha, montarCaca, montarCursiva, nivelDe, NIVEL_LABEL, type Nivel
+  montarBatalha, montarCacada, montarCursiva, paresParaTreinar,
+  nivelDe, NIVEL_LABEL, type Nivel
 } from '@/lib/engine/jogos';
 import type { LearnerState } from '@/lib/state/types';
 import { rng } from '@/lib/engine/rng';
@@ -205,7 +206,7 @@ export function AcademiaClient() {
     if (!screen.dados) setScreen({ ...screen, dados });
     const info = JOGOS[jogo];
 
-    const vazio = jogo === 'caca' ? !dados.caca
+    const vazio = jogo === 'caca' ? !dados.cacada?.length
       : jogo === 'cursiva' ? !dados.cursiva?.length
       : !dados.batalha;
 
@@ -233,8 +234,8 @@ export function AcademiaClient() {
           label={NIVEL_LABEL[nivel]}
           onBack={() => setScreen({ kind: 'menu' })}
         />
-        {jogo === 'caca' && dados.caca && (
-          <CacaLetra key={`ca-${screen.rodada}`} caca={dados.caca} unlocked={unlocked}
+        {jogo === 'caca' && dados.cacada && (
+          <CacaLetra key={`ca-${screen.rodada}`} cacas={dados.cacada} unlocked={unlocked}
                      onResposta={registrar} onFim={fim} />
         )}
         {jogo === 'batalha' && dados.batalha && (
@@ -407,14 +408,21 @@ export function AcademiaClient() {
     /* The previous best was written by finishGym before this screen rendered,
        so "da última vez" has to come from the run before that one. */
     const earlier = prev?.previousSeconds ?? null;
+    const recorde = prev?.bestSeconds ?? null;
+    /* Bateu o recorde? `finishGym` já gravou esta partida, então o recorde
+       guardado JÁ inclui ela - a comparação honesta é com o tempo anterior. */
+    const bateu = mode.timed && earlier != null && seconds < earlier;
+
     return (
       <div className="focus-col grid gap-5">
         <Milestone
           kicker={`${result.correct} de ${result.total} · ${pct}%`}
-          title={pct >= 80 ? 'Boa sessão.' : 'Sessão feita.'}
+          title={bateu ? 'Recorde seu.' : pct >= 80 ? 'Boa sessão.' : 'Sessão feita.'}
           body={
             mode.timed && earlier != null
-              ? `Você levou ${seconds} s. Da última vez: ${earlier} s.`
+              ? bateu
+                ? `${seconds} s, contra ${earlier} s da última vez.`
+                : `Você levou ${seconds} s. Da última vez: ${earlier} s.`
               : mode.timed
                 ? `Você levou ${seconds} s. Da próxima vez dá para comparar.`
                 : pct >= 80
@@ -422,6 +430,36 @@ export function AcademiaClient() {
                   : 'O que escapou já entrou na fila de revisão.'
           }
         >
+          {/* O placar do modo cronometrado, em números separados.
+              ──────────────────────────────────────────────────────────────
+              O pedido era ver acertos, erros, precisão, tempo e recorde. Uma
+              frase corrida não serve para comparar com a próxima partida -
+              e comparar com a própria marca anterior é a única competição que
+              este curso tem, de propósito: não há ranking entre alunos. */}
+          {mode.timed && (
+            <dl className="w-full grid grid-cols-2 sm:grid-cols-4 gap-3 list-none p-0 m-0 mb-1">
+              {([
+                ['Acertos', String(result.correct)],
+                ['Erros', String(result.total - result.correct)],
+                ['Precisão', `${pct}%`],
+                ['Tempo', `${seconds}s`]
+              ] as const).map(([rotulo, valor]) => (
+                <div key={rotulo}
+                     className="rounded-[var(--r-md)] border border-line bg-surface px-3 py-2.5
+                                grid gap-0.5 justify-items-center">
+                  <dt className="font-ui text-[11.5px] uppercase tracking-[.08em] text-ink-muted">
+                    {rotulo}
+                  </dt>
+                  <dd className="font-ui text-[19px] font-bold tabular-nums text-ink m-0">{valor}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          {mode.timed && recorde != null && (
+            <p className="font-ui text-[13.5px] text-ink-muted m-0 mb-1">
+              Seu melhor tempo neste modo: <strong className="font-semibold text-ink">{recorde}s</strong>.
+            </p>
+          )}
           <Button onClick={() => start(mode)}>Mais uma</Button>
           <Button variant="secondary" onClick={() => setScreen({ kind: 'menu' })}>
             Escolher outro modo
@@ -621,13 +659,18 @@ function montarNovo(
   jogo: Jogo, rodada: number, state: LearnerState, unlocked: Letter[], nivel: Nivel
 ) {
   const rand = rng(`${jogo}-${unlocked.length}-${rodada}`);
-  if (jogo === 'caca') return { caca: montarCaca(state, unlocked, rand, nivel) };
+  /* Uma CAÇADA, e não uma caça: cinco rodadas, cada uma com outra letra. A
+     tela montava uma rodada só e terminava nela, e era por isso que o jogo
+     praticava sempre a mesma letra - o sorteio já era por peso. */
+  if (jogo === 'caca') return { cacada: montarCacada(state, unlocked, rand, nivel) };
   if (jogo === 'cursiva') return { cursiva: montarCursiva(state, unlocked, rand, nivel) };
-  const par = confusionPair(state, unlocked);
-  if (!par) return {};
+  /* Vários pares por partida, e não um. `paresParaTreinar` põe primeiro o que
+     ELE trocou de verdade e depois o que o conteúdo prevê. */
+  const pares = paresParaTreinar(state, unlocked, 4);
+  if (!pares.length) return {};
   /* `doAluno` distingue o par que ELE trocou do par que o conteúdo prevê - e
      é o que autoriza, no fim, a frase "você confundia estas duas". */
-  return { batalha: montarBatalha(par, Object.keys(state.confusions).length > 0, rand) };
+  return { batalha: montarBatalha(pares, Object.keys(state.confusions).length > 0, rand) };
 }
 
 /* Seis desenhos de traço, no peso do resto do sistema. Traço e não emoji: o

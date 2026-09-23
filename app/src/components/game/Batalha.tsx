@@ -58,6 +58,16 @@ export function Batalha({
   const rodada = dados.rodadas[i];
   const total = dados.rodadas.length;
 
+  /* As duas letras em jogo AGORA. Toda rodada tem um alvo; a outra metade é
+     a que se parece com ele - e cada formato a guarda com outro nome. */
+  const parDaRodada: [{ letter: string }, { letter: string }] = useMemo(() => {
+    if (!rodada) return dados.par;
+    if (rodada.tipo === 'todas') return [rodada.alvo, rodada.outra];
+    if (rodada.tipo === 'intruso') return [rodada.alvo, rodada.intruso];
+    const outra = rodada.opcoes.find(o => o.id !== rodada.alvo.id);
+    return [rodada.alvo, outra ?? rodada.alvo];
+  }, [rodada, dados.par]);
+
   const avancar = useCallback(() => {
     travado.current = false;
     setMarca(null);
@@ -93,7 +103,10 @@ export function Batalha({
 
   return (
     <div className="grid gap-5">
-      <Placar i={i} total={total} acertos={acertos} par={dados.par} />
+      {/* O par exibido é o da RODADA, e não o da partida: agora a partida
+          percorre até quatro pares, e um cabeçalho fixo mentiria em três
+          quartos dela. */}
+      <Placar i={i} total={total} acertos={acertos} par={parDaRodada} />
 
       {rodada.tipo === 'qual' && (
         <Qual r={rodada} marca={marca} fechar={fechar} idx={i} />
@@ -104,6 +117,9 @@ export function Batalha({
       )}
       {rodada.tipo === 'intruso' && (
         <Intruso r={rodada} marca={marca} fechar={fechar} idx={i} />
+      )}
+      {rodada.tipo === 'relampago' && (
+        <Relampago r={rodada} marca={marca} fechar={fechar} idx={i} />
       )}
 
       <Retorno marca={marca} />
@@ -128,6 +144,115 @@ function Placar({
       <p className="font-ui text-[13px] text-ink-muted tabular-nums shrink-0" aria-live="polite">
         {Math.min(i + 1, total)} / {total} · {acertos} {acertos === 1 ? 'acerto' : 'acertos'}
       </p>
+    </div>
+  );
+}
+
+/* ── formato 4: o relâmpago ────────────────────────────────────────────
+   A letra aparece e some; a pergunta vem depois.
+
+   É o único formato em que não dá para COMPARAR - e comparar é a muleta que
+   faz alguém achar que distingue {{ד}} de {{ר}} quando na verdade sabe é
+   olhar as duas lado a lado. Na leitura real a letra não fica esperando.
+
+   Três decisões:
+
+   · O aluno DISPARA o relâmpago. Um flash que começa sozinho pega quem ainda
+     estava lendo o enunciado, e aí o que se mede é a atenção ao carregamento
+     da tela. Aqui ele toca «mostrar» quando estiver pronto.
+
+   · Com `prefers-reduced-motion`, a letra fica na tela até ele responder. O
+     formato perde a graça e mantém a pergunta - que é melhor do que excluir
+     do jogo quem pediu menos movimento. O mesmo vale para quem usa leitor de
+     tela: o glifo tem rótulo, e o rótulo não pisca.
+
+   · Depois de responder, a letra VOLTA junto do retorno. Errar sem poder
+     rever o que passou não ensina nada. */
+function Relampago({
+  r, marca, fechar, idx
+}: {
+  r: Extract<RodadaBatalha, { tipo: 'relampago' }>;
+  marca: Marca; idx: number;
+  fechar: (certo: boolean, texto: string | null, letterId: string, id: string, escolhida?: string) => void;
+}) {
+  const [fase, setFase] = useState<'espera' | 'piscou'>('espera');
+  const [visivel, setVisivel] = useState(false);
+  const tempo = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (tempo.current) clearTimeout(tempo.current); }, []);
+
+  const mostrar = () => {
+    if (fase !== 'espera') return;
+    const reduz = typeof window !== 'undefined'
+      && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    setFase('piscou');
+    setVisivel(true);
+    if (reduz) return;
+    if (tempo.current) clearTimeout(tempo.current);
+    tempo.current = setTimeout(() => setVisivel(false), r.ms);
+  };
+
+  /* Depois do veredito a letra reaparece, para o erro poder ser estudado. */
+  const naTela = visivel || !!marca;
+
+  return (
+    <div className="grid gap-4 justify-items-center">
+      <p className="font-ui text-[14px] text-ink-muted text-center max-w-[36ch]">
+        {fase === 'espera'
+          ? 'A letra vai aparecer por um instante. Toque quando estiver pronto.'
+          : 'Qual letra passou?'}
+      </p>
+
+      <div className="grid place-items-center min-h-[128px] w-full max-w-[420px]
+                      rounded-[var(--r-lg)] bg-[var(--sand)]">
+        {naTela ? (
+          <He size="display" tone={marca ? (marca.ok ? 'teal' : 'ink') : 'ink'}>{r.glifo}</He>
+        ) : fase === 'espera' ? (
+          <button
+            type="button"
+            onClick={mostrar}
+            className="min-h-[56px] px-7 rounded-[var(--r-md)] border border-line bg-surface
+                       font-ui text-[16px] font-semibold text-ink hover:bg-surface-2
+                       active:scale-[.98] transition-[background-color,transform]"
+          >
+            Mostrar a letra
+          </button>
+        ) : (
+          <span aria-hidden className="font-ui text-[15px] text-ink-muted">passou</span>
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 gap-2.5 w-full max-w-[420px]">
+        {r.opcoes.map(o => {
+          const certa = o.id === r.alvo.id;
+          const mostra = !!marca;
+          return (
+            <button
+              key={o.id}
+              type="button"
+              /* Antes do relâmpago não há o que responder: responder aqui
+                 seria chutar entre duas, e o placar registraria o chute. */
+              disabled={mostra || fase === 'espera'}
+              onClick={() => fechar(
+                certa,
+                certa ? null : porQueErrou(r.alvo, o) ?? `Era a ${r.alvo.namePt}.`,
+                r.alvo.id, `batalha:${r.alvo.id}:l${idx}`,
+                certa ? undefined : o.letter
+              )}
+              className={`min-h-[56px] rounded-[var(--r-md)] border px-4 font-ui text-[16px] font-semibold
+                transition-colors disabled:opacity-60
+                ${mostra && certa
+                  ? 'border-[var(--teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)]'
+                  : mostra
+                    ? 'border-line bg-surface text-ink-muted'
+                    : 'border-line bg-surface text-ink enabled:hover:bg-surface-2 enabled:active:scale-[.98]'}`}
+            >
+              {o.namePt}
+              {mostra && certa && <span aria-hidden className="ml-1.5">✓</span>}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

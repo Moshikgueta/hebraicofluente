@@ -245,11 +245,15 @@ export type Caca = {
  * que a pessoa consiga ter contado enquanto jogava.
  */
 export function montarCaca(
-  state: LearnerState, unlocked: readonly Letter[], rand: Rand, nivel: Nivel
+  state: LearnerState, unlocked: readonly Letter[], rand: Rand, nivel: Nivel,
+  /** De onde sortear o ALVO. O ruído continua vindo de todo o desbloqueado -
+   *  ver `montarCacada`, que usa isto para não repetir letra entre rodadas. */
+  fonteDoAlvo: readonly Letter[] = unlocked
 ): Caca | null {
   if (unlocked.length < 3) return null;
 
-  const alvo = sortearPorPeso(unlocked, l => pesoDaLetra(state, l.id), rand);
+  const alvo = sortearPorPeso(
+    fonteDoAlvo.length ? fonteDoAlvo : unlocked, l => pesoDaLetra(state, l.id), rand);
   if (!alvo) return null;
 
   /* A forma final entra como rodada própria, e só quando a letra tem uma.
@@ -291,6 +295,43 @@ export function montarCaca(
   };
 }
 
+/**
+ * Uma CAÇADA: várias rodadas, cada uma com outra letra.
+ * ─────────────────────────────────────────────────────────────────────────
+ * `montarCaca` sempre soube sortear a letra pelo peso, e mesmo assim o jogo
+ * praticava uma letra só - porque a tela montava UMA rodada e terminava nela.
+ * Relato do dono do curso: «essa atividade praticamente usa apenas uma letra».
+ * A correção não é no sorteio: é a partida deixar de ser uma rodada.
+ *
+ * Cinco rodadas, e as letras não se repetem enquanto houver alfabeto. Isso
+ * importa mais do que parece: duas rodadas seguidas com a mesma letra fazem a
+ * segunda virar memória da primeira em vez de leitura, e o aluno acha que
+ * ficou bom no jogo quando ficou bom naquela grade.
+ *
+ * Quando o alfabeto disponível é menor que o número de rodadas - começo do
+ * curso -, a repetição volta a ser permitida em vez de a partida encolher:
+ * cinco rodadas com três letras ainda é prática, e três rodadas seria menos
+ * jogo do que o aluno pediu.
+ */
+export function montarCacada(
+  state: LearnerState, unlocked: readonly Letter[], rand: Rand, nivel: Nivel,
+  rodadas = 5
+): Caca[] {
+  const out: Caca[] = [];
+  const usadas = new Set<string>();
+
+  for (let i = 0; i < rodadas; i++) {
+    /* Sobra alfabeto? Então o sorteio desta rodada ignora quem já saiu. */
+    const restantes = unlocked.filter(l => !usadas.has(l.id));
+    const fonte = restantes.length >= 3 ? restantes : unlocked;
+    const c = montarCaca(state, unlocked, rand, nivel, fonte);
+    if (!c) break;
+    usadas.add(c.alvo.id);
+    out.push(c);
+  }
+  return out;
+}
+
 /* ── as rodadas da Batalha ─────────────────────────────────────────────── */
 
 export type RodadaBatalha =
@@ -298,15 +339,81 @@ export type RodadaBatalha =
   | { tipo: 'todas'; alvo: Letter; outra: Letter; glifo: string;
       fila: { id: string; glifo: string; certa: boolean; letterId: string }[] }
   | { tipo: 'intruso'; alvo: Letter; intruso: Letter;
-      fila: { id: string; glifo: string; intruso: boolean; letterId: string }[] };
+      fila: { id: string; glifo: string; intruso: boolean; letterId: string }[] }
+  /* O RELÂMPAGO. A letra aparece por pouco tempo e some; a pergunta vem
+     depois. É o único formato em que o aluno não pode comparar os desenhos
+     lado a lado - e comparar é justamente a muleta que faz alguém achar que
+     sabe distinguir {{ד}} de {{ר}} quando na verdade sabe é comparar. Na
+     leitura real a letra não fica esperando. */
+  | { tipo: 'relampago'; alvo: Letter; glifo: string; opcoes: Letter[]; ms: number };
 
 export type Batalha = {
-  /** As duas inimigas do dia. */
+  /** As duas inimigas da PRIMEIRA rodada, para o anúncio de abertura. */
   par: [Letter, Letter];
+  /** Todos os pares que a partida percorre, na ordem. */
+  pares: [Letter, Letter][];
   rodadas: RodadaBatalha[];
-  /** Verdadeiro quando o par saiu dos erros DELE, e não do conteúdo. */
+  /** Verdadeiro quando o primeiro par saiu dos erros DELE, e não do conteúdo. */
   doAluno: boolean;
 };
+
+/**
+ * Os pares que vale a pena treinar, em ordem de urgência.
+ * ─────────────────────────────────────────────────────────────────────────
+ * A batalha treinava UM par por partida, e o par vinha de `confusionPair`.
+ * Relato do dono do curso: «existem apenas aproximadamente 8 exercícios e a
+ * atividade é pouco interativa». Um par e oito rodadas é, de fato, sempre a
+ * mesma partida.
+ *
+ * Esta função devolve até `quantos` pares distintos, e a ordem é a ordem em
+ * que eles importam:
+ *
+ *   1. o que ELE trocou de verdade, do mais frequente ao menos - `confusions`
+ *      é a única evidência que fala deste aluno e não de alunos em geral;
+ *   2. o que o conteúdo diz que se parece (`confusableWith`), das letras mais
+ *      recentes para as mais antigas - esperar o erro para começar a treinar
+ *      é esperar demais, e a letra de ontem é a que ainda não assentou.
+ *
+ * As duas metades de um par têm de estar DESBLOQUEADAS. Um par com uma letra
+ * que o aluno nunca viu não é um par difícil: é uma pergunta sem resposta.
+ *
+ * E não há lista de pares escrita à mão aqui, de propósito. Os pares que
+ * valem a pena - {{ד}}/{{ר}}, {{ב}}/{{כ}}, {{ה}}/{{ח}}, {{ו}}/{{ז}} e os
+ * outros - já estão no campo `confusableWith` de cada letra, que é conteúdo
+ * revisado. Uma segunda lista aqui seria uma segunda fonte de verdade sobre
+ * o que se parece com o quê, e um dia as duas discordariam.
+ */
+export function paresParaTreinar(
+  state: LearnerState, unlocked: readonly Letter[], quantos = 4
+): [Letter, Letter][] {
+  const porGlifo = new Map<string, Letter>();
+  for (const l of unlocked) {
+    porGlifo.set(l.letter, l);
+    if (l.finalForm) porGlifo.set(l.finalForm, l);
+  }
+
+  const out: [Letter, Letter][] = [];
+  const vistos = new Set<string>();
+  const chave = (a: Letter, b: Letter) => [a.id, b.id].sort().join('>');
+
+  const junta = (a?: Letter, b?: Letter) => {
+    if (!a || !b || a.id === b.id) return;
+    const k = chave(a, b);
+    if (vistos.has(k)) return;
+    vistos.add(k);
+    out.push([a, b]);
+  };
+
+  for (const c of topConfusions(state, 12)) {
+    junta(porGlifo.get(c.correct), porGlifo.get(c.chosen));
+    if (out.length >= quantos) return out.slice(0, quantos);
+  }
+  for (const L of [...unlocked].reverse()) {
+    for (const glifo of L.confusableWith) junta(L, porGlifo.get(glifo));
+    if (out.length >= quantos) break;
+  }
+  return out.slice(0, quantos);
+}
 
 /**
  * Monta a batalha de um par.
@@ -323,15 +430,42 @@ export type Batalha = {
  * decidindo qual par treinar.
  */
 export function montarBatalha(
-  par: [Letter, Letter], doAluno: boolean, rand: Rand, quantas = 8
+  pares: [Letter, Letter][], doAluno: boolean, rand: Rand, quantas = 16
 ): Batalha {
   const rodadas: RodadaBatalha[] = [];
   const formas = (L: Letter) => (L.finalForm ? [L.letter, L.finalForm] : [L.letter]);
+  const lista = pares.length ? pares : [];
+  if (!lista.length) return { par: [null as never, null as never], pares: [], rodadas: [], doAluno };
+
+  /* QUATRO rodadas por par antes de trocar, e não uma de cada.
+     ────────────────────────────────────────────────────────────────────
+     Alternar par a cada rodada pareceria mais variado e ensinaria menos: a
+     discriminação de duas formas parecidas assenta por repetição próxima, e
+     quatro ângulos seguidos sobre {{ד}}/{{ר}} - qual é, ache todas, o
+     intruso, o relâmpago - é o que faz a diferença virar automática. Depois
+     disso o par muda, e a partida inteira cobre três ou quatro pares em vez
+     de um. */
+  const POR_PAR = 4;
 
   for (let i = 0; i < quantas; i++) {
+    const par = lista[Math.floor(i / POR_PAR) % lista.length]!;
     const alvo = par[i % 2]!;
     const outra = par[(i + 1) % 2]!;
     const glifo = pick(formas(alvo), rand) ?? alvo.letter;
+
+    /* A quarta de cada par é a relâmpago, e ela vem por último de propósito:
+       o aluno chega nela tendo visto o par de três ângulos, então o que se
+       mede é o reconhecimento e não a surpresa. */
+    if (i % POR_PAR === 3) {
+      rodadas.push({
+        tipo: 'relampago', alvo, glifo,
+        opcoes: shuffled([alvo, outra], rand),
+        /* 900 ms: tempo de ver, não de estudar. Abaixo disso vira teste de
+           reflexo; acima, o aluno guarda a imagem e compara depois. */
+        ms: 900
+      });
+      continue;
+    }
 
     if (i % 3 === 0) {
       rodadas.push({ tipo: 'qual', alvo, glifo, opcoes: shuffled([alvo, outra], rand) });
@@ -368,7 +502,7 @@ export function montarBatalha(
     rodadas.push({ tipo: 'intruso', alvo, intruso: outra, fila });
   }
 
-  return { par, rodadas, doAluno };
+  return { par: lista[0]!, pares: lista, rodadas, doAluno };
 }
 
 /* ── as rodadas de Impressa × Cursiva ──────────────────────────────────── */
@@ -392,7 +526,7 @@ export type RodadaCursiva =
  * mais do que acerta, e um jogo que pune a mão não ensina a letra.
  */
 export function montarCursiva(
-  state: LearnerState, unlocked: readonly Letter[], rand: Rand, nivel: Nivel, quantas = 8
+  state: LearnerState, unlocked: readonly Letter[], rand: Rand, nivel: Nivel, quantas = 12
 ): RodadaCursiva[] {
   if (unlocked.length < 3) return [];
   const out: RodadaCursiva[] = [];
