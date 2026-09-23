@@ -137,6 +137,20 @@ export function AcademiaClient() {
     [p.state, unlocked, audio, p.day]
   );
 
+  /* A rodada é montada UMA vez, quando começa. Montada a cada render ela
+     seguiria o estado, e cada resposta muda o domínio das letras, que decide
+     quais palavras e letras vêm primeiro: o item seguinte trocaria no meio da
+     sessão. A semente vem do começo da sessão, então refazer o modo no mesmo
+     dia dá outra rodada. Por isso a dependência é só `screen`. */
+  const rodada = useMemo(
+    () => (screen.kind === 'run'
+      ? buildGym(screen.mode, p.state, unlocked, {
+          audioAvailable: audio, day: p.day, seed: `${screen.mode.id}-${screen.startedAt}`
+        })
+      : null),
+    [screen]
+  );
+
   const tecladoOk = !!p.state.firsts['teclado-hebraico'];
   const start = useCallback((mode: GymMode) => {
     /* A digitação pede o teclado hebraico, e o aluno confirma UMA vez que o
@@ -410,7 +424,7 @@ export function AcademiaClient() {
   }
 
   if (screen.kind === 'run') {
-    const run = buildGym(screen.mode, p.state, unlocked, { audioAvailable: audio, day: p.day });
+    const run = rodada ?? { exercises: [], label: '' };
     if (!run.exercises.length) {
       return (
         <Empty onBack={() => setScreen({ kind: 'menu' })}>

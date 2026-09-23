@@ -21,6 +21,7 @@ import {
 } from '@/lib/hebrew';
 import { shuffled, take, type Rand } from './rng';
 import type { Ctx, Gen } from './generators';
+import type { Exercise } from './types';
 
 /* ── o vocabulário ─────────────────────────────────────────────────────── */
 
@@ -66,6 +67,19 @@ export function palavrasLegiveis(
   vocabulario: readonly PalavraDoCurso[], alfabeto: readonly string[]
 ): PalavraDoCurso[] {
   return vocabulario.filter(w => consegueLer(w.he, alfabeto));
+}
+
+/**
+ * O vocabulário que o aluno ACUMULOU e já pode montar, ver à mão e digitar:
+ * toda palavra das lições feitas, lida pela régua do curso E com toda letra
+ * da grafia já ensinada. É a fonte dos três modos de palavra da academia -
+ * antes eles tiravam a palavra da posição do item, e a mesma palavra voltava
+ * item após item ("Digitar" pedia אמא oito vezes).
+ */
+export function palavrasAcumuladas(letras: readonly Letter[]): PalavraDoCurso[] {
+  const alfabeto = alfabetoDe(letras);
+  return vocabularioDoCurso(letras).filter(w => letrasDaGrafia(w.he).length >= 2
+    && consegueLer(w.he, alfabeto) && todasAsLetrasEnsinadas(w.he, alfabeto));
 }
 
 /** Os marcos que viram conquista. O número exato aparece sempre; os marcos
@@ -157,33 +171,41 @@ export function construirPalavra(cursiva: boolean): Gen {
                                - Math.abs(letrasDaGrafia(b.he).length - min));
     const alvo = fila[i % fila.length];
     if (!alvo) return null;
+    return itemConstruir(alvo, L, ctx, rand, i, cursiva, nivel);
+  };
+}
 
-    const letras = letrasDaGrafia(alvo.he);
-    const extras = distratoresDaConstrucao(letras, nivel, ctx, rand);
-    let pecas = shuffled([...letras, ...extras], rand);
-    if (!extras.length && pecas.join('') === letras.join('') && letras.length > 1) {
-      pecas = [...pecas].reverse();
-    }
-    return {
-      id: `${L.id}-${cursiva ? 'bcur' : 'blet'}-${i}`,
-      kind: 'build-letters', letterId: L.id, skill: 'ler',
-      promptPt: cursiva
-        ? `Monte em cursiva a palavra “${alvo.translit}”.`
-        : `Monte a palavra “${alvo.translit}”, letra por letra.`,
-      target: stripNikud(alvo.he), letras, tiles: pecas,
-      translit: alvo.translit,
-      /* No avançado o significado sai de cena: sobra só o som. */
-      pt: nivel === 'avancado' ? null : alvo.pt,
-      cursiva, nivel,
-      audioId: alvo.audioId,
-      hintsPt: [
-        'A primeira letra fica à DIREITA.',
-        `Começa com ${letras[0]}.`
-      ],
-      explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. `
-        + (cursiva ? 'À mão, sem os sinais de vogal: é assim que se escreve de verdade.'
-                   : 'Sem os sinais de vogal, é assim que a palavra aparece numa placa.')
-    };
+/** O item de montar para uma palavra JÁ escolhida. A lição escolhe pela
+ *  letra do dia; a academia, pelo vocabulário acumulado (ver `gym.ts`). */
+export function itemConstruir(
+  alvo: Word, L: Letter, ctx: Ctx, rand: Rand, i: number,
+  cursiva: boolean, nivel: NivelConstrucao
+): Exercise {
+  const letras = letrasDaGrafia(alvo.he);
+  const extras = distratoresDaConstrucao(letras, nivel, ctx, rand);
+  let pecas = shuffled([...letras, ...extras], rand);
+  if (!extras.length && pecas.join('') === letras.join('') && letras.length > 1) {
+    pecas = [...pecas].reverse();
+  }
+  return {
+    id: `${L.id}-${cursiva ? 'bcur' : 'blet'}-${i}`,
+    kind: 'build-letters', letterId: L.id, skill: 'ler',
+    promptPt: cursiva
+      ? `Monte em cursiva a palavra “${alvo.translit}”.`
+      : `Monte a palavra “${alvo.translit}”, letra por letra.`,
+    target: stripNikud(alvo.he), letras, tiles: pecas,
+    translit: alvo.translit,
+    /* No avançado o significado sai de cena: sobra só o som. */
+    pt: nivel === 'avancado' ? null : alvo.pt,
+    cursiva, nivel,
+    audioId: alvo.audioId,
+    hintsPt: [
+      'A primeira letra fica à DIREITA.',
+      `Começa com ${letras[0]}.`
+    ],
+    explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. `
+      + (cursiva ? 'À mão, sem os sinais de vogal: é assim que se escreve de verdade.'
+                 : 'Sem os sinais de vogal, é assim que a palavra aparece numa placa.')
   };
 }
 
@@ -228,67 +250,76 @@ export function palavraEmCursiva(modo: ModoCursiva): Gen {
     const fila = [...daLetra, ...pool.filter(w => !daLetra.includes(w))];
     const alvo = fila[i % Math.max(1, fila.length)];
     if (!alvo) return null;
-    const escrita = stripNikud(alvo.he);
-    const outras = pool.filter(w => esqueleto(w.he) !== esqueleto(alvo.he));
-    const base = {
-      id: `${L.id}-curw-${modo}-${i}`,
-      kind: 'cursive-word' as const, letterId: L.id,
-      modo, he: alvo.he, escrita, audioId: alvo.audioId,
-      explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. À mão ela se escreve sem os `
-        + 'sinais de vogal, e é assim que você vai encontrá-la num bilhete.'
-    };
+    return itemCursiva(modo, alvo, pool, L, ctx, rand, i);
+  };
+}
 
-    if (modo === 'letra') {
-      /* A letra destacada é a da lição, se ela está na palavra; senão a
-         primeira. As alternativas são IMPRESSAS e todas já ensinadas. */
-      const letras = letrasDaGrafia(alvo.he);
-      const marca = letras.find(g => (FINAL_TO_BASE[g] ?? g) === L.letter) ?? letras[0]!;
-      const dono = ctx.history.find(x => x.letter === (FINAL_TO_BASE[marca] ?? marca));
-      const parecidas = (dono?.confusableWith ?? [])
-        .filter(g => ctx.alphabet.includes(g) && g !== marca);
-      const resto = ctx.alphabet.filter(g => g !== marca && !parecidas.includes(g)
-        && !FINAL_TO_BASE[g]);
-      const erradas = [...take(parecidas, 2, rand), ...shuffled(resto, rand)].slice(0, 3);
-      if (erradas.length < 2) return null;
-      const options = shuffled([marca, ...erradas], rand);
-      return {
-        ...base, skill: 'rec',
-        promptPt: 'Na palavra escrita à mão, que letra é esta, a destacada?',
-        marca, options, answer: options.indexOf(marca),
-        whyPt: options.map(o => o === marca ? null
-          : dono?.contrastes?.[o] ?? 'Essa é outra letra. Compare o traço destacado com ela.')
-      };
-    }
+/** O item de cursiva para uma palavra JÁ escolhida; `pool` é de onde saem
+ *  as alternativas erradas. Devolve null quando não há alternativas. */
+export function itemCursiva(
+  modo: ModoCursiva, alvo: Word, pool: readonly Word[],
+  L: Letter, ctx: Ctx, rand: Rand, i: number
+): Exercise | null {
+  const escrita = stripNikud(alvo.he);
+  const outras = pool.filter(w => esqueleto(w.he) !== esqueleto(alvo.he));
+  const base = {
+    id: `${L.id}-curw-${modo}-${i}`,
+    kind: 'cursive-word' as const, letterId: L.id,
+    modo, he: alvo.he, escrita, audioId: alvo.audioId,
+    explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. À mão ela se escreve sem os `
+      + 'sinais de vogal, e é assim que você vai encontrá-la num bilhete.'
+  };
 
-    if (modo === 'significado') {
-      const erradas = take(outras.filter(w => w.pt !== alvo.pt), 3, rand).map(w => w.pt);
-      if (erradas.length < 2) return null;
-      const options = shuffled([alvo.pt, ...erradas], rand);
-      return {
-        ...base, skill: 'ler',
-        promptPt: 'Esta palavra está escrita à mão. O que ela quer dizer?',
-        options, answer: options.indexOf(alvo.pt)
-      };
-    }
-
-    /* As duas direções entre a impressa e a cursiva. As alternativas são
-       palavras de comprimento parecido, para a pergunta ser sobre o desenho
-       das letras e não sobre o tamanho da palavra. */
-    const n = letrasDaGrafia(alvo.he).length;
-    const parecidasNoTamanho = [...outras].sort((a, b) =>
-      Math.abs(letrasDaGrafia(a.he).length - n) - Math.abs(letrasDaGrafia(b.he).length - n));
-    const erradas = take(parecidasNoTamanho.slice(0, 6), 3, rand);
+  if (modo === 'letra') {
+    /* A letra destacada é a da lição, se ela está na palavra; senão a
+       primeira. As alternativas são IMPRESSAS e todas já ensinadas. */
+    const letras = letrasDaGrafia(alvo.he);
+    const marca = letras.find(g => (FINAL_TO_BASE[g] ?? g) === L.letter) ?? letras[0]!;
+    const dono = ctx.history.find(x => x.letter === (FINAL_TO_BASE[marca] ?? marca));
+    const parecidas = (dono?.confusableWith ?? [])
+      .filter(g => ctx.alphabet.includes(g) && g !== marca);
+    const resto = ctx.alphabet.filter(g => g !== marca && !parecidas.includes(g)
+      && !FINAL_TO_BASE[g]);
+    const erradas = [...take(parecidas, 2, rand), ...shuffled(resto, rand)].slice(0, 3);
     if (erradas.length < 2) return null;
-    const certa = modo === 'para-cursiva' ? escrita : alvo.he;
-    const options = shuffled(
-      [certa, ...erradas.map(w => (modo === 'para-cursiva' ? stripNikud(w.he) : w.he))], rand);
+    const options = shuffled([marca, ...erradas], rand);
+    return {
+      ...base, skill: 'rec',
+      promptPt: 'Na palavra escrita à mão, que letra é esta, a destacada?',
+      marca, options, answer: options.indexOf(marca),
+      whyPt: options.map(o => o === marca ? null
+        : dono?.contrastes?.[o] ?? 'Essa é outra letra. Compare o traço destacado com ela.')
+    };
+  }
+
+  if (modo === 'significado') {
+    const erradas = take(outras.filter(w => w.pt !== alvo.pt), 3, rand).map(w => w.pt);
+    if (erradas.length < 2) return null;
+    const options = shuffled([alvo.pt, ...erradas], rand);
     return {
       ...base, skill: 'ler',
-      promptPt: modo === 'para-cursiva'
-        ? 'Qual destas é a mesma palavra, escrita à mão?'
-        : 'Qual destas palavras está escrita à mão aqui?',
-      options, answer: options.indexOf(certa)
+      promptPt: 'Esta palavra está escrita à mão. O que ela quer dizer?',
+      options, answer: options.indexOf(alvo.pt)
     };
+  }
+
+  /* As duas direções entre a impressa e a cursiva. As alternativas são
+     palavras de comprimento parecido, para a pergunta ser sobre o desenho
+     das letras e não sobre o tamanho da palavra. */
+  const n = letrasDaGrafia(alvo.he).length;
+  const parecidasNoTamanho = [...outras].sort((a, b) =>
+    Math.abs(letrasDaGrafia(a.he).length - n) - Math.abs(letrasDaGrafia(b.he).length - n));
+  const erradas = take(parecidasNoTamanho.slice(0, 6), 3, rand);
+  if (erradas.length < 2) return null;
+  const certa = modo === 'para-cursiva' ? escrita : alvo.he;
+  const options = shuffled(
+    [certa, ...erradas.map(w => (modo === 'para-cursiva' ? stripNikud(w.he) : w.he))], rand);
+  return {
+    ...base, skill: 'ler',
+    promptPt: modo === 'para-cursiva'
+      ? 'Qual destas é a mesma palavra, escrita à mão?'
+      : 'Qual destas palavras está escrita à mão aqui?',
+    options, answer: options.indexOf(certa)
   };
 }
 
@@ -321,6 +352,11 @@ export const exTypeHebrew: Gen = (L, ctx, _rand, i) => {
   const pool = montaveis(ctx).filter(w => letrasDaGrafia(w.he).length <= 5);
   const alvo = pool[i % Math.max(1, pool.length)];
   if (!alvo) return null;
+  return itemDigitar(alvo, L, i);
+};
+
+/** O item de digitar para uma palavra JÁ escolhida. */
+export function itemDigitar(alvo: Word, L: Letter, i: number): Exercise {
   return {
     id: `${L.id}-typhe-${i}`,
     kind: 'type-hebrew', letterId: L.id, skill: 'escrever',
@@ -331,7 +367,7 @@ export const exTypeHebrew: Gen = (L, ctx, _rand, i) => {
     hintsPt: ['A primeira letra que você digita aparece à direita.', `Começa com ${letrasDaGrafia(alvo.he)[0]}.`],
     explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}.`
   };
-};
+}
 
 /** Hebraico digitado, comparado sem vogais e sem exigir a forma final. */
 export function hebraicoDigitadoCerto(digitado: string, aceitas: readonly string[]): boolean {

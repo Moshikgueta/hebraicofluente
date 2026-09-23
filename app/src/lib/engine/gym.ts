@@ -26,10 +26,12 @@ import {
   exSoundToSyllable, exSyllableReading, exTypeHeard, exTypeTranslit, exVowelSound,
   type Gen
 } from './generators';
-import { buildConfusionDrill, buildReview, type Exercise } from './exercises';
+import { buildConfusionDrill, buildReview, contextFor, type Exercise } from './exercises';
 import {
-  GENS_CURSIVA_PALAVRA, exBuildLetters, exBuildLettersCursive, exTypeHebrew, todasAsLetrasEnsinadas
+  CURSIVA_DESDE, itemConstruir, itemCursiva, itemDigitar, letrasDaGrafia, nivelDeConstrucao,
+  palavrasAcumuladas, type ModoCursiva, type PalavraDoCurso
 } from './palavras';
+import { rng, shuffled, type Rand } from './rng';
 
 export type GymModeId =
   | 'letras' | 'vogais' | 'silabas' | 'palavras' | 'ouvir'
@@ -64,12 +66,11 @@ const GENS: Record<GymModeId, readonly Gen[]> = {
   parecidas: [exLetterRecognition, exOddOneOut, exCompleteWord],
   relogio: [exLetterRecognition, exSyllableReading, exOddOneOut, exVowelSound, exSoundToSyllable],
   revisao: [],         // built from the SRS instead
-  /* Montar letra por letra, impressa e à mão. O nível (inicial,
-     intermediário, avançado) vem da letra de cada item, então a mesma sessão
-     mistura palavras curtas das letras antigas e longas das novas. */
-  construir: [exBuildLetters, exBuildLettersCursive],
-  'palavras-cursiva': [...GENS_CURSIVA_PALAVRA, exBuildLettersCursive],
-  digitar: [exTypeHebrew]
+  /* Os três modos de palavra não passam por geradores por letra: a palavra
+     de cada item sai do vocabulário ACUMULADO (ver `rodadaDePalavras`). */
+  construir: [],
+  'palavras-cursiva': [],
+  digitar: []
 };
 
 /* Kept out of the list above only because the import would shadow the name. */
@@ -163,10 +164,10 @@ export function availableModes(
     }
     /* Montar, ver à mão e digitar pedem uma palavra cujas letras TODAS o
        aluno já tem - inclusive o ו que numa leitura seria só vogal. */
-    if (mode.id === 'construir' || mode.id === 'palavras-cursiva' || mode.id === 'digitar') {
-      const alfabeto = unlocked.flatMap(l => (l.finalForm ? [l.letter, l.finalForm] : [l.letter]));
-      const temPalavra = unlocked.some(l => l.wordsToRead.some(w => todasAsLetrasEnsinadas(w.he, alfabeto)));
-      if (!temPalavra) return { mode, ready: false, whyNot: 'Chega com a primeira palavra, na lição do Mem.' };
+    if (MODOS_DE_PALAVRA.has(mode.id)) {
+      if (!palavrasAcumuladas(unlocked).length) {
+        return { mode, ready: false, whyNot: 'Chega com a primeira palavra, na lição do Mem.' };
+      }
       if (mode.id === 'palavras-cursiva' && unlocked.length < 3) {
         return { mode, ready: false, whyNot: 'Chega na lição do Tav.' };
       }
@@ -236,6 +237,12 @@ export function buildGym(
     };
   }
 
+  if (MODOS_DE_PALAVRA.has(mode.id)) {
+    const exercises = rodadaDePalavras(mode, state, letters, rng(seed));
+    const n = palavrasAcumuladas(letters).length;
+    return { exercises, label: `Das ${n} palavras que você já acumulou` };
+  }
+
   /* Everything else: aim at the letters this learner is weakest on, then fill
      from the rest. Practising what is already strong feels good and teaches
      nothing. */
@@ -268,4 +275,122 @@ function buildFromGens(
     seed: opts.seed,
     gens
   });
+}
+
+/* ── os modos de palavra: o vocabulário acumulado ─────────────────────── */
+
+const MODOS_DE_PALAVRA = new Set<GymModeId>(['construir', 'palavras-cursiva', 'digitar']);
+
+/** Quantas palavras de uma rodada vêm das três últimas letras. O resto sai
+ *  do que ficou para trás - é para isso que serve praticar fora da lição. */
+const FRACAO_RECENTE = 1 / 3;
+
+/**
+ * Uma rodada dos modos de palavra.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Antes cada item escolhia a palavra pela posição dele na rodada, e a lista
+ * de onde escolhia era sempre a mesma, na mesma ordem: "Digitar" pedia אמא
+ * oito vezes, e "Palavras à mão" girava em volta das mesmas quatro ou cinco
+ * palavras das primeiras lições, qualquer que fosse o vocabulário do aluno.
+ *
+ * Agora a rodada:
+ *   · tira de TODAS as palavras que o aluno acumulou (`palavrasAcumuladas`):
+ *     um terço das três últimas letras e o resto das antigas, em RODÍZIO - a
+ *     rodada n continua de onde a n-1 parou, então em poucas rodadas todo o
+ *     vocabulário passou, em vez de o sorteio insistir sempre nas mesmas;
+ *   · nunca repete palavra enquanto houver palavra nova. Com vocabulário
+ *     pequeno (as primeiras lições), a volta repete a palavra com OUTRO gesto
+ *     e nunca em seguida - e digitar, que só tem um gesto, fica mais curto;
+ *   · muda a cada rodada: a semente vem do começo da sessão (ver a academia),
+ *     então fazer o modo duas vezes no mesmo dia dá duas rodadas diferentes.
+ */
+function rodadaDePalavras(
+  mode: GymMode, state: LearnerState, letters: Letter[], rand: Rand
+): Exercise[] {
+  const ordenadas = [...letters].sort((a, b) => a.order - b.order);
+  const atual = ordenadas[ordenadas.length - 1];
+  if (!atual) return [];
+  const ctx = contextFor(atual, ordenadas);
+  const todas = palavrasAcumuladas(ordenadas);
+  const pool = mode.id === 'digitar'
+    ? todas.filter(w => letrasDaGrafia(w.he).length <= 6)
+    : todas;
+  if (!pool.length) return [];
+
+  const volta = state.gym[mode.id]?.runs ?? 0;
+  const escolhidas = escolherPalavras(pool, atual.order, mode, volta, rand);
+  const donoDe = (w: PalavraDoCurso) => ordenadas.find(l => l.order === w.desde) ?? atual;
+
+  /* Os gestos de cada modo, pela etapa em que o aluno está. */
+  const nivel = nivelDeConstrucao(atual.order);
+  const modosCursiva = (Object.keys(CURSIVA_DESDE) as ModoCursiva[])
+    .filter(m => atual.order >= CURSIVA_DESDE[m]);
+  type Gesto = ModoCursiva | 'montar-impressa' | 'montar-cursiva' | 'digitar';
+  const gestos: Gesto[] = mode.id === 'digitar' ? ['digitar']
+    : mode.id === 'construir' ? ['montar-impressa', 'montar-cursiva']
+    : [...modosCursiva, 'montar-cursiva'];
+  const giro = Math.floor(rand() * gestos.length);
+
+  const item = (w: PalavraDoCurso, gesto: Gesto, k: number): Exercise | null => {
+    const L = donoDe(w);
+    if (gesto === 'digitar') return itemDigitar(w, L, k);
+    if (gesto === 'montar-impressa' || gesto === 'montar-cursiva') {
+      return itemConstruir(w, L, ctx, rand, k, gesto === 'montar-cursiva', nivel);
+    }
+    return itemCursiva(gesto, w, todas, L, ctx, rand, k)
+      /* Sem alternativas bastantes (vocabulário mínimo): monta à mão. */
+      ?? itemConstruir(w, L, ctx, rand, k, true, nivel);
+  };
+
+  const out: Exercise[] = [];
+  escolhidas.forEach((w, k) => {
+    const ex = item(w, gestos[(k + giro) % gestos.length]!, k);
+    if (ex) out.push(ex);
+  });
+
+  /* Vocabulário menor que a rodada: uma segunda volta com o gesto seguinte,
+     nunca a mesma palavra duas vezes em seguida. Digitar não tem outro gesto
+     e para aqui. */
+  if (out.length < mode.count && gestos.length > 1) {
+    let volta = shuffled(escolhidas, rand);
+    if (volta.length > 1 && volta[0] === escolhidas[escolhidas.length - 1]) {
+      volta = [...volta.slice(1), volta[0]!];
+    }
+    volta.slice(0, mode.count - out.length).forEach((w, j) => {
+      const k = escolhidas.length + j;
+      const ex = item(w, gestos[(escolhidas.indexOf(w) + giro + 1) % gestos.length]!, k);
+      if (ex) out.push(ex);
+    });
+  }
+  /* Sem `spread`: ele reordena por tipo de item e podia pôr a mesma palavra
+     duas vezes em seguida. Os gestos já se alternam pela ordem acima. */
+  return out;
+}
+
+/** As palavras da rodada, sem repetir: um terço das três últimas letras, o
+ *  resto das antigas, e os DOIS grupos em rodízio.
+ *
+ *  Rodízio: uma ordem fixa para este aluno neste ponto do curso (a semente
+ *  não muda de rodada para rodada), e cada rodada pega a janela seguinte. Um
+ *  sorteio novo a cada rodada insiste nas mesmas palavras: com as 22 letras,
+ *  cinco rodadas sorteadas cobriam 44 das 139. */
+function escolherPalavras(
+  pool: readonly PalavraDoCurso[], ordemAtual: number, mode: GymMode, volta: number, rand: Rand
+): PalavraDoCurso[] {
+  const quantas = mode.count;
+  const janela = (ws: PalavraDoCurso[], grupo: string, n: number) => {
+    const fixa = shuffled(ws, rng(`${mode.id}-${grupo}-${ordemAtual}`));
+    const inicio = fixa.length ? (volta * n) % fixa.length : 0;
+    return [...fixa.slice(inicio), ...fixa.slice(0, inicio)];
+  };
+  const nRecentes = Math.max(1, Math.round(quantas * FRACAO_RECENTE));
+  const recentes = janela(pool.filter(w => w.desde > ordemAtual - 3), 'recentes', nRecentes);
+  const antigas = janela(pool.filter(w => w.desde <= ordemAtual - 3), 'antigas', quantas - nRecentes);
+  const escolha = [...recentes.slice(0, nRecentes), ...antigas.slice(0, quantas - nRecentes)];
+  /* Faltando de um lado, completa do outro. */
+  for (const w of [...recentes, ...antigas]) {
+    if (escolha.length >= quantas) break;
+    if (!escolha.includes(w)) escolha.push(w);
+  }
+  return shuffled(escolha.slice(0, quantas), rand);
 }

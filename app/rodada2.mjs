@@ -211,7 +211,8 @@ for (const width of [390, 1280]) {
 
       const enunciado = await p.locator('main').innerText();
       const tr = enunciado.match(/Digite em hebraico: “([^”]+)”/)?.[1];
-      const w = letras.flatMap(l => l.wordsToRead).find(x => x.translit === tr);
+      /* O modo tira do vocabulário ACUMULADO: as duas listas de cada letra. */
+      const w = letras.flatMap(l => [...l.wordsToRead, ...l.wordsToRecognize]).find(x => x.translit === tr);
       if (!w) erro(`não achei a palavra de «${tr}» no conteúdo`);
       else {
         await campo.fill(semVogal(w.he));
@@ -245,7 +246,7 @@ for (const width of [390, 1280]) {
       const mesa = await p.evaluate(() => [...document.querySelectorAll('main button[aria-label^="Letra "]')]
         .map(b => b.getAttribute('aria-label').slice(6)));
       const cabe = seq => { const m = [...mesa]; return seq.every(g => { const k = m.indexOf(g); if (k < 0) return false; m.splice(k, 1); return true; }); };
-      const w = letras.flatMap(l => l.wordsToRead)
+      const w = letras.flatMap(l => [...l.wordsToRead, ...l.wordsToRecognize])
         .filter(x => x.translit === tr).map(x => [...semVogal(x.he)]).find(cabe);
       return w ?? null;
     };

@@ -181,7 +181,7 @@ export type BuildOptions = {
   gens?: readonly Gen[];
 };
 
-function contextFor(L: Letter, history: Letter[]): Ctx {
+export function contextFor(L: Letter, history: Letter[]): Ctx {
   return {
     history: history.filter(x => x.order <= L.order),
     alphabet: L.alphabetSoFar,
