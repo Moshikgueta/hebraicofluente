@@ -1083,7 +1083,7 @@ describe('a limpeza das contas de teste acompanha o esquema', () => {
     const esquema = await ler('../../worker/schema.sql');
     const tabelas = new Set<string>();
     for (const bloco of esquema.split(/CREATE TABLE IF NOT EXISTS /).slice(1)) {
-      const nome = bloco.match(/^(\w+)/)![1];
+      const nome = bloco.match(/^(\w+)/)![1]!;
       const corpo = bloco.slice(0, bloco.indexOf(');'));
       if (/REFERENCES\s+(accounts|orders)\s*\(/.test(corpo)) tabelas.add(nome);
     }
@@ -1091,7 +1091,7 @@ describe('a limpeza das contas de teste acompanha o esquema', () => {
   }
 
   function ordemDosDeletes(texto: string) {
-    return [...texto.matchAll(/DELETE FROM (\w+)/g)].map((m) => m[1]);
+    return [...texto.matchAll(/DELETE FROM (\w+)/g)].map((m) => m[1]!);
   }
 
   it('o esquema tem as tabelas que a limpeza precisa conhecer', async () => {
