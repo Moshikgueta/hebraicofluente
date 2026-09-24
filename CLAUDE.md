@@ -155,6 +155,25 @@ regras que ele fixou e que valem para todo commit daqui em diante:
   concede nada; o dono confirma com `liberar`. Quem se cadastrou não é
   informado de que havia presente. Ver a nota em `worker/src/lib/db.js`,
   acima de `invitesPendentes`.
+- **A cota do D1 é superfície de ataque** (auditoria de 24/09/2026, medida
+  contra o D1 local). No plano gratuito são 500 MB e 100.000 linhas escritas
+  por dia, e banco cheio ou cota vencida é TODA escrita falhando - login,
+  cadastro, pagamento. Duas regras saíram daí:
+  - **Só conta com curso grava progresso** (`PUT /api/progress` → 403
+    `sem-curso`, conferido antes do freio). Antes, mil contas grátis de 512 KB
+    enchiam o banco. O app trata o 403 como "o aparelho guarda", igual a
+    estar deslogado (`lib/state/worker.ts`).
+  - **Toda rota que escreve tem teto por HORA por endereço**, conferido
+    antes do freio do minuto, e recusa não escreve nada: login 20 erros e 60
+    tentativas, cadastro 10, esqueci a senha 10, redefinir 20, saúde 30,
+    checkout 10, e 20 somando as rotas da conta (senha, apagar, confirmar e
+    reenviar o e-mail) - conta é de graça, então freio só por conta não
+    segura. Falha de login contra e-mail inventado não vai para a trilha.
+    Uma máquina passou de ~17.000 linhas por HORA para ~17.000 por DIA; a
+    cota ainda acaba com uns seis endereços o dia inteiro, e o conserto de
+    verdade é o Workers Paid. Rota nova que escreve nasce com teto por hora.
+    `tests/auditoria.test.ts` ("a cota de escrita e o tamanho do banco")
+    conta as linhas com `total_changes()`.
 - **O horizonte da faxina do freio precisa ser maior que a maior janela em
   uso** (`throttled`, hoje 48h contra uma janela máxima de 24h). Menor, e a
   limpeza apaga a linha que a própria chamada acabou de criar - o freio

@@ -86,10 +86,13 @@ export async function create({ request, env }) {
   /* Cada pedido é uma linha aqui e uma cobrança de verdade na Mercado Pago,
      com chave de idempotência nova. Sem freio, uma conta gratuita num laço
      enchia o painel de cobranças fantasmas e a fila da varredura de pedidos
-     que nunca vão compensar. Seis por minuto é um humano indeciso; o de IP
-     segura quem cria contas descartáveis para contornar o primeiro. */
-  if (await throttled(env, `pay:${account.id}`, 6)) return fail('rate-limited', 429);
-  if (await throttled(env, `payip:${ip(request)}`, 12)) return fail('rate-limited', 429);
+     que nunca vão compensar - e gastava a cota diária de escrita do D1, umas
+     oito linhas por pedido. Por HORA desde a auditoria de 24/09/2026: seis
+     por conta é um humano indeciso; o de endereço segura quem cria contas
+     descartáveis para contornar o primeiro. Ninguém abre dez checkouts por
+     hora. */
+  if (await throttled(env, `payip-h:${ip(request)}`, 10, 3_600_000)) return fail('rate-limited-hora', 429);
+  if (await throttled(env, `pay-h:${account.id}`, 6, 3_600_000)) return fail('rate-limited-hora', 429);
 
   const body = await readJson(request);
   if (!body || typeof body !== 'object') return fail('server');
@@ -261,7 +264,13 @@ export async function verify({ request, env }) {
        comprador. Vinte por minuto por conta, e uma consulta feita há menos
        de cinco segundos vale como resposta. */
     const recente = order.checked_at && Date.now() - Number(order.checked_at) < 5_000;
-    if (!recente && !await throttled(env, `verify:${account.id}`, 20)) {
+    /* O teto da hora: 180 consultas são quinze minutos da tela perguntando a
+       cada cinco segundos. Passado isso a tela recebe o que está gravado, e
+       quem liquida é o aviso da Mercado Pago ou a varredura de 5 em 5 min -
+       o comprador espera minutos a mais, e a cota de escrita não paga a
+       espera. */
+    if (!recente && !await throttled(env, `verify-h:${account.id}`, 180, 3_600_000)
+        && !await throttled(env, `verify:${account.id}`, 20)) {
       await settleFromProvider(env, order, 'verify');
     }
     return json(toOrder(await getOrder(env, order.id)));
@@ -305,8 +314,11 @@ export async function webhook({ request, env }) {
     /* A trilha guarda a recusa, mas não uma linha por requisição: esta é uma
        rota pública, e uma escrita gratuita no D1 por chamada anônima é o
        jeito mais barato de esgotar a cota de escrita da plataforma inteira.
-       Trinta por minuto por IP na trilha; o resto só leva o 401. */
-    if (!await throttled(env, `whk:${ip(request)}`, 30)) {
+       Uma linha por endereço por HORA; o resto só leva o 401. Era trinta por
+       minuto, e cada pedido falso até o trigésimo custava o freio e a trilha -
+       umas cento e vinte linhas por minuto de uma máquina só, numa rota que
+       nem a borda freia (auditoria de 24/09/2026). */
+    if (!await throttled(env, `whk-h:${ip(request)}`, 1, 3_600_000)) {
       await log(env, null, 'webhook-bad-signature', String(dataId));
     }
     /* 401, e não 200: um remetente legítimo com segredo errado precisa saber

@@ -62,6 +62,8 @@ async function comConta(env: Record<string, unknown>, email = 'aluna@exemplo.com
   return { cookie: cookieDe(r), id: body.account.id, email };
 }
 
+const comContaSemCurso = (env: Record<string, unknown>) => comConta(env);
+
 const linhas = (env: Record<string, unknown>, sql: string) =>
   ((env.DB as { bruto: { prepare(s: string): { all(): unknown[] } } }).bruto.prepare(sql).all());
 
@@ -412,12 +414,14 @@ describe('o login', () => {
   /* Quem já estourou o freio por IP não ganha nem a leitura do corpo - nem
      no login, nem no esqueci-a-senha, nem no reset. */
   it.each([
-    ['login', 'login', 20, (env: Record<string, unknown>, r: Request) => auth.login({ request: r, env, ctx })],
-    ['forgot', 'forgot', 6, (env: Record<string, unknown>, r: Request) => auth.forgot({ request: r, env, ctx })],
-    ['reset', 'reset', 12, (env: Record<string, unknown>, r: Request) => auth.reset({ request: r, env, ctx })]
+    /* Por HORA desde 24/09/2026 (a cota de escrita do D1 - ver "a cota de
+       escrita e o tamanho do banco", mais abaixo). */
+    ['login', 'login-h', 60, (env: Record<string, unknown>, r: Request) => auth.login({ request: r, env, ctx })],
+    ['forgot', 'forgot-ip-h', 10, (env: Record<string, unknown>, r: Request) => auth.forgot({ request: r, env, ctx })],
+    ['reset', 'reset-h', 20, (env: Record<string, unknown>, r: Request) => auth.reset({ request: r, env, ctx })]
   ])('%s: o freio por IP vem antes do corpo', async (rota, chave, teto, chamar) => {
     const env = envSite();
-    for (let i = 0; i < teto; i++) await throttled(env, `${chave}:203.0.113.9`, teto);
+    for (let i = 0; i < teto; i++) await throttled(env, `${chave}:203.0.113.9`, teto, 3_600_000);
     const r = new Request(`${SITE}/api/auth/${rota}`, {
       method: 'POST', body: '{"email":"a@b.co","password":"x","token":"t"}',
       headers: { 'content-type': 'application/json', 'CF-Connecting-IP': '203.0.113.9' }
@@ -546,6 +550,171 @@ describe('liberação e estorno simultâneos', () => {
   });
 });
 
+/* ── a cota de escrita e o tamanho do banco ─────────────────────────────── */
+
+/* Auditoria de 24/09/2026. No plano gratuito o D1 tem 500 MB e 100.000 linhas
+   escritas por dia, e os dois se esgotavam de fora:
+     · qualquer conta, sem comprar nada, gravava 512 KB de "progresso" - umas
+       mil contas descartáveis enchiam o banco;
+     · os freios por minuto deixavam uma máquina só escrever umas 290 linhas
+       por minuto em pedidos anônimos, e a cota do dia acabava em seis horas.
+   Banco cheio ou cota vencida é toda escrita falhando: cadastro, login,
+   pagamento. O que se trava aqui: recusa não escreve nada, e cada rota
+   anônima tem um teto por hora. `total_changes()` conta as linhas que o
+   SQLite de fato mudou. */
+describe('a cota de escrita e o tamanho do banco', () => {
+  const escritas = (env: Record<string, unknown>) =>
+    Number(((env.DB as { bruto: { prepare(s: string): { get(): unknown } } }).bruto
+      .prepare('SELECT total_changes() AS n').get() as { n: number }).n);
+  const deIp = (ip: string, url: string, body: unknown) => new Request(url, {
+    method: 'POST', headers: { 'content-type': 'application/json', 'CF-Connecting-IP': ip },
+    body: JSON.stringify(body)
+  });
+  /* No começo de uma hora cheia, para que o teste não atravesse a virada da
+     janela no meio. */
+  beforeEach(() => { vi.useFakeTimers({ now: Date.UTC(2026, 8, 24, 10, 0, 5), toFake: ['Date'] }); });
+  afterEach(() => { vi.useRealTimers(); });
+  const avancar = (ms: number) => vi.setSystemTime(Date.now() + ms);
+
+  it('conta sem curso não grava progresso, e a recusa não escreve nada', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const antes = escritas(env);
+    const r = await progress.write({
+      request: new Request(`${SITE}/api/progress`, {
+        method: 'PUT', headers: { 'content-type': 'application/json', Cookie: cookie },
+        body: JSON.stringify({ state: { version: 2, lixo: 'a'.repeat(400 * 1024) }, rev: 0 })
+      }), env, ctx
+    });
+    expect(r.status).toBe(403);
+    expect(((await r.json()) as { error: string }).error).toBe('sem-curso');
+    expect(escritas(env)).toBe(antes);
+    expect(linhas(env, 'SELECT * FROM progress')).toEqual([]);
+  });
+
+  it('apagar um progresso que não existe não escreve nada', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const antes = escritas(env);
+    const r = await progress.drop({
+      request: new Request(`${SITE}/api/progress`, { method: 'DELETE', headers: { Cookie: cookie } }),
+      env, ctx
+    });
+    expect(r.status).toBe(200);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('login: vinte erros por hora por endereço, e o vigésimo primeiro não escreve', async () => {
+    const env = envSite();
+    const tentar = (i: number) => auth.login({
+      request: deIp('203.0.113.50', `${SITE}/api/auth/login`, { email: `inventado${i}@exemplo.com`, password: 'errada-123' }),
+      env, ctx
+    });
+    for (let i = 0; i < 20; i++) expect((await tentar(i)).status).toBe(401);
+    /* E-mail inventado não vai para a trilha: não é de ninguém. */
+    expect(linhas(env, "SELECT * FROM access_log WHERE action = 'login-failed'")).toEqual([]);
+
+    avancar(5 * 60_000);                  /* outro minuto, mesma hora */
+    const antes = escritas(env);
+    const r = await tentar(99);
+    expect(r.status).toBe(429);
+    expect(((await r.json()) as { error: string }).error).toBe('rate-limited-hora');
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('login: a falha contra uma conta que existe continua na trilha', async () => {
+    const env = envSite();
+    await comConta(env);
+    await auth.login({
+      request: deIp('203.0.113.51', `${SITE}/api/auth/login`, { email: 'aluna@exemplo.com.br', password: 'errada-123' }),
+      env, ctx
+    });
+    expect(linhas(env, "SELECT * FROM access_log WHERE action = 'login-failed'")).toHaveLength(1);
+  });
+
+  it('cadastro: dez por hora por endereço', async () => {
+    const env = envSite();
+    const cadastrar = (i: number) => auth.signup({
+      request: deIp('203.0.113.52', `${SITE}/api/auth/signup`, { email: `nova${i}@exemplo.com`, password: 'senha-boa-123' }),
+      env, ctx
+    });
+    for (let i = 0; i < 10; i++) expect((await cadastrar(i)).status).toBe(200);
+    avancar(61_000);
+    const antes = escritas(env);
+    const r = await cadastrar(99);
+    expect(r.status).toBe(429);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('esqueci a senha: dez por hora por endereço', async () => {
+    const env = envSite();
+    const pedir = (i: number) => auth.forgot({
+      request: deIp('203.0.113.53', `${SITE}/api/auth/forgot`, { email: `x${i}@exemplo.com` }),
+      env, ctx
+    });
+    for (let i = 0; i < 10; i++) expect((await pedir(i)).status).toBe(200);
+    avancar(61_000);
+    const antes = escritas(env);
+    expect((await pedir(99)).status).toBe(429);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('rotas da conta: vinte por hora por endereço, somando as contas', async () => {
+    /* Conta é de graça, então o freio por conta sozinho não segura nada:
+       três contas, trocando a senha com a senha atual errada, do mesmo
+       endereço. */
+    const env = envSite();
+    const contas = [];
+    for (let i = 0; i < 3; i++) contas.push(await comConta(env, `conta${i}@exemplo.com`));
+    const trocar = (cookie: string) => auth.password({
+      request: new Request(`${SITE}/api/auth/password`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', Cookie: cookie, 'CF-Connecting-IP': '203.0.113.55' },
+        body: JSON.stringify({ current: 'errada-123', password: 'nova-senha-123' })
+      }), env
+    });
+    let recusadas = 0;
+    for (let i = 0; i < 20; i++) {
+      const r = await trocar(contas[i % 3]!.cookie);
+      expect(r.status).toBe(401);
+    }
+    const antes = escritas(env);
+    for (const c of contas) if ((await trocar(c.cookie)).status === 429) recusadas++;
+    expect(recusadas).toBe(3);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('login: sessenta tentativas por hora, mesmo acertando', async () => {
+    const env = envSite();
+    await comConta(env, 'laco@exemplo.com');
+    const entrar = () => auth.login({
+      request: deIp('203.0.113.56', `${SITE}/api/auth/login`, { email: 'laco@exemplo.com', password: 'senha-boa-123' }),
+      env, ctx
+    });
+    for (let i = 0; i < 60; i++) expect((await entrar()).status).toBe(200);
+    const antes = escritas(env);
+    expect((await entrar()).status).toBe(429);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('aviso de pagamento com assinatura falsa: uma linha por hora, não por pedido', async () => {
+    const env = envSite({ MP_WEBHOOK_SECRET: 'segredo' });
+    const falso = () => pay.webhook({
+      request: new Request(`${SITE}/api/pay/webhook?data.id=123&type=payment`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'CF-Connecting-IP': '203.0.113.54',
+          'x-signature': `ts=${Math.floor(Date.now() / 1000)},v1=${'0'.repeat(64)}`, 'x-request-id': 'r' },
+        body: '{}'
+      }), env, ctx
+    });
+    expect((await falso()).status).toBe(401);
+    const antes = escritas(env);
+    for (let i = 0; i < 10; i++) expect((await falso()).status).toBe(401);
+    expect(escritas(env)).toBe(antes);
+    expect(linhas(env, "SELECT * FROM access_log WHERE action = 'webhook-bad-signature'")).toHaveLength(1);
+  });
+});
+
 /* ── a saúde ────────────────────────────────────────────────────────────── */
 
 describe('a saúde', () => {
@@ -556,7 +725,9 @@ describe('a saúde', () => {
     const body = await r.json() as Record<string, unknown>;
     expect(body).not.toHaveProperty('iterations');
     expect(body.ok).toBe(true);
-    for (let i = 0; i < 9; i++) await auth.health({ request: req, env });
+    /* Trinta por hora por endereço (era dez por minuto): cada consulta é uma
+       escrita de freio, e a cota diária de escrita do D1 é o que protege. */
+    for (let i = 0; i < 29; i++) await auth.health({ request: req, env });
     expect((await auth.health({ request: req, env })).status).toBe(429);
   });
 });
@@ -657,6 +828,12 @@ describe('o progresso recusa chave que não é dado', () => {
     progress.write({
       request: pedido(`${SITE}/api/progress`, { state, rev: 0 }, { Cookie: cookie }), env, ctx
     });
+  /* Só quem tem curso guarda progresso no servidor (ver o bloco seguinte). */
+  const comConta = async (env: Record<string, unknown>) => {
+    const c = await comContaSemCurso(env);
+    await grantAccess(env, { accountId: c.id, courseSlug: 'alfabetizacao', orderId: 'TESTE', months: 12 });
+    return c;
+  };
 
   it.each([
     ['na raiz', () => JSON.parse('{"version":2,"__proto__":{"admin":true}}')],

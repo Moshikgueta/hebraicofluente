@@ -665,6 +665,13 @@ export async function ultimoEnvioDeSenha(env) {
 /* ── progresso ──────────────────────────────────────────────────────────── */
 
 /** O estado gravado, ou `null` para quem nunca sincronizou. */
+/** Existe linha de progresso para a conta, legível ou não? É a pergunta do
+ *  DELETE: uma linha com JSON quebrado também precisa poder ser apagada. */
+export async function hasProgress(env, accountId) {
+  return !!(await env.DB.prepare('SELECT 1 AS ok FROM progress WHERE account_id = ?')
+    .bind(accountId).first());
+}
+
 export async function getProgress(env, accountId) {
   const row = await env.DB.prepare(
     'SELECT state, version, rev, updated_at FROM progress WHERE account_id = ?'

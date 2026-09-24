@@ -88,6 +88,14 @@ export class WorkerProgressStore implements ProgressStore {
   #comSessao = true;
   /** O que este aparelho já mandou ao servidor. Ver a nota em `save`. */
   #enviado: LearnerState | null = null;
+  /**
+   * A conta ainda não comprou nada, e o servidor não guarda progresso de quem
+   * não tem curso (403 `sem-curso`, ver worker/src/api/progress.js). Aí o
+   * aparelho é o lugar, como para quem está deslogado: nada de PUT a cada
+   * mudança, nada de aviso de "não sincronizado". Volta a tentar na próxima
+   * `load()`, que é o que acontece depois da compra.
+   */
+  #semCurso = false;
 
   async #ler(): Promise<Resposta> {
     const r = await pedir('/api/progress');
@@ -108,6 +116,7 @@ export class WorkerProgressStore implements ProgressStore {
   }
 
   async load(): Promise<LearnerState> {
+    this.#semCurso = false;
     const aqui = await this.#local.load();
     const la = await this.#ler();
     this.#rev = la.rev;
@@ -147,7 +156,7 @@ export class WorkerProgressStore implements ProgressStore {
     /* O aparelho primeiro, e sempre. Se a rede falhar, a sessão continua
        salva; a próxima `load()` funde e leva. */
     await this.#local.save(state);
-    if (!this.#comSessao) return;
+    if (!this.#comSessao || this.#semCurso) return;
     /* Trocar de tela grava `lastRoute` e mais nada. Subir isso seria uma
        escrita no D1 por clique de navegação, para sincronizar onde a pessoa
        está neste segundo - a rota sobe junto com a próxima mudança de
@@ -183,7 +192,7 @@ export class WorkerProgressStore implements ProgressStore {
    * nunca foi prometida a ele.
    */
   sincronizado(): boolean {
-    if (!this.#comSessao) return true;
+    if (!this.#comSessao || this.#semCurso) return true;
     return this.#enviado !== null;
   }
 
@@ -216,6 +225,7 @@ export class WorkerProgressStore implements ProgressStore {
       });
       if (!r) return;                       /* sem rede: fica no aparelho */
       if (r.status === 401) { await descartar(r); this.#comSessao = false; return; }
+      if (r.status === 403) { await descartar(r); this.#semCurso = true; return; }
 
       const corpo = await r.json().catch(() => null) as
         { rev?: number; state?: unknown } | null;
