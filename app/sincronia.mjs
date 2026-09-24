@@ -13,6 +13,7 @@
    Roda com: node sincronia.mjs   (variável HF_CHROMIUM para o navegador) */
 
 import { chromium } from 'playwright';
+import { execFileSync } from 'node:child_process';
 
 const BASE = process.env.HF_BASE || 'http://127.0.0.1:8788';
 const hoje = new Date().toISOString().slice(0, 10);
@@ -48,6 +49,19 @@ if (!cadastro.ok) {
 const bruto = cadastro.headers.get('set-cookie') || '';
 const valor = (bruto.match(/__Host-hf_session=([^;]+)/) || [])[1];
 if (!valor) { console.error('sem cookie de sessão na resposta'); process.exit(1); }
+
+/* O servidor só guarda progresso de quem tem curso (auditoria de 24/09/2026,
+   worker/src/api/progress.js), então a conta de teste recebe o acesso direto
+   no D1 LOCAL - o mesmo que o `liberar` do Actions faz em produção. Contra
+   outro endereço que não o local, este passo não tem como rodar. */
+if (!/^http:\/\/(127\.0\.0\.1|localhost)(:|\/|$)/.test(BASE)) {
+  console.error('sincronia.mjs concede o curso pelo D1 local; aponte HF_BASE para o wrangler dev.');
+  process.exit(1);
+}
+execFileSync('npx', ['wrangler', 'd1', 'execute', 'hebraico-fluente', '--local', '--command',
+  `INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
+   SELECT id, 'alfabetizacao', unixepoch()*1000, unixepoch()*1000 + 31536000000, 'SINCRONIA'
+     FROM accounts WHERE email = '${email}'`], { cwd: '..', stdio: 'ignore' });
 
 const comCookie = (extra = {}) => ({
   headers: { Cookie: `__Host-hf_session=${valor}`, ...extra }

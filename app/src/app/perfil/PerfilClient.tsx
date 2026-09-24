@@ -152,6 +152,12 @@ export function PerfilClient() {
           {account.demo
             ? <>Estes números são deste aparelho. Nesta versão o progresso é
                 guardado no navegador e não viaja com a conta.</>
+            /* O servidor só guarda progresso de quem tem curso
+               (worker/src/api/progress.js). Sem curso, prometer a sincronização
+               seria a mesma mentira da build de demonstração. */
+            : (account.session?.entitlements.length ?? 0) === 0
+            ? <>Estes números são deste aparelho. O progresso passa a viajar com a
+                conta quando você tiver um curso - e o que estiver aqui vai junto.</>
             : <>Seu progresso fica na sua conta e é sincronizado entre os
                 aparelhos: o que você fizer no celular aparece no computador.
                 Uma cópia continua neste aparelho, para o curso funcionar

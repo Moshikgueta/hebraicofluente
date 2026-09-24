@@ -92,6 +92,34 @@ export const ip = request => {
    atravessar um almoço - a pessoa pede, sai, e volta. Quinze minutos parece
    mais seguro e só produz um segundo pedido. */
 export const RESET_TTL_MIN = 60;
+
+/* ── o teto da hora ────────────────────────────────────────────────────────
+ * Auditoria de 24/09/2026. O plano gratuito do D1 aceita 100.000 linhas
+ * escritas por dia, e os freios por minuto sozinhos deixavam uma máquina só
+ * gastar umas 290 linhas por minuto em pedidos anônimos, todos dentro do
+ * limite - login errado, cadastro, esqueci a senha, saúde. Medido contra o D1
+ * local: a cota do dia acabava em seis horas, e daí até 00:00 UTC toda
+ * escrita falhava - login, cadastro, pagamento.
+ *
+ * Os tetos por hora abaixo seguram isso sem mexer em quem usa o site de
+ * verdade: ninguém cria vinte contas, erra vinte senhas ou pede dez links de
+ * senha nova por hora de uma mesma casa. Cada um é conferido ANTES do freio do
+ * minuto, porque um pedido barrado pelo teto da hora não pode custar a
+ * escrita do freio do minuto. E `throttled` lê antes de gravar: estourado, o
+ * teto também não grava nada.
+ */
+const HORA = 3_600_000;
+
+/**
+ * As rotas de manutenção da conta - trocar a senha, apagar, confirmar o
+ * e-mail, pedir o link de novo - exigem sessão, e sessão é de graça: criar
+ * conta não custa nada. Então os freios por CONTA não bastam, porque quem
+ * quer gastar a cota cria mais contas. Este é o teto por ENDEREÇO, somado
+ * entre as quatro rotas: vinte por hora é muito mais do que alguém faz na
+ * própria conta numa tarde.
+ */
+const freioDaConta = async (env, request) =>
+  throttled(env, `conta-ip-h:${ip(request)}`, 20, HORA);
 const RESET_TTL = RESET_TTL_MIN * 60_000;
 
 /**
@@ -242,7 +270,9 @@ async function enviarConfirmacao(env, ctx, request, account) {
 export async function signup({ request, env, ctx }) {
   /* O freio por IP antes de ler o corpo: quem já estourou não ganha nem a
      leitura. */
-  if (await throttled(env, `signup:${ip(request)}`, 10)) return fail('rate-limited', 429);
+  /* Dez por hora por endereço. Era dez por MINUTO, e o teto da hora o
+     tornou redundante - e cada freio que passa é uma linha escrita. */
+  if (await throttled(env, `signup-h:${ip(request)}`, 10, HORA)) return fail('rate-limited-hora', 429);
 
   const body = await readJson(request);
   if (!body || typeof body !== 'object') return fail('server');
@@ -296,8 +326,9 @@ export async function verifySend({ request, env, ctx }) {
 
   if (await emailVerified(env, account.id, account.email)) return json({ ok: true, jaConfirmado: true });
 
+  if (await freioDaConta(env, request)) return fail('rate-limited-hora', 429);
+  if (await throttled(env, `verif-h:${account.id}`, 5, HORA)) return fail('rate-limited-hora', 429);
   if (await throttled(env, `verif:${account.id}`, 2)) return fail('rate-limited', 429);
-  if (await throttled(env, `verif-h:${account.id}`, 5, 3_600_000)) return fail('rate-limited', 429);
 
   if (!await enviarConfirmacao(env, ctx, request, account)) return fail('server', 503);
   return json({ ok: true });
@@ -320,7 +351,8 @@ export async function verify({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
 
-  if (await throttled(env, `verif-ok:${account.id}`, 10)) return fail('rate-limited', 429);
+  if (await freioDaConta(env, request)) return fail('rate-limited-hora', 429);
+  if (await throttled(env, `verif-ok-h:${account.id}`, 10, HORA)) return fail('rate-limited-hora', 429);
 
   const body = await readJson(request);
   if (!body) return fail('server');
@@ -346,7 +378,15 @@ export async function login({ request, env, ctx }) {
   /* O freio por IP antes de ler o corpo, como no cadastro: quem já estourou
      não ganha nem a leitura. */
   const origem = ip(request);
-  if (await throttled(env, `login:${origem}`, 20)) return fail('rate-limited', 429);
+  /* Vinte ERROS por hora por endereço. Conta só as falhas, e é só uma
+     leitura aqui - o gasto é lá embaixo, quando a senha erra. Quem acerta
+     não chega perto; quem tenta senhas ou e-mails ao acaso para na vigésima. */
+  if (await estourou(env, `login-falhas-h:${origem}`, 20, HORA)) return fail('rate-limited-hora', 429);
+  /* E sessenta tentativas por hora, certas ou erradas. Sem este, entrar e
+     sair em laço com a própria senha escrevia cinco linhas por volta sem
+     nunca errar. Substitui os vinte por minuto: quem tenta senhas já para
+     no teto de erros acima, que é mais apertado. */
+  if (await throttled(env, `login-h:${origem}`, 60, HORA)) return fail('rate-limited-hora', 429);
 
   const body = await readJson(request);
   if (!body) return fail('server');
@@ -357,8 +397,9 @@ export async function login({ request, env, ctx }) {
   const email = normalizeEmail(body.email);
   const password = body.password;
 
-  /* Três freios, e o que cada um conta importa.
-     · por IP: toda tentativa, 20 por minuto - uma máquina tentando senhas.
+  /* Os freios, e o que cada um conta importa.
+     · por IP: 20 ERROS por hora e 60 tentativas por hora (acima) - uma
+       máquina tentando senhas, ou gastando a cota de escrita.
      · por e-mail E IP: só as que ERRAM, 5 por minuto - a mesma máquina
        contra uma conta específica.
      · por e-mail, de qualquer lugar: só as que ERRAM, 30 por minuto - o
@@ -377,9 +418,14 @@ export async function login({ request, env, ctx }) {
     : await fakeVerify(password, itersFor(env));
 
   if (!account || !ok) {
+    await throttled(env, `login-falhas-h:${origem}`, 20, HORA);
     await throttled(env, `login:${email}:${origem}`, 5);
     await throttled(env, `login:${email}`, 30);
-    await log(env, account ? account.id : null, 'login-failed');
+    /* Na trilha, só a falha contra uma conta que EXISTE - essa é a que diz
+       alguma coisa ("alguém está tentando a senha da fulana"). Um e-mail
+       inventado não tem de quem ser, e registrá-lo eram três linhas escritas
+       (a linha, o índice e o contador do AUTOINCREMENT) por tentativa. */
+    if (account) await log(env, account.id, 'login-failed');
     return fail('bad-credentials', 401);
   }
 
@@ -440,7 +486,7 @@ export async function logout({ request, env }) {
  */
 export async function forgot({ request, env, ctx }) {
   /* Freio por IP antes de ler o corpo. */
-  if (await throttled(env, `forgot:${ip(request)}`, 6)) return fail('rate-limited', 429);
+  if (await throttled(env, `forgot-ip-h:${ip(request)}`, 10, HORA)) return fail('rate-limited-hora', 429);
 
   const body = await readJson(request);
   if (!body) return fail('server');
@@ -522,7 +568,8 @@ export async function forgot({ request, env, ctx }) {
  * que só ajuda quem está tentando adivinhar.
  */
 export async function reset({ request, env }) {
-  if (await throttled(env, `reset:${ip(request)}`, 12)) return fail('rate-limited', 429);
+  /* O token tem 32 bytes: adivinhar não é o risco, gastar a cota é. */
+  if (await throttled(env, `reset-h:${ip(request)}`, 20, HORA)) return fail('rate-limited-hora', 429);
 
   const body = await readJson(request);
   if (!body) return fail('server');
@@ -580,7 +627,8 @@ export async function password({ request, env }) {
   const atual = String(body.current || '');
   const nova = String(body.password || '');
 
-  if (await throttled(env, `senha:${account.id}`, 8)) return fail('rate-limited', 429);
+  if (await freioDaConta(env, request)) return fail('rate-limited-hora', 429);
+  if (await throttled(env, `senha-h:${account.id}`, 10, HORA)) return fail('rate-limited-hora', 429);
   if (nova.length < MIN_PASSWORD) return fail('weak-password');
 
   const ok = await verifyPassword(atual, account.pass_salt, account.pass_hash, account.pass_iter);
@@ -630,7 +678,8 @@ export async function apagar({ request, env }) {
 
   /* Mais apertado que o freio da troca de senha: adivinhar a senha aqui custa
      a conta inteira, e ninguém apaga a própria conta cinco vezes. */
-  if (await throttled(env, `apagar:${account.id}`, 5)) return fail('rate-limited', 429);
+  if (await freioDaConta(env, request)) return fail('rate-limited-hora', 429);
+  if (await throttled(env, `apagar-h:${account.id}`, 5, HORA)) return fail('rate-limited-hora', 429);
 
   const ok = await verifyPassword(
     String(body.password || ''), account.pass_salt, account.pass_hash, account.pass_iter);
@@ -684,7 +733,10 @@ export async function me({ request, env }) {
 export async function health({ request, env }) {
   /* Rota pública que faz quatro consultas ao banco: dez por minuto por IP
      é folgado para a conferência da publicação e apertado para um laço. */
-  if (request && env.DB && await throttled(env, `health:${ip(request)}`, 10)) {
+  /* Trinta por HORA por endereço. Cada consulta permitida é uma escrita de
+     freio, e dez por minuto eram seiscentas por hora de uma máquina só; uma
+     publicação consulta meia dúzia de vezes. */
+  if (request && env.DB && await throttled(env, `health-h:${ip(request)}`, 30, HORA)) {
     return fail('rate-limited', 429);
   }
   const out = {

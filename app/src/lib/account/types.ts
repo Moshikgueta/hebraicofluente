@@ -64,7 +64,7 @@ export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired'
 
 export type AuthErrorCode =
   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
-  | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'payments-off'
+  | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'rate-limited-hora' | 'payments-off'
   | 'bad-token' | 'payment-failed' | 'card-off' | 'pix-off' | 'already-owned';
 
 export class AuthError extends Error {
@@ -84,6 +84,9 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
   'offline': 'Sem conexão. Tente de novo em um instante.',
   'server': 'Alguma coisa quebrou do nosso lado. Tente de novo.',
   'rate-limited': 'Tentativas demais. Espere um minuto.',
+  /* O teto da hora (worker/src/api/auth.js). Dizer "um minuto" aqui mandaria
+     a pessoa tentar de novo em vão sessenta vezes. */
+  'rate-limited-hora': 'Tentativas demais por agora. Tente de novo daqui a uma hora.',
   /* Não é erro: é a plataforma no ar antes de o meio de pagamento estar
      ligado. Dizer isso evita que alguém tente três vezes e conclua que o
      cartão dele foi recusado. */
