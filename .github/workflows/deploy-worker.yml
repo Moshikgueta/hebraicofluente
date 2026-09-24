@@ -525,11 +525,13 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           ALVO="SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'"
-          # `email_verifications` aponta para `accounts` e precisa sair antes.
-          # Fica num comando À PARTE, com `|| true`, porque a tabela pode ainda
-          # não existir no banco (a publicação não aplica o schema.sql), e um
-          # DELETE numa tabela ausente derrubaria o comando inteiro abaixo.
-          # O mesmo vale para `registros_acesso` e `arrependimentos` (24/09/2026).
+          # `email_verifications`, `registros_acesso` e `arrependimentos` apontam
+          # para `accounts` (e `arrependimentos` para `orders`) e precisam sair
+          # antes. Ficam num comando À PARTE, com `|| true`: a publicação aplica
+          # o worker/schema.sql (scripts/cloudflare-setup.sh), mas esta etapa
+          # roda com `always()`, também quando a publicação caiu ANTES de
+          # aplicá-lo. Aí uma tabela nova pode ainda não existir, e um DELETE
+          # numa tabela ausente derrubaria o comando inteiro abaixo.
           npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --command \
             "DELETE FROM email_verifications WHERE account_id IN ($ALVO);
              DELETE FROM registros_acesso    WHERE account_id IN ($ALVO);
