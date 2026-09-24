@@ -32,7 +32,8 @@ const BASE = '';
 const CODES: readonly string[] = [
   'bad-credentials', 'email-taken', 'weak-password', 'invalid-email',
   'not-signed-in', 'offline', 'server', 'rate-limited', 'rate-limited-hora', 'payments-off',
-  'bad-token', 'payment-failed', 'card-off', 'pix-off', 'already-owned'
+  'bad-token', 'payment-failed', 'card-off', 'pix-off', 'already-owned',
+  'fora-do-prazo', 'nao-pago'
 ];
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
@@ -135,5 +136,11 @@ export class WorkerApi implements PlatformApi {
 
   orders(): Promise<Order[]> {
     return call<{ orders: Order[] }>('/orders').then(r => r.orders);
+  }
+
+  requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }> {
+    return call<{ pedidoEm: string }>('/pay/desistir', {
+      method: 'POST', body: JSON.stringify({ order: orderId })
+    });
   }
 }

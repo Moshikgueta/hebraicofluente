@@ -8,7 +8,7 @@
  *
  *   · o DADO PESSOAL tem de sumir - e-mail, nome, senha, progresso, acesso;
  *   · o REGISTRO DE VENDA tem de ficar, porque nota fiscal é obrigação de
- *     quem vende e a própria LGPD prevê a guarda (art. 16, II).
+ *     quem vende e a própria LGPD prevê a guarda (art. 16, I).
  *
  * Um apagamento que leva o pedido junto quebra a contabilidade. Um que deixa
  * o e-mail para trás não apaga nada. Os dois erros passam despercebidos, e

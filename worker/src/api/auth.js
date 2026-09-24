@@ -34,7 +34,7 @@ import {
 import {
   activeEntitlements, bumpSessionVersion, changePassword, createAccount, deleteAccount,
   emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
-  normalizeEmail, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
+  normalizeEmail, registrarAcesso, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
   ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset
 } from '../lib/db.js';
 
@@ -86,6 +86,15 @@ export const ip = request => {
     .map(x => x.toLowerCase().padStart(4, '0'));
   return cheio.slice(0, 4).join(':') + '::/64';
 };
+
+/**
+ * O IP inteiro, como a Cloudflare o entrega - para o registro de acesso do
+ * Marco Civil, que precisa identificar a conexão, e não para os freios, que
+ * agrupam IPv6 por /64 (ver `ip` acima). Mesma fonte, a única que quem chama
+ * não escolhe.
+ */
+export const ipCompleto = request =>
+  (request.headers.get('CF-Connecting-IP') || '').trim() || 'desconhecido';
 
 /* Uma hora. Curto o bastante para que um link esquecido numa caixa de entrada
    compartilhada não seja uma chave permanente, e longo o bastante para
@@ -297,6 +306,7 @@ export async function signup({ request, env, ctx }) {
      lida por operadores num resumo do Actions, e é o que sobra depois de a
      conta ser apagada. */
   await log(env, account.id, 'signup');
+  await registrarAcesso(env, { accountId: account.id, evento: 'cadastro', ip: ipCompleto(request) });
 
   /* Um presente esperando por este endereço avisa o dono. Não libera nada:
      ver a nota em `avisarConvitePendente`. A pessoa não é informada, e isso
@@ -449,6 +459,10 @@ export async function login({ request, env, ctx }) {
     }
   }
 
+  /* O registro de acesso do Marco Civil (art. 15): quem entrou, de onde e
+     quando. Ver a tabela em worker/schema.sql. */
+  await registrarAcesso(env, { accountId: account.id, evento: 'entrada', ip: ipCompleto(request) });
+
   /* Rede de segurança para um convite que ficou pendente: hoje `liberar`
      concede direto quando a conta existe, então isto cobre linhas antigas e
      o caso de alguém ter criado o convite à mão. Avisa o dono, não libera. */
@@ -594,6 +608,8 @@ export async function reset({ request, env }) {
   const novo = await hashPassword(password, null, itersFor(env));
   const atualizada = await changePassword(env, account.id, novo);
   await log(env, account.id, 'senha-redefinida');
+  /* Redefinir já entra na conta (a resposta traz o cookie): é um acesso. */
+  await registrarAcesso(env, { accountId: account.id, evento: 'senha-redefinida', ip: ipCompleto(request) });
 
   /* Quem chegou aqui abriu o link que foi para a caixa de entrada da conta:
      isso confirma o e-mail. É também o caminho da dona de um endereço usado

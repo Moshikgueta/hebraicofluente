@@ -347,6 +347,10 @@ export class LocalApi implements PlatformApi {
     const age = Date.now() - new Date(order.createdAt).getTime();
     if (order.status === 'pending' && age > 3_000) {
       order.status = 'paid';
+      order.paidAt = new Date().toISOString();
+      /* O mesmo prazo do servidor, sem o arredondamento para o fim do dia:
+         aqui é demonstração, e o que importa é o botão aparecer e sumir. */
+      order.desistirAte = new Date(Date.now() + 7 * 86_400_000).toISOString();
       const course = getCourse(order.courseSlug);
       if (course && !a.entitlements.some(e => e.courseSlug === order.courseSlug)) {
         const expires = new Date();
@@ -367,5 +371,25 @@ export class LocalApi implements PlatformApi {
     const s = read();
     const a = s.current ? s.accounts[s.current] : undefined;
     return a ? a.orders.slice() : [];
+  }
+
+  /** A desistência, na demonstração: registra o pedido e pronto - não há
+   *  dinheiro para devolver nem dono para avisar. As mesmas recusas do
+   *  servidor, para a tela ser escrita contra o comportamento de verdade. */
+  async requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    const order = a.orders.find(o => o.id === orderId);
+    if (!order) throw new AuthError('server', 'Pedido não encontrado.');
+    if (order.desistenciaEm) return { pedidoEm: order.desistenciaEm };
+    if (order.status !== 'paid') throw new AuthError('nao-pago');
+    if (!order.desistirAte || Date.now() > new Date(order.desistirAte).getTime()) {
+      throw new AuthError('fora-do-prazo');
+    }
+    order.desistenciaEm = new Date().toISOString();
+    write(s);
+    return { pedidoEm: order.desistenciaEm };
   }
 }

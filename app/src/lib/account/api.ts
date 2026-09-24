@@ -79,7 +79,7 @@ export interface PlatformApi {
    *
    *  Some a PESSOA - e-mail, nome, senha, progresso, acesso. Ficam os
    *  pedidos, sem dono identificável: registro de venda é obrigação fiscal, e
-   *  a própria LGPD prevê a guarda (art. 16, II). */
+   *  a própria LGPD prevê a guarda (art. 16, I). */
   deleteAccount(input: { password: string }): Promise<void>;
 
   /** Começa um pedido. Para PIX volta com o copia-e-cola; para cartão, com a
@@ -93,6 +93,11 @@ export interface PlatformApi {
 
   /** Pedidos da conta, mais recente primeiro. Para a página de perfil. */
   orders(): Promise<Order[]>;
+
+  /** Desiste de uma compra dentro dos sete dias (CDC, art. 49), pelo próprio
+   *  site, como o Decreto 7.962/2013 exige. Devolve quando o pedido ficou
+   *  registrado; pedir de novo devolve o mesmo momento. */
+  requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }>;
 }
 
 const MODE: ApiMode =

@@ -18,13 +18,17 @@
  */
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
-import { ip, requireAccount } from './auth.js';
+import { ip, ipCompleto, requireAccount } from './auth.js';
 import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
 import {
-  createOrder, entitlementExpiry, entitlementOf, findAccountById, getOrder, grantAccess,
-  log, markPaid, ordersOf, recordEvent, refundOrder, throttled, updateOrder
+  arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, findAccountById, getOrder,
+  grantAccess, log, markPaid, ordersOf, pedirArrependimento, recordEvent, refundOrder, throttled,
+  updateOrder
 } from '../lib/db.js';
-import { dataBR, mailReady, mensagemDeCompra, reaisBR, sendMail } from '../lib/mail.js';
+import {
+  dataBR, dataHoraBR, mailReady, mensagemDeArrependimento, mensagemDeArrependimentoDono,
+  mensagemDeCompra, reaisBR, sendMail
+} from '../lib/mail.js';
 import {
   createCardPreference, createPix, getPayment, mapStatus, paymentsFor,
   verifyWebhookSignature
@@ -58,14 +62,39 @@ const aceita = forma => {
   return forma === 'pix' ? !!FORMAS.pix : !!FORMAS.cartao;
 };
 
-/** Um pedido, no formato que o app espera (app/src/lib/account/types.ts). */
-const toOrder = row => ({
+/* ── o prazo de desistência ────────────────────────────────────────────────
+ * Sete dias corridos (CDC, art. 49), contados da liberação do acesso - que é
+ * o pagamento confirmado, e é depois da compra, então é o mais favorável ao
+ * consumidor, como a Política de Reembolso promete. E vai até o FIM do
+ * sétimo dia no horário de Brasília: "sete dias" que acabam às 14h32 porque
+ * foi a hora em que o PIX caiu não é como ninguém conta dias.
+ *
+ * Brasília é UTC-3 o ano inteiro desde 2019 (sem horário de verão).
+ */
+const DIA = 86_400_000;
+const BRASILIA = 3 * 3_600_000;
+const DIAS_ARREPENDIMENTO = Number(empresa.politicas && empresa.politicas.arrependimentoDias) || 7;
+
+export function prazoDeDesistencia(paidAt, dias = DIAS_ARREPENDIMENTO) {
+  if (!paidAt || !dias) return null;
+  const local = Number(paidAt) - BRASILIA + dias * DIA;
+  return Math.floor(local / DIA) * DIA + DIA - 1 + BRASILIA;
+}
+
+/** Um pedido, no formato que o app espera (app/src/lib/account/types.ts).
+ *  `desistenciaEm` é o momento do pedido de desistência, se houver. */
+const toOrder = (row, desistenciaEm = null) => ({
   id: row.id,
   courseSlug: row.course_slug,
   amountCents: row.amount_cents,
   method: row.method,
   status: row.status,
   createdAt: new Date(row.created_at).toISOString(),
+  paidAt: row.paid_at ? new Date(Number(row.paid_at)).toISOString() : null,
+  /* Até quando o botão "Desistir da compra" aparece. Só para pedido pago. */
+  desistirAte: row.status === 'paid' && row.paid_at
+    ? new Date(prazoDeDesistencia(row.paid_at)).toISOString() : null,
+  desistenciaEm: desistenciaEm ? new Date(desistenciaEm).toISOString() : null,
   ...(row.pix_code ? {
     pix: {
       code: row.pix_code,
@@ -283,7 +312,98 @@ export async function verify({ request, env }) {
 export async function orders({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
-  return json({ orders: (await ordersOf(env, account.id)).map(toOrder) });
+  const pedidos = await arrependimentosDe(env, account.id);
+  return json({
+    orders: (await ordersOf(env, account.id)).map(o => toOrder(o, pedidos.get(String(o.id)) || null))
+  });
+}
+
+/* ── POST /api/pay/desistir ─────────────────────────────────────────────── */
+
+/**
+ * O pedido de desistência, feito pelo próprio site.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O Decreto 7.962/2013 (art. 5º) quer duas coisas que o e-mail sozinho não
+ * dava: que o consumidor possa desistir "pela mesma ferramenta utilizada
+ * para a contratação" - o site - e que o recebimento seja confirmado
+ * IMEDIATAMENTE. Então: um botão em Sua conta → Compras, este endpoint, e um
+ * e-mail de confirmação que sai na hora, com a data e a hora do pedido.
+ *
+ * O estorno em si continua com o dono (o aviso vai para SUPPORT_EMAIL):
+ * dinheiro saindo sozinho por um clique é uma decisão que não é deste
+ * endpoint. Quando a Mercado Pago avisar o estorno, `applyPayment` fecha o
+ * acesso como sempre.
+ *
+ * Pedir de novo não faz nada de novo: vale o PRIMEIRO pedido, e a pessoa
+ * recebe a mesma resposta - inclusive depois do prazo, porque o que importa
+ * é que ela pediu dentro dele.
+ */
+export async function desistir({ request, env, ctx }) {
+  const account = await requireAccount(request, env);
+  if (!account) return notSignedIn();
+  if (await throttled(env, `desistir-h:${account.id}`, 10, 3_600_000)) return fail('rate-limited-hora', 429);
+
+  const body = await readJson(request);
+  if (!body || typeof body !== 'object') return fail('server');
+  const order = await getOrder(env, typeof body.order === 'string' ? body.order : '');
+  if (!order || order.account_id !== account.id) return fail('server', 404);
+
+  const jaPedido = (await arrependimentosDe(env, account.id)).get(String(order.id));
+  if (jaPedido) {
+    return json({ ok: true, novo: false, pedidoEm: new Date(jaPedido).toISOString() });
+  }
+
+  if (order.status !== 'paid') return fail('nao-pago', 409);
+  const ate = prazoDeDesistencia(order.paid_at);
+  if (!ate || Date.now() > ate) return fail('fora-do-prazo', 409);
+
+  const r = await pedirArrependimento(env, {
+    orderId: order.id, accountId: account.id, ip: ipCompleto(request)
+  });
+  if (r.novo) {
+    await log(env, account.id, 'desistencia-pedida', order.id);
+    const avisar = avisarDesistencia(env, order, account, r.pedidoEm);
+    if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(avisar);
+    else await avisar;
+  }
+  return json({ ok: true, novo: r.novo, pedidoEm: new Date(r.pedidoEm).toISOString() });
+}
+
+/** Os dois e-mails da desistência: a confirmação para quem pediu, e o aviso
+ *  para o dono fazer o estorno. Nunca lança - o pedido já está gravado. */
+async function avisarDesistencia(env, order, account, pedidoEm) {
+  try {
+    if (!mailReady(env)) return;
+    const curso = getCourse(order.course_slug)?.titlePt || order.course_slug;
+    const valor = reaisBR(order.amount_cents, order.currency);
+    const quando = dataHoraBR(pedidoEm);
+    const prazoUteis = Number(empresa.politicas?.prazoReembolsoUteis) || 10;
+    const marca = empresa.nomeFantasia || 'Hebraico Fluente';
+
+    const r = await sendMail(env, {
+      to: account.email,
+      ...mensagemDeArrependimento({
+        nome: account.name || '', curso, valor, pedido: order.id, pedidoEm: quando,
+        prazoUteis, cartao: order.method === 'card', marca,
+        suporte: empresa.contato?.emailSuporte || ''
+      })
+    });
+    await log(env, account.id, r.ok ? 'desistencia-confirmada' : 'desistencia-email-falhou',
+      r.ok ? order.id : `${order.id} ${r.motivo}`);
+
+    const dono = String(env.SUPPORT_EMAIL || '').trim();
+    if (dono) {
+      await sendMail(env, {
+        to: dono,
+        ...mensagemDeArrependimentoDono({
+          email: account.email, curso, valor, pedido: order.id, pedidoEm: quando,
+          prazoUteis, pixDireto: pixDireto(), marca
+        })
+      });
+    }
+  } catch (e) {
+    console.error('desistencia', e && e.stack || e);
+  }
 }
 
 /* ── POST /api/pay/webhook ──────────────────────────────────────────────── */
@@ -594,7 +714,13 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
       arrependimentoDias: empresa.politicas?.arrependimentoDias || 0,
       /* Uma renovação não diz "seu acesso está liberado" a quem já estava
          estudando: diz que foi estendido. É a mesma compra e outra notícia. */
-      renovacao: !primeiraCompra
+      renovacao: !primeiraCompra,
+      /* O contrato que vale para esta compra (Decreto 7.962/2013, art. 4º,
+         IV), e onde desistir pelo site (art. 5º). */
+      termos: `${site}/termos/`,
+      reembolso: `${site}/reembolso/`,
+      versao: dataBR(Date.parse(`${empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)) || '',
+      desistir: `${site}/perfil/`
     });
 
     const r = await sendMail(env, { to: account.email, ...msg });

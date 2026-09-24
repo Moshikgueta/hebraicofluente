@@ -51,6 +51,9 @@ const ROUTES = {
   'GET /api/pay/webhook': pay.webhook,
 
   'GET /api/orders': pay.orders,
+  /* A desistência da compra pelo próprio site (CDC, art. 49; Decreto
+     7.962/2013, art. 5º). Ver api/pay.js. */
+  'POST /api/pay/desistir': pay.desistir,
 
   /* O curso em si. É a metade do controle de acesso que faltava: o portão
      recusa as ROTAS pagas, e esta rota recusa o MATERIAL - que até 20/09/2026

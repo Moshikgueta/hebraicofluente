@@ -78,7 +78,20 @@ export default function Page() {
         </p>
       </Artigo>
 
-      <Artigo n={3} titulo="Sua conta">
+      {/* 24/09/2026. Contrato com menor de 18 anos pode ser anulado (Código
+          Civil, arts. 4º e 171), e o dado de criança tem regra própria na LGPD
+          (art. 14). O curso é para adultos; o responsável é quem contrata
+          quando não é. */}
+      <Artigo n={3} titulo="Quem pode comprar">
+        <p>
+          A compra é feita por <strong>maiores de 18 anos</strong>. Menores de 18 só
+          podem usar a plataforma com a autorização e o acompanhamento de um pai, mãe
+          ou responsável legal, que é quem faz a compra e responde por ela. Ao comprar,
+          você declara ter 18 anos ou mais, ou ser o responsável por quem vai estudar.
+        </p>
+      </Artigo>
+
+      <Artigo n={4} titulo="Sua conta">
         <p>
           A conta é <strong>pessoal e intransferível</strong>. A senha é sua
           responsabilidade, e o acesso comprado destina-se ao uso de uma pessoa.
@@ -87,14 +100,19 @@ export default function Page() {
         </p>
         <p>
           Você pode apagar todo o seu progresso quando quiser, dentro da plataforma, e
-          pode pedir a exclusão da conta pelo canal descrito na{' '}
+          pode <strong>apagar a conta</strong> sozinho, a qualquer momento, na página{' '}
+          <Link href="/perfil" className="text-[var(--accent)] hover:underline">Sua conta</Link>.
+          Apagar a conta encerra também o acesso aos cursos comprados, e isso{' '}
+          <strong>não gera reembolso</strong>: para receber o valor de volta dentro do
+          prazo de desistência, use antes a opção descrita no artigo 7. O que acontece
+          com os seus dados está na{' '}
           <Link href="/privacidade" className="text-[var(--accent)] hover:underline">
             Política de Privacidade
           </Link>.
         </p>
       </Artigo>
 
-      <Artigo n={4} titulo="O conteúdo é nosso, o aprendizado é seu">
+      <Artigo n={5} titulo="O conteúdo é nosso, o aprendizado é seu">
         <p>
           Textos, exercícios, áudios, imagens e o próprio software são protegidos por
           direito autoral. Você pode usá-los para estudar, imprimir para uso próprio e
@@ -104,7 +122,7 @@ export default function Page() {
         </p>
       </Artigo>
 
-      <Artigo n={5} titulo="O que prometemos - e o que não">
+      <Artigo n={6} titulo="O que prometemos - e o que não">
         <p>
           Prometemos que o curso fica disponível durante todo o período contratado, que
           o conteúdo anunciado na página de vendas é o que está lá dentro, e que erros
@@ -118,18 +136,22 @@ export default function Page() {
         </p>
       </Artigo>
 
-      <Artigo n={6} titulo="Cancelamento e reembolso">
+      <Artigo n={7} titulo="Cancelamento e reembolso">
         <p>
           Você tem <strong>{politicas.arrependimentoDias} dias</strong> para desistir da
           compra e receber o valor de volta, conforme o art. 49 do Código de Defesa do
-          Consumidor. As condições, o passo a passo e os prazos estão na{' '}
+          Consumidor. A desistência se faz pelo próprio site - em{' '}
+          <Link href="/perfil" className="text-[var(--accent)] hover:underline">Sua conta</Link>,
+          na compra, use <strong>Desistir da compra</strong> - ou por e-mail, e a
+          confirmação de recebimento chega na hora. As condições, o passo a passo e os
+          prazos estão na{' '}
           <Link href="/reembolso" className="text-[var(--accent)] hover:underline">
             Política de Reembolso e Cancelamento
           </Link>.
         </p>
       </Artigo>
 
-      <Artigo n={7} titulo="Mudanças nestes termos">
+      <Artigo n={8} titulo="Mudanças nestes termos">
         <p>
           Estes termos podem mudar - para corrigir, esclarecer ou acompanhar mudanças no
           produto. A data de atualização fica no topo desta página. Mudança que afete
@@ -138,7 +160,7 @@ export default function Page() {
         </p>
       </Artigo>
 
-      <Artigo n={8} titulo="Lei e foro">
+      <Artigo n={9} titulo="Lei e foro">
         <p>
           Estes termos são regidos pela lei brasileira. Questões de consumo seguem o
           Código de Defesa do Consumidor, inclusive quanto ao foro do domicílio do

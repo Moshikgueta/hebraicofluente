@@ -429,6 +429,13 @@ describe('a confirmação de compra', () => {
     expect(m.text, 'sem o valor').toMatch(/R\$\s?\d/);
     expect(m.text, 'sem a data de vencimento').toMatch(/Acesso até: \d{2}\/\d{2}\/\d{4}/);
     expect(m.text, 'sem os sete dias do CDC').toContain('7 dias para desistir');
+    /* O contrato que vale para a compra, num meio que a pessoa guarda
+       (Decreto 7.962/2013, art. 4º, IV), e onde desistir pelo site (art. 5º). */
+    expect(m.text, 'sem os Termos').toContain('https://hebraicofluente.com.br/termos/');
+    expect(m.text, 'sem a Política de Reembolso').toContain('https://hebraicofluente.com.br/reembolso/');
+    expect(m.text, 'sem a versão dos termos').toMatch(/na versão de \d{2}\/\d{2}\/\d{4}/);
+    expect(m.text, 'sem onde desistir').toContain('Desistir da compra');
+    expect(m.html).toContain('href="https://hebraicofluente.com.br/termos/"');
     expect(m.text, 'sem o suporte').toContain('@');
     /* E diz que abriu, não que renovou. */
     expect(m.text).toContain('está liberado');

@@ -280,6 +280,29 @@ As quatro rotas novas precisam estar em `PUBLIC_PREFIXES`
 (`components/shell/Chrome.tsx`): uma Política de Privacidade atrás de login
 informa o cliente, e não o visitante - que é justamente quem precisa dela.
 
+### Consumidor e Marco Civil (24/09/2026)
+Revisão contra a lei brasileira; o que o código cumpre e onde:
+
+- **Desistência pelo site** (CDC art. 49; Decreto 7.962/2013 art. 5º):
+  botão "Desistir da compra" em Sua conta → Compras, `POST /api/pay/desistir`,
+  tabela `arrependimentos`. Vale até o fim do 7º dia depois do pagamento, em
+  Brasília (`prazoDeDesistencia` em `api/pay.js`). A confirmação sai NA HORA
+  por e-mail, e o dono recebe o aviso para estornar - o estorno continua
+  manual, e o acesso fecha sozinho quando a Mercado Pago avisa.
+- **Registro de acesso** (Marco Civil art. 15): tabela `registros_acesso`, IP
+  inteiro + data/hora em cadastro, login e senha redefinida, 190 dias, apagado
+  pela varredura. NÃO sai com a conta apagada (obrigação legal).
+- **O contrato no e-mail** (Decreto 7.962 art. 4º, IV): o recibo de compra
+  leva os links dos Termos e da Política de Reembolso com a versão
+  (`politicas.atualizadoEm` em `data/empresa.json` - suba a data quando os
+  textos mudarem).
+- **18+**: artigo 3 dos Termos e a declaração junto do aceite no checkout.
+- **LGPD art. 16, I** (obrigação legal) é o que ampara guardar pedidos e
+  registros depois da exclusão - não o II, que é pesquisa.
+- A autorização do autor de *Ba Li Ivrit* existe (o dono a tem por escrito).
+
+`tests/consumidor.test.ts` guarda tudo isso.
+
 ## O endereço do site
 `hebraicofluente.com.br`, declarado em `wrangler.toml` (`routes` com
 `custom_domain = true`) e repetido em `SITE_ORIGIN`. O `*.workers.dev`
