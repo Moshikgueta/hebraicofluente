@@ -43,7 +43,9 @@ export default function Page() {
           O resumo, para quem não quer ler o resto
         </p>
         <p className="font-ui text-[15.5px] leading-relaxed text-ink-body">
-          Comprou e se arrependeu? Escreva para{' '}
+          Comprou e se arrependeu? Em{' '}
+          <Link href="/perfil" className="text-[var(--accent)] hover:underline">Sua conta</Link>,
+          use <strong>Desistir da compra</strong>, ou escreva para{' '}
           <a href={`mailto:${contato.emailSuporte}?subject=${encodeURIComponent('Pedido de reembolso')}`}
              className="font-semibold text-[var(--accent)] hover:underline break-all">
             {contato.emailSuporte}
@@ -70,11 +72,22 @@ export default function Page() {
         </p>
       </Artigo>
 
+      {/* Pelo site primeiro (Decreto 7.962/2013, art. 5º, § 1º: "pela mesma
+          ferramenta utilizada para a contratação"), com a confirmação na hora
+          (§ 4º). O e-mail continua valendo, como caminho a mais. */}
       <Artigo n={2} titulo="Como pedir">
+        <p>
+          <strong>Pelo site, em um minuto:</strong> entre em{' '}
+          <Link href="/perfil" className="text-[var(--accent)] hover:underline">Sua conta</Link>,
+          encontre a compra em <em>Compras</em> e use <strong>Desistir da compra</strong>.
+          O pedido fica registrado na hora, com data e horário, e a confirmação chega
+          no seu e-mail no mesmo instante. Você não precisa fazer mais nada.
+        </p>
+        <p>Se preferir, por e-mail:</p>
         <Lista itens={[
           <>Escreva para <a href={`mailto:${contato.emailSuporte}`} className="text-[var(--accent)] hover:underline break-all">{contato.emailSuporte}</a>, do <strong>mesmo e-mail</strong> usado na compra.</>,
           <>Escreva <em>Pedido de reembolso</em> no assunto. Não precisa de mais nada - nem número de pedido, nós encontramos pelo seu e-mail.</>,
-          <>Respondemos confirmando em até {atendimento.prazoRespostaUteis} dias úteis.</>
+          <>Respondemos confirmando em até {atendimento.prazoRespostaUteis} dias úteis. Vale a data em que você escreveu, não a da nossa resposta.</>
         ]} />
         <p>
           Pedir do e-mail da compra é a única exigência, e ela existe para proteger
@@ -129,7 +142,9 @@ export default function Page() {
             página da sua conta
           </Link>
           , a qualquer momento. É definitivo, e leva junto o seu progresso e o seu
-          acesso ao curso.
+          acesso ao curso - <strong>sem reembolso</strong>. Se ainda estiver dentro
+          dos {politicas.arrependimentoDias} dias e quiser o valor de volta, use antes{' '}
+          <strong>Desistir da compra</strong>.
         </p>
       </Artigo>
     </LegalPage>

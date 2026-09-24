@@ -384,6 +384,8 @@ Para apagá-la do banco de produção:
     "DELETE FROM orders          WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM entitlements    WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM progress        WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM registros_acesso WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM email_verifications WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM password_resets WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM accounts WHERE email = '$MAIL'"
 

@@ -283,7 +283,8 @@ export function mensagemDeConvitePendente({ email, nome, cursos, marca, painel }
  * provável de cair no spam, e HTML pesado com imagem remota é o que faz cair.
  */
 export function mensagemDeCompra({
-  nome, curso, valor, pedido, expiraEm, link, marca, suporte, arrependimentoDias, renovacao
+  nome, curso, valor, pedido, expiraEm, link, marca, suporte, arrependimentoDias, renovacao,
+  termos, reembolso, versao, desistir
 }) {
   const ola = nome ? `Oi, ${nome}.` : 'Oi.';
   const assinatura = marca || 'Hebraico Fluente';
@@ -316,7 +317,17 @@ export function mensagemDeCompra({
       ? `Você tem ${arrependimentoDias} dias para desistir, contados a partir de agora, sem ` +
         'precisar justificar. É o Código de Defesa do Consumidor, e basta pedir: o valor volta integral.'
       : null,
+    arrependimentoDias && desistir
+      ? `Para desistir, abra ${desistir} e use "Desistir da compra", ou responda este e-mail.`
+      : null,
     '',
+    /* O contrato, num meio que a pessoa guarda (Decreto 7.962/2013, art. 4º,
+       IV): este e-mail é o comprovante, e diz QUAL versão dos termos valeu. */
+    termos ? 'Este e-mail é o comprovante da sua compra. As condições que valem para ela são' : null,
+    termos ? `as dos Termos de Uso e da Política de Reembolso, na versão de ${versao || 'hoje'}:` : null,
+    termos ? `· Termos de Uso: ${termos}` : null,
+    reembolso ? `· Política de Reembolso: ${reembolso}` : null,
+    termos ? '' : null,
     suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
     '',
     assinatura
@@ -340,7 +351,18 @@ export function mensagemDeCompra({
     arrependimentoDias
       ? `<p>Você tem ${arrependimentoDias} dias para desistir, contados a partir de agora,` +
         ' sem precisar justificar. É o Código de Defesa do Consumidor, e basta pedir:' +
-        ' o valor volta integral.</p>'
+        ' o valor volta integral.' +
+        (desistir
+          ? ` Para desistir, abra <a href="${escapar(desistir)}">Sua conta</a> e use` +
+            ' "Desistir da compra", ou responda este e-mail.'
+          : '') +
+        '</p>'
+      : '',
+    termos
+      ? '<p>Este e-mail é o comprovante da sua compra. As condições que valem para ela são' +
+        ` as dos <a href="${escapar(termos)}">Termos de Uso</a>` +
+        (reembolso ? ` e da <a href="${escapar(reembolso)}">Política de Reembolso</a>` : '') +
+        `, na versão de ${escapar(versao || 'hoje')}.</p>`
       : '',
     suporte
       ? `<p>Qualquer dúvida, responda esta mensagem ou escreva para ${escapar(suporte)}.</p>`
@@ -353,6 +375,109 @@ export function mensagemDeCompra({
     text,
     html
   };
+}
+
+/* ── a desistência da compra ───────────────────────────────────────────── */
+
+/**
+ * "Recebemos o seu pedido de desistência" - para quem pediu, NA HORA.
+ *
+ * O Decreto 7.962/2013 (art. 5º, § 4º) manda confirmar imediatamente o
+ * recebimento do pedido de arrependimento. Este é o e-mail: diz quando o
+ * pedido chegou (é o que prova que foi dentro do prazo), o que acontece com
+ * o dinheiro e com o acesso, e que a pessoa não precisa fazer mais nada.
+ */
+export function mensagemDeArrependimento({
+  nome, curso, valor, pedido, pedidoEm, prazoUteis, cartao, marca, suporte
+}) {
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  const devolucao = cartao
+    ? 'O estorno é pedido à operadora do cartão e aparece na fatura conforme o prazo dela.'
+    : `O valor volta pela mesma forma de pagamento, em até ${prazoUteis} dias úteis.`;
+
+  const text = [
+    ola,
+    '',
+    `Recebemos o seu pedido de desistência da compra do curso ${curso}, em ${pedidoEm}.`,
+    'Você não precisa fazer mais nada.',
+    '',
+    '---',
+    `Curso: ${curso}`,
+    `Valor: ${valor}`,
+    `Pedido: ${pedido}`,
+    `Desistência pedida em: ${pedidoEm}`,
+    '---',
+    '',
+    `Devolvemos 100% do valor. ${devolucao}`,
+    'O acesso ao curso é encerrado quando o reembolso for processado; o seu progresso',
+    'de estudo fica guardado, caso um dia você volte.',
+    '',
+    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    '',
+    assinatura
+  ].filter(l => l !== null).join('\n');
+
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p><strong>Recebemos o seu pedido de desistência da compra do curso ${escapar(curso)},`,
+    ` em ${escapar(pedidoEm)}.</strong> Você não precisa fazer mais nada.</p>`,
+    '<hr>',
+    `<p>Curso: ${escapar(curso)}<br>`,
+    `Valor: ${escapar(valor)}<br>`,
+    `Pedido: ${escapar(pedido)}<br>`,
+    `Desistência pedida em: ${escapar(pedidoEm)}</p>`,
+    '<hr>',
+    `<p>Devolvemos 100% do valor. ${escapar(devolucao)}</p>`,
+    '<p>O acesso ao curso é encerrado quando o reembolso for processado; o seu progresso',
+    ' de estudo fica guardado, caso um dia você volte.</p>',
+    suporte ? `<p>Qualquer dúvida, escreva para ${escapar(suporte)}.</p>` : '',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  return { subject: `Recebemos seu pedido de desistência - ${curso}`, text, html };
+}
+
+/**
+ * O aviso ao DONO: alguém pediu desistência, e o estorno é com ele.
+ *
+ * Como o aviso de convite pendente, este carrega o e-mail do aluno de
+ * propósito - quem lê é o dono, e sem o endereço não há o que fazer.
+ */
+export function mensagemDeArrependimentoDono({
+  email, curso, valor, pedido, pedidoEm, prazoUteis, pixDireto, marca
+}) {
+  const assinatura = marca || 'Hebraico Fluente';
+  const como = pixDireto
+    ? 'Devolva o PIX pelo banco e depois rode Actions -> Acesso -> revogar para este e-mail.'
+    : 'Devolva pelo painel da Mercado Pago (Atividade -> o pagamento -> Devolver dinheiro). ' +
+      'Quando a Mercado Pago avisar o estorno, o acesso fecha sozinho.';
+  const text = [
+    'Pedido de desistência recebido pelo site (CDC, art. 49).',
+    '',
+    `E-mail: ${email}`,
+    `Curso: ${curso}`,
+    `Valor: ${valor}`,
+    `Pedido: ${pedido}`,
+    `Pedido de desistência em: ${pedidoEm}`,
+    '',
+    `Prazo prometido na Política de Reembolso: ${prazoUteis} dias úteis.`,
+    como,
+    '',
+    assinatura
+  ].join('\n');
+  const html = [
+    '<p><strong>Pedido de desistência recebido pelo site</strong> (CDC, art. 49).</p>',
+    `<p>E-mail: <strong>${escapar(email)}</strong><br>`,
+    `Curso: ${escapar(curso)}<br>`,
+    `Valor: ${escapar(valor)}<br>`,
+    `Pedido: ${escapar(pedido)}<br>`,
+    `Pedido de desistência em: ${escapar(pedidoEm)}</p>`,
+    `<p>Prazo prometido na Política de Reembolso: ${prazoUteis} dias úteis.</p>`,
+    `<p>${escapar(como)}</p>`,
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+  return { subject: `Desistência: ${pedido} (${valor})`, text, html };
 }
 
 /**
@@ -369,6 +494,16 @@ export function dataBR(ms) {
   const d = new Date(Number(ms) - 3 * 60 * 60 * 1000);
   const dois = n => String(n).padStart(2, '0');
   return `${dois(d.getUTCDate())}/${dois(d.getUTCMonth() + 1)}/${d.getUTCFullYear()}`;
+}
+
+/** Data e hora, no mesmo fuso de `dataBR` - para o pedido de desistência,
+ *  em que a HORA é o que prova que foi dentro do prazo. */
+export function dataHoraBR(ms) {
+  const dia = dataBR(ms);
+  if (!dia) return '';
+  const d = new Date(Number(ms) - 3 * 60 * 60 * 1000);
+  const dois = n => String(n).padStart(2, '0');
+  return `${dia} às ${dois(d.getUTCHours())}:${dois(d.getUTCMinutes())} (horário de Brasília)`;
 }
 
 /** Centavos em reais, como o site escreve. */

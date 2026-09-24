@@ -231,6 +231,57 @@ export async function logPurge(env, at = now()) {
     .bind(at - 180 * 86_400_000).run();
 }
 
+/* ── registros de acesso (Marco Civil, art. 15) ───────────────────────────
+ * Ver o comentário da tabela em worker/schema.sql: seis meses é o mínimo
+ * da lei, e 190 dias é esse mínimo com folga para meses de 31 dias.
+ */
+export const REGISTROS_DIAS = 190;
+
+/** Grava uma entrada na conta. Nunca lança: o registro é obrigação legal,
+ *  mas derrubar o login de alguém porque a tabela falhou não protege
+ *  ninguém - o erro vai para o log do Worker, onde alguém vê. */
+export async function registrarAcesso(env, { accountId, evento, ip }, at = now()) {
+  try {
+    await env.DB.prepare(
+      'INSERT INTO registros_acesso (account_id, evento, ip, criado_em) VALUES (?, ?, ?, ?)'
+    ).bind(accountId, evento, String(ip || '').slice(0, 64), at).run();
+  } catch (e) {
+    console.error('registro de acesso', e && e.message || e);
+  }
+}
+
+export async function registrosPurge(env, at = now()) {
+  await env.DB.prepare('DELETE FROM registros_acesso WHERE criado_em < ?')
+    .bind(at - REGISTROS_DIAS * 86_400_000).run();
+}
+
+/* ── desistência da compra ──────────────────────────────────────────────── */
+
+/** Registra o pedido de desistência. Devolve `{ novo, pedidoEm }`: pedir de
+ *  novo não cria outra linha, e o momento que vale é o do PRIMEIRO pedido. */
+export async function pedirArrependimento(env, { orderId, accountId, ip }, at = now()) {
+  const r = await env.DB.prepare(
+    `INSERT OR IGNORE INTO arrependimentos (order_id, account_id, pedido_em, ip)
+     VALUES (?, ?, ?, ?)`
+  ).bind(orderId, accountId, at, String(ip || '').slice(0, 64)).run();
+  const row = await env.DB.prepare('SELECT pedido_em FROM arrependimentos WHERE order_id = ?')
+    .bind(orderId).first();
+  return { novo: Number(r && r.meta && r.meta.changes) > 0, pedidoEm: row ? Number(row.pedido_em) : at };
+}
+
+/** Os pedidos de desistência da conta, por pedido de compra. Tabela ausente
+ *  vira "nenhum": a lista de compras não pode sumir por causa disto. */
+export async function arrependimentosDe(env, accountId) {
+  try {
+    const { results } = await env.DB.prepare(
+      'SELECT order_id, pedido_em FROM arrependimentos WHERE account_id = ?'
+    ).bind(accountId).all();
+    return new Map((results || []).map(r => [String(r.order_id), Number(r.pedido_em)]));
+  } catch {
+    return new Map();
+  }
+}
+
 /* ── direitos de acesso ─────────────────────────────────────────────────── */
 
 /** Só os que ainda valem. Um direito vencido não é devolvido: nada acima
@@ -741,7 +792,7 @@ export async function clearProgress(env, accountId) {
  * `orders` referencia `accounts(id)`, e a lei brasileira não deixa apagar o
  * registro de uma venda junto com o cliente: a nota, o valor, a data e o
  * estorno são obrigação fiscal e contábil, e sobrevivem ao pedido de
- * exclusão - a própria LGPD prevê isso (art. 16, II). Apagar a linha da conta
+ * exclusão - a própria LGPD prevê isso (art. 16, I). Apagar a linha da conta
  * deixaria todo pedido dela apontando para um id que não existe mais, e o
  * livro caixa viraria um monte de órfãos que ninguém consegue conferir.
  *

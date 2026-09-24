@@ -340,7 +340,10 @@ export function CheckoutClient({ slug }: { slug: string }) {
               {busy ? 'Gerando…' : `Pagar ${brl(total)}`}
             </Button>
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted text-center">
-              Ao continuar você concorda com os{' '}
+              {/* 24/09/2026: a declaração de idade vai aqui, onde o contrato se faz
+                  (Termos, artigo 3). */}
+              Ao continuar você declara ter 18 anos ou mais, ou ser o responsável
+              por quem vai estudar, e concorda com os{' '}
               <Link href="/termos" className="text-[var(--accent)] hover:underline">
                 Termos de Uso
               </Link>{' '}

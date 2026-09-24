@@ -44,7 +44,17 @@ export default function Page() {
       'confirmar a compra, liberar o acesso e tratar estorno - o que a Mercado Pago responde sobre o pagamento: situação, valor, moeda, forma e a referência do pedido. Sem dados do pagador e sem dados de cartão',
       'pelo prazo legal de guarda fiscal'
     ] as [string, string, string]]),
-    ['Endereço de IP e dados do navegador', 'segurança: limitar tentativas de login e identificar abuso',
+    ['Confirmação de e-mail', 'provar que o endereço da conta é seu (o link que mandamos no cadastro)',
+     'enquanto a conta existir'],
+    /* Marco Civil da Internet, art. 15 (24/09/2026): o provedor de aplicação
+       guarda os registros de acesso por seis meses, em sigilo. Ver a tabela
+       registros_acesso em worker/schema.sql. */
+    ['Registro de acesso: endereço IP, data e hora de cada entrada na conta',
+     'cumprir o Marco Civil da Internet (Lei 12.965/2014, art. 15). Fica em sigilo e só é entregue por ordem judicial',
+     'seis meses, e então é apagado - inclusive se você apagar a conta antes'],
+    ['Pedido de desistência da compra', 'registrar quando você desistiu, que é o que prova o prazo do art. 49 do CDC',
+     'junto com o registro da compra'],
+    ['Endereço de IP (freio de tentativas)', 'segurança: limitar tentativas de login e identificar abuso',
      'poucos dias, em registro técnico']
   ];
 
@@ -120,8 +130,9 @@ export default function Page() {
         <p>
           A base legal é a <strong>execução do contrato</strong> que você fez conosco
           (art. 7º, V da LGPD) para tudo que diz respeito ao acesso e ao progresso, o{' '}
-          <strong>cumprimento de obrigação legal</strong> para os dados fiscais do
-          pedido, e o <strong>legítimo interesse</strong> para os registros de
+          <strong>cumprimento de obrigação legal</strong> (art. 7º, II) para os dados
+          fiscais do pedido e para o registro de acesso exigido pelo Marco Civil da
+          Internet, e o <strong>legítimo interesse</strong> para os registros de
           segurança.
         </p>
       </Artigo>
@@ -236,8 +247,11 @@ export default function Page() {
           O que a exclusão leva: e-mail, nome, senha, progresso e acesso ao curso. O
           que ela não leva, e a lei não deixa levar: o registro das compras, que fica
           sem o seu nome e sem o seu e-mail, porque guardar nota de venda é obrigação
-          de quem vende e a própria LGPD prevê essa guarda (art. 16, II). O que sobra
-          é valor, data e situação do pagamento, e não aponta para você.
+          de quem vende e a própria LGPD prevê essa guarda (art. 16, I). O que sobra
+          é valor, data e situação do pagamento, e não aponta para você. Pelo mesmo
+          motivo ficam os <strong>registros de acesso</strong> dos últimos seis meses,
+          que o Marco Civil da Internet obriga a guardar; eles são apagados quando
+          completam o prazo.
         </p>
         <p>
           O canal de e-mail acima continua valendo para todo o resto - acesso,

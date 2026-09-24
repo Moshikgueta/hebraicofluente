@@ -512,7 +512,8 @@ jobs:
       # falhar com "FOREIGN KEY constraint failed" e deixa a conta de teste
       # no banco de produção - foi o que aconteceu quando `password_resets`
       # nasceu. A lista de hoje: orders, entitlements, progress,
-      # password_resets, email_verifications. Ver worker/schema.sql.
+      # password_resets, email_verifications, registros_acesso, arrependimentos.
+      # Ver worker/schema.sql.
       #
       # `access_log` não tem chave estrangeira e por isso não quebrava nada -
       # e por isso mesmo ficava para trás: cada publicação deixava meia dúzia
@@ -528,8 +529,11 @@ jobs:
           # Fica num comando À PARTE, com `|| true`, porque a tabela pode ainda
           # não existir no banco (a publicação não aplica o schema.sql), e um
           # DELETE numa tabela ausente derrubaria o comando inteiro abaixo.
+          # O mesmo vale para `registros_acesso` e `arrependimentos` (24/09/2026).
           npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --command \
-            "DELETE FROM email_verifications WHERE account_id IN ($ALVO);" || true
+            "DELETE FROM email_verifications WHERE account_id IN ($ALVO);
+             DELETE FROM registros_acesso    WHERE account_id IN ($ALVO);
+             DELETE FROM arrependimentos     WHERE account_id IN ($ALVO);" || true
           npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --command \
             "DELETE FROM access_log       WHERE account_id IN ($ALVO);
              DELETE FROM payment_events   WHERE order_id IN (SELECT id FROM orders WHERE account_id IN ($ALVO));

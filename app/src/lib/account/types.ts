@@ -52,6 +52,13 @@ export type Order = {
   createdAt: string;
   /** Só para PIX: o copia-e-cola e o QR. */
   pix?: { code: string; qrPngBase64: string | null; expiresAt: string };
+  /** Quando o pagamento foi confirmado. */
+  paidAt?: string | null;
+  /** Até quando o botão "Desistir da compra" vale (CDC, art. 49): o fim do
+   *  sétimo dia depois do pagamento, em Brasília. `null` fora de pedido pago. */
+  desistirAte?: string | null;
+  /** Quando a desistência foi pedida pelo site, se foi. */
+  desistenciaEm?: string | null;
 };
 
 export type PaymentMethod = 'pix' | 'card';
@@ -65,7 +72,8 @@ export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired'
 export type AuthErrorCode =
   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
   | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'rate-limited-hora' | 'payments-off'
-  | 'bad-token' | 'payment-failed' | 'card-off' | 'pix-off' | 'already-owned';
+  | 'bad-token' | 'payment-failed' | 'card-off' | 'pix-off' | 'already-owned'
+  | 'fora-do-prazo' | 'nao-pago';
 
 export class AuthError extends Error {
   constructor(readonly code: AuthErrorCode, message?: string) {
@@ -112,7 +120,11 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
   'pix-off': 'No momento só aceitamos cartão de crédito. Volte e escolha cartão - dá para parcelar.',
   /* Não é erro, é a compra repetida barrada. A renovação abre sozinha nos
      últimos 45 dias; antes disso não há o que pagar. */
-  'already-owned': 'Este curso já está na sua conta. A renovação abre nos últimos 45 dias de acesso.'
+  'already-owned': 'Este curso já está na sua conta. A renovação abre nos últimos 45 dias de acesso.',
+  /* A desistência pelo site. Passado o prazo, o caminho é o mesmo da Política
+     de Reembolso para depois dos sete dias: escrever. */
+  'fora-do-prazo': `O prazo de ${empresa.politicas.arrependimentoDias} dias para desistir desta compra terminou. Se houver problema técnico ou cobrança indevida, escreva para ${empresa.contato.emailSuporte}.`,
+  'nao-pago': 'Esta compra não está paga, então não há o que devolver.'
 };
 
 /* ── regras de acesso ────────────────────────────────────────────────────

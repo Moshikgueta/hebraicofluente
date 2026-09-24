@@ -221,3 +221,48 @@ CREATE TABLE IF NOT EXISTS progress (
   rev        INTEGER NOT NULL DEFAULT 1,    -- sobe a cada escrita aceita
   updated_at INTEGER NOT NULL
 );
+
+-- ── registros de acesso (Marco Civil da Internet, art. 15) ────────────────
+-- O provedor de aplicação constituído como pessoa jurídica, com fins
+-- econômicos, tem de guardar os registros de acesso à aplicação - data e
+-- hora de uso a partir de um endereço IP - por SEIS MESES, em sigilo. É o
+-- que uma ordem judicial pede quando alguém usa a conta de outra pessoa.
+--
+-- Uma linha por entrada na conta: cadastro, login e senha redefinida (que
+-- também entra). O IP é o inteiro, como a Cloudflare o entrega - não o /64
+-- dos freios. Fica 190 dias (seis meses mais uma folga) e a varredura de 5
+-- em 5 min apaga o resto: guardar além do exigido seria dado pessoal sem
+-- finalidade (LGPD, art. 6º, III).
+--
+-- NÃO é apagado quando a conta é apagada: é obrigação legal (LGPD, art. 16,
+-- I), e a conta apagada é esvaziada, não removida, então a referência vale.
+--
+-- Sem AUTOINCREMENT de propósito: ele custa uma escrita a mais por linha
+-- (a tabela sqlite_sequence), e aqui nada depende de ids nunca reusados.
+CREATE TABLE IF NOT EXISTS registros_acesso (
+  id         INTEGER PRIMARY KEY,
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  evento     TEXT    NOT NULL,              -- 'cadastro' | 'entrada' | 'senha-redefinida'
+  ip         TEXT    NOT NULL,
+  criado_em  INTEGER NOT NULL
+);
+
+-- Para a faxina, que apaga por idade.
+CREATE INDEX IF NOT EXISTS registros_acesso_idade ON registros_acesso(criado_em);
+
+-- ── desistência da compra (CDC, art. 49; Decreto 7.962/2013, art. 5º) ─────
+-- O pedido de desistência feito pelo próprio site - "pela mesma ferramenta
+-- utilizada para a contratação", como o decreto exige. Uma linha por pedido
+-- de compra: pedir de novo não cria outra, e o momento do primeiro pedido é
+-- o que conta para o prazo.
+--
+-- O reembolso em si continua sendo feito pelo dono, no painel da Mercado
+-- Pago; quando ela avisa o estorno, `applyPayment` fecha o acesso sozinho.
+-- Esta tabela é a prova de QUANDO a pessoa pediu - que é o que decide se
+-- estava dentro dos sete dias.
+CREATE TABLE IF NOT EXISTS arrependimentos (
+  order_id   TEXT    PRIMARY KEY REFERENCES orders(id),
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  pedido_em  INTEGER NOT NULL,
+  ip         TEXT    NOT NULL DEFAULT ''
+);

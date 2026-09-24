@@ -199,6 +199,12 @@ export function PerfilClient() {
                   {{ paid: 'Pago', pending: 'Aguardando', failed: 'Não concluído',
                      refunded: 'Estornado', expired: 'Expirado' }[o.status]}
                 </Badge>
+                <DesistirDaCompra
+                  order={o}
+                  email={me.email}
+                  onPedido={pedidoEm => setOrders(lista => (lista ?? []).map(x =>
+                    x.id === o.id ? { ...x, desistenciaEm: pedidoEm } : x))}
+                />
               </li>
             ))}
           </ul>
@@ -367,7 +373,10 @@ function ApagarConta() {
         <>
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
             Você pode apagar a sua conta e todos os seus dados aqui mesmo, sem
-            precisar pedir a ninguém. É definitivo.
+            precisar pedir a ninguém. É definitivo, e encerra também o acesso aos
+            cursos comprados, <strong>sem reembolso</strong> - para receber o valor
+            de volta dentro do prazo de desistência, use antes{' '}
+            <strong>Desistir da compra</strong>, em Compras.
           </p>
           <Button variant="ghost" className="justify-self-start"
                   onClick={() => setAberto(true)}>
@@ -532,6 +541,88 @@ function ConfirmarEmailAviso({ verificado, email }: { verificado?: boolean | nul
     </div>
   );
 }
+
+/* Desistir da compra, pelo próprio site.
+   ────────────────────────────────────────────────────────────────────────
+   O Decreto 7.962/2013 (art. 5º) pede que a desistência possa ser feita
+   "pela mesma ferramenta utilizada para a contratação" - aqui, o site - e
+   que o recebimento seja confirmado na hora. O servidor grava o pedido e
+   manda o e-mail de confirmação; esta tela diz isso, com a data e a hora.
+
+   Pede confirmação antes, porque o efeito é real: o valor volta e o acesso
+   fecha. Mas a confirmação é uma pergunta, não um obstáculo - nada de
+   "tem certeza?" repetido, nem motivo obrigatório. */
+function DesistirDaCompra({ order, email, onPedido }: {
+  order: Order; email: string; onPedido: (pedidoEm: string) => void;
+}) {
+  const account = useAccount();
+  const [confirmando, setConfirmando] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  if (order.desistenciaEm) {
+    return order.status === 'paid' ? (
+      <p className="basis-full font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+        Desistência pedida em {dataHora(order.desistenciaEm)}. O reembolso está em
+        andamento, e a confirmação foi para {email}.
+      </p>
+    ) : null;
+  }
+  const aberto = order.status === 'paid' && order.desistirAte
+    && new Date(order.desistirAte).getTime() > Date.now();
+  if (!aberto) return null;
+
+  async function pedir() {
+    if (busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const r = await account.requestWithdrawal(order.id);
+      onPedido(r.pedidoEm);
+    } catch (e) {
+      setError(e instanceof AuthError ? e.message : MESSAGES.server);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="basis-full grid gap-2">
+      {confirmando ? (
+        <>
+          <p className="font-ui text-[13px] leading-relaxed text-ink-body m-0">
+            Você recebe <strong>100% do valor de volta</strong>, sem precisar explicar
+            o motivo, e o acesso ao curso é encerrado quando o reembolso for
+            processado. Seu progresso fica guardado.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Button size="sm" variant="secondary" onClick={pedir} disabled={busy}>
+              {busy ? 'Enviando…' : 'Confirmar desistência'}
+            </Button>
+            <Button size="sm" variant="ghost" onClick={() => setConfirmando(false)} disabled={busy}>
+              Voltar
+            </Button>
+          </div>
+        </>
+      ) : (
+        <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+          Você pode desistir até {dataHora(order.desistirAte!)}.{' '}
+          <button type="button" onClick={() => setConfirmando(true)}
+                  className="text-[var(--accent)] font-medium hover:underline">
+            Desistir da compra
+          </button>
+        </p>
+      )}
+      {error && <Erro>{error}</Erro>}
+    </div>
+  );
+}
+
+const dataHora = (iso: string) =>
+  new Date(iso).toLocaleString('pt-BR', {
+    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
+    timeZone: 'America/Sao_Paulo'
+  });
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
