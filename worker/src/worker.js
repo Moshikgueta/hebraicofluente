@@ -33,6 +33,10 @@ const ROUTES = {
   /* Estas duas, sim, exigem sessão E a senha atual. Ver as notas em
      api/auth.js. A segunda apaga a conta do próprio titular, que é o direito
      de exclusão da LGPD sem passar por um pedido de suporte. */
+  /* Confirmar o e-mail: pedir o link de novo, e usar o link. As duas exigem
+     sessão - ver as notas em api/auth.js. */
+  'POST /api/auth/verify/send': auth.verifySend,
+  'POST /api/auth/verify': auth.verify,
   'POST /api/auth/password': auth.password,
   'POST /api/auth/delete': auth.apagar,
   'GET /api/me': auth.me,

@@ -41,8 +41,8 @@ function origem() {
 /* Abertas, mas não anunciáveis. Precisa bater com NAO_LISTADAS de
    src/lib/seo.ts - checa-seo.mjs confere as duas contra o HTML. */
 const NAO_LISTADAS = [
-  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/perfil', '/checkout',
-  '/conta-apagada'
+  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/confirmar-email', '/perfil',
+  '/checkout', '/conta-apagada'
 ];
 
 /* Quanto o Google deve voltar. Não é ranking - é só uma dica de frequência,

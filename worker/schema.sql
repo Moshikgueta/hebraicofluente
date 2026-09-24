@@ -123,6 +123,40 @@ CREATE TABLE IF NOT EXISTS password_resets (
 CREATE INDEX IF NOT EXISTS password_resets_abertos
   ON password_resets(account_id) WHERE used_at IS NULL;
 
+-- ── confirmação de e-mail ─────────────────────────────────────────────────
+-- Prova de que quem criou a conta recebe o e-mail dela.
+--
+-- Sem isto qualquer pessoa cria uma conta com o endereço de outra, e a dona
+-- do endereço só descobre quando tenta se cadastrar e ouve "já existe uma
+-- conta com esse e-mail". O e-mail de confirmação chega a ela - e é ele que
+-- avisa, se não foi ela quem criou, como tomar a conta de volta.
+--
+-- Uma linha por link enviado. `confirmed_at` preenchido é a prova, e ela vale
+-- para o par (conta, endereço): o dia em que o e-mail da conta mudar, a prova
+-- antiga não confirma o endereço novo.
+--
+-- Como em `password_resets`, o que está gravado é o sha256 do token, e o hash
+-- é a chave primária. Uma recuperação de senha concluída também prova a caixa
+-- de entrada, e grava aqui uma linha já confirmada, com `reset:` na frente do
+-- hash para não colidir com um link de confirmação.
+--
+-- Tabela nova (24/09/2026): aplicar com
+--   npx wrangler d1 execute hebraico-fluente --file=worker/schema.sql --remote
+-- Enquanto ela não existe, o site funciona igual e só não confirma ninguém -
+-- `/api/health` reporta `verificacao: false`.
+CREATE TABLE IF NOT EXISTS email_verifications (
+  token_hash   TEXT    PRIMARY KEY,
+  account_id   INTEGER NOT NULL REFERENCES accounts(id),
+  email        TEXT    NOT NULL,
+  created_at   INTEGER NOT NULL,
+  expires_at   INTEGER NOT NULL,
+  confirmed_at INTEGER
+);
+
+-- "Esta conta tem o e-mail confirmado?" é perguntado a cada /api/me.
+CREATE INDEX IF NOT EXISTS email_verifications_conta
+  ON email_verifications(account_id, email);
+
 -- Trilha do que mexeu em acesso. É o que responde "por que essa pessoa perdeu
 -- o curso?" três meses depois, quando ninguém lembra.
 CREATE TABLE IF NOT EXISTS access_log (

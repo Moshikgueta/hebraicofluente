@@ -21,6 +21,10 @@ export type Account = {
   /** Sempre em minúsculas e sem espaços nas pontas - normalizado na entrada. */
   email: string;
   createdAt: string;
+  /** O e-mail foi confirmado pelo link? `null` (ou ausente) quando o servidor
+   *  não tem como saber - aí a tela não pede nada. Confirmar não bloqueia
+   *  nada: a conta e a compra funcionam sem isso. */
+  emailVerified?: boolean | null;
 };
 
 export type Entitlement = {

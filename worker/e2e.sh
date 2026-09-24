@@ -100,7 +100,7 @@ for _ in 1 2 3 4 5; do
   HEALTH="$(G --max-time 15 "$B/api/health")"
   # O campo MAIS NOVO é o sinal de que a versão nova já está respondendo.
   # Trocar quando um campo novo entra faz parte de acrescentá-lo.
-  case "$HEALTH" in *'"recuperacao"'*) break ;; esac
+  case "$HEALTH" in *'"verificacao"'*) break ;; esac
   sleep 3
 done
 campo() { grep -o "\"$1\":[a-z]*" <<<"$HEALTH" | cut -d: -f2; }
@@ -108,6 +108,10 @@ espera "ligação com o banco (D1)"      true "$(campo db)"
 espera "tabelas criadas (schema.sql)"  true "$(campo schema)"
 espera "tabela de progresso criada"    true "$(campo progresso)"
 espera "tabela de recuperação criada"  true "$(campo recuperacao)"
+# A de confirmação de e-mail (24/09/2026). Sem ela o site funciona igual e
+# ninguém confirma o e-mail - e a publicação não aplica o schema.sql, então
+# este ✗ é o aviso de que falta rodá-lo (ver o topo de worker/schema.sql).
+espera "tabela de confirmação de e-mail criada" true "$(campo verificacao)"
 espera "SESSION_SECRET definido"       true "$(campo session)"
 if [ "$(campo payments)" != "true" ]; then
   echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) - o site funciona assim"

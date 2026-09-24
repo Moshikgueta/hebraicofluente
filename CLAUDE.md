@@ -212,6 +212,34 @@ na saída - ver `app/tests/ajuda/d1.ts`), `worker/e2e.sh` (as rotas contra o que
 está publicado, inclusive a igualdade das duas respostas de `forgot`) e
 `npm run senha` (o caminho da pessoa, num navegador, a 390px).
 
+### Confirmação de e-mail (24/09/2026)
+O cadastro manda um link "Confirme seu e-mail" (`mensagemDeConfirmacao` em
+`worker/src/lib/mail.js`), e `/api/me` devolve `account.emailVerified`.
+**Confirmar não bloqueia nada** - a conta e a compra funcionam sem isso
+(decisão do dono). O que a confirmação resolve é a conta criada com o endereço
+de outra pessoa: o e-mail chega à dona do endereço e diz como tomar a conta de
+volta (recuperar a senha, que confirma o e-mail e derruba a sessão de quem a
+criou).
+
+- **O link só confirma com a sessão da conta que o pediu** (`verify` em
+  `api/auth.js`; `/confirmar-email` pede login se não houver). Se o clique
+  bastasse, a dona do endereço confirmaria, por reflexo, a conta do impostor.
+  `tests/auditoria.test.ts` trava isso; o ciclo inteiro está em
+  `tests/confirmacao.test.ts`.
+- **A tabela `email_verifications` não é criada pela publicação.** Rodar uma
+  vez `npx wrangler d1 execute hebraico-fluente --file=worker/schema.sql --remote`.
+  Sem ela tudo funciona e ninguém confirma nada: `emailVerified` vem `null`, a
+  tela não pede, e `/api/health` diz `verificacao: false` (o `e2e.sh` acusa).
+- Endereço `.invalid` não recebe o link: é o das contas de teste da publicação.
+
+### O cookie de sessão
+Chama-se `__Host-hf_session` desde 24/09/2026: o prefixo faz o navegador
+recusar esse nome vindo de qualquer lugar que não seja este host, com Secure,
+Path=/ e sem Domain. O nome antigo, `hf_session`, é aceito até `LEGADO_ATE`
+(`worker/src/lib/session.js`, 15/10/2026) e trocado pelo novo na primeira
+chamada a `/api/me` - ninguém é deslogado pela troca. Passada a data, a
+constante e o ramo que a usa podem sair.
+
 ## Camada de confiança (Brasil)
 `data/empresa.json` é a FONTE ÚNICA da identificação do fornecedor: razão social,
 CNPJ, endereço, canais de atendimento e os prazos das políticas. O rodapé,

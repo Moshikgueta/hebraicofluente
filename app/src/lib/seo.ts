@@ -50,7 +50,8 @@ export const PAGAS = [
  * formulário de pagamento sem ter lido a oferta.
  */
 export const NAO_LISTADAS = [
-  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/perfil', '/checkout',
+  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/confirmar-email', '/perfil',
+  '/checkout',
   /* A confirmação de que a conta foi apagada. É pública porque a pessoa chega
      nela SEM sessão - foi a exclusão que a tirou -, e por isso mesmo não pode
      ser indexada: "conta apagada" saindo numa busca pelo nome do curso é a

@@ -23,7 +23,9 @@
  */
 
 import { settleFromProvider } from './api/pay.js';
-import { getOrder, log, logPurge, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
+import {
+  getOrder, log, logPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
+} from './lib/db.js';
 import empresa from '../../data/empresa.json';
 
 /* No PIX direto não existe provedor a quem perguntar: o dinheiro cai na conta
@@ -84,6 +86,7 @@ export async function runReconcile(env) {
      trabalho de verdade desta execução. */
   try { await resetPurge(env); } catch { /* a faxina tenta de novo em 5 min */ }
   try { await logPurge(env); } catch { /* idem */ }
+  try { await verifyPurge(env); } catch { /* idem, e a tabela pode ainda não existir */ }
 
   return { checked: pending.length, settled, expired };
 }

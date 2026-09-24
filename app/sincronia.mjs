@@ -46,11 +46,11 @@ if (!cadastro.ok) {
   process.exit(1);
 }
 const bruto = cadastro.headers.get('set-cookie') || '';
-const valor = (bruto.match(/hf_session=([^;]+)/) || [])[1];
+const valor = (bruto.match(/__Host-hf_session=([^;]+)/) || [])[1];
 if (!valor) { console.error('sem cookie de sessão na resposta'); process.exit(1); }
 
 const comCookie = (extra = {}) => ({
-  headers: { Cookie: `hf_session=${valor}`, ...extra }
+  headers: { Cookie: `__Host-hf_session=${valor}`, ...extra }
 });
 
 const servidor = async () => {
@@ -66,20 +66,29 @@ const servidor = async () => {
 /* ── os dois aparelhos ──────────────────────────────────────────────────── */
 const b = await chromium.launch({ executablePath: process.env.HF_CHROMIUM });
 const erros = [];
-const url = new URL(BASE);
 
 async function aparelho(nome, semente) {
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
-  await ctx.addCookies([{
-    name: 'hf_session', value: valor, domain: url.hostname, path: '/',
-    httpOnly: true, secure: false, sameSite: 'Lax'
-  }]);
   if (semente) {
     await ctx.addInitScript(s => {
       try { localStorage.setItem('hebraico-fluente-v1', s); } catch { /* */ }
     }, JSON.stringify(semente));
   }
   const p = await ctx.newPage();
+  /* O aparelho entra pela API, de dentro da página, e não com um cookie
+     plantado: o cookie é `__Host-hf_session`, e o protocolo de automação do
+     Chromium recusa gravar um cookie Secure para uma URL http - enquanto o
+     navegador aceita o mesmo cookie vindo numa resposta de 127.0.0.1, que ele
+     trata como origem confiável. O `fetch` precisa de uma página da própria
+     origem; o JSON de /api/health serve, e não carrega o app antes da hora. */
+  await p.goto(`${BASE}/api/health`);
+  const entrou = await p.evaluate(async ([e, s]) => (await fetch('/api/auth/login', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: e, password: s })
+  })).status, [email, 'senha-de-teste-123']);
+  if (entrou !== 200) throw new Error(`${nome}: login respondeu ${entrou}`);
+  /* Os erros de console contam daqui em diante: o login acima abre um JSON,
+     e o pedido de /favicon.ico que o navegador faz para ele não é do app. */
   p.on('console', m => { if (m.type() === 'error') erros.push(`${nome}: ${m.text()}`); });
   p.on('pageerror', e => erros.push(`${nome} pageerror: ${e.message}`));
   return { ctx, p };

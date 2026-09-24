@@ -25,7 +25,7 @@ import * as progress from '../../worker/src/api/progress.js';
 // @ts-expect-error - idem
 import { readJson } from '../../worker/src/lib/http.js';
 // @ts-expect-error - idem
-import { makeSessionCookie, readSession } from '../../worker/src/lib/session.js';
+import { LEGADO_ATE, makeSessionCookie, readSession } from '../../worker/src/lib/session.js';
 // @ts-expect-error - idem
 import { enxuto, estourou, grantAccess, hasEntitlement, inviteCreate, recordEvent, throttled } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
@@ -35,6 +35,8 @@ import { hmacHex } from '../../worker/src/lib/crypto.js';
 import { safeNext } from '../src/lib/safe-next';
 import { mergeStates } from '../src/lib/state/merge';
 import { empresa, formasAtivas, temCartao, temPix } from '../src/lib/empresa';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
@@ -241,7 +243,7 @@ describe('a sessão', () => {
   it('vale o primeiro cookie que CONFERE, não o primeiro que aparece', async () => {
     const env = envSite();
     const { cookie } = await comConta(env);
-    const enxerto = `hf_session=lixo.lixo; ${cookie}; outro=1`;
+    const enxerto = `__Host-hf_session=lixo.lixo; ${cookie}; outro=1`;
     const r = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: enxerto } }), env });
     expect(r.status).toBe(200);
   });
@@ -253,12 +255,61 @@ describe('a sessão', () => {
     const env = envSite();
     const { cookie } = await comConta(env);
     const me = (c: string) => auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: c } }), env });
-    const lixo = (n: number) => Array.from({ length: n }, (_, i) => `hf_session=lixo${i}.lixo`).join('; ');
+    const lixo = (n: number) => Array.from({ length: n }, (_, i) => `__Host-hf_session=lixo${i}.lixo`).join('; ');
     expect((await me(`${lixo(5)}; ${cookie}`)).status).toBe(200);
     expect((await me(`${lixo(20)}; ${cookie}`)).status).toBe(200);
-    expect((await me(`hf_session=${'a'.repeat(3000)}.b; ${cookie}`)).status).toBe(200);
+    expect((await me(`__Host-hf_session=${'a'.repeat(3000)}.b; ${cookie}`)).status).toBe(200);
     /* Sem o legítimo, nada disso vira sessão. */
     expect((await me(lixo(20))).status).toBe(401);
+  });
+
+  /* Auditoria de 24/09/2026: sem o prefixo, um subdomínio conseguiria
+     plantar no navegador da vítima um cookie de sessão válido - o de uma
+     conta do atacante -, e ela estudaria e pagaria dentro dela. `__Host-`
+     faz o navegador recusar qualquer cookie com esse nome que não venha
+     deste host, com Secure, Path=/ e sem Domain. */
+  it('o cookie tem o prefixo __Host-, com o que o prefixo exige', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    expect(cookie).toMatch(/^__Host-hf_session=/);
+    const inteiro = await makeSessionCookie(env, { id: 1, session_version: 0 });
+    expect(inteiro).toMatch(/; Path=\/;/);
+    expect(inteiro).toMatch(/; Secure;/);
+    expect(inteiro).not.toMatch(/Domain=/i);
+  });
+
+  it('o nome antigo vale até LEGADO_ATE, e /api/me o troca pelo novo', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const antigo = cookie.replace(/^__Host-hf_session=/, 'hf_session=');
+    const r = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: antigo } }), env });
+    expect(r.status).toBe(200);
+    const sets = r.headers.getSetCookie();
+    expect(sets.some((c: string) => c.startsWith('__Host-hf_session=') && !c.includes('Max-Age=0'))).toBe(true);
+    expect(sets.some((c: string) => c.startsWith('hf_session=;') && c.includes('Max-Age=0'))).toBe(true);
+  });
+
+  it('depois de LEGADO_ATE, o nome antigo não abre nada', async () => {
+    vi.useFakeTimers({ now: LEGADO_ATE + 60_000, toFake: ['Date'] });
+    try {
+      const env = envSite();
+      const { cookie } = await comConta(env);
+      const antigo = cookie.replace(/^__Host-hf_session=/, 'hf_session=');
+      const me = (c: string) => auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: c } }), env });
+      expect((await me(antigo)).status).toBe(401);
+      expect((await me(cookie)).status).toBe(200);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('sair apaga os dois nomes', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const r = await auth.logout({ request: new Request(`${SITE}/api/auth/logout`, { method: 'POST', headers: { Cookie: cookie } }), env });
+    const sets = r.headers.getSetCookie();
+    expect(sets.some((c: string) => c.startsWith('__Host-hf_session=;') && c.includes('Max-Age=0'))).toBe(true);
+    expect(sets.some((c: string) => c.startsWith('hf_session=;') && c.includes('Max-Age=0'))).toBe(true);
   });
 
   it('não carrega e-mail nem nome', async () => {
@@ -448,6 +499,53 @@ describe('o pedido de senha', () => {
   });
 });
 
+/* ── o e-mail de outra pessoa ──────────────────────────────────────────── */
+
+/* Auditoria de 24/09/2026: qualquer um criava conta com o endereço de
+   outra pessoa. O conserto é o e-mail de confirmação (o ciclo inteiro está em
+   tests/confirmacao.test.ts); o que fica AQUI é a propriedade que impede o
+   conserto de virar um furo novo: o link, clicado sem a sessão da conta, não
+   confirma nada - senão a dona do endereço confirmaria a conta do impostor. */
+describe('a conta com o e-mail de outra pessoa', () => {
+  it('o link de confirmação sem a sessão da conta não confirma nada', async () => {
+    let texto = '';
+    vi.stubGlobal('fetch', async (_u: string, init?: RequestInit) => {
+      texto = JSON.parse(String(init?.body)).text;
+      return new Response('{"id":"m"}', { status: 200 });
+    });
+    try {
+      const env = envSite({
+        RESEND_API_KEY: 're_x', EMAIL_FROM: 'HF <c@hebraicofluente.com.br>',
+        RESEND_BASE: 'https://api.resend.test'
+      });
+      const { cookie } = await comConta(env, 'vitima@exemplo.com.br');
+      const token = decodeURIComponent(texto.match(/\/confirmar-email\/\?token=([^\s]+)/)![1]!);
+
+      const r = await auth.verify({ request: pedido(`${SITE}/api/auth/verify`, { token }), env });
+      expect(r.status).toBe(401);
+      const me = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: cookie } }), env });
+      expect(((await me.json()) as { account: { emailVerified: boolean } }).account.emailVerified).toBe(false);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+});
+
+/* ── liberação e estorno simultâneos ────────────────────────────────────── */
+
+/* Auditoria de 24/09/2026: webhook, tela e varredura liberando o mesmo
+   pagamento ao mesmo tempo davam 24 ou 36 meses por 12, e o estorno
+   simultâneo recuava duas vezes. A prova é worker/concessao.mjs, que roda o
+   pay.js de verdade com as consultas cedendo a vez como numa ida à rede -
+   aqui ela entra na suíte, para não depender de alguém lembrar de rodá-la. */
+describe('liberação e estorno simultâneos', () => {
+  it('worker/concessao.mjs passa inteiro', () => {
+    const script = fileURLToPath(new URL('../../worker/concessao.mjs', import.meta.url));
+    const saida = execFileSync(process.execPath, [script], { encoding: 'utf8', stdio: 'pipe' });
+    expect(saida).toContain('Tudo certo.');
+  });
+});
+
 /* ── a saúde ────────────────────────────────────────────────────────────── */
 
 describe('a saúde', () => {
@@ -634,7 +732,9 @@ describe('um convite não vira acesso sozinho', () => {
 
     const enviados: { to: string[]; subject: string; text: string }[] = [];
     vi.stubGlobal('fetch', async (_u: string, init?: RequestInit) => {
-      enviados.push(JSON.parse(String(init?.body)));
+      const b = JSON.parse(String(init?.body));
+      /* O e-mail de confirmação do cadastro não é o aviso ao dono. */
+      if (!String(b.subject).startsWith('Confirme seu e-mail')) enviados.push(b);
       return new Response('{"id":"m"}', { status: 200 });
     });
     const esperar: Promise<unknown>[] = [];
@@ -660,7 +760,11 @@ describe('um convite não vira acesso sozinho', () => {
       RESEND_BASE: 'https://api.resend.test', SUPPORT_EMAIL: 'dono@exemplo.com'
     });
     let envios = 0;
-    vi.stubGlobal('fetch', async () => { envios++; return new Response('{"id":"m"}', { status: 200 }); });
+    vi.stubGlobal('fetch', async (_u: string, init?: RequestInit) => {
+      /* Conta só os avisos ao dono, e não a confirmação do cadastro. */
+      if (!String(JSON.parse(String(init?.body)).subject).startsWith('Confirme seu e-mail')) envios++;
+      return new Response('{"id":"m"}', { status: 200 });
+    });
     await convidar(env, 'presenteada@exemplo.com.br');
     await cadastrar(env, 'presenteada@exemplo.com.br');
     for (let i = 0; i < 5; i++) {

@@ -32,7 +32,7 @@ const BASE = '';
 const CODES: readonly string[] = [
   'bad-credentials', 'email-taken', 'weak-password', 'invalid-email',
   'not-signed-in', 'offline', 'server', 'rate-limited', 'payments-off',
-  'bad-token', 'payment-failed', 'card-off', 'already-owned'
+  'bad-token', 'payment-failed', 'card-off', 'pix-off', 'already-owned'
 ];
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
@@ -108,6 +108,15 @@ export class WorkerApi implements PlatformApi {
 
   changePassword(input: { current: string; password: string }): Promise<Session> {
     return call<Session>('/auth/password', { method: 'POST', body: JSON.stringify(input) });
+  }
+
+  async requestEmailVerification(): Promise<{ demoLink?: string }> {
+    await call<{ ok: true }>('/auth/verify/send', { method: 'POST' });
+    return {};
+  }
+
+  confirmEmail(token: string): Promise<Session> {
+    return call<Session>('/auth/verify', { method: 'POST', body: JSON.stringify({ token }) });
   }
 
   async deleteAccount(input: { password: string }): Promise<void> {
