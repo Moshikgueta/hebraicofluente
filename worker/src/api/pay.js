@@ -21,8 +21,8 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { ip, requireAccount } from './auth.js';
 import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
 import {
-  createOrder, entitlementExpiry, findAccountById, getOrder, grantAccess, grantedBy,
-  hasEntitlement, log, ordersOf, recordEvent, rollbackAccess, throttled, updateOrder
+  createOrder, entitlementExpiry, entitlementOf, findAccountById, getOrder, grantAccess,
+  log, markPaid, ordersOf, recordEvent, rollbackAccess, throttled, updateOrder
 } from '../lib/db.js';
 import { dataBR, mailReady, mensagemDeCompra, reaisBR, sendMail } from '../lib/mail.js';
 import {
@@ -479,42 +479,52 @@ async function applyPayment(env, order, payment, source) {
     return 'failed';
   }
 
+  /* A linha de acesso ANTES de conceder, porque `grantAccess` apaga a
+     diferença: depois dele toda conta tem acesso, e não haveria como saber se
+     esta compra abriu a porta ou esticou um prazo que já existia. É só o que
+     decide o texto do e-mail - "seu acesso está liberado" contra "foi
+     renovado" -, e mandar a primeira frase a quem já estudava há meses é o
+     tipo de detalhe que faz a mensagem inteira parecer automática. */
+  const antes = await entitlementOf(env, order.account_id, order.course_slug);
+
   /* O direito PRIMEIRO, o pedido DEPOIS. A ordem é o que torna uma
      liberação interrompida recuperável: se o banco cair entre as duas
      escritas, o pedido continua `pending`, o reenvio do aviso chega até
-     aqui de novo e termina o serviço. Na ordem inversa - que era a de antes
-     - o pedido ficava `paid` sem direito nenhum, e cada reenvio parava na
-     linha "já está pago" lá em cima.
+     aqui de novo e termina o serviço. Na ordem inversa o pedido ficava
+     `paid` sem direito nenhum, e cada reenvio parava na linha "já está pago"
+     lá em cima.
 
-     E o reenvio não concede duas vezes: `grantAccess` ESTENDE a validade a
-     cada chamada, então a retomada de uma liberação que já tinha gravado o
-     direito daria vinte e quatro meses por doze. Se a linha de acesso já
-     aponta para este pedido, os meses já foram dados; falta só o pedido. */
-  const jaConcedido = await grantedBy(env, order.account_id, order.course_slug) === order.id
-    && atual.status === 'pending';
-
-  /* Lido ANTES de conceder, porque `grantAccess` apaga a diferença: depois
-     dele toda conta tem acesso, e não haveria como saber se esta compra abriu
-     a porta ou esticou um prazo que já existia. É só o que decide o texto do
-     e-mail - "seu acesso está liberado" contra "foi renovado" -, e mandar a
-     primeira frase a quem já estudava há meses é o tipo de detalhe que faz a
-     mensagem inteira parecer automática. */
-  const jaTinhaAcesso = !jaConcedido
-    && await hasEntitlement(env, order.account_id, order.course_slug);
-
-  if (!jaConcedido) {
-    await grantAccess(env, {
-      accountId: order.account_id,
-      courseSlug: order.course_slug,
-      orderId: order.id,
-      months
-    });
-  }
-  await updateOrder(env, order.id, {
-    status: 'paid', paid_at: Date.now(), provider_ref: String(payment.id)
+     Nem o reenvio nem uma liberação simultânea concedem duas vezes: o
+     `grantAccess` não faz nada se a linha já aponta para este pedido, e
+     decide isso dentro do mesmo comando que grava. A conferência que ficava
+     aqui, numa leitura separada, deixava duas liberações simultâneas lerem
+     "ainda não" e estenderem os meses uma da outra - ver
+     worker/concessao.mjs. */
+  await grantAccess(env, {
+    accountId: order.account_id,
+    courseSlug: order.course_slug,
+    orderId: order.id,
+    months
   });
+
+  /* Só quem de fato virou o pedido para `paid` registra e manda o recibo.
+     As outras liberações simultâneas chegam aqui com o serviço feito. */
+  if (!await markPaid(env, order.id, payment.id)) return 'paid';
+
   await log(env, order.account_id, 'paid', `${order.id} via ${source}`);
-  await confirmarPorEmail(env, order, !jaTinhaAcesso);
+
+  /* Primeira compra ou renovação. Se a linha lida acima ainda era de outro
+     pedido (ou não existia), ela é o retrato de antes: renovação é ter
+     acesso valendo. Se já apontava para ESTE pedido - uma liberação
+     interrompida sendo retomada, ou uma simultânea que concedeu primeiro -,
+     o retrato de antes se perdeu, e a pista é `granted_at`: uma linha
+     criada por esta compra nasce depois do pedido; uma estendida por ela é
+     mais velha que ele. */
+  const primeiraCompra = antes && String(antes.order_id) === String(order.id)
+    ? Number(antes.granted_at) >= Number(order.created_at)
+    : !(antes && (antes.expires_at === null || Number(antes.expires_at) > Date.now()));
+
+  await confirmarPorEmail(env, order, primeiraCompra);
   return 'paid';
 }
 
@@ -522,9 +532,11 @@ async function applyPayment(env, order, payment, source) {
  * O recibo, na caixa de entrada de quem pagou.
  *
  * ── por que AQUI, e exatamente aqui ─────────────────────────────────────
- * Este ponto roda uma vez por pedido, e não por acaso: a linha
- * `if (atual.status === 'paid') return 'paid'` lá em cima faz toda segunda
- * passagem sair antes de chegar aqui. E há três caminhos que levam um
+ * Este ponto roda uma vez por pedido, e não por acaso: só chega aqui quem
+ * ganhou o `markPaid` - a troca de `pending` para `paid` feita num comando só,
+ * que duas liberações simultâneas não conseguem ganhar juntas. A leitura
+ * `if (atual.status === 'paid')` lá em cima barra a passagem que chega
+ * depois, mas não a que chega AO MESMO TEMPO. E há três caminhos que levam um
  * pagamento a ser liquidado - o retorno do navegador, o aviso da Mercado
  * Pago e a varredura de dez em dez minutos -, então um disparo colocado
  * mais acima mandaria o mesmo e-mail três vezes.

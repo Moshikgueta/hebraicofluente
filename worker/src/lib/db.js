@@ -198,26 +198,51 @@ export async function hasEntitlement(env, accountId, slug, at = now()) {
  * Renovar ESTENDE o que ainda vale, em vez de recomeçar a contagem: quem
  * renova com dois meses sobrando não pode perder esses dois meses por ter
  * pagado cedo. Se já venceu, conta a partir de hoje.
+ *
+ * ── um pedido concede UMA vez, e isso é decidido dentro do SQL ────────────
+ * Webhook, tela e varredura podem liberar o mesmo pagamento no mesmo
+ * instante. A versão anterior lia a validade, somava os meses em JavaScript e
+ * gravava - e quem chamava conferia "este pedido já concedeu?" numa leitura
+ * separada, antes. Duas liberações simultâneas liam "não" as duas, e cada uma
+ * estendia a anterior: um pedido de 12 meses virava 24 ou 36, e o estorno
+ * recuava só 12. Medido em worker/concessao.mjs.
+ *
+ * Agora é um comando só. A soma dos meses sai da linha como ela está NA HORA
+ * da escrita, e o `WHERE ... order_id IS NOT excluded.order_id` faz de um
+ * segundo pedido de concessão do mesmo pedido um nada. O SQLite executa um
+ * comando por vez, então não há janela entre conferir e gravar.
+ *
+ * A conta dos meses é a do SQLite (`'+12 months'`), que transborda o dia do
+ * mesmo jeito que `Date#setMonth` em UTC - 31/01 + 1 mês é 03/03 nos dois.
+ *
+ * Devolve `{ granted, until }`: `granted` é falso quando este pedido já tinha
+ * concedido, e aí `until` é null.
  */
 export async function grantAccess(env, { accountId, courseSlug, orderId, months }) {
   const t = now();
-  const current = await env.DB.prepare(
-    'SELECT expires_at FROM entitlements WHERE account_id = ? AND course_slug = ?'
-  ).bind(accountId, courseSlug).first();
+  const m = Math.max(1, Math.floor(Number(months) || 12));
 
-  const from = current && current.expires_at && current.expires_at > t ? current.expires_at : t;
-  const until = new Date(from);
-  until.setMonth(until.getMonth() + (Number(months) || 12));
-
-  await env.DB.prepare(
+  const row = await env.DB.prepare(
     `INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
-     VALUES (?, ?, ?, ?, ?)
-     ON CONFLICT(account_id, course_slug)
-       DO UPDATE SET expires_at = excluded.expires_at, order_id = excluded.order_id`
-  ).bind(accountId, courseSlug, t, until.getTime(), orderId).run();
+     VALUES (?1, ?2, ?3,
+             unixepoch(CAST(?3 AS INTEGER) / 1000, 'unixepoch', ?5) * 1000 + CAST(?3 AS INTEGER) % 1000,
+             ?4)
+     ON CONFLICT(account_id, course_slug) DO UPDATE SET
+       expires_at =
+         unixepoch(CAST(CASE WHEN entitlements.expires_at > ?3 THEN entitlements.expires_at ELSE ?3 END
+                        AS INTEGER) / 1000, 'unixepoch', ?5) * 1000
+         + CAST(CASE WHEN entitlements.expires_at > ?3 THEN entitlements.expires_at ELSE ?3 END
+                AS INTEGER) % 1000,
+       order_id = excluded.order_id
+     WHERE entitlements.order_id IS NOT excluded.order_id
+     RETURNING expires_at`
+  ).bind(accountId, courseSlug, t, orderId, `+${m} months`).first();
 
-  await log(env, accountId, 'grant', `${courseSlug} até ${until.toISOString()} (${orderId})`);
-  return until.getTime();
+  if (!row) return { granted: false, until: null };
+
+  const until = Number(row.expires_at);
+  await log(env, accountId, 'grant', `${courseSlug} até ${new Date(until).toISOString()} (${orderId})`);
+  return { granted: true, until };
 }
 
 /** Usado por um estorno. Fecha a porta imediatamente - o cookie de sessão não
@@ -229,15 +254,13 @@ export async function revokeAccess(env, accountId, courseSlug, why = '') {
   await log(env, accountId, 'revoke', `${courseSlug} ${why}`.trim());
 }
 
-/** Qual pedido concedeu (ou renovou por último) o direito que existe hoje.
- *  `null` se não há linha. É o que permite a uma liberação interrompida
- *  retomar sem conceder os meses duas vezes. */
-export async function grantedBy(env, accountId, courseSlug) {
-  const row = await env.DB.prepare(
-    'SELECT order_id FROM entitlements WHERE account_id = ? AND course_slug = ?'
+/** A linha de acesso como está agora - qual pedido concedeu por último, desde
+ *  quando e até quando -, ou `null`. Só decide o TEXTO do recibo; quem impede
+ *  a concessão dupla é o próprio `grantAccess`. */
+export const entitlementOf = (env, accountId, courseSlug) =>
+  env.DB.prepare(
+    'SELECT order_id, granted_at, expires_at FROM entitlements WHERE account_id = ? AND course_slug = ?'
   ).bind(accountId, courseSlug).first();
-  return row ? String(row.order_id) : null;
-}
 
 /**
  * Desfaz os meses de UM pedido - o estorno de uma renovação.
@@ -350,6 +373,21 @@ export async function updateOrder(env, id, fields) {
   await env.DB.prepare(
     `UPDATE orders SET ${safe.map(k => `${k} = ?`).join(', ')} WHERE id = ?`
   ).bind(...safe.map(k => fields[k]), id).run();
+}
+
+/**
+ * Marca o pedido como pago - e diz se foi ESTA chamada que marcou.
+ *
+ * Das liberações simultâneas de um mesmo pagamento, só uma recebe `true`, e é
+ * ela quem registra `paid` na trilha e manda o recibo. Sem isto cada caminho
+ * que chegasse junto mandava o seu, e o comprador recebia três recibos iguais.
+ */
+export async function markPaid(env, id, providerRef, at = now()) {
+  const r = await env.DB.prepare(
+    `UPDATE orders SET status = 'paid', paid_at = ?, provider_ref = ?
+      WHERE id = ? AND status <> 'paid'`
+  ).bind(at, String(providerRef), id).run();
+  return Number(r && r.meta && r.meta.changes) > 0;
 }
 
 /** Pendentes que já têm idade para valer uma pergunta ao provedor. */
