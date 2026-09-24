@@ -22,7 +22,7 @@ import { ip, requireAccount } from './auth.js';
 import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
 import {
   createOrder, entitlementExpiry, entitlementOf, findAccountById, getOrder, grantAccess,
-  log, markPaid, ordersOf, recordEvent, rollbackAccess, throttled, updateOrder
+  log, markPaid, ordersOf, recordEvent, refundOrder, throttled, updateOrder
 } from '../lib/db.js';
 import { dataBR, mailReady, mensagemDeCompra, reaisBR, sendMail } from '../lib/mail.js';
 import {
@@ -444,13 +444,23 @@ async function applyPayment(env, order, payment, source) {
        Recua os meses DESTE pedido, e não apaga tudo: o estorno de uma
        renovação não pode levar junto os meses da compra anterior, que
        ninguém devolveu. Quando este pedido é o único, recuar e apagar dão no
-       mesmo. O recuo vem ANTES de marcar o pedido: se cair no meio, o pedido
-       continua `paid`, o reenvio chega aqui de novo e - com a linha já
-       apagada no caso comum - não encontra o que recuar. */
+       mesmo.
+
+       Recuar e marcar o pedido são UMA transação, que só age se o pedido
+       ainda está `paid` (ver `refundOrder`). A leitura de `atual.status`
+       aqui barra o aviso que chega depois; o que chega AO MESMO TEMPO lia
+       "pago" também e recuava os meses uma segunda vez. */
     if (atual.status === 'paid') {
-      await rollbackAccess(env, order.account_id, order.course_slug, months, `${payment.id} via ${source}`);
-      await updateOrder(env, order.id, { status: 'refunded' });
-      await log(env, order.account_id, 'estorno', `${order.id} ${payment.status} ${refundedCents || paidCents} via ${source}`);
+      const r = await refundOrder(env, {
+        accountId: order.account_id,
+        courseSlug: order.course_slug,
+        orderId: order.id,
+        months,
+        why: `${payment.id} via ${source}`
+      });
+      if (r.refunded) {
+        await log(env, order.account_id, 'estorno', `${order.id} ${payment.status} ${refundedCents || paidCents} via ${source}`);
+      }
     } else if (atual.status === 'pending') {
       await updateOrder(env, order.id, { status: 'refunded' });
     }

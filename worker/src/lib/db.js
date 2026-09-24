@@ -245,15 +245,6 @@ export async function grantAccess(env, { accountId, courseSlug, orderId, months 
   return { granted: true, until };
 }
 
-/** Usado por um estorno. Fecha a porta imediatamente - o cookie de sessão não
- *  carrega direito nenhum, então não há atraso de sete dias. */
-export async function revokeAccess(env, accountId, courseSlug, why = '') {
-  await env.DB.prepare(
-    'DELETE FROM entitlements WHERE account_id = ? AND course_slug = ?'
-  ).bind(accountId, courseSlug).run();
-  await log(env, accountId, 'revoke', `${courseSlug} ${why}`.trim());
-}
-
 /** A linha de acesso como está agora - qual pedido concedeu por último, desde
  *  quando e até quando -, ou `null`. Só decide o TEXTO do recibo; quem impede
  *  a concessão dupla é o próprio `grantAccess`. */
@@ -263,32 +254,63 @@ export const entitlementOf = (env, accountId, courseSlug) =>
   ).bind(accountId, courseSlug).first();
 
 /**
- * Desfaz os meses de UM pedido - o estorno de uma renovação.
+ * O estorno de UM pedido: recua os meses dele e marca o pedido `refunded`.
  *
- * Apagar a linha inteira (`revokeAccess`) é certo quando o pedido estornado é
- * o único; quando é a renovação de quem já tinha oito meses pagos, apagar
- * tudo tira também os oito meses que ninguém devolveu. Aqui a validade
- * recua os meses daquele pedido, e a linha só some se não sobrar nada.
+ * Recua, e não apaga: quando o pedido estornado é a renovação de quem já
+ * tinha oito meses pagos, apagar a linha tiraria também os oito meses que
+ * ninguém devolveu. A linha só some se não sobrar nada - ou se não tinha
+ * vencimento, que nenhum curso vende hoje.
+ *
+ * ── uma vez só, e tudo ou nada ────────────────────────────────────────────
+ * Webhook, tela e varredura podem ver o mesmo estorno no mesmo instante. A
+ * versão anterior lia "o pedido está pago?", recuava e só depois marcava - e
+ * dois avisos simultâneos liam "pago" os dois e recuavam duas vezes. Quem
+ * tinha renovado perdia a compra anterior junto (worker/concessao.mjs).
+ *
+ * Agora são três comandos num `batch`, que o D1 executa como UMA transação:
+ * cada um só age se o pedido ainda está `paid`, e o último o tira de lá. O
+ * segundo aviso encontra o pedido já `refunded` e não faz nada. E como é
+ * tudo ou nada, uma queda no meio não deixa o acesso recuado com o pedido
+ * ainda pago (que o reenvio recuaria de novo), nem o contrário.
+ *
+ * Devolve `{ refunded, until }`: `refunded` é falso quando outra chamada já
+ * tinha estornado este pedido; `until` é a validade que sobrou, ou null se o
+ * acesso sumiu.
  */
-export async function rollbackAccess(env, accountId, courseSlug, months, why = '') {
-  const row = await env.DB.prepare(
-    'SELECT expires_at FROM entitlements WHERE account_id = ? AND course_slug = ?'
-  ).bind(accountId, courseSlug).first();
-  if (!row) return false;
-
+export async function refundOrder(env, { accountId, courseSlug, orderId, months, why = '' }) {
   const t = now();
-  const until = row.expires_at === null || row.expires_at === undefined ? null : new Date(Number(row.expires_at));
-  if (until) until.setMonth(until.getMonth() - (Number(months) || 12));
+  const m = Math.max(1, Math.floor(Number(months) || 12));
+  const pago = `EXISTS (SELECT 1 FROM orders WHERE id = ?3 AND status = 'paid')`;
 
-  if (!until || until.getTime() <= t) {
-    await revokeAccess(env, accountId, courseSlug, why);
-    return true;
+  const [, , marcado] = await env.DB.batch([
+    env.DB.prepare(
+      `UPDATE entitlements
+          SET expires_at = unixepoch(CAST(expires_at AS INTEGER) / 1000, 'unixepoch', ?4) * 1000
+                           + CAST(expires_at AS INTEGER) % 1000
+        WHERE account_id = ?1 AND course_slug = ?2 AND expires_at IS NOT NULL
+          AND ${pago}`
+    ).bind(accountId, courseSlug, orderId, `-${m} months`),
+    env.DB.prepare(
+      `DELETE FROM entitlements
+        WHERE account_id = ?1 AND course_slug = ?2
+          AND (expires_at IS NULL OR expires_at <= ?4)
+          AND ${pago}`
+    ).bind(accountId, courseSlug, orderId, t),
+    env.DB.prepare(
+      `UPDATE orders SET status = 'refunded' WHERE id = ? AND status = 'paid'`
+    ).bind(orderId)
+  ]);
+
+  if (!(Number(marcado && marcado.meta && marcado.meta.changes) > 0)) {
+    return { refunded: false, until: null };
   }
-  await env.DB.prepare(
-    'UPDATE entitlements SET expires_at = ? WHERE account_id = ? AND course_slug = ?'
-  ).bind(until.getTime(), accountId, courseSlug).run();
-  await log(env, accountId, 'revoke', `${courseSlug} recuou para ${until.toISOString()} ${why}`.trim());
-  return true;
+
+  const row = await entitlementOf(env, accountId, courseSlug);
+  const until = row && row.expires_at !== null ? Number(row.expires_at) : null;
+  await log(env, accountId, 'revoke', until
+    ? `${courseSlug} recuou para ${new Date(until).toISOString()} ${why}`.trim()
+    : `${courseSlug} ${why}`.trim());
+  return { refunded: true, until };
 }
 
 /* ── convites ───────────────────────────────────────────────────────────── */

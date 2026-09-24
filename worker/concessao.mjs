@@ -222,5 +222,81 @@ await cenario('Renovação com 20 dias sobrando, seis liberações quase simult�
     `o recibo sai, como primeira compra ("${assunto}")`);
 }
 
+/* ── o estorno, com os três caminhos chegando JUNTOS ─────────────────────────
+ * O mesmo defeito, do outro lado. O estorno lia "o pedido está pago?", recuava
+ * os meses e só então marcava o pedido. Dois avisos de estorno simultâneos
+ * liam "pago" os dois e recuavam duas vezes: quem tinha renovado perdia,
+ * junto com os 12 meses devolvidos, os 12 da compra anterior, que ninguém
+ * devolveu. */
+async function estorno(titulo, { anterior = false, escalonar = 0 } = {}) {
+  console.log(titulo);
+  const D1 = fakeD1();
+  const env = { DB: D1, MP_ACCESS_TOKEN: 'APP_USR-1-1-a-1' };
+  const course = getCourse('alfabetizacao');
+  const cents = priceCents(course, 'pix');
+  const agora = Date.now();
+
+  D1.raw.prepare(`INSERT INTO accounts (id, email, name, pass_hash, pass_salt, pass_iter, created_at)
+                  VALUES (1, 'a@example.invalid', 'Ana', 'x', 'y', 1, ?)`).run(agora);
+
+  /* Com `anterior`, a conta tinha 8 meses de uma compra antiga e renovou:
+     a linha vale 8 + 12 = 20 meses e aponta para o pedido novo. */
+  const sobra = anterior ? 8 : 0;
+  const vale = new Date(agora);
+  vale.setMonth(vale.getMonth() + sobra + course.accessMonths);
+  D1.raw.prepare(`INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
+                  VALUES (1, 'alfabetizacao', ?, ?, 'HFNOVO')`).run(agora, vale.getTime());
+  D1.raw.prepare(`INSERT INTO orders (id, account_id, course_slug, amount_cents, currency, method,
+                                      installments, status, provider, provider_ref, paid_at, created_at)
+                  VALUES ('HFNOVO', 1, 'alfabetizacao', ?, 'BRL', 'pix', 1, 'paid', 'mercadopago',
+                          '777', ?, ?)`)
+    .run(cents, agora, agora - 60_000);
+
+  pagamento = {
+    id: 777, status: 'refunded', transaction_amount: cents / 100,
+    transaction_amount_refunded: cents / 100, currency_id: 'BRL', external_reference: 'HFNOVO'
+  };
+
+  const order = D1.raw.prepare(`SELECT * FROM orders WHERE id = 'HFNOVO'`).get();
+  const caminhos = [
+    () => settleFromPaymentId(env, '777', 'webhook'),
+    () => settleFromProvider(env, { ...order }, 'verify'),
+    () => settleFromProvider(env, { ...order }, 'reconcile'),
+    () => settleFromPaymentId(env, '777', 'webhook'),
+    () => settleFromProvider(env, { ...order }, 'verify'),
+    () => settleFromProvider(env, { ...order }, 'reconcile')
+  ];
+  const r = await Promise.all(caminhos.map(async (f, i) => {
+    for (let k = 0; k < i * escalonar; k++) await cede();
+    return f();
+  }));
+
+  const ent = D1.raw.prepare(`SELECT * FROM entitlements WHERE account_id = 1`).get();
+  const pedido = D1.raw.prepare(`SELECT status FROM orders WHERE id = 'HFNOVO'`).get();
+  const estornos = D1.raw.prepare(`SELECT COUNT(*) AS n FROM access_log WHERE action = 'estorno'`).get().n;
+
+  confere(r.every(x => x === 'refunded'), `os seis caminhos respondem 'refunded' (${r.join(', ')})`);
+  confere(pedido.status === 'refunded', 'o pedido fica estornado');
+  confere(estornos === 1, `um estorno só na trilha (veio ${estornos})`);
+  if (anterior) {
+    const esperado = new Date(agora);
+    esperado.setMonth(esperado.getMonth() + sobra);
+    confere(!!ent && ent.expires_at === esperado.getTime(),
+      `sobram os ${sobra} meses da compra anterior (veio ${ent ? ((ent.expires_at - agora) / MES).toFixed(1) : 'nada'})`);
+  } else {
+    confere(!ent, 'o acesso some');
+  }
+
+  /* E um aviso de estorno repetido depois não tira mais nada. */
+  await settleFromPaymentId(env, '777', 'webhook');
+  const depois = D1.raw.prepare(`SELECT expires_at FROM entitlements WHERE account_id = 1`).get();
+  confere((depois && depois.expires_at) === (ent && ent.expires_at),
+    'um aviso repetido depois não recua de novo');
+}
+
+await estorno('Estorno da única compra, seis avisos simultâneos');
+await estorno('Estorno de uma renovação, seis avisos simultâneos', { anterior: true });
+await estorno('Estorno de uma renovação, seis avisos quase simultâneos', { anterior: true, escalonar: 1 });
+
 console.log(falhas ? `\n${falhas} falha(s).` : '\nTudo certo.');
 process.exit(falhas ? 1 : 0);
