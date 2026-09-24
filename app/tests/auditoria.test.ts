@@ -1066,3 +1066,59 @@ describe('para onde voltar depois de entrar', () => {
     expect(safeNext('/perfil?aba=x')).toBe('/perfil?aba=x');
   });
 });
+
+describe('a limpeza das contas de teste acompanha o esquema', () => {
+  /* Uma tabela nova que aponte para `accounts` (ou para `orders`) e fique
+     fora da limpeza faz o DELETE das contas falhar com "FOREIGN KEY
+     constraint failed": a conta de teste fica no banco de produção a cada
+     publicação. Foi o que aconteceu quando `password_resets` nasceu. As duas
+     listas (a etapa do deploy e a receita que o e2e.sh imprime) são
+     conferidas aqui contra o worker/schema.sql. */
+  async function ler(caminho: string) {
+    const { readFileSync } = await import('node:fs');
+    return readFileSync(new URL(caminho, import.meta.url), 'utf8');
+  }
+
+  async function tabelasQueApontam() {
+    const esquema = await ler('../../worker/schema.sql');
+    const tabelas = new Set<string>();
+    for (const bloco of esquema.split(/CREATE TABLE IF NOT EXISTS /).slice(1)) {
+      const nome = bloco.match(/^(\w+)/)![1];
+      const corpo = bloco.slice(0, bloco.indexOf(');'));
+      if (/REFERENCES\s+(accounts|orders)\s*\(/.test(corpo)) tabelas.add(nome);
+    }
+    return tabelas;
+  }
+
+  function ordemDosDeletes(texto: string) {
+    return [...texto.matchAll(/DELETE FROM (\w+)/g)].map((m) => m[1]);
+  }
+
+  it('o esquema tem as tabelas que a limpeza precisa conhecer', async () => {
+    const t = await tabelasQueApontam();
+    for (const nome of ['entitlements', 'orders', 'password_resets', 'email_verifications',
+      'progress', 'registros_acesso', 'arrependimentos']) expect(t).toContain(nome);
+  });
+
+  for (const [rotulo, caminho, corte] of [
+    ['a etapa do deploy', '../../.github/workflows/deploy-worker.yml', 'Limpar as contas de teste'],
+    ['a receita do e2e.sh', '../../worker/e2e.sh', 'LIMPEZA'],
+  ] as const) {
+    it(`${rotulo} apaga toda tabela que aponta para accounts ou orders, antes delas`, async () => {
+      const texto = await ler(caminho);
+      const trecho = texto.slice(texto.indexOf(corte));
+      const ordem = ordemDosDeletes(trecho);
+      const contas = ordem.indexOf('accounts');
+      const pedidos = ordem.indexOf('orders');
+      expect(contas).toBeGreaterThan(-1);
+      for (const nome of await tabelasQueApontam()) {
+        const i = ordem.indexOf(nome);
+        expect(i, `${nome} fora da limpeza`).toBeGreaterThan(-1);
+        expect(i, `${nome} depois de accounts`).toBeLessThan(contas);
+      }
+      expect(ordem.indexOf('arrependimentos')).toBeLessThan(pedidos);
+      expect(ordem, 'access_log fica para trás').toContain('access_log');
+      expect(ordem, 'payment_events fica para trás').toContain('payment_events');
+    });
+  }
+});
