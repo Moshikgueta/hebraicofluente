@@ -39,9 +39,14 @@
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {
-    "next": "15.5.25",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "next": "15.5.26",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.28"
+    }
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",
