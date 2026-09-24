@@ -74,6 +74,7 @@ export function PerfilClient() {
           <Row k="E-mail" v={me.email} />
           <Row k="Conta criada em" v={date(me.createdAt)} />
         </dl>
+        <ConfirmarEmailAviso verificado={me.emailVerified} email={me.email} />
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
                       border-t border-[color:var(--line-soft)] pt-3">
           Para trocar o e-mail, escreva para{' '}
@@ -473,6 +474,56 @@ function TrocarSenha() {
         </>
       )}
     </Card>
+  );
+}
+
+/* O e-mail ainda não confirmado.
+   ────────────────────────────────────────────────────────────────────────
+   Um pedido discreto, e não um bloqueio: a conta e a compra funcionam sem
+   confirmar (decisão do dono, 24/09/2026). Só aparece diante de um `false`
+   de verdade - `null` é o servidor sem a tabela nova, e aí pedir seria
+   prometer um e-mail que não sai. */
+function ConfirmarEmailAviso({ verificado, email }: { verificado?: boolean | null; email: string }) {
+  const account = useAccount();
+  const [estado, setEstado] = useState<'parado' | 'enviando' | 'enviado'>('parado');
+  const [demoLink, setDemoLink] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  if (verificado !== false) return null;
+
+  async function reenviar() {
+    if (estado === 'enviando') return;
+    setError(null);
+    setEstado('enviando');
+    try {
+      const r = await account.requestEmailVerification();
+      setDemoLink(r.demoLink ?? null);
+      setEstado('enviado');
+    } catch (e) {
+      setError(e instanceof AuthError ? e.message : MESSAGES.server);
+      setEstado('parado');
+    }
+  }
+
+  return (
+    <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-3">
+      <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+        Seu e-mail ainda não foi confirmado. No cadastro mandamos um link para{' '}
+        <span className="break-all">{email}</span> - abra esse e-mail com a conta
+        aberta aqui, e pronto. Nada fica bloqueado enquanto isso.
+      </p>
+      {estado === 'enviado' ? (
+        <Aviso>
+          Link enviado. Ele vale por sete dias.
+          {demoLink && <> Demonstração: <a href={demoLink} className="underline">abrir o link</a>.</>}
+        </Aviso>
+      ) : (
+        <Button variant="secondary" onClick={reenviar} disabled={estado === 'enviando'}>
+          {estado === 'enviando' ? 'Enviando…' : 'Mandar o link de novo'}
+        </Button>
+      )}
+      {error && <Erro>{error}</Erro>}
+    </div>
   );
 }
 

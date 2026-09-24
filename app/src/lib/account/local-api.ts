@@ -37,6 +37,8 @@ type Stored = {
   accounts: Record<string, {
     id: string; name: string; email: string; createdAt: string;
     pw: string;                       // pbkdf2$<iter>$<saltB64>$<hashB64>
+    /** E-mail confirmado pelo link de demonstração. Ausente em contas antigas. */
+    verified?: boolean;
     entitlements: Entitlement[];
     orders: Order[];
   }>;
@@ -47,6 +49,7 @@ type Stored = {
    *  hash daria trabalho para proteger o dado de ninguém. O Worker guarda o
    *  hash, e a nota está em worker/schema.sql. */
   resets?: Record<string, { email: string; expiresAt: number; used?: boolean }>;
+  verifs?: Record<string, { email: string; expiresAt: number }>;
 };
 
 const EMPTY: Stored = { v: 1, accounts: {}, current: null, resets: {} };
@@ -114,7 +117,10 @@ export class LocalApi implements PlatformApi {
     const a = s.current ? s.accounts[s.current] : undefined;
     if (!a) return null;
     return {
-      account: { id: a.id, name: a.name, email: a.email, createdAt: a.createdAt },
+      account: {
+        id: a.id, name: a.name, email: a.email, createdAt: a.createdAt,
+        emailVerified: !!a.verified
+      },
       entitlements: a.entitlements
     };
   }
@@ -205,6 +211,8 @@ export class LocalApi implements PlatformApi {
 
     a.pw = await hashPassword(password);
     pedido.used = true;
+    /* Recuperar a senha prova a caixa de entrada, como no servidor. */
+    a.verified = true;
     s.current = a.email;
     write(s);
     return this.session(s)!;
@@ -240,6 +248,41 @@ export class LocalApi implements PlatformApi {
      a senha, recusar a errada com o mesmo código, e sair da conta no fim. É
      isso que a tela do perfil usa, e é isso que precisa se comportar do mesmo
      jeito nas duas builds. */
+  /* ── confirmar o e-mail ─────────────────────────────────────────────────
+     Como a recuperação de senha: sem e-mail para mandar, o link volta na
+     resposta e a tela o mostra no aviso de demonstração. E o mesmo rigor do
+     servidor - o link vale para a conta aberta, expira e vale uma vez. */
+
+  async requestEmailVerification(): Promise<{ demoLink?: string }> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    if (a.verified) return {};
+    s.verifs ??= {};
+    for (const [t, v] of Object.entries(s.verifs)) if (v.email === a.email) delete s.verifs[t];
+    const token = crypto.randomUUID().replace(/-/g, '');
+    s.verifs[token] = { email: a.email, expiresAt: Date.now() + 7 * 86_400_000 };
+    write(s);
+    return { demoLink: `/confirmar-email/?token=${encodeURIComponent(token)}` };
+  }
+
+  async confirmEmail(token: string): Promise<Session> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    const v = s.verifs?.[token];
+    if (v && v.email === a.email && v.expiresAt > Date.now()) {
+      a.verified = true;
+      delete s.verifs![token];
+      write(s);
+    } else if (!a.verified) {
+      throw new AuthError('bad-token');
+    }
+    return this.session(s)!;
+  }
+
   async deleteAccount({ password }: { password: string }): Promise<void> {
     await tick();
     const s = read();
@@ -250,6 +293,9 @@ export class LocalApi implements PlatformApi {
     delete s.accounts[a.email];
     for (const [t, r] of Object.entries(s.resets ?? {})) {
       if (r.email === a.email) delete s.resets![t];
+    }
+    for (const [t, v] of Object.entries(s.verifs ?? {})) {
+      if (v.email === a.email) delete s.verifs![t];
     }
     s.current = null;
     write(s);

@@ -45,6 +45,11 @@ function mercadoPagoFalsa() {
     if (u.host === 'api.resend.test') {
       if (recusarEmail) return new Response('{"message":"nope"}', { status: 422 });
       const b = JSON.parse(String(init?.body ?? '{}'));
+      /* O e-mail de confirmação do cadastro (tests/confirmacao.test.ts) não
+         é assunto deste arquivo, e contá-lo aqui mudaria toda contagem. */
+      if (String(b.subject).startsWith('Confirme seu e-mail')) {
+        return new Response('{"id":"m0"}', { status: 200 });
+      }
       enviados.push({ to: String(b.to?.[0] ?? ''), subject: b.subject, text: b.text, html: b.html });
       return new Response('{"id":"m1"}', { status: 200 });
     }

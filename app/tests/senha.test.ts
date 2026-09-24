@@ -43,6 +43,11 @@ beforeEach(() => {
   vi.stubGlobal('fetch', async (url: string, init: RequestInit) => {
     const corpo = JSON.parse(String(init.body)) as
       { to: string[]; subject: string; text: string };
+    /* O e-mail de confirmação do cadastro (tests/confirmacao.test.ts) não
+       é assunto deste arquivo, e contá-lo aqui mudaria toda contagem. */
+    if (corpo.subject.startsWith('Confirme seu e-mail')) {
+      return new Response(JSON.stringify({ id: 'msg_teste' }), { status: 200 });
+    }
     enviados.push({ to: corpo.to[0]!, subject: corpo.subject, text: corpo.text });
     return new Response(JSON.stringify({ id: 'msg_teste' }), { status: 200 });
   });
@@ -103,7 +108,7 @@ describe('esqueci a senha, e volto para dentro', () => {
     const r2 = await reset(env, tokenDoEmail(), 'senha-nova-12345');
     expect(r2.status).toBe(200);
     /* Redefinir já entra: a resposta traz sessão e cookie. */
-    expect(cookieDe(r2)).toMatch(/^hf_session=/);
+    expect(cookieDe(r2)).toMatch(/^__Host-hf_session=/);
     expect((await r2.json()).account.email).toBe(email);
 
     /* E a senha nova é a que vale, das duas pontas. */
@@ -266,7 +271,7 @@ describe('trocar a senha no perfil', () => {
     const { env, cookie } = await comConta();
     const r = await trocar(env, cookie, 'senha-inicial-1', 'senha-nova-12345');
     const novo = cookieDe(r);
-    expect(novo).toMatch(/^hf_session=/);
+    expect(novo).toMatch(/^__Host-hf_session=/);
     expect(novo).not.toBe(cookie);
 
     /* O novo abre a conta; o antigo, não. */

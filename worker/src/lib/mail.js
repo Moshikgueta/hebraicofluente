@@ -144,6 +144,62 @@ export function mensagemDeRecuperacao({ nome, link, minutos, marca, suporte }) {
   return { subject: `Redefinir sua senha - ${assinatura}`, text, html };
 }
 
+/* ── a mensagem de confirmação de e-mail ───────────────────────────────── */
+
+/**
+ * "Confirme seu e-mail", mandado no cadastro e quando a pessoa pede de novo.
+ *
+ * O parágrafo que importa é o do fim. Este e-mail chega à DONA do endereço
+ * mesmo quando não foi ela quem criou a conta - e é a única chance de ela
+ * saber disso. Então ele diz o que fazer: pedir uma senha nova, que só chega
+ * a ela e derruba a sessão de quem criou.
+ *
+ * E ele NÃO diz "clique para confirmar e pronto": o link só confirma com a
+ * conta aberta no navegador. Quem não criou a conta e clica por reflexo não
+ * confirma nada - a tela pede login, e ela não tem a senha.
+ */
+export function mensagemDeConfirmacao({ nome, link, dias, esqueci, marca, suporte }) {
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+
+  const text = [
+    ola,
+    '',
+    `Sua conta no ${assinatura} foi criada com este endereço de e-mail.`,
+    'Para confirmar que ele é seu, abra o link abaixo:',
+    '',
+    link,
+    '',
+    `O link vale por ${dias} dias. Se ele pedir para entrar, use o e-mail e a`,
+    'senha que você escolheu no cadastro.',
+    '',
+    'Não foi você que criou esta conta? Então alguém usou o seu endereço.',
+    `Você pode tomá-la de volta em ${esqueci} - o link de senha nova chega`,
+    'só a você, e trocar a senha desconecta quem criou a conta.',
+    '',
+    suporte ? `Qualquer dúvida, é só responder ou escrever para ${suporte}.` : '',
+    '',
+    assinatura
+  ].join('\n');
+
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p>Sua conta no ${escapar(assinatura)} foi criada com este endereço de e-mail.`,
+    ' Para confirmar que ele é seu, abra o link abaixo:</p>',
+    `<p><a href="${escapar(link)}">Confirmar meu e-mail</a></p>`,
+    `<p>O link vale por ${dias} dias. Se ele pedir para entrar, use o e-mail e a`,
+    ' senha que você escolheu no cadastro.</p>',
+    '<p><strong>Não foi você que criou esta conta?</strong> Então alguém usou o seu',
+    ` endereço. Você pode tomá-la de volta em <a href="${escapar(esqueci)}">${escapar(esqueci)}</a>`,
+    ' - o link de senha nova chega só a você, e trocar a senha desconecta quem',
+    ' criou a conta.</p>',
+    suporte ? `<p>Qualquer dúvida, escreva para ${escapar(suporte)}.</p>` : '',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  return { subject: `Confirme seu e-mail - ${assinatura}`, text, html };
+}
+
 /* ── o aviso de presente aguardando ────────────────────────────────────── */
 
 /**

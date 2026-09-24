@@ -24,15 +24,18 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import {
   b64url, fakeVerify, hashPassword, itersFor, sha256hex, verifyPassword
 } from '../lib/crypto.js';
-import { clearSessionCookie, makeSessionCookie, readSession } from '../lib/session.js';
+import {
+  clearLegacyCookie, clearSessionCookie, makeSessionCookie, readSession
+} from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
 import {
-  mailReady, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
+  mailReady, mensagemDeConfirmacao, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
 } from '../lib/mail.js';
 import {
   activeEntitlements, bumpSessionVersion, changePassword, createAccount, deleteAccount,
-  estourou, findAccountByEmail, findAccountById, invitesPendentes, log, normalizeEmail,
-  resetCreate, resetFind, resetUse, setPasswordHash, throttled, ultimoEnvioDeSenha
+  emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
+  normalizeEmail, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
+  ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset
 } from '../lib/db.js';
 
 const MIN_PASSWORD = 8;
@@ -108,14 +111,19 @@ const siteOrigin = (env, request) =>
   String((env && env.SITE_ORIGIN) || '').replace(/\/+$/, '') || new URL(request.url).origin;
 
 /** O que o app recebe como sessão. Os direitos vêm do BANCO, sempre - o
- *  cookie não os carrega, justamente para que um estorno feche na hora. */
+ *  cookie não os carrega, justamente para que um estorno feche na hora.
+ *
+ *  `emailVerified` é `null` quando não dá para saber (a tabela de
+ *  confirmação ainda não foi criada): a tela só pede confirmação diante de um
+ *  `false` de verdade. */
 async function sessionBody(env, account) {
   return {
     account: {
       id: String(account.id),
       name: account.name || '',
       email: account.email,
-      createdAt: new Date(account.created_at).toISOString()
+      createdAt: new Date(account.created_at).toISOString(),
+      emailVerified: await emailVerified(env, account.id, account.email)
     },
     entitlements: await activeEntitlements(env, account.id)
   };
@@ -177,6 +185,60 @@ async function avisarConvitePendente(env, ctx, account, email) {
   else await entregar();
 }
 
+/* ── confirmar o e-mail ─────────────────────────────────────────────────────
+ * Sete dias de prazo, e não uma hora como a senha: este link só funciona com
+ * a conta aberta no navegador (ver `verify`), então um link vazado não
+ * confirma nada para quem não tem a senha. O prazo longo é para quem abre o
+ * e-mail no fim de semana.
+ */
+export const VERIFY_TTL_DIAS = 7;
+const VERIFY_TTL = VERIFY_TTL_DIAS * 86_400_000;
+
+/**
+ * Manda o link de confirmação. Nunca lança: quem chama está no meio de um
+ * cadastro, e um e-mail que não saiu não pode derrubar a conta que acabou de
+ * nascer. Devolve se o link foi GRAVADO (o envio sai por `waitUntil`).
+ *
+ * `.invalid` é pulado: é um domínio reservado que nunca recebe nada (RFC
+ * 2606), e é o das contas de teste da publicação. Mandar para lá é só uma
+ * devolução a mais na reputação do remetente.
+ */
+async function enviarConfirmacao(env, ctx, request, account) {
+  if (!mailReady(env) || /\.invalid$/i.test(account.email)) return false;
+
+  const token = b64url(crypto.getRandomValues(new Uint8Array(32)));
+  try {
+    await verifyCreate(env, {
+      accountId: account.id, email: account.email,
+      tokenHash: await sha256hex(token), ttlMs: VERIFY_TTL
+    });
+  } catch (e) {
+    /* A tabela ainda não existe. O cadastro segue; `/api/health` mostra. */
+    console.error('verificacao', e && e.message || e);
+    return false;
+  }
+
+  const site = siteOrigin(env, request);
+  const msg = mensagemDeConfirmacao({
+    nome: account.name || '',
+    link: `${site}/confirmar-email/?token=${encodeURIComponent(token)}`,
+    dias: VERIFY_TTL_DIAS,
+    esqueci: `${site}/esqueci-senha/`,
+    marca: 'Hebraico Fluente',
+    suporte: env.SUPPORT_EMAIL || ''
+  });
+
+  const entregar = async () => {
+    const r = await sendMail(env, { to: account.email, ...msg });
+    await log(env, account.id, r.ok ? 'confirmacao-enviada' : 'confirmacao-falhou',
+      r.ok ? '' : `${r.motivo}${r.detalhe ? ': ' + r.detalhe : ''}`);
+    if (!r.ok) console.error('mail', 'confirmacao', r.motivo, r.detalhe || '');
+  };
+  if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(entregar());
+  else await entregar();
+  return true;
+}
+
 export async function signup({ request, env, ctx }) {
   /* O freio por IP antes de ler o corpo: quem já estourou não ganha nem a
      leitura. */
@@ -212,8 +274,72 @@ export async function signup({ request, env, ctx }) {
      confirmação que um impostor usaria para saber que acertou o alvo. */
   await avisarConvitePendente(env, ctx, account, email);
 
+  /* O link de confirmação. Não bloqueia nada - a conta funciona inteira sem
+     ele, inclusive a compra (decisão do dono, 24/09/2026). O que ele faz é
+     chegar à dona do endereço, que fica sabendo se foi outra pessoa. */
+  await enviarConfirmacao(env, ctx, request, account);
+
   return json(await sessionBody(env, account), 200,
     { 'Set-Cookie': await makeSessionCookie(env, account) });
+}
+
+/**
+ * POST /api/auth/verify/send - "não chegou, manda de novo".
+ *
+ * Exige sessão: é a conta pedindo para confirmar o PRÓPRIO endereço, e sem
+ * sessão isto viraria um jeito anônimo de encher a caixa de entrada de
+ * alguém. O freio é por conta, no minuto e na hora.
+ */
+export async function verifySend({ request, env, ctx }) {
+  const account = await requireAccount(request, env);
+  if (!account) return notSignedIn();
+
+  if (await emailVerified(env, account.id, account.email)) return json({ ok: true, jaConfirmado: true });
+
+  if (await throttled(env, `verif:${account.id}`, 2)) return fail('rate-limited', 429);
+  if (await throttled(env, `verif-h:${account.id}`, 5, 3_600_000)) return fail('rate-limited', 429);
+
+  if (!await enviarConfirmacao(env, ctx, request, account)) return fail('server', 503);
+  return json({ ok: true });
+}
+
+/**
+ * POST /api/auth/verify - o link do e-mail, aberto.
+ *
+ * Exige SESSÃO, e da mesma conta que pediu o link. É o que impede o golpe que
+ * a confirmação existe para fechar de virar outro: se o link confirmasse
+ * sozinho, a dona de um endereço usado por outra pessoa clicaria por reflexo
+ * e CONFIRMARIA a conta do impostor. Sem a senha dele, ela não tem a sessão, e
+ * o clique não faz nada - a tela pede login.
+ *
+ * Link errado, vencido, de outra conta ou já usado respondem igual, `bad-token`.
+ * Um segundo clique no mesmo link, com o e-mail já confirmado, responde com a
+ * sessão: para quem clicou duas vezes, deu certo.
+ */
+export async function verify({ request, env }) {
+  const account = await requireAccount(request, env);
+  if (!account) return notSignedIn();
+
+  if (await throttled(env, `verif-ok:${account.id}`, 10)) return fail('rate-limited', 429);
+
+  const body = await readJson(request);
+  if (!body) return fail('server');
+  const token = typeof body.token === 'string' ? body.token : '';
+  if (!token || token.length > 200) return fail('bad-token', 400);
+
+  let ok = false;
+  try {
+    ok = await verifyConfirm(env, {
+      tokenHash: await sha256hex(token), accountId: account.id, email: account.email
+    });
+  } catch {
+    return fail('server', 503);
+  }
+
+  if (ok) await log(env, account.id, 'email-confirmado');
+  else if (!await emailVerified(env, account.id, account.email)) return fail('bad-token', 400);
+
+  return json(await sessionBody(env, account));
 }
 
 export async function login({ request, env, ctx }) {
@@ -422,6 +548,12 @@ export async function reset({ request, env }) {
   const atualizada = await changePassword(env, account.id, novo);
   await log(env, account.id, 'senha-redefinida');
 
+  /* Quem chegou aqui abriu o link que foi para a caixa de entrada da conta:
+     isso confirma o e-mail. É também o caminho da dona de um endereço usado
+     por outra pessoa - e a troca de senha acima já derrubou a sessão de quem
+     criou a conta. */
+  await verifyFromReset(env, { accountId: account.id, email: account.email, resetHash: tokenHash });
+
   /* `changePassword` subiu a `session_version`, então todo cookie anterior
      morreu - inclusive o de quem eventualmente estivesse dentro da conta sem
      ser o dono. O cookie novo desta resposta é o único que vale. */
@@ -525,6 +657,14 @@ export async function me({ request, env }) {
     return json({ error: 'not-signed-in' }, 401, { 'Set-Cookie': clearSessionCookie });
   }
 
+  /* Um cookie com o nome antigo, ainda válido: troca pelo nome novo aqui, e
+     apaga o antigo. É o que faz a mudança de nome não deslogar ninguém - o
+     app chama /api/me a cada página. Ver LEGADO_ATE em lib/session.js. */
+  if (sess.legado) {
+    return json(await sessionBody(env, account), 200,
+      { 'Set-Cookie': [await makeSessionCookie(env, account), clearLegacyCookie] });
+  }
+
   return json(await sessionBody(env, account));
 }
 
@@ -563,6 +703,10 @@ export async function health({ request, env }) {
        progresso: a falta dela não derruba nada, só faz "esqueci minha senha"
        falhar para todo mundo, em silêncio, até alguém reclamar. */
     recuperacao: false,
+    /* A tabela de confirmação de e-mail existe? Mesma história: ela entrou
+       depois (24/09/2026) e a publicação não aplica o schema.sql. Sem ela o
+       cadastro funciona igual e ninguém confirma nada. */
+    verificacao: false,
     /* O cookie de sessão tem como ser assinado? `false` = SESSION_SECRET
        não foi definido, e aí NENHUM login funciona. */
     session: !!env.SESSION_SECRET,
@@ -627,6 +771,12 @@ export async function health({ request, env }) {
     try {
       await env.DB.prepare('SELECT 1 FROM password_resets LIMIT 1').first();
       out.recuperacao = true;
+    } catch {
+      /* idem */
+    }
+    try {
+      await env.DB.prepare('SELECT 1 FROM email_verifications LIMIT 1').first();
+      out.verificacao = true;
     } catch {
       /* idem */
     }

@@ -51,6 +51,9 @@ type AccountValue = {
   /** Apaga a conta do próprio titular, e sai. Exige a senha atual. */
   deleteAccount(i: { password: string }): Promise<void>;
 
+  requestEmailVerification(): Promise<{ demoLink?: string }>;
+  confirmEmail(token: string): Promise<void>;
+
   startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number }):
     Promise<Order & { redirectUrl?: string }>;
   orderStatus(id: string): Promise<Order>;
@@ -134,6 +137,11 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       setSession(null);
       avisar(true);
     },
+
+    requestEmailVerification: async () => (await api()).requestEmailVerification(),
+    /* A mesma conta, só com o e-mail confirmado: sem `avisar()`, pelo mesmo
+       motivo da troca de senha. */
+    async confirmEmail(token) { setSession(await (await api()).confirmEmail(token)); },
 
     startOrder: async i => (await api()).startOrder(i),
     orderStatus: async id => (await api()).orderStatus(id),

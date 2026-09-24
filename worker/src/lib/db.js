@@ -139,6 +139,84 @@ export async function resetPurge(env, at = now()) {
     .bind(at - 7 * 86_400_000).run();
 }
 
+/* ── confirmação de e-mail ────────────────────────────────────────────────
+ * Mesma forma da recuperação: o banco guarda o sha256 do token, e o consumo
+ * é um UPDATE condicional - conferir e gravar numa operação só.
+ *
+ * Toda função aqui pode encontrar a tabela AUSENTE, porque ela entrou depois
+ * das outras e a publicação não aplica o schema.sql. Quem chama trata a
+ * falha como "não confirmado" e segue: um cadastro não pode cair porque uma
+ * migração esperou.
+ */
+
+/** Um link novo. Os anteriores ainda não usados desta conta morrem aqui: "não
+ *  chegou, mandei outro" não pode deixar três links valendo. */
+export async function verifyCreate(env, { accountId, email, tokenHash, ttlMs }) {
+  const t = now();
+  await env.DB.batch([
+    env.DB.prepare(
+      'DELETE FROM email_verifications WHERE account_id = ? AND confirmed_at IS NULL'
+    ).bind(accountId),
+    env.DB.prepare(
+      `INSERT INTO email_verifications (token_hash, account_id, email, created_at, expires_at)
+       VALUES (?, ?, ?, ?, ?)`
+    ).bind(tokenHash, accountId, normalizeEmail(email), t, t + ttlMs)
+  ]);
+  return t + ttlMs;
+}
+
+/**
+ * Confirma, e responde se foi ESTA chamada que confirmou.
+ *
+ * O link só vale para a conta que o pediu e para o endereço que ela tinha
+ * quando pediu - as duas coisas estão no WHERE, junto com o prazo. Um link
+ * de outra conta, vencido ou já usado responde igual: `false`.
+ */
+export async function verifyConfirm(env, { tokenHash, accountId, email }, at = now()) {
+  const r = await env.DB.prepare(
+    `UPDATE email_verifications SET confirmed_at = ?
+      WHERE token_hash = ? AND account_id = ? AND email = ?
+        AND confirmed_at IS NULL AND expires_at > ?`
+  ).bind(at, tokenHash, accountId, normalizeEmail(email), at).run();
+  return Number(r && r.meta && r.meta.changes) > 0;
+}
+
+/** O endereço ATUAL da conta está confirmado? `null` quando não dá para saber
+ *  (a tabela ainda não existe) - e aí a tela não pede nada. */
+export async function emailVerified(env, accountId, email) {
+  try {
+    const row = await env.DB.prepare(
+      `SELECT 1 AS ok FROM email_verifications
+        WHERE account_id = ? AND email = ? AND confirmed_at IS NOT NULL LIMIT 1`
+    ).bind(accountId, normalizeEmail(email)).first();
+    return !!row;
+  } catch {
+    return null;
+  }
+}
+
+/** Uma recuperação de senha concluída provou a caixa de entrada. Grava isso
+ *  como confirmação, com a chave do próprio pedido de recuperação. */
+export async function verifyFromReset(env, { accountId, email, resetHash }, at = now()) {
+  try {
+    await env.DB.prepare(
+      `INSERT OR IGNORE INTO email_verifications
+         (token_hash, account_id, email, created_at, expires_at, confirmed_at)
+       VALUES (?, ?, ?, ?, ?, ?)`
+    ).bind(`reset:${resetHash}`, accountId, normalizeEmail(email), at, at, at).run();
+  } catch {
+    /* Tabela ausente: a senha foi trocada, que é o que importava. */
+  }
+}
+
+/** Faxina dos links nunca usados, uma semana depois de vencerem. Os
+ *  confirmados ficam: são a prova. */
+export async function verifyPurge(env, at = now()) {
+  await env.DB.prepare(
+    'DELETE FROM email_verifications WHERE confirmed_at IS NULL AND expires_at < ?'
+  ).bind(at - 7 * 86_400_000).run();
+}
+
 /**
  * Faxina da trilha. Cento e oitenta dias, e depois some.
  *
@@ -712,6 +790,15 @@ export async function deleteAccount(env, accountId) {
         WHERE id = ?`
     ).bind(`apagada+${id}@invalido.local`, hashMorto, salMorto, id)
   ]);
+
+  /* As confirmações de e-mail guardam o endereço, então vão junto - mas fora
+     da transação acima, porque a tabela pode ainda não existir (ela entrou
+     depois, e a publicação não aplica o schema.sql). Dentro do batch, a
+     ausência dela derrubaria a exclusão inteira; aqui, tabela ausente é só
+     nada para apagar. */
+  try {
+    await env.DB.prepare('DELETE FROM email_verifications WHERE account_id = ?').bind(id).run();
+  } catch { /* tabela ausente */ }
 
   /* A trilha fica, e é justamente ela que responde "por que este pedido não
      tem cliente?" daqui a um ano. Não guarda o e-mail: guarda que houve. */

@@ -27,6 +27,9 @@ const PUBLIC_PREFIXES = [
      ter de entrar para voltar a entrar. (`/recuperar` estava nesta lista e
      nunca existiu como página - virou estas duas.) */
   '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha',
+  /* O link de confirmação de e-mail. Pública porque quem clica pode estar
+     sem sessão - e aí a própria página pede o login, com o caminho de volta. */
+  '/confirmar-email',
   /* O checkout é público de propósito: quem chega por um link de venda
      precisa ver o preço antes de ter conta. Quem paga tem de estar logado, e
      essa exigência é da própria tela, não do portão. */

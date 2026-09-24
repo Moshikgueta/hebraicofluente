@@ -59,6 +59,18 @@ export interface PlatformApi {
    *  destrancada não pode bastar para tomar a conta. */
   changePassword(input: { current: string; password: string }): Promise<Session>;
 
+  /* ── e-mail ─────────────────────────────────────────────────────────────
+     Confirmar o endereço. As duas exigem sessão: o link só confirma a conta
+     que está aberta, para que a dona de um endereço usado por outra pessoa
+     não confirme, com um clique, a conta de quem o usou. */
+
+  /** Manda o link de confirmação de novo. No adaptador local, devolve o link
+   *  na mão, como na recuperação de senha. */
+  requestEmailVerification(): Promise<{ demoLink?: string }>;
+
+  /** Usa o link do e-mail. Devolve a sessão já com `emailVerified: true`. */
+  confirmEmail(token: string): Promise<Session>;
+
   /** Apaga a conta do próprio titular, e desloga.
    *
    *  Exige a senha atual pelo mesmo motivo da troca de senha, que aqui pesa
