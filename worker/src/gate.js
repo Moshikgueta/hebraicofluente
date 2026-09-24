@@ -57,7 +57,13 @@ const GATED = [
      um clipe pedido de lá vai receber 403. No dia em que houver clipes, os
      das páginas livres saem por outro prefixo, ou esta linha vira uma
      decisão por lição. */
-  '/audio'
+  '/audio',
+  /* 24/09/2026: os diagramas de ordem dos traços das 27 letras. A lição os
+     carrega daqui como <img>, e o navegador manda o cookie junto; quem não
+     comprou recebe 403. A landing mostra dois (Álef e Shin), e esses dois
+     saem por /tracado-amostra/, que é público - ver
+     tools/export-content.mjs. */
+  '/stroke-order'
 ];
 
 /* O curso que essas rotas pertencem. Quando o A1 tiver as próprias rotas,

@@ -520,6 +520,20 @@ function main() {
   cpSync(join(ROOT, 'assets/fonts'), join(pub, 'fonts'), { recursive: true });
   cpSync(join(ROOT, 'assets/stroke-order'), join(pub, 'stroke-order'), { recursive: true });
 
+  /* A amostra pública do traçado. `/stroke-order/` inteiro fica atrás do
+     portão (worker/src/gate.js) desde 24/09/2026: são 27 diagramas, material
+     do curso, e a landing usa DOIS. Só esses dois são copiados para cá, e a
+     pasta é recriada do zero a cada exportação, para que uma letra tirada da
+     lista não continue publicada por esquecimento. Uma letra nova na landing
+     entra nesta lista - tests/conteudo.test.ts reprova se faltar. */
+  const AMOSTRA_TRACADO = ['alef', 'shin'];
+  const amostra = join(pub, 'tracado-amostra');
+  rmSync(amostra, { recursive: true, force: true });
+  mkdirSync(amostra, { recursive: true });
+  for (const id of AMOSTRA_TRACADO) {
+    cpSync(join(ROOT, 'assets/stroke-order', `${id}.svg`), join(amostra, `${id}.svg`));
+  }
+
   /* The recordings land in audio/ at the repo root - one obvious place for a
      speaker to drop files - and are copied in from there. The app serves
      whatever is present and marks the rest as "áudio em breve"; nothing has to
