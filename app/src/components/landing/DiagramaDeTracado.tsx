@@ -10,7 +10,7 @@
  * de erro no primeiro clique.
  *
  * Este lê o que JÁ É PÚBLICO: o SVG que o exportador copia para
- * `public/stroke-order/`, gerado do mesmo contorno da mesma fonte cursiva, na
+ * `public/tracado-amostra/`, gerado do mesmo contorno da mesma fonte cursiva, na
  * mesma execução que gera o do livro impresso. Não é uma imitação do
  * exercício nem uma segunda fonte de verdade - é o mesmo desenho, servido
  * como arquivo em vez de como dado.
@@ -20,13 +20,22 @@
  * por propriedade até aqui, e o que se ganharia com isso - animar traço a
  * traço - a landing não precisa: o diagrama já numera os movimentos e desenha
  * a seta de partida. Um arquivo, em cache, sem JavaScript nenhum.
+ *
+ * ── por que só duas letras ──────────────────────────────────────────────
+ * `/stroke-order/` inteiro é material do curso e fica atrás do portão desde
+ * 24/09/2026. Só as letras que a landing mostra são publicadas, em
+ * `/tracado-amostra/` - a lista está em tools/export-content.mjs
+ * (`AMOSTRA_TRACADO`), e o tipo de `letterId` abaixo é o espelho dela.
  */
+
+/** As letras publicadas em /tracado-amostra/. Ver AMOSTRA_TRACADO. */
+export type LetraDaAmostra = 'alef' | 'shin';
 
 /** Quantos movimentos a letra tem. Vem do `data-strokes` do próprio SVG. */
 export function DiagramaDeTracado({
   letterId, label, movimentos, className = ''
 }: {
-  letterId: string;
+  letterId: LetraDaAmostra;
   label: string;
   movimentos: number;
   className?: string;
@@ -36,7 +45,7 @@ export function DiagramaDeTracado({
     <figure className={`m-0 grid gap-2.5 justify-items-center ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`/stroke-order/${letterId}.svg`}
+        src={`/tracado-amostra/${letterId}.svg`}
         alt={`Ordem dos traços da letra ${label}: ${quantos}, com o ponto de partida marcado.`}
         width={200}
         height={200}

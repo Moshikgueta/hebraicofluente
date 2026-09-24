@@ -4,6 +4,7 @@ out/
 content/
 public/fonts/
 public/stroke-order/
+public/tracado-amostra/
 public/audio/
 next-env.d.ts
 *.tsbuildinfo

@@ -131,6 +131,10 @@ regras que ele fixou e que valem para todo commit daqui em diante:
   `lib/content.ts`, que nasce vazio. Um import estático novo em código de
   cliente desfaz tudo em silêncio - é o que `npm run pacote` (no deploy, contra
   o export publicado) e `tests/conteudo.test.ts` existem para impedir.
+  Os 27 diagramas de traçado (`/stroke-order/`) também estão atrás do portão
+  desde 24/09/2026; a landing lê só os que mostra, de `/tracado-amostra/`,
+  que o exportador recria a partir de `AMOSTRA_TRACADO`
+  (`tools/export-content.mjs`). Letra nova na landing entra nessa lista.
 - **O repositório é público, e o resumo de cada execução do Actions também.**
   `acesso.yml` mascara todo e-mail que imprime (`mascara`); a trilha
   (`access_log`) não recebe e-mail; `payment_events` guarda só a projeção
