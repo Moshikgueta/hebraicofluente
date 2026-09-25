@@ -89,7 +89,8 @@ describe('the audio manifest and the app agree', () => {
        that makes the course's central claim - this letter makes this sound -
        actually audible. */
     expect(w1.filter(c => c.kind === 'nome').length).toBeGreaterThanOrEqual(22);
-    expect(w1.filter(c => c.kind === 'silaba').length).toBeGreaterThanOrEqual(132);
+    /* 22 × 6, menos o sheva de א, ה e ע, que não levam esse cartão. */
+    expect(w1.filter(c => c.kind === 'silaba').length).toBeGreaterThanOrEqual(129);
   });
 
   it('never claims a clip that is not in the manifest', () => {

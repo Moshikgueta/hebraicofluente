@@ -178,6 +178,9 @@ function main() {
         comoPt: v.comoPt, ondePt: v.ondePt, audioId: audioIdFor(v.he)
       })),
       soundNotePt: L.soundNotePt,
+      /* De onde sai o som, nas letras de garganta: o desenho da lição
+         (components/learn/OndeNasceOSom.tsx) lê só isto. `null` nas outras. */
+      garganta: L.garganta ?? null,
       /* A camada pedagógica, inteira. Passa como está: o que ela tem de
          obrigatório é cobrado pela V23 do validate.js, na FONTE - um
          exportador que conserta dado ruim esconde dado ruim. */
