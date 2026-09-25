@@ -86,6 +86,7 @@ const PEAK_CEIL_DB = -1.5;
 const MP3_KBPS = 96;
 
 const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+const SEM_LIMPEZA = process.argv.includes('--sem-limpeza');
 
 function ff(args) {
   return execFileSync('ffmpeg', ['-hide_banner', '-nostdin', ...args],
@@ -350,9 +351,13 @@ function extrair(wav, seg, destino, pisoDb) {
      -30. O teto existe para a sala barulhenta, onde o piso sobe e quinze
      acima dele começaria a comer consoante. */
   const nf = Math.max(-45, Math.min(-30, Math.round(pisoDb + 15)));
+  /* `--sem-limpeza` (25/09/2026): quem grava com microfone de verdade, numa
+     sala quieta, não precisa do filtro de graves nem do redutor de ruído - e
+     o redutor, mesmo gentil, é o que mais poderia mudar o timbre. O acabamento
+     (bordas, fades, volume igual) continua: sem ele cada clipe começa com um
+     atraso diferente e toca num volume diferente. */
   const limpeza = [
-    'highpass=f=80',
-    `afftdn=nr=20:nf=${nf}`,
+    ...(SEM_LIMPEZA ? [] : ['highpass=f=80', `afftdn=nr=20:nf=${nf}`]),
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     `adelay=${Math.round(PAD_HEAD_S * 1000)}`,
@@ -550,6 +555,8 @@ function main() {
   --letra  um arquivo com os itens de UMA letra. É o jeito recomendado de
            gravar no celular - se uma letra sair errada, só ela é refeita.
   --vogais o arquivo com os 14 nomes de sinais de vogal
+  --sem-limpeza  sem filtro de graves nem redutor de ruído (microfone bom);
+                 o corte, as bordas e o volume igual continuam
   --grupo  um arquivo com os itens de um grupo do roteiro por letra
            ("módulo 7", "no mundo real")
   --onda   1, 2, 3 ou "todas". "todas" é o que a página de gravação guiada
