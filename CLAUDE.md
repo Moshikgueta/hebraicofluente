@@ -402,6 +402,38 @@ libera `microphone=(self)` SÓ nas rotas do portão (`isGatedPath`); o site
 público e a API seguem com `microphone=()` (teste em auditoria.test.ts). A
 privacidade diz isso no art. 2.
 
+## Painel de gravação (/admin/gravar)
+
+O dono do curso grava as pronúncias pelo navegador (pensado para o Safari do
+iPhone): escolhe o item, Gravar, Parar, ouve, Salvar ou Apagar e gravar de
+novo; o painel pula para o próximo item sem áudio. Referência:
+`worker/src/api/audio.js`.
+
+- **O endereço não muda.** Tudo continua pedindo `/audio/<id>.mp3` (id =
+  hash do hebraico). Depois do portão, o Worker serve a gravação do painel
+  (tabela `gravacoes` do D1, schema.sql) e, sem ela, o arquivo do git. Gravar
+  de novo substitui; remover devolve o arquivo do estúdio. Serve com `Range`
+  (o Safari não toca mídia sem 206).
+- **Formato:** `audio/mp4` (AAC) quando o `MediaRecorder` aceita; senão o
+  painel grava WebM/Ogg e converte para WAV antes de enviar (WebM não toca em
+  todo iPhone). O servidor confere os bytes, não o tipo declarado.
+- **Corte:** o painel mede onde a voz está (`acharVoz`, lib/gravador.ts) e
+  guarda `inicio_ms`/`fim_ms`; o curso toca só esse trecho (fragmento `#t=`
+  + corte no `timeupdate`). O WAV já sai cortado e nivelado.
+- **O curso fica sabendo na hora:** `lib/audio-registro.ts` junta o
+  `AUDIO_MANIFEST` da build com `/api/audio/manifest` (público, só ids),
+  carregado pelo AppShell e guardado no aparelho. `hasAudio`, `audioAvailable`
+  e `gravado` leem daí. O `?v=` no endereço fura o cache quando uma gravação
+  é substituída.
+- **Nomes organizados** (`alef.mp4`, `a-ayin.mp4`) saem de
+  `worker/src/lib/nomes-audio.js`, calculados do catálogo inteiro: só rótulo e
+  nome de download, o arquivo continua guardado pelo id.
+- **Quem pode:** as contas em `ADMIN_EMAILS` (vírgulas). `/admin` fica fora
+  da casca do curso e do portão de compra (Chrome.tsx), com `noindex`, e com
+  o microfone liberado pelo `Permissions-Policy`.
+- `tests/gravacao-painel.test.ts` cobre tudo isso contra o SQLite com o
+  schema de produção.
+
 ## Palavras à mão
 
 Na academia, "Palavras à mão" (também em `/academia?treino=palavras-a-mao`,

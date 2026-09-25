@@ -21,6 +21,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
+import { carregarManifesto } from '@/lib/audio-registro';
 import { useProgress } from '@/lib/state/store';
 import { XPIndicator } from '@/components/game/Game';
 import { Card } from '@/components/ui/Card';
@@ -103,6 +104,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { remember } = p;
 
   useEffect(() => { if (pathname) remember(pathname); }, [pathname, remember]);
+  /* Os clipes gravados pelo painel depois da build (lib/audio-registro.ts). */
+  useEffect(() => { void carregarManifesto(); }, []);
 
   const avisos = (
     <>

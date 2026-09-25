@@ -331,14 +331,16 @@ html[data-a11y-movimento='reduzido'] .reveal { opacity: 1; transform: none; }
 .hf-a11y {
   position: fixed;
   right: 16px;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 78px);
+  /* `--hf-a11y-acima`: uma tela com barra própria presa embaixo (o gravador
+     do painel, /admin/gravar) informa a altura dela, e o botão sobe junto. */
+  bottom: calc(env(safe-area-inset-bottom, 0px) + var(--hf-a11y-acima, 78px));
   z-index: 70;
   display: grid;
   justify-items: end;
   gap: 10px;
 }
 @media (min-width: 1024px) {
-  .hf-a11y { bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); }
+  .hf-a11y { bottom: calc(env(safe-area-inset-bottom, 0px) + var(--hf-a11y-acima, 18px)); }
 }
 /* O painel abre PARA CIMA, porque o botão mora embaixo. `max-height` com
    rolagem própria: em 150% de zoom e num telefone deitado, ele é mais alto

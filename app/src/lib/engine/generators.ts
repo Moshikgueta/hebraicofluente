@@ -18,7 +18,7 @@ import {
   isReadableWith, onCarrier, splitSyllable
 } from '@/lib/hebrew';
 import { shuffled, take, type Rand } from './rng';
-import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+import { temClipe } from '@/lib/audio-registro';
 
 /* ── só o que já foi GRAVADO vira exercício de escuta ─────────────────────
    Todo item do curso tem `audioId`, gravado ou não: o id sai do hebraico.
@@ -26,9 +26,9 @@ import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
    três geradores de escuta nem rodavam. Com a primeira letra gravada ele
    virou verdadeiro para o curso INTEIRO - e sem esta checagem cada letra
    ainda sem áudio ganharia um "qual sílaba você ouviu?" sem som nenhum.
-   O áudio chega em levas, letra por letra; a escuta acompanha item a item. */
-const GRAVADOS = new Set(AUDIO_MANIFEST);
-export const gravado = (audioId: string | null | undefined): boolean => !!audioId && GRAVADOS.has(audioId);
+   O áudio chega em levas, letra por letra; a escuta acompanha item a item.
+   "Gravado" vale para o estúdio (git) e para o painel: lib/audio-registro.ts. */
+export const gravado = (audioId: string | null | undefined): boolean => temClipe(audioId);
 import type { Exercise } from './types';
 
 export type Ctx = {
