@@ -10,7 +10,9 @@ const ACC={v:1,accounts:{'demo@hf.test':{id:'acc_demo',name:'Moshik',email:'demo
 const ST={version:2,onboarding:{reason:'familia',goalMinutes:10,startingPoint:'zero',name:'Moshik',completedAt:new Date().toISOString()},xp:340,lessons:{mem:{letterId:'mem',stagesDone:[1,2,3,4,5],quizBest:1,quizAttempts:1,perfectBonusPaid:true,completedAt:new Date().toISOString()},tav:{letterId:'tav',stagesDone:[1,2,3,4,5],quizBest:.9,quizAttempts:2,perfectBonusPaid:false,completedAt:new Date().toISOString()},alef:{letterId:'alef',stagesDone:[1,2],quizBest:null,quizAttempts:0,perfectBonusPaid:false,completedAt:null}},checkpoints:{},srs:{tav:{itemId:'tav',letterId:'tav',box:1,misses:2,hits:1,dueOn:hoje,lastSeen:hoje,skill:'ler'},mem:{itemId:'mem',letterId:'mem',box:0,misses:1,hits:0,dueOn:hoje,lastSeen:hoje,skill:'som'}},achievements:[{id:'primeira-letra',unlockedAt:new Date().toISOString()}],days:{[hoje]:{answered:12,units:3,xp:120,goalMet:false}},streak:{current:3,longest:5,lastDay:hoje},lastRoute:null,finalChallenge:{best:null,completedAt:null},skills:{},confusions:{},firsts:{},gym:{}};
 const ROTAS=['/meu-hebraico/','/mapa/','/revisao/','/academia/','/conquistas/','/perfil/','/licao/alef/','/licao/bet/','/licao/he/','/modulo/6/','/inicio/','/historia/','/desafio-final/','/onboarding/',
   /* 23/09/2026: as três telas das atividades de produção. */
-  '/vocabulario/','/meu-nome/','/teclado-hebraico/'];
+  '/vocabulario/','/meu-nome/','/teclado-hebraico/',
+  /* 25/09/2026: a missão de módulo. */
+  '/modulo/1/missao/'];
 const b=await chromium.launch({executablePath:process.env.HF_CHROMIUM});
 let ruim=0;
 /* O que a navegação OFERECE, por largura e por rota. Ver as duas regras

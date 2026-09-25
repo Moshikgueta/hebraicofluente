@@ -12,10 +12,14 @@ import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import type { CourseModule, Letter } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
+import { missaoDoModulo } from '@/lib/content';
+import { missaoId } from '@/lib/engine/missao';
 
 export function ModuleClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
   const p = useProgress();
   const first = letters.find(l => !isLessonComplete(p.state, l.id)) ?? letters[0];
+  const missao = missaoDoModulo(mod.n);
+  const missaoFeita = !!p.state.firsts[missaoId(mod.n)];
 
   return (
     <div className="grid gap-6 reading">
@@ -97,6 +101,22 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         </Card>
       )}
 
+
+      {/* A missão fecha o módulo com uma situação de verdade, depois do
+          checkpoint. Fica aqui, e não só no fim do checkpoint, porque é o
+          módulo que ela fecha - e quem voltou para rever acha a porta. */}
+      {missao && (
+        <Card tone={missaoFeita ? 'mint' : 'surface'} className="p-6 grid gap-3">
+          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
+            Missão do módulo{missaoFeita ? ' · cumprida ✓' : ''}
+          </p>
+          <h2 className="font-display text-[18px] font-semibold">{missao.tituloPt}</h2>
+          <p className="text-[15px] leading-relaxed text-ink-body">{missao.situacaoPt}</p>
+          <LinkButton href={`/modulo/${mod.n}/missao`} variant="secondary" className="justify-self-start">
+            {missaoFeita ? 'Fazer de novo' : 'Fazer a missão'}
+          </LinkButton>
+        </Card>
+      )}
 
       {first ? (
         <LinkButton href={`/licao/${first.id}`} size="lg" full>

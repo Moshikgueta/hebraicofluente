@@ -58,6 +58,15 @@ export function VocabularioClient() {
             ? ` Mais ${faltam} chegam com as próximas letras.`
             : ' É o vocabulário inteiro do curso.'}
         </p>
+        {/* A forma à mão de cada palavra está logo abaixo; aqui é onde se
+            pratica escrevê-la. */}
+        {n > 0 && (
+          <Link href="/academia?treino=palavras-a-mao"
+                className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium
+                           text-[var(--teal-ink)] underline">
+            Praticar estas palavras à mão, em cursiva
+          </Link>
+        )}
       </header>
 
       {n > 0 && (

@@ -15,6 +15,7 @@ export type EventName =
   | 'quiz_completed'
   | 'review_started' | 'review_completed'
   | 'checkpoint_started' | 'checkpoint_completed'
+  | 'mission_started' | 'mission_completed'
   | 'streak_updated' | 'achievement_unlocked'
   | 'first_reached'
   | 'gym_started' | 'gym_completed'
