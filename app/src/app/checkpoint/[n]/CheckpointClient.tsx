@@ -63,8 +63,13 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
           <Button variant={passed ? 'secondary' : 'primary'} onClick={() => { setRun(n => n + 1); setResult(null); setPhase('running'); }}>
             Refazer
           </Button>
+          {passed && (
+            <Button onClick={() => router.push(`/modulo/${mod.n}/missao`)}>
+              Missão do módulo
+            </Button>
+          )}
           {passed && nextModule && (
-            <Button onClick={() => router.push(`/modulo/${nextModule.n}`)}>
+            <Button variant="secondary" onClick={() => router.push(`/modulo/${nextModule.n}`)}>
               Módulo {nextModule.n} - {nextModule.titlePt}
             </Button>
           )}

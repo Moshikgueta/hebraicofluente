@@ -40,6 +40,7 @@ import sentences from '../../../app/content/sentences.json';
 import eras from '../../../app/content/eras.json';
 import strokes from '../../../app/content/stroke-paths.json';
 import culture from '../../../app/content/culture.json';
+import missoes from '../../../app/content/missoes.json';
 
 /* Montado uma vez, no carregamento do módulo: é o mesmo objeto para todo
    aluno, e remontá-lo por requisição seria trabalho por pedido para produzir
@@ -53,7 +54,8 @@ const CONTEUDO = JSON.stringify({
   sentences: sentences.sentences,
   eras: eras.pairs,
   strokes: strokes.letters,
-  culture: culture.cards
+  culture: culture.cards,
+  missoes: missoes.missoes
 });
 
 export async function content({ request, env }) {

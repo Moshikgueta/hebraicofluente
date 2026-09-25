@@ -1,0 +1,314 @@
+{
+  "missoes": [
+    {
+      "modulo": 1,
+      "tituloPt": "No mercado, na primeira semana",
+      "situacaoPt": "Você acabou de chegar em Israel e vai ao mercado da esquina. Ainda não sabe quase nada de hebraico - mas já sabe ler seis letras, e é disso que vai precisar.",
+      "passos": [
+        {
+          "tipo": "ler",
+          "he": "מַיִם",
+          "ondePt": "Na prateleira de bebidas, o rótulo de uma garrafa",
+          "erradas": [
+            "תֵּה",
+            "יָם",
+            "אִמָּא"
+          ]
+        },
+        {
+          "tipo": "ler",
+          "he": "תֵּה",
+          "ondePt": "Ao lado, uma caixinha de saquinhos",
+          "erradas": [
+            "מַיִם",
+            "אֶמֶת",
+            "יָם"
+          ]
+        },
+        {
+          "tipo": "achar",
+          "he": "אֲנִי",
+          "promptPt": "Na fila do caixa, perguntam quem é o próximo. Qual destas palavras diz “eu”?",
+          "erradas": [
+            "אַתָּה",
+            "הִנֵּה",
+            "מִי"
+          ]
+        },
+        {
+          "tipo": "transliterar",
+          "he": "הִנֵּה",
+          "promptPt": "O caixa devolve o troco dizendo esta palavra. Escreva como ela se lê."
+        }
+      ],
+      "fechoPt": "Água, chá, “eu” e “aqui está”: uma ida ao mercado inteira, lida por você."
+    },
+    {
+      "modulo": 2,
+      "tituloPt": "A ficha da escola",
+      "situacaoPt": "Você foi matricular seu filho numa escola em Israel, e a secretaria entregou uma ficha. Ninguém vai preencher por você.",
+      "passos": [
+        {
+          "tipo": "ler",
+          "he": "שֵׁם",
+          "ondePt": "O primeiro campo da ficha",
+          "erradas": [
+            "שָׁנָה",
+            "שָׁם",
+            "יָד"
+          ]
+        },
+        {
+          "tipo": "ler",
+          "he": "יֶלֶד",
+          "ondePt": "O campo onde vai o nome do seu filho",
+          "erradas": [
+            "יַלְדָּה",
+            "אִשָּׁה",
+            "דָּג"
+          ]
+        },
+        {
+          "tipo": "achar",
+          "he": "לַיְלָה",
+          "promptPt": "A secretária pergunta quando você pode vir às reuniões. Qual destas palavras diz “noite”?",
+          "erradas": [
+            "שֶׁמֶשׁ",
+            "שָׁנָה",
+            "יָם"
+          ]
+        },
+        {
+          "tipo": "transliterar",
+          "he": "שִׁיר",
+          "promptPt": "No mural da escola, o cartaz da festa diz esta palavra. Escreva como ela se lê."
+        }
+      ],
+      "fechoPt": "Nome, menino, noite e canção: a ficha está preenchida, e você não precisou pedir ajuda."
+    },
+    {
+      "modulo": 3,
+      "tituloPt": "Na padaria",
+      "situacaoPt": "É sexta de manhã e você vai à padaria do bairro. Desta vez quer entrar, pedir e sair sem apontar para nada.",
+      "passos": [
+        {
+          "tipo": "ler",
+          "he": "שָׁלוֹם",
+          "ondePt": "Na porta da padaria, uma plaquinha",
+          "erradas": [
+            "תּוֹדָה",
+            "לֶחֶם",
+            "חָדָשׁ"
+          ]
+        },
+        {
+          "tipo": "ler",
+          "he": "לֶחֶם",
+          "ondePt": "Na etiqueta da prateleira",
+          "erradas": [
+            "טָרִי",
+            "מָזוֹן",
+            "אֶחָד"
+          ]
+        },
+        {
+          "tipo": "achar",
+          "he": "אֶחָד",
+          "promptPt": "Você quer levar só um pão. Qual destas palavras diz “um”?",
+          "erradas": [
+            "חֲמִשָּׁה",
+            "אָח",
+            "זֶה"
+          ]
+        },
+        {
+          "tipo": "transliterar",
+          "he": "תּוֹדָה",
+          "promptPt": "No fim do recibo vem esta palavra. Escreva como ela se lê."
+        }
+      ],
+      "fechoPt": "Olá, pão, um e obrigado: você entrou, pediu e agradeceu, tudo por escrito."
+    },
+    {
+      "modulo": 4,
+      "tituloPt": "Pela cidade",
+      "situacaoPt": "Um dia inteiro resolvendo coisas no centro: uma loja, a biblioteca, um quiosque. As placas agora usam quase todo o alfabeto.",
+      "passos": [
+        {
+          "tipo": "ler",
+          "he": "שָׁעָה",
+          "ondePt": "No horário de funcionamento de uma loja",
+          "erradas": [
+            "שָׁנָה",
+            "יוֹם",
+            "זְמַן"
+          ]
+        },
+        {
+          "tipo": "ler",
+          "he": "שֶׁקֶט",
+          "ondePt": "Na parede da biblioteca",
+          "erradas": [
+            "קוֹל",
+            "שִׁיר",
+            "סֵדֶר"
+          ]
+        },
+        {
+          "tipo": "achar",
+          "he": "מִיץ",
+          "promptPt": "Com sede, você procura suco na geladeira do quiosque. Qual caixinha diz “suco”?",
+          "erradas": [
+            "מַיִם",
+            "טָרִי",
+            "תֵּה"
+          ]
+        },
+        {
+          "tipo": "transliterar",
+          "he": "עִיר",
+          "promptPt": "No alto do mapa do centro vem esta palavra. Escreva como ela se lê."
+        }
+      ],
+      "fechoPt": "Hora, silêncio, suco e cidade: as placas do centro deixaram de ser desenho."
+    },
+    {
+      "modulo": 5,
+      "tituloPt": "Um sábado com a família",
+      "situacaoPt": "O alfabeto está completo. É sábado, a família está em casa, e o celular não para de apitar.",
+      "passos": [
+        {
+          "tipo": "ler",
+          "he": "בֹּקֶר טוֹב",
+          "ondePt": "A primeira mensagem do dia no grupo da família",
+          "erradas": [
+            "לַיְלָה",
+            "שָׁלוֹם",
+            "שַׁבָּת"
+          ]
+        },
+        {
+          "tipo": "achar",
+          "he": "כֶּלֶב",
+          "promptPt": "Seu filho pede para adotar um bicho. Qual destas palavras diz “cachorro”?",
+          "erradas": [
+            "כַּדּוּר",
+            "כּוֹס",
+            "לֵב"
+          ]
+        },
+        {
+          "tipo": "ler",
+          "he": "סֵפֶר",
+          "ondePt": "Na vitrine da livraria, no passeio da tarde",
+          "erradas": [
+            "כֶּסֶף",
+            "סוֹף",
+            "טֶלֶפוֹן"
+          ]
+        },
+        {
+          "tipo": "transliterar",
+          "he": "מִשְׁפָּחָה",
+          "promptPt": "À noite, você escreve a legenda da foto de todos juntos. Escreva como esta palavra se lê."
+        }
+      ],
+      "fechoPt": "Bom dia, cachorro, livro e família: um dia inteiro lido com as 22 letras."
+    },
+    {
+      "modulo": 6,
+      "tituloPt": "A rua sem pontinhos",
+      "situacaoPt": "Fora do curso, quase nada vem com nikud. Placas, vitrines e telas escrevem só as letras, e quem lê é que sabe o som.",
+      "passos": [
+        {
+          "tipo": "ler",
+          "he": "כֶּסֶף",
+          "semPontos": true,
+          "ondePt": "Na vitrine da casa de câmbio",
+          "erradas": [
+            "סוֹף",
+            "דֶּרֶךְ",
+            "סֵפֶר"
+          ]
+        },
+        {
+          "tipo": "ler",
+          "he": "הַמֶּלֶךְ",
+          "semPontos": true,
+          "ondePt": "Na placa de uma rua",
+          "erradas": [
+            "דֶּרֶךְ",
+            "כֶּלֶב",
+            "בַּיִת"
+          ]
+        },
+        {
+          "tipo": "transliterar",
+          "he": "סֵפֶר",
+          "semPontos": true,
+          "promptPt": "Na capa de um caderno, sem nenhum ponto. Escreva como esta palavra se lê."
+        },
+        {
+          "tipo": "ler",
+          "he": "סוֹף",
+          "semPontos": true,
+          "ondePt": "Na tela, quando o filme acaba",
+          "erradas": [
+            "סֵדֶר",
+            "דֶּרֶךְ",
+            "כֶּסֶף"
+          ]
+        }
+      ],
+      "fechoPt": "Dinheiro, rei, livro e fim, sem um ponto sequer: é assim que o hebraico aparece na rua."
+    },
+    {
+      "modulo": 7,
+      "tituloPt": "Uma viagem",
+      "situacaoPt": "Você vai viajar saindo de Israel. No aeroporto, no hotel e no passeio, aparecem as palavras que o hebraico pegou emprestadas de outras línguas.",
+      "passos": [
+        {
+          "tipo": "ler",
+          "he": "צ׳ילה",
+          "ondePt": "No painel de partidas do aeroporto",
+          "erradas": [
+            "צ׳כיה",
+            "ג׳ירף",
+            "פיג׳מה"
+          ]
+        },
+        {
+          "tipo": "achar",
+          "he": "ואוצ׳ר",
+          "promptPt": "No balcão do hotel, pedem o comprovante da reserva. Qual papel diz “voucher”?",
+          "erradas": [
+            "ג׳וניור",
+            "ז׳רגון",
+            "צ׳כיה"
+          ]
+        },
+        {
+          "tipo": "ler",
+          "he": "ג׳ירף",
+          "ondePt": "No mapa do zoológico, num passeio",
+          "erradas": [
+            "ג׳ל",
+            "ז׳רגון",
+            "צ׳ילה"
+          ]
+        },
+        {
+          "tipo": "achar",
+          "he": "פיג׳מה",
+          "promptPt": "Arrumando a mala para voltar. Qual etiqueta diz “pijama”?",
+          "erradas": [
+            "ג׳ל",
+            "ג׳ירף",
+            "ז׳סטה"
+          ]
+        }
+      ],
+      "fechoPt": "Chile, voucher, girafa e pijama: sons que o alfabeto antigo não tinha, lidos de primeira."
+    }
+  ]
+}

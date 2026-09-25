@@ -346,6 +346,26 @@ vencida e devolve o estado atual junto, e o cliente funde e repete. `uid` volta
 no GET para que um notebook compartilhado não funda o progresso de uma pessoa
 na conta de outra.
 
+## Missão de módulo
+
+Cada módulo fecha com uma missão: uma situação de verdade (o mercado, a
+padaria, a ficha da escola) em 3 ou 4 passos, em `/modulo/N/missao/`. O
+cartão fica na página do módulo, e o checkpoint aprovado leva até ela. Passa
+com 70%; cumprida, grava `firsts['missao-N']`. Não tranca nada.
+
+- `data/missoes.json` só CITA o hebraico de cada passo e escreve a situação em
+  português. O significado e a transliteração vêm do vocabulário do curso na
+  hora de montar (`lib/engine/missao.ts`), para a missão nunca discordar da
+  lição. Não escreva hebraico novo ali: copie o de uma palavra do curso.
+- Passos: `ler` (hebraico no lugar → significado), `achar` (significado →
+  qual palavra), `transliterar` (escrever como se lê). `semPontos` tira o
+  nikud (módulo 6).
+- `tests/missoes.test.ts` falha se uma palavra não for do curso, se usar letra
+  que o aluno ainda não viu naquele módulo, ou se dois distratores tiverem o
+  mesmo significado da certa.
+- É conteúdo pago: vai por `/api/content` (os três lados do contrato e
+  `OS_PAGOS` em `tests/conteudo.test.ts`), nunca no pacote público.
+
 ## Antes de commitar
 ```sh
 cd app && npm test        # 302 testes

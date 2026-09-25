@@ -497,6 +497,40 @@ function main() {
     writeFileSync(join(OUT, 'culture.json'), JSON.stringify({ cards: [] }, null, 2) + '\n');
   }
 
+  /* ── as missões de módulo ───────────────────────────────────────────
+     Uma situação de verdade por módulo, que fecha o módulo com "eu usei
+     isto" em vez de itens soltos. O arquivo só CITA palavras do curso; o
+     significado e a transliteração vêm do próprio curso na hora de montar
+     (lib/engine/missao.ts), e `tests/missoes.test.ts` confere que cada
+     palavra existe e é legível com as letras daquele módulo. Aqui só a
+     forma, para que um arquivo torto pare a build e não a lição. */
+  const missoes = readJson('data/missoes.json').missoes;
+  const modulosVistos = new Set();
+  for (const m of missoes) {
+    if (!Number.isInteger(m.modulo) || modulosVistos.has(m.modulo)) {
+      throw new Error(`missoes.json: módulo ${m.modulo} inválido ou repetido`);
+    }
+    modulosVistos.add(m.modulo);
+    if (!Array.isArray(m.passos) || m.passos.length < 3) {
+      throw new Error(`missoes.json: a missão do módulo ${m.modulo} precisa de pelo menos 3 passos`);
+    }
+    for (const p of m.passos) {
+      if (!['ler', 'achar', 'transliterar'].includes(p.tipo)) {
+        throw new Error(`missoes.json: tipo de passo desconhecido "${p.tipo}" no módulo ${m.modulo}`);
+      }
+    }
+  }
+  writeFileSync(join(OUT, 'missoes.json'), JSON.stringify({
+    missoes: missoes.map(m => ({
+      ...m,
+      passos: m.passos.map(p => ({
+        ...p,
+        he: NFC(p.he),
+        ...(p.erradas ? { erradas: p.erradas.map(NFC) } : {})
+      }))
+    }))
+  }, null, 2) + '\n');
+
   /* ── stroke geometry ────────────────────────────────────────────────
      The SVG in assets/stroke-order/ is the printed diagram: the whole letter,
      with numbered start dots. This is the same run's machine-readable half -
