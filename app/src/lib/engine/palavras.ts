@@ -380,3 +380,25 @@ export function hebraicoDigitadoCerto(digitado: string, aceitas: readonly string
 export const pareceTecladoLatino = (s: string): boolean => /[A-Za-z]/.test(s);
 
 export { BASE_TO_FINAL };
+
+/* ── palavras à mão ──────────────────────────────────────────────────────
+   O treino de escrita da academia era de letra solta. Escrever uma palavra
+   inteira é outra habilidade: as letras vizinhas mudam de tamanho uma perto
+   da outra, a final entra no lugar da base, e a mão vai da direita para a
+   esquerda sem voltar. Este é o sorteio das palavras daquele treino. */
+
+/** Quantas palavras numa rodada de escrita à mão. */
+export const RODADA_A_MAO = 5;
+
+/**
+ * As palavras que o aluno pode escrever à mão: as do vocabulário ACUMULADO
+ * (toda letra da grafia já ensinada - à mão não há vogal, e o ו vogal vira
+ * letra na tela) e de até sete letras, que é o que cabe num telefone em
+ * corpo legível. Sorteadas pela semente, sem repetir.
+ */
+export function palavrasParaEscrever(
+  letras: readonly Letter[], rand: Rand, n: number = RODADA_A_MAO
+): PalavraDoCurso[] {
+  const cabem = palavrasAcumuladas(letras).filter(w => letrasDaGrafia(w.he).length <= 7);
+  return shuffled(cabem, rand).slice(0, n);
+}

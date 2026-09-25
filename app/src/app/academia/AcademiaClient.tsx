@@ -23,6 +23,7 @@ import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { SoundLab, VowelSigns } from '@/components/learn/SoundLab';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
+import { EscreverPalavras } from '@/components/learn/EscreverPalavras';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { ParaRevisar } from '@/components/game/Debt';
 import { useProgress } from '@/lib/state/store';
@@ -61,6 +62,8 @@ const DE_BARALHO = (j: Jogo): j is JogoDeBaralho =>
 
 type Screen =
   | { kind: 'menu' }
+  /* Palavras inteiras em cursiva, à mão. */
+  | { kind: 'palavras-a-mao' }
   | { kind: 'run'; mode: GymMode; startedAt: number }
   /* O guia do teclado, entre o toque no modo de digitação e o modo. */
   | { kind: 'teclado'; mode: GymMode }
@@ -173,6 +176,11 @@ export function AcademiaClient() {
       setScreen({ kind: 'jogo', jogo: pedido as Jogo, rodada: 0 });
     }
   }, [pedido]);
+  /* O vocabulário manda para cá com `?treino=palavras-a-mao`. */
+  const treino = busca?.get('treino');
+  useEffect(() => {
+    if (treino === 'palavras-a-mao') setScreen({ kind: 'palavras-a-mao' });
+  }, [treino]);
 
   /* As letras que mais custam entram primeiro no baralho. É o mesmo sinal que
      alimenta a revisão - aqui ele só decide a ORDEM, nunca o conteúdo. */
@@ -540,6 +548,19 @@ export function AcademiaClient() {
     );
   }
 
+  if (screen.kind === 'palavras-a-mao') {
+    return (
+      <div className="grid gap-5">
+        <GymHeader
+          mode={{ titlePt: 'Palavras à mão' } as GymMode}
+          label="Escreva em cursiva as palavras que você já aprendeu"
+          onBack={() => setScreen({ kind: 'menu' })}
+        />
+        <EscreverPalavras letras={unlocked} semente={`a-mao-${p.day}`} />
+      </div>
+    );
+  }
+
   if (screen.kind === 'escrita') {
     /* The letter the learner is weakest at writing, or the newest one. Writing
        practice with nothing to aim at is doodling. */
@@ -686,6 +707,11 @@ export function AcademiaClient() {
               title="Escrita"
               desc="Traçar e escrever à mão a letra que mais precisa."
               onClick={() => setScreen({ kind: 'escrita' })}
+            />
+            <ReferenceCard
+              title="Palavras à mão"
+              desc="Escrever em cursiva palavras inteiras que você já aprendeu, e não só letras soltas."
+              onClick={() => setScreen({ kind: 'palavras-a-mao' })}
             />
           </div>
         </>

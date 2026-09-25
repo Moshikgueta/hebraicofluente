@@ -366,6 +366,20 @@ com 70%; cumprida, grava `firsts['missao-N']`. Não tranca nada.
 - É conteúdo pago: vai por `/api/content` (os três lados do contrato e
   `OS_PAGOS` em `tests/conteudo.test.ts`), nunca no pacote público.
 
+## Palavras à mão
+
+Na academia, "Palavras à mão" (também em `/academia?treino=palavras-a-mao`,
+que o vocabulário linka) dá rodadas de 5 palavras aprendidas para escrever
+inteiras em cursiva, no mesmo `TraceBoard` das letras e do "meu nome": por
+cima do modelo, modelo fraco, sem modelo. O modelo é a palavra sem nikud.
+
+- O sorteio é `palavrasParaEscrever` (lib/engine/palavras.ts): só palavras do
+  vocabulário acumulado (toda letra da grafia já ensinada, porque à mão o ו
+  vogal vira letra), de 2 a 7 letras. `tests/palavras-a-mao.test.ts`.
+- Corpo `display` para 3+ letras: medido, a mais larga cabe no quadro de um
+  telefone de 360px. Mudar a fonte cursiva ou o limite de 7 letras pede medir
+  de novo.
+
 ## Antes de commitar
 ```sh
 cd app && npm test        # 302 testes
