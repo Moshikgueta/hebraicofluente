@@ -273,7 +273,7 @@
           "ondePt": "No painel de partidas do aeroporto",
           "erradas": [
             "צ׳כיה",
-            "ג׳ירף",
+            "ג׳ירפה",
             "פיג׳מה"
           ]
         },
@@ -289,7 +289,7 @@
         },
         {
           "tipo": "ler",
-          "he": "ג׳ירף",
+          "he": "ג׳ירפה",
           "ondePt": "No mapa do zoológico, num passeio",
           "erradas": [
             "ג׳ל",
@@ -303,7 +303,7 @@
           "promptPt": "Arrumando a mala para voltar. Qual etiqueta diz “pijama”?",
           "erradas": [
             "ג׳ל",
-            "ג׳ירף",
+            "ג׳ירפה",
             "ז׳סטה"
           ]
         }
