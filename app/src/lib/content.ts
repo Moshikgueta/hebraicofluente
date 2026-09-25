@@ -33,6 +33,7 @@
  */
 
 import { course, getModule, letterIds } from './content-publico';
+import { textosPublicados } from './engine/textos';
 import type {
   Checkpoint, Course, CourseModule, CultureCard, EraPair, Letter, LetterSkel,
   NikudIntro, NikudSign, NikudSound, Scene, Sentence, SentenceWord, Stroke, StrokeSet,
@@ -61,6 +62,7 @@ export type ConteudoPago = {
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
   missoes: import('./engine/missao').Missao[];
+  textos: import('./engine/textos').Texto[];
 };
 
 /* ── o depósito ─────────────────────────────────────────────────────────── */
@@ -115,6 +117,10 @@ export const nikud = (): ConteudoPago['nikud'] => dados().nikud;
 
 /** Módulos 6 e 7, iguais aos da apostila impressa. */
 export const extras = (): ConteudoPago['extras'] => dados().extras;
+
+/** O mini-texto do módulo `n`, só se já foi revisado. Ver lib/engine/textos.ts. */
+export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
+  textosPublicados(dados().textos).find(t => t.modulo === n);
 
 /** A missão que fecha o módulo `n`, se houver. */
 export const missaoDoModulo = (n: number): ConteudoPago['missoes'][number] | undefined =>
@@ -235,7 +241,7 @@ export async function carregarConteudo(): Promise<void> {
      com os `import()` dentro. A constante exportada é para quem lê; o ramo
      tem de ser podado, e quem poda não segue exportação. */
   if (process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker') {
-    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, erasJson, strokeJson, cultureJson, missoesJson] = await Promise.all([
+    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, erasJson, strokeJson, cultureJson, missoesJson, textosJson] = await Promise.all([
       import('@content/letters.json'),
       import('@content/nikud.json'),
       import('@content/extras.json'),
@@ -244,7 +250,8 @@ export async function carregarConteudo(): Promise<void> {
       import('@content/eras.json'),
       import('@content/stroke-paths.json'),
       import('@content/culture.json'),
-      import('@content/missoes.json')
+      import('@content/missoes.json'),
+      import('@content/textos.json')
     ]);
     const bruto = <T,>(m: unknown): T =>
       ((m as { default?: unknown }).default ?? m) as T;
@@ -257,7 +264,8 @@ export async function carregarConteudo(): Promise<void> {
       eras: bruto<{ pairs: EraPair[] }>(erasJson).pairs,
       strokes: bruto<{ box: number; letters: Record<string, StrokeSet> }>(strokeJson).letters,
       culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards,
-      missoes: bruto<{ missoes: ConteudoPago['missoes'] }>(missoesJson).missoes
+      missoes: bruto<{ missoes: ConteudoPago['missoes'] }>(missoesJson).missoes,
+      textos: bruto<{ textos: ConteudoPago['textos'] }>(textosJson).textos
     });
     return;
   }

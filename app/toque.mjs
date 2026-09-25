@@ -65,7 +65,7 @@ const ROTAS = ['/meu-hebraico/', '/mapa/', '/licao/zayin/', '/licao/alef/', '/in
                /* 23/09/2026: as telas das atividades de produção. */
                '/vocabulario/', '/meu-nome/', '/teclado-hebraico/',
                /* 25/09/2026: a missão de módulo. */
-               '/modulo/1/missao/'];
+               '/modulo/1/missao/', '/modulo/3/texto/'];
 
 let falhas = 0;
 const navegador = await chromium.launch();

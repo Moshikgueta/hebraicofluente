@@ -32,7 +32,9 @@ import erasJson from '@content/eras.json';
 import strokeJson from '@content/stroke-paths.json';
 import cultureJson from '@content/culture.json';
 import missoesJson from '@content/missoes.json';
+import textosJson from '@content/textos.json';
 import type { Missao } from './engine/missao';
+import type { Texto } from './engine/textos';
 import type {
   CultureCard, EraPair, Letter, NikudIntro, NikudSound, Scene, Sentence, StrokeSet
 } from './content-publico';
@@ -47,6 +49,7 @@ export type ConteudoPago = {
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
   missoes: Missao[];
+  textos: Texto[];
 };
 
 /**
@@ -65,7 +68,8 @@ export const conteudoPago: ConteudoPago = {
   eras: (erasJson as unknown as { pairs: EraPair[] }).pairs,
   strokes: (strokeJson as unknown as { box: number; letters: Record<string, StrokeSet> }).letters,
   culture: (cultureJson as unknown as { cards: CultureCard[] }).cards,
-  missoes: (missoesJson as unknown as { missoes: Missao[] }).missoes
+  missoes: (missoesJson as unknown as { missoes: Missao[] }).missoes,
+  textos: (textosJson as unknown as { textos: Texto[] }).textos
 };
 
 /* ── as letras, para as rotas ─────────────────────────────────────────────

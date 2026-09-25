@@ -83,12 +83,6 @@
         "he": "אוּ",
         "translit": "u",
         "ptApprox": "só a vogal U"
-      },
-      {
-        "vowel": "sheva",
-        "he": "אֲ",
-        "translit": "a",
-        "ptApprox": "guturais não aceitam sheva - usam o hataf, um A ultrabreve"
       }
     ],
     "wordsToRecognize": [
@@ -624,6 +618,11 @@
     "translit": "h",
     "sound": "/h/",
     "soundNotePt": "Um H aspirado, soprado - o H do inglês \"hello\". No fim da palavra costuma ser mudo.",
+    "garganta": {
+      "ponto": "glote",
+      "voz": false,
+      "comoPt": "Lá embaixo, nas cordas vocais: só um sopro, sem raspar nada, como quem embaça um espelho. É o H do inglês \"hello\"."
+    },
     "ensino": {
       "funcaoPt": "{{ה}} tem duas vidas, e é a primeira letra do curso em que isso acontece. No começo e no meio da palavra ela é consoante: um sopro leve de ar, como o H do inglês em \"house\". No FIM da palavra ela quase sempre não é pronunciada - e não está ali à toa: é ela que indica que a palavra termina com som de vogal, quase sempre \"a\". Em {{מָה}} (o quê) você lê \"ma\", e o {{ה}} do fim não vira sopro nenhum.",
       "detalhePt": "Quando {{ה}} fecha a palavra e não é pronunciada, ela está muda: aparece escrita, mas você não ouve som próprio. Isto é diferente do {{א}}, que é apoio de vogal em qualquer posição - o {{ה}} sopra no começo e cala no fim. Guarde a ideia geral, porque ela volta: uma letra pode ter comportamento diferente dependendo de onde está na palavra, e algumas letras participam da representação de uma vogal em vez de soar como consoante.",
@@ -716,12 +715,6 @@
         "he": "הוּ",
         "translit": "hu",
         "ptApprox": "U como em \"muro\""
-      },
-      {
-        "vowel": "sheva",
-        "he": "הְ",
-        "translit": "h",
-        "ptApprox": "só a consoante, sem vogal"
       }
     ],
     "wordsToRecognize": [
@@ -1637,12 +1630,17 @@
     "namePt": "Resh",
     "translit": "r",
     "sound": "/ʁ/",
-    "soundNotePt": "O R raspado na garganta - exatamente o R carioca de \"porta\" ou o R inicial de \"rato\". Para o brasileiro, é presente de graça.",
+    "soundNotePt": "O R francês de \"Paris\": macio, feito no fundo da boca, perto da úvula, com a voz ligada. Não é o R carioca de \"carro\", que é soprado e áspero - esse som, em hebraico, é o de outra letra, que você conhece daqui a três lições.",
+    "garganta": {
+      "ponto": "uvula",
+      "voz": true,
+      "comoPt": "Na úvula, a \"campainha\" no fundo da boca, com a voz ligada: ponha a mão no pescoço e sinta vibrar. Daqui a três lições vem outra letra que sai deste mesmo lugar, mas sem voz."
+    },
     "ensino": {
-      "funcaoPt": "{{ר}} é a consoante do R raspado na garganta - o R de \"rato\" e \"porta\" na pronúncia carioca. O hebraico moderno tem um R só: não existe a diferença entre \"caro\" e \"carro\" que o português faz. Toda vez que você vir {{ר}}, é esse mesmo som.",
+      "funcaoPt": "{{ר}} é a consoante do R francês, feito no fundo da boca, perto da úvula, com a voz ligada - como em \"Paris\". O hebraico moderno tem um R só: não existe a diferença entre \"caro\" e \"carro\" que o português faz. Toda vez que você vir {{ר}}, é esse mesmo som.",
       "detalhePt": "Chegou a hora do aviso que ficou pendente na lição do {{ד}}: as duas se parecem muito. O {{ר}} tem o canto superior direito ARREDONDADO, numa curva contínua; o {{ד}} tem esse canto em ângulo reto, com um pedacinho do traço de cima ultrapassando a perna à direita. É a confusão visual mais comum do alfabeto inteiro, e ela some quando você sabe para onde olhar.",
-      "paraBrasileiroPt": "Aqui o brasileiro sai na frente: o R uvular do hebraico é o mesmo que a maior parte do Brasil já faz em \"rato\". Quem fala com R de ponta de língua (o R \"caipira\" ou o R vibrado) vai soar estrangeiro em hebraico - e a correção é simples, porque o som certo já existe no seu repertório.",
-      "lembrePt": "{{ר}} é o R da garganta, um só em todo o hebraico. E tem o canto de cima redondo - é isso que o separa do {{ד}}.",
+      "paraBrasileiroPt": "Cuidado com a armadilha: o R carioca de \"carro\" também sai do fundo da boca, mas é soprado, sem voz, e áspero - e esse som, em hebraico, é o de outra letra, que você conhece daqui a três lições. O {{ר}} é mais macio e tem voz, como o R francês. Quem fala com R de ponta de língua (o R caipira ou o R batido de \"caro\") também vai soar estrangeiro. Para achar o som: diga \"Paris\" à francesa, ou faça um gargarejo leve com a voz ligada.",
+      "lembrePt": "{{ר}} é o R francês, macio e com voz, um só em todo o hebraico. E tem o canto de cima redondo - é isso que o separa do {{ד}}.",
       "checagem": [
         {
           "t": "visual",
@@ -1658,18 +1656,18 @@
           "t": "vf",
           "q": "Em hebraico existe a diferença entre o R de \"caro\" e o R de \"carro\".",
           "certa": false,
-          "porque": "O hebraico moderno tem um R só, sempre raspado na garganta. Essa distinção é do português - em hebraico o mesmo {{ר}} serve em qualquer posição da palavra."
+          "porque": "O hebraico moderno tem um R só, o R francês do fundo da boca. Essa distinção é do português - em hebraico o mesmo {{ר}} serve em qualquer posição da palavra."
         },
         {
           "t": "escolha",
           "q": "Como se lê {{הַר}} (montanha)?",
           "opcoes": [
-            "\"har\", com R de garganta",
+            "\"har\", com o R francês, do fundo da boca",
             "\"har\", com R de ponta de língua",
             "\"ha\", com o R mudo"
           ],
           "certa": 0,
-          "porque": "O {{ר}} é pronunciado inteiro, com o R raspado - o mesmo de \"rato\". Ele não emudece no fim da palavra, como acontece com o R do infinitivo em português falado (\"falá\")."
+          "porque": "O {{ר}} é pronunciado inteiro, com o R francês. Ele não emudece no fim da palavra, como acontece com o R do infinitivo em português falado (\"falá\")."
         }
       ]
     },
@@ -1760,11 +1758,11 @@
         "pt": "rio"
       }
     ],
-    "didYouKnow": "O R israelense é o mesmo som do R carioca e do R francês, produzido no fundo da garganta. Quem fala português do Brasil já tem esse som pronto - é uma das poucas vantagens gratuitas deste alfabeto.",
+    "didYouKnow": "O R israelense é o R francês, feito no fundo da boca, perto da úvula. Ele lembra o R carioca, mas não é o mesmo: o carioca é soprado e áspero, e em hebraico esse som áspero pertence a outra letra, que você conhece daqui a três lições. Trocar um pelo outro pode confundir quem ouve.",
     "brazilianMistake": {
-      "wrong": "Usar o R retroflex do interior paulista, \"porrrta\", ou o R batido de \"caro\".",
-      "right": "Usar o R raspado, o mesmo de \"carro\" e \"rato\" no Rio.",
-      "why": "O hebraico moderno tem um único R, sempre uvular. O R batido da ponta da língua soa estrangeiro e, em algumas palavras, chega a confundir."
+      "wrong": "Usar o R carioca soprado de \"carro\", que em hebraico é o som de outra letra, ou o R batido de \"caro\", ou o R retroflexo do interior, \"porrrta\".",
+      "right": "Usar o R francês, macio e com a voz ligada, como em \"Paris\": {{הַר}} é \"har\", com esse R no fim.",
+      "why": "O hebraico moderno tem um único R, o francês. O R carioca soprado é o som de outra letra, e o R de ponta de língua soa estrangeiro."
     },
     "audioIds": [],
     "biblicalWord": null,
@@ -2157,6 +2155,11 @@
     "translit": "ch",
     "sound": "/χ/",
     "soundNotePt": "O mesmo som raspado do R carioca, mas mais forte e prolongado. Escrevemos \"ch\" na transliteração, e não tem nada a ver com o CH de \"chave\".",
+    "garganta": {
+      "ponto": "uvula",
+      "voz": false,
+      "comoPt": "No mesmo lugar do {{ר}}, a úvula, mas sem voz: só o ar raspando, com força. Ponha a mão no pescoço: no {{ר}} ele vibra, no {{ח}} não."
+    },
     "ensino": {
       "funcaoPt": "{{ח}} é uma consoante raspada na garganta, e é o primeiro som deste curso que NÃO existe em português. Ele é parecido com o R carioca de \"rato\", só que mais forte, mais longo e feito bem no fundo da garganta. Aparece em palavras muito comuns, como {{לֶחֶם}} (pão) e {{אָח}} (irmão), então vale praticar desde já.",
       "detalhePt": "Nas transliterações você vai ver esse som escrito como \"ch\" - {{לֶחֶם}} vira \"lechem\". Essa convenção vem do alemão e do espanhol, não do português, e é uma armadilha: nenhuma palavra brasileira usa CH com esse valor. Leia como raspado na garganta, nunca como o CH de \"chave\".",
@@ -2691,12 +2694,6 @@
         "he": "עוּ",
         "translit": "u",
         "ptApprox": "só a vogal U"
-      },
-      {
-        "vowel": "sheva",
-        "he": "עֲ",
-        "translit": "a",
-        "ptApprox": "guturais não aceitam sheva - usam o hataf, um A ultrabreve"
       }
     ],
     "wordsToRecognize": [
@@ -3329,6 +3326,11 @@
       }
     ],
     "soundNotePt": "Com o ponto ({{כּ}}) soa K, igual a {{ק}}. Sem o ponto ({{כ}}) soa raspado, igual a {{ח}}. No fim da palavra vira {{ך}}, e aí é sempre raspado.",
+    "garganta": {
+      "ponto": "uvula",
+      "voz": false,
+      "comoPt": "O som suave, do {{כ}} sem ponto e do {{ך}}: igual ao {{ח}}, na úvula, sem voz. Com o ponto, {{כּ}} é um K comum, feito com a língua no céu da boca."
+    },
     "ensino": {
       "funcaoPt": "{{כ}} funciona como o {{ב}}: um ponto decide o som. Com o ponto ({{כּ}}) ela é K, igual ao {{ק}}. Sem o ponto ({{כ}}) ela é raspada na garganta, igual ao {{ח}}. Duas letras familiares, num desenho só.",
       "detalhePt": "Ela tem forma final - {{ך}}, que desce abaixo da linha - e aqui vem a regra que mais derruba iniciante: o {{ך}} final NUNCA leva ponto, então ele é sempre o som raspado. {{מֶלֶךְ}} é \"melech\", com a garganta raspando no fim, e nunca \"melek\". É o erro mais audível desta letra.",

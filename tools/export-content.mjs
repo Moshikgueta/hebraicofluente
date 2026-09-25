@@ -178,6 +178,9 @@ function main() {
         comoPt: v.comoPt, ondePt: v.ondePt, audioId: audioIdFor(v.he)
       })),
       soundNotePt: L.soundNotePt,
+      /* De onde sai o som, nas letras de garganta: o desenho da lição
+         (components/learn/OndeNasceOSom.tsx) lê só isto. `null` nas outras. */
+      garganta: L.garganta ?? null,
       /* A camada pedagógica, inteira. Passa como está: o que ela tem de
          obrigatório é cobrado pela V23 do validate.js, na FONTE - um
          exportador que conserta dado ruim esconde dado ruim. */
@@ -520,6 +523,25 @@ function main() {
       }
     }
   }
+  /* ── os mini-textos de leitura corrida ─────────────────────────────
+     Um texto curto por módulo, do 3 ao 7. São as únicas frases do curso
+     escritas para ele, e por isso cada um nasce com `revisado: false`: o
+     curso só mostra o texto depois que alguém que fala hebraico o aprovou
+     (lib/engine/textos.ts). Aqui, como nas missões, só a forma. */
+  const textos = readJson('data/textos.json').textos;
+  for (const t of textos) {
+    if (!Number.isInteger(t.modulo) || typeof t.revisado !== 'boolean') {
+      throw new Error(`textos.json: texto do módulo ${t.modulo} sem módulo ou sem "revisado"`);
+    }
+    if (!Array.isArray(t.linhas) || !t.linhas.length || !Array.isArray(t.perguntas) || !t.perguntas.length) {
+      throw new Error(`textos.json: o texto do módulo ${t.modulo} precisa de linhas e perguntas`);
+    }
+  }
+  const pontua = x => ({ ...x, he: NFC(x.he) });
+  writeFileSync(join(OUT, 'textos.json'), JSON.stringify({
+    textos: textos.map(t => ({ ...t, linhas: t.linhas.map(pontua), novas: (t.novas || []).map(pontua) }))
+  }, null, 2) + '\n');
+
   writeFileSync(join(OUT, 'missoes.json'), JSON.stringify({
     missoes: missoes.map(m => ({
       ...m,

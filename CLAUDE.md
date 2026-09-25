@@ -366,6 +366,22 @@ com 70%; cumprida, grava `firsts['missao-N']`. Não tranca nada.
 - É conteúdo pago: vai por `/api/content` (os três lados do contrato e
   `OS_PAGOS` em `tests/conteudo.test.ts`), nunca no pacote público.
 
+## Mini-textos de leitura corrida
+
+Um texto curto por módulo, do 3 ao 7 (bilhete, mensagem de WhatsApp, cartão),
+em `/modulo/N/texto/`, com transliteração e tradução a um toque (a linha ou o
+texto todo), glossário das palavras novas e perguntas de compreensão
+(`Compreensao`, sem nota). O do módulo 6 aparece sem nikud.
+
+- São as únicas frases escritas PARA o curso. Cada texto em `data/textos.json`
+  nasce com `revisado: false` e só aparece para o aluno com `true`
+  (`textoDoModulo` filtra). Aprovar é trabalho de quem fala hebraico, e
+  `TEXTOS-PARA-REVISAR.md` é o documento de revisão.
+- `tests/textos.test.ts`: um por módulo 3 a 7, só letras já ensinadas no
+  módulo, toda palavra pontuada (menos as com gerech), transliteração,
+  tradução e porquê em tudo, e a trava da revisão.
+- Conteúdo pago: vai por `/api/content`, como as missões.
+
 ## Palavras à mão
 
 Na academia, "Palavras à mão" (também em `/academia?treino=palavras-a-mao`,

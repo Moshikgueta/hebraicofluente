@@ -12,7 +12,7 @@ const ROTAS=['/meu-hebraico/','/mapa/','/revisao/','/academia/','/conquistas/','
   /* 23/09/2026: as três telas das atividades de produção. */
   '/vocabulario/','/meu-nome/','/teclado-hebraico/',
   /* 25/09/2026: a missão de módulo. */
-  '/modulo/1/missao/'];
+  '/modulo/1/missao/', '/modulo/3/texto/'];
 const b=await chromium.launch({executablePath:process.env.HF_CHROMIUM});
 let ruim=0;
 /* O que a navegação OFERECE, por largura e por rota. Ver as duas regras

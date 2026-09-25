@@ -173,6 +173,8 @@ export type Letter = {
   /** As leituras, quando há mais de uma. Vazio na maioria das letras. */
   variantes: VarianteLetra[];
   soundNotePt: string;
+  /** De onde sai o som, só nas letras de garganta (ר ח כ ה). */
+  garganta: Garganta | null;
   /** A camada pedagógica: o que a letra FAZ, e a checagem. Ver `Ensino`. */
   ensino: Ensino;
   didYouKnow: string;
@@ -191,6 +193,11 @@ export type Letter = {
   workbookPages: { from: number; to: number } | null;
   audioId: string;
 };
+
+/** O ponto de articulação de uma letra de garganta, para o desenho da lição.
+ *  `uvula`: a "campainha" no fundo da boca (ר, ח, o כ suave). `glote`: as
+ *  cordas vocais (ה). `voz`: se a garganta vibra - é o que separa ר de ח. */
+export type Garganta = { ponto: 'uvula' | 'glote'; voz: boolean; comoPt: string };
 
 export type Checkpoint = {
   id: string;

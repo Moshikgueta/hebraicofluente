@@ -48,7 +48,7 @@ const src = (p: string) => readFileSync(new URL(`../src/${p}`, import.meta.url),
    são públicos, e o caso logo abaixo é quem diz isso em voz alta. */
 const OS_PAGOS = [
   'letters', 'nikud', 'extras', 'real-world', 'sentences', 'eras',
-  'stroke-paths', 'culture', 'missoes'
+  'stroke-paths', 'culture', 'missoes', 'textos'
 ];
 
 /* ── 1. a fonte do vazamento ─────────────────────────────────────────────── */

@@ -147,9 +147,14 @@ function Trecho({ module: m, estado, ultimo }: {
       </div>
 
       <div className="pb-6 sm:pb-[26px]">
-        <Link
-          href={destino}
-          className={`block rounded-[18px] border p-5 sm:px-6 sm:py-[22px] transition-shadow duration-[250ms]
+        {/* O cartão inteiro leva ao próximo passo do módulo, e cada letra já
+            feita (ou começada) leva à SUA lição. Um link não pode morar
+            dentro de outro, então o do cartão é o título, esticado sobre o
+            cartão todo por um `::after`, e as letras ficam por cima dele.
+            Antes o cartão era um link só, e tocar num {{ש}} concluído abria
+            sempre a primeira letra do grupo. */}
+        <div
+          className={`relative rounded-[18px] border p-5 sm:px-6 sm:py-[22px] transition-shadow duration-[250ms]
             hover:shadow-[var(--sh)]
             ${estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
               /* O módulo trancado RECUA, e é por isso que ele usa o papel e
@@ -184,7 +189,10 @@ function Trecho({ module: m, estado, ultimo }: {
 
           <p className={`font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-3.5
                          ${estado === 'adiante' ? 'text-ink-muted' : 'text-ink'}`}>
-            {m.titlePt}
+            <Link href={destino}
+                  className="after:absolute after:inset-0 after:rounded-[18px] after:content-['']">
+              {m.titlePt}
+            </Link>
           </p>
 
           {extra ? (
@@ -197,15 +205,15 @@ function Trecho({ module: m, estado, ultimo }: {
                 const feita = isLessonComplete(p.state, L!.id);
                 const etapasFeitas = p.state.lessons[L!.id]?.stagesDone.length ?? 0;
                 const comecada = etapasFeitas > 0 && !feita;
-                return (
-                  <span
-                    key={L!.id}
-                    title={`${L!.namePt}${feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas` : ''}`}
-                    className={`min-w-[46px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
-                      ${feita ? 'bg-[var(--teal-soft)] border-[var(--edge-teal)]'
-                        : comecada ? 'bg-[var(--card)] border-[var(--teal)]'
-                        : 'bg-[var(--sand)] border-line'}`}
-                  >
+                const estadoDaLetra = feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas` : '';
+                const aberta = feita || comecada;
+                const classe = `relative z-[1] min-w-[46px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
+                  ${aberta ? 'hover:shadow-[var(--sh)] hover:border-[var(--teal)] transition-[box-shadow,border-color]' : ''}
+                  ${feita ? 'bg-[var(--teal-soft)] border-[var(--edge-teal)]'
+                    : comecada ? 'bg-[var(--card)] border-[var(--teal)]'
+                    : 'bg-[var(--sand)] border-line'}`;
+                const miolo = (
+                  <>
                     <He size="inline" tone={feita ? 'teal' : estado === 'adiante' ? 'muted' : 'navy'}
                         className="!text-[23px] !leading-[1.1]">
                       {L!.letter}
@@ -214,12 +222,25 @@ function Trecho({ module: m, estado, ultimo }: {
                       ${feita ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
                       {L!.namePt}
                     </span>
+                  </>
+                );
+                /* Só a letra que já foi aberta ganha link próprio: a que
+                   ainda vem pela frente é alcançada pelo cartão, na ordem. */
+                return aberta ? (
+                  <Link key={L!.id} href={`/licao/${L!.id}`} className={classe}
+                        title={`${L!.namePt}${estadoDaLetra}`}
+                        aria-label={`Abrir a lição de ${L!.namePt}${estadoDaLetra}`}>
+                    {miolo}
+                  </Link>
+                ) : (
+                  <span key={L!.id} className={classe} title={`${L!.namePt}${estadoDaLetra}`}>
+                    {miolo}
                   </span>
                 );
               })}
             </div>
           )}
-        </Link>
+        </div>
       </div>
     </li>
   );

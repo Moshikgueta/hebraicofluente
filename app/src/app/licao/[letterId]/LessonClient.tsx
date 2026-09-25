@@ -22,6 +22,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
+import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
 import { SoundLab } from '@/components/learn/SoundLab';
 import { CultureUnlock } from '@/components/learn/Culture';
 import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioButton';
@@ -250,6 +251,15 @@ function StageConhecer({
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <Prose text={letter.soundNotePt} />
         </p>
+        {/* Nas letras de garganta, o lugar de onde o som sai, desenhado. */}
+        {letter.garganta && (
+          <OndeNasceOSom
+            ponto={letter.garganta.ponto}
+            voz={letter.garganta.voz}
+            comoPt={letter.garganta.comoPt}
+            letra={letter.namePt}
+          />
+        )}
       </Card>
 
       {/* As duas (ou três) leituras, com um botão de som para cada uma.
