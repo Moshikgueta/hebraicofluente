@@ -4,7 +4,7 @@
       "modulo": 3,
       "tituloPt": "O bilhete na geladeira",
       "tipoPt": "Bilhete",
-      "revisado": false,
+      "revisado": true,
       "introPt": "Você acorda cedo e acha um bilhete preso na geladeira. É a primeira coisa que você lê inteira em hebraico.",
       "linhas": [
         {
@@ -101,7 +101,7 @@
       "modulo": 4,
       "tituloPt": "Uma mensagem da montanha",
       "tipoPt": "Mensagem de WhatsApp",
-      "revisado": false,
+      "revisado": true,
       "introPt": "A Noa foi passear e mandou uma mensagem para o Dan. No celular, o hebraico chega assim: frases curtas, uma embaixo da outra.",
       "linhas": [
         {
@@ -208,7 +208,7 @@
       "modulo": 5,
       "tituloPt": "Sábado de manhã",
       "tipoPt": "Mensagem no grupo da família",
-      "revisado": false,
+      "revisado": true,
       "introPt": "O alfabeto está completo. É sábado, e chega a primeira mensagem do dia no grupo da família.",
       "linhas": [
         {
@@ -305,7 +305,7 @@
       "modulo": 6,
       "tituloPt": "A caminho de casa",
       "tipoPt": "Mensagem sem pontinhos",
-      "revisado": false,
+      "revisado": true,
       "semPontos": true,
       "introPt": "Ninguém põe nikud numa mensagem de celular. Esta chega como chegaria de verdade: só as letras. Se travar, toque em \"Mostrar os pontos\".",
       "linhas": [
@@ -393,7 +393,7 @@
       "modulo": 7,
       "tituloPt": "Um cartão de viagem",
       "tipoPt": "Mensagem de viagem",
-      "revisado": false,
+      "revisado": true,
       "introPt": "A Dana está viajando e escreve para a mãe. Aparecem as palavras de outras línguas, escritas com o gerech.",
       "linhas": [
         {
