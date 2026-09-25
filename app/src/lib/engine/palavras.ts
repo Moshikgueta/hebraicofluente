@@ -397,8 +397,57 @@ export const RODADA_A_MAO = 5;
  * corpo legível. Sorteadas pela semente, sem repetir.
  */
 export function palavrasParaEscrever(
-  letras: readonly Letter[], rand: Rand, n: number = RODADA_A_MAO
+  letras: readonly Letter[], rand: Rand, n: number = RODADA_A_MAO,
+  /** As palavras dos mini-textos já lidos: passam pelas mesmas réguas. */
+  extras: readonly PalavraDoCurso[] = []
 ): PalavraDoCurso[] {
-  const cabem = palavrasAcumuladas(letras).filter(w => letrasDaGrafia(w.he).length <= 7);
+  const alfabeto = alfabetoDe(letras);
+  const visto = new Set<string>();
+  const cabem = [...palavrasAcumuladas(letras), ...extras.filter(w =>
+    letrasDaGrafia(w.he).length >= 2 && consegueLer(w.he, alfabeto) && todasAsLetrasEnsinadas(w.he, alfabeto))]
+    .filter(w => letrasDaGrafia(w.he).length <= 7)
+    .filter(w => { const k = clean(w.he); if (visto.has(k)) return false; visto.add(k); return true; });
   return shuffled(cabem, rand).slice(0, n);
+}
+
+/* ── a rampa para o hebraico sem pontos ───────────────────────────────────
+   O módulo 6 ensina a ler sem nikud, e até lá o aluno nunca viu uma palavra
+   sem os pontinhos: o salto era de uma vez. Os checkpoints dos módulos 3, 4
+   e 5 terminam com três palavras que ele JÁ conhece, mostradas como
+   aparecem na rua, com a forma pontuada a um toque (a dica). Viram rampa. */
+
+/** Os módulos cujo checkpoint termina com palavras sem pontos. */
+export const MODULOS_COM_RAMPA: readonly number[] = [3, 4, 5];
+
+/**
+ * Três palavras conhecidas, sem nikud, para dizer o que querem dizer.
+ *
+ * Do vocabulário acumulado (toda letra da grafia já ensinada, porque sem
+ * ponto o ו e o י vogais aparecem como letra), com três letras ou mais, e só
+ * as que ficam SEM AMBIGUIDADE sem os pontos dentro desse vocabulário:
+ * {{שֵׁם}} e {{שָׁם}} viram a mesma grafia, e aí a pergunta não tem resposta.
+ */
+export function buildSemPontos(letras: readonly Letter[], rand: Rand, n = 3): Exercise[] {
+  const vocab = palavrasAcumuladas(letras).filter(w => letrasDaGrafia(w.he).length >= 3);
+  const porGrafia = new Map<string, number>();
+  for (const w of vocab) porGrafia.set(stripNikud(w.he), (porGrafia.get(stripNikud(w.he)) ?? 0) + 1);
+  const claras = vocab.filter(w => porGrafia.get(stripNikud(w.he)) === 1);
+
+  return shuffled(claras, rand).slice(0, n).map((w, i) => {
+    const outras = shuffled(vocab.filter(x => x.pt !== w.pt), rand).map(x => x.pt);
+    const options = shuffled([...new Set([w.pt, ...outras])].slice(0, 4), rand);
+    return {
+      id: `sempontos-${i}-${stripNikud(w.he)}`,
+      kind: 'word-meaning' as const,
+      letterId: 'final',
+      skill: 'ler' as const,
+      promptPt: 'Sem os pontinhos, como aparece na rua. O que quer dizer?',
+      he: stripNikud(w.he),
+      options,
+      answer: options.indexOf(w.pt),
+      hintsPt: [`Com os pontos: ${w.he}`, `Lê-se "${w.translit}".`],
+      audioId: w.audioId,
+      explainPt: `${w.he} - ${w.translit} - ${w.pt}.`
+    };
+  });
 }

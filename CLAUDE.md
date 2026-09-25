@@ -382,6 +382,17 @@ texto todo), glossário das palavras novas e perguntas de compreensão
   tradução e porquê em tudo, e a trava da revisão.
 - Conteúdo pago: vai por `/api/content`, como as missões.
 
+## A rampa sem pontos, e as palavras dos textos no vocabulário
+
+- Os checkpoints dos módulos 3, 4 e 5 (`MODULOS_COM_RAMPA`) terminam com 3
+  palavras conhecidas sem nikud (`buildSemPontos`), com a forma pontuada na
+  dica. Ficam FORA da nota: `CheckpointClient` recalcula o placar sem os ids
+  `sempontos-` e mostra o resultado delas à parte. Só palavras que não viram
+  outra sem os pontos (שֵׁם/שָׁם ficam de fora).
+- Respondidas as perguntas de um mini-texto, grava-se `firsts['texto-N']`, e
+  as `novas` do texto (menos prefixo solto e nome próprio) entram no
+  vocabulário (`leituraDe`) e no "Palavras à mão" (`palavrasDosTextosLidos`).
+
 ## Palavras à mão
 
 Na academia, "Palavras à mão" (também em `/academia?treino=palavras-a-mao`,

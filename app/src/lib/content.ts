@@ -118,6 +118,9 @@ export const nikud = (): ConteudoPago['nikud'] => dados().nikud;
 /** Módulos 6 e 7, iguais aos da apostila impressa. */
 export const extras = (): ConteudoPago['extras'] => dados().extras;
 
+/** Todos os mini-textos que o aluno pode ver (os revisados). */
+export const textosDoCurso = (): ConteudoPago['textos'] => textosPublicados(dados().textos);
+
 /** O mini-texto do módulo `n`, só se já foi revisado. Ver lib/engine/textos.ts. */
 export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
   textosPublicados(dados().textos).find(t => t.modulo === n);

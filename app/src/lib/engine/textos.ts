@@ -19,7 +19,7 @@
  * aparecem num glossário embaixo do texto.
  */
 
-import type { ItemCompreensao } from '@/lib/content-publico';
+import type { ItemCompreensao, Word } from '@/lib/content-publico';
 
 export type LinhaDeTexto = { he: string; translit: string; pt: string };
 
@@ -41,3 +41,26 @@ export type Texto = {
 /** Os textos que o aluno pode ver. */
 export const textosPublicados = (textos: readonly Texto[]): Texto[] =>
   textos.filter(t => t.revisado);
+
+/** O `firsts` que registra o texto do módulo `n` como lido. */
+export const textoLidoId = (n: number): string => `texto-${n}`;
+
+/**
+ * As palavras que um texto acrescenta ao vocabulário do aluno, depois de lido.
+ *
+ * Vêm de `novas`, que já foram revisadas junto com o texto, menos o que não é
+ * palavra de vocabulário: o prefixo solto (הַ־, בַּ־, que termina no traço de
+ * união) e o nome próprio (Dana, Noa). A pontuação de fim sai: "מָה נִשְׁמַע?"
+ * entra como "מָה נִשְׁמַע". Sem gravação ainda, então `audioId` vazio.
+ */
+export function palavrasDoTexto(t: Texto): Word[] {
+  return t.novas
+    .filter(w => !w.he.includes('־') && !/\(nome\)\s*$/.test(w.pt))
+    .map(w => ({
+      he: w.he.replace(/[?!.,:]+$/u, '').trim(),
+      translit: w.translit.replace(/[?!.,:]+$/u, '').trim(),
+      pt: w.pt,
+      use: null,
+      audioId: ''
+    }));
+}

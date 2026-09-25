@@ -19,9 +19,12 @@ import { He } from '@/components/hebrew/He';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { textoDoModulo, type CourseModule } from '@/lib/content';
 import { stripNikud } from '@/lib/hebrew';
+import { useProgress } from '@/lib/state/store';
+import { textoLidoId } from '@/lib/engine/textos';
 
 export function TextoClient({ module: mod }: { module: CourseModule }) {
   const texto = textoDoModulo(mod.n);
+  const p = useProgress();
   const [translit, setTranslit] = useState(false);
   const [traducao, setTraducao] = useState(false);
   const [pontos, setPontos] = useState(false);
@@ -130,7 +133,15 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
           bom: 'Você leu um texto inteiro em hebraico e entendeu. É para isto que o alfabeto serve.',
           parcial: 'Volte ao texto e toque nas linhas que travaram. Na segunda leitura ele fica mais fácil.'
         }}
+        /* Respondidas as perguntas, o texto conta como lido, e as palavras
+           novas dele passam a fazer parte do vocabulário do aluno. */
+        aoCompletar={() => p.markFirst(textoLidoId(mod.n))}
       />
+      {p.state.firsts[textoLidoId(mod.n)] && texto.novas.length > 0 && (
+        <p className="font-ui text-[14px] text-[var(--teal-ink)] m-0">
+          ✓ As palavras novas deste texto entraram no seu vocabulário e no treino de palavras à mão.
+        </p>
+      )}
 
       <LinkButton href={`/modulo/${mod.n}`} variant="secondary" className="justify-self-start">
         Voltar ao módulo
