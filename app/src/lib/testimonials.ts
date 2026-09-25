@@ -29,7 +29,10 @@ export type Depoimento = {
 };
 
 export const DEPOIMENTOS: readonly Depoimento[] = [
-  /* Enviado pela própria aluna ao dono do curso (25/09/2026), para a landing. */
+  /* Enviado pela própria aluna ao dono do curso (25/09/2026), para a landing.
+     Trecho, sem reescrita: a pedido do dono do curso sai o fim da segunda
+     frase ("corrigindo e acompanhando até que você realmente compreenda"),
+     que descrevia acompanhamento individual - e o curso não tem. */
   {
     nome: 'Natália',
     contexto: 'Búzios, Rio de Janeiro',
@@ -38,8 +41,7 @@ export const DEPOIMENTOS: readonly Depoimento[] = [
     resultado: 'Lê e escreve em hebraico',
     citacao:
       'Eu já havia estudado hebraico com outros professores, mas encontrei no Moshik uma abordagem ' +
-      'diferente. Ele faz você prestar atenção em cada palavra, cada letra e cada pronúncia, corrigindo ' +
-      'e acompanhando até que você realmente compreenda.\n\n' +
+      'diferente. Ele faz você prestar atenção em cada palavra, cada letra e cada pronúncia.\n\n' +
       'A plataforma também demonstra esse cuidado, com áudio, texto, imagens e exercícios de leitura, ' +
       'escrita e pronúncia. Existe uma preocupação real em fazer o aluno aprender de verdade.\n\n' +
       'Hoje consigo perceber que estou aprendendo hebraico de uma maneira diferente.',
