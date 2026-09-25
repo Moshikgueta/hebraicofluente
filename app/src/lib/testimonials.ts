@@ -21,9 +21,25 @@
 export type Depoimento = {
   nome: string;
   contexto: string;
-  resultado: string;
+  /** Opcional: só quando a própria pessoa disse um resultado. Nunca inventado. */
+  resultado?: string;
+  /** Parágrafos separados por linha em branco. O texto é o da pessoa, sem edição. */
   citacao: string;
   iniciais: string;
 };
 
-export const DEPOIMENTOS: readonly Depoimento[] = [];
+export const DEPOIMENTOS: readonly Depoimento[] = [
+  /* Enviado pela própria aluna ao dono do curso (25/09/2026), para a landing. */
+  {
+    nome: 'Natália',
+    contexto: 'Búzios, Rio de Janeiro',
+    citacao:
+      'Eu já havia estudado hebraico com outros professores, mas encontrei no Moshik uma abordagem ' +
+      'diferente. Ele faz você prestar atenção em cada palavra, cada letra e cada pronúncia, corrigindo ' +
+      'e acompanhando até que você realmente compreenda.\n\n' +
+      'A plataforma também demonstra esse cuidado, com áudio, texto, imagens e exercícios de leitura, ' +
+      'escrita e pronúncia. Existe uma preocupação real em fazer o aluno aprender de verdade.\n\n' +
+      'Hoje consigo perceber que estou aprendendo hebraico de uma maneira diferente.',
+    iniciais: 'N'
+  }
+];
