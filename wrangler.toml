@@ -122,6 +122,10 @@ SUPPORT_EMAIL = "languageswithmoshik@gmail.com"
 # sem nenhum sintoma; "0" faz a Mercado Pago recusar na hora, na primeira
 # tentativa, onde dá para ver. Entre falhar calado e falhar alto, alto.
 MP_SANDBOX = "0"
+# Quem pode gravar, substituir e remover pronúncias em /admin/gravar
+# (worker/src/api/audio.js). Separados por vírgula. Não é segredo: a conta
+# ainda exige a senha. Não criar um Secret com este nome no painel.
+ADMIN_EMAILS = "languageswithmoshik@gmail.com"
 # Custo do hash de senha. O padrão do código (25.000) foi dimensionado para o
 # limite de 10 ms de CPU do plano GRATUITO - acima disso o Worker é morto no
 # meio do cálculo e toda conta/login devolve 500.

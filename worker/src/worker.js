@@ -20,6 +20,7 @@ import * as auth from './api/auth.js';
 import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
 import { content } from './api/content.js';
+import * as audio from './api/audio.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -65,7 +66,16 @@ const ROUTES = {
      notebook de se apagarem - ver api/progress.js. */
   'GET /api/progress': progress.read,
   'PUT /api/progress': progress.write,
-  'DELETE /api/progress': progress.drop
+  'DELETE /api/progress': progress.drop,
+
+  /* O áudio gravado pelo painel do dono do curso (/admin/gravar). O
+     manifesto é público - só ids -, o resto exige conta de administrador.
+     Ver api/audio.js. */
+  'GET /api/audio/manifest': audio.manifesto,
+  'GET /api/admin/audio': audio.lista,
+  'PUT /api/admin/audio': audio.salvar,
+  'DELETE /api/admin/audio': audio.apagar,
+  'GET /api/admin/audio/arquivo': audio.arquivo
 };
 
 export default {
@@ -159,6 +169,20 @@ async function responder(request, env, ctx) {
     });
     if (blocked) return blocked;
 
+    /* ── o áudio gravado pelo painel ────────────────────────────────────
+       Depois do portão: `/audio` é rota paga. Com gravação do painel para
+       esse id, ela sai do banco; sem, segue para o arquivo do git, como
+       sempre. Um banco fora do ar também segue para o arquivo - o curso
+       perde a gravação nova por um instante, nunca o som que já tinha. */
+    const clipe = path.match(/^\/audio\/(he-[0-9a-f]{8})\.mp3$/);
+    if (clipe && (request.method === 'GET' || request.method === 'HEAD')) {
+      const doPainel = await audio.servir(request, env, clipe[1]).catch(e => {
+        console.error('audio', path, e && e.stack || e);
+        return null;
+      });
+      if (doPainel) return doPainel;
+    }
+
     /* ── o site ─────────────────────────────────────────────────────── */
     return env.ASSETS.fetch(request);
 }
@@ -195,6 +219,10 @@ const CSP = [
   "object-src 'none'"
 ].join('; ');
 
+/* O painel do dono do curso. Também libera o microfone: é onde as
+   pronúncias do curso são gravadas (app/src/app/admin/gravar). */
+const isAdminPath = path => /^\/admin(\/|$)/i.test(path);
+
 function blindar(res, path) {
   /* Uma resposta sem corpo (304, 302, 403) é reconstruída sem corpo: passar
      um `body` nulo com esses status é permitido; passar um corpo em 304 não. */
@@ -207,12 +235,19 @@ function blindar(res, path) {
      nas páginas do curso, onde o aluno grava a própria leitura
      (components/learn/GravarLeitura.tsx - a gravação não sai do aparelho).
      Nenhum terceiro, nem num iframe, ganha o microfone em lugar nenhum. */
-  const mic = isGatedPath(path) ? 'microphone=(self)' : 'microphone=()';
+  const mic = isGatedPath(path) || isAdminPath(path) ? 'microphone=(self)' : 'microphone=()';
   h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), payment=()`);
   const tipo = h.get('Content-Type') || '';
   if (tipo.startsWith('text/html')) {
     h.set('Content-Security-Policy', CSP);
     h.set('X-Frame-Options', 'DENY');
+  }
+  /* O painel do dono do curso: fora de busca e fora de cache. A página em
+     si não tem nada secreto (os dados vêm de /api/admin/*, que confere a
+     conta), mas não tem por que existir num índice. */
+  if (isAdminPath(path)) {
+    h.set('Cache-Control', 'private, no-store');
+    h.set('X-Robots-Tag', 'noindex, nofollow');
   }
   if (!path.startsWith('/api/') && isGatedPath(path)) {
     h.set('Cache-Control', 'private, no-store');

@@ -63,6 +63,11 @@ export function isPublicRoute(pathname: string | null): boolean {
 export function Chrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
+  /* O painel do dono do curso (/admin): sem a casca do curso e sem o
+     portão de compra. Quem decide o acesso é a API, pela conta de
+     administrador - ver worker/src/api/audio.js. */
+  if (/^\/admin(\/|$)/.test(pathname ?? '')) return <>{children}</>;
+
   if (isPublicRoute(pathname)) {
     return <PublicShell>{children}</PublicShell>;
   }

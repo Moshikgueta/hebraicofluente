@@ -304,7 +304,10 @@ export function Depoimentos() {
     <section>
       <Container className="pt-16 sm:pt-24">
         <Reveal><H2 className="mb-8">Quem já está lendo.</H2></Reveal>
-        <ul className="grid gap-4 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(275px,1fr))]">
+        {/* Um depoimento só não se estica pela largura toda: linha de texto
+            longa demais cansa. */}
+        <ul className={`grid gap-4 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(275px,1fr))]
+                        ${DEPOIMENTOS.length === 1 ? 'max-w-[720px]' : ''}`}>
           {DEPOIMENTOS.map((t, i) => (
             <Reveal as="li" key={t.nome + i} delay={i * 80}
                     className="rounded-[18px] bg-[var(--card)] border border-line p-6">
@@ -320,11 +323,19 @@ export function Depoimentos() {
                   <span className="font-ui text-[13.5px] text-ink-muted">{t.contexto}</span>
                 </span>
               </span>
-              <span className="inline-block rounded-full bg-[var(--teal-soft)] px-[11px] py-[5px]
-                               font-ui text-[13px] font-semibold text-[var(--teal-ink)] mb-3.5">
-                {t.resultado}
-              </span>
-              <p className="font-ui text-[15.5px] leading-[1.6] text-ink-muted">{t.citacao}</p>
+              {t.resultado && (
+                <span className="inline-block rounded-full bg-[var(--teal-soft)] px-[11px] py-[5px]
+                                 font-ui text-[13px] font-semibold text-[var(--teal-ink)] mb-3.5">
+                  {t.resultado}
+                </span>
+              )}
+              <blockquote className="m-0 grid gap-3">
+                {t.citacao.split(/\n\s*\n/).map((par, j) => (
+                  <p key={j} className="m-0 font-ui text-[15.5px] leading-[1.6] text-ink-muted">
+                    {j === 0 ? '“' : ''}{par}{j === t.citacao.split(/\n\s*\n/).length - 1 ? '”' : ''}
+                  </p>
+                ))}
+              </blockquote>
             </Reveal>
           ))}
         </ul>

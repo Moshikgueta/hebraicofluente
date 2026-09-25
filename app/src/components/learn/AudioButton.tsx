@@ -21,18 +21,24 @@
  * a recording made for the printed workbook plays here with no second naming
  * scheme and no renaming when a lesson is reordered. */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { asset } from '@/lib/asset';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { track } from '@/lib/analytics';
 
-/* Which clips exist. Populated at build time from public/audio/; empty today,
-   and the UI is built to look right that way rather than to look broken. */
-import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+/* Which clips exist: the studio files the build found in public/audio/, plus
+   the ones recorded from the admin panel after the build (lib/audio-registro).
+   The UI is built to look right with none of either. */
+import {
+  algumClipe, assinar, clipeDoPainel, temClipe, urlDoClipe, versaoDoRegistro
+} from '@/lib/audio-registro';
 
-export const hasAudio = (audioId: string | null | undefined): boolean =>
-  !!audioId && AUDIO_MANIFEST.includes(audioId);
+export const hasAudio = (audioId: string | null | undefined): boolean => temClipe(audioId);
 
-export const audioAvailable = (): boolean => AUDIO_MANIFEST.length > 0;
+export const audioAvailable = (): boolean => algumClipe();
+
+/** Re-render when the panel's list arrives. The server snapshot is 0, so the
+    first client render matches the static HTML and only then picks up clips. */
+export const useRegistroDeAudio = (): number =>
+  useSyncExternalStore(assinar, versaoDoRegistro, () => 0);
 
 export function AudioButton({
   audioId, label = 'Ouvir', size = 'md', slow = false
@@ -45,18 +51,34 @@ export function AudioButton({
 }) {
   const ref = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
+  useRegistroDeAudio();
   const available = hasAudio(audioId);
 
   useEffect(() => () => { ref.current?.pause(); }, []);
 
   const play = useCallback((rate: number) => {
     if (!audioId || !available) return;
-    const el = ref.current ?? new Audio(asset(`/audio/${audioId}.mp3`));
-    ref.current = el;
+    /* A gravação do painel pode ter sido substituída desde o último toque:
+       o endereço muda com ela, e o elemento velho é trocado. */
+    const src = urlDoClipe(audioId);
+    if (!ref.current || ref.current.dataset.src !== src) {
+      ref.current?.pause();
+      ref.current = new Audio(src);
+      ref.current.dataset.src = src;
+    }
+    const el = ref.current;
+    /* O trecho da voz, quando o painel mediu um: o arquivo gravado no
+       celular tem silêncio antes e depois. O fragmento `#t=` do endereço
+       vale para o primeiro toque; a partir do segundo, quem corta é isto. */
+    const corte = clipeDoPainel(audioId);
+    const inicio = corte?.inicio != null ? corte.inicio / 1000 : 0;
+    const fim = corte?.fim != null ? corte.fim / 1000 : null;
     el.playbackRate = rate;
-    el.currentTime = 0;
+    el.currentTime = inicio;
     setPlaying(true);
     el.onended = () => setPlaying(false);
+    el.onpause = () => setPlaying(false);
+    el.ontimeupdate = fim === null ? null : () => { if (el.currentTime >= fim) el.pause(); };
     el.onerror = () => { setPlaying(false); track('audio_unavailable', { audioId }); };
     void el.play().catch(() => setPlaying(false));
     track('audio_played', { audioId });

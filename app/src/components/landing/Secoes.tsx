@@ -548,8 +548,8 @@ export function Jornada() {
       <Container className="py-16 sm:py-[88px]">
         <Reveal><H2 className="mb-3">Seu hebraico começa aqui. Não termina aqui.</H2></Reveal>
         <Reveal delay={80}><Lead className="mb-10">
-          A Alfabetização é o primeiro degrau de uma trilha que continua. Quem entra
-          agora acompanha os próximos níveis conforme saem.
+          A Alfabetização é o primeiro degrau. Os próximos níveis estão em preparação
+          e serão cursos à parte.
         </Lead></Reveal>
         <ul className="grid gap-3.5 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(176px,1fr))]">
           {cursos.map((c, i) => {

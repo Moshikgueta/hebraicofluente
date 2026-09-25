@@ -21,6 +21,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
+import { carregarManifesto } from '@/lib/audio-registro';
 import { useProgress } from '@/lib/state/store';
 import { XPIndicator } from '@/components/game/Game';
 import { Card } from '@/components/ui/Card';
@@ -28,7 +29,6 @@ import { Button } from '@/components/ui/Button';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { Logo } from '@/components/shell/Logo';
 import { He } from '@/components/hebrew/He';
-import { allCourses, isPlayable } from '@/lib/catalog';
 import {
   IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil, IconeAula0,
   IconePalavras
@@ -104,6 +104,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { remember } = p;
 
   useEffect(() => { if (pathname) remember(pathname); }, [pathname, remember]);
+  /* Os clipes gravados pelo painel depois da build (lib/audio-registro.ts). */
+  useEffect(() => { void carregarManifesto(); }, []);
 
   const avisos = (
     <>
@@ -270,7 +272,6 @@ function RodapeDeAjuda() {
    compra um A1. */
 function Sidebar({ pathname }: { pathname: string | null }) {
   const p = useProgress();
-  const proximo = allCourses().find(c => !isPlayable(c));
 
   return (
     <aside className="hidden lg:flex flex-col gap-[26px] bg-[var(--navy)] px-[18px] py-[26px]">
@@ -318,15 +319,10 @@ function Sidebar({ pathname }: { pathname: string | null }) {
 
       <div className="flex-1" />
 
-      {proximo && (
-        <div className="rounded-[14px] bg-white/[.07] p-4">
-          <p className="font-ui text-[13px] text-white/60 mb-1.5">Próximo nível</p>
-          <p className="font-ui text-[15px] font-semibold text-white mb-1">{proximo.titlePt}</p>
-          <p className="font-ui text-[13px] leading-[1.45] text-white/[.55]">
-            Liberado quando você concluir a Alfabetização.
-          </p>
-        </div>
-      )}
+      {/* Aqui havia um cartão de "próximo nível" dizendo que o A1 seria
+          liberado ao concluir a Alfabetização. Removido em 25/09/2026, a
+          pedido do dono do curso: o A1 não existe ainda e será vendido à
+          parte, então o cartão prometia de graça um curso que vai custar. */}
 
       <p className="font-ui text-[11.5px] leading-relaxed text-white/[.45] px-1">
         Nos exercícios, <Key dark>1</Key>-<Key dark>4</Key> respondem e <Key dark>Enter</Key> avança.

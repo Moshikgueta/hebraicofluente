@@ -266,3 +266,28 @@ CREATE TABLE IF NOT EXISTS arrependimentos (
   pedido_em  INTEGER NOT NULL,
   ip         TEXT    NOT NULL DEFAULT ''
 );
+
+-- ── gravações do painel (/admin/gravar) ───────────────────────────────────
+-- O áudio que o dono do curso grava pelo navegador. Uma linha por clipe, com
+-- o id do catálogo (`he-xxxxxxxx`, data/audio.json) como chave: gravar de
+-- novo SUBSTITUI. O Worker serve daqui antes do arquivo do git, no mesmo
+-- endereço /audio/<id>.mp3 - ver worker/src/api/audio.js.
+--
+-- `dados` é o arquivo como o navegador gravou (audio/mp4 no Safari; WAV no
+-- navegador que só grava WebM). `inicio_ms`/`fim_ms` é onde a voz começa e
+-- termina dentro dele, medido pelo painel; o curso toca só esse trecho.
+--
+-- `autor` é o e-mail, e não uma chave para `accounts`, de propósito: a
+-- gravação é conteúdo do curso, e não pode travar nem sumir quando uma conta
+-- é apagada.
+CREATE TABLE IF NOT EXISTS gravacoes (
+  audio_id      TEXT    PRIMARY KEY,
+  tipo          TEXT    NOT NULL,
+  dados         BLOB    NOT NULL,
+  tamanho       INTEGER NOT NULL,
+  inicio_ms     INTEGER,
+  fim_ms        INTEGER,
+  duracao_ms    INTEGER,
+  autor         TEXT    NOT NULL,
+  atualizado_em INTEGER NOT NULL
+);
