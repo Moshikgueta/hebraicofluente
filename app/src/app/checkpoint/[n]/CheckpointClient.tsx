@@ -21,6 +21,8 @@ import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, type CourseModule, type Letter } from '@/lib/content';
 import { buildCheckpoint } from '@/lib/engine/exercises';
+import { buildSemPontos, MODULOS_COM_RAMPA } from '@/lib/engine/palavras';
+import { rng } from '@/lib/engine/rng';
 import { isLessonComplete, PASS_MARK } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
@@ -30,13 +32,20 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
   const [phase, setPhase] = useState<'intro' | 'running' | 'result'>('intro');
   const [run, setRun] = useState(0);
   const [result, setResult] = useState<PlayerResult | null>(null);
+  /* As palavras sem pontos do fim (módulos 3 a 5): quantas acertou. Fora da
+     nota do checkpoint, que continua sendo sobre as letras do módulo. */
+  const [rampa, setRampa] = useState<{ certas: number; total: number } | null>(null);
 
   const history = useMemo(() => allLetters().filter(l => l.order <= (mod.upTo ?? 0)), [mod.upTo]);
+  const comRampa = MODULOS_COM_RAMPA.includes(mod.n);
   const exercises = useMemo(
-    () => buildCheckpoint(letters, history, {
-      audioAvailable: audioAvailable(), count: 12, seed: `cp-${mod.n}-${run}`
-    }),
-    [letters, history, mod.n, run]
+    () => [
+      ...buildCheckpoint(letters, history, {
+        audioAvailable: audioAvailable(), count: 12, seed: `cp-${mod.n}-${run}`
+      }),
+      ...(comRampa ? buildSemPontos(history, rng(`cp-${mod.n}-${run}-sem-pontos`)) : [])
+    ],
+    [letters, history, mod.n, run, comRampa]
   );
 
   const readyLetters = letters.filter(l => isLessonComplete(p.state, l.id));
@@ -83,6 +92,17 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
             <p className="text-[16px] leading-relaxed text-ink"><Prose text={mod.milestonePt} /></p>
           </Card>
         )}
+        {rampa && (
+          <Card tone="wash" className="p-5 grid gap-1.5">
+            <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Sem os pontinhos</p>
+            <p className="text-[15px] leading-relaxed text-ink-body m-0">
+              Você leu {rampa.certas} de {rampa.total} palavras sem nikud, do jeito que elas aparecem
+              na rua. Isso não entra na nota: é um aquecimento para o módulo 6, onde os pontos
+              somem de vez.
+            </p>
+          </Card>
+        )}
+
         {/* O fim de um módulo é o melhor momento para o número: "conheço seis
             letras" vira "leio N palavras". */}
         {passed && <ContadorDeLeitura />}
@@ -117,8 +137,18 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         exercises={exercises}
         title={`Checkpoint ${mod.n}`}
         onDone={r => {
-          setResult(r);
-          if (mod.checkpoint) p.finishCheckpoint(mod.checkpoint.id, r.score);
+          /* A nota é só dos itens do checkpoint; a rampa sem pontos é
+             prática e é contada à parte. */
+          const daRampa = (id: string) => id.startsWith('sempontos-');
+          const totalRampa = exercises.filter(e => daRampa(e.id)).length;
+          const errosRampa = r.missed.filter(daRampa).length;
+          const total = r.total - totalRampa;
+          const missed = r.missed.filter(id => !daRampa(id));
+          const correct = total - missed.length;
+          const nucleo = { correct, total, score: total ? correct / total : 0, missed };
+          setRampa(totalRampa ? { certas: totalRampa - errosRampa, total: totalRampa } : null);
+          setResult(nucleo);
+          if (mod.checkpoint) p.finishCheckpoint(mod.checkpoint.id, nucleo.score);
           setPhase('result');
         }}
       />
@@ -176,6 +206,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
           12 questões misturando reconhecimento, leitura, vocabulário e as formas
           finais - só com letras que você já viu. Passa com 70%, e dá para refazer
           quantas vezes quiser.
+          {comRampa && ' No fim vêm 3 palavras que você já conhece, sem os pontinhos, como aparecem na rua. Elas não entram na nota.'}
         </p>
         <div className="pt-1">
           <HeSeq items={letters.map(l => l.letter)} size="word" />

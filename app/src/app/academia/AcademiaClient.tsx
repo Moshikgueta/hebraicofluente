@@ -24,6 +24,7 @@ import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePl
 import { SoundLab, VowelSigns } from '@/components/learn/SoundLab';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { EscreverPalavras } from '@/components/learn/EscreverPalavras';
+import { palavrasDosTextosLidos } from '@/lib/leitura';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { ParaRevisar } from '@/components/game/Debt';
 import { useProgress } from '@/lib/state/store';
@@ -556,7 +557,8 @@ export function AcademiaClient() {
           label="Escreva em cursiva as palavras que você já aprendeu"
           onBack={() => setScreen({ kind: 'menu' })}
         />
-        <EscreverPalavras letras={unlocked} semente={`a-mao-${p.day}`} />
+        <EscreverPalavras letras={unlocked} semente={`a-mao-${p.day}`}
+                          extras={palavrasDosTextosLidos(p.state)} />
       </div>
     );
   }

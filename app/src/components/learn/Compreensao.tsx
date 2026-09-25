@@ -34,7 +34,7 @@
  * assoc    associação: várias linhas, cada uma com os mesmos rótulos
  */
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 /* O enunciado e o retorno são PROSA: o hebraico dentro deles vem marcado
@@ -58,13 +58,15 @@ function tom(respondida: boolean, estaCerta: boolean, marcada: boolean) {
   return 'border-line bg-surface text-ink-muted';
 }
 
-export function Compreensao({ id, titulo, intro, perguntas, fecho }: {
+export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar }: {
   id: string;
   titulo: string;
   intro: string;
   perguntas: ItemCompreensao[];
   /** A mensagem do fim, quando tudo foi respondido. */
   fecho: { bom: string; parcial: string };
+  /** Chamado uma vez, quando a última pergunta é respondida. */
+  aoCompletar?: (certas: number) => void;
 }) {
   /* Uma resposta por pergunta; na associação, uma por linha. */
   const [resp, setResp] = useState<Record<number, number>>({});
@@ -85,6 +87,17 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho }: {
   const feitas = perguntas.filter((p, i) => respondida(i, p)).length;
   const certas = perguntas.filter((p, i) => respondida(i, p) && acertou(i, p)).length;
   const completo = feitas === perguntas.length;
+
+  /* Uma vez só: responder de novo não dispara outra vez. Quem ouve (o
+     mini-texto) grava um `firsts`, que já é idempotente, mas a guarda deixa
+     o contrato claro para o próximo que usar isto. */
+  const avisado = useRef(false);
+  useEffect(() => {
+    if (completo && !avisado.current) {
+      avisado.current = true;
+      aoCompletar?.(certas);
+    }
+  }, [completo, certas, aoCompletar]);
 
   return (
     <section aria-labelledby={id} className="grid gap-4">

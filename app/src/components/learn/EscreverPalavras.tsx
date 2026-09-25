@@ -24,7 +24,7 @@ import { He } from '@/components/hebrew/He';
 import { AudioButton, hasAudio } from './AudioButton';
 import { TraceBoard, type QuadroHandle, type Veredito } from './TraceBoard';
 import type { Letter } from '@/lib/content';
-import { palavrasParaEscrever } from '@/lib/engine/palavras';
+import { palavrasParaEscrever, type PalavraDoCurso } from '@/lib/engine/palavras';
 import { rng } from '@/lib/engine/rng';
 import { stripNikud } from '@/lib/hebrew';
 
@@ -34,11 +34,19 @@ const ETAPAS = [
   { guia: 0, rotulo: 'Sem modelo', dica: 'Agora sozinho. Escreva a palavra de memória.' }
 ] as const;
 
-export function EscreverPalavras({ letras, semente }: { letras: readonly Letter[]; semente: string }) {
+export function EscreverPalavras({ letras, semente, extras = [] }: {
+  letras: readonly Letter[]; semente: string;
+  /** As palavras dos mini-textos já lidos. */
+  extras?: readonly PalavraDoCurso[];
+}) {
   const [rodada, setRodada] = useState(0);
   const palavras = useMemo(
-    () => palavrasParaEscrever(letras, rng(`${semente}-${rodada}`)),
-    [letras, semente, rodada]
+    () => palavrasParaEscrever(letras, rng(`${semente}-${rodada}`), undefined, extras),
+    /* Pela CHAVE das palavras, e não pela lista: quem chama monta a lista a
+       cada render, e depender dela sortearia outra rodada no meio da
+       escrita - o defeito que a academia já teve com os jogos. */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [letras, semente, rodada, extras.map(w => w.he).join('|')]
   );
   const [qual, setQual] = useState(0);
   const [etapa, setEtapa] = useState(0);
