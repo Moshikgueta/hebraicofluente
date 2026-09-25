@@ -62,6 +62,14 @@ export const IconeAula0 = (p: P) => wrap(
     <path d="M10 5.9v10.2" stroke="currentColor" />
   </>, p);
 
+/** Palavras: duas fichas de vocabulário, uma sobre a outra. */
+export const IconePalavras = (p: P) => wrap(
+  <>
+    <rect x="3.4" y="6" width="10.6" height="10.6" rx="1.2" stroke="currentColor" />
+    <path d="M6.6 3.4h8.8a1.2 1.2 0 0 1 1.2 1.2v8.8" stroke="currentColor" />
+    <path d="M6.2 10h5M6.2 12.8h3.2" stroke="currentColor" />
+  </>, p);
+
 /** Perfil: a pessoa. */
 export const IconePerfil = (p: P) => wrap(
   <>

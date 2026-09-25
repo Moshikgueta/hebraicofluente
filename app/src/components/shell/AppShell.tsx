@@ -30,7 +30,8 @@ import { Logo } from '@/components/shell/Logo';
 import { He } from '@/components/hebrew/He';
 import { allCourses, isPlayable } from '@/lib/catalog';
 import {
-  IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil, IconeAula0
+  IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil, IconeAula0,
+  IconePalavras
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
@@ -60,6 +61,12 @@ const NAV = [
      drill only the vowels should not have to find the door. */
   { href: '/academia', label: 'Praticar', icon: IconePraticar, movel: 'barra' },
   { href: '/conquistas', label: 'Progresso', icon: IconeConquistas, movel: 'barra' },
+  /* As palavras aprendidas: /vocabulario mostra só o que as letras já
+     concluídas leem. Antes a página só se abria pelo link do contador de
+     leitura no painel, e quem queria rever uma palavra tinha de voltar ao
+     painel para achar a porta. Depois dos cinco destinos do dia, para que
+     nenhum deles mude de lugar. */
+  { href: '/vocabulario', label: 'Palavras', icon: IconePalavras, movel: 'barra' },
   /* A aula 0 fica na navegação, e não só no painel.
      ──────────────────────────────────────────────────────────────────────
      Ela nasceu como uma etapa: o painel oferecia, o onboarding terminava
@@ -378,7 +385,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
                  bg-[color-mix(in_srgb,var(--paper)_94%,transparent)] backdrop-blur-md
                  pb-[env(safe-area-inset-bottom)]"
     >
-      {/* Seis alvos num aparelho de 390px dão 65px cada, e o rótulo mais
+      {/* Sete alvos num aparelho de 390px dão 54px cada, e o rótulo mais
           largo ("Progresso") mede 52. O `min-w-0` é o que impede um deles de
           esticar a linha: sem ele, `flex-1` respeita a largura do conteúdo e
           a barra fica mais larga que a tela. */}
