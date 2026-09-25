@@ -56,7 +56,7 @@
 
 <section class="sheet">
   <h1>Roteiro de gravação</h1>
-  <p class="lead">Hebraico Fluente - curso de alfabetização. <strong>321 clipes</strong>,
+  <p class="lead">Hebraico Fluente - curso de alfabetização. <strong>318 clipes</strong>,
      divididos em três ondas. Estimativa total: cerca de <strong>80 minutos</strong>
      de sessão, sem contar montagem e pausas.</p>
 
@@ -78,15 +78,20 @@
     <div class="box">
       <h3>O técnico</h3>
       <ul>
-        <li><strong>WAV 48 kHz / 24 bits</strong>, mono. A conversão para MP3 é nossa.</li>
+        <li><strong>WAV</strong>, mono, 48 kHz (44,1 kHz também serve). A conversão para MP3 é nossa.</li>
         <li><strong>Sem processamento</strong>: nada de compressão, de-esser, EQ,
             normalização ou redução de ruído. Cru.</li>
-        <li>Um arquivo por clipe, nomeado exatamente como a coluna
-            <em>Nome do arquivo</em>, trocando <code>.mp3</code> por <code>.wav</code>.</li>
-        <li>Deixe <strong>0,3 s de silêncio</strong> antes e depois de cada palavra.</li>
-        <li>Grave <strong>30 s de ruído de sala</strong> no começo da sessão e entregue
-            como <code>room-tone.wav</code>.</li>
-        <li>Se houver segunda tomada, entregue só a escolhida.</li>
+        <li><strong>Não é um arquivo por palavra.</strong> Grave em <strong>blocos de até 40
+            clipes</strong>, lendo de cima para baixo na ordem dos números, num arquivo
+            contínuo por bloco. O corte e os nomes são automáticos.</li>
+        <li>Comece cada bloco com <strong>3 segundos de silêncio</strong>, e deixe
+            <strong>1 segundo de silêncio</strong> entre um clipe e o próximo. É por esse
+            silêncio que a gravação é cortada.</li>
+        <li>Nomeie cada bloco pela onda e pelos números: <code>onda1_001-040.wav</code>.</li>
+        <li><strong>Errou, tossiu ou repetiu?</strong> Pare, apague aquele bloco e grave o
+            bloco de novo. Uma palavra a mais ou a menos desalinha o resto do bloco.</li>
+        <li>Grave <strong>30 s de silêncio da sala</strong> no começo, sem falar, e entregue
+            como <code>room-tone.wav</code>. É o que a limpeza do ruído usa de referência.</li>
       </ul>
     </div>
   </div>
@@ -98,7 +103,7 @@
        pronúncia corrente se ela divergir. Duas palavras deste roteiro têm as
        mesmas consoantes e vogais diferentes; elas são clipes diferentes de
        propósito.</p>
-    <p style="margin:0"><strong>2. As sílabas são o coração.</strong> A onda 1 tem 136
+    <p style="margin:0"><strong>2. As sílabas são o coração.</strong> A onda 1 tem 133
        sílabas soltas. Elas soam estranhas de ler em voz alta, e é normal: o aluno
        está aprendendo que <em>esta letra com este sinal faz este som</em>. Leia cada
        uma como sílaba isolada, sem transformar em palavra e sem alongar.</p>
@@ -111,8 +116,8 @@
       <tr>
         <td class="num">1</td>
         <td><strong>O essencial</strong></td>
-        <td class="num">168</td>
-        <td class="num">~42 min</td>
+        <td class="num">165</td>
+        <td class="num">~41 min</td>
         <td class="gloss">Nomes das letras, sílabas e os sinais de vogal. Só com esta onda, toda lição já tem áudio no que importa: o som da letra.</td>
       </tr><tr>
         <td class="num">2</td>
@@ -131,17 +136,20 @@
   </table>
 
   <h3>Depois da sessão</h3>
-  <p class="lead">Coloque os arquivos convertidos em <code>audio/</code> na raiz do
-     repositório e rode <code>npm run check-audio</code>. Ele diz o que chegou, o que
-     falta, e se algum arquivo tem nome que não corresponde a clipe nenhum. Nada
-     mais precisa ser editado: o app passa a tocar os clipes que existirem.</p>
+  <p class="lead">Cada bloco passa por <code>npm run cortar-audio -- --onda 1 --de 1 --ate 40
+     onda1_001-040.wav</code>, que corta nos silêncios, limpa, iguala o volume e dá a
+     cada pedaço o nome certo. O corte só grava os arquivos se a contagem bater
+     exatamente com o bloco, e gera <code>audio/conferir/conferencia.html</code>, que toca
+     cada pedaço ao lado da palavra: ouvir algumas linhas dela prova que nada saiu
+     desalinhado. No fim, <code>npm run check-audio</code> diz o que chegou e o que falta.
+     Nada mais precisa ser editado: o app passa a tocar os clipes que existirem.</p>
 </section>
 
 
   <section class="sheet">
     <h2>Onda 1 - O essencial</h2>
     <p class="lead">Nomes das letras, sílabas e os sinais de vogal. Só com esta onda, toda lição já tem áudio no que importa: o som da letra.</p>
-    <p class="meta"><strong>168</strong> clipes · cerca de <strong>42 min</strong> de sessão</p>
+    <p class="meta"><strong>165</strong> clipes · cerca de <strong>41 min</strong> de sessão</p>
     <table>
       <thead>
         <tr>
@@ -150,6 +158,12 @@
         </tr>
       </thead>
       <tbody>
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 1 a 42</strong> (40 clipes) · grave como
+      <code>onda1_001-042.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 1 --de 1 --ate 42 onda1_001-042.wav</code>
+    </td></tr>
+
     <tr>
       <td class="num">1</td>
       <td class="he-cell"><span class="he he--word" lang="he">אָלֶף</span></td>
@@ -207,16 +221,6 @@
       <td class="gloss">sílaba - só a vogal U</td>
       <td class="where">letra 1</td>
       <td class="file"><code>he-56e8723f.mp3</code></td>
-      <td class="take"></td>
-    </tr>
-
-    <tr>
-      <td class="num">7</td>
-      <td class="he-cell"><span class="he he--word" lang="he">אֲ</span></td>
-      <td class="tr"><strong>a</strong></td>
-      <td class="gloss">sílaba - guturais não aceitam sheva - usam o hataf, um A ultrabreve</td>
-      <td class="where">letra 1</td>
-      <td class="file"><code>he-06c3c65b.mp3</code></td>
       <td class="take"></td>
     </tr>
 
@@ -491,16 +495,6 @@
     </tr>
 
     <tr>
-      <td class="num">35</td>
-      <td class="he-cell"><span class="he he--word" lang="he">הְ</span></td>
-      <td class="tr"><strong>h</strong></td>
-      <td class="gloss">sílaba - só a consoante, sem vogal</td>
-      <td class="where">letra 5</td>
-      <td class="file"><code>he-8c018233.mp3</code></td>
-      <td class="take"></td>
-    </tr>
-
-    <tr>
       <td class="num">36</td>
       <td class="he-cell"><span class="he he--word" lang="he">יוֹד</span></td>
       <td class="tr"><strong>Yod</strong></td>
@@ -569,6 +563,12 @@
       <td class="file"><code>he-f32bd38f.mp3</code></td>
       <td class="take"></td>
     </tr>
+
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 43 a 82</strong> (40 clipes) · grave como
+      <code>onda1_043-082.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 1 --de 43 --ate 82 onda1_043-082.wav</code>
+    </td></tr>
 
     <tr>
       <td class="num">43</td>
@@ -970,6 +970,12 @@
       <td class="take"></td>
     </tr>
 
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 83 a 123</strong> (40 clipes) · grave como
+      <code>onda1_083-123.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 1 --de 83 --ate 123 onda1_083-123.wav</code>
+    </td></tr>
+
     <tr>
       <td class="num">83</td>
       <td class="he-cell"><span class="he he--word" lang="he">ווּ</span></td>
@@ -1331,16 +1337,6 @@
     </tr>
 
     <tr>
-      <td class="num">119</td>
-      <td class="he-cell"><span class="he he--word" lang="he">עֲ</span></td>
-      <td class="tr"><strong>a</strong></td>
-      <td class="gloss">sílaba - guturais não aceitam sheva - usam o hataf, um A ultrabreve</td>
-      <td class="where">letra 17</td>
-      <td class="file"><code>he-358c21fb.mp3</code></td>
-      <td class="take"></td>
-    </tr>
-
-    <tr>
       <td class="num">120</td>
       <td class="he-cell"><span class="he he--word" lang="he">צָדִי</span></td>
       <td class="tr"><strong>Tsadi</strong></td>
@@ -1379,6 +1375,12 @@
       <td class="file"><code>he-d52ba322.mp3</code></td>
       <td class="take"></td>
     </tr>
+
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 124 a 163</strong> (40 clipes) · grave como
+      <code>onda1_124-163.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 1 --de 124 --ate 163 onda1_124-163.wav</code>
+    </td></tr>
 
     <tr>
       <td class="num">124</td>
@@ -1780,6 +1782,12 @@
       <td class="take"></td>
     </tr>
 
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 164 a 168</strong> (5 clipes) · grave como
+      <code>onda1_164-168.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 1 --de 164 --ate 168 onda1_164-168.wav</code>
+    </td></tr>
+
     <tr>
       <td class="num">164</td>
       <td class="he-cell"><span class="he he--word" lang="he">חוֹלָם מָלֵא</span></td>
@@ -1844,6 +1852,12 @@
         </tr>
       </thead>
       <tbody>
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 169 a 208</strong> (40 clipes) · grave como
+      <code>onda2_169-208.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 2 --de 169 --ate 208 onda2_169-208.wav</code>
+    </td></tr>
+
     <tr>
       <td class="num">169</td>
       <td class="he-cell"><span class="he he--word" lang="he">אִמָּא</span></td>
@@ -2109,7 +2123,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">שֵׁם</span></td>
       <td class="tr"><strong>shem</strong></td>
       <td class="gloss">nome</td>
-      <td class="where">letra 9</td>
+      <td class="where">letra 9 · módulo 6</td>
       <td class="file"><code>he-805c8091.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2119,7 +2133,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">שָׁם</span></td>
       <td class="tr"><strong>sham</strong></td>
       <td class="gloss">lá / ali</td>
-      <td class="where">letra 9</td>
+      <td class="where">letra 9 · módulo 6</td>
       <td class="file"><code>he-b19b2b8c.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2149,7 +2163,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">שֶׁמֶשׁ</span></td>
       <td class="tr"><strong>shémesh</strong></td>
       <td class="gloss">sol</td>
-      <td class="where">letra 9</td>
+      <td class="where">letra 9 · módulo 6</td>
       <td class="file"><code>he-736e502c.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2179,7 +2193,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">יֶלֶד</span></td>
       <td class="tr"><strong>yéled</strong></td>
       <td class="gloss">menino</td>
-      <td class="where">letra 10</td>
+      <td class="where">letra 10 · módulo 6</td>
       <td class="file"><code>he-0386b412.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2209,7 +2223,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">שִׁיר</span></td>
       <td class="tr"><strong>shir</strong></td>
       <td class="gloss">canção</td>
-      <td class="where">letra 11</td>
+      <td class="where">letra 11 · módulo 6</td>
       <td class="file"><code>he-c057fc77.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2244,6 +2258,12 @@
       <td class="take"></td>
     </tr>
 
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 209 a 248</strong> (40 clipes) · grave como
+      <code>onda2_209-248.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 2 --de 209 --ate 248 onda2_209-248.wav</code>
+    </td></tr>
+
     <tr>
       <td class="num">209</td>
       <td class="he-cell"><span class="he he--word" lang="he">שָׁלוֹם</span></td>
@@ -2259,7 +2279,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">תּוֹדָה</span></td>
       <td class="tr"><strong>todá</strong></td>
       <td class="gloss">obrigado</td>
-      <td class="where">letra 12 · letra 3 · no mundo real</td>
+      <td class="where">letra 12 · letra 3 · módulo 6 · no mundo real</td>
       <td class="file"><code>he-6c894906.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2389,7 +2409,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">לֶחֶם</span></td>
       <td class="tr"><strong>léchem</strong></td>
       <td class="gloss">pão</td>
-      <td class="where">letra 14 · letra 10 · no mundo real</td>
+      <td class="where">letra 14 · letra 10 · módulo 6 · no mundo real</td>
       <td class="file"><code>he-f059f3a3.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2459,7 +2479,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">סוּס</span></td>
       <td class="tr"><strong>sus</strong></td>
       <td class="gloss">cavalo</td>
-      <td class="where">letra 16</td>
+      <td class="where">letra 16 · módulo 6</td>
       <td class="file"><code>he-5b034b0b.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2509,7 +2529,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">עִיר</span></td>
       <td class="tr"><strong>ir</strong></td>
       <td class="gloss">cidade</td>
-      <td class="where">letra 17</td>
+      <td class="where">letra 17 · módulo 6</td>
       <td class="file"><code>he-43b3f1c8.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2619,7 +2639,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">קוֹל</span></td>
       <td class="tr"><strong>kol</strong></td>
       <td class="gloss">voz</td>
-      <td class="where">letra 19</td>
+      <td class="where">letra 19 · módulo 6</td>
       <td class="file"><code>he-7d56d33c.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -2643,6 +2663,12 @@
       <td class="file"><code>he-8e835cc6.mp3</code></td>
       <td class="take"></td>
     </tr>
+
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 249 a 267</strong> (19 clipes) · grave como
+      <code>onda2_249-267.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 2 --de 249 --ate 267 onda2_249-267.wav</code>
+    </td></tr>
 
     <tr>
       <td class="num">249</td>
@@ -2848,6 +2874,12 @@
         </tr>
       </thead>
       <tbody>
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 268 a 307</strong> (40 clipes) · grave como
+      <code>onda3_268-307.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 3 --de 268 --ate 307 onda3_268-307.wav</code>
+    </td></tr>
+
     <tr>
       <td class="num">268</td>
       <td class="he-cell"><span class="he he--word" lang="he">אֶתְמוֹל</span></td>
@@ -2993,7 +3025,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">רְחוֹב</span></td>
       <td class="tr"><strong>rechov</strong></td>
       <td class="gloss">rua</td>
-      <td class="where">letra 11</td>
+      <td class="where">letra 11 · módulo 6</td>
       <td class="file"><code>he-1972aacc.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -3043,7 +3075,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">עַכְשָׁו</span></td>
       <td class="tr"><strong>achshav</strong></td>
       <td class="gloss">agora</td>
-      <td class="where">letra 12</td>
+      <td class="where">letra 12 · módulo 6</td>
       <td class="file"><code>he-fd9903d6.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -3103,7 +3135,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">סְלִיחָה</span></td>
       <td class="tr"><strong>slichá</strong></td>
       <td class="gloss">desculpe / com licença</td>
-      <td class="where">letra 16</td>
+      <td class="where">letra 16 · módulo 6</td>
       <td class="file"><code>he-5afd57ab.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -3113,7 +3145,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">אוֹטוֹבּוּס</span></td>
       <td class="tr"><strong>ótobus</strong></td>
       <td class="gloss">ônibus</td>
-      <td class="where">letra 16</td>
+      <td class="where">letra 16 · módulo 6</td>
       <td class="file"><code>he-ddf3f643.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -3133,7 +3165,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">עִבְרִית</span></td>
       <td class="tr"><strong>ivrit</strong></td>
       <td class="gloss">hebraico</td>
-      <td class="where">letra 17</td>
+      <td class="where">letra 17 · módulo 6</td>
       <td class="file"><code>he-63edeaab.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -3163,7 +3195,7 @@
       <td class="he-cell"><span class="he he--word" lang="he">בְּבַקָּשָׁה</span></td>
       <td class="tr"><strong>bevakashá</strong></td>
       <td class="gloss">por favor</td>
-      <td class="where">letra 18 · letra 19 · letra 20</td>
+      <td class="where">letra 18 · letra 19 · letra 20 · módulo 6</td>
       <td class="file"><code>he-f2a28ac7.mp3</code></td>
       <td class="take"></td>
     </tr>
@@ -3243,10 +3275,16 @@
       <td class="he-cell"><span class="he he--word" lang="he">טֶלֶפוֹן</span></td>
       <td class="tr"><strong>télefon</strong></td>
       <td class="gloss">telefone</td>
-      <td class="where">letra 22</td>
+      <td class="where">letra 22 · módulo 6</td>
       <td class="file"><code>he-81846849.mp3</code></td>
       <td class="take"></td>
     </tr>
+
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº 308 a 322</strong> (14 clipes) · grave como
+      <code>onda3_308-322.wav</code> · corte com
+      <code>npm run cortar-audio -- --onda 3 --de 308 --ate 322 onda3_308-322.wav</code>
+    </td></tr>
 
     <tr>
       <td class="num">308</td>
@@ -3295,16 +3333,6 @@
       <td class="gloss">a letra ג com gerech - som dj</td>
       <td class="where">módulo 7</td>
       <td class="file"><code>he-b79fc10c.mp3</code></td>
-      <td class="take"></td>
-    </tr>
-
-    <tr>
-      <td class="num">313</td>
-      <td class="he-cell"><span class="he he--word" lang="he">ג׳ירף</span></td>
-      <td class="tr"><span class="dim">-</span></td>
-      <td class="gloss">girafa</td>
-      <td class="where">módulo 7</td>
-      <td class="file"><code>he-7b264104.mp3</code></td>
       <td class="take"></td>
     </tr>
 
@@ -3385,6 +3413,16 @@
       <td class="gloss">o rei</td>
       <td class="where">no mundo real</td>
       <td class="file"><code>he-8bf4419d.mp3</code></td>
+      <td class="take"></td>
+    </tr>
+
+    <tr>
+      <td class="num">322</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ג׳ירפה</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">girafa</td>
+      <td class="where">módulo 7</td>
+      <td class="file"><code>he-40c182e6.mp3</code></td>
       <td class="take"></td>
     </tr></tbody>
     </table>
