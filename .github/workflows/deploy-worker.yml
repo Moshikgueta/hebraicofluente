@@ -58,6 +58,11 @@ on:
       - 'worker/**'
       - 'wrangler.toml'
       - 'tools/export-content.mjs'
+      # As gravações. Desde 25/09/2026 os .mp3 cortados moram no git e a build
+      # os copia para o site; sem esta linha, uma correção só de áudio (a voz
+      # dobrada do Álef e do He, Moshikgueta/hebraicofluente#16) fundiu verde
+      # e não publicou nada - o som com defeito seguiu no ar.
+      - 'audio/**'
       # A publicação É feita por estes scripts (os passos "Mercado Pago
       # autentica?" e "Publicar e configurar"), então mexer neles tem de
       # disparar uma publicação - senão uma correção no próprio caminho do
