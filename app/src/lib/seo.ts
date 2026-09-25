@@ -56,7 +56,10 @@ export const NAO_LISTADAS = [
      nela SEM sessão - foi a exclusão que a tirou -, e por isso mesmo não pode
      ser indexada: "conta apagada" saindo numa busca pelo nome do curso é a
      pior vitrine possível. */
-  '/conta-apagada'
+  '/conta-apagada',
+  /* O painel de gravação do dono do curso (/admin/gravar). Nada nele serve a
+     quem busca, e o Worker já o marca `noindex` - fora do sitemap também. */
+  '/admin'
 ] as const;
 
 /** A rota, na forma canônica que o portão também usa para comparar. */
