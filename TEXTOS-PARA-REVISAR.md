@@ -39,7 +39,7 @@ Dúvida minha para quem revisar: o curso escreve girafa como `ג׳ירף`; o uso
 - O que o menino está fazendo? Tomando chá / Comprando pão / **Dormindo**
 - (V/F) O pão é fresco. → **Verdadeiro**
 
-Status: aguardando revisão
+Status: aprovado em 25/09/2026
 
 ## Módulo 4 · Uma mensagem da montanha
 *Mensagem de WhatsApp*
@@ -69,7 +69,7 @@ Status: aguardando revisão
 - Como está o rio? Quente / Grande / **Frio**
 - (V/F) A Noa quer ficar mais um dia. → **Verdadeiro**
 
-Status: aguardando revisão
+Status: aprovado em 25/09/2026
 
 ## Módulo 5 · Sábado de manhã
 *Mensagem no grupo da família*
@@ -96,7 +96,7 @@ Status: aguardando revisão
 - (V/F) O cachorro quer dormir. → **Falso**
 - Quem mandou a mensagem? A mãe / O cachorro / **O pai**
 
-Status: aguardando revisão
+Status: aprovado em 25/09/2026
 
 ## Módulo 6 · A caminho de casa
 *Mensagem sem pontinhos* · mostrado **sem nikud** ao aluno
@@ -122,7 +122,7 @@ Status: aguardando revisão
 - O que ela pergunta ao Dani? **Se ele está em casa** / Se ele tem dinheiro / Que horas são
 - (V/F) A mensagem foi mandada de manhã. → **Falso**
 
-Status: aguardando revisão
+Status: aprovado em 25/09/2026
 
 ## Módulo 7 · Um cartão de viagem
 *Mensagem de viagem*
@@ -151,4 +151,4 @@ Status: aguardando revisão
 - Para onde ela vai amanhã? **Chile** / Tchéquia / Israel
 - (V/F) O hotel é feio. → **Falso**
 
-Status: aguardando revisão
+Status: aprovado em 25/09/2026
