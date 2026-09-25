@@ -356,13 +356,18 @@ function extrair(wav, seg, destino, pisoDb) {
      o redutor, mesmo gentil, é o que mais poderia mudar o timbre. O acabamento
      (bordas, fades, volume igual) continua: sem ele cada clipe começa com um
      atraso diferente e toca num volume diferente. */
+  /* Mono PRIMEIRO (25/09/2026). O gravador do iPhone entrega estéreo, dois
+     canais iguais, e o `adelay` com um valor só atrasa apenas o PRIMEIRO
+     canal: com o mono no fim da cadeia, a voz atrasada 80 ms era somada à voz
+     no tempo certo e o clipe saía dobrado, com som de robô. Juntando os
+     canais antes de tudo, não há segundo canal para ficar para trás. */
   const limpeza = [
+    'aresample=44100', 'aformat=channel_layouts=mono',
     ...(SEM_LIMPEZA ? [] : ['highpass=f=80', `afftdn=nr=20:nf=${nf}`]),
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     `adelay=${Math.round(PAD_HEAD_S * 1000)}`,
-    `apad=pad_dur=${PAD_TAIL_S}`,
-    'aresample=44100', 'aformat=channel_layouts=mono'
+    `apad=pad_dur=${PAD_TAIL_S}`
   ].join(',');
 
   const bruto = destino + '.tmp.wav';
@@ -489,6 +494,25 @@ function ensaiar() {
     } else {
       console.log(`    nivelado em      ${mean.toFixed(1)} dB  (alvo ${TARGET_MEAN_DB})`);
     }
+  }
+
+  /* 1b. Estéreo: o gravador do celular entrega dois canais iguais, e o clipe
+     tem de sair IGUAL ao de uma gravação mono. Uma cadeia que atrasa só um
+     canal soma a voz com ela mesma deslocada - o som de robô que os
+     primeiros clipes do iPhone tiveram. A diferença entre os dois tem de ser
+     silêncio. */
+  if (corte.bateu) {
+    const estereo = join(tmp, 'estereo.wav');
+    ff(['-y', '-i', falso, '-af', 'pan=stereo|c0=c0|c1=c0', estereo]);
+    const deEstereo = join(tmp, 'de-estereo.mp3');
+    extrair(estereo, corte.segs[3], deEstereo, piso.db);
+    /* O respiro do início tem de ser silêncio: na voz dobrada, o canal que
+       não foi atrasado já soa ali. (A folga de 20 ms cobre o atraso do MP3.) */
+    const inicio = ffMeasure(['-i', deEstereo, '-af',
+      `atrim=0:${(PAD_HEAD_S - 0.02).toFixed(3)},volumedetect`, '-f', 'null', '-']);
+    const pico = Number((inicio.match(/max_volume:\s*(-?\d+(?:\.\d+)?)/) ?? [])[1] ?? 0);
+    if (pico > -50) erro(`de uma gravação estéreo, o clipe já soa no respiro (${pico} dB): voz dobrada`);
+    else console.log(`    estéreo          respiro limpo (${pico} dB), voz sem eco`);
   }
 
   /* 2. O caso que decide se esta ferramenta é segura: uma gravação com um
