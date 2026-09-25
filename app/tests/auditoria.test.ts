@@ -165,6 +165,26 @@ describe('o site sai blindado', () => {
     /* JSON não leva CSP - a política é de página. */
     expect(api.headers.get('content-security-policy')).toBeNull();
   });
+
+  /* 25/09/2026: o aluno grava a própria leitura (GravarLeitura). O
+     microfone abre só para o próprio site, só nas páginas do curso; no site
+     público e na API continua fechado, e nenhum terceiro o recebe. */
+  it('o microfone só abre para o próprio site, e só no curso', async () => {
+    const env = envSite();
+    const publica = await worker.fetch(new Request(`${SITE}/`), env, ctx);
+    expect(publica.headers.get('permissions-policy')).toContain('microphone=()');
+
+    const { cookie, id } = await comConta(env);
+    await grantAccess(env, { accountId: id, courseSlug: 'alfabetizacao', orderId: 'M', months: 12 });
+    const aula = await worker.fetch(new Request(`${SITE}/licao/alef/`, { headers: { Cookie: cookie } }), env, ctx);
+    const pp = aula.headers.get('permissions-policy') || '';
+    expect(pp).toContain('microphone=(self)');
+    expect(pp).toContain('camera=()');
+    expect(pp).not.toMatch(/microphone=\([^)]*(https?:|\*)/);
+
+    const api = await worker.fetch(new Request(`${SITE}/api/me`), env, ctx);
+    expect(api.headers.get('permissions-policy')).toContain('microphone=()');
+  });
 });
 
 /* ── escrita só da própria origem ──────────────────────────────────────── */
