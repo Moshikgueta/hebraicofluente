@@ -10,8 +10,7 @@ até ser aprovado** por alguém que fala hebraico.
 **O que conferir em cada texto:** a gramática e a naturalidade das frases, a pontuação (nikud), a transliteração
 e a tradução, e se as palavras novas fazem sentido para o nível.
 
-Dúvida minha para quem revisar: o curso escreve girafa como `ג׳ירף`; o uso mais comum não é `ג׳ירפה`?
-(Não uso essa palavra nos textos, mas ela está no módulo 7 e na missão do módulo 7.)
+Girafa: o curso escrevia `ג׳ירף`; corrigido para `ג׳ירפה` em 25/09/2026, no módulo 7 e na missão do módulo 7.
 
 ## Módulo 3 · O bilhete na geladeira
 *Bilhete*
