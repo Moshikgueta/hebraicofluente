@@ -305,8 +305,10 @@ export function Depoimentos() {
       <Container className="pt-16 sm:pt-24">
         <Reveal><H2 className="mb-8">Quem já está lendo.</H2></Reveal>
         {/* Um depoimento só não se estica pela largura toda: linha de texto
-            longa demais cansa. */}
-        <ul className={`grid gap-4 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(275px,1fr))]
+            longa demais cansa. `min(275px,100%)`: com o texto em 150% num
+            telefone, sobram ~260px, e um mínimo fixo de 275 empurrava a página
+            para o lado (npm run a11y). */}
+        <ul className={`grid gap-4 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(min(275px,100%),1fr))]
                         ${DEPOIMENTOS.length === 1 ? 'max-w-[720px]' : ''}`}>
           {DEPOIMENTOS.map((t, i) => (
             <Reveal as="li" key={t.nome + i} delay={i * 80}
