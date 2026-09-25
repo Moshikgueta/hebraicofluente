@@ -25,6 +25,7 @@ import { Card } from '@/components/ui/Card';
 import { AudioButton, hasAudio } from './AudioButton';
 import type { Letter, Syllable } from '@/lib/content';
 import { nikud } from '@/lib/content';
+import { temSomProprio } from '@/lib/som-proprio';
 
 const VOWELS = ['a', 'e', 'i', 'o', 'u'] as const;
 type Vowel = typeof VOWELS[number];
@@ -43,11 +44,12 @@ export function SoundLab({
 }) {
   const [picked, setPicked] = useState<{ letter: Letter; syl: Syllable } | null>(null);
 
-  if (!letters.length) return null;
+  const comSom = letters.filter(temSomProprio);
+  if (!comSom.length) return null;
 
   /* Newest first: the letter just learned is the one being practised, and on a
      phone the top row is the only one visible without scrolling. */
-  const rows = [...letters].sort((a, b) => b.order - a.order).slice(0, compact ? 6 : 22);
+  const rows = [...comSom].sort((a, b) => b.order - a.order).slice(0, compact ? 6 : 22);
 
   return (
     <Card className="overflow-hidden">
