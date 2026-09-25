@@ -173,8 +173,8 @@ export type Letter = {
   /** As leituras, quando há mais de uma. Vazio na maioria das letras. */
   variantes: VarianteLetra[];
   soundNotePt: string;
-  /** De onde sai o som, só nas letras de garganta (ר ח כ ה). */
-  garganta: Garganta | null;
+  /** De onde sai o som, em todas as letras: o desenho da lição. */
+  articulacao: Articulacao;
   /** A camada pedagógica: o que a letra FAZ, e a checagem. Ver `Ensino`. */
   ensino: Ensino;
   didYouKnow: string;
@@ -194,10 +194,20 @@ export type Letter = {
   audioId: string;
 };
 
-/** O ponto de articulação de uma letra de garganta, para o desenho da lição.
- *  `uvula`: a "campainha" no fundo da boca (ר, ח, o כ suave). `glote`: as
- *  cordas vocais (ה). `voz`: se a garganta vibra - é o que separa ר de ח. */
-export type Garganta = { ponto: 'uvula' | 'glote'; voz: boolean; comoPt: string };
+/** Os lugares da boca de onde um som pode sair, da frente para o fundo. */
+export type PontoDoSom = 'labios' | 'labio-dentes' | 'dentes' | 'palato' | 'veu' | 'uvula' | 'glote';
+
+/** De onde sai o som de uma letra, para o desenho da lição.
+ *  `pontos`: um por som - vazio nas letras mudas (א, ע), dois nas letras de
+ *  duas leituras (בּ/ב, כּ/כ, פּ/פ, שׁ/שׂ), com a forma no `rotulo`.
+ *  `voz`: se a garganta vibra (é o que separa ר de ח, ד de ת); `null` na muda.
+ *  `nariz`: o ar sai pelo nariz (מ, נ). */
+export type Articulacao = {
+  pontos: { ponto: PontoDoSom; rotulo?: string }[];
+  voz: boolean | null;
+  nariz?: boolean;
+  comoPt: string;
+};
 
 export type Checkpoint = {
   id: string;

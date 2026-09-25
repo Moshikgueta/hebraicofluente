@@ -252,15 +252,8 @@ function StageConhecer({
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <Prose text={letter.soundNotePt} />
         </p>
-        {/* Nas letras de garganta, o lugar de onde o som sai, desenhado. */}
-        {letter.garganta && (
-          <OndeNasceOSom
-            ponto={letter.garganta.ponto}
-            voz={letter.garganta.voz}
-            comoPt={letter.garganta.comoPt}
-            letra={letter.namePt}
-          />
-        )}
+        {/* O lugar de onde o som sai, desenhado - em toda letra. */}
+        <OndeNasceOSom articulacao={letter.articulacao} letra={letter.namePt} />
       </Card>
 
       {/* As duas (ou três) leituras, com um botão de som para cada uma.

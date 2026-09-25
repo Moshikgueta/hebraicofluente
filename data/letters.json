@@ -11,6 +11,11 @@
     "translit": "a",
     "sound": "(mudo)",
     "soundNotePt": "Não tem som próprio. {{א}} é um apoio: existe para segurar a vogal que vem com ele. Você pronuncia só a vogal.",
+    "articulacao": {
+      "pontos": [],
+      "voz": null,
+      "comoPt": "De lugar nenhum: {{א}} não tem som. Ele só segura a vogal, e é a vogal que você pronuncia, com a boca na posição dela."
+    },
     "ensino": {
       "funcaoPt": "{{א}} é um suporte. Ela não tem som próprio: existe para segurar o sinal de vogal que vem com ela. Quando você encontra {{א}} numa palavra, pronuncia a vogal que está nela e mais nada. Por isso ela aparece tanto no começo de palavras que, para nós, começam com som de vogal - o hebraico não escreve uma vogal solta, então alguém precisa segurá-la, e esse alguém costuma ser o {{א}}.",
       "detalhePt": "Dizer que {{א}} é muda quer dizer que ela aparece escrita mas não tem som próprio perceptível na pronúncia. Ela não está sobrando: sem ela a vogal não teria onde se apoiar. No hebraico antigo o {{א}} marcava uma paradinha na garganta, como o corte que a gente faz entre as duas vogais de \"co-operar\"; no hebraico falado hoje essa parada praticamente desapareceu, e o que sobra é o apoio.",
@@ -145,6 +150,16 @@
     "translit": "m",
     "sound": "/m/",
     "soundNotePt": "Igual ao M do português, em mãe, mesa, música. Não há nada novo a aprender no som - só na forma.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "labios"
+        }
+      ],
+      "nariz": true,
+      "voz": true,
+      "comoPt": "Os dois lábios se fecham e o ar sai pelo nariz, com a voz ligada. Tape o nariz e tente dizer M: não sai."
+    },
     "ensino": {
       "funcaoPt": "{{מ}} é a sua primeira consoante de verdade: ela traz o som /m/ e se junta a uma vogal para formar sílaba - {{מַ}}, {{מִ}}, {{מוֹ}}. Repare na diferença para o {{א}}: lá você pronunciava só a vogal, aqui você pronuncia a consoante e a vogal juntas. É assim que funciona a maioria das letras hebraicas.",
       "detalhePt": "{{מ}} muda de desenho quando fecha a palavra: vira {{ם}}, de cantos fechados. É a mesma letra e o mesmo som /m/ - só a forma muda, e muda por um motivo simples: a forma arredondada com a perna aberta foi ficando difícil de escrever no fim de uma palavra, e com o tempo a escrita à mão criou uma versão fechada para essa posição. Você vê a forma final em {{אֵם}}, onde o mem termina a palavra.",
@@ -315,6 +330,15 @@
     "translit": "t",
     "sound": "/t/",
     "soundNotePt": "Como o T de \"tatu\" - sempre seco, nunca com som de TCH.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "dentes"
+        }
+      ],
+      "voz": false,
+      "comoPt": "A ponta da língua encosta atrás dos dentes de cima e solta o ar de uma vez, sem voz. Seco, como em \"tatu\": nunca o TCH de \"tia\" do jeito carioca."
+    },
     "ensino": {
       "funcaoPt": "{{ת}} é a consoante /t/ e a última letra do alfabeto. Ela se junta às vogais como qualquer consoante - {{תַּ}}, {{תִּ}}, {{תּוֹ}} - e aparece com muita frequência fechando palavras: {{אֶמֶת}} (verdade) termina com ela. Encontrar o {{ת}} no fim de uma palavra é tão comum que vale reconhecê-lo de olhos fechados.",
       "detalhePt": "Você vai encontrar {{ת}} com um pontinho dentro ({{תּ}}) e sem ele. No hebraico falado em Israel hoje, o som é /t/ nos dois casos - o ponto não muda nada para você. Ele já mudou no passado, e a diferença sobrevive na pronúncia asquenazita tradicional, em que o tav sem ponto soa como \"s\": é por isso que a mesma palavra aparece como \"Shabat\" na pronúncia israelense e \"Shabes\" na tradição asquenazita.",
@@ -455,6 +479,16 @@
     "translit": "n",
     "sound": "/n/",
     "soundNotePt": "Como o N de \"nada\". No fim da palavra vira {{ן}}, uma haste longa que desce abaixo da linha.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "dentes"
+        }
+      ],
+      "nariz": true,
+      "voz": true,
+      "comoPt": "A ponta da língua encosta atrás dos dentes de cima, como no {{ת}}, mas o ar sai pelo nariz, com a voz ligada."
+    },
     "ensino": {
       "funcaoPt": "{{נ}} é a consoante /n/. Como toda consoante, ela se junta a uma vogal para formar sílaba - {{נַ}}, {{נִ}}, {{נוֹ}} - e aparece muito no fim de palavras: {{אָמֵן}} (amém) e {{תֵּן}} (dá!) terminam com ela.",
       "detalhePt": "{{נ}} também tem forma final: vira {{ן}}, um traço reto que desce e passa da linha de baixo. Mesma letra, mesmo som /n/ - só o desenho muda quando ela fecha a palavra. Compare {{נָתַן}} (deu), que tem as duas: começa com {{נ}} e termina com {{ן}}.",
@@ -618,8 +652,12 @@
     "translit": "h",
     "sound": "/h/",
     "soundNotePt": "Um H aspirado, soprado - o H do inglês \"hello\". No fim da palavra costuma ser mudo.",
-    "garganta": {
-      "ponto": "glote",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "glote"
+        }
+      ],
       "voz": false,
       "comoPt": "Lá embaixo, nas cordas vocais: só um sopro, sem raspar nada, como quem embaça um espelho. É o H do inglês \"hello\"."
     },
@@ -812,6 +850,15 @@
     "translit": "y",
     "sound": "/j/",
     "soundNotePt": "Como o I de \"ioiô\" ou o Y de \"Yara\". Nunca como o J do português.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "palato"
+        }
+      ],
+      "voz": true,
+      "comoPt": "O meio da língua sobe até perto do céu da boca, sem encostar, com a voz ligada: o I de \"ioiô\", que desliza para a vogal seguinte."
+    },
     "ensino": {
       "funcaoPt": "{{י}} é a menor letra do alfabeto e faz dois trabalhos. Como consoante, ela é o som do I em \"ioga\" e \"iate\" - {{יָם}} é \"iam\" (mar). E, muito frequentemente, ela não soa como consoante nenhuma: aparece depois de um sinal de vogal para indicar que ali o som é \"i\" ou \"ei\". Em {{מִי}} (quem) e {{אֲנִי}} (eu), o {{י}} do fim não é uma consoante - ele está marcando o \"i\".",
       "detalhePt": "Esta é a segunda letra que você vê participando da representação de uma vogal, depois do {{ה}} no fim de palavra - e é a que faz isso com mais frequência no hebraico inteiro. Não há regra para decorar agora: com o tempo você vai reconhecer os padrões, e o sinal de vogal ao lado sempre diz qual é o som. Quando não houver sinal nenhum, é o {{י}} que segura a pista do \"i\".",
@@ -974,6 +1021,15 @@
     "translit": "g",
     "sound": "/ɡ/",
     "soundNotePt": "Sempre o G duro de \"gato\" - nunca o G suave de \"gente\".",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "veu"
+        }
+      ],
+      "voz": true,
+      "comoPt": "O fundo da língua encosta no céu da boca, lá atrás, e solta, com a voz ligada: o G de \"gato\". É o lugar do K, só que vibrando."
+    },
     "ensino": {
       "funcaoPt": "{{ג}} é a consoante do G duro, o de \"gato\" e \"gota\". Ela se junta às vogais como qualquer consoante - {{גַּ}}, {{גִּ}}, {{גוֹ}} - e não tem nenhuma alternância de som: em hebraico, um G é sempre um G duro, venha a vogal que vier depois.",
       "detalhePt": "Você vai encontrar {{ג}} com um pontinho dentro ({{גּ}}) e sem ele. No hebraico falado em Israel hoje, o som é /g/ nos dois casos - o ponto não muda nada para você aqui. Ele já distinguiu dois sons no passado, e ainda distingue em três outras letras que você vai aprender no fim do curso. Guarde só isto por enquanto: nem todo ponto dentro de uma letra é vogal, e neste caso ele não muda a sua leitura.",
@@ -1124,6 +1180,15 @@
     "translit": "d",
     "sound": "/d/",
     "soundNotePt": "Como o D de \"dado\" - sempre seco, nunca com som de DJ.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "dentes"
+        }
+      ],
+      "voz": true,
+      "comoPt": "A ponta da língua atrás dos dentes de cima, como no {{ת}}, mas com a voz ligada. Ponha a mão no pescoço: no {{ד}} ele vibra, no {{ת}} não. Nunca o DJ de \"dia\" do jeito carioca."
+    },
     "ensino": {
       "funcaoPt": "{{ד}} é a consoante /d/, sempre seca. Como as outras consoantes, ela forma sílaba com a vogal que vem junto - {{דָּ}}, {{דִּ}}, {{דוֹ}} - e aparece com frequência no fim de palavras, como em {{יָד}} (mão).",
       "detalhePt": "Também aqui você encontra {{ד}} com pontinho ({{דּ}}) e sem: o som é /d/ nos dois casos no hebraico de hoje. E guarde um aviso para daqui a algumas lições: o {{ד}} é parecido com outra letra que você ainda não viu, e a diferença está num detalhe do canto superior direito. Quando ela chegar, o curso vai mostrar as duas lado a lado.",
@@ -1293,6 +1358,20 @@
       }
     ],
     "soundNotePt": "Como o CH de \"chave\", \"chuva\", \"cachorro\". Com o ponto do lado esquerdo ({{שׂ}}, Sin) o som muda para S de \"sapo\".",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "palato",
+          "rotulo": "שׁ"
+        },
+        {
+          "ponto": "dentes",
+          "rotulo": "שׂ"
+        }
+      ],
+      "voz": false,
+      "comoPt": "{{שׁ}}: a língua recua um pouco, rumo ao céu da boca, e o ar chia sem voz, o CH de \"chave\". {{שׂ}}: a ponta da língua volta para trás dos dentes e o ar sibila, o S de \"sapo\"."
+    },
     "ensino": {
       "funcaoPt": "{{ש}} é a letra do som CH de \"chave\" - e é a primeira letra do curso em que um ponto decide QUAL letra você está lendo. Com o ponto no alto à direita ({{שׁ}}) o som é \"ch\"; com o ponto no alto à esquerda ({{שׂ}}) o som é o S de \"sapo\". O desenho é o mesmo; o lado do ponto é que manda.",
       "detalhePt": "Repare no que está acontecendo: este ponto não é vogal nenhuma. Ele está dizendo qual das duas letras aquele desenho representa - {{שׁ}} (Shin) ou {{שׂ}} (Sin). É por isso que \"nem todo ponto é vogal\" não é um detalhe chato: aqui, ler o ponto como vogal faria você pronunciar a palavra inteira errado. Na prática, {{שׁ}} é muito mais frequente, e a maioria das palavras que você vai encontrar tem o ponto à direita.",
@@ -1464,6 +1543,15 @@
     "translit": "l",
     "sound": "/l/",
     "soundNotePt": "Como o L de \"lua\" e \"bola\" - sempre claro, nunca com som de U.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "dentes"
+        }
+      ],
+      "voz": true,
+      "comoPt": "A ponta da língua encosta atrás dos dentes de cima e fica lá, e o ar sai pelos lados dela, com a voz ligada. No fim da sílaba também: a língua sobe, e o L nunca vira U."
+    },
     "ensino": {
       "funcaoPt": "{{ל}} é a consoante /l/. Ela é a letra mais alta do alfabeto - sobe acima da linha das outras -, o que a torna fácil de achar dentro de uma palavra. Forma sílaba normalmente ({{לַ}}, {{לִ}}, {{לוֹ}}) e aparece muito no fim de sílaba, que é exatamente onde o brasileiro escorrega.",
       "detalhePt": "Aquela altura toda tem uma consequência prática na hora de escrever à mão: o {{ל}} é a única letra que ocupa espaço ACIMA da linha, então numa frase escrita ele é o primeiro que o olho encontra. Use isso a seu favor enquanto ainda lê devagar - achar o {{ל}} ajuda a fatiar a palavra.",
@@ -1631,8 +1719,12 @@
     "translit": "r",
     "sound": "/ʁ/",
     "soundNotePt": "O R francês de \"Paris\": macio, feito no fundo da boca, perto da úvula, com a voz ligada. Não é o R carioca de \"carro\", que é soprado e áspero - esse som, em hebraico, é o de outra letra, que você conhece daqui a três lições.",
-    "garganta": {
-      "ponto": "uvula",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "uvula"
+        }
+      ],
       "voz": true,
       "comoPt": "Na úvula, a \"campainha\" no fundo da boca, com a voz ligada: ponha a mão no pescoço e sinta vibrar. Daqui a três lições vem outra letra que sai deste mesmo lugar, mas sem voz."
     },
@@ -1797,6 +1889,15 @@
     "translit": "v",
     "sound": "/v/",
     "soundNotePt": "Como o V de \"vaca\" quando é consoante. Mas {{ו}} também carrega as vogais O e U - quem decide é o ponto que vem com ela.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "labio-dentes"
+        }
+      ],
+      "voz": true,
+      "comoPt": "Os dentes de cima tocam o lábio de baixo e o ar passa entre eles, com a voz ligada: o V de \"vaca\". Quando {{ו}} é vogal (O ou U), quem manda é a boca da vogal."
+    },
     "ensino": {
       "funcaoPt": "{{ו}} é a letra que faz três coisas, e é a mais importante desta parte do curso. Como consoante, ela é o V de \"vaca\". Com um ponto EM CIMA ({{וֹ}}), ela não é consoante nenhuma: é a vogal \"o\". Com um ponto DENTRO ({{וּ}}), é a vogal \"u\". Você já vinha lendo essas duas vogais desde a primeira lição, em {{אוֹ}} e {{אוּ}} - agora sabe que letra estava ali.",
       "detalhePt": "Lembra do módulo de introdução, quando o curso avisou que algumas letras participam da representação de vogais? Esta é a mais frequente delas. O que decide é o ponto, e o ponto é pequeno: procure-o ANTES de pronunciar. Sem ponto nenhum e com sinal de vogal próprio, o {{ו}} é consoante; com ponto em cima é \"o\"; com ponto dentro é \"u\". Em {{שָׁלוֹם}} ele é a vogal \"o\"; em {{הוּא}} (ele), a vogal \"u\".",
@@ -1999,6 +2100,15 @@
     "translit": "z",
     "sound": "/z/",
     "soundNotePt": "Como o Z de \"zebra\" - e como o S sonoro de \"casa\". Sempre vibrado, em qualquer posição.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "dentes"
+        }
+      ],
+      "voz": true,
+      "comoPt": "A ponta da língua perto dos dentes de cima, sem encostar, e o ar zumbe, com a voz ligada: o Z de \"zebra\". Ponha a mão no pescoço: vibra."
+    },
     "ensino": {
       "funcaoPt": "{{ז}} é a consoante /z/, sempre vibrada: o Z de \"zebra\" e também o som que o S faz entre vogais em \"casa\". Ela forma sílaba normalmente e mantém o som em qualquer posição da palavra, inclusive no fim.",
       "detalhePt": "Cuidado com a companhia: {{ז}}, {{ו}} e {{ן}} são três traços verticais parecidos, e é fácil trocá-los no começo. O {{ז}} tem um chapéu que se abre para os DOIS lados sobre a perna; o {{ו}} tem um ganchinho que vira só para a esquerda; o {{ן}} é um traço reto que desce abaixo da linha.",
@@ -2155,8 +2265,12 @@
     "translit": "ch",
     "sound": "/χ/",
     "soundNotePt": "O mesmo som raspado do R carioca, mas mais forte e prolongado. Escrevemos \"ch\" na transliteração, e não tem nada a ver com o CH de \"chave\".",
-    "garganta": {
-      "ponto": "uvula",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "uvula"
+        }
+      ],
       "voz": false,
       "comoPt": "No mesmo lugar do {{ר}}, a úvula, mas sem voz: só o ar raspando, com força. Ponha a mão no pescoço: no {{ר}} ele vibra, no {{ח}} não."
     },
@@ -2322,6 +2436,15 @@
     "translit": "t",
     "sound": "/t/",
     "soundNotePt": "Como o T de \"tatu\". No hebraico moderno soa exatamente igual a {{ת}} - mais um par de letras para um som só.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "dentes"
+        }
+      ],
+      "voz": false,
+      "comoPt": "Igual ao {{ת}}: a ponta da língua atrás dos dentes de cima, sem voz. Duas letras, um lugar só."
+    },
     "ensino": {
       "funcaoPt": "{{ט}} é a consoante /t/ - o mesmo som do {{ת}} que você já conhece. No hebraico moderno as duas letras soam exatamente igual, e a escolha entre uma e outra é uma questão de ortografia de cada palavra, como o X e o CH de \"enxada\" e \"encher\" em português.",
       "detalhePt": "Duas letras para um som só não é defeito do hebraico: é história. {{ט}} e {{ת}} representavam sons diferentes há milhares de anos, e a fala mudou enquanto a escrita ficou. Para você isso significa uma coisa prática: ao LER, tanto faz - as duas são T. Ao ESCREVER, é preciso saber qual palavra leva qual, e isso se aprende palavra por palavra, com o tempo.",
@@ -2474,6 +2597,15 @@
     "translit": "s",
     "sound": "/s/",
     "soundNotePt": "Como o S de \"sapo\". Sempre surdo, em qualquer posição - nunca com som de Z.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "dentes"
+        }
+      ],
+      "voz": false,
+      "comoPt": "A ponta da língua perto dos dentes de cima, sem encostar, e o ar sibila sem voz: o S de \"sapo\". É o {{ז}} com a voz desligada."
+    },
     "ensino": {
       "funcaoPt": "{{ס}} é a consoante /s/, sempre surda - o S de \"sapo\". Ela forma sílaba normalmente e não muda de som em nenhuma posição, nem quando fica entre duas vogais.",
       "detalhePt": "Você agora tem duas letras para sons parecidos e precisa separá-las bem: {{ס}} é o S surdo de \"sapo\" e {{ז}} é o Z vibrado de \"zebra\". Em {{סוּס}} (cavalo) as duas pontas são {{ס}}, e a palavra se lê \"sus\" - com S nas duas, nunca \"suz\". E cuidado com a forma: o {{ס}} é redondo, enquanto o {{ם}} que você aprendeu na segunda lição é quadrado.",
@@ -2635,6 +2767,11 @@
     "translit": "a",
     "sound": "(mudo para a maioria)",
     "soundNotePt": "Para a maior parte dos israelenses hoje, {{ע}} é mudo, igual a {{א}}: você pronuncia só a vogal. Falantes de origem mizrahi e árabe ainda produzem um som de garganta.",
+    "articulacao": {
+      "pontos": [],
+      "voz": null,
+      "comoPt": "Para a maioria dos israelenses, de lugar nenhum: {{ע}} é mudo como o {{א}}, e só a vogal soa. Quem fala com sotaque oriental ainda aperta a garganta aqui; você não precisa."
+    },
     "ensino": {
       "funcaoPt": "{{ע}} é a segunda letra do alfabeto que, para a maior parte dos israelenses de hoje, não tem som próprio: você pronuncia só a vogal que vem com ela, exatamente como faz com o {{א}}. Ela aparece em palavras muito comuns - {{עִיר}} (cidade), {{עַל}} (sobre) - e o seu trabalho na leitura é o mesmo do {{א}}: segurar a vogal e marcar o lugar dela na palavra.",
       "detalhePt": "Duas letras mudas para o mesmo papel não é redundância: é história. O {{ע}} já foi um som forte, produzido bem no fundo da garganta, e ele não desapareceu - falantes de origem mizrahi e as comunidades de língua árabe produzem esse som até hoje, e você vai ouvi-lo em Israel. O hebraico padrão de Tel Aviv o perdeu, e é por isso que {{א}} e {{ע}} soam igual na maior parte das conversas.",
@@ -2782,6 +2919,15 @@
     "translit": "ts",
     "sound": "/ts/",
     "soundNotePt": "O som TS, como no fim de \"pizza\" ou no começo de \"tsunami\" - os dois sons colados, num golpe só. No fim da palavra vira {{ץ}}.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "dentes"
+        }
+      ],
+      "voz": false,
+      "comoPt": "A ponta da língua encosta atrás dos dentes, como no {{ת}}, e solta direto num S, sem voz: T e S colados, o \"ts\" de \"tsunami\"."
+    },
     "ensino": {
       "funcaoPt": "{{צ}} traz um som que o português não usa no começo de palavra: TS, os dois sons colados num golpe só, como no fim de \"pizza\" ou no começo de \"tsunami\". É uma consoante comum, que forma sílaba normalmente, e ela aparece em palavras do dia a dia como {{אֶרֶץ}} (terra) e {{מִיץ}} (suco).",
       "detalhePt": "{{צ}} tem forma final: vira {{ץ}}, com a perna descendo abaixo da linha. Mesma letra, mesmo som TS - só o desenho muda no fim da palavra, e você vê isso em {{עֵץ}} (árvore) e {{מִיץ}} (suco).",
@@ -2943,6 +3089,15 @@
     "translit": "k",
     "sound": "/k/",
     "soundNotePt": "Como o C de \"casa\". No hebraico moderno soa exatamente igual a {{כּ}} - são duas letras para um som só.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "veu"
+        }
+      ],
+      "voz": false,
+      "comoPt": "O fundo da língua encosta no céu da boca, lá atrás, e solta sem voz: o C de \"casa\". É o lugar do {{ג}}, com a voz desligada."
+    },
     "ensino": {
       "funcaoPt": "{{ק}} é a consoante /k/, o C de \"casa\". Ela forma sílaba como qualquer consoante e aparece em palavras muito usadas - {{רַק}} (só), {{קָטָן}} (pequeno), {{מָקוֹם}} (lugar).",
       "detalhePt": "No hebraico moderno, {{ק}} soa exatamente igual à letra que você aprende na próxima lição com o ponto dentro: são duas letras para um som só, como aconteceu com {{ט}} e {{ת}}. Para LER, isso não custa nada - as duas são K. Para escrever, é ortografia: cada palavra tem a sua letra, e isso se aprende com o uso.",
@@ -3123,6 +3278,20 @@
       }
     ],
     "soundNotePt": "Com o ponto dentro ({{בּ}}) soa B, como em \"bola\". Sem o ponto ({{ב}}) soa V, como em \"vaca\". É a mesma letra, com dois sons.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "labios",
+          "rotulo": "בּ"
+        },
+        {
+          "ponto": "labio-dentes",
+          "rotulo": "ב"
+        }
+      ],
+      "voz": true,
+      "comoPt": "{{בּ}}: os dois lábios se fecham e soltam, com a voz ligada, o B de \"bola\". {{ב}} sem ponto: os dentes de cima tocam o lábio de baixo, como no {{ו}}, o V de \"vaca\"."
+    },
     "ensino": {
       "funcaoPt": "{{ב}} é a primeira letra do curso que muda de SOM conforme um ponto. Com o ponto dentro ({{בּ}}) ela é B, como em \"bola\". Sem o ponto ({{ב}}) ela é V, como em \"vaca\". É a mesma letra nas duas: quem decide é o ponto, e ele é pequeno - procure antes de pronunciar.",
       "detalhePt": "Esse ponto tem nome, daguesh, e é o mesmo tipo de sinal que você viu no {{ג}}, no {{ד}} e no {{ת}} sem mudar nada. Aqui ele muda tudo: {{אַבָּא}} é \"aba\" (pai), com B, e {{לֵב}} é \"lev\" (coração), com V. E há uma consequência prática importante: a maioria dos textos israelenses reais não escreve o daguesh, do mesmo jeito que não escreve vogais. Enquanto você aprende, o ponto está aí para ajudar; depois, é a palavra conhecida que diz o som.",
@@ -3326,10 +3495,19 @@
       }
     ],
     "soundNotePt": "Com o ponto ({{כּ}}) soa K, igual a {{ק}}. Sem o ponto ({{כ}}) soa raspado, igual a {{ח}}. No fim da palavra vira {{ך}}, e aí é sempre raspado.",
-    "garganta": {
-      "ponto": "uvula",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "veu",
+          "rotulo": "כּ"
+        },
+        {
+          "ponto": "uvula",
+          "rotulo": "כ"
+        }
+      ],
       "voz": false,
-      "comoPt": "O som suave, do {{כ}} sem ponto e do {{ך}}: igual ao {{ח}}, na úvula, sem voz. Com o ponto, {{כּ}} é um K comum, feito com a língua no céu da boca."
+      "comoPt": "{{כּ}}: o fundo da língua no céu da boca, lá atrás, como no {{ק}}: um K. {{כ}} sem ponto e {{ך}}: na úvula, raspando, igual ao {{ח}}. Os dois sem voz."
     },
     "ensino": {
       "funcaoPt": "{{כ}} funciona como o {{ב}}: um ponto decide o som. Com o ponto ({{כּ}}) ela é K, igual ao {{ק}}. Sem o ponto ({{כ}}) ela é raspada na garganta, igual ao {{ח}}. Duas letras familiares, num desenho só.",
@@ -3535,6 +3713,20 @@
       }
     ],
     "soundNotePt": "Com o ponto dentro ({{פּ}}) soa P, como em \"pato\". Sem o ponto ({{פ}}) soa F, como em \"faca\". No fim da palavra vira {{ף}}, e aí é sempre F.",
+    "articulacao": {
+      "pontos": [
+        {
+          "ponto": "labios",
+          "rotulo": "פּ"
+        },
+        {
+          "ponto": "labio-dentes",
+          "rotulo": "פ"
+        }
+      ],
+      "voz": false,
+      "comoPt": "{{פּ}}: os dois lábios se fecham e soltam o ar, sem voz, o P de \"pato\". {{פ}} sem ponto e {{ף}}: os dentes de cima no lábio de baixo, o F de \"faca\". É o par sem voz do {{בּ}} e do {{ב}}."
+    },
     "ensino": {
       "funcaoPt": "{{פ}} é a terceira e última letra do curso em que um ponto decide o som. Com o ponto ({{פּ}}) ela é P, como em \"pato\". Sem o ponto ({{פ}}) ela é F, como em \"faca\". Você já conhece o mecanismo do {{ב}} e do {{כ}} - é exatamente o mesmo.",
       "detalhePt": "Ela também tem forma final: {{ף}}, que desce abaixo da linha. E vale a mesma regra do {{ך}}: a forma final não leva ponto, então ela é sempre F. {{סוֹף}} é \"sof\" (fim), e \"sop\" não existe em hebraico nenhum.",
