@@ -11,9 +11,14 @@ app/public/tracado-amostra/
 app/public/audio/
 app/next-env.d.ts
 
-audio/*.mp3
+# Os .mp3 CORTADOS entram no git (25/09/2026): o site é montado a partir do
+# git, e sem eles nenhuma gravação chegava ao ar. São pequenos (~10 KB cada,
+# ~3 MB os 318). As gravações brutas e o material de conferência, não.
 audio/*.wav
+audio/*.m4a
+audio/*.mp4
 audio/room-tone.*
+audio/conferir/
 
 # Segredos locais do Worker (wrangler dev). Ver .env.example.
 .dev.vars
