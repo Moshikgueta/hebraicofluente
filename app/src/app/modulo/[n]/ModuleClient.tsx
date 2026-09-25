@@ -12,7 +12,7 @@ import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import type { CourseModule, Letter } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
-import { missaoDoModulo } from '@/lib/content';
+import { missaoDoModulo, textoDoModulo } from '@/lib/content';
 import { missaoId } from '@/lib/engine/missao';
 
 export function ModuleClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
@@ -20,6 +20,8 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   const first = letters.find(l => !isLessonComplete(p.state, l.id)) ?? letters[0];
   const missao = missaoDoModulo(mod.n);
   const missaoFeita = !!p.state.firsts[missaoId(mod.n)];
+  /* Só aparece depois de revisado: ver lib/engine/textos.ts. */
+  const texto = textoDoModulo(mod.n);
 
   return (
     <div className="grid gap-6 reading">
@@ -105,6 +107,19 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       {/* A missão fecha o módulo com uma situação de verdade, depois do
           checkpoint. Fica aqui, e não só no fim do checkpoint, porque é o
           módulo que ela fecha - e quem voltou para rever acha a porta. */}
+      {texto && (
+        <Card className="p-6 grid gap-3">
+          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
+            Leitura do módulo · {texto.tipoPt}
+          </p>
+          <h2 className="font-display text-[18px] font-semibold">{texto.tituloPt}</h2>
+          <p className="text-[15px] leading-relaxed text-ink-body">{texto.introPt}</p>
+          <LinkButton href={`/modulo/${mod.n}/texto`} variant="secondary" className="justify-self-start">
+            Ler o texto
+          </LinkButton>
+        </Card>
+      )}
+
       {missao && (
         <Card tone={missaoFeita ? 'mint' : 'surface'} className="p-6 grid gap-3">
           <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
