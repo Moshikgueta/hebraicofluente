@@ -18,6 +18,17 @@ import {
   isReadableWith, onCarrier, splitSyllable
 } from '@/lib/hebrew';
 import { shuffled, take, type Rand } from './rng';
+import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+
+/* ── só o que já foi GRAVADO vira exercício de escuta ─────────────────────
+   Todo item do curso tem `audioId`, gravado ou não: o id sai do hebraico.
+   Enquanto não havia nenhuma gravação, `audioAvailable()` era falso e os
+   três geradores de escuta nem rodavam. Com a primeira letra gravada ele
+   virou verdadeiro para o curso INTEIRO - e sem esta checagem cada letra
+   ainda sem áudio ganharia um "qual sílaba você ouviu?" sem som nenhum.
+   O áudio chega em levas, letra por letra; a escuta acompanha item a item. */
+const GRAVADOS = new Set(AUDIO_MANIFEST);
+export const gravado = (audioId: string | null | undefined): boolean => !!audioId && GRAVADOS.has(audioId);
 import type { Exercise } from './types';
 
 export type Ctx = {
@@ -332,7 +343,7 @@ export const exSoundToSyllable: Gen = (L, _ctx, rand, i) => {
  * never finds out.
  */
 export const exListenSyllable: Gen = (L, _ctx, rand, i) => {
-  const pool = vowelSyllables(L).filter(s => s.audioId);
+  const pool = vowelSyllables(L).filter(s => gravado(s.audioId));
   const target = at(pool, i);
   if (!target || pool.length < 3) return null;
   const wrong = pool.filter(s => s.he !== target.he).map(s => s.he);
@@ -617,7 +628,7 @@ export const exTypeSyllable: Gen = (L, _ctx, _rand, i) => {
 };
 
 export const exTypeHeard: Gen = (L, _ctx, rand, i) => {
-  const usable = L.wordsToRead.filter(w => w.audioId && w.translit.length <= 9);
+  const usable = L.wordsToRead.filter(w => gravado(w.audioId) && w.translit.length <= 9);
   const target = at(usable, i);
   if (!target) return null;
   return {
@@ -754,7 +765,7 @@ export const exCompleteWord: Gen = (L, ctx, rand, i) => {
 };
 
 export const exAudioWord: Gen = (L, ctx, rand, i) => {
-  const target = at(L.wordsToRead, i);
+  const target = at(L.wordsToRead.filter(w => gravado(w.audioId)), i);
   if (!target) return null;
   const pool = ctx.history.flatMap(x => x.wordsToRead);
   const wrong = wordDistractors(target, pool, rand, 3).map(w => w.he);

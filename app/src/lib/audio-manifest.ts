@@ -4,4 +4,4 @@
  * of the course: see ARCHITECTURE.md §6.3. Everything downstream - the audio
  * button, the listening exercises, the quiz composition - reads this array and
  * degrades visibly rather than inventing a pronunciation. */
-export const AUDIO_MANIFEST: readonly string[] = [];
+export const AUDIO_MANIFEST: readonly string[] = ["he-0064abb5","he-2dcfcfd9","he-2e898b6f","he-31bf7079","he-3c3ac3e3","he-52e153b1","he-56e8723f","he-6039eb15","he-6d3868b8","he-712ec1ea","he-7d989155","he-85afc57b","he-8f2861d4","he-9386220e","he-9ef57af7","he-a53cb10d","he-adff9a40","he-cb60d834","he-eb6524ab","he-f058ad23","he-f97442b5","he-fc7c0593"];
