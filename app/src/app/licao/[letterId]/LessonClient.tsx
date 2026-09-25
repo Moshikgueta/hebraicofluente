@@ -23,6 +23,7 @@ import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
+import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { SoundLab } from '@/components/learn/SoundLab';
 import { CultureUnlock } from '@/components/learn/Culture';
 import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioButton';
@@ -292,6 +293,14 @@ function StageConhecer({
           </p>
         </div>
         <SyllableTrainer letter={letter} />
+        {/* Ler as sílabas em voz alta e se ouvir: é onde a pronúncia da letra
+            nova se forma, antes de ela virar hábito errado. */}
+        <GravarLeitura
+          titulo="Leia as sílabas em voz alta"
+          instrucao={`Leia as ${letter.syllables.length} sílabas acima, da direita para a esquerda, grave e se ouça.`}
+          audioId={letter.audioId}
+          maxSegundos={45}
+        />
       </Card>
 
       {/* The same five vowels on the letters already learned. Seeing the column

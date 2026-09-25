@@ -135,6 +135,16 @@ export default function Page() {
           Internet, e o <strong>legítimo interesse</strong> para os registros de
           segurança.
         </p>
+        {/* 25/09/2026: o aluno pode gravar a própria leitura
+            (components/learn/GravarLeitura.tsx). O microfone só abre nas
+            páginas do curso, e o áudio nunca sai do aparelho - por isso ele
+            não é dado que tratamos, e não entra na tabela acima. */}
+        <p>
+          <strong>Gravação da sua voz.</strong> Nas lições e nos textos de leitura você
+          pode gravar a própria leitura para se ouvir. O navegador pede permissão para
+          usar o microfone, e a gravação fica só no seu aparelho: some quando você sai
+          da página e nunca é enviada para nós nem para ninguém.
+        </p>
       </Artigo>
 
       <Artigo n={3} titulo="Com quem compartilhamos">

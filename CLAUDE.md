@@ -393,6 +393,15 @@ texto todo), glossário das palavras novas e perguntas de compreensão
   as `novas` do texto (menos prefixo solto e nome próprio) entram no
   vocabulário (`leituraDe`) e no "Palavras à mão" (`palavrasDosTextosLidos`).
 
+## Gravar a própria leitura
+
+`GravarLeitura` (components/learn) grava o aluno lendo em voz alta e toca de
+volta: nas sílabas da lição e no mini-texto. O áudio fica num `Blob` local e
+some ao sair da página; nada é enviado. O `Permissions-Policy` do Worker
+libera `microphone=(self)` SÓ nas rotas do portão (`isGatedPath`); o site
+público e a API seguem com `microphone=()` (teste em auditoria.test.ts). A
+privacidade diz isso no art. 2.
+
 ## Palavras à mão
 
 Na academia, "Palavras à mão" (também em `/academia?treino=palavras-a-mao`,

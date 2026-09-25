@@ -203,7 +203,12 @@ function blindar(res, path) {
   h.set('X-Content-Type-Options', 'nosniff');
   h.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   h.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  h.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+  /* O microfone: bloqueado no site público, liberado SÓ para o próprio site
+     nas páginas do curso, onde o aluno grava a própria leitura
+     (components/learn/GravarLeitura.tsx - a gravação não sai do aparelho).
+     Nenhum terceiro, nem num iframe, ganha o microfone em lugar nenhum. */
+  const mic = isGatedPath(path) ? 'microphone=(self)' : 'microphone=()';
+  h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), payment=()`);
   const tipo = h.get('Content-Type') || '';
   if (tipo.startsWith('text/html')) {
     h.set('Content-Security-Policy', CSP);

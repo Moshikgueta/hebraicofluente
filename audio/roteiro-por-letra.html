@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>Roteiro por letra - Hebraico Fluente</title>
+<style>
+  @font-face { font-family: 'Noto Sans Hebrew'; src: url('../assets/fonts/noto-sans-hebrew-hebrew-400-normal.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Noto Sans Hebrew'; src: url('../assets/fonts/noto-sans-hebrew-hebrew-700-normal.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'Inter'; src: url('../assets/fonts/inter-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Inter'; src: url('../assets/fonts/inter-latin-700-normal.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'DM Sans'; src: url('../assets/fonts/dm-sans-latin-700-normal.woff2') format('woff2'); font-weight: 700; }
+
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body { font: 400 11px/1.5 'Inter', system-ui, sans-serif; color: #1a1a1a; margin: 0; background: #fff; }
+  h1 { font: 700 26px/1.2 'DM Sans', sans-serif; margin: 0 0 6px; }
+  h2 { font: 700 17px/1.25 'DM Sans', sans-serif; margin: 0 0 4px; }
+  h3 { font: 700 12px/1.3 'DM Sans', sans-serif; margin: 16px 0 6px; text-transform: uppercase; letter-spacing: .06em; color: #15788F; }
+  .lead { color: #4a4a4a; margin: 0 0 6px; max-width: 62ch; }
+  .meta { color: #6a6a6a; margin: 0 0 12px; }
+  .sheet { break-before: page; }
+  .sheet:first-of-type { break-before: auto; }
+
+  /* THE DIRECTION CONTRACT. Same rule as the book and the app: every Hebrew run
+     is its own bidi isolate, so a neutral character outside it cannot be pulled
+     in and reorder the word the speaker is about to read aloud. */
+  .he { font-family: 'Noto Sans Hebrew', sans-serif; direction: rtl; unicode-bidi: isolate;
+        font-feature-settings: 'ccmp' 1, 'mark' 1, 'mkmk' 1; }
+  .he--word { font-size: 26px; line-height: 1.5; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead { display: table-header-group; }
+  th { text-align: left; font: 700 9px/1.2 'Inter', sans-serif; text-transform: uppercase;
+       letter-spacing: .07em; color: #fff; background: #15788F; padding: 6px 7px; }
+  td { padding: 5px 7px; border-bottom: .5pt solid rgba(0,0,0,.12); vertical-align: middle; }
+  tr { break-inside: avoid; }
+  .num { font-variant-numeric: tabular-nums; color: #6a6a6a; width: 34px; }
+  .he-cell { width: 120px; }
+  .tr { width: 88px; color: #15788F; }
+  .gloss { color: #333; }
+  .where { color: #6a6a6a; font-size: 10px; width: 92px; }
+  .file { width: 128px; }
+  code { font: 400 9.5px/1 ui-monospace, monospace; color: #555; }
+  .take { width: 24px; border: .5pt solid rgba(0,0,0,.25); }
+  .dim { color: #aaa; }
+
+  .brief { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px; }
+  .box { border: .5pt solid rgba(0,0,0,.18); border-radius: 6px; padding: 12px 14px; }
+  .box ul { margin: 0; padding-left: 16px; }
+  .box li { margin: 3px 0; }
+  .warn { background: #FDF4E3; border-color: #E0C68A; }
+  .plan td, .plan th { font-size: 10.5px; }
+</style>
+
+<style>
+  section.letra { break-before: auto; margin-bottom: 18px; }
+  section.letra + section.letra { break-before: auto; }
+</style>
+</head>
+<body>
+<section class="sheet">
+  <h1>Roteiro de gravação por letra</h1>
+  <p class="lead">318 clipes em 25 arquivos: um por letra (o nome da letra, as
+     sílabas e as palavras daquela letra) e três avulsos no fim. Grave cada seção num
+     arquivo só, de cima para baixo, com <strong>3 segundos de silêncio no começo</strong> e
+     <strong>1 segundo entre um item e o próximo</strong>. Errou, tossiu ou repetiu? Apague o
+     arquivo daquela letra e grave a letra de novo: uma palavra a mais ou a menos desalinha
+     o resto do arquivo.</p>
+  <p class="lead">Grave antes, uma vez, <strong>30 segundos de silêncio da sala</strong> sem falar,
+     e envie como <code>room-tone.m4a</code>. O nikud manda: leia cada item como está pontuado,
+     e as sílabas como sílabas soltas, sem virar palavra.</p>
+</section>
+
+  <section class="sheet letra">
+    <h2>Letra 1 · Álef <span class="he he--word" lang="he">א</span></h2>
+    <p class="meta"><strong>8</strong> itens · grave como <code>letra-01.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 1 --onda todas letra-01.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אָלֶף</span></td>
+      <td class="tr"><strong>Álef</strong></td>
+      <td class="gloss">nome da letra Álef</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אַ</span></td>
+      <td class="tr"><strong>a</strong></td>
+      <td class="gloss">sílaba - só a vogal A</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֶ</span></td>
+      <td class="tr"><strong>e</strong></td>
+      <td class="gloss">sílaba - só a vogal E</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אִ</span></td>
+      <td class="tr"><strong>i</strong></td>
+      <td class="gloss">sílaba - só a vogal I</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אוֹ</span></td>
+      <td class="tr"><strong>o</strong></td>
+      <td class="gloss">sílaba - só a vogal O</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אוּ</span></td>
+      <td class="tr"><strong>u</strong></td>
+      <td class="gloss">sílaba - só a vogal U</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֶתְמוֹל</span></td>
+      <td class="tr"><strong>etmol</strong></td>
+      <td class="gloss">ontem</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אַחֲרֵי</span></td>
+      <td class="tr"><strong>acharei</strong></td>
+      <td class="gloss">depois de</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 2 · Mem <span class="he he--word" lang="he">מ</span></h2>
+    <p class="meta"><strong>9</strong> itens · grave como <code>letra-02.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 2 --onda todas letra-02.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מֵם</span></td>
+      <td class="tr"><strong>Mem</strong></td>
+      <td class="gloss">nome da letra Mem</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מַ</span></td>
+      <td class="tr"><strong>ma</strong></td>
+      <td class="gloss">sílaba - como o MA de &quot;má&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מֶ</span></td>
+      <td class="tr"><strong>me</strong></td>
+      <td class="gloss">sílaba - como o ME de &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִ</span></td>
+      <td class="tr"><strong>mi</strong></td>
+      <td class="gloss">sílaba - como o MI de &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מוֹ</span></td>
+      <td class="tr"><strong>mo</strong></td>
+      <td class="gloss">sílaba - como o MO de &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מוּ</span></td>
+      <td class="tr"><strong>mu</strong></td>
+      <td class="gloss">sílaba - como o MU de &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מְ</span></td>
+      <td class="tr"><strong>m</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אִמָּא</span></td>
+      <td class="tr"><strong>imá</strong></td>
+      <td class="gloss">mãe</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֵם</span></td>
+      <td class="tr"><strong>em</strong></td>
+      <td class="gloss">mãe (registro formal, em compostos)</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 3 · Tav <span class="he he--word" lang="he">ת</span></h2>
+    <p class="meta"><strong>11</strong> itens · grave como <code>letra-03.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 3 --onda todas letra-03.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תָּו</span></td>
+      <td class="tr"><strong>Tav</strong></td>
+      <td class="gloss">nome da letra Tav</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תַּ</span></td>
+      <td class="tr"><strong>ta</strong></td>
+      <td class="gloss">sílaba - como &quot;tá&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תֶּ</span></td>
+      <td class="tr"><strong>te</strong></td>
+      <td class="gloss">sílaba - como &quot;te&quot; de &quot;teto&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תִּ</span></td>
+      <td class="tr"><strong>ti</strong></td>
+      <td class="gloss">sílaba - como &quot;ti&quot; de &quot;tigre&quot; - nunca &quot;tchi&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תּוֹ</span></td>
+      <td class="tr"><strong>to</strong></td>
+      <td class="gloss">sílaba - como &quot;to&quot; de &quot;topo&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תּוּ</span></td>
+      <td class="tr"><strong>tu</strong></td>
+      <td class="gloss">sílaba - como &quot;tu&quot; de &quot;tudo&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תְּ</span></td>
+      <td class="tr"><strong>t</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֶמֶת</span></td>
+      <td class="tr"><strong>emet</strong></td>
+      <td class="gloss">verdade</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תָּא</span></td>
+      <td class="tr"><strong>ta</strong></td>
+      <td class="gloss">compartimento · caixa postal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תֵּה</span></td>
+      <td class="tr"><strong>te</strong></td>
+      <td class="gloss">chá</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תַּפּוּחַ</span></td>
+      <td class="tr"><strong>tapúach</strong></td>
+      <td class="gloss">maçã</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 4 · Nun <span class="he he--word" lang="he">נ</span></h2>
+    <p class="meta"><strong>13</strong> itens · grave como <code>letra-04.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 4 --onda todas letra-04.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נוּן</span></td>
+      <td class="tr"><strong>Nun</strong></td>
+      <td class="gloss">nome da letra Nun</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נַ</span></td>
+      <td class="tr"><strong>na</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נֶ</span></td>
+      <td class="tr"><strong>ne</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נִ</span></td>
+      <td class="tr"><strong>ni</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נוֹ</span></td>
+      <td class="tr"><strong>no</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נוּ</span></td>
+      <td class="tr"><strong>nu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נְ</span></td>
+      <td class="tr"><strong>n</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אָמֵן</span></td>
+      <td class="tr"><strong>amén</strong></td>
+      <td class="gloss">amém</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נָתַן</span></td>
+      <td class="tr"><strong>natan</strong></td>
+      <td class="gloss">deu</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תֵּן</span></td>
+      <td class="tr"><strong>ten</strong></td>
+      <td class="gloss">dá! (imperativo)</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִן</span></td>
+      <td class="tr"><strong>min</strong></td>
+      <td class="gloss">de / a partir de (registro formal)</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נָכוֹן</span></td>
+      <td class="tr"><strong>nachon</strong></td>
+      <td class="gloss">correto</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נֶחְמָד</span></td>
+      <td class="tr"><strong>nechmad</strong></td>
+      <td class="gloss">simpático</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 5 · He <span class="he he--word" lang="he">ה</span></h2>
+    <p class="meta"><strong>14</strong> itens · grave como <code>letra-05.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 5 --onda todas letra-05.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הֵא</span></td>
+      <td class="tr"><strong>He</strong></td>
+      <td class="gloss">nome da letra He</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הַ</span></td>
+      <td class="tr"><strong>ha</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הֶ</span></td>
+      <td class="tr"><strong>he</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הִ</span></td>
+      <td class="tr"><strong>hi</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הוֹ</span></td>
+      <td class="tr"><strong>ho</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הוּ</span></td>
+      <td class="tr"><strong>hu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מָה</span></td>
+      <td class="tr"><strong>ma</strong></td>
+      <td class="gloss">o quê / que</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אַתָּה</span></td>
+      <td class="tr"><strong>atá</strong></td>
+      <td class="gloss">você (para homem)</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אַתְּ</span></td>
+      <td class="tr"><strong>at</strong></td>
+      <td class="gloss">você (para mulher)</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הֵם</span></td>
+      <td class="tr"><strong>hem</strong></td>
+      <td class="gloss">eles</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הֵן</span></td>
+      <td class="tr"><strong>hen</strong></td>
+      <td class="gloss">elas</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הִנֵּה</span></td>
+      <td class="tr"><strong>hiné</strong></td>
+      <td class="gloss">eis aqui / aqui está</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הַיּוֹם</span></td>
+      <td class="tr"><strong>hayom</strong></td>
+      <td class="gloss">hoje</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הַכֹּל</span></td>
+      <td class="tr"><strong>hakol</strong></td>
+      <td class="gloss">tudo</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 6 · Yod <span class="he he--word" lang="he">י</span></h2>
+    <p class="meta"><strong>12</strong> itens · grave como <code>letra-06.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 6 --onda todas letra-06.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יוֹד</span></td>
+      <td class="tr"><strong>Yod</strong></td>
+      <td class="gloss">nome da letra Yod</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יַ</span></td>
+      <td class="tr"><strong>ya</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יֶ</span></td>
+      <td class="tr"><strong>ye</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יִ</span></td>
+      <td class="tr"><strong>yi</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יוֹ</span></td>
+      <td class="tr"><strong>yo</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יוּ</span></td>
+      <td class="tr"><strong>yu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יְ</span></td>
+      <td class="tr"><strong>y</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֲנִי</span></td>
+      <td class="tr"><strong>aní</strong></td>
+      <td class="gloss">eu</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִי</span></td>
+      <td class="tr"><strong>mi</strong></td>
+      <td class="gloss">quem</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מַיִם</span></td>
+      <td class="tr"><strong>máyim</strong></td>
+      <td class="gloss">água</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יָם</span></td>
+      <td class="tr"><strong>yam</strong></td>
+      <td class="gloss">mar</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יִשְׂרָאֵל</span></td>
+      <td class="tr"><strong>yisrael</strong></td>
+      <td class="gloss">Israel</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 7 · Guímel <span class="he he--word" lang="he">ג</span></h2>
+    <p class="meta"><strong>13</strong> itens · grave como <code>letra-07.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 7 --onda todas letra-07.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גִּימֶל</span></td>
+      <td class="tr"><strong>Guímel</strong></td>
+      <td class="gloss">nome da letra Guímel</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גַ</span></td>
+      <td class="tr"><strong>ga</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גֶ</span></td>
+      <td class="tr"><strong>ge</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גִ</span></td>
+      <td class="tr"><strong>gi</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גוֹ</span></td>
+      <td class="tr"><strong>go</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גוּ</span></td>
+      <td class="tr"><strong>gu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גְ</span></td>
+      <td class="tr"><strong>g</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גַּם</span></td>
+      <td class="tr"><strong>gam</strong></td>
+      <td class="gloss">também</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גַּן</span></td>
+      <td class="tr"><strong>gan</strong></td>
+      <td class="gloss">jardim · jardim de infância</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גַּג</span></td>
+      <td class="tr"><strong>gag</strong></td>
+      <td class="gloss">telhado</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֲגַם</span></td>
+      <td class="tr"><strong>agam</strong></td>
+      <td class="gloss">lago</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גְּלִידָה</span></td>
+      <td class="tr"><strong>glidá</strong></td>
+      <td class="gloss">sorvete</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רֶגַע</span></td>
+      <td class="tr"><strong>réga</strong></td>
+      <td class="gloss">um momento</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 8 · Dálet <span class="he he--word" lang="he">ד</span></h2>
+    <p class="meta"><strong>14</strong> itens · grave como <code>letra-08.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 8 --onda todas letra-08.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דָּלֶת</span></td>
+      <td class="tr"><strong>Dálet</strong></td>
+      <td class="gloss">nome da letra Dálet</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דַ</span></td>
+      <td class="tr"><strong>da</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דֶ</span></td>
+      <td class="tr"><strong>de</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דִ</span></td>
+      <td class="tr"><strong>di</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דוֹ</span></td>
+      <td class="tr"><strong>do</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דוּ</span></td>
+      <td class="tr"><strong>du</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דְ</span></td>
+      <td class="tr"><strong>d</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יָד</span></td>
+      <td class="tr"><strong>yad</strong></td>
+      <td class="gloss">mão</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דָּג</span></td>
+      <td class="tr"><strong>dag</strong></td>
+      <td class="gloss">peixe</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֲדָמָה</span></td>
+      <td class="tr"><strong>adamá</strong></td>
+      <td class="gloss">terra / solo</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִדָּה</span></td>
+      <td class="tr"><strong>midá</strong></td>
+      <td class="gloss">medida / tamanho</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דּוֹדָה</span></td>
+      <td class="tr"><strong>dodá</strong></td>
+      <td class="gloss">tia</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מְדַבֵּר</span></td>
+      <td class="tr"><strong>medaber</strong></td>
+      <td class="gloss">falo, fala</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עֶשְׂרִים</span></td>
+      <td class="tr"><strong>esrim</strong></td>
+      <td class="gloss">vinte</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 9 · Shin <span class="he he--word" lang="he">ש</span></h2>
+    <p class="meta"><strong>12</strong> itens · grave como <code>letra-09.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 9 --onda todas letra-09.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שִׁין</span></td>
+      <td class="tr"><strong>Shin</strong></td>
+      <td class="gloss">nome da letra Shin</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שַׁ</span></td>
+      <td class="tr"><strong>sha</strong></td>
+      <td class="gloss">sílaba - como &quot;chá&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שֶׁ</span></td>
+      <td class="tr"><strong>she</strong></td>
+      <td class="gloss">sílaba - como &quot;che&quot; de &quot;chegar&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שִׁ</span></td>
+      <td class="tr"><strong>shi</strong></td>
+      <td class="gloss">sílaba - como &quot;chi&quot; de &quot;chique&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שׁוֹ</span></td>
+      <td class="tr"><strong>sho</strong></td>
+      <td class="gloss">sílaba - como &quot;cho&quot; de &quot;chocolate&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שׁוּ</span></td>
+      <td class="tr"><strong>shu</strong></td>
+      <td class="gloss">sílaba - como &quot;chu&quot; de &quot;chuva&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שְׁ</span></td>
+      <td class="tr"><strong>sh</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שֵׁם</span></td>
+      <td class="tr"><strong>shem</strong></td>
+      <td class="gloss">nome</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שָׁם</span></td>
+      <td class="tr"><strong>sham</strong></td>
+      <td class="gloss">lá / ali</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שָׁנָה</span></td>
+      <td class="tr"><strong>shaná</strong></td>
+      <td class="gloss">ano</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אִשָּׁה</span></td>
+      <td class="tr"><strong>ishá</strong></td>
+      <td class="gloss">mulher</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שֶׁמֶשׁ</span></td>
+      <td class="tr"><strong>shémesh</strong></td>
+      <td class="gloss">sol</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 10 · Lámed <span class="he he--word" lang="he">ל</span></h2>
+    <p class="meta"><strong>12</strong> itens · grave como <code>letra-10.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 10 --onda todas letra-10.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לָמֶד</span></td>
+      <td class="tr"><strong>Lámed</strong></td>
+      <td class="gloss">nome da letra Lámed</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לַ</span></td>
+      <td class="tr"><strong>la</strong></td>
+      <td class="gloss">sílaba - como &quot;lá&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לֶ</span></td>
+      <td class="tr"><strong>le</strong></td>
+      <td class="gloss">sílaba - como &quot;le&quot; de &quot;leve&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לִ</span></td>
+      <td class="tr"><strong>li</strong></td>
+      <td class="gloss">sílaba - como &quot;li&quot; de &quot;livro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לוֹ</span></td>
+      <td class="tr"><strong>lo</strong></td>
+      <td class="gloss">sílaba - como &quot;lo&quot; de &quot;loja&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לוּ</span></td>
+      <td class="tr"><strong>lu</strong></td>
+      <td class="gloss">sílaba - como &quot;lu&quot; de &quot;luva&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לְ</span></td>
+      <td class="tr"><strong>l</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לֹא</span></td>
+      <td class="tr"><strong>lo</strong></td>
+      <td class="gloss">não</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שֶׁל</span></td>
+      <td class="tr"><strong>shel</strong></td>
+      <td class="gloss">de (posse)</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יֶלֶד</span></td>
+      <td class="tr"><strong>yéled</strong></td>
+      <td class="gloss">menino</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יַלְדָּה</span></td>
+      <td class="tr"><strong>yaldá</strong></td>
+      <td class="gloss">menina</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לַיְלָה</span></td>
+      <td class="tr"><strong>láila</strong></td>
+      <td class="gloss">noite</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 11 · Resh <span class="he he--word" lang="he">ר</span></h2>
+    <p class="meta"><strong>14</strong> itens · grave como <code>letra-11.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 11 --onda todas letra-11.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רֵישׁ</span></td>
+      <td class="tr"><strong>Resh</strong></td>
+      <td class="gloss">nome da letra Resh</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רַ</span></td>
+      <td class="tr"><strong>ra</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רֶ</span></td>
+      <td class="tr"><strong>re</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רִ</span></td>
+      <td class="tr"><strong>ri</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רוֹ</span></td>
+      <td class="tr"><strong>ro</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רוּ</span></td>
+      <td class="tr"><strong>ru</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רְ</span></td>
+      <td class="tr"><strong>r</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שִׁיר</span></td>
+      <td class="tr"><strong>shir</strong></td>
+      <td class="gloss">canção</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אָמַר</span></td>
+      <td class="tr"><strong>amar</strong></td>
+      <td class="gloss">disse</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הַר</span></td>
+      <td class="tr"><strong>har</strong></td>
+      <td class="gloss">montanha</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נָהָר</span></td>
+      <td class="tr"><strong>nahar</strong></td>
+      <td class="gloss">rio</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רְחוֹב</span></td>
+      <td class="tr"><strong>rechov</strong></td>
+      <td class="gloss">rua</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חָבֵר</span></td>
+      <td class="tr"><strong>chaver</strong></td>
+      <td class="gloss">amigo</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אַרְבַּע</span></td>
+      <td class="tr"><strong>arba</strong></td>
+      <td class="gloss">quatro</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 12 · Vav <span class="he he--word" lang="he">ו</span></h2>
+    <p class="meta"><strong>17</strong> itens · grave como <code>letra-12.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 12 --onda todas letra-12.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">וָו</span></td>
+      <td class="tr"><strong>Vav</strong></td>
+      <td class="gloss">nome da letra Vav</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">וַ</span></td>
+      <td class="tr"><strong>va</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">וֶ</span></td>
+      <td class="tr"><strong>ve</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">וִ</span></td>
+      <td class="tr"><strong>vi</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ווֹ</span></td>
+      <td class="tr"><strong>vo</strong></td>
+      <td class="gloss">sílaba - precisa de dois vav: um consoante, um vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ווּ</span></td>
+      <td class="tr"><strong>vu</strong></td>
+      <td class="gloss">sílaba - precisa de dois vav: um consoante, um vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">וְ</span></td>
+      <td class="tr"><strong>v</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שָׁלוֹם</span></td>
+      <td class="tr"><strong>shalom</strong></td>
+      <td class="gloss">paz / olá / tchau</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תּוֹדָה</span></td>
+      <td class="tr"><strong>todá</strong></td>
+      <td class="gloss">obrigado</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יוֹם</span></td>
+      <td class="tr"><strong>yom</strong></td>
+      <td class="gloss">dia</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מוֹרָה</span></td>
+      <td class="tr"><strong>morá</strong></td>
+      <td class="gloss">professora</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">גָּדוֹל</span></td>
+      <td class="tr"><strong>gadol</strong></td>
+      <td class="gloss">grande</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הוּא</span></td>
+      <td class="tr"><strong>hu</strong></td>
+      <td class="gloss">ele</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הִיא</span></td>
+      <td class="tr"><strong>hi</strong></td>
+      <td class="gloss">ela</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">15</td>
+      <td class="he-cell"><span class="he he--word" lang="he">וְגַם</span></td>
+      <td class="tr"><strong>vegam</strong></td>
+      <td class="gloss">e também</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">16</td>
+      <td class="he-cell"><span class="he he--word" lang="he">וֶרֶד</span></td>
+      <td class="tr"><strong>véred</strong></td>
+      <td class="gloss">rosa (flor)</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">17</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עַכְשָׁו</span></td>
+      <td class="tr"><strong>achshav</strong></td>
+      <td class="gloss">agora</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 13 · Záyin <span class="he he--word" lang="he">ז</span></h2>
+    <p class="meta"><strong>13</strong> itens · grave como <code>letra-13.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 13 --onda todas letra-13.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זַיִן</span></td>
+      <td class="tr"><strong>Záyin</strong></td>
+      <td class="gloss">nome da letra Záyin</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זַ</span></td>
+      <td class="tr"><strong>za</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זֶ</span></td>
+      <td class="tr"><strong>ze</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זִ</span></td>
+      <td class="tr"><strong>zi</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זוֹ</span></td>
+      <td class="tr"><strong>zo</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זוּ</span></td>
+      <td class="tr"><strong>zu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זְ</span></td>
+      <td class="tr"><strong>z</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זֶה</span></td>
+      <td class="tr"><strong>ze</strong></td>
+      <td class="gloss">este / isto</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זֹאת</span></td>
+      <td class="tr"><strong>zot</strong></td>
+      <td class="gloss">esta</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">זְמַן</span></td>
+      <td class="tr"><strong>zman</strong></td>
+      <td class="gloss">tempo</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֹזֶן</span></td>
+      <td class="tr"><strong>ózen</strong></td>
+      <td class="gloss">orelha</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מָזוֹן</span></td>
+      <td class="tr"><strong>mazon</strong></td>
+      <td class="gloss">alimento</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מַזָּל</span></td>
+      <td class="tr"><strong>mazal</strong></td>
+      <td class="gloss">sorte</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 14 · Het <span class="he he--word" lang="he">ח</span></h2>
+    <p class="meta"><strong>14</strong> itens · grave como <code>letra-14.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 14 --onda todas letra-14.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חֵית</span></td>
+      <td class="tr"><strong>Het</strong></td>
+      <td class="gloss">nome da letra Het</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חַ</span></td>
+      <td class="tr"><strong>cha</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חֶ</span></td>
+      <td class="tr"><strong>che</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חִ</span></td>
+      <td class="tr"><strong>chi</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חוֹ</span></td>
+      <td class="tr"><strong>cho</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חוּ</span></td>
+      <td class="tr"><strong>chu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חֲ</span></td>
+      <td class="tr"><strong>cha</strong></td>
+      <td class="gloss">sílaba - guturais não aceitam sheva - usam o hataf, um A ultrabreve</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אָח</span></td>
+      <td class="tr"><strong>ach</strong></td>
+      <td class="gloss">irmão</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֶחָד</span></td>
+      <td class="tr"><strong>echad</strong></td>
+      <td class="gloss">um</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לֶחֶם</span></td>
+      <td class="tr"><strong>léchem</strong></td>
+      <td class="gloss">pão</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חַלּוֹן</span></td>
+      <td class="tr"><strong>chalon</strong></td>
+      <td class="gloss">janela</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חָדָשׁ</span></td>
+      <td class="tr"><strong>chadash</strong></td>
+      <td class="gloss">novo</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שִׂמְחָה</span></td>
+      <td class="tr"><strong>simchá</strong></td>
+      <td class="gloss">alegria</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חֲמִשָּׁה</span></td>
+      <td class="tr"><strong>chamishá</strong></td>
+      <td class="gloss">cinco</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 15 · Tet <span class="he he--word" lang="he">ט</span></h2>
+    <p class="meta"><strong>13</strong> itens · grave como <code>letra-15.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 15 --onda todas letra-15.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טֵית</span></td>
+      <td class="tr"><strong>Tet</strong></td>
+      <td class="gloss">nome da letra Tet</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טַ</span></td>
+      <td class="tr"><strong>ta</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טֶ</span></td>
+      <td class="tr"><strong>te</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טִ</span></td>
+      <td class="tr"><strong>ti</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טוֹ</span></td>
+      <td class="tr"><strong>to</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טוּ</span></td>
+      <td class="tr"><strong>tu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טְ</span></td>
+      <td class="tr"><strong>t</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִטָּה</span></td>
+      <td class="tr"><strong>mitá</strong></td>
+      <td class="gloss">cama</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טִיּוּל</span></td>
+      <td class="tr"><strong>tiyul</strong></td>
+      <td class="gloss">passeio</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טָרִי</span></td>
+      <td class="tr"><strong>tari</strong></td>
+      <td class="gloss">fresco</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִטְרִיָּה</span></td>
+      <td class="tr"><strong>mitriyá</strong></td>
+      <td class="gloss">guarda-chuva</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סְטוּדֶנְט</span></td>
+      <td class="tr"><strong>student</strong></td>
+      <td class="gloss">estudante</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מְעַט</span></td>
+      <td class="tr"><strong>meat</strong></td>
+      <td class="gloss">pouco</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 16 · Sámech <span class="he he--word" lang="he">ס</span></h2>
+    <p class="meta"><strong>15</strong> itens · grave como <code>letra-16.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 16 --onda todas letra-16.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סָמֶךְ</span></td>
+      <td class="tr"><strong>Sámech</strong></td>
+      <td class="gloss">nome da letra Sámech</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סַ</span></td>
+      <td class="tr"><strong>sa</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סֶ</span></td>
+      <td class="tr"><strong>se</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סִ</span></td>
+      <td class="tr"><strong>si</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סוֹ</span></td>
+      <td class="tr"><strong>so</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סוּ</span></td>
+      <td class="tr"><strong>su</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סְ</span></td>
+      <td class="tr"><strong>s</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סוּס</span></td>
+      <td class="tr"><strong>sus</strong></td>
+      <td class="gloss">cavalo</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סוֹד</span></td>
+      <td class="tr"><strong>sod</strong></td>
+      <td class="gloss">segredo</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סֵדֶר</span></td>
+      <td class="tr"><strong>séder</strong></td>
+      <td class="gloss">ordem / sequência</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סֶרֶט</span></td>
+      <td class="tr"><strong>séret</strong></td>
+      <td class="gloss">filme</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סַל</span></td>
+      <td class="tr"><strong>sal</strong></td>
+      <td class="gloss">cesta</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סְלִיחָה</span></td>
+      <td class="tr"><strong>slichá</strong></td>
+      <td class="gloss">desculpe / com licença</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אוֹטוֹבּוּס</span></td>
+      <td class="tr"><strong>ótobus</strong></td>
+      <td class="gloss">ônibus</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">15</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כִּסֵּא</span></td>
+      <td class="tr"><strong>kisé</strong></td>
+      <td class="gloss">cadeira</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 17 · Áyin <span class="he he--word" lang="he">ע</span></h2>
+    <p class="meta"><strong>13</strong> itens · grave como <code>letra-17.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 17 --onda todas letra-17.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עַיִן</span></td>
+      <td class="tr"><strong>Áyin</strong></td>
+      <td class="gloss">nome da letra Áyin</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עַ</span></td>
+      <td class="tr"><strong>a</strong></td>
+      <td class="gloss">sílaba - só a vogal A</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עֶ</span></td>
+      <td class="tr"><strong>e</strong></td>
+      <td class="gloss">sílaba - só a vogal E</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עִ</span></td>
+      <td class="tr"><strong>i</strong></td>
+      <td class="gloss">sílaba - só a vogal I</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עוֹ</span></td>
+      <td class="tr"><strong>o</strong></td>
+      <td class="gloss">sílaba - só a vogal O</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עוּ</span></td>
+      <td class="tr"><strong>u</strong></td>
+      <td class="gloss">sílaba - só a vogal U</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עִיר</span></td>
+      <td class="tr"><strong>ir</strong></td>
+      <td class="gloss">cidade</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עַל</span></td>
+      <td class="tr"><strong>al</strong></td>
+      <td class="gloss">sobre / em cima de</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שָׁעָה</span></td>
+      <td class="tr"><strong>shaá</strong></td>
+      <td class="gloss">hora</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עוֹלָם</span></td>
+      <td class="tr"><strong>olam</strong></td>
+      <td class="gloss">mundo</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">נָעִים</span></td>
+      <td class="tr"><strong>naim</strong></td>
+      <td class="gloss">agradável</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עִבְרִית</span></td>
+      <td class="tr"><strong>ivrit</strong></td>
+      <td class="gloss">hebraico</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עוֹד</span></td>
+      <td class="tr"><strong>od</strong></td>
+      <td class="gloss">mais, ainda</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 18 · Tsadi <span class="he he--word" lang="he">צ</span></h2>
+    <p class="meta"><strong>15</strong> itens · grave como <code>letra-18.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 18 --onda todas letra-18.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צָדִי</span></td>
+      <td class="tr"><strong>Tsadi</strong></td>
+      <td class="gloss">nome da letra Tsadi</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צַ</span></td>
+      <td class="tr"><strong>tsa</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צֶ</span></td>
+      <td class="tr"><strong>tse</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צִ</span></td>
+      <td class="tr"><strong>tsi</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צוֹ</span></td>
+      <td class="tr"><strong>tso</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צוּ</span></td>
+      <td class="tr"><strong>tsu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צְ</span></td>
+      <td class="tr"><strong>ts</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">עֵץ</span></td>
+      <td class="tr"><strong>ets</strong></td>
+      <td class="gloss">árvore</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֶרֶץ</span></td>
+      <td class="tr"><strong>érets</strong></td>
+      <td class="gloss">terra / país</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִיץ</span></td>
+      <td class="tr"><strong>mits</strong></td>
+      <td class="gloss">suco</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רוֹצֶה</span></td>
+      <td class="tr"><strong>rotsé</strong></td>
+      <td class="gloss">quer</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צֵל</span></td>
+      <td class="tr"><strong>tsel</strong></td>
+      <td class="gloss">sombra</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צָהֳרַיִם</span></td>
+      <td class="tr"><strong>tsohoráyim</strong></td>
+      <td class="gloss">meio-dia</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בְּבַקָּשָׁה</span></td>
+      <td class="tr"><strong>bevakashá</strong></td>
+      <td class="gloss">por favor</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">15</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִצְוָה</span></td>
+      <td class="tr"><strong>mitsvá</strong></td>
+      <td class="gloss">preceito, boa ação</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 19 · Qof <span class="he he--word" lang="he">ק</span></h2>
+    <p class="meta"><strong>15</strong> itens · grave como <code>letra-19.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 19 --onda todas letra-19.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קוֹף</span></td>
+      <td class="tr"><strong>Qof</strong></td>
+      <td class="gloss">nome da letra Qof</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קַ</span></td>
+      <td class="tr"><strong>ka</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קֶ</span></td>
+      <td class="tr"><strong>ke</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קִ</span></td>
+      <td class="tr"><strong>ki</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קוֹ</span></td>
+      <td class="tr"><strong>ko</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קוּ</span></td>
+      <td class="tr"><strong>ku</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קְ</span></td>
+      <td class="tr"><strong>k</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">רַק</span></td>
+      <td class="tr"><strong>rak</strong></td>
+      <td class="gloss">só / apenas</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קוֹל</span></td>
+      <td class="tr"><strong>kol</strong></td>
+      <td class="gloss">voz</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קָטָן</span></td>
+      <td class="tr"><strong>katan</strong></td>
+      <td class="gloss">pequeno</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">תִּיק</span></td>
+      <td class="tr"><strong>tik</strong></td>
+      <td class="gloss">bolsa / mochila</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שֶׁקֶט</span></td>
+      <td class="tr"><strong>shéket</strong></td>
+      <td class="gloss">silêncio</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מָקוֹם</span></td>
+      <td class="tr"><strong>makom</strong></td>
+      <td class="gloss">lugar</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קָפֶה</span></td>
+      <td class="tr"><strong>kafé</strong></td>
+      <td class="gloss">café</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">15</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קָשֶׁה</span></td>
+      <td class="tr"><strong>kashé</strong></td>
+      <td class="gloss">difícil</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 20 · Bet / Vet <span class="he he--word" lang="he">ב</span></h2>
+    <p class="meta"><strong>13</strong> itens · grave como <code>letra-20.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 20 --onda todas letra-20.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בֵּית</span></td>
+      <td class="tr"><strong>Bet / Vet</strong></td>
+      <td class="gloss">nome da letra Bet / Vet</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בַּ</span></td>
+      <td class="tr"><strong>ba</strong></td>
+      <td class="gloss">sílaba - como &quot;bá&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בֶּ</span></td>
+      <td class="tr"><strong>be</strong></td>
+      <td class="gloss">sílaba - como &quot;be&quot; de &quot;beber&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בִּ</span></td>
+      <td class="tr"><strong>bi</strong></td>
+      <td class="gloss">sílaba - como &quot;bi&quot; de &quot;bicho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בּוֹ</span></td>
+      <td class="tr"><strong>bo</strong></td>
+      <td class="gloss">sílaba - como &quot;bo&quot; de &quot;bolo&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בּוּ</span></td>
+      <td class="tr"><strong>bu</strong></td>
+      <td class="gloss">sílaba - como &quot;bu&quot; de &quot;buraco&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בְּ</span></td>
+      <td class="tr"><strong>b</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אַבָּא</span></td>
+      <td class="tr"><strong>abá</strong></td>
+      <td class="gloss">pai</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בַּיִת</span></td>
+      <td class="tr"><strong>báyit</strong></td>
+      <td class="gloss">casa</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טוֹב</span></td>
+      <td class="tr"><strong>tov</strong></td>
+      <td class="gloss">bom</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לֵב</span></td>
+      <td class="tr"><strong>lev</strong></td>
+      <td class="gloss">coração</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שַׁבָּת</span></td>
+      <td class="tr"><strong>shabat</strong></td>
+      <td class="gloss">sábado / shabat</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בֹּקֶר</span></td>
+      <td class="tr"><strong>bóker</strong></td>
+      <td class="gloss">manhã</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 21 · Kaf / Chaf <span class="he he--word" lang="he">כ</span></h2>
+    <p class="meta"><strong>16</strong> itens · grave como <code>letra-21.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 21 --onda todas letra-21.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כַּף</span></td>
+      <td class="tr"><strong>Kaf / Chaf</strong></td>
+      <td class="gloss">nome da letra Kaf / Chaf</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כַּ</span></td>
+      <td class="tr"><strong>ka</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כֶּ</span></td>
+      <td class="tr"><strong>ke</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כִּ</span></td>
+      <td class="tr"><strong>ki</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כּוֹ</span></td>
+      <td class="tr"><strong>ko</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כּוּ</span></td>
+      <td class="tr"><strong>ku</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כְּ</span></td>
+      <td class="tr"><strong>k</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כֶּלֶב</span></td>
+      <td class="tr"><strong>kélev</strong></td>
+      <td class="gloss">cachorro</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כּוֹס</span></td>
+      <td class="tr"><strong>kos</strong></td>
+      <td class="gloss">copo</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">אֹכֶל</span></td>
+      <td class="tr"><strong>óchel</strong></td>
+      <td class="gloss">comida</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מֶלֶךְ</span></td>
+      <td class="tr"><strong>mélech</strong></td>
+      <td class="gloss">rei</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">דֶּרֶךְ</span></td>
+      <td class="tr"><strong>dérech</strong></td>
+      <td class="gloss">caminho</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כַּדּוּר</span></td>
+      <td class="tr"><strong>kadur</strong></td>
+      <td class="gloss">bola</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כֵּן</span></td>
+      <td class="tr"><strong>ken</strong></td>
+      <td class="gloss">sim</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">15</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כִּתָּה</span></td>
+      <td class="tr"><strong>kitá</strong></td>
+      <td class="gloss">sala de aula, turma</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">16</td>
+      <td class="he-cell"><span class="he he--word" lang="he">לָלֶכֶת</span></td>
+      <td class="tr"><strong>laléchet</strong></td>
+      <td class="gloss">ir, caminhar</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Letra 22 · Pe / Fe <span class="he he--word" lang="he">פ</span></h2>
+    <p class="meta"><strong>14</strong> itens · grave como <code>letra-22.m4a</code>
+       · depois: <code>npm run cortar-audio -- --letra 22 --onda todas letra-22.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פֵּא</span></td>
+      <td class="tr"><strong>Pe / Fe</strong></td>
+      <td class="gloss">nome da letra Pe / Fe</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פַּ</span></td>
+      <td class="tr"><strong>pa</strong></td>
+      <td class="gloss">sílaba - A aberto, como em &quot;casa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פֶּ</span></td>
+      <td class="tr"><strong>pe</strong></td>
+      <td class="gloss">sílaba - E como em &quot;mesa&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פִּ</span></td>
+      <td class="tr"><strong>pi</strong></td>
+      <td class="gloss">sílaba - I como em &quot;milho&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פּוֹ</span></td>
+      <td class="tr"><strong>po</strong></td>
+      <td class="gloss">sílaba - O como em &quot;motor&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פּוּ</span></td>
+      <td class="tr"><strong>pu</strong></td>
+      <td class="gloss">sílaba - U como em &quot;muro&quot;</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פְּ</span></td>
+      <td class="tr"><strong>p</strong></td>
+      <td class="gloss">sílaba - só a consoante, sem vogal</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סֵפֶר</span></td>
+      <td class="tr"><strong>séfer</strong></td>
+      <td class="gloss">livro</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מִשְׁפָּחָה</span></td>
+      <td class="tr"><strong>mishpachá</strong></td>
+      <td class="gloss">família</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">יָפֶה</span></td>
+      <td class="tr"><strong>yafé</strong></td>
+      <td class="gloss">bonito</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">כֶּסֶף</span></td>
+      <td class="tr"><strong>késef</strong></td>
+      <td class="gloss">dinheiro</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סוֹף</span></td>
+      <td class="tr"><strong>sof</strong></td>
+      <td class="gloss">fim</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פֹּה</span></td>
+      <td class="tr"><strong>po</strong></td>
+      <td class="gloss">aqui</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">טֶלֶפוֹן</span></td>
+      <td class="tr"><strong>télefon</strong></td>
+      <td class="gloss">telefone</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Sinais de vogal</h2>
+    <p class="meta"><strong>14</strong> itens · grave como <code>vogais.m4a</code>
+       · depois: <code>npm run cortar-audio -- --vogais --onda todas vogais.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פַּתָּח</span></td>
+      <td class="tr"><strong>patach</strong></td>
+      <td class="gloss">nome do sinal patach</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מָ</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">sinal kamats - som a</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קָמָץ</span></td>
+      <td class="tr"><strong>kamats</strong></td>
+      <td class="gloss">nome do sinal kamats</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">סֶגּוֹל</span></td>
+      <td class="tr"><strong>segol</strong></td>
+      <td class="gloss">nome do sinal segol</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מֵ</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">sinal tsere - som e</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צֵירֵי</span></td>
+      <td class="tr"><strong>tsere</strong></td>
+      <td class="gloss">nome do sinal tsere</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חִירִיק</span></td>
+      <td class="tr"><strong>chirik</strong></td>
+      <td class="gloss">nome do sinal chirik</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מֹ</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">sinal cholam - som o</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חוֹלָם</span></td>
+      <td class="tr"><strong>cholam</strong></td>
+      <td class="gloss">nome do sinal cholam</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">חוֹלָם מָלֵא</span></td>
+      <td class="tr"><strong>cholam malê</strong></td>
+      <td class="gloss">nome do sinal cholam malê</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">מֻ</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">sinal kubuts - som u</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">קֻבּוּץ</span></td>
+      <td class="tr"><strong>kubuts</strong></td>
+      <td class="gloss">nome do sinal kubuts</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שׁוּרוּק</span></td>
+      <td class="tr"><strong>shuruk</strong></td>
+      <td class="gloss">nome do sinal shuruk</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="he-cell"><span class="he he--word" lang="he">שְׁוָא</span></td>
+      <td class="tr"><strong>sheva</strong></td>
+      <td class="gloss">nome do sinal sheva</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>Módulo 7 · os sons com gerech</h2>
+    <p class="meta"><strong>12</strong> itens · grave como <code>modulo-7.m4a</code>
+       · depois: <code>npm run cortar-audio -- --grupo &quot;módulo 7&quot; --onda todas modulo-7.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צ׳</span></td>
+      <td class="tr"><strong>tch</strong></td>
+      <td class="gloss">a letra צ com gerech - som tch</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צ׳ילה</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">Chile</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td class="he-cell"><span class="he he--word" lang="he">צ׳כיה</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">Tchéquia</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ואוצ׳ר</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">voucher</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ג׳</span></td>
+      <td class="tr"><strong>dj</strong></td>
+      <td class="gloss">a letra ג com gerech - som dj</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td class="he-cell"><span class="he he--word" lang="he">פיג׳מה</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">pijama</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ג׳ל</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">gel</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ג׳וניור</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">júnior</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ז׳</span></td>
+      <td class="tr"><strong>j</strong></td>
+      <td class="gloss">a letra ז com gerech - som j</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ז׳רגון</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">jargão</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ז׳סטה</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">gesto</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="he-cell"><span class="he he--word" lang="he">ג׳ירפה</span></td>
+      <td class="tr"><span class="dim">-</span></td>
+      <td class="gloss">girafa</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+
+  <section class="sheet letra">
+    <h2>No mundo real</h2>
+    <p class="meta"><strong>2</strong> itens · grave como <code>mundo-real.m4a</code>
+       · depois: <code>npm run cortar-audio -- --grupo &quot;no mundo real&quot; --onda todas mundo-real.m4a</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>
+    <tr>
+      <td class="num">1</td>
+      <td class="he-cell"><span class="he he--word" lang="he">בֹּקֶר טוֹב</span></td>
+      <td class="tr"><strong>bóker tov</strong></td>
+      <td class="gloss">bom dia</td>
+      <td class="take"></td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td class="he-cell"><span class="he he--word" lang="he">הַמֶּלֶךְ</span></td>
+      <td class="tr"><strong>hamélech</strong></td>
+      <td class="gloss">o rei</td>
+      <td class="take"></td>
+    </tr></tbody>
+    </table>
+  </section>
+</body>
+</html>

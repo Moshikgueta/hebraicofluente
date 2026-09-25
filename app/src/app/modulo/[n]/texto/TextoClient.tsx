@@ -17,6 +17,7 @@ import { Badge, Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { Compreensao } from '@/components/learn/Compreensao';
+import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { textoDoModulo, type CourseModule } from '@/lib/content';
 import { stripNikud } from '@/lib/hebrew';
 import { useProgress } from '@/lib/state/store';
@@ -104,6 +105,13 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
           Toque numa linha para ver só a ajuda dela.
         </p>
       </Card>
+
+      {/* Ler o texto inteiro em voz alta é a leitura corrida de verdade: sem
+          parar em cada palavra. Gravar e se ouvir mostra onde a voz travou. */}
+      <GravarLeitura
+        titulo="Leia o texto em voz alta"
+        instrucao="Leia o texto inteiro, sem parar em cada palavra, grave e se ouça. Depois leia de novo e compare."
+      />
 
       {texto.novas.length > 0 && (
         <Card tone="wash" className="p-5 grid gap-3">

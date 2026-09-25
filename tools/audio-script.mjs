@@ -35,7 +35,33 @@ function main() {
   const audio = readJson('data/audio.json');
   const clips = audio.clips;
 
-  const waveRows = w => clips.filter(c => c.wave === w).map(c => `
+  const silabas = clips.filter(c => c.wave === 1 && c.kind === 'silaba').length;
+
+  /* NA ORDEM DOS NÚMEROS, que é a ordem em que cortar-audio.mjs nomeia os
+     pedaços (`alvo.sort((a, b) => a.num - b.num)`). O roteiro imprimia na
+     ordem do curso, e um clipe novo recebe o próximo número livre: o da
+     girafa, nº 322, saía entre o 312 e o 314. O locutor leria nessa ordem, e
+     o corte daria a cada pedaço dali em diante o nome da palavra vizinha -
+     sem aviso, porque a contagem bate. */
+  const daOnda = w => clips.filter(c => c.wave === w).sort((a, b) => a.num - b.num);
+
+  /* Blocos de até BLOCO clipes: cada um é um arquivo, e um erro no meio custa
+     regravar só aquele bloco. A linha do bloco já traz o nome do arquivo e o
+     comando que o corta. */
+  const BLOCO = 40;
+  const pad = n => String(n).padStart(3, '0');
+  const cabecaDeBloco = (w, bloco) => {
+    const de = bloco[0].num, ate = bloco[bloco.length - 1].num;
+    const arquivo = `onda${w}_${pad(de)}-${pad(ate)}.wav`;
+    return `
+    <tr class="bloco"><td colspan="7">
+      <strong>Bloco: nº ${de} a ${ate}</strong> (${bloco.length} clipes) · grave como
+      <code>${arquivo}</code> · corte com
+      <code>npm run cortar-audio -- --onda ${w} --de ${de} --ate ${ate} ${arquivo}</code>
+    </td></tr>`;
+  };
+
+  const linha = c => `
     <tr>
       <td class="num">${c.num}</td>
       <td class="he-cell">${he(c.he, { size: 'word' })}</td>
@@ -44,7 +70,17 @@ function main() {
       <td class="where">${esc(c.where.join(' · '))}</td>
       <td class="file"><code>${esc(c.file)}</code></td>
       <td class="take"></td>
-    </tr>`).join('\n');
+    </tr>`;
+
+  const waveRows = w => {
+    const lista = daOnda(w);
+    const partes = [];
+    for (let i = 0; i < lista.length; i += BLOCO) {
+      const bloco = lista.slice(i, i + BLOCO);
+      partes.push(cabecaDeBloco(w, bloco), ...bloco.map(linha));
+    }
+    return partes.join('\n');
+  };
 
   const waveSection = w => `
   <section class="sheet">
@@ -144,15 +180,20 @@ function main() {
     <div class="box">
       <h3>O técnico</h3>
       <ul>
-        <li><strong>WAV 48 kHz / 24 bits</strong>, mono. A conversão para MP3 é nossa.</li>
+        <li><strong>WAV</strong>, mono, 48 kHz (44,1 kHz também serve). A conversão para MP3 é nossa.</li>
         <li><strong>Sem processamento</strong>: nada de compressão, de-esser, EQ,
             normalização ou redução de ruído. Cru.</li>
-        <li>Um arquivo por clipe, nomeado exatamente como a coluna
-            <em>Nome do arquivo</em>, trocando <code>.mp3</code> por <code>.wav</code>.</li>
-        <li>Deixe <strong>0,3 s de silêncio</strong> antes e depois de cada palavra.</li>
-        <li>Grave <strong>30 s de ruído de sala</strong> no começo da sessão e entregue
-            como <code>room-tone.wav</code>.</li>
-        <li>Se houver segunda tomada, entregue só a escolhida.</li>
+        <li><strong>Não é um arquivo por palavra.</strong> Grave em <strong>blocos de até 40
+            clipes</strong>, lendo de cima para baixo na ordem dos números, num arquivo
+            contínuo por bloco. O corte e os nomes são automáticos.</li>
+        <li>Comece cada bloco com <strong>3 segundos de silêncio</strong>, e deixe
+            <strong>1 segundo de silêncio</strong> entre um clipe e o próximo. É por esse
+            silêncio que a gravação é cortada.</li>
+        <li>Nomeie cada bloco pela onda e pelos números: <code>onda1_001-040.wav</code>.</li>
+        <li><strong>Errou, tossiu ou repetiu?</strong> Pare, apague aquele bloco e grave o
+            bloco de novo. Uma palavra a mais ou a menos desalinha o resto do bloco.</li>
+        <li>Grave <strong>30 s de silêncio da sala</strong> no começo, sem falar, e entregue
+            como <code>room-tone.wav</code>. É o que a limpeza do ruído usa de referência.</li>
       </ul>
     </div>
   </div>
@@ -164,7 +205,7 @@ function main() {
        pronúncia corrente se ela divergir. Duas palavras deste roteiro têm as
        mesmas consoantes e vogais diferentes; elas são clipes diferentes de
        propósito.</p>
-    <p style="margin:0"><strong>2. As sílabas são o coração.</strong> A onda 1 tem 136
+    <p style="margin:0"><strong>2. As sílabas são o coração.</strong> A onda 1 tem ${silabas}
        sílabas soltas. Elas soam estranhas de ler em voz alta, e é normal: o aluno
        está aprendendo que <em>esta letra com este sinal faz este som</em>. Leia cada
        uma como sílaba isolada, sem transformar em palavra e sem alongar.</p>
@@ -185,10 +226,13 @@ function main() {
   </table>
 
   <h3>Depois da sessão</h3>
-  <p class="lead">Coloque os arquivos convertidos em <code>audio/</code> na raiz do
-     repositório e rode <code>npm run check-audio</code>. Ele diz o que chegou, o que
-     falta, e se algum arquivo tem nome que não corresponde a clipe nenhum. Nada
-     mais precisa ser editado: o app passa a tocar os clipes que existirem.</p>
+  <p class="lead">Cada bloco passa por <code>npm run cortar-audio -- --onda 1 --de 1 --ate 40
+     onda1_001-040.wav</code>, que corta nos silêncios, limpa, iguala o volume e dá a
+     cada pedaço o nome certo. O corte só grava os arquivos se a contagem bater
+     exatamente com o bloco, e gera <code>audio/conferir/conferencia.html</code>, que toca
+     cada pedaço ao lado da palavra: ouvir algumas linhas dela prova que nada saiu
+     desalinhado. No fim, <code>npm run check-audio</code> diz o que chegou e o que falta.
+     Nada mais precisa ser editado: o app passa a tocar os clipes que existirem.</p>
 </section>
 
 ${audio.waves.map(waveSection).join('\n')}
@@ -198,6 +242,83 @@ ${audio.waves.map(waveSection).join('\n')}
 
   mkdirSync(join(ROOT, 'audio'), { recursive: true });
   writeFileSync(join(ROOT, 'audio/roteiro-de-gravacao.html'), html);
+
+  /* ── o roteiro POR LETRA ────────────────────────────────────────────────
+     Para gravar no celular, sem estúdio: um arquivo por letra, com tudo o
+     que aquela letra tem (o nome, as sílabas, as palavras de leitura), mais
+     três arquivos avulsos (sinais de vogal, módulo 7, no mundo real). Uma
+     letra que sai errada é refeita sozinha, e cada arquivo é curto o bastante
+     para gravar de uma vez. A ordem de cada seção é a ordem dos números, que
+     é a ordem em que `cortar-audio --letra N --onda todas` nomeia os pedaços. */
+  const letras = readJson('data/letters.json').slice().sort((a, b) => a.order - b.order);
+  const grupoDe = c => (c.where || []).find(w => /^letra \d+$/.test(w)) || (c.where || [])[0] || '';
+  const doGrupo = g => clips.filter(c => grupoDe(c) === g).sort((a, b) => a.num - b.num);
+  const pad2 = n => String(n).padStart(2, '0');
+  const linhaSimples = (c, i) => `
+    <tr>
+      <td class="num">${i + 1}</td>
+      <td class="he-cell">${he(c.he, { size: 'word' })}</td>
+      <td class="tr">${c.translit ? `<strong>${esc(c.translit)}</strong>` : '<span class="dim">-</span>'}</td>
+      <td class="gloss">${esc(c.gloss)}</td>
+      <td class="take"></td>
+    </tr>`;
+  const secao = (titulo, lista, arquivo, comando) => `
+  <section class="sheet letra">
+    <h2>${titulo}</h2>
+    <p class="meta"><strong>${lista.length}</strong> itens · grave como <code>${esc(arquivo)}</code>
+       · depois: <code>${esc(comando)}</code></p>
+    <table>
+      <thead><tr><th>#</th><th>Hebraico</th><th>Leitura</th><th>Significado</th><th>✓</th></tr></thead>
+      <tbody>${lista.map(linhaSimples).join('')}</tbody>
+    </table>
+  </section>`;
+
+  const secoes = [
+    ...letras.map(L => {
+      const lista = doGrupo(`letra ${L.order}`);
+      const arquivo = `letra-${pad2(L.order)}.m4a`;
+      return secao(`Letra ${L.order} · ${esc(L.namePt)} ${he(L.letter, { size: 'word' })}`, lista, arquivo,
+        `npm run cortar-audio -- --letra ${L.order} --onda todas ${arquivo}`);
+    }),
+    secao('Sinais de vogal', doGrupo('sinais de vogal'), 'vogais.m4a',
+      'npm run cortar-audio -- --vogais --onda todas vogais.m4a'),
+    secao('Módulo 7 · os sons com gerech', doGrupo('módulo 7'), 'modulo-7.m4a',
+      'npm run cortar-audio -- --grupo "módulo 7" --onda todas modulo-7.m4a'),
+    secao('No mundo real', doGrupo('no mundo real'), 'mundo-real.m4a',
+      'npm run cortar-audio -- --grupo "no mundo real" --onda todas mundo-real.m4a')
+  ];
+  const cobertos = letras.reduce((n, L) => n + doGrupo(`letra ${L.order}`).length, 0)
+    + ['sinais de vogal', 'módulo 7', 'no mundo real'].reduce((n, g) => n + doGrupo(g).length, 0);
+  if (cobertos !== total) {
+    throw new Error(`roteiro por letra cobre ${cobertos} de ${total} clipes: um grupo novo apareceu no manifesto`);
+  }
+
+  const cabeca = html.slice(0, html.indexOf('</head>'))
+    .replace('<title>Roteiro de gravacao - Hebraico Fluente</title>', '<title>Roteiro por letra - Hebraico Fluente</title>');
+  const porLetra = `${cabeca}
+<style>
+  section.letra { break-before: auto; margin-bottom: 18px; }
+  section.letra + section.letra { break-before: auto; }
+</style>
+</head>
+<body>
+<section class="sheet">
+  <h1>Roteiro de gravação por letra</h1>
+  <p class="lead">${total} clipes em ${secoes.length} arquivos: um por letra (o nome da letra, as
+     sílabas e as palavras daquela letra) e três avulsos no fim. Grave cada seção num
+     arquivo só, de cima para baixo, com <strong>3 segundos de silêncio no começo</strong> e
+     <strong>1 segundo entre um item e o próximo</strong>. Errou, tossiu ou repetiu? Apague o
+     arquivo daquela letra e grave a letra de novo: uma palavra a mais ou a menos desalinha
+     o resto do arquivo.</p>
+  <p class="lead">Grave antes, uma vez, <strong>30 segundos de silêncio da sala</strong> sem falar,
+     e envie como <code>room-tone.m4a</code>. O nikud manda: leia cada item como está pontuado,
+     e as sílabas como sílabas soltas, sem virar palavra.</p>
+</section>
+${secoes.join('\n')}
+</body>
+</html>`;
+  writeFileSync(join(ROOT, 'audio/roteiro-por-letra.html'), porLetra);
+  console.log(`  roteiro por letra: ${secoes.length} arquivos → audio/roteiro-por-letra.html`);
   console.log(`\n  roteiro com ${total} clipes → audio/roteiro-de-gravacao.html`);
   console.log(`  estimativa: ~${mins(total)} min de sessão`);
   audio.waves.forEach(w => console.log(`    onda ${w.id} · ${w.count} clipes · ~${mins(w.count)} min`));

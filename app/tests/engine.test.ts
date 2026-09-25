@@ -11,7 +11,7 @@ import {
   buildCheckpoint, buildConfusionDrill, buildFinalChallenge, buildLessonQuiz, buildReview,
   isChoice, spread, typedIsCorrect, violatesOrderRule
 } from '@/lib/engine/exercises';
-import { exCursiveToPrint, exPrintVsCursive } from '@/lib/engine/generators';
+import { exCursiveToPrint, exPrintVsCursive, gravado } from '@/lib/engine/generators';
 import { rng } from '@/lib/engine/rng';
 import { normalizeTyped } from '@/lib/engine/types';
 import { clean, clusters, joinSyllable, splitSyllable } from '@/lib/hebrew';
@@ -348,11 +348,31 @@ describe('a checkpoint is a demonstration, not a longer lesson', () => {
     }
   });
 
-  it('adds listening as a fourth dimension once there are recordings', () => {
-    const m = course.modules.find(x => x.n === 3)!;
-    const own = letters.filter(l => l.module === m.n);
-    const cp = buildCheckpoint(own, historyFor(m.upTo!), { audioAvailable: true, count: 12 });
-    expect(new Set(cp.map(e => e.skill)).has('ouvir')).toBe(true);
+  /* O áudio chega letra por letra (25/09/2026: Álef e He primeiro). Escuta
+     só onde já há gravação: o módulo 1 tem o Álef e o He gravados; um
+     módulo sem nenhuma gravação não ganha exercício de escuta mudo. */
+  it('adds listening where there are recordings, and only there', () => {
+    const cp = (n: number) => {
+      const m = course.modules.find(x => x.n === n)!;
+      const own = letters.filter(l => l.module === m.n);
+      return buildCheckpoint(own, historyFor(m.upTo!), { audioAvailable: true, count: 12 });
+    };
+    const ouvir = (n: number) => cp(n).filter(e => e.skill === 'ouvir');
+    const gravadas = letters.filter(l => l.syllables.some(s => gravado(s.audioId)));
+    if (gravadas.some(l => l.module === 1)) expect(ouvir(1).length).toBeGreaterThan(0);
+    if (!letters.some(l => l.module === 3 && l.syllables.some(s => gravado(s.audioId)))) {
+      expect(ouvir(3)).toEqual([]);
+    }
+  });
+
+  it('never builds a listening exercise for a clip that was not recorded', () => {
+    for (const m of course.modules) {
+      if (!m.letterIds.length || m.upTo == null) continue;
+      const own = letters.filter(l => l.module === m.n);
+      for (const e of buildCheckpoint(own, historyFor(m.upTo), { audioAvailable: true, count: 12 })) {
+        if (e.skill === 'ouvir') expect(gravado(e.audioId), e.id).toBe(true);
+      }
+    }
   });
 
   it('still fills the whole checkpoint', () => {

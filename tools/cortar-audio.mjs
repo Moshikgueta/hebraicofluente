@@ -86,6 +86,7 @@ const PEAK_CEIL_DB = -1.5;
 const MP3_KBPS = 96;
 
 const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+const SEM_LIMPEZA = process.argv.includes('--sem-limpeza');
 
 function ff(args) {
   return execFileSync('ffmpeg', ['-hide_banner', '-nostdin', ...args],
@@ -111,17 +112,21 @@ const duracao = file => Number(execFileSync('ffprobe',
 
 /* ── noise floor ─────────────────────────────────────────────────────────
    Measured from room-tone.wav when the speaker recorded one, which is why
-   the brief asks for it. Without it, the first two seconds of the take are
-   used: the speaker has not started, so it is room tone by another name. */
+   the brief asks for it. Without it, the FIRST SECOND of the take is used:
+   the roteiro asks for three seconds of silence before the first word, so
+   the first one is room tone by another name. It was two seconds, and the
+   ensaio caught what that costs: a take whose first word comes at 1.5 s
+   gets a "floor" that includes speech, the cut is set above half of the
+   words, and nothing is found. One second leaves a wide margin. */
 function pisoDeRuido(wav) {
   const tone = join(DROP, 'room-tone.wav');
   const fonte = existsSync(tone) ? tone : wav;
-  const recorte = existsSync(tone) ? [] : ['-t', '2'];
+  const recorte = existsSync(tone) ? [] : ['-t', '1'];
   const saida = ffMeasure(['-i', fonte, ...recorte, '-af', 'volumedetect']);
   const m = saida.match(/mean_volume:\s*(-?\d+(?:\.\d+)?) dB/);
   return {
     db: m ? Number(m[1]) : -60,
-    fonte: existsSync(tone) ? 'room-tone.wav' : 'os 2 primeiros segundos'
+    fonte: existsSync(tone) ? 'room-tone.wav' : 'o primeiro segundo'
   };
 }
 
@@ -346,9 +351,13 @@ function extrair(wav, seg, destino, pisoDb) {
      -30. O teto existe para a sala barulhenta, onde o piso sobe e quinze
      acima dele começaria a comer consoante. */
   const nf = Math.max(-45, Math.min(-30, Math.round(pisoDb + 15)));
+  /* `--sem-limpeza` (25/09/2026): quem grava com microfone de verdade, numa
+     sala quieta, não precisa do filtro de graves nem do redutor de ruído - e
+     o redutor, mesmo gentil, é o que mais poderia mudar o timbre. O acabamento
+     (bordas, fades, volume igual) continua: sem ele cada clipe começa com um
+     atraso diferente e toca num volume diferente. */
   const limpeza = [
-    'highpass=f=80',
-    `afftdn=nr=20:nf=${nf}`,
+    ...(SEM_LIMPEZA ? [] : ['highpass=f=80', `afftdn=nr=20:nf=${nf}`]),
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     `adelay=${Math.round(PAD_HEAD_S * 1000)}`,
@@ -516,7 +525,7 @@ function main() {
     const i = argv.indexOf(nome);
     return i >= 0 ? argv[i + 1] : null;
   };
-  const comValor = new Set(['--onda', '--de', '--ate', '--letra']);
+  const comValor = new Set(['--onda', '--de', '--ate', '--letra', '--grupo']);
   const wav = argv.find((a, i) => !a.startsWith('--') && !comValor.has(argv[i - 1]));
   /* `--onda todas` existe por causa da página de gravação guiada: ela pede um
      arquivo por LETRA com tudo o que aquela letra tem - o nome e as sílabas da
@@ -529,12 +538,16 @@ function main() {
   const ate = arg('--ate') ? Number(arg('--ate')) : null;
   const letra = arg('--letra') ? Number(arg('--letra')) : null;
   const vogais = argv.includes('--vogais');
+  /* Um grupo qualquer do roteiro por letra, pelo nome impresso na coluna
+     "Onde aparece": "módulo 7", "no mundo real". */
+  const grupo = arg('--grupo');
 
   if (!wav || !existsSync(wav)) {
     console.log(`
   uso:  npm run cortar-audio -- --letra 1 --onda todas letra-01.m4a
         npm run cortar-audio -- --letra 1 alef.m4a
-        npm run cortar-audio -- --vogais sinais.m4a
+        npm run cortar-audio -- --vogais --onda todas vogais.m4a
+        npm run cortar-audio -- --grupo "módulo 7" --onda todas modulo-7.m4a
         npm run cortar-audio -- --onda 1 gravacao-inteira.wav
         npm run cortar-audio -- --onda 1 --de 40 --ate 80 parte2.wav
         npm run cortar-audio -- --ensaiar
@@ -542,6 +555,10 @@ function main() {
   --letra  um arquivo com os itens de UMA letra. É o jeito recomendado de
            gravar no celular - se uma letra sair errada, só ela é refeita.
   --vogais o arquivo com os 14 nomes de sinais de vogal
+  --sem-limpeza  sem filtro de graves nem redutor de ruído (microfone bom);
+                 o corte, as bordas e o volume igual continuam
+  --grupo  um arquivo com os itens de um grupo do roteiro por letra
+           ("módulo 7", "no mundo real")
   --onda   1, 2, 3 ou "todas". "todas" é o que a página de gravação guiada
            pede: um arquivo por letra com tudo o que aquela letra tem.
   --de     primeiro número do roteiro neste arquivo
@@ -569,6 +586,9 @@ function main() {
   if (letra !== null) {
     alvo = alvo.filter(c => grupoDe(c) === `letra ${letra}`);
     rotulo = `letra ${letra} · ${daOnda}`;
+  } else if (grupo) {
+    alvo = alvo.filter(c => grupoDe(c) === grupo);
+    rotulo = `${grupo} · ${daOnda}`;
   } else if (vogais) {
     alvo = alvo.filter(c => grupoDe(c) === 'sinais de vogal');
     rotulo = `sinais de vogal · ${daOnda}`;
