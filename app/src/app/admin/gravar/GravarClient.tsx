@@ -387,7 +387,10 @@ export function GravarClient() {
   return (
     <main className="mx-auto max-w-[760px] px-4 pt-6 pb-[380px] grid gap-5">
       <header className="grid gap-2">
-        <p className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted m-0">Painel · só administrador</p>
+        <nav className="flex gap-4 font-ui text-[13px]">
+          <span className="text-ink font-semibold">Gravar pronúncias</span>
+          <Link href="/admin/relatos/" className="text-ink-muted underline">Relatos de erro</Link>
+        </nav>
         <h1 className="text-[26px] sm:text-[30px] font-bold leading-tight m-0">Gravar pronúncias</h1>
         <p className="font-ui text-[15px] text-ink-body m-0">
           <strong>{comAudio} de {contagem.total}</strong> itens com áudio

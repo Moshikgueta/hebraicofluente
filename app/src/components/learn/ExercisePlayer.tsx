@@ -22,6 +22,7 @@
  */
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { RelatarErro } from './RelatarErro';
 import { He, HeCloze } from '@/components/hebrew/He';
 import { AudioButton, hasAudio } from './AudioButton';
 import {
@@ -299,6 +300,8 @@ export function ExercisePlayer({
                 {i + 1 >= exercises.length ? 'Ver resultado' : 'Continuar'}
               </Button>
               {hasAudio(ex.audioId) && <AudioButton audioId={ex.audioId!} label="Ouvir" size="sm" slow />}
+              {/* A chave é a questão: o formulário aberto não passa para a próxima. */}
+              <RelatarErro key={`${i}:${ex.id}`} ex={ex} escolhida={settled.chosen} acertou={settled.correct} />
             </div>
           </Card>
           </div>

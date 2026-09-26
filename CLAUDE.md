@@ -456,6 +456,24 @@ novo; o painel pula para o próximo item sem áudio. Referência:
   que você precisa lembrar", as sílabas e as perguntas; o resto fica em
   "Ver a explicação completa".
 
+## Comparar pronúncia e "Achei um erro" (26/09/2026)
+
+- **`CompararPronuncia`** (components/learn): nas sílabas (etapa 1) e nas
+  palavras (etapa 2), só com item gravado. O aluno ouve o modelo, grava o
+  seu e vê as duas ondas na MESMA escala de tempo (`barrasDoTrecho`,
+  lib/gravador.ts), cortadas no trecho da voz; "Ouvir os dois" toca modelo e
+  a sua em sequência, por Web Audio. Sem nota automática, de propósito. A
+  gravação não sai do aparelho.
+- **"Achei um erro neste exercício"** (`RelatarErro`, na folha de retorno,
+  depois da resposta; só com `NEXT_PUBLIC_PLATFORM_API=worker`): motivo +
+  comentário opcional + a foto do exercício (`lib/relato.ts`). `POST
+  /api/relatos` exige sessão mas NÃO guarda a conta (tabela `relatos`, sem
+  chave para `accounts`); freio de 20/hora por conta. O painel
+  `/admin/relatos` agrupa por exercício e "Resolvido" fecha todos os relatos
+  da questão. A privacidade diz isso (art. 2).
+- `lib/admin.js` (worker) tem `isAdmin`/`exigirAdmin`, usados pelos dois
+  painéis. `tests/relatos-e-comparacao.test.ts`.
+
 ## Palavras à mão
 
 Na academia, "Palavras à mão" (também em `/academia?treino=palavras-a-mao`,

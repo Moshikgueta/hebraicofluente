@@ -36,9 +36,9 @@
  * sessão válida ou não.
  */
 
-import { json, fail, notSignedIn } from '../lib/http.js';
-import { requireAccount } from './auth.js';
+import { json, fail } from '../lib/http.js';
 import { normalizeEmail } from '../lib/db.js';
+import { exigirAdmin, isAdmin } from '../lib/admin.js';
 import { nomesOrganizados, idDoClipe, EXTENSAO } from '../lib/nomes-audio.js';
 
 import catalogoAudio from '../../../data/audio.json';
@@ -55,20 +55,10 @@ export const MAX_BYTES = 1_500_000;
 
 export const ID_RE = /^he-[0-9a-f]{8}$/;
 
-/* ── administrador ─────────────────────────────────────────────────────── */
-export function isAdmin(account, env) {
-  if (!account || !account.email) return false;
-  const lista = String(env.ADMIN_EMAILS || '')
-    .split(',').map(normalizeEmail).filter(Boolean);
-  return lista.includes(normalizeEmail(account.email));
-}
-
-async function exigirAdmin(request, env) {
-  const account = await requireAccount(request, env);
-  if (!account) return { erro: notSignedIn() };
-  if (!isAdmin(account, env)) return { erro: fail('not-admin', 403) };
-  return { account };
-}
+/* ── administrador ─────────────────────────────────────────────────────
+   Em lib/admin.js, que o painel de relatos também usa. Reexportado aqui
+   porque os testes do painel de gravação o importam deste módulo. */
+export { isAdmin };
 
 /* ── o tipo, conferido pelo conteúdo ───────────────────────────────────────
  * O `Content-Type` do envio é o que o navegador declara, e cada um declara

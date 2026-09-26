@@ -23,6 +23,7 @@ import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
+import { CompararPronuncia } from '@/components/learn/CompararPronuncia';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { SoundLab } from '@/components/learn/SoundLab';
 import { CultureUnlock } from '@/components/learn/Culture';
@@ -321,6 +322,9 @@ function StageConhecer({
           audioId={letter.audioId}
           maxSegundos={45}
         />
+        {/* Sílaba por sílaba, contra a gravação do curso: some sozinho
+            enquanto nenhuma sílaba desta letra estiver gravada. */}
+        <CompararPronuncia itens={letter.syllables} />
       </Card>
 
       {/* The same five vowels on the letters already learned. Seeing the column
@@ -523,6 +527,7 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
             </p>
           </div>
           <WordList letter={letter} />
+          <CompararPronuncia itens={letter.wordsToRead} titulo="Compare a sua leitura das palavras com a do curso" />
         </section>
       ) : (
         <Card tone="amber" className="p-6 grid gap-2">

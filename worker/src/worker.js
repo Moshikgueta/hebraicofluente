@@ -21,6 +21,7 @@ import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
 import { content } from './api/content.js';
 import * as audio from './api/audio.js';
+import * as relatos from './api/relatos.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -75,7 +76,13 @@ const ROUTES = {
   'GET /api/admin/audio': audio.lista,
   'PUT /api/admin/audio': audio.salvar,
   'DELETE /api/admin/audio': audio.apagar,
-  'GET /api/admin/audio/arquivo': audio.arquivo
+  'GET /api/admin/audio/arquivo': audio.arquivo,
+
+  /* "Achei um erro": o aluno relata (com sessão, sem guardar quem), o dono
+     do curso lê e resolve. Ver api/relatos.js. */
+  'POST /api/relatos': relatos.enviar,
+  'GET /api/admin/relatos': relatos.listar,
+  'POST /api/admin/relatos/resolver': relatos.resolver
 };
 
 export default {
