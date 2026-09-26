@@ -21,7 +21,11 @@
 
 import type { ItemCompreensao, Word } from '@/lib/content-publico';
 
-export type LinhaDeTexto = { he: string; translit: string; pt: string };
+export type LinhaDeTexto = {
+  he: string; translit: string; pt: string;
+  /** Só nas linhas do texto: a gravação da linha (onda 4 de data/audio.json). */
+  audioId?: string;
+};
 
 export type Texto = {
   modulo: number;

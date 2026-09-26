@@ -33,7 +33,7 @@ import {
 
 type Item = {
   id: string; num: number; he: string; translit: string | null; gloss: string;
-  kind: 'nome' | 'silaba' | 'palavra'; where: string[]; nome: string;
+  kind: 'nome' | 'silaba' | 'palavra' | 'frase'; where: string[]; nome: string;
 };
 type Gravacao = {
   tipo: string; tamanho: number; inicio: number | null; fim: number | null;
@@ -445,7 +445,9 @@ export function GravarClient() {
                         : s === 'estudio' ? 'arquivo do estúdio' : 'sem áudio'} · nº {c.num}
                     </span>
                   </span>
-                  <He size="word">{c.he}</He>
+                  {/* Uma frase não pode espremer o texto ao lado: fica com no
+                      máximo metade da linha e quebra dentro dela. */}
+                  <span className="max-w-[48vw] sm:max-w-[320px] text-right"><He size="word">{c.he}</He></span>
                 </button>
               </li>
             );

@@ -46,7 +46,12 @@ export const audioIdFor = he =>
 export const WAVES = {
   1: { id: 1, titlePt: 'O essencial', notePt: 'Nomes das letras, sílabas e os sinais de vogal. Só com esta onda, toda lição já tem áudio no que importa: o som da letra.' },
   2: { id: 2, titlePt: 'As palavras de leitura', notePt: 'Todo o vocabulário que o aluno lê sozinho, na ordem do curso.' },
-  3: { id: 3, titlePt: 'Reconhecimento e os módulos finais', notePt: 'Vocabulário de reconhecimento, os módulos 6 e 7, e as cenas de «no mundo real».' }
+  3: { id: 3, titlePt: 'Reconhecimento e os módulos finais', notePt: 'Vocabulário de reconhecimento, os módulos 6 e 7, e as cenas de «no mundo real».' },
+  /* 26/09/2026. As três primeiras ondas são de palavra solta, e o ouvido que
+     só ouviu palavra solta trava na primeira frase dita no ritmo da fala. As
+     frases e as linhas dos mini-textos são o que liga a escuta de frase
+     (exListenSentence, exListenMeaning) e o "ouvir o texto" da leitura. */
+  4: { id: 4, titlePt: 'Frases e textos', notePt: 'As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.' }
 };
 
 function main() {
@@ -54,6 +59,8 @@ function main() {
   const nikud = readJson('data/nikud.json');
   const extras = readJson('data/extras.json');
   const realWorld = readJson('data/real-world.json');
+  const sentences = readJson('data/sentences.json').sentences;
+  const textos = readJson('data/textos.json').textos;
 
   const seen = new Map();
   /** @param {{he:string, translit?:string|null, gloss:string, kind:string, wave:number, where:string}} c */
@@ -164,6 +171,19 @@ function main() {
           kind: 'palavra', wave: 3, where: 'no mundo real' });
   }
 
+  /* ── wave 4 · sentences and the mini-texts, line by line ─────────────
+     Uma linha por clipe, e não o texto inteiro num clipe só: a linha é o que
+     o aluno toca quando trava nela, e o texto inteiro é a sequência delas.
+     Só textos revisados: um texto que ainda não foi ao ar não pede gravação. */
+  for (const f of sentences) {
+    add({ he: f.he, translit: f.translit, gloss: f.pt, kind: 'frase', wave: 4, where: 'frases' });
+  }
+  for (const t of textos.filter(t => t.revisado)) {
+    for (const l of t.linhas) {
+      add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 4, where: `texto do módulo ${t.modulo}` });
+    }
+  }
+
   /* ── stable numbering ───────────────────────────────────────────────── */
   let previous = {};
   try {
@@ -210,7 +230,7 @@ function main() {
 
   const by = k => clips.filter(c => c.kind === k).length;
   console.log(`\n  ${clips.length} clipes → data/audio.json`);
-  console.log(`    ${by('nome')} nomes · ${by('silaba')} sílabas · ${by('palavra')} palavras`);
+  console.log(`    ${by('nome')} nomes · ${by('silaba')} sílabas · ${by('palavra')} palavras · ${by('frase')} frases`);
   for (const w of Object.values(WAVES)) {
     console.log(`    onda ${w.id} - ${w.titlePt}: ${clips.filter(c => c.wave === w.id).length}`);
   }

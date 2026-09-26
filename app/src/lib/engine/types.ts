@@ -61,6 +61,10 @@ export type Exercise =
   | (ChoiceBase & { kind: 'meaning-to-word'; pt: string })
   | (ChoiceBase & { kind: 'complete-word'; parts: (string | null)[]; hintPt: string })
   | (ChoiceBase & { kind: 'audio-recognition'; audioId: string })
+  /* A frase OUVIDA, sem o texto na tela, e a pergunta é o que ela quer dizer.
+     É a escuta de verdade - a palavra solta treina o ouvido para um som, a
+     frase treina para o ritmo da fala. As alternativas são em português. */
+  | (ChoiceBase & { kind: 'listen-meaning'; audioId: string })
 
   /* ── vowels, which the course taught and never tested ─────────────── */
   /** A syllable is shown; which vowel sound is it. Tests the SIGN, not the letter. */

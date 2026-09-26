@@ -731,6 +731,51 @@ export const exSentenceReading: Gen = (L, ctx, rand, i) => {
   };
 };
 
+/* ── a frase ouvida ──────────────────────────────────────────────────────
+ * Até aqui a escuta do curso era de palavra solta. Estes dois pegam as frases
+ * que o aluno já sabe ler - as mesmas de `exSentenceReading` - e tiram o
+ * texto da tela: primeiro ouvir e achar a frase escrita (o ouvido guiando o
+ * olho), depois ouvir e entender sem texto nenhum. Só com frase gravada: a
+ * régua é a mesma `gravado` das outras escutas.
+ */
+const frasesGravadas = (L: Letter, ctx: Ctx) => {
+  const recem = ctx.sentences.filter(s => s.after === L.order);
+  const resto = ctx.sentences.filter(s => s.after !== L.order).sort((a, b) => b.after - a.after);
+  return [...recem, ...resto].filter(s => gravado(s.audioId));
+};
+
+/** Ouça e ache a frase escrita. As alternativas são outras frases que ele já lê. */
+export const exListenSentence: Gen = (L, ctx, rand, i) => {
+  const alvo = at(frasesGravadas(L, ctx), i);
+  if (!alvo) return null;
+  const wrong = take(shuffled(ctx.sentences.filter(s => s.id !== alvo.id), rand).map(s => s.he), 3, rand);
+  if (wrong.length < 2) return null;
+  const { options, answer } = optionsWith(alvo.he, wrong, rand);
+  return {
+    id: `${L.id}-ouvir-frase-${alvo.id}`, kind: 'audio-recognition', letterId: L.id, skill: 'ouvir',
+    promptPt: 'Qual frase você ouviu?',
+    audioId: alvo.audioId, options, answer,
+    explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}`
+  };
+};
+
+/** Ouça, sem texto, e diga o que a frase quer dizer. */
+export const exListenMeaning: Gen = (L, ctx, rand, i) => {
+  const alvo = at(frasesGravadas(L, ctx), i + 1);
+  if (!alvo) return null;
+  const wrong = take(shuffled(ctx.sentences.filter(s => s.id !== alvo.id), rand).map(s => s.pt), 3, rand);
+  if (wrong.length < 2) return null;
+  const { options, answer } = optionsWith(alvo.pt, wrong, rand);
+  return {
+    id: `${L.id}-ouvir-sentido-${alvo.id}`, kind: 'listen-meaning', letterId: L.id, skill: 'ouvir',
+    promptPt: 'Ouça a frase. O que ela quer dizer?',
+    audioId: alvo.audioId, options, answer,
+    /* A primeira palavra, como na leitura: destrava quem pegou metade. */
+    hintsPt: alvo.words.length > 1 ? [`A frase começa com “${alvo.words[0]!.translit}”.`] : undefined,
+    explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}`
+  };
+};
+
 export const exMeaningToWord: Gen = (L, ctx, rand, i) => {
   const target = at(L.wordsToRead, i + 1);
   if (!target) return null;
@@ -974,7 +1019,7 @@ export const exCursiveToPrint: Gen = (L, ctx, rand, i) => {
 /* ── the catalogue ──────────────────────────────────────────────────────── */
 
 /** Every generator that needs a recording to be honest. */
-export const NEEDS_AUDIO = new Set<Gen>([exAudioWord, exListenSyllable, exTypeHeard]);
+export const NEEDS_AUDIO = new Set<Gen>([exAudioWord, exListenSyllable, exTypeHeard, exListenSentence, exListenMeaning]);
 
 /**
  * The order a lesson walks through. Deliberately alternating in GESTURE, not
@@ -1009,7 +1054,9 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exCursiveToPrint,
   exAudioWord,
   exMatchLetterSound,
-  exTypeHeard
+  exTypeHeard,
+  exListenSentence,
+  exListenMeaning
 ];
 
 /** Skill → the generators that exercise it, for targeted practice. */
@@ -1020,7 +1067,7 @@ export const BY_SKILL: Record<string, readonly Gen[]> = {
   ler: [exVariantSyllable, exSyllableReading, exBuildSyllable, exSoundToSyllable, exWordMeaning,
         exCompleteWord, exBuildWord, exMeaningToWord, exMatchSyllable,
         exMatchWordMeaning, exTypeTranslit, exSentenceReading],
-  ouvir: [exListenSyllable, exAudioWord, exTypeHeard],
+  ouvir: [exListenSyllable, exAudioWord, exTypeHeard, exListenSentence, exListenMeaning],
   /* Writing is produced on a canvas, not generated as a question - see
      components/learn/Tracing.tsx. The key exists so callers can ask for any
      skill without a special case. */

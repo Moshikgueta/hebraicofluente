@@ -31,6 +31,15 @@ const SECONDS_PER_CLIP = 15;
 
 const mins = n => Math.round((n * SECONDS_PER_CLIP) / 60);
 
+
+/* Uma frase ou linha de texto (onda 4) tem vírgula e ponto, que o `he()` recusa
+   com razão: dentro de uma frase em português, pontuação ao lado do hebraico
+   troca de lugar. Aqui a linha fica sozinha na célula, então vai inteira num
+   bloco isolado da direita para a esquerda, onde a pontuação fica onde está. */
+const heDoClipe = c => c.kind === 'frase'
+  ? `<bdi class="he he--word" lang="he" dir="rtl">${esc(c.he)}</bdi>`
+  : he(c.he, { size: 'word' });
+
 function main() {
   const audio = readJson('data/audio.json');
   const clips = audio.clips;
@@ -64,7 +73,7 @@ function main() {
   const linha = c => `
     <tr>
       <td class="num">${c.num}</td>
-      <td class="he-cell">${he(c.he, { size: 'word' })}</td>
+      <td class="he-cell">${heDoClipe(c)}</td>
       <td class="tr">${c.translit ? `<strong>${esc(c.translit)}</strong>` : '<span class="dim">-</span>'}</td>
       <td class="gloss">${esc(c.gloss)}</td>
       <td class="where">${esc(c.where.join(' · '))}</td>
@@ -254,10 +263,13 @@ ${audio.waves.map(waveSection).join('\n')}
   const grupoDe = c => (c.where || []).find(w => /^letra \d+$/.test(w)) || (c.where || [])[0] || '';
   const doGrupo = g => clips.filter(c => grupoDe(c) === g).sort((a, b) => a.num - b.num);
   const pad2 = n => String(n).padStart(2, '0');
+  /* Um arquivo por mini-texto, na ordem dos módulos. */
+  const textosDoRoteiro = [...new Set(clips.map(grupoDe).filter(g => /^texto do módulo \d+$/.test(g)))]
+    .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]));
   const linhaSimples = (c, i) => `
     <tr>
       <td class="num">${i + 1}</td>
-      <td class="he-cell">${he(c.he, { size: 'word' })}</td>
+      <td class="he-cell">${heDoClipe(c)}</td>
       <td class="tr">${c.translit ? `<strong>${esc(c.translit)}</strong>` : '<span class="dim">-</span>'}</td>
       <td class="gloss">${esc(c.gloss)}</td>
       <td class="take"></td>
@@ -285,10 +297,18 @@ ${audio.waves.map(waveSection).join('\n')}
     secao('Módulo 7 · os sons com gerech', doGrupo('módulo 7'), 'modulo-7.m4a',
       'npm run cortar-audio -- --grupo "módulo 7" --onda todas modulo-7.m4a'),
     secao('No mundo real', doGrupo('no mundo real'), 'mundo-real.m4a',
-      'npm run cortar-audio -- --grupo "no mundo real" --onda todas mundo-real.m4a')
+      'npm run cortar-audio -- --grupo "no mundo real" --onda todas mundo-real.m4a'),
+    /* Onda 4. Frase é dita no ritmo da fala, sem pausa entre as palavras - a
+       pausa de 1 segundo é só ENTRE uma frase e a próxima, como nos outros. */
+    secao('Frases · no ritmo da fala, com 2 segundos de pausa entre uma frase e outra', doGrupo('frases'), 'frases.m4a',
+      'npm run cortar-audio -- --grupo "frases" --onda todas frases.m4a'),
+    ...textosDoRoteiro.map(g => secao(`Mini-texto · ${esc(g.replace('texto do ', ''))} · uma linha por vez, com 2 segundos de pausa entre as linhas`,
+      doGrupo(g), `${g.replace(/ /g, '-').replace('ó', 'o')}.m4a`,
+      `npm run cortar-audio -- --grupo "${g}" --onda todas ${g.replace(/ /g, '-').replace('ó', 'o')}.m4a`))
   ];
   const cobertos = letras.reduce((n, L) => n + doGrupo(`letra ${L.order}`).length, 0)
-    + ['sinais de vogal', 'módulo 7', 'no mundo real'].reduce((n, g) => n + doGrupo(g).length, 0);
+    + ['sinais de vogal', 'módulo 7', 'no mundo real', 'frases', ...textosDoRoteiro]
+      .reduce((n, g) => n + doGrupo(g).length, 0);
   if (cobertos !== total) {
     throw new Error(`roteiro por letra cobre ${cobertos} de ${total} clipes: um grupo novo apareceu no manifesto`);
   }

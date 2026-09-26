@@ -25,6 +25,7 @@ import {
   exBuildSyllable, exBuildWord, exCompleteWord, exFinalForm, exLetterRecognition,
   exListenSyllable, exMatchLetterSound, exMatchSyllable, exMeaningToWord, exOddOneOut,
   exPrintVsCursive, exSoundToSyllable, exSyllableReading, exTypeHeard, exTypeTranslit,
+  exListenSentence, exListenMeaning,
   exVowelSound, exVowelPair, exAudioWord,
   exConfusablePick, exCursiveToPrint, exFinalInWord, exLetterInWord, exLetterPosition,
   type Gen
@@ -125,7 +126,7 @@ const GENS: Record<ExamPartId, readonly Gen[]> = {
   silabas: [exSyllableReading, exSoundToSyllable, exBuildSyllable, exMatchSyllable],
   palavras: [exCompleteWord, exBuildWord, exMeaningToWord, exTypeTranslit],
   frases: [],        // montado das frases, como `mundo` das cenas
-  escuta: [exListenSyllable, exAudioWord, exTypeHeard],
+  escuta: [exListenSyllable, exAudioWord, exTypeHeard, exListenSentence, exListenMeaning],
   mundo: []          // built from the real-world scenes instead
 };
 

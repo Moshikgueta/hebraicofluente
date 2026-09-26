@@ -434,6 +434,28 @@ novo; o painel pula para o próximo item sem áudio. Referência:
 - `tests/gravacao-painel.test.ts` cobre tudo isso contra o SQLite com o
   schema de produção.
 
+## Escuta de frase e a onda 4 (26/09/2026)
+
+- **Onda 4 · Frases e textos** (`tools/gen-audio.mjs`): as 23 frases e cada
+  linha dos mini-textos revisados, `kind: 'frase'`. Uma frase de uma palavra
+  só que já é palavra do curso reaproveita o clipe dela. As linhas dos textos
+  saem do exportador com `audioId`.
+- **Gravar frases**: o roteiro por letra tem uma seção "frases" e uma por
+  texto, com 2 s de pausa entre os itens. O `cortar-audio` entra sozinho no
+  modo frase quando todos os itens são `frase` (pausa mínima 0,9 s, sem abrir
+  peça longa) - o `--ensaiar` prova que a régua de palavra partiria a frase.
+- **Exercícios**: `exListenSentence` (ouça e ache a frase escrita,
+  `audio-recognition`) e `exListenMeaning` (ouça, sem texto, e diga o sentido
+  em português, tipo `listen-meaning`). Só com a frase gravada (`gravado`),
+  só com frases que o aluno já lê; entram na lição, na escuta da academia e
+  na parte "escuta" do exame. `tests/escuta-frases.test.ts`.
+- **Mini-texto**: botão de ouvir por linha e "Ouvir o texto inteiro" (só
+  com TODAS as linhas gravadas), acendendo a linha que toca.
+- **Etapa 1 enxuta** a partir da letra 12 (`ENXUTA_DESDE` em LessonClient):
+  à vista ficam a letra, como pronunciar (com o desenho), as leituras, "o
+  que você precisa lembrar", as sílabas e as perguntas; o resto fica em
+  "Ver a explicação completa".
+
 ## Palavras à mão
 
 Na academia, "Palavras à mão" (também em `/academia?treino=palavras-a-mao`,

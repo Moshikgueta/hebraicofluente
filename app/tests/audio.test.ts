@@ -10,7 +10,7 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { allLetters, extras, nikud, scenesUpTo } from '../src/lib/content';
+import { allLetters, extras, nikud, scenesUpTo, sentencesUpTo, textosDoCurso } from '../src/lib/content';
 import { AUDIO_MANIFEST } from '../src/lib/audio-manifest';
 
 type Clip = { num: number; he: string; file: string; wave: number; kind: string };
@@ -48,6 +48,11 @@ function requested(): { id: string; where: string }[] {
     g.words.forEach(w => out.push({ id: w.audioId, where: `mod7 ${w.he}` }));
   });
   scenesUpTo(22).forEach(s => out.push({ id: s.audioId, where: `scene ${s.id}` }));
+  /* Onda 4: as frases e cada linha dos mini-textos, que a escuta de frase e
+     o "ouvir o texto" da leitura tocam. */
+  sentencesUpTo(22).forEach(f => out.push({ id: f.audioId, where: `frase ${f.id}` }));
+  textosDoCurso().forEach(t => t.linhas.forEach((l, i) =>
+    out.push({ id: l.audioId!, where: `texto ${t.modulo} linha ${i + 1}` })));
   return out;
 }
 
@@ -83,7 +88,7 @@ describe('the audio manifest and the app agree', () => {
   });
 
   it('keeps every clip in exactly one wave, and wave 1 first', () => {
-    for (const c of manifest.clips) expect([1, 2, 3]).toContain(c.wave);
+    for (const c of manifest.clips) expect([1, 2, 3, 4]).toContain(c.wave);
     const w1 = manifest.clips.filter(c => c.wave === 1);
     /* Wave 1 must carry every letter name and every syllable: it is the wave
        that makes the course's central claim - this letter makes this sound -

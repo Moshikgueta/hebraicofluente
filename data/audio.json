@@ -8,7 +8,7 @@
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
   "generatedAt": "2026-09-26",
-  "total": 317,
+  "total": 363,
   "waves": [
     {
       "id": 1,
@@ -27,6 +27,12 @@
       "titlePt": "Reconhecimento e os módulos finais",
       "notePt": "Vocabulário de reconhecimento, os módulos 6 e 7, e as cenas de «no mundo real».",
       "count": 54
+    },
+    {
+      "id": 4,
+      "titlePt": "Frases e textos",
+      "notePt": "As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.",
+      "count": 46
     }
   ],
   "clips": [
@@ -2177,7 +2183,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 2"
+        "letra 2",
+        "texto do módulo 3"
       ],
       "file": "he-febde9cc.mp3"
     },
@@ -3278,7 +3285,8 @@
       "wave": 2,
       "where": [
         "letra 20",
-        "módulo 6"
+        "módulo 6",
+        "texto do módulo 5"
       ],
       "file": "he-787bf52d.mp3"
     },
@@ -3852,7 +3860,8 @@
       "wave": 3,
       "where": [
         "letra 16",
-        "módulo 6"
+        "módulo 6",
+        "frases"
       ],
       "file": "he-5afd57ab.mp3"
     },
@@ -4209,7 +4218,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "no mundo real"
+        "no mundo real",
+        "frases"
       ],
       "file": "he-564f6619.mp3"
     },
@@ -4225,6 +4235,604 @@
         "no mundo real"
       ],
       "file": "he-8bf4419d.mp3"
+    },
+    {
+      "num": 323,
+      "seq": 317,
+      "he": "אֲנִי לוֹמֵד",
+      "translit": "aní loméd",
+      "gloss": "eu estudo",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-6f4cb601.mp3"
+    },
+    {
+      "num": 324,
+      "seq": 318,
+      "he": "הִיא מוֹרָה",
+      "translit": "hi morá",
+      "gloss": "ela é professora",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-441b97b6.mp3"
+    },
+    {
+      "num": 325,
+      "seq": 319,
+      "he": "דָּוִד וְשָׂרָה",
+      "translit": "David ve-Sará",
+      "gloss": "David e Sara",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-31baa9f9.mp3"
+    },
+    {
+      "num": 326,
+      "seq": 320,
+      "he": "יְרוּשָׁלַיִם",
+      "translit": "Yerushaláyim",
+      "gloss": "Jerusalém",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-e28ad13c.mp3"
+    },
+    {
+      "num": 327,
+      "seq": 321,
+      "he": "אֲנִי מִיִּשְׂרָאֵל",
+      "translit": "aní mi-Yisraél",
+      "gloss": "eu sou de Israel",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-24e09f1d.mp3"
+    },
+    {
+      "num": 328,
+      "seq": 322,
+      "he": "הַיָּם גָּדוֹל",
+      "translit": "ha-yám gadól",
+      "gloss": "o mar é grande",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-36cc27ed.mp3"
+    },
+    {
+      "num": 329,
+      "seq": 323,
+      "he": "מָה הַשָּׁעָה",
+      "translit": "ma ha-shaá",
+      "gloss": "que horas são",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-71f8d9c9.mp3"
+    },
+    {
+      "num": 330,
+      "seq": 324,
+      "he": "מָה נִשְׁמָע",
+      "translit": "ma nishmá",
+      "gloss": "como vai",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-82da85f2.mp3"
+    },
+    {
+      "num": 331,
+      "seq": 325,
+      "he": "שְׁמַע יִשְׂרָאֵל",
+      "translit": "shemá Yisraél",
+      "gloss": "ouve, Israel",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-a8876447.mp3"
+    },
+    {
+      "num": 332,
+      "seq": 326,
+      "he": "תּוֹדָה רַבָּה",
+      "translit": "todá rabá",
+      "gloss": "muito obrigado",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-a3cedd71.mp3"
+    },
+    {
+      "num": 333,
+      "seq": 327,
+      "he": "כֵּן, בְּבַקָּשָׁה",
+      "translit": "ken, bevakashá",
+      "gloss": "sim, por favor",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-7dabda3c.mp3"
+    },
+    {
+      "num": 334,
+      "seq": 328,
+      "he": "אֲנִי מְדַבֵּר עִבְרִית",
+      "translit": "aní medabér ivrít",
+      "gloss": "eu falo hebraico",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-49aa23c4.mp3"
+    },
+    {
+      "num": 335,
+      "seq": 329,
+      "he": "שָׁלוֹם, מָה שְׁלוֹמְךָ",
+      "translit": "shalóm, ma shlomchá",
+      "gloss": "olá, como você está",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-3bbe114e.mp3"
+    },
+    {
+      "num": 336,
+      "seq": 330,
+      "he": "תֵּל אָבִיב",
+      "translit": "Tel Avív",
+      "gloss": "Tel Aviv",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-1d794745.mp3"
+    },
+    {
+      "num": 337,
+      "seq": 331,
+      "he": "מָה זֶה",
+      "translit": "ma ze",
+      "gloss": "o que é isto",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-7d13b8d4.mp3"
+    },
+    {
+      "num": 338,
+      "seq": 332,
+      "he": "חַג שָׂמֵחַ",
+      "translit": "chag saméach",
+      "gloss": "boas festas",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-e8989d47.mp3"
+    },
+    {
+      "num": 339,
+      "seq": 333,
+      "he": "לְאַט",
+      "translit": "le'at",
+      "gloss": "devagar",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-04179e4c.mp3"
+    },
+    {
+      "num": 340,
+      "seq": 334,
+      "he": "אֲנִי רוֹצֶה מַיִם",
+      "translit": "aní rotsé máyim",
+      "gloss": "eu quero água",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-c4b8ec28.mp3"
+    },
+    {
+      "num": 341,
+      "seq": 335,
+      "he": "רַק רֶגַע",
+      "translit": "rak réga",
+      "gloss": "só um momento",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-40ab6725.mp3"
+    },
+    {
+      "num": 342,
+      "seq": 336,
+      "he": "בְּרֵאשִׁית בָּרָא",
+      "translit": "bereshít bará",
+      "gloss": "no princípio, criou",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-733351c5.mp3"
+    },
+    {
+      "num": 343,
+      "seq": 337,
+      "he": "אֲנִי רוֹצֶה קָפֶה",
+      "translit": "aní rotsé kafé",
+      "gloss": "eu quero um café",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "frases"
+      ],
+      "file": "he-702a7a37.mp3"
+    },
+    {
+      "num": 344,
+      "seq": 338,
+      "he": "שָׁלוֹם, דָּנָה!",
+      "translit": "shalom, Dana!",
+      "gloss": "Olá, Dana!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 3"
+      ],
+      "file": "he-8d87903f.mp3"
+    },
+    {
+      "num": 345,
+      "seq": 339,
+      "he": "הַיּוֹם יוֹם גָּדוֹל!",
+      "translit": "hayom yom gadol!",
+      "gloss": "Hoje é um grande dia!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 3"
+      ],
+      "file": "he-54dd5a27.mp3"
+    },
+    {
+      "num": 346,
+      "seq": 340,
+      "he": "הַלֶּחֶם טָרִי, וְהַתֵּה חַם.",
+      "translit": "haléchem tari, vehate cham.",
+      "gloss": "O pão está fresco, e o chá está quente.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 3"
+      ],
+      "file": "he-e3478057.mp3"
+    },
+    {
+      "num": 347,
+      "seq": 341,
+      "he": "הַיֶּלֶד יָשֵׁן.",
+      "translit": "hayéled yashen.",
+      "gloss": "O menino está dormindo.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 3"
+      ],
+      "file": "he-f77b3760.mp3"
+    },
+    {
+      "num": 348,
+      "seq": 342,
+      "he": "שָׁלוֹם, דָּן! מָה נִשְׁמַע?",
+      "translit": "shalom, Dan! ma nishma?",
+      "gloss": "Oi, Dan! Tudo bem?",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 4"
+      ],
+      "file": "he-312b9980.mp3"
+    },
+    {
+      "num": 349,
+      "seq": 343,
+      "he": "אֲנִי עַל הָהָר.",
+      "translit": "aní al hahar.",
+      "gloss": "Estou na montanha.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 4"
+      ],
+      "file": "he-80331711.mp3"
+    },
+    {
+      "num": 350,
+      "seq": 344,
+      "he": "אֵיזֶה שֶׁקֶט!",
+      "translit": "eize shéket!",
+      "gloss": "Que silêncio!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 4"
+      ],
+      "file": "he-9ccc6ca8.mp3"
+    },
+    {
+      "num": 351,
+      "seq": 345,
+      "he": "הַנָּהָר קַר.",
+      "translit": "hanahar kar.",
+      "gloss": "O rio está frio.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 4"
+      ],
+      "file": "he-c97a2c68.mp3"
+    },
+    {
+      "num": 352,
+      "seq": 346,
+      "he": "אֲנִי רוֹצָה עוֹד יוֹם!",
+      "translit": "aní rotsá od yom!",
+      "gloss": "Quero mais um dia!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 4"
+      ],
+      "file": "he-ce025642.mp3"
+    },
+    {
+      "num": 353,
+      "seq": 347,
+      "he": "נוֹעָה",
+      "translit": "Noa",
+      "gloss": "Noa",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 4"
+      ],
+      "file": "he-240b362d.mp3"
+    },
+    {
+      "num": 354,
+      "seq": 348,
+      "he": "בֹּקֶר טוֹב, מִשְׁפָּחָה!",
+      "translit": "bóker tov, mishpachá!",
+      "gloss": "Bom dia, família!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 5"
+      ],
+      "file": "he-3fa4c9d9.mp3"
+    },
+    {
+      "num": 355,
+      "seq": 349,
+      "he": "הַיּוֹם שַׁבָּת.",
+      "translit": "hayom shabat.",
+      "gloss": "Hoje é sábado.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 5"
+      ],
+      "file": "he-5c0429a3.mp3"
+    },
+    {
+      "num": 356,
+      "seq": 350,
+      "he": "אִמָּא בַּגַּן, וְהַכֶּלֶב רוֹצֶה לָלֶכֶת.",
+      "translit": "imá bagan, vehakélev rotsé laléchet.",
+      "gloss": "A mãe está no jardim, e o cachorro quer passear.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 5"
+      ],
+      "file": "he-3c5ddb84.mp3"
+    },
+    {
+      "num": 357,
+      "seq": 351,
+      "he": "יֵשׁ קָפֶה וְלֶחֶם טָרִי.",
+      "translit": "yesh kafé veléchem tari.",
+      "gloss": "Tem café e pão fresco.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 5"
+      ],
+      "file": "he-65e1b475.mp3"
+    },
+    {
+      "num": 358,
+      "seq": 352,
+      "he": "מִי בָּא?",
+      "translit": "mi ba?",
+      "gloss": "Quem vem?",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 5"
+      ],
+      "file": "he-97827bb0.mp3"
+    },
+    {
+      "num": 359,
+      "seq": 353,
+      "he": "שָׁלוֹם, דָּנִי!",
+      "translit": "shalom, Dani!",
+      "gloss": "Oi, Dani!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 6"
+      ],
+      "file": "he-28c3233f.mp3"
+    },
+    {
+      "num": 360,
+      "seq": 354,
+      "he": "אֲנִי בַּדֶּרֶךְ הַבַּיְתָה.",
+      "translit": "aní badérech habáyta.",
+      "gloss": "Estou a caminho de casa.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 6"
+      ],
+      "file": "he-039fad3a.mp3"
+    },
+    {
+      "num": 361,
+      "seq": 355,
+      "he": "יֵשׁ לִי סֵפֶר חָדָשׁ.",
+      "translit": "yesh li séfer chadash.",
+      "gloss": "Tenho um livro novo.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 6"
+      ],
+      "file": "he-4bcd5e96.mp3"
+    },
+    {
+      "num": 362,
+      "seq": 356,
+      "he": "אַתָּה בַּבַּיִת?",
+      "translit": "atá babáyit?",
+      "gloss": "Você está em casa?",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 6"
+      ],
+      "file": "he-9208f080.mp3"
+    },
+    {
+      "num": 363,
+      "seq": 357,
+      "he": "לַיְלָה טוֹב!",
+      "translit": "láila tov!",
+      "gloss": "Boa noite!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 6"
+      ],
+      "file": "he-351f5700.mp3"
+    },
+    {
+      "num": 364,
+      "seq": 358,
+      "he": "שָׁלוֹם, אִמָּא!",
+      "translit": "shalom, imá!",
+      "gloss": "Oi, mãe!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 7"
+      ],
+      "file": "he-0fae12e5.mp3"
+    },
+    {
+      "num": 365,
+      "seq": 359,
+      "he": "יֵשׁ לִי ואוצ׳ר לַמָּלוֹן, וְהַמָּלוֹן יָפֶה.",
+      "translit": "yesh li váutcher lamalon, vehamalon yafé.",
+      "gloss": "Tenho um voucher para o hotel, e o hotel é bonito.",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 7"
+      ],
+      "file": "he-47623da1.mp3"
+    },
+    {
+      "num": 366,
+      "seq": 360,
+      "he": "אֲנִי בְּלִי פיג׳מה!",
+      "translit": "aní bli pidjama!",
+      "gloss": "Estou sem pijama!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 7"
+      ],
+      "file": "he-f7c51f49.mp3"
+    },
+    {
+      "num": 367,
+      "seq": 361,
+      "he": "מָחָר: צ׳ילה!",
+      "translit": "machar: Tchile!",
+      "gloss": "Amanhã: Chile!",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 7"
+      ],
+      "file": "he-5f931dc2.mp3"
+    },
+    {
+      "num": 368,
+      "seq": 362,
+      "he": "נְשִׁיקוֹת, דָּנָה",
+      "translit": "neshikot, Dana",
+      "gloss": "Beijos, Dana",
+      "kind": "frase",
+      "wave": 4,
+      "where": [
+        "texto do módulo 7"
+      ],
+      "file": "he-6a3fc74b.mp3"
     }
   ]
 }
