@@ -41,10 +41,12 @@ export const useRegistroDeAudio = (): number =>
   useSyncExternalStore(assinar, versaoDoRegistro, () => 0);
 
 export function AudioButton({
-  audioId, label = 'Ouvir', size = 'md', slow = false
+  audioId, label = 'Ouvir', ariaLabel, size = 'md', slow = false
 }: {
   audioId: string | null;
   label?: string;
+  /** O nome para o leitor de tela, quando vários botões "Ouvir" dividem a tela. */
+  ariaLabel?: string;
   size?: 'sm' | 'md' | 'lg';
   /** Offer a 0.7× pass as well - useful on syllables and long words. */
   slow?: boolean;
@@ -117,7 +119,7 @@ export function AudioButton({
       <button
         type="button"
         onClick={() => play(1)}
-        aria-label={label}
+        aria-label={ariaLabel ?? label}
         className={`inline-flex items-center justify-center gap-2 rounded-[var(--r-md)]
           bg-[var(--accent-wash)] text-[var(--accent)] font-ui font-medium
           transition-transform duration-[var(--dur)] ease-[var(--ease)]

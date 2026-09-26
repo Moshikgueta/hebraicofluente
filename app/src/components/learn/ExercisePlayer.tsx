@@ -553,6 +553,7 @@ function Stimulus({ ex }: { ex: Exercise }) {
         </div>
       );
     case 'audio-recognition':
+    case 'listen-meaning':
     case 'listen-syllable':
       return (
         <div className="flex justify-center py-2">

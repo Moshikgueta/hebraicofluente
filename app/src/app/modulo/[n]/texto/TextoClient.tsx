@@ -11,13 +11,15 @@
  * checagens da lição: não vale nota, não tranca nada, e o motivo aparece
  * sempre. O motor e a regra da revisão estão em lib/engine/textos.ts. */
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Badge, Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
+import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
+import { clipeDoPainel, urlDoClipe } from '@/lib/audio-registro';
 import { textoDoModulo, type CourseModule } from '@/lib/content';
 import { stripNikud } from '@/lib/hebrew';
 import { useProgress } from '@/lib/state/store';
@@ -31,6 +33,13 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
   const [pontos, setPontos] = useState(false);
   /* As linhas abertas uma a uma, para quem travou só numa. */
   const [abertas, setAbertas] = useState<Set<number>>(new Set());
+  /* "Ouvir o texto inteiro": as linhas em sequência, acendendo a que toca.
+     Só aparece com TODAS as linhas gravadas - um texto que para no meio
+     ensina que a fala tem buracos. */
+  useRegistroDeAudio();
+  const [tocando, setTocando] = useState<number | null>(null);
+  const player = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => () => { player.current?.pause(); }, []);
 
   if (!texto) {
     return (
@@ -42,6 +51,28 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
       </div>
     );
   }
+
+  const todasGravadas = texto.linhas.every(l => hasAudio(l.audioId));
+  const tocarLinha = (i: number) => {
+    const l = texto.linhas[i];
+    if (!l?.audioId) { setTocando(null); return; }
+    const corte = clipeDoPainel(l.audioId);
+    const el = new Audio(urlDoClipe(l.audioId));
+    player.current?.pause();
+    player.current = el;
+    setTocando(i);
+    const fim = corte?.fim != null ? corte.fim / 1000 : null;
+    el.currentTime = corte?.inicio != null ? corte.inicio / 1000 : 0;
+    const proxima = () => { el.onended = null; el.ontimeupdate = null; tocarLinha(i + 1); };
+    el.onended = proxima;
+    el.ontimeupdate = fim === null ? null : () => { if (el.currentTime >= fim) { el.pause(); proxima(); } };
+    el.onerror = () => setTocando(null);
+    void el.play().catch(() => setTocando(null));
+  };
+  const ouvirTexto = () => {
+    if (tocando !== null) { player.current?.pause(); setTocando(null); return; }
+    tocarLinha(0);
+  };
 
   const mostra = (he: string) => (texto.semPontos && !pontos ? stripNikud(he) : he);
   const alterna = (i: number) => setAbertas(s => {
@@ -75,6 +106,11 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
         {texto.semPontos && <Chave ativo={pontos} onClick={() => setPontos(v => !v)}>Mostrar os pontos</Chave>}
         <Chave ativo={translit} onClick={() => setTranslit(v => !v)}>Transliteração</Chave>
         <Chave ativo={traducao} onClick={() => setTraducao(v => !v)}>Tradução</Chave>
+        {todasGravadas && (
+          <Chave ativo={tocando !== null} onClick={ouvirTexto}>
+            {tocando !== null ? '■ Parar' : '▶ Ouvir o texto inteiro'}
+          </Chave>
+        )}
       </div>
 
       <Card className="p-5 sm:p-6 grid gap-1">
@@ -84,11 +120,15 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
             const aberta = abertas.has(i);
             return (
               <li key={i} className="grid gap-1">
-                <button type="button" onClick={() => alterna(i)} aria-expanded={aberta}
-                        aria-label={`Linha ${i + 1}: ${aberta ? 'esconder' : 'mostrar'} a ajuda`}
-                        className="text-right rounded-[var(--r-md)] px-2 py-1 -mx-2 hover:bg-surface-2">
-                  <He size="lg" className="!text-[28px] sm:!text-[34px] !leading-[1.5]">{mostra(l.he)}</He>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button type="button" onClick={() => alterna(i)} aria-expanded={aberta}
+                          aria-label={`Linha ${i + 1}: ${aberta ? 'esconder' : 'mostrar'} a ajuda`}
+                          className={`flex-1 text-right rounded-[var(--r-md)] px-2 py-1 -mx-2 hover:bg-surface-2
+                            ${tocando === i ? 'bg-[var(--accent-wash)]' : ''}`}>
+                    <He size="lg" className="!text-[28px] sm:!text-[34px] !leading-[1.5]">{mostra(l.he)}</He>
+                  </button>
+                  {hasAudio(l.audioId) && <AudioButton audioId={l.audioId!} ariaLabel={`Ouvir a linha ${i + 1}`} size="sm" />}
+                </div>
                 {(translit || aberta) && (
                   <p dir="ltr" className="font-ui text-[14.5px] text-ink m-0 px-2 text-left">
                     <span className="font-semibold">{l.translit}</span>

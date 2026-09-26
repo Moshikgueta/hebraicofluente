@@ -228,14 +228,29 @@ function LessonHeader({
 }
 
 /* ── 1 · conhecer ───────────────────────────────────────────────────────── */
+/* A etapa 1 enxuta, a partir da letra 12.
+   ─────────────────────────────────────────────────────────────────────────
+   Quem chegou à letra 12 já fez onze vezes o mesmo ritual: objetivos, o que a
+   letra faz, detalhe, dica para brasileiro, padrão, dica de leitura, erro
+   típico, comparação com as outras letras. Repetir tudo por extenso no mesmo
+   formato ensina a rolar a tela sem ler. Daqui em diante, o que fica à vista
+   é o que muda de letra para letra - a forma, o som (com o desenho da boca),
+   as leituras, o resumo e as sílabas - e a explicação completa fica a um
+   toque, inteira, para quem quiser. As perguntas rápidas continuam: são elas
+   que dizem se o resumo bastou. */
+export const ENXUTA_DESDE = 12;
+
 function StageConhecer({
   letter, history, onDone
 }: { letter: Letter; history: Letter[]; onDone: () => void }) {
+  const enxuta = letter.order >= ENXUTA_DESDE;
+  const [completa, setCompleta] = useState(false);
+  const mostraTudo = !enxuta || completa;
   return (
     <div className="grid gap-5">
       <Card className="p-6 sm:p-8 grid gap-6">
         <HebrewLetterCard letter={letter} />
-        <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
+        {mostraTudo && <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
             Quando terminar esta aula
           </p>
@@ -244,7 +259,7 @@ function StageConhecer({
             <He size="inline">{letter.letter}</He>
             {letter.finalForm && <> - e a sua forma final, <He size="inline">{letter.finalForm}</He></>}.
           </p>
-        </div>
+        </div>}
       </Card>
 
       <Card className="p-6 grid gap-3">
@@ -274,9 +289,21 @@ function StageConhecer({
           "por que ela mudou de formato?", "isso é vogal ou consoante?" -
           não eram respondidas em lugar nenhum, e a conclusão que sobrava
           era a de que o hebraico é arbitrário. */}
-      <Ensinamento letter={letter} />
-
-      <BrazilianTip mistake={letter.brazilianMistake} />
+      {mostraTudo ? (
+        <>
+          <Ensinamento letter={letter} />
+          <BrazilianTip mistake={letter.brazilianMistake} />
+        </>
+      ) : (
+        <>
+          {letter.ensino && <Lembre texto={letter.ensino.lembrePt} />}
+          <button type="button" onClick={() => setCompleta(true)} aria-expanded={false}
+                  className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
+                             text-[var(--accent)] underline underline-offset-2">
+            Ver a explicação completa
+          </button>
+        </>
+      )}
 
       <Card className="p-6 grid gap-4">
         <div className="grid gap-1">
@@ -299,7 +326,7 @@ function StageConhecer({
       {/* The same five vowels on the letters already learned. Seeing the column
           is what turns "מַ se lê ma" into "o patach faz a" - the generalisation
           the course depends on and used to leave the learner to make alone. */}
-      {history.length > 1 && (
+      {mostraTudo && history.length > 1 && (
         <SoundLab
           letters={history}
           compact
@@ -457,19 +484,26 @@ function Ensinamento({ letter }: { letter: Letter }) {
 
       {e.dicaLeitura && <DicaDeLeitura dica={e.dicaLeitura} />}
 
-      {/* Sem selo, e isto é decisão: este quadro é o FECHO da explicação, e
-          não um dos cinco tipos. Ele carregava 💡, que agora pertence à
-          dica de leitura - um símbolo, um dono. O destaque continua o
-          mesmo, que é o que fazia ele funcionar. */}
-      <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
-        <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
-          O que você precisa lembrar
-        </h2>
-        <p className="text-[16px] leading-relaxed text-ink">
-          <Prose text={e.lembrePt} />
-        </p>
-      </Card>
+      <Lembre texto={e.lembrePt} />
     </div>
+  );
+}
+
+/* Sem selo, e isto é decisão: este quadro é o FECHO da explicação, e não um
+   dos cinco tipos. Ele carregava 💡, que agora pertence à dica de leitura -
+   um símbolo, um dono. O destaque continua o mesmo, que é o que fazia ele
+   funcionar. Na etapa 1 enxuta (letra 12 em diante) é o único quadro da
+   explicação que fica à vista. */
+function Lembre({ texto }: { texto: string }) {
+  return (
+    <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
+      <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
+        O que você precisa lembrar
+      </h2>
+      <p className="text-[16px] leading-relaxed text-ink">
+        <Prose text={texto} />
+      </p>
+    </Card>
   );
 }
 

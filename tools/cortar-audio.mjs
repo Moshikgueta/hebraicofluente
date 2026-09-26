@@ -59,7 +59,7 @@ const CONF = join(DROP, 'conferir');
    speaker is told to leave a second; half of that is the floor, which leaves
    room for someone who rushes without turning a breath inside a word into a
    cut. */
-const GAP_MIN_S = 0.45;
+let GAP_MIN_S = 0.45;
 
 /* A segment shorter than this is a cough, a page turn or a chair. Hebrew
    letter names are the longest thing in wave 1 and none is near this short. */
@@ -202,7 +202,16 @@ function medir(wav, seg, pisoDb) {
    0.30 and 0.90 s, and the median was 0.56. Anything past this is not one
    syllable being said slowly - it is two items with no usable gap between
    them, and it has to be opened rather than counted as one. */
-const PALAVRA_MAX_S = 1.1;
+let PALAVRA_MAX_S = 1.1;
+
+/* ── frases (onda 4) ─────────────────────────────────────────────────────
+   Uma frase dura de 1 a 4 segundos e tem pausa DENTRO dela: a vírgula, o
+   fôlego entre duas palavras. Com as réguas de palavra solta, cada frase
+   sairia partida em pedaços. Para um arquivo só de frases, quem grava deixa
+   2 segundos entre uma e outra; a pausa mínima sobe para 0,9 s e nada é
+   "aberto" por ser longo. */
+const FRASE_GAP_MIN_S = 0.9;
+const FRASE_MAX_S = 10;
 
 /* ── opening a glued piece ───────────────────────────────────────────────
    A single global setting cannot serve a real recording. The first take of
@@ -535,6 +544,33 @@ function ensaiar() {
   console.log(`    trechos achados  ${corteRapido.segs.length} de ${N}  (pausa ${corteRapido.gap}s)`);
   if (!corteRapido.bateu) erro('a escada não alcançou uma gravação de pausas curtas');
 
+  /* 4. Frases (onda 4): três "palavras" de 0,4 s com pausas de 0,35 s dentro
+     de cada frase - a vírgula, o fôlego - e 2 s entre uma frase e outra. Com
+     as réguas de frase, cada frase sai INTEIRA; com as de palavra solta, ela
+     seria partida, e isso também é conferido, para a régua não afrouxar à toa. */
+  console.log(`\n  frases com pausas de vírgula dentro`);
+  const F = 6;
+  const partes = ['anoisesrc=amplitude=0.001:duration=1.5'];
+  for (let i = 0; i < F; i++) {
+    for (let p = 0; p < 3; p++) {
+      partes.push(`sine=frequency=${200 + i * 30 + p * 10}:duration=0.4`);
+      partes.push(`anoisesrc=amplitude=0.001:duration=${p < 2 ? 0.35 : 2.0}`);
+    }
+  }
+  const filtro = partes.map((p, i) => `${p}[a${i}]`).join(';') +
+    ';' + partes.map((_, i) => `[a${i}]`).join('') + `concat=n=${partes.length}:v=0:a=1[out]`;
+  const frases = join(tmp, 'frases.wav');
+  ff(['-y', '-filter_complex', filtro, '-map', '[out]', '-ac', '1', '-ar', '44100', frases]);
+  const [gap0, max0] = [GAP_MIN_S, PALAVRA_MAX_S];
+  const comoPalavra = acharCorte(frases, pisoDeRuido(frases).db, F);
+  GAP_MIN_S = FRASE_GAP_MIN_S; PALAVRA_MAX_S = FRASE_MAX_S;
+  const comoFrase = acharCorte(frases, pisoDeRuido(frases).db, F);
+  GAP_MIN_S = gap0; PALAVRA_MAX_S = max0;
+  console.log(`    régua de frase   ${comoFrase.segs.length} de ${F}`);
+  console.log(`    régua de palavra ${comoPalavra.segs.length} (partiria as frases)`);
+  if (!comoFrase.bateu) erro('o modo frase partiu ou juntou frases');
+  if (comoPalavra.bateu) erro('a régua de palavra deixou frase inteira - o modo frase não seria preciso');
+
   rmSync(tmp, { recursive: true, force: true });
   console.log(falhas ? `\n  ${falhas} falha(s)\n` : '\n  ✓ o corte, a limpeza e a recusa funcionam\n');
   process.exitCode = falhas ? 1 : 0;
@@ -582,7 +618,7 @@ function main() {
   --sem-limpeza  sem filtro de graves nem redutor de ruído (microfone bom);
                  o corte, as bordas e o volume igual continuam
   --grupo  um arquivo com os itens de um grupo do roteiro por letra
-           ("módulo 7", "no mundo real")
+           ("módulo 7", "no mundo real", "frases", "texto do módulo 3")
   --onda   1, 2, 3 ou "todas". "todas" é o que a página de gravação guiada
            pede: um arquivo por letra com tudo o que aquela letra tem.
   --de     primeiro número do roteiro neste arquivo
@@ -622,6 +658,11 @@ function main() {
     if (de !== null) rotulo += ` (nº ${de} a ${ate ?? '∞'})`;
   }
   alvo.sort((a, b) => a.num - b.num);
+  if (alvo.length && alvo.every(c => c.kind === 'frase')) {
+    GAP_MIN_S = FRASE_GAP_MIN_S;
+    PALAVRA_MAX_S = FRASE_MAX_S;
+    rotulo += ' · modo frase (pausa de 2 s entre as frases)';
+  }
 
   if (!alvo.length) {
     console.log(`\n  ✗ nenhum clipe em "${rotulo}"\n`);

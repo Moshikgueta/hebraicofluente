@@ -542,7 +542,13 @@ function main() {
   }
   const pontua = x => ({ ...x, he: NFC(x.he) });
   writeFileSync(join(OUT, 'textos.json'), JSON.stringify({
-    textos: textos.map(t => ({ ...t, linhas: t.linhas.map(pontua), novas: (t.novas || []).map(pontua) }))
+    /* Cada linha com o id de áudio: a gravação dela (onda 4, gen-audio.mjs)
+       é o que o botão da linha e o "ouvir o texto" tocam. */
+    textos: textos.map(t => ({
+      ...t,
+      linhas: t.linhas.map(l => ({ ...pontua(l), audioId: audioIdFor(l.he) })),
+      novas: (t.novas || []).map(pontua)
+    }))
   }, null, 2) + '\n');
 
   writeFileSync(join(OUT, 'missoes.json'), JSON.stringify({
