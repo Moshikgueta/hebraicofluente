@@ -117,10 +117,12 @@ export function validate({ checkDist = true } = {}) {
     }
 
     /* ── V6 - syllable table ─────────────────────────────────────────── */
-    /* א, ה e ע não levam o cartão do sheva. No א e no ע ele virava um hataf
-       ("a" ultrabreve) que o aluno lia como mais um A; no ה, um som que não se
-       pronuncia. As três ficam com as cinco vogais. */
-    const SEM_SHEVA = new Set(['א', 'ה', 'ע']);
+    /* א, ה, י e ע não levam o cartão do sheva. No א e no ע ele virava um
+       hataf ("a" ultrabreve) que o aluno lia como mais um A; no ה, um som que
+       não se pronuncia; no י, um "y" sozinho que ninguém diz - o som do Yod é
+       o da letra com a vogal (pedido do dono do curso, 26/09/2026). As quatro
+       ficam com as cinco vogais. */
+    const SEM_SHEVA = new Set(['א', 'ה', 'י', 'ע']);
     const WANT = SEM_SHEVA.has(L.letter) ? ['a', 'e', 'i', 'o', 'u'] : ['a', 'e', 'i', 'o', 'u', 'sheva'];
     if (!Array.isArray(L.syllables) || L.syllables.length !== WANT.length) {
       fail('V6', at, `expected ${WANT.length} syllables, got ${L.syllables ? L.syllables.length : 0}`);
