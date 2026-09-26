@@ -937,7 +937,7 @@
     "wordsToRecognize": [
       {
         "he": "יִשְׂרָאֵל",
-        "translit": "yisrael",
+        "translit": "Yisraél",
         "pt": "Israel",
         "use": "Nome próprio essencial"
       },
@@ -2006,7 +2006,7 @@
         "use": "Substantivo"
       },
       {
-        "he": "עַכְשָׁו",
+        "he": "עַכְשָׁיו",
         "translit": "achshav",
         "pt": "agora",
         "use": "Advérbio essencial"
@@ -2343,9 +2343,9 @@
       },
       {
         "vowel": "sheva",
-        "he": "חֲ",
-        "translit": "cha",
-        "ptApprox": "guturais não aceitam sheva - usam o hataf, um A ultrabreve"
+        "he": "חְ",
+        "translit": "ch",
+        "ptApprox": "só a consoante, sem vogal: o raspado sozinho"
       }
     ],
     "wordsToRecognize": [
@@ -3250,7 +3250,7 @@
     "letter": "ב",
     "finalForm": null,
     "nameHe": "בֵּית",
-    "namePt": "Bet / Vet",
+    "namePt": "Bet",
     "translit": "b",
     "sound": "/b/ ou /v/",
     "variantes": [
@@ -3271,27 +3271,22 @@
         "ondePt": "sem o ponto"
       }
     ],
-    "soundNotePt": "Com o ponto dentro ({{בּ}}) soa B, como em \"bola\". Sem o ponto ({{ב}}) soa V, como em \"vaca\". É a mesma letra, com dois sons.",
+    "soundNotePt": "Com o ponto dentro ({{בּ}}), soa B, como em \"bola\". Esta lição é a do B. Sem o ponto a mesma letra tem outro som, o V, e ele ganha uma lição só dele logo depois desta: o Vet.",
     "articulacao": {
       "pontos": [
         {
-          "ponto": "labios",
-          "rotulo": "בּ"
-        },
-        {
-          "ponto": "labio-dentes",
-          "rotulo": "ב"
+          "ponto": "labios"
         }
       ],
       "voz": true,
-      "comoPt": "{{בּ}}: os dois lábios se fecham e soltam, com a voz ligada, o B de \"bola\". {{ב}} sem ponto: os dentes de cima tocam o lábio de baixo, como no {{ו}}, o V de \"vaca\"."
+      "comoPt": "Os dois lábios se fecham e soltam, com a voz ligada: o B de \"bola\". Ponha a mão no pescoço: vibra. (Sem o ponto, a boca muda - é a lição do Vet.)"
     },
     "ensino": {
-      "funcaoPt": "{{ב}} é a primeira letra do curso que muda de SOM conforme um ponto. Com o ponto dentro ({{בּ}}) ela é B, como em \"bola\". Sem o ponto ({{ב}}) ela é V, como em \"vaca\". É a mesma letra nas duas: quem decide é o ponto, e ele é pequeno - procure antes de pronunciar.",
-      "detalhePt": "Esse ponto tem nome, daguesh, e é o mesmo tipo de sinal que você viu no {{ג}}, no {{ד}} e no {{ת}} sem mudar nada. Aqui ele muda tudo: {{אַבָּא}} é \"aba\" (pai), com B, e {{לֵב}} é \"lev\" (coração), com V. E há uma consequência prática importante: a maioria dos textos israelenses reais não escreve o daguesh, do mesmo jeito que não escreve vogais. Enquanto você aprende, o ponto está aí para ajudar; depois, é a palavra conhecida que diz o som.",
-      "paraBrasileiroPt": "Os dois sons já existem em português e são fáceis - o problema é só lembrar de OLHAR. O reflexo de ler todo {{ב}} como B produz coisas como \"lebe\" no lugar de \"lev\", e é o erro mais comum desta letra.",
+      "funcaoPt": "{{בּ}} é a primeira letra do curso em que um ponto dentro dela decide o som. Com o ponto, ela é B, como em \"bola\": {{אַבָּא}}, {{בַּיִת}}, {{בֹּקֶר}}. Procure o ponto antes de pronunciar - ele é pequeno.",
+      "detalhePt": "Esse ponto tem nome, daguesh, e é o mesmo sinal que você viu no {{ג}}, no {{ד}} e no {{ת}} sem mudar nada. Aqui ele muda: sem ele, a letra deixa de ser B. Esse outro som tem lição própria, a próxima. Por enquanto, a regra desta lição é uma só: ponto dentro, B.",
+      "paraBrasileiroPt": "O B do hebraico é o mesmo do português, então o som não dá trabalho. O que dá trabalho é o hábito: fechar os dois lábios de verdade antes de soltar, e não deixar o B escorregar para um V.",
       "padraoPt": "Guarde a ideia do ponto dentro da letra: ele muda o SOM da consoante, e não a vogal. Esta é a primeira de três letras do alfabeto em que isso acontece, e as outras duas vêm logo adiante, com a mesma lógica. Reconhecendo o padrão aqui, elas vêm de graça.",
-      "lembrePt": "Com ponto, {{בּ}} é B. Sem ponto, {{ב}} é V. Mesma letra, dois sons.",
+      "lembrePt": "Com o ponto dentro, {{בּ}} é B. Sem o ponto é outro som, e ele é a próxima lição.",
       "checagem": [
         {
           "t": "visual",
@@ -3301,24 +3296,23 @@
             "ב"
           ],
           "certa": 0,
-          "porque": "O ponto dentro da letra - o daguesh - marca o som B. Sem ele, a mesma letra soa V."
+          "porque": "O ponto dentro da letra, o daguesh, marca o som B. Sem ele a letra tem outro som, que é a próxima lição."
         },
         {
           "t": "escolha",
-          "q": "Como se lê {{לֵב}} (coração)?",
+          "q": "Como se lê {{אַבָּא}} (pai)?",
           "opcoes": [
-            "\"lev\", com V no fim",
-            "\"leb\", com B no fim",
-            "\"lebe\""
+            "\"abá\", com B",
+            "\"avá\", com V"
           ],
           "certa": 0,
-          "porque": "Não há ponto dentro da letra, então o som é V. Ler todo {{ב}} como B é o erro mais frequente desta lição."
+          "porque": "A letra tem o ponto dentro, e com o ponto ela é sempre B: \"abá\". Ler V aqui é trocar a letra pelo outro som dela, que só vale quando o ponto não está lá."
         },
         {
           "t": "vf",
           "q": "O ponto dentro do {{בּ}} é um sinal de vogal.",
           "certa": false,
-          "porque": "É o daguesh, que aqui muda a consoante de V para B. A vogal continua sendo marcada pelos sinais embaixo ou ao lado da letra - e por isso \"nem todo ponto é vogal\" importa tanto."
+          "porque": "É o daguesh, que aqui marca o som B. A vogal continua sendo marcada pelos sinais embaixo ou ao lado da letra."
         }
       ]
     },
@@ -3403,12 +3397,14 @@
       {
         "he": "טוֹב",
         "translit": "tov",
-        "pt": "bom"
+        "pt": "bom",
+        "som": "vet"
       },
       {
         "he": "לֵב",
         "translit": "lev",
-        "pt": "coração"
+        "pt": "coração",
+        "som": "vet"
       },
       {
         "he": "שַׁבָּת",
@@ -3423,9 +3419,9 @@
     ],
     "didYouKnow": "{{בַּיִת}} quer dizer casa - e é a origem do nome da letra. Você já conhece essa palavra sem saber: ela está em \"Belém\", Beit Léchem, a casa do pão.",
     "brazilianMistake": {
-      "wrong": "Ler todo {{ב}} como B, e dizer \"abav\" ou \"lebe\".",
-      "right": "Olhar o ponto antes de decidir: {{בּ}} é B, {{ב}} sem ponto é V. {{לֵב}} termina em V: \"lev\".",
-      "why": "O ponto dentro da letra - o daguesh - é fácil de ignorar porque é minúsculo, e a maioria dos textos israelenses reais nem o escreve. Enquanto você está aprendendo, procure o ponto sempre."
+      "wrong": "Deixar o B escorregar para um V e dizer \"avá\" em vez de {{אַבָּא}}.",
+      "right": "Fechar os dois lábios de verdade antes de soltar: \"abá\", \"báyit\", \"bóker\".",
+      "why": "Com o ponto dentro, o B hebraico é um B inteiro. Soltar o ar sem fechar os lábios já é o outro som desta letra, o da próxima lição."
     },
     "audioIds": [],
     "biblicalWord": null,
@@ -3459,7 +3455,7 @@
     "letter": "כ",
     "finalForm": "ך",
     "nameHe": "כַּף",
-    "namePt": "Kaf / Chaf",
+    "namePt": "Kaf",
     "translit": "k",
     "sound": "/k/ ou /χ/",
     "variantes": [
@@ -3488,39 +3484,23 @@
         "ondePt": "no fim da palavra - e nunca leva ponto"
       }
     ],
-    "soundNotePt": "Com o ponto ({{כּ}}) soa K, igual a {{ק}}. Sem o ponto ({{כ}}) soa raspado, igual a {{ח}}. No fim da palavra vira {{ך}}, e aí é sempre raspado.",
+    "soundNotePt": "Com o ponto ({{כּ}}), soa K, igual ao {{ק}}. Esta lição é a do K. Sem o ponto, e na forma final {{ך}}, a letra tem outro som, o raspado, e ele ganha lição própria logo depois desta: o Chaf.",
     "articulacao": {
       "pontos": [
         {
-          "ponto": "veu",
-          "rotulo": "כּ"
-        },
-        {
-          "ponto": "uvula",
-          "rotulo": "כ"
+          "ponto": "veu"
         }
       ],
       "voz": false,
-      "comoPt": "{{כּ}}: o fundo da língua no céu da boca, lá atrás, como no {{ק}}: um K. {{כ}} sem ponto e {{ך}}: na úvula, raspando, igual ao {{ח}}. Os dois sem voz."
+      "comoPt": "O fundo da língua encosta no céu da boca, lá atrás, e solta, sem voz: um K, no mesmo lugar do {{ק}}. (Sem o ponto, a língua não fecha e o ar raspa - é a lição do Chaf.)"
     },
     "ensino": {
-      "funcaoPt": "{{כ}} funciona como o {{ב}}: um ponto decide o som. Com o ponto ({{כּ}}) ela é K, igual ao {{ק}}. Sem o ponto ({{כ}}) ela é raspada na garganta, igual ao {{ח}}. Duas letras familiares, num desenho só.",
-      "detalhePt": "Ela tem forma final - {{ך}}, que desce abaixo da linha - e aqui vem a regra que mais derruba iniciante: o {{ך}} final NUNCA leva ponto, então ele é sempre o som raspado. {{מֶלֶךְ}} é \"melech\", com a garganta raspando no fim, e nunca \"melek\". É o erro mais audível desta letra.",
-      "paraBrasileiroPt": "O som raspado é o mesmo do {{ח}}, que você já treinou: comece pelo R de \"rato\" e raspe mais fundo. O que o brasileiro tende a fazer é terminar a palavra com K, porque é o som que ele reconhece - e é justamente esse que não vale no fim.",
+      "funcaoPt": "{{כּ}} funciona como o {{בּ}}: o ponto dentro decide o som. Com o ponto, ela é K, igual ao {{ק}}: {{כֶּלֶב}}, {{כּוֹס}}, {{כַּדּוּר}}. Duas letras com o mesmo som - quem decide qual se escreve é a palavra.",
+      "detalhePt": "Ela tem forma final, {{ך}}, que desce abaixo da linha. A forma final nunca leva ponto, então ela nunca é K - ela é o som da próxima lição. Por enquanto, a regra desta é uma só: ponto dentro, K.",
+      "paraBrasileiroPt": "O K não dá trabalho: é o mesmo do português. O cuidado é com o desenho, que se parece com o {{ב}} - o {{כ}} é uma curva arredondada, sem o pé do {{ב}} na base.",
       "padraoPt": "É o mesmo ponto do {{ב}}: dentro da letra, ele troca o som da consoante. Você já viu isso uma vez e vai ver mais uma, na última letra do curso. Três letras, uma regra só.",
-      "lembrePt": "Com ponto, {{כּ}} é K. Sem ponto, {{כ}} é raspado. E {{ך}} no fim da palavra é sempre raspado, porque ele nunca leva ponto.",
+      "lembrePt": "Com o ponto dentro, {{כּ}} é K, igual ao {{ק}}. Sem o ponto, e no {{ך}} final, é outro som, e ele é a próxima lição.",
       "checagem": [
-        {
-          "t": "escolha",
-          "q": "Como termina {{מֶלֶךְ}} (rei)?",
-          "opcoes": [
-            "Com o som raspado da garganta: \"melech\"",
-            "Com K: \"melek\"",
-            "Com o CH de \"chave\": \"melesh\""
-          ],
-          "certa": 0,
-          "porque": "O {{ך}} final nunca leva ponto, e sem ponto esta letra é sempre raspada. Terminar com K é o erro mais audível que um iniciante comete aqui."
-        },
         {
           "t": "visual",
           "q": "Qual destas se lê com som de K?",
@@ -3529,13 +3509,23 @@
             "כ"
           ],
           "certa": 0,
-          "porque": "O ponto dentro marca o K. Sem ponto, a mesma letra é o som raspado do {{ח}}."
+          "porque": "O ponto dentro marca o K. Sem ele a letra tem outro som, que é a próxima lição."
+        },
+        {
+          "t": "escolha",
+          "q": "Qual outra letra também faz o som K?",
+          "opcoes": [
+            "{{ק}}",
+            "{{ח}}"
+          ],
+          "certa": 0,
+          "porque": "{{כּ}} com ponto e {{ק}} soam igual: K. Qual se escreve depende da palavra."
         },
         {
           "t": "vf",
           "q": "A forma final {{ך}} pode aparecer com ponto dentro.",
           "certa": false,
-          "porque": "Não aparece: por isso o {{ך}} é sempre o som raspado. Saber isso resolve a leitura de todas as palavras que terminam com esta letra."
+          "porque": "Não aparece, e por isso o {{ך}} nunca é K. O som dele é o da próxima lição."
         }
       ]
     },
@@ -3599,7 +3589,8 @@
         "he": "לָלֶכֶת",
         "translit": "laléchet",
         "pt": "ir, caminhar",
-        "use": "Verbo muito comum"
+        "use": "Verbo muito comum",
+        "som": "chaf"
       }
     ],
     "wordsToRead": [
@@ -3616,17 +3607,20 @@
       {
         "he": "אֹכֶל",
         "translit": "óchel",
-        "pt": "comida"
+        "pt": "comida",
+        "som": "chaf"
       },
       {
         "he": "מֶלֶךְ",
         "translit": "mélech",
-        "pt": "rei"
+        "pt": "rei",
+        "som": "chaf"
       },
       {
         "he": "דֶּרֶךְ",
         "translit": "dérech",
-        "pt": "caminho"
+        "pt": "caminho",
+        "som": "chaf"
       },
       {
         "he": "כַּדּוּר",
@@ -3634,11 +3628,11 @@
         "pt": "bola"
       }
     ],
-    "didYouKnow": "{{כַּף}} é a palma da mão, e a letra desenha a mão aberta de lado. Com ela você finalmente lê {{מֶלֶךְ}} - \"rei\" - que apareceu lá na primeira lição e ficou esperando vinte letras.",
+    "didYouKnow": "{{כַּף}} é a palma da mão, e a letra desenha a mão aberta de lado. E {{מֶלֶךְ}}, \"rei\", que apareceu lá na primeira lição, fica para a próxima: ele termina com a forma final, que é o outro som desta letra.",
     "brazilianMistake": {
-      "wrong": "Ler {{מֶלֶךְ}} como \"mélek\", com K no fim.",
-      "right": "Ler \"mélech\", com a garganta raspando no fim, como em {{לֶחֶם}}.",
-      "why": "O {{ך}} final nunca leva ponto, então é sempre o som raspado. Terminar com K é o erro mais audível que um iniciante comete nesta letra."
+      "wrong": "Confundir {{כ}} com {{ב}} e ler {{כּוֹס}} como \"bos\".",
+      "right": "Olhar a base: o {{כ}} é uma curva arredondada, sem pé; o {{ב}} tem um pé que avança para a direita. \"Kos\".",
+      "why": "As duas letras têm quase o mesmo contorno, e nas duas o ponto dentro muda o som. O pé na base é o que separa uma da outra."
     },
     "audioIds": [],
     "biblicalWord": null,
@@ -3677,7 +3671,7 @@
     "letter": "פ",
     "finalForm": "ף",
     "nameHe": "פֵּא",
-    "namePt": "Pe / Fe",
+    "namePt": "Pe",
     "translit": "p",
     "sound": "/p/ ou /f/",
     "variantes": [
@@ -3706,55 +3700,48 @@
         "ondePt": "no fim da palavra - e nunca leva ponto"
       }
     ],
-    "soundNotePt": "Com o ponto dentro ({{פּ}}) soa P, como em \"pato\". Sem o ponto ({{פ}}) soa F, como em \"faca\". No fim da palavra vira {{ף}}, e aí é sempre F.",
+    "soundNotePt": "Com o ponto dentro ({{פּ}}), soa P, como em \"pato\". Esta lição é a do P. Sem o ponto, e na forma final {{ף}}, a letra soa F, e esse som ganha lição própria logo depois desta: o Fe.",
     "articulacao": {
       "pontos": [
         {
-          "ponto": "labios",
-          "rotulo": "פּ"
-        },
-        {
-          "ponto": "labio-dentes",
-          "rotulo": "פ"
+          "ponto": "labios"
         }
       ],
       "voz": false,
-      "comoPt": "{{פּ}}: os dois lábios se fecham e soltam o ar, sem voz, o P de \"pato\". {{פ}} sem ponto e {{ף}}: os dentes de cima no lábio de baixo, o F de \"faca\". É o par sem voz do {{בּ}} e do {{ב}}."
+      "comoPt": "Os dois lábios se fecham e soltam o ar, sem voz: o P de \"pato\". É o par sem voz do {{בּ}}. (Sem o ponto, os lábios não fecham - é a lição do Fe.)"
     },
     "ensino": {
-      "funcaoPt": "{{פ}} é a terceira e última letra do curso em que um ponto decide o som. Com o ponto ({{פּ}}) ela é P, como em \"pato\". Sem o ponto ({{פ}}) ela é F, como em \"faca\". Você já conhece o mecanismo do {{ב}} e do {{כ}} - é exatamente o mesmo.",
-      "detalhePt": "Ela também tem forma final: {{ף}}, que desce abaixo da linha. E vale a mesma regra do {{ך}}: a forma final não leva ponto, então ela é sempre F. {{סוֹף}} é \"sof\" (fim), e \"sop\" não existe em hebraico nenhum.",
-      "paraBrasileiroPt": "Os dois sons são fáceis para quem fala português - de novo, o trabalho é OLHAR antes de pronunciar. O reflexo de ler todo {{פ}} como P produz \"séper\" no lugar de \"sefer\" ({{סֵפֶר}}, livro), que é a palavra mais comum onde isso acontece.",
+      "funcaoPt": "{{פּ}} é a terceira e última letra em que um ponto dentro decide o som. Com o ponto, ela é P, como em \"pato\": {{פֶּה}}, {{פָּרָה}}, {{מִשְׁפָּחָה}}. Você já conhece o mecanismo do {{בּ}} e do {{כּ}} - é o mesmo.",
+      "detalhePt": "Ela também tem forma final, {{ף}}, que desce abaixo da linha. Como o {{ך}}, a forma final nunca leva ponto, então ela nunca é P - ela é o som da próxima lição. Por enquanto, a regra desta é uma só: ponto dentro, P.",
+      "paraBrasileiroPt": "O P é o mesmo do português. Repare no desenho: a boca do {{פ}} fica aberta à esquerda, com um dente virado para dentro.",
       "padraoPt": "A terceira e última letra do grupo do ponto: {{ב}}, {{כ}} e esta. Se você reconheceu o padrão nas outras duas, aqui não há nada novo para decorar - só a letra.",
-      "lembrePt": "Com ponto, {{פּ}} é P. Sem ponto, {{פ}} é F. E {{ף}} no fim da palavra é sempre F.",
+      "lembrePt": "Com o ponto dentro, {{פּ}} é P. Sem o ponto, e no {{ף}} final, é outro som, e ele é a próxima lição.",
       "checagem": [
         {
-          "t": "escolha",
-          "q": "Como se lê {{סֵפֶר}} (livro)?",
+          "t": "visual",
+          "q": "Qual destas se lê com som de P?",
           "opcoes": [
-            "\"sefer\", com F",
-            "\"seper\", com P",
-            "\"sefel\""
+            "פּ",
+            "פ"
           ],
           "certa": 0,
-          "porque": "A letra está sem ponto, então o som é F. Ler todo {{פ}} como P é o mesmo reflexo que faz ler todo {{ב}} como B."
+          "porque": "O ponto dentro marca o P. Sem ele a letra tem outro som, que é a próxima lição."
         },
         {
           "t": "escolha",
-          "q": "E {{סוֹף}} (fim)?",
+          "q": "Como se lê {{פֶּה}} (boca)?",
           "opcoes": [
-            "\"sof\", sempre com F",
-            "\"sop\", com P",
-            "Depende: pode ser \"sof\" ou \"sop\""
+            "\"pe\", com P",
+            "\"fe\", com F"
           ],
           "certa": 0,
-          "porque": "A forma final {{ף}} nunca leva ponto, então ela é sempre F. Vale a mesma regra do {{ך}}, que é sempre raspado."
+          "porque": "A letra tem o ponto dentro: P. \"Pe\" - e é também o nome da letra."
         },
         {
           "t": "vf",
           "q": "As três letras que mudam de som com o ponto são {{ב}}, {{כ}} e {{פ}}.",
           "certa": true,
-          "porque": "No hebraico de hoje são essas três. Outras letras também levam o ponto - {{ג}}, {{ד}}, {{ת}} -, mas nelas ele não muda mais a pronúncia."
+          "porque": "No hebraico de hoje são essas três. Outras letras também levam o ponto - {{ג}}, {{ד}}, {{ת}} -, mas nelas ele não muda o som."
         }
       ]
     },
@@ -3811,20 +3798,23 @@
         "he": "טֶלֶפוֹן",
         "translit": "télefon",
         "pt": "telefone",
-        "use": "Substantivo cotidiano"
+        "use": "Substantivo cotidiano",
+        "som": "fe"
       },
       {
         "he": "כֶּסֶף",
         "translit": "késef",
         "pt": "dinheiro",
-        "use": "Substantivo essencial"
+        "use": "Substantivo essencial",
+        "som": "fe"
       }
     ],
     "wordsToRead": [
       {
         "he": "סֵפֶר",
         "translit": "séfer",
-        "pt": "livro"
+        "pt": "livro",
+        "som": "fe"
       },
       {
         "he": "מִשְׁפָּחָה",
@@ -3834,24 +3824,42 @@
       {
         "he": "יָפֶה",
         "translit": "yafé",
-        "pt": "bonito"
+        "pt": "bonito",
+        "som": "fe"
       },
       {
         "he": "כֶּסֶף",
         "translit": "késef",
-        "pt": "dinheiro"
+        "pt": "dinheiro",
+        "som": "fe"
       },
       {
         "he": "סוֹף",
         "translit": "sof",
-        "pt": "fim"
+        "pt": "fim",
+        "som": "fe"
+      },
+      {
+        "he": "פֶּה",
+        "translit": "pe",
+        "pt": "boca"
+      },
+      {
+        "he": "פָּרָה",
+        "translit": "pará",
+        "pt": "vaca"
+      },
+      {
+        "he": "פִּתָּה",
+        "translit": "pitá",
+        "pt": "pão sírio"
       }
     ],
-    "didYouKnow": "O nome da letra é {{פֵּא}}, \"boca\". E {{סֵפֶר}}, livro, é da mesma raiz de {{סוֹפֵר}}, escritor, e de {{מִסְפָּר}}, número - contar e escrever eram o mesmo ofício.",
+    "didYouKnow": "O nome da letra é {{פֵּא}}, e {{פֶּה}} quer dizer \"boca\" - a letra desenha uma boca aberta, com um dente. Você lê essa palavra nesta lição.",
     "brazilianMistake": {
-      "wrong": "Ler todo {{פ}} como P: dizer \"séper\" em vez de {{סֵפֶר}}.",
-      "right": "Procurar o ponto: só {{פּ}} é P. Sem ponto, e sempre no fim da palavra, é F.",
-      "why": "É a mesma armadilha do {{ב}}, e ela custa caro aqui: {{סוֹף}} (\"fim\") lido com P não existe em hebraico nenhum."
+      "wrong": "Soprar o P e ler {{פֶּה}} quase como \"fe\".",
+      "right": "Fechar os dois lábios de verdade antes de soltar: \"pe\", como em \"pato\".",
+      "why": "Com o ponto, o P hebraico é um P inteiro, com os lábios fechados. Soltar o ar sem fechar a boca já é o outro som desta letra, o da próxima lição."
     },
     "audioIds": [],
     "biblicalWord": null,

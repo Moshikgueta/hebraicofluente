@@ -165,7 +165,7 @@ export function validate({ checkDist = true } = {}) {
 
     /* ── V12 - empty reading list (expected for letter 1) ────────────── */
     if (!L.wordsToRead || !L.wordsToRead.length) {
-      warn('V12', at, 'wordsToRead is empty - the templates fall back to syllable-only practice');
+      warn('V12', at, 'wordsToRead is empty - the lesson falls back to syllable-only practice');
     }
 
     /* ── V13 - Hebrew in prose must be marked {{…}} ──────────────────
@@ -716,6 +716,9 @@ export function validate({ checkDist = true } = {}) {
       for (const L of letters) {
         for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) vocab.set(clean(w.he), w);
       }
+      /* As lições de som também ensinam palavras: desde 26/09/2026 {{טוֹב}},
+         {{סֵפֶר}} e {{מֶלֶךְ}} são lidas pela primeira vez em Vet, Fe e Chaf. */
+      for (const S of extras.sons?.licoes || []) for (const w of S.palavras) vocab.set(clean(w.he), w);
       const confere = (pointed, onde) => {
         const p = clean(pointed);
         const w = vocab.get(p);
@@ -786,6 +789,18 @@ export function validate({ checkDist = true } = {}) {
      letras, na posição da lição); e o plano de aulas (modules.json) põe a
      lição no número e no módulo que ela diz ter. */
   if (extras?.sons) {
+    /* Uma palavra da letra marcada com `som` é ensinada na lição de som, e não
+       na da letra: a marca tem de apontar para uma lição que a ensina. */
+    for (const L of letters) {
+      for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) {
+        if (!w.som) continue;
+        const S = extras.sons.licoes.find(x => x.id === w.som);
+        if (!S) fail('V26', L.id, `"${w.he}" aponta para a lição de som "${w.som}", que não existe`);
+        else if (!S.palavras.some(p => clean(p.he) === clean(w.he))) {
+          fail('V26', L.id, `"${w.he}" diz ser da lição ${S.namePt}, que não a ensina`);
+        }
+      }
+    }
     const DAGUESH = 'ּ';
     const GERESH = '׳';
     const plano = new Map();

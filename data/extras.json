@@ -4,10 +4,8 @@
     "introduzem letra nova, e por isso sao as mais faceis de pular e as piores",
     "de pular.",
     "",
-    "Estava embutido em templates/extras.js. Saiu para ca porque o curso",
-    "interativo precisa exatamente do mesmo conteudo: uma fonte, dois produtos.",
-    "O livro le este arquivo por templates/extras.js; o app, por",
-    "tools/export-content.mjs.",
+    "O app le este arquivo por tools/export-content.mjs. (O livro em PDF,",
+    "que tambem o lia, saiu do projeto em 26/09/2026.)",
     "",
     "Tudo aqui vem DEPOIS da letra 22, entao a regra da ordem nao restringe",
     "nada - todas as 22 letras ja foram ensinadas."
@@ -119,7 +117,7 @@
         "id": "rua",
         "titlePt": "As que resolvem uma rua em Israel",
         "notePt": "Mais longas, e nenhuma delas vai aparecer com pontinhos onde você vai encontrá-las: numa placa, num ônibus, numa conversa escrita.",
-        "words": ["תּוֹדָה", "סְלִיחָה", "בְּבַקָּשָׁה", "רְחוֹב", "אוֹטוֹבּוּס", "עִבְרִית", "עַכְשָׁו", "טֶלֶפוֹן"]
+        "words": ["תּוֹדָה", "סְלִיחָה", "בְּבַקָּשָׁה", "רְחוֹב", "אוֹטוֹבּוּס", "עִבְרִית", "עַכְשָׁיו", "טֶלֶפוֹן"]
       }
     ],
     "ambiguous": {
@@ -215,8 +213,8 @@
         "regraPt": "Ponto no alto à direita, {{שׁ}}: SH. Ponto no alto à esquerda, {{שׂ}}: S. Aqui não é a posição na palavra que decide, como no daguesh: é só o lado do ponto. E num texto sem nikud não há ponto nenhum, e é a palavra conhecida que diz qual é.",
         "irmaoPt": "O Sin soa exatamente como o {{ס}}, o Sámech, que você vai conhecer no módulo 4. Duas letras, um som só: quem decide qual se escreve é a palavra.",
         "erro": {
-          "wrong": "Ler toda {{ש}} como SH, sem olhar o lado do ponto: {{יִשְׂרָאֵל}} vira \"yishrael\".",
-          "right": "Olhar o ponto antes de dizer: à esquerda é S. \"yisrael\", \"Sará\", \"smol\".",
+          "wrong": "Ler toda {{ש}} como SH, sem olhar o lado do ponto: {{יִשְׂרָאֵל}} vira \"Yishraél\".",
+          "right": "Olhar o ponto antes de dizer: à esquerda é S. \"Yisraél\", \"Sará\", \"smol\".",
           "why": "O {{שׁ}} aparece muito mais, e o olho se acostuma a ele. O ponto à esquerda é o único aviso de que o som é outro."
         },
         "silabas": [
@@ -244,7 +242,7 @@
         "palavras": [
           {
             "he": "יִשְׂרָאֵל",
-            "translit": "yisrael",
+            "translit": "Yisraél",
             "pt": "Israel"
           },
           {
@@ -497,7 +495,7 @@
             "pt": "abençoado"
           },
           {
-            "he": "עַכְשָׁו",
+            "he": "עַכְשָׁיו",
             "translit": "achshav",
             "pt": "agora"
           }

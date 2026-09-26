@@ -49,6 +49,9 @@ const word = w => {
     translit: w.translit,
     pt: w.pt,
     use: w.use ?? null,
+    /* A lição de som que ensina esta palavra (טוֹב → Vet). A lição da letra a
+       pula; o resto do curso - missões, cenas, jogos - a conta como sabida. */
+    som: w.som ?? null,
     audioId: audioIdFor(w.he),
     ...(img ? {
       image: img.image ?? null,
@@ -67,13 +70,17 @@ const word = w => {
  *   · `image` apontando para arquivo que não existe - a tela mostraria um
  *     ícone quebrado no lugar da ilustração.
  */
-function carregarImagens(letters) {
+function carregarImagens(letters, sons = []) {
   const caminho = join(ROOT, 'data/imagens-vocabulario.json');
   if (!existsSync(caminho)) return;
   const d = JSON.parse(readFileSync(caminho, 'utf8'));
   ESTILO_IMAGEM = d.estilo ?? '';
-  const doCurso = new Set(letters.flatMap(L =>
-    [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])].map(w => NFC(w.he))));
+  /* As lições de som também ensinam palavras (לֵב, סֵפֶר, מֶלֶךְ saíram das
+     lições de Bet, Kaf e Pe para as de Vet, Fe e Chaf em 26/09/2026). */
+  const doCurso = new Set([
+    ...letters.flatMap(L => [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])].map(w => NFC(w.he))),
+    ...sons.flatMap(S => S.palavras.map(w => NFC(w.he)))
+  ]);
   for (const [he, img] of Object.entries(d.palavras ?? {})) {
     const k = NFC(he);
     if (!doCurso.has(k)) throw new Error(`imagens-vocabulario: "${he}" não é palavra do curso`);
@@ -114,7 +121,7 @@ function lookupWord(letters, phrase, scene) {
 
 function main() {
   const letters = readJson('data/letters.json').sort((a, b) => a.order - b.order);
-  carregarImagens(letters);
+  carregarImagens(letters, readJson('data/extras.json').sons?.licoes);
   const modules = readJson('data/modules.json').modules;
   const nikud = readJson('data/nikud.json');
   const extras = readJson('data/extras.json');
@@ -122,20 +129,6 @@ function main() {
   const sentences = readJson('data/sentences.json');
   const eras = readJson('data/eras.json');
   const biblia = readJson('data/biblia.json');
-
-  /* Where each letter's pages start in the printed workbook, so the app can
-     say "quer praticar à mão? páginas X-Y". Absent before the first `npm run
-     pdf`; the link is then simply not shown. */
-  let pageMap = {};
-  try { pageMap = readJson('data/page-map.json').sections || {}; } catch { /* no pdf yet */ }
-  const sectionOrder = Object.keys(pageMap).sort((a, b) => pageMap[a] - pageMap[b]);
-  const pagesFor = id => {
-    const at = sectionOrder.indexOf(id);
-    if (at < 0) return null;
-    const from = pageMap[id];
-    const next = sectionOrder[at + 1];
-    return { from, to: next ? pageMap[next] - 1 : from };
-  };
 
   rmSync(OUT, { recursive: true, force: true });
   mkdirSync(join(OUT, 'letters'), { recursive: true });
@@ -207,7 +200,6 @@ function main() {
       bridgeWords: (L.bridgeWords || []).map(b => ({ he: NFC(b.he), pt: b.pt })),
       alphabetSoFar: alphabetUpTo(L.order),
       strokeOrder: { base: strokeSvg(L.id), final: L.finalForm ? strokeSvg(`${L.id}-final`) : null },
-      workbookPages: pagesFor(L.id),
       audioId: audioIdFor(L.nameHe)
     };
     exported.push(out);
@@ -257,11 +249,9 @@ function main() {
             id: `cp${M.n}`, module: M.n,
             upTo: escopo[escopo.length - 1].order,
             letterIds: escopo.map(l => l.id),
-            cumulativo: !own.length,
-            workbookPages: pagesFor(`rev${M.n}`)
+            cumulativo: !own.length
           };
-        })(),
-        workbookPages: pagesFor(M.id)
+        })()
       };
     }),
     letters: letters.map(l => ({
@@ -384,6 +374,9 @@ function main() {
       for (const L of letters) {
         for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) vocab.set(NFC(w.he), w);
       }
+      /* E as das lições de som (Vet, Chaf, Fe...), onde {{טוֹב}}, {{סֵפֶר}} e
+         {{מֶלֶךְ}} passaram a ser ensinadas. */
+      for (const S of extras.sons.licoes) for (const w of S.palavras) if (!vocab.has(NFC(w.he))) vocab.set(NFC(w.he), w);
       const resolver = pointed => {
         const p = NFC(pointed);
         const w = vocab.get(p);
@@ -450,7 +443,8 @@ function main() {
           ? L.syllables.slice(0, S.silabas.length)
               .map(s => ({ he: NFC(s.he), translit: s.translit, audioId: audioIdFor(s.he) }))
           : [],
-        palavras: S.palavras.map(withAudio),
+        /* Com a ilustração, quando a palavra tem uma (o coração de לֵב). */
+        palavras: S.palavras.map(w => ({ ...word(w), audioId: audioIdFor(w.he) })),
         parPalavras: parPalavras
           .map(w => ({ he: NFC(w.he), translit: w.translit, pt: w.pt, audioId: audioIdFor(w.he) }))
       };

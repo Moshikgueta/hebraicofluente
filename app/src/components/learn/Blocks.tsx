@@ -297,11 +297,8 @@ export function RealWorldHebrew({ scene }: { scene: Scene }) {
    três telas adiante. Então saiu inteiro: a página, os cinco cartões e o
    evento de analytics.
 
-   O que FICA é o campo `workbookPages` no conteúdo. Ele não é promessa: é a
-   correspondência entre cada letra e as páginas do manuscrito de origem, que
-   `tools/build-pdf.mjs` usa para gerar o livro do dono do curso. Nada disso
-   chega à tela do aluno. No dia em que houver um arquivo para distribuir, o
-   cartão volta - com um link que leva a alguma coisa. */
+   Em 26/09/2026 o livro em PDF saiu do projeto inteiro, com o gerador e o
+   campo `workbookPages`: o curso é a plataforma. */
 
 /* ── a letter, big ──────────────────────────────────────────────────────── */
 export function HebrewLetterCard({ letter }: { letter: Letter }) {

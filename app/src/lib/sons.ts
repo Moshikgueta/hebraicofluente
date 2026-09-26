@@ -196,3 +196,18 @@ export function rodadaDoSom(
   }
   return out;
 }
+
+/**
+ * A letra como a SUA lição a mostra: sem as palavras que são ensinadas na
+ * lição de som seguinte (טוֹב e לֵב saem do Bet e ficam para o Vet). As
+ * palavras continuam no conteúdo da letra - missões, cenas e jogos as contam
+ * como sabidas a partir dali -, só a tela e os exercícios da lição da letra
+ * não as usam, porque o som delas ainda não foi ensinado.
+ */
+export function semPalavrasDeSom<T extends { wordsToRead: readonly { som?: string | null }[]; wordsToRecognize: readonly { som?: string | null }[] }>(
+  letra: T
+): T {
+  const fica = (w: { som?: string | null }) => !w.som;
+  if (!letra.wordsToRead.some(w => w.som) && !letra.wordsToRecognize.some(w => w.som)) return letra;
+  return { ...letra, wordsToRead: letra.wordsToRead.filter(fica), wordsToRecognize: letra.wordsToRecognize.filter(fica) };
+}
