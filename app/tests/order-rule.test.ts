@@ -9,8 +9,8 @@
 import { describe, expect, it } from 'vitest';
 import { allLetters, course } from '../src/lib/content';
 import {
-  buildCheckpoint, buildLessonQuiz, buildReview, glyphOptionsOf, isChoice, readingUsedBy,
-  violatesOrderRule
+  buildCheckpoint, buildLessonQuiz, buildLetterPractice, buildMiniTest, buildReview, glyphOptionsOf,
+  isChoice, readingUsedBy, violatesOrderRule
 } from '../src/lib/engine/exercises';
 import { ALL_GLYPHS, isReadableWith } from '../src/lib/hebrew';
 
@@ -58,6 +58,42 @@ describe('the order rule', () => {
       }
     }
     expect(offences).toEqual([]);
+  });
+
+  /* Desde 26/09/2026 cada rodada concluída troca a semente (lib/rodadas.ts),
+     então o aluno vê MUITAS sementes, e não só a padrão. Os três testes acima
+     rodam a semente padrão; este varre 40 por tela. Foi assim que apareceu o
+     par de vogal com ו antes da lição do Vav. */
+  it('holds across many rounds: practice, mini-test, checkpoint and review', () => {
+    const offences: string[] = [];
+    for (const L of letters) {
+      const history = letters.filter(x => x.order <= L.order);
+      for (let r = 0; r < 40; r++) {
+        for (const ex of [
+          ...buildLetterPractice(L, history, { audioAvailable: true, seed: `r${r}` }),
+          ...buildMiniTest(L, history, { audioAvailable: true, seed: `r${r}` })
+        ]) {
+          const bad = violatesOrderRule(ex, L.alphabetSoFar);
+          if (bad.length) offences.push(`${L.id} r${r} · ${ex.id} · ${bad.join(', ')}`);
+        }
+      }
+    }
+    for (const m of course.modules) {
+      if (!m.letterIds.length || m.upTo == null) continue;
+      const own = letters.filter(l => l.module === m.n);
+      const history = letters.filter(l => l.order <= m.upTo!);
+      const alphabet = history.flatMap(l => l.finalForm ? [l.letter, l.finalForm] : [l.letter]);
+      for (let r = 0; r < 40; r++) {
+        for (const ex of [
+          ...buildCheckpoint(own, history, { audioAvailable: true, count: 12, seed: `r${r}` }),
+          ...buildReview(own.map(l => l.id), history, { audioAvailable: true, count: 5, seed: `r${r}` })
+        ]) {
+          const bad = violatesOrderRule(ex, alphabet);
+          if (bad.length) offences.push(`cp${m.n} r${r} · ${ex.id} · ${bad.join(', ')}`);
+        }
+      }
+    }
+    expect([...new Set(offences)].slice(0, 20)).toEqual([]);
   });
 
   /* The negative case. Without it the three tests above could be passing

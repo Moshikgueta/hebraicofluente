@@ -229,13 +229,19 @@ function fill(
      produced, and it made every checkpoint feel like a lesson about one thing. */
   const steps = gens.length * Math.max(letters.length, 1) * rounds;
   const ctxCache = new Map<string, Ctx>();
+  /* O giro e a letra de partida vêm do sorteio (26/09/2026). Antes os dois
+     saíam da posição, e a semente só embaralhava as alternativas: refazer um
+     checkpoint trazia a mesma letra na mesma pergunta, com a mesma palavra.
+     O mesmo giro que a prática da letra já usava - ver buildLetterPractice. */
+  const giro = Math.floor(rand() * 97);
+  const inicio = Math.floor(rand() * letters.length);
   for (let k = 0; k < steps && out.length < count; k++) {
     const gen = gens[k % gens.length]!;
-    const L = letters[k % letters.length]!;
+    const L = letters[(k + inicio) % letters.length]!;
     if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
     let ctx = ctxCache.get(L.id);
     if (!ctx) { ctx = contextFor(L, history); ctxCache.set(L.id, ctx); }
-    const ex = gen(L, ctx, rand, Math.floor(k / gens.length));
+    const ex = gen(L, ctx, rand, giro + Math.floor(k / gens.length));
     if (ex && !seen.has(ex.id)) { seen.add(ex.id); out.push(ex); }
   }
   return out;
@@ -1050,13 +1056,17 @@ export function buildReview(
   const out: Exercise[] = [];
   const seen = new Set<string>();
 
+  /* Gesto e conteúdo giram com o sorteio, como no `fill` (26/09/2026): com
+     o índice fixo, duas revisões das mesmas letras traziam as mesmas
+     perguntas. */
+  const giro = Math.floor(rand() * 97);
   for (let round = 0; round < 6 && out.length < count; round++) {
     for (const L of pool) {
       if (out.length >= count) break;
       const ctx = contextFor(L, all);
-      const gen = gens[(round * 5 + L.order) % gens.length]!;
+      const gen = gens[(giro + round * 5 + L.order) % gens.length]!;
       if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
-      const ex = gen(L, ctx, rand, round);
+      const ex = gen(L, ctx, rand, giro + round);
       if (ex && !seen.has(ex.id)) { seen.add(ex.id); out.push(ex); }
     }
   }

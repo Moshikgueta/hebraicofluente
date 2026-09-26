@@ -23,6 +23,7 @@ import { allLetters, course, type CourseModule, type Letter } from '@/lib/conten
 import { buildCheckpoint } from '@/lib/engine/exercises';
 import { buildSemPontos, MODULOS_COM_RAMPA } from '@/lib/engine/palavras';
 import { rng } from '@/lib/engine/rng';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 import { isLessonComplete, PASS_MARK } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
@@ -38,13 +39,14 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
 
   const history = useMemo(() => allLetters().filter(l => l.order <= (mod.upTo ?? 0)), [mod.upTo]);
   const comRampa = MODULOS_COM_RAMPA.includes(mod.n);
+  /* Refazer o checkpoint é outra rodada, com o que já apareceu no fim da
+     fila (lib/rodadas.ts). */
   const exercises = useMemo(
-    () => [
-      ...buildCheckpoint(letters, history, {
-        audioAvailable: audioAvailable(), count: 12, seed: `cp-${mod.n}-${run}`
-      }),
-      ...(comRampa ? buildSemPontos(history, rng(`cp-${mod.n}-${run}-sem-pontos`)) : [])
-    ],
+    () => escolherRodada(`checkpoint-${mod.n}`, seed => [
+      ...buildCheckpoint(letters, history, { audioAvailable: audioAvailable(), count: 12, seed }),
+      ...(comRampa ? buildSemPontos(history, rng(`${seed}-sem-pontos`)) : [])
+    ]).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [letters, history, mod.n, run, comRampa]
   );
 
@@ -137,6 +139,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         exercises={exercises}
         title={`Checkpoint ${mod.n}`}
         onDone={r => {
+          registrarRodada(`checkpoint-${mod.n}`, exercises);
           /* A nota é só dos itens do checkpoint; a rampa sem pontos é
              prática e é contada à parte. */
           const daRampa = (id: string) => id.startsWith('sempontos-');

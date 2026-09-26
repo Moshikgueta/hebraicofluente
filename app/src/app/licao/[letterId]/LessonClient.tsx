@@ -44,6 +44,7 @@ import {
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
 import { nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom } from '@/lib/sons';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const STAGES = [
   { n: 1, label: 'Conhecer' },
@@ -76,12 +77,15 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
      palavra, forma final, outra fonte, ler - e reserva ~30% para letras
      anteriores. O motor faz essa composição; aqui só se diz quantas e quais
      letras andaram custando. */
+  /* Cada rodada concluída muda as perguntas da seguinte, e o que já apareceu
+     vai para o fim da fila (lib/rodadas.ts). */
+  const [rodadaPratica, setRodadaPratica] = useState(0);
   const practice = useMemo(
-    () => buildLetterPractice(letter, history, {
-      audioAvailable: audioAvailable(),
-      seed: `pratica-${letter.id}`, weak: p.weak
-    }),
-    [letter, history, p.weak]
+    () => escolherRodada(`licao-pratica-${letter.id}`, seed => buildLetterPractice(letter, history, {
+      audioAvailable: audioAvailable(), seed, weak: p.weak
+    })).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [letter, history, p.weak, rodadaPratica]
   );
   /* O mini-teste: dez itens, um de cada coisa que "saber a letra" quer dizer
      - reconhecer, o som ou a variante, dentro de uma palavra, a forma que
@@ -89,9 +93,10 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
      que não mostra a resposta na tela - e um de uma letra anterior. Outra
      semente a cada tentativa. */
   const quiz = useMemo(
-    () => buildMiniTest(letter, history, {
-      audioAvailable: audioAvailable(), seed: `mini-${letter.id}-${quizRun}`
-    }),
+    () => escolherRodada(`licao-fixacao-${letter.id}`, seed => buildMiniTest(letter, history, {
+      audioAvailable: audioAvailable(), seed
+    })).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [letter, history, quizRun]
   );
 
@@ -148,6 +153,7 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
         <StagePraticar
           key={`p-${letter.id}`}
           exercises={practice} letter={letter} onDone={() => done(4)}
+          aoTerminar={() => { registrarRodada(`licao-pratica-${letter.id}`, practice); setRodadaPratica(n => n + 1); }}
         />
       )}
       {/* A card earned by the letter just finished, shown where it was earned.
@@ -170,7 +176,10 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
           letter={letter}
           history={history}
           result={quizResult}
-          onResult={r => { setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5); }}
+          onResult={r => {
+            registrarRodada(`licao-fixacao-${letter.id}`, quiz);
+            setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5);
+          }}
           onRetry={() => { setQuizResult(null); setQuizRun(n => n + 1); }}
           onNext={() => {
             if (somSeguinte) router.push(rotaDaLicao(somSeguinte));
@@ -687,8 +696,8 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
 
 /* ── 4 · praticar ───────────────────────────────────────────────────────── */
 function StagePraticar({
-  exercises, letter, onDone
-}: { exercises: Exercise[]; letter: Letter; onDone: () => void }) {
+  exercises, letter, onDone, aoTerminar
+}: { exercises: Exercise[]; letter: Letter; onDone: () => void; aoTerminar: () => void }) {
   const [finished, setFinished] = useState(false);
 
   if (!exercises.length) {
@@ -713,7 +722,7 @@ function StagePraticar({
     <ExercisePlayer
       exercises={exercises}
       title="Prática - sem nota"
-      onDone={() => setFinished(true)}
+      onDone={() => { aoTerminar(); setFinished(true); }}
     />
   );
 }

@@ -36,6 +36,7 @@ import { allLetters, course } from '@/lib/content';
 import type { SomLicao } from '@/lib/engine/extras';
 import { idDoSom, nomeDaLicao, ordemDeEnsino, rodadaDoSom, rotaDaLicao } from '@/lib/sons';
 import { track } from '@/lib/analytics';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const STAGES = [
   { n: 1, label: 'Conhecer' },
@@ -65,12 +66,17 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
     setTrancada(porQueTrancada(p.state, ordem, id));
   }, [p.ready, p.state, ordem, id]);
 
+  /* Refazer é outra rodada, e o que já apareceu vai para o fim da fila
+     (lib/rodadas.ts). */
+  const [rodadaPratica, setRodadaPratica] = useState(0);
   const pratica = useMemo(
-    () => rodadaDoSom(S, { seed: `pratica-${S.id}`, count: 8, temAudio: hasAudio }),
-    [S, versaoAudio]
+    () => escolherRodada(`som-pratica-${S.id}`, seed => rodadaDoSom(S, { seed, count: 8, temAudio: hasAudio })).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [S, versaoAudio, rodadaPratica]
   );
   const teste = useMemo(
-    () => rodadaDoSom(S, { seed: `fixacao-${S.id}-${tentativa}`, count: 8, temAudio: hasAudio }),
+    () => escolherRodada(`som-fixacao-${S.id}`, seed => rodadaDoSom(S, { seed, count: 8, temAudio: hasAudio })).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [S, tentativa, versaoAudio]
   );
 
@@ -155,7 +161,10 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
       {stage === 1 && <Conhecer S={S} onDone={() => feito(1)} />}
       {stage === 2 && <Palavras S={S} onDone={() => feito(2)} />}
       {stage === 3 && <Contraste S={S} onDone={() => feito(3)} />}
-      {stage === 4 && <Praticar exercicios={pratica} onDone={() => feito(4)} />}
+      {stage === 4 && (
+        <Praticar exercicios={pratica} onDone={() => feito(4)}
+                  aoTerminar={() => { registrarRodada(`som-pratica-${S.id}`, pratica); setRodadaPratica(n => n + 1); }} />
+      )}
       {stage === 5 && (
         resultado ? (
           <Resultado
@@ -171,6 +180,7 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
             title={`Fixação - som ${S.namePt}`}
             onDone={r => {
               track('quiz_completed', { letterId: id, score: r.score });
+              registrarRodada(`som-fixacao-${S.id}`, teste);
               setResultado(r);
               p.finishQuiz(id, r.score);
               p.finishStage(id, 5);
@@ -386,7 +396,9 @@ function Linha({ w, mark }: { w: { he: string; translit: string; pt: string; aud
 }
 
 /* ── 4 · praticar ──────────────────────────────────────────────────────── */
-function Praticar({ exercicios, onDone }: { exercicios: ReturnType<typeof rodadaDoSom>; onDone: () => void }) {
+function Praticar({ exercicios, onDone, aoTerminar }: {
+  exercicios: ReturnType<typeof rodadaDoSom>; onDone: () => void; aoTerminar: () => void;
+}) {
   const [fim, setFim] = useState(false);
   if (fim) {
     return (
@@ -397,7 +409,7 @@ function Praticar({ exercicios, onDone }: { exercicios: ReturnType<typeof rodada
       </div>
     );
   }
-  return <ExercisePlayer exercises={exercicios} title="Prática - sem nota" onDone={() => setFim(true)} />;
+  return <ExercisePlayer exercises={exercicios} title="Prática - sem nota" onDone={() => { aoTerminar(); setFim(true); }} />;
 }
 
 /* ── 5 · o resultado ───────────────────────────────────────────────────── */

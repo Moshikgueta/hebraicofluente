@@ -18,6 +18,7 @@ import { buildReview } from '@/lib/engine/exercises';
 import { dueItems, weakestSkill, weakLetters } from '@/lib/state/rules';
 import type { Skill } from '@/lib/state/types';
 import { track } from '@/lib/analytics';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 export function ReviewClient() {
   const p = useProgress();
@@ -68,10 +69,13 @@ export function ReviewClient() {
     return wanted.size && wanted.size < 4 ? [...wanted] : undefined;
   }, [weak, p.state.skills]);
 
+  /* Cada revisão concluída é uma rodada: a seguinte, no mesmo dia ou em
+     outro, evita as perguntas das últimas (lib/rodadas.ts). */
   const exercises = useMemo(
-    () => buildReview(weak, learned, {
-      audioAvailable: audioAvailable(), count: 5, seed: `rev-${p.day}-${run}`, skills
-    }),
+    () => escolherRodada('revisao', seed => buildReview(weak, learned, {
+      audioAvailable: audioAvailable(), count: 5, seed, skills
+    })).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [weak, learned, p.day, run, skills]
   );
 
@@ -113,7 +117,7 @@ export function ReviewClient() {
         key={run}
         exercises={exercises}
         title="Revisão rápida"
-        onDone={r => { setResult(r); p.finishReview(r.score); setPhase('done'); }}
+        onDone={r => { registrarRodada('revisao', exercises); setResult(r); p.finishReview(r.score); setPhase('done'); }}
       />
     );
   }

@@ -21,6 +21,7 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, course, extras, missaoDoModulo, scenesUpTo, type CourseModule } from '@/lib/content';
 import { lexicoDoCurso, missaoId, montarMissao, MISSAO_PASSA } from '@/lib/engine/missao';
 import { rng } from '@/lib/engine/rng';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 import { track } from '@/lib/analytics';
 
 export function MissaoClient({ module: mod }: { module: CourseModule }) {
@@ -34,7 +35,8 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
   const exercises = useMemo(() => {
     if (!missao) return [];
     const lex = lexicoDoCurso(allLetters(), scenesUpTo(Number.MAX_SAFE_INTEGER), extras());
-    return montarMissao(missao, lex, rng(`missao-${mod.n}-${run}`));
+    /* Refazer a missão é outra rodada (lib/rodadas.ts). */
+    return escolherRodada(`missao-${mod.n}`, seed => montarMissao(missao, lex, rng(seed))).itens;
   }, [missao, mod.n, run]);
 
   const feita = !!p.state.firsts[missaoId(mod.n)];
@@ -56,6 +58,7 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
         exercises={exercises}
         title={`Missão · ${missao.tituloPt}`}
         onDone={r => {
+          registrarRodada(`missao-${mod.n}`, exercises);
           setResult(r);
           const passou = r.score >= MISSAO_PASSA;
           if (passou) p.markFirst(missaoId(mod.n));
