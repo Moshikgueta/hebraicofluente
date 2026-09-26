@@ -1,6 +1,6 @@
 /* Traz as gravações do painel (/admin/gravar) do banco para o git.
  * ─────────────────────────────────────────────────────────────────────────
- *   node tools/exportar-gravacoes.mjs            (na Action "Exportar gravações")
+ *   node tools/exportar-gravacoes.mjs            (no deploy-worker.yml, disparo manual com "exportar_gravacoes")
  *   node tools/exportar-gravacoes.mjs --ensaiar  (confere o tratamento, sem banco)
  *
  * O painel grava direto no D1 (tabela `gravacoes`), e o Worker já serve dali:

@@ -76,6 +76,15 @@ on:
       - 'scripts/**'
       - '.github/workflows/deploy-worker.yml'
   workflow_dispatch:
+    inputs:
+      # Em vez de publicar, trazer as gravações do painel /admin/gravar
+      # (banco D1) para audio/, num ramo novo - ver o job `exportar-gravacoes`.
+      # Mora aqui, e não num workflow próprio, porque um workflow novo não
+      # chegou a ser registrado pelo GitHub (26/09/2026) e este já está.
+      exportar_gravacoes:
+        description: 'Exportar as gravações do painel para audio/ (não publica)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -104,6 +113,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.exportar_gravacoes) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -550,3 +560,50 @@ jobs:
              DELETE FROM password_resets  WHERE account_id IN ($ALVO);
              DELETE FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'" \
             && echo "Contas de teste removidas." >> "$GITHUB_STEP_SUMMARY"
+
+  # ── exportar as gravações do painel ──────────────────────────────────────
+  # Só no disparo manual com "Exportar as gravações do painel" marcado. Lê a
+  # tabela `gravacoes` do D1, trata cada clipe como o cortar-audio e guarda em
+  # audio/ num ramo novo `gravacoes-do-painel-<run>`, para conferir num PR.
+  # Não publica nada: a publicação vem quando o PR entra em main (audio/**
+  # está nos caminhos que disparam o deploy).
+  exportar-gravacoes:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.exportar_gravacoes }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+
+      - name: O tratamento funciona? (ensaio, sem banco)
+        run: node tools/exportar-gravacoes.mjs --ensaiar
+
+      - name: Exportar do D1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node tools/exportar-gravacoes.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Guardar num ramo novo
+        run: |
+          RAMO="gravacoes-do-painel-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$RAMO"
+          git add audio/*.mp3
+          if git diff --cached --quiet; then
+            echo "Nada mudou em audio/: as gravações do painel já estão no git." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          N=$(git diff --cached --name-only | wc -l)
+          git commit -q -m "Áudio: $N clipe(s) exportado(s) do painel de gravação"
+          git push -q origin "$RAMO"
+          echo "Ramo **$RAMO** com $N clipe(s). Abra um PR dele para main." >> "$GITHUB_STEP_SUMMARY"
