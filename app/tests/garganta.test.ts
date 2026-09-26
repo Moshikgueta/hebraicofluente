@@ -4,7 +4,7 @@
  *   · as de duas leituras acendem dois lugares, as mudas nenhum;
  *   · o texto de uma letra não mostra letra que o aluno ainda não viu (o ר
  *     vem antes do ח, então o texto do ר fala dele sem desenhá-lo);
- *   · א, ה e ע não levam o cartão do sheva. */
+ *   · א, ה, י e ע não levam o cartão do sheva. */
 
 import { describe, expect, it } from 'vitest';
 import { conteudoPago } from '@/lib/content-servidor';
@@ -75,10 +75,10 @@ describe('de onde sai o som', () => {
     expect(letra('resh').soundNotePt).not.toMatch(/exatamente o R carioca/);
   });
 
-  it('א, ה e ע não têm o cartão do sheva; as outras têm', () => {
+  it('א, ה, י e ע não têm o cartão do sheva; as outras têm', () => {
     for (const l of L) {
       const temSheva = l.syllables.some(s => s.vowel === 'sheva');
-      expect(temSheva, l.id).toBe(!['alef', 'he', 'ayin'].includes(l.id));
+      expect(temSheva, l.id).toBe(!['alef', 'he', 'yod', 'ayin'].includes(l.id));
     }
   });
 });

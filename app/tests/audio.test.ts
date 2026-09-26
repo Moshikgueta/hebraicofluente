@@ -90,7 +90,7 @@ describe('the audio manifest and the app agree', () => {
        actually audible. */
     expect(w1.filter(c => c.kind === 'nome').length).toBeGreaterThanOrEqual(22);
     /* 22 × 6, menos o sheva de א, ה e ע, que não levam esse cartão. */
-    expect(w1.filter(c => c.kind === 'silaba').length).toBeGreaterThanOrEqual(129);
+    expect(w1.filter(c => c.kind === 'silaba').length).toBeGreaterThanOrEqual(128);
   });
 
   it('never claims a clip that is not in the manifest', () => {
