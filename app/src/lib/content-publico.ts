@@ -35,6 +35,8 @@ export type Word = {
   translit: string;
   pt: string;
   use: string | null;
+  /** A lição de som que ensina a palavra ("vet"): a lição da letra a pula. */
+  som?: string | null;
   audioId: string;
   /* A ilustração, quando a palavra é concreta e tem entrada em
      data/imagens-vocabulario.json. `image` é null até o arquivo existir;
@@ -190,7 +192,6 @@ export type Letter = {
   /** Every glyph the learner may legally be shown at this point. */
   alphabetSoFar: string[];
   strokeOrder: { base: string | null; final: string | null };
-  workbookPages: { from: number; to: number } | null;
   audioId: string;
 };
 
@@ -217,7 +218,6 @@ export type Checkpoint = {
   /** Verdadeiro nos módulos que consolidam em vez de ensinar letra nova: o
    *  escopo passa a ser tudo o que veio antes, e não o que o módulo trouxe. */
   cumulativo?: boolean;
-  workbookPages: { from: number; to: number } | null;
 };
 
 export type CourseModule = {
@@ -233,7 +233,6 @@ export type CourseModule = {
   letterIds: string[];
   upTo: number | null;
   checkpoint: Checkpoint | null;
-  workbookPages: { from: number; to: number } | null;
 };
 
 /** O esqueleto de uma letra que a vitrine mostra: o glifo e o nome. */

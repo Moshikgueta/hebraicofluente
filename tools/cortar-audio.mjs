@@ -617,6 +617,8 @@ function main() {
   --vogais o arquivo com os 14 nomes de sinais de vogal
   --sem-limpeza  sem filtro de graves nem redutor de ruído (microfone bom);
                  o corte, as bordas e o volume igual continuam
+  --faltantes  só os itens do grupo que ainda não têm arquivo em audio/
+           (o que o estúdio lista quando um grupo ganha itens novos)
   --grupo  um arquivo com os itens de um grupo do roteiro por letra
            ("módulo 7", "no mundo real", "frases", "texto do módulo 3")
   --onda   1, 2, 3 ou "todas". "todas" é o que a página de gravação guiada
@@ -656,6 +658,15 @@ function main() {
     if (de !== null) alvo = alvo.filter(c => c.num >= de);
     if (ate !== null) alvo = alvo.filter(c => c.num <= ate);
     if (de !== null) rotulo += ` (nº ${de} a ${ate ?? '∞'})`;
+  }
+  /* `--faltantes` (26/09/2026): só os clipes do grupo que ainda não têm
+     arquivo em audio/. É o que o estúdio pede quando um grupo já gravado
+     ganha itens novos (as três palavras novas do Pe) ou quando uma lição
+     nova reaproveita um clipe que já existe (לָלֶכֶת, na lição do Chaf): a
+     pessoa grava só o que falta, e o corte casa com exatamente isso. */
+  if (argv.includes('--faltantes')) {
+    alvo = alvo.filter(c => !existsSync(join(DROP, c.file)));
+    rotulo += ' · só os que faltam';
   }
   alvo.sort((a, b) => a.num - b.num);
   if (alvo.length && alvo.every(c => c.kind === 'frase')) {

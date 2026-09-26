@@ -37,11 +37,18 @@ describe('de onde sai o som', () => {
     expect(ponto('gimel')).toEqual(['veu']);
   });
 
-  it('as de duas leituras acendem dois lugares, cada um com a sua forma', () => {
-    expect(letra('bet').articulacao.pontos).toEqual([{ ponto: 'labios', rotulo: 'בּ' }, { ponto: 'labio-dentes', rotulo: 'ב' }]);
-    expect(letra('pe').articulacao.pontos.map(p => p.ponto)).toEqual(['labios', 'labio-dentes']);
-    expect(letra('kaf').articulacao.pontos.map(p => p.ponto)).toEqual(['veu', 'uvula']);
-    expect(letra('shin').articulacao.pontos.map(p => p.ponto)).toEqual(['palato', 'dentes']);
+  it('Bet, Kaf e Pe mostram o lugar do som com ponto; o outro fica na lição de som', () => {
+    /* Desde 26/09/2026 a lição da letra ensina o B, o K e o P; o V, o raspado
+       e o F têm lição própria (Vet, Chaf, Fe), com o desenho deles. */
+    expect(ponto('bet')).toEqual(['labios']);
+    expect(ponto('kaf')).toEqual(['veu']);
+    expect(ponto('pe')).toEqual(['labios']);
+    const som = (id: string) => conteudoPago.extras.sons.find(s => s.id === id)!.articulacao.pontos.map(p => p.ponto);
+    expect(som('vet')).toEqual(['labio-dentes']);
+    expect(som('chaf')).toEqual(['uvula']);
+    expect(som('fe')).toEqual(['labio-dentes']);
+    /* O Shin continua com as duas leituras na lição dele. */
+    expect(ponto('shin')).toEqual(['palato', 'dentes']);
   });
 
   it('א e ע são mudas, e מ e נ soltam o ar pelo nariz', () => {

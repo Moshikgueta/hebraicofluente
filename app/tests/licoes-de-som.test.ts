@@ -19,8 +19,11 @@ import { describe, expect, it } from 'vitest';
 import { allLetters, course, extras } from '../src/lib/content';
 import { totalLicoes } from '@/lib/content-publico';
 import {
-  bancoDoSom, idDoSom, leituraTrocada, nomeDaLicao, ordemDeEnsino, rodadaDoSom, rotaDaLicao
+  bancoDoSom, idDoSom, leituraTrocada, nomeDaLicao, ordemDeEnsino, rodadaDoSom, rotaDaLicao,
+  semPalavrasDeSom
 } from '@/lib/sons';
+import { buildLetterPractice, buildMiniTest } from '@/lib/engine/exercises';
+import { readFileSync, existsSync } from 'node:fs';
 import {
   courseProgress, lettersMastered, letraLiberada, porQueTrancada, STAGE_COUNT
 } from '@/lib/state/rules';
@@ -234,5 +237,70 @@ describe('a rota', () => {
   it('é paga, no portão e no eco do SEO', () => {
     expect(isGatedPath('/som/vet/')).toBe(true);
     expect(PAGAS).toContain('/som');
+  });
+});
+
+describe('as lições de Bet, Kaf e Pe ensinam só o som com ponto (26/09/2026)', () => {
+  const SUAVES: Record<string, string[]> = {
+    bet: ['טוֹב', 'לֵב'],
+    kaf: ['אֹכֶל', 'מֶלֶךְ', 'דֶּרֶךְ', 'לָלֶכֶת'],
+    pe: ['סֵפֶר', 'יָפֶה', 'כֶּסֶף', 'סוֹף', 'טֶלֶפוֹן']
+  };
+  const letra = (id: string) => allLetters().find(l => l.id === id)!;
+  const textoDe = (e: unknown) => JSON.stringify(e);
+
+  it('as palavras do outro som ficam marcadas com a lição que as ensina', () => {
+    for (const [id, suaves] of Object.entries(SUAVES)) {
+      const L = letra(id);
+      const marcadas = [...L.wordsToRead, ...L.wordsToRecognize].filter(w => w.som).map(w => w.he);
+      expect(new Set(marcadas), id).toEqual(new Set(suaves));
+      for (const w of [...L.wordsToRead, ...L.wordsToRecognize].filter(x => x.som)) {
+        const S = SONS.find(x => x.id === w.som)!;
+        expect(S.palavras.map(p => p.he), `${id}: ${w.he}`).toContain(w.he);
+      }
+    }
+  });
+
+  it('a tela e os exercícios da letra não usam essas palavras', () => {
+    for (const [id, suaves] of Object.entries(SUAVES)) {
+      const L = semPalavrasDeSom(letra(id));
+      expect(L.wordsToRead.some(w => suaves.includes(w.he)), id).toBe(false);
+      const historia = allLetters().filter(l => l.order <= L.order).map(l => (l.id === L.id ? L : l));
+      for (let k = 0; k < 5; k++) {
+        const ex = [
+          ...buildLetterPractice(L, historia, { audioAvailable: false, seed: `p-${id}-${k}` }),
+          ...buildMiniTest(L, historia, { audioAvailable: false, seed: `m-${id}-${k}` })
+        ];
+        for (const s of suaves) expect(textoDe(ex), `${id}: ${s}`).not.toContain(s);
+      }
+    }
+  });
+
+  it('mas continuam no vocabulário do curso (missões, cenas, jogos, ler sem nikud)', () => {
+    expect(letra('bet').wordsToRead.map(w => w.he)).toContain('טוֹב');
+    expect(letra('pe').wordsToRead.map(w => w.he)).toContain('סֵפֶר');
+  });
+
+  it('a lição do Pe ganhou palavras com P para ler', () => {
+    const L = semPalavrasDeSom(letra('pe'));
+    expect(L.wordsToRead.map(w => w.he)).toEqual(expect.arrayContaining(['פֶּה', 'פָּרָה', 'פִּתָּה', 'מִשְׁפָּחָה']));
+  });
+});
+
+describe('Israel se escreve de um jeito só', () => {
+  it('"Yisraél" em todo o conteúdo', () => {
+    const tudo = ['letters.json', 'extras.json', 'sentences.json']
+      .map(f => readFileSync(new URL(`../content/${f}`, import.meta.url), 'utf8')).join('');
+    expect(tudo).not.toMatch(/yisrael|Yisrael\b/);
+    expect(tudo).toContain('Yisraél');
+  });
+});
+
+describe('o livro em PDF saiu do projeto', () => {
+  it('sem gerador, sem modelos, sem mapa de páginas', () => {
+    for (const f of ['scripts/build.js', 'templates', 'tools/build-pdf.mjs', 'tools/check-fit.mjs', 'tools/pack.mjs', 'data/page-map.json']) {
+      expect(existsSync(new URL(`../../${f}`, import.meta.url)), f).toBe(false);
+    }
+    expect(readFileSync(new URL('../content/letters/bet.json', import.meta.url), 'utf8')).not.toContain('workbookPages');
   });
 });

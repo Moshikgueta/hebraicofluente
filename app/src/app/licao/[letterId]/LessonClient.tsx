@@ -43,7 +43,7 @@ import {
   buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
-import { nomeDaLicao, ordemDeEnsino, rotaDaLicao } from '@/lib/sons';
+import { nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom } from '@/lib/sons';
 
 const STAGES = [
   { n: 1, label: 'Conhecer' },
@@ -53,7 +53,10 @@ const STAGES = [
   { n: 5, label: 'Fixação' }
 ] as const;
 
-export function LessonClient({ letter }: { letter: Letter }) {
+export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
+  /* Bet, Kaf e Pe: as palavras do outro som (טוֹב, מֶלֶךְ, סֵפֶר) ficam para a
+     lição de som logo depois - nem a tela nem os exercícios desta as usam. */
+  const letter = useMemo(() => semPalavrasDeSom(letraInteira), [letraInteira]);
   const p = useProgress();
   const router = useRouter();
   const [stage, setStage] = useState(1);
@@ -62,8 +65,8 @@ export function LessonClient({ letter }: { letter: Letter }) {
   const [quizRun, setQuizRun] = useState(0);
 
   const history = useMemo(
-    () => allLetters().filter(l => l.order <= letter.order),
-    [letter.order]
+    () => allLetters().filter(l => l.order <= letter.order).map(l => (l.id === letter.id ? letter : l)),
+    [letter]
   );
 
   /* Dois conjuntos diferentes: a etapa 4 pratica, a 5 mede. Reaproveitar um
