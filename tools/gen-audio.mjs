@@ -166,6 +166,21 @@ function main() {
             kind: 'palavra', wave: 3, where: 'módulo 7' });
     }
   }
+  /* As lições de som (26/09/2026): as sílabas sem ponto e as palavras de
+     cada uma. São lições do caminho principal, então entram na onda 2, com o
+     que o aluno lê - e não na 3, junto com o que ele só reconhece. */
+  for (const S of extras.sons.licoes) {
+    /* A letra com gerech já é clipe (módulo 7). A letra sem ponto sozinha,
+       não: uma consoante sem vogal não se diz - o som dela é a sílaba. */
+    for (const s of S.silabas) {
+      add({ he: s.he, translit: s.translit, gloss: `sílaba sem ponto - ${S.namePt}`,
+            kind: 'silaba', wave: 2, where: `lição ${S.namePt}` });
+    }
+    for (const w of S.palavras) {
+      add({ he: w.he, translit: w.translit, gloss: w.pt,
+            kind: 'palavra', wave: 2, where: `lição ${S.namePt}` });
+    }
+  }
   for (const s of realWorld.scenes) {
     add({ he: s.he, translit: s.translit, gloss: s.pt,
           kind: 'palavra', wave: 3, where: 'no mundo real' });

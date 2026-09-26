@@ -779,6 +779,72 @@ export function validate({ checkDist = true } = {}) {
     warn('V19', 'data/extras.json', 'ausente - os módulos 6 e 7 ficam sem conteúdo');
   }
 
+  /* ── V26 - as lições de som (Vet, Chaf, Fe, Tch, Dj, J) ────────────
+     Cada uma promete três coisas que dá para conferir: toda palavra TEM o
+     som da lição (a letra sem daguesh, a final, ou a letra com gerech); toda
+     palavra de Vet/Chaf/Fe só usa letras já ensinadas até ali (a regra V1 das
+     letras, na posição da lição); e o plano de aulas (modules.json) põe a
+     lição no número e no módulo que ela diz ter. */
+  if (extras?.sons) {
+    const DAGUESH = 'ּ';
+    const GERESH = '׳';
+    const plano = new Map();
+    for (const M of modules || []) for (const ls of M.lessons || []) if (ls.som) plano.set(ls.som, { M, ls });
+    const ids = new Set();
+    for (const S of extras.sons.licoes) {
+      const onde = `extras.sons/${S.id}`;
+      if (ids.has(S.id)) fail('V26', onde, 'id repetido');
+      ids.add(S.id);
+      const p = plano.get(S.id);
+      if (!p) fail('V26', onde, 'nenhuma lição de modules.json aponta para este som');
+      else if (p.ls.n !== S.licao || p.M.n !== S.modulo) {
+        fail('V26', onde, `diz ser a lição ${S.licao} do módulo ${S.modulo}; o plano diz ${p.ls.n} do módulo ${p.M.n}`);
+      }
+      if (S.tipo === 'daguesh') {
+        const L = letters.find(l => l.id === S.depoisDe);
+        if (!L) { fail('V26', onde, `depoisDe "${S.depoisDe}" não é uma letra`); continue; }
+        if (S.he !== L.letter) fail('V26', onde, `"${S.he}" não é a letra ${L.letter}`);
+        /* A letra sem ponto em algum lugar da palavra, ou a forma final. */
+        const temSom = he => [...he.normalize('NFC')].some((c, i, a) =>
+          (c === L.letter && !a.slice(i + 1).join('').match(/^[֑-ׇ]*ּ/)) || c === L.finalForm);
+        for (const s of S.silabas) {
+          /* O daguesh proibido é o da consoante; o do וּ (shuruk) é vogal. */
+          const consoante = s.he.normalize('NFC').match(/^.[\u0591-\u05C7]*/)[0];
+          if (consoante.includes(DAGUESH) || stripNikud(s.he).replace(/ו/g, '') !== L.letter) {
+            fail('V26', onde, `a sílaba "${s.he}" não é ${L.letter} sem ponto`);
+          }
+        }
+        for (const w of S.palavras) {
+          if (!hasNikud(w.he)) fail('V26', onde, `"${w.he}" sem nikud`);
+          if (!temSom(w.he)) fail('V26', onde, `"${w.he}" não tem ${L.letter} sem ponto`);
+          for (const c of stripNikud(w.he)) {
+            const o = orderOf.get(c);
+            if (o == null || o > L.order) fail('V26', onde, `"${w.he}" usa ${c}, que ainda não foi ensinada`);
+          }
+          record(w.he, w.translit, onde);
+        }
+      } else if (S.tipo === 'gerech') {
+        const L = letters.find(l => l.id === S.parId);
+        if (!L) { fail('V26', onde, `parId "${S.parId}" não é uma letra`); continue; }
+        if (S.he !== L.letter + GERESH) fail('V26', onde, `"${S.he}" deveria ser ${L.letter} + gerech U+05F3`);
+        const final = L.finalForm ? L.finalForm + GERESH : null;
+        for (const w of S.palavras) {
+          if (!w.he.includes(S.he) && !(final && w.he.includes(final))) {
+            fail('V26', onde, `"${w.he}" não contém ${S.he}`);
+          }
+        }
+      } else {
+        fail('V26', onde, `tipo "${S.tipo}" desconhecido`);
+      }
+      if (!S.palavras.length || !S.checagem?.length) fail('V26', onde, 'sem palavras ou sem checagem');
+      /* As alternativas da checagem saem como texto puro: um {{…}} ali
+         aparece para o aluno com as chaves. Só o enunciado passa pelo Prose. */
+      for (const q of S.checagem || []) {
+        for (const o of q.opcoes || []) if (o.includes('{{')) fail('V26', onde, `alternativa com {{…}}: "${o}"`);
+      }
+    }
+  }
+
 
   /* V3b - a word written with two DIFFERENT pointings is usually a typo in one
      of them. Not fatal (שָׁם/שֵׁם are a real pair), but worth surfacing.

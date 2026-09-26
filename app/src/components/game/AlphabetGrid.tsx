@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, type Letter } from '@/lib/content';
+import { nomeDaLicao, ordemDeEnsino } from '@/lib/sons';
 import {
   isLessonComplete, isLessonMastered, letraLiberada, LIBERA_MARK, porQueTrancada, STAGE_COUNT
 } from '@/lib/state/rules';
@@ -48,7 +49,8 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
      custaram; aqui só interessa a pertinência ao conjunto. */
   const aRevisar = new Set(p.weak);
 
-  const ordem = letters.map(l => l.id);
+  /* A ordem de ensino inclui as lições de som: Kaf abre depois de Vet. */
+  const ordem = ordemDeEnsino(letters, course.modules);
 
   const estadoDe = (L: Letter): EstadoLetra => {
     if (aRevisar.has(L.id)) return 'revisar';
@@ -85,7 +87,7 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
             compact={compact}
             atual={L.id === atual}
             porque={porQueTrancada(p.state, ordem, L.id)}
-            nomeAnterior={id => letters.find(x => x.id === id)?.namePt ?? id}
+            nomeAnterior={id => nomeDaLicao(id, letters, course.modules)}
           />
         ))}
       </div>

@@ -7,12 +7,12 @@
  * to trace and no new syllable table. What they do have is the plan's own three
  * lessons, so that is the shape:
  *
- *   module 6 - 16: the three letters without their dot
- *              17: the five final forms, together for the first time
- *              18: read without nikud
- *   module 7 - 19: the gerech
- *              20: read the loanwords
- *              21: the quiz that closes the alphabet
+ *   module 6 - 20: the three letters without their dot
+ *              21: the five final forms, together for the first time
+ *              22: read without nikud
+ *   module 7 - 26: the three modern sounds together, the loanwords and the
+ *              quiz that closes the alphabet (23-25 are Tch, Dj and J, each
+ *              a lesson of its own at /som/...)
  *
  * Progress is stored under the module id (`mod6`, `mod7`) in the same
  * `lessons` map as a letter, with three stages instead of five, and the closing
@@ -39,14 +39,16 @@ export type ExtraSlug = 'sem-o-ponto' | 'sons-modernos';
 
 const STAGES: Record<ExtraSlug, { n: number; label: string; lesson: number }[]> = {
   'sem-o-ponto': [
-    { n: 1, label: 'Sem o ponto', lesson: 16 },
-    { n: 2, label: 'As finais', lesson: 17 },
-    { n: 3, label: 'Sem nikud', lesson: 18 }
+    { n: 1, label: 'Sem o ponto', lesson: 20 },
+    { n: 2, label: 'As finais', lesson: 21 },
+    { n: 3, label: 'Sem nikud', lesson: 22 }
   ],
   'sons-modernos': [
-    { n: 1, label: 'O gerech', lesson: 19 },
-    { n: 2, label: 'Ler', lesson: 20 },
-    { n: 3, label: 'Fecho', lesson: 21 }
+    /* Tch, Dj e J são as lições 23 a 25, cada uma na sua página (/som/...).
+       Esta é a 26: os três juntos, e o fecho do alfabeto. */
+    { n: 1, label: 'O gerech', lesson: 26 },
+    { n: 2, label: 'Ler', lesson: 26 },
+    { n: 3, label: 'Fecho', lesson: 26 }
   ]
 };
 

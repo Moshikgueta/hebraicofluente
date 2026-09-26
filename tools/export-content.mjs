@@ -415,7 +415,36 @@ function main() {
         audioId: audioIdFor(g.he),
         words: g.words.map(w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) }))
       }))
-    }
+    },
+    /* ── as lições de som (Vet, Chaf, Fe, Tch, Dj, J) ──────────────────
+       O par de cada som - o lado com daguesh, ou a letra sem o gerech - sai
+       de letters.json e do quadro do daguesh, e não é reescrito na fonte: o
+       contraste que a lição mostra é, letra por letra, o que a lição da
+       letra ensinou. */
+    sons: extras.sons.licoes.map(S => {
+      const parId = S.tipo === 'daguesh' ? S.depoisDe : S.parId;
+      const L = letters.find(l => l.id === parId);
+      if (!L) throw new Error(`extras.sons: "${S.id}" aponta para a letra "${parId}", que não existe`);
+      const D = extras.dagesh.letters.find(d => d.id === parId);
+      const parPalavras = S.tipo === 'daguesh' ? (D?.hardWords ?? []) : L.wordsToRead.slice(0, 4);
+      return {
+        ...S,
+        he: NFC(S.he), parHe: NFC(S.parHe),
+        finalHe: S.finalHe ? NFC(S.finalHe) : null,
+        parId,
+        /* O som sozinho: a letra com gerech, ou a primeira sílaba sem ponto. */
+        audioId: audioIdFor(S.tipo === 'gerech' ? S.he : S.silabas[0].he),
+        silabas: S.silabas.map(withAudio),
+        /* As mesmas vogais, com o ponto: o par exato de cada sílaba. */
+        parSilabas: S.tipo === 'daguesh'
+          ? L.syllables.slice(0, S.silabas.length)
+              .map(s => ({ he: NFC(s.he), translit: s.translit, audioId: audioIdFor(s.he) }))
+          : [],
+        palavras: S.palavras.map(withAudio),
+        parPalavras: parPalavras
+          .map(w => ({ he: NFC(w.he), translit: w.translit, pt: w.pt, audioId: audioIdFor(w.he) }))
+      };
+    })
   }, null, 2) + '\n');
 
   /* ── as frases ──────────────────────────────────────────────────────

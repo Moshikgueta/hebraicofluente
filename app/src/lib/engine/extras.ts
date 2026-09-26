@@ -49,6 +49,37 @@ export type UnpointedWord = {
   bare: string; pointed: string; translit: string; pt: string; audioId: string;
 };
 
+/** Uma lição de som: Vet, Chaf, Fe (a letra sem daguesh) ou Tch, Dj, J (a
+ *  letra com gerech). Ver data/extras.json → `sons` e lib/sons.ts. */
+export type SomLicao = {
+  id: string;
+  tipo: 'daguesh' | 'gerech';
+  modulo: number;
+  licao: number;
+  /** A lição que vem logo antes no caminho: a letra (bet) ou outro som (tch). */
+  depoisDe: string | null;
+  namePt: string;
+  he: string;
+  som: string;
+  comoPt: string;
+  parHe: string;
+  parNomePt: string;
+  parSom: string;
+  parId: string;
+  finalHe: string | null;
+  introPt: string;
+  articulacao: import('@/lib/content-publico').Articulacao;
+  regraPt: string;
+  irmaoPt: string;
+  erro: { wrong: string; right: string; why: string };
+  audioId: string;
+  silabas: { he: string; translit: string; audioId: string }[];
+  parSilabas: { he: string; translit: string; audioId: string }[];
+  palavras: { he: string; translit: string; pt: string; audioId: string }[];
+  parPalavras: { he: string; translit: string; pt: string; audioId: string }[];
+  checagem: import('@/lib/content-publico').ItemCompreensao[];
+};
+
 export type Extras = {
   dagesh: { titlePt: string; rulePt: string; warningPt: string; letters: DageshLetter[] };
   finals: FinalForm[];
@@ -67,6 +98,7 @@ export type Extras = {
     titlePt: string; signNamePt: string; signHe: string;
     introPt: string; signNotePt: string; letters: GerechLetter[];
   };
+  sons: SomLicao[];
 };
 
 /* The extra kinds, added to the shared Exercise union via the same shape the

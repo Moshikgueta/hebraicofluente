@@ -118,12 +118,13 @@ type Ctx = {
 const StoreContext = createContext<Ctx | null>(null);
 
 export function ProgressProvider({
-  children, totalLetters, extraModuleIds = []
-}: { children: ReactNode; totalLetters: number; extraModuleIds?: string[] }) {
+  children, totalLetters, extraModuleIds = [], somIds = []
+}: { children: ReactNode; totalLetters: number; extraModuleIds?: string[]; somIds?: string[] }) {
   const store = useMemo(createStore, []);
   /* The caller passes a fresh array literal on every render; keying the memo on
      its contents rather than its identity keeps the context value stable. */
   const extraKey = extraModuleIds.join(',');
+  const somKey = somIds.join(',');
   const [state, setState] = useState<LearnerState>(EMPTY_STATE);
   const [ready, setReady] = useState(false);
   const [persistent, setPersistent] = useState(true);
@@ -408,7 +409,8 @@ export function ProgressProvider({
       state, ready, persistent, sincronizado, day,
       streak: displayStreak(state, day),
       mastered: lettersMastered(state),
-      progress: courseProgress(state, totalLetters, extraKey ? extraKey.split(',') : []),
+      progress: courseProgress(state, totalLetters, extraKey ? extraKey.split(',') : [],
+        somKey ? somKey.split(',') : []),
       dueCount: dueItems(state, day).length,
       weak: weakLetters(state, day),
       goalUnits: state.days[day]?.units ?? 0,
@@ -421,7 +423,7 @@ export function ProgressProvider({
       remember, reset, setNomeHebraico
     };
   }, [
-    state, ready, persistent, sincronizado, day, totalLetters, extraKey, pending,
+    state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
     setNomeHebraico

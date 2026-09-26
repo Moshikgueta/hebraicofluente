@@ -39,7 +39,7 @@ export const PAGAS = [
   '/mapa', '/desafio-final', '/certificado', '/concluido', '/conquistas',
   '/historia', '/inicio', '/onboarding', '/meu-hebraico',
   '/vocabulario', '/meu-nome', '/teclado-hebraico',
-  '/audio', '/stroke-order'
+  '/audio', '/stroke-order', '/som'
 ] as const;
 
 /**

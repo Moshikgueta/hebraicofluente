@@ -14,10 +14,17 @@ import type { CourseModule, Letter } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
 import { missaoDoModulo, textoDoModulo } from '@/lib/content';
 import { missaoId } from '@/lib/engine/missao';
+import { idDoSom } from '@/lib/sons';
 
 export function ModuleClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
   const p = useProgress();
+  /* A primeira lição por fazer, na ordem do plano: letra ou som. */
+  const pendente = mod.lessons.flatMap(ls =>
+    ls.som ? [{ href: `/som/${ls.som}`, id: idDoSom(ls.som), rotulo: `o som ${ls.nomePt ?? ls.som}` }]
+      : (ls.letters ?? []).map(id => ({ href: `/licao/${id}`, id, rotulo: `a letra ${letters.find(l => l.id === id)?.namePt ?? id}` }))
+  ).find(i => !isLessonComplete(p.state, i.id));
   const first = letters.find(l => !isLessonComplete(p.state, l.id)) ?? letters[0];
+  const sons = mod.lessons.filter(ls => ls.som);
   const missao = missaoDoModulo(mod.n);
   const missaoFeita = !!p.state.firsts[missaoId(mod.n)];
   /* Só aparece depois de revisado: ver lib/engine/textos.ts. */
@@ -55,6 +62,10 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
               <span className="text-[15px] text-ink-body">
                 {ls.kind === 'practice'
                   ? 'Sem letra nova - jogos, correção e leitura em voz alta.'
+                  : ls.som
+                    ? <Link href={`/som/${ls.som}`} className="underline underline-offset-2 hover:text-ink">
+                        {ls.nomePt}: <Prose text={ls.topicPt ?? ''} />
+                      </Link>
                   : ls.letters?.length
                     ? ls.letters.map(id => letters.find(l => l.id === id))
                         .filter((l): l is Letter => !!l)
@@ -133,7 +144,32 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         </Card>
       )}
 
-      {first ? (
+      {sons.length > 0 && (
+        <Card className="p-6 grid gap-3">
+          <h2 className="font-display text-[18px] font-semibold">Os sons</h2>
+          <ul className="grid gap-1">
+            {sons.map(ls => {
+              const feito = isLessonComplete(p.state, idDoSom(ls.som!));
+              return (
+                <li key={ls.som}>
+                  <Link href={`/som/${ls.som}`}
+                        className="flex items-center gap-4 rounded-[var(--r-md)] p-2.5 hover:bg-surface-2">
+                    <He size="lg" dim={!feito}>{ls.he ?? ''}</He>
+                    <span className="font-ui text-[15px] text-ink">Lição {ls.n}. {ls.nomePt}</span>
+                    <span aria-hidden className="ml-auto text-ink-muted">{feito ? '✓' : '→'}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </Card>
+      )}
+
+      {pendente ? (
+        <LinkButton href={pendente.href} size="lg" full>
+          {first && pendente.id === first.id ? `Começar pela letra ${first.namePt}` : `Continuar com ${pendente.rotulo}`}
+        </LinkButton>
+      ) : first ? (
         <LinkButton href={`/licao/${first.id}`} size="lg" full>
           Começar pela letra {first.namePt}
         </LinkButton>

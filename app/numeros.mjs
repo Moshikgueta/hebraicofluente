@@ -32,6 +32,17 @@ const TOTAL = {
   modulos: curso.modules.length
 };
 
+/* As contagens de UM módulo, que a vitrine mostra de propósito ("Módulo 05 ·
+   7 lições"). Uma delas pode coincidir com o total de outra unidade - desde
+   26/09/2026 o módulo 5 tem 7 lições, e o curso tem 7 módulos - sem ser o
+   defeito que a segunda regra procura. O defeito ("22 lições") nunca é a
+   contagem de um módulo. */
+const PARCIAIS = {
+  licoes: new Set(curso.modules.map(m => m.lessons.length)),
+  letras: new Set(curso.modules.map(m => curso.letters.filter(l => l.module === m.n).length)),
+  modulos: new Set()
+};
+
 const UNIDADE = {
   'lições': 'licoes', 'lição': 'licoes',
   'letras': 'letras', 'letra': 'letras',
@@ -55,6 +66,7 @@ function julgar(n, unidade) {
   const total = TOTAL[unidade];
   if (n > total) return `promete mais do que existe (${total})`;
   if (n === total) return null;
+  if (PARCIAIS[unidade].has(n)) return null;
   for (const [outra, valor] of Object.entries(TOTAL)) {
     if (outra !== unidade && n === valor) {
       return `é o total de ${outra} (${valor}), não de ${unidade} (${total})`;
