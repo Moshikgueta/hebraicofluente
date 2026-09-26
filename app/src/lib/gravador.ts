@@ -173,3 +173,20 @@ export function barras(amostras: Float32Array, n = 80): number[] {
 /** Uma gravação curta demais é quase sempre um toque sem querer. */
 export const MAX_SEGUNDOS = 15;
 export const MIN_MS = 250;
+
+/**
+ * As barras do TRECHO da voz, tantas quanto a duração pede (`porSegundo`).
+ * É o que põe duas gravações na mesma escala de tempo: a sílaba dita em
+ * 0,8 s sai com o dobro de barras da dita em 0,4 s, e desenhadas lado a lado
+ * a diferença de duração aparece (components/learn/CompararPronuncia.tsx).
+ */
+export function barrasDoTrecho(amostras: Float32Array, taxa: number, corte: Corte, porSegundo = 40): number[] {
+  const de = Math.floor((corte.inicio / 1000) * taxa);
+  const ate = Math.min(amostras.length, Math.ceil((corte.fim / 1000) * taxa));
+  const trecho = amostras.subarray(de, ate);
+  const n = Math.max(4, Math.round(((corte.fim - corte.inicio) / 1000) * porSegundo));
+  const passo = Math.max(1, Math.floor(trecho.length / n));
+  const brutas = Array.from({ length: n }, (_, i) => pico(trecho.subarray(i * passo, (i + 1) * passo)));
+  const m = Math.max(...brutas, 1e-6);
+  return brutas.map(x => x / m);
+}

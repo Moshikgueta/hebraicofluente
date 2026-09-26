@@ -291,3 +291,25 @@ CREATE TABLE IF NOT EXISTS gravacoes (
   autor         TEXT    NOT NULL,
   atualizado_em INTEGER NOT NULL
 );
+
+-- ── relatos de erro (o botão "Achei um erro" dos exercícios) ─────────────
+-- Uma linha por relato. `foto` é o exercício como o aluno o viu (JSON:
+-- enunciado, hebraico, alternativas, a certa e a escolhida) - os exercícios
+-- são sorteados, e sem a foto o relato não aponta para nada.
+--
+-- SEM conta, de propósito: o relato exige sessão, mas não guarda quem mandou.
+-- Não é dado pessoal, não trava a exclusão de conta e não entra na limpeza
+-- das contas de teste. Ver worker/src/api/relatos.js.
+CREATE TABLE IF NOT EXISTS relatos (
+  id           INTEGER PRIMARY KEY,
+  exercicio    TEXT    NOT NULL,
+  tipo         TEXT    NOT NULL DEFAULT '',
+  letra        TEXT    NOT NULL DEFAULT '',
+  rota         TEXT    NOT NULL DEFAULT '',
+  motivo       TEXT    NOT NULL,              -- resposta | hebraico | audio | confuso | outro
+  comentario   TEXT    NOT NULL DEFAULT '',
+  foto         TEXT    NOT NULL,
+  criado_em    INTEGER NOT NULL,
+  resolvido_em INTEGER
+);
+CREATE INDEX IF NOT EXISTS relatos_abertos ON relatos (resolvido_em, criado_em);
