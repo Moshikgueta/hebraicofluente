@@ -14,7 +14,7 @@ import { allLetters, sentencesUpTo, textosDoCurso } from '@/lib/content';
 import { contextFor, readingUsedBy } from '@/lib/engine/exercises';
 import { exListenMeaning, exListenSentence, NEEDS_AUDIO, BY_SKILL } from '@/lib/engine/generators';
 import { rng } from '@/lib/engine/rng';
-import { aplicarManifesto } from '@/lib/audio-registro';
+import { aplicarManifesto, temClipe } from '@/lib/audio-registro';
 import { clusters } from '@/lib/hebrew';
 
 type Clip = { he: string; file: string; wave: number; kind: string; where: string[] };
@@ -58,8 +58,12 @@ describe('a frase ouvida', () => {
   });
 
   it('não existe sem gravação', () => {
-    expect(exListenSentence(ultima, ctx, rng('a'), 0)).toBeNull();
-    expect(exListenMeaning(ultima, ctx, rng('a'), 0)).toBeNull();
+    /* Só as frases ainda sem gravação: desde 26/09/2026 "בֹּקֶר טוֹב" tem
+       clipe (gravado no grupo "no mundo real"), e a frase ouvida existe
+       justamente quando há o que ouvir. */
+    const semAudio = { ...ctx, sentences: ctx.sentences.filter(f => !temClipe(f.audioId)) };
+    expect(exListenSentence(ultima, semAudio, rng('a'), 0)).toBeNull();
+    expect(exListenMeaning(ultima, semAudio, rng('a'), 0)).toBeNull();
   });
 
   it('com a frase gravada: ouvir e achar a frase escrita, entre frases que ele lê', () => {
