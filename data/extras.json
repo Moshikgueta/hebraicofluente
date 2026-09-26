@@ -117,7 +117,7 @@
         "id": "rua",
         "titlePt": "As que resolvem uma rua em Israel",
         "notePt": "Mais longas, e nenhuma delas vai aparecer com pontinhos onde você vai encontrá-las: numa placa, num ônibus, numa conversa escrita.",
-        "words": ["תּוֹדָה", "סְלִיחָה", "בְּבַקָּשָׁה", "רְחוֹב", "אוֹטוֹבּוּס", "עִבְרִית", "עַכְשָׁו", "טֶלֶפוֹן"]
+        "words": ["תּוֹדָה", "סְלִיחָה", "בְּבַקָּשָׁה", "רְחוֹב", "אוֹטוֹבּוּס", "עִבְרִית", "עַכְשָׁיו", "טֶלֶפוֹן"]
       }
     ],
     "ambiguous": {
@@ -495,7 +495,7 @@
             "pt": "abençoado"
           },
           {
-            "he": "עַכְשָׁו",
+            "he": "עַכְשָׁיו",
             "translit": "achshav",
             "pt": "agora"
           }

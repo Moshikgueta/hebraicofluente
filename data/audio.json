@@ -1265,17 +1265,17 @@
       "file": "he-f09a16c7.mp3"
     },
     {
-      "num": 98,
+      "num": 411,
       "seq": 94,
-      "he": "חֲ",
-      "translit": "cha",
-      "gloss": "sílaba - guturais não aceitam sheva - usam o hataf, um A ultrabreve",
+      "he": "חְ",
+      "translit": "ch",
+      "gloss": "sílaba - só a consoante, sem vogal: o raspado sozinho",
       "kind": "silaba",
       "wave": 1,
       "where": [
         "letra 14"
       ],
-      "file": "he-4013cc54.mp3"
+      "file": "he-83513b46.mp3"
     },
     {
       "num": 99,
@@ -1723,8 +1723,8 @@
       "num": 134,
       "seq": 129,
       "he": "בֵּית",
-      "translit": "Bet / Vet",
-      "gloss": "nome da letra Bet / Vet",
+      "translit": "Bet",
+      "gloss": "nome da letra Bet",
       "kind": "nome",
       "wave": 1,
       "where": [
@@ -1814,8 +1814,8 @@
       "num": 141,
       "seq": 136,
       "he": "כַּף",
-      "translit": "Kaf / Chaf",
-      "gloss": "nome da letra Kaf / Chaf",
+      "translit": "Kaf",
+      "gloss": "nome da letra Kaf",
       "kind": "nome",
       "wave": 1,
       "where": [
@@ -1905,8 +1905,8 @@
       "num": 148,
       "seq": 143,
       "he": "פֵּא",
-      "translit": "Pe / Fe",
-      "gloss": "nome da letra Pe / Fe",
+      "translit": "Pe",
+      "gloss": "nome da letra Pe",
       "kind": "nome",
       "wave": 1,
       "where": [
@@ -3599,9 +3599,9 @@
       "file": "he-63795cfd.mp3"
     },
     {
-      "num": 287,
+      "num": 412,
       "seq": 285,
-      "he": "עַכְשָׁו",
+      "he": "עַכְשָׁיו",
       "translit": "achshav",
       "gloss": "agora",
       "kind": "palavra",
@@ -3611,7 +3611,7 @@
         "módulo 6",
         "lição Chaf"
       ],
-      "file": "he-fd9903d6.mp3"
+      "file": "he-bfb40c4f.mp3"
     },
     {
       "num": 305,

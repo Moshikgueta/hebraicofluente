@@ -2006,7 +2006,7 @@
         "use": "Substantivo"
       },
       {
-        "he": "עַכְשָׁו",
+        "he": "עַכְשָׁיו",
         "translit": "achshav",
         "pt": "agora",
         "use": "Advérbio essencial"
@@ -2343,9 +2343,9 @@
       },
       {
         "vowel": "sheva",
-        "he": "חֲ",
-        "translit": "cha",
-        "ptApprox": "guturais não aceitam sheva - usam o hataf, um A ultrabreve"
+        "he": "חְ",
+        "translit": "ch",
+        "ptApprox": "só a consoante, sem vogal: o raspado sozinho"
       }
     ],
     "wordsToRecognize": [
@@ -3250,7 +3250,7 @@
     "letter": "ב",
     "finalForm": null,
     "nameHe": "בֵּית",
-    "namePt": "Bet / Vet",
+    "namePt": "Bet",
     "translit": "b",
     "sound": "/b/ ou /v/",
     "variantes": [
@@ -3455,7 +3455,7 @@
     "letter": "כ",
     "finalForm": "ך",
     "nameHe": "כַּף",
-    "namePt": "Kaf / Chaf",
+    "namePt": "Kaf",
     "translit": "k",
     "sound": "/k/ ou /χ/",
     "variantes": [
@@ -3671,7 +3671,7 @@
     "letter": "פ",
     "finalForm": "ף",
     "nameHe": "פֵּא",
-    "namePt": "Pe / Fe",
+    "namePt": "Pe",
     "translit": "p",
     "sound": "/p/ ou /f/",
     "variantes": [

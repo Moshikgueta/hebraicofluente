@@ -118,7 +118,7 @@ describe('a trava', () => {
 
   it('o nome e a rota de cada lição do caminho', () => {
     expect(nomeDaLicao('som-vet', allLetters(), course.modules)).toBe('Vet');
-    expect(nomeDaLicao('kaf', allLetters(), course.modules)).toBe('Kaf / Chaf');
+    expect(nomeDaLicao('kaf', allLetters(), course.modules)).toBe('Kaf');
     expect(rotaDaLicao('som-chaf')).toBe('/som/chaf');
     expect(rotaDaLicao('pe')).toBe('/licao/pe');
   });
@@ -302,5 +302,27 @@ describe('o livro em PDF saiu do projeto', () => {
       expect(existsSync(new URL(`../../${f}`, import.meta.url)), f).toBe(false);
     }
     expect(readFileSync(new URL('../content/letters/bet.json', import.meta.url), 'utf8')).not.toContain('workbookPages');
+  });
+});
+
+describe('as correções da revisão de nativo (26/09/2026)', () => {
+  const letra = (id: string) => allLetters().find(l => l.id === id)!;
+
+  it('o nome da letra é o do som com ponto: Bet, Kaf, Pe', () => {
+    expect(['bet', 'kaf', 'pe'].map(id => letra(id).namePt)).toEqual(['Bet', 'Kaf', 'Pe']);
+  });
+
+  it('a última sílaba do Het é a consoante muda, חְ, e não o hataf', () => {
+    const s = letra('het').syllables.at(-1)!;
+    expect(s.he).toBe('חְ');
+    expect(s.translit).toBe('ch');
+  });
+
+  it('"agora" se escreve עַכְשָׁיו, e sem nikud fica עכשיו', () => {
+    const tudo = ['letters.json', 'extras.json']
+      .map(f => readFileSync(new URL(`../content/${f}`, import.meta.url), 'utf8')).join('');
+    expect(tudo).not.toContain('עַכְשָׁו');
+    expect(tudo).toContain('עַכְשָׁיו');
+    expect(extras().unpointed.words.map(w => w.bare)).toContain('עכשיו');
   });
 });
