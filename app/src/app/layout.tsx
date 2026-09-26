@@ -134,6 +134,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <ProgressProvider
               totalLetters={course.totalLetters}
               extraModuleIds={course.modules.filter(m => !m.letterIds.length).map(m => m.id)}
+              somIds={course.modules.flatMap(m => m.lessons.filter(l => l.som).map(l => `som-${l.som}`))}
             >
               <Chrome>
                 <div id="conteudo">{children}</div>

@@ -41,7 +41,8 @@
       "lessons": [
         { "n": 4, "letters": ["gimel", "dalet", "shin"] },
         { "n": 5, "letters": ["lamed", "resh"] },
-        { "n": 6, "kind": "practice" }
+        { "n": 6, "som": "sin", "he": "שׂ", "parHe": "שׁ", "nomePt": "Sin", "topicPt": "{{שׂ}} com o ponto à esquerda - o som S" },
+        { "n": 7, "kind": "practice" }
       ],
       "introPt": "Nenhum destes cinco sons é novo para um brasileiro: G de \"gato\", D de \"dado\", X de \"xícara\", L de \"lua\", R de \"caro\". O que é novo é o desenho - e, no caso do {{ש}}, um ponto que decide tudo: com o ponto à direita ele é {{שׁ}} (sh), com o ponto à esquerda é {{שׂ}} (s).",
       "goalsPt": [
@@ -59,9 +60,9 @@
       "subPt": "e a palavra que todo mundo conhece",
       "letters": ["vav", "zayin", "het", "tet"],
       "lessons": [
-        { "n": 7, "letters": ["vav", "zayin"] },
-        { "n": 8, "letters": ["het", "tet"] },
-        { "n": 9, "kind": "practice" }
+        { "n": 8, "letters": ["vav", "zayin"] },
+        { "n": 9, "letters": ["het", "tet"] },
+        { "n": 10, "kind": "practice" }
       ],
       "introPt": "O {{ו}} é a letra mais versátil do alfabeto: sozinha vale V, com um ponto em cima vira o som O, com um ponto no meio vira U. É por causa dela que este módulo abre a porta para metade do vocabulário básico. O {{ח}} traz o primeiro som que o português não tem - o raspado da garganta, como o J espanhol de \"Juan\".",
       "goalsPt": [
@@ -79,9 +80,9 @@
       "subPt": "as quatro letras de placa e cardápio",
       "letters": ["samekh", "ayin", "tsadi", "qof"],
       "lessons": [
-        { "n": 10, "letters": ["samekh", "ayin"] },
-        { "n": 11, "letters": ["tsadi", "qof"] },
-        { "n": 12, "kind": "practice" }
+        { "n": 11, "letters": ["samekh", "ayin"] },
+        { "n": 12, "letters": ["tsadi", "qof"] },
+        { "n": 13, "kind": "practice" }
       ],
       "introPt": "Quatro letras que aparecem em quase toda placa de rua em Israel. Duas delas exigem atenção redobrada: o {{ע}} é mudo no hebraico moderno - só segura a vogal -, e o {{ק}} soa exatamente igual ao {{כּ}}, que você ainda vai conhecer. Ouvir não basta para escolher entre os dois: é preciso saber a palavra.",
       "goalsPt": [
@@ -99,9 +100,13 @@
       "subPt": "{{בּ}} · {{כּ}} · {{פּ}}",
       "letters": ["bet", "kaf", "pe"],
       "lessons": [
-        { "n": 13, "letters": ["bet"] },
-        { "n": 14, "letters": ["kaf", "pe"] },
-        { "n": 15, "kind": "practice" }
+        { "n": 14, "letters": ["bet"] },
+        { "n": 15, "som": "vet", "he": "ב", "parHe": "בּ", "nomePt": "Vet", "topicPt": "{{ב}} sem o ponto - o som V" },
+        { "n": 16, "letters": ["kaf"] },
+        { "n": 17, "som": "chaf", "he": "כ", "parHe": "כּ", "nomePt": "Chaf", "topicPt": "{{כ}} sem o ponto e a final {{ך}} - o som raspado" },
+        { "n": 18, "letters": ["pe"] },
+        { "n": 19, "som": "fe", "he": "פ", "parHe": "פּ", "nomePt": "Fe", "topicPt": "{{פ}} sem o ponto e a final {{ף}} - o som F" },
+        { "n": 20, "kind": "practice" }
       ],
       "introPt": "Aqui o alfabeto se fecha, e com a sua regra mais elegante: três letras mudam de som conforme levem ou não um ponto no meio - o daguesh. Com ponto são oclusivas, {{בּ}} b, {{כּ}} k, {{פּ}} p; sem ponto são fricativas, {{ב}} v, {{כ}} ch, {{פ}} f. O guia ensina as formas COM ponto primeiro, porque são as que o brasileiro reconhece nas palavras emprestadas.",
       "goalsPt": [
@@ -120,9 +125,9 @@
       "subPt": "as formas suaves e as cinco finais",
       "letters": [],
       "lessons": [
-        { "n": 16, "topicPt": "{{כ}} suave e a final {{ך}}" },
-        { "n": 17, "topicPt": "{{פ}} suave e a final {{ף}}" },
-        { "n": 18, "kind": "practice" }
+        { "n": 21, "topicPt": "As três letras de dois sons, juntas: {{ב}}, {{כ}} e {{פ}} com e sem o ponto" },
+        { "n": 22, "topicPt": "As cinco formas finais, juntas pela primeira vez" },
+        { "n": 23, "kind": "practice" }
       ],
       "introPt": "Nenhuma letra nova neste módulo - e ainda assim ele é o que separa quem decora de quem lê. Você já viu as três letras do daguesh com o ponto; agora vai vê-las sem ele, no meio e no fim da palavra, onde o ponto quase nunca aparece. É aqui também que as cinco formas finais deixam de ser curiosidade e viram hábito de leitura.",
       "goalsPt": [
@@ -141,9 +146,10 @@
       "subPt": "{{צ׳}} tch · {{ג׳}} dj · {{ז׳}} j",
       "letters": [],
       "lessons": [
-        { "n": 19, "topicPt": "{{צ׳}} - o som de \"tchau\"" },
-        { "n": 20, "topicPt": "{{ג׳}} e {{ז׳}} - \"gee\" e \"j\"" },
-        { "n": 21, "kind": "practice" }
+        { "n": 24, "som": "tch", "he": "צ׳", "parHe": "צ", "nomePt": "Tch", "topicPt": "{{צ׳}} - o TCH de \"tchau\"" },
+        { "n": 25, "som": "dj", "he": "ג׳", "parHe": "ג", "nomePt": "Dj", "topicPt": "{{ג׳}} - o DJ de \"Djavan\"" },
+        { "n": 26, "som": "j", "he": "ז׳", "parHe": "ז", "nomePt": "J", "topicPt": "{{ז׳}} - o J de \"jarro\"" },
+        { "n": 27, "kind": "practice" }
       ],
       "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"gelo\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
       "goalsPt": [

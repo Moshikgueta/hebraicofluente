@@ -28,6 +28,35 @@ import { Prose } from '@/components/learn/Blocks';
 import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
 import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
 import { flagship } from '@/lib/catalog';
+import { idDoSom } from '@/lib/sons';
+
+/* Uma lição do caminho dentro do módulo: uma letra ou um som (Vet, Tch...). */
+type Item = { id: string; he: string; nome: string; href: string };
+
+function itensDoModulo(m: CourseModule): Item[] {
+  /* Bet, Kaf, Pe e Shin têm, no mesmo módulo, a lição do outro som: o
+     cartão da letra mostra o lado dela (בּ "Bet", שׁ "Shin") e o do som
+     mostra o outro (ב "Vet", שׂ "Sin"). Sem isso eram dois cartões com o
+     mesmo desenho. Os sons modernos ficam fora: a letra sem gerech está em
+     outro módulo. */
+  const ladoDe = (letra: string) =>
+    m.lessons.find(l => l.som && l.parHe && [...l.parHe][0] === letra)?.parHe;
+  return m.lessons.flatMap(ls => {
+    if (ls.som) {
+      return [{ id: idDoSom(ls.som), he: ls.he ?? '', nome: ls.nomePt ?? ls.som, href: `/som/${ls.som}` }];
+    }
+    return (ls.letters ?? []).map(getLetter).filter(l => !!l)
+      .map(L => {
+        const lado = ladoDe(L!.letter);
+        return {
+          id: L!.id,
+          he: lado ?? L!.letter,
+          nome: lado ? L!.namePt.split('/')[0]!.trim() : L!.namePt,
+          href: `/licao/${L!.id}`
+        };
+      });
+  });
+}
 
 type Estado = 'feito' | 'agora' | 'adiante';
 
@@ -87,8 +116,9 @@ export function CourseMapClient() {
 }
 
 function moduloCompleto(state: Parameters<typeof isLessonComplete>[0], m: CourseModule): boolean {
-  if (m.letterIds.length === 0) return (state.lessons[m.id]?.stagesDone.length ?? 0) >= 3;
-  const letras = m.letterIds.every(id => isLessonComplete(state, id));
+  const itens = itensDoModulo(m).every(i => isLessonComplete(state, i.id));
+  if (m.letterIds.length === 0) return itens && (state.lessons[m.id]?.stagesDone.length ?? 0) >= 3;
+  const letras = itens;
   const cp = m.checkpoint ? !!state.checkpoints[m.checkpoint.id]?.passedAt : true;
   return letras && cp;
 }
@@ -97,15 +127,15 @@ function Trecho({ module: m, estado, ultimo }: {
   module: CourseModule; estado: Estado; ultimo: boolean;
 }) {
   const p = useProgress();
-  const letras = m.letterIds.map(getLetter).filter(l => !!l);
-  const feitas = letras.filter(l => isLessonComplete(p.state, l!.id)).length;
-  const extra = letras.length === 0;
-  const etapas = extra ? Math.min(3, p.state.lessons[m.id]?.stagesDone.length ?? 0) : feitas;
-  const total = extra ? 3 : letras.length;
+  const itens = itensDoModulo(m);
+  const feitas = itens.filter(i => isLessonComplete(p.state, i.id)).length;
+  const extra = m.letterIds.length === 0;
+  /* O módulo 7 tem as três lições de som E o fecho de três etapas. */
+  const etapas = feitas + (extra ? Math.min(3, p.state.lessons[m.id]?.stagesDone.length ?? 0) : 0);
+  const total = itens.length + (extra ? 3 : 0);
   const pct = total ? Math.round((etapas / total) * 100) : 0;
-  const destino = extra
-    ? `/modulo/${m.n}`
-    : `/licao/${m.letterIds.find(id => !isLessonComplete(p.state, id)) ?? m.letterIds[0]}`;
+  const pendente = itens.find(i => !isLessonComplete(p.state, i.id));
+  const destino = pendente ? pendente.href : extra ? `/modulo/${m.n}` : itens[0]?.href ?? `/modulo/${m.n}`;
 
   const TAG = {
     feito: { texto: 'Concluído', cor: 'text-[var(--teal-ink)]' },
@@ -195,15 +225,15 @@ function Trecho({ module: m, estado, ultimo }: {
             </Link>
           </p>
 
-          {extra ? (
+          {itens.length === 0 ? (
             <p className="font-ui text-[14.5px] leading-[1.5] text-ink-muted">
               <Prose text={m.subPt} />
             </p>
           ) : (
             <div className="flex flex-wrap gap-2">
-              {letras.map(L => {
-                const feita = isLessonComplete(p.state, L!.id);
-                const etapasFeitas = p.state.lessons[L!.id]?.stagesDone.length ?? 0;
+              {itens.map(L => {
+                const feita = isLessonComplete(p.state, L.id);
+                const etapasFeitas = p.state.lessons[L.id]?.stagesDone.length ?? 0;
                 const comecada = etapasFeitas > 0 && !feita;
                 const estadoDaLetra = feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas` : '';
                 const aberta = feita || comecada;
@@ -216,24 +246,24 @@ function Trecho({ module: m, estado, ultimo }: {
                   <>
                     <He size="inline" tone={feita ? 'teal' : estado === 'adiante' ? 'muted' : 'navy'}
                         className="!text-[23px] !leading-[1.1]">
-                      {L!.letter}
+                      {L.he}
                     </He>
                     <span className={`font-ui text-[9.5px] tracking-[.04em]
                       ${feita ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
-                      {L!.namePt}
+                      {L.nome}
                     </span>
                   </>
                 );
                 /* Só a letra que já foi aberta ganha link próprio: a que
                    ainda vem pela frente é alcançada pelo cartão, na ordem. */
                 return aberta ? (
-                  <Link key={L!.id} href={`/licao/${L!.id}`} className={classe}
-                        title={`${L!.namePt}${estadoDaLetra}`}
-                        aria-label={`Abrir a lição de ${L!.namePt}${estadoDaLetra}`}>
+                  <Link key={L.id} href={L.href} className={classe}
+                        title={`${L.nome}${estadoDaLetra}`}
+                        aria-label={`Abrir a lição de ${L.nome}${estadoDaLetra}`}>
                     {miolo}
                   </Link>
                 ) : (
-                  <span key={L!.id} className={classe} title={`${L!.namePt}${estadoDaLetra}`}>
+                  <span key={L.id} className={classe} title={`${L.nome}${estadoDaLetra}`}>
                     {miolo}
                   </span>
                 );

@@ -43,6 +43,7 @@ import {
   buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
+import { nomeDaLicao, ordemDeEnsino, rotaDaLicao } from '@/lib/sons';
 
 const STAGES = [
   { n: 1, label: 'Conhecer' },
@@ -109,7 +110,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
    * pagamento, no Worker. Esta trava protege o CAMINHO de aprendizagem. */
   useEffect(() => {
     if (!p.ready) return;
-    const ordem = allLetters().map(l => l.id);
+    const ordem = ordemDeEnsino(allLetters(), course.modules);
     setTrancada(porQueTrancada(p.state, ordem, letter.id));
   }, [p.ready, p.state, letter.id]);
 
@@ -121,6 +122,11 @@ export function LessonClient({ letter }: { letter: Letter }) {
   const stagesDone = p.state.lessons[letter.id]?.stagesDone ?? [];
   const unlockedCard = cultureAt(p.mastered);
   const after = nextLetter(letter.id);
+  /* Resh, Bet, Kaf e Pe têm uma lição de som logo depois (Sin, Vet, Chaf,
+     Fe): ela vem antes da letra seguinte e antes do checkpoint. */
+  const ordemToda = ordemDeEnsino(allLetters(), course.modules);
+  const seguinte = ordemToda[ordemToda.indexOf(letter.id) + 1];
+  const somSeguinte = seguinte?.startsWith('som-') ? seguinte : null;
   const mod = course.modules.find(m => m.n === letter.module);
   const moduleFinished = !!mod && mod.letterIds.every(
     id => id === letter.id || (p.state.lessons[id]?.stagesDone.length ?? 0) >= 5
@@ -164,7 +170,8 @@ export function LessonClient({ letter }: { letter: Letter }) {
           onResult={r => { setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5); }}
           onRetry={() => { setQuizResult(null); setQuizRun(n => n + 1); }}
           onNext={() => {
-            if (moduleFinished && mod?.checkpoint) router.push(`/checkpoint/${mod.n}`);
+            if (somSeguinte) router.push(rotaDaLicao(somSeguinte));
+            else if (moduleFinished && mod?.checkpoint) router.push(`/checkpoint/${mod.n}`);
             else if (after) router.push(`/licao/${after.id}`);
             else router.push('/mapa');
           }}
@@ -174,7 +181,8 @@ export function LessonClient({ letter }: { letter: Letter }) {
              etapa precisa soar como fim, senão ele é só mais um clique. */
           nextLabel="Concluir e continuar"
           nextHint={
-            moduleFinished && mod?.checkpoint ? `Em seguida: Checkpoint ${mod.n}`
+            somSeguinte ? `Em seguida: o som ${nomeDaLicao(somSeguinte, allLetters(), course.modules)}`
+              : moduleFinished && mod?.checkpoint ? `Em seguida: Checkpoint ${mod.n}`
               : after ? `Em seguida: letra ${after.namePt}` : 'De volta ao mapa do curso'
           }
         />
@@ -844,10 +852,11 @@ function PortaTrancada({ letter, porque }: {
   porque: NonNullable<ReturnType<typeof porQueTrancada>>;
 }) {
   const p = useProgress();
-  const anterior = allLetters().find(l => l.id === porque.anterior);
-  const ordem = allLetters().map(l => l.id);
+  const ordem = ordemDeEnsino(allLetters(), course.modules);
+  /* A anterior pode ser uma lição de som: Kaf vem depois de Vet. */
+  const anterior = { namePt: nomeDaLicao(porque.anterior, allLetters(), course.modules) };
   const atual = letraAtual(p.state, ordem);
-  const atualL = allLetters().find(l => l.id === atual);
+  const atualL = { namePt: nomeDaLicao(atual, allLetters(), course.modules) };
 
   return (
     <div className="grid gap-5 focus-col">
@@ -878,13 +887,13 @@ function PortaTrancada({ letter, porque }: {
           </p>
         </div>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
-          <LinkButton href={`/licao/${porque.anterior}`} size="lg" full>
+          <LinkButton href={rotaDaLicao(porque.anterior)} size="lg" full>
             {porque.falta === 'licao'
               ? `Ir para ${anterior?.namePt}`
               : `Refazer a fixação de ${anterior?.namePt}`}
           </LinkButton>
           {atual !== porque.anterior && atualL && (
-            <LinkButton href={`/licao/${atual}`} variant="secondary" full>
+            <LinkButton href={rotaDaLicao(atual)} variant="secondary" full>
               Continuar de onde parei ({atualL.namePt})
             </LinkButton>
           )}

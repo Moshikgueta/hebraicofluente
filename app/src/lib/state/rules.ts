@@ -217,8 +217,15 @@ export function isLessonMastered(state: LearnerState, letterId: string): boolean
   return l.stagesDone.length >= STAGE_COUNT && (l.quizBest ?? 0) >= MASTERY_MARK;
 }
 
+/* As lições de som (Vet, Chaf, Fe, Tch, Dj, J) gravam em `lessons` com o
+   prefixo `som-`, com as mesmas cinco etapas e a mesma fixação de uma letra -
+   é o que deixa a trava de progressão tratá-las igual. Mas não são letras:
+   "22 letras dominadas" continua contando só as 22. */
+export const SOM_PREFIXO = 'som-';
+export const ehLicaoDeSom = (id: string) => id.startsWith(SOM_PREFIXO);
+
 export const lettersMastered = (state: LearnerState): number =>
-  Object.keys(state.lessons).filter(id => isLessonMastered(state, id)).length;
+  Object.keys(state.lessons).filter(id => !ehLicaoDeSom(id) && isLessonMastered(state, id)).length;
 
 /**
  * O alfabeto inteiro fechado - a condição do teste final.
@@ -725,11 +732,13 @@ export const supportLabel = (level: SupportLevel): string =>
  * its dots, which is most words.
  */
 export function courseProgress(
-  state: LearnerState, totalLetters: number, extraModuleIds: readonly string[] = []
+  state: LearnerState, totalLetters: number, extraModuleIds: readonly string[] = [],
+  /** As lições de som (`som-vet`...): cinco etapas cada, como uma letra. */
+  somIds: readonly string[] = []
 ): number {
   if (totalLetters <= 0) return 0;
   const letterIds = new Set(
-    Object.keys(state.lessons).filter(id => !extraModuleIds.includes(id))
+    Object.keys(state.lessons).filter(id => !extraModuleIds.includes(id) && !ehLicaoDeSom(id))
   );
   const letters = [...letterIds].reduce((a, id) => {
     const l = state.lessons[id];
@@ -739,7 +748,11 @@ export function courseProgress(
     const l = state.lessons[id];
     return a + (l ? Math.min(EXTRA_STAGE_COUNT, l.stagesDone.length) / EXTRA_STAGE_COUNT : 0);
   }, 0);
-  return Math.min(1, (letters + extras) / (totalLetters + extraModuleIds.length));
+  const sons = somIds.reduce((a, id) => {
+    const l = state.lessons[id];
+    return a + (l ? Math.min(STAGE_COUNT, l.stagesDone.length) / STAGE_COUNT : 0);
+  }, 0);
+  return Math.min(1, (letters + extras + sons) / (totalLetters + extraModuleIds.length + somIds.length));
 }
 
 /** Modules 6 and 7 have three lessons, not five stages. */

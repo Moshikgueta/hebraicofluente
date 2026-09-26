@@ -63,7 +63,9 @@ const GATED = [
      comprou recebe 403. A landing mostra dois (Álef e Shin), e esses dois
      saem por /tracado-amostra/, que é público - ver
      tools/export-content.mjs. */
-  '/stroke-order'
+  '/stroke-order',
+  /* 26/09/2026: as lições de som (Vet, Chaf, Fe, Tch, Dj, J). */
+  '/som'
 ];
 
 /* O curso que essas rotas pertencem. Quando o A1 tiver as próprias rotas,

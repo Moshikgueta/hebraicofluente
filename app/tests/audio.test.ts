@@ -47,6 +47,13 @@ function requested(): { id: string; where: string }[] {
     out.push({ id: g.audioId, where: `mod7 letter ${g.he}` });
     g.words.forEach(w => out.push({ id: w.audioId, where: `mod7 ${w.he}` }));
   });
+  /* As lições de som: as sílabas sem ponto (e o par, com ponto), as palavras
+     de cada som e as do contraste. */
+  extras().sons.forEach(S => {
+    out.push({ id: S.audioId, where: `som ${S.id}` });
+    [...S.silabas, ...S.parSilabas, ...S.palavras, ...S.parPalavras]
+      .forEach(x => out.push({ id: x.audioId, where: `som ${S.id} ${x.he}` }));
+  });
   scenesUpTo(22).forEach(s => out.push({ id: s.audioId, where: `scene ${s.id}` }));
   /* Onda 4: as frases e cada linha dos mini-textos, que a escuta de frase e
      o "ouvir o texto" da leitura tocam. */

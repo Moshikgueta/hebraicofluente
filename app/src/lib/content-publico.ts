@@ -229,7 +229,7 @@ export type CourseModule = {
   introPt: string;
   goalsPt: string[];
   milestonePt: string;
-  lessons: { n: number; kind?: string; letters?: string[]; topicPt?: string }[];
+  lessons: { n: number; kind?: string; letters?: string[]; topicPt?: string; som?: string; nomePt?: string; he?: string; parHe?: string }[];
   letterIds: string[];
   upTo: number | null;
   checkpoint: Checkpoint | null;

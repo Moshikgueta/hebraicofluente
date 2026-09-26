@@ -35,6 +35,7 @@ import { CourseShelf } from '@/components/platform/CourseShelf';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
 import { AntesEDepois } from '@/components/platform/AntesEDepois';
+import { idDoSom } from '@/lib/sons';
 
 export function DashboardClient() {
   const p = useProgress();
@@ -45,6 +46,18 @@ export function DashboardClient() {
      A checkpoint interrupts when its whole module is done and it is not. */
   const next = useMemo(() => {
     for (const m of course.modules) {
+      /* As lições do módulo na ordem do plano: letras e lições de som (Vet
+         logo depois de Bet, Tch/Dj/J antes do fecho do módulo 7). */
+      for (const ls of m.lessons) {
+        if (ls.som && !isLessonComplete(p.state, idDoSom(ls.som))) {
+          return { kind: 'som' as const, som: ls.som, nome: ls.nomePt ?? ls.som, lesson: ls.n, module: m };
+        }
+        for (const id of ls.letters ?? []) {
+          if (!isLessonComplete(p.state, id)) {
+            return { kind: 'letter' as const, letter: getLetter(id)!, module: m };
+          }
+        }
+      }
       /* Modules 6 and 7 teach no letter but are not optional: they are where
          reading without nikud starts. They sit in the sequence, in order. */
       if (!m.letterIds.length) {
@@ -162,6 +175,18 @@ export function DashboardClient() {
             pct={p.progress}
             href={`/licao/${next.letter.id}`}
             cta={(p.state.lessons[next.letter.id]?.stagesDone.length ?? 0) > 0
+              ? 'Continuar aprendendo' : 'Começar a lição'}
+          />
+        )}
+
+        {next.kind === 'som' && (
+          <CartaoCurso
+            kicker="Curso em andamento"
+            titulo={flagship().titlePt}
+            sub={`Módulo ${next.module.n} · lição ${next.lesson} - o som ${next.nome}`}
+            pct={p.progress}
+            href={`/som/${next.som}`}
+            cta={(p.state.lessons[idDoSom(next.som)]?.stagesDone.length ?? 0) > 0
               ? 'Continuar aprendendo' : 'Começar a lição'}
           />
         )}
