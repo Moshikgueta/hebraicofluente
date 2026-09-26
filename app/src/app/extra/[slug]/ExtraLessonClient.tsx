@@ -34,6 +34,7 @@ import { course, extras, type CourseModule } from '@/lib/content';
 import { buildDageshQuiz, buildGerechQuiz, type Extras } from '@/lib/engine/extras';
 import { EXTRA_STAGE_UNITS } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 export type ExtraSlug = 'sem-o-ponto' | 'sons-modernos';
 
@@ -64,10 +65,14 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
   const stagesDone = p.state.lessons[stateId]?.stagesDone ?? [];
   const steps = STAGES[slug];
 
+  /* Refazer o fecho é outra rodada, com o que já apareceu no fim da fila
+     (lib/rodadas.ts). */
+  const categoria = `modulo-${mod.n}-fecho`;
   const quiz = useMemo(
-    () => slug === 'sem-o-ponto'
-      ? buildDageshQuiz(extras(), 10, `mod6-${run}`)
-      : buildGerechQuiz(extras(), 8, `mod7-${run}`),
+    () => escolherRodada(categoria, seed => slug === 'sem-o-ponto'
+      ? buildDageshQuiz(extras(), 10, seed)
+      : buildGerechQuiz(extras(), 8, seed)).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [slug, run]
   );
 
@@ -136,6 +141,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
             quiz={quiz}
             onDone={r => {
               setResult(r);
+              registrarRodada(categoria, quiz);
               p.finishCheckpoint(cpId, r.score);
               p.finishStage(stateId, 3, EXTRA_STAGE_UNITS);
             }}
@@ -147,6 +153,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
             title="Fecho do alfabeto"
             onDone={r => {
               setResult(r);
+              registrarRodada(categoria, quiz);
               p.finishCheckpoint(cpId, r.score);
               p.finishStage(stateId, 3, EXTRA_STAGE_UNITS);
             }}

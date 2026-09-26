@@ -224,7 +224,14 @@ export const exVowelSound: Gen = (L, _ctx, rand, i) => {
 export const exVowelPair: Gen = (L, ctx, rand, i) => {
   /* Só os sons escritos de dois jeitos: a, e, o, u. `i` e `sheva` têm um
      sinal cada e não têm par para mostrar. */
-  const comDois = ctx.nikud.filter(s => s.signs.length >= 2);
+  /* A grafia com ו (holam malé וֹ, shuruk וּ) só depois de o ו ser ensinado:
+     antes disso ela põe na tela uma letra que o aluno ainda não conhece. O
+     defeito ficou escondido enquanto o índice seguia a ordem fixa, e apareceu
+     quando as rodadas passaram a variar (26/09/2026). */
+  const temVav = ctx.alphabet.includes('ו');
+  const comDois = ctx.nikud
+    .map(s => ({ ...s, signs: s.signs.filter(g => temVav || !g.sign.includes('ו')) }))
+    .filter(s => s.signs.length >= 2);
   const som = at(comDois, i);
   if (!som) return null;
 

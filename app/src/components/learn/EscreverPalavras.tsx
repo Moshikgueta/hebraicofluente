@@ -17,7 +17,7 @@
  * forma à mão.
  */
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { He } from '@/components/hebrew/He';
@@ -27,6 +27,7 @@ import type { Letter } from '@/lib/content';
 import { palavrasParaEscrever, type PalavraDoCurso } from '@/lib/engine/palavras';
 import { rng } from '@/lib/engine/rng';
 import { stripNikud } from '@/lib/hebrew';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const ETAPAS = [
   { guia: 0.22, rotulo: 'Por cima do modelo', dica: 'Passe o dedo por cima da palavra, começando pela direita.' },
@@ -41,7 +42,9 @@ export function EscreverPalavras({ letras, semente, extras = [] }: {
 }) {
   const [rodada, setRodada] = useState(0);
   const palavras = useMemo(
-    () => palavrasParaEscrever(letras, rng(`${semente}-${rodada}`), undefined, extras),
+    /* Cada rodada completa manda as suas palavras para o fim da fila: a
+       seguinte - agora ou noutro dia - traz outras (lib/rodadas.ts). */
+    () => escolherRodada('escrever-palavras', seed => palavrasParaEscrever(letras, rng(seed), undefined, extras), w => w.he).itens,
     /* Pela CHAVE das palavras, e não pela lista: quem chama monta a lista a
        cada render, e depender dela sortearia outra rodada no meio da
        escrita - o defeito que a academia já teve com os jogos. */
@@ -54,6 +57,11 @@ export function EscreverPalavras({ letras, semente, extras = [] }: {
   const [veredito, setVeredito] = useState<Veredito | null>(null);
   /* A nota da etapa SEM modelo de cada palavra: é a que diz se a mão sabe. */
   const [notas, setNotas] = useState<number[]>([]);
+  const completa = palavras.length > 0 && qual >= palavras.length;
+  useEffect(() => {
+    if (completa) registrarRodada('escrever-palavras', palavras, w => w.he);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completa]);
   const quadro = useRef<QuadroHandle>(null);
 
   if (!palavras.length) {

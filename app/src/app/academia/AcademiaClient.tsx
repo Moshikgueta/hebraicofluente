@@ -31,6 +31,7 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, type Letter } from '@/lib/content';
 import { onCarrier } from '@/lib/hebrew';
 import { availableModes, buildGym, confusionPair, type GymMode } from '@/lib/engine/gym';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 import { GuiaTeclado } from '@/components/learn/GuiaTeclado';
 import {
   montarBatalha, montarCacada, montarCursiva, paresParaTreinar,
@@ -148,9 +149,13 @@ export function AcademiaClient() {
      dia dá outra rodada. Por isso a dependência é só `screen`. */
   const rodada = useMemo(
     () => (screen.kind === 'run'
-      ? buildGym(screen.mode, p.state, unlocked, {
-          audioAvailable: audio, day: p.day, seed: `${screen.mode.id}-${screen.startedAt}`
-        })
+      ? (() => {
+          /* A semente sai da rodada da categoria: o modo refeito evita as
+             perguntas das últimas vezes (lib/rodadas.ts). */
+          const gerar = (seed: string) => buildGym(screen.mode, p.state, unlocked, { audioAvailable: audio, day: p.day, seed });
+          const { seed, itens } = escolherRodada(`academia-${screen.mode.id}`, s => gerar(s).exercises);
+          return { ...gerar(seed), exercises: itens };
+        })()
       : null),
     [screen]
   );
@@ -452,6 +457,7 @@ export function AcademiaClient() {
           onDone={result => {
             const seconds = Math.round((Date.now() - screen.startedAt) / 1000);
             track('gym_completed', { mode: screen.mode.id, score: result.score, seconds });
+            if (rodada) registrarRodada(`academia-${screen.mode.id}`, rodada.exercises);
             p.finishGym(screen.mode.id, result.score, seconds);
             setScreen({ kind: 'done', mode: screen.mode, result, seconds });
           }}
