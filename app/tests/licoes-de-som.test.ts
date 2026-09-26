@@ -1,10 +1,11 @@
-/* As lições de som: Vet, Chaf, Fe, Tch, Dj e J (26/09/2026).
+/* As lições de som: Sin, Vet, Chaf, Fe, Tch, Dj e J (26/09/2026).
  *
  * Pedido de quem gravou o curso inteiro: não havia um momento só do V, só do
  * F, só do TCH. Cada som virou uma lição do caminho, logo depois da letra que
  * ele divide. O que se prova aqui:
  *
- *   · a ordem de ensino: Bet → Vet → Kaf → Chaf → Pe → Fe, e Tch → Dj → J;
+ *   · a ordem de ensino: Lámed → Resh → Sin, Bet → Vet → Kaf → Chaf → Pe →
+ *     Fe, e Tch → Dj → J;
  *   · a trava: Kaf só abre com Vet dominado - e quem já estava em Kaf antes
  *     das lições novas continua lá (a regra "nunca tira o que já foi dado");
  *   · as 22 letras continuam 22: um som não conta como letra dominada, mas
@@ -52,13 +53,19 @@ describe('a ordem de ensino', () => {
     ]);
   });
 
+  it('o Sin fecha as letras do módulo 2, antes do Vav', () => {
+    expect(ORDEM.slice(ORDEM.indexOf('shin'), ORDEM.indexOf('vav') + 1)).toEqual([
+      'shin', 'lamed', 'resh', 'som-sin', 'vav'
+    ]);
+  });
+
   it('continua começando pelas 22 letras na ordem delas', () => {
     const soLetras = ORDEM.filter(id => !id.startsWith('som-'));
     expect(soLetras).toEqual(allLetters().map(l => l.id));
   });
 
-  it('o plano de aulas tem 26 lições, e o número de cada som bate com o conteúdo', () => {
-    expect(totalLicoes()).toBe(26);
+  it('o plano de aulas tem 27 lições, e o número de cada som bate com o conteúdo', () => {
+    expect(totalLicoes()).toBe(27);
     for (const S of SONS) {
       const ls = course.modules.flatMap(m => m.lessons.map(l => ({ m, l }))).find(x => x.l.som === S.id);
       expect(ls, S.id).toBeDefined();
@@ -90,6 +97,13 @@ describe('a trava', () => {
     expect(letraLiberada(s, ORDEM, 'kaf')).toBe(true);
     /* E o Vet, que ficou para trás, também está aberto para ser feito. */
     expect(letraLiberada(s, ORDEM, 'som-vet')).toBe(true);
+  });
+
+  it('o Sin abre depois do Resh, e o Vav só com o Sin dominado', () => {
+    expect(letraLiberada(ateAqui('lamed'), ORDEM, 'som-sin')).toBe(false);
+    expect(letraLiberada(ateAqui('resh'), ORDEM, 'som-sin')).toBe(true);
+    expect(porQueTrancada(ateAqui('resh'), ORDEM, 'vav')).toMatchObject({ anterior: 'som-sin' });
+    expect(letraLiberada(ateAqui('som-sin'), ORDEM, 'vav')).toBe(true);
   });
 
   it('Tch abre depois do Fe; Dj depois do Tch; J depois do Dj', () => {
@@ -132,6 +146,7 @@ describe('os exercícios de cada som', () => {
     expect(leituraTrocada('tov', 'v', 'b')).toBe('tob');
     expect(leituraTrocada('óchel', 'ch', 'k')).toBe('ókel');
     expect(leituraTrocada('séfer', 'f', 'p')).toBe('séper');
+    expect(leituraTrocada('smol', 's', 'sh')).toBe('shmol');
   });
 
   it('todo exercício tem a resposta certa entre as opções, sem repetir opção nem id', () => {
@@ -167,6 +182,26 @@ describe('os exercícios de cada som', () => {
         expect(S.parSilabas[i]!.he, S.id).toContain('ּ');
       }
     }
+  });
+
+  it('o Sin: sílabas com o ponto à esquerda contra as do Shin, à direita', () => {
+    const sin = SONS.find(S => S.id === 'sin')!;
+    expect(sin.tipo).toBe('ponto');
+    expect(sin.silabas).toHaveLength(5);
+    for (const [i, s] of sin.silabas.entries()) {
+      expect(s.he, s.he).toContain('\u05C2');
+      expect(sin.parSilabas[i]!.he).toContain('\u05C1');
+    }
+    /* O contraste de palavras usa só palavras com o ponto do Shin. */
+    expect(sin.parPalavras.length).toBeGreaterThanOrEqual(3);
+    for (const w of sin.parPalavras) {
+      expect(w.he).toContain('\u05C1');
+      expect(w.he).not.toContain('\u05C2');
+    }
+    const e = bancoDoSom(sin, semAudio).find(x => x.id === 'som-sin-sil-0')!;
+    if (e.kind !== 'syllable-reading') throw new Error(e.kind);
+    expect(e.options[e.answer]).toBe('sa');
+    expect(e.options).toContain('sha');
   });
 
   it('exercício de ouvir só entra quando a gravação existe', () => {

@@ -182,14 +182,131 @@
       "juntos, na lição da letra, e os três sons modernos numa página só do módulo 7.",
       "Cada som ganhou uma lição inteira, no mapa, logo depois da letra que ele",
       "divide: Bet → Vet → Kaf → Chaf → Pe → Fe, e no módulo 7 Tch → Dj → J.",
-      "Ids de progresso: `som-<id>`. Não são letras: não entram na contagem das 22."
+      "Ids de progresso: `som-<id>`. Não são letras: não entram na contagem das 22.",
+      "O Sin (26/09/2026, pedido do dono do curso) é do tipo `ponto`: o som depende do LADO do ponto, não do daguesh. Fica no fim do módulo 2, depois de Lámed e Resh, porque só com essas letras há palavras de verdade com {{שׂ}}."
     ],
     "licoes": [
+      {
+        "id": "sin",
+        "tipo": "ponto",
+        "modulo": 2,
+        "licao": 6,
+        "depoisDe": "resh",
+        "namePt": "Sin",
+        "he": "שׂ",
+        "som": "s",
+        "comoPt": "o S de \"sapo\"",
+        "parHe": "שׁ",
+        "parNomePt": "Shin",
+        "parSom": "sh",
+        "parId": "shin",
+        "rotuloPt": "com o ponto à esquerda",
+        "parRotuloPt": "com o ponto à direita",
+        "introPt": "Na lição do {{שׁ}} você viu que a mesma letra tem dois sons, e que quem decide é o lado do ponto. Esta lição é só do outro lado: {{שׂ}}, com o ponto no alto à esquerda, o Sin, que soa S. É ele que aparece em {{יִשְׂרָאֵל}} e em {{שָׂרָה}}.",
+        "articulacao": {
+          "pontos": [
+            {
+              "ponto": "dentes"
+            }
+          ],
+          "voz": false,
+          "comoPt": "A ponta da língua fica atrás dos dentes de cima, sem encostar, e o ar sibila, sem voz: o S de \"sapo\". No {{שׁ}} a língua recua para o céu da boca e o ar chia; no {{שׂ}} ela fica na frente."
+        },
+        "regraPt": "Ponto no alto à direita, {{שׁ}}: SH. Ponto no alto à esquerda, {{שׂ}}: S. Aqui não é a posição na palavra que decide, como no daguesh: é só o lado do ponto. E num texto sem nikud não há ponto nenhum, e é a palavra conhecida que diz qual é.",
+        "irmaoPt": "O Sin soa exatamente como o {{ס}}, o Sámech, que você vai conhecer no módulo 4. Duas letras, um som só: quem decide qual se escreve é a palavra.",
+        "erro": {
+          "wrong": "Ler toda {{ש}} como SH, sem olhar o lado do ponto: {{יִשְׂרָאֵל}} vira \"yishrael\".",
+          "right": "Olhar o ponto antes de dizer: à esquerda é S. \"yisrael\", \"Sará\", \"smol\".",
+          "why": "O {{שׁ}} aparece muito mais, e o olho se acostuma a ele. O ponto à esquerda é o único aviso de que o som é outro."
+        },
+        "silabas": [
+          {
+            "he": "שַׂ",
+            "translit": "sa"
+          },
+          {
+            "he": "שֶׂ",
+            "translit": "se"
+          },
+          {
+            "he": "שִׂ",
+            "translit": "si"
+          },
+          {
+            "he": "שׂוֹ",
+            "translit": "so"
+          },
+          {
+            "he": "שׂוּ",
+            "translit": "su"
+          }
+        ],
+        "palavras": [
+          {
+            "he": "יִשְׂרָאֵל",
+            "translit": "yisrael",
+            "pt": "Israel"
+          },
+          {
+            "he": "שָׂרָה",
+            "translit": "Sará",
+            "pt": "Sara"
+          },
+          {
+            "he": "שְׂמֹאל",
+            "translit": "smol",
+            "pt": "esquerda"
+          },
+          {
+            "he": "שָׂדֶה",
+            "translit": "sadé",
+            "pt": "campo"
+          },
+          {
+            "he": "נָשִׂיא",
+            "translit": "nasí",
+            "pt": "presidente"
+          },
+          {
+            "he": "שָׂר",
+            "translit": "sar",
+            "pt": "ministro"
+          }
+        ],
+        "checagem": [
+          {
+            "t": "visual",
+            "q": "Qual destas soa S?",
+            "opcoes": [
+              "שׁ",
+              "שׂ"
+            ],
+            "certa": 1,
+            "porque": "O ponto no alto à esquerda faz o Sin, S. À direita, é o Shin, SH."
+          },
+          {
+            "t": "escolha",
+            "q": "Como se lê {{שָׂרָה}}?",
+            "opcoes": [
+              "Shará",
+              "Sará"
+            ],
+            "certa": 1,
+            "porque": "O ponto está à esquerda: S. \"Sará\"."
+          },
+          {
+            "t": "vf",
+            "q": "O lado do ponto muda conforme a posição da letra na palavra.",
+            "certa": false,
+            "porque": "Não muda: cada palavra tem o seu. No começo, no meio ou no fim, o ponto à esquerda é sempre S."
+          }
+        ]
+      },
       {
         "id": "vet",
         "tipo": "daguesh",
         "modulo": 5,
-        "licao": 14,
+        "licao": 15,
         "depoisDe": "bet",
         "namePt": "Vet",
         "he": "ב",
@@ -296,13 +413,15 @@
             "certa": true,
             "porque": "Os dois soam V. É a palavra que decide qual das duas letras se escreve."
           }
-        ]
+        ],
+        "rotuloPt": "sem o ponto",
+        "parRotuloPt": "com o ponto"
       },
       {
         "id": "chaf",
         "tipo": "daguesh",
         "modulo": 5,
-        "licao": 16,
+        "licao": 17,
         "depoisDe": "kaf",
         "namePt": "Chaf",
         "he": "כ",
@@ -410,13 +529,15 @@
             "certa": false,
             "porque": "Na transliteração do hebraico, \"ch\" é sempre o som raspado da garganta, o do {{ח}}."
           }
-        ]
+        ],
+        "rotuloPt": "sem o ponto",
+        "parRotuloPt": "com o ponto"
       },
       {
         "id": "fe",
         "tipo": "daguesh",
         "modulo": 5,
-        "licao": 18,
+        "licao": 19,
         "depoisDe": "pe",
         "namePt": "Fe",
         "he": "פ",
@@ -524,13 +645,15 @@
             "certa": false,
             "porque": "A forma final {{ף}} é sempre F: {{סוֹף}}, \"sof\"."
           }
-        ]
+        ],
+        "rotuloPt": "sem o ponto",
+        "parRotuloPt": "com o ponto"
       },
       {
         "id": "tch",
         "tipo": "gerech",
         "modulo": 7,
-        "licao": 23,
+        "licao": 24,
         "depoisDe": null,
         "namePt": "Tch",
         "he": "צ׳",
@@ -607,13 +730,15 @@
             "certa": false,
             "porque": "Ele é parte da escrita da palavra e muda o som da letra."
           }
-        ]
+        ],
+        "rotuloPt": "com o traço",
+        "parRotuloPt": "sem o traço"
       },
       {
         "id": "dj",
         "tipo": "gerech",
         "modulo": 7,
-        "licao": 24,
+        "licao": 25,
         "depoisDe": "tch",
         "namePt": "Dj",
         "he": "ג׳",
@@ -694,13 +819,15 @@
             "certa": 0,
             "porque": "O movimento é o mesmo. No {{ג׳}} a garganta vibra, no {{צ׳}} não."
           }
-        ]
+        ],
+        "rotuloPt": "com o traço",
+        "parRotuloPt": "sem o traço"
       },
       {
         "id": "j",
         "tipo": "gerech",
         "modulo": 7,
-        "licao": 25,
+        "licao": 26,
         "depoisDe": "dj",
         "namePt": "J",
         "he": "ז׳",
@@ -777,7 +904,9 @@
             "certa": false,
             "porque": "Sem o {{גֶּרֶשׁ}}, {{ז}} é Z, o Z de \"zebra\"."
           }
-        ]
+        ],
+        "rotuloPt": "com o traço",
+        "parRotuloPt": "sem o traço"
       }
     ]
   }

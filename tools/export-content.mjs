@@ -422,11 +422,21 @@ function main() {
        contraste que a lição mostra é, letra por letra, o que a lição da
        letra ensinou. */
     sons: extras.sons.licoes.map(S => {
+      /* O par: Vet/Chaf/Fe dividem a letra da lição anterior; o Sin e os sons
+         modernos dizem de qual letra são o outro lado (`parId`). */
       const parId = S.tipo === 'daguesh' ? S.depoisDe : S.parId;
       const L = letters.find(l => l.id === parId);
       if (!L) throw new Error(`extras.sons: "${S.id}" aponta para a letra "${parId}", que não existe`);
       const D = extras.dagesh.letters.find(d => d.id === parId);
-      const parPalavras = S.tipo === 'daguesh' ? (D?.hardWords ?? []) : L.wordsToRead.slice(0, 4);
+      const parPalavras = S.tipo === 'daguesh' ? (D?.hardWords ?? [])
+        /* Do Shin, só as palavras que têm MESMO o ponto à direita. Pelo ponto
+           sozinho: na ordem Unicode a vogal vem antes dele (שָׁ = ש + qamats
+           + ponto), e "שׁ" colado não aparece na palavra. */
+        : S.tipo === 'ponto' ? L.wordsToRead.filter(w => {
+            const ponto = [...NFC(S.parHe)].slice(1).join('');
+            return NFC(w.he).includes(ponto) && !NFC(w.he).includes([...NFC(S.he)].slice(1).join(''));
+          }).slice(0, 4)
+        : L.wordsToRead.slice(0, 4);
       return {
         ...S,
         he: NFC(S.he), parHe: NFC(S.parHe),
@@ -436,7 +446,7 @@ function main() {
         audioId: audioIdFor(S.tipo === 'gerech' ? S.he : S.silabas[0].he),
         silabas: S.silabas.map(withAudio),
         /* As mesmas vogais, com o ponto: o par exato de cada sílaba. */
-        parSilabas: S.tipo === 'daguesh'
+        parSilabas: S.tipo !== 'gerech'
           ? L.syllables.slice(0, S.silabas.length)
               .map(s => ({ he: NFC(s.he), translit: s.translit, audioId: audioIdFor(s.he) }))
           : [],

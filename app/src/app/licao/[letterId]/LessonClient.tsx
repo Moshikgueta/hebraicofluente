@@ -122,8 +122,8 @@ export function LessonClient({ letter }: { letter: Letter }) {
   const stagesDone = p.state.lessons[letter.id]?.stagesDone ?? [];
   const unlockedCard = cultureAt(p.mastered);
   const after = nextLetter(letter.id);
-  /* Bet, Kaf e Pe têm a lição do outro som logo depois (Vet, Chaf, Fe): ela
-     vem antes da letra seguinte e antes do checkpoint. */
+  /* Resh, Bet, Kaf e Pe têm uma lição de som logo depois (Sin, Vet, Chaf,
+     Fe): ela vem antes da letra seguinte e antes do checkpoint. */
   const ordemToda = ordemDeEnsino(allLetters(), course.modules);
   const seguinte = ordemToda[ordemToda.indexOf(letter.id) + 1];
   const somSeguinte = seguinte?.startsWith('som-') ? seguinte : null;
@@ -181,7 +181,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
              etapa precisa soar como fim, senão ele é só mais um clique. */
           nextLabel="Concluir e continuar"
           nextHint={
-            somSeguinte ? `Em seguida: o som ${nomeDaLicao(somSeguinte, allLetters(), course.modules)}, a outra metade de ${letter.namePt}`
+            somSeguinte ? `Em seguida: o som ${nomeDaLicao(somSeguinte, allLetters(), course.modules)}`
               : moduleFinished && mod?.checkpoint ? `Em seguida: Checkpoint ${mod.n}`
               : after ? `Em seguida: letra ${after.namePt}` : 'De volta ao mapa do curso'
           }

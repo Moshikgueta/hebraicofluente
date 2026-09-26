@@ -34,21 +34,27 @@ import { idDoSom } from '@/lib/sons';
 type Item = { id: string; he: string; nome: string; href: string };
 
 function itensDoModulo(m: CourseModule): Item[] {
-  return m.lessons.flatMap((ls, i) => {
+  /* Bet, Kaf, Pe e Shin têm, no mesmo módulo, a lição do outro som: o
+     cartão da letra mostra o lado dela (בּ "Bet", שׁ "Shin") e o do som
+     mostra o outro (ב "Vet", שׂ "Sin"). Sem isso eram dois cartões com o
+     mesmo desenho. Os sons modernos ficam fora: a letra sem gerech está em
+     outro módulo. */
+  const ladoDe = (letra: string) =>
+    m.lessons.find(l => l.som && l.parHe && [...l.parHe][0] === letra)?.parHe;
+  return m.lessons.flatMap(ls => {
     if (ls.som) {
       return [{ id: idDoSom(ls.som), he: ls.he ?? '', nome: ls.nomePt ?? ls.som, href: `/som/${ls.som}` }];
     }
-    /* Bet, Kaf e Pe seguidas da lição do outro som: o cartão da letra mostra
-       o lado COM o ponto (בּ, "Bet"), e o do som mostra o lado sem ele (ב,
-       "Vet"). Sem isso eram dois cartões com o mesmo desenho. */
-    const dividida = !!m.lessons[i + 1]?.som;
     return (ls.letters ?? []).map(getLetter).filter(l => !!l)
-      .map(L => ({
-        id: L!.id,
-        he: dividida ? `${L!.letter}\u05BC` : L!.letter,
-        nome: dividida ? L!.namePt.split('/')[0]!.trim() : L!.namePt,
-        href: `/licao/${L!.id}`
-      }));
+      .map(L => {
+        const lado = ladoDe(L!.letter);
+        return {
+          id: L!.id,
+          he: lado ?? L!.letter,
+          nome: lado ? L!.namePt.split('/')[0]!.trim() : L!.namePt,
+          href: `/licao/${L!.id}`
+        };
+      });
   });
 }
 

@@ -779,7 +779,7 @@ export function validate({ checkDist = true } = {}) {
     warn('V19', 'data/extras.json', 'ausente - os módulos 6 e 7 ficam sem conteúdo');
   }
 
-  /* ── V26 - as lições de som (Vet, Chaf, Fe, Tch, Dj, J) ────────────
+  /* ── V26 - as lições de som (Sin, Vet, Chaf, Fe, Tch, Dj, J) ───────
      Cada uma promete três coisas que dá para conferir: toda palavra TEM o
      som da lição (a letra sem daguesh, a final, ou a letra com gerech); toda
      palavra de Vet/Chaf/Fe só usa letras já ensinadas até ali (a regra V1 das
@@ -820,6 +820,30 @@ export function validate({ checkDist = true } = {}) {
           for (const c of stripNikud(w.he)) {
             const o = orderOf.get(c);
             if (o == null || o > L.order) fail('V26', onde, `"${w.he}" usa ${c}, que ainda não foi ensinada`);
+          }
+          record(w.he, w.translit, onde);
+        }
+      } else if (S.tipo === 'ponto') {
+        /* O Sin: o som depende do LADO do ponto do ש. A lição vem no fim do
+           módulo 2, e as palavras só podem usar letras de lições anteriores. */
+        const L = letters.find(l => l.id === S.parId);
+        if (!L) { fail('V26', onde, `parId "${S.parId}" não é uma letra`); continue; }
+        const lado = [...S.he.normalize('NFC')].slice(1).join('');
+        if (stripNikud(S.he) !== L.letter || !lado) fail('V26', onde, `"${S.he}" não é ${L.letter} com um ponto`);
+        if (S.he.normalize('NFC') === S.parHe.normalize('NFC')) fail('V26', onde, 'o som e o par são o mesmo desenho');
+        const licaoDe = new Map();
+        for (const l of letters) { licaoDe.set(l.letter, l.lesson); if (l.finalForm) licaoDe.set(l.finalForm, l.lesson); }
+        for (const s of S.silabas) {
+          if (!s.he.normalize('NFC').startsWith(S.he.normalize('NFC')) && !s.he.normalize('NFC').includes(lado)) {
+            fail('V26', onde, `a sílaba "${s.he}" não tem ${S.he}`);
+          }
+        }
+        for (const w of S.palavras) {
+          if (!hasNikud(w.he)) fail('V26', onde, `"${w.he}" sem nikud`);
+          if (!w.he.normalize('NFC').includes(lado)) fail('V26', onde, `"${w.he}" não tem ${S.he}`);
+          for (const c of stripNikud(w.he)) {
+            const n = licaoDe.get(c);
+            if (n == null || n >= S.licao) fail('V26', onde, `"${w.he}" usa ${c}, que ainda não foi ensinada na lição ${S.licao}`);
           }
           record(w.he, w.translit, onde);
         }

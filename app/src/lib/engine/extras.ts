@@ -49,11 +49,12 @@ export type UnpointedWord = {
   bare: string; pointed: string; translit: string; pt: string; audioId: string;
 };
 
-/** Uma lição de som: Vet, Chaf, Fe (a letra sem daguesh) ou Tch, Dj, J (a
- *  letra com gerech). Ver data/extras.json → `sons` e lib/sons.ts. */
+/** Uma lição de som: Vet, Chaf, Fe (a letra sem daguesh), Sin (o ponto do
+ *  ש à esquerda) ou Tch, Dj, J (a letra com gerech). Ver data/extras.json →
+ *  `sons` e lib/sons.ts. */
 export type SomLicao = {
   id: string;
-  tipo: 'daguesh' | 'gerech';
+  tipo: 'daguesh' | 'ponto' | 'gerech';
   modulo: number;
   licao: number;
   /** A lição que vem logo antes no caminho: a letra (bet) ou outro som (tch). */
@@ -66,6 +67,9 @@ export type SomLicao = {
   parNomePt: string;
   parSom: string;
   parId: string;
+  /** O sinal que distingue, dito em palavras: "sem o ponto", "ponto à esquerda". */
+  rotuloPt: string;
+  parRotuloPt: string;
   finalHe: string | null;
   introPt: string;
   articulacao: import('@/lib/content-publico').Articulacao;

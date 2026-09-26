@@ -9,8 +9,9 @@
  *
  *   1 conhecer   - o som, a boca, a regra, as sílabas
  *   2 palavras   - as palavras que têm o som
- *   3 contraste  - lado a lado com o par (com ponto / sem ponto, com gerech /
- *                  sem gerech), para ler em voz alta
+ *   3 contraste  - lado a lado com o par (com ponto / sem ponto, ponto à
+ *                  esquerda / à direita, com gerech / sem gerech), para ler em
+ *                  voz alta
  *   4 praticar   - exercícios de contraste, sem nota
  *   5 fixação    - o mesmo tipo de pergunta, com nota; 75% domina
  */
@@ -229,7 +230,7 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
         <Card className="p-6 grid gap-4">
           <div className="grid gap-1">
             <h2 className="text-[19px] font-semibold">O som com cada vogal</h2>
-            <p className="font-ui text-[13.5px] text-ink-muted">Sem o ponto, em todas. Leia da direita para a esquerda.</p>
+            <p className="font-ui text-[13.5px] text-ink-muted">{S.rotuloPt[0]!.toUpperCase() + S.rotuloPt.slice(1)}, em todas. Leia da direita para a esquerda.</p>
           </div>
           <ul className="grid grid-cols-2 sm:grid-cols-5 gap-3 list-none p-0 m-0">
             {S.silabas.map(s => (
@@ -273,14 +274,14 @@ function Palavras({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       <div className="grid gap-1">
         <h2 className="text-[21px] font-bold">Palavras com o som {S.namePt}</h2>
         <p className="font-ui text-[14px] text-ink-muted">
-          {S.tipo === 'daguesh'
-            ? 'Tente ler antes de revelar. A letra destacada está sem o ponto.'
-            : 'Palavras que vieram de fora: você já sabe como soam. Leia antes de revelar.'}
+          {S.tipo === 'gerech'
+            ? 'Palavras que vieram de fora: você já sabe como soam. Leia antes de revelar.'
+            : `Tente ler antes de revelar. A letra destacada está ${S.rotuloPt}.`}
         </p>
       </div>
       <div className="grid gap-3">
         {S.palavras.map(w => (
-          <WordReveal key={w.he} word={{ ...w, use: null }} mark={S.finalHe && w.he.includes(S.finalHe) ? S.finalHe : S.he} />
+          <WordReveal key={w.he} word={{ ...w, use: null }} mark={marcaDe(S, w.he)} />
         ))}
       </div>
       <CompararPronuncia itens={S.palavras} titulo="Compare a sua leitura das palavras com a do curso" />
@@ -296,8 +297,8 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       <div className="grid gap-1">
         <h2 className="text-[21px] font-bold">{S.parNomePt} ou {S.namePt}?</h2>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-          {S.tipo === 'daguesh'
-            ? <>Lado a lado, com e sem o ponto. Leia cada linha em voz alta, primeiro a coluna da direita e depois a
+          {S.tipo !== 'gerech'
+            ? <>Lado a lado: {S.parRotuloPt} e {S.rotuloPt}. Leia cada linha em voz alta, primeiro a coluna da direita e depois a
               da esquerda, e sinta a boca mudar: <strong>{S.parSom}</strong> e <strong>{S.som}</strong>.</>
             : <>Lado a lado, com e sem o traço. Sem ele, <He size="inline">{S.parHe}</He> é <strong>{S.parSom}</strong>;
               com ele, <He size="inline">{S.he}</He> é <strong>{S.som}</strong>.</>}
@@ -307,8 +308,8 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       {S.parSilabas.length > 0 && (
         <Card className="p-5 grid gap-2">
           <div className="grid grid-cols-2 gap-3 font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted text-center">
-            <span>{S.namePt} · sem ponto</span>
-            <span>{S.parNomePt} · com ponto</span>
+            <span>{S.namePt} · {S.rotuloPt}</span>
+            <span>{S.parNomePt} · {S.parRotuloPt}</span>
           </div>
           {S.silabas.map((s, i) => {
             const par = S.parSilabas[i];
@@ -327,13 +328,13 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-[var(--accent)]">
             Com o som {S.som} · <He size="inline">{S.he}</He>
           </p>
-          {S.palavras.map(w => <Linha key={w.he} w={w} mark={S.finalHe && w.he.includes(S.finalHe) ? S.finalHe : S.he} />)}
+          {S.palavras.map(w => <Linha key={w.he} w={w} mark={marcaDe(S, w.he)} />)}
         </Card>
         <Card className="p-5 grid gap-2 content-start">
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
             Com o som {S.parSom} · <He size="inline">{S.parHe}</He>
           </p>
-          {S.parPalavras.map(w => <Linha key={w.he} w={w} mark={S.parHe} />)}
+          {S.parPalavras.map(w => <Linha key={w.he} w={w} mark={S.tipo === 'ponto' ? [...S.parHe][0]! : S.parHe} />)}
         </Card>
       </div>
 
@@ -346,6 +347,14 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       <Button size="lg" onClick={onDone} full>Continuar para a prática</Button>
     </div>
   );
+}
+
+/* A letra a destacar numa palavra. No Sin, a letra sem o ponto: o ponto do
+   ש vem depois da vogal na ordem Unicode (שְׂ = ש + sheva + ponto), e o par
+   "ש + ponto" nem sempre aparece colado dentro da palavra. */
+function marcaDe(S: SomLicao, he: string): string {
+  if (S.tipo === 'ponto') return [...S.he][0]!;
+  return S.finalHe && he.includes(S.finalHe) ? S.finalHe : S.he;
 }
 
 function Par({ he, translit, audioId, destaque = false }: {

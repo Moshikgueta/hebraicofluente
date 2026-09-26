@@ -1,10 +1,11 @@
-/* As lições de som: Vet, Chaf, Fe, Tch, Dj e J (26/09/2026).
+/* As lições de som: Sin, Vet, Chaf, Fe, Tch, Dj e J (26/09/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Bet/Vet, Kaf/Chaf e Pe/Fe eram ensinados juntos, na lição da letra, e os
  * três sons modernos numa página só do módulo 7. Quem gravou o curso inteiro
  * notou o buraco de ouvido: não havia um momento só do V, só do F, só do TCH.
  * Agora cada som é uma lição do caminho, logo depois da letra que ele divide:
  *
+ *   ... Lámed → Resh → Sin               (módulo 2: o ponto do ש à esquerda)
  *   Bet → Vet → Kaf → Chaf → Pe → Fe   (módulo 5)
  *   Tch → Dj → J                        (módulo 7)
  *
@@ -80,9 +81,11 @@ export function leituraTrocada(translit: string, som: string, parSom: string): s
 export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exercise[] {
   const out: Exercise[] = [];
   const rand = rng(`banco-${S.id}`);
-  const letterId = S.tipo === 'daguesh' ? S.parId : 'mod7';
+  const letterId = S.tipo === 'gerech' ? 'mod7' : S.parId;
 
-  if (S.tipo === 'daguesh') {
+  /* Vet/Chaf/Fe (sem o daguesh) e o Sin (o ponto à esquerda) são o mesmo
+     exercício: sílaba contra sílaba, com um sinal de diferença. */
+  if (S.tipo !== 'gerech') {
     /* 1. a sílaba sem ponto: como se lê? (a do par é a errada) */
     S.silabas.forEach((s, i) => {
       const par = S.parSilabas[i];
@@ -90,7 +93,7 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
       out.push({
         id: `som-${S.id}-sil-${i}`, kind: 'syllable-reading', letterId, skill: 'som',
         promptPt: 'Como se lê esta sílaba?', he: s.he, options, answer,
-        explainPt: `Sem o ponto: ${s.he} é "${s.translit}". Com o ponto, ${par?.he ?? S.parHe} seria "${par?.translit ?? S.parSom}".`
+        explainPt: `${s.he}, ${S.rotuloPt}, é "${s.translit}". ${par?.he ?? S.parHe}, ${S.parRotuloPt}, seria "${par?.translit ?? S.parSom}".`
       });
     });
     /* 2. o som dado, o desenho pedido: com ponto ou sem? */
@@ -101,7 +104,7 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
       out.push({
         id: `som-${S.id}-des-${i}`, kind: 'sound-to-syllable', letterId, skill: 'ler',
         promptPt: 'Qual destas se lê assim?', sound: s.translit, options, answer,
-        explainPt: `"${s.translit}" é ${s.he}, sem o ponto. ${par.he}, com o ponto, é "${par.translit}".`
+        explainPt: `"${s.translit}" é ${s.he}, ${S.rotuloPt}. ${par.he}, ${S.parRotuloPt}, é "${par.translit}".`
       });
     });
     /* 3. a palavra: a leitura certa contra a de quem não olhou o ponto */
@@ -112,7 +115,7 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
       out.push({
         id: `som-${S.id}-ler-${i}`, kind: 'syllable-reading', letterId, skill: 'ler',
         promptPt: 'Como se lê esta palavra?', he: w.he, options, answer,
-        explainPt: `${w.he} - "${w.translit}", ${w.pt}. A letra está sem o ponto: soa ${S.som.toUpperCase()}.`
+        explainPt: `${w.he} - "${w.translit}", ${w.pt}. A letra está ${S.rotuloPt}: soa ${S.som.toUpperCase()}.`
       });
     });
     /* 4. ouvir a sílaba e achar o desenho, onde houver gravação */
@@ -123,7 +126,7 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
       out.push({
         id: `som-${S.id}-ouv-${i}`, kind: 'listen-syllable', letterId, skill: 'ouvir',
         promptPt: 'Ouça. Qual foi a sílaba?', audioId: s.audioId, options, answer,
-        explainPt: `Foi ${s.he}, "${s.translit}" - sem o ponto.`
+        explainPt: `Foi ${s.he}, "${s.translit}" - ${S.rotuloPt}.`
       });
     });
   } else {
