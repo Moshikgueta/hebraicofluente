@@ -145,17 +145,6 @@ export default function Page() {
           usar o microfone, e a gravação fica só no seu aparelho: some quando você sai
           da página e nunca é enviada para nós nem para ninguém.
         </p>
-        {/* 26/09/2026: o botão "Achei um erro" dos exercícios
-            (components/learn/RelatarErro.tsx, worker/src/api/relatos.js). O
-            relato não é ligado à conta; o único dado que pode ser pessoal é o
-            que a própria pessoa escrever no comentário. */}
-        <p>
-          <strong>Relatos de erro.</strong> Se você usar &ldquo;Achei um erro neste
-          exercício&rdquo;, guardamos o exercício como ele apareceu para você, o motivo
-          que escolheu e o comentário, se escrever um. O relato <strong>não é ligado à
-          sua conta</strong>: não guardamos seu nome nem seu e-mail junto dele. Ele serve
-          só para corrigir o curso. Evite escrever dados pessoais no comentário.
-        </p>
       </Artigo>
 
       <Artigo n={3} titulo="Com quem compartilhamos">
