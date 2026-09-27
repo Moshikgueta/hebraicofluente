@@ -286,7 +286,11 @@ export async function verify({ request, env }) {
      na conta sem avisar ninguém. O pedido fica `pending` até alguém liberar à
      mão, e a tela do comprador precisa saber disso para parar de girar em vez
      de prometer uma confirmação que não vem. */
-  if (order.status === 'pending' && !pixDireto()) {
+  /* `failed` também (27/09/2026): um cartão recusado marca o pedido, e a
+     segunda tentativa, aprovada, era invisível para esta consulta - só o
+     aviso da Mercado Pago a liberava, e um aviso perdido deixava quem pagou
+     do lado de fora. */
+  if ((order.status === 'pending' || order.status === 'failed') && !pixDireto()) {
     /* Cada consulta aqui é uma chamada à Mercado Pago com a nossa
        credencial. A tela pergunta a cada três segundos; um laço perguntaria
        mil vezes por minuto e gastaria a cota do vendedor com a conta de um
@@ -582,6 +586,20 @@ async function applyPayment(env, order, payment, source) {
        ainda está `paid` (ver `refundOrder`). A leitura de `atual.status`
        aqui barra o aviso que chega depois; o que chega AO MESMO TEMPO lia
        "pago" também e recuava os meses uma segunda vez. */
+    /* O estorno de um pagamento que NÃO é o que pagou este pedido (27/09/2026).
+       Um comprador pode pagar o mesmo pedido duas vezes - o link do cartão
+       continua aceitando pagamento -, e o dono estorna a cobrança duplicada.
+       O aviso desse estorno chega aqui com o pedido `paid`, e antes recuava
+       os doze meses que o OUTRO pagamento, intacto, continua pagando.
+       `markPaid` guarda em `provider_ref` o id do pagamento que pagou; o
+       estorno só fecha a porta quando é dele. */
+    if (atual.status === 'paid' && atual.provider_ref && String(atual.provider_ref) !== String(payment.id)) {
+      if (fresh) {
+        await log(env, order.account_id, 'estorno-duplicado',
+          `${order.id}: estornado ${payment.id}, o pedido segue pago por ${atual.provider_ref}`);
+      }
+      return status;
+    }
     if (atual.status === 'paid') {
       const r = await refundOrder(env, {
         accountId: order.account_id,
@@ -610,7 +628,17 @@ async function applyPayment(env, order, payment, source) {
      propósito: se o pedido já está pago, a linha seguinte encerra; se NÃO
      está - uma liberação que caiu no meio, entre gravar o evento e gravar o
      direito - o reenvio é justamente a chance de terminar o serviço. */
-  if (atual.status === 'paid') return 'paid';
+  if (atual.status === 'paid') {
+    /* Um SEGUNDO pagamento aprovado para um pedido já pago é uma cobrança em
+       dobro: o comprador pagou duas vezes. Não muda o acesso, mas precisa
+       aparecer na trilha - antes passava calado, e o dono só descobria pela
+       reclamação. O `fresh` evita repetir a linha a cada reenvio do aviso. */
+    if (fresh && atual.provider_ref && String(atual.provider_ref) !== String(payment.id)) {
+      await log(env, order.account_id, 'pagamento-duplicado',
+        `${order.id}: pago por ${atual.provider_ref} e de novo por ${payment.id} - estornar o segundo`);
+    }
+    return 'paid';
+  }
 
   /* O valor. Um pagamento aprovado de R$ 1,00 apontando para um pedido de
      R$ 147,00 não é um pagamento deste pedido - é alguém que montou o próprio

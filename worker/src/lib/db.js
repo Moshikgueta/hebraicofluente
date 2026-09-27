@@ -541,11 +541,16 @@ export async function markPaid(env, id, providerRef, at = now()) {
   return Number(r && r.meta && r.meta.changes) > 0;
 }
 
-/** Pendentes que já têm idade para valer uma pergunta ao provedor. */
+/** Pendentes que já têm idade para valer uma pergunta ao provedor.
+ *
+ *  Os `failed` entram também (27/09/2026): um cartão recusado marca o pedido,
+ *  o comprador tenta de novo no mesmo checkout e é aprovado - e esse pedido
+ *  ficava fora da varredura. Se o aviso da Mercado Pago se perdesse, quem
+ *  pagou não entrava nunca. Depois de 24 h eles expiram como os pendentes. */
 export function stalePendingOrders(env, { olderThanMs = 60_000, limit = 25 } = {}) {
   return env.DB.prepare(
     `SELECT * FROM orders
-      WHERE status = 'pending' AND created_at < ?
+      WHERE status IN ('pending', 'failed') AND created_at < ?
       ORDER BY created_at ASC LIMIT ?`
   ).bind(now() - olderThanMs, limit).all().then(r => r.results || []);
 }
