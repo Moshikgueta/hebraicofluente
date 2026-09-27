@@ -145,6 +145,19 @@ export default function Page() {
           usar o microfone, e a gravação fica só no seu aparelho: some quando você sai
           da página e nunca é enviada para nós nem para ninguém.
         </p>
+        {/* 27/09/2026: "Fale e seja corrigido" (components/learn/FalarECorrigir.tsx,
+            lib/fala.ts). A transcrição é do reconhecimento de fala do próprio
+            navegador; o curso não recebe o áudio, só o texto transcrito, e
+            não o guarda. */}
+        <p>
+          <strong>Correção da pronúncia.</strong> Se você usar &ldquo;Fale e seja
+          corrigido&rdquo;, a sua fala é transcrita pelo serviço de reconhecimento de
+          voz do seu navegador - o do Google, no Chrome e no Android, ou o da Apple, no
+          Safari e no iPhone -, sob as regras de privacidade de quem fez o navegador. O
+          curso não recebe o seu áudio: recebe só o texto transcrito, compara com a
+          palavra na tela e não o guarda. Se preferir que a sua voz não saia do
+          aparelho, use só o &ldquo;Gravar a minha&rdquo;.
+        </p>
       </Artigo>
 
       <Artigo n={3} titulo="Com quem compartilhamos">

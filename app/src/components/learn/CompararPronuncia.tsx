@@ -26,6 +26,7 @@ import { He } from '@/components/hebrew/He';
 import { hasAudio, useRegistroDeAudio } from './AudioButton';
 import { urlDoClipe } from '@/lib/audio-registro';
 import { acharVoz, barrasDoTrecho, paraMono, type Corte } from '@/lib/gravador';
+import { FalarECorrigir } from './FalarECorrigir';
 
 export type ItemDeComparacao = {
   he: string; translit?: string | null; audioId: string | null;
@@ -315,6 +316,9 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
       )}
 
       {painel}
+      {/* Palavras (e só elas: a grade é de sílabas): o aluno fala e o curso
+          confere pelo reconhecimento do navegador. Some onde não há. */}
+      <FalarECorrigir alvo={item.he} translit={item.translit} />
     </section>
   );
 }
