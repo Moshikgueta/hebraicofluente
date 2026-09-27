@@ -13,14 +13,27 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { allLetters } from '../src/lib/content';
 import { buildCheckpoint, buildMiniTest, buildReview } from '@/lib/engine/exercises';
-import { escolherRodada, impressao, melhorRodada, registrarRodada } from '@/lib/rodadas';
+import {
+  escolherRodada, fundirRegistro, fundirRodadas, impressao, lerEspelho, limparEspelho, MEMORIA,
+  melhorRodada, registrarRodada, RODADAS_MUDOU, sincronizarEspelho
+} from '@/lib/rodadas';
+import { mergeStates } from '@/lib/state/merge';
+import { migrate } from '@/lib/state/migrate';
+import { EMPTY_STATE } from '@/lib/state/types';
 import type { Exercise } from '@/lib/engine/types';
 
 const mem = new Map<string, string>();
+const eventos: { type: string; detail: unknown }[] = [];
 beforeEach(() => {
   mem.clear();
+  eventos.length = 0;
   (globalThis as { window?: unknown }).window = {
-    localStorage: { getItem: (k: string) => mem.get(k) ?? null, setItem: (k: string, v: string) => { mem.set(k, v); } }
+    localStorage: {
+      getItem: (k: string) => mem.get(k) ?? null,
+      setItem: (k: string, v: string) => { mem.set(k, v); },
+      removeItem: (k: string) => { mem.delete(k); }
+    },
+    dispatchEvent: (e: { type: string; detail: unknown }) => { eventos.push(e); return true; }
   };
 });
 
@@ -111,5 +124,58 @@ describe('sem armazenamento', () => {
     const g = (s: string) => [s];
     expect(escolherRodada('x', g, imp => imp).itens).toEqual(['x-r0-0']);
     expect(() => registrarRodada('x', ['a'], i => i)).not.toThrow();
+  });
+});
+
+describe('na conta do aluno (27/09/2026)', () => {
+  const r = (n: number, ...vistas: string[]) => ({ n, vistas });
+
+  it('a fusão fica com o lado de mais rodadas, e é comutativa e idempotente', () => {
+    expect(fundirRegistro(r(2, 'a'), r(3, 'b'))).toEqual(r(3, 'b'));
+    expect(fundirRegistro(r(3, 'b'), r(2, 'a'))).toEqual(r(3, 'b'));
+    /* empate: decide o conteúdo, não o lado */
+    expect(fundirRegistro(r(2, 'a'), r(2, 'b'))).toEqual(fundirRegistro(r(2, 'b'), r(2, 'a')));
+    const A = { x: r(1, 'a'), y: r(4, 'c') }, B = { x: r(2, 'b'), z: r(1, 'd') };
+    expect(fundirRodadas(A, B)).toEqual(fundirRodadas(B, A));
+    expect(fundirRodadas(fundirRodadas(A, B), B)).toEqual(fundirRodadas(A, B));
+  });
+
+  it('o progresso funde as rodadas de dois aparelhos', () => {
+    const celular = { ...EMPTY_STATE, rodadas: { 'checkpoint-2': r(2, 'p', 'q') } };
+    const notebook = { ...EMPTY_STATE, rodadas: { 'checkpoint-2': r(1, 'p'), revisao: r(1, 'z') } };
+    expect(mergeStates(notebook, celular).rodadas).toEqual({ 'checkpoint-2': r(2, 'p', 'q'), revisao: r(1, 'z') });
+  });
+
+  it('o que vem do servidor com forma errada é descartado, não quebra a tela', () => {
+    const s = migrate({ ...EMPTY_STATE, rodadas: {
+      boa: r(1, 'a'), sem_n: { vistas: [] }, lixo: 'x', n_negativo: r(-1),
+      longa: { n: 1, vistas: Array.from({ length: 500 }, (_, i) => `i${i}`) }
+    } });
+    expect(Object.keys(s.rodadas).sort()).toEqual(['boa', 'longa']);
+    expect(s.rodadas.longa!.vistas).toHaveLength(MEMORIA);
+    expect(migrate({ ...EMPTY_STATE, rodadas: undefined }).rodadas).toEqual({});
+  });
+
+  it('registrar avisa o store, que leva a rodada para a conta', () => {
+    registrarRodada('x', ['a', 'b'], i => i);
+    expect(eventos).toHaveLength(1);
+    expect(eventos[0]!.type).toBe(RODADAS_MUDOU);
+    expect(eventos[0]!.detail).toEqual({ categoria: 'x', registro: r(1, 'a', 'b') });
+  });
+
+  it('o que outro aparelho fez desce para este, e o que este lembrava sobe', () => {
+    registrarRodada('so-aqui', ['a'], i => i);
+    const junto = sincronizarEspelho({ 'so-na-conta': r(3, 'z') });
+    expect(junto).toEqual({ 'so-na-conta': r(3, 'z'), 'so-aqui': r(1, 'a') });
+    expect(lerEspelho()).toEqual(junto);
+    /* e a escolha da rodada, que lê o espelho, já vê a da conta */
+    const g = (s: string) => [s];
+    expect(escolherRodada('so-na-conta', g, i => i).itens).toEqual(['so-na-conta-r3-0']);
+  });
+
+  it('sair da conta esquece o espelho', () => {
+    registrarRodada('x', ['a'], i => i);
+    limparEspelho();
+    expect(lerEspelho()).toEqual({});
   });
 });

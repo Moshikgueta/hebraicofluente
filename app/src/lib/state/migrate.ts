@@ -18,6 +18,7 @@
  */
 
 import { EMPTY_STATE, STATE_VERSION, type LearnerState } from './types';
+import { fundirRodadas, type Rodadas } from '@/lib/rodadas';
 
 /** v1: everything before per-skill mastery. */
 type V1 = Omit<LearnerState, 'version' | 'skills' | 'confusions' | 'firsts' | 'gym'> & { version: 1 };
@@ -81,6 +82,10 @@ export function migrate(raw: unknown): LearnerState {
     /* Os dois de 23/09/2026, pelo mesmo motivo do `gym`. */
     nomeHebraico: merged.nomeHebraico ?? null,
     kinds: merged.kinds ?? {},
+    /* 27/09/2026, pelo mesmo motivo. Passa pela fusão consigo mesmo, que
+       descarta registro malformado: isto vem do servidor ou do navegador, e
+       quem escolhe as perguntas confia na forma. */
+    rodadas: isObject(merged.rodadas) ? fundirRodadas(merged.rodadas as Rodadas, {}) : {},
     streak: merged.streak ?? { current: 0, longest: 0, lastDay: null },
     finalChallenge: merged.finalChallenge ?? { best: null, completedAt: null }
   };

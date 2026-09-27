@@ -1,6 +1,8 @@
 /* The learner's state. One shape, two adapters (localStorage now, Supabase
  * when there are keys), so nothing above this line knows where it is stored. */
 
+import type { Rodadas } from '@/lib/rodadas';
+
 export type DailyGoalMinutes = 5 | 10 | 15 | 20;
 
 export type Onboarding = {
@@ -185,6 +187,16 @@ export type LearnerState = {
    * precisa para mostrar erro por exercício sem guardar resposta a resposta.
    */
   kinds: Record<string, { h: number; m: number }>;
+
+  /* ── acrescentado à v2 em 27/09/2026 ─────────────────────────────── */
+
+  /**
+   * As rodadas de cada categoria de exercício: quantas o aluno concluiu e a
+   * "impressão" das perguntas que já viu (lib/rodadas.ts). Estava só no
+   * navegador; aqui ela vai para a conta, e refazer um exercício em outro
+   * aparelho também traz perguntas novas.
+   */
+  rodadas: Rodadas;
 };
 
 /**
@@ -228,7 +240,8 @@ export const EMPTY_STATE: LearnerState = {
   firsts: {},
   gym: {},
   nomeHebraico: null,
-  kinds: {}
+  kinds: {},
+  rodadas: {}
 };
 
 export interface ProgressStore {

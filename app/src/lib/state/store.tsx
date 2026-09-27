@@ -29,6 +29,9 @@ import {
   topConfusions, weakLetters, XP
 } from './rules';
 import { track } from '@/lib/analytics';
+import {
+  fundirRegistro, limparEspelho, registroValido, RODADAS_MUDOU, sincronizarEspelho, type Registro
+} from '@/lib/rodadas';
 import { EXAM_PASS } from '@/lib/engine/exam';
 
 /* Onde o progresso mora, nesta build.
@@ -41,6 +44,16 @@ import { EXAM_PASS } from '@/lib/engine/exam';
  * O Supabase continua aqui por ser uma porta escrita e nunca ligada; só entra
  * se alguém configurar as duas variáveis, e numa build de Worker isso seria
  * duas fontes de verdade para o mesmo progresso. */
+/* As rodadas de exercício (lib/rodadas.ts) têm um espelho no aparelho,
+   que as telas leem de forma síncrona. Ao carregar o progresso, o espelho e
+   a conta se fundem nos dois sentidos: o que outro aparelho fez desce para
+   este, e o que este lembrava antes de a conta guardar rodadas sobe. Devolve
+   o próprio estado quando nada mudou - para não gravar à toa. */
+function comEspelhoDeRodadas(s: LearnerState): LearnerState {
+  const junto = sincronizarEspelho(s.rodadas ?? {});
+  return JSON.stringify(junto) === JSON.stringify(s.rodadas ?? {}) ? s : { ...s, rodadas: junto };
+}
+
 function createStore(): ProgressStore {
   if (apiMode() === 'worker') return new WorkerProgressStore();
   return supabaseConfigured() ? new SupabaseProgressStore() : new LocalProgressStore();
@@ -183,13 +196,16 @@ export function ProgressProvider({
          ruim cabe uma lição inteira nesse intervalo. `mergeStates` é a mesma
          fusão que concilia dois aparelhos, e ela não desfaz nada. */
       const emMemoria = stateRef.current;
-      const inicial = sameState(emMemoria, EMPTY_STATE) ? s : mergeStates(emMemoria, s);
+      const fundido = sameState(emMemoria, EMPTY_STATE) ? s : mergeStates(emMemoria, s);
+      const inicial = comEspelhoDeRodadas(fundido);
       stateRef.current = inicial;
       setState(inicial);
       setReady(true);
       /* Só agora a gravação é liberada, e nesta ordem: liberar antes de o
          estado estar em mãos é reabrir o defeito que este arquivo conserta. */
       gravador.liberar();
+      /* O espelho trouxe rodadas que a conta não tinha: sobem agora. */
+      if (inicial !== fundido) gravador.agendar(400);
       /* A rota que o AppShell avisou enquanto o estado carregava ficou de
          fora da fusão; se ela não chegou a entrar, entra agora. */
       if (rotaPendente.current && inicial.lastRoute !== rotaPendente.current) {
@@ -220,6 +236,7 @@ export function ProgressProvider({
          e volta no login. */
       if (saiu) {
         gravador.cancelar();
+        limparEspelho();
         void store.esquecerAqui().then(() => {
           if (!alive) return;
           stateRef.current = EMPTY_STATE;
@@ -234,9 +251,11 @@ export function ProgressProvider({
         .then(() => store.load())
         .then(s => {
           if (!alive) return;
-          stateRef.current = s;
-          setState(s);
+          const comRodadas = comEspelhoDeRodadas(s);
+          stateRef.current = comRodadas;
+          setState(comRodadas);
           setSincronizado(store.sincronizado());
+          if (comRodadas !== s) gravador.agendar(400);
         });
     };
     window.addEventListener(SESSAO_MUDOU, aoMudar);
@@ -259,6 +278,26 @@ export function ProgressProvider({
     setState(synced.state);
     gravador.agendar(250);
   }, [gravador]);
+
+  /* Uma rodada concluída (lib/rodadas.ts avisa) entra no progresso e sobe
+     para a conta com ele. Sem XP nem conquista: é memória, não mérito. */
+  useEffect(() => {
+    const aoRegistrar = (e: Event) => {
+      const d = (e as CustomEvent<{ categoria?: string; registro?: Registro }>).detail;
+      const novo = registroValido(d?.registro);
+      if (!d?.categoria || !novo) return;
+      const s = agora();
+      const antes = registroValido(s.rodadas?.[d.categoria]);
+      const r = antes ? fundirRegistro(antes, novo) : novo;
+      if (antes && r === antes) return;
+      const next = { ...s, rodadas: { ...(s.rodadas ?? {}), [d.categoria]: r } };
+      stateRef.current = next;
+      setState(next);
+      gravador.agendar(250);
+    };
+    window.addEventListener(RODADAS_MUDOU, aoRegistrar);
+    return () => window.removeEventListener(RODADAS_MUDOU, aoRegistrar);
+  }, [agora, gravador]);
 
   const setOnboarding = useCallback((o: Onboarding) => {
     commit({ ...agora(), onboarding: o });
@@ -397,6 +436,7 @@ export function ProgressProvider({
 
   const reset = useCallback(() => {
     gravador.cancelar();
+    limparEspelho();
     void store.clear();
     stateRef.current = EMPTY_STATE;
     setState(EMPTY_STATE);

@@ -23,20 +23,38 @@
  * tela no meio - o registro de áudio que chega, uma resposta que muda o
  * estado - não troca as perguntas debaixo do aluno.
  *
- * Fica no navegador (localStorage), por aparelho. Sem ele (janela anônima,
- * armazenamento bloqueado) o curso funciona igual, só sem a memória.
+ * ONDE MORA (27/09/2026): na CONTA do aluno, junto do progresso
+ * (`LearnerState.rodadas`, que sobe e desce pela mesma sincronização das
+ * lições). Quem fez o checkpoint no celular não reencontra as mesmas
+ * perguntas no notebook. O localStorage continua como espelho síncrono:
+ * as telas escolhem a rodada no primeiro render, antes de o progresso
+ * chegar da rede, e o espelho é o que elas leem. A ponte é o store
+ * (lib/state/store.tsx): quando o progresso carrega, espelho e conta se
+ * fundem nos dois sentidos; quando uma rodada é registrada aqui, o evento
+ * `RODADAS_MUDOU` a leva para o estado, e dali para o servidor.
+ *
+ * Sem armazenamento nenhum (janela anônima, conta deslogada e navegador
+ * bloqueado) o curso funciona igual, só sem a memória.
  */
 
 import type { Exercise } from '@/lib/engine/types';
 
 const CHAVE = 'hf-rodadas-v1';
-/** Quantas impressões cada categoria guarda: umas quatro rodadas grandes. */
-export const MEMORIA = 80;
+/** Quantas impressões cada categoria guarda: três rodadas da prática (16),
+ *  quatro de um checkpoint (12). Vai para a conta, então é contado: umas
+ *  cem categorias no curso inteiro, 48 impressões de ~7 caracteres cada,
+ *  dá dezenas de KB no fim do curso - do tamanho do resto do progresso. */
+export const MEMORIA = 48;
 /** Quantos sorteios são consultados para cada lugar da rodada. */
 export const TENTATIVAS = 12;
 
-type Registro = { n: number; vistas: string[] };
-type Store = Record<string, Registro>;
+/** O que uma categoria lembra: quantas rodadas concluiu e o que já viu. */
+export type Registro = { n: number; vistas: string[] };
+export type Rodadas = Record<string, Registro>;
+type Store = Rodadas;
+
+/** Avisado quando uma rodada é registrada; o store o leva para a conta. */
+export const RODADAS_MUDOU = 'hf-rodadas-mudou';
 
 /* ── a impressão de uma pergunta ────────────────────────────────────────── */
 
@@ -138,12 +156,78 @@ function gravar(s: Store) {
   try { window.localStorage.setItem(CHAVE, JSON.stringify(s)); } catch { /* sem armazenamento */ }
 }
 
+/* ── a fusão (dois aparelhos) ───────────────────────────────────────────── */
+
+/**
+ * Funde o registro de uma categoria vindo de dois lugares.
+ *
+ * Vale o lado com MAIS rodadas concluídas, inteiro: as vistas são a lista do
+ * que aquele lado mostrou por último, em ordem, e misturar duas listas
+ * inventaria uma ordem que não houve. Empate de rodadas desempata pelo
+ * conteúdo, e não pelo lado: assim a fusão é comutativa (A com B dá o mesmo
+ * que B com A) e dois aparelhos não ficam trocando o registro um do outro.
+ */
+export function fundirRegistro(a: Registro, b: Registro): Registro {
+  if (a.n !== b.n) return a.n > b.n ? a : b;
+  return JSON.stringify(a.vistas) >= JSON.stringify(b.vistas) ? a : b;
+}
+
+const PERIGOSAS = new Set(['__proto__', 'constructor', 'prototype']);
+
+/** Um registro que se pode usar, ou `null`: o que vem do servidor ou do
+ *  navegador não é confiável na forma. */
+export function registroValido(v: unknown): Registro | null {
+  if (!v || typeof v !== 'object' || Array.isArray(v)) return null;
+  const { n, vistas } = v as { n?: unknown; vistas?: unknown };
+  if (typeof n !== 'number' || !Number.isFinite(n) || n < 0) return null;
+  if (!Array.isArray(vistas)) return null;
+  return {
+    n: Math.floor(n),
+    vistas: vistas.filter((x): x is string => typeof x === 'string' && x.length <= 32).slice(0, MEMORIA)
+  };
+}
+
+export function fundirRodadas(a: Rodadas, b: Rodadas): Rodadas {
+  const fora: Rodadas = {};
+  for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) {
+    if (PERIGOSAS.has(k)) continue;
+    const x = registroValido(a[k]), y = registroValido(b[k]);
+    const r = x && y ? fundirRegistro(x, y) : (x ?? y);
+    if (r) fora[k] = r;
+  }
+  return fora;
+}
+
+/* ── o espelho no aparelho ─────────────────────────────────────────────── */
+
+/** O espelho local inteiro (o store o funde com a conta ao carregar). */
+export const lerEspelho = (): Rodadas => fundirRodadas(ler(), {});
+
+/**
+ * Funde o que a conta trouxe com o espelho, grava o resultado no espelho e o
+ * devolve - para o store pôr de volta no estado, se mudou. É o que faz a
+ * memória de um aparelho chegar ao outro, e a memória antiga (de antes de a
+ * conta guardar isto) subir para a conta na primeira abertura.
+ */
+export function sincronizarEspelho(daConta: Rodadas): Rodadas {
+  if (typeof window === 'undefined') return daConta;
+  const junto = fundirRodadas(daConta, ler());
+  gravar(junto);
+  return junto;
+}
+
+/** Sair da conta esquece o espelho: numa máquina compartilhada, a memória de
+ *  quem saiu não pode decidir as perguntas de quem sentar depois. */
+export function limparEspelho() {
+  try { window.localStorage.removeItem(CHAVE); } catch { /* sem armazenamento */ }
+}
+
 /** A rodada atual de uma categoria: as perguntas e a semente que as gerou. */
 export function escolherRodada<T = Exercise>(
   categoria: string, gerar: (seed: string) => T[],
   imp: (t: T) => string = impressao as unknown as (t: T) => string
 ): { seed: string; itens: T[] } {
-  const r = ler()[categoria] ?? { n: 0, vistas: [] };
+  const r = registroValido(ler()[categoria]) ?? { n: 0, vistas: [] };
   const { seed, itens } = melhorRodada(gerar, categoria, r.n, r.vistas, imp);
   return { seed, itens };
 }
@@ -155,11 +239,16 @@ export function registrarRodada<T = Exercise>(
 ) {
   if (typeof window === 'undefined') return;
   const s = ler();
-  const r = s[categoria] ?? { n: 0, vistas: [] };
+  const r = registroValido(s[categoria]) ?? { n: 0, vistas: [] };
   const novas = itens.map(imp);
-  s[categoria] = {
+  const registro = {
     n: r.n + 1,
     vistas: [...novas, ...r.vistas.filter(v => !novas.includes(v))].slice(0, MEMORIA)
   };
+  s[categoria] = registro;
   gravar(s);
+  /* Para a conta: o store escuta e põe no progresso, que sincroniza. */
+  try {
+    window.dispatchEvent(new CustomEvent(RODADAS_MUDOU, { detail: { categoria, registro } }));
+  } catch { /* sem eventos (teste sem DOM) */ }
 }
