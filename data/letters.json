@@ -507,7 +507,7 @@
         },
         {
           "t": "escolha",
-          "q": "A palavra {{נָתַן}} (deu) traz a mesma letra duas vezes, desenhada de dois jeitos. Por quê?",
+          "q": "A palavra {{נֹתֵן}} (dá) traz a mesma letra duas vezes, desenhada de dois jeitos. Por quê?",
           "opcoes": [
             "Porque uma está no começo e a outra no fim da palavra",
             "Porque são letras diferentes com o mesmo som",
@@ -594,14 +594,9 @@
         "pt": "amém"
       },
       {
-        "he": "נָתַן",
-        "translit": "natan",
-        "pt": "deu"
-      },
-      {
-        "he": "תֵּן",
-        "translit": "ten",
-        "pt": "dá! (imperativo)"
+        "he": "נֹתֵן",
+        "translit": "notén",
+        "pt": "dá, está dando"
       },
       {
         "he": "מִן",
@@ -1829,9 +1824,9 @@
         "pt": "canção"
       },
       {
-        "he": "אָמַר",
-        "translit": "amar",
-        "pt": "disse"
+        "he": "אֹמֵר",
+        "translit": "omer",
+        "pt": "diz, está dizendo"
       },
       {
         "he": "הַר",
