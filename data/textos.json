@@ -477,34 +477,34 @@
     },
     {
       "modulo": 7,
-      "tituloPt": "Chegou?",
+      "tituloPt": "No hotel",
       "tipoPt": "Conversa no WhatsApp",
       "revisado": true,
-      "introPt": "A Dana está viajando pela América do Sul, e a mãe quer saber se ela chegou bem. Repare nas palavras de fora, com o gerech.",
+      "introPt": "A Dana está viajando pela América do Sul, e a mãe manda mensagem para saber como ela está. Repare nas palavras de fora, com o gerech.",
       "linhas": [
         {
           "quem": "Mãe",
-          "he": "דָּנָה, הִגַּעְתְּ לַמָּלוֹן?",
-          "translit": "Dana, higát lamalon?",
-          "pt": "Dana, chegou ao hotel?"
+          "he": "דָּנָה, אַתְּ בַּמָּלוֹן?",
+          "translit": "Dana, at bamalon?",
+          "pt": "Dana, você está no hotel?"
         },
         {
           "quem": "Dana",
-          "he": "כֵּן! עָשִׂיתִי צ׳ק-אין. הַמָּלוֹן יָפֶה.",
-          "translit": "ken! asíti tchek-in. hamalon yafé.",
-          "pt": "Sim! Fiz o check-in. O hotel é bonito."
+          "he": "כֵּן! אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו.",
+          "translit": "ken! aní ossá tchek-in achshav.",
+          "pt": "Sim! Estou fazendo o check-in agora."
         },
         {
           "quem": "Mãe",
-          "he": "וְלָקַחְתְּ פיג׳מה?",
-          "translit": "velakácht pidjama?",
-          "pt": "E você levou pijama?"
+          "he": "יֵשׁ לָךְ פיג׳מה?",
+          "translit": "yesh lach pidjama?",
+          "pt": "Você tem pijama?"
         },
         {
           "quem": "Dana",
-          "he": "שָׁכַחְתִּי! אֶקְנֶה פֹּה.",
-          "translit": "shacháchti! ekné po.",
-          "pt": "Esqueci! Compro aqui."
+          "he": "אֵין לִי! אֲנִי קוֹנָה פֹּה.",
+          "translit": "ein li! aní koná po.",
+          "pt": "Não tenho! Compro aqui."
         },
         {
           "quem": "Mãe",
@@ -521,24 +521,14 @@
       ],
       "novas": [
         {
-          "he": "הִגַּעְתְּ",
-          "translit": "higát",
-          "pt": "você chegou (para mulher)"
-        },
-        {
-          "he": "לַ־",
-          "translit": "la-",
-          "pt": "para o, para a, ao (grudado na palavra)"
-        },
-        {
           "he": "מָלוֹן",
           "translit": "malon",
           "pt": "hotel"
         },
         {
-          "he": "עָשִׂיתִי",
-          "translit": "asíti",
-          "pt": "eu fiz"
+          "he": "עוֹשָׂה",
+          "translit": "ossá",
+          "pt": "faz, está fazendo (ela)"
         },
         {
           "he": "צ׳ק-אין",
@@ -546,19 +536,24 @@
           "pt": "check-in"
         },
         {
-          "he": "לָקַחְתְּ",
-          "translit": "lakácht",
-          "pt": "você levou (para mulher)"
+          "he": "עַכְשָׁיו",
+          "translit": "achshav",
+          "pt": "agora"
         },
         {
-          "he": "שָׁכַחְתִּי",
-          "translit": "shacháchti",
-          "pt": "eu esqueci"
+          "he": "יֵשׁ לָךְ",
+          "translit": "yesh lach",
+          "pt": "você tem (para mulher)"
         },
         {
-          "he": "אֶקְנֶה",
-          "translit": "ekné",
-          "pt": "vou comprar"
+          "he": "אֵין לִי",
+          "translit": "ein li",
+          "pt": "eu não tenho"
+        },
+        {
+          "he": "קוֹנָה",
+          "translit": "koná",
+          "pt": "compra, está comprando (ela)"
         },
         {
           "he": "פֹּה",
@@ -581,18 +576,24 @@
             "Em casa"
           ],
           "certa": 1,
-          "porque": "{{הִגַּעְתְּ לַמָּלוֹן?}} e ela responde {{כֵּן}}: chegou ao hotel."
+          "porque": "A mãe pergunta {{אַתְּ בַּמָּלוֹן?}} e ela responde {{כֵּן}}: sim."
         },
         {
           "t": "escolha",
-          "q": "O que a Dana esqueceu?",
+          "q": "O que a Dana está fazendo agora?",
           "opcoes": [
-            "O passaporte",
-            "O pijama",
-            "O celular"
+            "O check-in",
+            "Comprando pijama",
+            "Dormindo"
           ],
-          "certa": 1,
-          "porque": "{{שָׁכַחְתִּי!}}: esqueci - o pijama que a mãe perguntou."
+          "certa": 0,
+          "porque": "{{אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו}}: estou fazendo o check-in agora."
+        },
+        {
+          "t": "vf",
+          "q": "A Dana tem pijama.",
+          "certa": false,
+          "porque": "{{אֵין לִי!}}: não tenho - e ela vai comprar lá."
         },
         {
           "t": "escolha",
@@ -604,12 +605,6 @@
           ],
           "certa": 0,
           "porque": "{{מָחָר צ׳ילה}}: amanhã, Chile."
-        },
-        {
-          "t": "vf",
-          "q": "O hotel é feio.",
-          "certa": false,
-          "porque": "{{יָפֶה}} é bonito."
         }
       ]
     }
