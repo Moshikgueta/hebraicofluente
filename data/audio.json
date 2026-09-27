@@ -8,7 +8,7 @@
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
   "generatedAt": "2026-09-27",
-  "total": 505,
+  "total": 499,
   "waves": [
     {
       "id": 1,
@@ -38,7 +38,7 @@
       "id": 5,
       "titlePt": "Leituras bônus",
       "notePt": "Os textos bíblicos e as bênçãos de Recompensas, uma linha por clipe, em ritmo de leitura: calmo, mas sem pausa entre as palavras.",
-      "count": 72
+      "count": 66
     }
   ],
   "clips": [
@@ -6275,34 +6275,8 @@
       "file": "he-019bdd92.mp3"
     },
     {
-      "num": 490,
-      "seq": 471,
-      "he": "שִׁיר הַמַּעֲלוֹת לְדָוִד",
-      "translit": "shir ha-maalót leDavíd",
-      "gloss": "Cântico das subidas, de Davi.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Salmo 133:1"
-      ],
-      "file": "he-7c78002c.mp3"
-    },
-    {
-      "num": 491,
-      "seq": 472,
-      "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד",
-      "translit": "hinéi ma-tóv uma-naím shévet achím gam-yáchad",
-      "gloss": "Vejam como é bom e agradável os irmãos viverem juntos.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Salmo 133:1"
-      ],
-      "file": "he-1cb2cd23.mp3"
-    },
-    {
       "num": 492,
-      "seq": 473,
+      "seq": 471,
       "he": "יְבָרֶכְךָ יְהוָה וְיִשְׁמְרֶךָ",
       "translit": "yevarechechá Adonái veyishmerécha",
       "gloss": "O Senhor te abençoe e te guarde.",
@@ -6315,7 +6289,7 @@
     },
     {
       "num": 493,
-      "seq": 474,
+      "seq": 472,
       "he": "יָאֵר יְהוָה פָּנָיו אֵלֶיךָ וִיחֻנֶּךָּ",
       "translit": "yaér Adonái panáv elécha vichunéka",
       "gloss": "O Senhor faça brilhar o seu rosto sobre ti e tenha misericórdia de ti.",
@@ -6328,7 +6302,7 @@
     },
     {
       "num": 494,
-      "seq": 475,
+      "seq": 473,
       "he": "יִשָּׂא יְהוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם",
       "translit": "yisá Adonái panáv elécha veyasém lechá shalóm",
       "gloss": "O Senhor volte o seu rosto para ti e te dê a paz.",
@@ -6338,6 +6312,32 @@
         "leitura bônus: Números 6:24-26"
       ],
       "file": "he-652afad4.mp3"
+    },
+    {
+      "num": 543,
+      "seq": 474,
+      "he": "וְקָרָא זֶה אֶל־זֶה וְאָמַר",
+      "translit": "vekará ze el-ze veamár",
+      "gloss": "E um clamava ao outro, dizendo:",
+      "kind": "frase",
+      "wave": 5,
+      "where": [
+        "leitura bônus: Isaías 6:3"
+      ],
+      "file": "he-fa37866a.mp3"
+    },
+    {
+      "num": 544,
+      "seq": 475,
+      "he": "קָדוֹשׁ קָדוֹשׁ קָדוֹשׁ יְהוָה צְבָאוֹת מְלֹא כָל־הָאָרֶץ כְּבוֹדוֹ",
+      "translit": "kadósh kadósh kadósh Adonái tsevaót, meló chol-haárets kevodó",
+      "gloss": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória.",
+      "kind": "frase",
+      "wave": 5,
+      "where": [
+        "leitura bônus: Isaías 6:3"
+      ],
+      "file": "he-6e348b26.mp3"
     },
     {
       "num": 541,
@@ -6366,112 +6366,34 @@
       "file": "he-38e8c761.mp3"
     },
     {
-      "num": 543,
+      "num": 490,
       "seq": 478,
-      "he": "וְקָרָא זֶה אֶל־זֶה וְאָמַר",
-      "translit": "vekará ze el-ze veamár",
-      "gloss": "E um clamava ao outro, dizendo:",
+      "he": "שִׁיר הַמַּעֲלוֹת לְדָוִד",
+      "translit": "shir ha-maalót leDavíd",
+      "gloss": "Cântico das subidas, de Davi.",
       "kind": "frase",
       "wave": 5,
       "where": [
-        "leitura bônus: Isaías 6:3"
+        "leitura bônus: Salmo 133:1"
       ],
-      "file": "he-fa37866a.mp3"
+      "file": "he-7c78002c.mp3"
     },
     {
-      "num": 544,
+      "num": 491,
       "seq": 479,
-      "he": "קָדוֹשׁ קָדוֹשׁ קָדוֹשׁ יְהוָה צְבָאוֹת מְלֹא כָל־הָאָרֶץ כְּבוֹדוֹ",
-      "translit": "kadósh kadósh kadósh Adonái tsevaót, meló chol-haárets kevodó",
-      "gloss": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória.",
+      "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד",
+      "translit": "hinéi ma-tóv uma-naím shévet achím gam-yáchad",
+      "gloss": "Vejam como é bom e agradável os irmãos viverem juntos.",
       "kind": "frase",
       "wave": 5,
       "where": [
-        "leitura bônus: Isaías 6:3"
+        "leitura bônus: Salmo 133:1"
       ],
-      "file": "he-6e348b26.mp3"
-    },
-    {
-      "num": 545,
-      "seq": 480,
-      "he": "וְשָׁפַט בֵּין הַגּוֹיִם וְהוֹכִיחַ לְעַמִּים רַבִּים",
-      "translit": "veshafát bein hagoyím, vehochíach leamím rabím",
-      "gloss": "Ele julgará entre as nações e será o árbitro de muitos povos.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Isaías 2:4"
-      ],
-      "file": "he-573ee157.mp3"
-    },
-    {
-      "num": 546,
-      "seq": 481,
-      "he": "וְכִתְּתוּ חַרְבוֹתָם לְאִתִּים וַחֲנִיתוֹתֵיהֶם לְמַזְמֵרוֹת",
-      "translit": "vechitetú charvotám leitím, vachanitoteihém lemazmerót",
-      "gloss": "Das suas espadas farão arados, e das suas lanças, foices.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Isaías 2:4"
-      ],
-      "file": "he-9d8eb52a.mp3"
-    },
-    {
-      "num": 547,
-      "seq": 482,
-      "he": "לֹא־יִשָּׂא גוֹי אֶל־גּוֹי חֶרֶב וְלֹא־יִלְמְדוּ עוֹד מִלְחָמָה",
-      "translit": "lo-yisá goi el-goi chérev, velo-yilmedú od milchamá",
-      "gloss": "Uma nação não levantará a espada contra outra, e não aprenderão mais a guerra.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Isaías 2:4"
-      ],
-      "file": "he-3892327c.mp3"
-    },
-    {
-      "num": 548,
-      "seq": 483,
-      "he": "הִגִּיד לְךָ אָדָם מַה־טּוֹב",
-      "translit": "higuíd lechá adám ma-tov",
-      "gloss": "Ele te declarou, ó homem, o que é bom,",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Miqueias 6:8"
-      ],
-      "file": "he-e18ac462.mp3"
-    },
-    {
-      "num": 549,
-      "seq": 484,
-      "he": "וּמָה־יְהוָה דּוֹרֵשׁ מִמְּךָ",
-      "translit": "umá-Adonái dorésh mimechá",
-      "gloss": "e o que o Senhor pede de ti:",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Miqueias 6:8"
-      ],
-      "file": "he-77576120.mp3"
-    },
-    {
-      "num": 550,
-      "seq": 485,
-      "he": "כִּי אִם־עֲשׂוֹת מִשְׁפָּט וְאַהֲבַת חֶסֶד וְהַצְנֵעַ לֶכֶת עִם־אֱלֹהֶיךָ",
-      "translit": "ki im-asót mishpát veahavát chésed, vehatsnéa léchet im-Elohécha",
-      "gloss": "nada além de praticar a justiça, amar a bondade e andar humildemente com o teu Deus.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Miqueias 6:8"
-      ],
-      "file": "he-e5c02683.mp3"
+      "file": "he-1cb2cd23.mp3"
     },
     {
       "num": 500,
-      "seq": 486,
+      "seq": 480,
       "he": "יְהוָה",
       "translit": "Adonái",
       "gloss": "como está no texto bíblico",
@@ -6484,7 +6406,7 @@
     },
     {
       "num": 519,
-      "seq": 487,
+      "seq": 481,
       "he": "יְהוָה אֱלֹהֵינוּ",
       "translit": "Adonái Elohéinu",
       "gloss": "o Senhor, nosso Deus (do Shemá)",
@@ -6497,7 +6419,7 @@
     },
     {
       "num": 502,
-      "seq": 488,
+      "seq": 482,
       "he": "בְּרֵאשִׁית",
       "translit": "bereshít",
       "gloss": "sheva no começo: «be»",
@@ -6510,7 +6432,7 @@
     },
     {
       "num": 503,
-      "seq": 489,
+      "seq": 483,
       "he": "שְׁמַע",
       "translit": "shemá",
       "gloss": "sheva no começo: «she»",
@@ -6523,7 +6445,7 @@
     },
     {
       "num": 504,
-      "seq": 490,
+      "seq": 484,
       "he": "אֱלֹהִים",
       "translit": "Elohím",
       "gloss": "«e» rápido",
@@ -6536,7 +6458,7 @@
     },
     {
       "num": 505,
-      "seq": 491,
+      "seq": 485,
       "he": "אֲשֶׁר",
       "translit": "ashér",
       "gloss": "«a» rápido",
@@ -6549,7 +6471,7 @@
     },
     {
       "num": 506,
-      "seq": 492,
+      "seq": 486,
       "he": "כָּל־יְמֵי",
       "translit": "kol-yeméi",
       "gloss": "todos os dias de",
@@ -6562,7 +6484,7 @@
     },
     {
       "num": 507,
-      "seq": 493,
+      "seq": 487,
       "he": "בְּכָל־לְבָבְךָ",
       "translit": "bechol-levavchá",
       "gloss": "com todo o teu coração",
@@ -6575,7 +6497,7 @@
     },
     {
       "num": 508,
-      "seq": 494,
+      "seq": 488,
       "he": "וְרוּחַ",
       "translit": "veruách",
       "gloss": "e o espírito",
@@ -6588,7 +6510,7 @@
     },
     {
       "num": 509,
-      "seq": 495,
+      "seq": 489,
       "he": "עַל־פְּנֵי",
       "translit": "al-penéi",
       "gloss": "sobre a face de",
@@ -6601,7 +6523,7 @@
     },
     {
       "num": 510,
-      "seq": 496,
+      "seq": 490,
       "he": "כִּי־טוֹב",
       "translit": "ki-tov",
       "gloss": "que era bom",
@@ -6614,7 +6536,7 @@
     },
     {
       "num": 511,
-      "seq": 497,
+      "seq": 491,
       "he": "בָּרָא",
       "translit": "bará",
       "gloss": "com dagesh: «b»",
@@ -6627,7 +6549,7 @@
     },
     {
       "num": 512,
-      "seq": 498,
+      "seq": 492,
       "he": "וַיְהִי־בֹקֶר",
       "translit": "vayehí-vóker",
       "gloss": "sem dagesh: «v»",
@@ -6640,7 +6562,7 @@
     },
     {
       "num": 513,
-      "seq": 499,
+      "seq": 493,
       "he": "הַשָּׁמַיִם",
       "translit": "ha-shamáyim",
       "gloss": "dagesh no ש: o som não muda",
@@ -6653,7 +6575,7 @@
     },
     {
       "num": 514,
-      "seq": 500,
+      "seq": 494,
       "he": "אִירָא",
       "translit": "irá",
       "gloss": "temerei",
@@ -6666,7 +6588,7 @@
     },
     {
       "num": 515,
-      "seq": 501,
+      "seq": 495,
       "he": "לְבָנֶיךָ",
       "translit": "levanécha",
       "gloss": "a teus filhos",
@@ -6679,7 +6601,7 @@
     },
     {
       "num": 516,
-      "seq": 502,
+      "seq": 496,
       "he": "אֱלֹהֵינוּ",
       "translit": "Elohéinu",
       "gloss": "nosso Deus",
@@ -6692,7 +6614,7 @@
     },
     {
       "num": 517,
-      "seq": 503,
+      "seq": 497,
       "he": "וַיֹּאמֶר",
       "translit": "vayómer",
       "gloss": "e disse",
@@ -6705,7 +6627,7 @@
     },
     {
       "num": 518,
-      "seq": 504,
+      "seq": 498,
       "he": "וַיְהִי",
       "translit": "vayehí",
       "gloss": "e houve",

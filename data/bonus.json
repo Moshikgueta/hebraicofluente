@@ -29,7 +29,11 @@
     "",
     "27/09/2026: o dono do curso pediu o foco no texto bíblico e não nas rezas. As",
     "quatro bênçãos de reza (pão, vinho, velas, Shehecheyanu) saíram; a bênção",
-    "sacerdotal fica, porque é texto bíblico (Números 6)."
+    "sacerdotal fica, porque é texto bíblico (Números 6).",
+    "",
+    "27/09/2026: os versículos passam a ser os mais conhecidos, e os que chamam a atenção",
+    "de quem é cristão (pedido do dono). Saíram Isaías 2:4 e Miqueias 6:8. A numeração",
+    "segue a das Bíblias em português; quando a hebraica difere, `fontePt` diz as duas."
   ],
   "leituras": [
     {
@@ -283,22 +287,212 @@
       ]
     },
     {
-      "id": "salmo-133",
+      "id": "jeremias-29",
       "tipo": "curto",
-      "revisado": true,
-      "tituloPt": "Como é bom",
-      "fontePt": "Salmo 133:1",
-      "introPt": "Um versículo só, e talvez o mais cantado: הִנֵּה מַה־טּוֹב vira música em casamento, em festa e em reunião de amigos.",
+      "revisado": false,
+      "tituloPt": "Planos de paz",
+      "fontePt": "Jeremias 29:11",
+      "introPt": "Um dos versículos mais amados e citados: a promessa de um futuro e de uma esperança, numa carta de Jeremias aos exilados na Babilônia.",
       "linhas": [
         {
-          "he": "שִׁיר הַמַּעֲלוֹת לְדָוִד",
-          "translit": "shir ha-maalót leDavíd",
-          "pt": "Cântico das subidas, de Davi."
+          "he": "כִּי אָנֹכִי יָדַעְתִּי אֶת־הַמַּחֲשָׁבֹת אֲשֶׁר אָנֹכִי חֹשֵׁב עֲלֵיכֶם נְאֻם־יְהוָה",
+          "translit": "ki anochí yadáti et-hamachashavót ashér anochí choshév aleichém, neúm-Adonái",
+          "pt": "Porque eu sei os planos que tenho para vocês, diz o Senhor:"
         },
         {
-          "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד",
-          "translit": "hinéi ma-tóv uma-naím shévet achím gam-yáchad",
-          "pt": "Vejam como é bom e agradável os irmãos viverem juntos."
+          "he": "מַחְשְׁבוֹת שָׁלוֹם וְלֹא לְרָעָה לָתֵת לָכֶם אַחֲרִית וְתִקְוָה",
+          "translit": "machshevót shalóm velo leraá, latét lachém acharít vetikvá",
+          "pt": "planos de paz, e não de mal, para dar a vocês um futuro e uma esperança."
+        }
+      ]
+    },
+    {
+      "id": "josue-1",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Sê forte e corajoso",
+      "fontePt": "Josué 1:9",
+      "introPt": "O que Deus diz a Josué antes de ele entrar na terra prometida. חֲזַק וֶאֱמָץ, «chazák veemáts», se diz até hoje para dar coragem a alguém.",
+      "linhas": [
+        {
+          "he": "הֲלוֹא צִוִּיתִיךָ חֲזַק וֶאֱמָץ",
+          "translit": "haló tsivitícha: chazák veemáts",
+          "pt": "Não fui eu que te ordenei? Sê forte e corajoso."
+        },
+        {
+          "he": "אַל־תַּעֲרֹץ וְאַל־תֵּחָת",
+          "translit": "al-taaróts veal-techát",
+          "pt": "Não tenhas medo nem desanimes,"
+        },
+        {
+          "he": "כִּי עִמְּךָ יְהוָה אֱלֹהֶיךָ בְּכֹל אֲשֶׁר תֵּלֵךְ",
+          "translit": "ki imechá Adonái Elohécha bechól ashér teléch",
+          "pt": "porque o Senhor, teu Deus, está contigo por onde quer que fores."
+        }
+      ]
+    },
+    {
+      "id": "proverbios-3",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Confia no Senhor",
+      "fontePt": "Provérbios 3:5-6",
+      "introPt": "O conselho de Salomão para as decisões da vida: confiar no Senhor, e não só no próprio entendimento.",
+      "linhas": [
+        {
+          "he": "בְּטַח אֶל־יְהוָה בְּכָל־לִבֶּךָ",
+          "translit": "betách el-Adonái bechol-libécha",
+          "pt": "Confia no Senhor de todo o teu coração"
+        },
+        {
+          "he": "וְאֶל־בִּינָתְךָ אַל־תִּשָּׁעֵן",
+          "translit": "veel-binatchá al-tishaén",
+          "pt": "e não te apoies no teu próprio entendimento."
+        },
+        {
+          "he": "בְּכָל־דְּרָכֶיךָ דָעֵהוּ וְהוּא יְיַשֵּׁר אֹרְחֹתֶיךָ",
+          "translit": "bechol-derachécha daéhu, vehú yeyashér orchotécha",
+          "pt": "Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas."
+        }
+      ]
+    },
+    {
+      "id": "isaias-41",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Não temas",
+      "fontePt": "Isaías 41:10",
+      "introPt": "Uma das promessas mais repetidas da Bíblia, «não temas», com três verbos seguidos no fim: fortaleço, ajudo, sustento.",
+      "linhas": [
+        {
+          "he": "אַל־תִּירָא כִּי עִמְּךָ־אָנִי",
+          "translit": "al-tirá ki imechá-áni",
+          "pt": "Não temas, porque eu estou contigo;"
+        },
+        {
+          "he": "אַל־תִּשְׁתָּע כִּי־אֲנִי אֱלֹהֶיךָ",
+          "translit": "al-tishtá ki-aní Elohécha",
+          "pt": "não te assustes, porque eu sou o teu Deus."
+        },
+        {
+          "he": "אִמַּצְתִּיךָ אַף־עֲזַרְתִּיךָ אַף־תְּמַכְתִּיךָ בִּימִין צִדְקִי",
+          "translit": "imatstícha af-azartícha af-temachtícha bimín tsidkí",
+          "pt": "Eu te fortaleço, eu te ajudo, eu te sustento com a mão direita da minha justiça."
+        }
+      ]
+    },
+    {
+      "id": "isaias-40",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Asas como águias",
+      "fontePt": "Isaías 40:31",
+      "introPt": "O versículo das águias: três pares de verbos, subir, correr e caminhar, sem se cansar.",
+      "linhas": [
+        {
+          "he": "וְקוֹיֵ יְהוָה יַחֲלִיפוּ כֹחַ",
+          "translit": "vekovéi Adonái yachalífu chóach",
+          "pt": "Mas os que esperam no Senhor renovam as suas forças;"
+        },
+        {
+          "he": "יַעֲלוּ אֵבֶר כַּנְּשָׁרִים",
+          "translit": "yaalú éver kanesharím",
+          "pt": "sobem com asas, como águias;"
+        },
+        {
+          "he": "יָרוּצוּ וְלֹא יִיגָעוּ יֵלְכוּ וְלֹא יִיעָפוּ",
+          "translit": "yarútsu velo yigáu, yelchú velo yiáfu",
+          "pt": "correm e não se cansam, caminham e não se fatigam."
+        }
+      ]
+    },
+    {
+      "id": "jeremias-33",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Clama a mim",
+      "fontePt": "Jeremias 33:3",
+      "introPt": "Um convite à oração, dito a Jeremias quando ele estava preso: «clama a mim, e eu te responderei».",
+      "linhas": [
+        {
+          "he": "קְרָא אֵלַי וְאֶעֱנֶךָּ",
+          "translit": "kerá elái veeenéka",
+          "pt": "Clama a mim, e eu te responderei;"
+        },
+        {
+          "he": "וְאַגִּידָה לְּךָ גְּדֹלוֹת וּבְצֻרוֹת לֹא יְדַעְתָּם",
+          "translit": "veaguída lechá guedolót uvtsurót lo yedatám",
+          "pt": "e te anunciarei coisas grandes e escondidas, que você não conhece."
+        }
+      ]
+    },
+    {
+      "id": "josue-24",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Eu e a minha casa",
+      "fontePt": "Josué 24:15",
+      "introPt": "A decisão de Josué diante de todo o povo, que muita gente escreve na parede de casa. São só cinco palavras.",
+      "linhas": [
+        {
+          "he": "וְאָנֹכִי וּבֵיתִי נַעֲבֹד אֶת־יְהוָה",
+          "translit": "veanochí uveití naavód et-Adonái",
+          "pt": "Eu e a minha casa serviremos ao Senhor."
+        }
+      ]
+    },
+    {
+      "id": "salmo-91",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "À sombra do Todo-Poderoso",
+      "fontePt": "Salmo 91:1-2",
+      "introPt": "O salmo da proteção, que muita gente lê nos tempos difíceis. Aqui, os dois primeiros versículos. שַׁדַּי, «Shadái», é o Todo-Poderoso.",
+      "linhas": [
+        {
+          "he": "יֹשֵׁב בְּסֵתֶר עֶלְיוֹן בְּצֵל שַׁדַּי יִתְלוֹנָן",
+          "translit": "yoshév beséter elyón, betsél Shadái yitlonán",
+          "pt": "Quem habita no abrigo do Altíssimo descansa à sombra do Todo-Poderoso."
+        },
+        {
+          "he": "אֹמַר לַיהוָה מַחְסִי וּמְצוּדָתִי אֱלֹהַי אֶבְטַח־בּוֹ",
+          "translit": "omár ladonái: machsí umtsudatí, Elohái evtach-bó",
+          "pt": "Digo ao Senhor: meu refúgio e minha fortaleza, meu Deus, em quem confio."
+        }
+      ]
+    },
+    {
+      "id": "lamentacoes-3",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Novas a cada manhã",
+      "fontePt": "Lamentações 3:22-23",
+      "introPt": "No meio do livro mais triste da Bíblia, uma esperança: as misericórdias do Senhor se renovam a cada manhã.",
+      "linhas": [
+        {
+          "he": "חַסְדֵי יְהוָה כִּי לֹא־תָמְנוּ כִּי לֹא־כָלוּ רַחֲמָיו",
+          "translit": "chasdéi Adonái ki lo-támnu, ki lo-chálu rachamáv",
+          "pt": "As misericórdias do Senhor não têm fim, as suas compaixões não se esgotam;"
+        },
+        {
+          "he": "חֲדָשִׁים לַבְּקָרִים רַבָּה אֱמוּנָתֶךָ",
+          "translit": "chadashím labkarím, rabá emunatécha",
+          "pt": "elas se renovam a cada manhã. Grande é a tua fidelidade!"
+        }
+      ]
+    },
+    {
+      "id": "salmo-119",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Lâmpada para os meus pés",
+      "fontePt": "Salmo 119:105",
+      "introPt": "Do maior capítulo da Bíblia, o versículo sobre a própria Palavra.",
+      "linhas": [
+        {
+          "he": "נֵר־לְרַגְלִי דְבָרֶךָ וְאוֹר לִנְתִיבָתִי",
+          "translit": "ner-leraglí devarécha, veór lintivatí",
+          "pt": "A tua palavra é lâmpada para os meus pés e luz para o meu caminho."
         }
       ]
     },
@@ -328,26 +522,6 @@
       ]
     },
     {
-      "id": "levitico-19",
-      "tipo": "curto",
-      "revisado": true,
-      "tituloPt": "Amarás o teu próximo",
-      "fontePt": "Levítico 19:18",
-      "introPt": "O versículo de onde vem «amarás o teu próximo como a ti mesmo». Ele termina com a assinatura que a Torá repete tantas vezes: אֲנִי יְהוָה, «eu sou o Senhor».",
-      "linhas": [
-        {
-          "he": "לֹא־תִקֹּם וְלֹא־תִטֹּר אֶת־בְּנֵי עַמֶּךָ",
-          "translit": "lo-tikóm velo-titór et-benéi amécha",
-          "pt": "Não te vingarás nem guardarás rancor contra os filhos do teu povo;"
-        },
-        {
-          "he": "וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ אֲנִי יְהוָה",
-          "translit": "veahavtá lereachá kamócha: aní Adonái",
-          "pt": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor."
-        }
-      ]
-    },
-    {
       "id": "isaias-6",
       "tipo": "curto",
       "revisado": true,
@@ -368,52 +542,87 @@
       ]
     },
     {
-      "id": "isaias-2",
+      "id": "isaias-9",
       "tipo": "curto",
-      "revisado": true,
-      "tituloPt": "Espadas em arados",
-      "fontePt": "Isaías 2:4",
-      "introPt": "A profecia da paz entre as nações. A última linha está gravada, em hebraico, perto da sede da ONU, em Nova York.",
+      "revisado": false,
+      "tituloPt": "Um menino nos nasceu",
+      "fontePt": "Isaías 9:6 (9:5 na Bíblia hebraica)",
+      "introPt": "Um dos textos mais lidos no Natal. Na Bíblia hebraica a numeração é um versículo antes: 9:5.",
       "linhas": [
         {
-          "he": "וְשָׁפַט בֵּין הַגּוֹיִם וְהוֹכִיחַ לְעַמִּים רַבִּים",
-          "translit": "veshafát bein hagoyím, vehochíach leamím rabím",
-          "pt": "Ele julgará entre as nações e será o árbitro de muitos povos."
+          "he": "כִּי־יֶלֶד יֻלַּד־לָנוּ בֵּן נִתַּן־לָנוּ",
+          "translit": "ki-yéled yulád-lánu, ben nitán-lánu",
+          "pt": "Porque um menino nos nasceu, um filho nos foi dado;"
         },
         {
-          "he": "וְכִתְּתוּ חַרְבוֹתָם לְאִתִּים וַחֲנִיתוֹתֵיהֶם לְמַזְמֵרוֹת",
-          "translit": "vechitetú charvotám leitím, vachanitoteihém lemazmerót",
-          "pt": "Das suas espadas farão arados, e das suas lanças, foices."
+          "he": "וַתְּהִי הַמִּשְׂרָה עַל־שִׁכְמוֹ",
+          "translit": "vatehí hamisrá al-shichmó",
+          "pt": "o governo está sobre os seus ombros,"
         },
         {
-          "he": "לֹא־יִשָּׂא גוֹי אֶל־גּוֹי חֶרֶב וְלֹא־יִלְמְדוּ עוֹד מִלְחָמָה",
-          "translit": "lo-yisá goi el-goi chérev, velo-yilmedú od milchamá",
-          "pt": "Uma nação não levantará a espada contra outra, e não aprenderão mais a guerra."
+          "he": "וַיִּקְרָא שְׁמוֹ פֶּלֶא יוֹעֵץ אֵל גִּבּוֹר אֲבִיעַד שַׂר־שָׁלוֹם",
+          "translit": "vayikrá shemó: péle yoéts, El guibór, Avíad, sar-shalóm",
+          "pt": "e o seu nome é chamado: Maravilhoso, Conselheiro, Deus Forte, Pai Eterno, Príncipe da Paz."
         }
       ]
     },
     {
-      "id": "miqueias-6",
+      "id": "isaias-53",
       "tipo": "curto",
-      "revisado": true,
-      "tituloPt": "O que o Senhor pede de ti",
-      "fontePt": "Miqueias 6:8",
-      "introPt": "Um versículo que resume os profetas em três pedidos: justiça, bondade e humildade.",
+      "revisado": false,
+      "tituloPt": "Pelas suas feridas",
+      "fontePt": "Isaías 53:5",
+      "introPt": "Do capítulo do servo sofredor, um dos textos do Antigo Testamento mais citados pelos cristãos.",
       "linhas": [
         {
-          "he": "הִגִּיד לְךָ אָדָם מַה־טּוֹב",
-          "translit": "higuíd lechá adám ma-tov",
-          "pt": "Ele te declarou, ó homem, o que é bom,"
+          "he": "וְהוּא מְחֹלָל מִפְּשָׁעֵנוּ מְדֻכָּא מֵעֲוֹנֹתֵינוּ",
+          "translit": "vehú mecholál mipeshaénu, meduká meavonotéinu",
+          "pt": "Mas ele foi ferido por causa das nossas transgressões, esmagado por causa das nossas culpas;"
         },
         {
-          "he": "וּמָה־יְהוָה דּוֹרֵשׁ מִמְּךָ",
-          "translit": "umá-Adonái dorésh mimechá",
-          "pt": "e o que o Senhor pede de ti:"
+          "he": "מוּסַר שְׁלוֹמֵנוּ עָלָיו וּבַחֲבֻרָתוֹ נִרְפָּא־לָנוּ",
+          "translit": "musár shloméinu aláv, uvachavurató nirpá-lánu",
+          "pt": "o castigo que nos traz a paz estava sobre ele, e pelas suas feridas fomos curados."
+        }
+      ]
+    },
+    {
+      "id": "levitico-19",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Amarás o teu próximo",
+      "fontePt": "Levítico 19:18",
+      "introPt": "O versículo de onde vem «amarás o teu próximo como a ti mesmo». Ele termina com a assinatura que a Torá repete tantas vezes: אֲנִי יְהוָה, «eu sou o Senhor».",
+      "linhas": [
+        {
+          "he": "לֹא־תִקֹּם וְלֹא־תִטֹּר אֶת־בְּנֵי עַמֶּךָ",
+          "translit": "lo-tikóm velo-titór et-benéi amécha",
+          "pt": "Não te vingarás nem guardarás rancor contra os filhos do teu povo;"
         },
         {
-          "he": "כִּי אִם־עֲשׂוֹת מִשְׁפָּט וְאַהֲבַת חֶסֶד וְהַצְנֵעַ לֶכֶת עִם־אֱלֹהֶיךָ",
-          "translit": "ki im-asót mishpát veahavát chésed, vehatsnéa léchet im-Elohécha",
-          "pt": "nada além de praticar a justiça, amar a bondade e andar humildemente com o teu Deus."
+          "he": "וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ אֲנִי יְהוָה",
+          "translit": "veahavtá lereachá kamócha: aní Adonái",
+          "pt": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor."
+        }
+      ]
+    },
+    {
+      "id": "salmo-133",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Como é bom",
+      "fontePt": "Salmo 133:1",
+      "introPt": "Um versículo só, e talvez o mais cantado: הִנֵּה מַה־טּוֹב vira música em casamento, em festa e em reunião de amigos.",
+      "linhas": [
+        {
+          "he": "שִׁיר הַמַּעֲלוֹת לְדָוִד",
+          "translit": "shir ha-maalót leDavíd",
+          "pt": "Cântico das subidas, de Davi."
+        },
+        {
+          "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד",
+          "translit": "hinéi ma-tóv uma-naím shévet achím gam-yáchad",
+          "pt": "Vejam como é bom e agradável os irmãos viverem juntos."
         }
       ]
     }
