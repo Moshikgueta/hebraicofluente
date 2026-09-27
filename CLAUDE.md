@@ -527,7 +527,8 @@ tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
   `usadaEm` = o dia coberto. Tudo ou nada. `displayStreak` usa a mesma conta.
 - **Nunca trancar conteúdo principal atrás de XP**: o aluno já pagou.
 - O XP é do cliente e pode ser forjado. Serve para prêmios digitais; qualquer
-  coisa que valha dinheiro (desconto na renovação) precisa de teto no servidor.
+  coisa que valha dinheiro não entra na loja sem uma decisão à parte do dono,
+  e com teto conferido no servidor.
 - `/loja` está no `GATED` do portão e no `PAGAS` de lib/seo.ts.
 - `tests/loja.test.ts`.
 
