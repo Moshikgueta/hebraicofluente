@@ -167,7 +167,13 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Logo size={30} />
           </Link>
           <div className="flex items-center gap-4">
-            {p.ready && <XPIndicator xp={p.state.xp} />}
+            {/* O XP leva às Recompensas (27/09/2026): é onde ele vale alguma coisa. */}
+            {p.ready && (
+              <Link href="/loja" aria-label={`${p.state.xp} XP. Abrir as recompensas`}
+                    className="inline-flex items-center min-h-[40px] px-1.5 rounded-[var(--r-md)] hover:bg-surface-2">
+                <XPIndicator xp={p.state.xp} />
+              </Link>
+            )}
             <ProfileLink />
           </div>
         </div>

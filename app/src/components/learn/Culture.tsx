@@ -18,6 +18,7 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Prose } from './Blocks';
 import { cultureUnlocked, cultureCards, type CultureCard } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
+import { cartasCompradas } from '@/lib/loja';
 
 const KIND_LABEL: Record<string, string> = {
   historia: 'História',
@@ -27,9 +28,15 @@ const KIND_LABEL: Record<string, string> = {
 
 export function CultureShelf() {
   const p = useProgress();
-  const unlocked = cultureUnlocked(p.mastered);
+  /* As abertas: por letras dominadas, e as trocadas por XP em Recompensas
+     (27/09/2026, lib/loja.ts). */
+  const compradas = cartasCompradas(p.state);
+  const unlocked = [
+    ...cultureUnlocked(p.mastered),
+    ...cultureCards().filter(c => c.unlockAt > p.mastered && compradas.has(c.id))
+  ];
   const locked = cultureCards()
-    .filter(c => c.unlockAt > p.mastered)
+    .filter(c => c.unlockAt > p.mastered && !compradas.has(c.id))
     .sort((a, b) => a.unlockAt - b.unlockAt);
 
   return (

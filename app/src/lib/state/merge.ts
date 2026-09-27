@@ -34,6 +34,7 @@ import {
   type SkillStat, type SrsItem
 } from './types';
 import { fundirRodadas } from '@/lib/rodadas';
+import { fundirCompras } from '@/lib/loja';
 
 /* ── auxiliares ─────────────────────────────────────────────────────────── */
 
@@ -265,7 +266,10 @@ export function mergeStates(local: LearnerState, remoto: LearnerState): LearnerS
     /* As rodadas: vale, por categoria, o lado com mais rodadas concluídas
        (lib/rodadas.ts, `fundirRegistro`). Comutativa e idempotente como o
        resto: o empate desempata pelo conteúdo, não pelo lado. */
-    rodadas: fundirRodadas(a.rodadas ?? {}, b.rodadas ?? {})
+    rodadas: fundirRodadas(a.rodadas ?? {}, b.rodadas ?? {}),
+    /* As trocas de XP: união por id (cada compra tem id próprio), e numa folga
+       comprada nos dois lados vale o uso MAIS CEDO. Comutativa e idempotente. */
+    loja: { compras: fundirCompras(a.loja?.compras ?? {}, b.loja?.compras ?? {}) }
   };
 }
 

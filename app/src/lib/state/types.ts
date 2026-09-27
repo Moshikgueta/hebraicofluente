@@ -197,6 +197,27 @@ export type LearnerState = {
    * aparelho também traz perguntas novas.
    */
   rodadas: Rodadas;
+
+  /* ── acrescentado à v2 em 27/09/2026 ─────────────────────────────── */
+
+  /**
+   * As trocas de XP (lib/loja.ts). O XP TOTAL (`xp`) é a conquista e nunca
+   * diminui; o que se pode gastar é o SALDO, `xp` menos a soma do que está
+   * aqui. Por isso gastar não apaga esforço nenhum.
+   */
+  loja: { compras: Record<string, Compra> };
+};
+
+/** Uma troca de XP. O id é único por compra (`folga:<instante>`, `carta:<id>`). */
+export type Compra = {
+  item: string;
+  custo: number;
+  /** ISO, quando foi comprada. */
+  em: string;
+  /** O que ela abriu, quando é um item com alvo (o id da carta). */
+  alvo?: string;
+  /** Só nas folgas: o dia que ela cobriu, quando já foi usada. */
+  usadaEm?: string | null;
 };
 
 /**
@@ -241,7 +262,8 @@ export const EMPTY_STATE: LearnerState = {
   gym: {},
   nomeHebraico: null,
   kinds: {},
-  rodadas: {}
+  rodadas: {},
+  loja: { compras: {} }
 };
 
 export interface ProgressStore {

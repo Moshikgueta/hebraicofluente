@@ -65,7 +65,9 @@ const GATED = [
      tools/export-content.mjs. */
   '/stroke-order',
   /* 26/09/2026: as lições de som (Vet, Chaf, Fe, Tch, Dj, J). */
-  '/som'
+  '/som',
+  /* 27/09/2026: as recompensas (trocar XP). */
+  '/loja'
 ];
 
 /* O curso que essas rotas pertencem. Quando o A1 tiver as próprias rotas,

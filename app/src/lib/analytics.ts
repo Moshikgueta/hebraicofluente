@@ -18,6 +18,7 @@ export type EventName =
   | 'mission_started' | 'mission_completed'
   | 'streak_updated' | 'achievement_unlocked'
   | 'first_reached'
+  | 'loja_compra'
   | 'gym_started' | 'gym_completed'
   /* Match, Blast e Teste. `jogo` diz qual. */
   | 'game_started' | 'game_completed'
