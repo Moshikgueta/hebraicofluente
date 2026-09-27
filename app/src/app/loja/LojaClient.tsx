@@ -104,7 +104,7 @@ export function LojaClient() {
   );
 }
 
-/* Textos bíblicos e bênçãos (lib/engine/bonus.ts). Só as revisadas; cada
+/* Textos e versículos bíblicos (lib/engine/bonus.ts). Só as revisadas; cada
    uma se oferece quando o aluno já domina a letra mais tardia dela - trocar
    XP por um texto que ainda não se consegue ler seria vender frustração. */
 function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
@@ -118,8 +118,8 @@ function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
       <div className="grid gap-1">
         <h2 id="leituras-bonus" className="font-display text-[21px] font-bold m-0">Leituras bônus</h2>
         <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-          Trechos do Antigo Testamento e bênçãos, com transliteração, tradução e a leitura gravada, linha a linha.
-          Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ou bênção ◆ {ITENS.bencao.custo}.
+          Trechos e versículos do Antigo Testamento, com transliteração, tradução e a leitura gravada, linha a linha.
+          Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ◆ {ITENS.bencao.custo}.
         </p>
         <Link href="/nikud-biblico" className="font-ui text-[14px] text-[var(--accent)] underline justify-self-start">
           Guia opcional e gratuito: o nikud da Bíblia →

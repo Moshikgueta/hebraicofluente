@@ -128,7 +128,7 @@ export const textosDoCurso = (): ConteudoPago['textos'] => textosPublicados(dado
 export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
   textosPublicados(dados().textos).find(t => t.modulo === n);
 
-/** As leituras bônus revisadas (textos bíblicos e bênçãos; ver engine/bonus.ts).
+/** As leituras bônus revisadas (textos e versículos bíblicos; ver engine/bonus.ts).
  *  `?? []`: um Worker publicado antes delas responde sem o campo. */
 export const leiturasBonus = (): LeituraBonus[] => leiturasPublicadas(dados().bonus ?? []);
 

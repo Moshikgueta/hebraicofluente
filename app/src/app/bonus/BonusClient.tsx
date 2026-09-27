@@ -1,6 +1,6 @@
 'use client';
 
-/* As leituras bônus do aluno: textos bíblicos e bênçãos (27/09/2026).
+/* As leituras bônus do aluno: textos e versículos bíblicos (27/09/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Abertas com XP em Recompensas (lib/loja.ts). Sem `?l=`, a lista das que o
  * aluno já tem; com `?l=<id>`, a leitura, com as mesmas ajudas do texto do
@@ -73,7 +73,7 @@ export function BonusClient() {
       <header className="grid gap-3">
         <h1 className="text-[27px] sm:text-[33px] font-bold m-0">Leituras bônus</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-          Textos do Antigo Testamento e bênçãos, com transliteração, tradução e a leitura gravada.
+          Trechos e versículos do Antigo Testamento, com transliteração, tradução e a leitura gravada.
           Você abre cada uma com XP, em Recompensas.
         </p>
       </header>

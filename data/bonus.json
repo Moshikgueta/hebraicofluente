@@ -1,32 +1,35 @@
 {
   "note": [
-    "LEITURAS BÔNUS - textos bíblicos e bênçãos trocados por XP em Recompensas (27/09/2026).",
+    "LEITURAS BÔNUS - textos e versículos bíblicos trocados por XP em Recompensas (27/09/2026).",
     "",
     "Pedido do dono do curso, para o público judeu, evangélico e Bnei Anusim que quer",
     "ler o Antigo Testamento. São RECOMPENSA, fora do caminho do curso: nada da",
     "trilha depende delas, e elas não valem XP.",
     "",
     "Por isso ficam fora da regra do curso de «só tempo presente»: é hebraico bíblico",
-    "e litúrgico, com o passado narrativo (וַיֹּאמֶר, «e disse»). A introdução de cada",
+    "com o passado narrativo (וַיֹּאמֶר, «e disse»). A introdução de cada",
     "uma avisa que a tradução está ali para ajudar, e que entender o hebraico bíblico",
     "é outro curso.",
     "",
-    "O Nome: nos textos bíblicos está escrito como no texto massorético (יְהוָה), e",
-    "nas bênçãos como nos livros de reza (יְיָ). Nos dois lê-se «Adonái», e é o que",
-    "a transliteração diz.",
+    "O Nome está escrito como no texto massorético (יְהוָה) e se lê «Adonái», que é o",
+    "que a transliteração diz.",
     "",
     "Pontuação sem os sinais de cantilação (te'amim), só as vogais. A tradução é",
     "nossa, literal, e não de uma edição da Bíblia com direitos.",
     "",
     "`revisado: false` até o dono do curso conferir o hebraico: só as revisadas",
     "aparecem na loja e entram no roteiro de gravação (onda 5). `tipo` escolhe o",
-    "item da loja: \"texto\" (200 XP) ou \"curto\" (versículo ou bênção, 100 XP).",
+    "item da loja: \"texto\" (200 XP) ou \"curto\" (versículo, 100 XP).",
     "`after` (a letra mais tardia) é CALCULADO pelo exportador.",
     "",
     "`guia` (27/09/2026): «O nikud da Bíblia», uma página à parte (/nikud-biblico), opcional e",
     "fora da trilha. Explica o que a Bíblia pontua além do que o curso ensina. Todo exemplo",
     "é recortado de uma linha das leituras acima (tests/loja.test.ts confere), e o de",
-    "te'amim (`ouvir`) toca a gravação da linha sem os sinais."
+    "te'amim (`ouvir`) toca a gravação da linha sem os sinais.",
+    "",
+    "27/09/2026: o dono do curso pediu o foco no texto bíblico e não nas rezas. As",
+    "quatro bênçãos de reza (pão, vinho, velas, Shehecheyanu) saíram; a bênção",
+    "sacerdotal fica, porque é texto bíblico (Números 6)."
   ],
   "leituras": [
     {
@@ -145,6 +148,141 @@
       ]
     },
     {
+      "id": "salmo-121",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "Levanto os meus olhos para os montes",
+      "fontePt": "Salmo 121",
+      "introPt": "Um salmo de viagem, dos «cânticos das subidas» que se cantavam a caminho de Jerusalém. A palavra que mais se repete é שֹׁמֵר, «guarda»: conte quantas vezes ela aparece.",
+      "linhas": [
+        {
+          "he": "שִׁיר לַמַּעֲלוֹת אֶשָּׂא עֵינַי אֶל־הֶהָרִים מֵאַיִן יָבֹא עֶזְרִי",
+          "translit": "shir lamaalót. esá einái el-heharím: meáyin yavó ezrí?",
+          "pt": "Cântico das subidas. Levanto os meus olhos para os montes: de onde virá o meu socorro?"
+        },
+        {
+          "he": "עֶזְרִי מֵעִם יְהוָה עֹשֵׂה שָׁמַיִם וָאָרֶץ",
+          "translit": "ezrí meím Adonái, osé shamáyim vaárets",
+          "pt": "O meu socorro vem do Senhor, que fez os céus e a terra."
+        },
+        {
+          "he": "אַל־יִתֵּן לַמּוֹט רַגְלֶךָ אַל־יָנוּם שֹׁמְרֶךָ",
+          "translit": "al-yitén lamót raglécha, al-yanúm shomerécha",
+          "pt": "Ele não deixará o teu pé tropeçar; não cochila aquele que te guarda."
+        },
+        {
+          "he": "הִנֵּה לֹא־יָנוּם וְלֹא יִישָׁן שׁוֹמֵר יִשְׂרָאֵל",
+          "translit": "hiné lo-yanúm velo yishán shomér Yisraél",
+          "pt": "Não cochila nem dorme o guarda de Israel."
+        },
+        {
+          "he": "יְהוָה שֹׁמְרֶךָ יְהוָה צִלְּךָ עַל־יַד יְמִינֶךָ",
+          "translit": "Adonái shomerécha, Adonái tsilechá al-yad yeminécha",
+          "pt": "O Senhor é quem te guarda; o Senhor é a tua sombra, à tua mão direita."
+        },
+        {
+          "he": "יוֹמָם הַשֶּׁמֶשׁ לֹא־יַכֶּכָּה וְיָרֵחַ בַּלָּיְלָה",
+          "translit": "yomám hashémesh lo-yakéka, veyaréach baláyla",
+          "pt": "De dia o sol não te ferirá, nem a lua de noite."
+        },
+        {
+          "he": "יְהוָה יִשְׁמָרְךָ מִכָּל־רָע יִשְׁמֹר אֶת־נַפְשֶׁךָ",
+          "translit": "Adonái yishmorchá mikol-ra, yishmór et-nafshécha",
+          "pt": "O Senhor te guardará de todo mal; ele guardará a tua vida."
+        },
+        {
+          "he": "יְהוָה יִשְׁמָר־צֵאתְךָ וּבוֹאֶךָ מֵעַתָּה וְעַד־עוֹלָם",
+          "translit": "Adonái yishmor-tsetechá uvoécha, meatá veád-olám",
+          "pt": "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre."
+        }
+      ]
+    },
+    {
+      "id": "rute-1",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "O teu povo é o meu povo",
+      "fontePt": "Rute 1:16-17",
+      "introPt": "Rute, que não era israelita, se recusa a deixar a sogra, Noemi, e escolhe o povo e o Deus dela. Para muitos, é o texto de quem volta ou chega ao povo judeu.",
+      "linhas": [
+        {
+          "he": "וַתֹּאמֶר רוּת אַל־תִּפְגְּעִי־בִי לְעָזְבֵךְ לָשׁוּב מֵאַחֲרָיִךְ",
+          "translit": "vatómer Rut: al-tifgueí-vi leozvéch lashúv meacharáyich",
+          "pt": "Rute disse: não insistas comigo para que eu te deixe e volte, deixando de te seguir."
+        },
+        {
+          "he": "כִּי אֶל־אֲשֶׁר תֵּלְכִי אֵלֵךְ וּבַאֲשֶׁר תָּלִינִי אָלִין",
+          "translit": "ki el-ashér teléchi eléch, uvaashér talíni alín",
+          "pt": "Pois aonde tu fores, eu irei, e onde tu pousares, eu pousarei."
+        },
+        {
+          "he": "עַמֵּךְ עַמִּי וֵאלֹהַיִךְ אֱלֹהָי",
+          "translit": "améch amí, velohá'yich Elohái",
+          "pt": "O teu povo será o meu povo, e o teu Deus, o meu Deus."
+        },
+        {
+          "he": "בַּאֲשֶׁר תָּמוּתִי אָמוּת וְשָׁם אֶקָּבֵר",
+          "translit": "baashér tamúti amút, vesham ekavér",
+          "pt": "Onde tu morreres, eu morrerei, e ali serei sepultada."
+        },
+        {
+          "he": "כֹּה יַעֲשֶׂה יְהוָה לִי וְכֹה יֹסִיף כִּי הַמָּוֶת יַפְרִיד בֵּינִי וּבֵינֵךְ",
+          "translit": "ko yaasé Adonái li vechó yosíf, ki hamávet yafríd beiní uveinéch",
+          "pt": "Que o Senhor me castigue, e mais ainda, se outra coisa que não a morte me separar de ti."
+        }
+      ]
+    },
+    {
+      "id": "eclesiastes-3",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "Tudo tem o seu tempo",
+      "fontePt": "Eclesiastes 3:1-8",
+      "introPt": "O texto bíblico mais fácil de ler em voz alta: a palavra עֵת, «tempo», se repete 28 vezes, e cada linha é um par de opostos. Um bom primeiro texto longo.",
+      "linhas": [
+        {
+          "he": "לַכֹּל זְמָן וְעֵת לְכָל־חֵפֶץ תַּחַת הַשָּׁמָיִם",
+          "translit": "lakól zman, veét lechol-chéfets táchat hashamáyim",
+          "pt": "Tudo tem o seu tempo, e há um momento para cada coisa debaixo do céu:"
+        },
+        {
+          "he": "עֵת לָלֶדֶת וְעֵת לָמוּת עֵת לָטַעַת וְעֵת לַעֲקוֹר נָטוּעַ",
+          "translit": "et lalédet veét lamút, et latáat veét laakór natúa",
+          "pt": "tempo de nascer e tempo de morrer, tempo de plantar e tempo de arrancar o que se plantou;"
+        },
+        {
+          "he": "עֵת לַהֲרוֹג וְעֵת לִרְפּוֹא עֵת לִפְרוֹץ וְעֵת לִבְנוֹת",
+          "translit": "et laharóg veét lirpó, et lifróts veét livnót",
+          "pt": "tempo de matar e tempo de curar, tempo de derrubar e tempo de construir;"
+        },
+        {
+          "he": "עֵת לִבְכּוֹת וְעֵת לִשְׂחוֹק עֵת סְפוֹד וְעֵת רְקוֹד",
+          "translit": "et livkót veét lischók, et sefód veét rekód",
+          "pt": "tempo de chorar e tempo de rir, tempo de lamentar e tempo de dançar;"
+        },
+        {
+          "he": "עֵת לְהַשְׁלִיךְ אֲבָנִים וְעֵת כְּנוֹס אֲבָנִים עֵת לַחֲבוֹק וְעֵת לִרְחֹק מֵחַבֵּק",
+          "translit": "et lehashlích avaním veét kenós avaním, et lachavók veét lirchók mechabék",
+          "pt": "tempo de espalhar pedras e tempo de juntar pedras, tempo de abraçar e tempo de se afastar do abraço;"
+        },
+        {
+          "he": "עֵת לְבַקֵּשׁ וְעֵת לְאַבֵּד עֵת לִשְׁמוֹר וְעֵת לְהַשְׁלִיךְ",
+          "translit": "et levakésh veét leabéd, et lishmór veét lehashlích",
+          "pt": "tempo de procurar e tempo de perder, tempo de guardar e tempo de jogar fora;"
+        },
+        {
+          "he": "עֵת לִקְרוֹעַ וְעֵת לִתְפּוֹר עֵת לַחֲשׁוֹת וְעֵת לְדַבֵּר",
+          "translit": "et likróa veét litpór, et lachashót veét ledabér",
+          "pt": "tempo de rasgar e tempo de costurar, tempo de calar e tempo de falar;"
+        },
+        {
+          "he": "עֵת לֶאֱהֹב וְעֵת לִשְׂנֹא עֵת מִלְחָמָה וְעֵת שָׁלוֹם",
+          "translit": "et leehóv veét lisnó, et milchamá veét shalóm",
+          "pt": "tempo de amar e tempo de odiar, tempo de guerra e tempo de paz."
+        }
+      ]
+    },
+    {
       "id": "salmo-133",
       "tipo": "curto",
       "revisado": true,
@@ -170,7 +308,7 @@
       "revisado": true,
       "tituloPt": "A bênção sacerdotal",
       "fontePt": "Números 6:24-26",
-      "introPt": "A bênção que os sacerdotes davam ao povo, e que muitos pais dizem aos filhos na sexta-feira à noite. Três versículos, cada um maior que o anterior.",
+      "introPt": "A bênção que Deus manda Aarão e os seus filhos darem ao povo de Israel. Três versículos, cada um maior que o anterior.",
       "linhas": [
         {
           "he": "יְבָרֶכְךָ יְהוָה וְיִשְׁמְרֶךָ",
@@ -190,82 +328,92 @@
       ]
     },
     {
-      "id": "bencao-pao",
+      "id": "levitico-19",
       "tipo": "curto",
       "revisado": true,
-      "tituloPt": "A bênção do pão",
-      "fontePt": "Bênção antes de comer pão (hamotsí)",
-      "introPt": "Toda bênção judaica começa com as mesmas seis palavras. Aprenda a primeira linha aqui e você já lê o começo de todas as outras.",
+      "tituloPt": "Amarás o teu próximo",
+      "fontePt": "Levítico 19:18",
+      "introPt": "O versículo de onde vem «amarás o teu próximo como a ti mesmo». Ele termina com a assinatura que a Torá repete tantas vezes: אֲנִי יְהוָה, «eu sou o Senhor».",
       "linhas": [
         {
-          "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם",
-          "translit": "barúch atá Adonái, Elohéinu mélech ha-olám",
-          "pt": "Bendito és tu, Senhor, nosso Deus, rei do universo,"
+          "he": "לֹא־תִקֹּם וְלֹא־תִטֹּר אֶת־בְּנֵי עַמֶּךָ",
+          "translit": "lo-tikóm velo-titór et-benéi amécha",
+          "pt": "Não te vingarás nem guardarás rancor contra os filhos do teu povo;"
         },
         {
-          "he": "הַמּוֹצִיא לֶחֶם מִן הָאָרֶץ",
-          "translit": "ha-motsí léchem min ha-árets",
-          "pt": "que tira o pão da terra."
+          "he": "וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ אֲנִי יְהוָה",
+          "translit": "veahavtá lereachá kamócha: aní Adonái",
+          "pt": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor."
         }
       ]
     },
     {
-      "id": "bencao-vinho",
+      "id": "isaias-6",
       "tipo": "curto",
       "revisado": true,
-      "tituloPt": "A bênção do vinho",
-      "fontePt": "Bênção antes de beber vinho",
-      "introPt": "A mesma abertura de toda bênção, e o fim muda: aqui, o fruto da videira. É a que abre o kidush do Shabat.",
+      "tituloPt": "Santo, santo, santo",
+      "fontePt": "Isaías 6:3",
+      "introPt": "O que os anjos proclamam na visão de Isaías. A palavra קָדוֹשׁ, «santo», vem três vezes seguidas.",
       "linhas": [
         {
-          "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם",
-          "translit": "barúch atá Adonái, Elohéinu mélech ha-olám",
-          "pt": "Bendito és tu, Senhor, nosso Deus, rei do universo,"
+          "he": "וְקָרָא זֶה אֶל־זֶה וְאָמַר",
+          "translit": "vekará ze el-ze veamár",
+          "pt": "E um clamava ao outro, dizendo:"
         },
         {
-          "he": "בּוֹרֵא פְּרִי הַגָּפֶן",
-          "translit": "boré pri ha-gáfen",
-          "pt": "que cria o fruto da videira."
+          "he": "קָדוֹשׁ קָדוֹשׁ קָדוֹשׁ יְהוָה צְבָאוֹת מְלֹא כָל־הָאָרֶץ כְּבוֹדוֹ",
+          "translit": "kadósh kadósh kadósh Adonái tsevaót, meló chol-haárets kevodó",
+          "pt": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória."
         }
       ]
     },
     {
-      "id": "velas-shabat",
+      "id": "isaias-2",
       "tipo": "curto",
       "revisado": true,
-      "tituloPt": "As velas do Shabat",
-      "fontePt": "Bênção ao acender as velas de Shabat",
-      "introPt": "Dita na sexta-feira, ao pôr do sol, ao acender as velas. A abertura é a de sempre; o resto fala de mandamento.",
+      "tituloPt": "Espadas em arados",
+      "fontePt": "Isaías 2:4",
+      "introPt": "A profecia da paz entre as nações. A última linha está gravada, em hebraico, perto da sede da ONU, em Nova York.",
       "linhas": [
         {
-          "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם",
-          "translit": "barúch atá Adonái, Elohéinu mélech ha-olám",
-          "pt": "Bendito és tu, Senhor, nosso Deus, rei do universo,"
+          "he": "וְשָׁפַט בֵּין הַגּוֹיִם וְהוֹכִיחַ לְעַמִּים רַבִּים",
+          "translit": "veshafát bein hagoyím, vehochíach leamím rabím",
+          "pt": "Ele julgará entre as nações e será o árbitro de muitos povos."
         },
         {
-          "he": "אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל שַׁבָּת",
-          "translit": "ashér kideshánu bemitsvotáv vetsivánu lehadlík ner shel Shabát",
-          "pt": "que nos santificou com os seus mandamentos e nos ordenou acender a vela do Shabat."
+          "he": "וְכִתְּתוּ חַרְבוֹתָם לְאִתִּים וַחֲנִיתוֹתֵיהֶם לְמַזְמֵרוֹת",
+          "translit": "vechitetú charvotám leitím, vachanitoteihém lemazmerót",
+          "pt": "Das suas espadas farão arados, e das suas lanças, foices."
+        },
+        {
+          "he": "לֹא־יִשָּׂא גוֹי אֶל־גּוֹי חֶרֶב וְלֹא־יִלְמְדוּ עוֹד מִלְחָמָה",
+          "translit": "lo-yisá goi el-goi chérev, velo-yilmedú od milchamá",
+          "pt": "Uma nação não levantará a espada contra outra, e não aprenderão mais a guerra."
         }
       ]
     },
     {
-      "id": "shehecheyanu",
+      "id": "miqueias-6",
       "tipo": "curto",
       "revisado": true,
-      "tituloPt": "Shehecheyanu",
-      "fontePt": "Bênção pelas ocasiões novas",
-      "introPt": "A bênção de agradecer por ter chegado a um momento: uma festa, uma roupa nova, a primeira vez de alguma coisa. Terminar de aprender o alefbet serve.",
+      "tituloPt": "O que o Senhor pede de ti",
+      "fontePt": "Miqueias 6:8",
+      "introPt": "Um versículo que resume os profetas em três pedidos: justiça, bondade e humildade.",
       "linhas": [
         {
-          "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם",
-          "translit": "barúch atá Adonái, Elohéinu mélech ha-olám",
-          "pt": "Bendito és tu, Senhor, nosso Deus, rei do universo,"
+          "he": "הִגִּיד לְךָ אָדָם מַה־טּוֹב",
+          "translit": "higuíd lechá adám ma-tov",
+          "pt": "Ele te declarou, ó homem, o que é bom,"
         },
         {
-          "he": "שֶׁהֶחֱיָנוּ וְקִיְּמָנוּ וְהִגִּיעָנוּ לַזְּמַן הַזֶּה",
-          "translit": "shehecheyánu vekiyemánu vehiguiánu lazmán hazé",
-          "pt": "que nos deu vida, nos sustentou e nos fez chegar a este momento."
+          "he": "וּמָה־יְהוָה דּוֹרֵשׁ מִמְּךָ",
+          "translit": "umá-Adonái dorésh mimechá",
+          "pt": "e o que o Senhor pede de ti:"
+        },
+        {
+          "he": "כִּי אִם־עֲשׂוֹת מִשְׁפָּט וְאַהֲבַת חֶסֶד וְהַצְנֵעַ לֶכֶת עִם־אֱלֹהֶיךָ",
+          "translit": "ki im-asót mishpát veahavát chésed, vehatsnéa léchet im-Elohécha",
+          "pt": "nada além de praticar a justiça, amar a bondade e andar humildemente com o teu Deus."
         }
       ]
     }
@@ -278,17 +426,17 @@
       {
         "id": "nome",
         "tituloPt": "O Nome se lê «Adonái»",
-        "textoPt": "O nome de Deus, {{יְהוָה}}, nunca é lido como está escrito: lê-se «Adonái». Os pontos dele são um lembrete dessa leitura, e não o som das letras. Nos livros de reza ele aparece abreviado como {{יְיָ}}, que se lê do mesmo jeito. Fora da reza, muita gente escreve {{ה׳}} e diz «Hashém».",
+        "textoPt": "O nome de Deus, {{יְהוָה}}, nunca é lido como está escrito: lê-se «Adonái». Os pontos dele são um lembrete dessa leitura, e não o som das letras. Fora da leitura em voz alta, muita gente escreve {{ה׳}} e diz «Hashém», «o Nome».",
         "exemplos": [
           {
             "he": "יְהוָה",
             "translit": "Adonái",
-            "pt": "como está nos textos bíblicos"
+            "pt": "como está no texto bíblico"
           },
           {
-            "he": "יְיָ",
-            "translit": "Adonái",
-            "pt": "como está nas bênçãos"
+            "he": "יְהוָה אֱלֹהֵינוּ",
+            "translit": "Adonái Elohéinu",
+            "pt": "o Senhor, nosso Deus (do Shemá)"
           }
         ]
       },
