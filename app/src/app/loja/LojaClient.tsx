@@ -11,11 +11,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
-import { cultureCards } from '@/lib/content';
-import { cartasCompradas, folgasLivres, gasto, ITENS, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
+import { cultureCards, leiturasBonus } from '@/lib/content';
+import { itemDaLeitura } from '@/lib/engine/bonus';
+import { cartasCompradas, folgasLivres, gasto, ITENS, leiturasCompradas, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
 import { arquivoDoNome, desenharNome, FORMATOS_NOME, type FormatoNome } from '@/lib/nome-decorado';
 
 const MOTIVO: Record<Recusa, string> = {
@@ -96,7 +97,72 @@ export function LojaClient() {
               porQueNao={!s.nomeHebraico ? MOTIVO['sem-nome'] : MOTIVO.saldo}
               onTrocar={() => trocar('nome-decorado', undefined, 'Pronto! Escolha o formato e baixe a imagem.')} />
       )}
+
+      <LeiturasBonus livre={livre} mastered={p.mastered} minhas={leiturasCompradas(s)}
+                     onTrocar={(item, id) => trocar(item, id, 'Leitura aberta! Ela está em Leituras bônus.')} />
     </div>
+  );
+}
+
+/* Textos bíblicos e bênçãos (lib/engine/bonus.ts). Só as revisadas; cada
+   uma se oferece quando o aluno já domina a letra mais tardia dela - trocar
+   XP por um texto que ainda não se consegue ler seria vender frustração. */
+function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
+  livre: number; mastered: number; minhas: Set<string>;
+  onTrocar: (item: 'texto-bonus' | 'bencao', id: string) => void;
+}) {
+  const leituras = leiturasBonus();
+  if (!leituras.length) return null;
+  return (
+    <section className="grid gap-3" aria-labelledby="leituras-bonus">
+      <div className="grid gap-1">
+        <h2 id="leituras-bonus" className="font-display text-[21px] font-bold m-0">Leituras bônus</h2>
+        <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
+          Trechos do Antigo Testamento e bênçãos, com transliteração, tradução e a leitura gravada, linha a linha.
+          Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ou bênção ◆ {ITENS.bencao.custo}.
+        </p>
+        <Link href="/nikud-biblico" className="font-ui text-[14px] text-[var(--accent)] underline justify-self-start">
+          Guia opcional e gratuito: o nikud da Bíblia →
+        </Link>
+        {minhas.size > 0 && (
+          <Link href="/bonus" className="font-ui text-[14px] font-semibold text-[var(--accent)] underline justify-self-start">
+            Ler as minhas leituras →
+          </Link>
+        )}
+      </div>
+      <ul className="grid gap-2 list-none p-0 m-0">
+        {leituras.map(l => {
+          const item = itemDaLeitura(l);
+          const custo = ITENS[item].custo;
+          const tem = minhas.has(l.id);
+          const legivel = mastered >= l.after;
+          return (
+            <li key={l.id}>
+              <Card className="p-4 flex flex-wrap items-center gap-3">
+                <div className="grid gap-0.5 min-w-0 flex-1">
+                  <span className="font-display text-[16.5px] font-semibold text-ink">{l.tituloPt}</span>
+                  <span className="font-ui text-[13px] text-ink-muted">{l.fontePt}</span>
+                </div>
+                {tem ? (
+                  <LinkButton href={`/bonus?l=${l.id}`} variant="secondary">Ler</LinkButton>
+                ) : (
+                  <div className="grid gap-1 justify-items-end">
+                    <Button onClick={() => onTrocar(item, l.id)} disabled={!legivel || livre < custo} size="md">
+                      Trocar por ◆ {custo}
+                    </Button>
+                    {!legivel ? (
+                      <span className="font-ui text-[12.5px] text-ink-muted">Abre quando você dominar {l.after} letras.</span>
+                    ) : livre < custo ? (
+                      <span className="font-ui text-[12.5px] text-ink-muted">{MOTIVO.saldo}</span>
+                    ) : null}
+                  </div>
+                )}
+              </Card>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
 

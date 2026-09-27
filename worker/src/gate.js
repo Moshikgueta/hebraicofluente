@@ -66,8 +66,10 @@ const GATED = [
   '/stroke-order',
   /* 26/09/2026: as lições de som (Vet, Chaf, Fe, Tch, Dj, J). */
   '/som',
-  /* 27/09/2026: as recompensas (trocar XP). */
-  '/loja'
+  /* 27/09/2026: as recompensas (trocar XP) e as leituras bônus que elas abrem. */
+  '/loja', '/bonus',
+  /* O guia opcional «O nikud da Bíblia». */
+  '/nikud-biblico'
 ];
 
 /* O curso que essas rotas pertencem. Quando o A1 tiver as próprias rotas,

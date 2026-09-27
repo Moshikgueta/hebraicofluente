@@ -51,7 +51,10 @@ export const WAVES = {
      só ouviu palavra solta trava na primeira frase dita no ritmo da fala. As
      frases e as linhas dos mini-textos são o que liga a escuta de frase
      (exListenSentence, exListenMeaning) e o "ouvir o texto" da leitura. */
-  4: { id: 4, titlePt: 'Frases e textos', notePt: 'As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.' }
+  4: { id: 4, titlePt: 'Frases e textos', notePt: 'As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.' },
+  /* 27/09/2026. Os textos bíblicos e as bênçãos de Recompensas (data/bonus.json):
+     lidos pelo dono do curso, uma linha por clipe. */
+  5: { id: 5, titlePt: 'Leituras bônus', notePt: 'Os textos bíblicos e as bênçãos de Recompensas, uma linha por clipe, em ritmo de leitura: calmo, mas sem pausa entre as palavras.' }
 };
 
 function main() {
@@ -61,6 +64,7 @@ function main() {
   const realWorld = readJson('data/real-world.json');
   const sentences = readJson('data/sentences.json').sentences;
   const textos = readJson('data/textos.json').textos;
+  const { leituras: bonus, guia } = readJson('data/bonus.json');
 
   const seen = new Map();
   /** @param {{he:string, translit?:string|null, gloss:string, kind:string, wave:number, where:string}} c */
@@ -209,6 +213,22 @@ function main() {
       if (w.he.includes('־') || /\(nome\)\s*$/.test(w.pt)) continue;
       add({ he: w.he.replace(/[?!.,:]+$/u, '').trim(), translit: w.translit.replace(/[?!.,:]+$/u, '').trim(),
             gloss: w.pt, kind: 'palavra', wave: 4, where: `palavras do texto ${t.modulo}` });
+    }
+  }
+
+  /* ── wave 5 · as leituras bônus ──────────────────────────────────────
+     Como os textos: só as revisadas. A abertura das bênçãos (בָּרוּךְ אַתָּה…)
+     é a mesma linha nas quatro e vira um clipe só - o `add` não duplica. */
+  for (const b of bonus.filter(b => b.revisado)) {
+    for (const l of b.linhas) {
+      add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 5, where: `leitura bônus: ${b.fontePt}` });
+    }
+  }
+  /* Os exemplos do guia «O nikud da Bíblia», palavras recortadas das leituras.
+     O de te'amim toca a linha já gravada (`ouvir`), e o `add` não duplica. */
+  if (guia?.revisado) {
+    for (const s of guia.secoes) for (const e of s.exemplos) {
+      add({ he: e.ouvir ?? e.he, translit: e.translit, gloss: e.pt, kind: 'palavra', wave: 5, where: 'guia do nikud bíblico' });
     }
   }
 

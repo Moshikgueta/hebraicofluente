@@ -21,7 +21,7 @@ import type { Compra, LearnerState } from '@/lib/state/types';
 /* ── o catálogo ─────────────────────────────────────────────────────────── */
 
 export type ItemDaLoja = {
-  id: 'folga' | 'carta' | 'nome-decorado';
+  id: 'folga' | 'carta' | 'nome-decorado' | 'texto-bonus' | 'bencao';
   titulo: string;
   custo: number;
   descricao: string;
@@ -41,8 +41,21 @@ export const ITENS: Record<ItemDaLoja['id'], ItemDaLoja> = {
   'nome-decorado': {
     id: 'nome-decorado', titulo: 'Seu nome em hebraico decorado', custo: 300,
     descricao: 'O seu nome em letra de fôrma e à mão, numa imagem para baixar: papel de parede do celular ou para imprimir.'
+  },
+  /* As leituras bônus (lib/engine/bonus.ts): um trecho da Bíblia vale o
+     dobro de um versículo ou bênção, que tem duas ou três linhas. */
+  'texto-bonus': {
+    id: 'texto-bonus', titulo: 'Texto bíblico bônus', custo: 200,
+    descricao: 'Um trecho do Antigo Testamento em hebraico, com transliteração, tradução e a leitura gravada, linha a linha.'
+  },
+  bencao: {
+    id: 'bencao', titulo: 'Versículo ou bênção', custo: 100,
+    descricao: 'Um versículo conhecido ou uma bênção do dia a dia, com transliteração, tradução e a leitura gravada.'
   }
 };
+
+/** Os itens comprados PARA alguma coisa: a carta, a leitura. Um por alvo. */
+const COM_ALVO = new Set<ItemDaLoja['id']>(['carta', 'texto-bonus', 'bencao']);
 
 /** Quantas folgas sem uso cabem na mão de uma vez. */
 export const MAX_FOLGAS = 2;
@@ -88,6 +101,10 @@ export function usarFolgas(s: LearnerState, diasPerdidos: readonly string[]): Le
 export const cartasCompradas = (s: LearnerState): Set<string> =>
   new Set(compras(s).filter(c => c.item === 'carta' && c.alvo).map(c => c.alvo!));
 
+/** Os ids das leituras bônus abertas (textos e bênçãos). */
+export const leiturasCompradas = (s: LearnerState): Set<string> =>
+  new Set(compras(s).filter(c => (c.item === 'texto-bonus' || c.item === 'bencao') && c.alvo).map(c => c.alvo!));
+
 export const temNomeDecorado = (s: LearnerState): boolean =>
   compras(s).some(c => c.item === 'nome-decorado');
 
@@ -105,15 +122,15 @@ export function comprar(
   const def = ITENS[item];
   if (saldo(s) < def.custo) return { ok: false, motivo: 'saldo' };
   if (item === 'folga' && folgasLivres(s).length >= MAX_FOLGAS) return { ok: false, motivo: 'limite' };
-  if (item === 'carta' && !alvo) return { ok: false, motivo: 'sem-alvo' };
-  if (item === 'carta' && cartasCompradas(s).has(alvo!)) return { ok: false, motivo: 'ja-tem' };
+  if (COM_ALVO.has(item) && !alvo) return { ok: false, motivo: 'sem-alvo' };
+  if (COM_ALVO.has(item) && `${item}:${alvo}` in (s.loja?.compras ?? {})) return { ok: false, motivo: 'ja-tem' };
   if (item === 'nome-decorado' && temNomeDecorado(s)) return { ok: false, motivo: 'ja-tem' };
   if (item === 'nome-decorado' && !s.nomeHebraico) return { ok: false, motivo: 'sem-nome' };
 
   /* O id: único por compra de folga (várias podem existir), e fixo por alvo
      nas outras - comprar a mesma carta em dois aparelhos vira UMA compra na
      fusão, e não duas cobranças. */
-  const id = item === 'folga' ? `folga:${agora}` : item === 'carta' ? `carta:${alvo}` : item;
+  const id = item === 'folga' ? `folga:${agora}` : COM_ALVO.has(item) ? `${item}:${alvo}` : item;
   const compra: Compra = { item, custo: def.custo, em: agora, ...(alvo ? { alvo } : {}), ...(item === 'folga' ? { usadaEm: null } : {}) };
   return { ok: true, state: { ...s, loja: { compras: { ...(s.loja?.compras ?? {}), [id]: compra } } } };
 }

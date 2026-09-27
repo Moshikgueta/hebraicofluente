@@ -108,6 +108,8 @@ for (const s of j('sentences.json').sentences) por(`frase/${s.id}`, s.notePt);
 for (const p of j('eras.json').pairs) por(`era/${p.id}`, p.notePt);
 
 for (const s of j('real-world.json').scenes) por(`cena/${s.id}`, s.contextPt);
+/* As leituras bônus (27/09/2026): a prosa da introdução, pelo mesmo motivo. */
+for (const l of j('bonus.json').leituras) por(`bonus/${l.id}`, l.introPt);
 for (const c of j('culture.json').cards) {
   por(`cultura/${c.id}.leadPt`, c.leadPt);
   por(`cultura/${c.id}.bodyPt`, c.bodyPt?.[0]);

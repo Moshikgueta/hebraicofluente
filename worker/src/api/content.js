@@ -42,6 +42,7 @@ import strokes from '../../../app/content/stroke-paths.json';
 import culture from '../../../app/content/culture.json';
 import missoes from '../../../app/content/missoes.json';
 import textos from '../../../app/content/textos.json';
+import bonus from '../../../app/content/bonus.json';
 
 /* Montado uma vez, no carregamento do módulo: é o mesmo objeto para todo
    aluno, e remontá-lo por requisição seria trabalho por pedido para produzir
@@ -57,7 +58,9 @@ const CONTEUDO = JSON.stringify({
   strokes: strokes.letters,
   culture: culture.cards,
   missoes: missoes.missoes,
-  textos: textos.textos
+  textos: textos.textos,
+  bonus: bonus.leituras,
+  guiaNikud: bonus.guia ?? null
 });
 
 export async function content({ request, env }) {
