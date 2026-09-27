@@ -8,7 +8,9 @@
      1. o aparelho A estudou o Mem e sobe sozinho ao abrir o site;
      2. o aparelho B, que estudou o Tav, encontra o Mem ao abrir;
      3. o aparelho A, recarregado, encontra o Tav;
-     4. apagar progresso num aparelho limpa também o servidor.
+     4. as rodadas de exercício (lib/rodadas.ts) atravessam também: o que um
+        aparelho lembrava sobe, e o outro passa a evitar as mesmas perguntas;
+     5. apagar progresso num aparelho limpa também o servidor.
 
    Roda com: node sincronia.mjs   (variável HF_CHROMIUM para o navegador) */
 
@@ -73,7 +75,9 @@ const servidor = async () => {
   return {
     rev: j.rev,
     letras: j.state ? Object.keys(j.state.lessons || {}).sort() : [],
-    xp: j.state ? j.state.xp : null
+    xp: j.state ? j.state.xp : null,
+    rodadas: j.state && j.state.rodadas
+      ? Object.fromEntries(Object.entries(j.state.rodadas).map(([k, v]) => [k, v.n])) : {}
   };
 };
 
@@ -149,11 +153,42 @@ const depois = (await servidor()).rev;
 console.log(`  3b) duas aberturas sem novidade → rev ${antes} → ${depois}`,
             depois === antes ? '(não gravou, certo)' : '(GRAVOU À TOA)');
 
-/* 4. apagar num aparelho apaga no servidor */
+/* 4. as rodadas. Um terceiro aparelho tem memória de rodadas de ANTES de a
+   conta guardá-las (só no espelho local, `hf-rodadas-v1`): o checkpoint 1
+   feito duas vezes. Ao abrir, isso sobe; o notebook, ao voltar, recebe no
+   espelho dele - que é o que as telas leem para escolher as perguntas. */
+const C = await aparelho('tablet', estado(['mem'], 120));
+await C.ctx.addInitScript(() => {
+  try {
+    if (!localStorage.getItem('hf-rodadas-v1')) {
+      localStorage.setItem('hf-rodadas-v1', JSON.stringify({ 'checkpoint-1': { n: 2, vistas: ['aa', 'bb'] } }));
+    }
+  } catch { /* */ }
+});
+await abrir(C.p);
+const comRodadas = await servidor();
+console.log('  4) tablet abre   → servidor rodadas:', JSON.stringify(comRodadas.rodadas));
+await abrir(B.p);
+const noNotebook = await B.p.evaluate(() => {
+  try { return JSON.parse(localStorage.getItem('hf-rodadas-v1') || '{}'); } catch { return {}; }
+});
+console.log('     notebook volta → espelho:', JSON.stringify(noNotebook));
+const r1 = (await servidor()).rev;
+await abrir(B.p);
+await abrir(C.p);
+const r2 = (await servidor()).rev;
+console.log(`  4b) duas aberturas sem novidade → rev ${r1} → ${r2}`,
+            r2 === r1 ? '(não gravou, certo)' : '(GRAVOU À TOA)');
+const rodadasOk = comRodadas.rodadas['checkpoint-1'] === 2
+  && noNotebook['checkpoint-1']?.n === 2 && r2 === r1;
+
+/* 5. apagar num aparelho apaga no servidor */
 await A.p.evaluate(async () => {
   await fetch('/api/progress', { method: 'DELETE', credentials: 'same-origin' });
 });
-console.log('  4) apagou        → servidor:', JSON.stringify(await servidor()));
+console.log('  5) apagou        → servidor:', JSON.stringify(await servidor()));
 
 console.log('\n  erros de console:', erros.length ? erros.slice(0, 3) : 'nenhum', '\n');
 await b.close();
+if (!rodadasOk) { console.error('  ✗ as rodadas não atravessaram os aparelhos'); process.exitCode = 1; }
+else console.log('  ✓ as rodadas atravessam os aparelhos pela conta, sem gravar à toa\n');

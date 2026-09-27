@@ -33,6 +33,7 @@ import {
   type GymRecord, type LearnerState, type LessonProgress, type LetterSkills,
   type SkillStat, type SrsItem
 } from './types';
+import { fundirRodadas } from '@/lib/rodadas';
 
 /* ── auxiliares ─────────────────────────────────────────────────────────── */
 
@@ -260,7 +261,11 @@ export function mergeStates(local: LearnerState, remoto: LearnerState): LearnerS
        trocaram numa sincronização anterior. */
     kinds: fundirMapa(a.kinds ?? {}, b.kinds ?? {}, (x, y) => ({
       h: Math.max(x.h, y.h), m: Math.max(x.m, y.m)
-    }))
+    })),
+    /* As rodadas: vale, por categoria, o lado com mais rodadas concluídas
+       (lib/rodadas.ts, `fundirRegistro`). Comutativa e idempotente como o
+       resto: o empate desempata pelo conteúdo, não pelo lado. */
+    rodadas: fundirRodadas(a.rodadas ?? {}, b.rodadas ?? {})
   };
 }
 

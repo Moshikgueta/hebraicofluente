@@ -346,6 +346,17 @@ vencida e devolve o estado atual junto, e o cliente funde e repete. `uid` volta
 no GET para que um notebook compartilhado não funda o progresso de uma pessoa
 na conta de outra.
 
+**Rodadas de exercício** (`lib/rodadas.ts`): refazer um exercício traz
+perguntas que o aluno ainda não viu. Cada categoria (`licao-pratica-bet`,
+`checkpoint-3`, `revisao`...) guarda quantas rodadas concluiu e a impressão
+das últimas 48 perguntas. Desde 27/09/2026 isso mora na CONTA
+(`LearnerState.rodadas`, fundido por `fundirRegistro`: o lado com mais
+rodadas vence, empate pelo conteúdo), com um espelho síncrono no aparelho
+(`hf-rodadas-v1`) que as telas leem ao escolher a rodada. O store faz a
+ponte: ao carregar, espelho e conta se fundem nos dois sentidos; o evento
+`RODADAS_MUDOU` leva cada rodada concluída para o estado; sair da conta
+limpa o espelho. `npm run sincronia` prova a travessia entre aparelhos.
+
 ## Missão de módulo
 
 Cada módulo fecha com uma missão: uma situação de verdade (o mercado, a
