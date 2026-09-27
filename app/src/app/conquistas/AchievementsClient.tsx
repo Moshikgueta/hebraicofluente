@@ -6,6 +6,7 @@ import { useProgress } from '@/lib/state/store';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { course, cultureCards, cultureUnlocked } from '@/lib/content';
 import Link from 'next/link';
+import { cartasCompradas, saldo } from '@/lib/loja';
 
 export function AchievementsClient() {
   const p = useProgress();
@@ -40,7 +41,21 @@ export function AchievementsClient() {
             Viagem pela história do hebraico
           </span>
           <span className="font-ui text-[12.5px] text-ink-muted">
-            {cultureUnlocked(p.mastered).length} de {cultureCards().length} cartas abertas
+            {cultureUnlocked(p.mastered).length + cultureCards().filter(c => c.unlockAt > p.mastered && cartasCompradas(p.state).has(c.id)).length} de {cultureCards().length} cartas abertas
+          </span>
+        </span>
+        <span aria-hidden className="text-ink-muted">→</span>
+      </Link>
+
+      <Link
+        href="/loja"
+        className="flex items-center justify-between gap-4 rounded-[var(--r-md)] border
+                   border-line bg-surface px-4 py-3.5 hover:bg-surface-2 transition-colors"
+      >
+        <span className="grid gap-0.5 min-w-0">
+          <span className="font-ui text-[14.5px] font-medium text-ink">Recompensas</span>
+          <span className="font-ui text-[12.5px] text-ink-muted">
+            ◆ {saldo(p.state).toLocaleString('pt-BR')} de saldo para trocar
           </span>
         </span>
         <span aria-hidden className="text-ink-muted">→</span>

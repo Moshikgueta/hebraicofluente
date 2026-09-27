@@ -128,6 +128,10 @@ conferir(await atributo(pg, 'data-a11y-texto') === '150',
 
 console.log('\n── mais contraste ────────────────────────────');
 
+/* O `domcontentloaded` acima é de propósito (o carimbo vem antes do React),
+   mas o botão só responde depois da hidratação: um clique antes dela se
+   perde, e no runner lento do CI isso derrubou a publicação do PR #41. */
+await pg.waitForLoadState('networkidle');
 await abrirPainel(pg);
 await pg.getByRole('button', { name: '100%', exact: true }).click();
 await pg.getByLabel('Mais contraste').check();

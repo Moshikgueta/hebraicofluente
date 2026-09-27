@@ -508,6 +508,30 @@ cima do modelo, modelo fraco, sem modelo. O modelo é a palavra sem nikud.
   telefone de 360px. Mudar a fonte cursiva ou o limite de 7 letras pede medir
   de novo.
 
+## Recompensas: trocar XP (27/09/2026)
+
+`/loja` (atrás do portão; o XP do cabeçalho linka para lá). Regra que segura
+tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
+`xp - soma dos custos` (`lib/loja.ts`, nunca negativo na tela).
+
+- Compras em `LearnerState.loja.compras`, por id: `folga:<ISO>`,
+  `carta:<id da carta>`, `nome-decorado`. A fusão é a união (`fundirCompras`),
+  então a mesma carta comprada em dois aparelhos cobra uma vez só.
+  `comprasValidas` descarta custo que não é número ou é negativo: um custo
+  forjado viraria saldo infinito.
+- Itens: folga 100 (até 2 guardadas), carta de cultura antecipada 150, nome
+  decorado 300 (pede o nome confirmado em "Meu nome"; a imagem é desenhada no
+  navegador, `lib/nome-decorado.ts`).
+- A folga: em `applyPractice`, se a meta é cumprida depois de dias perdidos e
+  há folgas para TODOS eles, a sequência continua e cada folga fica com
+  `usadaEm` = o dia coberto. Tudo ou nada. `displayStreak` usa a mesma conta.
+- **Nunca trancar conteúdo principal atrás de XP**: o aluno já pagou.
+- O XP é do cliente e pode ser forjado. Serve para prêmios digitais; qualquer
+  coisa que valha dinheiro não entra na loja sem uma decisão à parte do dono,
+  e com teto conferido no servidor.
+- `/loja` está no `GATED` do portão e no `PAGAS` de lib/seo.ts.
+- `tests/loja.test.ts`.
+
 ## Antes de commitar
 ```sh
 cd app && npm test        # 302 testes

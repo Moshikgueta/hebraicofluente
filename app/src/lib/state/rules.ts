@@ -10,6 +10,7 @@ import type {
   LessonProgress, LetterSkills, Skill, SkillStat, SrsItem
 } from './types';
 import { SKILLS } from './types';
+import { folgasLivres, usarFolgas } from '@/lib/loja';
 
 export const today = (d: Date = new Date()): string => {
   /* Local date, not UTC: a learner practising at 22h in São Paulo must get
@@ -96,7 +97,21 @@ export function applyPractice(
     xp += XP.dailyGoal;
 
     const last = streak.lastDay;
-    const current = last == null ? 1 : daysBetween(last, day) === 1 ? streak.current + 1 : 1;
+    const gap = last == null ? 0 : daysBetween(last, day);
+    let current = last == null ? 1 : gap === 1 ? streak.current + 1 : 1;
+
+    /* As folgas (27/09/2026, lib/loja.ts): se a lacuna foi de um ou dois
+       dias e há folga para cada dia perdido, elas são gastas agora e a
+       sequência continua como se não tivesse parado. Tudo ou nada. */
+    if (last != null && gap > 1 && streak.current > 0) {
+      const perdidos = Array.from({ length: gap - 1 }, (_, i) => addDays(last, i + 1));
+      const coberto = usarFolgas({ ...state, xp }, perdidos);
+      if (coberto) {
+        current = streak.current + 1;
+        streak = { current, longest: Math.max(streak.longest, current), lastDay: day };
+        return { ...coberto, xp, days: { ...state.days, [day]: next }, streak };
+      }
+    }
     streak = { current, longest: Math.max(streak.longest, current), lastDay: day };
   }
 
@@ -109,7 +124,10 @@ export function displayStreak(state: LearnerState, day: string): number {
   const { current, lastDay } = state.streak;
   if (!lastDay || current === 0) return 0;
   const gap = daysBetween(lastDay, day);
-  return gap <= 1 ? current : 0;
+  if (gap <= 1) return current;
+  /* Com folga bastante para os dias perdidos, a sequência continua viva:
+     ela será gasta quando a meta de hoje for cumprida. */
+  return gap - 1 <= folgasLivres(state).length ? current : 0;
 }
 
 export function awardXp(state: LearnerState, day: string, amount: number): LearnerState {

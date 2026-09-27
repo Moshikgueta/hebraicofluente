@@ -29,6 +29,7 @@ import {
   topConfusions, weakLetters, XP
 } from './rules';
 import { track } from '@/lib/analytics';
+import { comprar as comprarNaLoja, type ItemDaLoja, type Recusa } from '@/lib/loja';
 import {
   fundirRegistro, limparEspelho, registroValido, RODADAS_MUDOU, sincronizarEspelho, type Registro
 } from '@/lib/rodadas';
@@ -126,6 +127,8 @@ type Ctx = {
   ) => void;
   remember: (route: string) => void;
   reset: () => void;
+  /** Troca XP do saldo por um item da loja (lib/loja.ts). Devolve o motivo da recusa, ou null. */
+  comprar: (item: ItemDaLoja['id'], alvo?: string) => Recusa | null;
 };
 
 const StoreContext = createContext<Ctx | null>(null);
@@ -434,6 +437,14 @@ export function ProgressProvider({
     gravador.agendar(400);
   }, [gravador]);
 
+  const comprar = useCallback((item: ItemDaLoja['id'], alvo?: string): Recusa | null => {
+    const r = comprarNaLoja(agora(), item, new Date().toISOString(), alvo);
+    if (!r.ok) return r.motivo;
+    commit(r.state);
+    track('loja_compra', { itemId: item });
+    return null;
+  }, [commit, agora]);
+
   const reset = useCallback(() => {
     gravador.cancelar();
     limparEspelho();
@@ -460,13 +471,13 @@ export function ProgressProvider({
       clearPending: () => setPending([]),
       setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
-      remember, reset, setNomeHebraico
+      remember, reset, setNomeHebraico, comprar
     };
   }, [
     state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
-    setNomeHebraico
+    setNomeHebraico, comprar
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

@@ -19,6 +19,7 @@
 
 import { EMPTY_STATE, STATE_VERSION, type LearnerState } from './types';
 import { fundirRodadas, type Rodadas } from '@/lib/rodadas';
+import { comprasValidas } from '@/lib/loja';
 
 /** v1: everything before per-skill mastery. */
 type V1 = Omit<LearnerState, 'version' | 'skills' | 'confusions' | 'firsts' | 'gym'> & { version: 1 };
@@ -86,6 +87,9 @@ export function migrate(raw: unknown): LearnerState {
        descarta registro malformado: isto vem do servidor ou do navegador, e
        quem escolhe as perguntas confia na forma. */
     rodadas: isObject(merged.rodadas) ? fundirRodadas(merged.rodadas as Rodadas, {}) : {},
+    /* As trocas de XP (27/09/2026). Só as que têm a forma certa: é dinheiro
+       de faz de conta, mas um custo que não é número viraria saldo infinito. */
+    loja: { compras: comprasValidas(isObject(merged.loja) ? (merged.loja as { compras?: unknown }).compras : null) },
     streak: merged.streak ?? { current: 0, longest: 0, lastDay: null },
     finalChallenge: merged.finalChallenge ?? { best: null, completedAt: null }
   };
