@@ -475,16 +475,15 @@ novo; o painel pula para o próximo item sem áudio. Referência:
   lib/gravador.ts), cortadas no trecho da voz; "Ouvir os dois" toca modelo e
   a sua em sequência, por Web Audio. Sem nota automática, de propósito. A
   gravação não sai do aparelho.
-- **"Achei um erro neste exercício" SAIU da tela do aluno** (26/09/2026, a
-  pedido do dono do curso: não abrir canal de reclamação dentro do curso).
-  O componente `RelatarErro` foi apagado e a privacidade não fala mais em
-  relatos. O resto ficou quieto, sem ninguém que o chame: `POST
-  /api/relatos` (exige sessão, não guarda a conta, freio de 20/hora),
-  `lib/relato.ts` e o painel `/admin/relatos`, que continua mostrando os
-  relatos antigos. Para religar, basta voltar o componente na folha de
-  retorno do `ExercisePlayer` (e o parágrafo da privacidade, art. 2).
-- `lib/admin.js` (worker) tem `isAdmin`/`exigirAdmin`, usados pelos dois
-  painéis. `tests/relatos-e-comparacao.test.ts`.
+- **"Achei um erro" foi DESLIGADO por inteiro** (27/09/2026, a pedido do dono
+  do curso: não abrir canal de reclamação dentro do curso). Saíram o botão,
+  `RelatarErro`, `lib/relato.ts`, a rota `POST /api/relatos`, as duas rotas
+  do painel e a página `/admin/relatos`. A tabela `relatos` continua no
+  schema só para não apagar em silêncio o que havia no banco de produção;
+  nada lê nem grava nela. `tests/comparacao-pronuncia.test.ts` prova que as
+  três rotas respondem 404.
+- `lib/admin.js` (worker) tem `isAdmin`/`exigirAdmin`, usados pelo painel de
+  gravação.
 
 ## Palavras à mão
 

@@ -293,13 +293,17 @@ CREATE TABLE IF NOT EXISTS gravacoes (
 );
 
 -- ── relatos de erro (o botão "Achei um erro" dos exercícios) ─────────────
+-- DESLIGADO em 27/09/2026, a pedido do dono do curso: o botão, a rota que
+-- recebia (/api/relatos) e o painel saíram. A tabela fica só para não
+-- apagar em silêncio o que já estava no banco de produção; nada mais lê
+-- nem grava aqui. Apagá-la é um `DROP TABLE relatos` de propósito.
 -- Uma linha por relato. `foto` é o exercício como o aluno o viu (JSON:
 -- enunciado, hebraico, alternativas, a certa e a escolhida) - os exercícios
 -- são sorteados, e sem a foto o relato não aponta para nada.
 --
 -- SEM conta, de propósito: o relato exige sessão, mas não guarda quem mandou.
 -- Não é dado pessoal, não trava a exclusão de conta e não entra na limpeza
--- das contas de teste. Ver worker/src/api/relatos.js.
+-- das contas de teste.
 CREATE TABLE IF NOT EXISTS relatos (
   id           INTEGER PRIMARY KEY,
   exercicio    TEXT    NOT NULL,

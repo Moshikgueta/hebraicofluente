@@ -56,7 +56,7 @@ export const MAX_BYTES = 1_500_000;
 export const ID_RE = /^he-[0-9a-f]{8}$/;
 
 /* ── administrador ─────────────────────────────────────────────────────
-   Em lib/admin.js, que o painel de relatos também usa. Reexportado aqui
+   Em lib/admin.js. Reexportado aqui
    porque os testes do painel de gravação o importam deste módulo. */
 export { isAdmin };
 
