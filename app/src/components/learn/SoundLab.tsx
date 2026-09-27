@@ -22,7 +22,7 @@
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
-import { AudioButton, hasAudio } from './AudioButton';
+import { AudioButton, hasAudio, tocarClipe, useRegistroDeAudio } from './AudioButton';
 import type { Letter, Syllable } from '@/lib/content';
 import { nikud } from '@/lib/content';
 
@@ -98,7 +98,12 @@ export function SoundLab({
                     <td key={v} className="p-1">
                       <button
                         type="button"
-                        onClick={() => setPicked(on ? null : { letter: L, syl })}
+                        onClick={() => {
+                          /* Tocar é ouvir (27/09/2026): o som sai no toque, e o
+                             painel embaixo fica para ler a dica e repetir. */
+                          tocarClipe(syl.audioId);
+                          setPicked({ letter: L, syl });
+                        }}
                         aria-label={`${L.namePt} com ${VOWEL_LABEL[v]}: ${syl.translit}`}
                         aria-pressed={on}
                         className={`w-full min-h-[56px] rounded-[var(--r-md)] border-2 px-1
@@ -131,7 +136,7 @@ export function SoundLab({
               <p className="font-ui text-[13px] text-ink-muted">{picked.syl.ptApprox}</p>
             </div>
             <div className="ml-auto">
-              <AudioButton audioId={picked.syl.audioId} label="Ouvir" slow />
+              <AudioButton audioId={picked.syl.audioId} label="De novo" slow />
             </div>
           </>
         ) : (
@@ -150,6 +155,7 @@ export function SoundLab({
    they sit, which is the other half - and it is the only place in the course
    where a learner can hear "patach" said out loud. */
 export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
+  useRegistroDeAudio();
   return (
     <div className="grid gap-3">
       {nikud().sounds.map(s => (
@@ -164,18 +170,20 @@ export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
           </div>
           <ul className="grid gap-2 sm:grid-cols-2">
             {s.signs.map(g => (
-              <li key={g.namePt}
-                  className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
-                <He size="lg">{demoLetter ? demoLetter + g.sign : g.demo}</He>
-                <span className="grid gap-0.5 min-w-0">
-                  <span className="font-ui text-[13.5px] font-medium text-ink">{g.namePt}</span>
-                  <span className="font-ui text-[12px] text-ink-muted truncate">{g.position}</span>
-                </span>
-                {hasAudio(g.nameAudioId) && (
-                  <span className="ml-auto">
-                    <AudioButton audioId={g.nameAudioId} label="Nome" size="sm" />
+              <li key={g.namePt}>
+                {/* O cartão inteiro toca o nome do sinal (27/09/2026). */}
+                <button type="button" onClick={() => tocarClipe(g.nameAudioId)}
+                        disabled={!hasAudio(g.nameAudioId)}
+                        aria-label={`${g.namePt}${hasAudio(g.nameAudioId) ? ': ouvir o nome' : ''}`}
+                        className="w-full text-left flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2
+                                   min-h-[56px] enabled:hover:bg-[var(--accent-wash)] enabled:active:scale-[.99] transition">
+                  <He size="lg">{demoLetter ? demoLetter + g.sign : g.demo}</He>
+                  <span className="grid gap-0.5 min-w-0">
+                    <span className="font-ui text-[13.5px] font-medium text-ink">{g.namePt}</span>
+                    <span className="font-ui text-[12px] text-ink-muted truncate">{g.position}</span>
                   </span>
-                )}
+                  {hasAudio(g.nameAudioId) && <span aria-hidden className="ml-auto text-[var(--accent)]">🔊</span>}
+                </button>
               </li>
             ))}
           </ul>

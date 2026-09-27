@@ -40,6 +40,32 @@ export const audioAvailable = (): boolean => algumClipe();
 export const useRegistroDeAudio = (): number =>
   useSyncExternalStore(assinar, versaoDoRegistro, () => 0);
 
+/**
+ * Tocar um clipe direto, sem botão (27/09/2026): o toque NA sílaba ou NA
+ * vogal toca o som - o dono do curso pediu para não precisar de um segundo
+ * botão. Um elemento só para a página inteira: tocar outra sílaba corta a
+ * anterior, em vez de sobrepor as duas. Respeita o corte do painel igual
+ * ao botão. Sem clipe, não faz nada (nunca voz sintética - ver o topo).
+ */
+let tocador: HTMLAudioElement | null = null;
+export function tocarClipe(audioId: string | null | undefined, rate = 1): void {
+  if (!audioId || !temClipe(audioId) || typeof Audio === 'undefined') return;
+  const src = urlDoClipe(audioId);
+  if (!tocador || tocador.dataset.src !== src) {
+    tocador?.pause();
+    tocador = new Audio(src);
+    tocador.dataset.src = src;
+  }
+  const el = tocador;
+  const corte = clipeDoPainel(audioId);
+  const fim = corte?.fim != null ? corte.fim / 1000 : null;
+  el.playbackRate = rate;
+  el.currentTime = corte?.inicio != null ? corte.inicio / 1000 : 0;
+  el.ontimeupdate = fim === null ? null : () => { if (el.currentTime >= fim) el.pause(); };
+  void el.play().catch(() => { /* bloqueado ou sem rede: fica o botão */ });
+  track('audio_played', { audioId });
+}
+
 export function AudioButton({
   audioId, label = 'Ouvir', ariaLabel, size = 'md', slow = false
 }: {

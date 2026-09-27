@@ -59,7 +59,7 @@ import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
-import { AudioButton } from '@/components/learn/AudioButton';
+import { hasAudio, tocarClipe, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { Prose, RegraCursiva } from '@/components/learn/Blocks';
 import { Compreensao, type ItemCompreensao } from '@/components/learn/Compreensao';
 import {
@@ -185,6 +185,9 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
   alfabeto: AlfabetoProps;
   curso: CursoProps;
 }) {
+  /* A lista das vogais sabe quais têm gravação só depois que o manifesto
+     chega; isto a redesenha quando chega. */
+  useRegistroDeAudio();
   return (
     <div className="grid gap-6 reading">
       <header className="grid gap-3">
@@ -965,16 +968,22 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
               </div>
               <ul className="grid sm:grid-cols-2 gap-2 list-none p-0 m-0">
                 {s.signs.map(g => (
-                  <li key={g.demo}
-                      className="flex items-center gap-4 rounded-[var(--r-md)] bg-surface-2 px-4 py-3">
-                    <He size="lg">{g.demo}</He>
-                    <span className="min-w-0 grid gap-0.5">
-                      <span className="font-ui text-[14px] text-ink">{g.namePt}</span>
-                      <span className="font-ui text-[12.5px] text-ink-muted leading-snug">
-                        <Prose text={g.position} />
+                  <li key={g.demo}>
+                    {/* Tocar na vogal é ouvir (27/09/2026), sem botão à parte. */}
+                    <button type="button" onClick={() => tocarClipe(g.audioId)}
+                            disabled={!hasAudio(g.audioId)}
+                            aria-label={`${g.namePt}${hasAudio(g.audioId) ? ': ouvir' : ''}`}
+                            className="w-full text-left flex items-center gap-4 rounded-[var(--r-md)] bg-surface-2 px-4 py-3
+                                       min-h-[56px] enabled:hover:bg-[var(--accent-wash)] enabled:active:scale-[.99] transition">
+                      <He size="lg">{g.demo}</He>
+                      <span className="min-w-0 grid gap-0.5">
+                        <span className="font-ui text-[14px] text-ink">{g.namePt}</span>
+                        <span className="font-ui text-[12.5px] text-ink-muted leading-snug">
+                          <Prose text={g.position} />
+                        </span>
                       </span>
-                    </span>
-                    <span className="ml-auto"><AudioButton audioId={g.audioId} label="" size="sm" /></span>
+                      {hasAudio(g.audioId) && <span aria-hidden className="ml-auto text-[var(--accent)]">🔊</span>}
+                    </button>
                   </li>
                 ))}
               </ul>
