@@ -539,6 +539,11 @@ tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
   componente do texto do módulo. Só `revisado: true` aparece e entra na
   onda 5 do roteiro. São hebraico bíblico, fora da regra de "só presente" -
   por serem recompensa, fora do caminho do curso.
+- **O Nome nas gravações:** o dono do curso segue o costume de não dizer o Nome
+  fora da reza. Onde está יְהוָה, a gravação diz «Hashém», e a transliteração
+  diz o mesmo (nunca «Adonái»: o aluno ouviria outra palavra). A leitura que
+  contém o Nome mostra o aviso "Por que a gravação diz «Hashém»", e o guia
+  explica na seção `nome`. Elohím é dito normalmente.
 - **Guia «O nikud da Bíblia»** (`guia` em data/bonus.json → `ConteudoPago.guiaNikud`):
   página à parte `/nikud-biblico` (no GATED), opcional, sem XP e sem nada que
   dependa dela - pedido do dono. Linkada das Leituras bônus e de Recompensas.

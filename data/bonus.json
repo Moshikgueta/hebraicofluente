@@ -11,8 +11,9 @@
     "uma avisa que a tradução está ali para ajudar, e que entender o hebraico bíblico",
     "é outro curso.",
     "",
-    "O Nome está escrito como no texto massorético (יְהוָה) e se lê «Adonái», que é o",
-    "que a transliteração diz.",
+    "O Nome está escrito como no texto massorético (יְהוָה). Na reza lê-se «Adonái»; o dono do",
+    "curso, nas gravações, segue o costume de não dizer o Nome fora da reza e diz «Hashém»",
+    "(«o Nome»). A transliteração acompanha a gravação: «Hashém». O guia explica.",
     "",
     "Pontuação sem os sinais de cantilação (te'amim), só as vogais. A tradução é",
     "nossa, literal, e não de uma edição da Bíblia com direitos.",
@@ -81,12 +82,12 @@
       "linhas": [
         {
           "he": "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד",
-          "translit": "shemá Yisraél, Adonái Elohéinu, Adonái echád",
+          "translit": "shemá Yisraél, Hashém Elohéinu, Hashém echád",
           "pt": "Ouve, Israel: o Senhor é o nosso Deus, o Senhor é um."
         },
         {
           "he": "וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל־לְבָבְךָ וּבְכָל־נַפְשְׁךָ וּבְכָל־מְאֹדֶךָ",
-          "translit": "veahavtá et Adonái Elohécha bechol-levavchá uvchol-nafshechá uvchol-meodécha",
+          "translit": "veahavtá et Hashém Elohécha bechol-levavchá uvchol-nafshechá uvchol-meodécha",
           "pt": "Amarás o Senhor, teu Deus, de todo o teu coração, de toda a tua alma e com toda a tua força."
         },
         {
@@ -121,7 +122,7 @@
       "linhas": [
         {
           "he": "מִזְמוֹר לְדָוִד יְהוָה רֹעִי לֹא אֶחְסָר",
-          "translit": "mizmór leDavíd. Adonái roí, lo echsár",
+          "translit": "mizmór leDavíd. Hashém roí, lo echsár",
           "pt": "Salmo de Davi. O Senhor é o meu pastor, nada me faltará."
         },
         {
@@ -146,7 +147,7 @@
         },
         {
           "he": "אַךְ טוֹב וָחֶסֶד יִרְדְּפוּנִי כָּל־יְמֵי חַיָּי וְשַׁבְתִּי בְּבֵית־יְהוָה לְאֹרֶךְ יָמִים",
-          "translit": "ach tov vachésed yirdefúni kol-yeméi chayái, veshavtí beveit-Adonái leórech yamím",
+          "translit": "ach tov vachésed yirdefúni kol-yeméi chayái, veshavtí beveit-Hashém leórech yamím",
           "pt": "Certamente o bem e a bondade me seguirão todos os dias da minha vida, e habitarei na casa do Senhor por longos dias."
         }
       ]
@@ -166,7 +167,7 @@
         },
         {
           "he": "עֶזְרִי מֵעִם יְהוָה עֹשֵׂה שָׁמַיִם וָאָרֶץ",
-          "translit": "ezrí meím Adonái, osé shamáyim vaárets",
+          "translit": "ezrí meím Hashém, osé shamáyim vaárets",
           "pt": "O meu socorro vem do Senhor, que fez os céus e a terra."
         },
         {
@@ -181,7 +182,7 @@
         },
         {
           "he": "יְהוָה שֹׁמְרֶךָ יְהוָה צִלְּךָ עַל־יַד יְמִינֶךָ",
-          "translit": "Adonái shomerécha, Adonái tsilechá al-yad yeminécha",
+          "translit": "Hashém shomerécha, Hashém tsilechá al-yad yeminécha",
           "pt": "O Senhor é quem te guarda; o Senhor é a tua sombra, à tua mão direita."
         },
         {
@@ -191,12 +192,12 @@
         },
         {
           "he": "יְהוָה יִשְׁמָרְךָ מִכָּל־רָע יִשְׁמֹר אֶת־נַפְשֶׁךָ",
-          "translit": "Adonái yishmorchá mikol-ra, yishmór et-nafshécha",
+          "translit": "Hashém yishmorchá mikol-ra, yishmór et-nafshécha",
           "pt": "O Senhor te guardará de todo mal; ele guardará a tua vida."
         },
         {
           "he": "יְהוָה יִשְׁמָר־צֵאתְךָ וּבוֹאֶךָ מֵעַתָּה וְעַד־עוֹלָם",
-          "translit": "Adonái yishmor-tsetechá uvoécha, meatá veád-olám",
+          "translit": "Hashém yishmor-tsetechá uvoécha, meatá veád-olám",
           "pt": "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre."
         }
       ]
@@ -231,7 +232,7 @@
         },
         {
           "he": "כֹּה יַעֲשֶׂה יְהוָה לִי וְכֹה יֹסִיף כִּי הַמָּוֶת יַפְרִיד בֵּינִי וּבֵינֵךְ",
-          "translit": "ko yaasé Adonái li vechó yosíf, ki hamávet yafríd beiní uveinéch",
+          "translit": "ko yaasé Hashém li vechó yosíf, ki hamávet yafríd beiní uveinéch",
           "pt": "Que o Senhor me castigue, e mais ainda, se outra coisa que não a morte me separar de ti."
         }
       ]
@@ -296,7 +297,7 @@
       "linhas": [
         {
           "he": "כִּי אָנֹכִי יָדַעְתִּי אֶת־הַמַּחֲשָׁבֹת אֲשֶׁר אָנֹכִי חֹשֵׁב עֲלֵיכֶם נְאֻם־יְהוָה",
-          "translit": "ki anochí yadáti et-hamachashavót ashér anochí choshév aleichém, neúm-Adonái",
+          "translit": "ki anochí yadáti et-hamachashavót ashér anochí choshév aleichém, neúm-Hashém",
           "pt": "Porque eu sei os planos que tenho para vocês, diz o Senhor:"
         },
         {
@@ -326,7 +327,7 @@
         },
         {
           "he": "כִּי עִמְּךָ יְהוָה אֱלֹהֶיךָ בְּכֹל אֲשֶׁר תֵּלֵךְ",
-          "translit": "ki imechá Adonái Elohécha bechól ashér teléch",
+          "translit": "ki imechá Hashém Elohécha bechól ashér teléch",
           "pt": "porque o Senhor, teu Deus, está contigo por onde quer que fores."
         }
       ]
@@ -341,7 +342,7 @@
       "linhas": [
         {
           "he": "בְּטַח אֶל־יְהוָה בְּכָל־לִבֶּךָ",
-          "translit": "betách el-Adonái bechol-libécha",
+          "translit": "betách el-Hashém bechol-libécha",
           "pt": "Confia no Senhor de todo o teu coração"
         },
         {
@@ -391,7 +392,7 @@
       "linhas": [
         {
           "he": "וְקוֹיֵ יְהוָה יַחֲלִיפוּ כֹחַ",
-          "translit": "vekovéi Adonái yachalífu chóach",
+          "translit": "vekovéi Hashém yachalífu chóach",
           "pt": "Mas os que esperam no Senhor renovam as suas forças;"
         },
         {
@@ -436,7 +437,7 @@
       "linhas": [
         {
           "he": "וְאָנֹכִי וּבֵיתִי נַעֲבֹד אֶת־יְהוָה",
-          "translit": "veanochí uveití naavód et-Adonái",
+          "translit": "veanochí uveití naavód et-Hashém",
           "pt": "Eu e a minha casa serviremos ao Senhor."
         }
       ]
@@ -456,7 +457,7 @@
         },
         {
           "he": "אֹמַר לַיהוָה מַחְסִי וּמְצוּדָתִי אֱלֹהַי אֶבְטַח־בּוֹ",
-          "translit": "omár ladonái: machsí umtsudatí, Elohái evtach-bó",
+          "translit": "omár laHashém: machsí umtsudatí, Elohái evtach-bó",
           "pt": "Digo ao Senhor: meu refúgio e minha fortaleza, meu Deus, em quem confio."
         }
       ]
@@ -471,7 +472,7 @@
       "linhas": [
         {
           "he": "חַסְדֵי יְהוָה כִּי לֹא־תָמְנוּ כִּי לֹא־כָלוּ רַחֲמָיו",
-          "translit": "chasdéi Adonái ki lo-támnu, ki lo-chálu rachamáv",
+          "translit": "chasdéi Hashém ki lo-támnu, ki lo-chálu rachamáv",
           "pt": "As misericórdias do Senhor não têm fim, as suas compaixões não se esgotam;"
         },
         {
@@ -506,17 +507,17 @@
       "linhas": [
         {
           "he": "יְבָרֶכְךָ יְהוָה וְיִשְׁמְרֶךָ",
-          "translit": "yevarechechá Adonái veyishmerécha",
+          "translit": "yevarechechá Hashém veyishmerécha",
           "pt": "O Senhor te abençoe e te guarde."
         },
         {
           "he": "יָאֵר יְהוָה פָּנָיו אֵלֶיךָ וִיחֻנֶּךָּ",
-          "translit": "yaér Adonái panáv elécha vichunéka",
+          "translit": "yaér Hashém panáv elécha vichunéka",
           "pt": "O Senhor faça brilhar o seu rosto sobre ti e tenha misericórdia de ti."
         },
         {
           "he": "יִשָּׂא יְהוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם",
-          "translit": "yisá Adonái panáv elécha veyasém lechá shalóm",
+          "translit": "yisá Hashém panáv elécha veyasém lechá shalóm",
           "pt": "O Senhor volte o seu rosto para ti e te dê a paz."
         }
       ]
@@ -536,7 +537,7 @@
         },
         {
           "he": "קָדוֹשׁ קָדוֹשׁ קָדוֹשׁ יְהוָה צְבָאוֹת מְלֹא כָל־הָאָרֶץ כְּבוֹדוֹ",
-          "translit": "kadósh kadósh kadósh Adonái tsevaót, meló chol-haárets kevodó",
+          "translit": "kadósh kadósh kadósh Hashém tsevaót, meló chol-haárets kevodó",
           "pt": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória."
         }
       ]
@@ -601,7 +602,7 @@
         },
         {
           "he": "וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ אֲנִי יְהוָה",
-          "translit": "veahavtá lereachá kamócha: aní Adonái",
+          "translit": "veahavtá lereachá kamócha: aní Hashém",
           "pt": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor."
         }
       ]
@@ -634,17 +635,17 @@
     "secoes": [
       {
         "id": "nome",
-        "tituloPt": "O Nome se lê «Adonái»",
-        "textoPt": "O nome de Deus, {{יְהוָה}}, nunca é lido como está escrito: lê-se «Adonái». Os pontos dele são um lembrete dessa leitura, e não o som das letras. Fora da leitura em voz alta, muita gente escreve {{ה׳}} e diz «Hashém», «o Nome».",
+        "tituloPt": "O Nome não se pronuncia",
+        "textoPt": "O nome de Deus, {{יְהוָה}}, nunca é lido como está escrito. Na reza e na leitura da Torá na sinagoga, diz-se «Adonái», «meu Senhor». Fora da reza, muitos judeus evitam até essa palavra, por respeito ao Nome, e dizem «Hashém», que quer dizer «o Nome». As gravações deste curso seguem esse costume: por isso você ouve «Hashém», e a transliteração mostra o que se ouve. Ao ler sozinho, cada um segue o costume da sua casa: «Adonái», «Hashém» ou, nas traduções, «o Senhor». Por escrito, muita gente abrevia para {{ה׳}}.",
         "exemplos": [
           {
             "he": "יְהוָה",
-            "translit": "Adonái",
-            "pt": "como está no texto bíblico"
+            "translit": "Hashém",
+            "pt": "como está no texto bíblico; na gravação, «Hashém»"
           },
           {
             "he": "יְהוָה אֱלֹהֵינוּ",
-            "translit": "Adonái Elohéinu",
+            "translit": "Hashém Elohéinu",
             "pt": "o Senhor, nosso Deus (do Shemá)"
           }
         ]

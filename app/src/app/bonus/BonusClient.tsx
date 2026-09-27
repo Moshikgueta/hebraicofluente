@@ -16,6 +16,8 @@ import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { LinhasDeLeitura } from '@/components/learn/LinhasDeLeitura';
 import { guiaNikud, leiturasBonus } from '@/lib/content';
 import { leiturasCompradas } from '@/lib/loja';
+import { He } from '@/components/hebrew/He';
+import { stripNikud } from '@/lib/hebrew';
 import { useProgress } from '@/lib/state/store';
 
 export function BonusClient() {
@@ -51,6 +53,21 @@ export function BonusClient() {
           <p className="text-[16px] leading-relaxed text-ink-body m-0">{leitura.introPt}</p>
         </header>
 
+        {/* O Nome (27/09/2026). O dono do curso grava «Hashém» onde está
+            escrito יְהוָה: o costume de não dizer o Nome fora da reza. Sem
+            este aviso, o aluno ouve uma palavra que não está no texto. */}
+        {temONome(leitura.linhas) && (
+          <Card tone="wash" className="p-4 grid gap-1">
+            <p className="font-ui text-[14.5px] font-semibold text-ink m-0">Por que a gravação diz «Hashém»</p>
+            <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
+              Onde está escrito <He size="inline">יְהוָה</He>, o nome de Deus, a gravação diz «Hashém», «o Nome».
+              É um costume judaico: o Nome não se pronuncia, e fora da reza muitos evitam até «Adonái», que é
+              como se lê na reza e na sinagoga. A transliteração mostra o que se ouve.{' '}
+              <Link href="/nikud-biblico#nome" className="underline">Mais no guia</Link>.
+            </p>
+          </Card>
+        )}
+
         <LinhasDeLeitura linhas={leitura.linhas} rotulo={leitura.fontePt}
                          heClassName="!text-[24px] sm:!text-[30px] !leading-[1.7]" />
 
@@ -60,7 +77,6 @@ export function BonusClient() {
         />
 
         <p className="font-ui text-[13.5px] text-ink-muted m-0">
-          O Nome está escrito como no texto original e se lê «Adonái», como na transliteração.
           A tradução é literal, para acompanhar o hebraico linha a linha.
         </p>
         <GuiaCartao />
@@ -115,3 +131,7 @@ function GuiaCartao() {
     </Link>
   );
 }
+
+/** A leitura tem o Nome (יהוה, com qualquer prefixo: לַיהוָה)? */
+const temONome = (linhas: readonly { he: string }[]): boolean =>
+  linhas.some(l => stripNikud(l.he).includes('יהוה'));
