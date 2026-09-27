@@ -580,7 +580,15 @@ function main() {
     textos: textos.map(t => ({
       ...t,
       linhas: t.linhas.map(l => ({ ...pontua(l), audioId: audioIdFor(l.he) })),
-      novas: (t.novas || []).map(pontua)
+      /* As palavras novas também: a gravação de cada uma (gen-audio.mjs,
+         "palavras do texto N") toca na lista embaixo do texto e, depois de
+         lido, no vocabulário e no treino. O prefixo solto e o nome próprio
+         não têm gravação e ficam sem id. */
+      novas: (t.novas || []).map(w => {
+        const x = pontua(w);
+        if (x.he.includes('־') || /\(nome\)\s*$/.test(x.pt)) return x;
+        return { ...x, audioId: audioIdFor(x.he.replace(/[?!.,:]+$/u, '').trim()) };
+      })
     }))
   }, null, 2) + '\n');
 

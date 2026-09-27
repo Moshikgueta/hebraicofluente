@@ -58,7 +58,7 @@ export const textoLidoId = (n: number): string => `texto-${n}`;
  * Vêm de `novas`, que já foram revisadas junto com o texto, menos o que não é
  * palavra de vocabulário: o prefixo solto (הַ־, בַּ־, que termina no traço de
  * união) e o nome próprio (Dana, Noa). A pontuação de fim sai: "מָה נִשְׁמַע?"
- * entra como "מָה נִשְׁמַע". Sem gravação ainda, então `audioId` vazio.
+ * entra como "מָה נִשְׁמַע". O `audioId` vem do export (a gravação da palavra).
  */
 export function palavrasDoTexto(t: Texto): Word[] {
   return t.novas
@@ -68,6 +68,7 @@ export function palavrasDoTexto(t: Texto): Word[] {
       translit: w.translit.replace(/[?!.,:]+$/u, '').trim(),
       pt: w.pt,
       use: null,
-      audioId: ''
+      /* A gravação da palavra (27/09/2026, onda 4, "palavras do texto N"). */
+      audioId: w.audioId ?? ''
     }));
 }

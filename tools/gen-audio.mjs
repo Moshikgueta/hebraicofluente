@@ -198,6 +198,19 @@ function main() {
       add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 4, where: `texto do módulo ${t.modulo}` });
     }
   }
+  /* As palavras novas de cada texto (27/09/2026). Depois de lido o texto,
+     elas entram no vocabulário e no treino do aluno (palavrasDoTexto, em
+     lib/engine/textos.ts) - e entravam mudas: era o único lugar do curso
+     com palavra sem voz. Mesmo filtro de lá: sem o prefixo solto (הַ־) e
+     sem nome próprio, sem a pontuação do fim. Uma palavra que a lição já
+     ensinou mantém a gravação e o grupo dela (o `add` não duplica). */
+  for (const t of textos.filter(t => t.revisado)) {
+    for (const w of t.novas || []) {
+      if (w.he.includes('־') || /\(nome\)\s*$/.test(w.pt)) continue;
+      add({ he: w.he.replace(/[?!.,:]+$/u, '').trim(), translit: w.translit.replace(/[?!.,:]+$/u, '').trim(),
+            gloss: w.pt, kind: 'palavra', wave: 4, where: `palavras do texto ${t.modulo}` });
+    }
+  }
 
   /* ── stable numbering ───────────────────────────────────────────────── */
   let previous = {};
