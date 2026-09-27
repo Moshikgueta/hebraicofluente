@@ -60,6 +60,11 @@ function requested(): { id: string; where: string }[] {
   sentencesUpTo(22).forEach(f => out.push({ id: f.audioId, where: `frase ${f.id}` }));
   textosDoCurso().forEach(t => t.linhas.forEach((l, i) =>
     out.push({ id: l.audioId!, where: `texto ${t.modulo} linha ${i + 1}` })));
+  /* E as palavras novas de cada texto: a lista embaixo dele e, depois de
+     lido, o vocabulário e o treino (27/09/2026). */
+  textosDoCurso().forEach(t => t.novas.forEach(w => {
+    if (w.audioId) out.push({ id: w.audioId, where: `texto ${t.modulo} palavra ${w.he}` });
+  }));
   return out;
 }
 

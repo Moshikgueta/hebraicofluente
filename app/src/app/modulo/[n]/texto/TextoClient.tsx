@@ -169,6 +169,7 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
             {texto.novas.map(w => (
               <li key={w.he} className="flex items-baseline gap-3 flex-wrap">
                 <He size="word">{w.he}</He>
+                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId!} ariaLabel={`Ouvir ${w.translit}`} size="sm" />}
                 <span className="font-ui text-[14px] text-ink">
                   <span className="font-semibold">{w.translit}</span>
                   <span className="text-ink-muted"> · {w.pt}</span>

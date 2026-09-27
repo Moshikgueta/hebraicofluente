@@ -8,7 +8,7 @@
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
   "generatedAt": "2026-09-27",
-  "total": 406,
+  "total": 433,
   "waves": [
     {
       "id": 1,
@@ -32,7 +32,7 @@
       "id": 4,
       "titlePt": "Frases e textos",
       "notePt": "As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.",
-      "count": 48
+      "count": 75
     }
   ],
   "clips": [
@@ -2410,7 +2410,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 7"
+        "letra 7",
+        "palavras do texto 3"
       ],
       "file": "he-3f291332.mp3"
     },
@@ -2529,7 +2530,8 @@
       "wave": 2,
       "where": [
         "letra 9",
-        "módulo 6"
+        "módulo 6",
+        "palavras do texto 4"
       ],
       "file": "he-b19b2b8c.mp3"
     },
@@ -3388,7 +3390,8 @@
         "letra 1",
         "módulo 6",
         "lição Chaf",
-        "no mundo real"
+        "no mundo real",
+        "palavras do texto 6"
       ],
       "file": "he-e01dbc52.mp3"
     },
@@ -3594,7 +3597,8 @@
       "where": [
         "letra 12",
         "módulo 6",
-        "lição Chaf"
+        "lição Chaf",
+        "palavras do texto 7"
       ],
       "file": "he-bfb40c4f.mp3"
     },
@@ -4613,7 +4617,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 17"
+        "letra 17",
+        "palavras do texto 4"
       ],
       "file": "he-54727e8c.mp3"
     },
@@ -4668,7 +4673,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 19"
+        "letra 19",
+        "palavras do texto 5"
       ],
       "file": "he-1b13ecef.mp3"
     },
@@ -4720,7 +4726,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 22"
+        "letra 22",
+        "palavras do texto 7"
       ],
       "file": "he-d8bd5b3d.mp3"
     },
@@ -5413,6 +5420,357 @@
         "texto do módulo 7"
       ],
       "file": "he-98ac8f4a.mp3"
+    },
+    {
+      "num": 446,
+      "seq": 406,
+      "he": "חַם",
+      "translit": "cham",
+      "gloss": "quente",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 3"
+      ],
+      "file": "he-8a651ff3.mp3"
+    },
+    {
+      "num": 447,
+      "seq": 407,
+      "he": "יָשֵׁן",
+      "translit": "yashen",
+      "gloss": "dorme, está dormindo",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 3"
+      ],
+      "file": "he-7bad5560.mp3"
+    },
+    {
+      "num": 448,
+      "seq": 408,
+      "he": "הַי",
+      "translit": "hai",
+      "gloss": "oi",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 4"
+      ],
+      "file": "he-23fdffde.mp3"
+    },
+    {
+      "num": 449,
+      "seq": 409,
+      "he": "מָה נִשְׁמַע",
+      "translit": "ma nishma",
+      "gloss": "tudo bem? (o que se ouve?)",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 4"
+      ],
+      "file": "he-52b4929b.mp3"
+    },
+    {
+      "num": 450,
+      "seq": 410,
+      "he": "מְעוּלֶה",
+      "translit": "meulé",
+      "gloss": "ótimo",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 4"
+      ],
+      "file": "he-73c21157.mp3"
+    },
+    {
+      "num": 451,
+      "seq": 411,
+      "he": "קַר",
+      "translit": "kar",
+      "gloss": "frio",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 4"
+      ],
+      "file": "he-65d03eb3.mp3"
+    },
+    {
+      "num": 452,
+      "seq": 412,
+      "he": "קְצָת",
+      "translit": "ktsat",
+      "gloss": "um pouco",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 4"
+      ],
+      "file": "he-3f8aa517.mp3"
+    },
+    {
+      "num": 453,
+      "seq": 413,
+      "he": "חוֹזֶרֶת",
+      "translit": "chozéret",
+      "gloss": "volta (ela volta)",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 4"
+      ],
+      "file": "he-9b1a743d.mp3"
+    },
+    {
+      "num": 454,
+      "seq": 414,
+      "he": "מָחָר",
+      "translit": "machar",
+      "gloss": "amanhã",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 4"
+      ],
+      "file": "he-188ef99d.mp3"
+    },
+    {
+      "num": 455,
+      "seq": 415,
+      "he": "לָצֵאת",
+      "translit": "latset",
+      "gloss": "sair",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 5"
+      ],
+      "file": "he-530072a4.mp3"
+    },
+    {
+      "num": 456,
+      "seq": 416,
+      "he": "בָּא",
+      "translit": "ba",
+      "gloss": "vem, está vindo",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 5"
+      ],
+      "file": "he-2e9da48e.mp3"
+    },
+    {
+      "num": 457,
+      "seq": 417,
+      "he": "שַׁבָּת שָׁלוֹם",
+      "translit": "shabat shalom",
+      "gloss": "bom sábado (a saudação do sábado)",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 5"
+      ],
+      "file": "he-838ddc4e.mp3"
+    },
+    {
+      "num": 458,
+      "seq": 418,
+      "he": "אֵיפֹה",
+      "translit": "eifo",
+      "gloss": "onde",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 6"
+      ],
+      "file": "he-cea65053.mp3"
+    },
+    {
+      "num": 459,
+      "seq": 419,
+      "he": "בַּדֶּרֶךְ הַבַּיְתָה",
+      "translit": "badérech habáyta",
+      "gloss": "a caminho de casa",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 6"
+      ],
+      "file": "he-15de60fc.mp3"
+    },
+    {
+      "num": 460,
+      "seq": 420,
+      "he": "יֵשׁ לְךָ",
+      "translit": "yesh lechá",
+      "gloss": "você tem",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 6"
+      ],
+      "file": "he-2a5ef2a4.mp3"
+    },
+    {
+      "num": 461,
+      "seq": 421,
+      "he": "מַפְתֵּחַ",
+      "translit": "mafteach",
+      "gloss": "chave",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 6"
+      ],
+      "file": "he-8f5647e9.mp3"
+    },
+    {
+      "num": 462,
+      "seq": 422,
+      "he": "בְּעוֹד",
+      "translit": "beod",
+      "gloss": "daqui a, em (tempo)",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 6"
+      ],
+      "file": "he-80f426f9.mp3"
+    },
+    {
+      "num": 463,
+      "seq": 423,
+      "he": "עֶשֶׂר",
+      "translit": "éser",
+      "gloss": "dez",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 6"
+      ],
+      "file": "he-a9e8f6bb.mp3"
+    },
+    {
+      "num": 464,
+      "seq": 424,
+      "he": "דַּקּוֹת",
+      "translit": "dakot",
+      "gloss": "minutos",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 6"
+      ],
+      "file": "he-10ac827a.mp3"
+    },
+    {
+      "num": 465,
+      "seq": 425,
+      "he": "מְקָרֵר",
+      "translit": "mekarer",
+      "gloss": "geladeira",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 6"
+      ],
+      "file": "he-f6fac7e1.mp3"
+    },
+    {
+      "num": 466,
+      "seq": 426,
+      "he": "מָלוֹן",
+      "translit": "malon",
+      "gloss": "hotel",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 7"
+      ],
+      "file": "he-83cbcc98.mp3"
+    },
+    {
+      "num": 467,
+      "seq": 427,
+      "he": "עוֹשָׂה",
+      "translit": "ossá",
+      "gloss": "faz, está fazendo (ela)",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 7"
+      ],
+      "file": "he-595cf45a.mp3"
+    },
+    {
+      "num": 468,
+      "seq": 428,
+      "he": "צ׳ק-אין",
+      "translit": "tchek-in",
+      "gloss": "check-in",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 7"
+      ],
+      "file": "he-3a08078b.mp3"
+    },
+    {
+      "num": 469,
+      "seq": 429,
+      "he": "יֵשׁ לָךְ",
+      "translit": "yesh lach",
+      "gloss": "você tem (para mulher)",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 7"
+      ],
+      "file": "he-ef51680e.mp3"
+    },
+    {
+      "num": 470,
+      "seq": 430,
+      "he": "אֵין לִי",
+      "translit": "ein li",
+      "gloss": "eu não tenho",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 7"
+      ],
+      "file": "he-6ce5a3ed.mp3"
+    },
+    {
+      "num": 471,
+      "seq": 431,
+      "he": "קוֹנָה",
+      "translit": "koná",
+      "gloss": "compra, está comprando (ela)",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 7"
+      ],
+      "file": "he-ef23f5d4.mp3"
+    },
+    {
+      "num": 472,
+      "seq": 432,
+      "he": "נְשִׁיקוֹת",
+      "translit": "neshikot",
+      "gloss": "beijos",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras do texto 7"
+      ],
+      "file": "he-1c9ca4fd.mp3"
     }
   ]
 }

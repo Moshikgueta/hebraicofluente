@@ -68,11 +68,23 @@ function optionsWith<T>(correct: T, wrong: T[], rand: Rand): { options: T[]; ans
   return { options, answer: options.indexOf(correct) };
 }
 
+/**
+ * O glifo é a PRÓPRIA letra, em qualquer das duas formas?
+ *
+ * ם é Mem, ן é Nun. Uma pergunta "qual destas é Mem?" ou "uma destas não é
+ * Mem" que traz ם como a errada está errada - e foi uma aluna que apontou
+ * (27/09/2026): "essas letras todas são Mem". O alfabeto aprendido traz as
+ * formas finais, e o `confusableWith` de cinco letras trazia a própria final;
+ * as duas portas passam por aqui. A forma final tem exercício próprio
+ * (`exFinalForm`), onde a base É a errada de propósito.
+ */
+export const mesmaLetra = (L: Letter, g: string): boolean => g === L.letter || g === L.finalForm;
+
 function letterDistractors(L: Letter, ctx: Ctx, rand: Rand, n: number): string[] {
-  const confusable = L.confusableWith.filter(c => c !== L.letter);
-  const learned = ctx.alphabet.filter(c => c !== L.letter && !confusable.includes(c));
+  const confusable = L.confusableWith.filter(c => !mesmaLetra(L, c));
+  const learned = ctx.alphabet.filter(c => !mesmaLetra(L, c) && !confusable.includes(c));
   const rest = ctx.allGlyphs.filter(
-    c => c !== L.letter && c !== L.finalForm && !confusable.includes(c) && !learned.includes(c)
+    c => !mesmaLetra(L, c) && !confusable.includes(c) && !learned.includes(c)
   );
   return [...shuffled(confusable, rand), ...shuffled(learned, rand), ...shuffled(rest, rand)].slice(0, n);
 }
@@ -157,7 +169,8 @@ export const exFinalForm: Gen = (L, ctx, rand, i) => {
  * apart is a visual skill, and it is trained by looking, not by reasoning.
  */
 export const exOddOneOut: Gen = (L, _ctx, rand, i) => {
-  const intruder = L.confusableWith.filter(c => c !== L.letter)[i % Math.max(1, L.confusableWith.length)];
+  const outras = L.confusableWith.filter(c => !mesmaLetra(L, c));
+  const intruder = outras[i % Math.max(1, outras.length)];
   if (!intruder) return null;
   const size = 6;
   const answer = Math.floor(rand() * size);
@@ -910,7 +923,7 @@ export const exLetterPosition: Gen = (L, ctx, rand, i) => {
  * ר, e ele não pode ser deixado ao acaso da rotação.
  */
 export const exConfusablePick: Gen = (L, ctx, rand, i) => {
-  const confusos = L.confusableWith.filter(c => c !== L.letter && ctx.allGlyphs.includes(c));
+  const confusos = L.confusableWith.filter(c => !mesmaLetra(L, c) && ctx.allGlyphs.includes(c));
   /* UM parecido já basta.
      ──────────────────────────────────────────────────────────────────────
      Exigia dois, e por isso cinco letras atravessavam o curso inteiro sem
@@ -920,7 +933,7 @@ export const exConfusablePick: Gen = (L, ctx, rand, i) => {
      falso ensina uma diferença que não existe. Então o parecido de verdade
      entra como distrator principal e o resto é completado com o alfabeto. */
   if (!confusos.length) return null;
-  const enchimento = ctx.allGlyphs.filter(c => c !== L.letter && !confusos.includes(c));
+  const enchimento = ctx.allGlyphs.filter(c => !mesmaLetra(L, c) && !confusos.includes(c));
   const wrong = [...take(confusos, 3, rand), ...shuffled(enchimento, rand)].slice(0, 3);
   if (wrong.length < 2) return null;
   const { options, answer } = optionsWith(L.letter, wrong, rand);
