@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { comprar, fundirCompras, folgasLivres, ITENS, saldo, cartasCompradas, leiturasCompradas } from '@/lib/loja';
-import { itemDaLeitura, leiturasPublicadas, type LeituraBonus } from '@/lib/engine/bonus';
+import { itemDaLeitura, leiturasPublicadas, type GuiaNikud, type LeituraBonus } from '@/lib/engine/bonus';
 import { applyPractice, displayStreak, goalTarget } from '@/lib/state/rules';
 import { mergeStates } from '@/lib/state/merge';
 import { migrate } from '@/lib/state/migrate';
@@ -143,5 +143,20 @@ describe('as leituras bônus', () => {
     /* A abertura das bênçãos é a MESMA linha em todas: um clipe só. */
     const aberturas = new Set(leituras.filter(l => l.id.startsWith('bencao-') && l.id !== 'bencao-sacerdotal').map(l => l.linhas[0]!.audioId));
     expect(aberturas.size).toBe(1);
+  });
+});
+
+describe('o guia do nikud bíblico', () => {
+  it('todo exemplo sai de uma linha das leituras (já aprovadas) e tem gravação', () => {
+    const { leituras, guia } = JSON.parse(readFileSync(join(__dirname, '../content/bonus.json'), 'utf8')) as
+      { leituras: LeituraBonus[]; guia: GuiaNikud };
+    const linhas = leituras.flatMap(l => l.linhas.map(x => x.he.normalize('NFC'))).join(' ');
+    for (const s of guia.secoes) {
+      expect(s.exemplos.length, s.id).toBeGreaterThan(0);
+      for (const e of s.exemplos) {
+        expect(linhas.includes((e.ouvir ?? e.he).normalize('NFC')), `${s.id}: ${e.he}`).toBe(true);
+        expect(e.audioId).toMatch(/^he-[0-9a-f]{8}$/);
+      }
+    }
   });
 });

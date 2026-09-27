@@ -597,7 +597,7 @@ function main() {
      o resto: vão por /api/content, nunca no pacote. `after` é a letra mais
      tardia da leitura - a loja só oferece o que o aluno já consegue ler. */
   {
-    const bonus = readJson('data/bonus.json').leituras;
+    const { leituras: bonus, guia } = readJson('data/bonus.json');
     const ordem = new Map();
     for (const L of letters) {
       ordem.set(NFC(L.letter), L.order);
@@ -622,7 +622,16 @@ function main() {
         ...b,
         after: Math.max(...b.linhas.flatMap(l => [...NFC(l.he)].map(c => ordem.get(c) ?? 0))),
         linhas: b.linhas.map(l => ({ ...l, he: NFC(l.he), audioId: audioIdFor(l.he) }))
-      }))
+      })),
+      /* O guia «O nikud da Bíblia»: cada exemplo com a gravação dele (a do
+         texto sem te'amim, quando `ouvir` existe). */
+      guia: guia && {
+        ...guia,
+        secoes: guia.secoes.map(s => ({
+          ...s,
+          exemplos: s.exemplos.map(e => ({ ...e, he: NFC(e.he), audioId: audioIdFor(e.ouvir ?? e.he) }))
+        }))
+      }
     }, null, 2) + '\n');
   }
 

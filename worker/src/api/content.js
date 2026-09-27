@@ -59,7 +59,8 @@ const CONTEUDO = JSON.stringify({
   culture: culture.cards,
   missoes: missoes.missoes,
   textos: textos.textos,
-  bonus: bonus.leituras
+  bonus: bonus.leituras,
+  guiaNikud: bonus.guia ?? null
 });
 
 export async function content({ request, env }) {

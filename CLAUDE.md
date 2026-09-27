@@ -539,6 +539,11 @@ tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
   componente do texto do módulo. Só `revisado: true` aparece e entra na
   onda 5 do roteiro. São hebraico bíblico, fora da regra de "só presente" -
   por serem recompensa, fora do caminho do curso.
+- **Guia «O nikud da Bíblia»** (`guia` em data/bonus.json → `ConteudoPago.guiaNikud`):
+  página à parte `/nikud-biblico` (no GATED), opcional, sem XP e sem nada que
+  dependa dela - pedido do dono. Linkada das Leituras bônus e de Recompensas.
+  Todo exemplo é recortado de uma linha já aprovada das leituras (o teste
+  confere); gravações na onda 5.
 - `tests/loja.test.ts`.
 
 ## Antes de commitar

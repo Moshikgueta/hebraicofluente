@@ -64,7 +64,7 @@ function main() {
   const realWorld = readJson('data/real-world.json');
   const sentences = readJson('data/sentences.json').sentences;
   const textos = readJson('data/textos.json').textos;
-  const bonus = readJson('data/bonus.json').leituras;
+  const { leituras: bonus, guia } = readJson('data/bonus.json');
 
   const seen = new Map();
   /** @param {{he:string, translit?:string|null, gloss:string, kind:string, wave:number, where:string}} c */
@@ -222,6 +222,13 @@ function main() {
   for (const b of bonus.filter(b => b.revisado)) {
     for (const l of b.linhas) {
       add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 5, where: `leitura bônus: ${b.fontePt}` });
+    }
+  }
+  /* Os exemplos do guia «O nikud da Bíblia», palavras recortadas das leituras.
+     O de te'amim toca a linha já gravada (`ouvir`), e o `add` não duplica. */
+  if (guia?.revisado) {
+    for (const s of guia.secoes) for (const e of s.exemplos) {
+      add({ he: e.ouvir ?? e.he, translit: e.translit, gloss: e.pt, kind: 'palavra', wave: 5, where: 'guia do nikud bíblico' });
     }
   }
 

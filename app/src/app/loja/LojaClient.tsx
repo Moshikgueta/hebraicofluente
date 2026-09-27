@@ -121,6 +121,9 @@ function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
           Trechos do Antigo Testamento e bênçãos, com transliteração, tradução e a leitura gravada, linha a linha.
           Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ou bênção ◆ {ITENS.bencao.custo}.
         </p>
+        <Link href="/nikud-biblico" className="font-ui text-[14px] text-[var(--accent)] underline justify-self-start">
+          Guia opcional e gratuito: o nikud da Bíblia →
+        </Link>
         {minhas.size > 0 && (
           <Link href="/bonus" className="font-ui text-[14px] font-semibold text-[var(--accent)] underline justify-self-start">
             Ler as minhas leituras →

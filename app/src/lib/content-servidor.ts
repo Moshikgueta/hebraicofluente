@@ -36,7 +36,7 @@ import textosJson from '@content/textos.json';
 import bonusJson from '@content/bonus.json';
 import type { Missao } from './engine/missao';
 import type { Texto } from './engine/textos';
-import type { LeituraBonus } from './engine/bonus';
+import type { GuiaNikud, LeituraBonus } from './engine/bonus';
 import type {
   CultureCard, EraPair, Letter, NikudIntro, NikudSound, Scene, Sentence, StrokeSet
 } from './content-publico';
@@ -53,6 +53,7 @@ export type ConteudoPago = {
   missoes: Missao[];
   textos: Texto[];
   bonus: LeituraBonus[];
+  guiaNikud: GuiaNikud | null;
 };
 
 /**
@@ -73,7 +74,8 @@ export const conteudoPago: ConteudoPago = {
   culture: (cultureJson as unknown as { cards: CultureCard[] }).cards,
   missoes: (missoesJson as unknown as { missoes: Missao[] }).missoes,
   textos: (textosJson as unknown as { textos: Texto[] }).textos,
-  bonus: (bonusJson as unknown as { leituras: LeituraBonus[] }).leituras
+  bonus: (bonusJson as unknown as { leituras: LeituraBonus[] }).leituras,
+  guiaNikud: (bonusJson as unknown as { guia?: GuiaNikud }).guia ?? null
 };
 
 /* ── as letras, para as rotas ─────────────────────────────────────────────

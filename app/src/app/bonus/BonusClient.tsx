@@ -14,7 +14,7 @@ import { Badge, Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { LinhasDeLeitura } from '@/components/learn/LinhasDeLeitura';
-import { leiturasBonus } from '@/lib/content';
+import { guiaNikud, leiturasBonus } from '@/lib/content';
 import { leiturasCompradas } from '@/lib/loja';
 import { useProgress } from '@/lib/state/store';
 
@@ -63,6 +63,7 @@ export function BonusClient() {
           O Nome está escrito como no texto original e se lê «Adonái», como na transliteração.
           A tradução é literal, para acompanhar o hebraico linha a linha.
         </p>
+        <GuiaCartao />
       </div>
     );
   }
@@ -76,6 +77,7 @@ export function BonusClient() {
           Você abre cada uma com XP, em Recompensas.
         </p>
       </header>
+      <GuiaCartao />
       {abertas.length === 0 ? (
         <Card tone="wash" className="p-5 grid gap-3">
           <p className="font-ui text-[15px] text-ink-body m-0">Você ainda não abriu nenhuma leitura.</p>
@@ -95,5 +97,21 @@ export function BonusClient() {
         </ul>
       )}
     </div>
+  );
+}
+
+/* O guia opcional, oferecido e nunca exigido: um cartão para quem quiser. */
+function GuiaCartao() {
+  const guia = guiaNikud();
+  if (!guia) return null;
+  return (
+    <Link href="/nikud-biblico"
+          className="block rounded-[var(--r-lg)] border border-line bg-[var(--accent-wash)] p-4 hover:bg-surface-2">
+      <span className="block font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Guia opcional · sem XP</span>
+      <span className="block font-display text-[18px] font-semibold text-ink">{guia.tituloPt} →</span>
+      <span className="block font-ui text-[13.5px] text-ink-body">
+        O Nome, o sheva, as vogais rápidas e os outros pontos que a Bíblia usa além do curso.
+      </span>
+    </Link>
   );
 }

@@ -34,7 +34,7 @@
 
 import { course, getModule, letterIds } from './content-publico';
 import { textosPublicados } from './engine/textos';
-import { leiturasPublicadas, type LeituraBonus } from './engine/bonus';
+import { leiturasPublicadas, type GuiaNikud, type LeituraBonus } from './engine/bonus';
 import type {
   Checkpoint, Course, CourseModule, CultureCard, EraPair, Letter, LetterSkel,
   NikudIntro, NikudSign, NikudSound, Scene, Sentence, SentenceWord, Stroke, StrokeSet,
@@ -65,6 +65,7 @@ export type ConteudoPago = {
   missoes: import('./engine/missao').Missao[];
   textos: import('./engine/textos').Texto[];
   bonus: LeituraBonus[];
+  guiaNikud: GuiaNikud | null;
 };
 
 /* ── o depósito ─────────────────────────────────────────────────────────── */
@@ -130,6 +131,12 @@ export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undef
 /** As leituras bônus revisadas (textos bíblicos e bênçãos; ver engine/bonus.ts).
  *  `?? []`: um Worker publicado antes delas responde sem o campo. */
 export const leiturasBonus = (): LeituraBonus[] => leiturasPublicadas(dados().bonus ?? []);
+
+/** O guia «O nikud da Bíblia», se já revisado. */
+export const guiaNikud = (): GuiaNikud | null => {
+  const g = dados().guiaNikud;
+  return g?.revisado ? g : null;
+};
 
 /** A missão que fecha o módulo `n`, se houver. */
 export const missaoDoModulo = (n: number): ConteudoPago['missoes'][number] | undefined =>
@@ -276,7 +283,8 @@ export async function carregarConteudo(): Promise<void> {
       culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards,
       missoes: bruto<{ missoes: ConteudoPago['missoes'] }>(missoesJson).missoes,
       textos: bruto<{ textos: ConteudoPago['textos'] }>(textosJson).textos,
-      bonus: bruto<{ leituras: LeituraBonus[] }>(bonusJson).leituras
+      bonus: bruto<{ leituras: LeituraBonus[] }>(bonusJson).leituras,
+      guiaNikud: bruto<{ guia?: GuiaNikud }>(bonusJson).guia ?? null
     });
     return;
   }

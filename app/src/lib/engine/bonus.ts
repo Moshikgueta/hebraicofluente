@@ -23,6 +23,15 @@ export type LeituraBonus = {
   linhas: LinhaBonus[];
 };
 
+/** O guia «O nikud da Bíblia» (/nikud-biblico): opcional, fora da trilha. */
+export type ExemploNikud = { he: string; translit: string; pt: string; ouvir?: string; audioId?: string };
+export type GuiaNikud = {
+  revisado: boolean;
+  tituloPt: string;
+  introPt: string;
+  secoes: { id: string; tituloPt: string; textoPt: string; exemplos: ExemploNikud[] }[];
+};
+
 export const leiturasPublicadas = (ls: readonly LeituraBonus[]): LeituraBonus[] =>
   ls.filter(l => l.revisado);
 
