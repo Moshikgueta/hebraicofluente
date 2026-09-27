@@ -669,6 +669,19 @@ function main() {
     rotulo += ' · só os que faltam';
   }
   alvo.sort((a, b) => a.num - b.num);
+  /* Um texto se lê na ordem da CONVERSA, não na dos números (27/09/2026).
+     Quando um texto é reescrito, as falas que já existiam guardam o número
+     antigo e as novas ganham números no fim - a ordem por número pularia
+     de fala em fala. O estúdio lista na ordem do texto, e o corte casa com
+     ela: posição da linha em data/textos.json, e o número só desempata. */
+  const linhaDoTexto = new Map();
+  for (const t of readJson('data/textos.json').textos) {
+    t.linhas.forEach((l, i) => linhaDoTexto.set(`texto do módulo ${t.modulo}|${l.he}`, i));
+  }
+  const posTexto = c => linhaDoTexto.get(`${grupoDe(c)}|${c.he}`);
+  if (alvo.length && alvo.every(c => posTexto(c) !== undefined)) {
+    alvo.sort((a, b) => posTexto(a) - posTexto(b) || a.num - b.num);
+  }
   if (alvo.length && alvo.every(c => c.kind === 'frase')) {
     GAP_MIN_S = FRASE_GAP_MIN_S;
     PALAVRA_MAX_S = FRASE_MAX_S;
