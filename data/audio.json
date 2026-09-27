@@ -33,6 +33,12 @@
       "titlePt": "Frases e textos",
       "notePt": "As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.",
       "count": 75
+    },
+    {
+      "id": 5,
+      "titlePt": "Leituras bônus",
+      "notePt": "Os textos bíblicos e as bênçãos de Recompensas, uma linha por clipe, em ritmo de leitura: calmo, mas sem pausa entre as palavras.",
+      "count": 0
     }
   ],
   "clips": [

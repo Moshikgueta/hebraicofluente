@@ -1,0 +1,148 @@
+{
+  "note": [
+    "LEITURAS BÔNUS - textos bíblicos e bênçãos trocados por XP em Recompensas (27/09/2026).",
+    "",
+    "Pedido do dono do curso, para o público judeu, evangélico e Bnei Anusim que quer",
+    "ler o Antigo Testamento. São RECOMPENSA, fora do caminho do curso: nada da",
+    "trilha depende delas, e elas não valem XP.",
+    "",
+    "Por isso ficam fora da regra do curso de «só tempo presente»: é hebraico bíblico",
+    "e litúrgico, com o passado narrativo (וַיֹּאמֶר, «e disse»). A introdução de cada",
+    "uma avisa que a tradução está ali para ajudar, e que entender o hebraico bíblico",
+    "é outro curso.",
+    "",
+    "O Nome: nos textos bíblicos está escrito como no texto massorético (יְהוָה), e",
+    "nas bênçãos como nos livros de reza (יְיָ). Nos dois lê-se «Adonái», e é o que",
+    "a transliteração diz.",
+    "",
+    "Pontuação sem os sinais de cantilação (te'amim), só as vogais. A tradução é",
+    "nossa, literal, e não de uma edição da Bíblia com direitos.",
+    "",
+    "`revisado: false` até o dono do curso conferir o hebraico: só as revisadas",
+    "aparecem na loja e entram no roteiro de gravação (onda 5). `tipo` escolhe o",
+    "item da loja: \"texto\" (200 XP) ou \"curto\" (versículo ou bênção, 100 XP).",
+    "`after` (a letra mais tardia) é CALCULADO pelo exportador."
+  ],
+  "leituras": [
+    {
+      "id": "genesis-1",
+      "tipo": "texto",
+      "revisado": false,
+      "tituloPt": "No princípio",
+      "fontePt": "Gênesis 1:1-5",
+      "introPt": "O começo da Bíblia: a criação da luz e o primeiro dia. É hebraico bíblico, que conta no passado (וַיֹּאמֶר é «e disse»), então leia pelo som e use a tradução para acompanhar.",
+      "linhas": [
+        { "he": "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ", "translit": "bereshít bará Elohím et ha-shamáyim ve-et ha-árets", "pt": "No princípio, Deus criou os céus e a terra." },
+        { "he": "וְהָאָרֶץ הָיְתָה תֹהוּ וָבֹהוּ וְחֹשֶׁךְ עַל־פְּנֵי תְהוֹם וְרוּחַ אֱלֹהִים מְרַחֶפֶת עַל־פְּנֵי הַמָּיִם", "translit": "veha-árets haytá tóhu vavóhu, vechóshech al-penéi tehóm, veruách Elohím merachéfet al-penéi ha-máyim", "pt": "A terra era sem forma e vazia, havia escuridão sobre o abismo, e o espírito de Deus pairava sobre as águas." },
+        { "he": "וַיֹּאמֶר אֱלֹהִים יְהִי אוֹר וַיְהִי־אוֹר", "translit": "vayómer Elohím: yehí or! vayehí-or", "pt": "Deus disse: haja luz! E houve luz." },
+        { "he": "וַיַּרְא אֱלֹהִים אֶת־הָאוֹר כִּי־טוֹב וַיַּבְדֵּל אֱלֹהִים בֵּין הָאוֹר וּבֵין הַחֹשֶׁךְ", "translit": "vayár Elohím et-ha-or ki-tov, vayavdél Elohím bein ha-or uvéin ha-chóshech", "pt": "Deus viu que a luz era boa, e Deus separou a luz da escuridão." },
+        { "he": "וַיִּקְרָא אֱלֹהִים לָאוֹר יוֹם וְלַחֹשֶׁךְ קָרָא לָיְלָה וַיְהִי־עֶרֶב וַיְהִי־בֹקֶר יוֹם אֶחָד", "translit": "vayikrá Elohím la-or yom, velachóshech kará láyla. vayehí-érev vayehí-vóker, yom echád", "pt": "Deus chamou a luz de dia, e a escuridão chamou de noite. Houve tarde e houve manhã: o primeiro dia (no hebraico, «dia um»)." }
+      ]
+    },
+    {
+      "id": "shema",
+      "tipo": "texto",
+      "revisado": false,
+      "tituloPt": "Shemá Israel",
+      "fontePt": "Deuteronômio 6:4-9",
+      "introPt": "O Shemá, a declaração de fé que se diz de manhã e à noite. As palavras que a mezuzá guarda no batente da porta estão no último versículo.",
+      "linhas": [
+        { "he": "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד", "translit": "shemá Yisraél, Adonái Elohéinu, Adonái echád", "pt": "Ouve, Israel: o Senhor é o nosso Deus, o Senhor é um." },
+        { "he": "וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל־לְבָבְךָ וּבְכָל־נַפְשְׁךָ וּבְכָל־מְאֹדֶךָ", "translit": "veahavtá et Adonái Elohécha bechol-levavchá uvchol-nafshechá uvchol-meodécha", "pt": "Amarás o Senhor, teu Deus, de todo o teu coração, de toda a tua alma e com toda a tua força." },
+        { "he": "וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ", "translit": "vehayú ha-devarím ha-éle ashér anochí metsavechá ha-yóm al-levavécha", "pt": "Estas palavras que hoje eu te ordeno estarão no teu coração." },
+        { "he": "וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשָׁכְבְּךָ וּבְקוּמֶךָ", "translit": "veshinantám levanécha vedibartá bam, beshivtechá bevetécha uvlechtechá vadérech, uvshochbechá uvkumécha", "pt": "Tu as ensinarás a teus filhos e falarás delas sentado em casa e andando pelo caminho, ao deitar e ao levantar." },
+        { "he": "וּקְשַׁרְתָּם לְאוֹת עַל־יָדֶךָ וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ", "translit": "ukshartám leót al-yadécha, vehayú letotafót bein einécha", "pt": "Tu as atarás como sinal na tua mão, e serão como uma faixa entre os teus olhos." },
+        { "he": "וּכְתַבְתָּם עַל־מְזֻזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ", "translit": "uchtavtám al-mezuzót betécha uvisharécha", "pt": "E as escreverás nos batentes da tua casa e nos teus portões." }
+      ]
+    },
+    {
+      "id": "salmo-23",
+      "tipo": "texto",
+      "revisado": false,
+      "tituloPt": "O Senhor é o meu pastor",
+      "fontePt": "Salmo 23",
+      "introPt": "O salmo mais conhecido, inteiro, nos seis versículos. Muita gente já o sabe de cor em português: ler em hebraico é reconhecer o que já conhece.",
+      "linhas": [
+        { "he": "מִזְמוֹר לְדָוִד יְהוָה רֹעִי לֹא אֶחְסָר", "translit": "mizmór leDavíd. Adonái roí, lo echsár", "pt": "Salmo de Davi. O Senhor é o meu pastor, nada me faltará." },
+        { "he": "בִּנְאוֹת דֶּשֶׁא יַרְבִּיצֵנִי עַל־מֵי מְנֻחוֹת יְנַהֲלֵנִי", "translit": "binót déshe yarbitséni, al-méi menuchót yenahaléni", "pt": "Em pastos verdes me faz deitar, a águas tranquilas me conduz." },
+        { "he": "נַפְשִׁי יְשׁוֹבֵב יַנְחֵנִי בְמַעְגְּלֵי־צֶדֶק לְמַעַן שְׁמוֹ", "translit": "nafshí yeshovév, yanchéni vemaglei-tsédek lemáan shemó", "pt": "Restaura a minha alma, me guia por caminhos de justiça por amor do seu nome." },
+        { "he": "גַּם כִּי־אֵלֵךְ בְּגֵיא צַלְמָוֶת לֹא־אִירָא רָע כִּי־אַתָּה עִמָּדִי שִׁבְטְךָ וּמִשְׁעַנְתֶּךָ הֵמָּה יְנַחֲמֻנִי", "translit": "gam ki-eléch begéi tsalmávet lo-irá ra, ki-atá imadí; shivtechá umishantécha héma yenachamúni", "pt": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal nenhum, porque tu estás comigo; a tua vara e o teu cajado me consolam." },
+        { "he": "תַּעֲרֹךְ לְפָנַי שֻׁלְחָן נֶגֶד צֹרְרָי דִּשַּׁנְתָּ בַשֶּׁמֶן רֹאשִׁי כּוֹסִי רְוָיָה", "translit": "taaróch lefanái shulchán négued tsorerái; dishánta vashémen roshí, kosí revayá", "pt": "Preparas uma mesa para mim diante dos meus inimigos; unges com óleo a minha cabeça, o meu cálice transborda." },
+        { "he": "אַךְ טוֹב וָחֶסֶד יִרְדְּפוּנִי כָּל־יְמֵי חַיָּי וְשַׁבְתִּי בְּבֵית־יְהוָה לְאֹרֶךְ יָמִים", "translit": "ach tov vachésed yirdefúni kol-yeméi chayái, veshavtí beveit-Adonái leórech yamím", "pt": "Certamente o bem e a bondade me seguirão todos os dias da minha vida, e habitarei na casa do Senhor por longos dias." }
+      ]
+    },
+    {
+      "id": "salmo-133",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Como é bom",
+      "fontePt": "Salmo 133:1",
+      "introPt": "Um versículo só, e talvez o mais cantado: הִנֵּה מַה־טּוֹב vira música em casamento, em festa e em reunião de amigos.",
+      "linhas": [
+        { "he": "שִׁיר הַמַּעֲלוֹת לְדָוִד", "translit": "shir ha-maalót leDavíd", "pt": "Cântico das subidas, de Davi." },
+        { "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד", "translit": "hinéi ma-tóv uma-naím shévet achím gam-yáchad", "pt": "Vejam como é bom e agradável os irmãos viverem juntos." }
+      ]
+    },
+    {
+      "id": "bencao-sacerdotal",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "A bênção sacerdotal",
+      "fontePt": "Números 6:24-26",
+      "introPt": "A bênção que os sacerdotes davam ao povo, e que muitos pais dizem aos filhos na sexta-feira à noite. Três versículos, cada um maior que o anterior.",
+      "linhas": [
+        { "he": "יְבָרֶכְךָ יְהוָה וְיִשְׁמְרֶךָ", "translit": "yevarechechá Adonái veyishmerécha", "pt": "O Senhor te abençoe e te guarde." },
+        { "he": "יָאֵר יְהוָה פָּנָיו אֵלֶיךָ וִיחֻנֶּךָּ", "translit": "yaér Adonái panáv elécha vichunéka", "pt": "O Senhor faça brilhar o seu rosto sobre ti e tenha misericórdia de ti." },
+        { "he": "יִשָּׂא יְהוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם", "translit": "yisá Adonái panáv elécha veyasém lechá shalóm", "pt": "O Senhor volte o seu rosto para ti e te dê a paz." }
+      ]
+    },
+    {
+      "id": "bencao-pao",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "A bênção do pão",
+      "fontePt": "Bênção antes de comer pão (hamotsí)",
+      "introPt": "Toda bênção judaica começa com as mesmas seis palavras. Aprenda a primeira linha aqui e você já lê o começo de todas as outras.",
+      "linhas": [
+        { "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם", "translit": "barúch atá Adonái, Elohéinu mélech ha-olám", "pt": "Bendito és tu, Senhor, nosso Deus, rei do universo," },
+        { "he": "הַמּוֹצִיא לֶחֶם מִן הָאָרֶץ", "translit": "ha-motsí léchem min ha-árets", "pt": "que tira o pão da terra." }
+      ]
+    },
+    {
+      "id": "bencao-vinho",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "A bênção do vinho",
+      "fontePt": "Bênção antes de beber vinho",
+      "introPt": "A mesma abertura de toda bênção, e o fim muda: aqui, o fruto da videira. É a que abre o kidush do Shabat.",
+      "linhas": [
+        { "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם", "translit": "barúch atá Adonái, Elohéinu mélech ha-olám", "pt": "Bendito és tu, Senhor, nosso Deus, rei do universo," },
+        { "he": "בּוֹרֵא פְּרִי הַגָּפֶן", "translit": "boré pri ha-gáfen", "pt": "que cria o fruto da videira." }
+      ]
+    },
+    {
+      "id": "velas-shabat",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "As velas do Shabat",
+      "fontePt": "Bênção ao acender as velas de Shabat",
+      "introPt": "Dita na sexta-feira, ao pôr do sol, ao acender as velas. A abertura é a de sempre; o resto fala de mandamento.",
+      "linhas": [
+        { "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם", "translit": "barúch atá Adonái, Elohéinu mélech ha-olám", "pt": "Bendito és tu, Senhor, nosso Deus, rei do universo," },
+        { "he": "אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל שַׁבָּת", "translit": "ashér kideshánu bemitsvotáv vetsivánu lehadlík ner shel Shabát", "pt": "que nos santificou com os seus mandamentos e nos ordenou acender a vela do Shabat." }
+      ]
+    },
+    {
+      "id": "shehecheyanu",
+      "tipo": "curto",
+      "revisado": false,
+      "tituloPt": "Shehecheyanu",
+      "fontePt": "Bênção pelas ocasiões novas",
+      "introPt": "A bênção de agradecer por ter chegado a um momento: uma festa, uma roupa nova, a primeira vez de alguma coisa. Terminar de aprender o alefbet serve.",
+      "linhas": [
+        { "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם", "translit": "barúch atá Adonái, Elohéinu mélech ha-olám", "pt": "Bendito és tu, Senhor, nosso Deus, rei do universo," },
+        { "he": "שֶׁהֶחֱיָנוּ וְקִיְּמָנוּ וְהִגִּיעָנוּ לַזְּמַן הַזֶּה", "translit": "shehecheyánu vekiyemánu vehiguiánu lazmán hazé", "pt": "que nos deu vida, nos sustentou e nos fez chegar a este momento." }
+      ]
+    }
+  ]
+}

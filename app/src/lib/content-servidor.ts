@@ -33,8 +33,10 @@ import strokeJson from '@content/stroke-paths.json';
 import cultureJson from '@content/culture.json';
 import missoesJson from '@content/missoes.json';
 import textosJson from '@content/textos.json';
+import bonusJson from '@content/bonus.json';
 import type { Missao } from './engine/missao';
 import type { Texto } from './engine/textos';
+import type { LeituraBonus } from './engine/bonus';
 import type {
   CultureCard, EraPair, Letter, NikudIntro, NikudSound, Scene, Sentence, StrokeSet
 } from './content-publico';
@@ -50,6 +52,7 @@ export type ConteudoPago = {
   culture: CultureCard[];
   missoes: Missao[];
   textos: Texto[];
+  bonus: LeituraBonus[];
 };
 
 /**
@@ -69,7 +72,8 @@ export const conteudoPago: ConteudoPago = {
   strokes: (strokeJson as unknown as { box: number; letters: Record<string, StrokeSet> }).letters,
   culture: (cultureJson as unknown as { cards: CultureCard[] }).cards,
   missoes: (missoesJson as unknown as { missoes: Missao[] }).missoes,
-  textos: (textosJson as unknown as { textos: Texto[] }).textos
+  textos: (textosJson as unknown as { textos: Texto[] }).textos,
+  bonus: (bonusJson as unknown as { leituras: LeituraBonus[] }).leituras
 };
 
 /* ── as letras, para as rotas ─────────────────────────────────────────────

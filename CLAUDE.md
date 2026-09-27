@@ -530,6 +530,15 @@ tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
   coisa que valha dinheiro não entra na loja sem uma decisão à parte do dono,
   e com teto conferido no servidor.
 - `/loja` está no `GATED` do portão e no `PAGAS` de lib/seo.ts.
+- **Leituras bônus** (textos bíblicos e bênçãos): `data/bonus.json` →
+  export (com `after` e `audioId`) → `ConteudoPago.bonus` (pago, pelo
+  `/api/content`; os três lugares: content.ts, content-servidor.ts,
+  worker/src/api/content.js). Itens `texto-bonus` (200) e `bencao` (100), um
+  por leitura (`<item>:<id>`). A loja só oferece com `mastered >= after`.
+  Leitura em `/bonus?l=<id>` (no GATED), com `LinhasDeLeitura`, o mesmo
+  componente do texto do módulo. Só `revisado: true` aparece e entra na
+  onda 5 do roteiro. São hebraico bíblico, fora da regra de "só presente" -
+  por serem recompensa, fora do caminho do curso.
 - `tests/loja.test.ts`.
 
 ## Antes de commitar

@@ -592,6 +592,40 @@ function main() {
     }))
   }, null, 2) + '\n');
 
+  /* ── as leituras bônus (27/09/2026) ─────────────────────────────────
+     Textos bíblicos e bênçãos, trocados por XP em Recompensas. Pagos como
+     o resto: vão por /api/content, nunca no pacote. `after` é a letra mais
+     tardia da leitura - a loja só oferece o que o aluno já consegue ler. */
+  {
+    const bonus = readJson('data/bonus.json').leituras;
+    const ordem = new Map();
+    for (const L of letters) {
+      ordem.set(NFC(L.letter), L.order);
+      if (L.finalForm) ordem.set(NFC(L.finalForm), L.order);
+    }
+    const ids = new Set();
+    for (const b of bonus) {
+      if (!/^[a-z0-9-]+$/.test(b.id || '') || ids.has(b.id)) throw new Error(`bonus.json: id inválido ou repetido "${b.id}"`);
+      ids.add(b.id);
+      if (!['texto', 'curto'].includes(b.tipo)) throw new Error(`bonus.json: ${b.id} com tipo "${b.tipo}"`);
+      if (typeof b.revisado !== 'boolean') throw new Error(`bonus.json: ${b.id} sem "revisado"`);
+      if (!Array.isArray(b.linhas) || !b.linhas.length) throw new Error(`bonus.json: ${b.id} sem linhas`);
+      for (const l of b.linhas) {
+        for (const c of NFC(l.he)) {
+          if (/[א-ת]/.test(c) && !ordem.has(c)) throw new Error(`bonus.json: ${b.id} usa "${c}", que o curso não ensina`);
+        }
+        if (!l.translit || !l.pt) throw new Error(`bonus.json: ${b.id} tem linha sem transliteração ou tradução`);
+      }
+    }
+    writeFileSync(join(OUT, 'bonus.json'), JSON.stringify({
+      leituras: bonus.map(b => ({
+        ...b,
+        after: Math.max(...b.linhas.flatMap(l => [...NFC(l.he)].map(c => ordem.get(c) ?? 0))),
+        linhas: b.linhas.map(l => ({ ...l, he: NFC(l.he), audioId: audioIdFor(l.he) }))
+      }))
+    }, null, 2) + '\n');
+  }
+
   writeFileSync(join(OUT, 'missoes.json'), JSON.stringify({
     missoes: missoes.map(m => ({
       ...m,

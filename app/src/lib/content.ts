@@ -34,6 +34,7 @@
 
 import { course, getModule, letterIds } from './content-publico';
 import { textosPublicados } from './engine/textos';
+import { leiturasPublicadas, type LeituraBonus } from './engine/bonus';
 import type {
   Checkpoint, Course, CourseModule, CultureCard, EraPair, Letter, LetterSkel,
   NikudIntro, NikudSign, NikudSound, Scene, Sentence, SentenceWord, Stroke, StrokeSet,
@@ -63,6 +64,7 @@ export type ConteudoPago = {
   culture: CultureCard[];
   missoes: import('./engine/missao').Missao[];
   textos: import('./engine/textos').Texto[];
+  bonus: LeituraBonus[];
 };
 
 /* ── o depósito ─────────────────────────────────────────────────────────── */
@@ -124,6 +126,10 @@ export const textosDoCurso = (): ConteudoPago['textos'] => textosPublicados(dado
 /** O mini-texto do módulo `n`, só se já foi revisado. Ver lib/engine/textos.ts. */
 export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
   textosPublicados(dados().textos).find(t => t.modulo === n);
+
+/** As leituras bônus revisadas (textos bíblicos e bênçãos; ver engine/bonus.ts).
+ *  `?? []`: um Worker publicado antes delas responde sem o campo. */
+export const leiturasBonus = (): LeituraBonus[] => leiturasPublicadas(dados().bonus ?? []);
 
 /** A missão que fecha o módulo `n`, se houver. */
 export const missaoDoModulo = (n: number): ConteudoPago['missoes'][number] | undefined =>
@@ -244,7 +250,7 @@ export async function carregarConteudo(): Promise<void> {
      com os `import()` dentro. A constante exportada é para quem lê; o ramo
      tem de ser podado, e quem poda não segue exportação. */
   if (process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker') {
-    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, erasJson, strokeJson, cultureJson, missoesJson, textosJson] = await Promise.all([
+    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, erasJson, strokeJson, cultureJson, missoesJson, textosJson, bonusJson] = await Promise.all([
       import('@content/letters.json'),
       import('@content/nikud.json'),
       import('@content/extras.json'),
@@ -254,7 +260,8 @@ export async function carregarConteudo(): Promise<void> {
       import('@content/stroke-paths.json'),
       import('@content/culture.json'),
       import('@content/missoes.json'),
-      import('@content/textos.json')
+      import('@content/textos.json'),
+      import('@content/bonus.json')
     ]);
     const bruto = <T,>(m: unknown): T =>
       ((m as { default?: unknown }).default ?? m) as T;
@@ -268,7 +275,8 @@ export async function carregarConteudo(): Promise<void> {
       strokes: bruto<{ box: number; letters: Record<string, StrokeSet> }>(strokeJson).letters,
       culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards,
       missoes: bruto<{ missoes: ConteudoPago['missoes'] }>(missoesJson).missoes,
-      textos: bruto<{ textos: ConteudoPago['textos'] }>(textosJson).textos
+      textos: bruto<{ textos: ConteudoPago['textos'] }>(textosJson).textos,
+      bonus: bruto<{ leituras: LeituraBonus[] }>(bonusJson).leituras
     });
     return;
   }

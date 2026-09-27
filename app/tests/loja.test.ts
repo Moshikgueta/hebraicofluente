@@ -7,8 +7,11 @@
  *   · o que vem de fora com forma errada é descartado.
  */
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { comprar, fundirCompras, folgasLivres, ITENS, saldo, cartasCompradas } from '@/lib/loja';
+import { comprar, fundirCompras, folgasLivres, ITENS, saldo, cartasCompradas, leiturasCompradas } from '@/lib/loja';
+import { itemDaLeitura, leiturasPublicadas, type LeituraBonus } from '@/lib/engine/bonus';
 import { applyPractice, displayStreak, goalTarget } from '@/lib/state/rules';
 import { mergeStates } from '@/lib/state/merge';
 import { migrate } from '@/lib/state/migrate';
@@ -100,5 +103,45 @@ describe('dois aparelhos', () => {
     } } });
     expect(Object.keys(s.loja.compras)).toEqual(['ok']);
     expect(migrate({ ...EMPTY_STATE, loja: undefined }).loja).toEqual({ compras: {} });
+  });
+});
+
+describe('as leituras bônus', () => {
+  it('cada leitura é uma compra só, e texto custa mais que bênção', () => {
+    let s = compra(com(1000), 'texto-bonus', T, 'shema');
+    expect(comprar(s, 'texto-bonus', T, 'shema')).toEqual({ ok: false, motivo: 'ja-tem' });
+    expect(comprar(s, 'bencao', T)).toEqual({ ok: false, motivo: 'sem-alvo' });
+    s = compra(s, 'bencao', T, 'bencao-pao');
+    expect([...leiturasCompradas(s)].sort()).toEqual(['bencao-pao', 'shema']);
+    expect(saldo(s)).toBe(1000 - ITENS['texto-bonus'].custo - ITENS.bencao.custo);
+    expect(ITENS['texto-bonus'].custo).toBeGreaterThan(ITENS.bencao.custo);
+    /* Uma carta com o mesmo nome de alvo não se confunde com a leitura. */
+    expect(cartasCompradas(s).size).toBe(0);
+  });
+
+  it('só as revisadas aparecem, e o tipo escolhe o item', () => {
+    const base = { tituloPt: '', fontePt: '', introPt: '', after: 1, linhas: [] };
+    const ls = [
+      { ...base, id: 'a', tipo: 'texto' as const, revisado: true },
+      { ...base, id: 'b', tipo: 'curto' as const, revisado: false }
+    ];
+    expect(leiturasPublicadas(ls).map(l => l.id)).toEqual(['a']);
+    expect(itemDaLeitura(ls[0]!)).toBe('texto-bonus');
+    expect(itemDaLeitura(ls[1]!)).toBe('bencao');
+  });
+
+  it('o conteúdo exportado: toda linha com áudio, transliteração e tradução, e `after` calculado', () => {
+    const { leituras } = JSON.parse(readFileSync(join(__dirname, '../content/bonus.json'), 'utf8')) as { leituras: LeituraBonus[] };
+    expect(leituras.length).toBeGreaterThan(0);
+    for (const l of leituras) {
+      expect(l.after, l.id).toBeGreaterThan(0);
+      for (const x of l.linhas) {
+        expect(x.audioId, l.id).toMatch(/^he-[0-9a-f]{8}$/);
+        expect(x.translit && x.pt, l.id).toBeTruthy();
+      }
+    }
+    /* A abertura das bênçãos é a MESMA linha em todas: um clipe só. */
+    const aberturas = new Set(leituras.filter(l => l.id.startsWith('bencao-') && l.id !== 'bencao-sacerdotal').map(l => l.linhas[0]!.audioId));
+    expect(aberturas.size).toBe(1);
   });
 });
