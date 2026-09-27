@@ -1,8 +1,8 @@
 /* Quem é o dono do curso.
  * ─────────────────────────────────────────────────────────────────────────
  * As contas listadas em `ADMIN_EMAILS` (wrangler.toml [vars], separadas por
- * vírgula). É o que abre os painéis de /admin: a gravação das pronúncias
- * (api/audio.js) e os relatos de erro dos alunos (api/relatos.js). Uma conta
+ * vírgula). É o que abre o painel de /admin: a gravação das pronúncias
+ * (api/audio.js). Uma conta
  * comum recebe 403 em toda rota de administrador, com sessão válida ou não.
  */
 
