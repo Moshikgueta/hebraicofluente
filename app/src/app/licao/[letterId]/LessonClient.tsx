@@ -24,7 +24,6 @@ import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePl
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
 import { CompararPronuncia } from '@/components/learn/CompararPronuncia';
-import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { SoundLab } from '@/components/learn/SoundLab';
 import { CultureUnlock } from '@/components/learn/Culture';
 import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioButton';
@@ -330,21 +329,24 @@ function StageConhecer({
         <div className="grid gap-1">
           <h2 className="text-[19px] font-semibold">A letra com cada vogal</h2>
           <p className="font-ui text-[13.5px] text-ink-muted">
-            Toque numa sílaba para ver a dica de pronúncia.
+            {letter.syllables.some(s => hasAudio(s.audioId))
+              ? 'Toque numa sílaba para ouvir. Depois grave a sua e compare.'
+              : 'Toque numa sílaba para ver a dica de pronúncia.'}
           </p>
         </div>
-        <SyllableTrainer letter={letter} />
-        {/* Ler as sílabas em voz alta e se ouvir: é onde a pronúncia da letra
-            nova se forma, antes de ela virar hábito errado. */}
-        <GravarLeitura
-          titulo="Leia as sílabas em voz alta"
-          instrucao={`Leia as ${letter.syllables.length} sílabas acima, da direita para a esquerda, grave e se ouça.`}
-          audioId={letter.audioId}
-          maxSegundos={45}
-        />
-        {/* Sílaba por sílaba, contra a gravação do curso: some sozinho
-            enquanto nenhuma sílaba desta letra estiver gravada. */}
-        <CompararPronuncia itens={letter.syllables} />
+        {/* Uma coisa só (27/09/2026): tocar na sílaba toca o som dela, e o
+            gravar-e-comparar fica logo abaixo, para a sílaba escolhida. Eram
+            três blocos - a grade, "Leia as sílabas em voz alta" e a comparação
+            com as mesmas sílabas de novo. Sem nenhuma sílaba gravada, volta a
+            grade de dicas. */}
+        {letter.syllables.some(s => hasAudio(s.audioId)) ? (
+          <>
+            <CompararPronuncia itens={letter.syllables} grade />
+            <div className="flex flex-wrap items-center gap-3">
+              <AudioButton audioId={letter.audioId} label={`Ouvir o nome: ${letter.namePt}`} slow />
+            </div>
+          </>
+        ) : <SyllableTrainer letter={letter} />}
       </Card>
 
       {/* The same five vowels on the letters already learned. Seeing the column
