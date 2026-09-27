@@ -682,6 +682,12 @@ function main() {
   if (alvo.length && alvo.every(c => posTexto(c) !== undefined)) {
     alvo.sort((a, b) => posTexto(a) - posTexto(b) || a.num - b.num);
   }
+  /* As leituras bônus e o guia do nikud (onda 5): a ordem da leitura é a
+     de inserção no manifesto (`seq`), que é a do estúdio. Um exemplo trocado
+     depois ganha número no fim e, por número, sairia fora do lugar. */
+  if (alvo.length && alvo.every(c => c.wave === 5)) {
+    alvo.sort((a, b) => a.seq - b.seq);
+  }
   if (alvo.length && alvo.every(c => c.kind === 'frase')) {
     GAP_MIN_S = FRASE_GAP_MIN_S;
     PALAVRA_MAX_S = FRASE_MAX_S;
