@@ -27,7 +27,7 @@ describe('as palavras dos mini-textos no vocabulário', () => {
     expect(todas.some(w => w.he.includes('־'))).toBe(false);
     expect(todas.some(w => /\(nome\)/.test(w.pt))).toBe(false);
     expect(todas.some(w => /[?!.,:]$/.test(w.he))).toBe(false);
-    expect(palavrasDoTexto(texto3()).map(w => w.pt)).toEqual(['quente', 'dorme, está dormindo']);
+    expect(palavrasDoTexto(texto3()).map(w => w.pt)).toEqual(['também', 'quente', 'dorme, está dormindo']);
   });
 
   it('só entram depois que o texto foi lido', () => {
