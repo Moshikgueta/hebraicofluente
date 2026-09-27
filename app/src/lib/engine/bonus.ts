@@ -1,4 +1,4 @@
-/* As leituras bônus: textos bíblicos e bênçãos (27/09/2026).
+/* As leituras bônus: textos e versículos bíblicos (27/09/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Trocadas por XP em Recompensas (lib/loja.ts), fora do caminho do curso. O
  * conteúdo mora em data/bonus.json, que explica as escolhas (o Nome, os
@@ -12,7 +12,7 @@ export type LinhaBonus = { he: string; translit: string; pt: string; audioId?: s
 
 export type LeituraBonus = {
   id: string;
-  /** "texto" (um trecho, 200 XP) ou "curto" (versículo ou bênção, 100 XP). */
+  /** "texto" (um trecho, 200 XP) ou "curto" (versículo, 100 XP). */
   tipo: 'texto' | 'curto';
   revisado: boolean;
   tituloPt: string;

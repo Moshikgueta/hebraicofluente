@@ -8,7 +8,7 @@
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
   "generatedAt": "2026-09-27",
-  "total": 479,
+  "total": 474,
   "waves": [
     {
       "id": 1,
@@ -38,7 +38,7 @@
       "id": 5,
       "titlePt": "Leituras bônus",
       "notePt": "Os textos bíblicos e as bênçãos de Recompensas, uma linha por clipe, em ritmo de leitura: calmo, mas sem pausa entre as palavras.",
-      "count": 46
+      "count": 41
     }
   ],
   "clips": [
@@ -6067,79 +6067,11 @@
       "file": "he-652afad4.mp3"
     },
     {
-      "num": 495,
-      "seq": 455,
-      "he": "בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם",
-      "translit": "barúch atá Adonái, Elohéinu mélech ha-olám",
-      "gloss": "Bendito és tu, Senhor, nosso Deus, rei do universo,",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Bênção antes de comer pão (hamotsí)",
-        "leitura bônus: Bênção antes de beber vinho",
-        "leitura bônus: Bênção ao acender as velas de Shabat",
-        "leitura bônus: Bênção pelas ocasiões novas"
-      ],
-      "file": "he-f8ac017d.mp3"
-    },
-    {
-      "num": 496,
-      "seq": 456,
-      "he": "הַמּוֹצִיא לֶחֶם מִן הָאָרֶץ",
-      "translit": "ha-motsí léchem min ha-árets",
-      "gloss": "que tira o pão da terra.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Bênção antes de comer pão (hamotsí)"
-      ],
-      "file": "he-9e97fa19.mp3"
-    },
-    {
-      "num": 497,
-      "seq": 457,
-      "he": "בּוֹרֵא פְּרִי הַגָּפֶן",
-      "translit": "boré pri ha-gáfen",
-      "gloss": "que cria o fruto da videira.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Bênção antes de beber vinho"
-      ],
-      "file": "he-0d5183b4.mp3"
-    },
-    {
-      "num": 498,
-      "seq": 458,
-      "he": "אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל שַׁבָּת",
-      "translit": "ashér kideshánu bemitsvotáv vetsivánu lehadlík ner shel Shabát",
-      "gloss": "que nos santificou com os seus mandamentos e nos ordenou acender a vela do Shabat.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Bênção ao acender as velas de Shabat"
-      ],
-      "file": "he-6186201e.mp3"
-    },
-    {
-      "num": 499,
-      "seq": 459,
-      "he": "שֶׁהֶחֱיָנוּ וְקִיְּמָנוּ וְהִגִּיעָנוּ לַזְּמַן הַזֶּה",
-      "translit": "shehecheyánu vekiyemánu vehiguiánu lazmán hazé",
-      "gloss": "que nos deu vida, nos sustentou e nos fez chegar a este momento.",
-      "kind": "frase",
-      "wave": 5,
-      "where": [
-        "leitura bônus: Bênção pelas ocasiões novas"
-      ],
-      "file": "he-b5036618.mp3"
-    },
-    {
       "num": 500,
-      "seq": 460,
+      "seq": 455,
       "he": "יְהוָה",
       "translit": "Adonái",
-      "gloss": "como está nos textos bíblicos",
+      "gloss": "como está no texto bíblico",
       "kind": "palavra",
       "wave": 5,
       "where": [
@@ -6148,21 +6080,21 @@
       "file": "he-3498cc9e.mp3"
     },
     {
-      "num": 501,
-      "seq": 461,
-      "he": "יְיָ",
-      "translit": "Adonái",
-      "gloss": "como está nas bênçãos",
+      "num": 519,
+      "seq": 456,
+      "he": "יְהוָה אֱלֹהֵינוּ",
+      "translit": "Adonái Elohéinu",
+      "gloss": "o Senhor, nosso Deus (do Shemá)",
       "kind": "palavra",
       "wave": 5,
       "where": [
         "guia do nikud bíblico"
       ],
-      "file": "he-367e9a03.mp3"
+      "file": "he-103b11f9.mp3"
     },
     {
       "num": 502,
-      "seq": 462,
+      "seq": 457,
       "he": "בְּרֵאשִׁית",
       "translit": "bereshít",
       "gloss": "sheva no começo: «be»",
@@ -6175,7 +6107,7 @@
     },
     {
       "num": 503,
-      "seq": 463,
+      "seq": 458,
       "he": "שְׁמַע",
       "translit": "shemá",
       "gloss": "sheva no começo: «she»",
@@ -6188,7 +6120,7 @@
     },
     {
       "num": 504,
-      "seq": 464,
+      "seq": 459,
       "he": "אֱלֹהִים",
       "translit": "Elohím",
       "gloss": "«e» rápido",
@@ -6201,7 +6133,7 @@
     },
     {
       "num": 505,
-      "seq": 465,
+      "seq": 460,
       "he": "אֲשֶׁר",
       "translit": "ashér",
       "gloss": "«a» rápido",
@@ -6214,7 +6146,7 @@
     },
     {
       "num": 506,
-      "seq": 466,
+      "seq": 461,
       "he": "כָּל־יְמֵי",
       "translit": "kol-yeméi",
       "gloss": "todos os dias de",
@@ -6227,7 +6159,7 @@
     },
     {
       "num": 507,
-      "seq": 467,
+      "seq": 462,
       "he": "בְּכָל־לְבָבְךָ",
       "translit": "bechol-levavchá",
       "gloss": "com todo o teu coração",
@@ -6240,7 +6172,7 @@
     },
     {
       "num": 508,
-      "seq": 468,
+      "seq": 463,
       "he": "וְרוּחַ",
       "translit": "veruách",
       "gloss": "e o espírito",
@@ -6253,7 +6185,7 @@
     },
     {
       "num": 509,
-      "seq": 469,
+      "seq": 464,
       "he": "עַל־פְּנֵי",
       "translit": "al-penéi",
       "gloss": "sobre a face de",
@@ -6266,7 +6198,7 @@
     },
     {
       "num": 510,
-      "seq": 470,
+      "seq": 465,
       "he": "כִּי־טוֹב",
       "translit": "ki-tov",
       "gloss": "que era bom",
@@ -6279,7 +6211,7 @@
     },
     {
       "num": 511,
-      "seq": 471,
+      "seq": 466,
       "he": "בָּרָא",
       "translit": "bará",
       "gloss": "com dagesh: «b»",
@@ -6292,7 +6224,7 @@
     },
     {
       "num": 512,
-      "seq": 472,
+      "seq": 467,
       "he": "וַיְהִי־בֹקֶר",
       "translit": "vayehí-vóker",
       "gloss": "sem dagesh: «v»",
@@ -6305,7 +6237,7 @@
     },
     {
       "num": 513,
-      "seq": 473,
+      "seq": 468,
       "he": "הַשָּׁמַיִם",
       "translit": "ha-shamáyim",
       "gloss": "dagesh no ש: o som não muda",
@@ -6318,7 +6250,7 @@
     },
     {
       "num": 514,
-      "seq": 474,
+      "seq": 469,
       "he": "אִירָא",
       "translit": "irá",
       "gloss": "temerei",
@@ -6331,7 +6263,7 @@
     },
     {
       "num": 515,
-      "seq": 475,
+      "seq": 470,
       "he": "לְבָנֶיךָ",
       "translit": "levanécha",
       "gloss": "a teus filhos",
@@ -6344,7 +6276,7 @@
     },
     {
       "num": 516,
-      "seq": 476,
+      "seq": 471,
       "he": "אֱלֹהֵינוּ",
       "translit": "Elohéinu",
       "gloss": "nosso Deus",
@@ -6357,7 +6289,7 @@
     },
     {
       "num": 517,
-      "seq": 477,
+      "seq": 472,
       "he": "וַיֹּאמֶר",
       "translit": "vayómer",
       "gloss": "e disse",
@@ -6370,7 +6302,7 @@
     },
     {
       "num": 518,
-      "seq": 478,
+      "seq": 473,
       "he": "וַיְהִי",
       "translit": "vayehí",
       "gloss": "e houve",

@@ -43,14 +43,15 @@ export const ITENS: Record<ItemDaLoja['id'], ItemDaLoja> = {
     descricao: 'O seu nome em letra de fôrma e à mão, numa imagem para baixar: papel de parede do celular ou para imprimir.'
   },
   /* As leituras bônus (lib/engine/bonus.ts): um trecho da Bíblia vale o
-     dobro de um versículo ou bênção, que tem duas ou três linhas. */
+     dobro de um versículo, que tem duas ou três linhas. O id `bencao` ficou
+     do tempo em que havia bênçãos de reza aqui: mudar quebraria compras. */
   'texto-bonus': {
     id: 'texto-bonus', titulo: 'Texto bíblico bônus', custo: 200,
     descricao: 'Um trecho do Antigo Testamento em hebraico, com transliteração, tradução e a leitura gravada, linha a linha.'
   },
   bencao: {
-    id: 'bencao', titulo: 'Versículo ou bênção', custo: 100,
-    descricao: 'Um versículo conhecido ou uma bênção do dia a dia, com transliteração, tradução e a leitura gravada.'
+    id: 'bencao', titulo: 'Versículo bíblico', custo: 100,
+    descricao: 'Um versículo conhecido do Antigo Testamento, com transliteração, tradução e a leitura gravada.'
   }
 };
 
@@ -101,7 +102,7 @@ export function usarFolgas(s: LearnerState, diasPerdidos: readonly string[]): Le
 export const cartasCompradas = (s: LearnerState): Set<string> =>
   new Set(compras(s).filter(c => c.item === 'carta' && c.alvo).map(c => c.alvo!));
 
-/** Os ids das leituras bônus abertas (textos e bênçãos). */
+/** Os ids das leituras bônus abertas (textos e versículos). */
 export const leiturasCompradas = (s: LearnerState): Set<string> =>
   new Set(compras(s).filter(c => (c.item === 'texto-bonus' || c.item === 'bencao') && c.alvo).map(c => c.alvo!));
 

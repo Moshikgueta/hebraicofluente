@@ -111,8 +111,8 @@ describe('as leituras bônus', () => {
     let s = compra(com(1000), 'texto-bonus', T, 'shema');
     expect(comprar(s, 'texto-bonus', T, 'shema')).toEqual({ ok: false, motivo: 'ja-tem' });
     expect(comprar(s, 'bencao', T)).toEqual({ ok: false, motivo: 'sem-alvo' });
-    s = compra(s, 'bencao', T, 'bencao-pao');
-    expect([...leiturasCompradas(s)].sort()).toEqual(['bencao-pao', 'shema']);
+    s = compra(s, 'bencao', T, 'isaias-6');
+    expect([...leiturasCompradas(s)].sort()).toEqual(['isaias-6', 'shema']);
     expect(saldo(s)).toBe(1000 - ITENS['texto-bonus'].custo - ITENS.bencao.custo);
     expect(ITENS['texto-bonus'].custo).toBeGreaterThan(ITENS.bencao.custo);
     /* Uma carta com o mesmo nome de alvo não se confunde com a leitura. */
@@ -140,17 +140,14 @@ describe('as leituras bônus', () => {
         expect(x.translit && x.pt, l.id).toBeTruthy();
       }
     }
-    /* A abertura das bênçãos é a MESMA linha em todas: um clipe só. */
-    const aberturas = new Set(leituras.filter(l => l.id.startsWith('bencao-') && l.id !== 'bencao-sacerdotal').map(l => l.linhas[0]!.audioId));
-    expect(aberturas.size).toBe(1);
   });
 });
 
 describe('o guia do nikud bíblico', () => {
-  it('todo exemplo sai de uma linha das leituras (já aprovadas) e tem gravação', () => {
+  it('todo exemplo sai de uma linha das leituras JÁ APROVADAS e tem gravação', () => {
     const { leituras, guia } = JSON.parse(readFileSync(join(__dirname, '../content/bonus.json'), 'utf8')) as
       { leituras: LeituraBonus[]; guia: GuiaNikud };
-    const linhas = leituras.flatMap(l => l.linhas.map(x => x.he.normalize('NFC'))).join(' ');
+    const linhas = leituras.filter(l => l.revisado).flatMap(l => l.linhas.map(x => x.he.normalize('NFC'))).join(' ');
     for (const s of guia.secoes) {
       expect(s.exemplos.length, s.id).toBeGreaterThan(0);
       for (const e of s.exemplos) {
