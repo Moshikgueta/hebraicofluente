@@ -79,8 +79,21 @@ export function impressao(ex: Exercise): string {
   const tela = ['he', 'letter', 'sound', 'audioId', 'pt', 'parts', 'escrita', 'modo', 'translit', 'want']
     .map(k => (k in e ? JSON.stringify(e[k]) : ''))
     .join('|');
-  return h(`${ex.kind}|${ex.promptPt}|${tela}|${JSON.stringify(certa)}`);
+  /* Nas perguntas sobre a PRÓPRIA letra ("qual destas é o Mem?"), a resposta
+     certa é sempre a mesma, e o que muda o exercício são as outras opções:
+     achar מ entre ס ט ם é outra discriminação que achar מ entre נ כ ב. Sem
+     elas na impressão, estas perguntas contavam como repetidas em toda
+     rodada (medido em 27/09/2026: 74 de 77 reconhecimentos da prática). Nas
+     perguntas sobre PALAVRAS elas continuam de fora - a mesma palavra com
+     outras alternativas é a mesma pergunta. */
+  const opcoes = SOBRE_A_LETRA.has(ex.kind) && Array.isArray(e.options)
+    ? JSON.stringify([...new Set((e.options as unknown[]).map(String))].sort())
+    : '';
+  return h(`${ex.kind}|${ex.promptPt}|${tela}|${JSON.stringify(certa)}|${opcoes}`);
 }
+
+/** Os tipos em que a resposta é a letra da lição e as opções fazem a pergunta. */
+const SOBRE_A_LETRA = new Set(['letter-recognition', 'print-vs-cursive', 'final-form', 'odd-one-out']);
 
 /* ── a escolha (pura, testável) ─────────────────────────────────────────── */
 
