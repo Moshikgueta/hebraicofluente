@@ -54,6 +54,19 @@ describe('a impressão de uma pergunta', () => {
     expect(impressao(outra)).toBe(impressao(base));
   });
 
+  it('numa pergunta sobre a própria letra, outras opções fazem outra pergunta', () => {
+    const rec = {
+      id: 'r', kind: 'letter-recognition', letterId: 'mem', skill: 'rec', promptPt: 'Qual destas é a letra Mem?',
+      letter: 'מ', options: ['מ', 'ס', 'ט', 'ם'], answer: 0, explainPt: ''
+    } as unknown as Exercise;
+    /* mesma letra, outras vizinhas: é outra discriminação */
+    expect(impressao({ ...rec, options: ['מ', 'נ', 'כ', 'ב'] } as unknown as Exercise)).not.toBe(impressao(rec));
+    /* as mesmas vizinhas em outra ordem continuam sendo a mesma pergunta */
+    expect(impressao({ ...rec, options: ['ם', 'ט', 'מ', 'ס'], answer: 2 } as unknown as Exercise)).toBe(impressao(rec));
+    /* e numa pergunta sobre palavra, trocar as alternativas NÃO faz pergunta nova */
+    expect(impressao({ ...base, options: ['água', 'pão', 'céu'] } as unknown as Exercise)).toBe(impressao(base));
+  });
+
   it('muda quando a palavra na tela ou a resposta muda', () => {
     expect(impressao({ ...base, he: 'יָם', options: ['mar', 'água'], answer: 0 } as unknown as Exercise))
       .not.toBe(impressao(base));
