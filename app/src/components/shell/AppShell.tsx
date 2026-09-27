@@ -23,6 +23,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { carregarManifesto } from '@/lib/audio-registro';
 import { useProgress } from '@/lib/state/store';
+import { ITENS, saldo } from '@/lib/loja';
 import { XPIndicator } from '@/components/game/Game';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -31,7 +32,7 @@ import { Logo } from '@/components/shell/Logo';
 import { He } from '@/components/hebrew/He';
 import {
   IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil, IconeAula0,
-  IconePalavras
+  IconePalavras, IconeRecompensas
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
@@ -51,6 +52,7 @@ import { DemoNotice } from '@/components/shell/DemoNotice';
  *
  *   'barra' - na barra inferior, sob o polegar, e na sidebar
  *   'conta' - no cabeçalho do telefone, como a inicial da conta, e na sidebar
+ *   'cabecalho' - no cabeçalho do telefone, como ícone, e na sidebar
  */
 const NAV = [
   { href: '/meu-hebraico', label: 'Hoje', icon: IconeHoje, movel: 'barra' },
@@ -80,6 +82,11 @@ const NAV = [
   { href: '/inicio', label: 'Aula 0', icon: IconeAula0, movel: 'barra' },
   /* Perfil mora na sidebar no desktop; no telefone ele é a inicial da conta
      no cabeçalho, que diz de relance EM QUAL conta a pessoa está. */
+  /* Recompensas (27/09/2026): um ícone próprio, a pedido do dono do curso.
+     Na barra de baixo não cabe um oitavo destino (54px viram 48, e
+     "Progresso" mede 52), então no telefone ele é o presente do cabeçalho,
+     ao lado do XP que ele gasta. */
+  { href: '/loja', label: 'Recompensas', icon: IconeRecompensas, movel: 'cabecalho' },
   { href: '/perfil', label: 'Perfil', icon: IconePerfil, movel: 'conta' }
 ] as const;
 
@@ -172,6 +179,19 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Link href="/loja" aria-label={`${p.state.xp} XP. Abrir as recompensas`}
                     className="inline-flex items-center min-h-[40px] px-1.5 rounded-[var(--r-md)] hover:bg-surface-2">
                 <XPIndicator xp={p.state.xp} />
+              </Link>
+            )}
+            {/* E o ícone próprio delas. O ponto dourado: há saldo para trocar
+                pelo item mais barato - como o ponto da Revisão na barra. */}
+            {p.ready && (
+              <Link href="/loja" aria-label="Recompensas"
+                    aria-current={isActive(pathname, '/loja') ? 'page' : undefined}
+                    className={`relative inline-grid place-items-center w-[40px] h-[40px] rounded-full hover:bg-surface-2
+                      ${isActive(pathname, '/loja') ? 'text-[var(--navy)] bg-[var(--accent-wash)]' : 'text-ink-muted'}`}>
+                <IconeRecompensas size={21} />
+                {saldo(p.state) >= Math.min(...Object.values(ITENS).map(i => i.custo)) && (
+                  <span aria-hidden className="absolute top-1.5 right-1.5 w-[7px] h-[7px] rounded-full bg-[var(--gold)]" />
+                )}
               </Link>
             )}
             <ProfileLink />

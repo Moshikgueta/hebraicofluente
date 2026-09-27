@@ -70,6 +70,15 @@ export const IconePalavras = (p: P) => wrap(
     <path d="M6.2 10h5M6.2 12.8h3.2" stroke="currentColor" />
   </>, p);
 
+/** Recompensas: um presente. Onde o XP vira alguma coisa. */
+export const IconeRecompensas = (p: P) => wrap(
+  <>
+    <rect x="3.4" y="7.6" width="13.2" height="3.2" rx=".8" stroke="currentColor" />
+    <path d="M4.6 10.8v5a.8.8 0 0 0 .8.8h9.2a.8.8 0 0 0 .8-.8v-5M10 7.6v9" stroke="currentColor" />
+    <path d="M10 7.6C9.2 5.2 7.9 4 6.7 4.1c-1 .1-1.5 1-1.1 1.9.5 1 2 1.6 4.4 1.6Zm0 0c.8-2.4 2.1-3.6 3.3-3.5 1 .1 1.5 1 1.1 1.9-.5 1-2 1.6-4.4 1.6Z"
+          stroke="currentColor" />
+  </>, p);
+
 /** Perfil: a pessoa. */
 export const IconePerfil = (p: P) => wrap(
   <>
