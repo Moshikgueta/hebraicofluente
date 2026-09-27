@@ -406,15 +406,17 @@ npx wrangler d1 execute hebraico-fluente --remote --command \
    VALUES (<id>, 'alfabetizacao', unixepoch()*1000, unixepoch()*1000 + 31536000000, 'MANUAL')"
 ```
 
-**Tirar acesso depois de um estorno.** Devolver o dinheiro no painel da Mercado
-Pago **não fecha a porta**. A segunda metade é obrigatória:
+**Estorno.** Devolver o dinheiro no painel da Mercado Pago **já fecha a porta**:
+o aviso de estorno (`refunded`/`charged_back`, ou um estorno parcial que deixa
+menos que o preço) chega ao webhook e `applyPayment` recua os meses DAQUELE
+pedido - o estorno de uma renovação não leva junto a compra anterior. O estorno
+de uma cobrança em dobro (trilha `pagamento-duplicado`) não fecha nada: o
+pedido segue pago pelo outro pagamento (trilha `estorno-duplicado`).
 
-```bash
-npx wrangler d1 execute hebraico-fluente --remote --command \
-  "DELETE FROM entitlements WHERE account_id = <id> AND course_slug = 'alfabetizacao'"
-```
-
-Fecha na hora - o cookie de sessão não carrega direito nenhum.
+Só se o aviso do estorno se perder (a varredura não relê pedidos pagos) é
+preciso fechar à mão - e aí recue os meses em vez de apagar a linha, para não
+tirar meses de uma compra anterior que ninguém devolveu. Confira antes na
+trilha se a linha `estorno` daquele pedido já existe.
 
 **Achar uma conta:**
 

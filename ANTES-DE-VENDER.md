@@ -421,9 +421,13 @@ com teste.
   disse de cada um.
 - `Actions → Acesso → senha`: os e-mails de recuperação que saíram, e o motivo
   dos que não saíram.
-- Um pedido parado em `pending` por mais de uma hora é a única coisa que
-  merece susto: confira no painel da Mercado Pago se foi pago e, se foi,
-  libere por `Actions → Acesso → liberar`.
+- Um pedido parado em `pending` ou `failed` por mais de uma hora é a única
+  coisa que merece susto: confira no painel da Mercado Pago se foi pago e, se
+  foi, libere por `Actions → Acesso → liberar`. (`failed` é o cartão recusado
+  numa primeira tentativa; a segunda pode ter sido aprovada. Desde 27/09/2026
+  a varredura pergunta por eles também, mas vale olhar.)
+- Uma linha `pagamento-duplicado` na trilha é um comprador que pagou duas
+  vezes: estorne o segundo pagamento. O acesso continua pelo primeiro.
 
 ---
 

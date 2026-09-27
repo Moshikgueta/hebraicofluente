@@ -475,6 +475,15 @@ novo; o painel pula para o próximo item sem áudio. Referência:
   lib/gravador.ts), cortadas no trecho da voz; "Ouvir os dois" toca modelo e
   a sua em sequência, por Web Audio. Sem nota automática, de propósito. A
   gravação não sai do aparelho.
+- **Sílabas e pronúncia (27/09/2026).** Na etapa das sílabas (letra e som),
+  `CompararPronuncia grade`: tocar na sílaba TOCA a gravação e mostra a dica, e
+  o gravar-e-comparar fica logo abaixo, para a sílaba escolhida (eram três
+  blocos repetidos). Nas PALAVRAS, `FalarECorrigir`: o reconhecimento de fala
+  do navegador (he-IL) transcreve e `conferirFala` (lib/fala.ts) decide -
+  sem pontos, sem forma final, e grafia cheia = defectiva (אומר = אֹמֵר).
+  Não em sílaba solta. Some onde o navegador não transcreve (Firefox). A voz
+  vai ao Google/Apple: o aviso fica ao lado do botão e a privacidade (art. 2)
+  diz isso. `tests/fala.test.ts`.
 - **"Achei um erro" foi DESLIGADO por inteiro** (27/09/2026, a pedido do dono
   do curso: não abrir canal de reclamação dentro do curso). Saíram o botão,
   `RelatarErro`, `lib/relato.ts`, a rota `POST /api/relatos`, as duas rotas

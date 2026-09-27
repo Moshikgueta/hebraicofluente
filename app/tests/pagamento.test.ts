@@ -201,6 +201,80 @@ describe('2. estorno e chargeback fecham o acesso', () => {
   });
 });
 
+/* ── 2b. cobrança em dobro (27/09/2026) ───────────────────────────────────
+   O link do cartão continua aceitando pagamento: dá para pagar o mesmo pedido
+   duas vezes. Estornar a cobrança duplicada NÃO pode fechar o acesso que o
+   outro pagamento paga - e a cobrança em dobro tem de aparecer na trilha. */
+
+describe('2b. o estorno de uma cobrança em dobro não fecha o acesso', () => {
+  it('o segundo pagamento fica na trilha; o estorno dele não recua nada; o do primeiro, sim', async () => {
+    const env = envPagamento();
+    const { cookie, id } = await compradora(env);
+    const ordem = await pedidoPix(env, cookie);
+    const p1 = [...pagamentos.values()][0]!;
+    p1.status = 'approved';
+    await pay.webhook({ request: await avisoAssinado(p1.id), env });
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
+
+    /* A mesma compra, paga de novo. */
+    const p2: Pagamento = { ...p1, id: proximoId++, status: 'approved' };
+    pagamentos.set(p2.id, p2);
+    await pay.webhook({ request: await avisoAssinado(p2.id), env });
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'pagamento-duplicado'"),
+      'a cobrança em dobro passou calada').toBeTruthy();
+
+    /* O dono estorna a duplicada. */
+    p2.status = 'refunded';
+    await pay.webhook({ request: await avisoAssinado(p2.id), env });
+    expect(await hasEntitlement(env, id, 'alfabetizacao'), 'o estorno da duplicada fechou o acesso pago').toBe(true);
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${ordem.id}'`)!.status).toBe('paid');
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'estorno-duplicado'")).toBeTruthy();
+
+    /* E o estorno do pagamento que pagou continua fechando. */
+    p1.status = 'refunded';
+    await pay.webhook({ request: await avisoAssinado(p1.id), env });
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(false);
+  });
+});
+
+/* ── 2c. recusado e aprovado na segunda tentativa (27/09/2026) ─────────────
+   O cartão recusado marca o pedido `failed`. A segunda tentativa, aprovada,
+   precisa ser achada pela tela e pela varredura - não só pelo aviso da
+   Mercado Pago, que pode se perder. */
+
+describe('2c. um pedido recusado e pago na segunda tentativa não fica de fora', () => {
+  async function recusadoDepoisAprovado(env: Record<string, unknown>) {
+    const { cookie, id } = await compradora(env);
+    const ordem = await pedidoPix(env, cookie);
+    const p1 = [...pagamentos.values()][0]!;
+    p1.status = 'rejected';
+    await pay.webhook({ request: await avisoAssinado(p1.id), env });
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${ordem.id}'`)!.status).toBe('failed');
+    /* A segunda tentativa é aprovada - e o aviso dela se perde. */
+    const p2: Pagamento = { ...p1, id: proximoId++, status: 'approved' };
+    pagamentos.set(p2.id, p2);
+    return { cookie, id, ordem };
+  }
+
+  it('a tela do comprador acha o pagamento', async () => {
+    const env = envPagamento();
+    const { cookie, id, ordem } = await recusadoDepoisAprovado(env);
+    const r = await verify(env, cookie, ordem.id);
+    expect((await r.json() as { status: string }).status).toBe('paid');
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
+  });
+
+  it('a varredura de 5 em 5 minutos também', async () => {
+    const env = envPagamento();
+    const { id, ordem } = await recusadoDepoisAprovado(env);
+    (env.DB as { bruto: { prepare(s: string): { run(): unknown } } }).bruto
+      .prepare(`UPDATE orders SET created_at = created_at - 120000, checked_at = NULL WHERE id = '${ordem.id}'`).run();
+    const r = await runReconcile(env);
+    expect(r.settled).toBe(1);
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
+  });
+});
+
 /* ── 3. uma liberação que quebrou no meio se recupera ───────────────────── */
 
 describe('3. uma falha no meio da liberação não vira um pedido pago sem curso', () => {

@@ -26,8 +26,13 @@ import { He } from '@/components/hebrew/He';
 import { hasAudio, useRegistroDeAudio } from './AudioButton';
 import { urlDoClipe } from '@/lib/audio-registro';
 import { acharVoz, barrasDoTrecho, paraMono, type Corte } from '@/lib/gravador';
+import { FalarECorrigir } from './FalarECorrigir';
 
-export type ItemDeComparacao = { he: string; translit?: string | null; audioId: string | null };
+export type ItemDeComparacao = {
+  he: string; translit?: string | null; audioId: string | null;
+  /** A dica de pronúncia, mostrada na grade quando a sílaba é escolhida. */
+  ptApprox?: string | null;
+};
 
 type Onda = { buf: AudioBuffer; corte: Corte; barras: number[] };
 type Estado = 'parado' | 'gravando' | 'pronto' | 'negado' | 'sem-suporte' | 'erro';
@@ -56,8 +61,15 @@ function Barras({ onda, largura, cor, rotulo }: { onda: Onda | null; largura: nu
   );
 }
 
-export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia com a do curso' }: {
-  itens: readonly ItemDeComparacao[]; titulo?: string;
+/**
+ * `grade` (27/09/2026): a forma da etapa das sílabas. Antes eram três blocos
+ * para a mesma coisa - a grade de sílabas, um "Leia as sílabas em voz alta"
+ * e esta comparação com as mesmas sílabas de novo em botões pequenos. O dono
+ * do curso pediu um só: TOCAR na sílaba toca o som dela e mostra a dica, e o
+ * gravar-e-comparar fica logo abaixo, para a sílaba escolhida.
+ */
+export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia com a do curso', grade = false }: {
+  itens: readonly ItemDeComparacao[]; titulo?: string; grade?: boolean;
 }) {
   useRegistroDeAudio();
   const comAudio = itens.filter(i => hasAudio(i.audioId));
@@ -70,6 +82,9 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
   const stream = useRef<MediaStream | null>(null);
   const tocando = useRef<AudioBufferSourceNode[]>([]);
   const item = comAudio[Math.min(qual, comAudio.length - 1)];
+  /* Os modelos já decodificados, por audioId: na grade, tocar uma sílaba de
+     novo não baixa o clipe outra vez. */
+  const cache = useRef(new Map<string, Onda>());
 
   const soltar = useCallback(() => {
     stream.current?.getTracks().forEach(t => t.stop());
@@ -80,6 +95,20 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
     tocando.current.forEach(s => { try { s.stop(); } catch { /* já parou */ } });
     void ctx.current?.close().catch(() => {});
   }, [soltar]);
+
+  const carregarModelo = async (audioId: string): Promise<Onda> => {
+    const pronto = cache.current.get(audioId);
+    if (pronto) return pronto;
+    const url = urlDoClipe(audioId).split('#')[0]!;
+    const r = await fetch(url, { credentials: 'same-origin' });
+    if (!r.ok) throw new Error(String(r.status));
+    const dados = await r.arrayBuffer();
+    const buf = await new Promise<AudioBuffer>((ok, falha) =>
+      (ctx.current ?? new AudioContext()).decodeAudioData(dados, ok, falha));
+    const onda = ondaDe(buf);
+    cache.current.set(audioId, onda);
+    return onda;
+  };
 
   const contexto = () => {
     /* Criado dentro do toque: o iOS só deixa um AudioContext tocar assim. */
@@ -95,12 +124,8 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
     setMinha(null);
     if (!item?.audioId || estado === 'gravando') return;
     let vivo = true;
-    const url = urlDoClipe(item.audioId).split('#')[0]!;
-    fetch(url, { credentials: 'same-origin' })
-      .then(r => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(String(r.status)))))
-      .then(dados => new Promise<AudioBuffer>((ok, falha) =>
-        (ctx.current ?? new AudioContext()).decodeAudioData(dados, ok, falha)))
-      .then(buf => { if (vivo) setModelo(ondaDe(buf)); })
+    carregarModelo(item.audioId)
+      .then(o => { if (vivo) setModelo(o); })
       .catch(() => { /* sem o modelo, a comparação some; o botão de gravar continua */ });
     return () => { vivo = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -158,37 +183,24 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
   };
   const parar = () => { if (rec.current?.state === 'recording') rec.current.stop(); };
 
+  /* Na grade, escolher É ouvir: o toque na sílaba toca o modelo dela. O
+     contexto de áudio nasce aqui, dentro do toque - o iOS exige. */
+  const escolher = (k: number) => {
+    if (estado === 'gravando') return;
+    setQual(k);
+    setEstado('parado');
+    const id = comAudio[k]?.audioId;
+    if (!grade || !id) return;
+    contexto();
+    carregarModelo(id).then(o => tocar([o])).catch(() => { /* sem o clipe, fica só a seleção */ });
+  };
+
   if (!comAudio.length || !item) return null;
 
   const largura = Math.max(modelo?.barras.length ?? 0, minha?.barras.length ?? 0);
 
-  return (
-    <section aria-label={titulo} className="grid gap-3 rounded-[var(--r-lg)] border border-line bg-surface p-5">
-      <div className="grid gap-1">
-        <h3 className="font-display text-[17px] font-semibold m-0">{titulo}</h3>
-        <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-          Escolha um item, ouça o modelo, grave o seu e compare: as duas ondas ficam na mesma escala de tempo.
-        </p>
-      </div>
-
-      {comAudio.length > 1 && (
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Item para comparar">
-          {comAudio.map((it, k) => (
-            <button key={it.he} type="button" aria-pressed={k === qual} disabled={estado === 'gravando'}
-                    onClick={() => { setQual(k); setEstado('parado'); }}
-                    className={`min-h-[44px] min-w-[52px] px-3 rounded-[var(--r-md)] border
-                      ${k === qual ? 'border-[var(--navy)] bg-[var(--accent-wash)]' : 'border-line bg-surface'}`}>
-              <He size="word">{it.he}</He>
-            </button>
-          ))}
-        </div>
-      )}
-
-      <div className="grid gap-1.5 rounded-[var(--r-md)] bg-surface-2 p-3">
-        <Barras onda={modelo} largura={largura} cor="var(--navy)" rotulo="Curso" />
-        <Barras onda={minha} largura={largura} cor="var(--teal)" rotulo="Você" />
-      </div>
-
+  const controles = () => (
+    <>
       <div className="flex flex-wrap items-center gap-2.5">
         <button type="button" onClick={() => modelo && tocar([modelo])} disabled={!modelo}
                 className="min-h-[44px] px-4 rounded-[var(--r-md)] border border-line bg-surface font-ui text-[14px] disabled:opacity-50">
@@ -234,6 +246,79 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
         <p role="alert" className="font-ui text-[14px] text-ink-body m-0">Não consegui gravar ou ler a gravação. Tente de novo.</p>
       )}
       <p className="font-ui text-[12.5px] text-ink-muted m-0">A sua gravação fica só neste aparelho. Nada é enviado.</p>
+    </>
+  );
+
+  const painel = (
+    <>
+      <div className="grid gap-1.5 rounded-[var(--r-md)] bg-surface-2 p-3">
+        <Barras onda={modelo} largura={largura} cor="var(--navy)" rotulo="Curso" />
+        <Barras onda={minha} largura={largura} cor="var(--teal)" rotulo="Você" />
+      </div>
+      {controles()}
+    </>
+  );
+
+  if (grade) {
+    return (
+      <div className="grid gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3" role="group" aria-label="Sílabas">
+          {comAudio.map((it, k) => (
+            <button key={it.he} type="button" aria-pressed={k === qual} disabled={estado === 'gravando'}
+                    onClick={() => escolher(k)}
+                    aria-label={`${it.translit ?? it.he}: ouvir e praticar`}
+                    className={`rounded-[var(--r-lg)] border p-4 text-center min-h-[108px]
+                      flex flex-col items-center justify-center gap-1.5 transition-all duration-[var(--dur)]
+                      ${k === qual ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
+                        : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}>
+              <He size="lg">{it.he}</He>
+              <span className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
+                {it.translit || '-'}
+              </span>
+              {k === qual && it.ptApprox && (
+                <span className="font-ui text-[12px] text-ink-muted leading-snug">{it.ptApprox}</span>
+              )}
+            </button>
+          ))}
+        </div>
+        <section aria-label={`Praticar ${item.translit ?? item.he}`}
+                 className="grid gap-3 rounded-[var(--r-lg)] border border-line bg-surface p-4">
+          <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
+            Agora você: grave <He size="inline">{item.he}</He>
+            {item.translit ? <> ({item.translit})</> : null} e compare com o curso.
+          </p>
+          {painel}
+        </section>
+      </div>
+    );
+  }
+
+  return (
+    <section aria-label={titulo} className="grid gap-3 rounded-[var(--r-lg)] border border-line bg-surface p-5">
+      <div className="grid gap-1">
+        <h3 className="font-display text-[17px] font-semibold m-0">{titulo}</h3>
+        <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
+          Escolha um item, ouça o modelo, grave o seu e compare: as duas ondas ficam na mesma escala de tempo.
+        </p>
+      </div>
+
+      {comAudio.length > 1 && (
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Item para comparar">
+          {comAudio.map((it, k) => (
+            <button key={it.he} type="button" aria-pressed={k === qual} disabled={estado === 'gravando'}
+                    onClick={() => { setQual(k); setEstado('parado'); }}
+                    className={`min-h-[44px] min-w-[52px] px-3 rounded-[var(--r-md)] border
+                      ${k === qual ? 'border-[var(--navy)] bg-[var(--accent-wash)]' : 'border-line bg-surface'}`}>
+              <He size="word">{it.he}</He>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {painel}
+      {/* Palavras (e só elas: a grade é de sílabas): o aluno fala e o curso
+          confere pelo reconhecimento do navegador. Some onde não há. */}
+      <FalarECorrigir alvo={item.he} translit={item.translit} />
     </section>
   );
 }

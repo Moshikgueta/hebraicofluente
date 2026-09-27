@@ -242,22 +242,20 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
             <h2 className="text-[19px] font-semibold">O som com cada vogal</h2>
             <p className="font-ui text-[13.5px] text-ink-muted">{S.rotuloPt[0]!.toUpperCase() + S.rotuloPt.slice(1)}, em todas. Leia da direita para a esquerda.</p>
           </div>
-          <ul className="grid grid-cols-2 sm:grid-cols-5 gap-3 list-none p-0 m-0">
-            {S.silabas.map(s => (
-              <li key={s.he} className="rounded-[var(--r-md)] bg-surface-2 p-3 grid justify-items-center gap-1">
-                <He size="xl">{s.he}</He>
-                <span className="font-ui text-[14px] font-semibold text-ink">{s.translit}</span>
-                {hasAudio(s.audioId) && <AudioButton audioId={s.audioId} label="" ariaLabel={`Ouvir ${s.translit}`} size="sm" />}
-              </li>
-            ))}
-          </ul>
-          <GravarLeitura
-            titulo="Leia as sílabas em voz alta"
-            instrucao={`Leia as ${S.silabas.length} sílabas acima, da direita para a esquerda, grave e se ouça.`}
-            audioId={S.audioId}
-            maxSegundos={30}
-          />
-          <CompararPronuncia itens={S.silabas} />
+          {/* Como na lição da letra (27/09/2026): tocar na sílaba toca o som,
+              e o gravar-e-comparar fica logo abaixo. Sem gravação, a lista. */}
+          {S.silabas.some(s => hasAudio(s.audioId)) ? (
+            <CompararPronuncia itens={S.silabas} grade />
+          ) : (
+            <ul className="grid grid-cols-2 sm:grid-cols-5 gap-3 list-none p-0 m-0">
+              {S.silabas.map(s => (
+                <li key={s.he} className="rounded-[var(--r-md)] bg-surface-2 p-3 grid justify-items-center gap-1">
+                  <He size="xl">{s.he}</He>
+                  <span className="font-ui text-[14px] font-semibold text-ink">{s.translit}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </Card>
       )}
 
