@@ -150,7 +150,7 @@
     {
       "id": "salmo-121",
       "tipo": "texto",
-      "revisado": false,
+      "revisado": true,
       "tituloPt": "Levanto os meus olhos para os montes",
       "fontePt": "Salmo 121",
       "introPt": "Um salmo de viagem, dos «cânticos das subidas» que se cantavam a caminho de Jerusalém. A palavra que mais se repete é שֹׁמֵר, «guarda»: conte quantas vezes ela aparece.",
@@ -200,7 +200,7 @@
     {
       "id": "rute-1",
       "tipo": "texto",
-      "revisado": false,
+      "revisado": true,
       "tituloPt": "O teu povo é o meu povo",
       "fontePt": "Rute 1:16-17",
       "introPt": "Rute, que não era israelita, se recusa a deixar a sogra, Noemi, e escolhe o povo e o Deus dela. Para muitos, é o texto de quem volta ou chega ao povo judeu.",
@@ -235,7 +235,7 @@
     {
       "id": "eclesiastes-3",
       "tipo": "texto",
-      "revisado": false,
+      "revisado": true,
       "tituloPt": "Tudo tem o seu tempo",
       "fontePt": "Eclesiastes 3:1-8",
       "introPt": "O texto bíblico mais fácil de ler em voz alta: a palavra עֵת, «tempo», se repete 28 vezes, e cada linha é um par de opostos. Um bom primeiro texto longo.",
@@ -330,7 +330,7 @@
     {
       "id": "levitico-19",
       "tipo": "curto",
-      "revisado": false,
+      "revisado": true,
       "tituloPt": "Amarás o teu próximo",
       "fontePt": "Levítico 19:18",
       "introPt": "O versículo de onde vem «amarás o teu próximo como a ti mesmo». Ele termina com a assinatura que a Torá repete tantas vezes: אֲנִי יְהוָה, «eu sou o Senhor».",
@@ -350,7 +350,7 @@
     {
       "id": "isaias-6",
       "tipo": "curto",
-      "revisado": false,
+      "revisado": true,
       "tituloPt": "Santo, santo, santo",
       "fontePt": "Isaías 6:3",
       "introPt": "O que os anjos proclamam na visão de Isaías. A palavra קָדוֹשׁ, «santo», vem três vezes seguidas.",
@@ -370,7 +370,7 @@
     {
       "id": "isaias-2",
       "tipo": "curto",
-      "revisado": false,
+      "revisado": true,
       "tituloPt": "Espadas em arados",
       "fontePt": "Isaías 2:4",
       "introPt": "A profecia da paz entre as nações. A última linha está gravada, em hebraico, perto da sede da ONU, em Nova York.",
@@ -395,7 +395,7 @@
     {
       "id": "miqueias-6",
       "tipo": "curto",
-      "revisado": false,
+      "revisado": true,
       "tituloPt": "O que o Senhor pede de ti",
       "fontePt": "Miqueias 6:8",
       "introPt": "Um versículo que resume os profetas em três pedidos: justiça, bondade e humildade.",
