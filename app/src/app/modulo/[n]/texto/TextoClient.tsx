@@ -120,6 +120,13 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
             const aberta = abertas.has(i);
             return (
               <li key={i} className="grid gap-1">
+                {/* Numa conversa, o nome acima da linha - como no WhatsApp.
+                    Só quando muda quem fala, para não repetir o nome à toa. */}
+                {l.quem && l.quem !== texto.linhas[i - 1]?.quem && (
+                  <p dir="ltr" className={`font-ui text-[12.5px] font-semibold text-ink-muted m-0 px-2 ${i ? 'mt-2' : ''} text-right`}>
+                    {l.quem}
+                  </p>
+                )}
                 <div className="flex items-center gap-2">
                   <button type="button" onClick={() => alterna(i)} aria-expanded={aberta}
                           aria-label={`Linha ${i + 1}: ${aberta ? 'esconder' : 'mostrar'} a ajuda`}

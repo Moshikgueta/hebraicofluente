@@ -23,6 +23,9 @@ import type { ItemCompreensao, Word } from '@/lib/content-publico';
 
 export type LinhaDeTexto = {
   he: string; translit: string; pt: string;
+  /** Quem fala, nas conversas (27/09/2026): "Dana", "Mãe". Em português, porque
+   *  é rótulo da tela e não texto a ler; não entra na gravação. */
+  quem?: string;
   /** Só nas linhas do texto: a gravação da linha (onda 4 de data/audio.json). */
   audioId?: string;
 };
