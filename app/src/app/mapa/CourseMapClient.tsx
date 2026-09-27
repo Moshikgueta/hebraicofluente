@@ -22,13 +22,13 @@
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
-import { course, getLetter, type CourseModule } from '@/lib/content';
+import { allLetters, course, getLetter, type CourseModule } from '@/lib/content';
 import { totalLicoes } from '@/lib/content-publico';
 import { Prose } from '@/components/learn/Blocks';
 import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
-import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
+import { isLessonComplete, letraLiberada, STAGE_COUNT } from '@/lib/state/rules';
 import { flagship } from '@/lib/catalog';
-import { idDoSom } from '@/lib/sons';
+import { idDoSom, ordemDeEnsino } from '@/lib/sons';
 
 /* Uma lição do caminho dentro do módulo: uma letra ou um som (Vet, Tch...). */
 type Item = { id: string; he: string; nome: string; href: string };
@@ -128,6 +128,10 @@ function Trecho({ module: m, estado, ultimo }: {
 }) {
   const p = useProgress();
   const itens = itensDoModulo(m);
+  /* A ordem de ensino, a mesma que a trava da lição usa. Calculada aqui e
+     não no carregamento do arquivo: na plataforma o conteúdo das letras
+     chega do servidor depois, e uma constante de módulo nasceria vazia. */
+  const ordem = ordemDeEnsino(allLetters(), course.modules);
   const feitas = itens.filter(i => isLessonComplete(p.state, i.id)).length;
   const extra = m.letterIds.length === 0;
   /* O módulo 7 tem as três lições de som E o fecho de três etapas. */
@@ -235,8 +239,15 @@ function Trecho({ module: m, estado, ultimo }: {
                 const feita = isLessonComplete(p.state, L.id);
                 const etapasFeitas = p.state.lessons[L.id]?.stagesDone.length ?? 0;
                 const comecada = etapasFeitas > 0 && !feita;
-                const estadoDaLetra = feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas` : '';
+
                 const aberta = feita || comecada;
+                /* 🔒 na letra que a trava de progressão ainda fecha (a mesma
+                   regra da lição, `letraLiberada`). A próxima a estudar fica
+                   SEM cadeado, e nada aparece antes de o progresso carregar -
+                   senão o mapa inteiro piscaria trancado a cada abertura. */
+                const bloqueada = p.ready && !aberta && !letraLiberada(p.state, ordem, L.id);
+                const estadoDaLetra = feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas`
+                  : bloqueada ? ' - bloqueada' : '';
                 const classe = `relative z-[1] min-w-[46px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
                   ${aberta ? 'hover:shadow-[var(--sh)] hover:border-[var(--teal)] transition-[box-shadow,border-color]' : ''}
                   ${feita ? 'bg-[var(--teal-soft)] border-[var(--edge-teal)]'
@@ -244,6 +255,9 @@ function Trecho({ module: m, estado, ultimo }: {
                     : 'bg-[var(--sand)] border-line'}`;
                 const miolo = (
                   <>
+                    {bloqueada && (
+                      <span aria-hidden className="absolute -top-2 -right-2 text-[13px] leading-none">🔒</span>
+                    )}
                     <He size="inline" tone={feita ? 'teal' : estado === 'adiante' ? 'muted' : 'navy'}
                         className="!text-[23px] !leading-[1.1]">
                       {L.he}
@@ -263,7 +277,8 @@ function Trecho({ module: m, estado, ultimo }: {
                     {miolo}
                   </Link>
                 ) : (
-                  <span key={L.id} className={classe} title={`${L.nome}${estadoDaLetra}`}>
+                  <span key={L.id} className={classe} title={`${L.nome}${estadoDaLetra}`}
+                        aria-label={`${L.nome}${estadoDaLetra}`}>
                     {miolo}
                   </span>
                 );
