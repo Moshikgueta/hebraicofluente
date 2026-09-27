@@ -464,13 +464,14 @@ novo; o painel pula para o próximo item sem áudio. Referência:
   lib/gravador.ts), cortadas no trecho da voz; "Ouvir os dois" toca modelo e
   a sua em sequência, por Web Audio. Sem nota automática, de propósito. A
   gravação não sai do aparelho.
-- **"Achei um erro neste exercício"** (`RelatarErro`, na folha de retorno,
-  depois da resposta; só com `NEXT_PUBLIC_PLATFORM_API=worker`): motivo +
-  comentário opcional + a foto do exercício (`lib/relato.ts`). `POST
-  /api/relatos` exige sessão mas NÃO guarda a conta (tabela `relatos`, sem
-  chave para `accounts`); freio de 20/hora por conta. O painel
-  `/admin/relatos` agrupa por exercício e "Resolvido" fecha todos os relatos
-  da questão. A privacidade diz isso (art. 2).
+- **"Achei um erro neste exercício" SAIU da tela do aluno** (26/09/2026, a
+  pedido do dono do curso: não abrir canal de reclamação dentro do curso).
+  O componente `RelatarErro` foi apagado e a privacidade não fala mais em
+  relatos. O resto ficou quieto, sem ninguém que o chame: `POST
+  /api/relatos` (exige sessão, não guarda a conta, freio de 20/hora),
+  `lib/relato.ts` e o painel `/admin/relatos`, que continua mostrando os
+  relatos antigos. Para religar, basta voltar o componente na folha de
+  retorno do `ExercisePlayer` (e o parágrafo da privacidade, art. 2).
 - `lib/admin.js` (worker) tem `isAdmin`/`exigirAdmin`, usados pelos dois
   painéis. `tests/relatos-e-comparacao.test.ts`.
 
