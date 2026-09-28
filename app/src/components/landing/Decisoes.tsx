@@ -305,7 +305,7 @@ export function Decisoes() {
     <section id="decisoes" aria-labelledby="decisoes-titulo">
       <Container className="pt-16 sm:pt-24">
         <Reveal>
-          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
+          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
             Como o curso foi pensado
           </p>
           <H2 id="decisoes-titulo" className="mb-3 max-w-[22ch]">
@@ -330,7 +330,7 @@ export function Decisoes() {
               <article className="h-full rounded-[22px] border border-line bg-[var(--card)]
                                   p-6 sm:p-7 flex flex-col gap-5">
                 <div className="grid gap-2.5">
-                  <p className="font-ui text-[12.5px] font-bold tracking-[.14em] text-[var(--teal)] m-0">
+                  <p className="font-ui text-[12.5px] font-bold tracking-[.14em] text-[var(--teal-ink)] m-0">
                     {c.n}
                   </p>
                   <h3 className="font-display text-[21px] sm:text-[22px] font-semibold

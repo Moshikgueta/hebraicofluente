@@ -13,7 +13,7 @@
  * A stage is marked done when the learner reaches its end, and XP is awarded
  * there - never on navigation. */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
@@ -120,6 +120,22 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     const ordem = ordemDeEnsino(allLetters(), course.modules);
     setTrancada(porQueTrancada(p.state, ordem, letter.id));
   }, [p.ready, p.state, letter.id]);
+
+  /* Trocar de etapa desmonta o botão que tinha o foco, e ele caía no
+     <body>, com a página parada no meio (auditoria de 28/09, UX-002). Se o
+     foco se perdeu, ele vai para a etapa atual na barra de etapas, que fica
+     no topo: quem usa teclado ou leitor de tela sabe onde está e segue com
+     Tab para o conteúdo novo. */
+  const primeiraEtapa = useRef(true);
+  useEffect(() => {
+    if (primeiraEtapa.current) { primeiraEtapa.current = false; return; }
+    const id = requestAnimationFrame(() => {
+      const a = document.activeElement;
+      if (a && a !== document.body && document.body.contains(a)) return;
+      document.querySelector<HTMLElement>('[aria-label="Etapas da lição"] [aria-current="step"]')?.focus();
+    });
+    return () => cancelAnimationFrame(id);
+  }, [stage]);
 
   const done = useCallback((n: number) => {
     p.finishStage(letter.id, n);

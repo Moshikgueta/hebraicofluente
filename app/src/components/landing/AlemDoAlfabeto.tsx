@@ -67,7 +67,7 @@ export function AlemDoAlfabeto() {
     <section aria-labelledby="alem" className="mt-16 sm:mt-24 bg-[var(--sand)] border-y border-line">
       <Container className="py-16 sm:py-[88px]">
         <Reveal>
-          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
+          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
             Conteúdo extra, e opcional
           </p>
         </Reveal>

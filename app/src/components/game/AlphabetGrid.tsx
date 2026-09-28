@@ -207,7 +207,7 @@ function LetterCell({
       )}
       {!compact && parcial && (
         <span aria-hidden
-              className="sm:hidden absolute bottom-0.5 font-ui text-[9px] leading-none text-[var(--teal)] tabular-nums">
+              className="sm:hidden absolute bottom-0.5 font-ui text-[9px] leading-none text-[var(--teal-ink)] tabular-nums">
           {stages}/{STAGE_COUNT}
         </span>
       )}

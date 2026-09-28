@@ -73,7 +73,7 @@ export function Professor({ retrato }: { retrato: string | null }) {
             )}
           </Reveal>
           <Reveal delay={100}>
-            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
+            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
               Quem está por trás do Hebraico Fluente
             </p>
             <h2 id="sobre-titulo"
@@ -93,7 +93,7 @@ export function Professor({ retrato }: { retrato: string | null }) {
               ))}
             </ul>
             <Link href="/sobre"
-                  className="group inline-flex items-center gap-2 font-ui text-[16px] font-semibold text-[var(--teal)]
+                  className="group inline-flex items-center gap-2 font-ui text-[16px] font-semibold text-[var(--teal-ink)]
                              hover:text-[var(--teal-ink)]">
               Conheça a minha história
               <span aria-hidden className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
@@ -246,7 +246,7 @@ export function AulaAmostra({ href }: { href: string }) {
                   <p className="flex items-center gap-2.5 mb-1">
                     <Check size={17} color="var(--teal-ink)" />
                     <span className="font-ui font-bold text-[16px] text-[var(--teal-ink)]">Muito bem!</span>
-                    <span className="ml-auto font-ui font-bold text-[14px] text-[var(--teal)]">+10 XP</span>
+                    <span className="ml-auto font-ui font-bold text-[14px] text-[var(--teal-ink)]">+10 XP</span>
                   </p>
                   <p className="font-ui text-[14.5px] leading-[1.55] text-[var(--teal-body)]">
                     Nun faz o som N. Mem faz M, Tav faz T e He faz o H aspirado: as quatro

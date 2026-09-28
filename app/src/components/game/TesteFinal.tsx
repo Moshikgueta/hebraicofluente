@@ -126,7 +126,7 @@ export function TesteFinalCard({ compacto = false }: { compacto?: boolean }) {
         className={`relative mt-1 justify-self-start inline-flex items-center rounded-[12px]
                     font-ui font-semibold text-[15px] px-5 py-3 transition-transform duration-[180ms]
                     hover:-translate-y-[2px]
-          ${celebrar ? 'bg-[var(--teal)] text-white' : 'bg-white text-[var(--navy)]'}`}
+          ${celebrar ? 'bg-[var(--teal-solid)] text-white' : 'bg-white text-[var(--navy)]'}`}
       >
         {p.state.finalChallenge.completedAt ? 'Refazer o teste final' : 'Fazer o teste final'}
       </Link>

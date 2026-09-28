@@ -55,6 +55,8 @@ export function ExercisePlayer({
   const [correctCount, setCorrectCount] = useState(0);
   const [missed, setMissed] = useState<string[]>([]);
   const sheetRef = useRef<HTMLDivElement>(null);
+  const raizRef = useRef<HTMLDivElement>(null);
+  const perguntaRef = useRef<HTMLHeadingElement>(null);
   const [sheetH, setSheetH] = useState(0);
 
   /* ── DUAS TRAVAS, e o defeito que elas consertam ─────────────────────
@@ -201,10 +203,38 @@ export function ExercisePlayer({
     return () => ro.disconnect();
   }, [settled, i]);
 
+  /* O foco do teclado, só quando ele se PERDE (auditoria de 28/09, UX-002).
+     Responder desabilita o botão escolhido, e o foco caía no <body>: quem usa
+     teclado ou leitor de tela recomeçava do topo da página. Então, se depois
+     de responder o foco não está num elemento vivo do player, ele vai para o
+     primeiro botão da folha de retorno (o Continuar); ao passar de questão,
+     para o enunciado da nova. Sem rolar a tela, e sem mexer em quem está com
+     o foco num lugar válido - a regra acima, de não roubar o foco, continua. */
+  const focoPerdido = () => {
+    const a = document.activeElement as HTMLElement | null;
+    return !a || a === document.body || (a as HTMLButtonElement).disabled === true
+      || !raizRef.current?.contains(a);
+  };
+  useEffect(() => {
+    if (!settled) return;
+    const id = requestAnimationFrame(() => {
+      if (focoPerdido()) sheetRef.current?.querySelector<HTMLElement>('button')?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [settled]);
+  useEffect(() => {
+    if (i === 0) return;
+    const id = requestAnimationFrame(() => {
+      if (focoPerdido()) perguntaRef.current?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [i]);
+
   if (!ex) return null;
 
   return (
     <div
+      ref={raizRef}
       className="grid gap-5 pb-[var(--sheet-h)] lg:pb-0"
       style={{ '--sheet-h': `${sheetH ? sheetH + 16 : 0}px` } as React.CSSProperties}
     >
@@ -235,7 +265,8 @@ export function ExercisePlayer({
       </header>
 
       <Card className="p-5 sm:p-7 grid gap-6">
-        <h2 className="text-[19px] sm:text-[21px] font-semibold leading-snug">{ex.promptPt}</h2>
+        <h2 ref={perguntaRef} tabIndex={-1}
+            className="text-[19px] sm:text-[21px] font-semibold leading-snug focus:outline-none">{ex.promptPt}</h2>
 
         {/* A CHAVE é o item, e não é enfeite. Sem ela o React reaproveita o
             componente de resposta quando dois itens seguidos são do mesmo

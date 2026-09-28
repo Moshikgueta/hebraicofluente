@@ -61,6 +61,11 @@
   --teal:      #1F8A7D;   /* progresso, acerto, bordas ativas */
   --teal-soft: #E4F1EE;   /* fundo tingido de acerto/progresso */
   --teal-ink:  #12665C;   /* texto sobre --teal-soft */
+  /* Fundo de botão sólido com texto BRANCO. Igual nos dois modos: 7,1:1 com
+     branco. `--teal` (#1F8A7D) dava 4,2:1 e falhava AA em texto de 14 px
+     (auditoria de 28/09/2026, UX-006); `--teal-ink` não serve de fundo porque
+     clareia no modo escuro. `--teal` fica para barra, borda e ícone. */
+  --teal-solid: #12665C;
   --teal-lite: #8FD6C8;   /* só sobre navy: rótulo, ícone, fim do gradiente */
   --gold:      #B8862F;   /* sequência, revisão pendente */
   --gold-soft: #F7EFDF;   /* fundo de revisão e de resposta incorreta */

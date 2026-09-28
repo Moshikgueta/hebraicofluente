@@ -151,7 +151,7 @@ function PainelAula() {
       <div className="rounded-[16px] bg-[var(--sand)] px-4 py-[22px] text-center mb-4">
         <He size="plate" tone="navy">שׁ</He>
         <p className="font-ui text-[17px] font-semibold text-ink mt-1.5">Shin</p>
-        <p className="font-ui text-[14.5px] text-[var(--teal)]">som /ʃ/ - como o CH de «chave»</p>
+        <p className="font-ui text-[14.5px] text-[var(--teal-ink)]">som /ʃ/ - como o CH de «chave»</p>
       </div>
       <p className="font-ui text-[15.5px] leading-[1.6] text-ink-muted">
         O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma
@@ -335,7 +335,7 @@ export function Metodo() {
               <Reveal as="li" key={t} delay={i * 70}>
                 <span aria-hidden className="mb-4 w-14 h-14 rounded-[16px] bg-[var(--card)]
                                              border-[1.5px] border-[var(--teal)] grid place-items-center
-                                             font-ui font-bold text-[18px] text-[var(--teal)]">
+                                             font-ui font-bold text-[18px] text-[var(--teal-ink)]">
                   {i + 1}
                 </span>
                 <p className="font-display text-[19px] font-semibold tracking-[-0.015em] text-ink mb-1.5">{t}</p>

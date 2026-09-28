@@ -65,7 +65,7 @@ export function FalarECorrigir({ alvo, translit, nota }: {
           </button>
         ) : (
           <button type="button" onClick={falar} disabled={estado.t === 'sem-hebraico'}
-                  className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[var(--teal)] text-white font-ui text-[14px] font-semibold disabled:opacity-50">
+                  className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[var(--teal-solid)] text-white font-ui text-[14px] font-semibold disabled:opacity-50">
             🎤 Fale e seja corrigido
           </button>
         )}

@@ -127,7 +127,7 @@ export function Hero({
             </p>
             <h1 className="font-display font-semibold text-[clamp(36px,4.3vw,56px)] leading-[1.04]
                            tracking-[-0.035em] text-balance m-0 mb-5">
-              Ler e escrever hebraico, <span className="text-[var(--teal)]">do zero.</span>
+              Ler e escrever hebraico, <span className="text-[var(--teal-ink)]">do zero.</span>
             </h1>
             {/* Os três desejos, como selos: cada um cabe numa linha curta, e
                 juntos dizem "é para mim" sem pesar o título. */}
@@ -169,10 +169,10 @@ export function Hero({
             </p>
             <h1 className="font-display font-semibold tracking-[-0.03em] text-balance m-0 mb-4 sm:mb-5 grid gap-1">
               <span className="text-[clamp(30px,3.4vw,44px)] leading-[1.08]">
-                Quer viajar para <span className="text-[var(--teal)]">Israel</span>?
+                Quer viajar para <span className="text-[var(--teal-ink)]">Israel</span>?
               </span>
               <span className="text-[clamp(30px,3.4vw,44px)] leading-[1.08]">
-                Ler as letras da <span className="text-[var(--teal)]">Bíblia</span> no original?
+                Ler as letras da <span className="text-[var(--teal-ink)]">Bíblia</span> no original?
               </span>
               <span className="mt-2 text-[clamp(19px,1.8vw,22px)] leading-[1.35] font-medium tracking-[-0.015em]
                                text-ink-muted max-w-[36ch]">
@@ -186,7 +186,7 @@ export function Hero({
             style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
           >
             <p className="flex items-center gap-3 font-display text-[clamp(20px,1.9vw,23px)] font-semibold
-                          tracking-[-0.02em] text-[var(--teal)] m-0 mb-2.5">
+                          tracking-[-0.02em] text-[var(--teal-ink)] m-0 mb-2.5">
               <span aria-hidden className="w-7 h-[2px] rounded-full bg-[var(--teal)]" />
               Você está no lugar certo.
             </p>
@@ -447,7 +447,7 @@ function Mockup({ ativo, certo }: { ativo: boolean; certo: boolean }) {
             style={{ width: ativo ? '72%' : '0%', background: 'linear-gradient(90deg,var(--teal),#2FB39F)' }}
           />
         </span>
-        <span className="font-ui text-[13px] font-semibold text-[var(--teal)] tabular-nums min-w-[34px] text-right">
+        <span className="font-ui text-[13px] font-semibold text-[var(--teal-ink)] tabular-nums min-w-[34px] text-right">
           {ativo ? '72%' : '0%'}
         </span>
       </div>
@@ -500,7 +500,7 @@ function Mockup({ ativo, certo }: { ativo: boolean; certo: boolean }) {
           um enfeite sujando um número que a página quer que seja lido. */}
       {certo && (
         <span className="absolute right-[22px] top-[-13px] z-[4] font-ui font-bold text-[17px]
-                         text-[var(--teal)] pointer-events-none animate-xp">
+                         text-[var(--teal-ink)] pointer-events-none animate-xp">
           +10 XP
         </span>
       )}

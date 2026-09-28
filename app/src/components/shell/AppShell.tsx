@@ -352,8 +352,10 @@ function Sidebar({ pathname }: { pathname: string | null }) {
           pedido do dono do curso: o A1 não existe ainda e será vendido à
           parte, então o cartão prometia de graça um curso que vai custar. */}
 
-      <p className="font-ui text-[11.5px] leading-relaxed text-white/[.45] px-1">
-        Nos exercícios, <Key dark>1</Key>-<Key dark>4</Key> respondem e <Key dark>Enter</Key> avança.
+      {/* Branco a 85% (antes 45%, 3,8:1 - auditoria de 28/09, UX-007), e
+          "nas lições": os jogos da Academia não têm os atalhos (UX-014). */}
+      <p className="font-ui text-[12px] leading-relaxed text-white/[.85] px-1">
+        Nas lições, <Key dark>1</Key>-<Key dark>4</Key> respondem e <Key dark>Enter</Key> avança.
       </p>
     </aside>
   );

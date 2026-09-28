@@ -85,7 +85,7 @@ export function Transformacao() {
       <Container className="pt-4 pb-16 sm:pt-6 sm:pb-[88px]">
         <div className="grid gap-10 lg:gap-16 lg:grid-cols-[minmax(0,.85fr)_minmax(0,1fr)] lg:items-center">
           <Reveal>
-            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
+            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
               Hoje e depois
             </p>
             <H2 id="transformacao" className="max-w-[16ch] mb-4">
