@@ -211,6 +211,29 @@ regras que ele fixou e que valem para todo commit daqui em diante:
   do zero num banco de teste na Cloudflare e o apaga depois: uma vez por mês.
   Falha vira e-mail para o SUPPORT_EMAIL. O agendamento só roda no ramo
   PADRÃO do GitHub, que precisa ser a `main`.
+- **Publicação volta sozinha** (desde 28/09/2026): `scripts/cloudflare-setup.sh`
+  anota a versão no ar antes do `wrangler deploy`; se a conferência de
+  produção (`worker/e2e.sh`) falhar duas vezes seguidas, faz `wrangler
+  rollback` para ela e a execução fica vermelha. Uma falha só, seguida de
+  sucesso, é tratada como passageira. O rollback não desfaz schema (que só
+  cresce) nem segredos.
+- **Token de teste barra a publicação:** `MP_ACCESS_TOKEN` com `TEST-` faz
+  `scripts/pagamento-ativo.mjs` parar antes do build; o e2e de produção exige
+  `modo: producao` e conta que não seja usuário de teste da Mercado Pago.
+- **Trocar o e-mail de um aluno:** Actions → Acesso → `trocar-email` (campo
+  E-mail = o de hoje, `novo_email` = o certo). Só depois de confirmar com o
+  aluno por outro canal.
+- **Desistência estorna sozinha** (desde 28/09/2026): `POST /api/pay/desistir`
+  pede o estorno total à Mercado Pago na hora (`iniciarEstorno` em
+  `worker/src/api/pay.js`, chave de idempotência `estorno-<pedido>`), a
+  varredura tenta de novo o que falhou (8 vezes, intervalo dobrando) e o
+  acesso fecha pelo caminho de sempre quando ela confirma. PIX direto e
+  pedido liberado à mão ficam `manual`. Estado em `estornos`.
+- **Alertas ao dono** (`worker/src/alertas.js`, na varredura): erros de
+  pagamento na última hora viram um e-mail por hora; desistência sem estorno
+  resolvido vira lembrete diário. A varredura marca um batimento, e
+  `/api/health` responde `monitor: false` se ela parar: é o campo que o
+  monitor externo de disponibilidade deve olhar (palavra-chave `"monitor":true`).
 - **O backup é segredo:** tem e-mail e hash de senha de todo aluno. Nunca num
   artefato do Actions nem no git. `npm run db:backup` continua existindo para
   uma cópia na sua máquina.

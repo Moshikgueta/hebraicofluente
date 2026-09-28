@@ -314,6 +314,25 @@ export const getPayment = (env, paymentId) => {
   return call(env, `/v1/payments/${encodeURIComponent(id)}`);
 };
 
+/* ── estorno ────────────────────────────────────────────────────────────── */
+
+/**
+ * Pede o estorno TOTAL de um pagamento (desistência em sete dias).
+ *
+ * Corpo vazio = devolve tudo. A chave de idempotência é fixa por pedido de
+ * compra (`estorno-<pedido>`): se a varredura repetir a chamada depois de uma
+ * resposta perdida, a Mercado Pago devolve o mesmo estorno em vez de fazer
+ * outro. Quem fecha o acesso não é esta função: é `applyPayment`, quando o
+ * pagamento aparece `refunded`.
+ */
+export const refundPayment = (env, paymentId, idempotencyKey) => {
+  const id = String(paymentId);
+  if (!/^\d{1,24}$/.test(id)) throw new Error('id de pagamento fora do formato');
+  return call(env, `/v1/payments/${encodeURIComponent(id)}/refunds`, {
+    method: 'POST', body: {}, idempotencyKey
+  });
+};
+
 /** Todos os pagamentos ligados a um pedido nosso. É como a varredura encontra
  *  um pagamento cujo aviso nunca chegou. */
 export async function paymentsFor(env, orderId) {

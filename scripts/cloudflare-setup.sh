@@ -271,6 +271,26 @@ echo
 bold "6. Publicar"
 # Guardado antes de publicar, para a checagem logo abaixo.
 HAVE_BEFORE="$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml || true)"
+
+# A versão que está no ar AGORA, para voltar a ela sozinho se as conferências
+# do passo 9 falharem (auditoria de 28/09, INFRA-003: #152 e #154 subiram,
+# a conferência falhou, e a versão nova ficou no ar sem ninguém desfazer).
+# Vazio = primeira publicação, ou o wrangler não respondeu: aí não há para
+# onde voltar, e o passo 9 só avisa, como antes.
+ANTERIOR="$($W deployments status --json 2>/dev/null | node -e '
+  let s = "";
+  process.stdin.on("data", d => s += d).on("end", () => {
+    try {
+      const v = (JSON.parse(s).versions || []).slice().sort((a, b) => (b.percentage || 0) - (a.percentage || 0))[0];
+      process.stdout.write(v && v.version_id ? String(v.version_id) : "");
+    } catch { /* sem versão anterior conhecida */ }
+  });' 2>/dev/null || true)"
+if [ -n "$ANTERIOR" ]; then
+  info "Versão no ar antes desta publicação: $ANTERIOR (é para ela que se volta se algo falhar)"
+else
+  info "Não consegui ler a versão no ar agora: se a conferência falhar, não haverá volta automática."
+fi
+
 DEPLOY="$($W deploy 2>&1)"
 RC=$?
 
@@ -753,9 +773,45 @@ fi
 HF_BASE="$URL" bash worker/e2e.sh
 RC=$?
 
+# ── 10. voltar sozinho, se a conferência falhou ──────────────────────────
+# Uma falha pode ser passageira (a do portão no #154 passou na segunda
+# tentativa, com o mesmo código), e desfazer uma versão boa por ruído seria
+# pior do que o ruído. Então: uma segunda conferência; se ela também falhar,
+# volta para a versão anterior e confere que o site responde.
+#
+# O que o rollback NÃO desfaz: o schema (só cresce, e a versão anterior
+# convive com tabelas a mais) e os segredos já enviados no passo 4.
+if [ $RC -ne 0 ]; then
+  echo
+  bold "10. A conferência falhou: tentando mais uma vez antes de voltar"
+  HF_BASE="$URL" bash worker/e2e.sh
+  RC=$?
+  if [ $RC -ne 0 ] && [ -n "$ANTERIOR" ]; then
+    bold "Falhou de novo. Voltando para a versão anterior ($ANTERIOR)."
+    if $W rollback "$ANTERIOR" -m "Conferência pós-publicação falhou duas vezes (deploy automático)" -y >/tmp/hf-rollback 2>&1; then
+      if espera_subir "$URL"; then
+        ok "De volta à versão anterior; $URL responde."
+      else
+        erro "Voltei para a versão anterior, mas $URL respondeu $ULTIMO."
+      fi
+    else
+      erro "O rollback automático falhou. O wrangler disse:"
+      tail -15 /tmp/hf-rollback | sed 's/^/       /'
+      info "Volte à mão: npx wrangler rollback $ANTERIOR"
+    fi
+    VOLTOU=1
+  elif [ $RC -ne 0 ]; then
+    erro "Sem versão anterior conhecida: a versão nova continua no ar."
+  else
+    ok "Na segunda conferência passou: a falha anterior foi passageira."
+  fi
+fi
+
 echo
 if [ $RC -eq 0 ]; then
   bold "Pronto. $URL"
+elif [ "${VOLTOU:-0}" = "1" ]; then
+  bold "A versão nova NÃO ficou no ar: a conferência falhou duas vezes e o site voltou à anterior."
 else
   bold "Subiu, mas alguma verificação falhou (acima)."
 fi

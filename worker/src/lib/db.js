@@ -282,6 +282,139 @@ export async function arrependimentosDe(env, accountId) {
   }
 }
 
+/* ── estorno automático da desistência ──────────────────────────────────
+   O estado mora em `estornos` (ver o comentário da tabela em schema.sql).
+   Toda leitura aqui tolera a tabela ausente: a lista de compras e a
+   varredura não podem cair porque uma publicação ainda não criou a tabela. */
+
+/** Cria a linha do estorno. Pedir de novo não cria outra. */
+export async function estornoCriar(env, { orderId, paymentId, estado }, at = now()) {
+  await env.DB.prepare(
+    `INSERT OR IGNORE INTO estornos (order_id, payment_id, estado, proxima_em, criado_em, atualizado_em)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  ).bind(orderId, String(paymentId || ''), estado, at, at, at).run();
+  return estornoDe(env, orderId);
+}
+
+export const estornoDe = (env, orderId) =>
+  env.DB.prepare('SELECT * FROM estornos WHERE order_id = ?').bind(orderId).first();
+
+/** Muda só as colunas desta lista; o resto fica. */
+const COLUNAS_ESTORNO = ['estado', 'tentativas', 'proxima_em', 'refund_id', 'erro'];
+export async function estornoAtualizar(env, orderId, campos, at = now()) {
+  const cols = Object.keys(campos).filter(c => COLUNAS_ESTORNO.includes(c));
+  if (!cols.length) return;
+  await env.DB.prepare(
+    `UPDATE estornos SET ${cols.map(c => `${c} = ?`).join(', ')}, atualizado_em = ? WHERE order_id = ?`
+  ).bind(...cols.map(c => campos[c]), at, orderId).run();
+}
+
+/** Os estornos da conta, por pedido de compra: `{ estado }`. */
+export async function estornosDe(env, accountId) {
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT e.order_id, e.estado FROM estornos e JOIN orders o ON o.id = e.order_id
+        WHERE o.account_id = ?`
+    ).bind(accountId).all();
+    return new Map((results || []).map(r => [String(r.order_id), String(r.estado)]));
+  } catch {
+    return new Map();
+  }
+}
+
+/** O que a varredura tem de mexer: pendentes vencidos e pedidos à espera de
+ *  confirmação há mais de 15 minutos. */
+export async function estornosParaVarrer(env, { limit = 10 } = {}, at = now()) {
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT * FROM estornos
+        WHERE (estado = 'pendente' AND proxima_em <= ?1)
+           OR (estado = 'pedido' AND atualizado_em <= ?2)
+        ORDER BY atualizado_em LIMIT ?3`
+    ).bind(at, at - 15 * 60_000, limit).all();
+    return results || [];
+  } catch {
+    return [];
+  }
+}
+
+/** Os que ainda pedem atenção do dono: manual, erro, ou mais de um dia sem
+ *  confirmação. Com o e-mail da conta, porque quem lê é o dono. */
+export async function estornosAbertos(env, at = now()) {
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT e.order_id, e.estado, e.erro, e.tentativas, e.criado_em, o.amount_cents, o.method,
+              a.email
+         FROM estornos e JOIN orders o ON o.id = e.order_id
+         LEFT JOIN accounts a ON a.id = o.account_id
+        WHERE e.estado IN ('manual', 'erro')
+           OR (e.estado IN ('pendente', 'pedido') AND e.criado_em <= ?)
+        ORDER BY e.criado_em`
+    ).bind(at - 24 * 3_600_000).all();
+    return results || [];
+  } catch {
+    return [];
+  }
+}
+
+/* ── monitoramento ──────────────────────────────────────────────────────── */
+
+/** Marca que `nome` rodou agora. */
+export async function bater(env, nome, at = now()) {
+  try {
+    await env.DB.prepare(
+      'INSERT INTO batimentos (nome, em) VALUES (?, ?) ON CONFLICT(nome) DO UPDATE SET em = excluded.em'
+    ).bind(nome, at).run();
+  } catch { /* o batimento nunca derruba a varredura */ }
+}
+
+/** Quando `nome` rodou pela última vez, ou null. */
+export async function ultimoBatimento(env, nome) {
+  try {
+    const r = await env.DB.prepare('SELECT em FROM batimentos WHERE nome = ?').bind(nome).first();
+    return r ? Number(r.em) : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Reserva o aviso `chave`. true = ninguém mandou ainda, mande; false = já
+ *  foi. É o que faz o lembrete sair uma vez por dia, e não a cada 5 min. */
+export async function reservarAviso(env, chave, at = now()) {
+  try {
+    const r = await env.DB.prepare('INSERT OR IGNORE INTO avisos (chave, enviado_em) VALUES (?, ?)')
+      .bind(chave, at).run();
+    return Number(r && r.meta && r.meta.changes) > 0;
+  } catch {
+    return false;
+  }
+}
+
+/** Solta a reserva quando o e-mail não saiu, para a próxima varredura tentar. */
+export async function soltarAviso(env, chave) {
+  try { await env.DB.prepare('DELETE FROM avisos WHERE chave = ?').bind(chave).run(); } catch { /* idem */ }
+}
+
+/** Quantas vezes cada ação apareceu na trilha desde `desde`. */
+export async function contarAcoes(env, acoes, desde) {
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT action, COUNT(*) AS n FROM access_log
+        WHERE created_at >= ? AND action IN (${acoes.map(() => '?').join(', ')})
+        GROUP BY action`
+    ).bind(desde, ...acoes).all();
+    return Object.fromEntries((results || []).map(r => [String(r.action), Number(r.n)]));
+  } catch {
+    return {};
+  }
+}
+
+/** Avisos com mais de 60 dias saem: só servem para deduplicar. */
+export async function avisosPurge(env, at = now()) {
+  try { await env.DB.prepare('DELETE FROM avisos WHERE enviado_em < ?').bind(at - 60 * 86_400_000).run(); }
+  catch { /* idem */ }
+}
+
 /* ── direitos de acesso ─────────────────────────────────────────────────── */
 
 /** Só os que ainda valem. Um direito vencido não é devolvido: nada acima

@@ -35,7 +35,7 @@ import {
   activeEntitlements, bumpSessionVersion, changePassword, createAccount, deleteAccount,
   emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
   normalizeEmail, registrarAcesso, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
-  ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset
+  ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset, ultimoBatimento
 } from '../lib/db.js';
 
 const MIN_PASSWORD = 8;
@@ -819,7 +819,11 @@ export async function health({ request, env }) {
        "producao", o comprador é mandado ao checkout real, e lá encontra "uma
        das partes é de teste" sem que nada deste lado pareça errado.
        Ver vendedorFormato em lib/mercadopago.js. */
-    vendedor: await vendedorFormato(env)
+    vendedor: await vendedorFormato(env),
+    /* Há quantos minutos a varredura de 5 em 5 min rodou (null = nunca).
+       Ela confere pagamentos cujo aviso não chegou, refaz estornos e manda
+       os alertas ao dono - parada, tudo isso para em silêncio. */
+    varredura: null
   };
 
   if (env.DB) {
@@ -849,6 +853,8 @@ export async function health({ request, env }) {
       /* idem */
     }
     out.emailEntregue = await ultimoEnvioDeSenha(env);
+    const bateu = await ultimoBatimento(env, 'varredura');
+    out.varredura = bateu === null ? null : Math.floor((Date.now() - bateu) / 60_000);
   }
 
   /* `progresso`, `recuperacao` e `email` ficam FORA do `ok` de propósito: sem
@@ -861,6 +867,11 @@ export async function health({ request, env }) {
      uma resposta da Mercado Pago, e um servidor de terceiro fora do ar não
      torna este site doente. */
   out.ok = out.db && out.schema && out.session;
+  /* O que o MONITOR EXTERNO olha (UptimeRobot ou parecido, palavra-chave
+     `"monitor":true`): o site no ar E a varredura viva. Fica separado do `ok`
+     porque a publicação confere o `ok` logo depois de subir, antes de a
+     varredura ter tido tempo de rodar. Auditoria de 28/09, INFRA-002. */
+  out.monitor = out.ok && out.varredura !== null && out.varredura <= 15;
   return json(out);
 }
 

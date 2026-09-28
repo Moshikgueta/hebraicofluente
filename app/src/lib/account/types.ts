@@ -59,6 +59,9 @@ export type Order = {
   desistirAte?: string | null;
   /** Quando a desistência foi pedida pelo site, se foi. */
   desistenciaEm?: string | null;
+  /** Como o dinheiro volta: `automatico` (o site pediu o estorno à Mercado
+   *  Pago), `manual` (a equipe devolve) ou null (sem desistência). */
+  estorno?: 'automatico' | 'manual' | null;
 };
 
 export type PaymentMethod = 'pix' | 'card';

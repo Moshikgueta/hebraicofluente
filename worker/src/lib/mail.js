@@ -388,13 +388,16 @@ export function mensagemDeCompra({
  * o dinheiro e com o acesso, e que a pessoa não precisa fazer mais nada.
  */
 export function mensagemDeArrependimento({
-  nome, curso, valor, pedido, pedidoEm, prazoUteis, cartao, marca, suporte
+  nome, curso, valor, pedido, pedidoEm, prazoUteis, cartao, marca, suporte, estornoPedido = false
 }) {
   const ola = nome ? `Oi, ${nome}.` : 'Oi.';
   const assinatura = marca || 'Hebraico Fluente';
-  const devolucao = cartao
-    ? 'O estorno é pedido à operadora do cartão e aparece na fatura conforme o prazo dela.'
-    : `O valor volta pela mesma forma de pagamento, em até ${prazoUteis} dias úteis.`;
+  /* `estornoPedido`: o site já pediu a devolução à Mercado Pago, e a
+     Mercado Pago aceitou. Só então o e-mail pode dizer isso. */
+  const jaPedido = estornoPedido ? 'O estorno já foi pedido à Mercado Pago. ' : '';
+  const devolucao = jaPedido + (cartao
+    ? 'No cartão, ele aparece na fatura conforme o prazo da operadora.'
+    : `O valor volta pela mesma forma de pagamento, em até ${prazoUteis} dias úteis.`);
 
   const text = [
     ola,
@@ -445,13 +448,22 @@ export function mensagemDeArrependimento({
  * propósito - quem lê é o dono, e sem o endereço não há o que fazer.
  */
 export function mensagemDeArrependimentoDono({
-  email, curso, valor, pedido, pedidoEm, prazoUteis, pixDireto, marca
+  email, curso, valor, pedido, pedidoEm, prazoUteis, pixDireto, marca, estado = null
 }) {
   const assinatura = marca || 'Hebraico Fluente';
-  const como = pixDireto
+  const manual = pixDireto
     ? 'Devolva o PIX pelo banco e depois rode Actions -> Acesso -> revogar para este e-mail.'
     : 'Devolva pelo painel da Mercado Pago (Atividade -> o pagamento -> Devolver dinheiro). ' +
       'Quando a Mercado Pago avisar o estorno, o acesso fecha sozinho.';
+  /* O que o site já fez sozinho decide o que o dono tem de fazer. */
+  const como = estado === 'pedido' || estado === 'concluido'
+    ? 'O ESTORNO JÁ FOI PEDIDO AUTOMATICAMENTE à Mercado Pago. Você não precisa fazer nada: ' +
+      'quando ela confirmar, o acesso fecha sozinho.'
+    : estado === 'pendente'
+      ? 'A primeira tentativa de estorno automático não passou. O site tenta de novo sozinho; ' +
+        'se não conseguir, você recebe um alerta. Se preferir não esperar: ' + manual
+      : 'ESTE ESTORNO É COM VOCÊ (não dá para fazer sozinho neste pedido). ' + manual +
+        ' Até resolver, você recebe um lembrete por dia.';
   const text = [
     'Pedido de desistência recebido pelo site (CDC, art. 49).',
     '',
@@ -478,6 +490,18 @@ export function mensagemDeArrependimentoDono({
     `<p>${escapar(assinatura)}</p>`
   ].join('');
   return { subject: `Desistência: ${pedido} (${valor})`, text, html };
+}
+
+/**
+ * Um alerta operacional para o dono (worker/src/alertas.js e o estorno que
+ * travou). Texto puro, curto, sem dado de aluno além do que o dono precisa
+ * para agir. `linhas` é uma lista; string vazia vira parágrafo.
+ */
+export function mensagemDeAlerta({ assunto, linhas }) {
+  const text = [...linhas, '', 'Hebraico Fluente - alerta automático'].join('\n');
+  const html = linhas.filter(l => l !== '').map(l => `<p>${escapar(l)}</p>`).join('')
+    + '<p><small>Hebraico Fluente - alerta automático</small></p>';
+  return { subject: `[Hebraico Fluente] ${assunto}`, text, html };
 }
 
 /**

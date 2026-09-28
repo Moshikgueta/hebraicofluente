@@ -561,10 +561,17 @@ function DesistirDaCompra({ order, email, onPedido }: {
   const [error, setError] = useState<string | null>(null);
 
   if (order.desistenciaEm) {
+    /* Só o que o servidor sabe: se o estorno já foi pedido à Mercado Pago ou
+       se a equipe devolve. Não afirma que o e-mail chegou - o envio pode ter
+       falhado, e a tela não tem como saber (auditoria, QA-006). */
+    const prazo = Number(empresa.politicas?.prazoReembolsoUteis) || 10;
     return order.status === 'paid' ? (
       <p className="basis-full font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
-        Desistência pedida em {dataHora(order.desistenciaEm)}. O reembolso está em
-        andamento, e a confirmação foi para {email}.
+        Desistência pedida em {dataHora(order.desistenciaEm)}.{' '}
+        {order.estorno === 'automatico'
+          ? 'O estorno já foi pedido à Mercado Pago e o valor volta pela mesma forma de pagamento. O acesso fecha quando ela confirmar.'
+          : `O valor volta pela mesma forma de pagamento, em até ${prazo} dias úteis.`}{' '}
+        A confirmação é enviada para {email}.
       </p>
     ) : null;
   }

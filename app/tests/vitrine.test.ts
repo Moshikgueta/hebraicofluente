@@ -126,6 +126,17 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
     expect(achadas).toEqual([]);
   });
 
+  it('não diz que o áudio é sintetizado quando há gravação', () => {
+    /* A FAQ dizia "sintetizador do próprio navegador, com voz de espanhol
+       latino" com 526 gravações do professor no ar: um texto fixo herdado do
+       curso de espanhol (auditoria de 28/09/2026, COM-003). A resposta passa
+       a sair do manifesto, e nenhuma das frases antigas pode voltar. */
+    const fonte = faq();
+    expect(fonte).toContain("from '@/lib/audio-manifest'");
+    const NEGACOES = ['espanhol latino', 'sintetizador do próprio navegador', 'estão planejadas'];
+    expect(NEGACOES.filter(n => fonte.includes(n))).toEqual([]);
+  });
+
   it('não escreve à mão um número que o array decide', () => {
     /* A seção do método dizia "Seis passos" e renderizava CINCO: `PASSOS`
        perde o passo "Ouça" enquanto não há gravação, e a frase ficou. Um

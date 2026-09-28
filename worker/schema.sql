@@ -256,10 +256,10 @@ CREATE INDEX IF NOT EXISTS registros_acesso_idade ON registros_acesso(criado_em)
 -- de compra: pedir de novo não cria outra, e o momento do primeiro pedido é
 -- o que conta para o prazo.
 --
--- O reembolso em si continua sendo feito pelo dono, no painel da Mercado
--- Pago; quando ela avisa o estorno, `applyPayment` fecha o acesso sozinho.
--- Esta tabela é a prova de QUANDO a pessoa pediu - que é o que decide se
--- estava dentro dos sete dias.
+-- Desde 28/09/2026 o estorno é pedido à Mercado Pago pelo próprio site, na
+-- hora (ver a tabela `estornos`, no fim deste arquivo); quando ela confirma,
+-- `applyPayment` fecha o acesso sozinho. Esta tabela é a prova de QUANDO a
+-- pessoa pediu - que é o que decide se estava dentro dos sete dias.
 CREATE TABLE IF NOT EXISTS arrependimentos (
   order_id   TEXT    PRIMARY KEY REFERENCES orders(id),
   account_id INTEGER NOT NULL REFERENCES accounts(id),
@@ -328,4 +328,52 @@ CREATE TABLE IF NOT EXISTS ab_contagens (
   dia      TEXT    NOT NULL,
   n        INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY (exp, variante, evento, dia)
+);
+
+-- ── estorno automático da desistência (28/09/2026) ────────────────────────
+-- Quando o aluno desiste pelo site dentro dos sete dias, o próprio site pede o
+-- estorno à Mercado Pago (POST /v1/payments/{id}/refunds). Esta tabela é o
+-- estado desse pedido de estorno, uma linha por pedido de compra:
+--
+--   pendente   ainda não conseguimos pedir; a varredura tenta de novo em
+--              `proxima_em` (intervalo crescente)
+--   pedido     a Mercado Pago aceitou o estorno; falta ela confirmar, e aí
+--              `applyPayment` fecha o acesso como sempre
+--   concluido  o pedido de compra está `refunded`
+--   manual     não há como estornar sozinho (PIX direto, liberação à mão,
+--              sem credencial): o dono estorna, e recebe alerta diário
+--   erro       oito tentativas falharam: vira manual, com alerta diário
+--
+-- Tabela nova, e não colunas novas em `arrependimentos`: a publicação aplica
+-- este arquivo com CREATE IF NOT EXISTS, e um ALTER TABLE nunca chegaria à
+-- produção (auditoria de 28/09, INFRA-005).
+CREATE TABLE IF NOT EXISTS estornos (
+  order_id      TEXT    PRIMARY KEY REFERENCES orders(id),
+  payment_id    TEXT    NOT NULL DEFAULT '',
+  estado        TEXT    NOT NULL,
+  tentativas    INTEGER NOT NULL DEFAULT 0,
+  proxima_em    INTEGER NOT NULL DEFAULT 0,
+  refund_id     TEXT    NOT NULL DEFAULT '',
+  erro          TEXT    NOT NULL DEFAULT '',
+  criado_em     INTEGER NOT NULL,
+  atualizado_em INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS estornos_estado ON estornos (estado, proxima_em);
+
+-- ── monitoramento (28/09/2026) ────────────────────────────────────────────
+-- `batimentos`: quando a varredura de 5 em 5 minutos rodou pela última vez.
+-- /api/health responde `monitor: false` se ela parou, e o monitor externo de
+-- disponibilidade avisa o dono. Um cron que parou era indistinguível de um
+-- cron sem trabalho (auditoria, INFRA-002/INFRA-013).
+CREATE TABLE IF NOT EXISTS batimentos (
+  nome TEXT    PRIMARY KEY,
+  em   INTEGER NOT NULL
+);
+
+-- `avisos`: cada alerta mandado ao dono, pela chave que o deduplica (por
+-- exemplo `desistencias:2026-09-28`, `operacao:2026-09-28T14`). Garante um
+-- lembrete por dia e um alerta de erro por hora, e não um a cada 5 minutos.
+CREATE TABLE IF NOT EXISTS avisos (
+  chave      TEXT    PRIMARY KEY,
+  enviado_em INTEGER NOT NULL
 );

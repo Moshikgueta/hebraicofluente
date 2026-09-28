@@ -7,6 +7,11 @@ import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { ancora, flagship, brl, parcelasMax, pixPrice } from '@/lib/catalog';
 import { course, totalLicoes } from '@/lib/content-publico';
+import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+
+/* O mesmo critério da capa (components/landing/copy.ts): é o manifesto de
+   gravações que decide o que se diz sobre áudio, nunca um texto fixo. */
+const TEM_AUDIO = AUDIO_MANIFEST.length > 0;
 
 export const metadata: Metadata = meta({
   rota: '/faq',
@@ -23,9 +28,12 @@ export const metadata: Metadata = meta({
  *   1. Toda resposta responde. "Depende", "entre em contato" e "em breve" são
  *      respostas que empurram o problema para o suporte e para a avaliação
  *      ruim depois da compra.
- *   2. O que ainda não existe é dito. Hoje o áudio do curso é sintetizado
- *      pelo próprio navegador, e isso está escrito aqui - porque um aluno que
- *      descobre sozinho acha que foi enganado, e com razão.
+ *   2. O que ainda não existe é dito, e o que já existe também. A resposta
+ *      sobre áudio dizia que a pronúncia era a voz artificial do navegador,
+ *      texto fixo herdado do curso de espanhol, e continuou no ar depois que
+ *      o curso ganhou as gravações do professor (auditoria de 28/09/2026,
+ *      COM-003). Agora ela sai do manifesto, como na capa, e
+ *      tests/vitrine.test.ts impede as frases antigas de voltarem.
  *
  * Preço e prazo vêm do catálogo. Uma FAQ com o preço digitado à mão é a
  * primeira coisa a ficar desatualizada num aumento.
@@ -109,10 +117,15 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
   },
   {
     q: 'O curso tem áudio com voz de verdade?',
-    a: [
-      'Ainda não. Hoje a pronúncia é falada pelo sintetizador do próprio navegador, com voz de espanhol latino quando existe - serve para conferir a sílaba, mas não é uma gravação.',
-      'As gravações com falante nativo estão planejadas e entram sem que você precise fazer nada: os mesmos botões passam a tocar o arquivo quando ele existir. Os exercícios que dependem só de escutar ficam marcados como indisponíveis até lá, em vez de te fazerem adivinhar.'
-    ]
+    a: TEM_AUDIO
+      ? [
+          'Sim. As letras, as sílabas, as palavras, as frases e os textos do curso têm áudio gravado pelo professor, um israelense. Você ouve quantas vezes quiser, e também mais devagar.',
+          'Os exercícios de escuta usam essas gravações: você ouve e responde, sem ver o texto.'
+        ]
+      : [
+          'As gravações estão em produção. Enquanto não entram, o curso não usa voz sintética: cada som é explicado por comparação com um som do português.',
+          'Os exercícios que dependem só de escutar ficam desativados até lá, em vez de virar adivinhação.'
+        ]
   },
   {
     q: 'Preciso saber escrever à mão?',
