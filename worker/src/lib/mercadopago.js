@@ -314,6 +314,29 @@ export const getPayment = (env, paymentId) => {
   return call(env, `/v1/payments/${encodeURIComponent(id)}`);
 };
 
+/* ── avisos que não são de pagamento ─────────────────────────────────────
+   Uma contestação (chargeback) ou um pedido do Checkout Pro chegam com o id
+   DELES, não o do pagamento. Estas duas consultas levam do aviso aos
+   pagamentos, e daí tudo segue pelo caminho de sempre (settleFromPaymentId). */
+
+const idNumerico = id => {
+  const s = String(id);
+  if (!/^\d{1,24}$/.test(s)) throw new Error('id fora do formato');
+  return encodeURIComponent(s);
+};
+
+/** Os ids de pagamento de uma contestação. */
+export async function paymentsOfChargeback(env, chargebackId) {
+  const c = await call(env, `/v1/chargebacks/${idNumerico(chargebackId)}`);
+  return (c && Array.isArray(c.payments) ? c.payments : []).map(p => String(p && p.id || p));
+}
+
+/** Os ids de pagamento de um pedido (merchant order) do Checkout Pro. */
+export async function paymentsOfMerchantOrder(env, merchantOrderId) {
+  const m = await call(env, `/merchant_orders/${idNumerico(merchantOrderId)}`);
+  return (m && Array.isArray(m.payments) ? m.payments : []).map(p => String(p && p.id));
+}
+
 /* ── estorno ────────────────────────────────────────────────────────────── */
 
 /**

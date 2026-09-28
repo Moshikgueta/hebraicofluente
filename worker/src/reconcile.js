@@ -25,7 +25,7 @@
 import { runEstornos, settleFromProvider } from './api/pay.js';
 import { runAlertas } from './alertas.js';
 import {
-  arrependimentosIpPurge, getOrder, log, logPurge, registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
+  arrependimentosIpPurge, getOrder, log, logPurge, paidOrdersToRecheck, registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
 } from './lib/db.js';
 import empresa from '../../data/empresa.json';
 
@@ -96,6 +96,19 @@ export async function runReconcile(env) {
      que a Mercado Pago já devolveu) e os alertas ao dono, que também marcam
      o batimento que /api/health usa para dizer se esta varredura parou.
      Cada um no seu try, pelo mesmo motivo das faxinas acima. */
+  /* Os pedidos PAGOS, uma vez por dia cada, dez por rodada (o plano gratuito
+     limita cada execução a 50 chamadas externas): pega o estorno ou a
+     contestação cujo aviso nunca chegou (auditoria de 28/09, PAY-002).
+     `settleFromProvider` pergunta à Mercado Pago pelo nosso id de pedido e
+     aplica o que ela disser; um `refunded` ou `charged_back` fecha o acesso. */
+  if (!PIX_DIRETO) {
+    try {
+      for (const order of await paidOrdersToRecheck(env)) {
+        try { await settleFromProvider(env, order, 'reconcile-pagos'); }
+        catch (e) { await log(env, order.account_id, 'reconcile-error', `${order.id} ${e && e.message || e}`); }
+      }
+    } catch (e) { console.error('pagos', e && e.stack || e); }
+  }
   try { await runEstornos(env); } catch (e) { console.error('estornos', e && e.stack || e); }
   try { await runAlertas(env); } catch (e) { console.error('alertas', e && e.stack || e); }
 

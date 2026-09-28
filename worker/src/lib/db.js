@@ -698,6 +698,19 @@ export function stalePendingOrders(env, { olderThanMs = 60_000, limit = 25 } = {
   ).bind(now() - olderThanMs, limit).all().then(r => r.results || []);
 }
 
+/** Pedidos PAGOS pela Mercado Pago nos últimos `dias`, que a varredura não
+ *  conferiu nas últimas 24 h. É a rede para estorno e contestação cujo aviso
+ *  nunca chegou (auditoria de 28/09, PAY-002): antes, a varredura só olhava
+ *  pendentes, e um pedido pago nunca mais era perguntado. */
+export function paidOrdersToRecheck(env, { dias = 120, limit = 10 } = {}, at = now()) {
+  return env.DB.prepare(
+    `SELECT * FROM orders
+      WHERE status = 'paid' AND provider = 'mercadopago'
+        AND paid_at >= ?1 AND (checked_at IS NULL OR checked_at < ?2)
+      ORDER BY COALESCE(checked_at, 0) ASC LIMIT ?3`
+  ).bind(at - dias * 86_400_000, at - 86_400_000, limit).all().then(r => r.results || []);
+}
+
 /* ── eventos de pagamento ───────────────────────────────────────────────── */
 
 /**

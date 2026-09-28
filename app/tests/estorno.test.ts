@@ -39,9 +39,13 @@ let estornos: { pagamento: number; chave: string | null }[];
 /** Quantas das próximas chamadas de estorno a Mercado Pago recusa. */
 let recusarEstornos = 0;
 let enviados: { to: string; subject: string; text: string }[];
+/** Contestações e pedidos do Checkout Pro: id deles → ids de pagamento. */
+let contestacoes: Map<number, number[]>;
+let pedidosMp: Map<number, number[]>;
 
 beforeEach(() => {
   pagamentos = new Map(); estornos = []; enviados = []; recusarEstornos = 0; proximoId = 800001;
+  contestacoes = new Map(); pedidosMp = new Map();
   vi.stubGlobal('fetch', async (url: string, init?: RequestInit) => {
     const u = new URL(url);
     if (u.host === 'api.resend.test') {
@@ -67,6 +71,16 @@ beforeEach(() => {
       p.status = 'refunded';                 // no PIX e no cartão, a MP devolve na hora
       return new Response(JSON.stringify({ id: 9000 + estornos.length, payment_id: p.id, status: 'approved' }), { status: 201 });
     }
+    const cb = u.pathname.match(/^\/v1\/chargebacks\/(\d+)$/);
+    if (cb) {
+      const pags = contestacoes.get(Number(cb[1]));
+      return pags ? new Response(JSON.stringify({ id: Number(cb[1]), payments: pags }), { status: 200 }) : new Response('{"message":"not found"}', { status: 404 });
+    }
+    const mo = u.pathname.match(/^\/merchant_orders\/(\d+)$/);
+    if (mo) {
+      const pags = pedidosMp.get(Number(mo[1]));
+      return pags ? new Response(JSON.stringify({ id: Number(mo[1]), payments: pags.map(id => ({ id })) }), { status: 200 }) : new Response('{"message":"not found"}', { status: 404 });
+    }
     const m = u.pathname.match(/^\/v1\/payments\/(\d+)$/);
     if (m) {
       const p = pagamentos.get(Number(m[1]));
@@ -90,10 +104,10 @@ const envCompleto = (extra: Record<string, unknown> = {}) => envDeTeste({
 const linha = (env: Env, sql: string) => env.DB.bruto.prepare(sql).get() as Record<string, unknown> | undefined;
 const linhas = (env: Env, sql: string) => env.DB.bruto.prepare(sql).all() as Record<string, unknown>[];
 
-async function aviso(id: number) {
+async function aviso(id: number, tipo = 'payment') {
   const ts = Math.floor(Date.now() / 1000);
   const v1 = await hmacHex(SEGREDO, `id:${id};request-id:req-1;ts:${ts};`);
-  return new Request(`${SITE}/api/pay/webhook?data.id=${id}&type=payment`, {
+  return new Request(`${SITE}/api/pay/webhook?data.id=${id}&type=${tipo}`, {
     method: 'POST', headers: { 'x-signature': `ts=${ts},v1=${v1}`, 'x-request-id': 'req-1', 'content-type': 'application/json' }, body: '{}'
   });
 }
@@ -219,6 +233,54 @@ describe('a desistência estorna sozinha', () => {
     const r = await pay.orders({ request: new Request(`${SITE}/api/orders`, { headers: { Cookie: a.cookie } }), env });
     const o = (await r.json() as { orders: { id: string; estorno: string | null }[] }).orders.find(x => x.id === a.order)!;
     expect(o.estorno).toBe('automatico');
+  });
+});
+
+describe('estorno e contestação que não chegam como aviso de pagamento (PAY-002)', () => {
+  it('uma contestação avisada pelo tópico chargebacks fecha o acesso', async () => {
+    const env = envCompleto();
+    const a = await alunaQueComprou(env);
+    pagamentos.get(a.pagamento)!.status = 'charged_back';
+    contestacoes.set(55001, [a.pagamento]);
+    const r = await pay.webhook({ request: await aviso(55001, 'chargebacks'), env });
+    expect(r.status).toBe(200);
+    expect(await hasEntitlement(env, a.id, 'alfabetizacao'), 'o curso ficou com quem contestou').toBe(false);
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${a.order}'`)!.status).toBe('refunded');
+  });
+
+  it('um aviso de merchant_order também chega ao pagamento', async () => {
+    const env = envCompleto();
+    const a = await alunaQueComprou(env);
+    pagamentos.get(a.pagamento)!.status = 'refunded';
+    pedidosMp.set(66001, [a.pagamento]);
+    await pay.webhook({ request: await aviso(66001, 'merchant_order'), env });
+    expect(await hasEntitlement(env, a.id, 'alfabetizacao')).toBe(false);
+  });
+
+  it('contestação de outra loja (404) não quebra nada nem é reenviada para sempre', async () => {
+    const env = envCompleto();
+    const r = await pay.webhook({ request: await aviso(99999, 'chargebacks'), env });
+    expect(r.status).toBe(200);
+  });
+
+  it('sem aviso nenhum, a varredura diária dos pedidos pagos pega o estorno feito no painel', async () => {
+    const env = envCompleto();
+    const a = await alunaQueComprou(env);
+    pagamentos.get(a.pagamento)!.status = 'refunded';     // o dono estornou pelo painel; o aviso se perdeu
+
+    await runReconcile(env);
+    expect(await hasEntitlement(env, a.id, 'alfabetizacao')).toBe(false);
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${a.order}'`)!.status).toBe('refunded');
+  });
+
+  it('a varredura dos pagos pergunta cada pedido no máximo uma vez por dia', async () => {
+    const env = envCompleto();
+    const a = await alunaQueComprou(env);
+    await runReconcile(env);
+    const primeira = Number(linha(env, `SELECT checked_at FROM orders WHERE id = '${a.order}'`)!.checked_at);
+    await runReconcile(env);
+    expect(Number(linha(env, `SELECT checked_at FROM orders WHERE id = '${a.order}'`)!.checked_at)).toBe(primeira);
+    expect(await hasEntitlement(env, a.id, 'alfabetizacao'), 'um pedido pago e intacto perdeu o acesso').toBe(true);
   });
 });
 
