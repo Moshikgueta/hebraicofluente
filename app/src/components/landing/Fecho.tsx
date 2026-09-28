@@ -24,7 +24,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
-import { ancora, brl, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
@@ -386,11 +386,6 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                               text-[var(--teal-ink)] mb-1.5">
                   {cheio ? 'Preço de pré-lançamento' : 'Acesso completo'}
                 </p>
-                {cheio && (
-                  <p className="font-ui text-[16px] text-ink-muted line-through leading-none mb-1">
-                    {brl(cheio)}
-                  </p>
-                )}
                 <p className="font-display text-[44px] sm:text-[48px] font-semibold tracking-[-0.035em]
                               leading-none text-ink mb-1">
                   {brl(soPix() ? pix : c.price.brl)}
@@ -437,7 +432,9 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 sozinha no dia em que o listBrl virar null. */}
             {!owned && cheio && (
               <p className="mt-2 font-ui text-[13.5px] leading-[1.5] font-medium text-[var(--teal-ink)]">
-                Depois do pré-lançamento, o curso passa a custar {brl(cheio)}.
+                {fimDoPreLancamento(c.price)
+                  ? <>Preço de pré-lançamento até {fimDoPreLancamento(c.price)}. Depois, o curso passa a custar {brl(cheio)}.</>
+                  : <>Depois do pré-lançamento, o curso passa a custar {brl(cheio)}.</>}
               </p>
             )}
           </div>

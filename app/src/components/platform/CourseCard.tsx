@@ -18,7 +18,7 @@
 
 import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
-import { ancora, brl, isPlayable, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
+import { ancora, brl, isPlayable, parcelasMax, pixPrice, type CatalogCourse, fimDoPreLancamento } from '@/lib/catalog';
 import { soPix } from '@/lib/empresa';
 
 export type CourseCardState = 'owned' | 'available' | 'soon' | 'locked';
@@ -109,13 +109,14 @@ export function CourseCard({
             </>
           ) : (
             <>
-              {/* O riscado antes do preço, e não depois: quem varre a grade lê
-                  o primeiro número como o preço. Ver `ancora()` em catalog.ts. */}
-              {ancora(course.price) && (
-                <span className="line-through">{brl(ancora(course.price)!)}{' '}</span>
-              )}
+              {/* Sem número riscado desde 28/09/2026 (auditoria, LEGAL-014):
+                  o preço cheio aparece como o que ele é, o de depois do
+                  pré-lançamento. Ver `fimDoPreLancamento()` em catalog.ts. */}
               <strong className="font-semibold text-ink">{brl(course.price.brl)}</strong>
               {' '}ou em até {parcelasMax(course.price)}x no cartão
+              {ancora(course.price) && (
+                <>{' '}· pré-lançamento{fimDoPreLancamento(course.price) ? ` até ${fimDoPreLancamento(course.price)}` : ''}, depois {brl(ancora(course.price)!)}</>
+              )}
             </>
           )}
         </p>

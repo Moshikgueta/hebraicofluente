@@ -42,6 +42,8 @@ export type CoursePrice = {
   installments: number;
   /** Desconto no PIX, em pontos percentuais. 0 desliga a linha inteira. */
   pixDiscountPct: number;
+  /** Último dia do preço de pré-lançamento (AAAA-MM-DD), quando há. */
+  preLancamentoAte?: string | null;
 };
 
 export type CatalogModule = {
@@ -163,3 +165,16 @@ export const parcelasMax = (p: CoursePrice): number => Math.max(1, p.installment
  */
 export const ancora = (p: CoursePrice): number | null =>
   p.listBrl !== null && p.listBrl > p.brl ? p.listBrl : null;
+
+/**
+ * Até quando vale o preço de pré-lançamento, como as telas escrevem
+ * ("31/10/2026"), ou null. Sem traço no preço cheio desde 28/09/2026
+ * (auditoria, LEGAL-014): um número riscado é preço de referência, e o
+ * R$ 297 nunca foi praticado. No lugar dele, a frase com a data de fim.
+ */
+export function fimDoPreLancamento(p: CoursePrice): string | null {
+  const d = ancora(p) && p.preLancamentoAte;
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return null;
+  const [a, m, dia] = d.split('-');
+  return `${dia}/${m}/${a}`;
+}

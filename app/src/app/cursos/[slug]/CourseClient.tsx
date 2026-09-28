@@ -22,7 +22,7 @@ import { Prose } from '@/components/hebrew/Prose';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { ancora, brl, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
 
@@ -294,7 +294,9 @@ function BuyBox({ slug }: { slug: string }) {
           </p>
         )}
         {cheio && (
-          <p className="font-ui text-[14px] text-ink-muted line-through">{brl(cheio)}</p>
+          <p className="font-ui text-[13px] text-ink-muted">
+            {fimDoPreLancamento(c.price) ? `Até ${fimDoPreLancamento(c.price)}. ` : ''}Depois, {brl(cheio)}.
+          </p>
         )}
         {/* O preço em destaque é o preço que vai ser cobrado. Com só PIX no ar,
             o desconto deixa de ser alternativa e passa a ser o preço, e o valor

@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { ancora, flagship, brl, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, flagship, brl, fimDoPreLancamento, parcelasMax, pixPrice } from '@/lib/catalog';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
 
@@ -81,7 +81,7 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
           /* A frase só existe enquanto o preço for promocional: quando o
              listBrl virar null, ela some sozinha. Ver `ancora()`. */
           ...(ancora(c.price)
-            ? [`Esse é o preço de pré-lançamento. Depois dele, o curso passa a custar ${brl(ancora(c.price)!)}. Quem compra agora paga uma vez e fica com os ${c.accessMonths} meses de acesso.`]
+            ? [`Esse é o preço de pré-lançamento${fimDoPreLancamento(c.price) ? `, válido até ${fimDoPreLancamento(c.price)}` : ''}. Depois dele, o curso passa a custar ${brl(ancora(c.price)!)}. Quem compra agora paga uma vez e fica com os ${c.accessMonths} meses de acesso.`]
             : []),
           /* O valor da parcela não é anunciado aqui de propósito: os juros do
              cartão são repassados, então quem fecha esse número é a operadora.
