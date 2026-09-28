@@ -80,6 +80,10 @@ async function descartar(r: Response): Promise<void> {
   try { await r.text(); } catch { /* já consumido, ou sem corpo */ }
 }
 
+/** Evento no `window`: o servidor recusou o progresso por falta de sessão
+ *  no meio do estudo. components/shell/SessaoCaiu.tsx mostra o aviso. */
+export const SESSAO_CAIU = 'hf-sessao-caiu';
+
 export class WorkerProgressStore implements ProgressStore {
   #local = new LocalProgressStore();
   /** A revisão que este aparelho leu por último. 0 = nunca leu nada. */
@@ -224,7 +228,13 @@ export class WorkerProgressStore implements ProgressStore {
         body: JSON.stringify({ state: atual, rev: this.#rev, version: atual.version })
       });
       if (!r) return;                       /* sem rede: fica no aparelho */
-      if (r.status === 401) { await descartar(r); this.#comSessao = false; return; }
+      if (r.status === 401) {
+        await descartar(r);
+        this.#comSessao = false;
+        /* Havia sessão e ela caiu: a pessoa precisa saber (QA-004). */
+        try { window.dispatchEvent(new CustomEvent(SESSAO_CAIU)); } catch { /* SSR */ }
+        return;
+      }
       if (r.status === 403) { await descartar(r); this.#semCurso = true; return; }
 
       const corpo = await r.json().catch(() => null) as

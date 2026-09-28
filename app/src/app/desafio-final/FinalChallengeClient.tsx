@@ -17,7 +17,7 @@
  * pass is never overwritten by a later, worse attempt.
  */
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
@@ -38,11 +38,61 @@ type Phase =
   | { kind: 'running'; index: number }
   | { kind: 'done' };
 
+/* ── o exame sobrevive a recarregar a página ─────────────────────────────
+   Recarregar no meio do exame jogava fora as 40 questões e voltava à
+   abertura (auditoria de 28/09/2026, QA-003). O exame é gerado de forma
+   determinística pelo número da tentativa, então basta guardar a tentativa,
+   a parte em que a pessoa está e o resultado das partes feitas: ao voltar,
+   ela recomeça a parte em que estava, com as anteriores já contadas. Fica
+   no aparelho (localStorage) e vale por 24 horas; um exame esquecido não
+   reaparece uma semana depois. */
+const CHAVE_EXAME = 'hf-exame-em-andamento-v1';
+const VALIDADE_EXAME_MS = 24 * 3_600_000;
+type ExameSalvo = { attempt: number; index: number; results: PartResult[]; em: number };
+
+function lerExame(): ExameSalvo | null {
+  try {
+    const s = JSON.parse(window.localStorage.getItem(CHAVE_EXAME) || 'null') as ExameSalvo | null;
+    if (!s || typeof s.attempt !== 'number' || typeof s.index !== 'number' || !Array.isArray(s.results)) return null;
+    if (Date.now() - Number(s.em) > VALIDADE_EXAME_MS) return null;
+    return s;
+  } catch { return null; }
+}
+function gravarExame(s: ExameSalvo | null) {
+  try {
+    if (s) window.localStorage.setItem(CHAVE_EXAME, JSON.stringify(s));
+    else window.localStorage.removeItem(CHAVE_EXAME);
+  } catch { /* sem armazenamento: o exame só não sobrevive a recarregar */ }
+}
+
 export function FinalChallengeClient() {
   const p = useProgress();
   const [phase, setPhase] = useState<Phase>({ kind: 'intro' });
   const [results, setResults] = useState<PartResult[]>([]);
   const [attempt, setAttempt] = useState(() => (p.state.finalChallenge.attempts ?? 0) + 1);
+  const [retomado, setRetomado] = useState(false);
+
+  /* Volta ao exame em andamento, se houver. No efeito, e não no estado
+     inicial: a página é gerada estática, e o localStorage só existe no
+     navegador. */
+  useEffect(() => {
+    const s = lerExame();
+    if (!s) return;
+    setAttempt(s.attempt);
+    setResults(s.results);
+    setPhase({ kind: 'brief', index: s.index });
+    setRetomado(true);
+  }, []);
+
+  /* Guarda a cada mudança de parte; apaga quando o exame termina ou quando
+     ainda não começou. */
+  useEffect(() => {
+    if (phase.kind === 'brief' || phase.kind === 'running') {
+      gravarExame({ attempt, index: phase.index, results, em: Date.now() });
+    } else {
+      gravarExame(null);
+    }
+  }, [phase, attempt, results]);
 
   const letters = allLetters();
   const ready = letters.filter(l => isLessonComplete(p.state, l.id));
@@ -143,6 +193,12 @@ export function FinalChallengeClient() {
         <ExamProgress exam={exam} index={phase.index} results={results} />
         <Card className="p-6 sm:p-8 grid gap-4">
           <Badge tone="accent">Parte {phase.index + 1} de {exam.sections.length}</Badge>
+          {retomado && results.length > 0 && (
+            <p className="font-ui text-[13.5px] leading-relaxed text-ink-body m-0" role="status">
+              Você voltou ao exame. {results.length === 1 ? 'A parte 1 já está contada' : `As partes 1 a ${results.length} já estão contadas`};
+              esta parte recomeça do início.
+            </p>
+          )}
           <h1 className="text-[26px] sm:text-[32px] font-bold leading-tight">
             {section.part.titlePt}
           </h1>

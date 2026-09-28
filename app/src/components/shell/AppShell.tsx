@@ -36,6 +36,7 @@ import {
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
+import { SessaoCaiu } from '@/components/shell/SessaoCaiu';
 
 /* A navegação, e ONDE cada item aparece no telefone.
  * ─────────────────────────────────────────────────────────────────────────
@@ -117,6 +118,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const avisos = (
     <>
       <DemoNotice />
+      <SessaoCaiu />
       {!p.persistent && (
         <Card tone="ember" className="p-4 mb-4">
           <p className="font-ui text-[13px] leading-relaxed text-[var(--gold-body)]">
