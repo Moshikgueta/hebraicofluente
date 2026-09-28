@@ -309,8 +309,8 @@ export function CheckoutClient({ slug }: { slug: string }) {
                         bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
             O número do cartão é digitado na tela da Mercado Pago, não aqui. Esta
             plataforma nunca recebe os dados do seu cartão. É lá também que você
-            escolhe em quantas vezes pagar e vê o valor de cada parcela, com os
-            juros da operadora, antes de confirmar.
+            escolhe em quantas vezes pagar e vê o valor de cada parcela e o total,
+            com os juros do parcelamento, antes de confirmar.
           </p>
         )}
 

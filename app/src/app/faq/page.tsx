@@ -86,7 +86,7 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
           /* O valor da parcela não é anunciado aqui de propósito: os juros do
              cartão são repassados, então quem fecha esse número é a operadora.
              Ver `parcelasMax` em lib/catalog.ts. */
-          `No parcelamento, os juros são os da operadora do seu cartão. O valor de cada parcela aparece na tela de pagamento antes de você confirmar.`
+          `No parcelamento há juros, cobrados pela Mercado Pago. O valor de cada parcela e o total aparecem na tela de pagamento dela antes de você confirmar.`
         ]
   },
   {
