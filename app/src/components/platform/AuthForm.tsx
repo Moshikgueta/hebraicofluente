@@ -95,7 +95,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
           )}
 
           <Campo
-            id="email" label="E-mail" value={email} onChange={setEmail}
+            id="email" label="E-mail" value={email} onChange={setEmail} erroId={error ? 'auth-erro' : undefined}
             type="email" autoComplete="email" placeholder="voce@exemplo.com.br" required
             /* No cadastro, um e-mail errado custa o recibo e o link de senha, e
                o site não deixa trocar sozinho (auditoria, OPS-001). */
@@ -103,14 +103,14 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
           />
 
           <Campo
-            id="senha" label="Senha" value={password} onChange={setPassword}
+            id="senha" label="Senha" value={password} onChange={setPassword} erroId={error ? 'auth-erro' : undefined}
             type="password"
             autoComplete={signup ? 'new-password' : 'current-password'}
             hint={signup ? `Pelo menos ${MIN_PASSWORD} caracteres.` : undefined}
             required
           />
 
-          {error && <Erro>{error}</Erro>}
+          {error && <Erro id="auth-erro">{error}</Erro>}
 
           <Button type="submit" size="lg" full disabled={busy}>
             {busy ? (signup ? 'Criando…' : 'Entrando…') : (signup ? 'Criar conta' : 'Entrar')}

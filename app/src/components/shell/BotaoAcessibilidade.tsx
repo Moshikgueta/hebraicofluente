@@ -287,7 +287,7 @@ export function BotaoAcessibilidade() {
             : 'Ajustes de acessibilidade'
         }
         title="Acessibilidade (Alt + Shift + A)"
-        className="hf-a11y-botao relative w-[52px] h-[52px] rounded-full bg-[var(--navy)] text-white
+        className="hf-a11y-botao relative w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] rounded-full bg-[var(--navy)] text-white
                    border-2 border-[var(--cream)] shadow-[var(--sh)] grid place-items-center
                    transition-[background-color,transform] duration-[180ms]
                    hover:bg-[var(--navy-2)] hover:scale-[1.04] active:scale-100"

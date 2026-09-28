@@ -147,7 +147,7 @@ function Trecho({ module: m, estado, ultimo }: {
     /* `--locked` e não um cinza escrito à mão: o cinza literal era o mesmo
        nos dois temas, e no escuro ele nem é o cinza certo nem acompanha o
        alto contraste. */
-    adiante: { texto: 'Em breve', cor: 'text-[var(--locked)]' }
+    adiante: { texto: 'Em breve', cor: 'text-ink-muted' }  // texto, não controle: 4,5:1 (UX-009)
   }[estado];
 
   return (

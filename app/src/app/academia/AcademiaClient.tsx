@@ -909,6 +909,10 @@ function GymHeader({
 }: { mode: GymMode; label: string; onBack: () => void }) {
   return (
     <header className="flex flex-wrap items-center gap-3">
+      {/* Durante o jogo a tela não tinha título nenhum: quem navega por
+          títulos com o leitor de tela não achava onde estava (auditoria de
+          28/09, UX-013). Visualmente o nome já está no rótulo à direita. */}
+      <h1 className="sr-only">{mode.titlePt}</h1>
       <button
         type="button"
         onClick={onBack}
