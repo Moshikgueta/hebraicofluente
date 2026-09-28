@@ -160,6 +160,29 @@ export const strokesFor = (id: string): StrokeSet | null => dados().strokes[id] 
    e mostrá-la cedo demais não frustra um pouco: frustra na coisa pela qual a
    pessoa pagou. */
 
+/* ── o som sem o ponto (Vet, Chaf, Fe) ──────────────────────────────────
+   Cada um é ensinado na lição de som logo DEPOIS da letra (sons.ts). Uma
+   frase ou cena liberada pela ordem das letras pode trazer esse som antes da
+   hora: na lição do Kaf, «מָה שְׁלוֹמְךָ» termina em Chaf (auditoria de
+   28/09, PED-025). As listas abaixo continuam iguais - o exame e a galeria
+   usam tudo -, e é a lição da letra que filtra com `semOSomDe`. */
+
+const SEM_PONTO: Record<string, string> = { 'ב': 'bet', 'כ': 'kaf', 'ך': 'kaf', 'פ': 'pe', 'ף': 'pe' };
+
+/** As letras (bet, kaf, pe) que aparecem SEM daguesh neste hebraico
+ *  pontuado - isto é, com o som de Vet, Chaf ou Fe. */
+export function sonsSemPonto(he: string): Set<string> {
+  const out = new Set<string>();
+  for (const m of he.matchAll(/([\u05D1\u05DB\u05DA\u05E4\u05E3])([\u0591-\u05C7]*)/g)) {
+    if (!m[2]!.includes('\u05BC')) out.add(SEM_PONTO[m[1]!]!);
+  }
+  return out;
+}
+
+/** Filtro da lição da letra: fica fora o que usa o som dela ainda não ensinado. */
+export const semOSomDe = (letterId: string) => (x: { he: string }): boolean =>
+  !sonsSemPonto(x.he).has(letterId);
+
 /** Tudo o que este aluno já consegue ler, da mais simples para a mais tardia. */
 export const sentencesUpTo = (order: number): Sentence[] =>
   dados().sentences.filter(s => s.after <= order).sort((a, b) => a.after - b.after);
