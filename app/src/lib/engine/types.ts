@@ -254,6 +254,12 @@ export function normalizeTyped(text: string): string {
 export function normalizeLoose(text: string): string {
   return normalizeTyped(text)
     .replace(/kh/g, 'ch')
+    /* O brasileiro escreve o som do ח como "rr" - a própria checagem do ח
+       propõe "lerrem" - e o K como "c" antes de a, o, u ("col" para קוֹל).
+       Antes do corte de letras dobradas, que faria de "rr" um "r"
+       (auditoria de 28/09, PED-022). */
+    .replace(/rr/g, 'ch')
+    .replace(/c(?=[aou])/g, 'k')
     .replace(/tz/g, 'ts')
     .replace(/y/g, 'i')
     /* "tiyul" vira "tiiul" na linha de cima; "tiul" é o mesmo som. */

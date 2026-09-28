@@ -99,7 +99,7 @@ const PERGUNTAS_NIQQUD: ItemCompreensao[] = [
     q: 'Nesta dupla, qual é o SINAL de niqqud - e não a letra?',
     opcoes: ['◌ַ', 'ב'],
     certa: 0,
-    porque: 'A letra é בּ. O traço sozinho aparece aqui pendurado num círculo pontilhado porque um sinal de niqqud não existe sozinho: ele sempre se apoia numa letra.'
+    porque: 'A letra é ב. O traço sozinho aparece aqui pendurado num círculo pontilhado porque um sinal de niqqud não existe sozinho: ele sempre se apoia numa letra.'
   },
   {
     t: 'vf',
@@ -1247,8 +1247,8 @@ const PERGUNTAS_GERAIS: ItemCompreensao[] = [
   },
   {
     t: 'vf',
-    q: 'O alfabeto do hebraico antigo é diferente do alfabeto do hebraico de hoje.',
-    certa: false,
+    q: 'As letras de um rolo da Torá são as mesmas de uma placa de rua de hoje.',
+    certa: true,
     porque: 'São as mesmas letras num rolo da Torah e numa placa de ônibus em Tel Aviv. O que mudou de uma fase para a outra foi a língua por cima delas: palavras novas, outro sistema de verbos, a pronúncia.'
   },
   {

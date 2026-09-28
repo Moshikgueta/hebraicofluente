@@ -110,7 +110,7 @@
       "linhas": [
         {
           "quem": "Dan",
-          "he": "הַי נוֹעָה, מָה נִשְׁמַע?",
+          "he": "הַי נוֹעָה, מָה נִשְׁמָע?",
           "translit": "hai Noa, ma nishmá?",
           "pt": "Oi, Noa, tudo bem?"
         },
@@ -142,7 +142,7 @@
           "quem": "Noa",
           "he": "מָחָר. אֲנִי רוֹצָה עוֹד יוֹם!",
           "translit": "machar. aní rotsá od yom!",
-          "pt": "Amanhã. Queria mais um dia!"
+          "pt": "Amanhã. Quero mais um dia!"
         }
       ],
       "novas": [
@@ -162,7 +162,7 @@
           "pt": "oi"
         },
         {
-          "he": "מָה נִשְׁמַע?",
+          "he": "מָה נִשְׁמָע?",
           "translit": "ma nishmá?",
           "pt": "tudo bem? (o que se ouve?)"
         },
@@ -364,13 +364,13 @@
         {
           "quem": "Mãe",
           "he": "יֵשׁ לְךָ מַפְתֵּחַ?",
-          "translit": "yesh lechá mafteach?",
+          "translit": "yesh lechá maftéach?",
           "pt": "Você está com a chave?"
         },
         {
           "quem": "Dani",
           "he": "כֵּן. אֲנִי בַּבַּיִת בְּעוֹד עֶשֶׂר דַּקּוֹת.",
-          "translit": "ken. aní babáyit beod éser dakot.",
+          "translit": "ken. aní babáyit beod ésser dakot.",
           "pt": "Sim. Chego em casa em dez minutos."
         },
         {
@@ -409,7 +409,7 @@
         },
         {
           "he": "מַפְתֵּחַ",
-          "translit": "mafteach",
+          "translit": "maftéach",
           "pt": "chave"
         },
         {
@@ -419,7 +419,7 @@
         },
         {
           "he": "עֶשֶׂר",
-          "translit": "éser",
+          "translit": "ésser",
           "pt": "dez"
         },
         {

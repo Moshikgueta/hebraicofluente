@@ -35,9 +35,12 @@ import {
   type Exercise, type SceneLike, type SentenceLike
 } from './exercises';
 import { rng, shuffled } from './rng';
+import { buildSemPontos } from './palavras';
+import { buildGerechQuiz, type Extras } from './extras';
 
 export type ExamPartId =
-  'letras' | 'dificeis' | 'sinais' | 'silabas' | 'palavras' | 'frases' | 'mundo' | 'escuta';
+  'letras' | 'dificeis' | 'sinais' | 'silabas' | 'palavras' | 'frases' | 'sempontos' | 'gerech' |
+  'mundo' | 'escuta';
 
 export type ExamPart = {
   id: ExamPartId;
@@ -95,6 +98,17 @@ export const EXAM_PARTS: ExamPart[] = [
     id: 'frases', titlePt: 'Frases', skill: 'ler', count: 3, practiceMode: 'palavras',
     descPt: 'Duas ou três palavras juntas. Sem transliteração.'
   },
+  /* Os módulos 6 e 7 ensinavam duas coisas que o exame não media (auditoria
+     de 28/09, PED-042): ler sem os pontos, como na rua, e o gerech. Poucos
+     itens de cada, porque são o fim do curso e não o centro dele. */
+  {
+    id: 'sempontos', titlePt: 'Sem os pontos', skill: 'ler', count: 3, practiceMode: 'palavras',
+    descPt: 'Palavras que você conhece, escritas como na rua: sem os sinais de vogal.'
+  },
+  {
+    id: 'gerech', titlePt: 'Os sons de fora', skill: 'som', count: 2, practiceMode: 'palavras',
+    descPt: 'O sinal ׳ que dá ao hebraico os sons de TCH, DJ e J.'
+  },
   {
     id: 'escuta', titlePt: 'Escuta', skill: 'ouvir', count: 5, practiceMode: 'ouvir',
     needsAudio: true,
@@ -126,6 +140,8 @@ const GENS: Record<ExamPartId, readonly Gen[]> = {
   silabas: [exSyllableReading, exSoundToSyllable, exBuildSyllable, exMatchSyllable],
   palavras: [exCompleteWord, exBuildWord, exMeaningToWord, exTypeTranslit],
   frases: [],        // montado das frases, como `mundo` das cenas
+  sempontos: [],     // buildSemPontos
+  gerech: [],        // buildGerechQuiz, do conteúdo do módulo 7
   escuta: [exListenSyllable, exAudioWord, exTypeHeard, exListenSentence, exListenMeaning],
   mundo: []          // built from the real-world scenes instead
 };
@@ -150,9 +166,13 @@ export function partsFor(audioAvailable: boolean): ExamPart[] {
  */
 export function buildExam(
   letters: Letter[], scenes: readonly SceneLike[],
-  opts: { audioAvailable: boolean; attempt?: number; sentences?: readonly SentenceLike[] }
+  opts: {
+    audioAvailable: boolean; attempt?: number; sentences?: readonly SentenceLike[];
+    /** O conteúdo dos módulos 6 e 7. Sem ele, a parte do gerech fica de fora. */
+    extras?: Extras;
+  }
 ): Exam {
-  const { audioAvailable, attempt = 1, sentences = [] } = opts;
+  const { audioAvailable, attempt = 1, sentences = [], extras } = opts;
 
   const sections = partsFor(audioAvailable).map(part => {
     const seed = `exam-${attempt}-${part.id}`;
@@ -166,6 +186,14 @@ export function buildExam(
       ? buildScenes(scenes, rng(seed), part.count)
       : part.id === 'frases'
       ? buildSentences(sentences, rng(seed), part.count)
+      : part.id === 'sempontos'
+      ? buildSemPontos(letters, rng(seed), part.count)
+      : part.id === 'gerech'
+      /* Só as perguntas de SOM (com e sem o sinal): o módulo 7 é sobre isso,
+         e a parte declara `som`. As de palavra emprestada são leitura. */
+      ? (extras
+          ? buildGerechQuiz(extras, 99, seed).filter(e => e.skill === 'som').slice(0, part.count)
+          : [])
       : spread(buildReview(pool, letters, {
           audioAvailable, count: part.count, seed, gens: GENS[part.id]
         }));

@@ -106,7 +106,7 @@
           "pt": "Tu as atarás como sinal na tua mão, e serão como uma faixa entre os teus olhos."
         },
         {
-          "he": "וּכְתַבְתָּם עַל־מְזֻזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ",
+          "he": "וּכְתַבְתָּם עַל־מְזוּזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ",
           "translit": "uchtavtám al-mezuzót betécha uvisharécha",
           "pt": "E as escreverás nos batentes da tua casa e nos teus portões."
         }
@@ -137,17 +137,17 @@
         },
         {
           "he": "גַּם כִּי־אֵלֵךְ בְּגֵיא צַלְמָוֶת לֹא־אִירָא רָע כִּי־אַתָּה עִמָּדִי שִׁבְטְךָ וּמִשְׁעַנְתֶּךָ הֵמָּה יְנַחֲמֻנִי",
-          "translit": "gam ki-eléch begéi tsalmávet lo-irá ra, ki-atá imadí; shivtechá umishantécha héma yenachamúni",
+          "translit": "gam ki-eléch beguéi tsalmávet lo-irá ra, ki-atá imadí; shivtechá umishantécha héma yenachamúni",
           "pt": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal nenhum, porque tu estás comigo; a tua vara e o teu cajado me consolam."
         },
         {
           "he": "תַּעֲרֹךְ לְפָנַי שֻׁלְחָן נֶגֶד צֹרְרָי דִּשַּׁנְתָּ בַשֶּׁמֶן רֹאשִׁי כּוֹסִי רְוָיָה",
-          "translit": "taaróch lefanái shulchán négued tsorerái; dishánta vashémen roshí, kosí revayá",
+          "translit": "taaróch lefanái shulchán négued tsorerái; dishánta vashémen roshí, kossí revayá",
           "pt": "Preparas uma mesa para mim diante dos meus inimigos; unges com óleo a minha cabeça, o meu cálice transborda."
         },
         {
           "he": "אַךְ טוֹב וָחֶסֶד יִרְדְּפוּנִי כָּל־יְמֵי חַיָּי וְשַׁבְתִּי בְּבֵית־יְהוָה לְאֹרֶךְ יָמִים",
-          "translit": "ach tov vachésed yirdefúni kol-yeméi chayái, veshavtí beveit-Hashém leórech yamím",
+          "translit": "ach tov vachéssed yirdefúni kol-yeméi chayái, veshavtí beveit-Hashém leórech yamím",
           "pt": "Certamente o bem e a bondade me seguirão todos os dias da minha vida, e habitarei na casa do Senhor por longos dias."
         }
       ]
@@ -158,16 +158,16 @@
       "revisado": true,
       "tituloPt": "Levanto os meus olhos para os montes",
       "fontePt": "Salmo 121",
-      "introPt": "Um salmo de viagem, dos «cânticos das subidas» que se cantavam a caminho de Jerusalém. A palavra que mais se repete é שֹׁמֵר, «guarda»: conte quantas vezes ela aparece.",
+      "introPt": "Um salmo de viagem, dos «cânticos das subidas» que se cantavam a caminho de Jerusalém. A raiz que mais se repete é שׁ־מ־ר, «guardar»: conte quantas vezes ela aparece.",
       "linhas": [
         {
           "he": "שִׁיר לַמַּעֲלוֹת אֶשָּׂא עֵינַי אֶל־הֶהָרִים מֵאַיִן יָבֹא עֶזְרִי",
-          "translit": "shir lamaalót. esá einái el-heharím: meáyin yavó ezrí?",
+          "translit": "shir lamaalót. essá einái el-heharím: meáyin yavó ezrí?",
           "pt": "Cântico das subidas. Levanto os meus olhos para os montes: de onde virá o meu socorro?"
         },
         {
           "he": "עֶזְרִי מֵעִם יְהוָה עֹשֵׂה שָׁמַיִם וָאָרֶץ",
-          "translit": "ezrí meím Hashém, osé shamáyim vaárets",
+          "translit": "ezrí meím Hashém, ossé shamáyim vaárets",
           "pt": "O meu socorro vem do Senhor, que fez os céus e a terra."
         },
         {
@@ -232,7 +232,7 @@
         },
         {
           "he": "כֹּה יַעֲשֶׂה יְהוָה לִי וְכֹה יֹסִיף כִּי הַמָּוֶת יַפְרִיד בֵּינִי וּבֵינֵךְ",
-          "translit": "ko yaasé Hashém li vechó yosíf, ki hamávet yafríd beiní uveinéch",
+          "translit": "ko yaassé Hashém li vechó yossíf, ki hamávet yafríd beiní uveinéch",
           "pt": "Que o Senhor me castigue, e mais ainda, se outra coisa que não a morte me separar de ti."
         }
       ]
@@ -243,7 +243,7 @@
       "revisado": true,
       "tituloPt": "Tudo tem o seu tempo",
       "fontePt": "Eclesiastes 3:1-8",
-      "introPt": "O texto bíblico mais fácil de ler em voz alta: a palavra עֵת, «tempo», se repete 28 vezes, e cada linha é um par de opostos. Um bom primeiro texto longo.",
+      "introPt": "O texto bíblico mais fácil de ler em voz alta: a palavra עֵת, «tempo», se repete 28 vezes nos pares dos versos 2 a 8, e cada linha é um par de opostos. Um bom primeiro texto longo.",
       "linhas": [
         {
           "he": "לַכֹּל זְמָן וְעֵת לְכָל־חֵפֶץ תַּחַת הַשָּׁמָיִם",
@@ -423,7 +423,7 @@
         {
           "he": "וְאַגִּידָה לְּךָ גְּדֹלוֹת וּבְצֻרוֹת לֹא יְדַעְתָּם",
           "translit": "veaguída lechá guedolót uvtsurót lo yedatám",
-          "pt": "e te anunciarei coisas grandes e escondidas, que você não conhece."
+          "pt": "e te anunciarei coisas grandes e escondidas, que tu não conheces."
         }
       ]
     },
@@ -452,7 +452,7 @@
       "linhas": [
         {
           "he": "יֹשֵׁב בְּסֵתֶר עֶלְיוֹן בְּצֵל שַׁדַּי יִתְלוֹנָן",
-          "translit": "yoshév beséter elyón, betsél Shadái yitlonán",
+          "translit": "yoshév besséter elyón, betsél Shadái yitlonán",
           "pt": "Quem habita no abrigo do Altíssimo descansa à sombra do Todo-Poderoso."
         },
         {
@@ -517,7 +517,7 @@
         },
         {
           "he": "יִשָּׂא יְהוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם",
-          "translit": "yisá Hashém panáv elécha veyasém lechá shalóm",
+          "translit": "yissá Hashém panáv elécha veyassém lechá shalóm",
           "pt": "O Senhor volte o seu rosto para ti e te dê a paz."
         }
       ]
@@ -548,7 +548,7 @@
       "revisado": true,
       "tituloPt": "Um menino nos nasceu",
       "fontePt": "Isaías 9:6 (9:5 na Bíblia hebraica)",
-      "introPt": "Um dos textos mais lidos no Natal. Na Bíblia hebraica a numeração é um versículo antes: 9:5.",
+      "introPt": "Um dos textos mais conhecidos da Bíblia. Na Bíblia hebraica a numeração é um versículo antes: 9:5. Há mais de uma leitura tradicional deste versículo; a tradução abaixo é a mais conhecida no Brasil.",
       "linhas": [
         {
           "he": "כִּי־יֶלֶד יֻלַּד־לָנוּ בֵּן נִתַּן־לָנוּ",
@@ -582,7 +582,7 @@
         },
         {
           "he": "מוּסַר שְׁלוֹמֵנוּ עָלָיו וּבַחֲבֻרָתוֹ נִרְפָּא־לָנוּ",
-          "translit": "musár shloméinu aláv, uvachavurató nirpá-lánu",
+          "translit": "mussár shloméinu aláv, uvachavurató nirpá-lánu",
           "pt": "o castigo que nos traz a paz estava sobre ele, e pelas suas feridas fomos curados."
         }
       ]
@@ -622,7 +622,7 @@
         },
         {
           "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד",
-          "translit": "hinéi ma-tóv uma-naím shévet achím gam-yáchad",
+          "translit": "hiné ma-tóv uma-naím shévet achím gam-yáchad",
           "pt": "Vejam como é bom e agradável os irmãos viverem juntos."
         }
       ]

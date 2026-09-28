@@ -1,6 +1,6 @@
 {
   "note": "Conteúdo cultural e histórico. NÃO é gerado - escrito à mão e precisa de revisão do autor antes de publicar. Cada carta traz `sources` com a base da afirmação. Nada aqui entra no caminho principal do curso: são desbloqueáveis opcionais.",
-  "reviewStatus": "rascunho - conferir datas e formulações com uma fonte acadêmica antes da publicação",
+  "reviewStatus": "revisado pelo autor em 28/09/2026 (auditoria PED-049: shekel novo em 1985)",
   "cards": [
     {
       "id": "de-onde-vem",
@@ -101,11 +101,11 @@
       "unlockAt": 20,
       "leadPt": "₪ não é um desenho aleatório: são duas letras que você já sabe ler.",
       "bodyPt": [
-        "O símbolo junta ש e ח - as iniciais de שֶׁקֶל חָדָשׁ, \"shekel novo\", a moeda israelense adotada em 1986.",
+        "O símbolo junta ש e ח - as iniciais de שֶׁקֶל חָדָשׁ, \"shekel novo\", a moeda israelense adotada em 1985.",
         "Depois de ler isto, o símbolo deixa de ser um rabisco e passa a ser uma abreviação. É mais ou menos o que acontece com o alfabeto inteiro: a partir de certo ponto, você para de ver desenhos e começa a ver palavras.",
         "A palavra שקל é muito mais antiga do que a moeda: era uma unidade de peso, e aparece na Bíblia com esse sentido."
       ],
-      "sources": "₪ como ligadura de ש+ח (שקל חדש); novo shekel em circulação a partir de 1986."
+      "sources": "₪ como ligadura de ש+ח (שקל חדש); novo shekel em circulação a partir de 1985."
     },
     {
       "id": "na-rua",
