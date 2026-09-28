@@ -99,7 +99,7 @@ export function GuiaTeclado({
   const latino = /[A-Za-z]/.test(teste);
 
   return (
-    <div className="grid gap-5">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5">
       <div className="grid gap-2">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">
           O seu aparelho
@@ -124,7 +124,7 @@ export function GuiaTeclado({
 
       <ol className="grid gap-3 list-none p-0 m-0">
         {PASSOS[sistema].map((passo, i) => (
-          <li key={passo.titulo} className="grid grid-cols-[32px_1fr] gap-3 items-start">
+          <li key={passo.titulo} className="grid grid-cols-[32px_minmax(0,1fr)] gap-3 items-start">
             <span aria-hidden className="w-8 h-8 rounded-full bg-surface-2 grid place-items-center
                                          font-ui text-[14px] font-semibold text-ink">
               {i + 1}
@@ -137,7 +137,7 @@ export function GuiaTeclado({
         ))}
       </ol>
 
-      <div className="grid gap-2 rounded-[var(--r-lg)] bg-surface-2 p-4">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-2 rounded-[var(--r-lg)] bg-surface-2 p-4">
         <label htmlFor="teste-teclado" className="font-ui text-[14px] font-semibold text-ink">
           Teste aqui: troque para o hebraico e digite qualquer letra
         </label>
@@ -147,7 +147,7 @@ export function GuiaTeclado({
           onChange={e => setTeste(e.target.value)}
           dir="auto"
           autoComplete="off" autoCapitalize="off" autoCorrect="off" spellCheck={false}
-          className="min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
+          className="w-full min-w-0 min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                      he text-[22px] text-ink"
         />
         <p role="status" className="font-ui text-[14px] m-0 min-h-[20px]">

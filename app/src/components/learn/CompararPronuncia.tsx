@@ -220,7 +220,7 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
         {modelo && minha && (
           <>
             <button type="button" onClick={() => tocar([modelo, minha])}
-                    className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[var(--teal)] text-white font-ui text-[14px] font-semibold">
+                    className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[var(--teal-solid)] text-white font-ui text-[14px] font-semibold">
               ▶ Ouvir os dois
             </button>
             <button type="button" onClick={() => tocar([minha])}

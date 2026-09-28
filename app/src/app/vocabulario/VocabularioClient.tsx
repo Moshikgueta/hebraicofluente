@@ -114,7 +114,9 @@ export function VocabularioClient() {
                     <span className="text-ink-muted"> · {w.pt}</span>
                   </p>
                 </div>
-                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId} size="sm" />}
+                {/* O nome no botão: eram 32 botões "Ouvir" iguais para o leitor
+                    de tela (auditoria de 28/09, UX-011). */}
+                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId} size="sm" ariaLabel={`Ouvir ${w.translit}`} />}
               </div>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 {/* As LETRAS que é preciso conhecer para ler a palavra - pela

@@ -36,6 +36,7 @@ import {
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
+import { SessaoCaiu } from '@/components/shell/SessaoCaiu';
 
 /* A navegação, e ONDE cada item aparece no telefone.
  * ─────────────────────────────────────────────────────────────────────────
@@ -117,6 +118,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const avisos = (
     <>
       <DemoNotice />
+      <SessaoCaiu />
       {!p.persistent && (
         <Card tone="ember" className="p-4 mb-4">
           <p className="font-ui text-[13px] leading-relaxed text-[var(--gold-body)]">
@@ -271,7 +273,8 @@ function RodapeDeAjuda() {
             ['/faq', 'Dúvidas frequentes'],
             ['/reembolso', 'Reembolso e cancelamento'],
             ['/termos', 'Termos'],
-            ['/privacidade', 'Privacidade']
+            ['/privacidade', 'Privacidade'],
+            ['/acessibilidade', 'Acessibilidade']
           ].map(([href, label]) => (
             <li key={href}>
               {/* Alvo de 44px de altura também aqui: um link de 13px em cima
@@ -350,8 +353,10 @@ function Sidebar({ pathname }: { pathname: string | null }) {
           pedido do dono do curso: o A1 não existe ainda e será vendido à
           parte, então o cartão prometia de graça um curso que vai custar. */}
 
-      <p className="font-ui text-[11.5px] leading-relaxed text-white/[.45] px-1">
-        Nos exercícios, <Key dark>1</Key>-<Key dark>4</Key> respondem e <Key dark>Enter</Key> avança.
+      {/* Branco a 85% (antes 45%, 3,8:1 - auditoria de 28/09, UX-007), e
+          "nas lições": os jogos da Academia não têm os atalhos (UX-014). */}
+      <p className="font-ui text-[12px] leading-relaxed text-white/[.85] px-1">
+        Nas lições, <Key dark>1</Key>-<Key dark>4</Key> respondem e <Key dark>Enter</Key> avança.
       </p>
     </aside>
   );

@@ -13,7 +13,22 @@
  * motivating; "o tempo médio é 28 s" is a reason to stop.
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, type FocusEvent } from 'react';
+
+/* O foco não pode escapar do jogo (auditoria de 28/09, UX-002). Responder
+   desabilita o botão tocado, o foco sai e o próximo Tab caía no rodapé
+   ("Reembolso", "Precisa de ajuda?"). Quando o foco sai do jogo sem ir para
+   lugar nenhum, ele volta ao primeiro botão ativo do jogo. Um só lugar, para
+   os cinco jogos. */
+function segurarFoco(e: FocusEvent<HTMLDivElement>) {
+  if (e.relatedTarget) return;                        // foi para um lugar de verdade
+  const raiz = e.currentTarget;
+  requestAnimationFrame(() => {
+    const a = document.activeElement;
+    if (a && a !== document.body && document.body.contains(a)) return;
+    raiz.querySelector<HTMLElement>('button:not([disabled])')?.focus({ preventScroll: true });
+  });
+}
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Card, Badge } from '@/components/ui/Card';
@@ -273,7 +288,7 @@ export function AcademiaClient() {
     };
 
     return (
-      <div className="focus-col grid gap-5">
+      <div className="focus-col grid gap-5" onBlur={segurarFoco}>
         <GymHeader
           mode={{ titlePt: info.titlePt } as GymMode}
           label={NIVEL_LABEL[nivel]}

@@ -197,3 +197,30 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
     expect(alem).not.toContain('href="/historia"');
   });
 });
+
+/* ── preço de pré-lançamento (auditoria de 28/09/2026, LEGAL-014) ────────
+   O R$ 297 nunca foi praticado, então não pode aparecer riscado: número
+   riscado é preço de referência. Ele aparece como o preço de DEPOIS, com a
+   data em que o pré-lançamento acaba (decisão do dono: 31/10/2026). */
+describe('o preço cheio não aparece riscado', () => {
+  it('nenhuma tela usa line-through', async () => {
+    const { readdirSync, statSync } = await import('node:fs');
+    const { join } = await import('node:path');
+    const raiz = new URL('../src/', import.meta.url).pathname;
+    const achados: string[] = [];
+    const varre = (d: string) => {
+      for (const n of readdirSync(d)) {
+        const p = join(d, n);
+        if (statSync(p).isDirectory()) varre(p);
+        else if (/\.(tsx|ts|css)$/.test(n) && readFileSync(p, 'utf8').includes('line-through')) achados.push(p);
+      }
+    };
+    varre(raiz);
+    expect(achados).toEqual([]);
+  });
+
+  it('a data de fim sai do catálogo, no formato brasileiro', async () => {
+    const { fimDoPreLancamento, flagship } = await import('@/lib/catalog');
+    expect(fimDoPreLancamento(flagship().price)).toBe('31/10/2026');
+  });
+});

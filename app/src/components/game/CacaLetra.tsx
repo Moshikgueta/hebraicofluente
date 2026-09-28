@@ -38,8 +38,18 @@ import { He } from '@/components/hebrew/He';
 import { Button } from '@/components/ui/Button';
 import type { Caca } from '@/lib/engine/jogos';
 import { porQueErrou } from '@/lib/engine/jogos';
-import type { Letter } from '@/lib/content';
+import { allLetters, type Letter } from '@/lib/content';
 import type { ResultadoJogo } from './Match';
+
+/* O nome que o leitor de tela anuncia para uma célula. Antes todas diziam
+   "letra", doze vezes, e o jogo era injogável sem visão (auditoria de 28/09,
+   UX-005). Com o nome, a busca vira de ouvido, o que é o possível: o jogo
+   treina a forma, e quem não a vê precisa do nome para jogar. */
+function nomeDaCelula(letterId: string, glifo: string): string {
+  const l = allLetters().find(x => x.id === letterId);
+  if (!l) return 'letra';
+  return glifo !== l.letter ? `${l.namePt} final` : l.namePt;
+}
 
 /* Uma CAÇADA, e não uma caça.
  * ─────────────────────────────────────────────────────────────────────────
@@ -153,13 +163,14 @@ export function CacaLetra({
           que o jogo pede. */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex items-center gap-3 flex-1 min-w-[200px]">
-          <span className="w-[56px] h-[56px] shrink-0 rounded-[var(--r-md)]
+          <span aria-hidden className="w-[56px] h-[56px] shrink-0 rounded-[var(--r-md)]
                            border border-[color:var(--edge-teal)] bg-[var(--teal-soft)]
                            grid place-items-center">
             <He size="word" tone="teal">{caca.glifo}</He>
           </span>
           <p className="font-ui text-[15px] leading-snug text-ink-body">
             Encontre todas as letras iguais a esta.
+            <span className="sr-only"> A letra é {nomeDaCelula(caca.alvo.id, caca.glifo)}.</span>
           </p>
         </div>
         <div className="shrink-0 grid justify-items-end gap-0.5">
@@ -203,7 +214,7 @@ export function CacaLetra({
                 onClick={() => tocar(c.id)}
                 disabled={achada || acabou}
                 aria-pressed={achada}
-                aria-label={achada ? 'encontrada' : 'letra'}
+                aria-label={achada ? `${nomeDaCelula(c.letterId, c.glifo)}, encontrada` : nomeDaCelula(c.letterId, c.glifo)}
                 className={`w-full min-h-[60px] rounded-[var(--r-md)] border grid place-items-center
                   relative transition-[background-color,border-color,transform] duration-150
                   ${achada

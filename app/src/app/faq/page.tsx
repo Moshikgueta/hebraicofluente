@@ -5,8 +5,8 @@ import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { ancora, flagship, brl, parcelasMax, pixPrice } from '@/lib/catalog';
-import { course, totalLicoes } from '@/lib/content-publico';
+import { ancora, flagship, brl, fimDoPreLancamento, parcelasMax, pixPrice } from '@/lib/catalog';
+import { course, tempoDoCursoPt } from '@/lib/content-publico';
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
 
 /* O mesmo critério da capa (components/landing/copy.ts): é o manifesto de
@@ -56,10 +56,11 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
        grandezas diferentes, e por azar parecidas, então o erro passou: a capa
        anunciava "21 lições" e esta página, "São 22 lições". Dois números para
        a mesma coisa, na página que se lê logo antes de comprar. A soma agora
-       é `totalLicoes()`, uma função só para o site inteiro. */
+       é `totalLicoes()`, uma função só para o site inteiro, e a frase do
+       tempo é `tempoDoCursoPt()`, derivada dela. */
     q: 'Quanto tempo leva?',
     a: [
-      `São ${totalLicoes()} lições de cerca de dez minutos, que ensinam as ${course.totalLetters} letras. Quem faz uma por dia termina em menos de um mês; quem faz três por semana leva uns dois. Não há prazo interno nem turma: o curso espera por você.`
+      `${tempoDoCursoPt()} Elas ensinam as ${course.totalLetters} letras. Não há prazo interno nem turma: o curso espera por você.`
     ]
   },
   /* As duas respostas abaixo mudam com `pagamento.modo` em data/empresa.json,
@@ -81,7 +82,7 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
           /* A frase só existe enquanto o preço for promocional: quando o
              listBrl virar null, ela some sozinha. Ver `ancora()`. */
           ...(ancora(c.price)
-            ? [`Esse é o preço de pré-lançamento. Depois dele, o curso passa a custar ${brl(ancora(c.price)!)}. Quem compra agora paga uma vez e fica com os ${c.accessMonths} meses de acesso.`]
+            ? [`Esse é o preço de pré-lançamento${fimDoPreLancamento(c.price) ? `, válido até ${fimDoPreLancamento(c.price)}` : ''}. Depois dele, o curso passa a custar ${brl(ancora(c.price)!)}. Quem compra agora paga uma vez e fica com os ${c.accessMonths} meses de acesso.`]
             : []),
           /* O valor da parcela não é anunciado aqui de propósito: os juros do
              cartão são repassados, então quem fecha esse número é a operadora.
@@ -238,7 +239,7 @@ export default function FaqPage() {
                   {item.link && (
                     <Link href={item.link.href}
                           className="inline-flex items-center min-h-[44px] font-ui text-[14px]
-                                     font-semibold text-[var(--teal)] hover:underline">
+                                     font-semibold text-[var(--teal-ink)] hover:underline">
                       {item.link.label} →
                     </Link>
                   )}

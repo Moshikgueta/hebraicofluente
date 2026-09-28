@@ -91,7 +91,7 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
           </Reveal>
 
           <Reveal delay={100}>
-            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
+            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
               Quem está por trás do Hebraico Fluente
             </p>
             <Titulo id="trajetoria-titulo"
@@ -143,12 +143,12 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
                   )}
                   <span aria-hidden
                         className={`relative z-[1] w-7 h-7 rounded-full grid place-items-center font-ui font-bold text-[12.5px]
-                          ${ultimo ? 'bg-[var(--teal)] text-white' : 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'}`}>
+                          ${ultimo ? 'bg-[var(--teal-solid)] text-white' : 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'}`}>
                     {i + 1}
                   </span>
                   <div className="min-w-0">
                     <p className={`font-display text-[18px] font-semibold tracking-[-0.015em] m-0 mb-1
-                                   ${ultimo ? 'text-[var(--teal)]' : 'text-ink'}`}>{c.t}</p>
+                                   ${ultimo ? 'text-[var(--teal-ink)]' : 'text-ink'}`}>{c.t}</p>
                     <p className="font-ui text-[14px] leading-[1.5] text-ink-muted m-0">{c.d}</p>
                   </div>
                 </li>

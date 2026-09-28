@@ -170,7 +170,7 @@ export function DemoAlef({
     <section id="experimente" aria-labelledby="experimente-titulo">
       <Container className="pt-16 sm:pt-24">
         <Reveal>
-          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
+          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
             Teste grátis · 2 minutos
           </p>
           <H2 id="experimente-titulo" className="mb-3">
@@ -548,7 +548,7 @@ export function DemoAlef({
                       <He size="lg" tone="teal">א</He>
                     </span>
                     <p className="font-ui text-[13px] font-bold uppercase tracking-[.12em]
-                                  text-[var(--teal)] tabular-nums m-0">
+                                  text-[var(--teal-ink)] tabular-nums m-0">
                       1 de {course.totalLetters} letras
                     </p>
                   </div>

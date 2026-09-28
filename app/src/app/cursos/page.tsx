@@ -6,8 +6,8 @@ export const metadata: Metadata = meta({
   rota: '/cursos',
   title: 'Cursos de Hebraico - Hebraico Fluente',
   description:
-    'Alfabetização, A1, A2 e B1. A trilha completa do hebraico para brasileiros, ' +
-    'na mesma conta e com o mesmo progresso.'
+    'Alfabetização em hebraico para brasileiros, do zero: disponível hoje. ' +
+    'A1, A2 e B1 em produção, vendidos à parte na mesma conta.'
 });
 
 export default function CursosPage() { return <CursosClient />; }

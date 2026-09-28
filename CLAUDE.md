@@ -18,6 +18,9 @@ espanhol (regras, fontes, provedor de pagamento) vale aqui.
 - **Nunca trancar conteúdo central do curso atrás de XP.** A loja só troca extras.
 - **Não apagar tabelas do banco de produção** sem pedido explícito.
 - **Nenhum identificador de modelo** em commits, PRs, comentários ou arquivos.
+- **Incidente** (vazamento, invasão, segredo exposto, site fora): seguir
+  `INCIDENTES.md`, na ordem. Tem a tabela de como trocar cada segredo e o
+  prazo da ANPD.
 - A auditoria de pré-lançamento de 28/09/2026 está em `audit/2026-09-28/`
   (`RELATORIO.md` é o consolidado; a seção Q é a ordem de correção).
 

@@ -37,7 +37,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
-import { ancora, brl, getCourse, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
 import { confirmaSozinho, empresa, formasAtivas, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
@@ -588,7 +588,7 @@ function Shell({ course, children }: {
                 sozinho não responde isso. Ver `ancora()` em lib/catalog.ts. */}
             {cheio && (
               <p className="font-ui text-[11px] uppercase tracking-[.08em] text-[var(--accent)]">
-                Pré-lançamento · de <span className="line-through">{brl(cheio)}</span>
+                Pré-lançamento{fimDoPreLancamento(c.price) ? ` até ${fimDoPreLancamento(c.price)}` : ''} · depois, {brl(cheio)}
               </p>
             )}
             <p className="font-display text-[26px] font-bold text-ink leading-none">

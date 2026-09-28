@@ -118,7 +118,7 @@ function BotaoOuvir({ nome, rotulo, tocar, tocando }: {
     <button type="button" onClick={() => tocar(nome)}
             className={`inline-flex items-center gap-2.5 min-h-[48px] rounded-full px-5 font-ui text-[15.5px] font-semibold
                         transition-colors duration-200
-                        ${ativo ? 'bg-[var(--teal)] text-white' : 'bg-[var(--navy)] text-white hover:bg-[var(--navy-2)]'}`}>
+                        ${ativo ? 'bg-[var(--teal-solid)] text-white' : 'bg-[var(--navy)] text-white hover:bg-[var(--navy-2)]'}`}>
       <span aria-hidden className="text-[13px]">{ativo ? '■' : '▶'}</span>
       {rotulo}
     </button>

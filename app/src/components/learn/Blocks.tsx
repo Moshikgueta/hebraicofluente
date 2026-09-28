@@ -72,7 +72,7 @@ export function BrazilianTip({ mistake }: { mistake: Letter['brazilianMistake'] 
           <dd className="text-[15px] leading-relaxed text-ink-body"><Prose text={mistake.wrong} /></dd>
         </div>
         <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 items-start">
-          <dt className="font-ui text-xs font-semibold text-[var(--green)] pt-[3px] uppercase tracking-wider">Certo</dt>
+          <dt className="font-ui text-xs font-semibold text-[var(--teal-ink)] pt-[3px] uppercase tracking-wider">Certo</dt>
           <dd className="text-[15px] leading-relaxed text-ink"><Prose text={mistake.right} /></dd>
         </div>
       </dl>

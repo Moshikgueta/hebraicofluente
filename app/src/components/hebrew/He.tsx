@@ -59,7 +59,7 @@ const TONE = {
   ink:   'text-ink',
   muted: 'text-ink-muted',
   paper: 'text-[var(--cream)]',
-  teal:  'text-[var(--teal)]',
+  teal:  'text-[var(--teal-ink)]',
   navy:  'text-[var(--navy)]',
   /* Teal claro: existe SÓ sobre navy - a marca, os rótulos e os ícones
      dentro dos blocos escuros. Sobre creme ele não passa em contraste. */

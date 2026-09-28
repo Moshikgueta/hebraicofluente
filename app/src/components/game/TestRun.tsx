@@ -245,7 +245,7 @@ export function RelatorioTeste({
                   </span>
                   {L && (
                     <Link href={`/licao/${L.id}`}
-                          className="font-ui text-[13px] text-[var(--teal)] hover:underline shrink-0">
+                          className="font-ui text-[13px] text-[var(--teal-ink)] hover:underline shrink-0">
                       Rever {L.namePt}
                     </Link>
                   )}

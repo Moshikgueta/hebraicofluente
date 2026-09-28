@@ -50,7 +50,7 @@ const NAO_LISTADAS = [
    muda e o texto jurídico que fica anos parado. */
 const CADENCIA = (rota) =>
   rota === '/' ? 'weekly'
-  : ['/termos/', '/privacidade/', '/reembolso/', '/suporte/'].includes(rota) ? 'yearly'
+  : ['/termos/', '/privacidade/', '/reembolso/', '/suporte/', '/acessibilidade/'].includes(rota) ? 'yearly'
   : 'monthly';
 
 export function rotas(dir = 'out', base = '') {

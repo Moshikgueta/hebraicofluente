@@ -78,7 +78,7 @@ export function CartaoNumero({
   n, rotulo, tom = 'teal', icone
 }: { n: ReactNode; rotulo: string; tom?: 'teal' | 'gold' | 'neutro'; icone: ReactNode }) {
   const FUNDO = {
-    teal: 'bg-[var(--teal-soft)] text-[var(--teal)]',
+    teal: 'bg-[var(--teal-soft)] text-[var(--teal-ink)]',
     gold: 'bg-[var(--gold-soft)] text-[var(--gold)]',
     neutro: 'bg-[var(--sand)] text-ink-muted'
   } as const;

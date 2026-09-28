@@ -24,7 +24,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Logo } from '@/components/shell/Logo';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
@@ -54,6 +54,19 @@ export function PublicShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const account = useAccount();
+  const botaoMenu = useRef<HTMLButtonElement>(null);
+
+  /* Escape fecha o menu e devolve o foco ao botão, como no painel de
+     acessibilidade (auditoria de 28/09, UX-004: o menu não fechava pelo
+     teclado, e o fundo continuava travado). */
+  useEffect(() => {
+    if (!open) return;
+    const aoTeclar = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setOpen(false); botaoMenu.current?.focus(); }
+    };
+    document.addEventListener('keydown', aoTeclar);
+    return () => document.removeEventListener('keydown', aoTeclar);
+  }, [open]);
 
   /* Fecha o menu ao mudar de rota. Sem isto, tocar num link abre a página
      nova com o menu ainda por cima dela. */
@@ -159,6 +172,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
             )}
 
             <button
+              ref={botaoMenu}
               type="button"
               onClick={() => setOpen(v => !v)}
               aria-expanded={open}
@@ -252,6 +266,7 @@ function Footer() {
           { href: '/termos', label: 'Termos de Uso' },
           { href: '/privacidade', label: 'Política de Privacidade' },
           { href: '/reembolso', label: 'Reembolso e Cancelamento' },
+          { href: '/acessibilidade', label: 'Acessibilidade' },
           { href: '/suporte', label: 'Suporte' }
         ]} />
 

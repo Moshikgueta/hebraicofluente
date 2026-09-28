@@ -99,6 +99,30 @@ export function BotaoAcessibilidade() {
     return () => document.removeEventListener('pointerdown', fora);
   }, [aberto]);
 
+  /* Ao abrir, o foco entra no painel; o Tab circula dentro dele até fechar
+     (Escape, o botão ou clique fora). Antes o painel abria sem foco e ficava
+     ANTES do botão no DOM: o primeiro Tab saía dele para o "Pular para o
+     conteúdo", e os controles só eram alcançados por Shift+Tab (auditoria de
+     28/09, UX-003). */
+  useEffect(() => {
+    if (!aberto) return;
+    const el = painel.current;
+    if (!el) return;
+    const focaveis = () => Array.from(el.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), [href], input:not([disabled]), select, [tabindex]:not([tabindex="-1"])'));
+    const id = requestAnimationFrame(() => focaveis()[0]?.focus());
+    const circular = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const lista = focaveis();
+      if (!lista.length) return;
+      const primeiro = lista[0]!, ultimo = lista[lista.length - 1]!;
+      if (e.shiftKey && document.activeElement === primeiro) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primeiro.focus(); }
+    };
+    el.addEventListener('keydown', circular);
+    return () => { cancelAnimationFrame(id); el.removeEventListener('keydown', circular); };
+  }, [aberto]);
+
   const ligadas = pronto
     ? Number(prefs.texto !== 100) + Number(prefs.tema !== 'auto') + Number(prefs.contraste)
       + Number(prefs.movimento) + Number(prefs.links) + Number(prefs.espaco)

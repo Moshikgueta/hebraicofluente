@@ -101,7 +101,7 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
         </p>
         <Link
           href={href}
-          className="shrink-0 inline-flex items-center rounded-[12px] bg-[var(--teal)] text-white
+          className="shrink-0 inline-flex items-center rounded-[12px] bg-[var(--teal-solid)] text-white
                      font-ui font-semibold text-[15.5px] px-5 min-h-[46px]
                      transition-transform duration-[180ms] active:scale-[.98]"
         >
