@@ -23,7 +23,7 @@ import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/cat
 import {
   arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar, estornoCriar,
   estornoDe, estornosDe, estornosParaVarrer, findAccountById, getOrder, grantAccess, log, markPaid,
-  ordersOf, pedirArrependimento, recordEvent, refundOrder, throttled, updateOrder
+  ordersOf, outroPedidoPagoRecente, pedirArrependimento, recordEvent, refundOrder, throttled, updateOrder
 } from '../lib/db.js';
 import {
   dataBR, dataHoraBR, mailReady, mensagemDeArrependimento, mensagemDeArrependimentoDono,
@@ -841,6 +841,20 @@ async function applyPayment(env, order, payment, source) {
   if (!await markPaid(env, order.id, payment.id)) return 'paid';
 
   await log(env, order.account_id, 'paid', `${order.id} via ${source}`);
+
+  /* Dois PEDIDOS pagos, e não um pedido pago duas vezes (auditoria de
+     28/09, PAY-004). "Gerar outro código" cria um PIX novo e o anterior
+     continua pagável por 30 minutos; quem paga os dois ganha 24 meses, o
+     que é coerente com o dinheiro, mas quase sempre é engano. A trilha
+     `pedido-duplicado` vira alerta ao dono (worker/src/alertas.js), que
+     confirma com o aluno e estorna um. Falha aqui não desfaz a liberação. */
+  try {
+    const outro = await outroPedidoPagoRecente(env, order, 24 * 3_600_000);
+    if (outro) {
+      await log(env, order.account_id, 'pedido-duplicado',
+        `${order.id} pago; ${outro.id} do mesmo curso já estava pago - confirmar com o aluno e estornar um`);
+    }
+  } catch (e) { console.error('pedido-duplicado', e && e.stack || e); }
 
   /* Primeira compra ou renovação. Se a linha lida acima ainda era de outro
      pedido (ou não existia), ela é o retrato de antes: renovação é ter

@@ -42,6 +42,9 @@ const querido = (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago';
 
 const linhas = [];
 const diga = t => { linhas.push(t); console.log(t); };
+/** Se esta publicação foi rebaixada para PIX direto. O passo seguinte do
+ *  deploy lê isto (GITHUB_OUTPUT) e avisa o dono por e-mail. */
+let rebaixado = false;
 
 /**
  * Escreve, no arquivo DESTA execução, o que a conta realmente aceita.
@@ -79,6 +82,7 @@ function rebaixar(porque) {
     process.exit(1);
   }
   writeFileSync(ARQUIVO, novo);
+  rebaixado = true;
   diga(`⚠ ${porque}`);
   diga('  Esta publicação vai ao ar em PIX DIRETO: o site vende por PIX e o');
   diga('  acesso é liberado à mão em Actions → Acesso → liberar.');
@@ -240,4 +244,12 @@ if (querido !== 'mercadopago') {
 if (process.env.GITHUB_STEP_SUMMARY) {
   writeFileSync(process.env.GITHUB_STEP_SUMMARY,
     `## Meio de pagamento\n\n\`\`\`\n${linhas.join('\n')}\n\`\`\`\n\n`, { flag: 'a' });
+}
+
+/* O rebaixamento só aparecia no resumo da publicação, que ninguém abre
+   quando a publicação fica verde (auditoria de 28/09, PAY-009). O passo
+   seguinte do deploy-worker.yml manda o texto por e-mail ao dono. */
+if (rebaixado && process.env.GITHUB_OUTPUT) {
+  writeFileSync('/tmp/rebaixamento.txt', linhas.join('\n'));
+  writeFileSync(process.env.GITHUB_OUTPUT, 'rebaixado=true\n', { flag: 'a' });
 }

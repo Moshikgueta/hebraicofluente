@@ -684,6 +684,17 @@ export async function markPaid(env, id, providerRef, at = now()) {
   return Number(r && r.meta && r.meta.changes) > 0;
 }
 
+/** Outro pedido PAGO da mesma conta e do mesmo curso, pago dentro da janela
+ *  (auditoria de 28/09, PAY-004). null quando não há. */
+export async function outroPedidoPagoRecente(env, order, janelaMs, at = now()) {
+  return await env.DB.prepare(
+    `SELECT id, paid_at FROM orders
+      WHERE account_id = ? AND course_slug = ? AND status = 'paid'
+        AND id <> ? AND paid_at >= ?
+      ORDER BY paid_at DESC LIMIT 1`
+  ).bind(order.account_id, order.course_slug, order.id, at - janelaMs).first() || null;
+}
+
 /** Pendentes que já têm idade para valer uma pergunta ao provedor.
  *
  *  Os `failed` entram também (27/09/2026): um cartão recusado marca o pedido,

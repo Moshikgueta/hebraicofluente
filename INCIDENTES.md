@@ -14,7 +14,7 @@ tudo com data e hora** (num documento só seu, fora do repositório). A nota
 
 | Sinal | De onde vem |
 |---|---|
-| E-mail "[Hebraico Fluente] erros de pagamento na última hora" | a varredura de 5 em 5 min (`worker/src/alertas.js`) |
+| E-mail "[Hebraico Fluente] problemas de pagamento na última hora" | a varredura de 5 em 5 min (`worker/src/alertas.js`) |
 | Alerta do monitor externo (UptimeRobot): `"monitor":true` sumiu | site fora, banco fora ou varredura parada (`/api/health`) |
 | E-mail "o backup diário do banco FALHOU" | Action "Backup do banco" |
 | Aluno escrevendo "não consigo entrar", "fui cobrado e não liberou", "recebi e-mail estranho" | atendimento |

@@ -337,13 +337,21 @@ jobs:
               if [ "$EXISTE" != "0" ]; then
                 # ON CONFLICT porque a chave é (conta, curso): liberar duas
                 # vezes ESTENDE o prazo em vez de criar uma segunda linha.
+                # Estende A PARTIR DO VENCIMENTO quando o acesso ainda vale:
+                # antes era "agora + M", e um aluno pagante com 10 meses pela
+                # frente que ganhava 1 mês de cortesia ficava com 1 (auditoria
+                # de 28/09, PAY-007). Vencido, conta a partir de agora. Acesso
+                # sem vencimento (NULL) continua sem vencimento.
                 grava \
                   "INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
                    SELECT id, '$CURSO', unixepoch()*1000,
                           unixepoch()*1000 + $M * 2629800000, 'MANUAL-ACTIONS'
                      FROM accounts WHERE email = '$SQLMAIL'
                    ON CONFLICT(account_id, course_slug) DO UPDATE SET
-                     expires_at = excluded.expires_at;
+                     expires_at = CASE
+                       WHEN entitlements.expires_at IS NULL THEN NULL
+                       ELSE MAX(entitlements.expires_at, unixepoch()*1000) + $M * 2629800000
+                     END;
                    INSERT INTO access_log (account_id, action, detail, created_at)
                    SELECT id, 'grant-manual', '$CURSO via GitHub Actions', unixepoch()*1000
                      FROM accounts WHERE email = '$SQLMAIL';
@@ -369,6 +377,7 @@ jobs:
               fi
 
               say "Liberado **$CURSO** por **$M meses** para \`$(printf '%s' "$MAIL" | mascara)\`."
+              say "Se a conta já tinha acesso valendo, os meses foram somados ao prazo que restava."
               say ""
               say '```'
               mostra "SELECT a.email, e.course_slug,
