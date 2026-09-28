@@ -472,7 +472,7 @@ export function Faq() {
     ['Posso estudar no meu ritmo?',
      'Sim. Não há turmas nem prazos. O progresso fica salvo e você retoma exatamente de onde parou.'],
     ['O que acontece depois que termino?',
-     'Você entra na trilha: Hebraico A1 é o próximo nível. Alunos da Alfabetização são avisados primeiro quando ele abre.']
+     'Você entra na trilha: Hebraico A1 é o próximo nível. Se quiser, marque em Sua conta o pedido de receber um e-mail quando ele abrir.']
   ];
 
   const [aberta, setAberta] = useState(-1);

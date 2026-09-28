@@ -53,6 +53,8 @@ type AccountValue = {
 
   requestEmailVerification(): Promise<{ demoLink?: string }>;
   confirmEmail(token: string): Promise<void>;
+  /** A caixa do perfil do aviso do próximo curso. */
+  setNovidades(quero: boolean): Promise<void>;
 
   startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number }):
     Promise<Order & { redirectUrl?: string }>;
@@ -143,6 +145,10 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     /* A mesma conta, só com o e-mail confirmado: sem `avisar()`, pelo mesmo
        motivo da troca de senha. */
     async confirmEmail(token) { setSession(await (await api()).confirmEmail(token)); },
+    async setNovidades(quero) {
+      await (await api()).setNovidades(quero);
+      setSession(s => s && { ...s, account: { ...s.account, novidades: quero } });
+    },
 
     startOrder: async i => (await api()).startOrder(i),
     orderStatus: async id => (await api()).orderStatus(id),

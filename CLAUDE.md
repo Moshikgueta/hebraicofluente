@@ -226,6 +226,15 @@ regras que ele fixou e que valem para todo commit daqui em diante:
 - **Trocar o e-mail de um aluno:** Actions → Acesso → `trocar-email` (campo
   E-mail = o de hoje, `novo_email` = o certo). Só depois de confirmar com o
   aluno por outro canal.
+- **Lista do aviso do próximo curso** (desde 28/09/2026): a ÚNICA
+  propaganda por e-mail, e só com consentimento. Entra pela caixa "Quero
+  receber um e-mail quando o Hebraico A1 abrir" em /perfil (começa
+  desmarcada); sai pela mesma caixa, pelo link assinado de /sair-da-lista
+  (o GET só abre a página, quem tira é o POST) ou apagando a conta. Tabela
+  `novidades`; tudo em `worker/src/api/novidades.js`. O envio do lançamento
+  ainda não existe: cada mensagem precisa levar `linkDeSaida(env, id)` no
+  corpo e nos cabeçalhos List-Unsubscribe. Nenhum outro e-mail de
+  propaganda: a política de privacidade diz isso.
 - **Desistência estorna sozinha** (desde 28/09/2026): `POST /api/pay/desistir`
   pede o estorno total à Mercado Pago na hora (`iniciarEstorno` em
   `worker/src/api/pay.js`, chave de idempotência `estorno-<pedido>`), a

@@ -25,6 +25,9 @@ export type Account = {
    *  não tem como saber - aí a tela não pede nada. Confirmar não bloqueia
    *  nada: a conta e a compra funcionam sem isso. */
   emailVerified?: boolean | null;
+  /** Pediu, no perfil, um e-mail quando o próximo curso abrir. Ausente =
+   *  não pediu. Ver worker/src/api/novidades.js. */
+  novidades?: boolean;
 };
 
 export type Entitlement = {

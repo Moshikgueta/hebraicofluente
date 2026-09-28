@@ -684,6 +684,26 @@ export async function markPaid(env, id, providerRef, at = now()) {
   return Number(r && r.meta && r.meta.changes) > 0;
 }
 
+/* ── a lista de novidades (api/novidades.js) ─────────────────────────────
+   As duas falham FECHADAS para quem pergunta e abertas para quem usa: sem a
+   tabela (o schema.sql entra na publicação, mas um banco de teste pode não
+   tê-la), ninguém está na lista, e a conta continua funcionando. */
+
+/** A pessoa pediu para receber o aviso do próximo curso? */
+export async function novidadesQuer(env, accountId) {
+  try {
+    return !!await env.DB.prepare('SELECT 1 AS x FROM novidades WHERE account_id = ?')
+      .bind(accountId).first();
+  } catch { return false; }
+}
+
+export async function novidadesMarcar(env, accountId, quer, at = now()) {
+  await env.DB.prepare(quer
+    ? 'INSERT INTO novidades (account_id, criado_em) VALUES (?, ?) ON CONFLICT(account_id) DO NOTHING'
+    : 'DELETE FROM novidades WHERE account_id = ?'
+  ).bind(...(quer ? [accountId, at] : [accountId])).run();
+}
+
 /** Outro pedido PAGO da mesma conta e do mesmo curso, pago dentro da janela
  *  (auditoria de 28/09, PAY-004). null quando não há. */
 export async function outroPedidoPagoRecente(env, order, janelaMs, at = now()) {
@@ -1028,6 +1048,10 @@ export async function deleteAccount(env, accountId) {
      nada para apagar. */
   try {
     await env.DB.prepare('DELETE FROM email_verifications WHERE account_id = ?').bind(id).run();
+  } catch { /* tabela ausente */ }
+  /* A lista de novidades guarda a vontade de receber e-mail: some junto. */
+  try {
+    await env.DB.prepare('DELETE FROM novidades WHERE account_id = ?').bind(id).run();
   } catch { /* tabela ausente */ }
 
   /* A trilha fica, e é justamente ela que responde "por que este pedido não

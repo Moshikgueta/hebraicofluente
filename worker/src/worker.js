@@ -22,6 +22,7 @@ import * as progress from './api/progress.js';
 import { content } from './api/content.js';
 import * as audio from './api/audio.js';
 import * as ab from './api/ab.js';
+import * as novidades from './api/novidades.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -41,6 +42,9 @@ const ROUTES = {
   'POST /api/auth/verify': auth.verify,
   'POST /api/auth/password': auth.password,
   'POST /api/auth/delete': auth.apagar,
+  /* A lista do aviso do próximo curso: entrar e sair (api/novidades.js). */
+  'PUT /api/novidades': novidades.marcar,
+  'POST /api/novidades/sair': novidades.sair,
   'GET /api/me': auth.me,
   'GET /api/health': auth.health,
 

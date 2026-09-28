@@ -82,6 +82,10 @@ export interface PlatformApi {
    *  a própria LGPD prevê a guarda (art. 16, I). */
   deleteAccount(input: { password: string }): Promise<void>;
 
+  /** Entra ou sai da lista do aviso do próximo curso (a caixa do perfil).
+   *  Só a pessoa põe o próprio nome nela; começa sempre fora. */
+  setNovidades(quero: boolean): Promise<void>;
+
   /** Começa um pedido. Para PIX volta com o copia-e-cola; para cartão, com a
    *  URL do checkout da Mercado Pago em `redirectUrl`. */
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number }):

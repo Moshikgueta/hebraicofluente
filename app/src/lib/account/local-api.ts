@@ -39,6 +39,8 @@ type Stored = {
     pw: string;                       // pbkdf2$<iter>$<saltB64>$<hashB64>
     /** E-mail confirmado pelo link de demonstração. Ausente em contas antigas. */
     verified?: boolean;
+    /** Pediu o aviso do próximo curso. */
+    novidades?: boolean;
     entitlements: Entitlement[];
     orders: Order[];
   }>;
@@ -119,7 +121,8 @@ export class LocalApi implements PlatformApi {
     return {
       account: {
         id: a.id, name: a.name, email: a.email, createdAt: a.createdAt,
-        emailVerified: !!a.verified
+        emailVerified: !!a.verified,
+        novidades: !!a.novidades
       },
       entitlements: a.entitlements
     };
@@ -281,6 +284,15 @@ export class LocalApi implements PlatformApi {
       throw new AuthError('bad-token');
     }
     return this.session(s)!;
+  }
+
+  async setNovidades(quero: boolean): Promise<void> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    a.novidades = quero;
+    write(s);
   }
 
   async deleteAccount({ password }: { password: string }): Promise<void> {

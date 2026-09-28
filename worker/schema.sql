@@ -377,3 +377,11 @@ CREATE TABLE IF NOT EXISTS avisos (
   chave      TEXT    PRIMARY KEY,
   enviado_em INTEGER NOT NULL
 );
+
+-- Quem pediu, no perfil, um e-mail quando o próximo curso abrir (28/09/2026,
+-- auditoria LEGAL-019). A linha existir É o consentimento; sair apaga a
+-- linha. Ver worker/src/api/novidades.js.
+CREATE TABLE IF NOT EXISTS novidades (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  criado_em  INTEGER NOT NULL
+);

@@ -33,7 +33,7 @@ import {
   mailReady, mensagemDeConfirmacao, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
 } from '../lib/mail.js';
 import {
-  activeEntitlements, bumpSessionVersion, changePassword, createAccount, deleteAccount,
+  activeEntitlements, bumpSessionVersion, novidadesQuer, changePassword, createAccount, deleteAccount,
   emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
   normalizeEmail, registrarAcesso, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
   ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset, ultimoBatimento
@@ -161,7 +161,9 @@ async function sessionBody(env, account) {
       name: account.name || '',
       email: account.email,
       createdAt: new Date(account.created_at).toISOString(),
-      emailVerified: await emailVerified(env, account.id, account.email)
+      emailVerified: await emailVerified(env, account.id, account.email),
+      /* Pediu o e-mail do próximo curso? Ver api/novidades.js. */
+      novidades: await novidadesQuer(env, account.id)
     },
     entitlements: await activeEntitlements(env, account.id)
   };

@@ -91,6 +91,9 @@ export function PerfilClient() {
       {/* ── senha ─────────────────────────────────────────────────── */}
       <TrocarSenha />
 
+      {/* ── o aviso do próximo curso ──────────────────────────────── */}
+      <AvisoDoProximoCurso />
+
 
       {/* ── cursos ────────────────────────────────────────────────── */}
       <Card className="p-5 grid gap-4">
@@ -399,6 +402,52 @@ function ApagarConta() {
  * Pede a senha atual porque a sessão sozinha não pode bastar: um celular
  * emprestado, destrancado, viraria uma conta tomada em dois toques.
  */
+/**
+ * O aviso do próximo curso: a ÚNICA porta de entrada da lista (auditoria de
+ * 28/09, LEGAL-019). Começa desmarcada e salva no toque; desmarcar tira da
+ * lista na hora. Sem curso "em breve" no catálogo, não aparece.
+ */
+function AvisoDoProximoCurso() {
+  const account = useAccount();
+  const proximo = allCourses().find(c => c.status === 'soon');
+  const [busy, setBusy] = useState(false);
+  const [erro, setErro] = useState(false);
+  /* A marca muda NO TOQUE e volta atrás só se o servidor recusar: esperar a
+     resposta para marcar deixava a caixa parada, e parecia quebrada. */
+  const [otimista, setOtimista] = useState<boolean | null>(null);
+  if (!proximo || !account.session) return null;
+  const marcado = otimista ?? !!account.session.account.novidades;
+
+  async function trocar(quero: boolean) {
+    setOtimista(quero); setBusy(true); setErro(false);
+    try { await account.setNovidades(quero); }
+    catch { setErro(true); }
+    finally { setOtimista(null); setBusy(false); }
+  }
+
+  return (
+    <Card className="p-5 grid gap-3">
+      <h2 className="font-display text-[17px] font-bold text-ink">Aviso do próximo curso</h2>
+      <label className="flex items-start gap-3 cursor-pointer min-h-[44px]">
+        <input type="checkbox" checked={marcado} aria-busy={busy}
+               onChange={e => { if (!busy) void trocar(e.target.checked); }}
+               aria-describedby="novidades-nota"
+               className="mt-1 w-5 h-5 shrink-0 accent-[var(--navy)]" />
+        <span className="font-ui text-[15px] leading-relaxed text-ink">
+          Quero receber um e-mail quando o {proximo.titlePt} abrir.
+        </span>
+      </label>
+      <p id="novidades-nota" className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+        Um aviso só, quando o curso abrir, e nada mais. Você sai quando quiser,
+        desmarcando aqui ou pelo link que vai no próprio e-mail.
+      </p>
+      <p role="status" className="font-ui text-[13px] text-[var(--ember)] m-0 empty:hidden">
+        {erro ? 'Não consegui salvar agora. Tente de novo em instantes.' : ''}
+      </p>
+    </Card>
+  );
+}
+
 function TrocarSenha() {
   const account = useAccount();
   const [aberto, setAberto] = useState(false);
