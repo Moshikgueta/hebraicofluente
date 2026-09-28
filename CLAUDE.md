@@ -578,9 +578,9 @@ cd app && npm run sincronia   # dois aparelhos, uma conta, ninguém perde trabal
 
 ## Teste A/B do hero da capa (28/09/2026)
 
-`hero-2026-09`: A = hero anterior ("Dê seus primeiros passos…", botão "Quero
-começar a ler hebraico"); B = hero novo (Israel, "as letras da Bíblia", botão
-"Comece do zero…"). Cada navegador sorteia uma vez (`lib/ab.ts`, localStorage).
+`hero-2026-09`: A = híbrido ("Ler e escrever hebraico, do zero." com os três
+desejos como selos); B = as perguntas (Israel, "as letras da Bíblia"). O botão
+é o mesmo nas duas ("Comece do zero…"): o teste compara só a mensagem. Cada navegador sorteia uma vez (`lib/ab.ts`, localStorage).
 O HTML estático sai com B; o texto do hero nasce invisível, então A não pisca.
 
 - Contagem: `POST /api/ab` (worker/src/api/ab.js) soma totais diários em

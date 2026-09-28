@@ -40,12 +40,10 @@ const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1
  * saiba.
  */
 export function Hero({
-  primaryHref, primaryLabel, primaryLabelA, testeAB = false, primaryMicro, secondaryHref, midia = SEM_MIDIA
+  primaryHref, primaryLabel, testeAB = false, primaryMicro, secondaryHref, midia = SEM_MIDIA
 }: {
   primaryHref: string;
   primaryLabel: string;
-  /** O rótulo do botão na versão A do teste (o hero anterior). */
-  primaryLabelA?: string;
   /** Participa do teste A/B (lib/ab.ts): só quem ainda pode comprar. */
   testeAB?: boolean;
   /** A linha curta embaixo do botão: o que se leva ao clicar. */
@@ -110,34 +108,51 @@ export function Hero({
               O resto da explicação (o que se aprende, os dois "nada de") foi
               para a faixa logo abaixo (Promessa.tsx): o hero ficou com a
               mensagem, e a primeira tela continua mostrando o botão. */}
-          {/* Versão A do teste: o hero de antes de 28/09/2026, com o rótulo
-              antigo do botão. Versão B: o hero novo. Ver lib/ab.ts. */}
+          {/* Versão A do teste: o HÍBRIDO (escolhido pelo dono do curso em
+              28/09/2026) - o resultado claro no título e os três desejos
+              como selos logo abaixo. Versão B: as perguntas. O botão é o
+              mesmo nas duas, para que o teste compare só a mensagem. Ver
+              lib/ab.ts. */}
           {versao === 'a' ? (
             <>
           <div
             className="transition-[opacity,transform] duration-[600ms] ease-[var(--ease)]"
             style={{ opacity: em(1) ? 1 : 0, transform: em(1) ? 'none' : 'translateY(20px)' }}
           >
-            <h1 className="font-display font-semibold text-[clamp(30px,3.35vw,42px)] leading-[1.07]
-                           tracking-[-0.03em] text-balance m-0 mb-3.5">
-              Dê seus primeiros passos até conseguir{' '}
-              <span className="text-[var(--teal)]">ler e escrever hebraico com segurança.</span>
-            </h1>
-            <p className="font-display text-[clamp(18px,1.85vw,22px)] leading-[1.32] font-medium
-                          tracking-[-0.02em] text-ink text-balance max-w-[36ch] m-0 mb-4">
-              Aprenda do zero, uma letra de cada vez, até reconhecer os sons, formar
-              palavras e começar a ler hebraico de verdade.
+            <p className="inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
+                          font-ui text-[13px] sm:text-[13.5px] font-semibold px-3.5 py-1.5 m-0 mb-4 sm:mb-5">
+              <span aria-hidden className="w-[7px] h-[7px] rounded-full bg-[var(--teal)]" />
+              <span className="sm:hidden">Do zero · alfabetização em hebraico</span>
+              <span className="hidden sm:inline">Alfabetização em hebraico · para iniciantes absolutos</span>
             </p>
+            <h1 className="font-display font-semibold text-[clamp(36px,4.3vw,56px)] leading-[1.04]
+                           tracking-[-0.035em] text-balance m-0 mb-5">
+              Ler e escrever hebraico, <span className="text-[var(--teal)]">do zero.</span>
+            </h1>
+            {/* Os três desejos, como selos: cada um cabe numa linha curta, e
+                juntos dizem "é para mim" sem pesar o título. */}
+            <ul className="flex flex-wrap gap-2 list-none p-0 m-0 mb-6" aria-label="Para quem é">
+              {['para viajar a Israel', 'para ler as letras da Bíblia', 'para finalmente entender o alfabeto'].map(t => (
+                <li key={t} className="inline-flex items-center gap-2 rounded-full border border-line bg-[var(--card)]
+                                       px-3.5 py-1.5 font-ui text-[14.5px] sm:text-[15px] font-medium text-ink-body">
+                  <span aria-hidden className="w-[6px] h-[6px] rounded-full bg-[var(--teal)]" />
+                  {t}
+                </li>
+              ))}
+            </ul>
           </div>
-          <p
-            className="font-ui text-[18px] sm:text-[19.5px] leading-[1.6] text-ink-muted max-w-[48ch] mb-7
-                       transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
+          <div
+            className="transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
             style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
           >
-            Um curso interativo criado especialmente para brasileiros, com prática em cada
-            etapa e correção imediata para você saber exatamente quando está avançando.
-          </p>
-
+            <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.34] font-medium tracking-[-0.02em]
+                          text-ink text-balance max-w-[30ch] m-0 mb-2">
+              Mesmo que hoje você não reconheça uma única letra.
+            </p>
+            <p className="font-ui text-[16.5px] sm:text-[18px] leading-[1.55] text-ink-muted max-w-[46ch] m-0 mb-7">
+              Uma letra por vez, com som, escrita e correção na hora, até ler suas primeiras palavras sozinho.
+            </p>
+          </div>
             </>
           ) : (
             <>
@@ -219,7 +234,7 @@ export function Hero({
                            shadow-[var(--sh)] transition-[background-color,transform] duration-[180ms]
                            hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0"
               >
-                {versao === 'a' && primaryLabelA ? primaryLabelA : primaryLabel}
+                {primaryLabel}
                 {/* A seta anda 3px no hover. Micro-interação, não animação: o
                     botão responde ao ponteiro sem chamar atenção para si. */}
                 <span aria-hidden

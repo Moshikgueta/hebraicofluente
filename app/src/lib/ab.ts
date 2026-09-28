@@ -1,8 +1,10 @@
 /* O teste A/B do hero da capa (28/09/2026), do lado do navegador.
  * ─────────────────────────────────────────────────────────────────────────
- * A: o hero anterior ("Dê seus primeiros passos…"). B: o novo, que abre
- * pelos desejos (Israel, a Bíblia). Cada navegador sorteia uma versão uma
- * vez e fica com ela (localStorage), para que a mesma pessoa não veja as duas.
+ * A: o híbrido - "Ler e escrever hebraico, do zero." com os três desejos
+ * como selos. B: as perguntas ("Quer viajar para Israel? Ler as letras da
+ * Bíblia no original?"). O botão é o mesmo: o teste compara só a mensagem.
+ * Cada navegador sorteia uma versão uma vez e fica com ela (localStorage),
+ * para que a mesma pessoa não veja as duas.
  *
  * O que sai daqui é só `{exp, v, evento}` para /api/ab (worker/src/api/ab.js),
  * que soma totais diários. "visto" e "checkout" contam uma vez por sessão,

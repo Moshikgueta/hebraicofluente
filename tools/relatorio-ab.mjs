@@ -37,7 +37,7 @@ function compara(ka, na, kb, nb) {
 
 const out = [];
 out.push('## Teste A/B do hero da capa (`hero-2026-09`)', '');
-out.push('A = hero anterior ("Dê seus primeiros passos…"). B = hero novo (Israel, a Bíblia).', '');
+out.push('A = híbrido ("Ler e escrever hebraico, do zero." + os três desejos). B = as perguntas ("Quer viajar para Israel? Ler as letras da Bíblia no original?").', '');
 out.push('| | A | B |', '|---|---:|---:|');
 out.push(`| Viram o hero | ${v('a', 'visto')} | ${v('b', 'visto')} |`);
 out.push(`| Clicaram no botão | ${v('a', 'clique')} (${pct(v('a', 'clique'), v('a', 'visto'))}) | ${v('b', 'clique')} (${pct(v('b', 'clique'), v('b', 'visto'))}) |`);
