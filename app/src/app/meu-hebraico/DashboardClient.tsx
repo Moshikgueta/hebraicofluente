@@ -300,7 +300,7 @@ export function DashboardClient() {
           </h2>
           <Link href="/academia"
                 className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                           text-[var(--teal)] hover:underline">
+                           text-[var(--teal-ink)] hover:underline">
             Ver tudo →
           </Link>
         </div>
@@ -339,7 +339,7 @@ export function DashboardClient() {
                 acertado com a ponta do dedo, e não com um cursor. */}
             <Link href="/mapa"
                   className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                             text-[var(--teal)] hover:underline">
+                             text-[var(--teal-ink)] hover:underline">
               Ver o mapa →
             </Link>
           </div>

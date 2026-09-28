@@ -239,7 +239,7 @@ export default function FaqPage() {
                   {item.link && (
                     <Link href={item.link.href}
                           className="inline-flex items-center min-h-[44px] font-ui text-[14px]
-                                     font-semibold text-[var(--teal)] hover:underline">
+                                     font-semibold text-[var(--teal-ink)] hover:underline">
                       {item.link.label} →
                     </Link>
                   )}

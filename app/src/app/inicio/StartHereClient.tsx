@@ -814,7 +814,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             <li key={t} className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-surface
                                px-3 py-1.5 font-ui text-[13.5px] text-ink">
-                <span aria-hidden className="font-bold text-[11px] text-[var(--teal)] tabular-nums">
+                <span aria-hidden className="font-bold text-[11px] text-[var(--teal-ink)] tabular-nums">
                   {i + 1}
                 </span>
                 {t}

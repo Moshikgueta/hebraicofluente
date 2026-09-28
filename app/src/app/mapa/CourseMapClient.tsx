@@ -73,7 +73,7 @@ export function CourseMapClient() {
                     lg:p-10 lg:pb-11">
       <header className="flex items-end gap-5 flex-wrap mb-8">
         <div className="flex-1 min-w-[240px]">
-          <p className="font-ui text-[13px] font-bold uppercase tracking-[.1em] text-[var(--teal)] mb-2">
+          <p className="font-ui text-[13px] font-bold uppercase tracking-[.1em] text-[var(--teal-ink)] mb-2">
             Meu curso
           </p>
           <h1 className="font-display text-[27px] sm:text-[31px] font-semibold leading-[1.1]
@@ -86,7 +86,7 @@ export function CourseMapClient() {
         </div>
         <p className="text-right">
           <span className="block font-display text-[34px] sm:text-[38px] font-semibold
-                           tracking-[-0.03em] leading-none text-[var(--teal)] tabular-nums">
+                           tracking-[-0.03em] leading-none text-[var(--teal-ink)] tabular-nums">
             {Math.round(p.progress * 100)}%
           </span>
           <span className="block font-ui text-[14px] text-ink-muted">concluído</span>
@@ -143,7 +143,7 @@ function Trecho({ module: m, estado, ultimo }: {
 
   const TAG = {
     feito: { texto: 'Concluído', cor: 'text-[var(--teal-ink)]' },
-    agora: { texto: 'Em andamento', cor: 'text-[var(--teal)]' },
+    agora: { texto: 'Em andamento', cor: 'text-[var(--teal-ink)]' },
     /* `--locked` e não um cinza escrito à mão: o cinza literal era o mesmo
        nos dois temas, e no escuro ele nem é o cinza certo nem acompanha o
        alto contraste. */
@@ -216,7 +216,7 @@ function Trecho({ module: m, estado, ultimo }: {
                   <span className="block h-full rounded-full bg-[var(--teal)] transition-[width] duration-500"
                         style={{ width: `${pct}%` }} />
                 </span>
-                <span className="font-ui text-[13px] font-semibold text-[var(--teal)] tabular-nums">{pct}%</span>
+                <span className="font-ui text-[13px] font-semibold text-[var(--teal-ink)] tabular-nums">{pct}%</span>
               </span>
             )}
           </div>
