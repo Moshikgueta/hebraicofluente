@@ -44,7 +44,14 @@ const GIVE_UP_MS = 24 * 3_600_000;
 const BATCH = 20;
 
 export async function runReconcile(env) {
-  const pending = await stalePendingOrders(env, { olderThanMs: MIN_AGE_MS, limit: BATCH });
+  /* No PIX direto não há nada a perguntar, e EXPIRAR também não: o pedido
+     é a prova de que a pessoa quis comprar, e a liberação à mão pode vir no
+     dia seguinte. Expirado, o aluno que pagou via "Expirado" em /perfil
+     enquanto esperava (auditoria de 28/09, PAY-009); pendente, vê
+     "aguardando". Quando a Mercado Pago voltar, a varredura retoma e os
+     pedidos velhos expiram pela regra de sempre. */
+  const pending = PIX_DIRETO ? []
+    : await stalePendingOrders(env, { olderThanMs: MIN_AGE_MS, limit: BATCH });
   let settled = 0, expired = 0;
 
   for (const order of pending) {
@@ -57,10 +64,6 @@ export async function runReconcile(env) {
         expired++;
         continue;
       }
-      /* Expirar continua valendo no PIX direto - um pedido de ontem não pode
-         ficar pendente para sempre. Perguntar ao provedor, não: não há
-         provedor. */
-      if (PIX_DIRETO) continue;
       const status = await settleFromProvider(env, order, 'reconcile');
       /* Conta como liberado só o que FOI liberado agora: o pedido era
          pendente e saiu pago. Contar o valor devolvido pela função

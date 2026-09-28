@@ -290,7 +290,7 @@ describe('os alertas ao dono', () => {
     for (let i = 0; i < 3; i++) await log(env, null, 'pay-create-failed', 'teste');
     await runAlertas(env);
     await runAlertas(env);
-    const alertas = enviados.filter(m => m.to === DONO && m.subject.includes('erros de pagamento'));
+    const alertas = enviados.filter(m => m.to === DONO && m.subject.includes('problemas de pagamento'));
     expect(alertas).toHaveLength(1);
     expect(alertas[0]!.text).toContain('3 cobranças que não nasceram na Mercado Pago');
   });

@@ -28,6 +28,7 @@ import {
   clearLegacyCookie, clearSessionCookie, makeSessionCookie, readSession
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
+import empresa from '../../../data/empresa.json';
 import {
   mailReady, mensagemDeConfirmacao, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
 } from '../lib/mail.js';
@@ -798,6 +799,12 @@ export async function health({ request, env }) {
        token, então esta linha é a confirmação de qual credencial está no ar -
        a pergunta que, errada, custa semanas de venda em silêncio. */
     modo: env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado',
+    /* Como ESTA publicação cobra: `mercadopago` ou `pix-direto`. É o valor
+       que o deploy escreveu em data/empresa.json depois de testar o token -
+       `pix-direto` aqui, com o arquivo do repositório dizendo mercadopago,
+       quer dizer que a Mercado Pago recusou a credencial e o cartão está
+       desligado (auditoria de 28/09, PAY-009). */
+    cobranca: (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago',
     /* QUE credencial foi colada - `access-token`, `chave-publica`,
        `formato-desconhecido` ou `ausente`. Nunca um pedaço do valor.
 

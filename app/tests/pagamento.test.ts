@@ -237,6 +237,39 @@ describe('2b. o estorno de uma cobrança em dobro não fecha o acesso', () => {
   });
 });
 
+/* ── 2b'. dois PEDIDOS do mesmo curso pagos (auditoria de 28/09, PAY-004) ──
+   "Gerar outro código" cria um PIX novo e o anterior continua pagável. Pagos
+   os dois, o aluno fica com os meses dos dois - e o dono precisa saber. */
+
+describe("2b'. dois pedidos do mesmo curso pagos no mesmo dia viram alerta", () => {
+  it('o segundo pedido pago grava pedido-duplicado; um pedido só, não', async () => {
+    const env = envPagamento();
+    const { cookie } = await compradora(env);
+    const o1 = await pedidoPix(env, cookie);
+    const p1 = [...pagamentos.values()].at(-1)!;
+    p1.status = 'approved';
+    await pay.webhook({ request: await avisoAssinado(p1.id), env });
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'pedido-duplicado'"),
+      'um pedido só não é duplicidade').toBeFalsy();
+
+    /* Pagar um segundo pedido exige que a loja deixe criá-lo: com acesso
+       valendo, o checkout recusa - então o caso real é o PIX anterior,
+       ainda pendente, pago depois do novo. Simulamos o mesmo no banco. */
+    const db = (env.DB as { bruto: { prepare(s: string): { run(...a: unknown[]): unknown } } }).bruto;
+    const p2: Pagamento = { ...p1, id: proximoId++, status: 'approved' };
+    pagamentos.set(p2.id, p2);
+    const o2 = `${o1.id}-2`;
+    db.prepare(`INSERT INTO orders (id, account_id, course_slug, amount_cents, currency, method, status, provider, provider_ref, created_at)
+                SELECT ?, account_id, course_slug, amount_cents, currency, method, 'pending', provider, NULL, created_at
+                  FROM orders WHERE id = ?`).run(o2, o1.id);
+    p2.external_reference = o2;
+    await pay.webhook({ request: await avisoAssinado(p2.id), env });
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${o2}'`)!.status).toBe('paid');
+    expect(linha(env, "SELECT detail FROM access_log WHERE action = 'pedido-duplicado'"),
+      'dois pedidos pagos passaram calados').toBeTruthy();
+  });
+});
+
 /* ── 2c. recusado e aprovado na segunda tentativa (27/09/2026) ─────────────
    O cartão recusado marca o pedido `failed`. A segunda tentativa, aprovada,
    precisa ser achada pela tela e pela varredura - não só pelo aviso da

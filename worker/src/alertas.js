@@ -12,7 +12,9 @@
  *
  *   2. ERROS DE PAGAMENTO na última hora: pedido que não nasceu na Mercado
  *      Pago, liberação que falhou, pagamento com valor errado, e-mail de
- *      compra que não saiu, estorno recusado. Passou do limite, sai UM e-mail
+ *      compra que não saiu, estorno recusado, cobrança em dobro (o mesmo
+ *      pedido pago duas vezes, ou dois pedidos do mesmo curso pagos em 24 h).
+ *      Passou do limite, sai UM e-mail
  *      por hora com as contagens (nunca um a cada 5 minutos).
  *
  *   3. DESISTÊNCIAS sem estorno resolvido: manual, erro, ou mais de um dia
@@ -38,7 +40,9 @@ export const LIMITES = {
   'compra-email-falhou': 1,     // o recibo da compra não saiu
   'estorno-falhou': 3,          // a Mercado Pago recusou estornos
   'reconcile-error': 3,         // a varredura não conseguiu consultar pedidos
-  'webhook-bad-signature': 20   // avisos com assinatura errada: segredo trocado?
+  'webhook-bad-signature': 20,  // avisos com assinatura errada: segredo trocado?
+  'pagamento-duplicado': 1,     // o mesmo pedido pago duas vezes
+  'pedido-duplicado': 1         // dois pedidos do mesmo curso pagos em 24 h
 };
 
 const DESCRICAO = {
@@ -48,7 +52,9 @@ const DESCRICAO = {
   'compra-email-falhou': 'recibos de compra que não saíram',
   'estorno-falhou': 'estornos recusados pela Mercado Pago',
   'reconcile-error': 'erros da varredura de pagamentos',
-  'webhook-bad-signature': 'avisos da Mercado Pago com assinatura inválida (o segredo do webhook mudou?)'
+  'webhook-bad-signature': 'avisos da Mercado Pago com assinatura inválida (o segredo do webhook mudou?)',
+  'pagamento-duplicado': 'pedidos pagos duas vezes (estornar o segundo pagamento)',
+  'pedido-duplicado': 'alunos que pagaram dois pedidos do mesmo curso em 24 h (confirmar e estornar um)'
 };
 
 /** O dia e a hora em Brasília, para as chaves dos avisos. */
@@ -76,7 +82,7 @@ async function alertaDeErros(env, at) {
   if (!acima.length) return;
   const hora = brasilia(at).slice(0, 13);                  // 2026-09-28T14
   await enviarAoDono(env, `operacao:${hora}`, mensagemDeAlerta({
-    assunto: 'erros de pagamento na última hora',
+    assunto: 'problemas de pagamento na última hora',
     linhas: [
       'Na última hora o site registrou:',
       ...acima.map(([acao]) => `- ${contagem[acao]} ${DESCRICAO[acao]}`),
