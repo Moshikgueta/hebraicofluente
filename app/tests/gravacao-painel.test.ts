@@ -177,8 +177,8 @@ describe('o curso toca a gravação do painel no endereço de sempre', () => {
     const r = await chamar('GET', '/admin/gravar/');
     expect(r.headers.get('permissions-policy')).toContain('microphone=(self)');
     expect(r.headers.get('x-robots-tag')).toBe('noindex, nofollow');
-    const home = await chamar('GET', '/');
-    expect(home.headers.get('permissions-policy')).toContain('microphone=()');
+    const publica = await chamar('GET', '/faq/');
+    expect(publica.headers.get('permissions-policy')).toContain('microphone=()');
   });
 });
 

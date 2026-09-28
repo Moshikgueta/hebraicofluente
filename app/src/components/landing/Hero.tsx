@@ -20,32 +20,10 @@ import { He } from '@/components/hebrew/He';
 import { Container, Check } from './base';
 import { TEM_AUDIO } from './copy';
 import { SEM_MIDIA, type HeroMedia } from './media';
-import { course, totalLicoes } from '@/lib/content-publico';
-import { flagship } from '@/lib/catalog';
 
 
 const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1000], [5, 1900]];
 
-
-/* Os quatro fatos do produto, lidos do CURSO e do CATÁLOGO.
-   ─────────────────────────────────────────────────────────────────────────
-   Esta linha é a mais fácil de escrever à mão e a mais cara de errar: ela
-   está acima da dobra, e um "21 lições" que vira 24 no dia em que um módulo
-   entra é uma oferta que não bate com o produto. O mesmo motivo pelo qual a
-   seção do método passou a contar o próprio array. */
-function fatos(): string[] {
-  return [
-    /* Os dois números numa linha só, e não dois itens: a contagem de letras
-       saiu do parágrafo de apoio quando ele foi reescrito, e ela é o número
-       que responde «o que exatamente eu vou aprender?». Como item separado
-       faria cinco fatos numa grade de dois - uma terceira linha com um item
-       órfão no telefone. */
-    `${course.totalLetters} letras em ${totalLicoes()} lições`,
-    'exercícios interativos',
-    'progresso salvo',
-    `acesso por ${flagship().accessMonths} meses`
-  ];
-}
 
 /* A mensagem central é em PORTUGUÊS, inteira.
  * ─────────────────────────────────────────────────────────────────────────
@@ -95,95 +73,72 @@ export function Hero({
       <Container className="relative pt-14 pb-16 sm:pt-[78px] sm:pb-24
                             grid gap-12 lg:gap-[60px] lg:grid-cols-[minmax(0,1.04fr)_minmax(0,1fr)] lg:items-center">
         <div>
+          {/* A mensagem do hero (28/09/2026), a pedido do dono do curso.
+              ──────────────────────────────────────────────────────────────
+              Antes o título dizia o resultado ("ler e escrever hebraico com
+              segurança"). Agora ele começa pelo DESEJO de quem chega - viajar
+              para Israel, ler a Bíblia no original, ou só vencer as letras que
+              sempre pareceram impossíveis -, e o resultado vem logo abaixo,
+              grifado: "ler e escrever hebraico do zero".
+
+              A hierarquia, de cima para baixo:
+                · o selo diz em um relance PARA QUEM é e O QUE é - iniciante
+                  absoluto, alfabetização (e não fluência);
+                · as duas primeiras perguntas no corpo grande: são os dois
+                  motivos que mais trazem gente para cá;
+                · a terceira, menor e em tinta suave: é o motivo de todo mundo,
+                  e em corpo grande ela sozinha ocuparia três linhas;
+                · "Você está no lugar certo." em teal, a virada;
+                · a promessa, com o grifo no que o curso entrega.
+              O resto da explicação (o que se aprende, os dois "nada de") foi
+              para a faixa logo abaixo (Promessa.tsx): o hero ficou com a
+              mensagem, e a primeira tela continua mostrando o botão. */}
           <div
             className="transition-[opacity,transform] duration-[600ms] ease-[var(--ease)]"
             style={{ opacity: em(1) ? 1 : 0, transform: em(1) ? 'none' : 'translateY(20px)' }}
           >
-            {/* A pílula "Alfabetização Hebraica · turma aberta" saiu daqui.
-                Ela dizia duas coisas que a página já diz melhor logo abaixo:
-                o nome do curso está no título e na caixa de preço, e "turma
-                aberta" sugeria justamente o que o produto NÃO é - não há
-                turma, não há data de início, e o FAQ responde isso em uma
-                linha. Um selo acima do título custa a primeira leitura da
-                página inteira, e este não estava pagando por ela. */}
-            {/* O título diz o RESULTADO, com o verbo que a pessoa procurou no
-                Google: "ler hebraico". "Da primeira letra ao hebraico de
-                verdade" era bonito e vago - quem chega aqui precisa saber, na
-                primeira linha, o que vai conseguir fazer.
-
-                ── e agora diz o que ela SENTE, primeiro ──────────────────
-                O visitante brasileiro chega com uma frase na cabeça, e não é
-                "quero aprender a ler hebraico": é "isso parece impossível". A
-                primeira linha responde exatamente essa frase, e o resultado
-                vem logo abaixo, na segunda.
-
-                A promessa é de PERCURSO, não de prazo. "Aprenda hebraico em 7
-                dias" converte melhor numa tarde e cobra o preço em reembolso
-                na semana seguinte; esta diz uma coisa que o curso entrega
-                mesmo - que o estranho vira legível - e deixa o tempo para o
-                FAQ, onde ele está medido. */}
-            {/* O tamanho é MEDIDO, não escolhido pelo efeito.
-                ──────────────────────────────────────────────────────────
-                A 62px uma frase mais curta que esta já ocupava quatro linhas
-                no desktop e empurrava os botões para fora da primeira tela. A
-                promessa só funciona se o convite estiver visível junto com
-                ela - um título imponente que esconde o botão custa a conversão
-                que ele foi escrito para criar. Esta frase é mais longa, então
-                o corpo desce junto. */}
-            <h1 className="font-display font-semibold text-[clamp(30px,3.35vw,42px)] leading-[1.07]
-                           tracking-[-0.03em] text-balance m-0 mb-3.5">
-              Dê seus primeiros passos até conseguir{' '}
-              <span className="text-[var(--teal)]">ler e escrever hebraico com segurança.</span>
-            </h1>
-            <p className="font-display text-[clamp(18px,1.85vw,22px)] leading-[1.32] font-medium
-                          tracking-[-0.02em] text-ink text-balance max-w-[36ch] m-0 mb-4">
-              Aprenda do zero, uma letra de cada vez, até reconhecer os sons, formar
-              palavras e começar a ler hebraico de verdade.
+            <p className="inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
+                          font-ui text-[13px] sm:text-[13.5px] font-semibold px-3.5 py-1.5 m-0 mb-5">
+              <span aria-hidden className="w-[7px] h-[7px] rounded-full bg-[var(--teal)]" />
+              {/* Curto no telefone: o longo quebrava em duas linhas e virava um bloco. */}
+              <span className="sm:hidden">Do zero · alfabetização em hebraico</span>
+              <span className="hidden sm:inline">Alfabetização em hebraico · para iniciantes absolutos</span>
             </p>
+            <h1 className="font-display font-semibold tracking-[-0.03em] text-balance m-0 mb-5 grid gap-1">
+              <span className="text-[clamp(30px,3.4vw,44px)] leading-[1.08]">
+                Quer viajar para <span className="text-[var(--teal)]">Israel</span>?
+              </span>
+              <span className="text-[clamp(30px,3.4vw,44px)] leading-[1.08]">
+                Ler a <span className="text-[var(--teal)]">Bíblia</span> no hebraico original?
+              </span>
+              <span className="mt-2 text-[clamp(19px,1.8vw,22px)] leading-[1.35] font-medium tracking-[-0.015em]
+                               text-ink-muted max-w-[36ch]">
+                Ou finalmente entender aquelas letras que sempre pareceram impossíveis?
+              </span>
+            </h1>
           </div>
 
-          <p
-            className="font-ui text-[18px] sm:text-[19.5px] leading-[1.6] text-ink-muted max-w-[48ch] mb-5
-                       transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
+          <div
+            className="transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
             style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
           >
-            Um curso interativo criado especialmente para brasileiros, com prática em cada
-            etapa e correção imediata para você saber exatamente quando está avançando.
-          </p>
-
-          {/* Os quatro fatos. Respondem "o que exatamente eu estou comprando?"
-              antes do botão, que é onde a pergunta aparece.
-
-              Grade de dois no celular, linha única com separadores a partir
-              do sm. A primeira versão era sempre uma linha com um ponto ANTES
-              de cada item, e ao quebrar no telefone o ponto ia junto - a
-              segunda linha começava com "· progresso salvo", um marcador
-              órfão. Separador que quebra tem de ser o do fim da linha, não o
-              do começo da seguinte; num telefone estreito, não ter separador
-              nenhum é mais limpo do que resolver isso. */}
-          {/* Duas colunas em TODA largura, e sem os pontinhos.
-              ──────────────────────────────────────────────────────────────
-              A linha antes era flex com um separador ANTES de cada item, e
-              isso funcionava enquanto os quatro fatos cabiam numa linha só.
-              Quando o primeiro passou a dizer "22 letras em 21 lições" eles
-              deixaram de caber, a linha quebrou, e o ponto foi junto: a
-              segunda linha começava com "· acesso por 12 meses", um marcador
-              órfão. A nota antiga deste arquivo já dizia a saída - separador
-              que quebra tem de ser o do fim da linha, e num espaço estreito
-              não ter separador nenhum é mais limpo do que resolver isso.
-
-              Numa grade de duas colunas o problema não existe em largura
-              nenhuma, e os quatro fatos ficam alinhados em vez de corridos. */}
-          <ul
-            className="grid grid-cols-2 gap-x-6 gap-y-1.5 max-w-[440px]
-                       list-none p-0 m-0 mb-6 font-ui text-[14.5px] text-ink-body
-                       transition-[opacity,transform] duration-[600ms] delay-[180ms] ease-[var(--ease)]"
-            style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(12px)' }}
-          >
-            {fatos().map(f => (
-              <li key={f} className="font-medium">{f}</li>
-            ))}
-          </ul>
+            <p className="flex items-center gap-3 font-display text-[clamp(20px,1.9vw,23px)] font-semibold
+                          tracking-[-0.02em] text-[var(--teal)] m-0 mb-2.5">
+              <span aria-hidden className="w-7 h-[2px] rounded-full bg-[var(--teal)]" />
+              Você está no lugar certo.
+            </p>
+            <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.34] font-medium tracking-[-0.02em]
+                          text-ink text-balance max-w-[30ch] m-0 mb-7">
+              Aprenda a{' '}
+              {/* O grifo é um degradê embaixo do texto, e não `<mark>` com
+                  fundo: acompanha a quebra de linha e não vira um bloco. */}
+              <strong className="font-semibold [background-image:linear-gradient(transparent_58%,color-mix(in_srgb,var(--teal)_24%,transparent)_58%)]
+                                 [box-decoration-break:clone] px-0.5 -mx-0.5">
+                ler e escrever hebraico do zero
+              </strong>
+              , mesmo que hoje você não reconheça uma única letra.
+            </p>
+          </div>
 
           <div
             className="grid gap-2.5 justify-items-start mb-7
@@ -200,7 +155,8 @@ export function Hero({
             <div className="flex flex-wrap gap-2.5">
               <Link
                 href={primaryHref}
-                className="group inline-flex items-center justify-center gap-2 rounded-[13px]
+                className="group inline-flex items-center justify-center gap-2 rounded-[13px] w-full sm:w-auto
+                           text-center leading-[1.3]
                            bg-[var(--navy)] text-white font-ui font-semibold text-[16.5px] px-5 py-[15px]
                            shadow-[var(--sh)] transition-[background-color,transform] duration-[180ms]
                            hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0"

@@ -235,7 +235,12 @@ function blindar(res, path) {
      nas páginas do curso, onde o aluno grava a própria leitura
      (components/learn/GravarLeitura.tsx - a gravação não sai do aparelho).
      Nenhum terceiro, nem num iframe, ganha o microfone em lugar nenhum. */
-  const mic = isGatedPath(path) || isAdminPath(path) ? 'microphone=(self)' : 'microphone=()';
+  /* 28/09/2026: e na CAPA, só nela. A landing ganhou "Ouça e fale"
+     (components/landing/OuvirEFalar.tsx): o visitante se grava falando
+     שָׁלוֹם e é corrigido, antes de comprar - a pedido do dono do curso. As
+     outras páginas públicas e a API continuam fechadas. */
+  const naCapa = path === '/' || path === '/index.html';
+  const mic = isGatedPath(path) || isAdminPath(path) || naCapa ? 'microphone=(self)' : 'microphone=()';
   h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), payment=()`);
   const tipo = h.get('Content-Type') || '';
   if (tipo.startsWith('text/html')) {

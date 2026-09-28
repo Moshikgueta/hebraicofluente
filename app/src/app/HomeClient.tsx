@@ -25,7 +25,9 @@
 import { Hero } from '@/components/landing/Hero';
 import { Problema, Demonstracao, Metodo, Curriculo, Jornada } from '@/components/landing/Secoes';
 import { Transformacao } from '@/components/landing/Transformacao';
+import { Promessa } from '@/components/landing/Promessa';
 import { DemoAlef } from '@/components/landing/DemoAlef';
+import { OuvirEFalar } from '@/components/landing/OuvirEFalar';
 import { Decisoes } from '@/components/landing/Decisoes';
 import { AlemDoAlfabeto } from '@/components/landing/AlemDoAlfabeto';
 import { BarraFixa } from '@/components/landing/BarraFixa';
@@ -58,11 +60,14 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
            muda aqui é só a voz do botão para quem ainda não comprou: na
            primeira dobra ele é a resposta do visitante à promessa logo
            acima, e não uma instrução do site para ele. */
-        primaryLabel={passo.vende ? 'Quero começar a ler hebraico' : passo.label}
+        primaryLabel={passo.vende ? 'Comece do zero e leia suas primeiras palavras em hebraico' : passo.label}
         primaryMicro={passo.micro}
         secondaryHref="#experimente"
         midia={midia}
       />
+      {/* A explicação que o hero deixou de carregar (28/09/2026): o que se
+          aprende e os dois "nada de". Ver Promessa.tsx. */}
+      <Promessa />
       {/* A ordem da narrativa, e por que ela é esta.
           ──────────────────────────────────────────────────────────────────
           A promessa do hero cria uma dúvida ("será que EU consigo?"), e a
@@ -77,6 +82,9 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
           ordem inversa seriam três promessas à espera de prova. */}
       <Transformacao />
       <DemoAlef href={comprar} micro={passo.micro} label={passo.label} vende={passo.vende} />
+      {/* Logo depois da aula aberta: o Álef não tem som, e esta seção mostra
+          o resto - ouvir o professor e ser corrigido falando. */}
+      <OuvirEFalar />
       <Problema />
       <Demonstracao />
       <Decisoes />

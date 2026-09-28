@@ -169,10 +169,15 @@ describe('o site sai blindado', () => {
   /* 25/09/2026: o aluno grava a própria leitura (GravarLeitura). O
      microfone abre só para o próprio site, só nas páginas do curso; no site
      público e na API continua fechado, e nenhum terceiro o recebe. */
-  it('o microfone só abre para o próprio site, e só no curso', async () => {
+  it('o microfone só abre para o próprio site, e só no curso e na capa', async () => {
     const env = envSite();
-    const publica = await worker.fetch(new Request(`${SITE}/`), env, ctx);
+    const publica = await worker.fetch(new Request(`${SITE}/faq/`), env, ctx);
     expect(publica.headers.get('permissions-policy')).toContain('microphone=()');
+    /* 28/09/2026: a capa abre o microfone para o próprio site - o "Ouça e
+       fale" da landing -, e só para ele. */
+    const capa = await worker.fetch(new Request(`${SITE}/`), env, ctx);
+    expect(capa.headers.get('permissions-policy')).toContain('microphone=(self)');
+    expect(capa.headers.get('permissions-policy')).not.toMatch(/microphone=\([^)]*(https?:|\*)/);
 
     const { cookie, id } = await comConta(env);
     await grantAccess(env, { accountId: id, courseSlug: 'alfabetizacao', orderId: 'M', months: 12 });
