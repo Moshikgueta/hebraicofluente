@@ -37,7 +37,7 @@ import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
 import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { useProgress } from '@/lib/state/store';
 import { letraAtual, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
-import { allLetters, course, cultureAt, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
+import { allLetters, course, cultureAt, nextLetter, scenesForOrder, semOSomDe, type Letter } from '@/lib/content';
 import {
   buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
 } from '@/lib/engine/exercises';
@@ -609,7 +609,8 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
 }
 
 function Scenes({ letter }: { letter: Letter }) {
-  const scenes = scenesForOrder(letter.order);
+  /* Sem as placas que usam o som que a lição seguinte ensina (PED-025). */
+  const scenes = scenesForOrder(letter.order).filter(semOSomDe(letter.id));
   const [shown, setShown] = useState(1);
   if (!scenes.length) return null;
   const rest = scenes.length - shown;

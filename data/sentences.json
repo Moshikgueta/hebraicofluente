@@ -85,13 +85,13 @@
     {
       "id": "ha-yam-gadol",
       "he": "הַיָּם גָּדוֹל",
-      "translit": "ha-yám gadól",
+      "translit": "ha-yam gadol",
       "pt": "o mar é grande",
       "after": 12,
       "era": "moderno",
       "words": [
-        { "he": "הַיָּם", "translit": "ha-yám", "pt": "o mar" },
-        { "he": "גָּדוֹל", "translit": "gadól", "pt": "grande" }
+        { "he": "הַיָּם", "translit": "ha-yam", "pt": "o mar" },
+        { "he": "גָּדוֹל", "translit": "gadol", "pt": "grande" }
       ],
       "notePt": "O {{ה}} na frente é o \"o/a\". Também vem colado."
     },
@@ -188,26 +188,26 @@
     {
       "id": "ani-medaber-ivrit",
       "he": "אֲנִי מְדַבֵּר עִבְרִית",
-      "translit": "aní medabér ivrít",
+      "translit": "aní medaber ivrit",
       "pt": "eu falo hebraico",
       "after": 20,
       "era": "moderno",
       "words": [
         { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
-        { "he": "מְדַבֵּר", "translit": "medabér", "pt": "falo" },
-        { "he": "עִבְרִית", "translit": "ivrít", "pt": "hebraico" }
+        { "he": "מְדַבֵּר", "translit": "medaber", "pt": "falo" },
+        { "he": "עִבְרִית", "translit": "ivrit", "pt": "hebraico" }
       ],
       "notePt": "Três palavras. A última é o nome da própria língua que você está lendo."
     },
     {
       "id": "shalom-ma-shlomcha",
       "he": "שָׁלוֹם, מָה שְׁלוֹמְךָ",
-      "translit": "shalóm, ma shlomchá",
+      "translit": "shalom, ma shlomchá",
       "pt": "olá, como você está",
       "after": 21,
       "era": "moderno",
       "words": [
-        { "he": "שָׁלוֹם", "translit": "shalóm", "pt": "olá" },
+        { "he": "שָׁלוֹם", "translit": "shalom", "pt": "olá" },
         { "he": "מָה", "translit": "ma", "pt": "que" },
         { "he": "שְׁלוֹמְךָ", "translit": "shlomchá", "pt": "a sua paz" }
       ],
@@ -216,13 +216,13 @@
     {
       "id": "tel-aviv",
       "he": "תֵּל אָבִיב",
-      "translit": "Tel Avív",
+      "translit": "Tel Aviv",
       "pt": "Tel Aviv",
       "after": 20,
       "era": "moderno",
       "words": [
         { "he": "תֵּל", "translit": "tel", "pt": "colina" },
-        { "he": "אָבִיב", "translit": "avív", "pt": "primavera" }
+        { "he": "אָבִיב", "translit": "aviv", "pt": "primavera" }
       ],
       "notePt": "O nome da cidade quer dizer \"colina da primavera\" - antigo e moderno na mesma placa."
     },

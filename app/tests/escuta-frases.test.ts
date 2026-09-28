@@ -80,8 +80,9 @@ describe('a frase ouvida', () => {
     const alfabeto = new Set(ultima.alphabetSoFar);
     for (const t of readingUsedBy(ex)) {
       for (const g of clusters(t)) {
-        const base = g.normalize('NFD').replace(/[\u0591-\u05C7\s]/g, '');
-        if (/[א-ת]/.test(base)) expect(alfabeto.has(base), `${t}: ${base}`).toBe(true);
+        /* Só a letra: sinais, espaço e pontuação (a vírgula de «כֵּן,») saem. */
+        const base = g.normalize('NFD').replace(/[^א-ת]/g, '');
+        if (base) expect(alfabeto.has(base), `${t}: ${base}`).toBe(true);
       }
     }
   });

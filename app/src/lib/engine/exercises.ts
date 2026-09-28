@@ -21,7 +21,7 @@
  */
 
 import type { Letter } from '@/lib/content';
-import { nikud, sentencesUpTo } from '@/lib/content';
+import { nikud, semOSomDe, sentencesUpTo } from '@/lib/content';
 import type { Skill } from '@/lib/state/types';
 import { ALL_GLYPHS, isReadableWith } from '@/lib/hebrew';
 import { rng, shuffled, type Rand } from './rng';
@@ -186,7 +186,8 @@ export function contextFor(L: Letter, history: Letter[]): Ctx {
     history: history.filter(x => x.order <= L.order),
     alphabet: L.alphabetSoFar,
     allGlyphs: [...ALL_GLYPHS],
-    sentences: sentencesUpTo(L.order),
+    /* Sem o som da própria letra que só a lição seguinte ensina (PED-025). */
+    sentences: sentencesUpTo(L.order).filter(semOSomDe(L.id)),
     nikud: nikud().sounds
   };
 }

@@ -25,7 +25,7 @@
       ],
       "introPt": "Seis letras escolhidas por uma razão só: juntas elas já formam palavras que você vai usar no primeiro dia. Duas delas - {{מ}} e {{נ}} - trazem de brinde as suas formas finais, {{ם}} e {{ן}}, e com isso você aprende, logo de entrada, que uma letra hebraica pode mudar de desenho no fim da palavra.",
       "goalsPt": [
-        "Ler e escrever {{מ ת א נ ה י}} em letra de imprensa e em cursiva",
+        "Ler e escrever {{מ ת א נ ה י}} em cursiva",
         "Reconhecer as formas finais {{ם}} e {{ן}}",
         "Ler sem ajuda {{אִמָּא}}, {{אֲנִי}}, {{מַיִם}}, {{אַתָּה}} e {{הִנֵּה}}",
         "Dizer quem você é: {{אֲנִי}} + o seu nome"
@@ -44,7 +44,7 @@
         { "n": 6, "som": "sin", "he": "שׂ", "parHe": "שׁ", "nomePt": "Sin", "topicPt": "{{שׂ}} com o ponto à esquerda - o som S" },
         { "n": 7, "kind": "practice" }
       ],
-      "introPt": "Nenhum destes cinco sons é novo para um brasileiro: G de \"gato\", D de \"dado\", X de \"xícara\", L de \"lua\", R de \"caro\". O que é novo é o desenho - e, no caso do {{ש}}, um ponto que decide tudo: com o ponto à direita ele é {{שׁ}} (sh), com o ponto à esquerda é {{שׂ}} (s).",
+      "introPt": "Nenhum destes cinco sons é novo para um brasileiro: G de \"gato\", D de \"dado\", X de \"xícara\", L de \"lua\", R do fundo da garganta, com voz (o R francês). O que é novo é o desenho - e, no caso do {{ש}}, um ponto que decide tudo: com o ponto à direita ele é {{שׁ}} (sh), com o ponto à esquerda é {{שׂ}} (s).",
       "goalsPt": [
         "Ler e escrever {{ג ד ש ל ר}}",
         "Distinguir {{שׁ}} de {{שׂ}} pelo lado do ponto",
