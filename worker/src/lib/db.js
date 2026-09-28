@@ -269,6 +269,16 @@ export async function pedirArrependimento(env, { orderId, accountId, ip }, at = 
   return { novo: Number(r && r.meta && r.meta.changes) > 0, pedidoEm: row ? Number(row.pedido_em) : at };
 }
 
+/** O IP do pedido de desistência prova QUEM pediu, e só importa enquanto a
+ *  desistência pode ser contestada. Depois de REGISTROS_DIAS (o mesmo prazo
+ *  do registro de acesso do Marco Civil) ele sai; a data e a hora do pedido
+ *  ficam, junto com o registro da compra. Antes, o IP ficava para sempre e
+ *  sobrevivia à exclusão da conta (auditoria de 28/09, LEGAL-002). */
+export async function arrependimentosIpPurge(env, at = now()) {
+  await env.DB.prepare("UPDATE arrependimentos SET ip = '' WHERE ip <> '' AND pedido_em < ?")
+    .bind(at - REGISTROS_DIAS * 86_400_000).run();
+}
+
 /** Os pedidos de desistência da conta, por pedido de compra. Tabela ausente
  *  vira "nenhum": a lista de compras não pode sumir por causa disto. */
 export async function arrependimentosDe(env, accountId) {
@@ -686,6 +696,19 @@ export function stalePendingOrders(env, { olderThanMs = 60_000, limit = 25 } = {
       WHERE status IN ('pending', 'failed') AND created_at < ?
       ORDER BY created_at ASC LIMIT ?`
   ).bind(now() - olderThanMs, limit).all().then(r => r.results || []);
+}
+
+/** Pedidos PAGOS pela Mercado Pago nos últimos `dias`, que a varredura não
+ *  conferiu nas últimas 24 h. É a rede para estorno e contestação cujo aviso
+ *  nunca chegou (auditoria de 28/09, PAY-002): antes, a varredura só olhava
+ *  pendentes, e um pedido pago nunca mais era perguntado. */
+export function paidOrdersToRecheck(env, { dias = 120, limit = 10 } = {}, at = now()) {
+  return env.DB.prepare(
+    `SELECT * FROM orders
+      WHERE status = 'paid' AND provider = 'mercadopago'
+        AND paid_at >= ?1 AND (checked_at IS NULL OR checked_at < ?2)
+      ORDER BY COALESCE(checked_at, 0) ASC LIMIT ?3`
+  ).bind(at - dias * 86_400_000, at - 86_400_000, limit).all().then(r => r.results || []);
 }
 
 /* ── eventos de pagamento ───────────────────────────────────────────────── */

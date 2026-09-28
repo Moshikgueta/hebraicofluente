@@ -30,8 +30,8 @@ import {
   mensagemDeAlerta, mensagemDeCompra, reaisBR, sendMail
 } from '../lib/mail.js';
 import {
-  createCardPreference, createPix, getPayment, mapStatus, paymentsFor, refundPayment,
-  verifyWebhookSignature
+  createCardPreference, createPix, getPayment, mapStatus, paymentsFor, paymentsOfChargeback,
+  paymentsOfMerchantOrder, refundPayment, verifyWebhookSignature
 } from '../lib/mercadopago.js';
 import { brCode, confereBrCode } from '../lib/pix.js';
 import empresa from '../../../data/empresa.json';
@@ -551,11 +551,18 @@ export async function webhook({ request, env }) {
      de aviso e da versão da integração. Aceitar os dois é mais barato do que
      descobrir em produção qual deles chegou. */
   const dataId = url.searchParams.get('data.id') || body?.data?.id || url.searchParams.get('id');
-  const type = url.searchParams.get('type') || body?.type || '';
+  const type = String(url.searchParams.get('type') || body?.type || url.searchParams.get('topic') || body?.topic || '');
 
-  /* Só pagamento interessa. Aviso de plano, de assinatura ou de fraude chega
-     na mesma URL e não tem o que fazer aqui. */
-  if (!dataId || (type && !String(type).startsWith('payment'))) {
+  /* Pagamento, contestação (chargeback) e pedido do Checkout Pro. Até
+     28/09/2026 só `payment` era lido, e uma contestação que chegasse pelo
+     tópico `chargebacks` deixava o aluno com o curso e sem o dinheiro
+     (auditoria, PAY-002). Aviso de plano, de assinatura ou de outro produto
+     chega na mesma URL e não tem o que fazer aqui. */
+  const tipo = !type || type.startsWith('payment') ? 'payment'
+    : type.startsWith('chargeback') ? 'chargeback'
+    : type.startsWith('merchant_order') ? 'merchant_order'
+    : '';
+  if (!dataId || !tipo) {
     return json({ ok: true });
   }
 
@@ -584,8 +591,29 @@ export async function webhook({ request, env }) {
   }
 
   /* A assinatura prova QUEM mandou, não O QUE aconteceu. O status vem de uma
-     consulta nossa. */
-  const resultado = await settleFromPaymentId(env, String(dataId), 'webhook');
+     consulta nossa - e, para contestação e pedido, de uma consulta que leva
+     aos pagamentos, que seguem pelo mesmo caminho. */
+  let resultado;
+  if (tipo === 'payment') {
+    resultado = await settleFromPaymentId(env, String(dataId), 'webhook');
+  } else {
+    let ids;
+    try {
+      ids = tipo === 'chargeback'
+        ? await paymentsOfChargeback(env, String(dataId))
+        : await paymentsOfMerchantOrder(env, String(dataId));
+    } catch (e) {
+      /* 404 = não é nosso; o resto é erro nosso ou deles, e a MP reenvia. */
+      if (e && e.status === 404) return json({ ok: true });
+      await erroDeLiberacao(env, null, `${tipo} ${dataId} ${e && e.message || e}`);
+      return json({ error: 'retry' }, 500);
+    }
+    for (const id of ids.filter(i => /^\d{1,24}$/.test(i))) {
+      const r = await settleFromPaymentId(env, id, `webhook-${tipo}`);
+      if (r === 'erro') resultado = 'erro';
+    }
+    if (tipo === 'chargeback') await log(env, null, 'contestacao', `${dataId} ${ids.join(',')}`.slice(0, 200));
+  }
   /* Duas respostas, para dois casos que a Mercado Pago trata diferente:
      · um erro NOSSO (banco fora, consulta que caiu) devolve 500, e ela
        reenvia - que é exatamente o que se quer de um aviso que não

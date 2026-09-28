@@ -260,4 +260,32 @@ describe('os textos legais', () => {
     expect(p).toContain('seis meses');
     expect(p).not.toContain('art. 16, II');
   });
+
+  it('a Política descreve o que a auditoria de 28/09 achou faltando', () => {
+    const p = fonte('privacidade/page.tsx');
+    /* LEGAL-002: retenções da trilha e do IP da desistência. */
+    expect(p).toContain('Trilha de operações da conta');
+    expect(p).toContain('o endereço IP, seis meses');
+    /* LEGAL-003: operadores. */
+    expect(p).toContain('<strong>GitHub</strong>');
+    expect(p).toContain('Gmail, do Google');
+    /* LEGAL-004: o Resend recebe o nome da conta, não só o primeiro nome. */
+    expect(p).not.toContain('primeiro nome');
+    /* LEGAL-007: as cópias de segurança e o prazo delas. */
+    expect(p).toContain('Cópias de segurança');
+    expect(p).toContain('90 dias');
+    /* LEGAL-010: a voz do visitante na página inicial. */
+    expect(p).toContain('demonstração da página inicial');
+  });
+
+  it('o cadastro mostra os Termos e a Política (LEGAL-009)', () => {
+    const f = readFileSync(new URL('../src/components/platform/AuthForm.tsx', import.meta.url), 'utf8');
+    expect(f).toContain('href="/termos"');
+    expect(f).toContain('href="/privacidade"');
+  });
+
+  it('o IP da desistência sai na varredura, no prazo do registro de acesso', () => {
+    const r = readFileSync(new URL('../../worker/src/reconcile.js', import.meta.url), 'utf8');
+    expect(r).toContain('arrependimentosIpPurge(env)');
+  });
 });
