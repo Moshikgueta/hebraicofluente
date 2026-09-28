@@ -26,8 +26,8 @@ export function CursosClient() {
         <SectionHead
           id="cursos"
           eyebrowPt="Cursos de hebraico"
-          titlePt="Do primeiro alfabeto à conversa."
-          leadPt="Quatro cursos, uma conta. Cada um começa exatamente onde o anterior parou - nada de recomeçar do zero em outra plataforma."
+          titlePt="Comece pelo alfabeto."
+          leadPt="A Alfabetização está disponível hoje. O A1, o A2 e o B1 estão em produção e serão vendidos à parte, na mesma conta, cada um começando onde o anterior parou."
         />
         <CourseShelf />
       </Section>

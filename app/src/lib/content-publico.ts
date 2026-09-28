@@ -383,3 +383,19 @@ export const letterIds = (): string[] =>
  */
 export const totalLicoes = (): number =>
   course.modules.reduce((n, m) => n + m.lessons.length, 0);
+
+/**
+ * Quanto tempo leva, numa frase só, derivada do número de lições.
+ *
+ * Havia três estimativas diferentes no site ("vinte minutos por dia, a
+ * maioria termina em seis a oito semanas", "três semanas ou três meses" e
+ * "menos de um mês") e um "a maioria" sem nenhum aluno para sustentar
+ * (auditoria de 28/09/2026, COM-005). Agora é esta, e a conta está à vista.
+ */
+export function tempoDoCursoPt(): string {
+  const n = totalLicoes();
+  const umPorDia = n <= 30 ? 'menos de um mês' : `cerca de ${Math.ceil(n / 30)} meses`;
+  const tresPorSemana = Math.max(1, Math.round(n / 3 / 4.3));
+  return `São ${n} lições de cerca de dez minutos. Quem faz uma por dia termina em ${umPorDia}; ` +
+    `quem faz três por semana leva ${tresPorSemana === 1 ? 'cerca de um mês' : `uns ${tresPorSemana} meses`}.`;
+}

@@ -24,6 +24,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { ancora, brl, fimDoPreLancamento, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
+import { tempoDoCursoPt } from '@/lib/content-publico';
 import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
 
 export function CourseClient({ slug }: { slug: string }) {
@@ -161,9 +162,9 @@ export function CourseClient({ slug }: { slug: string }) {
               E se não for para mim?
             </h3>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              Você tem {c.accessMonths} meses de acesso e nenhum prazo interno: dá para
-              fazer em três semanas ou em três meses. O curso guarda onde você
-              parou e volta exatamente ali.
+              Você tem {c.accessMonths} meses de acesso e nenhum prazo interno.{' '}
+              {tempoDoCursoPt()} O curso guarda onde você parou e volta
+              exatamente ali.
             </p>
             <Link href="/faq" className="font-ui text-[13.5px] text-[var(--accent)] hover:underline
                                           inline-flex items-center min-h-[36px]">

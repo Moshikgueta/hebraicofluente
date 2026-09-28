@@ -25,7 +25,7 @@ import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
-import { course, totalLicoes } from '@/lib/content-publico';
+import { course, tempoDoCursoPt, totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { confirmaSozinho, soPix, temPix } from '@/lib/empresa';
@@ -129,7 +129,7 @@ const RECURSOS: Recurso[] = [
     paths: ['M4 8v4M7 5.5v9M10 3v14M13 5.5v9M16 8v4']
   },
   { t: 'Correção imediata', d: 'Você sabe na hora se acertou - e por que errou.', paths: ['M4 10.5 8 14.5 16 5.5'] },
-  { t: 'Sequência de estudos', d: 'Os dias seguidos contam, e faltar um não zera nada.', paths: ['M10 2.5c1.9 3 .8 4.5-.6 6-1.3 1.4-2.4 2.7-2.4 4.6a3 3 0 0 0 6 0c0-.9-.3-1.6-.7-2.3 2 1 3.2 2.6 3.2 4.6'] },
+  { t: 'Sequência de estudos', d: 'Os dias seguidos contam. Faltar um dia não apaga seu XP nem seu recorde, e uma folga guardada protege a sequência.', paths: ['M10 2.5c1.9 3 .8 4.5-.6 6-1.3 1.4-2.4 2.7-2.4 4.6a3 3 0 0 0 6 0c0-.9-.3-1.6-.7-2.3 2 1 3.2 2.6 3.2 4.6'] },
   { t: 'Progresso visual', d: 'Percentual por módulo e mapa de domínio das letras.', paths: ['M4 16V9M9 16V4M14 16v-5'] },
   { t: 'Revisão inteligente', d: 'O que escapa volta sozinho, no intervalo certo.', paths: ['M16 6.5A6.5 6.5 0 1 0 17 10', 'M16 3v3.5h-3.5'] },
   { t: 'Estude no celular', d: 'Uma atividade por tela, botão de continuar sempre à mão.', paths: ['M6.5 2.5h7a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 5 16V4a1.5 1.5 0 0 1 1.5-1.5Z', 'M9 15h2'] },
@@ -167,7 +167,12 @@ export function Recursos() {
 }
 
 /* ── 10 · a aula de amostra ─────────────────────────────────────────────── */
-const AMOSTRA: readonly [string, string][] = [['ש', 'Shin'], ['מ', 'Mem'], ['ל', 'Lámed'], ['ב', 'Bet']];
+/* Só letras das lições 1 e 2 (א מ ת · נ ה י), que é o que a Lição 3, de
+   prática, revisa. A versão anterior perguntava pelo Shin (lição 4), com
+   Lámed (5) e Bet (14) de opção: uma "questão real da Lição 3" que a Lição
+   3 nunca faria, contra a própria regra do curso (auditoria de 28/09,
+   COM-004). */
+const AMOSTRA: readonly [string, string][] = [['נ', 'Nun'], ['מ', 'Mem'], ['ת', 'Tav'], ['ה', 'He']];
 
 export function AulaAmostra({ href }: { href: string }) {
   const [escolha, setEscolha] = useState<number | null>(null);
@@ -200,7 +205,7 @@ export function AulaAmostra({ href }: { href: string }) {
               Lição 3 · Reconhecimento
             </p>
             <p className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink mb-5">
-              Qual letra representa o som SH?
+              Qual letra faz o som N?
             </p>
             <div className="grid grid-cols-2 gap-3 mb-4.5">
               {AMOSTRA.map(([he, nome], i) => {
@@ -244,7 +249,8 @@ export function AulaAmostra({ href }: { href: string }) {
                     <span className="ml-auto font-ui font-bold text-[14px] text-[var(--teal)]">+10 XP</span>
                   </p>
                   <p className="font-ui text-[14.5px] leading-[1.55] text-[var(--teal-body)]">
-                    Shin é a única com o ponto em cima à direita. É esse ponto que faz o som SH.
+                    Nun faz o som N. Mem faz M, Tav faz T e He faz o H aspirado: as quatro
+                    vêm das duas primeiras lições.
                   </p>
                 </div>
               )}
@@ -257,8 +263,8 @@ export function AulaAmostra({ href }: { href: string }) {
                     <span className="font-ui font-bold text-[16px] text-[var(--gold-ink)]">Quase.</span>
                   </p>
                   <p className="font-ui text-[14.5px] leading-[1.55] text-[var(--gold-body)]">
-                    {AMOSTRA[escolha]![1]} tem outro som. Procure a letra de três hastes, com um
-                    ponto em cima à direita - pode tentar de novo.
+                    {AMOSTRA[escolha]![1]} tem outro som. Procure a letra estreita, de base
+                    curta - pode tentar de novo.
                   </p>
                 </div>
               )}
@@ -447,7 +453,6 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
 /* ── 13 · as dúvidas ────────────────────────────────────────────────────── */
 export function Faq() {
   const c = flagship();
-  const licoes = totalLicoes();
 
   const PERGUNTAS: readonly [string, string][] = [
     ['Preciso saber hebraico?',
@@ -455,7 +460,7 @@ export function Faq() {
     ['É hebraico moderno ou bíblico?',
      'A leitura é a mesma: as letras e os sinais de vogal do texto bíblico são os que este curso ensina. O curso usa a pronúncia do hebraico moderno e vocabulário do dia a dia, o que abre os dois caminhos. Ler em voz alta e entender, porém, são coisas diferentes - a página /biblia responde isso por inteiro.'],
     ['Quanto tempo leva?',
-     `São ${course.totalLetters} letras em ${licoes} lições, mais os checkpoints. Em vinte minutos por dia, a maioria termina em seis a oito semanas.`],
+     `${tempoDoCursoPt()} São ${course.totalLetters} letras, mais os checkpoints de revisão, e o ritmo é seu.`],
     ['O curso funciona no celular?',
      'Sim. A plataforma foi desenhada primeiro para o celular: uma atividade por tela e o botão de continuar sempre à mão.'],
     ['Tem áudio?',
