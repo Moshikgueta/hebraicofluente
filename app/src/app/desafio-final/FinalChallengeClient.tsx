@@ -26,7 +26,7 @@ import { Milestone, ProgressBar } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
-import { allLetters, course, scenesUpTo, sentencesUpTo } from '@/lib/content';
+import { allLetters, course, extras, scenesUpTo, sentencesUpTo } from '@/lib/content';
 import { buildExam, examReport, partsFor, EXAM_PASS, type Exam, type PartResult }
   from '@/lib/engine/exam';
 import { alphabetComplete, lettersLeft, isLessonComplete } from '@/lib/state/rules';
@@ -46,7 +46,7 @@ type Phase =
    ela recomeça a parte em que estava, com as anteriores já contadas. Fica
    no aparelho (localStorage) e vale por 24 horas; um exame esquecido não
    reaparece uma semana depois. */
-const CHAVE_EXAME = 'hf-exame-em-andamento-v1';
+const CHAVE_EXAME = 'hf-exame-em-andamento-v2';   // v2: o exame ganhou duas partes (28/09); um salvo da v1 apontaria para outras perguntas
 const VALIDADE_EXAME_MS = 24 * 3_600_000;
 type ExameSalvo = { attempt: number; index: number; results: PartResult[]; em: number };
 
@@ -105,7 +105,7 @@ export function FinalChallengeClient() {
   /* One exam per attempt. Rebuilt only when the attempt number changes, so
      leaving a part and coming back does not reshuffle the questions. */
   const exam = useMemo(
-    () => buildExam(letters, scenes, { audioAvailable: audio, attempt, sentences }),
+    () => buildExam(letters, scenes, { audioAvailable: audio, attempt, sentences, extras: extras() }),
     [letters, scenes, sentences, audio, attempt]
   );
 

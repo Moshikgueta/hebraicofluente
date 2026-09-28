@@ -82,8 +82,10 @@
       "fromOrder": 18,
       "sceneType": "jornal",
       "labelPt": "Na primeira página do jornal mais antigo do país",
-      "he": "אֶרֶץ",
-      "contextPt": "O jornal Haaretz é literalmente \"A Terra\". A palavra termina com o {{ץ}} final, que desce abaixo da linha."
+      "he": "הָאָרֶץ",
+      "contextPt": "O jornal Haaretz é literalmente \"A Terra\". A palavra termina com o {{ץ}} final, que desce abaixo da linha.",
+      "translit": "haárets",
+      "pt": "a terra"
     },
     {
       "id": "caixa-mits",
@@ -134,7 +136,7 @@
       "sceneType": "placa",
       "labelPt": "Numa placa de rua, em quase toda cidade do país",
       "he": "הַמֶּלֶךְ",
-      "contextPt": "\"Do rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
+      "contextPt": "\"O rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
       "translit": "hamélech",
       "pt": "o rei"
     },

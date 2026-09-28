@@ -67,7 +67,7 @@
           { "he": "סֵפֶר", "translit": "séfer", "pt": "livro" },
           { "he": "יָפֶה", "translit": "yafé", "pt": "bonito" },
           { "he": "סוֹף", "translit": "sof", "pt": "fim" },
-          { "he": "כֶּסֶף", "translit": "késef", "pt": "dinheiro" }
+          { "he": "כֶּסֶף", "translit": "késsef", "pt": "dinheiro" }
         ],
         "notePt": "O par mais fácil de ouvir dos três: P e F são tão distintos em hebraico quanto em português."
       }
@@ -79,7 +79,7 @@
       "word": "יוֹם", "translit": "yom", "pt": "dia", "descends": false },
     { "base": "נ", "fin": "ן", "namePt": "Nun sofit", "nameHe": "נוּן סוֹפִית",
       "word": "מִן", "translit": "min", "pt": "de", "descends": true },
-    { "base": "כ", "fin": "ך", "namePt": "Chaf sofit", "nameHe": "כַף סוֹפִית",
+    { "base": "כ", "fin": "ך", "namePt": "Chaf sofit", "nameHe": "כַּף סוֹפִית",
       "word": "מֶלֶךְ", "translit": "mélech", "pt": "rei", "descends": true },
     { "base": "פ", "fin": "ף", "namePt": "Fe sofit", "nameHe": "פֵּא סוֹפִית",
       "word": "סוֹף", "translit": "sof", "pt": "fim", "descends": true },
@@ -262,7 +262,7 @@
           },
           {
             "he": "נָשִׂיא",
-            "translit": "nasí",
+            "translit": "nassí",
             "pt": "presidente"
           },
           {
@@ -597,7 +597,7 @@
           },
           {
             "he": "כֶּסֶף",
-            "translit": "késef",
+            "translit": "késsef",
             "pt": "dinheiro"
           },
           {
@@ -787,7 +787,7 @@
           },
           {
             "he": "ג׳ונגל",
-            "translit": "djúngel",
+            "translit": "djúnguel",
             "pt": "selva"
           },
           {
@@ -846,7 +846,7 @@
           "comoPt": "A língua chega perto do céu da boca, atrás dos dentes, sem encostar, e o ar zumbe com a voz ligada: o J de \"jarro\". Sem o D na frente: é isso que o separa do {{ג׳}}."
         },
         "regraPt": "O traço fica à esquerda da letra, no alto: {{ז׳}}. Sem ele, a letra volta a ser {{ז}}, Z.",
-        "irmaoPt": "{{ג׳}} e {{ז׳}} são vizinhos: DJ começa com a língua encostada, J não encosta. \"Djins\" e \"jaquet\".",
+        "irmaoPt": "{{ג׳}} e {{ז׳}} são vizinhos: DJ começa com a língua encostada, J não encosta. \"Djins\" e \"jakét\".",
         "erro": {
           "wrong": "Trocar {{ז׳}} por {{ג׳}} e pôr um D na frente: \"djaket\".",
           "right": "J liso, sem D: \"jakét\", \"jargon\", \"massáj\".",

@@ -213,7 +213,16 @@ describe('typed answers are forgiving about the right things', () => {
 
   it('does NOT collapse distinctions the course teaches', () => {
     expect(typedIsCorrect('sam', ['sham'])).toBe(false);
-    expect(typedIsCorrect('kar', ['car'])).toBe(false);
+    /* C antes de E e I é S em português: não vira K. */
+    expect(typedIsCorrect('cel', ['kel'])).toBe(false);
+  });
+
+  /* O brasileiro escreve o ח como "rr" e o K como "c" antes de a, o, u
+     (auditoria de 28/09, PED-022, aprovado pelo dono). */
+  it('accepts rr for ch and c for k before a, o, u', () => {
+    expect(typedIsCorrect('lerrem', ['léchem'])).toBe(true);
+    expect(typedIsCorrect('col', ['kol'])).toBe(true);
+    expect(typedIsCorrect('car', ['kar'])).toBe(true);
   });
 
   it('never accepts an empty answer', () => {

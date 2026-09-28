@@ -990,10 +990,7 @@
         "he": "אלומיניום",
         "pt": "alumínio"
       },
-      {
-        "he": "בריטניה",
-        "pt": "Bretanha"
-      }
+      {"he": "בריטניה", "pt": "Grã-Bretanha"}
     ]
   },
   {
@@ -1058,13 +1055,13 @@
       {
         "vowel": "e",
         "he": "גֶ",
-        "translit": "ge",
+        "translit": "gue",
         "ptApprox": "E como em \"mesa\""
       },
       {
         "vowel": "i",
         "he": "גִ",
-        "translit": "gi",
+        "translit": "gui",
         "ptApprox": "I como em \"milho\""
       },
       {
@@ -1131,7 +1128,7 @@
     "didYouKnow": "{{גִּימֶל}} vem de {{גָּמָל}}, camelo, e a forma antiga desenhava o pescoço do animal. É também a letra do dreidel que significa \"gantz\" - leve tudo.",
     "brazilianMistake": {
       "wrong": "Suavizar o G antes de E e I: ler {{גֶּשֶׁם}} como \"jéshem\".",
-      "right": "Manter o G duro sempre: \"géshem\", \"gadol\", como em \"guerra\" e \"guitarra\".",
+      "right": "Manter o G duro sempre: \"guéshem\", \"gadol\", como em \"guerra\" e \"guitarra\".",
       "why": "Em português o G antes de E e I vira J - \"gente\", \"gigante\" - e por isso escrevemos \"gu\" para manter o som duro. O hebraico não tem essa alternância: {{ג}} é sempre duro."
     },
     "audioIds": [],
@@ -1284,7 +1281,7 @@
         "pt": "medida / tamanho"
       }
     ],
-    "didYouKnow": "O nome da letra é {{דֶּלֶת}}, que significa porta - e a forma da letra é o batente visto de lado. Muitos nomes de letras hebraicas são assim: a coisa que a letra desenhava originalmente.",
+    "didYouKnow": "O nome da letra vem de {{דֶּלֶת}}, que significa porta - e a forma da letra é o batente visto de lado. Muitos nomes de letras hebraicas são assim: a coisa que a letra desenhava originalmente.",
     "brazilianMistake": {
       "wrong": "Ler {{דִּי}} como \"dji\", do jeito que falamos \"dia\".",
       "right": "Ler {{דִּי}} como \"di\", com o D seco, como em \"dado\".",
@@ -1631,7 +1628,7 @@
       },
       {
         "he": "לַיְלָה",
-        "translit": "láila",
+        "translit": "láyla",
         "pt": "noite",
         "use": "Substantivo cotidiano"
       }
@@ -1659,7 +1656,7 @@
       },
       {
         "he": "לַיְלָה",
-        "translit": "láila",
+        "translit": "láyla",
         "pt": "noite"
       }
     ],
@@ -1705,7 +1702,7 @@
     "namePt": "Resh",
     "translit": "r",
     "sound": "/ʁ/",
-    "soundNotePt": "O R francês de \"Paris\": macio, feito no fundo da boca, perto da úvula, com a voz ligada. Não é o R carioca de \"carro\", que é soprado e áspero - esse som, em hebraico, é o de outra letra, que você conhece daqui a três lições.",
+    "soundNotePt": "O R francês de \"Paris\": macio, feito no fundo da boca, perto da úvula, com a voz ligada. Não é o R carioca de \"carro\", que é soprado e áspero - esse som, em hebraico, é o de outra letra, que você conhece no próximo módulo.",
     "articulacao": {
       "pontos": [
         {
@@ -1713,12 +1710,12 @@
         }
       ],
       "voz": true,
-      "comoPt": "Na úvula, a \"campainha\" no fundo da boca, com a voz ligada: ponha a mão no pescoço e sinta vibrar. Daqui a três lições vem outra letra que sai deste mesmo lugar, mas sem voz."
+      "comoPt": "Na úvula, a \"campainha\" no fundo da boca, com a voz ligada: ponha a mão no pescoço e sinta vibrar. No próximo módulo vem outra letra que sai deste mesmo lugar, mas sem voz."
     },
     "ensino": {
       "funcaoPt": "{{ר}} é a consoante do R francês, feito no fundo da boca, perto da úvula, com a voz ligada - como em \"Paris\". O hebraico moderno tem um R só: não existe a diferença entre \"caro\" e \"carro\" que o português faz. Toda vez que você vir {{ר}}, é esse mesmo som.",
       "detalhePt": "Chegou a hora do aviso que ficou pendente na lição do {{ד}}: as duas se parecem muito. O {{ר}} tem o canto superior direito ARREDONDADO, numa curva contínua; o {{ד}} tem esse canto em ângulo reto, com um pedacinho do traço de cima ultrapassando a perna à direita. É a confusão visual mais comum do alfabeto inteiro, e ela some quando você sabe para onde olhar.",
-      "paraBrasileiroPt": "Cuidado com a armadilha: o R carioca de \"carro\" também sai do fundo da boca, mas é soprado, sem voz, e áspero - e esse som, em hebraico, é o de outra letra, que você conhece daqui a três lições. O {{ר}} é mais macio e tem voz, como o R francês. Quem fala com R de ponta de língua (o R caipira ou o R batido de \"caro\") também vai soar estrangeiro. Para achar o som: diga \"Paris\" à francesa, ou faça um gargarejo leve com a voz ligada.",
+      "paraBrasileiroPt": "Cuidado com a armadilha: o R carioca de \"carro\" também sai do fundo da boca, mas é soprado, sem voz, e áspero - e esse som, em hebraico, é o de outra letra, que você conhece no próximo módulo. O {{ר}} é mais macio e tem voz, como o R francês. Quem fala com R de ponta de língua (o R caipira ou o R batido de \"caro\") também vai soar estrangeiro. Para achar o som: diga \"Paris\" à francesa, ou faça um gargarejo leve com a voz ligada.",
       "lembrePt": "{{ר}} é o R francês, macio e com voz, um só em todo o hebraico. E tem o canto de cima redondo - é isso que o separa do {{ד}}.",
       "checagem": [
         {
@@ -1810,7 +1807,7 @@
       },
       {
         "he": "אַרְבַּע",
-        "translit": "arba",
+        "translit": "arbá",
         "pt": "quatro",
         "use": "Número"
       }
@@ -1837,7 +1834,7 @@
         "pt": "rio"
       }
     ],
-    "didYouKnow": "O R israelense é o R francês, feito no fundo da boca, perto da úvula. Ele lembra o R carioca, mas não é o mesmo: o carioca é soprado e áspero, e em hebraico esse som áspero pertence a outra letra, que você conhece daqui a três lições. Trocar um pelo outro pode confundir quem ouve.",
+    "didYouKnow": "O R israelense é o R francês, feito no fundo da boca, perto da úvula. Ele lembra o R carioca, mas não é o mesmo: o carioca é soprado e áspero, e em hebraico esse som áspero pertence a outra letra, que você conhece no próximo módulo. Trocar um pelo outro pode confundir quem ouve.",
     "brazilianMistake": {
       "wrong": "Usar o R carioca soprado de \"carro\", que em hebraico é o som de outra letra, ou o R batido de \"caro\", ou o R retroflexo do interior, \"porrrta\".",
       "right": "Usar o R francês, macio e com a voz ligada, como em \"Paris\": {{הַר}} é \"har\", com esse R no fim.",
@@ -1970,13 +1967,13 @@
         "vowel": "o",
         "he": "ווֹ",
         "translit": "vo",
-        "ptApprox": "precisa de dois vav: um consoante, um vogal"
+        "ptApprox": "com dois vav, como se escreve sem nikud: um consoante, um vogal"
       },
       {
         "vowel": "u",
         "he": "ווּ",
         "translit": "vu",
-        "ptApprox": "precisa de dois vav: um consoante, um vogal"
+        "ptApprox": "com dois vav, como se escreve sem nikud: um consoante, um vogal"
       },
       {
         "vowel": "sheva",
@@ -2042,7 +2039,7 @@
         "pt": "ela"
       }
     ],
-    "didYouKnow": "Com {{ו}} você acaba de destravar {{שָׁלוֹם}} - a palavra que abre e fecha qualquer conversa em Israel. Oito letras foi tudo o que ela exigiu.",
+    "didYouKnow": "Com {{ו}} você acaba de destravar {{שָׁלוֹם}} - a palavra que abre e fecha qualquer conversa em Israel. Doze letras foi tudo o que ela exigiu.",
     "brazilianMistake": {
       "wrong": "Ler todo {{ו}} como V, inclusive quando ele é vogal: dizer \"shalvm\".",
       "right": "Olhar o ponto: {{וֹ}} é O, {{וּ}} é U, {{ו}} sem ponto entre consoantes é V.",
@@ -2099,7 +2096,7 @@
     "ensino": {
       "funcaoPt": "{{ז}} é a consoante /z/, sempre vibrada: o Z de \"zebra\" e também o som que o S faz entre vogais em \"casa\". Ela forma sílaba normalmente e mantém o som em qualquer posição da palavra, inclusive no fim.",
       "detalhePt": "Cuidado com a companhia: {{ז}}, {{ו}} e {{ן}} são três traços verticais parecidos, e é fácil trocá-los no começo. O {{ז}} tem um chapéu que se abre para os DOIS lados sobre a perna; o {{ו}} tem um ganchinho que vira só para a esquerda; o {{ן}} é um traço reto que desce abaixo da linha.",
-      "paraBrasileiroPt": "Em português o Z no fim da palavra perde a vibração e vira S ou CH - dizemos \"paiz\" como \"pais\", \"luz\" como \"luis\". Em hebraico o {{ז}} continua sonoro onde estiver: a garganta vibra até o fim.",
+      "paraBrasileiroPt": "Em português o Z no fim da palavra perde a vibração e vira S ou CH - dizemos \"paiz\" como \"pais\", \"luz\" como \"lus\". Em hebraico o {{ז}} continua sonoro onde estiver: a garganta vibra até o fim.",
       "lembrePt": "{{ז}} é sempre o Z vibrado de \"zebra\", inclusive terminando a palavra.",
       "checagem": [
         {
@@ -2213,7 +2210,7 @@
         "pt": "alimento"
       }
     ],
-    "didYouKnow": "{{מַזָּל טוֹב}} - a saudação que atravessou para o português como \"mazel tov\" - é literalmente \"boa sorte\". As duas palavras você já lê inteiras.",
+    "didYouKnow": "{{מַזָּל טוֹב}} - a saudação que atravessou para o português como \"mazel tov\" - é literalmente \"boa sorte\". A primeira palavra você já lê; a segunda chega com o {{ב}}, no módulo 5.",
     "brazilianMistake": {
       "wrong": "Ensurdecer o Z no fim da sílaba: ler {{זַיִן}} como \"sáin\".",
       "right": "Manter o Z vibrado: \"záyin\", com a garganta ligada.",
@@ -2404,10 +2401,6 @@
       {
         "he": "חופה",
         "pt": "chupá"
-      },
-      {
-        "he": "מחנה",
-        "pt": "acampamento"
       }
     ]
   },
@@ -2541,7 +2534,7 @@
         "pt": "guarda-chuva"
       }
     ],
-    "didYouKnow": "Com {{ט}} você lê {{טוֹב}}, \"bom\" - e portanto {{בֹּקֶר טוֹב}}, {{עֶרֶב טוֹב}} e {{מַזָּל טוֹב}} inteiros. Três cumprimentos completos numa letra só.",
+    "didYouKnow": "Com {{ט}} você já tem quase toda a palavra {{טוֹב}}, \"bom\": falta só o {{ב}}, que chega no módulo 5. Aí você lê {{בֹּקֶר טוֹב}}, {{עֶרֶב טוֹב}} e {{מַזָּל טוֹב}} inteiros.",
     "brazilianMistake": {
       "wrong": "Palatalizar antes de I e E: ler {{טִי}} como \"tchi\".",
       "right": "Ler \"ti\", com o T seco, exatamente como no {{ת}}.",
@@ -2679,7 +2672,7 @@
       },
       {
         "he": "כִּסֵּא",
-        "translit": "kisé",
+        "translit": "kissé",
         "pt": "cadeira",
         "use": "Substantivo cotidiano"
       }
@@ -2713,7 +2706,7 @@
     ],
     "didYouKnow": "{{סֵדֶר}} quer dizer \"ordem\" - e é o nome do jantar ordenado da Páscoa judaica, o Seder. A mesma palavra aparece em {{בְּסֵדֶר}}, \"tudo bem\", literalmente \"em ordem\".",
     "brazilianMistake": {
-      "wrong": "Sonorizar o S entre vogais: ler {{סָבָא}} como \"zaba\".",
+      "wrong": "Sonorizar o S entre vogais: ler {{חָסָה}} (alface) como \"chazá\".",
       "right": "Manter o S surdo sempre: \"saba\", \"savta\".",
       "why": "Em português o S entre vogais vira Z automaticamente - \"casa\", \"mesa\". Em hebraico isso nunca acontece: {{ס}} é sempre /s/, e existe uma letra separada, {{ז}}, para o som de Z."
     },
@@ -2875,20 +2868,7 @@
     },
     "audioIds": [],
     "biblicalWord": null,
-    "bridgeWords": [
-      {
-        "he": "מעגל",
-        "pt": "círculo"
-      },
-      {
-        "he": "עיניים",
-        "pt": "olhos"
-      },
-      {
-        "he": "נעים",
-        "pt": "agradável"
-      }
-    ],
+    "bridgeWords": [],
     "contrastes": {
       "צ": "O צ tem o braço esquerdo colado no alto do corpo. O ע tem os dois braços soltos, formando um V.",
       "א": "O א é um X com dois braços curtos. O ע é um V apoiado numa perna."
@@ -3033,7 +3013,7 @@
         "pt": "sombra"
       }
     ],
-    "didYouKnow": "Você chegou à última letra. {{אֶרֶץ יִשְׂרָאֵל}} - \"a terra de Israel\" - termina justamente com o {{ץ}} final, e é a primeira palavra que muitos iniciantes conseguem ler numa placa de rua.",
+    "didYouKnow": "Mais uma forma final. {{אֶרֶץ יִשְׂרָאֵל}} - \"a terra de Israel\" - termina justamente com o {{ץ}} final, e é a primeira palavra que muitos iniciantes conseguem ler numa placa de rua.",
     "brazilianMistake": {
       "wrong": "Desmontar o TS: ler {{צָרִיךְ}} como \"sarich\" ou \"tcharich\".",
       "right": "Colar os dois sons num só golpe: \"tsarich\", como o fim de \"pizza\" transportado para o começo da palavra.",
@@ -3086,7 +3066,7 @@
     },
     "ensino": {
       "funcaoPt": "{{ק}} é a consoante /k/, o C de \"casa\". Ela forma sílaba como qualquer consoante e aparece em palavras muito usadas - {{רַק}} (só), {{קָטָן}} (pequeno), {{מָקוֹם}} (lugar).",
-      "detalhePt": "No hebraico moderno, {{ק}} soa exatamente igual à letra que você aprende na próxima lição com o ponto dentro: são duas letras para um som só, como aconteceu com {{ט}} e {{ת}}. Para LER, isso não custa nada - as duas são K. Para escrever, é ortografia: cada palavra tem a sua letra, e isso se aprende com o uso.",
+      "detalhePt": "No hebraico moderno, {{ק}} soa exatamente igual à letra que você aprende no módulo 5, com o ponto dentro: são duas letras para um som só, como aconteceu com {{ט}} e {{ת}}. Para LER, isso não custa nada - as duas são K. Para escrever, é ortografia: cada palavra tem a sua letra, e isso se aprende com o uso.",
       "paraBrasileiroPt": "A transliteração escreve {{ק}} como Q, e aí mora a armadilha: em português o Q quase sempre vem acompanhado de U - \"quando\", \"quilo\". Em hebraico não existe U nenhum embutido na letra. {{קוֹל}} é \"kol\" (voz), e nunca \"kuol\".",
       "lembrePt": "{{ק}} é K puro, sem nenhum U junto. Soa igual ao K da outra letra que também faz esse som.",
       "checagem": [
@@ -3207,7 +3187,7 @@
     "brazilianMistake": {
       "wrong": "Ler {{ק}} como \"qu\" com um U embutido, dizendo \"kuol\" para {{קוֹל}}.",
       "right": "Ler {{ק}} como o C de \"casa\", sem nenhum U: \"kol\".",
-      "why": "A transliteração usa Q, e em português Q quase sempre vem com U - \"quando\", \"quilo\". Em hebraico não há U nenhum na letra."
+      "why": "Em português, o som de K muitas vezes vem escrito com U, como em \"quando\" e \"quilo\". Em hebraico não há U nenhum na letra."
     },
     "audioIds": [],
     "biblicalWord": null,
@@ -3220,10 +3200,7 @@
         "he": "קיוסק",
         "pt": "quiosque"
       },
-      {
-        "he": "רקטה",
-        "pt": "raquete"
-      },
+      {"he": "רקטה", "pt": "foguete"},
       {
         "he": "קוקטייל",
         "pt": "coquetel"
@@ -3628,10 +3605,7 @@
     "audioIds": [],
     "biblicalWord": null,
     "bridgeWords": [
-      {
-        "he": "תורכיה",
-        "pt": "Turquia"
-      },
+      {"he": "כימיה", "pt": "química"},
       {
         "he": "סוכר",
         "pt": "açúcar"
@@ -3793,7 +3767,7 @@
       },
       {
         "he": "כֶּסֶף",
-        "translit": "késef",
+        "translit": "késsef",
         "pt": "dinheiro",
         "use": "Substantivo essencial",
         "som": "fe"
@@ -3819,7 +3793,7 @@
       },
       {
         "he": "כֶּסֶף",
-        "translit": "késef",
+        "translit": "késsef",
         "pt": "dinheiro",
         "som": "fe"
       },
