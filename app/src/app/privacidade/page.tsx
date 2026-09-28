@@ -46,6 +46,11 @@ export default function Page() {
     ] as [string, string, string]]),
     ['Confirmação de e-mail', 'provar que o endereço da conta é seu (o link que mandamos no cadastro)',
      'enquanto a conta existir'],
+    /* 28/09/2026 (auditoria, LEGAL-019): a lista do aviso do próximo curso,
+       só com consentimento. Ver worker/src/api/novidades.js. */
+    ['Pedido para receber o aviso do próximo curso (só se você marcar em Sua conta)',
+     'mandar um e-mail quando o próximo curso abrir - base legal: o seu consentimento, que você retira quando quiser',
+     'até você desmarcar, sair pelo link do e-mail ou apagar a conta'],
     /* Marco Civil da Internet, art. 15 (24/09/2026): o provedor de aplicação
        guarda os registros de acesso por seis meses, em sigilo. Ver a tabela
        registros_acesso em worker/schema.sql. */
@@ -209,7 +214,7 @@ export default function Page() {
              recebe endereço e nome de todo mundo que pede um link de
              senha. Omiti-la deixava a política descrevendo menos
              compartilhamento do que o sistema faz. */
-          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha, confirmação da compra e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o nome da sua conta</strong>. Não mandamos e-mail de propaganda.</>,
+          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha, confirmação da compra e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o nome da sua conta</strong>. E-mail de propaganda, só um: o aviso de que o próximo curso abriu, e só para quem marcou esse pedido em Sua conta. Cada um desses e-mails traz o link para sair da lista.</>,
           <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site, o banco de dados e as cópias de segurança.</>,
           /* 28/09/2026 (auditoria, LEGAL-003): o GitHub e o atendimento
              estavam fora da lista, e os dois recebem dado pessoal. */

@@ -57,6 +57,7 @@ export const NAO_LISTADAS = [
      ser indexada: "conta apagada" saindo numa busca pelo nome do curso é a
      pior vitrine possível. */
   '/conta-apagada',
+  '/sair-da-lista',
   /* O painel de gravação do dono do curso (/admin/gravar). Nada nele serve a
      quem busca, e o Worker já o marca `noindex` - fora do sitemap também. */
   '/admin'
