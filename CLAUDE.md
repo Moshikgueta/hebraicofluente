@@ -1,5 +1,26 @@
 # Hebraico Fluente - notas do projeto
 
+## Como trabalhar neste repositório (regras do dono)
+Este projeto é SEPARADO do curso de espanhol (`Moshikgueta/espanolsindolordecabeza`).
+Sessões do Claude para o Hebraico Fluente abrem só este repositório; nada do
+espanhol (regras, fontes, provedor de pagamento) vale aqui.
+
+- **Responder ao dono em português.**
+- **Nunca fazer merge nem push em `main` sem aprovação.** Trabalhar no ramo da
+  sessão, abrir PR e perguntar "Posso fazer o merge?". Depois de cada merge:
+  reiniciar o ramo a partir da `main` nova e conferir a publicação
+  (`deploy-worker.yml`) até ficar verde.
+- **Conteúdo do curso só no presente.** Exceção aprovada: as leituras bíblicas
+  bônus (`data/bonus.json`).
+- **Hebraico escrito pelo Claude precisa da aprovação do dono antes de ir ao ar.**
+- **Nunca inventar fatos sobre o dono** (Moshik Gueta): cargos, certificados,
+  números de alunos, anos de experiência. Só o que ele informou.
+- **Nunca trancar conteúdo central do curso atrás de XP.** A loja só troca extras.
+- **Não apagar tabelas do banco de produção** sem pedido explícito.
+- **Nenhum identificador de modelo** em commits, PRs, comentários ou arquivos.
+- A auditoria de pré-lançamento de 28/09/2026 está em `audit/2026-09-28/`
+  (`RELATORIO.md` é o consolidado; a seção Q é a ordem de correção).
+
 ## Escrita: nada de travessão
 O texto do site, dos comentários, dos commits e da documentação usa **hífen `-`**.
 Nunca o travessão (U+2014) nem a meia-risca (U+2013), nem as formas escapadas
