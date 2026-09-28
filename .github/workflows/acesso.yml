@@ -45,7 +45,7 @@ on:
         required: true
         default: liberar
         type: choice
-        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido]
+        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido, trocar-email]
       email:
         description: 'E-mail da conta (não precisa em "listar", "envios", "pagamento" nem "pedido")'
         required: false
@@ -63,6 +63,10 @@ on:
         type: string
       pedido:
         description: 'Id do pedido, ou o começo dele (só em "pedido")'
+        required: false
+        type: string
+      novo_email:
+        description: 'O e-mail CERTO (só em "trocar-email"; o campo "E-mail" acima é o errado, o de hoje)'
         required: false
         type: string
 
@@ -88,6 +92,7 @@ jobs:
           CURSO: ${{ inputs.curso }}
           MESES: ${{ inputs.meses }}
           PEDIDO: ${{ inputs.pedido }}
+          NOVO_EMAIL: ${{ inputs.novo_email }}
         run: |
           set -euo pipefail
           # A máscara abaixo usa classes de caracteres, e classes dependem do
@@ -380,6 +385,56 @@ jobs:
               say "roda este \`liberar\` outra vez - aí sim o curso é concedido."
               say "O convite não vira curso sozinho de propósito: bastaria alguém"
               say "saber o endereço presenteado para chegar na frente e levá-lo."
+              ;;
+
+            # Corrigir o e-mail de uma conta (auditoria de 28/09, OPS-001).
+            #
+            # Quem digita o e-mail errado no cadastro e paga fica sem recibo,
+            # sem link de senha e sem como corrigir sozinho: o site não troca
+            # e-mail, de propósito (trocar e-mail sem prova de posse é como se
+            # rouba conta). Aqui a troca é feita pelo dono, DEPOIS de confirmar
+            # com o aluno por outro canal (WhatsApp, o e-mail certo) que a
+            # conta é dele. Compras, acesso e progresso ficam na mesma conta;
+            # só o endereço muda. O e-mail novo entra NÃO confirmado: o aviso
+            # de confirmação aparece para o aluno no próximo acesso.
+            trocar-email)
+              [ -n "$MAIL" ] || { echo "::error::Informe no campo E-mail o endereço de HOJE (o errado)."; exit 1; }
+              NOVO="$(printf '%s' "${NOVO_EMAIL:-}" | tr '[:upper:]' '[:lower:]' | xargs || true)"
+              [ -n "$NOVO" ] || { echo "::error::Informe o e-mail certo no campo novo_email."; exit 1; }
+              # A mesma forma que o cadastro aceita: algo@algo.algo, sem espaço
+              # nem caractere de controle, até 254 caracteres.
+              if ! printf '%s' "$NOVO" | grep -qE '^[^@[:space:][:cntrl:]]+@[^@[:space:][:cntrl:]]+\.[^@[:space:][:cntrl:]]+$' \
+                 || [ "${#NOVO}" -gt 254 ]; then
+                echo "::error::O e-mail novo não tem a forma de um endereço (recebi '$(printf '%s' "$NOVO" | mascara)')."; exit 1
+              fi
+              [ "$NOVO" != "$MAIL" ] || { echo "::error::Os dois e-mails são iguais."; exit 1; }
+              SQLNOVO="$(printf '%s' "$NOVO" | sed "s/'/''/g")"
+              conta() {
+                $W --json --command "SELECT COUNT(*) AS n FROM accounts WHERE email = '$1'" 2>&1 \
+                  | mascara | grep -o '"n": *[0-9]*' | head -1 | tr -cd '0-9'
+              }
+              ANTIGA="$(conta "$SQLMAIL")"; JA_USADO="$(conta "$SQLNOVO")"
+              [ -n "$ANTIGA" ] && [ -n "$JA_USADO" ] || { echo "::error::Não consegui consultar as contas."; exit 1; }
+              [ "$ANTIGA" = "1" ] || { echo "::error::Não existe conta com o e-mail de hoje. Confira com 'consultar'."; exit 1; }
+              if [ "$JA_USADO" != "0" ]; then
+                echo "::error::Já existe uma conta com o e-mail novo. Duas contas não podem ter o mesmo e-mail;"
+                echo "::error::confira com 'consultar' qual delas tem a compra antes de decidir."
+                exit 1
+              fi
+              grava \
+                "UPDATE accounts SET email = '$SQLNOVO' WHERE email = '$SQLMAIL';
+                 -- Links de senha pedidos para o endereço errado deixam de valer.
+                 UPDATE password_resets SET used_at = unixepoch()*1000
+                  WHERE used_at IS NULL
+                    AND account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO');
+                 INSERT INTO access_log (account_id, action, detail, created_at)
+                 SELECT id, 'email-trocado', 'via GitHub Actions', unixepoch()*1000
+                   FROM accounts WHERE email = '$SQLNOVO'"
+              say "E-mail trocado: \`$(printf '%s' "$MAIL" | mascara)\` → \`$(printf '%s' "$NOVO" | mascara)\`."
+              say ""
+              say "Compras, acesso e progresso continuam na mesma conta. A senha não muda."
+              say "Diga ao aluno para entrar com o e-mail novo; se não lembrar a senha,"
+              say "\"Esqueci minha senha\" agora manda o link para o endereço certo."
               ;;
 
             revogar)
