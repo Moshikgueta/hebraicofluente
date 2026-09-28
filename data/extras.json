@@ -81,7 +81,7 @@
       "word": "מִן", "translit": "min", "pt": "de", "descends": true },
     { "base": "כ", "fin": "ך", "namePt": "Kaf sofit", "nameHe": "כַּף סוֹפִית",
       "word": "מֶלֶךְ", "translit": "mélech", "pt": "rei", "descends": true },
-    { "base": "פ", "fin": "ף", "namePt": "Fe sofit", "nameHe": "פֵּא סוֹפִית",
+    { "base": "פ", "fin": "ף", "namePt": "Pe sofit", "nameHe": "פֵּא סוֹפִית",
       "word": "סוֹף", "translit": "sof", "pt": "fim", "descends": true },
     { "base": "צ", "fin": "ץ", "namePt": "Tsadi sofit", "nameHe": "צָדִי סוֹפִית",
       "word": "אֶרֶץ", "translit": "érets", "pt": "terra / país", "descends": true }
