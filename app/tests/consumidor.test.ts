@@ -293,12 +293,13 @@ describe('os textos legais', () => {
 /* PIX direto (auditoria de 28/09, LEGAL-017): a liberação é à mão, então
    nenhuma tela de venda pode prometer "em alguns minutos" nesse modo. */
 describe('o PIX direto não promete acesso em minutos', () => {
-  it('checkout, FAQ, capa e rodapé não dizem "alguns minutos"', () => {
+  it('checkout, FAQ, capa e rodapé não prometem liberação "em alguns minutos"', () => {
     for (const f of [
       'src/app/checkout/[slug]/CheckoutClient.tsx', 'src/app/faq/page.tsx',
       'src/components/landing/Fecho.tsx', 'src/components/shell/PublicShell.tsx'
     ]) {
-      expect(readFileSync(f, 'utf8'), f).not.toMatch(/alguns minutos/);
+      /* "Recarregue em alguns minutos" (modo automático) continua valendo. */
+      expect(readFileSync(f, 'utf8'), f).not.toMatch(/(liberad[oa]|normalmente|Acesso liberado) em alguns minutos/);
     }
   });
 });
