@@ -85,8 +85,10 @@ let enviados: Enviado[] = [];
 let recusarEmail = false;
 
 /** Um aviso assinado como a Mercado Pago assina. */
-async function avisoAssinado(id: number) {
-  const ts = Math.floor(Date.now() / 1000);
+async function avisoAssinado(id: number, emMs = false) {
+  /* A Mercado Pago manda o `ts` em segundos (documentação) ou em
+     milissegundos (visto em produção em 28/09/2026). Os dois valem. */
+  const ts = emMs ? Date.now() : Math.floor(Date.now() / 1000);
   const v1 = await hmacHex(SEGREDO, `id:${id};request-id:req-1;ts:${ts};`);
   return new Request(`${SITE}/api/pay/webhook?data.id=${id}&type=payment`, {
     method: 'POST',
@@ -180,6 +182,19 @@ describe('1. um PIX visto pendente e aprovado depois libera o curso', () => {
 });
 
 /* ── 2. estorno fecha a porta ───────────────────────────────────────────── */
+
+describe('1b. aviso com o ts em milissegundos', () => {
+  it('é aceito e libera o curso', async () => {
+    const env = envPagamento();
+    const { cookie, id } = await compradora(env);
+    await pedidoPix(env, cookie);
+    const p = [...pagamentos.values()].at(-1)!;
+    p.status = 'approved';
+    const r = await pay.webhook({ request: await avisoAssinado(p.id, true), env });
+    expect(r.status).toBe(200);
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
+  });
+});
 
 describe('2. estorno e chargeback fecham o acesso', () => {
   it.each(['refunded', 'charged_back'])('%s depois de pago revoga e marca o pedido', async (fim) => {

@@ -572,7 +572,8 @@ export async function webhook({ request, env }) {
   if (typeof dataId !== 'string' && typeof dataId !== 'number') return json({ ok: true });
   if (!/^\d{1,24}$/.test(String(dataId))) return json({ ok: true });
 
-  if (!await verifyWebhookSignature(env, request, dataId)) {
+  const recusa = {};
+  if (!await verifyWebhookSignature(env, request, dataId, recusa)) {
     /* A trilha guarda a recusa, mas não uma linha por requisição: esta é uma
        rota pública, e uma escrita gratuita no D1 por chamada anônima é o
        jeito mais barato de esgotar a cota de escrita da plataforma inteira.
@@ -581,7 +582,7 @@ export async function webhook({ request, env }) {
        umas cento e vinte linhas por minuto de uma máquina só, numa rota que
        nem a borda freia (auditoria de 24/09/2026). */
     if (!await throttled(env, `whk-h:${ip(request)}`, 1, 3_600_000)) {
-      await log(env, null, 'webhook-bad-signature', String(dataId));
+      await log(env, null, 'webhook-bad-signature', `${dataId} ${recusa.motivo || ''}`.trim());
     }
     /* 401, e não 200: um remetente legítimo com segredo errado precisa saber
        que está sendo recusado, em vez de achar que entregou. E o código é
