@@ -41,6 +41,7 @@ import { ancora, brl, getCourse, parcelasMax, pixPrice, type CatalogCourse } fro
 import { confirmaSozinho, empresa, formasAtivas, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
+import { contarAB } from '@/lib/ab';
 
 /** De quanto em quanto tempo perguntar, e por quanto tempo insistir. */
 const POLL_MS = 3_000;
@@ -50,6 +51,10 @@ export function CheckoutClient({ slug }: { slug: string }) {
   const account = useAccount();
   const router = useRouter();
   const c = getCourse(slug)!;
+
+  /* O teste A/B da capa (lib/ab.ts): chegou ao checkout. Só conta se o
+     navegador passou pela capa; nada mais aqui depende disto. */
+  useEffect(() => { contarAB('checkout'); }, []);
 
   /* Lidos uma vez: vêm de data/empresa.json, que é fixo no momento da build. */
   const CONFIRMA_SOZINHO = confirmaSozinho();
@@ -111,6 +116,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
              de acesso, e o portão do curso lê dela. */
           await account.refresh();
           track('course_completed', { id: `compra-${slug}` });
+          contarAB('compra');
         }
       } catch {
         /* Uma falha de rede no meio de uma espera não é motivo para desistir:

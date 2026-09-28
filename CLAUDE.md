@@ -575,3 +575,19 @@ npm run db:init:local
 SESSION_SECRET=qualquer-coisa npx wrangler dev --port 8788 --local
 cd app && npm run sincronia   # dois aparelhos, uma conta, ninguém perde trabalho
 ```
+
+## Teste A/B do hero da capa (28/09/2026)
+
+`hero-2026-09`: A = hero anterior ("Dê seus primeiros passos…", botão "Quero
+começar a ler hebraico"); B = hero novo (Israel, "as letras da Bíblia", botão
+"Comece do zero…"). Cada navegador sorteia uma vez (`lib/ab.ts`, localStorage).
+O HTML estático sai com B; o texto do hero nasce invisível, então A não pisca.
+
+- Contagem: `POST /api/ab` (worker/src/api/ab.js) soma totais diários em
+  `ab_contagens` (visto, clique, checkout, compra). Sem cookie, conta ou IP.
+  O site continua sem analítica: é o único contador.
+- Relatório: Action "Relatório do teste A/B" (`tools/relatorio-ab.mjs`), com
+  taxas e teste de duas proporções. O resumo é público (repositório público).
+- A privacidade (art. 4) descreve o teste.
+- **Para encerrar:** fixar a versão vencedora no Hero, apagar `lib/ab.ts`, as
+  chamadas `contarAB`, a rota `/api/ab` e o workflow; a tabela pode ficar.

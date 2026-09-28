@@ -28,6 +28,7 @@ import { useAccount } from '@/lib/account/store';
 import { getCourse } from '@/lib/catalog';
 import type { OrderStatus } from '@/lib/account/types';
 import { empresa } from '@/lib/empresa';
+import { contarAB } from '@/lib/ab';
 
 const POLL_MS = 3_000;
 const GIVE_UP_MS = 3 * 60_000;
@@ -67,6 +68,7 @@ export function ObrigadoClient({ slug }: { slug: string }) {
         };
         if (order.status === 'paid') {
           await account.refresh();
+          contarAB('compra');
           if (!stop) setPhase('paid');
           return true;
         }

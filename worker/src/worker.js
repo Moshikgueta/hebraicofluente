@@ -21,6 +21,7 @@ import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
 import { content } from './api/content.js';
 import * as audio from './api/audio.js';
+import * as ab from './api/ab.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -61,6 +62,10 @@ const ROUTES = {
      viajava dentro do pacote que qualquer visitante baixava. Ver
      api/content.js. */
   'GET /api/content': content,
+
+  /* O teste A/B da capa: só contagens diárias, sem identificar ninguém.
+     Ver api/ab.js. */
+  'POST /api/ab': ab.registrar,
 
   /* O progresso do aluno. `rev` na escrita é o que impede o celular e o
      notebook de se apagarem - ver api/progress.js. */
