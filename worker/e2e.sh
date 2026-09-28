@@ -386,6 +386,7 @@ Para apagá-la do banco de produção:
 
   npx wrangler d1 execute hebraico-fluente --remote --command \\
     "DELETE FROM arrependimentos     WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM estornos            WHERE order_id IN (SELECT id FROM orders WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL'));
      DELETE FROM payment_events      WHERE order_id IN (SELECT id FROM orders WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL'));
      DELETE FROM orders              WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM entitlements        WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
@@ -398,7 +399,7 @@ Para apagá-la do banco de produção:
 
 (Toda tabela que aponta para accounts precisa estar aí, antes do DELETE das
 contas - senão o banco recusa tudo com "FOREIGN KEY constraint failed" e a
-conta fica. arrependimentos também aponta para orders e sai antes dela.
+conta fica. arrependimentos e estornos também apontam para orders e saem antes dela.
 access_log e payment_events não têm chave estrangeira, mas guardam rastro
 da conta de teste. Ver worker/schema.sql.)
 LIMPEZA

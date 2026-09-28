@@ -541,7 +541,7 @@ jobs:
         run: |
           ALVO="SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'"
           # `email_verifications`, `registros_acesso` e `arrependimentos` apontam
-          # para `accounts` (e `arrependimentos` para `orders`) e precisam sair
+          # para `accounts` (e `arrependimentos` e `estornos` para `orders`) e precisam sair
           # antes. Ficam num comando À PARTE, com `|| true`: a publicação aplica
           # o worker/schema.sql (scripts/cloudflare-setup.sh), mas esta etapa
           # roda com `always()`, também quando a publicação caiu ANTES de
@@ -550,7 +550,8 @@ jobs:
           npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --command \
             "DELETE FROM email_verifications WHERE account_id IN ($ALVO);
              DELETE FROM registros_acesso    WHERE account_id IN ($ALVO);
-             DELETE FROM arrependimentos     WHERE account_id IN ($ALVO);" || true
+             DELETE FROM arrependimentos     WHERE account_id IN ($ALVO);
+             DELETE FROM estornos            WHERE order_id IN (SELECT id FROM orders WHERE account_id IN ($ALVO));" || true
           npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --command \
             "DELETE FROM access_log       WHERE account_id IN ($ALVO);
              DELETE FROM payment_events   WHERE order_id IN (SELECT id FROM orders WHERE account_id IN ($ALVO));

@@ -22,7 +22,8 @@
  * `settle` o processa do mesmo jeito: `expired` não fecha porta nenhuma.
  */
 
-import { settleFromProvider } from './api/pay.js';
+import { runEstornos, settleFromProvider } from './api/pay.js';
+import { runAlertas } from './alertas.js';
 import {
   getOrder, log, logPurge, registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
 } from './lib/db.js';
@@ -89,6 +90,13 @@ export async function runReconcile(env) {
   /* Os registros de acesso do Marco Civil: seis meses e pronto. */
   try { await registrosPurge(env); } catch { /* idem, e a tabela pode ainda não existir */ }
   try { await verifyPurge(env); } catch { /* idem, e a tabela pode ainda não existir */ }
+
+  /* Os estornos das desistências (pedir de novo o que falhou, confirmar o
+     que a Mercado Pago já devolveu) e os alertas ao dono, que também marcam
+     o batimento que /api/health usa para dizer se esta varredura parou.
+     Cada um no seu try, pelo mesmo motivo das faxinas acima. */
+  try { await runEstornos(env); } catch (e) { console.error('estornos', e && e.stack || e); }
+  try { await runAlertas(env); } catch (e) { console.error('alertas', e && e.stack || e); }
 
   return { checked: pending.length, settled, expired };
 }

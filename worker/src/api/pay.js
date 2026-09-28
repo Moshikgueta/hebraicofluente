@@ -21,16 +21,16 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { ip, ipCompleto, requireAccount } from './auth.js';
 import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
 import {
-  arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, findAccountById, getOrder,
-  grantAccess, log, markPaid, ordersOf, pedirArrependimento, recordEvent, refundOrder, throttled,
-  updateOrder
+  arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar, estornoCriar,
+  estornoDe, estornosDe, estornosParaVarrer, findAccountById, getOrder, grantAccess, log, markPaid,
+  ordersOf, pedirArrependimento, recordEvent, refundOrder, throttled, updateOrder
 } from '../lib/db.js';
 import {
   dataBR, dataHoraBR, mailReady, mensagemDeArrependimento, mensagemDeArrependimentoDono,
-  mensagemDeCompra, reaisBR, sendMail
+  mensagemDeAlerta, mensagemDeCompra, reaisBR, sendMail
 } from '../lib/mail.js';
 import {
-  createCardPreference, createPix, getPayment, mapStatus, paymentsFor,
+  createCardPreference, createPix, getPayment, mapStatus, paymentsFor, refundPayment,
   verifyWebhookSignature
 } from '../lib/mercadopago.js';
 import { brCode, confereBrCode } from '../lib/pix.js';
@@ -83,7 +83,7 @@ export function prazoDeDesistencia(paidAt, dias = DIAS_ARREPENDIMENTO) {
 
 /** Um pedido, no formato que o app espera (app/src/lib/account/types.ts).
  *  `desistenciaEm` é o momento do pedido de desistência, se houver. */
-const toOrder = (row, desistenciaEm = null) => ({
+const toOrder = (row, desistenciaEm = null, estorno = null) => ({
   id: row.id,
   courseSlug: row.course_slug,
   amountCents: row.amount_cents,
@@ -95,6 +95,9 @@ const toOrder = (row, desistenciaEm = null) => ({
   desistirAte: row.status === 'paid' && row.paid_at
     ? new Date(prazoDeDesistencia(row.paid_at)).toISOString() : null,
   desistenciaEm: desistenciaEm ? new Date(desistenciaEm).toISOString() : null,
+  /* Como o dinheiro está voltando: `automatico` (o site pediu o estorno à
+     Mercado Pago), `manual` (o dono estorna) ou null (não houve desistência). */
+  estorno: estorno ? (['manual', 'erro'].includes(estorno) ? 'manual' : 'automatico') : null,
   ...(row.pix_code ? {
     pix: {
       code: row.pix_code,
@@ -317,8 +320,10 @@ export async function orders({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
   const pedidos = await arrependimentosDe(env, account.id);
+  const estornos = await estornosDe(env, account.id);
   return json({
-    orders: (await ordersOf(env, account.id)).map(o => toOrder(o, pedidos.get(String(o.id)) || null))
+    orders: (await ordersOf(env, account.id)).map(o =>
+      toOrder(o, pedidos.get(String(o.id)) || null, estornos.get(String(o.id)) || null))
   });
 }
 
@@ -333,10 +338,13 @@ export async function orders({ request, env }) {
  * IMEDIATAMENTE. Então: um botão em Sua conta → Compras, este endpoint, e um
  * e-mail de confirmação que sai na hora, com a data e a hora do pedido.
  *
- * O estorno em si continua com o dono (o aviso vai para SUPPORT_EMAIL):
- * dinheiro saindo sozinho por um clique é uma decisão que não é deste
- * endpoint. Quando a Mercado Pago avisar o estorno, `applyPayment` fecha o
- * acesso como sempre.
+ * E o estorno sai SOZINHO (decisão do dono, 28/09/2026): este endpoint pede
+ * à Mercado Pago a devolução total na hora - ver `iniciarEstorno`. Antes o
+ * pedido só virava um e-mail para o dono, sem lista, sem lembrete e sem
+ * prazo controlado (auditoria, LEGAL-013/PAY-003), e o CDC quer a devolução
+ * imediata. Quando a Mercado Pago confirma o estorno, `applyPayment` fecha o
+ * acesso como sempre; o que não dá para estornar sozinho vira alerta ao dono
+ * até ser resolvido (worker/src/alertas.js).
  *
  * Pedir de novo não faz nada de novo: vale o PRIMEIRO pedido, e a pessoa
  * recebe a mesma resposta - inclusive depois do prazo, porque o que importa
@@ -364,18 +372,140 @@ export async function desistir({ request, env, ctx }) {
   const r = await pedirArrependimento(env, {
     orderId: order.id, accountId: account.id, ip: ipCompleto(request)
   });
+  let estado = null;
   if (r.novo) {
     await log(env, account.id, 'desistencia-pedida', order.id);
-    const avisar = avisarDesistencia(env, order, account, r.pedidoEm);
+    /* O estorno ANTES dos e-mails, para que eles digam o que de fato
+       aconteceu com o dinheiro. Nunca lança: o pedido já está gravado, e o
+       que falhar aqui a varredura tenta de novo. */
+    estado = await iniciarEstorno(env, order);
+    const avisar = avisarDesistencia(env, order, account, r.pedidoEm, estado);
     if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(avisar);
     else await avisar;
   }
   return json({ ok: true, novo: r.novo, pedidoEm: new Date(r.pedidoEm).toISOString() });
 }
 
+/* ── o estorno da desistência ──────────────────────────────────────────────
+ * Estados em `estornos` (schema.sql): pendente → pedido → concluido, ou
+ * manual/erro quando não há como devolver sozinho.
+ */
+
+/** Tentativas antes de desistir e chamar o dono. Com o intervalo dobrando a
+ *  partir de 5 min (teto de 6 h), oito tentativas cobrem pouco mais de um
+ *  dia - bem dentro dos dez dias úteis prometidos. */
+const MAX_TENTATIVAS = 8;
+const espera = n => Math.min(5 * 60_000 * 2 ** Math.max(0, n - 1), 6 * 3_600_000);
+
+/** Dá para estornar sozinho? Só um pagamento da Mercado Pago, com o id dele,
+ *  e com a credencial no ar. PIX direto, liberação à mão e convite não. */
+const estornavel = (env, order) =>
+  !pixDireto() && !!env.MP_ACCESS_TOKEN && order.provider === 'mercadopago'
+  && /^\d{1,24}$/.test(String(order.provider_ref || ''));
+
+/** Cria o estorno do pedido e faz a primeira tentativa. Devolve o estado. */
+export async function iniciarEstorno(env, order) {
+  try {
+    const auto = estornavel(env, order);
+    const row = await estornoCriar(env, {
+      orderId: order.id, paymentId: auto ? order.provider_ref : '', estado: auto ? 'pendente' : 'manual'
+    });
+    if (!auto) {
+      await log(env, order.account_id, 'estorno-manual', order.id);
+      return 'manual';
+    }
+    return await tentarEstorno(env, row);
+  } catch (e) {
+    console.error('estorno', e && e.stack || e);
+    return null;
+  }
+}
+
+/** Uma tentativa. Devolve o estado depois dela. */
+async function tentarEstorno(env, row) {
+  const order = await getOrder(env, row.order_id);
+  if (!order) return row.estado;
+  if (order.status === 'refunded') {
+    await estornoAtualizar(env, order.id, { estado: 'concluido' });
+    return 'concluido';
+  }
+  const tentativas = Number(row.tentativas || 0) + 1;
+  try {
+    const refund = await refundPayment(env, row.payment_id, `estorno-${order.id}`);
+    await estornoAtualizar(env, order.id, {
+      estado: 'pedido', tentativas, refund_id: String(refund && refund.id || ''), erro: ''
+    });
+    await log(env, order.account_id, 'estorno-pedido', `${order.id} ${refund && refund.status || ''}`.trim());
+  } catch (e) {
+    /* A Mercado Pago recusou. Se foi porque o pagamento JÁ está devolvido
+       (o dono estornou pelo painel, ou uma resposta nossa se perdeu), o
+       acerto abaixo fecha o pedido; senão, tenta de novo mais tarde. */
+    const motivo = `${e && e.status || ''} ${e && e.data && (e.data.message || e.data.error) || e && e.message || ''}`
+      .trim().slice(0, 200);
+    const desistir = tentativas >= MAX_TENTATIVAS;
+    await estornoAtualizar(env, order.id, {
+      estado: desistir ? 'erro' : 'pendente', tentativas, erro: motivo,
+      proxima_em: Date.now() + espera(tentativas)
+    });
+    await log(env, order.account_id, 'estorno-falhou', `${order.id} ${tentativas}/${MAX_TENTATIVAS} ${motivo}`);
+    if (desistir) await avisarEstornoTravado(env, order, motivo);
+  }
+  /* O mesmo caminho do webhook: pergunta à Mercado Pago o estado do
+     pagamento e aplica. Se ela já diz `refunded`, o acesso fecha aqui. */
+  try { await settleFromPaymentId(env, row.payment_id, 'estorno'); } catch { /* a varredura tenta */ }
+  const depois = await getOrder(env, order.id);
+  if (depois && depois.status === 'refunded') {
+    await estornoAtualizar(env, order.id, { estado: 'concluido' });
+    return 'concluido';
+  }
+  return (await estornoDe(env, order.id))?.estado || null;
+}
+
+/** Oito tentativas falharam: o dono precisa agir. O lembrete diário de
+ *  worker/src/alertas.js repete até resolver; este é o aviso imediato. */
+async function avisarEstornoTravado(env, order, motivo) {
+  try {
+    const dono = String(env.SUPPORT_EMAIL || '').trim();
+    if (!dono || !mailReady(env)) return;
+    await sendMail(env, {
+      to: dono,
+      ...mensagemDeAlerta({
+        assunto: `Estorno automático falhou: ${order.id}`,
+        linhas: [
+          `O estorno da desistência do pedido ${order.id} (${reaisBR(order.amount_cents, order.currency)}) falhou ${MAX_TENTATIVAS} vezes.`,
+          `Última resposta da Mercado Pago: ${motivo || 'sem detalhe'}.`,
+          '',
+          'Devolva pelo painel da Mercado Pago (Atividade -> o pagamento -> Devolver dinheiro).',
+          'Quando ela confirmar, o acesso fecha sozinho e este pedido sai do lembrete diário.'
+        ]
+      })
+    });
+  } catch { /* o lembrete diário cobre */ }
+}
+
+/** A parte da varredura de 5 em 5 min: tenta de novo os pendentes e acerta
+ *  os que a Mercado Pago já confirmou. Nunca lança. */
+export async function runEstornos(env) {
+  let tentados = 0;
+  for (const row of await estornosParaVarrer(env)) {
+    try {
+      if (row.estado === 'pendente') { await tentarEstorno(env, row); tentados++; continue; }
+      /* `pedido`: a Mercado Pago aceitou; confere se já devolveu. */
+      try { await settleFromPaymentId(env, row.payment_id, 'estorno'); } catch { /* próxima */ }
+      const order = await getOrder(env, row.order_id);
+      await estornoAtualizar(env, row.order_id,
+        order && order.status === 'refunded' ? { estado: 'concluido' } : { estado: 'pedido' });
+    } catch (e) {
+      console.error('estornos', e && e.stack || e);
+    }
+  }
+  return { tentados };
+}
+
 /** Os dois e-mails da desistência: a confirmação para quem pediu, e o aviso
- *  para o dono fazer o estorno. Nunca lança - o pedido já está gravado. */
-async function avisarDesistencia(env, order, account, pedidoEm) {
+ *  ao dono dizendo se o estorno saiu sozinho ou se é com ele. Nunca lança -
+ *  o pedido já está gravado. */
+async function avisarDesistencia(env, order, account, pedidoEm, estado) {
   try {
     if (!mailReady(env)) return;
     const curso = getCourse(order.course_slug)?.titlePt || order.course_slug;
@@ -389,7 +519,8 @@ async function avisarDesistencia(env, order, account, pedidoEm) {
       ...mensagemDeArrependimento({
         nome: account.name || '', curso, valor, pedido: order.id, pedidoEm: quando,
         prazoUteis, cartao: order.method === 'card', marca,
-        suporte: empresa.contato?.emailSuporte || ''
+        suporte: empresa.contato?.emailSuporte || '',
+        estornoPedido: estado === 'pedido' || estado === 'concluido'
       })
     });
     await log(env, account.id, r.ok ? 'desistencia-confirmada' : 'desistencia-email-falhou',
@@ -401,7 +532,7 @@ async function avisarDesistencia(env, order, account, pedidoEm) {
         to: dono,
         ...mensagemDeArrependimentoDono({
           email: account.email, curso, valor, pedido: order.id, pedidoEm: quando,
-          prazoUteis, pixDireto: pixDireto(), marca
+          prazoUteis, pixDireto: pixDireto(), marca, estado
         })
       });
     }
