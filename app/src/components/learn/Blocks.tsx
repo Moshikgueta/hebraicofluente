@@ -4,6 +4,7 @@
 
 import { useState } from 'react';
 import { He, HeSeq } from '@/components/hebrew/He';
+import { Prose } from '@/components/hebrew/Prose';
 import { AudioButton } from './AudioButton';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -82,24 +83,9 @@ export function BrazilianTip({ mistake }: { mistake: Letter['brazilianMistake'] 
   );
 }
 
-/* Prose from the data files marks Hebrew as {{…}}. Authors never write a
-   direction span by hand; this wraps it, and everything outside the braces
-   stays ordinary Portuguese - so the quotes and parentheses that bled into the
-   reference PDF's Hebrew runs physically cannot get inside a span. */
-export function Prose({ text }: { text: string }) {
-  const parts: React.ReactNode[] = [];
-  let i = 0, k = 0;
-  for (;;) {
-    const open = text.indexOf('{{', i);
-    if (open < 0) { parts.push(text.slice(i)); break; }
-    const close = text.indexOf('}}', open);
-    if (close < 0) { parts.push(text.slice(i)); break; }
-    parts.push(text.slice(i, open));
-    parts.push(<He key={`he-${k++}`} size="inline">{text.slice(open + 2, close).trim()}</He>);
-    i = close + 2;
-  }
-  return <>{parts}</>;
-}
+/* Prose moved to components/hebrew/Prose.tsx, so public pages can use it
+   without this module; re-exported here for the lesson screens. */
+export { Prose };
 
 /* ── syllables ──────────────────────────────────────────────────────────
    Learning mode, explicitly: the reading is on screen. The testing version of

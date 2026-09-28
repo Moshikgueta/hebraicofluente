@@ -18,6 +18,7 @@
 
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
+import { Prose } from '@/components/hebrew/Prose';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
@@ -126,7 +127,7 @@ export function CourseClient({ slug }: { slug: string }) {
                 </span>
                 <div className="grid gap-0.5 min-w-0">
                   <h3 className="font-display text-[16.5px] font-bold text-ink">{m.titlePt}</h3>
-                  <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">{m.subPt}</p>
+                  <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted"><Prose text={m.subPt} /></p>
                 </div>
                 {m.letters ? (
                   <span className="ml-auto shrink-0 font-ui text-[12px] text-ink-muted tabular-nums">

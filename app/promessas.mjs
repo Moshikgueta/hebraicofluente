@@ -106,8 +106,59 @@ console.log(`gravações: ${TEM_AUDIO ? 'existem' : 'NENHUMA'} · `
   + `páginas livres conferidas: ${paginas.length}`);
 console.log('─'.repeat(66));
 
+/* ── marcação crua na vitrine ─────────────────────────────────────────────
+   Os textos de data/*.json marcam hebraico como {{...}}, e só o componente
+   <Prose> transforma isso em texto. A página do curso mostrou `{{בּ}} ·
+   {{כּ}} · {{פּ}}` para quem ia comprar porque renderizava a string crua
+   (auditoria de 28/09/2026, UX-001). Conta só o texto VISÍVEL: dentro dos
+   <script> de dados da página as chaves são normais. */
+const cruas = [];
+for (const p of paginas.filter(p => p.endsWith('.html'))) {
+  let html;
+  try { html = readFileSync(p, 'utf8'); } catch { continue; }
+  const visivel = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ');
+  const m = visivel.match(/\{\{[^}]{0,40}\}\}/);
+  if (m) cruas.push({ onde: rotaDe(p), trecho: m[0] });
+}
+if (cruas.length) {
+  console.error(`\n✗ ${cruas.length} página(s) livre(s) mostram marcação crua de hebraico:\n`);
+  for (const c of cruas) console.error(`   ${c.onde.padEnd(46)} ${c.trecho}`);
+  console.error('\nUse <Prose text={...} /> (components/hebrew/Prose.tsx) em vez da string.');
+  console.error('─'.repeat(66));
+  process.exit(1);
+}
+console.log('✓ nenhuma página livre mostra {{...}} cru.');
+
+/* ── o contrário: com gravação, nenhuma página pode NEGÁ-LA ─────────────
+   Em 28/09/2026 a FAQ dizia "sintetizador do próprio navegador, com voz de
+   espanhol latino" com 526 gravações no ar - um texto fixo herdado do curso
+   de espanhol, que este script não via porque só cobrava o lado da promessa
+   (auditoria, COM-003). Prometer a menos custa a venda. */
+const NEGACOES = [
+  'sintetizador',
+  'voz sintética',
+  'espanhol latino',
+  'gravações estão em produção',
+  'gravações com falante nativo estão planejadas'
+];
+
 if (TEM_AUDIO) {
-  console.log('✓ o manifesto tem gravação: a vitrine pode prometer áudio.');
+  const negadas = [];
+  for (const p of paginas) {
+    let texto;
+    try { texto = readFileSync(p, 'utf8'); } catch { continue; }
+    for (const frase of NEGACOES) if (texto.includes(frase)) negadas.push({ onde: rotaDe(p), frase });
+  }
+  if (negadas.length) {
+    console.error(`\n✗ ${negadas.length} página(s) negam o áudio que o curso TEM:\n`);
+    for (const a of negadas) console.error(`   ${a.onde.padEnd(46)} "${a.frase}"`);
+    console.error('\nO manifesto tem gravação. Cada frase sobre áudio tem de sair dele');
+    console.error('(ver components/landing/copy.ts e app/faq/page.tsx).');
+    console.error('─'.repeat(66));
+    process.exit(1);
+  }
+  console.log('✓ o manifesto tem gravação: a vitrine pode prometer áudio,');
+  console.log('  e nenhuma página livre diz que ele é sintetizado ou que não existe.');
   process.exit(0);
 }
 
