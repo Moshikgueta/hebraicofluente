@@ -18,6 +18,8 @@
     "db:init:local": "wrangler d1 execute hebraico-fluente --file=worker/schema.sql --local",
     "db:backup": "bash scripts/backup-d1.sh",
     "db:backup:ensaio": "bash scripts/backup-d1.sh --ensaiar",
+    "db:backup:nuvem": "bash scripts/backup-nuvem.sh copiar",
+    "db:backup:nuvem:ensaio": "bash scripts/backup-nuvem.sh ensaiar",
     "dev:worker": "npm run build:platform && wrangler dev",
     "test:concessao": "node worker/concessao.mjs"
   },
