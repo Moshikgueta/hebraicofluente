@@ -203,9 +203,17 @@ regras que ele fixou e que valem para todo commit daqui em diante:
   uso** (`throttled`, hoje 48h contra uma janela máxima de 24h). Menor, e a
   limpeza apaga a linha que a própria chamada acabou de criar - o freio
   conta até um para sempre.
-- **O backup é local e é segredo:** `npm run db:backup`, e
-  `npm run db:backup:ensaio` prova que a cópia restaura. Nunca num artefato
-  do Actions - tem e-mail e hash de senha de todo aluno.
+- **Backup diário no R2** (desde 28/09/2026): a Action "Backup do banco"
+  (`.github/workflows/backup.yml` + `scripts/backup-nuvem.sh`) exporta o D1
+  às 03:17 de Brasília, restaura a cópia num banco local e só guarda no R2
+  (`hebraico-fluente-backups`, privado, diárias por 90 dias) se todas as
+  tabelas voltarem com as mesmas linhas. "ensaiar", à mão, restaura uma cópia
+  do zero num banco de teste na Cloudflare e o apaga depois: uma vez por mês.
+  Falha vira e-mail para o SUPPORT_EMAIL. O agendamento só roda no ramo
+  PADRÃO do GitHub, que precisa ser a `main`.
+- **O backup é segredo:** tem e-mail e hash de senha de todo aluno. Nunca num
+  artefato do Actions nem no git. `npm run db:backup` continua existindo para
+  uma cópia na sua máquina.
 - `npm run csp` prova a CSP num navegador; `app/tests/auditoria.test.ts`
   guarda cada ataque fechado. Um achado novo entra lá antes do conserto.
 

@@ -405,6 +405,9 @@ aqui porque dois deles mudam o que você vê acontecer.
     hash da senha de cada um. Guarde-o como guardaria a carteira, e nunca num
     repositório ou num artefato do Actions.
     Rode uma vez agora, com o `--ensaiar`, para saber que funciona.
+    **Desde 28/09/2026 há também o backup automático diário no R2** (Action
+    "Backup do banco", ver `.github/workflows/backup.yml`): a cópia manual
+    passa a ser um extra, não a única.
 
 **De brinde**, um defeito que apareceu ao fazer o item 13: o freio de
 requisições apagava sozinho a própria contagem em toda janela maior que duas
