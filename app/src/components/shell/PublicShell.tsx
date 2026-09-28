@@ -266,6 +266,7 @@ function Footer() {
           { href: '/termos', label: 'Termos de Uso' },
           { href: '/privacidade', label: 'Política de Privacidade' },
           { href: '/reembolso', label: 'Reembolso e Cancelamento' },
+          { href: '/acessibilidade', label: 'Acessibilidade' },
           { href: '/suporte', label: 'Suporte' }
         ]} />
 

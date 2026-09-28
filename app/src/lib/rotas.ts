@@ -24,7 +24,7 @@ const PUBLIC_PREFIXES = [
      e é justamente o visitante que precisa dela para decidir comprar. O
      mesmo vale para o atendimento: quem não consegue entrar é exatamente
      quem mais precisa escrever. */
-  '/termos', '/privacidade', '/reembolso', '/suporte',
+  '/termos', '/privacidade', '/reembolso', '/suporte', '/acessibilidade',
   /* A confirmação de que a conta foi apagada.
      ──────────────────────────────────────────────────────────────────────
      Pública por necessidade, e não por conveniência: quem chega nela acabou

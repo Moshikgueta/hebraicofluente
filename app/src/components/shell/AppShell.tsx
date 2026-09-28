@@ -273,7 +273,8 @@ function RodapeDeAjuda() {
             ['/faq', 'Dúvidas frequentes'],
             ['/reembolso', 'Reembolso e cancelamento'],
             ['/termos', 'Termos'],
-            ['/privacidade', 'Privacidade']
+            ['/privacidade', 'Privacidade'],
+            ['/acessibilidade', 'Acessibilidade']
           ].map(([href, label]) => (
             <li key={href}>
               {/* Alvo de 44px de altura também aqui: um link de 13px em cima
