@@ -11,15 +11,18 @@
  * A/B" (.github/workflows/relatorio-ab.yml), que lê a tabela `ab_contagens`.
  */
 
-import { json, fail } from '../lib/http.js';
+import { json, fail, readJson } from '../lib/http.js';
 import { throttled } from '../lib/db.js';
 
 export const EXPERIMENTOS = { 'hero-2026-09': ['a', 'b'] };
 const EVENTOS = new Set(['visto', 'clique', 'checkout', 'compra']);
 
 export async function registrar({ request, env }) {
-  let b;
-  try { b = await request.json(); } catch { return fail('bad-request'); }
+  /* Um evento cabe em poucas dezenas de bytes. O teto de 1 KB impede que um
+     anônimo faça o Worker ler e interpretar megabytes antes de recusar
+     (auditoria de 28/09, SEC-005). */
+  const b = await readJson(request, 1024);
+  if (!b) return fail('bad-request');
   const versoes = EXPERIMENTOS[b?.exp];
   if (!versoes || !versoes.includes(b?.v) || !EVENTOS.has(b?.evento)) return fail('bad-request');
 

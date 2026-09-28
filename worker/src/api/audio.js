@@ -36,7 +36,7 @@
  * sessão válida ou não.
  */
 
-import { json, fail } from '../lib/http.js';
+import { json, fail, readBytes } from '../lib/http.js';
 import { normalizeEmail } from '../lib/db.js';
 import { exigirAdmin, isAdmin } from '../lib/admin.js';
 import { nomesOrganizados, idDoClipe, EXTENSAO } from '../lib/nomes-audio.js';
@@ -194,10 +194,8 @@ export async function salvar({ request, env }) {
   const tipo = normalizarTipo(request.headers.get('Content-Type'));
   if (!tipo) return fail('unsupported-type', 415);
 
-  const declarado = Number(request.headers.get('Content-Length') || 0);
-  if (declarado > MAX_BYTES) return fail('too-large', 413);
-  const dados = new Uint8Array(await request.arrayBuffer());
-  if (dados.length > MAX_BYTES) return fail('too-large', 413);
+  const dados = await readBytes(request, MAX_BYTES);
+  if (!dados) return fail('too-large', 413);
   if (!conteudoBate(tipo, dados)) return fail('bad-audio', 422);
 
   const inicio = inteiroOuNulo(url.searchParams.get('inicio'));
