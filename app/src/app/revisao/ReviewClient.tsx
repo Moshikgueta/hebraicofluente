@@ -100,7 +100,9 @@ export function ReviewClient() {
         <Milestone
           kicker={`${result.correct} de ${result.total}`}
           title="Revisão feita."
-          body="O que você errar hoje volta daqui a um dia. O que acertar volta mais tarde, e some quando estiver firme."
+          body={p.dueCount > 0
+            ? `O que você errou volta amanhã, e o que acertou volta mais tarde. Ainda ${p.dueCount === 1 ? 'falta 1 item' : `faltam ${p.dueCount} itens`} para hoje: mais cinco questões resolvem.`
+            : 'Tudo o que estava para hoje foi revisado. O que você errou volta amanhã; o que acertou volta mais tarde, e some quando estiver firme.'}
         >
           <Button variant="secondary" onClick={() => { setRun(n => n + 1); setResult(null); setPhase('running'); }}>
             Mais cinco
@@ -117,7 +119,21 @@ export function ReviewClient() {
         key={run}
         exercises={exercises}
         title="Revisão rápida"
-        onDone={r => { registrarRodada('revisao', exercises); setResult(r); p.finishReview(r.score); setPhase('done'); }}
+        onDone={r => {
+          registrarRodada('revisao', exercises);
+          setResult(r);
+          /* De cada letra da rodada, os erros na primeira tentativa. É por
+             LETRA que a revisão fecha os itens pendentes (concluirRevisao em
+             lib/state/rules.ts): as perguntas daqui são outras que as da
+             lição, e por id elas nunca encontravam o item pendente. */
+          const porLetra: Record<string, { erros: number }> = {};
+          for (const ex of exercises) {
+            const l = (porLetra[ex.letterId] ??= { erros: 0 });
+            if (r.missed.includes(ex.id)) l.erros += 1;
+          }
+          p.finishReview(r.score, porLetra);
+          setPhase('done');
+        }}
       />
     );
   }
