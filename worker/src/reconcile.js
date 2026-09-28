@@ -25,7 +25,7 @@
 import { runEstornos, settleFromProvider } from './api/pay.js';
 import { runAlertas } from './alertas.js';
 import {
-  getOrder, log, logPurge, registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
+  arrependimentosIpPurge, getOrder, log, logPurge, registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
 } from './lib/db.js';
 import empresa from '../../data/empresa.json';
 
@@ -90,6 +90,7 @@ export async function runReconcile(env) {
   /* Os registros de acesso do Marco Civil: seis meses e pronto. */
   try { await registrosPurge(env); } catch { /* idem, e a tabela pode ainda não existir */ }
   try { await verifyPurge(env); } catch { /* idem, e a tabela pode ainda não existir */ }
+  try { await arrependimentosIpPurge(env); } catch { /* idem */ }
 
   /* Os estornos das desistências (pedir de novo o que falhou, confirmar o
      que a Mercado Pago já devolveu) e os alertas ao dono, que também marcam

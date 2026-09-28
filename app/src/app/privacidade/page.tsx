@@ -52,10 +52,21 @@ export default function Page() {
     ['Registro de acesso: endereço IP, data e hora de cada entrada na conta',
      'cumprir o Marco Civil da Internet (Lei 12.965/2014, art. 15). Fica em sigilo e só é entregue por ordem judicial',
      'seis meses, e então é apagado - inclusive se você apagar a conta antes'],
-    ['Pedido de desistência da compra', 'registrar quando você desistiu, que é o que prova o prazo do art. 49 do CDC',
-     'junto com o registro da compra'],
+    /* 28/09/2026 (auditoria, LEGAL-002): o IP do pedido de desistência não
+       estava descrito e ficava para sempre. Agora sai em 190 dias
+       (arrependimentosIpPurge em worker/src/lib/db.js). */
+    ['Pedido de desistência da compra: data, hora e endereço IP de quando você pediu',
+     'provar que você desistiu dentro do prazo do art. 49 do CDC, e fazer o estorno',
+     'a data e a hora, junto com o registro da compra; o endereço IP, seis meses'],
+    /* access_log: 180 dias (logPurge), com o id da conta e sem e-mail. */
+    ['Trilha de operações da conta: o que aconteceu e quando (compra, liberação, estorno, troca de senha), sem o seu e-mail',
+     'segurança, atendimento e prova do que foi feito na sua conta',
+     'seis meses, e então é apagada - inclusive se você apagar a conta antes'],
+    ['E-mail de quem recebe um curso de presente',
+     'liberar o curso quando a pessoa presenteada criar a conta',
+     'até o presente ser usado ou cancelado'],
     ['Endereço de IP (freio de tentativas)', 'segurança: limitar tentativas de login e identificar abuso',
-     'poucos dias, em registro técnico']
+     'dois dias, em registro técnico']
   ];
 
   const DIREITOS = [
@@ -133,15 +144,27 @@ export default function Page() {
           <strong>cumprimento de obrigação legal</strong> (art. 7º, II) para os dados
           fiscais do pedido e para o registro de acesso exigido pelo Marco Civil da
           Internet, e o <strong>legítimo interesse</strong> para os registros de
-          segurança.
+          segurança e para as cópias de segurança.
+        </p>
+        {/* 28/09/2026: o backup diário (scripts/backup-nuvem.sh). A exclusão
+            vale na hora no sistema, mas a cópia de ontem continua existindo
+            até expirar - dizer isso é o que a auditoria pediu (LEGAL-007). */}
+        <p>
+          <strong>Cópias de segurança.</strong> Uma vez por dia fazemos uma cópia do
+          banco de dados, guardada de forma privada na Cloudflare, para recuperar o
+          serviço se algo der errado. Cada cópia é apagada automaticamente depois de{' '}
+          <strong>90 dias</strong>. Se você apagar a conta, os seus dados saem do
+          sistema na hora e das cópias quando elas expiram; enquanto isso, as cópias só
+          são usadas para restaurar o serviço, nunca para outro fim.
         </p>
         {/* 25/09/2026: o aluno pode gravar a própria leitura
             (components/learn/GravarLeitura.tsx). O microfone só abre nas
             páginas do curso, e o áudio nunca sai do aparelho - por isso ele
             não é dado que tratamos, e não entra na tabela acima. */}
         <p>
-          <strong>Gravação da sua voz.</strong> Nas lições e nos textos de leitura você
-          pode gravar a própria leitura para se ouvir. O navegador pede permissão para
+          <strong>Gravação da sua voz.</strong> Nas lições, nos textos de leitura e na
+          demonstração da página inicial (mesmo sem conta) você pode gravar a própria
+          leitura para se ouvir. O navegador pede permissão para
           usar o microfone, e a gravação fica só no seu aparelho: some quando você sai
           da página e nunca é enviada para nós nem para ninguém.
         </p>
@@ -151,7 +174,7 @@ export default function Page() {
             não o guarda. */}
         <p>
           <strong>Correção da pronúncia.</strong> Se você usar &ldquo;Fale e seja
-          corrigido&rdquo;, a sua fala é transcrita pelo serviço de reconhecimento de
+          corrigido&rdquo;, nas lições ou na demonstração da página inicial, a sua fala é transcrita pelo serviço de reconhecimento de
           voz do seu navegador - o do Google, no Chrome e no Android, ou o da Apple, no
           Safari e no iPhone -, sob as regras de privacidade de quem fez o navegador. O
           curso não recebe o seu áudio: recebe só o texto transcrito, compara com a
@@ -183,11 +206,15 @@ export default function Page() {
                uma promessa mais forte do que o código sustenta. */
             : <><strong>Mercado Pago</strong>: recebe o seu <strong>e-mail</strong> e o seu <strong>nome</strong> para emitir a cobrança, processa o pagamento e nos devolve o resultado. O número do cartão, a validade e o código de segurança são digitados no ambiente dela: nós não pedimos esses dados e <strong>não guardamos nenhum deles</strong> - o que a resposta dela traz é filtrado antes de ser gravado, e só ficam os campos listados na tabela acima.</>,
           /* A Resend estava fora desta lista, e é um operador como os outros:
-             recebe endereço e primeiro nome de todo mundo que pede um link de
+             recebe endereço e nome de todo mundo que pede um link de
              senha. Omiti-la deixava a política descrevendo menos
              compartilhamento do que o sistema faz. */
-          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o seu primeiro nome</strong>. Não mandamos e-mail de propaganda.</>,
-          <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site e o banco de dados.</>,
+          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha, confirmação da compra e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o nome da sua conta</strong>. Não mandamos e-mail de propaganda.</>,
+          <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site, o banco de dados e as cópias de segurança.</>,
+          /* 28/09/2026 (auditoria, LEGAL-003): o GitHub e o atendimento
+             estavam fora da lista, e os dois recebem dado pessoal. */
+          <><strong>GitHub</strong>: guarda o código do site e as ferramentas de operação. Quando consultamos ou mudamos o acesso de uma conta (por exemplo, para liberar um curso ou corrigir um e-mail), a operação roda lá, e o registro dela mostra o e-mail parcialmente escondido.</>,
+          <><strong>Atendimento</strong>: se você nos escreve, a mensagem fica na caixa de e-mail do atendimento (Gmail, do Google) ou no WhatsApp (da Meta). Os avisos de compra e de desistência chegam a essa mesma caixa, com o seu e-mail.</>,
           <><strong>Autoridades</strong>, quando houver ordem legal para isso.</>
         ]} />
         {/* Transferência internacional (LGPD, art. 33). A Resend e a
@@ -195,11 +222,11 @@ export default function Page() {
             - dizer isso em uma frase custa uma frase, e a ausência dela é
             achado de auditoria. */}
         <p>
-          A Resend e a Cloudflare são empresas sediadas fora do Brasil, e parte
-          do tratamento acontece em servidores no exterior. Essa transferência
-          é necessária para a execução do contrato que você fez conosco - é o
-          que permite o site responder e o e-mail de senha chegar - e está
-          amparada no art. 33 da LGPD.
+          A Resend, a Cloudflare, o GitHub, o Google e a Meta são empresas sediadas
+          fora do Brasil, e parte do tratamento acontece em servidores no exterior.
+          Essa transferência é necessária para a execução do contrato que você fez
+          conosco - é o que permite o site responder, o e-mail chegar e o
+          atendimento acontecer - e está amparada no art. 33 da LGPD.
         </p>
       </Artigo>
 
@@ -211,7 +238,8 @@ export default function Page() {
         </p>
         <p>
           O navegador também guarda o seu progresso localmente, para o curso funcionar
-          sem internet. Não usamos cookies de publicidade, nem rede de anúncio, nem
+          sem internet, e algumas preferências suas (como os ajustes de
+          acessibilidade). Isso fica só no seu aparelho. Não usamos cookies de publicidade, nem rede de anúncio, nem
           script de terceiros para medir audiência.
         </p>
         <p>
@@ -228,7 +256,8 @@ export default function Page() {
           'Todo o tráfego em HTTPS.',
           'Cookie de sessão HttpOnly - o JavaScript da página não consegue lê-lo.',
           'Freio de tentativas no login, contra teste automatizado de senhas.',
-          'Acesso ao banco restrito à aplicação.'
+          'Acesso ao banco restrito à aplicação.',
+          'Cópia de segurança diária, privada, com a restauração testada.'
         ]} />
         <p>
           Nenhum sistema é perfeito. Se houver incidente de segurança com risco

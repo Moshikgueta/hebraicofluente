@@ -97,6 +97,9 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
           <Campo
             id="email" label="E-mail" value={email} onChange={setEmail}
             type="email" autoComplete="email" placeholder="voce@exemplo.com.br" required
+            /* No cadastro, um e-mail errado custa o recibo e o link de senha, e
+               o site não deixa trocar sozinho (auditoria, OPS-001). */
+            hint={signup ? 'Confira com cuidado: é para ele que vão o recibo da compra e o link de senha.' : undefined}
           />
 
           <Campo
@@ -112,6 +115,19 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
           <Button type="submit" size="lg" full disabled={busy}>
             {busy ? (signup ? 'Criando…' : 'Entrando…') : (signup ? 'Criar conta' : 'Entrar')}
           </Button>
+
+          {/* Quem cria conta e não compra também tem dados tratados, e só via
+              os Termos e a Política no checkout (auditoria, LEGAL-009). Uma
+              frase, sem caixa de marcar: a base é o contrato, não o
+              consentimento. */}
+          {signup && (
+            <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted text-center m-0">
+              Ao criar a conta você concorda com os{' '}
+              <Link href="/termos" className="text-[var(--accent)] hover:underline">Termos de Uso</Link>
+              {' '}e com a{' '}
+              <Link href="/privacidade" className="text-[var(--accent)] hover:underline">Política de Privacidade</Link>.
+            </p>
+          )}
 
           {/* Dentro do formulário, logo abaixo do botão: é onde a pessoa
               está olhando no momento exato em que a senha não funciona.
