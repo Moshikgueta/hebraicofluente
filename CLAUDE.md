@@ -71,7 +71,10 @@ cabeçalhos de comentário não são travessões e ficam como estão.
   `npm run validate` cobra isso.
 - **Limite de 10 ms de CPU** por requisição no plano gratuito do Workers. É por
   isso que o PBKDF2 roda 25.000 iterações (`worker/src/lib/crypto.js`) e não
-  310.000. `wrangler dev` não aplica o limite: o erro só aparece em produção.
+  as 600.000 do OWASP. `wrangler dev` não aplica o limite: o erro só aparece em
+  produção. Com o Workers Paid: descomentar `PBKDF2_ITERATIONS = "600000"` e o
+  bloco `[limits] cpu_ms = 300` no wrangler.toml e publicar; as contas se
+  atualizam sozinhas no próximo login.
 - **A fusão de progresso é monotônica** (`app/src/lib/state/merge.ts`). Todo
   campo tem um "mais adiantado dos dois" e é ele que fica; contagem é MÁXIMO e
   nunca soma, senão o mesmo dia sincronizado duas vezes dobra o XP. É essa

@@ -67,7 +67,7 @@ not_found_handling = "404-page"
 # configurar. No Workers Paid, descomente para permitir o PBKDF2 forte
 # (ver PBKDF2_ITERATIONS em [vars]).
 # [limits]
-# cpu_ms = 200
+# cpu_ms = 300
 
 [[d1_databases]]
 binding = "DB"
@@ -134,4 +134,4 @@ ADMIN_EMAILS = "languageswithmoshik@gmail.com"
 # para chegar ao valor recomendado pelo OWASP. Ninguém é deslogado: cada conta
 # guarda as iterações com que foi gravada, e se atualiza sozinha no primeiro
 # login. Ver a nota em worker/src/lib/crypto.js.
-# PBKDF2_ITERATIONS = "310000"
+# PBKDF2_ITERATIONS = "600000"
