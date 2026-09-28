@@ -23,7 +23,7 @@ import { apiMode } from '@/lib/account/api';
 import { SESSAO_MUDOU } from '@/lib/account/store';
 import {
   ANSWER_UNITS, applyPractice, awardXp, clearConfusion, completeStage, courseProgress,
-  displayStreak, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
+  concluirRevisao, displayStreak, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
   recordCheckpoint, recordConfusion, recordExam, recordGym, recordQuiz, recordSkill,
   syncAchievements, today,
   topConfusions, weakLetters, XP
@@ -119,7 +119,9 @@ type Ctx = {
   finishGym: (modeId: string, score: number, seconds: number) => void;
   finishQuiz: (letterId: string, score: number) => void;
   finishCheckpoint: (id: string, score: number) => void;
-  finishReview: (score: number) => void;
+  /** Fecha a revisão: `porLetra` diz, de cada letra revisada, quantos erros
+   *  houve na primeira tentativa (ver `concluirRevisao`). */
+  finishReview: (score: number, porLetra: Record<string, { erros: number }>) => void;
   finishFinalChallenge: (score: number) => void;
   /** One sitting of the final exam: its overall score and each part's. */
   finishExam: (
@@ -394,8 +396,9 @@ export function ProgressProvider({
     track('checkpoint_completed', { checkpointId: id, score });
   }, [commit, agora]);
 
-  const finishReview = useCallback((score: number) => {
-    commit(awardXp(agora(), today(), XP.review));
+  const finishReview = useCallback((score: number, porLetra: Record<string, { erros: number }>) => {
+    const d = today();
+    commit(awardXp(concluirRevisao(agora(), d, porLetra), d, XP.review));
     track('review_completed', { score });
   }, [commit, agora]);
 

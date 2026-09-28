@@ -538,6 +538,43 @@ export function recordAnswer(
   return { ...state, srs: { ...state.srs, [itemId]: item } };
 }
 
+/**
+ * Fecha uma revisão rápida (28/09/2026).
+ * ─────────────────────────────────────────────────────────────────────────
+ * O defeito que isto resolve: a fila de revisão guarda a PERGUNTA exata que
+ * o aluno errou na lição (o id do exercício), e a revisão rápida gera
+ * perguntas NOVAS para as mesmas letras, com outros ids. Acertar tudo na
+ * revisão não tocava nos itens pendentes: "a revisar" nunca baixava, e o
+ * aluno que refazia e consertava os erros via a revisão como não feita.
+ *
+ * Agora quem conta é a LETRA revisada. Para cada letra que entrou na rodada,
+ * os itens dela que estão para hoje andam:
+ *   · a letra saiu sem erro na primeira tentativa → o item sobe uma caixa e
+ *     volta mais tarde, como um acerto;
+ *   · houve erro e o aluno consertou → o item sai de hoje e volta amanhã,
+ *     sem subir de caixa. É o que a tela de fim promete ("o que você errar
+ *     hoje volta daqui a um dia").
+ * As letras que não couberam nesta rodada continuam para hoje.
+ */
+export function concluirRevisao(
+  state: LearnerState, day: string, porLetra: Record<string, { erros: number }>
+): LearnerState {
+  let next = state;
+  for (const item of dueItems(state, day)) {
+    const letra = porLetra[item.letterId];
+    if (!letra) continue;
+    if (letra.erros === 0) {
+      next = recordAnswer(next, item.itemId, item.letterId, true, day);
+    } else {
+      const atual = next.srs[item.itemId];
+      if (atual) {
+        next = { ...next, srs: { ...next.srs, [item.itemId]: { ...atual, lastSeen: day, dueOn: addDays(day, 1) } } };
+      }
+    }
+  }
+  return next;
+}
+
 export const dueItems = (state: LearnerState, day: string): SrsItem[] =>
   Object.values(state.srs)
     .filter(i => i.dueOn <= day)
