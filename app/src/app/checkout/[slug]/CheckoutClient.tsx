@@ -24,7 +24,7 @@
  *   na barra de endereço. É exatamente o erro que o projeto irmão em espanhol
  *   documenta no IMPLEMENTATION.md dele.
  *
- * · A consulta tem limite. Se o pagamento não cair em cinco minutos, a tela
+ * · A consulta tem limite. Se o pagamento não cair em trinta minutos, a tela
  *   para de perguntar e explica o que fazer - em vez de girar para sempre e
  *   deixar a pessoa achando que travou.
  */
@@ -43,9 +43,18 @@ import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 import { contarAB } from '@/lib/ab';
 
-/** De quanto em quanto tempo perguntar, e por quanto tempo insistir. */
+/** De quanto em quanto tempo perguntar, e por quanto tempo insistir.
+ *
+ *  Trinta minutos, a validade do código PIX, e não cinco (compra real de
+ *  28/09/2026): quem paga pelo app do banco no MESMO celular deixa esta aba
+ *  em segundo plano, o navegador congela a consulta, e ao voltar depois de
+ *  cinco minutos a tela já tinha desistido - o acesso só saía na varredura.
+ *  Depois dos primeiros cinco minutos a pergunta fica mais espaçada, para não
+ *  gastar à toa a cota de consultas da conta. */
 const POLL_MS = 3_000;
-const GIVE_UP_MS = 5 * 60_000;
+const LENTO_DEPOIS_MS = 5 * 60_000;
+const POLL_LENTO_MS = 15_000;
+const GIVE_UP_MS = 30 * 60_000;
 
 export function CheckoutClient({ slug }: { slug: string }) {
   const account = useAccount();
@@ -88,6 +97,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
 
   /* ── a consulta ──────────────────────────────────────────────────── */
   const startedAt = useRef<number>(0);
+  /* Fora do efeito: ele recomeça a cada resposta (o pedido novo é outro
+     objeto), e a hora da última pergunta tem de sobreviver a isso. */
+  const ultimaPergunta = useRef<number>(0);
   useEffect(() => {
     if (!order || order.status !== 'pending') return;
     /* No PIX direto ninguém vai responder esta pergunta: o dinheiro cai na
@@ -99,13 +111,16 @@ export function CheckoutClient({ slug }: { slug: string }) {
     startedAt.current = startedAt.current || Date.now();
     let stop = false;
 
-    const timer = setInterval(async () => {
+    const perguntar = async (agora = false) => {
       if (stop) return;
-      if (Date.now() - startedAt.current > GIVE_UP_MS) {
+      const passou = Date.now() - startedAt.current;
+      if (passou > GIVE_UP_MS) {
         setGaveUp(true);
         clearInterval(timer);
         return;
       }
+      if (!agora && passou > LENTO_DEPOIS_MS && Date.now() - ultimaPergunta.current < POLL_LENTO_MS) return;
+      ultimaPergunta.current = Date.now();
       try {
         const fresh = await account.orderStatus(order.id);
         if (stop) return;
@@ -122,9 +137,17 @@ export function CheckoutClient({ slug }: { slug: string }) {
         /* Uma falha de rede no meio de uma espera não é motivo para desistir:
            a próxima volta tenta de novo, e o prazo acima é quem desiste. */
       }
-    }, POLL_MS);
+    };
+    const timer = setInterval(() => { void perguntar(); }, POLL_MS);
 
-    return () => { stop = true; clearInterval(timer); };
+    /* Voltou do app do banco: pergunta NA HORA, sem esperar a próxima volta. */
+    const aoVoltar = () => { if (document.visibilityState === 'visible') void perguntar(true); };
+    document.addEventListener('visibilitychange', aoVoltar);
+
+    return () => {
+      stop = true; clearInterval(timer);
+      document.removeEventListener('visibilitychange', aoVoltar);
+    };
   }, [order, account, slug, CONFIRMA_SOZINHO]);
 
   const pay = useCallback(async () => {

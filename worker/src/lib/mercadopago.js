@@ -377,7 +377,7 @@ export async function paymentsFor(env, orderId) {
  * Sem MP_WEBHOOK_SECRET configurado a resposta é `false`, e não "deixa
  * passar". Um webhook não verificado é uma rota pública que concede acesso.
  */
-export async function verifyWebhookSignature(env, request, dataId) {
+export async function verifyWebhookSignature(env, request, dataId, out = {}) {
   /* Aparado, pela mesma razão do Access Token lá em cima: este valor é
      COLADO de um painel para outro, e colar traz espaço na ponta e às vezes
      quebra de linha. Nenhum dos dois é visível para quem colou, e o efeito
@@ -386,7 +386,10 @@ export async function verifyWebhookSignature(env, request, dataId) {
      é "paguei e não liberou" dias depois - com o segredo certo, à vista, nos
      dois lados. */
   const segredo = String((env && env.MP_WEBHOOK_SECRET) || '').trim();
-  if (!segredo) return false;
+  /* `out.motivo` diz POR QUE recusou, para a trilha: "assinatura errada"
+     sozinho não separa um segredo trocado de um relógio fora da janela, e os
+     dois pedem consertos diferentes (28/09/2026). */
+  if (!segredo) { out.motivo = 'sem-segredo'; return false; }
 
   const sig = request.headers.get('x-signature') || '';
   const requestId = request.headers.get('x-request-id') || '';
@@ -394,14 +397,20 @@ export async function verifyWebhookSignature(env, request, dataId) {
     sig.split(',').map(p => p.split('=').map(s => s.trim())).filter(p => p.length === 2)
   );
   const ts = parts.ts, v1 = parts.v1;
-  if (!ts || !v1) return false;
+  if (!ts || !v1) { out.motivo = 'sem-assinatura'; return false; }
 
   /* Cinco minutos. Um relógio desencontrado de dez segundos passa; uma
      entrega gravada ontem, não. */
-  const age = Math.abs(Date.now() - Number(ts) * 1000);
-  if (!Number.isFinite(age) || age > 5 * 60_000) return false;
+  /* Em segundos, como na documentação, ou em milissegundos, como a Mercado
+     Pago também manda: lido em segundos, um `ts` de 13 dígitos parecia vir
+     de milhares de anos no futuro e todo aviso era recusado. */
+  const tsMs = /^\d{13,}$/.test(ts) ? Number(ts) : Number(ts) * 1000;
+  const age = Math.abs(Date.now() - tsMs);
+  if (!Number.isFinite(age) || age > 5 * 60_000) { out.motivo = `fora-da-janela ts=${ts}`; return false; }
 
   const manifest = `id:${String(dataId).toLowerCase()};request-id:${requestId};ts:${ts};`;
   const { hmacHex, timingSafeEqual } = await import('./crypto.js');
-  return timingSafeEqual(await hmacHex(segredo, manifest), v1.toLowerCase());
+  const ok = timingSafeEqual(await hmacHex(segredo, manifest), v1.toLowerCase());
+  if (!ok) out.motivo = 'hmac-diferente';
+  return ok;
 }
