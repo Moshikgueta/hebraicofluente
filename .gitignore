@@ -8,6 +8,7 @@ app/content/
 app/public/fonts/
 app/public/stroke-order/
 app/public/tracado-amostra/
+app/public/amostra-audio/
 app/public/audio/
 app/next-env.d.ts
 

@@ -683,6 +683,23 @@ function main() {
     cpSync(join(ROOT, 'assets/stroke-order', `${id}.svg`), join(amostra, `${id}.svg`));
   }
 
+  /* A amostra pública do ÁUDIO (28/09/2026), pelo mesmo motivo da do
+     traçado: /audio/ inteiro fica atrás do portão, e o "Ouça e fale" da
+     landing (components/landing/OuvirEFalar.tsx) toca quatro gravações.
+     Copiadas com nome legível e recriadas do zero a cada exportação.
+     A lista é a mesma de lib/amostra-audio.ts - tests/amostra-audio.test.ts
+     confere as duas. Uma gravação que falte derruba a exportação: a capa não
+     pode ir ao ar com um botão "Ouvir" mudo. */
+  const AMOSTRA_AUDIO = { sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם' };
+  const amostraAudio = join(pub, 'amostra-audio');
+  rmSync(amostraAudio, { recursive: true, force: true });
+  mkdirSync(amostraAudio, { recursive: true });
+  for (const [slug, he] of Object.entries(AMOSTRA_AUDIO)) {
+    const f = join(ROOT, 'audio', `${audioIdFor(he)}.mp3`);
+    if (!existsSync(f)) throw new Error(`amostra de áudio: falta a gravação de ${he} (${audioIdFor(he)}.mp3)`);
+    cpSync(f, join(amostraAudio, `${slug}.mp3`));
+  }
+
   /* The recordings land in audio/ at the repo root - one obvious place for a
      speaker to drop files - and are copied in from there. The app serves
      whatever is present and marks the rest as "áudio em breve"; nothing has to

@@ -20,7 +20,11 @@ type Estado =
   | { t: 'parado' } | { t: 'ouvindo' } | { t: 'veredito'; v: Veredito }
   | { t: 'nada' } | { t: 'negado' } | { t: 'sem-hebraico' } | { t: 'erro' };
 
-export function FalarECorrigir({ alvo, translit }: { alvo: string; translit?: string | null }) {
+export function FalarECorrigir({ alvo, translit, nota }: {
+  alvo: string; translit?: string | null;
+  /** O aviso de privacidade, quando o da lição não serve (a capa não tem "a gravação acima"). */
+  nota?: string;
+}) {
   const [disponivel, setDisponivel] = useState(false);
   const [estado, setEstado] = useState<Estado>({ t: 'parado' });
   const [acertos, setAcertos] = useState(0);
@@ -106,7 +110,7 @@ export function FalarECorrigir({ alvo, translit }: { alvo: string; translit?: st
         </p>
       )}
       <p className="font-ui text-[12px] text-ink-muted m-0">
-        Para corrigir, a sua voz vai para o serviço de fala do navegador (Google ou Apple). A gravação acima não sai do aparelho.
+        {nota ?? 'Para corrigir, a sua voz vai para o serviço de fala do navegador (Google ou Apple). A gravação acima não sai do aparelho.'}
       </p>
     </div>
   );
