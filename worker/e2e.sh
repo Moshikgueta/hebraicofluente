@@ -263,6 +263,22 @@ echo "Cobrança"
 # está de pé. Com token de TESTE, que não toca em dinheiro nenhum, o pedido é
 # criado e o preço é conferido - que é onde essa prova vale alguma coisa.
 MODO="$(grep -o '"modo":"[a-z]*"' <<<"$HEALTH" | cut -d'"' -f4)"
+VENDEDOR="$(grep -o '"vendedor":"[a-z-]*"' <<<"$HEALTH" | cut -d'"' -f4)"
+# Contra a PRODUÇÃO, cobrança de teste é defeito, não configuração (auditoria
+# de 28/09, PAY-001): com token de teste o comprador vai a um checkout que não
+# cobra, e nada mais falha. Só barra com prova positiva - `vendedor` vem de
+# /users/me, que a Mercado Pago às vezes recusa com 403 (`recusado`) para um
+# token de produção perfeito, e isso não pode derrubar a publicação.
+case "$B" in
+  http://127.0.0.1*|http://localhost*) ;;
+  *)
+    if grep -q '"payments":true' <<<"$HEALTH"; then
+      espera "a cobrança no ar é de produção (não de teste)" producao "$MODO"
+      espera "a conta da Mercado Pago não é um usuário de teste" nao \
+        "$([ "$VENDEDOR" = "usuario-de-teste" ] && echo sim || echo nao)"
+    fi
+    ;;
+esac
 if [ "$MODO" = "producao" ]; then
   echo "  · token de PRODUÇÃO: pulando a criação de pedido para não deixar"
   echo "    uma cobrança pendente no painel a cada publicação."

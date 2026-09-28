@@ -96,6 +96,19 @@ if (querido !== 'mercadopago') {
 
   if (!token) {
     rebaixar('O segredo MP_ACCESS_TOKEN está vazio.');
+  } else if (/^TEST-/i.test(token)) {
+    /* Token de TESTE na publicação de produção: a Mercado Pago autentica,
+       o checkout abre, o comprador vai para uma tela que NÃO COBRA e nada
+       falha - semanas de venda perdida sem sintoma (auditoria de 28/09,
+       PAY-001). Rebaixar para PIX direto esconderia o engano; parar a
+       publicação não: o site continua no ar com a versão anterior, que tem
+       o segredo de antes, e esta execução fica vermelha dizendo por quê. */
+    diga('✗ O segredo MP_ACCESS_TOKEN é um token de TESTE (começa com TEST-).');
+    diga('  Com ele o comprador iria para um checkout que não cobra nada.');
+    diga('  Publicação PARADA; o site continua com a versão anterior.');
+    diga('  Cole o Access Token de PRODUÇÃO (começa com APP_USR-) em');
+    diga('  Settings → Secrets and variables → Actions → MP_ACCESS_TOKEN e publique de novo.');
+    process.exit(1);
   } else {
     /* A pergunta certa é a que o checkout vai fazer.
        ──────────────────────────────────────────────────────────────────────
