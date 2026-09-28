@@ -137,7 +137,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               somIds={course.modules.flatMap(m => m.lessons.filter(l => l.som).map(l => `som-${l.som}`))}
             >
               <Chrome>
-                <div id="conteudo">{children}</div>
+                <div id="conteudo" tabIndex={-1} className="outline-none">{children}</div>
               </Chrome>
             </ProgressProvider>
           </AccountProvider>

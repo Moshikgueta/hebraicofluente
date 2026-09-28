@@ -45,11 +45,15 @@ export type CampoProps = {
   required?: boolean;
   /** Foca ao montar. Para a tela que tem um campo só e um propósito só. */
   autoFocus?: boolean;
+  /** O id da mensagem de erro do formulário, quando há uma. Marca o campo
+   *  como inválido e liga a mensagem a ele (WCAG 3.3.1; auditoria de 28/09,
+   *  UX-016): o leitor de tela diz o erro ao chegar no campo. */
+  erroId?: string;
 };
 
 export function Campo({
   id, label, value, onChange, type, autoComplete,
-  placeholder, hint, required, autoFocus
+  placeholder, hint, required, autoFocus, erroId
 }: CampoProps) {
   const senha = type === 'password';
   const [vendo, setVendo] = useState(false);
@@ -74,7 +78,8 @@ export function Campo({
           placeholder={placeholder}
           autoFocus={autoFocus}
           onChange={e => onChange(e.target.value)}
-          aria-describedby={hint ? `${id}-hint` : undefined}
+          aria-invalid={erroId ? true : undefined}
+          aria-describedby={[hint ? `${id}-hint` : '', erroId ?? ''].filter(Boolean).join(' ') || undefined}
           className={`w-full min-h-[52px] pl-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                       font-ui text-[16px] text-ink placeholder:text-ink-muted
                       focus:border-[var(--accent-soft)] focus:outline-none
@@ -138,8 +143,8 @@ function Olho({ aberto }: { aberto: boolean }) {
  * procurar, e sempre perto do botão - um erro no topo de um formulário rolado
  * é um erro que ninguém vê.
  */
-export const Erro = ({ children }: { children: ReactNode }) => (
-  <p role="alert"
+export const Erro = ({ children, id }: { children: ReactNode; id?: string }) => (
+  <p role="alert" id={id}
      className="font-ui text-[13.5px] leading-relaxed text-[var(--ember)]
                 bg-[var(--ember-wash)] rounded-[var(--r-md)] px-4 py-3">
     {children}

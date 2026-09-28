@@ -79,6 +79,10 @@ export function AudioButton({
 }) {
   const ref = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
+  /* A falha era engolida: sem rede, o toque não fazia nada e ninguém sabia
+     por quê (auditoria de 28/09, UX-012). Agora vira uma linha discreta,
+     anunciada pelo leitor de tela, que some no próximo toque. */
+  const [falhou, setFalhou] = useState(false);
   useRegistroDeAudio();
   const available = hasAudio(audioId);
 
@@ -104,11 +108,16 @@ export function AudioButton({
     el.playbackRate = rate;
     el.currentTime = inicio;
     setPlaying(true);
+    setFalhou(false);
     el.onended = () => setPlaying(false);
     el.onpause = () => setPlaying(false);
     el.ontimeupdate = fim === null ? null : () => { if (el.currentTime >= fim) el.pause(); };
-    el.onerror = () => { setPlaying(false); track('audio_unavailable', { audioId }); };
-    void el.play().catch(() => setPlaying(false));
+    el.onerror = () => { setPlaying(false); setFalhou(true); track('audio_unavailable', { audioId }); };
+    void el.play().catch((e: unknown) => {
+      setPlaying(false);
+      /* AbortError é outro toque cortando este: não é falha. */
+      if (!(e instanceof DOMException && e.name === 'AbortError')) setFalhou(true);
+    });
     track('audio_played', { audioId });
   }, [audioId, available]);
 
@@ -141,7 +150,7 @@ export function AudioButton({
   if (!available) return null;
 
   return (
-    <span className="inline-flex items-center gap-2">
+    <span className="inline-flex flex-wrap items-center gap-2">
       <button
         type="button"
         onClick={() => play(1)}
@@ -166,6 +175,9 @@ export function AudioButton({
           0,7×
         </button>
       )}
+      <span role="status" className="font-ui text-[13px] text-ink-muted empty:-ml-2">
+        {falhou ? 'Não consegui tocar o áudio. Confira a conexão e toque de novo.' : ''}
+      </span>
     </span>
   );
 }

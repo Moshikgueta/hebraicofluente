@@ -1,5 +1,7 @@
 'use client';
 
+import { Prose } from '@/components/hebrew/Prose';
+
 /* Como pôr o teclado hebraico no aparelho.
  * ─────────────────────────────────────────────────────────────────────────
  * Aparece em dois lugares: na página /teclado-hebraico, para consulta, e como
@@ -34,21 +36,21 @@ const PASSOS: Record<Sistema, { titulo: string; texto: string }[]> = {
     { titulo: 'Abra os ajustes do teclado',
       texto: 'Ajustes → Geral → Teclado → Teclados.' },
     { titulo: 'Adicione o hebraico',
-      texto: 'Toque em “Adicionar Novo Teclado…” e escolha “Hebraico” (עברית).' },
+      texto: 'Toque em “Adicionar Novo Teclado…” e escolha “Hebraico” ({{עברית}}).' },
     { titulo: 'Alterne entre os teclados',
       texto: 'No teclado, toque no globo 🌐 ao lado da barra de espaço. Segurando o globo, aparece a lista para escolher.' },
     { titulo: 'Confira que está ativo',
-      texto: 'As teclas mostram letras hebraicas - ק ר א ט na primeira linha - e a barra de espaço diz “עברית”.' }
+      texto: 'As teclas mostram letras hebraicas - {{ק ר א ט}} na primeira linha - e a barra de espaço diz “{{עברית}}”.' }
   ],
   android: [
     { titulo: 'Abra as configurações do teclado',
       texto: 'Com o teclado aberto, toque na engrenagem ⚙ do Gboard. Ou: Configurações → Sistema → Teclado → Teclado na tela → Gboard (em aparelhos mais antigos, “Idiomas e entrada” no lugar de “Teclado”). Em Samsung, o teclado de fábrica é o Teclado Samsung: Configurações → Gerenciamento geral → Configurações do Teclado Samsung.' },
     { titulo: 'Adicione o hebraico',
-      texto: 'No Gboard: Idiomas → Adicionar teclado → procure “Hebraico” (עברית) → Concluído. No Teclado Samsung: Idiomas e tipos → Gerenciar idiomas de entrada → ative “עברית”.' },
+      texto: 'No Gboard: Idiomas → Adicionar teclado → procure “Hebraico” ({{עברית}}) → Concluído. No Teclado Samsung: Idiomas e tipos → Gerenciar idiomas de entrada → ative “{{עברית}}”.' },
     { titulo: 'Alterne entre os teclados',
       texto: 'Toque no globo 🌐 do teclado, ou toque e segure a barra de espaço e escolha o idioma. No Teclado Samsung, segure a barra de espaço e deslize para o lado.' },
     { titulo: 'Confira que está ativo',
-      texto: 'A barra de espaço mostra “עברית” e as teclas trazem letras hebraicas.' }
+      texto: 'A barra de espaço mostra “{{עברית}}” e as teclas trazem letras hebraicas.' }
   ],
   windows: [
     { titulo: 'Abra as configurações de idioma',
@@ -131,7 +133,7 @@ export function GuiaTeclado({
             </span>
             <div>
               <p className="font-ui text-[15px] font-semibold text-ink m-0">{passo.titulo}</p>
-              <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">{passo.texto}</p>
+              <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0"><Prose text={passo.texto} /></p>
             </div>
           </li>
         ))}

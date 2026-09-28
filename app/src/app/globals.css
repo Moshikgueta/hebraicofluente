@@ -342,6 +342,14 @@ html[data-a11y-movimento='reduzido'] .reveal { opacity: 1; transform: none; }
 @media (min-width: 1024px) {
   .hf-a11y { bottom: calc(env(safe-area-inset-bottom, 0px) + var(--hf-a11y-acima, 18px)); }
 }
+/* Em telefone o botão encosta mais na borda e encolhe para 44 px (o mínimo
+   de toque), e a página ganha uma folga no fim: o botão cobria a ponta das
+   últimas linhas, e sem a folga o fim da página nunca saía de baixo dele
+   (auditoria de 28/09/2026, UX-017). */
+@media (max-width: 639px) {
+  .hf-a11y { right: 10px; }
+  #conteudo { padding-bottom: 56px; }
+}
 /* O painel abre PARA CIMA, porque o botão mora embaixo. `max-height` com
    rolagem própria: em 150% de zoom e num telefone deitado, ele é mais alto
    do que a tela. */

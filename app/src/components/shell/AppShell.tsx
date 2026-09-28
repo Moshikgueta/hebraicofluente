@@ -447,6 +447,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
 
 function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void }) {
   const first = ACHIEVEMENTS.find(a => a.id === ids[0]);
+  const nosJogos = (usePathname() ?? '').startsWith('/academia');
   useEffect(() => {
     const t = setTimeout(onClose, 6000);
     return () => clearTimeout(t);
@@ -459,8 +460,12 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
        learner is looking at when an achievement fires. */
     <div
       role="status"
-      className="fixed top-[68px] left-1/2 -translate-x-1/2 z-40 w-[min(420px,calc(100vw-32px))]
-                 animate-rise"
+      /* Nos jogos da academia a instrução e o alvo ficam no alto da tela, e o
+         aviso preso embaixo do cabeçalho os cobria (auditoria de 28/09,
+         UX-018). Lá ele desce para acima da barra e do botão de acessibilidade; o
+         "Continuar" das lições, que motivou o topo, não existe nos jogos. */
+      className={`fixed left-1/2 -translate-x-1/2 z-40 w-[min(420px,calc(100vw-32px))] animate-rise
+                  ${nosJogos ? 'bottom-[136px] lg:bottom-6' : 'top-[68px]'}`}
     >
       <Card tone="mint" className="p-4 shadow-[var(--shadow-2)] flex items-center gap-4">
         <span aria-hidden className="text-[var(--mint-ink)] text-[22px] leading-none">◆</span>

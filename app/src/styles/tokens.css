@@ -78,14 +78,17 @@
   /* Auxiliares nomeadas na especificação. */
   --edge-teal: #BFE0D8;   /* borda de cartão "dominada" */
   --edge-gold: #EADCC0;   /* borda de cartão "revisar" */
-  --locked:    #A8AFAB;   /* texto e ícone de estado bloqueado */
+  --locked:    #A8AFAB;   /* ícone e letra bloqueada; texto informativo usa --ink-muted */
   --gold-body: #7A5A1C;   /* corpo dentro da caixa gold */
   --teal-body: #2C5F58;   /* corpo dentro da caixa teal */
 
   /* ── tinta ─────────────────────────────────────────────────────────── */
   --ink:       #1B211F;   /* texto principal, nunca preto puro */
   --ink-body:  #414A47;   /* corpo longo: entre o título e o secundário */
-  --ink-muted: #66716D;   /* secundário; passa 4.5:1 sobre o creme */
+  /* Secundário. #66716D passava 4,5:1 no creme mas não na areia (4,45), no
+     teal-soft (4,37) nem no gold-soft (4,43), onde também é usado
+     (auditoria de 28/09/2026, UX-008). Este passa em todos: 4,84 o menor. */
+  --ink-muted: #5F6A66;
 
   /* ── os nomes semânticos, apontando para os de cima ────────────────── */
   --accent:      var(--navy);

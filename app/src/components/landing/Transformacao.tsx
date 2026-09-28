@@ -92,7 +92,7 @@ export function Transformacao() {
               O que parecia impossível começa a fazer sentido.
             </H2>
             <p className="font-ui text-[17px] sm:text-[18px] leading-[1.65] text-ink-muted max-w-[46ch]">
-              Agora, <span className="he text-[19px] text-ink">ש מ ל א</span> são desenhos.
+              Agora, <span lang="he" dir="rtl" className="he text-[19px] text-ink">ש מ ל א</span> são desenhos.
               Depois do curso são sons que você reconhece, letras que você lê e palavras que
               você entende. Veja acontecer com a palavra que você já ouviu a vida inteira.
             </p>

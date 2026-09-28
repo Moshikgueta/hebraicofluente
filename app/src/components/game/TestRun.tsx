@@ -73,6 +73,17 @@ export function TestRun({
      pergunta seguinte sem precisar de ninguém para limpá-la. */
   const confirmado = useRef(-1);
 
+  /* Leitor de tela e teclado (auditoria de 28/09, UX-013). O teste não diz
+     se acertou - isso é o relatório do fim -, mas precisa dizer que a
+     resposta foi registrada e em que pergunta se está. E o botão de
+     confirmar fica desativado depois do toque, o que jogava o foco no
+     <body>: ele vai para o enunciado da pergunta nova. */
+  const enunciado = useRef<HTMLParagraphElement | null>(null);
+  const [aviso, setAviso] = useState('');
+  useEffect(() => {
+    if (i > 0) enunciado.current?.focus();
+  }, [i]);
+
   /* O cronômetro, quando o modo pede um.
      ─────────────────────────────────────────────────────────────────────
      Um `setInterval` só, criado quando a rodada começa e desligado no
@@ -117,6 +128,7 @@ export function TestRun({
       });
       return;
     }
+    setAviso(`Resposta registrada. Pergunta ${i + 2} de ${perguntas.length}.`);
     setI(n => n + 1);
   }, [escolha, q, dadas, i, perguntas.length, onFim, onResposta, inicio]);
 
@@ -126,6 +138,7 @@ export function TestRun({
 
   return (
     <div className="grid gap-5">
+      <p aria-live="polite" className="sr-only">{aviso}</p>
       <div className="flex items-center gap-3">
         <span className="flex-1 h-1.5 rounded-full bg-[var(--sand)] overflow-hidden">
           <span className="block h-full rounded-full bg-[var(--navy)] transition-[width] duration-300"
@@ -143,7 +156,8 @@ export function TestRun({
       </div>
 
       <Card className="p-5 sm:p-7 grid gap-5">
-        <p className="font-ui text-[17px] sm:text-[19px] font-semibold text-ink">{q.enunciadoPt}</p>
+        <p ref={enunciado} tabIndex={-1}
+           className="font-ui text-[17px] sm:text-[19px] font-semibold text-ink outline-none">{q.enunciadoPt}</p>
 
         <div className="rounded-[18px] bg-[var(--sand)] px-4 py-6 text-center">
           {emHebraico

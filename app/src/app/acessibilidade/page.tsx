@@ -94,8 +94,7 @@ export default function Page() {
           'os exercícios de escuta dependem de ouvir, e ainda não têm uma alternativa para pessoas surdas; o restante do curso não depende de áudio;',
           '"Fale e seja corrigido" depende do reconhecimento de voz do navegador, que não existe em todos (o Firefox, por exemplo, não tem); é um recurso opcional, e "Gravar a minha" funciona em todos;',
           'o jogo "Caça à letra" treina o reconhecimento visual da forma das letras; com leitor de tela, ele anuncia o nome de cada letra, o que torna o jogo possível, mas muda o que ele treina;',
-          'ainda não testamos a plataforma com leitores de tela reais (NVDA, VoiceOver, TalkBack) nem em todos os celulares; a revisão foi feita no navegador Chromium;',
-          'há ajustes menores de contraste e de descrição de botões em andamento.'
+          'ainda não testamos a plataforma com leitores de tela reais (NVDA, VoiceOver, TalkBack) nem em todos os celulares; a revisão foi feita no navegador Chromium.'
         ]} />
       </Artigo>
 

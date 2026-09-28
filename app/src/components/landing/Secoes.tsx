@@ -561,7 +561,7 @@ export function Jornada() {
                                            : 'bg-[var(--card)] border-line'}`}>
                 <span className="flex items-center justify-between mb-3.5">
                   <span className={`font-ui text-[12.5px] font-bold uppercase tracking-[.09em]
-                                    ${aberto ? 'text-[var(--teal-lite)]' : 'text-[#9AA29E]'}`}>
+                                    ${aberto ? 'text-[var(--teal-lite)]' : 'text-ink-muted'}`}>
                     {aberto ? 'Disponível' : 'Em breve'}
                   </span>
                   {aberto
