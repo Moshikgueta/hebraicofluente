@@ -317,3 +317,15 @@ CREATE TABLE IF NOT EXISTS relatos (
   resolvido_em INTEGER
 );
 CREATE INDEX IF NOT EXISTS relatos_abertos ON relatos (resolvido_em, criado_em);
+
+-- O teste A/B da capa (28/09/2026). Só TOTAIS por dia e versão: quantos viram
+-- o hero, clicaram no botão, chegaram ao checkout e compraram. Nenhuma coluna
+-- identifica pessoa. Ver worker/src/api/ab.js.
+CREATE TABLE IF NOT EXISTS ab_contagens (
+  exp      TEXT    NOT NULL,
+  variante TEXT    NOT NULL,
+  evento   TEXT    NOT NULL,
+  dia      TEXT    NOT NULL,
+  n        INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (exp, variante, evento, dia)
+);

@@ -61,6 +61,8 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
            primeira dobra ele é a resposta do visitante à promessa logo
            acima, e não uma instrução do site para ele. */
         primaryLabel={passo.vende ? 'Comece do zero e leia suas primeiras palavras em hebraico' : passo.label}
+        /* O teste A/B do hero (lib/ab.ts): só para quem ainda pode comprar. */
+        testeAB={passo.vende}
         primaryMicro={passo.micro}
         secondaryHref="#experimente"
         midia={midia}

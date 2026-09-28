@@ -20,6 +20,7 @@ import { He } from '@/components/hebrew/He';
 import { Container, Check } from './base';
 import { TEM_AUDIO } from './copy';
 import { SEM_MIDIA, type HeroMedia } from './media';
+import { contarAB, versaoDoHero, type VersaoHero } from '@/lib/ab';
 
 
 const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1000], [5, 1900]];
@@ -39,10 +40,12 @@ const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1
  * saiba.
  */
 export function Hero({
-  primaryHref, primaryLabel, primaryMicro, secondaryHref, midia = SEM_MIDIA
+  primaryHref, primaryLabel, testeAB = false, primaryMicro, secondaryHref, midia = SEM_MIDIA
 }: {
   primaryHref: string;
   primaryLabel: string;
+  /** Participa do teste A/B (lib/ab.ts): só quem ainda pode comprar. */
+  testeAB?: boolean;
   /** A linha curta embaixo do botão: o que se leva ao clicar. */
   primaryMicro: string;
   secondaryHref: string;
@@ -50,6 +53,18 @@ export function Hero({
   midia?: HeroMedia;
 }) {
   const [etapa, setEtapa] = useState(0);
+  /* O teste A/B (lib/ab.ts). O HTML estático sai com a versão B, e a versão
+     do visitante é escolhida no mesmo efeito que agenda a entrada: o texto
+     do hero nasce invisível (etapa 0) e só aparece depois, então quem cai
+     na A nunca vê a B piscar. */
+  const [versao, setVersao] = useState<VersaoHero>('b');
+
+  useEffect(() => {
+    if (testeAB) {
+      setVersao(versaoDoHero());
+      contarAB('visto');
+    }
+  }, [testeAB]);
 
   useEffect(() => {
     const reduz = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -70,7 +85,7 @@ export function Hero({
         style={{ background: 'radial-gradient(120% 90% at 82% -10%, #EAF4F1 0%, rgba(234,244,241,0) 58%)' }}
       />
       <AtmosferaFundo midia={midia} />
-      <Container className="relative pt-14 pb-16 sm:pt-[78px] sm:pb-24
+      <Container className="relative pt-8 pb-16 sm:pt-[78px] sm:pb-24
                             grid gap-12 lg:gap-[60px] lg:grid-cols-[minmax(0,1.04fr)_minmax(0,1fr)] lg:items-center">
         <div>
           {/* A mensagem do hero (28/09/2026), a pedido do dono do curso.
@@ -93,23 +108,71 @@ export function Hero({
               O resto da explicação (o que se aprende, os dois "nada de") foi
               para a faixa logo abaixo (Promessa.tsx): o hero ficou com a
               mensagem, e a primeira tela continua mostrando o botão. */}
+          {/* Versão A do teste: o HÍBRIDO (escolhido pelo dono do curso em
+              28/09/2026) - o resultado claro no título e os três desejos
+              como selos logo abaixo. Versão B: as perguntas. O botão é o
+              mesmo nas duas, para que o teste compare só a mensagem. Ver
+              lib/ab.ts. */}
+          {versao === 'a' ? (
+            <>
           <div
             className="transition-[opacity,transform] duration-[600ms] ease-[var(--ease)]"
             style={{ opacity: em(1) ? 1 : 0, transform: em(1) ? 'none' : 'translateY(20px)' }}
           >
             <p className="inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
-                          font-ui text-[13px] sm:text-[13.5px] font-semibold px-3.5 py-1.5 m-0 mb-5">
+                          font-ui text-[13px] sm:text-[13.5px] font-semibold px-3.5 py-1.5 m-0 mb-4 sm:mb-5">
+              <span aria-hidden className="w-[7px] h-[7px] rounded-full bg-[var(--teal)]" />
+              <span className="sm:hidden">Do zero · alfabetização em hebraico</span>
+              <span className="hidden sm:inline">Alfabetização em hebraico · para iniciantes absolutos</span>
+            </p>
+            <h1 className="font-display font-semibold text-[clamp(36px,4.3vw,56px)] leading-[1.04]
+                           tracking-[-0.035em] text-balance m-0 mb-5">
+              Ler e escrever hebraico, <span className="text-[var(--teal)]">do zero.</span>
+            </h1>
+            {/* Os três desejos, como selos: cada um cabe numa linha curta, e
+                juntos dizem "é para mim" sem pesar o título. */}
+            <ul className="flex flex-wrap gap-2 list-none p-0 m-0 mb-6" aria-label="Para quem é">
+              {['para viajar a Israel', 'para ler as letras da Bíblia', 'para finalmente entender o alfabeto'].map(t => (
+                <li key={t} className="inline-flex items-center gap-2 rounded-full border border-line bg-[var(--card)]
+                                       px-3.5 py-1.5 font-ui text-[14.5px] sm:text-[15px] font-medium text-ink-body">
+                  <span aria-hidden className="w-[6px] h-[6px] rounded-full bg-[var(--teal)]" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            className="transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
+            style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
+          >
+            <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.34] font-medium tracking-[-0.02em]
+                          text-ink text-balance max-w-[30ch] m-0 mb-2">
+              Mesmo que hoje você não reconheça uma única letra.
+            </p>
+            <p className="font-ui text-[16.5px] sm:text-[18px] leading-[1.55] text-ink-muted max-w-[46ch] m-0 mb-7">
+              Uma letra por vez, com som, escrita e correção na hora, até ler suas primeiras palavras sozinho.
+            </p>
+          </div>
+            </>
+          ) : (
+            <>
+          <div
+            className="transition-[opacity,transform] duration-[600ms] ease-[var(--ease)]"
+            style={{ opacity: em(1) ? 1 : 0, transform: em(1) ? 'none' : 'translateY(20px)' }}
+          >
+            <p className="inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
+                          font-ui text-[13px] sm:text-[13.5px] font-semibold px-3.5 py-1.5 m-0 mb-4 sm:mb-5">
               <span aria-hidden className="w-[7px] h-[7px] rounded-full bg-[var(--teal)]" />
               {/* Curto no telefone: o longo quebrava em duas linhas e virava um bloco. */}
               <span className="sm:hidden">Do zero · alfabetização em hebraico</span>
               <span className="hidden sm:inline">Alfabetização em hebraico · para iniciantes absolutos</span>
             </p>
-            <h1 className="font-display font-semibold tracking-[-0.03em] text-balance m-0 mb-5 grid gap-1">
+            <h1 className="font-display font-semibold tracking-[-0.03em] text-balance m-0 mb-4 sm:mb-5 grid gap-1">
               <span className="text-[clamp(30px,3.4vw,44px)] leading-[1.08]">
                 Quer viajar para <span className="text-[var(--teal)]">Israel</span>?
               </span>
               <span className="text-[clamp(30px,3.4vw,44px)] leading-[1.08]">
-                Ler a <span className="text-[var(--teal)]">Bíblia</span> no hebraico original?
+                Ler as letras da <span className="text-[var(--teal)]">Bíblia</span> no original?
               </span>
               <span className="mt-2 text-[clamp(19px,1.8vw,22px)] leading-[1.35] font-medium tracking-[-0.015em]
                                text-ink-muted max-w-[36ch]">
@@ -138,7 +201,16 @@ export function Hero({
               </strong>
               , mesmo que hoje você não reconheça uma única letra.
             </p>
+            {/* O fio que liga os desejos acima ao que o curso entrega, sem
+                prometer conversa nem compreensão da Bíblia: ler as letras é o
+                primeiro passo de qualquer um deles. */}
+            <p className="font-ui text-[14.5px] sm:text-[15.5px] leading-[1.5] text-ink-muted max-w-[46ch] -mt-5 sm:-mt-4 mb-6 sm:mb-7">
+              Ler as letras é o primeiro passo para qualquer um desses objetivos.
+            </p>
           </div>
+
+            </>
+          )}
 
           <div
             className="grid gap-2.5 justify-items-start mb-7
@@ -155,6 +227,7 @@ export function Hero({
             <div className="flex flex-wrap gap-2.5">
               <Link
                 href={primaryHref}
+                onClick={() => { if (testeAB) contarAB('clique'); }}
                 className="group inline-flex items-center justify-center gap-2 rounded-[13px] w-full sm:w-auto
                            text-center leading-[1.3]
                            bg-[var(--navy)] text-white font-ui font-semibold text-[16.5px] px-5 py-[15px]

@@ -9,6 +9,7 @@ import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { primeiroQueExiste } from '@/lib/midia-publica';
+import { Trajetoria } from '@/components/landing/Trajetoria';
 
 /* O retrato é o MESMO arquivo da capa, achado do mesmo jeito: olhando o disco
    na hora da build. Uma página de servidor pode fazer isso - por isso esta
@@ -20,98 +21,28 @@ export const metadata: Metadata = meta({
   rota: '/sobre',
   title: 'Sobre o Moshik - Hebraico Fluente',
   description:
-    'Quem faz o Hebraico Fluente e por que o curso é do jeito que é.'
+    'Moshik Gueta, israelense, professor de hebraico e de idiomas: a trajetória no Brasil, em ' +
+    'Israel e em Buenos Aires que virou a metodologia do Hebraico Fluente.'
 });
 
 /* A trajetória, e o que dela pode ser afirmado.
  * ─────────────────────────────────────────────────────────────────────────
- * Esta página passou meses com um aviso no lugar deste comentário: nada nela
- * podia afirmar um fato biográfico, porque nenhum existia no projeto, e uma
- * credencial inventada numa página «Sobre» é a mentira pequena que derruba a
- * confiança inteira no dia em que um aluno pergunta.
- *
- * Em 22/09/2026 o dono do curso passou os fatos, e eles são estes - nenhum a
- * mais:
- *
- *   · professor de hebraico no Brasil, com alunos brasileiros de níveis
- *     diferentes;
- *   · shaliach da Agência Judaica em Curitiba;
- *   · trajetória no ensino de idiomas, no Brasil e fora;
- *   · gestão pedagógica e criação de material didático.
- *
- * A regra continua valendo para tudo o que NÃO está nessa lista: sem datas,
- * sem número de alunos, sem nome de instituição que ninguém confirmou, sem
- * título acadêmico. Quem for acrescentar alguma coisa aqui precisa ter
- * ouvido do Moshik, e não deduzido do repositório.
- *
- * A mesma trajetória aparece resumida na capa (Fecho.tsx, seção do
- * professor). As duas dizem o mesmo porque saíram da mesma lista; se um dia
- * divergirem, esta é a longa e aquela é a curta - nunca duas biografias.
+ * A história mora em components/landing/Trajetoria.tsx, e as regras dela
+ * estão lá: só entra fato que o Moshik deu (os anos, as instituições, o
+ * CELTA, Letras, os cinco idiomas), sem número de alunos e sem promessa que
+ * não se demonstra. A capa mostra um resumo (Professor, em Fecho.tsx) com o
+ * link para cá - uma biografia, em duas medidas, nunca duas.
  */
 
 export default function SobrePage() {
   const retrato = primeiroQueExiste(RETRATO);
   return (
     <>
+      {/* A história inteira (28/09/2026): o mesmo componente que antes
+          ocupava a capa, que agora mostra só um resumo com o link para cá.
+          Aqui o título é o <h1> da página. */}
       <div className="border-b border-[color:var(--line-soft)]">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-18
-                        grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-center">
-          <div className="grid gap-5">
-            <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-              Sobre
-            </p>
-            <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[18ch]">
-              Oi, eu sou o Moshik.
-            </h1>
-            <p className="text-[17px] leading-relaxed text-ink-body max-w-[56ch]">
-              Sou israelense e ensino hebraico para brasileiros. Dei aula em
-              comunidade e em sala, trabalhei como shaliach da Agência Judaica em
-              Curitiba, e antes disso já vinha do ensino de idiomas - no Brasil e
-              fora dele, também cuidando da parte pedagógica e do material que os
-              alunos tinham na mão.
-            </p>
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[58ch]">
-              Foi nessa convivência que eu vi o mesmo padrão se repetir: gente
-              motivada, que queria muito aprender, desistindo na primeira semana.
-              Quase nunca por falta de esforço. O material que existia tinha sido
-              pensado para outro público e traduzido depois - e traduzir um método
-              não é adaptá-lo.
-            </p>
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[58ch]">
-              O Hebraico Fluente é o que eu aprendi ali, virado plataforma: começar
-              pela leitura, uma letra por vez, sem pular nada e sem pedir que ninguém
-              decore o que ainda não consegue ler.
-            </p>
-          </div>
-
-          {/* O retrato, e a frase como legenda dele.
-              `object-top`: num retrato de rua o rosto fica no terço de cima,
-              e o corte centralizado do object-cover o decapitaria no 4/5. */}
-          {retrato ? (
-            <figure className="m-0 grid gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={retrato}
-                alt="Moshik Gueta, professor e criador do Hebraico Fluente"
-                width={680} height={850} loading="lazy" decoding="async"
-                className="aspect-[4/5] w-full rounded-[var(--r-lg)] border border-line
-                           object-cover object-top bg-surface-2"
-              />
-              <figcaption className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-                O alfabeto é a porta. Depois dela, o hebraico deixa de ser um bloco
-                e vira uma língua como qualquer outra.
-              </figcaption>
-            </figure>
-          ) : (
-            <Card tone="wash" className="p-8 grid gap-4 justify-items-center text-center">
-              <He size="xl" dim>ע</He>
-              <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-                O alfabeto é a porta. Depois dela, o hebraico deixa de ser um bloco
-                e vira uma língua como qualquer outra.
-              </p>
-            </Card>
-          )}
-        </div>
+        <Trajetoria retrato={retrato} nivel="h1" />
       </div>
 
       {/* As mesmas três decisões de sempre, contadas do lado do aluno.
