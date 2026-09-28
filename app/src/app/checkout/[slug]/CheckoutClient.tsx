@@ -388,7 +388,9 @@ function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
       ? (temPix()
         ? 'Na hora em que o pagamento for confirmado - em minutos, no PIX.'
         : 'Na hora em que o pagamento for confirmado.')
-      : 'Depois que o pagamento cair, normalmente em alguns minutos. Você entra na plataforma com seu e-mail e senha.'],
+      /* PIX direto: a liberação é À MÃO. "Em alguns minutos" prometia o que
+         só a confirmação automática faz (auditoria de 28/09, LEGAL-017). */
+      : `Depois que conferirmos o pagamento: a liberação é feita à mão, em até ${empresa.atendimento.prazoRespostaUteis} dias úteis. Você entra na plataforma com seu e-mail e senha.`],
     ['Se você desistir', <>
       {empresa.politicas.arrependimentoDias} dias para cancelar e receber 100% de volta,
       sem justificar.{' '}
@@ -461,13 +463,13 @@ function PixPanel({
         <div className="grid gap-2">
           <p aria-live="polite" className="font-ui text-[14px] leading-relaxed text-ink-body
                                            bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
-            Pague pelo aplicativo do seu banco. Assim que o pagamento cair,
-            liberamos seu acesso - normalmente em alguns minutos. Você pode
+            Pague pelo aplicativo do seu banco. Conferimos o pagamento e
+            liberamos seu acesso à mão, em até {empresa.atendimento.prazoRespostaUteis} dias úteis. Você pode
             fechar esta página: para ver o curso, entre com o mesmo e-mail e a
             mesma senha que você acabou de usar.
           </p>
           <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted">
-            Se demorar mais do que isso, escreva para{' '}
+            Se passar desse prazo, escreva para{' '}
             <a href={`mailto:${empresa.contato.emailSuporte}`}
                className="text-[var(--accent)] hover:underline">
               {empresa.contato.emailSuporte}

@@ -98,8 +98,8 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
           'A liberação é automática. Não existe aprovação manual, e você não precisa mandar comprovante para ninguém.'
         ]
       : [
-          'Assim que o pagamento cai, normalmente em alguns minutos. Você não precisa deixar nenhuma página aberta nem mandar comprovante: é só entrar com o mesmo e-mail e a mesma senha que você usou para comprar.',
-          `Se passar disso, escreva para ${empresa.contato.emailSuporte} com o e-mail da compra. É falha nossa e se resolve na hora.`
+          `Depois que conferimos o pagamento: neste momento a liberação é feita à mão, em até ${empresa.atendimento.prazoRespostaUteis} dias úteis. Você não precisa deixar nenhuma página aberta nem mandar comprovante: é só entrar com o mesmo e-mail e a mesma senha que você usou para comprar.`,
+          `Se passar desse prazo, escreva para ${empresa.contato.emailSuporte} com o e-mail da compra.`
         ]
   },
   {

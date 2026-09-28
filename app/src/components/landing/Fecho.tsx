@@ -429,8 +429,8 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                   : confirmaSozinho()
                     ? <>No PIX sai por {brl(pix)}. Acesso liberado na hora da confirmação,
                        por {c.accessMonths} meses.</>
-                    : <>No PIX sai por {brl(pix)}. Acesso liberado em alguns minutos,
-                       por {c.accessMonths} meses.</>}
+                    : <>No PIX sai por {brl(pix)}. Acesso liberado à mão depois de
+                       conferido o pagamento, por {c.accessMonths} meses.</>}
             </p>
             {/* O número riscado diz "é mais barato"; esta linha diz o que ele
                 É. Sem ela, o riscado vira preço de referência inventado - e no

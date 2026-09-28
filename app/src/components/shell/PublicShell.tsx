@@ -305,7 +305,7 @@ function Footer() {
                 junto, em vez de continuar prometendo o número velho no pé de
                 todas as páginas. */}
             {soPix()
-              ? 'Pagamento por PIX. Acesso liberado em alguns minutos.'
+              ? 'Pagamento por PIX. Acesso liberado depois de conferido o pagamento.'
               : temPix() && temCartao()
                 ? `Pagamento por PIX ou cartão, em até ${parcelasMax(flagship().price)}x. Acesso liberado na hora.`
                 : temCartao()
