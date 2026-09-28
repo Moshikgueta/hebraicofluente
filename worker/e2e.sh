@@ -186,8 +186,12 @@ espera "o HTML tem tamanho de página" true \
 # `<<<` e não `printf | grep -q`: o `-q` sai no primeiro acerto e fecha o
 # cano, e aí o printf do outro lado imprime "write error: Broken pipe" no log
 # de uma verificação que PASSOU. Ruído desse tipo ensina a ignorar log.
+# O texto do <h1> é contado SEM as tags de dentro (28/09/2026): a capa nova
+# quebra o título em linhas (<span>), e o grep antigo, que exigia o texto
+# logo depois de <h1>, caiu com a página certa no ar - exatamente o tipo de
+# vermelho que esta nota acima pede para não existir.
 espera "a capa tem um título com texto" true \
-  "$(grep -qE '<h1[^>]*>[^<]{12,}' <<<"$HOME_HTML" && echo true || echo false)"
+  "$(perl -0ne '$ok = 0; if (/<h1[^>]*>(.*?)<\/h1>/s) { ($t = $1) =~ s/<[^>]+>//g; $t =~ s/\s+/ /g; $ok = length($t) >= 12 } print $ok ? "true" : "false"' <<<"$HOME_HTML")"
 espera "a capa traz a marca" true \
   "$(grep -q 'Hebraico Fluente' <<<"$HOME_HTML" && echo true || echo false)"
 
