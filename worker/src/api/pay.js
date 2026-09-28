@@ -305,7 +305,9 @@ export async function verify({ request, env }) {
        quem liquida é o aviso da Mercado Pago ou a varredura de 5 em 5 min -
        o comprador espera minutos a mais, e a cota de escrita não paga a
        espera. */
-    if (!recente && !await throttled(env, `verify-h:${account.id}`, 180, 3_600_000)
+    /* 240 por hora: a tela espera até 30 minutos (a validade do PIX), a cada
+       3 s nos primeiros 5 e a cada 15 s depois - cerca de 200 perguntas. */
+    if (!recente && !await throttled(env, `verify-h:${account.id}`, 240, 3_600_000)
         && !await throttled(env, `verify:${account.id}`, 20)) {
       await settleFromProvider(env, order, 'verify');
     }
