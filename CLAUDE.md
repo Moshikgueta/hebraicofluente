@@ -790,3 +790,16 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - Vocabulário: a forma "À mão" aparece para toda palavra legível, inclusive as com o ו de
   vogal antes da lição do Vav (יוֹם, שָׁלוֹם, תּוֹדָה, הוּא...). A escrita de palavras e os
   exercícios de cursiva continuam com a régua estrita.
+
+## Lições de prática (29/09/2026, pedido do dono)
+- As lições 3, 7, 10, 13, 23 e 27 (`kind: "practice"` em modules.json) eram só uma frase na
+  página do módulo. Agora são `/modulo/N/pratica` (PraticaClient), montadas SÓ com conteúdo que
+  já existe (lib/engine/pratica.ts):
+  - correção: os erros do aluno nas letras do módulo (weakLetters filtrada), ou as letras do
+    módulo; nos módulos 6 e 7, buildDageshQuiz / buildGerechQuiz. Com `repetirErros`;
+  - letras parecidas: o primeiro par `confusableWith` do módulo (buildConfusionDrill);
+  - ler em voz alta: as palavras do módulo, com CompararPronuncia e GravarLeitura;
+  - portas para texto, missão, checkpoint e Academia.
+- Não tranca nada e não entra na porcentagem. Terminar a correção grava `pratica-N` em
+  `firsts`, que a página do módulo mostra com ✓. O módulo 5 não tem lição de prática (a 20
+  é o contraste).

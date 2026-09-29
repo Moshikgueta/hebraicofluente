@@ -14,6 +14,7 @@ import type { CourseModule, Letter } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
 import { missaoDoModulo, textoDoModulo } from '@/lib/content';
 import { missaoId } from '@/lib/engine/missao';
+import { licaoDePratica, praticaId } from '@/lib/engine/pratica';
 import { ehContraste, idDoSom } from '@/lib/sons';
 
 export function ModuleClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
@@ -61,7 +62,10 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
               </span>
               <span className="text-[15px] text-ink-body">
                 {ls.kind === 'practice'
-                  ? 'Sem letra nova - jogos, correção e leitura em voz alta.'
+                  ? <Link href={`/modulo/${mod.n}/pratica`} className="underline underline-offset-2 hover:text-ink">
+                      Prática: sem letra nova - correção dos seus erros, letras parecidas e leitura em voz alta
+                      {p.state.firsts[praticaId(mod.n)] ? ' ✓' : ''}
+                    </Link>
                   : ls.som
                     ? <Link href={`/som/${ls.som}`} className="underline underline-offset-2 hover:text-ink">
                         {ls.nomePt}: <Prose text={ls.topicPt ?? ''} />
@@ -127,6 +131,23 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
           <p className="text-[15px] leading-relaxed text-ink-body">{texto.introPt}</p>
           <LinkButton href={`/modulo/${mod.n}/texto`} variant="secondary" className="justify-self-start">
             Ler o texto
+          </LinkButton>
+        </Card>
+      )}
+
+      {/* A lição de prática (29/09/2026): antes era só uma frase na lista
+          acima, sem página. Ver lib/engine/pratica.ts. */}
+      {licaoDePratica(mod) && (
+        <Card tone={p.state.firsts[praticaId(mod.n)] ? 'mint' : 'surface'} className="p-6 grid gap-3">
+          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
+            Lição {licaoDePratica(mod)} · prática{p.state.firsts[praticaId(mod.n)] ? ' · feita ✓' : ''}
+          </p>
+          <h2 className="font-display text-[18px] font-semibold">O módulo inteiro de novo, começando pelo que você errou</h2>
+          <p className="text-[15px] leading-relaxed text-ink-body">
+            Correção dos seus erros, letras parecidas e leitura em voz alta. Nenhuma letra nova.
+          </p>
+          <LinkButton href={`/modulo/${mod.n}/pratica`} variant="secondary" className="justify-self-start">
+            {p.state.firsts[praticaId(mod.n)] ? 'Praticar de novo' : 'Fazer a prática'}
           </LinkButton>
         </Card>
       )}
