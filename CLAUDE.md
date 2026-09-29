@@ -776,3 +776,17 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   porcentagem. Exercícios em `bancoDoContraste`.
 - Estúdio: as palavras das frases (`sentences.json` → `words`) entraram no catálogo de áudio
   (onda 4); 13 eram novas, números 576-588. הָאָרֶץ já estava (573), só falta gravar.
+
+## Depoimentos (29/09/2026, pedido do dono)
+- `/depoimento` (atrás do portão): o aluno com o curso liberado escreve um depoimento
+  (20 a 1200 caracteres), escolhe como assinar (nome e cidade, iniciais ou "Aluno do curso") e
+  marca, à parte, a autorização para publicar (começa desmarcada). Um por conta; editar volta o
+  estado para "novo". Retirar apaga a linha (sem freio); apagar a conta também.
+- `/admin/depoimentos`: o dono lê e aprova ou recusa; aprovar exige a autorização do aluno.
+  Aprovar NÃO publica nada: pôr um depoimento na vitrine é passo manual do dono.
+- Tabela `depoimentos` em schema.sql; API em worker/src/api/depoimentos.js; aviso diário ao
+  dono em alertas.js (só a contagem). Link discreto no painel depois de 6 lições.
+  Nunca dar XP, desconto ou brinde em troca de depoimento.
+- Vocabulário: a forma "À mão" aparece para toda palavra legível, inclusive as com o ו de
+  vogal antes da lição do Vav (יוֹם, שָׁלוֹם, תּוֹדָה, הוּא...). A escrita de palavras e os
+  exercícios de cursiva continuam com a régua estrita.

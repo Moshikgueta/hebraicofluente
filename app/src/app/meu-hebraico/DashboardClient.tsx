@@ -265,6 +265,18 @@ export function DashboardClient() {
           do alfabeto - e some sozinho antes disso. */}
       <AntesEDepois />
 
+      {/* O pedido de depoimento (29/09/2026), só depois de seis lições - antes
+          disso a pessoa ainda não tem o que contar. Discreto e sem troca:
+          nada de XP ou desconto por depoimento. Ver /depoimento. */}
+      {licoesFeitas >= 6 && (
+        <p className="font-ui text-[13.5px] text-ink-muted">
+          <Link href="/depoimento" className="hover:text-[var(--accent)] underline underline-offset-2">
+            Conte como está sendo
+          </Link>{' '}
+          · o seu depoimento ajuda o curso e quem está pensando em começar.
+        </p>
+      )}
+
       {/* Os quatro números, e depois revisar e a semana. É a ordem do design,
           e ela responde na sequência certa: o que eu já fiz, o que está
           pendente, e como foi a semana. */}

@@ -423,3 +423,23 @@ CREATE TABLE IF NOT EXISTS aparelhos (
   criado_em  INTEGER NOT NULL,
   PRIMARY KEY (account_id, aparelho)
 );
+
+-- Os depoimentos dos alunos (29/09/2026). Um por conta, escrito pelo próprio
+-- aluno em /depoimento. Só vai ao ar com `publicar` = 1 (a autorização do
+-- aluno) E `estado` = 'aprovado' (a leitura do dono). Retirar a autorização
+-- apaga a linha. Ver worker/src/api/depoimentos.js.
+CREATE TABLE IF NOT EXISTS depoimentos (
+  account_id    INTEGER PRIMARY KEY REFERENCES accounts(id),
+  texto         TEXT    NOT NULL,
+  -- como a pessoa quer aparecer: 'nome' (nome e cidade), 'iniciais', 'anonimo'
+  forma         TEXT    NOT NULL,
+  nome_publico  TEXT    NOT NULL DEFAULT '',
+  cidade        TEXT    NOT NULL DEFAULT '',
+  publicar      INTEGER NOT NULL DEFAULT 0,
+  contato       INTEGER NOT NULL DEFAULT 0,
+  -- 'novo' (o dono ainda não leu), 'aprovado', 'recusado'
+  estado        TEXT    NOT NULL DEFAULT 'novo',
+  criado_em     INTEGER NOT NULL,
+  atualizado_em INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS depoimentos_estado ON depoimentos(estado, atualizado_em);

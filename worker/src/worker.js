@@ -25,6 +25,7 @@ import * as ab from './api/ab.js';
 import * as novidades from './api/novidades.js';
 import * as csp from './api/csp.js';
 import * as marca from './api/marca.js';
+import * as depoimentos from './api/depoimentos.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -94,7 +95,15 @@ const ROUTES = {
 
   /* De qual conta saiu uma cópia do curso: lê a marca invisível de um
      trecho colado. Só administrador. Ver api/marca.js. */
-  'POST /api/admin/marca': marca.identificar
+  'POST /api/admin/marca': marca.identificar,
+
+  /* Os depoimentos: o aluno escreve, autoriza (ou não) e retira o dele; o
+     dono lê e aprova. Ver api/depoimentos.js. */
+  'GET /api/depoimento': depoimentos.ler,
+  'PUT /api/depoimento': depoimentos.salvar,
+  'DELETE /api/depoimento': depoimentos.retirar,
+  'GET /api/admin/depoimentos': depoimentos.listar,
+  'PUT /api/admin/depoimentos': depoimentos.julgar
 };
 
 export default {
