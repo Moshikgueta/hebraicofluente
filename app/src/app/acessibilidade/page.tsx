@@ -85,7 +85,8 @@ export default function Page() {
           tamanho de texto em 150% e a navegação em telas de celular. Em 28/09/2026
           fizemos uma revisão manual completa: navegação por teclado, foco, nomes dos
           botões, contraste medido, textos em hebraico e telas de 320 pixels de
-          largura. As correções dessa revisão já estão no ar.
+          largura. As correções dessa revisão já estão no ar. Em 29/09/2026 testamos
+          também em celulares de verdade, um iPhone e um Android.
         </p>
       </Artigo>
 
@@ -94,7 +95,7 @@ export default function Page() {
           'os exercícios de escuta dependem de ouvir, e ainda não têm uma alternativa para pessoas surdas; o restante do curso não depende de áudio;',
           '"Fale e seja corrigido" depende do reconhecimento de voz do navegador, que não existe em todos (o Firefox, por exemplo, não tem); é um recurso opcional, e "Gravar a minha" funciona em todos;',
           'o jogo "Caça à letra" treina o reconhecimento visual da forma das letras; com leitor de tela, ele anuncia o nome de cada letra, o que torna o jogo possível, mas muda o que ele treina;',
-          'ainda não testamos a plataforma com leitores de tela reais (NVDA, VoiceOver, TalkBack) nem em todos os celulares; a revisão foi feita no navegador Chromium.'
+          'ainda não testamos a plataforma com leitores de tela reais (NVDA, VoiceOver, TalkBack).'
         ]} />
       </Artigo>
 
