@@ -23,6 +23,7 @@ import { content } from './api/content.js';
 import * as audio from './api/audio.js';
 import * as ab from './api/ab.js';
 import * as novidades from './api/novidades.js';
+import * as csp from './api/csp.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -71,6 +72,10 @@ const ROUTES = {
      Ver api/ab.js. */
   'POST /api/ab': ab.registrar,
 
+  /* O que a CSP estrita, ainda em observação, teria bloqueado. Ver
+     api/csp.js. */
+  'POST /api/csp-report': csp.relatorio,
+
   /* O progresso do aluno. `rev` na escrita é o que impede o celular e o
      notebook de se apagarem - ver api/progress.js. */
   'GET /api/progress': progress.read,
@@ -94,7 +99,8 @@ export default {
      senha. */
   async fetch(request, env, ctx) {
     const path = new URL(request.url).pathname.replace(/\/+$/, '') || '/';
-    return blindar(await responder(request, env, ctx), path);
+    const res = await responder(request, env, ctx);
+    return blindar(res, path, await hashesDaPagina(request, env, res, path));
   },
 
   /* O cron (ver [triggers] no wrangler.toml). Esperado, e não solto com
@@ -142,8 +148,12 @@ async function responder(request, env, ctx) {
          curl do e2e, um script de operação - passa: a defesa é contra o
          navegador da vítima, não contra ferramentas.
          O webhook fica de fora porque a Mercado Pago é, legitimamente,
-         outra origem; a assinatura HMAC é a trava dele. */
-      if (request.method !== 'GET' && request.method !== 'HEAD' && path !== '/api/pay/webhook') {
+         outra origem; a assinatura HMAC é a trava dele. O relato de CSP
+         também: quem o manda é o próprio navegador, que nem sempre declara a
+         origem do mesmo jeito, e ele não escreve nada além de uma linha de
+         trilha com freio. */
+      if (request.method !== 'GET' && request.method !== 'HEAD'
+          && path !== '/api/pay/webhook' && path !== '/api/csp-report') {
         const site = request.headers.get('Sec-Fetch-Site');
         const origin = request.headers.get('Origin');
         const cruzada = site === 'cross-site' || site === 'same-site'
@@ -193,6 +203,8 @@ async function responder(request, env, ctx) {
     }
 
     /* ── o site ─────────────────────────────────────────────────────── */
+    /* A lista de hashes da CSP é do Worker, não do visitante. */
+    if (path === '/' + ARQUIVO_HASHES) return new Response('Not found', { status: 404 });
     return env.ASSETS.fetch(request);
 }
 
@@ -208,6 +220,10 @@ async function responder(request, env, ctx) {
  * impede um script injetado de mandar uma senha para fora, e
  * `frame-ancestors 'none'` é o que impede o checkout e o login de serem
  * emoldurados por outro site.
+ *
+ * A saída do `'unsafe-inline'` já está a caminho: a mesma política, com o
+ * hash de cada script no lugar dele, vai em observação ao lado desta (ver
+ * `cspEstrita` abaixo). Quando valer, esta linha muda.
  *
  * Uma página paga que passou pelo portão sai `private, no-store`: o servidor
  * de ativos a marca `public`, e um cache compartilhado no caminho poderia
@@ -228,11 +244,60 @@ const CSP = [
   "object-src 'none'"
 ].join('; ');
 
+/* A CSP estrita, em observação (auditoria, SEC-003).
+ * ─────────────────────────────────────────────────────────────────────────
+ * A mesma política, com uma diferença: em vez de `'unsafe-inline'`, o hash
+ * de cada script inline QUE AQUELA PÁGINA TRAZ, calculado no build por
+ * tools/csp-hashes.mjs. Sai em `Content-Security-Policy-Report-Only`: o
+ * navegador não bloqueia nada, só relata em /api/csp-report o que teria
+ * bloqueado (api/csp.js). Quando os relatos ficarem limpos por alguns dias,
+ * esta vira a `Content-Security-Policy` e a de cima sai - decisão do dono.
+ *
+ * A lista é lida uma vez por isolate, do próprio servidor de ativos: ela
+ * muda a cada publicação, e cada publicação sobe isolates novos. Sem a lista
+ * (build antiga, arquivo fora do ar), a página sai só com a política de
+ * sempre - a observação nunca pode custar uma página.
+ */
+const ARQUIVO_HASHES = '_csp-hashes.json';
+let mapaHashes = null;
+
+async function carregarHashes(request, env) {
+  if (mapaHashes) return mapaHashes;
+  try {
+    const r = await env.ASSETS.fetch(new Request(new URL('/' + ARQUIVO_HASHES, request.url)));
+    if (!r.ok) return {};
+    mapaHashes = await r.json();
+    return mapaHashes;
+  } catch {
+    return {};
+  }
+}
+
+/** A rota como tools/csp-hashes.mjs a grava: `/faq`, `/`, ou "404". */
+function rotaDaPagina(path, status) {
+  if (status === 404) return '404';
+  const p = path.replace(/\/index\.html$/i, '').replace(/\.html$/i, '');
+  return p || '/';
+}
+
+async function hashesDaPagina(request, env, res, path) {
+  if (!(res.headers.get('Content-Type') || '').startsWith('text/html')) return null;
+  const mapa = await carregarHashes(request, env);
+  const hs = mapa[rotaDaPagina(path, res.status)];
+  return Array.isArray(hs) ? hs : null;
+}
+
+function cspEstrita(hashes) {
+  const scripts = ["'self'", "'report-sample'", ...hashes.map(h => `'${h}'`)].join(' ');
+  return CSP.replace("script-src 'self' 'unsafe-inline'", `script-src ${scripts}`)
+    + '; report-uri /api/csp-report';
+}
+
 /* O painel do dono do curso. Também libera o microfone: é onde as
    pronúncias do curso são gravadas (app/src/app/admin/gravar). */
 const isAdminPath = path => /^\/admin(\/|$)/i.test(path);
 
-function blindar(res, path) {
+function blindar(res, path, hashes = null) {
   /* Uma resposta sem corpo (304, 302, 403) é reconstruída sem corpo: passar
      um `body` nulo com esses status é permitido; passar um corpo em 304 não. */
   const out = new Response(res.body, res);
@@ -259,6 +324,7 @@ function blindar(res, path) {
   const tipo = h.get('Content-Type') || '';
   if (tipo.startsWith('text/html')) {
     h.set('Content-Security-Policy', CSP);
+    if (hashes) h.set('Content-Security-Policy-Report-Only', cspEstrita(hashes));
     h.set('X-Frame-Options', 'DENY');
   }
   /* O painel do dono do curso: fora de busca e fora de cache. A página em

@@ -261,6 +261,14 @@ regras que ele fixou e que valem para todo commit daqui em diante:
   uma cópia na sua máquina.
 - `npm run csp` prova a CSP num navegador; `app/tests/auditoria.test.ts`
   guarda cada ataque fechado. Um achado novo entra lá antes do conserto.
+- **CSP estrita em observação (SEC-003).** O build de `app` roda
+  `tools/csp-hashes.mjs`, que grava em `out/_csp-hashes.json` o hash de cada
+  script inline de cada página. O Worker manda, ao lado da CSP que vale, uma
+  `Content-Security-Policy-Report-Only` sem `'unsafe-inline'` e com esses
+  hashes; o navegador relata em `/api/csp-report` (trilha `csp-violacao`,
+  lida em Actions → Acesso → `csp`). `CSP_ESTRITA=1 npm run csp` aplica a
+  regra estrita de verdade num Chromium. Trocar a observação pela regra que
+  vale é decisão do dono, depois de semanas sem relato.
 
 ## Conta e senha
 Criar conta, entrar, sair, **esquecer a senha** e **trocar a senha** - tudo em
