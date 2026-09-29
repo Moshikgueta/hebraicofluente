@@ -24,6 +24,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { He, HeCloze } from '@/components/hebrew/He';
 import { AudioButton, hasAudio } from './AudioButton';
+import { OuvirInstrucao } from './OuvirInstrucao';
 import {
   BuildLetters, BuildSyllable, BuildWord, Hints, MatchPairs, TypeAnswer, TypeHebrew
 } from './Answers';
@@ -31,6 +32,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import type { Exercise } from '@/lib/engine/exercises';
 import { isChoice } from '@/lib/engine/exercises';
+import { reenfileirar } from '@/lib/engine/fila-de-revisao';
 import { useProgress } from '@/lib/state/store';
 import { clusters } from '@/lib/hebrew';
 import { supportLevel } from '@/lib/state/rules';
@@ -41,14 +43,22 @@ export type PlayerResult = { correct: number; total: number; score: number; miss
 type Settled = { correct: boolean; chosen: number | null; why: string | null };
 
 export function ExercisePlayer({
-  exercises, onDone, title, compact = false
+  exercises, onDone, title, compact = false, repetirErros = false
 }: {
   exercises: Exercise[];
   onDone: (r: PlayerResult) => void;
   title?: string;
   compact?: boolean;
+  /** A prática de revisão (o reforço depois do teste): uma questão errada
+   *  volta para a fila, depois de outras, até ser acertada; a prática só
+   *  termina com todas certas. Desligado em todo o resto do curso. */
+  repetirErros?: boolean;
 }) {
   const { answer, markFirst, mastered, state } = useProgress();
+  /* A fila que o aluno percorre. Sem `repetirErros` ela é a lista recebida,
+     do começo ao fim; com ele, cresce a cada erro. */
+  const [filaDaRevisao, setFila] = useState<Exercise[]>(exercises);
+  const fila = repetirErros ? filaDaRevisao : exercises;
   const [i, setI] = useState(0);
   const [firstUnaided, setFirstUnaided] = useState(false);
   const [settled, setSettled] = useState<Settled | null>(null);
@@ -87,8 +97,10 @@ export function ExercisePlayer({
   const julgado = useRef(-1);
   const avancado = useRef(-1);
 
-  const ex = exercises[i];
+  const ex = fila[i];
   const isRight = settled?.correct ?? false;
+  /* Esta errada volta? Só no modo de revisão. */
+  const vaiVoltar = repetirErros && !!settled && !settled.correct;
 
   /**
    * Settle the current question.
@@ -143,15 +155,21 @@ export function ExercisePlayer({
   const next = useCallback(() => {
     if (avancado.current === i) return;
     avancado.current = i;
-    if (i + 1 >= exercises.length) {
+    const seguinte = vaiVoltar ? reenfileirar(fila, i) : fila;
+    if (repetirErros && seguinte !== fila) setFila(seguinte);
+    if (i + 1 >= seguinte.length) {
+      /* No modo de revisão só se chega aqui com tudo certo: o resultado conta
+         as questões da lista, não as tentativas, e `missed` diz quais
+         precisaram de mais de uma. */
       const total = exercises.length;
-      onDone({ correct: correctCount, total, score: total ? correctCount / total : 0, missed });
+      const certas = repetirErros ? total : correctCount;
+      onDone({ correct: certas, total, score: total ? certas / total : 0, missed: [...new Set(missed)] });
       return;
     }
     setI(n => n + 1);
     setSettled(null);
     setFirstUnaided(false);
-  }, [i, exercises.length, correctCount, missed, onDone]);
+  }, [i, fila, vaiVoltar, repetirErros, exercises.length, correctCount, missed, onDone]);
 
   /* Keyboard: 1-9 to answer a choice, Enter to continue. Every exercise that
      can be answered without a pointer, is. */
@@ -249,7 +267,7 @@ export function ExercisePlayer({
           <div className="h-1.5 flex-1 rounded-full bg-surface-2 overflow-hidden">
             <div
               className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-300 ease-[var(--ease)]"
-              style={{ width: `${((i + (settled ? 1 : 0)) / exercises.length) * 100}%` }}
+              style={{ width: `${((i + (settled ? 1 : 0)) / fila.length) * 100}%` }}
             />
           </div>
           {/* `data-progresso` é para a varredura de exercícios, do mesmo jeito
@@ -257,9 +275,9 @@ export function ExercisePlayer({
               "3 / 10" no texto, e o cabeçalho da lição mostra "LETRA 7/22"
               logo acima - um robô que lê o primeiro "n/m" da tela pega o
               errado, e foi o que aconteceu na primeira execução. */}
-          <span data-progresso={`${i + 1}/${exercises.length}`}
+          <span data-progresso={`${i + 1}/${fila.length}`}
                 className="font-ui text-[13px] tabular-nums text-ink-muted shrink-0">
-            {i + 1} / {exercises.length}
+            {i + 1} / {fila.length}
           </span>
         </div>
       </header>
@@ -267,6 +285,9 @@ export function ExercisePlayer({
       <Card className="p-5 sm:p-7 grid gap-6">
         <h2 ref={perguntaRef} tabIndex={-1}
             className="text-[19px] sm:text-[21px] font-semibold leading-snug focus:outline-none">{ex.promptPt}</h2>
+        {/* Só com "Ouvir instruções em português" ligado no menu de
+            acessibilidade. Lê o enunciado, nunca as alternativas. */}
+        <OuvirInstrucao texto={ex.promptPt} />
 
         {/* A CHAVE é o item, e não é enfeite. Sem ela o React reaproveita o
             componente de resposta quando dois itens seguidos são do mesmo
@@ -317,6 +338,11 @@ export function ExercisePlayer({
               <p className="mt-2 text-[15px] leading-relaxed text-ink font-medium">{settled.why}</p>
             )}
             <p className="mt-2 text-[15px] leading-relaxed text-ink-body">{ex.explainPt}</p>
+            {vaiVoltar && (
+              <p className="mt-2 font-ui text-[14px] leading-relaxed text-[var(--gold-body)]">
+                Esta questão volta daqui a pouco, para você acertar.
+              </p>
+            )}
             {firstUnaided && (
               <p className="mt-3 pt-3 border-t border-[color:var(--line-soft)]
                             font-ui text-[14px] leading-relaxed text-[var(--mint-ink)]">
@@ -327,7 +353,7 @@ export function ExercisePlayer({
             )}
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <Button onClick={next} size="md">
-                {i + 1 >= exercises.length ? 'Ver resultado' : 'Continuar'}
+                {i + 1 >= fila.length && !vaiVoltar ? 'Ver resultado' : 'Continuar'}
               </Button>
               {hasAudio(ex.audioId) && <AudioButton audioId={ex.audioId!} label="Ouvir" size="sm" slow />}
             </div>

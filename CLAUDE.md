@@ -304,6 +304,32 @@ Pedido do dono. Nenhum site impede quem pagou de copiar o que vê; o que existe:
   154-A. Só a lei, sem ameaça que o site não cumpra; revisar com o advogado.
 - Termos (art. 2, 4 e 5), Privacidade (duas linhas novas) e FAQ dizem isso.
 
+## Quatro melhorias de 29/09/2026 (pedido do dono)
+- **Áudio das leituras da letra** (פּ/פ/ף, בּ/ב, כּ/כ/ך, שׁ/שׂ): o `audioId` de
+  cada `variante` saía da consoante sozinha, que nunca foi gravada (não se
+  pronuncia): o quadro "As leituras desta letra" era mudo. Agora
+  `export-content.mjs` (`exemploDaVariante`) dá a cada leitura um EXEMPLO
+  gravado: a sílaba com patach (פַּ, פַ) ou, na forma final, a primeira
+  palavra da letra que termina nela (ף → כֶּסֶף). `exemploHe` aparece embaixo
+  do botão. `tests/audio.test.ts` passou a incluir as variantes (era por
+  isso que o buraco não aparecia); `tests/audio-pe.test.ts` cobre o Pe.
+- **Prática de revisão** (o reforço depois da fixação, "Praticar mais um
+  pouco"): `ExercisePlayer` com `repetirErros` - errou, a questão volta
+  depois de outras 2 (`lib/engine/fila-de-revisao.ts`), e a prática só
+  termina com todas certas. Só o reforço liga isso; o resto do curso, não.
+- **Ouvir instruções em português** (menu de acessibilidade, `voz`, marca
+  `data-a11y-voz` no html): `components/learn/OuvirInstrucao.tsx` lê o
+  ENUNCIADO com a voz pt-BR do aparelho (ouvir/pausar/continuar), nunca
+  alternativas nem resposta; o hebraico citado vira "o hebraico mostrado"
+  (`lib/voz-instrucao.ts`). Voz sintética é só para português: o hebraico
+  continua só com gravação.
+- **Teclado hebraico na tela** nos exercícios de digitar em hebraico
+  (`components/learn/TecladoHebraico.tsx`, lógica em
+  `lib/teclado-hebraico.ts`): 22 letras, 5 finais, os 11 sinais do curso;
+  escreve no cursor, apaga um ponto de código por vez, não rouba o foco, e
+  convive com o teclado do aparelho. A academia deixou de exigir instalar o
+  teclado ("Usar o teclado da tela").
+
 ## Conta e senha
 Criar conta, entrar, sair, **esquecer a senha** e **trocar a senha** - tudo em
 `worker/src/api/auth.js`, com as consultas em `worker/src/lib/db.js`.

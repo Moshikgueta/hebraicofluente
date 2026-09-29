@@ -448,6 +448,19 @@ export function AcademiaClient() {
           track('gym_started', { mode: mode.id });
           setScreen({ kind: 'run', mode, startedAt: Date.now() });
         }} />
+        {/* 29/09/2026: o exercício agora tem um teclado hebraico na tela
+            (components/learn/TecladoHebraico.tsx). Instalar continua sendo o
+            melhor, mas deixou de ser condição. */}
+        <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
+          Prefere não instalar agora? O exercício tem um teclado hebraico na tela.
+        </p>
+        <Button variant="secondary" onClick={() => {
+          p.markFirst('teclado-hebraico');
+          track('gym_started', { mode: mode.id });
+          setScreen({ kind: 'run', mode, startedAt: Date.now() });
+        }}>
+          Usar o teclado da tela
+        </Button>
       </div>
     );
   }

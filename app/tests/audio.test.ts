@@ -28,6 +28,10 @@ function requested(): { id: string; where: string }[] {
     L.syllables.forEach(s => out.push({ id: s.audioId, where: `${L.id}.syllable ${s.vowel}` }));
     L.wordsToRead.forEach(w => out.push({ id: w.audioId, where: `${L.id}.read ${w.he}` }));
     L.wordsToRecognize.forEach(w => out.push({ id: w.audioId, where: `${L.id}.recognize ${w.he}` }));
+    /* As leituras de uma letra (פּ/פ/ף, בּ/ב, כּ/כ/ך, שׁ/שׂ). Ficavam de fora
+       desta lista, e o id delas - da consoante sozinha - não tinha gravação
+       nenhuma: o quadro "As leituras desta letra" era mudo (29/09/2026). */
+    (L.variantes ?? []).forEach(v => out.push({ id: v.audioId, where: `${L.id}.variante ${v.he}` }));
   }
   for (const s of nikud().sounds) {
     s.signs.forEach(g => {

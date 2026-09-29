@@ -26,6 +26,8 @@ import { clean, joinSyllable, onCarrier } from '@/lib/hebrew';
 import { typedIsCorrect } from '@/lib/engine/types';
 import { hebraicoDigitadoCerto, pareceTecladoLatino } from '@/lib/engine/palavras';
 import { rng, shuffled } from '@/lib/engine/rng';
+import { TecladoHebraico } from './TecladoHebraico';
+import type { Selecao } from '@/lib/teclado-hebraico';
 
 /* ── build a syllable ───────────────────────────────────────────────────
    The consonant is on screen. Tapping a vowel puts it ON the consonant, in
@@ -298,6 +300,13 @@ export function TypeHebrew({
 }) {
   const [value, setValue] = useState('');
   const [latino, setLatino] = useState(false);
+  /* O campo e onde está o cursor nele: o teclado da tela escreve ali. */
+  const campo = useRef<HTMLInputElement | null>(null);
+  const selecao = useRef<Selecao>({ ini: 0, fim: 0 });
+  const lembrar = () => {
+    const el = campo.current;
+    if (el) selecao.current = { ini: el.selectionStart ?? el.value.length, fim: el.selectionEnd ?? el.value.length };
+  };
 
   const submit = () => {
     if (settled || !value.trim()) return;
@@ -310,8 +319,13 @@ export function TypeHebrew({
     <div className="grid gap-3">
       <div className="flex flex-wrap items-center gap-3">
         <input
+          ref={campo}
           value={value}
-          onChange={e => { setValue(e.target.value); if (latino) setLatino(false); }}
+          onChange={e => { setValue(e.target.value); if (latino) setLatino(false); lembrar(); }}
+          onSelect={lembrar}
+          onKeyUp={lembrar}
+          onClick={lembrar}
+          onBlur={lembrar}
           onKeyDown={e => {
             if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); submit(); }
           }}
@@ -331,6 +345,10 @@ export function TypeHebrew({
         />
         <Button onClick={submit} disabled={settled || !value.trim()} size="md">Conferir</Button>
       </div>
+      {!settled && (
+        <TecladoHebraico campo={campo} valor={value} selecao={selecao} desligado={settled}
+                         aoEditar={e => { setValue(e.valor); if (latino) setLatino(false); }} />
+      )}
       {latino && (
         <p role="status" className="font-ui text-[14px] text-[var(--amber)] m-0">
           Isso chegou em letras latinas: o teclado ainda está em português. Troque para

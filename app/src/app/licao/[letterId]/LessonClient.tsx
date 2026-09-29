@@ -808,13 +808,15 @@ function StageFixacao({
           </p>
           <p className="font-ui text-[14.5px] leading-relaxed text-[var(--gold-body)]">
             Estas {reforco.length} questões saem do que escapou agora há pouco.
-            Nada aqui vale nota.
+            Nada aqui vale nota. A que você errar volta depois de outras, até
+            você acertar.
           </p>
         </Card>
         <ExercisePlayer
           key={`ref-${letter.id}-${result.correct}`}
           exercises={reforco}
           title="Reforço"
+          repetirErros
           onDone={() => setFase('fechado')}
         />
       </div>
@@ -969,8 +971,12 @@ function Leituras({ letter }: { letter: Letter }) {
               </span>
             </span>
             {hasAudio(v.audioId) && (
-              <span className="ml-auto shrink-0">
-                <AudioButton audioId={v.audioId} label="" size="sm" />
+              <span className="ml-auto shrink-0 grid justify-items-center gap-0.5">
+                <AudioButton audioId={v.audioId} label="" size="sm"
+                             ariaLabel={`Ouvir ${v.nomePt}, no exemplo ${v.exemploHe}`} />
+                {/* O que toca é um exemplo: uma consoante sozinha não se
+                    pronuncia. Mostrado, para o som não parecer da letra solta. */}
+                <He size="inline">{v.exemploHe}</He>
               </span>
             )}
           </li>
