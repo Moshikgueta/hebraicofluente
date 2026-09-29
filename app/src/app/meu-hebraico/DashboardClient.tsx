@@ -35,7 +35,7 @@ import { CourseShelf } from '@/components/platform/CourseShelf';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
 import { AntesEDepois } from '@/components/platform/AntesEDepois';
-import { idDoSom } from '@/lib/sons';
+import { ehContraste, idDoSom } from '@/lib/sons';
 
 export function DashboardClient() {
   const p = useProgress();
@@ -183,7 +183,7 @@ export function DashboardClient() {
           <CartaoCurso
             kicker="Curso em andamento"
             titulo={flagship().titlePt}
-            sub={`Módulo ${next.module.n} · lição ${next.lesson} - o som ${next.nome}`}
+            sub={`Módulo ${next.module.n} · lição ${next.lesson} - ${ehContraste(next.som) ? next.nome.toLowerCase() : `o som ${next.nome}`}`}
             pct={p.progress}
             href={`/som/${next.som}`}
             cta={(p.state.lessons[idDoSom(next.som)]?.stagesDone.length ?? 0) > 0

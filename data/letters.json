@@ -3240,7 +3240,7 @@
         "ondePt": "sem o ponto"
       }
     ],
-    "soundNotePt": "Com o ponto dentro ({{בּ}}), soa B, como em \"bola\". Esta lição é a do B. Sem o ponto a mesma letra tem outro som, o V, e ele ganha uma lição só dele logo depois desta: o Vet.",
+    "soundNotePt": "Com o ponto dentro ({{בּ}}), soa B, como em \"bola\". Esta lição é a do B. Sem o ponto a mesma letra tem outro som, e ele ganha uma lição só dele logo depois desta.",
     "articulacao": {
       "pontos": [
         {
@@ -3248,7 +3248,7 @@
         }
       ],
       "voz": true,
-      "comoPt": "Os dois lábios se fecham e soltam, com a voz ligada: o B de \"bola\". Ponha a mão no pescoço: vibra. (Sem o ponto, a boca muda - é a lição do Vet.)"
+      "comoPt": "Os dois lábios se fecham e soltam, com a voz ligada: o B de \"bola\". Ponha a mão no pescoço: vibra."
     },
     "ensino": {
       "funcaoPt": "{{בּ}} é a primeira letra do curso em que um ponto dentro dela decide o som. Com o ponto, ela é B, como em \"bola\": {{אַבָּא}}, {{בַּיִת}}, {{בֹּקֶר}}. Procure o ponto antes de pronunciar - ele é pequeno.",
@@ -3272,10 +3272,10 @@
           "q": "Como se lê {{אַבָּא}} (pai)?",
           "opcoes": [
             "\"abá\", com B",
-            "\"avá\", com V"
+            "\"amá\", com M"
           ],
           "certa": 0,
-          "porque": "A letra tem o ponto dentro, e com o ponto ela é sempre B: \"abá\". Ler V aqui é trocar a letra pelo outro som dela, que só vale quando o ponto não está lá."
+          "porque": "A letra do meio é o {{בּ}}: os lábios fecham e soltam, B. \"Abá\". Com M seria o {{מ}}, que tem outro desenho."
         },
         {
           "t": "vf",
@@ -3453,7 +3453,7 @@
         "ondePt": "no fim da palavra - e nunca leva ponto"
       }
     ],
-    "soundNotePt": "Com o ponto ({{כּ}}), soa K, igual ao {{ק}}. Esta lição é a do K. Sem o ponto, e na forma final {{ך}}, a letra tem outro som, o raspado, e ele ganha lição própria logo depois desta: o Chaf.",
+    "soundNotePt": "Com o ponto ({{כּ}}), soa K, igual ao {{ק}}. Esta lição é a do K. Sem o ponto, e na forma final {{ך}}, a letra tem outro som, e ele ganha lição própria logo depois desta.",
     "articulacao": {
       "pontos": [
         {
@@ -3461,7 +3461,7 @@
         }
       ],
       "voz": false,
-      "comoPt": "O fundo da língua encosta no céu da boca, lá atrás, e solta, sem voz: um K, no mesmo lugar do {{ק}}. (Sem o ponto, a língua não fecha e o ar raspa - é a lição do Chaf.)"
+      "comoPt": "O fundo da língua encosta no céu da boca, lá atrás, e solta, sem voz: um K, no mesmo lugar do {{ק}}."
     },
     "ensino": {
       "funcaoPt": "{{כּ}} funciona como o {{בּ}}: o ponto dentro decide o som. Com o ponto, ela é K, igual ao {{ק}}: {{כֶּלֶב}}, {{כּוֹס}}, {{כַּדּוּר}}. Duas letras com o mesmo som - quem decide qual se escreve é a palavra.",
@@ -3665,7 +3665,7 @@
         "ondePt": "no fim da palavra - e nunca leva ponto"
       }
     ],
-    "soundNotePt": "Com o ponto dentro ({{פּ}}), soa P, como em \"pato\". Esta lição é a do P. Sem o ponto, e na forma final {{ף}}, a letra soa F, e esse som ganha lição própria logo depois desta: o Fe.",
+    "soundNotePt": "Com o ponto dentro ({{פּ}}), soa P, como em \"pato\". Esta lição é a do P. Sem o ponto, e na forma final {{ף}}, a letra tem outro som, e ele ganha lição própria logo depois desta.",
     "articulacao": {
       "pontos": [
         {
@@ -3673,7 +3673,7 @@
         }
       ],
       "voz": false,
-      "comoPt": "Os dois lábios se fecham e soltam o ar, sem voz: o P de \"pato\". É o par sem voz do {{בּ}}. (Sem o ponto, os lábios não fecham - é a lição do Fe.)"
+      "comoPt": "Os dois lábios se fecham e soltam o ar, sem voz: o P de \"pato\". É o par sem voz do {{בּ}}."
     },
     "ensino": {
       "funcaoPt": "{{פּ}} é a terceira e última letra em que um ponto dentro decide o som. Com o ponto, ela é P, como em \"pato\": {{פֶּה}}, {{פָּרָה}}, {{מִשְׁפָּחָה}}. Você já conhece o mecanismo do {{בּ}} e do {{כּ}} - é o mesmo.",
@@ -3697,10 +3697,10 @@
           "q": "Como se lê {{פֶּה}} (boca)?",
           "opcoes": [
             "\"pe\", com P",
-            "\"fe\", com F"
+            "\"be\", com B"
           ],
           "certa": 0,
-          "porque": "A letra tem o ponto dentro: P. \"Pe\" - e é também o nome da letra."
+          "porque": "A letra é o {{פּ}}, com o ponto dentro: P, sem voz. \"Pe\" - e é também o nome da letra. Com B, com voz, seria o {{בּ}}."
         },
         {
           "t": "vf",

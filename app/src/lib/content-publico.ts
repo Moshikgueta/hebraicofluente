@@ -158,6 +158,10 @@ export type VarianteLetra = {
   comoPt: string;
   /** Onde está o sinal que a distingue - é nisto que o aluno olha. */
   ondePt: string;
+  /** O que o botão toca: a sílaba desta leitura (פַּ, פַ) ou, na forma
+   *  final, uma palavra que termina nela (כֶּסֶף). Uma consoante sozinha não
+   *  tem gravação. */
+  exemploHe: string;
   audioId: string;
 };
 

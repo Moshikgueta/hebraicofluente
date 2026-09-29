@@ -14,13 +14,13 @@ import type { CourseModule, Letter } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
 import { missaoDoModulo, textoDoModulo } from '@/lib/content';
 import { missaoId } from '@/lib/engine/missao';
-import { idDoSom } from '@/lib/sons';
+import { ehContraste, idDoSom } from '@/lib/sons';
 
 export function ModuleClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
   const p = useProgress();
   /* A primeira lição por fazer, na ordem do plano: letra ou som. */
   const pendente = mod.lessons.flatMap(ls =>
-    ls.som ? [{ href: `/som/${ls.som}`, id: idDoSom(ls.som), rotulo: `o som ${ls.nomePt ?? ls.som}` }]
+    ls.som ? [{ href: `/som/${ls.som}`, id: idDoSom(ls.som), rotulo: ehContraste(ls.som) ? 'os três pares' : `o som ${ls.nomePt ?? ls.som}` }]
       : (ls.letters ?? []).map(id => ({ href: `/licao/${id}`, id, rotulo: `a letra ${letters.find(l => l.id === id)?.namePt ?? id}` }))
   ).find(i => !isLessonComplete(p.state, i.id));
   const first = letters.find(l => !isLessonComplete(p.state, l.id)) ?? letters[0];

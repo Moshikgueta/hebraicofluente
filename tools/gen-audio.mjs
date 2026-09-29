@@ -197,6 +197,18 @@ function main() {
   for (const f of sentences) {
     add({ he: f.he, translit: f.translit, gloss: f.pt, kind: 'frase', wave: 4, where: 'frases' });
   }
+  /* As palavras de cada frase (29/09/2026): a leitura palavra a palavra do
+     exercício de frase toca cada uma, e treze delas não estavam no
+     catálogo - o botão sumia e o estúdio nem as listava. Depois das frases,
+     para que as já gravadas mantenham o número; uma palavra que a lição já
+     ensinou fica no grupo dela (o `add` não duplica). */
+  for (const f of sentences) {
+    for (const w of f.words || []) {
+      /* O mesmo hebraico que export-content.mjs usa para o id: sem limpar
+         nada, ou o id do app e o do estúdio se separam. */
+      add({ he: w.he, translit: w.translit ?? null, gloss: w.pt, kind: 'palavra', wave: 4, where: `palavras da frase ${f.id}` });
+    }
+  }
   for (const t of textos.filter(t => t.revisado)) {
     for (const l of t.linhas) {
       add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 4, where: `texto do módulo ${t.modulo}` });

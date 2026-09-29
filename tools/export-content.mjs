@@ -35,6 +35,23 @@ const NFC = s => String(s ?? '').normalize('NFC');
    the app without a second naming scheme. Content-derived, never positional. */
 const audioIdFor = he => 'he-' + createHash('sha256').update(NFC(he)).digest('hex').slice(0, 8);
 
+/* O exemplo que se ouve numa leitura da letra (ver `variantes` abaixo). Uma
+   forma final não leva vogal depois de si: o exemplo é a primeira palavra da
+   letra que termina nela. As outras: a sílaba com patach, que toda lição de
+   letra e toda lição de som gravaram. */
+const FINAIS = new Set(['ך', 'ם', 'ן', 'ף', 'ץ']);
+const semPontos = he => NFC(he).replace(/[\u0591-\u05C7]/g, '');
+function exemploDaVariante(L, he) {
+  const base = semPontos(he);
+  if (FINAIS.has(base)) {
+    const palavra = [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])]
+      .find(w => semPontos(w.he).endsWith(base));
+    if (!palavra) throw new Error(`letters.json: ${L.id} não tem palavra terminada em ${base} para a leitura final`);
+    return NFC(palavra.he);
+  }
+  return NFC(he + '\u05B7');
+}
+
 /* As imagens do vocabulário moram num arquivo próprio (data/imagens-
    vocabulario.json) e entram aqui, na palavra. Só as palavras concretas têm
    entrada; as outras saem sem os campos, e a tela sabe que não há imagem.
@@ -163,13 +180,24 @@ function main() {
       translit: L.translit,
       sound: L.sound,
       /* As leituras de uma letra que tem mais de uma, cada uma com o SEU
-         audioId - e são ids diferentes porque o id sai do próprio texto
-         hebraico. É o que permite as gravações de Shin e Sin entrarem
-         separadas, sem um botão tocar o som da outra. */
-      variantes: (L.variantes || []).map(v => ({
-        he: NFC(v.he), nomePt: v.nomePt, som: v.som, translit: v.translit,
-        comoPt: v.comoPt, ondePt: v.ondePt, audioId: audioIdFor(v.he)
-      })),
+         áudio - Shin e Sin, Pe e Fe, cada botão toca o som da sua leitura.
+
+         O áudio é de um EXEMPLO, e não da letra sozinha (29/09/2026). O id
+         saía do próprio `v.he` - "פּ", "פ", "ף" -, e uma consoante sem vogal
+         nunca foi gravada (não se pronuncia sozinha): o id não tinha
+         arquivo, o botão sumia, e o quadro "As leituras desta letra" do Pe,
+         do Bet, do Kaf e do Shin ficava mudo justo onde se ensina a
+         diferença entre /p/ e /f/. Agora cada leitura toca a sílaba dela
+         com patach (פַּ = "pa", פַ = "fa"), e a forma final toca a primeira
+         palavra do curso que termina nela (ף → כֶּסֶף). A letra desenhada no
+         quadro continua a mesma. */
+      variantes: (L.variantes || []).map(v => {
+        const exemplo = exemploDaVariante(L, v.he);
+        return {
+          he: NFC(v.he), nomePt: v.nomePt, som: v.som, translit: v.translit,
+          comoPt: v.comoPt, ondePt: v.ondePt, exemploHe: exemplo, audioId: audioIdFor(exemplo)
+        };
+      }),
       soundNotePt: L.soundNotePt,
       /* De onde sai o som, em todas as letras: o desenho da lição
          (components/learn/OndeNasceOSom.tsx). */

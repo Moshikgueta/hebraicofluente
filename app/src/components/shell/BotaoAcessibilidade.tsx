@@ -22,7 +22,7 @@
  * painel é um `dialog` rotulado. Nada aqui rouba o foco de quem não abriu.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import {
   PADRAO, TAMANHOS, TEMAS, aplicar, carregar, guardar, type Prefs
 } from '@/lib/acessibilidade';
@@ -33,6 +33,9 @@ export function BotaoAcessibilidade() {
   /* Até ler o localStorage, o componente não sabe o estado real. Marcar as
      opções antes disso mostraria "desligado" a quem tem tudo ligado. */
   const [pronto, setPronto] = useState(false);
+  /* A voz do aparelho existe? Só se sabe no navegador. */
+  const [vozDisponivel, setVozDisponivel] = useState(true);
+  useEffect(() => { setVozDisponivel(typeof window !== 'undefined' && 'speechSynthesis' in window); }, []);
   const botao = useRef<HTMLButtonElement>(null);
   const painel = useRef<HTMLDivElement>(null);
 
@@ -125,7 +128,7 @@ export function BotaoAcessibilidade() {
 
   const ligadas = pronto
     ? Number(prefs.texto !== 100) + Number(prefs.tema !== 'auto') + Number(prefs.contraste)
-      + Number(prefs.movimento) + Number(prefs.links) + Number(prefs.espaco)
+      + Number(prefs.movimento) + Number(prefs.links) + Number(prefs.espaco) + Number(prefs.voz)
     : 0;
 
   return (
@@ -243,6 +246,15 @@ export function BotaoAcessibilidade() {
               aoMudar={v => mudar({ links: v })}
             />
             <Opcao
+              id="a11y-voz"
+              rotulo={<><span aria-hidden>🔊 </span>Ouvir instruções em português</>}
+              nota={vozDisponivel
+                ? 'Cada exercício ganha um botão que lê o enunciado em voz alta. Não lê as respostas.'
+                : 'Este navegador não tem voz para ler em português.'}
+              ligada={prefs.voz}
+              aoMudar={v => mudar({ voz: v })}
+            />
+            <Opcao
               id="a11y-movimento"
               rotulo="Menos animação"
               nota="Nada entra deslizando nem fica pulsando."
@@ -310,7 +322,7 @@ export function BotaoAcessibilidade() {
    "caixa de seleção, marcada", o rótulo é clicável e o teclado já funciona
    sem nenhuma tecla tratada à mão. */
 function Opcao({ id, rotulo, nota, ligada, aoMudar }: {
-  id: string; rotulo: string; nota: string;
+  id: string; rotulo: ReactNode; nota: string;
   ligada: boolean; aoMudar: (v: boolean) => void;
 }) {
   return (

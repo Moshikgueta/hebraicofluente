@@ -28,6 +28,10 @@ function requested(): { id: string; where: string }[] {
     L.syllables.forEach(s => out.push({ id: s.audioId, where: `${L.id}.syllable ${s.vowel}` }));
     L.wordsToRead.forEach(w => out.push({ id: w.audioId, where: `${L.id}.read ${w.he}` }));
     L.wordsToRecognize.forEach(w => out.push({ id: w.audioId, where: `${L.id}.recognize ${w.he}` }));
+    /* As leituras de uma letra (פּ/פ/ף, בּ/ב, כּ/כ/ך, שׁ/שׂ). Ficavam de fora
+       desta lista, e o id delas - da consoante sozinha - não tinha gravação
+       nenhuma: o quadro "As leituras desta letra" era mudo (29/09/2026). */
+    (L.variantes ?? []).forEach(v => out.push({ id: v.audioId, where: `${L.id}.variante ${v.he}` }));
   }
   for (const s of nikud().sounds) {
     s.signs.forEach(g => {
@@ -58,6 +62,9 @@ function requested(): { id: string; where: string }[] {
   /* Onda 4: as frases e cada linha dos mini-textos, que a escuta de frase e
      o "ouvir o texto" da leitura tocam. */
   sentencesUpTo(22).forEach(f => out.push({ id: f.audioId, where: `frase ${f.id}` }));
+  /* E cada palavra da frase, que a leitura palavra a palavra toca: treze
+     delas não tinham gravação prevista (29/09/2026). */
+  sentencesUpTo(22).forEach(f => f.words.forEach(w => out.push({ id: w.audioId, where: `frase ${f.id} palavra ${w.he}` })));
   textosDoCurso().forEach(t => t.linhas.forEach((l, i) =>
     out.push({ id: l.audioId!, where: `texto ${t.modulo} linha ${i + 1}` })));
   /* E as palavras novas de cada texto: a lista embaixo dele e, depois de

@@ -9,9 +9,9 @@
  *
  *   1 conhecer   - o som, a boca, a regra, as sílabas
  *   2 palavras   - as palavras que têm o som
- *   3 contraste  - lado a lado com o par (com ponto / sem ponto, ponto à
- *                  esquerda / à direita, com gerech / sem gerech), para ler em
- *                  voz alta
+ *   3 contraste  - lado a lado com o par (ponto à esquerda / à direita, com
+ *                  gerech / sem gerech), para ler em voz alta. Em Vet, Chaf
+ *                  e Fe é "ler": o som sozinho, e o par fica para a lição 20
  *   4 praticar   - exercícios de contraste, sem nota
  *   5 fixação    - o mesmo tipo de pergunta, com nota; 75% domina
  */
@@ -34,17 +34,20 @@ import { useProgress } from '@/lib/state/store';
 import { LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
 import { allLetters, course } from '@/lib/content';
 import type { SomLicao } from '@/lib/engine/extras';
-import { idDoSom, nomeDaLicao, ordemDeEnsino, rodadaDoSom, rotaDaLicao } from '@/lib/sons';
+import { CONTRASTE, idDoSom, nomeDaLicao, ordemDeEnsino, rodadaDoSom, rotaDaLicao } from '@/lib/sons';
 import { track } from '@/lib/analytics';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
-const STAGES = [
+/* Vet, Chaf e Fe não têm mais o contraste (29/09/2026): a terceira etapa é
+   ler o som sozinho, e o lado a lado com Bet, Kaf e Pe é a lição 20. O Sin e
+   os sons modernos seguem com o contraste. */
+const etapasDe = (S: SomLicao) => [
   { n: 1, label: 'Conhecer' },
   { n: 2, label: 'Palavras' },
-  { n: 3, label: 'Contraste' },
+  { n: 3, label: S.tipo === 'daguesh' ? 'Ler' : 'Contraste' },
   { n: 4, label: 'Praticar' },
   { n: 5, label: 'Fixação' }
-] as const;
+];
 
 export function SomLessonClient({ som: S }: { som: SomLicao }) {
   const p = useProgress();
@@ -85,44 +88,9 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
     if (n < 5) setStage(n + 1);
   }, [p, id]);
 
-  /* Para onde se vai depois: a próxima lição do caminho, a não ser que o
-     módulo tenha acabado aqui - o 5 fecha no checkpoint, o 7 no fecho dos
-     três sons juntos. */
-  const destino = useMemo(() => {
-    const mod = course.modules.find(m => m.n === S.modulo);
-    const doModulo = new Set(mod?.lessons.flatMap(l => l.som ? [idDoSom(l.som)] : l.letters ?? []) ?? []);
-    const seguinte = ordem[ordem.indexOf(id) + 1];
-    if (seguinte && doModulo.has(seguinte)) {
-      const nome = nomeDaLicao(seguinte, allLetters(), course.modules);
-      return { href: rotaDaLicao(seguinte), dica: seguinte.startsWith('som-') ? `Em seguida: o som ${nome}` : `Em seguida: letra ${nome}` };
-    }
-    if (mod?.checkpoint) return { href: `/checkpoint/${mod.n}`, dica: `Em seguida: Checkpoint ${mod.n}` };
-    if (mod && !mod.letterIds.length) return { href: '/extra/sons-modernos', dica: 'Em seguida: os três sons juntos, e o fecho do alfabeto' };
-    return { href: '/mapa', dica: 'De volta ao mapa do curso' };
-  }, [S.modulo, ordem, id]);
+  const destino = useDestino(S.modulo, id, ordem);
 
-  if (trancada) {
-    const anterior = nomeDaLicao(trancada.anterior, allLetters(), course.modules);
-    return (
-      <div className="grid gap-5 focus-col">
-        <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
-          <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">
-            O som {S.namePt} ainda não abriu
-          </h1>
-          <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
-            {trancada.falta === 'licao'
-              ? <>Ele vem depois de <strong className="font-semibold text-ink">{anterior}</strong>, e essa lição ainda não foi concluída.</>
-              : <>Falta a fixação de <strong className="font-semibold text-ink">{anterior}</strong>: sua melhor nota lá
-                foi {Math.round((trancada.nota ?? 0) * 100)}%, e esta lição abre a partir de {Math.round(LIBERA_MARK * 100)}%.</>}
-          </p>
-          <div className="grid gap-2 w-full max-w-[320px] pt-1">
-            <LinkButton href={rotaDaLicao(trancada.anterior)} size="lg" full>Ir para {anterior}</LinkButton>
-            <LinkButton href="/mapa" variant="ghost" full>Ver o mapa</LinkButton>
-          </div>
-        </Card>
-      </div>
-    );
-  }
+  if (trancada) return <Trancada titulo={`O som ${S.namePt} ainda não abriu`} trancada={trancada} />;
 
   const stagesDone = p.state.lessons[id]?.stagesDone ?? [];
 
@@ -137,7 +105,7 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
           <Badge tone="accent">Módulo {S.modulo} · lição {S.licao} · som {S.namePt}</Badge>
         </div>
         <ol className="flex items-center gap-1.5" aria-label="Etapas da lição">
-          {STAGES.map(s => {
+          {etapasDe(S).map(s => {
             const isDone = stagesDone.includes(s.n);
             const isNow = stage === s.n;
             return (
@@ -160,7 +128,9 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
 
       {stage === 1 && <Conhecer S={S} onDone={() => feito(1)} />}
       {stage === 2 && <Palavras S={S} onDone={() => feito(2)} />}
-      {stage === 3 && <Contraste S={S} onDone={() => feito(3)} />}
+      {stage === 3 && (S.tipo === 'daguesh'
+        ? <Ler S={S} onDone={() => feito(3)} />
+        : <Contraste S={S} onDone={() => feito(3)} />)}
       {stage === 4 && (
         <Praticar exercicios={pratica} onDone={() => feito(4)}
                   aoTerminar={() => { registrarRodada(`som-pratica-${S.id}`, pratica); setRodadaPratica(n => n + 1); }} />
@@ -188,6 +158,48 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
           />
         )
       )}
+    </div>
+  );
+}
+
+/* Para onde se vai depois: a próxima lição do caminho, a não ser que o
+   módulo tenha acabado aqui - o 5 fecha no checkpoint (depois da lição 20,
+   a do contraste), o 7 no fecho dos três sons juntos. */
+export function useDestino(modulo: number, id: string, ordem: readonly string[]) {
+  return useMemo(() => {
+    const mod = course.modules.find(m => m.n === modulo);
+    const doModulo = new Set(mod?.lessons.flatMap(l => l.som ? [idDoSom(l.som)] : l.letters ?? []) ?? []);
+    const seguinte = ordem[ordem.indexOf(id) + 1];
+    if (seguinte && doModulo.has(seguinte)) {
+      const nome = nomeDaLicao(seguinte, allLetters(), course.modules);
+      const dica = seguinte === idDoSom(CONTRASTE) ? 'Em seguida: os três pares lado a lado'
+        : seguinte.startsWith('som-') ? `Em seguida: o som ${nome}` : `Em seguida: letra ${nome}`;
+      return { href: rotaDaLicao(seguinte), dica };
+    }
+    if (mod?.checkpoint) return { href: `/checkpoint/${mod.n}`, dica: `Em seguida: Checkpoint ${mod.n}` };
+    if (mod && !mod.letterIds.length) return { href: '/extra/sons-modernos', dica: 'Em seguida: os três sons juntos, e o fecho do alfabeto' };
+    return { href: '/mapa', dica: 'De volta ao mapa do curso' };
+  }, [modulo, ordem, id]);
+}
+
+/** A porta fechada: a lição anterior ainda não foi concluída ou dominada. */
+export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNullable<ReturnType<typeof porQueTrancada>> }) {
+  const anterior = nomeDaLicao(trancada.anterior, allLetters(), course.modules);
+  return (
+    <div className="grid gap-5 focus-col">
+      <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
+        <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">{titulo}</h1>
+        <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
+          {trancada.falta === 'licao'
+            ? <>Esta lição vem depois de <strong className="font-semibold text-ink">{anterior}</strong>, e essa lição ainda não foi concluída.</>
+            : <>Falta a fixação de <strong className="font-semibold text-ink">{anterior}</strong>: sua melhor nota lá
+              foi {Math.round((trancada.nota ?? 0) * 100)}%, e esta lição abre a partir de {Math.round(LIBERA_MARK * 100)}%.</>}
+        </p>
+        <div className="grid gap-2 w-full max-w-[320px] pt-1">
+          <LinkButton href={rotaDaLicao(trancada.anterior)} size="lg" full>Ir para {anterior}</LinkButton>
+          <LinkButton href="/mapa" variant="ghost" full>Ver o mapa</LinkButton>
+        </div>
+      </Card>
     </div>
   );
 }
@@ -293,7 +305,48 @@ function Palavras({ S, onDone }: { S: SomLicao; onDone: () => void }) {
         ))}
       </div>
       <CompararPronuncia itens={S.palavras} titulo="Compare a sua leitura das palavras com a do curso" />
-      <Button size="lg" onClick={onDone} full>Continuar para o contraste</Button>
+      <Button size="lg" onClick={onDone} full>
+        {S.tipo === 'daguesh' ? 'Continuar para a leitura' : 'Continuar para o contraste'}
+      </Button>
+    </div>
+  );
+}
+
+/* ── 3 · ler (Vet, Chaf, Fe) ───────────────────────────────────────────── */
+function Ler({ S, onDone }: { S: SomLicao; onDone: () => void }) {
+  return (
+    <div className="grid gap-5">
+      <div className="grid gap-1">
+        <h2 className="text-[21px] font-bold">Ler o {S.namePt} em voz alta</h2>
+        <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+          Só o som <strong>{S.som}</strong>, sem pressa. Leia cada sílaba e cada palavra em voz alta, da direita para a
+          esquerda{S.finalHe ? <>, e repare no <He size="inline">{S.finalHe}</He> do fim da palavra</> : null}.
+        </p>
+      </div>
+
+      <Card className="p-5 grid gap-2">
+        <p className="font-ui text-[12px] uppercase tracking-[.07em] text-[var(--accent)] text-center">
+          {S.namePt} · {S.rotuloPt}
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3" dir="rtl">
+          {S.silabas.map(s => <Par key={s.he} he={s.he} translit={s.translit} audioId={s.audioId} destaque />)}
+        </div>
+      </Card>
+
+      <Card className="p-5 grid gap-2 content-start">
+        <p className="font-ui text-[12px] uppercase tracking-[.07em] text-[var(--accent)]">
+          Com o som {S.som} · <He size="inline">{S.he}</He>
+        </p>
+        {S.palavras.map(w => <Linha key={w.he} w={w} mark={marcaDe(S, w.he)} />)}
+      </Card>
+
+      <GravarLeitura
+        titulo="Leia as palavras em voz alta"
+        instrucao={`Leia as palavras com ${S.som}, grave e confira se o som saiu ${S.som.toUpperCase()} em todas.`}
+        maxSegundos={60}
+      />
+
+      <Button size="lg" onClick={onDone} full>Continuar para a prática</Button>
     </div>
   );
 }
@@ -360,12 +413,12 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
 /* A letra a destacar numa palavra. No Sin, a letra sem o ponto: o ponto do
    ש vem depois da vogal na ordem Unicode (שְׂ = ש + sheva + ponto), e o par
    "ש + ponto" nem sempre aparece colado dentro da palavra. */
-function marcaDe(S: SomLicao, he: string): string {
+export function marcaDe(S: SomLicao, he: string): string {
   if (S.tipo === 'ponto') return [...S.he][0]!;
   return S.finalHe && he.includes(S.finalHe) ? S.finalHe : S.he;
 }
 
-function Par({ he, translit, audioId, destaque = false }: {
+export function Par({ he, translit, audioId, destaque = false }: {
   he: string; translit: string; audioId: string; destaque?: boolean;
 }) {
   return (
@@ -378,7 +431,7 @@ function Par({ he, translit, audioId, destaque = false }: {
   );
 }
 
-function Linha({ w, mark }: { w: { he: string; translit: string; pt: string; audioId: string }; mark: string }) {
+export function Linha({ w, mark }: { w: { he: string; translit: string; pt: string; audioId: string }; mark: string }) {
   return (
     <div className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
       <He size="word" mark={mark}>{w.he}</He>
@@ -394,7 +447,7 @@ function Linha({ w, mark }: { w: { he: string; translit: string; pt: string; aud
 }
 
 /* ── 4 · praticar ──────────────────────────────────────────────────────── */
-function Praticar({ exercicios, onDone, aoTerminar }: {
+export function Praticar({ exercicios, onDone, aoTerminar }: {
   exercicios: ReturnType<typeof rodadaDoSom>; onDone: () => void; aoTerminar: () => void;
 }) {
   const [fim, setFim] = useState(false);
@@ -421,9 +474,13 @@ function Resultado({ S, r, onRetry, onNext, dica }: {
       tone={bom ? 'bom' : 'parcial'}
       kicker={`${r.correct} de ${r.total} · ${pct}%`}
       title={bom ? `O som ${S.namePt} está firme.` : `Vamos firmar o ${S.namePt}.`}
-      body={bom
-        ? `Você decide entre ${S.parSom} e ${S.som} olhando a letra. Pode seguir.`
-        : `Refaça quando quiser: as perguntas mudam, e o que conta é decidir entre ${S.parSom} e ${S.som} sem hesitar. A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}%.`}
+      body={S.tipo === 'daguesh'
+        ? (bom
+          ? `Você lê ${S.he} ${S.rotuloPt} como ${S.som.toUpperCase()}, com cada vogal. Pode seguir.`
+          : `Refaça quando quiser: as perguntas mudam. A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}%.`)
+        : bom
+          ? `Você decide entre ${S.parSom} e ${S.som} olhando a letra. Pode seguir.`
+          : `Refaça quando quiser: as perguntas mudam, e o que conta é decidir entre ${S.parSom} e ${S.som} sem hesitar. A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}%.`}
     >
       <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>Refazer a fixação</Button>
       <Button variant={bom ? 'primary' : 'secondary'} onClick={onNext}>Concluir e continuar</Button>

@@ -19,7 +19,7 @@ import { describe, expect, it } from 'vitest';
 import { allLetters, course, extras } from '../src/lib/content';
 import { totalLicoes } from '@/lib/content-publico';
 import {
-  bancoDoSom, idDoSom, leituraTrocada, nomeDaLicao, ordemDeEnsino, rodadaDoSom, rotaDaLicao,
+  bancoDoContraste, bancoDoSom, CONTRASTE, idDoSom, leituraTrocada, rodadaDoContraste, soOLadoDoPonto, nomeDaLicao, ordemDeEnsino, rodadaDoSom, rotaDaLicao,
   semPalavrasDeSom
 } from '@/lib/sons';
 import { buildLetterPractice, buildMiniTest } from '@/lib/engine/exercises';
@@ -52,7 +52,7 @@ const ateAqui = (ate: string): LearnerState => ({
 describe('a ordem de ensino', () => {
   it('põe cada som logo depois da letra que ele divide, e os modernos no fim', () => {
     expect(ORDEM.slice(ORDEM.indexOf('bet'))).toEqual([
-      'bet', 'som-vet', 'kaf', 'som-chaf', 'pe', 'som-fe', 'som-tch', 'som-dj', 'som-j'
+      'bet', 'som-vet', 'kaf', 'som-chaf', 'pe', 'som-fe', 'som-contraste', 'som-tch', 'som-dj', 'som-j'
     ]);
   });
 
@@ -75,7 +75,8 @@ describe('a ordem de ensino', () => {
       expect(ls!.l.n).toBe(S.licao);
       expect(ls!.m.n).toBe(S.modulo);
     }
-    expect(SONS.map(S => idDoSom(S.id)).sort()).toEqual([...somIds].sort());
+    /* Mais a lição 20, a do contraste, que anda pelo caminho como um som. */
+    expect([...SONS.map(S => idDoSom(S.id)), idDoSom(CONTRASTE)].sort()).toEqual([...somIds].sort());
   });
 });
 
@@ -109,9 +110,12 @@ describe('a trava', () => {
     expect(letraLiberada(ateAqui('som-sin'), ORDEM, 'vav')).toBe(true);
   });
 
-  it('Tch abre depois do Fe; Dj depois do Tch; J depois do Dj', () => {
-    expect(letraLiberada(ateAqui('pe'), ORDEM, 'som-tch')).toBe(false);
-    expect(letraLiberada(ateAqui('som-fe'), ORDEM, 'som-tch')).toBe(true);
+  it('o contraste abre depois do Fe; Tch depois do contraste; Dj depois do Tch; J depois do Dj', () => {
+    expect(letraLiberada(ateAqui('pe'), ORDEM, 'som-contraste')).toBe(false);
+    expect(letraLiberada(ateAqui('som-fe'), ORDEM, 'som-contraste')).toBe(true);
+    expect(letraLiberada(ateAqui('som-fe'), ORDEM, 'som-tch')).toBe(false);
+    expect(porQueTrancada(ateAqui('som-fe'), ORDEM, 'som-tch')).toMatchObject({ anterior: 'som-contraste' });
+    expect(letraLiberada(ateAqui('som-contraste'), ORDEM, 'som-tch')).toBe(true);
     expect(letraLiberada(ateAqui('som-tch'), ORDEM, 'som-dj')).toBe(true);
     expect(letraLiberada(ateAqui('som-tch'), ORDEM, 'som-j')).toBe(false);
   });
@@ -166,9 +170,8 @@ describe('os exercícios de cada som', () => {
     }
   });
 
-  it('os contrastes do Vet: a sílaba sem ponto é "va", e o par com ponto é a errada', () => {
-    const vet = SONS.find(S => S.id === 'vet')!;
-    const e = bancoDoSom(vet, semAudio).find(x => x.id === 'som-vet-sil-0')!;
+  it('os contrastes do Vet, na lição 20: a sílaba sem ponto é "va", e o par com ponto é a errada', () => {
+    const e = bancoDoContraste(SONS, semAudio).find(x => x.id === 'som-vet-sil-0')!;
     expect(e.kind).toBe('syllable-reading');
     if (e.kind !== 'syllable-reading') return;
     expect(e.he).toBe('בַ');
@@ -284,6 +287,107 @@ describe('as lições de Bet, Kaf e Pe ensinam só o som com ponto (26/09/2026)'
   it('a lição do Pe ganhou palavras com P para ler', () => {
     const L = semPalavrasDeSom(letra('pe'));
     expect(L.wordsToRead.map(w => w.he)).toEqual(expect.arrayContaining(['פֶּה', 'פָּרָה', 'פִּתָּה', 'מִשְׁפָּחָה']));
+  });
+});
+
+describe('cada lado na sua lição, e o contraste na lição 20 (29/09/2026)', () => {
+  const semAudio = () => false;
+  const DAGUESH = '\u05BC';
+  const letra = (id: string) => allLetters().find(l => l.id === id)!;
+  const suaves = SONS.filter(S => S.tipo === 'daguesh');
+  const semO = (s: string) => s.replace(/\u05D5\u05BC/g, '');   // o וּ é vogal, não o ponto da letra
+
+  it('Bet, Kaf e Pe mostram só o lado com o ponto, sem o quadro das leituras', () => {
+    for (const id of ['bet', 'kaf', 'pe']) {
+      const L = soOLadoDoPonto(letra(id));
+      expect(L.variantes, id).toHaveLength(1);
+      expect(L.variantes[0]!.he, id).toContain(DAGUESH);
+      expect(L.sound, id).toBe(L.variantes[0]!.som);
+      expect(L.sound, id).not.toMatch(/v|f|χ/);
+    }
+    /* O Shin não muda: as duas leituras continuam, e o Sin segue no contraste. */
+    expect(soOLadoDoPonto(letra('shin'))).toBe(letra('shin'));
+  });
+
+  it('e os exercícios dessas letras não cobram o outro lado', () => {
+    for (const id of ['bet', 'kaf', 'pe']) {
+      const L = soOLadoDoPonto(semPalavrasDeSom(letra(id)));
+      const historia = allLetters().filter(l => l.order <= L.order).map(l => (l.id === L.id ? L : l));
+      for (let k = 0; k < 5; k++) {
+        const ex = [
+          ...buildLetterPractice(L, historia, { audioAvailable: false, seed: `p-${id}-${k}` }),
+          ...buildMiniTest(L, historia, { audioAvailable: false, seed: `m-${id}-${k}` })
+        ];
+        expect(ex.some(e => e.kind === 'letter-variant' || e.kind === 'variant-syllable'), id).toBe(false);
+      }
+    }
+  });
+
+  it('os textos das três letras não explicam mais o V, o raspado e o F', () => {
+    for (const id of ['bet', 'kaf', 'pe']) {
+      const L = letra(id);
+      const texto = [L.soundNotePt, L.articulacao.comoPt, ...L.ensino.checagem.flatMap(c => [c.q, ...(c.opcoes ?? []), c.porque])].join(' ');
+      expect(texto, id).not.toMatch(/\b(Vet|Chaf|Fe)\b|com V|com F|o V,|o F\b|raspa/);
+      /* Mas avisam, numa frase, que o outro som tem lição própria. */
+      expect(L.soundNotePt, id).toMatch(/outro som.*lição/);
+    }
+  });
+
+  it('Vet, Chaf e Fe treinam o som sozinho: nenhuma opção com o ponto', () => {
+    for (const S of suaves) {
+      for (const temAudio of [semAudio, () => true]) {
+        const banco = bancoDoSom(S, temAudio);
+        expect(banco.length, S.id).toBeGreaterThanOrEqual(15);
+        for (const e of banco) {
+          if (!('options' in e)) continue;
+          for (const o of e.options) expect(semO(o), `${e.id}: ${o}`).not.toContain(DAGUESH);
+          /* E a leitura errada de quem não olhou o ponto também não aparece. */
+          for (const o of e.options) expect(S.parSilabas.map(p => p.translit), e.id).not.toContain(o);
+          expect(e.explainPt ?? '', e.id).not.toContain(S.parNomePt);
+        }
+      }
+    }
+  });
+
+  it('o Sin continua com o contraste, igual a antes', () => {
+    const sin = SONS.find(S => S.id === 'sin')!;
+    const ids = bancoDoSom(sin, () => true).map(e => e.id);
+    expect(ids.filter(i => i.includes('-sil-'))).toHaveLength(5);
+    expect(ids.some(i => i.includes('suave'))).toBe(false);
+  });
+
+  it('a lição 20 é o contraste dos três pares, e vem antes do checkpoint 5', () => {
+    const mod5 = course.modules.find(m => m.n === 5)!;
+    const l20 = mod5.lessons.find(l => l.n === 20)!;
+    expect(l20.som).toBe(CONTRASTE);
+    expect(ORDEM.indexOf('som-contraste')).toBe(ORDEM.indexOf('som-fe') + 1);
+    expect(rotaDaLicao('som-contraste')).toBe('/som/contraste');
+    expect(isGatedPath('/som/contraste/')).toBe(true);
+    expect(mod5.checkpoint).not.toBeNull();
+  });
+
+  it('o banco do contraste tem os três pares, sempre com o par entre as opções', () => {
+    const banco = bancoDoContraste(SONS, semAudio);
+    for (const S of suaves) expect(banco.some(e => e.id.startsWith(`som-${S.id}-`)), S.id).toBe(true);
+    expect(banco.some(e => e.id.startsWith('som-sin-'))).toBe(false);
+    for (const e of banco.filter(x => x.kind === 'sound-to-syllable')) {
+      if (!('options' in e)) continue;
+      expect(e.options.filter(o => semO(o).includes(DAGUESH)), e.id).toHaveLength(1);
+    }
+    const a = rodadaDoContraste(SONS, { seed: 'a', count: 12, temAudio: semAudio });
+    expect(a).toHaveLength(12);
+    expect(new Set(a.map(e => e.letterId)).size).toBeGreaterThanOrEqual(2);
+  });
+
+  it('a porcentagem conta a lição 20 como lição de som, e não como letra', () => {
+    const extrasIds = course.modules.filter(m => !m.letterIds.length).map(m => m.id);
+    const tudo = ateAqui('som-j');
+    for (const id of extrasIds) tudo.lessons[id] = licao(id, 1, 3);
+    expect(courseProgress(tudo, 22, extrasIds, somIds)).toBe(1);
+    const semContraste = { ...tudo, lessons: { ...tudo.lessons } };
+    delete semContraste.lessons['som-contraste'];
+    expect(courseProgress(semContraste, 22, extrasIds, somIds)).toBeLessThan(1);
+    expect(lettersMastered(tudo)).toBe(22);
   });
 });
 
