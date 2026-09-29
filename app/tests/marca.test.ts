@@ -46,6 +46,12 @@ describe('a marca', () => {
     expect(lerMarcas('texto sem marca')).toEqual([]);
   });
 
+  it('o número visível também serve: o da marca d\'água e o digitado', () => {
+    expect(lerMarcas('Licenciado para an•••@gmail.com · cópia 636195AE')).toEqual(['636195ae']);
+    expect(lerMarcas('  3FA9C01D ')).toEqual(['3fa9c01d']);
+    expect(lerMarcas('abc 3FA9C01D def')).toEqual([]);
+  });
+
   it('cada conta recebe o conteúdo com a sua marca, sempre a mesma', async () => {
     const env = envDeTeste() as Env;
     const ana = await aluno(env, 'ana@exemplo.com');

@@ -41,6 +41,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { FLAGSHIP, flagship } from '@/lib/catalog';
 import { carregarConteudo, conteudoPronto } from '@/lib/content';
+import { AvisoDeDireitos, MarcaDagua } from '@/components/shell/MarcaDagua';
 
 /** Rotas de aluno que não exigem compra: a conta, e nada mais. */
 const FREE_FOR_ACCOUNT = ['/perfil'];
@@ -91,7 +92,10 @@ export function CourseGate({ children }: { children: ReactNode }) {
   if (!account.ready) return <GateSkeleton />;
 
   if (allowed) {
-    if (!needsPurchase || conteudo === 'pronto') return <>{children}</>;
+    if (!needsPurchase) return <>{children}</>;
+    /* A marca d'água só onde há aula: nas rotas pagas, com o conteúdo na
+       mão (components/shell/MarcaDagua.tsx). */
+    if (conteudo === 'pronto') return <>{children}<AvisoDeDireitos /><MarcaDagua /></>;
     if (conteudo === 'buscando') return <GateSkeleton />;
     /* Falhou. Não é "sem acesso" - é rede, ou o servidor fora do ar por um
        instante. Dizer a coisa certa aqui importa: "entre para continuar"
