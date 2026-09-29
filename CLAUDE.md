@@ -385,6 +385,33 @@ Revisão contra a lei brasileira; o que o código cumpre e onde:
 
 `tests/consumidor.test.ts` guarda tudo isso.
 
+### Enquadramento: serviço educacional, não produto digital (29/09/2026)
+Regra do dono do curso para qualquer análise jurídica ou fiscal deste projeto.
+
+- A empresa (Mhg Treinamentos e Idiomas) está enquadrada em ensino de idiomas
+  (CNAE 8593-7/00). O que o consumidor compra é **acesso a um curso de
+  hebraico** por um período. A internet e a plataforma são o MEIO de entrega
+  do serviço educacional, não outra atividade.
+- Não tratar o Hebraico Fluente como software, SaaS, e-commerce ou comércio
+  de produto digital só porque há plataforma e pagamento online. Analisar o
+  objeto efetivamente vendido, não a tecnologia.
+- Outro CNAE ou enquadramento só entra em discussão diante de uma atividade
+  **independente de fato**: venda separada de software ou licença da
+  plataforma, SaaS para terceiros, venda avulsa de outros produtos digitais
+  (e-book, apostila, pacote de áudio), material de natureza jurídica
+  diferente do curso, anúncios ou afiliados. Nada disso existe hoje.
+- O que existe e é parte do curso: exercícios, jogos da academia, leituras
+  bônus, áudios, exame, certificado de conclusão (gratuito, não oficial), a
+  "loja" (troca de XP, sem dinheiro), compra de presente e renovação (o mesmo
+  curso). Os juros do parcelamento são da Mercado Pago, não receita nossa.
+- **Uma mudança que crie atividade independente** (qualquer item da lista
+  acima) tem de ser apontada ao dono ANTES de ser feita, com o motivo.
+- Os textos seguem a mesma regra: "cursos online", "acesso a um curso",
+  "oferece"; não "vende produto digital" (artigo 1 dos Termos).
+- Em aberto com o contador: como sai a nota de serviço de cada venda, se
+  Curitiba exige CPF do aluno na nota (o site não pede CPF hoje; pedir exige
+  atualizar a Privacidade) e em nome de quem sai a nota na compra de presente.
+
 ## O endereço do site
 `hebraicofluente.com.br`, declarado em `wrangler.toml` (`routes` com
 `custom_domain = true`) e repetido em `SITE_ORIGIN`. O `*.workers.dev`

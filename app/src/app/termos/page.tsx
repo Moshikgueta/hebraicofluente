@@ -34,12 +34,18 @@ export default function Page() {
         'vendido, como o acesso funciona e o que acontece quando alguém quer sair.'
       }
     >
+      {/* 29/09/2026, a pedido do dono do curso: o que se contrata é um
+          SERVIÇO de ensino de idiomas (CNAE 8593-7/00) entregue online, e não
+          uma mercadoria digital. "Vende acesso a cursos digitais" descrevia o
+          curso como produto; o contrato é a primeira peça que um fiscal ou um
+          juiz lê. Ver "Enquadramento" no CLAUDE.md. */}
       <Artigo n={1} titulo="O que é contratado">
         <p>
-          O Hebraico Fluente vende <strong>acesso a cursos digitais de hebraico</strong>,
-          usados dentro da própria plataforma, pelo navegador. O curso é
-          autoinstrucional: você estuda no seu ritmo, e a plataforma corrige cada
-          exercício na hora.
+          O Hebraico Fluente{empresa.razaoSocial ? `, da ${empresa.razaoSocial},` : ''} oferece{' '}
+          <strong>cursos online de hebraico</strong>. O que você contrata é o{' '}
+          <strong>acesso a um curso</strong>, pelo prazo indicado, estudado dentro da
+          plataforma, pelo navegador. O curso é autoinstrucional: você estuda no seu
+          ritmo, e a plataforma corrige cada exercício na hora.
         </p>
         {/* 28/09/2026 (auditoria, COM-007): o que NÃO vem junto só aparecia numa
             meia frase. Quem compra precisa saber antes. */}
