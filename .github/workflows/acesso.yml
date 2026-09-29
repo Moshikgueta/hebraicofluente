@@ -321,6 +321,20 @@ jobs:
               say '```'
               say ""
               say "Nada nas duas tabelas = ninguém com esse e-mail, e nenhum convite."
+              # Aparelhos conectados e o rastro de login dividido (29/09/2026,
+              # worker/src/lib/aparelhos.js): no máximo três por conta.
+              say ""
+              say "**Aparelhos conectados** (no máximo 3) **e dias com sinal de login dividido**"
+              say '```'
+              mostra "SELECT 'aparelho' AS tipo, datetime(p.criado_em/1000,'unixepoch') AS quando
+                        FROM aparelhos p JOIN accounts a ON a.id = p.account_id
+                       WHERE a.email = '$SQLMAIL'
+                      UNION ALL
+                      SELECT 'mais de 6 entradas em 24 h', datetime(l.created_at/1000,'unixepoch')
+                        FROM access_log l JOIN accounts a ON a.id = l.account_id
+                       WHERE a.email = '$SQLMAIL' AND l.action = 'aparelhos-rodizio'
+                       ORDER BY 2 DESC LIMIT 20"
+              say '```'
               ;;
 
             liberar)

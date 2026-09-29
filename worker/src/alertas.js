@@ -64,6 +64,7 @@ export async function runAlertas(env, at = Date.now()) {
   await bater(env, 'varredura', at);
   try { await alertaDeErros(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await lembreteDeDesistencias(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
+  try { await alertaDeCompartilhamento(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await avisosPurge(env, at); } catch { /* idem */ }
 }
 
@@ -89,6 +90,35 @@ async function alertaDeErros(env, at) {
       '',
       'Para ver os detalhes: GitHub -> Actions -> Acesso -> Run workflow -> "pagamento".',
       'Este aviso sai no máximo uma vez por hora.'
+    ]
+  }));
+}
+
+/* Contas que entraram mais de seis vezes em 24 horas (lib/aparelhos.js): o
+   rastro de um login dividido, com as pessoas se derrubando. Um e-mail por
+   dia, com a lista. Nada é bloqueado: os Termos (artigo 4) pedem aviso ao
+   aluno e 5 dias úteis para ele responder antes de qualquer suspensão. */
+async function alertaDeCompartilhamento(env, at) {
+  const { results } = await env.DB.prepare(
+    `SELECT a.email, COUNT(*) AS dias
+       FROM access_log l JOIN accounts a ON a.id = l.account_id
+      WHERE l.action = 'aparelhos-rodizio' AND l.created_at >= ?
+      GROUP BY l.account_id ORDER BY dias DESC LIMIT 20`
+  ).bind(at - 86_400_000).all();
+  if (!results || !results.length) return;
+  const dia = brasilia(at).slice(0, 10);
+  await enviarAoDono(env, `compartilhamento:${dia}`, mensagemDeAlerta({
+    assunto: `${results.length} conta(s) com sinal de login dividido`,
+    linhas: [
+      'Estas contas entraram mais de seis vezes nas últimas 24 horas. Como cada conta',
+      'fica conectada em no máximo três aparelhos, isso costuma ser um login dividido',
+      'entre pessoas que se derrubam umas às outras:',
+      ...results.map(r => `- ${r.email}`),
+      '',
+      'Nada foi bloqueado. Se quiser agir, os Termos (artigo 4) pedem: avisar o aluno por',
+      'e-mail dizendo o que foi observado e esperar 5 dias úteis pela resposta. Para ver o',
+      'histórico da conta: GitHub -> Actions -> Acesso -> "consultar".',
+      'Este aviso sai no máximo uma vez por dia.'
     ]
   }));
 }

@@ -273,6 +273,29 @@ regras que ele fixou e que valem para todo commit daqui em diante:
   regra estrita de verdade num Chromium. Trocar a observação pela regra que
   vale é decisão do dono, depois de semanas sem relato.
 
+## Proteção do conteúdo contra cópia (29/09/2026)
+Pedido do dono. Nenhum site impede quem pagou de copiar o que vê; o que existe:
+- **Marca invisível por conta** (`worker/src/lib/marca.js`): `/api/content`
+  sai de um molde com um marcador de uso privado no FIM de cada "Você sabia?"
+  e de cada parágrafo das cartas de cultura; por pedido, o marcador vira 32
+  bits em caracteres de largura zero (a marca aleatória da conta, tabela
+  `marcas`). Nunca em hebraico, transliteração ou texto comparado com
+  resposta. `_licenca` no JSON mostra o número da cópia. O painel
+  `/admin/marca` (POST `/api/admin/marca`, só administrador) lê um trecho
+  colado e diz a conta. Banco fora: o curso sai sem marca, nunca sem aula.
+- **Três aparelhos por conta** (`worker/src/lib/aparelhos.js`): cada entrada
+  cria um `ap` no cookie e uma linha em `aparelhos`; a quarta apaga a mais
+  antiga, e `requireAccount`, o portão e `/api/me` recusam o aparelho que
+  saiu. Cookie sem `ap` (de antes) vale e ganha um no `/api/me`. Tabela
+  ausente: ninguém fica trancado. Trocar a senha mantém o aparelho atual;
+  sair libera todas as vagas.
+- **Login dividido:** mais de 6 entradas em 24 h deixam `aparelhos-rodizio`
+  na trilha (uma por conta por dia) e um e-mail diário ao dono
+  (`alertaDeCompartilhamento` em alertas.js). NADA é bloqueado: os Termos
+  (art. 4) pedem aviso e 5 dias úteis antes de suspender. Acesso →
+  `consultar` mostra os aparelhos e esses dias.
+- Termos (art. 2, 4 e 5), Privacidade (duas linhas novas) e FAQ dizem isso.
+
 ## Conta e senha
 Criar conta, entrar, sair, **esquecer a senha** e **trocar a senha** - tudo em
 `worker/src/api/auth.js`, com as consultas em `worker/src/lib/db.js`.

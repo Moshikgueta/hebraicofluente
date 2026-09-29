@@ -402,3 +402,24 @@ CREATE TABLE IF NOT EXISTS migracoes (
   nome       TEXT    PRIMARY KEY,
   aplicado_em INTEGER NOT NULL
 );
+
+-- A marca invisível de cada conta no conteúdo do curso (29/09/2026, a
+-- pedido do dono: rastrear uma cópia pirata até a conta de onde saiu). Um
+-- número aleatório, sem relação com o id nem com o e-mail; sai apagado com
+-- a conta. Ver worker/src/lib/marca.js.
+CREATE TABLE IF NOT EXISTS marcas (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  marca      TEXT    NOT NULL UNIQUE,
+  criado_em  INTEGER NOT NULL
+);
+
+-- Os aparelhos com sessão aberta em cada conta (29/09/2026). No máximo
+-- três: um login num quarto encerra o mais antigo. O id vai no cookie
+-- (`ap`); apagar a linha desconecta aquele aparelho. Nada do aparelho em
+-- si é guardado - nem modelo, nem IP. Ver worker/src/lib/aparelhos.js.
+CREATE TABLE IF NOT EXISTS aparelhos (
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  aparelho   TEXT    NOT NULL,
+  criado_em  INTEGER NOT NULL,
+  PRIMARY KEY (account_id, aparelho)
+);

@@ -67,6 +67,14 @@ export default function Page() {
     ['Trilha de operações da conta: o que aconteceu e quando (compra, liberação, estorno, troca de senha), sem o seu e-mail',
      'segurança, atendimento e prova do que foi feito na sua conta',
      'seis meses, e então é apagada - inclusive se você apagar a conta antes'],
+    /* 29/09/2026: o limite de três aparelhos e a marca contra cópia
+       (worker/src/lib/aparelhos.js e lib/marca.js). */
+    ['Aparelhos conectados: um código aleatório e a data de cada entrada na conta, sem modelo do aparelho, navegador nem IP',
+     'manter a conta conectada em no máximo três aparelhos, e perceber quando um mesmo login é dividido entre várias pessoas',
+     'enquanto o aparelho estiver conectado; sai quando você sai da conta, quando um quarto aparelho entra ou quando a conta é apagada'],
+    ['Marca da sua cópia do curso: um número aleatório, sem relação com o seu nome ou e-mail, gravado de forma invisível no conteúdo que você recebe',
+     'proteger o curso contra cópia: identificar de qual conta saiu uma cópia publicada sem autorização',
+     'enquanto a conta existir'],
     ['E-mail de quem recebe um curso de presente',
      'liberar o curso quando a pessoa presenteada criar a conta',
      'até o presente ser usado ou cancelado'],

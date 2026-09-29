@@ -24,6 +24,7 @@ import * as audio from './api/audio.js';
 import * as ab from './api/ab.js';
 import * as novidades from './api/novidades.js';
 import * as csp from './api/csp.js';
+import * as marca from './api/marca.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -89,7 +90,11 @@ const ROUTES = {
   'GET /api/admin/audio': audio.lista,
   'PUT /api/admin/audio': audio.salvar,
   'DELETE /api/admin/audio': audio.apagar,
-  'GET /api/admin/audio/arquivo': audio.arquivo
+  'GET /api/admin/audio/arquivo': audio.arquivo,
+
+  /* De qual conta saiu uma cópia do curso: lê a marca invisível de um
+     trecho colado. Só administrador. Ver api/marca.js. */
+  'POST /api/admin/marca': marca.identificar
 };
 
 export default {

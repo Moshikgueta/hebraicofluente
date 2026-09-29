@@ -85,6 +85,7 @@ export default function Page() {
             <>No <strong>cartão</strong>, assim que a operadora aprova a transação.</>
           ]),
           <>O acesso fica vinculado à <strong>conta</strong> criada com o seu e-mail, e não ao aparelho: você pode entrar no celular e no computador com o mesmo login.</>,
+          <>A conta fica conectada em até <strong>3 aparelhos</strong> ao mesmo tempo. Ao entrar num quarto, o aparelho em que você entrou há mais tempo é desconectado e pede o login de novo; seu progresso não se perde.</>,
           <>Seu progresso é salvo na sua conta e acompanha você entre os aparelhos.</>
         ]} />
         <p>
@@ -120,7 +121,8 @@ export default function Page() {
         <p>
           O único motivo de suspensão é <strong>compartilhar o acesso</strong> com
           outras pessoas (por exemplo, passar o login adiante ou publicá-lo). Se
-          houver indício disso, avisamos por e-mail dizendo o que foi observado, e
+          houver indício disso (como uma quantidade de entradas na conta muito acima
+          do normal num mesmo dia, ou uma cópia do conteúdo com a marca da conta), avisamos por e-mail dizendo o que foi observado, e
           você tem <strong>5 dias úteis</strong> para responder. A conta só é suspensa
           se o compartilhamento se confirmar, e a suspensão é comunicada por e-mail,
           com o motivo. Se ela se mostrar indevida, o acesso volta e o tempo em que
@@ -147,6 +149,11 @@ export default function Page() {
           fazer anotações à vontade. Não pode redistribuir, revender, publicar,
           hospedar em outro lugar nem usar para dar aula a terceiros sem autorização
           por escrito.
+        </p>
+        <p>
+          Para proteger o curso, o conteúdo que cada conta recebe leva uma marca
+          invisível, que não aparece na tela nem atrapalha o estudo, e que permite
+          identificar de qual conta saiu uma cópia publicada sem autorização.
         </p>
       </Artigo>
 
