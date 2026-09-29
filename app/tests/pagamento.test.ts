@@ -68,6 +68,8 @@ function mercadoPagoFalsa() {
       return new Response(JSON.stringify({ results }), { status: 200 });
     }
     const m = u.pathname.match(/^\/v1\/payments\/(\d+)$/);
+    /* Um pagamento de OUTRO vendedor: a Mercado Pago responde 403. */
+    if (m && m[1] === '403403') return new Response('{"message":"forbidden"}', { status: 403 });
     if (m) {
       const p = pagamentos.get(Number(m[1]));
       return p ? new Response(JSON.stringify(p), { status: 200 }) : new Response('{"message":"not found"}', { status: 404 });
@@ -182,6 +184,16 @@ describe('1. um PIX visto pendente e aprovado depois libera o curso', () => {
 });
 
 /* ── 2. estorno fecha a porta ───────────────────────────────────────────── */
+
+describe('1c. aviso de pagamento de outro vendedor (PAY-006)', () => {
+  it('responde 200, fica na trilha como alheio e não vira erro de liberação', async () => {
+    const env = envPagamento();
+    const r = await pay.webhook({ request: await avisoAssinado(403403), env });
+    expect(r.status).toBe(200);
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'webhook-alheio'")).toBeTruthy();
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'settle-error'")).toBeFalsy();
+  });
+});
 
 describe('1b. aviso com o ts em milissegundos', () => {
   it('é aceito e libera o curso', async () => {
@@ -666,5 +678,14 @@ describe('a renovação não é tratada como primeira compra', () => {
     expect(m.text).toContain('foi renovado');
     expect(m.text).not.toContain('está liberado');
     void ordem;
+  });
+});
+
+/* PAY-005: o link do cartão expira com fuso de Brasília escrito. */
+describe('a expiração do link do cartão', () => {
+  it('sai no formato da documentação da Mercado Pago', async () => {
+    // @ts-expect-error - módulo JS do Worker, sem tipos
+    const { comFusoBR } = await import('../../worker/src/lib/mercadopago.js');
+    expect(comFusoBR(Date.UTC(2026, 8, 29, 0, 30))).toBe('2026-09-28T21:30:00.000-03:00');
   });
 });

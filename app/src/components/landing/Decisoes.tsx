@@ -294,7 +294,7 @@ const CARTOES = [
   {
     n: '03',
     t: 'Retorno na hora, em cada passo',
-    b: 'Você não precisa esperar por um professor para saber se acertou. Quando erra, o curso diz onde olhar e devolve a tentativa. O exame final tem correção, gabarito, transcrição e critérios à vista.',
+    b: 'Você não precisa esperar por um professor para saber se acertou. Quando erra, o curso diz onde olhar e devolve a tentativa. O exame final corrige cada questão na hora, diz antes de começar a nota que aprova e, no fim, mostra quais partes pedem revisão.',
     destaque: 'Você nunca termina uma etapa sem saber se entendeu de verdade.',
     visual: <RetornoImediato />
   }
