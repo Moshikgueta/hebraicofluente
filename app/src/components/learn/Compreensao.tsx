@@ -58,9 +58,12 @@ function tom(respondida: boolean, estaCerta: boolean, marcada: boolean) {
   return 'border-line bg-surface text-ink-muted';
 }
 
-export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar }: {
+export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, tituloOculto = false }: {
   id: string;
   titulo: string;
+  /** Quando a checagem mora dentro de uma parte que já mostra o título (a
+   *  Aula 0), o título daqui fica só para o leitor de tela. */
+  tituloOculto?: boolean;
   intro: string;
   perguntas: ItemCompreensao[];
   /** A mensagem do fim, quando tudo foi respondido. */
@@ -102,7 +105,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar }
   return (
     <section aria-labelledby={id} className="grid gap-4">
       <div className="grid gap-1">
-        <h2 id={id} className="text-[21px] font-bold">{titulo}</h2>
+        <h2 id={id} className={tituloOculto ? 'sr-only' : 'text-[21px] font-bold'}>{titulo}</h2>
         <p className="font-ui text-[14px] leading-relaxed text-ink-muted max-w-[54ch]">{intro}</p>
       </div>
 

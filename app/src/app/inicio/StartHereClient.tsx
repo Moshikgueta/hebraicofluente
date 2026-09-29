@@ -55,13 +55,14 @@
  */
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { He } from '@/components/hebrew/He';
-import { Card, Badge } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { hasAudio, tocarClipe, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { Prose, RegraCursiva } from '@/components/learn/Blocks';
 import { Compreensao, type ItemCompreensao } from '@/components/learn/Compreensao';
+import { AbrirTodas, Parte, Partes, useAbrirParte } from '@/components/learn/Partes';
 import {
   ANALOGIA_CURSIVA, CURSIVA_NO_CURSO, MESMA_LETRA,
   ONDE_CURSIVA, ONDE_IMPRESSA
@@ -166,6 +167,10 @@ const INDICE: { id: string; t: string }[] = [
   { id: 'como-funciona',     t: 'Como este curso funciona' }
 ];
 
+/* As partes que abrem com um clique (components/learn/Partes.tsx): as do
+   índice, mais "Como praticar", que fica fora dele. */
+const PARTES = [...INDICE.map(i => i.id), 'como-praticar'];
+
 const SOUND_LABEL: Record<string, string> = {
   a: 'o som A', e: 'o som E', i: 'o som I', o: 'o som O', u: 'o som U',
   sheva: 'sem vogal'
@@ -209,6 +214,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </p>
       </header>
 
+      <Partes ids={PARTES} abertaDeInicio="o-sistema">
       {/* ── o índice ────────────────────────────────────────
           Esta página passou de oito quadros para onze, e num telefone isso é
           um rolo de dúzias de telas. Uma página de "leia antes de começar"
@@ -227,25 +233,26 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-0.5 list-none p-0 m-0">
           {INDICE.map((it, i) => (
             <li key={it.id}>
-              <a href={`#${it.id}`}
+              <LinkDoIndice id={it.id}
                  className="flex items-baseline gap-2.5 min-h-[36px] py-1 font-ui text-[14.5px]
                             leading-snug text-ink-body hover:text-[var(--accent)]">
                 <span aria-hidden className="font-ui text-[12px] text-ink-muted tabular-nums w-4 shrink-0">
                   {i + 1}
                 </span>
                 <span>{it.t}</span>
-              </a>
+              </LinkDoIndice>
             </li>
           ))}
         </ol>
       </nav>
 
+      <p className="font-ui text-[14.5px] text-ink-muted -mb-3">
+        Cada parte abre com um clique no título.
+      </p>
+      <AbrirTodas />
+
       {/* ── 1 · o sistema é outro ─────────────────────────────────────── */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="o-sistema"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          Não é o mesmo sistema do português
-        </h2>
+      <Parte id="o-sistema" titulo={<>Não é o mesmo sistema do português</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           Em português, consoantes e vogais são letras do mesmo tipo, e a gente
           escreve todas em fila:
@@ -270,14 +277,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           termo quando encontrar por aí. O que importa é a ideia: as letras são, em
           essência, as consoantes.
         </p>
-      </Card>
+      </Parte>
 
       {/* ── 2 · a analogia, marcada como analogia ─────────────────────── */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="a-comparacao"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          Uma comparação para sentir a diferença
-        </h2>
+      <Parte id="a-comparacao" titulo={<>Uma comparação para sentir a diferença</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           Imagine que em português a gente escrevesse só <strong className="font-semibold text-ink">
           C S</strong> e soubesse pelo contexto se ali está escrito <em>casa</em>,{' '}
@@ -291,14 +294,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           comparação serve para uma coisa só: entender por que as vogais nem sempre
           aparecem escritas do mesmo jeito que aqui.
         </p>
-      </Card>
+      </Parte>
 
       {/* ── 3 e 5 · onde estão as vogais, e o que NÃO dizer ───────────── */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="as-vogais"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          Então onde estão as vogais?
-        </h2>
+      <Parte id="as-vogais" titulo={<>Então onde estão as vogais?</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           Esta é a primeira pergunta de quase todo mundo, e ela tem resposta. O
           hebraico <strong className="font-semibold text-ink">tem sons de vogal como
@@ -339,14 +338,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             O, U.
           </p>
         </div>
-      </Card>
+      </Parte>
 
       {/* ── 4 · o niqqud ──────────────────────────────────────────────── */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="o-niqqud"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          O niqqud: os pontinhos que marcam as vogais
-        </h2>
+      <Parte id="o-niqqud" titulo={<>O niqqud: os pontinhos que marcam as vogais</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <strong className="font-semibold text-ink">Niqqud</strong>{' '}
           (<He size="inline">נִקּוּד</He>) é o sistema de pontos e traços colocados perto
@@ -401,7 +396,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             ora, só saiba que eles existem e não são vogais.
           </p>
         </div>
-      </Card>
+      </Parte>
 
       {/* ── a checagem do niqqud ──────────────────────────────────────────
           Explicação → exemplo → PERGUNTAS → prática. O conceito acima é o
@@ -409,8 +404,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           "achar que entendeu": ele é simples de ler e difícil de acreditar,
           porque contraria o que a pessoa acha que sabe sobre escrita. Então
           o curso não segue sem perguntar. */}
+      <Parte id="checagem-niqqud" titulo={<>Checagem: entendeu o niqqud? Oito perguntas</>}>
       <Compreensao
-        id="checagem-niqqud"
+        id="checagem-niqqud-perguntas"
+        tituloOculto
         titulo="Entendeu o niqqud? Oito perguntas"
         intro="Não vale nota e não tranca nada - é só para confirmar que a ideia ficou de pé antes de seguir. Se errar, a explicação aparece na hora."
         perguntas={PERGUNTAS_NIQQUD}
@@ -419,13 +416,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           parcial: 'Vale reler o quadro acima antes de seguir - são duas ou três ideias, e elas voltam em toda lição do curso.'
         }}
       />
+      </Parte>
 
       {/* ── 6 · as quatro letras especiais ────────────────────────────── */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="as-quatro-letras"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          Quatro letras se comportam de um jeito especial
-        </h2>
+      <Parte id="as-quatro-letras" titulo={<>Quatro letras se comportam de um jeito especial</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           Estas quatro merecem um aviso desde já:
         </p>
@@ -452,14 +446,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           consoantes"</em>. Cada uma dessas quatro tem a sua lição, e é lá que o
           assunto é ensinado.
         </p>
-      </Card>
+      </Parte>
 
       {/* ── 7 · a direção, com atividade ──────────────────────────────── */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="a-direcao"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          Da direita para a esquerda
-        </h2>
+      <Parte id="a-direcao" titulo={<>Da direita para a esquerda</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           O hebraico se lê e se escreve da direita para a esquerda. A primeira letra de
           uma palavra é a que está mais à direita - o contrário do português, e é a
@@ -488,7 +478,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           que faz uma linha ter duas direções ao mesmo tempo - e o próximo quadro
           mostra isso acontecendo.
         </p>
-      </Card>
+      </Parte>
 
       {/* ── 7b · a linha com duas direções ─────────────────────────
           "Os números vão para o outro lado" era uma frase solta, e frase solta
@@ -497,11 +487,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           para a direita. E ela vai ver isso antes de terminar o curso - numa
           placa, num preço, num site. Sem este quadro, o primeiro encontro com
           uma linha assim parece erro de impressão ou defeito da tela. */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="duas-direcoes"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          Quando a linha tem duas direções
-        </h2>
+      <Parte id="duas-direcoes" titulo={<>Quando a linha tem duas direções</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           Número, preço, telefone, endereço de site: tudo isso continua correndo da
           esquerda para a direita dentro de uma linha hebraica. Não é mistura errada
@@ -537,15 +523,14 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             o texto guardado continua o mesmo, só a montagem visual mudou.
           </p>
         </div>
-      </Card>
+      </Parte>
 
       {/* ── 8, 9 e 10 · maiúscula, formas finais, letra muda ──────────── */}
-      <Card className="p-6 grid gap-5">
+      <Parte id="maiuscula-e-finais" titulo={<>Maiúscula, formas finais e &quot;letra muda&quot;</>}>
         <div className="grid gap-3">
-          <h2 id="maiuscula-e-finais"
-              className="font-display text-[19px] font-semibold scroll-mt-4">
+          <h3 className="font-display text-[17px] font-semibold">
             Não existe maiúscula e minúscula
-          </h2>
+          </h3>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
             Em português, a mesma letra tem duas formas: A e a, B e b. Em hebraico,
             não. Uma letra tem um desenho só, esteja ela no começo da frase, num nome
@@ -554,9 +539,9 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </div>
 
         <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-5">
-          <h2 className="font-display text-[19px] font-semibold">
+          <h3 className="font-display text-[17px] font-semibold">
             Mas {alfabeto.finais.length} letras mudam de forma no fim da palavra
-          </h2>
+          </h3>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
             É a mesma letra e normalmente o mesmo som. O que muda é o formato quando
             ela aparece no fim da palavra:
@@ -579,9 +564,9 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </div>
 
         <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-5">
-          <h2 className="font-display text-[19px] font-semibold">
+          <h3 className="font-display text-[17px] font-semibold">
             E o que é uma "letra muda"?
-          </h2>
+          </h3>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
             Você vai encontrar esse termo já na primeira lição, então vale defini-lo
             agora: <strong className="font-semibold text-ink">uma letra muda é uma
@@ -597,7 +582,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             isso que cada caso é ensinado no seu lugar.
           </p>
         </div>
-      </Card>
+      </Parte>
 
       {/* ── 10d · impressa e cursiva ────────────────────────────────────
           O aluno brasileiro não desconfia que isto exista. Ele vai estudar
@@ -613,11 +598,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
           O texto vem de lib/cursiva.ts, que é o mesmo que a etapa
           "Escrever" de cada lição lê. */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="impressa-e-cursiva"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          A mesma letra tem dois desenhos: impressa e cursiva
-        </h2>
+      <Parte id="impressa-e-cursiva" titulo={<>A mesma letra tem dois desenhos: impressa e cursiva</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           Tudo o que você viu até aqui está em <strong className="font-semibold text-ink">letra
           impressa</strong> - a forma dos livros e das telas. Existe uma segunda forma, a{' '}
@@ -663,7 +644,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </p>
 
         <NoCaderno />
-      </Card>
+      </Parte>
       {/* ── 10b · que hebraico é este ──────────────────────────────────
           A pergunta que quase todo aluno traz e quase nunca faz em voz alta:
           "o hebraico da Torah e o hebraico de Tel Aviv são a mesma coisa?
@@ -676,11 +657,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           O que NENHUMA linha aqui faz é prometer compreensão: ler e entender
           são trabalhos diferentes, e um curso de alfabetização entrega o
           primeiro. Dizer o contrário venderia melhor e seria mentira. */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="que-hebraico"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          Que hebraico é este que você vai aprender?
-        </h2>
+      <Parte id="que-hebraico" titulo={<>Que hebraico é este que você vai aprender?</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           Talvez você tenha ouvido falar em "hebraico bíblico" e "hebraico moderno" e
           esteja se perguntando qual dos dois está nesta tela. A resposta começa pela
@@ -733,7 +710,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           poesia bíblica é difícil até para quem nasceu falando hebraico - por isso as
           edições israelenses costumam vir com notas.
         </p>
-      </Card>
+      </Parte>
 
       {/* ── 10c · a história, fechada ──────────────────────────────────
           Fechada porque é história, e história não é pré-requisito de ler:
@@ -791,11 +768,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </div>
       </details>
       {/* ── 11 · o mapa ───────────────────────────────────────────────── */}
-      <Card tone="wash" className="p-6 grid gap-4">
-        <h2 id="o-caminho"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          O caminho, do início ao fim
-        </h2>
+      <Parte id="o-caminho" tone="wash" titulo={<>O caminho, do início ao fim</>}>
         {/* Uma CORRENTE, e não dez cartões empilhados.
             ──────────────────────────────────────────────────────────────
             Eram cinco cartões, e o caminho de verdade tem dez passos - os
@@ -869,11 +842,13 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             o mapa explica por quê
           </Link>.
         </p>
-      </Card>
+      </Parte>
 
       {/* ── 13 · a atividade rápida, agora sobre a página inteira ─────── */}
+      <Parte id="atividade" titulo={<>Checagem final: dezessete perguntas</>}>
       <Compreensao
-        id="atividade"
+        id="atividade-perguntas"
+        tituloOculto
         titulo="E o resto? Dezessete perguntas"
         intro="A última conferência antes das letras, sobre tudo o que esta página explicou. Nada aqui vale nota nem tranca nada - errar só faz aparecer a explicação."
         perguntas={PERGUNTAS_GERAIS}
@@ -882,13 +857,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           parcial: 'O que escapou está explicado acima - dá para reler agora, ou seguir e voltar aqui quando o assunto aparecer numa lição.'
         }}
       />
+      </Parte>
 
       {/* ── como o curso funciona ─────────────────────────────────────── */}
-      <Card className="p-6 grid gap-4">
-        <h2 id="como-funciona"
-            className="font-display text-[19px] font-semibold scroll-mt-4">
-          Como este curso funciona
-        </h2>
+      <Parte id="como-funciona" titulo={<>Como este curso funciona</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           São {curso.licoes} lições em {curso.modulos} módulos, e uma regra que vale do
           começo ao fim: nada aparece na tela antes de ter sido ensinado. Você nunca vê
@@ -912,10 +884,9 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           Seu progresso fica salvo sozinho. Dá para parar no meio de uma lição, fechar
           o navegador e voltar semana que vem: a plataforma reabre onde você parou.
         </p>
-      </Card>
+      </Parte>
 
-      <Card tone="wash" className="p-6 grid gap-3">
-        <h2 className="font-display text-[18px] font-semibold">Como praticar de verdade</h2>
+      <Parte id="como-praticar" tone="wash" titulo={<>Como praticar de verdade</>}>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
           {[
             'Leia em voz alta. Sempre. Ouvir o próprio som é metade do aprendizado.',
@@ -929,7 +900,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             </li>
           ))}
         </ul>
-      </Card>
+      </Parte>
 
       {/* ── o quadro completo dos sinais, FECHADO ─────────────────────────
           Ele é excelente para consultar e péssimo como terceira tela de quem
@@ -991,6 +962,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           ))}
         </div>
       </details>
+      </Partes>
 
       {/* O destino sai do CURSO, e não escrito à mão.
           Escrito à mão ele estava - e apontava para a SEGUNDA letra. A tela
@@ -1017,6 +989,13 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
    publicou uma lista de palavras invertida. Aqui seria pior: a tela que
    ENSINA direção mostrando a direção errada. */
 type PedacoLinha = { t: 'he' | 'lat'; s: string };
+
+/* Um item do índice: abre a parte antes de o navegador rolar até o título
+   dela (o título fica sempre à vista, então a rolagem acha o lugar). */
+function LinkDoIndice({ id, className, children }: { id: string; className: string; children: ReactNode }) {
+  const abrir = useAbrirParte();
+  return <a href={`#${id}`} onClick={() => abrir(id)} className={className}>{children}</a>;
+}
 
 function LinhaMista({ partes }: { partes: readonly PedacoLinha[] }) {
   return (
