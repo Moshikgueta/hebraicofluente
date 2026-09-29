@@ -27,6 +27,7 @@
 import { notSignedIn, fail } from '../lib/http.js';
 import { requireAccount } from './auth.js';
 import { hasEntitlement } from '../lib/db.js';
+import { marcaDaConta, invisivel } from '../lib/marca.js';
 
 /* O mesmo curso que o portão protege (worker/src/gate.js). Quando o A1 tiver
    rotas próprias, os dois viram um mapa de prefixo → curso, juntos. */
@@ -48,15 +49,26 @@ import bonus from '../../../app/content/bonus.json';
    aluno, e remontá-lo por requisição seria trabalho por pedido para produzir
    sempre o mesmo resultado. A forma é a que `hidratarConteudo` espera
    (app/src/lib/content.ts) - um contrato só, dos dois lados. */
-const CONTEUDO = JSON.stringify({
-  letters: [...letters].sort((a, b) => a.order - b.order),
+/* Onde a marca de cada conta entra (lib/marca.js): no FIM do "Você sabia?"
+   de cada letra e de cada parágrafo das cartas de cultura - texto em
+   português que o aluno só lê. O molde é montado uma vez; por pedido, só a
+   troca do marcador (um caractere de uso privado, que não existe em texto
+   nenhum do curso) pela marca invisível daquela conta. */
+const MARCADOR = '\uE000', MARCADOR_VISIVEL = '\uE001';
+const marcar = s => (typeof s === 'string' && s ? s + MARCADOR : s);
+
+const MOLDE = JSON.stringify({
+  _licenca: `Conteúdo do curso Hebraico Fluente, licenciado para uso pessoal de uma conta. ` +
+    `Proibido copiar ou redistribuir (Termos de Uso, artigo 5). Cópia ${MARCADOR_VISIVEL}.`,
+  letters: [...letters].sort((a, b) => a.order - b.order)
+    .map(l => ({ ...l, didYouKnow: marcar(l.didYouKnow) })),
   nikud,
   extras,
   scenes: realWorld.scenes,
   sentences: sentences.sentences,
   eras: eras.pairs,
   strokes: strokes.letters,
-  culture: culture.cards,
+  culture: culture.cards.map(c => ({ ...c, bodyPt: (c.bodyPt || []).map(marcar) })),
   missoes: missoes.missoes,
   textos: textos.textos,
   bonus: bonus.leituras,
@@ -74,7 +86,14 @@ export async function content({ request, env }) {
     return fail('not-owned', 403);
   }
 
-  return new Response(CONTEUDO, {
+  /* Sem marca (banco fora do ar), o curso sai mesmo assim: quem pagou não
+     perde a aula por causa de uma defesa contra cópia. */
+  const marca = await marcaDaConta(env, account.id);
+  const corpo = MOLDE
+    .replaceAll(MARCADOR, marca ? invisivel(marca) : '')
+    .replaceAll(MARCADOR_VISIVEL, marca ? marca.toUpperCase() : '-');
+
+  return new Response(corpo, {
     status: 200,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
@@ -84,4 +103,4 @@ export async function content({ request, env }) {
 }
 
 /* Só para o teste poder conferir a forma sem subir um Worker. */
-export const conteudoBruto = () => CONTEUDO;
+export const conteudoBruto = () => MOLDE.replaceAll(MARCADOR, '').replaceAll(MARCADOR_VISIVEL, '-');

@@ -47,15 +47,19 @@ const DAYS = 7;
 
 const enc = new TextEncoder();
 
-export async function makeSessionCookie(env, account) {
-  /* Só o que o servidor lê de volta: quem, qual versão, até quando. O
+export async function makeSessionCookie(env, account, ap = null) {
+  /* Só o que o servidor lê de volta: quem, qual versão, até quando, qual
+     aparelho. O
      e-mail e o nome já viajaram aqui dentro e ninguém os lia - e um cookie
      é visível em captura de tela de suporte, em extensão de navegador, em
      log de proxy. O que não está no cookie não vaza pelo cookie. */
   const payload = b64url(enc.encode(JSON.stringify({
     uid: account.id,
     sv: Number(account.session_version) || 0,
-    exp: Date.now() + DAYS * 86_400_000
+    exp: Date.now() + DAYS * 86_400_000,
+    /* O aparelho desta entrada (lib/aparelhos.js): um id aleatório, que só
+       diz qual das três vagas da conta este navegador ocupa. */
+    ...(ap ? { ap } : {})
   })));
   const sig = await hmacB64(env.SESSION_SECRET, 'sess:' + payload);
   return `${COOKIE}=${payload}.${sig}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${DAYS * 86_400}`;

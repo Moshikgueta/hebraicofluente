@@ -156,7 +156,8 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
     a: [
       'Fica, e a plataforma volta exatamente na lição e na questão em que você parou.',
       'Ele é da sua conta, e não do aparelho: estude no celular, abra no computador e continue de onde estava. O que você fizer sem internet fica guardado no aparelho e sobe sozinho quando a conexão voltar - o curso funciona no ônibus.',
-      'E se você já tinha estudado neste aparelho antes de entrar na conta, nada se perde: as duas coisas são juntadas no login.'
+      'E se você já tinha estudado neste aparelho antes de entrar na conta, nada se perde: as duas coisas são juntadas no login.',
+      'A conta fica conectada em até 3 aparelhos ao mesmo tempo. Se você entrar num quarto, o mais antigo pede o login de novo, e o que estava nele se junta à conta quando você entrar outra vez.'
     ]
   },
   {

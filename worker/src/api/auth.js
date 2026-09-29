@@ -28,6 +28,7 @@ import {
   clearLegacyCookie, clearSessionCookie, makeSessionCookie, readSession
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
+import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelhos.js';
 import empresa from '../../../data/empresa.json';
 import {
   mailReady, mensagemDeConfirmacao, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
@@ -323,7 +324,7 @@ export async function signup({ request, env, ctx }) {
   await enviarConfirmacao(env, ctx, request, account);
 
   return json(await sessionBody(env, account), 200,
-    { 'Set-Cookie': await makeSessionCookie(env, account) });
+    { 'Set-Cookie': await makeSessionCookie(env, account, await novoAparelho(env, account.id)) });
 }
 
 /**
@@ -472,7 +473,7 @@ export async function login({ request, env, ctx }) {
   await avisarConvitePendente(env, ctx, account, email);
 
   return json(await sessionBody(env, account), 200,
-    { 'Set-Cookie': await makeSessionCookie(env, account) });
+    { 'Set-Cookie': await makeSessionCookie(env, account, await novoAparelho(env, account.id)) });
 }
 
 export async function logout({ request, env }) {
@@ -483,6 +484,7 @@ export async function logout({ request, env }) {
   const account = request && env ? await requireAccount(request, env) : null;
   if (account) {
     await bumpSessionVersion(env, account.id);
+    await esquecerAparelhos(env, account.id);
     await log(env, account.id, 'logout');
   }
   return json({ ok: true }, 200, { 'Set-Cookie': clearSessionCookie });
@@ -624,7 +626,7 @@ export async function reset({ request, env }) {
      morreu - inclusive o de quem eventualmente estivesse dentro da conta sem
      ser o dono. O cookie novo desta resposta é o único que vale. */
   return json(await sessionBody(env, atualizada), 200,
-    { 'Set-Cookie': await makeSessionCookie(env, atualizada) });
+    { 'Set-Cookie': await makeSessionCookie(env, atualizada, await novoAparelho(env, atualizada.id)) });
 }
 
 /* ── trocar a senha já estando dentro ──────────────────────────────────── */
@@ -663,8 +665,10 @@ export async function password({ request, env }) {
   /* Um cookie novo na mesma resposta. Sem ele, quem acabou de trocar a senha
      com sucesso seria deslogado pela própria troca - a `session_version`
      subiu e o cookie do navegador é o da versão anterior. */
+  /* O mesmo aparelho continua: trocar a senha derruba os OUTROS. */
+  const sess = await readSession(request, env);
   return json(await sessionBody(env, atualizada), 200,
-    { 'Set-Cookie': await makeSessionCookie(env, atualizada) });
+    { 'Set-Cookie': await makeSessionCookie(env, atualizada, sess?.ap || null) });
 }
 
 /**
@@ -728,9 +732,24 @@ export async function me({ request, env }) {
   /* Um cookie com o nome antigo, ainda válido: troca pelo nome novo aqui, e
      apaga o antigo. É o que faz a mudança de nome não deslogar ninguém - o
      app chama /api/me a cada página. Ver LEGADO_ATE em lib/session.js. */
+  /* O aparelho deste navegador saiu das três vagas: outro entrou depois. */
+  if (!await aparelhoValido(env, sess)) {
+    return json({ error: 'not-signed-in' }, 401, { 'Set-Cookie': clearSessionCookie });
+  }
+
   if (sess.legado) {
     return json(await sessionBody(env, account), 200,
-      { 'Set-Cookie': [await makeSessionCookie(env, account), clearLegacyCookie] });
+      { 'Set-Cookie': [await makeSessionCookie(env, account, sess.ap || await novoAparelho(env, account.id)), clearLegacyCookie] });
+  }
+
+  /* Um cookie de antes do limite de aparelhos (29/09/2026): ganha o seu
+     aparelho aqui, na primeira página que o app abrir. */
+  if (!sess.ap) {
+    const ap = await novoAparelho(env, account.id);
+    if (ap) {
+      return json(await sessionBody(env, account), 200,
+        { 'Set-Cookie': await makeSessionCookie(env, account, ap) });
+    }
   }
 
   return json(await sessionBody(env, account));
@@ -890,5 +909,6 @@ export async function requireAccount(request, env) {
   if (!sess) return null;
   const account = await findAccountById(env, sess.uid);
   if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)) return null;
+  if (!await aparelhoValido(env, sess)) return null;
   return account;
 }

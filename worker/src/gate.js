@@ -39,6 +39,7 @@
  */
 
 import { readSession } from './lib/session.js';
+import { aparelhoValido } from './lib/aparelhos.js';
 import { hasEntitlement, findAccountById } from './lib/db.js';
 
 /* As rotas do curso pago. Uma lista de prefixos, e não uma de rotas livres:
@@ -113,7 +114,8 @@ export async function gate(request, env) {
   if (!sess) return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}`);
 
   const account = await findAccountById(env, sess.uid);
-  if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)) {
+  if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)
+      || !await aparelhoValido(env, sess)) {
     return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}`);
   }
 

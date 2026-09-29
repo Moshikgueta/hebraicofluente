@@ -1076,6 +1076,14 @@ export async function deleteAccount(env, accountId) {
     await env.DB.prepare('DELETE FROM novidades WHERE account_id = ?').bind(id).run();
   } catch { /* tabela ausente */ }
 
+  /* A marca invisível do conteúdo e os aparelhos conectados só existem por
+     causa da conta: somem com ela. */
+  for (const t of ['marcas', 'aparelhos']) {
+    try {
+      await env.DB.prepare(`DELETE FROM ${t} WHERE account_id = ?`).bind(id).run();
+    } catch { /* tabela ausente */ }
+  }
+
   /* A trilha fica, e é justamente ela que responde "por que este pedido não
      tem cliente?" daqui a um ano. Não guarda o e-mail: guarda que houve. */
   await log(env, id, 'conta-apagada');

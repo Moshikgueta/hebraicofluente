@@ -134,7 +134,9 @@ describe('o que o Worker manda é o que o navegador espera', () => {
   const doWorker = JSON.parse(conteudoBruto());
 
   it('tem as mesmas seis partes, do mesmo tamanho', () => {
-    expect(Object.keys(doWorker).sort()).toEqual(Object.keys(conteudoPago).sort());
+    /* `_licenca` é o aviso de uso pessoal com o número da cópia (lib/marca.js);
+       o navegador não o usa. */
+    expect(Object.keys(doWorker).filter(k => k !== '_licenca').sort()).toEqual(Object.keys(conteudoPago).sort());
     expect(doWorker.letters).toHaveLength(conteudoPago.letters.length);
     expect(doWorker.scenes).toHaveLength(conteudoPago.scenes.length);
     expect(doWorker.culture).toHaveLength(conteudoPago.culture.length);

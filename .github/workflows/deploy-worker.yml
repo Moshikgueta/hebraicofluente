@@ -596,6 +596,8 @@ jobs:
              DELETE FROM registros_acesso    WHERE account_id IN ($ALVO);
              DELETE FROM arrependimentos     WHERE account_id IN ($ALVO);
              DELETE FROM novidades           WHERE account_id IN ($ALVO);
+             DELETE FROM marcas              WHERE account_id IN ($ALVO);
+             DELETE FROM aparelhos           WHERE account_id IN ($ALVO);
              DELETE FROM estornos            WHERE order_id IN (SELECT id FROM orders WHERE account_id IN ($ALVO));" || true
           npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --command \
             "DELETE FROM access_log       WHERE account_id IN ($ALVO);
