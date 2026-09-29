@@ -75,6 +75,10 @@ export default function Page() {
     ['Marca da sua cópia do curso: um número aleatório, sem relação com o seu nome ou e-mail, gravado de forma invisível no conteúdo que você recebe',
      'proteger o curso contra cópia: identificar de qual conta saiu uma cópia publicada sem autorização',
      'enquanto a conta existir'],
+    /* 29/09/2026: o depoimento (worker/src/api/depoimentos.js). */
+    ['Depoimento (só se você escrever um em /depoimento): o texto, a forma de assinar que você escolher (nome e cidade, iniciais ou sem nome) e as suas duas escolhas, publicar e ser contatado',
+     'ouvir a sua opinião sobre o curso e, só com a sua autorização, publicá-la no site e em materiais de divulgação - base legal: o seu consentimento, que você retira quando quiser na mesma página',
+     'até você retirar o depoimento ou apagar a conta; se ele estiver publicado, sai em até 7 dias'],
     ['E-mail de quem recebe um curso de presente',
      'liberar o curso quando a pessoa presenteada criar a conta',
      'até o presente ser usado ou cancelado'],

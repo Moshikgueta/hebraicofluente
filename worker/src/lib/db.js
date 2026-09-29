@@ -1075,6 +1075,10 @@ export async function deleteAccount(env, accountId) {
   try {
     await env.DB.prepare('DELETE FROM novidades WHERE account_id = ?').bind(id).run();
   } catch { /* tabela ausente */ }
+  /* O depoimento é dado da pessoa e sai com ela - publicado ou não. */
+  try {
+    await env.DB.prepare('DELETE FROM depoimentos WHERE account_id = ?').bind(id).run();
+  } catch { /* tabela ausente */ }
 
   /* A marca invisível do conteúdo e os aparelhos conectados só existem por
      causa da conta: somem com ela. */

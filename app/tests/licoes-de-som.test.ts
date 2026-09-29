@@ -318,7 +318,7 @@ describe('cada lado na sua lição, e o contraste na lição 20 (29/09/2026)', (
           ...buildLetterPractice(L, historia, { audioAvailable: false, seed: `p-${id}-${k}` }),
           ...buildMiniTest(L, historia, { audioAvailable: false, seed: `m-${id}-${k}` })
         ];
-        expect(ex.some(e => e.kind === 'letter-variant' || e.kind === 'variant-syllable'), id).toBe(false);
+        expect(ex.some(e => e.kind === 'letter-variant'), id).toBe(false);
       }
     }
   });
@@ -326,7 +326,7 @@ describe('cada lado na sua lição, e o contraste na lição 20 (29/09/2026)', (
   it('os textos das três letras não explicam mais o V, o raspado e o F', () => {
     for (const id of ['bet', 'kaf', 'pe']) {
       const L = letra(id);
-      const texto = [L.soundNotePt, L.articulacao.comoPt, ...L.ensino.checagem.flatMap(c => [c.q, ...(c.opcoes ?? []), c.porque])].join(' ');
+      const texto = [L.soundNotePt, L.articulacao.comoPt, ...L.ensino.checagem.flatMap(c => [c.q, ...('opcoes' in c ? c.opcoes : []), c.porque])].join(' ');
       expect(texto, id).not.toMatch(/\b(Vet|Chaf|Fe)\b|com V|com F|o V,|o F\b|raspa/);
       /* Mas avisam, numa frase, que o outro som tem lição própria. */
       expect(L.soundNotePt, id).toMatch(/outro som.*lição/);

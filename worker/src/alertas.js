@@ -30,6 +30,7 @@ import {
   avisosPurge, bater, contarAcoes, estornosAbertos, reservarAviso, soltarAviso
 } from './lib/db.js';
 import { mailReady, mensagemDeAlerta, reaisBR, sendMail } from './lib/mail.js';
+import { novosDesde } from './api/depoimentos.js';
 
 /** Quantas vezes, na última hora, cada erro precisa aparecer para virar
  *  alerta. Um só já basta para os que nunca deveriam acontecer. */
@@ -65,6 +66,7 @@ export async function runAlertas(env, at = Date.now()) {
   try { await alertaDeErros(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await lembreteDeDesistencias(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await alertaDeCompartilhamento(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
+  try { await avisoDeDepoimentos(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await avisosPurge(env, at); } catch { /* idem */ }
 }
 
@@ -118,6 +120,24 @@ async function alertaDeCompartilhamento(env, at) {
       'Nada foi bloqueado. Se quiser agir, os Termos (artigo 4) pedem: avisar o aluno por',
       'e-mail dizendo o que foi observado e esperar 5 dias úteis pela resposta. Para ver o',
       'histórico da conta: GitHub -> Actions -> Acesso -> "consultar".',
+      'Este aviso sai no máximo uma vez por dia.'
+    ]
+  }));
+}
+
+/* Depoimentos novos ou editados nas últimas 24 horas (api/depoimentos.js).
+   Um e-mail por dia, só com a contagem: o texto e o nome ficam no painel,
+   que exige a conta de administrador. */
+async function avisoDeDepoimentos(env, at) {
+  const n = await novosDesde(env, at - 86_400_000);
+  if (!n) return;
+  const dia = brasilia(at).slice(0, 10);
+  await enviarAoDono(env, `depoimentos:${dia}`, mensagemDeAlerta({
+    assunto: `${n} depoimento(s) novo(s) para ler`,
+    linhas: [
+      `Nas últimas 24 horas chegaram ${n} depoimento(s) novo(s) ou editado(s).`,
+      'Para ler e aprovar: /admin/depoimentos (entre com a conta de administrador).',
+      'Só dá para aprovar o que o aluno autorizou publicar.',
       'Este aviso sai no máximo uma vez por dia.'
     ]
   }));

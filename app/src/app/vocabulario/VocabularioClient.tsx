@@ -20,7 +20,6 @@ import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { AudioButton, hasAudio } from '@/components/learn/AudioButton';
 import { useLeitura, fraseDeLeitura } from '@/lib/vocabulario';
-import { todasAsLetrasEnsinadas } from '@/lib/engine/palavras';
 import { consonantsToKnow } from '@/lib/hebrew';
 import { normalizeTyped } from '@/lib/engine/types';
 import { stripNikud } from '@/lib/hebrew';
@@ -131,15 +130,18 @@ export function VocabularioClient() {
                     ))}
                   </span>
                 </div>
-                {/* À mão a palavra vai sem vogal, e aí o ו vogal vira letra na
-                    tela. Então a forma cursiva só aparece quando TODAS as letras
-                    da grafia já foram ensinadas - a régua estrita. */}
-                {todasAsLetrasEnsinadas(w.he, leitura.alfabeto) && (
-                  <div className="flex items-center gap-2" data-cursiva>
-                    <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">À mão</span>
-                    <He size="lg" cursive>{stripNikud(w.he)}</He>
-                  </div>
-                )}
+                {/* À mão, a palavra vai sem os sinais de vogal. Até 29/09/2026 a
+                    forma cursiva só aparecia com TODAS as letras da grafia já
+                    ensinadas, e toda palavra com o ו de vogal (יוֹם, שָׁלוֹם,
+                    תּוֹדָה, הוּא) ficava sem ela até a lição do Vav - o dono do
+                    curso notou. Ler a cursiva não pede o Vav como letra: o
+                    traço do ו é o mesmo que o aluno já lê como O e U. Escrever
+                    pede, e por isso a escrita de palavras (palavrasAcumuladas)
+                    continua com a régua estrita. */}
+                <div className="flex items-center gap-2" data-cursiva>
+                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">À mão</span>
+                  <He size="lg" cursive>{stripNikud(w.he)}</He>
+                </div>
               </div>
             </li>
           ))}

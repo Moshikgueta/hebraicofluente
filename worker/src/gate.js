@@ -70,7 +70,9 @@ const GATED = [
   /* 27/09/2026: as recompensas (trocar XP) e as leituras bônus que elas abrem. */
   '/loja', '/bonus',
   /* O guia opcional «O nikud da Bíblia». */
-  '/nikud-biblico'
+  '/nikud-biblico',
+  /* 29/09/2026: o depoimento do aluno. Só quem tem o curso escreve. */
+  '/depoimento'
 ];
 
 /* O curso que essas rotas pertencem. Quando o A1 tiver as próprias rotas,
