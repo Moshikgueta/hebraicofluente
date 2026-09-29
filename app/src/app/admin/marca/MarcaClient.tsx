@@ -49,12 +49,14 @@ export function MarcaClient() {
         <p className="font-ui text-[16px] text-ink-body m-0">
           Cada aluno recebe o curso com uma marca invisível da conta dele. Copie um trecho da
           cópia que você achou (o texto de uma carta de cultura ou de um &quot;Você sabia?&quot;
-          serve), cole abaixo e clique em Identificar.
+          serve), cole abaixo e clique em Identificar. Se você só tem um print ou um vídeo,
+          digite o número da cópia que aparece na margem esquerda da aula (8 letras e
+          números, como 636195AE).
         </p>
       </header>
 
       <label className="grid gap-2 font-ui text-[15px] font-semibold">
-        Trecho copiado
+        Trecho copiado ou número da cópia
         <textarea
           value={texto}
           onChange={e => setTexto(e.target.value)}

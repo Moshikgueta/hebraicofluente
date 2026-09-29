@@ -66,6 +66,9 @@ export type ConteudoPago = {
   textos: import('./engine/textos').Texto[];
   bonus: LeituraBonus[];
   guiaNikud: GuiaNikud | null;
+  /** O aviso de uso pessoal com o número da cópia desta conta
+   *  (worker/src/lib/marca.js). Só no que vem de /api/content. */
+  _licenca?: string;
 };
 
 /* ── o depósito ─────────────────────────────────────────────────────────── */
@@ -73,6 +76,10 @@ export type ConteudoPago = {
 let DADOS: ConteudoPago | null = null;
 let LETTERS: Letter[] = [];
 let BY_ID = new Map<string, Letter>();
+
+/** O número da cópia desta conta, para a marca d'água das aulas. */
+export const numeroDaCopia = (): string | null =>
+  DADOS?._licenca?.match(/Cópia ([0-9A-F]{8})\./)?.[1] ?? null;
 
 /** Já dá para ler? É o que `CourseGate` pergunta antes de renderizar. */
 export const conteudoPronto = (): boolean => DADOS !== null;

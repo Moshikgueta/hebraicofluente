@@ -59,7 +59,9 @@ const marcar = s => (typeof s === 'string' && s ? s + MARCADOR : s);
 
 const MOLDE = JSON.stringify({
   _licenca: `Conteúdo do curso Hebraico Fluente, licenciado para uso pessoal de uma conta. ` +
-    `Proibido copiar ou redistribuir (Termos de Uso, artigo 5). Cópia ${MARCADOR_VISIVEL}.`,
+    `Proibido copiar ou redistribuir: violação de direito autoral (Lei 9.610/1998; Código Penal, ` +
+    `art. 184), sujeita a responsabilização civil e criminal (Termos de Uso, artigo 5). ` +
+    `Cópia ${MARCADOR_VISIVEL}.`,
   letters: [...letters].sort((a, b) => a.order - b.order)
     .map(l => ({ ...l, didYouKnow: marcar(l.didYouKnow) })),
   nikud,

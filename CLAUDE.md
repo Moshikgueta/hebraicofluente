@@ -294,6 +294,14 @@ Pedido do dono. Nenhum site impede quem pagou de copiar o que vê; o que existe:
   (`alertaDeCompartilhamento` em alertas.js). NADA é bloqueado: os Termos
   (art. 4) pedem aviso e 5 dias úteis antes de suspender. Acesso →
   `consultar` mostra os aparelhos e esses dias.
+- **Marca d'água visível** (`components/shell/MarcaDagua.tsx`): em pé na
+  margem esquerda das páginas pagas, "Licenciado para an•••@dominio · cópia
+  XXXXXXXX" (o número da marca invisível, lido de `_licenca`). O painel
+  `/admin/marca` aceita esse número digitado, para quem só tem um print.
+  Nada impede gravação de tela num site; isto faz a gravação levar a conta.
+- **Aviso de direitos** (`AvisoDeDireitos`, no pé de toda página de aula) e
+  Termos art. 5: Lei 9.610/1998 (arts. 102-104), Código Penal arts. 184 e
+  154-A. Só a lei, sem ameaça que o site não cumpra; revisar com o advogado.
 - Termos (art. 2, 4 e 5), Privacidade (duas linhas novas) e FAQ dizem isso.
 
 ## Conta e senha

@@ -153,7 +153,21 @@ export default function Page() {
         <p>
           Para proteger o curso, o conteúdo que cada conta recebe leva uma marca
           invisível, que não aparece na tela nem atrapalha o estudo, e que permite
-          identificar de qual conta saiu uma cópia publicada sem autorização.
+          identificar de qual conta saiu uma cópia publicada sem autorização. Pelo mesmo
+          motivo, as páginas das aulas mostram na margem, em letra pequena, o começo do
+          seu e-mail e o número da sua cópia.
+        </p>
+        {/* 29/09/2026, a pedido do dono: deixar explícito que copiar o curso ou
+            os dados tem consequência. Só a lei, sem ameaça que o site não
+            possa cumprir. Revisar com o advogado. */}
+        <p>
+          <strong>Copiar, distribuir ou vender o curso sem autorização é violação de direito
+          autoral</strong> (Lei 9.610/1998) e pode levar a responsabilização civil, com
+          indenização pelos danos (arts. 102 a 104 da mesma lei), e criminal (Código Penal,
+          art. 184). Acessar ou tentar acessar dados da plataforma ou de outros alunos sem
+          autorização também pode ser crime (Código Penal, art. 154-A). Quando identificarmos
+          uma cópia ou um acesso indevido, a conta de origem pode ser suspensa, na forma do
+          artigo 4, e as medidas legais cabíveis podem ser tomadas.
         </p>
       </Artigo>
 

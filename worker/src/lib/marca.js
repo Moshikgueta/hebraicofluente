@@ -27,9 +27,16 @@ export function invisivel(hex) {
   return BORDA + [...bits].map(b => (b === '1' ? UM : ZERO)).join('') + BORDA;
 }
 
-/** As marcas encontradas num texto colado, em hexadecimal, sem repetição. */
+/** As marcas encontradas num texto colado, em hexadecimal, sem repetição.
+ *  Aceita também o número VISÍVEL - o da marca d'água das aulas ("cópia
+ *  636195AE") ou o do aviso `_licenca` -, para quem só tem um print. */
 export function lerMarcas(texto) {
   const achadas = new Set();
+  for (const [, hex] of String(texto || '').matchAll(/c[óo]pia\s+([0-9a-f]{8})\b/gi)) {
+    achadas.add(hex.toLowerCase());
+  }
+  const so = String(texto || '').trim();
+  if (/^[0-9a-f]{8}$/i.test(so)) achadas.add(so.toLowerCase());
   for (const [, bits] of String(texto || '').matchAll(/⁠([​‌]{32})⁠/g)) {
     const bin = [...bits].map(c => (c === UM ? '1' : '0')).join('');
     achadas.add(parseInt(bin, 2).toString(16).padStart(8, '0'));
