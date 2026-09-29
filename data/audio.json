@@ -7,8 +7,8 @@
     "numeros ja atribuidos sao preservados e so clipes novos recebem numeros novos.",
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
-  "generatedAt": "2026-09-28",
-  "total": 526,
+  "generatedAt": "2026-09-29",
+  "total": 539,
   "waves": [
     {
       "id": 1,
@@ -32,13 +32,13 @@
       "id": 4,
       "titlePt": "Frases e textos",
       "notePt": "As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.",
-      "count": 74
+      "count": 90
     },
     {
       "id": 5,
       "titlePt": "Leituras bônus",
       "notePt": "Os textos bíblicos e as bênçãos de Recompensas, uma linha por clipe, em ritmo de leitura: calmo, mas sem pausa entre as palavras.",
-      "count": 93
+      "count": 90
     }
   ],
   "clips": [
@@ -2282,7 +2282,11 @@
       "wave": 2,
       "where": [
         "letra 5",
-        "letra 2"
+        "letra 2",
+        "palavras da frase ma-hashaa",
+        "palavras da frase ma-nishma",
+        "palavras da frase shalom-ma-shlomcha",
+        "palavras da frase ma-ze"
       ],
       "file": "he-8f2861d4.mp3"
     },
@@ -2360,7 +2364,12 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 6"
+        "letra 6",
+        "palavras da frase ani-lomed",
+        "palavras da frase ani-mi-israel",
+        "palavras da frase ani-medaber-ivrit",
+        "palavras da frase ani-rotse-maim",
+        "palavras da frase ani-rotse-kafe"
       ],
       "file": "he-eddf7041.mp3"
     },
@@ -2390,7 +2399,8 @@
       "where": [
         "letra 6",
         "letra 2",
-        "no mundo real"
+        "no mundo real",
+        "palavras da frase ani-rotse-maim"
       ],
       "file": "he-f9c5c883.mp3"
     },
@@ -2713,7 +2723,8 @@
         "letra 12",
         "letra 9",
         "módulo 6",
-        "no mundo real"
+        "no mundo real",
+        "palavras da frase shalom-ma-shlomcha"
       ],
       "file": "he-e1e7fe52.mp3"
     },
@@ -2729,7 +2740,8 @@
         "letra 12",
         "letra 3",
         "módulo 6",
-        "no mundo real"
+        "no mundo real",
+        "palavras da frase toda-raba"
       ],
       "file": "he-6c894906.mp3"
     },
@@ -2771,7 +2783,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 12"
+        "letra 12",
+        "palavras da frase ha-yam-gadol"
       ],
       "file": "he-5736dc0d.mp3"
     },
@@ -2797,7 +2810,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 12"
+        "letra 12",
+        "palavras da frase hi-mora"
       ],
       "file": "he-8ca5205d.mp3"
     },
@@ -2810,7 +2824,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 13"
+        "letra 13",
+        "palavras da frase ma-ze"
       ],
       "file": "he-c6060038.mp3"
     },
@@ -3171,7 +3186,9 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 18"
+        "letra 18",
+        "palavras da frase ani-rotse-maim",
+        "palavras da frase ani-rotse-kafe"
       ],
       "file": "he-66dc2846.mp3"
     },
@@ -3197,7 +3214,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 19"
+        "letra 19",
+        "palavras da frase rak-rega"
       ],
       "file": "he-0859becc.mp3"
     },
@@ -3307,7 +3325,8 @@
       "where": [
         "letra 20",
         "módulo 6",
-        "lição Vet"
+        "lição Vet",
+        "palavras da frase boker-tov"
       ],
       "file": "he-d77ac2ce.mp3"
     },
@@ -3350,7 +3369,8 @@
       "wave": 2,
       "where": [
         "letra 20",
-        "módulo 6"
+        "módulo 6",
+        "palavras da frase boker-tov"
       ],
       "file": "he-0903eab6.mp3"
     },
@@ -3573,6 +3593,7 @@
       "where": [
         "letra 6",
         "lição Sin",
+        "palavras da frase shma-israel",
         "guia do nikud bíblico"
       ],
       "file": "he-30688018.mp3"
@@ -3980,7 +4001,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "lição Vet"
+        "lição Vet",
+        "palavras da frase tel-aviv"
       ],
       "file": "he-dbdd5b5d.mp3"
     },
@@ -4396,7 +4418,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 7"
+        "letra 7",
+        "palavras da frase rak-rega"
       ],
       "file": "he-442c813e.mp3"
     },
@@ -4422,7 +4445,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 8"
+        "letra 8",
+        "palavras da frase ani-medaber-ivrit"
       ],
       "file": "he-6d223a4d.mp3"
     },
@@ -4569,7 +4593,8 @@
       "where": [
         "letra 16",
         "módulo 6",
-        "frases"
+        "frases",
+        "palavras da frase slicha"
       ],
       "file": "he-5afd57ab.mp3"
     },
@@ -4610,7 +4635,8 @@
       "wave": 3,
       "where": [
         "letra 17",
-        "módulo 6"
+        "módulo 6",
+        "palavras da frase ani-medaber-ivrit"
       ],
       "file": "he-63edeaab.mp3"
     },
@@ -4653,7 +4679,8 @@
         "letra 18",
         "letra 19",
         "letra 20",
-        "módulo 6"
+        "módulo 6",
+        "palavras da frase ken-bevakasha"
       ],
       "file": "he-f2a28ac7.mp3"
     },
@@ -4680,6 +4707,7 @@
       "wave": 3,
       "where": [
         "letra 19",
+        "palavras da frase ani-rotse-kafe",
         "palavras do texto 5"
       ],
       "file": "he-1b13ecef.mp3"
@@ -4706,7 +4734,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 21"
+        "letra 21",
+        "palavras da frase ken-bevakasha"
       ],
       "file": "he-288bdbba.mp3"
     },
@@ -4780,7 +4809,8 @@
       "num": 573,
       "seq": 356,
       "he": "הָאָרֶץ",
-      "translit": null,
+      "translit": "haárets",
+      "gloss": "a terra",
       "kind": "palavra",
       "wave": 3,
       "where": [
@@ -4863,7 +4893,8 @@
       "kind": "frase",
       "wave": 4,
       "where": [
-        "frases"
+        "frases",
+        "palavras da frase yerushalayim"
       ],
       "file": "he-e28ad13c.mp3"
     },
@@ -5033,7 +5064,8 @@
       "kind": "frase",
       "wave": 4,
       "where": [
-        "frases"
+        "frases",
+        "palavras da frase leat"
       ],
       "file": "he-04179e4c.mp3"
     },
@@ -5090,8 +5122,219 @@
       "file": "he-702a7a37.mp3"
     },
     {
-      "num": 413,
+      "num": 576,
       "seq": 380,
+      "he": "לוֹמֵד",
+      "translit": "loméd",
+      "gloss": "estudo",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase ani-lomed"
+      ],
+      "file": "he-f1bab9a2.mp3"
+    },
+    {
+      "num": 577,
+      "seq": 381,
+      "he": "מוֹרָה",
+      "translit": "morá",
+      "gloss": "professora",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase hi-mora"
+      ],
+      "file": "he-03afe381.mp3"
+    },
+    {
+      "num": 578,
+      "seq": 382,
+      "he": "דָּוִד",
+      "translit": "David",
+      "gloss": "David",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase david-ve-sara"
+      ],
+      "file": "he-87cff654.mp3"
+    },
+    {
+      "num": 579,
+      "seq": 383,
+      "he": "וְשָׂרָה",
+      "translit": "ve-Sará",
+      "gloss": "e Sara",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase david-ve-sara"
+      ],
+      "file": "he-7bb8b91c.mp3"
+    },
+    {
+      "num": 580,
+      "seq": 384,
+      "he": "מִיִּשְׂרָאֵל",
+      "translit": "mi-Yisraél",
+      "gloss": "de Israel",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase ani-mi-israel"
+      ],
+      "file": "he-7c0165d5.mp3"
+    },
+    {
+      "num": 581,
+      "seq": 385,
+      "he": "הַיָּם",
+      "translit": "ha-yam",
+      "gloss": "o mar",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase ha-yam-gadol"
+      ],
+      "file": "he-2670a3e0.mp3"
+    },
+    {
+      "num": 582,
+      "seq": 386,
+      "he": "הַשָּׁעָה",
+      "translit": "ha-shaá",
+      "gloss": "a hora",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase ma-hashaa"
+      ],
+      "file": "he-adc61994.mp3"
+    },
+    {
+      "num": 583,
+      "seq": 387,
+      "he": "נִשְׁמָע",
+      "translit": "nishmá",
+      "gloss": "se ouve",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase ma-nishma"
+      ],
+      "file": "he-1f6957b6.mp3"
+    },
+    {
+      "num": 503,
+      "seq": 388,
+      "he": "שְׁמַע",
+      "translit": "shemá",
+      "gloss": "ouve",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase shma-israel",
+        "guia do nikud bíblico"
+      ],
+      "file": "he-8ba70d52.mp3"
+    },
+    {
+      "num": 584,
+      "seq": 389,
+      "he": "רַבָּה",
+      "translit": "rabá",
+      "gloss": "muita",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase toda-raba"
+      ],
+      "file": "he-f4aa81d8.mp3"
+    },
+    {
+      "num": 585,
+      "seq": 390,
+      "he": "שְׁלוֹמְךָ",
+      "translit": "shlomchá",
+      "gloss": "a sua paz",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase shalom-ma-shlomcha"
+      ],
+      "file": "he-cf10e4e0.mp3"
+    },
+    {
+      "num": 586,
+      "seq": 391,
+      "he": "תֵּל",
+      "translit": "tel",
+      "gloss": "colina",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase tel-aviv"
+      ],
+      "file": "he-9d90a14a.mp3"
+    },
+    {
+      "num": 587,
+      "seq": 392,
+      "he": "חַג",
+      "translit": "chag",
+      "gloss": "festa",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase chag-sameach"
+      ],
+      "file": "he-2e5bf226.mp3"
+    },
+    {
+      "num": 588,
+      "seq": 393,
+      "he": "שָׂמֵחַ",
+      "translit": "saméach",
+      "gloss": "alegre",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase chag-sameach"
+      ],
+      "file": "he-a50c7339.mp3"
+    },
+    {
+      "num": 502,
+      "seq": 394,
+      "he": "בְּרֵאשִׁית",
+      "translit": "bereshít",
+      "gloss": "no princípio",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase bereshit",
+        "guia do nikud bíblico"
+      ],
+      "file": "he-424a9bc4.mp3"
+    },
+    {
+      "num": 511,
+      "seq": 395,
+      "he": "בָּרָא",
+      "translit": "bará",
+      "gloss": "criou",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase bereshit",
+        "guia do nikud bíblico"
+      ],
+      "file": "he-940bdade.mp3"
+    },
+    {
+      "num": 413,
+      "seq": 396,
       "he": "אִמָּא, יֵשׁ לֶחֶם?",
       "translit": "imá, yesh léchem?",
       "gloss": "Mãe, tem pão?",
@@ -5104,7 +5347,7 @@
     },
     {
       "num": 414,
-      "seq": 381,
+      "seq": 397,
       "he": "יֵשׁ לֶחֶם טָרִי, וְיֵשׁ גַּם תֵּה חַם.",
       "translit": "yesh léchem tari, veyesh gam te cham.",
       "gloss": "Tem pão fresco, e tem chá quente também.",
@@ -5117,7 +5360,7 @@
     },
     {
       "num": 415,
-      "seq": 382,
+      "seq": 398,
       "he": "תּוֹדָה! וְיוֹנָתָן?",
       "translit": "todá! veYonatan?",
       "gloss": "Obrigada! E o Yonatan?",
@@ -5130,7 +5373,7 @@
     },
     {
       "num": 416,
-      "seq": 383,
+      "seq": 399,
       "he": "הוּא יָשֵׁן.",
       "translit": "hu yashen.",
       "gloss": "Ele está dormindo.",
@@ -5143,7 +5386,7 @@
     },
     {
       "num": 574,
-      "seq": 384,
+      "seq": 400,
       "he": "הַי נוֹעָה, מָה נִשְׁמָע?",
       "translit": "hai Noa, ma nishmá?",
       "gloss": "Oi, Noa, tudo bem?",
@@ -5156,7 +5399,7 @@
     },
     {
       "num": 418,
-      "seq": 385,
+      "seq": 401,
       "he": "מְעוּלֶה! אֲנִי עַל הָהָר.",
       "translit": "meulé! aní al hahar.",
       "gloss": "Ótimo! Estou na montanha.",
@@ -5169,7 +5412,7 @@
     },
     {
       "num": 419,
-      "seq": 386,
+      "seq": 402,
       "he": "קַר שָׁם?",
       "translit": "kar sham?",
       "gloss": "Está frio aí?",
@@ -5182,7 +5425,7 @@
     },
     {
       "num": 420,
-      "seq": 387,
+      "seq": 403,
       "he": "קְצָת. אֲנִי עִם תֵּה חַם.",
       "translit": "ktsat. aní im te cham.",
       "gloss": "Um pouco. Estou com um chá quente.",
@@ -5195,7 +5438,7 @@
     },
     {
       "num": 421,
-      "seq": 388,
+      "seq": 404,
       "he": "מָתַי אַתְּ חוֹזֶרֶת?",
       "translit": "matai at chozéret?",
       "gloss": "Quando você volta?",
@@ -5208,7 +5451,7 @@
     },
     {
       "num": 422,
-      "seq": 389,
+      "seq": 405,
       "he": "מָחָר. אֲנִי רוֹצָה עוֹד יוֹם!",
       "translit": "machar. aní rotsá od yom!",
       "gloss": "Amanhã. Quero mais um dia!",
@@ -5221,7 +5464,7 @@
     },
     {
       "num": 423,
-      "seq": 390,
+      "seq": 406,
       "he": "בֹּקֶר טוֹב! מִי רוֹצֶה קָפֶה?",
       "translit": "bóker tov! mi rotsé kafé?",
       "gloss": "Bom dia! Quem quer café?",
@@ -5234,7 +5477,7 @@
     },
     {
       "num": 424,
-      "seq": 391,
+      "seq": 407,
       "he": "אֲנִי!",
       "translit": "aní!",
       "gloss": "Eu!",
@@ -5247,7 +5490,7 @@
     },
     {
       "num": 425,
-      "seq": 392,
+      "seq": 408,
       "he": "גַּם אֲנִי. אֲנִי בַּגַּן.",
       "translit": "gam aní. aní bagan.",
       "gloss": "Eu também. Estou no jardim.",
@@ -5260,7 +5503,7 @@
     },
     {
       "num": 426,
-      "seq": 393,
+      "seq": 409,
       "he": "הַכֶּלֶב רוֹצֶה לָצֵאת!",
       "translit": "hakélev rotsé latset!",
       "gloss": "O cachorro quer sair!",
@@ -5273,7 +5516,7 @@
     },
     {
       "num": 427,
-      "seq": 394,
+      "seq": 410,
       "he": "אֲנִי בָּא. שַׁבָּת שָׁלוֹם!",
       "translit": "aní ba. shabat shalom!",
       "gloss": "Já vou. Shabat shalom!",
@@ -5286,7 +5529,7 @@
     },
     {
       "num": 428,
-      "seq": 395,
+      "seq": 411,
       "he": "דָּנִי, אֵיפֹה אַתָּה?",
       "translit": "Dani, eifo atá?",
       "gloss": "Dani, onde você está?",
@@ -5299,7 +5542,7 @@
     },
     {
       "num": 429,
-      "seq": 396,
+      "seq": 412,
       "he": "בַּדֶּרֶךְ הַבַּיְתָה.",
       "translit": "badérech habáyta.",
       "gloss": "A caminho de casa.",
@@ -5312,7 +5555,7 @@
     },
     {
       "num": 430,
-      "seq": 397,
+      "seq": 413,
       "he": "יֵשׁ לְךָ מַפְתֵּחַ?",
       "translit": "yesh lechá maftéach?",
       "gloss": "Você está com a chave?",
@@ -5325,7 +5568,7 @@
     },
     {
       "num": 431,
-      "seq": 398,
+      "seq": 414,
       "he": "כֵּן. אֲנִי בַּבַּיִת בְּעוֹד עֶשֶׂר דַּקּוֹת.",
       "translit": "ken. aní babáyit beod ésser dakot.",
       "gloss": "Sim. Chego em casa em dez minutos.",
@@ -5338,7 +5581,7 @@
     },
     {
       "num": 432,
-      "seq": 399,
+      "seq": 415,
       "he": "מְעוּלֶה. יֵשׁ אֹכֶל בַּמְּקָרֵר.",
       "translit": "meulé. yesh óchel bamekarer.",
       "gloss": "Ótimo. Tem comida na geladeira.",
@@ -5351,7 +5594,7 @@
     },
     {
       "num": 433,
-      "seq": 400,
+      "seq": 416,
       "he": "תּוֹדָה, אִמָּא!",
       "translit": "todá, imá!",
       "gloss": "Obrigado, mãe!",
@@ -5364,7 +5607,7 @@
     },
     {
       "num": 440,
-      "seq": 401,
+      "seq": 417,
       "he": "דָּנָה, אַתְּ בַּמָּלוֹן?",
       "translit": "Dana, at bamalon?",
       "gloss": "Dana, você está no hotel?",
@@ -5377,7 +5620,7 @@
     },
     {
       "num": 441,
-      "seq": 402,
+      "seq": 418,
       "he": "כֵּן! אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו.",
       "translit": "ken! aní ossá tchek-in achshav.",
       "gloss": "Sim! Estou fazendo o check-in agora.",
@@ -5390,7 +5633,7 @@
     },
     {
       "num": 442,
-      "seq": 403,
+      "seq": 419,
       "he": "יֵשׁ לָךְ פיג׳מה?",
       "translit": "yesh lach pidjama?",
       "gloss": "Você tem pijama?",
@@ -5403,7 +5646,7 @@
     },
     {
       "num": 443,
-      "seq": 404,
+      "seq": 420,
       "he": "אֵין לִי! אֲנִי קוֹנָה פֹּה.",
       "translit": "ein li! aní koná po.",
       "gloss": "Não tenho! Compro aqui.",
@@ -5416,7 +5659,7 @@
     },
     {
       "num": 438,
-      "seq": 405,
+      "seq": 421,
       "he": "וּמָחָר?",
       "translit": "umachar?",
       "gloss": "E amanhã?",
@@ -5429,7 +5672,7 @@
     },
     {
       "num": 439,
-      "seq": 406,
+      "seq": 422,
       "he": "מָחָר צ׳ילה! נְשִׁיקוֹת!",
       "translit": "machar Tchile! neshikot!",
       "gloss": "Amanhã, Chile! Beijos!",
@@ -5442,7 +5685,7 @@
     },
     {
       "num": 446,
-      "seq": 407,
+      "seq": 423,
       "he": "חַם",
       "translit": "cham",
       "gloss": "quente",
@@ -5455,7 +5698,7 @@
     },
     {
       "num": 447,
-      "seq": 408,
+      "seq": 424,
       "he": "יָשֵׁן",
       "translit": "yashen",
       "gloss": "dorme, está dormindo",
@@ -5468,7 +5711,7 @@
     },
     {
       "num": 448,
-      "seq": 409,
+      "seq": 425,
       "he": "הַי",
       "translit": "hai",
       "gloss": "oi",
@@ -5481,7 +5724,7 @@
     },
     {
       "num": 450,
-      "seq": 410,
+      "seq": 426,
       "he": "מְעוּלֶה",
       "translit": "meulé",
       "gloss": "ótimo",
@@ -5494,7 +5737,7 @@
     },
     {
       "num": 451,
-      "seq": 411,
+      "seq": 427,
       "he": "קַר",
       "translit": "kar",
       "gloss": "frio",
@@ -5507,7 +5750,7 @@
     },
     {
       "num": 452,
-      "seq": 412,
+      "seq": 428,
       "he": "קְצָת",
       "translit": "ktsat",
       "gloss": "um pouco",
@@ -5520,7 +5763,7 @@
     },
     {
       "num": 453,
-      "seq": 413,
+      "seq": 429,
       "he": "חוֹזֶרֶת",
       "translit": "chozéret",
       "gloss": "volta (ela volta)",
@@ -5533,7 +5776,7 @@
     },
     {
       "num": 454,
-      "seq": 414,
+      "seq": 430,
       "he": "מָחָר",
       "translit": "machar",
       "gloss": "amanhã",
@@ -5546,7 +5789,7 @@
     },
     {
       "num": 455,
-      "seq": 415,
+      "seq": 431,
       "he": "לָצֵאת",
       "translit": "latset",
       "gloss": "sair",
@@ -5559,7 +5802,7 @@
     },
     {
       "num": 456,
-      "seq": 416,
+      "seq": 432,
       "he": "בָּא",
       "translit": "ba",
       "gloss": "vem, está vindo",
@@ -5572,7 +5815,7 @@
     },
     {
       "num": 457,
-      "seq": 417,
+      "seq": 433,
       "he": "שַׁבָּת שָׁלוֹם",
       "translit": "shabat shalom",
       "gloss": "bom sábado (a saudação do sábado)",
@@ -5585,7 +5828,7 @@
     },
     {
       "num": 458,
-      "seq": 418,
+      "seq": 434,
       "he": "אֵיפֹה",
       "translit": "eifo",
       "gloss": "onde",
@@ -5598,7 +5841,7 @@
     },
     {
       "num": 459,
-      "seq": 419,
+      "seq": 435,
       "he": "בַּדֶּרֶךְ הַבַּיְתָה",
       "translit": "badérech habáyta",
       "gloss": "a caminho de casa",
@@ -5611,7 +5854,7 @@
     },
     {
       "num": 460,
-      "seq": 420,
+      "seq": 436,
       "he": "יֵשׁ לְךָ",
       "translit": "yesh lechá",
       "gloss": "você tem",
@@ -5624,7 +5867,7 @@
     },
     {
       "num": 461,
-      "seq": 421,
+      "seq": 437,
       "he": "מַפְתֵּחַ",
       "translit": "maftéach",
       "gloss": "chave",
@@ -5637,7 +5880,7 @@
     },
     {
       "num": 462,
-      "seq": 422,
+      "seq": 438,
       "he": "בְּעוֹד",
       "translit": "beod",
       "gloss": "daqui a, em (tempo)",
@@ -5650,7 +5893,7 @@
     },
     {
       "num": 463,
-      "seq": 423,
+      "seq": 439,
       "he": "עֶשֶׂר",
       "translit": "ésser",
       "gloss": "dez",
@@ -5663,7 +5906,7 @@
     },
     {
       "num": 464,
-      "seq": 424,
+      "seq": 440,
       "he": "דַּקּוֹת",
       "translit": "dakot",
       "gloss": "minutos",
@@ -5676,7 +5919,7 @@
     },
     {
       "num": 465,
-      "seq": 425,
+      "seq": 441,
       "he": "מְקָרֵר",
       "translit": "mekarer",
       "gloss": "geladeira",
@@ -5689,7 +5932,7 @@
     },
     {
       "num": 466,
-      "seq": 426,
+      "seq": 442,
       "he": "מָלוֹן",
       "translit": "malon",
       "gloss": "hotel",
@@ -5702,7 +5945,7 @@
     },
     {
       "num": 467,
-      "seq": 427,
+      "seq": 443,
       "he": "עוֹשָׂה",
       "translit": "ossá",
       "gloss": "faz, está fazendo (ela)",
@@ -5715,7 +5958,7 @@
     },
     {
       "num": 468,
-      "seq": 428,
+      "seq": 444,
       "he": "צ׳ק-אין",
       "translit": "tchek-in",
       "gloss": "check-in",
@@ -5728,7 +5971,7 @@
     },
     {
       "num": 469,
-      "seq": 429,
+      "seq": 445,
       "he": "יֵשׁ לָךְ",
       "translit": "yesh lach",
       "gloss": "você tem (para mulher)",
@@ -5741,7 +5984,7 @@
     },
     {
       "num": 470,
-      "seq": 430,
+      "seq": 446,
       "he": "אֵין לִי",
       "translit": "ein li",
       "gloss": "eu não tenho",
@@ -5754,7 +5997,7 @@
     },
     {
       "num": 471,
-      "seq": 431,
+      "seq": 447,
       "he": "קוֹנָה",
       "translit": "koná",
       "gloss": "compra, está comprando (ela)",
@@ -5767,7 +6010,7 @@
     },
     {
       "num": 472,
-      "seq": 432,
+      "seq": 448,
       "he": "נְשִׁיקוֹת",
       "translit": "neshikot",
       "gloss": "beijos",
@@ -5780,7 +6023,7 @@
     },
     {
       "num": 473,
-      "seq": 433,
+      "seq": 449,
       "he": "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ",
       "translit": "bereshít bará Elohím et ha-shamáyim ve-et ha-árets",
       "gloss": "No princípio, Deus criou os céus e a terra.",
@@ -5794,7 +6037,7 @@
     },
     {
       "num": 474,
-      "seq": 434,
+      "seq": 450,
       "he": "וְהָאָרֶץ הָיְתָה תֹהוּ וָבֹהוּ וְחֹשֶׁךְ עַל־פְּנֵי תְהוֹם וְרוּחַ אֱלֹהִים מְרַחֶפֶת עַל־פְּנֵי הַמָּיִם",
       "translit": "veha-árets haytá tóhu vavóhu, vechóshech al-penéi tehóm, veruách Elohím merachéfet al-penéi ha-máyim",
       "gloss": "A terra era sem forma e vazia, havia escuridão sobre o abismo, e o espírito de Deus pairava sobre as águas.",
@@ -5807,7 +6050,7 @@
     },
     {
       "num": 475,
-      "seq": 435,
+      "seq": 451,
       "he": "וַיֹּאמֶר אֱלֹהִים יְהִי אוֹר וַיְהִי־אוֹר",
       "translit": "vayómer Elohím: yehí or! vayehí-or",
       "gloss": "Deus disse: haja luz! E houve luz.",
@@ -5820,7 +6063,7 @@
     },
     {
       "num": 476,
-      "seq": 436,
+      "seq": 452,
       "he": "וַיַּרְא אֱלֹהִים אֶת־הָאוֹר כִּי־טוֹב וַיַּבְדֵּל אֱלֹהִים בֵּין הָאוֹר וּבֵין הַחֹשֶׁךְ",
       "translit": "vayár Elohím et-ha-or ki-tov, vayavdél Elohím bein ha-or uvéin ha-chóshech",
       "gloss": "Deus viu que a luz era boa, e Deus separou a luz da escuridão.",
@@ -5833,7 +6076,7 @@
     },
     {
       "num": 477,
-      "seq": 437,
+      "seq": 453,
       "he": "וַיִּקְרָא אֱלֹהִים לָאוֹר יוֹם וְלַחֹשֶׁךְ קָרָא לָיְלָה וַיְהִי־עֶרֶב וַיְהִי־בֹקֶר יוֹם אֶחָד",
       "translit": "vayikrá Elohím la-or yom, velachóshech kará láyla. vayehí-érev vayehí-vóker, yom echád",
       "gloss": "Deus chamou a luz de dia, e a escuridão chamou de noite. Houve tarde e houve manhã: o primeiro dia (no hebraico, «dia um»).",
@@ -5846,7 +6089,7 @@
     },
     {
       "num": 478,
-      "seq": 438,
+      "seq": 454,
       "he": "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד",
       "translit": "shemá Yisraél, Hashém Elohéinu, Hashém echád",
       "gloss": "Ouve, Israel: o Senhor é o nosso Deus, o Senhor é um.",
@@ -5859,7 +6102,7 @@
     },
     {
       "num": 479,
-      "seq": 439,
+      "seq": 455,
       "he": "וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל־לְבָבְךָ וּבְכָל־נַפְשְׁךָ וּבְכָל־מְאֹדֶךָ",
       "translit": "veahavtá et Hashém Elohécha bechol-levavchá uvchol-nafshechá uvchol-meodécha",
       "gloss": "Amarás o Senhor, teu Deus, de todo o teu coração, de toda a tua alma e com toda a tua força.",
@@ -5872,7 +6115,7 @@
     },
     {
       "num": 480,
-      "seq": 440,
+      "seq": 456,
       "he": "וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ",
       "translit": "vehayú ha-devarím ha-éle ashér anochí metsavechá ha-yóm al-levavécha",
       "gloss": "Estas palavras que hoje eu te ordeno estarão no teu coração.",
@@ -5885,7 +6128,7 @@
     },
     {
       "num": 481,
-      "seq": 441,
+      "seq": 457,
       "he": "וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשָׁכְבְּךָ וּבְקוּמֶךָ",
       "translit": "veshinantám levanécha vedibartá bam, beshivtechá bevetécha uvlechtechá vadérech, uvshochbechá uvkumécha",
       "gloss": "Tu as ensinarás a teus filhos e falarás delas sentado em casa e andando pelo caminho, ao deitar e ao levantar.",
@@ -5898,7 +6141,7 @@
     },
     {
       "num": 482,
-      "seq": 442,
+      "seq": 458,
       "he": "וּקְשַׁרְתָּם לְאוֹת עַל־יָדֶךָ וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ",
       "translit": "ukshartám leót al-yadécha, vehayú letotafót bein einécha",
       "gloss": "Tu as atarás como sinal na tua mão, e serão como uma faixa entre os teus olhos.",
@@ -5911,7 +6154,7 @@
     },
     {
       "num": 575,
-      "seq": 443,
+      "seq": 459,
       "he": "וּכְתַבְתָּם עַל־מְזוּזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ",
       "translit": "uchtavtám al-mezuzót betécha uvisharécha",
       "gloss": "E as escreverás nos batentes da tua casa e nos teus portões.",
@@ -5924,7 +6167,7 @@
     },
     {
       "num": 484,
-      "seq": 444,
+      "seq": 460,
       "he": "מִזְמוֹר לְדָוִד יְהוָה רֹעִי לֹא אֶחְסָר",
       "translit": "mizmór leDavíd. Hashém roí, lo echsár",
       "gloss": "Salmo de Davi. O Senhor é o meu pastor, nada me faltará.",
@@ -5937,7 +6180,7 @@
     },
     {
       "num": 485,
-      "seq": 445,
+      "seq": 461,
       "he": "בִּנְאוֹת דֶּשֶׁא יַרְבִּיצֵנִי עַל־מֵי מְנֻחוֹת יְנַהֲלֵנִי",
       "translit": "binót déshe yarbitséni, al-méi menuchót yenahaléni",
       "gloss": "Em pastos verdes me faz deitar, a águas tranquilas me conduz.",
@@ -5950,7 +6193,7 @@
     },
     {
       "num": 486,
-      "seq": 446,
+      "seq": 462,
       "he": "נַפְשִׁי יְשׁוֹבֵב יַנְחֵנִי בְמַעְגְּלֵי־צֶדֶק לְמַעַן שְׁמוֹ",
       "translit": "nafshí yeshovév, yanchéni vemaglei-tsédek lemáan shemó",
       "gloss": "Restaura a minha alma, me guia por caminhos de justiça por amor do seu nome.",
@@ -5963,7 +6206,7 @@
     },
     {
       "num": 487,
-      "seq": 447,
+      "seq": 463,
       "he": "גַּם כִּי־אֵלֵךְ בְּגֵיא צַלְמָוֶת לֹא־אִירָא רָע כִּי־אַתָּה עִמָּדִי שִׁבְטְךָ וּמִשְׁעַנְתֶּךָ הֵמָּה יְנַחֲמֻנִי",
       "translit": "gam ki-eléch beguéi tsalmávet lo-irá ra, ki-atá imadí; shivtechá umishantécha héma yenachamúni",
       "gloss": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal nenhum, porque tu estás comigo; a tua vara e o teu cajado me consolam.",
@@ -5976,7 +6219,7 @@
     },
     {
       "num": 488,
-      "seq": 448,
+      "seq": 464,
       "he": "תַּעֲרֹךְ לְפָנַי שֻׁלְחָן נֶגֶד צֹרְרָי דִּשַּׁנְתָּ בַשֶּׁמֶן רֹאשִׁי כּוֹסִי רְוָיָה",
       "translit": "taaróch lefanái shulchán négued tsorerái; dishánta vashémen roshí, kossí revayá",
       "gloss": "Preparas uma mesa para mim diante dos meus inimigos; unges com óleo a minha cabeça, o meu cálice transborda.",
@@ -5989,7 +6232,7 @@
     },
     {
       "num": 489,
-      "seq": 449,
+      "seq": 465,
       "he": "אַךְ טוֹב וָחֶסֶד יִרְדְּפוּנִי כָּל־יְמֵי חַיָּי וְשַׁבְתִּי בְּבֵית־יְהוָה לְאֹרֶךְ יָמִים",
       "translit": "ach tov vachéssed yirdefúni kol-yeméi chayái, veshavtí beveit-Hashém leórech yamím",
       "gloss": "Certamente o bem e a bondade me seguirão todos os dias da minha vida, e habitarei na casa do Senhor por longos dias.",
@@ -6002,7 +6245,7 @@
     },
     {
       "num": 520,
-      "seq": 450,
+      "seq": 466,
       "he": "שִׁיר לַמַּעֲלוֹת אֶשָּׂא עֵינַי אֶל־הֶהָרִים מֵאַיִן יָבֹא עֶזְרִי",
       "translit": "shir lamaalót. essá einái el-heharím: meáyin yavó ezrí?",
       "gloss": "Cântico das subidas. Levanto os meus olhos para os montes: de onde virá o meu socorro?",
@@ -6015,7 +6258,7 @@
     },
     {
       "num": 521,
-      "seq": 451,
+      "seq": 467,
       "he": "עֶזְרִי מֵעִם יְהוָה עֹשֵׂה שָׁמַיִם וָאָרֶץ",
       "translit": "ezrí meím Hashém, ossé shamáyim vaárets",
       "gloss": "O meu socorro vem do Senhor, que fez os céus e a terra.",
@@ -6028,7 +6271,7 @@
     },
     {
       "num": 522,
-      "seq": 452,
+      "seq": 468,
       "he": "אַל־יִתֵּן לַמּוֹט רַגְלֶךָ אַל־יָנוּם שֹׁמְרֶךָ",
       "translit": "al-yitén lamót raglécha, al-yanúm shomerécha",
       "gloss": "Ele não deixará o teu pé tropeçar; não cochila aquele que te guarda.",
@@ -6041,7 +6284,7 @@
     },
     {
       "num": 523,
-      "seq": 453,
+      "seq": 469,
       "he": "הִנֵּה לֹא־יָנוּם וְלֹא יִישָׁן שׁוֹמֵר יִשְׂרָאֵל",
       "translit": "hiné lo-yanúm velo yishán shomér Yisraél",
       "gloss": "Não cochila nem dorme o guarda de Israel.",
@@ -6054,7 +6297,7 @@
     },
     {
       "num": 524,
-      "seq": 454,
+      "seq": 470,
       "he": "יְהוָה שֹׁמְרֶךָ יְהוָה צִלְּךָ עַל־יַד יְמִינֶךָ",
       "translit": "Hashém shomerécha, Hashém tsilechá al-yad yeminécha",
       "gloss": "O Senhor é quem te guarda; o Senhor é a tua sombra, à tua mão direita.",
@@ -6067,7 +6310,7 @@
     },
     {
       "num": 525,
-      "seq": 455,
+      "seq": 471,
       "he": "יוֹמָם הַשֶּׁמֶשׁ לֹא־יַכֶּכָּה וְיָרֵחַ בַּלָּיְלָה",
       "translit": "yomám hashémesh lo-yakéka, veyaréach baláyla",
       "gloss": "De dia o sol não te ferirá, nem a lua de noite.",
@@ -6080,7 +6323,7 @@
     },
     {
       "num": 526,
-      "seq": 456,
+      "seq": 472,
       "he": "יְהוָה יִשְׁמָרְךָ מִכָּל־רָע יִשְׁמֹר אֶת־נַפְשֶׁךָ",
       "translit": "Hashém yishmorchá mikol-ra, yishmór et-nafshécha",
       "gloss": "O Senhor te guardará de todo mal; ele guardará a tua vida.",
@@ -6093,7 +6336,7 @@
     },
     {
       "num": 527,
-      "seq": 457,
+      "seq": 473,
       "he": "יְהוָה יִשְׁמָר־צֵאתְךָ וּבוֹאֶךָ מֵעַתָּה וְעַד־עוֹלָם",
       "translit": "Hashém yishmor-tsetechá uvoécha, meatá veád-olám",
       "gloss": "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre.",
@@ -6106,7 +6349,7 @@
     },
     {
       "num": 528,
-      "seq": 458,
+      "seq": 474,
       "he": "וַתֹּאמֶר רוּת אַל־תִּפְגְּעִי־בִי לְעָזְבֵךְ לָשׁוּב מֵאַחֲרָיִךְ",
       "translit": "vatómer Rut: al-tifgueí-vi leozvéch lashúv meacharáyich",
       "gloss": "Rute disse: não insistas comigo para que eu te deixe e volte, deixando de te seguir.",
@@ -6119,7 +6362,7 @@
     },
     {
       "num": 529,
-      "seq": 459,
+      "seq": 475,
       "he": "כִּי אֶל־אֲשֶׁר תֵּלְכִי אֵלֵךְ וּבַאֲשֶׁר תָּלִינִי אָלִין",
       "translit": "ki el-ashér teléchi eléch, uvaashér talíni alín",
       "gloss": "Pois aonde tu fores, eu irei, e onde tu pousares, eu pousarei.",
@@ -6132,7 +6375,7 @@
     },
     {
       "num": 530,
-      "seq": 460,
+      "seq": 476,
       "he": "עַמֵּךְ עַמִּי וֵאלֹהַיִךְ אֱלֹהָי",
       "translit": "améch amí, velohá'yich Elohái",
       "gloss": "O teu povo será o meu povo, e o teu Deus, o meu Deus.",
@@ -6145,7 +6388,7 @@
     },
     {
       "num": 531,
-      "seq": 461,
+      "seq": 477,
       "he": "בַּאֲשֶׁר תָּמוּתִי אָמוּת וְשָׁם אֶקָּבֵר",
       "translit": "baashér tamúti amút, vesham ekavér",
       "gloss": "Onde tu morreres, eu morrerei, e ali serei sepultada.",
@@ -6158,7 +6401,7 @@
     },
     {
       "num": 532,
-      "seq": 462,
+      "seq": 478,
       "he": "כֹּה יַעֲשֶׂה יְהוָה לִי וְכֹה יֹסִיף כִּי הַמָּוֶת יַפְרִיד בֵּינִי וּבֵינֵךְ",
       "translit": "ko yaassé Hashém li vechó yossíf, ki hamávet yafríd beiní uveinéch",
       "gloss": "Que o Senhor me castigue, e mais ainda, se outra coisa que não a morte me separar de ti.",
@@ -6171,7 +6414,7 @@
     },
     {
       "num": 533,
-      "seq": 463,
+      "seq": 479,
       "he": "לַכֹּל זְמָן וְעֵת לְכָל־חֵפֶץ תַּחַת הַשָּׁמָיִם",
       "translit": "lakól zman, veét lechol-chéfets táchat hashamáyim",
       "gloss": "Tudo tem o seu tempo, e há um momento para cada coisa debaixo do céu:",
@@ -6184,7 +6427,7 @@
     },
     {
       "num": 534,
-      "seq": 464,
+      "seq": 480,
       "he": "עֵת לָלֶדֶת וְעֵת לָמוּת עֵת לָטַעַת וְעֵת לַעֲקוֹר נָטוּעַ",
       "translit": "et lalédet veét lamút, et latáat veét laakór natúa",
       "gloss": "tempo de nascer e tempo de morrer, tempo de plantar e tempo de arrancar o que se plantou;",
@@ -6197,7 +6440,7 @@
     },
     {
       "num": 535,
-      "seq": 465,
+      "seq": 481,
       "he": "עֵת לַהֲרוֹג וְעֵת לִרְפּוֹא עֵת לִפְרוֹץ וְעֵת לִבְנוֹת",
       "translit": "et laharóg veét lirpó, et lifróts veét livnót",
       "gloss": "tempo de matar e tempo de curar, tempo de derrubar e tempo de construir;",
@@ -6210,7 +6453,7 @@
     },
     {
       "num": 536,
-      "seq": 466,
+      "seq": 482,
       "he": "עֵת לִבְכּוֹת וְעֵת לִשְׂחוֹק עֵת סְפוֹד וְעֵת רְקוֹד",
       "translit": "et livkót veét lischók, et sefód veét rekód",
       "gloss": "tempo de chorar e tempo de rir, tempo de lamentar e tempo de dançar;",
@@ -6223,7 +6466,7 @@
     },
     {
       "num": 537,
-      "seq": 467,
+      "seq": 483,
       "he": "עֵת לְהַשְׁלִיךְ אֲבָנִים וְעֵת כְּנוֹס אֲבָנִים עֵת לַחֲבוֹק וְעֵת לִרְחֹק מֵחַבֵּק",
       "translit": "et lehashlích avaním veét kenós avaním, et lachavók veét lirchók mechabék",
       "gloss": "tempo de espalhar pedras e tempo de juntar pedras, tempo de abraçar e tempo de se afastar do abraço;",
@@ -6236,7 +6479,7 @@
     },
     {
       "num": 538,
-      "seq": 468,
+      "seq": 484,
       "he": "עֵת לְבַקֵּשׁ וְעֵת לְאַבֵּד עֵת לִשְׁמוֹר וְעֵת לְהַשְׁלִיךְ",
       "translit": "et levakésh veét leabéd, et lishmór veét lehashlích",
       "gloss": "tempo de procurar e tempo de perder, tempo de guardar e tempo de jogar fora;",
@@ -6249,7 +6492,7 @@
     },
     {
       "num": 539,
-      "seq": 469,
+      "seq": 485,
       "he": "עֵת לִקְרוֹעַ וְעֵת לִתְפּוֹר עֵת לַחֲשׁוֹת וְעֵת לְדַבֵּר",
       "translit": "et likróa veét litpór, et lachashót veét ledabér",
       "gloss": "tempo de rasgar e tempo de costurar, tempo de calar e tempo de falar;",
@@ -6262,7 +6505,7 @@
     },
     {
       "num": 540,
-      "seq": 470,
+      "seq": 486,
       "he": "עֵת לֶאֱהֹב וְעֵת לִשְׂנֹא עֵת מִלְחָמָה וְעֵת שָׁלוֹם",
       "translit": "et leehóv veét lisnó, et milchamá veét shalóm",
       "gloss": "tempo de amar e tempo de odiar, tempo de guerra e tempo de paz.",
@@ -6275,7 +6518,7 @@
     },
     {
       "num": 545,
-      "seq": 471,
+      "seq": 487,
       "he": "כִּי אָנֹכִי יָדַעְתִּי אֶת־הַמַּחֲשָׁבֹת אֲשֶׁר אָנֹכִי חֹשֵׁב עֲלֵיכֶם נְאֻם־יְהוָה",
       "translit": "ki anochí yadáti et-hamachashavót ashér anochí choshév aleichém, neúm-Hashém",
       "gloss": "Porque eu sei os planos que tenho para vocês, diz o Senhor:",
@@ -6288,7 +6531,7 @@
     },
     {
       "num": 546,
-      "seq": 472,
+      "seq": 488,
       "he": "מַחְשְׁבוֹת שָׁלוֹם וְלֹא לְרָעָה לָתֵת לָכֶם אַחֲרִית וְתִקְוָה",
       "translit": "machshevót shalóm velo leraá, latét lachém acharít vetikvá",
       "gloss": "planos de paz, e não de mal, para dar a vocês um futuro e uma esperança.",
@@ -6301,7 +6544,7 @@
     },
     {
       "num": 547,
-      "seq": 473,
+      "seq": 489,
       "he": "הֲלוֹא צִוִּיתִיךָ חֲזַק וֶאֱמָץ",
       "translit": "haló tsivitícha: chazák veemáts",
       "gloss": "Não fui eu que te ordenei? Sê forte e corajoso.",
@@ -6314,7 +6557,7 @@
     },
     {
       "num": 548,
-      "seq": 474,
+      "seq": 490,
       "he": "אַל־תַּעֲרֹץ וְאַל־תֵּחָת",
       "translit": "al-taaróts veal-techát",
       "gloss": "Não tenhas medo nem desanimes,",
@@ -6327,7 +6570,7 @@
     },
     {
       "num": 549,
-      "seq": 475,
+      "seq": 491,
       "he": "כִּי עִמְּךָ יְהוָה אֱלֹהֶיךָ בְּכֹל אֲשֶׁר תֵּלֵךְ",
       "translit": "ki imechá Hashém Elohécha bechól ashér teléch",
       "gloss": "porque o Senhor, teu Deus, está contigo por onde quer que fores.",
@@ -6340,7 +6583,7 @@
     },
     {
       "num": 550,
-      "seq": 476,
+      "seq": 492,
       "he": "בְּטַח אֶל־יְהוָה בְּכָל־לִבֶּךָ",
       "translit": "betách el-Hashém bechol-libécha",
       "gloss": "Confia no Senhor de todo o teu coração",
@@ -6353,7 +6596,7 @@
     },
     {
       "num": 551,
-      "seq": 477,
+      "seq": 493,
       "he": "וְאֶל־בִּינָתְךָ אַל־תִּשָּׁעֵן",
       "translit": "veel-binatchá al-tishaén",
       "gloss": "e não te apoies no teu próprio entendimento.",
@@ -6366,7 +6609,7 @@
     },
     {
       "num": 552,
-      "seq": 478,
+      "seq": 494,
       "he": "בְּכָל־דְּרָכֶיךָ דָעֵהוּ וְהוּא יְיַשֵּׁר אֹרְחֹתֶיךָ",
       "translit": "bechol-derachécha daéhu, vehú yeyashér orchotécha",
       "gloss": "Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas.",
@@ -6379,7 +6622,7 @@
     },
     {
       "num": 553,
-      "seq": 479,
+      "seq": 495,
       "he": "אַל־תִּירָא כִּי עִמְּךָ־אָנִי",
       "translit": "al-tirá ki imechá-áni",
       "gloss": "Não temas, porque eu estou contigo;",
@@ -6392,7 +6635,7 @@
     },
     {
       "num": 554,
-      "seq": 480,
+      "seq": 496,
       "he": "אַל־תִּשְׁתָּע כִּי־אֲנִי אֱלֹהֶיךָ",
       "translit": "al-tishtá ki-aní Elohécha",
       "gloss": "não te assustes, porque eu sou o teu Deus.",
@@ -6405,7 +6648,7 @@
     },
     {
       "num": 555,
-      "seq": 481,
+      "seq": 497,
       "he": "אִמַּצְתִּיךָ אַף־עֲזַרְתִּיךָ אַף־תְּמַכְתִּיךָ בִּימִין צִדְקִי",
       "translit": "imatstícha af-azartícha af-temachtícha bimín tsidkí",
       "gloss": "Eu te fortaleço, eu te ajudo, eu te sustento com a mão direita da minha justiça.",
@@ -6418,7 +6661,7 @@
     },
     {
       "num": 556,
-      "seq": 482,
+      "seq": 498,
       "he": "וְקוֹיֵ יְהוָה יַחֲלִיפוּ כֹחַ",
       "translit": "vekovéi Hashém yachalífu chóach",
       "gloss": "Mas os que esperam no Senhor renovam as suas forças;",
@@ -6431,7 +6674,7 @@
     },
     {
       "num": 557,
-      "seq": 483,
+      "seq": 499,
       "he": "יַעֲלוּ אֵבֶר כַּנְּשָׁרִים",
       "translit": "yaalú éver kanesharím",
       "gloss": "sobem com asas, como águias;",
@@ -6444,7 +6687,7 @@
     },
     {
       "num": 558,
-      "seq": 484,
+      "seq": 500,
       "he": "יָרוּצוּ וְלֹא יִיגָעוּ יֵלְכוּ וְלֹא יִיעָפוּ",
       "translit": "yarútsu velo yigáu, yelchú velo yiáfu",
       "gloss": "correm e não se cansam, caminham e não se fatigam.",
@@ -6457,7 +6700,7 @@
     },
     {
       "num": 559,
-      "seq": 485,
+      "seq": 501,
       "he": "קְרָא אֵלַי וְאֶעֱנֶךָּ",
       "translit": "kerá elái veeenéka",
       "gloss": "Clama a mim, e eu te responderei;",
@@ -6470,7 +6713,7 @@
     },
     {
       "num": 560,
-      "seq": 486,
+      "seq": 502,
       "he": "וְאַגִּידָה לְּךָ גְּדֹלוֹת וּבְצֻרוֹת לֹא יְדַעְתָּם",
       "translit": "veaguída lechá guedolót uvtsurót lo yedatám",
       "gloss": "e te anunciarei coisas grandes e escondidas, que tu não conheces.",
@@ -6483,7 +6726,7 @@
     },
     {
       "num": 561,
-      "seq": 487,
+      "seq": 503,
       "he": "וְאָנֹכִי וּבֵיתִי נַעֲבֹד אֶת־יְהוָה",
       "translit": "veanochí uveití naavód et-Hashém",
       "gloss": "Eu e a minha casa serviremos ao Senhor.",
@@ -6496,7 +6739,7 @@
     },
     {
       "num": 562,
-      "seq": 488,
+      "seq": 504,
       "he": "יֹשֵׁב בְּסֵתֶר עֶלְיוֹן בְּצֵל שַׁדַּי יִתְלוֹנָן",
       "translit": "yoshév besséter elyón, betsél Shadái yitlonán",
       "gloss": "Quem habita no abrigo do Altíssimo descansa à sombra do Todo-Poderoso.",
@@ -6509,7 +6752,7 @@
     },
     {
       "num": 563,
-      "seq": 489,
+      "seq": 505,
       "he": "אֹמַר לַיהוָה מַחְסִי וּמְצוּדָתִי אֱלֹהַי אֶבְטַח־בּוֹ",
       "translit": "omár laHashém: machsí umtsudatí, Elohái evtach-bó",
       "gloss": "Digo ao Senhor: meu refúgio e minha fortaleza, meu Deus, em quem confio.",
@@ -6522,7 +6765,7 @@
     },
     {
       "num": 564,
-      "seq": 490,
+      "seq": 506,
       "he": "חַסְדֵי יְהוָה כִּי לֹא־תָמְנוּ כִּי לֹא־כָלוּ רַחֲמָיו",
       "translit": "chasdéi Hashém ki lo-támnu, ki lo-chálu rachamáv",
       "gloss": "As misericórdias do Senhor não têm fim, as suas compaixões não se esgotam;",
@@ -6535,7 +6778,7 @@
     },
     {
       "num": 565,
-      "seq": 491,
+      "seq": 507,
       "he": "חֲדָשִׁים לַבְּקָרִים רַבָּה אֱמוּנָתֶךָ",
       "translit": "chadashím labkarím, rabá emunatécha",
       "gloss": "elas se renovam a cada manhã. Grande é a tua fidelidade!",
@@ -6548,7 +6791,7 @@
     },
     {
       "num": 566,
-      "seq": 492,
+      "seq": 508,
       "he": "נֵר־לְרַגְלִי דְבָרֶךָ וְאוֹר לִנְתִיבָתִי",
       "translit": "ner-leraglí devarécha, veór lintivatí",
       "gloss": "A tua palavra é lâmpada para os meus pés e luz para o meu caminho.",
@@ -6561,7 +6804,7 @@
     },
     {
       "num": 492,
-      "seq": 493,
+      "seq": 509,
       "he": "יְבָרֶכְךָ יְהוָה וְיִשְׁמְרֶךָ",
       "translit": "yevarechechá Hashém veyishmerécha",
       "gloss": "O Senhor te abençoe e te guarde.",
@@ -6574,7 +6817,7 @@
     },
     {
       "num": 493,
-      "seq": 494,
+      "seq": 510,
       "he": "יָאֵר יְהוָה פָּנָיו אֵלֶיךָ וִיחֻנֶּךָּ",
       "translit": "yaér Hashém panáv elécha vichunéka",
       "gloss": "O Senhor faça brilhar o seu rosto sobre ti e tenha misericórdia de ti.",
@@ -6587,7 +6830,7 @@
     },
     {
       "num": 494,
-      "seq": 495,
+      "seq": 511,
       "he": "יִשָּׂא יְהוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם",
       "translit": "yissá Hashém panáv elécha veyassém lechá shalóm",
       "gloss": "O Senhor volte o seu rosto para ti e te dê a paz.",
@@ -6600,7 +6843,7 @@
     },
     {
       "num": 543,
-      "seq": 496,
+      "seq": 512,
       "he": "וְקָרָא זֶה אֶל־זֶה וְאָמַר",
       "translit": "vekará ze el-ze veamár",
       "gloss": "E um clamava ao outro, dizendo:",
@@ -6613,7 +6856,7 @@
     },
     {
       "num": 544,
-      "seq": 497,
+      "seq": 513,
       "he": "קָדוֹשׁ קָדוֹשׁ קָדוֹשׁ יְהוָה צְבָאוֹת מְלֹא כָל־הָאָרֶץ כְּבוֹדוֹ",
       "translit": "kadósh kadósh kadósh Hashém tsevaót, meló chol-haárets kevodó",
       "gloss": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória.",
@@ -6626,7 +6869,7 @@
     },
     {
       "num": 567,
-      "seq": 498,
+      "seq": 514,
       "he": "כִּי־יֶלֶד יֻלַּד־לָנוּ בֵּן נִתַּן־לָנוּ",
       "translit": "ki-yéled yulád-lánu, ben nitán-lánu",
       "gloss": "Porque um menino nos nasceu, um filho nos foi dado;",
@@ -6639,7 +6882,7 @@
     },
     {
       "num": 568,
-      "seq": 499,
+      "seq": 515,
       "he": "וַתְּהִי הַמִּשְׂרָה עַל־שִׁכְמוֹ",
       "translit": "vatehí hamisrá al-shichmó",
       "gloss": "o governo está sobre os seus ombros,",
@@ -6652,7 +6895,7 @@
     },
     {
       "num": 569,
-      "seq": 500,
+      "seq": 516,
       "he": "וַיִּקְרָא שְׁמוֹ פֶּלֶא יוֹעֵץ אֵל גִּבּוֹר אֲבִיעַד שַׂר־שָׁלוֹם",
       "translit": "vayikrá shemó: péle yoéts, El guibór, Avíad, sar-shalóm",
       "gloss": "e o seu nome é chamado: Maravilhoso, Conselheiro, Deus Forte, Pai Eterno, Príncipe da Paz.",
@@ -6665,7 +6908,7 @@
     },
     {
       "num": 570,
-      "seq": 501,
+      "seq": 517,
       "he": "וְהוּא מְחֹלָל מִפְּשָׁעֵנוּ מְדֻכָּא מֵעֲוֹנֹתֵינוּ",
       "translit": "vehú mecholál mipeshaénu, meduká meavonotéinu",
       "gloss": "Mas ele foi ferido por causa das nossas transgressões, esmagado por causa das nossas culpas;",
@@ -6678,7 +6921,7 @@
     },
     {
       "num": 571,
-      "seq": 502,
+      "seq": 518,
       "he": "מוּסַר שְׁלוֹמֵנוּ עָלָיו וּבַחֲבֻרָתוֹ נִרְפָּא־לָנוּ",
       "translit": "mussár shloméinu aláv, uvachavurató nirpá-lánu",
       "gloss": "o castigo que nos traz a paz estava sobre ele, e pelas suas feridas fomos curados.",
@@ -6691,7 +6934,7 @@
     },
     {
       "num": 541,
-      "seq": 503,
+      "seq": 519,
       "he": "לֹא־תִקֹּם וְלֹא־תִטֹּר אֶת־בְּנֵי עַמֶּךָ",
       "translit": "lo-tikóm velo-titór et-benéi amécha",
       "gloss": "Não te vingarás nem guardarás rancor contra os filhos do teu povo;",
@@ -6704,7 +6947,7 @@
     },
     {
       "num": 542,
-      "seq": 504,
+      "seq": 520,
       "he": "וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ אֲנִי יְהוָה",
       "translit": "veahavtá lereachá kamócha: aní Hashém",
       "gloss": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor.",
@@ -6717,7 +6960,7 @@
     },
     {
       "num": 490,
-      "seq": 505,
+      "seq": 521,
       "he": "שִׁיר הַמַּעֲלוֹת לְדָוִד",
       "translit": "shir ha-maalót leDavíd",
       "gloss": "Cântico das subidas, de Davi.",
@@ -6730,7 +6973,7 @@
     },
     {
       "num": 491,
-      "seq": 506,
+      "seq": 522,
       "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד",
       "translit": "hiné ma-tóv uma-naím shévet achím gam-yáchad",
       "gloss": "Vejam como é bom e agradável os irmãos viverem juntos.",
@@ -6743,7 +6986,7 @@
     },
     {
       "num": 500,
-      "seq": 507,
+      "seq": 523,
       "he": "יְהוָה",
       "translit": "Hashém",
       "gloss": "como está no texto bíblico; na gravação, «Hashém»",
@@ -6756,7 +6999,7 @@
     },
     {
       "num": 519,
-      "seq": 508,
+      "seq": 524,
       "he": "יְהוָה אֱלֹהֵינוּ",
       "translit": "Hashém Elohéinu",
       "gloss": "o Senhor, nosso Deus (do Shemá)",
@@ -6768,34 +7011,8 @@
       "file": "he-103b11f9.mp3"
     },
     {
-      "num": 502,
-      "seq": 509,
-      "he": "בְּרֵאשִׁית",
-      "translit": "bereshít",
-      "gloss": "sheva no começo: «be»",
-      "kind": "palavra",
-      "wave": 5,
-      "where": [
-        "guia do nikud bíblico"
-      ],
-      "file": "he-424a9bc4.mp3"
-    },
-    {
-      "num": 503,
-      "seq": 510,
-      "he": "שְׁמַע",
-      "translit": "shemá",
-      "gloss": "sheva no começo: «she»",
-      "kind": "palavra",
-      "wave": 5,
-      "where": [
-        "guia do nikud bíblico"
-      ],
-      "file": "he-8ba70d52.mp3"
-    },
-    {
       "num": 504,
-      "seq": 511,
+      "seq": 525,
       "he": "אֱלֹהִים",
       "translit": "Elohím",
       "gloss": "«e» rápido",
@@ -6808,7 +7025,7 @@
     },
     {
       "num": 505,
-      "seq": 512,
+      "seq": 526,
       "he": "אֲשֶׁר",
       "translit": "ashér",
       "gloss": "«a» rápido",
@@ -6821,7 +7038,7 @@
     },
     {
       "num": 506,
-      "seq": 513,
+      "seq": 527,
       "he": "כָּל־יְמֵי",
       "translit": "kol-yeméi",
       "gloss": "todos os dias de",
@@ -6834,7 +7051,7 @@
     },
     {
       "num": 507,
-      "seq": 514,
+      "seq": 528,
       "he": "בְּכָל־לְבָבְךָ",
       "translit": "bechol-levavchá",
       "gloss": "com todo o teu coração",
@@ -6847,7 +7064,7 @@
     },
     {
       "num": 508,
-      "seq": 515,
+      "seq": 529,
       "he": "וְרוּחַ",
       "translit": "veruách",
       "gloss": "e o espírito",
@@ -6860,7 +7077,7 @@
     },
     {
       "num": 509,
-      "seq": 516,
+      "seq": 530,
       "he": "עַל־פְּנֵי",
       "translit": "al-penéi",
       "gloss": "sobre a face de",
@@ -6873,7 +7090,7 @@
     },
     {
       "num": 510,
-      "seq": 517,
+      "seq": 531,
       "he": "כִּי־טוֹב",
       "translit": "ki-tov",
       "gloss": "que era bom",
@@ -6885,21 +7102,8 @@
       "file": "he-62977b71.mp3"
     },
     {
-      "num": 511,
-      "seq": 518,
-      "he": "בָּרָא",
-      "translit": "bará",
-      "gloss": "com dagesh: «b»",
-      "kind": "palavra",
-      "wave": 5,
-      "where": [
-        "guia do nikud bíblico"
-      ],
-      "file": "he-940bdade.mp3"
-    },
-    {
       "num": 512,
-      "seq": 519,
+      "seq": 532,
       "he": "וַיְהִי־בֹקֶר",
       "translit": "vayehí-vóker",
       "gloss": "sem dagesh: «v»",
@@ -6912,7 +7116,7 @@
     },
     {
       "num": 513,
-      "seq": 520,
+      "seq": 533,
       "he": "הַשָּׁמַיִם",
       "translit": "ha-shamáyim",
       "gloss": "dagesh no ש: o som não muda",
@@ -6925,7 +7129,7 @@
     },
     {
       "num": 514,
-      "seq": 521,
+      "seq": 534,
       "he": "אִירָא",
       "translit": "irá",
       "gloss": "temerei",
@@ -6938,7 +7142,7 @@
     },
     {
       "num": 515,
-      "seq": 522,
+      "seq": 535,
       "he": "לְבָנֶיךָ",
       "translit": "levanécha",
       "gloss": "a teus filhos",
@@ -6951,7 +7155,7 @@
     },
     {
       "num": 516,
-      "seq": 523,
+      "seq": 536,
       "he": "אֱלֹהֵינוּ",
       "translit": "Elohéinu",
       "gloss": "nosso Deus",
@@ -6964,7 +7168,7 @@
     },
     {
       "num": 517,
-      "seq": 524,
+      "seq": 537,
       "he": "וַיֹּאמֶר",
       "translit": "vayómer",
       "gloss": "e disse",
@@ -6977,7 +7181,7 @@
     },
     {
       "num": 518,
-      "seq": 525,
+      "seq": 538,
       "he": "וַיְהִי",
       "translit": "vayehí",
       "gloss": "e houve",

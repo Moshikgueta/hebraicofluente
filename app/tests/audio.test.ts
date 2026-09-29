@@ -62,6 +62,9 @@ function requested(): { id: string; where: string }[] {
   /* Onda 4: as frases e cada linha dos mini-textos, que a escuta de frase e
      o "ouvir o texto" da leitura tocam. */
   sentencesUpTo(22).forEach(f => out.push({ id: f.audioId, where: `frase ${f.id}` }));
+  /* E cada palavra da frase, que a leitura palavra a palavra toca: treze
+     delas não tinham gravação prevista (29/09/2026). */
+  sentencesUpTo(22).forEach(f => f.words.forEach(w => out.push({ id: w.audioId, where: `frase ${f.id} palavra ${w.he}` })));
   textosDoCurso().forEach(t => t.linhas.forEach((l, i) =>
     out.push({ id: l.audioId!, where: `texto ${t.modulo} linha ${i + 1}` })));
   /* E as palavras novas de cada texto: a lista embaixo dele e, depois de

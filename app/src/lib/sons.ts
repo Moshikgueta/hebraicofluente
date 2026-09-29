@@ -9,6 +9,10 @@
  *   Bet → Vet → Kaf → Chaf → Pe → Fe   (módulo 5)
  *   Tch → Dj → J                        (módulo 7)
  *
+ * Desde 29/09/2026 cada lado tem a sua lição sem o outro: Bet, Kaf e Pe só
+ * com o ponto, Vet, Chaf e Fe só sem ele, e o contraste dos três pares na
+ * lição 20, a última do módulo 5 (`som: "contraste"` em modules.json).
+ *
  * Aqui mora a parte que não precisa de navegador: a ordem de ensino (que a
  * trava de progressão, o mapa e o painel usam) e os exercícios de cada som.
  */
@@ -71,109 +75,193 @@ export function leituraTrocada(translit: string, som: string, parSom: string): s
 }
 
 /**
+ * Os exercícios de CONTRASTE de um som: "este ou o do par" - com ponto ou
+ * sem, ponto à direita ou à esquerda. É a decisão que o aluno vai ter de
+ * tomar lendo. O Sin os usa na própria lição; Vet, Chaf e Fe, desde
+ * 29/09/2026, só na lição 20, a do contraste (ver `bancoDoContraste`).
+ */
+function exerciciosDeContraste(S: SomLicao, temAudio: (id: string) => boolean, rand: Rand): Exercise[] {
+  const out: Exercise[] = [];
+  const letterId = S.parId;
+  /* 1. a sílaba: como se lê? (a do par é a errada) */
+  S.silabas.forEach((s, i) => {
+    const par = S.parSilabas[i];
+    const { options, answer } = comOpcoes(s.translit, [par?.translit ?? S.parSom], rand);
+    out.push({
+      id: `som-${S.id}-sil-${i}`, kind: 'syllable-reading', letterId, skill: 'som',
+      promptPt: 'Como se lê esta sílaba?', he: s.he, options, answer,
+      explainPt: `${s.he}, ${S.rotuloPt}, é "${s.translit}". ${par?.he ?? S.parHe}, ${S.parRotuloPt}, seria "${par?.translit ?? S.parSom}".`
+    });
+  });
+  /* 2. o som dado, o desenho pedido: com ponto ou sem? */
+  S.silabas.forEach((s, i) => {
+    const par = S.parSilabas[i];
+    if (!par) return;
+    const { options, answer } = comOpcoes(s.he, [par.he], rand);
+    out.push({
+      id: `som-${S.id}-des-${i}`, kind: 'sound-to-syllable', letterId, skill: 'ler',
+      promptPt: 'Qual destas se lê assim?', sound: s.translit, options, answer,
+      explainPt: `"${s.translit}" é ${s.he}, ${S.rotuloPt}. ${par.he}, ${S.parRotuloPt}, é "${par.translit}".`
+    });
+  });
+  /* 3. a palavra: a leitura certa contra a de quem não olhou o ponto */
+  S.palavras.forEach((w, i) => {
+    const errada = leituraTrocada(w.translit, S.som, S.parSom);
+    if (errada === w.translit) return;
+    const { options, answer } = comOpcoes(w.translit, [errada], rand);
+    out.push({
+      id: `som-${S.id}-ler-${i}`, kind: 'syllable-reading', letterId, skill: 'ler',
+      promptPt: 'Como se lê esta palavra?', he: w.he, options, answer,
+      explainPt: `${w.he} - "${w.translit}", ${w.pt}. A letra está ${S.rotuloPt}: soa ${S.som.toUpperCase()}.`
+    });
+  });
+  /* 4. ouvir a sílaba e achar o desenho, onde houver gravação */
+  S.silabas.forEach((s, i) => {
+    const par = S.parSilabas[i];
+    if (!par || !temAudio(s.audioId)) return;
+    const { options, answer } = comOpcoes(s.he, [par.he], rand);
+    out.push({
+      id: `som-${S.id}-ouv-${i}`, kind: 'listen-syllable', letterId, skill: 'ouvir',
+      promptPt: 'Ouça. Qual foi a sílaba?', audioId: s.audioId, options, answer,
+      explainPt: `Foi ${s.he}, "${s.translit}" - ${S.rotuloPt}.`
+    });
+  });
+  return out;
+}
+
+/**
+ * Os exercícios de Vet, Chaf e Fe SEM o par (29/09/2026). O dono do curso
+ * pediu cada som sem daguesh numa lição só dele: comparar com o lado do ponto
+ * fica para a lição 20, no fim do módulo. Aqui as opções erradas são as
+ * outras sílabas e palavras do MESMO som - o que se decide é a vogal, a
+ * palavra e o sentido, e a letra é sempre a sem ponto.
+ */
+function exerciciosDoSomSuave(S: SomLicao, temAudio: (id: string) => boolean, rand: Rand): Exercise[] {
+  const out: Exercise[] = [];
+  const letterId = S.parId;
+  const outras = <T,>(lista: readonly T[], x: T, n: number) => take(lista.filter(y => y !== x), n, rand);
+  /* 1. a sílaba: como se lê? (as outras vogais do mesmo som são as erradas) */
+  S.silabas.forEach((s, i) => {
+    const { options, answer } = comOpcoes(s.translit, outras(S.silabas, s, 2).map(x => x.translit), rand);
+    out.push({
+      id: `som-${S.id}-suave-sil-${i}`, kind: 'syllable-reading', letterId, skill: 'som',
+      promptPt: 'Como se lê esta sílaba?', he: s.he, options, answer,
+      explainPt: `${s.he} é "${s.translit}": ${S.he} ${S.rotuloPt} soa ${S.som.toUpperCase()}, e a vogal decide o resto.`
+    });
+  });
+  /* 2. o som dado, a sílaba pedida */
+  S.silabas.forEach((s, i) => {
+    const { options, answer } = comOpcoes(s.he, outras(S.silabas, s, 2).map(x => x.he), rand);
+    out.push({
+      id: `som-${S.id}-suave-des-${i}`, kind: 'sound-to-syllable', letterId, skill: 'ler',
+      promptPt: 'Qual destas se lê assim?', sound: s.translit, options, answer,
+      explainPt: `"${s.translit}" é ${s.he}.`
+    });
+  });
+  /* 3. a palavra: como se lê? (as erradas são outras palavras do som) */
+  S.palavras.forEach((w, i) => {
+    const { options, answer } = comOpcoes(w.translit, outras(S.palavras, w, 2).map(x => x.translit), rand);
+    out.push({
+      id: `som-${S.id}-suave-ler-${i}`, kind: 'syllable-reading', letterId, skill: 'ler',
+      promptPt: 'Como se lê esta palavra?', he: w.he, options, answer,
+      explainPt: `${w.he} - "${w.translit}", ${w.pt}. O ${S.he} soa ${S.som.toUpperCase()}.`
+    });
+  });
+  /* 4. a palavra lida: o que quer dizer? */
+  S.palavras.forEach((w, i) => {
+    const { options, answer } = comOpcoes(w.pt, outras(S.palavras, w, 2).map(x => x.pt), rand);
+    out.push({
+      id: `som-${S.id}-suave-pal-${i}`, kind: 'word-meaning', letterId, skill: 'ler',
+      promptPt: 'Leia em voz alta. Que palavra é esta?', he: w.he, options, answer,
+      explainPt: `${w.he} - "${w.translit}", ${w.pt}.`
+    });
+  });
+  /* 5. ouvir a sílaba e achar o desenho, onde houver gravação */
+  S.silabas.forEach((s, i) => {
+    if (!temAudio(s.audioId)) return;
+    const { options, answer } = comOpcoes(s.he, outras(S.silabas, s, 2).map(x => x.he), rand);
+    out.push({
+      id: `som-${S.id}-suave-ouv-${i}`, kind: 'listen-syllable', letterId, skill: 'ouvir',
+      promptPt: 'Ouça. Qual foi a sílaba?', audioId: s.audioId, options, answer,
+      explainPt: `Foi ${s.he}, "${s.translit}".`
+    });
+  });
+  return out;
+}
+
+/**
  * O banco de exercícios de um som. A prática e a fixação sorteiam daqui,
  * com sementes diferentes.
  *
- * Todo exercício é um CONTRASTE: a pergunta nunca é "que som é este" com
- * quatro sons ao acaso, e sim "este ou o do par" - com ponto ou sem, com
- * gerech ou sem. É a decisão que o aluno vai ter de tomar lendo.
+ *   · Sin: contraste com o Shin (ponto à esquerda ou à direita);
+ *   · Vet, Chaf, Fe: só o som sem ponto - o contraste é a lição 20;
+ *   · Tch, Dj, J: com gerech ou sem.
  */
 export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exercise[] {
-  const out: Exercise[] = [];
   const rand = rng(`banco-${S.id}`);
-  const letterId = S.tipo === 'gerech' ? 'mod7' : S.parId;
+  if (S.tipo === 'ponto') return exerciciosDeContraste(S, temAudio, rand);
+  if (S.tipo === 'daguesh') return exerciciosDoSomSuave(S, temAudio, rand);
 
-  /* Vet/Chaf/Fe (sem o daguesh) e o Sin (o ponto à esquerda) são o mesmo
-     exercício: sílaba contra sílaba, com um sinal de diferença. */
-  if (S.tipo !== 'gerech') {
-    /* 1. a sílaba sem ponto: como se lê? (a do par é a errada) */
-    S.silabas.forEach((s, i) => {
-      const par = S.parSilabas[i];
-      const { options, answer } = comOpcoes(s.translit, [par?.translit ?? S.parSom], rand);
-      out.push({
-        id: `som-${S.id}-sil-${i}`, kind: 'syllable-reading', letterId, skill: 'som',
-        promptPt: 'Como se lê esta sílaba?', he: s.he, options, answer,
-        explainPt: `${s.he}, ${S.rotuloPt}, é "${s.translit}". ${par?.he ?? S.parHe}, ${S.parRotuloPt}, seria "${par?.translit ?? S.parSom}".`
-      });
-    });
-    /* 2. o som dado, o desenho pedido: com ponto ou sem? */
-    S.silabas.forEach((s, i) => {
-      const par = S.parSilabas[i];
-      if (!par) return;
-      const { options, answer } = comOpcoes(s.he, [par.he], rand);
-      out.push({
-        id: `som-${S.id}-des-${i}`, kind: 'sound-to-syllable', letterId, skill: 'ler',
-        promptPt: 'Qual destas se lê assim?', sound: s.translit, options, answer,
-        explainPt: `"${s.translit}" é ${s.he}, ${S.rotuloPt}. ${par.he}, ${S.parRotuloPt}, é "${par.translit}".`
-      });
-    });
-    /* 3. a palavra: a leitura certa contra a de quem não olhou o ponto */
-    S.palavras.forEach((w, i) => {
-      const errada = leituraTrocada(w.translit, S.som, S.parSom);
-      if (errada === w.translit) return;
-      const { options, answer } = comOpcoes(w.translit, [errada], rand);
-      out.push({
-        id: `som-${S.id}-ler-${i}`, kind: 'syllable-reading', letterId, skill: 'ler',
-        promptPt: 'Como se lê esta palavra?', he: w.he, options, answer,
-        explainPt: `${w.he} - "${w.translit}", ${w.pt}. A letra está ${S.rotuloPt}: soa ${S.som.toUpperCase()}.`
-      });
-    });
-    /* 4. ouvir a sílaba e achar o desenho, onde houver gravação */
-    S.silabas.forEach((s, i) => {
-      const par = S.parSilabas[i];
-      if (!par || !temAudio(s.audioId)) return;
-      const { options, answer } = comOpcoes(s.he, [par.he], rand);
-      out.push({
-        id: `som-${S.id}-ouv-${i}`, kind: 'listen-syllable', letterId, skill: 'ouvir',
-        promptPt: 'Ouça. Qual foi a sílaba?', audioId: s.audioId, options, answer,
-        explainPt: `Foi ${s.he}, "${s.translit}" - ${S.rotuloPt}.`
-      });
-    });
-  } else {
-    /* 1. a letra com gerech: que som? (o da letra sem o sinal é a errada) */
-    const s1 = comOpcoes(S.som, [S.parSom], rand);
+  const out: Exercise[] = [];
+  const letterId = 'mod7';
+  /* 1. a letra com gerech: que som? (o da letra sem o sinal é a errada) */
+  const s1 = comOpcoes(S.som, [S.parSom], rand);
+  out.push({
+    id: `som-${S.id}-letra`, kind: 'syllable-reading', letterId, skill: 'som',
+    promptPt: 'Que som esta letra tem?', he: S.he, options: s1.options, answer: s1.answer,
+    explainPt: `${S.he}, com o gerech, é ${S.som} - ${S.comoPt}. Sem o sinal, ${S.parHe} é ${S.parSom}.`
+  });
+  const s2 = comOpcoes(S.he, [S.parHe], rand);
+  out.push({
+    id: `som-${S.id}-desenho`, kind: 'sound-to-syllable', letterId, skill: 'ler',
+    promptPt: 'Qual destas se lê assim?', sound: S.som, options: s2.options, answer: s2.answer,
+    explainPt: `${S.som} é ${S.he}, com o traço. ${S.parHe}, sem ele, é ${S.parSom}.`
+  });
+  /* 2. a palavra de fora: o que quer dizer? */
+  S.palavras.forEach((w, i) => {
+    const erradas = take(S.palavras.filter(x => x.he !== w.he).map(x => x.pt), 2, rand);
+    const { options, answer } = comOpcoes(w.pt, erradas, rand);
     out.push({
-      id: `som-${S.id}-letra`, kind: 'syllable-reading', letterId, skill: 'som',
-      promptPt: 'Que som esta letra tem?', he: S.he, options: s1.options, answer: s1.answer,
-      explainPt: `${S.he}, com o gerech, é ${S.som} - ${S.comoPt}. Sem o sinal, ${S.parHe} é ${S.parSom}.`
+      id: `som-${S.id}-pal-${i}`, kind: 'word-meaning', letterId, skill: 'ler',
+      promptPt: 'Leia em voz alta. Que palavra é esta?', he: w.he, options, answer,
+      explainPt: `${w.he} - "${w.translit}", ${w.pt}. O ${S.he} faz o som ${S.som}.`
     });
-    const s2 = comOpcoes(S.he, [S.parHe], rand);
+  });
+  /* 3. qual palavra tem o som? (as outras têm a letra SEM o gerech) */
+  S.palavras.forEach((w, i) => {
+    if (S.parPalavras.length < 2) return;
+    const erradas = take(S.parPalavras.map(x => x.he), 2, rand);
+    const { options, answer } = comOpcoes(w.he, erradas, rand);
     out.push({
-      id: `som-${S.id}-desenho`, kind: 'sound-to-syllable', letterId, skill: 'ler',
-      promptPt: 'Qual destas se lê assim?', sound: S.som, options: s2.options, answer: s2.answer,
-      explainPt: `${S.som} é ${S.he}, com o traço. ${S.parHe}, sem ele, é ${S.parSom}.`
+      id: `som-${S.id}-qual-${i}`, kind: 'letter-in-word', letterId, skill: 'rec',
+      promptPt: `Qual destas palavras tem o som ${S.som}?`, letter: S.he, options, answer,
+      explainPt: `${w.he} tem ${S.he}, com o traço. As outras têm ${S.parHe} sem o sinal, que soa ${S.parSom}.`
     });
-    /* 2. a palavra de fora: o que quer dizer? */
-    S.palavras.forEach((w, i) => {
-      const erradas = take(S.palavras.filter(x => x.he !== w.he).map(x => x.pt), 2, rand);
-      const { options, answer } = comOpcoes(w.pt, erradas, rand);
-      out.push({
-        id: `som-${S.id}-pal-${i}`, kind: 'word-meaning', letterId, skill: 'ler',
-        promptPt: 'Leia em voz alta. Que palavra é esta?', he: w.he, options, answer,
-        explainPt: `${w.he} - "${w.translit}", ${w.pt}. O ${S.he} faz o som ${S.som}.`
-      });
+  });
+  if (temAudio(S.audioId)) {
+    const s3 = comOpcoes(S.he, [S.parHe], rand);
+    out.push({
+      id: `som-${S.id}-ouvir`, kind: 'listen-syllable', letterId, skill: 'ouvir',
+      promptPt: 'Ouça. Qual letra foi dita?', audioId: S.audioId, options: s3.options, answer: s3.answer,
+      explainPt: `Foi ${S.he}: ${S.som}.`
     });
-    /* 3. qual palavra tem o som? (as outras têm a letra SEM o gerech) */
-    S.palavras.forEach((w, i) => {
-      if (S.parPalavras.length < 2) return;
-      const erradas = take(S.parPalavras.map(x => x.he), 2, rand);
-      const { options, answer } = comOpcoes(w.he, erradas, rand);
-      out.push({
-        id: `som-${S.id}-qual-${i}`, kind: 'letter-in-word', letterId, skill: 'rec',
-        promptPt: `Qual destas palavras tem o som ${S.som}?`, letter: S.he, options, answer,
-        explainPt: `${w.he} tem ${S.he}, com o traço. As outras têm ${S.parHe} sem o sinal, que soa ${S.parSom}.`
-      });
-    });
-    if (temAudio(S.audioId)) {
-      const s3 = comOpcoes(S.he, [S.parHe], rand);
-      out.push({
-        id: `som-${S.id}-ouvir`, kind: 'listen-syllable', letterId, skill: 'ouvir',
-        promptPt: 'Ouça. Qual letra foi dita?', audioId: S.audioId, options: s3.options, answer: s3.answer,
-        explainPt: `Foi ${S.he}: ${S.som}.`
-      });
-    }
   }
   return out;
+}
+
+/* ── a lição 20: o contraste dos três pares ─────────────────────────────
+   Bet/Vet, Kaf/Chaf e Pe/Fe lado a lado, no fim do módulo 5, depois de cada
+   lado ter tido a sua lição. Os exercícios são os de contraste das três
+   lições de som, juntos. */
+
+/** O id da lição 20 em modules.json (`som: "contraste"`): entra no caminho,
+ *  na trava e na porcentagem como uma lição de som, `som-contraste`. */
+export const CONTRASTE = 'contraste';
+export const ehContraste = (som: string | undefined | null) => som === CONTRASTE;
+
+export function bancoDoContraste(sons: readonly SomLicao[], temAudio: (id: string) => boolean): Exercise[] {
+  return sons.filter(S => S.tipo === 'daguesh')
+    .flatMap(S => exerciciosDeContraste(S, temAudio, rng(`contraste-${S.id}`)));
 }
 
 /**
@@ -184,7 +272,18 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
 export function rodadaDoSom(
   S: SomLicao, opts: { seed: string; count: number; temAudio: (id: string) => boolean }
 ): Exercise[] {
-  const banco = shuffled(bancoDoSom(S, opts.temAudio), rng(opts.seed));
+  return rodadaDe(bancoDoSom(S, opts.temAudio), opts);
+}
+
+/** A rodada da lição 20: os três pares misturados. */
+export function rodadaDoContraste(
+  sons: readonly SomLicao[], opts: { seed: string; count: number; temAudio: (id: string) => boolean }
+): Exercise[] {
+  return rodadaDe(bancoDoContraste(sons, opts.temAudio), opts);
+}
+
+function rodadaDe(bancoInteiro: Exercise[], opts: { seed: string; count: number }): Exercise[] {
+  const banco = shuffled(bancoInteiro, rng(opts.seed));
   const porTipo = new Map<string, Exercise[]>();
   for (const e of banco) porTipo.set(e.kind, [...(porTipo.get(e.kind) ?? []), e]);
   /* Um de cada tipo por vez, em rodízio: dez itens do mesmo formato viram
@@ -210,4 +309,25 @@ export function semPalavrasDeSom<T extends { wordsToRead: readonly { som?: strin
   const fica = (w: { som?: string | null }) => !w.som;
   if (!letra.wordsToRead.some(w => w.som) && !letra.wordsToRecognize.some(w => w.som)) return letra;
   return { ...letra, wordsToRead: letra.wordsToRead.filter(fica), wordsToRecognize: letra.wordsToRecognize.filter(fica) };
+}
+
+const DAGUESH = 'ּ';
+
+/**
+ * Bet, Kaf e Pe como a SUA lição os mostra (29/09/2026): só o lado com o
+ * ponto. O quadro das leituras (B/V, K/Ch, P/F) e os exercícios de variante
+ * saíam na lição da letra, antes de o som sem ponto ter lição - e o dono do
+ * curso pediu cada lado na sua lição, com o contraste só na lição 20. As
+ * variantes continuam no conteúdo (revisões e módulo 6 usam as duas); é a
+ * tela da letra que fica com uma.
+ *
+ * O Shin não muda: nenhuma das duas leituras dele tem daguesh, e o Sin segue
+ * ensinado pelo contraste.
+ */
+export function soOLadoDoPonto<T extends { sound: string; variantes: readonly { he: string; som: string }[] }>(
+  letra: T
+): T {
+  const comPonto = letra.variantes.filter(v => v.he.includes(DAGUESH));
+  if (!comPonto.length || comPonto.length === letra.variantes.length) return letra;
+  return { ...letra, variantes: comPonto, sound: comPonto.map(v => v.som).join(' ') };
 }

@@ -106,7 +106,7 @@
         { "n": 17, "som": "chaf", "he": "כ", "parHe": "כּ", "nomePt": "Chaf", "topicPt": "{{כ}} sem o ponto e a final {{ך}} - o som raspado" },
         { "n": 18, "letters": ["pe"] },
         { "n": 19, "som": "fe", "he": "פ", "parHe": "פּ", "nomePt": "Fe", "topicPt": "{{פ}} sem o ponto e a final {{ף}} - o som F" },
-        { "n": 20, "kind": "practice" }
+        { "n": 20, "som": "contraste", "he": "בּ ב", "nomePt": "Com e sem o ponto", "topicPt": "{{בּ}} e {{ב}}, {{כּ}} e {{כ}}, {{פּ}} e {{פ}} lado a lado - o contraste dos três pares" }
       ],
       "introPt": "Aqui o alfabeto se fecha, e com a sua regra mais elegante: três letras mudam de som conforme levem ou não um ponto no meio - o daguesh. Com ponto são oclusivas, {{בּ}} b, {{כּ}} k, {{פּ}} p; sem ponto são fricativas, {{ב}} v, {{כ}} ch, {{פ}} f. O guia ensina as formas COM ponto primeiro, porque são as que o brasileiro reconhece nas palavras emprestadas.",
       "goalsPt": [

@@ -760,3 +760,19 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - A privacidade (art. 4) descreve o teste.
 - **Para encerrar:** fixar a versão vencedora no Hero, apagar `lib/ab.ts`, as
   chamadas `contarAB`, a rota `/api/ab` e o workflow; a tabela pode ficar.
+
+## Módulo 5: cada lado na sua lição, contraste na lição 20 (29/09/2026, pedido do dono)
+- Bet, Kaf e Pe ensinam só o lado COM o ponto: `soOLadoDoPonto` (lib/sons.ts) tira da tela
+  da letra as variantes sem daguesh (sem o quadro "As leituras", sem exercício de variante) e
+  o `sound` vira só /b/, /k/, /p/. Os dados em letters.json continuam com as variantes
+  (revisões e módulo 6 as usam). Os textos dessas três letras só dizem, numa frase, que o outro
+  som tem lição própria. O Shin NÃO muda.
+- Vet, Chaf e Fe ensinam só o lado SEM o ponto: a etapa 3 é "Ler" (não "Contraste") e o
+  banco (`exerciciosDoSomSuave`) nunca põe o par nas opções. O Sin e os sons do módulo 7
+  continuam com o contraste.
+- A lição 20 é o contraste dos três pares: `{ som: "contraste" }` em modules.json, rota
+  `/som/contraste` (ContrasteClient), id de progresso `som-contraste`. Anda pelo caminho como
+  uma lição de som: entra na ordem de ensino, na trava (Tch só abre depois dela) e na
+  porcentagem. Exercícios em `bancoDoContraste`.
+- Estúdio: as palavras das frases (`sentences.json` → `words`) entraram no catálogo de áudio
+  (onda 4); 13 eram novas, números 576-588. הָאָרֶץ já estava (573), só falta gravar.

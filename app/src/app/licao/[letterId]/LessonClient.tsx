@@ -42,7 +42,7 @@ import {
   buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
-import { nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom } from '@/lib/sons';
+import { nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom, soOLadoDoPonto } from '@/lib/sons';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const STAGES = [
@@ -55,8 +55,10 @@ const STAGES = [
 
 export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
   /* Bet, Kaf e Pe: as palavras do outro som (טוֹב, מֶלֶךְ, סֵפֶר) ficam para a
-     lição de som logo depois - nem a tela nem os exercícios desta as usam. */
-  const letter = useMemo(() => semPalavrasDeSom(letraInteira), [letraInteira]);
+     lição de som logo depois - nem a tela nem os exercícios desta as usam.
+     E a lição mostra só o lado com o ponto: sem o quadro B/V, K/Ch, P/F e
+     sem os exercícios de variante, que viraram a lição 20 (29/09/2026). */
+  const letter = useMemo(() => soOLadoDoPonto(semPalavrasDeSom(letraInteira)), [letraInteira]);
   const p = useProgress();
   const router = useRouter();
   const [stage, setStage] = useState(1);
@@ -942,7 +944,10 @@ function PortaTrancada({ letter, porque }: {
    distingue, e o som. A coluna "onde olhar" é a que ensina - "ponto no alto
    à direita" é acionável, "/ʃ/" não é. */
 function Leituras({ letter }: { letter: Letter }) {
-  if (!letter.variantes?.length) return null;
+  /* Uma leitura só não é quadro: é o som da letra, que o cartão já mostra.
+     É o caso de Bet, Kaf e Pe desde que o lado sem ponto tem lição própria
+     (soOLadoDoPonto em lib/sons.ts). */
+  if ((letter.variantes?.length ?? 0) < 2) return null;
 
   return (
     <Card className="p-6 grid gap-4">
