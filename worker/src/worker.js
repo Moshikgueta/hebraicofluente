@@ -287,8 +287,21 @@ async function hashesDaPagina(request, env, res, path) {
   return Array.isArray(hs) ? hs : null;
 }
 
-function cspEstrita(hashes) {
-  const scripts = ["'self'", "'report-sample'", ...hashes.map(h => `'${h}'`)].join(' ');
+/* O nonce é para o script que a PRÓPRIA Cloudflare injeta no HTML (a
+   detecção de robôs, "JavaScript detections"). Ele muda a cada resposta e
+   não tem hash fixo; a Cloudflare lê o nonce do cabeçalho de CSP e o
+   carimba no script que injeta. Foi o único relato das primeiras horas de
+   observação (29/09/2026), em todas as páginas. Um valor novo por resposta,
+   e só nesta política: posto na que vale, ao lado de `'unsafe-inline'`, ele
+   DESLIGARIA o `'unsafe-inline'` nos navegadores e quebraria o site. */
+function novoNonce() {
+  const b = new Uint8Array(16);
+  crypto.getRandomValues(b);
+  return btoa(String.fromCharCode(...b));
+}
+
+function cspEstrita(hashes, nonce = novoNonce()) {
+  const scripts = ["'self'", "'report-sample'", `'nonce-${nonce}'`, ...hashes.map(h => `'${h}'`)].join(' ');
   return CSP.replace("script-src 'self' 'unsafe-inline'", `script-src ${scripts}`)
     + '; report-uri /api/csp-report';
 }
