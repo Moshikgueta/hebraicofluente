@@ -256,6 +256,9 @@ export async function createPix(env, { order, course, account, origin }) {
 
 /* ── cartão (Checkout Pro) ──────────────────────────────────────────────── */
 
+/** Um instante em ISO 8601 no horário de Brasília: 2026-09-29T21:30:00.000-03:00. */
+export const comFusoBR = ms => new Date(ms - 3 * 3_600_000).toISOString().replace('Z', '-03:00');
+
 export async function createCardPreference(env, { order, course, account, origin }) {
   const pref = await call(env, '/checkout/preferences', {
     method: 'POST',
@@ -289,7 +292,14 @@ export async function createCardPreference(env, { order, course, account, origin
         excluded_payment_types: [{ id: 'ticket' }, { id: 'bank_transfer' }],
         installments: Number(order.installments) || 1
       },
-      statement_descriptor: 'HEBRAICOFLUENTE'
+      statement_descriptor: 'HEBRAICOFLUENTE',
+      /* O link morre uma hora ANTES de o pedido expirar aqui (24 h, ver
+         reconcile.js). Sem prazo, dava para pagar o link de ontem num pedido
+         que a varredura e a tela já não consultavam mais (auditoria de 28/09,
+         PAY-005). Horário de Brasília com o fuso escrito, como na
+         documentação da Mercado Pago. */
+      expires: true,
+      expiration_date_to: comFusoBR(Number(order.created_at || Date.now()) + 23 * 3_600_000)
     }
   });
 

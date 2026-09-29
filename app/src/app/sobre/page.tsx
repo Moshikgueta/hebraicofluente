@@ -76,7 +76,7 @@ export default function SobrePage() {
             },
             {
               t: 'Retorno na hora, em cada passo',
-              b: 'Você não precisa esperar por um professor para saber se acertou. Cada exercício corrige na hora, cada erro explica onde olhar, e o exame final vem com gabarito, transcrição e critérios à vista.'
+              b: 'Você não precisa esperar por um professor para saber se acertou. Cada exercício corrige na hora, cada erro explica onde olhar, e o exame final diz antes de começar a nota que aprova e, no fim, quais partes pedem revisão.'
             }
           ].map(x => (
             <li key={x.t}>

@@ -75,7 +75,7 @@ export const ABAS: readonly Aba[] = [
     body: TEM_AUDIO
       ? 'Múltipla escolha, digitação, associação, escuta e leitura. A alternância é o que impede a decoreba.'
       : 'Múltipla escolha, digitação, associação e leitura. A alternância é o que impede a decoreba.',
-    points: ['Correção imediata, com explicação', 'Erro não bloqueia: você tenta de novo', 'Dificuldade sobe conforme você acerta']
+    points: ['Correção imediata, com explicação', 'Erro não bloqueia: você tenta de novo', 'Nos jogos, a dificuldade sobe conforme você acerta']   // só os jogos têm níveis (COM-013)
   },
   {
     label: 'Revisão', kicker: 'Consolidar', title: 'O que você errou volta na hora certa.',

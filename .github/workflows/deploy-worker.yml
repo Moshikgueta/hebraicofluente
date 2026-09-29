@@ -58,6 +58,7 @@ on:
       - 'worker/**'
       - 'wrangler.toml'
       - 'tools/export-content.mjs'
+      - 'tools/csp-hashes.mjs'
       # As gravações. Desde 25/09/2026 os .mp3 cortados moram no git e a build
       # os copia para o site; sem esta linha, uma correção só de áudio (a voz
       # dobrada do Álef e do He, Moshikgueta/hebraicofluente#16) fundiu verde

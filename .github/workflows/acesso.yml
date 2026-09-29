@@ -45,9 +45,9 @@ on:
         required: true
         default: liberar
         type: choice
-        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido, trocar-email]
+        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido, trocar-email, csp]
       email:
-        description: 'E-mail da conta (não precisa em "listar", "envios", "pagamento" nem "pedido")'
+        description: 'E-mail da conta (não precisa em "listar", "envios", "pagamento", "pedido" nem "csp")'
         required: false
         type: string
       curso:
@@ -187,6 +187,24 @@ jobs:
             # trilha, e é ela que diz o que consertar: "The domain is not
             # verified" pede o passo de DNS, "Invalid from field" pede outro
             # EMAIL_FROM, um 429 pede esperar.
+            # O que a regra estrita de scripts, ainda em observação, TERIA
+            # bloqueado (auditoria, SEC-003; worker/src/api/csp.js). Semanas
+            # com esta tabela vazia são o que autoriza a regra valer.
+            csp)
+              say "**Relatos da CSP estrita (últimos 30 dias)**"
+              say '```'
+              mostra "SELECT detail AS relato, COUNT(*) AS vezes,
+                             datetime(MAX(created_at)/1000,'unixepoch') AS ultimo
+                        FROM access_log
+                       WHERE action = 'csp-violacao'
+                         AND created_at > (unixepoch() - 30*86400) * 1000
+                       GROUP BY detail ORDER BY vezes DESC LIMIT 25"
+              say '```'
+              say ""
+              say "Tabela vazia = nenhum navegador relatou script fora da lista."
+              say "Formato: página | diretiva | o que foi bloqueado | começo do trecho."
+              ;;
+
             envios)
               say "**Últimas tentativas de e-mail de senha**"
               say '```'

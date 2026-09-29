@@ -402,6 +402,12 @@ function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
   const LINHAS: [string, React.ReactNode][] = [
     ['O que você leva', `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
     ['Por quanto tempo', `${curso.accessMonths} meses, contados da confirmação do pagamento.`],
+    /* COM-007 (auditoria de 28/09): o que NÃO vem junto, antes de pagar. */
+    ['O que não vem junto', <>
+      Aulas ao vivo e correção por professor: o curso é autoinstrucional, e a
+      plataforma corrige cada exercício na hora.{' '}
+      <Link href="/termos" className="text-[var(--accent)] hover:underline">Termos</Link>.
+    </>],
     /* O prazo prometido aqui é o prazo que a plataforma consegue cumprir, e
        ele muda com o trilho de cobrança: com confirmação automática o acesso
        abre sozinho; no PIX direto alguém confere o extrato e libera. Uma

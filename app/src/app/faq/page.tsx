@@ -109,6 +109,16 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
       'Perto do fim, a plataforma avisa - com trinta dias de antecedência, e de novo na última semana.'
     ]
   },
+  /* 28/09/2026 (auditoria, COM-007): o que NÃO vem junto só estava nos
+     Termos. É o tipo de expectativa que, frustrada, vira pedido de reembolso -
+     então é dito aqui, com as mesmas palavras do art. 1 dos Termos. */
+  {
+    q: 'O que não está incluído?',
+    a: [
+      'O curso é autoinstrucional: você estuda no seu ritmo, e a plataforma corrige cada exercício na hora. Por isso não há aulas ao vivo, nem correção ou acompanhamento feito por professor. O suporte por e-mail e WhatsApp é para acesso, pagamento e conta.',
+      'Também não vêm junto: os outros cursos (A1, A2 e B1, vendidos à parte quando forem lançados), aplicativo para instalar (tudo funciona no navegador) e material físico. O certificado de conclusão não é um certificado oficial.'
+    ]
+  },
   {
     q: 'Funciona no celular?',
     a: [
@@ -168,7 +178,7 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
     q: 'E se eu não gostar?',
     a: [
       'O Código de Defesa do Consumidor te dá sete dias para desistir de uma compra feita pela internet, contados a partir do acesso. Dentro desse prazo, basta pedir: o valor volta integral, sem pergunta e sem etapa.',
-      `Escreva para ${empresa.contato.emailSuporte} com o e-mail da compra.`
+      `Em Sua conta, na compra, use "Desistir da compra": o estorno é pedido na hora, sozinho. Se preferir, escreva para ${empresa.contato.emailSuporte} com o e-mail da compra.`
     ]
   },
   {

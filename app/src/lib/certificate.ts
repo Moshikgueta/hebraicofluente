@@ -234,7 +234,9 @@ export async function drawCertificate(
   ctx.font = `400 ${wide ? 13 : 14.5}px ${ui}`;
   ctx.fillStyle = C.muted;
   ctx.fillText(
-    'Registro de conclusão do curso. Não é um certificado oficial de proficiência.',
+    /* Sem "Registro de conclusão" aqui: com o título "Certificado de
+       conclusão" em cima, as duas frases pareciam se desmentir (COM-014). */
+    'Emitido pela plataforma. Não é um certificado oficial de proficiência.',
     cx, footY + (wide ? 24 : 28)
   );
 }

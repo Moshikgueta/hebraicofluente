@@ -370,6 +370,28 @@ export async function estornosAbertos(env, at = now()) {
 /* ── monitoramento ──────────────────────────────────────────────────────── */
 
 /** Marca que `nome` rodou agora. */
+/* ── travas ──────────────────────────────────────────────────────────────
+   Uma execução por vez de um trabalho agendado. Pega quem conseguir gravar
+   a trava vencida (ou inexistente) num comando só; `ate` diz até quando ela
+   vale, e uma trava de quem morreu no meio vence sozinha. Falha ABERTA: sem
+   a tabela, ou com o D1 fora, a resposta é "pode seguir". */
+export async function pegarTrava(env, nome, validadeMs, at = now()) {
+  try {
+    const r = await env.DB.prepare(
+      `INSERT INTO travas (nome, ate) VALUES (?1, ?2)
+       ON CONFLICT(nome) DO UPDATE SET ate = excluded.ate WHERE travas.ate <= ?3`
+    ).bind(nome, at + validadeMs, at).run();
+    return Number(r && r.meta && r.meta.changes) > 0;
+  } catch {
+    return true;
+  }
+}
+
+export async function soltarTrava(env, nome) {
+  try { await env.DB.prepare('UPDATE travas SET ate = 0 WHERE nome = ?').bind(nome).run(); }
+  catch { /* vence sozinha */ }
+}
+
 export async function bater(env, nome, at = now()) {
   try {
     await env.DB.prepare(

@@ -608,6 +608,10 @@ export async function webhook({ request, env }) {
     } catch (e) {
       /* 404 = não é nosso; o resto é erro nosso ou deles, e a MP reenvia. */
       if (e && e.status === 404) return json({ ok: true });
+      if (e && (e.status === 400 || e.status === 403)) {       // PAY-006
+        await avisoAlheio(env, `${tipo} ${dataId} ${e.status}`);
+        return json({ ok: true });
+      }
       await erroDeLiberacao(env, null, `${tipo} ${dataId} ${e && e.message || e}`);
       return json({ error: 'retry' }, 500);
     }
@@ -671,6 +675,15 @@ export async function settleFromPaymentId(env, paymentId, source) {
        pagamento de outra conta) não é falha nossa: responder 500 faria ela
        reenviar para sempre um aviso que nunca vai ter o que fazer aqui. */
     if (e && e.status === 404) return null;
+    /* No AVISO, 400/403 também é "não é nosso": a Mercado Pago responde assim
+       a um pagamento de outro vendedor, e devolver 500 faria ela reenviar até
+       o limite dela, com uma linha de erro por tentativa (PAY-006). Na
+       varredura e na tela, 403 continua sendo erro - ali ele quer dizer que a
+       NOSSA credencial perdeu permissão, e isso precisa virar alerta. */
+    if (e && (e.status === 400 || e.status === 403) && String(source).startsWith('webhook')) {
+      await avisoAlheio(env, `pagamento ${paymentId} ${e.status}`);
+      return null;
+    }
     await erroDeLiberacao(env, null, `pagamento ${paymentId} ${e.message || e}`);
     return 'erro';
   }
@@ -679,6 +692,12 @@ export async function settleFromPaymentId(env, paymentId, source) {
 /** A trilha do erro de liberação, com teto: um provedor fora do ar durante
  *  uma varredura, ou um aviso reenviado em laço, não pode virar uma linha
  *  por tentativa até a cota de escrita acabar. */
+/** Um aviso sobre um pagamento que a nossa credencial não enxerga. Fica na
+ *  trilha (uma linha por hora), sem virar alerta ao dono. */
+async function avisoAlheio(env, detalhe) {
+  if (!await throttled(env, 'webhook-alheio', 1, 3_600_000)) await log(env, null, 'webhook-alheio', detalhe);
+}
+
 async function erroDeLiberacao(env, accountId, detalhe) {
   console.error('settle', detalhe);
   if (!await throttled(env, 'settle-error', 20)) await log(env, accountId, 'settle-error', detalhe);
