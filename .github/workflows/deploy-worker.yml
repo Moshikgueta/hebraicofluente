@@ -527,8 +527,15 @@ jobs:
             echo "## A capa num navegador de verdade"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+          # O código de saída do CHECK, e não o do `tee`: sem isto uma capa que
+          # não aparecia saía como etapa verde, e o relato ficava escondido no
+          # resumo (29/09/2026). Com `continue-on-error` a publicação segue; a
+          # etapa só fica marcada como falha, para ser vista.
+          set +e
           node worker/browser-check.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+          rc=${PIPESTATUS[0]}
           echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
 
       # As capturas encerram a discussão quando o texto não basta.
       - name: Guardar as capturas
