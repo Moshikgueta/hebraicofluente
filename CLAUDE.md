@@ -266,7 +266,10 @@ regras que ele fixou e que valem para todo commit daqui em diante:
   script inline de cada página. O Worker manda, ao lado da CSP que vale, uma
   `Content-Security-Policy-Report-Only` sem `'unsafe-inline'` e com esses
   hashes; o navegador relata em `/api/csp-report` (trilha `csp-violacao`,
-  lida em Actions → Acesso → `csp`). `CSP_ESTRITA=1 npm run csp` aplica a
+  lida em Actions → Acesso → `csp`). A observação leva também um nonce novo
+  por resposta, para o script de detecção de robôs que a Cloudflare injeta
+  (ela carimba o nonce do cabeçalho no script dela); nunca na política que
+  vale, onde desligaria o `'unsafe-inline'`. `CSP_ESTRITA=1 npm run csp` aplica a
   regra estrita de verdade num Chromium. Trocar a observação pela regra que
   vale é decisão do dono, depois de semanas sem relato.
 

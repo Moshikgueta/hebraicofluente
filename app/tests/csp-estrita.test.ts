@@ -48,7 +48,13 @@ describe('a CSP estrita em observação', () => {
   it('sai em Report-Only, com os hashes da página e sem unsafe-inline', async () => {
     const r = await abrir('/faq/');
     const obs = r.headers.get('Content-Security-Policy-Report-Only')!;
-    expect(obs).toContain("script-src 'self' 'report-sample' 'sha256-faq1' 'sha256-faq2'");
+    expect(obs).toMatch(/script-src 'self' 'report-sample' 'nonce-[A-Za-z0-9+/]{22}==' 'sha256-faq1' 'sha256-faq2'/);
+    /* O nonce (para o script que a Cloudflare injeta) é novo a cada resposta,
+       e nunca entra na política que vale: ao lado de 'unsafe-inline', ele o
+       desligaria. */
+    const outra = (await abrir('/faq/')).headers.get('Content-Security-Policy-Report-Only')!;
+    expect(outra.match(/'nonce-[^']+'/)![0]).not.toBe(obs.match(/'nonce-[^']+'/)![0]);
+    expect(r.headers.get('Content-Security-Policy')).not.toContain('nonce-');
     expect(obs.match(/script-src [^;]*/)![0]).not.toContain('unsafe-inline');
     expect(obs).toContain("frame-ancestors 'none'");
     expect(obs).toMatch(/report-uri \/api\/csp-report$/);
