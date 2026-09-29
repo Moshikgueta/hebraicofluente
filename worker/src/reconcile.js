@@ -24,7 +24,7 @@
 
 import { runEstornos, settleFromProvider } from './api/pay.js';
 import { runAlertas } from './alertas.js';
-import {
+import { pegarTrava, soltarTrava,
   arrependimentosIpPurge, getOrder, log, logPurge, paidOrdersToRecheck, registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
 } from './lib/db.js';
 import empresa from '../../data/empresa.json';
@@ -43,7 +43,22 @@ const GIVE_UP_MS = 24 * 3_600_000;
  *  tacada estoura o tempo do cron e não resolve nenhum. */
 const BATCH = 20;
 
+/** A varredura de 5 em 5 minutos, uma de cada vez (auditoria de 28/09,
+ *  INFRA-013). Uma execução que demorasse mais que o intervalo encontraria a
+ *  seguinte no meio do caminho, e as duas pediriam o mesmo estorno e
+ *  mandariam o mesmo alerta. A trava vale 4 minutos: se uma execução morrer
+ *  sem soltar, a próxima-da-próxima segue normalmente. Sem a tabela, ou com
+ *  o banco falhando, a varredura roda assim mesmo - não rodar é pior. */
 export async function runReconcile(env) {
+  if (!await pegarTrava(env, 'varredura', 4 * 60_000)) {
+    console.log('varredura anterior ainda em andamento - esta foi pulada');
+    return { checked: 0, settled: 0, expired: 0, pulada: true };
+  }
+  try { return await varrer(env); }
+  finally { await soltarTrava(env, 'varredura'); }
+}
+
+async function varrer(env) {
   /* No PIX direto não há nada a perguntar, e EXPIRAR também não: o pedido
      é a prova de que a pessoa quis comprar, e a liberação à mão pode vir no
      dia seguinte. Expirado, o aluno que pagou via "Expirado" em /perfil

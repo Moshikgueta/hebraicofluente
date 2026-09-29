@@ -239,7 +239,12 @@ function blindar(res, path) {
   const h = out.headers;
   h.set('X-Content-Type-Options', 'nosniff');
   h.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  h.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  /* `preload` (auditoria de 28/09, INFRA-015): o domínio já cumpre os
+     requisitos da lista de pré-carga dos navegadores (um ano, subdomínios
+     inclusos, HTTPS em tudo). O cabeçalho só declara que aceita; entrar na
+     lista é um pedido à parte, em hstspreload.org, e difícil de desfazer -
+     fica para o dono decidir. */
+  h.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   /* O microfone: bloqueado no site público, liberado SÓ para o próprio site
      nas páginas do curso, onde o aluno grava a própria leitura
      (components/learn/GravarLeitura.tsx - a gravação não sai do aparelho).

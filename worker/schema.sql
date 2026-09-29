@@ -385,3 +385,20 @@ CREATE TABLE IF NOT EXISTS novidades (
   account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
   criado_em  INTEGER NOT NULL
 );
+
+-- Uma execução por vez da varredura de 5 em 5 minutos (28/09/2026,
+-- auditoria INFRA-013). `ate` = até quando a trava vale; ver pegarTrava em
+-- worker/src/lib/db.js.
+CREATE TABLE IF NOT EXISTS travas (
+  nome TEXT    PRIMARY KEY,
+  ate  INTEGER NOT NULL
+);
+
+-- As migrações que já rodaram (28/09/2026, auditoria INFRA-005). Este
+-- arquivo só CRIA o que não existe; uma coluna nova numa tabela que já está
+-- no ar é um arquivo em worker/migrations/, aplicado uma vez só pela
+-- publicação. Ver worker/migrations/README.md.
+CREATE TABLE IF NOT EXISTS migracoes (
+  nome       TEXT    PRIMARY KEY,
+  aplicado_em INTEGER NOT NULL
+);

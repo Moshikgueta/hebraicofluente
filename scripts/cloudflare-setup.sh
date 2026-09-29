@@ -167,6 +167,41 @@ else
        npx wrangler d1 execute $DB_NAME --remote --file=worker/schema.sql"
 fi
 
+# ── 3b. migrações ─────────────────────────────────────────────────────────
+# O schema.sql só CRIA o que não existe (auditoria de 28/09, INFRA-005): uma
+# coluna nova numa tabela que já está no ar nunca chegaria à produção. Cada
+# mudança assim é um arquivo em worker/migrations/ (NNNN-descricao.sql),
+# aplicado UMA vez, em ordem, e anotado na tabela `migracoes`. Uma migração
+# que falha para a publicação ANTES de o código novo subir - o site continua
+# com a versão anterior, que não depende dela.
+MIGR_DIR=worker/migrations
+if ls "$MIGR_DIR"/[0-9][0-9][0-9][0-9]-*.sql >/dev/null 2>&1; then
+  if ! FEITAS_JSON="$($W d1 execute "$DB_NAME" --remote --json --command "SELECT nome FROM migracoes" 2>/dev/null)"; then
+    morre "Não consegui ler a tabela de migrações." \
+          "Sem saber quais já rodaram, aplicar de novo pode duplicar uma mudança."
+  fi
+  FEITAS="$(printf '%s' "$FEITAS_JSON" | python3 -c 'import json,sys
+d=json.load(sys.stdin)
+print("\n".join(r["nome"] for b in d for r in b.get("results", [])))')"
+  for f in $(ls "$MIGR_DIR"/[0-9][0-9][0-9][0-9]-*.sql | sort); do
+    n="$(basename "$f")"
+    case "$n" in *[!a-z0-9.-]*) morre "Nome de migração inválido: $n" "Use NNNN-descricao.sql, só minúsculas, números e hífen." ;; esac
+    grep -qxF "$n" <<<"$FEITAS" && continue
+    info "Aplicando a migração $n…"
+    $W d1 execute "$DB_NAME" --remote --file="$f" >/dev/null 2>&1 \
+      || morre "A migração $n falhou." "Rode à mão para ver a mensagem:
+       npx wrangler d1 execute $DB_NAME --remote --file=$f"
+    $W d1 execute "$DB_NAME" --remote --command \
+      "INSERT INTO migracoes (nome, aplicado_em) VALUES ('$n', unixepoch()*1000)" >/dev/null 2>&1 \
+      || morre "A migração $n rodou, mas não consegui anotá-la." \
+               "Anote à mão antes de publicar de novo, senão ela roda outra vez:
+       npx wrangler d1 execute $DB_NAME --remote --command \"INSERT INTO migracoes (nome, aplicado_em) VALUES ('$n', unixepoch()*1000)\""
+    ok "Migração $n aplicada"
+  done
+else
+  ok "Nenhuma migração pendente"
+fi
+
 # ── 4. segredos ───────────────────────────────────────────────────────────
 echo
 bold "4. Segredos"

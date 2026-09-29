@@ -229,6 +229,13 @@ regras que ele fixou e que valem para todo commit daqui em diante:
 - **Trocar o e-mail de um aluno:** Actions → Acesso → `trocar-email` (campo
   E-mail = o de hoje, `novo_email` = o certo). Só depois de confirmar com o
   aluno por outro canal.
+- **Mudança numa tabela que já existe** (desde 28/09/2026): o `schema.sql` só
+  cria; `ALTER TABLE` vai num arquivo `worker/migrations/NNNN-descricao.sql`,
+  aplicado uma vez pela publicação (passo 3b de `scripts/cloudflare-setup.sh`)
+  e anotado na tabela `migracoes`. Só acrescentar (a versão anterior ainda
+  está no ar quando a migração roda). Ver `worker/migrations/README.md`.
+- **A varredura roda uma de cada vez**: trava `varredura` na tabela `travas`,
+  4 minutos de validade, falha aberta (`pegarTrava` em `worker/src/lib/db.js`).
 - **Lista do aviso do próximo curso** (desde 28/09/2026): a ÚNICA
   propaganda por e-mail, e só com consentimento. Entra pela caixa "Quero
   receber um e-mail quando o Hebraico A1 abrir" em /perfil (começa
