@@ -11,7 +11,7 @@
  * "o site não abre" - que foi exatamente o relato que este arquivo existe
  * para investigar.
  *
- * O que ele faz: abre a capa num Chromium, espera a rede sossegar, e então
+ * O que ele faz: abre a capa num Chromium, espera a página carregar, e então
  * mede o que um olho mediria - quanto texto visível existe no corpo da
  * página. Junto, recolhe tudo que o navegador reclamou: erro de script,
  * requisição que falhou, resposta 4xx/5xx.
@@ -62,9 +62,15 @@ for (const path of PAGES) {
 
   let texto = '', titulo = '', erroDeIda = null;
   try {
-    /* `networkidle` e não `load`: o que interessa é o estado depois de o app
-       ter feito o que ia fazer, inclusive a chamada de sessão. */
-    await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 45_000 });
+    /* `load`, e depois a rede sossegar por no máximo 10 s. O que interessa é
+       o estado depois de o app ter feito o que ia fazer, inclusive a chamada
+       de sessão - mas `networkidle` como condição de ida não serve: a capa
+       manda o contador do teste A/B com `keepalive`, e o Playwright nunca
+       marca esse envio como terminado, mesmo com o servidor respondendo 200
+       em milissegundos. A capa "não carregava" em toda publicação, e o
+       visitante nunca viu problema nenhum (29/09/2026). */
+    await page.goto(BASE + path, { waitUntil: 'load', timeout: 45_000 });
+    await page.waitForLoadState('networkidle', { timeout: 10_000 }).catch(() => {});
     titulo = await page.title();
     texto = (await page.locator('body').innerText().catch(() => '')).trim();
   } catch (e) {
