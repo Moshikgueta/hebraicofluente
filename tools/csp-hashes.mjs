@@ -26,9 +26,6 @@ import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
-const OUT = process.argv[2] || new URL('../app/out', import.meta.url).pathname;
-if (!existsSync(OUT)) { console.error(`csp-hashes: ${OUT} não existe; rode o build antes.`); process.exit(1); }
-
 /* O conteúdo EXATO entre as tags, como o navegador o vê: o hash é sobre os
    bytes, e um espaço a mais é outro script. Scripts com `src` ficam de fora -
    esses já são cobertos por `'self'`. */
@@ -60,7 +57,12 @@ function* htmls(dir) {
   }
 }
 
+/* Só quando chamado como script. O teste importa as duas funções acima, e
+   roda no CI ANTES do build: uma conferência da pasta no topo do módulo
+   derrubava o teste (e a publicação) por falta de um out/ que ele nem usa. */
 if (import.meta.url === `file://${process.argv[1]}`) {
+  const OUT = process.argv[2] || new URL('../app/out', import.meta.url).pathname;
+  if (!existsSync(OUT)) { console.error(`csp-hashes: ${OUT} não existe; rode o build antes.`); process.exit(1); }
   const mapa = {};
   let total = 0;
   for (const f of htmls(OUT)) {
