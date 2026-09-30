@@ -28,6 +28,7 @@ import * as marca from './api/marca.js';
 import * as depoimentos from './api/depoimentos.js';
 import * as estatisticas from './api/estatisticas.js';
 import * as adminCodigo from './api/admin-codigo.js';
+import * as estornosAdmin from './api/estornos-admin.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -115,7 +116,11 @@ const ROUTES = {
   /* O segundo fator do administrador: o código por e-mail. Ver
      lib/admin.js e api/admin-codigo.js. */
   'POST /api/admin/codigo': adminCodigo.enviar,
-  'POST /api/admin/codigo/conferir': adminCodigo.conferir
+  'POST /api/admin/codigo/conferir': adminCodigo.conferir,
+  /* Os estornos que dependem do dono (PIX direto, recusados): listar e
+     marcar "já devolvi". Ver api/estornos-admin.js. */
+  'GET /api/admin/estornos': estornosAdmin.listar,
+  'POST /api/admin/estornos/feito': estornosAdmin.feito
 };
 
 export default {

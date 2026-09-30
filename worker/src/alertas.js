@@ -164,6 +164,8 @@ async function lembreteDeDesistencias(env, at) {
       'O CDC pede a devolução imediata. Para os marcados "com você" ou "falhou": devolva pelo',
       'painel da Mercado Pago (Atividade -> o pagamento -> Devolver dinheiro); quando ela',
       'confirmar, o acesso fecha sozinho e o pedido sai desta lista.',
+      'PIX direto (devolvido pelo seu banco): depois de devolver, abra /admin/estornos e toque',
+      'em "Já devolvi o dinheiro". O acesso fecha e o pedido sai desta lista.',
       'Este lembrete sai uma vez por dia enquanto houver pendência.'
     ]
   }));
