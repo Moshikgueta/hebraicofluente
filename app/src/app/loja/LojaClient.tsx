@@ -14,7 +14,8 @@ import { Card } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
-import { cultureCards, leiturasBonus } from '@/lib/content';
+import { allLetters, cultureCards, leiturasBonus } from '@/lib/content';
+import { concluidasSemDominio } from '@/lib/state/rules';
 import { itemDaLeitura } from '@/lib/engine/bonus';
 import { cartasCompradas, folgasLivres, gasto, ITENS, leiturasCompradas, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
 import { arquivoDoNome, desenharNome, FORMATOS_NOME, type FormatoNome } from '@/lib/nome-decorado';
@@ -98,7 +99,8 @@ export function LojaClient() {
               onTrocar={() => trocar('nome-decorado', undefined, 'Pronto! Escolha o formato e baixe a imagem.')} />
       )}
 
-      <LeiturasBonus livre={livre} mastered={p.mastered} minhas={leiturasCompradas(s)}
+      <LeiturasBonus livre={livre} mastered={p.mastered} semDominio={concluidasSemDominio(s)}
+                     totalLetras={allLetters().length} minhas={leiturasCompradas(s)}
                      onTrocar={(item, id) => trocar(item, id, 'Leitura aberta! Ela está em Leituras bônus.')} />
     </div>
   );
@@ -107,12 +109,16 @@ export function LojaClient() {
 /* Textos e versículos bíblicos (lib/engine/bonus.ts). Só as revisadas; cada
    uma se oferece quando o aluno já domina a letra mais tardia dela - trocar
    XP por um texto que ainda não se consegue ler seria vender frustração. */
-function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
-  livre: number; mastered: number; minhas: Set<string>;
+function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTrocar }: {
+  livre: number; mastered: number; semDominio: number; totalLetras: number; minhas: Set<string>;
   onTrocar: (item: 'texto-bonus' | 'bencao', id: string) => void;
 }) {
   const leituras = leiturasBonus();
   if (!leituras.length) return null;
+  /* 30/09/2026, a pedido do dono: o botão cinza com "abre quando você
+     dominar 22 letras" parecia defeito. Agora a regra vem explicada, com o
+     número de quem lê e o que fazer para chegar lá. */
+  const travadas = leituras.some(l => !minhas.has(l.id) && mastered < l.after);
   return (
     <section className="grid gap-3" aria-labelledby="leituras-bonus">
       <div className="grid gap-1">
@@ -121,6 +127,25 @@ function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
           Trechos e versículos do Antigo Testamento, com transliteração, tradução e a leitura gravada, linha a linha.
           Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ◆ {ITENS.bencao.custo}.
         </p>
+        {travadas && (
+          <div className="rounded-[var(--r-md)] bg-surface-2 px-4 py-3 grid gap-1.5 font-ui text-[14px] leading-relaxed text-ink-body">
+            <p className="m-0">
+              Cada leitura abre quando você domina as letras que aparecem nela, para você conseguir ler o que trocou.
+              Você domina <strong>{mastered} de {totalLetras} letras</strong>.
+            </p>
+            <p className="m-0">
+              Dominar uma letra é concluir a lição dela e acertar pelo menos 6 de 8 na fixação.
+            </p>
+            {semDominio > 0 && (
+              <p className="m-0">
+                {semDominio === 1
+                  ? 'Uma lição que você concluiu ficou abaixo de 6 de 8. Refazer a fixação dela já conta.'
+                  : `${semDominio} lições que você concluiu ficaram abaixo de 6 de 8. Refazer a fixação delas já conta.`}{' '}
+                <Link href="/mapa" className="text-[var(--accent)] underline">Ver as lições</Link>
+              </p>
+            )}
+          </div>
+        )}
         <Link href="/nikud-biblico" className="font-ui text-[14px] text-[var(--accent)] underline justify-self-start">
           Guia opcional e gratuito: o nikud da Bíblia →
         </Link>
@@ -151,7 +176,9 @@ function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
                       Trocar por ◆ {custo}
                     </Button>
                     {!legivel ? (
-                      <span className="font-ui text-[12.5px] text-ink-muted">Abre quando você dominar {l.after} letras.</span>
+                      <span className="font-ui text-[12.5px] text-ink-muted">
+                        Abre com {l.after} letras dominadas: {l.after - mastered === 1 ? 'falta 1' : `faltam ${l.after - mastered}`}.
+                      </span>
                     ) : livre < custo ? (
                       <span className="font-ui text-[12.5px] text-ink-muted">{MOTIVO.saldo}</span>
                     ) : null}

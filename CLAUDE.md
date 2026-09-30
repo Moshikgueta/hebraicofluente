@@ -852,3 +852,10 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   ou script que cria conta manda `aceitouTermos: true, declarouIdade: true`.
 - "Condições desta compra" no checkout diz: pagamento único, sem assinatura nem renovação
   automática (CDC, art. 6º, III).
+
+## Leituras bônus: a trava explicada (30/09/2026, pedido do dono)
+- O dono não conseguia trocar XP pelos textos bíblicos: cada leitura só abre com as letras dela
+  DOMINADAS (`after`, 20 a 22), e dominar é concluir e ter 6 de 8 na fixação. A trava fica; o
+  que mudou é a explicação. Em Recompensas, acima das leituras: "Você domina X de 22 letras",
+  a regra do domínio e, se houver, quantas lições concluídas ficaram abaixo de 6 de 8
+  (`concluidasSemDominio` em lib/state/rules.ts), com link para o mapa. Cada botão diz quantas faltam.
