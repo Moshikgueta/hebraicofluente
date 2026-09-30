@@ -21,8 +21,10 @@ const alfabeto = (m: (typeof COM_PRATICA)[number]) =>
   letrasDoModulo(m, LETRAS).historia.flatMap(l => (l.finalForm ? [l.letter, l.finalForm] : [l.letter]));
 
 describe('as lições de prática', () => {
-  it('são as seis do plano, e a rota é paga', () => {
-    expect(COM_PRATICA.map(m => licaoDePratica(m))).toEqual([3, 7, 10, 13, 23, 27]);
+  it('são as quatro dos módulos com letra, e a rota é paga', () => {
+    /* A 23 e a 27 não são prática: são a leitura sem nikud e o fecho dos
+       módulos 6 e 7, dentro de /extra (30/09/2026). */
+    expect(COM_PRATICA.map(m => licaoDePratica(m))).toEqual([3, 7, 10, 13]);
     expect(isGatedPath('/modulo/1/pratica/')).toBe(true);
   });
 

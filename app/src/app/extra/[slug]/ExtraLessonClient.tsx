@@ -7,7 +7,7 @@
  * to trace and no new syllable table. What they do have is the plan's own three
  * lessons, so that is the shape:
  *
- *   module 6 - 21: the three letters without their dot
+ *   module 6 - 21: where the dot goes, and reading when it is not printed
  *              22: the five final forms, together for the first time
  *              23: read without nikud
  *   module 7 - 27: the three modern sounds together, the loanwords and the
@@ -30,7 +30,8 @@ import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePl
 import { AudioButton } from '@/components/learn/AudioButton';
 import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
-import { course, extras, type CourseModule } from '@/lib/content';
+import { allLetters, course, extras, type CourseModule } from '@/lib/content';
+import { classificar, exerciciosDoPonto, palavrasDoPonto, POSICAO_PT } from '@/lib/engine/posicao-do-ponto';
 import { buildDageshQuiz, buildGerechQuiz, type Extras } from '@/lib/engine/extras';
 import { EXTRA_STAGE_UNITS } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
@@ -40,7 +41,7 @@ export type ExtraSlug = 'sem-o-ponto' | 'sons-modernos';
 
 const STAGES: Record<ExtraSlug, { n: number; label: string; lesson: number }[]> = {
   'sem-o-ponto': [
-    { n: 1, label: 'Sem o ponto', lesson: 21 },
+    { n: 1, label: 'Onde vem o ponto', lesson: 21 },
     { n: 2, label: 'As finais', lesson: 22 },
     { n: 3, label: 'Sem nikud', lesson: 23 }
   ],
@@ -165,18 +166,105 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
   );
 }
 
-/* ── 6.1 · the three letters without their dot ──────────────────────────── */
+/* ── 6.1 · onde o ponto aparece (30/09/2026) ────────────────────────────
+   Era Bet/Vet, Kaf/Chaf e Pe/Fe lado a lado - o mesmo da lição 20. Agora é o
+   passo seguinte: fora do livro o ponto não é impresso, e o som sai do lugar
+   da letra na palavra. Motor em lib/engine/posicao-do-ponto.ts. */
 function DageshStage({ onDone }: { onDone: () => void }) {
   const D = extras().dagesh;
+  const { certas, excecoes } = useMemo(() => classificar(palavrasDoPonto(extras(), allLetters())), []);
+  const [fase, setFase] = useState<'ler' | 'praticar' | 'feito'>('ler');
+  const [rodada, setRodada] = useState(0);
+  const exercicios = useMemo(
+    () => escolherRodada('modulo-6-ponto', seed => exerciciosDoPonto(certas, { seed, count: 8 })).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [certas, rodada]
+  );
+  const exemplos = (['comeco', 'depois-de-consoante', 'depois-de-vogal'] as const).map(pos => ({
+    pos, palavras: certas.filter(w => w.analise.posicao === pos).slice(0, 3)
+  })).filter(x => x.palavras.length);
+
+  if (fase === 'praticar') {
+    return (
+      <ExercisePlayer
+        key={rodada}
+        exercises={exercicios}
+        title="Sem o ponto impresso"
+        repetirErros
+        onDone={() => { registrarRodada('modulo-6-ponto', exercicios); setRodada(n => n + 1); setFase('feito'); }}
+      />
+    );
+  }
+  if (fase === 'feito') {
+    return (
+      <div className="grid gap-5">
+        <Milestone tone="bom" kicker="Lição 21 concluída" title="Você decide o som pelo lugar da letra."
+                   body="É o que vai fazer em toda palavra sem pontos. Agora as cinco formas finais, juntas." />
+        <Button size="lg" full onClick={onDone}>Continuar para as formas finais</Button>
+        <Button variant="ghost" onClick={() => setFase('praticar')}>Praticar de novo</Button>
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-5">
       <div className="grid gap-2">
-        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Sem o ponto</h1>
+        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Onde o ponto aparece</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
-          Três letras - <He size="inline">ב</He>, <He size="inline">כ</He> e{' '}
-          <He size="inline">פ</He> - têm dois sons. <Prose text={D.rulePt} />
+          Você já conhece os dois lados de <He size="inline">ב</He>, <He size="inline">כ</He> e{' '}
+          <He size="inline">פ</He>. Mas fora do livro o ponto quase nunca é impresso. Então a pergunta
+          muda: sem ver o ponto, como saber o som? Pelo lugar da letra na palavra.
         </p>
       </div>
+
+      <Card tone="wash" className="p-5 grid gap-2">
+        <h2 className="text-[18px] font-semibold m-0">A regra</h2>
+        <p className="text-[15.5px] leading-relaxed text-ink-body m-0"><Prose text={D.rulePt} /></p>
+      </Card>
+
+      {exemplos.map(({ pos, palavras }) => (
+        <Card key={pos} className="p-5 grid gap-3">
+          <p className="font-ui text-[12px] uppercase tracking-[.07em] text-[var(--accent)] m-0">
+            {POSICAO_PT[pos]} · {pos === 'depois-de-vogal' ? 'sem o ponto: V, CH, F' : 'com o ponto: B, K, P'}
+          </p>
+          {palavras.map(w => (
+            <div key={w.he} className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
+              <He size="word" mark={w.analise.letra.he}>{w.he}</He>
+              <span className="grid min-w-0">
+                <span className="font-ui text-[14px] font-semibold text-ink">{w.translit}</span>
+                <span className="font-ui text-[12.5px] text-ink-muted">{w.pt}</span>
+              </span>
+            </div>
+          ))}
+        </Card>
+      ))}
+
+      <Card className="p-5 grid gap-2">
+        <h2 className="text-[17px] font-semibold m-0">E as formas finais</h2>
+        <p className="text-[15px] leading-relaxed text-ink-body m-0">
+          <He size="inline">ך</He> e <He size="inline">ף</He> nunca levam o ponto: no fim da palavra, são sempre
+          CH e F.
+        </p>
+      </Card>
+
+      {excecoes.length > 0 && (
+        <Card tone="amber" className="p-5 grid gap-3">
+          <p className="font-ui text-[13px] font-semibold uppercase tracking-[.06em] text-[var(--amber)] m-0">
+            Quando a regra não basta
+          </p>
+          <p className="text-[15px] leading-relaxed text-ink-body m-0">
+            Em algumas palavras o ponto aparece depois de vogal. Ali ele não muda só o som: ele dobra a consoante,
+            e o som fica o forte. Essas palavras se aprendem de ouvido e de leitura, uma a uma.
+          </p>
+          {excecoes.map(w => (
+            <div key={w.he} className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
+              <He size="word" mark={w.analise.letra.he}>{w.he}</He>
+              <span className="font-ui text-[14px] font-semibold text-ink">{w.translit}</span>
+              <span className="font-ui text-[12.5px] text-ink-muted">{w.pt}</span>
+            </div>
+          ))}
+        </Card>
+      )}
 
       <Card tone="amber" className="p-5">
         <p className="font-ui text-[13px] font-semibold uppercase tracking-[.06em] text-[var(--amber)] mb-2">
@@ -185,45 +273,7 @@ function DageshStage({ onDone }: { onDone: () => void }) {
         <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={D.warningPt} /></p>
       </Card>
 
-      {D.letters.map(L => (
-        <Card key={L.id} className="p-5 sm:p-6 grid gap-4">
-          <div className="flex items-baseline gap-4 flex-wrap">
-            <He size="xl">{L.hard}</He>
-            <span className="text-ink-muted">e</span>
-            <He size="xl">{L.soft}</He>
-            <h2 className="font-display text-[18px] font-semibold ml-auto">{L.namePt}</h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-3">
-            {([['Com daguesh', L.hard, L.hardPt, L.hardWords],
-               ['Sem daguesh', L.soft, L.softPt, L.softWords]] as const).map(([label, glyph, sound, words]) => (
-              <div key={label} className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-3">
-                <div className="flex items-center gap-3">
-                  <He size="lg">{glyph}</He>
-                  <span className="font-ui text-[15px] font-semibold text-[var(--accent)]">{sound}</span>
-                  <span className="font-ui text-[12px] text-ink-muted ml-auto">{label}</span>
-                </div>
-                <ul className="grid gap-1.5">
-                  {words.map(w => (
-                    <li key={w.he} className="flex items-baseline justify-between gap-3">
-                      <He size="word" mark={L.soft}>{w.he}</He>
-                      <span className="font-ui text-[12.5px] text-ink-muted text-right">{w.pt}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-[14.5px] leading-relaxed text-ink-body"><Prose text={L.notePt} /></p>
-          <p className="font-ui text-[12.5px] text-ink-muted">
-            À mão ninguém escreve o daguesh - a cursiva é a mesma nos dois casos.
-            Só o contexto distingue.
-          </p>
-        </Card>
-      ))}
-
-      <Button size="lg" full onClick={onDone}>Continuar para as formas finais</Button>
+      <Button size="lg" full onClick={() => setFase('praticar')}>Praticar: ler sem o ponto impresso</Button>
     </div>
   );
 }
