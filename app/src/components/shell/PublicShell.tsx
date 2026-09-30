@@ -41,7 +41,9 @@ import {
    este mesmo cabeçalho. A capa tem as âncoras por dentro, para quem já está
    rolando por ela. */
 const LINKS = [
-  { href: '/#como', label: 'Como funciona' },
+  /* A seção `#como` saiu da capa em 30/09/2026 (ver HomeClient.tsx); "Como
+     funciona" leva agora às três decisões de como o curso foi pensado. */
+  { href: '/#decisoes', label: 'Como funciona' },
   { href: '/cursos', label: 'O curso' },
   { href: '/metodo', label: 'Metodologia' },
   { href: '/sobre', label: 'Sobre' },
