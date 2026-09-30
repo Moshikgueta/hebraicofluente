@@ -158,8 +158,8 @@ describe('o guia do nikud bíblico', () => {
   });
 });
 
-/* 30/09/2026: a trava das leituras bônus explicada - quantas letras o aluno
-   domina e quantas concluiu sem chegar a 6 de 8 na fixação. */
+/* 30/09/2026: as leituras bônus se trocam a qualquer momento; a tela diz
+   quantas letras o aluno domina e quantas concluiu sem chegar a 6 de 8. */
 describe('o que falta para abrir uma leitura', () => {
   const licao = (quizBest: number) => ({ stagesDone: [0, 1, 2, 3, 4], quizBest }) as LearnerState['lessons'][string];
   it('conta só as letras concluídas abaixo de 6 de 8, sem as lições de som', () => {
@@ -171,9 +171,15 @@ describe('o que falta para abrir uma leitura', () => {
     expect(concluidasSemDominio(s)).toBe(1);
   });
 
-  it('a tela diz o número e a regra', () => {
+  it('a troca é livre, e a tela diz o número e a lógica de voltar depois', () => {
     const f = readFileSync(join(__dirname, '../src/app/loja/LojaClient.tsx'), 'utf8');
+    expect(f).toContain('Você pode trocar qualquer leitura agora.');
     expect(f).toContain('Você domina <strong>{mastered} de {totalLetras} letras</strong>');
     expect(f).toContain('acertar pelo menos 6 de 8 na fixação');
+    /* O botão só se desliga por saldo, nunca pelas letras. */
+    expect(f).toContain('disabled={livre < custo}');
+    expect(f).not.toContain('disabled={!legivel');
+    const b = readFileSync(join(__dirname, '../src/app/bonus/BonusClient.tsx'), 'utf8');
+    expect(b).toContain('p.mastered < leitura.after');
   });
 });

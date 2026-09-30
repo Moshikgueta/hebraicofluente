@@ -101,24 +101,25 @@ export function LojaClient() {
 
       <LeiturasBonus livre={livre} mastered={p.mastered} semDominio={concluidasSemDominio(s)}
                      totalLetras={allLetters().length} minhas={leiturasCompradas(s)}
-                     onTrocar={(item, id) => trocar(item, id, 'Leitura aberta! Ela está em Leituras bônus.')} />
+                     onTrocar={(item, id, legivel) => trocar(item, id, legivel
+                       ? 'Leitura aberta! Ela está em Leituras bônus.'
+                       : 'Leitura guardada em Leituras bônus. Volte a ela quando dominar as letras do texto.')} />
     </div>
   );
 }
 
-/* Textos e versículos bíblicos (lib/engine/bonus.ts). Só as revisadas; cada
-   uma se oferece quando o aluno já domina a letra mais tardia dela - trocar
-   XP por um texto que ainda não se consegue ler seria vender frustração. */
+/* Textos e versículos bíblicos (lib/engine/bonus.ts). Só as revisadas.
+   30/09/2026, decisão do dono: qualquer leitura se troca a qualquer momento.
+   Antes, cada uma só abria com as letras dela dominadas (`after`), e o botão
+   cinza parecia defeito. Agora a troca é livre e a tela diz a lógica: o texto
+   fica guardado, e a leitura sozinha vem quando as letras estiverem dominadas. */
 function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTrocar }: {
   livre: number; mastered: number; semDominio: number; totalLetras: number; minhas: Set<string>;
-  onTrocar: (item: 'texto-bonus' | 'bencao', id: string) => void;
+  onTrocar: (item: 'texto-bonus' | 'bencao', id: string, legivel: boolean) => void;
 }) {
   const leituras = leiturasBonus();
   if (!leituras.length) return null;
-  /* 30/09/2026, a pedido do dono: o botão cinza com "abre quando você
-     dominar 22 letras" parecia defeito. Agora a regra vem explicada, com o
-     número de quem lê e o que fazer para chegar lá. */
-  const travadas = leituras.some(l => !minhas.has(l.id) && mastered < l.after);
+  const adiantadas = leituras.some(l => mastered < l.after);
   return (
     <section className="grid gap-3" aria-labelledby="leituras-bonus">
       <div className="grid gap-1">
@@ -127,11 +128,15 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
           Trechos e versículos do Antigo Testamento, com transliteração, tradução e a leitura gravada, linha a linha.
           Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ◆ {ITENS.bencao.custo}.
         </p>
-        {travadas && (
+        {adiantadas && (
           <div className="rounded-[var(--r-md)] bg-surface-2 px-4 py-3 grid gap-1.5 font-ui text-[14px] leading-relaxed text-ink-body">
             <p className="m-0">
-              Cada leitura abre quando você domina as letras que aparecem nela, para você conseguir ler o que trocou.
-              Você domina <strong>{mastered} de {totalLetras} letras</strong>.
+              Você pode trocar qualquer leitura agora. Ela fica guardada em Leituras bônus, e já dá para ouvir e
+              acompanhar pela transliteração e pela tradução.
+            </p>
+            <p className="m-0">
+              Ler sozinho, direto do hebraico, vem depois: cada leitura diz quantas letras dominadas ela pede.
+              Quando chegar lá, volte a ela. Você domina <strong>{mastered} de {totalLetras} letras</strong>.
             </p>
             <p className="m-0">
               Dominar uma letra é concluir a lição dela e acertar pelo menos 6 de 8 na fixação.
@@ -161,29 +166,29 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
           const custo = ITENS[item].custo;
           const tem = minhas.has(l.id);
           const legivel = mastered >= l.after;
+          const faltam = l.after - mastered;
+          /* A nota vai numa linha própria, embaixo: ao lado do botão ela
+             espremia o título a uma palavra por linha no celular. */
+          const nota = !tem && livre < custo ? MOTIVO.saldo
+            : legivel ? null
+            : `Para ler sozinho: ${l.after} letras dominadas (${faltam === 1 ? 'falta 1' : `faltam ${faltam}`}).`;
           return (
             <li key={l.id}>
-              <Card className="p-4 flex flex-wrap items-center gap-3">
-                <div className="grid gap-0.5 min-w-0 flex-1">
-                  <span className="font-display text-[16.5px] font-semibold text-ink">{l.tituloPt}</span>
-                  <span className="font-ui text-[13px] text-ink-muted">{l.fontePt}</span>
-                </div>
-                {tem ? (
-                  <LinkButton href={`/bonus?l=${l.id}`} variant="secondary">Ler</LinkButton>
-                ) : (
-                  <div className="grid gap-1 justify-items-end">
-                    <Button onClick={() => onTrocar(item, l.id)} disabled={!legivel || livre < custo} size="md">
+              <Card className="p-4 grid gap-2">
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="grid gap-0.5 min-w-[10rem] flex-1">
+                    <span className="font-display text-[16.5px] font-semibold text-ink">{l.tituloPt}</span>
+                    <span className="font-ui text-[13px] text-ink-muted">{l.fontePt}</span>
+                  </div>
+                  {tem ? (
+                    <LinkButton href={`/bonus?l=${l.id}`} variant="secondary">Ler</LinkButton>
+                  ) : (
+                    <Button onClick={() => onTrocar(item, l.id, legivel)} disabled={livre < custo} size="md">
                       Trocar por ◆ {custo}
                     </Button>
-                    {!legivel ? (
-                      <span className="font-ui text-[12.5px] text-ink-muted">
-                        Abre com {l.after} letras dominadas: {l.after - mastered === 1 ? 'falta 1' : `faltam ${l.after - mastered}`}.
-                      </span>
-                    ) : livre < custo ? (
-                      <span className="font-ui text-[12.5px] text-ink-muted">{MOTIVO.saldo}</span>
-                    ) : null}
-                  </div>
-                )}
+                  )}
+                </div>
+                {nota && <p className="font-ui text-[12.5px] text-ink-muted m-0">{nota}</p>}
               </Card>
             </li>
           );
