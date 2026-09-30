@@ -17,7 +17,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { readFile } from 'node:fs/promises';
-import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
+import { cookieDe, envDeTeste, pedido, comoAdmin } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import worker from '../../worker/src/worker.js';
 // @ts-expect-error - módulo JS do Worker, sem tipos
@@ -72,7 +72,7 @@ async function conta(env: Record<string, unknown>, email: string) {
 
 async function cenario() {
   const env = envDeTeste({ ASSETS, ADMIN_EMAILS: ` ${ADMIN.toUpperCase()} , outro@x.com` });
-  const admin = await conta(env, ADMIN);
+  const admin = await comoAdmin(env, await conta(env, ADMIN));
   const aluno = await conta(env, 'aluna@exemplo.com.br');
   const chamar = (metodo: string, caminho: string, cookie?: string, body?: BodyInit, headers: Record<string, string> = {}) =>
     worker.fetch(new Request(`${SITE}${caminho}`, {

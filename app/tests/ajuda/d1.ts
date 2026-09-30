@@ -127,3 +127,17 @@ export function cookieDe(r: Response): string {
   const set = r.headers.get('set-cookie') || '';
   return set.split(';')[0] || '';
 }
+
+/** O cookie de sessão de um administrador com o segundo fator já feito
+ *  (lib/admin.js): o mesmo que o código por e-mail daria. Para os testes das
+ *  rotas de administrador que não são sobre o código em si. */
+export async function comoAdmin(env: Record<string, unknown>, cookie: string): Promise<string> {
+  // @ts-expect-error - módulo JS do Worker, sem tipos
+  const { readSession } = await import('../../../worker/src/lib/session.js');
+  // @ts-expect-error - idem
+  const { cookieDeAdmin } = await import('../../../worker/src/lib/admin.js');
+  const sess = await readSession(new Request('https://x/', { headers: { cookie } }), env);
+  if (!sess) throw new Error('comoAdmin: sessão inválida');
+  const admin = String(await cookieDeAdmin(env, sess)).split(';')[0];
+  return `${cookie}; ${admin}`;
+}

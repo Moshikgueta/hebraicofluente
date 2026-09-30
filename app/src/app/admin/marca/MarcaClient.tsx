@@ -12,10 +12,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { asset } from '@/lib/asset';
+import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 
 type Dono = { marca: string; accountId: number | null; email: string | null; criadaEm: number | null };
 type Estado =
-  | { tipo: 'vazio' } | { tipo: 'buscando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' }
+  | { tipo: 'vazio' } | { tipo: 'buscando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' }
   | { tipo: 'erro' } | { tipo: 'pronto'; donos: Dono[] };
 
 const data = (ms: number | null) => (ms ? new Date(ms).toLocaleDateString('pt-BR') : '');
@@ -33,6 +34,7 @@ export function MarcaClient() {
         body: JSON.stringify({ texto })
       });
       if (r.status === 401) return setEstado({ tipo: 'sem-sessao' });
+      if (await pedeCodigo(r)) return setEstado({ tipo: 'codigo' });
       if (r.status === 403) return setEstado({ tipo: 'nao-admin' });
       if (!r.ok) return setEstado({ tipo: 'erro' });
       const { marcas } = await r.json() as { marcas: Dono[] };
@@ -78,6 +80,7 @@ export function MarcaClient() {
           </p>
         )}
         {estado.tipo === 'nao-admin' && <p className="m-0">Esta conta não tem acesso a este painel.</p>}
+        {estado.tipo === 'codigo' && <CodigoDoAdmin onPronto={() => void buscar()} />}
         {estado.tipo === 'erro' && <p className="m-0">Não consegui consultar agora. Confira a internet e tente de novo.</p>}
         {estado.tipo === 'pronto' && estado.donos.length === 0 && (
           <p className="m-0">

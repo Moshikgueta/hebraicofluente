@@ -10,7 +10,7 @@ import * as auth from '../../worker/src/api/auth.js';
 import { createOrder, grantAccess, deleteAccount } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
 import { invisivel, lerMarcas } from '../../worker/src/lib/marca.js';
-import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
+import { cookieDe, envDeTeste, pedido, comoAdmin } from './ajuda/d1';
 
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
@@ -110,7 +110,7 @@ describe('identificar uma cópia', () => {
     const dono = await aluno(env, 'dono@exemplo.com', false);
     const c = JSON.parse(await baixar(env, ana.cookie));
     const trecho = `copiado de um grupo: ${c.culture[0].bodyPt[0]}`;
-    const r = await identificar(env, dono.cookie, trecho);
+    const r = await identificar(env, await comoAdmin(env, dono.cookie), trecho);
     expect(r.status).toBe(200);
     const { marcas } = await r.json() as { marcas: { email: string; marca: string }[] };
     expect(marcas).toHaveLength(1);

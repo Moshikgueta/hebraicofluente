@@ -25,6 +25,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { asset } from '@/lib/asset';
+import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
 import {
   MAX_SEGUNDOS, MIN_MS, acharVoz, barras, diagnosticar, escolherFormato, paraMono,
@@ -39,7 +40,7 @@ type Gravacao = {
   tipo: string; tamanho: number; inicio: number | null; fim: number | null;
   duracao: number | null; autor: string; em: number; arquivo: string;
 };
-type Carga = 'carregando' | 'sem-sessao' | 'nao-admin' | 'erro' | 'pronto';
+type Carga = 'carregando' | 'sem-sessao' | 'nao-admin' | 'codigo' | 'erro' | 'pronto';
 type Mic = 'parado' | 'pedindo' | 'gravando' | 'analisando' | 'revisar' | 'salvando' | 'negado' | 'sem-suporte' | 'erro';
 type Revisao = {
   blob: Blob; url: string; corte: Corte | null; corteVisual: Corte | null;
@@ -85,10 +86,14 @@ export function GravarClient() {
   const player = useRef<HTMLAudioElement | null>(null);
 
   /* ── o catálogo ───────────────────────────────────────────────────── */
+  /* Sobe depois de o código do segundo fator ser aceito (lib/admin.js),
+     para buscar o catálogo de novo. */
+  const [carregamento, setCarregamento] = useState(0);
   useEffect(() => {
     fetch(asset('/api/admin/audio'), { credentials: 'same-origin', cache: 'no-store' })
       .then(async r => {
         if (r.status === 401) return setCarga('sem-sessao');
+        if (await pedeCodigo(r)) return setCarga('codigo');
         if (r.status === 403) return setCarga('nao-admin');
         if (!r.ok) return setCarga('erro');
         const j = await r.json() as { catalogo: Item[]; gravacoes: Record<string, Gravacao> };
@@ -97,7 +102,7 @@ export function GravarClient() {
         setCarga('pronto');
       })
       .catch(() => setCarga('erro'));
-  }, []);
+  }, [carregamento]);
 
   const status = useCallback((id: string): 'painel' | 'estudio' | 'nenhum' =>
     (gravacoes[id] ? 'painel' : DO_ESTUDIO.has(id) ? 'estudio' : 'nenhum'), [gravacoes]);
@@ -295,6 +300,7 @@ export function GravarClient() {
         const erro = ((await r.json().catch(() => ({}))) as { error?: string }).error;
         setAviso(erro === 'too-large' ? 'O arquivo ficou grande demais. Grave um trecho mais curto.'
           : erro === 'not-admin' || r.status === 401 ? 'A sessão caiu. Entre de novo com a conta de administrador.'
+          : erro === 'admin-codigo' ? 'As 12 horas do código venceram. Recarregue a página e confirme o código de novo - a gravação continua aqui até lá.'
           : 'Não consegui salvar. Confira a internet e tente de novo - a gravação continua aqui.');
         setMic('revisar');
         return;
@@ -366,6 +372,7 @@ export function GravarClient() {
       carregando: 'Carregando o catálogo…',
       'sem-sessao': 'Entre com a conta de administrador para gravar.',
       'nao-admin': 'Esta conta não tem acesso ao painel de gravação.',
+      codigo: 'Falta confirmar que é você.',
       erro: 'Não consegui carregar o catálogo. Confira a internet e recarregue a página.'
     }[carga];
     return (
@@ -374,6 +381,9 @@ export function GravarClient() {
         <p className="font-ui text-[16px] text-ink-body m-0" role={carga === 'carregando' ? 'status' : 'alert'}>{texto}</p>
         {carga === 'sem-sessao' && (
           <Link href="/entrar/?next=/admin/gravar/" className="font-ui text-[16px] text-[var(--accent)] underline">Entrar</Link>
+        )}
+        {carga === 'codigo' && (
+          <CodigoDoAdmin onPronto={() => { setCarga('carregando'); setCarregamento(n => n + 1); }} />
         )}
       </main>
     );

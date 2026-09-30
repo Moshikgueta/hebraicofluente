@@ -70,7 +70,10 @@ export async function makeSessionCookie(env, account, ap = null) {
    lib/http.js manda um array como vários Set-Cookie. */
 export const clearSessionCookie = [
   `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`,
-  `${LEGADO}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`
+  `${LEGADO}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`,
+  /* E o segundo fator do administrador (lib/admin.js): ele já morre com a
+     sessão, mas sair não deixa nem o cookie para trás. */
+  '__Host-hf_admin=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0'
 ];
 
 /** O Set-Cookie que apaga só o nome antigo, para quem acabou de ser migrado. */

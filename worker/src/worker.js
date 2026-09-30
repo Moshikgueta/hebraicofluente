@@ -27,6 +27,7 @@ import * as csp from './api/csp.js';
 import * as marca from './api/marca.js';
 import * as depoimentos from './api/depoimentos.js';
 import * as estatisticas from './api/estatisticas.js';
+import * as adminCodigo from './api/admin-codigo.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -109,7 +110,12 @@ const ROUTES = {
   /* Onde os alunos erram e onde param: só contadores, sem identificar
      ninguém. Ver api/estatisticas.js. */
   'POST /api/estatisticas': estatisticas.registrar,
-  'GET /api/admin/estatisticas': estatisticas.ler
+  'GET /api/admin/estatisticas': estatisticas.ler,
+
+  /* O segundo fator do administrador: o código por e-mail. Ver
+     lib/admin.js e api/admin-codigo.js. */
+  'POST /api/admin/codigo': adminCodigo.enviar,
+  'POST /api/admin/codigo/conferir': adminCodigo.conferir
 };
 
 export default {

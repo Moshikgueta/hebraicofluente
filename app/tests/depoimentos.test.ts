@@ -14,7 +14,7 @@ import { runAlertas } from '../../worker/src/alertas.js';
 import { isGatedPath } from '../../worker/src/gate.js';
 import { assinatura } from '@/lib/depoimento';
 import { PAGAS } from '@/lib/seo';
-import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
+import { cookieDe, envDeTeste, pedido, comoAdmin } from './ajuda/d1';
 
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
@@ -66,6 +66,7 @@ describe('o aluno escreve, autoriza e retira', () => {
     const env = envDeTeste({ ADMIN_EMAILS: 'dono@exemplo.com' }) as Env;
     const ana = await aluno(env, 'ana@exemplo.com');
     const dono = await aluno(env, 'dono@exemplo.com', false);
+    dono.cookie = await comoAdmin(env, dono.cookie);
     await chamar(env, 'PUT', '/api/depoimento', ana.cookie, BOM);
     expect((await chamar(env, 'PUT', '/api/admin/depoimentos', dono.cookie, { id: ana.id, estado: 'aprovado' })).status).toBe(200);
     expect(linha(env, ana.id)).toMatchObject({ estado: 'aprovado' });
@@ -125,6 +126,7 @@ describe('o dono lê e aprova', () => {
     const env = envDeTeste({ ADMIN_EMAILS: 'dono@exemplo.com' }) as Env;
     const ana = await aluno(env, 'ana@exemplo.com');
     const dono = await aluno(env, 'dono@exemplo.com', false);
+    dono.cookie = await comoAdmin(env, dono.cookie);
     await chamar(env, 'PUT', '/api/depoimento', ana.cookie, BOM);
     const r = await chamar(env, 'GET', '/api/admin/depoimentos', dono.cookie);
     const { depoimentos } = await r.json() as { depoimentos: { email: string; assinatura: string }[] };
@@ -138,6 +140,7 @@ describe('o dono lê e aprova', () => {
     const env = envDeTeste({ ADMIN_EMAILS: 'dono@exemplo.com' }) as Env;
     const ana = await aluno(env, 'ana@exemplo.com');
     const dono = await aluno(env, 'dono@exemplo.com', false);
+    dono.cookie = await comoAdmin(env, dono.cookie);
     await chamar(env, 'PUT', '/api/depoimento', ana.cookie, { ...BOM, publicar: false });
     expect((await chamar(env, 'PUT', '/api/admin/depoimentos', dono.cookie, { id: ana.id, estado: 'aprovado' })).status).toBe(409);
     expect((await chamar(env, 'PUT', '/api/admin/depoimentos', dono.cookie, { id: ana.id, estado: 'recusado' })).status).toBe(200);
