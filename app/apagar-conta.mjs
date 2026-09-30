@@ -31,7 +31,7 @@ const U='http://127.0.0.1:4412';
 
 await p.goto(`${U}/criar-conta/`,{waitUntil:'networkidle'});
 await p.fill('#nome','Daniel'); await p.fill('#email','apagavel@exemplo.com.br');
-await p.fill('#senha','senha-do-teste-1'); await p.check('#aceite-termos'); await p.check('#declaracao-idade'); await p.click('button[type=submit]');
+await p.fill('#senha','senha-do-teste-1'); await p.check('#aceite-termos'); await p.click('button[type=submit]');
 await p.waitForTimeout(900);
 
 await p.goto(`${U}/perfil/`,{waitUntil:'networkidle'});

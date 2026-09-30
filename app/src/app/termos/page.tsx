@@ -105,8 +105,9 @@ export default function Page() {
         <p>
           A compra é feita por <strong>maiores de 18 anos</strong>. Menores de 18 só
           podem usar a plataforma com a autorização e o acompanhamento de um pai, mãe
-          ou responsável legal, que é quem faz a compra e responde por ela. Ao comprar,
-          você declara ter 18 anos ou mais, ou ser o responsável por quem vai estudar.
+          ou responsável legal, que é quem faz a compra e responde por ela. Ao aceitar
+          estes Termos no cadastro, e ao comprar, você declara ter 18 anos ou mais, ou
+          ser o responsável legal por quem vai estudar.
         </p>
       </Artigo>
 

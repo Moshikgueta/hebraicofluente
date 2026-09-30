@@ -71,8 +71,12 @@ describe('o aceite dos Termos de Uso', () => {
     expect(f).toMatch(/type="checkbox" checked=\{aceite\}/);
     expect(f).toContain('Li e aceito os');
     expect(f).toContain('aceitouTermos: aceite');
-    expect(f).toContain('declarouIdade: idade');
-    expect(f).toContain('id="declaracao-idade"');
+    /* A idade vem dentro do aceite (30/09/2026): uma caixa só. */
+    expect(f).toContain('declarouIdade: aceite');
+    expect(f).toContain('inclusive a declaração de que tenho 18 anos ou mais');
+    expect(f).not.toContain('declaracao-idade');
+    const t = readFileSync(new URL('../src/app/termos/page.tsx', import.meta.url), 'utf8');
+    expect(t).toContain('Ao aceitar\n          estes Termos no cadastro');
     expect(f).not.toContain('Ao criar a conta você concorda');
   });
 });
