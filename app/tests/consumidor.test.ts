@@ -243,8 +243,13 @@ describe('os textos legais', () => {
     expect(t).toContain('não gera reembolso');
   });
 
-  it('o checkout traz a declaração de idade junto do aceite', () => {
-    expect(fonte('checkout/[slug]/CheckoutClient.tsx')).toContain('declara ter 18 anos ou mais');
+  /* 30/09/2026, pedido do dono: a declaração de idade fica só nos Termos
+     (art. 3), e o checkout remete a eles em vez de repeti-la. */
+  it('a declaração de idade está nos Termos, e o checkout remete a eles', () => {
+    expect(fonte('termos/page.tsx')).toContain('você declara ter 18 anos ou mais');
+    const c = fonte('checkout/[slug]/CheckoutClient.tsx');
+    expect(c).toContain('Ao continuar você concorda com os');
+    expect(c).not.toContain('18 anos');
   });
 
   it('a Política de Reembolso põe o site primeiro, com confirmação na hora', () => {

@@ -73,7 +73,8 @@ describe('o aceite dos Termos de Uso', () => {
     expect(f).toContain('aceitouTermos: aceite');
     /* A idade vem dentro do aceite (30/09/2026): uma caixa só. */
     expect(f).toContain('declarouIdade: aceite');
-    expect(f).toContain('inclusive a declaração de que tenho 18 anos ou mais');
+    /* E só nos Termos (pedido do dono): a caixa não repete a idade. */
+    expect(f).not.toContain('18 anos');
     expect(f).not.toContain('declaracao-idade');
     const t = readFileSync(new URL('../src/app/termos/page.tsx', import.meta.url), 'utf8');
     expect(t).toContain('Ao aceitar\n          estes Termos no cadastro');
