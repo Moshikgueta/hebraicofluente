@@ -846,8 +846,11 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - Testes: `comoAdmin(env, cookie)` em tests/ajuda/d1.ts dá o segundo fator a um administrador.
 
 ## Idade no cadastro e pagamento único no checkout (30/09/2026, pedido do dono)
-- O cadastro tem uma segunda caixa, desmarcada: "Tenho 18 anos ou mais, ou sou o responsável
-  legal por quem vai estudar" (Termos, art. 3). O servidor exige `declarouIdade: true` (erro
+- A declaração de idade vem DENTRO do aceite dos Termos, numa caixa só (pedido do dono, depois
+  de ver as duas caixas): "Li e aceito os Termos de Uso, inclusive a declaração de que tenho 18
+  anos ou mais, ou sou o responsável legal por quem vai estudar". Os Termos, art. 3, dizem que a
+  declaração se faz ao aceitar no cadastro e ao comprar; versão das políticas 2026-09-30. O
+  formulário manda `declarouIdade` igual a `aceitouTermos`. O servidor exige `declarouIdade: true` (erro
   `idade`) e grava em `aceites` também o documento `idade`, com a versão dos Termos. Todo teste
   ou script que cria conta manda `aceitouTermos: true, declarouIdade: true`.
 - "Condições desta compra" no checkout diz: pagamento único, sem assinatura nem renovação
