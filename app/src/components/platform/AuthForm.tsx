@@ -50,6 +50,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [aceite, setAceite] = useState(false);
+  const [idade, setIdade] = useState(false);
 
   const signup = mode === 'signup';
 
@@ -60,11 +61,12 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
 
     if (!emailLooksValid(email)) { setError(MESSAGES['invalid-email']); return; }
     if (signup && !passwordOk(password)) { setError(MESSAGES['weak-password']); return; }
+    if (signup && !idade) { setError(MESSAGES.idade); return; }
     if (signup && !aceite) { setError(MESSAGES.termos); return; }
 
     setBusy(true);
     try {
-      if (signup) await account.signUp({ name, email, password, aceitouTermos: aceite });
+      if (signup) await account.signUp({ name, email, password, aceitouTermos: aceite, declarouIdade: idade });
       else await account.signIn({ email, password });
       router.replace(next);
     } catch (err) {
@@ -119,6 +121,15 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
               Privacidade é só informada: a base legal dela não é aceite. */}
           {signup && (
             <div className="grid gap-2">
+              {/* A declaração de idade (30/09/2026): Termos, artigo 3. Também
+                  desmarcada e também conferida pelo servidor. */}
+              <label className="flex items-start gap-3 font-ui text-[14.5px] leading-relaxed text-ink cursor-pointer">
+                <input id="declaracao-idade" type="checkbox" checked={idade} onChange={e => setIdade(e.target.checked)}
+                       aria-describedby={error === MESSAGES.idade ? 'auth-erro' : undefined}
+                       aria-invalid={error === MESSAGES.idade || undefined}
+                       className="w-5 h-5 mt-0.5 shrink-0 accent-[var(--accent)]" />
+                <span>Tenho 18 anos ou mais, ou sou o responsável legal por quem vai estudar.</span>
+              </label>
               <label className="flex items-start gap-3 font-ui text-[14.5px] leading-relaxed text-ink cursor-pointer">
                 <input id="aceite-termos" type="checkbox" checked={aceite} onChange={e => setAceite(e.target.checked)}
                        aria-describedby={error === MESSAGES.termos ? 'auth-erro' : undefined}

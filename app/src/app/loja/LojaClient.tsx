@@ -14,7 +14,8 @@ import { Card } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
-import { cultureCards, leiturasBonus } from '@/lib/content';
+import { allLetters, cultureCards, leiturasBonus } from '@/lib/content';
+import { concluidasSemDominio } from '@/lib/state/rules';
 import { itemDaLeitura } from '@/lib/engine/bonus';
 import { cartasCompradas, folgasLivres, gasto, ITENS, leiturasCompradas, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
 import { arquivoDoNome, desenharNome, FORMATOS_NOME, type FormatoNome } from '@/lib/nome-decorado';
@@ -98,29 +99,60 @@ export function LojaClient() {
               onTrocar={() => trocar('nome-decorado', undefined, 'Pronto! Escolha o formato e baixe a imagem.')} />
       )}
 
-      <LeiturasBonus livre={livre} mastered={p.mastered} minhas={leiturasCompradas(s)}
-                     onTrocar={(item, id) => trocar(item, id, 'Leitura aberta! Ela está em Leituras bônus.')} />
+      <LeiturasBonus livre={livre} mastered={p.mastered} semDominio={concluidasSemDominio(s)}
+                     totalLetras={allLetters().length} minhas={leiturasCompradas(s)}
+                     onTrocar={(item, id, legivel) => trocar(item, id, legivel
+                       ? 'Leitura aberta! Ela está em Leituras bônus.'
+                       : 'Leitura guardada em Leituras bônus. Volte a ela quando dominar as letras do texto.')} />
     </div>
   );
 }
 
-/* Textos e versículos bíblicos (lib/engine/bonus.ts). Só as revisadas; cada
-   uma se oferece quando o aluno já domina a letra mais tardia dela - trocar
-   XP por um texto que ainda não se consegue ler seria vender frustração. */
-function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
-  livre: number; mastered: number; minhas: Set<string>;
-  onTrocar: (item: 'texto-bonus' | 'bencao', id: string) => void;
+/* Textos e versículos bíblicos (lib/engine/bonus.ts). Só as revisadas.
+   30/09/2026, decisão do dono: qualquer leitura se troca a qualquer momento.
+   Antes, cada uma só abria com as letras dela dominadas (`after`), e o botão
+   cinza parecia defeito. Agora a troca é livre e a tela diz a lógica: o texto
+   fica guardado, e a leitura sozinha vem quando as letras estiverem dominadas. */
+function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTrocar }: {
+  livre: number; mastered: number; semDominio: number; totalLetras: number; minhas: Set<string>;
+  onTrocar: (item: 'texto-bonus' | 'bencao', id: string, legivel: boolean) => void;
 }) {
   const leituras = leiturasBonus();
   if (!leituras.length) return null;
+  const adiantadas = leituras.some(l => mastered < l.after);
   return (
     <section className="grid gap-3" aria-labelledby="leituras-bonus">
       <div className="grid gap-1">
         <h2 id="leituras-bonus" className="font-display text-[21px] font-bold m-0">Leituras bônus</h2>
         <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
           Trechos e versículos do Antigo Testamento, com transliteração, tradução e a leitura gravada, linha a linha.
-          Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ◆ {ITENS.bencao.custo}.
+          {' '}{ITENS['texto-bonus'].custo === ITENS.bencao.custo
+            ? <>Cada leitura ◆ {ITENS.bencao.custo}.</>
+            : <>Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ◆ {ITENS.bencao.custo}.</>}
         </p>
+        {adiantadas && (
+          <div className="rounded-[var(--r-md)] bg-surface-2 px-4 py-3 grid gap-1.5 font-ui text-[14px] leading-relaxed text-ink-body">
+            <p className="m-0">
+              Você pode trocar qualquer leitura agora. Ela fica guardada em Leituras bônus, e já dá para ouvir e
+              acompanhar pela transliteração e pela tradução.
+            </p>
+            <p className="m-0">
+              Ler sozinho, direto do hebraico, vem depois: cada leitura diz quantas letras dominadas ela pede.
+              Quando chegar lá, volte a ela. Você domina <strong>{mastered} de {totalLetras} letras</strong>.
+            </p>
+            <p className="m-0">
+              Dominar uma letra é concluir a lição dela e acertar pelo menos 6 de 8 na fixação.
+            </p>
+            {semDominio > 0 && (
+              <p className="m-0">
+                {semDominio === 1
+                  ? 'Uma lição que você concluiu ficou abaixo de 6 de 8. Refazer a fixação dela já conta.'
+                  : `${semDominio} lições que você concluiu ficaram abaixo de 6 de 8. Refazer a fixação delas já conta.`}{' '}
+                <Link href="/mapa" className="text-[var(--accent)] underline">Ver as lições</Link>
+              </p>
+            )}
+          </div>
+        )}
         <Link href="/nikud-biblico" className="font-ui text-[14px] text-[var(--accent)] underline justify-self-start">
           Guia opcional e gratuito: o nikud da Bíblia →
         </Link>
@@ -136,27 +168,29 @@ function LeiturasBonus({ livre, mastered, minhas, onTrocar }: {
           const custo = ITENS[item].custo;
           const tem = minhas.has(l.id);
           const legivel = mastered >= l.after;
+          const faltam = l.after - mastered;
+          /* A nota vai numa linha própria, embaixo: ao lado do botão ela
+             espremia o título a uma palavra por linha no celular. */
+          const nota = !tem && livre < custo ? MOTIVO.saldo
+            : legivel ? null
+            : `Para ler sozinho: ${l.after} letras dominadas (${faltam === 1 ? 'falta 1' : `faltam ${faltam}`}).`;
           return (
             <li key={l.id}>
-              <Card className="p-4 flex flex-wrap items-center gap-3">
-                <div className="grid gap-0.5 min-w-0 flex-1">
-                  <span className="font-display text-[16.5px] font-semibold text-ink">{l.tituloPt}</span>
-                  <span className="font-ui text-[13px] text-ink-muted">{l.fontePt}</span>
-                </div>
-                {tem ? (
-                  <LinkButton href={`/bonus?l=${l.id}`} variant="secondary">Ler</LinkButton>
-                ) : (
-                  <div className="grid gap-1 justify-items-end">
-                    <Button onClick={() => onTrocar(item, l.id)} disabled={!legivel || livre < custo} size="md">
+              <Card className="p-4 grid gap-2">
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="grid gap-0.5 min-w-[10rem] flex-1">
+                    <span className="font-display text-[16.5px] font-semibold text-ink">{l.tituloPt}</span>
+                    <span className="font-ui text-[13px] text-ink-muted">{l.fontePt}</span>
+                  </div>
+                  {tem ? (
+                    <LinkButton href={`/bonus?l=${l.id}`} variant="secondary">Ler</LinkButton>
+                  ) : (
+                    <Button onClick={() => onTrocar(item, l.id, legivel)} disabled={livre < custo} size="md">
                       Trocar por ◆ {custo}
                     </Button>
-                    {!legivel ? (
-                      <span className="font-ui text-[12.5px] text-ink-muted">Abre quando você dominar {l.after} letras.</span>
-                    ) : livre < custo ? (
-                      <span className="font-ui text-[12.5px] text-ink-muted">{MOTIVO.saldo}</span>
-                    ) : null}
-                  </div>
-                )}
+                  )}
+                </div>
+                {nota && <p className="font-ui text-[12.5px] text-ink-muted m-0">{nota}</p>}
               </Card>
             </li>
           );

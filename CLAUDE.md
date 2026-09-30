@@ -844,3 +844,24 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   mostrando CodigoDoAdmin.
 - Depende do envio de e-mail (Resend). Sem ele, os painéis não abrem (erro `sem-email`).
 - Testes: `comoAdmin(env, cookie)` em tests/ajuda/d1.ts dá o segundo fator a um administrador.
+
+## Idade no cadastro e pagamento único no checkout (30/09/2026, pedido do dono)
+- O cadastro tem uma segunda caixa, desmarcada: "Tenho 18 anos ou mais, ou sou o responsável
+  legal por quem vai estudar" (Termos, art. 3). O servidor exige `declarouIdade: true` (erro
+  `idade`) e grava em `aceites` também o documento `idade`, com a versão dos Termos. Todo teste
+  ou script que cria conta manda `aceitouTermos: true, declarouIdade: true`.
+- "Condições desta compra" no checkout diz: pagamento único, sem assinatura nem renovação
+  automática (CDC, art. 6º, III).
+
+## Leituras bônus: troca livre, leitura sozinha depois (30/09/2026, pedido do dono)
+- O dono não conseguia trocar XP pelos textos bíblicos: cada leitura só abria com as letras dela
+  DOMINADAS (`after`, 20 a 22; dominar = concluir e ter 6 de 8 na fixação). Decisão dele: a
+  troca é LIVRE a qualquer momento (o botão só se desliga por saldo), e a tela explica a lógica.
+- Em Recompensas, acima das leituras: pode trocar agora, ela fica guardada, já dá para ouvir e
+  acompanhar pela transliteração; ler sozinho vem quando dominar as letras. "Você domina X de 22",
+  a regra do domínio e, se houver, quantas lições concluídas ficaram abaixo de 6 de 8
+  (`concluidasSemDominio` em lib/state/rules.ts), com link para o mapa. Cada leitura diz, numa
+  linha própria abaixo do botão, quantas letras pede e quantas faltam.
+- Na leitura (/bonus?l=), antes de dominar as letras, um cartão "Este texto ainda está à sua frente".
+- Preço: 200 XP por leitura, trecho ou versículo (o versículo custava 100). A compra guarda o custo
+  que pagou, então quem já trocou não perde saldo.

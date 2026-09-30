@@ -23,7 +23,7 @@ const linhas = (env: Env) =>
   (env.DB.bruto.prepare('SELECT COUNT(*) AS n FROM aparelhos').get() as { n: number }).n;
 
 async function conta(env: Env) {
-  const r = await chamar(env, '/api/auth/signup', { aceitouTermos: true, name: 'Ana', email: 'ana@exemplo.com', password: SENHA });
+  const r = await chamar(env, '/api/auth/signup', { aceitouTermos: true, declarouIdade: true, name: 'Ana', email: 'ana@exemplo.com', password: SENHA });
   expect(r.status).toBe(200);
   return cookieDe(r);
 }

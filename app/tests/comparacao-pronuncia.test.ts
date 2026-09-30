@@ -23,7 +23,7 @@ describe('o "Achei um erro" desligado', () => {
   it('a rota que recebia os relatos e as do painel não existem mais', async () => {
     const env = envDeTeste({ ADMIN_EMAILS: ADMIN });
     const r = await auth.signup({
-      request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Dono', email: ADMIN, password: 'senha-boa-123' }),
+      request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Dono', email: ADMIN, password: 'senha-boa-123' }),
       env, ctx
     });
     const cookie = cookieDe(r);

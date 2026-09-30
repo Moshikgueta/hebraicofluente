@@ -53,6 +53,19 @@ export function BonusClient() {
           <p className="text-[16px] leading-relaxed text-ink-body m-0">{leitura.introPt}</p>
         </header>
 
+        {/* 30/09/2026: a troca é livre (ver app/loja), então a leitura pode
+            chegar antes das letras. Dizer isso aqui, onde a pessoa tenta ler. */}
+        {p.mastered < leitura.after && (
+          <Card tone="wash" className="p-4 grid gap-1">
+            <p className="font-ui text-[14.5px] font-semibold text-ink m-0">Este texto ainda está à sua frente</p>
+            <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
+              Para ler este texto sozinho, você precisa dominar {leitura.after} letras, e hoje domina {p.mastered}. Por enquanto,
+              ouça cada linha e acompanhe pela transliteração e pela tradução. Quando dominar as letras, volte aqui e leia
+              direto do hebraico. Ele continua guardado em Leituras bônus.
+            </p>
+          </Card>
+        )}
+
         {/* O Nome (27/09/2026). O dono do curso grava «Hashém» onde está
             escrito יְהוָה: o costume de não dizer o Nome fora da reza. Sem
             este aviso, o aluno ouve uma palavra que não está no texto. */}

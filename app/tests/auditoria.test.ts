@@ -54,7 +54,7 @@ const envSite = (extra: Record<string, unknown> = {}) => envDeTeste({ ASSETS, ..
 
 async function comConta(env: Record<string, unknown>, email = 'aluna@exemplo.com.br') {
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Ana', email, password: 'senha-boa-123' }),
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Ana', email, password: 'senha-boa-123' }),
     env, ctx
   });
   expect(r.status).toBe(200);
@@ -478,7 +478,7 @@ describe('o cadastro', () => {
   it('recusa e-mail longo demais e com caractere de controle', async () => {
     const env = envSite();
     for (const email of ['a'.repeat(250) + '@x.com', 'a@b\u0000.co', 'a\u0001@b.co', 'ab']) {
-      const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, email, password: 'senha-boa-123' }), env, ctx });
+      const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, email, password: 'senha-boa-123' }), env, ctx });
       expect(r.status, email).toBe(400);
     }
   });
@@ -660,7 +660,7 @@ describe('a cota de escrita e o tamanho do banco', () => {
   it('cadastro: dez por hora por endereço', async () => {
     const env = envSite();
     const cadastrar = (i: number) => auth.signup({
-      request: deIp('203.0.113.52', `${SITE}/api/auth/signup`, { aceitouTermos: true, email: `nova${i}@exemplo.com`, password: 'senha-boa-123' }),
+      request: deIp('203.0.113.52', `${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, email: `nova${i}@exemplo.com`, password: 'senha-boa-123' }),
       env, ctx
     });
     for (let i = 0; i < 10; i++) expect((await cadastrar(i)).status).toBe(200);
@@ -905,7 +905,7 @@ describe('um convite não vira acesso sozinho', () => {
 
   const cadastrar = (env: Record<string, unknown>, email: string, c = ctx) =>
     auth.signup({
-      request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Quem', email, password: 'senha-boa-123' }),
+      request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Quem', email, password: 'senha-boa-123' }),
       env, ctx: c
     });
 

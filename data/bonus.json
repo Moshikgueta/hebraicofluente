@@ -20,7 +20,7 @@
     "",
     "`revisado: false` até o dono do curso conferir o hebraico: só as revisadas",
     "aparecem na loja e entram no roteiro de gravação (onda 5). `tipo` escolhe o",
-    "item da loja: \"texto\" (200 XP) ou \"curto\" (versículo, 100 XP).",
+    "item da loja: \"texto\" ou \"curto\" (versículo), os dois a 200 XP.",
     "`after` (a letra mais tardia) é CALCULADO pelo exportador.",
     "",
     "`guia` (27/09/2026): «O nikud da Bíblia», uma página à parte (/nikud-biblico), opcional e",

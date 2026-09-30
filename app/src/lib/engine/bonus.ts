@@ -12,7 +12,7 @@ export type LinhaBonus = { he: string; translit: string; pt: string; audioId?: s
 
 export type LeituraBonus = {
   id: string;
-  /** "texto" (um trecho, 200 XP) ou "curto" (versículo, 100 XP). */
+  /** "texto" (um trecho) ou "curto" (versículo); os dois custam 200 XP. */
   tipo: 'texto' | 'curto';
   revisado: boolean;
   tituloPt: string;

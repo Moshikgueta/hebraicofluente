@@ -42,7 +42,7 @@ const estado = (licoes, xp) => ({
 const cadastro = await fetch(`${BASE}/api/auth/signup`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ aceitouTermos: true, name: 'Sincronia', email, password: 'senha-de-teste-123' })
+  body: JSON.stringify({ aceitouTermos: true, declarouIdade: true, name: 'Sincronia', email, password: 'senha-de-teste-123' })
 });
 if (!cadastro.ok) {
   console.error('não deu para criar a conta:', cadastro.status, await cadastro.text());

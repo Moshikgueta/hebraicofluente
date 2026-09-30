@@ -245,6 +245,12 @@ export const ehLicaoDeSom = (id: string) => id.startsWith(SOM_PREFIXO);
 export const lettersMastered = (state: LearnerState): number =>
   Object.keys(state.lessons).filter(id => !ehLicaoDeSom(id) && isLessonMastered(state, id)).length;
 
+/** As letras concluídas que ainda não chegaram a 6 de 8 na fixação: o que
+ *  falta a quem "já fez tudo" e mesmo assim não vê a leitura bônus abrir. */
+export const concluidasSemDominio = (state: LearnerState): number =>
+  Object.keys(state.lessons)
+    .filter(id => !ehLicaoDeSom(id) && isLessonComplete(state, id) && !isLessonMastered(state, id)).length;
+
 /**
  * O alfabeto inteiro fechado - a condição do teste final.
  *

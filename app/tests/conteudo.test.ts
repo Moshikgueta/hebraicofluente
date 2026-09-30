@@ -165,7 +165,7 @@ describe('o que o Worker manda é o que o navegador espera', () => {
 async function contaLogada(env: Record<string, unknown>, ctx = {}) {
   const r = await auth.signup({
     request: pedido(`${SITE}/api/auth/signup`,
-      { aceitouTermos: true, name: 'Ana', email: 'ana@exemplo.com', password: 'senha-boa-123' }),
+      { aceitouTermos: true, declarouIdade: true, name: 'Ana', email: 'ana@exemplo.com', password: 'senha-boa-123' }),
     env, ctx
   });
   expect(r.status).toBe(200);
@@ -290,7 +290,7 @@ describe('os diagramas de traçado', () => {
     expect(semConta.status).toBe(403);
 
     const r = await auth.signup({
-      request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, email: 'traco@exemplo.com', password: 'senha-boa-123' }),
+      request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, email: 'traco@exemplo.com', password: 'senha-boa-123' }),
       env, ctx: { waitUntil() {} }
     });
     const cookie = cookieDe(r);

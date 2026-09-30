@@ -12,7 +12,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { comprar, fundirCompras, folgasLivres, ITENS, saldo, cartasCompradas, leiturasCompradas } from '@/lib/loja';
 import { itemDaLeitura, leiturasPublicadas, type GuiaNikud, type LeituraBonus } from '@/lib/engine/bonus';
-import { applyPractice, displayStreak, goalTarget } from '@/lib/state/rules';
+import { applyPractice, concluidasSemDominio, displayStreak, goalTarget, lettersMastered } from '@/lib/state/rules';
 import { mergeStates } from '@/lib/state/merge';
 import { migrate } from '@/lib/state/migrate';
 import { EMPTY_STATE, type LearnerState } from '@/lib/state/types';
@@ -114,7 +114,9 @@ describe('as leituras bônus', () => {
     s = compra(s, 'bencao', T, 'isaias-6');
     expect([...leiturasCompradas(s)].sort()).toEqual(['isaias-6', 'shema']);
     expect(saldo(s)).toBe(1000 - ITENS['texto-bonus'].custo - ITENS.bencao.custo);
-    expect(ITENS['texto-bonus'].custo).toBeGreaterThan(ITENS.bencao.custo);
+    /* 30/09/2026, decisão do dono: 200 XP por leitura, trecho ou versículo. */
+    expect(ITENS['texto-bonus'].custo).toBe(200);
+    expect(ITENS.bencao.custo).toBe(200);
     /* Uma carta com o mesmo nome de alvo não se confunde com a leitura. */
     expect(cartasCompradas(s).size).toBe(0);
   });
@@ -155,5 +157,31 @@ describe('o guia do nikud bíblico', () => {
         expect(e.audioId).toMatch(/^he-[0-9a-f]{8}$/);
       }
     }
+  });
+});
+
+/* 30/09/2026: as leituras bônus se trocam a qualquer momento; a tela diz
+   quantas letras o aluno domina e quantas concluiu sem chegar a 6 de 8. */
+describe('o que falta para abrir uma leitura', () => {
+  const licao = (quizBest: number) => ({ stagesDone: [0, 1, 2, 3, 4], quizBest }) as LearnerState['lessons'][string];
+  it('conta só as letras concluídas abaixo de 6 de 8, sem as lições de som', () => {
+    const s = com(0, { lessons: {
+      alef: licao(1), bet: licao(0.5), gimel: licao(0.75),
+      dalet: { ...licao(1), stagesDone: [0, 1] }, 'som-vet': licao(0.2)
+    } });
+    expect(lettersMastered(s)).toBe(2);
+    expect(concluidasSemDominio(s)).toBe(1);
+  });
+
+  it('a troca é livre, e a tela diz o número e a lógica de voltar depois', () => {
+    const f = readFileSync(join(__dirname, '../src/app/loja/LojaClient.tsx'), 'utf8');
+    expect(f).toContain('Você pode trocar qualquer leitura agora.');
+    expect(f).toContain('Você domina <strong>{mastered} de {totalLetras} letras</strong>');
+    expect(f).toContain('acertar pelo menos 6 de 8 na fixação');
+    /* O botão só se desliga por saldo, nunca pelas letras. */
+    expect(f).toContain('disabled={livre < custo}');
+    expect(f).not.toContain('disabled={!legivel');
+    const b = readFileSync(join(__dirname, '../src/app/bonus/BonusClient.tsx'), 'utf8');
+    expect(b).toContain('p.mastered < leitura.after');
   });
 });

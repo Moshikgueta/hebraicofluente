@@ -81,7 +81,7 @@ export class WorkerApi implements PlatformApi {
     }
   }
 
-  signUp(input: { name: string; email: string; password: string; aceitouTermos: boolean }): Promise<Session> {
+  signUp(input: { name: string; email: string; password: string; aceitouTermos: boolean; declarouIdade: boolean }): Promise<Session> {
     return call<Session>('/auth/signup', { method: 'POST', body: JSON.stringify(input) });
   }
 
