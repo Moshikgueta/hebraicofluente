@@ -879,3 +879,10 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - `estornosAbertos` ignora pedido já `refunded`: devolver pelo painel da MP um estorno "manual" ou
   "erro" fecha o pedido pelo aviso dela, e antes a linha do estorno ficava aberta para sempre.
 - O lembrete diário (alertas.js) aponta para /admin/estornos no caso do PIX direto.
+
+## Capa mais curta (30/09/2026, decisão do dono)
+- Saíram 7 seções que repetiam outra: Transformação, Problema (`#como`), Demonstração (`#curso`),
+  Recursos, AulaAmostra (`#aula`), Jornada e AlemDoAlfabeto (`#alem`). No celular, de 19 seções
+  e 22.650 px para 12 e cerca de 14.500 px; o preço sobe de ~17.000 px para ~11.500 px de rolagem.
+- Os componentes ficam em components/landing/ (sem uso na capa). O menu "Como funciona" aponta
+  para `/#decisoes`. A página /biblia continua ligada pela FAQ da capa.

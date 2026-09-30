@@ -1,12 +1,18 @@
 'use client';
 
-/* A porta da frente, nas catorze seções do design.
+/* A porta da frente.
+ *
+ * 30/09/2026, decisão do dono: a capa tinha 19 seções e 22.650 px no celular,
+ * com o preço a 17.000 px de rolagem. Saíram as sete que repetiam outra
+ * (Transformação, Problema, Demonstração, Recursos, AulaAmostra, Jornada e
+ * AlemDoAlfabeto): ficou com 12 seções e cerca de 14.500 px. Os componentes
+ * continuam em components/landing/ para voltar, se um dia fizer falta.
  * ─────────────────────────────────────────────────────────────────────────
  * Uma página de venda para adulto brasileiro que já tentou aprender hebraico
  * e parou. Três coisas ela faz e uma ela não faz.
  *
- * Faz: nomeia a objeção real logo na segunda seção ("as letras parecem todas
- * iguais"), mostra hebraico de verdade na tela - e deixa a pessoa RESPONDER
+ * Faz: responde logo na segunda seção o que se aprende e os dois "nada
+ * de", mostra hebraico de verdade na tela - e deixa a pessoa RESPONDER
  * uma questão - antes de pedir qualquer coisa, e diz o preço sem obrigar a
  * clicar para descobrir.
  *
@@ -23,16 +29,14 @@
  */
 
 import { Hero } from '@/components/landing/Hero';
-import { Problema, Demonstracao, Metodo, Curriculo, Jornada } from '@/components/landing/Secoes';
-import { Transformacao } from '@/components/landing/Transformacao';
+import { Metodo, Curriculo } from '@/components/landing/Secoes';
 import { Promessa } from '@/components/landing/Promessa';
 import { DemoAlef } from '@/components/landing/DemoAlef';
 import { OuvirEFalar } from '@/components/landing/OuvirEFalar';
 import { Decisoes } from '@/components/landing/Decisoes';
-import { AlemDoAlfabeto } from '@/components/landing/AlemDoAlfabeto';
 import { BarraFixa } from '@/components/landing/BarraFixa';
 import {
-  Professor, Recursos, AulaAmostra, Depoimentos, Preco, Faq, CtaFinal
+  Professor, Depoimentos, Preco, Faq, CtaFinal
 } from '@/components/landing/Fecho';
 import { FLAGSHIP } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
@@ -48,7 +52,6 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
      em cada tela ela se contradiz na terceira. */
   const passo = proximoPasso(account);
   const comprar = passo.href;
-  const curso = `/cursos/${FLAGSHIP}`;
 
   return (
     <>
@@ -73,8 +76,7 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
       {/* A ordem da narrativa, e por que ela é esta.
           ──────────────────────────────────────────────────────────────────
           A promessa do hero cria uma dúvida ("será que EU consigo?"), e a
-          página responde antes de qualquer outra coisa: a transformação em
-          quatro segundos, e logo depois a aula aberta, onde a pessoa aprende
+          página responde antes de qualquer outra coisa com a aula aberta, onde a pessoa aprende
           o Álef de verdade. Tudo o que vem depois - o método, o currículo, o
           professor, o preço - é lido por alguém que já provou a si mesmo que
           consegue, o que é uma pessoa diferente da que chegou.
@@ -82,21 +84,14 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
           As três decisões pedagógicas ficam logo abaixo da demo, e nessa
           ordem de propósito: elas AFIRMAM o que a demo acabou de FAZER. Na
           ordem inversa seriam três promessas à espera de prova. */}
-      <Transformacao />
       <DemoAlef href={comprar} micro={passo.micro} label={passo.label} vende={passo.vende} />
       {/* Logo depois da aula aberta: o Álef não tem som, e esta seção mostra
           o resto - ouvir o professor e ser corrigido falando. */}
       <OuvirEFalar />
-      <Problema />
-      <Demonstracao />
       <Decisoes />
       <Metodo />
       <Curriculo />
-      <Jornada />
       <Professor retrato={retrato} />
-      <Recursos />
-      <AulaAmostra href={curso} />
-      <AlemDoAlfabeto />
       <Depoimentos />
       <Preco href={comprar} label={passo.label} owned={account.ready && account.can(FLAGSHIP)} />
       <Faq />
