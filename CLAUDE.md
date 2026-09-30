@@ -886,3 +886,6 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   e 22.650 px para 12 e cerca de 14.500 px; o preço sobe de ~17.000 px para ~11.500 px de rolagem.
 - Os componentes ficam em components/landing/ (sem uso na capa). O menu "Como funciona" aponta
   para `/#decisoes`. A página /biblia continua ligada pela FAQ da capa.
+- A conferência `app/clique.mjs` (roda ANTES de publicar) abre `/#experimente`, `/#decisoes` e
+  `/#duvidas` direto pelo link. Tirar uma seção da capa pede tirar a âncora dela dali também, ou a
+  publicação é barrada (foi o que aconteceu com `/#curso` no #83).
