@@ -109,7 +109,7 @@ const envComEmail = () => envDeTeste({
 });
 
 async function compradora(env: Record<string, unknown>, email = 'compradora@exemplo.com.br') {
-  const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
+  const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
   const body = await r.json() as { account: { id: number } };
   return { cookie: cookieDe(r), id: body.account.id };
 }

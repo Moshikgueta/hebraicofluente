@@ -58,7 +58,7 @@ type Env = Record<string, unknown> & { DB: { bruto: { exec(sql: string): void; p
 
 async function cadastrar(env: Env, email = 'aluna@exemplo.com.br', senha = 'senha-da-aluna-1') {
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { name: 'Débora', email, password: senha }),
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Débora', email, password: senha }),
     env, ctx
   });
   expect(r.status).toBe(200);
@@ -131,7 +131,7 @@ describe('o e-mail de confirmação', () => {
     await auth.signup({
       request: new Request('https://atacante.example/api/auth/signup', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name: 'X', email: 'x@exemplo.com.br', password: 'senha-grande-1' })
+        body: JSON.stringify({ aceitouTermos: true, name: 'X', email: 'x@exemplo.com.br', password: 'senha-grande-1' })
       }),
       env, ctx
     });

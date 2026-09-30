@@ -49,6 +49,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [aceite, setAceite] = useState(false);
 
   const signup = mode === 'signup';
 
@@ -59,10 +60,11 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
 
     if (!emailLooksValid(email)) { setError(MESSAGES['invalid-email']); return; }
     if (signup && !passwordOk(password)) { setError(MESSAGES['weak-password']); return; }
+    if (signup && !aceite) { setError(MESSAGES.termos); return; }
 
     setBusy(true);
     try {
-      if (signup) await account.signUp({ name, email, password });
+      if (signup) await account.signUp({ name, email, password, aceitouTermos: aceite });
       else await account.signIn({ email, password });
       router.replace(next);
     } catch (err) {
@@ -110,24 +112,40 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
             required
           />
 
+          {/* O aceite dos Termos (30/09/2026, pedido do dono): uma caixa que a
+              pessoa marca, e não mais uma frase que ela nem lê. Começa
+              desmarcada e o servidor confere de novo (api/auth.js). Os links
+              abrem em outra aba, para não perder o que já foi digitado. A
+              Privacidade é só informada: a base legal dela não é aceite. */}
+          {signup && (
+            <div className="grid gap-2">
+              <label className="flex items-start gap-3 font-ui text-[14.5px] leading-relaxed text-ink cursor-pointer">
+                <input id="aceite-termos" type="checkbox" checked={aceite} onChange={e => setAceite(e.target.checked)}
+                       aria-describedby={error === MESSAGES.termos ? 'auth-erro' : undefined}
+                       aria-invalid={error === MESSAGES.termos || undefined}
+                       className="w-5 h-5 mt-0.5 shrink-0 accent-[var(--accent)]" />
+                <span>
+                  Li e aceito os{' '}
+                  <Link href="/termos" target="_blank" rel="noopener" className="text-[var(--accent)] underline underline-offset-2">
+                    Termos de Uso
+                  </Link>.
+                </span>
+              </label>
+              <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+                Como tratamos os seus dados:{' '}
+                <Link href="/privacidade" target="_blank" rel="noopener" className="text-[var(--accent)] hover:underline">
+                  Política de Privacidade
+                </Link>.
+              </p>
+            </div>
+          )}
+
           {error && <Erro id="auth-erro">{error}</Erro>}
 
           <Button type="submit" size="lg" full disabled={busy}>
             {busy ? (signup ? 'Criando…' : 'Entrando…') : (signup ? 'Criar conta' : 'Entrar')}
           </Button>
 
-          {/* Quem cria conta e não compra também tem dados tratados, e só via
-              os Termos e a Política no checkout (auditoria, LEGAL-009). Uma
-              frase, sem caixa de marcar: a base é o contrato, não o
-              consentimento. */}
-          {signup && (
-            <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted text-center m-0">
-              Ao criar a conta você concorda com os{' '}
-              <Link href="/termos" className="text-[var(--accent)] hover:underline">Termos de Uso</Link>
-              {' '}e com a{' '}
-              <Link href="/privacidade" className="text-[var(--accent)] hover:underline">Política de Privacidade</Link>.
-            </p>
-          )}
 
           {/* Dentro do formulário, logo abaixo do botão: é onde a pessoa
               está olhando no momento exato em que a senha não funciona.

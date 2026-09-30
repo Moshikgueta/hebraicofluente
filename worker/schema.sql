@@ -443,3 +443,14 @@ CREATE TABLE IF NOT EXISTS depoimentos (
   atualizado_em INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS depoimentos_estado ON depoimentos(estado, atualizado_em);
+
+-- O aceite dos Termos de Uso no cadastro (30/09/2026): quando e qual versão
+-- (a data de `politicas.atualizadoEm` em data/empresa.json). Nada além disso:
+-- nem IP, nem aparelho. Sai com a conta (deleteAccount).
+CREATE TABLE IF NOT EXISTS aceites (
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  documento  TEXT    NOT NULL,
+  versao     TEXT    NOT NULL,
+  aceito_em  INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS aceites_conta ON aceites(account_id);

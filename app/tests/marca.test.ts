@@ -18,7 +18,7 @@ type Env = ReturnType<typeof envDeTeste> & { DB: { bruto: import('node:sqlite').
 
 async function aluno(env: Env, email: string, comprou = true) {
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { name: 'Ana', email, password: 'senha-boa-123' }), env, ctx
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx
   });
   const cookie = cookieDe(r);
   const { id } = env.DB.bruto.prepare('SELECT id FROM accounts WHERE email = ?').get(email) as { id: number };

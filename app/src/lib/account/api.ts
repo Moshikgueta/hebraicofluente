@@ -31,7 +31,7 @@ export interface PlatformApi {
   /** A sessão atual, ou null. Nunca lança por falta de sessão. */
   me(): Promise<Session | null>;
 
-  signUp(input: { name: string; email: string; password: string }): Promise<Session>;
+  signUp(input: { name: string; email: string; password: string; aceitouTermos: boolean }): Promise<Session>;
   signIn(input: { email: string; password: string }): Promise<Session>;
   signOut(): Promise<void>;
 
