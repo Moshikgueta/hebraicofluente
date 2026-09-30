@@ -827,3 +827,9 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   IP nem horário; apaga depois de 365 dias. O dono lê em /admin/estatisticas.
 - LinkButton para rota paga não pré-carrega (evita 403 para quem não comprou). Conta criada
   há menos de 24 h vê o preço antes do aviso "já pagou com outro e-mail?".
+
+## Etapa 1 da lição mais curta (30/09/2026)
+- Em toda letra, `Ensinamento` mostra à vista só "O que esta letra faz" e "O que você precisa
+  lembrar" (e o detalhe, quando a letra tem forma final). Detalhe, nota para brasileiro,
+  padrão e dica de leitura ficam atrás de "Ver mais sobre esta letra (N quadros)". Álef no
+  celular: 5172px → 4350px. A partir da letra 12 continua valendo a etapa enxuta (ENXUTA_DESDE).

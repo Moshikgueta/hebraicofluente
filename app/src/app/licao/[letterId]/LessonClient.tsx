@@ -469,18 +469,20 @@ function DicaDeLeitura({ dica }: { dica: NonNullable<Letter['ensino']['dicaLeitu
 
 function Ensinamento({ letter }: { letter: Letter }) {
   const e = letter.ensino;
+  /* O aprofundamento recolhido (30/09/2026). A etapa 1 do Álef tinha seis
+     telas de celular antes da primeira sílaba, e o maior bloco era este. À
+     vista fica o que a letra faz e o que lembrar; o detalhe, a nota para
+     brasileiro, o padrão e a dica de leitura ficam a um toque, inteiros. O
+     detalhe de letra com forma final continua à vista: é ele que mostra o
+     desenho do fim da palavra. */
+  const [aberto, setAberto] = useState(false);
   if (!e) return null;
+  const detalheAVista = !!(e.detalhePt && letter.finalForm);
+  const recolhidos = [
+    e.detalhePt && !detalheAVista, e.paraBrasileiroPt, e.padraoPt, e.dicaLeitura
+  ].filter(Boolean).length;
 
-  return (
-    <div className="grid gap-4">
-      <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">O que esta letra faz</h2>
-        <p className="text-[15.5px] leading-relaxed text-ink-body">
-          <Prose text={e.funcaoPt} />
-        </p>
-      </Card>
-
-      {e.detalhePt && (
+  const detalhe = e.detalhePt && (
         <Card className="p-6 grid gap-3">
           <h2 className="text-[19px] font-semibold">Detalhe importante</h2>
           {/* A forma final MOSTRADA, e não só descrita: o par lado a lado
@@ -503,32 +505,57 @@ function Ensinamento({ letter }: { letter: Letter }) {
             <Prose text={e.detalhePt} />
           </p>
         </Card>
-      )}
+  );
 
-      {e.paraBrasileiroPt && (
-        <Card tone="wash" className="p-6 grid gap-2">
-          <TituloComSelo selo="brasileiro" className="text-[var(--teal-ink)]" />
-          <p className="text-[15.5px] leading-relaxed text-ink-body">
-            <Prose text={e.paraBrasileiroPt} />
-          </p>
-        </Card>
-      )}
+  return (
+    <div className="grid gap-4">
+      <Card className="p-6 grid gap-3">
+        <h2 className="text-[19px] font-semibold">O que esta letra faz</h2>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">
+          <Prose text={e.funcaoPt} />
+        </p>
+      </Card>
 
-      {/* 🧠 - o padrão que volta o curso inteiro. Opcional de propósito: a
-          maioria das letras não tem um, e inventar um para preencher o
-          quadro ensina o aluno a pular o quadro. */}
-      {e.padraoPt && (
-        <Card className="p-6 grid gap-2">
-          <TituloComSelo selo="padrao" className="text-ink-muted" />
-          <p className="text-[15.5px] leading-relaxed text-ink-body">
-            <Prose text={e.padraoPt} />
-          </p>
-        </Card>
-      )}
-
-      {e.dicaLeitura && <DicaDeLeitura dica={e.dicaLeitura} />}
+      {detalheAVista && detalhe}
 
       <Lembre texto={e.lembrePt} />
+
+      {recolhidos > 0 && !aberto && (
+        <button type="button" onClick={() => setAberto(true)} aria-expanded={false}
+                className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
+                           text-[var(--accent)] underline underline-offset-2">
+          Ver mais sobre esta letra ({recolhidos} {recolhidos === 1 ? 'quadro' : 'quadros'})
+        </button>
+      )}
+
+      {aberto && (
+        <>
+          {!detalheAVista && detalhe}
+
+          {e.paraBrasileiroPt && (
+            <Card tone="wash" className="p-6 grid gap-2">
+              <TituloComSelo selo="brasileiro" className="text-[var(--teal-ink)]" />
+              <p className="text-[15.5px] leading-relaxed text-ink-body">
+                <Prose text={e.paraBrasileiroPt} />
+              </p>
+            </Card>
+          )}
+
+          {/* 🧠 - o padrão que volta o curso inteiro. Opcional de propósito: a
+              maioria das letras não tem um, e inventar um para preencher o
+              quadro ensina o aluno a pular o quadro. */}
+          {e.padraoPt && (
+            <Card className="p-6 grid gap-2">
+              <TituloComSelo selo="padrao" className="text-ink-muted" />
+              <p className="text-[15.5px] leading-relaxed text-ink-body">
+                <Prose text={e.padraoPt} />
+              </p>
+            </Card>
+          )}
+
+          {e.dicaLeitura && <DicaDeLeitura dica={e.dicaLeitura} />}
+        </>
+      )}
     </div>
   );
 }
