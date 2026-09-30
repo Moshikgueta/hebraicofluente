@@ -58,7 +58,7 @@ const deIp = (ip: string, url: string, body: unknown, cookie?: string) => new Re
 
 async function comConta(env: Env, email = 'aluna@exemplo.com.br', ipDe = '203.0.113.10') {
   const r = await auth.signup({
-    request: deIp(ipDe, `${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx
+    request: deIp(ipDe, `${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx
   });
   expect(r.status).toBe(200);
   await assentar();

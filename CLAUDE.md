@@ -844,3 +844,11 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   mostrando CodigoDoAdmin.
 - Depende do envio de e-mail (Resend). Sem ele, os painéis não abrem (erro `sem-email`).
 - Testes: `comoAdmin(env, cookie)` em tests/ajuda/d1.ts dá o segundo fator a um administrador.
+
+## Idade no cadastro e pagamento único no checkout (30/09/2026, pedido do dono)
+- O cadastro tem uma segunda caixa, desmarcada: "Tenho 18 anos ou mais, ou sou o responsável
+  legal por quem vai estudar" (Termos, art. 3). O servidor exige `declarouIdade: true` (erro
+  `idade`) e grava em `aceites` também o documento `idade`, com a versão dos Termos. Todo teste
+  ou script que cria conta manda `aceitouTermos: true, declarouIdade: true`.
+- "Condições desta compra" no checkout diz: pagamento único, sem assinatura nem renovação
+  automática (CDC, art. 6º, III).

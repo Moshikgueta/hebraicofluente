@@ -35,7 +35,7 @@ type AccountValue = {
   /** Nenhuma cobrança desta build é real. */
   demo: boolean;
 
-  signUp(i: { name: string; email: string; password: string; aceitouTermos: boolean }): Promise<void>;
+  signUp(i: { name: string; email: string; password: string; aceitouTermos: boolean; declarouIdade: boolean }): Promise<void>;
   signIn(i: { email: string; password: string }): Promise<void>;
   signOut(): Promise<void>;
   /** Recarrega a sessão do servidor - depois de um pagamento, por exemplo. */

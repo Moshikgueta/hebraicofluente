@@ -71,6 +71,7 @@ await preencher('nome', 'Daniel');
 await preencher('email', EMAIL);
 await preencher('senha', SENHA_VELHA);
 await p.check('#aceite-termos');
+await p.check('#declaracao-idade');
 await p.getByRole('button', { name: /Criar conta/ }).click();
 await p.waitForURL(/meu-hebraico|onboarding/, { timeout: 15000 });
 ok('a conta foi criada e entrou', true, new URL(p.url()).pathname);

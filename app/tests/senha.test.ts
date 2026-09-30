@@ -66,7 +66,7 @@ const envComEmail = (extra: Record<string, unknown> = {}) => envDeTeste({
 async function comConta(env = envComEmail(), senha = 'senha-inicial-1') {
   const email = 'aluno@exemplo.com.br';
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Daniel', email, password: senha }),
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Daniel', email, password: senha }),
     env, ctx
   });
   expect(r.status).toBe(200);

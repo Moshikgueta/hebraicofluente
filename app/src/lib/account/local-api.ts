@@ -132,12 +132,13 @@ export class LocalApi implements PlatformApi {
     return this.session(read());
   }
 
-  async signUp({ name, email, password, aceitouTermos }: { name: string; email: string; password: string; aceitouTermos: boolean }) {
+  async signUp({ name, email, password, aceitouTermos, declarouIdade }: { name: string; email: string; password: string; aceitouTermos: boolean; declarouIdade: boolean }) {
     await tick();
     const mail = normalizeEmail(email);
     if (!emailLooksValid(mail)) throw new AuthError('invalid-email');
     if (!passwordOk(password)) throw new AuthError('weak-password');
     if (!aceitouTermos) throw new AuthError('termos');
+    if (!declarouIdade) throw new AuthError('idade');
     const s = read();
     if (s.accounts[mail]) throw new AuthError('email-taken');
     s.accounts[mail] = {

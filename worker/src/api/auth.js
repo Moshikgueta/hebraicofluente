@@ -242,9 +242,12 @@ const VERIFY_TTL = VERIFY_TTL_DIAS * 86_400_000;
    conta por um erro do banco seria pior - o erro vai para o log. */
 async function registrarAceite(env, accountId) {
   try {
-    await env.DB.prepare(
+    const versao = String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
+    const inserir = documento => env.DB.prepare(
       'INSERT INTO aceites (account_id, documento, versao, aceito_em) VALUES (?, ?, ?, ?)'
-    ).bind(accountId, 'termos', String(empresa.politicas?.atualizadoEm || ''), Date.now()).run();
+    ).bind(accountId, documento, versao, agora);
+    /* `idade`: a declaração "18 anos ou mais, ou responsável". */
+    await env.DB.batch([inserir('termos'), inserir('idade')]);
   } catch (e) {
     console.error('aceite dos termos', e && e.stack || e);
   }
@@ -316,6 +319,11 @@ export async function signup({ request, env, ctx }) {
      marcar no formulário, e não mais uma frase embaixo do botão. O servidor
      confere também - quem chama a API direto não cria conta sem aceitar. */
   if (body.aceitouTermos !== true) return fail('termos');
+  /* A declaração de idade (30/09/2026): a compra é de maiores de 18 anos ou
+     do responsável por quem vai estudar (Termos, artigo 3; Código Civil,
+     arts. 3º a 5º). Estava só como frase no checkout; o cadastro, que já
+     coleta nome e e-mail, não pedia nada. */
+  if (body.declarouIdade !== true) return fail('idade');
 
   const existing = await findAccountByEmail(env, email);
   if (existing) {

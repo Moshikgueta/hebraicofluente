@@ -31,7 +31,7 @@ const chamar = (env: Env, metodo: string, caminho: string, cookie = '', body?: u
     body: body === undefined ? undefined : JSON.stringify(body)
   }), env, ctx);
 async function conta(env: Env, email: string) {
-  return cookieDe(await chamar(env, 'POST', '/api/auth/signup', '', { aceitouTermos: true, name: 'X', email, password: SENHA }));
+  return cookieDe(await chamar(env, 'POST', '/api/auth/signup', '', { aceitouTermos: true, declarouIdade: true, name: 'X', email, password: SENHA }));
 }
 const entrar = async (env: Env, email: string) =>
   cookieDe(await chamar(env, 'POST', '/api/auth/login', '', { email, password: SENHA }));

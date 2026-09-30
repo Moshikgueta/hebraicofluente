@@ -33,7 +33,7 @@ export default function Page() {
      'enquanto a conta existir'],
     /* 30/09/2026: a caixa "Li e aceito os Termos de Uso" do cadastro
        (tabela aceites, worker/src/api/auth.js). */
-    ['Aceite dos Termos de Uso: a data e a versão dos Termos que você aceitou ao criar a conta',
+    ['Aceite dos Termos de Uso e declaração de idade (18 anos ou mais, ou responsável legal): a data e a versão dos Termos, marcadas por você ao criar a conta',
      'provar o contrato entre você e o curso',
      'enquanto a conta existir'],
     ['Progresso de estudo', 'mostrar onde você parou, escolher a próxima revisão e emitir o certificado',

@@ -46,7 +46,7 @@ describe('o que o app manda', () => {
 describe('o servidor', () => {
   async function conta(env: Env, email = 'ana@exemplo.com') {
     const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`,
-      { aceitouTermos: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
+      { aceitouTermos: true, declarouIdade: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
     return cookieDe(r);
   }
   const mandar = (env: Env, cookie: string, eventos: unknown) =>

@@ -28,4 +28,9 @@ describe('o que o painel promete bate com o curso', () => {
     expect(c).toContain('{!contaNova && aviso}');
     expect(c).toContain('{contaNova && aviso}');
   });
+
+  it('o checkout diz que é pagamento único, sem renovação automática (CDC, art. 6º, III)', () => {
+    expect(fonte('app/checkout/[slug]/CheckoutClient.tsx'))
+      .toContain('Pagamento único. Não há assinatura nem renovação automática');
+  });
 });

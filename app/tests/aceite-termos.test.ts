@@ -15,7 +15,7 @@ type Env = ReturnType<typeof envDeTeste> & { DB: { bruto: import('node:sqlite').
 
 const cadastrar = (env: Env, corpo: Record<string, unknown>) =>
   auth.signup({ request: pedido(`${SITE}/api/auth/signup`, corpo), env, ctx });
-const BASE = { name: 'Ana', email: 'ana@exemplo.com', password: 'senha-boa-123' };
+const BASE = { name: 'Ana', email: 'ana@exemplo.com', password: 'senha-boa-123', declarouIdade: true };
 const aceites = (env: Env) => env.DB.bruto.prepare('SELECT * FROM aceites').all() as
   { account_id: number; documento: string; versao: string; aceito_em: number }[];
 
@@ -34,8 +34,10 @@ describe('o aceite dos Termos de Uso', () => {
     const env = envDeTeste() as Env;
     const antes = Date.now();
     expect((await cadastrar(env, { ...BASE, aceitouTermos: true })).status).toBe(200);
-    const [a] = aceites(env);
+    const [a, b] = aceites(env);
     expect(a).toMatchObject({ documento: 'termos', versao: empresa.politicas.atualizadoEm });
+    /* E a declaração de idade, junto. */
+    expect(b).toMatchObject({ documento: 'idade', versao: empresa.politicas.atualizadoEm });
     expect(a!.aceito_em).toBeGreaterThanOrEqual(antes);
   });
 
@@ -45,6 +47,16 @@ describe('o aceite dos Termos de Uso', () => {
     const { id } = env.DB.bruto.prepare('SELECT id FROM accounts').get() as { id: number };
     await deleteAccount(env, id);
     expect(aceites(env)).toEqual([]);
+  });
+
+  it('sem declarar a idade, também não cria conta', async () => {
+    const env = envDeTeste() as Env;
+    for (const declarouIdade of [undefined, false, 'sim']) {
+      const r = await cadastrar(env, { ...BASE, declarouIdade, aceitouTermos: true });
+      expect(r.status).toBe(400);
+      expect(await r.json()).toEqual({ error: 'idade' });
+    }
+    expect(env.DB.bruto.prepare('SELECT COUNT(*) AS n FROM accounts').get()).toEqual({ n: 0 });
   });
 
   it('sem a tabela, o cadastro não cai', async () => {
@@ -59,6 +71,8 @@ describe('o aceite dos Termos de Uso', () => {
     expect(f).toMatch(/type="checkbox" checked=\{aceite\}/);
     expect(f).toContain('Li e aceito os');
     expect(f).toContain('aceitouTermos: aceite');
+    expect(f).toContain('declarouIdade: idade');
+    expect(f).toContain('id="declaracao-idade"');
     expect(f).not.toContain('Ao criar a conta você concorda');
   });
 });

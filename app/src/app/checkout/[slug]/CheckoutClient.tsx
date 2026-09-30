@@ -402,6 +402,9 @@ function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
   const LINHAS: [string, React.ReactNode][] = [
     ['O que você leva', `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
     ['Por quanto tempo', `${curso.accessMonths} meses, contados da confirmação do pagamento.`],
+    /* 30/09/2026 (CDC, art. 6º, III): dito com todas as letras, e não
+       deduzido de "12 meses". Renovar é uma compra nova, feita pela pessoa. */
+    ['Cobrança', 'Pagamento único. Não há assinatura nem renovação automática: ao fim do prazo, o acesso termina e nada mais é cobrado.'],
     /* COM-007 (auditoria de 28/09): o que NÃO vem junto, antes de pagar. */
     ['O que não vem junto', <>
       Aulas ao vivo e correção por professor: o curso é autoinstrucional, e a
