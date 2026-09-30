@@ -868,3 +868,14 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - Na leitura (/bonus?l=), antes de dominar as letras, um cartão "Este texto ainda está à sua frente".
 - Preço: 200 XP por leitura, trecho ou versículo (o versículo custava 100). A compra guarda o custo
   que pagou, então quem já trocou não perde saldo.
+
+## Estornos que dependem do dono: /admin/estornos (30/09/2026)
+- Estorno "manual" (PIX direto, liberação à mão) ou "erro" (8 recusas da Mercado Pago) não tinha
+  como ser dado por feito: o acesso continuava aberto e o lembrete diário não parava. Agora
+  `/admin/estornos` (com o segundo fator) lista os mesmos do lembrete e tem "Já devolvi o
+  dinheiro" (com confirmação): `POST /api/admin/estornos/feito` roda `refundOrder` (pedido
+  `refunded`, meses fora do acesso), marca o estorno `concluido` e grava `estorno-manual-feito`
+  na trilha. Estorno automático em andamento (`pendente`/`pedido`) dá 409: quem confirma é a MP.
+- `estornosAbertos` ignora pedido já `refunded`: devolver pelo painel da MP um estorno "manual" ou
+  "erro" fecha o pedido pelo aviso dela, e antes a linha do estorno ficava aberta para sempre.
+- O lembrete diário (alertas.js) aponta para /admin/estornos no caso do PIX direto.

@@ -349,7 +349,12 @@ export async function estornosParaVarrer(env, { limit = 10 } = {}, at = now()) {
 }
 
 /** Os que ainda pedem atenção do dono: manual, erro, ou mais de um dia sem
- *  confirmação. Com o e-mail da conta, porque quem lê é o dono. */
+ *  confirmação. Com o e-mail da conta, porque quem lê é o dono.
+ *
+ *  Um pedido já `refunded` não entra, qualquer que seja o estado do estorno
+ *  (30/09/2026): o dono que devolve pelo painel da Mercado Pago um estorno
+ *  "manual" ou "erro" fecha o pedido pelo aviso dela, mas a linha do estorno
+ *  ficava como estava, e o lembrete diário não parava nunca. */
 export async function estornosAbertos(env, at = now()) {
   try {
     const { results } = await env.DB.prepare(
@@ -357,8 +362,9 @@ export async function estornosAbertos(env, at = now()) {
               a.email
          FROM estornos e JOIN orders o ON o.id = e.order_id
          LEFT JOIN accounts a ON a.id = o.account_id
-        WHERE e.estado IN ('manual', 'erro')
-           OR (e.estado IN ('pendente', 'pedido') AND e.criado_em <= ?)
+        WHERE o.status <> 'refunded'
+          AND (e.estado IN ('manual', 'erro')
+               OR (e.estado IN ('pendente', 'pedido') AND e.criado_em <= ?))
         ORDER BY e.criado_em`
     ).bind(at - 24 * 3_600_000).all();
     return results || [];
