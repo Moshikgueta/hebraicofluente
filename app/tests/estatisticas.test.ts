@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { criarEnviador, LOTE_MAX, paraEnvio } from '@/lib/estatisticas';
 import { ondeErram, ondeParam, ordemDoPlano } from '@/lib/painel-estatisticas';
 import { course } from '@/lib/content-publico';
-import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
+import { cookieDe, envDeTeste, pedido, comoAdmin } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import worker from '../../worker/src/worker.js';
 // @ts-expect-error - idem
@@ -78,7 +78,7 @@ describe('o servidor', () => {
 
   it('só o dono lê, e a leitura junta certo e errado', async () => {
     const env = envDeTeste({ ADMIN_EMAILS: 'dono@exemplo.com' }) as Env;
-    const a = await conta(env), dono = await conta(env, 'dono@exemplo.com');
+    const a = await conta(env), dono = await comoAdmin(env, await conta(env, 'dono@exemplo.com'));
     await mandar(env, a, [{ e: 'resposta', k: 'match', l: 'alef', c: false }, { e: 'resposta', k: 'match', l: 'alef', c: true }]);
     const ler = (cookie: string) => worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie } }), env, ctx);
     expect((await ler(a)).status).toBe(403);

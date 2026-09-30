@@ -465,3 +465,13 @@ CREATE TABLE IF NOT EXISTS estatisticas (
   n     INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY (dia, chave)
 );
+
+-- O código de seis dígitos do segundo fator do administrador (30/09/2026):
+-- só o hash, 10 minutos, 5 tentativas; um por conta, o novo substitui o
+-- anterior. Ver worker/src/api/admin-codigo.js e lib/admin.js.
+CREATE TABLE IF NOT EXISTS admin_codigos (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  hash       TEXT    NOT NULL,
+  expira     INTEGER NOT NULL,
+  tentativas INTEGER NOT NULL DEFAULT 0
+);

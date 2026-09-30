@@ -1075,6 +1075,10 @@ export async function deleteAccount(env, accountId) {
   try {
     await env.DB.prepare('DELETE FROM novidades WHERE account_id = ?').bind(id).run();
   } catch { /* tabela ausente */ }
+  /* O código pendente do segundo fator do administrador. */
+  try {
+    await env.DB.prepare('DELETE FROM admin_codigos WHERE account_id = ?').bind(id).run();
+  } catch { /* tabela ausente */ }
   /* O registro do aceite dos Termos também. */
   try {
     await env.DB.prepare('DELETE FROM aceites WHERE account_id = ?').bind(id).run();

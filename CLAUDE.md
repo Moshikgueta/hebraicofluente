@@ -833,3 +833,14 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   lembrar" (e o detalhe, quando a letra tem forma final). Detalhe, nota para brasileiro,
   padrão e dica de leitura ficam atrás de "Ver mais sobre esta letra (N quadros)". Álef no
   celular: 5172px → 4350px. A partir da letra 12 continua valendo a etapa enxuta (ENXUTA_DESDE).
+
+## Segundo fator do administrador (30/09/2026, pedido do dono)
+- Toda rota de administrador (`exigirAdmin` em lib/admin.js) pede, além da sessão de uma conta de
+  ADMIN_EMAILS, o cookie `__Host-hf_admin`, que só nasce depois do código de 6 dígitos mandado ao
+  e-mail da conta (POST /api/admin/codigo e /api/admin/codigo/conferir, api/admin-codigo.js).
+  Código: só o hash em `admin_codigos`, 10 min, 5 tentativas, 5 pedidos por hora.
+- O cookie vale 12 h e fica preso à sessão: mesma conta, mesma `session_version` e mesmo aparelho
+  (`ap`). Sair apaga; trocar a senha derruba. Sem ele: 403 `admin-codigo`, que os 4 painéis tratam
+  mostrando CodigoDoAdmin.
+- Depende do envio de e-mail (Resend). Sem ele, os painéis não abrem (erro `sem-email`).
+- Testes: `comoAdmin(env, cookie)` em tests/ajuda/d1.ts dá o segundo fator a um administrador.

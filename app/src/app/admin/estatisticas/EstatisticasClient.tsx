@@ -7,13 +7,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { asset } from '@/lib/asset';
+import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course } from '@/lib/content-publico';
 import {
   ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
 } from '@/lib/painel-estatisticas';
 
 type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[] };
-type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'erro' }
+type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; dados: Dados };
 
 const pct = (x: number | null) => (x == null ? '-' : `${Math.round(x * 100)}%`);
@@ -27,6 +28,7 @@ export function EstatisticasClient() {
     try {
       const r = await fetch(asset(`/api/admin/estatisticas?dias=${d}`), { credentials: 'same-origin', cache: 'no-store' });
       if (r.status === 401) return setEstado({ tipo: 'sem-sessao' });
+      if (await pedeCodigo(r)) return setEstado({ tipo: 'codigo' });
       if (r.status === 403) return setEstado({ tipo: 'nao-admin' });
       if (!r.ok) return setEstado({ tipo: 'erro' });
       setEstado({ tipo: 'pronto', dados: await r.json() as Dados });
@@ -73,6 +75,7 @@ export function EstatisticasClient() {
             <Link href="/entrar/?next=/admin/estatisticas/" className="text-[var(--accent)] underline">Entrar</Link></p>
         )}
         {estado.tipo === 'nao-admin' && <p className="m-0">Esta conta não tem acesso a este painel.</p>}
+        {estado.tipo === 'codigo' && <CodigoDoAdmin onPronto={() => void carregar(dias)} />}
         {estado.tipo === 'erro' && <p className="m-0">Não consegui carregar agora. Tente de novo.</p>}
       </div>
 

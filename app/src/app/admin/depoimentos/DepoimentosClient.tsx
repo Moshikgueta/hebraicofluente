@@ -11,12 +11,13 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { asset } from '@/lib/asset';
+import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 
 type Item = {
   id: number; email: string; nomeConta: string; texto: string; assinatura: string;
   publicar: boolean; contato: boolean; estado: 'novo' | 'aprovado' | 'recusado'; atualizadoEm: number;
 };
-type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'erro' }
+type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; itens: Item[] };
 
 const ESTADO_PT = { novo: 'Novo', aprovado: 'Aprovado', recusado: 'Recusado' } as const;
@@ -30,6 +31,7 @@ export function DepoimentosClient() {
     try {
       const r = await fetch(asset('/api/admin/depoimentos'), { credentials: 'same-origin', cache: 'no-store' });
       if (r.status === 401) return setEstado({ tipo: 'sem-sessao' });
+      if (await pedeCodigo(r)) return setEstado({ tipo: 'codigo' });
       if (r.status === 403) return setEstado({ tipo: 'nao-admin' });
       if (!r.ok) return setEstado({ tipo: 'erro' });
       const { depoimentos } = await r.json() as { depoimentos: Item[] };
@@ -73,6 +75,7 @@ export function DepoimentosClient() {
           </p>
         )}
         {estado.tipo === 'nao-admin' && <p className="m-0">Esta conta não tem acesso a este painel.</p>}
+        {estado.tipo === 'codigo' && <CodigoDoAdmin onPronto={() => void carregar()} />}
         {estado.tipo === 'erro' && <p className="m-0">Não consegui carregar agora. Confira a internet e tente de novo.</p>}
         {estado.tipo === 'pronto' && estado.itens.length === 0 && <p className="m-0">Nenhum depoimento ainda.</p>}
         {aviso && <p className="m-0 text-[var(--ember)]">{aviso}</p>}
