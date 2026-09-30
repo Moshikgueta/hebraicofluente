@@ -42,15 +42,17 @@ export const ITENS: Record<ItemDaLoja['id'], ItemDaLoja> = {
     id: 'nome-decorado', titulo: 'Seu nome em hebraico decorado', custo: 300,
     descricao: 'O seu nome em letra de fôrma e à mão, numa imagem para baixar: papel de parede do celular ou para imprimir.'
   },
-  /* As leituras bônus (lib/engine/bonus.ts): um trecho da Bíblia vale o
-     dobro de um versículo, que tem duas ou três linhas. O id `bencao` ficou
+  /* As leituras bônus (lib/engine/bonus.ts): 200 XP cada, trecho ou
+     versículo (30/09/2026, decisão do dono; antes o versículo custava 100).
+     Uma compra guarda o custo que pagou, então mudar o preço não mexe no
+     saldo de quem já trocou. O id `bencao` ficou
      do tempo em que havia bênçãos de reza aqui: mudar quebraria compras. */
   'texto-bonus': {
     id: 'texto-bonus', titulo: 'Texto bíblico bônus', custo: 200,
     descricao: 'Um trecho do Antigo Testamento em hebraico, com transliteração, tradução e a leitura gravada, linha a linha.'
   },
   bencao: {
-    id: 'bencao', titulo: 'Versículo bíblico', custo: 100,
+    id: 'bencao', titulo: 'Versículo bíblico', custo: 200,
     descricao: 'Um versículo conhecido do Antigo Testamento, com transliteração, tradução e a leitura gravada.'
   }
 };

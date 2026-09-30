@@ -863,3 +863,5 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   (`concluidasSemDominio` em lib/state/rules.ts), com link para o mapa. Cada leitura diz, numa
   linha própria abaixo do botão, quantas letras pede e quantas faltam.
 - Na leitura (/bonus?l=), antes de dominar as letras, um cartão "Este texto ainda está à sua frente".
+- Preço: 200 XP por leitura, trecho ou versículo (o versículo custava 100). A compra guarda o custo
+  que pagou, então quem já trocou não perde saldo.

@@ -114,7 +114,9 @@ describe('as leituras bônus', () => {
     s = compra(s, 'bencao', T, 'isaias-6');
     expect([...leiturasCompradas(s)].sort()).toEqual(['isaias-6', 'shema']);
     expect(saldo(s)).toBe(1000 - ITENS['texto-bonus'].custo - ITENS.bencao.custo);
-    expect(ITENS['texto-bonus'].custo).toBeGreaterThan(ITENS.bencao.custo);
+    /* 30/09/2026, decisão do dono: 200 XP por leitura, trecho ou versículo. */
+    expect(ITENS['texto-bonus'].custo).toBe(200);
+    expect(ITENS.bencao.custo).toBe(200);
     /* Uma carta com o mesmo nome de alvo não se confunde com a leitura. */
     expect(cartasCompradas(s).size).toBe(0);
   });

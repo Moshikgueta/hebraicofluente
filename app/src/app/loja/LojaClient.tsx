@@ -126,7 +126,9 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
         <h2 id="leituras-bonus" className="font-display text-[21px] font-bold m-0">Leituras bônus</h2>
         <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
           Trechos e versículos do Antigo Testamento, com transliteração, tradução e a leitura gravada, linha a linha.
-          Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ◆ {ITENS.bencao.custo}.
+          {ITENS['texto-bonus'].custo === ITENS.bencao.custo
+            ? <>Cada leitura ◆ {ITENS.bencao.custo}.</>
+            : <>Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ◆ {ITENS.bencao.custo}.</>}
         </p>
         {adiantadas && (
           <div className="rounded-[var(--r-md)] bg-surface-2 px-4 py-3 grid gap-1.5 font-ui text-[14px] leading-relaxed text-ink-body">
