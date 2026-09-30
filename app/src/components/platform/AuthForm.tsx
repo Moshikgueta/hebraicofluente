@@ -125,13 +125,13 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
                        aria-invalid={error === MESSAGES.termos || undefined}
                        className="w-5 h-5 mt-0.5 shrink-0 accent-[var(--accent)]" />
                 <span>
-                  {/* A declaração de idade (Termos, art. 3) vem DENTRO do aceite,
-                      a pedido do dono (30/09/2026): uma caixa só, e não duas. O
-                      servidor continua gravando os dois registros, termos e idade. */}
+                  {/* A declaração de idade mora SÓ nos Termos, art. 3 (pedido do
+                      dono, 30/09/2026): aceitar os Termos é fazê-la. A caixa não a
+                      repete; o servidor continua gravando os registros termos e idade. */}
                   Li e aceito os{' '}
                   <Link href="/termos" target="_blank" rel="noopener" className="text-[var(--accent)] underline underline-offset-2">
                     Termos de Uso
-                  </Link>, inclusive a declaração de que tenho 18 anos ou mais, ou sou o responsável legal por quem vai estudar.
+                  </Link>.
                 </span>
               </label>
               <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
