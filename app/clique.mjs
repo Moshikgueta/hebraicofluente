@@ -168,7 +168,7 @@ for (const width of LARGURAS) {
   const explosoes = [];
   p.on('pageerror', e => explosoes.push(String(e.message || e).slice(0, 200)));
 
-  for (const alvo of ['/#experimente', '/#curso', '/#duvidas']) {
+  for (const alvo of ['/#experimente', '/#decisoes', '/#duvidas']) {
     await p.goto(`${BASE}${alvo}`, { waitUntil: 'networkidle' });
     await p.waitForTimeout(900);
     const id = alvo.slice(2);
