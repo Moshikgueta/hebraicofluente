@@ -30,6 +30,11 @@ export default function Page() {
      'enquanto a conta existir'],
     ['Senha', 'entrar na plataforma - guardada como hash PBKDF2, nunca em texto puro',
      'enquanto a conta existir'],
+    /* 30/09/2026: a caixa "Li e aceito os Termos de Uso" do cadastro
+       (tabela aceites, worker/src/api/auth.js). */
+    ['Aceite dos Termos de Uso: a data e a versão dos Termos que você aceitou ao criar a conta',
+     'provar o contrato entre você e o curso',
+     'enquanto a conta existir'],
     ['Progresso de estudo', 'mostrar onde você parou, escolher a próxima revisão e emitir o certificado',
      'enquanto a conta existir, ou até você apagar'],
     ['Dados do pedido', 'registrar a compra, liberar o acesso e cumprir obrigação fiscal',

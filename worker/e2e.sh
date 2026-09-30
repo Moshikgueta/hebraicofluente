@@ -224,13 +224,13 @@ espera "rota paga sem sessão manda ao login"  "$B/entrar/?next=%2Flicao%2Falef%
 echo "Conta"
 espera "criar conta" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
   -H 'content-type: application/json' \
-  -d "{\"name\":\"Teste\",\"email\":\"$MAIL\",\"password\":\"cavalo correto\"}")"
+  -d "{\"aceitouTermos\":true,\"name\":\"Teste\",\"email\":\"$MAIL\",\"password\":\"cavalo correto\"}")"
 espera "/api/me com sessão" 200 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' $B/api/me)"
 espera "e-mail repetido" 409 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
   -H 'content-type: application/json' \
-  -d "{\"name\":\"Outro\",\"email\":\"$MAIL\",\"password\":\"outra senha\"}")"
+  -d "{\"aceitouTermos\":true,\"name\":\"Outro\",\"email\":\"$MAIL\",\"password\":\"outra senha\"}")"
 espera "senha curta" 400 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
-  -H 'content-type: application/json' -d '{"email":"x@exemplo.br","password":"1234"}')"
+  -H 'content-type: application/json' -d '{"aceitouTermos":true,"email":"x@exemplo.br","password":"1234"}')"
 espera "senha errada" 401 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/login \
   -H 'content-type: application/json' -d "{\"email\":\"$MAIL\",\"password\":\"errada!!\"}")"
 # O e-mail é normalizado: entrar com outra caixa e espaços tem de funcionar.
@@ -406,6 +406,7 @@ Para apagá-la do banco de produção:
      DELETE FROM marcas              WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM aparelhos           WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM depoimentos         WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM aceites             WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM estornos            WHERE order_id IN (SELECT id FROM orders WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL'));
      DELETE FROM payment_events      WHERE order_id IN (SELECT id FROM orders WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL'));
      DELETE FROM orders              WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');

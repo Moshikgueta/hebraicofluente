@@ -235,6 +235,21 @@ async function avisarConvitePendente(env, ctx, account, email) {
 export const VERIFY_TTL_DIAS = 7;
 const VERIFY_TTL = VERIFY_TTL_DIAS * 86_400_000;
 
+/* A prova do aceite: quando e qual versão dos Termos (a data de
+   `politicas.atualizadoEm` em data/empresa.json, a mesma que a página
+   /termos mostra). Tabela à parte, `aceites`, que o schema.sql cria. Uma
+   falha aqui não impede o cadastro: a pessoa aceitou na tela, e perder a
+   conta por um erro do banco seria pior - o erro vai para o log. */
+async function registrarAceite(env, accountId) {
+  try {
+    await env.DB.prepare(
+      'INSERT INTO aceites (account_id, documento, versao, aceito_em) VALUES (?, ?, ?, ?)'
+    ).bind(accountId, 'termos', String(empresa.politicas?.atualizadoEm || ''), Date.now()).run();
+  } catch (e) {
+    console.error('aceite dos termos', e && e.stack || e);
+  }
+}
+
 /**
  * Manda o link de confirmação. Nunca lança: quem chama está no meio de um
  * cadastro, e um e-mail que não saiu não pode derrubar a conta que acabou de
@@ -297,6 +312,10 @@ export async function signup({ request, env, ctx }) {
 
   if (!emailOk(email)) return fail('invalid-email');
   if (password.length < MIN_PASSWORD || password.length > 1024) return fail('weak-password');
+  /* O aceite dos Termos de Uso (30/09/2026, pedido do dono): uma caixa de
+     marcar no formulário, e não mais uma frase embaixo do botão. O servidor
+     confere também - quem chama a API direto não cria conta sem aceitar. */
+  if (body.aceitouTermos !== true) return fail('termos');
 
   const existing = await findAccountByEmail(env, email);
   if (existing) {
@@ -310,6 +329,7 @@ export async function signup({ request, env, ctx }) {
      lida por operadores num resumo do Actions, e é o que sobra depois de a
      conta ser apagada. */
   await log(env, account.id, 'signup');
+  await registrarAceite(env, account.id);
   await registrarAcesso(env, { accountId: account.id, evento: 'cadastro', ip: ipCompleto(request) });
 
   /* Um presente esperando por este endereço avisa o dono. Não libera nada:

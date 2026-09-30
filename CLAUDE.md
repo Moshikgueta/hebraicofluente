@@ -803,3 +803,13 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - Não tranca nada e não entra na porcentagem. Terminar a correção grava `pratica-N` em
   `firsts`, que a página do módulo mostra com ✓. O módulo 5 não tem lição de prática (a 20
   é o contraste).
+
+## Aceite dos Termos no cadastro (30/09/2026, pedido do dono)
+- O cadastro (AuthForm, também no checkout) tem a caixa "Li e aceito os Termos de Uso",
+  desmarcada, com o link abrindo em outra aba. A Privacidade é só informada (a base legal dela
+  não é aceite). Substitui a frase "Ao criar a conta você concorda...".
+- O servidor exige `aceitouTermos: true` no POST /api/auth/signup (erro `termos`) e grava na
+  tabela `aceites` a data e a versão (`politicas.atualizadoEm` de data/empresa.json). Falha ao
+  gravar não derruba o cadastro. Apagar a conta apaga o aceite. Todo script ou teste que cria
+  conta pela API manda `aceitouTermos: true`.
+- Quando os Termos mudarem, subir `politicas.atualizadoEm`: os aceites novos saem com a versão nova.

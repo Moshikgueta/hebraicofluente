@@ -61,7 +61,7 @@ const ASSETS = {
 
 async function conta(env: Record<string, unknown>, email: string) {
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { name: 'Teste', email, password: 'senha-boa-123' }),
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Teste', email, password: 'senha-boa-123' }),
     env, ctx
   });
   expect(r.status).toBe(200);

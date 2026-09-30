@@ -18,7 +18,7 @@ const naLista = (env: Env, id: number) =>
 
 async function conta(env: Env, email: string) {
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { name: 'Ana', email, password: 'senha-da-ana-1' }), env, ctx
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Ana', email, password: 'senha-da-ana-1' }), env, ctx
   });
   expect(r.status).toBe(200);
   const cookie = cookieDe(r);

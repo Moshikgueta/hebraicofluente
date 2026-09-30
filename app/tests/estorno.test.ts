@@ -114,7 +114,7 @@ async function aviso(id: number, tipo = 'payment') {
 
 /** Uma aluna que comprou pela Mercado Pago, com o acesso liberado. */
 async function alunaQueComprou(env: Env, email = 'aluna@exemplo.com.br') {
-  const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
+  const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
   const cookie = cookieDe(r);
   const { account } = await r.json() as { account: { id: number } };
   await assentar();

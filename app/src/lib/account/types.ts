@@ -79,7 +79,7 @@ export type AuthErrorCode =
   | 'bad-credentials' | 'email-taken' | 'weak-password' | 'invalid-email'
   | 'not-signed-in' | 'offline' | 'server' | 'rate-limited' | 'rate-limited-hora' | 'payments-off'
   | 'bad-token' | 'payment-failed' | 'card-off' | 'pix-off' | 'already-owned'
-  | 'fora-do-prazo' | 'nao-pago';
+  | 'fora-do-prazo' | 'nao-pago' | 'termos';
 
 export class AuthError extends Error {
   constructor(readonly code: AuthErrorCode, message?: string) {
@@ -94,6 +94,7 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
   'email-taken': 'Já existe uma conta com esse e-mail. Tente entrar.',
   'weak-password': 'A senha precisa de pelo menos 8 caracteres.',
   'invalid-email': 'Esse e-mail não parece válido.',
+  'termos': 'Para criar a conta, marque que você leu e aceita os Termos de Uso.',
   'not-signed-in': 'Você precisa entrar para continuar.',
   'offline': 'Sem conexão. Tente de novo em um instante.',
   'server': 'Alguma coisa quebrou do nosso lado. Tente de novo.',
