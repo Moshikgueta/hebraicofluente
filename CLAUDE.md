@@ -813,3 +813,17 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   gravar não derruba o cadastro. Apagar a conta apaga o aceite. Todo script ou teste que cria
   conta pela API manda `aceitouTermos: true`.
 - Quando os Termos mudarem, subir `politicas.atualizadoEm`: os aceites novos saem com a versão nova.
+
+## Lição 21, fecho dos módulos 6/7 e estatísticas (30/09/2026, pedido do dono)
+- Lição 21 (/extra/sem-o-ponto, etapa 1) ensina onde o ponto aparece (começo, depois de
+  consoante, depois de vogal) e pratica a leitura com o ponto NÃO impresso. Motor em
+  lib/engine/posicao-do-ponto.ts: analisa as palavras do curso e só usa as em que a regra
+  acerta; as do ponto que dobra (אַבָּא, שַׁבָּת) vão para "Quando a regra não basta".
+- 23 e 27 NÃO são lições de prática: são a leitura sem nikud e o fecho dos módulos 6 e 7.
+  Prática (`kind: "practice"`) só em 3, 7, 10 e 13.
+- Estatísticas: o app (lib/estatisticas.ts, ligado por EnvioDeEstatisticas só com sessão)
+  manda em lote respostas (tipo, lição, certa/errada) e etapas concluídas pela primeira vez.
+  O servidor (api/estatisticas.js) soma em `estatisticas (dia, chave, n)`, sem conta, e-mail,
+  IP nem horário; apaga depois de 365 dias. O dono lê em /admin/estatisticas.
+- LinkButton para rota paga não pré-carrega (evita 403 para quem não comprou). Conta criada
+  há menos de 24 h vê o preço antes do aviso "já pagou com outro e-mail?".

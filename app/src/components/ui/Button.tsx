@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ehPaga } from '@/lib/seo';
 import type { ReactNode } from 'react';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'quiet';
@@ -54,7 +55,12 @@ export function LinkButton({
   className?: string; full?: boolean;
 }) {
   return (
-    <Link href={href} className={`${base} ${VARIANT[variant]} ${SIZE[size]} ${full ? 'w-full' : ''} ${className}`}>
+    /* Rota paga sem pré-carregamento (30/09/2026): quem ainda não comprou
+       via o botão "Meu Hebraico" do topo e o Next pedia a página paga de
+       antemão - um 403 a cada tela. Pré-carregar só adianta para quem pode
+       abrir, e o clique continua instantâneo o bastante. */
+    <Link href={href} prefetch={ehPaga(href) ? false : undefined}
+          className={`${base} ${VARIANT[variant]} ${SIZE[size]} ${full ? 'w-full' : ''} ${className}`}>
       {children}
     </Link>
   );

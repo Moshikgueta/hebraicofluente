@@ -244,7 +244,7 @@ export function DashboardClient() {
               Como o hebraico funciona
             </p>
             <p className="text-[14.5px] leading-relaxed text-ink-body">
-              Cinco minutos de leitura: a direção, o alfabeto, o que muda em relação
+              Dez minutos de leitura: a direção, o alfabeto, o que muda em relação
               ao português e como este curso funciona.
             </p>
           </div>
@@ -427,9 +427,9 @@ function Welcome() {
           {/* O "22" estava escrito à mão aqui. É o mesmo defeito que pôs dois
               números diferentes na vitrine: letra e lição são grandezas
               parecidas, e a cópia manual erra em silêncio. */}
-          São {course.totalLetters} letras, em {course.modules.filter(m => m.letterIds.length).length} módulos.
-          Antes da primeira, duas perguntas rápidas: como você quer ser chamado e
-          quanto tempo por dia dá para estudar.
+          São {course.totalLetters} letras, em {course.modules.length} módulos.
+          Antes da primeira, três perguntas rápidas: por que você quer aprender, quanto
+          tempo por dia dá para estudar e o que você já sabe.
         </p>
         <div className="pt-2">
           <LinkButton href="/onboarding" size="lg">Começar</LinkButton>

@@ -18,7 +18,8 @@ export const metadata: Metadata = meta({
  * Escrita a partir do que o sistema REALMENTE faz, e não de um modelo. Cada
  * linha da tabela de dados corresponde a algo que existe no código: as contas
  * em `accounts`, o progresso em `progress`, os pedidos em `orders`, os eventos
- * de analytics em lib/analytics.ts (que hoje não saem do navegador, e isso
+ * de analytics em lib/analytics.ts (que só saem do navegador como contagens
+ * somadas por dia, sem identificar ninguém - lib/estatisticas.ts -, e isso
  * está dito). Uma política que descreve um produto genérico é pior do que
  * nenhuma: ela promete o que ninguém conferiu.
  */
@@ -269,6 +270,13 @@ export default function Page() {
           qual das duas versões você viu, e o nosso servidor soma apenas totais por dia:
           quantas pessoas viram cada versão, clicaram no botão, chegaram ao pagamento e
           compraram. Esses totais não têm nome, e-mail, conta nem endereço de IP.
+        </p>
+        {/* 30/09/2026: worker/src/api/estatisticas.js. */}
+        <p>
+          Para melhorar as aulas, quem está conectado ao curso manda também, em lote, só contagens de
+          aprendizagem: que tipo de exercício, de qual lição, se a resposta foi certa ou errada, e que etapa de
+          qual lição foi concluída pela primeira vez. O servidor soma esses números por dia e não guarda nome,
+          e-mail, conta, endereço de IP, horário nem o que você digitou. Os totais saem depois de um ano.
         </p>
       </Artigo>
 
