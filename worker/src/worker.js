@@ -26,6 +26,7 @@ import * as novidades from './api/novidades.js';
 import * as csp from './api/csp.js';
 import * as marca from './api/marca.js';
 import * as depoimentos from './api/depoimentos.js';
+import * as estatisticas from './api/estatisticas.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -103,7 +104,12 @@ const ROUTES = {
   'PUT /api/depoimento': depoimentos.salvar,
   'DELETE /api/depoimento': depoimentos.retirar,
   'GET /api/admin/depoimentos': depoimentos.listar,
-  'PUT /api/admin/depoimentos': depoimentos.julgar
+  'PUT /api/admin/depoimentos': depoimentos.julgar,
+
+  /* Onde os alunos erram e onde param: só contadores, sem identificar
+     ninguém. Ver api/estatisticas.js. */
+  'POST /api/estatisticas': estatisticas.registrar,
+  'GET /api/admin/estatisticas': estatisticas.ler
 };
 
 export default {

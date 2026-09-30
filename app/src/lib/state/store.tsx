@@ -313,9 +313,10 @@ export function ProgressProvider({
     const d = today();
     const total = units === undefined ? 5 : 3;
     const before = agora().lessons[letterId]?.stagesDone.length ?? 0;
+    const primeira = !(agora().lessons[letterId]?.stagesDone ?? []).includes(stage);
     const next = completeStage(agora(), letterId, stage, d, units);
     commit(next);
-    track('stage_completed', { letterId, stage });
+    track('stage_completed', { letterId, stage, primeira });
     if (before < total && (next.lessons[letterId]?.stagesDone.length ?? 0) >= total) {
       track('lesson_completed', { letterId });
     }

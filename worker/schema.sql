@@ -454,3 +454,14 @@ CREATE TABLE IF NOT EXISTS aceites (
   aceito_em  INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS aceites_conta ON aceites(account_id);
+
+-- Onde os alunos erram e onde param (30/09/2026): só contadores por dia,
+-- sem conta, e-mail, IP ou horário. Chaves `r|tipo|lição|1` (resposta
+-- certa), `r|tipo|lição|0` (errada) e `e|lição|etapa` (etapa concluída pela
+-- primeira vez). Saem depois de um ano. Ver worker/src/api/estatisticas.js.
+CREATE TABLE IF NOT EXISTS estatisticas (
+  dia   TEXT    NOT NULL,
+  chave TEXT    NOT NULL,
+  n     INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (dia, chave)
+);

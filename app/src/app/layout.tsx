@@ -65,6 +65,7 @@ import { ProgressProvider } from '@/lib/state/store';
 import { AccountProvider } from '@/lib/account/store';
 import { Chrome } from '@/components/shell/Chrome';
 import { BotaoAcessibilidade } from '@/components/shell/BotaoAcessibilidade';
+import { EnvioDeEstatisticas } from '@/components/shell/EnvioDeEstatisticas';
 import { SCRIPT_DE_ARRANQUE } from '@/lib/acessibilidade';
 import { course } from '@/lib/content-publico';
 import { ORIGEM } from '@/lib/seo';
@@ -128,6 +129,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             pessoa no ajuste que ela acabou de fazer. */}
         <div id="hf-zoom">
           <AccountProvider>
+            {/* As estatísticas de aprendizagem, só com sessão (lib/estatisticas.ts). */}
+            <EnvioDeEstatisticas />
             {/* Modules 6 and 7 count toward completion: a bar that reads 100%
                 while the reader still cannot handle an unpointed word would be
                 lying about the thing the course exists to teach. */}

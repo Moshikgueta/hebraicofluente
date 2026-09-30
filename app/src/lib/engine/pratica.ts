@@ -1,4 +1,5 @@
-/* As lições de prática: 3, 7, 10, 13, 23 e 27 (29/09/2026).
+/* As lições de prática: 3, 7, 10 e 13 (29/09/2026; a 23 e a 27 são o fecho
+ * dos módulos 6 e 7, em /extra, desde 30/09/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * O plano de aulas fecha cada módulo com uma lição sem letra nova - "jogos,
  * correção e leitura em voz alta". No site ela era só essa frase na página

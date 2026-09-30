@@ -31,6 +31,7 @@ import {
 } from './lib/db.js';
 import { mailReady, mensagemDeAlerta, reaisBR, sendMail } from './lib/mail.js';
 import { novosDesde } from './api/depoimentos.js';
+import { estatisticasPurge } from './api/estatisticas.js';
 
 /** Quantas vezes, na última hora, cada erro precisa aparecer para virar
  *  alerta. Um só já basta para os que nunca deveriam acontecer. */
@@ -68,6 +69,7 @@ export async function runAlertas(env, at = Date.now()) {
   try { await alertaDeCompartilhamento(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await avisoDeDepoimentos(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await avisosPurge(env, at); } catch { /* idem */ }
+  try { await estatisticasPurge(env, at); } catch { /* idem */ }
 }
 
 async function enviarAoDono(env, chave, msg) {

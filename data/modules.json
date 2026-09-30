@@ -125,9 +125,9 @@
       "subPt": "as formas suaves e as cinco finais",
       "letters": [],
       "lessons": [
-        { "n": 21, "topicPt": "As três letras de dois sons, juntas: {{ב}}, {{כ}} e {{פ}} com e sem o ponto" },
+        { "n": 21, "topicPt": "Onde o ponto aparece: ler {{ב}}, {{כ}} e {{פ}} quando o ponto não está impresso" },
         { "n": 22, "topicPt": "As cinco formas finais, juntas pela primeira vez" },
-        { "n": 23, "kind": "practice" }
+        { "n": 23, "topicPt": "Ler sem nikud, e o fecho do módulo" }
       ],
       "introPt": "Nenhuma letra nova neste módulo - e ainda assim ele é o que separa quem decora de quem lê. Você já viu as três letras do daguesh com o ponto; agora vai vê-las sem ele, no meio e no fim da palavra, onde o ponto quase nunca aparece. É aqui também que as cinco formas finais deixam de ser curiosidade e viram hábito de leitura.",
       "goalsPt": [
@@ -149,7 +149,7 @@
         { "n": 24, "som": "tch", "he": "צ׳", "parHe": "צ", "nomePt": "Tch", "topicPt": "{{צ׳}} - o TCH de \"tchau\"" },
         { "n": 25, "som": "dj", "he": "ג׳", "parHe": "ג", "nomePt": "Dj", "topicPt": "{{ג׳}} - o DJ de \"Djavan\"" },
         { "n": 26, "som": "j", "he": "ז׳", "parHe": "ז", "nomePt": "J", "topicPt": "{{ז׳}} - o J de \"jarro\"" },
-        { "n": 27, "kind": "practice" }
+        { "n": 27, "topicPt": "Os três sons juntos, e o fecho do alfabeto" }
       ],
       "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"gelo\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
       "goalsPt": [

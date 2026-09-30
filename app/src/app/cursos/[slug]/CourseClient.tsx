@@ -240,23 +240,7 @@ function BuyBox({ slug }: { slug: string }) {
     );
   }
 
-  return (
-    <div className="grid gap-4 content-start">
-      {/* Conectado, e mesmo assim sem o curso.
-          ──────────────────────────────────────────────────────────────────
-          É o estado mais cruel da plataforma, e até agora ele era MUDO: o
-          portão manda para cá quem tenta abrir uma aula sem ter o direito, e
-          a pessoa via uma página de preço. Quem pagou e cai numa página de
-          pagamento não conclui "falta liberar meu acesso" - conclui que foi
-          cobrado por nada, ou que o site quebrou. E aí ou paga de novo, ou
-          some.
-
-          Então, havendo sessão sem curso, a página diz as três coisas que
-          resolvem: COM QUAL CONTA a pessoa está conectada (o caso mais comum
-          é ter comprado com outro e-mail), como trocar de conta, e para onde
-          escrever. O preço continua logo abaixo, para quem de fato ainda não
-          comprou. */}
-      {account.signedIn && (
+  const aviso = account.signedIn ? (
         <Card tone="wash" className="p-5 grid gap-2.5">
           <p className="font-display text-[17px] font-bold text-ink leading-snug">
             Esta conta ainda não tem o curso
@@ -283,7 +267,32 @@ function BuyBox({ slug }: { slug: string }) {
             com o e-mail da compra que a gente libera.
           </p>
         </Card>
-      )}
+      ) : null;
+  const criada = account.session?.account.createdAt ? Date.parse(account.session.account.createdAt) : NaN;
+  const contaNova = Number.isFinite(criada) && Date.now() - criada < 86_400_000;
+
+  return (
+    <div className="grid gap-4 content-start">
+      {/* Conectado, e mesmo assim sem o curso.
+          ──────────────────────────────────────────────────────────────────
+          É o estado mais cruel da plataforma, e até agora ele era MUDO: o
+          portão manda para cá quem tenta abrir uma aula sem ter o direito, e
+          a pessoa via uma página de preço. Quem pagou e cai numa página de
+          pagamento não conclui "falta liberar meu acesso" - conclui que foi
+          cobrado por nada, ou que o site quebrou. E aí ou paga de novo, ou
+          some.
+
+          Então, havendo sessão sem curso, a página diz as três coisas que
+          resolvem: COM QUAL CONTA a pessoa está conectada (o caso mais comum
+          é ter comprado com outro e-mail), como trocar de conta, e para onde
+          escrever. O preço continua logo abaixo, para quem de fato ainda não
+          comprou. */}
+      {/* Conta criada há menos de um dia (30/09/2026): quase sempre é quem
+          acabou de se cadastrar PARA comprar, e abrir com "esta conta não tem
+          o curso" parecia erro. Para ela, o preço vem primeiro e o aviso de
+          "já pagou com outro e-mail?" vem depois. Conta mais antiga continua
+          vendo o aviso antes: é o caso de quem pagou e caiu aqui. */}
+      {!contaNova && aviso}
 
       <Card className="p-6 grid gap-4 content-start">
       <div className="grid gap-1">
@@ -358,6 +367,7 @@ function BuyBox({ slug }: { slug: string }) {
         </p>
       )}
       </Card>
+      {contaNova && aviso}
     </div>
   );
 }

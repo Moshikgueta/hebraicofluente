@@ -63,6 +63,8 @@ export type EventProps = {
   words?: number;
   /** O tipo do exercício respondido, para o erro por tipo no painel. */
   kind?: string;
+  /** Etapa concluída pela primeira vez (e não refeita). */
+  primeira?: boolean;
 };
 
 export type LearningEvent = { name: EventName; props: EventProps; at: number };
