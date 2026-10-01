@@ -97,7 +97,9 @@ escrever" basta para a maioria.
 16. **Depoimento (LEGAL-107).** O depoimento da aluna Natália foi encurtado
     (corte marcado com "[...]"). Qual a forma mínima da autorização (escrita,
     com o corte)? Se ela teve acesso gratuito ou foi aluna particular, isso
-    precisa ser dito junto do depoimento (CONAR)?
+    precisa ser dito junto do depoimento (CONAR)? **Resposta do dono
+    (01/10/2026): ela é aluna particular.** O site já diz isso no cartão do
+    depoimento ("aluna particular do professor"). Basta, ou precisa mais?
 17. **Credenciais do professor (LEGAL-124).** "Gerente Pedagógico da New
     School", "professor na Universidad Isaac Abarbanel", "Formação CELTA e
     Letras". Que comprovantes guardar? "Formação em Letras" pode ser usado
