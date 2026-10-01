@@ -88,7 +88,7 @@
   },
   "דָּג": {
    "pt": "peixe",
-   "image": null,
+   "image": "/media/vocabulario/peixe-792ad3c0.webp",
    "imageAlt": "Um peixe nadando, de perfil.",
    "imagePrompt": "a single fish swimming, side view"
   },
@@ -100,13 +100,13 @@
   },
   "אִשָּׁה": {
    "pt": "mulher",
-   "image": null,
-   "imageAlt": "Uma mulher adulta em pé, sorrindo.",
+   "image": "/media/vocabulario/mulher-479bdbfb.webp",
+   "imageAlt": "Uma mulher adulta de cabelo comprido, sorrindo, com as mãos nos bolsos.",
    "imagePrompt": "an adult woman standing and smiling"
   },
   "שֶׁמֶשׁ": {
    "pt": "sol",
-   "image": null,
+   "image": "/media/vocabulario/sol-008e0080.webp",
    "imageAlt": "Um sol redondo e brilhante num céu limpo.",
    "imagePrompt": "a round bright sun in a clear sky"
   },
@@ -124,8 +124,8 @@
   },
   "לֶחֶם": {
    "pt": "pão",
-   "image": null,
-   "imageAlt": "Um pão redondo e dourado, com uma fatia cortada.",
+   "image": "/media/vocabulario/pao-b3aedfa6.webp",
+   "imageAlt": "Um pão de forma dourado, com algumas fatias cortadas.",
    "imagePrompt": "a round golden loaf of bread with one slice cut"
   },
   "הַר": {
@@ -172,14 +172,14 @@
   },
   "מִטָּה": {
    "pt": "cama",
-   "image": null,
+   "image": "/media/vocabulario/cama-336f2b72.webp",
    "imageAlt": "Uma cama arrumada com travesseiro e cobertor.",
    "imagePrompt": "a made bed with a pillow and a blanket"
   },
   "מִטְרִיָּה": {
    "pt": "guarda-chuva",
-   "image": null,
-   "imageAlt": "Um guarda-chuva aberto sob gotas de chuva.",
+   "image": "/media/vocabulario/guarda-chuva-f232dd1a.webp",
+   "imageAlt": "Um guarda-chuva verde, fechado, de cabo curvo.",
    "imagePrompt": "an open umbrella under falling raindrops"
   },
   "סוּס": {
@@ -202,7 +202,7 @@
   },
   "כִּסֵּא": {
    "pt": "cadeira",
-   "image": null,
+   "image": "/media/vocabulario/cadeira-9043e065.webp",
    "imageAlt": "Uma cadeira de madeira simples.",
    "imagePrompt": "a simple wooden chair"
   },
@@ -214,20 +214,20 @@
   },
   "עֵץ": {
    "pt": "árvore",
-   "image": null,
+   "image": "/media/vocabulario/arvore-4fee03dc.webp",
    "imageAlt": "Uma árvore frondosa com tronco grosso.",
    "imagePrompt": "a leafy tree with a thick trunk"
   },
   "מִיץ": {
    "pt": "suco",
-   "image": null,
+   "image": "/media/vocabulario/suco-3651798a.webp",
    "imageAlt": "Um copo de suco de laranja com uma laranja cortada ao lado.",
    "imagePrompt": "a glass of orange juice with a halved orange beside it"
   },
   "קָפֶה": {
    "pt": "café",
-   "image": null,
-   "imageAlt": "Uma xícara de café com fumaça.",
+   "image": "/media/vocabulario/cafe-003d8179.webp",
+   "imageAlt": "Uma xícara de café preto sobre o pires.",
    "imagePrompt": "a steaming cup of coffee"
   },
   "אַבָּא": {
@@ -238,7 +238,7 @@
   },
   "בַּיִת": {
    "pt": "casa",
-   "image": null,
+   "image": "/media/vocabulario/casa-1bd61561.webp",
    "imageAlt": "Uma casa simples com porta, janelas e telhado.",
    "imagePrompt": "a simple house with a door, windows and a roof"
   },
@@ -250,7 +250,7 @@
   },
   "כֶּלֶב": {
    "pt": "cachorro",
-   "image": null,
+   "image": "/media/vocabulario/cachorro-78e0a4d8.webp",
    "imageAlt": "Um cachorro sentado, olhando para a frente.",
    "imagePrompt": "a dog sitting and looking forward"
   },
@@ -262,14 +262,14 @@
   },
   "כַּדּוּר": {
    "pt": "bola",
-   "image": null,
+   "image": "/media/vocabulario/bola-048e7acc.webp",
    "imageAlt": "Uma bola de futebol.",
    "imagePrompt": "a football (soccer ball)"
   },
   "סֵפֶר": {
    "pt": "livro",
-   "image": null,
-   "imageAlt": "Um livro aberto.",
+   "image": "/media/vocabulario/livro-37bb35ab.webp",
+   "imageAlt": "Um livro fechado, de capa verde, com uma fita marcando a página.",
    "imagePrompt": "an open book"
   },
   "כֶּסֶף": {
@@ -280,8 +280,8 @@
   },
   "טֶלֶפוֹן": {
    "pt": "telefone",
-   "image": null,
-   "imageAlt": "Um celular com a tela acesa.",
+   "image": "/media/vocabulario/telefone-02596224.webp",
+   "imageAlt": "Um celular de tela escura, inclinado.",
    "imagePrompt": "a smartphone with its screen lit"
   }
  }
