@@ -16,6 +16,7 @@
  * se decide, e o cadeado é visível.
  */
 
+import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
 import { ancora, brl, isPlayable, parcelasMax, pixPrice, type CatalogCourse, fimDoPreLancamento } from '@/lib/catalog';
@@ -65,7 +66,7 @@ export function CourseCard({
         <div className="flex items-center gap-2">
           {state === 'locked' && (
             <span aria-hidden title="Ainda não está na sua conta"
-                  className="text-[14px] text-ink-muted">🔒</span>
+                  className="text-ink-muted"><IconeCadeado size={15} /></span>
           )}
           <Badge tone={badge.tone}>{badge.label}</Badge>
         </div>

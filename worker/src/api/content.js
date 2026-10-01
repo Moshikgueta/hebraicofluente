@@ -40,7 +40,7 @@
 
 import { notSignedIn, fail } from '../lib/http.js';
 import { requireAccount } from './auth.js';
-import { hasEntitlement } from '../lib/db.js';
+import { hasEntitlement, registrarConteudo } from '../lib/db.js';
 import { marcaDaConta, invisivel } from '../lib/marca.js';
 
 /* O mesmo curso que o portão protege (worker/src/gate.js). Quando o A1 tiver
@@ -128,6 +128,7 @@ export async function content({ request, env }) {
     .split(',').map(t => t.trim().replace(/^W\//, ''));
   if (jaTem.includes(etag)) return new Response(null, { status: 304, headers: cabecalhos });
 
+  await registrarConteudo(env, account.id);
   const corpo = MOLDE
     .replaceAll(MARCADOR, marca ? invisivel(marca) : '')
     .replaceAll(MARCADOR_VISIVEL, marca ? marca.toUpperCase() : '-');

@@ -1125,6 +1125,30 @@ export async function estourou(env, key, limit = 10, janelaMs = 60_000) {
 
 /* ── trilha ─────────────────────────────────────────────────────────────── */
 
+/* O conteúdo do curso saiu para esta conta (auditoria de 01/10/2026,
+   SEC-A-010): uma linha por conta por dia, na trilha, e só a partir do
+   200 (o 304 do cache não conta). É o que diz ao dono, num pedido de
+   desistência, se o curso inteiro já foi baixado. Não muda o direito de
+   desistir: é informação. */
+export async function registrarConteudo(env, accountId, at = now()) {
+  try {
+    const ja = await env.DB.prepare(
+      "SELECT 1 FROM access_log WHERE account_id = ? AND action = 'conteudo' AND created_at > ? LIMIT 1"
+    ).bind(accountId, at - 86_400_000).first();
+    if (!ja) await log(env, accountId, 'conteudo', '');
+  } catch { /* a trilha nunca derruba a aula */ }
+}
+
+/** Em quantos dias o conteúdo saiu para a conta desde `desde`, e o primeiro. */
+export async function conteudoBaixado(env, accountId, desde) {
+  try {
+    const r = await env.DB.prepare(
+      "SELECT COUNT(*) AS dias, MIN(created_at) AS primeiro FROM access_log WHERE account_id = ? AND action = 'conteudo' AND created_at >= ?"
+    ).bind(accountId, desde).first();
+    return { dias: Number(r?.dias) || 0, primeiro: r?.primeiro ?? null };
+  } catch { return { dias: 0, primeiro: null }; }
+}
+
 export async function log(env, accountId, action, detail = '') {
   try {
     await env.DB.prepare(

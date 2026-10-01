@@ -54,6 +54,7 @@
  * volta do estado anterior.
  */
 
+import { IconeSom } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { useEffect, useState, type ReactNode } from 'react';
 import { useProgress } from '@/lib/state/store';
@@ -961,7 +962,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
                           <Prose text={g.position} />
                         </span>
                       </span>
-                      {hasAudio(g.audioId) && <span aria-hidden className="ml-auto text-[var(--accent)]">🔊</span>}
+                      {hasAudio(g.audioId) && <span aria-hidden className="ml-auto text-[var(--accent)]"><IconeSom size={16} /></span>}
                     </button>
                   </li>
                 ))}

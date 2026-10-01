@@ -140,7 +140,7 @@ export function DashboardClient() {
       <header className="flex items-start gap-5 flex-wrap">
         <div className="flex-1 min-w-[240px]">
           <h1 className="font-display text-[27px] sm:text-[31px] font-semibold leading-[1.1] tracking-[-0.028em] mb-1">
-            {greeting()}{name ? `, ${name}` : ''} 👋
+            {greeting()}{name ? `, ${name}` : ''}.
           </h1>
           <p className="font-ui text-[16px] sm:text-[16.5px] text-ink-muted">
             {p.mastered === 0

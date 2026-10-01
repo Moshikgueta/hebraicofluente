@@ -19,6 +19,7 @@
  * scored. The testing version of the same content is the generated exercise.
  */
 
+import { IconeSom } from '@/components/shell/NavIcons';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
@@ -182,7 +183,7 @@ export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
                     <span className="font-ui text-[13.5px] font-medium text-ink">{g.namePt}</span>
                     <span className="font-ui text-[12px] text-ink-muted truncate">{g.position}</span>
                   </span>
-                  {hasAudio(g.nameAudioId) && <span aria-hidden className="ml-auto text-[var(--accent)]">🔊</span>}
+                  {hasAudio(g.nameAudioId) && <span aria-hidden className="ml-auto text-[var(--accent)]"><IconeSom size={16} /></span>}
                 </button>
               </li>
             ))}

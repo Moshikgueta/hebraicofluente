@@ -483,8 +483,19 @@ export function mensagemDeArrependimento({
  * Como o aviso de convite pendente, este carrega o e-mail do aluno de
  * propósito - quem lê é o dono, e sem o endereço não há o que fazer.
  */
+/* Quanto do curso já saiu para quem desiste (SEC-A-010). Só para o dono:
+   não muda o direito de desistir, e o e-mail diz isso. */
+function linhasDoConteudo(conteudo) {
+  if (!conteudo) return [];
+  if (!conteudo.dias) return ['Conteúdo do curso: não foi aberto desde a compra.'];
+  return [
+    `Conteúdo do curso aberto em ${conteudo.dias} dia(s) desde a compra (o primeiro em ${conteudo.primeiro}).`,
+    'Isso não muda o direito de desistir (CDC, art. 49): é só para você saber.'
+  ];
+}
+
 export function mensagemDeArrependimentoDono({
-  email, curso, valor, pedido, pedidoEm, prazoUteis, pixDireto, marca, estado = null
+  email, curso, valor, pedido, pedidoEm, prazoUteis, pixDireto, marca, estado = null, conteudo = null
 }) {
   const assinatura = marca || 'Hebraico Fluente';
   const manual = pixDireto
@@ -508,6 +519,7 @@ export function mensagemDeArrependimentoDono({
     `Valor: ${valor}`,
     `Pedido: ${pedido}`,
     `Pedido de desistência em: ${pedidoEm}`,
+    ...linhasDoConteudo(conteudo),
     '',
     `Prazo prometido na Política de Reembolso: ${prazoUteis} dias úteis.`,
     como,
@@ -521,6 +533,7 @@ export function mensagemDeArrependimentoDono({
     `Valor: ${escapar(valor)}<br>`,
     `Pedido: ${escapar(pedido)}<br>`,
     `Pedido de desistência em: ${escapar(pedidoEm)}</p>`,
+    ...linhasDoConteudo(conteudo).map(l => `<p>${escapar(l)}</p>`),
     `<p>Prazo prometido na Política de Reembolso: ${prazoUteis} dias úteis.</p>`,
     `<p>${escapar(como)}</p>`,
     `<p>${escapar(assinatura)}</p>`
