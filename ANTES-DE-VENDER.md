@@ -459,6 +459,13 @@ e-mail e as estatísticas de aprendizagem. Os Termos (art. 9) dizem que
 mudança que afete um acesso já comprado não retroage, e a Política de
 Privacidade promete avisar por e-mail antes de mudar o tratamento de dados.
 
+**RESPOSTA DO DONO (01/10/2026): houve venda real antes de 29/09.** Falta
+mandar o e-mail único a esses compradores (texto sugerido na conversa de
+01/10, com a frase final ajustada: mais aparelhos se pedirem, a marca d'água
+fica para todos, devolução opcional), depois de ver a lista em Actions ->
+Acesso -> listar. Decisão do dono: **a marca d'água fica, inclusive para
+quem comprou antes** (VIS-011 encerrado).
+
 **SÓ VOCÊ SABE.** Confirme se alguém comprou de verdade (não teste seu)
 antes de 29/09/2026.
 
