@@ -168,13 +168,19 @@ export function buildExam(
   letters: Letter[], scenes: readonly SceneLike[],
   opts: {
     audioAvailable: boolean; attempt?: number; sentences?: readonly SentenceLike[];
-    /** O conteúdo dos módulos 6 e 7. Sem ele, a parte do gerech fica de fora. */
+    /** O conteúdo dos módulos 6 e 7. Sem ele, a parte do gerech fica de fora.
+     *  Quem chama só passa quando o aluno FEZ o módulo 7 (CONT-010). */
     extras?: Extras;
+    /** A parte "Sem os pontos" (módulo 6). Falso para quem não fez o módulo
+     *  6: o exame abre com as 22 letras dominadas (a regra do certificado) e
+     *  não cobra o que o aluno ainda não estudou (auditoria de 01/10/2026,
+     *  CONT-010). */
+    semPontos?: boolean;
   }
 ): Exam {
-  const { audioAvailable, attempt = 1, sentences = [], extras } = opts;
+  const { audioAvailable, attempt = 1, sentences = [], extras, semPontos = true } = opts;
 
-  const sections = partsFor(audioAvailable).map(part => {
+  const sections = partsFor(audioAvailable).filter(part => semPontos || part.id !== 'sempontos').map(part => {
     const seed = `exam-${attempt}-${part.id}`;
     /* The LETTER ORDER is seeded, not just the option shuffling.
        Without this a retry was the same paper: the builder walks letters in the
@@ -251,7 +257,7 @@ function band(score: number, weakCount: number): { titlePt: string; bodyPt: stri
   if (score >= 0.9) {
     return {
       titlePt: 'Você lê hebraico.',
-      bodyPt: 'Não é força de expressão: você decodificou palavras que não viu antes, ' +
+      bodyPt: 'Não é força de expressão: você decodificou as palavras do curso sozinho, ' +
         'sem transliteração e sem pistas. O que falta agora é volume de leitura, não método.'
     };
   }

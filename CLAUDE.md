@@ -1018,3 +1018,30 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   hero, formas de pagamento do checkout), do `#teclado-hebraico` e de tudo que é
   `position: fixed` (folha de retorno): sobe acima, ou vai para a esquerda, ou fica. O
   aviso de conquista vai para o alto quando o teclado da tela está aberto.
+
+## Auditoria de 01/10/2026, parte do curso (audit/2026-10-01, G/F/E/D)
+- **Dt 6:9 voltou ao massorético.** A correção PED-015 de 28/09 (commit 8410a28) trocou
+  `מְזֻזֹת` por `מְזוּזֹת` no Shemá de `data/bonus.json`; foi revertida (CONT-004): o
+  Códice de Leningrado traz `וּכְתַבְתָּם עַל־מְזֻזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ` (qubuts, sem
+  vav); `מְזוּזוֹת` é a grafia de Dt 11:20. A pronúncia não muda, então a gravação é a mesma:
+  `audio/he-05cb039a.mp3` voltou de `audio/arquivo/` e `he-8b9dc73a.mp3` foi para lá (o id
+  sai do hebraico). Se o painel /admin/gravar tiver regravado `he-8b9dc73a`, regravar no id novo.
+- **Som da letra em português** (`lib/som-pt.ts`, CONT-003): `somPt(sound)` é o rótulo da
+  tela (cabeçalho da lição, página do módulo, painel, ligar letra e som, baralho da Academia);
+  o IPA de `data/letters.json` fica como detalhe. `fonemasDe`/`somEmComum` dizem quando dois
+  sons são o mesmo (Tav/Tet, Álef/Áyin, Kaf/Qof): o ligar da lição (CONT-001) e o baralho
+  (`chavesDe` em deck.ts, CONT-005) nunca põem dois iguais na mesa.
+- **Domínio com os números das constantes** (UXQA-005): `FIXACAO_ITENS` (10),
+  `acertosPara`, `REGRA_DO_DOMINIO` e `REGRA_DO_DOMINIO_CURTA` ("8 de 10") em
+  lib/state/rules.ts. Nenhuma tela escreve "6 de 8" à mão; "dominada" é sempre
+  `isLessonMastered` (checkpoint, /concluido, /certificado, exame). A nota de 30/09 acima
+  que diz "6 de 8" descreve a régua antiga.
+- **Exame e módulos 6/7** (CONT-010): o exame abre com as 22 letras dominadas (a regra do
+  certificado). "Sem os pontos" só entra para quem fez o módulo 6, e "Os sons de fora" para
+  quem fez o 7 (`semPontos` e `extras` em `buildExam`).
+- **Aula 0 primeiro** (CONV-020): abrir /inicio grava `firsts['aula-0']`; até isso, sem
+  nenhuma lição começada, o painel oferece a Aula 0 como botão principal.
+- **Lição trancada** (UXQA-002): fixação abaixo de `LIBERA_MARK` troca o botão principal por
+  "Refazer a fixação (precisa de 80%)" e o painel aponta "Terminar <letra>".
+- Testes: `app/tests/auditoria-curso-1001.test.ts`. `npm run validate` ganhou V27 (todo
+  hebraico do dado-fonte em NFC).

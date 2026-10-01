@@ -942,6 +942,24 @@ export function validate({ checkDist = true } = {}) {
     }
   }
 
+  /* ── V27 - todo hebraico do dado-fonte em NFC ───────────────────────
+     O exportador normaliza, então o aluno nunca via a diferença; mas oito
+     sílabas de Kaf e Pe estavam com o daguesh antes da vogal no dado-fonte, e
+     todo código que compara o dado cru (o validate, os geradores que dizem
+     "o dado do curso está em NFC") herdava a mentira (auditoria de
+     01/10/2026, CONT-018). */
+  for (const f of ['letters', 'modules', 'sentences', 'textos', 'bonus', 'missoes', 'extras', 'real-world', 'biblia', 'nikud']) {
+    let dado;
+    try { dado = readJson(`data/${f}.json`); } catch { continue; }
+    const andar = (x, onde) => {
+      if (typeof x === 'string') {
+        if (/[\u0590-\u05FF]/.test(x) && x.normalize('NFC') !== x) fail('V27', `data/${f}.json${onde}`, `fora de NFC: ${JSON.stringify(x.slice(0, 30))}`);
+      } else if (Array.isArray(x)) x.forEach((v, i) => andar(v, `${onde}[${i}]`));
+      else if (x && typeof x === 'object') for (const [k, v] of Object.entries(x)) andar(v, `${onde}.${k}`);
+    };
+    andar(dado, '');
+  }
+
   return { fails: fails.slice(), warns: warns.slice() };
 }
 

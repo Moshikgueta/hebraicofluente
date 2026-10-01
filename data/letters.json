@@ -662,7 +662,7 @@
         "tituloPt": "Viu {{ה}} no final da palavra?",
         "passos": [
           "Não coloque um \"h\" no fim. Quase nunca é isso que se ouve ali.",
-          "Olhe o niqqud embaixo da letra ANTERIOR - é ele que manda.",
+          "Olhe o nikud embaixo da letra ANTERIOR - é ele que manda.",
           "Veja qual som de vogal aparece. Com o traço {{◌ָ}} embaixo, o fim costuma soar \"á\".",
           "Leia a palavra inteira de uma vez, e não letra por letra."
         ],
@@ -678,7 +678,7 @@
             "ptPt": "você (para homem)"
           }
         ],
-        "notaPt": "Isto é uma pista, e não uma lei. Não existe \"{{ה}} no fim significa sempre A\": existem palavras em que ele soa, e existem outras vogais no fim. O que vale sempre é olhar o niqqud e ler a palavra como uma unidade."
+        "notaPt": "Isto é uma pista, e não uma lei. Não existe \"{{ה}} no fim significa sempre A\": existem palavras em que ele soa, e existem outras vogais no fim. O que vale sempre é olhar o nikud e ler a palavra como uma unidade."
       },
       "lembrePt": "No começo da palavra, {{ה}} é um sopro. No fim, quase sempre é muda e marca o som de \"a\".",
       "checagem": [
@@ -1341,7 +1341,7 @@
         "ondePt": "ponto no alto, à ESQUERDA"
       }
     ],
-    "soundNotePt": "Como o CH de \"chave\", \"chuva\", \"cachorro\". Com o ponto do lado esquerdo ({{שׂ}}, Sin) o som muda para S de \"sapo\".",
+    "soundNotePt": "Como o CH de \"chave\", \"chuva\", \"cachorro\". Com o ponto do lado esquerdo a letra vira Sin, com o S de \"sapo\", que tem lição própria logo depois.",
     "articulacao": {
       "pontos": [
         {
@@ -1906,7 +1906,7 @@
             "ptPt": "professor"
           }
         ],
-        "notaPt": "Estas duas palavras você vai ouvir no primeiro dia em Israel, e agora consegue ler as duas sem ajuda. Continua valendo o mesmo aviso: o {{ה}} do fim é pista, não regra, e quem decide é o niqqud."
+        "notaPt": "Estas duas palavras você vai ouvir no primeiro dia em Israel, e agora consegue ler as duas sem ajuda. Continua valendo o mesmo aviso: o {{ה}} do fim é pista, não regra, e quem decide é o nikud."
       },
       "lembrePt": "{{ו}} sozinha com vogal própria é V. {{וֹ}} é \"o\". {{וּ}} é \"u\". O ponto decide.",
       "checagem": [
@@ -3054,7 +3054,7 @@
     "namePt": "Qof",
     "translit": "k",
     "sound": "/k/",
-    "soundNotePt": "Como o C de \"casa\". No hebraico moderno soa exatamente igual a {{כּ}} - são duas letras para um som só.",
+    "soundNotePt": "Como o C de \"casa\". No hebraico moderno soa exatamente igual ao Kaf com ponto, que vem mais adiante - são duas letras para um som só.",
     "articulacao": {
       "pontos": [
         {
@@ -3505,19 +3505,19 @@
     "syllables": [
       {
         "vowel": "a",
-        "he": "כַּ",
+        "he": "כַּ",
         "translit": "ka",
         "ptApprox": "A aberto, como em \"casa\""
       },
       {
         "vowel": "e",
-        "he": "כֶּ",
+        "he": "כֶּ",
         "translit": "ke",
         "ptApprox": "E como em \"mesa\""
       },
       {
         "vowel": "i",
-        "he": "כִּ",
+        "he": "כִּ",
         "translit": "ki",
         "ptApprox": "I como em \"milho\""
       },
@@ -3535,7 +3535,7 @@
       },
       {
         "vowel": "sheva",
-        "he": "כְּ",
+        "he": "כְּ",
         "translit": "k",
         "ptApprox": "só a consoante, sem vogal"
       }
@@ -3716,19 +3716,19 @@
     "syllables": [
       {
         "vowel": "a",
-        "he": "פַּ",
+        "he": "פַּ",
         "translit": "pa",
         "ptApprox": "A aberto, como em \"casa\""
       },
       {
         "vowel": "e",
-        "he": "פֶּ",
+        "he": "פֶּ",
         "translit": "pe",
         "ptApprox": "E como em \"mesa\""
       },
       {
         "vowel": "i",
-        "he": "פִּ",
+        "he": "פִּ",
         "translit": "pi",
         "ptApprox": "I como em \"milho\""
       },
@@ -3746,7 +3746,7 @@
       },
       {
         "vowel": "sheva",
-        "he": "פְּ",
+        "he": "פְּ",
         "translit": "p",
         "ptApprox": "só a consoante, sem vogal"
       }

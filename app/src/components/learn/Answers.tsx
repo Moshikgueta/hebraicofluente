@@ -20,6 +20,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
+import { Prose } from '@/components/hebrew/Prose';
 import { Button } from '@/components/ui/Button';
 import { AudioButton, hasAudio } from './AudioButton';
 import { clean, joinSyllable, onCarrier } from '@/lib/hebrew';
@@ -391,6 +392,9 @@ export function MatchPairs({
   const [wrong, setWrong] = useState<{ l: number; r: number } | null>(null);
   const missesRef = useRef<[string, string][]>([]);
   const reported = useRef(false);
+  /* O que o leitor de tela ouve a cada toque (VIS-005, o mesmo padrão do
+     Match da Academia): escolha, par certo, par errado. */
+  const [anuncio, setAnuncio] = useState('');
 
   useEffect(() => {
     if (matched.length === pairs.length && !reported.current) {
@@ -399,19 +403,28 @@ export function MatchPairs({
     }
   }, [matched, pairs.length, onAnswer]);
 
+  const valor = (side: 'left' | 'right', i: number) => side === 'left' ? pairs[i]!.left : pairs[i]!.right;
+
   const tap = (side: 'left' | 'right', i: number) => {
     if (settled || matched.includes(i)) return;
-    if (!picked) { setPicked({ side, i }); return; }
-    if (picked.side === side) { setPicked({ side, i }); return; }   // changed their mind
+    if (!picked || picked.side === side) {            // first tap, or changed their mind
+      setPicked({ side, i });
+      setAnuncio(`Escolhido: ${valor(side, i)}. Agora escolha o par na outra coluna.`);
+      return;
+    }
 
     const l = side === 'right' ? picked.i : i;
     const r = side === 'right' ? i : picked.i;
     if (l === r) {
       setMatched(m => [...m, l]);
       setWrong(null);
+      const faltam = pairs.length - matched.length - 1;
+      setAnuncio(`Par certo: ${pairs[l]!.left} com ${pairs[r]!.right}.`
+        + (faltam > 0 ? ` Faltam ${faltam}.` : ' Todos ligados.'));
     } else {
       missesRef.current.push([pairs[l]!.left, pairs[r]!.right]);
       setWrong({ l, r });
+      setAnuncio(`Não combinam: ${pairs[l]!.left} e ${pairs[r]!.right}. Tente outro par.`);
       setTimeout(() => setWrong(null), 550);
     }
     setPicked(null);
@@ -423,6 +436,7 @@ export function MatchPairs({
       : <He size={kind === 'glyph' ? 'lg' : 'word'}>{value}</He>;
 
   return (
+    <div className="grid gap-2">
     <div className="grid grid-cols-2 gap-3 sm:gap-4">
       {([['left', labelLeft], ['right', labelRight]] as const).map(([side, label]) => (
         <div key={side} className="grid gap-2 content-start">
@@ -438,7 +452,14 @@ export function MatchPairs({
                 <li key={`${side}-${i}`}>
                   <button
                     type="button"
-                    disabled={settled || isMatched}
+                    /* `aria-disabled` e não `disabled`: o botão desligado
+                       perdia o foco para o <body> a cada par formado
+                       (VIS-005). O clique num par já feito é ignorado em `tap`. */
+                    aria-disabled={settled || isMatched}
+                    aria-pressed={isPicked}
+                    aria-label={isMatched
+                      ? `${valor(side, i)}, ligado a ${side === 'left' ? pairs[i]!.right : pairs[i]!.left}`
+                      : undefined}
                     onClick={() => tap(side, i)}
                     /* A fixed row height on BOTH sides, so row 3 on the left
                        sits beside row 3 on the right. Hebrew at word size is
@@ -446,7 +467,7 @@ export function MatchPairs({
                        find their own heights made the two columns drift apart
                        down the screen. */
                     className={`w-full h-[72px] px-3 rounded-[var(--r-md)] border-2
-                      grid place-items-center transition-colors disabled:cursor-default
+                      grid place-items-center transition-colors aria-disabled:cursor-default
                       ${isMatched ? 'border-[var(--green)] bg-mint'
                         : isWrong ? 'border-[var(--amber)] bg-[var(--amber-wash)]'
                         : isPicked ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
@@ -463,6 +484,8 @@ export function MatchPairs({
           </ul>
         </div>
       ))}
+    </div>
+    <p role="status" aria-live="polite" className="sr-only">{anuncio}</p>
     </div>
   );
 }
@@ -549,6 +572,15 @@ export function TypeAnswer({
 export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string | null }) {
   const [shown, setShown] = useState(0);
   const available = hints?.length ?? 0;
+  /* Depois da última dica o botão "Mais uma dica" some, e o foco caía no
+     <body> (VIS-008). Quem pediu a dica pelo teclado vai para a dica nova. */
+  const ultimaRef = useRef<HTMLLIElement>(null);
+  const pediuPeloBotao = useRef(false);
+  useEffect(() => {
+    if (!pediuPeloBotao.current) return;
+    pediuPeloBotao.current = false;
+    if (shown >= available) ultimaRef.current?.focus({ preventScroll: true });
+  }, [shown, available]);
   /* Sem gravação e sem dica, a linha inteira some: não há o que mostrar, e um
      controle desligado entre o aluno e a resposta não é informação. A regra
      valia só aqui, porque as lições diziam "áudio em breve"; hoje elas também
@@ -561,9 +593,10 @@ export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string |
       {shown > 0 && (
         <ul className="grid gap-1.5" aria-live="polite">
           {hints?.slice(0, shown).map((h, i) => (
-            <li key={i} className="font-ui text-[13.5px] leading-relaxed text-ink-muted
+            <li key={i} ref={i === shown - 1 ? ultimaRef : undefined} tabIndex={-1}
+                className="outline-none font-ui text-[13.5px] leading-relaxed text-ink-muted
                                    border-l-2 border-[var(--accent)] pl-3">
-              {h}
+              <Prose text={h} />
             </li>
           ))}
         </ul>
@@ -572,7 +605,7 @@ export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string |
         {shown < available && (
           <button
             type="button"
-            onClick={() => setShown(s => s + 1)}
+            onClick={() => { pediuPeloBotao.current = true; setShown(s => s + 1); }}
             className="min-h-[44px] font-ui text-[13px] text-[var(--accent)] hover:underline"
           >
             {shown === 0 ? 'Precisa de uma dica?' : 'Mais uma dica'}

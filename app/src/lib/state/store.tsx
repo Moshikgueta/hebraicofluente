@@ -29,6 +29,7 @@ import {
   topConfusions, weakLetters, XP
 } from './rules';
 import { track } from '@/lib/analytics';
+import { ACERTO_DO_TRACO } from '@/lib/trace-score';
 import { comprar as comprarNaLoja, type ItemDaLoja, type Recusa } from '@/lib/loja';
 import {
   fundirRegistro, limparEspelho, registroValido, RODADAS_MUDOU, sincronizarEspelho, type Registro
@@ -364,11 +365,11 @@ export function ProgressProvider({
     /* The bar is 0.5, which is low, and that is the decision: a finger on glass
        is not a pen on paper, and a learner told their readable ג is wrong stops
        trusting the whole app. The canvas is generous; this agrees with it. */
-    let next = recordSkill(agora(), letterId, 'escrever', score >= 0.5, d);
+    let next = recordSkill(agora(), letterId, 'escrever', score >= ACERTO_DO_TRACO, d);
     /* Writing is practice even when it comes out badly - more so, in fact. */
     next = applyPractice(next, d, { units: ANSWER_UNITS });
     commit(next);
-    track('exercise_answered', { letterId, skill: 'escrever', correct: score >= 0.5 });
+    track('exercise_answered', { letterId, skill: 'escrever', correct: score >= ACERTO_DO_TRACO });
   }, [commit, agora]);
 
   const finishGym = useCallback((modeId: string, score: number, seconds: number) => {

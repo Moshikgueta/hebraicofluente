@@ -132,6 +132,24 @@ export function TestRun({
     setI(n => n + 1);
   }, [escolha, q, dadas, i, perguntas.length, onFim, onResposta, inicio]);
 
+  /* Teclado: 1-4 escolhem, Enter confirma - o mesmo atalho da prática. Os
+     selos numerados já prometiam isso e as teclas não faziam nada (auditoria
+     de 01/10/2026, VIS-013). Aqui a tecla só ESCOLHE: o teste não corrige
+     durante, e confirmar continua sendo um gesto à parte. */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!q) return;
+      const el = document.activeElement;
+      if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) return;
+      if (e.key === 'Enter' && escolha !== null && !e.repeat
+          && !(el instanceof HTMLButtonElement)) { e.preventDefault(); confirmar(); return; }
+      const n = Number(e.key);
+      if (n >= 1 && n <= q.opcoes.length) { e.preventDefault(); setEscolha(n - 1); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [q, escolha, confirmar]);
+
   if (!q) return null;
   const decorridos = Math.max(0, Math.round((agora - inicio) / 1000));
   const emHebraico = q.sentido === 'he';

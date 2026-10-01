@@ -19,6 +19,7 @@ import {
 } from '@/lib/hebrew';
 import { shuffled, take, type Rand } from './rng';
 import { temClipe } from '@/lib/audio-registro';
+import { somEmComum, somPt } from '@/lib/som-pt';
 
 /* ── só o que já foi GRAVADO vira exercício de escuta ─────────────────────
    Todo item do curso tem `audioId`, gravado ou não: o id sai do hebraico.
@@ -127,7 +128,7 @@ export const exLetterRecognition: Gen = (L, ctx, rand, i) => {
     letter: L.letter, options, answer,
     whyPt: options.map(o => o === L.letter ? null : `Essa não é ${L.namePt}.`),
     hintsPt: [L.soundNotePt],
-    explainPt: `${L.namePt} faz o som ${L.sound}.`
+    explainPt: `${L.namePt} faz o som ${somPt(L.sound)}.`
   };
 };
 
@@ -453,13 +454,23 @@ export const exBuildWord: Gen = (L, _ctx, rand, i) => {
  * the only version that works with a keyboard or a screen reader.
  */
 export const exMatchLetterSound: Gen = (L, ctx, rand, i) => {
-  const pool = [L, ...ctx.history.filter(x => x.id !== L.id).slice(-5)];
-  const chosen = take(pool, 4, rand);
+  /* Nunca duas cartas com o mesmo som (auditoria de 01/10/2026, CONT-001).
+     O Match corrige por índice: com כ e ק ambos "k", ligar ק ao "k" do כ
+     contava erro, e o modelo de confusões aprendia um par que não existe.
+     A letra da lição entra sempre; das recentes, só as que não dividem
+     nenhum som com quem já está na mesa (Tav/Tet, Álef/Áyin, Kaf/Qof). */
+  const recentes = shuffled(ctx.history.filter(x => x.id !== L.id).slice(-5), rand);
+  const chosen: Letter[] = [L];
+  for (const x of recentes) {
+    if (chosen.length >= 4) break;
+    if (chosen.some(c => somEmComum(c.sound, x.sound))) continue;
+    chosen.push(x);
+  }
   if (chosen.length < 3) return null;
   return {
     id: `${L.id}-mls-${i}`, kind: 'match', letterId: L.id, skill: 'som',
     promptPt: 'Ligue cada letra ao seu som.',
-    pairs: chosen.map(x => ({ left: x.letter, right: x.sound })),
+    pairs: shuffled(chosen, rand).map(x => ({ left: x.letter, right: somPt(x.sound) })),
     leftKind: 'glyph', rightKind: 'text',
     labelLeft: 'Letra', labelRight: 'Som',
     explainPt: 'O som é a única coisa que a forma da letra não mostra - é o que precisa ser decorado.'
@@ -885,7 +896,12 @@ export const exLetterInWord: Gen = (L, ctx, rand, i) => {
 
 /** Onde a letra aparece nesta palavra: começo, meio ou fim? */
 export const exLetterPosition: Gen = (L, ctx, rand, i) => {
-  const pool = legiveis(ctx).filter(w => containsLetter(w.he, L.letter));
+  /* Só palavras em que a letra aparece UMA vez (base ou final): em שֶׁמֶשׁ,
+     נֹתֵן ou לַיְלָה ela está em duas posições, e a pergunta teria duas
+     respostas certas (auditoria de 01/10/2026, CONT-006). */
+  const vezes = (he: string) =>
+    clusters(he).filter(c => c[0] === L.letter || (!!L.finalForm && c[0] === L.finalForm)).length;
+  const pool = legiveis(ctx).filter(w => containsLetter(w.he, L.letter) && vezes(w.he) === 1);
   const alvo = at(pool, i);
   if (!alvo) return null;
 
@@ -962,7 +978,7 @@ export const exConfusablePick: Gen = (L, ctx, rand, i) => {
       return nome ? `Essa é ${nome}. Olhe o desenho de novo.` : 'Essa é outra letra, bem parecida.';
     }),
     hintsPt: [L.soundNotePt],
-    explainPt: `${L.namePt} faz ${L.sound}. As outras aqui são as que mais se parecem com ela.`
+    explainPt: `${L.namePt} faz o som ${somPt(L.sound)}. As outras aqui são as que mais se parecem com ela.`
   };
 };
 

@@ -23,6 +23,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { He, HeCloze } from '@/components/hebrew/He';
+import { Prose } from '@/components/hebrew/Prose';
 import { AudioButton, hasAudio } from './AudioButton';
 import { OuvirInstrucao } from './OuvirInstrucao';
 import {
@@ -335,9 +336,9 @@ export function ExercisePlayer({
             {/* The specific reason first, the general explanation after it. A
                 learner who chose מִ needs to hear about מִ, not about vowels. */}
             {settled.why && (
-              <p className="mt-2 text-[15px] leading-relaxed text-ink font-medium">{settled.why}</p>
+              <p className="mt-2 text-[15px] leading-relaxed text-ink font-medium"><Prose text={settled.why} /></p>
             )}
-            <p className="mt-2 text-[15px] leading-relaxed text-ink-body">{ex.explainPt}</p>
+            <p className="mt-2 text-[15px] leading-relaxed text-ink-body"><Prose text={ex.explainPt} /></p>
             {vaiVoltar && (
               <p className="mt-2 font-ui text-[14px] leading-relaxed text-[var(--gold-body)]">
                 Esta questão volta daqui a pouco, para você acertar.

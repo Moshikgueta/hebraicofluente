@@ -4,6 +4,8 @@
    lesson, and what the learner will be able to read at the end of it. It is
    the workbook's own module page, and it is where the bridge words live. */
 
+import { somPt } from '@/lib/som-pt';
+import { resumoDasLicoes } from '@/lib/resumo-licoes';
 import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
@@ -15,7 +17,7 @@ import { isLessonComplete } from '@/lib/state/rules';
 import { missaoDoModulo, textoDoModulo } from '@/lib/content';
 import { missaoId } from '@/lib/engine/missao';
 import { licaoDePratica, praticaId } from '@/lib/engine/pratica';
-import { ehContraste, idDoSom } from '@/lib/sons';
+import { ehContraste, idDoSom, soOLadoDoPonto } from '@/lib/sons';
 
 export function ModuleClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
   const p = useProgress();
@@ -48,11 +50,11 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       </Card>
 
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[18px] font-semibold">As três lições</h2>
+        <h2 className="font-display text-[18px] font-semibold">As lições</h2>
+        {/* Contado dos dados, não escrito à mão: "as três lições" estava no
+            módulo 5, que tem sete (auditoria de 01/10/2026, CONT-008). */}
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-          Este módulo corresponde a uma unidade do plano de aulas: duas lições com
-          conteúdo novo e uma terceira de prática. Estudando sozinho, trate cada
-          lição como uma sessão - e não pule a terceira.
+          {resumoDasLicoes(mod.lessons)} Estudando sozinho, trate cada lição como uma sessão.
         </p>
         <ol className="grid gap-2">
           {mod.lessons.map(ls => (
@@ -107,7 +109,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
                       className="flex items-center gap-4 rounded-[var(--r-md)] p-2.5 hover:bg-surface-2">
                   <He size="lg" dim={!isLessonComplete(p.state, l.id)}>{l.letter}</He>
                   <span className="font-ui text-[15px] text-ink">{l.order}. {l.namePt}</span>
-                  <span className="font-ui text-[13px] text-ink-muted">{l.sound}</span>
+                  <span className="font-ui text-[13px] text-ink-muted">{somPt(soOLadoDoPonto(l).sound)}</span>
                   <span aria-hidden className="ml-auto text-ink-muted">
                     {isLessonComplete(p.state, l.id) ? '✓' : '→'}
                   </span>
@@ -204,3 +206,4 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
     </div>
   );
 }
+

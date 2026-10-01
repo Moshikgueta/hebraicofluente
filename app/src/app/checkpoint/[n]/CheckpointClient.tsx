@@ -24,7 +24,7 @@ import { buildCheckpoint } from '@/lib/engine/exercises';
 import { buildSemPontos, MODULOS_COM_RAMPA } from '@/lib/engine/palavras';
 import { rng } from '@/lib/engine/rng';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
-import { isLessonComplete, PASS_MARK } from '@/lib/state/rules';
+import { isLessonComplete, isLessonMastered, PASS_MARK, REGRA_DO_DOMINIO_CURTA } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
 export function CheckpointClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
@@ -170,24 +170,30 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       </header>
 
       <Card className="p-6 grid gap-4">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">Você já domina</p>
+        {/* "Concluída" e "dominada" são palavras diferentes (UXQA-005): o
+            título não afirma domínio sobre uma letra concluída a 50%. */}
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">As letras deste módulo</p>
         <ul className="grid gap-2">
           {letters.map(l => {
             const done = isLessonComplete(p.state, l.id);
+            const dominada = isLessonMastered(p.state, l.id);
             return (
               <li key={l.id} className="flex items-center gap-3">
-                <span aria-hidden className={done ? 'text-[var(--green)]' : 'text-ink-muted'}>
-                  {done ? '✓' : '○'}
+                <span aria-hidden className={dominada ? 'text-[var(--green)]' : 'text-ink-muted'}>
+                  {dominada ? '✓' : done ? '◐' : '○'}
                 </span>
                 <He size="word" dim={!done}>{l.letter}</He>
                 <span className={`font-ui text-[14px] ${done ? 'text-ink' : 'text-ink-muted'}`}>
                   {l.namePt}
+                  <span className="text-ink-muted">
+                    {dominada ? ' · dominada' : done ? ' · concluída' : ''}
+                  </span>
                 </span>
-                {!done && (
+                {!dominada && (
                   <Link href={`/licao/${l.id}`}
                         className="ml-auto inline-flex items-center min-h-[44px] pl-3 font-ui text-[13px]
                                    text-[var(--accent)] hover:underline">
-                    fazer a lição
+                    {done ? `refazer a fixação (${REGRA_DO_DOMINIO_CURTA})` : 'fazer a lição'}
                   </Link>
                 )}
               </li>
@@ -196,7 +202,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         </ul>
         <ProgressBar
           value={letters.length ? readyLetters.length / letters.length : 0}
-          label="Lições do módulo"
+          label="Lições concluídas"
           sublabel={`${readyLetters.length} / ${letters.length}`}
         />
       </Card>

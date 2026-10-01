@@ -260,6 +260,13 @@ export function normalizeLoose(text: string): string {
        (auditoria de 28/09, PED-022). */
     .replace(/rr/g, 'ch')
     .replace(/c(?=[aou])/g, 'k')
+    /* "gue"/"gui" é a convenção do curso para o G duro antes de E e I; quem
+       escreve "ge", "gi" ou "geshem" leu certo (auditoria de 01/10/2026,
+       CONT-012). E o h final depois de vogal ("todah", "imah") é
+       grafia de fora do curso para a mesma palavra: o curso nunca escreve o
+       ה final mudo. */
+    .replace(/gu(?=[ei])/g, 'g')
+    .replace(/([aeiou])h\b/g, '$1')
     .replace(/tz/g, 'ts')
     .replace(/y/g, 'i')
     /* "tiyul" vira "tiiul" na linha de cima; "tiul" é o mesmo som. */
@@ -272,5 +279,10 @@ export const typedIsCorrect = (typed: string, accept: readonly string[]): boolea
   if (!t.length) return false;
   if (accept.some(a => normalizeTyped(a) === t)) return true;
   const f = normalizeLoose(typed);
-  return accept.some(a => normalizeLoose(a) === f);
+  if (accept.some(a => normalizeLoose(a) === f)) return true;
+  /* Um passo a mais, e só numa direção: o "ch" do curso (ח e כ sem ponto)
+     escrito "h", como o português escreve "Hanucá" e "lehaim" - "lehem" para
+     léchem (CONT-012). O contrário NÃO vale: "ch" no lugar do "h" do ה
+     seria ler ה como ח, que é exatamente a troca que o curso corrige. */
+  return accept.some(a => normalizeLoose(a).replace(/ch/g, 'h') === f);
 };

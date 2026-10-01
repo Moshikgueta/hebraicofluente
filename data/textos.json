@@ -233,9 +233,9 @@
         },
         {
           "t": "vf",
-          "q": "A Noa queria ficar mais um dia.",
+          "q": "A Noa quer ficar mais um dia.",
           "certa": true,
-          "porque": "{{אֲנִי רוֹצָה עוֹד יוֹם!}}: queria mais um dia!"
+          "porque": "{{אֲנִי רוֹצָה עוֹד יוֹם!}}: quero mais um dia!"
         }
       ]
     },
