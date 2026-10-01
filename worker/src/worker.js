@@ -73,6 +73,9 @@ const ROUTES = {
   'GET /api/pay/webhook': pay.webhook,
 
   'GET /api/orders': pay.orders,
+  /* O PIX ainda pagável do próprio pedido, para o checkout e o /perfil
+     reabrirem o mesmo código em vez de gerar outro. Ver api/pay.js. */
+  'GET /api/pay/pix': pay.pixAberto,
   /* A desistência da compra pelo próprio site (CDC, art. 49; Decreto
      7.962/2013, art. 5º). Ver api/pay.js. */
   'POST /api/pay/desistir': pay.desistir,

@@ -510,6 +510,133 @@ export function mensagemDeArrependimentoDono({
   return { subject: `Desistência: ${pedido} (${valor})`, text, html };
 }
 
+/* ── o estorno concluído (auditoria de 01/10/2026, PAY-B-006) ──────────── */
+
+/**
+ * "O estorno está concluído e o acesso está encerrado" - para o aluno, uma
+ * vez, quando o pedido vira `refunded`: desistência estornada sozinha,
+ * devolução marcada pelo dono em /admin/estornos, ou contestação no banco.
+ * O e-mail da desistência promete "o acesso é encerrado quando o reembolso
+ * for processado"; até aqui ninguém avisava quando foi.
+ *
+ * `restaAte`: quando o estorno é de uma renovação, os meses DELA saem e o
+ * acesso anterior continua - a mensagem diz até quando, em vez de dizer que
+ * o curso acabou.
+ */
+export function mensagemDeEstorno({
+  nome, curso, valor, pedido, cartao, contestacao = false, restaAte = '', marca, suporte
+}) {
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  const abertura = contestacao
+    ? `A compra do curso ${curso} está contestada junto ao banco ou à operadora, e o valor está devolvido.`
+    : `O estorno da sua compra do curso ${curso} está concluído.`;
+  const acesso = restaAte
+    ? `Os meses desta compra saem do seu acesso, que continua valendo até ${restaAte}.`
+    : 'O acesso ao curso está encerrado.';
+  const dinheiro = cartao
+    ? 'No cartão, o valor aparece na fatura conforme o prazo da operadora.'
+    : 'O valor volta pela mesma forma de pagamento.';
+
+  const text = [
+    ola,
+    '',
+    abertura,
+    acesso,
+    '',
+    '---',
+    `Curso: ${curso}`,
+    `Valor: ${valor}`,
+    `Pedido: ${pedido}`,
+    '---',
+    '',
+    dinheiro,
+    'Seu progresso de estudo fica guardado na conta, caso um dia você volte.',
+    '',
+    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    '',
+    assinatura
+  ].filter(l => l !== null).join('\n');
+
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p><strong>${escapar(abertura)}</strong> ${escapar(acesso)}</p>`,
+    '<hr>',
+    `<p>Curso: ${escapar(curso)}<br>`,
+    `Valor: ${escapar(valor)}<br>`,
+    `Pedido: ${escapar(pedido)}</p>`,
+    '<hr>',
+    `<p>${escapar(dinheiro)} Seu progresso de estudo fica guardado na conta, caso um dia você volte.</p>`,
+    suporte ? `<p>Qualquer dúvida, responda esta mensagem ou escreva para ${escapar(suporte)}.</p>` : '',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  return {
+    subject: contestacao ? `Compra contestada - ${curso}` : `Estorno concluído - ${curso}`,
+    text,
+    html
+  };
+}
+
+/* ── o fim do acesso (auditoria de 01/10/2026, PAY-B-004) ──────────────── */
+
+/**
+ * O aviso de fim de acesso: 30 dias antes, 7 dias antes e no dia do fim
+ * (worker/src/vencimento.js). Não é propaganda: é a informação de que um
+ * serviço contratado está acabando, para quem o contratou, e por isso não
+ * depende da lista de novidades. Diz a data, diz que nada é cobrado sozinho,
+ * e diz como renovar - que é uma compra nova, feita pela pessoa.
+ *
+ * `marco`: 'd30' | 'd7' | 'fim'. `dias`: quantos faltam (nos dois primeiros).
+ */
+export function mensagemDeVencimento({
+  nome, curso, quando, dias, marco, meses, renovar, marca, suporte
+}) {
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  const fim = marco === 'fim';
+  const faltam = Number(dias) === 1 ? 'amanhã' : `daqui a ${dias} dias`;
+  const abertura = fim
+    ? `Seu acesso ao curso ${curso} está encerrado desde ${quando}.`
+    : `Seu acesso ao curso ${curso} termina em ${quando} (${faltam}).`;
+  const como = fim
+    ? `Para voltar a estudar, renove por mais ${meses} meses: ${renovar}`
+    : `Para continuar estudando, renove por mais ${meses} meses: ${renovar}`;
+  const soma = fim
+    ? 'Seu progresso fica guardado na conta e volta inteiro quando você renovar.'
+    : `Renovar antes não perde nenhum dia: os ${meses} meses são somados ao prazo que ainda resta.`;
+
+  const text = [
+    ola,
+    '',
+    abertura,
+    '',
+    como,
+    soma,
+    '',
+    'Não há renovação automática: nada é cobrado sem o seu pedido.',
+    '',
+    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    '',
+    assinatura
+  ].filter(l => l !== null).join('\n');
+
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p><strong>${escapar(abertura)}</strong></p>`,
+    `<p><a href="${escapar(renovar)}">Renovar por mais ${escapar(meses)} meses</a></p>`,
+    `<p>${escapar(soma)}</p>`,
+    '<p>Não há renovação automática: nada é cobrado sem o seu pedido.</p>',
+    suporte ? `<p>Qualquer dúvida, responda esta mensagem ou escreva para ${escapar(suporte)}.</p>` : '',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  const subject = fim
+    ? `Seu acesso terminou - ${curso}`
+    : `Seu acesso termina em ${dias} ${Number(dias) === 1 ? 'dia' : 'dias'} - ${curso}`;
+  return { subject, text, html };
+}
+
 /**
  * Um alerta operacional para o dono (worker/src/alertas.js e o estorno que
  * travou). Texto puro, curto, sem dado de aluno além do que o dono precisa

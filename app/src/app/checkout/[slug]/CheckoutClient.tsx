@@ -42,6 +42,8 @@ import { confirmaSozinho, empresa, formasAtivas, soPix, temPix } from '@/lib/emp
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 import { contarAB } from '@/lib/ab';
+import { api } from '@/lib/account/api';
+import { deveRetomarPix } from './retomada';
 
 /** De quanto em quanto tempo perguntar, e por quanto tempo insistir.
  *
@@ -85,6 +87,8 @@ export function CheckoutClient({ slug }: { slug: string }) {
   /* Estado próprio, e não uma mensagem de erro vermelha: a plataforma pode
      estar no ar antes da conta da Mercado Pago existir, e isso não é falha. */
   const [paymentsOff, setPaymentsOff] = useState(false);
+  /* O PIX reaberto de uma visita anterior (PAY-B-002): muda só uma frase. */
+  const [retomado, setRetomado] = useState(false);
 
   /* "Já é dono" só bloqueia a compra fora da janela de renovação: nos últimos
      45 dias o servidor aceita um pedido novo e ESTENDE o prazo, e esta tela
@@ -94,6 +98,37 @@ export function CheckoutClient({ slug }: { slug: string }) {
   const owned = account.can(slug) && (restam === null || restam > 45);
   const parcelas = parcelasMax(c.price);
   const total = method === 'pix' ? pixPrice(c.price) : c.price.brl;
+
+  /* ── o PIX que já existe ─────────────────────────────────────────────
+     Auditoria de 01/10/2026, PAY-B-002. O código vivia só na memória da
+     aba: quem voltava do aplicativo do banco com a aba recarregada (o
+     celular descarta abas em segundo plano) via de novo "Pagar", gerava um
+     SEGUNDO PIX e, pagando os dois, pagava duas vezes. Ao abrir, a tela
+     pergunta se há um PIX deste curso ainda dentro do prazo e reabre o
+     MESMO código, com a consulta de sempre. Uma vez por visita: "Gerar outro
+     código" não pode ser desfeito por esta busca. */
+  const procurouPix = useRef(false);
+  useEffect(() => {
+    if (!deveRetomarPix({
+      pronto: account.ready, logado: account.signedIn, dono: owned,
+      temPedido: !!order, jaProcurou: procurouPix.current
+    })) return;
+    procurouPix.current = true;
+    let stop = false;
+    void (async () => {
+      try {
+        const aberto = await (await api()).pixPendente(slug);
+        /* `stop` também cobre a pessoa que clicou em Pagar no meio da
+           pergunta: o pedido novo muda `order`, e a limpeza deste efeito
+           descarta a resposta. */
+        if (stop || !aberto) return;
+        setMethod('pix');
+        setRetomado(true);
+        setOrder(aberto);
+      } catch { /* sem PIX para reabrir: a tela segue como sempre */ }
+    })();
+    return () => { stop = true; };
+  }, [account.ready, account.signedIn, owned, order, slug]);
 
   /* ── a consulta ──────────────────────────────────────────────────── */
   const startedAt = useRef<number>(0);
@@ -349,6 +384,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
         {order?.status === 'pending' && order.pix ? (
           <PixPanel
             order={order} copied={copied} gaveUp={gaveUp} automatico={CONFIRMA_SOZINHO}
+            retomado={retomado}
             onCopy={async () => {
               try {
                 await navigator.clipboard.writeText(order.pix!.code);
@@ -356,7 +392,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
                 setTimeout(() => setCopied(false), 2500);
               } catch { setCopied(false); }
             }}
-            onRetry={() => { setOrder(null); setGaveUp(false); }}
+            onRetry={() => { setOrder(null); setGaveUp(false); setRetomado(false); }}
           />
         ) : order?.status === 'pending' ? (
           <p aria-live="polite" className="font-ui text-[14px] text-ink-body">
@@ -470,13 +506,23 @@ function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
  * menos suporte do que o contrário.
  */
 function PixPanel({
-  order, copied, gaveUp, automatico, onCopy, onRetry
+  order, copied, gaveUp, automatico, retomado, onCopy, onRetry
 }: {
-  order: Order; copied: boolean; gaveUp: boolean; automatico: boolean;
+  order: Order; copied: boolean; gaveUp: boolean; automatico: boolean; retomado: boolean;
   onCopy: () => void; onRetry: () => void;
 }) {
+  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString('pt-BR', {
+    hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo'
+  });
   return (
     <div className="grid gap-4">
+      {retomado && (
+        <p className="font-ui text-[13.5px] leading-relaxed text-ink-body
+                      bg-[var(--accent-wash)] rounded-[var(--r-md)] px-4 py-3">
+          Este é o mesmo código PIX que você gerou antes, e ele vale até as {ate}.
+          Se você já pagou, não pague de novo: o acesso entra sozinho.
+        </p>
+      )}
       <div className="grid gap-2">
         <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
           PIX copia e cola

@@ -378,6 +378,20 @@ CREATE TABLE IF NOT EXISTS avisos (
   enviado_em INTEGER NOT NULL
 );
 
+-- Os avisos de fim de acesso ao aluno (01/10/2026, auditoria PAY-B-004):
+-- 30 dias antes, 7 dias antes e no dia do fim (`marco` = d30 | d7 | fim).
+-- Uma linha por aviso mandado; a chave inclui o vencimento, então uma
+-- renovação muda a data e os marcos recomeçam, e a varredura que roda de
+-- novo não repete o mesmo aviso. Ver worker/src/vencimento.js.
+CREATE TABLE IF NOT EXISTS avisos_vencimento (
+  account_id  INTEGER NOT NULL,
+  course_slug TEXT    NOT NULL,
+  expires_at  INTEGER NOT NULL,
+  marco       TEXT    NOT NULL,
+  enviado_em  INTEGER NOT NULL,
+  PRIMARY KEY (account_id, course_slug, expires_at, marco)
+);
+
 -- Quem pediu, no perfil, um e-mail quando o próximo curso abrir (28/09/2026,
 -- auditoria LEGAL-019). A linha existir É o consentimento; sair apaga a
 -- linha. Ver worker/src/api/novidades.js.

@@ -20,12 +20,17 @@
  * continuar perguntando por eles seria gastar chamada com pedido morto. Se um
  * pagamento chegar mesmo assim, o webhook o encontra pelo id do pedido e o
  * `settle` o processa do mesmo jeito: `expired` não fecha porta nenhuma.
+ * E, desde 01/10/2026 (PAY-B-009), o expirado que teve pagamento no
+ * provedor (o cartão em análise antifraude) continua sendo perguntado de 6 em
+ * 6 horas por uma semana, para não depender só do webhook.
  */
 
-import { runEstornos, settleFromProvider } from './api/pay.js';
+import { enviarRecibosManuais, runEstornos, settleFromProvider } from './api/pay.js';
 import { runAlertas } from './alertas.js';
+import { runVencimentos } from './vencimento.js';
 import { pegarTrava, soltarTrava,
-  arrependimentosIpPurge, getOrder, log, logPurge, paidOrdersToRecheck, registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
+  arrependimentosIpPurge, expiredOrdersToRecheck, getOrder, log, logPurge, paidOrdersToRecheck,
+  registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
 } from './lib/db.js';
 import empresa from '../../data/empresa.json';
 
@@ -126,7 +131,27 @@ async function varrer(env) {
         catch (e) { await log(env, order.account_id, 'reconcile-error', `${order.id} ${e && e.message || e}`); }
       }
     } catch (e) { console.error('pagos', e && e.stack || e); }
+
+    /* Os EXPIRADOS que tiveram pagamento no provedor, por mais uma semana,
+       de 6 em 6 horas cada, cinco por rodada (01/10/2026, PAY-B-009). Um
+       cartão em análise antifraude por mais de 24 h vira `expired` acima, e
+       a aprovação que chega depois disso só abria o curso pelo webhook. */
+    try {
+      for (const order of await expiredOrdersToRecheck(env)) {
+        try {
+          const st = await settleFromProvider(env, order, 'reconcile-expirados');
+          if (st === 'paid') {
+            const depois = await getOrder(env, order.id);
+            if (depois && depois.status === 'paid') settled++;
+          }
+        } catch (e) { await log(env, order.account_id, 'reconcile-error', `${order.id} ${e && e.message || e}`); }
+      }
+    } catch (e) { console.error('expirados', e && e.stack || e); }
   }
+  /* Os recibos das liberações feitas à mão (Actions → Acesso → liberar com
+     pedido) e os avisos de fim de acesso ao aluno. Valem nos dois trilhos. */
+  try { await enviarRecibosManuais(env); } catch (e) { console.error('recibos', e && e.stack || e); }
+  try { await runVencimentos(env); } catch (e) { console.error('vencimentos', e && e.stack || e); }
   try { await runEstornos(env); } catch (e) { console.error('estornos', e && e.stack || e); }
   try { await runAlertas(env); } catch (e) { console.error('alertas', e && e.stack || e); }
 

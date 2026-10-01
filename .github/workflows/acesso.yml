@@ -62,7 +62,7 @@ on:
         default: '12'
         type: string
       pedido:
-        description: 'Id do pedido, ou o começo dele (só em "pedido")'
+        description: 'Id do pedido, ou o começo dele, em "pedido"; em "liberar", o id exato do pedido pago (opcional)'
         required: false
         type: string
       novo_email:
@@ -352,6 +352,42 @@ jobs:
               esac
               if [ "${#M}" -gt 3 ] || [ "$M" -lt 1 ] || [ "$M" -gt 120 ]; then
                 echo "::error::meses fora de 1..120 (recebi '$M')."; exit 1
+              fi
+
+              # Liberar UM PEDIDO pago (PIX direto, ou um pagamento que o site
+              # não viu): o pedido vira pago, o acesso sai com o id dele e o
+              # recibo vai por e-mail na varredura seguinte (auditoria de
+              # 01/10/2026, PAY-B-005). Antes `liberar` só gravava um acesso
+              # 'MANUAL-ACTIONS': o pedido ficava "Aguardando" para sempre em
+              # /perfil, a desistência pelo site respondia "não pago" e o
+              # aluno não recebia recibo. Sem `pedido`, segue como sempre.
+              P="$(printf '%s' "${PEDIDO:-}" | tr -cd 'A-Za-z0-9_-')"
+              if [ -n "$P" ]; then
+                # O pedido existe, é desta conta, e em que estado está?
+                ESTADO="$($W --json --command "SELECT o.status AS s, o.course_slug AS c FROM orders o
+                            JOIN accounts a ON a.id = o.account_id
+                           WHERE o.id = '$P' AND a.email = '$SQLMAIL'" 2>&1 | mascara)"
+                ST="$(printf '%s' "$ESTADO" | grep -o '"s": *"[a-z]*"' | head -1 | sed 's/.*"\([a-z]*\)"$/\1/')"
+                PC="$(printf '%s' "$ESTADO" | grep -o '"c": *"[a-z0-9-]*"' | head -1 | sed 's/.*"\([a-z0-9-]*\)"$/\1/')"
+                [ -n "$ST" ] || { echo "::error::Não existe pedido $P nesta conta. Confira com 'pedido' (id) e 'consultar' (e-mail)."; exit 1; }
+                case "$ST" in
+                  paid) say "O pedido \`$P\` **já estava pago**. Nada mudou."; exit 0 ;;
+                  refunded) echo "::error::O pedido $P foi estornado. Não dá para liberar um pedido devolvido."; exit 1 ;;
+                esac
+                [ "$PC" = "$CURSO" ] || say "O pedido é do curso **$PC** (o campo Curso dizia $CURSO): vale o do pedido."
+                grava "$(bash scripts/sql-liberar-pedido.sh "$P" "$SQLMAIL" "$M")"
+                say "Pedido \`$P\` marcado como **pago** e **$PC** liberado por **$M meses** para \`$(printf '%s' "$MAIL" | mascara)\`."
+                say "Se a conta já tinha acesso valendo, os meses foram somados ao prazo que restava."
+                say "O recibo sai por e-mail na varredura seguinte (até 5 minutos)."
+                say ""
+                say '```'
+                mostra "SELECT o.id, o.status, o.provider, a.email, e.course_slug,
+                               datetime(e.expires_at/1000,'unixepoch') AS vence_em
+                          FROM orders o JOIN accounts a ON a.id = o.account_id
+                          LEFT JOIN entitlements e ON e.account_id = a.id AND e.course_slug = o.course_slug
+                         WHERE o.id = '$P'"
+                say '```'
+                exit 0
               fi
 
               # A conta existe? Decide o caminho abaixo.
