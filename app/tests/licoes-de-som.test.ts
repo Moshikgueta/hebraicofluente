@@ -372,7 +372,10 @@ describe('cada lado na sua lição, e o contraste na lição 20 (29/09/2026)', (
     expect(banco.some(e => e.id.startsWith('som-sin-'))).toBe(false);
     for (const e of banco.filter(x => x.kind === 'sound-to-syllable')) {
       if (!('options' in e)) continue;
-      expect(e.options.filter(o => semO(o).includes(DAGUESH)), e.id).toHaveLength(1);
+      /* Duas leituras × duas vogais (CONT-013): metade com ponto, metade sem. */
+      const comPonto = e.options.filter(o => semO(o).includes(DAGUESH)).length;
+      expect(comPonto, e.id).toBeGreaterThanOrEqual(1);
+      expect(comPonto * 2, e.id).toBe(e.options.length);
     }
     const a = rodadaDoContraste(SONS, { seed: 'a', count: 12, temAudio: semAudio });
     expect(a).toHaveLength(12);

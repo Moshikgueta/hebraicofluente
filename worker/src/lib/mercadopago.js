@@ -366,6 +366,22 @@ export const refundPayment = (env, paymentId, idempotencyKey) => {
   });
 };
 
+/**
+ * Cancela um PIX ainda pendente (auditoria de 01/10/2026, PAY-B-002). É o
+ * que "Gerar outro código" faz com o código anterior: sem isto, o aluno
+ * ficava com dois PIX pagáveis do mesmo curso, e pagar os dois era um
+ * estorno manual. Um pagamento já aprovado não pode ser cancelado: a Mercado
+ * Pago recusa, quem chama ignora a recusa, e o aviso de pagamento libera o
+ * acesso normalmente.
+ */
+export const cancelPayment = (env, paymentId) => {
+  const id = String(paymentId);
+  if (!/^\d{1,24}$/.test(id)) throw new Error('id de pagamento fora do formato');
+  return call(env, `/v1/payments/${encodeURIComponent(id)}`, {
+    method: 'PUT', body: { status: 'cancelled' }
+  });
+};
+
 /** Todos os pagamentos ligados a um pedido nosso. É como a varredura encontra
  *  um pagamento cujo aviso nunca chegou. */
 export async function paymentsFor(env, orderId) {

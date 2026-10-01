@@ -90,6 +90,14 @@ beforeEach(() => {
       return new Response(JSON.stringify({ results: [...pagamentos.values()].filter(p => p.external_reference === ref) }), { status: 200 });
     }
     const m = u.pathname.match(/^\/v1\/payments\/(\d+)$/);
+    if (m && init?.method === 'PUT') {
+      const p = pagamentos.get(Number(m[1]));
+      if (!p) return new Response('{"message":"not found"}', { status: 404 });
+      /* A Mercado Pago não cancela o que já foi aprovado. */
+      if (p.status === 'approved') return new Response('{"message":"cannot cancel"}', { status: 400 });
+      p.status = 'cancelled';
+      return new Response(JSON.stringify(p), { status: 200 });
+    }
     if (m) {
       const p = pagamentos.get(Number(m[1]));
       return p ? new Response(JSON.stringify(p), { status: 200 }) : new Response('{"message":"not found"}', { status: 404 });
@@ -166,6 +174,32 @@ describe('PAY-B-002: o PIX pendente é reaberto', () => {
     /* Vencido o prazo do código, não reabre mais. */
     exec(env, 'UPDATE orders SET pix_expires_at = ? WHERE id = ?', Date.now() - 1000, ordem.id);
     expect(await (await get(env, a.cookie, '/api/pay/pix?curso=alfabetizacao')).json()).toEqual({ order: null });
+  });
+
+  it('"Gerar outro código" cancela na Mercado Pago o PIX anterior', async () => {
+    const env = envCompleto();
+    const a = await aluna(env);
+    const primeiro = await (await criar(env, a.cookie, { courseSlug: 'alfabetizacao', method: 'pix' })).json() as { id: string };
+    const segundo = await (await criar(env, a.cookie, { courseSlug: 'alfabetizacao', method: 'pix' })).json() as { id: string };
+    expect(segundo.id).not.toBe(primeiro.id);
+    const [p1, p2] = [...pagamentos.values()];
+    expect(p1!.status).toBe('cancelled');
+    expect(p2!.status).toBe('pending');
+    expect(linha(env, 'SELECT status FROM orders WHERE id = ?', primeiro.id)!.status).toBe('expired');
+    /* O que reabre agora é o novo. */
+    const v = await (await get(env, a.cookie, '/api/pay/pix?curso=alfabetizacao')).json() as { order: { id: string } | null };
+    expect(v.order?.id).toBe(segundo.id);
+  });
+
+  it('um PIX anterior já aprovado não é cancelado, e o novo nasce mesmo assim', async () => {
+    const env = envCompleto();
+    const a = await aluna(env);
+    const primeiro = await (await criar(env, a.cookie, { courseSlug: 'alfabetizacao', method: 'pix' })).json() as { id: string };
+    [...pagamentos.values()][0]!.status = 'approved';
+    const r = await criar(env, a.cookie, { courseSlug: 'alfabetizacao', method: 'pix' });
+    expect(r.status).toBe(200);
+    expect([...pagamentos.values()][0]!.status).toBe('approved');
+    expect(linha(env, 'SELECT status FROM orders WHERE id = ?', primeiro.id)!.status).toBe('pending');
   });
 });
 
