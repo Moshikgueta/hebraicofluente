@@ -22,13 +22,14 @@
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import {
-  b64url, fakeVerify, hashPassword, itersFor, sha256hex, verifyPassword
+  b64url, fakeVerify, hashPassword, itersFor, sha256hex, timingSafeEqual, verifyPassword
 } from '../lib/crypto.js';
 import {
   clearLegacyCookie, clearSessionCookie, makeSessionCookie, readSession
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
 import { nomeSeguro } from '../lib/nome.js';
+import { exigirAdmin } from '../lib/admin.js';
 import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelhos.js';
 import empresa from '../../../data/empresa.json';
 import {
@@ -826,20 +827,47 @@ export async function me({ request, env }) {
  * toda rota de conta responde igual, e descobrir qual dos três é o problema
  * exige acesso ao painel que quem está depurando muitas vezes não tem à mão.
  *
- * Responde só BOOLEANOS. Nenhum valor, nenhum nome de variável, nenhuma
- * mensagem de erro do banco. O que um curioso aprende com isto - que o site
- * usa D1 e tem uma tabela `accounts` - já está no repositório, que é público.
- * O que ele não aprende é nada que ajude a entrar.
+ * ── duas respostas (auditoria de 01/10/2026, SEC-A-007) ──────────────────
+ * PÚBLICA: só `{ ok, monitor }`, que é o que o monitor externo precisa
+ * (palavra-chave `"monitor":true`, ver INCIDENTES.md). Antes a rota pública
+ * dizia também o modo da cobrança, de quem é a credencial, se o último
+ * e-mail de senha saiu e há quantos minutos a varredura rodou: um mapa de
+ * QUANDO a recuperação de senha ou a cobrança estão quebradas, que é a
+ * janela boa para um golpe de "suporte".
+ *
+ * DETALHADA: com `Authorization: Bearer <ADMIN_TOKEN>` (o segredo que a
+ * publicação gera e entrega à conferência, scripts/cloudflare-setup.sh) ou
+ * com a sessão de um administrador com o segundo fator em dia. Responde só
+ * BOOLEANOS e vereditos: nenhum valor, nenhum nome de variável, nenhuma
+ * mensagem de erro do banco.
  */
+async function podeVerDetalhes(request, env) {
+  if (!request) return false;
+  const token = String(env.ADMIN_TOKEN || '');
+  const pedido = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
+  /* Um token curto seria adivinhável; abaixo de 32 caracteres ele não abre
+     nada, nem configurado. */
+  if (token.length >= 32 && pedido && timingSafeEqual(pedido, token)) return true;
+  /* Sem cookie, nem consulta: é o caso do monitor e de qualquer curioso. */
+  if (!request.headers.get('Cookie')) return false;
+  try {
+    const { account } = await exigirAdmin(request, env);
+    return !!account;
+  } catch {
+    return false;
+  }
+}
+
 export async function health({ request, env }) {
-  /* Rota pública que faz quatro consultas ao banco: dez por minuto por IP
-     é folgado para a conferência da publicação e apertado para um laço. */
   /* Trinta por HORA por endereço. Cada consulta permitida é uma escrita de
      freio, e dez por minuto eram seiscentas por hora de uma máquina só; uma
-     publicação consulta meia dúzia de vezes. */
+     publicação consulta meia dúzia de vezes, e o monitor externo, de 5 em 5
+     minutos, doze. */
   if (request && env.DB && await throttled(env, `health-h:${ip(request)}`, 30, HORA)) {
     return fail('rate-limited', 429);
   }
+  const detalhes = await podeVerDetalhes(request, env);
+
   const out = {
     /* A ligação com o D1 existe no Worker? `false` = binding ausente ou
        database_id errado no wrangler.toml. */
@@ -910,7 +938,7 @@ export async function health({ request, env }) {
        "producao", o comprador é mandado ao checkout real, e lá encontra "uma
        das partes é de teste" sem que nada deste lado pareça errado.
        Ver vendedorFormato em lib/mercadopago.js. */
-    vendedor: await vendedorFormato(env),
+    vendedor: detalhes ? await vendedorFormato(env) : null,
     /* Há quantos minutos a varredura de 5 em 5 min rodou (null = nunca).
        Ela confere pagamentos cujo aviso não chegou, refaz estornos e manda
        os alertas ao dono - parada, tudo isso para em silêncio. */
@@ -963,8 +991,14 @@ export async function health({ request, env }) {
      porque a publicação confere o `ok` logo depois de subir, antes de a
      varredura ter tido tempo de rodar. Auditoria de 28/09, INFRA-002. */
   out.monitor = out.ok && out.varredura !== null && out.varredura <= 15;
+  /* Para quem não é administrador, só as duas respostas que o monitor
+     precisa. O resto foi calculado à toa, e é barato: são as mesmas
+     consultas que `ok` e `monitor` já pedem, menos a da Mercado Pago, que só
+     roda com `detalhes`. */
+  if (!detalhes) return json({ ok: out.ok, monitor: out.monitor });
   return json(out);
 }
+
 
 /** A conta desta requisição, ou null. Usado por tudo que exige sessão. */
 export async function requireAccount(request, env) {

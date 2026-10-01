@@ -20,7 +20,7 @@
  */
 
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
-import { envDeTeste, pedido, cookieDe } from './ajuda/d1';
+import { envDeTeste, pedido, cookieDe, saudeDetalhada } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
@@ -274,10 +274,7 @@ describe('antes de a tabela nova existir', () => {
     expect(enviados.filter(e => e.subject.startsWith('Confirme'))).toHaveLength(0);
     expect(await confirmado(env, cookie)).toBeNull();
 
-    const h = await auth.health({
-      request: new Request(`${SITE}/api/health`, { headers: { 'CF-Connecting-IP': '203.0.113.9' } }),
-      env
-    });
+    const h = await auth.health({ request: saudeDetalhada('203.0.113.9'), env });
     const saude = await h.json() as { ok: boolean; verificacao: boolean };
     expect(saude.verificacao).toBe(false);
     expect(saude.ok).toBe(true);

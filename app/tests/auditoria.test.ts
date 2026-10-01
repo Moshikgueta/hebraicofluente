@@ -11,7 +11,7 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
+import { comoAdmin, cookieDe, envDeTeste, pedido } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import worker from '../../worker/src/worker.js';
 // @ts-expect-error - idem
@@ -797,6 +797,45 @@ describe('a saúde', () => {
        escrita de freio, e a cota diária de escrita do D1 é o que protege. */
     for (let i = 0; i < 29; i++) await auth.health({ request: req, env });
     expect((await auth.health({ request: req, env })).status).toBe(429);
+  });
+
+  /* SEC-A-007 (auditoria de 01/10/2026): a rota pública dizia o modo da
+     cobrança, de quem era a credencial, se o último e-mail de senha saiu e
+     há quantos minutos a varredura rodou. */
+  it('para o público, só ok e monitor', async () => {
+    const env = envSite({ MP_ACCESS_TOKEN: 'TEST-1234', RESEND_API_KEY: 're_x', EMAIL_FROM: 'a@b.co' });
+    const r = await worker.fetch(new Request(`${SITE}/api/health`, { headers: { 'CF-Connecting-IP': '203.0.113.2' } }), env, ctx);
+    expect(Object.keys(await r.json() as object).sort()).toEqual(['monitor', 'ok']);
+  });
+
+  it('os detalhes só com o ADMIN_TOKEN, e nunca com um token errado ou curto', async () => {
+    const env = envSite();
+    const com = (auth_: string) => worker.fetch(new Request(`${SITE}/api/health`, {
+      headers: { 'CF-Connecting-IP': '203.0.113.3', Authorization: auth_ }
+    }), env, ctx).then(r => r.json() as Promise<Record<string, unknown>>);
+    const certo = await com(`Bearer ${env.ADMIN_TOKEN}`);
+    for (const k of ['db', 'schema', 'session', 'modo', 'tokenFormato', 'vendedor', 'emailEntregue', 'varredura', 'ok', 'monitor']) {
+      expect(certo).toHaveProperty(k);
+    }
+    expect(Object.keys(await com('Bearer errado')).sort()).toEqual(['monitor', 'ok']);
+    expect(Object.keys(await com(`Bearer ${String(env.ADMIN_TOKEN).slice(0, -1)}x`)).sort()).toEqual(['monitor', 'ok']);
+    /* Configurado curto demais, não abre nem com ele mesmo. */
+    const curto = envSite({ ADMIN_TOKEN: 'curto' });
+    const r = await worker.fetch(new Request(`${SITE}/api/health`, { headers: { Authorization: 'Bearer curto' } }), curto, ctx);
+    expect(Object.keys(await r.json() as object).sort()).toEqual(['monitor', 'ok']);
+  });
+
+  it('a sessão de administrador com o segundo fator também vê os detalhes; aluno não', async () => {
+    const env = envSite({ ADMIN_EMAILS: 'dono@exemplo.com', ADMIN_TOKEN: '' });
+    const { cookie: aluno } = await comConta(env, 'aluno@exemplo.com');
+    const { cookie: dono } = await comConta(env, 'dono@exemplo.com');
+    const ver = async (cookie: string) => Object.keys(await (await worker.fetch(new Request(`${SITE}/api/health`, {
+      headers: { 'CF-Connecting-IP': '203.0.113.4', Cookie: cookie }
+    }), env, ctx)).json() as object);
+    expect((await ver(aluno)).sort()).toEqual(['monitor', 'ok']);
+    /* Sem o código do e-mail, a senha do dono não basta. */
+    expect((await ver(dono)).sort()).toEqual(['monitor', 'ok']);
+    expect(await ver(await comoAdmin(env, dono))).toContain('modo');
   });
 });
 

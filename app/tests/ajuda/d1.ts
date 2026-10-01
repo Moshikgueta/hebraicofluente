@@ -110,9 +110,20 @@ export function envDeTeste(extra: Record<string, unknown> = {}) {
     SESSION_SECRET: 'segredo-de-teste-nao-usado-em-lugar-nenhum',
     SITE_ORIGIN: 'https://hebraicofluente.com.br',
     PBKDF2_ITERATIONS: '10000',
+    ADMIN_TOKEN: ADMIN_TOKEN_DE_TESTE,
     ...extra
   } as Record<string, unknown>;
 }
+
+/** O ADMIN_TOKEN dos testes: o que abre os detalhes de /api/health
+ *  (SEC-A-007). Em produção quem o gera é scripts/cloudflare-setup.sh. */
+export const ADMIN_TOKEN_DE_TESTE = 'token-de-administrador-so-dos-testes-0123456789';
+
+/** GET /api/health com o token: a resposta DETALHADA, a da conferência. */
+export const saudeDetalhada = (ip = '203.0.113.200') =>
+  new Request('https://hebraicofluente.com.br/api/health', {
+    headers: { Authorization: `Bearer ${ADMIN_TOKEN_DE_TESTE}`, 'CF-Connecting-IP': ip }
+  });
 
 /** Uma requisição JSON como o app faz. */
 export const pedido = (url: string, body?: unknown, headers: Record<string, string> = {}) =>

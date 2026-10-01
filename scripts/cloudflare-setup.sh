@@ -230,6 +230,24 @@ else
   fi
 fi
 
+# ADMIN_TOKEN: o que abre os detalhes de /api/health (auditoria de
+# 01/10/2026, SEC-A-007). Para o público a saúde diz só `ok` e `monitor`; a
+# conferência desta publicação (worker/e2e.sh) precisa do resto - tabelas,
+# sessão, e-mail, modo da cobrança - e o recebe em HF_ADMIN_TOKEN.
+#
+# Um valor NOVO a cada publicação, a menos que ADMIN_TOKEN venha no ambiente
+# (quem quiser um fixo põe nos segredos do repositório). Ninguém precisa
+# guardá-lo: quem lê os detalhes fora da publicação é o administrador, pela
+# própria sessão com o segundo fator. Trocar a cada vez é também o que
+# torna inútil um token visto num log velho.
+ADMIN_TOKEN="${ADMIN_TOKEN:-$(openssl rand -hex 32)}"
+if printf '%s' "$ADMIN_TOKEN" | $W secret put ADMIN_TOKEN >/dev/null 2>&1; then
+  ok "ADMIN_TOKEN enviado ao Worker"
+  export HF_ADMIN_TOKEN="$ADMIN_TOKEN"
+else
+  info "Não consegui enviar ADMIN_TOKEN: a conferência vai ver só a saúde pública."
+fi
+
 # Os da Mercado Pago: se o valor estiver no AMBIENTE (segredo do GitHub, ou
 # exportado na sua máquina), ele é empurrado para o Worker. É o que evita a
 # viagem ao painel da Cloudflare - os segredos ficam num lugar só, o mesmo

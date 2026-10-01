@@ -31,8 +31,9 @@
 # desligado, dizendo isso na tela.
 #
 # Para RECUPERAR SENHA, falta RESEND_API_KEY, no mesmo lugar. Sem ela o link
-# de "esqueci minha senha" não é entregue a ninguém, e /api/health reporta
-# "email": false. Ver .env.example.
+# de "esqueci minha senha" não é entregue a ninguém, e /api/health (os
+# detalhes, que só a conferência da publicação vê) reporta "email": false.
+# Ver .env.example.
 
 name: Deploy platform to Cloudflare
 
@@ -486,8 +487,9 @@ jobs:
           MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
           MP_WEBHOOK_SECRET: ${{ secrets.MP_WEBHOOK_SECRET }}
           # A chave da Resend, pela mesma porta. Vazia, o site sobe inteiro e
-          # "esqueci minha senha" não entrega o link - /api/health reporta
-          # "email": false. Onde conseguir está em .env.example.
+          # "esqueci minha senha" não entrega o link - os detalhes de
+          # /api/health reportam "email": false (a conferência os lê com o
+          # ADMIN_TOKEN que o script gera). Onde conseguir está em .env.example.
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           # O build já aconteceu no passo anterior, com o cache do npm, para
           # que uma falha de build apareça como falha de build.

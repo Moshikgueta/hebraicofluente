@@ -9,7 +9,7 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
+import { cookieDe, envDeTeste, pedido, saudeDetalhada } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
@@ -307,7 +307,7 @@ describe('os alertas ao dono', () => {
 
   it('/api/health diz se a varredura está viva, no campo que o monitor externo olha', async () => {
     const env = envCompleto();
-    const saude = async () => await (await auth.health({ request: new Request(`${SITE}/api/health`), env })).json() as { ok: boolean; monitor: boolean; varredura: number | null };
+    const saude = async () => await (await auth.health({ request: saudeDetalhada(), env })).json() as { ok: boolean; monitor: boolean; varredura: number | null };
 
     const antes = await saude();
     expect(antes.ok).toBe(true);

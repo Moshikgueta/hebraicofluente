@@ -15,7 +15,7 @@
  */
 
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
-import { envDeTeste, pedido, cookieDe } from './ajuda/d1';
+import { envDeTeste, pedido, cookieDe, saudeDetalhada } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
@@ -337,7 +337,7 @@ describe('quando não há como mandar e-mail', () => {
     expect(r.status).toBe(200);
     expect(enviados).toHaveLength(0);
 
-    const saude = await (await auth.health({ env })).json();
+    const saude = await (await auth.health({ request: saudeDetalhada(), env })).json();
     expect(saude.email).toBe(false);
     /* E o site continua saudável: não poder recuperar senha é uma degradação,
        não uma queda. */
@@ -353,7 +353,7 @@ describe('quando não há como mandar e-mail', () => {
     const env = envComEmail();
     const { email } = await comConta(env);
 
-    const antes = await (await auth.health({ env })).json();
+    const antes = await (await auth.health({ request: saudeDetalhada(), env })).json();
     expect(antes.email).toBe(true);
     expect(antes.emailEntregue, 'ninguém pediu link ainda').toBe(null);
 
@@ -363,7 +363,7 @@ describe('quando não há como mandar e-mail', () => {
     await forgot(env, email);
     await assentar();
 
-    const depois = await (await auth.health({ env })).json();
+    const depois = await (await auth.health({ request: saudeDetalhada(), env })).json();
     expect(depois.email, 'a chave continua lá').toBe(true);
     expect(depois.emailEntregue, 'mas nada saiu').toBe(false);
     /* E o site continua saudável: é uma porta fechada, não uma queda. */
@@ -375,7 +375,7 @@ describe('quando não há como mandar e-mail', () => {
     const { email } = await comConta(env);
     await forgot(env, email);
     await assentar();
-    expect((await (await auth.health({ env })).json()).emailEntregue).toBe(true);
+    expect((await (await auth.health({ request: saudeDetalhada(), env })).json()).emailEntregue).toBe(true);
   });
 
   it('mailReady exige a chave E o remetente', () => {
