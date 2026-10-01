@@ -330,6 +330,15 @@ CREATE TABLE IF NOT EXISTS ab_contagens (
   PRIMARY KEY (exp, variante, evento, dia)
 );
 
+-- `ab_compras` (01/10/2026, SEC-A-008): os pedidos pagos que já viraram uma
+-- `compra` no teste. Só o id do pedido, para contar cada um uma vez; a
+-- versão vai só para o total em `ab_contagens`. Uma `compra` sem pedido pago
+-- da própria sessão não conta (api/ab.js). 60 dias de guarda (alertas.js).
+CREATE TABLE IF NOT EXISTS ab_compras (
+  order_id TEXT    PRIMARY KEY,
+  em       INTEGER NOT NULL
+);
+
 -- ── estorno automático da desistência (28/09/2026) ────────────────────────
 -- Quando o aluno desiste pelo site dentro dos sete dias, o próprio site pede o
 -- estorno à Mercado Pago (POST /v1/payments/{id}/refunds). Esta tabela é o
@@ -369,6 +378,19 @@ CREATE TABLE IF NOT EXISTS batimentos (
   nome TEXT    PRIMARY KEY,
   em   INTEGER NOT NULL
 );
+-- Desde 01/10/2026 (SEC-A-005) a linha `backup` é o carimbo do backup
+-- diário: scripts/backup-nuvem.sh a grava depois de guardar a cópia no R2, e
+-- o alerta diário avisa quando ela passa de 36 h.
+
+-- `respostas_5xx`: quantas respostas 5xx o Worker deu, por hora (01/10/2026,
+-- SEC-A-005). Uma linha por hora, não por erro, então uma rajada de erros
+-- não enche o banco; 7 dias de guarda (alertas.js). Conta o que o Worker
+-- respondeu: um erro do próprio D1 não consegue se contar aqui, e o número
+-- completo (com os erros da plataforma) fica no painel da Cloudflare.
+CREATE TABLE IF NOT EXISTS respostas_5xx (
+  hora INTEGER PRIMARY KEY,   -- início da hora, em ms
+  n    INTEGER NOT NULL
+);
 
 -- `avisos`: cada alerta mandado ao dono, pela chave que o deduplica (por
 -- exemplo `desistencias:2026-09-28`, `operacao:2026-09-28T14`). Garante um
@@ -376,6 +398,20 @@ CREATE TABLE IF NOT EXISTS batimentos (
 CREATE TABLE IF NOT EXISTS avisos (
   chave      TEXT    PRIMARY KEY,
   enviado_em INTEGER NOT NULL
+);
+
+-- Os avisos de fim de acesso ao aluno (01/10/2026, auditoria PAY-B-004):
+-- 30 dias antes, 7 dias antes e no dia do fim (`marco` = d30 | d7 | fim).
+-- Uma linha por aviso mandado; a chave inclui o vencimento, então uma
+-- renovação muda a data e os marcos recomeçam, e a varredura que roda de
+-- novo não repete o mesmo aviso. Ver worker/src/vencimento.js.
+CREATE TABLE IF NOT EXISTS avisos_vencimento (
+  account_id  INTEGER NOT NULL,
+  course_slug TEXT    NOT NULL,
+  expires_at  INTEGER NOT NULL,
+  marco       TEXT    NOT NULL,
+  enviado_em  INTEGER NOT NULL,
+  PRIMARY KEY (account_id, course_slug, expires_at, marco)
 );
 
 -- Quem pediu, no perfil, um e-mail quando o próximo curso abrir (28/09/2026,

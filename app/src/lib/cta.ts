@@ -21,6 +21,7 @@
  */
 
 import { FLAGSHIP, getCourse, isPlayable, allCourses, type CatalogCourse } from './catalog';
+import { confirmaSozinho, empresa } from './empresa';
 
 export type Passo = {
   href: string;
@@ -68,10 +69,17 @@ export function proximoPasso(conta: Conta, slug: string = FLAGSHIP): Passo {
   }
 
   const meses = curso?.accessMonths ?? 12;
+  /* "Acesso imediato" só quando o pagamento se confirma sozinho. No PIX
+     direto alguém confere o extrato e libera à mão, no prazo do atendimento
+     (auditoria de 01/10/2026, LEGAL-103): o botão não pode prometer o que o
+     checkout logo depois desmente. */
+  const quando = confirmaSozinho()
+    ? 'Acesso imediato'
+    : `Acesso em até ${empresa.atendimento.prazoRespostaUteis} dias úteis`;
   return {
     href: `/checkout/${slug}`,
     label: conta.ready && conta.signedIn ? 'Liberar meu acesso' : 'Começar a aprender',
-    micro: `Acesso imediato · ${meses} meses · sem mensalidade`,
+    micro: `${quando} · ${meses} meses · sem mensalidade`,
     vende: true
   };
 }

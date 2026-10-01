@@ -22,12 +22,16 @@
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import {
-  b64url, fakeVerify, hashPassword, itersFor, sha256hex, verifyPassword
+  b64url, fakeVerify, hashPassword, itersFor, sha256hex, timingSafeEqual, verifyPassword
 } from '../lib/crypto.js';
 import {
   clearLegacyCookie, clearSessionCookie, makeSessionCookie, readSession
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
+import { nomeSeguro } from '../lib/nome.js';
+import { exigirAdmin } from '../lib/admin.js';
+import { avisarRetirada } from './depoimentos.js';
+import { versaoAtual } from '../lib/versoes.js';
 import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelhos.js';
 import empresa from '../../../data/empresa.json';
 import {
@@ -36,7 +40,7 @@ import {
 import {
   activeEntitlements, bumpSessionVersion, novidadesQuer, changePassword, createAccount, deleteAccount,
   emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
-  normalizeEmail, registrarAcesso, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
+  normalizeEmail, registrarAcesso, reservarVaga, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
   ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset, ultimoBatimento
 } from '../lib/db.js';
 
@@ -235,14 +239,16 @@ async function avisarConvitePendente(env, ctx, account, email) {
 export const VERIFY_TTL_DIAS = 7;
 const VERIFY_TTL = VERIFY_TTL_DIAS * 86_400_000;
 
-/* A prova do aceite: quando e qual versão dos Termos (a data de
-   `politicas.atualizadoEm` em data/empresa.json, a mesma que a página
-   /termos mostra). Tabela à parte, `aceites`, que o schema.sql cria. Uma
+/* A prova do aceite: quando e qual versão dos Termos (desde 01/10/2026, o
+   código do texto publicado, de data/politicas-versoes/atual.json; antes, a
+   data `politicas.atualizadoEm`). Tabela à parte, `aceites`, que o schema.sql cria. Uma
    falha aqui não impede o cadastro: a pessoa aceitou na tela, e perder a
    conta por um erro do banco seria pior - o erro vai para o log. */
 async function registrarAceite(env, accountId) {
   try {
-    const versao = String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
+    /* O código da versão do texto (LEGAL-104), com a cópia fixa em
+       /termos/v/<versao>/; sem ele, a data, como antes. */
+    const versao = versaoAtual('termos') || String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
     const inserir = documento => env.DB.prepare(
       'INSERT INTO aceites (account_id, documento, versao, aceito_em) VALUES (?, ?, ?, ?)'
     ).bind(accountId, documento, versao, agora);
@@ -279,7 +285,10 @@ async function enviarConfirmacao(env, ctx, request, account) {
 
   const site = siteOrigin(env, request);
   const msg = mensagemDeConfirmacao({
-    nome: account.name || '',
+    /* Sem nome, sempre: este e-mail vai a um endereço que ainda não provou
+       ser de quem criou a conta, e o nome é escrito por quem a criou
+       (SEC-A-003, lib/nome.js). */
+    nome: '',
     link: `${site}/confirmar-email/?token=${encodeURIComponent(token)}`,
     dias: VERIFY_TTL_DIAS,
     esqueci: `${site}/esqueci-senha/`,
@@ -311,7 +320,11 @@ export async function signup({ request, env, ctx }) {
 
   const email = normalizeEmail(body.email);
   const password = body.password;
-  const name = String(body.name || '').trim();
+  /* Um nome que não é nome (link, domínio, dígitos, um parágrafo) não é
+     recusado: a conta nasce sem nome, e a tela mostra o e-mail. Recusar
+     poria um erro na frente de quem só quer estudar; guardar poria o texto
+     num e-mail do nosso domínio (SEC-A-003, lib/nome.js). */
+  const name = nomeSeguro(body.name);
 
   if (!emailOk(email)) return fail('invalid-email');
   if (password.length < MIN_PASSWORD || password.length > 1024) return fail('weak-password');
@@ -420,39 +433,62 @@ export async function login({ request, env, ctx }) {
   /* O freio por IP antes de ler o corpo, como no cadastro: quem já estourou
      não ganha nem a leitura. */
   const origem = ip(request);
-  /* Vinte ERROS por hora por endereço. Conta só as falhas, e é só uma
-     leitura aqui - o gasto é lá embaixo, quando a senha erra. Quem acerta
-     não chega perto; quem tenta senhas ou e-mails ao acaso para na vigésima. */
+  /* Vinte ERROS por hora por endereço, e sessenta tentativas por hora,
+     certas ou erradas. Sem o segundo, entrar e sair em laço com a própria
+     senha escrevia cinco linhas por volta sem nunca errar; quem tenta senhas
+     para antes, no teto de erros, que é mais apertado.
+
+     A primeira linha só LÊ, para poupar a escrita de quem já estourou (um
+     freio que grava a cada tentativa barrada é o próprio amplificador). Ela
+     pode negar, nunca autorizar: quem autoriza é a reserva atômica mais
+     abaixo (SEC-A-002, auditoria de 01/10/2026). */
   if (await estourou(env, `login-falhas-h:${origem}`, 20, HORA)) return fail('rate-limited-hora', 429);
-  /* E sessenta tentativas por hora, certas ou erradas. Sem este, entrar e
-     sair em laço com a própria senha escrevia cinco linhas por volta sem
-     nunca errar. Substitui os vinte por minuto: quem tenta senhas já para
-     no teto de erros acima, que é mais apertado. */
   if (await throttled(env, `login-h:${origem}`, 60, HORA)) return fail('rate-limited-hora', 429);
 
+  /* Os freios de ERRO, e o que cada um conta importa.
+     · por IP: 20 erros por hora - uma máquina tentando senhas.
+     · por e-mail E IP: 5 erros por minuto - a mesma máquina contra uma
+       conta específica.
+     · por e-mail, de qualquer lugar: 30 erros por minuto - o teto para quem
+       troca de endereço a cada tentativa.
+     Cada um RESERVA a vaga antes de verificar a senha (`reservarVaga`: a
+     escrita atômica decide, então quarenta tentativas em paralelo não são
+     quarenta avaliações - antes eram, e o teto de 5 por minuto não existia
+     para uma rajada). Quem acerta a senha DEVOLVE as vagas: o teto continua
+     contando só as falhas. Uma versão anterior contava tudo, com teto de 8, e nove
+     pedidos por minuto de um estranho trancavam a dona da conta para fora com
+     a senha certa na mão. Agora o estranho tranca a si mesmo. */
+  const vagas = [];
+  const devolverVagas = () => Promise.all(vagas.map(v => v.devolver()));
+  const reservar = async (chave, teto, janela) => {
+    const v = await reservarVaga(env, chave, teto, janela);
+    vagas.push(v);
+    return !v.negado;
+  };
+
+  if (!await reservar(`login-falhas-h:${origem}`, 20, HORA)) {
+    await devolverVagas();
+    return fail('rate-limited-hora', 429);
+  }
+
   const body = await readJson(request);
-  if (!body) return fail('server');
+  if (!body) {
+    await devolverVagas();
+    return fail('server');
+  }
 
   if (typeof body.email !== 'string' || typeof body.password !== 'string') {
+    /* Não chegou a tentar senha nenhuma: não conta como erro. */
+    await devolverVagas();
     return fail('bad-credentials', 401);
   }
   const email = normalizeEmail(body.email);
   const password = body.password;
 
-  /* Os freios, e o que cada um conta importa.
-     · por IP: 20 ERROS por hora e 60 tentativas por hora (acima) - uma
-       máquina tentando senhas, ou gastando a cota de escrita.
-     · por e-mail E IP: só as que ERRAM, 5 por minuto - a mesma máquina
-       contra uma conta específica.
-     · por e-mail, de qualquer lugar: só as que ERRAM, 30 por minuto - o
-       teto para quem troca de endereço a cada tentativa.
-     Os dois de e-mail são LIDOS aqui e GASTOS lá embaixo, na falha. Antes
-     contavam tudo, com teto de 8: nove pedidos por minuto de um estranho,
-     com qualquer senha, trancavam a dona da conta para fora com a senha certa
-     na mão. Agora o estranho tranca a si mesmo, e precisa de trinta erros por
-     minuto de trinta endereços para encostar na dona. */
-  if (await estourou(env, `login:${email}:${origem}`, 5)) return fail('rate-limited', 429);
-  if (await estourou(env, `login:${email}`, 30)) return fail('rate-limited', 429);
+  if (!await reservar(`login:${email}:${origem}`, 5) || !await reservar(`login:${email}`, 30)) {
+    await devolverVagas();
+    return fail('rate-limited', 429);
+  }
 
   const account = await findAccountByEmail(env, email);
   const ok = account
@@ -460,9 +496,7 @@ export async function login({ request, env, ctx }) {
     : await fakeVerify(password, itersFor(env));
 
   if (!account || !ok) {
-    await throttled(env, `login-falhas-h:${origem}`, 20, HORA);
-    await throttled(env, `login:${email}:${origem}`, 5);
-    await throttled(env, `login:${email}`, 30);
+    /* As vagas reservadas ficam: este é o erro que elas contam. */
     /* Na trilha, só a falha contra uma conta que EXISTE - essa é a que diz
        alguma coisa ("alguém está tentando a senha da fulana"). Um e-mail
        inventado não tem de quem ser, e registrá-lo eram três linhas escritas
@@ -470,6 +504,9 @@ export async function login({ request, env, ctx }) {
     if (account) await log(env, account.id, 'login-failed');
     return fail('bad-credentials', 401);
   }
+
+  /* Acertou: as vagas voltam, e o teto de erros não sabe desta entrada. */
+  await devolverVagas();
 
   /* Subiu o custo do hash? Esta conta se atualiza sozinha, agora, com a senha
      que acabou de ser digitada - o único instante em que ela existe em claro.
@@ -571,15 +608,18 @@ export async function forgot({ request, env, ctx }) {
   });
 
   const link = `${siteOrigin(env, request)}/nova-senha/?token=${encodeURIComponent(token)}`;
-  const msg = mensagemDeRecuperacao({
-    nome: account.name || '',
-    link,
-    minutos: RESET_TTL_MIN,
-    marca: 'Hebraico Fluente',
-    suporte: env.SUPPORT_EMAIL || ''
-  });
-
   const entregar = async () => {
+    const msg = mensagemDeRecuperacao({
+      /* O nome só com o e-mail já confirmado: antes disso, quem o escreveu
+         pode não ser a dona do endereço que recebe (SEC-A-003). A consulta
+         fica aqui dentro, fora do caminho da resposta, para o relógio não
+         ganhar uma consulta a mais só quando a conta existe. */
+      nome: await emailVerified(env, account.id, account.email) === true ? account.name || '' : '',
+      link,
+      minutos: RESET_TTL_MIN,
+      marca: 'Hebraico Fluente',
+      suporte: env.SUPPORT_EMAIL || ''
+    });
     const r = await sendMail(env, { to: account.email, ...msg });
     /* O resultado vai para a trilha nos dois casos. "A pessoa diz que não
        recebeu" é a pergunta mais comum deste fluxo, e sem este registro a
@@ -720,7 +760,7 @@ export async function password({ request, env }) {
  * (`session_version` subiu dentro do apagamento), mas mandar a limpeza junto
  * é a diferença entre a pessoa ver a tela de "conta apagada" e ver um erro.
  */
-export async function apagar({ request, env }) {
+export async function apagar({ request, env, ctx }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
 
@@ -739,31 +779,52 @@ export async function apagar({ request, env }) {
     return fail('bad-credentials', 401);
   }
 
+  /* Depoimento APROVADO sai do site em até 7 dias também quando a conta é
+     apagada: o dono é avisado antes de a linha sumir (LEGAL-106). */
+  await avisarRetirada(env, account.id, 'conta-apagada', ctx);
   const r = await deleteAccount(env, account.id);
   if (!r.ok) return fail('server', 500);
 
   return json({ ok: true }, 200, { 'Set-Cookie': clearSessionCookie });
 }
 
+/* ── visitante não é erro (auditoria de 01/10/2026, PERF-007/UXQA-018) ────
+ * Todo visitante, em toda página pública, levava um 401 de /api/me: um erro
+ * vermelho no console a cada página vista, que esconde o erro de verdade no
+ * meio do ruído. Para o app de agora a resposta sem sessão é 200
+ * `{ signedIn: false }`.
+ *
+ * Só para quem PEDE assim (`X-HF-Sessao: opcional`, que lib/account/
+ * worker-api.ts manda). O app de antes trata qualquer 200 desta rota como
+ * uma sessão, e uma aba aberta antes da publicação, com o pacote antigo,
+ * leria `{ signedIn: false }` como conta e quebraria a tela. Sem o
+ * cabeçalho (o pacote antigo, o curl do e2e) continua o 401 de sempre. As
+ * rotas que exigem sessão continuam respondendo 401. */
+const semSessao = (request, limparCookie = false) => {
+  const extra = limparCookie ? { 'Set-Cookie': clearSessionCookie } : {};
+  if ((request.headers.get('X-HF-Sessao') || '').toLowerCase() === 'opcional') {
+    return json({ signedIn: false }, 200, extra);
+  }
+  return limparCookie ? json({ error: 'not-signed-in' }, 401, extra) : notSignedIn();
+};
+
 export async function me({ request, env }) {
   const sess = await readSession(request, env);
-  if (!sess) return notSignedIn();
+  if (!sess) return semSessao(request);
 
   const account = await findAccountById(env, sess.uid);
   /* A conta sumiu, ou a versão de sessão foi subida (troca de senha, suspeita
      de vazamento). O cookie ainda tem assinatura válida e mesmo assim não
      vale mais - é para isto que `sv` existe. */
   if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)) {
-    return json({ error: 'not-signed-in' }, 401, { 'Set-Cookie': clearSessionCookie });
+    return semSessao(request, true);
   }
 
   /* Um cookie com o nome antigo, ainda válido: troca pelo nome novo aqui, e
      apaga o antigo. É o que faz a mudança de nome não deslogar ninguém - o
      app chama /api/me a cada página. Ver LEGADO_ATE em lib/session.js. */
   /* O aparelho deste navegador saiu das três vagas: outro entrou depois. */
-  if (!await aparelhoValido(env, sess)) {
-    return json({ error: 'not-signed-in' }, 401, { 'Set-Cookie': clearSessionCookie });
-  }
+  if (!await aparelhoValido(env, sess)) return semSessao(request, true);
 
   if (sess.legado) {
     return json(await sessionBody(env, account), 200,
@@ -791,20 +852,47 @@ export async function me({ request, env }) {
  * toda rota de conta responde igual, e descobrir qual dos três é o problema
  * exige acesso ao painel que quem está depurando muitas vezes não tem à mão.
  *
- * Responde só BOOLEANOS. Nenhum valor, nenhum nome de variável, nenhuma
- * mensagem de erro do banco. O que um curioso aprende com isto - que o site
- * usa D1 e tem uma tabela `accounts` - já está no repositório, que é público.
- * O que ele não aprende é nada que ajude a entrar.
+ * ── duas respostas (auditoria de 01/10/2026, SEC-A-007) ──────────────────
+ * PÚBLICA: só `{ ok, monitor }`, que é o que o monitor externo precisa
+ * (palavra-chave `"monitor":true`, ver INCIDENTES.md). Antes a rota pública
+ * dizia também o modo da cobrança, de quem é a credencial, se o último
+ * e-mail de senha saiu e há quantos minutos a varredura rodou: um mapa de
+ * QUANDO a recuperação de senha ou a cobrança estão quebradas, que é a
+ * janela boa para um golpe de "suporte".
+ *
+ * DETALHADA: com `Authorization: Bearer <ADMIN_TOKEN>` (o segredo que a
+ * publicação gera e entrega à conferência, scripts/cloudflare-setup.sh) ou
+ * com a sessão de um administrador com o segundo fator em dia. Responde só
+ * BOOLEANOS e vereditos: nenhum valor, nenhum nome de variável, nenhuma
+ * mensagem de erro do banco.
  */
+async function podeVerDetalhes(request, env) {
+  if (!request) return false;
+  const token = String(env.ADMIN_TOKEN || '');
+  const pedido = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
+  /* Um token curto seria adivinhável; abaixo de 32 caracteres ele não abre
+     nada, nem configurado. */
+  if (token.length >= 32 && pedido && timingSafeEqual(pedido, token)) return true;
+  /* Sem cookie, nem consulta: é o caso do monitor e de qualquer curioso. */
+  if (!request.headers.get('Cookie')) return false;
+  try {
+    const { account } = await exigirAdmin(request, env);
+    return !!account;
+  } catch {
+    return false;
+  }
+}
+
 export async function health({ request, env }) {
-  /* Rota pública que faz quatro consultas ao banco: dez por minuto por IP
-     é folgado para a conferência da publicação e apertado para um laço. */
   /* Trinta por HORA por endereço. Cada consulta permitida é uma escrita de
      freio, e dez por minuto eram seiscentas por hora de uma máquina só; uma
-     publicação consulta meia dúzia de vezes. */
+     publicação consulta meia dúzia de vezes, e o monitor externo, de 5 em 5
+     minutos, doze. */
   if (request && env.DB && await throttled(env, `health-h:${ip(request)}`, 30, HORA)) {
     return fail('rate-limited', 429);
   }
+  const detalhes = await podeVerDetalhes(request, env);
+
   const out = {
     /* A ligação com o D1 existe no Worker? `false` = binding ausente ou
        database_id errado no wrangler.toml. */
@@ -875,7 +963,7 @@ export async function health({ request, env }) {
        "producao", o comprador é mandado ao checkout real, e lá encontra "uma
        das partes é de teste" sem que nada deste lado pareça errado.
        Ver vendedorFormato em lib/mercadopago.js. */
-    vendedor: await vendedorFormato(env),
+    vendedor: detalhes ? await vendedorFormato(env) : null,
     /* Há quantos minutos a varredura de 5 em 5 min rodou (null = nunca).
        Ela confere pagamentos cujo aviso não chegou, refaz estornos e manda
        os alertas ao dono - parada, tudo isso para em silêncio. */
@@ -928,8 +1016,14 @@ export async function health({ request, env }) {
      porque a publicação confere o `ok` logo depois de subir, antes de a
      varredura ter tido tempo de rodar. Auditoria de 28/09, INFRA-002. */
   out.monitor = out.ok && out.varredura !== null && out.varredura <= 15;
+  /* Para quem não é administrador, só as duas respostas que o monitor
+     precisa. O resto foi calculado à toa, e é barato: são as mesmas
+     consultas que `ok` e `monitor` já pedem, menos a da Mercado Pago, que só
+     roda com `detalhes`. */
+  if (!detalhes) return json({ ok: out.ok, monitor: out.monitor });
   return json(out);
 }
+
 
 /** A conta desta requisição, ou null. Usado por tudo que exige sessão. */
 export async function requireAccount(request, env) {

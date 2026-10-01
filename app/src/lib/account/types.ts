@@ -13,7 +13,7 @@
  *     Mercado Pago, e o que volta é um id de pagamento.
  */
 
-import { empresa } from '@/lib/empresa';
+import { empresa, prazoResposta } from '@/lib/empresa';
 
 export type Account = {
   id: string;
@@ -65,7 +65,20 @@ export type Order = {
   /** Como o dinheiro volta: `automatico` (o site pediu o estorno à Mercado
    *  Pago), `manual` (a equipe devolve) ou null (sem desistência). */
   estorno?: 'automatico' | 'manual' | null;
+  /** O que o provedor disse por último sobre o pagamento deste pedido, nas
+   *  palavras do servidor. Vem só da consulta de um pedido (`orderStatus`), e
+   *  decide só o TEXTO da tela de retorno - nunca o acesso. `null` quando
+   *  nenhum pagamento apareceu. */
+  ultimoPagamento?: UltimoPagamento | null;
 };
+
+export type UltimoPagamento = 'em-analise' | 'aguardando' | 'recusado' | 'aprovado' | 'devolvido';
+
+/** Um acesso que venceu: o curso e quando. */
+export type AcessoVencido = { courseSlug: string; expiredAt: string };
+
+/** O que o /perfil lê da conta: os pedidos e os acessos vencidos. */
+export type Compras = { orders: Order[]; vencidos: AcessoVencido[] };
 
 export type PaymentMethod = 'pix' | 'card';
 export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired';
@@ -116,7 +129,7 @@ export const MESSAGES: Record<AuthErrorCode, string> = {
      nossa, e repetir vai falhar de novo. A pessoa está com o cartão na mão;
      o que serve a ela é saber que o problema não é dela e ter para onde
      escrever. */
-  'payment-failed': `Não conseguimos gerar o pagamento agora, e o problema é nosso, não seu. Escreva para ${empresa.contato.emailSuporte} que a gente resolve na hora - e nada foi cobrado.`,
+  'payment-failed': `Não conseguimos gerar o pagamento agora, e o problema é nosso, não seu. Nada foi cobrado. Escreva para ${empresa.contato.emailSuporte}: respondemos ${prazoResposta()}.`,
   /* O checkout não oferece cartão quando só existe PIX, então em uso normal
      ninguém vê esta frase: ela é a rede para um pedido antigo aberto numa aba
      esquecida, ou para alguém chamando a API na mão. Diz o que fazer em vez de

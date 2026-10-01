@@ -20,7 +20,7 @@
  */
 
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
-import { envDeTeste, pedido, cookieDe } from './ajuda/d1';
+import { envDeTeste, pedido, cookieDe, saudeDetalhada } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
@@ -97,7 +97,10 @@ describe('o e-mail de confirmação', () => {
     const m = enviados.find(e => e.subject.startsWith('Confirme'))!;
     expect(m.to).toBe('aluna@exemplo.com.br');
     expect(m.subject).toBe('Confirme seu e-mail - Hebraico Fluente');
-    expect(m.text).toContain('Oi, Débora.');
+    /* Sem o nome: o endereço ainda não provou ser de quem escreveu o nome
+       (SEC-A-003, tests/nome-nos-emails.test.ts). */
+    expect(m.text.startsWith('Oi.\n')).toBe(true);
+    expect(m.text).not.toContain('Débora');
     expect(m.text).toContain(`${SITE}/confirmar-email/?token=`);
     expect(m.text).toContain('O link vale por 7 dias');
   });
@@ -271,10 +274,7 @@ describe('antes de a tabela nova existir', () => {
     expect(enviados.filter(e => e.subject.startsWith('Confirme'))).toHaveLength(0);
     expect(await confirmado(env, cookie)).toBeNull();
 
-    const h = await auth.health({
-      request: new Request(`${SITE}/api/health`, { headers: { 'CF-Connecting-IP': '203.0.113.9' } }),
-      env
-    });
+    const h = await auth.health({ request: saudeDetalhada('203.0.113.9'), env });
     const saude = await h.json() as { ok: boolean; verificacao: boolean };
     expect(saude.verificacao).toBe(false);
     expect(saude.ok).toBe(true);

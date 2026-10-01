@@ -12,6 +12,8 @@ import worker from '../../worker/src/worker.js';
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
 import { chaveDe, estatisticasPurge } from '../../worker/src/api/estatisticas.js';
+// @ts-expect-error - idem
+import { grantAccess } from '../../worker/src/lib/db.js';
 
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
@@ -44,9 +46,12 @@ describe('o que o app manda', () => {
 });
 
 describe('o servidor', () => {
-  async function conta(env: Env, email = 'ana@exemplo.com') {
+  /* Com o curso liberado: desde 01/10/2026 (SEC-A-008) só aluno conta. */
+  async function conta(env: Env, email = 'ana@exemplo.com', comCurso = true) {
     const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`,
       { aceitouTermos: true, declarouIdade: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
+    const { account } = await r.clone().json() as { account: { id: string } };
+    if (comCurso) await grantAccess(env, { accountId: Number(account.id), courseSlug: 'alfabetizacao', orderId: 'T', months: 12 });
     return cookieDe(r);
   }
   const mandar = (env: Env, cookie: string, eventos: unknown) =>
@@ -74,6 +79,17 @@ describe('o servidor', () => {
     await mandar(env, a, [{ e: 'etapa', l: 'alef', s: 9 }, { e: 'resposta', k: '<b>', l: 'alef', c: true }, 'x', null]);
     expect(env.DB.bruto.prepare('SELECT COUNT(*) AS n FROM estatisticas').get()).toEqual({ n: 0 });
     expect(chaveDe({ e: 'resposta', k: 'match', l: 'alef', c: 'sim' })).toBeNull();
+  });
+
+  /* SEC-A-008 (auditoria de 01/10/2026): conta é de graça, e qualquer conta
+     logada envenenava os números com que o dono decide o curso. */
+  it('conta sem curso não conta, e não escreve nem o freio', async () => {
+    const env = envDeTeste() as Env;
+    const a = await conta(env, 'curiosa@exemplo.com', false);
+    const antes = env.DB.bruto.prepare('SELECT COUNT(*) AS n FROM throttle').get();
+    expect((await mandar(env, a, [{ e: 'resposta', k: 'match', l: 'alef', c: false }])).status).toBe(204);
+    expect(env.DB.bruto.prepare('SELECT COUNT(*) AS n FROM estatisticas').get()).toEqual({ n: 0 });
+    expect(env.DB.bruto.prepare('SELECT COUNT(*) AS n FROM throttle').get()).toEqual(antes);
   });
 
   it('só o dono lê, e a leitura junta certo e errado', async () => {

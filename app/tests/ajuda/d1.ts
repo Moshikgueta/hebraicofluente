@@ -18,7 +18,7 @@
  * o SQL está certo - que é onde moram os erros deste fluxo.
  */
 
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
 
 type Linha = Record<string, unknown> | null;
@@ -70,6 +70,12 @@ export function bancoDeTeste(): D1Falso {
   const db = new DatabaseSync(':memory:');
   const schema = readFileSync(new URL('../../../worker/schema.sql', import.meta.url), 'utf8');
   db.exec(schema);
+  /* E as migrações, em ordem, como a publicação faz (scripts/cloudflare-setup.sh,
+     passo 3b): uma coluna nova só existe nelas. */
+  const migr = new URL('../../../worker/migrations/', import.meta.url);
+  for (const nome of readdirSync(migr).filter(n => /^\d{4}-[a-z0-9.-]+\.sql$/.test(n)).sort()) {
+    db.exec(readFileSync(new URL(nome, migr), 'utf8'));
+  }
   return {
     prepare: (sql: string) => new Preparada(db, sql),
 
@@ -110,9 +116,20 @@ export function envDeTeste(extra: Record<string, unknown> = {}) {
     SESSION_SECRET: 'segredo-de-teste-nao-usado-em-lugar-nenhum',
     SITE_ORIGIN: 'https://hebraicofluente.com.br',
     PBKDF2_ITERATIONS: '10000',
+    ADMIN_TOKEN: ADMIN_TOKEN_DE_TESTE,
     ...extra
   } as Record<string, unknown>;
 }
+
+/** O ADMIN_TOKEN dos testes: o que abre os detalhes de /api/health
+ *  (SEC-A-007). Em produção quem o gera é scripts/cloudflare-setup.sh. */
+export const ADMIN_TOKEN_DE_TESTE = 'token-de-administrador-so-dos-testes-0123456789';
+
+/** GET /api/health com o token: a resposta DETALHADA, a da conferência. */
+export const saudeDetalhada = (ip = '203.0.113.200') =>
+  new Request('https://hebraicofluente.com.br/api/health', {
+    headers: { Authorization: `Bearer ${ADMIN_TOKEN_DE_TESTE}`, 'CF-Connecting-IP': ip }
+  });
 
 /** Uma requisição JSON como o app faz. */
 export const pedido = (url: string, body?: unknown, headers: Record<string, string> = {}) =>

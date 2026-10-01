@@ -32,6 +32,17 @@ const TOTAL = {
   modulos: curso.modules.length
 };
 
+/* A lição que ensina a letra de ordem `ordem`: a mesma conta de
+   `licaoDaLetra` (lib/content-publico.ts). */
+const licaoDaLetra = ordem => {
+  const letra = curso.letters.find(l => l.order === ordem);
+  if (!letra) return null;
+  for (const md of curso.modules) for (const l of md.lessons) {
+    if ((l.letters || []).includes(letra.id)) return l.n;
+  }
+  return null;
+};
+
 /* As contagens de UM módulo, que a vitrine mostra de propósito ("Módulo 05 ·
    7 lições"). Uma delas pode coincidir com o total de outra unidade - desde
    26/09/2026 o módulo 5 tem 7 lições, e o curso tem 7 módulos - sem ser o
@@ -117,6 +128,25 @@ for (const [rota, arquivo] of paginas('out').sort()) {
     vistos.set(chave, true);
     const queixa = julgar(Number(n), UNIDADE[palavra]);
     if (queixa) problemas.push(`${rota.padEnd(28)} diz "${chave}", que ${queixa}`);
+  }
+
+  /* "letra N das M" e "lição N das M": o M é o total da grandeza, e uma
+     "lição" logo depois de uma "letra" ("letra 20 das 22 (lição 14 das 27)")
+     é a lição que ENSINA aquela letra. Em 01/10/2026 /biblia dizia "lição 20
+     das 22": a ordem da letra lida como lição, e o total de letras como total
+     de lições (auditoria, CONV-006). */
+  for (const [trecho, palavra, n, m] of t.matchAll(/\b(letra|lição)\s+(\d+)\s+das\s+(\d+)/g)) {
+    const unidade = UNIDADE[palavra];
+    if (Number(m) !== TOTAL[unidade]) {
+      problemas.push(`${rota.padEnd(28)} diz "${trecho.replace(/\s+/g, " ")}", mas o curso tem ${TOTAL[unidade]} ${unidade}`);
+    }
+    if (Number(n) > Number(m)) problemas.push(`${rota.padEnd(28)} diz "${trecho}"`);
+  }
+  for (const [trecho, ordem, licao] of t.matchAll(/letra\s+(\d+)\s+das\s+\d+\s*\(\s*lição\s+(\d+)/g)) {
+    const certa = licaoDaLetra(Number(ordem));
+    if (certa !== Number(licao)) {
+      problemas.push(`${rota.padEnd(28)} diz "${trecho.replace(/\s+/g, " ")}…", mas a letra ${ordem} entra na lição ${certa}`);
+    }
   }
 
   /* A segunda regra: o valor da parcela.

@@ -19,7 +19,18 @@ DB_NAME="hebraico-fluente"
 # (token da Cloudflare, Mercado Pago, Resend); `wrangler@4` resolvia para a
 # versão mais nova a cada execução, e um pacote comprometido rodaria com tudo
 # isso nas mãos. Subir de versão é uma edição deliberada, testada, aqui.
-W="npx --yes wrangler@4.135.0"
+# O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+# SEC-A-009): com `npm ci` na raiz, a versão E todas as dependências dela vêm
+# do lockfile, conferidas pelo hash. O `npx --yes wrangler@VERSÃO` fixava só
+# o pacote de cima e resolvia o resto a cada execução - num passo que tem os
+# segredos de produção no ambiente. Sem `npm ci` (uma máquina nova), cai no
+# npx com a mesma versão do lockfile.
+if [ -x "$PWD/node_modules/.bin/wrangler" ]; then
+  WRANGLER_LOCAL="$PWD/node_modules/.bin/wrangler"
+else
+  WRANGLER_LOCAL="npx --yes wrangler@4.135.0"
+fi
+W="$WRANGLER_LOCAL"
 # Vira 1 quando este script edita o wrangler.toml. No CI a edição é
 # descartável (o runner some), então a publicação funciona mesmo assim - mas
 # o arquivo do repositório continua com o valor de exemplo, e é isso que o
@@ -228,6 +239,24 @@ else
           "Rode à mão: npx wrangler secret put SESSION_SECRET
        (cole o resultado de: openssl rand -base64 48)"
   fi
+fi
+
+# ADMIN_TOKEN: o que abre os detalhes de /api/health (auditoria de
+# 01/10/2026, SEC-A-007). Para o público a saúde diz só `ok` e `monitor`; a
+# conferência desta publicação (worker/e2e.sh) precisa do resto - tabelas,
+# sessão, e-mail, modo da cobrança - e o recebe em HF_ADMIN_TOKEN.
+#
+# Um valor NOVO a cada publicação, a menos que ADMIN_TOKEN venha no ambiente
+# (quem quiser um fixo põe nos segredos do repositório). Ninguém precisa
+# guardá-lo: quem lê os detalhes fora da publicação é o administrador, pela
+# própria sessão com o segundo fator. Trocar a cada vez é também o que
+# torna inútil um token visto num log velho.
+ADMIN_TOKEN="${ADMIN_TOKEN:-$(openssl rand -hex 32)}"
+if printf '%s' "$ADMIN_TOKEN" | $W secret put ADMIN_TOKEN >/dev/null 2>&1; then
+  ok "ADMIN_TOKEN enviado ao Worker"
+  export HF_ADMIN_TOKEN="$ADMIN_TOKEN"
+else
+  info "Não consegui enviar ADMIN_TOKEN: a conferência vai ver só a saúde pública."
 fi
 
 # Os da Mercado Pago: se o valor estiver no AMBIENTE (segredo do GitHub, ou

@@ -34,10 +34,13 @@ export function Section({
 
 /** Um título de faixa com subtítulo opcional. `id` para o aria-labelledby. */
 export function SectionHead({
-  id, eyebrowPt, titlePt, leadPt, center = false
+  id, eyebrowPt, titlePt, leadPt, center = false, nivel = 'h2'
 }: {
   id: string; eyebrowPt?: string; titlePt: string; leadPt?: string; center?: boolean;
+  /** 'h1' quando a faixa abre a página e ela não tem outro título (/cursos). */
+  nivel?: 'h1' | 'h2';
 }) {
+  const Titulo = nivel;
   return (
     <header className={`grid gap-3 mb-8 ${center ? 'text-center justify-items-center' : ''}`}>
       {eyebrowPt && (
@@ -45,9 +48,9 @@ export function SectionHead({
           {eyebrowPt}
         </p>
       )}
-      <h2 id={id} className="font-display text-[26px] sm:text-[32px] font-bold leading-[1.2] text-ink max-w-[22ch]">
+      <Titulo id={id} className="font-display text-[26px] sm:text-[32px] font-bold leading-[1.2] text-ink max-w-[22ch]">
         {titlePt}
-      </h2>
+      </Titulo>
       {leadPt && (
         <p className="font-ui text-[16px] leading-relaxed text-ink-body max-w-[58ch]">
           {leadPt}

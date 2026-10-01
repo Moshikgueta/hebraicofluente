@@ -4,7 +4,7 @@ import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
 import { flagship } from '@/lib/catalog';
-import { empresa, soPix } from '@/lib/empresa';
+import { confirmacaoDaDesistencia, empresa, INICIO_DO_ACESSO, temCartao, temPix } from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
   rota: '/reembolso',
@@ -28,10 +28,11 @@ export const metadata: Metadata = meta({
  */
 export default function Page() {
   const c = flagship();
-  const { politicas, contato, atendimento } = empresa;
+  const { politicas, contato } = empresa;
 
   return (
     <LegalPage
+      documento="reembolso"
       titulo="Reembolso e Cancelamento"
       resumo={
         `Você tem ${politicas.arrependimentoDias} dias para desistir da compra e ` +
@@ -59,9 +60,8 @@ export default function Page() {
       <Artigo n={1} titulo="O direito de arrependimento">
         <p>
           Toda compra feita pela internet dá ao consumidor{' '}
-          <strong>{politicas.arrependimentoDias} dias corridos</strong> para desistir,
-          contados da data da compra ou da liberação do acesso, o que for mais
-          favorável a você. É o art. 49 do Código de Defesa do Consumidor, e ele não
+          <strong>{politicas.arrependimentoDias} dias corridos</strong> para desistir. Aqui
+          eles são {INICIO_DO_ACESSO}, o dia em que o curso abre para você. É o art. 49 do Código de Defesa do Consumidor, e ele não
           admite condição.
         </p>
         <p>
@@ -86,9 +86,11 @@ export default function Page() {
         <p>Se preferir, por e-mail:</p>
         <Lista itens={[
           <>Escreva para <a href={`mailto:${contato.emailSuporte}`} className="text-[var(--accent)] hover:underline break-all">{contato.emailSuporte}</a>, do <strong>mesmo e-mail</strong> usado na compra.</>,
-          <>Escreva <em>Pedido de reembolso</em> no assunto. Não precisa de mais nada - nem número de pedido, nós encontramos pelo seu e-mail.</>,
-          <>Respondemos confirmando em até {atendimento.prazoRespostaUteis} dias úteis. Vale a data em que você escreveu, não a da nossa resposta.</>
+          <>Escreva <em>Pedido de reembolso</em> no assunto. Não precisa de mais nada - nem número de pedido, nós encontramos pelo seu e-mail.</>
         ]} />
+        {/* Um texto só para os dois canais, o mesmo dos Termos, da FAQ e do
+            /suporte (auditoria de 01/10/2026, LEGAL-109). */}
+        <p>{confirmacaoDaDesistencia()}</p>
         <p>
           Pedir do e-mail da compra é a única exigência, e ela existe para proteger
           você: é assim que confirmamos que quem pede o estorno é quem pagou.
@@ -100,8 +102,10 @@ export default function Page() {
             só entra PIX, só sai PIX, e descrever um estorno de cartão que
             ninguém vai pedir só faz o documento parecer genérico. */}
         <Lista itens={[
-          <><strong>PIX</strong>: devolvemos para a mesma chave ou conta de origem, em até {politicas.prazoReembolsoUteis} dias úteis a partir da confirmação.</>,
-          ...(soPix() ? [] : [
+          ...(temPix() ? [
+            <><strong>PIX</strong>: devolvemos para a mesma chave ou conta de origem, em até {politicas.prazoReembolsoUteis} dias úteis a partir da confirmação.</>
+          ] : []),
+          ...(!temCartao() ? [] : [
             <><strong>Cartão de crédito</strong>: o estorno é solicitado na hora, e aparece na fatura conforme o prazo da operadora - em geral na fatura seguinte, às vezes na outra. Esse tempo é do banco, não nosso.</>,
             <><strong>Parcelado</strong>: o estorno é do valor total. A administradora pode lançar as parcelas restantes e estornar em seguida; o saldo final é zero.</>
           ])

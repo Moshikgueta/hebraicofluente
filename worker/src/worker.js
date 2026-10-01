@@ -26,6 +26,7 @@ import { json } from './lib/http.js';
 import { comRange } from './lib/range.js';
 import { gate, isGatedPath } from './gate.js';
 import { runReconcile } from './reconcile.js';
+import { contar5xx } from './lib/db.js';
 import * as auth from './api/auth.js';
 import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
@@ -73,6 +74,9 @@ const ROUTES = {
   'GET /api/pay/webhook': pay.webhook,
 
   'GET /api/orders': pay.orders,
+  /* O PIX ainda pagável do próprio pedido, para o checkout e o /perfil
+     reabrirem o mesmo código em vez de gerar outro. Ver api/pay.js. */
+  'GET /api/pay/pix': pay.pixAberto,
   /* A desistência da compra pelo próprio site (CDC, art. 49; Decreto
      7.962/2013, art. 5º). Ver api/pay.js. */
   'POST /api/pay/desistir': pay.desistir,
@@ -141,6 +145,14 @@ export default {
   async fetch(request, env, ctx) {
     const path = new URL(request.url).pathname.replace(/\/+$/, '') || '/';
     const res = await responder(request, env, ctx);
+    /* Toda resposta 5xx vira um contador por hora no D1, que o alerta
+       diário soma (alertas.js, auditoria de 01/10/2026, SEC-A-005). Fora do
+       caminho da resposta: quem já recebeu um erro não espera pela conta. */
+    if (res.status >= 500) {
+      const contar = contar5xx(env);
+      if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(contar);
+      else await contar;
+    }
     return blindar(res, path, await hashesDaPagina(request, env, res, path));
   },
 
@@ -258,7 +270,23 @@ async function responder(request, env, ctx) {
     if (/^\/amostra-audio\/[^/]+\.mp3$/.test(path) && (request.method === 'GET' || request.method === 'HEAD')) {
       return comRange(request, await env.ASSETS.fetch(request));
     }
-    return env.ASSETS.fetch(request);
+    return permanente(await env.ASSETS.fetch(request));
+}
+
+/* ── o redirecionamento da barra final é permanente ──────────────────────
+ * O servidor de ativos (html_handling padrão, "auto-trailing-slash") manda
+ * `/cursos` para `/cursos/` e `/index.html` para `/` com 307, que é
+ * TEMPORÁRIO: um link externo sem a barra passa autoridade por um desvio
+ * que o buscador não guarda (auditoria de 01/10/2026, SEO-002). O wrangler
+ * não tem opção para mudar o código, então a troca é aqui: o mesmo destino,
+ * com 308 (permanente, e que, como o 307, preserva método e corpo). Só os
+ * redirecionamentos do servidor de ativos passam por esta função; os 302 do
+ * portão e o 301 do www nascem antes e não mudam. */
+function permanente(res) {
+  if (res.status !== 307) return res;
+  const destino = res.headers.get('Location');
+  if (!destino) return res;
+  return new Response(null, { status: 308, headers: { Location: destino } });
 }
 
 /* ── os cabeçalhos do site ─────────────────────────────────────────────────
@@ -411,6 +439,14 @@ function blindar(res, path, hashes = null) {
      a regra do portão, abaixo, vem depois e vence. */
   if (path.startsWith('/_next/static/')) {
     h.set('Cache-Control', 'public, max-age=31536000, immutable');
+  }
+  /* Os `.txt` do export são o payload RSC de cada página (`/faq/index.txt`),
+     servidos como text/plain: um rastreador que os descubra ao renderizar
+     pode indexar o texto cru como se fosse página (auditoria de 01/10/2026,
+     SEO-003). robots.txt e llms.txt são feitos para serem lidos e ficam de
+     fora. */
+  if (/\.txt$/i.test(path) && path !== '/robots.txt' && path !== '/llms.txt') {
+    h.set('X-Robots-Tag', 'noindex');
   }
   if (!path.startsWith('/api/') && isGatedPath(path)) {
     h.set('Cache-Control', 'private, no-store');

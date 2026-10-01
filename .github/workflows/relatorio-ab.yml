@@ -25,7 +25,13 @@ jobs:
   relatorio:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      # O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+      # SEC-A-009): versão e dependências conferidas pelo hash do lockfile,
+      # e nenhum script de instalação roda num passo com o token no ambiente.
+      - name: Instalar o wrangler do lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Ler as contagens
         env:
@@ -36,8 +42,8 @@ jobs:
             echo "::error::CLOUDFLARE_API_TOKEN não está nos segredos do repositório."
             exit 1
           fi
-          # Versão fixa, como em acesso.yml: o token tem acesso ao banco.
-          npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --json --command \
+          # O wrangler do lockfile, como em acesso.yml: o token tem acesso ao banco.
+          node_modules/.bin/wrangler d1 execute hebraico-fluente --remote --json --command \
             "SELECT variante, evento, SUM(n) AS n FROM ab_contagens WHERE exp = 'hero-2026-09' GROUP BY variante, evento" \
             > contagens.json
           node tools/relatorio-ab.mjs < contagens.json | tee -a "$GITHUB_STEP_SUMMARY"

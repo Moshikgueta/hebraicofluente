@@ -3,7 +3,10 @@ import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { brl, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
-import { empresa, soPix } from '@/lib/empresa';
+import {
+  confirmaSozinho, confirmacaoDaDesistencia, empresa, INICIO_DO_ACESSO,
+  parcelasTexto, prazoResposta, renovacaoTexto, soPix, temCartao, temPix
+} from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
   rota: '/termos',
@@ -28,6 +31,7 @@ export default function Page() {
 
   return (
     <LegalPage
+      documento="termos"
       titulo="Termos de Uso"
       resumo={
         'Estes termos valem entre você e o Hebraico Fluente, e descrevem o que é ' +
@@ -52,38 +56,59 @@ export default function Page() {
         <p>O que <strong>não</strong> está incluído, salvo se estiver escrito na página do curso que você comprou:</p>
         <Lista itens={[
           'aulas ao vivo, em grupo ou individuais;',
-          'correção ou acompanhamento feito por professor - o suporte por e-mail e WhatsApp é para problemas de acesso, pagamento e conta;',
+          /* TEXTO PARA APROVAÇÃO (UXQA-016): a resposta a dúvida de conteúdo
+             é a mesma de /suporte e da FAQ, ver DUVIDAS_DE_CONTEUDO. */
+          'correção de exercícios ou acompanhamento do estudo feito por professor: o atendimento por e-mail e WhatsApp é para problemas de acesso, pagamento e conta, e para dúvidas pontuais sobre o conteúdo;',
           'os outros cursos da plataforma (A1, A2, B1), vendidos à parte quando forem lançados;',
           'aplicativo para instalar - a plataforma funciona no navegador, no celular e no computador;',
           'certificado oficial: o certificado de conclusão registra que você terminou o curso e passou no exame final, e não é reconhecido por nenhuma instituição de ensino;',
           'material físico.'
         ]} />
         {/* As formas de pagamento descritas aqui são as que o checkout aceita
-            de verdade. Um contrato que oferece parcelamento no cartão enquanto
-            a loja só processa PIX não é um contrato desatualizado: é uma oferta
-            que o fornecedor não cumpre, e ela está escrita por ele. */}
+            de verdade, nesta publicação: `temPix()` e `temCartao()` leem o que
+            a Mercado Pago respondeu (`pagamento.formas`), e não só o modo
+            (auditoria de 01/10/2026, LEGAL-103). Um contrato que promete um
+            desconto no PIX que o checkout não oferece é uma oferta que o
+            fornecedor não cumpre, escrita por ele. */}
         <p>
           O {c.titlePt} custa {brl(c.price.brl)}
           {soPix()
             ? <>, ou {brl(pix)} pagando por <strong>PIX</strong>, que é a forma
                 de pagamento aceita hoje</>
-            : <> à vista, {brl(pix)} no PIX, ou em até {parcelas}× no cartão de
-                crédito. No parcelamento há juros, cobrados pela Mercado Pago e pagos
-                pelo comprador; o valor de cada parcela e o total aparecem na tela de
-                pagamento da Mercado Pago antes da confirmação</>}
+            : <>
+                {temCartao() && <>{' '}à vista</>}
+                {temPix() && temCartao() && <>, {brl(pix)} no PIX, ou {parcelasTexto(parcelas)} no cartão de crédito</>}
+                {temPix() && !temCartao() && <>, ou {brl(pix)} pagando por <strong>PIX</strong>, que é a forma de pagamento aceita hoje</>}
+                {!temPix() && temCartao() && <> no cartão de crédito, ou {parcelasTexto(parcelas)}</>}
+                {temCartao() && <>. No parcelamento, os juros são cobrados pela Mercado Pago e pagos
+                  pelo comprador; o valor de cada parcela e o total aparecem na tela de
+                  pagamento da Mercado Pago antes da confirmação</>}
+              </>}
           , e dá{' '}
-          <strong>{c.accessMonths} meses de acesso</strong> contados da confirmação do
-          pagamento. O preço vigente é sempre o exibido na página do curso e no
-          checkout no momento da compra.
+          <strong>{c.accessMonths} meses de acesso</strong> {INICIO_DO_ACESSO}. O preço
+          vigente é sempre o exibido na página do curso e no checkout no momento da compra.
+        </p>
+        {/* 01/10/2026 (auditoria, LEGAL-121): a renovação existia no código e
+            não no contrato. O texto descreve o que `grantAccess` faz. */}
+        <p>
+          <strong>Renovação.</strong> {renovacaoTexto(c.accessMonths)} Se você desistir de
+          uma renovação no prazo do artigo 8, os meses dela são retirados e o acesso volta
+          a terminar na data de antes.
         </p>
       </Artigo>
 
       <Artigo n={2} titulo="Como o acesso é liberado">
         <Lista itens={[
-          <>No <strong>PIX</strong>, o acesso é liberado assim que o pagamento é confirmado - normalmente em minutos.</>,
-          ...(soPix() ? [] : [
+          /* A promessa de prazo acompanha o trilho: com confirmação
+             automática, minutos; no PIX direto, alguém confere o extrato e
+             libera à mão (LEGAL-103). */
+          ...(temPix() ? [confirmaSozinho()
+            ? <>No <strong>PIX</strong>, o acesso é liberado assim que o pagamento é confirmado - normalmente em minutos.</>
+            : <>No <strong>PIX</strong>, o acesso é liberado depois que conferimos o pagamento: a liberação é feita à mão, {prazoResposta()}.</>
+          ] : []),
+          ...(temCartao() ? [
             <>No <strong>cartão</strong>, assim que a operadora aprova a transação.</>
-          ]),
+          ] : []),
           <>O acesso fica vinculado à <strong>conta</strong> criada com o seu e-mail, e não ao aparelho: você pode entrar no celular e no computador com o mesmo login.</>,
           <>A conta fica conectada em até <strong>3 aparelhos</strong> ao mesmo tempo. Ao entrar num quarto, o aparelho em que você entrou há mais tempo é desconectado e pede o login de novo; seu progresso não se perde.</>,
           <>Seu progresso é salvo na sua conta e acompanha você entre os aparelhos.</>
@@ -204,8 +229,8 @@ export default function Page() {
           compra e receber o valor de volta, conforme o art. 49 do Código de Defesa do
           Consumidor. A desistência se faz pelo próprio site - em{' '}
           <Link href="/perfil" className="text-[var(--accent)] hover:underline">Sua conta</Link>,
-          na compra, use <strong>Desistir da compra</strong> - ou por e-mail, e a
-          confirmação de recebimento chega na hora. As condições, o passo a passo e os
+          na compra, use <strong>Desistir da compra</strong> - ou por e-mail.{' '}
+          {confirmacaoDaDesistencia()} As condições, o passo a passo e os
           prazos estão na{' '}
           <Link href="/reembolso" className="text-[var(--accent)] hover:underline">
             Política de Reembolso e Cancelamento
@@ -216,9 +241,10 @@ export default function Page() {
       <Artigo n={9} titulo="Mudanças nestes termos">
         <p>
           Estes termos podem mudar - para corrigir, esclarecer ou acompanhar mudanças no
-          produto. A data de atualização fica no topo desta página. Mudança que afete
-          um acesso já comprado não retroage: vale o que estava escrito no dia da sua
-          compra.
+          serviço. A data de atualização fica no topo desta página. Cada versão tem um
+          código e fica guardada, sem mudança, num endereço próprio; o e-mail de cada
+          compra traz o link da versão que valeu para ela. Mudança que afete um acesso
+          já comprado não retroage: vale o que estava escrito no dia da sua compra.
         </p>
       </Artigo>
 

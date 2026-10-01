@@ -389,6 +389,20 @@ export const totalLicoes = (): number =>
   course.modules.reduce((n, m) => n + m.lessons.length, 0);
 
 /**
+ * A lição que ensina a letra de ordem `ordem` (a 1ª lição em que ela entra),
+ * ou null. "Letra 20" e "lição 20" são grandezas diferentes: a Bet é a 20ª
+ * letra e entra na lição 14 (auditoria de 01/10/2026, CONV-006, em /biblia).
+ */
+export function licaoDaLetra(ordem: number): number | null {
+  const letra = course.letters.find(l => l.order === ordem);
+  if (!letra) return null;
+  for (const m of course.modules) {
+    for (const l of m.lessons) if ((l.letters ?? []).includes(letra.id)) return l.n;
+  }
+  return null;
+}
+
+/**
  * Quanto tempo leva, numa frase só, derivada do número de lições.
  *
  * Havia três estimativas diferentes no site ("vinte minutos por dia, a
