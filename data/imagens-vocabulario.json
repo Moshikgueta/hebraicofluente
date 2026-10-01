@@ -232,7 +232,7 @@
   },
   "אַבָּא": {
    "pt": "pai",
-   "image": null,
+   "image": "/media/vocabulario/pai-a1f2f6b8.webp",
    "imageAlt": "Um homem adulto carregando uma criança nos ombros.",
    "imagePrompt": "a father carrying a young child on his shoulders"
   },
@@ -244,7 +244,7 @@
   },
   "לֵב": {
    "pt": "coração",
-   "image": null,
+   "image": "/media/vocabulario/coracao-47a1e40d.webp",
    "imageAlt": "Um coração vermelho desenhado.",
    "imagePrompt": "a red heart shape"
   },
@@ -256,7 +256,7 @@
   },
   "כּוֹס": {
    "pt": "copo",
-   "image": null,
+   "image": "/media/vocabulario/copo-25b1d6f2.webp",
    "imageAlt": "Um copo de vidro vazio.",
    "imagePrompt": "an empty drinking glass"
   },
@@ -274,7 +274,7 @@
   },
   "כֶּסֶף": {
    "pt": "dinheiro",
-   "image": null,
+   "image": "/media/vocabulario/dinheiro-63a06df4.webp",
    "imageAlt": "Algumas moedas e uma nota dobrada.",
    "imagePrompt": "a few coins and a folded banknote"
   },
