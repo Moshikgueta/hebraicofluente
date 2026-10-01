@@ -66,7 +66,17 @@ export function FalarECorrigir({ alvo, translit, nota }: {
         ) : (
           <button type="button" onClick={falar} disabled={estado.t === 'sem-hebraico'}
                   className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[var(--teal-solid)] text-white font-ui text-[14px] font-semibold disabled:opacity-50">
-            🎤 Fale e seja corrigido
+            {/* Microfone de traço, no lugar do emoji colorido, que muda de
+                desenho entre Android, iOS e Windows (auditoria de 01/10,
+                VIS-018). Mesmo traço dos ícones da navegação. */}
+            <span className="inline-flex items-center gap-2">
+              <svg width="17" height="17" viewBox="0 0 20 20" fill="none" aria-hidden
+                   strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="7.2" y="2.8" width="5.6" height="9.4" rx="2.8" stroke="currentColor" />
+                <path d="M4.6 9.6a5.4 5.4 0 0 0 10.8 0M10 15v2.4" stroke="currentColor" />
+              </svg>
+              Fale e seja corrigido
+            </span>
           </button>
         )}
         {acertos > 0 && (

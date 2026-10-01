@@ -20,7 +20,6 @@ import { He } from '@/components/hebrew/He';
 import { Container, Check } from './base';
 import { TEM_AUDIO } from './copy';
 import { SEM_MIDIA, type HeroMedia } from './media';
-import { contarAB, versaoDoHero, type VersaoHero } from '@/lib/ab';
 
 
 const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1000], [5, 1900]];
@@ -40,12 +39,10 @@ const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1
  * saiba.
  */
 export function Hero({
-  primaryHref, primaryLabel, testeAB = false, primaryMicro, secondaryHref, midia = SEM_MIDIA
+  primaryHref, primaryLabel, primaryMicro, secondaryHref, midia = SEM_MIDIA
 }: {
   primaryHref: string;
   primaryLabel: string;
-  /** Participa do teste A/B (lib/ab.ts): só quem ainda pode comprar. */
-  testeAB?: boolean;
   /** A linha curta embaixo do botão: o que se leva ao clicar. */
   primaryMicro: string;
   secondaryHref: string;
@@ -53,19 +50,6 @@ export function Hero({
   midia?: HeroMedia;
 }) {
   const [etapa, setEtapa] = useState(0);
-  /* O teste A/B (lib/ab.ts). O HTML estático sai com a versão B, e a versão
-     do visitante é escolhida no mesmo efeito que agenda a entrada: o texto
-     do hero nasce invisível (etapa 0) e só aparece depois, então quem cai
-     na A nunca vê a B piscar. */
-  const [versao, setVersao] = useState<VersaoHero>('b');
-
-  useEffect(() => {
-    if (testeAB) {
-      setVersao(versaoDoHero());
-      contarAB('visto');
-    }
-  }, [testeAB]);
-
   useEffect(() => {
     const reduz = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     const timers = ETAPAS.map(([v, ms]) => setTimeout(() => setEtapa(v), reduz ? 0 : ms));
@@ -88,35 +72,20 @@ export function Hero({
       <Container className="relative pt-8 pb-16 sm:pt-[78px] sm:pb-24
                             grid gap-12 lg:gap-[60px] lg:grid-cols-[minmax(0,1.04fr)_minmax(0,1fr)] lg:items-center">
         <div>
-          {/* A mensagem do hero (28/09/2026), a pedido do dono do curso.
+          {/* A mensagem do hero: o resultado claro no título e os três
+              desejos como selos logo abaixo (a versão "híbrida", escolhida
+              pelo dono do curso em 28/09/2026).
               ──────────────────────────────────────────────────────────────
-              Antes o título dizia o resultado ("ler e escrever hebraico com
-              segurança"). Agora ele começa pelo DESEJO de quem chega - viajar
-              para Israel, ler a Bíblia no original, ou só vencer as letras que
-              sempre pareceram impossíveis -, e o resultado vem logo abaixo,
-              grifado: "ler e escrever hebraico do zero".
-
-              A hierarquia, de cima para baixo:
-                · o selo diz em um relance PARA QUEM é e O QUE é - iniciante
-                  absoluto, alfabetização (e não fluência);
-                · as duas primeiras perguntas no corpo grande: são os dois
-                  motivos que mais trazem gente para cá;
-                · a terceira, menor e em tinta suave: é o motivo de todo mundo,
-                  e em corpo grande ela sozinha ocuparia três linhas;
-                · "Você está no lugar certo." em teal, a virada;
-                · a promessa, com o grifo no que o curso entrega.
-              O resto da explicação (o que se aprende, os dois "nada de") foi
-              para a faixa logo abaixo (Promessa.tsx): o hero ficou com a
-              mensagem, e a primeira tela continua mostrando o botão. */}
-          {/* Versão A do teste: o HÍBRIDO (escolhido pelo dono do curso em
-              28/09/2026) - o resultado claro no título e os três desejos
-              como selos logo abaixo. Versão B: as perguntas. O botão é o
-              mesmo nas duas, para que o teste compare só a mensagem. Ver
-              lib/ab.ts. */}
-          {versao === 'a' ? (
-            <>
+              De 28/09 a 01/10/2026 ela disputou um teste A/B (`hero-2026-09`)
+              com uma versão B feita de perguntas ("Quer viajar para Israel?
+              Ler as letras da Bíblia no original?"). Com o volume do
+              pré-lançamento o teste não chegaria a significância antes de
+              31/10, e a auditoria de 01/10 (CONV-009) recomendou decidir por
+              clareza: ficou a A, que diz em uma linha o que se aprende. O
+              registro do teste está no CLAUDE.md ("Teste A/B do hero"). */}
           <div
             className="transition-[opacity,transform] duration-[600ms] ease-[var(--ease)]"
+            data-entrada
             style={{ opacity: em(1) ? 1 : 0, transform: em(1) ? 'none' : 'translateY(20px)' }}
           >
             <p className="inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
@@ -143,6 +112,7 @@ export function Hero({
           </div>
           <div
             className="transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
+            data-entrada
             style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
           >
             <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.34] font-medium tracking-[-0.02em]
@@ -153,68 +123,11 @@ export function Hero({
               Uma letra por vez, com som, escrita e correção na hora, até ler suas primeiras palavras sozinho.
             </p>
           </div>
-            </>
-          ) : (
-            <>
-          <div
-            className="transition-[opacity,transform] duration-[600ms] ease-[var(--ease)]"
-            style={{ opacity: em(1) ? 1 : 0, transform: em(1) ? 'none' : 'translateY(20px)' }}
-          >
-            <p className="inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
-                          font-ui text-[13px] sm:text-[13.5px] font-semibold px-3.5 py-1.5 m-0 mb-4 sm:mb-5">
-              <span aria-hidden className="w-[7px] h-[7px] rounded-full bg-[var(--teal)]" />
-              {/* Curto no telefone: o longo quebrava em duas linhas e virava um bloco. */}
-              <span className="sm:hidden">Do zero · alfabetização em hebraico</span>
-              <span className="hidden sm:inline">Alfabetização em hebraico · para iniciantes absolutos</span>
-            </p>
-            <h1 className="font-display font-semibold tracking-[-0.03em] text-balance m-0 mb-4 sm:mb-5 grid gap-1">
-              <span className="text-[clamp(30px,3.4vw,44px)] leading-[1.08]">
-                Quer viajar para <span className="text-[var(--teal-ink)]">Israel</span>?
-              </span>
-              <span className="text-[clamp(30px,3.4vw,44px)] leading-[1.08]">
-                Ler as letras da <span className="text-[var(--teal-ink)]">Bíblia</span> no original?
-              </span>
-              <span className="mt-2 text-[clamp(19px,1.8vw,22px)] leading-[1.35] font-medium tracking-[-0.015em]
-                               text-ink-muted max-w-[36ch]">
-                Ou finalmente entender aquelas letras que sempre pareceram impossíveis?
-              </span>
-            </h1>
-          </div>
-
-          <div
-            className="transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
-            style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
-          >
-            <p className="flex items-center gap-3 font-display text-[clamp(20px,1.9vw,23px)] font-semibold
-                          tracking-[-0.02em] text-[var(--teal-ink)] m-0 mb-2.5">
-              <span aria-hidden className="w-7 h-[2px] rounded-full bg-[var(--teal)]" />
-              Você está no lugar certo.
-            </p>
-            <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.34] font-medium tracking-[-0.02em]
-                          text-ink text-balance max-w-[30ch] m-0 mb-7">
-              Aprenda a{' '}
-              {/* O grifo é um degradê embaixo do texto, e não `<mark>` com
-                  fundo: acompanha a quebra de linha e não vira um bloco. */}
-              <strong className="font-semibold [background-image:linear-gradient(transparent_58%,color-mix(in_srgb,var(--teal)_24%,transparent)_58%)]
-                                 [box-decoration-break:clone] px-0.5 -mx-0.5">
-                ler e escrever hebraico do zero
-              </strong>
-              , mesmo que hoje você não reconheça uma única letra.
-            </p>
-            {/* O fio que liga os desejos acima ao que o curso entrega, sem
-                prometer conversa nem compreensão da Bíblia: ler as letras é o
-                primeiro passo de qualquer um deles. */}
-            <p className="font-ui text-[14.5px] sm:text-[15.5px] leading-[1.5] text-ink-muted max-w-[46ch] -mt-5 sm:-mt-4 mb-6 sm:mb-7">
-              Ler as letras é o primeiro passo para qualquer um desses objetivos.
-            </p>
-          </div>
-
-            </>
-          )}
 
           <div
             className="grid gap-2.5 justify-items-start mb-7
                        transition-[opacity,transform] duration-500 delay-[260ms] ease-[var(--ease)]"
+            data-entrada
             style={{ opacity: em(3) ? 1 : 0, transform: em(3) ? 'none' : 'translateY(14px)' }}
           >
             {/* Medido: a coluna tem 553px e os dois botões somavam 573.
@@ -227,7 +140,6 @@ export function Hero({
             <div className="flex flex-wrap gap-2.5">
               <Link
                 href={primaryHref}
-                onClick={() => { if (testeAB) contarAB('clique'); }}
                 className="group inline-flex items-center justify-center gap-2 rounded-[13px] w-full sm:w-auto
                            text-center leading-[1.3]
                            bg-[var(--navy)] text-white font-ui font-semibold text-[16.5px] px-5 py-[15px]
@@ -281,12 +193,16 @@ export function Hero({
 
         <div
           className="relative transition-[opacity,transform] duration-700 delay-[340ms] ease-[var(--ease)]"
-          style={{ opacity: em(4) ? 1 : 0, transform: em(4) ? 'none' : 'translateY(26px)' }}
+          data-entrada
+            style={{ opacity: em(4) ? 1 : 0, transform: em(4) ? 'none' : 'translateY(26px)' }}
         >
           {!midia.imagem && !midia.video && <HaloDesenhado />}
           <Mockup ativo={em(4)} certo={certo} />
+          {/* ACIMA do cartão, e não sobre a borda dele: em `top-[-22px]` o
+              selo cobria a barra de progresso e cortava o "72%" no desktop
+              (auditoria de 01/10, VIS-015). */}
           <CartaoFlutuante
-            className="top-[-22px] right-[-6px] sm:right-[-14px]"
+            className="top-[-66px] right-[-6px] sm:right-[-14px]"
             style={{ animationDuration: '5.5s' }}
             icone={<Chama />}
             fundo="var(--gold-soft)"
@@ -437,7 +353,9 @@ function HaloDesenhado() {
    momento em que ela é respondida. */
 function Mockup({ ativo, certo }: { ativo: boolean; certo: boolean }) {
   return (
-    <div className="relative z-[2] rounded-[26px] bg-[var(--card)] border border-line
+    /* `data-a11y-desvia`: o botão de acessibilidade sai de cima dele (CONV-021). */
+    <div data-a11y-desvia
+         className="relative z-[2] rounded-[26px] bg-[var(--card)] border border-line
                     shadow-[var(--sh-mock)] p-6 pt-[26px]">
       <div className="flex items-center gap-3 mb-5">
         <span aria-hidden className="text-ink-muted text-[19px] leading-none">‹</span>
@@ -499,7 +417,7 @@ function Mockup({ ativo, certo }: { ativo: boolean; certo: boolean }) {
           `top-[52px]` pousava sobre o "72%" do progresso - nos dois casos
           um enfeite sujando um número que a página quer que seja lido. */}
       {certo && (
-        <span className="absolute right-[22px] top-[-13px] z-[4] font-ui font-bold text-[17px]
+        <span className="absolute left-[22px] top-[-13px] z-[4] font-ui font-bold text-[17px]
                          text-[var(--teal-ink)] pointer-events-none animate-xp">
           +10 XP
         </span>
@@ -516,6 +434,7 @@ function CartaoFlutuante({
 }) {
   return (
     <div
+      data-a11y-desvia
       className={`absolute z-[3] flex items-center gap-[11px] rounded-[16px] bg-[var(--card)]
                   border border-line shadow-[var(--sh)] px-4 py-3 animate-float ${className}`}
       style={style}
