@@ -23,7 +23,7 @@ import { apiMode } from '@/lib/account/api';
 import { SESSAO_MUDOU } from '@/lib/account/store';
 import {
   ANSWER_UNITS, applyPractice, awardXp, clearConfusion, completeStage, courseProgress,
-  concluirRevisao, displayStreak, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
+  concluirRevisao, displayStreak, pagarAcerto, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
   recordCheckpoint, recordConfusion, recordExam, recordGym, recordQuiz, recordSkill,
   syncAchievements, today,
   topConfusions, weakLetters, XP
@@ -350,6 +350,7 @@ export function ProgressProvider({
         [kind]: { h: k.h + (correct ? 1 : 0), m: k.m + (correct ? 0 : 1) } } };
     }
     next = applyPractice(next, d, { answered: 1, units: ANSWER_UNITS });
+    if (correct) next = pagarAcerto(next, d);
     commit(next);
     track('exercise_answered', { letterId, itemId, correct, skill, kind });
     if (!correct) track('exercise_wrong', { letterId, itemId, chosen });
@@ -368,6 +369,7 @@ export function ProgressProvider({
     let next = recordSkill(agora(), letterId, 'escrever', score >= ACERTO_DO_TRACO, d);
     /* Writing is practice even when it comes out badly - more so, in fact. */
     next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (score >= ACERTO_DO_TRACO) next = pagarAcerto(next, d);
     commit(next);
     track('exercise_answered', { letterId, skill: 'escrever', correct: score >= ACERTO_DO_TRACO });
   }, [commit, agora]);

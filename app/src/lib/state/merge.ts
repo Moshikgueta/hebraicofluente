@@ -128,7 +128,9 @@ const fundirDia = (a: DayRecord, b: DayRecord): DayRecord => ({
   answered: Math.max(a.answered, b.answered),
   units: Math.max(a.units, b.units),
   xp: Math.max(a.xp, b.xp),
-  goalMet: a.goalMet || b.goalMet
+  goalMet: a.goalMet || b.goalMet,
+  ...(a.xpAcertos != null || b.xpAcertos != null
+    ? { xpAcertos: Math.max(a.xpAcertos ?? 0, b.xpAcertos ?? 0) } : {})
 });
 
 function fundirStat(a: SkillStat, b: SkillStat): SkillStat {

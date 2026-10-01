@@ -699,6 +699,11 @@ tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
   coisa que valha dinheiro não entra na loja sem uma decisão à parte do dono,
   e com teto conferido no servidor.
 - `/loja` está no `GATED` do portão e no `PAGAS` de lib/seo.ts.
+- **XP por acerto (01/10/2026, pedido do dono):** cada acerto praticando letras
+  (lição, revisão, academia e traçado aprovado) paga `XP.acerto` = 2, até
+  `XP_ACERTOS_POR_DIA` = 100 por dia (`pagarAcerto`, contador `days[d].xpAcertos`,
+  fundido pelo máximo). Erro não paga. O teto existe para que repetir o
+  exercício mais fácil não vire o jeito de comprar as leituras bônus.
 - **Leituras bônus** (texto bíblico, não reza - pedido do dono): `data/bonus.json` →
   export (com `after` e `audioId`) → `ConteudoPago.bonus` (pago, pelo
   `/api/content`; os três lugares: content.ts, content-servidor.ts,

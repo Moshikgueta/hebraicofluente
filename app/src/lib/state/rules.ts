@@ -45,8 +45,30 @@ export const XP = {
   perfectQuiz: 10,
   checkpoint: 50,
   review: 15,
-  dailyGoal: 5
+  dailyGoal: 5,
+  /** Cada acerto praticando letras (lição, revisão, academia, traçado). */
+  acerto: 2
 } as const;
+
+/**
+ * Teto do XP de acertos num dia (pedido do dono em 01/10/2026: mais XP por
+ * praticar as letras). 50 acertos por dia pagam; dali em diante a prática
+ * continua contando para a meta e para a revisão, mas não paga mais XP.
+ * Sem teto, repetir o exercício mais fácil viraria o jeito de comprar as
+ * leituras bônus da loja.
+ */
+export const XP_ACERTOS_POR_DIA = 100;
+
+/** Paga o XP de um acerto, respeitando o teto do dia. */
+export function pagarAcerto(state: LearnerState, day: string): LearnerState {
+  const prev: DayRecord = state.days[day] ?? emptyDay();
+  const ja = prev.xpAcertos ?? 0;
+  const valor = Math.min(XP.acerto, XP_ACERTOS_POR_DIA - ja);
+  if (valor <= 0) return state;
+  const next = awardXp(state, day, valor);
+  const dia = next.days[day]!;
+  return { ...next, days: { ...next.days, [day]: { ...dia, xpAcertos: ja + valor } } };
+}
 
 /** Practice units in a daily goal. One unit is about twenty seconds. */
 export const goalTarget = (minutes: number): number => Math.max(3, Math.round(minutes * 3));
