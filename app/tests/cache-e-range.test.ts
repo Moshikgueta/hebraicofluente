@@ -104,7 +104,10 @@ describe('a lista do run_worker_first', () => {
       const dir = f.replace(/\/\*$/, '');
       expect(isGatedPath(dir), `${dir} é rota paga e não pode sair do Worker`).toBe(false);
       expect(isGatedPath(`${dir}/x`), `${dir}/x é rota paga e não pode sair do Worker`).toBe(false);
-      expect(existsSync(raiz(`app/public${dir}`)) || existsSync(raiz(`app/out${dir}`)), `${dir} não existe no site`).toBe(true);
+      /* /_next/static só existe depois da build, e no CI os testes rodam
+         antes dela; os outros vêm de app/public e existem sempre. */
+      if (dir === '/_next/static') continue;
+      expect(existsSync(raiz(`app/public${dir}`)), `${dir} não existe em app/public`).toBe(true);
     }
   });
 
