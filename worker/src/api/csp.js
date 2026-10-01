@@ -1,10 +1,9 @@
 /* Os relatos da CSP estrita (auditoria, SEC-003).
  * ─────────────────────────────────────────────────────────────────────────
- * A regra estrita (scripts só por hash, sem `'unsafe-inline'`) sai hoje no
- * cabeçalho de OBSERVAÇÃO, `Content-Security-Policy-Report-Only` (ver
- * `blindar` em worker.js e tools/csp-hashes.mjs). O navegador não bloqueia
- * nada: só manda para cá o que TERIA bloqueado. Dias sem relato é o que
- * autoriza trocar a regra de observação pela de verdade.
+ * A regra estrita (scripts só por hash, sem `'unsafe-inline'`) ficou em
+ * observação (`Report-Only`) de 29/09 a 01/10/2026 e agora vale (ver
+ * `blindar` em worker.js e tools/csp-hashes.mjs). O navegador manda para cá
+ * o que bloqueou. Relato novo de script do próprio site = algo quebrou.
  *
  * O relato vai para a trilha (`access_log`, ação 'csp-violacao') e sai pela
  * Action "Acesso" → `csp`. Dois freios, porque isto é um endpoint anônimo

@@ -1,4 +1,4 @@
-/* A CSP estrita em observação (auditoria, SEC-003): tools/csp-hashes.mjs,
+/* A CSP estrita (em vigor desde 01/10/2026) (auditoria, SEC-003): tools/csp-hashes.mjs,
  * `blindar` em worker/src/worker.js e worker/src/api/csp.js. */
 import { describe, expect, it } from 'vitest';
 import { createHash } from 'node:crypto';
@@ -21,7 +21,7 @@ const ASSETS = {
   fetch: async (r: Request) => {
     const p = new URL(r.url).pathname;
     if (p === '/_csp-hashes.json') return new Response(JSON.stringify(MAPA), { headers: { 'Content-Type': 'application/json' } });
-    if (p === '/' || p.startsWith('/faq')) return html();
+    if (p === '/' || p.startsWith('/faq') || p.startsWith('/sem-lista')) return html();
     if (p.endsWith('.js')) return new Response('1', { headers: { 'Content-Type': 'text/javascript' } });
     return html(404);
   }
@@ -44,34 +44,35 @@ describe('o gerador de hashes', () => {
   });
 });
 
-describe('a CSP estrita em observação', () => {
-  it('sai em Report-Only, com os hashes da página e sem unsafe-inline', async () => {
+describe('a CSP estrita', () => {
+  it('vale, com os hashes da página e sem unsafe-inline', async () => {
     const r = await abrir('/faq/');
-    const obs = r.headers.get('Content-Security-Policy-Report-Only')!;
+    expect(r.headers.get('Content-Security-Policy-Report-Only')).toBeNull();
+    const obs = r.headers.get('Content-Security-Policy')!;
     expect(obs).toMatch(/script-src 'self' 'report-sample' 'nonce-[A-Za-z0-9+/]{22}==' 'sha256-faq1' 'sha256-faq2'/);
-    /* O nonce (para o script que a Cloudflare injeta) é novo a cada resposta,
-       e nunca entra na política que vale: ao lado de 'unsafe-inline', ele o
-       desligaria. */
-    const outra = (await abrir('/faq/')).headers.get('Content-Security-Policy-Report-Only')!;
+    /* O nonce (para o script que a Cloudflare injeta) é novo a cada resposta. */
+    const outra = (await abrir('/faq/')).headers.get('Content-Security-Policy')!;
     expect(outra.match(/'nonce-[^']+'/)![0]).not.toBe(obs.match(/'nonce-[^']+'/)![0]);
-    expect(r.headers.get('Content-Security-Policy')).not.toContain('nonce-');
     expect(obs.match(/script-src [^;]*/)![0]).not.toContain('unsafe-inline');
     expect(obs).toContain("frame-ancestors 'none'");
     expect(obs).toMatch(/report-uri \/api\/csp-report$/);
-    /* A política que vale continua a de sempre. */
-    expect(r.headers.get('Content-Security-Policy')).toContain("script-src 'self' 'unsafe-inline'");
   });
 
   it('a capa e a página de erro usam as próprias listas', async () => {
-    expect((await abrir('/')).headers.get('Content-Security-Policy-Report-Only')).toContain("'sha256-capa'");
+    expect((await abrir('/')).headers.get('Content-Security-Policy')).toContain("'sha256-capa'");
     const erro = await abrir('/nao-existe');
     expect(erro.status).toBe(404);
-    expect(erro.headers.get('Content-Security-Policy-Report-Only')).toContain("'sha256-erro'");
+    expect(erro.headers.get('Content-Security-Policy')).toContain("'sha256-erro'");
   });
 
-  it('fora de HTML, não há observação', async () => {
+  it('fora de HTML, não há CSP', async () => {
     const r = await abrir('/_next/x.js');
-    expect(r.headers.get('Content-Security-Policy-Report-Only')).toBeNull();
+    expect(r.headers.get('Content-Security-Policy')).toBeNull();
+  });
+
+  it('HTML sem lista de hashes sai com a política de reserva', async () => {
+    const r = await abrir('/sem-lista/');
+    expect(r.headers.get('Content-Security-Policy')).toContain("script-src 'self' 'unsafe-inline'");
   });
 
   it('a lista de hashes não é servida ao visitante', async () => {
