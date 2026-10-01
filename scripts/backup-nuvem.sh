@@ -66,7 +66,18 @@ BUCKET="${HF_BACKUP_BUCKET:-hebraico-fluente-backups}"
 REGRA="expira-diarias-90-dias"
 DIAS=90
 # Mesma versão fixa da publicação: estes comandos rodam com o token da conta.
-W="${HF_WRANGLER:-npx --yes wrangler@4.135.0}"
+# O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+# SEC-A-009): com `npm ci` na raiz, a versão E todas as dependências dela vêm
+# do lockfile, conferidas pelo hash. O `npx --yes wrangler@VERSÃO` fixava só
+# o pacote de cima e resolvia o resto a cada execução - num passo que tem os
+# segredos de produção no ambiente. Sem `npm ci` (uma máquina nova), cai no
+# npx com a mesma versão do lockfile.
+if [ -x "$PWD/node_modules/.bin/wrangler" ]; then
+  WRANGLER_LOCAL="$PWD/node_modules/.bin/wrangler"
+else
+  WRANGLER_LOCAL="npx --yes wrangler@4.135.0"
+fi
+W="${HF_WRANGLER:-$WRANGLER_LOCAL}"
 
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT

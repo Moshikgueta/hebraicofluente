@@ -82,7 +82,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: producao
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      # O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+      # SEC-A-009): versão e dependências conferidas pelo hash do lockfile,
+      # e nenhum script de instalação roda num passo com o token no ambiente.
+      - name: Instalar o wrangler do lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Executar
         env:
@@ -105,10 +111,11 @@ jobs:
             exit 1
           fi
 
-          # Versão fixa. `wrangler@4` resolvia para a mais nova a cada execução,
-          # com o token da Cloudflare no ambiente - um pacote comprometido
-          # rodaria com acesso de escrita ao banco inteiro.
-          W="npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote"
+          # Versão fixa, e com as dependências do lockfile da raiz (o passo
+          # acima). `wrangler@4` resolvia para a mais nova a cada execução, com
+          # o token da Cloudflare no ambiente - um pacote comprometido rodaria
+          # com acesso de escrita ao banco inteiro.
+          W="node_modules/.bin/wrangler d1 execute hebraico-fluente --remote"
           say() { echo "$*" >> "$GITHUB_STEP_SUMMARY"; }
 
           # Primeiro caractere, três asteriscos, domínio. Vale para tudo que
