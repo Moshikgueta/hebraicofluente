@@ -16,8 +16,22 @@
  *    build, igual para todo aluno, e que muda quando o curso muda - buscar
  *    no D1 seria uma consulta por aluno para devolver sempre a mesma coisa.
  *
- * 2. `private, no-store`. Um cache compartilhado no caminho que guardasse
+ * 2. `private`, sempre. Um cache compartilhado no caminho que guardasse
  *    esta resposta a entregaria a quem não pagou, e desfaria a rota inteira.
+ *    Desde 01/10/2026 (auditoria, PERF-008/UXQA-020) é `private, max-age=300`
+ *    com ETag, e não mais `no-store`: os 296 KB eram baixados de novo a cada
+ *    carga de qualquer tela do curso. O que segura a segurança:
+ *      · `private` proíbe CDN e proxy de guardar; só o navegador do aluno
+ *        guarda, e o que ele guarda é a cópia que já estava na memória dele;
+ *      · `Vary: Cookie`: o navegador só reaproveita a cópia para o MESMO
+ *        cookie. Sair (o cookie some) ou entrar com outra conta no mesmo
+ *        computador não reusa a cópia marcada da conta anterior;
+ *      · o 304 só sai DEPOIS de conferir sessão e direito, como o 200;
+ *      · a ETag é o molde do curso + a marca da conta: muda quando o curso
+ *        muda (publicação nova) e é diferente para cada aluno.
+ *    O preço, conhecido: um estorno fecha a rota na hora, mas uma cópia
+ *    guardada nos últimos 5 minutos ainda abre no aparelho de quem já a
+ *    tinha lido. Não entrega nada que ele não tivesse.
  *
  * 3. Sem freio por tentativa. Quem chega aqui já provou que pagou; o custo é
  *    uma resposta grande, não uma porta aberta. O freio que importa nesta
@@ -77,6 +91,19 @@ const MOLDE = JSON.stringify({
   guiaNikud: bonus.guia ?? null
 });
 
+/* A impressão do molde: FNV-1a de 32 bits, calculada uma vez por isolate.
+   Não é segurança (quem decide o acesso é a sessão), só identidade da versão. */
+const VERSAO = (() => {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < MOLDE.length; i++) {
+    h ^= MOLDE.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, '0');
+})();
+
+export const CACHE_DO_CONTEUDO = 'private, max-age=300';
+
 export async function content({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
@@ -91,6 +118,16 @@ export async function content({ request, env }) {
   /* Sem marca (banco fora do ar), o curso sai mesmo assim: quem pagou não
      perde a aula por causa de uma defesa contra cópia. */
   const marca = await marcaDaConta(env, account.id);
+  const etag = `"c-${VERSAO}-${marca || 'sem-marca'}"`;
+  const cabecalhos = {
+    'Cache-Control': CACHE_DO_CONTEUDO,
+    'ETag': etag,
+    'Vary': 'Cookie'
+  };
+  const jaTem = (request.headers.get('If-None-Match') || '')
+    .split(',').map(t => t.trim().replace(/^W\//, ''));
+  if (jaTem.includes(etag)) return new Response(null, { status: 304, headers: cabecalhos });
+
   const corpo = MOLDE
     .replaceAll(MARCADOR, marca ? invisivel(marca) : '')
     .replaceAll(MARCADOR_VISIVEL, marca ? marca.toUpperCase() : '-');
@@ -99,7 +136,7 @@ export async function content({ request, env }) {
     status: 200,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'private, no-store'
+      ...cabecalhos
     }
   });
 }

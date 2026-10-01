@@ -20,7 +20,8 @@ import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
-import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
+import { ExercisePlayer, type PlayerResult, type PosicaoNoPlayer } from '@/components/learn/ExercisePlayer';
+import { gravarLicao, lerLicao, type LicaoEmAndamento } from '@/lib/licao-em-andamento';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
 import { CompararPronuncia } from '@/components/learn/CompararPronuncia';
@@ -61,7 +62,11 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
   const letter = useMemo(() => soOLadoDoPonto(semPalavrasDeSom(letraInteira)), [letraInteira]);
   const p = useProgress();
   const router = useRouter();
-  const [stage, setStage] = useState(1);
+  /* A etapa e a Prática voltam de onde estavam depois de recarregar
+     (lib/licao-em-andamento.ts). No estado inicial, e não num efeito: esta
+     tela só monta no navegador, depois de o CourseGate trazer o conteúdo. */
+  const [salvo] = useState<LicaoEmAndamento | null>(() => lerLicao(letraInteira.id));
+  const [stage, setStageCru] = useState(() => salvo?.etapa ?? 1);
   const [trancada, setTrancada] = useState<ReturnType<typeof porQueTrancada>>(null);
   const [quizResult, setQuizResult] = useState<PlayerResult | null>(null);
   const [quizRun, setQuizRun] = useState(0);
@@ -139,10 +144,52 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     return () => cancelAnimationFrame(id);
   }, [stage]);
 
+  /* ── o Voltar do navegador volta uma etapa ─────────────────────────────
+     As etapas não eram entradas do histórico, e o Voltar no meio da Prática
+     saía da lição (auditoria de 01/10/2026, UXQA-003). Cada etapa nova vira
+     uma entrada com a MESMA URL (`pushState` nativo, que o roteador do Next
+     acompanha); o Voltar desfaz uma etapa, e só da primeira entrada é que
+     sai da lição. */
+  const etapaAtual = useRef(stage);
+  etapaAtual.current = stage;
+  const setStage = useCallback((n: number) => {
+    if (n !== etapaAtual.current && typeof window !== 'undefined') {
+      window.history.pushState({ ...window.history.state, hfEtapa: n }, '', window.location.href);
+    }
+    setStageCru(n);
+  }, []);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    /* A entrada em que a lição abriu guarda a etapa de abertura. */
+    if (typeof window.history.state?.hfEtapa !== 'number') {
+      window.history.replaceState({ ...window.history.state, hfEtapa: stage }, '', window.location.href);
+    }
+    const aoVoltar = (e: PopStateEvent) => {
+      const n = (e.state as { hfEtapa?: unknown } | null)?.hfEtapa;
+      if (typeof n !== 'number' || n < 1 || n > 5) return;
+      setStageCru(n);
+    };
+    window.addEventListener('popstate', aoVoltar);
+    return () => window.removeEventListener('popstate', aoVoltar);
+    // só na montagem: a entrada inicial é marcada uma vez
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /* A Prática em andamento: as questões sorteadas e a posição. */
+  const [praticaSalva, setPraticaSalva] = useState(() => salvo?.pratica ?? null);
+  useEffect(() => {
+    gravarLicao(letter.id, { etapa: stage, ...(stage === 4 && praticaSalva ? { pratica: praticaSalva } : {}) });
+  }, [letter.id, stage, praticaSalva]);
+  const itensDaPratica = praticaSalva?.itens ?? practice;
+  const aoAvancarNaPratica = useCallback((pos: PosicaoNoPlayer) => {
+    setPraticaSalva({ itens: itensDaPratica, ...pos });
+  }, [itensDaPratica]);
+
   const done = useCallback((n: number) => {
     p.finishStage(letter.id, n);
+    if (n === 4) setPraticaSalva(null);
     if (n < 5) setStage(n + 1);
-  }, [p, letter.id]);
+  }, [p, letter.id, setStage]);
 
   const stagesDone = p.state.lessons[letter.id]?.stagesDone ?? [];
   const unlockedCard = cultureAt(p.mastered);
@@ -174,8 +221,12 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
       {stage === 4 && (
         <StagePraticar
           key={`p-${letter.id}`}
-          exercises={practice} letter={letter} onDone={() => done(4)}
-          aoTerminar={() => { registrarRodada(`licao-pratica-${letter.id}`, practice); setRodadaPratica(n => n + 1); }}
+          exercises={itensDaPratica} letter={letter} onDone={() => done(4)}
+          retomar={praticaSalva} aoAvancar={aoAvancarNaPratica}
+          aoTerminar={() => {
+            registrarRodada(`licao-pratica-${letter.id}`, itensDaPratica);
+            setPraticaSalva(null); setRodadaPratica(n => n + 1);
+          }}
         />
       )}
       {/* A card earned by the letter just finished, shown where it was earned.
@@ -204,6 +255,7 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
           }}
           onRetry={() => { setQuizResult(null); setQuizRun(n => n + 1); }}
           onNext={() => {
+            gravarLicao(letter.id, null);
             if (somSeguinte) router.push(rotaDaLicao(somSeguinte));
             else if (moduleFinished && mod?.checkpoint) router.push(`/checkpoint/${mod.n}`);
             else if (after) router.push(`/licao/${after.id}`);
@@ -750,8 +802,11 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
 
 /* ── 4 · praticar ───────────────────────────────────────────────────────── */
 function StagePraticar({
-  exercises, letter, onDone, aoTerminar
-}: { exercises: Exercise[]; letter: Letter; onDone: () => void; aoTerminar: () => void }) {
+  exercises, letter, onDone, aoTerminar, retomar, aoAvancar
+}: {
+  exercises: Exercise[]; letter: Letter; onDone: () => void; aoTerminar: () => void;
+  retomar?: PosicaoNoPlayer | null; aoAvancar?: (p: PosicaoNoPlayer) => void;
+}) {
   const [finished, setFinished] = useState(false);
 
   if (!exercises.length) {
@@ -776,6 +831,7 @@ function StagePraticar({
     <ExercisePlayer
       exercises={exercises}
       title="Prática - sem nota"
+      retomar={retomar} aoAvancar={aoAvancar}
       onDone={() => { aoTerminar(); setFinished(true); }}
     />
   );

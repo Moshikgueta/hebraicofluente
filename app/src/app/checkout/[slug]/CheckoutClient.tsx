@@ -216,9 +216,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
       <Shell course={c}>
         <Card tone="amber" className="p-6 grid gap-3">
           <Badge>Em configuração</Badge>
-          <h2 className="font-display text-[21px] font-bold text-ink">
+          <h1 className="font-display text-[21px] font-bold text-ink">
             O pagamento ainda não está ativado.
-          </h2>
+          </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
             A plataforma já está no ar, mas o meio de pagamento está sendo
             configurado. Sua conta ficou criada - escreva para o endereço abaixo
@@ -244,9 +244,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
       <Shell course={c}>
         <Card tone="mint" className="p-6 grid gap-3">
           <Badge tone="mint">Já é seu</Badge>
-          <h2 className="font-display text-[21px] font-bold text-ink">
+          <h1 className="font-display text-[21px] font-bold text-ink">
             Este curso já está na sua conta.
-          </h2>
+          </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
             Nada a pagar. Continue de onde você parou.
           </p>
@@ -265,9 +265,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
         <Card tone="mint" className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
           <He size="lg" dim>ע</He>
           <Badge tone="mint">Pagamento confirmado</Badge>
-          <h2 className="font-display text-[24px] sm:text-[28px] font-bold text-ink max-w-[20ch]">
+          <h1 className="font-display text-[24px] sm:text-[28px] font-bold text-ink max-w-[20ch]">
             Pronto. O curso é seu.
-          </h2>
+          </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
             Acesso liberado por {c.accessMonths} meses. A primeira lição leva dez minutos.
           </p>
@@ -283,9 +283,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
       <Shell course={c}>
         <Card className="p-5 grid gap-2">
           <Badge tone="accent">Passo 1 de 2</Badge>
-          <h2 className="font-display text-[19px] font-bold text-ink">
+          <h1 className="font-display text-[19px] font-bold text-ink">
             Primeiro, sua conta.
-          </h2>
+          </h1>
           <p className="font-ui text-[14px] leading-relaxed text-ink-body">
             É ela que guarda o acesso. Leva quinze segundos e o pagamento vem logo
             em seguida, nesta mesma página.
@@ -306,7 +306,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
       <Card className="p-5 sm:p-6 grid gap-5">
         <div className="grid gap-1">
           <Badge tone="accent">Passo 2 de 2</Badge>
-          <h2 className="font-display text-[19px] font-bold text-ink mt-1">Como você quer pagar?</h2>
+          {/* Um h1 por passo (auditoria de 01/10/2026, VIS-012): o título que já
+              existia, promovido. "Seu pedido", no resumo, é o h2. */}
+          <h1 className="font-display text-[19px] font-bold text-ink mt-1">Como você quer pagar?</h1>
         </div>
 
         {/* A escolha só aparece quando existe escolha.
@@ -604,7 +606,7 @@ function AuthFormInline({ slug }: { slug: string }) {
   /* AuthForm lê `?next=` da URL, e aqui a URL é a do checkout. Em vez de
      duplicar o formulário com outra prop, o link de retorno é o endereço
      atual - que é exatamente o que a pessoa quer: voltar para a compra. */
-  return <AuthForm mode="signup" key={slug} />;
+  return <AuthForm mode="signup" nivelDoTitulo="h2" key={slug} />;
 }
 
 function Shell({ course, children }: {
@@ -631,9 +633,9 @@ function Shell({ course, children }: {
           vai para cima do formulário e não para baixo dele - ninguém paga o
           que não consegue ver. */}
       <Card tone="wash" className="p-5 grid gap-3 content-start order-first lg:order-last">
-        <p className="font-ui text-[11px] uppercase tracking-[.08em] text-[var(--accent)]">
+        <h2 className="font-ui text-[11px] uppercase tracking-[.08em] text-[var(--accent)]">
           Seu pedido
-        </p>
+        </h2>
         <p className="font-display text-[17px] font-bold text-ink leading-snug">{c.titlePt}</p>
         <p className="font-ui text-[13px] text-ink-muted">
           {c.stats.modules} módulos

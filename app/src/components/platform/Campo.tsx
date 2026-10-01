@@ -81,7 +81,7 @@ export function Campo({
           aria-invalid={erroId ? true : undefined}
           aria-describedby={[hint ? `${id}-hint` : '', erroId ?? ''].filter(Boolean).join(' ') || undefined}
           className={`w-full min-h-[52px] pl-4 rounded-[var(--r-md)] border-2 border-line bg-surface
-                      font-ui text-[16px] text-ink placeholder:text-ink-muted
+                      font-ui text-[16px] text-ink placeholder:text-[var(--ink-placeholder)] placeholder:italic
                       focus:border-[var(--accent-soft)] focus:outline-none
                       ${senha ? 'pr-[54px]' : 'pr-4'}`}
         />

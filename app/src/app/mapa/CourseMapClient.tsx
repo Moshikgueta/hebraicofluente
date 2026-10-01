@@ -147,7 +147,9 @@ function Trecho({ module: m, estado, ultimo }: {
     /* `--locked` e não um cinza escrito à mão: o cinza literal era o mesmo
        nos dois temas, e no escuro ele nem é o cinza certo nem acompanha o
        alto contraste. */
-    adiante: { texto: 'Em breve', cor: 'text-ink-muted' }  // texto, não controle: 4,5:1 (UX-009)
+    /* "Em breve" sugeria conteúdo ainda não lançado, quando o módulo só
+       espera o anterior (auditoria de 01/10/2026, VIS-010). */
+    adiante: { texto: `Abre depois do módulo ${m.n - 1}`, cor: 'text-ink-muted' }  // texto, não controle: 4,5:1 (UX-009)
   }[estado];
 
   return (
@@ -198,12 +200,21 @@ function Trecho({ module: m, estado, ultimo }: {
                  módulos que o aluno ainda não pode abrir gritavam, e o único
                  que ele podia estudar ficava mais quieto que eles.
                  Com `--paper` o cartão tem a cor do fundo nos dois temas, e
-                 quem o separa é a borda. Que é o que "ainda não" deve ser. */
-              : estado === 'adiante' ? 'bg-[var(--paper)] border-line opacity-[.72]'
+                 quem o separa é a borda. Que é o que "ainda não" deve ser.
+                 Sem `opacity` (VIS-010): ela levava o texto do cartão a 3:1.
+                 O recuo agora é só do cartão - papel, borda tracejada e o
+                 cadeado -, e o texto fica em `--ink-muted`, que passa 4,5:1. */
+              : estado === 'adiante' ? 'bg-[var(--paper)] border-line border-dashed'
               : 'bg-[var(--card)] border-line'}`}
         >
           <div className="flex items-center gap-3.5 flex-wrap mb-2.5">
-            <span className={`font-ui text-[12.5px] font-bold uppercase tracking-[.1em] ${TAG.cor}`}>
+            <span className={`inline-flex items-center gap-1.5 font-ui text-[12.5px] font-bold uppercase tracking-[.1em] ${TAG.cor}`}>
+              {estado === 'adiante' && (
+                <svg aria-hidden width="13" height="13" viewBox="0 0 18 18" fill="none">
+                  <rect x="3.6" y="7.8" width="10.8" height="7.4" rx="2" stroke="currentColor" strokeWidth="1.6" />
+                  <path d="M6.2 7.8V5.9a2.8 2.8 0 0 1 5.6 0v1.9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+              )}
               {TAG.texto}
             </span>
             <span className="font-ui text-[13.5px] text-ink-muted">

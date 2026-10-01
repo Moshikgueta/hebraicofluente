@@ -175,8 +175,9 @@ export function PerfilClient() {
                 conta quando você tiver um curso - e o que estiver aqui vai junto.</>
             : <>Seu progresso fica na sua conta e é sincronizado entre os
                 aparelhos: o que você fizer no celular aparece no computador.
-                Uma cópia continua neste aparelho, para o curso funcionar
-                mesmo sem internet.</>}
+                Uma cópia continua neste aparelho: o que você fizer com a
+                conexão caída fica guardado e sobe quando ela voltar. Funciona
+                em qualquer conexão; precisa de internet para abrir cada aula.</>}
         </p>
         <div className="flex flex-wrap gap-2">
           <LinkButton href="/conquistas" variant="secondary" size="sm">Ver conquistas</LinkButton>
@@ -237,6 +238,15 @@ export function PerfilClient() {
                 mentiria - e de um jeito que assusta. O que é verdade agora: o
                 progresso mora na CONTA, sai deste navegador, e volta inteiro
                 no próximo login. */}
+            {/* Sair derruba TODOS os aparelhos (decisão do dono, 20/09/2026:
+                `logout` em worker/src/api/auth.js sobe a versão da sessão e
+                apaga as vagas). A confirmação tem de dizer isso (auditoria de
+                01/10/2026, UXQA-006), senão o celular pede a senha no dia
+                seguinte sem ninguém saber por quê. */}
+            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+              Isto desconecta a sua conta em todos os aparelhos: no celular, no
+              tablet e em qualquer computador onde ela estiver aberta.
+            </p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
               Você vai precisar do e-mail e da senha para voltar. Seu progresso
               fica guardado na sua conta e volta assim que você entrar de novo,
@@ -500,7 +510,11 @@ function TrocarSenha() {
       setAberto(false);
       setPronto(true);
     } catch (err) {
-      setError(err instanceof AuthError ? err.message : MESSAGES.server);
+      /* Aqui não se digita e-mail: `bad-credentials` só pode ser a senha
+         atual (auditoria de 01/10/2026, UXQA-011). */
+      setError(err instanceof AuthError
+        ? (err.code === 'bad-credentials' ? 'A senha atual não confere.' : err.message)
+        : MESSAGES.server);
     } finally {
       setBusy(false);
     }
@@ -637,7 +651,11 @@ function DesistirDaCompra({ order, email, onPedido }: {
         {order.estorno === 'automatico'
           ? 'O estorno já foi pedido à Mercado Pago e o valor volta pela mesma forma de pagamento. O acesso fecha quando ela confirmar.'
           : `O valor volta pela mesma forma de pagamento, em até ${prazo} dias úteis.`}{' '}
-        A confirmação é enviada para {email}.
+        {/* O e-mail sai por `waitUntil` (worker/src/api/pay.js, desistir):
+            a resposta chega antes de o envio terminar, então a tela não sabe
+            se ele saiu e não pode afirmar (auditoria de 01/10/2026, UXQA-019). */}
+        Vamos confirmar também por e-mail, em {email}. Se a mensagem não
+        chegar, esta linha, com a data e a hora, é o registro do seu pedido.
       </p>
     ) : null;
   }

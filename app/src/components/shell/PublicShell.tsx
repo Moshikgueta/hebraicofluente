@@ -31,7 +31,7 @@ import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
 import { He } from '@/components/hebrew/He';
 import { METODO_ORIGINAL } from '@/lib/credito';
-import { flagship, parcelasMax } from '@/lib/catalog';
+import { FLAGSHIP, flagship, parcelasMax } from '@/lib/catalog';
 import {
   empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
@@ -142,8 +142,16 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="ml-auto flex items-center gap-1 sm:gap-2">
-            {account.ready && account.signedIn ? (
+            {/* "Meu Hebraico" só para quem tem o curso (auditoria de
+                01/10/2026, UXQA-007). Para a conta sem curso - inclusive o PIX
+                aguardando confirmação - o painel do aluno só devolveria a
+                página de vendas; o que ela tem é a conta. */}
+            {account.ready && account.signedIn && account.can(FLAGSHIP) ? (
               <LinkButton href="/meu-hebraico" size="sm">Meu Hebraico</LinkButton>
+            ) : account.ready && account.signedIn ? (
+              <LinkButton href="/perfil" variant="secondary" size="sm" className="whitespace-nowrap">
+                Minha conta
+              </LinkButton>
             ) : (
               <>
                 {/* "Entrar" aparece em TODA largura, inclusive no telefone.

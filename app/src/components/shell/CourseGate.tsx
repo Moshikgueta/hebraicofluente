@@ -69,9 +69,20 @@ export function CourseGate({ children }: { children: ReactNode }) {
     if (!account.signedIn) {
       router.replace(`/entrar?next=${encodeURIComponent(here)}`);
     } else {
-      router.replace(`/cursos/${FLAGSHIP}`);
+      router.replace(`/cursos/${FLAGSHIP}?${PARAM_SEM_ACESSO}=1`);
     }
   }, [account.ready, account.signedIn, allowed, here, router]);
+
+  /* A busca do conteúdo começa JÁ, em paralelo com /api/me (auditoria de
+     01/10/2026, PERF-004). Numa rota paga o HTML só saiu do Worker depois de
+     o portão conferir sessão e direito (worker/src/gate.js), então esperar
+     o /api/me para pedir o curso era uma ida e volta a mais em toda primeira
+     tela do dia - em 3G, mais de um segundo de esqueleto. Se a sessão
+     disser que não, a recusa do servidor é engolida aqui: nada se mostra
+     sem `allowed`, e o efeito abaixo pede de novo quando puder. */
+  useEffect(() => {
+    if (needsPurchase && !conteudoPronto()) carregarConteudo().catch(() => {});
+  }, []);
 
   /* Só busca depois de saber que pode, e só onde o conteúdo é preciso.
      ──────────────────────────────────────────────────────────────────────
@@ -139,7 +150,7 @@ export function CourseGate({ children }: { children: ReactNode }) {
             : 'Suas aulas, seu progresso e seu certificado ficam na sua conta.'}
         </p>
         <LinkButton
-          href={account.signedIn ? `/cursos/${FLAGSHIP}` : `/entrar?next=${encodeURIComponent(here)}`}
+          href={account.signedIn ? `/cursos/${FLAGSHIP}?${PARAM_SEM_ACESSO}=1` : `/entrar?next=${encodeURIComponent(here)}`}
           className="justify-self-start"
         >
           {account.signedIn ? 'Ver o curso' : 'Entrar'}
@@ -149,9 +160,24 @@ export function CourseGate({ children }: { children: ReactNode }) {
   );
 }
 
+/* O ponto de extensão da página do curso (auditoria de 01/10/2026,
+   UXQA-007). Quem chega lá vindo de uma rota de aluno SEM o curso traz
+   `?sem-acesso=1`, e a página pode pôr o aviso "esta conta ainda não tem o
+   curso, não pague de novo" ACIMA do preço também para conta nova. A página
+   do curso é de outra frente: ela só precisa chamar `veioSemAcesso()`.
+   O 302 do Worker (gate.js) ainda não leva o parâmetro. */
+export const PARAM_SEM_ACESSO = 'sem-acesso';
+export function veioSemAcesso(): boolean {
+  if (typeof window === 'undefined') return false;
+  return new URLSearchParams(window.location.search).get(PARAM_SEM_ACESSO) === '1';
+}
+
+/* Altura reservada (PERF-004): o esqueleto ocupa a tela inteira abaixo do
+   cabeçalho, para o rodapé de ajuda não aparecer no meio dela e depois
+   descer quando a aula entra (era o CLS de 0,1 da lição). */
 function GateSkeleton() {
   return (
-    <div className="grid gap-6 py-6" aria-busy="true">
+    <div className="grid gap-6 py-6 content-start min-h-[calc(100dvh-60px)]" aria-busy="true">
       <Skeleton className="h-9 w-2/3" />
       <Skeleton className="h-[132px] w-full rounded-[var(--r-lg)]" />
       <div className="grid sm:grid-cols-2 gap-4">

@@ -348,6 +348,13 @@ case "$pay_code" in
     espera "e nenhum pedido órfão foi criado" "" \
       "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
     ;;
+  502)
+    # O provedor recusou (sem credencial, no wrangler dev): o pedido nasce
+    # `failed` sem provider_ref e, desde 01/10/2026 (PAY-B-010), não aparece
+    # em Compras. O preço gravado é conferido pelos testes de unidade.
+    espera "pagamento recusado pelo provedor não vira compra listada" "" \
+      "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
+    ;;
   *)
     espera "o pedido ficou registrado com o preço do servidor" 13230 \
       "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"

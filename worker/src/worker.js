@@ -24,7 +24,7 @@
 
 import { json } from './lib/http.js';
 import { comRange } from './lib/range.js';
-import { gate, isGatedPath } from './gate.js';
+import { gate, isGatedPath, canonical } from './gate.js';
 import { runReconcile } from './reconcile.js';
 import { contar5xx } from './lib/db.js';
 import * as auth from './api/auth.js';
@@ -449,7 +449,14 @@ function blindar(res, path, hashes = null) {
     h.set('X-Robots-Tag', 'noindex');
   }
   if (!path.startsWith('/api/') && isGatedPath(path)) {
-    h.set('Cache-Control', 'private, no-store');
+    /* O clipe de áudio que o portão deixou passar: um dia no aparelho do
+       aluno, nunca em cache compartilhado (PERF-008, api/audio.js). */
+    if (audio.clipeComCache(canonical(path), out.status)) {
+      h.set('Cache-Control', audio.CACHE_DO_CLIPE);
+      h.set('Vary', 'Cookie');
+    } else {
+      h.set('Cache-Control', 'private, no-store');
+    }
     /* E não entra em buscador. Isto é cinto e suspensório, de propósito: um
        rastreador já leva 302 do portão e nunca vê o HTML da aula. Mas o
        portão JÁ teve uma brecha - a exceção de `Sec-Fetch-Dest`, contada em

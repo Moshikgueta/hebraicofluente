@@ -290,8 +290,10 @@ describe('o Worker fatia o mp3 do git atrás do portão', () => {
     expect(r.status).toBe(206);
     expect(r.headers.get('content-range')).toBe('bytes 0-1/10');
     expect(r.headers.get('accept-ranges')).toBe('bytes');
-    /* Continua pago: nada de cache compartilhado. */
-    expect(r.headers.get('cache-control')).toBe('private, no-store');
+    /* Continua pago: nada de cache compartilhado. Um dia só no navegador
+       do aluno, e só para o mesmo cookie (PERF-008). */
+    expect(r.headers.get('cache-control')).toBe('private, max-age=86400');
+    expect(r.headers.get('vary') || '').toContain('Cookie');
   });
 
   it('sem cookie, o portão continua na frente do Range', async () => {

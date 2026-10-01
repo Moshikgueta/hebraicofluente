@@ -116,7 +116,7 @@ export function EsqueciSenha() {
           <form onSubmit={submit} className="grid gap-4" noValidate>
             <Campo
               id="email" label="E-mail" value={email} onChange={setEmail}
-              type="email" autoComplete="email" placeholder="voce@exemplo.com.br"
+              type="email" autoComplete="email" placeholder="ex.: voce@exemplo.com.br"
               required autoFocus={!email}
             />
 

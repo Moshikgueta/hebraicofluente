@@ -229,3 +229,17 @@ export async function arquivo({ request, env }) {
     }
   });
 }
+
+/* O cache dos clipes (auditoria de 01/10/2026, PERF-008). Cada toque em
+   "ouvir" era um pedido ao Worker com 4 ou 5 leituras do D1 e saía
+   `no-store`: um clipe já ouvido em outra aula era baixado e conferido de
+   novo. Agora um dia no navegador do aluno, e SÓ nele: `private` proíbe
+   cache compartilhado, `Vary: Cookie` não reaproveita o clipe para outro
+   cookie, e o primeiro pedido continua passando pelo portão. Gravação
+   substituída no painel muda o `?v=` do endereço (lib/audio-registro.ts),
+   então o cache nunca toca a versão velha. Só respostas de áudio (200, 206
+   e 304): o 302 e o 403 do portão continuam `no-store`. */
+export const CACHE_DO_CLIPE = 'private, max-age=86400';
+export function clipeComCache(path, status) {
+  return /^\/audio\/he-[0-9a-f]{8}\.mp3$/.test(path) && (status === 200 || status === 206 || status === 304);
+}

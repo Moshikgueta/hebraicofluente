@@ -70,6 +70,12 @@
   --gold:      #B8862F;   /* sequência, revisão pendente */
   --gold-soft: #F7EFDF;   /* fundo de revisão e de resposta incorreta */
   --gold-ink:  #8A6520;   /* texto sobre --gold-soft */
+  /* Fundo de botão e selo gold com texto BRANCO, igual nos dois modos:
+     5,3:1 com branco. `--gold` (#B8862F) dava 3,24:1 no "Começar revisão" e
+     no selo da Revisão (auditoria de 01/10/2026, VIS-007); `--gold-ink` não
+     serve de fundo porque clareia no modo escuro. Mesmo papel do
+     `--teal-solid` acima. */
+  --gold-solid: #8A6520;
   --cream:     #FBF9F5;   /* fundo da página */
   --sand:      #F3F0E9;   /* seções alternadas, trilhos, cartão neutro */
   --card:      #FFFFFF;   /* superfície de cartão */
@@ -89,6 +95,11 @@
      teal-soft (4,37) nem no gold-soft (4,43), onde também é usado
      (auditoria de 28/09/2026, UX-008). Este passa em todos: 4,84 o menor. */
   --ink-muted: #5F6A66;
+  /* Placeholder de campo: mais claro que o secundário, de propósito. Com a
+     mesma cor do texto (#5F6A66), "Daniel" parecia um campo já preenchido
+     (auditoria de 01/10/2026, VIS-017). É dica, não conteúdo: a WCAG não
+     cobra 4,5:1 de placeholder, e o rótulo continua acima do campo. */
+  --ink-placeholder: #8A938F;
 
   /* ── os nomes semânticos, apontando para os de cima ────────────────── */
   /* `--accent` é TINTA (texto, ícone, borda, barra de progresso) e
@@ -222,6 +233,7 @@
     --ink:       #ECF1EF;
     --ink-body:  #C4CFCC;
     --ink-muted: #94A29E;
+    --ink-placeholder: #6F7C79;
 
     /* ── teal: progresso e acerto ──────────────────────────────────────── */
     --teal:      #41B5A4;

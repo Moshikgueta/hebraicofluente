@@ -82,14 +82,26 @@ export function AchievementBadge({
   if (!def) return null;
   return (
     <div
-      className={`rounded-[var(--r-md)] border p-4 grid gap-1 transition-opacity
-        ${unlocked ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]' : 'border-line bg-surface opacity-55'}`}
+      /* A conquista ainda não feita recua pelo CARTÃO (papel, borda
+         tracejada, cadeado), nunca pela opacidade: o `opacity-55` levava a
+         descrição a 2,28:1 (auditoria de 01/10/2026, VIS-010). O texto é
+         informação - o que falta fazer - e fica em tinta que passa 4,5:1. */
+      className={`rounded-[var(--r-md)] border p-4 grid gap-1
+        ${unlocked ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]' : 'border-line border-dashed bg-[var(--paper)]'}`}
     >
       <div className="flex items-center gap-2">
-        <span aria-hidden className={unlocked ? 'text-[var(--accent)]' : 'text-ink-muted'}>
-          {unlocked ? '◆' : '◇'}
-        </span>
-        <p className="font-display text-[15px] font-semibold text-ink">{def.titlePt}</p>
+        {unlocked ? (
+          <span aria-hidden className="text-[var(--accent)]">◆</span>
+        ) : (
+          <svg aria-hidden width="14" height="14" viewBox="0 0 18 18" fill="none" className="text-ink-muted shrink-0">
+            <rect x="3.6" y="7.8" width="10.8" height="7.4" rx="2" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M6.2 7.8V5.9a2.8 2.8 0 0 1 5.6 0v1.9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          </svg>
+        )}
+        <p className={`font-display text-[15px] font-semibold ${unlocked ? 'text-ink' : 'text-ink-body'}`}>
+          {def.titlePt}
+          {!unlocked && <span className="sr-only"> (ainda não conquistada)</span>}
+        </p>
       </div>
       {!compact && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
