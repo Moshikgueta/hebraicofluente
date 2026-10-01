@@ -31,6 +31,7 @@
  * mais.
  */
 
+import { useFocoDaRodada } from './foco-da-rodada';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import type { RodadaCursiva } from '@/lib/engine/jogos';
@@ -68,11 +69,13 @@ export function ImpressaCursiva({
     return () => clearTimeout(t);
   }, [i, total, acertos, erros, letrasErradas, onFim]);
 
+  const foco = useFocoDaRodada(i);
   const responder = useCallback((
     certo: boolean, texto: string | null, letterId: string, id: string, escolhida?: string
   ) => {
     if (travado.current) return;
     travado.current = true;
+    foco.segurar();
     onResposta?.({ id, letterId, certo, escolhida });
     if (certo) setAcertos(n => n + 1);
     else { setErros(n => n + 1); setLetrasErradas(l => [...l, letterId]); }
@@ -82,7 +85,7 @@ export function ImpressaCursiva({
       setMarca(null);
       setI(n => n + 1);
     }, certo ? 560 : 1700);
-  }, [onResposta]);
+  }, [onResposta, foco.segurar]);
 
   if (!r) return null;
 
@@ -97,6 +100,8 @@ export function ImpressaCursiva({
         </p>
       </div>
 
+      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={`Rodada ${Math.min(i + 1, total)} de ${total}`}
+           className="grid gap-5 outline-none">
       {r.tipo === 'pares'
         ? <Pares key={i} r={r} idx={i} responder={responder} />
         : <Escolha key={i} r={r} idx={i} marca={marca} responder={responder} />}
@@ -111,6 +116,7 @@ export function ImpressaCursiva({
             {marca.ok ? 'Exatamente.' : marca.texto ?? 'Compare os dois desenhos com calma.'}
           </p>
         )}
+      </div>
       </div>
     </div>
   );

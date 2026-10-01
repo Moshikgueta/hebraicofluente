@@ -30,6 +30,7 @@
  * verdade registrado. Inventá-la para todo mundo a esvaziaria.
  */
 
+import { useFocoDaRodada } from './foco-da-rodada';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import type { Batalha as Dados, RodadaBatalha } from '@/lib/engine/jogos';
@@ -54,6 +55,7 @@ export function Batalha({
   const [tocadas, setTocadas] = useState<string[]>([]);
   const travado = useRef(false);
   const inicio = useRef(Date.now());
+  const foco = useFocoDaRodada(i);
 
   const rodada = dados.rodadas[i];
   const total = dados.rodadas.length;
@@ -90,6 +92,7 @@ export function Batalha({
                               id: string, escolhida?: string) => {
     if (travado.current) return;
     travado.current = true;
+    foco.segurar();
     onResposta?.({ id, letterId, certo, escolhida });
     if (certo) setAcertos(n => n + 1);
     else { setErros(n => n + 1); setLetrasErradas(l => [...l, letterId]); }
@@ -97,7 +100,7 @@ export function Batalha({
     /* O erro segura mais tempo na tela, porque ele traz a frase que ensina -
        e uma explicação que some em meio segundo não foi lida. */
     setTimeout(avancar, certo ? 560 : 1900);
-  }, [avancar, onResposta]);
+  }, [avancar, onResposta, foco.segurar]);
 
   if (!rodada) return null;
 
@@ -107,6 +110,9 @@ export function Batalha({
           percorre até quatro pares, e um cabeçalho fixo mentiria em três
           quartos dela. */}
       <Placar i={i} total={total} acertos={acertos} par={parDaRodada} />
+
+      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={`Rodada ${i + 1} de ${total}`}
+           className="grid gap-5 outline-none">
 
       {rodada.tipo === 'qual' && (
         <Qual r={rodada} marca={marca} fechar={fechar} idx={i} />
@@ -123,6 +129,7 @@ export function Batalha({
       )}
 
       <Retorno marca={marca} />
+      </div>
     </div>
   );
 }

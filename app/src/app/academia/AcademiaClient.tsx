@@ -231,6 +231,31 @@ export function AcademiaClient() {
     (jogo: Jogo, rodada: number) => montarNovo(jogo, rodada, p.state, unlocked, nivel),
     [p.state, unlocked, nivel]);
 
+  /* Que jogo tem material hoje? A mesma conta que a tela do jogo faz antes
+     de recusar com "Ainda não há letras suficientes". Com uma letra só, os
+     seis abriam e os seis davam nesse beco (auditoria de 01/10/2026,
+     VIS-009); agora o cartão diz, antes do clique, quando ele abre. */
+  const fechados = useMemo(() => {
+    const out: Partial<Record<Jogo, string>> = {};
+    for (const jogo of Object.keys(JOGOS) as Jogo[]) {
+      const info = JOGOS[jogo];
+      let falta: boolean;
+      if (unlocked.length < info.minimo) falta = true;
+      else if (DE_BARALHO(jogo)) {
+        const { baralho, perguntas } = fazerJogo(jogo, 0);
+        falta = jogo === 'match' ? baralho.length < info.minimo : perguntas.length < info.minimo;
+      } else {
+        const d = fazerNovo(jogo, 0);
+        falta = jogo === 'caca' ? !d.cacada?.length : jogo === 'cursiva' ? !d.cursiva?.length : !d.batalha;
+      }
+      if (!falta) continue;
+      out[jogo] = unlocked.length < info.minimo
+        ? `Abre com ${info.minimo} letras`
+        : jogo === 'batalha' ? 'Abre quando houver duas letras parecidas' : 'Abre com mais letras';
+    }
+    return out;
+  }, [unlocked, fazerJogo, fazerNovo]);
+
   /* Cada tentativa alimenta o mesmo modelo que as lições alimentam: o jogo
      não tem placar próprio, ele escreve na mesma memória.
 
@@ -438,29 +463,37 @@ export function AcademiaClient() {
     return (
       <div className="focus-col grid gap-5">
         <GymHeader mode={mode} label="Antes: o teclado hebraico" onBack={() => setScreen({ kind: 'menu' })} />
+        {/* O teclado da tela primeiro (UXQA-012): ele funciona em qualquer
+            aparelho, sem configurar nada (components/learn/TecladoHebraico.tsx).
+            Instalar o teclado do sistema continua sendo o melhor para quem
+            vai digitar muito, e fica como opção recolhida, logo abaixo. */}
         <p className="font-ui text-[16px] leading-relaxed text-ink-body m-0">
-          Este é o único exercício do curso que pede o teclado hebraico do seu aparelho.
-          Adicione uma vez - leva um minuto - e ele fica disponível ao lado do português.
+          Este exercício pede para escrever em hebraico, e tem um teclado hebraico na tela:
+          é só tocar nas letras, sem instalar nada.
         </p>
-        <GuiaTeclado onConfirmar={() => {
-          p.markFirst('teclado-hebraico');
-          track('keyboard_confirmed', {});
-          track('gym_started', { mode: mode.id });
-          setScreen({ kind: 'run', mode, startedAt: Date.now() });
-        }} />
-        {/* 29/09/2026: o exercício agora tem um teclado hebraico na tela
-            (components/learn/TecladoHebraico.tsx). Instalar continua sendo o
-            melhor, mas deixou de ser condição. */}
-        <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-          Prefere não instalar agora? O exercício tem um teclado hebraico na tela.
-        </p>
-        <Button variant="secondary" onClick={() => {
+        <Button size="lg" onClick={() => {
           p.markFirst('teclado-hebraico');
           track('gym_started', { mode: mode.id });
           setScreen({ kind: 'run', mode, startedAt: Date.now() });
         }}>
           Usar o teclado da tela
         </Button>
+        <details className="rounded-[var(--r-md)] border border-line bg-surface px-4 py-3">
+          <summary className="min-h-[44px] flex items-center cursor-pointer font-ui text-[15px] font-semibold text-ink">
+            Prefere o teclado hebraico do seu aparelho? Veja como adicionar
+          </summary>
+          <div className="grid gap-3 pt-2">
+            <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
+              Adicione uma vez - leva um minuto - e ele fica disponível ao lado do português.
+            </p>
+            <GuiaTeclado onConfirmar={() => {
+              p.markFirst('teclado-hebraico');
+              track('keyboard_confirmed', {});
+              track('gym_started', { mode: mode.id });
+              setScreen({ kind: 'run', mode, startedAt: Date.now() });
+            }} />
+          </div>
+        </details>
       </div>
     );
   }
@@ -663,10 +696,12 @@ export function AcademiaClient() {
                 <li key={jogo}>
                   <button
                     type="button"
+                    disabled={!!fechados[jogo]}
                     onClick={() => setScreen({ kind: 'jogo', jogo, rodada: 0 })}
-                    className="w-full h-full text-left rounded-[18px] border border-line bg-[var(--card)]
+                    className={`w-full h-full text-left rounded-[18px] border border-line bg-[var(--card)]
                                p-5 grid gap-1.5 content-start transition-[box-shadow,border-color]
-                               duration-[250ms] hover:shadow-[var(--sh)] hover:border-[var(--teal)]"
+                               duration-[250ms]
+                               ${fechados[jogo] ? 'cursor-default bg-surface-2' : 'hover:shadow-[var(--sh)] hover:border-[var(--teal)]'}`}
                   >
                     <span aria-hidden className="w-10 h-10 rounded-[12px] bg-[var(--teal-soft)]
                                                  grid place-items-center mb-1">
@@ -678,7 +713,11 @@ export function AcademiaClient() {
                     <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
                       {JOGOS[jogo].descPt}
                     </span>
-                    <GymBest modeId={jogo} />
+                    {fechados[jogo]
+                      ? <span className="font-ui text-[13px] font-semibold text-ink-body">
+                          <span aria-hidden>🔒 </span>{fechados[jogo]}
+                        </span>
+                      : <GymBest modeId={jogo} />}
                   </button>
                 </li>
               ))}
@@ -940,8 +979,11 @@ function GymHeader({
 }
 
 function Empty({ children, onBack }: { children: React.ReactNode; onBack: () => void }) {
+  /* Com título: a tela vazia não tinha heading nenhum, e quem navega por
+     títulos não achava nada (VIS-009). */
   return (
     <div className="focus-col grid gap-4">
+      <h1 className="text-[23px] font-bold">Ainda não há material suficiente</h1>
       <Card tone="amber" className="p-6">
         <p className="text-[15px] leading-relaxed text-ink-body">{children}</p>
       </Card>

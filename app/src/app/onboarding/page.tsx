@@ -9,10 +9,12 @@
  * skipping ahead would break the reading progression, not accelerate it. */
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { useProgress } from '@/lib/state/store';
+import { useAccount } from '@/lib/account/store';
+import { primeiroNome } from '@/components/learn/MeuNome';
 import type { DailyGoalMinutes, Onboarding } from '@/lib/state/types';
 
 const REASONS = [
@@ -45,6 +47,17 @@ export default function OnboardingPage() {
   const [goal, setGoal] = useState<DailyGoalMinutes | null>(null);
   const [start, setStart] = useState<Onboarding['startingPoint'] | null>(null);
   const [name, setName] = useState('');
+  /* O cadastro já pediu o nome: aqui ele vem preenchido com o primeiro nome
+     da conta, e o aluno só troca se quiser outro (UXQA-008). Uma vez só,
+     para não apagar o que ele digitou. */
+  const account = useAccount();
+  const nomeDaConta = account.session?.account.name ?? '';
+  const preenchido = useRef(false);
+  useEffect(() => {
+    if (preenchido.current || !nomeDaConta) return;
+    preenchido.current = true;
+    setName(n => n || primeiroNome(nomeDaConta));
+  }, [nomeDaConta]);
 
   const finish = () => {
     setOnboarding({
@@ -124,7 +137,7 @@ export default function OnboardingPage() {
       )}
 
       {step === 3 && (
-        <Question title="Como podemos te chamar?" hint="Opcional. Fica só no seu navegador.">
+        <Question title="Como podemos te chamar?" hint="Opcional. Fica na sua conta e já preenche o certificado e a atividade Meu nome.">
           <input
             type="text"
             value={name}

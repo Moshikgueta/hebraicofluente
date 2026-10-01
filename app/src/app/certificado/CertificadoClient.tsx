@@ -21,8 +21,9 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
+import { useAccount } from '@/lib/account/store';
 import { allLetters, course } from '@/lib/content';
-import { certificateReady } from '@/lib/state/rules';
+import { certificateReady, REGRA_DO_DOMINIO } from '@/lib/state/rules';
 import { CompartilharCertificado } from '@/components/platform/CompartilharCertificado';
 import { EXAM_PASS } from '@/lib/engine/exam';
 import {
@@ -55,11 +56,16 @@ export function CertificadoClient() {
   const date = passedAt ? new Date(passedAt) : new Date();
   const score = p.state.finalChallenge.best;
 
-  /* Prefill from onboarding once state has loaded, and then stop touching it -
-     a learner who cleared the field means it. */
+  /* Preenchido uma vez, com o nome do onboarding ou, sem ele, o nome da
+     conta (UXQA-008); depois o campo é do aluno - quem apagou quis apagar. */
+  const account = useAccount();
+  const nomeDaConta = account.session?.account.name?.trim() ?? '';
   useEffect(() => {
-    if (!touched && p.ready) setName(p.state.onboarding?.name?.trim() ?? '');
-  }, [p.ready, p.state.onboarding?.name, touched]);
+    if (!touched && p.ready) setName(p.state.onboarding?.name?.trim() || nomeDaConta);
+  }, [p.ready, p.state.onboarding?.name, nomeDaConta, touched]);
+  /* Sem nome, o certificado não sai: baixava "certificado-...-aluno.png"
+     em branco, sem aviso nenhum. */
+  const semNome = !name.trim();
 
   const redraw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -77,6 +83,7 @@ export function CertificadoClient() {
   const download = useCallback(async (): Promise<boolean> => {
     const canvas = canvasRef.current;
     if (!canvas) return false;
+    if (!name.trim()) { setSaid('Escreva o seu nome no campo acima antes de baixar.'); return false; }
     setBusy(true);
     const blob = await canvasToBlob(canvas);
     setBusy(false);
@@ -97,6 +104,7 @@ export function CertificadoClient() {
   const share = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    if (!name.trim()) { setSaid('Escreva o seu nome no campo acima antes de compartilhar.'); return; }
     setBusy(true);
     const blob = await canvasToBlob(canvas);
     setBusy(false);
@@ -143,8 +151,8 @@ export function CertificadoClient() {
           <ul className="divide-y divide-[color:var(--line-soft)]">
             <Requirement
               done={gate.lettersDone >= course.totalLetters}
-              titlePt="As 22 letras"
-              detailPt={`${gate.lettersDone} de ${course.totalLetters} concluídas`}
+              titlePt={`As ${course.totalLetters} letras dominadas`}
+              detailPt={`${gate.lettersDone} de ${course.totalLetters} dominadas. Dominar é ${REGRA_DO_DOMINIO}.`}
               href="/mapa"
               ctaPt="Ir para o mapa"
             />
@@ -207,10 +215,17 @@ export function CertificadoClient() {
             onChange={e => { setTouched(true); setName(e.target.value.slice(0, 48)); }}
             placeholder="Como você quer aparecer"
             autoComplete="name"
+            aria-describedby={semNome ? 'cert-name-falta' : undefined}
+            aria-invalid={semNome || undefined}
             className="min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                        font-ui text-[17px] text-ink placeholder:text-ink-muted
                        focus:border-[var(--accent-soft)]"
           />
+          {semNome && (
+            <p id="cert-name-falta" className="font-ui text-[13.5px] text-[var(--amber)]">
+              Escreva o seu nome: o certificado só sai com ele.
+            </p>
+          )}
         </div>
 
         <div className="grid gap-3 rounded-[var(--r-lg)] border border-line p-4">
@@ -298,10 +313,10 @@ export function CertificadoClient() {
         </fieldset>
 
         <div className="flex flex-wrap gap-3 pt-1">
-          <Button size="lg" onClick={share} disabled={busy}>
+          <Button size="lg" onClick={share} disabled={busy || semNome}>
             {busy ? 'Gerando…' : 'Compartilhar'}
           </Button>
-          <Button variant="secondary" onClick={download} disabled={busy}>
+          <Button variant="secondary" onClick={download} disabled={busy || semNome}>
             Baixar PNG
           </Button>
         </div>
@@ -328,7 +343,7 @@ export function CertificadoClient() {
 
       <Card tone="wash" className="p-5 grid gap-2 reading">
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-          <strong>O que este certificado é:</strong> o registro de que você concluiu as
+          <strong>O que este certificado é:</strong> o registro de que você dominou as
           22 letras e foi aprovado no exame final deste curso, com {' '}
           {score != null ? `${Math.round(score * 100)}%` : 'nota de aprovação'}.
         </p>

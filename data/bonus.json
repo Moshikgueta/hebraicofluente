@@ -106,7 +106,7 @@
           "pt": "Tu as atarás como sinal na tua mão, e serão como uma faixa entre os teus olhos."
         },
         {
-          "he": "וּכְתַבְתָּם עַל־מְזוּזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ",
+          "he": "וּכְתַבְתָּם עַל־מְזֻזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ",
           "translit": "uchtavtám al-mezuzót betécha uvisharécha",
           "pt": "E as escreverás nos batentes da tua casa e nos teus portões."
         }
@@ -282,7 +282,7 @@
         },
         {
           "he": "עֵת לֶאֱהֹב וְעֵת לִשְׂנֹא עֵת מִלְחָמָה וְעֵת שָׁלוֹם",
-          "translit": "et leehóv veét lisnó, et milchamá veét shalóm",
+          "translit": "et leehóv veét lisnó, et milchamá veét shalom",
           "pt": "tempo de amar e tempo de odiar, tempo de guerra e tempo de paz."
         }
       ]
@@ -302,7 +302,7 @@
         },
         {
           "he": "מַחְשְׁבוֹת שָׁלוֹם וְלֹא לְרָעָה לָתֵת לָכֶם אַחֲרִית וְתִקְוָה",
-          "translit": "machshevót shalóm velo leraá, latét lachém acharít vetikvá",
+          "translit": "machshevót shalom velo leraá, latét lachém acharít vetikvá",
           "pt": "planos de paz, e não de mal, para dar a vocês um futuro e uma esperança."
         }
       ]
@@ -517,7 +517,7 @@
         },
         {
           "he": "יִשָּׂא יְהוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם",
-          "translit": "yissá Hashém panáv elécha veyassém lechá shalóm",
+          "translit": "yissá Hashém panáv elécha veyassém lechá shalom",
           "pt": "O Senhor volte o seu rosto para ti e te dê a paz."
         }
       ]
@@ -562,7 +562,7 @@
         },
         {
           "he": "וַיִּקְרָא שְׁמוֹ פֶּלֶא יוֹעֵץ אֵל גִּבּוֹר אֲבִיעַד שַׂר־שָׁלוֹם",
-          "translit": "vayikrá shemó: péle yoéts, El guibór, Avíad, sar-shalóm",
+          "translit": "vayikrá shemó: péle yoéts, El guibór, Avíad, sar-shalom",
           "pt": "e o seu nome é chamado: Maravilhoso, Conselheiro, Deus Forte, Pai Eterno, Príncipe da Paz."
         }
       ]
@@ -737,23 +737,23 @@
       },
       {
         "id": "dagesh",
-        "tituloPt": "O dagesh, de novo",
-        "textoPt": "Você já sabe que o ponto dentro de {{ב}}, {{כ}} e {{פ}} muda o som. A Bíblia pontua tudo, então você vai ver o dagesh em muitas outras letras também: nelas, ele não muda nada que você precise dizer.",
+        "tituloPt": "O daguesh, de novo",
+        "textoPt": "Você já sabe que o ponto dentro de {{ב}}, {{כ}} e {{פ}} muda o som. A Bíblia pontua tudo, então você vai ver o daguesh em muitas outras letras também: nelas, ele não muda nada que você precise dizer.",
         "exemplos": [
           {
             "he": "בָּרָא",
             "translit": "bará",
-            "pt": "com dagesh: «b»"
+            "pt": "com daguesh: «b»"
           },
           {
             "he": "וַיְהִי־בֹקֶר",
             "translit": "vayehí-vóker",
-            "pt": "sem dagesh: «v»"
+            "pt": "sem daguesh: «v»"
           },
           {
             "he": "הַשָּׁמַיִם",
             "translit": "ha-shamáyim",
-            "pt": "dagesh no ש: o som não muda"
+            "pt": "daguesh no ש: o som não muda"
           }
         ]
       },

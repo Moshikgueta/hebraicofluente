@@ -12,6 +12,7 @@
  * hoje quer a aula de hoje.
  */
 
+import { somPt } from '@/lib/som-pt';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -29,13 +30,13 @@ import { allLetters, course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
 import { CartaoMeuNome } from '@/components/learn/MeuNome';
-import { alphabetComplete, isExtraModuleDone, isLessonComplete, needsWarmUp } from '@/lib/state/rules';
+import { alphabetComplete, isExtraModuleDone, isLessonComplete, LIBERA_MARK, needsWarmUp, porQueTrancada } from '@/lib/state/rules';
 import { useAccount } from '@/lib/account/store';
 import { CourseShelf } from '@/components/platform/CourseShelf';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
 import { AntesEDepois } from '@/components/platform/AntesEDepois';
-import { ehContraste, idDoSom } from '@/lib/sons';
+import { ehContraste, idDoSom, nomeDaLicao, ordemDeEnsino, rotaDaLicao, soOLadoDoPonto } from '@/lib/sons';
 
 export function DashboardClient() {
   const p = useProgress();
@@ -77,6 +78,26 @@ export function DashboardClient() {
     }
     return { kind: 'done' as const };
   }, [p.state]);
+
+  /* A próxima lição pode estar trancada: a anterior foi concluída com nota
+     abaixo de LIBERA_MARK. Aí o cartão principal aponta para TERMINAR a
+     anterior, nunca para a porta trancada (auditoria de 01/10/2026, UXQA-002). */
+  const terminar = useMemo(() => {
+    const id = next.kind === 'letter' ? next.letter.id : next.kind === 'som' ? idDoSom(next.som) : null;
+    if (!id) return null;
+    const ordem = ordemDeEnsino(allLetters(), course.modules);
+    const porque = porQueTrancada(p.state, ordem, id);
+    if (!porque) return null;
+    return {
+      id: porque.anterior,
+      nome: nomeDaLicao(porque.anterior, allLetters(), course.modules),
+      nota: porque.nota
+    };
+  }, [next, p.state]);
+
+  /* Primeiro acesso: a Aula 0 é a ação principal enquanto não foi aberta e
+     nenhuma lição começou (CONV-020). Depois, a lição. */
+  const aula0Primeiro = !p.state.firsts['aula-0'] && Object.keys(p.state.lessons).length === 0;
 
   const alfabetoFechado = alphabetComplete(p.state, allLetters().map(l => l.id));
 
@@ -167,11 +188,43 @@ export function DashboardClient() {
       {/* The primary action, alone and unmissable. */}
       <section aria-labelledby="continuar">
         <h2 id="continuar" className="sr-only">Continuar aprendendo</h2>
-        {next.kind === 'letter' && (
+        {aula0Primeiro && (
+          <div className="grid gap-2">
+            <CartaoCurso
+              kicker="Antes da primeira letra"
+              titulo="Como o hebraico funciona"
+              sub="Dez minutos de leitura: a direção, o alfabeto, o que muda em relação ao português e como este curso funciona. Depois, a primeira letra."
+              pct={p.progress}
+              href="/inicio"
+              cta="Começar pela Aula 0"
+            />
+            {next.kind === 'letter' && (
+              <p className="font-ui text-[13.5px] text-ink-muted">
+                <Link href={`/licao/${next.letter.id}`} className="hover:text-[var(--accent)] underline underline-offset-2">
+                  Ir direto para a primeira letra
+                </Link>
+              </p>
+            )}
+          </div>
+        )}
+
+        {!aula0Primeiro && terminar && (
           <CartaoCurso
             kicker="Curso em andamento"
             titulo={flagship().titlePt}
-            sub={`Módulo ${next.module.n} · lição ${next.letter.lesson} - letra ${next.letter.namePt}, som ${next.letter.sound}`}
+            sub={`Falta a fixação de ${terminar.nome}: a próxima lição abre com ${Math.round(LIBERA_MARK * 100)}%.`
+              + (terminar.nota != null ? ` Sua melhor nota até agora: ${Math.round(terminar.nota * 100)}%.` : '')}
+            pct={p.progress}
+            href={rotaDaLicao(terminar.id)}
+            cta={`Terminar ${terminar.nome}`}
+          />
+        )}
+
+        {!aula0Primeiro && !terminar && next.kind === 'letter' && (
+          <CartaoCurso
+            kicker="Curso em andamento"
+            titulo={flagship().titlePt}
+            sub={`Módulo ${next.module.n} · lição ${next.letter.lesson} - letra ${next.letter.namePt}, som ${somPt(soOLadoDoPonto(next.letter).sound)}`}
             pct={p.progress}
             href={`/licao/${next.letter.id}`}
             cta={(p.state.lessons[next.letter.id]?.stagesDone.length ?? 0) > 0
@@ -179,7 +232,7 @@ export function DashboardClient() {
           />
         )}
 
-        {next.kind === 'som' && (
+        {!aula0Primeiro && !terminar && next.kind === 'som' && (
           <CartaoCurso
             kicker="Curso em andamento"
             titulo={flagship().titlePt}
@@ -236,7 +289,7 @@ export function DashboardClient() {
 
           Para quem já começou vira uma linha discreta, porque aí é consulta
           e não caminho. Em nenhum dos dois casos ela é obrigatória. */}
-      {licoesFeitas === 0 ? (
+      {aula0Primeiro ? null : licoesFeitas === 0 ? (
         <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <div className="grid gap-1 min-w-0">
             <Badge tone="accent">Antes da primeira letra</Badge>
@@ -286,7 +339,7 @@ export function DashboardClient() {
                       tom="teal" icone={<IconeLetras />} />
         <CartaoNumero n={licoesFeitas} rotulo={licoesFeitas === 1 ? 'lição concluída' : 'lições concluídas'}
                       tom="teal" icone={<IconeLicoes />} />
-        <CartaoNumero n={p.dueCount} rotulo="a revisar" tom="gold" icone={<IconeRevisar />} />
+        <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? "item a revisar" : "itens a revisar"} tom="gold" icone={<IconeRevisar />} />
         <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />
       </section>
 

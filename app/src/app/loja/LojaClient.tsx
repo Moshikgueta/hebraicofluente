@@ -15,7 +15,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, cultureCards, leiturasBonus } from '@/lib/content';
-import { concluidasSemDominio } from '@/lib/state/rules';
+import { concluidasSemDominio, REGRA_DO_DOMINIO, REGRA_DO_DOMINIO_CURTA } from '@/lib/state/rules';
 import { itemDaLeitura } from '@/lib/engine/bonus';
 import { cartasCompradas, folgasLivres, gasto, ITENS, leiturasCompradas, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
 import { arquivoDoNome, desenharNome, FORMATOS_NOME, type FormatoNome } from '@/lib/nome-decorado';
@@ -141,13 +141,13 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
               Quando chegar lá, volte a ela. Você domina <strong>{mastered} de {totalLetras} letras</strong>.
             </p>
             <p className="m-0">
-              Dominar uma letra é concluir a lição dela e acertar pelo menos 6 de 8 na fixação.
+              Dominar uma letra é {REGRA_DO_DOMINIO}.
             </p>
             {semDominio > 0 && (
               <p className="m-0">
                 {semDominio === 1
-                  ? 'Uma lição que você concluiu ficou abaixo de 6 de 8. Refazer a fixação dela já conta.'
-                  : `${semDominio} lições que você concluiu ficaram abaixo de 6 de 8. Refazer a fixação delas já conta.`}{' '}
+                  ? `Uma lição que você concluiu ficou abaixo de ${REGRA_DO_DOMINIO_CURTA}. Refazer a fixação dela já conta.`
+                  : `${semDominio} lições que você concluiu ficaram abaixo de ${REGRA_DO_DOMINIO_CURTA}. Refazer a fixação delas já conta.`}{' '}
                 <Link href="/mapa" className="text-[var(--accent)] underline">Ver as lições</Link>
               </p>
             )}

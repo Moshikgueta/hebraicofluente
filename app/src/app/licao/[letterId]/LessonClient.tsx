@@ -36,7 +36,7 @@ import { Compreensao } from '@/components/learn/Compreensao';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
 import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { useProgress } from '@/lib/state/store';
-import { letraAtual, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
+import { acertosPara, FIXACAO_ITENS, letraAtual, letraLiberada, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
 import { allLetters, course, cultureAt, nextLetter, scenesForOrder, semOSomDe, type Letter } from '@/lib/content';
 import {
   buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
@@ -157,6 +157,11 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     id => id === letter.id || (p.state.lessons[id]?.stagesDone.length ?? 0) >= 5
   );
 
+  /* A lição seguinte abre com esta nota? Abaixo de LIBERA_MARK o botão
+     principal não pode mandar para uma porta trancada (UXQA-002): ele vira
+     "Refazer a fixação". */
+  const proximaTrancada = !!seguinte && !letraLiberada(p.state, ordemToda, seguinte);
+
   if (trancada) return <PortaTrancada letter={letter} porque={trancada} />;
 
   return (
@@ -209,6 +214,7 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
              terminava sem nunca dizer que tinha terminado: o fim de uma
              etapa precisa soar como fim, senão ele é só mais um clique. */
           nextLabel="Concluir e continuar"
+          proximaTrancada={proximaTrancada}
           nextHint={
             somSeguinte ? `Em seguida: o som ${nomeDaLicao(somSeguinte, allLetters(), course.modules)}`
               : moduleFinished && mod?.checkpoint ? `Em seguida: Checkpoint ${mod.n}`
@@ -778,9 +784,10 @@ function StagePraticar({
 /* ── 5 · fixação: o mini-teste, com portão de domínio ───────────────────
  *
  * Aqui a lição deixa de ser "rolei até o fim" e passa a ser "mostrei que
- * sei". Seis questões, e 80% delas - cinco - para a letra contar como
- * dominada. (Dizia "oito questões" aqui, e eram cinco: um comentário que
- * envelheceu sozinho porque não havia nada medindo se ele era verdade.)
+ * sei". FIXACAO_ITENS questões (10), e 75% delas (MASTERY_MARK, 8 de 10)
+ * para a letra contar como dominada; a seguinte abre com LIBERA_MARK (80%,
+ * também 8 de 10). Os números moram em lib/state/rules.ts e a tela os lê de
+ * lá: este comentário já disse "seis" e "oito" quando eram outros.
  *
  * O portão NÃO tranca. Quem fica abaixo recebe "vamos praticar mais um pouco"
  * e quatro questões montadas a partir dos PRÓPRIOS erros - não um sorteio
@@ -802,7 +809,7 @@ function StagePraticar({
 const PASSA = MASTERY_MARK;
 
 function StageFixacao({
-  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel, nextHint
+  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel, nextHint, proximaTrancada = false
 }: {
   exercises: Exercise[];
   letter: Letter;
@@ -814,6 +821,8 @@ function StageFixacao({
   nextLabel: string;
   /** Para onde o botão leva, em uma linha, embaixo dele. */
   nextHint: string;
+  /** A lição seguinte ainda não abre com a melhor nota desta. */
+  proximaTrancada?: boolean;
 }) {
   /* 'teste' → 'reforco' → 'fechado'. O reforço só existe quando a nota
      ficou abaixo do portão. */
@@ -867,8 +876,12 @@ function StageFixacao({
             : `Vamos firmar ${letter.namePt}.`}
           /* A mensagem acompanha a nota de verdade. "Faltou pouco" num
              resultado de zero é a plataforma fingindo que não viu. */
-          body={strong
+          body={strong && !proximaTrancada
             ? `Você reconhece ${letter.namePt} sozinha, dentro de uma palavra e entre as parecidas. Pode seguir com segurança.`
+            : proximaTrancada && (strong || fezReforco)
+              ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
+                + `A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}% na fixação. `
+                + 'Refaça o teste: as perguntas mudam a cada tentativa.'
             : fezReforco
               ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
                 + 'Ela ainda não conta como dominada - refaça o teste quando quiser, '
@@ -878,15 +891,34 @@ function StageFixacao({
                 : 'Esta letra ainda não está firme, e tudo bem - é para isso que existe a prática. Quatro questões montadas a partir do que escapou.'}
         >
           {!strong && !fezReforco && reforco.length > 0 && (
-            <Button onClick={() => setFase('reforco')}>Praticar mais um pouco</Button>
+            <Button variant={proximaTrancada ? 'secondary' : 'primary'} onClick={() => setFase('reforco')}>
+              Praticar mais um pouco
+            </Button>
           )}
-          <Button variant={strong ? 'secondary' : 'ghost'} onClick={() => { setFase('teste'); onRetry(); }}>
-            Refazer o teste
-          </Button>
-          <Button variant={strong || fezReforco ? 'primary' : 'secondary'} onClick={onNext}>
-            {nextLabel}
-          </Button>
-          <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{nextHint}</p>
+          {proximaTrancada ? (
+            /* A próxima lição ainda não abre: o caminho principal é refazer,
+               e "Em seguida" some, porque ele apontaria para uma porta
+               trancada (UXQA-002). */
+            <>
+              <Button variant={!strong && !fezReforco && reforco.length > 0 ? 'secondary' : 'primary'}
+                      onClick={() => { setFase('teste'); onRetry(); }}>
+                {`Refazer a fixação (precisa de ${Math.round(LIBERA_MARK * 100)}%)`}
+              </Button>
+              <p className="basis-full font-ui text-[13px] text-ink-muted m-0">
+                {`A próxima lição abre com ${Math.round(LIBERA_MARK * 100)}% na fixação: ${acertosPara(LIBERA_MARK)} de ${FIXACAO_ITENS}.`}
+              </p>
+            </>
+          ) : (
+            <>
+              <Button variant={strong ? 'secondary' : 'ghost'} onClick={() => { setFase('teste'); onRetry(); }}>
+                Refazer o teste
+              </Button>
+              <Button variant={strong || fezReforco ? 'primary' : 'secondary'} onClick={onNext}>
+                {nextLabel}
+              </Button>
+              <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{nextHint}</p>
+            </>
+          )}
         </Milestone>
       </div>
     );

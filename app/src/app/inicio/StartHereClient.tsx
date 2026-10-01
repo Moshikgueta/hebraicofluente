@@ -12,7 +12,7 @@
  * vira a aula em que se aprende a ter medo.
  *
  * ── três decisões de conteúdo ───────────────────────────────────────────
- * 1. O TERMO VEM DEPOIS DO CONCEITO. "Abjad" e "niqqud" aparecem, mas sempre
+ * 1. O TERMO VEM DEPOIS DO CONCEITO. "Abjad" e "nikud" aparecem, mas sempre
  *    depois da frase que explica a coisa. Um termo técnico apresentado antes
  *    do conceito é uma palavra para decorar; depois, é uma etiqueta para uma
  *    coisa que a pessoa já entendeu.
@@ -55,7 +55,8 @@
  */
 
 import Link from 'next/link';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { useProgress } from '@/lib/state/store';
 import { He } from '@/components/hebrew/He';
 import { Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
@@ -69,7 +70,7 @@ import {
 } from '@/lib/cursiva';
 import type { NikudIntro, NikudSound } from '@/lib/content';
 
-/* ── as oito perguntas do niqqud ──────────────────────────────────────────
+/* ── as oito perguntas do nikud ──────────────────────────────────────────
    Cada uma existe contra um mal-entendido específico, e não para cobrir o
    texto: o que se confere é o que costuma sair torto da leitura.
 
@@ -79,51 +80,51 @@ import type { NikudIntro, NikudSound } from '@/lib/content';
 const PERGUNTAS_NIQQUD: ItemCompreensao[] = [
   {
     t: 'escolha',
-    q: 'O que é o niqqud?',
+    q: 'O que é o nikud?',
     opcoes: [
       'Um conjunto de letras novas do alfabeto',
       'Um sistema de sinais que ajuda a indicar a pronúncia e os sons de vogal',
       'A forma cursiva do hebraico'
     ],
     certa: 1,
-    porque: 'O niqqud não é feito de letras novas. São pequenos sinais colocados junto às letras para mostrar como a palavra se pronuncia.'
+    porque: 'O nikud não é feito de letras novas. São pequenos sinais colocados junto às letras para mostrar como a palavra se pronuncia.'
   },
   {
     t: 'visual',
-    q: 'Qual destes exemplos tem niqqud?',
+    q: 'Qual destes exemplos tem nikud?',
     opcoes: ['בַ', 'ב'],
     certa: 0,
     porque: 'A letra é a mesma nos dois. O que muda é o traço embaixo dela, que marca o som de vogal.'
   },
   {
     t: 'visual',
-    q: 'Nesta dupla, qual é o SINAL de niqqud - e não a letra?',
+    q: 'Nesta dupla, qual é o SINAL de nikud - e não a letra?',
     opcoes: ['◌ַ', 'ב'],
     certa: 0,
-    porque: 'A letra é ב. O traço sozinho aparece aqui pendurado num círculo pontilhado porque um sinal de niqqud não existe sozinho: ele sempre se apoia numa letra.'
+    porque: 'A letra é ב. O traço sozinho aparece aqui pendurado num círculo pontilhado porque um sinal de nikud não existe sozinho: ele sempre se apoia numa letra.'
   },
   {
     t: 'vf',
-    q: 'Sem niqqud é impossível ler hebraico.',
+    q: 'Sem nikud é impossível ler hebraico.',
     certa: false,
-    porque: 'No hebraico moderno a maior parte dos textos é escrita sem niqqud. Quem fala a língua reconhece as palavras pelo contexto, pelo vocabulário e pelos padrões da língua - como você lê "casa" sem precisar soletrar.'
+    porque: 'No hebraico moderno a maior parte dos textos é escrita sem nikud. Quem fala a língua reconhece as palavras pelo contexto, pelo vocabulário e pelos padrões da língua - como você lê "casa" sem precisar soletrar.'
   },
   {
     t: 'vf',
-    q: 'Quando um texto não tem niqqud, a palavra é falada sem som de vogal.',
+    q: 'Quando um texto não tem nikud, a palavra é falada sem som de vogal.',
     certa: false,
-    porque: 'Os sons continuam lá na fala. O que some é a marcação escrita deles - a palavra é pronunciada igual, com niqqud ou sem.'
+    porque: 'Os sons continuam lá na fala. O que some é a marcação escrita deles - a palavra é pronunciada igual, com nikud ou sem.'
   },
   {
     t: 'escolha',
-    q: 'Como um israelense lê uma placa sem niqqud?',
+    q: 'Como um israelense lê uma placa sem nikud?',
     opcoes: [
       'Ele adivinha a pronúncia letra por letra',
       'Ele reconhece a palavra pelo contexto e pelos padrões que já conhece',
       'Ele só consegue ler palavras curtas'
     ],
     certa: 1,
-    porque: 'É reconhecimento, não adivinhação: quem já tem o vocabulário identifica a palavra inteira de uma vez. É por isso que ler sem niqqud vem DEPOIS de conhecer as palavras, e não antes.'
+    porque: 'É reconhecimento, não adivinhação: quem já tem o vocabulário identifica a palavra inteira de uma vez. É por isso que ler sem nikud vem DEPOIS de conhecer as palavras, e não antes.'
   },
   {
     t: 'vf',
@@ -133,7 +134,7 @@ const PERGUNTAS_NIQQUD: ItemCompreensao[] = [
   },
   {
     t: 'assoc',
-    q: 'Onde você espera encontrar niqqud?',
+    q: 'Onde você espera encontrar nikud?',
     rotulos: ['Costuma ter', 'Costuma não ter'],
     linhas: [
       { item: 'Livro para quem está aprendendo', certa: 0 },
@@ -154,8 +155,8 @@ const INDICE: { id: string; t: string }[] = [
   { id: 'o-sistema',         t: 'Não é o mesmo sistema do português' },
   { id: 'a-comparacao',      t: 'Uma comparação para sentir a diferença' },
   { id: 'as-vogais',         t: 'Então onde estão as vogais?' },
-  { id: 'o-niqqud',          t: 'O niqqud, os pontinhos das vogais' },
-  { id: 'checagem-niqqud',   t: 'Checagem: entendeu o niqqud?' },
+  { id: 'o-niqqud',          t: 'O nikud, os pontinhos das vogais' },
+  { id: 'checagem-niqqud',   t: 'Checagem: entendeu o nikud?' },
   { id: 'as-quatro-letras',  t: 'Quatro letras especiais' },
   { id: 'a-direcao',         t: 'Da direita para a esquerda' },
   { id: 'duas-direcoes',     t: 'Quando a linha tem duas direções' },
@@ -190,6 +191,13 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
   alfabeto: AlfabetoProps;
   curso: CursoProps;
 }) {
+  /* Abrir a Aula 0 fica anotado: até isso, o painel oferece ela como a ação
+     principal, antes da lição 1 (auditoria de 01/10/2026, CONV-020). */
+  const progresso = useProgress();
+  useEffect(() => {
+    if (progresso.ready && !progresso.state.firsts['aula-0']) progresso.markFirst('aula-0');
+  }, [progresso]);
+
   /* A lista das vogais sabe quais têm gravação só depois que o manifesto
      chega; isto a redesenha quando chega. */
   useRegistroDeAudio();
@@ -308,7 +316,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         <ol className="grid gap-3 list-none p-0 m-0 text-[15.5px] leading-relaxed text-ink-body">
           {[
             ['Sinais de vogal',
-              'Pontos e traços colocados embaixo, dentro ou ao lado da consoante. É o niqqud, explicado no quadro seguinte - e é com ele que este curso começa.'],
+              'Pontos e traços colocados embaixo, dentro ou ao lado da consoante. É o nikud, explicado no quadro seguinte - e é com ele que este curso começa.'],
             ['Algumas letras que ajudam',
               'Quatro letras podem, dependendo da palavra, participar da representação de um som de vogal em vez de soar como consoante. Você as conhece daqui a pouco.'],
             ['O contexto',
@@ -340,10 +348,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </div>
       </Parte>
 
-      {/* ── 4 · o niqqud ──────────────────────────────────────────────── */}
-      <Parte id="o-niqqud" titulo={<>O niqqud: os pontinhos que marcam as vogais</>}>
+      {/* ── 4 · o nikud ──────────────────────────────────────────────── */}
+      <Parte id="o-niqqud" titulo={<>O nikud: os pontinhos que marcam as vogais</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          <strong className="font-semibold text-ink">Niqqud</strong>{' '}
+          <strong className="font-semibold text-ink">Nikud</strong>{' '}
           (<He size="inline">נִקּוּד</He>) é o sistema de pontos e traços colocados perto
           das letras para indicar os sons de vogal. A mesma palavra, com e sem eles:
         </p>
@@ -351,19 +359,19 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
             <He size="lg">שָׁלוֹם</He>
             <p className="font-ui text-[12.5px] text-ink-muted text-center">
-              com niqqud - dá para ler sem conhecer a palavra
+              com nikud - dá para ler sem conhecer a palavra
             </p>
           </div>
           <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
             <He size="lg">שלום</He>
             <p className="font-ui text-[12.5px] text-ink-muted text-center">
-              sem niqqud - é assim que aparece na rua
+              sem nikud - é assim que aparece na rua
             </p>
           </div>
         </div>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
           {[
-            'Material para iniciante costuma trazer niqqud - inclusive este curso, no começo.',
+            'Material para iniciante costuma trazer nikud - inclusive este curso, no começo.',
             'Livro infantil, texto religioso e poesia também usam bastante.',
             'No hebraico do dia a dia, a maior parte dos textos vem sem: placa, jornal, site, mensagem de celular.'
           ].map(t => (
@@ -398,21 +406,21 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </div>
       </Parte>
 
-      {/* ── a checagem do niqqud ──────────────────────────────────────────
+      {/* ── a checagem do nikud ──────────────────────────────────────────
           Explicação → exemplo → PERGUNTAS → prática. O conceito acima é o
           mais importante desta página inteira, e também o mais fácil de
           "achar que entendeu": ele é simples de ler e difícil de acreditar,
           porque contraria o que a pessoa acha que sabe sobre escrita. Então
           o curso não segue sem perguntar. */}
-      <Parte id="checagem-niqqud" titulo={<>Checagem: entendeu o niqqud? Oito perguntas</>}>
+      <Parte id="checagem-niqqud" titulo={<>Checagem: entendeu o nikud? Oito perguntas</>}>
       <Compreensao
         id="checagem-niqqud-perguntas"
         tituloOculto
-        titulo="Entendeu o niqqud? Oito perguntas"
+        titulo="Entendeu o nikud? Oito perguntas"
         intro="Não vale nota e não tranca nada - é só para confirmar que a ideia ficou de pé antes de seguir. Se errar, a explicação aparece na hora."
         perguntas={PERGUNTAS_NIQQUD}
         fecho={{
-          bom: 'Ótimo. Agora você já sabe o que é o niqqud e por que ele aparece. Vamos entender como esses sinais funcionam na prática.',
+          bom: 'Ótimo. Agora você já sabe o que é o nikud e por que ele aparece. Vamos entender como esses sinais funcionam na prática.',
           parcial: 'Vale reler o quadro acima antes de seguir - são duas ou três ideias, e elas voltam em toda lição do curso.'
         }}
       />
@@ -675,7 +683,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             <ul className="grid gap-1.5 text-[14.5px] leading-relaxed text-ink-body">
               {[
                 'As letras, o desenho delas e a direção da escrita.',
-                'O niqqud, quando aparece.',
+                'O nikud, quando aparece.',
                 'A maior parte das raízes: as letras que carregam o sentido de uma família inteira de palavras.'
               ].map(t => <li key={t}>{t}</li>)}
             </ul>
@@ -774,14 +782,14 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             Eram cinco cartões, e o caminho de verdade tem dez passos - os
             dois que faltavam são os que mais interessam a quem está
             começando: reconhecer padrões, e ir precisando cada vez menos
-            do niqqud. Dez cartões custariam meia tela numa página que já é
+            do nikud. Dez cartões custariam meia tela numa página que já é
             a mais longa do curso; em corrente, os dez ocupam menos que os
             cinco de antes e leem como o que são: um percurso. */}
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-2 list-none p-0 m-0">
           {[
             'Entender o sistema', 'Aprender as letras', 'Ligar forma e som',
-            'Entender o niqqud', 'Combinar letras', 'Ler sílabas',
-            'Ler palavras', 'Reconhecer padrões', 'Depender menos do niqqud',
+            'Entender o nikud', 'Combinar letras', 'Ler sílabas',
+            'Ler palavras', 'Reconhecer padrões', 'Depender menos do nikud',
             'Ler hebraico de verdade'
           ].map((t, i, todos) => (
             <li key={t} className="flex items-center gap-2">
@@ -1131,7 +1139,7 @@ function NoCaderno() {
 
 /* ── as dezessete perguntas gerais ──────────────────────────────────────────
    A conferência do fim, sobre a página inteira. Elas usam o mesmo componente
-   da checagem do niqqud: um conceito novo nunca é seguido de "próximo" sem
+   da checagem do nikud: um conceito novo nunca é seguido de "próximo" sem
    uma pergunta no meio, e isso vale em todo o curso - ver
    components/learn/Compreensao.tsx.
 
@@ -1243,11 +1251,11 @@ const PERGUNTAS_GERAIS: ItemCompreensao[] = [
   },
   {
     t: 'escolha',
-    q: 'Por que o curso começa com niqqud e vai tirando os sinais aos poucos?',
+    q: 'Por que o curso começa com nikud e vai tirando os sinais aos poucos?',
     opcoes: [
-      'Porque o niqqud é mais bonito no começo',
+      'Porque o nikud é mais bonito no começo',
       'Porque com os sinais dá para ler sem adivinhar, e o hebraico do dia a dia vem sem eles',
-      'Porque o niqqud só existe em material para criança'
+      'Porque o nikud só existe em material para criança'
     ],
     certa: 1,
     porque: 'Os sinais são o apoio que permite ler antes de conhecer a palavra. Como placa, jornal e mensagem vêm sem eles, o objetivo é você depender cada vez menos do apoio.'

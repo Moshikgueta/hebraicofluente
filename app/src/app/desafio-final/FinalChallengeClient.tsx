@@ -27,9 +27,10 @@ import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePl
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, extras, scenesUpTo, sentencesUpTo } from '@/lib/content';
-import { buildExam, examReport, partsFor, EXAM_PASS, type Exam, type PartResult }
+import { buildExam, examReport, EXAM_PASS, type Exam, type PartResult }
   from '@/lib/engine/exam';
-import { alphabetComplete, lettersLeft, isLessonComplete } from '@/lib/state/rules';
+import { alphabetComplete, isExtraModuleDone, isLessonComplete, isLessonMastered, lettersLeft, REGRA_DO_DOMINIO } from '@/lib/state/rules';
+import { idDoSom } from '@/lib/sons';
 import { track } from '@/lib/analytics';
 
 type Phase =
@@ -95,7 +96,16 @@ export function FinalChallengeClient() {
   }, [phase, attempt, results]);
 
   const letters = allLetters();
-  const ready = letters.filter(l => isLessonComplete(p.state, l.id));
+  /* A régua do exame e do certificado: dominadas, não só concluídas. */
+  const ready = letters.filter(l => isLessonMastered(p.state, l.id));
+  /* Módulos 6 e 7 (CONT-010): o exame abre com as 22 letras dominadas, que é
+     a regra do certificado, e as duas partes que cobram esses módulos ("Sem
+     os pontos" e "Os sons de fora") só entram para quem os fez. */
+  const mod6 = course.modules.find(m => m.n === 6);
+  const mod7 = course.modules.find(m => m.n === 7);
+  const fezMod6 = !mod6 || isExtraModuleDone(p.state, mod6.id);
+  const fezMod7 = !mod7 || (isExtraModuleDone(p.state, mod7.id)
+    && mod7.lessons.every(ls => !ls.som || isLessonComplete(p.state, idDoSom(ls.som))));
   const audio = audioAvailable();
   const scenes = useMemo(() => scenesUpTo(course.totalLetters), []);
   /* Todas as frases do curso: quem chega aqui fechou o alfabeto, então
@@ -105,8 +115,11 @@ export function FinalChallengeClient() {
   /* One exam per attempt. Rebuilt only when the attempt number changes, so
      leaving a part and coming back does not reshuffle the questions. */
   const exam = useMemo(
-    () => buildExam(letters, scenes, { audioAvailable: audio, attempt, sentences, extras: extras() }),
-    [letters, scenes, sentences, audio, attempt]
+    () => buildExam(letters, scenes, {
+      audioAvailable: audio, attempt, sentences,
+      extras: fezMod7 ? extras() : undefined, semPontos: fezMod6
+    }),
+    [letters, scenes, sentences, audio, attempt, fezMod6, fezMod7]
   );
 
   const finishPart = useCallback((r: PlayerResult, index: number) => {
@@ -155,8 +168,9 @@ export function FinalChallengeClient() {
             O teste final ainda está trancado.
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
-            Complete todas as letras para desbloquear o teste final.{' '}
-            {faltam === 1 ? 'Falta 1 letra.' : `Faltam ${faltam} letras.`} Ele mede o
+            Domine as {course.totalLetters} letras para desbloquear o teste final.{' '}
+            {faltam === 1 ? 'Falta dominar 1 letra.' : `Faltam ${faltam} letras para dominar.`}{' '}
+            Dominar é {REGRA_DO_DOMINIO}. Ele mede o
             alfabeto inteiro - feito antes da hora, ele pergunta sobre letras que você
             ainda não viu e o número não diz nada.
           </p>
@@ -304,7 +318,8 @@ export function FinalChallengeClient() {
 
   /* ── the door ─────────────────────────────────────────────────────────── */
   const enough = ready.length >= course.totalLetters;
-  const parts = partsFor(audio);
+  /* O que cai é o que este exame vai cobrar de fato (as partes montadas). */
+  const parts = exam.sections.map(sec => ({ ...sec.part, count: sec.exercises.length }));
   const best = p.state.finalChallenge.best;
 
   return (
@@ -352,15 +367,26 @@ export function FinalChallengeClient() {
         </p>
       )}
 
+      {(!fezMod6 || !fezMod7) && (
+        <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
+          {!fezMod6 && !fezMod7
+            ? 'As partes "Sem os pontos" e "Os sons de fora" entram quando você fizer os módulos 6 e 7. '
+            : !fezMod6
+              ? 'A parte "Sem os pontos" entra quando você fizer o módulo 6. '
+              : 'A parte "Os sons de fora" entra quando você fizer o módulo 7. '}
+          Até lá o exame não cobra o que você ainda não estudou.
+        </p>
+      )}
+
       <Card className="p-6 grid gap-4">
         <ProgressBar
           value={course.totalLetters ? ready.length / course.totalLetters : 0}
-          label="Letras concluídas"
+          label="Letras dominadas"
           sublabel={`${ready.length} / ${course.totalLetters}`}
         />
         <div className="flex flex-wrap gap-2">
           {letters.map(l => (
-            <span key={l.id} className={isLessonComplete(p.state, l.id) ? '' : 'opacity-30'}>
+            <span key={l.id} className={isLessonMastered(p.state, l.id) ? '' : 'opacity-30'}>
               <He size="word">{l.letter}</He>
             </span>
           ))}

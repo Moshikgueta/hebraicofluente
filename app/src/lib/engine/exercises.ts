@@ -23,6 +23,7 @@
 import type { Letter } from '@/lib/content';
 import { nikud, semOSomDe, sentencesUpTo } from '@/lib/content';
 import type { Skill } from '@/lib/state/types';
+import { FIXACAO_ITENS } from '@/lib/state/rules';
 import { ALL_GLYPHS, isReadableWith } from '@/lib/hebrew';
 import { rng, shuffled, type Rand } from './rng';
 import {
@@ -289,7 +290,13 @@ export function assinatura(ex: Exercise): string {
   const pares = ex.kind === 'match'
     ? ex.pairs.map(p => `${p.left}=${p.right}`).sort().join('\u0001')
     : '';
-  return [ex.kind, ex.promptPt, o ? o.join('\u0001') : pares].join('\u0002');
+  /* O que a pergunta MOSTRA além do enunciado: em "Que vogal está escrita
+     aqui?" (opções a/e/i/o/u) e no digitado sem opções, sílabas diferentes
+     tinham a mesma assinatura e eram descartadas como repetidas (auditoria
+     de 01/10/2026, CONT-017). */
+  const x = ex as { he?: string; letter?: string; audioId?: string | null; target?: string };
+  const mostra = [x.he ?? '', x.letter ?? '', x.target ?? '', x.audioId ?? ''].join('\u0001');
+  return [ex.kind, ex.promptPt, o ? o.join('\u0001') : pares, mostra].join('\u0002');
 }
 
 const hasRun = (list: Exercise[]): boolean =>
@@ -710,12 +717,20 @@ export function buildLetterPractice(
      devolve itens que este bloco já tem, então pedir exatamente o que falta
      costuma trazer zero novos - foi o que deixou o Mem com onze. */
   if (out.length < count) {
-    for (const ex of fill([L], history, LESSON_GENERATORS, rand, (count - out.length) * 3 + 6, audioAvailable, 6)) {
-      if (out.length >= count) break;
-      if (seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
-      seen.add(ex.id);
-      ditos.add(assinatura(ex));
-      out.push(ex);
+    /* Gesto NOVO primeiro: desde que a assinatura passou a ver o hebraico
+       (CONT-017), "Que vogal está escrita aqui?" com outra sílaba deixou de
+       ser repetida - e, sem esta ordem, ela tomava o lugar de uma família
+       que o bloco ainda não tinha. */
+    const candidatos = fill([L], history, LESSON_GENERATORS, rand, (count - out.length) * 3 + 6, audioAvailable, 6);
+    for (const soNovos of [true, false]) {
+      for (const ex of candidatos) {
+        if (out.length >= count) break;
+        if (soNovos && out.some(e => e.kind === ex.kind)) continue;
+        if (seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        seen.add(ex.id);
+        ditos.add(assinatura(ex));
+        out.push(ex);
+      }
     }
   }
   /* Ainda curto - acontece nas duas primeiras letras, onde o alfabeto
@@ -780,7 +795,7 @@ export function buildMiniTest(
      falham nas duas: não existe nota entre as duas réguas. E o aluno passa a
      ter dois erros perdoados em vez de um, o que é justo num teste que
      cresceu de seis para dez itens e ganhou três gestos novos. */
-  const { audioAvailable = false, seed = `mini-${L.id}`, count = 10 } = opts;
+  const { audioAvailable = false, seed = `mini-${L.id}`, count = FIXACAO_ITENS } = opts;
   const rand = rng(seed);
   const ctx = contextFor(L, history);
   const out: Exercise[] = [];
