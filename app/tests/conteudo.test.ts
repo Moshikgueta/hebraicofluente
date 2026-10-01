@@ -227,7 +227,10 @@ describe('/api/content só responde a quem pagou', () => {
     /* Sem isto, um cache no caminho entrega a aula de quem pagou para o
        próximo que pedir - e desfaz a rota inteira sem erro nenhum. */
     expect(cache).toContain('private');
-    expect(cache).toContain('no-store');
+    expect(cache).not.toContain('public');
+    /* Desde 01/10/2026 (PERF-008) o navegador do aluno guarda 5 minutos,
+       mas só para o MESMO cookie: outra conta no mesmo aparelho não reusa. */
+    expect(r.headers.get('vary') || '').toContain('Cookie');
   });
 
   it('fecha a porta quando o direito de acesso vence', async () => {

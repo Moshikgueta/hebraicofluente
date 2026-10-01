@@ -29,7 +29,7 @@
  * prova o que RENDERIZA, este teste prova o que a interação pode mostrar.
  */
 
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from '@/components/landing/copy';
 
@@ -189,14 +189,15 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
     expect(barra).not.toMatch(/R\$\s?\d/);
   });
 
-  it('a seção do conteúdo extra não manda visitante para rota paga', () => {
+  it('nenhuma seção da capa manda visitante para rota paga', () => {
     /* /biblia é pública e vira link. /historia é do curso: um link para ela
        numa página de vendas leva a um 302 de login, que é a pior coisa que
-       um botão de landing pode fazer. */
-    const alem = readFileSync(
-      new URL('../src/components/landing/AlemDoAlfabeto.tsx', import.meta.url), 'utf8');
-    expect(alem).toContain('href="/biblia"');
-    expect(alem).not.toContain('href="/historia"');
+       um botão de landing pode fazer. (A seção AlemDoAlfabeto, que era a
+       que tinha esses links, saiu da capa em 30/09/2026.) */
+    const dir = new URL('../src/components/landing/', import.meta.url);
+    for (const f of readdirSync(dir).filter(n => n.endsWith('.tsx'))) {
+      expect(readFileSync(new URL(f, dir), 'utf8'), f).not.toContain('href="/historia"');
+    }
   });
 });
 
