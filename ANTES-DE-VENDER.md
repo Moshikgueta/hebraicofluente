@@ -93,7 +93,11 @@ e dois dentro de uma lição, com a conta que comprou.
 
 **Pronto quando.** O curl devolve 206 e os três clipes tocam no iPhone.
 
-### 1c. Web Analytics da Cloudflare: desligar na zona (auditoria de 28/09, LEGAL-001; reconferido em 01/10/2026)
+### 1c. Web Analytics da Cloudflare: desligar na zona (auditoria de 28/09, LEGAL-001; reconferido em 01/10/2026) - FEITO em 01/10/2026
+
+**Conferido pelo dono em 01/10/2026:** em Analytics → Web Analytics,
+`hebraicofluente.com.br` aparece como **Disabled** (print na conversa). A CSP
+estrita, em vigor desde a mesma data, bloquearia o beacon de qualquer forma.
 
 **O que é.** A Política de Privacidade (art. 4) diz que o site não usa
 "script de terceiros para medir audiência". No repositório isso é verdade:
