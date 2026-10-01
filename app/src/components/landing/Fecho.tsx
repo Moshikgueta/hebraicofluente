@@ -20,6 +20,7 @@
  *   catálogo.
  */
 
+import { PERFIL_LINKEDIN } from '@/lib/professor';
 import Link from 'next/link';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -98,12 +99,21 @@ export function Professor({ retrato }: { retrato: string | null }) {
                                        font-ui text-[14.5px] font-medium text-ink-body">{t}</li>
               ))}
             </ul>
-            <Link href="/sobre"
-                  className="group inline-flex items-center gap-2 font-ui text-[16px] font-semibold text-[var(--teal-ink)]
-                             hover:text-[var(--teal-ink)]">
-              Conheça a minha história
-              <span aria-hidden className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
-            </Link>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Link href="/sobre"
+                    className="group inline-flex items-center gap-2 font-ui text-[16px] font-semibold text-[var(--teal-ink)]
+                               hover:text-[var(--teal-ink)]">
+                Conheça a minha história
+                <span aria-hidden className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
+              </Link>
+              <a href={PERFIL_LINKEDIN} target="_blank" rel="noopener noreferrer me"
+                 className="inline-flex items-center gap-1.5 font-ui text-[16px] font-semibold text-[var(--teal-ink)]
+                            underline underline-offset-[3px] decoration-[1.5px]">
+                Ver meu perfil no LinkedIn
+                <span aria-hidden>↗</span>
+                <span className="sr-only"> (abre em outra aba)</span>
+              </a>
+            </div>
             {/* O crédito ao método de origem fica na capa também: é aqui que
                 ela fala de quem fez o curso. Ver lib/credito.ts. */}
             <p className="mt-6 pt-5 border-t border-[color:var(--line-soft)]
