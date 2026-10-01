@@ -685,3 +685,6 @@ lição, ouvir o áudio, responder (certo e errado) e seguir funcionaram, sem o
 foco voltar ao topo. No Chrome do iPhone o VoiceOver não funcionou bem; a
 Declaração de Acessibilidade recomenda o Safari. Faltam NVDA (computador) e
 TalkBack (Android), e o teste num iPhone com iOS 15 ou 16.
+
+O texto novo da Declaração (art. 4, sobre este teste) foi aprovado pelo dono
+em 01/10/2026.
