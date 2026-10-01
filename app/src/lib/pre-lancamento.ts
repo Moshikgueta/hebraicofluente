@@ -9,9 +9,10 @@
  * publicidade enganosa, e não um esquecimento (auditoria de 01/10/2026,
  * PAY-B-001).
  *
- * A regra de preço NÃO mora aqui: o dono ainda não decidiu o que acontece
- * em 01/11 (subir para listBrl, estender a data, ou tirar os dois). Este
- * módulo só DIZ EM QUE PÉ a data está, e `app/check-legal.mjs` transforma
+ * A regra de preço NÃO mora aqui. Decisão do dono em 01/10/2026: o preço
+ * SOBE para `listBrl` quando o pré-lançamento acaba, e quem faz a virada é
+ * tools/virar-preco.mjs, rodado pelo workflow agendado virar-preco.yml em
+ * 01/11 às 00:05 de Brasília. Este módulo só DIZ EM QUE PÉ a data está, e `app/check-legal.mjs` transforma
  * isso em aviso (faltam 10 dias ou menos) ou em falha (venceu) antes de
  * publicar. O check não monta TypeScript, então ele repete estas linhas, com
  * um comentário apontando para cá; o teste em tests/pre-lancamento.test.ts

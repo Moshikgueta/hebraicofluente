@@ -1,0 +1,78 @@
+# Fim do pré-lançamento: o preço sobe sozinho.
+#
+# Decisão do dono em 01/10/2026: em 01/11/2026 o curso de alfabetização
+# passa de R$ 147 para R$ 297 (data/courses.json, `listBrl`). Este workflow
+# roda às 03:05 UTC de 01/11 (00:05 de Brasília), aplica a virada com
+# tools/virar-preco.mjs, faz o commit em main e dispara a publicação. A
+# página e a cobrança mudam juntas, na mesma publicação.
+#
+# Seguro rodar a qualquer hora: se nenhum pré-lançamento terminou, ele não faz
+# nada. Pode ser disparado à mão (Actions → Virar o preço → Run workflow) se o
+# agendamento atrasar ou falhar; o GitHub manda e-mail ao dono quando falha.
+#
+# Um commit feito com o GITHUB_TOKEN não dispara outros workflows por push;
+# por isso a publicação é chamada explicitamente (workflow_dispatch, que é a
+# exceção permitida).
+
+name: Virar o preço (fim do pré-lançamento)
+
+on:
+  schedule:
+    - cron: '5 3 1 11 *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: virar-preco
+  cancel-in-progress: false
+
+jobs:
+  virar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: main
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      - name: Aplicar a virada
+        id: virada
+        run: |
+          node tools/virar-preco.mjs | tee virada.txt
+          if git diff --quiet -- data/courses.json; then
+            echo "mudou=nao" >> "$GITHUB_OUTPUT"
+          else
+            echo "mudou=sim" >> "$GITHUB_OUTPUT"
+          fi
+          { echo "## Virada do preço"; echo; cat virada.txt; } >> "$GITHUB_STEP_SUMMARY"
+
+      # Os Termos citam o preço: preço novo é versão nova do contrato, e a
+      # publicação exige a cópia fixa dela no repositório (app/versoes.mjs e
+      # app/check-legal.mjs, LEGAL-104). A build a gera em data/politicas-versoes.
+      - name: Gerar a versão nova das políticas
+        if: steps.virada.outputs.mudou == 'sim'
+        run: |
+          npm ci --ignore-scripts
+          (cd app && npm ci)
+          npm run build:platform
+          (cd app && node check-legal.mjs) || true
+
+      - name: Commit em main
+        if: steps.virada.outputs.mudou == 'sim'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/courses.json data/politicas-versoes
+          git commit -m "Fim do pré-lançamento: o preço passa ao valor cheio" -m "$(cat virada.txt)"
+          git push origin HEAD:main
+
+      - name: Publicar
+        if: steps.virada.outputs.mudou == 'sim'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-worker.yml --ref main

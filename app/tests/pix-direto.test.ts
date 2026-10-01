@@ -15,6 +15,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
+import { PIX_CENTAVOS, PIX_TEXTO } from './ajuda/preco';
 
 vi.mock('../../data/empresa.json', () => {
   const real = JSON.parse(readFileSync(new URL('../../data/empresa.json', import.meta.url), 'utf8'));
@@ -74,9 +75,9 @@ describe('PIX direto, do código ao recibo', () => {
     const r = await pay.create({ request: pedido(`${SITE}/api/pay/create`, { courseSlug: 'alfabetizacao', method: 'pix', amount: 1 }, { Cookie: cookie }), env, ctx });
     expect(r.status).toBe(200);
     const ordem = await r.json() as { id: string; status: string; amountCents: number; pix: { code: string } };
-    expect(ordem).toMatchObject({ status: 'pending', amountCents: 13230 });
+    expect(ordem).toMatchObject({ status: 'pending', amountCents: PIX_CENTAVOS });
     expect(confereBrCode(ordem.pix.code).ok, 'BR Code inválido').toBe(true);
-    expect(ordem.pix.code).toContain('132.30');
+    expect(ordem.pix.code).toContain(PIX_TEXTO);
     expect(chamadas, 'o PIX direto chamou a rede').toEqual([]);
 
     /* A tela consulta e recebe o que está gravado, sem perguntar a ninguém. */

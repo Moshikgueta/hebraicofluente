@@ -287,7 +287,8 @@ echo "Cobrança"
 # Duas situações legítimas, e a checagem se adapta:
 #
 #   · MP_ACCESS_TOKEN configurado → o pedido nasce, e o valor tem de ser o do
-#     catálogo: R$147 com 10% de desconto no PIX = 13230 centavos. É a prova de
+#     catálogo, no PIX, com o desconto (lido de data/courses.json: o preço
+#     muda sozinho no fim do pré-lançamento). É a prova de
 #     que o preço sai do servidor e não do navegador.
 #   · sem token → 503 `payments-off`, e NENHUM pedido é criado. Também é o
 #     comportamento certo: um pendente que nunca vai compensar é pior do que
@@ -356,7 +357,11 @@ case "$pay_code" in
       "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
     ;;
   *)
-    espera "o pedido ficou registrado com o preço do servidor" 13230 \
+    espera "o pedido ficou registrado com o preço do servidor" \
+      "$(node -e '
+        const c = require(process.argv[1]).courses.find(x => x.slug === "alfabetizacao").price;
+        console.log(Math.round(c.brl * (1 - c.pixDiscountPct / 100) * 100));' \
+        "$(cd "$(dirname "$0")/.." && pwd)/data/courses.json")" \
       "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
     ;;
 esac
