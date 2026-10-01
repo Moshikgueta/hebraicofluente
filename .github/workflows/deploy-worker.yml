@@ -599,7 +599,7 @@ jobs:
           ALVO="SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'"
           # O wrangler do lockfile da raiz (SEC-A-009); o npx, na mesma versão,
           # só se a publicação caiu antes de instalá-lo.
-          W="npx --yes wrangler@4.135.0"
+          W="npx --yes wrangler@4.146.0"
           [ -x node_modules/.bin/wrangler ] && W="node_modules/.bin/wrangler"
           # `email_verifications`, `registros_acesso` e `arrependimentos` apontam
           # para `accounts` (e `arrependimentos` e `estornos` para `orders`) e precisam sair
