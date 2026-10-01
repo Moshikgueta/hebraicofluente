@@ -5,61 +5,61 @@
   "אִמָּא": {
    "pt": "mãe",
    "image": "/media/vocabulario/mae-37f8403f.webp",
-   "imageAlt": "Uma mulher adulta sorrindo, de mãos dadas com uma criança pequena.",
+   "imageAlt": "Uma mulher adulta sorrindo, caminhando de mãos dadas com uma criança pequena.",
    "imagePrompt": "a mother holding the hand of a small child, both smiling"
   },
   "מַיִם": {
    "pt": "água",
-   "image": null,
+   "image": "/media/vocabulario/agua-03ebfa20.webp",
    "imageAlt": "Um copo transparente cheio de água, com uma gota caindo.",
    "imagePrompt": "a clear glass full of water with a single drop falling into it"
   },
   "מִשְׁפָּחָה": {
    "pt": "família",
-   "image": null,
-   "imageAlt": "Quatro pessoas de idades diferentes, lado a lado, abraçadas.",
+   "image": "/media/vocabulario/familia-aa94fd63.webp",
+   "imageAlt": "Pai, mãe e dois filhos, lado a lado, abraçados.",
    "imagePrompt": "a family of four of different ages standing side by side, arms around each other"
   },
   "מֶלֶךְ": {
    "pt": "rei",
-   "image": null,
+   "image": "/media/vocabulario/rei-e0dfa466.webp",
    "imageAlt": "Uma coroa dourada simples sobre uma almofada.",
    "imagePrompt": "a simple golden crown resting on a cushion"
   },
   "תֵּה": {
    "pt": "chá",
-   "image": null,
+   "image": "/media/vocabulario/cha-0916c752.webp",
    "imageAlt": "Uma xícara de chá fumegante com um saquinho pendurado.",
    "imagePrompt": "a steaming cup of tea with a tea bag tag hanging over the rim"
   },
   "תַּפּוּחַ": {
    "pt": "maçã",
-   "image": null,
+   "image": "/media/vocabulario/maca-485e6651.webp",
    "imageAlt": "Uma maçã vermelha com uma folha no cabo.",
    "imagePrompt": "a single red apple with one leaf on the stem"
   },
   "חַלּוֹן": {
    "pt": "janela",
-   "image": null,
-   "imageAlt": "Uma janela aberta com cortina leve e céu ao fundo.",
+   "image": "/media/vocabulario/janela-62a441d7.webp",
+   "imageAlt": "Uma janela aberta, com venezianas verdes, mostrando árvores e céu azul.",
    "imagePrompt": "an open window with a light curtain and sky behind it"
   },
   "יָם": {
    "pt": "mar",
-   "image": null,
+   "image": "/media/vocabulario/mar-da0d8526.webp",
    "imageAlt": "Ondas do mar sob um céu claro, com a linha do horizonte.",
    "imagePrompt": "gentle sea waves under a clear sky, horizon line visible"
   },
   "יַלְדָּה": {
    "pt": "menina",
-   "image": null,
-   "imageAlt": "Uma menina de uns oito anos, de mochila, acenando.",
+   "image": "/media/vocabulario/menina-b8552895.webp",
+   "imageAlt": "Uma menina de cabelo comprido e vestido amarelo, sorrindo.",
    "imagePrompt": "a girl about eight years old wearing a backpack, waving"
   },
   "גַּן": {
    "pt": "jardim · jardim de infância",
-   "image": null,
-   "imageAlt": "Um pequeno jardim com flores e um banco.",
+   "image": "/media/vocabulario/jardim-jardim-de-infancia-ea469b09.webp",
+   "imageAlt": "Um parquinho com árvore, escorregador, balanço e caixa de areia.",
    "imagePrompt": "a small garden with flowers and a wooden bench"
   },
   "גַּג": {
