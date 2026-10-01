@@ -28,6 +28,7 @@ import {
   clearLegacyCookie, clearSessionCookie, makeSessionCookie, readSession
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
+import { nomeSeguro } from '../lib/nome.js';
 import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelhos.js';
 import empresa from '../../../data/empresa.json';
 import {
@@ -279,7 +280,10 @@ async function enviarConfirmacao(env, ctx, request, account) {
 
   const site = siteOrigin(env, request);
   const msg = mensagemDeConfirmacao({
-    nome: account.name || '',
+    /* Sem nome, sempre: este e-mail vai a um endereço que ainda não provou
+       ser de quem criou a conta, e o nome é escrito por quem a criou
+       (SEC-A-003, lib/nome.js). */
+    nome: '',
     link: `${site}/confirmar-email/?token=${encodeURIComponent(token)}`,
     dias: VERIFY_TTL_DIAS,
     esqueci: `${site}/esqueci-senha/`,
@@ -311,7 +315,11 @@ export async function signup({ request, env, ctx }) {
 
   const email = normalizeEmail(body.email);
   const password = body.password;
-  const name = String(body.name || '').trim();
+  /* Um nome que não é nome (link, domínio, dígitos, um parágrafo) não é
+     recusado: a conta nasce sem nome, e a tela mostra o e-mail. Recusar
+     poria um erro na frente de quem só quer estudar; guardar poria o texto
+     num e-mail do nosso domínio (SEC-A-003, lib/nome.js). */
+  const name = nomeSeguro(body.name);
 
   if (!emailOk(email)) return fail('invalid-email');
   if (password.length < MIN_PASSWORD || password.length > 1024) return fail('weak-password');
@@ -595,15 +603,18 @@ export async function forgot({ request, env, ctx }) {
   });
 
   const link = `${siteOrigin(env, request)}/nova-senha/?token=${encodeURIComponent(token)}`;
-  const msg = mensagemDeRecuperacao({
-    nome: account.name || '',
-    link,
-    minutos: RESET_TTL_MIN,
-    marca: 'Hebraico Fluente',
-    suporte: env.SUPPORT_EMAIL || ''
-  });
-
   const entregar = async () => {
+    const msg = mensagemDeRecuperacao({
+      /* O nome só com o e-mail já confirmado: antes disso, quem o escreveu
+         pode não ser a dona do endereço que recebe (SEC-A-003). A consulta
+         fica aqui dentro, fora do caminho da resposta, para o relógio não
+         ganhar uma consulta a mais só quando a conta existe. */
+      nome: await emailVerified(env, account.id, account.email) === true ? account.name || '' : '',
+      link,
+      minutos: RESET_TTL_MIN,
+      marca: 'Hebraico Fluente',
+      suporte: env.SUPPORT_EMAIL || ''
+    });
     const r = await sendMail(env, { to: account.email, ...msg });
     /* O resultado vai para a trilha nos dois casos. "A pessoa diz que não
        recebeu" é a pergunta mais comum deste fluxo, e sem este registro a

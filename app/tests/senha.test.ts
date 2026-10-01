@@ -400,7 +400,9 @@ describe('a mensagem', () => {
     expect(m.text).toContain('https://hebraicofluente.com.br/nova-senha/?token=abc');
     expect(m.text).toContain('60 minutos');
     expect(m.html).not.toContain('<script>');
-    expect(m.html).toContain('&lt;script&gt;');
+    /* Um "nome" com marcação nem chega ao texto: vira "Oi." (SEC-A-003). */
+    expect(m.text.startsWith('Oi.\n')).toBe(true);
+    expect(m.html).not.toContain('script');
   });
 
   it('funciona sem nome - conta criada sem preencher o campo', () => {

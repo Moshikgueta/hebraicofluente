@@ -28,6 +28,8 @@
  *    `html` mínimo, o mesmo conteúdo nos dois.
  */
 
+import { nomeSeguro } from './nome.js';
+
 /**
  * O remetente. Fica em [vars] do wrangler.toml, não é segredo, e precisa ser
  * de um domínio verificado na Resend - senão ela recusa a entrega com 403.
@@ -124,7 +126,7 @@ export async function sendMail(env, { to, subject, text, html }) {
  * ninguém a decidir se clica agora ou depois do jantar.
  */
 export function mensagemDeRecuperacao({ nome, link, minutos, marca, suporte }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
 
   const text = [
@@ -177,7 +179,7 @@ export function mensagemDeRecuperacao({ nome, link, minutos, marca, suporte }) {
  * confirma nada - a tela pede login, e ela não tem a senha.
  */
 export function mensagemDeConfirmacao({ nome, link, dias, esqueci, marca, suporte }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
 
   const text = [
@@ -232,7 +234,10 @@ export function mensagemDeConfirmacao({ nome, link, dias, esqueci, marca, suport
  * endereço o aviso não serve para nada. É o único e-mail nosso que carrega
  * endereço de cliente, e vai para um destinatário só.
  */
-export function mensagemDeConvitePendente({ email, nome, cursos, marca, painel }) {
+export function mensagemDeConvitePendente({ email, nome: cru, cursos, marca, painel }) {
+  /* Mesmo indo ao dono, o nome passa pelo filtro: é texto escolhido por
+     quem se cadastrou, dentro de um e-mail do nosso domínio. */
+  const nome = nomeSeguro(cru);
   const assinatura = marca || 'Hebraico Fluente';
   const lista = (cursos || []).join(', ');
 
@@ -304,7 +309,7 @@ export function mensagemDeCompra({
   nome, curso, valor, pedido, expiraEm, link, marca, suporte, arrependimentoDias, renovacao,
   termos, reembolso, versao, desistir
 }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   /* "ao CURSO X", e não "ao X": o título vem do catálogo e pode começar com
      palavra de qualquer gênero - "ao Alfabetização em Hebraico" não é
@@ -408,7 +413,7 @@ export function mensagemDeCompra({
 export function mensagemDeArrependimento({
   nome, curso, valor, pedido, pedidoEm, prazoUteis, cartao, marca, suporte, estornoPedido = false
 }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   /* `estornoPedido`: o site já pediu a devolução à Mercado Pago, e a
      Mercado Pago aceitou. Só então o e-mail pode dizer isso. */
@@ -553,6 +558,14 @@ export function reaisBR(centavos, moeda = 'BRL') {
   const v = Number(centavos || 0) / 100;
   const n = v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   return moeda === 'BRL' ? `R$ ${n}` : `${n} ${moeda}`;
+}
+
+/* "Oi, Ana." só com um nome que é nome (lib/nome.js, SEC-A-003); qualquer
+   outra coisa vira "Oi." - o campo é escrito por quem cria a conta, e o
+   e-mail sai assinado pelo nosso domínio. */
+function saudacao(nome) {
+  const n = nomeSeguro(nome);
+  return n ? `Oi, ${n}.` : 'Oi.';
 }
 
 /** O nome do aluno entra no HTML. Um nome com `<` não pode virar marcação. */

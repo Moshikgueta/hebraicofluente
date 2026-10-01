@@ -97,7 +97,10 @@ describe('o e-mail de confirmação', () => {
     const m = enviados.find(e => e.subject.startsWith('Confirme'))!;
     expect(m.to).toBe('aluna@exemplo.com.br');
     expect(m.subject).toBe('Confirme seu e-mail - Hebraico Fluente');
-    expect(m.text).toContain('Oi, Débora.');
+    /* Sem o nome: o endereço ainda não provou ser de quem escreveu o nome
+       (SEC-A-003, tests/nome-nos-emails.test.ts). */
+    expect(m.text.startsWith('Oi.\n')).toBe(true);
+    expect(m.text).not.toContain('Débora');
     expect(m.text).toContain(`${SITE}/confirmar-email/?token=`);
     expect(m.text).toContain('O link vale por 7 dias');
   });
