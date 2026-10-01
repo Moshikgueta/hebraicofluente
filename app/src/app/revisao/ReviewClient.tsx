@@ -28,9 +28,15 @@ export function ReviewClient() {
 
   /* Only letters whose lesson is done can be reviewed: reviewing a letter the
      learner has not met yet is a test, not a review. */
+  /* Também entra a letra que já tem item na fila da revisão, mesmo com a
+     primeira etapa por fechar: o painel conta esses itens (`dueCount`) e o
+     selo dourado leva até aqui; sem elas, a página dizia "Ainda não há o que
+     revisar" com "5 a revisar" no painel (auditoria de 01/10/2026, VIS-004). */
   const learned = useMemo(
-    () => allLetters().filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0),
-    [p.state.lessons]
+    () => allLetters().filter(l =>
+      (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0
+      || Object.values(p.state.srs).some(i => i.letterId === l.id)),
+    [p.state.lessons, p.state.srs]
   );
   const due = useMemo(() => dueItems(p.state, p.day), [p.state, p.day]);
 

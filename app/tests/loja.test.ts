@@ -12,7 +12,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { comprar, fundirCompras, folgasLivres, ITENS, saldo, cartasCompradas, leiturasCompradas } from '@/lib/loja';
 import { itemDaLeitura, leiturasPublicadas, type GuiaNikud, type LeituraBonus } from '@/lib/engine/bonus';
-import { applyPractice, concluidasSemDominio, displayStreak, goalTarget, lettersMastered } from '@/lib/state/rules';
+import { applyPractice, concluidasSemDominio, displayStreak, goalTarget, lettersMastered, REGRA_DO_DOMINIO } from '@/lib/state/rules';
 import { mergeStates } from '@/lib/state/merge';
 import { migrate } from '@/lib/state/migrate';
 import { EMPTY_STATE, type LearnerState } from '@/lib/state/types';
@@ -161,10 +161,10 @@ describe('o guia do nikud bíblico', () => {
 });
 
 /* 30/09/2026: as leituras bônus se trocam a qualquer momento; a tela diz
-   quantas letras o aluno domina e quantas concluiu sem chegar a 6 de 8. */
+   quantas letras o aluno domina e quantas concluiu sem chegar ao domínio (8 de 10). */
 describe('o que falta para abrir uma leitura', () => {
   const licao = (quizBest: number) => ({ stagesDone: [0, 1, 2, 3, 4], quizBest }) as LearnerState['lessons'][string];
-  it('conta só as letras concluídas abaixo de 6 de 8, sem as lições de som', () => {
+  it('conta só as letras concluídas abaixo do domínio, sem as lições de som', () => {
     const s = com(0, { lessons: {
       alef: licao(1), bet: licao(0.5), gimel: licao(0.75),
       dalet: { ...licao(1), stagesDone: [0, 1] }, 'som-vet': licao(0.2)
@@ -177,7 +177,10 @@ describe('o que falta para abrir uma leitura', () => {
     const f = readFileSync(join(__dirname, '../src/app/loja/LojaClient.tsx'), 'utf8');
     expect(f).toContain('Você pode trocar qualquer leitura agora.');
     expect(f).toContain('Você domina <strong>{mastered} de {totalLetras} letras</strong>');
-    expect(f).toContain('acertar pelo menos 6 de 8 na fixação');
+    /* A regra sai das constantes (UXQA-005): nada de "6 de 8" escrito à mão. */
+    expect(f).toContain('Dominar uma letra é {REGRA_DO_DOMINIO}.');
+    expect(f).not.toContain('6 de 8');
+    expect(REGRA_DO_DOMINIO).toBe('concluir as 5 etapas da lição e acertar pelo menos 8 de 10 na fixação');
     /* O botão só se desliga por saldo, nunca pelas letras. */
     expect(f).toContain('disabled={livre < custo}');
     expect(f).not.toContain('disabled={!legivel');

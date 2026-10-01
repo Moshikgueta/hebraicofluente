@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import { He, HeSeq } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
+import { somPt } from '@/lib/som-pt';
 import { AudioButton } from './AudioButton';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -302,7 +303,11 @@ export function HebrewLetterCard({ letter }: { letter: Letter }) {
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           <h1 className="text-[28px] sm:text-[34px] font-bold">{letter.namePt}</h1>
-          <span className="font-ui text-[17px] text-[var(--accent)] font-semibold">{letter.sound}</span>
+          {/* O som em português; o IPA fica como detalhe (CONT-003). */}
+          <span className="font-ui text-[17px] text-[var(--accent)] font-semibold">{somPt(letter.sound)}</span>
+          <span className="font-ui text-[12px] text-ink-muted" title="Transcrição fonética (IPA)">
+            {letter.sound.startsWith('/') ? `IPA ${letter.sound}` : null}
+          </span>
           <He size="word" dim>{letter.nameHe}</He>
         </div>
       </div>

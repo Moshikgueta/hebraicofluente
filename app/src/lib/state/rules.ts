@@ -218,13 +218,28 @@ export function recordQuiz(
  * muda é o que CONTA:
  *
  *   · concluir  - as cinco etapas, sem nota. Libera a próxima letra.
- *   · dominar   - as cinco etapas E 6 de 8 na fixação, em QUALQUER tentativa.
+ *   · dominar   - as cinco etapas E 75% na fixação (8 de 10), em QUALQUER tentativa.
  *                 É isto que alimenta a barra, as conquistas e o exame final.
  *
  * "Qualquer tentativa" importa: refazer gera outras perguntas (outra semente),
  * então melhorar é aprender, não decorar o gabarito.
  */
 export const MASTERY_MARK = 0.75;
+
+/** Quantas perguntas a fixação tem (buildMiniTest). Um número, num lugar só:
+ *  toda frase que diz "N de M" sai daqui (auditoria de 01/10/2026, UXQA-005). */
+export const FIXACAO_ITENS = 10;
+
+/** Quantos acertos de `FIXACAO_ITENS` uma nota pede: 75% de 10 são 8. */
+export const acertosPara = (marca: number, total: number = FIXACAO_ITENS): number =>
+  Math.ceil(marca * total - 1e-9);
+
+/** "8 de 10", derivado das constantes. */
+export const REGRA_DO_DOMINIO_CURTA = `${acertosPara(MASTERY_MARK)} de ${FIXACAO_ITENS}`;
+
+/** A regra inteira, para a tela dizer o que "dominar" quer dizer. */
+export const REGRA_DO_DOMINIO =
+  `concluir as ${STAGE_COUNT} etapas da lição e acertar pelo menos ${REGRA_DO_DOMINIO_CURTA} na fixação`;
 
 export const isLessonComplete = (state: LearnerState, letterId: string): boolean =>
   (state.lessons[letterId]?.stagesDone.length ?? 0) >= STAGE_COUNT;
@@ -245,7 +260,7 @@ export const ehLicaoDeSom = (id: string) => id.startsWith(SOM_PREFIXO);
 export const lettersMastered = (state: LearnerState): number =>
   Object.keys(state.lessons).filter(id => !ehLicaoDeSom(id) && isLessonMastered(state, id)).length;
 
-/** As letras concluídas que ainda não chegaram a 6 de 8 na fixação: o que
+/** As letras concluídas que ainda não chegaram ao domínio na fixação: o que
  *  falta a quem "já fez tudo" e mesmo assim não vê a leitura bônus abrir. */
 export const concluidasSemDominio = (state: LearnerState): number =>
   Object.keys(state.lessons)

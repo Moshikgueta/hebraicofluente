@@ -4,150 +4,202 @@ Cinco textos curtos de leitura corrida, um por módulo (do 3 ao 7), escritos par
 São as únicas frases do curso que não vieram do material de origem. Por isso **nenhum aparece para o aluno
 até ser aprovado** por alguém que fala hebraico.
 
-**Como aprovar:** em `data/textos.json`, mude `"revisado": false` para `"revisado": true` no texto aprovado
-(ou me diga quais aprovar e o que corrigir). Cada texto usa só as letras que o aluno já conhece naquele módulo.
+**Situação em 01/10/2026: aguardando re-aprovação do dono.** Os cinco textos foram aprovados em 25/09/2026
+e reescritos por inteiro em 27/09/2026 (viraram conversas), mantendo `"revisado": true` em `data/textos.json`.
+Este documento descrevia os textos antigos; agora traz os textos ATUAIS, gerados do próprio `data/textos.json`.
+O campo `revisado` não foi mudado (mudar para `false` esconderia os textos de quem já os lê). Peço que o dono
+leia os cinco abaixo e confirme, ou diga o que corrigir (auditoria de 01/10/2026, CONT-009).
 
 **O que conferir em cada texto:** a gramática e a naturalidade das frases, a pontuação (nikud), a transliteração
 e a tradução, e se as palavras novas fazem sentido para o nível.
 
-Girafa: o curso escrevia `ג׳ירף`; corrigido para `ג׳ירפה` em 25/09/2026, no módulo 7 e na missão do módulo 7.
+Mudança de 01/10/2026 no texto do módulo 4, pergunta 4 (o curso fica no presente): "A Noa queria ficar mais um dia."
+passou a "A Noa quer ficar mais um dia.", e a explicação diz "quero mais um dia!".
 
-## Módulo 3 · O bilhete na geladeira
-*Bilhete*
+## Módulo 3 · Tem pão?
+*Conversa no WhatsApp*
 
-| Hebraico | Transliteração | Tradução |
-|---|---|---|
-| שָׁלוֹם, דָּנָה! | shalom, Dana! | Olá, Dana! |
-| הַיּוֹם יוֹם גָּדוֹל! | hayom yom gadol! | Hoje é um grande dia! |
-| הַלֶּחֶם טָרִי, וְהַתֵּה חַם. | haléchem tari, vehate cham. | O pão está fresco, e o chá está quente. |
-| הַיֶּלֶד יָשֵׁן. | hayéled yashen. | O menino está dormindo. |
-| אִמָּא | imá | Mamãe |
+Dana acorda, a casa está em silêncio, e ela manda uma mensagem para a mãe, que já saiu. É a primeira conversa que você lê inteira em hebraico.
+
+| Quem | Hebraico | Transliteração | Tradução |
+|---|---|---|---|
+| Dana | אִמָּא, יֵשׁ לֶחֶם? | imá, yesh léchem? | Mãe, tem pão? |
+| Mãe | יֵשׁ לֶחֶם טָרִי, וְיֵשׁ גַּם תֵּה חַם. | yesh léchem tari, veyesh gam te cham. | Tem pão fresco, e tem chá quente também. |
+| Dana | תּוֹדָה! וְיוֹנָתָן? | todá! veYonatan? | Obrigada! E o Yonatan? |
+| Mãe | הוּא יָשֵׁן. | hu yashen. | Ele está dormindo. |
 
 **Palavras novas** (fora do vocabulário do curso):
 
 - דָּנָה · Dana · Dana (nome)
+- יוֹנָתָן · Yonatan · Yonatan (nome)
+- גַּם · gam · também
 - חַם · cham · quente
 - יָשֵׁן · yashen · dorme, está dormindo
-- הַ־ · ha- · o, a (o artigo, grudado na palavra)
 - וְ־ · ve- · e (grudado na palavra)
 
 **Perguntas de compreensão:**
 
-- Quem escreveu o bilhete? A Dana / **A mãe** / O menino
+- O que a Dana pergunta primeiro? **Se tem pão** / Se tem chá / Onde está o Yonatan
+  - porquê: {{אִמָּא, יֵשׁ לֶחֶם?}}: mãe, tem pão?
 - (V/F) O chá está frio. → **Falso**
-- O que o menino está fazendo? Tomando chá / Comprando pão / **Dormindo**
+  - porquê: {{חַם}} é quente: o chá está quente.
+- O que o Yonatan está fazendo? Tomando chá / Comendo pão / **Dormindo**
+  - porquê: {{הוּא יָשֵׁן}}: ele está dormindo.
 - (V/F) O pão é fresco. → **Verdadeiro**
+  - porquê: {{טָרִי}} é fresco.
 
-Status: aprovado em 25/09/2026
+Status: aprovado em 25/09/2026 (versão anterior); versão atual de 27/09/2026 aguardando re-aprovação do dono.
 
 ## Módulo 4 · Uma mensagem da montanha
-*Mensagem de WhatsApp*
+*Conversa no WhatsApp*
 
-| Hebraico | Transliteração | Tradução |
-|---|---|---|
-| שָׁלוֹם, דָּן! מָה נִשְׁמַע? | shalom, Dan! ma nishma? | Oi, Dan! Tudo bem? |
-| אֲנִי עַל הָהָר. | aní al hahar. | Estou na montanha. |
-| אֵיזֶה שֶׁקֶט! | eize shéket! | Que silêncio! |
-| הַנָּהָר קַר. | hanahar kar. | O rio está frio. |
-| אֲנִי רוֹצָה עוֹד יוֹם! | aní rotsá od yom! | Quero mais um dia! |
-| נוֹעָה | Noa | Noa |
+A Noa foi passar uns dias na montanha, e o Dan manda uma mensagem para saber como ela está.
+
+| Quem | Hebraico | Transliteração | Tradução |
+|---|---|---|---|
+| Dan | הַי נוֹעָה, מָה נִשְׁמָע? | hai Noa, ma nishmá? | Oi, Noa, tudo bem? |
+| Noa | מְעוּלֶה! אֲנִי עַל הָהָר. | meulé! aní al hahar. | Ótimo! Estou na montanha. |
+| Dan | קַר שָׁם? | kar sham? | Está frio aí? |
+| Noa | קְצָת. אֲנִי עִם תֵּה חַם. | ktsat. aní im te cham. | Um pouco. Estou com um chá quente. |
+| Dan | מָתַי אַתְּ חוֹזֶרֶת? | matai at chozéret? | Quando você volta? |
+| Noa | מָחָר. אֲנִי רוֹצָה עוֹד יוֹם! | machar. aní rotsá od yom! | Amanhã. Quero mais um dia! |
 
 **Palavras novas** (fora do vocabulário do curso):
 
-- דָּן · Dan · Dan (nome)
 - נוֹעָה · Noa · Noa (nome)
-- מָה נִשְׁמַע? · ma nishma? · tudo bem? (literalmente, "o que se ouve?")
-- אֵיזֶה · eize · que...! (numa exclamação)
+- דָּן · Dan · Dan (nome)
+- הַי · hai · oi
+- מָה נִשְׁמָע? · ma nishmá? · tudo bem? (o que se ouve?)
+- מְעוּלֶה · meulé · ótimo
 - קַר · kar · frio
-- רוֹצָה · rotsá · quer (no feminino; {{רוֹצֶה}} é o masculino)
+- שָׁם · sham · lá, aí
+- קְצָת · ktsat · um pouco
+- חוֹזֶרֶת · chozéret · volta (ela volta)
+- מָחָר · machar · amanhã
+- עוֹד · od · mais, ainda
 
 **Perguntas de compreensão:**
 
-- Onde a Noa está? **Na montanha** / No mercado / Em casa
-- (V/F) Lá é barulhento. → **Falso**
-- Como está o rio? Quente / Grande / **Frio**
+- Onde a Noa está? Em casa / **Na montanha** / No mar
+  - porquê: {{אֲנִי עַל הָהָר}}: estou na montanha.
+- (V/F) Está muito frio na montanha. → **Falso**
+  - porquê: {{קְצָת}}: só um pouco.
+- Quando ela volta? Hoje / **Amanhã** / Daqui a uma semana
+  - porquê: {{מָחָר}} é amanhã.
 - (V/F) A Noa quer ficar mais um dia. → **Verdadeiro**
+  - porquê: {{אֲנִי רוֹצָה עוֹד יוֹם!}}: quero mais um dia!
 
-Status: aprovado em 25/09/2026
+Status: aprovado em 25/09/2026 (versão anterior); versão atual de 27/09/2026 aguardando re-aprovação do dono.
 
 ## Módulo 5 · Sábado de manhã
-*Mensagem no grupo da família*
+*Grupo da família no WhatsApp*
 
-| Hebraico | Transliteração | Tradução |
-|---|---|---|
-| בֹּקֶר טוֹב, מִשְׁפָּחָה! | bóker tov, mishpachá! | Bom dia, família! |
-| הַיּוֹם שַׁבָּת. | hayom shabat. | Hoje é sábado. |
-| אִמָּא בַּגַּן, וְהַכֶּלֶב רוֹצֶה לָלֶכֶת. | imá bagan, vehakélev rotsé laléchet. | A mãe está no jardim, e o cachorro quer passear. |
-| יֵשׁ קָפֶה וְלֶחֶם טָרִי. | yesh kafé veléchem tari. | Tem café e pão fresco. |
-| מִי בָּא? | mi ba? | Quem vem? |
-| אַבָּא | abá | Papai |
+Sábado de manhã, cada um num canto da casa, e o pai escreve no grupo da família.
+
+| Quem | Hebraico | Transliteração | Tradução |
+|---|---|---|---|
+| Pai | בֹּקֶר טוֹב! מִי רוֹצֶה קָפֶה? | bóker tov! mi rotsé kafé? | Bom dia! Quem quer café? |
+| Dana | אֲנִי! | aní! | Eu! |
+| Mãe | גַּם אֲנִי. אֲנִי בַּגַּן. | gam aní. aní bagan. | Eu também. Estou no jardim. |
+| Yonatan | הַכֶּלֶב רוֹצֶה לָצֵאת! | hakélev rotsé latset! | O cachorro quer sair! |
+| Pai | אֲנִי בָּא. שַׁבָּת שָׁלוֹם! | aní ba. shabat shalom! | Já vou. Shabat shalom! |
 
 **Palavras novas** (fora do vocabulário do curso):
 
+- קָפֶה · kafé · café
 - בַּ־ · ba- · no, na (grudado na palavra)
-- יֵשׁ · yesh · tem, há
-- בָּא · ba · vem
+- לָצֵאת · latset · sair
+- בָּא · ba · vem, está vindo
+- שַׁבָּת שָׁלוֹם · shabat shalom · bom sábado (a saudação do sábado)
 
 **Perguntas de compreensão:**
 
-- Que dia é hoje? Domingo / **Sábado** / Segunda-feira
-- Onde está a mãe? **No jardim** / Em casa / Na rua
-- (V/F) O cachorro quer dormir. → **Falso**
-- Quem mandou a mensagem? A mãe / O cachorro / **O pai**
+- Quem oferece café? **O pai** / A mãe / A Dana
+  - porquê: É o pai quem pergunta {{מִי רוֹצֶה קָפֶה?}}
+- Onde a mãe está? Na cozinha / **No jardim** / Na rua
+  - porquê: {{אֲנִי בַּגַּן}}: estou no jardim.
+- (V/F) O cachorro quer sair. → **Verdadeiro**
+  - porquê: {{הַכֶּלֶב רוֹצֶה לָצֵאת!}}
+- (V/F) A conversa é num dia de semana. → **Falso**
+  - porquê: {{שַׁבָּת שָׁלוֹם}}: é sábado.
 
-Status: aprovado em 25/09/2026
+Status: aprovado em 25/09/2026 (versão anterior); versão atual de 27/09/2026 aguardando re-aprovação do dono.
 
 ## Módulo 6 · A caminho de casa
-*Mensagem sem pontinhos* · mostrado **sem nikud** ao aluno
+*Conversa no WhatsApp* · aparece sem nikud para o aluno
 
-| Hebraico | Transliteração | Tradução |
-|---|---|---|
-| שָׁלוֹם, דָּנִי! | shalom, Dani! | Oi, Dani! |
-| אֲנִי בַּדֶּרֶךְ הַבַּיְתָה. | aní badérech habáyta. | Estou a caminho de casa. |
-| יֵשׁ לִי סֵפֶר חָדָשׁ. | yesh li séfer chadash. | Tenho um livro novo. |
-| אַתָּה בַּבַּיִת? | atá babáyit? | Você está em casa? |
-| לַיְלָה טוֹב! | láila tov! | Boa noite! |
+O Dani está voltando para casa, e a mãe manda mensagem. Como toda mensagem de verdade, chega sem os pontos das vogais.
+
+| Quem | Hebraico | Transliteração | Tradução |
+|---|---|---|---|
+| Mãe | דָּנִי, אֵיפֹה אַתָּה? | Dani, eifo atá? | Dani, onde você está? |
+| Dani | בַּדֶּרֶךְ הַבַּיְתָה. | badérech habáyta. | A caminho de casa. |
+| Mãe | יֵשׁ לְךָ מַפְתֵּחַ? | yesh lechá maftéach? | Você está com a chave? |
+| Dani | כֵּן. אֲנִי בַּבַּיִת בְּעוֹד עֶשֶׂר דַּקּוֹת. | ken. aní babáyit beod ésser dakot. | Sim. Chego em casa em dez minutos. |
+| Mãe | מְעוּלֶה. יֵשׁ אֹכֶל בַּמְּקָרֵר. | meulé. yesh óchel bamekarer. | Ótimo. Tem comida na geladeira. |
+| Dani | תּוֹדָה, אִמָּא! | todá, imá! | Obrigado, mãe! |
 
 **Palavras novas** (fora do vocabulário do curso):
 
 - דָּנִי · Dani · Dani (nome)
-- הַבַּיְתָה · habáyta · para casa
-- יֵשׁ לִי · yesh li · eu tenho
+- אֵיפֹה · eifo · onde
+- בַּדֶּרֶךְ הַבַּיְתָה · badérech habáyta · a caminho de casa
+- יֵשׁ לְךָ · yesh lechá · você tem
+- מַפְתֵּחַ · maftéach · chave
+- בְּעוֹד · beod · daqui a, em (tempo)
+- עֶשֶׂר · ésser · dez
+- דַּקּוֹת · dakot · minutos
+- אֹכֶל · óchel · comida
+- מְקָרֵר · mekarer · geladeira
 
 **Perguntas de compreensão:**
 
-- Para onde a pessoa está indo? Para a livraria / **Para casa** / Para o mercado
-- (V/F) Ela tem um livro novo. → **Verdadeiro**
-- O que ela pergunta ao Dani? **Se ele está em casa** / Se ele tem dinheiro / Que horas são
-- (V/F) A mensagem foi mandada de manhã. → **Falso**
+- O que a mãe pergunta primeiro? **Onde o Dani está** / Se ele está com fome / Quando ele sai
+  - porquê: {{אֵיפֹה אַתָּה?}}: onde você está?
+- Em quanto tempo o Dani chega? Dois minutos / **Dez minutos** / Uma hora
+  - porquê: {{עֶשֶׂר דַּקּוֹת}}: dez minutos.
+- (V/F) O Dani está sem a chave. → **Falso**
+  - porquê: A mãe pergunta {{יֵשׁ לְךָ מַפְתֵּחַ?}} e ele responde {{כֵּן}}: sim.
+- (V/F) Tem comida na geladeira. → **Verdadeiro**
+  - porquê: {{יֵשׁ אֹכֶל בַּמְּקָרֵר}}.
 
-Status: aprovado em 25/09/2026
+Status: aprovado em 25/09/2026 (versão anterior); versão atual de 27/09/2026 aguardando re-aprovação do dono.
 
-## Módulo 7 · Um cartão de viagem
-*Mensagem de viagem*
+## Módulo 7 · No hotel
+*Conversa no WhatsApp*
 
-| Hebraico | Transliteração | Tradução |
-|---|---|---|
-| שָׁלוֹם, אִמָּא! | shalom, imá! | Oi, mãe! |
-| יֵשׁ לִי ואוצ׳ר לַמָּלוֹן, וְהַמָּלוֹן יָפֶה. | yesh li váutcher lamalon, vehamalon yafé. | Tenho um voucher para o hotel, e o hotel é bonito. |
-| אֲנִי בְּלִי פיג׳מה! | aní bli pidjama! | Estou sem pijama! |
-| מָחָר: צ׳ילה! | machar: Tchile! | Amanhã: Chile! |
-| נְשִׁיקוֹת, דָּנָה | neshikot, Dana | Beijos, Dana |
+A Dana está viajando pela América do Sul, e a mãe manda mensagem para saber como ela está. Repare nas palavras de fora, com o gerech.
+
+| Quem | Hebraico | Transliteração | Tradução |
+|---|---|---|---|
+| Mãe | דָּנָה, אַתְּ בַּמָּלוֹן? | Dana, at bamalon? | Dana, você está no hotel? |
+| Dana | כֵּן! אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו. | ken! aní ossá tchek-in achshav. | Sim! Estou fazendo o check-in agora. |
+| Mãe | יֵשׁ לָךְ פיג׳מה? | yesh lach pidjama? | Você tem pijama? |
+| Dana | אֵין לִי! אֲנִי קוֹנָה פֹּה. | ein li! aní koná po. | Não tenho! Compro aqui. |
+| Mãe | וּמָחָר? | umachar? | E amanhã? |
+| Dana | מָחָר צ׳ילה! נְשִׁיקוֹת! | machar Tchile! neshikot! | Amanhã, Chile! Beijos! |
 
 **Palavras novas** (fora do vocabulário do curso):
 
 - מָלוֹן · malon · hotel
-- לַ־ · la- · para o, para a (grudado na palavra)
-- בְּלִי · bli · sem
-- מָחָר · machar · amanhã
+- עוֹשָׂה · ossá · faz, está fazendo (ela)
+- צ׳ק-אין · tchek-in · check-in
+- עַכְשָׁיו · achshav · agora
+- יֵשׁ לָךְ · yesh lach · você tem (para mulher)
+- אֵין לִי · ein li · eu não tenho
+- קוֹנָה · koná · compra, está comprando (ela)
+- פֹּה · po · aqui
 - נְשִׁיקוֹת · neshikot · beijos
-- יֵשׁ לִי · yesh li · eu tenho
 
 **Perguntas de compreensão:**
 
-- Para quem é a mensagem? Para o pai / **Para a mãe** / Para o hotel
-- O que a Dana esqueceu? O voucher / A mala / **O pijama**
+- Onde a Dana está? No aeroporto / **No hotel** / Em casa
+  - porquê: A mãe pergunta {{אַתְּ בַּמָּלוֹן?}} e ela responde {{כֵּן}}: sim.
+- O que a Dana está fazendo agora? **O check-in** / Comprando pijama / Dormindo
+  - porquê: {{אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו}}: estou fazendo o check-in agora.
+- (V/F) A Dana tem pijama. → **Falso**
+  - porquê: {{אֵין לִי!}}: não tenho - e ela vai comprar lá.
 - Para onde ela vai amanhã? **Chile** / Tchéquia / Israel
-- (V/F) O hotel é feio. → **Falso**
+  - porquê: {{מָחָר צ׳ילה}}: amanhã, Chile.
 
-Status: aprovado em 25/09/2026
+Status: aprovado em 25/09/2026 (versão anterior); versão atual de 27/09/2026 aguardando re-aprovação do dono.

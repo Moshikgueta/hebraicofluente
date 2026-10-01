@@ -111,7 +111,7 @@ log('\n── a fixação grava a nota ─────────────�
         const main = document.querySelector('main');
         const botoes = [...main.querySelectorAll('button')].map((el, i) => ({
           i, txt: (el.innerText || '').replace(/\s+/g, ' ').trim(),
-          off: el.disabled, etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa')
+          off: el.disabled || el.getAttribute('aria-disabled') === 'true', etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa')
         }));
         return {
           txt: (main?.innerText || '').replace(/\s+/g, ' '),
