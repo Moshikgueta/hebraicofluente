@@ -52,6 +52,10 @@ export type Empresa = {
   };
   privacidade: {
     encarregadoNome: string | null;
+    /** Microempresa (ME), confirmado pelo contador em 01/10/2026: agente de
+     *  tratamento de pequeno porte, dispensado de indicar encarregado pela
+     *  Resolução CD/ANPD nº 2/2022 (art. 11), desde que mantenha o canal. */
+    agentePequenoPorte?: boolean;
     /** Prazo de resposta a pedido de titular. A LGPD usa 15 dias no art. 19. */
     prazoLgpdDias: number;
   };
@@ -244,7 +248,7 @@ export function pendencias(): Pendencia[] {
     porQue: 'um segundo canal de atendimento; o e-mail sozinho já atende, mas dois convertem melhor',
     bloqueia: false
   });
-  if (!e.privacidade.encarregadoNome) faltando.push({
+  if (!e.privacidade.encarregadoNome && !e.privacidade.agentePequenoPorte) faltando.push({
     campo: 'privacidade.encarregadoNome',
     porQue: 'o encarregado de dados (LGPD art. 41); o canal de e-mail já atende o titular',
     bloqueia: false

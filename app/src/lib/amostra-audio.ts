@@ -3,6 +3,12 @@
  * para `/amostra-audio/<nome>.mp3` (tools/export-content.mjs, a mesma lista),
  * e são o que o "Ouça e fale" da capa toca. tests/amostra-audio.test.ts
  * confere que a lista daqui e os arquivos publicados batem. */
-export const AMOSTRA_AUDIO = { sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם' } as const;
+/* Os nomes das três letras entraram em 01/10/2026, a pedido do dono: o
+   passo "Ouça e descubra a letra" tocava a sílaba («sha») onde se esperava
+   ouvir o NOME da letra («Shin»). A sílaba continua, depois do acerto. */
+export const AMOSTRA_AUDIO = {
+  sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם',
+  shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד'
+} as const;
 export type NomeAmostra = keyof typeof AMOSTRA_AUDIO;
 export const urlAmostra = (nome: NomeAmostra): string => `/amostra-audio/${nome}.mp3`;

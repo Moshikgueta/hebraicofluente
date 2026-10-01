@@ -718,7 +718,10 @@ function main() {
      A lista é a mesma de lib/amostra-audio.ts - tests/amostra-audio.test.ts
      confere as duas. Uma gravação que falte derruba a exportação: a capa não
      pode ir ao ar com um botão "Ouvir" mudo. */
-  const AMOSTRA_AUDIO = { sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם' };
+  const AMOSTRA_AUDIO = {
+    sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם',
+    shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד'
+  };
   const amostraAudio = join(pub, 'amostra-audio');
   rmSync(amostraAudio, { recursive: true, force: true });
   mkdirSync(amostraAudio, { recursive: true });

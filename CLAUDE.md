@@ -889,3 +889,24 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - A conferência `app/clique.mjs` (roda ANTES de publicar) abre `/#experimente`, `/#decisoes` e
   `/#duvidas` direto pelo link. Tirar uma seção da capa pede tirar a âncora dela dali também, ou a
   publicação é barrada (foi o que aconteceu com `/#curso` no #83).
+
+## Encarregado de dados: ME dispensada (01/10/2026)
+- O contador confirmou: a empresa é ME, e o enquadramento (CNAE 8593-7/00) não muda.
+  `data/empresa.json` → `privacidade.agentePequenoPorte: true`. Sem `encarregadoNome`, a Política
+  de Privacidade (art. 1) diz que o controlador é agente de pequeno porte, dispensado de indicar
+  encarregado (Resolução CD/ANPD nº 2/2022, art. 11), e que o canal é o e-mail do item 6. O
+  `check-legal` e `pendenciasDaEmpresa` param de apontar o encarregado como pendência.
+- Versão das políticas: 2026-10-01. Falta o advogado confirmar que nenhum tratamento é de alto
+  risco (o alto risco tira a dispensa).
+
+## Crédito ao Damián: o que é do método e o que é adaptação (01/10/2026, palavras do dono)
+- A ordem em que as letras entram vem do método do Dr. Damián Dzienciarsky (não é adaptação).
+  São adaptação do Moshik: os exercícios, as explicações para quem fala português e a escrita
+  cursiva. A frase mora em `METODO_ORIGINAL.adaptacoesPt` (lib/credito.ts), em primeira pessoa,
+  e é lida pela capa (Professor) e por /sobre ("De onde vem o método").
+
+## Capa, "Ouça e descubra a letra": o nome da letra (01/10/2026, pedido do dono)
+- O botão tocava a sílaba («sha») onde se esperava o NOME da letra. Agora toca o nome gravado
+  (Shin, Mem, Lámed: `shin`/`mem`/`lamed` em AMOSTRA_AUDIO, lib/amostra-audio.ts e
+  tools/export-content.mjs, que copiam de audio/), pergunta "Qual é esta letra?", e depois do
+  acerto oferece "Ouvir «sha»" junto da explicação do risquinho.

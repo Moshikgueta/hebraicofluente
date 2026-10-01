@@ -132,7 +132,7 @@ export default function SobrePage() {
               {METODO_ORIGINAL.autor}, autor de{' '}
               <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
               ({METODO_ORIGINAL.obraTranslit}). O conteúdo do livro dele é a base do que a
-              plataforma ensina.
+              plataforma ensina. {METODO_ORIGINAL.adaptacoesPt}
             </p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
               As {totalLicoes()} lições, as palavras de cada letra e os exercícios vieram
