@@ -88,7 +88,7 @@
   },
   "דָּג": {
    "pt": "peixe",
-   "image": null,
+   "image": "/media/vocabulario/peixe-792ad3c0.webp",
    "imageAlt": "Um peixe nadando, de perfil.",
    "imagePrompt": "a single fish swimming, side view"
   },
@@ -100,13 +100,13 @@
   },
   "אִשָּׁה": {
    "pt": "mulher",
-   "image": null,
-   "imageAlt": "Uma mulher adulta em pé, sorrindo.",
+   "image": "/media/vocabulario/mulher-479bdbfb.webp",
+   "imageAlt": "Uma mulher adulta de cabelo comprido, sorrindo, com as mãos nos bolsos.",
    "imagePrompt": "an adult woman standing and smiling"
   },
   "שֶׁמֶשׁ": {
    "pt": "sol",
-   "image": null,
+   "image": "/media/vocabulario/sol-008e0080.webp",
    "imageAlt": "Um sol redondo e brilhante num céu limpo.",
    "imagePrompt": "a round bright sun in a clear sky"
   },
