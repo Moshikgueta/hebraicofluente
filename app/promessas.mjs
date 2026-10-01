@@ -129,6 +129,60 @@ if (cruas.length) {
 }
 console.log('✓ nenhuma página livre mostra {{...}} cru.');
 
+/* ── a ordem das letras é do método, não do professor ────────────────────
+   Decisão do dono (01/10/2026): a ordem em que as letras entram vem do
+   método do Dr. Damián; são adaptação do Moshik os exercícios, as
+   explicações para quem fala português e a cursiva. A única frase sobre a
+   ordem mora em lib/credito.ts (`adaptacoesPt`). Em 01/10 /sobre dizia, ao
+   lado dela, que "a sequência em que as letras entram" foi organizada pelo
+   Moshik (auditoria, CONV-004). Duas cercas:
+     · na FONTE (app/src e data/, sem comentários), nenhuma string fala em
+       "sequência/ordem das letras" fora de lib/credito.ts;
+     · no HTML publicado, toda frase visível que fala da ordem das letras
+       atribui ao método ("vem do método"). */
+const ORDEM = /(sequ[eê]ncia|ordem)\s+(das|em que as)\s+letras/i;
+const semComentarios = s => s
+  .replace(/\/\*[\s\S]*?\*\//g, ' ')
+  .replace(/(^|[^:'"`])\/\/.*$/gm, '$1');
+const fontes = [
+  ...arquivos(new URL('./src', import.meta.url).pathname).filter(p => /\.(tsx?|mjs)$/.test(p)),
+  ...arquivos(new URL('../data', import.meta.url).pathname).filter(p => p.endsWith('.json'))
+].filter(p => !p.endsWith('/lib/credito.ts'));
+const ordemNaFonte = [];
+for (const p of fontes) {
+  let s = readFileSync(p, 'utf8');
+  if (p.endsWith('.json')) {
+    /* Nos JSON, as chaves "_", "note" e "notes" são notas internas do
+       arquivo: não vão à tela. */
+    const NOTAS = new Set(['_', 'note', 'notes', 'nota', 'notaInterna']);
+    try {
+      s = JSON.stringify(JSON.parse(s), (k, v) => (NOTAS.has(k) ? undefined : v));
+    } catch { /* fica cru */ }
+  } else s = semComentarios(s);
+  const m = s.match(ORDEM);
+  if (m) ordemNaFonte.push(`${relative(new URL('..', import.meta.url).pathname, p)}: "${m[0]}"`);
+}
+const ordemNoHtml = [];
+for (const p of paginas.filter(p => p.endsWith('.html'))) {
+  let html;
+  try { html = readFileSync(p, 'utf8'); } catch { continue; }
+  const visivel = html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  for (const frase of visivel.split(/(?<=[.!?])\s+/)) {
+    if (ORDEM.test(frase) && !/vem do método/i.test(frase)) {
+      ordemNoHtml.push(`${rotaDe(p)}: "${frase.trim().slice(0, 120)}"`);
+    }
+  }
+}
+if (ordemNaFonte.length || ordemNoHtml.length) {
+  console.error('\n✗ a ordem das letras aparece fora de lib/credito.ts, ou atribuída a outro que não o método:\n');
+  for (const x of [...ordemNaFonte, ...ordemNoHtml]) console.error(`   ${x}`);
+  console.error('\nA ordem das letras vem do método do Dr. Damián (decisão do dono, 01/10/2026).');
+  console.error('Use METODO_ORIGINAL.adaptacoesPt (lib/credito.ts) e nada mais.');
+  console.error('─'.repeat(66));
+  process.exit(1);
+}
+console.log('✓ a ordem das letras só aparece como do método (lib/credito.ts).');
+
 /* ── o contrário: com gravação, nenhuma página pode NEGÁ-LA ─────────────
    Em 28/09/2026 a FAQ dizia "sintetizador do próprio navegador, com voz de
    espanhol latino" com 526 gravações no ar - um texto fixo herdado do curso

@@ -168,7 +168,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
                     para fora da tela. A palavra que importa é a primeira. */}
                 <LinkButton href="/cursos/alfabetizacao" size="sm"
                             className="whitespace-nowrap px-3 sm:px-4">
-                  Começar<span className="hidden sm:inline">&nbsp;agora</span>
+                  {/* Um rótulo inteiro por largura, e não "Começar" + um
+                      span com "&nbsp;agora": o `gap` do botão somava ao
+                      espaço e abria um vão (auditoria de 01/10, VIS-014). */}
+                  <span className="sm:hidden">Começar</span>
+                  <span className="hidden sm:inline">Começar agora</span>
                 </LinkButton>
               </>
             )}
@@ -232,7 +236,7 @@ function Footer() {
         <div className="grid gap-2 content-start">
           <Logo size={28} />
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted max-w-[32ch]">
-            Hebraico para brasileiros, do alfabeto à conversa. Feito para adulto
+            Hebraico para brasileiros, começando pelo alfabeto. Feito para adulto
             que estuda sozinho, no celular, sem professor do lado.
           </p>
           {/* O crédito ao método de origem, em toda página pública. Fica aqui,
@@ -245,12 +249,20 @@ function Footer() {
           </p>
         </div>
 
-        <FooterCol title="Cursos" links={[
-          { href: '/cursos/alfabetizacao', label: 'Alfabetização' },
-          { href: '/cursos/hebraico-a1', label: 'Hebraico A1' },
-          { href: '/cursos/hebraico-a2', label: 'Hebraico A2' },
-          { href: '/cursos/hebraico-b1', label: 'Hebraico B1' }
-        ]} />
+        {/* O curso à venda é um só. A1, A2 e B1 aparecem como o que são:
+            próximos cursos, à parte, ainda em produção - e não como três
+            ofertas na mesma coluna (auditoria de 01/10, CONV-011). */}
+        <div className="grid gap-1 content-start">
+          <FooterCol title="O curso" links={[
+            { href: '/cursos/alfabetizacao', label: 'Alfabetização em Hebraico' }
+          ]} />
+          <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">
+            Próximos cursos, à parte e ainda em produção:{' '}
+            <Link href="/cursos/hebraico-a1" className="underline underline-offset-2 hover:text-[var(--accent)]">A1</Link>,{' '}
+            <Link href="/cursos/hebraico-a2" className="underline underline-offset-2 hover:text-[var(--accent)]">A2</Link> e{' '}
+            <Link href="/cursos/hebraico-b1" className="underline underline-offset-2 hover:text-[var(--accent)]">B1</Link>.
+          </p>
+        </div>
 
         <FooterCol title="A plataforma" links={[
           { href: '/metodo', label: 'O método' },

@@ -32,6 +32,7 @@ import { course, totalLicoes } from '@/lib/content-publico';
 import { allCourses, isPlayable } from '@/lib/catalog';
 import { Container, H2, Lead, Reveal, Check, CheckList, Chevron } from './base';
 import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from './copy';
+import { quantasEtapasPt } from '@/lib/etapas-da-licao';
 
 
 /* ── 3 · o problema ─────────────────────────────────────────────────────── */
@@ -315,12 +316,13 @@ export function Metodo() {
             número errado na página que explica o método é pequeno e caro -
             é a seção que existe para dizer "aqui a gente é exato". */}
         <Reveal delay={80}><Lead className="mb-10 sm:mb-[46px]">
-          {PASSOS.length === 6 ? 'Seis passos' : 'Cinco passos'}, sempre nesta sequência.
-          Nenhuma letra avança sem passar por todos.
+          {quantasEtapasPt()} etapas em toda lição de letra, com os mesmos nomes que você
+          vai ver lá dentro, sempre nesta sequência.
+          Nenhuma letra avança sem passar por todas.
         </Lead></Reveal>
 
         <div className="relative">
-          {/* A linha que liga os seis passos, crescendo da esquerda. Escondida
+          {/* A linha que liga as etapas, crescendo da esquerda. Escondida
               abaixo de sm, onde os passos empilham e ela ligaria o nada. */}
           <span
             ref={ref}
@@ -449,7 +451,7 @@ function Percurso() {
               </span>
               <span className="block font-ui text-[14.5px] leading-[1.5] text-ink-muted">
                 O alfabeto já está completo. Aqui o texto perde as marcas que
-                facilitavam, do jeito que ele aparece numa placa ou num cardápio.
+                facilitavam, do jeito que ele aparece numa placa ou num rótulo.
               </span>
             </span>
           </li>

@@ -78,9 +78,12 @@ export const metadata: Metadata = {
      para resolver. Ver lib/seo.ts. */
   metadataBase: new URL(ORIGEM),
   title: 'Hebraico Fluente - a plataforma de hebraico para brasileiros',
+  /* Sem "do alfabeto à conversa" nem a lista A1/A2/B1: o que se vende hoje é a
+     alfabetização, e os outros são cursos à parte, ainda em produção
+     (auditoria de 01/10, CONV-011). */
   description:
-    'Do alfabeto à conversa, numa plataforma só. Alfabetização, A1, A2 e B1 - ' +
-    'aulas interativas, correção na hora e progresso que continua de onde você parou.',
+    'Hebraico para brasileiros, começando pelo alfabeto: aulas interativas, correção na ' +
+    'hora e progresso que continua de onde você parou.',
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
   applicationName: 'Hebraico Fluente'

@@ -125,6 +125,61 @@ if (og) {
   }
 }
 
+/* ── a description cabe no resultado da busca ───────────────────────────
+   Acima de ~155 caracteres o Google corta (auditoria de 01/10, SEO-003).
+   A capa reprova; nas outras é aviso, por enquanto. */
+for (const rota of listadas) {
+  const d = descDe(html(rota));
+  const n = d ? [...d.replace(/&[a-z#0-9]+;/gi, 'x')].length : 0;
+  if (n <= 155) continue;
+  if (rota === '/') nota(`a capa tem description com ${n} caracteres (máximo 155)`);
+  else console.log(`  aviso: ${rota} tem description com ${n} caracteres (o resultado corta em ~155)`);
+}
+
+/* ── os dados estruturados da capa (lib/jsonld.ts, SEO-001) ─────────────
+   JSON válido; o preço do Course é o da caixa de preço (catálogo, ou o do
+   PIX quando a loja só cobra por PIX); a validade é o fim do
+   pré-lançamento; o CNPJ é o de data/empresa.json; a FAQPage tem as
+   perguntas que a capa mostra. */
+{
+  const capa = html('/');
+  const blocos = [...capa.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => m[1]);
+  if (!blocos.length) nota('/ não tem JSON-LD (application/ld+json)');
+  const nos = [];
+  for (const b of blocos) {
+    try {
+      const j = JSON.parse(b);
+      nos.push(...(j['@graph'] || [j]));
+    } catch (e) { nota(`/ tem JSON-LD inválido: ${e.message}`); }
+  }
+  const tipo = t => nos.find(n => n['@type'] === t);
+  const catalogo = JSON.parse(readFileSync(new URL('./content/courses.json', import.meta.url), 'utf8'));
+  const empresa = JSON.parse(readFileSync(new URL('./content/empresa.json', import.meta.url), 'utf8'));
+  const c = catalogo.courses.find(x => x.slug === 'alfabetizacao');
+  const pix = c.price.pixDiscountPct > 0
+    ? Math.round(c.price.brl * (1 - c.price.pixDiscountPct / 100) * 100) / 100 : c.price.brl;
+  const esperado = (empresa.pagamento?.modo === 'pix-direto' ? pix : c.price.brl).toFixed(2);
+  const curso = tipo('Course'), org = tipo('Organization'), faq = tipo('FAQPage'), pessoa = tipo('Person');
+  if (!curso) nota('JSON-LD da capa sem Course');
+  else {
+    if (curso.offers?.price !== esperado) nota(`JSON-LD: preço ${curso.offers?.price}, o catálogo cobra ${esperado}`);
+    if (curso.offers?.priceCurrency !== 'BRL') nota('JSON-LD: moeda do Course não é BRL');
+    const ate = c.price.listBrl && c.price.listBrl > c.price.brl ? c.price.preLancamentoAte || null : null;
+    if ((curso.offers?.priceValidUntil || null) !== ate) {
+      nota(`JSON-LD: priceValidUntil ${curso.offers?.priceValidUntil}, o catálogo diz ${ate}`);
+    }
+  }
+  if (!org) nota('JSON-LD da capa sem Organization');
+  else if (empresa.cnpj && org.taxID !== empresa.cnpj) nota(`JSON-LD: CNPJ ${org.taxID}, empresa.json diz ${empresa.cnpj}`);
+  if (!faq || !faq.mainEntity?.length) nota('JSON-LD da capa sem FAQPage com perguntas');
+  else for (const q of faq.mainEntity) {
+    if (!q.name || !q.acceptedAnswer?.text) nota('JSON-LD: pergunta da FAQPage sem nome ou resposta');
+    else if (!capa.includes(q.name)) nota(`JSON-LD: a pergunta "${q.name}" não aparece na capa`);
+  }
+  if (!pessoa || pessoa.name !== 'Moshik Gueta') nota('JSON-LD da capa sem Person (o professor)');
+  if (blocos.length) console.log(`  JSON-LD da capa: ${nos.map(n => n['@type']).join(', ')} · preço ${curso?.offers?.price} · CNPJ ${org?.taxID}`);
+}
+
 console.log(`  site: ${SITE}`);
 console.log(`  anunciáveis: ${listadas.length} · pagas: ${pagas.length} · não listadas: ${ocultas.length}`);
 fim();

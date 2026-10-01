@@ -22,7 +22,7 @@ export const metadata: Metadata = meta({
   title: 'Sobre o Moshik - Hebraico Fluente',
   description:
     'Moshik Gueta, israelense, professor de hebraico e de idiomas: a trajetória no Brasil, em ' +
-    'Israel e em Buenos Aires que virou a metodologia do Hebraico Fluente.'
+    'Israel e em Buenos Aires por trás do Hebraico Fluente.'
 });
 
 /* A trajetória, e o que dela pode ser afirmado.
@@ -119,10 +119,9 @@ export default function SobrePage() {
           <Card className="p-5 grid gap-2.5 content-start">
             <h3 className="font-display text-[16.5px] font-bold text-ink">O que é adaptação minha</h3>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              A sequência em que as letras entram, o ritmo com que a transliteração se
-              retira, os tipos de exercício e as explicações foram organizados pensando
-              nas dificuldades de quem parte do português - as comparações com os nossos
-              sons, os erros que só um brasileiro comete, e tudo o que acontece na tela.
+              Os exercícios, as explicações e a escrita cursiva foram pensados para as
+              dificuldades de quem parte do português: as comparações com os nossos sons,
+              os erros que só um brasileiro comete e tudo o que acontece na tela.
             </p>
           </Card>
           <Card tone="wash" className="p-5 grid gap-2.5 content-start">

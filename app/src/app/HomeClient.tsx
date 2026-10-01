@@ -38,7 +38,8 @@ import { BarraFixa } from '@/components/landing/BarraFixa';
 import {
   Professor, Depoimentos, Preco, Faq, CtaFinal
 } from '@/components/landing/Fecho';
-import { FLAGSHIP } from '@/lib/catalog';
+import { FLAGSHIP, brl } from '@/lib/catalog';
+import { precoDeVitrine } from '@/lib/vitrine';
 import { useAccount } from '@/lib/account/store';
 import { proximoPasso } from '@/lib/cta';
 import type { HeroMedia } from '@/components/landing/media';
@@ -57,15 +58,13 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
     <>
       <Hero
         primaryHref={passo.href}
-        /* O rótulo do hero é o único da página que fala em PRIMEIRA PESSOA.
-           A regra de quem recebe qual oferta continua em lib/cta.ts - um
-           aluno pagante segue lendo "Continuar de onde parei" -, e o que
-           muda aqui é só a voz do botão para quem ainda não comprou: na
-           primeira dobra ele é a resposta do visitante à promessa logo
-           acima, e não uma instrução do site para ele. */
-        primaryLabel={passo.vende ? 'Comece do zero e leia suas primeiras palavras em hebraico' : passo.label}
-        /* O teste A/B do hero (lib/ab.ts): só para quem ainda pode comprar. */
-        testeAB={passo.vende}
+        /* O rótulo diz o que vem do outro lado: o botão leva ao checkout,
+           então ele diz "curso" e o preço, e não uma promessa de leitura
+           que soava como abrir uma aula (auditoria de 01/10, CONV-009). O
+           preço é o mesmo que a caixa de preço mostra (`precoDeVitrine`).
+           Para um aluno pagante segue valendo lib/cta.ts ("Continuar de
+           onde parei"). */
+        primaryLabel={passo.vende ? `Começar o curso · ${brl(precoDeVitrine())}` : passo.label}
         primaryMicro={passo.micro}
         secondaryHref="#experimente"
         midia={midia}

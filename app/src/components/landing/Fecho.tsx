@@ -25,11 +25,13 @@ import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
-import { course, tempoDoCursoPt, totalLicoes } from '@/lib/content-publico';
+import { totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { confirmaSozinho, empresa, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
+import { precoDeVitrine } from '@/lib/vitrine';
+import { perguntasDaCapa } from './faq-capa';
 
 const TEM_AUDIO = audioAvailable();
 
@@ -42,7 +44,10 @@ const RESUMO = [
   'Israelense, fala cinco idiomas',
   'Professor de hebraico no Brasil',
   'Gerente Pedagógico em Tel Aviv',
-  'Formação CELTA e Letras'
+  /* Letras está em curso (UNINTER): "Formação CELTA e Letras" se lê como
+     graduação concluída (auditoria de 01/10, CONV-005). Mesma forma em
+     /sobre (Trajetoria.tsx, REUNE). */
+  'CELTA · Letras em andamento'
 ];
 
 export function Professor({ retrato }: { retrato: string | null }) {
@@ -341,13 +346,20 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
   const pix = pixPrice(c.price);
   const cheio = ancora(c.price);
 
+  /* O que se recebe, em itens concretos e conferidos no produto (auditoria
+     de 01/10, CONV-001 seção 2, item 4): a Aula 0 (/inicio), as lições
+     (contadas do curso), a cursiva traçada na tela, o áudio (só com o
+     manifesto cheio), os jogos da Academia (/academia), o exame final
+     (/desafio-final) e o certificado, que a própria imagem diz não ser
+     oficial (/faq, "Tem certificado?"). */
   const inclui = [
-    `Curso completo, ${totalLicoes()} lições`,
-    'Exercícios interativos',
-    TEM_AUDIO ? 'Áudios de todas as letras e palavras' : 'Explicação de som para cada letra',
-    'Revisões liberadas automaticamente',
-    'Acesso à plataforma, no celular e no computador',
-    'Progresso salvo, retoma de onde parou'
+    'Aula 0: como o hebraico funciona, antes da primeira letra',
+    `${totalLicoes()} lições, uma letra por vez`,
+    'Escrita cursiva traçada na tela, com avaliação do traço',
+    TEM_AUDIO ? 'Áudio gravado pelo professor, um israelense' : 'Explicação de som para cada letra',
+    'Jogos de prática na Academia de Leitura',
+    'Exame final e certificado de conclusão (não oficial)',
+    'Progresso salvo, no celular e no computador'
   ];
 
   return (
@@ -359,7 +371,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
           <div>
             <p className="inline-block rounded-full bg-[var(--teal-soft)] px-3 py-1.5
                           font-ui text-[13px] font-bold uppercase tracking-[.06em] text-[var(--teal-ink)] mb-4.5">
-              Curso 1 de uma trilha
+              Pagamento único, sem mensalidade
             </p>
             <h2 className="font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08]
                            tracking-[-0.03em] m-0 mb-3.5">
@@ -392,7 +404,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 </p>
                 <p className="font-display text-[44px] sm:text-[48px] font-semibold tracking-[-0.035em]
                               leading-none text-ink mb-1">
-                  {brl(soPix() ? pix : c.price.brl)}
+                  {brl(precoDeVitrine())}
                 </p>
                 <p className="font-ui text-[14.5px] text-ink-muted mb-6">
                   {/* Em quantas vezes, e não quanto por vez: a taxa do cartão
@@ -463,33 +475,8 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
 
 /* ── 13 · as dúvidas ────────────────────────────────────────────────────── */
 export function Faq() {
-  const c = flagship();
 
-  const PERGUNTAS: readonly [string, string][] = [
-    ['Preciso saber hebraico?',
-     'Não. O curso começa do zero absoluto, na primeira letra, e assume que você nunca viu o alfabeto.'],
-    ['É hebraico moderno ou bíblico?',
-     'A leitura é a mesma: as letras e os sinais de vogal do texto bíblico são os que este curso ensina. O curso usa a pronúncia do hebraico moderno e vocabulário do dia a dia, o que abre os dois caminhos. Ler em voz alta e entender, porém, são coisas diferentes - a página /biblia responde isso por inteiro.'],
-    ['Quanto tempo leva?',
-     `${tempoDoCursoPt()} São ${course.totalLetters} letras, mais os checkpoints de revisão, e o ritmo é seu.`],
-    ['O curso funciona no celular?',
-     'Sim. A plataforma foi desenhada primeiro para o celular: uma atividade por tela e o botão de continuar sempre à mão.'],
-    ['Tem áudio?',
-     TEM_AUDIO
-       ? 'Cada letra, sílaba e palavra tem áudio gravado por falante nativo, com repetição livre.'
-       : 'As gravações estão em produção. Enquanto não entram, o curso não usa voz sintética: cada som é explicado por comparação com um som do português, e os exercícios de escuta ficam desativados em vez de virar adivinhação.'],
-    ['Por quanto tempo tenho acesso?',
-     `${c.accessMonths} meses a partir da confirmação do pagamento, incluindo as atualizações feitas no curso nesse período.`],
-    /* No lugar de "Posso estudar no meu ritmo?", que "Quanto tempo leva?" já
-       respondia. O prazo e o meio batem com /reembolso: contado da liberação
-       do acesso (a política conta "da compra ou da liberação, o que for mais
-       favorável"), estorno pelo mesmo meio (PIX volta para a chave de origem,
-       cartão é estornado na fatura). */
-    ['E se eu não gostar?',
-     `Você tem ${empresa.politicas.arrependimentoDias} dias, contados da liberação do acesso, para desistir pelo site e receber 100% de volta, sem precisar justificar. O estorno sai pelo mesmo meio de pagamento.`],
-    ['O que acontece depois que termino?',
-     'Você entra na trilha: Hebraico A1 é o próximo nível. Se quiser, marque em Sua conta o pedido de receber um e-mail quando ele abrir.']
-  ];
+  const PERGUNTAS = perguntasDaCapa();
 
   const [aberta, setAberta] = useState(-1);
 

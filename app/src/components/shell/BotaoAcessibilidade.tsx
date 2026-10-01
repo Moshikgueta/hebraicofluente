@@ -38,6 +38,13 @@ export function BotaoAcessibilidade() {
   useEffect(() => { setVozDisponivel(typeof window !== 'undefined' && 'speechSynthesis' in window); }, []);
   const botao = useRef<HTMLButtonElement>(null);
   const painel = useRef<HTMLDivElement>(null);
+  const caixa = useRef<HTMLDivElement>(null);
+
+  /* Sair da frente do que a pessoa está usando (auditoria de 01/10, VIS-016,
+     UXQA-014, CONV-021). O botão cobria o mockup do hero, o cartão de
+     pagamento do checkout, a folha de retorno dos exercícios e as teclas da
+     direita do teclado hebraico da tela. */
+  useDesvio(caixa, botao, aberto);
 
   useEffect(() => {
     const p = carregar();
@@ -134,7 +141,7 @@ export function BotaoAcessibilidade() {
   return (
     /* `print:hidden`: numa folha impressa o botão é uma bolha preta sobre o
        texto. Tudo desta camada sai do papel - ver globals.css. */
-    <div className="hf-a11y print:hidden">
+    <div ref={caixa} className="hf-a11y print:hidden">
       {aberto && (
         <div
           ref={painel}
@@ -316,6 +323,105 @@ export function BotaoAcessibilidade() {
       </button>
     </div>
   );
+}
+
+/* ── o desvio ─────────────────────────────────────────────────────────────
+ * O que conta como "coisa que a pessoa está usando" embaixo do botão:
+ *
+ *   · o que se marca com `data-a11y-desvia` (o mockup do hero, o cartão de
+ *     pagamento do checkout) e o teclado hebraico da tela (#teclado-hebraico);
+ *   · qualquer coisa PRESA à tela (position: fixed) - a folha de retorno dos
+ *     exercícios, a barra de preço da capa, um aviso.
+ *
+ * Um link qualquer do texto passando por baixo NÃO conta: o botão pularia a
+ * cada rolagem. Para o que conta, três tentativas, nesta ordem: subir acima
+ * do obstáculo; ir para o canto esquerdo; e, se nada couber (um obstáculo
+ * maior que a tela), ficar onde está. O tamanho não muda (44 px no telefone,
+ * 52 px a partir de sm) e Alt+Shift+A continua abrindo de qualquer lugar.
+ * Com o painel aberto nada se move. */
+const MARCADOS = '[data-a11y-desvia], #teclado-hebraico';
+const TOPO_LIVRE = 72; // o cabeçalho fixo: o botão nunca sobe para baixo dele
+
+function obstaculo(el: Element | null, caixa: HTMLElement): HTMLElement | null {
+  for (let n = el as HTMLElement | null; n && n !== document.body; n = n.parentElement) {
+    if (caixa.contains(n)) return null;
+    if (n.matches(MARCADOS)) return n;
+    if (getComputedStyle(n).position === 'fixed') return n;
+  }
+  return null;
+}
+
+/** Os obstáculos debaixo de um retângulo: cantos e centro. */
+function debaixo(r: DOMRect, caixa: HTMLElement): HTMLElement[] {
+  const pontos: [number, number][] = [
+    [r.left + 4, r.top + 4], [r.right - 4, r.top + 4], [r.left + 4, r.bottom - 4],
+    [r.right - 4, r.bottom - 4], [(r.left + r.right) / 2, (r.top + r.bottom) / 2]
+  ];
+  const achados = new Set<HTMLElement>();
+  for (const [x, y] of pontos) {
+    for (const el of document.elementsFromPoint(x, y)) {
+      if (caixa.contains(el)) continue;
+      const o = obstaculo(el, caixa);
+      if (o) achados.add(o);
+      break; // só o que está por cima, logo abaixo do botão
+    }
+  }
+  return [...achados];
+}
+
+function useDesvio(
+  caixaRef: React.RefObject<HTMLDivElement | null>,
+  botaoRef: React.RefObject<HTMLButtonElement | null>,
+  aberto: boolean
+) {
+  useEffect(() => {
+    const caixa = caixaRef.current, btn = botaoRef.current;
+    if (!caixa || !btn || aberto) return;
+    let quadro = 0;
+    const limpar = () => { caixa.style.removeProperty('bottom'); caixa.style.removeProperty('left'); caixa.style.removeProperty('right'); };
+    const medir = () => {
+      quadro = 0;
+      limpar();
+      const r0 = btn.getBoundingClientRect();
+      const obst = debaixo(r0, caixa);
+      if (!obst.length) return;
+      const vh = window.innerHeight;
+      /* 1 · acima do obstáculo, subindo de novo se cair sobre outro (o selo
+         flutuante em cima do mockup), enquanto couber abaixo do cabeçalho. */
+      let sobre = obst;
+      for (let i = 0; i < 4 && sobre.length; i++) {
+        const topo = Math.min(...sobre.map(o => o.getBoundingClientRect().top));
+        if (topo - r0.height - 10 < TOPO_LIVRE) break;
+        caixa.style.bottom = `${vh - topo + 10}px`;
+        sobre = debaixo(btn.getBoundingClientRect(), caixa);
+      }
+      if (!sobre.length) return;
+      limpar();
+      /* 2 · o canto esquerdo, na mesma altura. */
+      caixa.style.left = getComputedStyle(caixa).right;
+      caixa.style.right = 'auto';
+      if (!debaixo(btn.getBoundingClientRect(), caixa).length) return;
+      /* 3 · nada coube: fica onde estava. */
+      limpar();
+    };
+    const agendar = () => { if (!quadro) quadro = requestAnimationFrame(medir); };
+    agendar();
+    window.addEventListener('scroll', agendar, { passive: true });
+    window.addEventListener('resize', agendar);
+    const mo = new MutationObserver(agendar);
+    mo.observe(document.body, { childList: true, subtree: true });
+    /* O que entra animado (o mockup e os selos do hero sobem 26 px ao
+       aparecer) não muda o DOM: uma conferida a cada segundo pega o fim. */
+    const relogio = window.setInterval(agendar, 1000);
+    return () => {
+      window.clearInterval(relogio);
+      cancelAnimationFrame(quadro);
+      window.removeEventListener('scroll', agendar);
+      window.removeEventListener('resize', agendar);
+      mo.disconnect();
+      limpar();
+    };
+  }, [caixaRef, botaoRef, aberto]);
 }
 
 /* Um interruptor que é um checkbox de verdade por baixo: leitor de tela lê
