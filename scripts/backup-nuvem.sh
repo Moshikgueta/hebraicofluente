@@ -75,7 +75,7 @@ DIAS=90
 if [ -x "$PWD/node_modules/.bin/wrangler" ]; then
   WRANGLER_LOCAL="$PWD/node_modules/.bin/wrangler"
 else
-  WRANGLER_LOCAL="npx --yes wrangler@4.135.0"
+  WRANGLER_LOCAL="npx --yes wrangler@4.146.0"
 fi
 W="${HF_WRANGLER:-$WRANGLER_LOCAL}"
 

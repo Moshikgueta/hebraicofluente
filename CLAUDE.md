@@ -992,7 +992,7 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   pedido pago da própria sessão, uma vez por pedido (`ab_compras`).
 - **wrangler pelo lockfile da raiz** (`npm ci --ignore-scripts` + node_modules/.bin/wrangler) e
   actions fixadas por SHA. Subir o wrangler = editar package.json, o lockfile e o fallback
-  `wrangler@4.135.0` dos scripts juntos.
+  `wrangler@4.146.0` dos scripts juntos.
 - **/api/me sem sessão**: 200 `{signedIn:false}` só com `X-HF-Sessao: opcional` (o app manda); sem o
   cabeçalho, 401 (pacote antigo numa aba aberta). O progresso não chama /api/progress sem sessão.
 
