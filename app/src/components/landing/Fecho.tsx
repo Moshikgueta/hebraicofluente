@@ -20,7 +20,7 @@
  *   catálogo.
  */
 
-import { PERFIL_LINKEDIN } from '@/lib/professor';
+import { INSTAGRAM, PERFIL_LINKEDIN } from '@/lib/professor';
 import Link from 'next/link';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -112,6 +112,13 @@ export function Professor({ retrato }: { retrato: string | null }) {
                 Ver meu perfil no LinkedIn
                 <span aria-hidden>↗</span>
                 <span className="sr-only"> (abre em outra aba)</span>
+              </a>
+              <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer"
+                 className="inline-flex items-center gap-1.5 font-ui text-[16px] font-semibold text-[var(--teal-ink)]
+                            underline underline-offset-[3px] decoration-[1.5px]">
+                Instagram
+                <span aria-hidden>↗</span>
+                <span className="sr-only"> do Hebraico Fluente (abre em outra aba)</span>
               </a>
             </div>
             {/* O crédito ao método de origem fica na capa também: é aqui que

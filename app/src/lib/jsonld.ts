@@ -18,7 +18,7 @@
  * precisa de hash na CSP (tools/csp-hashes.mjs já o pula).
  */
 
-import { PERFIL_LINKEDIN } from './professor';
+import { INSTAGRAM, PERFIL_LINKEDIN } from './professor';
 import { ancora, flagship } from '@/lib/catalog';
 import { empresa, nomeLegal } from '@/lib/empresa';
 import { ORIGEM, url } from '@/lib/seo';
@@ -40,6 +40,7 @@ export function organizacao(): Json {
     ...(empresa.cnpj ? { taxID: empresa.cnpj } : {}),
     url: ORIGEM + '/',
     logo: `${ORIGEM}/apple-touch-icon.png`,
+    sameAs: [INSTAGRAM],
     email: empresa.contato.emailSuporte,
     ...(e?.logradouro && e.cidade ? {
       address: {
