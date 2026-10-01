@@ -45,7 +45,7 @@ on:
         required: true
         default: liberar
         type: choice
-        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido, trocar-email, csp]
+        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido, trocar-email, mover-compra, csp]
       email:
         description: 'E-mail da conta (não precisa em "listar", "envios", "pagamento", "pedido" nem "csp")'
         required: false
@@ -66,7 +66,7 @@ on:
         required: false
         type: string
       novo_email:
-        description: 'O e-mail CERTO (só em "trocar-email"; o campo "E-mail" acima é o errado, o de hoje)'
+        description: 'O e-mail CERTO: em "trocar-email", o novo endereço da mesma conta; em "mover-compra", a conta que passa a ter o curso'
         required: false
         type: string
 
@@ -519,6 +519,50 @@ jobs:
               say "Compras, acesso e progresso continuam na mesma conta. A senha não muda."
               say "Diga ao aluno para entrar com o e-mail novo; se não lembrar a senha,"
               say "\"Esqueci minha senha\" agora manda o link para o endereço certo."
+              ;;
+
+            # Comprou numa conta e estuda noutra (auditoria de 01/10/2026,
+            # PAY-B-013): o acesso, o pedido e a desistência, se houver,
+            # passam de "E-mail" para "novo_email". As duas contas têm de
+            # existir, e a de destino não pode já ter o curso.
+            mover-compra)
+              [ -n "$MAIL" ] || { echo "::error::Informe no campo E-mail a conta que COMPROU."; exit 1; }
+              NOVO="$(printf '%s' "${NOVO_EMAIL:-}" | tr '[:upper:]' '[:lower:]' | xargs || true)"
+              [ -n "$NOVO" ] || { echo "::error::Informe em novo_email a conta que vai ficar com o curso."; exit 1; }
+              [ "$NOVO" != "$MAIL" ] || { echo "::error::Os dois e-mails são iguais."; exit 1; }
+              SQLNOVO="$(printf '%s' "$NOVO" | sed "s/'/''/g")"
+              n() {
+                $W --json --command "$1" 2>&1 | mascara | grep -o '"n": *[0-9]*' | head -1 | tr -cd '0-9'
+              }
+              ORIGEM="$(n "SELECT COUNT(*) AS n FROM accounts WHERE email = '$SQLMAIL'")"
+              DESTINO="$(n "SELECT COUNT(*) AS n FROM accounts WHERE email = '$SQLNOVO'")"
+              TEM="$(n "SELECT COUNT(*) AS n FROM entitlements WHERE course_slug = '$CURSO' AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL')")"
+              JA="$(n "SELECT COUNT(*) AS n FROM entitlements WHERE course_slug = '$CURSO' AND account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO')")"
+              [ -n "$ORIGEM" ] && [ -n "$DESTINO" ] && [ -n "$TEM" ] && [ -n "$JA" ] || { echo "::error::Não consegui consultar as contas."; exit 1; }
+              [ "$ORIGEM" = "1" ] || { echo "::error::Não existe conta com o e-mail de origem."; exit 1; }
+              [ "$DESTINO" = "1" ] || { echo "::error::Não existe conta com o e-mail de destino. Peça à pessoa para se cadastrar primeiro."; exit 1; }
+              [ "$TEM" = "1" ] || { echo "::error::A conta de origem não tem o curso $CURSO."; exit 1; }
+              [ "$JA" = "0" ] || { echo "::error::A conta de destino já tem o curso $CURSO. Nada foi movido."; exit 1; }
+              grava \
+                "INSERT INTO access_log (account_id, action, detail, created_at)
+                 SELECT id, 'compra-movida-saida', '$CURSO via GitHub Actions', unixepoch()*1000
+                   FROM accounts WHERE email = '$SQLMAIL';
+                 UPDATE orders SET account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO')
+                  WHERE id IN (SELECT order_id FROM entitlements WHERE course_slug = '$CURSO'
+                                 AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL'));
+                 UPDATE arrependimentos SET account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO')
+                  WHERE order_id IN (SELECT order_id FROM entitlements WHERE course_slug = '$CURSO'
+                                       AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL'));
+                 UPDATE entitlements SET account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO')
+                  WHERE course_slug = '$CURSO'
+                    AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL');
+                 INSERT INTO access_log (account_id, action, detail, created_at)
+                 SELECT id, 'compra-movida-entrada', '$CURSO via GitHub Actions', unixepoch()*1000
+                   FROM accounts WHERE email = '$SQLNOVO'"
+              say "Compra de \`$CURSO\` movida: \`$(printf '%s' "$MAIL" | mascara)\` → \`$(printf '%s' "$NOVO" | mascara)\`."
+              say ""
+              say "O acesso (com a mesma data de fim) e o pedido agora são da conta de destino."
+              say "O progresso NÃO muda de conta: ele é de quem estudou."
               ;;
 
             revogar)

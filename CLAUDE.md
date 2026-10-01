@@ -1062,3 +1062,17 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   que a build escreve em `data/politicas-versoes/`.
 - `.gitignore` usa `node_modules` sem barra: um link simbólico `app/node_modules` foi commitado por engano
   e, no checkout, substituiu a pasta de dependências.
+
+## Bloco A da auditoria, fim (01/10/2026)
+- **Baixar meus dados** (`GET /api/account/dados`, api/meus-dados.js; botão em /perfil): JSON como anexo,
+  sem senha, sessões, aparelhos, marca anticópia, código PIX e link de pagamento. 10 por hora.
+- **mover-compra** (Actions → Acesso): acesso, pedido e desistência de uma conta para outra; para se a
+  de destino já tiver o curso. O progresso não muda de conta.
+- **a11y-pago.mjs**: entra com conta de aluno num wrangler dev e confere 9 telas pagas a 360/390 px com o
+  texto em 100% e 150% (sem HF_EMAIL, cria a conta e libera o curso no D1 LOCAL; recusa base remota sem
+  HF_EMAIL). Achou o 150% estourando painel, lição, perfil e mapa: `min-width: 0` e `overflow-wrap:
+  anywhere` dentro do <main> ampliado (globals.css) resolveram.
+- Conteúdo baixado vai para a trilha (`registrarConteudo`, uma linha por conta por dia) e o e-mail de
+  desistência ao dono diz em quantos dias foi aberto (não muda o direito de desistir).
+- A fala aceita ו/י a mais, nunca letra a menos (`grafiaCheiaDe`). Ícones de traço em NavIcons.tsx no
+  lugar de emojis coloridos; selos da lição ficam.

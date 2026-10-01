@@ -33,6 +33,7 @@ import * as progress from './api/progress.js';
 import { content } from './api/content.js';
 import * as audio from './api/audio.js';
 import * as novidades from './api/novidades.js';
+import * as meusDados from './api/meus-dados.js';
 import * as csp from './api/csp.js';
 import * as marca from './api/marca.js';
 import * as depoimentos from './api/depoimentos.js';
@@ -58,6 +59,8 @@ const ROUTES = {
   'POST /api/auth/verify': auth.verify,
   'POST /api/auth/password': auth.password,
   'POST /api/auth/delete': auth.apagar,
+  /* "Baixar meus dados" (LGPD art. 18; auditoria de 01/10/2026, LEGAL-122). */
+  'GET /api/account/dados': meusDados.exportar,
   /* A lista do aviso do próximo curso: entrar e sair (api/novidades.js). */
   'PUT /api/novidades': novidades.marcar,
   'POST /api/novidades/sair': novidades.sair,

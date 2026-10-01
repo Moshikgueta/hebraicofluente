@@ -209,6 +209,14 @@ html[data-a11y-texto='150'] #hf-zoom { zoom: 1.5; }
   html[data-a11y-texto='115'] [data-plataforma] main#hf-principal { zoom: 1.15; }
   html[data-a11y-texto='130'] [data-plataforma] main#hf-principal { zoom: 1.3; }
   html[data-a11y-texto='150'] [data-plataforma] main#hf-principal { zoom: 1.5; }
+  /* Com o <main> ampliado, um celular de 360px tem ~240px de conteúdo. Item
+     de grade e de flex não encolhe abaixo do próprio conteúdo por padrão, e
+     um e-mail ou uma etiqueta comprida empurrava a tela inteira para o lado
+     (a11y-pago.mjs, 01/10/2026). Aqui tudo pode encolher e quebrar a linha. */
+  html[data-a11y-texto='130'] [data-plataforma] main#hf-principal *,
+  html[data-a11y-texto='150'] [data-plataforma] main#hf-principal * {
+    min-width: 0; overflow-wrap: anywhere;
+  }
   html[data-a11y-texto='130'] .hf-barra-rotulo,
   html[data-a11y-texto='150'] .hf-barra-rotulo {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;

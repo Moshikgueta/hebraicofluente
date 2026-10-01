@@ -27,7 +27,8 @@ aprovação).
 ## 1. Comprou com outro e-mail
 
 A pessoa pagou numa conta (e-mail B) e quer estudar na outra (e-mail A).
-Não existe ferramenta que mova uma compra entre contas.
+Desde 01/10/2026 existe a ação `mover-compra`, que move o acesso, o pedido
+e a desistência (se houver) de uma conta para a outra.
 
 1. Confirme pelo outro canal (WhatsApp ou respondendo do e-mail da compra)
    que as duas contas são da mesma pessoa.
@@ -35,10 +36,10 @@ Não existe ferramenta que mova uma compra entre contas.
 3. Acesso → `consultar` com A:
    - **A não existe:** Acesso → `trocar-email` (E-mail = B, `novo_email` =
      A). Compra, acesso e progresso continuam juntos. Pronto.
-   - **A existe:** Acesso → `liberar` em A, com `meses` = os meses que
-     faltam em B (arredonde para cima). Depois Acesso → `revogar` em B. O
-     pedido continua registrado em B; anote no seu controle que o acesso foi
-     movido.
+   - **A existe:** Acesso → `mover-compra` (E-mail = B, `novo_email` = A,
+     curso). O acesso vai com a mesma data de fim, e o pedido passa a ser de
+     A. O progresso não muda de conta: é de quem estudou. Se A já tiver o
+     curso, a ação para sem mexer em nada.
 4. Responda dizendo com que e-mail entrar.
 
 ## 2. Pagou duas vezes
