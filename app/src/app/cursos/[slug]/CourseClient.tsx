@@ -203,7 +203,7 @@ export function CourseClient({ slug }: { slug: string }) {
               {open
                 ? confirmaSozinho()
                   ? 'O acesso é liberado assim que o pagamento é confirmado - sem espera, sem liberação manual, sem e-mail para procurar na caixa de spam.'
-                  : 'Você paga no PIX pelo aplicativo do seu banco e entra com o mesmo e-mail e senha. O acesso abre assim que o pagamento cai, normalmente em alguns minutos.'
+                  : `Você paga no PIX pelo aplicativo do seu banco e entra com o mesmo e-mail e senha. Conferimos o pagamento e liberamos o acesso à mão, ${prazoResposta()}.`
                 : 'Este curso está em produção. Quando sair, entra na mesma conta e continua de onde o anterior parou.'}
             </p>
           </div>

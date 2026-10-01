@@ -408,6 +408,80 @@ pagou nada.
 
 ---
 
+### 9. Houve venda real antes de 29/09/2026? (auditoria de 01/10/2026, LEGAL-105)
+
+**O que é.** Em 29 e 30/09 entraram, para todas as contas, o limite de 3
+aparelhos, a marca invisível no conteúdo, a marca d'água com o começo do
+e-mail e as estatísticas de aprendizagem. Os Termos (art. 9) dizem que
+mudança que afete um acesso já comprado não retroage, e a Política de
+Privacidade promete avisar por e-mail antes de mudar o tratamento de dados.
+
+**SÓ VOCÊ SABE.** Confirme se alguém comprou de verdade (não teste seu)
+antes de 29/09/2026.
+
+- **Não houve:** me diga, e isso fica registrado aqui. A regra continua para
+  as próximas mudanças (INCIDENTES.md, seção 9).
+- **Houve:** um e-mail único a esses compradores, dizendo o que mudou e
+  oferecendo a desistência ou as condições antigas, com o texto revisado pelo
+  advogado. O procedimento está em INCIDENTES.md, seção 9.
+
+**Pronto quando.** A resposta está escrita aqui.
+
+### 10. O depoimento da Natália (auditoria de 01/10/2026, LEGAL-107)
+
+**O que foi feito.** O corte na fala dela agora aparece marcado com "[...]"
+na capa, e a página /depoimento diz a regra que se pratica: o texto sai como
+o aluno escreveu, e todo corte aparece marcado.
+
+**O que é seu.**
+1. **Autorização por escrito**, guardada FORA do repositório: nome, cidade,
+   que o texto pode ir para o site e para divulgação, e que ela concorda com
+   o corte (o trecho "corrigindo e acompanhando até que você realmente
+   compreenda"). Hoje ela existe só como comentário no código. O caminho mais
+   simples é pedir que ela mesma registre o depoimento em /depoimento, que
+   grava a autorização.
+2. **"Imagens".** A citação diz que a plataforma tem "áudio, texto, imagens e
+   exercícios". A fala dela não foi alterada (é citação). Confirme com ela, e
+   para você mesmo, a que imagens ela se refere: o curso tem os diagramas de
+   traçado das letras; se ela pensava em outra coisa, combine com ela um
+   corte marcado ou um texto novo.
+3. Se ela teve acesso gratuito ou foi aluna particular, isso precisa ser dito
+   junto do depoimento (pergunta para o advogado).
+
+O título da seção na capa é "Quem já está lendo.", que serve para um
+depoimento ou vários; não precisou mudar.
+
+**Pronto quando.** A autorização está guardada e a dúvida das imagens,
+resolvida.
+
+### 11. Textos para você aprovar (auditoria de 01/10/2026)
+
+Estão no ar e foram escritos por mim; troque se não concordar:
+
+- **Dúvidas de conteúdo (UXQA-016):** "Dúvidas sobre o conteúdo também são
+  bem-vindas por e-mail, no mesmo prazo." Em /suporte e na FAQ
+  (`DUVIDAS_DE_CONTEUDO`, app/src/lib/empresa.ts), e nos Termos, art. 1:
+  "o atendimento por e-mail e WhatsApp é para problemas de acesso, pagamento
+  e conta, e para dúvidas pontuais sobre o conteúdo". Se preferir NÃO
+  responder dúvida de conteúdo, me diga e eu tiro dos três lugares.
+- **O que o curso ensina (UXQA-010):** "Este curso ensina a ler e escrever
+  em hebraico. Conversação começa no Hebraico A1, que é um curso à parte."
+  Na página do curso e na FAQ (`O_QUE_O_CURSO_ENSINA`).
+
+### 12. A versão do contrato em publicação rebaixada (LEGAL-104)
+
+Cada versão dos Termos, do Reembolso e da Privacidade tem uma cópia fixa em
+`data/politicas-versoes/`, publicada em `/<documento>/v/<código>/`, e o
+recibo de cada compra linka a versão daquela compra. Quando a Mercado Pago
+responde formas de pagamento diferentes das de `data/empresa.json` (por
+exemplo, sem PIX), o texto dos Termos muda naquela publicação e nasce uma
+versão que não está no git: ela fica no ar só até a próxima publicação. O
+resumo do Actions avisa, e o conserto está em RUNBOOK-ATENDIMENTO.md. O mais
+simples é deixar `pagamento.formas` em `data/empresa.json` igual ao que a
+Mercado Pago de fato aceita.
+
+---
+
 ## Bloco 3 - FEITO
 
 Os cinco saíram numa tacada, com testes, e estão no ar. Ficam registrados
