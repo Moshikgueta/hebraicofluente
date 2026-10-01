@@ -284,7 +284,18 @@ que ela sugere). Leva de minutos a algumas horas para propagar.
 **Pronto quando.** Pedir "esqueci minha senha" com um e-mail seu e o link
 chegar na caixa de entrada, não no spam.
 
-### 6. Uma compra de verdade, ponta a ponta
+### 6. Uma compra de verdade, ponta a ponta - QUASE FEITO (falta o parcelado com desistência)
+
+**Conferido pelo dono em 01/10/2026, pelos extratos da Mercado Pago:**
+- **Cartão:** venda real de 21/09/2026, R$ 139,68 líquidos (R$ 147 menos a
+  tarifa do cartão), liberada na hora. Não foi estornada.
+- **PIX:** venda de R$ 130,99 líquidos (R$ 132,30 menos a tarifa do PIX),
+  cancelada em 28/09/2026 com o dinheiro devolvido: compra e devolução no
+  PIX funcionam.
+- **Falta:** uma compra PARCELADA no cartão (2x ou mais) com desistência,
+  conferindo na fatura que voltou o valor cobrado inteiro, juros inclusos
+  (LEGAL-110). É o que sustenta o "100% de volta" na compra parcelada.
+
 
 **O que é.** Comprar o curso você mesmo, com dinheiro de verdade, e depois
 estornar.
