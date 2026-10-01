@@ -19,7 +19,7 @@
  */
 
 import type { PlatformApi } from './api';
-import { AuthError, type AuthErrorCode, type Order, type PaymentMethod, type Session } from './types';
+import { AuthError, type AuthErrorCode, type Compras, type Order, type PaymentMethod, type Session } from './types';
 
 /* Sempre a própria origem. Isto já foi `process.env.NEXT_PUBLIC_API_BASE`, e
    como a variável nunca era definida no build o empacotador não a congelava:
@@ -160,6 +160,16 @@ export class WorkerApi implements PlatformApi {
 
   orders(): Promise<Order[]> {
     return call<{ orders: Order[] }>('/orders').then(r => r.orders);
+  }
+
+  compras(): Promise<Compras> {
+    return call<{ orders: Order[]; vencidos?: Compras['vencidos'] }>('/orders')
+      .then(r => ({ orders: r.orders, vencidos: r.vencidos ?? [] }));
+  }
+
+  pixPendente(courseSlug: string): Promise<Order | null> {
+    return call<{ order: Order | null }>(`/pay/pix?curso=${encodeURIComponent(courseSlug)}`)
+      .then(r => r.order);
   }
 
   requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }> {

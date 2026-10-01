@@ -150,8 +150,10 @@ describe('a desistência estorna sozinha', () => {
     expect(linha(env, `SELECT status FROM orders WHERE id = '${a.order}'`)!.status).toBe('refunded');
     expect(linha(env, `SELECT estado FROM estornos WHERE order_id = '${a.order}'`)!.estado).toBe('concluido');
 
-    const paraEla = enviados.find(m => m.to === a.email)!;
+    const paraEla = enviados.find(m => m.to === a.email && m.subject.startsWith('Recebemos'))!;
     expect(paraEla.text).toContain('O estorno já foi pedido à Mercado Pago');
+    /* E, como o estorno concluiu na hora, o aviso de que concluiu (PAY-B-006). */
+    expect(enviados.filter(m => m.to === a.email && m.subject.startsWith('Estorno concluído'))).toHaveLength(1);
     const paraODono = enviados.find(m => m.to === DONO)!;
     expect(paraODono.text).toContain('JÁ FOI PEDIDO AUTOMATICAMENTE');
   });

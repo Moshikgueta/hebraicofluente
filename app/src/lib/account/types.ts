@@ -65,7 +65,20 @@ export type Order = {
   /** Como o dinheiro volta: `automatico` (o site pediu o estorno à Mercado
    *  Pago), `manual` (a equipe devolve) ou null (sem desistência). */
   estorno?: 'automatico' | 'manual' | null;
+  /** O que o provedor disse por último sobre o pagamento deste pedido, nas
+   *  palavras do servidor. Vem só da consulta de um pedido (`orderStatus`), e
+   *  decide só o TEXTO da tela de retorno - nunca o acesso. `null` quando
+   *  nenhum pagamento apareceu. */
+  ultimoPagamento?: UltimoPagamento | null;
 };
+
+export type UltimoPagamento = 'em-analise' | 'aguardando' | 'recusado' | 'aprovado' | 'devolvido';
+
+/** Um acesso que venceu: o curso e quando. */
+export type AcessoVencido = { courseSlug: string; expiredAt: string };
+
+/** O que o /perfil lê da conta: os pedidos e os acessos vencidos. */
+export type Compras = { orders: Order[]; vencidos: AcessoVencido[] };
 
 export type PaymentMethod = 'pix' | 'card';
 export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired';

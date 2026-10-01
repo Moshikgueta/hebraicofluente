@@ -17,6 +17,7 @@
  */
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
 import { Card, Badge } from '@/components/ui/Card';
@@ -26,6 +27,25 @@ import { ancora, brl, fimDoPreLancamento, getCourse, isPlayable, parcelasMax, pi
 import { useAccount } from '@/lib/account/store';
 import { tempoDoCursoPt } from '@/lib/content-publico';
 import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
+import { api } from '@/lib/account/api';
+import type { AcessoVencido } from '@/lib/account/types';
+import { fraseDeVencido, vencidoDe } from '@/app/perfil/compras';
+
+/* Os acessos vencidos da conta, uma pergunta por página (a caixa de compra
+   aparece duas vezes). Só para quem está logado e não tem o curso: é o aluno
+   que pagou, venceu, e o portão mandou para cá (PAY-B-004). */
+let vencidosDaPagina: Promise<AcessoVencido[]> | null = null;
+function useVencido(slug: string, perguntar: boolean): string | null {
+  const [vencidos, setVencidos] = useState<AcessoVencido[] | null>(null);
+  useEffect(() => {
+    if (!perguntar) return;
+    let stop = false;
+    vencidosDaPagina ??= api().then(a => a.compras()).then(r => r.vencidos).catch(() => []);
+    void vencidosDaPagina.then(v => { if (!stop) setVencidos(v); });
+    return () => { stop = true; };
+  }, [perguntar]);
+  return perguntar ? vencidoDe(vencidos, slug) : null;
+}
 
 export function CourseClient({ slug }: { slug: string }) {
   const account = useAccount();
@@ -218,6 +238,7 @@ function BuyBox({ slug }: { slug: string }) {
   const open = isPlayable(c);
   const parcelas = parcelasMax(c.price);
   const cheio = ancora(c.price);
+  const venceuEm = useVencido(c.slug, account.ready && account.signedIn && !owned && open);
 
   if (owned) {
     return (
@@ -248,7 +269,22 @@ function BuyBox({ slug }: { slug: string }) {
     );
   }
 
-  const aviso = account.signedIn ? (
+  /* Pagou, e o acesso venceu: o aviso diz isso com a data, acima do preço,
+     no lugar do "esta conta ainda não tem o curso" (PAY-B-004). */
+  const aviso = venceuEm ? (
+        <Card tone="wash" className="p-5 grid gap-2.5">
+          <p className="font-display text-[17px] font-bold text-ink leading-snug">
+            {fraseDeVencido(venceuEm)}
+          </p>
+          <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+            Seu progresso continua guardado na sua conta e volta inteiro quando
+            você renovar.
+          </p>
+          <LinkButton href={`/checkout/${c.slug}`} size="sm" className="justify-self-start">
+            Renovar por mais {c.accessMonths} meses
+          </LinkButton>
+        </Card>
+      ) : account.signedIn ? (
         <Card tone="wash" className="p-5 grid gap-2.5">
           <p className="font-display text-[17px] font-bold text-ink leading-snug">
             Esta conta ainda não tem o curso
@@ -277,7 +313,9 @@ function BuyBox({ slug }: { slug: string }) {
         </Card>
       ) : null;
   const criada = account.session?.account.createdAt ? Date.parse(account.session.account.createdAt) : NaN;
-  const contaNova = Number.isFinite(criada) && Date.now() - criada < 86_400_000;
+  /* Quem tem acesso vencido não é conta nova para este curso: o aviso com a
+     data vem antes do preço. */
+  const contaNova = !venceuEm && Number.isFinite(criada) && Date.now() - criada < 86_400_000;
 
   return (
     <div className="grid gap-4 content-start">
