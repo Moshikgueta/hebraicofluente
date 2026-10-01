@@ -32,7 +32,6 @@ import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
 import { content } from './api/content.js';
 import * as audio from './api/audio.js';
-import * as ab from './api/ab.js';
 import * as novidades from './api/novidades.js';
 import * as csp from './api/csp.js';
 import * as marca from './api/marca.js';
@@ -86,10 +85,6 @@ const ROUTES = {
      viajava dentro do pacote que qualquer visitante baixava. Ver
      api/content.js. */
   'GET /api/content': content,
-
-  /* O teste A/B da capa: só contagens diárias, sem identificar ninguém.
-     Ver api/ab.js. */
-  'POST /api/ab': ab.registrar,
 
   /* O que a CSP estrita, ainda em observação, teria bloqueado. Ver
      api/csp.js. */

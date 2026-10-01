@@ -745,7 +745,11 @@ SESSION_SECRET=qualquer-coisa npx wrangler dev --port 8788 --local
 cd app && npm run sincronia   # dois aparelhos, uma conta, ninguém perde trabalho
 ```
 
-## Teste A/B do hero da capa (28/09/2026)
+## Teste A/B do hero da capa (28/09/2026) - ENCERRADO e desmontado em 01/10/2026
+
+Ficou a versão A. Saíram `lib/ab.ts`, as chamadas no checkout e no obrigado, a rota `POST /api/ab`,
+o workflow e `tools/relatorio-ab.mjs`. Ficam as tabelas e `abComprasPurge` (api/ab.js), que apaga
+`ab_compras` em 60 dias. O texto abaixo é histórico.
 
 `hero-2026-09`: A = híbrido ("Ler e escrever hebraico, do zero." com os três
 desejos como selos); B = as perguntas (Israel, "as letras da Bíblia"). O botão

@@ -27,7 +27,6 @@ import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { getCourse } from '@/lib/catalog';
 import { empresa } from '@/lib/empresa';
-import { contarAB } from '@/lib/ab';
 import { decidirFase, DESISTE_MS, FINAL, type Fase } from './fase';
 
 const POLL_MS = 3_000;
@@ -69,7 +68,6 @@ export function ObrigadoClient({ slug }: { slug: string }) {
         });
         if (fase === 'pago') {
           await account.refresh();
-          contarAB('compra');
         }
         if (!stop) setPhase(fase);
         return FINAL.has(fase);

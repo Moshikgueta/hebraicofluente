@@ -21,6 +21,7 @@ const REASONS = [
   { id: 'viagem',   label: 'Viajar para Israel' },
   { id: 'familia',  label: 'Família ou relacionamento' },
   { id: 'morar',    label: 'Morar em Israel' },
+  { id: 'biblia',   label: 'Ler a Bíblia ou textos religiosos' },
   { id: 'idiomas',  label: 'Interesse em idiomas' },
   { id: 'trabalho', label: 'Trabalho' },
   { id: 'outro',    label: 'Outro motivo' }

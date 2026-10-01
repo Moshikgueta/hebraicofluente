@@ -41,7 +41,6 @@ import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, type
 import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
-import { contarAB } from '@/lib/ab';
 import { api } from '@/lib/account/api';
 import { deveRetomarPix } from './retomada';
 
@@ -63,9 +62,6 @@ export function CheckoutClient({ slug }: { slug: string }) {
   const router = useRouter();
   const c = getCourse(slug)!;
 
-  /* O teste A/B da capa (lib/ab.ts): chegou ao checkout. Só conta se o
-     navegador passou pela capa; nada mais aqui depende disto. */
-  useEffect(() => { contarAB('checkout'); }, []);
 
   /* Lidos uma vez: vêm de data/empresa.json, que é fixo no momento da build. */
   const CONFIRMA_SOZINHO = confirmaSozinho();
@@ -166,7 +162,6 @@ export function CheckoutClient({ slug }: { slug: string }) {
              de acesso, e o portão do curso lê dela. */
           await account.refresh();
           track('course_completed', { id: `compra-${slug}` });
-          contarAB('compra');
         }
       } catch {
         /* Uma falha de rede no meio de uma espera não é motivo para desistir:
