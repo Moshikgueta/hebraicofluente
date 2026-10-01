@@ -86,7 +86,9 @@ const estado = () => p.evaluate(() => {
   const [feito, total] = marca.split('/').map(Number);
   const botoes = [...main.querySelectorAll('button')].map((el, i) => ({
     i, txt: (el.innerText || '').replace(/\s+/g, ' ').trim(),
-    off: el.disabled, etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa'),
+    /* aria-disabled conta como desligado: o ligar da lição e as perguntas
+       da etapa 1 mantêm o botão focável depois de respondido (VIS-005/008). */
+    off: el.disabled || el.getAttribute('aria-disabled') === 'true', etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa'),
     resposta: el.getAttribute('data-resposta'),
     /* O rótulo acessível, e ele é necessário por causa de um laço infinito.
        ────────────────────────────────────────────────────────────────────
@@ -260,7 +262,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
         const todos = [...document.querySelectorAll('main button')];
         const idx = el => todos.indexOf(el);
         return uls.slice(0, 2).map(u => [...u.querySelectorAll('button')]
-          .map(b => ({ i: idx(b), off: b.disabled })));
+          .map(b => ({ i: idx(b), off: b.disabled || b.getAttribute('aria-disabled') === 'true' })));
       });
       if (colunas.length < 2) { travas++; await p.waitForTimeout(300); continue; }
       const [esq, dir] = colunas;
