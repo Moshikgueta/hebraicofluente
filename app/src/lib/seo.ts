@@ -58,6 +58,9 @@ export const NAO_LISTADAS = [
      pior vitrine possível. */
   '/conta-apagada',
   '/sair-da-lista',
+  /* As cópias fixas de cada versão das políticas (app/versoes.mjs, LEGAL-104).
+     Existem para quem aceitou aquela versão; na busca, só a de hoje. */
+  '/termos/v', '/reembolso/v', '/privacidade/v',
   /* O painel de gravação do dono do curso (/admin/gravar). Nada nele serve a
      quem busca, e o Worker já o marca `noindex` - fora do sitemap também. */
   '/admin'

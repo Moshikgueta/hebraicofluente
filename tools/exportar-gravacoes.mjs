@@ -22,13 +22,18 @@
  */
 
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const AUDIO = join(ROOT, 'audio');
-const WRANGLER = ['--yes', 'wrangler@4.135.0', 'd1', 'execute', 'hebraico-fluente', '--remote', '--json', '--command'];
+/* O wrangler do package-lock.json da raiz quando `npm ci` rodou (SEC-A-009:
+   as dependências dele vêm do lockfile, com hash); senão o npx, na mesma
+   versão. */
+const LOCAL = join(ROOT, 'node_modules', '.bin', 'wrangler');
+const [CMD, ...BASE] = existsSync(LOCAL) ? [LOCAL] : ['npx', '--yes', 'wrangler@4.135.0'];
+const WRANGLER = [...BASE, 'd1', 'execute', 'hebraico-fluente', '--remote', '--json', '--command'];
 const LOTE = 4;
 
 const PAD_HEAD_MS = 80;
@@ -78,7 +83,7 @@ export function tratar(bruto, tipo, inicioMs, fimMs, destino) {
 }
 
 function sql(consulta) {
-  const saida = execFileSync('npx', [...WRANGLER, consulta], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
+  const saida = execFileSync(CMD, [...WRANGLER, consulta], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
   const json = JSON.parse(saida.slice(saida.indexOf('[')));
   return json[0]?.results ?? [];
 }

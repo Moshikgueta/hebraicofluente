@@ -19,7 +19,7 @@
  */
 
 import type { PlatformApi } from './api';
-import { AuthError, type AuthErrorCode, type Order, type PaymentMethod, type Session } from './types';
+import { AuthError, type AuthErrorCode, type Compras, type Order, type PaymentMethod, type Session } from './types';
 
 /* Sempre a própria origem. Isto já foi `process.env.NEXT_PUBLIC_API_BASE`, e
    como a variável nunca era definida no build o empacotador não a congelava:
@@ -70,12 +70,32 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
 export class WorkerApi implements PlatformApi {
   readonly mode = 'worker' as const;
 
-  async me(): Promise<Session | null> {
+  /** A pergunta "há sessão?" em voo, compartilhada. O AccountProvider e o
+   *  progresso (lib/state/worker.ts) perguntam juntos ao abrir cada página;
+   *  uma ida à rede responde aos dois. Só enquanto está em voo: resposta
+   *  guardada depois envelheceria (uma compra, um login em outra aba). */
+  #meEmVoo: Promise<Session | null> | null = null;
+
+  me(): Promise<Session | null> {
+    if (this.#meEmVoo) return this.#meEmVoo;
+    const p = this.#buscarMe().finally(() => { this.#meEmVoo = null; });
+    this.#meEmVoo = p;
+    return p;
+  }
+
+  async #buscarMe(): Promise<Session | null> {
     try {
-      return await call<Session>('/me');
+      /* `X-HF-Sessao: opcional`: sem sessão, o servidor responde 200
+         `{ signedIn: false }` em vez de 401, e o console do visitante não
+         ganha um erro vermelho por página (auditoria de 01/10/2026,
+         PERF-007). Ver `semSessao` em worker/src/api/auth.js. */
+      const s = await call<Session | { signedIn: false }>('/me', { headers: { 'X-HF-Sessao': 'opcional' } });
+      return s && typeof s === 'object' && 'account' in s && s.account ? s : null;
     } catch (e) {
       /* Sem sessão é uma resposta, não uma falha: é o estado de todo visitante
-         que ainda não entrou. Só relança o que for realmente um problema. */
+         que ainda não entrou. O 401 continua possível (um Worker anterior a
+         esta mudança, depois de um rollback). Só relança o que for realmente
+         um problema. */
       if (e instanceof AuthError && e.code === 'not-signed-in') return null;
       throw e;
     }
@@ -140,6 +160,16 @@ export class WorkerApi implements PlatformApi {
 
   orders(): Promise<Order[]> {
     return call<{ orders: Order[] }>('/orders').then(r => r.orders);
+  }
+
+  compras(): Promise<Compras> {
+    return call<{ orders: Order[]; vencidos?: Compras['vencidos'] }>('/orders')
+      .then(r => ({ orders: r.orders, vencidos: r.vencidos ?? [] }));
+  }
+
+  pixPendente(courseSlug: string): Promise<Order | null> {
+    return call<{ order: Order | null }>(`/pay/pix?curso=${encodeURIComponent(courseSlug)}`)
+      .then(r => r.order);
   }
 
   requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }> {

@@ -7,7 +7,7 @@ import { envDeTeste, pedido } from './ajuda/d1';
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
 import { deleteAccount } from '../../worker/src/lib/db.js';
-import empresa from '../../data/empresa.json';
+import versoes from '../../data/politicas-versoes/atual.json';
 
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
@@ -30,14 +30,17 @@ describe('o aceite dos Termos de Uso', () => {
     expect(env.DB.bruto.prepare('SELECT COUNT(*) AS n FROM accounts').get()).toEqual({ n: 0 });
   });
 
-  it('aceitando, grava quando e a versão que a página /termos mostra', async () => {
+  /* Desde 01/10/2026 (LEGAL-104) a versão é o código do texto publicado,
+     com a cópia fixa em /termos/v/<versao>/, e não mais a data. */
+  it('aceitando, grava quando e o código da versão publicada dos Termos', async () => {
     const env = envDeTeste() as Env;
     const antes = Date.now();
     expect((await cadastrar(env, { ...BASE, aceitouTermos: true })).status).toBe(200);
     const [a, b] = aceites(env);
-    expect(a).toMatchObject({ documento: 'termos', versao: empresa.politicas.atualizadoEm });
+    expect(versoes.termos).toMatch(/^[0-9a-f]{10}$/);
+    expect(a).toMatchObject({ documento: 'termos', versao: versoes.termos });
     /* E a declaração de idade, junto. */
-    expect(b).toMatchObject({ documento: 'idade', versao: empresa.politicas.atualizadoEm });
+    expect(b).toMatchObject({ documento: 'idade', versao: versoes.termos });
     expect(a!.aceito_em).toBeGreaterThanOrEqual(antes);
   });
 

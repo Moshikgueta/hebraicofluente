@@ -14,15 +14,24 @@ import { LinkButton } from '@/components/ui/Button';
 import { AchievementBadge } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course } from '@/lib/content';
-import { isLessonComplete } from '@/lib/state/rules';
+import { ACHIEVEMENTS, isLessonComplete, isLessonMastered, REGRA_DO_DOMINIO } from '@/lib/state/rules';
 import { CertificateCallout } from '@/app/certificado/CertificadoClient';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 
 export function CompletionClient() {
   const p = useProgress();
   const letters = allLetters();
-  const mastered = letters.filter(l => isLessonComplete(p.state, l.id));
+  /* Uma régua só (UXQA-005): "dominada" é `isLessonMastered`, a mesma que
+     abre o exame e o certificado. */
+  const mastered = letters.filter(l => isLessonMastered(p.state, l.id));
+  const concluidasSemDominio = letters.filter(l => isLessonComplete(p.state, l.id) && !isLessonMastered(p.state, l.id));
   const finished = !!p.state.finalChallenge.completedAt;
+  /* A página não afirma o que ainda não aconteceu (UXQA-015): "Você está
+     lendo hebraico" e a lista do que se sabe fazer só com o alfabeto inteiro
+     dominado. Antes disso, ela mostra onde o aluno está e o que falta. */
+  const alfabetoDominado = mastered.length >= course.totalLetters;
+  const faltam = letters.filter(l => !isLessonMastered(p.state, l.id));
+  const conquistas = new Set(p.state.achievements.map(a => a.id).filter(id => ACHIEVEMENTS.some(d => d.id === id)));
 
   return (
     <div className="grid gap-6 reading">
@@ -35,10 +44,14 @@ export function CompletionClient() {
         <h1 className="text-[29px] sm:text-[38px] font-bold leading-[1.15]">
           {finished
             ? 'Agora você consegue ler hebraico.'
-            : 'Você está lendo hebraico.'}
+            : alfabetoDominado
+              ? 'Você está lendo hebraico.'
+              : 'O seu caminho no alfabeto'}
         </h1>
         <p className="text-[17px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
-          Há algumas semanas isto era um conjunto de símbolos.
+          {alfabetoDominado
+            ? 'Há algumas semanas isto era um conjunto de símbolos.'
+            : `Faltam ${faltam.length} ${faltam.length === 1 ? 'letra' : 'letras'} para dominar o alfabeto. Dominar uma letra é ${REGRA_DO_DOMINIO}.`}
         </p>
         <div className="py-2">
           <HeSeq items={letters.slice(0, 11).map(l => l.letter)} size="word" sep={null} />
@@ -50,13 +63,29 @@ export function CompletionClient() {
           {mastered.length} / {course.totalLetters}
         </p>
         <p className="font-ui text-[13px] text-ink-muted">letras dominadas</p>
+        {!alfabetoDominado && (
+          <div className="grid gap-2 justify-items-center">
+            {concluidasSemDominio.length > 0 && (
+              <p className="font-ui text-[14px] text-ink-body">
+                {concluidasSemDominio.length === 1
+                  ? '1 lição concluída ainda está abaixo do domínio: refazer a fixação dela já conta.'
+                  : `${concluidasSemDominio.length} lições concluídas ainda estão abaixo do domínio: refazer a fixação delas já conta.`}
+              </p>
+            )}
+            <LinkButton href={`/licao/${faltam[0]!.id}`}>
+              {isLessonComplete(p.state, faltam[0]!.id)
+                ? `Refazer a fixação de ${faltam[0]!.namePt}`
+                : `Ir para a letra ${faltam[0]!.namePt}`}
+            </LinkButton>
+          </div>
+        )}
       </Card>
 
       <div className="grid sm:grid-cols-3 gap-3">
         {[
           ['XP acumulado', p.state.xp.toLocaleString('pt-BR')],
           ['Maior sequência', `${p.state.streak.longest} dias`],
-          ['Conquistas', `${p.state.achievements.length} de 11`]
+          ['Conquistas', `${conquistas.size} de ${ACHIEVEMENTS.length}`]
         ].map(([k, v]) => (
           <Card key={k} className="p-5 grid gap-1">
             <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{k}</p>
@@ -76,6 +105,7 @@ export function CompletionClient() {
         </section>
       )}
 
+      {alfabetoDominado && (
       <Card className="p-6 grid gap-3">
         <h2 className="font-display text-[18px] font-semibold">O que você sabe fazer agora</h2>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
@@ -94,6 +124,7 @@ export function CompletionClient() {
           ))}
         </ul>
       </Card>
+      )}
 
       {/* "E depois?" vem do catálogo e some sozinho para quem já comprou o
           curso seguinte - o botão daqui era fixo no A1 e não levava a lugar

@@ -17,6 +17,8 @@
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { DOCUMENTOS, textoDe, trechoDoDocumento, versaoDe } from './versoes.mjs';
 
 const OUT = 'out';
 let erros = 0, avisos = 0;
@@ -78,7 +80,9 @@ if (!capa) {
     ['/termos/', 'Termos de Uso'],
     ['/privacidade/', 'Política de Privacidade'],
     ['/reembolso/', 'Reembolso'],
-    ['/suporte/', 'Suporte']
+    ['/suporte/', 'Suporte'],
+    /* LBI art. 63: a Declaração de Acessibilidade também (LEGAL-123). */
+    ['/acessibilidade/', 'Declaração de Acessibilidade']
   ];
   for (const [rota, nome] of PAGINAS) {
     const p = html(rota);
@@ -277,6 +281,106 @@ if (!AUTOR || !OBRA) {
     !f.endsWith('lib/credito.ts') && readFileSync(f, 'utf8').includes(AUTOR));
   if (copias.length) falha(`o nome do autor está escrito à mão em: ${copias.join(' ')}`);
   else ok('o nome do autor vem de src/lib/credito.ts, e de lugar nenhum mais');
+}
+
+/* ── 6. o parcelamento, sempre com os juros (LEGAL-102) ──────────────────── */
+console.log('\n  O PARCELAMENTO\n');
+
+/* "Em até 12x" sozinho é lido como "sem juros", e aqui há juros (da Mercado
+   Pago, pagos pelo comprador). Toda página do export, no texto que o
+   visitante lê (sem os <script>): cada "12x" precisa ter "juros" a até 120
+   caracteres. A frase sai de `parcelasTexto()`/`parcelasCurto()` em
+   src/lib/empresa.ts. */
+const paginasDoExport = [];
+(function varrerOut(dir) {
+  if (!existsSync(dir)) return;
+  for (const nome of readdirSync(dir)) {
+    const p = join(dir, nome);
+    if (statSync(p).isDirectory()) { if (nome !== '_next') varrerOut(p); }
+    else if (nome.endsWith('.html')) paginasDoExport.push(p);
+  }
+})(OUT);
+const visivel = h => textoDe(h.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' '));
+{
+  const semJuros = [];
+  let vistos = 0;
+  for (const f of paginasDoExport) {
+    const t = visivel(readFileSync(f, 'utf8'));
+    for (const m of t.matchAll(/\b\d{1,2} ?[x×](?![a-zà-ú])/gi)) {
+      vistos++;
+      const perto = t.slice(Math.max(0, m.index - 120), m.index + m[0].length + 120);
+      if (!/juros/i.test(perto)) { semJuros.push(`${f.slice(OUT.length)}: "...${t.slice(Math.max(0, m.index - 40), m.index + 40)}..."`); }
+    }
+  }
+  if (semJuros.length) {
+    for (const x of semJuros.slice(0, 10)) falha(`parcelamento sem "juros" no mesmo trecho - ${x}`);
+  } else ok(`${vistos} menção(ões) a parcelas no export, todas com "juros" no mesmo trecho`);
+}
+
+/* ── 7. a versão de cada política (LEGAL-104 e LEGAL-123) ──────────────────── */
+console.log('\n  A VERSÃO DE CADA POLÍTICA\n');
+
+/* A versão aceita no cadastro e gravada no pedido é o código do TEXTO
+   publicado (app/versoes.mjs). Três perguntas por documento: o código de
+   data/politicas-versoes/atual.json é o do texto deste export? A cópia fixa
+   dessa versão existe e foi publicada em /<doc>/v/<versao>/? Ela está no git
+   (é o que a faz durar mais do que esta publicação)? */
+{
+  const ATUAL = '../data/politicas-versoes/atual.json';
+  const atual = existsSync(ATUAL) ? JSON.parse(readFileSync(ATUAL, 'utf8')) : {};
+  const emCI = !!process.env.CI || !!process.env.GITHUB_ACTIONS;
+  for (const [doc] of DOCUMENTOS) {
+    const p = html(`/${doc}/`);
+    const trecho = p && trechoDoDocumento(p, doc);
+    if (!trecho) { falha(`/${doc}/ sem <article data-politica="${doc}"> - a versão não tem de onde sair`); continue; }
+    const v = versaoDe(textoDe(trecho));
+    if (atual[doc] !== v) {
+      falha(`${doc}: o texto publicado é a versão ${v}, e atual.json diz ${atual[doc] || '(nada)'} - rode \`npm run build\` (versoes.mjs)`);
+      continue;
+    }
+    const guardado = `../data/politicas-versoes/${doc}-${v}.html`;
+    if (!existsSync(guardado)) { falha(`${doc}: falta a cópia fixa ${guardado}`); continue; }
+    if (!existsSync(`${OUT}/${doc}/v/${v}/index.html`)) { falha(`${doc}: a cópia fixa não foi publicada em /${doc}/v/${v}/`); continue; }
+    let noGit = true;
+    try { execFileSync('git', ['ls-files', '--error-unmatch', guardado], { stdio: 'ignore' }); }
+    catch { noGit = false; }
+    if (noGit) ok(`${doc}: versão ${v}, com cópia fixa em /${doc}/v/${v}/ e no git`);
+    else if (emCI) aviso(`${doc}: a versão ${v} desta publicação não está no git - ver RUNBOOK-ATENDIMENTO.md`);
+    else falha(`${doc}: a versão ${v} é nova - faça commit de ${guardado.slice(3)} e de data/politicas-versoes/atual.json`);
+  }
+}
+
+/* ── 8. os Termos e a FAQ dizem o que o checkout cobra (LEGAL-103/123) ────── */
+console.log('\n  AS FORMAS DE PAGAMENTO NO TEXTO\n');
+
+/* O build reescreve `pagamento.formas` com o que a Mercado Pago aceita (e o
+   modo, quando a credencial cai). Cada página que fala de pagamento tem de
+   acompanhar - inclusive o contrato. Mesma regra de src/lib/empresa.ts. */
+{
+  const pg = empresa.pagamento || {};
+  const soPix = pg.modo === 'pix-direto';
+  const temPix = soPix ? true : (pg.formas ? !!pg.formas.pix : true);
+  const temCartao = soPix ? false : (pg.formas ? !!pg.formas.cartao : true);
+  const confirma = pg.modo === 'mercadopago';
+  const REGRAS = [
+    ...(temPix ? [] : [[/\bno PIX\b|pelo PIX|pagando por PIX/i, 'oferece PIX, que esta publicação não tem']]),
+    ...(temCartao ? [] : [[/parcelad|\b\d{1,2} ?[x×](?![a-zà-ú])/i, 'oferece parcelamento, que esta publicação não tem']]),
+    ...(confirma ? [] : [[/Acesso imediato|normalmente em minutos|em alguns minutos|liberado automaticamente|Acesso liberado na hora/i,
+                          'promete liberação imediata, e no PIX direto a liberação é à mão']])
+  ];
+  const ROTAS = ['/', '/cursos/alfabetizacao/', '/checkout/alfabetizacao/', '/termos/', '/faq/', '/suporte/', '/reembolso/'];
+  let achados = 0;
+  for (const rota of ROTAS) {
+    const p = html(rota);
+    if (!p) continue;
+    const t = visivel(p);
+    for (const [re, oQue] of REGRAS) {
+      const m = t.match(re);
+      if (m) { falha(`${rota} ${oQue}: "...${t.slice(Math.max(0, m.index - 40), m.index + 50)}..."`); achados++; }
+    }
+  }
+  if (!achados) ok(`modo ${pg.modo}, PIX ${temPix ? 'sim' : 'não'}, cartão ${temCartao ? 'sim' : 'não'}: ` +
+                   `${ROTAS.length} páginas de venda e de contrato coerentes`);
 }
 
 /* ── o veredito ─────────────────────────────────────────────────────────── */

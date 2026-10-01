@@ -31,7 +31,7 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { PASSOS, TEM_AUDIO } from '@/components/landing/copy';
+import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from '@/components/landing/copy';
 
 /* Trechos que só podem estar no ar quando existe gravação. */
 const PROMESSAS = [
@@ -43,9 +43,9 @@ const PROMESSAS = [
   'ouviu'
 ];
 
-/** Todo texto que o método mostra, numa lista só. (As abas da demonstração
- *  e a maquete saíram com a capa antiga: auditoria de 01/10/2026, TEC-001.) */
+/** Todo texto que a demonstração e o método mostram, numa lista só. */
 const textos = (): string[] => [
+  ...ABAS.flatMap(a => [a.label, a.kicker, a.title, a.body, ...a.points]),
   ...PASSOS.flatMap(p => [p[0], p[1]])
 ];
 
@@ -57,11 +57,31 @@ describe('a landing e o áudio dizem a mesma coisa', () => {
     expect(promete).toEqual([]);
   });
 
-  it('mantém o método com um passo por coisa que o curso faz', () => {
-    /* Seis passos com gravação, cinco sem: o "Ouça" não tem como existir com o
-       manifesto vazio. */
-    expect(PASSOS).toHaveLength(TEM_AUDIO ? 6 : 5);
-    expect(PASSOS.map(p => p[0])).toContain('Associe');
+  it('conta os tipos de exercício, em vez de chutar', () => {
+    /* Cinco categorias com gravação (múltipla escolha, digitação, associação,
+       escuta, leitura), quatro sem - a escuta é a única que o curso desliga.
+       Anunciar cinco e entregar quatro é o mesmo erro, de tamanho menor. */
+    const pratica = ABAS.find(a => a.label === 'Prática');
+    expect(pratica).toBeDefined();
+    expect(pratica!.title).toContain(TEM_AUDIO ? 'Cinco' : 'Quatro');
+  });
+
+  it('desenha uma maquete de exercício que existe hoje', () => {
+    /* As duas telas que MOSTRAM um exercício em vez de descrevê-lo. Sem
+       gravação, a de escuta não existe no curso - então a maquete vira a de
+       reconhecimento, que faz a pergunta ao contrário e é o que o aluno
+       encontra de verdade. */
+    expect(MAQUETE.praticaRotulo).toBe(TEM_AUDIO ? 'Escuta' : 'Reconhecer');
+    if (!TEM_AUDIO) {
+      expect(MAQUETE.praticaPergunta).not.toMatch(/ouviu|áudio|escut/i);
+      expect(MAQUETE.heroiPergunta).not.toMatch(/ouviu|áudio|escut/i);
+    }
+  });
+
+  it('mantém o método com as etapas da lição, e não uma lista à parte', () => {
+    /* Desde 01/10/2026 (CONV-010) os passos da capa são as abas da lição:
+       Conhecer, Palavras, Escrever, Praticar, Fixação - com a escrita. */
+    expect(PASSOS.map(p => p[0])).toEqual(['Conhecer', 'Palavras', 'Escrever', 'Praticar', 'Fixação']);
   });
 
   it('volta a prometer sozinha no dia em que a gravação entrar', () => {
@@ -127,7 +147,10 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
        gravação entrar e o array voltar a ter seis. */
     const fonte = readFileSync(
       new URL('../src/components/landing/Secoes.tsx', import.meta.url), 'utf8');
-    expect(fonte).toContain('PASSOS.length === 6');
+    /* Desde 01/10/2026 a contagem sai de lib/etapas-da-licao.ts
+       (`quantasEtapasPt`), a mesma lista que a capa desenha. */
+    expect(fonte).toContain('quantasEtapasPt()');
+    expect(fonte).not.toContain("'Seis passos'");
   });
 
   it('e a sincronização que ele anuncia existe mesmo', () => {
@@ -166,6 +189,15 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
     expect(barra).not.toMatch(/R\$\s?\d/);
   });
 
+  it('a seção do conteúdo extra não manda visitante para rota paga', () => {
+    /* /biblia é pública e vira link. /historia é do curso: um link para ela
+       numa página de vendas leva a um 302 de login, que é a pior coisa que
+       um botão de landing pode fazer. */
+    const alem = readFileSync(
+      new URL('../src/components/landing/AlemDoAlfabeto.tsx', import.meta.url), 'utf8');
+    expect(alem).toContain('href="/biblia"');
+    expect(alem).not.toContain('href="/historia"');
+  });
 });
 
 /* ── preço de pré-lançamento (auditoria de 28/09/2026, LEGAL-014) ────────

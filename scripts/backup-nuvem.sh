@@ -66,7 +66,18 @@ BUCKET="${HF_BACKUP_BUCKET:-hebraico-fluente-backups}"
 REGRA="expira-diarias-90-dias"
 DIAS=90
 # Mesma versão fixa da publicação: estes comandos rodam com o token da conta.
-W="${HF_WRANGLER:-npx --yes wrangler@4.135.0}"
+# O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+# SEC-A-009): com `npm ci` na raiz, a versão E todas as dependências dela vêm
+# do lockfile, conferidas pelo hash. O `npx --yes wrangler@VERSÃO` fixava só
+# o pacote de cima e resolvia o resto a cada execução - num passo que tem os
+# segredos de produção no ambiente. Sem `npm ci` (uma máquina nova), cai no
+# npx com a mesma versão do lockfile.
+if [ -x "$PWD/node_modules/.bin/wrangler" ]; then
+  WRANGLER_LOCAL="$PWD/node_modules/.bin/wrangler"
+else
+  WRANGLER_LOCAL="npx --yes wrangler@4.135.0"
+fi
+W="${HF_WRANGLER:-$WRANGLER_LOCAL}"
 
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
@@ -286,6 +297,22 @@ copiar() {
       --content-type application/gzip >>"$TMP/put.log" 2>&1 \
     || morre "O envio da cópia 'ultimo' ao R2 falhou." "$(tail -15 "$TMP/put.log")"
   verde "✓ $BUCKET/$chave ($(wc -c < "$arq.gz" | tr -d ' ') bytes compactado)"
+
+  # 5. O carimbo (auditoria de 01/10/2026, SEC-A-005). O Worker não lê o R2
+  # de backup, então é o backup que conta ao banco que terminou: a linha
+  # `backup` de `batimentos`, a mesma tabela do batimento da varredura. O
+  # alerta diário (worker/src/alertas.js) avisa o dono quando ela passa de
+  # 36 h. Só depois do envio ao R2: carimbo é "há cópia nova", não "tentei".
+  # Se o carimbo falhar, o backup NÃO falha (ele está guardado); o aviso
+  # aqui e, passadas 36 h, o e-mail do alerta dizem que algo não fecha.
+  verde "5. Carimbando o fim do backup no banco"
+  if $W d1 execute "$DB" --remote --command \
+      "INSERT INTO batimentos (nome, em) VALUES ('backup', unixepoch() * 1000) ON CONFLICT(nome) DO UPDATE SET em = excluded.em" \
+      >"$TMP/carimbo.log" 2>&1; then
+    info "batimentos.backup = agora"
+  else
+    printf '::warning::%s\n' "O backup foi guardado, mas o carimbo no banco falhou: o alerta diário vai dizer que não há backup novo. $(tail -3 "$TMP/carimbo.log" | tr '\n' ' ')"
+  fi
 
   resumo "## ✅ Backup do banco"
   resumo ""

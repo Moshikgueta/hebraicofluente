@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/Button';
 import { TraceBoard, type QuadroHandle, type Veredito } from '@/components/learn/TraceBoard';
 import { EditorDeNome, disponibilidade, nomeDoAluno } from '@/components/learn/MeuNome';
 import { useProgress } from '@/lib/state/store';
+import { useAccount } from '@/lib/account/store';
 import { letrasConcluidas } from '@/lib/leitura';
 import { letrasDoNome } from '@/lib/nome-hebraico';
 import { stripNikud } from '@/lib/hebrew';
@@ -29,6 +30,8 @@ import { track } from '@/lib/analytics';
 
 export function MeuNomeClient() {
   const p = useProgress();
+  const account = useAccount();
+  const nomeDaConta = account.session?.account.name ?? null;
   const aprendidas = useMemo(() => letrasConcluidas(p.state), [p.state]);
   const [nome, setNome] = useState('');
   const [grafia, setGrafia] = useState('');
@@ -38,11 +41,11 @@ export function MeuNomeClient() {
   /* O nome e a grafia de partida chegam quando o progresso carrega - uma vez,
      para não apagar o que o aluno já digitou. */
   useEffect(() => {
-    if (!p.ready || iniciado.current) return;
+    if (!p.ready || !account.ready || iniciado.current) return;
     iniciado.current = true;
-    setNome(nomeDoAluno(p.state.onboarding?.name));
+    setNome(nomeDoAluno(p.state.onboarding?.name, nomeDaConta));
     if (p.state.nomeHebraico) { setGrafia(p.state.nomeHebraico.texto); setEditado(true); }
-  }, [p.ready, p.state.onboarding?.name, p.state.nomeHebraico]);
+  }, [p.ready, account.ready, nomeDaConta, p.state.onboarding?.name, p.state.nomeHebraico]);
 
   const disp = useMemo(() => disponibilidade(nome, aprendidas.map(l => l.letter)), [nome, aprendidas]);
   /* Enquanto o aluno não mexeu na grafia, ela acompanha o nome digitado. */

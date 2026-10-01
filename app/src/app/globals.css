@@ -162,6 +162,13 @@
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; }
 }
+/* Sem JavaScript nenhum observador acrescenta `.vis`, e a entrada do hero
+   (`data-entrada`, Hero.tsx) nasce com opacidade zero num estilo inline que
+   só o React troca. `scripting: none` mostra tudo, e o `!important` vence o
+   estilo inline (auditoria de 01/10, UXQA-001). */
+@media (scripting: none) {
+  .reveal, [data-entrada] { opacity: 1 !important; transform: none !important; }
+}
 
 .skeleton {
   background: linear-gradient(90deg, var(--surface-2) 25%, var(--line-soft) 37%, var(--surface-2) 63%);

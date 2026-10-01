@@ -310,7 +310,7 @@ export const estornoDe = (env, orderId) =>
   env.DB.prepare('SELECT * FROM estornos WHERE order_id = ?').bind(orderId).first();
 
 /** Muda só as colunas desta lista; o resto fica. */
-const COLUNAS_ESTORNO = ['estado', 'tentativas', 'proxima_em', 'refund_id', 'erro'];
+const COLUNAS_ESTORNO = ['estado', 'tentativas', 'proxima_em', 'refund_id', 'erro', 'payment_id'];
 export async function estornoAtualizar(env, orderId, campos, at = now()) {
   const cols = Object.keys(campos).filter(c => COLUNAS_ESTORNO.includes(c));
   if (!cols.length) return;
@@ -448,6 +448,35 @@ export async function contarAcoes(env, acoes, desde) {
 }
 
 /** Avisos com mais de 60 dias saem: só servem para deduplicar. */
+/* ── respostas 5xx (01/10/2026, SEC-A-005) ──────────────────────────────────
+ * O que o alerta diário conta. Uma linha por hora com upsert: cada 5xx é uma
+ * escrita, mas a tabela não cresce com a rajada. Nunca lança - quem chama é o
+ * caminho de uma resposta que já deu errado. */
+const HORA_MS = 3_600_000;
+export async function contar5xx(env, at = now()) {
+  try {
+    await env.DB.prepare(
+      'INSERT INTO respostas_5xx (hora, n) VALUES (?, 1) ON CONFLICT(hora) DO UPDATE SET n = n + 1'
+    ).bind(Math.floor(at / HORA_MS) * HORA_MS).run();
+  } catch { /* banco fora: o 5xx que não se conta está no painel da Cloudflare */ }
+}
+
+/** Soma das respostas 5xx desde `desde` (ms), ou null se não deu para ler. */
+export async function somar5xx(env, desde) {
+  try {
+    const r = await env.DB.prepare('SELECT COALESCE(SUM(n), 0) AS n FROM respostas_5xx WHERE hora >= ?')
+      .bind(Math.floor(desde / HORA_MS) * HORA_MS).first();
+    return r ? Number(r.n) : 0;
+  } catch {
+    return null;
+  }
+}
+
+export async function respostas5xxPurge(env, at = now()) {
+  try { await env.DB.prepare('DELETE FROM respostas_5xx WHERE hora < ?').bind(at - 7 * 86_400_000).run(); }
+  catch { /* idem */ }
+}
+
 export async function avisosPurge(env, at = now()) {
   try { await env.DB.prepare('DELETE FROM avisos WHERE enviado_em < ?').bind(at - 60 * 86_400_000).run(); }
   catch { /* idem */ }
@@ -676,10 +705,70 @@ export async function createOrder(env, o) {
 export const getOrder = (env, id) =>
   env.DB.prepare('SELECT * FROM orders WHERE id = ?').bind(id).first();
 
+/* A lista de Compras do /perfil. Um pedido `failed` sem `provider_ref` é um
+   clique em Pagar cuja cobrança nem chegou a nascer no provedor (auditoria de
+   01/10/2026, PAY-B-010): não houve pagamento, não há o que mostrar, e cada
+   tentativa aparecia como uma compra "Não concluída" em vermelho. */
 export const ordersOf = (env, accountId, limit = 50) =>
   env.DB.prepare(
-    'SELECT * FROM orders WHERE account_id = ? ORDER BY created_at DESC LIMIT ?'
+    `SELECT * FROM orders
+      WHERE account_id = ? AND NOT (status = 'failed' AND provider_ref IS NULL)
+      ORDER BY created_at DESC LIMIT ?`
   ).bind(accountId, limit).all().then(r => r.results || []);
+
+/** O PIX ainda pagável de um curso: o pedido `pending` mais recente da conta,
+ *  com código e com o prazo no futuro (auditoria de 01/10/2026, PAY-B-002).
+ *  É o que o checkout reabre ao voltar do aplicativo do banco, em vez de
+ *  gerar um segundo PIX. null quando não há. */
+export async function pixPendente(env, accountId, courseSlug, at = now()) {
+  return await env.DB.prepare(
+    `SELECT * FROM orders
+      WHERE account_id = ? AND course_slug = ? AND status = 'pending' AND method = 'pix'
+        AND pix_code IS NOT NULL AND pix_expires_at > ?
+      ORDER BY created_at DESC LIMIT 1`
+  ).bind(accountId, courseSlug, at).first() || null;
+}
+
+/** O que o provedor disse por último sobre um pedido, em palavras nossas:
+ *  'em-analise' (cartão em análise na operadora), 'aguardando' (o pagamento
+ *  existe e espera), 'recusado', 'aprovado', 'devolvido', ou null quando
+ *  nenhum pagamento apareceu ainda. Decide só o TEXTO da tela de retorno
+ *  (PAY-B-003); acesso nunca sai daqui. */
+export async function ultimoPagamentoDe(env, orderId) {
+  try {
+    const row = await env.DB.prepare(
+      `SELECT raw FROM payment_events WHERE order_id = ?
+        ORDER BY created_at DESC, rowid DESC LIMIT 1`
+    ).bind(orderId).first();
+    if (!row) return null;
+    let st = '';
+    try { st = String(JSON.parse(row.raw).status || ''); } catch { return null; }
+    return ({
+      in_process: 'em-analise', in_mediation: 'em-analise', pending: 'aguardando',
+      authorized: 'aprovado', approved: 'aprovado', rejected: 'recusado', cancelled: 'recusado',
+      refunded: 'devolvido', charged_back: 'devolvido'
+    })[st] || null;
+  } catch {
+    return null;
+  }
+}
+
+/** Os acessos VENCIDOS da conta, por curso: `[{ courseSlug, expiredAt }]`.
+ *  A tabela guarda uma linha por conta e curso, então o vencimento que está
+ *  lá é o mais recente. É o que deixa o /perfil e a página do curso dizerem
+ *  "seu acesso terminou em ..." em vez de tratar quem pagou como visitante
+ *  (auditoria de 01/10/2026, PAY-B-004). */
+export async function acessosVencidos(env, accountId, at = now()) {
+  const { results } = await env.DB.prepare(
+    `SELECT course_slug, expires_at FROM entitlements
+      WHERE account_id = ? AND expires_at IS NOT NULL AND expires_at <= ?
+      ORDER BY expires_at DESC`
+  ).bind(accountId, at).all();
+  return (results || []).map(r => ({
+    courseSlug: r.course_slug,
+    expiredAt: new Date(Number(r.expires_at)).toISOString()
+  }));
+}
 
 export async function updateOrder(env, id, fields) {
   const keys = Object.keys(fields);
@@ -749,12 +838,106 @@ export async function outroPedidoPagoRecente(env, order, janelaMs, at = now()) {
  *  o comprador tenta de novo no mesmo checkout e é aprovado - e esse pedido
  *  ficava fora da varredura. Se o aviso da Mercado Pago se perdesse, quem
  *  pagou não entrava nunca. Depois de 24 h eles expiram como os pendentes. */
+/*  Um `failed` SEM `provider_ref` fica de fora (01/10/2026, PAY-B-010): a
+ *  cobrança nem nasceu no provedor, não há pagamento para achar, e cada
+ *  consulta dele com a credencial quebrada virava `settle-error` e um alerta
+ *  falso de "liberação que falhou". */
 export function stalePendingOrders(env, { olderThanMs = 60_000, limit = 25 } = {}) {
   return env.DB.prepare(
     `SELECT * FROM orders
-      WHERE status IN ('pending', 'failed') AND created_at < ?
+      WHERE (status = 'pending' OR (status = 'failed' AND provider_ref IS NOT NULL))
+        AND created_at < ?
       ORDER BY created_at ASC LIMIT ?`
   ).bind(now() - olderThanMs, limit).all().then(r => r.results || []);
+}
+
+/** Pedidos EXPIRADOS que tiveram pagamento no provedor (um evento gravado),
+ *  criados nos últimos `dias`, que ninguém consultou nas últimas `intervaloMs`
+ *  (01/10/2026, PAY-B-009). É o cartão que ficou em análise antifraude por
+ *  mais de 24 h: a varredura o expirava e nunca mais perguntava, e uma
+ *  aprovação depois disso só chegava pelo webhook. Agora ele continua sendo
+ *  perguntado, com calma, por uma semana. */
+export function expiredOrdersToRecheck(env, { dias = 7, intervaloMs = 6 * 3_600_000, limit = 5 } = {}, at = now()) {
+  return env.DB.prepare(
+    `SELECT * FROM orders o
+      WHERE o.status = 'expired' AND o.provider_ref IS NOT NULL
+        AND o.created_at >= ?1 AND (o.checked_at IS NULL OR o.checked_at < ?2)
+        AND EXISTS (SELECT 1 FROM payment_events e WHERE e.order_id = o.id)
+      ORDER BY COALESCE(o.checked_at, 0) ASC LIMIT ?3`
+  ).bind(at - dias * 86_400_000, at - intervaloMs, limit).all().then(r => r.results || []);
+}
+
+/** Pedidos pagos à mão (Actions → Acesso → `liberar` com `pedido`) cujo
+ *  recibo ainda não saiu (PAY-B-005). A Action só fala SQL; quem manda o
+ *  e-mail é a varredura, com o mesmo texto do recibo automático. A chave
+ *  `recibo:<pedido>` em `avisos` é o que impede o segundo envio. */
+export function recibosManuaisPendentes(env, { dias = 7, limit = 10 } = {}, at = now()) {
+  return env.DB.prepare(
+    `SELECT * FROM orders o
+      WHERE o.status = 'paid' AND o.provider = 'manual' AND o.paid_at >= ?1
+        AND NOT EXISTS (SELECT 1 FROM avisos a WHERE a.chave = 'recibo:' || o.id)
+      ORDER BY o.paid_at ASC LIMIT ?2`
+  ).bind(at - dias * 86_400_000, limit).all().then(r => r.results || []);
+}
+
+/* ── os avisos de fim de acesso (PAY-B-004) ──────────────────────────────
+   Três marcos por vencimento: 30 dias antes, 7 dias antes e o dia do fim.
+   Cada um sai UMA vez para aquele vencimento - a chave inclui o próprio
+   `expires_at`, então uma renovação (que muda a data) recomeça os marcos, e
+   a varredura que roda de novo no mesmo dia não manda duas vezes. */
+
+/** Os direitos que entraram na janela de algum marco e ainda não receberam
+ *  o aviso dele. Uma linha por (direito, marco), com o e-mail da conta. */
+export async function vencimentosParaAvisar(env, { limit = 20 } = {}, at = now()) {
+  const D = 86_400_000;
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT e.account_id, e.course_slug, e.expires_at, a.email, a.name, m.marco
+         FROM entitlements e
+         JOIN accounts a ON a.id = e.account_id
+         JOIN (SELECT 'd30' AS marco, ?1 AS de, ?2 AS ate
+               UNION ALL SELECT 'd7', ?3, ?4
+               UNION ALL SELECT 'fim', ?5, ?6) m
+           ON e.expires_at > m.de AND e.expires_at <= m.ate
+        WHERE e.expires_at IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM avisos_vencimento v
+                           WHERE v.account_id = e.account_id AND v.course_slug = e.course_slug
+                             AND v.expires_at = e.expires_at AND v.marco = m.marco)
+        ORDER BY e.expires_at ASC LIMIT ?7`
+    ).bind(
+      at + 23 * D, at + 30 * D,      // 30 dias: entrou na janela entre 30 e 23 dias antes
+      at, at + 7 * D,                // 7 dias: de 7 dias antes até o fim
+      at - 3 * D, at,                // o fim: venceu nos últimos três dias
+      limit
+    ).all();
+    return results || [];
+  } catch {
+    /* Tabela ainda não criada pela publicação: ninguém é avisado, nada cai. */
+    return [];
+  }
+}
+
+/** Reserva o marco. true = esta chamada reservou e deve mandar. */
+export async function reservarVencimento(env, { accountId, courseSlug, expiresAt, marco }, at = now()) {
+  try {
+    const r = await env.DB.prepare(
+      `INSERT OR IGNORE INTO avisos_vencimento (account_id, course_slug, expires_at, marco, enviado_em)
+       VALUES (?, ?, ?, ?, ?)`
+    ).bind(accountId, courseSlug, expiresAt, marco, at).run();
+    return Number(r && r.meta && r.meta.changes) > 0;
+  } catch {
+    return false;
+  }
+}
+
+/** Solta a reserva quando o e-mail não saiu: a próxima varredura tenta. */
+export async function soltarVencimento(env, { accountId, courseSlug, expiresAt, marco }) {
+  try {
+    await env.DB.prepare(
+      `DELETE FROM avisos_vencimento
+        WHERE account_id = ? AND course_slug = ? AND expires_at = ? AND marco = ?`
+    ).bind(accountId, courseSlug, expiresAt, marco).run();
+  } catch { /* a reserva fica; o aviso deste marco se perde, o curso não */ }
 }
 
 /** Pedidos PAGOS pela Mercado Pago nos últimos `dias`, que a varredura não
@@ -822,6 +1005,12 @@ export function enxuto(raw) {
  * digitando errado três vezes.
  */
 export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
+  return (await contar(env, key, limit, janelaMs)).negado;
+}
+
+/* O miolo de `throttled` e de `reservarVaga`: devolve, além do veredicto, se
+   a chamada GRAVOU (só quem gravou tem uma vaga para devolver). */
+async function contar(env, key, limit, janelaMs) {
   /* `window_at` é o INÍCIO da janela, em milissegundos - a mesma escala para
      toda janela, de um minuto ou de uma hora. Já foi um índice
      (`floor(now / janela)`), e aí a limpeza feita por uma chave de um minuto
@@ -844,7 +1033,7 @@ export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
   const antes = await env.DB.prepare(
     'SELECT hits FROM throttle WHERE key = ? AND window_at = ?'
   ).bind(k, window_at).first();
-  if (antes && antes.hits >= limit) return true;
+  if (antes && antes.hits >= limit) return { negado: true, gravou: false, k, window_at };
 
   /* Um comando só, e o SQLite devolve o valor DEPOIS do incremento: duas
      requisições simultâneas recebem números diferentes, e só as `limit`
@@ -871,7 +1060,50 @@ export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
     await env.DB.prepare('DELETE FROM throttle WHERE window_at < ?')
       .bind(now() - FAXINA_MS).run();
   }
-  return hits > limit;
+  return { negado: hits > limit, gravou: true, k, window_at };
+}
+
+/**
+ * Reserva uma vaga no freio ANTES de fazer a coisa cara, e devolve a vaga
+ * se ela não precisar contar.
+ *
+ * É o freio do login (auditoria de 01/10/2026, SEC-A-002). O teto de ERROS
+ * só deveria gastar quando a senha erra, e a primeira versão fazia isso com
+ * uma leitura (`estourou`) antes e o gasto depois da verificação. Só que a
+ * verificação leva milissegundos de PBKDF2, e quarenta tentativas em
+ * paralelo liam "abaixo do teto" quarenta vezes: todas eram avaliadas, e o
+ * teto de 5 por minuto virava o que a rajada coubesse. Aqui a vaga é tomada
+ * pela escrita atômica de `throttled` (só as `limit` primeiras passam,
+ * inclusive em paralelo) e quem ACERTOU a senha a devolve, para que o teto
+ * continue contando só as falhas: um estranho errando não tranca a dona.
+ *
+ * `devolver` nunca lança e só existe de verdade quando a chamada gravou.
+ * Devolver a última vaga apaga a linha, para que acertar a senha não deixe
+ * rastro no freio.
+ */
+export async function reservarVaga(env, key, limit = 10, janelaMs = 60_000) {
+  const r = await contar(env, key, limit, janelaMs);
+  let devolvida = !r.gravou;
+  const devolver = async () => {
+    if (devolvida) return;
+    devolvida = true;
+    try {
+      /* `hits <= 1` com a minha vaga ainda contada quer dizer que a única
+         vaga da linha é a minha. Senão, desconta um. */
+      const apagou = await env.DB.prepare(
+        'DELETE FROM throttle WHERE key = ? AND window_at = ? AND hits <= 1'
+      ).bind(r.k, r.window_at).run();
+      if (!apagou?.meta?.changes) {
+        await env.DB.prepare(
+          'UPDATE throttle SET hits = hits - 1 WHERE key = ? AND window_at = ? AND hits > 0'
+        ).bind(r.k, r.window_at).run();
+      }
+    } catch {
+      /* Uma vaga não devolvida é um erro a mais na conta de quem acertou;
+         nunca derruba o login. */
+    }
+  };
+  return { negado: r.negado, devolver };
 }
 
 /**
@@ -1094,9 +1326,9 @@ export async function deleteAccount(env, accountId) {
     await env.DB.prepare('DELETE FROM depoimentos WHERE account_id = ?').bind(id).run();
   } catch { /* tabela ausente */ }
 
-  /* A marca invisível do conteúdo e os aparelhos conectados só existem por
-     causa da conta: somem com ela. */
-  for (const t of ['marcas', 'aparelhos']) {
+  /* A marca invisível do conteúdo, os aparelhos conectados e os avisos de
+     fim de acesso só existem por causa da conta: somem com ela. */
+  for (const t of ['marcas', 'aparelhos', 'avisos_vencimento']) {
     try {
       await env.DB.prepare(`DELETE FROM ${t} WHERE account_id = ?`).bind(id).run();
     } catch { /* tabela ausente */ }

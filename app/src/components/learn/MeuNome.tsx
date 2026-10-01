@@ -25,10 +25,18 @@ import { useProgress } from '@/lib/state/store';
 import { letrasConcluidas } from '@/lib/leitura';
 import { GERESH, disponibilidade } from '@/lib/nome-hebraico';
 
-/** O nome do aluno como ele o deu - onboarding, se houver. */
-export function nomeDoAluno(onboardingName?: string | null): string {
-  return (onboardingName ?? '').trim();
+/** O nome do aluno como ele o deu: o do onboarding, se houver; senão, o
+ *  primeiro nome da conta (o cadastro já pediu). Pedir de novo, em branco,
+ *  era o terceiro pedido do mesmo dado (auditoria de 01/10/2026, UXQA-008). */
+export function nomeDoAluno(onboardingName?: string | null, nomeDaConta?: string | null): string {
+  const dado = (onboardingName ?? '').trim();
+  if (dado) return dado;
+  return primeiroNome(nomeDaConta);
 }
+
+/** A primeira palavra do nome da conta: "Maria Souza" → "Maria". */
+export const primeiroNome = (nome?: string | null): string =>
+  (nome ?? '').trim().split(/\s+/)[0] ?? '';
 
 export { disponibilidade, type Disponibilidade } from '@/lib/nome-hebraico';
 

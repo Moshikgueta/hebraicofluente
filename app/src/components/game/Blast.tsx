@@ -16,6 +16,7 @@
  * é bloqueado.
  */
 
+import { useFocoDaRodada } from './foco-da-rodada';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import type { Pergunta } from '@/lib/engine/deck';
@@ -75,6 +76,7 @@ export function Blast({
   useEffect(() => () => { if (avanco.current) clearTimeout(avanco.current); }, []);
 
   const q = perguntas[i];
+  const foco = useFocoDaRodada(i);
 
   const seguinte = useCallback(() => {
     setEscolha(null);
@@ -94,6 +96,7 @@ export function Blast({
     if (escolha !== null || !q) return;
     if (respondido.current === i) return;
     respondido.current = i;
+    foco.segurar();
     const certo = idx === q.resposta;
     setEscolha(idx);
     onResposta?.({ id: q.id, letterId: q.letterId, certo, escolhida: q.opcoes[idx] ?? '' });
@@ -121,7 +124,7 @@ export function Blast({
     setSequencia(0);
     setErradas(l => [...l, q.letterId]);
     agendar(seguinte, 1400);
-  }, [escolha, q, sequencia, i, perguntas.length, acertos, erradas, onFim, onResposta, seguinte, agendar]);
+  }, [escolha, q, sequencia, i, perguntas.length, acertos, erradas, onFim, onResposta, seguinte, agendar, foco.segurar]);
 
   /* Teclado: 1-4 respondem. O mesmo atalho do resto do curso. */
   useEffect(() => {
@@ -151,6 +154,8 @@ export function Blast({
         </span>
       </div>
 
+      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={`Pergunta ${i + 1} de ${perguntas.length}`}
+           className="grid gap-4 outline-none">
       <div className="rounded-[20px] bg-[var(--sand)] px-5 py-7 text-center relative overflow-hidden">
         <p className="font-ui text-[14.5px] text-ink-muted mb-3">{q.enunciadoPt}</p>
         {emHebraico
@@ -200,6 +205,7 @@ export function Blast({
               Quase. A resposta era {q.opcoes[q.resposta]}.
             </span>}
       </p>
+      </div>
     </div>
   );
 }

@@ -69,13 +69,19 @@ export async function conferir({ request, env }) {
   const b = await readJson(request);
   const codigo = String(b && b.codigo || '').replace(/\D/g, '');
   if (codigo.length !== 6) return fail('codigo-invalido');
-  const row = await env.DB.prepare('SELECT hash, expira, tentativas FROM admin_codigos WHERE account_id = ?')
-    .bind(account.id).first();
-  if (!row || row.expira < Date.now() || row.tentativas >= TENTATIVAS) {
-    return fail('codigo-vencido', 400);
-  }
+  /* A tentativa é GASTA antes de comparar, num comando só (auditoria de
+     01/10/2026, SEC-A-002). Antes era ler `tentativas`, comparar e só então
+     somar um na falha: quarenta palpites em paralelo liam "zero de cinco"
+     quarenta vezes e eram todos avaliados. Agora o UPDATE com a condição é a
+     corrida inteira: só as cinco primeiras recebem a linha de volta. O acerto
+     apaga a linha logo abaixo, então gastar a tentativa certa não custa nada. */
+  const row = await env.DB.prepare(
+    `UPDATE admin_codigos SET tentativas = tentativas + 1
+     WHERE account_id = ? AND expira >= ? AND tentativas < ?
+     RETURNING hash`
+  ).bind(account.id, Date.now(), TENTATIVAS).first();
+  if (!row) return fail('codigo-vencido', 400);
   if (!timingSafeEqual(row.hash, await hashDo(account.id, codigo))) {
-    await env.DB.prepare('UPDATE admin_codigos SET tentativas = tentativas + 1 WHERE account_id = ?').bind(account.id).run();
     await log(env, account.id, 'admin-codigo-errado', '');
     return fail('codigo-invalido');
   }

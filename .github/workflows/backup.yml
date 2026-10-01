@@ -62,11 +62,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
+
+      # O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+      # SEC-A-009): versão e dependências conferidas pelo hash do lockfile,
+      # e nenhum script de instalação roda num passo com o token no ambiente.
+      - name: Instalar o wrangler do lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Backup
         env:

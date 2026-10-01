@@ -28,6 +28,9 @@
  *    `html` mínimo, o mesmo conteúdo nos dois.
  */
 
+import { nomeSeguro } from './nome.js';
+import empresa from '../../../data/empresa.json';
+
 /**
  * O remetente. Fica em [vars] do wrangler.toml, não é segredo, e precisa ser
  * de um domínio verificado na Resend - senão ela recusa a entrega com 403.
@@ -49,6 +52,15 @@ export const mailReady = env => !!(env && env.RESEND_API_KEY && mailFrom(env));
 /* A base da API. Existe para o `npm test` apontar para um servidor de
    mentira; não pertence nem ao painel nem ao wrangler.toml. */
 const base = env => String((env && env.RESEND_BASE) || 'https://api.resend.com');
+
+/* O prazo de resposta do atendimento, o mesmo do site (data/empresa.json,
+   `atendimento.prazoRespostaUteis`, lido pela página via `prazoResposta()`
+   em app/src/lib/empresa.ts). Auditoria de 01/10/2026, LEGAL-109: os e-mails
+   diziam "responda" sem dizer em quanto tempo alguém lê a resposta. */
+const PRAZO_UTEIS = Number(empresa.atendimento && empresa.atendimento.prazoRespostaUteis) || 2;
+const PRAZO = `em até ${PRAZO_UTEIS} ${PRAZO_UTEIS === 1 ? 'dia útil' : 'dias úteis'}`;
+/** "Qualquer dúvida..." com o prazo, nos e-mails de compra e de desistência. */
+const duvida = suporte => `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}. Respondemos ${PRAZO}.`;
 
 /**
  * Manda, e diz o que aconteceu.
@@ -124,7 +136,7 @@ export async function sendMail(env, { to, subject, text, html }) {
  * ninguém a decidir se clica agora ou depois do jantar.
  */
 export function mensagemDeRecuperacao({ nome, link, minutos, marca, suporte }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
 
   const text = [
@@ -177,7 +189,7 @@ export function mensagemDeRecuperacao({ nome, link, minutos, marca, suporte }) {
  * confirma nada - a tela pede login, e ela não tem a senha.
  */
 export function mensagemDeConfirmacao({ nome, link, dias, esqueci, marca, suporte }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
 
   const text = [
@@ -232,7 +244,10 @@ export function mensagemDeConfirmacao({ nome, link, dias, esqueci, marca, suport
  * endereço o aviso não serve para nada. É o único e-mail nosso que carrega
  * endereço de cliente, e vai para um destinatário só.
  */
-export function mensagemDeConvitePendente({ email, nome, cursos, marca, painel }) {
+export function mensagemDeConvitePendente({ email, nome: cru, cursos, marca, painel }) {
+  /* Mesmo indo ao dono, o nome passa pelo filtro: é texto escolhido por
+     quem se cadastrou, dentro de um e-mail do nosso domínio. */
+  const nome = nomeSeguro(cru);
   const assinatura = marca || 'Hebraico Fluente';
   const lista = (cursos || []).join(', ');
 
@@ -304,7 +319,7 @@ export function mensagemDeCompra({
   nome, curso, valor, pedido, expiraEm, link, marca, suporte, arrependimentoDias, renovacao,
   termos, reembolso, versao, desistir
 }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   /* "ao CURSO X", e não "ao X": o título vem do catálogo e pode começar com
      palavra de qualquer gênero - "ao Alfabetização em Hebraico" não é
@@ -332,11 +347,13 @@ export function mensagemDeCompra({
     '---',
     '',
     arrependimentoDias
-      ? `Você tem ${arrependimentoDias} dias para desistir, contados a partir de agora, sem ` +
+      ? `Você tem ${arrependimentoDias} dias para desistir, contados da liberação do acesso (hoje), sem ` +
         'precisar justificar. É o Código de Defesa do Consumidor, e basta pedir: o valor volta integral.'
       : null,
     arrependimentoDias && desistir
-      ? `Para desistir, abra ${desistir} e use "Desistir da compra", ou responda este e-mail.`
+      ? `Para desistir, abra ${desistir} e use "Desistir da compra", ou responda este e-mail. ` +
+        `Pelo site, a confirmação chega na hora; por e-mail, respondemos confirmando o recebimento ${PRAZO}, ` +
+        'e vale a data em que você escreveu.'
       : null,
     '',
     /* O contrato, num meio que a pessoa guarda (Decreto 7.962/2013, art. 4º,
@@ -346,7 +363,7 @@ export function mensagemDeCompra({
     termos ? `· Termos de Uso: ${termos}` : null,
     reembolso ? `· Política de Reembolso: ${reembolso}` : null,
     termos ? '' : null,
-    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    suporte ? duvida(suporte) : null,
     '',
     assinatura
   /* `null` para a linha que não sai, `''` para a linha em branco que fica.
@@ -367,12 +384,13 @@ export function mensagemDeCompra({
     `Pedido: ${escapar(pedido)}</p>`,
     '<hr>',
     arrependimentoDias
-      ? `<p>Você tem ${arrependimentoDias} dias para desistir, contados a partir de agora,` +
+      ? `<p>Você tem ${arrependimentoDias} dias para desistir, contados da liberação do acesso (hoje),` +
         ' sem precisar justificar. É o Código de Defesa do Consumidor, e basta pedir:' +
         ' o valor volta integral.' +
         (desistir
           ? ` Para desistir, abra <a href="${escapar(desistir)}">Sua conta</a> e use` +
-            ' "Desistir da compra", ou responda este e-mail.'
+            ' "Desistir da compra", ou responda este e-mail. Pelo site, a confirmação chega na hora;' +
+            ` por e-mail, respondemos confirmando o recebimento ${PRAZO}, e vale a data em que você escreveu.`
           : '') +
         '</p>'
       : '',
@@ -383,7 +401,7 @@ export function mensagemDeCompra({
         `, na versão de ${escapar(versao || 'hoje')}.</p>`
       : '',
     suporte
-      ? `<p>Qualquer dúvida, responda esta mensagem ou escreva para ${escapar(suporte)}.</p>`
+      ? `<p>${escapar(duvida(suporte))}</p>`
       : '',
     `<p>${escapar(assinatura)}</p>`
   ].join('');
@@ -408,7 +426,7 @@ export function mensagemDeCompra({
 export function mensagemDeArrependimento({
   nome, curso, valor, pedido, pedidoEm, prazoUteis, cartao, marca, suporte, estornoPedido = false
 }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   /* `estornoPedido`: o site já pediu a devolução à Mercado Pago, e a
      Mercado Pago aceitou. Só então o e-mail pode dizer isso. */
@@ -434,7 +452,7 @@ export function mensagemDeArrependimento({
     'O acesso ao curso é encerrado quando o reembolso for processado; o seu progresso',
     'de estudo fica guardado, caso um dia você volte.',
     '',
-    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    suporte ? duvida(suporte) : null,
     '',
     assinatura
   ].filter(l => l !== null).join('\n');
@@ -452,7 +470,7 @@ export function mensagemDeArrependimento({
     `<p>Devolvemos 100% do valor. ${escapar(devolucao)}</p>`,
     '<p>O acesso ao curso é encerrado quando o reembolso for processado; o seu progresso',
     ' de estudo fica guardado, caso um dia você volte.</p>',
-    suporte ? `<p>Qualquer dúvida, escreva para ${escapar(suporte)}.</p>` : '',
+    suporte ? `<p>${escapar(duvida(suporte))}</p>` : '',
     `<p>${escapar(assinatura)}</p>`
   ].join('');
 
@@ -510,6 +528,133 @@ export function mensagemDeArrependimentoDono({
   return { subject: `Desistência: ${pedido} (${valor})`, text, html };
 }
 
+/* ── o estorno concluído (auditoria de 01/10/2026, PAY-B-006) ──────────── */
+
+/**
+ * "O estorno está concluído e o acesso está encerrado" - para o aluno, uma
+ * vez, quando o pedido vira `refunded`: desistência estornada sozinha,
+ * devolução marcada pelo dono em /admin/estornos, ou contestação no banco.
+ * O e-mail da desistência promete "o acesso é encerrado quando o reembolso
+ * for processado"; até aqui ninguém avisava quando foi.
+ *
+ * `restaAte`: quando o estorno é de uma renovação, os meses DELA saem e o
+ * acesso anterior continua - a mensagem diz até quando, em vez de dizer que
+ * o curso acabou.
+ */
+export function mensagemDeEstorno({
+  nome, curso, valor, pedido, cartao, contestacao = false, restaAte = '', marca, suporte
+}) {
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  const abertura = contestacao
+    ? `A compra do curso ${curso} está contestada junto ao banco ou à operadora, e o valor está devolvido.`
+    : `O estorno da sua compra do curso ${curso} está concluído.`;
+  const acesso = restaAte
+    ? `Os meses desta compra saem do seu acesso, que continua valendo até ${restaAte}.`
+    : 'O acesso ao curso está encerrado.';
+  const dinheiro = cartao
+    ? 'No cartão, o valor aparece na fatura conforme o prazo da operadora.'
+    : 'O valor volta pela mesma forma de pagamento.';
+
+  const text = [
+    ola,
+    '',
+    abertura,
+    acesso,
+    '',
+    '---',
+    `Curso: ${curso}`,
+    `Valor: ${valor}`,
+    `Pedido: ${pedido}`,
+    '---',
+    '',
+    dinheiro,
+    'Seu progresso de estudo fica guardado na conta, caso um dia você volte.',
+    '',
+    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    '',
+    assinatura
+  ].filter(l => l !== null).join('\n');
+
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p><strong>${escapar(abertura)}</strong> ${escapar(acesso)}</p>`,
+    '<hr>',
+    `<p>Curso: ${escapar(curso)}<br>`,
+    `Valor: ${escapar(valor)}<br>`,
+    `Pedido: ${escapar(pedido)}</p>`,
+    '<hr>',
+    `<p>${escapar(dinheiro)} Seu progresso de estudo fica guardado na conta, caso um dia você volte.</p>`,
+    suporte ? `<p>Qualquer dúvida, responda esta mensagem ou escreva para ${escapar(suporte)}.</p>` : '',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  return {
+    subject: contestacao ? `Compra contestada - ${curso}` : `Estorno concluído - ${curso}`,
+    text,
+    html
+  };
+}
+
+/* ── o fim do acesso (auditoria de 01/10/2026, PAY-B-004) ──────────────── */
+
+/**
+ * O aviso de fim de acesso: 30 dias antes, 7 dias antes e no dia do fim
+ * (worker/src/vencimento.js). Não é propaganda: é a informação de que um
+ * serviço contratado está acabando, para quem o contratou, e por isso não
+ * depende da lista de novidades. Diz a data, diz que nada é cobrado sozinho,
+ * e diz como renovar - que é uma compra nova, feita pela pessoa.
+ *
+ * `marco`: 'd30' | 'd7' | 'fim'. `dias`: quantos faltam (nos dois primeiros).
+ */
+export function mensagemDeVencimento({
+  nome, curso, quando, dias, marco, meses, renovar, marca, suporte
+}) {
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  const fim = marco === 'fim';
+  const faltam = Number(dias) === 1 ? 'amanhã' : `daqui a ${dias} dias`;
+  const abertura = fim
+    ? `Seu acesso ao curso ${curso} está encerrado desde ${quando}.`
+    : `Seu acesso ao curso ${curso} termina em ${quando} (${faltam}).`;
+  const como = fim
+    ? `Para voltar a estudar, renove por mais ${meses} meses: ${renovar}`
+    : `Para continuar estudando, renove por mais ${meses} meses: ${renovar}`;
+  const soma = fim
+    ? 'Seu progresso fica guardado na conta e volta inteiro quando você renovar.'
+    : `Renovar antes não perde nenhum dia: os ${meses} meses são somados ao prazo que ainda resta.`;
+
+  const text = [
+    ola,
+    '',
+    abertura,
+    '',
+    como,
+    soma,
+    '',
+    'Não há renovação automática: nada é cobrado sem o seu pedido.',
+    '',
+    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    '',
+    assinatura
+  ].filter(l => l !== null).join('\n');
+
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p><strong>${escapar(abertura)}</strong></p>`,
+    `<p><a href="${escapar(renovar)}">Renovar por mais ${escapar(meses)} meses</a></p>`,
+    `<p>${escapar(soma)}</p>`,
+    '<p>Não há renovação automática: nada é cobrado sem o seu pedido.</p>',
+    suporte ? `<p>Qualquer dúvida, responda esta mensagem ou escreva para ${escapar(suporte)}.</p>` : '',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  const subject = fim
+    ? `Seu acesso terminou - ${curso}`
+    : `Seu acesso termina em ${dias} ${Number(dias) === 1 ? 'dia' : 'dias'} - ${curso}`;
+  return { subject, text, html };
+}
+
 /**
  * Um alerta operacional para o dono (worker/src/alertas.js e o estorno que
  * travou). Texto puro, curto, sem dado de aluno além do que o dono precisa
@@ -553,6 +698,14 @@ export function reaisBR(centavos, moeda = 'BRL') {
   const v = Number(centavos || 0) / 100;
   const n = v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   return moeda === 'BRL' ? `R$ ${n}` : `${n} ${moeda}`;
+}
+
+/* "Oi, Ana." só com um nome que é nome (lib/nome.js, SEC-A-003); qualquer
+   outra coisa vira "Oi." - o campo é escrito por quem cria a conta, e o
+   e-mail sai assinado pelo nosso domínio. */
+function saudacao(nome) {
+  const n = nomeSeguro(nome);
+  return n ? `Oi, ${n}.` : 'Oi.';
 }
 
 /** O nome do aluno entra no HTML. Um nome com `<` não pode virar marcação. */

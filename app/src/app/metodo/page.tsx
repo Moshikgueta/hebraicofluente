@@ -5,6 +5,7 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { course, totalLicoes } from '@/lib/content-publico';
+import { ETAPAS_DA_LICAO, quantasEtapasPt } from '@/lib/etapas-da-licao';
 
 export const metadata: Metadata = meta({
   rota: '/metodo',
@@ -35,7 +36,7 @@ export default function MetodoPage() {
             O método
           </p>
           <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[20ch]">
-            Cinco regras, e uma delas é a que faz o curso funcionar.
+            {quantasEtapasPt()} etapas em toda lição, e uma regra que sustenta todas.
           </h1>
           <p className="text-[17px] leading-relaxed text-ink-body max-w-[58ch]">
             Não é método novo nem segredo de ninguém. É um conjunto pequeno de
@@ -80,7 +81,7 @@ export default function MetodoPage() {
       </Section>
 
       <Section tone="surface" labelledBy="outras">
-        <SectionHead id="outras" eyebrowPt="As outras quatro" titlePt="O resto do método." />
+        <SectionHead id="outras" eyebrowPt="As outras decisões" titlePt="Por que a lição é assim." />
         <ol className="grid gap-4 sm:grid-cols-2 list-none p-0 m-0">
           {[
             {
@@ -124,17 +125,13 @@ export default function MetodoPage() {
         <SectionHead
           id="aula"
           eyebrowPt="Uma lição por dentro"
-          titlePt="Dez minutos, cinco etapas."
-          leadPt="Toda lição de letra tem a mesma forma. A previsibilidade é de propósito: você nunca precisa descobrir como a tela funciona antes de aprender a letra."
+          titlePt={`Dez minutos, ${quantasEtapasPt().toLowerCase()} etapas.`}
+          leadPt="Toda lição de letra tem a mesma forma, com estas abas, nesta ordem. A previsibilidade é de propósito: você nunca precisa descobrir como a tela funciona antes de aprender a letra."
         />
+        {/* As etapas são as abas da lição (lib/etapas-da-licao.ts): a capa
+            conta a mesma lista, com os mesmos nomes (auditoria, CONV-010). */}
         <ol className="grid gap-3 sm:grid-cols-5 list-none p-0 m-0">
-          {[
-            ['Conheça', 'A forma, o nome e o som - com o que ela parece e o que ela não é.'],
-            ['Escute', 'O som isolado, depois na sílaba, depois na palavra.'],
-            ['Leia', 'Sílabas e palavras montadas só com o que você já tem.'],
-            ['Escreva', 'Com o dedo na tela, na ordem certa dos traços.'],
-            ['Prove', 'Um teste curto. Erro não pune: mostra o porquê e volta depois.']
-          ].map(([t, b], i) => (
+          {ETAPAS_DA_LICAO.map(({ aba: t, descricaoPt: b }, i) => (
             <li key={t}>
               <Card className="p-4 grid gap-1.5 h-full content-start">
                 <span aria-hidden className="font-ui text-[11px] font-bold tracking-[.1em] text-ink-muted">

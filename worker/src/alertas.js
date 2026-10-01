@@ -22,16 +22,23 @@
  *      não sobrar nenhuma. É o que garante o prazo do CDC mesmo quando o
  *      estorno automático não pôde agir.
  *
+ *   4. SAÚDE DO DIA (01/10/2026, SEC-A-005): backup sem cópia nova há mais
+ *      de 36 h (o carimbo `backup` que scripts/backup-nuvem.sh grava em
+ *      `batimentos`) e respostas 5xx nas últimas 24 h acima do limite. Um
+ *      e-mail por dia, só quando um dos dois passa da conta.
+ *
  * Nada aqui lança: um alerta que falha não pode derrubar a varredura, que é
  * a rede de segurança dos pagamentos.
  */
 
 import {
-  avisosPurge, bater, contarAcoes, estornosAbertos, reservarAviso, soltarAviso
+  avisosPurge, bater, contarAcoes, estornosAbertos, reservarAviso, respostas5xxPurge,
+  soltarAviso, somar5xx, ultimoBatimento
 } from './lib/db.js';
 import { mailReady, mensagemDeAlerta, reaisBR, sendMail } from './lib/mail.js';
 import { novosDesde } from './api/depoimentos.js';
 import { estatisticasPurge } from './api/estatisticas.js';
+import { abComprasPurge } from './api/ab.js';
 
 /** Quantas vezes, na última hora, cada erro precisa aparecer para virar
  *  alerta. Um só já basta para os que nunca deveriam acontecer. */
@@ -68,7 +75,10 @@ export async function runAlertas(env, at = Date.now()) {
   try { await lembreteDeDesistencias(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await alertaDeCompartilhamento(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await avisoDeDepoimentos(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
+  try { await alertaDeSaude(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await avisosPurge(env, at); } catch { /* idem */ }
+  try { await respostas5xxPurge(env, at); } catch { /* idem */ }
+  try { await abComprasPurge(env, at); } catch { /* idem */ }
   try { await estatisticasPurge(env, at); } catch { /* idem */ }
 }
 
@@ -79,6 +89,49 @@ async function enviarAoDono(env, chave, msg) {
   const r = await sendMail(env, { to: dono, ...msg });
   if (!r || !r.ok) { await soltarAviso(env, chave); return false; }
   return true;
+}
+
+/* O backup diário roda às 03:17 de Brasília. 36 h é uma execução perdida
+   mais meio dia de folga: o primeiro e-mail sai no dia seguinte ao backup
+   que faltou, e não por causa de um atraso do agendador do GitHub. */
+export const BACKUP_MAX_HORAS = 36;
+/* Respostas 5xx em 24 h para virar e-mail. O normal é perto de zero (o
+   Worker responde 4xx para tudo que é erro de quem chama); dez num dia já é
+   alguma coisa quebrada que nenhum aluno escreveu para contar. */
+export const LIMITE_5XX_DIA = 10;
+
+async function alertaDeSaude(env, at) {
+  const backup = await ultimoBatimento(env, 'backup');
+  const horasSemBackup = backup === null ? null : Math.floor((at - backup) / 3_600_000);
+  const backupVelho = backup === null || horasSemBackup > BACKUP_MAX_HORAS;
+  const erros = await somar5xx(env, at - 86_400_000);
+  const muitosErros = erros !== null && erros >= LIMITE_5XX_DIA;
+  if (!backupVelho && !muitosErros) return;
+
+  const dia = brasilia(at).slice(0, 10);
+  const linhas = [];
+  if (backupVelho) {
+    linhas.push(backup === null
+      ? '- Backup: nenhum carimbo de backup no banco. Ou o backup diário nunca terminou desde 01/10/2026, ou o passo "Carimbando" dele falhou.'
+      : `- Backup: a última cópia nova é de ${horasSemBackup} horas atrás (o limite é ${BACKUP_MAX_HORAS}).`,
+    '  Veja GitHub -> Actions -> "Backup do banco": a última execução diz o motivo. Rode "copiar" à mão depois de resolver.');
+  }
+  if (muitosErros) {
+    linhas.push(`- Erros do servidor: ${erros} respostas 5xx nas últimas 24 horas (o limite é ${LIMITE_5XX_DIA}).`,
+      '  O detalhe de cada uma está nos logs do Worker (Cloudflare -> Workers -> o Worker -> Logs) e o total, com os',
+      '  erros da própria plataforma, em Workers -> o Worker -> Métricas.');
+  } else if (erros !== null) {
+    linhas.push(`- Erros do servidor: ${erros} respostas 5xx nas últimas 24 horas (dentro do normal).`);
+  }
+  await enviarAoDono(env, `saude:${dia}`, mensagemDeAlerta({
+    assunto: backupVelho ? 'backup do banco sem cópia nova' : `${erros} erros do servidor em 24 horas`,
+    linhas: [
+      'A conferência diária do site encontrou:',
+      ...linhas,
+      '',
+      'Este aviso sai no máximo uma vez por dia.'
+    ]
+  }));
 }
 
 async function alertaDeErros(env, at) {

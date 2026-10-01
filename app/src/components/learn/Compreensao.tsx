@@ -23,14 +23,14 @@
  * O motor de exercícios do curso recusa pergunta de duas alternativas, e com
  * razão: num item de PROVA, 50% de chute não mede nada. Aqui não se mede
  * nada - o valor de um verdadeiro/falso é confrontar uma frase que a pessoa
- * provavelmente já ouviu ("sem niqqud é impossível ler") e responder a ela
+ * provavelmente já ouviu ("sem nikud é impossível ler") e responder a ela
  * na hora. São coisas diferentes, e por isso a regra de lá não vale aqui.
  *
  * ── os quatro formatos ──────────────────────────────────────────────────
  * escolha  múltipla escolha, com o enunciado em português
  * vf       verdadeiro ou falso
  * visual   as alternativas são hebraico, renderizado - para "qual destes
- *          tem niqqud?", que não existe como pergunta de texto
+ *          tem nikud?", que não existe como pergunta de texto
  * assoc    associação: várias linhas, cada uma com os mesmos rótulos
  */
 
@@ -109,6 +109,10 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
         <p className="font-ui text-[14px] leading-relaxed text-ink-muted max-w-[54ch]">{intro}</p>
       </div>
 
+      {/* `aria-disabled`, não `disabled`, nas alternativas: o botão
+          desligado ao responder jogava o foco no <body> e a página no topo
+          (auditoria de 01/10/2026, VIS-008). O clique depois de respondida
+          já é ignorado pelo próprio setResp. */}
       {perguntas.map((p, i) => {
         const feita = respondida(i, p);
         const certo = feita && acertou(i, p);
@@ -125,12 +129,12 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                   <button
                     key={o}
                     type="button"
-                    disabled={feita}
+                    aria-disabled={feita}
                     aria-pressed={resp[i] === j}
                     onClick={() => setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r))}
                     className={`min-h-[48px] px-4 py-2.5 text-left rounded-[var(--r-md)] border-2
                                 font-ui text-[14.5px] leading-snug transition-colors
-                                disabled:cursor-default ${tom(feita, j === p.certa, resp[i] === j)}`}
+                                aria-disabled:cursor-default ${tom(feita, j === p.certa, resp[i] === j)}`}
                   >
                     {feita && j === p.certa && <span aria-hidden>✓ </span>}
                     {o}
@@ -147,12 +151,12 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                     <button
                       key={o}
                       type="button"
-                      disabled={feita}
+                      aria-disabled={feita}
                       aria-pressed={resp[i] === j}
                       onClick={() => setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r))}
                       className={`min-h-[48px] px-4 rounded-[var(--r-md)] border-2 font-ui
                                   text-[14.5px] font-semibold transition-colors
-                                  disabled:cursor-default ${tom(feita, estaCerta, resp[i] === j)}`}
+                                  aria-disabled:cursor-default ${tom(feita, estaCerta, resp[i] === j)}`}
                     >
                       {feita && estaCerta && <span aria-hidden>✓ </span>}
                       {o}
@@ -168,12 +172,12 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                   <button
                     key={o}
                     type="button"
-                    disabled={feita}
+                    aria-disabled={feita}
                     aria-pressed={resp[i] === j}
                     onClick={() => setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r))}
                     className={`min-h-[88px] grid place-items-center gap-1 px-4 py-3
                                 rounded-[var(--r-md)] border-2 transition-colors
-                                disabled:cursor-default ${tom(feita, j === p.certa, resp[i] === j)}`}
+                                aria-disabled:cursor-default ${tom(feita, j === p.certa, resp[i] === j)}`}
                   >
                     <He size="lg">{o}</He>
                     {feita && j === p.certa && (
@@ -204,13 +208,13 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                           <button
                             key={r}
                             type="button"
-                            disabled={feitaLinha}
+                            aria-disabled={feitaLinha}
                             aria-pressed={escolhida === j}
                             aria-label={`${l.item}: ${r}`}
                             onClick={() => setAssoc(a => (a[chave] === undefined ? { ...a, [chave]: j } : a))}
                             className={`min-h-[40px] px-3 rounded-[var(--r-sm)] border-2 font-ui
                                         text-[13.5px] font-semibold transition-colors
-                                        disabled:cursor-default
+                                        aria-disabled:cursor-default
                                         ${tom(feitaLinha, j === l.certa, escolhida === j)}`}
                           >
                             {feitaLinha && j === l.certa && <span aria-hidden>✓ </span>}

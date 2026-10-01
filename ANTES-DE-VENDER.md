@@ -93,6 +93,49 @@ e dois dentro de uma lição, com a conta que comprou.
 
 **Pronto quando.** O curl devolve 206 e os três clipes tocam no iPhone.
 
+### 1c. Web Analytics da Cloudflare: desligar na zona (auditoria de 28/09, LEGAL-001; reconferido em 01/10/2026)
+
+**O que é.** A Política de Privacidade (art. 4) diz que o site não usa
+"script de terceiros para medir audiência". No repositório isso é verdade:
+nenhum arquivo carrega `static.cloudflareinsights.com` nem o beacon do
+Cloudflare Web Analytics (procurado em 01/10/2026; o único `sendBeacon` do
+código é o envio das estatísticas do curso para o próprio site). Mas a
+auditoria de 28/09 viu a ZONA injetar esse beacon nas páginas, e quem liga
+isso é uma chave no painel da Cloudflare, não o código. Hoje a CSP do site
+(`script-src 'self'`) bloqueia o script, então ele não coleta nada; no dia
+em que a CSP mudar, a frase da Política fica falsa.
+
+**O que fazer (é com você, no painel; daqui não há acesso).**
+1. dash.cloudflare.com → a conta → **Analytics & Logs → Web Analytics**.
+2. Se `hebraicofluente.com.br` aparecer na lista, abra-o e desligue a
+   medição (Disable, ou "Manage site" → desligar a instalação automática).
+   Se ele não aparecer, nada a fazer aqui.
+3. Confira também em Websites → `hebraicofluente.com.br` → **Speed →
+   Observatory / RUM** (o nome muda de tempos em tempos): o "Real User
+   Monitoring" deve estar desligado.
+4. Prova: abra a capa numa janela anônima, F12 → aba Rede, recarregue e
+   procure `cloudflareinsights`. Não pode aparecer nenhum pedido.
+
+**Se você quiser MANTER a medição.** Aí a Política precisa dizer isso. O
+texto para trocar a última frase do segundo parágrafo do art. 4 (no código,
+`app/src/app/privacidade/page.tsx`; me peça e eu troco, junto com a CSP, que
+hoje bloqueia o script):
+
+> Não usamos cookies de publicidade nem rede de anúncio. Para medir o
+> desempenho e o número de visitas das páginas, usamos o Cloudflare Web
+> Analytics, da Cloudflare, Inc., o mesmo fornecedor que hospeda o site: ele
+> não usa cookie nem guarda dado que identifique você, e conta as visitas de
+> forma agregada (página, país, navegador e tempo de carregamento). A
+> Cloudflare trata esses dados fora do Brasil, nas mesmas condições
+> descritas no item sobre transferência internacional.
+
+A frase sobre "fora do Brasil" deve conferir com o item de transferência
+internacional da própria Política; vale passar pelo advogado junto com o
+resto.
+
+**Pronto quando.** O passo 4 não mostra nenhum `cloudflareinsights`, ou a
+Política foi trocada pelo texto acima (e a CSP liberada para o script).
+
 ### 2. Fechar o que os logs públicos já mostraram - FEITO em 20/09/2026
 
 **As catorze execuções foram apagadas** (a execução inteira, não só o arquivo
@@ -405,6 +448,80 @@ protegido: ele agora exige conta e compra. O que continua verdade - e vale
 dizer - é que nenhum conteúdo entregue a um navegador é inviolável; um aluno
 pagante pode copiar o que ele mesmo vê. O que fechou foi o acesso de quem não
 pagou nada.
+
+---
+
+### 9. Houve venda real antes de 29/09/2026? (auditoria de 01/10/2026, LEGAL-105)
+
+**O que é.** Em 29 e 30/09 entraram, para todas as contas, o limite de 3
+aparelhos, a marca invisível no conteúdo, a marca d'água com o começo do
+e-mail e as estatísticas de aprendizagem. Os Termos (art. 9) dizem que
+mudança que afete um acesso já comprado não retroage, e a Política de
+Privacidade promete avisar por e-mail antes de mudar o tratamento de dados.
+
+**SÓ VOCÊ SABE.** Confirme se alguém comprou de verdade (não teste seu)
+antes de 29/09/2026.
+
+- **Não houve:** me diga, e isso fica registrado aqui. A regra continua para
+  as próximas mudanças (INCIDENTES.md, seção 9).
+- **Houve:** um e-mail único a esses compradores, dizendo o que mudou e
+  oferecendo a desistência ou as condições antigas, com o texto revisado pelo
+  advogado. O procedimento está em INCIDENTES.md, seção 9.
+
+**Pronto quando.** A resposta está escrita aqui.
+
+### 10. O depoimento da Natália (auditoria de 01/10/2026, LEGAL-107)
+
+**O que foi feito.** O corte na fala dela agora aparece marcado com "[...]"
+na capa, e a página /depoimento diz a regra que se pratica: o texto sai como
+o aluno escreveu, e todo corte aparece marcado.
+
+**O que é seu.**
+1. **Autorização por escrito**, guardada FORA do repositório: nome, cidade,
+   que o texto pode ir para o site e para divulgação, e que ela concorda com
+   o corte (o trecho "corrigindo e acompanhando até que você realmente
+   compreenda"). Hoje ela existe só como comentário no código. O caminho mais
+   simples é pedir que ela mesma registre o depoimento em /depoimento, que
+   grava a autorização.
+2. **"Imagens".** A citação diz que a plataforma tem "áudio, texto, imagens e
+   exercícios". A fala dela não foi alterada (é citação). Confirme com ela, e
+   para você mesmo, a que imagens ela se refere: o curso tem os diagramas de
+   traçado das letras; se ela pensava em outra coisa, combine com ela um
+   corte marcado ou um texto novo.
+3. Se ela teve acesso gratuito ou foi aluna particular, isso precisa ser dito
+   junto do depoimento (pergunta para o advogado).
+
+O título da seção na capa é "Quem já está lendo.", que serve para um
+depoimento ou vários; não precisou mudar.
+
+**Pronto quando.** A autorização está guardada e a dúvida das imagens,
+resolvida.
+
+### 11. Textos para você aprovar (auditoria de 01/10/2026)
+
+Estão no ar e foram escritos por mim; troque se não concordar:
+
+- **Dúvidas de conteúdo (UXQA-016):** "Dúvidas sobre o conteúdo também são
+  bem-vindas por e-mail, no mesmo prazo." Em /suporte e na FAQ
+  (`DUVIDAS_DE_CONTEUDO`, app/src/lib/empresa.ts), e nos Termos, art. 1:
+  "o atendimento por e-mail e WhatsApp é para problemas de acesso, pagamento
+  e conta, e para dúvidas pontuais sobre o conteúdo". Se preferir NÃO
+  responder dúvida de conteúdo, me diga e eu tiro dos três lugares.
+- **O que o curso ensina (UXQA-010):** "Este curso ensina a ler e escrever
+  em hebraico. Conversação começa no Hebraico A1, que é um curso à parte."
+  Na página do curso e na FAQ (`O_QUE_O_CURSO_ENSINA`).
+
+### 12. A versão do contrato em publicação rebaixada (LEGAL-104)
+
+Cada versão dos Termos, do Reembolso e da Privacidade tem uma cópia fixa em
+`data/politicas-versoes/`, publicada em `/<documento>/v/<código>/`, e o
+recibo de cada compra linka a versão daquela compra. Quando a Mercado Pago
+responde formas de pagamento diferentes das de `data/empresa.json` (por
+exemplo, sem PIX), o texto dos Termos muda naquela publicação e nasce uma
+versão que não está no git: ela fica no ar só até a próxima publicação. O
+resumo do Actions avisa, e o conserto está em RUNBOOK-ATENDIMENTO.md. O mais
+simples é deixar `pagamento.formas` em `data/empresa.json` igual ao que a
+Mercado Pago de fato aceita.
 
 ---
 

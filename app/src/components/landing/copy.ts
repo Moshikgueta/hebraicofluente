@@ -35,27 +35,73 @@
  */
 
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+import { ETAPAS_DA_LICAO } from '@/lib/etapas-da-licao';
 
 /** Existe gravação? É o mesmo que `audioAvailable()` responde ao curso. */
 export const TEM_AUDIO = AUDIO_MANIFEST.length > 0;
 
-/* Seis passos com gravação, cinco sem: o "Ouça" não tem como existir com o
-   manifesto vazio, e deixá-lo na lista era prometer um passo do método que a
-   lição não executa. O que sobra não é um buraco - "Associe" já era o passo que
-   faz o trabalho de ensinar o som, por comparação com o português. */
-export const PASSOS: readonly (readonly [string, string])[] = TEM_AUDIO
-  ? [
-      ['Reconheça', 'A forma isolada, grande, sem distração.'],
-      ['Ouça', 'O som gravado por falante nativo.'],
-      ['Associe', 'A comparação com um som do português.'],
-      ['Pratique', 'Cinco tipos de exercício, alternados.'],
-      ['Leia', 'A letra dentro de uma palavra real.'],
-      ['Revise', 'Ela volta depois, no intervalo certo.']
+export type Aba = {
+  label: string;
+  kicker: string;
+  title: string;
+  body: string;
+  points: readonly string[];
+};
+
+/** As cinco abas da demonstração: um momento da lição em cada. */
+export const ABAS: readonly Aba[] = [
+  {
+    label: 'Aula', kicker: 'Aprender', title: 'A letra primeiro, sempre sozinha.',
+    body: TEM_AUDIO
+      ? 'Uma forma por tela. O nome, o som, o áudio e a explicação em português - nada mais disputando atenção.'
+      : 'Uma forma por tela. O nome, o som e a explicação em português - nada mais disputando atenção.',
+    points: [
+      TEM_AUDIO ? 'Áudio gravado por falante nativo' : 'O som comparado com um som do português',
+      'Explicação escrita em português',
+      'Uma palavra de exemplo, já com nikud'
     ]
-  : [
-      ['Reconheça', 'A forma isolada, grande, sem distração.'],
-      ['Associe', 'O som comparado com um som que você já faz em português.'],
-      ['Pratique', 'Quatro tipos de exercício, alternados.'],
-      ['Leia', 'A letra dentro de uma palavra real.'],
-      ['Revise', 'Ela volta depois, no intervalo certo.']
-    ];
+  },
+  {
+    label: 'Escrita', kicker: 'Escrever', title: 'Você escreve a letra, com o dedo na tela.',
+    body: 'O curso mostra a ordem dos traços e depois devolve a caneta para você. Escrever é o que separa reconhecer de saber - a mão aprende o que o olho só reconhece.',
+    points: ['A ordem dos traços, movimento a movimento', 'Traçado com o dedo, direto no celular', 'A forma exata da cursiva israelense, e não um desenho aproximado']
+  },
+  {
+    /* Cinco categorias com gravação, quatro sem - e o número é CONTADO, não
+       escolhido: múltipla escolha, digitação, associação, escuta e leitura, e a
+       escuta é a única que o motor desliga quando não há clipe. Anunciar cinco
+       e entregar quatro é o mesmo erro, de tamanho menor. */
+    label: 'Prática', kicker: 'Fixar',
+    title: TEM_AUDIO ? 'Cinco tipos de exercício, alternados.' : 'Quatro tipos de exercício, alternados.',
+    body: TEM_AUDIO
+      ? 'Múltipla escolha, digitação, associação, escuta e leitura. A alternância é o que impede a decoreba.'
+      : 'Múltipla escolha, digitação, associação e leitura. A alternância é o que impede a decoreba.',
+    points: ['Correção imediata, com explicação', 'Erro não bloqueia: você tenta de novo', 'Nos jogos, a dificuldade sobe conforme você acerta']   // só os jogos têm níveis (COM-013)
+  },
+  {
+    label: 'Revisão', kicker: 'Consolidar', title: 'O que você errou volta na hora certa.',
+    body: 'As letras que ainda escapam reaparecem em intervalos crescentes, até ficarem automáticas.',
+    points: ['Revisões curtas, de 3 a 5 minutos', 'Só o que precisa - não repete o que já domina', 'Aviso quando há revisão pendente']
+  },
+  {
+    label: 'Progresso', kicker: 'Acompanhar', title: 'Você vê exatamente onde está.',
+    body: 'Letras dominadas, letras em progresso, letras a revisar. Sem pontuação inflada: o número reflete leitura real.',
+    points: ['Percentual por módulo', 'Mapa de domínio das 22 letras', 'Tempo de estudo por semana']
+  }
+];
+
+/* Os passos do método na capa SÃO as etapas da lição, com os nomes das abas
+   que o aluno vê lá dentro (lib/etapas-da-licao.ts, auditoria de 01/10,
+   CONV-010). Até então eram seis passos com outros nomes, sem a escrita. */
+export const PASSOS: readonly (readonly [string, string])[] =
+  ETAPAS_DA_LICAO.map(e => [e.aba, e.descricaoPt] as const);
+
+/* A maquete do exercício, e o herói. Duas telas que MOSTRAM um exercício em
+   vez de descrevê-lo - então elas também têm de mostrar um que exista hoje. */
+export const MAQUETE = {
+  /** O rótulo da aba de prática: escuta só quando há o que escutar. */
+  praticaRotulo: TEM_AUDIO ? 'Escuta' : 'Reconhecer',
+  praticaPergunta: TEM_AUDIO ? 'Qual som você ouviu?' : 'Qual destas letras faz o som SH?',
+  /** A pergunta do herói vale nos dois casos: ela é respondida pelas opções. */
+  heroiPergunta: 'Qual é o som desta letra?'
+} as const;

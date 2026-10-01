@@ -19,7 +19,7 @@
 import type { PlatformApi } from './api';
 import {
   AuthError, emailLooksValid, normalizeEmail, passwordOk,
-  type Entitlement, type Order, type PaymentMethod, type Session
+  type Compras, type Entitlement, type Order, type PaymentMethod, type Session
 } from './types';
 import { getCourse } from '@/lib/catalog';
 import { cents } from '@/lib/catalog';
@@ -385,6 +385,27 @@ export class LocalApi implements PlatformApi {
     const s = read();
     const a = s.current ? s.accounts[s.current] : undefined;
     return a ? a.orders.slice() : [];
+  }
+
+  async compras(): Promise<Compras> {
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) return { orders: [], vencidos: [] };
+    const agora = Date.now();
+    return {
+      orders: a.orders.slice(),
+      vencidos: a.entitlements
+        .filter(e => e.expiresAt && new Date(e.expiresAt).getTime() <= agora)
+        .map(e => ({ courseSlug: e.courseSlug, expiredAt: e.expiresAt! }))
+    };
+  }
+
+  async pixPendente(courseSlug: string): Promise<Order | null> {
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) return null;
+    return a.orders.find(o => o.courseSlug === courseSlug && o.status === 'pending'
+      && o.method === 'pix' && o.pix && new Date(o.pix.expiresAt).getTime() > Date.now()) ?? null;
   }
 
   /** A desistência, na demonstração: registra o pedido e pronto - não há

@@ -17,15 +17,35 @@
  */
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { ancora, brl, fimDoPreLancamento, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, FLAGSHIP, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { tempoDoCursoPt } from '@/lib/content-publico';
-import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
+import { confirmaSozinho, empresa, O_QUE_O_CURSO_ENSINA, parcelasTexto, prazoResposta, soPix, temCartao, temPix } from '@/lib/empresa';
+import { api } from '@/lib/account/api';
+import type { AcessoVencido } from '@/lib/account/types';
+import { fraseDeVencido, vencidoDe } from '@/app/perfil/compras';
+
+/* Os acessos vencidos da conta, uma pergunta por página (a caixa de compra
+   aparece duas vezes). Só para quem está logado e não tem o curso: é o aluno
+   que pagou, venceu, e o portão mandou para cá (PAY-B-004). */
+let vencidosDaPagina: Promise<AcessoVencido[]> | null = null;
+function useVencido(slug: string, perguntar: boolean): string | null {
+  const [vencidos, setVencidos] = useState<AcessoVencido[] | null>(null);
+  useEffect(() => {
+    if (!perguntar) return;
+    let stop = false;
+    vencidosDaPagina ??= api().then(a => a.compras()).then(r => r.vencidos).catch(() => []);
+    void vencidosDaPagina.then(v => { if (!stop) setVencidos(v); });
+    return () => { stop = true; };
+  }, [perguntar]);
+  return perguntar ? vencidoDe(vencidos, slug) : null;
+}
 
 export function CourseClient({ slug }: { slug: string }) {
   const account = useAccount();
@@ -92,7 +112,6 @@ export function CourseClient({ slug }: { slug: string }) {
           id="resultado"
           eyebrowPt="No fim deste curso"
           titlePt="O que você vai conseguir fazer."
-          leadPt="Escrito como coisa que se faz, não como tema que se estuda - é assim que dá para conferir se aconteceu."
         />
         <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0">
           {c.outcomesPt.map(o => (
@@ -154,6 +173,11 @@ export function CourseClient({ slug }: { slug: string }) {
                 </li>
               ))}
             </ul>
+            {/* UXQA-010 (auditoria de 01/10/2026): ler e escrever, não conversar.
+                Texto para aprovação, em lib/empresa.ts. */}
+            {c.slug === FLAGSHIP && (
+              <p className="font-ui text-[14.5px] leading-relaxed text-ink-body m-0">{O_QUE_O_CURSO_ENSINA}</p>
+            )}
           </div>
 
           <Card tone="wash" className="p-6 grid gap-3 content-start">
@@ -198,7 +222,7 @@ export function CourseClient({ slug }: { slug: string }) {
               {open
                 ? confirmaSozinho()
                   ? 'O acesso é liberado assim que o pagamento é confirmado - sem espera, sem liberação manual, sem e-mail para procurar na caixa de spam.'
-                  : 'Você paga no PIX pelo aplicativo do seu banco e entra com o mesmo e-mail e senha. O acesso abre assim que o pagamento cai, normalmente em alguns minutos.'
+                  : `Você paga no PIX pelo aplicativo do seu banco e entra com o mesmo e-mail e senha. Conferimos o pagamento e liberamos o acesso à mão, ${prazoResposta()}.`
                 : 'Este curso está em produção. Quando sair, entra na mesma conta e continua de onde o anterior parou.'}
             </p>
           </div>
@@ -218,6 +242,7 @@ function BuyBox({ slug }: { slug: string }) {
   const open = isPlayable(c);
   const parcelas = parcelasMax(c.price);
   const cheio = ancora(c.price);
+  const venceuEm = useVencido(c.slug, account.ready && account.signedIn && !owned && open);
 
   if (owned) {
     return (
@@ -248,7 +273,22 @@ function BuyBox({ slug }: { slug: string }) {
     );
   }
 
-  const aviso = account.signedIn ? (
+  /* Pagou, e o acesso venceu: o aviso diz isso com a data, acima do preço,
+     no lugar do "esta conta ainda não tem o curso" (PAY-B-004). */
+  const aviso = venceuEm ? (
+        <Card tone="wash" className="p-5 grid gap-2.5">
+          <p className="font-display text-[17px] font-bold text-ink leading-snug">
+            {fraseDeVencido(venceuEm)}
+          </p>
+          <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+            Seu progresso continua guardado na sua conta e volta inteiro quando
+            você renovar.
+          </p>
+          <LinkButton href={`/checkout/${c.slug}`} size="sm" className="justify-self-start">
+            Renovar por mais {c.accessMonths} meses
+          </LinkButton>
+        </Card>
+      ) : account.signedIn ? (
         <Card tone="wash" className="p-5 grid gap-2.5">
           <p className="font-display text-[17px] font-bold text-ink leading-snug">
             Esta conta ainda não tem o curso
@@ -277,7 +317,9 @@ function BuyBox({ slug }: { slug: string }) {
         </Card>
       ) : null;
   const criada = account.session?.account.createdAt ? Date.parse(account.session.account.createdAt) : NaN;
-  const contaNova = Number.isFinite(criada) && Date.now() - criada < 86_400_000;
+  /* Quem tem acesso vencido não é conta nova para este curso: o aviso com a
+     data vem antes do preço. */
+  const contaNova = !venceuEm && Number.isFinite(criada) && Date.now() - criada < 86_400_000;
 
   return (
     <div className="grid gap-4 content-start">
@@ -335,13 +377,13 @@ function BuyBox({ slug }: { slug: string }) {
           <>
             <p className="font-display text-[38px] font-bold text-ink leading-none">{brl(c.price.brl)}</p>
             <p className="font-ui text-[13.5px] text-ink-body">
-              ou em até {parcelas}x no cartão
+              ou {parcelasTexto(parcelas)} no cartão
             </p>
             {/* O preço do PIX some junto com a possibilidade de pagar no
                 PIX - ver a nota de `temPix` em app/src/lib/empresa.ts. */}
             {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[13.5px] font-medium text-[var(--accent)]">
-                {brl(pixPrice(c.price))} no PIX ({c.price.pixDiscountPct}% off)
+                {c.price.pixDiscountPct}% de desconto no PIX: {brl(pixPrice(c.price))}
               </p>
             )}
           </>
@@ -355,15 +397,15 @@ function BuyBox({ slug }: { slug: string }) {
           {soPix()
             ? 'Pagamento por PIX, pelo aplicativo do seu banco.'
             : temPix() && temCartao()
-              ? `PIX, cartão ou parcelado em até ${parcelas}x.`
+              ? `PIX, cartão ou parcelado ${parcelasTexto(parcelas)}.`
               : temCartao()
-                ? `Cartão de crédito, ou parcelado em até ${parcelas}x.`
+                ? `Cartão de crédito, ou parcelado ${parcelasTexto(parcelas)}.`
                 : 'Pagamento por PIX, pelo aplicativo do seu banco.'}
         </li>
         <li>
           {confirmaSozinho()
             ? 'Acesso liberado automaticamente.'
-            : 'Acesso liberado em alguns minutos, depois do pagamento.'}
+            : `Acesso liberado à mão, ${prazoResposta()} depois do pagamento.`}
         </li>
         <li>{c.accessMonths} meses, do celular ao computador.</li>
         {/* A mesma linha da caixa de preço da capa (CONV-001); o prazo vem de

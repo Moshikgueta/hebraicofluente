@@ -95,15 +95,38 @@ echo "Saúde"
 # uma falha que não existe: foi exatamente isso que aconteceu quando `progresso`
 # entrou. Quinze segundos de paciência cobrem a propagação; passado isso, o
 # campo ausente é falha de verdade e é assim que ela aparece.
+#
+# Os detalhes da saúde só saem com o ADMIN_TOKEN (auditoria de 01/10/2026,
+# SEC-A-007): para o público, /api/health responde só `ok` e `monitor`. A
+# publicação gera o token, o põe no Worker e o entrega aqui em
+# HF_ADMIN_TOKEN (scripts/cloudflare-setup.sh, passo 4). Sem ele (uma
+# passagem à mão), as conferências de detalhe ficam de fora e isso é dito.
+SAUDE_AUT=()
+[ -n "${HF_ADMIN_TOKEN:-}" ] && SAUDE_AUT=(-H "Authorization: Bearer $HF_ADMIN_TOKEN")
+saude() { G --max-time 15 ${SAUDE_AUT[@]+"${SAUDE_AUT[@]}"} "$B/api/health"; }
 HEALTH=''
 for _ in 1 2 3 4 5; do
-  HEALTH="$(G --max-time 15 "$B/api/health")"
+  HEALTH="$(saude)"
   # O campo MAIS NOVO é o sinal de que a versão nova já está respondendo.
-  # Trocar quando um campo novo entra faz parte de acrescentá-lo.
-  case "$HEALTH" in *'"verificacao"'*) break ;; esac
+  # Trocar quando um campo novo entra faz parte de acrescentá-lo. Sem token,
+  # a resposta é a pública, e o sinal é ela ter só os dois campos.
+  if [ -n "${HF_ADMIN_TOKEN:-}" ]; then
+    case "$HEALTH" in *'"verificacao"'*) break ;; esac
+  else
+    case "$HEALTH" in *'"ok"'*'"monitor"'*) case "$HEALTH" in *'"db"'*) ;; *) break ;; esac ;; esac
+  fi
   sleep 3
 done
 campo() { grep -o "\"$1\":[a-z]*" <<<"$HEALTH" | cut -d: -f2; }
+PUBLICA="$(G --max-time 15 "$B/api/health")"
+espera "a saúde pública diz só ok e monitor" nao \
+  "$(grep -qE '"(db|modo|vendedor|tokenFormato|emailEntregue|varredura)"' <<<"$PUBLICA" && echo sim || echo nao)"
+if [ -z "${HF_ADMIN_TOKEN:-}" ]; then
+  echo "  · sem HF_ADMIN_TOKEN: conferindo só o 'ok' público; tabelas, sessão,"
+  echo "    e-mail e cobrança ficam de fora desta passagem."
+  espera "a saúde pública diz ok" true "$(campo ok)"
+else
+espera "o ADMIN_TOKEN abre os detalhes da saúde" true "$(grep -q '"db"' <<<"$HEALTH" && echo true || echo false)"
 espera "ligação com o banco (D1)"      true "$(campo db)"
 espera "tabelas criadas (schema.sql)"  true "$(campo schema)"
 espera "tabela de progresso criada"    true "$(campo progresso)"
@@ -135,6 +158,7 @@ if [ "$(campo ok)" != "true" ]; then
   echo "  conserte o que está marcado ✗ aqui em cima primeiro."
   echo
 fi
+fi  # fim das conferências que pedem HF_ADMIN_TOKEN
 
 # O site de vendas inteiro, SEM conta nenhuma. É o requisito mais óbvio da
 # plataforma e o mais fácil de quebrar sem perceber: basta um prefixo a mais na
@@ -231,6 +255,11 @@ espera "mp3 da capa responde 206 a um Range (Safari)" 206 \
 
 echo "Sessão e portão"
 espera "/api/me sem sessão recusa"            401 "$(code $B/api/me)"
+# O app de agora pede `X-HF-Sessao: opcional` e recebe 200 sem sessão, para
+# o visitante não ganhar um erro vermelho por página (PERF-007). Sem o
+# cabeçalho, acima, continua o 401 (pacote antigo numa aba aberta).
+espera "/api/me sem sessão, pedido pelo app, é 200 signedIn:false" '{"signedIn":false}' \
+  "$(G -H 'X-HF-Sessao: opcional' $B/api/me)"
 espera "rota paga sem sessão manda ao login"  "$B/entrar/?next=%2Flicao%2Falef%2F" \
        "$(location $B/licao/alef/)"
 
@@ -277,6 +306,15 @@ echo "Cobrança"
 # criado e o preço é conferido - que é onde essa prova vale alguma coisa.
 MODO="$(grep -o '"modo":"[a-z]*"' <<<"$HEALTH" | cut -d'"' -f4)"
 VENDEDOR="$(grep -o '"vendedor":"[a-z-]*"' <<<"$HEALTH" | cut -d'"' -f4)"
+# Sem o token não se sabe o modo. Contra um endereço que não é a máquina
+# local, o seguro é tratar como produção: pular a criação do pedido, que
+# deixaria uma cobrança de verdade pendente no painel.
+if [ -z "$MODO" ] && [ -z "${HF_ADMIN_TOKEN:-}" ]; then
+  case "$B" in
+    http://127.0.0.1*|http://localhost*) ;;
+    *) MODO=producao ;;
+  esac
+fi
 # Contra a PRODUÇÃO, cobrança de teste é defeito, não configuração (auditoria
 # de 28/09, PAY-001): com token de teste o comprador vai a um checkout que não
 # cobra, e nada mais falha. Só barra com prova positiva - `vendedor` vem de
@@ -387,7 +425,7 @@ espera "a senha antiga não entra mais" 401 "$(G -o /dev/null -w '%{http_code}' 
 # sim, a tela diz "o link está a caminho" - e a Resend recusou. Quase sempre é
 # o domínio de EMAIL_FROM ainda não verificado, e nada na tela denuncia.
 if [ "$(campo email)" = "true" ]; then
-  ENTREGA="$(G --max-time 15 "$B/api/health" | grep -o '"emailEntregue":[a-z]*' | cut -d: -f2)"
+  ENTREGA="$(saude | grep -o '"emailEntregue":[a-z]*' | cut -d: -f2)"
   if [ "$ENTREGA" = "false" ]; then
     espera "o e-mail de recuperação saiu" true false
     echo "    A Resend recusou. O motivo exato está em Actions → Acesso → 'envios'."

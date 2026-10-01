@@ -104,6 +104,8 @@ export default function Page() {
 
   return (
     <LegalPage
+      documento="privacidade"
+      cta={false}
       titulo="Política de Privacidade"
       resumo={
         `Quais dados o ${nomeFantasia} coleta, para que servem, com quem são ` +
@@ -253,8 +255,10 @@ export default function Page() {
         <p>
           A Resend, a Cloudflare, o GitHub, o Google e a Meta são empresas sediadas
           fora do Brasil, e parte do tratamento acontece em servidores no exterior.
-          Essa transferência é necessária para a execução do contrato que você fez
-          conosco - é o que permite o site responder, o e-mail chegar e o
+          A Mercado Pago, que processa o pagamento, também pode tratar dados fora do
+          Brasil, conforme a política de privacidade dela. Essa transferência é
+          necessária para a execução do contrato que você fez conosco - é o que
+          permite o site responder, o pagamento acontecer, o e-mail chegar e o
           atendimento acontecer - e está amparada no art. 33 da LGPD.
         </p>
       </Artigo>

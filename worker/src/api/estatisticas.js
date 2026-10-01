@@ -15,11 +15,18 @@
  * quê. A sessão só é conferida para barrar lixo de fora; ela não é gravada.
  * As linhas saem depois de um ano (alertas.js).
  *
+ * Só conta quem tem o curso liberado (auditoria de 01/10/2026, SEC-A-008).
+ * Conta é de graça, e com qualquer conta logada um script mandava 30 lotes
+ * de 60 eventos por minuto: o dono decide onde mexer no curso por estes
+ * números, e eles eram envenenáveis por quem nunca estudou. Sem curso, a
+ * resposta continua 204 (o app não tem o que fazer com um erro aqui) e nada
+ * é escrito, nem o freio.
+ *
  * Quem lê é o dono, em /admin/estatisticas.
  */
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
-import { throttled } from '../lib/db.js';
+import { activeEntitlements, throttled } from '../lib/db.js';
 import { exigirAdmin } from '../lib/admin.js';
 import { requireAccount } from './auth.js';
 
@@ -52,6 +59,8 @@ export function chaveDe(ev) {
 export async function registrar({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
+  /* Antes do freio: quem não tem curso não gasta nem a escrita dele. */
+  if (!(await activeEntitlements(env, account.id)).length) return new Response(null, { status: 204 });
   if (await throttled(env, `estat:${account.id}`, 30, 60_000)) return new Response(null, { status: 204 });
   const b = await readJson(request, 16 * 1024);
   const eventos = b && Array.isArray(b.eventos) ? b.eventos.slice(0, MAX_EVENTOS) : [];

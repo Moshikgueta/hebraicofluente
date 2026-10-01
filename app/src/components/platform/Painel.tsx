@@ -115,9 +115,11 @@ export function CartaoRevisao() {
         </span>
       </p>
       <p className="font-ui text-[15.5px] leading-[1.55] text-[var(--gold-body)] mb-4">
+        {/* `dueCount` conta ITENS da fila, não letras (VIS-004): "2 letras"
+            com uma letra só na lista era a contagem errada com a palavra errada. */}
         {p.dueCount === 1
-          ? 'Uma letra precisa de uma revisão rápida.'
-          : `${p.dueCount} letras precisam de uma revisão rápida.`}{' '}
+          ? 'Um item precisa de uma revisão rápida.'
+          : `${p.dueCount} itens precisam de uma revisão rápida.`}{' '}
         Leva cerca de {minutos} minutos.
       </p>
       {letras.length > 0 && (

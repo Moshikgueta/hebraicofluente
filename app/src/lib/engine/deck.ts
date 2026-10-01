@@ -25,6 +25,7 @@
 
 import type { Letter } from '@/lib/content';
 import { rng, shuffled, take, type Rand } from './rng';
+import { fonemasDe, somPt } from '@/lib/som-pt';
 
 /** O que um par cobra do aluno. Fica no par para o placar poder dizer em que
  *  tipo de associação ele foi bem, e para o Teste variar de propósito. */
@@ -39,6 +40,8 @@ export type Par = {
   tipo: TipoPar;
   /** De que letra este par saiu - o progresso é registrado por letra. */
   letterId: string;
+  /** O som em IPA, quando o par é de som (ver `chavesDe`). */
+  som?: string;
 };
 
 /** Qualquer conteúdo que sirva de baralho. É o contrato que um curso futuro
@@ -49,7 +52,25 @@ export type Fonte = {
   pt: string;
   tipo: TipoPar;
   letterId: string;
+  /** O som em IPA, quando o par é de som: é por ele que dois sons iguais
+   *  com rótulos diferentes ("k" do Kaf e do Qof) se reconhecem. */
+  som?: string;
 };
+
+/**
+ * As chaves de "mesma resposta" de um par.
+ *
+ * Duas fontes com uma chave em comum não podem ser certa e distratora da
+ * mesma pergunta, nem dois cartões do mesmo Match (auditoria de 01/10/2026,
+ * CONT-005): ת e ט fazem "t", א e ע são mudas, קִ e כִּ se leem "ki". Som
+ * compara pelo fonema; o resto, pela leitura sem acento e sem caixa, com
+ * "mudo..." valendo como uma coisa só.
+ */
+export function chavesDe(f: { pt: string; tipo: TipoPar; som?: string }): string[] {
+  if (f.tipo === 'som' && f.som) return fonemasDe(f.som);
+  const k = f.pt.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+  return [k.startsWith('mudo') ? 'mudo' : k];
+}
 
 /**
  * Que habilidade uma resposta de jogo exercitou, lida do id do par.
@@ -94,8 +115,10 @@ export function deLetras(letras: readonly Letter[], tipos: readonly TipoPar[]): 
       out.push({ id: `nome:${L.id}`, he: L.letter, pt: L.namePt, tipo: 'nome', letterId: L.id });
     }
     if (tipos.includes('som')) {
-      const som = L.sound.replace(/[/()]/g, '').trim();
-      if (som) out.push({ id: `som:${L.id}`, he: L.letter, pt: som, tipo: 'som', letterId: L.id });
+      /* O rótulo legível (lib/som-pt.ts), não o IPA cru: "/j/" o brasileiro
+         lê como o J de "janela" (CONT-003). */
+      const som = somPt(L.sound).trim();
+      if (som) out.push({ id: `som:${L.id}`, he: L.letter, pt: som, tipo: 'som', letterId: L.id, som: L.sound });
     }
     if (tipos.includes('silaba')) {
       for (const s of L.syllables) {
@@ -152,10 +175,10 @@ export function montarBaralho(fontes: readonly Fonte[], o: OpcoesBaralho): Par[]
   for (const passada of [1, 2]) {
     for (const f of ordenadas) {
       if (escolhidos.length >= o.quantos) break;
-      const chaveLatina = f.pt.trim().toLowerCase();
-      if (vistos.has(chaveLatina)) continue;
+      const chaves = chavesDe(f);
+      if (chaves.some(k => vistos.has(k))) continue;
       if (passada === 1 && porLetra.has(f.letterId)) continue;
-      vistos.add(chaveLatina);
+      for (const k of chaves) vistos.add(k);
       porLetra.add(f.letterId);
       escolhidos.push(f);
     }
@@ -202,9 +225,13 @@ export function perguntasDe(
     const campo = (f: Fonte | Par) => (sentido === 'he' ? f.pt : f.he);
 
     const usados = new Set([campo(par).trim().toLowerCase()]);
+    /* O que a resposta certa "diz": um distrator que diz o mesmo seria uma
+       segunda resposta certa, nos dois sentidos (CONT-005). */
+    const daCerta = new Set(chavesDe(par));
     const distratores: string[] = [];
     for (const f of shuffled(mesmoTipo, rand)) {
       if (distratores.length >= n - 1) break;
+      if (chavesDe(f).some(k => daCerta.has(k))) continue;
       const v = campo(f);
       const chave = v.trim().toLowerCase();
       if (usados.has(chave)) continue;

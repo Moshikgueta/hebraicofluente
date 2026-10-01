@@ -18,7 +18,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { allLetters } from '../src/lib/content';
-import { buildLetterPractice, buildMiniTest } from '../src/lib/engine/exercises';
+import { assinatura, buildLetterPractice, buildMiniTest } from '../src/lib/engine/exercises';
 
 const letters = allLetters();
 const historyOf = (order: number) => letters.filter(l => l.order <= order);
@@ -109,8 +109,9 @@ describe('a prática não fica toda na mesma vogal', () => {
         buildLetterPractice(L, historyOf(L.order), { seed: `pratica-${L.id}` }),
         buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-0` })
       ]) {
-        const vistas = bloco.map(e =>
-          [e.kind, e.promptPt, ((e as { options?: string[] }).options ?? []).join('|')].join('::'));
+        /* "A mesma pergunta" é o que o aluno vê: enunciado, opções E o
+           hebraico na tela (assinatura, CONT-017 de 01/10/2026). */
+        const vistas = bloco.map(e => assinatura(e));
         expect(new Set(vistas).size, `${L.id} repete uma pergunta dentro do mesmo bloco`)
           .toBe(vistas.length);
       }

@@ -27,12 +27,14 @@ import { Campo, Aviso, Erro } from '@/components/platform/Campo';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, MIN_PASSWORD, passwordOk } from '@/lib/account/types';
 import { useProgress } from '@/lib/state/store';
-import { daysLeft, type Order } from '@/lib/account/types';
+import { daysLeft, type AcessoVencido, type Order } from '@/lib/account/types';
 import { allCourses, brl, FLAGSHIP, getCourse } from '@/lib/catalog';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { course } from '@/lib/content-publico';
 import { api } from '@/lib/account/api';
 import { empresa } from '@/lib/empresa';
+import { fraseDeVencido, pixAindaPagavel, vencidoDe } from './compras';
+import { IdentificacaoCurta } from '@/components/legal/Legal';
 
 const date = (iso: string) =>
   new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -43,13 +45,16 @@ export function PerfilClient() {
   const router = useRouter();
   const [confirming, setConfirming] = useState(false);
   const [orders, setOrders] = useState<Order[] | null>(null);
+  /* Os acessos que venceram (PAY-B-004): a sessão só carrega os que valem,
+     e sem isto quem pagou e venceu lia "Não está na sua conta". */
+  const [vencidos, setVencidos] = useState<AcessoVencido[]>([]);
 
   useEffect(() => {
     if (!account.signedIn) return;
     let stop = false;
     void (async () => {
-      const list = await (await api()).orders().catch(() => []);
-      if (!stop) setOrders(list);
+      const r = await (await api()).compras().catch(() => ({ orders: [] as Order[], vencidos: [] }));
+      if (!stop) { setOrders(r.orders); setVencidos(r.vencidos); }
     })();
     return () => { stop = true; };
   }, [account.signedIn]);
@@ -103,6 +108,7 @@ export function PerfilClient() {
             const ent = account.session!.entitlements.find(e => e.courseSlug === c.slug);
             const left = daysLeft(account.session, c.slug);
             const owned = account.can(c.slug);
+            const venceuEm = owned ? null : vencidoDe(vencidos, c.slug);
             return (
               <li key={c.slug}
                   className="flex flex-wrap items-center gap-3 border-b border-[color:var(--line-soft)]
@@ -112,13 +118,19 @@ export function PerfilClient() {
                   <span className="font-ui text-[12.5px] text-ink-muted">
                     {owned && ent?.expiresAt
                       ? `Acesso até ${date(ent.expiresAt)}${left !== null && left <= 30 ? ` · ${left} ${left === 1 ? 'dia' : 'dias'}` : ''}`
-                      : ent
-                        ? 'Acesso encerrado'
-                        : c.status === 'soon' ? 'Ainda não lançado' : 'Não está na sua conta'}
+                      : venceuEm
+                        ? fraseDeVencido(venceuEm)
+                        : ent
+                          ? 'Acesso encerrado'
+                          : c.status === 'soon' ? 'Ainda não lançado' : 'Não está na sua conta'}
                   </span>
                 </span>
                 {owned
                   ? <Badge tone="mint">Ativo</Badge>
+                  : venceuEm
+                    ? <LinkButton href={`/checkout/${c.slug}`} size="sm">
+                        Renovar por mais {c.accessMonths} meses
+                      </LinkButton>
                   : c.status === 'soon'
                     ? <Badge>Em breve</Badge>
                     : <LinkButton href={`/cursos/${c.slug}`} variant="secondary" size="sm">
@@ -203,6 +215,7 @@ export function PerfilClient() {
                   {{ paid: 'Pago', pending: 'Aguardando', failed: 'Não concluído',
                      refunded: 'Estornado', expired: 'Expirado' }[o.status]}
                 </Badge>
+                {pixAindaPagavel(o) && <VerCodigoPix order={o} />}
                 <DesistirDaCompra
                   order={o}
                   email={me.email}
@@ -267,6 +280,10 @@ export function PerfilClient() {
       )}
 
       <ApagarConta />
+
+      {/* LEGAL-118 (auditoria de 01/10/2026): quem oferece o serviço, na
+          página onde ficam "Desistir da compra" e "Apagar minha conta". */}
+      <IdentificacaoCurta />
     </div>
   );
 }
@@ -688,6 +705,49 @@ function DesistirDaCompra({ order, email, onPedido }: {
         </p>
       )}
       {error && <Erro>{error}</Erro>}
+    </div>
+  );
+}
+
+/* O PIX que ainda aguarda pagamento, reaberto daqui (auditoria de
+   01/10/2026, PAY-B-002). Antes o pedido aparecia como "Aguardando" sem
+   código nenhum, e quem voltava do banco sem ter pago gerava outro. Fechado
+   atrás de um toque: um copia-e-cola aberto na lista de compras é ruído. */
+function VerCodigoPix({ order }: { order: Order }) {
+  const [aberto, setAberto] = useState(false);
+  const [copiado, setCopiado] = useState(false);
+  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString('pt-BR', {
+    hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo'
+  });
+  if (!aberto) {
+    return (
+      <p className="basis-full font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+        <button type="button" onClick={() => setAberto(true)}
+                className="text-[var(--accent)] font-medium hover:underline min-h-[44px]">
+          Ver código PIX
+        </button>
+      </p>
+    );
+  }
+  return (
+    <div className="basis-full grid gap-2">
+      <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+        PIX copia e cola deste pedido, válido até as {ate}. Se você já pagou, não pague de novo.
+      </p>
+      <code className="block break-all rounded-[var(--r-md)] border border-line bg-surface-2
+                       px-3 py-2 font-mono text-[12px] leading-relaxed text-ink-body">
+        {order.pix!.code}
+      </code>
+      <Button size="sm" variant="secondary" className="justify-self-start"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(order.pix!.code);
+                  setCopiado(true);
+                  setTimeout(() => setCopiado(false), 2500);
+                } catch { setCopiado(false); }
+              }}>
+        {copiado ? 'Copiado ✓' : 'Copiar código'}
+      </Button>
     </div>
   );
 }

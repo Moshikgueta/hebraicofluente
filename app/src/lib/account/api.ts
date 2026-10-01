@@ -21,7 +21,7 @@
  * escancará-la.
  */
 
-import type { Order, PaymentMethod, Session } from './types';
+import type { Compras, Order, PaymentMethod, Session } from './types';
 
 export type ApiMode = 'worker' | 'local';
 
@@ -97,6 +97,15 @@ export interface PlatformApi {
 
   /** Pedidos da conta, mais recente primeiro. Para a página de perfil. */
   orders(): Promise<Order[]>;
+
+  /** Os pedidos e os acessos vencidos, com a data do fim. É o que deixa o
+   *  /perfil e a página do curso dizerem "seu acesso terminou em ..." em vez
+   *  de tratar quem pagou como visitante (a sessão só carrega os que valem). */
+  compras(): Promise<Compras>;
+
+  /** O PIX ainda pagável deste curso, se houver: o checkout reabre o MESMO
+   *  código ao voltar do aplicativo do banco, em vez de gerar outro. */
+  pixPendente(courseSlug: string): Promise<Order | null>;
 
   /** Desiste de uma compra dentro dos sete dias (CDC, art. 49), pelo próprio
    *  site, como o Decreto 7.962/2013 exige. Devolve quando o pedido ficou

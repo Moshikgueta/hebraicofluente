@@ -5,15 +5,14 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { Versiculo } from '@/components/landing/Versiculo';
-import { bibleVerses, course } from '@/lib/content-publico';
+import { bibleVerses, course, licaoDaLetra, totalLicoes } from '@/lib/content-publico';
 
 export const metadata: Metadata = meta({
   rota: '/biblia',
   title: 'Vou conseguir ler a Bíblia em hebraico? - Hebraico Fluente',
   description:
-    'A resposta honesta tem duas metades: sim, você vai decodificar o texto em voz ' +
-    'alta; não, você não vai entender o que leu sem vocabulário e gramática. Aqui ' +
-    'está Gênesis 1:1, palavra por palavra, para você julgar por si.'
+    'Sim, você vai ler o texto em voz alta; não, não vai entender sem vocabulário e gramática. ' +
+    'Gênesis 1:1, palavra por palavra, para você julgar.'
 });
 
 /* «Vou conseguir ler a Bíblia?»
@@ -42,6 +41,9 @@ export default function BibliaPage() {
      vendas publicada sem o argumento que ela existe para fazer. */
   const v = bibleVerses()[0];
   if (!v) throw new Error('data/biblia.json não tem nenhum versículo');
+  /* `after` é a ORDEM da letra mais tardia, não a lição: a 20ª letra (Bet)
+     entra na lição 14 das 27. Os dois números, calculados (CONV-006). */
+  const licao = licaoDaLetra(v.after);
 
   return (
     <>
@@ -54,8 +56,7 @@ export default function BibliaPage() {
             Vou conseguir ler a Bíblia em hebraico?
           </h1>
           <p className="text-[17px] leading-relaxed text-ink-body max-w-[58ch]">
-            A resposta honesta tem duas metades, e as duas importam. Elas estão
-            logo abaixo, do mesmo tamanho, antes de qualquer botão.
+            A resposta tem duas metades, e as duas importam.
           </p>
         </div>
       </div>
@@ -105,9 +106,10 @@ export default function BibliaPage() {
         />
         <Versiculo v={v} />
         <p className="font-ui text-[14px] leading-relaxed text-ink-muted max-w-[58ch] mt-5">
-          Todas as letras deste versículo são ensinadas até a lição {v.after} das{' '}
-          {course.totalLetters}. Ou seja: ele fica legível antes de o curso acabar,
-          e não no fim dele.
+          Todas as letras deste versículo são ensinadas até a letra {v.after} das{' '}
+          {course.totalLetters}
+          {licao !== null && <> (lição {licao} das {totalLicoes()})</>}. Ou seja: ele fica
+          legível antes de o curso acabar, e não no fim dele.
         </p>
       </Section>
 

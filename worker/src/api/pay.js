@@ -21,13 +21,14 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { ip, ipCompleto, requireAccount } from './auth.js';
 import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
 import {
-  arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar, estornoCriar,
-  estornoDe, estornosDe, estornosParaVarrer, findAccountById, getOrder, grantAccess, log, markPaid,
-  ordersOf, outroPedidoPagoRecente, pedirArrependimento, recordEvent, refundOrder, throttled, updateOrder
+  acessosVencidos, arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar,
+  estornoCriar, estornoDe, estornosDe, estornosParaVarrer, findAccountById, getOrder, grantAccess, log,
+  markPaid, ordersOf, outroPedidoPagoRecente, pedirArrependimento, pixPendente, recibosManuaisPendentes,
+  recordEvent, refundOrder, reservarAviso, soltarAviso, throttled, ultimoPagamentoDe, updateOrder
 } from '../lib/db.js';
 import {
   dataBR, dataHoraBR, mailReady, mensagemDeArrependimento, mensagemDeArrependimentoDono,
-  mensagemDeAlerta, mensagemDeCompra, reaisBR, sendMail
+  mensagemDeAlerta, mensagemDeCompra, mensagemDeEstorno, reaisBR, sendMail
 } from '../lib/mail.js';
 import {
   createCardPreference, createPix, getPayment, mapStatus, paymentsFor, paymentsOfChargeback,
@@ -35,6 +36,7 @@ import {
 } from '../lib/mercadopago.js';
 import { brCode, confereBrCode } from '../lib/pix.js';
 import empresa from '../../../data/empresa.json';
+import { gravarTermosDoPedido, linkDaVersao, versaoAtual } from '../lib/versoes.js';
 
 /* ── qual trilho de cobrança está ligado ──────────────────────────────────
  * Sai de data/empresa.json, e não de uma variável de ambiente, porque os
@@ -83,7 +85,7 @@ export function prazoDeDesistencia(paidAt, dias = DIAS_ARREPENDIMENTO) {
 
 /** Um pedido, no formato que o app espera (app/src/lib/account/types.ts).
  *  `desistenciaEm` é o momento do pedido de desistência, se houver. */
-const toOrder = (row, desistenciaEm = null, estorno = null) => ({
+const toOrder = (row, desistenciaEm = null, estorno = null, ultimoPagamento = undefined) => ({
   id: row.id,
   courseSlug: row.course_slug,
   amountCents: row.amount_cents,
@@ -98,6 +100,10 @@ const toOrder = (row, desistenciaEm = null, estorno = null) => ({
   /* Como o dinheiro está voltando: `automatico` (o site pediu o estorno à
      Mercado Pago), `manual` (o dono estorna) ou null (não houve desistência). */
   estorno: estorno ? (['manual', 'erro'].includes(estorno) ? 'manual' : 'automatico') : null,
+  /* Só na consulta da tela de retorno: o que o provedor disse por último
+     sobre o pagamento deste pedido ('em-analise', 'recusado', ...), para o
+     TEXTO da tela (PAY-B-003). Nunca decide acesso. */
+  ...(ultimoPagamento !== undefined ? { ultimoPagamento } : {}),
   ...(row.pix_code ? {
     pix: {
       code: row.pix_code,
@@ -178,6 +184,8 @@ export async function create({ request, env }) {
   const order = await createOrder(env, {
     accountId: account.id, courseSlug: course.slug, amountCents, method, installments
   });
+  /* A versão dos Termos que vale para este pedido (LEGAL-104). */
+  await gravarTermosDoPedido(env, order.id);
 
   try {
     /* ── PIX direto ────────────────────────────────────────────────────
@@ -293,7 +301,13 @@ export async function verify({ request, env }) {
      segunda tentativa, aprovada, era invisível para esta consulta - só o
      aviso da Mercado Pago a liberava, e um aviso perdido deixava quem pagou
      do lado de fora. */
-  if ((order.status === 'pending' || order.status === 'failed') && !pixDireto()) {
+  /* `expired` também (01/10/2026, PAY-B-009): um cartão em análise
+     antifraude por mais de 24 h vira `expired` na varredura, e a aprovação
+     que vem depois precisa ser achada por quem volta à tela. Um `failed` sem
+     `provider_ref` nunca existiu no provedor: não há a quem perguntar. */
+  const consultavel = order.status === 'pending'
+    || ((order.status === 'failed' || order.status === 'expired') && order.provider_ref);
+  if (consultavel && !pixDireto()) {
     /* Cada consulta aqui é uma chamada à Mercado Pago com a nossa
        credencial. A tela pergunta a cada três segundos; um laço perguntaria
        mil vezes por minuto e gastaria a cota do vendedor com a conta de um
@@ -311,9 +325,34 @@ export async function verify({ request, env }) {
         && !await throttled(env, `verify:${account.id}`, 20)) {
       await settleFromProvider(env, order, 'verify');
     }
-    return json(toOrder(await getOrder(env, order.id)));
+    return json(toOrder(await getOrder(env, order.id), null, null, await ultimoPagamentoDe(env, order.id)));
   }
-  return json(toOrder(order));
+  return json(toOrder(order, null, null, await ultimoPagamentoDe(env, order.id)));
+}
+
+/* ── GET /api/pay/pix?curso=… | ?order=… ─────────────────────────────────
+ * O PIX ainda pagável, para reabrir (auditoria de 01/10/2026, PAY-B-002).
+ * O código vivia só na memória da aba: recarregar, ou voltar do aplicativo
+ * do banco com a aba descartada pelo celular, mostrava de novo o botão
+ * "Pagar", e quem clicava gerava um segundo PIX - o caminho mais curto para
+ * "paguei duas vezes". Com `curso`, o pendente mais recente daquele curso;
+ * com `order`, aquele pedido. Só da própria conta, e só enquanto vale:
+ * fora disso, `{ order: null }`. */
+export async function pixAberto({ request, env }) {
+  const account = await requireAccount(request, env);
+  if (!account) return notSignedIn();
+  const q = new URL(request.url).searchParams;
+  const id = q.get('order');
+  let row = null;
+  if (id) {
+    const o = await getOrder(env, id);
+    if (o && o.account_id === account.id && o.status === 'pending' && o.method === 'pix'
+        && o.pix_code && Number(o.pix_expires_at) > Date.now()) row = o;
+  } else {
+    const curso = getCourse(String(q.get('curso') || ''));
+    if (curso) row = await pixPendente(env, account.id, curso.slug);
+  }
+  return json({ order: row ? toOrder(row) : null });
 }
 
 /* ── GET /api/orders ────────────────────────────────────────────────────── */
@@ -325,7 +364,11 @@ export async function orders({ request, env }) {
   const estornos = await estornosDe(env, account.id);
   return json({
     orders: (await ordersOf(env, account.id)).map(o =>
-      toOrder(o, pedidos.get(String(o.id)) || null, estornos.get(String(o.id)) || null))
+      toOrder(o, pedidos.get(String(o.id)) || null, estornos.get(String(o.id)) || null)),
+    /* Os acessos que venceram, com a data (PAY-B-004). A sessão só carrega os
+       que valem, e o /perfil tratava quem pagou e venceu como quem nunca
+       comprou. */
+    vencidos: await acessosVencidos(env, account.id)
   });
 }
 
@@ -460,7 +503,23 @@ async function tentarEstorno(env, row) {
     await estornoAtualizar(env, order.id, { estado: 'concluido' });
     return 'concluido';
   }
+  if (await seguirParaOutroPagamento(env, row, depois)) return 'pendente';
   return (await estornoDe(env, order.id))?.estado || null;
+}
+
+/** O pedido foi pago DUAS vezes e o estorno devolveu um dos pagamentos: ele
+ *  continua `paid`, agora pelo outro (PAY-B-008, `applyPayment`). Desistir é
+ *  receber tudo de volta, então o estorno segue para o pagamento que restou,
+ *  do zero. true quando seguiu. */
+async function seguirParaOutroPagamento(env, row, order) {
+  if (!order || order.status !== 'paid') return false;
+  const ref = String(order.provider_ref || '');
+  if (!/^\d{1,24}$/.test(ref) || ref === String(row.payment_id)) return false;
+  await estornoAtualizar(env, order.id, {
+    payment_id: ref, estado: 'pendente', tentativas: 0, proxima_em: Date.now(), erro: ''
+  });
+  await log(env, order.account_id, 'estorno-segue', `${order.id}: estornar também ${ref}`);
+  return true;
 }
 
 /** Oito tentativas falharam: o dono precisa agir. O lembrete diário de
@@ -495,6 +554,7 @@ export async function runEstornos(env) {
       /* `pedido`: a Mercado Pago aceitou; confere se já devolveu. */
       try { await settleFromPaymentId(env, row.payment_id, 'estorno'); } catch { /* próxima */ }
       const order = await getOrder(env, row.order_id);
+      if (await seguirParaOutroPagamento(env, row, order)) continue;
       await estornoAtualizar(env, row.order_id,
         order && order.status === 'refunded' ? { estado: 'concluido' } : { estado: 'pedido' });
     } catch (e) {
@@ -782,6 +842,18 @@ async function applyPayment(env, order, payment, source) {
       return status;
     }
     if (atual.status === 'paid') {
+      /* O caso inverso do de cima (01/10/2026, PAY-B-008): o pagamento
+         estornado É o que está gravado, mas o pedido foi pago duas vezes e o
+         OUTRO pagamento continua aprovado. Fechar o acesso aqui tiraria o
+         curso de quem segue pagando por ele. O pedido passa a apontar para o
+         pagamento que restou, e o acesso fica. */
+      const outro = await outroPagamentoAprovado(env, atual, payment.id);
+      if (outro) {
+        await updateOrder(env, order.id, { provider_ref: String(outro.id) });
+        await log(env, order.account_id, 'estorno-duplicado',
+          `${order.id}: estornado ${payment.id}, o pedido segue pago por ${outro.id}`);
+        return status;
+      }
       const r = await refundOrder(env, {
         accountId: order.account_id,
         courseSlug: order.course_slug,
@@ -791,6 +863,12 @@ async function applyPayment(env, order, payment, source) {
       });
       if (r.refunded) {
         await log(env, order.account_id, 'estorno', `${order.id} ${payment.status} ${refundedCents || paidCents} via ${source}`);
+        /* Só quem virou o pedido para `refunded` avisa: `refundOrder` é
+           condicional, então o aviso repetido e o simultâneo não mandam um
+           segundo e-mail (PAY-B-006). */
+        await avisarEstorno(env, atual, {
+          contestacao: payment.status === 'charged_back', restaAte: r.until
+        });
       }
     } else if (atual.status === 'pending') {
       await updateOrder(env, order.id, { status: 'refunded' });
@@ -893,6 +971,75 @@ async function applyPayment(env, order, payment, source) {
   return 'paid';
 }
 
+/** Outro pagamento APROVADO deste pedido, intacto (o que sobrou depois do
+ *  estorno cobre o preço), que não seja `exceto`. null quando não há, e
+ *  sempre null fora da Mercado Pago (pedido liberado à mão). Uma falha da
+ *  consulta sobe: melhor a Mercado Pago reenviar o aviso do que fechar o
+ *  acesso de quem continua pagando (PAY-B-008). */
+async function outroPagamentoAprovado(env, order, exceto) {
+  if (order.provider !== 'mercadopago') return null;
+  const lista = await paymentsFor(env, order.id);
+  return lista.find(p => {
+    if (String(p.id) === String(exceto) || mapStatus(p.status) !== 'paid') return false;
+    const pago = Math.round(Number(p.transaction_amount || 0) * 100);
+    const devolvido = Math.round(Number(p.transaction_amount_refunded || 0) * 100);
+    return pago - devolvido >= order.amount_cents && String(p.currency_id || 'BRL') === order.currency;
+  }) || null;
+}
+
+/**
+ * "O estorno está concluído" - para o aluno, uma vez por pedido (auditoria
+ * de 01/10/2026, PAY-B-006). Chamado por quem VIROU o pedido para
+ * `refunded`: o aviso da Mercado Pago (desistência, estorno pelo painel,
+ * contestação) e o "Já devolvi" de /admin/estornos. Nunca lança: o acesso
+ * já fechou, e um e-mail que não sai fica na trilha.
+ */
+export async function avisarEstorno(env, order, { contestacao = false, restaAte = null } = {}) {
+  try {
+    if (!mailReady(env)) return;
+    const account = await findAccountById(env, order.account_id);
+    if (!account?.email || /\.(invalid|local)$/i.test(account.email)) return;
+    const curso = getCourse(order.course_slug)?.titlePt || order.course_slug;
+    const r = await sendMail(env, {
+      to: account.email,
+      ...mensagemDeEstorno({
+        nome: account.name || '', curso, valor: reaisBR(order.amount_cents, order.currency),
+        pedido: order.id, cartao: order.method === 'card', contestacao,
+        restaAte: restaAte ? dataBR(restaAte) : '',
+        marca: empresa.nomeFantasia || 'Hebraico Fluente',
+        suporte: empresa.contato?.emailSuporte || ''
+      })
+    });
+    await log(env, account.id, r.ok ? 'estorno-email-enviado' : 'estorno-email-falhou',
+      r.ok ? order.id : `${order.id} ${r.motivo}`);
+  } catch (e) {
+    console.error('mail-estorno', e && e.stack || e);
+  }
+}
+
+/**
+ * Os recibos das liberações feitas à mão (PAY-B-005). Actions → Acesso →
+ * `liberar` com `pedido` marca o pedido pago e concede o acesso em SQL; o
+ * e-mail sai daqui, na varredura seguinte, com o mesmo texto e a mesma regra
+ * de primeira compra ou renovação do recibo automático. A reserva em
+ * `avisos` (`recibo:<pedido>`) garante um envio só; falhou, solta e tenta de
+ * novo em 5 minutos. Nunca lança.
+ */
+export async function enviarRecibosManuais(env) {
+  if (!mailReady(env)) return 0;
+  let n = 0;
+  for (const order of await recibosManuaisPendentes(env)) {
+    const chave = `recibo:${order.id}`;
+    if (!await reservarAviso(env, chave)) continue;
+    const ent = await entitlementOf(env, order.account_id, order.course_slug);
+    const primeiraCompra = !ent || String(ent.order_id) !== String(order.id)
+      || Number(ent.granted_at) >= Number(order.created_at);
+    const ok = await confirmarPorEmail(env, order, primeiraCompra);
+    if (ok) n++; else await soltarAviso(env, chave);
+  }
+  return n;
+}
+
 /**
  * O recibo, na caixa de entrada de quem pagou.
  *
@@ -916,10 +1063,10 @@ async function applyPayment(env, order, payment, source) {
  */
 async function confirmarPorEmail(env, order, primeiraCompra) {
   try {
-    if (!mailReady(env)) return;
+    if (!mailReady(env)) return false;
 
     const account = await findAccountById(env, order.account_id);
-    if (!account?.email) return;
+    if (!account?.email) return false;
 
     const curso = getCourse(order.course_slug);
     const vence = await entitlementExpiry(env, account.id, order.course_slug);
@@ -940,9 +1087,14 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
       renovacao: !primeiraCompra,
       /* O contrato que vale para esta compra (Decreto 7.962/2013, art. 4º,
          IV), e onde desistir pelo site (art. 5º). */
-      termos: `${site}/termos/`,
-      reembolso: `${site}/reembolso/`,
-      versao: dataBR(Date.parse(`${empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)) || '',
+      /* LEGAL-104: a cópia FIXA da versão que valeu para este pedido, e não
+         a página de hoje. Pedido de antes da coluna: a versão em vigor. */
+      termos: linkDaVersao(site, 'termos', order.termos_versao || versaoAtual('termos')),
+      reembolso: linkDaVersao(site, 'reembolso', versaoAtual('reembolso')),
+      versao: [
+        dataBR(Date.parse(`${empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)),
+        (order.termos_versao || versaoAtual('termos')) && `código ${order.termos_versao || versaoAtual('termos')}`
+      ].filter(Boolean).join(', '),
       desistir: `${site}/perfil/`
     });
 
@@ -950,8 +1102,10 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
     await log(env, account.id, r.ok ? 'compra-enviada' : 'compra-email-falhou',
       r.ok ? order.id : `${order.id} ${r.motivo}${r.detalhe ? ': ' + r.detalhe : ''}`);
     if (!r.ok) console.error('mail-compra', r.motivo, r.status || '', r.detalhe || '');
+    return !!r.ok;
   } catch (e) {
     /* Um erro aqui é um e-mail que não saiu, nunca uma compra desfeita. */
     console.error('mail-compra', e && e.stack || e);
+    return false;
   }
 }

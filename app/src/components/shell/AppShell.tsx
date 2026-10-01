@@ -20,7 +20,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { carregarManifesto } from '@/lib/audio-registro';
 import { useProgress } from '@/lib/state/store';
 import { ITENS, saldo } from '@/lib/loja';
@@ -172,8 +172,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="lg:hidden sticky top-0 z-30 border-b border-[color:var(--line-soft)]
                          bg-[color-mix(in_srgb,var(--cream)_88%,transparent)] backdrop-blur-md">
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 h-[60px] flex items-center justify-between gap-4">
+          {/* Abaixo de 380 px só o quadrado ע: a 360 px o nome passava por
+              baixo do "◆ XP" (auditoria de 01/10, VIS-003). O site público
+              já faz o mesmo abaixo de sm. */}
           <Link href="/meu-hebraico" className="flex items-center min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
-            <Logo size={30} />
+            <span className="min-[380px]:hidden"><Logo size={30} words={false} /></span>
+            <span className="hidden min-[380px]:inline-flex min-w-0"><Logo size={30} /></span>
+            <span className="sr-only min-[380px]:hidden">Hebraico Fluente</span>
           </Link>
           <div className="flex items-center gap-4">
             {/* O XP leva às Recompensas (27/09/2026): é onde ele vale alguma coisa. */}
@@ -449,6 +454,11 @@ function BottomBar({ pathname }: { pathname: string | null }) {
 function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void }) {
   const first = ACHIEVEMENTS.find(a => a.id === ids[0]);
   const nosJogos = (usePathname() ?? '').startsWith('/academia');
+  /* Com o teclado hebraico da tela aberto, o pé da tela é dele: o aviso vai
+     para o alto, e nunca por cima das teclas (auditoria de 01/10, UXQA-014). */
+  const [comTeclado, setComTeclado] = useState(false);
+  useEffect(() => { setComTeclado(!!document.getElementById('teclado-hebraico')); }, [ids]);
+  const embaixo = nosJogos && !comTeclado;
   useEffect(() => {
     const t = setTimeout(onClose, 6000);
     return () => clearTimeout(t);
@@ -466,7 +476,7 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
          UX-018). Lá ele desce para acima da barra e do botão de acessibilidade; o
          "Continuar" das lições, que motivou o topo, não existe nos jogos. */
       className={`fixed left-1/2 -translate-x-1/2 z-40 w-[min(420px,calc(100vw-32px))] animate-rise
-                  ${nosJogos ? 'bottom-[136px] lg:bottom-6' : 'top-[68px]'}`}
+                  ${embaixo ? 'bottom-[136px] lg:bottom-6' : 'top-[68px]'}`}
     >
       <Card tone="mint" className="p-4 shadow-[var(--shadow-2)] flex items-center gap-4">
         <span aria-hidden className="text-[var(--mint-ink)] text-[22px] leading-none">◆</span>

@@ -146,7 +146,7 @@ async function jogarAteOFim(p, { voltas = 140, espera = 260 } = {}) {
        acusada de "não termina" quando o que não terminava era a varredura;
      · a casca tem os seus próprios botões (voltar, conta, navegação), e
        clicar num deles sai do jogo sem que nada pareça errado. */
-  const alvo = 'main button:not([disabled])';
+  const alvo = 'main button:not([disabled]):not([aria-disabled="true"])';
   for (let v = 0; v < voltas; v++) {
     if (await p.locator('text=Mais uma').count()) return true;
     const alvos = await p.locator(alvo).evaluateAll(bs =>

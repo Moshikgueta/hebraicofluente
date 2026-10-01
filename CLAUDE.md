@@ -760,6 +760,14 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - A privacidade (art. 4) descreve o teste.
 - **Para encerrar:** fixar a versão vencedora no Hero, apagar `lib/ab.ts`, as
   chamadas `contarAB`, a rota `/api/ab` e o workflow; a tabela pode ficar.
+- **Encerrado em 01/10/2026 (auditoria CONV-009), por clareza:** com o volume do
+  pré-lançamento o teste não chegaria a significância antes de 31/10. Ficou a A
+  ("Ler e escrever hebraico, do zero."), única no Hero; a B saiu. O botão passou a
+  dizer o que vem: "Começar o curso · R$ 147" (preço de `lib/vitrine.ts`, o mesmo da
+  caixa de preço). `contarAB` virou função vazia e o Hero não sorteia mais. Falta o
+  resto do desmonte, fora da frente da capa: as chamadas em CheckoutClient e
+  ObrigadoClient, `lib/ab.ts`, `worker/src/api/ab.js`, o workflow do relatório e a
+  menção ao teste no art. 4 da Privacidade. `ab_contagens` fica com os números.
 
 ## Módulo 5: cada lado na sua lição, contraste na lição 20 (29/09/2026, pedido do dono)
 - Bet, Kaf e Pe ensinam só o lado COM o ponto: `soOLadoDoPonto` (lib/sons.ts) tira da tela
@@ -955,3 +963,85 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   `ok`, `avisa` (10 dias ou menos) ou `vencido`; `check-legal.mjs` carrega uma cópia entre os
   marcadores `inicio/fim estadoDoPreLancamento`, avisa perto do fim e FALHA com a data vencida.
   A regra de preço não muda sozinha: a decisão de 01/11 é do dono (PAY-B-001).
+
+## Fase 1 de segurança da auditoria de 01/10/2026 (SEC-A-002/003/005/007/008/009, PERF-007)
+- **Freio de erro reserva antes de verificar** (`reservarVaga` em lib/db.js): o login toma a vaga
+  dos três tetos de erro com a escrita atômica antes do PBKDF2 e quem acerta a devolve. O código
+  do administrador gasta a tentativa num UPDATE condicional antes de comparar. Ler o contador e
+  gastar depois deixava 40 tentativas paralelas serem todas avaliadas.
+- **Nome do cadastro** passa por `nomeSeguro` (lib/nome.js) no cadastro e em todo "Oi, <nome>."
+  dos e-mails; a confirmação de e-mail nunca leva o nome, e a senha nova só com o e-mail confirmado.
+- **/api/health público = `{ok, monitor}`**; os detalhes com `Authorization: Bearer <ADMIN_TOKEN>`
+  (a publicação gera um novo a cada vez e o entrega ao e2e em `HF_ADMIN_TOKEN`) ou com sessão de
+  administrador com o segundo fator.
+- **Alerta diário de saúde** (`alertaDeSaude`): carimbo `backup` em `batimentos` (gravado por
+  scripts/backup-nuvem.sh) com mais de 36 h, ou 10+ respostas 5xx em 24 h (`respostas_5xx`, uma linha
+  por hora, contada em worker.js). Monitor externo: INCIDENTES.md, "Monitor externo" (ação do dono).
+- **Estatísticas só de aluno**; A/B com teto diário por endereço (HMAC do IP) e `compra` só com
+  pedido pago da própria sessão, uma vez por pedido (`ab_compras`).
+- **wrangler pelo lockfile da raiz** (`npm ci --ignore-scripts` + node_modules/.bin/wrangler) e
+  actions fixadas por SHA. Subir o wrangler = editar package.json, o lockfile e o fallback
+  `wrangler@4.135.0` dos scripts juntos.
+- **/api/me sem sessão**: 200 `{signedIn:false}` só com `X-HF-Sessao: opcional` (o app manda); sem o
+  cabeçalho, 401 (pacote antigo numa aba aberta). O progresso não chama /api/progress sem sessão.
+
+## Capa, /sobre, /metodo, /biblia e SEO: fase 1 da auditoria de 01/10/2026
+- **Ordem das letras (CONV-004):** só como do método do Damián, pela frase de
+  `lib/credito.ts`. `app/promessas.mjs` reprova "sequência/ordem das letras" em string
+  de `app/src` ou `data/` (fora de credito.ts e das notas `_`/`note`) e qualquer frase
+  publicada sobre a ordem que não diga "vem do método".
+- **Credencial:** "CELTA · Letras em andamento" na capa; "CELTA e Letras em andamento"
+  em /sobre (Letras - Inglês, UNINTER, em curso).
+- **/biblia:** "letra N das 22 (lição M das 27)", com M de `licaoDaLetra` (content-publico)
+  e 27 de `totalLicoes()`. `numeros.mjs` confere "letra/lição N das M" e o par letra→lição.
+- **O método numa lista só (CONV-010):** `lib/etapas-da-licao.ts` = as abas da lição
+  (Conhecer, Palavras, Escrever, Praticar, Fixação). A capa (`PASSOS`) e /metodo leem
+  dela; `tests/etapas.test.ts` confere contra `STAGES` do LessonClient.
+- **Caixa de preço:** a lista "inclui" é concreta (Aula 0, N lições, cursiva, áudio do
+  professor se houver manifesto, jogos da Academia, exame final e certificado não oficial).
+- **SEO:** JSON-LD da capa (`lib/jsonld.ts`: Organization com CNPJ, Course com o preço de
+  `lib/vitrine.ts` e `priceValidUntil` = `preLancamentoAte`, FAQPage das perguntas de
+  `components/landing/faq-capa.ts`, Person só com o que /sobre afirma); `checa-seo.mjs`
+  confere tudo isso e a description da capa (até 155). Ícones: `app/src/app/apple-icon.png`
+  (link do Next), `app/public/apple-touch-icon.png` e `app/public/favicon.ico` (PNG 32 em
+  ICO), renderizados do `icon.svg` com a Noto Serif Hebrew no Chromium. O 404 tem título
+  próprio; /cursos tem h1.
+- **Worker:** o 307 da barra final vem do servidor de ativos (auto-trailing-slash); `permanente`
+  em worker.js troca por 308 com o mesmo destino. `.txt` (payload RSC) sai com
+  `X-Robots-Tag: noindex`, menos robots.txt e llms.txt. `tests/barra-e-txt.test.ts`.
+- **Sem JavaScript (UXQA-001):** saiu o `app/src/app/loading.tsx` da raiz (o conteúdo ia
+  para um `div hidden` do streaming). As rotas pagas já têm esqueleto próprio (CourseGate).
+  `@media (scripting: none)` em globals.css mostra `.reveal` e a entrada do hero
+  (`data-entrada`).
+- **Botão de acessibilidade (VIS-016, UXQA-014, CONV-021):** `useDesvio` em
+  BotaoAcessibilidade sai de cima do que está marcado com `data-a11y-desvia` (mockup do
+  hero, formas de pagamento do checkout), do `#teclado-hebraico` e de tudo que é
+  `position: fixed` (folha de retorno): sobe acima, ou vai para a esquerda, ou fica. O
+  aviso de conquista vai para o alto quando o teclado da tela está aberto.
+
+## Auditoria de 01/10/2026, parte do curso (audit/2026-10-01, G/F/E/D)
+- **Dt 6:9 voltou ao massorético.** A correção PED-015 de 28/09 (commit 8410a28) trocou
+  `מְזֻזֹת` por `מְזוּזֹת` no Shemá de `data/bonus.json`; foi revertida (CONT-004): o
+  Códice de Leningrado traz `וּכְתַבְתָּם עַל־מְזֻזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ` (qubuts, sem
+  vav); `מְזוּזוֹת` é a grafia de Dt 11:20. A pronúncia não muda, então a gravação é a mesma:
+  `audio/he-05cb039a.mp3` voltou de `audio/arquivo/` e `he-8b9dc73a.mp3` foi para lá (o id
+  sai do hebraico). Se o painel /admin/gravar tiver regravado `he-8b9dc73a`, regravar no id novo.
+- **Som da letra em português** (`lib/som-pt.ts`, CONT-003): `somPt(sound)` é o rótulo da
+  tela (cabeçalho da lição, página do módulo, painel, ligar letra e som, baralho da Academia);
+  o IPA de `data/letters.json` fica como detalhe. `fonemasDe`/`somEmComum` dizem quando dois
+  sons são o mesmo (Tav/Tet, Álef/Áyin, Kaf/Qof): o ligar da lição (CONT-001) e o baralho
+  (`chavesDe` em deck.ts, CONT-005) nunca põem dois iguais na mesa.
+- **Domínio com os números das constantes** (UXQA-005): `FIXACAO_ITENS` (10),
+  `acertosPara`, `REGRA_DO_DOMINIO` e `REGRA_DO_DOMINIO_CURTA` ("8 de 10") em
+  lib/state/rules.ts. Nenhuma tela escreve "6 de 8" à mão; "dominada" é sempre
+  `isLessonMastered` (checkpoint, /concluido, /certificado, exame). A nota de 30/09 acima
+  que diz "6 de 8" descreve a régua antiga.
+- **Exame e módulos 6/7** (CONT-010): o exame abre com as 22 letras dominadas (a regra do
+  certificado). "Sem os pontos" só entra para quem fez o módulo 6, e "Os sons de fora" para
+  quem fez o 7 (`semPontos` e `extras` em `buildExam`).
+- **Aula 0 primeiro** (CONV-020): abrir /inicio grava `firsts['aula-0']`; até isso, sem
+  nenhuma lição começada, o painel oferece a Aula 0 como botão principal.
+- **Lição trancada** (UXQA-002): fixação abaixo de `LIBERA_MARK` troca o botão principal por
+  "Refazer a fixação (precisa de 80%)" e o painel aponta "Terminar <letra>".
+- Testes: `app/tests/auditoria-curso-1001.test.ts`. `npm run validate` ganhou V27 (todo
+  hebraico do dado-fonte em NFC).
