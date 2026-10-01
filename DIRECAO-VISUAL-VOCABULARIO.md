@@ -72,9 +72,12 @@ um bom livro didático moderno, não a de um app infantil.
 
 ## Estado
 
-47 palavras concretas estão estruturadas, com `imageAlt` e `imagePrompt`
-escritos. **Nenhuma imagem foi gerada** - a tela funciona sem elas, e o
-cartão simplesmente não mostra ilustração enquanto `image` é `null`.
+**As 47 imagens estão no curso (01/10/2026).** Geradas pelo dono no
+ChatGPT (são dele, para uso comercial), em montagens 3x3 recortadas e
+completadas até o quadrado. Para trocar uma: gere a nova e rode
+`node tools/imagem-vocabulario.mjs <arquivo> <número>`; o arquivo antigo sai
+e o nome novo leva outro hash. O `imageAlt` descreve a imagem que está no
+ar, não o prompt: ao trocar a imagem, confira o texto.
 
 Palavras abstratas (ontem, também, verdade, obrigado) ficam **sem** imagem de
 propósito: uma ilustração de "verdade" é uma adivinhação, e uma imagem que
