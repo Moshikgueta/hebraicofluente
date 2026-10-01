@@ -18,6 +18,7 @@
  * precisa de hash na CSP (tools/csp-hashes.mjs já o pula).
  */
 
+import { PERFIL_LINKEDIN } from './professor';
 import { ancora, flagship } from '@/lib/catalog';
 import { empresa, nomeLegal } from '@/lib/empresa';
 import { ORIGEM, url } from '@/lib/seo';
@@ -95,6 +96,7 @@ export function professor(retrato: string | null): Json {
     url: url('/sobre'),
     knowsLanguage: ['he', 'pt', 'en', 'es', 'it'],
     worksFor: { '@id': ID_ORG },
+    sameAs: [PERFIL_LINKEDIN],
     ...(retrato ? { image: `${ORIGEM}/${retrato.replace(/^\/+/, '')}` } : {})
   };
 }

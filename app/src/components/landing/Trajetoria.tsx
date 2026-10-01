@@ -1,5 +1,6 @@
 'use client';
 
+import { PERFIL_LINKEDIN } from '@/lib/professor';
 import { He } from '@/components/hebrew/He';
 import { Container, Reveal } from './base';
 
@@ -233,6 +234,13 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
                 </li>
               ))}
             </ul>
+            <a href={PERFIL_LINKEDIN} target="_blank" rel="noopener noreferrer me"
+               className="inline-flex items-center gap-1.5 font-ui text-[15px] font-semibold text-white
+                          underline underline-offset-[3px] decoration-[1.5px] decoration-white/60">
+              Ver meu perfil no LinkedIn
+              <span aria-hidden>↗</span>
+              <span className="sr-only"> (abre em outra aba)</span>
+            </a>
           </div>
         </Reveal>
 
