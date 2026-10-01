@@ -16,7 +16,7 @@ import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto, whatsappUrl } from '@/lib/empresa';
+import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto, prazoResposta, whatsappUrl } from '@/lib/empresa';
 
 /** A data de atualização, por extenso, como se lê em português. */
 export function dataPt(iso: string): string {
@@ -30,11 +30,23 @@ export function dataPt(iso: string): string {
 }
 
 export function LegalPage({
-  titulo, resumo, children
-}: { titulo: string; resumo: string; children: ReactNode }) {
+  titulo, resumo, children, documento, cta = true
+}: {
+  titulo: string; resumo: string; children: ReactNode;
+  /** O nome do documento para a VERSÃO (`app/versoes.mjs`): o texto dentro
+   *  do `<article data-politica>` é o que se guarda e o que se resume no
+   *  código da versão. O que fica fora (o convite para começar, a navegação)
+   *  não é contrato e não muda a versão. */
+  documento?: 'termos' | 'reembolso' | 'privacidade' | 'acessibilidade';
+  /** O convite para começar no pé. Sai da Privacidade e da Acessibilidade
+   *  (auditoria de 01/10/2026, LEGAL-119): num documento sobre dados ou
+   *  sobre barreiras, um botão de venda soa deslocado. */
+  cta?: boolean;
+}) {
   return (
     <Section>
       <div className="mx-auto w-full max-w-[760px] grid gap-6">
+        <article data-politica={documento} className="grid gap-6">
         <header className="grid gap-3">
           <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
             {empresa.nomeFantasia}
@@ -51,23 +63,27 @@ export function LegalPage({
         <div className="grid gap-6">{children}</div>
 
         <Identificacao />
+        </article>
 
         {/* Um CTA no fim de uma política não é oportunismo: quem chegou aqui
             estava decidindo, e leu justamente a parte que responde "e se eu me
             arrepender?". Sair dessa leitura sem ter para onde ir é perder a
             pessoa no momento em que ela mais confia. Some sozinho para quem já
             comprou - ver lib/cta.ts. */}
-        <FaixaCta
-          onde="legal"
-          titulo="Tudo isso respondido? Então comece."
-          linha="A primeira letra leva dez minutos, e você tem sete dias para desistir sem precisar explicar por quê."
-        />
+        {cta && (
+          <FaixaCta
+            onde="legal"
+            titulo="Tudo isso respondido? Então comece."
+            linha="A primeira letra leva dez minutos, e você tem sete dias para desistir sem precisar explicar por quê."
+          />
+        )}
 
         <nav className="flex flex-wrap gap-x-5 gap-y-2 pt-2">
           {[
             ['/termos', 'Termos de Uso'],
             ['/privacidade', 'Política de Privacidade'],
             ['/reembolso', 'Reembolso e Cancelamento'],
+            ['/acessibilidade', 'Acessibilidade'],
             ['/faq', 'Dúvidas frequentes']
           ].map(([href, label]) => (
             <Link key={href} href={href!}
@@ -137,11 +153,31 @@ export function Identificacao() {
             : contato.whatsapp
         } />}
         <Linha rotulo="Horário" valor={atendimento.horarioPt} />
-        <Linha rotulo="Prazo de resposta" valor={
-          `até ${atendimento.prazoRespostaUteis} dias úteis`
-        } />
+        <Linha rotulo="Prazo de resposta" valor={prazoResposta()} />
       </dl>
     </Card>
+  );
+}
+
+/**
+ * Quem oferece, numa linha, para as telas de dentro da plataforma.
+ *
+ * A identificação completa fica no rodapé das páginas públicas, no cadastro e
+ * no checkout; dentro da conta havia só os links das políticas - inclusive em
+ * /perfil, onde ficam "Desistir da compra" e "Apagar minha conta"
+ * (auditoria de 01/10/2026, LEGAL-118). Cada pedaço só sai se existir.
+ */
+export function IdentificacaoCurta() {
+  const partes = [
+    nomeLegalCompleto(),
+    empresa.cnpj && `CNPJ ${empresa.cnpj}`,
+    enderecoLinha(),
+    empresa.contato.emailSuporte
+  ].filter(Boolean);
+  return (
+    <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+      Quem oferece este serviço: {partes.join(' · ')}.
+    </p>
   );
 }
 

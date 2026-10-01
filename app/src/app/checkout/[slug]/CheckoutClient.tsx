@@ -38,7 +38,7 @@ import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
 import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
-import { confirmaSozinho, empresa, formasAtivas, soPix, temPix } from '@/lib/empresa';
+import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 import { contarAB } from '@/lib/ab';
@@ -332,7 +332,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             {SO_CARTAO ? (
               <>
                 <strong>Cartão de crédito</strong> · {brl(c.price.brl)} à vista,
-                ou parcelado em até {parcelas}x.
+                ou parcelado {parcelasTexto(parcelas)} (o total aparece antes de confirmar).
               </>
             ) : (
               <>
@@ -357,7 +357,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             <MethodOption
               checked={method === 'card'} onSelect={() => setMethod('card')}
               titlePt="Cartão de crédito"
-              detailPt={`${brl(c.price.brl)} à vista, ou parcelado em até ${parcelas}x.`}
+              detailPt={`${brl(c.price.brl)} à vista, ou parcelado ${parcelasTexto(parcelas)} (o total aparece antes de confirmar).`}
             />
           </fieldset>
         )}
@@ -400,7 +400,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
           </p>
         ) : (
           <>
-            <CondicoesDaCompra curso={c} />
+            <CondicoesDaCompra curso={c} renovacao={restam !== null && restam <= JANELA_DE_RENOVACAO_DIAS} />
             <Button size="lg" full onClick={pay} disabled={busy}>
               {busy ? 'Gerando…' : `Pagar ${brl(total)}`}
             </Button>
@@ -433,10 +433,14 @@ export function CheckoutClient({ slug }: { slug: string }) {
  * Fica logo acima do botão de propósito. Uma condição que o leitor teria de
  * rolar para trás para encontrar não foi informada; foi arquivada.
  */
-function CondicoesDaCompra({ curso }: { curso: CatalogCourse }) {
+function CondicoesDaCompra({ curso, renovacao = false }: { curso: CatalogCourse; renovacao?: boolean }) {
   const LINHAS: [string, React.ReactNode][] = [
     ['O que você leva', `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
-    ['Por quanto tempo', `${curso.accessMonths} meses, contados da confirmação do pagamento.`],
+    /* PAY-B-011 (auditoria de 01/10/2026): na renovação os meses SOMAM ao
+       fim do acesso atual (`grantAccess`), e o quadro dizia o contrário. */
+    ['Por quanto tempo', renovacao
+      ? `Mais ${curso.accessMonths} meses, somados ao fim do acesso atual.`
+      : `${curso.accessMonths} meses, ${INICIO_DO_ACESSO}.`],
     /* 30/09/2026 (CDC, art. 6º, III): dito com todas as letras, e não
        deduzido de "12 meses". Renovar é uma compra nova, feita pela pessoa. */
     ['Cobrança', 'Pagamento único. Não há assinatura nem renovação automática: ao fim do prazo, o acesso termina e nada mais é cobrado.'],
@@ -674,7 +678,7 @@ function Shell({ course, children }: {
               {brl(c.price.brl)}
             </p>
             <p className="font-ui text-[12.5px] text-ink-body">
-              ou em até {parcelas}x no cartão
+              ou {parcelasTexto(parcelas)} no cartão
             </p>
             {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">

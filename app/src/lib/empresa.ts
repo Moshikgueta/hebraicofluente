@@ -200,6 +200,85 @@ export const formasAtivas = (): ('pix' | 'card')[] =>
  */
 export const confirmaSozinho = (): boolean => empresa.pagamento.modo === 'mercadopago';
 
+/* ── as frases que se repetem, num lugar só (auditoria de 01/10/2026) ──────
+ * Cada uma destas aparecia escrita à mão em três a nove páginas, e cada
+ * página dizia uma coisa um pouco diferente: "em até 12x" sem juros no
+ * checkout e com juros nos Termos (LEGAL-102); "mesmo dia útil" na FAQ e
+ * "até 2 dias úteis" no rodapé (CONV-013); confirmação da desistência "na
+ * hora" nos Termos e "em até 2 dias úteis" no Reembolso (LEGAL-109). Agora
+ * a página pergunta aqui, e o número sai de data/empresa.json.
+ */
+
+/**
+ * O parcelamento, sempre com os juros dito junto.
+ *
+ * "Em até 12x" sozinho é lido no varejo brasileiro como "sem juros", e aqui
+ * há juros: são da Mercado Pago, cobrados do comprador, e o total aparece na
+ * tela dela antes de confirmar. `check-legal.mjs` falha se o export tiver um
+ * "12x" sem "juros" no mesmo trecho.
+ */
+export const parcelasTexto = (n: number): string => `em até ${n}x com juros da Mercado Pago`;
+
+/** A versão curta, para onde não cabe o nome da Mercado Pago (a barra fixa
+ *  da capa, o cartão de curso): os juros continuam ditos. */
+export const parcelasCurto = (n: number): string => `em até ${n}x com juros`;
+
+/** A segunda metade, para onde houver espaço: quem fecha o número é a Mercado Pago. */
+export const PARCELAS_TOTAL =
+  'o valor de cada parcela e o total aparecem na tela da Mercado Pago antes de você confirmar';
+
+/** "em até 2 dias úteis": o prazo de resposta do atendimento, em todo lugar. */
+export const prazoResposta = (): string => {
+  const n = empresa.atendimento.prazoRespostaUteis;
+  return `em até ${n} ${n === 1 ? 'dia útil' : 'dias úteis'}`;
+};
+
+/**
+ * Como a desistência é confirmada, dito igual nos Termos, no Reembolso, na
+ * FAQ e no /suporte.
+ *
+ * Só o site confirma na hora: `POST /api/pay/desistir` grava o pedido e manda
+ * o e-mail no mesmo instante. O e-mail chega a uma caixa lida por uma pessoa,
+ * então a confirmação dele sai no prazo do atendimento, e o que vale é a data
+ * em que a pessoa escreveu.
+ */
+export const confirmacaoDaDesistencia = (): string =>
+  'Pelo site, a confirmação chega no seu e-mail na hora. Por e-mail, respondemos confirmando o ' +
+  `recebimento ${prazoResposta()}, e vale a data em que você escreveu, não a da nossa resposta.`;
+
+/** Desde quando contam os meses de acesso e os dias para desistir. O código
+ *  conta de `paid_at`, gravado na liberação (worker/src/api/pay.js). */
+export const INICIO_DO_ACESSO = 'contados da liberação do acesso';
+
+/** Os últimos dias de acesso em que a renovação abre. O mesmo número de
+ *  `RENOVACAO_MS` em worker/src/api/pay.js e do checkout. */
+export const JANELA_DE_RENOVACAO_DIAS = 45;
+
+/** Como a renovação funciona, igual ao que `grantAccess` (worker/src/lib/db.js) faz. */
+export const renovacaoTexto = (meses: number): string =>
+  `Nos últimos ${JANELA_DE_RENOVACAO_DIAS} dias de acesso, dá para renovar com uma compra nova, pelo ` +
+  `preço do dia. Os ${meses} meses da renovação são somados ao fim do acesso atual, e não contados ` +
+  'do dia do pagamento: renovar antes não faz perder nenhum dia. Nada é renovado nem cobrado sozinho.';
+
+/**
+ * Se o atendimento responde dúvida sobre o conteúdo do curso.
+ *
+ * TEXTO PARA APROVAÇÃO DO DONO (UXQA-016): até 01/10/2026 a FAQ dizia que o
+ * suporte era "para acesso, pagamento e conta" e o /suporte convidava a
+ * escrever dúvidas do curso. Esta é a resposta sugerida; trocar aqui troca
+ * nas duas páginas.
+ */
+export const DUVIDAS_DE_CONTEUDO =
+  'Dúvidas sobre o conteúdo também são bem-vindas por e-mail, no mesmo prazo.';
+
+/**
+ * O que este curso ensina e o que fica para o próximo (UXQA-010).
+ *
+ * TEXTO PARA APROVAÇÃO DO DONO. Sai na página do curso e na FAQ.
+ */
+export const O_QUE_O_CURSO_ENSINA =
+  'Este curso ensina a ler e escrever em hebraico. Conversação começa no Hebraico A1, que é um curso à parte.';
+
 /* ── o que ainda falta ──────────────────────────────────────────────────── */
 
 export type Pendencia = { campo: string; porQue: string; bloqueia: boolean };

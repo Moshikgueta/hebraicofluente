@@ -569,7 +569,13 @@ describe('a confirmação de compra', () => {
     expect(m.text, 'sem a Política de Reembolso').toContain('https://hebraicofluente.com.br/reembolso/');
     expect(m.text, 'sem a versão dos termos').toMatch(/na versão de \d{2}\/\d{2}\/\d{4}/);
     expect(m.text, 'sem onde desistir').toContain('Desistir da compra');
-    expect(m.html).toContain('href="https://hebraicofluente.com.br/termos/"');
+    /* A cópia FIXA da versão do pedido, e não a página de hoje (LEGAL-104). */
+    const v = (env.DB as unknown as { bruto: import('node:sqlite').DatabaseSync }).bruto
+      .prepare('SELECT termos_versao FROM orders WHERE id = ?').get(ordem.id) as { termos_versao: string };
+    expect(v.termos_versao).toMatch(/^[0-9a-f]{10}$/);
+    expect(m.html).toContain(`href="https://hebraicofluente.com.br/termos/v/${v.termos_versao}/"`);
+    expect(m.text).toContain(`código ${v.termos_versao}`);
+    expect(m.text).toMatch(/https:\/\/hebraicofluente\.com\.br\/reembolso\/v\/[0-9a-f]{10}\//);
     expect(m.text, 'sem o suporte').toContain('@');
     /* E diz que abriu, não que renovou. */
     expect(m.text).toContain('está liberado');

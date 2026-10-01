@@ -201,6 +201,48 @@ O que o monitor NÃO vê, e quem vê:
 - backup que parou: o mesmo e-mail diário, pelo carimbo `backup` em
   `batimentos` que `scripts/backup-nuvem.sh` grava ao terminar.
 
+## 9. Mudança relevante nos Termos ou na Política de Privacidade
+
+Não é incidente, mas tem prazo e pede o mesmo cuidado (auditoria de
+01/10/2026, LEGAL-105). A Política de Privacidade (item 8) promete:
+"Alteração relevante no tratamento dos seus dados é avisada por e-mail antes
+de valer". Os Termos (art. 9) dizem que mudança que afete um acesso já
+comprado não retroage.
+
+**Relevante** é o que muda o que o aluno recebe, paga ou tem de fazer, ou o
+que se faz com os dados dele: preço ou forma de pagamento para quem já
+comprou, limite de uso (como os 3 aparelhos), dado novo coletado, operador
+novo, prazo de guarda, regra de suspensão. Correção de texto, esclarecimento
+e mudança só para compras futuras não são.
+
+1. **Antes de publicar**, decida com o advogado se a mudança é relevante e se
+   vale para quem já comprou. Se não puder valer para eles, a regra nova
+   precisa distinguir as contas (pela data do pedido) no código.
+2. **Liste quem tem direito ativo**, na sua máquina (o resultado tem e-mails:
+   não cole em issue, PR nem resumo do Actions):
+   ```
+   npx wrangler d1 execute hebraico-fluente --remote --command \
+     "SELECT a.email, e.expires_at FROM entitlements e JOIN accounts a ON a.id = e.account_id
+      WHERE e.expires_at IS NULL OR e.expires_at > unixepoch()*1000"
+   ```
+3. **Mande um e-mail a cada um**, com pelo menos 15 dias de antecedência
+   (prazo a confirmar com o advogado): o que muda, a partir de quando, o link
+   da versão nova e da versão que valeu para a compra dele
+   (`/termos/v/<código>/`, ver RUNBOOK-ATENDIMENTO.md) e o que ele pode fazer
+   se não concordar. **Não existe rota de envio em massa no site**: a lista
+   do aviso do próximo curso (`novidades`) é só para propaganda com
+   consentimento e não serve para isto. Até existir uma ferramenta, o envio
+   é pelo seu e-mail, em cópia oculta, ou um a um.
+4. **Publique** a mudança na data anunciada. A versão nova nasce sozinha no
+   build (`data/politicas-versoes/`); faça commit da cópia fixa.
+5. Guarde a lista de destinatários e a data do envio fora do repositório,
+   pelo mesmo prazo das notas de incidente.
+
+Mudanças de 29 e 30/09/2026 (limite de 3 aparelhos, marca invisível, marca
+d'água com parte do e-mail, estatísticas de aprendizagem) entraram para
+todas as contas sem esse aviso. Se houve venda real antes de 29/09, ver
+ANTES-DE-VENDER.md, item 9.
+
 ---
 
 ## Contatos

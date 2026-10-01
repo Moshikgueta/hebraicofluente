@@ -62,7 +62,7 @@ export function DepoimentosClient() {
         <p className="font-ui text-[16px] text-ink-body m-0">
           O que os alunos escreveram em /depoimento, os novos primeiro. Só dá para aprovar quem autorizou
           publicar. Aprovar não publica nada sozinho: é a lista de onde você escolhe o que vai para o site.
-          Se o aluno retirar a autorização, o depoimento some daqui, e precisa sair do site em até 7 dias.
+          Se o aluno retirar a autorização, o depoimento some daqui, e precisa sair do site em até 7 dias; quando ele estava aprovado, você recebe um e-mail com a data-limite.
         </p>
       </header>
 

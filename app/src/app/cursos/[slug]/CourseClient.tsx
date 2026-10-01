@@ -23,10 +23,10 @@ import { Prose } from '@/components/hebrew/Prose';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { ancora, brl, fimDoPreLancamento, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, FLAGSHIP, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { tempoDoCursoPt } from '@/lib/content-publico';
-import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
+import { confirmaSozinho, empresa, O_QUE_O_CURSO_ENSINA, parcelasTexto, prazoResposta, soPix, temCartao, temPix } from '@/lib/empresa';
 import { api } from '@/lib/account/api';
 import type { AcessoVencido } from '@/lib/account/types';
 import { fraseDeVencido, vencidoDe } from '@/app/perfil/compras';
@@ -174,6 +174,11 @@ export function CourseClient({ slug }: { slug: string }) {
                 </li>
               ))}
             </ul>
+            {/* UXQA-010 (auditoria de 01/10/2026): ler e escrever, não conversar.
+                Texto para aprovação, em lib/empresa.ts. */}
+            {c.slug === FLAGSHIP && (
+              <p className="font-ui text-[14.5px] leading-relaxed text-ink-body m-0">{O_QUE_O_CURSO_ENSINA}</p>
+            )}
           </div>
 
           <Card tone="wash" className="p-6 grid gap-3 content-start">
@@ -218,7 +223,7 @@ export function CourseClient({ slug }: { slug: string }) {
               {open
                 ? confirmaSozinho()
                   ? 'O acesso é liberado assim que o pagamento é confirmado - sem espera, sem liberação manual, sem e-mail para procurar na caixa de spam.'
-                  : 'Você paga no PIX pelo aplicativo do seu banco e entra com o mesmo e-mail e senha. O acesso abre assim que o pagamento cai, normalmente em alguns minutos.'
+                  : `Você paga no PIX pelo aplicativo do seu banco e entra com o mesmo e-mail e senha. Conferimos o pagamento e liberamos o acesso à mão, ${prazoResposta()}.`
                 : 'Este curso está em produção. Quando sair, entra na mesma conta e continua de onde o anterior parou.'}
             </p>
           </div>
@@ -373,7 +378,7 @@ function BuyBox({ slug }: { slug: string }) {
           <>
             <p className="font-display text-[38px] font-bold text-ink leading-none">{brl(c.price.brl)}</p>
             <p className="font-ui text-[13.5px] text-ink-body">
-              ou em até {parcelas}x no cartão
+              ou {parcelasTexto(parcelas)} no cartão
             </p>
             {/* O preço do PIX some junto com a possibilidade de pagar no
                 PIX - ver a nota de `temPix` em app/src/lib/empresa.ts. */}
@@ -393,15 +398,15 @@ function BuyBox({ slug }: { slug: string }) {
           {soPix()
             ? 'Pagamento por PIX, pelo aplicativo do seu banco.'
             : temPix() && temCartao()
-              ? `PIX, cartão ou parcelado em até ${parcelas}x.`
+              ? `PIX, cartão ou parcelado ${parcelasTexto(parcelas)}.`
               : temCartao()
-                ? `Cartão de crédito, ou parcelado em até ${parcelas}x.`
+                ? `Cartão de crédito, ou parcelado ${parcelasTexto(parcelas)}.`
                 : 'Pagamento por PIX, pelo aplicativo do seu banco.'}
         </li>
         <li>
           {confirmaSozinho()
             ? 'Acesso liberado automaticamente.'
-            : 'Acesso liberado em alguns minutos, depois do pagamento.'}
+            : `Acesso liberado à mão, ${prazoResposta()} depois do pagamento.`}
         </li>
         <li>{c.accessMonths} meses, do celular ao computador.</li>
         {/* A mesma linha da caixa de preço da capa (CONV-001); o prazo vem de

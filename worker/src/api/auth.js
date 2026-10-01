@@ -30,6 +30,8 @@ import {
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
 import { nomeSeguro } from '../lib/nome.js';
 import { exigirAdmin } from '../lib/admin.js';
+import { avisarRetirada } from './depoimentos.js';
+import { versaoAtual } from '../lib/versoes.js';
 import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelhos.js';
 import empresa from '../../../data/empresa.json';
 import {
@@ -237,14 +239,16 @@ async function avisarConvitePendente(env, ctx, account, email) {
 export const VERIFY_TTL_DIAS = 7;
 const VERIFY_TTL = VERIFY_TTL_DIAS * 86_400_000;
 
-/* A prova do aceite: quando e qual versão dos Termos (a data de
-   `politicas.atualizadoEm` em data/empresa.json, a mesma que a página
-   /termos mostra). Tabela à parte, `aceites`, que o schema.sql cria. Uma
+/* A prova do aceite: quando e qual versão dos Termos (desde 01/10/2026, o
+   código do texto publicado, de data/politicas-versoes/atual.json; antes, a
+   data `politicas.atualizadoEm`). Tabela à parte, `aceites`, que o schema.sql cria. Uma
    falha aqui não impede o cadastro: a pessoa aceitou na tela, e perder a
    conta por um erro do banco seria pior - o erro vai para o log. */
 async function registrarAceite(env, accountId) {
   try {
-    const versao = String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
+    /* O código da versão do texto (LEGAL-104), com a cópia fixa em
+       /termos/v/<versao>/; sem ele, a data, como antes. */
+    const versao = versaoAtual('termos') || String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
     const inserir = documento => env.DB.prepare(
       'INSERT INTO aceites (account_id, documento, versao, aceito_em) VALUES (?, ?, ?, ?)'
     ).bind(accountId, documento, versao, agora);
@@ -756,7 +760,7 @@ export async function password({ request, env }) {
  * (`session_version` subiu dentro do apagamento), mas mandar a limpeza junto
  * é a diferença entre a pessoa ver a tela de "conta apagada" e ver um erro.
  */
-export async function apagar({ request, env }) {
+export async function apagar({ request, env, ctx }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
 
@@ -775,6 +779,9 @@ export async function apagar({ request, env }) {
     return fail('bad-credentials', 401);
   }
 
+  /* Depoimento APROVADO sai do site em até 7 dias também quando a conta é
+     apagada: o dono é avisado antes de a linha sumir (LEGAL-106). */
+  await avisarRetirada(env, account.id, 'conta-apagada', ctx);
   const r = await deleteAccount(env, account.id);
   if (!r.ok) return fail('server', 500);
 

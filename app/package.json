@@ -6,7 +6,7 @@
   "scripts": {
     "export-content": "node ../tools/export-content.mjs",
     "dev": "npm run export-content && next dev",
-    "build": "npm run export-content && next build && node ../tools/csp-hashes.mjs",
+    "build": "npm run export-content && next build && node versoes.mjs && node ../tools/csp-hashes.mjs",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -19,6 +19,7 @@
     "sincronia": "node sincronia.mjs",
     "exame": "node exame.mjs",
     "check-legal": "node check-legal.mjs",
+    "versoes": "node versoes.mjs",
     "senha": "node senha.mjs",
     "pagamento": "node pagamento.mjs",
     "csp": "node csp.mjs",

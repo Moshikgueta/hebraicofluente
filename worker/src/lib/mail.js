@@ -29,6 +29,7 @@
  */
 
 import { nomeSeguro } from './nome.js';
+import empresa from '../../../data/empresa.json';
 
 /**
  * O remetente. Fica em [vars] do wrangler.toml, não é segredo, e precisa ser
@@ -51,6 +52,15 @@ export const mailReady = env => !!(env && env.RESEND_API_KEY && mailFrom(env));
 /* A base da API. Existe para o `npm test` apontar para um servidor de
    mentira; não pertence nem ao painel nem ao wrangler.toml. */
 const base = env => String((env && env.RESEND_BASE) || 'https://api.resend.com');
+
+/* O prazo de resposta do atendimento, o mesmo do site (data/empresa.json,
+   `atendimento.prazoRespostaUteis`, lido pela página via `prazoResposta()`
+   em app/src/lib/empresa.ts). Auditoria de 01/10/2026, LEGAL-109: os e-mails
+   diziam "responda" sem dizer em quanto tempo alguém lê a resposta. */
+const PRAZO_UTEIS = Number(empresa.atendimento && empresa.atendimento.prazoRespostaUteis) || 2;
+const PRAZO = `em até ${PRAZO_UTEIS} ${PRAZO_UTEIS === 1 ? 'dia útil' : 'dias úteis'}`;
+/** "Qualquer dúvida..." com o prazo, nos e-mails de compra e de desistência. */
+const duvida = suporte => `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}. Respondemos ${PRAZO}.`;
 
 /**
  * Manda, e diz o que aconteceu.
@@ -337,11 +347,13 @@ export function mensagemDeCompra({
     '---',
     '',
     arrependimentoDias
-      ? `Você tem ${arrependimentoDias} dias para desistir, contados a partir de agora, sem ` +
+      ? `Você tem ${arrependimentoDias} dias para desistir, contados da liberação do acesso (hoje), sem ` +
         'precisar justificar. É o Código de Defesa do Consumidor, e basta pedir: o valor volta integral.'
       : null,
     arrependimentoDias && desistir
-      ? `Para desistir, abra ${desistir} e use "Desistir da compra", ou responda este e-mail.`
+      ? `Para desistir, abra ${desistir} e use "Desistir da compra", ou responda este e-mail. ` +
+        `Pelo site, a confirmação chega na hora; por e-mail, respondemos confirmando o recebimento ${PRAZO}, ` +
+        'e vale a data em que você escreveu.'
       : null,
     '',
     /* O contrato, num meio que a pessoa guarda (Decreto 7.962/2013, art. 4º,
@@ -351,7 +363,7 @@ export function mensagemDeCompra({
     termos ? `· Termos de Uso: ${termos}` : null,
     reembolso ? `· Política de Reembolso: ${reembolso}` : null,
     termos ? '' : null,
-    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    suporte ? duvida(suporte) : null,
     '',
     assinatura
   /* `null` para a linha que não sai, `''` para a linha em branco que fica.
@@ -372,12 +384,13 @@ export function mensagemDeCompra({
     `Pedido: ${escapar(pedido)}</p>`,
     '<hr>',
     arrependimentoDias
-      ? `<p>Você tem ${arrependimentoDias} dias para desistir, contados a partir de agora,` +
+      ? `<p>Você tem ${arrependimentoDias} dias para desistir, contados da liberação do acesso (hoje),` +
         ' sem precisar justificar. É o Código de Defesa do Consumidor, e basta pedir:' +
         ' o valor volta integral.' +
         (desistir
           ? ` Para desistir, abra <a href="${escapar(desistir)}">Sua conta</a> e use` +
-            ' "Desistir da compra", ou responda este e-mail.'
+            ' "Desistir da compra", ou responda este e-mail. Pelo site, a confirmação chega na hora;' +
+            ` por e-mail, respondemos confirmando o recebimento ${PRAZO}, e vale a data em que você escreveu.`
           : '') +
         '</p>'
       : '',
@@ -388,7 +401,7 @@ export function mensagemDeCompra({
         `, na versão de ${escapar(versao || 'hoje')}.</p>`
       : '',
     suporte
-      ? `<p>Qualquer dúvida, responda esta mensagem ou escreva para ${escapar(suporte)}.</p>`
+      ? `<p>${escapar(duvida(suporte))}</p>`
       : '',
     `<p>${escapar(assinatura)}</p>`
   ].join('');
@@ -439,7 +452,7 @@ export function mensagemDeArrependimento({
     'O acesso ao curso é encerrado quando o reembolso for processado; o seu progresso',
     'de estudo fica guardado, caso um dia você volte.',
     '',
-    suporte ? `Qualquer dúvida, responda esta mensagem ou escreva para ${suporte}.` : null,
+    suporte ? duvida(suporte) : null,
     '',
     assinatura
   ].filter(l => l !== null).join('\n');
@@ -457,7 +470,7 @@ export function mensagemDeArrependimento({
     `<p>Devolvemos 100% do valor. ${escapar(devolucao)}</p>`,
     '<p>O acesso ao curso é encerrado quando o reembolso for processado; o seu progresso',
     ' de estudo fica guardado, caso um dia você volte.</p>',
-    suporte ? `<p>Qualquer dúvida, escreva para ${escapar(suporte)}.</p>` : '',
+    suporte ? `<p>${escapar(duvida(suporte))}</p>` : '',
     `<p>${escapar(assinatura)}</p>`
   ].join('');
 
