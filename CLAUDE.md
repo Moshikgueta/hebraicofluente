@@ -1079,3 +1079,5 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - **Marca d'água visível (decisão do dono, 01/10/2026): fica**, em todas as contas, inclusive as de
   quem comprou antes de 29/09 (VIS-011 encerrado). Exceção possível, se um comprador antigo pedir: mais
   aparelhos na conta dele, nunca tirar a marca.
+- **Quem já sabe ler um pouco NÃO pula etapas** (decisão do dono, 01/10/2026; UXQA-022 encerrado): todo
+  aluno passa pelas 27 lições e pela fixação de 80% em ordem, sem nivelamento nem "já sei esta letra".
