@@ -1076,3 +1076,6 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   desistência ao dono diz em quantos dias foi aberto (não muda o direito de desistir).
 - A fala aceita ו/י a mais, nunca letra a menos (`grafiaCheiaDe`). Ícones de traço em NavIcons.tsx no
   lugar de emojis coloridos; selos da lição ficam.
+- **Marca d'água visível (decisão do dono, 01/10/2026): fica**, em todas as contas, inclusive as de
+  quem comprou antes de 29/09 (VIS-011 encerrado). Exceção possível, se um comprador antigo pedir: mais
+  aparelhos na conta dele, nunca tirar a marca.
