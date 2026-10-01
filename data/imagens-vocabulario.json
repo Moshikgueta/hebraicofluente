@@ -172,7 +172,7 @@
   },
   "מִטָּה": {
    "pt": "cama",
-   "image": null,
+   "image": "/media/vocabulario/cama-336f2b72.webp",
    "imageAlt": "Uma cama arrumada com travesseiro e cobertor.",
    "imagePrompt": "a made bed with a pillow and a blanket"
   },
@@ -202,7 +202,7 @@
   },
   "כִּסֵּא": {
    "pt": "cadeira",
-   "image": null,
+   "image": "/media/vocabulario/cadeira-9043e065.webp",
    "imageAlt": "Uma cadeira de madeira simples.",
    "imagePrompt": "a simple wooden chair"
   },
@@ -214,7 +214,7 @@
   },
   "עֵץ": {
    "pt": "árvore",
-   "image": null,
+   "image": "/media/vocabulario/arvore-4fee03dc.webp",
    "imageAlt": "Uma árvore frondosa com tronco grosso.",
    "imagePrompt": "a leafy tree with a thick trunk"
   },
@@ -238,7 +238,7 @@
   },
   "בַּיִת": {
    "pt": "casa",
-   "image": null,
+   "image": "/media/vocabulario/casa-1bd61561.webp",
    "imageAlt": "Uma casa simples com porta, janelas e telhado.",
    "imagePrompt": "a simple house with a door, windows and a roof"
   },
@@ -250,7 +250,7 @@
   },
   "כֶּלֶב": {
    "pt": "cachorro",
-   "image": null,
+   "image": "/media/vocabulario/cachorro-78e0a4d8.webp",
    "imageAlt": "Um cachorro sentado, olhando para a frente.",
    "imagePrompt": "a dog sitting and looking forward"
   },
@@ -268,8 +268,8 @@
   },
   "סֵפֶר": {
    "pt": "livro",
-   "image": null,
-   "imageAlt": "Um livro aberto.",
+   "image": "/media/vocabulario/livro-37bb35ab.webp",
+   "imageAlt": "Um livro fechado, de capa verde, com uma fita marcando a página.",
    "imagePrompt": "an open book"
   },
   "כֶּסֶף": {
