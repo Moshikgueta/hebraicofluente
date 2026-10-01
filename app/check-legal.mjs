@@ -185,7 +185,7 @@ function estadoDoPreLancamento(price, hoje) {
     const estado = estadoDoPreLancamento(c.price, hoje);
     if (estado === 'vencido') {
       falha(`O pré-lançamento de ${c.slug} terminou em ${brDe(fim)} e o site ainda anuncia a data e o preço cheio. ` +
-            'Decida: subir para listBrl, estender preLancamentoAte ou tirar os dois. Ver audit/2026-10-01 PAY-B-001.');
+            'A virada automática (workflow virar-preco.yml) não rodou: rode-o à mão em Actions. Ver audit/2026-10-01 PAY-B-001.');
     } else if (estado === 'avisa') {
       aviso(`o pré-lançamento de ${c.slug} termina em ${brDe(fim)} (hoje é ${brDe(hoje)}): ` +
             'decida antes o que acontece com o preço - subir para listBrl, estender preLancamentoAte ou tirar os dois. ' +

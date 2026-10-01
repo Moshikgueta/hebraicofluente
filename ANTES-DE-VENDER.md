@@ -60,7 +60,7 @@ vai republicar sozinho. O que resta é o site que ficou de pé.
 responde 404 numa janela anônima. Me avise quando fizer e eu confiro o que dá
 para conferir daqui.
 
-### 1b. Áudio no iPhone: conferir o 206 em produção (auditoria de 01/10/2026, PERF-002)
+### 1b. Áudio no iPhone: conferir o 206 em produção (auditoria de 01/10/2026, PERF-002) - FEITO em 01/10/2026 (o dono tocou os áudios num iPhone: funcionam)
 
 **O que é.** O Safari (todo iPhone e iPad) só toca um áudio se o servidor
 responder a um pedido parcial (`Range: bytes=0-1`) com `206` e `Content-Range`.
@@ -307,7 +307,7 @@ O aviso que sobrou é `privacidade.encarregadoNome`, e **é opcional para
 você**: a LGPD pede um encarregado (art. 41), mas a Resolução CD/ANPD nº
 2/2022 dispensa agentes de tratamento de pequeno porte, desde que exista um
 canal de comunicação com o titular - que existe, é o
-`languageswithmoshik@gmail.com` na página de privacidade. Se um dia quiser
+`contato@hebraicofluente.com.br` na página de privacidade (encaminhado ao Gmail pelo Email Routing da Cloudflare desde 01/10/2026). Se um dia quiser
 pôr um nome ali, é uma linha no JSON.
 
 O que era o problema:

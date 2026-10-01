@@ -127,7 +127,7 @@ EMAIL_FROM = "Hebraico Fluente <contato@hebraicofluente.com.br>"
 # Aparece dentro do e-mail, como "qualquer dúvida, escreva para". É o mesmo
 # endereço do rodapé do site (data/empresa.json) - repetido aqui porque o
 # Worker não lê o JSON do app.
-SUPPORT_EMAIL = "languageswithmoshik@gmail.com"
+SUPPORT_EMAIL = "contato@hebraicofluente.com.br"
 # "1" usa o checkout de teste da Mercado Pago (não cobra nada). Em produção,
 # "0" - e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.

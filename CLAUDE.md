@@ -1045,3 +1045,16 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   "Refazer a fixação (precisa de 80%)" e o painel aponta "Terminar <letra>".
 - Testes: `app/tests/auditoria-curso-1001.test.ts`. `npm run validate` ganhou V27 (todo
   hebraico do dado-fonte em NFC).
+
+## Fim do pré-lançamento e e-mail do domínio (01/10/2026)
+- **O preço sobe sozinho** (decisão do dono): `tools/virar-preco.mjs` troca, em `data/courses.json`, o
+  `brl` pelo `listBrl` e tira `listBrl`/`preLancamentoAte` quando o fim do dia `preLancamentoAte` em
+  Brasília passa. Quem roda é `.github/workflows/virar-preco.yml`, agendado para 01/11 03:05 UTC: aplica,
+  roda a build (os Termos citam o preço, então nasce versão nova do contrato em
+  `data/politicas-versoes/`), commita em main e dispara `deploy-worker.yml`. Rodar à mão é seguro.
+  Testes de cobrança e `worker/e2e.sh` leem o preço do catálogo (`tests/ajuda/preco.ts`), nunca 147 fixo.
+- **contato@hebraicofluente.com.br** é o e-mail do site (empresa.json e `SUPPORT_EMAIL`): Email Routing da
+  Cloudflare encaminha ao Gmail do dono. Mudar o e-mail nas políticas gera versão nova: commitar as cópias
+  que a build escreve em `data/politicas-versoes/`.
+- `.gitignore` usa `node_modules` sem barra: um link simbólico `app/node_modules` foi commitado por engano
+  e, no checkout, substituiu a pasta de dependências.

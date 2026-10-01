@@ -19,6 +19,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cookieDe, envDeTeste, pedido, comoAdmin } from './ajuda/d1';
+import { CARTAO_CENTAVOS, PIX_CENTAVOS, PRECO } from './ajuda/preco';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
@@ -202,15 +203,15 @@ describe('PAY-B-014: create ignora o que o corpo não pode decidir', () => {
       courseSlug: 'alfabetizacao', method: 'pix', amount: 1, amountCents: 100, price: 1, pixDiscountPct: 100
     });
     expect(r.status).toBe(200);
-    expect(linha(env, 'SELECT amount_cents FROM orders')!.amount_cents).toBe(13230);
-    expect(criados.at(-1)!.transaction_amount).toBe(132.3);
+    expect(linha(env, 'SELECT amount_cents FROM orders')!.amount_cents).toBe(PIX_CENTAVOS);
+    expect(criados.at(-1)!.transaction_amount).toBe(PIX_CENTAVOS / 100);
 
     const c = await criar(env, a.cookie, { courseSlug: 'alfabetizacao', method: 'card', installments: 99, amount: 1 });
     expect(c.status).toBe(200);
     expect(linha(env, "SELECT amount_cents, installments FROM orders WHERE method = 'card'"))
-      .toEqual({ amount_cents: 14700, installments: 12 });
+      .toEqual({ amount_cents: CARTAO_CENTAVOS, installments: 12 });
     const pref = criados.at(-1)! as { items: { unit_price: number }[]; payment_methods: { installments: number } };
-    expect(pref.items[0]!.unit_price).toBe(147);
+    expect(pref.items[0]!.unit_price).toBe(PRECO);
     expect(pref.payment_methods.installments).toBe(12);
 
     /* Um curso que ainda não está à venda não vira pedido. */

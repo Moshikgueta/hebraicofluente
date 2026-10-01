@@ -224,6 +224,8 @@ describe('o preço cheio não aparece riscado', () => {
 
   it('a data de fim sai do catálogo, no formato brasileiro', async () => {
     const { fimDoPreLancamento, flagship } = await import('@/lib/catalog');
-    expect(fimDoPreLancamento(flagship().price)).toBe('31/10/2026');
+    const p = flagship().price;
+    /* Depois da virada (tools/virar-preco.mjs) não há data a anunciar. */
+    expect(fimDoPreLancamento(p)).toBe(p.preLancamentoAte ? '31/10/2026' : null);
   });
 });

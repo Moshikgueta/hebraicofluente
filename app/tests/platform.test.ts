@@ -135,6 +135,13 @@ describe('dinheiro', () => {
        um dia o pré-lançamento acabar, este caso cai junto com a promoção -
        e é para cair, porque a frase "depois passa a custar X" sai da tela no
        mesmo movimento. */
+    /* Depois de 31/10/2026 a virada (tools/virar-preco.mjs) tira a data e a
+       âncora: o preço cheio passa a ser o cobrado, e não há o que comparar. */
+    if (!c.price.preLancamentoAte) {
+      expect(c.price.listBrl).toBeNull();
+      expect(ancora(c.price)).toBeNull();
+      return;
+    }
     expect(c.price.brl).toBeLessThan(c.price.listBrl!);
     expect(ancora(c.price)).toBe(c.price.listBrl);
   });
