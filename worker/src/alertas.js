@@ -38,6 +38,7 @@ import {
 import { mailReady, mensagemDeAlerta, reaisBR, sendMail } from './lib/mail.js';
 import { novosDesde } from './api/depoimentos.js';
 import { estatisticasPurge } from './api/estatisticas.js';
+import { abComprasPurge } from './api/ab.js';
 
 /** Quantas vezes, na última hora, cada erro precisa aparecer para virar
  *  alerta. Um só já basta para os que nunca deveriam acontecer. */
@@ -77,6 +78,7 @@ export async function runAlertas(env, at = Date.now()) {
   try { await alertaDeSaude(env, at); } catch (e) { console.error('alertas', e && e.stack || e); }
   try { await avisosPurge(env, at); } catch { /* idem */ }
   try { await respostas5xxPurge(env, at); } catch { /* idem */ }
+  try { await abComprasPurge(env, at); } catch { /* idem */ }
   try { await estatisticasPurge(env, at); } catch { /* idem */ }
 }
 

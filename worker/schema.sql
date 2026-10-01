@@ -330,6 +330,15 @@ CREATE TABLE IF NOT EXISTS ab_contagens (
   PRIMARY KEY (exp, variante, evento, dia)
 );
 
+-- `ab_compras` (01/10/2026, SEC-A-008): os pedidos pagos que já viraram uma
+-- `compra` no teste. Só o id do pedido, para contar cada um uma vez; a
+-- versão vai só para o total em `ab_contagens`. Uma `compra` sem pedido pago
+-- da própria sessão não conta (api/ab.js). 60 dias de guarda (alertas.js).
+CREATE TABLE IF NOT EXISTS ab_compras (
+  order_id TEXT    PRIMARY KEY,
+  em       INTEGER NOT NULL
+);
+
 -- ── estorno automático da desistência (28/09/2026) ────────────────────────
 -- Quando o aluno desiste pelo site dentro dos sete dias, o próprio site pede o
 -- estorno à Mercado Pago (POST /v1/payments/{id}/refunds). Esta tabela é o
