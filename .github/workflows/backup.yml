@@ -29,6 +29,12 @@
 #     (o modelo "Edit Cloudflare Workers" já traz). O bucket e a regra de 90
 #     dias o próprio script cria. Se faltar algo, o resumo da execução diz o quê.
 #
+# Cópia fora da Cloudflare (01/10/2026): com os segredos BACKUP_SENHA e
+# RCLONE_DRIVE_TOKEN, cada backup diário vai também, CIFRADO, para a pasta
+# `hebraico-fluente-backups` do Google Drive do dono (90 dias). Sem eles,
+# tudo funciona como antes e o resumo avisa que a cópia no Drive está
+# desligada. Como ligar: RUNBOOK-ATENDIMENTO.md, "Cópia do backup no Drive".
+#
 # Tudo o que o script faz está em scripts/backup-nuvem.sh.
 
 name: Backup do banco
@@ -74,9 +80,24 @@ jobs:
       - name: Instalar o wrangler do lockfile
         run: npm ci --ignore-scripts --no-audit --no-fund
 
+      # A cópia fora da Cloudflare (Google Drive, cifrada) só roda com os dois
+      # segredos; sem eles, o passo abaixo nem instala o rclone.
+      - name: Instalar o rclone (cópia no Google Drive)
+        env:
+          RCLONE_DRIVE_TOKEN: ${{ secrets.RCLONE_DRIVE_TOKEN }}
+        run: |
+          if [ -n "$RCLONE_DRIVE_TOKEN" ]; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+            rclone version | head -1
+          else
+            echo "Sem RCLONE_DRIVE_TOKEN: a cópia no Drive fica desligada."
+          fi
+
       - name: Backup
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BACKUP_SENHA: ${{ secrets.BACKUP_SENHA }}
+          RCLONE_DRIVE_TOKEN: ${{ secrets.RCLONE_DRIVE_TOKEN }}
           ACAO: ${{ github.event_name == 'schedule' && 'copiar' || inputs.acao }}
           CHAVE: ${{ inputs.chave }}
         run: |

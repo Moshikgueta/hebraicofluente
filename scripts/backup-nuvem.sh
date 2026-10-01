@@ -324,8 +324,55 @@ copiar() {
     resumo "  - ⚠️ ainda SEM arquivo em \`audio/\` (gravadas e não exportadas; só o banco as tem): \`$faltam\`. Rode o deploy-worker.yml com \"exportar_gravacoes\" e abra o PR."
     printf '::warning::%s gravação(ões) do painel ainda não estão em audio/ no git: %s\n' "$(printf '%s\n' $faltam | wc -l | tr -d ' ')" "$faltam"
   fi
+  verde "6. A cópia fora da Cloudflare (Google Drive)"
+  copiar_drive "$arq.gz" "$(basename "$chave")"
   resumo ""
   tabela_no_resumo "$TMP/comparacao.txt"
+}
+
+# ── a cópia fora da Cloudflare (Google Drive) ────────────────────────────
+# Desde 01/10/2026 (pedido do dono; a auditoria marcava como o que faltava
+# para o backup sobreviver a perder a conta Cloudflare). Opcional: só roda
+# quando os dois segredos existem, e sem eles o backup no R2 segue igual.
+#   BACKUP_SENHA          a senha da cifra. Sem ela o arquivo não abre;
+#                         guarde-a FORA do GitHub também (gerenciador de senhas).
+#   RCLONE_DRIVE_TOKEN    o token do Google Drive gerado com `rclone authorize "drive"`.
+# O arquivo vai CIFRADO (AES-256, chave derivada com PBKDF2): o Drive guarda
+# só bytes ilegíveis, nunca e-mail ou hash de senha de aluno em claro. Fica
+# na pasta `hebraico-fluente-backups` do Drive, uma por dia, e as de mais de
+# 90 dias são apagadas, o mesmo prazo do R2 e da Política de Privacidade.
+# Para abrir uma cópia (RUNBOOK-ATENDIMENTO.md, "Restaurar do Drive"):
+#   openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -in ARQ.sql.gz.enc -out ARQ.sql.gz
+DRIVE_PASTA="hebraico-fluente-backups"
+CIFRA=(-aes-256-cbc -pbkdf2 -iter 600000 -salt)
+
+cifrar() { # entrada saida  (senha em BACKUP_SENHA)
+  openssl enc "${CIFRA[@]}" -in "$1" -out "$2" -pass env:BACKUP_SENHA
+}
+decifrar() { # entrada saida
+  openssl enc -d "${CIFRA[@]}" -in "$1" -out "$2" -pass env:BACKUP_SENHA
+}
+
+copiar_drive() { # arquivo.sql.gz chave-base
+  local gz="$1" nome="$2.enc"
+  if [ -z "${BACKUP_SENHA:-}" ] || [ -z "${RCLONE_DRIVE_TOKEN:-}" ]; then
+    info "Drive: sem BACKUP_SENHA ou RCLONE_DRIVE_TOKEN, a cópia fora da Cloudflare não foi feita"
+    resumo "- ⚠️ Cópia no Google Drive: desligada (faltam os segredos BACKUP_SENHA e RCLONE_DRIVE_TOKEN)."
+    return 0
+  fi
+  command -v rclone >/dev/null || morre "rclone não está instalado no runner."
+  cifrar "$gz" "$TMP/$nome" || morre "A cifra da cópia falhou."
+  # Prova: a cópia cifrada volta a ser exatamente o arquivo de origem.
+  decifrar "$TMP/$nome" "$TMP/prova.gz" && cmp -s "$gz" "$TMP/prova.gz" \
+    || morre "A cópia cifrada não decifra igual ao original." "Nada foi enviado ao Drive."
+  export RCLONE_CONFIG_GDRIVE_TYPE=drive RCLONE_CONFIG_GDRIVE_TOKEN="$RCLONE_DRIVE_TOKEN"
+  rclone copyto "$TMP/$nome" "gdrive:$DRIVE_PASTA/$nome" >"$TMP/drive.log" 2>&1 \
+    || morre "O envio ao Google Drive falhou." "$(tail -15 "$TMP/drive.log")
+O token pode ter vencido: gere outro com rclone authorize \"drive\" e troque o segredo RCLONE_DRIVE_TOKEN."
+  rclone delete --min-age "${DIAS}d" "gdrive:$DRIVE_PASTA" >>"$TMP/drive.log" 2>&1 \
+    || printf '::warning::%s\n' "A cópia foi para o Drive, mas apagar as de mais de $DIAS dias falhou."
+  verde "✓ Drive: $DRIVE_PASTA/$nome (cifrado)"
+  resumo "- Cópia cifrada no Google Drive: \`$DRIVE_PASTA/$nome\` (some depois de $DIAS dias)."
 }
 
 # ── provar-gravacoes ──────────────────────────────────────────────────────
@@ -445,5 +492,10 @@ case "${1:-}" in
   ensaiar)  shift; conta; ensaiar "${1:-}" ;;
   conferir) [ -f "${2:-}" ] || morre "Uso: $0 conferir arquivo.sql"; conferir_local "$2"; verde "✓ A cópia restaura." ;;
   provar-gravacoes) provar_gravacoes ;;
-  *) morre "Uso: $0 copiar | ensaiar [chave] | conferir arquivo.sql | provar-gravacoes" ;;
+  provar-cifra)
+    # Sem nuvem: cifra e decifra um arquivo e confere que volta igual.
+    BACKUP_SENHA="${BACKUP_SENHA:-senha-de-teste}"; export BACKUP_SENHA
+    head -c 200000 /dev/urandom > "$TMP/x" && cifrar "$TMP/x" "$TMP/x.enc" && decifrar "$TMP/x.enc" "$TMP/y" \
+      && cmp -s "$TMP/x" "$TMP/y" && ! cmp -s "$TMP/x" "$TMP/x.enc" && verde "✓ A cifra volta igual." || morre "A cifra não volta igual." ;;
+  *) morre "Uso: $0 copiar | ensaiar [chave] | conferir arquivo.sql | provar-gravacoes | provar-cifra" ;;
 esac
