@@ -45,7 +45,7 @@ const REUNE = [
   'O hebraico como língua materna',
   'Sala de aula com alunos brasileiros',
   'A experiência de aprender cinco línguas',
-  'Formação em ensino de idiomas: CELTA e Letras em andamento',
+  'Formação em ensino de idiomas: CELTA e estudos em Letras',
   'O trabalho diário de criar cursos de idiomas'
 ];
 

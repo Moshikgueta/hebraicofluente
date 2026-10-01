@@ -46,8 +46,9 @@ const RESUMO = [
   'Gerente Pedagógico em Tel Aviv',
   /* Letras está em curso (UNINTER): "Formação CELTA e Letras" se lê como
      graduação concluída (auditoria de 01/10, CONV-005). Mesma forma em
-     /sobre (Trajetoria.tsx, REUNE). */
-  'CELTA · Letras em andamento'
+     /sobre (Trajetoria.tsx, REUNE). O dono confirmou em 01/10/2026: não
+     concluiu; a forma é "estudos em Letras" em todo lugar. */
+  'Formação CELTA e estudos em Letras'
 ];
 
 export function Professor({ retrato }: { retrato: string | null }) {
