@@ -106,7 +106,7 @@ export default function Page() {
           '"Fale e seja corrigido" depende do reconhecimento de voz do navegador, que não existe em todos (o Firefox, por exemplo, não tem); é um recurso opcional, e "Gravar a minha" funciona em todos;',
           'o jogo "Caça à letra" treina o reconhecimento visual da forma das letras; com leitor de tela, ele anuncia o nome de cada letra, o que torna o jogo possível, mas muda o que ele treina;',
           'o foco depois de responder foi corrigido nos exercícios e nos jogos que conhecemos (em 01/10/2026); se você encontrar uma tela em que ele volta para o início da página, avise pelo canal abaixo;',
-          'ainda não testamos a plataforma com leitores de tela reais (NVDA, VoiceOver, TalkBack).'
+          'com leitor de tela real, testamos o VoiceOver no iPhone, pelo Safari (em 01/10/2026): entrar, abrir uma lição, ouvir o áudio, responder e seguir funcionaram; no Chrome do iPhone o VoiceOver não funcionou bem, e recomendamos o Safari; ainda não testamos com NVDA (computador) nem TalkBack (Android).'
         ]} />
       </Artigo>
 

@@ -677,3 +677,11 @@ diários do Worker.
   ~50 compras e cadastros. O gratuito manda 100 e-mails/dia e 3.000/mês; passando
   disso, o acesso continua sendo liberado, mas o recibo e o "esqueci a senha" não
   chegam. Conferir no painel da Resend qual é o plano atual.
+
+### 13. Teste com leitor de tela - FEITO em 01/10/2026 (VoiceOver)
+
+O dono testou com o VoiceOver no iPhone, pelo Safari: entrar, abrir uma
+lição, ouvir o áudio, responder (certo e errado) e seguir funcionaram, sem o
+foco voltar ao topo. No Chrome do iPhone o VoiceOver não funcionou bem; a
+Declaração de Acessibilidade recomenda o Safari. Faltam NVDA (computador) e
+TalkBack (Android), e o teste num iPhone com iOS 15 ou 16.
