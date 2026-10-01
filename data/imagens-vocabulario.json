@@ -142,31 +142,31 @@
   },
   "רְחוֹב": {
    "pt": "rua",
-   "image": null,
+   "image": "/media/vocabulario/rua-d1a5995c.webp",
    "imageAlt": "Uma rua de cidade com calçada, poste e casas.",
    "imagePrompt": "a city street with a sidewalk, a street lamp and houses"
   },
   "חָבֵר": {
    "pt": "amigo",
-   "image": null,
+   "image": "/media/vocabulario/amigo-9b01e7f4.webp",
    "imageAlt": "Dois amigos adultos rindo, um com a mão no ombro do outro.",
    "imagePrompt": "two adult friends laughing, one with a hand on the other shoulder"
   },
   "וֶרֶד": {
    "pt": "rosa (flor)",
-   "image": null,
+   "image": "/media/vocabulario/rosa-flor-f06c8d02.webp",
    "imageAlt": "Uma rosa vermelha com o cabo e duas folhas.",
    "imagePrompt": "a single red rose with its stem and two leaves"
   },
   "אֹזֶן": {
    "pt": "orelha",
-   "image": null,
+   "image": "/media/vocabulario/orelha-2ba45358.webp",
    "imageAlt": "O perfil de uma cabeça com a orelha em destaque.",
    "imagePrompt": "a head in profile with the ear highlighted"
   },
   "אָח": {
    "pt": "irmão",
-   "image": null,
+   "image": "/media/vocabulario/irmao-d0ab8d19.webp",
    "imageAlt": "Dois irmãos, um mais velho e um mais novo, lado a lado.",
    "imagePrompt": "two brothers, one older and one younger, side by side"
   },
@@ -184,19 +184,19 @@
   },
   "סוּס": {
    "pt": "cavalo",
-   "image": null,
+   "image": "/media/vocabulario/cavalo-68e0d1a2.webp",
    "imageAlt": "Um cavalo marrom em pé, de perfil.",
    "imagePrompt": "a brown horse standing, side view"
   },
   "סַל": {
    "pt": "cesta",
-   "image": null,
+   "image": "/media/vocabulario/cesta-18eca3a6.webp",
    "imageAlt": "Uma cesta de vime com frutas.",
    "imagePrompt": "a wicker basket with fruit"
   },
   "אוֹטוֹבּוּס": {
    "pt": "ônibus",
-   "image": null,
+   "image": "/media/vocabulario/onibus-2e05f83b.webp",
    "imageAlt": "Um ônibus urbano de frente.",
    "imagePrompt": "a city bus seen from the front"
   },
@@ -208,7 +208,7 @@
   },
   "עִיר": {
    "pt": "cidade",
-   "image": null,
+   "image": "/media/vocabulario/cidade-fcdc9c95.webp",
    "imageAlt": "Prédios de uma cidade vistos de longe.",
    "imagePrompt": "a city skyline seen from a distance"
   },
