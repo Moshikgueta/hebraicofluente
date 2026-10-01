@@ -117,6 +117,8 @@ export type DayRecord = {
   units: number;
   xp: number;
   goalMet: boolean;
+  /** XP pago por acertos neste dia, para o teto (`XP_ACERTOS_POR_DIA`). */
+  xpAcertos?: number;
 };
 
 /** The current shape. Bump this and add a step to `migrate()` - never both
