@@ -688,3 +688,14 @@ TalkBack (Android), e o teste num iPhone com iOS 15 ou 16.
 
 O texto novo da Declaração (art. 4, sobre este teste) foi aprovado pelo dono
 em 01/10/2026.
+
+### 14. Cópia do backup fora da Cloudflare (Google Drive) - PRONTA, falta ligar
+
+O sistema já faz a cópia diária CIFRADA no Google Drive pessoal do dono (só
+ele acessa), assim que existirem os segredos `RCLONE_DRIVE_TOKEN` e
+`BACKUP_SENHA` no GitHub (passo a passo em RUNBOOK-ATENDIMENTO.md). O texto
+novo da Política de Privacidade sobre essa cópia foi aprovado pelo dono em
+01/10/2026; segue para o advogado com o resto.
+
+**Pronto quando.** O primeiro arquivo `.sql.gz.enc` aparece na pasta
+`hebraico-fluente-backups` do Drive.
