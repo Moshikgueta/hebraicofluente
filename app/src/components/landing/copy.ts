@@ -35,6 +35,7 @@
  */
 
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+import { ETAPAS_DA_LICAO } from '@/lib/etapas-da-licao';
 
 /** Existe gravação? É o mesmo que `audioAvailable()` responde ao curso. */
 export const TEM_AUDIO = AUDIO_MANIFEST.length > 0;
@@ -89,26 +90,11 @@ export const ABAS: readonly Aba[] = [
   }
 ];
 
-/* Seis passos com gravação, cinco sem: o "Ouça" não tem como existir com o
-   manifesto vazio, e deixá-lo na lista era prometer um passo do método que a
-   lição não executa. O que sobra não é um buraco - "Associe" já era o passo que
-   faz o trabalho de ensinar o som, por comparação com o português. */
-export const PASSOS: readonly (readonly [string, string])[] = TEM_AUDIO
-  ? [
-      ['Reconheça', 'A forma isolada, grande, sem distração.'],
-      ['Ouça', 'O som gravado por falante nativo.'],
-      ['Associe', 'A comparação com um som do português.'],
-      ['Pratique', 'Cinco tipos de exercício, alternados.'],
-      ['Leia', 'A letra dentro de uma palavra real.'],
-      ['Revise', 'Ela volta depois, no intervalo certo.']
-    ]
-  : [
-      ['Reconheça', 'A forma isolada, grande, sem distração.'],
-      ['Associe', 'O som comparado com um som que você já faz em português.'],
-      ['Pratique', 'Quatro tipos de exercício, alternados.'],
-      ['Leia', 'A letra dentro de uma palavra real.'],
-      ['Revise', 'Ela volta depois, no intervalo certo.']
-    ];
+/* Os passos do método na capa SÃO as etapas da lição, com os nomes das abas
+   que o aluno vê lá dentro (lib/etapas-da-licao.ts, auditoria de 01/10,
+   CONV-010). Até então eram seis passos com outros nomes, sem a escrita. */
+export const PASSOS: readonly (readonly [string, string])[] =
+  ETAPAS_DA_LICAO.map(e => [e.aba, e.descricaoPt] as const);
 
 /* A maquete do exercício, e o herói. Duas telas que MOSTRAM um exercício em
    vez de descrevê-lo - então elas também têm de mostrar um que exista hoje. */

@@ -78,11 +78,10 @@ describe('a landing e o áudio dizem a mesma coisa', () => {
     }
   });
 
-  it('mantém o método com um passo por coisa que o curso faz', () => {
-    /* Seis passos com gravação, cinco sem: o "Ouça" não tem como existir com o
-       manifesto vazio. */
-    expect(PASSOS).toHaveLength(TEM_AUDIO ? 6 : 5);
-    expect(PASSOS.map(p => p[0])).toContain('Associe');
+  it('mantém o método com as etapas da lição, e não uma lista à parte', () => {
+    /* Desde 01/10/2026 (CONV-010) os passos da capa são as abas da lição:
+       Conhecer, Palavras, Escrever, Praticar, Fixação - com a escrita. */
+    expect(PASSOS.map(p => p[0])).toEqual(['Conhecer', 'Palavras', 'Escrever', 'Praticar', 'Fixação']);
   });
 
   it('volta a prometer sozinha no dia em que a gravação entrar', () => {
@@ -148,7 +147,10 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
        gravação entrar e o array voltar a ter seis. */
     const fonte = readFileSync(
       new URL('../src/components/landing/Secoes.tsx', import.meta.url), 'utf8');
-    expect(fonte).toContain('PASSOS.length === 6');
+    /* Desde 01/10/2026 a contagem sai de lib/etapas-da-licao.ts
+       (`quantasEtapasPt`), a mesma lista que a capa desenha. */
+    expect(fonte).toContain('quantasEtapasPt()');
+    expect(fonte).not.toContain("'Seis passos'");
   });
 
   it('e a sincronização que ele anuncia existe mesmo', () => {

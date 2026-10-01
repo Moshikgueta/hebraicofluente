@@ -92,7 +92,6 @@ export function CourseClient({ slug }: { slug: string }) {
           id="resultado"
           eyebrowPt="No fim deste curso"
           titlePt="O que você vai conseguir fazer."
-          leadPt="Escrito como coisa que se faz, não como tema que se estuda - é assim que dá para conferir se aconteceu."
         />
         <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0">
           {c.outcomesPt.map(o => (
@@ -341,7 +340,7 @@ function BuyBox({ slug }: { slug: string }) {
                 PIX - ver a nota de `temPix` em app/src/lib/empresa.ts. */}
             {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[13.5px] font-medium text-[var(--accent)]">
-                {brl(pixPrice(c.price))} no PIX ({c.price.pixDiscountPct}% off)
+                {c.price.pixDiscountPct}% de desconto no PIX: {brl(pixPrice(c.price))}
               </p>
             )}
           </>
