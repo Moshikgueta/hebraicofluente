@@ -28,7 +28,7 @@ import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from
 import { course, tempoDoCursoPt, totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
-import { confirmaSozinho, soPix, temPix } from '@/lib/empresa';
+import { confirmaSozinho, empresa, soPix, temPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
 
 const TEM_AUDIO = audioAvailable();
@@ -430,6 +430,19 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                     : <>No PIX sai por {brl(pix)}. Acesso liberado à mão depois de
                        conferido o pagamento, por {c.accessMonths} meses.</>}
             </p>
+            {/* A desistência (CDC art. 49) é o maior redutor de risco que o
+                site tem para quem não conhece o criador, e até 01/10/2026 ela
+                só aparecia no checkout, em /suporte e num acordeão de /faq
+                (auditoria, CONV-001). Aqui, ao lado do botão, é onde o
+                tráfego frio decide. O prazo vem de data/empresa.json, o mesmo
+                que a Política de Reembolso lê; `check-legal.mjs` confere que
+                a frase saiu no HTML. Não é "garantia": é o direito do CDC,
+                dito como ele é. */}
+            {!owned && (
+              <p className="mt-2 font-ui text-[13.5px] leading-[1.5] text-ink-muted">
+                {empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar.
+              </p>
+            )}
             {/* O número riscado diz "é mais barato"; esta linha diz o que ele
                 É. Sem ela, o riscado vira preço de referência inventado - e no
                 Brasil isso é publicidade enganosa, não licença poética. Some
@@ -467,8 +480,13 @@ export function Faq() {
        : 'As gravações estão em produção. Enquanto não entram, o curso não usa voz sintética: cada som é explicado por comparação com um som do português, e os exercícios de escuta ficam desativados em vez de virar adivinhação.'],
     ['Por quanto tempo tenho acesso?',
      `${c.accessMonths} meses a partir da confirmação do pagamento, incluindo as atualizações feitas no curso nesse período.`],
-    ['Posso estudar no meu ritmo?',
-     'Sim. Não há turmas nem prazos. O progresso fica salvo e você retoma exatamente de onde parou.'],
+    /* No lugar de "Posso estudar no meu ritmo?", que "Quanto tempo leva?" já
+       respondia. O prazo e o meio batem com /reembolso: contado da liberação
+       do acesso (a política conta "da compra ou da liberação, o que for mais
+       favorável"), estorno pelo mesmo meio (PIX volta para a chave de origem,
+       cartão é estornado na fatura). */
+    ['E se eu não gostar?',
+     `Você tem ${empresa.politicas.arrependimentoDias} dias, contados da liberação do acesso, para desistir pelo site e receber 100% de volta, sem precisar justificar. O estorno sai pelo mesmo meio de pagamento.`],
     ['O que acontece depois que termino?',
      'Você entra na trilha: Hebraico A1 é o próximo nível. Se quiser, marque em Sua conta o pedido de receber um e-mail quando ele abrir.']
   ];

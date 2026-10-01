@@ -58,7 +58,30 @@ workers_dev = false
 # arquivos são servidos antes de o portão rodar, e a aula sai sem cookie.
 directory = "./app/out"
 binding = "ASSETS"
-run_worker_first = true
+# Uma lista, e não `true` (01/10/2026, auditoria PERF-001): `"/*"` manda tudo
+# para o Worker, e cada `"!..."` é uma exceção que o servidor de ativos
+# responde sozinho, sem invocar o Worker (não conta na cota do plano Free,
+# que custava de 47 a 70 invocações por carga de página). Só entra na lista
+# de exceções o que é PÚBLICO e IMUTÁVEL:
+#   /_next/static/*     chunks e CSS com o hash do conteúdo no nome
+#   /fonts/*            as fontes (next/font/local)
+#   /media/*            as imagens da capa e o og.jpg
+#   /tracado-amostra/*  os 2 traçados que a capa mostra (Álef e Shin)
+# /amostra-audio (os 7 clipes da capa) FICA no Worker de propósito: o
+# Safari só toca mp3 que responde 206 a `Range`, e o Worker garante a fatia
+# (worker/src/lib/range.js) em vez de depender do servidor de ativos.
+# NUNCA ponha aqui /audio nem /stroke-order: são conteúdo pago, atrás do
+# portão (worker/src/gate.js). Os cabeçalhos de segurança e de cache do que
+# sai sem Worker vêm de app/public/_headers (copiado para app/out na build).
+# Sintaxe (wrangler 4.x): array de globs; `!` nega; o wrangler recusa a
+# lista acima do limite de regras.
+run_worker_first = [
+  "/*",
+  "!/_next/static/*",
+  "!/fonts/*",
+  "!/media/*",
+  "!/tracado-amostra/*"
+]
 # O 404 do próprio site, com o layout do site - e não a página crua do
 # servidor.
 not_found_handling = "404-page"

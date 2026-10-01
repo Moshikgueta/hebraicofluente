@@ -910,3 +910,48 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   (Shin, Mem, Lámed: `shin`/`mem`/`lamed` em AMOSTRA_AUDIO, lib/amostra-audio.ts e
   tools/export-content.mjs, que copiam de audio/), pergunta "Qual é esta letra?", e depois do
   acerto oferece "Ouvir «sha»" junto da explicação do risquinho.
+
+## Ativos fora do Worker, cache imutável e Range (01/10/2026, auditoria PERF-001/002, LEGAL-101, SEC-A-004)
+- `run_worker_first` no `wrangler.toml` é uma LISTA: `"/*"` manda tudo ao Worker e as regras
+  `"!..."` são o que o servidor de ativos responde sozinho, sem invocação (não conta na cota do
+  Free): `/_next/static/*`, `/fonts/*`, `/media/*`, `/tracado-amostra/*`.
+  Só o que é público E imutável. `/amostra-audio` fica no Worker de propósito (Range). `/audio` e `/stroke-order` são pagos e NUNCA entram na lista.
+- O que sai sem Worker não passa por `blindar`: os cabeçalhos (nosniff, HSTS, `Cache-Control:
+  public, max-age=31536000, immutable`) vêm de `app/public/_headers`, que o Next copia para
+  `app/out/_headers` na build. Mudou a lista do toml, mude o `_headers` junto; o teste
+  `app/tests/cache-e-range.test.ts` confere os dois contra `gate.js`.
+- `blindar` também põe `immutable` em `/_next/static/` (vale no `wrangler dev` e no dia em que a
+  lista mudar); rota paga continua `private, no-store`, a regra do portão vem depois e vence.
+- `worker/src/lib/range.js`: `intervalo`, `responderRange` e `comRange`. O Safari exige 206 a
+  `Range: bytes=0-1`; o `wrangler dev` devolve 200 inteiro. `audio.servir` (D1) e os mp3 do git
+  em `/audio/*` usam o helper; um 206 que já veio pronto do servidor de ativos passa intocado.
+  Os clipes de `/amostra-audio` também passam por `comRange`; `worker/e2e.sh` confere o 206.
+- `sendMail` manda `reply_to: SUPPORT_EMAIL` à Resend ("responda este e-mail" cai na caixa de
+  suporte, não em `contato@`). `deploy-app.yml` (prévia no GitHub Pages sem portão) foi apagado.
+
+## Backup e a tabela gravacoes (01/10/2026, SEC-A-001)
+- `gravacoes` (os áudios do painel, BLOB de até 1,5 MB) fica FORA do backup diário:
+  o `d1 export` escreve cada linha como um INSERT em hexadecimal, acima do teto de 1 MB por
+  comando do SQLite, e a cópia não restaurava em lugar nenhum. `sem_gravacoes` em
+  `scripts/backup-nuvem.sh` tira só os INSERTs; o CREATE TABLE fica e a prova continua
+  (gravacoes sai 0, volta 0). Nada se perde: a casa delas é `audio/<id>.mp3` no git
+  (`exportar_gravacoes` no deploy-worker.yml) e o Worker serve do git quando não há linha.
+- O resumo diário diz quantas linhas ficaram fora e quais ainda não estão no git. Prova
+  local, sem nuvem: `bash scripts/backup-nuvem.sh provar-gravacoes` (cru estoura, filtrado restaura).
+
+## Desistência na vitrine, tinta do escuro e a data do pré-lançamento (01/10/2026, auditoria CONV-001, VIS-001, PAY-B-001)
+- A frase "N dias para desistir e receber 100% de volta, sem justificar." (N =
+  `empresa.politicas.arrependimentoDias`) está na caixa de preço da capa (`Preco`, Fecho.tsx),
+  na da página do curso (`BuyBox`, CourseClient.tsx) e, curta, na `BarraFixa`. O cartão
+  "E se não for para mim?" e a FAQ da capa ("E se eu não gostar?") respondem com ela.
+  `app/check-legal.mjs` confere a frase no HTML de `/` e de `/cursos/alfabetizacao/`. Nunca
+  chamar de "garantia": é o direito do CDC, contado da liberação do acesso como em /reembolso.
+- Tema escuro: `--accent` é TINTA e `--accent-bg` é FUNDO com texto branco. No claro os dois
+  são o navy; no escuro `--accent` vira `--teal-ink` (#7FDACA) e `--accent-bg` fica no navy
+  (#1D545E). Fundo sólido com texto branco usa `bg-[var(--accent-bg)]`; barra de progresso,
+  borda, ring e texto continuam em `--accent`. `app/escuro.mjs` mede o contraste de TODO
+  texto visível de `/licao/alef/` e falha abaixo de 4,5:1.
+- `preLancamentoAte` + `listBrl`: `src/lib/pre-lancamento.ts` (`estadoDoPreLancamento`) diz
+  `ok`, `avisa` (10 dias ou menos) ou `vencido`; `check-legal.mjs` carrega uma cópia entre os
+  marcadores `inicio/fim estadoDoPreLancamento`, avisa perto do fim e FALHA com a data vencida.
+  A regra de preço não muda sozinha: a decisão de 01/11 é do dono (PAY-B-001).

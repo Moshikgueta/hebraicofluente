@@ -11,6 +11,13 @@
 #     de TESTE na Cloudflare, confere e apaga o banco de teste. Rodar uma vez
 #     depois de ligar e depois uma vez por mês.
 #
+# A tabela `gravacoes` (os áudios do painel /admin/gravar) fica FORA da cópia
+# desde 01/10/2026 (SEC-A-001): cada blob em hexadecimal passa do teto de 1 MB
+# por comando do SQLite e a cópia não restaurava em lugar nenhum. As gravações
+# são conteúdo do curso e moram no git como audio/<id>.mp3 (job
+# `exportar-gravacoes` do deploy-worker.yml). O resumo de cada execução diz
+# quantas linhas ficaram fora e quais ainda não têm arquivo no git.
+#
 # Se falhar, manda e-mail para o SUPPORT_EMAIL do wrangler.toml (pela Resend,
 # a mesma chave do site). Não dependemos do aviso do próprio GitHub: numa
 # execução agendada ele vai para quem editou o cron por último, que pode não

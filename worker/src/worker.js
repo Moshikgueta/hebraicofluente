@@ -7,6 +7,15 @@
  *   2. rota paga → portão, que decide se o HTML sai;
  *   3. o resto  → entregar o export do Next, que é o site inteiro.
  *
+ * Com uma exceção, desde 01/10/2026: o que é público E imutável (os chunks
+ * com hash de /_next/static, as fontes, as imagens da capa e os dois
+ * traçados de amostra) é servido pelo servidor de ativos SEM passar por
+ * aqui, pela lista de exclusões do `run_worker_first`. Esses pedidos não
+ * contam na cota do plano, e os cabeçalhos deles vêm de app/public/_headers,
+ * não de `blindar`. Os clipes de /amostra-audio ficam aqui por causa do
+ * Range (ver abaixo). Tudo o que é pago (/audio, /stroke-order, as rotas do
+ * curso) continua entrando por esta porta.
+ *
  * O site é `output: 'export'` com `trailingSlash: true`, então cada rota é uma
  * pasta com index.html. Os ativos cuidam disso sozinhos - o que este arquivo
  * garante é que uma rota desconhecida caia no 404 do próprio site, e não num
@@ -14,6 +23,7 @@
  */
 
 import { json } from './lib/http.js';
+import { comRange } from './lib/range.js';
 import { gate, isGatedPath } from './gate.js';
 import { runReconcile } from './reconcile.js';
 import * as auth from './api/auth.js';
@@ -231,11 +241,23 @@ async function responder(request, env, ctx) {
         return null;
       });
       if (doPainel) return doPainel;
+      /* O mp3 do git, pelo servidor de ativos. O Safari pede `bytes=0-1`
+         antes de tocar e exige 206; em produção o servidor de ativos já
+         responde assim, mas o `wrangler dev` devolve 200 inteiro e ignora o
+         Range. Se vier 200 com Range no pedido, a fatia é feita aqui
+         (lib/range.js); um 206 pronto passa como veio. */
+      return comRange(request, await env.ASSETS.fetch(request));
     }
 
     /* ── o site ─────────────────────────────────────────────────────── */
     /* A lista de hashes da CSP é do Worker, não do visitante. */
     if (path === '/' + ARQUIVO_HASHES) return new Response('Not found', { status: 404 });
+    /* Os clipes da capa: públicos, mas o Safari só toca o que responde 206
+       a `Range` (auditoria de 01/10/2026, PERF-002). Por isso continuam no
+       Worker, e não na lista de exceções do `run_worker_first`. */
+    if (/^\/amostra-audio\/[^/]+\.mp3$/.test(path) && (request.method === 'GET' || request.method === 'HEAD')) {
+      return comRange(request, await env.ASSETS.fetch(request));
+    }
     return env.ASSETS.fetch(request);
 }
 
@@ -377,6 +399,18 @@ function blindar(res, path, hashes = null) {
   if (isAdminPath(path)) {
     h.set('Cache-Control', 'private, no-store');
     h.set('X-Robots-Tag', 'noindex, nofollow');
+  }
+  /* Os arquivos de /_next/static têm o hash do conteúdo no nome: mudar o
+     conteúdo muda o nome, então o navegador pode guardá-los por um ano sem
+     perguntar (`immutable`). O servidor de ativos os marca `max-age=0,
+     must-revalidate`, e cada "posso usar o que tenho?" era uma ida à rede e
+     uma invocação do Worker (auditoria de 01/10/2026, PERF-001). Em
+     produção esses pedidos nem chegam aqui (lista do `run_worker_first`) e o
+     cabeçalho vem de app/public/_headers; esta linha é a mesma regra para o
+     `wrangler dev` e para o dia em que a lista mudar. Nunca em rota paga:
+     a regra do portão, abaixo, vem depois e vence. */
+  if (path.startsWith('/_next/static/')) {
+    h.set('Cache-Control', 'public, max-age=31536000, immutable');
   }
   if (!path.startsWith('/api/') && isGatedPath(path)) {
     h.set('Cache-Control', 'private, no-store');

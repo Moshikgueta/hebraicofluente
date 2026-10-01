@@ -92,6 +92,18 @@ O banco NÃO guarda CPF nem dado de cartão. Senha fica como hash PBKDF2.
      executar o `.sql` nele (o mesmo que `scripts/backup-nuvem.sh ensaiar` faz,
      com o nome de produção). Faça com calma, e com o site em manutenção.
    - Perde-se no máximo um dia (o que aconteceu depois da última cópia).
+   - **As gravações do painel não estão na cópia.** A tabela `gravacoes`
+     (os áudios de /admin/gravar) fica fora do backup desde 01/10/2026: cada
+     áudio em hexadecimal passa do teto de 1 MB por comando do SQLite, e uma
+     cópia com eles não restaurava em lugar nenhum. Depois da restauração a
+     tabela volta vazia e o curso toca os arquivos `audio/<id>.mp3` do git,
+     que é o mesmo som, já cortado e nivelado (o Worker serve do git sempre
+     que não há linha no banco). Nada a fazer para o aluno. O que se perde é
+     só a gravação feita DEPOIS da última exportação para o git: o resumo
+     diário do backup lista esses ids ("ainda SEM arquivo em `audio/`"), e
+     o job `exportar_gravacoes` do deploy-worker.yml (Run workflow, caixa
+     marcada) leva do banco para um ramo e um PR. Rode-o depois de cada
+     sessão de gravação, e a perda é zero.
 3. Cloudflare fora: não há o que fazer além de esperar e avisar os alunos.
 
 ---

@@ -26,9 +26,12 @@ provável é o repositório ter virado privado (item 2) - no plano gratuito o
 Pages não serve repositório privado, então torná-lo privado derruba o site
 junto.
 
-**Confirme você**, numa janela anônima: `moshikgueta.github.io/hebraicofluente`
-tem de dar 404. E vale apagar o `.github/workflows/deploy-app.yml`, que era o
-único jeito de a cópia de demonstração voltar (ele só roda à mão, mas existe).
+**Confirme você**, numa janela anônima: abra
+https://moshikgueta.github.io/hebraicofluente/licao/alef/ e tem de dar 404.
+Se abrir a lição, é o curso inteiro no ar de graça: vá em **Settings → Pages →
+Unpublish site** na hora. O `.github/workflows/deploy-app.yml`, que era o único
+jeito de a cópia de demonstração voltar, foi apagado em 01/10/2026 (auditoria,
+SEC-A-004): o build dele saía sem portão e com os JSON pagos dentro do pacote.
 
 O que era o problema:
 
@@ -49,12 +52,46 @@ está de pé. São dois cliques:
 Se não aparecer o botão, a fonte do site está em "GitHub Actions": troque
 **Source** para **Deploy from a branch** → **None**, salve, e o botão aparece.
 
-A publicação automática já foi desligada (o `deploy-app.yml` só roda à mão,
-e o `nextjs.yml` duplicado foi removido), então nada vai republicar sozinho.
-O que resta é o site que ficou de pé.
+A publicação automática já foi desligada (o `deploy-app.yml` foi apagado em
+01/10/2026, e o `nextjs.yml` duplicado tinha sido removido antes), então nada
+vai republicar sozinho. O que resta é o site que ficou de pé.
 
-**Pronto quando.** `moshikgueta.github.io/hebraicofluente` responde 404. Me
-avise quando fizer e eu confiro o que dá para conferir daqui.
+**Pronto quando.** `moshikgueta.github.io/hebraicofluente/licao/alef/`
+responde 404 numa janela anônima. Me avise quando fizer e eu confiro o que dá
+para conferir daqui.
+
+### 1b. Áudio no iPhone: conferir o 206 em produção (auditoria de 01/10/2026, PERF-002)
+
+**O que é.** O Safari (todo iPhone e iPad) só toca um áudio se o servidor
+responder a um pedido parcial (`Range: bytes=0-1`) com `206` e `Content-Range`.
+Localmente o servidor de ativos devolve `200` inteiro e ignora o pedido; em
+produção a Cloudflare costuma responder 206 sozinha, mas daqui não dá para
+provar (o proxy barra o site).
+
+**Por que importa.** O áudio é o centro do curso e a capa vende com "Ouça e
+fale". Se a produção fizer como o local, quem usa iPhone aperta "Ouvir" e não
+ouve nada; a onda seguinte é de reembolso.
+
+**O que já está feito.** Os clipes das lições (`/audio/*.mp3`, atrás do
+portão) passam pelo Worker, que fatia a resposta em 206 quando o servidor de
+ativos devolve 200 (`worker/src/lib/range.js`, com teste). Os sete clipes da
+capa (`/amostra-audio/*`) também, de propósito: ficaram fora da lista de
+exceções do `run_worker_first` para que o 206 não dependa do servidor de
+ativos. A publicação confere o 206 sozinha (`worker/e2e.sh`).
+
+**Como conferir.** No seu computador:
+
+```
+curl -sI -H 'Range: bytes=0-1' https://hebraicofluente.com.br/amostra-audio/shalom.mp3
+```
+
+Espera-se `HTTP/2 206` e uma linha `content-range: bytes 0-1/11956`. Depois,
+num iPhone de verdade, toque 3 clipes: um na capa ("Ouça e descubra a letra")
+e dois dentro de uma lição, com a conta que comprou.
+
+**Se vier 200.** Me avise: é defeito, e a publicação já deveria ter falhado.
+
+**Pronto quando.** O curl devolve 206 e os três clipes tocam no iPhone.
 
 ### 2. Fechar o que os logs públicos já mostraram - FEITO em 20/09/2026
 
@@ -408,6 +445,12 @@ aqui porque dois deles mudam o que você vê acontecer.
     **Desde 28/09/2026 há também o backup automático diário no R2** (Action
     "Backup do banco", ver `.github/workflows/backup.yml`): a cópia manual
     passa a ser um extra, não a única.
+    **A tabela `gravacoes` fica fora dessa cópia** (desde 01/10/2026): os
+    áudios do painel não cabem num comando do SQLite e são conteúdo do curso,
+    não dado de aluno; a casa deles é o git (`audio/<id>.mp3`). O resumo de
+    cada execução diz quais gravações ainda não foram exportadas para lá:
+    quando aparecer alguma, rode o deploy-worker.yml com "exportar_gravacoes"
+    e aceite o PR. Depois de gravar, exporte; é a regra.
 
 **De brinde**, um defeito que apareceu ao fazer o item 13: o freio de
 requisições apagava sozinho a própria contagem em toda janela maior que duas

@@ -22,6 +22,7 @@
   --color-ink-muted: var(--ink-muted);
   --color-accent-soft: var(--accent-soft);
   --color-accent: var(--accent);
+  --color-accent-bg: var(--accent-bg);
   --color-accent-deep: var(--accent-deep);
   --color-accent-wash: var(--accent-wash);
   --color-mint: var(--mint);

@@ -35,6 +35,14 @@
 export const mailFrom = env =>
   String((env && env.EMAIL_FROM) || '').trim();
 
+/**
+ * Para onde vai a resposta de quem recebe. É a caixa de suporte do site
+ * (SUPPORT_EMAIL); vazio quando ela não está configurada, e então a resposta
+ * segue para o remetente, como antes.
+ */
+export const mailReplyTo = env =>
+  String((env && env.SUPPORT_EMAIL) || '').trim();
+
 /** Dá para mandar e-mail nesta implantação? É o que /api/health reporta. */
 export const mailReady = env => !!(env && env.RESEND_API_KEY && mailFrom(env));
 
@@ -55,12 +63,22 @@ const base = env => String((env && env.RESEND_BASE) || 'https://api.resend.com')
 export async function sendMail(env, { to, subject, text, html }) {
   if (!mailReady(env)) return { ok: false, motivo: 'sem-provedor' };
 
+  /* Para onde vai a RESPOSTA. Os textos dizem "responda este e-mail", e sem
+     `reply_to` a resposta iria para o remetente (`contato@`), que é um
+     endereço de envio, verificado na Resend, e não necessariamente uma caixa
+     que alguém lê. Com `reply_to` ela cai na caixa de suporte declarada no
+     site (SUPPORT_EMAIL, wrangler.toml [vars]). Um pedido de desistência
+     feito por resposta ao recibo é o direito do art. 49 do CDC sendo
+     exercido; ele não pode sumir num endereço sem leitor (auditoria de
+     01/10/2026, LEGAL-101). */
+  const suporte = mailReplyTo(env);
   const corpo = {
     from: mailFrom(env),
     to: [String(to)],
     subject: String(subject),
     text: String(text),
-    ...(html ? { html: String(html) } : {})
+    ...(html ? { html: String(html) } : {}),
+    ...(suporte ? { reply_to: suporte } : {})
   };
 
   let r;

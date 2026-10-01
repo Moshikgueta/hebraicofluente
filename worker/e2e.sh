@@ -212,9 +212,22 @@ if [ -n "$ASSET" ]; then
     ASSET_CODE="$(code "$B$ASSET")"
   fi
   espera "o JavaScript da página carrega" 200 "$ASSET_CODE"
+  # 01/10/2026 (auditoria PERF-001): /_next/static sai SEM Worker e com um
+  # ano de cache, pelo app/public/_headers. Um `max-age=0` aqui quer dizer
+  # que o _headers não foi copiado para app/out ou que a lista do
+  # run_worker_first voltou a `true`.
+  espera "o chunk do Next é imutável (_headers)" true \
+    "$(G -o /dev/null -D - "$B$ASSET" | grep -i '^cache-control:' | grep -q 'immutable' && echo true || echo false)"
 else
   espera "a capa referencia o JavaScript do Next" true false
 fi
+
+# 01/10/2026 (auditoria PERF-002): o Safari só toca áudio de servidor que
+# responde 206 a um Range. Os clipes da capa passam pelo Worker, que fatia
+# a resposta quando o servidor de ativos devolve o arquivo inteiro
+# (worker/src/lib/range.js).
+espera "mp3 da capa responde 206 a um Range (Safari)" 206 \
+  "$(code -H 'Range: bytes=0-1' "$B/amostra-audio/shalom.mp3")"
 
 echo "Sessão e portão"
 espera "/api/me sem sessão recusa"            401 "$(code $B/api/me)"
