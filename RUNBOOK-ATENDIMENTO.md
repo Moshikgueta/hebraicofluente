@@ -90,8 +90,9 @@ O aluno escreveu pedindo o dinheiro de volta, sem usar o botão.
      Acesso → `revogar`.
 5. Revogar é obrigatório: devolver o dinheiro NÃO tira o curso.
 
-**Resposta automática (LEGAL-109): FEITA e testada em 01/10/2026.** No Gmail
-que recebe o `contato@`, um filtro (Para: `contato@hebraicofluente.com.br`;
+**Resposta automática (LEGAL-109): EM CONFIGURAÇÃO (o teste de 01/10/2026
+ainda não respondeu).** No Gmail que recebe o `contato@` (o destino do Email
+Routing da Cloudflare, não necessariamente o Gmail de login), um filtro (Para: `contato@hebraicofluente.com.br`;
 Assunto: desistência OR desistencia OR desistir OR reembolso OR estorno OR
 arrependimento OR cancelar OR cancelamento) envia o modelo "Confirmação de
 recebimento" e aplica o marcador `Desistência`. A data e a hora da resposta
