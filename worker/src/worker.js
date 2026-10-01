@@ -258,7 +258,23 @@ async function responder(request, env, ctx) {
     if (/^\/amostra-audio\/[^/]+\.mp3$/.test(path) && (request.method === 'GET' || request.method === 'HEAD')) {
       return comRange(request, await env.ASSETS.fetch(request));
     }
-    return env.ASSETS.fetch(request);
+    return permanente(await env.ASSETS.fetch(request));
+}
+
+/* ── o redirecionamento da barra final é permanente ──────────────────────
+ * O servidor de ativos (html_handling padrão, "auto-trailing-slash") manda
+ * `/cursos` para `/cursos/` e `/index.html` para `/` com 307, que é
+ * TEMPORÁRIO: um link externo sem a barra passa autoridade por um desvio
+ * que o buscador não guarda (auditoria de 01/10/2026, SEO-002). O wrangler
+ * não tem opção para mudar o código, então a troca é aqui: o mesmo destino,
+ * com 308 (permanente, e que, como o 307, preserva método e corpo). Só os
+ * redirecionamentos do servidor de ativos passam por esta função; os 302 do
+ * portão e o 301 do www nascem antes e não mudam. */
+function permanente(res) {
+  if (res.status !== 307) return res;
+  const destino = res.headers.get('Location');
+  if (!destino) return res;
+  return new Response(null, { status: 308, headers: { Location: destino } });
 }
 
 /* ── os cabeçalhos do site ─────────────────────────────────────────────────
@@ -411,6 +427,14 @@ function blindar(res, path, hashes = null) {
      a regra do portão, abaixo, vem depois e vence. */
   if (path.startsWith('/_next/static/')) {
     h.set('Cache-Control', 'public, max-age=31536000, immutable');
+  }
+  /* Os `.txt` do export são o payload RSC de cada página (`/faq/index.txt`),
+     servidos como text/plain: um rastreador que os descubra ao renderizar
+     pode indexar o texto cru como se fosse página (auditoria de 01/10/2026,
+     SEO-003). robots.txt e llms.txt são feitos para serem lidos e ficam de
+     fora. */
+  if (/\.txt$/i.test(path) && path !== '/robots.txt' && path !== '/llms.txt') {
+    h.set('X-Robots-Tag', 'noindex');
   }
   if (!path.startsWith('/api/') && isGatedPath(path)) {
     h.set('Cache-Control', 'private, no-store');
