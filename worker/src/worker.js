@@ -26,6 +26,7 @@ import { json } from './lib/http.js';
 import { comRange } from './lib/range.js';
 import { gate, isGatedPath } from './gate.js';
 import { runReconcile } from './reconcile.js';
+import { contar5xx } from './lib/db.js';
 import * as auth from './api/auth.js';
 import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
@@ -141,6 +142,14 @@ export default {
   async fetch(request, env, ctx) {
     const path = new URL(request.url).pathname.replace(/\/+$/, '') || '/';
     const res = await responder(request, env, ctx);
+    /* Toda resposta 5xx vira um contador por hora no D1, que o alerta
+       diário soma (alertas.js, auditoria de 01/10/2026, SEC-A-005). Fora do
+       caminho da resposta: quem já recebeu um erro não espera pela conta. */
+    if (res.status >= 500) {
+      const contar = contar5xx(env);
+      if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(contar);
+      else await contar;
+    }
     return blindar(res, path, await hashesDaPagina(request, env, res, path));
   },
 

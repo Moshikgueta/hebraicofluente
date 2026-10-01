@@ -448,6 +448,35 @@ export async function contarAcoes(env, acoes, desde) {
 }
 
 /** Avisos com mais de 60 dias saem: só servem para deduplicar. */
+/* ── respostas 5xx (01/10/2026, SEC-A-005) ──────────────────────────────────
+ * O que o alerta diário conta. Uma linha por hora com upsert: cada 5xx é uma
+ * escrita, mas a tabela não cresce com a rajada. Nunca lança - quem chama é o
+ * caminho de uma resposta que já deu errado. */
+const HORA_MS = 3_600_000;
+export async function contar5xx(env, at = now()) {
+  try {
+    await env.DB.prepare(
+      'INSERT INTO respostas_5xx (hora, n) VALUES (?, 1) ON CONFLICT(hora) DO UPDATE SET n = n + 1'
+    ).bind(Math.floor(at / HORA_MS) * HORA_MS).run();
+  } catch { /* banco fora: o 5xx que não se conta está no painel da Cloudflare */ }
+}
+
+/** Soma das respostas 5xx desde `desde` (ms), ou null se não deu para ler. */
+export async function somar5xx(env, desde) {
+  try {
+    const r = await env.DB.prepare('SELECT COALESCE(SUM(n), 0) AS n FROM respostas_5xx WHERE hora >= ?')
+      .bind(Math.floor(desde / HORA_MS) * HORA_MS).first();
+    return r ? Number(r.n) : 0;
+  } catch {
+    return null;
+  }
+}
+
+export async function respostas5xxPurge(env, at = now()) {
+  try { await env.DB.prepare('DELETE FROM respostas_5xx WHERE hora < ?').bind(at - 7 * 86_400_000).run(); }
+  catch { /* idem */ }
+}
+
 export async function avisosPurge(env, at = now()) {
   try { await env.DB.prepare('DELETE FROM avisos WHERE enviado_em < ?').bind(at - 60 * 86_400_000).run(); }
   catch { /* idem */ }

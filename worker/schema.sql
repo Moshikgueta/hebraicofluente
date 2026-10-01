@@ -369,6 +369,19 @@ CREATE TABLE IF NOT EXISTS batimentos (
   nome TEXT    PRIMARY KEY,
   em   INTEGER NOT NULL
 );
+-- Desde 01/10/2026 (SEC-A-005) a linha `backup` é o carimbo do backup
+-- diário: scripts/backup-nuvem.sh a grava depois de guardar a cópia no R2, e
+-- o alerta diário avisa quando ela passa de 36 h.
+
+-- `respostas_5xx`: quantas respostas 5xx o Worker deu, por hora (01/10/2026,
+-- SEC-A-005). Uma linha por hora, não por erro, então uma rajada de erros
+-- não enche o banco; 7 dias de guarda (alertas.js). Conta o que o Worker
+-- respondeu: um erro do próprio D1 não consegue se contar aqui, e o número
+-- completo (com os erros da plataforma) fica no painel da Cloudflare.
+CREATE TABLE IF NOT EXISTS respostas_5xx (
+  hora INTEGER PRIMARY KEY,   -- início da hora, em ms
+  n    INTEGER NOT NULL
+);
 
 -- `avisos`: cada alerta mandado ao dono, pela chave que o deduplica (por
 -- exemplo `desistencias:2026-09-28`, `operacao:2026-09-28T14`). Garante um

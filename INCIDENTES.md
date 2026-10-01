@@ -15,8 +15,9 @@ tudo com data e hora** (num documento só seu, fora do repositório). A nota
 | Sinal | De onde vem |
 |---|---|
 | E-mail "[Hebraico Fluente] problemas de pagamento na última hora" | a varredura de 5 em 5 min (`worker/src/alertas.js`) |
-| Alerta do monitor externo (UptimeRobot): `"monitor":true` sumiu | site fora, banco fora ou varredura parada (`/api/health`) |
+| Alerta do monitor externo (UptimeRobot, ver "Monitor externo" no fim): `"monitor":true` sumiu, ou a capa não respondeu | site fora, banco fora ou varredura parada (`/api/health`) |
 | E-mail "o backup diário do banco FALHOU" | Action "Backup do banco" |
+| E-mail "[Hebraico Fluente] backup do banco sem cópia nova" ou "N erros do servidor em 24 horas" | a conferência diária da varredura (`alertaDeSaude` em `worker/src/alertas.js`): o carimbo do último backup passou de 36 h, ou houve 10 ou mais respostas 5xx em 24 h |
 | Aluno escrevendo "não consigo entrar", "fui cobrado e não liberou", "recebi e-mail estranho" | atendimento |
 | Aviso da Cloudflare, do GitHub, da Mercado Pago ou da Resend sobre acesso suspeito | e-mail das contas |
 
@@ -158,6 +159,50 @@ Não prometa o que não sabe ("nenhum dado foi acessado") antes de ter certeza.
 
 ---
 
+## Monitor externo (ação do dono, uma vez)
+
+O site não consegue avisar que caiu: um Worker fora do ar não manda e-mail.
+Quem avisa é um serviço de fora que consulta o site de 5 em 5 minutos. Nada
+no repositório prova que ele existe (auditoria de 01/10/2026, SEC-A-005):
+**criar e conferir é com você**, e leva uns dez minutos. O UptimeRobot tem
+plano gratuito que serve (qualquer outro com verificação por palavra-chave
+também).
+
+1. Crie a conta em uptimerobot.com com o e-mail de atendimento (o mesmo do
+   `SUPPORT_EMAIL` no `wrangler.toml`), e confirme o e-mail.
+2. **Monitor 1, a capa:** "+ New monitor" → tipo **HTTP(s)** → URL
+   `https://hebraicofluente.com.br/` → intervalo 5 minutos → nome "Hebraico
+   Fluente - capa". Ele acusa quando a página não responde 200.
+3. **Monitor 2, a saúde:** "+ New monitor" → tipo **Keyword** → URL
+   `https://hebraicofluente.com.br/api/health` → palavra-chave
+   `"monitor":true` (com as aspas, exatamente assim) → alertar quando a
+   palavra **não existir** ("Keyword not exists") → intervalo 5 minutos →
+   nome "Hebraico Fluente - saúde". Ele acusa site fora, banco fora, segredo
+   da sessão faltando e a varredura de 5 em 5 min parada há mais de 15 min.
+   A resposta pública é só `{"ok":...,"monitor":...}`; os detalhes ficam
+   para o administrador (ver `health` em `worker/src/api/auth.js`).
+4. Em cada monitor, "Alert contacts": marque o seu e-mail. Se quiser, o
+   aplicativo do UptimeRobot no celular avisa por notificação.
+5. **Prove que avisa:** no monitor 2, troque por um minuto a palavra-chave
+   para `"monitor":falso-de-teste` e salve. O alerta tem de chegar em até
+   10 minutos. Volte a palavra para `"monitor":true`.
+6. Anote aqui, na tabela de contatos abaixo, a conta usada e a data do
+   teste do item 5.
+
+Os dois monitores consultam a mesma origem; a saúde tem um freio de 30
+consultas por hora por endereço, e 5 minutos são 12 por hora.
+
+O que o monitor NÃO vê, e quem vê:
+- erros 5xx de rotas isoladas com o site no ar: o e-mail diário de saúde
+  (`alertaDeSaude`), contado pelo próprio Worker em `respostas_5xx`. Um 5xx
+  causado pelo banco fora não consegue se contar no banco; esse aparece no
+  monitor 2 (o `ok` cai) e no painel da Cloudflare (Workers → o Worker →
+  Métricas, que tem o total de erros, inclusive os da plataforma);
+- backup que parou: o mesmo e-mail diário, pelo carimbo `backup` em
+  `batimentos` que `scripts/backup-nuvem.sh` grava ao terminar.
+
+---
+
 ## Contatos
 
 | Quem | Para quê |
@@ -167,5 +212,6 @@ Não prometa o que não sabe ("nenhum dado foi acessado") antes de ter certeza.
 | Resend: resend.com → Support | e-mail |
 | GitHub: github.com/contact | repositório, Actions |
 | ANPD: gov.br/anpd | comunicação de incidente |
+| Monitor externo (UptimeRobot) | (preencher: conta usada e data do teste do alerta) |
 | Advogado | (preencher) |
 | Contador | (preencher) |

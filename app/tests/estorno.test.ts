@@ -19,7 +19,9 @@ import { runReconcile } from '../../worker/src/reconcile.js';
 // @ts-expect-error - idem
 import { runAlertas } from '../../worker/src/alertas.js';
 // @ts-expect-error - idem
-import { hasEntitlement, log } from '../../worker/src/lib/db.js';
+import { bater, contar5xx, hasEntitlement, log } from '../../worker/src/lib/db.js';
+// @ts-expect-error - idem
+import worker from '../../worker/src/worker.js';
 // @ts-expect-error - idem
 import { hmacHex } from '../../worker/src/lib/crypto.js';
 
@@ -297,6 +299,7 @@ describe('os alertas ao dono', () => {
 
   it('abaixo do limite, silêncio', async () => {
     const env = envCompleto();
+    await bater(env, 'backup');                 // o backup de hoje terminou
     await log(env, null, 'pay-create-failed', 'uma só');
     await runAlertas(env);
     expect(enviados).toHaveLength(0);
@@ -319,5 +322,67 @@ describe('os alertas ao dono', () => {
     const parada = await saude();
     expect(parada.monitor, 'a varredura parou há 20 min e o monitor não acusou').toBe(false);
     expect(linhas(env, 'SELECT nome FROM batimentos')).toEqual([{ nome: 'varredura' }]);
+  });
+});
+
+/* SEC-A-005 (auditoria de 01/10/2026): o backup que parou e os 5xx só
+   apareciam para quem fosse procurar. */
+describe('a saúde do dia, no alerta ao dono', () => {
+  const saude = () => enviados.filter(m => m.to === DONO && /backup|erros do servidor/.test(m.subject));
+
+  it('backup com carimbo de hoje e nenhum 5xx: silêncio', async () => {
+    const env = envCompleto();
+    await bater(env, 'backup');
+    await runAlertas(env);
+    expect(saude()).toHaveLength(0);
+  });
+
+  it('backup sem cópia nova há mais de 36 h vira um e-mail por dia', async () => {
+    const env = envCompleto();
+    await bater(env, 'backup', Date.now() - 40 * 3_600_000);
+    await runAlertas(env);
+    await runAlertas(env);
+    expect(saude()).toHaveLength(1);
+    expect(saude()[0]!.subject).toContain('backup do banco sem cópia nova');
+    expect(saude()[0]!.text).toContain('40 horas atrás');
+    expect(saude()[0]!.text).toContain('Backup do banco');
+  });
+
+  it('nenhum carimbo de backup também avisa: é o caso do backup que nunca terminou', async () => {
+    const env = envCompleto();
+    await runAlertas(env);
+    expect(saude()).toHaveLength(1);
+    expect(saude()[0]!.text).toContain('nenhum carimbo de backup');
+  });
+
+  it('5xx acima do limite em 24 h viram e-mail; os de ontem não contam', async () => {
+    const env = envCompleto();
+    await bater(env, 'backup');
+    for (let i = 0; i < 9; i++) await contar5xx(env);
+    for (let i = 0; i < 50; i++) await contar5xx(env, Date.now() - 30 * 3_600_000);
+    await runAlertas(env);
+    expect(saude()).toHaveLength(0);
+    /* O décimo: a varredura seguinte avisa (abaixo do limite nada foi
+       reservado, então o aviso do dia ainda está livre). */
+    await contar5xx(env);
+    await runAlertas(env);
+    expect(saude()).toHaveLength(1);
+    expect(saude()[0]!.subject).toContain('10 erros do servidor em 24 horas');
+    /* Uma linha por hora, não por erro. */
+    expect(linhas(env, 'SELECT COUNT(*) AS n FROM respostas_5xx')).toEqual([{ n: 2 }]);
+  });
+
+  it('a resposta 500 do Worker é contada', async () => {
+    const env = envCompleto();
+    const db = env.DB as { prepare(sql: string): unknown };
+    const real = db.prepare.bind(db);
+    db.prepare = (sql: string) => {
+      if (/FROM accounts/.test(sql)) throw new Error('banco em pane');
+      return real(sql);
+    };
+    const r = await worker.fetch(pedido(`${SITE}/api/auth/login`, { email: 'a@exemplo.com', password: 'x'.repeat(10) }), env, ctx);
+    expect(r.status).toBe(500);
+    await assentar();
+    expect(linhas(env, 'SELECT n FROM respostas_5xx')).toEqual([{ n: 1 }]);
   });
 });

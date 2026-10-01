@@ -287,6 +287,22 @@ copiar() {
     || morre "O envio da cópia 'ultimo' ao R2 falhou." "$(tail -15 "$TMP/put.log")"
   verde "✓ $BUCKET/$chave ($(wc -c < "$arq.gz" | tr -d ' ') bytes compactado)"
 
+  # 5. O carimbo (auditoria de 01/10/2026, SEC-A-005). O Worker não lê o R2
+  # de backup, então é o backup que conta ao banco que terminou: a linha
+  # `backup` de `batimentos`, a mesma tabela do batimento da varredura. O
+  # alerta diário (worker/src/alertas.js) avisa o dono quando ela passa de
+  # 36 h. Só depois do envio ao R2: carimbo é "há cópia nova", não "tentei".
+  # Se o carimbo falhar, o backup NÃO falha (ele está guardado); o aviso
+  # aqui e, passadas 36 h, o e-mail do alerta dizem que algo não fecha.
+  verde "5. Carimbando o fim do backup no banco"
+  if $W d1 execute "$DB" --remote --command \
+      "INSERT INTO batimentos (nome, em) VALUES ('backup', unixepoch() * 1000) ON CONFLICT(nome) DO UPDATE SET em = excluded.em" \
+      >"$TMP/carimbo.log" 2>&1; then
+    info "batimentos.backup = agora"
+  else
+    printf '::warning::%s\n' "O backup foi guardado, mas o carimbo no banco falhou: o alerta diário vai dizer que não há backup novo. $(tail -3 "$TMP/carimbo.log" | tr '\n' ' ')"
+  fi
+
   resumo "## ✅ Backup do banco"
   resumo ""
   resumo "- Guardado em \`$BUCKET/$chave\` e em \`$BUCKET/ultimo/hebraico-fluente.sql.gz\`."
