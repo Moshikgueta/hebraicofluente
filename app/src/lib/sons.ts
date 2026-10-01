@@ -83,10 +83,31 @@ export function leituraTrocada(translit: string, som: string, parSom: string): s
 function exerciciosDeContraste(S: SomLicao, temAudio: (id: string) => boolean, rand: Rand): Exercise[] {
   const out: Exercise[] = [];
   const letterId = S.parId;
+  /* As duas sílabas de OUTRA vogal, a deste som e a do par: com elas a
+     pergunta tem quatro alternativas (duas leituras × duas vogais), e chutar
+     dá 25%, não 50% (auditoria de 01/10/2026, CONT-013). A vogal errada é um
+     erro que o aluno também comete, então o distrator ensina. Sem uma
+     segunda vogal na lição, fica com duas. */
+  const outraVogal = (i: number): { s: { he: string; translit: string }; par: { he: string; translit: string } } | null => {
+    const s = S.silabas[i]!;
+    const par = S.parSilabas[i];
+    for (let k = 1; k < S.silabas.length; k++) {
+      const j = (i + k) % S.silabas.length;
+      const sj = S.silabas[j]!, pj = S.parSilabas[j];
+      if (!pj) continue;
+      const usados = [s.translit, par?.translit, s.he, par?.he];
+      if (usados.includes(sj.translit) || usados.includes(pj.translit)) continue;
+      if (usados.includes(sj.he) || usados.includes(pj.he)) continue;
+      return { s: sj, par: pj };
+    }
+    return null;
+  };
   /* 1. a sílaba: como se lê? (a do par é a errada) */
   S.silabas.forEach((s, i) => {
     const par = S.parSilabas[i];
-    const { options, answer } = comOpcoes(s.translit, [par?.translit ?? S.parSom], rand);
+    const ov = outraVogal(i);
+    const { options, answer } = comOpcoes(s.translit,
+      [par?.translit ?? S.parSom, ...(ov ? [ov.s.translit, ov.par.translit] : [])], rand);
     out.push({
       id: `som-${S.id}-sil-${i}`, kind: 'syllable-reading', letterId, skill: 'som',
       promptPt: 'Como se lê esta sílaba?', he: s.he, options, answer,
@@ -97,7 +118,8 @@ function exerciciosDeContraste(S: SomLicao, temAudio: (id: string) => boolean, r
   S.silabas.forEach((s, i) => {
     const par = S.parSilabas[i];
     if (!par) return;
-    const { options, answer } = comOpcoes(s.he, [par.he], rand);
+    const ov = outraVogal(i);
+    const { options, answer } = comOpcoes(s.he, [par.he, ...(ov ? [ov.s.he, ov.par.he] : [])], rand);
     out.push({
       id: `som-${S.id}-des-${i}`, kind: 'sound-to-syllable', letterId, skill: 'ler',
       promptPt: 'Qual destas se lê assim?', sound: s.translit, options, answer,
@@ -119,7 +141,8 @@ function exerciciosDeContraste(S: SomLicao, temAudio: (id: string) => boolean, r
   S.silabas.forEach((s, i) => {
     const par = S.parSilabas[i];
     if (!par || !temAudio(s.audioId)) return;
-    const { options, answer } = comOpcoes(s.he, [par.he], rand);
+    const ov = outraVogal(i);
+    const { options, answer } = comOpcoes(s.he, [par.he, ...(ov ? [ov.s.he, ov.par.he] : [])], rand);
     out.push({
       id: `som-${S.id}-ouv-${i}`, kind: 'listen-syllable', letterId, skill: 'ouvir',
       promptPt: 'Ouça. Qual foi a sílaba?', audioId: s.audioId, options, answer,

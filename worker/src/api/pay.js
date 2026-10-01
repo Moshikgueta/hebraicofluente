@@ -31,7 +31,7 @@ import {
   mensagemDeAlerta, mensagemDeCompra, mensagemDeEstorno, reaisBR, sendMail
 } from '../lib/mail.js';
 import {
-  createCardPreference, createPix, getPayment, mapStatus, paymentsFor, paymentsOfChargeback,
+  cancelPayment, createCardPreference, createPix, getPayment, mapStatus, paymentsFor, paymentsOfChargeback,
   paymentsOfMerchantOrder, refundPayment, verifyWebhookSignature
 } from '../lib/mercadopago.js';
 import { brCode, confereBrCode } from '../lib/pix.js';
@@ -181,6 +181,11 @@ export async function create({ request, env }) {
   /* O VALOR sai do catálogo. Nada do corpo da requisição chega até aqui. */
   const amountCents = priceCents(course, method);
 
+  /* O PIX anterior ainda pagável deste curso, se houver: ao gerar outro, ele
+     é cancelado na Mercado Pago (PAY-B-002). Lido antes de criar o novo. */
+  const pixAnterior = method === 'pix' && !pixDireto()
+    ? await pixPendente(env, account.id, course.slug) : null;
+
   const order = await createOrder(env, {
     accountId: account.id, courseSlug: course.slug, amountCents, method, installments
   });
@@ -235,6 +240,17 @@ export async function create({ request, env }) {
       /* O raríssimo caso de já nascer aprovado. Passa pelo mesmo `settle` que
          todo o resto, para que não exista um segundo lugar que libera acesso. */
       if (pix.status === 'paid') await settle(env, order.id, pix.paymentId, 'verify');
+      /* Só DEPOIS que o novo código existe: se a criação falhar, o aluno
+         continua com o anterior. A recusa (já pago, já vencido) é ignorada. */
+      if (pixAnterior && pixAnterior.provider_ref) {
+        try {
+          await cancelPayment(env, pixAnterior.provider_ref);
+          await updateOrder(env, pixAnterior.id, { status: 'expired' });
+          await log(env, account.id, 'pix-cancelado', `${pixAnterior.id} trocado por ${order.id}`);
+        } catch (e) {
+          await log(env, account.id, 'pix-cancelar-falhou', `${pixAnterior.id} ${e.message || e}`);
+        }
+      }
       return json(toOrder(await getOrder(env, order.id)));
     }
 
