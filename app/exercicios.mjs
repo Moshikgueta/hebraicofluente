@@ -105,7 +105,11 @@ const estado = () => p.evaluate(() => {
     rotulo: el.getAttribute('aria-label') || ''
   }));
   return {
-    txt: txt.slice(0, 400),
+    /* 2000, e não 400: com o som da letra em português (CONT-003) e o anúncio
+       do ligar para o leitor de tela (VIS-005), o retorno do item passou do
+       corte, e a varredura acusava "sem explicação" e "tela travada" numa
+       lição que funcionava. */
+    txt: txt.slice(0, 2000),
     feito: feito || 0, total: total || 0,
     /* O item desta tela já foi corrigido?
        ──────────────────────────────────────────────────────────────────
@@ -232,6 +236,8 @@ async function percorre(letraId, etapa, rotulo, abrir) {
 
     const alvos = e.botoes.filter(x => !x.off && !x.etapa && x.txt
       && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt)
+      /* "0,7×" é o "Ouvir devagar": o nome está só no rótulo acessível. */
+      && !/Ouvir|Tocar/i.test(x.rotulo)
       /* Na academia o "← Academia" é BOTÃO, e é o primeiro da tela: tocar
          nele sai do treino. A primeira execução desta passada acusou
          «respondi 0 de 8» num treino que funcionava. */
@@ -273,8 +279,9 @@ async function percorre(letraId, etapa, rotulo, abrir) {
         await p.waitForTimeout(90);
         await p.locator('main button').nth(alvo.i).click().catch(() => {});
         await p.waitForTimeout(160);
+        /* aria-disabled também fecha: o ligar mantém o botão focável (VIS-005). */
         const fechou = await p.locator('main button').nth(aberto.i)
-          .isDisabled().catch(() => false);
+          .evaluate(b => b.disabled || b.getAttribute('aria-disabled') === 'true').catch(() => false);
         if (fechou) break;
       }
       continue;

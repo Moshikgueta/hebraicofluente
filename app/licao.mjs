@@ -111,7 +111,8 @@ log('\n── a fixação grava a nota ─────────────�
         const main = document.querySelector('main');
         const botoes = [...main.querySelectorAll('button')].map((el, i) => ({
           i, txt: (el.innerText || '').replace(/\s+/g, ' ').trim(),
-          off: el.disabled || el.getAttribute('aria-disabled') === 'true', etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa')
+          off: el.disabled || el.getAttribute('aria-disabled') === 'true', etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa'),
+          rotulo: el.getAttribute('aria-label') || ''
         }));
         return {
           txt: (main?.innerText || '').replace(/\s+/g, ' '),
@@ -126,7 +127,9 @@ log('\n── a fixação grava a nota ─────────────�
         const e = await estado();
         /* O fim do bloco: o player sai e o resultado entra, com o botão que
            a lição chama de "Concluir e continuar". */
-        if (/Concluir e continuar/.test(e.txt)) { acabou = true; break; }
+        /* Abaixo de 80% o botão é "Refazer a fixação" (UXQA-002): também é o
+           fim, e a nota já foi gravada. */
+        if (/Concluir e continuar|Refazer a fixação/.test(e.txt)) { acabou = true; break; }
 
         const seguir = e.botoes.find(x => !x.off
           && /^Continuar|^Próxim|^Ver resultado|^Concluir/.test(x.txt));
@@ -136,9 +139,15 @@ log('\n── a fixação grava a nota ─────────────�
           await p.keyboard.press('Enter');
         } else {
           const alvos = e.botoes.filter(x => !x.off && !x.etapa && x.txt
-            && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt));
+            && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt)
+            /* "0,7×" é o "Ouvir devagar": o nome está só no rótulo acessível. */
+            && !/Ouvir|Tocar/i.test(x.rotulo));
           if (!alvos.length) { await p.waitForTimeout(300); continue; }
-          await p.locator('main button').nth(alvos[0].i).click().catch(() => {});
+          /* Uma alternativa sorteada, e não sempre a primeira: o erro volta
+             até ser acertado (a prática de revisão), e um robô que toca
+             sempre a primeira nunca acerta quando a certa não é ela. */
+          const alvo = alvos[Math.floor(Math.random() * alvos.length)];
+          await p.locator('main button').nth(alvo.i).click().catch(() => {});
         }
         await p.waitForTimeout(260);
       }
