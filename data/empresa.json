@@ -38,6 +38,7 @@
 
   "privacidade": {
     "encarregadoNome": null,
+    "agentePequenoPorte": true,
     "prazoLgpdDias": 15
   },
 
@@ -45,7 +46,7 @@
     "arrependimentoDias": 7,
     "garantiaDias": 7,
     "prazoReembolsoUteis": 10,
-    "atualizadoEm": "2026-09-30"
+    "atualizadoEm": "2026-10-01"
   },
 
   "_notaFormas": [

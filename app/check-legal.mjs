@@ -45,7 +45,8 @@ const DESEJAVEIS = [
   ['endereco.logradouro', empresa.endereco?.logradouro],
   ['endereco.cep', empresa.endereco?.cep],
   ['contato.telefone ou whatsapp', empresa.contato?.telefone || empresa.contato?.whatsapp],
-  ['privacidade.encarregadoNome', empresa.privacidade?.encarregadoNome]
+  /* ME: dispensada de indicar encarregado (Resolução CD/ANPD nº 2/2022). */
+  ['privacidade.encarregadoNome', empresa.privacidade?.encarregadoNome || empresa.privacidade?.agentePequenoPorte]
 ];
 
 for (const [campo, valor, porQue] of OBRIGATORIOS) {

@@ -7,9 +7,13 @@
  * mais surpreende: ouvir a letra na voz de quem ensina e ser corrigido
  * falando. Esta seção mostra as duas, em dois passos:
  *
- *   1 · ouvir e descobrir  três sílabas gravadas (sha, ma, la); o visitante
- *                          ouve e escolhe a letra entre quatro. O erro diz
- *                          que som aquela letra faz, e deixa tentar de novo;
+ *   1 · ouvir e descobrir  o nome de três letras, gravado (Shin, Mem,
+ *                          Lámed); o visitante ouve e escolhe a letra entre
+ *                          quatro. O erro diz que letra é aquela e que som
+ *                          ela faz, e deixa tentar de novo; o acerto abre a
+ *                          sílaba gravada (sha, ma, la). Até 01/10/2026 o
+ *                          botão tocava a sílaba, e o dono, com razão, esperava
+ *                          ouvir o nome da letra;
  *   2 · falar              ouvir שָׁלוֹם, dizer, e o reconhecimento de fala
  *                          do navegador confere (FalarECorrigir, o mesmo
  *                          componente das lições). Onde o navegador não
@@ -31,26 +35,26 @@ import { urlAmostra, type NomeAmostra } from '@/lib/amostra-audio';
 import { Container, H2, Lead, Reveal, Check } from './base';
 
 type Rodada = {
-  clipe: NomeAmostra; silaba: string; som: string; certa: string; nome: string;
+  clipeNome: NomeAmostra; clipe: NomeAmostra; silaba: string; som: string; certa: string; nome: string;
   opcoes: readonly { he: string; porque: string }[];
 };
 
 /* As alternativas são as letras que um iniciante confunde PELO SOM: o
    Sámech com o Shin (os dois "chiam"), o Nun com o Mem, o Resh com o Lámed. */
 const RODADAS: readonly Rodada[] = [
-  { clipe: 'sha', silaba: 'שַׁ', som: 'sha', certa: 'ש', nome: 'Shin', opcoes: [
+  { clipeNome: 'shin', clipe: 'sha', silaba: 'שַׁ', som: 'sha', certa: 'ש', nome: 'Shin', opcoes: [
     { he: 'ס', porque: 'Este é o Sámech: faz «s», sem o chiado.' },
     { he: 'ש', porque: '' },
     { he: 'צ', porque: 'Este é o Tsadi: faz «ts».' },
     { he: 'ת', porque: 'Este é o Tav: faz «t».' }
   ] },
-  { clipe: 'ma', silaba: 'מַ', som: 'ma', certa: 'מ', nome: 'Mem', opcoes: [
+  { clipeNome: 'mem', clipe: 'ma', silaba: 'מַ', som: 'ma', certa: 'מ', nome: 'Mem', opcoes: [
     { he: 'נ', porque: 'Este é o Nun: faz «n».' },
     { he: 'ב', porque: 'Este é o Bet: faz «b».' },
     { he: 'מ', porque: '' },
     { he: 'כ', porque: 'Este é o Kaf: faz «k».' }
   ] },
-  { clipe: 'la', silaba: 'לַ', som: 'la', certa: 'ל', nome: 'Lámed', opcoes: [
+  { clipeNome: 'lamed', clipe: 'la', silaba: 'לַ', som: 'la', certa: 'ל', nome: 'Lámed', opcoes: [
     { he: 'ר', porque: 'Este é o Resh: faz «r».' },
     { he: 'ל', porque: '' },
     { he: 'ד', porque: 'Este é o Dálet: faz «d».' },
@@ -136,10 +140,10 @@ function Ouvir({ tocar, tocando }: { tocar: (n: NomeAmostra) => void; tocando: N
   return (
     <Passo n={1} titulo="Ouça e descubra a letra">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <BotaoOuvir nome={r.clipe} rotulo="Ouvir o professor" tocar={tocar} tocando={tocando} />
+        <BotaoOuvir nome={r.clipeNome} rotulo="Ouvir o nome da letra" tocar={tocar} tocando={tocando} />
         <span className="font-ui text-[13.5px] text-ink-muted tabular-nums">{i + 1} de {RODADAS.length}</span>
       </div>
-      <p className="font-ui text-[15.5px] text-ink-body m-0">Qual letra faz este som?</p>
+      <p className="font-ui text-[15.5px] text-ink-body m-0">Qual é esta letra?</p>
       <div className="grid grid-cols-4 gap-2.5" role="group" aria-label="Escolha a letra">
         {r.opcoes.map(o => {
           const marcada = escolha === o.he;
@@ -166,6 +170,11 @@ function Ouvir({ tocar, tocando }: { tocar: (n: NomeAmostra) => void; tocando: N
             </span>
           </p>
         )}
+        {acertou && (
+          <div className="mt-3">
+            <BotaoOuvir nome={r.clipe} rotulo={`Ouvir «${r.som}»`} tocar={tocar} tocando={tocando} />
+          </div>
+        )}
         {errada && (
           <p className="font-ui text-[15px] text-ink-body m-0">
             <span aria-hidden>✕ </span>{errada.porque} Ouça de novo e tente outra.
@@ -176,12 +185,12 @@ function Ouvir({ tocar, tocando }: { tocar: (n: NomeAmostra) => void; tocando: N
         <button type="button" onClick={() => { setI(i + 1); setEscolha(null); }}
                 className="justify-self-start min-h-[44px] rounded-[12px] border border-line bg-[var(--card)] px-4
                            font-ui text-[15px] font-semibold hover:border-[#C9C3B4]">
-          Próximo som →
+          Próxima letra →
         </button>
       )}
       {fim && (
         <p className="font-ui text-[15px] font-semibold text-ink m-0">
-          Três letras reconhecidas pelo som. No curso são as 22, uma de cada vez.
+          Três letras reconhecidas pelo nome. No curso são as 22, uma de cada vez, com o nome e o som.
         </p>
       )}
     </Passo>

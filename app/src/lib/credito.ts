@@ -27,5 +27,12 @@ export const METODO_ORIGINAL = {
    *  inventar uma versão seria pôr na boca do autor o que ele não escreveu. */
   obraTranslit: 'Ba Li Ivrit',
   /** A frase curta, para rodapé e legendas. */
-  linhaPt: 'Método inspirado na obra do Dr. Damián Dzienciarsky.'
+  linhaPt: 'Método inspirado na obra do Dr. Damián Dzienciarsky.',
+  /** O que vem do método e o que é do professor, nas palavras dele
+   *  (01/10/2026): a ordem das letras NÃO é adaptação; os exercícios, as
+   *  explicações para quem fala português e a escrita cursiva são. Em
+   *  primeira pessoa, porque é o Moshik quem fala na capa e em /sobre. */
+  adaptacoesPt: 'A ordem em que as letras entram vem do método dele. A adaptação para o ' +
+    'aluno brasileiro é minha: os exercícios, as explicações pensadas para quem fala ' +
+    'português e a escrita cursiva.'
 } as const;

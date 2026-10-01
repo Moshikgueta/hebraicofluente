@@ -243,6 +243,24 @@ describe('os textos legais', () => {
     expect(t).toContain('não gera reembolso');
   });
 
+  /* 01/10/2026, nas palavras do dono: a ordem das letras vem do método do
+     Damián; os exercícios, as explicações para quem fala português e a
+     cursiva são adaptação dele. Capa e /sobre leem a mesma frase. */
+  it('o crédito ao Damián separa o que vem do método do que é adaptação', async () => {
+    const { METODO_ORIGINAL } = await import('@/lib/credito');
+    expect(METODO_ORIGINAL.adaptacoesPt).toContain('A ordem em que as letras entram vem do método dele');
+    expect(METODO_ORIGINAL.adaptacoesPt).toContain('os exercícios, as explicações pensadas para quem fala português e a escrita cursiva');
+    expect(fonte('sobre/page.tsx')).toContain('METODO_ORIGINAL.adaptacoesPt');
+  });
+
+  /* 01/10/2026: a empresa é ME (contador), e a Política diz a dispensa do
+     encarregado e o canal, em vez de calar sobre o encarregado. */
+  it('a Política de Privacidade explica por que não há encarregado nomeado', () => {
+    const p = fonte('privacidade/page.tsx');
+    expect(p).toContain('privacidade.agentePequenoPorte');
+    expect(p).toContain('dispensado de indicar um encarregado (Resolução CD/ANPD nº 2/2022, art. 11)');
+  });
+
   /* 30/09/2026, pedido do dono: a declaração de idade fica só nos Termos
      (art. 3), e o checkout remete a eles em vez de repeti-la. */
   it('a declaração de idade está nos Termos, e o checkout remete a eles', () => {

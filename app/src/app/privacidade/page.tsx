@@ -117,7 +117,13 @@ export default function Page() {
           indicado no item 6.
           {privacidade.encarregadoNome
             ? ` O encarregado pelo tratamento de dados é ${privacidade.encarregadoNome}.`
-            : ''}
+            /* 01/10/2026: a empresa é ME (confirmado pelo contador). */
+            : privacidade.agentePequenoPorte
+              ? ' Por ser microempresa, o controlador é agente de tratamento de pequeno porte e está' +
+                ' dispensado de indicar um encarregado (Resolução CD/ANPD nº 2/2022, art. 11). O canal' +
+                ' de comunicação para tudo o que diz respeito aos seus dados é esse e-mail, e ele é' +
+                ` respondido em até ${privacidade.prazoLgpdDias} dias.`
+              : ''}
         </p>
       </Artigo>
 

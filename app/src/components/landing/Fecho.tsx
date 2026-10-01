@@ -106,9 +106,7 @@ export function Professor({ retrato }: { retrato: string | null }) {
               {METODO_ORIGINAL.autor}</strong>, autor de{' '}
               <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
               ({METODO_ORIGINAL.obraTranslit}). O conteúdo do livro dele é a base do
-              que esta plataforma ensina, e a adaptação para o aluno brasileiro -
-              as comparações com o português, os exercícios e o que aparece na tela -
-              é minha.
+              que esta plataforma ensina. {METODO_ORIGINAL.adaptacoesPt}
             </p>
           </Reveal>
         </div>
