@@ -102,3 +102,7 @@ escrever" basta para a maioria.
     School", "professor na Universidad Isaac Abarbanel", "Formação CELTA e
     Letras". Que comprovantes guardar? "Formação em Letras" pode ser usado
     se a graduação não foi concluída?
+
+## Adendo de 01/10/2026: "Baixar meus dados"
+
+18. A conta agora tem "Baixar meus dados" (LGPD art. 18, II e V). O arquivo NÃO leva a senha (só existe como hash), os identificadores de sessão e de aparelho, nem a marca anticópia que identifica uma cópia vazada do curso. Deixar a marca de fora (por ser medida de segurança contra pirataria) é compatível com o direito de acesso, ou ela precisa ir no arquivo?

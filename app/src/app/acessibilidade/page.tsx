@@ -53,7 +53,7 @@ export default function Page() {
           ficam guardados no seu aparelho e valem em todas as páginas:
         </p>
         <Lista itens={[
-          'tamanho do texto em 100%, 115%, 130% ou 150% (no celular, o 150% ainda aperta algumas telas: ver o item 4);',
+          'tamanho do texto em 100%, 115%, 130% ou 150%;',
           'tema claro, escuro ou o do seu aparelho;',
           'alto contraste;',
           'menos animação (também respeitamos o ajuste de "reduzir movimento" do seu sistema);',
@@ -88,8 +88,10 @@ export default function Page() {
             lá dentro. Agora diz o que ela faz. */}
         <p>
           A cada publicação do site, uma verificação automática abre as páginas num
-          navegador de verdade e confere o menu de acessibilidade e o contraste. Ela
-          ainda não entra nas lições com uma conta de aluno, e por isso não substitui o
+          navegador de verdade e confere o menu de acessibilidade e o contraste. Outra,
+          que entra com uma conta de aluno, confere em celulares de 360 e 390 pixels que
+          as telas do curso cabem na tela também com o texto em 150% (rodada antes de
+          cada mudança grande, ainda não a cada publicação). Nenhuma das duas substitui o
           teste feito à mão. Em 28/09/2026
           fizemos uma revisão manual completa: navegação por teclado, foco, nomes dos
           botões, contraste medido, textos em hebraico e telas de 320 pixels de
@@ -103,9 +105,7 @@ export default function Page() {
           'os exercícios de escuta dependem de ouvir, e ainda não têm uma alternativa para pessoas surdas; o restante do curso não depende de áudio;',
           '"Fale e seja corrigido" depende do reconhecimento de voz do navegador, que não existe em todos (o Firefox, por exemplo, não tem); é um recurso opcional, e "Gravar a minha" funciona em todos;',
           'o jogo "Caça à letra" treina o reconhecimento visual da forma das letras; com leitor de tela, ele anuncia o nome de cada letra, o que torna o jogo possível, mas muda o que ele treina;',
-          'com o texto em 150% num celular, algumas telas da plataforma (como o vocabulário, a sua conta e o painel) ficam mais largas que a tela e rolam para o lado; estamos corrigindo;',
-          'nem toda a plataforma funciona bem só pelo teclado: em algumas telas, depois de responder (no exercício de ligar pares, nas perguntas rápidas e em alguns jogos), o foco volta para o início da página em vez de seguir para o próximo passo; estamos corrigindo;',
-          'no exercício de ligar pares, o leitor de tela ainda não anuncia qual item foi escolhido nem se o par está certo; estamos corrigindo;',
+          'o foco depois de responder foi corrigido nos exercícios e nos jogos que conhecemos (em 01/10/2026); se você encontrar uma tela em que ele volta para o início da página, avise pelo canal abaixo;',
           'ainda não testamos a plataforma com leitores de tela reais (NVDA, VoiceOver, TalkBack).'
         ]} />
       </Artigo>

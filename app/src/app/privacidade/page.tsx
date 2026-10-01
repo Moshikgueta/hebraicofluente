@@ -331,6 +331,17 @@ export default function Page() {
             junto. Ele dizia que apagar a conta passava pelo canal de e-mail -
             uma política que descreve um produto que não existe mais é pior do
             que não ter política, porque é a promessa escrita que vale. */}
+        {/* 01/10/2026 (LEGAL-122): o acesso e a portabilidade também são
+            self-service, pela rota /api/account/dados. */}
+        <p>
+          <strong>Baixar uma cópia dos seus dados você também faz sozinho</strong>, na{' '}
+          <Link href="/perfil" className="font-semibold text-[var(--accent)] hover:underline">
+            página da sua conta
+          </Link>
+          , em <em>Baixar meus dados</em>: sai um arquivo com o cadastro, as compras, os
+          aceites, os registros de acesso e o progresso. Por segurança, a senha e os
+          identificadores de sessão e de aparelho não vão no arquivo.
+        </p>
         <p>
           <strong>Apagar a conta você faz sozinho</strong>, a qualquer momento, na{' '}
           <Link href="/perfil" className="font-semibold text-[var(--accent)] hover:underline">

@@ -279,6 +279,8 @@ export function PerfilClient() {
         </p>
       )}
 
+      <MeusDados />
+
       <ApagarConta />
 
       {/* LEGAL-118 (auditoria de 01/10/2026): quem oferece o serviço, na
@@ -310,6 +312,28 @@ export function PerfilClient() {
  * O que some e o que fica está dito ANTES do formulário, e não depois. Uma
  * confirmação que explica as consequências na tela seguinte é uma armadilha.
  */
+/* "Baixar meus dados" (LGPD, art. 18; auditoria de 01/10/2026, LEGAL-122):
+   um link comum para a rota, que responde como anexo. Só no modo com
+   servidor: no adaptador local os dados já estão todos no navegador. */
+function MeusDados() {
+  if (process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker') return null;
+  return (
+    <Card className="p-5 grid gap-2">
+      <h2 className="font-display text-[17px] font-bold text-ink">Meus dados</h2>
+      <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
+        Uma cópia, em arquivo, de tudo o que guardamos sobre a sua conta: cadastro, compras,
+        aceites, registros de acesso e progresso. Por segurança, a senha e os identificadores de
+        sessão não vão no arquivo.
+      </p>
+      <a href="/api/account/dados" download
+         className="justify-self-start inline-flex items-center min-h-[44px] px-4 rounded-[var(--r-md)]
+                    border border-line bg-surface font-ui text-[14px] font-semibold text-ink-body hover:bg-surface-2">
+        Baixar meus dados
+      </a>
+    </Card>
+  );
+}
+
 function ApagarConta() {
   const account = useAccount();
   const [aberto, setAberto] = useState(false);
