@@ -131,7 +131,7 @@ export function CartaoRevisao() {
         </div>
       )}
       <Link href="/revisao"
-            className="inline-flex items-center rounded-[12px] bg-[var(--gold)] text-white
+            className="inline-flex items-center rounded-[12px] bg-[var(--gold-solid)] text-white
                        font-ui font-semibold text-[15.5px] px-[22px] py-3
                        transition-transform duration-[180ms] hover:-translate-y-[2px]">
         Começar revisão

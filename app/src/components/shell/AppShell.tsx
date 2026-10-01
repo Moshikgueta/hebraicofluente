@@ -225,7 +225,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
               Agora o topo é `pt-*` e o rodapé é `pb-*`: eles não se
               cruzam mais, e `app/toque.mjs` mede a tela de verdade. */}
-          <main className="min-w-0 pt-6 sm:pt-8 lg:px-9 lg:pt-[34px]
+          <main id="hf-principal" className="min-w-0 pt-6 sm:pt-8 lg:px-9 lg:pt-[34px]
                            pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-10">
             {avisos}
             {children}
@@ -279,7 +279,7 @@ function RodapeDeAjuda() {
             <li key={href}>
               {/* Alvo de 44px de altura também aqui: um link de 13px em cima
                   da barra fixa é o tipo de alvo que se erra com o polegar. */}
-              <Link href={href!}
+              <Link href={href!} prefetch={false}
                     className="inline-flex items-center min-h-[44px] font-ui text-[13px]
                                text-ink-muted hover:text-[var(--accent)] hover:underline">
                 {label}
@@ -334,7 +334,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
                   <Icone className={active ? 'text-[var(--teal-lite)]' : 'text-white/[.55]'} />
                   <span className="flex-1">{item.label}</span>
                   {item.href === '/revisao' && p.dueCount > 0 && (
-                    <span className="rounded-full bg-[var(--gold)] px-[7px] py-[2px]
+                    <span className="rounded-full bg-[var(--gold-solid)] px-[7px] py-[2px]
                                      font-ui text-[11.5px] font-bold text-white tabular-nums">
                       {p.dueCount}
                     </span>
@@ -424,14 +424,15 @@ function BottomBar({ pathname }: { pathname: string | null }) {
             <li key={item.href} className="flex-1 min-w-0">
               <Link
                 href={item.href}
+                aria-label={item.label}
                 aria-current={active ? 'page' : undefined}
                 className={`relative h-[60px] flex flex-col items-center justify-center gap-1.5
                   font-ui text-[10.5px] leading-none text-center px-0.5 transition-colors
                   whitespace-nowrap
                   ${active ? 'text-[var(--navy)] font-semibold' : 'text-ink-muted'}`}
               >
-                <Icone size={19} />
-                {item.label}
+                <span aria-hidden className="hf-barra-icone inline-grid"><Icone size={19} /></span>
+                <span className="hf-barra-rotulo">{item.label}</span>
                 {item.href === '/revisao' && p.dueCount > 0 && (
                   <span aria-hidden
                         className="absolute top-2 right-[24%] w-[7px] h-[7px] rounded-full bg-[var(--gold)]" />

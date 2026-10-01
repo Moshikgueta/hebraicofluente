@@ -116,9 +116,14 @@ export async function gate(request, env) {
   if (!sess) return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}`);
 
   const account = await findAccountById(env, sess.uid);
-  if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)
-      || !await aparelhoValido(env, sess)) {
+  if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)) {
     return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}`);
+  }
+  /* O aparelho saiu das três vagas (lib/aparelhos.js): o login diz por quê
+     (auditoria de 01/10/2026, UXQA-006). Sem o motivo, quem foi derrubado
+     caía num "Bem-vindo de volta" e achava que a conta tinha sido invadida. */
+  if (!await aparelhoValido(env, sess)) {
+    return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}&motivo=aparelhos`);
   }
 
   if (!await hasEntitlement(env, account.id, COURSE)) {

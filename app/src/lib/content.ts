@@ -278,7 +278,21 @@ export const CONTEUDO_DO_SERVIDOR = process.env.NEXT_PUBLIC_PLATFORM_API === 'wo
  * JSONs fora do pacote de produção e, ao mesmo tempo, deixa a varredura
  * abrir as telas de aluno sem um Worker por perto.
  */
-export async function carregarConteudo(): Promise<void> {
+export function carregarConteudo(): Promise<void> {
+  if (DADOS) return Promise.resolve();
+  /* Um pedido só por vez (auditoria de 01/10/2026, PERF-004): o CourseGate
+     dispara a busca já na montagem, em paralelo com /api/me, e de novo
+     quando a sessão confirma o acesso - a segunda chamada pega a mesma
+     promessa em vez de baixar o curso duas vezes. Falhou, esquece: a
+     próxima chamada tenta de novo. */
+  if (!emAndamento) {
+    emAndamento = buscarConteudo().catch(e => { emAndamento = null; throw e; });
+  }
+  return emAndamento;
+}
+let emAndamento: Promise<void> | null = null;
+
+async function buscarConteudo(): Promise<void> {
   if (DADOS) return;
 
   /* Escrito com o `process.env` inteiro dentro do `if`, e não com a constante

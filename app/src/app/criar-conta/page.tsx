@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { AuthForm } from '@/components/platform/AuthForm';
@@ -11,9 +10,7 @@ export const metadata: Metadata = meta({
 });
 
 export default function CriarContaPage() {
-  return (
-    <Suspense fallback={null}>
-      <AuthForm mode="signup" />
-    </Suspense>
-  );
+  /* Sem Suspense: o AuthForm lê `?next=` depois de montar, e o HTML
+     exportado já traz o formulário (auditoria de 01/10/2026, PERF-003). */
+  return <AuthForm mode="signup" />;
 }

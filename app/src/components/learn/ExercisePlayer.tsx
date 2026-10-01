@@ -42,8 +42,12 @@ export type PlayerResult = { correct: number; total: number; score: number; miss
 /** What one settled question knows about itself. */
 type Settled = { correct: boolean; chosen: number | null; why: string | null };
 
+/** Onde a pessoa estava: para a lição voltar à mesma questão depois de
+ *  recarregar (auditoria de 01/10/2026, UXQA-003). */
+export type PosicaoNoPlayer = { i: number; certas: number; erradas: string[] };
+
 export function ExercisePlayer({
-  exercises, onDone, title, compact = false, repetirErros = false
+  exercises, onDone, title, compact = false, repetirErros = false, retomar, aoAvancar
 }: {
   exercises: Exercise[];
   onDone: (r: PlayerResult) => void;
@@ -53,17 +57,23 @@ export function ExercisePlayer({
    *  volta para a fila, depois de outras, até ser acertada; a prática só
    *  termina com todas certas. Desligado em todo o resto do curso. */
   repetirErros?: boolean;
+  /** Começa desta questão, com estes acertos e erros já contados. Só sem
+   *  `repetirErros` (a fila da revisão muda a cada erro). */
+  retomar?: PosicaoNoPlayer | null;
+  /** Chamado a cada questão que avança, com a posição nova. */
+  aoAvancar?: (p: PosicaoNoPlayer) => void;
 }) {
+  const inicio = !repetirErros && retomar && retomar.i > 0 && retomar.i < exercises.length ? retomar : null;
   const { answer, markFirst, mastered, state } = useProgress();
   /* A fila que o aluno percorre. Sem `repetirErros` ela é a lista recebida,
      do começo ao fim; com ele, cresce a cada erro. */
   const [filaDaRevisao, setFila] = useState<Exercise[]>(exercises);
   const fila = repetirErros ? filaDaRevisao : exercises;
-  const [i, setI] = useState(0);
+  const [i, setI] = useState(inicio?.i ?? 0);
   const [firstUnaided, setFirstUnaided] = useState(false);
   const [settled, setSettled] = useState<Settled | null>(null);
-  const [correctCount, setCorrectCount] = useState(0);
-  const [missed, setMissed] = useState<string[]>([]);
+  const [correctCount, setCorrectCount] = useState(inicio?.certas ?? 0);
+  const [missed, setMissed] = useState<string[]>(inicio?.erradas ?? []);
   const sheetRef = useRef<HTMLDivElement>(null);
   const raizRef = useRef<HTMLDivElement>(null);
   const perguntaRef = useRef<HTMLHeadingElement>(null);
@@ -169,7 +179,8 @@ export function ExercisePlayer({
     setI(n => n + 1);
     setSettled(null);
     setFirstUnaided(false);
-  }, [i, fila, vaiVoltar, repetirErros, exercises.length, correctCount, missed, onDone]);
+    aoAvancar?.({ i: i + 1, certas: correctCount, erradas: missed });
+  }, [i, fila, vaiVoltar, repetirErros, exercises.length, correctCount, missed, onDone, aoAvancar]);
 
   /* Keyboard: 1-9 to answer a choice, Enter to continue. Every exercise that
      can be answered without a pointer, is. */

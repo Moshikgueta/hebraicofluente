@@ -18,19 +18,19 @@ const display = localFont({
   variable: '--font-display-loaded',
   display: 'swap',
   src: [
-    { path: '../../public/fonts/bricolage-grotesque-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/bricolage-grotesque-latin-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/bricolage-grotesque-latin-600-normal.woff2', weight: '600', style: 'normal' },
-    { path: '../../public/fonts/bricolage-grotesque-latin-700-normal.woff2', weight: '700', style: 'normal' }
+    { path: '../../../assets/fonts/bricolage-grotesque-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../../assets/fonts/bricolage-grotesque-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../../assets/fonts/bricolage-grotesque-latin-600-normal.woff2', weight: '600', style: 'normal' },
+    { path: '../../../assets/fonts/bricolage-grotesque-latin-700-normal.woff2', weight: '700', style: 'normal' }
   ]
 });
 const ui = localFont({
   variable: '--font-ui-loaded',
   display: 'swap',
   src: [
-    { path: '../../public/fonts/instrument-sans-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/instrument-sans-latin-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/instrument-sans-latin-600-normal.woff2', weight: '600', style: 'normal' }
+    { path: '../../../assets/fonts/instrument-sans-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../../assets/fonts/instrument-sans-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../../assets/fonts/instrument-sans-latin-600-normal.woff2', weight: '600', style: 'normal' }
   ]
 });
 /* Noto SERIF Hebrew - e a troca foi conferida ANTES de ser feita.
@@ -51,15 +51,25 @@ const hebrew = localFont({
   variable: '--font-he-loaded',
   display: 'swap',
   src: [
-    { path: '../../public/fonts/noto-serif-hebrew-hebrew-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/noto-serif-hebrew-hebrew-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/noto-serif-hebrew-hebrew-600-normal.woff2', weight: '600', style: 'normal' }
+    { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-600-normal.woff2', weight: '600', style: 'normal' }
   ]
 });
+/* Sem preload (auditoria de 01/10/2026, PERF-006): a cursiva só aparece nas
+   telas de escrita do curso, e o `<link rel=preload>` a punha em alta
+   prioridade em TODA página, inclusive na capa, disputando banda com o
+   JavaScript. Com `swap`, ela chega quando uma tela a pede.
+   As outras três famílias continuam com preload: o Next decide o preload por
+   família, não por peso, e cada uma tem pesos usados na capa (Bricolage 500
+   a 700, Instrument 400 a 600, Noto Serif Hebrew 400). Tirar os pesos raros
+   do preload pediria partir a família, e o navegador então sintetiza o
+   negrito no lugar do peso real. */
 const cursive = localFont({
   variable: '--font-he-cursive-loaded',
   display: 'swap',
-  src: [{ path: '../../public/fonts/gveret-levin-hebrew-400-normal.woff2', weight: '400', style: 'normal' }]
+  preload: false,
+  src: [{ path: '../../../assets/fonts/gveret-levin-hebrew-400-normal.woff2', weight: '400', style: 'normal' }]
 });
 import { ProgressProvider } from '@/lib/state/store';
 import { AccountProvider } from '@/lib/account/store';

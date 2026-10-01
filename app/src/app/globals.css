@@ -188,6 +188,29 @@ html[data-a11y-texto='115'] #hf-zoom { zoom: 1.15; }
 html[data-a11y-texto='130'] #hf-zoom { zoom: 1.3; }
 html[data-a11y-texto='150'] #hf-zoom { zoom: 1.5; }
 
+/*   No telefone, na plataforma, o zoom vai SÓ no conteúdo (auditoria de
+     01/10/2026, VIS-002). Com o contêiner inteiro em 150%, num aparelho de
+     360px o cabeçalho tinha 240px úteis e a marca passava por cima do XP, e
+     os sete rótulos da barra do polegar encostavam uns nos outros. Abaixo de
+     640px o cabeçalho e a barra ficam no tamanho de sempre; o <main> (aula,
+     avisos e rodapé de ajuda) é que cresce. Na barra, a partir de 130%, o
+     ícone cresce e o rótulo sai da vista (continua como nome acessível do
+     link): sete palavras em 150% não cabem em 360px, e um ícone grande é
+     mais fácil de acertar do que uma palavra espremida. */
+@media (max-width: 639.98px) {
+  html[data-a11y-texto] #hf-zoom:has([data-plataforma]) { zoom: 1; }
+  html[data-a11y-texto='115'] [data-plataforma] main#hf-principal { zoom: 1.15; }
+  html[data-a11y-texto='130'] [data-plataforma] main#hf-principal { zoom: 1.3; }
+  html[data-a11y-texto='150'] [data-plataforma] main#hf-principal { zoom: 1.5; }
+  html[data-a11y-texto='130'] .hf-barra-rotulo,
+  html[data-a11y-texto='150'] .hf-barra-rotulo {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+  html[data-a11y-texto='130'] .hf-barra-icone { zoom: 1.3; }
+  html[data-a11y-texto='150'] .hf-barra-icone { zoom: 1.5; }
+}
+
 /* 2 · MAIS CONTRASTE. Redefine os tokens, e não os componentes: as mesmas
        dez linhas revestem as 66 páginas. Preto puro aqui é deliberado - o
        "nunca preto puro" do design é uma decisão estética do tema padrão, e

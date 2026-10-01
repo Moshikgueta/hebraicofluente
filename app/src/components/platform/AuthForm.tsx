@@ -21,8 +21,8 @@
  */
 
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, type FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState, type FormEvent } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -38,11 +38,34 @@ import {
    já importava deste arquivo. */
 export { safeNext };
 
-export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
+/** O aviso de quem foi mandado ao login pelo portão (worker/src/gate.js),
+ *  pelo `?motivo=`. Só os motivos conhecidos têm texto; o resto não mostra
+ *  nada. */
+export const MOTIVOS: Record<string, string> = {
+  /* UXQA-006: a quarta entrada da conta derrubou este aparelho
+     (worker/src/lib/aparelhos.js). Sem isto ele caía no login sem saber por quê. */
+  aparelhos: 'Você entrou em outro aparelho e esta sessão foi encerrada. ' +
+    'O limite é de 3 aparelhos ao mesmo tempo.'
+};
+
+export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
+  mode: 'signin' | 'signup';
+  /** No checkout o título da página é o do passo, e este vira h2 (VIS-012). */
+  nivelDoTitulo?: 'h1' | 'h2';
+}) {
   const account = useAccount();
   const router = useRouter();
-  const params = useSearchParams();
-  const next = safeNext(params.get('next'));
+  /* `?next=` e `?motivo=` lidos depois da montagem, e não com
+     `useSearchParams` (auditoria de 01/10/2026, PERF-003). O hook obrigava um
+     <Suspense fallback={null}>, e o export estático saía com o <main> VAZIO:
+     o formulário só nascia depois de baixar e hidratar o JavaScript, e o
+     rodapé pulava quando ele entrava (CLS 0,59 em 3G). Agora o HTML já traz
+     o formulário inteiro; a URL só decide para onde voltar e se há aviso. */
+  const [busca, setBusca] = useState<URLSearchParams | null>(null);
+  useEffect(() => { setBusca(new URLSearchParams(window.location.search)); }, []);
+  const next = safeNext(busca?.get('next') ?? null);
+  const motivo = MOTIVOS[busca?.get('motivo') ?? ''];
+  const Titulo = nivelDoTitulo;
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -66,7 +89,7 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
     try {
       if (signup) await account.signUp({ name, email, password, aceitouTermos: aceite, declarouIdade: aceite });
       else await account.signIn({ email, password });
-      router.replace(next);
+      router.replace(safeNext(new URLSearchParams(window.location.search).get('next')));
     } catch (err) {
       setError(err instanceof AuthError ? err.message : MESSAGES.server);
       setBusy(false);
@@ -77,9 +100,9 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
     <div className="mx-auto w-full max-w-[460px] px-4 sm:px-6 py-12 sm:py-16 grid gap-6">
       <header className="grid gap-3 justify-items-center text-center">
         <He size="lg" dim>ע</He>
-        <h1 className="font-display text-[27px] sm:text-[31px] font-bold leading-tight text-ink">
+        <Titulo className="font-display text-[27px] sm:text-[31px] font-bold leading-tight text-ink">
           {signup ? 'Criar sua conta' : 'Entrar'}
-        </h1>
+        </Titulo>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-muted max-w-[38ch]">
           {signup
             ? 'Seus cursos, seu progresso e seu certificado ficam todos aqui.'
@@ -87,18 +110,26 @@ export function AuthForm({ mode }: { mode: 'signin' | 'signup' }) {
         </p>
       </header>
 
+      {motivo && (
+        <Card tone="ember" className="p-4">
+          <p role="status" className="font-ui text-[14px] leading-relaxed text-[var(--gold-body)] m-0">
+            {motivo}
+          </p>
+        </Card>
+      )}
+
       <Card className="p-6">
         <form onSubmit={submit} className="grid gap-4" noValidate>
           {signup && (
             <Campo
               id="nome" label="Como você quer ser chamado" value={name} onChange={setName}
-              type="text" autoComplete="name" placeholder="Daniel"
+              type="text" autoComplete="name" placeholder="ex.: Daniel"
             />
           )}
 
           <Campo
             id="email" label="E-mail" value={email} onChange={setEmail} erroId={error ? 'auth-erro' : undefined}
-            type="email" autoComplete="email" placeholder="voce@exemplo.com.br" required
+            type="email" autoComplete="email" placeholder="ex.: voce@exemplo.com.br" required
             /* No cadastro, um e-mail errado custa o recibo e o link de senha, e
                o site não deixa trocar sozinho (auditoria, OPS-001). */
             hint={signup ? 'Confira com cuidado: é para ele que vão o recibo da compra e o link de senha.' : undefined}

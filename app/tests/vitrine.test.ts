@@ -31,7 +31,7 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from '@/components/landing/copy';
+import { PASSOS, TEM_AUDIO } from '@/components/landing/copy';
 
 /* Trechos que só podem estar no ar quando existe gravação. */
 const PROMESSAS = [
@@ -43,9 +43,9 @@ const PROMESSAS = [
   'ouviu'
 ];
 
-/** Todo texto que a demonstração e o método mostram, numa lista só. */
+/** Todo texto que o método mostra, numa lista só. (As abas da demonstração
+ *  e a maquete saíram com a capa antiga: auditoria de 01/10/2026, TEC-001.) */
 const textos = (): string[] => [
-  ...ABAS.flatMap(a => [a.label, a.kicker, a.title, a.body, ...a.points]),
   ...PASSOS.flatMap(p => [p[0], p[1]])
 ];
 
@@ -55,27 +55,6 @@ describe('a landing e o áudio dizem a mesma coisa', () => {
     const promete = textos().filter(t =>
       PROMESSAS.some(p => t.toLowerCase().includes(p.toLowerCase())));
     expect(promete).toEqual([]);
-  });
-
-  it('conta os tipos de exercício, em vez de chutar', () => {
-    /* Cinco categorias com gravação (múltipla escolha, digitação, associação,
-       escuta, leitura), quatro sem - a escuta é a única que o curso desliga.
-       Anunciar cinco e entregar quatro é o mesmo erro, de tamanho menor. */
-    const pratica = ABAS.find(a => a.label === 'Prática');
-    expect(pratica).toBeDefined();
-    expect(pratica!.title).toContain(TEM_AUDIO ? 'Cinco' : 'Quatro');
-  });
-
-  it('desenha uma maquete de exercício que existe hoje', () => {
-    /* As duas telas que MOSTRAM um exercício em vez de descrevê-lo. Sem
-       gravação, a de escuta não existe no curso - então a maquete vira a de
-       reconhecimento, que faz a pergunta ao contrário e é o que o aluno
-       encontra de verdade. */
-    expect(MAQUETE.praticaRotulo).toBe(TEM_AUDIO ? 'Escuta' : 'Reconhecer');
-    if (!TEM_AUDIO) {
-      expect(MAQUETE.praticaPergunta).not.toMatch(/ouviu|áudio|escut/i);
-      expect(MAQUETE.heroiPergunta).not.toMatch(/ouviu|áudio|escut/i);
-    }
   });
 
   it('mantém o método com um passo por coisa que o curso faz', () => {
@@ -187,15 +166,6 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
     expect(barra).not.toMatch(/R\$\s?\d/);
   });
 
-  it('a seção do conteúdo extra não manda visitante para rota paga', () => {
-    /* /biblia é pública e vira link. /historia é do curso: um link para ela
-       numa página de vendas leva a um 302 de login, que é a pior coisa que
-       um botão de landing pode fazer. */
-    const alem = readFileSync(
-      new URL('../src/components/landing/AlemDoAlfabeto.tsx', import.meta.url), 'utf8');
-    expect(alem).toContain('href="/biblia"');
-    expect(alem).not.toContain('href="/historia"');
-  });
 });
 
 /* ── preço de pré-lançamento (auditoria de 28/09/2026, LEGAL-014) ────────
