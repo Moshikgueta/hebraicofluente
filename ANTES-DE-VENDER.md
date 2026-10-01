@@ -459,8 +459,13 @@ e-mail e as estatísticas de aprendizagem. Os Termos (art. 9) dizem que
 mudança que afete um acesso já comprado não retroage, e a Política de
 Privacidade promete avisar por e-mail antes de mudar o tratamento de dados.
 
-**RESPOSTA DO DONO (01/10/2026): houve venda real antes de 29/09.** Falta
-mandar o e-mail único a esses compradores (texto sugerido na conversa de
+**FEITO em 01/10/2026: o dono mandou o e-mail aos compradores de antes de
+29/09.** Guarde a cópia enviada (data, destinatários, texto) junto com a
+documentação do advogado: ela é a prova do aviso. Pedidos que chegarem em
+resposta (mais aparelhos, desistência) seguem RUNBOOK-ATENDIMENTO.md.
+
+**RESPOSTA DO DONO (01/10/2026): houve venda real antes de 29/09.** O e-mail
+único a esses compradores (texto sugerido na conversa de
 01/10, com a frase final ajustada: mais aparelhos se pedirem, a marca d'água
 fica para todos, devolução opcional), depois de ver a lista em Actions ->
 Acesso -> listar. Decisão do dono: **a marca d'água fica, inclusive para
