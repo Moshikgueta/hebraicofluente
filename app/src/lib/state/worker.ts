@@ -27,6 +27,7 @@ import { EMPTY_STATE, type LearnerState, type ProgressStore } from './types';
 import { LocalProgressStore } from './local';
 import { migrate } from './migrate';
 import { mergeStates, sameProgress, sameState } from './merge';
+import { api } from '../account/api';
 
 type Resposta = { state: LearnerState | null; rev: number; uid: string | null };
 
@@ -80,6 +81,16 @@ async function descartar(r: Response): Promise<void> {
   try { await r.text(); } catch { /* já consumido, ou sem corpo */ }
 }
 
+/** Verdadeiro só quando o servidor DISSE que não há sessão. Erro de rede ou
+ *  de servidor dá falso: na dúvida, o progresso pergunta. */
+async function semSessao(): Promise<boolean> {
+  try {
+    return (await (await api()).me()) === null;
+  } catch {
+    return false;
+  }
+}
+
 /** Evento no `window`: o servidor recusou o progresso por falta de sessão
  *  no meio do estudo. components/shell/SessaoCaiu.tsx mostra o aviso. */
 export const SESSAO_CAIU = 'hf-sessao-caiu';
@@ -102,6 +113,13 @@ export class WorkerProgressStore implements ProgressStore {
   #semCurso = false;
 
   async #ler(): Promise<Resposta> {
+    /* Visitante não pergunta pelo progresso (auditoria de 01/10/2026,
+       PERF-007): era um 401 certo em toda página pública, uma invocação do
+       Worker a mais por página vista. A pergunta "há sessão?" é a mesma que
+       o AccountProvider faz ao abrir a página, e as duas viajam juntas
+       (`me()` compartilha o pedido em voo). Se ela falhar (rede, servidor),
+       segue como antes: pergunta ao progresso, que sabe responder 401. */
+    if (await semSessao()) { this.#comSessao = false; return VAZIO; }
     const r = await pedir('/api/progress');
     if (!r) return VAZIO;
     if (r.status === 401) { await descartar(r); this.#comSessao = false; return VAZIO; }

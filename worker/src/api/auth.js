@@ -781,25 +781,43 @@ export async function apagar({ request, env }) {
   return json({ ok: true }, 200, { 'Set-Cookie': clearSessionCookie });
 }
 
+/* ── visitante não é erro (auditoria de 01/10/2026, PERF-007/UXQA-018) ────
+ * Todo visitante, em toda página pública, levava um 401 de /api/me: um erro
+ * vermelho no console a cada página vista, que esconde o erro de verdade no
+ * meio do ruído. Para o app de agora a resposta sem sessão é 200
+ * `{ signedIn: false }`.
+ *
+ * Só para quem PEDE assim (`X-HF-Sessao: opcional`, que lib/account/
+ * worker-api.ts manda). O app de antes trata qualquer 200 desta rota como
+ * uma sessão, e uma aba aberta antes da publicação, com o pacote antigo,
+ * leria `{ signedIn: false }` como conta e quebraria a tela. Sem o
+ * cabeçalho (o pacote antigo, o curl do e2e) continua o 401 de sempre. As
+ * rotas que exigem sessão continuam respondendo 401. */
+const semSessao = (request, limparCookie = false) => {
+  const extra = limparCookie ? { 'Set-Cookie': clearSessionCookie } : {};
+  if ((request.headers.get('X-HF-Sessao') || '').toLowerCase() === 'opcional') {
+    return json({ signedIn: false }, 200, extra);
+  }
+  return limparCookie ? json({ error: 'not-signed-in' }, 401, extra) : notSignedIn();
+};
+
 export async function me({ request, env }) {
   const sess = await readSession(request, env);
-  if (!sess) return notSignedIn();
+  if (!sess) return semSessao(request);
 
   const account = await findAccountById(env, sess.uid);
   /* A conta sumiu, ou a versão de sessão foi subida (troca de senha, suspeita
      de vazamento). O cookie ainda tem assinatura válida e mesmo assim não
      vale mais - é para isto que `sv` existe. */
   if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)) {
-    return json({ error: 'not-signed-in' }, 401, { 'Set-Cookie': clearSessionCookie });
+    return semSessao(request, true);
   }
 
   /* Um cookie com o nome antigo, ainda válido: troca pelo nome novo aqui, e
      apaga o antigo. É o que faz a mudança de nome não deslogar ninguém - o
      app chama /api/me a cada página. Ver LEGADO_ATE em lib/session.js. */
   /* O aparelho deste navegador saiu das três vagas: outro entrou depois. */
-  if (!await aparelhoValido(env, sess)) {
-    return json({ error: 'not-signed-in' }, 401, { 'Set-Cookie': clearSessionCookie });
-  }
+  if (!await aparelhoValido(env, sess)) return semSessao(request, true);
 
   if (sess.legado) {
     return json(await sessionBody(env, account), 200,

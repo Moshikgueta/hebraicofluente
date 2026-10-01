@@ -255,6 +255,11 @@ espera "mp3 da capa responde 206 a um Range (Safari)" 206 \
 
 echo "Sessão e portão"
 espera "/api/me sem sessão recusa"            401 "$(code $B/api/me)"
+# O app de agora pede `X-HF-Sessao: opcional` e recebe 200 sem sessão, para
+# o visitante não ganhar um erro vermelho por página (PERF-007). Sem o
+# cabeçalho, acima, continua o 401 (pacote antigo numa aba aberta).
+espera "/api/me sem sessão, pedido pelo app, é 200 signedIn:false" '{"signedIn":false}' \
+  "$(G -H 'X-HF-Sessao: opcional' $B/api/me)"
 espera "rota paga sem sessão manda ao login"  "$B/entrar/?next=%2Flicao%2Falef%2F" \
        "$(location $B/licao/alef/)"
 

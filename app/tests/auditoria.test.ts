@@ -433,9 +433,9 @@ describe('o login', () => {
     const env = envSite();
     const { email } = await comConta(env);
     const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
-      tentar(env, email, 'errada-' + i, '10.99.99.2')))).map(r => r.status);
-    expect(status.filter(s => s === 401)).toHaveLength(5);
-    expect(status.filter(s => s === 429)).toHaveLength(35);
+      tentar(env, email, 'errada-' + i, '10.99.99.2')))).map((r: Response) => r.status);
+    expect(status.filter((s: number) => s === 401)).toHaveLength(5);
+    expect(status.filter((s: number) => s === 429)).toHaveLength(35);
     /* A dona, de outro lugar, com a senha certa, continua entrando. */
     expect((await tentar(env, email, 'senha-boa-123', '198.51.100.7')).status).toBe(200);
   });
@@ -444,17 +444,17 @@ describe('o login', () => {
     const env = envSite();
     const { email } = await comConta(env);
     const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
-      tentar(env, email, 'errada-' + i, `10.98.0.${i + 1}`)))).map(r => r.status);
-    expect(status.filter(s => s === 401)).toHaveLength(30);
-    expect(status.filter(s => s === 429)).toHaveLength(10);
+      tentar(env, email, 'errada-' + i, `10.98.0.${i + 1}`)))).map((r: Response) => r.status);
+    expect(status.filter((s: number) => s === 401)).toHaveLength(30);
+    expect(status.filter((s: number) => s === 429)).toHaveLength(10);
   });
 
   it('por endereço, a rajada de e-mails inventados para nos 20 erros da hora', async () => {
     const env = envSite();
     const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
-      tentar(env, `ninguem${i}@exemplo.com`, 'errada-123', '10.99.99.3')))).map(r => r.status);
-    expect(status.filter(s => s === 401)).toHaveLength(20);
-    expect(status.filter(s => s === 429)).toHaveLength(20);
+      tentar(env, `ninguem${i}@exemplo.com`, 'errada-123', '10.99.99.3')))).map((r: Response) => r.status);
+    expect(status.filter((s: number) => s === 401)).toHaveLength(20);
+    expect(status.filter((s: number) => s === 429)).toHaveLength(20);
   });
 
   it('acertar devolve a vaga: o teto de erros só conta as falhas', async () => {
@@ -812,7 +812,7 @@ describe('a saúde', () => {
     const env = envSite();
     const com = (auth_: string) => worker.fetch(new Request(`${SITE}/api/health`, {
       headers: { 'CF-Connecting-IP': '203.0.113.3', Authorization: auth_ }
-    }), env, ctx).then(r => r.json() as Promise<Record<string, unknown>>);
+    }), env, ctx).then((r: Response) => r.json() as Promise<Record<string, unknown>>);
     const certo = await com(`Bearer ${env.ADMIN_TOKEN}`);
     for (const k of ['db', 'schema', 'session', 'modo', 'tokenFormato', 'vendedor', 'emailEntregue', 'varredura', 'ok', 'monitor']) {
       expect(certo).toHaveProperty(k);

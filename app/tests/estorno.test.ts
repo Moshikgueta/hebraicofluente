@@ -374,7 +374,7 @@ describe('a saúde do dia, no alerta ao dono', () => {
 
   it('a resposta 500 do Worker é contada', async () => {
     const env = envCompleto();
-    const db = env.DB as { prepare(sql: string): unknown };
+    const db = env.DB as unknown as { prepare(sql: string): unknown };
     const real = db.prepare.bind(db);
     db.prepare = (sql: string) => {
       if (/FROM accounts/.test(sql)) throw new Error('banco em pane');
