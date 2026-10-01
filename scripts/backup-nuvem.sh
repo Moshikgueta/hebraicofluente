@@ -4,6 +4,7 @@
 #   bash scripts/backup-nuvem.sh copiar            # o que a Action roda todo dia
 #   bash scripts/backup-nuvem.sh ensaiar [chave]   # restaura uma cópia num banco de teste
 #   bash scripts/backup-nuvem.sh conferir ARQ.sql  # só a prova, num banco local
+#   bash scripts/backup-nuvem.sh provar-gravacoes  # o teste do filtro de `gravacoes`, sem nuvem
 #
 # POR QUE EXISTE. O D1 é o único lugar onde moram as contas, os direitos de
 # acesso, os pedidos e o progresso de todos os alunos. O Time Travel da
@@ -31,6 +32,30 @@
 #     Cloudflare (`hebraico-fluente-ensaio`), confere as contagens e apaga o
 #     banco de teste. É a prova de que dá para voltar do zero. Rodar uma vez
 #     agora e depois uma vez por mês.
+#
+# A TABELA `gravacoes` FICA FORA DA CÓPIA (desde 01/10/2026, SEC-A-001).
+# O painel /admin/gravar guarda cada áudio como BLOB numa linha dessa tabela
+# (até 1,5 MB). O `d1 export` escreve cada linha como UM comando INSERT com o
+# blob em hexadecimal (o dobro do tamanho: até 3 MB), e o SQLite recusa
+# qualquer comando acima de 1.000.000 bytes (SQLITE_TOOBIG). Um dump assim não
+# restaura em lugar nenhum: nem no banco local da prova, nem no D1 remoto do
+# `ensaiar`. Por isso, a partir do primeiro áudio gravado (30/09/2026), a
+# Action falhou todo dia e nenhuma cópia nova chegou ao R2.
+#   · `sem_gravacoes` tira do dump só as linhas `INSERT INTO "gravacoes"`; o
+#     CREATE TABLE fica, e a tabela volta vazia na restauração.
+#   · Não se perde conteúdo: a gravação é conteúdo do CURSO, não dado de
+#     aluno. O Worker serve `/audio/<id>.mp3` da tabela quando a linha existe
+#     e do arquivo `audio/<id>.mp3` do git quando não existe (audio.js), e
+#     `tools/exportar-gravacoes.mjs` (deploy-worker.yml, disparo manual com
+#     "exportar_gravacoes") leva cada gravação do banco para o git, já cortada
+#     e nivelada. Depois de uma restauração, o curso toca os arquivos do git.
+#     O que estiver gravado e ainda não exportado para o git não tem cópia:
+#     o resumo da Action lista esses ids todo dia.
+#   · A contagem continua provada: `gravacoes` sai do arquivo com 0 linhas e
+#     volta com 0 (`comparar` não precisa de exceção).
+#   · `provar-gravacoes` reproduz o caso num D1 local (um blob de 1 MB, 2 MB
+#     em hex): o dump cru TEM de falhar com SQLITE_TOOBIG e o filtrado TEM de
+#     restaurar com as mesmas contagens. Sem nuvem, sem token.
 
 set -uo pipefail
 cd "$(dirname "$0")/.."
@@ -95,6 +120,10 @@ contar_no_banco() { # nome-do-banco args... -> "tabela n" por linha
 
 # Compara o que saiu com o que voltou. Toda tabela do banco restaurado tem de
 # ter exatamente as linhas que o arquivo carregava (zero, se não carregava).
+# `gravacoes` NÃO é exceção aqui, de propósito: `sem_gravacoes` tira as
+# linhas dela ANTES de o arquivo ser contado, então ela sai com 0 e tem de
+# voltar com 0 (a tabela existe, vazia). Se um dia ela aparecer com linhas
+# num dos lados, é um dump que não passou pelo filtro, e a prova acusa.
 comparar() { # saiu.txt voltou.txt -> 0 se tudo bate
   node -e '
     const fs=require("fs");
@@ -112,13 +141,49 @@ comparar() { # saiu.txt voltou.txt -> 0 se tudo bate
     process.exit(ok?0:1);' "$1" "$2"
 }
 
+# ── a tabela gravacoes ────────────────────────────────────────────────────
+# O teto do SQLite por comando. Um INSERT acima disto não restaura em lugar
+# nenhum (SQLITE_TOOBIG), e um dump com um comando assim é inútil inteiro.
+TETO_COMANDO=1000000
+
+# Tira do dump as linhas de dados de `gravacoes` (só os INSERTs; o CREATE
+# TABLE fica). Imprime quantas saíram. O export escreve cada linha de tabela
+# num comando só, terminado em `);`; um valor com quebra de linha continuaria
+# nas linhas seguintes, e por isso o filtro pula até o fim do comando, e não
+# só a primeira linha. (As colunas de `gravacoes` não carregam quebra de
+# linha: id com formato fixo, tipo normalizado, e-mail. É só cautela.)
+sem_gravacoes() { # entrada.sql saida.sql -> imprime N
+  awk -v contagem="$TMP/n-gravacoes" '
+    /^INSERT INTO "?gravacoes"?[ (]/ { n++; aberto = 1 }
+    aberto { if ($0 ~ /\);[ \t]*$/) aberto = 0; next }
+    { print }
+    END { print n + 0 > contagem }' "$1" > "$2" || return 1
+  cat "$TMP/n-gravacoes"
+}
+
+# Os ids das gravações que o dump carregava: o primeiro valor de cada INSERT.
+ids_gravacoes() { # entrada.sql -> um id por linha
+  sed -nE "s/^INSERT INTO \"?gravacoes\"?[^V]*VALUES\('(he-[0-9a-f]{8})'.*/\1/p" "$1"
+}
+
+# Quando a restauração falha, dizer se foi por um comando acima do teto, e de
+# qual tabela: é o erro que o SQLite só descreve como "statement too long".
+comando_longo() { # arquivo.sql -> uma frase, ou nada
+  awk -v teto="$TETO_COMANDO" 'length($0) > teto {
+      t = $0; sub(/^INSERT INTO "?/, "", t); sub(/"?[ (].*/, "", t);
+      printf "linha %d do arquivo tem %d bytes (tabela %s), acima do teto de %d por comando do SQLite\n", NR, length($0), t, teto; exit }' "$1"
+}
+
 # Restaura um .sql num banco LOCAL descartável e compara. Nunca toca a nuvem.
 conferir_local() { # arquivo.sql
-  local arq="$1" dir="$TMP/restaura-local"
+  local arq="$1" dir="$TMP/restaura-local" longo
   rm -rf "$dir"; mkdir -p "$dir"
-  $W d1 execute "$DB" --local --persist-to "$dir" --file="$arq" -y \
-    >"$TMP/restaura.log" 2>&1 \
-    || morre "A cópia NÃO restaurou num banco local." "$(tail -20 "$TMP/restaura.log")"
+  if ! $W d1 execute "$DB" --local --persist-to "$dir" --file="$arq" -y \
+      >"$TMP/restaura.log" 2>&1; then
+    longo="$(comando_longo "$arq")"
+    [ -z "$longo" ] || printf '\n  %s\n  (um dump da produção passa por `sem_gravacoes` antes de chegar aqui; este não passou)\n' "$longo"
+    morre "A cópia NÃO restaurou num banco local." "$(tail -20 "$TMP/restaura.log")"
+  fi
   contar_no_arquivo "$arq" > "$TMP/saiu.txt"
   contar_no_banco "$DB" --local --persist-to "$dir" > "$TMP/voltou.txt" \
     || morre "Restaurou, mas não consegui contar as tabelas do banco restaurado."
@@ -178,7 +243,7 @@ garantir_bucket() {
 
 # ── copiar ────────────────────────────────────────────────────────────────
 copiar() {
-  local carimbo arq tamanho chave
+  local carimbo arq tamanho chave n_grav faltam id
   carimbo="$(date -u +%Y%m%d-%H%M%S)"
   arq="$TMP/hebraico-fluente-$carimbo.sql"
   chave="diario/hebraico-fluente-$carimbo.sql.gz"
@@ -194,6 +259,20 @@ copiar() {
   grep -q 'INSERT INTO "\?accounts' "$arq" \
     || morre "O export não tem nenhuma linha de accounts." "Um banco de produção sem contas é um export errado, não um banco vazio."
   info "$tamanho bytes"
+
+  # As gravações do painel ficam fora (ver o cabeçalho): o blob de cada uma
+  # não cabe num comando do SQLite, e elas já têm o git como casa.
+  ids_gravacoes "$arq" > "$TMP/ids-gravacoes.txt"
+  n_grav="$(sem_gravacoes "$arq" "$arq.sem-gravacoes")" \
+    || morre "Não consegui tirar as linhas de gravacoes do export."
+  mv "$arq.sem-gravacoes" "$arq"
+  faltam=""
+  while IFS= read -r id; do
+    [ -n "$id" ] && [ ! -f "audio/$id.mp3" ] && faltam="$faltam $id"
+  done < "$TMP/ids-gravacoes.txt"
+  faltam="${faltam# }"
+  info "gravacoes: $n_grav linha(s) na produção, fora da cópia ($(wc -c < "$arq" | tr -d ' ') bytes sem elas)"
+  [ -z "$faltam" ] || info "gravacoes ainda sem arquivo em audio/: $faltam"
 
   verde "3. Provando que a cópia restaura (num banco local)"
   conferir_local "$arq"
@@ -213,8 +292,59 @@ copiar() {
   resumo "- Guardado em \`$BUCKET/$chave\` e em \`$BUCKET/ultimo/hebraico-fluente.sql.gz\`."
   resumo "- Restaurado num banco local antes do envio: todas as tabelas voltaram com o mesmo número de linhas."
   resumo "- As cópias diárias somem sozinhas depois de $DIAS dias."
+  resumo "- gravacoes: fora da cópia, $n_grav linha(s) na produção, recuperáveis de \`audio/<id>.mp3\` no git (o curso toca o arquivo do git quando a linha não existe; \`exportar_gravacoes\` no deploy-worker.yml leva o banco para o git)."
+  if [ -n "$faltam" ]; then
+    resumo "  - ⚠️ ainda SEM arquivo em \`audio/\` (gravadas e não exportadas; só o banco as tem): \`$faltam\`. Rode o deploy-worker.yml com \"exportar_gravacoes\" e abra o PR."
+    printf '::warning::%s gravação(ões) do painel ainda não estão em audio/ no git: %s\n' "$(printf '%s\n' $faltam | wc -l | tr -d ' ')" "$faltam"
+  fi
   resumo ""
   tabela_no_resumo "$TMP/comparacao.txt"
+}
+
+# ── provar-gravacoes ──────────────────────────────────────────────────────
+# O teste do filtro, reproduzível e sem nuvem: um D1 local com o schema de
+# produção, uma conta e UMA gravação com blob de 1 MB (2 MB em hexadecimal no
+# dump). O dump cru tem de falhar na restauração com SQLITE_TOOBIG (senão o
+# filtro deixou de ter motivo, e alguém precisa olhar); o dump filtrado tem
+# de restaurar e bater as contagens, com gravacoes 0/0 e accounts 1/1.
+provar_gravacoes() {
+  local proj="$TMP/sintetico" cru="$TMP/sintetico.sql" filtrado="$TMP/sintetico-sem-gravacoes.sql" n
+  mkdir -p "$proj"
+  # `d1 export --local` não aceita --persist-to: o banco local mora em
+  # .wrangler/ de um diretório de projeto. Um projeto descartável, então.
+  printf 'name = "sintetico"\ncompatibility_date = "2025-01-01"\n[[d1_databases]]\nbinding = "DB"\ndatabase_name = "%s"\ndatabase_id = "00000000-0000-0000-0000-000000000000"\n' "$DB" > "$proj/wrangler.toml"
+
+  verde "1. Um banco local com o schema de produção, uma conta e uma gravação de 1 MB"
+  $W d1 execute "$DB" --local --cwd "$proj" --file="$PWD/worker/schema.sql" -y >"$TMP/sint-schema.log" 2>&1 \
+    || morre "Não consegui aplicar worker/schema.sql no banco local." "$(tail -15 "$TMP/sint-schema.log")"
+  $W d1 execute "$DB" --local --cwd "$proj" -y --command \
+    "INSERT INTO accounts (email,name,pass_hash,pass_salt,created_at) VALUES ('prova@example.invalid','Prova','h','s',1);
+     INSERT INTO gravacoes VALUES ('he-00000001','audio/wav',randomblob(1000000),1000000,120,900,780,'dono@example.invalid',1)" \
+    >"$TMP/sint-dados.log" 2>&1 \
+    || morre "Não consegui inserir os dados sintéticos." "$(tail -15 "$TMP/sint-dados.log")"
+  $W d1 export "$DB" --local --cwd "$proj" --output="$cru" -y >"$TMP/sint-export.log" 2>&1 \
+    || morre "O export local falhou." "$(tail -15 "$TMP/sint-export.log")"
+  info "dump cru: $(wc -c < "$cru" | tr -d ' ') bytes; $(comando_longo "$cru")"
+
+  verde "2. O dump cru TEM de falhar na restauração (é o defeito de 30/09/2026)"
+  rm -rf "$TMP/restaura-cru"; mkdir -p "$TMP/restaura-cru"
+  if $W d1 execute "$DB" --local --persist-to "$TMP/restaura-cru" --file="$cru" -y >"$TMP/sint-cru.log" 2>&1; then
+    morre "O dump cru restaurou. O teto do SQLite mudou?" "Se o wrangler passou a dividir comandos, este filtro pode ser revisto; até lá, olhar antes de mexer."
+  fi
+  grep -q 'SQLITE_TOOBIG' "$TMP/sint-cru.log" \
+    || morre "O dump cru falhou, mas não por SQLITE_TOOBIG." "$(tail -10 "$TMP/sint-cru.log")"
+  info "falhou como esperado: $(grep -o 'statement too long: SQLITE_TOOBIG' "$TMP/sint-cru.log" | head -1)"
+
+  verde "3. O dump filtrado TEM de restaurar com as mesmas contagens"
+  n="$(sem_gravacoes "$cru" "$filtrado")" || morre "O filtro falhou."
+  [ "$n" = "1" ] || morre "O filtro tirou $n linha(s) de gravacoes; esperava 1."
+  grep -q '^CREATE TABLE "\?gravacoes' "$filtrado" || morre "O CREATE TABLE de gravacoes sumiu do dump filtrado."
+  info "ids que saíram: $(ids_gravacoes "$cru" | tr '\n' ' ')"
+  info "dump filtrado: $(wc -c < "$filtrado" | tr -d ' ') bytes"
+  conferir_local "$filtrado"
+  grep -qE '^✓ gravacoes +saiu +0 · voltou +0' "$TMP/comparacao.txt" || morre "gravacoes não voltou 0/0."
+  grep -qE '^✓ accounts +saiu +1 · voltou +1' "$TMP/comparacao.txt" || morre "accounts não voltou 1/1."
+  verde "✓ O filtro de gravacoes funciona: o dump cru estoura o SQLite, o filtrado restaura e bate."
 }
 
 # ── ensaiar ───────────────────────────────────────────────────────────────
@@ -287,5 +417,6 @@ case "${1:-}" in
   copiar)   conta; copiar ;;
   ensaiar)  shift; conta; ensaiar "${1:-}" ;;
   conferir) [ -f "${2:-}" ] || morre "Uso: $0 conferir arquivo.sql"; conferir_local "$2"; verde "✓ A cópia restaura." ;;
-  *) morre "Uso: $0 copiar | ensaiar [chave] | conferir arquivo.sql" ;;
+  provar-gravacoes) provar_gravacoes ;;
+  *) morre "Uso: $0 copiar | ensaiar [chave] | conferir arquivo.sql | provar-gravacoes" ;;
 esac

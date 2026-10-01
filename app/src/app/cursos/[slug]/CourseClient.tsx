@@ -161,8 +161,16 @@ export function CourseClient({ slug }: { slug: string }) {
             <h3 className="font-display text-[18px] font-bold text-ink">
               E se não for para mim?
             </h3>
+            {/* O título é a objeção, e a resposta começa por ela: a
+                desistência do CDC (art. 49), com o prazo de data/empresa.json
+                e o caminho pelo site (Decreto 7.962/2013, art. 5º). Até
+                01/10/2026 o cartão respondia só com o prazo de estudo
+                (auditoria, CONV-001). */}
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              Você tem {c.accessMonths} meses de acesso e nenhum prazo interno.{' '}
+              Você tem {empresa.politicas.arrependimentoDias} dias, contados da liberação
+              do acesso, para desistir e receber 100% de volta, sem justificar; é só um
+              botão em Sua conta. Depois disso, você tem {c.accessMonths} meses de acesso
+              e nenhum prazo interno.{' '}
               {tempoDoCursoPt()} O curso guarda onde você parou e volta
               exatamente ali.
             </p>
@@ -358,6 +366,9 @@ function BuyBox({ slug }: { slug: string }) {
             : 'Acesso liberado em alguns minutos, depois do pagamento.'}
         </li>
         <li>{c.accessMonths} meses, do celular ao computador.</li>
+        {/* A mesma linha da caixa de preço da capa (CONV-001); o prazo vem de
+            data/empresa.json e `check-legal.mjs` confere que ela saiu. */}
+        <li>{empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar.</li>
       </ul>
 
       {!account.signedIn && (

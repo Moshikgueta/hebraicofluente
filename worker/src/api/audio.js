@@ -40,6 +40,7 @@ import { json, fail, readBytes } from '../lib/http.js';
 import { normalizeEmail } from '../lib/db.js';
 import { exigirAdmin, isAdmin } from '../lib/admin.js';
 import { nomesOrganizados, idDoClipe, EXTENSAO } from '../lib/nomes-audio.js';
+import { responderRange } from '../lib/range.js';
 
 import catalogoAudio from '../../../data/audio.json';
 import letters from '../../../app/content/letters.json';
@@ -123,7 +124,8 @@ export async function manifesto({ env }) {
 /* ── servir o som ──────────────────────────────────────────────────────────
  * `null` quando o painel não tem gravação desse id: o Worker segue para o
  * arquivo do git. O Safari só toca mídia de servidor que responde a `Range`
- * (ele pede `bytes=0-1` antes de tudo), então os pedidos parciais saem 206. */
+ * (ele pede `bytes=0-1` antes de tudo), então os pedidos parciais saem 206;
+ * a conta vive em lib/range.js, que também fatia os mp3 do git. */
 export async function servir(request, env, audioId) {
   if (!ID_RE.test(audioId)) return null;
   const linha = await env.DB.prepare(
@@ -131,30 +133,9 @@ export async function servir(request, env, audioId) {
   ).bind(audioId).first();
   if (!linha) return null;
 
-  const dados = bytesDe(linha.dados);
-  const total = dados.length;
-  const base = {
+  return responderRange(request, bytesDe(linha.dados), {
     'Content-Type': linha.tipo,
-    'Accept-Ranges': 'bytes',
     'ETag': `"${audioId}-${linha.atualizado_em}"`
-  };
-
-  const range = request.headers.get('Range');
-  const m = range && range.match(/^bytes=(\d*)-(\d*)$/);
-  if (m && (m[1] || m[2])) {
-    let de, ate;
-    if (m[1]) { de = Number(m[1]); ate = m[2] ? Math.min(Number(m[2]), total - 1) : total - 1; }
-    else { de = Math.max(0, total - Number(m[2])); ate = total - 1; }
-    if (de >= total || de > ate) {
-      return new Response(null, { status: 416, headers: { ...base, 'Content-Range': `bytes */${total}` } });
-    }
-    return new Response(request.method === 'HEAD' ? null : dados.slice(de, ate + 1), {
-      status: 206,
-      headers: { ...base, 'Content-Range': `bytes ${de}-${ate}/${total}`, 'Content-Length': String(ate - de + 1) }
-    });
-  }
-  return new Response(request.method === 'HEAD' ? null : dados, {
-    status: 200, headers: { ...base, 'Content-Length': String(total) }
   });
 }
 

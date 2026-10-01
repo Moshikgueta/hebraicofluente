@@ -1,4 +1,4 @@
-# Publicar o curso: a PRÉVIA no GitHub Pages
+# Publicar o curso: a PRÉVIA no GitHub Pages (HISTÓRICO)
 
 > **A produção não é esta.** O site que vende e que os alunos usam,
 > https://hebraicofluente.com.br, roda na Cloudflare (Worker + D1 + Mercado
@@ -6,11 +6,15 @@
 > em `main`. O passo a passo dele está em `DEPLOY-CLOUDFLARE.md`; o que fazer
 > quando algo quebra, em `INCIDENTES.md`.
 >
-> Este arquivo descreve a prévia estática no GitHub Pages
-> (`.github/workflows/deploy-app.yml`, disparada à mão), que existe só para
-> revisar a interface sem banco e sem cobrança. Correção de 28/09/2026
+> **Este arquivo é histórico desde 01/10/2026.** O workflow que ele descreve
+> (`.github/workflows/deploy-app.yml`) foi APAGADO na auditoria (SEC-A-004):
+> sem `NEXT_PUBLIC_PLATFORM_API=worker` o build põe os JSON pagos dentro do
+> pacote, e a ação publicava o curso inteiro no GitHub Pages, sem portão. Não
+> o recrie. Uma prévia pública só volta se o build sair sem o conteúdo pago.
+> O que falta ao dono é conferir que o site antigo está fora do ar
+> (`ANTES-DE-VENDER.md`, item 1). Correção anterior, de 28/09/2026
 > (auditoria, INFRA-014): o texto abaixo dizia que o Pages era o site e que se
-> republicava a cada push, e nenhuma das duas coisas é verdade hoje.
+> republicava a cada push, e nenhuma das duas coisas era verdade.
 
 A prévia é estática: as páginas pré-renderizadas, e o único estado é o de
 quem abre, no navegador. Sem servidor, sem banco, sem custo.

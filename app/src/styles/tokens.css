@@ -91,7 +91,13 @@
   --ink-muted: #5F6A66;
 
   /* ── os nomes semânticos, apontando para os de cima ────────────────── */
+  /* `--accent` é TINTA (texto, ícone, borda, barra de progresso) e
+     `--accent-bg` é FUNDO sólido com texto branco por cima. No claro são a
+     mesma cor, o navy; no escuro se separam (ver o bloco no fim): o fundo
+     continua navy e a tinta clareia. Código novo que pinta um fundo com texto
+     branco usa `--accent-bg`; o resto usa `--accent`. */
   --accent:      var(--navy);
+  --accent-bg:   var(--navy);
   --accent-soft: var(--teal);
   --accent-deep: var(--navy-2);
   --accent-wash: var(--teal-soft);
@@ -196,6 +202,19 @@
        cima continua branco, e continua passando. */
     --navy:      #1D545E;
     --navy-2:    #266A76;   /* hover: sobe mais, como no claro ele escurecia */
+
+    /* ── a tinta de destaque se separa do fundo de destaque ────────────
+       No claro `--accent` é o navy e serve de tinta E de fundo. Aqui o navy
+       subiu para #1D545E, que como FUNDO (botão com texto branco, 8,5:1)
+       continua bom e como TINTA sobre o papel escuro dá 1,7:1 - foi o que
+       apagou "Ouvir a letra", a transliteração e o item ativo da barra em
+       149 lugares (auditoria de 01/10/2026, VIS-001). Então a tinta passa
+       para o teal claro da família (#7FDACA: 11,3:1 sobre o papel, 10,2:1
+       sobre o cartão, 8,6:1 sobre a caixa tingida; com alto contraste
+       ligado ele sobe junto, porque é o mesmo token) e o fundo fica no
+       navy. `escuro.mjs` mede todo texto da lição. */
+    --accent:    var(--teal-ink);
+    --accent-bg: var(--navy);
 
     /* ── tinta ─────────────────────────────────────────────────────────
        Nunca branco puro: #FFFFFF sobre fundo escuro vibra e cansa numa

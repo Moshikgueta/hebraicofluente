@@ -117,6 +117,82 @@ if (!checkout) {
   }
 }
 
+/* ── 3b. a desistência, onde se decide ──────────────────────────────────── */
+console.log('\n  A DESISTÊNCIA NA VITRINE\n');
+
+/* O direito de desistir em N dias com 100% de volta (CDC art. 49) é o maior
+   redutor de risco do site, e até 01/10/2026 ele só aparecia depois do clique:
+   checkout, /suporte e um acordeão de /faq (auditoria, CONV-001). Agora a
+   frase mora na caixa de preço da capa e na da página do curso, com o N de
+   data/empresa.json - o mesmo que a Política de Reembolso lê. Conferir no
+   HTML, e não no componente: é a frase que o visitante recebe. */
+{
+  const N = empresa.politicas?.arrependimentoDias;
+  if (!N) {
+    falha('politicas.arrependimentoDias está vazio em data/empresa.json');
+  } else {
+    /* O React separa `{N}` do texto ao lado com um comentário vazio no HTML
+       gerado ("7<!-- --> dias"); a frase lida pelo visitante é a mesma. */
+    const FRASE = new RegExp(`\\b${N}(?:<!-- -->)? dias para desistir e receber 100% de volta, sem justificar\\.`);
+    for (const [rota, onde] of [['/', 'a caixa de preço da capa'], ['/cursos/alfabetizacao/', 'a caixa de preço do curso']]) {
+      const p = html(rota);
+      if (!p) { falha(`${rota} não foi gerada`); continue; }
+      if (FRASE.test(p)) ok(`${onde} diz "${N} dias para desistir e receber 100% de volta, sem justificar."`);
+      else falha(`${onde} (${rota}) não diz "${N} dias para desistir e receber 100% de volta, sem justificar."`);
+    }
+  }
+}
+
+/* ── 3c. a data do pré-lançamento ───────────────────────────────────────── */
+console.log('\n  O PRÉ-LANÇAMENTO\n');
+
+/* O site escreve "Preço de pré-lançamento até 31/10/2026. Depois, R$ 297" a
+   partir de `price.preLancamentoAte` e `price.listBrl`, e nada no código
+   compara essa data com hoje (auditoria de 01/10/2026, PAY-B-001). Passada a
+   data, a frase vira um preço de referência que nunca chegou. A regra de
+   preço é decisão do dono e não muda aqui: este bloco só impede publicar com
+   a data vencida, e avisa quando ela se aproxima.
+
+   A função é CÓPIA de src/lib/pre-lancamento.ts (este script não monta
+   TypeScript). tests/pre-lancamento.test.ts lê o trecho entre os marcadores
+   e o põe à prova com a mesma tabela que o módulo. */
+/* inicio estadoDoPreLancamento */
+const DIAS_DE_AVISO = 10;
+function estadoDoPreLancamento(price, hoje) {
+  const fim = price.preLancamentoAte;
+  if (price.listBrl === null || price.listBrl === undefined) return 'ok';
+  if (!fim || !/^\d{4}-\d{2}-\d{2}$/.test(fim)) return 'ok';
+  const dia = typeof hoje === 'string' ? hoje : hoje.toISOString().slice(0, 10);
+  const faltam = Math.round((Date.parse(`${fim}T00:00:00Z`) - Date.parse(`${dia}T00:00:00Z`)) / 86_400_000);
+  if (faltam < 0) return 'vencido';
+  if (faltam <= DIAS_DE_AVISO) return 'avisa';
+  return 'ok';
+}
+/* fim estadoDoPreLancamento */
+{
+  const brDe = iso => iso.split('-').reverse().join('/');
+  const hoje = new Date().toISOString().slice(0, 10);
+  const { courses } = JSON.parse(readFileSync('content/courses.json', 'utf8'));
+  let comData = 0;
+  for (const c of courses) {
+    if (!c.price?.preLancamentoAte || c.price.listBrl == null) continue;
+    comData++;
+    const fim = c.price.preLancamentoAte;
+    const estado = estadoDoPreLancamento(c.price, hoje);
+    if (estado === 'vencido') {
+      falha(`O pré-lançamento de ${c.slug} terminou em ${brDe(fim)} e o site ainda anuncia a data e o preço cheio. ` +
+            'Decida: subir para listBrl, estender preLancamentoAte ou tirar os dois. Ver audit/2026-10-01 PAY-B-001.');
+    } else if (estado === 'avisa') {
+      aviso(`o pré-lançamento de ${c.slug} termina em ${brDe(fim)} (hoje é ${brDe(hoje)}): ` +
+            'decida antes o que acontece com o preço - subir para listBrl, estender preLancamentoAte ou tirar os dois. ' +
+            'Ver audit/2026-10-01 PAY-B-001.');
+    } else {
+      ok(`${c.slug}: pré-lançamento até ${brDe(fim)}, ainda em vigor`);
+    }
+  }
+  if (!comData) ok('nenhum curso anuncia data de fim de pré-lançamento');
+}
+
 /* ── 4. nada escrito à mão ──────────────────────────────────────────────── */
 console.log('\n  FONTE ÚNICA\n');
 

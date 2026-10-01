@@ -122,7 +122,7 @@ export function OfertaProximoCurso({ atual = FLAGSHIP }: { atual?: string }) {
           href={`/cursos/${curso.slug}`}
           onClick={() => track('next_course_clicked', { itemId: curso.slug })}
           className="group inline-flex items-center gap-2 min-h-[48px] px-5 rounded-[var(--r-md)]
-                     bg-[var(--accent)] text-white font-ui font-semibold text-[15px]
+                     bg-[var(--accent-bg)] text-white font-ui font-semibold text-[15px]
                      transition-transform duration-[180ms] hover:-translate-y-[2px]"
         >
           {abre ? `Conhecer o ${curso.levelPt}` : 'Ver o plano deste curso'}

@@ -3,9 +3,10 @@
 # É esta a implantação de produção: o Worker serve o site, responde a /api/*,
 # guarda contas e pedidos no D1 e fala com a Mercado Pago.
 #
-# A outra (deploy-app.yml → GitHub Pages) continua existindo e publica a mesma
-# interface em MODO DEMONSTRAÇÃO, sem servidor. As duas não se atropelam
-# porque a diferença é uma variável de build: NEXT_PUBLIC_PLATFORM_API.
+# É a única desde 01/10/2026: a outra (deploy-app.yml → GitHub Pages)
+# publicava a mesma interface em MODO DEMONSTRAÇÃO, com os JSON pagos dentro
+# do pacote e sem portão, e foi apagada (auditoria, SEC-A-004). Uma prévia
+# sem Cloudflare só volta se o build sair sem o conteúdo pago.
 #
 # ── O QUE PRECISA EXISTIR ─────────────────────────────────────────────────
 #
