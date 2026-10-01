@@ -90,9 +90,15 @@ O aluno escreveu pedindo o dinheiro de volta, sem usar o botão.
      Acesso → `revogar`.
 5. Revogar é obrigatório: devolver o dinheiro NÃO tira o curso.
 
-Recomendado (LEGAL-109): uma resposta automática no Gmail para mensagens com
-"reembolso" ou "desistência" no assunto, confirmando o recebimento com data e
-hora. Isso é configuração sua.
+**Resposta automática (LEGAL-109): FEITA e testada em 01/10/2026.** No Gmail
+que recebe o `contato@`, um filtro (Para: `contato@hebraicofluente.com.br`;
+Assunto: desistência OR desistencia OR desistir OR reembolso OR estorno OR
+arrependimento OR cancelar OR cancelamento) envia o modelo "Confirmação de
+recebimento" e aplica o marcador `Desistência`. A data e a hora da resposta
+automática são o registro do recebimento (Decreto 7.962, art. 5º, §4º).
+Olhe o marcador `Desistência` todo dia útil. Assunto sem nenhuma dessas
+palavras não recebe a confirmação: leia a caixa também, e se o pedido vier
+assim, confirme à mão o quanto antes.
 
 ## 5. 01/11/2026: o fim do pré-lançamento
 
