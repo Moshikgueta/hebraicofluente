@@ -615,3 +615,19 @@ proteger o `main` e confirmar o 404 do Pages.
 consegue cobrar, e o cartão funciona ponta a ponta. Dá para fazer a compra
 de verdade (item 6) hoje, no cartão, e vender. O PIX entra quando eles
 liberarem, sozinho.
+
+### Quando assinar os planos pagos (decisão do dono em 01/10/2026: só quando precisar)
+
+Hoje os planos gratuitos dão conta. Estimativa, não medição: até uns 2.000 alunos
+matriculados (700 a 1.000 estudando no mesmo dia) cabem nos 100 mil acessos
+diários do Worker.
+
+- **Cloudflare Workers Paid (US$ 5/mês):** um dia ANTES de qualquer anúncio pago;
+  ou quando Workers & Pages → o Worker → Metrics passar de ~50 mil requests/dia;
+  ou se o UptimeRobot avisar queda perto das 21h de Brasília (meia-noite UTC,
+  quando o limite diário estoura). Depois: avisar para subir o PBKDF2 para 600k e
+  ligar o limite de CPU no wrangler.toml.
+- **Resend pago (US$ 20/mês, 50 mil e-mails/mês):** quando houver dias com mais de
+  ~50 compras e cadastros. O gratuito manda 100 e-mails/dia e 3.000/mês; passando
+  disso, o acesso continua sendo liberado, mas o recibo e o "esqueci a senha" não
+  chegam. Conferir no painel da Resend qual é o plano atual.
