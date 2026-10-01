@@ -12,13 +12,13 @@ imagens de lugares diferentes.
 | o quê | onde |
 |---|---|
 | a lista das palavras com imagem, e o que cada uma mostra | `data/imagens-vocabulario.json` |
-| os arquivos de imagem | `app/public/vocabulario/<nome>.webp` |
+| os arquivos de imagem | `app/public/media/vocabulario/<nome>-<hash>.webp` (via `node tools/imagem-vocabulario.mjs <arquivo> <número>`) |
 | quem junta as duas coisas às palavras | `tools/export-content.mjs` (`carregarImagens`) |
 | onde elas aparecem hoje | "Meu vocabulário" (`/vocabulario`) |
 
 Cada entrada tem três campos:
 
-- **`image`** - o caminho do arquivo, por exemplo `/vocabulario/casa.webp`.
+- **`image`** - o caminho do arquivo, por exemplo `/media/vocabulario/casa-1a2b3c4d.webp`.
   Fica `null` até o arquivo existir. O exportador **recusa** um caminho para
   arquivo que não existe, então uma imagem quebrada nunca chega ao aluno.
 - **`imageAlt`** - o texto para leitor de tela. Descreve a **cena**, não a
