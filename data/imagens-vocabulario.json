@@ -64,25 +64,25 @@
   },
   "גַּג": {
    "pt": "telhado",
-   "image": null,
+   "image": "/media/vocabulario/telhado-03a6148b.webp",
    "imageAlt": "O telhado de uma casa, com telhas e uma chaminé.",
    "imagePrompt": "the tiled roof of a house with a chimney"
   },
   "אֲגַם": {
    "pt": "lago",
-   "image": null,
+   "image": "/media/vocabulario/lago-684936ac.webp",
    "imageAlt": "Um lago calmo cercado de árvores, com um barquinho.",
    "imagePrompt": "a calm lake surrounded by trees with a small rowing boat"
   },
   "גְּלִידָה": {
    "pt": "sorvete",
-   "image": null,
+   "image": "/media/vocabulario/sorvete-ad21d852.webp",
    "imageAlt": "Uma casquinha de sorvete com duas bolas.",
    "imagePrompt": "an ice cream cone with two scoops"
   },
   "יָד": {
    "pt": "mão",
-   "image": null,
+   "image": "/media/vocabulario/mao-bfddc335.webp",
    "imageAlt": "Uma mão aberta, palma para a frente.",
    "imagePrompt": "an open hand, palm facing forward"
   },
@@ -94,7 +94,7 @@
   },
   "דּוֹדָה": {
    "pt": "tia",
-   "image": null,
+   "image": "/media/vocabulario/tia-219ab8d7.webp",
    "imageAlt": "Uma mulher adulta abaixada para abraçar uma sobrinha.",
    "imagePrompt": "an adult woman bending down to hug her young niece"
   },
@@ -112,13 +112,13 @@
   },
   "יֶלֶד": {
    "pt": "menino",
-   "image": null,
+   "image": "/media/vocabulario/menino-e6ac487b.webp",
    "imageAlt": "Um menino de uns oito anos segurando uma bola.",
    "imagePrompt": "a boy about eight years old holding a ball"
   },
   "לַיְלָה": {
    "pt": "noite",
-   "image": null,
+   "image": "/media/vocabulario/noite-ae28a931.webp",
    "imageAlt": "Um céu noturno com lua crescente e estrelas sobre casas.",
    "imagePrompt": "a night sky with a crescent moon and stars over rooftops"
   },
@@ -130,13 +130,13 @@
   },
   "הַר": {
    "pt": "montanha",
-   "image": null,
+   "image": "/media/vocabulario/montanha-a4945fb5.webp",
    "imageAlt": "Uma montanha com o pico nevado.",
    "imagePrompt": "a mountain with a snowy peak"
   },
   "נָהָר": {
    "pt": "rio",
-   "image": null,
+   "image": "/media/vocabulario/rio-65daebe1.webp",
    "imageAlt": "Um rio correndo entre margens verdes.",
    "imagePrompt": "a river flowing between green banks"
   },
