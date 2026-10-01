@@ -67,9 +67,10 @@ do pedido (recua os meses dele), como o total.
    não use o estorno da Mercado Pago: devolva por fora (PIX) e anote.
 2. Se fez o parcial e o acesso fechou sem querer: Acesso → `liberar` com os
    meses que faltavam.
-3. Juros do parcelamento: ainda não se sabe se voltam no estorno
-   (LEGAL-110). Até a compra real de teste responder, confira no painel o
-   valor efetivamente devolvido e complete por fora se faltar.
+3. Juros do parcelamento: voltam no estorno total (LEGAL-110; compra real
+   em 2x estornada em 01/10/2026, o dono conferiu que voltou tudo). Se um
+   aluno disser que faltou dinheiro, confira no painel da Mercado Pago o
+   valor devolvido e complete por fora se faltar.
 
 ## 4. Desistência por e-mail
 
