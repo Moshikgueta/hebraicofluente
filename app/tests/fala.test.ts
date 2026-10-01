@@ -7,7 +7,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { conferirFala, palavrasDe } from '@/lib/fala';
+import { conferirFala, grafiaCheiaDe, palavrasDe } from '@/lib/fala';
 
 describe('palavrasDe', () => {
   it('tira os pontos, a pontuação e a forma final', () => {
@@ -55,6 +55,14 @@ describe('conferirFala: o que não pode passar', () => {
     /* O reconhecimento escreve a PALAVRA que ouviu, e קלב não é palavra: se
        vier, é outra coisa. */
     expect(conferirFala('כֶּלֶב', ['קלב']).certo).toBe(false);
+  });
+  it('uma letra do alvo FALTANDO não passa, um ו/י a mais passa (CONT-016)', () => {
+    expect(conferirFala('עִיר', ['ער']).certo).toBe(false);
+    expect(conferirFala('עִיר', ['עיר']).certo).toBe(true);
+    expect(conferirFala('אֹמֵר', ['אומר']).certo).toBe(true);
+    expect(grafiaCheiaDe('אומר', 'אמר')).toBe(true);
+    expect(grafiaCheiaDe('אמר', 'אומר')).toBe(false);
+    expect(grafiaCheiaDe('אמרה', 'אמר')).toBe(false);
   });
   it('nada ouvido', () => {
     expect(conferirFala('שָׁלוֹם', []).certo).toBe(false);

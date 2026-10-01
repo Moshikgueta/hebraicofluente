@@ -19,6 +19,7 @@
  * não "não pode entrar". Um adulto que quer espiar o módulo 6 pode.
  */
 
+import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
@@ -267,7 +268,7 @@ function Trecho({ module: m, estado, ultimo }: {
                 const miolo = (
                   <>
                     {bloqueada && (
-                      <span aria-hidden className="absolute -top-2 -right-2 text-[13px] leading-none">🔒</span>
+                      <span aria-hidden className="absolute -top-2 -right-2 leading-none text-ink-muted bg-[var(--card)] rounded-full"><IconeCadeado size={14} /></span>
                     )}
                     <He size="inline" tone={feita ? 'teal' : estado === 'adiante' ? 'muted' : 'navy'}
                         className="!text-[23px] !leading-[1.1]">

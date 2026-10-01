@@ -17,6 +17,7 @@
  * palavra certa é trabalho das gravações.
  */
 
+import { IconeSom } from '@/components/shell/NavIcons';
 import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { textoParaVoz } from '@/lib/voz-instrucao';
 
@@ -84,7 +85,7 @@ export function OuvirInstrucao({ texto }: { texto: string }) {
             className="justify-self-start inline-flex items-center gap-2 min-h-[44px] px-3.5 rounded-[var(--r-md)]
                        border border-line bg-surface font-ui text-[14px] font-semibold text-ink-body
                        hover:bg-surface-2">
-      <span aria-hidden>{estado === 'falando' ? '❚❚' : '🔊'}</span>
+      <span aria-hidden>{estado === 'falando' ? '❚❚' : <IconeSom size={17} />}</span>
       <span>{estado === 'falando' ? 'Pausar' : estado === 'pausado' ? 'Continuar' : 'Ouvir a instrução'}</span>
     </button>
   );

@@ -13,9 +13,8 @@
  *   · a forma final e a de meio valem o mesmo (a transcrição às vezes corta);
  *   · a grafia cheia e a defectiva valem o mesmo: o curso escreve אֹמֵר com
  *     o ponto em cima, e a transcrição escreve אומר, com vav. Por isso, se a
- *     comparação exata falha, compara-se o esqueleto sem ו e י. É leniente
- *     de propósito: corrigir um aluno que falou certo é pior do que deixar
- *     passar uma vogal, e a vogal ele ouve no modelo logo ao lado.
+ *     comparação exata falha, aceita-se a palavra com ו ou י A MAIS, nunca
+ *     com uma letra a menos (`grafiaCheiaDe`).
  *
  * Sílaba solta NÃO passa por aqui: "מַ" não é palavra, e nenhum
  * reconhecimento transcreve isso de forma confiável.
@@ -37,8 +36,22 @@ export function palavrasDe(texto: string): string[] {
     .map(p => [...p].map(c => FINAL[c] ?? c).join(''));
 }
 
-/** O esqueleto: sem ו e י, as letras que a grafia cheia acrescenta. */
-const esqueleto = (p: string) => p.replace(/[וי]/g, '');
+/**
+ * A grafia cheia do alvo: a palavra ouvida tem TODAS as letras do alvo, na
+ * ordem, e o que ela tem a mais é só ו ou י - as letras que a grafia cheia
+ * acrescenta (אֹמֵר → אומר). Até 01/10/2026 comparava-se o esqueleto sem ו e
+ * י dos dois lados, e uma letra que FALTAVA também passava: o alvo עִיר
+ * aceitava a transcrição "ער", que é outra palavra (auditoria, CONT-016).
+ */
+export function grafiaCheiaDe(ouvida: string, alvo: string): boolean {
+  if (!alvo.length) return false;
+  let k = 0;
+  for (const c of ouvida) {
+    if (k < alvo.length && c === alvo[k]) k++;
+    else if (c !== 'ו' && c !== 'י') return false;
+  }
+  return k === alvo.length;
+}
 
 export type Veredito = { certo: boolean; ouvi: string };
 
@@ -66,7 +79,7 @@ export function conferirFala(alvo: string, alternativas: readonly string[]): Ver
   }
   for (const alt of alternativas) {
     const ouvidas = palavrasDe(alt);
-    if (contem(ouvidas, (a, b) => esqueleto(a) === esqueleto(b) && esqueleto(b).length > 0)) {
+    if (contem(ouvidas, (a, b) => grafiaCheiaDe(a, b))) {
       return { certo: true, ouvi: alt.trim() };
     }
   }

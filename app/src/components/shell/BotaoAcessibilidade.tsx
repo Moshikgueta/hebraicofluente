@@ -22,6 +22,7 @@
  * painel é um `dialog` rotulado. Nada aqui rouba o foco de quem não abriu.
  */
 
+import { IconeSom } from '@/components/shell/NavIcons';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import {
   PADRAO, TAMANHOS, TEMAS, aplicar, carregar, guardar, type Prefs
@@ -254,7 +255,7 @@ export function BotaoAcessibilidade() {
             />
             <Opcao
               id="a11y-voz"
-              rotulo={<><span aria-hidden>🔊 </span>Ouvir instruções em português</>}
+              rotulo={<><IconeSom size={16} className="inline -mt-0.5 mr-1.5" />Ouvir instruções em português</>}
               nota={vozDisponivel
                 ? 'Cada exercício ganha um botão que lê o enunciado em voz alta. Não lê as respostas.'
                 : 'Este navegador não tem voz para ler em português.'}

@@ -33,7 +33,9 @@ import { conteudoBruto, content } from '../../worker/src/api/content.js';
 // @ts-expect-error - idem
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
-import { createOrder, grantAccess } from '../../worker/src/lib/db.js';
+import { conteudoBaixado, createOrder, grantAccess } from '../../worker/src/lib/db.js';
+// @ts-expect-error - módulo JS do Worker, sem tipos
+import { mensagemDeArrependimentoDono } from '../../worker/src/lib/mail.js';
 import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
 
 const SITE = 'https://hebraicofluente.com.br';
@@ -303,5 +305,28 @@ describe('os diagramas de traçado', () => {
     const { account } = await r.json() as { account: { id: string } };
     await grantAccess(env, { accountId: account.id, courseSlug: 'alfabetizacao', orderId: 'TESTE', months: 12 });
     expect(await gate(new Request(`${SITE}/stroke-order/tav.svg`, { headers: { ...img.headers, cookie } }), env)).toBeNull();
+  });
+});
+
+/* ── 5. o rastro de quem baixou (auditoria de 01/10/2026, SEC-A-010) ───── */
+
+describe('o conteúdo baixado fica na trilha, uma vez por dia', () => {
+  it('dois downloads no mesmo dia viram uma linha, e a desistência informa', async () => {
+    const env = envDeTeste();
+    const { cookie, id } = await contaLogada(env);
+    await comprou(env, id);
+    expect((await content({ request: pedirConteudo(cookie), env, ctx: {} })).status).toBe(200);
+    expect((await content({ request: pedirConteudo(cookie), env, ctx: {} })).status).toBe(200);
+    const b = await conteudoBaixado(env, id, 0);
+    expect(b.dias).toBe(1);
+    expect(b.primeiro).toBeTypeOf('number');
+
+    const m = mensagemDeArrependimentoDono({
+      email: 'ana@exemplo.com', curso: 'Alfabetização', valor: 'R$ 132,30', pedido: 'HF1',
+      pedidoEm: '01/10/2026', prazoUteis: 2, pixDireto: false, marca: 'Hebraico Fluente',
+      estado: 'pedido', conteudo: { dias: 1, primeiro: '01/10/2026 10:00' }
+    });
+    expect(m.text).toContain('Conteúdo do curso aberto em 1 dia(s)');
+    expect(m.text).toContain('não muda o direito de desistir');
   });
 });

@@ -63,6 +63,13 @@ const erro = m => { console.log(`  ✗ ${m}`); falhas++; };
 const b = await chromium.launch({ executablePath: process.env.HF_CHROMIUM });
 const ctx = await b.newContext({ viewport: { width: 390, height: 1100 } });
 await ctx.addInitScript(([a, s]) => {
+  /* A prática em andamento mora no sessionStorage desde 01/10/2026 (UXQA-003):
+     sem limpar, a segunda passada retomava a primeira, com outros itens, e
+     nenhum gabarito aprendido servia. */
+  sessionStorage.clear();
+  /* E as rodadas (lib/rodadas.ts): cada rodada concluída faz a próxima ser
+     outra, de propósito. A segunda passada precisa da MESMA rodada. */
+  localStorage.removeItem('hf-rodadas-v1');
   localStorage.setItem('hf-platform-local-v1', a);
   localStorage.setItem('hebraico-fluente-v1', s);
 }, [JSON.stringify(ACC), JSON.stringify(ST)]);
@@ -204,7 +211,17 @@ async function percorre(letraId, etapa, rotulo, abrir) {
           mesmo bloco traz o mesmo item - e aí ele digita o gabarito e cobra o
           acerto. */
     if (e.temCampo) {
-      const chave = `${letraId}/${rotulo}/${e.feito}`;
+      /* A chave é a TELA do item (enunciado e hebraico, sem o contador), e
+         não a posição: um digitado errado volta depois de outros itens (a
+         prática de revisão, 30/09/2026), e pela posição o robô digitava a
+         resposta de um item no outro e acusava "certa recusada". */
+      const tela = await p.evaluate(() => {
+        const main = document.querySelector('main');
+        const h2 = main?.querySelector('h2')?.textContent?.trim() ?? '';
+        const he = [...(main?.querySelectorAll('[lang="he"]') ?? [])].map(x => x.textContent?.trim()).filter(Boolean).join(' ');
+        return `${h2}|${he}`;
+      });
+      const chave = `${letraId}/${rotulo}/${tela}`;
       const sabida = gabaritos.get(chave);
       await p.locator('main input').first().fill(sabida ?? 'x');
       await p.keyboard.press('Enter');

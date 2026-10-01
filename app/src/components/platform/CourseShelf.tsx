@@ -9,6 +9,7 @@
  * Aparece no painel e na página /cursos, com o mesmo componente, de propósito.
  */
 
+import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
@@ -101,7 +102,7 @@ function ShelfRows({ courses }: { courses: CatalogCourse[] }) {
                   </span>
                 </span>
                 <span className="font-ui text-[12px] text-ink-muted shrink-0">
-                  {state === 'owned' ? '✓' : isPlayable(c) ? '🔒' : 'em breve'}
+                  {state === 'owned' ? '✓' : isPlayable(c) ? <IconeCadeado size={14} className="inline" /> : 'em breve'}
                 </span>
               </Link>
             </li>

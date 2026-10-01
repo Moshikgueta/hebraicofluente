@@ -70,7 +70,7 @@ export default function Page() {
      'provar que você desistiu dentro do prazo do art. 49 do CDC, e fazer o estorno',
      'a data e a hora, junto com o registro da compra; o endereço IP, seis meses'],
     /* access_log: 180 dias (logPurge), com o id da conta e sem e-mail. */
-    ['Trilha de operações da conta: o que aconteceu e quando (compra, liberação, estorno, troca de senha), sem o seu e-mail',
+    ['Trilha de operações da conta: o que aconteceu e quando (compra, liberação, estorno, troca de senha, e o dia em que o conteúdo do curso foi aberto), sem o seu e-mail',
      'segurança, atendimento e prova do que foi feito na sua conta',
      'seis meses, e então é apagada - inclusive se você apagar a conta antes'],
     /* 29/09/2026: o limite de três aparelhos e a marca contra cópia

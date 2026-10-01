@@ -23,7 +23,7 @@ import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/cat
 import {
   acessosVencidos, arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar,
   estornoCriar, estornoDe, estornosDe, estornosParaVarrer, findAccountById, getOrder, grantAccess, log,
-  markPaid, ordersOf, outroPedidoPagoRecente, pedirArrependimento, pixPendente, recibosManuaisPendentes,
+  conteudoBaixado, markPaid, ordersOf, outroPedidoPagoRecente, pedirArrependimento, pixPendente, recibosManuaisPendentes,
   recordEvent, refundOrder, reservarAviso, soltarAviso, throttled, ultimoPagamentoDe, updateOrder
 } from '../lib/db.js';
 import {
@@ -606,11 +606,13 @@ async function avisarDesistencia(env, order, account, pedidoEm, estado) {
 
     const dono = String(env.SUPPORT_EMAIL || '').trim();
     if (dono) {
+      const baixado = await conteudoBaixado(env, account.id, Number(order.paid_at) || Number(order.created_at));
       await sendMail(env, {
         to: dono,
         ...mensagemDeArrependimentoDono({
           email: account.email, curso, valor, pedido: order.id, pedidoEm: quando,
-          prazoUteis, pixDireto: pixDireto(), marca, estado
+          prazoUteis, pixDireto: pixDireto(), marca, estado,
+          conteudo: { dias: baixado.dias, primeiro: baixado.primeiro ? dataHoraBR(baixado.primeiro) : null }
         })
       });
     }

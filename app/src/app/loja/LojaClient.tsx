@@ -8,6 +8,7 @@
  * maçaneta.
  */
 
+import { IconeBrilho, IconeEscudo, IconePergaminho } from '@/components/shell/NavIcons';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
@@ -71,14 +72,14 @@ export function LojaClient() {
       </header>
 
       {/* Dia de folga */}
-      <Item titulo={ITENS.folga.titulo} custo={ITENS.folga.custo} icone="🛡️" descricao={ITENS.folga.descricao}
+      <Item titulo={ITENS.folga.titulo} custo={ITENS.folga.custo} icone={<IconeEscudo size={26} />} descricao={ITENS.folga.descricao}
             detalhe={folgas ? `Você tem ${folgas} ${folgas === 1 ? 'folga guardada' : 'folgas guardadas'}.` : 'Nenhuma folga guardada.'}
             pode={livre >= ITENS.folga.custo && folgas < MAX_FOLGAS}
             porQueNao={folgas >= MAX_FOLGAS ? MOTIVO.limite : MOTIVO.saldo}
             onTrocar={() => trocar('folga', undefined, 'Folga guardada. Se faltar um dia, ela protege a sua sequência.')} />
 
       {/* Carta de cultura antecipada */}
-      <Item titulo={ITENS.carta.titulo} custo={ITENS.carta.custo} icone="📜" descricao={ITENS.carta.descricao}
+      <Item titulo={ITENS.carta.titulo} custo={ITENS.carta.custo} icone={<IconePergaminho size={26} />} descricao={ITENS.carta.descricao}
             detalhe={proxima ? <>A próxima: <strong>{proxima.titlePt}</strong> (abriria com {proxima.unlockAt} letras).</> : 'Todas as cartas já estão abertas.'}
             pode={!!proxima && livre >= ITENS.carta.custo}
             porQueNao={!proxima ? MOTIVO['sem-alvo'] : MOTIVO.saldo}
@@ -89,7 +90,7 @@ export function LojaClient() {
       {temNomeDecorado(s) && s.nomeHebraico ? (
         <NomeDecorado nomeHe={s.nomeHebraico.texto} nomePt={s.onboarding?.name ?? ''} />
       ) : (
-        <Item titulo={ITENS['nome-decorado'].titulo} custo={ITENS['nome-decorado'].custo} icone="✨"
+        <Item titulo={ITENS['nome-decorado'].titulo} custo={ITENS['nome-decorado'].custo} icone={<IconeBrilho size={26} />}
               descricao={ITENS['nome-decorado'].descricao}
               detalhe={s.nomeHebraico
                 ? <>O seu nome: <He size="word">{s.nomeHebraico.texto}</He></>
@@ -201,13 +202,13 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
 }
 
 function Item({ titulo, custo, icone, descricao, detalhe, pode, porQueNao, onTrocar, depois }: {
-  titulo: string; custo: number; icone: string; descricao: string; detalhe: React.ReactNode;
+  titulo: string; custo: number; icone: React.ReactNode; descricao: string; detalhe: React.ReactNode;
   pode: boolean; porQueNao: string; onTrocar: () => void; depois?: React.ReactNode;
 }) {
   return (
     <Card className="p-5 grid gap-3">
       <div className="flex items-start gap-3">
-        <span aria-hidden className="text-[28px] leading-none">{icone}</span>
+        <span aria-hidden className="text-[var(--accent)] leading-none mt-0.5">{icone}</span>
         <div className="grid gap-1 min-w-0 flex-1">
           <h2 className="font-display text-[18px] font-semibold m-0">{titulo}</h2>
           <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">{descricao}</p>
@@ -247,7 +248,7 @@ function NomeDecorado({ nomeHe, nomePt }: { nomeHe: string; nomePt: string }) {
   return (
     <Card className="p-5 grid gap-4">
       <div className="grid gap-1">
-        <h2 className="font-display text-[18px] font-semibold m-0">✨ Seu nome em hebraico decorado</h2>
+        <h2 className="font-display text-[18px] font-semibold m-0">Seu nome em hebraico decorado</h2>
         <p className="font-ui text-[14px] text-ink-body m-0">Já é seu. Escolha o formato e baixe quantas vezes quiser.</p>
       </div>
       <div className="flex flex-wrap gap-2" role="group" aria-label="Formato">

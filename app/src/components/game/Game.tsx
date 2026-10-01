@@ -7,6 +7,7 @@
  * dashboard; they are NOT on every lesson screen, because a counter ticking
  * during a reading exercise competes with the reading. */
 
+import { IconeChama } from '@/components/shell/NavIcons';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { Prose } from '@/components/learn/Blocks';
 import { Card } from '@/components/ui/Card';
@@ -44,7 +45,7 @@ export function StreakCard({ days, goalUnits, goalTarget }: {
   return (
     <Card tone={days > 0 ? 'ember' : 'surface'} className="p-5 grid gap-3">
       <div className="flex items-center gap-2.5">
-        <span aria-hidden className="text-[20px]">{days > 0 ? '🔥' : '○'}</span>
+        <span aria-hidden className={days > 0 ? 'text-[var(--gold-ink)]' : 'text-ink-muted'}><IconeChama size={22} /></span>
         <p className="font-display text-[19px] font-bold text-ink">
           {days === 0 ? 'Comece hoje'
             : days === 1 ? '1 dia seguido'

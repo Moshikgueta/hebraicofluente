@@ -13,6 +13,7 @@
  * motivating; "o tempo médio é 28 s" is a reason to stop.
  */
 
+import { IconeCadeado } from '@/components/shell/NavIcons';
 import { useCallback, useEffect, useMemo, useState, type FocusEvent } from 'react';
 
 /* O foco não pode escapar do jogo (auditoria de 28/09, UX-002). Responder
@@ -715,7 +716,7 @@ export function AcademiaClient() {
                     </span>
                     {fechados[jogo]
                       ? <span className="font-ui text-[13px] font-semibold text-ink-body">
-                          <span aria-hidden>🔒 </span>{fechados[jogo]}
+                          <IconeCadeado size={14} className="inline -mt-0.5 mr-1" />{fechados[jogo]}
                         </span>
                       : <GymBest modeId={jogo} />}
                   </button>
