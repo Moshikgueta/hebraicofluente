@@ -93,6 +93,49 @@ e dois dentro de uma lição, com a conta que comprou.
 
 **Pronto quando.** O curl devolve 206 e os três clipes tocam no iPhone.
 
+### 1c. Web Analytics da Cloudflare: desligar na zona (auditoria de 28/09, LEGAL-001; reconferido em 01/10/2026)
+
+**O que é.** A Política de Privacidade (art. 4) diz que o site não usa
+"script de terceiros para medir audiência". No repositório isso é verdade:
+nenhum arquivo carrega `static.cloudflareinsights.com` nem o beacon do
+Cloudflare Web Analytics (procurado em 01/10/2026; o único `sendBeacon` do
+código é o envio das estatísticas do curso para o próprio site). Mas a
+auditoria de 28/09 viu a ZONA injetar esse beacon nas páginas, e quem liga
+isso é uma chave no painel da Cloudflare, não o código. Hoje a CSP do site
+(`script-src 'self'`) bloqueia o script, então ele não coleta nada; no dia
+em que a CSP mudar, a frase da Política fica falsa.
+
+**O que fazer (é com você, no painel; daqui não há acesso).**
+1. dash.cloudflare.com → a conta → **Analytics & Logs → Web Analytics**.
+2. Se `hebraicofluente.com.br` aparecer na lista, abra-o e desligue a
+   medição (Disable, ou "Manage site" → desligar a instalação automática).
+   Se ele não aparecer, nada a fazer aqui.
+3. Confira também em Websites → `hebraicofluente.com.br` → **Speed →
+   Observatory / RUM** (o nome muda de tempos em tempos): o "Real User
+   Monitoring" deve estar desligado.
+4. Prova: abra a capa numa janela anônima, F12 → aba Rede, recarregue e
+   procure `cloudflareinsights`. Não pode aparecer nenhum pedido.
+
+**Se você quiser MANTER a medição.** Aí a Política precisa dizer isso. O
+texto para trocar a última frase do segundo parágrafo do art. 4 (no código,
+`app/src/app/privacidade/page.tsx`; me peça e eu troco, junto com a CSP, que
+hoje bloqueia o script):
+
+> Não usamos cookies de publicidade nem rede de anúncio. Para medir o
+> desempenho e o número de visitas das páginas, usamos o Cloudflare Web
+> Analytics, da Cloudflare, Inc., o mesmo fornecedor que hospeda o site: ele
+> não usa cookie nem guarda dado que identifique você, e conta as visitas de
+> forma agregada (página, país, navegador e tempo de carregamento). A
+> Cloudflare trata esses dados fora do Brasil, nas mesmas condições
+> descritas no item sobre transferência internacional.
+
+A frase sobre "fora do Brasil" deve conferir com o item de transferência
+internacional da própria Política; vale passar pelo advogado junto com o
+resto.
+
+**Pronto quando.** O passo 4 não mostra nenhum `cloudflareinsights`, ou a
+Política foi trocada pelo texto acima (e a CSP liberada para o script).
+
 ### 2. Fechar o que os logs públicos já mostraram - FEITO em 20/09/2026
 
 **As catorze execuções foram apagadas** (a execução inteira, não só o arquivo

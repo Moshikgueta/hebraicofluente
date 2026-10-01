@@ -955,3 +955,24 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   `ok`, `avisa` (10 dias ou menos) ou `vencido`; `check-legal.mjs` carrega uma cópia entre os
   marcadores `inicio/fim estadoDoPreLancamento`, avisa perto do fim e FALHA com a data vencida.
   A regra de preço não muda sozinha: a decisão de 01/11 é do dono (PAY-B-001).
+
+## Fase 1 de segurança da auditoria de 01/10/2026 (SEC-A-002/003/005/007/008/009, PERF-007)
+- **Freio de erro reserva antes de verificar** (`reservarVaga` em lib/db.js): o login toma a vaga
+  dos três tetos de erro com a escrita atômica antes do PBKDF2 e quem acerta a devolve. O código
+  do administrador gasta a tentativa num UPDATE condicional antes de comparar. Ler o contador e
+  gastar depois deixava 40 tentativas paralelas serem todas avaliadas.
+- **Nome do cadastro** passa por `nomeSeguro` (lib/nome.js) no cadastro e em todo "Oi, <nome>."
+  dos e-mails; a confirmação de e-mail nunca leva o nome, e a senha nova só com o e-mail confirmado.
+- **/api/health público = `{ok, monitor}`**; os detalhes com `Authorization: Bearer <ADMIN_TOKEN>`
+  (a publicação gera um novo a cada vez e o entrega ao e2e em `HF_ADMIN_TOKEN`) ou com sessão de
+  administrador com o segundo fator.
+- **Alerta diário de saúde** (`alertaDeSaude`): carimbo `backup` em `batimentos` (gravado por
+  scripts/backup-nuvem.sh) com mais de 36 h, ou 10+ respostas 5xx em 24 h (`respostas_5xx`, uma linha
+  por hora, contada em worker.js). Monitor externo: INCIDENTES.md, "Monitor externo" (ação do dono).
+- **Estatísticas só de aluno**; A/B com teto diário por endereço (HMAC do IP) e `compra` só com
+  pedido pago da própria sessão, uma vez por pedido (`ab_compras`).
+- **wrangler pelo lockfile da raiz** (`npm ci --ignore-scripts` + node_modules/.bin/wrangler) e
+  actions fixadas por SHA. Subir o wrangler = editar package.json, o lockfile e o fallback
+  `wrangler@4.135.0` dos scripts juntos.
+- **/api/me sem sessão**: 200 `{signedIn:false}` só com `X-HF-Sessao: opcional` (o app manda); sem o
+  cabeçalho, 401 (pacote antigo numa aba aberta). O progresso não chama /api/progress sem sessão.
