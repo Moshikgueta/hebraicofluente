@@ -38,7 +38,7 @@ export function AccessNotice() {
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
           Depois disso as aulas do {flagship().titlePt} fecham. Seu progresso
-          continua guardado neste aparelho e volta assim que você renovar.
+          continua guardado na sua conta e volta inteiro assim que você renovar.
         </p>
       </div>
       <LinkButton href={`/checkout/${FLAGSHIP}`} className="justify-self-start sm:justify-self-end">

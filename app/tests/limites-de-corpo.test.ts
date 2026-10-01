@@ -3,10 +3,7 @@
  * sem Content-Length. */
 
 import { describe, expect, it } from 'vitest';
-import { envDeTeste } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
-import * as ab from '../../worker/src/api/ab.js';
-// @ts-expect-error - idem
 import { readBytes } from '../../worker/src/lib/http.js';
 
 /** Um corpo em pedaços, sem Content-Length, que conta quanto foi lido. */
@@ -34,14 +31,4 @@ describe('tetos de tamanho', () => {
     expect(Array.from(await readBytes(r, 10))).toEqual([1, 2, 3]);
   });
 
-  it('o registro do teste A/B recusa corpo de mais de 1 KB', async () => {
-    const env = envDeTeste();
-    const grande = JSON.stringify({ exp: 'x', v: 'a', evento: 'visto', lixo: 'a'.repeat(4000) });
-    const r = await ab.registrar({
-      request: new Request('https://hebraicofluente.com.br/api/ab', {
-        method: 'POST', headers: { 'content-type': 'application/json' }, body: grande
-      }), env
-    });
-    expect(r.status).toBe(400);
-  });
 });

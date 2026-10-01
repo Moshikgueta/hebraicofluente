@@ -276,10 +276,9 @@ export default function Page() {
           script de terceiros para medir audiência.
         </p>
         <p>
-          Para decidir qual versão da página inicial funciona melhor, o navegador guarda
-          qual das duas versões você viu, e o nosso servidor soma apenas totais por dia:
-          quantas pessoas viram cada versão, clicaram no botão, chegaram ao pagamento e
-          compraram. Esses totais não têm nome, e-mail, conta nem endereço de IP.
+          Entre 28/09 e 01/10/2026 testamos duas versões da página inicial. O teste acabou:
+          o navegador não guarda mais qual versão você viu, e o que ficou no servidor são só
+          totais por dia, sem nome, e-mail, conta nem endereço de IP.
         </p>
         {/* 30/09/2026: worker/src/api/estatisticas.js. */}
         <p>

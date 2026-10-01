@@ -6,7 +6,7 @@ import type { Rodadas } from '@/lib/rodadas';
 export type DailyGoalMinutes = 5 | 10 | 15 | 20;
 
 export type Onboarding = {
-  reason: 'viagem' | 'familia' | 'morar' | 'idiomas' | 'trabalho' | 'outro';
+  reason: 'viagem' | 'familia' | 'morar' | 'biblia' | 'idiomas' | 'trabalho' | 'outro';
   goalMinutes: DailyGoalMinutes;
   startingPoint: 'zero' | 'algumas-letras' | 'leio-um-pouco';
   name?: string;
