@@ -760,6 +760,14 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - A privacidade (art. 4) descreve o teste.
 - **Para encerrar:** fixar a versão vencedora no Hero, apagar `lib/ab.ts`, as
   chamadas `contarAB`, a rota `/api/ab` e o workflow; a tabela pode ficar.
+- **Encerrado em 01/10/2026 (auditoria CONV-009), por clareza:** com o volume do
+  pré-lançamento o teste não chegaria a significância antes de 31/10. Ficou a A
+  ("Ler e escrever hebraico, do zero."), única no Hero; a B saiu. O botão passou a
+  dizer o que vem: "Começar o curso · R$ 147" (preço de `lib/vitrine.ts`, o mesmo da
+  caixa de preço). `contarAB` virou função vazia e o Hero não sorteia mais. Falta o
+  resto do desmonte, fora da frente da capa: as chamadas em CheckoutClient e
+  ObrigadoClient, `lib/ab.ts`, `worker/src/api/ab.js`, o workflow do relatório e a
+  menção ao teste no art. 4 da Privacidade. `ab_contagens` fica com os números.
 
 ## Módulo 5: cada lado na sua lição, contraste na lição 20 (29/09/2026, pedido do dono)
 - Bet, Kaf e Pe ensinam só o lado COM o ponto: `soOLadoDoPonto` (lib/sons.ts) tira da tela
@@ -955,3 +963,37 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   `ok`, `avisa` (10 dias ou menos) ou `vencido`; `check-legal.mjs` carrega uma cópia entre os
   marcadores `inicio/fim estadoDoPreLancamento`, avisa perto do fim e FALHA com a data vencida.
   A regra de preço não muda sozinha: a decisão de 01/11 é do dono (PAY-B-001).
+
+## Capa, /sobre, /metodo, /biblia e SEO: fase 1 da auditoria de 01/10/2026
+- **Ordem das letras (CONV-004):** só como do método do Damián, pela frase de
+  `lib/credito.ts`. `app/promessas.mjs` reprova "sequência/ordem das letras" em string
+  de `app/src` ou `data/` (fora de credito.ts e das notas `_`/`note`) e qualquer frase
+  publicada sobre a ordem que não diga "vem do método".
+- **Credencial:** "CELTA · Letras em andamento" na capa; "CELTA e Letras em andamento"
+  em /sobre (Letras - Inglês, UNINTER, em curso).
+- **/biblia:** "letra N das 22 (lição M das 27)", com M de `licaoDaLetra` (content-publico)
+  e 27 de `totalLicoes()`. `numeros.mjs` confere "letra/lição N das M" e o par letra→lição.
+- **O método numa lista só (CONV-010):** `lib/etapas-da-licao.ts` = as abas da lição
+  (Conhecer, Palavras, Escrever, Praticar, Fixação). A capa (`PASSOS`) e /metodo leem
+  dela; `tests/etapas.test.ts` confere contra `STAGES` do LessonClient.
+- **Caixa de preço:** a lista "inclui" é concreta (Aula 0, N lições, cursiva, áudio do
+  professor se houver manifesto, jogos da Academia, exame final e certificado não oficial).
+- **SEO:** JSON-LD da capa (`lib/jsonld.ts`: Organization com CNPJ, Course com o preço de
+  `lib/vitrine.ts` e `priceValidUntil` = `preLancamentoAte`, FAQPage das perguntas de
+  `components/landing/faq-capa.ts`, Person só com o que /sobre afirma); `checa-seo.mjs`
+  confere tudo isso e a description da capa (até 155). Ícones: `app/src/app/apple-icon.png`
+  (link do Next), `app/public/apple-touch-icon.png` e `app/public/favicon.ico` (PNG 32 em
+  ICO), renderizados do `icon.svg` com a Noto Serif Hebrew no Chromium. O 404 tem título
+  próprio; /cursos tem h1.
+- **Worker:** o 307 da barra final vem do servidor de ativos (auto-trailing-slash); `permanente`
+  em worker.js troca por 308 com o mesmo destino. `.txt` (payload RSC) sai com
+  `X-Robots-Tag: noindex`, menos robots.txt e llms.txt. `tests/barra-e-txt.test.ts`.
+- **Sem JavaScript (UXQA-001):** saiu o `app/src/app/loading.tsx` da raiz (o conteúdo ia
+  para um `div hidden` do streaming). As rotas pagas já têm esqueleto próprio (CourseGate).
+  `@media (scripting: none)` em globals.css mostra `.reveal` e a entrada do hero
+  (`data-entrada`).
+- **Botão de acessibilidade (VIS-016, UXQA-014, CONV-021):** `useDesvio` em
+  BotaoAcessibilidade sai de cima do que está marcado com `data-a11y-desvia` (mockup do
+  hero, formas de pagamento do checkout), do `#teclado-hebraico` e de tudo que é
+  `position: fixed` (folha de retorno): sobe acima, ou vai para a esquerda, ou fica. O
+  aviso de conquista vai para o alto quando o teclado da tela está aberto.

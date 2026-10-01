@@ -308,7 +308,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             )}
           </p>
         ) : (
-          <fieldset className="grid gap-3" disabled={order?.status === 'pending'}>
+          <fieldset className="grid gap-3" disabled={order?.status === 'pending'} data-a11y-desvia>
             <legend className="sr-only">Forma de pagamento</legend>
 
             <MethodOption

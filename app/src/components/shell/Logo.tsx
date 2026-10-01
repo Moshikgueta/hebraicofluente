@@ -20,7 +20,7 @@ import { He } from '@/components/hebrew/He';
  */
 export function Logo({ size = 34, words = true }: { size?: number; words?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-2.5 shrink-0">
+    <span className="inline-flex items-center gap-2.5 min-w-0">
       <span
         aria-hidden
         className="grid place-items-center rounded-[10px] bg-[var(--navy)] shrink-0"
@@ -38,8 +38,11 @@ export function Logo({ size = 34, words = true }: { size?: number; words?: boole
         /* 15px no telefone: a 18px o nome sozinho come 150 dos 358 pixels
            úteis de um aparelho de 390, e empurra o botão de comprar para
            fora da tela. */
+        /* `truncate`: se mesmo assim faltar espaço, o nome encurta com
+           reticências em vez de passar por baixo do que vem ao lado
+           (auditoria de 01/10, VIS-003). */
         <span className="font-display font-semibold text-[15px] sm:text-[18px]
-                         tracking-[-0.02em] text-ink whitespace-nowrap">
+                         tracking-[-0.02em] text-ink whitespace-nowrap truncate min-w-0">
           Hebraico Fluente
         </span>
       )}
