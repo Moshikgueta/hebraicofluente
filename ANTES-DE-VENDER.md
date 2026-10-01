@@ -531,7 +531,12 @@ depoimento ou vários; não precisou mudar.
 **Pronto quando.** A autorização está guardada e a dúvida das imagens,
 resolvida.
 
-### 11. Textos para você aprovar (auditoria de 01/10/2026)
+### 11. Textos para você aprovar (auditoria de 01/10/2026) - APROVADOS em 01/10/2026
+
+**O dono aprovou todos os textos novos dos PRs #87 a #118** (97 itens, lista
+entregue na conversa de 01/10/2026: capa, FAQ, checkout, curso, conta,
+atendimento, textos legais, e-mails e descrições das imagens). Os textos
+legais seguem para o advogado mesmo aprovados.
 
 Estão no ar e foram escritos por mim; troque se não concordar:
 
