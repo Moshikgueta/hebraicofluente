@@ -494,7 +494,9 @@ o aluno escreveu, e todo corte aparece marcado.
 
 **Confirmado pelo dono em 01/10/2026:** nome e cidade (Búzios, Rio de
 Janeiro) conferem com o que está na capa. O nome completo fica com o dono,
-fora do repositório; a capa mostra só o primeiro nome.
+fora do repositório; a capa mostra só o primeiro nome. **A autorização por
+escrito dela está guardada com o dono** (confirmado em 01/10/2026): o passo 1
+abaixo está feito.
 
 **O que é seu.**
 1. **Autorização por escrito**, guardada FORA do repositório: nome, cidade,
