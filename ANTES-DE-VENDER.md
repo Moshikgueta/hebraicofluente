@@ -17,7 +17,7 @@ fechado, testado (378 testes) e no ar.
 
 ## Bloco 1 - sem isto não dá para vender
 
-### 1. Despublicar a cópia do GitHub Pages - PELO JEITO JÁ FOI
+### 1. Despublicar a cópia do GitHub Pages - FEITO em 01/10/2026 (o dono conferiu: 404)
 
 Em 20/09/2026 a API do GitHub passou a responder `has_pages: false` para este
 repositório, e a última publicação bem-sucedida no Pages foi em 19/09 às

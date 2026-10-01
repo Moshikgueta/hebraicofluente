@@ -254,6 +254,6 @@ ANTES-DE-VENDER.md, item 9.
 | Resend: resend.com → Support | e-mail |
 | GitHub: github.com/contact | repositório, Actions |
 | ANPD: gov.br/anpd | comunicação de incidente |
-| Monitor externo (UptimeRobot) | (preencher: conta usada e data do teste do alerta) |
+| Monitor externo (UptimeRobot) | conta do e-mail de atendimento; dois monitores (capa e /api/health com `"monitor":true`); alerta testado e recebido em 01/10/2026 |
 | Advogado | (preencher) |
 | Contador | (preencher) |
