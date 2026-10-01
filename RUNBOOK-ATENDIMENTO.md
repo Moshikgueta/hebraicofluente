@@ -156,3 +156,33 @@ diferentes das de `data/empresa.json`), a cópia fixa só existe naquela
 publicação. Para guardá-la: ponha em `pagamento.formas` as mesmas formas que
 a publicação usou, rode `npm run build:platform`, faça commit do arquivo novo
 em `data/politicas-versoes/` e volte `pagamento.formas` ao que era.
+
+## Cópia do backup no Google Drive (01/10/2026)
+
+Todo dia, o backup do banco vai também para a pasta `hebraico-fluente-backups`
+do Google Drive, CIFRADO (só abre com a senha). Guarda 90 dias.
+
+**Ligar (uma vez):**
+1. No computador, instale o rclone: https://rclone.org/downloads/ (Windows:
+   baixe o .zip, extraia, abra o Prompt de Comando na pasta).
+2. Rode `rclone authorize "drive"`. O navegador abre: entre com a conta Google
+   do Drive e permita. O Prompt mostra um texto entre chaves `{...}`: copie
+   tudo, das chaves de fora.
+3. GitHub → o repositório → Settings → Secrets and variables → Actions →
+   New repository secret:
+   - `RCLONE_DRIVE_TOKEN` = o texto `{...}` do passo 2;
+   - `BACKUP_SENHA` = uma senha longa e só para isto. **Guarde-a também fora
+     do GitHub** (gerenciador de senhas ou papel no cofre): sem ela, as cópias
+     do Drive não abrem nunca.
+4. Actions → Backup do banco → Run workflow → copiar. O resumo deve dizer
+   "Cópia cifrada no Google Drive", e o arquivo `.sql.gz.enc` aparece no Drive.
+
+**Restaurar do Drive** (só se a Cloudflare inteira for perdida): baixe o
+`.sql.gz.enc` e rode
+`openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -in ARQ.sql.gz.enc -out ARQ.sql.gz`
+(pede a BACKUP_SENHA), depois `gunzip ARQ.sql.gz` e
+`npx wrangler d1 execute hebraico-fluente --remote --file=ARQ.sql` num banco novo.
+
+**Se o e-mail "backup diário FALHOU" disser que o Drive recusou:** o token
+venceu (acontece se a senha do Google mudar). Repita os passos 2 e 3 só para o
+`RCLONE_DRIVE_TOKEN`.

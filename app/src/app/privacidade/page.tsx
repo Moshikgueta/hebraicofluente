@@ -182,8 +182,9 @@ export default function Page() {
             até expirar - dizer isso é o que a auditoria pediu (LEGAL-007). */}
         <p>
           <strong>Cópias de segurança.</strong> Uma vez por dia fazemos uma cópia do
-          banco de dados, guardada de forma privada na Cloudflare, para recuperar o
-          serviço se algo der errado. Cada cópia é apagada automaticamente depois de{' '}
+          banco de dados, guardada de forma privada na Cloudflare e, cifrada (ilegível
+          sem a nossa senha), também no Google Drive, para recuperar o serviço se algo
+          der errado. Cada cópia é apagada automaticamente depois de{' '}
           <strong>90 dias</strong>. Se você apagar a conta, os seus dados saem do
           sistema na hora e das cópias quando elas expiram; enquanto isso, as cópias só
           são usadas para restaurar o serviço, nunca para outro fim.
@@ -241,7 +242,7 @@ export default function Page() {
              senha. Omiti-la deixava a política descrevendo menos
              compartilhamento do que o sistema faz. */
           <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha, confirmação da compra e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o nome da sua conta</strong>. E-mail de propaganda, só um: o aviso de que o próximo curso abriu, e só para quem marcou esse pedido em Sua conta. Cada um desses e-mails traz o link para sair da lista.</>,
-          <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site, o banco de dados e as cópias de segurança.</>,
+          <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site, o banco de dados e as cópias de segurança. Uma segunda cópia de segurança, cifrada, fica no Google Drive; o Google guarda o arquivo, mas não consegue lê-lo.</>,
           /* 28/09/2026 (auditoria, LEGAL-003): o GitHub e o atendimento
              estavam fora da lista, e os dois recebem dado pessoal. */
           <><strong>GitHub</strong>: guarda o código do site e as ferramentas de operação. Quando consultamos ou mudamos o acesso de uma conta (por exemplo, para liberar um curso ou corrigir um e-mail), a operação roda lá, e o registro dela mostra o e-mail parcialmente escondido.</>,

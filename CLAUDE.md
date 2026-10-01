@@ -1097,3 +1097,13 @@ pela Resend, os assuntos de desistência/reembolso. Não responde a robôs,
 listas, ao próprio domínio, nem ao mesmo remetente mais de uma vez por hora.
 Encaminhar vem primeiro e falha alto (a Cloudflare devolve ao remetente).
 O "Enviar modelo" do Gmail não serve para isto: responde ao envelope SRS.
+
+## Backup também no Google Drive, cifrado (01/10/2026)
+`copiar_drive` em scripts/backup-nuvem.sh, depois do R2 e do carimbo: cifra o
+.sql.gz com `openssl enc -aes-256-cbc -pbkdf2 -iter 600000` (senha no segredo
+BACKUP_SENHA), prova que decifra igual, envia com rclone (segredo
+RCLONE_DRIVE_TOKEN, remote por variáveis de ambiente) para
+`hebraico-fluente-backups/` e apaga as de mais de 90 dias. Sem os dois segredos
+o passo só avisa no resumo. Nunca em claro fora da Cloudflare. Prova local:
+`bash scripts/backup-nuvem.sh provar-cifra`. Ligar e restaurar:
+RUNBOOK-ATENDIMENTO.md. A Política de Privacidade cita a cópia cifrada no Drive.
