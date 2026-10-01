@@ -521,8 +521,9 @@ abaixo está feito.
    para você mesmo, a que imagens ela se refere: o curso tem os diagramas de
    traçado das letras; se ela pensava em outra coisa, combine com ela um
    corte marcado ou um texto novo.
-3. Se ela teve acesso gratuito ou foi aluna particular, isso precisa ser dito
-   junto do depoimento (pergunta para o advogado).
+3. ~~Se ela teve acesso gratuito ou foi aluna particular~~ **Respondido
+   (01/10/2026): aluna particular.** O cartão do depoimento diz "aluna
+   particular do professor". O advogado confirma se basta (item 16).
 
 O título da seção na capa é "Quem já está lendo.", que serve para um
 depoimento ou vários; não precisou mudar.

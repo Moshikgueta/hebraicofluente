@@ -40,7 +40,10 @@ export const DEPOIMENTOS: readonly Depoimento[] = [
      (ANTES-DE-VENDER.md). */
   {
     nome: 'Natália',
-    contexto: 'Búzios, Rio de Janeiro',
+    /* Ela é aluna particular do professor (dono, 01/10/2026). O vínculo vai
+       junto do depoimento, à vista: quem lê precisa saber que ela não é uma
+       compradora qualquer (CONAR; PARA-O-ADVOGADO.md, item 16). */
+    contexto: 'Búzios, Rio de Janeiro · aluna particular do professor',
     /* Confirmado com a aluna pelo dono do curso (25/09/2026). Fica como
        etiqueta, fora das aspas: a citação é só o que ela escreveu. */
     resultado: 'Lê e escreve em hebraico',
