@@ -178,8 +178,8 @@
   },
   "מִטְרִיָּה": {
    "pt": "guarda-chuva",
-   "image": null,
-   "imageAlt": "Um guarda-chuva aberto sob gotas de chuva.",
+   "image": "/media/vocabulario/guarda-chuva-f232dd1a.webp",
+   "imageAlt": "Um guarda-chuva verde, fechado, de cabo curvo.",
    "imagePrompt": "an open umbrella under falling raindrops"
   },
   "סוּס": {
@@ -226,8 +226,8 @@
   },
   "קָפֶה": {
    "pt": "café",
-   "image": null,
-   "imageAlt": "Uma xícara de café com fumaça.",
+   "image": "/media/vocabulario/cafe-003d8179.webp",
+   "imageAlt": "Uma xícara de café preto sobre o pires.",
    "imagePrompt": "a steaming cup of coffee"
   },
   "אַבָּא": {
@@ -262,7 +262,7 @@
   },
   "כַּדּוּר": {
    "pt": "bola",
-   "image": null,
+   "image": "/media/vocabulario/bola-048e7acc.webp",
    "imageAlt": "Uma bola de futebol.",
    "imagePrompt": "a football (soccer ball)"
   },
