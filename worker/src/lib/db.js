@@ -822,6 +822,12 @@ export function enxuto(raw) {
  * digitando errado três vezes.
  */
 export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
+  return (await contar(env, key, limit, janelaMs)).negado;
+}
+
+/* O miolo de `throttled` e de `reservarVaga`: devolve, além do veredicto, se
+   a chamada GRAVOU (só quem gravou tem uma vaga para devolver). */
+async function contar(env, key, limit, janelaMs) {
   /* `window_at` é o INÍCIO da janela, em milissegundos - a mesma escala para
      toda janela, de um minuto ou de uma hora. Já foi um índice
      (`floor(now / janela)`), e aí a limpeza feita por uma chave de um minuto
@@ -844,7 +850,7 @@ export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
   const antes = await env.DB.prepare(
     'SELECT hits FROM throttle WHERE key = ? AND window_at = ?'
   ).bind(k, window_at).first();
-  if (antes && antes.hits >= limit) return true;
+  if (antes && antes.hits >= limit) return { negado: true, gravou: false, k, window_at };
 
   /* Um comando só, e o SQLite devolve o valor DEPOIS do incremento: duas
      requisições simultâneas recebem números diferentes, e só as `limit`
@@ -871,7 +877,50 @@ export async function throttled(env, key, limit = 10, janelaMs = 60_000) {
     await env.DB.prepare('DELETE FROM throttle WHERE window_at < ?')
       .bind(now() - FAXINA_MS).run();
   }
-  return hits > limit;
+  return { negado: hits > limit, gravou: true, k, window_at };
+}
+
+/**
+ * Reserva uma vaga no freio ANTES de fazer a coisa cara, e devolve a vaga
+ * se ela não precisar contar.
+ *
+ * É o freio do login (auditoria de 01/10/2026, SEC-A-002). O teto de ERROS
+ * só deveria gastar quando a senha erra, e a primeira versão fazia isso com
+ * uma leitura (`estourou`) antes e o gasto depois da verificação. Só que a
+ * verificação leva milissegundos de PBKDF2, e quarenta tentativas em
+ * paralelo liam "abaixo do teto" quarenta vezes: todas eram avaliadas, e o
+ * teto de 5 por minuto virava o que a rajada coubesse. Aqui a vaga é tomada
+ * pela escrita atômica de `throttled` (só as `limit` primeiras passam,
+ * inclusive em paralelo) e quem ACERTOU a senha a devolve, para que o teto
+ * continue contando só as falhas: um estranho errando não tranca a dona.
+ *
+ * `devolver` nunca lança e só existe de verdade quando a chamada gravou.
+ * Devolver a última vaga apaga a linha, para que acertar a senha não deixe
+ * rastro no freio.
+ */
+export async function reservarVaga(env, key, limit = 10, janelaMs = 60_000) {
+  const r = await contar(env, key, limit, janelaMs);
+  let devolvida = !r.gravou;
+  const devolver = async () => {
+    if (devolvida) return;
+    devolvida = true;
+    try {
+      /* `hits <= 1` com a minha vaga ainda contada quer dizer que a única
+         vaga da linha é a minha. Senão, desconta um. */
+      const apagou = await env.DB.prepare(
+        'DELETE FROM throttle WHERE key = ? AND window_at = ? AND hits <= 1'
+      ).bind(r.k, r.window_at).run();
+      if (!apagou?.meta?.changes) {
+        await env.DB.prepare(
+          'UPDATE throttle SET hits = hits - 1 WHERE key = ? AND window_at = ? AND hits > 0'
+        ).bind(r.k, r.window_at).run();
+      }
+    } catch {
+      /* Uma vaga não devolvida é um erro a mais na conta de quem acertou;
+         nunca derruba o login. */
+    }
+  };
+  return { negado: r.negado, devolver };
 }
 
 /**

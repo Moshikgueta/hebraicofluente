@@ -86,6 +86,22 @@ describe('o segundo fator do administrador', () => {
     expect(await r.json()).toEqual({ error: 'codigo-vencido' });
   });
 
+  /* SEC-A-002 (auditoria de 01/10/2026): ler as tentativas, comparar e só
+     depois somar deixava uma rajada em paralelo ser avaliada inteira. */
+  it('quarenta palpites em paralelo: só cinco são avaliados', async () => {
+    const env = novoEnv();
+    const dono = await conta(env, DONO);
+    await chamar(env, 'POST', '/api/admin/codigo', dono);
+    const certo = codigoDoEmail();
+    const palpites = Array.from({ length: 40 }, (_, i) => String((Number(certo) + 1 + i) % 1_000_000).padStart(6, '0'));
+    const respostas = await Promise.all(palpites.map(async c =>
+      ((await (await chamar(env, 'POST', '/api/admin/codigo/conferir', dono, { codigo: c })).json()) as { error: string }).error));
+    expect(respostas.filter(e => e === 'codigo-invalido')).toHaveLength(5);
+    expect(respostas.filter(e => e === 'codigo-vencido')).toHaveLength(35);
+    expect(await (await chamar(env, 'POST', '/api/admin/codigo/conferir', dono, { codigo: certo })).json())
+      .toEqual({ error: 'codigo-vencido' });
+  });
+
   it('código vencido não abre', async () => {
     const env = novoEnv();
     const dono = await conta(env, DONO);

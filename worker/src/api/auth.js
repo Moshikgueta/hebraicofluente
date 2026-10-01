@@ -36,7 +36,7 @@ import {
 import {
   activeEntitlements, bumpSessionVersion, novidadesQuer, changePassword, createAccount, deleteAccount,
   emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
-  normalizeEmail, registrarAcesso, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
+  normalizeEmail, registrarAcesso, reservarVaga, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
   ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset, ultimoBatimento
 } from '../lib/db.js';
 
@@ -420,39 +420,62 @@ export async function login({ request, env, ctx }) {
   /* O freio por IP antes de ler o corpo, como no cadastro: quem já estourou
      não ganha nem a leitura. */
   const origem = ip(request);
-  /* Vinte ERROS por hora por endereço. Conta só as falhas, e é só uma
-     leitura aqui - o gasto é lá embaixo, quando a senha erra. Quem acerta
-     não chega perto; quem tenta senhas ou e-mails ao acaso para na vigésima. */
+  /* Vinte ERROS por hora por endereço, e sessenta tentativas por hora,
+     certas ou erradas. Sem o segundo, entrar e sair em laço com a própria
+     senha escrevia cinco linhas por volta sem nunca errar; quem tenta senhas
+     para antes, no teto de erros, que é mais apertado.
+
+     A primeira linha só LÊ, para poupar a escrita de quem já estourou (um
+     freio que grava a cada tentativa barrada é o próprio amplificador). Ela
+     pode negar, nunca autorizar: quem autoriza é a reserva atômica mais
+     abaixo (SEC-A-002, auditoria de 01/10/2026). */
   if (await estourou(env, `login-falhas-h:${origem}`, 20, HORA)) return fail('rate-limited-hora', 429);
-  /* E sessenta tentativas por hora, certas ou erradas. Sem este, entrar e
-     sair em laço com a própria senha escrevia cinco linhas por volta sem
-     nunca errar. Substitui os vinte por minuto: quem tenta senhas já para
-     no teto de erros acima, que é mais apertado. */
   if (await throttled(env, `login-h:${origem}`, 60, HORA)) return fail('rate-limited-hora', 429);
 
+  /* Os freios de ERRO, e o que cada um conta importa.
+     · por IP: 20 erros por hora - uma máquina tentando senhas.
+     · por e-mail E IP: 5 erros por minuto - a mesma máquina contra uma
+       conta específica.
+     · por e-mail, de qualquer lugar: 30 erros por minuto - o teto para quem
+       troca de endereço a cada tentativa.
+     Cada um RESERVA a vaga antes de verificar a senha (`reservarVaga`: a
+     escrita atômica decide, então quarenta tentativas em paralelo não são
+     quarenta avaliações - antes eram, e o teto de 5 por minuto não existia
+     para uma rajada). Quem acerta a senha DEVOLVE as vagas: o teto continua
+     contando só as falhas. Uma versão anterior contava tudo, com teto de 8, e nove
+     pedidos por minuto de um estranho trancavam a dona da conta para fora com
+     a senha certa na mão. Agora o estranho tranca a si mesmo. */
+  const vagas = [];
+  const devolverVagas = () => Promise.all(vagas.map(v => v.devolver()));
+  const reservar = async (chave, teto, janela) => {
+    const v = await reservarVaga(env, chave, teto, janela);
+    vagas.push(v);
+    return !v.negado;
+  };
+
+  if (!await reservar(`login-falhas-h:${origem}`, 20, HORA)) {
+    await devolverVagas();
+    return fail('rate-limited-hora', 429);
+  }
+
   const body = await readJson(request);
-  if (!body) return fail('server');
+  if (!body) {
+    await devolverVagas();
+    return fail('server');
+  }
 
   if (typeof body.email !== 'string' || typeof body.password !== 'string') {
+    /* Não chegou a tentar senha nenhuma: não conta como erro. */
+    await devolverVagas();
     return fail('bad-credentials', 401);
   }
   const email = normalizeEmail(body.email);
   const password = body.password;
 
-  /* Os freios, e o que cada um conta importa.
-     · por IP: 20 ERROS por hora e 60 tentativas por hora (acima) - uma
-       máquina tentando senhas, ou gastando a cota de escrita.
-     · por e-mail E IP: só as que ERRAM, 5 por minuto - a mesma máquina
-       contra uma conta específica.
-     · por e-mail, de qualquer lugar: só as que ERRAM, 30 por minuto - o
-       teto para quem troca de endereço a cada tentativa.
-     Os dois de e-mail são LIDOS aqui e GASTOS lá embaixo, na falha. Antes
-     contavam tudo, com teto de 8: nove pedidos por minuto de um estranho,
-     com qualquer senha, trancavam a dona da conta para fora com a senha certa
-     na mão. Agora o estranho tranca a si mesmo, e precisa de trinta erros por
-     minuto de trinta endereços para encostar na dona. */
-  if (await estourou(env, `login:${email}:${origem}`, 5)) return fail('rate-limited', 429);
-  if (await estourou(env, `login:${email}`, 30)) return fail('rate-limited', 429);
+  if (!await reservar(`login:${email}:${origem}`, 5) || !await reservar(`login:${email}`, 30)) {
+    await devolverVagas();
+    return fail('rate-limited', 429);
+  }
 
   const account = await findAccountByEmail(env, email);
   const ok = account
@@ -460,9 +483,7 @@ export async function login({ request, env, ctx }) {
     : await fakeVerify(password, itersFor(env));
 
   if (!account || !ok) {
-    await throttled(env, `login-falhas-h:${origem}`, 20, HORA);
-    await throttled(env, `login:${email}:${origem}`, 5);
-    await throttled(env, `login:${email}`, 30);
+    /* As vagas reservadas ficam: este é o erro que elas contam. */
     /* Na trilha, só a falha contra uma conta que EXISTE - essa é a que diz
        alguma coisa ("alguém está tentando a senha da fulana"). Um e-mail
        inventado não tem de quem ser, e registrá-lo eram três linhas escritas
@@ -470,6 +491,9 @@ export async function login({ request, env, ctx }) {
     if (account) await log(env, account.id, 'login-failed');
     return fail('bad-credentials', 401);
   }
+
+  /* Acertou: as vagas voltam, e o teto de erros não sabe desta entrada. */
+  await devolverVagas();
 
   /* Subiu o custo do hash? Esta conta se atualiza sozinha, agora, com a senha
      que acabou de ser digitada - o único instante em que ela existe em claro.

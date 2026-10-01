@@ -424,6 +424,49 @@ describe('o login', () => {
     expect((await tentar(env, email, 'senha-boa-123', '198.51.100.7')).status).toBe(200);
   });
 
+  /* SEC-A-002 (auditoria de 01/10/2026): o teto de erros decidia por uma
+     LEITURA e só gastava depois da falha, e a verificação da senha leva o
+     tempo do PBKDF2. Quarenta senhas erradas em paralelo, mesmo IP e mesmo
+     e-mail, eram as quarenta avaliadas (40 respostas 401). Agora a vaga é
+     reservada antes: no máximo o teto (5 por minuto por e-mail e IP). */
+  it('quarenta senhas erradas em paralelo: no máximo o teto é avaliado', async () => {
+    const env = envSite();
+    const { email } = await comConta(env);
+    const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
+      tentar(env, email, 'errada-' + i, '10.99.99.2')))).map(r => r.status);
+    expect(status.filter(s => s === 401)).toHaveLength(5);
+    expect(status.filter(s => s === 429)).toHaveLength(35);
+    /* A dona, de outro lugar, com a senha certa, continua entrando. */
+    expect((await tentar(env, email, 'senha-boa-123', '198.51.100.7')).status).toBe(200);
+  });
+
+  it('a mesma rajada vinda de quarenta endereços: no máximo os 30 por e-mail', async () => {
+    const env = envSite();
+    const { email } = await comConta(env);
+    const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
+      tentar(env, email, 'errada-' + i, `10.98.0.${i + 1}`)))).map(r => r.status);
+    expect(status.filter(s => s === 401)).toHaveLength(30);
+    expect(status.filter(s => s === 429)).toHaveLength(10);
+  });
+
+  it('por endereço, a rajada de e-mails inventados para nos 20 erros da hora', async () => {
+    const env = envSite();
+    const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
+      tentar(env, `ninguem${i}@exemplo.com`, 'errada-123', '10.99.99.3')))).map(r => r.status);
+    expect(status.filter(s => s === 401)).toHaveLength(20);
+    expect(status.filter(s => s === 429)).toHaveLength(20);
+  });
+
+  it('acertar devolve a vaga: o teto de erros só conta as falhas', async () => {
+    const env = envSite();
+    const { email } = await comConta(env);
+    for (let i = 0; i < 4; i++) expect((await tentar(env, email, 'errada-' + i, '203.0.113.8')).status).toBe(401);
+    for (let i = 0; i < 3; i++) expect((await tentar(env, email, 'senha-boa-123', '203.0.113.8')).status).toBe(200);
+    /* Quatro erros e três acertos: ainda cabe o quinto erro. */
+    expect((await tentar(env, email, 'errada-x', '203.0.113.8')).status).toBe(401);
+    expect((await tentar(env, email, 'errada-y', '203.0.113.8')).status).toBe(429);
+  });
+
   it('a senha certa não gasta o orçamento do e-mail', async () => {
     const env = envSite();
     const { email } = await comConta(env);
