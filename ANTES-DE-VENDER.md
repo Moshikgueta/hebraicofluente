@@ -292,6 +292,13 @@ chegar na caixa de entrada, não no spam.
 - **PIX:** venda de R$ 130,99 líquidos (R$ 132,30 menos a tarifa do PIX),
   cancelada em 28/09/2026 com o dinheiro devolvido: compra e devolução no
   PIX funcionam.
+- **Cartão com desistência pelo site (01/10/2026):** compra de R$ 147 no
+  cartão, "Desistir da compra" em /perfil, e o estorno saiu sozinho: o pedido
+  ficou `refunded` no banco (conferido em Actions → Acesso → pedido) e a
+  Mercado Pago mostra "Venda cancelada" no mesmo minuto. O fluxo inteiro
+  funciona sem ninguém tocar em nada.
+- A venda de cartão de 21/09 que segue `paid` é de outra conta: é aluno de
+  verdade, não teste. Não estornar.
 - **Falta:** uma compra PARCELADA no cartão (2x ou mais) com desistência,
   conferindo na fatura que voltou o valor cobrado inteiro, juros inclusos
   (LEGAL-110). É o que sustenta o "100% de volta" na compra parcelada.
