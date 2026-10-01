@@ -128,6 +128,10 @@ EMAIL_FROM = "Hebraico Fluente <contato@hebraicofluente.com.br>"
 # endereço do rodapé do site (data/empresa.json) - repetido aqui porque o
 # Worker não lê o JSON do app.
 SUPPORT_EMAIL = "contato@hebraicofluente.com.br"
+# Para onde o Worker encaminha o que chega em contato@ (worker/src/email.js),
+# quando a regra do Email Routing manda contato@ "para o Worker". Precisa ser
+# um endereço de destino VERIFICADO no Email Routing da Cloudflare.
+CONTATO_DESTINO = "languageswithmoshik@gmail.com"
 # "1" usa o checkout de teste da Mercado Pago (não cobra nada). Em produção,
 # "0" - e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.

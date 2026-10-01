@@ -1088,3 +1088,12 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   aparelhos na conta dele, nunca tirar a marca.
 - **Quem já sabe ler um pouco NÃO pula etapas** (decisão do dono, 01/10/2026; UXQA-022 encerrado): todo
   aluno passa pelas 27 lições e pela fixação de 80% em ordem, sem nivelamento nem "já sei esta letra".
+
+## contato@ passa pelo Worker (01/10/2026, LEGAL-109)
+`worker/src/email.js` (o `email()` do Worker): o Email Routing manda
+`contato@` para o Worker, que encaminha tudo a `CONTATO_DESTINO` (wrangler.toml
+[vars]; precisa ser destino verificado no Email Routing) e confirma na hora,
+pela Resend, os assuntos de desistência/reembolso. Não responde a robôs,
+listas, ao próprio domínio, nem ao mesmo remetente mais de uma vez por hora.
+Encaminhar vem primeiro e falha alto (a Cloudflare devolve ao remetente).
+O "Enviar modelo" do Gmail não serve para isto: responde ao envelope SRS.

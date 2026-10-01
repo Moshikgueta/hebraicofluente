@@ -90,16 +90,19 @@ O aluno escreveu pedindo o dinheiro de volta, sem usar o botão.
      Acesso → `revogar`.
 5. Revogar é obrigatório: devolver o dinheiro NÃO tira o curso.
 
-**Resposta automática (LEGAL-109): EM CONFIGURAÇÃO (o teste de 01/10/2026
-ainda não respondeu).** No Gmail que recebe o `contato@` (o destino do Email
-Routing da Cloudflare, não necessariamente o Gmail de login), um filtro (Para: `contato@hebraicofluente.com.br`;
-Assunto: desistência OR desistencia OR desistir OR reembolso OR estorno OR
-arrependimento OR cancelar OR cancelamento) envia o modelo "Confirmação de
-recebimento" e aplica o marcador `Desistência`. A data e a hora da resposta
-automática são o registro do recebimento (Decreto 7.962, art. 5º, §4º).
-Olhe o marcador `Desistência` todo dia útil. Assunto sem nenhuma dessas
-palavras não recebe a confirmação: leia a caixa também, e se o pedido vier
-assim, confirme à mão o quanto antes.
+**Resposta automática (LEGAL-109).** Quem faz é o Worker
+(`worker/src/email.js`), não o Gmail: a regra de `contato@` no Email Routing
+da Cloudflare é "Send to a Worker" → `hebraico-fluente`. Ele encaminha TUDO
+para `CONTATO_DESTINO` (wrangler.toml, hoje languageswithmoshik@gmail.com) e,
+quando o assunto fala de reembolso, desistência, estorno, arrependimento,
+cancelamento ou devolução, responde na hora ao remetente, com data e hora,
+pela Resend. A trilha registra `autoresposta-enviada` / `autoresposta-falhou`.
+Assunto sem nenhuma dessas palavras não recebe a confirmação: leia a caixa, e
+se o pedido vier assim, confirme à mão o quanto antes.
+
+O filtro do Gmail com "Enviar modelo" NÃO serve: a mensagem chega
+encaminhada e o Gmail responde a um endereço técnico (`SRS0=...`) que
+ninguém recebe (testado em 01/10/2026). No Gmail fica só o marcador.
 
 ## 5. 01/11/2026: o fim do pré-lançamento
 

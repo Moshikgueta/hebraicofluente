@@ -22,6 +22,7 @@
  * 404 sem estilo do servidor.
  */
 
+import { receberEmail } from './email.js';
 import { json } from './lib/http.js';
 import { comRange } from './lib/range.js';
 import { gate, isGatedPath, canonical } from './gate.js';
@@ -158,6 +159,13 @@ export default {
      terminada com as chamadas ainda no ar mascararia toda falha dela. */
   async scheduled(event, env) {
     return runReconcile(env);
+  },
+
+  /* O que chega em contato@ (Email Routing → "Send to a Worker"):
+     encaminha ao dono e confirma na hora os pedidos de desistência.
+     Ver email.js. */
+  async email(message, env) {
+    return receberEmail(message, env);
   }
 };
 
