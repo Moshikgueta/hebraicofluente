@@ -254,6 +254,7 @@ ANTES-DE-VENDER.md, item 9.
 | Resend: resend.com → Support | e-mail |
 | GitHub: github.com/contact | repositório, Actions |
 | ANPD: gov.br/anpd | comunicação de incidente |
+| Contas do dono (Gmail, GitHub) | verificação em duas etapas ligada nas duas em 01/10/2026; códigos de recuperação guardados pelo dono, fora do repositório |
 | Monitor externo (UptimeRobot) | conta do e-mail de atendimento; dois monitores (capa e /api/health com `"monitor":true`); alerta testado e recebido em 01/10/2026 |
 | Advogado | (preencher) |
 | Contador | (preencher) |
