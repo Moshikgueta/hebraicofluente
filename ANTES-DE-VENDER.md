@@ -492,6 +492,10 @@ antes de 29/09/2026.
 na capa, e a página /depoimento diz a regra que se pratica: o texto sai como
 o aluno escreveu, e todo corte aparece marcado.
 
+**Confirmado pelo dono em 01/10/2026:** nome e cidade (Búzios, Rio de
+Janeiro) conferem com o que está na capa. O nome completo fica com o dono,
+fora do repositório; a capa mostra só o primeiro nome.
+
 **O que é seu.**
 1. **Autorização por escrito**, guardada FORA do repositório: nome, cidade,
    que o texto pode ir para o site e para divulgação, e que ela concorda com
