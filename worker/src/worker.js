@@ -89,8 +89,7 @@ const ROUTES = {
      api/content.js. */
   'GET /api/content': content,
 
-  /* O que a CSP estrita, ainda em observação, teria bloqueado. Ver
-     api/csp.js. */
+  /* O que a CSP estrita bloqueou. Ver api/csp.js. */
   'POST /api/csp-report': csp.relatorio,
 
   /* O progresso do aluno. `rev` na escrita é o que impede o celular e o
@@ -300,9 +299,8 @@ function permanente(res) {
  * `frame-ancestors 'none'` é o que impede o checkout e o login de serem
  * emoldurados por outro site.
  *
- * A saída do `'unsafe-inline'` já está a caminho: a mesma política, com o
- * hash de cada script no lugar dele, vai em observação ao lado desta (ver
- * `cspEstrita` abaixo). Quando valer, esta linha muda.
+ * Esta é a política de reserva: as páginas do build saem com `cspEstrita`
+ * (abaixo), sem `'unsafe-inline'`. Esta vale só no HTML sem lista de hashes.
  *
  * Uma página paga que passou pelo portão sai `private, no-store`: o servidor
  * de ativos a marca `public`, e um cache compartilhado no caminho poderia
@@ -323,14 +321,13 @@ const CSP = [
   "object-src 'none'"
 ].join('; ');
 
-/* A CSP estrita, em observação (auditoria, SEC-003).
+/* A CSP estrita (auditoria, SEC-003), em vigor desde 01/10/2026.
  * ─────────────────────────────────────────────────────────────────────────
  * A mesma política, com uma diferença: em vez de `'unsafe-inline'`, o hash
  * de cada script inline QUE AQUELA PÁGINA TRAZ, calculado no build por
- * tools/csp-hashes.mjs. Sai em `Content-Security-Policy-Report-Only`: o
- * navegador não bloqueia nada, só relata em /api/csp-report o que teria
- * bloqueado (api/csp.js). Quando os relatos ficarem limpos por alguns dias,
- * esta vira a `Content-Security-Policy` e a de cima sai - decisão do dono.
+ * tools/csp-hashes.mjs. Ficou em `Report-Only` de 29/09 a 01/10/2026; agora
+ * é a `Content-Security-Policy` que vale, e continua relatando em
+ * /api/csp-report o que bloqueia (api/csp.js; Actions → Acesso → csp).
  *
  * A lista é lida uma vez por isolate, do próprio servidor de ativos: ela
  * muda a cada publicação, e cada publicação sobe isolates novos. Sem a lista
@@ -415,8 +412,12 @@ function blindar(res, path, hashes = null) {
   h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), payment=()`);
   const tipo = h.get('Content-Type') || '';
   if (tipo.startsWith('text/html')) {
-    h.set('Content-Security-Policy', CSP);
-    if (hashes) h.set('Content-Security-Policy-Report-Only', cspEstrita(hashes));
+    /* A estrita VALE desde 01/10/2026 (decisão do dono, depois de dias de
+       observação sem relato de script do próprio site; o que sobrou, wasm de
+       extensões e o script que o navegador do Instagram injeta, a política
+       de sempre já bloqueava). Página sem lista de hashes (HTML gerado pelo
+       próprio Worker, build antiga) sai com a de sempre. */
+    h.set('Content-Security-Policy', hashes ? cspEstrita(hashes) : CSP);
     h.set('X-Frame-Options', 'DENY');
   }
   /* O painel do dono do curso: fora de busca e fora de cache. A página em
