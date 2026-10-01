@@ -124,8 +124,8 @@
   },
   "לֶחֶם": {
    "pt": "pão",
-   "image": null,
-   "imageAlt": "Um pão redondo e dourado, com uma fatia cortada.",
+   "image": "/media/vocabulario/pao-b3aedfa6.webp",
+   "imageAlt": "Um pão de forma dourado, com algumas fatias cortadas.",
    "imagePrompt": "a round golden loaf of bread with one slice cut"
   },
   "הַר": {
@@ -220,7 +220,7 @@
   },
   "מִיץ": {
    "pt": "suco",
-   "image": null,
+   "image": "/media/vocabulario/suco-3651798a.webp",
    "imageAlt": "Um copo de suco de laranja com uma laranja cortada ao lado.",
    "imagePrompt": "a glass of orange juice with a halved orange beside it"
   },
@@ -280,8 +280,8 @@
   },
   "טֶלֶפוֹן": {
    "pt": "telefone",
-   "image": null,
-   "imageAlt": "Um celular com a tela acesa.",
+   "image": "/media/vocabulario/telefone-02596224.webp",
+   "imageAlt": "Um celular de tela escura, inclinado.",
    "imagePrompt": "a smartphone with its screen lit"
   }
  }
