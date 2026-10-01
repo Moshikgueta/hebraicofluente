@@ -11,7 +11,11 @@
  *   · A AUTORIZAÇÃO é uma caixa à parte, desmarcada no começo. Sem ela, o
  *     texto vale como opinião para o dono ler, e nunca vai ao ar.
  *   · RETIRAR apaga a linha, sem pergunta e sem freio. O depoimento sai de
- *     onde estiver publicado em até 7 dias (é o prazo dito na página).
+ *     onde estiver publicado em até 7 dias (é o prazo dito na página). Se ele
+ *     estava APROVADO, o dono recebe um e-mail na hora, com a data-limite
+ *     (`avisarRetirada`, auditoria de 01/10/2026, LEGAL-106): a vitrine é um
+ *     arquivo que só ele publica, e a promessa dos 7 dias não pode depender
+ *     de ele lembrar de olhar a trilha. Vale também para a conta apagada.
  *   · O DONO lê em /admin/depoimentos e marca aprovado ou recusado. O texto
  *     não é editado por ninguém além do aluno.
  *   · APAGAR A CONTA apaga o depoimento (lib/db.js, deleteAccount).
@@ -24,6 +28,7 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { hasEntitlement, log, throttled } from '../lib/db.js';
 import { exigirAdmin } from '../lib/admin.js';
 import { requireAccount } from './auth.js';
+import { dataBR, mailReady, mensagemDeAlerta, sendMail } from '../lib/mail.js';
 
 const COURSE = 'alfabetizacao';
 export const TEXTO_MIN = 20;
@@ -118,11 +123,80 @@ export async function salvar({ request, env }) {
   return json({ ok: true });
 }
 
+/* Prazo para tirar da vitrine um depoimento cuja autorização foi retirada:
+   o mesmo de /depoimento e da Política de Privacidade. */
+export const PRAZO_RETIRADA_DIAS = 7;
+
+/**
+ * Se o depoimento desta conta estava APROVADO, avisa o dono por e-mail que ele
+ * precisa sair do site até a data-limite. Chamar ANTES de apagar a linha.
+ *
+ * Nunca lança: quem chama está retirando um consentimento ou apagando a conta,
+ * e nada disso pode falhar por causa de um e-mail. O destino é SUPPORT_EMAIL
+ * e, sem ele, o primeiro de ADMIN_EMAILS. Sem provedor de e-mail, fica a
+ * trilha (`depoimento-aprovado-retirado`) e o erro no log.
+ *
+ * O e-mail leva a assinatura pública e o começo do texto, que é o que o dono
+ * precisa para achar o cartão na vitrine; nunca o e-mail do aluno.
+ */
+export async function avisarRetirada(env, accountId, motivo, ctx, agora = Date.now()) {
+  try {
+    let r = null;
+    try {
+      r = await env.DB.prepare(
+        'SELECT estado, forma, nome_publico, cidade, texto FROM depoimentos WHERE account_id = ?'
+      ).bind(accountId).first();
+    } catch { return false; }                         // tabela ausente
+    if (!r || r.estado !== 'aprovado') return false;
+
+    await log(env, accountId, 'depoimento-aprovado-retirado', motivo);
+
+    const dono = String(env.SUPPORT_EMAIL || '').trim()
+      || String(env.ADMIN_EMAILS || '').split(',').map(s => s.trim()).filter(Boolean)[0] || '';
+    if (!dono || !mailReady(env)) {
+      console.error('depoimento', 'retirado sem e-mail para avisar o dono', accountId);
+      return false;
+    }
+
+    const limite = dataBR(agora + PRAZO_RETIRADA_DIAS * 86_400_000);
+    const quem = assinatura({ forma: r.forma, nomePublico: r.nome_publico || '', cidade: r.cidade || '' });
+    const texto = String(r.texto || '').replace(/\s+/g, ' ').trim();
+    const comeco = [...texto].length > 140 ? `${[...texto].slice(0, 140).join('')}...` : texto;
+    const msg = mensagemDeAlerta({
+      assunto: `retirar um depoimento do site até ${limite}`,
+      linhas: [
+        motivo === 'conta-apagada'
+          ? 'Um aluno com depoimento APROVADO apagou a conta, e a autorização para publicar acabou junto.'
+          : 'Um aluno retirou a autorização do depoimento dele, que estava APROVADO.',
+        '',
+        `Assinatura: ${quem}`,
+        `Começo do texto: "${comeco}"`,
+        '',
+        `Se ele estiver no site ou em qualquer material de divulgação, tire até ${limite} ` +
+          `(${PRAZO_RETIRADA_DIAS} dias, o prazo prometido em /depoimento e na Política de Privacidade).`,
+        'A vitrine da capa fica em app/src/lib/testimonials.ts.'
+      ]
+    });
+
+    const entregar = async () => {
+      const e = await sendMail(env, { to: dono, ...msg });
+      if (!e || !e.ok) console.error('depoimento', 'aviso de retirada', e && e.motivo, e && e.detalhe || '');
+    };
+    if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(entregar());
+    else await entregar();
+    return true;
+  } catch (e) {
+    console.error('depoimento', 'aviso de retirada', e && e.stack || e);
+    return false;
+  }
+}
+
 /** DELETE /api/depoimento - retirar. Sem freio: retirar um consentimento
  *  nunca pode esbarrar num "tente mais tarde". */
-export async function retirar({ request, env }) {
+export async function retirar({ request, env, ctx }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
+  await avisarRetirada(env, account.id, 'retirado', ctx);
   try {
     await env.DB.prepare('DELETE FROM depoimentos WHERE account_id = ?').bind(account.id).run();
   } catch { /* tabela ausente: nada a retirar */ }

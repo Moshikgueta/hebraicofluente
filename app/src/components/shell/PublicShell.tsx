@@ -33,7 +33,7 @@ import { He } from '@/components/hebrew/He';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { flagship, parcelasMax } from '@/lib/catalog';
 import {
-  empresa, enderecoLinha, nomeLegalCompleto, soPix, temCartao, temPix, whatsappUrl
+  empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
 
 /* Os rótulos são os do design. Os destinos são páginas de verdade, e não
@@ -291,8 +291,7 @@ function Footer() {
                 </span>
           )}
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2">
-            {empresa.atendimento.horarioPt}. Resposta em até{' '}
-            {empresa.atendimento.prazoRespostaUteis} dias úteis.
+            {empresa.atendimento.horarioPt}. Resposta {prazoResposta()}.
           </p>
           {/* Esta linha aparece em TODA página pública, o que faz dela a
               promessa de pagamento mais repetida do site - e a mais cara de
@@ -309,9 +308,9 @@ function Footer() {
             {soPix()
               ? 'Pagamento por PIX. Acesso liberado depois de conferido o pagamento.'
               : temPix() && temCartao()
-                ? `Pagamento por PIX ou cartão, em até ${parcelasMax(flagship().price)}x. Acesso liberado na hora.`
+                ? `Pagamento por PIX ou cartão, ${parcelasTexto(parcelasMax(flagship().price))}. Acesso liberado na hora.`
                 : temCartao()
-                  ? `Pagamento por cartão de crédito, em até ${parcelasMax(flagship().price)}x. Acesso liberado na hora.`
+                  ? `Pagamento por cartão de crédito, ${parcelasTexto(parcelasMax(flagship().price))}. Acesso liberado na hora.`
                   : 'Pagamento por PIX. Acesso liberado na hora.'}
           </p>
         </div>

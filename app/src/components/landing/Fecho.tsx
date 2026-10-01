@@ -28,7 +28,7 @@ import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from
 import { course, tempoDoCursoPt, totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
-import { confirmaSozinho, empresa, soPix, temPix } from '@/lib/empresa';
+import { confirmaSozinho, empresa, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
 
 const TEM_AUDIO = audioAvailable();
@@ -400,7 +400,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                       parcela é a operadora. Ver `parcelasMax` em catalog.ts. */}
                   {soPix()
                     ? <>no PIX, à vista</>
-                    : <>ou em até {parcelas}× no cartão</>}
+                    : <>ou {parcelasTexto(parcelas)} no cartão</>}
                 </p>
               </>
             )}

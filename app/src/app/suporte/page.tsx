@@ -5,7 +5,10 @@ import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
 import { Identificacao } from '@/components/legal/Legal';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { empresa, soPix, whatsappUrl } from '@/lib/empresa';
+import {
+  confirmaSozinho, confirmacaoDaDesistencia, DUVIDAS_DE_CONTEUDO, empresa, prazoResposta,
+  temCartao, temPix, whatsappUrl
+} from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
   rota: '/suporte',
@@ -36,13 +39,18 @@ export default function Page() {
   const ATALHOS: { titulo: string; corpo: React.ReactNode; acao: React.ReactNode }[] = [
     {
       titulo: 'Paguei e o acesso não liberou',
-      corpo: soPix()
-        ? <>O acesso costuma sair em alguns minutos depois que o PIX cai. Passou
-           disso, é falha nossa e resolvemos sem custo - escreva do e-mail que
-           você usou na compra.</>
-        : <>No PIX o acesso costuma sair em minutos; no cartão, assim que a operadora
-           aprova. Passou disso, é falha nossa e resolvemos sem custo - escreva do
-           e-mail que você usou na compra.</>,
+      /* No PIX direto a liberação é À MÃO, no prazo do atendimento: "em
+         alguns minutos" aqui desmentia o checkout (auditoria de 01/10/2026,
+         LEGAL-103). Com a Mercado Pago, o texto segue as formas ativas. */
+      corpo: !confirmaSozinho()
+        ? <>Depois do PIX, conferimos o pagamento e liberamos o acesso à mão,{' '}
+           {prazoResposta()}. Passou disso, escreva do e-mail que você usou na
+           compra: resolvemos sem custo.</>
+        : <>{[
+             temPix() ? 'No PIX o acesso costuma sair em minutos.' : '',
+             temCartao() ? 'No cartão, assim que a operadora aprova.' : ''
+           ].filter(Boolean).join(' ')} Passou disso, é falha nossa e resolvemos sem
+           custo - escreva do e-mail que você usou na compra.</>,
       acao: <a href={mail('Paguei e o acesso não liberou')}
                className="font-ui font-semibold text-[var(--accent)] hover:underline">
                Avisar sobre acesso não liberado →</a>
@@ -50,7 +58,9 @@ export default function Page() {
     {
       titulo: 'Quero meu dinheiro de volta',
       corpo: <>Você tem {politicas.arrependimentoDias} dias para desistir, sem precisar
-             explicar por quê e sem taxa. A{' '}
+             explicar por quê e sem taxa. O caminho mais rápido é em{' '}
+             <Link href="/perfil" className="text-[var(--accent)] hover:underline">Sua conta</Link>,
+             na compra: <strong>Desistir da compra</strong>. {confirmacaoDaDesistencia()} A{' '}
              <Link href="/reembolso" className="text-[var(--accent)] hover:underline">
                política completa
              </Link>{' '}
@@ -83,8 +93,8 @@ export default function Page() {
             Fale com a gente
           </h1>
           <p className="font-ui text-[16px] leading-relaxed text-ink-body max-w-[54ch]">
-            Um e-mail, respondido por quem faz o curso. {atendimento.horarioPt},
-            em até {atendimento.prazoRespostaUteis} dias úteis - normalmente bem antes.
+            Um e-mail, respondido por quem faz o curso. {atendimento.horarioPt}.
+            Respondemos {prazoResposta()}.
           </p>
         </header>
 
@@ -136,7 +146,7 @@ export default function Page() {
             <Link href="/faq" className="text-[var(--accent)] hover:underline">
               dúvidas frequentes
             </Link>. O que não estiver lá, escreva: a lista cresce com o que vocês
-            perguntam.
+            perguntam. {DUVIDAS_DE_CONTEUDO}
           </p>
         </Card>
 

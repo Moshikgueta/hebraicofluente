@@ -18,7 +18,7 @@
  * o SQL está certo - que é onde moram os erros deste fluxo.
  */
 
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
 
 type Linha = Record<string, unknown> | null;
@@ -70,6 +70,12 @@ export function bancoDeTeste(): D1Falso {
   const db = new DatabaseSync(':memory:');
   const schema = readFileSync(new URL('../../../worker/schema.sql', import.meta.url), 'utf8');
   db.exec(schema);
+  /* E as migrações, em ordem, como a publicação faz (scripts/cloudflare-setup.sh,
+     passo 3b): uma coluna nova só existe nelas. */
+  const migr = new URL('../../../worker/migrations/', import.meta.url);
+  for (const nome of readdirSync(migr).filter(n => /^\d{4}-[a-z0-9.-]+\.sql$/.test(n)).sort()) {
+    db.exec(readFileSync(new URL(nome, migr), 'utf8'));
+  }
   return {
     prepare: (sql: string) => new Preparada(db, sql),
 

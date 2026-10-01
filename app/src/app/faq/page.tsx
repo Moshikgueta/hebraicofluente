@@ -3,7 +3,10 @@ import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
+import {
+  confirmaSozinho, confirmacaoDaDesistencia, DUVIDAS_DE_CONTEUDO, empresa, INICIO_DO_ACESSO,
+  O_QUE_O_CURSO_ENSINA, parcelasTexto, prazoResposta, renovacaoTexto, soPix, temCartao, temPix
+} from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { ancora, flagship, brl, fimDoPreLancamento, parcelasMax, pixPrice } from '@/lib/catalog';
 import { course, tempoDoCursoPt } from '@/lib/content-publico';
@@ -76,9 +79,16 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
           `O curso sai por ${brl(pixPrice(c.price))}${c.price.pixDiscountPct > 0 ? ` no PIX (${c.price.pixDiscountPct}% de desconto sobre os ${brl(c.price.brl)})` : ''}.`,
           'Cartão de crédito ainda não. Quando entrar, aparece no checkout.'
         ]
+      /* E com as formas que a Mercado Pago aceita NESTA publicação
+         (`temPix`/`temCartao`, auditoria de 01/10/2026, LEGAL-103): a FAQ
+         não pode prometer o desconto do PIX quando o checkout não tem PIX. */
       : [
-          `PIX, cartão de crédito à vista ou parcelado em até ${parcelasMax(c.price)}x.`,
-          `À vista o curso sai por ${brl(c.price.brl)}${c.price.pixDiscountPct > 0 ? `, ou ${brl(pixPrice(c.price))} no PIX` : ''}.`,
+          temPix() && temCartao()
+            ? `PIX, cartão de crédito à vista ou parcelado ${parcelasTexto(parcelasMax(c.price))}.`
+            : temCartao()
+              ? `Cartão de crédito, à vista ou parcelado ${parcelasTexto(parcelasMax(c.price))}. O PIX ainda não está disponível; quando entrar, aparece no checkout.`
+              : 'Por PIX, pelo aplicativo do seu banco. O checkout mostra o código copia e cola.',
+          `À vista o curso sai por ${brl(c.price.brl)}${c.price.pixDiscountPct > 0 && temPix() ? `, ou ${brl(pixPrice(c.price))} no PIX` : ''}.`,
           /* A frase só existe enquanto o preço for promocional: quando o
              listBrl virar null, ela some sozinha. Ver `ancora()`. */
           ...(ancora(c.price)
@@ -87,14 +97,19 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
           /* O valor da parcela não é anunciado aqui de propósito: os juros do
              cartão são repassados, então quem fecha esse número é a operadora.
              Ver `parcelasMax` em lib/catalog.ts. */
-          `No parcelamento há juros, cobrados pela Mercado Pago. O valor de cada parcela e o total aparecem na tela de pagamento dela antes de você confirmar.`
+          ...(temCartao()
+            ? ['No parcelamento há juros, cobrados pela Mercado Pago. O valor de cada parcela e o total aparecem na tela de pagamento dela antes de você confirmar.']
+            : [])
         ]
   },
   {
     q: 'Quando o acesso é liberado?',
     a: confirmaSozinho()
       ? [
-          'No cartão, na hora - a confirmação vem em segundos. No PIX, assim que o pagamento compensa, que costuma levar menos de um minuto.',
+          [
+            temCartao() ? 'No cartão, na hora - a confirmação vem em segundos.' : '',
+            temPix() ? 'No PIX, assim que o pagamento compensa, que costuma levar menos de um minuto.' : ''
+          ].filter(Boolean).join(' '),
           'A liberação é automática. Não existe aprovação manual, e você não precisa mandar comprovante para ninguém.'
         ]
       : [
@@ -105,8 +120,10 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
   {
     q: 'Por quanto tempo eu tenho acesso?',
     a: [
-      `${c.accessMonths} meses a partir da compra, com tudo que for acrescentado ao curso nesse período.`,
-      'Perto do fim, a plataforma avisa - com trinta dias de antecedência, e de novo na última semana.'
+      `${c.accessMonths} meses, ${INICIO_DO_ACESSO}, com tudo que for acrescentado ao curso nesse período.`,
+      'Perto do fim, a plataforma avisa - com trinta dias de antecedência, e de novo na última semana.',
+      /* LEGAL-121 / PAY-B-011: a renovação soma ao fim do acesso atual. */
+      renovacaoTexto(c.accessMonths)
     ]
   },
   /* 28/09/2026 (auditoria, COM-007): o que NÃO vem junto só estava nos
@@ -115,8 +132,18 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
   {
     q: 'O que não está incluído?',
     a: [
-      'O curso é autoinstrucional: você estuda no seu ritmo, e a plataforma corrige cada exercício na hora. Por isso não há aulas ao vivo, nem correção ou acompanhamento feito por professor. O suporte por e-mail e WhatsApp é para acesso, pagamento e conta.',
+      /* TEXTO PARA APROVAÇÃO (UXQA-016): DUVIDAS_DE_CONTEUDO em lib/empresa.ts. */
+      `O curso é autoinstrucional: você estuda no seu ritmo, e a plataforma corrige cada exercício na hora. Por isso não há aulas ao vivo, nem correção ou acompanhamento feito por professor. O atendimento por e-mail e WhatsApp é para acesso, pagamento e conta. ${DUVIDAS_DE_CONTEUDO}`,
       'Também não vêm junto: os outros cursos (A1, A2 e B1, vendidos à parte quando forem lançados), aplicativo para instalar (tudo funciona no navegador) e material físico. O certificado de conclusão não é um certificado oficial.'
+    ]
+  },
+  /* 01/10/2026 (auditoria, UXQA-010): quem chega pela capa querendo
+     conversar na viagem precisa saber antes. TEXTO PARA APROVAÇÃO. */
+  {
+    q: 'O curso ensina a falar e a entender hebraico?',
+    a: [
+      O_QUE_O_CURSO_ENSINA,
+      'Aqui você aprende a decodificar: reconhecer cada letra e cada sinal de vogal, ler palavras em voz alta e escrevê-las.'
     ]
   },
   {
@@ -178,8 +205,10 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
   {
     q: 'E se eu não gostar?',
     a: [
-      'O Código de Defesa do Consumidor te dá sete dias para desistir de uma compra feita pela internet, contados a partir do acesso. Dentro desse prazo, basta pedir: o valor volta integral, sem pergunta e sem etapa.',
-      `Em Sua conta, na compra, use "Desistir da compra": o estorno é pedido na hora, sozinho. Se preferir, escreva para ${empresa.contato.emailSuporte} com o e-mail da compra.`
+      `O Código de Defesa do Consumidor te dá ${empresa.politicas.arrependimentoDias} dias para desistir de uma compra feita pela internet, ${INICIO_DO_ACESSO}. Dentro desse prazo, basta pedir: o valor volta integral, sem pergunta e sem etapa.`,
+      /* "O estorno é pedido na hora, sozinho" só é verdade com a Mercado
+         Pago: no PIX direto a devolução é feita por nós (pay.js, `manual`). */
+      `Em Sua conta, na compra, use "Desistir da compra"${confirmaSozinho() ? ': o estorno é pedido à Mercado Pago na hora, sozinho' : ''}. Se preferir, escreva para ${empresa.contato.emailSuporte} com o e-mail da compra. ${confirmacaoDaDesistencia()}`
     ]
   },
   {
@@ -272,7 +301,7 @@ export default function FaqPage() {
                  className="text-[var(--accent)] hover:underline">
                 {empresa.contato.emailSuporte}
               </a>
-              . Costumamos responder no mesmo dia útil.
+              . Respondemos {prazoResposta()}. {DUVIDAS_DE_CONTEUDO}
             </>
           }
         />

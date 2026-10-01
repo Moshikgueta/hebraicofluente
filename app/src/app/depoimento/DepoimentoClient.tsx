@@ -203,9 +203,13 @@ export function DepoimentoClient() {
             <span>Aceito receber um e-mail do dono do curso sobre este depoimento.</span>
           </label>
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted m-0">
-            Sem a autorização, o texto fica só para o dono do curso ler. O texto não é editado por ninguém: ou sai como
-            você escreveu, ou não sai. Se você retirar a autorização, o depoimento sai de onde estiver publicado em até
-            7 dias. Mais detalhes na <Link href="/privacidade" className="underline underline-offset-2">Política de Privacidade</Link>.
+            {/* LEGAL-107 (auditoria de 01/10/2026): a página prometia "o texto
+                não é editado por ninguém", e a vitrine publica trechos. A
+                regra agora é a que se pratica: as palavras são as suas, e
+                todo corte aparece marcado. */}
+            Sem a autorização, o texto fica só para o dono do curso ler. Publicamos o texto como você escreveu, sem
+            trocar nenhuma palavra; se ele precisar ser encurtado, o corte aparece marcado com [...]. Se você retirar a
+            autorização, o depoimento sai de onde estiver publicado em até 7 dias. Mais detalhes na <Link href="/privacidade" className="underline underline-offset-2">Política de Privacidade</Link>.
           </p>
         </Card>
 

@@ -29,7 +29,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { brl, flagship, parcelasMax } from '@/lib/catalog';
-import { empresa } from '@/lib/empresa';
+import { empresa, parcelasCurto } from '@/lib/empresa';
 
 /* Os alvos que apagam a barra. Ficam aqui, e não espalhados, porque são os
    ids que as seções de Fecho.tsx já expõem - se um sumir, o efeito abaixo
@@ -97,7 +97,7 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
             {brl(c.price.brl)}
           </span>
           <span className="block text-[12.5px] text-ink-muted tabular-nums">
-            ou em até {parcelas}x no cartão
+            ou {parcelasCurto(parcelas)} no cartão
           </span>
           {/* A versão curta da linha da caixa de preço (CONV-001): a barra
               é o único botão visível num trecho longo da capa, e a pessoa

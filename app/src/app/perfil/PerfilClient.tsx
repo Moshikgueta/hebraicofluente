@@ -33,6 +33,7 @@ import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { course } from '@/lib/content-publico';
 import { api } from '@/lib/account/api';
 import { empresa } from '@/lib/empresa';
+import { IdentificacaoCurta } from '@/components/legal/Legal';
 
 const date = (iso: string) =>
   new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -257,6 +258,10 @@ export function PerfilClient() {
       )}
 
       <ApagarConta />
+
+      {/* LEGAL-118 (auditoria de 01/10/2026): quem oferece o serviço, na
+          página onde ficam "Desistir da compra" e "Apagar minha conta". */}
+      <IdentificacaoCurta />
     </div>
   );
 }

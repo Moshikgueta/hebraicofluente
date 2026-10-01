@@ -35,6 +35,7 @@ import {
 } from '../lib/mercadopago.js';
 import { brCode, confereBrCode } from '../lib/pix.js';
 import empresa from '../../../data/empresa.json';
+import { gravarTermosDoPedido, linkDaVersao, versaoAtual } from '../lib/versoes.js';
 
 /* ── qual trilho de cobrança está ligado ──────────────────────────────────
  * Sai de data/empresa.json, e não de uma variável de ambiente, porque os
@@ -178,6 +179,8 @@ export async function create({ request, env }) {
   const order = await createOrder(env, {
     accountId: account.id, courseSlug: course.slug, amountCents, method, installments
   });
+  /* A versão dos Termos que vale para este pedido (LEGAL-104). */
+  await gravarTermosDoPedido(env, order.id);
 
   try {
     /* ── PIX direto ────────────────────────────────────────────────────
@@ -940,9 +943,14 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
       renovacao: !primeiraCompra,
       /* O contrato que vale para esta compra (Decreto 7.962/2013, art. 4º,
          IV), e onde desistir pelo site (art. 5º). */
-      termos: `${site}/termos/`,
-      reembolso: `${site}/reembolso/`,
-      versao: dataBR(Date.parse(`${empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)) || '',
+      /* LEGAL-104: a cópia FIXA da versão que valeu para este pedido, e não
+         a página de hoje. Pedido de antes da coluna: a versão em vigor. */
+      termos: linkDaVersao(site, 'termos', order.termos_versao || versaoAtual('termos')),
+      reembolso: linkDaVersao(site, 'reembolso', versaoAtual('reembolso')),
+      versao: [
+        dataBR(Date.parse(`${empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)),
+        (order.termos_versao || versaoAtual('termos')) && `código ${order.termos_versao || versaoAtual('termos')}`
+      ].filter(Boolean).join(', '),
       desistir: `${site}/perfil/`
     });
 

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
-import { empresa } from '@/lib/empresa';
+import { empresa, prazoResposta } from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
   rota: '/acessibilidade',
@@ -27,10 +27,12 @@ export const metadata: Metadata = meta({
  * precisa dela é quem ainda está decidindo se consegue usar o curso.
  */
 export default function Page() {
-  const { contato, atendimento } = empresa;
+  const { contato } = empresa;
 
   return (
     <LegalPage
+      documento="acessibilidade"
+      cta={false}
       titulo="Declaração de Acessibilidade"
       resumo="O que fazemos para que a plataforma possa ser usada por todas as pessoas, o que ainda falta, e como nos avisar de uma barreira."
     >
@@ -51,7 +53,7 @@ export default function Page() {
           ficam guardados no seu aparelho e valem em todas as páginas:
         </p>
         <Lista itens={[
-          'tamanho do texto em 100%, 115%, 130% ou 150%;',
+          'tamanho do texto em 100%, 115%, 130% ou 150% (no celular, o 150% ainda aperta algumas telas: ver o item 4);',
           'tema claro, escuro ou o do seu aparelho;',
           'alto contraste;',
           'menos animação (também respeitamos o ajuste de "reduzir movimento" do seu sistema);',
@@ -60,10 +62,10 @@ export default function Page() {
         ]} />
         <p><strong>Teclado e leitor de tela:</strong></p>
         <Lista itens={[
-          'toda a plataforma pode ser usada só pelo teclado, com o foco sempre visível e um atalho "Pular para o conteúdo" no início de cada página;',
+          'um atalho "Pular para o conteúdo" no início de cada página, e o foco visível nos botões e links;',
           'nas lições, as teclas 1 a 4 escolhem a resposta e Enter avança;',
           'os textos em hebraico são marcados como hebraico, para o leitor de tela trocar de idioma;',
-          'os botões de áudio dizem o que tocam, e a correção de cada exercício é anunciada;',
+          'os botões de áudio dizem o que tocam, e, nos exercícios das lições, o resultado de cada resposta é anunciado (menos no de ligar pares: ver o item 4);',
           'nenhuma imagem importante fica sem descrição.'
         ]} />
         <p><strong>Áudio, tempo e tela:</strong></p>
@@ -79,10 +81,16 @@ export default function Page() {
       </Artigo>
 
       <Artigo n={3} titulo="Como verificamos">
+        {/* 01/10/2026 (auditoria, VIS-006): a frase dizia que a verificação
+            automática conferia "o tamanho de texto em 150% e a navegação em
+            telas de celular". Ela roda contra as páginas públicas e as
+            telas do curso sem o conteúdo pago, então não via o que quebrava
+            lá dentro. Agora diz o que ela faz. */}
         <p>
           A cada publicação do site, uma verificação automática abre as páginas num
-          navegador de verdade e confere o menu de acessibilidade, o contraste, o
-          tamanho de texto em 150% e a navegação em telas de celular. Em 28/09/2026
+          navegador de verdade e confere o menu de acessibilidade e o contraste. Ela
+          ainda não entra nas lições com uma conta de aluno, e por isso não substitui o
+          teste feito à mão. Em 28/09/2026
           fizemos uma revisão manual completa: navegação por teclado, foco, nomes dos
           botões, contraste medido, textos em hebraico e telas de 320 pixels de
           largura. As correções dessa revisão já estão no ar. Em 29/09/2026 testamos
@@ -95,6 +103,9 @@ export default function Page() {
           'os exercícios de escuta dependem de ouvir, e ainda não têm uma alternativa para pessoas surdas; o restante do curso não depende de áudio;',
           '"Fale e seja corrigido" depende do reconhecimento de voz do navegador, que não existe em todos (o Firefox, por exemplo, não tem); é um recurso opcional, e "Gravar a minha" funciona em todos;',
           'o jogo "Caça à letra" treina o reconhecimento visual da forma das letras; com leitor de tela, ele anuncia o nome de cada letra, o que torna o jogo possível, mas muda o que ele treina;',
+          'com o texto em 150% num celular, algumas telas da plataforma (como o vocabulário, a sua conta e o painel) ficam mais largas que a tela e rolam para o lado; estamos corrigindo;',
+          'nem toda a plataforma funciona bem só pelo teclado: em algumas telas, depois de responder (no exercício de ligar pares, nas perguntas rápidas e em alguns jogos), o foco volta para o início da página em vez de seguir para o próximo passo; estamos corrigindo;',
+          'no exercício de ligar pares, o leitor de tela ainda não anuncia qual item foi escolhido nem se o par está certo; estamos corrigindo;',
           'ainda não testamos a plataforma com leitores de tela reais (NVDA, VoiceOver, TalkBack).'
         ]} />
       </Artigo>
@@ -108,7 +119,7 @@ export default function Page() {
           </a>{' '}
           com o assunto <em>Acessibilidade</em>. Conte em que página você estava, o
           que tentou fazer e, se puder, qual aparelho, navegador e tecnologia assistiva
-          usa. Respondemos em até {atendimento.prazoRespostaUteis} dias úteis, e, se a
+          usa. Respondemos {prazoResposta()}, e, se a
           barreira impedir você de estudar, buscamos uma forma de você continuar
           enquanto a correção não sai.
         </p>
