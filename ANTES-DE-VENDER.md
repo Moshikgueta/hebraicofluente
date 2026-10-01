@@ -284,7 +284,7 @@ que ela sugere). Leva de minutos a algumas horas para propagar.
 **Pronto quando.** Pedir "esqueci minha senha" com um e-mail seu e o link
 chegar na caixa de entrada, não no spam.
 
-### 6. Uma compra de verdade, ponta a ponta - QUASE FEITO (falta o parcelado com desistência)
+### 6. Uma compra de verdade, ponta a ponta - FEITO em 01/10/2026
 
 **Conferido pelo dono em 01/10/2026, pelos extratos da Mercado Pago:**
 - **Cartão:** venda real de 21/09/2026, R$ 139,68 líquidos (R$ 147 menos a
@@ -292,16 +292,16 @@ chegar na caixa de entrada, não no spam.
 - **PIX:** venda de R$ 130,99 líquidos (R$ 132,30 menos a tarifa do PIX),
   cancelada em 28/09/2026 com o dinheiro devolvido: compra e devolução no
   PIX funcionam.
-- **Cartão com desistência pelo site (01/10/2026):** compra de R$ 147 no
-  cartão, "Desistir da compra" em /perfil, e o estorno saiu sozinho: o pedido
+- **Cartão PARCELADO em 2x com desistência pelo site (01/10/2026):** compra
+  de R$ 147 no cartão, em 2x, "Desistir da compra" em /perfil, e o estorno saiu sozinho: o pedido
   ficou `refunded` no banco (conferido em Actions → Acesso → pedido) e a
   Mercado Pago mostra "Venda cancelada" no mesmo minuto. O fluxo inteiro
   funciona sem ninguém tocar em nada.
 - A venda de cartão de 21/09 que segue `paid` é de outra conta: é aluno de
   verdade, não teste. Não estornar.
-- **Falta:** uma compra PARCELADA no cartão (2x ou mais) com desistência,
-  conferindo na fatura que voltou o valor cobrado inteiro, juros inclusos
-  (LEGAL-110). É o que sustenta o "100% de volta" na compra parcelada.
+- **Juros do parcelamento (LEGAL-110): voltam.** O dono conferiu que o
+  estorno devolveu tudo o que foi cobrado na compra em 2x. O "100% de volta"
+  vale também no parcelado.
 
 
 **O que é.** Comprar o curso você mesmo, com dinheiro de verdade, e depois

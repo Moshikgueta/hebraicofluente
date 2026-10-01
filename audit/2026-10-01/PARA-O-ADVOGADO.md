@@ -25,8 +25,8 @@ escrever" basta para a maioria.
    automática no e-mail?
 2. **Prazo da devolução (LEGAL-110).** No PIX, "em até 10 dias úteis"; no
    cartão, conforme a fatura. Atende o "de imediato" do art. 49, parágrafo
-   único? Se os juros do parcelamento pagos à Mercado Pago não voltarem no
-   estorno, temos de devolver a diferença?
+   único? (Os juros do parcelamento voltam no estorno: compra real em 2x
+   estornada em 01/10/2026 devolveu tudo.)
 3. **Fim do pré-lançamento (LEGAL-108).** O site diz "Preço de
    pré-lançamento até 31/10/2026. Depois, R$ 297". Se o preço não subir em
    01/11, ou se a data for estendida, há risco de publicidade enganosa? Como
