@@ -22,7 +22,7 @@
  * que vê "Criar conta" no topo do site acha que foi deslogado.
  */
 
-import { INSTAGRAM } from '@/lib/professor';
+import { RedesSociais } from './RedesSociais';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
@@ -311,12 +311,7 @@ function Footer() {
                   WhatsApp {empresa.contato.whatsapp}
                 </span>
           )}
-          <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer"
-             className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
-                        text-ink-body hover:text-[var(--accent)]">
-            Instagram @hebraicofluente
-            <span className="sr-only"> (abre em outra aba)</span>
-          </a>
+          <RedesSociais />
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2">
             {empresa.atendimento.horarioPt}. Resposta {prazoResposta()}.
           </p>

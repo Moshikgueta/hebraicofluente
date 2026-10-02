@@ -82,3 +82,7 @@ ar, não o prompt: ao trocar a imagem, confira o texto.
 Palavras abstratas (ontem, também, verdade, obrigado) ficam **sem** imagem de
 propósito: uma ilustração de "verdade" é uma adivinhação, e uma imagem que
 precisa ser explicada não ajuda a lembrar a palavra.
+
+**102 imagens (02/10/2026).** Mais 55 palavras concretas ganharam imagem
+(montagens A a G). As descrições para leitor de tela ajustadas às imagens
+foram aprovadas pelo dono em 02/10/2026.
