@@ -1107,3 +1107,10 @@ RCLONE_DRIVE_TOKEN, remote por variáveis de ambiente) para
 o passo só avisa no resumo. Nunca em claro fora da Cloudflare. Prova local:
 `bash scripts/backup-nuvem.sh provar-cifra`. Ligar e restaurar:
 RUNBOOK-ATENDIMENTO.md. A Política de Privacidade cita a cópia cifrada no Drive.
+
+## Ordem das letras: Álef, Mem, Tav fica (decisão do dono, 02/10/2026)
+O dono considerou voltar à ordem do método de origem (Mem, Tav, Álef) e
+decidiu manter Álef primeiro: com Mem e Tav sozinhas não há palavra útil
+(אִמָּא e אֵם precisam do Álef), e a ordem atual dá a primeira palavra real já
+na lição 2. Rever só se alunos reais disserem que a lição do Álef (letra
+muda) confunde.
