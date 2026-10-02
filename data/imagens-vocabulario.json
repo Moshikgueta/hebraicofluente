@@ -556,55 +556,55 @@
   },
   "פיג׳מה": {
    "pt": "pijama",
-   "image": null,
-   "imageAlt": "Um pijama dobrado.",
+   "image": "/media/vocabulario/pijama-090b017e.webp",
+   "imageAlt": "Um pijama listrado dobrado.",
    "imagePrompt": "a folded pair of striped pajamas"
   },
   "ג׳ל": {
    "pt": "gel",
-   "image": null,
+   "image": "/media/vocabulario/gel-d54d4aa7.webp",
    "imageAlt": "Um tubo de gel de cabelo.",
    "imagePrompt": "a tube of hair gel with a blob of gel, no text"
   },
   "ג׳ונגל": {
    "pt": "selva",
-   "image": null,
+   "image": "/media/vocabulario/selva-90d75271.webp",
    "imageAlt": "Uma selva densa com árvores e cipós.",
    "imagePrompt": "a dense jungle with tall trees and hanging vines"
   },
   "ז׳קט": {
    "pt": "jaqueta",
-   "image": null,
-   "imageAlt": "Uma jaqueta.",
+   "image": "/media/vocabulario/jaqueta-2d34106b.webp",
+   "imageAlt": "Uma jaqueta verde num cabide.",
    "imagePrompt": "a jacket on a hanger"
   },
   "מסאז׳": {
    "pt": "massagem",
-   "image": null,
+   "image": "/media/vocabulario/massagem-34ceb78a.webp",
    "imageAlt": "Uma pessoa recebendo massagem nas costas.",
    "imagePrompt": "an adult lying face down receiving a back massage"
   },
   "בז׳": {
    "pt": "bege",
-   "image": null,
+   "image": "/media/vocabulario/bege-9d5588a2.webp",
    "imageAlt": "Um quadrado da cor bege.",
    "imagePrompt": "a single square swatch of beige color"
   },
   "ז׳סטה": {
    "pt": "gesto",
-   "image": null,
+   "image": "/media/vocabulario/gesto-3dd39d97.webp",
    "imageAlt": "Uma mão fazendo um gesto de \"ok\".",
    "imagePrompt": "a hand making an OK gesture"
   },
   "מִצְוָה": {
    "pt": "preceito, boa ação",
-   "image": null,
-   "imageAlt": "Uma pessoa ajudando um idoso a atravessar a rua.",
+   "image": "/media/vocabulario/preceito-boa-acao-ad13405c.webp",
+   "imageAlt": "Um jovem ajudando uma senhora idosa a atravessar a rua.",
    "imagePrompt": "a young adult helping an elderly person cross the street"
   },
   "זְמַן": {
    "pt": "tempo",
-   "image": null,
+   "image": "/media/vocabulario/tempo-71afa233.webp",
    "imageAlt": "Uma ampulheta com areia caindo.",
    "imagePrompt": "an hourglass with sand falling"
   },
