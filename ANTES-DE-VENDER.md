@@ -689,7 +689,11 @@ TalkBack (Android), e o teste num iPhone com iOS 15 ou 16.
 O texto novo da Declaração (art. 4, sobre este teste) foi aprovado pelo dono
 em 01/10/2026.
 
-### 14. Cópia do backup fora da Cloudflare (Google Drive) - PRONTA, falta ligar
+### 14. Cópia do backup fora da Cloudflare (Google Drive) - FEITO em 02/10/2026
+
+**Ligada e testada em 02/10/2026:** os dois segredos foram criados pelo dono, e o
+backup manual mandou `hebraico-fluente-20261002-012434.sql.gz.enc` (cifrado) para
+o Drive, depois de restaurar a cópia num banco local com todas as tabelas batendo.
 
 O sistema já faz a cópia diária CIFRADA no Google Drive pessoal do dono (só
 ele acessa), assim que existirem os segredos `RCLONE_DRIVE_TOKEN` e
