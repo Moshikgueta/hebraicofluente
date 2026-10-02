@@ -38,7 +38,9 @@ import { BarraFixa } from '@/components/landing/BarraFixa';
 import {
   Professor, Depoimentos, Preco, Faq, CtaFinal
 } from '@/components/landing/Fecho';
-import { FLAGSHIP, brl } from '@/lib/catalog';
+import { FLAGSHIP, brl, getCourse } from '@/lib/catalog';
+import { guardarParceriaDaUrl, parceriaAtual, precoDaParceria, PARCERIAS } from '@/lib/parceria';
+import { useEffect, useState } from 'react';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { useAccount } from '@/lib/account/store';
 import { proximoPasso } from '@/lib/cta';
@@ -54,8 +56,20 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
   const passo = proximoPasso(account);
   const comprar = passo.href;
 
+  /* Quem veio por um link de parceria (/sefarad): guarda e, se o preço da
+     parceria for menor que o do dia, avisa no topo. Ver lib/parceria.ts. */
+  const [parceria, setParceria] = useState<string | null>(null);
+  useEffect(() => { guardarParceriaDaUrl(); setParceria(parceriaAtual()); }, []);
+  const curso = getCourse(FLAGSHIP);
+  const daParceria = parceria && curso ? precoDaParceria(curso, parceria) : null;
+
   return (
     <>
+      {daParceria !== null && parceria && (
+        <p className="m-0 bg-[var(--gold-soft)] text-[var(--gold-ink)] text-center font-ui text-[14.5px] px-4 py-2.5 border-b border-[#EADCC0]">
+          Você chegou pela parceria com {PARCERIAS[parceria]?.perfil}: o curso sai por <strong>{brl(daParceria)}</strong> no checkout.
+        </p>
+      )}
       <Hero
         primaryHref={passo.href}
         /* O rótulo diz o que vem do outro lado: o botão leva ao checkout,

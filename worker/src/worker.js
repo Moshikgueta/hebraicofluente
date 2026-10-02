@@ -200,7 +200,7 @@ async function responder(request, env, ctx) {
     if (campanha && (request.method === 'GET' || request.method === 'HEAD')) {
       const conta = estatisticas.contarCampanha(env, campanha, request);
       if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(conta); else await conta;
-      return new Response(null, { status: 302, headers: { Location: `${url.origin}/#experimente`, 'Cache-Control': 'no-store' } });
+      return new Response(null, { status: 302, headers: { Location: `${url.origin}/?parceria=${campanha}#experimente`, 'Cache-Control': 'no-store' } });
     }
 
     /* ── a API ──────────────────────────────────────────────────────── */

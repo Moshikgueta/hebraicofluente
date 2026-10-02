@@ -38,6 +38,7 @@ import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
 import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
+import { comParceria, parceriaAtual, precoDaParceria, PARCERIAS } from '@/lib/parceria';
 import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
@@ -60,7 +61,11 @@ const GIVE_UP_MS = 30 * 60_000;
 export function CheckoutClient({ slug }: { slug: string }) {
   const account = useAccount();
   const router = useRouter();
-  const c = getCourse(slug)!;
+  /* Parceria (lib/parceria.ts): lida depois de montar, porque mora no
+     armazenamento do aparelho e a página é gerada sem ele. */
+  const [parceria, setParceria] = useState<string | null>(null);
+  useEffect(() => { setParceria(parceriaAtual()); }, []);
+  const c = comParceria(getCourse(slug)!, parceria);
 
 
   /* Lidos uma vez: vêm de data/empresa.json, que é fixo no momento da build. */
@@ -188,7 +193,8 @@ export function CheckoutClient({ slug }: { slug: string }) {
     try {
       const created = await account.startOrder({
         courseSlug: slug, method,
-        ...(method === 'card' ? { installments: parcelas } : {})
+        ...(method === 'card' ? { installments: parcelas } : {}),
+        ...(parceria ? { parceria } : {})
       });
       /* O cartão sai daqui: quem coleta o número é a Mercado Pago, e é assim
          que esta plataforma nunca vê um dado de cartão. */
@@ -296,9 +302,15 @@ export function CheckoutClient({ slug }: { slug: string }) {
   }
 
   /* ── pagamento ───────────────────────────────────────────────────── */
+  const daParceria = parceria ? precoDaParceria(getCourse(slug)!, parceria) : null;
   return (
     <Shell course={c}>
       <Card className="p-5 sm:p-6 grid gap-5">
+        {daParceria !== null && parceria && (
+          <p className="m-0 rounded-[var(--r-md)] bg-[var(--gold-soft)] px-4 py-3 font-ui text-[14.5px] text-[var(--gold-ink)]">
+            Preço da parceria com {PARCERIAS[parceria]?.perfil}: <strong>{brl(daParceria)}</strong>.
+          </p>
+        )}
         <div className="grid gap-1">
           <Badge tone="accent">Passo 2 de 2</Badge>
           {/* Um h1 por passo (auditoria de 01/10/2026, VIS-012): o título que já

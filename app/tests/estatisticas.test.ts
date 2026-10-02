@@ -138,7 +138,7 @@ describe('as tabelas do painel', () => {
       new Request(`${SITE}${caminho}`, { method: metodo, headers: { 'user-agent': ua } }), env, ctx);
     const r = await ir('Mozilla/5.0 (iPhone) Instagram');
     expect(r.status).toBe(302);
-    expect(r.headers.get('location')).toBe(`${SITE}/#experimente`);
+    expect(r.headers.get("location")).toBe(`${SITE}/?parceria=sefarad#experimente`);
     await ir('Mozilla/5.0 (iPhone)', 'GET', '/Sefarad/');
     await ir('facebookexternalhit/1.1');
     await ir('Mozilla/5.0', 'HEAD');

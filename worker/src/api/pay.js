@@ -19,7 +19,7 @@
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { ip, ipCompleto, requireAccount } from './auth.js';
-import { clampInstallments, getCourse, isSellable, priceCents } from '../lib/catalog.js';
+import { clampInstallments, getCourse, isSellable, parceriaValida, priceCents } from '../lib/catalog.js';
 import {
   acessosVencidos, arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar,
   estornoCriar, estornoDe, estornosDe, estornosParaVarrer, findAccountById, getOrder, grantAccess, log,
@@ -178,8 +178,10 @@ export async function create({ request, env }) {
   const method = pedido;
   const installments = method === 'card' ? clampInstallments(course, body.installments) : 1;
 
-  /* O VALOR sai do catálogo. Nada do corpo da requisição chega até aqui. */
-  const amountCents = priceCents(course, method);
+  /* O VALOR sai do catálogo. Do corpo só vem o NOME de uma parceria, que
+     vale apenas se estiver em PARCERIAS (lib/catalog.js). */
+  const parceria = parceriaValida(body.parceria) ? body.parceria : null;
+  const amountCents = priceCents(course, method, parceria);
 
   /* O PIX anterior ainda pagável deste curso, se houver: ao gerar outro, ele
      é cancelado na Mercado Pago (PAY-B-002). Lido antes de criar o novo. */

@@ -24,12 +24,27 @@ export const getCourse = slug => BY_SLUG.get(String(slug || '')) || null;
 /** Dá para comprar este curso agora? Só o que está publicado e tem conteúdo. */
 export const isSellable = c => !!c && c.status === 'available' && c.engine !== null;
 
-/** Centavos, arredondados uma vez só e a partir do preço do catálogo. */
-export const priceCents = (course, method) => {
+/* Parcerias (02/10/2026): quem chega pelo link de uma parceria paga
+   `price.parceriaBrl` quando ele é MENOR que o preço do dia. A primeira é a
+   associação sefardita (@adsesefarsitas, link /sefarad): R$ 147 também depois
+   do fim do pré-lançamento. O nome vem do pedido, mas só vale se estiver
+   nesta lista; o VALOR continua saindo só do catálogo. */
+export const PARCERIAS = new Set(['sefarad']);
+export const parceriaValida = nome => typeof nome === 'string' && PARCERIAS.has(nome);
+
+/** O preço base em reais: o do dia, ou o da parceria se for menor. */
+export const precoBase = (course, parceria) => {
   const p = course.price;
+  return parceriaValida(parceria) && Number(p.parceriaBrl) > 0 && p.parceriaBrl < p.brl ? p.parceriaBrl : p.brl;
+};
+
+/** Centavos, arredondados uma vez só e a partir do preço do catálogo. */
+export const priceCents = (course, method, parceria = null) => {
+  const p = course.price;
+  const base = precoBase(course, parceria);
   const brl = method === 'pix' && p.pixDiscountPct > 0
-    ? p.brl * (1 - p.pixDiscountPct / 100)
-    : p.brl;
+    ? base * (1 - p.pixDiscountPct / 100)
+    : base;
   return Math.round(brl * 100);
 };
 
