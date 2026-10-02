@@ -394,55 +394,55 @@
   },
   "סֶרֶט": {
    "pt": "filme",
-   "image": null,
+   "image": "/media/vocabulario/filme-afb6e002.webp",
    "imageAlt": "Um rolo de filme de cinema e pipoca.",
    "imagePrompt": "a cinema film reel next to a box of popcorn"
   },
   "שָׁעָה": {
    "pt": "hora",
-   "image": null,
+   "image": "/media/vocabulario/hora-c1bab4ed.webp",
    "imageAlt": "Um relógio de parede sem números.",
    "imagePrompt": "a round wall clock with hands but no numbers"
   },
   "עוֹלָם": {
    "pt": "mundo",
-   "image": null,
+   "image": "/media/vocabulario/mundo-2ee3e8f6.webp",
    "imageAlt": "Um globo terrestre.",
    "imagePrompt": "a globe of the Earth on a stand"
   },
   "צֵל": {
    "pt": "sombra",
-   "image": null,
+   "image": "/media/vocabulario/sombra-0a2cee98.webp",
    "imageAlt": "Uma árvore fazendo sombra no chão.",
    "imagePrompt": "a tree casting a long shadow on the ground"
   },
   "צָהֳרַיִם": {
    "pt": "meio-dia",
-   "image": null,
-   "imageAlt": "O sol bem alto, no meio do céu.",
+   "image": "/media/vocabulario/meio-dia-2a8f6771.webp",
+   "imageAlt": "O sol brilhando alto no céu, acima das nuvens.",
    "imagePrompt": "the sun high at the very top of the sky at noon"
   },
   "תִּיק": {
    "pt": "bolsa / mochila",
-   "image": null,
+   "image": "/media/vocabulario/bolsa-mochila-ff819ed1.webp",
    "imageAlt": "Uma mochila escolar.",
    "imagePrompt": "a school backpack"
   },
   "שֶׁקֶט": {
    "pt": "silêncio",
-   "image": null,
-   "imageAlt": "Uma pessoa com o dedo nos lábios pedindo silêncio.",
+   "image": "/media/vocabulario/silencio-f7616713.webp",
+   "imageAlt": "Uma mulher com o dedo nos lábios pedindo silêncio.",
    "imagePrompt": "an adult holding a finger to the lips asking for silence"
   },
   "טוֹב": {
    "pt": "bom",
-   "image": null,
+   "image": "/media/vocabulario/bom-3fa08fc4.webp",
    "imageAlt": "Uma mão com o polegar para cima.",
    "imagePrompt": "a hand giving a thumbs up"
   },
   "שַׁבָּת": {
    "pt": "sábado / shabat",
-   "image": null,
+   "image": "/media/vocabulario/sabado-shabat-67858d7d.webp",
    "imageAlt": "Duas velas acesas e uma chalá trançada.",
    "imagePrompt": "two lit candles and a braided challah bread on a table"
   },
