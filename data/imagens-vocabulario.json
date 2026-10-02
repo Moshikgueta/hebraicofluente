@@ -286,55 +286,55 @@
   },
   "אֹכֶל": {
    "pt": "comida",
-   "image": null,
+   "image": "/media/vocabulario/comida-bbbc6c3d.webp",
    "imageAlt": "Um prato com comida: arroz, legumes e um pedaço de frango.",
    "imagePrompt": "a plate of food with rice, vegetables and a piece of chicken"
   },
   "מוֹרֶה": {
    "pt": "professor",
-   "image": null,
+   "image": "/media/vocabulario/professor-45a18174.webp",
    "imageAlt": "Um professor em pé ao lado de um quadro, apontando.",
    "imagePrompt": "a male teacher standing next to a blank board, pointing at it"
   },
   "תָּא": {
    "pt": "compartimento · caixa postal",
-   "image": null,
-   "imageAlt": "Uma caixa de correio pequena, com a portinha aberta.",
+   "image": "/media/vocabulario/compartimento-caixa-postal-d6abb853.webp",
+   "imageAlt": "Um professor em pé ao lado de um quadro branco, apontando.",
    "imagePrompt": "a small mailbox with its little door open"
   },
   "יִשְׂרָאֵל": {
    "pt": "Israel",
-   "image": null,
+   "image": "/media/vocabulario/israel-73265f8c.webp",
    "imageAlt": "A bandeira de Israel tremulando.",
    "imagePrompt": "the flag of Israel waving on a pole"
   },
   "אֲדָמָה": {
    "pt": "terra / solo",
-   "image": null,
+   "image": "/media/vocabulario/terra-solo-33d3c517.webp",
    "imageAlt": "Um monte de terra escura com um broto saindo.",
    "imagePrompt": "a mound of dark soil with a small sprout growing out of it"
   },
   "מִדָּה": {
    "pt": "medida / tamanho",
-   "image": null,
+   "image": "/media/vocabulario/medida-tamanho-c1483dbf.webp",
    "imageAlt": "Uma fita métrica amarela desenrolada.",
    "imagePrompt": "a yellow measuring tape partly unrolled, no numbers visible"
   },
   "מְדַבֵּר": {
    "pt": "falo, fala",
-   "image": null,
-   "imageAlt": "Um homem falando, com balões de fala vazios.",
+   "image": "/media/vocabulario/falo-fala-d6ce355e.webp",
+   "imageAlt": "Uma trena amarela com a fita puxada.",
    "imagePrompt": "a man talking, with empty speech bubbles next to his mouth"
   },
   "שָׁלוֹם": {
    "pt": "paz / olá / tchau",
-   "image": null,
-   "imageAlt": "Duas pessoas se cumprimentando com um aceno.",
+   "image": "/media/vocabulario/paz-ola-tchau-9aa85613.webp",
+   "imageAlt": "Um homem falando, com balões de fala vazios.",
    "imagePrompt": "two adults waving hello to each other"
   },
   "שִׁיר": {
    "pt": "canção",
-   "image": null,
+   "image": "/media/vocabulario/cancao-38510399.webp",
    "imageAlt": "Notas musicais saindo de um rádio antigo.",
    "imagePrompt": "musical notes floating out of an old radio"
   },
