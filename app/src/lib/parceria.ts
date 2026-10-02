@@ -1,7 +1,7 @@
 /* Parcerias (02/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Quem chega por hebraicofluente.com.br/sefarad (a associação sefardita,
- * @adsesefarsitas) vem para a capa com `?parceria=sefarad`. A capa guarda o
+ * @adsefaraditas) vem para a capa com `?parceria=sefarad`. A capa guarda o
  * nome neste aparelho, e o checkout mostra e pede o preço da parceria
  * (`price.parceriaBrl`) quando ele é menor que o preço do dia - hoje, R$ 147
  * também depois do fim do pré-lançamento.
@@ -13,7 +13,7 @@
 import type { CatalogCourse } from './catalog';
 
 export const PARCERIAS: Record<string, { perfil: string }> = {
-  sefarad: { perfil: '@adsesefarsitas' }
+  sefarad: { perfil: '@adsefaraditas' }
 };
 
 const CHAVE = 'hf-parceria-v1';
