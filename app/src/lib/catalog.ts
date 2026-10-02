@@ -44,6 +44,8 @@ export type CoursePrice = {
   pixDiscountPct: number;
   /** Último dia do preço de pré-lançamento (AAAA-MM-DD), quando há. */
   preLancamentoAte?: string | null;
+  /** Preço para quem chega pelo link de uma parceria (lib/parceria.ts). */
+  parceriaBrl?: number | null;
 };
 
 export type CatalogModule = {

@@ -51,7 +51,7 @@
         "Quem vai viajar, tem família israelense ou lê por motivo religioso e quer decodificar sozinho."
       ],
       "requiresPurchase": true,
-      "price": { "brl": 147, "listBrl": 297, "installments": 12, "pixDiscountPct": 10, "preLancamentoAte": "2026-10-31" },
+      "price": { "brl": 147, "listBrl": 297, "installments": 12, "pixDiscountPct": 10, "preLancamentoAte": "2026-10-31", "parceriaBrl": 147 },
       "accessMonths": 12
     },
 

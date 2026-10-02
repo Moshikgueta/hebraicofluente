@@ -56,7 +56,7 @@ type AccountValue = {
   /** A caixa do perfil do aviso do próximo curso. */
   setNovidades(quero: boolean): Promise<void>;
 
-  startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number }):
+  startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string }):
     Promise<Order & { redirectUrl?: string }>;
   orderStatus(id: string): Promise<Order>;
   requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }>;

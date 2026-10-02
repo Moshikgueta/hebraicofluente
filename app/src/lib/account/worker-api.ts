@@ -148,7 +148,7 @@ export class WorkerApi implements PlatformApi {
     await call<{ ok: true }>('/novidades', { method: 'PUT', body: JSON.stringify({ quero }) });
   }
 
-  startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number }) {
+  startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string }) {
     return call<Order & { redirectUrl?: string }>('/pay/create', {
       method: 'POST', body: JSON.stringify(input)
     });
