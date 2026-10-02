@@ -502,55 +502,55 @@
   },
   "עֶרֶב": {
    "pt": "noite, fim de tarde",
-   "image": null,
-   "imageAlt": "O pôr do sol no fim da tarde.",
+   "image": "/media/vocabulario/noite-fim-de-tarde-fde56c1a.webp",
+   "imageAlt": "O pôr do sol sobre a água, no fim da tarde.",
    "imagePrompt": "a sunset at the end of the afternoon"
   },
   "אָבִיב": {
    "pt": "primavera",
-   "image": null,
+   "image": "/media/vocabulario/primavera-f34c3923.webp",
    "imageAlt": "Uma árvore florida na primavera.",
    "imagePrompt": "a tree in full spring blossom"
   },
   "זָהָב": {
    "pt": "ouro",
-   "image": null,
+   "image": "/media/vocabulario/ouro-ee9ae44e.webp",
    "imageAlt": "Barras de ouro empilhadas.",
    "imagePrompt": "a small stack of gold bars"
   },
   "צ׳יפס": {
    "pt": "batata frita",
-   "image": null,
-   "imageAlt": "Um pacote de batata frita.",
+   "image": "/media/vocabulario/batata-frita-dbbf1474.webp",
+   "imageAlt": "Batatas fritas num cone de papel.",
    "imagePrompt": "a portion of french fries in a paper cone, no text"
   },
   "צ׳ילה": {
    "pt": "Chile",
-   "image": null,
+   "image": "/media/vocabulario/chile-6e625e7b.webp",
    "imageAlt": "A bandeira do Chile.",
    "imagePrompt": "the flag of Chile waving on a pole"
   },
   "סנדוויץ׳": {
    "pt": "sanduíche",
-   "image": null,
+   "image": "/media/vocabulario/sanduiche-76bc4a20.webp",
    "imageAlt": "Um sanduíche com recheio.",
    "imagePrompt": "a sandwich with lettuce, tomato and cheese"
   },
   "צ׳כיה": {
    "pt": "Tchéquia",
-   "image": null,
+   "image": "/media/vocabulario/tchequia-0023e947.webp",
    "imageAlt": "A bandeira da Tchéquia.",
    "imagePrompt": "the flag of the Czech Republic waving on a pole"
   },
   "ג׳ינס": {
    "pt": "calça jeans",
-   "image": null,
+   "image": "/media/vocabulario/calca-jeans-0fb4e86e.webp",
    "imageAlt": "Uma calça jeans.",
    "imagePrompt": "a pair of blue jeans"
   },
   "ג׳ירפה": {
    "pt": "girafa",
-   "image": null,
+   "image": "/media/vocabulario/girafa-c0280e57.webp",
    "imageAlt": "Uma girafa.",
    "imagePrompt": "a giraffe standing"
   },
