@@ -695,10 +695,10 @@ export async function createOrder(env, o) {
   const id = newId('HF');
   await env.DB.prepare(
     `INSERT INTO orders (id, account_id, course_slug, amount_cents, currency, method,
-                         installments, status, provider, created_at)
-     VALUES (?, ?, ?, ?, 'BRL', ?, ?, 'pending', 'mercadopago', ?)`
+                         installments, status, provider, created_at, parceria)
+     VALUES (?, ?, ?, ?, 'BRL', ?, ?, 'pending', 'mercadopago', ?, ?)`
   ).bind(id, o.accountId, o.courseSlug, o.amountCents, o.method,
-         o.installments || 1, now()).run();
+         o.installments || 1, now(), o.parceria || null).run();
   return getOrder(env, id);
 }
 

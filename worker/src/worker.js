@@ -41,6 +41,7 @@ import * as depoimentos from './api/depoimentos.js';
 import * as estatisticas from './api/estatisticas.js';
 import * as adminCodigo from './api/admin-codigo.js';
 import * as estornosAdmin from './api/estornos-admin.js';
+import * as vendasAdmin from './api/vendas-admin.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -132,7 +133,9 @@ const ROUTES = {
   /* Os estornos que dependem do dono (PIX direto, recusados): listar e
      marcar "já devolvi". Ver api/estornos-admin.js. */
   'GET /api/admin/estornos': estornosAdmin.listar,
-  'POST /api/admin/estornos/feito': estornosAdmin.feito
+  'POST /api/admin/estornos/feito': estornosAdmin.feito,
+  /* Quem comprou, e por qual link. Só leitura. Ver api/vendas-admin.js. */
+  'GET /api/admin/vendas': vendasAdmin.listar
 };
 
 export default {

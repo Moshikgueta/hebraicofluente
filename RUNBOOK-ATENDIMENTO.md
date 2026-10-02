@@ -11,6 +11,8 @@ As ferramentas:
 - **/admin/estornos**: os estornos que dependem de você (PIX direto, pedido
   liberado à mão, estorno automático que falhou), com o botão "Já devolvi o
   dinheiro".
+- **/admin/vendas**: quem comprou (nome, e-mail, valor, data) e se a compra
+  veio pelo link de campanha (hebraicofluente.com.br/sefarad).
 - **/admin/depoimentos**: os depoimentos, para aprovar ou recusar.
 - **Painel da Mercado Pago**: o pagamento, o estorno total ou parcial.
 - **wrangler**, na sua máquina, para consultas que o Actions não faz:
