@@ -44,7 +44,7 @@ describe('a tela mostra o mesmo preço que o servidor cobra', () => {
   const curso = getCourse(FLAGSHIP)!;
   const virado: CatalogCourse = { ...curso, price: { ...curso.price, brl: 297, listBrl: null, preLancamentoAte: null } };
   it('só com parceria válida e preço menor', () => {
-    expect(PARCERIAS.sefarad?.perfil).toBe('@adsesefarsitas');
+    expect(PARCERIAS.sefarad?.perfil).toBe('@adsefaraditas');
     expect(precoDaParceria(virado, 'sefarad')).toBe(147);
     expect(precoDaParceria(virado, null)).toBeNull();
     expect(precoDaParceria(virado, 'outra')).toBeNull();
