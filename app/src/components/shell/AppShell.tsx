@@ -18,6 +18,7 @@
  * to read than a 600px one, and the Hebrew is the subject at every size.
  */
 
+import { RedesSociais } from './RedesSociais';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, type ReactNode } from 'react';
@@ -293,6 +294,7 @@ function RodapeDeAjuda() {
           ))}
         </ul>
       </nav>
+      <RedesSociais classe="mt-1" />
     </footer>
   );
 }
