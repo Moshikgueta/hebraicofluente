@@ -83,6 +83,25 @@ export async function registrar({ request, env }) {
   return new Response(null, { status: 204 });
 }
 
+/* Links de campanha (02/10/2026): hebraicofluente.com.br/sefarad, o link da
+   parceria com a associação sefardita. Conta só o total de visitas por dia,
+   na mesma tabela e com a mesma regra das outras contagens: sem conta,
+   e-mail, IP, horário nem cookie. A visita leva direto ao teste grátis. */
+export const LINKS_DE_CAMPANHA = new Map([['/sefarad', 'sefarad']]);
+const ROBO = /bot|crawl|spider|preview|facebookexternalhit|whatsapp|telegram|slack|discord|curl|wget|python|headless/i;
+
+export async function contarCampanha(env, origem, request) {
+  if (request.method !== 'GET' || ROBO.test(request.headers.get('user-agent') || '')) return;
+  try {
+    await env.DB.prepare(
+      `INSERT INTO estatisticas (dia, chave, n) VALUES (?1, ?2, 1)
+       ON CONFLICT(dia, chave) DO UPDATE SET n = n + 1`
+    ).bind(hojeBrasilia(), `o|${origem}`).run();
+  } catch (e) {
+    console.error('campanha', e && e.stack || e);
+  }
+}
+
 /** GET /api/admin/estatisticas?dias=30 - as somas do período. */
 export async function ler({ request, env }) {
   const { erro } = await exigirAdmin(request, env);
@@ -97,6 +116,7 @@ export async function ler({ request, env }) {
   } catch { /* tabela ausente: nada ainda */ }
   const respostas = new Map();
   const etapas = [];
+  const campanhas = [];
   for (const { chave, n } of linhas || []) {
     const p = String(chave).split('|');
     if (p[0] === 'r' && p.length === 4) {
@@ -107,9 +127,11 @@ export async function ler({ request, env }) {
       respostas.set(k, r);
     } else if (p[0] === 'e' && p.length === 3) {
       etapas.push({ licao: p[1], etapa: Number(p[2]), n });
+    } else if (p[0] === 'o' && p.length === 2) {
+      campanhas.push({ origem: p[1], visitas: n });
     }
   }
-  return json({ dias, desde, respostas: [...respostas.values()], etapas });
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas });
 }
 
 /** As linhas de mais de um ano (chamado pela varredura, em alertas.js). */

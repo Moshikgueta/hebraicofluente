@@ -131,4 +131,23 @@ describe('as tabelas do painel', () => {
     expect(p[0]).toEqual({ id: 'alef', comecaram: 10, terminaram: 7, taxa: 0.7 });
     expect(p[1]!.taxa).toBeNull();
   });
+
+  it('o link /sefarad conta a visita e leva ao teste grátis', async () => {
+    const env = envDeTeste({ ADMIN_EMAILS: 'dono@exemplo.com' }) as Env;
+    const ir = (ua: string, metodo = 'GET', caminho = '/sefarad') => worker.fetch(
+      new Request(`${SITE}${caminho}`, { method: metodo, headers: { 'user-agent': ua } }), env, ctx);
+    const r = await ir('Mozilla/5.0 (iPhone) Instagram');
+    expect(r.status).toBe(302);
+    expect(r.headers.get('location')).toBe(`${SITE}/#experimente`);
+    await ir('Mozilla/5.0 (iPhone)', 'GET', '/Sefarad/');
+    await ir('facebookexternalhit/1.1');
+    await ir('Mozilla/5.0', 'HEAD');
+    expect(env.DB.bruto.prepare("SELECT n FROM estatisticas WHERE chave = 'o|sefarad'").get()).toEqual({ n: 2 });
+    const r2 = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`,
+      { aceitouTermos: true, declarouIdade: true, name: 'Dono', email: 'dono@exemplo.com', password: 'senha-boa-123' }), env, ctx });
+    const dono = await comoAdmin(env, cookieDe(r2));
+    const d = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx))
+      .json() as { campanhas: unknown[] };
+    expect(d.campanhas).toEqual([{ origem: 'sefarad', visitas: 2 }]);
+  });
 });

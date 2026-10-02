@@ -13,7 +13,8 @@ import {
   ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
 } from '@/lib/painel-estatisticas';
 
-type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[] };
+type Campanha = { origem: string; visitas: number };
+type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[] };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; dados: Dados };
 
@@ -109,6 +110,21 @@ export function EstatisticasClient() {
                   </table>
                 </div>
               ) : <p className="font-ui text-[14px] m-0">Ainda não há respostas bastantes para comparar.</p>}
+            </section>
+
+            <section className="grid gap-3">
+              <h2 className="text-[20px] font-semibold m-0">Links de campanha</h2>
+              <p className="font-ui text-[14px] text-ink-muted m-0">
+                Visitas que entraram pelo link curto e foram levadas ao teste grátis. Robôs de pré-visualização não contam.
+              </p>
+              <ul className="list-none p-0 m-0 grid gap-1 font-ui text-[15px]">
+                <li className="flex justify-between gap-4 border-t border-[color:var(--line-soft)] py-2">
+                  <span>hebraicofluente.com.br/sefarad</span>
+                  <span className="tabular-nums font-semibold">
+                    {(estado.dados.campanhas || []).find(c => c.origem === 'sefarad')?.visitas ?? 0} visitas
+                  </span>
+                </li>
+              </ul>
             </section>
 
             <section className="grid gap-3">
