@@ -191,6 +191,18 @@ async function responder(request, env, ctx) {
       return Response.redirect(url.toString(), 301);
     }
 
+    /* ── links de campanha ───────────────────────────────────────────
+       /sefarad (parceria com a associação sefardita, 02/10/2026): soma uma
+       visita do dia e leva ao teste grátis da capa. 302, e não 301: o
+       navegador não pode guardar o desvio, senão a segunda visita da mesma
+       pessoa nem passa por aqui. Ver api/estatisticas.js. */
+    const campanha = estatisticas.LINKS_DE_CAMPANHA.get(path.toLowerCase());
+    if (campanha && (request.method === 'GET' || request.method === 'HEAD')) {
+      const conta = estatisticas.contarCampanha(env, campanha, request);
+      if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(conta); else await conta;
+      return new Response(null, { status: 302, headers: { Location: `${url.origin}/#experimente`, 'Cache-Control': 'no-store' } });
+    }
+
     /* ── a API ──────────────────────────────────────────────────────── */
     if (path.startsWith('/api/')) {
       /* Escrita só da nossa própria origem.
