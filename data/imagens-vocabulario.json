@@ -448,55 +448,55 @@
   },
   "בֹּקֶר": {
    "pt": "manhã",
-   "image": null,
+   "image": "/media/vocabulario/manha-99cabe3b.webp",
    "imageAlt": "O sol nascendo atrás de casas.",
    "imagePrompt": "the sun rising behind a few houses in the morning"
   },
   "דֶּרֶךְ": {
    "pt": "caminho",
-   "image": null,
+   "image": "/media/vocabulario/caminho-7198216c.webp",
    "imageAlt": "Um caminho de terra atravessando um campo.",
    "imagePrompt": "a dirt path winding through a green field"
   },
   "כִּתָּה": {
    "pt": "sala de aula, turma",
-   "image": null,
+   "image": "/media/vocabulario/sala-de-aula-turma-6ee6a56b.webp",
    "imageAlt": "Uma sala de aula com carteiras e um quadro.",
    "imagePrompt": "a classroom with desks and a blank board"
   },
   "לָלֶכֶת": {
    "pt": "ir, caminhar",
-   "image": null,
+   "image": "/media/vocabulario/ir-caminhar-6c2c3a8d.webp",
    "imageAlt": "Uma pessoa caminhando de perfil.",
    "imagePrompt": "an adult walking, side view"
   },
   "פֶּה": {
    "pt": "boca",
-   "image": null,
+   "image": "/media/vocabulario/boca-e6ce39cc.webp",
    "imageAlt": "Uma boca sorrindo.",
    "imagePrompt": "a smiling mouth, close-up, simple"
   },
   "פָּרָה": {
    "pt": "vaca",
-   "image": null,
+   "image": "/media/vocabulario/vaca-9c34f2f0.webp",
    "imageAlt": "Uma vaca malhada no pasto.",
    "imagePrompt": "a spotted cow standing in a pasture"
   },
   "פִּתָּה": {
    "pt": "pão sírio",
-   "image": null,
+   "image": "/media/vocabulario/pao-sirio-c6413cf5.webp",
    "imageAlt": "Um pão sírio redondo, aberto ao meio.",
    "imagePrompt": "a round pita bread, one cut open"
   },
   "שְׂמֹאל": {
    "pt": "esquerda",
-   "image": null,
+   "image": "/media/vocabulario/esquerda-8845e56c.webp",
    "imageAlt": "Uma seta apontando para a esquerda.",
    "imagePrompt": "a big arrow pointing to the left"
   },
   "שָׂדֶה": {
    "pt": "campo",
-   "image": null,
+   "image": "/media/vocabulario/campo-96ce001f.webp",
    "imageAlt": "Um campo verde aberto.",
    "imagePrompt": "a wide open green field under a clear sky"
   },
