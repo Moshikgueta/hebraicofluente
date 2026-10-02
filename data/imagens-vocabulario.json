@@ -340,55 +340,55 @@
   },
   "אַרְבַּע": {
    "pt": "quatro",
-   "image": null,
+   "image": "/media/vocabulario/quatro-473fcd44.webp",
    "imageAlt": "Quatro maçãs vermelhas em fila.",
    "imagePrompt": "exactly four red apples in a row"
   },
   "יוֹם": {
    "pt": "dia",
-   "image": null,
+   "image": "/media/vocabulario/dia-b32a7885.webp",
    "imageAlt": "Um dia claro com sol e nuvens sobre um campo.",
    "imagePrompt": "a bright daytime sky with sun and a few clouds over a field"
   },
   "אֶחָד": {
    "pt": "um",
-   "image": null,
+   "image": "/media/vocabulario/um-d06e14fa.webp",
    "imageAlt": "Uma única maçã vermelha.",
    "imagePrompt": "exactly one red apple alone in the centre"
   },
   "שִׂמְחָה": {
    "pt": "alegria",
-   "image": null,
+   "image": "/media/vocabulario/alegria-08f24cdb.webp",
    "imageAlt": "Uma pessoa pulando de alegria, braços para cima.",
    "imagePrompt": "an adult jumping with joy, arms raised"
   },
   "חֲמִשָּׁה": {
    "pt": "cinco",
-   "image": null,
+   "image": "/media/vocabulario/cinco-a79611e9.webp",
    "imageAlt": "Cinco maçãs vermelhas em fila.",
    "imagePrompt": "exactly five red apples in a row"
   },
   "טִיּוּל": {
    "pt": "passeio",
-   "image": null,
+   "image": "/media/vocabulario/passeio-c1722663.webp",
    "imageAlt": "Uma pessoa de mochila caminhando numa trilha.",
    "imagePrompt": "a person with a backpack walking on a hiking trail"
   },
   "טָרִי": {
    "pt": "fresco",
-   "image": null,
+   "image": "/media/vocabulario/fresco-4c7888f2.webp",
    "imageAlt": "Legumes frescos com gotas de água.",
    "imagePrompt": "fresh vegetables with water droplets on them"
   },
   "סְטוּדֶנְט": {
    "pt": "estudante",
-   "image": null,
-   "imageAlt": "Um estudante jovem com livros debaixo do braço.",
+   "image": "/media/vocabulario/estudante-a7408c76.webp",
+   "imageAlt": "Uma estudante jovem de mochila, com livros nos braços.",
    "imagePrompt": "a young adult student carrying books under one arm"
   },
   "סוֹד": {
    "pt": "segredo",
-   "image": null,
+   "image": "/media/vocabulario/segredo-47455c0b.webp",
    "imageAlt": "Uma pessoa cochichando no ouvido de outra.",
    "imagePrompt": "one adult whispering into another adult's ear"
   },
