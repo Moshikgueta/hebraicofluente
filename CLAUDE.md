@@ -899,6 +899,13 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   "erro" fecha o pedido pelo aviso dela, e antes a linha do estorno ficava aberta para sempre.
 - O lembrete diário (alertas.js) aponta para /admin/estornos no caso do PIX direto.
 
+## Quem comprou: /admin/vendas (02/10/2026)
+- `GET /api/admin/vendas` (com o segundo fator, só leitura) lista as últimas 200 compras `paid` ou
+  `refunded`: nome, e-mail, valor, meio, parcelas, data e `parceria`. Pendentes, vencidas e recusadas
+  ficam de fora. A página /admin/vendas mostra o total pago e quantas vieram pelo link de campanha.
+- `orders.parceria` (migração 0002) guarda o nome da parceria válida que o checkout mandou
+  (`sefarad`); `createOrder` grava, pay.js passa. Pedidos anteriores ficam NULL.
+
 ## Capa mais curta (30/09/2026, decisão do dono)
 - Saíram 7 seções que repetiam outra: Transformação, Problema (`#como`), Demonstração (`#curso`),
   Recursos, AulaAmostra (`#aula`), Jornada e AlemDoAlfabeto (`#alem`). No celular, de 19 seções

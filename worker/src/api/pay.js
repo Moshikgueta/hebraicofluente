@@ -189,7 +189,7 @@ export async function create({ request, env }) {
     ? await pixPendente(env, account.id, course.slug) : null;
 
   const order = await createOrder(env, {
-    accountId: account.id, courseSlug: course.slug, amountCents, method, installments
+    accountId: account.id, courseSlug: course.slug, amountCents, method, installments, parceria
   });
   /* A versão dos Termos que vale para este pedido (LEGAL-104). */
   await gravarTermosDoPedido(env, order.id);
