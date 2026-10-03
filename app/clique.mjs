@@ -356,6 +356,10 @@ for (const width of LARGURAS) {
        a forma escrita no código e acusava uma seção que estava certa. */
     if (!/1 de 22 letras/i.test(fim)) erro(`${width}px: o fim da demo não mostra 1 de 22`);
     if (!/acabou de aprender sua primeira letra/i.test(fim)) erro(`${width}px: falta a frase da conquista`);
+    /* O resultado: o que a pessoa fez. Ela riscou o quadro, então a escrita entra. */
+    if (!/O que você fez agora/i.test(fim)) erro(`${width}px: falta o resultado no fim do teste`);
+    else if (!/Escreveu o Álef com o dedo/.test(fim)) erro(`${width}px: o resultado não conta a escrita de quem escreveu`);
+    else log(`  ✓ ${String(width).padStart(4)}px  o fim mostra o que a pessoa fez`);
 
     /* O CTA tem de levar ao FLUXO DE COMPRA, e não a mais uma página de
        texto. É o ponto de maior intenção da visita inteira. */
