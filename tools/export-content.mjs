@@ -720,7 +720,9 @@ function main() {
      pode ir ao ar com um botão "Ouvir" mudo. */
   const AMOSTRA_AUDIO = {
     sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם',
-    shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד'
+    shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד',
+    alef: 'אָלֶף', 'alef-a': 'אַ', 'alef-e': 'אֶ', 'alef-i': 'אִ', 'alef-o': 'אוֹ', 'alef-u': 'אוּ',
+    aba: 'אַבָּא', etmol: 'אֶתְמוֹל', ochel: 'אֹכֶל'
   };
   const amostraAudio = join(pub, 'amostra-audio');
   rmSync(amostraAudio, { recursive: true, force: true });

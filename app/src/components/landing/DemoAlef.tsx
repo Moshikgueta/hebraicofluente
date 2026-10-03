@@ -59,6 +59,8 @@ import { TraceBoard, type QuadroHandle, type Veredito } from '@/components/learn
 import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { track } from '@/lib/analytics';
 import { contarEtapaDaDemo, type EtapaDaDemo } from '@/lib/funil-demo';
+import { type NomeAmostra } from '@/lib/amostra-audio';
+import { useTocador } from './useTocador';
 import { Container, H2, Lead, Reveal, Check } from './base';
 
 /* A letra vem do CATÁLOGO, e não escrita aqui: o glifo e o nome da primeira
@@ -105,7 +107,17 @@ const PALAVRA = { he: 'אַבָּא', translit: 'abá', pt: 'pai' } as const;
    ensina e deixa tentar de novo. Nada se conta nem se guarda, como no resto
    da demo. */
 type Alternativa = { he: string; rotulo?: string; certa: boolean; porque: string };
-type Rodada = { pergunta: string; mostra?: string; opcoes: readonly Alternativa[]; acerto: string };
+type Rodada = {
+  pergunta: string; mostra?: string; opcoes: readonly Alternativa[]; acerto: string;
+  /** Rodada de ouvir: o botão toca esta gravação, e não há texto para ler. */
+  ouvir?: NomeAmostra;
+  /** No acerto, um botão para ouvir a palavra na voz do professor. */
+  ouvirAcerto?: { clipe: NomeAmostra; rotulo: string };
+};
+
+/* A voz do professor (03/10/2026, a pedido do dono): as gravações que a
+   lição 1 já usa, publicadas como amostra (lib/amostra-audio.ts). */
+type Tocador = ReturnType<typeof useTocador>;
 
 const COMPARAR: readonly Rodada[] = [{
   pergunta: 'E agora: qual das duas é o Álef?',
@@ -117,8 +129,8 @@ const COMPARAR: readonly Rodada[] = [{
 }];
 
 const SILABAS = [
-  { he: 'אַ', som: 'a' }, { he: 'אֶ', som: 'e' }, { he: 'אִ', som: 'i' },
-  { he: 'אוֹ', som: 'o' }, { he: 'אוּ', som: 'u' }
+  { he: 'אַ', som: 'a', clipe: 'alef-a' }, { he: 'אֶ', som: 'e', clipe: 'alef-e' }, { he: 'אִ', som: 'i', clipe: 'alef-i' },
+  { he: 'אוֹ', som: 'o', clipe: 'alef-o' }, { he: 'אוּ', som: 'u', clipe: 'alef-u' }
 ] as const;
 
 const VOGAIS: readonly Rodada[] = [
@@ -148,6 +160,16 @@ const VOGAIS: readonly Rodada[] = [
       { he: 'i', rotulo: '«i»', certa: false, porque: 'O «i» é um ponto. Aqui há um tracinho, e o tracinho é a vogal «a».' }
     ],
     acerto: 'O tracinho embaixo é a vogal «a». Você acabou de ler três sílabas.'
+  },
+  /* A rodada de ouvir: o exercício «Ouvir a sílaba» das lições. */
+  {
+    pergunta: 'Agora ouça e toque na sílaba que você ouviu.', ouvir: 'alef-u',
+    opcoes: [
+      { he: 'אַ', certa: false, porque: 'Esta é «a», com o tracinho embaixo. O que você ouviu foi «u»: o ו com um ponto no meio.' },
+      { he: 'אוּ', certa: true, porque: '' },
+      { he: 'אִ', certa: false, porque: 'Esta é «i», com o ponto embaixo. O que você ouviu foi «u»: o ו com um ponto no meio.' }
+    ],
+    acerto: 'אוּ é «u». Você ouviu o som e achou a forma escrita.'
   }
 ];
 
@@ -160,7 +182,8 @@ const ACHAR: readonly Rodada[] = [
       { he: 'תּוֹדָה', certa: false, porque: 'Esta começa com Tav, a letra da direita. Em hebraico a palavra começa à direita.' },
       { he: 'בַּיִת', certa: false, porque: 'Esta começa com Bet, a letra da direita. Em hebraico a palavra começa à direita.' }
     ],
-    acerto: 'אֶתְמוֹל se lê «etmol» e quer dizer «ontem». O Álef está à direita, segurando o «e».'
+    acerto: 'אֶתְמוֹל se lê «etmol» e quer dizer «ontem». O Álef está à direita, segurando o «e».',
+    ouvirAcerto: { clipe: 'etmol', rotulo: 'Ouvir «etmol»' }
   },
   {
     pergunta: 'Mais uma: qual começa com Álef?',
@@ -170,7 +193,8 @@ const ACHAR: readonly Rodada[] = [
       { he: 'יֶלֶד', certa: false, porque: 'Esta começa com Yod, a letra da direita. Procure o Álef na ponta direita.' },
       { he: 'אֹכֶל', certa: true, porque: '' }
     ],
-    acerto: 'אֹכֶל se lê «óchel» e quer dizer «comida». Duas palavras de verdade, e você achou o Álef nas duas.'
+    acerto: 'אֹכֶל se lê «óchel» e quer dizer «comida». Duas palavras de verdade, e você achou o Álef nas duas.',
+    ouvirAcerto: { clipe: 'ochel', rotulo: 'Ouvir «óchel»' }
   }
 ];
 
@@ -218,6 +242,7 @@ export function DemoAlef({
   const [temTinta, setTemTinta] = useState(false);
   const [veredito, setVeredito] = useState<Veredito | null>(null);
   const secao = useRef<HTMLElement>(null);
+  const tocador = useTocador();
 
   /* Quantos visitantes chegam a VER o teste: o topo do funil do painel. É o
      único efeito da seção, e ele só conta - não mexe em nada da demo. */
@@ -335,7 +360,8 @@ export function DemoAlef({
                       você ouve vem do sinal que aparece embaixo ou ao lado dele. É por isso
                       que o Álef abre o alfabeto e abre tantas palavras.
                     </p>
-                    <div>
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <BotaoOuvir clipe="alef" rotulo="Ouvir o nome da letra" tocador={tocador} />
                       <button
                         type="button"
                         onClick={iniciar}
@@ -482,7 +508,7 @@ export function DemoAlef({
                     quer rabiscar. O botão de seguir está sempre vivo. */}
               {/* ── 3 · comparar ─────────────────────────────────────── */}
               {etapa === E.comparar && (
-                <Rodadas key="comparar" rodadas={COMPARAR} etapa="comparar"
+                <Rodadas key="comparar" rodadas={COMPARAR} etapa="comparar" tocador={tocador}
                          seguir="Agora as vogais →" onFim={() => avancar(E.vogais)} />
               )}
 
@@ -497,19 +523,32 @@ export function DemoAlef({
                       Uma letra, cinco sons.
                     </p>
                     <p className="font-ui text-[16px] leading-[1.65] text-ink-muted max-w-[56ch] m-0">
-                      O Álef não tem som: quem dá o som é o sinal de vogal que vem com ele. Olhe a
-                      tabela e responda.
+                      O Álef não tem som: quem dá o som é o sinal de vogal que vem com ele. Toque em
+                      cada sílaba para ouvir o professor, e depois responda.
                     </p>
                   </div>
                   <ul className="grid grid-cols-5 gap-1.5 sm:gap-2 list-none p-0 m-0 max-w-[420px]" aria-label="As vogais com o Álef">
                     {SILABAS.map(x => (
-                      <li key={x.som} className="rounded-[14px] bg-[var(--sand)] py-2.5 grid justify-items-center min-w-0">
-                        <He size="lg" tone="navy">{x.he}</He>
-                        <span className="font-ui text-[15px] font-semibold text-ink-muted">«{x.som}»</span>
+                      <li key={x.som} className="min-w-0">
+                        <button
+                          type="button"
+                          onClick={() => tocador.tocar(x.clipe)}
+                          aria-label={`Ouvir «${x.som}»`}
+                          className={`w-full rounded-[14px] py-2.5 grid justify-items-center min-h-[44px]
+                                      transition-colors duration-[200ms]
+                                      focus-visible:outline focus-visible:outline-2
+                                      focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
+                            ${tocador.tocando === x.clipe ? 'bg-[var(--teal-soft)]' : 'bg-[var(--sand)] hover:bg-[var(--teal-soft)]'}`}
+                        >
+                          <He size="lg" tone="navy">{x.he}</He>
+                          <span className="font-ui text-[15px] font-semibold text-ink-muted">
+                            <span aria-hidden>🔊 </span>«{x.som}»
+                          </span>
+                        </button>
                       </li>
                     ))}
                   </ul>
-                  <Rodadas key="vogais" rodadas={VOGAIS} etapa="vogais"
+                  <Rodadas key="vogais" rodadas={VOGAIS} etapa="vogais" tocador={tocador}
                            seguir="Agora escreva você →" onFim={() => avancar(E.escrever)} />
                 </div>
               )}
@@ -637,7 +676,7 @@ export function DemoAlef({
 
               {/* ── 6 · achar ────────────────────────────────────────── */}
               {etapa === E.achar && (
-                <Rodadas key="achar" rodadas={ACHAR} etapa="achar"
+                <Rodadas key="achar" rodadas={ACHAR} etapa="achar" tocador={tocador}
                          seguir="Agora leia uma palavra →" onFim={() => avancar(E.ler)} />
               )}
 
@@ -684,6 +723,7 @@ export function DemoAlef({
                       {PALAVRA.translit}
                     </p>
                     <p className="font-ui text-[15px] text-ink-muted m-0">«{PALAVRA.pt}»</p>
+                    <BotaoOuvir clipe="aba" rotulo="Ouvir o professor" tocador={tocador} />
                   </div>
                 </div>
               )}
@@ -787,9 +827,10 @@ export function DemoAlef({
 /* Uma sequência de perguntas de escolha, no formato da etapa «Reconhecer»:
    o erro diz onde olhar e deixa tentar de novo; o acerto mostra o que a
    pessoa acabou de aprender e um botão para a próxima rodada. */
-function Rodadas({ rodadas, etapa, seguir, onFim }: {
+function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
   rodadas: readonly Rodada[];
   etapa: string;
+  tocador: Tocador;
   seguir: string;
   onFim: () => void;
 }) {
@@ -815,6 +856,7 @@ function Rodadas({ rodadas, etapa, seguir, onFim }: {
         <p className="font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.02em] text-ink m-0">
           {rodada.pergunta}
         </p>
+        {rodada.ouvir && <BotaoOuvir clipe={rodada.ouvir} rotulo="Ouvir" tocador={tocador} />}
         {rodada.mostra && (
           <span className="rounded-[16px] bg-[var(--sand)] px-5 py-1.5"><He size="xl" tone="navy">{rodada.mostra}</He></span>
         )}
@@ -825,7 +867,7 @@ function Rodadas({ rodadas, etapa, seguir, onFim }: {
         )}
       </div>
 
-      <ul className={`grid gap-3 list-none p-0 m-0
+      <ul data-opcoes className={`grid gap-3 list-none p-0 m-0
                       ${rodada.opcoes.length === 2 ? 'grid-cols-2 max-w-[360px]'
                         : rodada.opcoes.length === 3 ? 'grid-cols-3 max-w-[480px]' : 'grid-cols-2 sm:grid-cols-4'}`}>
         {rodada.opcoes.map((o, i) => {
@@ -879,7 +921,10 @@ function Rodadas({ rodadas, etapa, seguir, onFim }: {
             <p className="font-ui text-[15px] leading-[1.6] text-[var(--teal-body)] m-0">
               <TextoComHebraico texto={rodada.acerto} />
             </p>
-            <div>
+            <div className="flex flex-wrap items-center gap-2.5">
+              {rodada.ouvirAcerto && (
+                <BotaoOuvir clipe={rodada.ouvirAcerto.clipe} rotulo={rodada.ouvirAcerto.rotulo} tocador={tocador} />
+              )}
               <button
                 type="button"
                 onClick={proxima}
@@ -903,12 +948,31 @@ function Rodadas({ rodadas, etapa, seguir, onFim }: {
               <span className="font-ui font-bold text-[17px] text-[var(--gold-ink)]">Quase.</span>
             </p>
             <p className="font-ui text-[15px] leading-[1.6] text-[var(--gold-body)] m-0">
-              <TextoComHebraico texto={escolhida.porque} /> Toque de novo.
+              <TextoComHebraico texto={escolhida.porque} /> {rodada.ouvir ? 'Ouça de novo e toque outra vez.' : 'Toque de novo.'}
             </p>
           </div>
         )}
       </div>
     </div>
+  );
+}
+
+/** O botão que toca a voz do professor. */
+function BotaoOuvir({ clipe, rotulo, tocador }: { clipe: NomeAmostra; rotulo: string; tocador: Tocador }) {
+  const ativo = tocador.tocando === clipe;
+  return (
+    <button
+      type="button"
+      onClick={() => tocador.tocar(clipe)}
+      className={`inline-flex items-center gap-2 min-h-[48px] px-5 rounded-[13px] border
+                  font-ui text-[15.5px] font-semibold
+                  focus-visible:outline focus-visible:outline-2
+                  focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
+        ${ativo ? 'border-[var(--teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)]'
+                : 'border-line bg-[var(--card)] text-ink hover:bg-[var(--sand)]'}`}
+    >
+      <span aria-hidden>{ativo ? '🔉' : '🔊'}</span>{rotulo}
+    </button>
   );
 }
 

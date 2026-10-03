@@ -249,7 +249,7 @@ for (const width of LARGURAS) {
     /* 2c · comparar e vogais (03/10/2026): rodadas de escolha, cada uma com
        um erro que ensina. Aqui se responde o certo e se segue. */
     const toca = async (texto) => {
-      const b = secao.locator('ul li button', { hasText: texto }).first();
+      const b = secao.locator('[data-opcoes] li button', { hasText: texto }).first();
       if (!(await b.count())) { erro(`${width}px: não achei a alternativa ${texto}`); return false; }
       await b.click(); await p.waitForTimeout(300); return true;
     };
@@ -264,9 +264,17 @@ for (const width of LARGURAS) {
     if (!/Áyin/.test(await secao.innerText())) erro(`${width}px: o erro do comparar não explica o Áyin`);
     await toca('א');
     await segue(/Agora as vogais/);
-    for (const [som, prox] of [['«i»', /Próxima/], ['«o»', /Próxima/], ['«a»', /Agora escreva você/]]) {
+    /* A tabela das sílabas toca a voz do professor (03/10/2026). */
+    const silabas = await secao.locator('button[aria-label^="Ouvir «"]').count();
+    if (silabas !== 5) erro(`${width}px: a tabela das vogais tem ${silabas} botões de ouvir, e não 5`);
+    for (const [som, prox] of [['«i»', /Próxima/], ['«o»', /Próxima/], ['«a»', /Próxima/]]) {
       await toca(som); await segue(prox);
     }
+    /* A rodada de ouvir: o botão existe, e o erro manda ouvir de novo. */
+    if (!(await secao.locator('button', { hasText: /^🔊Ouvir$/ }).count())) erro(`${width}px: a rodada de ouvir não tem botão`);
+    await toca('אַ');
+    if (!/Ouça de novo/.test(await secao.innerText())) erro(`${width}px: o erro da rodada de ouvir não manda ouvir de novo`);
+    await toca('אוּ'); await segue(/Agora escreva você/);
     log(`  ✓ ${String(width).padStart(4)}px  comparar e vogais respondem`);
 
     const canvas = secao.locator('canvas').first();
