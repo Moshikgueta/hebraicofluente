@@ -203,7 +203,7 @@ for (const width of LARGURAS) {
   if (!(await secao.count())) { erro(`${width}px: a seção da demo não existe`); await ctx.close(); continue; }
   await secao.scrollIntoViewIfNeeded();
 
-  /* 1 · conhecer → reconhecer. São cinco etapas desde que a escrita entrou. */
+  /* 1 · conhecer → reconhecer. Oito etapas desde 03/10/2026. */
   const comecar = secao.locator('button', { hasText: /testar agora/i }).first();
   if (!(await comecar.count())) { erro(`${width}px: não achei o botão que abre a demo`); await ctx.close(); continue; }
   await comecar.click();
@@ -246,8 +246,28 @@ for (const width of LARGURAS) {
        SOB O PONTEIRO. É a mesma conta de coordenadas que a lição usa, e ela
        já saiu errada uma vez - por isso a demo é medida do mesmo jeito que
        `escrita.mjs` mede o curso, e não só «o canvas existe». */
-    await secao.locator('button', { hasText: /Agora escreva você/ }).first().click();
-    await p.waitForTimeout(400);
+    /* 2c · comparar e vogais (03/10/2026): rodadas de escolha, cada uma com
+       um erro que ensina. Aqui se responde o certo e se segue. */
+    const toca = async (texto) => {
+      const b = secao.locator('ul li button', { hasText: texto }).first();
+      if (!(await b.count())) { erro(`${width}px: não achei a alternativa ${texto}`); return false; }
+      await b.click(); await p.waitForTimeout(300); return true;
+    };
+    const segue = async (rotulo) => {
+      const b = secao.locator('button', { hasText: rotulo }).first();
+      if (!(await b.count())) { erro(`${width}px: não achei o botão ${rotulo}`); return; }
+      await b.click(); await p.waitForTimeout(350);
+    };
+    await segue(/^Continuar/);
+    if (!/qual das duas é o Álef/.test(await secao.innerText())) erro(`${width}px: a etapa de comparar não apareceu`);
+    await toca('ע');
+    if (!/Áyin/.test(await secao.innerText())) erro(`${width}px: o erro do comparar não explica o Áyin`);
+    await toca('א');
+    await segue(/Agora as vogais/);
+    for (const [som, prox] of [['«i»', /Próxima/], ['«o»', /Próxima/], ['«a»', /Agora escreva você/]]) {
+      await toca(som); await segue(prox);
+    }
+    log(`  ✓ ${String(width).padStart(4)}px  comparar e vogais respondem`);
 
     const canvas = secao.locator('canvas').first();
     if (!(await canvas.count())) {
@@ -307,6 +327,12 @@ for (const width of LARGURAS) {
     /* 4 · ler. O botão de seguir NUNCA depende de ter desenhado: um canvas
        não é alcançável por teclado, e prender a demo ali seria fechá-la para
        quem navega sem ponteiro. */
+    await segue(/Agora ache o Álef/);
+    await toca('שָׁלוֹם');
+    if (!/começa à direita/.test(await secao.innerText())) erro(`${width}px: o erro do achar não ensina a direção`);
+    await toca('אֶתְמוֹל'); await segue(/Próxima/);
+    await toca('אֹכֶל');
+    log(`  ✓ ${String(width).padStart(4)}px  achar o Álef nas palavras responde`);
     await secao.locator('button', { hasText: /Agora leia uma palavra/ }).first().click();
     await p.waitForTimeout(300);
     const leitura = (await secao.innerText()).replace(/\s+/g, ' ');

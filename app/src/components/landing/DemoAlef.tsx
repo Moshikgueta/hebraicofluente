@@ -89,7 +89,92 @@ const OPCOES: readonly { he: string; certa: boolean; porque: string }[] = [
    E ela é uma palavra que um brasileiro reconhece de ouvido. */
 const PALAVRA = { he: 'אַבָּא', translit: 'abá', pt: 'pai' } as const;
 
-/* Cinco etapas, e a terceira é a que mais decide a compra.
+/* As etapas que entraram em 03/10/2026, a pedido do dono: o teste era curto
+   demais para o que a capa prometia. Cada uma ensina uma coisa que a lição 1
+   ensina (data/letters.json, `alef`), e nenhuma é enfeite:
+
+   · COMPARAR: a letra que mais se confunde com o Álef é o Áyin
+     (`confusableWith`), e a frase do erro é o `contrastes` do catálogo;
+   · VOGAIS: o Álef não tem som, e o erro clássico do brasileiro é lê-lo como
+     um A fixo (`brazilianMistake`). Três rodadas com as sílabas da lição;
+   · ACHAR: a palavra começa À DIREITA. Duas rodadas, com palavras da lição
+     (`wordsToRecognize`) contra palavras que começam com outra letra.
+
+   O formato é um só (`Rodadas`): uma pergunta, alternativas, um erro que
+   ensina e deixa tentar de novo. Nada se conta nem se guarda, como no resto
+   da demo. */
+type Alternativa = { he: string; rotulo?: string; certa: boolean; porque: string };
+type Rodada = { pergunta: string; mostra?: string; opcoes: readonly Alternativa[]; acerto: string };
+
+const COMPARAR: readonly Rodada[] = [{
+  pergunta: 'E agora: qual das duas é o Álef?',
+  opcoes: [
+    { he: 'ע', certa: false, porque: 'Este é o Áyin. O א tem um traço diagonal no meio, ligando os dois cantos. O ע é aberto em cima, com dois braços que descem para um pé só.' },
+    { he: 'א', certa: true, porque: '' }
+  ],
+  acerto: 'O traço diagonal no meio é a marca do Álef. O Áyin, aberto em cima, é a letra que mais se confunde com ele.'
+}];
+
+const SILABAS = [
+  { he: 'אַ', som: 'a' }, { he: 'אֶ', som: 'e' }, { he: 'אִ', som: 'i' },
+  { he: 'אוֹ', som: 'o' }, { he: 'אוּ', som: 'u' }
+] as const;
+
+const VOGAIS: readonly Rodada[] = [
+  {
+    pergunta: 'Como se lê isto?', mostra: 'אִ',
+    opcoes: [
+      { he: 'a', rotulo: '«a»', certa: false, porque: 'O tracinho embaixo é que seria o «a». Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».' },
+      { he: 'i', rotulo: '«i»', certa: true, porque: '' },
+      { he: 'o', rotulo: '«o»', certa: false, porque: 'O «o» vem com um ו e um ponto em cima. Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».' }
+    ],
+    acerto: 'O ponto embaixo é a vogal «i». O Álef só segura.'
+  },
+  {
+    pergunta: 'E isto?', mostra: 'אוֹ',
+    opcoes: [
+      { he: 'u', rotulo: '«u»', certa: false, porque: 'No «u» o ponto fica no meio do ו. Aqui o ponto está em cima do ו, e isso é a vogal «o».' },
+      { he: 'a', rotulo: '«a»', certa: false, porque: 'O nome da letra começa com A, e isso engana: o Álef não é a vogal A. O ו com um ponto em cima é a vogal «o».' },
+      { he: 'o', rotulo: '«o»', certa: true, porque: '' }
+    ],
+    acerto: 'O ו com um ponto em cima é a vogal «o».'
+  },
+  {
+    pergunta: 'Última: e esta?', mostra: 'אַ',
+    opcoes: [
+      { he: 'a', rotulo: '«a»', certa: true, porque: '' },
+      { he: 'e', rotulo: '«e»', certa: false, porque: 'O «e» são três pontinhos embaixo. Aqui há um tracinho só, e o tracinho é a vogal «a».' },
+      { he: 'i', rotulo: '«i»', certa: false, porque: 'O «i» é um ponto. Aqui há um tracinho, e o tracinho é a vogal «a».' }
+    ],
+    acerto: 'O tracinho embaixo é a vogal «a». Você acabou de ler três sílabas.'
+  }
+];
+
+const ACHAR: readonly Rodada[] = [
+  {
+    pergunta: 'Qual destas palavras começa com Álef?',
+    opcoes: [
+      { he: 'שָׁלוֹם', certa: false, porque: 'Esta começa com Shin, a letra da direita. Em hebraico a palavra começa à direita.' },
+      { he: 'אֶתְמוֹל', certa: true, porque: '' },
+      { he: 'תּוֹדָה', certa: false, porque: 'Esta começa com Tav, a letra da direita. Em hebraico a palavra começa à direita.' },
+      { he: 'בַּיִת', certa: false, porque: 'Esta começa com Bet, a letra da direita. Em hebraico a palavra começa à direita.' }
+    ],
+    acerto: 'אֶתְמוֹל se lê «etmol» e quer dizer «ontem». O Álef está à direita, segurando o «e».'
+  },
+  {
+    pergunta: 'Mais uma: qual começa com Álef?',
+    opcoes: [
+      { he: 'מַיִם', certa: false, porque: 'Esta começa com Mem, a letra da direita. Procure o Álef na ponta direita.' },
+      { he: 'לֶחֶם', certa: false, porque: 'Esta começa com Lamed, a letra da direita. Procure o Álef na ponta direita.' },
+      { he: 'יֶלֶד', certa: false, porque: 'Esta começa com Yod, a letra da direita. Procure o Álef na ponta direita.' },
+      { he: 'אֹכֶל', certa: true, porque: '' }
+    ],
+    acerto: 'אֹכֶל se lê «óchel» e quer dizer «comida». Duas palavras de verdade, e você achou o Álef nas duas.'
+  }
+];
+
+/* Oito etapas desde 03/10/2026 (eram cinco). A de escrever continua sendo a
+   que mais decide a compra.
    ─────────────────────────────────────────────────────────────────────────
    Reconhecer uma letra numa grade é agradável e não convence ninguém de que
    aprendeu: o dedo não fez nada. ESCREVER é o momento em que a pessoa deixa
@@ -101,9 +186,13 @@ const PALAVRA = { he: 'אַבָּא', translit: 'abá', pt: 'pai' } as const;
    O quadro é o MESMO da lição (components/learn/TraceBoard.tsx), não uma
    imitação dele - inclusive a conta de coordenadas que sobrevive ao zoom do
    menu de acessibilidade. */
-type Etapa = 0 | 1 | 2 | 3 | 4;
-const TOTAL_ETAPAS = 5;
-const ROTULOS = ['Conhecer', 'Reconhecer', 'Escrever', 'Ler', 'Pronto'] as const;
+type Etapa = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+const TOTAL_ETAPAS = 8;
+const ROTULOS = ['Conhecer', 'Reconhecer', 'Comparar', 'Vogais', 'Escrever', 'Achar', 'Ler', 'Pronto'] as const;
+/* Onde cada etapa mora, para o resto do arquivo não depender da ordem. */
+const E = { conhecer: 0, reconhecer: 1, comparar: 2, vogais: 3, escrever: 4, achar: 5, ler: 6, pronto: 7 } as const;
+/* Os exercícios que a capa anuncia: tudo menos a apresentação e o fim. */
+export const EXERCICIOS_DA_DEMO = TOTAL_ETAPAS - 2;
 
 export function DemoAlef({
   href, micro, label, vende
@@ -142,7 +231,7 @@ export function DemoAlef({
 
   const iniciar = () => {
     if (!comecou.current) { comecou.current = true; track('demo_started', { letterId: 'alef' }); }
-    avancar(1);
+    avancar(E.reconhecer);
   };
 
   const responder = (i: number) => {
@@ -158,12 +247,12 @@ export function DemoAlef({
     const v = quadro.current?.conferir();
     if (!v) return;
     setVeredito(v);
-    track('trace_completed', { letterId: 'alef', score: v.score, stage: 2 });
+    track('trace_completed', { letterId: 'alef', score: v.score, stage: E.escrever });
   };
 
   const concluir = () => {
     track('demo_completed', { letterId: 'alef' });
-    avancar(4);
+    avancar(E.pronto);
   };
 
   return (
@@ -171,7 +260,7 @@ export function DemoAlef({
       <Container className="pt-16 sm:pt-24">
         <Reveal>
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
-            Teste grátis · 2 minutos
+            Teste grátis · {EXERCICIOS_DA_DEMO} exercícios
           </p>
           <H2 id="experimente-titulo" className="mb-3">
             Experimente aprender sua primeira letra.
@@ -180,8 +269,8 @@ export function DemoAlef({
         <Reveal delay={80}>
           <Lead className="mb-8">
             Sem cadastro e sem cartão. Você conhece a letra, encontra ela entre outras,
-            escreve com o dedo e lê dentro de uma palavra - do mesmo jeito que acontece
-            dentro do curso.
+            descobre como ela segura as vogais, escreve com o dedo e acha ela dentro de
+            palavras de verdade - do mesmo jeito que acontece dentro do curso.
           </Lead>
         </Reveal>
 
@@ -210,7 +299,7 @@ export function DemoAlef({
             <div ref={foco} tabIndex={-1} className="outline-none p-6 sm:p-9">
 
               {/* ── 1 · conhecer ─────────────────────────────────────── */}
-              {etapa === 0 && (
+              {etapa === E.conhecer && (
                 <div className="grid gap-7 sm:grid-cols-[minmax(0,260px)_minmax(0,1fr)] sm:items-center">
                   <div className="rounded-[20px] bg-[var(--sand)] py-8 grid justify-items-center gap-1">
                     <He size="display" tone="navy">{ALEF.letter}</He>
@@ -246,7 +335,7 @@ export function DemoAlef({
               )}
 
               {/* ── 2 · reconhecer ───────────────────────────────────── */}
-              {etapa === 1 && (
+              {etapa === E.reconhecer && (
                 <div className="grid gap-5">
                   <p className="font-display text-[22px] sm:text-[25px] font-semibold
                                 tracking-[-0.02em] text-ink">
@@ -319,7 +408,7 @@ export function DemoAlef({
                         <div>
                           <button
                             type="button"
-                            onClick={() => avancar(2)}
+                            onClick={() => avancar(E.comparar)}
                             className="inline-flex items-center justify-center min-h-[48px] px-6
                                        rounded-[13px] bg-[var(--navy)] text-white
                                        font-ui text-[16px] font-semibold
@@ -328,7 +417,7 @@ export function DemoAlef({
                                        focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                        motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                           >
-                            Agora escreva você →
+                            Continuar →
                           </button>
                         </div>
                       </div>
@@ -371,7 +460,41 @@ export function DemoAlef({
                     demo que exigisse o traço prenderia ali quem navega por
                     teclado, quem usa leitor de tela e quem simplesmente não
                     quer rabiscar. O botão de seguir está sempre vivo. */}
-              {etapa === 2 && (
+              {/* ── 3 · comparar ─────────────────────────────────────── */}
+              {etapa === E.comparar && (
+                <Rodadas key="comparar" rodadas={COMPARAR} etapa="comparar"
+                         seguir="Agora as vogais →" onFim={() => avancar(E.vogais)} />
+              )}
+
+              {/* ── 4 · vogais ───────────────────────────────────────
+                  A tabela fica à vista durante as rodadas: é uma amostra,
+                  e consultar é o jeito certo de aprender uma forma nova. */}
+              {etapa === E.vogais && (
+                <div className="grid gap-5">
+                  <div className="grid gap-2">
+                    <p className="font-display text-[22px] sm:text-[25px] font-semibold
+                                  tracking-[-0.02em] text-ink m-0">
+                      Uma letra, cinco sons.
+                    </p>
+                    <p className="font-ui text-[16px] leading-[1.65] text-ink-muted max-w-[56ch] m-0">
+                      O Álef não tem som: quem dá o som é o sinal de vogal que vem com ele. Olhe a
+                      tabela e responda.
+                    </p>
+                  </div>
+                  <ul className="grid grid-cols-5 gap-1.5 sm:gap-2 list-none p-0 m-0 max-w-[420px]" aria-label="As vogais com o Álef">
+                    {SILABAS.map(x => (
+                      <li key={x.som} className="rounded-[14px] bg-[var(--sand)] py-2.5 grid justify-items-center min-w-0">
+                        <He size="lg" tone="navy">{x.he}</He>
+                        <span className="font-ui text-[15px] font-semibold text-ink-muted">«{x.som}»</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Rodadas key="vogais" rodadas={VOGAIS} etapa="vogais"
+                           seguir="Agora escreva você →" onFim={() => avancar(E.escrever)} />
+                </div>
+              )}
+
+              {etapa === E.escrever && (
                 <div className="grid gap-5">
                   {/* O título e a frase que muda a percepção ficam em cima, em
                       largura cheia. Tudo o mais é secundário e desce.
@@ -475,7 +598,7 @@ export function DemoAlef({
                       </button>
                       <button
                         type="button"
-                        onClick={() => avancar(3)}
+                        onClick={() => avancar(E.achar)}
                         className="ml-auto inline-flex items-center justify-center min-h-[48px] px-6
                                    rounded-[13px] bg-[var(--navy)] text-white
                                    font-ui text-[16px] font-semibold
@@ -484,7 +607,7 @@ export function DemoAlef({
                                    focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                    motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                       >
-                        Agora leia uma palavra →
+                        Agora ache o Álef →
                       </button>
                     </div>
                   </div>
@@ -492,8 +615,14 @@ export function DemoAlef({
                 </div>
               )}
 
-              {/* ── 4 · ler ──────────────────────────────────────────── */}
-              {etapa === 3 && (
+              {/* ── 6 · achar ────────────────────────────────────────── */}
+              {etapa === E.achar && (
+                <Rodadas key="achar" rodadas={ACHAR} etapa="achar"
+                         seguir="Agora leia uma palavra →" onFim={() => avancar(E.ler)} />
+              )}
+
+              {/* ── 7 · ler ──────────────────────────────────────────── */}
+              {etapa === E.ler && (
                 <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,300px)] sm:items-center">
                   <div className="grid gap-4">
                     <p className="font-display text-[22px] sm:text-[25px] font-semibold
@@ -539,8 +668,8 @@ export function DemoAlef({
                 </div>
               )}
 
-              {/* ── 5 · a conquista, e o próximo passo ───────────────── */}
-              {etapa === 4 && (
+              {/* ── 8 · a conquista, e o próximo passo ───────────────── */}
+              {etapa === E.pronto && (
                 <div className="grid gap-6 justify-items-center text-center">
                   <div className="grid justify-items-center gap-3">
                     <span className="grid place-items-center w-[84px] h-[84px] rounded-[26px]
@@ -616,7 +745,7 @@ export function DemoAlef({
                     onClick={() => {
                       setEscolha(null); setTentativas(0); setVeredito(null);
                       quadro.current?.limpar();
-                      avancar(0);
+                      avancar(E.conhecer);
                     }}
                     className="min-h-[44px] px-4 font-ui text-[14.5px] font-semibold text-ink-muted
                                hover:text-ink rounded-[10px]
@@ -633,6 +762,143 @@ export function DemoAlef({
       </Container>
     </section>
   );
+}
+
+/* Uma sequência de perguntas de escolha, no formato da etapa «Reconhecer»:
+   o erro diz onde olhar e deixa tentar de novo; o acerto mostra o que a
+   pessoa acabou de aprender e um botão para a próxima rodada. */
+function Rodadas({ rodadas, etapa, seguir, onFim }: {
+  rodadas: readonly Rodada[];
+  etapa: string;
+  seguir: string;
+  onFim: () => void;
+}) {
+  const [n, setN] = useState(0);
+  const [escolha, setEscolha] = useState<number | null>(null);
+  const rodada = rodadas[n]!;
+  const escolhida = escolha === null ? null : rodada.opcoes[escolha]!;
+  const ultima = n === rodadas.length - 1;
+  const palavras = rodada.opcoes.every(o => !o.rotulo);
+
+  const responder = (i: number) => {
+    setEscolha(i);
+    track('demo_answered', { letterId: 'alef', correct: !!rodada.opcoes[i]?.certa, chosen: `${etapa}:${rodada.opcoes[i]?.he}` });
+  };
+  const proxima = () => {
+    if (ultima) return onFim();
+    setN(n + 1); setEscolha(null);
+  };
+
+  return (
+    <div className="grid gap-5">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+        <p className="font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.02em] text-ink m-0">
+          {rodada.pergunta}
+        </p>
+        {rodada.mostra && (
+          <span className="rounded-[16px] bg-[var(--sand)] px-5 py-1.5"><He size="xl" tone="navy">{rodada.mostra}</He></span>
+        )}
+        {rodadas.length > 1 && (
+          <span className="font-ui text-[13px] font-semibold text-ink-muted tabular-nums ml-auto">
+            {n + 1} de {rodadas.length}
+          </span>
+        )}
+      </div>
+
+      <ul className={`grid gap-3 list-none p-0 m-0
+                      ${rodada.opcoes.length === 2 ? 'grid-cols-2 max-w-[360px]'
+                        : rodada.opcoes.length === 3 ? 'grid-cols-3 max-w-[480px]' : 'grid-cols-2 sm:grid-cols-4'}`}>
+        {rodada.opcoes.map((o, i) => {
+          const marcada = escolha === i;
+          const bom = marcada && o.certa;
+          const ruim = marcada && !o.certa;
+          return (
+            <li key={o.he}>
+              <button
+                type="button"
+                onClick={() => responder(i)}
+                aria-pressed={marcada}
+                className={`w-full ${palavras ? 'min-h-[92px]' : 'min-h-[72px]'} rounded-[18px] border-2 grid place-items-center
+                            relative px-2 transition-[background-color,border-color,transform] duration-[200ms]
+                            hover:-translate-y-[2px] active:translate-y-0
+                            focus-visible:outline focus-visible:outline-2
+                            focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
+                            motion-reduce:transition-none motion-reduce:hover:translate-y-0
+                  ${bom
+                    ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
+                    : ruim
+                      ? 'border-[#D9B872] bg-[var(--gold-soft)]'
+                      : 'border-line bg-[var(--card)] hover:bg-[var(--sand)]'}`}
+              >
+                {o.rotulo
+                  ? <span className="font-display text-[24px] font-semibold text-ink">{o.rotulo}</span>
+                  : <He size="lg" tone={bom ? 'teal' : 'navy'}>{o.he}</He>}
+                {marcada && (
+                  <span aria-hidden
+                        className={`absolute top-2 right-2.5 font-ui text-[15px] font-bold
+                          ${bom ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>
+                    {bom ? '✓' : '✕'}
+                  </span>
+                )}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="min-h-[124px]" aria-live="polite">
+        {escolha === null && (
+          <p className="font-ui text-[15px] leading-[1.6] text-ink-muted pt-1">Toque na resposta.</p>
+        )}
+        {escolhida && escolhida.certa && (
+          <div className="rounded-[16px] bg-[var(--teal-soft)] px-5 py-4 grid gap-3 animate-pop motion-reduce:animate-none">
+            <p className="flex items-center gap-2.5 m-0">
+              <Check size={18} color="var(--teal-ink)" />
+              <span className="font-ui font-bold text-[17px] text-[var(--teal-ink)]">Isso!</span>
+            </p>
+            <p className="font-ui text-[15px] leading-[1.6] text-[var(--teal-body)] m-0">
+              <TextoComHebraico texto={rodada.acerto} />
+            </p>
+            <div>
+              <button
+                type="button"
+                onClick={proxima}
+                className="inline-flex items-center justify-center min-h-[48px] px-6
+                           rounded-[13px] bg-[var(--navy)] text-white
+                           font-ui text-[16px] font-semibold
+                           transition-transform duration-[180ms] hover:-translate-y-[2px]
+                           focus-visible:outline focus-visible:outline-2
+                           focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
+                           motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              >
+                {ultima ? seguir : 'Próxima →'}
+              </button>
+            </div>
+          </div>
+        )}
+        {escolhida && !escolhida.certa && (
+          <div className="rounded-[16px] bg-[var(--gold-soft)] px-5 py-4 grid gap-2 animate-pop motion-reduce:animate-none">
+            <p className="flex items-center gap-2.5 m-0">
+              <span aria-hidden className="font-ui text-[17px] font-bold text-[var(--gold-ink)]">✕</span>
+              <span className="font-ui font-bold text-[17px] text-[var(--gold-ink)]">Quase.</span>
+            </p>
+            <p className="font-ui text-[15px] leading-[1.6] text-[var(--gold-body)] m-0">
+              <TextoComHebraico texto={escolhida.porque} /> Toque de novo.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* As frases de retorno misturam português e hebraico. Cada trecho em letras
+   hebraicas vai num <He>, que cuida da direção e da fonte. */
+function TextoComHebraico({ texto }: { texto: string }) {
+  const partes = texto.split(/([\u0590-\u05FF]+)/);
+  return <>{partes.map((t, i) => /[\u0590-\u05FF]/.test(t)
+    ? <He key={i} size="inline" tone="ink">{t}</He>
+    : <span key={i}>{t}</span>)}</>;
 }
 
 /* Um aviso ao próximo que mexer aqui: não há `useEffect` nesta seção, e isso
