@@ -899,6 +899,13 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   "erro" fecha o pedido pelo aviso dela, e antes a linha do estorno ficava aberta para sempre.
 - O lembrete diário (alertas.js) aponta para /admin/estornos no caso do PIX direto.
 
+## Funil do teste grátis da capa (03/10/2026)
+- `POST /api/demo {etapa}` (sem sessão, sempre 204) soma `d|<etapa>` em `estatisticas`. Etapas válidas em
+  `ETAPAS_DA_DEMO` (api/estatisticas.js): visto, reconhecer, comparar, vogais, escrever, achar, ler, pronto, cta.
+  Robô não conta; freio de 40 por hora por IP (`demo-ip:`). O app (lib/funil-demo.ts) manda cada etapa uma vez
+  por visita; `visto` vem de um IntersectionObserver na seção. Painel: /admin/estatisticas, "Teste grátis da capa".
+  A Política de Privacidade (art. 4) tem um parágrafo sobre isso.
+
 ## Quem comprou: /admin/vendas (02/10/2026)
 - `GET /api/admin/vendas` (com o segundo fator, só leitura) lista as últimas 200 compras `paid` ou
   `refunded`: nome, e-mail, valor, meio, parcelas, data e `parceria`. Pendentes, vencidas e recusadas

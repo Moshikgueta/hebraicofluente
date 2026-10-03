@@ -288,6 +288,12 @@ export default function Page() {
           qual lição foi concluída pela primeira vez. O servidor soma esses números por dia e não guarda nome,
           e-mail, conta, endereço de IP, horário nem o que você digitou. Os totais saem depois de um ano.
         </p>
+        {/* 03/10/2026: worker/src/api/estatisticas.js, contarDemo. */}
+        <p>
+          No teste grátis da página inicial, o navegador manda só o nome de cada etapa que você alcançou, uma vez
+          por visita, para sabermos onde as pessoas param. O servidor soma esses números por dia e não guarda nome,
+          e-mail, conta, endereço de IP, horário nem as suas respostas. Os totais saem depois de um ano.
+        </p>
       </Artigo>
 
       <Artigo n={5} titulo="Segurança">

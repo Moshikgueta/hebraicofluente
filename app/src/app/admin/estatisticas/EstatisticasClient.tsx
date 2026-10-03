@@ -10,11 +10,11 @@ import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course } from '@/lib/content-publico';
 import {
-  ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
+  funilDaDemo, ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
 } from '@/lib/painel-estatisticas';
 
 type Campanha = { origem: string; visitas: number };
-type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[] };
+type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[] };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; dados: Dados };
 
@@ -110,6 +110,30 @@ export function EstatisticasClient() {
                   </table>
                 </div>
               ) : <p className="font-ui text-[14px] m-0">Ainda não há respostas bastantes para comparar.</p>}
+            </section>
+
+            <section className="grid gap-3">
+              <h2 className="text-[20px] font-semibold m-0">Teste grátis da capa</h2>
+              <p className="font-ui text-[14px] text-ink-muted m-0">
+                Quantos visitantes chegaram a cada etapa do teste do Álef, contando cada pessoa uma vez por visita.
+                A porcentagem é sobre quem viu o teste. Uma queda grande de uma etapa para a seguinte mostra onde
+                as pessoas desistem.
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full font-ui text-[14px] border-collapse">
+                  <thead><tr className="text-left text-ink-muted">
+                    <th className="py-2 pr-3">Etapa</th><th className="py-2 pr-3 text-right">Pessoas</th>
+                    <th className="py-2 text-right">De quem viu</th>
+                  </tr></thead>
+                  <tbody>{funilDaDemo(estado.dados.demo || []).map(l => (
+                    <tr key={l.etapa} className="border-t border-[color:var(--line-soft)]">
+                      <td className="py-2 pr-3">{l.nome}</td>
+                      <td className="py-2 pr-3 text-right tabular-nums">{l.n}</td>
+                      <td className="py-2 text-right tabular-nums">{pct(l.deQuemViu)}</td>
+                    </tr>
+                  ))}</tbody>
+                </table>
+              </div>
             </section>
 
             <section className="grid gap-3">

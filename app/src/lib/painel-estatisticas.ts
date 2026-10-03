@@ -76,3 +76,27 @@ export function ordemDoPlano(modulos: readonly {
   }
   return out;
 }
+
+/* O teste grátis da capa (03/10/2026): as etapas na ordem, com o nome que o
+   dono reconhece. Ver worker/src/api/estatisticas.js, `contarDemo`. */
+export const ETAPAS_DA_DEMO_PT: readonly { etapa: string; nome: string }[] = [
+  { etapa: 'visto', nome: 'Viram o teste na página' },
+  { etapa: 'reconhecer', nome: 'Começaram (Reconhecer)' },
+  { etapa: 'comparar', nome: 'Comparar (Álef ou Áyin)' },
+  { etapa: 'vogais', nome: 'Vogais' },
+  { etapa: 'escrever', nome: 'Escrever' },
+  { etapa: 'achar', nome: 'Achar nas palavras' },
+  { etapa: 'ler', nome: 'Ler a palavra' },
+  { etapa: 'pronto', nome: 'Terminaram o teste' },
+  { etapa: 'cta', nome: 'Clicaram para comprar' }
+];
+
+/** O funil do teste: quantos chegaram a cada etapa, e a parte de quem viu. */
+export function funilDaDemo(demo: readonly { etapa: string; n: number }[]) {
+  const conta = new Map(demo.map(d => [d.etapa, d.n]));
+  const viram = conta.get('visto') ?? 0;
+  return ETAPAS_DA_DEMO_PT.map(({ etapa, nome }) => {
+    const n = conta.get(etapa) ?? 0;
+    return { etapa, nome, n, deQuemViu: viram ? n / viram : null };
+  });
+}
