@@ -26,12 +26,13 @@
  * Não pontua e não guarda nada, como a aula aberta: é amostra.
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { FalarECorrigir } from '@/components/learn/FalarECorrigir';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { falaDisponivel } from '@/lib/fala';
-import { urlAmostra, type NomeAmostra } from '@/lib/amostra-audio';
+import { type NomeAmostra } from '@/lib/amostra-audio';
+import { useTocador } from './useTocador';
 import { Container, H2, Lead, Reveal, Check } from './base';
 
 type Rodada = {
@@ -62,21 +63,6 @@ const RODADAS: readonly Rodada[] = [
   ] }
 ];
 
-/** Um tocador só para a seção: tocar outro clipe corta o anterior. */
-function useTocador() {
-  const el = useRef<HTMLAudioElement | null>(null);
-  const [tocando, setTocando] = useState<NomeAmostra | null>(null);
-  useEffect(() => () => { el.current?.pause(); }, []);
-  const tocar = (nome: NomeAmostra) => {
-    el.current?.pause();
-    const a = new Audio(urlAmostra(nome));
-    el.current = a;
-    setTocando(nome);
-    a.onended = a.onerror = () => setTocando(t => (t === nome ? null : t));
-    void a.play().catch(() => setTocando(null));
-  };
-  return { tocar, tocando };
-}
 
 export function OuvirEFalar() {
   const { tocar, tocando } = useTocador();

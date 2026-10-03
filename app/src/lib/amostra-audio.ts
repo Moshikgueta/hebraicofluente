@@ -6,9 +6,13 @@
 /* Os nomes das três letras entraram em 01/10/2026, a pedido do dono: o
    passo "Ouça e descubra a letra" tocava a sílaba («sha») onde se esperava
    ouvir o NOME da letra («Shin»). A sílaba continua, depois do acerto. */
+/* As da lição 1 entraram em 03/10/2026: o teste grátis do Álef (DemoAlef)
+   toca o nome da letra, as cinco sílabas e as três palavras dele. */
 export const AMOSTRA_AUDIO = {
   sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם',
-  shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד'
+  shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד',
+  alef: 'אָלֶף', 'alef-a': 'אַ', 'alef-e': 'אֶ', 'alef-i': 'אִ', 'alef-o': 'אוֹ', 'alef-u': 'אוּ',
+  aba: 'אַבָּא', etmol: 'אֶתְמוֹל', ochel: 'אֹכֶל'
 } as const;
 export type NomeAmostra = keyof typeof AMOSTRA_AUDIO;
 export const urlAmostra = (nome: NomeAmostra): string => `/amostra-audio/${nome}.mp3`;
