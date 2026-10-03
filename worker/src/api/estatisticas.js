@@ -28,7 +28,7 @@
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { activeEntitlements, throttled } from '../lib/db.js';
 import { exigirAdmin } from '../lib/admin.js';
-import { requireAccount } from './auth.js';
+import { ip, requireAccount } from './auth.js';
 
 const ID = /^[a-z0-9-]{1,40}$/;
 const MAX_EVENTOS = 60;
@@ -102,6 +102,37 @@ export async function contarCampanha(env, origem, request) {
   }
 }
 
+/* O teste grátis da capa (03/10/2026): até onde os visitantes chegam.
+   ─────────────────────────────────────────────────────────────────────────
+   Quem faz o teste ainda não tem conta, então aqui não há sessão a conferir.
+   O app manda só o NOME da etapa alcançada, uma vez por etapa e por visita
+   (app/src/lib/funil-demo.ts), e o servidor soma por dia na mesma tabela,
+   com a chave `d|<etapa>`: sem conta, e-mail, IP, horário nem cookie.
+
+   Contra contagem inflada: nome fora da lista não conta, robô não conta, e
+   cada endereço de IP conta no máximo 40 etapas por hora (o freio guarda o
+   IP só durante a janela, como o do cadastro). Uma visita inteira usa 9. */
+export const ETAPAS_DA_DEMO = ['visto', 'reconhecer', 'comparar', 'vogais', 'escrever', 'achar', 'ler', 'pronto', 'cta'];
+
+/** POST /api/demo {etapa} - sempre 204. */
+export async function contarDemo({ request, env }) {
+  const nada = new Response(null, { status: 204 });
+  if (ROBO.test(request.headers.get('user-agent') || '')) return nada;
+  const b = await readJson(request, 1024);
+  const etapa = String(b && b.etapa || '');
+  if (!ETAPAS_DA_DEMO.includes(etapa)) return nada;
+  if (await throttled(env, `demo-ip:${ip(request)}`, 40, 3_600_000)) return nada;
+  try {
+    await env.DB.prepare(
+      `INSERT INTO estatisticas (dia, chave, n) VALUES (?1, ?2, 1)
+       ON CONFLICT(dia, chave) DO UPDATE SET n = n + 1`
+    ).bind(hojeBrasilia(), `d|${etapa}`).run();
+  } catch (e) {
+    console.error('demo', e && e.stack || e);
+  }
+  return nada;
+}
+
 /** GET /api/admin/estatisticas?dias=30 - as somas do período. */
 export async function ler({ request, env }) {
   const { erro } = await exigirAdmin(request, env);
@@ -117,6 +148,7 @@ export async function ler({ request, env }) {
   const respostas = new Map();
   const etapas = [];
   const campanhas = [];
+  const demo = [];
   for (const { chave, n } of linhas || []) {
     const p = String(chave).split('|');
     if (p[0] === 'r' && p.length === 4) {
@@ -129,9 +161,11 @@ export async function ler({ request, env }) {
       etapas.push({ licao: p[1], etapa: Number(p[2]), n });
     } else if (p[0] === 'o' && p.length === 2) {
       campanhas.push({ origem: p[1], visitas: n });
+    } else if (p[0] === 'd' && p.length === 2) {
+      demo.push({ etapa: p[1], n });
     }
   }
-  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas });
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo });
 }
 
 /** As linhas de mais de um ano (chamado pela varredura, em alertas.js). */

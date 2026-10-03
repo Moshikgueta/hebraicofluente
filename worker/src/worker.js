@@ -125,6 +125,8 @@ const ROUTES = {
      ninguém. Ver api/estatisticas.js. */
   'POST /api/estatisticas': estatisticas.registrar,
   'GET /api/admin/estatisticas': estatisticas.ler,
+  /* Até onde os visitantes chegam no teste grátis da capa. Sem sessão. */
+  'POST /api/demo': estatisticas.contarDemo,
 
   /* O segundo fator do administrador: o código por e-mail. Ver
      lib/admin.js e api/admin-codigo.js. */

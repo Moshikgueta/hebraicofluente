@@ -3,7 +3,7 @@
  * tabelas do painel (lib/painel-estatisticas.ts). */
 import { describe, expect, it } from 'vitest';
 import { criarEnviador, LOTE_MAX, paraEnvio } from '@/lib/estatisticas';
-import { ondeErram, ondeParam, ordemDoPlano } from '@/lib/painel-estatisticas';
+import { funilDaDemo, ondeErram, ondeParam, ordemDoPlano } from '@/lib/painel-estatisticas';
 import { course } from '@/lib/content-publico';
 import { cookieDe, envDeTeste, pedido, comoAdmin } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
@@ -11,7 +11,7 @@ import worker from '../../worker/src/worker.js';
 // @ts-expect-error - idem
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
-import { chaveDe, estatisticasPurge } from '../../worker/src/api/estatisticas.js';
+import { chaveDe, estatisticasPurge, ETAPAS_DA_DEMO } from '../../worker/src/api/estatisticas.js';
 // @ts-expect-error - idem
 import { grantAccess } from '../../worker/src/lib/db.js';
 
@@ -149,5 +149,41 @@ describe('as tabelas do painel', () => {
     const d = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx))
       .json() as { campanhas: unknown[] };
     expect(d.campanhas).toEqual([{ origem: 'sefarad', visitas: 2 }]);
+  });
+
+  it('o teste da capa conta as etapas, sem sessão, com freio e sem robô', async () => {
+    const env = envDeTeste({ ADMIN_EMAILS: 'dono@exemplo.com' }) as Env;
+    const etapa = (e: unknown, ip = '203.0.113.7', ua = 'Mozilla/5.0 (iPhone)') => worker.fetch(new Request(`${SITE}/api/demo`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Origin: SITE, 'user-agent': ua, 'CF-Connecting-IP': ip },
+      body: JSON.stringify({ etapa: e })
+    }), env, ctx);
+    expect((await etapa('visto')).status).toBe(204);
+    await etapa('visto', '198.51.100.9');
+    await etapa('pronto');
+    await etapa('inventada');
+    await etapa({ x: 1 });
+    await etapa('visto', '203.0.113.7', 'Googlebot/2.1');
+    const conta = (c: string) => (env.DB.bruto.prepare('SELECT n FROM estatisticas WHERE chave = ?').get(c) as { n: number } | undefined)?.n ?? 0;
+    expect(conta('d|visto')).toBe(2);
+    expect(conta('d|pronto')).toBe(1);
+    expect(env.DB.bruto.prepare("SELECT COUNT(*) AS n FROM estatisticas WHERE chave LIKE 'd|%'").get()).toEqual({ n: 2 });
+    /* O freio: 40 por hora por endereço. */
+    for (let i = 0; i < 45; i++) await etapa('cta', '192.0.2.1');
+    expect(conta('d|cta')).toBe(40);
+    /* De outro site, recusado antes de contar. */
+    const fora = await worker.fetch(new Request(`${SITE}/api/demo`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'https://outro.exemplo' }, body: '{"etapa":"visto"}'
+    }), env, ctx);
+    expect(fora.status).toBe(403);
+
+    const r2 = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`,
+      { aceitouTermos: true, declarouIdade: true, name: 'Dono', email: 'dono@exemplo.com', password: 'senha-boa-123' }), env, ctx });
+    const dono = await comoAdmin(env, cookieDe(r2));
+    const d = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx))
+      .json() as { demo: { etapa: string; n: number }[] };
+    const f = funilDaDemo(d.demo);
+    expect(f[0]).toMatchObject({ etapa: 'visto', n: 2, deQuemViu: 1 });
+    expect(f.find(x => x.etapa === 'pronto')).toMatchObject({ n: 1, deQuemViu: 0.5 });
+    expect(f.map(x => x.etapa)).toEqual(ETAPAS_DA_DEMO);
   });
 });

@@ -50,7 +50,7 @@
  */
 
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { course } from '@/lib/content-publico';
 import { brl, flagship } from '@/lib/catalog';
@@ -58,6 +58,7 @@ import { MESMA_LETRA } from '@/lib/cursiva';
 import { TraceBoard, type QuadroHandle, type Veredito } from '@/components/learn/TraceBoard';
 import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { track } from '@/lib/analytics';
+import { contarEtapaDaDemo, type EtapaDaDemo } from '@/lib/funil-demo';
 import { Container, H2, Lead, Reveal, Check } from './base';
 
 /* A letra vem do CATÁLOGO, e não escrita aqui: o glifo e o nome da primeira
@@ -191,6 +192,10 @@ const TOTAL_ETAPAS = 8;
 const ROTULOS = ['Conhecer', 'Reconhecer', 'Comparar', 'Vogais', 'Escrever', 'Achar', 'Ler', 'Pronto'] as const;
 /* Onde cada etapa mora, para o resto do arquivo não depender da ordem. */
 const E = { conhecer: 0, reconhecer: 1, comparar: 2, vogais: 3, escrever: 4, achar: 5, ler: 6, pronto: 7 } as const;
+/* O nome que vai para o funil do painel (lib/funil-demo.ts) ao chegar em cada
+   etapa. A primeira não vai: quem a vê conta como `visto`, pela rolagem. */
+const NO_FUNIL: readonly (EtapaDaDemo | null)[] =
+  [null, 'reconhecer', 'comparar', 'vogais', 'escrever', 'achar', 'ler', 'pronto'];
 /* Os exercícios que a capa anuncia: tudo menos a apresentação e o fim. */
 export const EXERCICIOS_DA_DEMO = TOTAL_ETAPAS - 2;
 
@@ -212,6 +217,19 @@ export function DemoAlef({
   const quadro = useRef<QuadroHandle>(null);
   const [temTinta, setTemTinta] = useState(false);
   const [veredito, setVeredito] = useState<Veredito | null>(null);
+  const secao = useRef<HTMLElement>(null);
+
+  /* Quantos visitantes chegam a VER o teste: o topo do funil do painel. É o
+     único efeito da seção, e ele só conta - não mexe em nada da demo. */
+  useEffect(() => {
+    const el = secao.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver(es => {
+      if (es.some(e => e.isIntersecting)) { contarEtapaDaDemo('visto'); obs.disconnect(); }
+    }, { threshold: 0.35 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   /* Uma letra sem glifo é uma seção que não pode existir. Nunca acontece - o
      catálogo sempre traz as 22 -, e mesmo assim a seção some inteira em vez
@@ -223,6 +241,8 @@ export function DemoAlef({
 
   const avancar = (n: Etapa) => {
     setEtapa(n);
+    const nome = NO_FUNIL[n];
+    if (nome) contarEtapaDaDemo(nome);
     /* O foco vai para o topo do cartão a cada etapa: sem isso, quem navega
        por teclado continua no botão que acabou de sumir e é devolvido ao
        começo do documento. */
@@ -256,7 +276,7 @@ export function DemoAlef({
   };
 
   return (
-    <section id="experimente" aria-labelledby="experimente-titulo">
+    <section ref={secao} id="experimente" aria-labelledby="experimente-titulo">
       <Container className="pt-16 sm:pt-24">
         <Reveal>
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
@@ -717,7 +737,7 @@ export function DemoAlef({
                   <div className="grid gap-2.5 justify-items-center">
                     <Link
                       href={href}
-                      onClick={() => track('cta_clicked', { itemId: 'demo-alef' })}
+                      onClick={() => { track('cta_clicked', { itemId: 'demo-alef' }); contarEtapaDaDemo('cta'); }}
                       className="inline-flex items-center justify-center min-h-[58px] px-9
                                  rounded-[15px] bg-[var(--navy)] text-white
                                  font-ui text-[17.5px] font-semibold text-center
@@ -901,7 +921,8 @@ function TextoComHebraico({ texto }: { texto: string }) {
     : <span key={i}>{t}</span>)}</>;
 }
 
-/* Um aviso ao próximo que mexer aqui: não há `useEffect` nesta seção, e isso
-   é decisão. Nada precisa acontecer sozinho - a pessoa toca, a tela responde.
+/* Um aviso ao próximo que mexer aqui: o único `useEffect` desta seção é o que
+   conta quem a viu, e isso é decisão. Nada na demo acontece sozinho - a pessoa
+   toca, a tela responde.
    Um efeito que avançasse a demo por conta própria tiraria dela a única coisa
    que a faz funcionar, que é ter sido o visitante a fazer. */
