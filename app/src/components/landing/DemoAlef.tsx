@@ -240,6 +240,8 @@ export function DemoAlef({
   const foco = useRef<HTMLDivElement>(null);
   const quadro = useRef<QuadroHandle>(null);
   const [temTinta, setTemTinta] = useState(false);
+  /* Para o resultado do fim: escrever é a única etapa que dá para pular. */
+  const [escreveu, setEscreveu] = useState(false);
   const [veredito, setVeredito] = useState<Veredito | null>(null);
   const secao = useRef<HTMLElement>(null);
   const tocador = useTocador();
@@ -599,7 +601,7 @@ export function DemoAlef({
                         glyph={ALEF.letter}
                         guia={0.22}
                         label="Álef"
-                        onTinta={setTemTinta}
+                        onTinta={t => { setTemTinta(t); if (t) setEscreveu(true); }}
                         alturaClass="h-[240px] sm:h-[280px]"
                       />
                     </div>
@@ -748,6 +750,24 @@ export function DemoAlef({
                                   max-w-[22ch]">
                       Você acabou de aprender sua primeira letra em hebraico.
                     </p>
+
+                    {/* O resultado (03/10/2026, a pedido do dono): o que a
+                        pessoa FEZ, e não uma nota. Avançar já exige o acerto,
+                        então cada item é verdade; o de escrever só aparece
+                        para quem escreveu, porque essa etapa se pode pular. */}
+                    <div className="rounded-[18px] bg-[var(--teal-soft)] px-5 py-4 text-left w-full max-w-[440px]">
+                      <p className="font-ui text-[14px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] m-0 mb-2.5">
+                        O que você fez agora
+                      </p>
+                      <ul className="list-none p-0 m-0 grid gap-2">
+                        {feitos(escreveu).map(t => (
+                          <li key={t} className="flex items-start gap-2.5 font-ui text-[15.5px] leading-[1.5] text-[var(--teal-body)]">
+                            <span className="mt-[3px] shrink-0"><Check size={16} color="var(--teal-ink)" /></span>
+                            <span><TextoComHebraico texto={t} /></span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                     <p className="font-ui text-[16.5px] leading-[1.6] text-ink-muted max-w-[42ch] m-0">
                       Faltam {course.totalLetters - 1}. Imagine onde você chega aprendendo
                       uma de cada vez, do mesmo jeito.
@@ -803,7 +823,7 @@ export function DemoAlef({
                   <button
                     type="button"
                     onClick={() => {
-                      setEscolha(null); setTentativas(0); setVeredito(null);
+                      setEscolha(null); setTentativas(0); setVeredito(null); setEscreveu(false);
                       quadro.current?.limpar();
                       avancar(E.conhecer);
                     }}
@@ -955,6 +975,19 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
       </div>
     </div>
   );
+}
+
+/** O resultado do fim, na ordem em que a pessoa fez. */
+function feitos(escreveu: boolean): string[] {
+  return [
+    'Reconheceu o Álef entre quatro letras parecidas',
+    'Separou o Álef do Áyin, a letra que mais se confunde com ele',
+    'Leu três sílabas com vogais',
+    'Reconheceu uma sílaba só de ouvir',
+    ...(escreveu ? ['Escreveu o Álef com o dedo'] : []),
+    'Achou o Álef em duas palavras de verdade',
+    'Leu a palavra אַבָּא, «pai»'
+  ];
 }
 
 /** O botão que toca a voz do professor. */
