@@ -906,6 +906,13 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   por visita; `visto` vem de um IntersectionObserver na seção. Painel: /admin/estatisticas, "Teste grátis da capa".
   A Política de Privacidade (art. 4) tem um parágrafo sobre isso.
 
+## A segunda letra por e-mail, no fim do teste (03/10/2026)
+- `POST /api/segunda-letra {email}` manda UM e-mail com o Mem (a 2ª letra do curso) e nada mais: o endereço não
+  é gravado nem entra em lista. Freio: 5/hora por IP e 1/dia por sha256 do endereço (repetido responde ok igual,
+  sem oráculo). Conteúdo em `SEGUNDA_LETRA` (lib/mail.js), conferido contra data/letters.json pelo
+  segunda-letra.test.ts. Sem preço no e-mail. O envio soma `d|segunda-letra` no funil (só o servidor conta).
+  A Política de Privacidade (art. 4) tem um parágrafo sobre isso.
+
 ## Quem comprou: /admin/vendas (02/10/2026)
 - `GET /api/admin/vendas` (com o segundo fator, só leitura) lista as últimas 200 compras `paid` ou
   `refunded`: nome, e-mail, valor, meio, parcelas, data e `parceria`. Pendentes, vencidas e recusadas

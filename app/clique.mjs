@@ -360,6 +360,9 @@ for (const width of LARGURAS) {
     if (!/O que você fez agora/i.test(fim)) erro(`${width}px: falta o resultado no fim do teste`);
     else if (!/Escreveu o Álef com o dedo/.test(fim)) erro(`${width}px: o resultado não conta a escrita de quem escreveu`);
     else log(`  ✓ ${String(width).padStart(4)}px  o fim mostra o que a pessoa fez`);
+    /* A segunda letra por e-mail: o campo existe e tem rótulo. */
+    if (!(await secao.getByLabel('Seu e-mail').count())) erro(`${width}px: falta o pedido da segunda letra no fim do teste`);
+    else log(`  ✓ ${String(width).padStart(4)}px  o fim oferece a segunda letra por e-mail`);
 
     /* O CTA tem de levar ao FLUXO DE COMPRA, e não a mais uma página de
        texto. É o ponto de maior intenção da visita inteira. */

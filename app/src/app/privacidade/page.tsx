@@ -294,6 +294,12 @@ export default function Page() {
           por visita, para sabermos onde as pessoas param. O servidor soma esses números por dia e não guarda nome,
           e-mail, conta, endereço de IP, horário nem as suas respostas. Os totais saem depois de um ano.
         </p>
+        {/* 03/10/2026: worker/src/api/segunda-letra.js. */}
+        <p>
+          No fim desse teste, você pode pedir a segunda letra por e-mail. O endereço que você digita é usado só para
+          mandar esse e-mail e não é guardado nem entra em lista nenhuma. Para não mandar duas vezes no mesmo dia, o
+          servidor guarda por até 48 horas um código calculado a partir do endereço, que não permite recuperá-lo.
+        </p>
       </Artigo>
 
       <Artigo n={5} titulo="Segurança">

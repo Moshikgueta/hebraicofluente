@@ -88,7 +88,8 @@ export const ETAPAS_DA_DEMO_PT: readonly { etapa: string; nome: string }[] = [
   { etapa: 'achar', nome: 'Achar nas palavras' },
   { etapa: 'ler', nome: 'Ler a palavra' },
   { etapa: 'pronto', nome: 'Terminaram o teste' },
-  { etapa: 'cta', nome: 'Clicaram para comprar' }
+  { etapa: 'cta', nome: 'Clicaram para comprar' },
+  { etapa: 'segunda-letra', nome: 'Pediram a segunda letra por e-mail' }
 ];
 
 /** O funil do teste: quantos chegaram a cada etapa, e a parte de quem viu. */

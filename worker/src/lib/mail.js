@@ -230,6 +230,91 @@ export function mensagemDeConfirmacao({ nome, link, dias, esqueci, marca, suport
   return { subject: `Confirme seu e-mail - ${assinatura}`, text, html };
 }
 
+/* ── a segunda letra (03/10/2026) ───────────────────────────────────────── */
+
+/**
+ * O e-mail de quem terminou o teste grátis da capa e pediu a segunda letra
+ * (api/segunda-letra.js). No curso, a segunda letra é o Mem.
+ *
+ * Todo o conteúdo da letra sai da lição 2 (data/letters.json, `mem`), e o
+ * teste segunda-letra.test.ts confere que cada frase daqui ainda está lá: se
+ * a lição mudar, este e-mail não fica ensinando outra coisa.
+ *
+ * Um e-mail só, e o endereço não entra em lista nenhuma. Sem preço: ele muda,
+ * e um e-mail antigo não pode prometer o valor de outro dia.
+ */
+export const SEGUNDA_LETRA = {
+  letra: 'מ', nome: 'Mem', final: 'ם',
+  som: 'Igual ao M do português, em mãe, mesa, música. Não há nada novo a aprender no som - só na forma.',
+  silabas: [['מַ', 'ma'], ['מֶ', 'me'], ['מִ', 'mi'], ['מוֹ', 'mo'], ['מוּ', 'mu']],
+  palavras: [['מַיִם', 'máyim', 'água'], ['אִמָּא', 'imá', 'mãe']],
+  cuidado: 'Em português o M no fim da sílaba nasaliza a vogal antes dele - "mim", "bom", "sim". Em hebraico isso não acontece: o M é sempre pronunciado como consoante inteira, e a vogal continua oral.',
+  fim: 'faz /m/ e vira ם quando termina a palavra. Mesma letra, mesmo som, outro desenho.',
+  sabia: 'Mem é a letra da água. O próprio nome vem de máyim - água - e a forma da letra foi desenhada, há milhares de anos, a partir do desenho de uma onda.'
+};
+
+export function mensagemDaSegundaLetra({ site, suporte, marca }) {
+  const L = SEGUNDA_LETRA;
+  const assinatura = marca || 'Hebraico Fluente';
+  const curso = `${site}/cursos/alfabetizacao/`;
+  const silabas = L.silabas.map(([he, t]) => `${he} ${t}`).join(' · ');
+  const palavras = L.palavras.map(([he, t, pt]) => `${he} (${t}), «${pt}»`).join(' · ');
+
+  const text = [
+    'Oi.',
+    '',
+    'Você terminou o teste do Álef no nosso site e pediu a segunda letra. Aqui está ela.',
+    '',
+    `${L.letra}  ${L.nome}`,
+    '',
+    `O som: ${L.som}`,
+    '',
+    `As sílabas: ${silabas}`,
+    'Repare: as vogais são as mesmas que você viu com o Álef.',
+    '',
+    `Duas palavras: ${palavras}`,
+    '',
+    `Cuidado, brasileiro: ${L.cuidado}`,
+    '',
+    `No fim da palavra: ${L.letra} ${L.fim}`,
+    '',
+    `Você sabia? ${L.sabia}`,
+    '',
+    'Faltam 20 letras. No curso, cada uma vem assim: a voz do professor, a escrita com o dedo e a correção na hora.',
+    curso,
+    '',
+    'Você recebeu este e-mail porque alguém pediu a segunda letra com este endereço no site. Não foi você? É só ignorar: não mandamos mais nada, e o endereço não fica guardado.',
+    suporte ? `Dúvidas: ${suporte}` : '',
+    '',
+    assinatura
+  ].join('\n');
+
+  const he = t => `<span dir="rtl" lang="he" style="font-size:1.25em">${escapar(t)}</span>`;
+  const [antesDaFinal, depoisDaFinal = ''] = L.fim.split(L.final);
+  const html = [
+    '<p>Oi.</p>',
+    '<p>Você terminou o teste do Álef no nosso site e pediu a segunda letra. Aqui está ela.</p>',
+    `<p style="font-size:44px;margin:16px 0 4px;text-align:left"><span dir="rtl" lang="he">${escapar(L.letra)}</span></p>`,
+    `<p style="margin:0 0 16px"><strong>${escapar(L.nome)}</strong></p>`,
+    `<p><strong>O som:</strong> ${escapar(L.som)}</p>`,
+    `<p><strong>As sílabas:</strong> ${L.silabas.map(([h, t]) => `${he(h)} ${escapar(t)}`).join(' · ')}<br>`,
+    'Repare: as vogais são as mesmas que você viu com o Álef.</p>',
+    `<p><strong>Duas palavras:</strong> ${L.palavras.map(([h, t, pt]) => `${he(h)} (${escapar(t)}), «${escapar(pt)}»`).join(' · ')}</p>`,
+    `<p><strong>Cuidado, brasileiro:</strong> ${escapar(L.cuidado)}</p>`,
+    `<p><strong>No fim da palavra:</strong> ${he(L.letra)} ${escapar(antesDaFinal)}${he(L.final)}${escapar(depoisDaFinal)}</p>`,
+    `<p><strong>Você sabia?</strong> ${escapar(L.sabia)}</p>`,
+    '<p>Faltam 20 letras. No curso, cada uma vem assim: a voz do professor, a escrita com o dedo e a correção na hora.</p>',
+    `<p><a href="${escapar(curso)}">Conhecer o curso completo</a></p>`,
+    '<p style="color:#666;font-size:13px">Você recebeu este e-mail porque alguém pediu a segunda letra com este endereço no site.',
+    ' Não foi você? É só ignorar: não mandamos mais nada, e o endereço não fica guardado.',
+    suporte ? ` Dúvidas: ${escapar(suporte)}` : '',
+    '</p>',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+
+  return { subject: `A segunda letra: ${L.nome} (${L.letra}) - ${assinatura}`, text, html };
+}
+
 /* ── o aviso de presente aguardando ────────────────────────────────────── */
 
 /**
