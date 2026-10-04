@@ -101,3 +101,7 @@ export function funilDaDemo(demo: readonly { etapa: string; n: number }[]) {
     return { etapa, nome, n, deQuemViu: viram ? n / viram : null };
   });
 }
+
+/* Os motivos de desistência (04/10/2026), opcionais: o nome de cada um, como
+   a pessoa viu ao desistir. É a lista de lib/motivos-desistencia.ts. */
+export { MOTIVOS_DESISTENCIA as MOTIVOS_PT } from './motivos-desistencia';

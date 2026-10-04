@@ -580,7 +580,7 @@ function linhasDoConteudo(conteudo) {
 }
 
 export function mensagemDeArrependimentoDono({
-  email, curso, valor, pedido, pedidoEm, prazoUteis, pixDireto, marca, estado = null, conteudo = null
+  email, curso, valor, pedido, pedidoEm, prazoUteis, pixDireto, marca, estado = null, conteudo = null, motivo = null
 }) {
   const assinatura = marca || 'Hebraico Fluente';
   const manual = pixDireto
@@ -604,6 +604,7 @@ export function mensagemDeArrependimentoDono({
     `Valor: ${valor}`,
     `Pedido: ${pedido}`,
     `Pedido de desistência em: ${pedidoEm}`,
+    `Motivo: ${motivo || 'não informado (é opcional)'}`,
     ...linhasDoConteudo(conteudo),
     '',
     `Prazo prometido na Política de Reembolso: ${prazoUteis} dias úteis.`,
@@ -617,7 +618,8 @@ export function mensagemDeArrependimentoDono({
     `Curso: ${escapar(curso)}<br>`,
     `Valor: ${escapar(valor)}<br>`,
     `Pedido: ${escapar(pedido)}<br>`,
-    `Pedido de desistência em: ${escapar(pedidoEm)}</p>`,
+    `Pedido de desistência em: ${escapar(pedidoEm)}<br>`,
+    `Motivo: ${escapar(motivo || 'não informado (é opcional)')}</p>`,
     ...linhasDoConteudo(conteudo).map(l => `<p>${escapar(l)}</p>`),
     `<p>Prazo prometido na Política de Reembolso: ${prazoUteis} dias úteis.</p>`,
     `<p>${escapar(como)}</p>`,

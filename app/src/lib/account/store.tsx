@@ -59,7 +59,7 @@ type AccountValue = {
   startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string }):
     Promise<Order & { redirectUrl?: string }>;
   orderStatus(id: string): Promise<Order>;
-  requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }>;
+  requestWithdrawal(orderId: string, motivo?: string | null): Promise<{ pedidoEm: string }>;
 
   /** Este aluno pode abrir este curso agora? */
   can(courseSlug: string): boolean;
@@ -152,7 +152,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 
     startOrder: async i => (await api()).startOrder(i),
     orderStatus: async id => (await api()).orderStatus(id),
-    requestWithdrawal: async id => (await api()).requestWithdrawal(id),
+    requestWithdrawal: async (id, motivo) => (await api()).requestWithdrawal(id, motivo),
 
     can: slug => hasAccess(session, slug)
   }), [ready, session, refresh]);

@@ -411,7 +411,7 @@ export class LocalApi implements PlatformApi {
   /** A desistência, na demonstração: registra o pedido e pronto - não há
    *  dinheiro para devolver nem dono para avisar. As mesmas recusas do
    *  servidor, para a tela ser escrita contra o comportamento de verdade. */
-  async requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }> {
+  async requestWithdrawal(orderId: string, _motivo?: string | null): Promise<{ pedidoEm: string }> {
     await tick();
     const s = read();
     const a = s.current ? s.accounts[s.current] : undefined;

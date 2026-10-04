@@ -32,7 +32,8 @@ import { allCourses, brl, FLAGSHIP, getCourse } from '@/lib/catalog';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { course } from '@/lib/content-publico';
 import { api } from '@/lib/account/api';
-import { empresa } from '@/lib/empresa';
+import { empresa, whatsappUrl } from '@/lib/empresa';
+import { MOTIVOS_DESISTENCIA, type MotivoDesistencia } from '@/lib/motivos-desistencia';
 import { fraseDeVencido, pixAindaPagavel, vencidoDe } from './compras';
 import { IdentificacaoCurta } from '@/components/legal/Legal';
 
@@ -655,12 +656,19 @@ function ConfirmarEmailAviso({ verificado, email }: { verificado?: boolean | nul
 
    Pede confirmação antes, porque o efeito é real: o valor volta e o acesso
    fecha. Mas a confirmação é uma pergunta, não um obstáculo - nada de
-   "tem certeza?" repetido, nem motivo obrigatório. */
+   "tem certeza?" repetido, nem motivo obrigatório.
+
+   Desde 04/10/2026, a pedido do dono, a confirmação também (1) deixa a
+   pessoa dizer o motivo, se quiser, numa lista fechada, e (2) oferece falar
+   com o professor pelo WhatsApp. Os dois são OPCIONAIS e ficam ao lado do
+   botão de confirmar, que não muda de lugar nem ganha passo novo: o Decreto
+   7.962/2013 não admite que desistir fique mais difícil do que comprar. */
 function DesistirDaCompra({ order, email, onPedido }: {
   order: Order; email: string; onPedido: (pedidoEm: string) => void;
 }) {
   const account = useAccount();
   const [confirmando, setConfirmando] = useState(false);
+  const [motivo, setMotivo] = useState<MotivoDesistencia | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -692,7 +700,7 @@ function DesistirDaCompra({ order, email, onPedido }: {
     setBusy(true);
     setError(null);
     try {
-      const r = await account.requestWithdrawal(order.id);
+      const r = await account.requestWithdrawal(order.id, motivo);
       onPedido(r.pedidoEm);
     } catch (e) {
       setError(e instanceof AuthError ? e.message : MESSAGES.server);
@@ -710,14 +718,35 @@ function DesistirDaCompra({ order, email, onPedido }: {
             o motivo, e o acesso ao curso é encerrado quando o reembolso for
             processado. Seu progresso fica guardado.
           </p>
+          <label className="grid gap-1 font-ui text-[12.5px] leading-relaxed text-ink-muted">
+            Se quiser, conte o motivo. É opcional e nos ajuda a melhorar o curso.
+            <select value={motivo ?? ''} disabled={busy}
+                    onChange={e => setMotivo((e.target.value || null) as MotivoDesistencia | null)}
+                    className="min-h-[44px] max-w-full rounded-[var(--r-md)] border border-line bg-surface px-3
+                               font-ui text-[13px] text-ink">
+              <option value="">Prefiro não dizer</option>
+              {(Object.keys(MOTIVOS_DESISTENCIA) as MotivoDesistencia[]).map(m => (
+                <option key={m} value={m}>{MOTIVOS_DESISTENCIA[m]}</option>
+              ))}
+            </select>
+          </label>
           <div className="flex flex-wrap gap-2">
             <Button size="sm" variant="secondary" onClick={pedir} disabled={busy}>
               {busy ? 'Enviando…' : 'Confirmar desistência'}
             </Button>
-            <Button size="sm" variant="ghost" onClick={() => setConfirmando(false)} disabled={busy}>
+            <Button size="sm" variant="ghost" onClick={() => { setConfirmando(false); setMotivo(null); }} disabled={busy}>
               Voltar
             </Button>
           </div>
+          {whatsappUrl() && (
+            <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+              Travou em alguma lição ou teve um problema técnico? Se preferir, fale antes com o
+              professor{' '}
+              <a href={whatsappUrl()!} target="_blank" rel="noopener noreferrer"
+                 className="text-[var(--accent)] font-medium hover:underline">pelo WhatsApp</a>.
+              Você pode desistir do mesmo jeito depois, dentro do prazo.
+            </p>
+          )}
         </>
       ) : (
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">

@@ -130,16 +130,7 @@ export async function contarDemo({ request, env }) {
 }
 
 /** Soma 1 na etapa do teste, hoje. Nunca lança. */
-export async function contarEtapa(env, etapa) {
-  try {
-    await env.DB.prepare(
-      `INSERT INTO estatisticas (dia, chave, n) VALUES (?1, ?2, 1)
-       ON CONFLICT(dia, chave) DO UPDATE SET n = n + 1`
-    ).bind(hojeBrasilia(), `d|${etapa}`).run();
-  } catch (e) {
-    console.error('demo', e && e.stack || e);
-  }
-}
+export const contarEtapa = (env, etapa) => contarChave(env, `d|${etapa}`);
 
 /** GET /api/admin/estatisticas?dias=30 - as somas do período. */
 export async function ler({ request, env }) {
@@ -157,6 +148,7 @@ export async function ler({ request, env }) {
   const etapas = [];
   const campanhas = [];
   const demo = [];
+  const motivos = [];
   for (const { chave, n } of linhas || []) {
     const p = String(chave).split('|');
     if (p[0] === 'r' && p.length === 4) {
@@ -171,9 +163,25 @@ export async function ler({ request, env }) {
       campanhas.push({ origem: p[1], visitas: n });
     } else if (p[0] === 'd' && p.length === 2) {
       demo.push({ etapa: p[1], n });
+    } else if (p[0] === 'm' && p.length === 2) {
+      motivos.push({ motivo: p[1], n });
     }
   }
-  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo });
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos });
+}
+
+/** Soma 1 numa chave de contador, hoje. Nunca lança: estatística perdida
+ *  não é problema de ninguém. Usado pelos motivos de desistência (m|<motivo>,
+ *  api/pay.js), que não identificam quem desistiu. */
+export async function contarChave(env, chave) {
+  try {
+    await env.DB.prepare(
+      `INSERT INTO estatisticas (dia, chave, n) VALUES (?1, ?2, 1)
+       ON CONFLICT(dia, chave) DO UPDATE SET n = n + 1`
+    ).bind(hojeBrasilia(), chave).run();
+  } catch (e) {
+    console.error('estatisticas', e && e.stack || e);
+  }
 }
 
 /** As linhas de mais de um ano (chamado pela varredura, em alertas.js). */

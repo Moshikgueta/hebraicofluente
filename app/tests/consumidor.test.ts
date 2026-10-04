@@ -326,3 +326,34 @@ describe('o PIX direto não promete acesso em minutos', () => {
     }
   });
 });
+
+/* O motivo, opcional (04/10/2026): a desistência nunca depende dele. */
+describe('o motivo da desistência', () => {
+  const desistirCom = (env: Env, cookie: string, order: string, motivo: unknown) =>
+    pay.desistir({ request: deIp('198.51.100.9', `${SITE}/api/pay/desistir`, { order, motivo }, cookie), env, ctx });
+
+  it('com motivo: vai no e-mail do dono e soma um contador sem nome', async () => {
+    const env = envMail();
+    const { cookie, id } = await comConta(env);
+    pedidoPago(env, id, 'HF-MOTIVO', Date.now() - 3_600_000);
+    expect((await desistirCom(env, cookie, 'HF-MOTIVO', 'tempo')).status).toBe(200);
+    await assentar();
+    const dono = enviados.find(e => e.to === 'dono@exemplo.com')!;
+    expect(dono.text).toContain('Motivo: Não tenho tempo agora');
+    expect(linhas(env, "SELECT chave, n FROM estatisticas WHERE chave LIKE 'm|%'")).toEqual([{ chave: 'm|tempo', n: 1 }]);
+  });
+
+  it('sem motivo, ou com um inválido: a desistência segue igual', async () => {
+    const env = envMail();
+    const { cookie, id } = await comConta(env);
+    pedidoPago(env, id, 'HF-SEM', Date.now() - 3_600_000);
+    pedidoPago(env, id, 'HF-LIXO', Date.now() - 3_600_000);
+    expect((await desistir(env, cookie, 'HF-SEM')).status).toBe(200);
+    expect((await desistirCom(env, cookie, 'HF-LIXO', '<script>')).status).toBe(200);
+    await assentar();
+    const doDono = enviados.filter(e => e.to === 'dono@exemplo.com');
+    expect(doDono).toHaveLength(2);
+    for (const e of doDono) expect(e.text).toContain('Motivo: não informado (é opcional)');
+    expect(linhas(env, "SELECT chave FROM estatisticas WHERE chave LIKE 'm|%'")).toEqual([]);
+  });
+});
