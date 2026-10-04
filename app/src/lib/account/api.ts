@@ -110,7 +110,7 @@ export interface PlatformApi {
   /** Desiste de uma compra dentro dos sete dias (CDC, art. 49), pelo próprio
    *  site, como o Decreto 7.962/2013 exige. Devolve quando o pedido ficou
    *  registrado; pedir de novo devolve o mesmo momento. */
-  requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }>;
+  requestWithdrawal(orderId: string, motivo?: string | null): Promise<{ pedidoEm: string }>;
 }
 
 const MODE: ApiMode =

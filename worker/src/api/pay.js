@@ -19,6 +19,8 @@
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { ip, ipCompleto, requireAccount } from './auth.js';
+import { MOTIVOS_DESISTENCIA, motivoValido } from '../lib/motivos.js';
+import { contarChave } from './estatisticas.js';
 import { clampInstallments, getCourse, isSellable, parceriaValida, priceCents } from '../lib/catalog.js';
 import {
   acessosVencidos, arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar,
@@ -435,6 +437,10 @@ export async function desistir({ request, env, ctx }) {
   const r = await pedirArrependimento(env, {
     orderId: order.id, accountId: account.id, ip: ipCompleto(request)
   });
+  /* O motivo, se a pessoa quis dizer (04/10/2026). Opcional e de uma lista
+     fechada (lib/motivos.js): sem motivo, ou com um inválido, a desistência
+     segue igual. Vai no e-mail do dono e soma um contador sem nome. */
+  const motivo = motivoValido(body.motivo);
   let estado = null;
   if (r.novo) {
     await log(env, account.id, 'desistencia-pedida', order.id);
@@ -442,7 +448,8 @@ export async function desistir({ request, env, ctx }) {
        aconteceu com o dinheiro. Nunca lança: o pedido já está gravado, e o
        que falhar aqui a varredura tenta de novo. */
     estado = await iniciarEstorno(env, order);
-    const avisar = avisarDesistencia(env, order, account, r.pedidoEm, estado);
+    if (motivo) await contarChave(env, `m|${motivo}`);
+    const avisar = avisarDesistencia(env, order, account, r.pedidoEm, estado, motivo);
     if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(avisar);
     else await avisar;
   }
@@ -585,7 +592,7 @@ export async function runEstornos(env) {
 /** Os dois e-mails da desistência: a confirmação para quem pediu, e o aviso
  *  ao dono dizendo se o estorno saiu sozinho ou se é com ele. Nunca lança -
  *  o pedido já está gravado. */
-async function avisarDesistencia(env, order, account, pedidoEm, estado) {
+async function avisarDesistencia(env, order, account, pedidoEm, estado, motivo = null) {
   try {
     if (!mailReady(env)) return;
     const curso = getCourse(order.course_slug)?.titlePt || order.course_slug;
@@ -614,6 +621,7 @@ async function avisarDesistencia(env, order, account, pedidoEm, estado) {
         ...mensagemDeArrependimentoDono({
           email: account.email, curso, valor, pedido: order.id, pedidoEm: quando,
           prazoUteis, pixDireto: pixDireto(), marca, estado,
+          motivo: motivo ? MOTIVOS_DESISTENCIA[motivo] : null,
           conteudo: { dias: baixado.dias, primeiro: baixado.primeiro ? dataHoraBR(baixado.primeiro) : null }
         })
       });

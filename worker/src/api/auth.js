@@ -54,7 +54,7 @@ const MIN_PASSWORD = 8;
  * de freio e linha de trilha; um caractere de controle no meio criava uma
  * segunda conta que se lê exatamente como a primeira em toda tela do sistema.
  */
-const emailOk = s => {
+export const emailOk = s => {
   const v = String(s || '').trim();
   return v.length >= 6 && v.length <= 254
     && !/[\u0000-\u001f\u007f]/.test(v)

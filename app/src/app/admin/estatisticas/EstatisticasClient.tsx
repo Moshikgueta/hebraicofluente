@@ -10,11 +10,11 @@ import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course } from '@/lib/content-publico';
 import {
-  funilDaDemo, ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
+  funilDaDemo, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
 } from '@/lib/painel-estatisticas';
 
 type Campanha = { origem: string; visitas: number };
-type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[] };
+type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; motivos?: { motivo: string; n: number }[] };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; dados: Dados };
 
@@ -134,6 +134,26 @@ export function EstatisticasClient() {
                   ))}</tbody>
                 </table>
               </div>
+            </section>
+
+            <section className="grid gap-3">
+              <h2 className="text-[20px] font-semibold m-0">Motivos de desistência</h2>
+              <p className="font-ui text-[14px] text-ink-muted m-0">
+                O que as pessoas escolheram ao desistir da compra. É opcional, então nem toda desistência
+                aparece aqui. Não identifica ninguém.
+              </p>
+              {(estado.dados.motivos || []).length === 0 ? (
+                <p className="font-ui text-[15px] m-0">Nenhum motivo informado no período.</p>
+              ) : (
+                <ul className="list-none p-0 m-0 grid gap-1 font-ui text-[15px]">
+                  {[...(estado.dados.motivos || [])].sort((a, b) => b.n - a.n).map(m => (
+                    <li key={m.motivo} className="flex justify-between gap-4 border-t border-[color:var(--line-soft)] py-2">
+                      <span>{MOTIVOS_PT[m.motivo as keyof typeof MOTIVOS_PT] ?? m.motivo}</span>
+                      <span className="tabular-nums font-semibold">{m.n}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </section>
 
             <section className="grid gap-3">

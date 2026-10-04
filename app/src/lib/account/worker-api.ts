@@ -172,9 +172,9 @@ export class WorkerApi implements PlatformApi {
       .then(r => r.order);
   }
 
-  requestWithdrawal(orderId: string): Promise<{ pedidoEm: string }> {
+  requestWithdrawal(orderId: string, motivo?: string | null): Promise<{ pedidoEm: string }> {
     return call<{ pedidoEm: string }>('/pay/desistir', {
-      method: 'POST', body: JSON.stringify({ order: orderId })
+      method: 'POST', body: JSON.stringify({ order: orderId, ...(motivo ? { motivo } : {}) })
     });
   }
 }

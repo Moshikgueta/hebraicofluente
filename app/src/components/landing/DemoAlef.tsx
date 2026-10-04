@@ -61,6 +61,7 @@ import { track } from '@/lib/analytics';
 import { contarEtapaDaDemo, type EtapaDaDemo } from '@/lib/funil-demo';
 import { type NomeAmostra } from '@/lib/amostra-audio';
 import { useTocador } from './useTocador';
+import { asset } from '@/lib/asset';
 import { Container, H2, Lead, Reveal, Check } from './base';
 
 /* A letra vem do CATÁLOGO, e não escrita aqui: o glifo e o nome da primeira
@@ -693,7 +694,7 @@ export function DemoAlef({
                     <p className="font-ui text-[16px] leading-[1.65] text-ink-muted max-w-[44ch] m-0">
                       Esta é uma palavra hebraica de verdade, e o Álef aparece nas duas pontas -
                       lembrando que em hebraico se lê da direita para a esquerda. A letra do meio
-                      é a próxima que o curso ensina.
+                      é o Bet, que o curso também ensina.
                     </p>
                     <p className="font-ui text-[15px] leading-[1.6] text-ink-muted max-w-[44ch] m-0">
                       A transliteração ao lado é o apoio do começo. Ela vai diminuindo ao longo
@@ -819,6 +820,8 @@ export function DemoAlef({
                       Comece do zero, avance no seu ritmo, e o progresso fica salvo.
                     </p>
                   </div>
+
+                  {vende && <SegundaLetra />}
 
                   <button
                     type="button"
@@ -973,6 +976,82 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+/* A segunda letra por e-mail (03/10/2026, a pedido do dono): para quem
+   terminou e ainda não quer comprar. Um e-mail só, com o Mem; o endereço não
+   entra em lista nenhuma. Ver worker/src/api/segunda-letra.js. */
+function SegundaLetra() {
+  const [email, setEmail] = useState('');
+  const [estado, setEstado] = useState<'pronto' | 'enviando' | 'ok' | 'invalido' | 'erro'>('pronto');
+
+  const enviar = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (estado === 'enviando') return;
+    setEstado('enviando');
+    try {
+      const r = await fetch(asset('/api/segunda-letra'), {
+        method: 'POST', credentials: 'same-origin', cache: 'no-store',
+        headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email })
+      });
+      if (r.ok) return setEstado('ok');
+      const { error } = await r.json().catch(() => ({ error: '' })) as { error?: string };
+      setEstado(error === 'email-invalido' ? 'invalido' : 'erro');
+    } catch { setEstado('erro'); }
+  };
+
+  return (
+    <div className="w-full max-w-[440px] rounded-[18px] border border-line bg-[var(--card)] px-5 py-4 text-left grid gap-3">
+      <div className="grid gap-1">
+        <p className="font-display text-[18px] font-semibold text-ink m-0">
+          Ainda não quer decidir? Receba a segunda letra por <span className="whitespace-nowrap">e-mail</span>.
+        </p>
+        <p className="font-ui text-[14px] leading-[1.55] text-ink-muted m-0">
+          Mandamos um e-mail só, com o Mem, a segunda letra do curso. Seu endereço não entra em lista nenhuma.
+        </p>
+      </div>
+      {estado === 'ok' ? (
+        <p role="status" className="font-ui text-[15px] leading-[1.55] text-[var(--teal-ink)] m-0">
+          <span aria-hidden className="font-bold mr-1.5">✓</span>
+          Pronto! A segunda letra está a caminho de <strong className="break-all">{email}</strong>. Se não chegar em
+          alguns minutos, olhe a caixa de spam.
+        </p>
+      ) : (
+        <form onSubmit={enviar} className="grid gap-2">
+          <label htmlFor="segunda-letra-email" className="font-ui text-[14px] font-semibold text-ink">Seu e-mail</label>
+          <div className="flex flex-wrap gap-2">
+            <input
+              id="segunda-letra-email"
+              type="email" required autoComplete="email" inputMode="email"
+              value={email} onChange={e => { setEmail(e.target.value); if (estado !== 'enviando') setEstado('pronto'); }}
+              className="flex-1 min-w-[200px] min-h-[48px] rounded-[12px] border border-line bg-[var(--card)] px-3.5
+                         font-ui text-[16px] text-ink
+                         focus-visible:outline focus-visible:outline-2
+                         focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]"
+            />
+            <button
+              type="submit"
+              disabled={estado === 'enviando'}
+              className="min-h-[48px] px-5 rounded-[12px] bg-[var(--teal)] text-white font-ui text-[15.5px] font-semibold
+                         disabled:opacity-60
+                         focus-visible:outline focus-visible:outline-2
+                         focus-visible:outline-offset-2 focus-visible:outline-[var(--navy)]"
+            >
+              {estado === 'enviando' ? 'Enviando…' : 'Mandar a segunda letra'}
+            </button>
+          </div>
+          <div aria-live="polite" className="min-h-[20px]">
+            {estado === 'invalido' && (
+              <p className="font-ui text-[14px] text-[var(--gold-ink)] m-0">Confira o e-mail: parece que falta alguma coisa.</p>
+            )}
+            {estado === 'erro' && (
+              <p className="font-ui text-[14px] text-[var(--gold-ink)] m-0">Não consegui mandar agora. Tente de novo daqui a pouco.</p>
+            )}
+          </div>
+        </form>
+      )}
     </div>
   );
 }

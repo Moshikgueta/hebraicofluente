@@ -69,6 +69,11 @@ export default function Page() {
     ['Pedido de desistência da compra: data, hora e endereço IP de quando você pediu',
      'provar que você desistiu dentro do prazo do art. 49 do CDC, e fazer o estorno',
      'a data e a hora, junto com o registro da compra; o endereço IP, seis meses'],
+    /* 04/10/2026: o motivo opcional (worker/src/lib/motivos.js). Vai só no
+       aviso ao atendimento; no banco fica um contador por dia, sem conta. */
+    ['Motivo da desistência, se você escolher um (é opcional)',
+     'entender por que as pessoas desistem e melhorar o curso',
+     'vai no aviso de desistência para a caixa do atendimento; no site fica só um total por dia, sem o seu nome, apagado em um ano'],
     /* access_log: 180 dias (logPurge), com o id da conta e sem e-mail. */
     ['Trilha de operações da conta: o que aconteceu e quando (compra, liberação, estorno, troca de senha, e o dia em que o conteúdo do curso foi aberto), sem o seu e-mail',
      'segurança, atendimento e prova do que foi feito na sua conta',
@@ -293,6 +298,12 @@ export default function Page() {
           No teste grátis da página inicial, o navegador manda só o nome de cada etapa que você alcançou, uma vez
           por visita, para sabermos onde as pessoas param. O servidor soma esses números por dia e não guarda nome,
           e-mail, conta, endereço de IP, horário nem as suas respostas. Os totais saem depois de um ano.
+        </p>
+        {/* 03/10/2026: worker/src/api/segunda-letra.js. */}
+        <p>
+          No fim desse teste, você pode pedir a segunda letra por e-mail. O endereço que você digita é usado só para
+          mandar esse e-mail e não é guardado nem entra em lista nenhuma. Para não mandar duas vezes no mesmo dia, o
+          servidor guarda por até 48 horas um código calculado a partir do endereço, que não permite recuperá-lo.
         </p>
       </Artigo>
 

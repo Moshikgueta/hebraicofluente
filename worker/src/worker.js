@@ -42,6 +42,7 @@ import * as estatisticas from './api/estatisticas.js';
 import * as adminCodigo from './api/admin-codigo.js';
 import * as estornosAdmin from './api/estornos-admin.js';
 import * as vendasAdmin from './api/vendas-admin.js';
+import * as segundaLetra from './api/segunda-letra.js';
 
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
@@ -127,6 +128,8 @@ const ROUTES = {
   'GET /api/admin/estatisticas': estatisticas.ler,
   /* Até onde os visitantes chegam no teste grátis da capa. Sem sessão. */
   'POST /api/demo': estatisticas.contarDemo,
+  /* A segunda letra por e-mail, no fim do teste. Ver api/segunda-letra.js. */
+  'POST /api/segunda-letra': segundaLetra.pedir,
 
   /* O segundo fator do administrador: o código por e-mail. Ver
      lib/admin.js e api/admin-codigo.js. */
