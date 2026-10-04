@@ -665,7 +665,10 @@ export const exTypeHeard: Gen = (L, _ctx, rand, i) => {
   return {
     id: `${L.id}-tph-${i}`, kind: 'type-answer', letterId: L.id, skill: 'ouvir',
     promptPt: 'Escreva o que você ouviu.',
-    accept: [target.translit],
+    /* A transliteração ou a própria palavra em hebraico, com ou sem nikud
+       (`typedIsCorrect`, 04/10/2026). Só aqui: onde a palavra hebraica está
+       na tela, aceitá-la de volta seria copiar, e não ler. */
+    accept: [target.translit, target.he],
     placeholder: 'escreva aqui',
     want: 'translit',
     audioId: target.audioId,

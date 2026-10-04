@@ -393,3 +393,23 @@ describe('a checkpoint is a demonstration, not a longer lesson', () => {
     }
   });
 });
+
+/* "Escreva o que você ouviu" em hebraico (04/10/2026, pedido do dono): quem
+   ouviu יַלְדָּה e digitou ילדה no teclado do celular acertou. */
+describe('resposta digitada em hebraico', () => {
+  const accept = ['yaldá', 'יַלְדָּה'];
+  it('aceita a palavra sem nikud, com nikud e com espaço sobrando', () => {
+    expect(typedIsCorrect('ילדה', accept)).toBe(true);
+    expect(typedIsCorrect('יַלְדָּה', accept)).toBe(true);
+    expect(typedIsCorrect('  ילדה ', accept)).toBe(true);
+    expect(typedIsCorrect('yalda', accept)).toBe(true);
+  });
+  it('letra errada e forma final trocada continuam erradas', () => {
+    expect(typedIsCorrect('ילדא', accept)).toBe(false);
+    expect(typedIsCorrect('שלומ', ['shalom', 'שָׁלוֹם'])).toBe(false);
+    expect(typedIsCorrect('שלום', ['shalom', 'שָׁלוֹם'])).toBe(true);
+  });
+  it('sem hebraico entre as respostas, hebraico digitado não passa', () => {
+    expect(typedIsCorrect('ילדה', ['yaldá'])).toBe(false);
+  });
+});

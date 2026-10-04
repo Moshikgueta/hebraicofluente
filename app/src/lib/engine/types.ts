@@ -274,7 +274,30 @@ export function normalizeLoose(text: string): string {
     .replace(/([^aeiou])\1+/g, '$1');
 }
 
+/* Resposta digitada EM HEBRAICO (04/10/2026, pedido do dono): quem ouve
+   יַלְדָּה e escreve ילדה acertou. O teclado do celular não põe nikud, e o
+   exercício de ouvir não está ensinando nikud - está ensinando a reconhecer
+   a palavra. Então, quando a resposta tem letras hebraicas, compara só as
+   letras: sai o nikud e os sinais de cantilação (U+0591 a U+05C7, menos o
+   maqaf, que vira espaço), e sai o que não é letra. As formas finais NÃO se
+   juntam com as normais: escrever מ no fim de palavra é um erro que o curso
+   ensina a evitar. */
+const LETRA_HEBRAICA = /[\u05D0-\u05EA]/;
+export function soLetrasHebraicas(text: string): string {
+  return String(text ?? '')
+    .normalize('NFD')
+    .replace(/\u05BE/g, ' ')
+    .replace(/[\u0591-\u05C7]/g, '')
+    .replace(/[^\u05D0-\u05EA ]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export const typedIsCorrect = (typed: string, accept: readonly string[]): boolean => {
+  if (LETRA_HEBRAICA.test(String(typed ?? ''))) {
+    const h = soLetrasHebraicas(typed);
+    return h.length > 0 && accept.some(a => LETRA_HEBRAICA.test(a) && soLetrasHebraicas(a) === h);
+  }
   const t = normalizeTyped(typed);
   if (!t.length) return false;
   if (accept.some(a => normalizeTyped(a) === t)) return true;
