@@ -1,7 +1,9 @@
 /* Parcerias (02/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Quem chega por hebraicofluente.com.br/sefarad (a associação sefardita,
- * @adsefaraditas) vem para a capa com `?parceria=sefarad`. A capa guarda o
+ * @adsefarditas) vem para a capa com `?parceria=sefarad`. Desde 04/10/2026,
+ * os links do Instagram (/bio, /stories, /dm) fazem o mesmo, cada um com o
+ * seu nome, e o preço vale até `price.parceriaAte`. A capa guarda o
  * nome neste aparelho, e o checkout mostra e pede o preço da parceria
  * (`price.parceriaBrl`) quando ele é menor que o preço do dia - hoje, R$ 147
  * também depois do fim do pré-lançamento.
@@ -13,7 +15,10 @@
 import type { CatalogCourse } from './catalog';
 
 export const PARCERIAS: Record<string, { perfil: string }> = {
-  sefarad: { perfil: '@adsefaraditas' }
+  sefarad: { perfil: '@adsefarditas' },
+  bio: { perfil: '@hebraicofluente' },
+  stories: { perfil: '@hebraicofluente' },
+  dm: { perfil: '@hebraicofluente' }
 };
 
 const CHAVE = 'hf-parceria-v1';
@@ -40,10 +45,20 @@ export function parceriaAtual(): string | null {
   } catch { return null; }
 }
 
-/** O preço da parceria, se houver e for menor que o do dia. */
-export function precoDaParceria(c: CatalogCourse, nome: string | null): number | null {
+/** O preço da parceria ainda vale? Sem data, vale sempre. A mesma regra de
+ *  worker/src/lib/catalog.js (`parceriaVigente`). */
+export const parceriaVigente = (p: CatalogCourse['price'], agora = Date.now()): boolean =>
+  !p.parceriaAte || agora <= Date.parse(`${p.parceriaAte}T23:59:59.999-03:00`);
+
+/** "30/11", o último dia do preço da parceria, para a tela. */
+export const fimDaParceria = (c: CatalogCourse): string | null =>
+  c.price.parceriaAte ? c.price.parceriaAte.slice(8, 10) + '/' + c.price.parceriaAte.slice(5, 7) : null;
+
+/** O preço da parceria, se houver, for menor que o do dia e ainda valer. */
+export function precoDaParceria(c: CatalogCourse, nome: string | null, agora = Date.now()): number | null {
   const p = c.price;
-  return nome && valida(nome) && p.parceriaBrl && p.parceriaBrl > 0 && p.parceriaBrl < p.brl ? p.parceriaBrl : null;
+  return nome && valida(nome) && p.parceriaBrl && p.parceriaBrl > 0 && p.parceriaBrl < p.brl && parceriaVigente(p, agora)
+    ? p.parceriaBrl : null;
 }
 
 /** O curso como o checkout deve mostrá-lo para quem veio da parceria. */

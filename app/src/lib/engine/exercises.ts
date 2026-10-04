@@ -30,7 +30,7 @@ import {
   BY_SKILL, LESSON_GENERATORS, NEEDS_AUDIO,
   exBuildSyllable, exBuildWord, exCompleteWord, exConfusablePick, exCursiveToPrint,
   exFinalForm, exFinalInWord, exLetterInWord, exLetterPosition, exLetterRecognition,
-  exLetterVariant,
+  exLetterVariant, exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning,
   exVariantSyllable,
   exMatchLetterSound, exMeaningToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
   exSentenceReading, exSyllableReading, exTypeSyllable, exTypeTranslit, exVowelSound, exWordMeaning,
@@ -584,6 +584,18 @@ export function buildLetterPractice(
   const CAMADAS_FIXAS = 7;
   const tetoProprio = Math.max(CAMADAS_FIXAS, count - reservaRevisao - (frase ? 1 : 0));
 
+  /* O TETO POR GESTO (04/10/2026, pedido do dono: "os exercícios estão
+     repetitivos"). Medido nas 22 lições: "qual destas é a letra" (o tipo
+     letter-recognition, que inclui "entre estas parecidas") era um em cada
+     cinco itens do curso, e chegava a seis numa lição só, somando a camada
+     de reconhecer, a de parecidas, a revisão cumulativa e o preenchimento.
+     Dois por bloco bastam; o lugar dos outros vai para gestos diferentes. */
+  const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = { 'letter-recognition': 2, 'odd-one-out': 1 };
+  const cabe = (ex: Exercise) => {
+    const teto = TETO_POR_TIPO[ex.kind];
+    return teto === undefined || out.filter(e => e.kind === ex.kind).length < teto;
+  };
+
   const tentar = (gens: readonly Gen[], quantos = 1) => {
     let postos = 0;
     for (let round = 0; round < 6 && postos < quantos; round++) {
@@ -591,7 +603,7 @@ export function buildLetterPractice(
         if (postos >= quantos || out.length >= tetoProprio) return;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
         const ex = gen(L, ctx, rand, giro + round + out.length);
-        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabe(ex)) continue;
         seen.add(ex.id);
         ditos.add(assinatura(ex));
         out.push(ex);
@@ -615,52 +627,67 @@ export function buildLetterPractice(
      letra de duas leituras, “que som esta letra faz?” é a pergunta errada -
      a resposta é “depende do ponto”, que é exatamente o que a camada de
      variante cobra. */
-  const antes = out.length;
-  if ((L.variantes?.length ?? 0) >= 2) tentar([exLetterVariant, exVariantSyllable], 1);
-  if (out.length === antes) tentar(girar([exMatchLetterSound, exVowelSound, exSoundToSyllable], L.order), 1);
+  /* O ROTEIRO MUDA DE UMA LIÇÃO PARA OUTRA (04/10/2026, pedido do dono).
+     ─────────────────────────────────────────────────────────────────────
+     As camadas abaixo eram chamadas sempre na mesma ordem, e o bloco saía na
+     ordem em que eram chamadas: as 22 lições tinham o MESMO roteiro, só com
+     outra letra - reconhecer, som, parecidas, na palavra, posição, cursiva,
+     montar, digitar, ler. Quem fazia duas lições seguidas sentia que fazia a
+     mesma de novo.
+
+     Agora são dois grupos, e cada um é embaralhado pelo sorteio do bloco:
+
+       · o CURRÍCULO (som ou variante, parecidas, na palavra, a posição, a
+         forma final, a cursiva e a cursiva em palavra) - todos entram,
+         sempre; muda só a ordem;
+       · a PRODUÇÃO - montar, digitar e, desde hoje, OUVIR têm lugar
+         garantido; montar letra por letra e ler disputam o espaço que sobra,
+         em ordem sorteada.
+
+     O reconhecer continua abrindo o bloco e a frase continua fechando: os
+     dois lugares têm razão pedagógica. A semente é a do bloco, então a
+     mesma rodada devolve o mesmo bloco, e refazer muda o roteiro. */
   const contrastes = contrastesDoConteudo(history.filter(x => x.order <= L.order));
   const gemea = gemeaDe(L, contrastes);
-  tentar(gemea
-    ? [...girar(gensDoPar(gemea), L.order), exConfusablePick]
-    : girar([exConfusablePick, exOddOneOut], L.order), 1);
-  tentar(girar([exLetterInWord, exCompleteWord], L.order), 1);
-  tentar([exLetterPosition, exLetterInWord], 1);
-  if (L.finalForm) tentar([exFinalInWord, exFinalForm], 1);
-  tentar([exPrintVsCursive, exCursiveToPrint], 1);
-  /* A CURSIVA EM PALAVRA, e não só a letra.
-     ─────────────────────────────────────────────────────────────────────
-     A camada de cima ensina que {{א}} impressa é {{א}} à mão. Isso não basta
-     para ler um bilhete: à mão as letras vêm juntas, sem vogal, e a palavra
-     tem de ser reconhecida inteira. Os quatro modos entram aos poucos (ver
-     CURSIVA_DESDE) e giram pela ordem da letra; antes do primeiro, a camada
-     simplesmente não existe. */
+  const curriculo: (() => void)[] = [
+    () => {
+      const antes = out.length;
+      if ((L.variantes?.length ?? 0) >= 2) tentar([exLetterVariant, exVariantSyllable], 1);
+      if (out.length === antes) tentar(girar([exMatchLetterSound, exVowelSound, exSoundToSyllable], L.order), 1);
+    },
+    () => tentar(gemea
+      ? [...girar(gensDoPar(gemea), L.order), exConfusablePick]
+      : girar([exConfusablePick, exOddOneOut], L.order), 1),
+    () => tentar(girar([exLetterInWord, exCompleteWord], L.order), 1),
+    () => tentar([exLetterPosition, exLetterInWord], 1),
+    () => { if (L.finalForm) tentar([exFinalInWord, exFinalForm], 1); },
+    () => tentar([exPrintVsCursive, exCursiveToPrint], 1)
+  ];
+  /* A variante (letras de duas leituras: o ponto do שׁ/שׂ, do בּ/ב) continua
+     PRIMEIRO no currículo: nas letras tardias o bloco lota, e a diferença que
+     DEFINE a letra não pode ser a camada que fica de fora. Numa letra de uma
+     leitura só, este lugar é o do som. */
+  const [variante, ...resto] = curriculo;
+  const producao: (() => void)[] = [
+    () => tentar(girar([exBuildLetters, exBuildCursiveGated], L.order), 1),
+    () => tentar(girar([exSyllableReading, exWordMeaning, exMeaningToWord], L.order), frase ? 1 : 2)
+  ];
+  variante!();
+  for (const camada of shuffled(resto, rand)) camada();
+  /* Fora do sorteio, nesta ordem, porque não podem ser as que ficam de fora
+     quando o bloco é pequeno: a cursiva EM PALAVRA (a última camada do
+     currículo, a que sempre cedia primeiro) e o DIGITADO, que tem de vir
+     antes de a fixação cobrar (tests/p0-exercicios). */
   tentar(girar(GENS_CURSIVA_PALAVRA, L.order), 1);
-  /* A frase foi DECIDIDA lá em cima, junto da reserva, e é COLOCADA aqui.
-     Decidida antes porque o teto das camadas depende dela; colocada depois
-     porque é o item mais difícil e o mais gratificante - antes das sílabas o
-     aluno bate nele sem aquecimento.
-
-     DOIS itens de leitura e montagem, e não um: com o bloco em catorze cabem
-     os dois gestos, ler a sílaba pronta e MONTAR a sílaba. Antes só cabia um
-     deles, e qual dos dois era sorte da ordem da lista.
-
-     Por isso MONTAR tem lugar próprio, antes do ler. Com a lista inteira
-     girando junta, a rotação deu variedade de família e tirou gesto: montar
-     a sílaba caiu de 46 para 23 aparições e a escolha múltipla subiu de 84%
-     para 91% do curso. Variar QUAL pergunta de escolher não é variar o gesto. */
+  /* MONTAR tem lugar próprio desde a rodada 2: com a lista girando junta, a
+     escolha múltipla tomava o lugar dele (tests/rodada2). */
   tentar([...girar([exBuildSyllable, exBuildWord], L.order), exSoundToSyllable], 1);
-  /* DIGITAR, o único gesto do bloco que não oferece a resposta na tela.
-     Entra aqui para que a fixação - que também cobra - nunca seja o primeiro
-     encontro do aluno com a caixa de texto. Gira com fase oposta à da
-     fixação: quem digita a palavra na prática digita a sílaba na prova, e
-     vice-versa. */
-  /* MONTAR A PALAVRA LETRA POR LETRA - o som na tela, as letras soltas na
-     mesa, a primeira à direita. É o gesto de produção que o curso não tinha:
-     `build-word` monta por sílabas pontuadas, que é ler; este soletra. A
-     partir da letra 11 ele gira com a versão em cursiva. */
-  tentar(girar([exBuildLetters, exBuildCursiveGated], L.order), 1);
   tentar(girar([exTypeTranslit, exTypeSyllable], L.order), 1);
-  tentar(girar([exSyllableReading, exWordMeaning, exMeaningToWord], L.order), frase ? 1 : 2);
+  /* OUVIR, com a voz do professor: a camada que faltava. Medido antes dela,
+     um item de ouvir em 569 nas lições, com 539 gravações no curso. Sem
+     áudio, ela não entra e o lugar fica para a produção. */
+  tentar(girar([exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning], L.order), 1);
+  for (const camada of shuffled(producao, rand)) camada();
   /* A frase NÃO entra aqui: ela é acrescentada no fim, depois do arranjo.
      Ver a nota do `return`. */
 
@@ -673,8 +700,12 @@ export function buildLetterPractice(
   if (anteriores.length) {
     const ordenadas = ordemDeRevisao(L, anteriores, weak, rand);
     const quantos = reservaRevisao;
-    const gensCumulativo = [exLetterRecognition, exLetterInWord, exSyllableReading,
-                            exConfusablePick, exVowelSound, exWordMeaning];
+    /* Mais gestos e o reconhecer por último (04/10/2026): a revisão das
+       letras antigas era quase só "qual destas é a letra". Agora ela também
+       ouve, monta e digita. */
+    const gensCumulativo = [exAudioWord, exLetterInWord, exBuildSyllable, exSyllableReading,
+                            exListenSyllable, exWordMeaning, exTypeTranslit, exVowelSound,
+                            exConfusablePick, exLetterRecognition];
     let postos = 0;
     let emPar = 0;
     /* Uma letra por vez, na ordem de urgência, e cada uma tenta os geradores
@@ -702,7 +733,7 @@ export function buildLetterPractice(
         const gen = gensCumulativo[(n + L.order + g) % gensCumulativo.length]!;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
         const ex = gen(P, contextFor(P, history), rand, giro + n);
-        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabe(ex)) continue;
         seen.add(ex.id);
         ditos.add(assinatura(ex));
         out.push(ex);
@@ -726,7 +757,7 @@ export function buildLetterPractice(
       for (const ex of candidatos) {
         if (out.length >= count) break;
         if (soNovos && out.some(e => e.kind === ex.kind)) continue;
-        if (seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        if (seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabe(ex)) continue;
         seen.add(ex.id);
         ditos.add(assinatura(ex));
         out.push(ex);
@@ -1083,6 +1114,10 @@ export function buildReview(
       const gen = gens[(giro + round * 5 + L.order) % gens.length]!;
       if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
       const ex = gen(L, ctx, rand, giro + round);
+      /* Nas primeiras voltas, um tipo de exercício por rodada (04/10/2026):
+         cinco perguntas de cinco jeitos diferentes. Depois, se faltar, vale
+         repetir o tipo - melhor uma revisão completa do que uma curta. */
+      if (ex && round < 3 && out.some(e => e.kind === ex.kind)) continue;
       if (ex && !seen.has(ex.id)) { seen.add(ex.id); out.push(ex); }
     }
   }

@@ -46,6 +46,8 @@ export type CoursePrice = {
   preLancamentoAte?: string | null;
   /** Preço para quem chega pelo link de uma parceria (lib/parceria.ts). */
   parceriaBrl?: number | null;
+  /** Último dia (AAAA-MM-DD, Brasília) em que o preço da parceria vale. */
+  parceriaAte?: string | null;
 };
 
 export type CatalogModule = {

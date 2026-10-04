@@ -200,7 +200,8 @@ async function responder(request, env, ctx) {
     }
 
     /* ── links de campanha ───────────────────────────────────────────
-       /sefarad (parceria com a associação sefardita, 02/10/2026): soma uma
+       /sefarad (parceria com a associação sefardita, 02/10/2026) e, desde
+       04/10/2026, /bio, /stories e /dm (Instagram): cada um soma uma
        visita do dia e leva ao teste grátis da capa. 302, e não 301: o
        navegador não pode guardar o desvio, senão a segunda visita da mesma
        pessoa nem passa por aqui. Ver api/estatisticas.js. */

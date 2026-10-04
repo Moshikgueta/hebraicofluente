@@ -87,7 +87,12 @@ export async function registrar({ request, env }) {
    parceria com a associação sefardita. Conta só o total de visitas por dia,
    na mesma tabela e com a mesma regra das outras contagens: sem conta,
    e-mail, IP, horário nem cookie. A visita leva direto ao teste grátis. */
-export const LINKS_DE_CAMPANHA = new Map([['/sefarad', 'sefarad']]);
+export const LINKS_DE_CAMPANHA = new Map([
+  ['/sefarad', 'sefarad'],
+  /* Os do Instagram (04/10/2026): a bio, as figurinhas de link dos stories e
+     o link mandado no direct. Cada um conta à parte. */
+  ['/bio', 'bio'], ['/stories', 'stories'], ['/dm', 'dm']
+]);
 const ROBO = /bot|crawl|spider|preview|facebookexternalhit|whatsapp|telegram|slack|discord|curl|wget|python|headless/i;
 
 export async function contarCampanha(env, origem, request) {

@@ -17,6 +17,7 @@
  */
 
 import type { Skill } from '@/lib/state/types';
+import { hebraicoDigitadoCerto } from './palavras';
 
 export type ExerciseBase = {
   id: string;
@@ -274,7 +275,18 @@ export function normalizeLoose(text: string): string {
     .replace(/([^aeiou])\1+/g, '$1');
 }
 
+/* Resposta digitada EM HEBRAICO (04/10/2026, pedido do dono): quem ouve
+   יַלְדָּה e escreve ילדה acertou. O teclado do celular não põe nikud, e o
+   exercício de ouvir não está ensinando nikud - está ensinando a reconhecer
+   a palavra. A regra é a MESMA do "Digite em hebraico" (palavras.ts,
+   `hebraicoDigitadoCerto`): sem vogais e sem exigir a forma final. Duas
+   regras diferentes para hebraico digitado fariam o curso se contradizer. */
+const LETRA_HEBRAICA = /[\u05D0-\u05EA]/;
+
 export const typedIsCorrect = (typed: string, accept: readonly string[]): boolean => {
+  if (LETRA_HEBRAICA.test(String(typed ?? ''))) {
+    return hebraicoDigitadoCerto(typed, accept.filter(a => LETRA_HEBRAICA.test(a)));
+  }
   const t = normalizeTyped(typed);
   if (!t.length) return false;
   if (accept.some(a => normalizeTyped(a) === t)) return true;
