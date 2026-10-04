@@ -404,10 +404,11 @@ describe('resposta digitada em hebraico', () => {
     expect(typedIsCorrect('  ילדה ', accept)).toBe(true);
     expect(typedIsCorrect('yalda', accept)).toBe(true);
   });
-  it('letra errada e forma final trocada continuam erradas', () => {
+  it('letra errada continua errada; a forma final segue a regra do "Digite em hebraico"', () => {
     expect(typedIsCorrect('ילדא', accept)).toBe(false);
-    expect(typedIsCorrect('שלומ', ['shalom', 'שָׁלוֹם'])).toBe(false);
     expect(typedIsCorrect('שלום', ['shalom', 'שָׁלוֹם'])).toBe(true);
+    /* A mesma régua de hebraicoDigitadoCerto: a forma final não é exigida. */
+    expect(typedIsCorrect('שלומ', ['shalom', 'שָׁלוֹם'])).toBe(true);
   });
   it('sem hebraico entre as respostas, hebraico digitado não passa', () => {
     expect(typedIsCorrect('ילדה', ['yaldá'])).toBe(false);

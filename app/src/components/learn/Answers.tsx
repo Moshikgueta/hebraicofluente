@@ -25,6 +25,7 @@ import { Button } from '@/components/ui/Button';
 import { AudioButton, hasAudio } from './AudioButton';
 import { clean, joinSyllable, onCarrier } from '@/lib/hebrew';
 import { typedIsCorrect } from '@/lib/engine/types';
+import { stripNikud } from '@/lib/hebrew';
 import { hebraicoDigitadoCerto, pareceTecladoLatino } from '@/lib/engine/palavras';
 import { rng, shuffled } from '@/lib/engine/rng';
 import { TecladoHebraico } from './TecladoHebraico';
@@ -563,7 +564,10 @@ export function TypeAnswer({
         <p className="font-ui text-[14px] text-ink-body">
           Você escreveu <strong>{value}</strong>. O certo era <strong>{accept[0]}</strong>
           {accept.slice(1).some(a => /[\u05D0-\u05EA]/.test(a)) && (
-            <> (<He size="inline">{accept.slice(1).find(a => /[\u05D0-\u05EA]/.test(a))!}</He>)</>
+            /* Sem nikud: é como a palavra se digita no teclado do celular
+               (04/10/2026, pedido do dono). A forma com nikud aparece no
+               retorno logo abaixo, que é onde se ensina a ler. */
+            <> (<He size="inline">{stripNikud(accept.slice(1).find(a => /[\u05D0-\u05EA]/.test(a))!)}</He>)</>
           )}.
         </p>
       )}
