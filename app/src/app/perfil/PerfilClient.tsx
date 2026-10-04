@@ -30,7 +30,7 @@ import { useProgress } from '@/lib/state/store';
 import { daysLeft, type AcessoVencido, type Order } from '@/lib/account/types';
 import { allCourses, brl, FLAGSHIP, getCourse } from '@/lib/catalog';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
-import { course } from '@/lib/content-publico';
+import { course, totalLicoes } from '@/lib/content-publico';
 import { api } from '@/lib/account/api';
 import { empresa, whatsappUrl } from '@/lib/empresa';
 import { MOTIVOS_DESISTENCIA, type MotivoDesistencia } from '@/lib/motivos-desistencia';
@@ -667,6 +667,7 @@ function DesistirDaCompra({ order, email, onPedido }: {
   order: Order; email: string; onPedido: (pedidoEm: string) => void;
 }) {
   const account = useAccount();
+  const p = useProgress();
   const [confirmando, setConfirmando] = useState(false);
   const [motivo, setMotivo] = useState<MotivoDesistencia | null>(null);
   const [busy, setBusy] = useState(false);
@@ -718,6 +719,27 @@ function DesistirDaCompra({ order, email, onPedido }: {
             o motivo, e o acesso ao curso é encerrado quando o reembolso for
             processado. Seu progresso fica guardado.
           </p>
+          {/* O que a pessoa perde, dito com a verdade (04/10/2026, a pedido do
+              dono): o que o curso tem e o progresso REAL dela. Informa, não
+              assusta - a conta e o progresso continuam, e isso também é dito.
+              Só para a alfabetização, que é o curso que esta lista descreve. */}
+          {order.courseSlug === FLAGSHIP && (
+            <div className="rounded-[var(--r-md)] bg-surface-2 px-3 py-2.5 grid gap-1.5">
+              <p className="font-ui text-[13px] font-semibold text-ink m-0">Ao desistir, você perde o acesso a:</p>
+              <ul className="list-none p-0 m-0 grid gap-1 font-ui text-[13px] text-ink-body">
+                {[
+                  `${totalLicoes()} lições, com o áudio do professor`,
+                  'Os exercícios de escrita, leitura e revisão',
+                  'Os jogos de prática e o certificado de conclusão'
+                ].map(t => <li key={t}><span aria-hidden>✓ </span>{t}</li>)}
+              </ul>
+              {p.mastered > 0 && (
+                <p className="font-ui text-[13px] text-ink-body m-0">
+                  Até agora, você já domina <strong>{p.mastered} de {course.totalLetters} letras</strong>.
+                </p>
+              )}
+            </div>
+          )}
           <label className="grid gap-1 font-ui text-[12.5px] leading-relaxed text-ink-muted">
             Se quiser, conte o motivo. É opcional e nos ajuda a melhorar o curso.
             <select value={motivo ?? ''} disabled={busy}
