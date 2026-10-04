@@ -38,7 +38,7 @@ import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
 import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
-import { comParceria, parceriaAtual, precoDaParceria } from '@/lib/parceria';
+import { comParceria, fimDaParceria, parceriaAtual, precoDaParceria } from '@/lib/parceria';
 import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
@@ -308,7 +308,8 @@ export function CheckoutClient({ slug }: { slug: string }) {
       <Card className="p-5 sm:p-6 grid gap-5">
         {daParceria !== null && parceria && (
           <p className="m-0 rounded-[var(--r-md)] bg-[var(--gold-soft)] px-4 py-3 font-ui text-[14.5px] text-[var(--gold-ink)]">
-            Preço de pré-lançamento garantido pelo seu link: <strong>{brl(daParceria)}</strong>.
+            Preço de pré-lançamento garantido pelo seu link: <strong>{brl(daParceria)}</strong>
+            {fimDaParceria(getCourse(slug)!) ? `, até ${fimDaParceria(getCourse(slug)!)}` : ''}.
           </p>
         )}
         <div className="grid gap-1">

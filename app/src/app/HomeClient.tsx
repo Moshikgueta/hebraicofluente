@@ -39,7 +39,7 @@ import {
   Professor, Depoimentos, Preco, Faq, CtaFinal
 } from '@/components/landing/Fecho';
 import { FLAGSHIP, brl, getCourse } from '@/lib/catalog';
-import { guardarParceriaDaUrl, parceriaAtual, precoDaParceria } from '@/lib/parceria';
+import { fimDaParceria, guardarParceriaDaUrl, parceriaAtual, precoDaParceria } from '@/lib/parceria';
 import { useEffect, useState } from 'react';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { useAccount } from '@/lib/account/store';
@@ -67,7 +67,8 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
     <>
       {daParceria !== null && parceria && (
         <p className="m-0 bg-[var(--gold-soft)] text-[var(--gold-ink)] text-center font-ui text-[14.5px] px-4 py-2.5 border-b border-[#EADCC0]">
-          Seu link garante o preço de pré-lançamento: o curso sai por <strong>{brl(daParceria)}</strong> no checkout.
+          Seu link garante o preço de pré-lançamento: o curso sai por <strong>{brl(daParceria)}</strong> no checkout
+          {curso && fimDaParceria(curso) ? `, até ${fimDaParceria(curso)}` : ''}.
         </p>
       )}
       <Hero

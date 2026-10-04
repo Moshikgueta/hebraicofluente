@@ -162,12 +162,14 @@ export function EstatisticasClient() {
                 Visitas que entraram pelo link curto e foram levadas ao teste grátis. Robôs de pré-visualização não contam.
               </p>
               <ul className="list-none p-0 m-0 grid gap-1 font-ui text-[15px]">
-                <li className="flex justify-between gap-4 border-t border-[color:var(--line-soft)] py-2">
-                  <span>hebraicofluente.com.br/sefarad</span>
-                  <span className="tabular-nums font-semibold">
-                    {(estado.dados.campanhas || []).find(c => c.origem === 'sefarad')?.visitas ?? 0} visitas
-                  </span>
-                </li>
+                {['sefarad', 'bio', 'stories', 'dm'].map(origem => (
+                  <li key={origem} className="flex justify-between gap-4 border-t border-[color:var(--line-soft)] py-2">
+                    <span>hebraicofluente.com.br/{origem}</span>
+                    <span className="tabular-nums font-semibold">
+                      {(estado.dados.campanhas || []).find(c => c.origem === origem)?.visitas ?? 0} visitas
+                    </span>
+                  </li>
+                ))}
               </ul>
             </section>
 

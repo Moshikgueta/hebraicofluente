@@ -19,7 +19,10 @@ type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-adm
   | { tipo: 'pronto'; vendas: Venda[] };
 
 /* O endereço que o dono divulgou, para cada nome de parceria. */
-const LINK: Record<string, string> = { sefarad: 'hebraicofluente.com.br/sefarad' };
+const LINK: Record<string, string> = {
+  sefarad: 'hebraicofluente.com.br/sefarad', bio: 'hebraicofluente.com.br/bio',
+  stories: 'hebraicofluente.com.br/stories', dm: 'hebraicofluente.com.br/dm'
+};
 
 const reais = (c: number) => (c / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const quando = (ms: number) => new Date(ms).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });

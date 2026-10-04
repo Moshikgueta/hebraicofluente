@@ -149,6 +149,16 @@ describe('as tabelas do painel', () => {
     const d = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx))
       .json() as { campanhas: unknown[] };
     expect(d.campanhas).toEqual([{ origem: 'sefarad', visitas: 2 }]);
+
+    /* Os links do Instagram (04/10/2026): cada um conta à parte e leva o
+       próprio nome no endereço, que é o que o pedido guarda. */
+    const bio = await ir('Mozilla/5.0 (iPhone) Instagram', 'GET', '/bio');
+    expect(bio.headers.get('location')).toBe(`${SITE}/?parceria=bio#experimente`);
+    await ir('Mozilla/5.0', 'GET', '/stories/');
+    await ir('Mozilla/5.0', 'GET', '/dm');
+    const d2 = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx))
+      .json() as { campanhas: { origem: string; visitas: number }[] };
+    expect(Object.fromEntries(d2.campanhas.map(c => [c.origem, c.visitas]))).toEqual({ sefarad: 2, bio: 1, stories: 1, dm: 1 });
   });
 
   it('o teste da capa conta as etapas, sem sessão, com freio e sem robô', async () => {

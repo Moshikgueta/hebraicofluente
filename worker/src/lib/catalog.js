@@ -26,22 +26,32 @@ export const isSellable = c => !!c && c.status === 'available' && c.engine !== n
 
 /* Parcerias (02/10/2026): quem chega pelo link de uma parceria paga
    `price.parceriaBrl` quando ele é MENOR que o preço do dia. A primeira é a
-   associação sefardita (@adsefaraditas, link /sefarad): R$ 147 também depois
+   associação sefardita (@adsefarditas, link /sefarad): R$ 147 também depois
    do fim do pré-lançamento. O nome vem do pedido, mas só vale se estiver
-   nesta lista; o VALOR continua saindo só do catálogo. */
-export const PARCERIAS = new Set(['sefarad']);
+   nesta lista; o VALOR continua saindo só do catálogo.
+
+   04/10/2026, decisão do dono: o preço dos links vale até `price.parceriaAte`
+   (30/11/2026, fim do dia em Brasília), para o "por tempo limitado" dos posts
+   ser verdade. E os links do Instagram (/bio, /stories, /dm) entram como
+   parcerias também: mesmo preço, e o pedido guarda de qual link veio. */
+export const PARCERIAS = new Set(['sefarad', 'bio', 'stories', 'dm']);
 export const parceriaValida = nome => typeof nome === 'string' && PARCERIAS.has(nome);
 
-/** O preço base em reais: o do dia, ou o da parceria se for menor. */
-export const precoBase = (course, parceria) => {
+/** O preço da parceria ainda vale em `agora`? Sem data, vale sempre. */
+export const parceriaVigente = (price, agora = Date.now()) =>
+  !price.parceriaAte || agora <= Date.parse(`${price.parceriaAte}T23:59:59.999-03:00`);
+
+/** O preço base em reais: o do dia, ou o da parceria se for menor e ainda valer. */
+export const precoBase = (course, parceria, agora = Date.now()) => {
   const p = course.price;
-  return parceriaValida(parceria) && Number(p.parceriaBrl) > 0 && p.parceriaBrl < p.brl ? p.parceriaBrl : p.brl;
+  return parceriaValida(parceria) && Number(p.parceriaBrl) > 0 && p.parceriaBrl < p.brl && parceriaVigente(p, agora)
+    ? p.parceriaBrl : p.brl;
 };
 
 /** Centavos, arredondados uma vez só e a partir do preço do catálogo. */
-export const priceCents = (course, method, parceria = null) => {
+export const priceCents = (course, method, parceria = null, agora = Date.now()) => {
   const p = course.price;
-  const base = precoBase(course, parceria);
+  const base = precoBase(course, parceria, agora);
   const brl = method === 'pix' && p.pixDiscountPct > 0
     ? base * (1 - p.pixDiscountPct / 100)
     : base;

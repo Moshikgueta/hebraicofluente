@@ -906,6 +906,14 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   por visita; `visto` vem de um IntersectionObserver na seção. Painel: /admin/estatisticas, "Teste grátis da capa".
   A Política de Privacidade (art. 4) tem um parágrafo sobre isso.
 
+## Links de campanha e preço dos links (04/10/2026, decisão do dono)
+- `LINKS_DE_CAMPANHA` (api/estatisticas.js): /sefarad, /bio, /stories, /dm. Cada um conta a visita e leva a
+  `/?parceria=<nome>#experimente`. Os quatro estão em `PARCERIAS` (worker/src/lib/catalog.js e lib/parceria.ts):
+  mesmo preço `price.parceriaBrl` (R$ 147), e o pedido guarda o nome (orders.parceria, /admin/vendas).
+- O preço dos links vale até `price.parceriaAte` = 2026-11-30, fim do dia em Brasília (`parceriaVigente`, nos
+  dois lados). Depois, os links levam ao preço do dia. A capa e o checkout dizem "até 30/11".
+- O @ certo da associação é @adsefarditas.
+
 ## A segunda letra por e-mail, no fim do teste (03/10/2026)
 - `POST /api/segunda-letra {email}` manda UM e-mail com o Mem (a 2ª letra do curso) e nada mais: o endereço não
   é gravado nem entra em lista. Freio: 5/hora por IP e 1/dia por sha256 do endereço (repetido responde ok igual,
