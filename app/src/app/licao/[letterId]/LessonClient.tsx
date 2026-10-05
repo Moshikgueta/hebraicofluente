@@ -13,6 +13,7 @@
  * A stage is marked done when the learner reaches its end, and XP is awarded
  * there - never on navigation. */
 
+import { AvaliarLicao } from '@/components/learn/AvaliarLicao';
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -274,6 +275,9 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
           }
         />
       )}
+      {/* "Como foi esta lição?": depois da nota, uma vez por lição neste
+          aparelho, anônima. Ver components/learn/AvaliarLicao.tsx. */}
+      {stage === 5 && quizResult && <AvaliarLicao licao={letter.id} />}
     </div>
   );
 }
