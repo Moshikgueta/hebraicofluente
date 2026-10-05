@@ -11,8 +11,12 @@ import { describe, expect, it } from 'vitest';
 import { course } from '@/lib/content-publico';
 import { conteudoPago } from '@/lib/content-servidor';
 import { textosPublicados, type Texto } from '@/lib/engine/textos';
+import { alfabetoDe, palavrasLegiveis, vocabularioDoCurso } from '@/lib/engine/palavras';
 
-const textos: Texto[] = conteudoPago.textos;
+const todos: Texto[] = conteudoPago.textos;
+/* As leituras de revisão (05/10/2026) têm as regras delas, no fim. */
+const textos = todos.filter(t => !t.revisao);
+const revisoes = todos.filter(t => t.revisao);
 const L = conteudoPago.letters;
 const FINAL: Record<string, string> = { 'ך': 'כ', 'ם': 'מ', 'ן': 'נ', 'ף': 'פ', 'ץ': 'צ' };
 const letrasDe = (he: string) => [...he.normalize('NFD')].filter(c => /[א-ת]/.test(c)).map(c => FINAL[c] ?? c);
@@ -73,5 +77,55 @@ describe('os mini-textos', () => {
     const base = textos[0]!;
     expect(textosPublicados([{ ...base, revisado: false }])).toEqual([]);
     expect(textosPublicados([{ ...base, revisado: true }])).toHaveLength(1);
+  });
+});
+
+/* As leituras de revisão (05/10/2026): um texto por módulo, do 1 ao 7, que
+ * NÃO ensina palavra nenhuma. Cada palavra é uma que o aluno já lê naquele
+ * ponto (as das lições, as do ponto e das finais a partir do 6, as do gerech
+ * no 7, e as dos textos dos módulos anteriores), um nome declarado ou uma
+ * delas com um prefixo declarado (הַ־, וְ־, לְ־, בְּ־) grudado. */
+describe('as leituras de revisão', () => {
+  const tira = (he: string) => he.normalize('NFD').replace(/[^א-ת׳]/g, '');
+  /* O ו vogal (יוֹם, אוֹכֶל) vem e vai conforme a grafia: não decide nada. */
+  const chave = (he: string) => tira(he).replace(/ו/g, '');
+
+  it('há uma em cada módulo, do 1 ao 7', () => {
+    expect(revisoes.map(t => t.modulo).sort()).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  it('só usam palavras que o aluno já acumulou', () => {
+    const ex = conteudoPago.extras;
+    const culpados: string[] = [];
+    for (const t of revisoes) {
+      const upTo = course.modules.find(m => m.n === t.modulo)!.checkpoint?.upTo ?? 22;
+      const alfabeto = alfabetoDe(L.filter(l => l.order <= upTo));
+      const conhecidas = new Set(palavrasLegiveis(vocabularioDoCurso(L), alfabeto).map(w => chave(w.he)));
+      if (t.modulo >= 6) {
+        for (const D of ex.dagesh.letters) for (const w of [...D.hardWords, ...D.softWords]) conhecidas.add(chave(w.he));
+        for (const F of ex.finals) conhecidas.add(chave(F.word));
+      }
+      if (t.modulo >= 7) for (const g of ex.gerech.letters) for (const w of g.words) conhecidas.add(chave(w.he));
+      for (const o of textos.filter(o => o.modulo < t.modulo)) for (const w of o.novas) conhecidas.add(chave(w.he));
+      const nomes = new Set(t.novas.filter(w => /\(nome\)\s*$/.test(w.pt)).map(w => chave(w.he)));
+      const prefixos = new Set(t.novas.filter(w => w.he.includes('־')).map(w => tira(w.he)[0]));
+      const ok = (k: string) => conhecidas.has(k) || nomes.has(k);
+      for (const l of t.linhas) {
+        for (const palavra of l.he.split(/[\s,.!?:]+/).filter(p => /[א-ת]/.test(p))) {
+          const k = chave(palavra);
+          const semPrefixo = prefixos.has(tira(palavra)[0]!) && ok(chave(tira(palavra).slice(1)));
+          if (!ok(k) && !semPrefixo) culpados.push(`${t.modulo}: ${palavra}`);
+        }
+      }
+    }
+    expect(culpados).toEqual([]);
+  });
+
+  it('a página só mostra o que é de cada uma', () => {
+    for (const t of revisoes) {
+      expect(t.novas.every(w => w.he.includes('־') || /\(nome\)\s*$/.test(w.pt)), `${t.modulo}`).toBe(true);
+      expect(t.linhas.length).toBeGreaterThanOrEqual(4);
+      expect(t.perguntas.length).toBeGreaterThanOrEqual(3);
+    }
   });
 });

@@ -133,7 +133,11 @@ export const textosDoCurso = (): ConteudoPago['textos'] => textosPublicados(dado
 
 /** O mini-texto do módulo `n`, só se já foi revisado. Ver lib/engine/textos.ts. */
 export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
-  textosPublicados(dados().textos).find(t => t.modulo === n);
+  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao);
+
+/** A leitura de revisão do módulo `n`: só palavras já acumuladas. */
+export const revisaoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
+  textosPublicados(dados().textos).find(t => t.modulo === n && t.revisao);
 
 /** As leituras bônus revisadas (textos e versículos bíblicos; ver engine/bonus.ts).
  *  `?? []`: um Worker publicado antes delas responde sem o campo. */

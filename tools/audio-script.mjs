@@ -264,8 +264,8 @@ ${audio.waves.map(waveSection).join('\n')}
   const doGrupo = g => clips.filter(c => grupoDe(c) === g).sort((a, b) => a.num - b.num);
   const pad2 = n => String(n).padStart(2, '0');
   /* Um arquivo por mini-texto, na ordem dos módulos. */
-  const textosDoRoteiro = [...new Set(clips.map(grupoDe).filter(g => /^texto do módulo \d+$/.test(g)))]
-    .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]));
+  const textosDoRoteiro = [...new Set(clips.map(grupoDe).filter(g => /^(texto|leitura de revisão) do módulo \d+$/.test(g)))]
+    .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]) || a.localeCompare(b));
   const linhaSimples = (c, i) => `
     <tr>
       <td class="num">${i + 1}</td>

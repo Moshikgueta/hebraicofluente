@@ -211,7 +211,7 @@ function main() {
   }
   for (const t of textos.filter(t => t.revisado)) {
     for (const l of t.linhas) {
-      add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 4, where: `texto do módulo ${t.modulo}` });
+      add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 4, where: `${t.revisao ? 'leitura de revisão' : 'texto'} do módulo ${t.modulo}` });
     }
   }
   /* As palavras novas de cada texto (27/09/2026). Depois de lido o texto,
