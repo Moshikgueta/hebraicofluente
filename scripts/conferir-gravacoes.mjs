@@ -117,13 +117,30 @@ for (const c of clips) {
 }
 
 const f1 = n => (n == null ? '-' : n.toFixed(1).replace('.', ','));
+/* `atualizado_em` é Date.now() do Worker; mostrado no horário de Brasília. */
+const quando = ms => (ms == null ? '-' : new Date(Number(ms) < 1e12 ? Number(ms) * 1000 : Number(ms))
+  .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', dateStyle: 'short', timeStyle: 'short' }));
 const f2 = n => (n == null ? '-' : n.toFixed(2).replace('.', ','));
 say(`## Gravações: ${GRUPO}`);
 say('');
 say(`${clips.length} itens · ${linhas.filter(l => !l.flags.includes('SEM GRAVAÇÃO')).length} gravados · ${problemas} para olhar`);
 say('');
-say('| # | Grupo | Leitura | Duração (s) | s/sílaba | Média (dB) | Pico (dB) | No topo (%) | Atenção |');
-say('|---|---|---|---|---|---|---|---|---|');
+say('| # | Grupo | Leitura | Duração (s) | s/sílaba | Média (dB) | Pico (dB) | No topo (%) | Salva em | Atenção |');
+say('|---|---|---|---|---|---|---|---|---|---|');
 for (const l of linhas) {
-  say(`| ${l.c.num} | ${l.c.where[0]} | ${l.c.translit ?? ''} | ${f1(l.dur)} | ${f2(l.ritmo)} | ${f1(l.media)} | ${f1(l.pico)} | ${l.topo == null ? '-' : l.topo.toFixed(3).replace('.', ',')} | ${l.flags.join(', ') || 'ok'} |`);
+  say(`| ${l.c.num} | ${l.c.where[0]} | ${l.c.translit ?? ''} | ${f1(l.dur)} | ${f2(l.ritmo)} | ${f1(l.media)} | ${f1(l.pico)} | ${l.topo == null ? '-' : l.topo.toFixed(3).replace('.', ',')} | ${quando(l.em)} | ${l.flags.join(', ') || 'ok'} |`);
+}
+
+/* As últimas gravações salvas no painel, de qualquer grupo: quando uma fala
+   regravada não muda, é aqui que se vê onde a gravação foi parar. */
+const porId = new Map(JSON.parse(readFileSync(new URL('../data/audio.json', import.meta.url))).clips.map(c => [idDe(c), c]));
+const ultimas = consulta('SELECT audio_id, atualizado_em FROM gravacoes ORDER BY atualizado_em DESC LIMIT 8');
+say('');
+say('### As últimas 8 gravações salvas no painel');
+say('');
+say('| Salva em | Grupo | Leitura |');
+say('|---|---|---|');
+for (const u of ultimas) {
+  const c = porId.get(u.audio_id);
+  say(`| ${quando(u.atualizado_em)} | ${c?.where?.[0] ?? '(fora do catálogo)'} | ${c?.translit ?? u.audio_id} |`);
 }
