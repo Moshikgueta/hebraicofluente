@@ -11,9 +11,9 @@
  *   · pausas longas no meio (a frase pode ter sido gravada em duas vezes);
  *   · voz logo FORA do corte (o corte pode ter comido o começo ou o fim).
  *
- * Nada é escrito no banco e nenhum som sai daqui: o repositório é público,
- * e o resumo da execução também. Só sai o texto do curso e os números. O
- * `autor` da gravação (um e-mail) nunca é lido.
+ * Nada é escrito no banco e nenhum som sai daqui: o resumo da execução
+ * mostra só o texto do curso e os números, mesmo o repositório sendo
+ * privado. O `autor` da gravação (um e-mail) nunca é lido.
  *
  *   GRUPO="leitura de revisão" node scripts/conferir-gravacoes.mjs
  *

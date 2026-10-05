@@ -17,7 +17,7 @@
 # ⚠ O ARQUIVO GERADO É SEGREDO. Ele tem e-mail de todo aluno, o hash da senha
 # de cada um, os pedidos e a trilha. Vale o mesmo que o banco: guarde onde
 # você guardaria uma cópia da sua carteira, nunca num repositório, nunca num
-# artefato do Actions (que num repositório público é público), nunca anexado
+# artefato do Actions (que todo colaborador do repositório baixa), nunca anexado
 # a um chamado de suporte.
 
 set -uo pipefail

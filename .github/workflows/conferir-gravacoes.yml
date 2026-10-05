@@ -4,8 +4,9 @@
 # ritmo, volume, pausas no meio e voz cortada nas bordas. O resultado sai no
 # resumo da execução. Ver scripts/conferir-gravacoes.mjs.
 #
-# ⚠ O REPOSITÓRIO É PÚBLICO, E O RESUMO TAMBÉM: nenhum som sai daqui (nada
-# de artefato), e o script nunca lê o `autor` (um e-mail) da gravação.
+# O repositório é privado, mas nenhum som sai daqui (nada de artefato) e o
+# script nunca lê o `autor` (um e-mail) da gravação: o resumo mostra só o
+# texto do curso e os números.
 #
 # Como usar: aba Actions → "Conferir gravações" → Run workflow → o grupo
 # (o começo do nome basta: "leitura de revisão" pega os sete módulos).
