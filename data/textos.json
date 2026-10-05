@@ -1189,7 +1189,7 @@
       "tituloPt": "Viagem ao Chile",
       "tipoPt": "Conversa no WhatsApp",
       "revisado": true,
-      "introPt": "A Maya vai viajar, e o Dani quer saber o que vai na mala. Repare nas palavras de fora, com o gerech.",
+      "introPt": "A Maya vai viajar, e o Dani quer saber o que vai na mochila. Repare nas palavras de fora, com o gerech.",
       "linhas": [
         {
           "quem": "Maya",
@@ -1201,7 +1201,7 @@
           "quem": "Dani",
           "he": "בְּצ׳ילה? יָפֶה! מָה בַּתִּיק?",
           "translit": "beTchile? yafé! ma batik?",
-          "pt": "No Chile? Que lindo! O que tem na mala?"
+          "pt": "No Chile? Que lindo! O que tem na mochila?"
         },
         {
           "quem": "Maya",
@@ -1270,7 +1270,7 @@
         },
         {
           "t": "escolha",
-          "q": "Qual destas coisas está na mala?",
+          "q": "Qual destas coisas está na mochila?",
           "opcoes": [
             "Pijama",
             "Bola",
