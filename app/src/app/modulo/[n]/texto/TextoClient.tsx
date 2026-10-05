@@ -17,12 +17,15 @@ import { Compreensao } from '@/components/learn/Compreensao';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { LinhasDeLeitura } from '@/components/learn/LinhasDeLeitura';
-import { textoDoModulo, type CourseModule } from '@/lib/content';
+import { revisaoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
-import { textoLidoId } from '@/lib/engine/textos';
+import { palavrasDoTexto, textoLidoId } from '@/lib/engine/textos';
 
-export function TextoClient({ module: mod }: { module: CourseModule }) {
-  const texto = textoDoModulo(mod.n);
+/* `revisao` (05/10/2026): a mesma página serve à leitura de revisão do
+   módulo, que só usa palavras que o aluno já acumulou (/modulo/N/revisao). */
+export function TextoClient({ module: mod, revisao = false }: { module: CourseModule; revisao?: boolean }) {
+  const texto = revisao ? revisaoDoModulo(mod.n) : textoDoModulo(mod.n);
+  const lidoId = textoLidoId(mod.n, revisao);
   const p = useProgress();
   /* A lista de palavras novas pergunta `hasAudio`: sem assinar, ela não
      redesenha quando o registro das gravações chega. */
@@ -30,7 +33,9 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
   if (!texto) {
     return (
       <div className="focus-col grid gap-5">
-        <p className="text-[16px] text-ink-body m-0">Este módulo ainda não tem texto de leitura.</p>
+        <p className="text-[16px] text-ink-body m-0">
+          {revisao ? 'Este módulo ainda não tem leitura de revisão.' : 'Este módulo ainda não tem texto de leitura.'}
+        </p>
         <LinkButton href={`/modulo/${mod.n}`} variant="secondary" className="justify-self-start">
           Voltar ao módulo
         </LinkButton>
@@ -45,7 +50,7 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
           ← Módulo {mod.n}
         </Link>
-        <Badge tone="accent">Leitura do módulo {mod.n}</Badge>
+        <Badge tone="accent">{revisao ? `Leitura de revisão · módulo ${mod.n}` : `Leitura do módulo ${mod.n}`}</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold leading-tight m-0">{texto.tituloPt}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body m-0">{texto.introPt}</p>
       </header>
@@ -62,7 +67,7 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
       {texto.novas.length > 0 && (
         <Card tone="wash" className="p-5 grid gap-3">
           <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">
-            Palavras novas neste texto
+            {revisao ? 'Nomes e partes grudadas na palavra' : 'Palavras novas neste texto'}
           </p>
           <ul className="grid gap-2 list-none p-0 m-0">
             {texto.novas.map(w => (
@@ -80,7 +85,7 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
       )}
 
       <Compreensao
-        id={`texto-${mod.n}`}
+        id={revisao ? `revisao-texto-${mod.n}` : `texto-${mod.n}`}
         titulo="Você entendeu?"
         intro="Responda pelo que leu. Não vale nota: o motivo aparece a cada resposta."
         perguntas={texto.perguntas}
@@ -90,9 +95,9 @@ export function TextoClient({ module: mod }: { module: CourseModule }) {
         }}
         /* Respondidas as perguntas, o texto conta como lido, e as palavras
            novas dele passam a fazer parte do vocabulário do aluno. */
-        aoCompletar={() => p.markFirst(textoLidoId(mod.n))}
+        aoCompletar={() => p.markFirst(lidoId)}
       />
-      {p.state.firsts[textoLidoId(mod.n)] && texto.novas.length > 0 && (
+      {p.state.firsts[lidoId] && palavrasDoTexto(texto).length > 0 && (
         <p className="font-ui text-[14px] text-[var(--teal-ink)] m-0">
           ✓ As palavras novas deste texto entraram no seu vocabulário e no treino de palavras à mão.
         </p>

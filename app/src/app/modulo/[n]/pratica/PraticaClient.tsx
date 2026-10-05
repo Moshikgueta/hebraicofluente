@@ -20,7 +20,7 @@ import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { audioAvailable, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
 import { weakLetters } from '@/lib/state/rules';
-import { allLetters, extras, missaoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
+import { allLetters, extras, missaoDoModulo, revisaoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
 import { missaoId } from '@/lib/engine/missao';
 import {
   correcaoDoModulo, licaoDePratica, palavrasParaLer, parecidasDoModulo, praticaId
@@ -74,6 +74,7 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
 
   const palavras = useMemo(() => palavrasParaLer(mod, letras, extras()), [mod, letras]);
   const texto = textoDoModulo(mod.n);
+  const revisao = revisaoDoModulo(mod.n);
   const missao = missaoDoModulo(mod.n);
   const numero = licaoDePratica(mod);
   const concluida = !!p.state.firsts[praticaId(mod.n)];
@@ -215,6 +216,7 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
       <Card tone="wash" className="p-5 grid gap-3">
         <p className="font-display text-[17px] font-semibold text-ink m-0">E para fechar o módulo</p>
         <div className="flex flex-wrap gap-2">
+          {revisao && <LinkButton href={`/modulo/${mod.n}/revisao`} variant="secondary">Leitura de revisão</LinkButton>}
           {texto && <LinkButton href={`/modulo/${mod.n}/texto`} variant="secondary">Ler o texto do módulo</LinkButton>}
           {missao && (
             <LinkButton href={`/modulo/${mod.n}/missao`} variant="secondary">

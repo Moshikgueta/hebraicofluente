@@ -676,7 +676,7 @@ function main() {
      ela: posição da linha em data/textos.json, e o número só desempata. */
   const linhaDoTexto = new Map();
   for (const t of readJson('data/textos.json').textos) {
-    t.linhas.forEach((l, i) => linhaDoTexto.set(`texto do módulo ${t.modulo}|${l.he}`, i));
+    t.linhas.forEach((l, i) => linhaDoTexto.set(`${t.revisao ? 'leitura de revisão' : 'texto'} do módulo ${t.modulo}|${l.he}`, i));
   }
   const posTexto = c => linhaDoTexto.get(`${grupoDe(c)}|${c.he}`);
   if (alvo.length && alvo.every(c => posTexto(c) !== undefined)) {

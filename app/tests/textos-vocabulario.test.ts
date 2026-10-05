@@ -19,7 +19,7 @@ const tudoFeito = (firsts: Record<string, string> = {}): LearnerState => ({
     perfectBonusPaid: false, completedAt: '2026-09-25T10:00:00.000Z'
   }]))
 });
-const texto3 = () => textosDoCurso().find(t => t.modulo === 3)!;
+const texto3 = () => textosDoCurso().find(t => t.modulo === 3 && !t.revisao)!;
 
 describe('as palavras dos mini-textos no vocabulário', () => {
   it('deixam de fora o prefixo solto e o nome próprio, e tiram a pontuação', () => {
@@ -46,7 +46,7 @@ describe('as palavras dos mini-textos no vocabulário', () => {
   });
 
   it('uma palavra que a lição já ensinou não aparece duas vezes', () => {
-    const todosLidos = Object.fromEntries(textosDoCurso().map(t => [textoLidoId(t.modulo), 'x']));
+    const todosLidos = Object.fromEntries(textosDoCurso().map(t => [textoLidoId(t.modulo, t.revisao), 'x']));
     const hes = leituraDe(tudoFeito(todosLidos)).legiveis.map(w => w.he);
     expect(new Set(hes).size).toBe(hes.length);
   });

@@ -38,6 +38,10 @@ export type Texto = {
   introPt: string;
   /** Só `true` depois de um falante de hebraico aprovar. */
   revisado: boolean;
+  /** A "leitura de revisão" do módulo (05/10/2026): só com as palavras que o
+   *  aluno já acumulou nas lições, sem palavra nova. Uma por módulo, do 1 ao 7,
+   *  ao lado do texto do módulo. `novas` traz só os nomes e os prefixos. */
+  revisao?: boolean;
   /** Mostrar sem nikud, como chega de verdade (módulo 6). */
   semPontos?: boolean;
   linhas: LinhaDeTexto[];
@@ -50,7 +54,8 @@ export const textosPublicados = (textos: readonly Texto[]): Texto[] =>
   textos.filter(t => t.revisado);
 
 /** O `firsts` que registra o texto do módulo `n` como lido. */
-export const textoLidoId = (n: number): string => `texto-${n}`;
+export const textoLidoId = (n: number, revisao = false): string =>
+  revisao ? `revisao-texto-${n}` : `texto-${n}`;
 
 /**
  * As palavras que um texto acrescenta ao vocabulário do aluno, depois de lido.

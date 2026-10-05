@@ -15,7 +15,8 @@ import { useProgress } from '@/lib/state/store';
 import type { CourseModule, Letter } from '@/lib/content';
 import { EXTRA_STAGE_COUNT, isLessonComplete } from '@/lib/state/rules';
 import { course } from '@/lib/content-publico';
-import { missaoDoModulo, textoDoModulo } from '@/lib/content';
+import { missaoDoModulo, revisaoDoModulo, textoDoModulo } from '@/lib/content';
+import { textoLidoId } from '@/lib/engine/textos';
 import { missaoId } from '@/lib/engine/missao';
 import { praticaId } from '@/lib/engine/pratica';
 import { ehContraste, idDoSom, soOLadoDoPonto } from '@/lib/sons';
@@ -33,6 +34,8 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   const missaoFeita = !!p.state.firsts[missaoId(mod.n)];
   /* Só aparece depois de revisado: ver lib/engine/textos.ts. */
   const texto = textoDoModulo(mod.n);
+  const revisao = revisaoDoModulo(mod.n);
+  const revisaoLida = !!p.state.firsts[textoLidoId(mod.n, true)];
   /* O módulo inteiro feito: letras e sons; no 6 e no 7, as três etapas de /extra. */
   const tudoFeito = !pendente && (letters.length > 0
     || (p.state.lessons[mod.id]?.stagesDone.length ?? 0) >= EXTRA_STAGE_COUNT);
@@ -61,6 +64,12 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         {!tudoFeito && ' Os dois ficam abertos a qualquer momento, mas rendem mais depois das lições.'}
       </p>
       <div className="flex flex-wrap gap-2">
+        {/* No topo, depois de tudo feito, a leitura de revisão vem junto. */}
+        {revisao && tudoFeito && (
+          <LinkButton href={`/modulo/${mod.n}/revisao`} variant="secondary">
+            {revisaoLida ? 'Leitura de revisão ✓' : 'Leitura de revisão'}
+          </LinkButton>
+        )}
         {mod.checkpoint && (
           <LinkButton href={`/checkpoint/${mod.n}`} variant={tudoFeito && !passou ? 'primary' : 'secondary'}>
             {passou ? 'Refazer o checkpoint' : 'Fazer o checkpoint'}
@@ -166,6 +175,21 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       {/* A missão fecha o módulo com uma situação de verdade, depois do
           checkpoint. Fica aqui, e não só no fim do checkpoint, porque é o
           módulo que ela fecha - e quem voltou para rever acha a porta. */}
+      {/* A leitura de revisão (05/10/2026): só palavras que o aluno já leu
+          nas lições, para ler corrido antes do checkpoint. */}
+      {revisao && (
+        <Card tone={revisaoLida ? 'mint' : 'surface'} className="p-6 grid gap-3">
+          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
+            Leitura de revisão · {revisao.tipoPt}{revisaoLida ? ' · lida ✓' : ''}
+          </p>
+          <h2 className="font-display text-[18px] font-semibold">{revisao.tituloPt}</h2>
+          <p className="text-[15px] leading-relaxed text-ink-body">{revisao.introPt}</p>
+          <LinkButton href={`/modulo/${mod.n}/revisao`} variant="secondary" className="justify-self-start">
+            {revisaoLida ? 'Ler de novo' : 'Ler a revisão'}
+          </LinkButton>
+        </Card>
+      )}
+
       {texto && (
         <Card className="p-6 grid gap-3">
           <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
