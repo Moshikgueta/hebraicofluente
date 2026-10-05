@@ -49,6 +49,23 @@ const medida = (arquivo, de, ate, filtro) => {
     ...(ate != null ? ['-to', String(ate)] : []), '-i', arquivo, '-af', filtro, '-f', 'null', '-'];
   return spawnSync('ffmpeg', args, { encoding: 'utf8' }).stderr || '';
 };
+/* Que parte do trecho fica a 90% do pico, ou mais. Voz limpa encosta no
+   próprio pico só por um instante (perto de 0,02% das amostras); voz que
+   estourou fica com o topo da onda achatado, lá em cima por muito mais tempo
+   (0,15% ou mais, medido com voz real estourada de 5 dB e recomprimida em
+   AAC, que é como o painel guarda). Pico perto de 0 dB sozinho não diz nada. */
+const noTopo = (arquivo, de, ate) => {
+  const r = spawnSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-ss', String(Math.max(0, de)), '-to', String(ate),
+    '-i', arquivo, '-ac', '1', '-f', 's16le', '-acodec', 'pcm_s16le', '-'], { maxBuffer: 64 * 1024 * 1024 });
+  const b = r.stdout || Buffer.alloc(0);
+  const n = Math.floor(b.length / 2);
+  if (!n) return 0;
+  let m = 0;
+  for (let i = 0; i < n; i++) m = Math.max(m, Math.abs(b.readInt16LE(i * 2)));
+  let k = 0;
+  for (let i = 0; i < n; i++) if (Math.abs(b.readInt16LE(i * 2)) >= 0.9 * m) k++;
+  return (100 * k) / n;
+};
 const num = (txt, re) => { const m = txt.match(re); return m ? Number(m[1]) : null; };
 const duracaoDoArquivo = arquivo => {
   const r = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', arquivo], { encoding: 'utf8' });
@@ -87,14 +104,16 @@ for (const c of clips) {
 
   const flags = [];
   if (media != null && media < -32) flags.push('baixo');
-  if (pico != null && pico > -0.5) flags.push('estourado');
+  const topo = noTopo(arquivo, ini, fim);
+  if (pico != null && pico > -1 && topo >= 0.1) flags.push('estourado');
+  else if (pico != null && pico > -1 && topo >= 0.05) flags.push('no limite');
   if (pausas.some(p => p > 1.0)) flags.push(`pausa de ${Math.max(...pausas).toFixed(1).replace('.', ',')} s no meio`);
   if (antes != null && pico != null && antes > pico - 12) flags.push('voz antes do corte');
   if (depois != null && pico != null && depois > pico - 12) flags.push('voz depois do corte');
   if (ritmo < 0.11) flags.push('rápido ou cortado');
   if (dur > 0.5 * silabas(c.he) + 1.0) flags.push('lento demais');
   if (flags.length) problemas++;
-  linhas.push({ c, dur, ritmo, media, pico, em: r.atualizado_em, flags });
+  linhas.push({ c, dur, ritmo, media, pico, topo, em: r.atualizado_em, flags });
 }
 
 const f1 = n => (n == null ? '-' : n.toFixed(1).replace('.', ','));
@@ -103,8 +122,8 @@ say(`## Gravações: ${GRUPO}`);
 say('');
 say(`${clips.length} itens · ${linhas.filter(l => !l.flags.includes('SEM GRAVAÇÃO')).length} gravados · ${problemas} para olhar`);
 say('');
-say('| # | Grupo | Leitura | Duração (s) | s/sílaba | Média (dB) | Pico (dB) | Atenção |');
-say('|---|---|---|---|---|---|---|---|');
+say('| # | Grupo | Leitura | Duração (s) | s/sílaba | Média (dB) | Pico (dB) | No topo (%) | Atenção |');
+say('|---|---|---|---|---|---|---|---|---|');
 for (const l of linhas) {
-  say(`| ${l.c.num} | ${l.c.where[0]} | ${l.c.translit ?? ''} | ${f1(l.dur)} | ${f2(l.ritmo)} | ${f1(l.media)} | ${f1(l.pico)} | ${l.flags.join(', ') || 'ok'} |`);
+  say(`| ${l.c.num} | ${l.c.where[0]} | ${l.c.translit ?? ''} | ${f1(l.dur)} | ${f2(l.ritmo)} | ${f1(l.media)} | ${f1(l.pico)} | ${l.topo == null ? '-' : l.topo.toFixed(3).replace('.', ',')} | ${l.flags.join(', ') || 'ok'} |`);
 }
