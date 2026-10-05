@@ -4,16 +4,19 @@
  *
  * As últimas compras pagas ou estornadas: nome, e-mail, valor, meio, data e,
  * quando houver, o link de campanha de onde o pedido veio. Só leitura.
+ * Desde 05/10/2026, também se a pessoa já começou o curso, e até onde foi.
  */
 
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
+import { course, letterIds } from '@/lib/content-publico';
 
 type Venda = {
   orderId: string; curso: string; valorCentavos: number; metodo: string; parcelas: number;
   status: 'paid' | 'refunded'; pagoEm: number; parceria: string | null; nome: string; email: string | null;
+  estudouEm: number | null; concluidas: string[];
 };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; vendas: Venda[] };
@@ -25,6 +28,7 @@ const LINK: Record<string, string> = {
 };
 
 const reais = (c: number) => (c / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const LETRAS = new Set(letterIds());
 const quando = (ms: number) => new Date(ms).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
 
 export function VendasClient() {
@@ -90,6 +94,13 @@ export function VendasClient() {
           </p>
           {v.parceria && (
             <p className="font-ui text-[14px] m-0"><strong>Veio pelo link {LINK[v.parceria] ?? v.parceria}</strong></p>
+          )}
+          {v.status === 'paid' && (
+            <p className="font-ui text-[14px] m-0">
+              {v.estudouEm === null
+                ? 'Ainda não começou o curso.'
+                : <>Estudou pela última vez em {quando(v.estudouEm)} · {v.concluidas.filter(id => LETRAS.has(id)).length} de {course.totalLetters} letras concluídas</>}
+            </p>
           )}
           {v.status === 'refunded' && <p className="font-ui text-[14px] text-ink-muted m-0">Estornada</p>}
         </article>
