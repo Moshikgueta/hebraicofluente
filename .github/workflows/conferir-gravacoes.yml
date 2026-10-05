@@ -1,0 +1,49 @@
+# Conferir as gravações do painel (/admin/gravar) - só leitura.
+#
+# Mede cada gravação de um grupo do catálogo de áudio: se existe, duração,
+# ritmo, volume, pausas no meio e voz cortada nas bordas. O resultado sai no
+# resumo da execução. Ver scripts/conferir-gravacoes.mjs.
+#
+# ⚠ O REPOSITÓRIO É PÚBLICO, E O RESUMO TAMBÉM: nenhum som sai daqui (nada
+# de artefato), e o script nunca lê o `autor` (um e-mail) da gravação.
+#
+# Como usar: aba Actions → "Conferir gravações" → Run workflow → o grupo
+# (o começo do nome basta: "leitura de revisão" pega os sete módulos).
+
+name: Conferir gravações
+
+on:
+  workflow_dispatch:
+    inputs:
+      grupo:
+        description: 'Grupo do catálogo, ou o começo do nome'
+        required: true
+        default: 'leitura de revisão'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare
+  cancel-in-progress: false
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    environment: producao
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      # O wrangler do lockfile, sem scripts de instalação (como em acesso.yml).
+      - name: Instalar o wrangler do lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Instalar o ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Conferir
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          GRUPO: ${{ inputs.grupo }}
+        run: node scripts/conferir-gravacoes.mjs
