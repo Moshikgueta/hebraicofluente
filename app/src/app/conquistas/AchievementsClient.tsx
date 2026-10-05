@@ -7,6 +7,8 @@ import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { course, cultureCards, cultureUnlocked } from '@/lib/content';
 import Link from 'next/link';
 import { cartasCompradas, saldo } from '@/lib/loja';
+import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
+import { podeCompartilhar } from '@/lib/compartilhar';
 
 export function AchievementsClient() {
   const p = useProgress();
@@ -24,7 +26,14 @@ export function AchievementsClient() {
 
       <div className="grid sm:grid-cols-2 gap-3">
         {ACHIEVEMENTS.map(a => (
-          <AchievementBadge key={a.id} id={a.id} unlocked={have.has(a.id)} />
+          <div key={a.id} className="grid gap-2 content-start">
+            <AchievementBadge id={a.id} unlocked={have.has(a.id)} />
+            {/* Só a conquista feita, e só a que tem frase (lib/compartilhar.ts). */}
+            {have.has(a.id) && podeCompartilhar(a.id) && (
+              <CompartilharConquista id={a.id} variant="quiet"
+                quando={p.state.achievements.find(x => x.id === a.id)?.unlockedAt} />
+            )}
+          </div>
         ))}
       </div>
 

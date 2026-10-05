@@ -7,6 +7,8 @@
  * Passing is 70%. Failing is not a failure - it is a suggestion to revisit one
  * or two letters, named specifically, and the retry is unlimited. */
 
+import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
+import { conquistaDoModulo } from '@/lib/compartilhar';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
@@ -87,6 +89,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
           {passed && !nextModule && (
             <Button onClick={() => router.push('/desafio-final')}>Ir para o desafio final</Button>
           )}
+          {passed && <CompartilharConquista id={conquistaDoModulo(mod.n)} />}
         </Milestone>
 
         {passed && (

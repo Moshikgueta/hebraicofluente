@@ -18,6 +18,8 @@
  * to read than a 600px one, and the Hebrew is the subject at every size.
  */
 
+import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
+import { podeCompartilhar } from '@/lib/compartilhar';
 import { RedesSociais } from './RedesSociais';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -461,10 +463,15 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
   const [comTeclado, setComTeclado] = useState(false);
   useEffect(() => { setComTeclado(!!document.getElementById('teclado-hebraico')); }, [ids]);
   const embaixo = nosJogos && !comTeclado;
+  /* Quem tocou em "Compartilhar" está usando o aviso: ele não some sozinho
+     no meio da folha de compartilhar. Com o botão, o aviso fica mais tempo. */
+  const [segura, setSegura] = useState(false);
+  const compartilhavel = !!first && podeCompartilhar(first.id);
   useEffect(() => {
-    const t = setTimeout(onClose, 6000);
+    if (segura) return;
+    const t = setTimeout(onClose, compartilhavel ? 12000 : 6000);
     return () => clearTimeout(t);
-  }, [onClose]);
+  }, [onClose, segura, compartilhavel]);
   if (!first) return null;
 
   return (
@@ -489,6 +496,11 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
           <p className="font-display text-[16px] font-semibold text-ink truncate">{first.titlePt}</p>
           {ids.length > 1 && (
             <p className="font-ui text-[12px] text-ink-muted">e mais {ids.length - 1}</p>
+          )}
+          {podeCompartilhar(first.id) && (
+            <div className="mt-2" onFocus={() => setSegura(true)} onPointerDown={() => setSegura(true)}>
+              <CompartilharConquista id={first.id} />
+            </div>
           )}
         </div>
         <Button variant="ghost" size="sm" onClick={onClose} aria-label="Fechar">✕</Button>

@@ -511,3 +511,15 @@ CREATE TABLE IF NOT EXISTS admin_codigos (
   expira     INTEGER NOT NULL,
   tentativas INTEGER NOT NULL DEFAULT 0
 );
+
+-- "Como foi esta lição?" (05/10/2026). Uma linha por avaliação, ANÔNIMA: a
+-- lição (id da letra), a nota (facil | ok | dificil), o comentário opcional e
+-- a data, sem a conta - como os relatos. Ver worker/src/api/avaliacoes.js.
+CREATE TABLE IF NOT EXISTS avaliacoes_licao (
+  id         INTEGER PRIMARY KEY,
+  licao      TEXT    NOT NULL,
+  nota       TEXT    NOT NULL,
+  comentario TEXT    NOT NULL DEFAULT '',
+  criado_em  INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS avaliacoes_licao_data ON avaliacoes_licao (criado_em);
