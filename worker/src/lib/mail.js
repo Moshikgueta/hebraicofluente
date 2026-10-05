@@ -399,9 +399,17 @@ export function mensagemDeConvitePendente({ email, nome: cru, cursos, marca, pai
  *
  * Sem anexo e sem imagem: a primeira mensagem de um remetente novo é a mais
  * provável de cair no spam, e HTML pesado com imagem remota é o que faz cair.
+ *
+ * O PRIMEIRO PASSO (05/10/2026, pedido do dono): na primeira compra, o link
+ * de começar leva à Aula 0 (`aula0`) e diz o que ela é, com o tempo que a
+ * própria página promete ("dez minutos de leitura"). Quem não começa nos
+ * primeiros dias é quem mais desiste; um primeiro passo pequeno e com nome
+ * é mais fácil de dar do que "o curso". O painel continua no e-mail, logo
+ * abaixo, para quem volta a ele depois. Na renovação, quem já estuda volta
+ * para o painel, como antes.
  */
 export function mensagemDeCompra({
-  nome, curso, valor, pedido, expiraEm, link, marca, suporte, arrependimentoDias, renovacao,
+  nome, curso, valor, pedido, expiraEm, link, aula0, marca, suporte, arrependimentoDias, renovacao,
   termos, reembolso, versao, desistir
 }) {
   const ola = saudacao(nome);
@@ -412,13 +420,20 @@ export function mensagemDeCompra({
   const abertura = renovacao
     ? `Seu acesso ao curso ${curso} foi renovado.`
     : `Seu acesso ao curso ${curso} está liberado.`;
+  const primeiroPasso = !renovacao && aula0;
+  const AULA0 = 'São uns dez minutos de leitura, sem nada para decorar: ela mostra como a ' +
+    'escrita hebraica funciona, e depois cada letra fica muito mais simples.';
 
   const text = [
     ola,
     '',
     abertura,
     '',
-    `Comece por aqui: ${link}`,
+    primeiroPasso ? 'Seu primeiro passo: a Aula 0.' : null,
+    primeiroPasso ? AULA0 : null,
+    primeiroPasso ? '' : null,
+    `Comece por aqui: ${primeiroPasso ? aula0 : link}`,
+    primeiroPasso ? `Depois, o curso inteiro fica no seu painel: ${link}` : null,
     '',
     'Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
     'compra. Seu progresso fica na conta, então dá para estudar no celular e',
@@ -458,7 +473,11 @@ export function mensagemDeCompra({
   const html = [
     `<p>${escapar(ola)}</p>`,
     `<p><strong>${escapar(abertura)}</strong></p>`,
-    `<p><a href="${escapar(link)}">Começar o curso</a></p>`,
+    primeiroPasso
+      ? `<p><strong>Seu primeiro passo: a Aula 0.</strong> ${escapar(AULA0)}</p>` +
+        `<p><a href="${escapar(aula0)}">Começar pela Aula 0</a></p>` +
+        `<p>Depois, o curso inteiro fica no <a href="${escapar(link)}">seu painel</a>.</p>`
+      : `<p><a href="${escapar(link)}">Começar o curso</a></p>`,
     '<p>Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
     ' compra. Seu progresso fica na conta, então dá para estudar no celular e',
     ' continuar no computador de onde parou.</p>',

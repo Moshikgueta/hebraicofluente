@@ -1107,6 +1107,7 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
       pedido: order.id,
       expiraEm: dataBR(vence),
       link: `${site}/meu-hebraico/`,
+      aula0: `${site}/inicio/`,
       marca: empresa.nomeFantasia || 'Hebraico Fluente',
       suporte: empresa.contato?.emailSuporte || '',
       arrependimentoDias: empresa.politicas?.arrependimentoDias || 0,
