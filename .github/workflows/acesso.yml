@@ -22,14 +22,14 @@
 # Toda execução fica registrada no histórico do Actions, com quem disparou e
 # quando. Isso é de propósito: mexer no acesso de alguém tem de deixar rastro.
 #
-# ⚠ O REPOSITÓRIO É PÚBLICO, E O RESUMO DE CADA EXECUÇÃO TAMBÉM.
-# Qualquer pessoa, sem login no GitHub, abre o resumo de uma execução desta
-# ação. Por isso NADA aqui imprime um endereço de e-mail inteiro: toda saída
-# passa por `mascara`, que reduz `ana.silva@gmail.com` a `a***@gmail.com`.
-# O operador reconhece a conta; um estranho não ganha a lista de clientes.
-# O e-mail digitado no campo de entrada aparece nos metadados da execução, o
-# que não há como esconder num repositório público - a única forma de fechar
-# isso é o repositório deixar de ser público.
+# O repositório é PRIVADO (conferido em 05/10/2026): o resumo e o log de
+# cada execução só aparecem para quem tem acesso a ele. Mesmo assim, NADA
+# aqui imprime um endereço de e-mail inteiro: toda saída passa por
+# `mascara`, que reduz `ana.silva@gmail.com` a `a***@gmail.com`. O operador
+# reconhece a conta, e um colaborador futuro, um print do resumo ou o
+# repositório voltando a ser público não entregam a lista de clientes. O
+# e-mail digitado no campo de entrada fica nos metadados da execução, que
+# só quem tem acesso ao repositório vê.
 #
 # `environment: producao` deixa o dono exigir aprovação para rodar isto
 # (Settings → Environments → producao → Required reviewers). Sem configurar
@@ -129,9 +129,9 @@ jobs:
           }
           # Roda a consulta e mostra o resultado, mascarado, no resumo.
           mostra() { $W --command "$1" | mascara | tee -a "$GITHUB_STEP_SUMMARY"; }
-          # Roda uma escrita. A saída vai só para o log da execução - que num
-          # repositório público também é público - e vai mascarada, porque
-          # um erro de SQL ecoa o comando, e o comando tem o e-mail dentro.
+          # Roda uma escrita. A saída vai só para o log da execução, e vai
+          # mascarada como o resumo, porque um erro de SQL ecoa o comando, e o
+          # comando tem o e-mail dentro.
           grava() { $W --command "$1" | mascara; }
 
           # O e-mail é normalizado do mesmo jeito que na entrada da plataforma
@@ -149,7 +149,7 @@ jobs:
 
           case "$ACAO" in
             listar)
-              say "**Últimas contas** (e-mails mascarados: o resumo é público)"
+              say "**Últimas contas** (e-mails mascarados)"
               say '```'
               mostra "SELECT id, email, datetime(created_at/1000,'unixepoch') AS criada
                         FROM accounts ORDER BY created_at DESC LIMIT 25"
