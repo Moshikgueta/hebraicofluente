@@ -258,10 +258,15 @@ function Trecho({ module: m, estado, ultimo }: {
                    SEM cadeado, e nada aparece antes de o progresso carregar -
                    senão o mapa inteiro piscaria trancado a cada abertura. */
                 const bloqueada = p.ready && !aberta && !letraLiberada(p.state, ordem, L.id);
+                /* A próxima a estudar também é link (05/10/2026): o Resh
+                   concluído liberava a Sin, mas o cartão dela, sem cadeado,
+                   não abria - parecia trancado sem dizer por quê. Antes de o
+                   progresso carregar, nada que não foi aberto vira link. */
+                const liberada = aberta || (p.ready && !bloqueada);
                 const estadoDaLetra = feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas`
                   : bloqueada ? ' - bloqueada' : '';
                 const classe = `relative z-[1] min-w-[46px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
-                  ${aberta ? 'hover:shadow-[var(--sh)] hover:border-[var(--teal)] transition-[box-shadow,border-color]' : ''}
+                  ${liberada ? 'hover:shadow-[var(--sh)] hover:border-[var(--teal)] transition-[box-shadow,border-color]' : ''}
                   ${feita ? 'bg-[var(--teal-soft)] border-[var(--edge-teal)]'
                     : comecada ? 'bg-[var(--card)] border-[var(--teal)]'
                     : 'bg-[var(--sand)] border-line'}`;
@@ -280,9 +285,9 @@ function Trecho({ module: m, estado, ultimo }: {
                     </span>
                   </>
                 );
-                /* Só a letra que já foi aberta ganha link próprio: a que
-                   ainda vem pela frente é alcançada pelo cartão, na ordem. */
-                return aberta ? (
+                /* Ganha link a letra já aberta e a liberada; a trancada, com o
+                   cadeado, continua sem link e é alcançada na ordem. */
+                return liberada ? (
                   <Link key={L.id} href={L.href} className={classe}
                         title={`${L.nome}${estadoDaLetra}`}
                         aria-label={`Abrir a lição de ${L.nome}${estadoDaLetra}`}>
