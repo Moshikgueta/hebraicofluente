@@ -170,13 +170,20 @@ function LetterCell({
   porque: ReturnType<typeof porQueTrancada>;
   nomeAnterior: (id: string) => string;
 }) {
-  const e = ESTADO[estado];
+  /* Concluída e na fila de revisão de hoje (05/10/2026): o cartão continua
+     VERDE e com o ✓, e ganha o sinal dourado de revisar embaixo. Antes ele
+     virava todo dourado, sem o ✓, e o aluno lia "a letra não foi concluída"
+     - o dono do curso leu assim no Lámed. Revisar é tarefa do dia, não
+     perda da lição. */
+  const revisarFeita = estado === 'revisar' && feita;
+  const e = ESTADO[revisarFeita ? 'dominada' : estado];
   /* A contagem de etapas só faz sentido enquanto a lição não fechou. Uma
      letra concluída que voltou para revisão mostra o NOME, e não "5/5" - o
      5/5 diria a coisa certa pelo motivo errado. */
   const parcial = !feita && stages > 0;
   const dito = estado === 'progresso' && stages > 0
     ? `${stages} de ${STAGE_COUNT} etapas`
+    : revisarFeita ? 'concluída, revisar hoje'
     : e.rotulo.toLowerCase();
 
   const trancada = estado === 'bloqueada';
@@ -212,8 +219,13 @@ function LetterCell({
         </span>
       )}
       <span aria-hidden className="absolute top-1 right-1.5 grid place-items-center">
-        <SinalEstado estado={estado} />
+        <SinalEstado estado={revisarFeita ? 'dominada' : estado} />
       </span>
+      {revisarFeita && (
+        <span aria-hidden className="absolute bottom-1 right-1.5 grid place-items-center">
+          <SinalEstado estado="revisar" />
+        </span>
+      )}
     </>
   );
 

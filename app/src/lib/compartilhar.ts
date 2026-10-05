@@ -65,7 +65,7 @@ function linhas(ctx: CanvasRenderingContext2D, texto: string, largura: number): 
   return out;
 }
 
-/** Desenha a imagem e devolve o PNG. `quando` é a data já escrita (dd/mm/aaaa). */
+/** Desenha a imagem e devolve o JPEG. `quando` é a data já escrita (dd/mm/aaaa). */
 export async function desenharConquista(frase: string, quando: string): Promise<Blob> {
   try { await document.fonts.ready; } catch { /* sem a API: segue com o que houver */ }
   const canvas = document.createElement('canvas');
@@ -112,5 +112,6 @@ export async function desenharConquista(frase: string, quando: string): Promise<
   ctx.font = `500 36px ${ui}`;
   ctx.fillText('hebraicofluente.com.br', W / 2, 1616);
 
-  return new Promise((ok, erro) => canvas.toBlob(b => (b ? ok(b) : erro(new Error('sem imagem'))), 'image/png'));
+  /* JPEG: um quinto do PNG, e é o que o Instagram guarda de qualquer jeito. */
+  return new Promise((ok, erro) => canvas.toBlob(b => (b ? ok(b) : erro(new Error('sem imagem'))), 'image/jpeg', 0.92));
 }

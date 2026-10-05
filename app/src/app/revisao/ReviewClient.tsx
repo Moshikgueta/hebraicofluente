@@ -15,7 +15,8 @@ import { audioAvailable } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, getLetter } from '@/lib/content';
 import { buildReview } from '@/lib/engine/exercises';
-import { dueItems, weakestSkill, weakLetters } from '@/lib/state/rules';
+import { dueItems, skillLevel, weakestSkill, weakLetters } from '@/lib/state/rules';
+import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import type { Skill } from '@/lib/state/types';
 import { track } from '@/lib/analytics';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
@@ -58,6 +59,13 @@ export function ReviewClient() {
     const w = weakLetters(p.state, p.day, 5, byGlyph).filter(id => learned.some(l => l.id === id));
     return w.length ? w : learned.slice(-3).map(l => l.id);
   }, [p.state, p.day, byGlyph, learned]);
+
+  /* As letras cujo TRAÇADO está para refazer: a revisão de questões não
+     alcança essa habilidade (ver EscreverDeNovo, no fim do arquivo). */
+  const paraEscrever = useMemo(
+    () => learned.filter(l => skillLevel(p.state.skills[l.id]?.escrever) === 'revisar').map(l => l.id).slice(0, 3),
+    [learned, p.state.skills]
+  );
 
   /* Aim at the failing skill where there is one: a learner who reads ק and
      cannot hear it should get listening, not more reading. */
@@ -115,6 +123,7 @@ export function ReviewClient() {
           </Button>
           <LinkButton href="/meu-hebraico" variant="primary">Voltar ao início</LinkButton>
         </Milestone>
+        <EscreverDeNovo ids={paraEscrever} />
       </div>
     );
   }
@@ -196,6 +205,8 @@ export function ReviewClient() {
         </ul>
       </Card>
 
+      <EscreverDeNovo ids={paraEscrever} />
+
       {!exercises.length ? (
         <Card tone="amber" className="p-5">
           <p className="text-[15px] leading-relaxed text-ink-body">
@@ -216,5 +227,36 @@ export function ReviewClient() {
         Ver o mapa do curso
       </Link>
     </div>
+  );
+}
+
+/* ── escrever de novo (05/10/2026) ────────────────────────────────────────
+   Um erro de TRAÇADO deixava a letra marcada "revisar" para sempre: as cinco
+   questões daqui não têm pergunta de escrever (o traçado é um quadro, não uma
+   alternativa), então acertar a revisão inteira não apagava nada - o dono do
+   curso viu isso no Lámed. Aqui ficam os quadros das letras cujo traçado
+   ainda está por refazer, com a mesma régua da lição (recordWriting). Um
+   traçado bom limpa a marca; a letra some desta lista sozinha. */
+function EscreverDeNovo({ ids }: { ids: string[] }) {
+  const p = useProgress();
+  if (!ids.length) return null;
+  return (
+    <Card className="p-6 grid gap-4">
+      <div className="grid gap-1">
+        <h2 className="text-[19px] font-bold m-0">Escrever de novo</h2>
+        <p className="font-ui text-[14px] text-ink-muted m-0">
+          {ids.length === 1 ? 'Esta letra pede' : 'Estas letras pedem'} o traçado de novo. Um traçado
+          bom tira a marca de revisar.
+        </p>
+      </div>
+      {ids.map(id => {
+        const l = getLetter(id);
+        if (!l) return null;
+        return (
+          <WritingCanvas key={id} glyph={l.letter} letterId={l.id} label={l.namePt}
+                         onScored={score => p.recordWriting(l.id, score)} />
+        );
+      })}
+    </Card>
   );
 }
