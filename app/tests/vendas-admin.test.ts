@@ -57,10 +57,40 @@ describe('o painel de vendas', () => {
     const { vendas } = await (await listar(env, dono)).json() as { vendas: Record<string, unknown>[] };
     expect(vendas).toEqual([
       { orderId: doLink.id, curso: 'alfabetizacao', valorCentavos: 14700, metodo: 'card', parcelas: 12,
-        status: 'paid', pagoEm: 2000, parceria: 'sefarad', nome: 'Ana', email: 'ana@exemplo.com' },
+        status: 'paid', pagoEm: 2000, parceria: 'sefarad', nome: 'Ana', email: 'ana@exemplo.com',
+        estudouEm: null, concluidas: [] },
       { orderId: semLink.id, curso: 'alfabetizacao', valorCentavos: 13230, metodo: 'pix', parcelas: 1,
-        status: 'refunded', pagoEm: 1000, parceria: null, nome: 'Bia', email: 'bia@exemplo.com' }
+        status: 'refunded', pagoEm: 1000, parceria: null, nome: 'Bia', email: 'bia@exemplo.com',
+        estudouEm: null, concluidas: [] }
     ]);
     expect(vendas.some(v => v.orderId === pendente.id)).toBe(false);
+  });
+
+  it('diz se quem comprou já começou o curso, e que lições concluiu', async () => {
+    const env = envDeTeste({ ADMIN_EMAILS: DONO }) as Env;
+    await conta(env, 'ana@exemplo.com', 'Ana');
+    await conta(env, 'bia@exemplo.com', 'Bia');
+    await conta(env, 'caio@exemplo.com', 'Caio');
+    const dono = await comoAdmin(env, await conta(env, DONO));
+    const [ana, bia, caio] = ['ana', 'bia', 'caio'].map(n => idDe(env, `${n}@exemplo.com`)) as [number, number, number];
+    for (const [id, quando] of [[ana, 3000], [bia, 2000], [caio, 1000]] as [number, number][]) {
+      const o = await createOrder(env, { accountId: id, courseSlug: 'alfabetizacao', amountCents: 14700, method: 'card' });
+      env.DB.bruto.prepare("UPDATE orders SET status = 'paid', paid_at = ? WHERE id = ?").run(quando, o.id);
+    }
+    const estado = { version: 2, lessons: {
+      alef: { letterId: 'alef', completedAt: '2026-10-04T12:00:00Z' },
+      mem: { letterId: 'mem', completedAt: '2026-10-04T13:00:00Z' },
+      shin: { letterId: 'shin', completedAt: null }
+    } };
+    env.DB.bruto.prepare('INSERT INTO progress (account_id, state, version, rev, updated_at) VALUES (?, ?, 2, 1, ?)')
+      .run(ana, JSON.stringify(estado), 5000);
+    /* um estado estragado não derruba a lista: vira lista vazia */
+    env.DB.bruto.prepare('INSERT INTO progress (account_id, state, version, rev, updated_at) VALUES (?, ?, 2, 1, ?)')
+      .run(bia, '{isto não é json', 4000);
+
+    const { vendas } = await (await listar(env, dono)).json() as { vendas: Record<string, unknown>[] };
+    expect(vendas.map(v => [v.nome, v.estudouEm, v.concluidas])).toEqual([
+      ['Ana', 5000, ['alef', 'mem']], ['Bia', 4000, []], ['Caio', null, []]
+    ]);
   });
 });
