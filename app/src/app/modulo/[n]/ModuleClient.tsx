@@ -13,10 +13,11 @@ import { LinkButton } from '@/components/ui/Button';
 import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import type { CourseModule, Letter } from '@/lib/content';
-import { isLessonComplete } from '@/lib/state/rules';
+import { EXTRA_STAGE_COUNT, isLessonComplete } from '@/lib/state/rules';
+import { course } from '@/lib/content-publico';
 import { missaoDoModulo, textoDoModulo } from '@/lib/content';
 import { missaoId } from '@/lib/engine/missao';
-import { licaoDePratica, praticaId } from '@/lib/engine/pratica';
+import { praticaId } from '@/lib/engine/pratica';
 import { ehContraste, idDoSom, soOLadoDoPonto } from '@/lib/sons';
 
 export function ModuleClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
@@ -32,6 +33,45 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   const missaoFeita = !!p.state.firsts[missaoId(mod.n)];
   /* Só aparece depois de revisado: ver lib/engine/textos.ts. */
   const texto = textoDoModulo(mod.n);
+  /* O módulo inteiro feito: letras e sons; no 6 e no 7, as três etapas de /extra. */
+  const tudoFeito = !pendente && (letters.length > 0
+    || (p.state.lessons[mod.id]?.stagesDone.length ?? 0) >= EXTRA_STAGE_COUNT);
+  const cp = mod.checkpoint ? p.state.checkpoints[mod.checkpoint.id] : undefined;
+  const passou = !!cp?.passedAt;
+  const praticaFeita = !!p.state.firsts[praticaId(mod.n)];
+  const proximo = course.modules.find(m => m.n === mod.n + 1);
+
+  /* O checkpoint e a prática focada num cartão só (05/10/2026). Antes o
+     checkpoint só aparecia no fim da última lição: quem voltava ao módulo
+     não achava a porta. Terminado o módulo, o cartão sobe para o topo. */
+  const fecho = (
+    <Card tone={tudoFeito ? 'mint' : 'surface'} className="p-6 grid gap-3">
+      <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
+        Fechamento do módulo{passou ? ' · checkpoint aprovado ✓' : ''}
+      </p>
+      <h2 className="font-display text-[18px] font-semibold">
+        {passou ? 'Você passou no checkpoint deste módulo'
+          : tudoFeito ? 'Você terminou as lições. Agora, o checkpoint.'
+          : 'Checkpoint e prática focada'}
+      </h2>
+      <p className="text-[15px] leading-relaxed text-ink-body">
+        {passou && cp?.best != null ? `Sua melhor nota: ${Math.round(cp.best * 100)}%. ` : ''}
+        O checkpoint mostra o que já está firme. A prática focada começa pelo que você errou neste módulo,
+        sem nenhuma letra nova.
+        {!tudoFeito && ' Os dois ficam abertos a qualquer momento, mas rendem mais depois das lições.'}
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {mod.checkpoint && (
+          <LinkButton href={`/checkpoint/${mod.n}`} variant={tudoFeito && !passou ? 'primary' : 'secondary'}>
+            {passou ? 'Refazer o checkpoint' : 'Fazer o checkpoint'}
+          </LinkButton>
+        )}
+        <LinkButton href={`/modulo/${mod.n}/pratica`} variant="secondary">
+          {praticaFeita ? 'Prática focada ✓' : 'Prática focada'}
+        </LinkButton>
+      </div>
+    </Card>
+  );
 
   return (
     <div className="grid gap-6 reading">
@@ -44,6 +84,8 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
           <div className="pt-2"><HeSeq items={letters.map(l => l.letter)} size="lg" /></div>
         )}
       </header>
+
+      {tudoFeito && fecho}
 
       <Card className="p-6">
         <p className="text-[16px] leading-relaxed text-ink-body"><Prose text={mod.introPt} /></p>
@@ -66,7 +108,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
                 {ls.kind === 'practice'
                   ? <Link href={`/modulo/${mod.n}/pratica`} className="underline underline-offset-2 hover:text-ink">
                       Prática: sem letra nova - correção dos seus erros, letras parecidas e leitura em voz alta
-                      {p.state.firsts[praticaId(mod.n)] ? ' ✓' : ''}
+                      {praticaFeita ? ' ✓' : ''}
                     </Link>
                   : ls.som
                     ? <Link href={`/som/${ls.som}`} className="underline underline-offset-2 hover:text-ink">
@@ -137,22 +179,9 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         </Card>
       )}
 
-      {/* A lição de prática (29/09/2026): antes era só uma frase na lista
-          acima, sem página. Ver lib/engine/pratica.ts. */}
-      {licaoDePratica(mod) && (
-        <Card tone={p.state.firsts[praticaId(mod.n)] ? 'mint' : 'surface'} className="p-6 grid gap-3">
-          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-            Lição {licaoDePratica(mod)} · prática{p.state.firsts[praticaId(mod.n)] ? ' · feita ✓' : ''}
-          </p>
-          <h2 className="font-display text-[18px] font-semibold">O módulo inteiro de novo, começando pelo que você errou</h2>
-          <p className="text-[15px] leading-relaxed text-ink-body">
-            Correção dos seus erros, letras parecidas e leitura em voz alta. Nenhuma letra nova.
-          </p>
-          <LinkButton href={`/modulo/${mod.n}/pratica`} variant="secondary" className="justify-self-start">
-            {p.state.firsts[praticaId(mod.n)] ? 'Praticar de novo' : 'Fazer a prática'}
-          </LinkButton>
-        </Card>
-      )}
+      {/* A lição de prática (29/09/2026) agora está no cartão do fechamento,
+          aberto em todos os módulos. Ver lib/engine/pratica.ts. */}
+      {!tudoFeito && fecho}
 
       {missao && (
         <Card tone={missaoFeita ? 'mint' : 'surface'} className="p-6 grid gap-3">
@@ -191,6 +220,14 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       {pendente ? (
         <LinkButton href={pendente.href} size="lg" full>
           {first && pendente.id === first.id ? `Começar pela letra ${first.namePt}` : `Continuar com ${pendente.rotulo}`}
+        </LinkButton>
+      ) : tudoFeito && mod.checkpoint && !passou ? (
+        <LinkButton href={`/checkpoint/${mod.n}`} size="lg" full>
+          Fazer o checkpoint do módulo {mod.n}
+        </LinkButton>
+      ) : tudoFeito && proximo ? (
+        <LinkButton href={`/modulo/${proximo.n}`} size="lg" full>
+          Seguir para o módulo {proximo.n}
         </LinkButton>
       ) : first ? (
         <LinkButton href={`/licao/${first.id}`} size="lg" full>

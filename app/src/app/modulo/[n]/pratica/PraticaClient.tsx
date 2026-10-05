@@ -92,7 +92,7 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
       <ExercisePlayer
         key={`correcao-${rodada}`}
         exercises={correcao.itens}
-        title={`Lição ${numero ?? ''} · correção`}
+        title={`${numero ? `Lição ${numero}` : 'Prática focada'} · correção`}
         repetirErros
         onDone={r => terminar('correcao', correcao.itens, r.correct, r.total)}
       />
@@ -103,7 +103,7 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
       <ExercisePlayer
         key={`parecidas-${rodada}`}
         exercises={parecidas.itens}
-        title={`Lição ${numero ?? ''} · ${parecidas.par[0].namePt} e ${parecidas.par[1].namePt}`}
+        title={`${numero ? `Lição ${numero}` : 'Prática focada'} · ${parecidas.par[0].namePt} e ${parecidas.par[1].namePt}`}
         repetirErros
         onDone={r => terminar('parecidas', parecidas.itens, r.correct, r.total)}
       />
@@ -184,7 +184,7 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
           ← Módulo {mod.n}
         </Link>
-        <Badge tone="accent">Módulo {mod.n} · lição {numero} · prática{concluida ? ' · feita ✓' : ''}</Badge>
+        <Badge tone="accent">Módulo {mod.n} · {numero ? `lição ${numero} · prática` : 'prática focada'}{concluida ? ' · feita ✓' : ''}</Badge>
         <h1 className="text-[27px] sm:text-[32px] font-bold leading-tight">Prática do módulo {mod.n}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
           Nenhuma letra nova: o módulo inteiro de novo, começando pelo que você errou. Faça as partes na ordem que
