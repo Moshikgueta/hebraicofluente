@@ -8,7 +8,7 @@
  * stops XP being awarded twice from two different screens. */
 
 import {
-  chaveDoItem, registrarExameA1, registrarHabilidade, registrarUnidade, responderRevisao, unidadeConcluida,
+  chaveDoItem, registrarCheckpointA1, registrarExameA1, registrarHabilidade, registrarUnidade, responderRevisao, unidadeConcluida,
   type GeneroA1, type TranslitA1
 } from './a1-estado';
 import { habilidadeDoItem, type ItemA1 } from '@/lib/a1';
@@ -149,6 +149,8 @@ type Ctx = {
   /** Um item do A1 respondido pela PRIMEIRA vez numa rodada: revisão
    *  espaçada, habilidade, e a contagem anônima de acerto por tipo. */
   responderItemA1: (n: number, item: ItemA1, certo: boolean, daLeitura?: boolean) => void;
+  /** Um checkpoint do A1 terminou, com a nota de 0 a 1. */
+  finishCheckpointA1: (n: number, nota: number) => void;
   /** Uma sessão de "Minha revisão" terminou, com tantos itens. */
   revisaoA1Feita: (itens: number) => void;
   marcarFavoritoA1: (chave: string, on: boolean) => void;
@@ -517,6 +519,17 @@ export function ProgressProvider({
     track('exercise_answered', { letterId: `a1-u${n}`, kind: item.t, correct: certo });
   }, [commit, agora]);
 
+  const finishCheckpointA1 = useCallback((n: number, nota: number) => {
+    const d = today();
+    const s = agora();
+    const antes = !!s.a1.checkpoints[String(n)]?.passedAt;
+    let next: LearnerState = { ...s, a1: registrarCheckpointA1(s.a1, n, nota, new Date().toISOString()) };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (!antes && next.a1.checkpoints[String(n)]?.passedAt) next = awardXp(next, d, XP.checkpoint);
+    commit(next);
+    track('checkpoint_completed', { checkpointId: `a1-c${n}`, score: nota });
+  }, [commit, agora]);
+
   const revisaoA1Feita = useCallback((itens: number) => {
     const d = today();
     const s = agora();
@@ -568,14 +581,14 @@ export function ProgressProvider({
       setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
       remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
-      responderItemA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
+      responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
     };
   }, [
     state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
     setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
-    responderItemA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
+    responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

@@ -109,6 +109,65 @@
       ]
     }
   ],
+  "checkpoints": [
+    {
+      "n": 1,
+      "depoisDoModulo": 2,
+      "tituloPt": "Checkpoint 1: o começo",
+      "unidades": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "n": 2,
+      "depoisDoModulo": 4,
+      "tituloPt": "Checkpoint 2: a primeira metade",
+      "unidades": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "n": 3,
+      "depoisDoModulo": 6,
+      "tituloPt": "Checkpoint 3: rotina, casa e cidade",
+      "unidades": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "n": 4,
+      "depoisDoModulo": 8,
+      "tituloPt": "Checkpoint 4: comida, compras e compromissos",
+      "unidades": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ]
+    }
+  ],
   "certificado": {
     "tituloPt": "Hebraico A1 - curso concluído",
     "linhaPt": "{nome} concluiu o curso Hebraico A1 do Hebraico Fluente e foi aprovado no exame final.",

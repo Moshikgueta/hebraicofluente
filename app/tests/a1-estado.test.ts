@@ -6,7 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
-  A1_APROVA, A1_VAZIO, a1Valido, chaveDoItem, dominio, fundirA1, paraRevisarHoje, registrarExameA1,
+  A1_APROVA, A1_VAZIO, a1Valido, chaveDoItem, registrarCheckpointA1, dominio, fundirA1, paraRevisarHoje, registrarExameA1,
   registrarHabilidade, registrarUnidade, responderRevisao, situacaoRevisao, unidadeConcluida,
   type EstadoA1
 } from '@/lib/state/a1-estado';
@@ -147,5 +147,15 @@ describe('o progresso do A1', () => {
     expect(e.revisao).toEqual({});
     expect(Object.keys(e.favoritos)).toEqual(['w:שלום']);
     expect(e.translit).toBeNull();
+  });
+
+  it('o checkpoint guarda a melhor nota e a primeira aprovação, e funde como o exame', () => {
+    let a = registrarCheckpointA1(A1_VAZIO, 2, 0.6, T1);
+    a = registrarCheckpointA1(a, 2, 0.8, T2);
+    expect(a.checkpoints['2']).toEqual({ best: 0.8, attempts: 2, passedAt: T2 });
+    const b = registrarCheckpointA1(A1_VAZIO, 2, 0.9, T1);
+    const ab = fundirA1(a, b);
+    expect(fundirA1(b, a)).toEqual(ab);
+    expect(ab.checkpoints['2']).toEqual({ best: 0.9, attempts: 2, passedAt: T1 });
   });
 });

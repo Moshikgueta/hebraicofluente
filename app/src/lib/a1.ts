@@ -78,6 +78,7 @@ export type UnidadeA1 = {
 };
 
 export type ModuloA1 = { n: number; tituloPt: string; objetivoPt: string; unidades: number[] };
+export type CheckpointA1 = { n: number; depoisDoModulo: number; tituloPt: string; unidades: number[] };
 
 /** Do exame, o navegador só recebe as regras e os nomes das partes: as
  *  perguntas e o gabarito ficam no servidor (worker/src/api/exame-a1.js). */
@@ -87,6 +88,7 @@ export type CursoA1 = {
   _licenca?: string;
   genero: { perguntaPt: string };
   modulos: ModuloA1[];
+  checkpoints: CheckpointA1[];
   unidades: UnidadeA1[];
   exame: { sorteio: number; aprovacao: number; partes: ParteExameA1[] };
   certificado: { tituloPt: string; linhaPt: string; avisoPt: string };
@@ -102,6 +104,7 @@ export const CURSO_A1 = 'hebraico-a1';
    são geradas na build e o conteúdo do A1 é pago: chega pela rede, dentro do
    CourseGate. Um teste confere que são as mesmas dos módulos de
    data/a1/curso.json, na mesma ordem. */
+export const CHECKPOINTS_A1: readonly number[] = [1, 2, 3, 4];
 export const UNIDADES_A1: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 export const ehFormas = (w: PalavraA1 | FormasA1): w is FormasA1 => 'formas' in w;
 

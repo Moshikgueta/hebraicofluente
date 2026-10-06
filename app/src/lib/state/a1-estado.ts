@@ -55,6 +55,8 @@ export type EstadoA1 = {
     passedAt: string | null;
     parts?: Record<string, { correct: number; total: number }>;
   };
+  /** Os checkpoints entre os módulos: melhor nota, tentativas, aprovação. */
+  checkpoints: Record<string, { best: number | null; attempts: number; passedAt: string | null }>;
   revisao: Record<string, ItemRevisao>;
   habilidades: Partial<Record<HabilidadeA1, { h: number; m: number }>>;
   favoritos: Record<string, { on: boolean; em: string }>;
@@ -67,6 +69,7 @@ export const A1_VAZIO: EstadoA1 = {
   genero: null,
   unidades: {},
   exame: { best: null, attempts: 0, passedAt: null },
+  checkpoints: {},
   revisao: {},
   habilidades: {},
   favoritos: {},
@@ -108,6 +111,13 @@ export function a1Valido(bruto: unknown): EstadoA1 {
   };
   if (ehObj(e.parts)) exame.parts = e.parts as EstadoA1['exame']['parts'];
 
+  const checkpoints: EstadoA1['checkpoints'] = {};
+  if (ehObj(bruto.checkpoints)) {
+    for (const [k, v] of Object.entries(bruto.checkpoints)) {
+      if (!/^[1-9]$/.test(k) || !ehObj(v)) continue;
+      checkpoints[k] = { best: num(v.best), attempts: inteiro(v.attempts), passedAt: data(v.passedAt) };
+    }
+  }
   const revisao: Record<string, ItemRevisao> = {};
   if (ehObj(bruto.revisao)) {
     for (const [k, v] of Object.entries(bruto.revisao)) {
@@ -143,7 +153,7 @@ export function a1Valido(bruto: unknown): EstadoA1 {
     : null;
   const dias: Record<string, number> = {};
   if (ehObj(bruto.dias)) for (const [k, v] of Object.entries(bruto.dias)) if (DIA.test(k)) dias[k] = inteiro(v);
-  return { genero: g, unidades, exame, revisao, habilidades, favoritos, auto, translit: t, dias };
+  return { genero: g, unidades, exame, checkpoints, revisao, habilidades, favoritos, auto, translit: t, dias };
 }
 
 const maior = (a: number | null, b: number | null) => (a == null ? b : b == null ? a : Math.max(a, b));
@@ -173,6 +183,12 @@ export function fundirA1(x: EstadoA1 | undefined, y: EstadoA1 | undefined): Esta
     : (JSON.stringify(ea.parts ?? null) <= JSON.stringify(eb.parts ?? null) ? (ea.parts ?? eb.parts) : (eb.parts ?? ea.parts));
   if (parts) exame.parts = parts;
 
+  const checkpoints: EstadoA1['checkpoints'] = {};
+  for (const k of new Set([...Object.keys(a.checkpoints), ...Object.keys(b.checkpoints)])) {
+    const u = a.checkpoints[k], v = b.checkpoints[k];
+    checkpoints[k] = !u ? v! : !v ? u
+      : { best: maior(u.best, v.best), attempts: Math.max(u.attempts, v.attempts), passedAt: cedo(u.passedAt, v.passedAt) };
+  }
   const revisao: Record<string, ItemRevisao> = {};
   for (const k of new Set([...Object.keys(a.revisao), ...Object.keys(b.revisao)])) {
     const u = a.revisao[k], v = b.revisao[k];
@@ -190,7 +206,7 @@ export function fundirA1(x: EstadoA1 | undefined, y: EstadoA1 | undefined): Esta
       : (a.translit.valor <= b.translit.valor ? a.translit : b.translit));
   const dias: Record<string, number> = {};
   for (const k of new Set([...Object.keys(a.dias), ...Object.keys(b.dias)])) dias[k] = Math.max(a.dias[k] ?? 0, b.dias[k] ?? 0);
-  return { genero, unidades, exame, revisao, habilidades, favoritos, auto, translit, dias };
+  return { genero, unidades, exame, checkpoints, revisao, habilidades, favoritos, auto, translit, dias };
 }
 
 /* A ordem que decide entre dois registros da mesma revisão: o visto por
@@ -318,3 +334,16 @@ export const chaveDeFrase = (he: string) => `f:${somenteLetras(he)}`;
 const somenteLetras = (he: string) => he.normalize('NFC').replace(/[\u0591-\u05c7]/g, '').replace(/[^\u05d0-\u05ea\u05f3' ?!.,]/g, '').trim().slice(0, 160);
 
 export const favorito = (e: EstadoA1, chave: string): boolean => !!e.favoritos[chave]?.on;
+
+/** Um checkpoint terminou. */
+export function registrarCheckpointA1(e: EstadoA1, n: number, nota: number, agoraIso: string): EstadoA1 {
+  const k = String(n);
+  const prev = e.checkpoints[k] ?? { best: null, attempts: 0, passedAt: null };
+  return {
+    ...e,
+    checkpoints: {
+      ...e.checkpoints,
+      [k]: { best: maior(prev.best, nota), attempts: prev.attempts + 1, passedAt: prev.passedAt ?? (nota >= A1_APROVA ? agoraIso : null) }
+    }
+  };
+}

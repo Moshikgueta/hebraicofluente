@@ -42,7 +42,7 @@ function origem() {
    src/lib/seo.ts - checa-seo.mjs confere as duas contra o HTML. */
 const NAO_LISTADAS = [
   '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/confirmar-email', '/perfil',
-  '/checkout', '/conta-apagada', '/admin', '/sair-da-lista',
+  '/checkout', '/conta-apagada', '/admin', '/sair-da-lista', '/verificar-certificado',
   '/termos/v', '/reembolso/v', '/privacidade/v'
 ];
 

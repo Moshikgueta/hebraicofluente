@@ -72,6 +72,12 @@ export async function dadosDaConta(env, account, agora = Date.now()) {
       autorizouPublicar: !!depo.publicar, aceitaContato: !!depo.contato, situacao: depo.estado,
       enviadoEm: iso(depo.criado_em), atualizadoEm: iso(depo.atualizado_em)
     } : null,
+    examesA1: (await todas(env,
+      'SELECT criada_em, entregue_em, nota, partes FROM provas_a1 WHERE account_id = ? ORDER BY criada_em', id))
+      .map(p => ({ sorteadaEm: iso(p.criada_em), entregueEm: iso(p.entregue_em), nota: p.nota ?? null, partes: p.partes ? JSON.parse(p.partes) : null })),
+    certificados: (await todas(env,
+      'SELECT id, curso, nome, nota, aprovado_em, emitido_em, publico FROM certificados WHERE account_id = ?', id))
+      .map(c => ({ codigo: c.id, curso: c.curso, nome: c.nome, nota: c.nota, aprovadoEm: iso(c.aprovado_em), emitidoEm: iso(c.emitido_em), verificacaoPublica: !!c.publico })),
     progresso: progresso ? { atualizadoEm: iso(progresso.updated_at), estado } : null
   };
 }

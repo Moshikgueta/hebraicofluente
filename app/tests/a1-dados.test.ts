@@ -204,6 +204,17 @@ describe('o curso Hebraico A1 (data/a1/)', () => {
     }
   });
 
+  it('os checkpoints misturam unidades que existem, e as páginas geradas são as mesmas', async () => {
+    const c = JSON.parse(ler('curso.json')) as { checkpoints: { n: number; depoisDoModulo: number; unidades: number[] }[] };
+    const { CHECKPOINTS_A1 } = await import('@/lib/a1');
+    expect([...CHECKPOINTS_A1]).toEqual(c.checkpoints.map(x => x.n));
+    for (const cp of c.checkpoints) {
+      expect(cp.unidades.length, `checkpoint ${cp.n}`).toBeGreaterThanOrEqual(4);
+      for (const u of cp.unidades) expect(ordem, `checkpoint ${cp.n}`).toContain(u);
+      expect(curso.modulos.map(m => m.n), `checkpoint ${cp.n}`).toContain(cp.depoisDoModulo);
+    }
+  });
+
   it('a trilha da história tem 10 capítulos, cada um sugerido depois de uma unidade que existe', () => {
     const h = JSON.parse(ler('historia.json')) as { capitulos: { n: number; tituloPt: string; textoPt: string; depoisDaUnidade: number }[] };
     expect(h.capitulos.map(c => c.n)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);

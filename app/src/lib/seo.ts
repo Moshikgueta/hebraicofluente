@@ -65,7 +65,11 @@ export const NAO_LISTADAS = [
   '/termos/v', '/reembolso/v', '/privacidade/v',
   /* O painel de gravação do dono do curso (/admin/gravar). Nada nele serve a
      quem busca, e o Worker já o marca `noindex` - fora do sitemap também. */
-  '/admin'
+  '/admin',
+  /* A conferência pública de um certificado do A1 (06/10/2026). Aberta, para
+     quem recebe o código poder conferir sem conta; fora da busca, porque cada
+     página mostra o nome de uma pessoa. */
+  '/verificar-certificado'
 ] as const;
 
 /** A rota, na forma canônica que o portão também usa para comparar. */

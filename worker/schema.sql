@@ -523,3 +523,34 @@ CREATE TABLE IF NOT EXISTS avaliacoes_licao (
   criado_em  INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS avaliacoes_licao_data ON avaliacoes_licao (criado_em);
+
+-- O exame final do A1, corrigido no servidor (06/10/2026). Uma linha por
+-- prova sorteada: o sorteio (que itens e em que ordem saíram as opções), e,
+-- depois de entregue, a nota e as partes. É desta tabela, e não do progresso
+-- que o navegador guarda, que sai a aprovação. Ver worker/src/api/exame-a1.js.
+CREATE TABLE IF NOT EXISTS provas_a1 (
+  id          TEXT    PRIMARY KEY,
+  account_id  INTEGER NOT NULL REFERENCES accounts(id),
+  sorteio     TEXT    NOT NULL,
+  criada_em   INTEGER NOT NULL,
+  entregue_em INTEGER,
+  nota        REAL,
+  partes      TEXT
+);
+CREATE INDEX IF NOT EXISTS provas_a1_conta ON provas_a1 (account_id, criada_em);
+
+-- O certificado: um por conta e por curso, emitido só com uma prova
+-- aprovada em provas_a1. O id é o código que se confere na página pública
+-- /verificar-certificado/, que mostra o nome, o curso e a data, e só se
+-- `publico` = 1 (o aluno pode desligar). Ver worker/src/api/exame-a1.js.
+CREATE TABLE IF NOT EXISTS certificados (
+  id          TEXT    PRIMARY KEY,
+  account_id  INTEGER NOT NULL REFERENCES accounts(id),
+  curso       TEXT    NOT NULL,
+  nome        TEXT    NOT NULL,
+  nota        REAL    NOT NULL,
+  aprovado_em INTEGER NOT NULL,
+  emitido_em  INTEGER NOT NULL,
+  publico     INTEGER NOT NULL DEFAULT 1,
+  UNIQUE (account_id, curso)
+);

@@ -101,9 +101,38 @@ export function A1HomeClient() {
                 );
               })}
             </ol>
+            {curso.checkpoints.filter(c => c.depoisDoModulo === m.n).map(c => {
+              const r = a1.checkpoints[String(c.n)];
+              return (
+                <Link key={c.n} href={`/a1/checkpoint/${c.n}`} className="block rounded-[var(--r-lg)] focus-visible:outline-2">
+                  <Card tone={r?.passedAt ? 'mint' : 'wash'} className="p-4 grid gap-1 border-dashed hover:border-[var(--accent-soft)]">
+                    <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted m-0">
+                      Checkpoint {c.n}{r?.passedAt ? ' · aprovado ✓' : r?.best != null ? ` · melhor nota ${Math.round(r.best * 100)}%` : ''}
+                    </p>
+                    <p className="font-display text-[16.5px] font-semibold text-ink m-0">{c.tituloPt}</p>
+                    <p className="font-ui text-[13.5px] text-ink-body m-0">20 exercícios misturados das Unidades {c.unidades[0]} a {c.unidades[c.unidades.length - 1]}.</p>
+                  </Card>
+                </Link>
+              );
+            })}
           </section>
         );
       })}
+
+      <section className="grid gap-3" aria-labelledby="t-exame">
+        <h2 id="t-exame" className="font-display text-[21px] font-semibold text-ink m-0">Exame final e certificado</h2>
+        <Card tone={a1.exame.passedAt ? 'mint' : 'surface'} className="p-5 grid gap-2">
+          <p className="text-[15px] leading-relaxed text-ink-body m-0">
+            Seis partes, uma por habilidade, corrigidas no servidor. Com 70% ou mais, você recebe o certificado, com um código que qualquer pessoa pode conferir.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <LinkButton href="/a1/exame" variant={a1.exame.passedAt ? 'secondary' : 'primary'}>
+              {a1.exame.passedAt ? 'Fazer o exame de novo' : 'Ir para o exame'}
+            </LinkButton>
+            {a1.exame.passedAt && <LinkButton href="/a1/certificado">Ver o certificado</LinkButton>}
+          </div>
+        </Card>
+      </section>
 
       {a1.genero && (
         <details className="font-ui text-[14px] text-ink-muted">
