@@ -40,7 +40,7 @@ de o dono aprovar o hebraico.
 | 7 | Contar, horas, preço | números, כמה, que horas | mercado, tempo, dias |
 | 8 | Me virar numa conversa | preposições ב/ל com sufixos, revisão | tudo acumulado |
 
-## Unidade 1 - "Quem é você?" (conteúdo aprovado; banco de exercícios em revisão)
+## Unidade 1 - "Quem é você?" (aprovada pelo dono em 06/10/2026)
 
 Pendente de confirmação do dono: o item 20 (וַאֲנִי).
 
@@ -92,3 +92,53 @@ Pendente de confirmação do dono: o item 20 (וַאֲנִי).
 18. Responder: alguém diz שָׁלוֹם! מַה שִּׁמְךָ? → **שְׁמִי…** / תּוֹדָה / לְהִתְרָאוֹת
 19. Escrever: "muito prazer" → **נָעִים מְאֹד**
 20. Escrever (fala um homem): "Eu sou estudante e sou do Brasil" → **אֲנִי סְטוּדֶנְט וַאֲנִי מִבְּרָזִיל** (confirmar)
+
+## Unidade 2 - "O que é isto? Quem é?" (aprovada pelo dono em 06/10/2026)
+
+### Palavras
+
+מָה זֶה? · מִי זֶה? / מִי זֹאת? · זֶה / זֹאת · כֵּן / לֹא · זֶה לֹא… ·
+masculinas: סֵפֶר · טֶלֶפוֹן · מַפְתֵּחַ · שֻׁלְחָן · כִּסֵּא · תִּיק ·
+femininas: מַחְבֶּרֶת · דֶּלֶת · כּוֹס (exceção, sem ־ָה/־ֶת) · מְנוֹרָה · מַתָּנָה ·
+pessoas: אִישׁ / אִשָּׁה · יֶלֶד / יַלְדָּה · חָבֵר / חֲבֵרָה · אַבָּא / אִמָּא
+
+### Gramática
+
+1. זֶה para masculino, זֹאת para feminino: manda o gênero da palavra (mesa é
+   masculina em hebraico, feminina em português).
+2. Femininas em geral terminam em ־ָה ou ־ֶת; há exceções (כּוֹס).
+3. Não existe "um/uma"; negar com לֹא antes. מָה זֶה? serve para tudo.
+
+### Diálogo (Tom e Maya, antes da aula)
+
+| Quem | Hebraico | Português |
+|---|---|---|
+| Tom | מַיָּה, מָה זֶה? | Maya, o que é isto? |
+| Maya | זֶה מַפְתֵּחַ. | É uma chave. |
+| Tom | וּמָה זֶה? | E o que é isto? |
+| Maya | זֹאת מַחְבֶּרֶת. | É um caderno. |
+| Tom | וּמִי זֹאת? | E quem é esta? |
+| Maya | זֹאת אִמָּא. וְזֶה אַבָּא. | Esta é a minha mãe. E este é o meu pai. |
+| Tom | וּמִי זֶה? | E quem é este? |
+| Maya | זֶה לֹא אַבָּא, זֶה דָּנִי! | Este não é o meu pai, é o Dani! |
+
+### Banco de exercícios (18 itens)
+
+1. Ligar: סֵפֶר · שֻׁלְחָן · דֶּלֶת · מַפְתֵּחַ · כִּסֵּא → livro · mesa · porta · chave · cadeira
+2. Escolha: מַחְבֶּרֶת → **caderno** / cadeira / chave
+3. Intruso: יֶלֶד · אִישׁ · **שֻׁלְחָן** · חָבֵר
+4. ___ סֵפֶר → **זֶה**
+5. ___ מַחְבֶּרֶת → **זֹאת**
+6. ___ דֶּלֶת → **זֹאת**
+7. ___ כִּסֵּא → **זֶה**
+8. Separar (m / f): טֶלֶפוֹן · מְנוֹרָה · תִּיק · מַתָּנָה · שֻׁלְחָן · דֶּלֶת
+9. ___ כּוֹס → **זֹאת** (exceção)
+10. ___ חֲבֵרָה / ___ חָבֵר → **זֹאת** / **זֶה**
+11. Apontando uma mulher → **מִי זֹאת?**
+12. Montar: "Isto não é um livro" → **זֶה לֹא סֵפֶר**
+13. Achar o erro: זֹאת שֻׁלְחָן → **זֶה שֻׁלְחָן**
+14. V ou F: "um livro" precisa de uma palavra para "um" → **Falso**
+15. Ouvir: זֹאת מַתָּנָה → **É um presente**
+16. Ouvir: מִי זֶה? → sobre **um homem/menino**
+17. Diálogo: o que Maya mostra primeiro? → **uma chave**
+18. Diálogo, V ou F: na foto, o homem é o pai da Maya → **Falso**
