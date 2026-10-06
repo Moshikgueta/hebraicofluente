@@ -26,6 +26,11 @@ de o dono aprovar o hebraico.
    pedido).
 8. **Instruções dos exercícios em português.** Só as respostas e opções em
    hebraico: um aluno de A1 ainda não lê o enunciado em hebraico.
+9. **O curso pergunta o gênero do aluno uma vez**, no começo do A1 ("Como você
+   quer ser tratado: no masculino ou no feminino?"), e usa em todo exercício
+   em que o aluno fala de si (aprovado com a Unidade 4).
+10. **Falado antes de formal** quando os dois existem: מְדַבֵּר עִבְרִית טוֹב
+    (e não הֵיטֵב), porque é o que o aluno vai ouvir.
 
 ## O mapa (aprovado)
 
@@ -200,3 +205,58 @@ E também: הַ־ · אֵלֶּה · אֲנַחְנוּ · אַתֶּם / אַת
 18. Ouvir: הֵן נֶחְמָדוֹת → fala de **mulheres**
 19. Diálogo: como é a casa? → **pequena, mas bonita**
 20. Diálogo, V ou F: a mesa é nova → **Falso**
+
+## Unidade 4 - "O que você faz? Onde você mora?" (aprovada pelo dono em 06/10/2026)
+
+### Palavras
+
+Verbos (m · f · m pl · f pl): גָּר גָּרָה גָּרִים גָּרוֹת · לוֹמֵד לוֹמֶדֶת לוֹמְדִים לוֹמְדוֹת ·
+עוֹבֵד עוֹבֶדֶת עוֹבְדִים עוֹבְדוֹת · כּוֹתֵב כּוֹתֶבֶת כּוֹתְבִים כּוֹתְבוֹת ·
+מְדַבֵּר מְדַבֶּרֶת מְדַבְּרִים מְדַבְּרוֹת
+
+Lugares e línguas: אֵיפֹה? · בְּ־ / בִּ־ · תֵּל אָבִיב · יְרוּשָׁלַיִם · סָאוֹ פָּאוּלוֹ · רִיוֹ ·
+עִבְרִית · פּוֹרְטוּגָזִית · אַנְגְּלִית · קְצָת
+
+### Gramática
+
+1. O presente muda com gênero e número, não com a pessoa.
+2. O desenho _וֹ_ֵ_ / _וֹ_ֶ_ֶת / _וֹ_ְ_ִים / _וֹ_ְ_וֹת; גָּר e מְדַבֵּר ensinados como estão.
+3. "Em" = בְּ־ grudado; língua sem preposição (מְדַבֵּר עִבְרִית).
+
+### Diálogo (Noa e Tom)
+
+| Quem | Hebraico | Português |
+|---|---|---|
+| Noa | טוֹם, אֵיפֹה אַתָּה גָּר? | Tom, onde você mora? |
+| Tom | אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ? | Moro em Jerusalém. E você? |
+| Noa | אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד? | Moro em Tel Aviv. Você trabalha? |
+| Tom | לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ? | Não, estudo hebraico. E você? |
+| Noa | אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב! | Eu trabalho. Você fala hebraico bem! |
+| Tom | תּוֹדָה! אֲנִי מְדַבֵּר קְצָת. | Obrigado! Falo um pouco. |
+| Noa | דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית. | O Dani e a Maya também estudam hebraico. |
+| Tom | הֵם גָּרִים בִּירוּשָׁלַיִם? | Eles moram em Jerusalém? |
+| Noa | לֹא, הֵם גָּרִים בְּתֵל אָבִיב. | Não, eles moram em Tel Aviv. |
+
+### Banco de exercícios (20 itens)
+
+1. Tabela: לוֹמֵד → **לוֹמֶדֶת · לוֹמְדִים · לוֹמְדוֹת**
+2. Tabela: עוֹבֵד → **עוֹבֶדֶת · עוֹבְדִים · עוֹבְדוֹת**
+3. Separar (um homem / uma mulher / vários): כּוֹתֵב · כּוֹתֶבֶת · כּוֹתְבִים · גָּרָה · גָּר · גָּרוֹת
+4. A Maya: אֲנִי ___ עִבְרִית → **לוֹמֶדֶת**
+5. O Dani: אֲנִי ___ בְּרִיוֹ → **גָּר**
+6. Noa e Maya: הֵן ___ → **עוֹבְדוֹת**
+7. Dani e Noa: הֵם ___ אַנְגְּלִית → **מְדַבְּרִים**
+8. Achar o erro (mulher): אֲנִי עוֹבֵד בִּירוּשָׁלַיִם → **אֲנִי עוֹבֶדֶת בִּירוּשָׁלַיִם**
+9. V ou F: "eu estudo" e "ele estuda" são a mesma palavra (homens) → **Verdadeiro**
+10. Montar: "Moro em São Paulo" (homem) → **אֲנִי גָּר בְּסָאוֹ פָּאוּלוֹ**
+11. הִיא גָּרָה ___תֵל אָבִיב → **בְּ**
+12. "Falo português" → **אֲנִי מְדַבֵּר פּוֹרְטוּגָזִית**
+13. Perguntar à Noa onde mora → **אֵיפֹה אַתְּ גָּרָה?**
+14. Responder a אַתָּה מְדַבֵּר עִבְרִית? → **קְצָת**
+15. Ouvir: אֲנַחְנוּ לוֹמְדוֹת → **um grupo de mulheres**
+16. Ouvir: הוּא כּוֹתֵב בְּעִבְרִית → **ele escreve em hebraico**
+17. Diálogo: onde o Tom mora? → **em Jerusalém**
+18. Diálogo: o que a Noa faz? → **trabalha**
+19. Diálogo, V ou F: Dani e Maya moram em Jerusalém → **Falso**
+20. Escrever 2 frases sobre você (onde mora, o que faz); a forma do verbo é
+    conferida pelo gênero que o aluno escolheu (decisão 9).
