@@ -260,3 +260,59 @@ Lugares e línguas: אֵיפֹה? · בְּ־ / בִּ־ · תֵּל אָבִי�
 19. Diálogo, V ou F: Dani e Maya moram em Jerusalém → **Falso**
 20. Escrever 2 frases sobre você (onde mora, o que faz); a forma do verbo é
     conferida pelo gênero que o aluno escolheu (decisão 9).
+
+## Unidade 5 - "O que você come? O que você quer?" (aprovada pelo dono em 06/10/2026)
+
+### Palavras
+
+Verbos (m · f · m pl · f pl): אוֹכֵל אוֹכֶלֶת אוֹכְלִים אוֹכְלוֹת ·
+קוֹרֵא קוֹרֵאת קוֹרְאִים קוֹרְאוֹת · שׁוֹתֶה שׁוֹתָה שׁוֹתִים שׁוֹתוֹת ·
+קוֹנֶה קוֹנָה קוֹנִים קוֹנוֹת · רוֹצֶה רוֹצָה רוֹצִים רוֹצוֹת
+
+Comida e bebida: לֶחֶם · גְּבִינָה · בֵּיצָה/בֵּיצִים · תַּפּוּחַ/תַּפּוּחִים · עוּגָה · סָלָט ·
+חָלָב · מַיִם · קָפֶה · תֵּה
+
+A casa: מִטְבָּח · מְקָרֵר · חֶדֶר · עִתּוֹן
+
+### Gramática
+
+1. Verbos com ה no fim: ־ֶה / ־ָה / ־ִים / ־וֹת; קוֹרֵאת por causa do א.
+2. אֶת só antes do objeto com הַ (אוֹכֵל אֶת הַלֶּחֶם; אוֹכֵל לֶחֶם sem אֶת).
+3. Negar: לֹא antes do verbo.
+4. בְּ + הַ = בַּ (בַּמִּטְבָּח). מַיִם é sempre plural.
+
+### Diálogo (café da manhã na casa da Maya)
+
+| Quem | Hebraico | Português |
+|---|---|---|
+| Dani | מַיָּה, מָה אַתְּ אוֹכֶלֶת? | Maya, o que você está comendo? |
+| Maya | אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה? | Pão e queijo. Você quer? |
+| Dani | כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב? | Quero, obrigado. Onde está o leite? |
+| Maya | הֶחָלָב בַּמְּקָרֵר. | O leite está na geladeira. |
+| Dani | אַתְּ שׁוֹתָה קָפֶה? | Você bebe café? |
+| Maya | לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה. | Não, não bebo café. Bebo chá. |
+| Dani | וּמִי קוֹנֶה אֶת הַלֶּחֶם? | E quem compra o pão? |
+| Maya | אַתָּה! | Você! |
+
+### Banco de exercícios (20 itens)
+
+1. Tabela: שׁוֹתֶה → **שׁוֹתָה · שׁוֹתִים · שׁוֹתוֹת**
+2. Tabela: אוֹכֵל → **אוֹכֶלֶת · אוֹכְלִים · אוֹכְלוֹת**
+3. A Noa: אֲנִי ___ עִתּוֹן → **קוֹרֵאת**
+4. Tom e Dani: הֵם ___ קָפֶה → **רוֹצִים**
+5. Separar (ה no fim / desenho da Unidade 4): קוֹנֶה · אוֹכֵל · רוֹצָה · לוֹמֵד · שׁוֹתִים · עוֹבֶדֶת
+6. אֲנִי קוֹנֶה ___ הָעוּגָה → **אֶת**
+7. אֲנִי קוֹנֶה ___ עוּגָה → **nada**
+8. Achar o erro: הִיא אוֹכֶלֶת אֶת סָלָט → **הִיא אוֹכֶלֶת סָלָט**
+9. Montar: "Eu leio o jornal" (homem) → **אֲנִי קוֹרֵא אֶת הָעִתּוֹן**
+10. V ou F: אֶת antes de todo objeto → **Falso**
+11. Montar: "Eu não bebo leite" (mulher) → **אֲנִי לֹא שׁוֹתָה חָלָב**
+12. "Na cozinha" → **בַּמִּטְבָּח**
+13. הַבֵּיצִים ___מְּקָרֵר → **בַּ**
+14. Perguntar à Maya se quer bolo → **אַתְּ רוֹצָה עוּגָה?**
+15. Responder (homem, não quer chá) → **לֹא, תּוֹדָה**
+16. Ouvir: אֲנַחְנוּ לֹא אוֹכְלִים בֵּיצִים → **nós não comemos ovos**
+17. Ouvir: הִיא קוֹנָה תַּפּוּחִים → **ela compra maçãs**
+18. Diálogo: onde está o leite? → **na geladeira**
+19. Diálogo, V ou F: a Maya bebe café → **Falso**
+20. Escrever 2 frases: o que come de manhã e o que não bebe (gênero do aluno).
