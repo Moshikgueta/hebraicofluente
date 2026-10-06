@@ -121,20 +121,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "סאונה",
-        "pt": "sauna"
+        "he": "אמריקה",
+        "pt": "América"
       },
       {
-        "he": "כאוס",
-        "pt": "caos"
+        "he": "אופרה",
+        "pt": "ópera"
       },
       {
-        "he": "קואלה",
-        "pt": "coala"
+        "he": "אקורדיון",
+        "pt": "acordeão"
       },
       {
-        "he": "פירנאים",
-        "pt": "Pirineus"
+        "he": "אנטנה",
+        "pt": "antena"
       }
     ]
   },
@@ -296,20 +296,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "טרמינל",
-        "pt": "terminal"
+        "he": "מוזיקה",
+        "pt": "música"
       },
       {
-        "he": "דיאגרמה",
-        "pt": "diagrama"
+        "he": "קומדיה",
+        "pt": "comédia"
       },
       {
-        "he": "דמוקרטיה",
-        "pt": "democracia"
+        "he": "מיקרופון",
+        "pt": "microfone"
       },
       {
-        "he": "קרם",
-        "pt": "creme"
+        "he": "מקסימום",
+        "pt": "máximo"
       }
     ],
     "contrastes": {
@@ -449,20 +449,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "תל אביב",
-        "pt": "Tel Aviv"
+        "he": "תיאוריה",
+        "pt": "teoria"
       },
       {
-        "he": "מרתון",
-        "pt": "maratona"
+        "he": "מתמטיקה",
+        "pt": "matemática"
       },
       {
-        "he": "תיאטרון",
-        "pt": "teatro"
+        "he": "תאילנד",
+        "pt": "Tailândia"
       },
       {
-        "he": "אתיקה",
-        "pt": "ética"
+        "he": "תוניסיה",
+        "pt": "Tunísia"
       }
     ]
   },
@@ -612,20 +612,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "לימונדה",
-        "pt": "limonada"
+        "he": "בננה",
+        "pt": "banana"
       },
       {
-        "he": "ברלין",
-        "pt": "Berlim"
+        "he": "פיאנו",
+        "pt": "piano"
       },
       {
-        "he": "סנדל",
-        "pt": "sandália"
+        "he": "אינטרנט",
+        "pt": "internet"
       },
       {
-        "he": "קניבל",
-        "pt": "canibal"
+        "he": "קנגורו",
+        "pt": "canguru"
       }
     ],
     "contrastes": {
@@ -810,20 +810,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "הוריקן",
-        "pt": "furacão"
+        "he": "הוקי",
+        "pt": "hóquei"
       },
       {
-        "he": "אלכוהול",
-        "pt": "álcool"
+        "he": "הוואי",
+        "pt": "Havaí"
       },
       {
-        "he": "הליקופטר",
-        "pt": "helicóptero"
+        "he": "הולנד",
+        "pt": "Holanda"
       },
       {
-        "he": "טהיטי",
-        "pt": "Taiti"
+        "he": "המבורגר",
+        "pt": "hambúrguer"
       }
     ],
     "contrastes": {
@@ -979,18 +979,21 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "רדיו",
-        "pt": "rádio"
+        "he": "יוגה",
+        "pt": "ioga"
       },
       {
-        "he": "קריירה",
-        "pt": "carreira"
+        "he": "פיצה",
+        "pt": "pizza"
       },
       {
-        "he": "אלומיניום",
-        "pt": "alumínio"
+        "he": "יוגורט",
+        "pt": "iogurte"
       },
-      {"he": "בריטניה", "pt": "Grã-Bretanha"}
+      {
+        "he": "וידאו",
+        "pt": "vídeo"
+      }
     ]
   },
   {
@@ -1135,20 +1138,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "מרגרינה",
-        "pt": "margarina"
+        "he": "גיטרה",
+        "pt": "violão, guitarra"
       },
       {
-        "he": "ספגטי",
-        "pt": "espaguete"
+        "he": "גולף",
+        "pt": "golfe"
       },
       {
-        "he": "לגו",
-        "pt": "Lego"
+        "he": "אוריגמי",
+        "pt": "origami"
       },
       {
-        "he": "הולוגרם",
-        "pt": "holograma"
+        "he": "גורילה",
+        "pt": "gorila"
       }
     ]
   },
@@ -1291,20 +1294,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "אבסורד",
-        "pt": "absurdo"
+        "he": "דינוזאור",
+        "pt": "dinossauro"
       },
       {
-        "he": "מדוזה",
-        "pt": "medusa"
+        "he": "דיסקו",
+        "pt": "discoteca"
       },
       {
-        "he": "נודיסט",
-        "pt": "nudista"
+        "he": "פודינג",
+        "pt": "pudim"
       },
       {
-        "he": "למבדה",
-        "pt": "lambda"
+        "he": "אינדונזיה",
+        "pt": "Indonésia"
       }
     ],
     "contrastes": {
@@ -1495,20 +1498,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "קטשופ",
-        "pt": "ketchup"
+        "he": "שוקולד",
+        "pt": "chocolate"
       },
       {
-        "he": "קשמיר",
-        "pt": "caxemira"
+        "he": "שמפניה",
+        "pt": "champanhe"
       },
       {
-        "he": "שמפו",
-        "pt": "xampu"
+        "he": "מרשמלו",
+        "pt": "marshmallow"
       },
       {
-        "he": "גישה",
-        "pt": "abordagem"
+        "he": "שריף",
+        "pt": "xerife"
       }
     ],
     "contrastes": {
@@ -1670,20 +1673,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "איטליה",
-        "pt": "Itália"
+        "he": "לימון",
+        "pt": "limão"
       },
       {
-        "he": "פלאפל",
-        "pt": "falafel"
+        "he": "גלקסיה",
+        "pt": "galáxia"
       },
       {
-        "he": "גלובוס",
-        "pt": "globo"
+        "he": "בלט",
+        "pt": "balé"
       },
       {
-        "he": "פקולטה",
-        "pt": "faculdade"
+        "he": "פלסטיק",
+        "pt": "plástico"
       }
     ],
     "contrastes": {
@@ -1844,20 +1847,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "אורגנו",
-        "pt": "orégano"
+        "he": "רובוט",
+        "pt": "robô"
       },
       {
-        "he": "אנרגיה",
-        "pt": "energia"
+        "he": "קרמל",
+        "pt": "caramelo"
       },
       {
-        "he": "סיגריה",
-        "pt": "cigarro"
+        "he": "ריזוטו",
+        "pt": "risoto"
       },
       {
-        "he": "קרוסלה",
-        "pt": "carrossel"
+        "he": "טרקטור",
+        "pt": "trator"
       }
     ]
   },
@@ -2049,20 +2052,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "קיווי",
-        "pt": "kiwi"
+        "he": "וניל",
+        "pt": "baunilha"
       },
       {
-        "he": "אקוודור",
-        "pt": "Equador"
+        "he": "ויזה",
+        "pt": "visto (visa)"
       },
       {
-        "he": "וטרן",
-        "pt": "veterano"
+        "he": "וירוס",
+        "pt": "vírus"
       },
       {
-        "he": "וולונטרי",
-        "pt": "voluntário"
+        "he": "ויקינג",
+        "pt": "viking"
       }
     ],
     "contrastes": {
@@ -2220,20 +2223,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "אקזוטי",
-        "pt": "exótico"
+        "he": "פיזיקה",
+        "pt": "física"
       },
       {
-        "he": "היפנוזה",
-        "pt": "hipnose"
+        "he": "זברה",
+        "pt": "zebra"
       },
       {
-        "he": "מוזיאון",
-        "pt": "museu"
+        "he": "מוזאיקה",
+        "pt": "mosaico"
       },
       {
-        "he": "זיגזג",
-        "pt": "ziguezague"
+        "he": "ברזיל",
+        "pt": "Brasil"
       }
     ]
   },
@@ -2395,12 +2398,16 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "חיפה",
-        "pt": "Haifa"
+        "he": "חומוס",
+        "pt": "homus"
       },
       {
-        "he": "חופה",
-        "pt": "chupá"
+        "he": "בחריין",
+        "pt": "Bahrein"
+      },
+      {
+        "he": "חאקי",
+        "pt": "cáqui"
       }
     ]
   },
@@ -2544,20 +2551,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "הליקופטר",
-        "pt": "helicóptero"
+        "he": "טניס",
+        "pt": "tênis"
       },
       {
-        "he": "ויטמין",
-        "pt": "vitamina"
+        "he": "טלפון",
+        "pt": "telefone"
       },
       {
-        "he": "מטרו",
-        "pt": "metrô"
+        "he": "טונה",
+        "pt": "atum"
       },
       {
-        "he": "פוטו",
-        "pt": "foto"
+        "he": "סלט",
+        "pt": "salada"
       }
     ],
     "contrastes": {
@@ -2714,20 +2721,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "פסטה",
-        "pt": "massa"
+        "he": "סושי",
+        "pt": "sushi"
       },
       {
-        "he": "רסיטל",
-        "pt": "recital"
+        "he": "סטודנט",
+        "pt": "estudante"
       },
       {
-        "he": "פיקסו",
-        "pt": "Picasso"
+        "he": "אוטובוס",
+        "pt": "ônibus"
       },
       {
-        "he": "אבסורד",
-        "pt": "absurdo"
+        "he": "קקטוס",
+        "pt": "cacto"
       }
     ],
     "contrastes": {
@@ -2868,7 +2875,16 @@
     },
     "audioIds": [],
     "biblicalWord": null,
-    "bridgeWords": [],
+    "bridgeWords": [
+      {
+        "he": "עיראק",
+        "pt": "Iraque"
+      },
+      {
+        "he": "עומאן",
+        "pt": "Omã"
+      }
+    ],
     "contrastes": {
       "צ": "O צ tem o braço esquerdo colado no alto do corpo. O ע tem os dois braços soltos, formando um V.",
       "א": "O א é um X com dois braços curtos. O ע é um V apoiado numa perna."
@@ -3023,20 +3039,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "צלופן",
-        "pt": "celofane"
+        "he": "קונצרט",
+        "pt": "concerto"
       },
       {
-        "he": "מיצובישי",
-        "pt": "Mitsubishi"
+        "he": "מרצדס",
+        "pt": "Mercedes"
       },
       {
-        "he": "פניצילין",
-        "pt": "penicilina"
+        "he": "אנציקלופדיה",
+        "pt": "enciclopédia"
       },
       {
-        "he": "קיבוץ",
-        "pt": "kibutz"
+        "he": "צונאמי",
+        "pt": "tsunami"
       }
     ],
     "contrastes": {
@@ -3193,17 +3209,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "פיקניק",
-        "pt": "piquenique"
+        "he": "קפה",
+        "pt": "café"
       },
       {
-        "he": "קיוסק",
-        "pt": "quiosque"
+        "he": "קקאו",
+        "pt": "cacau"
       },
-      {"he": "רקטה", "pt": "foguete"},
       {
-        "he": "קוקטייל",
-        "pt": "coquetel"
+        "he": "אקדמיה",
+        "pt": "academia"
+      },
+      {
+        "he": "קוקוס",
+        "pt": "coco"
       }
     ],
     "contrastes": {
@@ -3396,20 +3415,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "אמבולנס",
-        "pt": "ambulância"
+        "he": "בלון",
+        "pt": "balão"
       },
       {
-        "he": "תל אביב",
-        "pt": "Tel Aviv"
+        "he": "ברוקולי",
+        "pt": "brócolis"
       },
       {
-        "he": "נובלה",
-        "pt": "novela"
+        "he": "סמבה",
+        "pt": "samba"
       },
       {
-        "he": "סומבררו",
-        "pt": "sombrero"
+        "he": "אלבום",
+        "pt": "álbum"
       }
     ],
     "contrastes": {
@@ -3605,22 +3624,21 @@
     "audioIds": [],
     "biblicalWord": null,
     "bridgeWords": [
-      {"he": "כימיה", "pt": "química"},
       {
-        "he": "סוכר",
-        "pt": "açúcar"
+        "he": "כולסטרול",
+        "pt": "colesterol"
       },
       {
-        "he": "לוכסמבורג",
-        "pt": "Luxemburgo"
+        "he": "כרום",
+        "pt": "cromo"
       },
       {
-        "he": "ארכיטקט",
-        "pt": "arquiteto"
+        "he": "ארכיאולוגיה",
+        "pt": "arqueologia"
       },
       {
-        "he": "מכני",
-        "pt": "mecânico"
+        "he": "פסיכולוגיה",
+        "pt": "psicologia"
       }
     ],
     "contrastes": {
@@ -3829,28 +3847,20 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "סופרמרקט",
-        "pt": "supermercado"
+        "he": "פסטיבל",
+        "pt": "festival"
       },
       {
-        "he": "רמפה",
-        "pt": "rampa"
+        "he": "פרלמנט",
+        "pt": "parlamento"
       },
       {
-        "he": "מיקרוסקופ",
-        "pt": "microscópio"
+        "he": "פינגווין",
+        "pt": "pinguim"
       },
       {
-        "he": "אפריקה",
-        "pt": "África"
-      },
-      {
-        "he": "דולפין",
-        "pt": "golfinho"
-      },
-      {
-        "he": "טלגרף",
-        "pt": "telégrafo"
+        "he": "פירמידה",
+        "pt": "pirâmide"
       }
     ],
     "contrastes": {
