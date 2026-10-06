@@ -51,7 +51,7 @@ export type UnpointedWord = {
 };
 
 /** Uma lição de som: Vet, Chaf, Fe (a letra sem daguesh), Sin (o ponto do
- *  ש à esquerda) ou Tch, Dj, J (a letra com gerech). Ver data/extras.json →
+ *  ש à esquerda) ou Tch, Dj, J (a letra com guéresh). Ver data/extras.json →
  *  `sons` e lib/sons.ts. */
 export type SomLicao = {
   id: string;
@@ -212,7 +212,7 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       he: g.he,
       options,
       answer,
-      explainPt: `${g.he} é ${g.pt} - ${g.likePt}. Sem o gerech, ${g.base} é ${g.basePt}.`
+      explainPt: `${g.he} é ${g.pt} - ${g.likePt}. Sem o guéresh, ${g.base} é ${g.basePt}.`
     });
     const bare = optionsWith(g.basePt, G.map(x => x.pt), rand);
     out.push({
@@ -223,7 +223,7 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       he: g.base,
       options: bare.options,
       answer: bare.answer,
-      explainPt: `Sem o gerech, ${g.base} é ${g.basePt}. Com ele, ${g.he} é ${g.pt}.`
+      explainPt: `Sem o guéresh, ${g.base} é ${g.basePt}. Com ele, ${g.he} é ${g.pt}.`
     });
   }
 

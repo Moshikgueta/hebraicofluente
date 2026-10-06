@@ -128,7 +128,7 @@
 
   "gerech": {
     "titlePt": "Os sons modernos",
-    "signNamePt": "gerech",
+    "signNamePt": "guéresh",
     "signHe": "גֶּרֶשׁ",
     "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"Djavan\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
     "signNotePt": "O {{גֶּרֶשׁ}} é o traço que se põe à esquerda da letra, no alto. Nestas três letras, ele não é acento nem pontuação: é parte da escrita da palavra, e sem ele a palavra tem outro som.",
@@ -671,7 +671,7 @@
           "voz": false,
           "comoPt": "A língua encosta atrás dos dentes, um pouco mais para trás que no {{צ}}, e solta num CH de \"chuva\", sem voz: T e CH colados, o TCH de \"tchau\"."
         },
-        "regraPt": "O traço fica à esquerda da letra, no alto: {{צ׳}}. Sem ele, a letra volta a ser {{צ}}, TS. O sinal é parte da palavra: um texto sem nikud ainda escreve o gerech.",
+        "regraPt": "O traço fica à esquerda da letra, no alto: {{צ׳}}. Sem ele, a letra volta a ser {{צ}}, TS. O sinal é parte da palavra: um texto sem nikud ainda escreve o guéresh.",
         "irmaoPt": "Estes sons quase só aparecem em palavras que vieram de fora e em nomes próprios. É onde o brasileiro mais acerta: você já sabe como a palavra soa, e a escrita só confirma.",
         "erro": {
           "wrong": "Ignorar o traço e ler {{צ׳}} como {{צ}}: \"Chile\" vira \"Tsile\".",

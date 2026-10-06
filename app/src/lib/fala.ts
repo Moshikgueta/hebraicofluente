@@ -9,7 +9,7 @@
  * Aqui mora só a decisão, sem navegador: a transcrição bate com a palavra?
  *
  *   · sem os pontos: o reconhecimento escreve hebraico sem nikud;
- *   · sem pontuação e sem o traço do gerech trocado por apóstrofo;
+ *   · sem pontuação e sem o traço do guéresh trocado por apóstrofo;
  *   · a forma final e a de meio valem o mesmo (a transcrição às vezes corta);
  *   · a grafia cheia e a defectiva valem o mesmo: o curso escreve אֹמֵר com
  *     o ponto em cima, e a transcrição escreve אומר, com vav. Por isso, se a
@@ -28,7 +28,7 @@ export function palavrasDe(texto: string): string[] {
   return texto
     .normalize('NFC')
     .replace(NIKUD, '')
-    .replace(/[׳'`´"״]/g, '')               // gerech e aspas: o reconhecimento escreve ' ou nada
+    .replace(/[׳'`´"״]/g, '')               // guéresh e aspas: o reconhecimento escreve ' ou nada
     .replace(/[^א-ת\s-]/g, ' ')    // o resto que não é letra hebraica vira espaço
     .replace(/-/g, ' ')
     .split(/\s+/)

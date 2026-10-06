@@ -99,7 +99,7 @@ export const EXAM_PARTS: ExamPart[] = [
     descPt: 'Duas ou três palavras juntas. Sem transliteração.'
   },
   /* Os módulos 6 e 7 ensinavam duas coisas que o exame não media (auditoria
-     de 28/09, PED-042): ler sem os pontos, como na rua, e o gerech. Poucos
+     de 28/09, PED-042): ler sem os pontos, como na rua, e o guéresh. Poucos
      itens de cada, porque são o fim do curso e não o centro dele. */
   {
     id: 'sempontos', titlePt: 'Sem os pontos', skill: 'ler', count: 3, practiceMode: 'palavras',
@@ -168,7 +168,7 @@ export function buildExam(
   letters: Letter[], scenes: readonly SceneLike[],
   opts: {
     audioAvailable: boolean; attempt?: number; sentences?: readonly SentenceLike[];
-    /** O conteúdo dos módulos 6 e 7. Sem ele, a parte do gerech fica de fora.
+    /** O conteúdo dos módulos 6 e 7. Sem ele, a parte do guéresh fica de fora.
      *  Quem chama só passa quando o aluno FEZ o módulo 7 (CONT-010). */
     extras?: Extras;
     /** A parte "Sem os pontos" (módulo 6). Falso para quem não fez o módulo

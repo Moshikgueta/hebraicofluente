@@ -764,7 +764,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
     test: s => lettersMastered(s) >= 22 },
   { id: 'sem-o-ponto', titlePt: 'Sem o ponto', descPt: 'Você lê {{בּ}}, {{כּ}} e {{פּ}} sem o daguesh - como elas aparecem na rua.',
     test: s => !!s.checkpoints['cp6']?.passedAt },
-  { id: 'sons-modernos', titlePt: 'Os sons modernos', descPt: 'O gerech e as três letras que o hebraico moderno inventou sem inventar letra.',
+  { id: 'sons-modernos', titlePt: 'Os sons modernos', descPt: 'O guéresh e as três letras que o hebraico moderno inventou sem inventar letra.',
     test: s => !!s.checkpoints['cp7']?.passedAt },
   /* Not a count of anything. The one moment the course is actually selling:
      a whole word decoded with no transliteration on the screen. */

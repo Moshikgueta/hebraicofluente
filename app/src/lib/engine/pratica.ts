@@ -11,7 +11,7 @@
  *   · correção  - os erros do aluno nas letras do módulo (ou, sem erro
  *                 registrado, as letras do módulo), com a questão errada
  *                 voltando até ser acertada; nos módulos 6 e 7, o quiz do
- *                 ponto e das finais, ou o do gerech;
+ *                 ponto e das finais, ou o do guéresh;
  *   · parecidas - o par de letras do módulo que mais se confunde, lado a
  *                 lado (só onde há par);
  *   · ler       - as palavras do módulo em voz alta, com o gravar e comparar;
@@ -55,7 +55,7 @@ export function correcaoDoModulo(
   const count = opts.count ?? 8;
   const { doModulo, historia } = letrasDoModulo(mod, letras);
   if (!doModulo.length) {
-    /* Os módulos sem letra: o 6 (o ponto e as finais) e o 7 (o gerech). */
+    /* Os módulos sem letra: o 6 (o ponto e as finais) e o 7 (o guéresh). */
     const exercicios = mod.n === 7
       ? buildGerechQuiz(extras, count, opts.seed)
       : buildDageshQuiz(extras, count, opts.seed);
@@ -102,7 +102,7 @@ export type PalavraParaLer = { he: string; translit: string | null; pt: string; 
 
 /**
  * As palavras para ler em voz alta: as de leitura das letras do módulo; no
- * 6, as do ponto e das finais; no 7, as do gerech. Sem repetir, até `max`.
+ * 6, as do ponto e das finais; no 7, as do guéresh. Sem repetir, até `max`.
  */
 export function palavrasParaLer(
   mod: ModuloLike, letras: readonly Letter[], extras: Extras, max = 8

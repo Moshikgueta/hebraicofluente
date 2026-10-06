@@ -48,7 +48,7 @@ const STAGES: Record<ExtraSlug, { n: number; label: string; lesson: number }[]> 
   'sons-modernos': [
     /* Tch, Dj e J são as lições 24 a 26, cada uma na sua página (/som/...).
        Esta é a 27: os três juntos, e o fecho do alfabeto. */
-    { n: 1, label: 'O gerech', lesson: 27 },
+    { n: 1, label: 'O guéresh', lesson: 27 },
     { n: 2, label: 'Ler', lesson: 27 },
     { n: 3, label: 'Fecho', lesson: 27 }
   ]
@@ -438,7 +438,7 @@ function UnpointedRow({
   );
 }
 
-/* ── 7.1 · the gerech ───────────────────────────────────────────────────── */
+/* ── 7.1 · the guéresh ───────────────────────────────────────────────────── */
 function GerechStage({ onDone }: { onDone: () => void }) {
   const G = extras().gerech;
   return (
