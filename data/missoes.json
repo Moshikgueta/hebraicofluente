@@ -246,7 +246,7 @@
           "tipo": "transliterar",
           "he": "סֵפֶר",
           "semPontos": true,
-          "promptPt": "Na capa de um caderno, sem nenhum ponto. Escreva como esta palavra se lê."
+          "promptPt": "Na plaquinha de uma prateleira de livros, sem nenhum ponto. Sem os pontos, as mesmas letras podem ter mais de uma leitura, e quem decide é o lugar onde a palavra está. Escreva como esta palavra se lê."
         },
         {
           "tipo": "ler",
@@ -279,8 +279,8 @@
         },
         {
           "tipo": "achar",
-          "he": "ואוצ׳ר",
-          "promptPt": "No balcão do hotel, pedem o comprovante da reserva. Qual papel diz “voucher”?",
+          "he": "ג׳ל",
+          "promptPt": "No banheiro do hotel há uma fileira de frasquinhos. Qual etiqueta diz “gel”?",
           "erradas": [
             "ג׳וניור",
             "ז׳רגון",
@@ -304,11 +304,11 @@
           "erradas": [
             "ג׳ל",
             "ג׳ירפה",
-            "ז׳סטה"
+            "ז׳רגון"
           ]
         }
       ],
-      "fechoPt": "Chile, voucher, girafa e pijama: sons que o alfabeto antigo não tinha, lidos de primeira."
+      "fechoPt": "Chile, gel, girafa e pijama: sons que o alfabeto antigo não tinha, lidos de primeira."
     }
   ]
 }

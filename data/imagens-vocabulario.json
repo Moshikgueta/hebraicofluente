@@ -297,10 +297,10 @@
    "imagePrompt": "a male teacher standing next to a blank board, pointing at it"
   },
   "תָּא": {
-   "pt": "compartimento · caixa postal",
+   "pt": "compartimento · cabine",
    "image": "/media/vocabulario/compartimento-caixa-postal-d6abb853.webp",
    "imageAlt": "Uma caixa de correio pequena, com a portinha aberta.",
-   "imagePrompt": "a small mailbox with its little door open"
+   "imagePrompt": "a row of small lockers, one compartment door open"
   },
   "יִשְׂרָאֵל": {
    "pt": "Israel",
@@ -342,7 +342,7 @@
    "pt": "quatro",
    "image": "/media/vocabulario/quatro-473fcd44.webp",
    "imageAlt": "Quatro maçãs vermelhas em fila.",
-   "imagePrompt": "exactly four red apples in a row"
+   "imagePrompt": "exactly four simple round dots in a row"
   },
   "יוֹם": {
    "pt": "dia",
@@ -384,7 +384,7 @@
    "pt": "estudante",
    "image": "/media/vocabulario/estudante-a7408c76.webp",
    "imageAlt": "Uma estudante jovem de mochila, com livros nos braços.",
-   "imagePrompt": "a young adult student carrying books under one arm"
+   "imagePrompt": "a young adult male student carrying books under one arm"
   },
   "סוֹד": {
    "pt": "segredo",
@@ -591,10 +591,10 @@
    "imagePrompt": "a single square swatch of beige color"
   },
   "ז׳סטה": {
-   "pt": "gesto",
+   "pt": "gesto de boa vontade, gentileza",
    "image": "/media/vocabulario/gesto-3dd39d97.webp",
    "imageAlt": "Uma mão fazendo um gesto de \"ok\".",
-   "imagePrompt": "a hand making an OK gesture"
+   "imagePrompt": "a person holding a door open for another person carrying bags"
   },
   "מִצְוָה": {
    "pt": "preceito, boa ação",

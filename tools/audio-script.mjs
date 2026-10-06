@@ -302,7 +302,7 @@ ${audio.waves.map(waveSection).join('\n')}
     }),
     secao('Sinais de vogal', doGrupo('sinais de vogal'), 'vogais.m4a',
       'npm run cortar-audio -- --vogais --onda todas vogais.m4a'),
-    secao('Módulo 7 · os sons com gerech', doGrupo('módulo 7'), 'modulo-7.m4a',
+    secao('Módulo 7 · os sons com guéresh', doGrupo('módulo 7'), 'modulo-7.m4a',
       'npm run cortar-audio -- --grupo "módulo 7" --onda todas modulo-7.m4a'),
     secao('No mundo real', doGrupo('no mundo real'), 'mundo-real.m4a',
       'npm run cortar-audio -- --grupo "no mundo real" --onda todas mundo-real.m4a'),

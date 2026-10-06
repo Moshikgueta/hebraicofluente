@@ -77,7 +77,7 @@ const ALEF = course.letters.find(l => l.id === 'alef');
    vez, e por isso elas são o teste. O {{ב}} entra por ser a segunda letra do
    alfabeto e aparecer na palavra da etapa seguinte. */
 const OPCOES: readonly { he: string; certa: boolean; porque: string }[] = [
-  { he: 'מ', certa: false, porque: 'Este é o Mem. Ele tem uma "perna" fechada à esquerda.' },
+  { he: 'מ', certa: false, porque: 'Este é o Mem. Ele tem uma base reta e uma pequena abertura embaixo, à esquerda.' },
   { he: 'א', certa: true, porque: '' },
   { he: 'ש', certa: false, porque: 'Este é o Shin, e ele tem três hastes subindo, como um garfo.' },
   { he: 'ב', certa: false, porque: 'Este é o Bet, com a base reta apoiada na linha.' }
@@ -91,7 +91,7 @@ const OPCOES: readonly { he: string; certa: boolean; porque: string }[] = [
    sensação, e não a tradução, que faz a pessoa querer a segunda letra.
 
    E ela é uma palavra que um brasileiro reconhece de ouvido. */
-const PALAVRA = { he: 'אַבָּא', translit: 'abá', pt: 'pai' } as const;
+const PALAVRA = { he: 'אַבָּא', translit: 'ába', pt: 'pai' } as const;
 
 /* As etapas que entraram em 03/10/2026, a pedido do dono: o teste era curto
    demais para o que a capa prometia. Cada uma ensina uma coisa que a lição 1
@@ -140,7 +140,7 @@ const VOGAIS: readonly Rodada[] = [
     opcoes: [
       { he: 'a', rotulo: '«a»', certa: false, porque: 'O tracinho embaixo é que seria o «a». Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».' },
       { he: 'i', rotulo: '«i»', certa: true, porque: '' },
-      { he: 'o', rotulo: '«o»', certa: false, porque: 'O «o» vem com um ו e um ponto em cima. Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».' }
+      { he: 'o', rotulo: '«o»', certa: false, porque: 'O «o» é um ponto em cima: em cima de um ו (אוֹ) ou da própria letra (אֹ). Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».' }
     ],
     acerto: 'O ponto embaixo é a vogal «i». O Álef só segura.'
   },
@@ -157,7 +157,7 @@ const VOGAIS: readonly Rodada[] = [
     pergunta: 'Última: e esta?', mostra: 'אַ',
     opcoes: [
       { he: 'a', rotulo: '«a»', certa: true, porque: '' },
-      { he: 'e', rotulo: '«e»', certa: false, porque: 'O «e» são três pontinhos embaixo. Aqui há um tracinho só, e o tracinho é a vogal «a».' },
+      { he: 'e', rotulo: '«e»', certa: false, porque: 'O «e» são pontinhos embaixo, três (אֶ) ou dois (אֵ). Aqui há um tracinho só, e o tracinho é a vogal «a».' },
       { he: 'i', rotulo: '«i»', certa: false, porque: 'O «i» é um ponto. Aqui há um tracinho, e o tracinho é a vogal «a».' }
     ],
     acerto: 'O tracinho embaixo é a vogal «a». Você acabou de ler três sílabas.'
@@ -190,11 +190,11 @@ const ACHAR: readonly Rodada[] = [
     pergunta: 'Mais uma: qual começa com Álef?',
     opcoes: [
       { he: 'מַיִם', certa: false, porque: 'Esta começa com Mem, a letra da direita. Procure o Álef na ponta direita.' },
-      { he: 'לֶחֶם', certa: false, porque: 'Esta começa com Lamed, a letra da direita. Procure o Álef na ponta direita.' },
+      { he: 'לֶחֶם', certa: false, porque: 'Esta começa com Lámed, a letra da direita. Procure o Álef na ponta direita.' },
       { he: 'יֶלֶד', certa: false, porque: 'Esta começa com Yod, a letra da direita. Procure o Álef na ponta direita.' },
       { he: 'אֹכֶל', certa: true, porque: '' }
     ],
-    acerto: 'אֹכֶל se lê «óchel» e quer dizer «comida». Duas palavras de verdade, e você achou o Álef nas duas.',
+    acerto: 'אֹכֶל se lê «óchel» e quer dizer «comida» (o ch aqui não é o ch de «chave»: é um R raspado na garganta, como o R carioca de «carro»). Duas palavras de verdade, e você achou o Álef nas duas.',
     ouvirAcerto: { clipe: 'ochel', rotulo: 'Ouvir «óchel»' }
   }
 ];

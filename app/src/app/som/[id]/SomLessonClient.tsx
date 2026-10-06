@@ -10,7 +10,7 @@
  *   1 conhecer   - o som, a boca, a regra, as sílabas
  *   2 palavras   - as palavras que têm o som
  *   3 contraste  - lado a lado com o par (ponto à esquerda / à direita, com
- *                  gerech / sem gerech), para ler em voz alta. Em Vet, Chaf
+ *                  guéresh / sem guéresh), para ler em voz alta. Em Vet, Chaf
  *                  e Fe é "ler": o som sozinho, e o par fica para a lição 20
  *   4 praticar   - exercícios de contraste, sem nota
  *   5 fixação    - o mesmo tipo de pergunta, com nota; 75% domina

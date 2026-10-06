@@ -167,7 +167,7 @@ function main() {
           kind: 'palavra', wave: 3, where: 'módulo 6' });
   }
   for (const g of extras.gerech.letters) {
-    add({ he: g.he, translit: g.pt, gloss: `a letra ${g.base} com gerech - som ${g.pt}`,
+    add({ he: g.he, translit: g.pt, gloss: `a letra ${g.base} com guéresh - som ${g.pt}`,
           kind: 'nome', wave: 3, where: 'módulo 7' });
     for (const w of g.words) {
       add({ he: w.he, translit: null, gloss: w.pt,
@@ -178,7 +178,7 @@ function main() {
      cada uma. São lições do caminho principal, então entram na onda 2, com o
      que o aluno lê - e não na 3, junto com o que ele só reconhece. */
   for (const S of extras.sons.licoes) {
-    /* A letra com gerech já é clipe (módulo 7). A letra sem ponto sozinha,
+    /* A letra com guéresh já é clipe (módulo 7). A letra sem ponto sozinha,
        não: uma consoante sem vogal não se diz - o som dela é a sílaba. */
     for (const s of S.silabas) {
       add({ he: s.he, translit: s.translit, gloss: `sílaba sem ponto - ${S.namePt}`,

@@ -152,7 +152,7 @@ function PainelAula() {
       <div className="rounded-[16px] bg-[var(--sand)] px-4 py-[22px] text-center mb-4">
         <He size="plate" tone="navy">שׁ</He>
         <p className="font-ui text-[17px] font-semibold text-ink mt-1.5">Shin</p>
-        <p className="font-ui text-[14.5px] text-[var(--teal-ink)]">som /ʃ/ - como o CH de «chave»</p>
+        <p className="font-ui text-[14.5px] text-[var(--teal-ink)]">som /ʃ/ - como o X de «xícara»; no curso, escrito sh</p>
       </div>
       <p className="font-ui text-[15.5px] leading-[1.6] text-ink-muted">
         O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma

@@ -192,21 +192,21 @@ function Falar({ tocar, tocando }: { tocar: (n: NomeAmostra) => void; tocando: N
     <Passo n={2} titulo="Agora é a sua vez">
       <div className="rounded-[18px] bg-[var(--sand)] px-5 py-6 text-center grid gap-2 justify-items-center">
         <He size="plate" tone="navy">שָׁלוֹם</He>
-        <p className="font-ui text-[15px] text-ink-muted m-0"><strong className="text-ink">shalóm</strong> · olá, paz</p>
+        <p className="font-ui text-[15px] text-ink-muted m-0"><strong className="text-ink">shalom</strong> · olá, paz</p>
         <BotaoOuvir nome="shalom" rotulo="Ouvir o professor" tocar={tocar} tocando={tocando} />
       </div>
       {transcreve === false ? (
         <GravarLeitura
           titulo="Grave e compare"
-          instrucao="Diga «shalóm», grave e se ouça. Depois ouça o professor e compare."
+          instrucao="Diga «shalom», grave e se ouça. Depois ouça o professor e compare."
           maxSegundos={10}
         />
       ) : (
         <>
           <p className="font-ui text-[15.5px] text-ink-body m-0">
-            Toque no microfone e diga <strong>shalóm</strong>. O curso ouve e diz se bateu.
+            Toque no microfone e diga <strong>shalom</strong>. O curso ouve e diz se bateu.
           </p>
-          <FalarECorrigir alvo="שָׁלוֹם" translit="shalóm"
+          <FalarECorrigir alvo="שָׁלוֹם" translit="shalom"
                           nota="Para corrigir, a sua voz vai para o serviço de fala do navegador (Google ou Apple). O Hebraico Fluente não guarda nada." />
         </>
       )}
