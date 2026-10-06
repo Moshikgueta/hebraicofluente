@@ -38,7 +38,7 @@ function itensDoModulo(m: CourseModule): Item[] {
   /* Bet, Kaf, Pe e Shin têm, no mesmo módulo, a lição do outro som: o
      cartão da letra mostra o lado dela (בּ "Bet", שׁ "Shin") e o do som
      mostra o outro (ב "Vet", שׂ "Sin"). Sem isso eram dois cartões com o
-     mesmo desenho. Os sons modernos ficam fora: a letra sem gerech está em
+     mesmo desenho. Os sons modernos ficam fora: a letra sem guéresh está em
      outro módulo. */
   const ladoDe = (letra: string) =>
     m.lessons.find(l => l.som && l.parHe && [...l.parHe][0] === letra)?.parHe;

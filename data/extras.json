@@ -13,7 +13,7 @@
 
   "dagesh": {
     "titlePt": "Sem o ponto",
-    "rulePt": "O ponto no meio, o daguesh, escolhe qual dos dois sons a letra tem. Ele aparece no começo da palavra e depois de consoante; some entre vogais e quase sempre no fim. E, fora dos livros didáticos e dos textos sagrados, ele simplesmente não é impresso: a palavra vem sem pontos e sem nikud, e é você quem decide.",
+    "rulePt": "O ponto no meio, o daguesh, escolhe qual dos dois sons a letra tem. Em geral ele aparece no começo da palavra e depois de uma consoante que fecha a sílaba, como em {{מִשְׁפָּחָה}}; some depois de vogal e quase sempre no fim. Depois de uma letra com shevá no começo da palavra, ele também some: {{בְּבַקָּשָׁה}} é \"bevakashá\". Há exceções: palavras como {{אַבָּא}} e muitas palavras de fora ({{אוֹטוֹבּוּס}}) têm o ponto mesmo entre vogais, e nelas o som é sempre o duro. E, fora dos livros didáticos e dos textos sagrados, ele simplesmente não é impresso: a palavra vem sem pontos e sem nikud, e é você quem decide.",
     "warningPt": "Ler {{סֵפֶר}} como \"séper\" em vez de \"séfer\" não é sotaque: é outra palavra, ou palavra nenhuma. As três letras deste módulo aparecem em quase toda frase do hebraico, e na rua elas vêm sem o ponto.",
     "letters": [
       {
@@ -25,7 +25,7 @@
         "softPt": "v",
         "hardWords": [
           { "he": "בַּיִת", "translit": "báyit", "pt": "casa" },
-          { "he": "אַבָּא", "translit": "abá", "pt": "pai" },
+          { "he": "אַבָּא", "translit": "ába", "pt": "pai" },
           { "he": "בֹּקֶר", "translit": "bóker", "pt": "manhã" }
         ],
         "softWords": [
@@ -51,7 +51,7 @@
           { "he": "מֶלֶךְ", "translit": "mélech", "pt": "rei" },
           { "he": "דֶּרֶךְ", "translit": "dérech", "pt": "caminho" }
         ],
-        "notePt": "O som suave é o mesmo raspado de {{ח}}, feito no fundo da garganta. Na forma final {{ך}} ele é sempre suave."
+        "notePt": "O som suave é o mesmo raspado de {{ח}}, feito no fundo da garganta. Na forma final {{ך}}, no hebraico de hoje, ele é sempre suave (só em alguns textos bíblicos aparece {{ךָּ}}, com ponto, e aí soa K)."
       },
       {
         "id": "pe",
@@ -128,10 +128,10 @@
 
   "gerech": {
     "titlePt": "Os sons modernos",
-    "signNamePt": "gerech",
+    "signNamePt": "guéresh",
     "signHe": "גֶּרֶשׁ",
     "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"Djavan\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
-    "signNotePt": "O {{גֶּרֶשׁ}} é o traço que se põe à esquerda da letra, no alto. Ele não é acento nem pontuação: é parte da escrita da palavra, e sem ele a palavra tem outro som.",
+    "signNotePt": "O {{גֶּרֶשׁ}} é o traço que se põe à esquerda da letra, no alto. Nestas três letras, ele não é acento nem pontuação: é parte da escrita da palavra, e sem ele a palavra tem outro som.",
     "letters": [
       {
         "id": "tsadi-gerech",
@@ -143,7 +143,7 @@
         "words": [
           { "he": "צ׳ילה", "pt": "Chile" },
           { "he": "צ׳כיה", "pt": "Tchéquia" },
-          { "he": "ואוצ׳ר", "pt": "voucher" }
+          { "he": "וואוצ׳ר", "pt": "voucher" }
         ]
       },
       {
@@ -429,7 +429,7 @@
         "parNomePt": "Kaf",
         "parSom": "k",
         "finalHe": "ך",
-        "introPt": "Na lição passada você conheceu {{כּ}}, o K. Esta lição é da outra metade: {{כ}} sem o ponto, o Chaf, que soa raspado, como o {{ח}}. E ele tem forma final, {{ך}}, que é sempre raspada: {{מֶלֶךְ}}, {{דֶּרֶךְ}}.",
+        "introPt": "Na lição passada você conheceu {{כּ}}, o K. Esta lição é da outra metade: {{כ}} sem o ponto, o Chaf, que soa raspado, como o {{ח}}. E ele tem forma final, {{ך}}, que no hebraico de hoje é sempre raspada: {{מֶלֶךְ}}, {{דֶּרֶךְ}}.",
         "articulacao": {
           "pontos": [
             {
@@ -439,7 +439,7 @@
           "voz": false,
           "comoPt": "O fundo da língua chega perto da úvula e o ar passa raspando, sem voz: o mesmo som do {{ח}}. No {{כּ}} a língua fecha a passagem e solta; no {{כ}} ela nunca fecha, e o ar raspa."
         },
-        "regraPt": "Sem o ponto, a letra soa raspada. Isso acontece no meio da palavra depois de vogal, como em {{אֹכֶל}}, e sempre na forma final {{ך}}. No começo da palavra ela quase sempre vem com o ponto e soa K.",
+        "regraPt": "Sem o ponto, a letra soa raspada. Isso acontece no meio da palavra depois de vogal, como em {{אֹכֶל}}, e, no hebraico de hoje, sempre na forma final {{ך}}. No começo da palavra ela quase sempre vem com o ponto e soa K.",
         "irmaoPt": "O Chaf soa como o {{ח}}. Não é o CH de \"chave\": é o raspado da garganta, o J espanhol de \"Juan\".",
         "erro": {
           "wrong": "Ler o {{כ}} sem ponto como o CH de \"chave\", ou como K: {{אֹכֶל}} vira \"óxel\" ou \"ókel\".",
@@ -519,7 +519,7 @@
               "raspado, como o Het"
             ],
             "certa": 1,
-            "porque": "A forma final {{ך}} é sempre raspada: {{מֶלֶךְ}}, \"mélech\"."
+            "porque": "No hebraico de hoje, a forma final {{ך}} é sempre raspada: {{מֶלֶךְ}}, \"mélech\"."
           },
           {
             "t": "vf",
@@ -671,7 +671,7 @@
           "voz": false,
           "comoPt": "A língua encosta atrás dos dentes, um pouco mais para trás que no {{צ}}, e solta num CH de \"chuva\", sem voz: T e CH colados, o TCH de \"tchau\"."
         },
-        "regraPt": "O traço fica à esquerda da letra, no alto: {{צ׳}}. Sem ele, a letra volta a ser {{צ}}, TS. O sinal é parte da palavra: um texto sem nikud ainda escreve o gerech.",
+        "regraPt": "O traço fica à esquerda da letra, no alto: {{צ׳}}. Sem ele, a letra volta a ser {{צ}}, TS. O sinal é parte da palavra: um texto sem nikud ainda escreve o guéresh.",
         "irmaoPt": "Estes sons quase só aparecem em palavras que vieram de fora e em nomes próprios. É onde o brasileiro mais acerta: você já sabe como a palavra soa, e a escrita só confirma.",
         "erro": {
           "wrong": "Ignorar o traço e ler {{צ׳}} como {{צ}}: \"Chile\" vira \"Tsile\".",
@@ -706,7 +706,7 @@
             "pt": "Tchéquia"
           },
           {
-            "he": "ואוצ׳ר",
+            "he": "וואוצ׳ר",
             "translit": "váutcher",
             "pt": "voucher"
           }

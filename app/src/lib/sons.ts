@@ -218,7 +218,7 @@ function exerciciosDoSomSuave(S: SomLicao, temAudio: (id: string) => boolean, ra
  *
  *   · Sin: contraste com o Shin (ponto à esquerda ou à direita);
  *   · Vet, Chaf, Fe: só o som sem ponto - o contraste é a lição 20;
- *   · Tch, Dj, J: com gerech ou sem.
+ *   · Tch, Dj, J: com guéresh ou sem.
  */
 export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exercise[] {
   const rand = rng(`banco-${S.id}`);
@@ -227,12 +227,12 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
 
   const out: Exercise[] = [];
   const letterId = 'mod7';
-  /* 1. a letra com gerech: que som? (o da letra sem o sinal é a errada) */
+  /* 1. a letra com guéresh: que som? (o da letra sem o sinal é a errada) */
   const s1 = comOpcoes(S.som, [S.parSom], rand);
   out.push({
     id: `som-${S.id}-letra`, kind: 'syllable-reading', letterId, skill: 'som',
     promptPt: 'Que som esta letra tem?', he: S.he, options: s1.options, answer: s1.answer,
-    explainPt: `${S.he}, com o gerech, é ${S.som} - ${S.comoPt}. Sem o sinal, ${S.parHe} é ${S.parSom}.`
+    explainPt: `${S.he}, com o guéresh, é ${S.som} - ${S.comoPt}. Sem o sinal, ${S.parHe} é ${S.parSom}.`
   });
   const s2 = comOpcoes(S.he, [S.parHe], rand);
   out.push({
@@ -250,7 +250,7 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
       explainPt: `${w.he} - "${w.translit}", ${w.pt}. O ${S.he} faz o som ${S.som}.`
     });
   });
-  /* 3. qual palavra tem o som? (as outras têm a letra SEM o gerech) */
+  /* 3. qual palavra tem o som? (as outras têm a letra SEM o guéresh) */
   S.palavras.forEach((w, i) => {
     if (S.parPalavras.length < 2) return;
     const erradas = take(S.parPalavras.map(x => x.he), 2, rand);

@@ -19,6 +19,7 @@
 
 import type { Exercise } from './exercises';
 import { rng, shuffled, take, type Rand } from './rng';
+import { analisar } from './posicao-do-ponto';
 
 export type DageshLetter = {
   id: string;
@@ -50,7 +51,7 @@ export type UnpointedWord = {
 };
 
 /** Uma lição de som: Vet, Chaf, Fe (a letra sem daguesh), Sin (o ponto do
- *  ש à esquerda) ou Tch, Dj, J (a letra com gerech). Ver data/extras.json →
+ *  ש à esquerda) ou Tch, Dj, J (a letra com guéresh). Ver data/extras.json →
  *  `sons` e lib/sons.ts. */
 export type SomLicao = {
   id: string;
@@ -117,6 +118,15 @@ const optionsWith = (correct: string, wrong: string[], rand: Rand) => {
 
 /* ── module 6 ───────────────────────────────────────────────────────────── */
 
+/* O daguesh desta letra está depois de vogal? Então não é o do começo da
+   palavra nem o de depois de consoante: é o que dobra a letra ({{אַבָּא}}),
+   e a explicação geral ("no começo ou depois de consoante") mentiria.
+   `hard` traz a letra com o ponto (בּ); a análise compara pela letra base. */
+function dobra(he: string, hard: string): boolean {
+  const base = hard.normalize('NFD')[0];
+  return analisar(he).some(a => a.letra.he === base && a.real && a.posicao === 'depois-de-vogal');
+}
+
 export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exercise[] {
   const rand = rng(seed);
   const out: Exercise[] = [];
@@ -142,8 +152,10 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       answer,
       explainPt: `${row.w.he} - ${row.w.translit} - ${row.w.pt}. ` +
         (row.isHard
-          ? 'Com daguesh: no começo da palavra ou depois de consoante.'
-          : 'Sem daguesh: entre vogais, ou no fim da palavra.')
+          ? (dobra(row.w.he, row.D.hard)
+            ? 'Com daguesh. Aqui ele aparece depois de vogal: é o ponto que "dobra" a letra, e acontece em palavras como {{אַבָּא}} e {{סַבָּא}}.'
+            : 'Com daguesh: no começo da palavra ou depois de consoante que fecha a sílaba.')
+          : 'Sem daguesh: quase sempre entre vogais, e no fim da palavra.')
     });
   }
 
@@ -200,7 +212,7 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       he: g.he,
       options,
       answer,
-      explainPt: `${g.he} é ${g.pt} - ${g.likePt}. Sem o gerech, ${g.base} é ${g.basePt}.`
+      explainPt: `${g.he} é ${g.pt} - ${g.likePt}. Sem o guéresh, ${g.base} é ${g.basePt}.`
     });
     const bare = optionsWith(g.basePt, G.map(x => x.pt), rand);
     out.push({
@@ -211,7 +223,7 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       he: g.base,
       options: bare.options,
       answer: bare.answer,
-      explainPt: `Sem o gerech, ${g.base} é ${g.basePt}. Com ele, ${g.he} é ${g.pt}.`
+      explainPt: `Sem o guéresh, ${g.base} é ${g.basePt}. Com ele, ${g.he} é ${g.pt}.`
     });
   }
 

@@ -144,7 +144,7 @@ function distratoresDaConstrucao(
 /**
  * Monte a palavra, letra por letra, da direita para a esquerda.
  * ─────────────────────────────────────────────────────────────────────────
- * O que a tela mostra é a TRANSLITERAÇÃO - "imá" -, e na mesa estão as letras
+ * O que a tela mostra é a TRANSLITERAÇÃO - "íma" -, e na mesa estão as letras
  * soltas da grafia, sem sinal: א, מ, א. O aluno as põe na ordem de leitura, e
  * a primeira fica à direita. É o gesto mais próximo de escrever que existe sem
  * uma caneta: lembrar quais letras formam o som, e em que ordem.

@@ -144,6 +144,12 @@ export const exPrintVsCursive: Gen = (L, ctx, rand, i) => {
   };
 };
 
+/* ך e ף não são "o mesmo som" da letra da lição: a lição de Kaf e a de Pe
+   mostram o lado com o ponto (K, P), e no fim da palavra o som é sempre o
+   suave - ך = CH, ף = F (auditoria 09, "Mesmo som" para as finais). Só
+   ם, ן e ץ têm de fato o mesmo som da forma de começo e meio. */
+const SOM_DA_FINAL_SUAVE: Record<string, string> = { 'ך': 'CH', 'ף': 'F' };
+
 export const exFinalForm: Gen = (L, ctx, rand, i) => {
   if (!L.finalForm) return null;
   const otherFinals = Object.values(BASE_TO_FINAL).filter(f => f !== L.finalForm);
@@ -158,7 +164,9 @@ export const exFinalForm: Gen = (L, ctx, rand, i) => {
     promptPt: `Qual é a forma final de ${L.namePt}, a que aparece no fim da palavra?`,
     letter: L.letter, options, answer,
     hintsPt: ['Quase todas as formas finais descem abaixo da linha.'],
-    explainPt: 'Mesmo som, outro desenho - e quase sempre descendo abaixo da linha.'
+    explainPt: SOM_DA_FINAL_SUAVE[L.finalForm]
+      ? `Outro desenho, e quase sempre descendo abaixo da linha. E no fim da palavra o som é sempre o suave: ${L.finalForm} = ${SOM_DA_FINAL_SUAVE[L.finalForm]}.`
+      : 'Mesmo som, outro desenho - e quase sempre descendo abaixo da linha.'
   };
 };
 
@@ -1026,7 +1034,9 @@ export const exFinalInWord: Gen = (L, ctx, rand, i) => {
                   : 'Essa é a forma final de outra letra.';
     }),
     hintsPt: ['A forma final quase sempre desce abaixo da linha.'],
-    explainPt: `${alvo.pt} termina em ${L.finalForm}. Mesma letra, mesmo som - só o desenho muda no fim da palavra.`
+    explainPt: SOM_DA_FINAL_SUAVE[L.finalForm]
+      ? `${alvo.pt} termina em ${L.finalForm}. Mesma letra, outro desenho - e no fim da palavra o som é sempre o suave: ${L.finalForm} = ${SOM_DA_FINAL_SUAVE[L.finalForm]}.`
+      : `${alvo.pt} termina em ${L.finalForm}. Mesma letra, mesmo som - só o desenho muda no fim da palavra.`
   };
 };
 

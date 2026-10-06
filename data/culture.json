@@ -9,9 +9,9 @@
       "unlockAt": 3,
       "leadPt": "As 22 letras que você está aprendendo têm cerca de três mil anos - e não nasceram em Israel.",
       "bodyPt": [
-        "O alfabeto hebraico descende do alfabeto fenício, usado no litoral do Mediterrâneo oriental a partir de mais ou menos 1050 a.C. O mesmo alfabeto fenício deu origem ao grego, e do grego veio o latino - o que você está lendo agora.",
+        "O alfabeto hebraico descende do alfabeto fenício, usado no litoral do Mediterrâneo oriental a partir de mais ou menos 1050 a.C. O mesmo alfabeto fenício deu origem ao grego, e do grego, por meio dos etruscos, veio o latino - o que você está lendo agora.",
         "Ou seja: o alfabeto hebraico e o nosso são primos. Eles se separaram há uns três mil anos e seguiram caminhos diferentes, um para a direita e o outro para a esquerda.",
-        "Isso explica uma coisa que costuma incomodar no começo: as letras hebraicas não se parecem com nada que você conhece, mas a ideia por trás delas - um símbolo para cada som - é exatamente a mesma."
+        "Isso explica uma coisa que costuma incomodar no começo: as letras hebraicas não se parecem com nada que você conhece, mas a ideia por trás delas - letras que representam sons, e não ideias - é a mesma."
       ],
       "sources": "Consenso acadêmico sobre a origem fenícia dos alfabetos grego e aramaico/hebraico."
     },
@@ -23,7 +23,7 @@
       "leadPt": "As letras do Primeiro Templo não são as que você está aprendendo.",
       "bodyPt": [
         "Até o exílio na Babilônia, o hebraico era escrito no chamado paleo-hebraico, um desenho bem mais próximo do fenício.",
-        "Depois do exílio, os judeus passaram a usar a escrita aramaica quadrada - o aramaico era a língua franca do império, e a escrita dele acabou adotada para escrever hebraico. É essa escrita quadrada que virou o alfabeto hebraico moderno.",
+        "Depois do exílio, os judeus passaram, aos poucos, a usar a escrita aramaica quadrada - o aramaico era a língua franca do império, e a escrita dele acabou adotada para escrever hebraico. É essa escrita quadrada que virou o alfabeto hebraico moderno.",
         "Por isso o hebraico tem duas histórias visuais: a língua é a mesma, o desenho das letras mudou."
       ],
       "sources": "Consenso acadêmico: adoção da escrita aramaica quadrada no período do Segundo Templo."
@@ -35,7 +35,7 @@
       "unlockAt": 9,
       "leadPt": "O nikud é mais de mil anos mais novo do que as letras.",
       "bodyPt": [
-        "Durante a maior parte da sua história, o hebraico foi escrito só com consoantes. Quem lia sabia a língua e completava as vogais de cabeça - como um brasileiro lê \"vc\" sem hesitar.",
+        "Durante a maior parte da sua história, o hebraico foi escrito sem sinais de vogal, só com as letras (algumas delas, como {{ו}} e {{י}}, ajudando a indicar vogais). Quem lia sabia a língua e completava as vogais de cabeça - como um brasileiro lê \"vc\" sem hesitar.",
         "Entre os séculos VII e X, estudiosos conhecidos como massoretas criaram sistemas de sinais para fixar a pronúncia do texto bíblico, que estava sendo transmitido de geração em geração. O sistema que se tornou padrão foi o desenvolvido em Tiberíades, na Galileia - é o que você está aprendendo.",
         "Então o nikud não é uma muleta para estrangeiros: foi criado por sábios judeus, numa época em que o hebraico já não era a língua de casa de ninguém, justamente para preservar uma leitura que corria o risco de se perder."
       ],
@@ -46,23 +46,23 @@
       "titlePt": "Por que cinco letras mudam no fim",
       "kind": "historia",
       "unlockAt": 12,
-      "leadPt": "As formas finais não foram inventadas. Elas são as formas antigas.",
+      "leadPt": "As formas finais não foram inventadas: quatro delas guardam o traço mais antigo da letra.",
       "bodyPt": [
         "Repare no que ם, ן, ך, ף e ץ têm em comum: quatro delas descem abaixo da linha, e a quinta se fecha.",
         "A explicação mais aceita é que, ao escrever rápido, as letras no meio da palavra foram sendo encurtadas para emendar na próxima - e só no fim da palavra, onde não havia o que emendar, o traço original continuou inteiro.",
-        "Ou seja: a forma \"estranha\" é a original, e a comum é a abreviada. Saber disso não ajuda a ler mais rápido, mas ajuda a parar de achar que são dez letras em vez de cinco."
+        "Ou seja: em {{ך}}, {{ן}}, {{ף}} e {{ץ}}, a forma \"estranha\" é a mais antiga, e a comum é a abreviada. O {{ם}} fechado tem uma história um pouco diferente. Saber disso não ajuda a ler mais rápido, mas ajuda a parar de achar que são dez letras em vez de cinco."
       ],
-      "sources": "Explicação paleográfica corrente para as formas finais; conferir formulação antes de publicar."
+      "sources": "Explicação paleográfica corrente para as formas finais."
     },
     {
       "id": "ben-yehuda",
       "titlePt": "A língua que voltou a ser falada",
       "kind": "historia",
       "unlockAt": 15,
-      "leadPt": "Nenhuma outra língua fez o que o hebraico fez.",
+      "leadPt": "Nenhuma outra língua fez o que o hebraico fez nessa escala.",
       "bodyPt": [
         "Por cerca de mil e setecentos anos o hebraico foi lido, rezado, estudado e escrito - mas não era a língua do dia a dia de quase ninguém. Judeus falavam iídiche, ladino, árabe, português.",
-        "No fim do século XIX isso começou a mudar. Eliezer Ben-Yehuda (1858-1922) mudou-se para Jerusalém em 1881 decidido a criar palavras para o que faltava e a criar o filho falando só hebraico. Seu filho Itamar é lembrado como a primeira criança em séculos a ter o hebraico como língua materna.",
+        "No fim do século XIX isso começou a mudar. Eliezer Ben-Yehuda (1858-1922) mudou-se para Jerusalém em 1881 decidido a criar palavras para o que faltava e a criar o filho falando só hebraico. Seu filho Itamar é lembrado como uma das primeiras crianças em séculos a ter o hebraico como língua materna.",
         "Ben-Yehuda virou o símbolo da história, mas o trabalho foi coletivo: escolas, professores, jornais e famílias inteiras decidiram falar uma língua que ninguém falava em casa. Hoje são milhões de falantes nativos.",
         "Quando você lê uma placa em Tel Aviv, está lendo o resultado dessa decisão."
       ],
@@ -76,8 +76,8 @@
       "leadPt": "Algumas ausências facilitam a sua vida.",
       "bodyPt": [
         "Não há letras maiúsculas. Nenhuma. Nomes próprios, começo de frase, títulos - tudo com as mesmas 22 letras.",
-        "Não há uma letra para cada vogal: as vogais são os sinais, e na maior parte dos textos do dia a dia elas nem aparecem.",
-        "E não há \"c\", \"x\", \"w\" nem \"y\" como letras separadas - os sons que o português escreve com elas são resolvidos por letras que você já conhece, ou pelo gerech de ג׳, צ׳ e ז׳."
+        "Não há letras próprias para todas as vogais: elas são os sinais do nikud, que no dia a dia não aparecem. O que aparece são as letras {{ו}} e {{י}}, que fazem as vezes de O/U e de I.",
+        "E não há \"c\", \"x\", \"w\" nem \"y\" como letras separadas - os sons que o português escreve com elas são resolvidos por letras que você já conhece, ou pelo guéresh de ג׳, צ׳ e ז׳."
       ],
       "sources": "Fatos elementares da ortografia hebraica."
     },
@@ -88,11 +88,11 @@
       "unlockAt": 18,
       "leadPt": "א é 1, ב é 2, ל é 30.",
       "bodyPt": [
-        "Antes de existirem algarismos, as letras faziam esse trabalho: as nove primeiras valem de 1 a 9, as seguintes de 10 a 90, e as últimas as centenas.",
-        "Isso não é só história. Você vai encontrar letras como números no calendário hebraico, na numeração de capítulos, em andares de prédio e em listas - do mesmo jeito que usamos algarismos romanos.",
+        "Por muitos séculos as letras também fizeram o papel de números: as nove primeiras valem de 1 a 9, as nove seguintes de 10 a 90, e as quatro últimas valem 100, 200, 300 e 400.",
+        "Isso não é só história. Você vai encontrar letras como números no calendário hebraico, na numeração de capítulos, nas séries da escola (o primeiro ano é a turma {{א׳}}) e em listas - do mesmo jeito que usamos algarismos romanos.",
         "Um exemplo que aparece muito: י״ד é 14 - dez mais quatro."
       ],
-      "sources": "Sistema numérico hebraico (gematria). י״ד = 10 + 4."
+      "sources": "Valor numérico das letras hebraicas (a soma desses valores é a base da gematria). י״ד = 10 + 4."
     },
     {
       "id": "shekel",

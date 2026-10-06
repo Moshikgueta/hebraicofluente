@@ -131,7 +131,7 @@ const PERGUNTAS_NIQQUD: ItemCompreensao[] = [
     t: 'vf',
     q: 'Todo ponto que aparece dentro ou perto de uma letra hebraica é uma vogal.',
     certa: false,
-    porque: 'Existem outros sinais com aparência parecida: o daguesh, o ponto dentro da letra que muda o som da consoante, e o ponto que distingue שׁ de שׂ. Nenhum dos dois é vogal.'
+    porque: 'Existem outros sinais com aparência parecida: o daguesh, o ponto dentro da letra (em בּ, כּ e פּ ele muda o som; nas outras quase não se ouve), e o ponto que distingue שׁ de שׂ. Nenhum dos dois é vogal. Atenção: o ponto dentro do ו (וּ) é outra coisa, é a vogal U.'
   },
   {
     t: 'assoc',
@@ -402,7 +402,9 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             <He size="inline">בּ</He>, que muda o som da consoante, e o ponto que
             distingue <He size="inline">שׁ</He> de <He size="inline">שׂ</He>, que diz
             qual das duas letras está ali. Você aprende cada um no seu momento - por
-            ora, só saiba que eles existem e não são vogais.
+            ora, só saiba que eles existem e não são vogais. A exceção, que você vai ver
+            logo: o ponto no meio do <He size="inline">ו</He> (<He size="inline">וּ</He>) é
+            a vogal U.
           </p>
         </div>
       </Parte>
@@ -755,7 +757,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             A virada começa no fim do século XIX. O nome mais lembrado é o de Eliezer
             Ben-Yehuda (1858-1922), que se instalou em Jerusalém em 1881 e criou o
             próprio filho ouvindo hebraico e mais nada; Itamar entrou para a história
-            como a primeira criança em séculos a ter o hebraico como primeira língua.
+            como uma das primeiras crianças em séculos a ter o hebraico como primeira língua.
           </p>
           <p>
             Só que uma língua não volta pela decisão de uma família. Voltou porque

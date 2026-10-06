@@ -438,7 +438,7 @@ function main() {
       }))
     },
     /* ── as lições de som (Vet, Chaf, Fe, Tch, Dj, J) ──────────────────
-       O par de cada som - o lado com daguesh, ou a letra sem o gerech - sai
+       O par de cada som - o lado com daguesh, ou a letra sem o guéresh - sai
        de letters.json e do quadro do daguesh, e não é reescrito na fonte: o
        contraste que a lição mostra é, letra por letra, o que a lição da
        letra ensinou. */
@@ -463,7 +463,7 @@ function main() {
         he: NFC(S.he), parHe: NFC(S.parHe),
         finalHe: S.finalHe ? NFC(S.finalHe) : null,
         parId,
-        /* O som sozinho: a letra com gerech, ou a primeira sílaba sem ponto. */
+        /* O som sozinho: a letra com guéresh, ou a primeira sílaba sem ponto. */
         audioId: audioIdFor(S.tipo === 'gerech' ? S.he : S.silabas[0].he),
         silabas: S.silabas.map(withAudio),
         /* As mesmas vogais, com o ponto: o par exato de cada sílaba. */

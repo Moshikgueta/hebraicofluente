@@ -770,7 +770,7 @@ export function validate({ checkDist = true } = {}) {
     const GERESH = '׳';
     for (const g of extras.gerech.letters) {
       if (g.he !== g.base + GERESH) {
-        fail('V19', `extras.gerech/${g.id}`, `"${g.he}" deveria ser ${g.base} + gerech U+05F3`);
+        fail('V19', `extras.gerech/${g.id}`, `"${g.he}" deveria ser ${g.base} + guéresh U+05F3`);
       }
       for (const w of g.words) {
         if (!w.he.includes(g.he)) {
@@ -784,7 +784,7 @@ export function validate({ checkDist = true } = {}) {
 
   /* ── V26 - as lições de som (Sin, Vet, Chaf, Fe, Tch, Dj, J) ───────
      Cada uma promete três coisas que dá para conferir: toda palavra TEM o
-     som da lição (a letra sem daguesh, a final, ou a letra com gerech); toda
+     som da lição (a letra sem daguesh, a final, ou a letra com guéresh); toda
      palavra de Vet/Chaf/Fe só usa letras já ensinadas até ali (a regra V1 das
      letras, na posição da lição); e o plano de aulas (modules.json) põe a
      lição no número e no módulo que ela diz ter. */
@@ -865,7 +865,7 @@ export function validate({ checkDist = true } = {}) {
       } else if (S.tipo === 'gerech') {
         const L = letters.find(l => l.id === S.parId);
         if (!L) { fail('V26', onde, `parId "${S.parId}" não é uma letra`); continue; }
-        if (S.he !== L.letter + GERESH) fail('V26', onde, `"${S.he}" deveria ser ${L.letter} + gerech U+05F3`);
+        if (S.he !== L.letter + GERESH) fail('V26', onde, `"${S.he}" deveria ser ${L.letter} + guéresh U+05F3`);
         const final = L.finalForm ? L.finalForm + GERESH : null;
         for (const w of S.palavras) {
           if (!w.he.includes(S.he) && !(final && w.he.includes(final))) {

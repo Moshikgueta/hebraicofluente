@@ -10,7 +10,7 @@
  *    QUANTAS letras faltam, nunca quais.
  *
  * 2. O editor é por TOQUE, e não pelo teclado. O aluno edita a sugestão
- *    tocando nas letras que já conhece (e o ׳ do gerech, para o J e o G de
+ *    tocando nas letras que já conhece (e o ׳ do guéresh, para o J e o G de
  *    "Gisele"); nada de trocar de teclado para uma atividade de celebração.
  *
  * 3. Nada é gravado sem o aluno CONFIRMAR a grafia. Nome tem mais de uma
@@ -97,7 +97,7 @@ export function EditorDeNome({
         ))}
         <li>
           <button type="button" onClick={() => por(GERESH)} disabled={!podeGeresh}
-                  aria-label="Pôr o gerech, o sinal do J" title="O ׳ transforma ז em J, ג em DJ e צ em TCH"
+                  aria-label="Pôr o guéresh, o sinal do J" title="O ׳ transforma ז em J, ג em DJ e צ em TCH"
                   className="min-h-[48px] min-w-[46px] rounded-[var(--r-md)] border-2 border-line bg-surface
                              grid place-items-center disabled:opacity-35">
             <He size="lg">{GERESH}</He>

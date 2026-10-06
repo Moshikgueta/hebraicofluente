@@ -31,7 +31,7 @@ import { AudioButton } from '@/components/learn/AudioButton';
 import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, extras, type CourseModule } from '@/lib/content';
-import { classificar, exerciciosDoPonto, palavrasDoPonto, POSICAO_PT } from '@/lib/engine/posicao-do-ponto';
+import { classificar, exerciciosDoPonto, grupoAnalisado, palavrasDoPonto, POSICAO_PT } from '@/lib/engine/posicao-do-ponto';
 import { buildDageshQuiz, buildGerechQuiz, type Extras } from '@/lib/engine/extras';
 import { EXTRA_STAGE_UNITS } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
@@ -48,7 +48,7 @@ const STAGES: Record<ExtraSlug, { n: number; label: string; lesson: number }[]> 
   'sons-modernos': [
     /* Tch, Dj e J são as lições 24 a 26, cada uma na sua página (/som/...).
        Esta é a 27: os três juntos, e o fecho do alfabeto. */
-    { n: 1, label: 'O gerech', lesson: 27 },
+    { n: 1, label: 'O guéresh', lesson: 27 },
     { n: 2, label: 'Ler', lesson: 27 },
     { n: 3, label: 'Fecho', lesson: 27 }
   ]
@@ -252,13 +252,22 @@ function DageshStage({ onDone }: { onDone: () => void }) {
           <p className="font-ui text-[13px] font-semibold uppercase tracking-[.06em] text-[var(--amber)] m-0">
             Quando a regra não basta
           </p>
-          <p className="text-[15px] leading-relaxed text-ink-body m-0">
-            Em algumas palavras o ponto aparece depois de vogal. Ali ele não muda só o som: ele dobra a consoante,
-            e o som fica o forte. Essas palavras se aprendem de ouvido e de leitura, uma a uma.
-          </p>
+          {excecoes.some(w => w.analise.posicao === 'depois-de-vogal') && (
+            <p className="text-[15px] leading-relaxed text-ink-body m-0">
+              Em algumas palavras o ponto aparece depois de vogal. Ali ele não muda só o som: ele dobra a consoante,
+              e o som fica o forte. Essas palavras se aprendem de ouvido e de leitura, uma a uma.
+            </p>
+          )}
+          {excecoes.some(w => w.analise.posicao === 'depois-de-consoante') && (
+            <p className="text-[15px] leading-relaxed text-ink-body m-0">
+              E depois de uma letra com shevá no começo da palavra (ou de um prefixo) a regra também falha: ali a
+              letra fica sem o ponto, e o som é o suave, como em <He size="inline">בְּבַקָּשָׁה</He> (bevakashá) e{' '}
+              <He size="inline">כְּבָר</He> (kvar).
+            </p>
+          )}
           {excecoes.map(w => (
             <div key={w.he} className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
-              <He size="word" mark={w.analise.letra.he}>{w.he}</He>
+              <He size="word" mark={grupoAnalisado(w)}>{w.he}</He>
               <span className="font-ui text-[14px] font-semibold text-ink">{w.translit}</span>
               <span className="font-ui text-[12.5px] text-ink-muted">{w.pt}</span>
             </div>
@@ -429,7 +438,7 @@ function UnpointedRow({
   );
 }
 
-/* ── 7.1 · the gerech ───────────────────────────────────────────────────── */
+/* ── 7.1 · the guéresh ───────────────────────────────────────────────────── */
 function GerechStage({ onDone }: { onDone: () => void }) {
   const G = extras().gerech;
   return (

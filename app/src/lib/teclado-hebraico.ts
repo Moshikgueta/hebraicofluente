@@ -9,8 +9,8 @@ export type Tecla = { ch: string; nome: string };
 
 export const LETRAS: Tecla[] = [
   ['א', 'Álef'], ['ב', 'Bet'], ['ג', 'Guímel'], ['ד', 'Dálet'], ['ה', 'He'], ['ו', 'Vav'],
-  ['ז', 'Záyin'], ['ח', 'Chet'], ['ט', 'Tet'], ['י', 'Yod'], ['כ', 'Kaf'], ['ל', 'Lámed'],
-  ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sâmech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsadi'],
+  ['ז', 'Záyin'], ['ח', 'Het'], ['ט', 'Tet'], ['י', 'Yod'], ['כ', 'Kaf'], ['ל', 'Lámed'],
+  ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sámech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsadi'],
   ['ק', 'Qof'], ['ר', 'Resh'], ['ש', 'Shin'], ['ת', 'Tav']
 ].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));
 
@@ -22,7 +22,7 @@ export const FINAIS: Tecla[] = [
    que aparecem nas lições. Cada um entra DEPOIS da letra que o leva. */
 export const NIKUD: Tecla[] = [
   ['ַ', 'patach (a)'], ['ָ', 'kamats (a)'], ['ֶ', 'segol (e)'], ['ֵ', 'tsere (e)'],
-  ['ִ', 'chiriq (i)'], ['ֹ', 'cholam (o)'], ['ֻ', 'kubuts (u)'], ['ְ', 'shvá'],
+  ['ִ', 'chirik (i)'], ['ֹ', 'cholam (o)'], ['ֻ', 'kubuts (u)'], ['ְ', 'sheva'],
   ['ּ', 'daguesh (ponto dentro)'], ['ׁ', 'ponto do Shin'], ['ׂ', 'ponto do Sin']
 ].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));
 

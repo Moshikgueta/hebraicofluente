@@ -78,7 +78,7 @@
       "revisado": true,
       "tituloPt": "Shemá Israel",
       "fontePt": "Deuteronômio 6:4-9",
-      "introPt": "O Shemá, a declaração de fé que se diz de manhã e à noite. As palavras que a mezuzá guarda no batente da porta estão no último versículo.",
+      "introPt": "O Shemá, a declaração de fé que se diz de manhã e à noite. O último versículo é a origem da mezuzá, no batente da porta: o pergaminho dela traz este trecho inteiro (e mais Deuteronômio 11:13-21).",
       "linhas": [
         {
           "he": "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד",
@@ -158,7 +158,7 @@
       "revisado": true,
       "tituloPt": "Levanto os meus olhos para os montes",
       "fontePt": "Salmo 121",
-      "introPt": "Um salmo de viagem, dos «cânticos das subidas» que se cantavam a caminho de Jerusalém. A raiz que mais se repete é שׁ־מ־ר, «guardar»: conte quantas vezes ela aparece.",
+      "introPt": "Um salmo de viagem, dos «cânticos das subidas» que, segundo uma tradição, se cantavam a caminho de Jerusalém. A raiz que mais se repete é שׁ־מ־ר, «guardar»: conte quantas vezes ela aparece.",
       "linhas": [
         {
           "he": "שִׁיר לַמַּעֲלוֹת אֶשָּׂא עֵינַי אֶל־הֶהָרִים מֵאַיִן יָבֹא עֶזְרִי",
@@ -222,7 +222,7 @@
         },
         {
           "he": "עַמֵּךְ עַמִּי וֵאלֹהַיִךְ אֱלֹהָי",
-          "translit": "améch amí, velohá'yich Elohái",
+          "translit": "améch amí, veloháyich Elohái",
           "pt": "O teu povo será o meu povo, e o teu Deus, o meu Deus."
         },
         {
@@ -388,7 +388,7 @@
       "revisado": true,
       "tituloPt": "Asas como águias",
       "fontePt": "Isaías 40:31",
-      "introPt": "O versículo das águias: três pares de verbos, subir, correr e caminhar, sem se cansar.",
+      "introPt": "O versículo das águias: três imagens, subir como águias, correr e caminhar sem se cansar.",
       "linhas": [
         {
           "he": "וְקוֹיֵ יְהוָה יַחֲלִיפוּ כֹחַ",
@@ -562,7 +562,7 @@
         },
         {
           "he": "וַיִּקְרָא שְׁמוֹ פֶּלֶא יוֹעֵץ אֵל גִּבּוֹר אֲבִיעַד שַׂר־שָׁלוֹם",
-          "translit": "vayikrá shemó: péle yoéts, El guibór, Avíad, sar-shalom",
+          "translit": "vayikrá shemó: péle yoéts, El guibór, Aviád, sar-shalom",
           "pt": "e o seu nome é chamado: Maravilhoso, Conselheiro, Deus Forte, Pai Eterno, Príncipe da Paz."
         }
       ]
@@ -692,7 +692,7 @@
       {
         "id": "kamats-katan",
         "tituloPt": "Quando o kamats soa «o»",
-        "textoPt": "Em umas poucas palavras, o kamats ({{ָ}}) soa «o», e não «a». A mais comum de todas é {{כָּל}}, «todo», que aparece em quase toda página. Nas leituras bônus, a transliteração sempre mostra qual é o caso.",
+        "textoPt": "Em algumas palavras, o kamats ({{ָ}}) soa «o», e não «a». A mais comum de todas é {{כָּל}}, «todo», que aparece em quase toda página. Nas leituras bônus, a transliteração sempre mostra qual é o caso.",
         "exemplos": [
           {
             "he": "כָּל־יְמֵי",
@@ -709,7 +709,7 @@
       {
         "id": "patach-furtivo",
         "tituloPt": "O «a» que vem antes da letra",
-        "textoPt": "Quando a palavra termina em {{ח}}, {{ע}} ou {{ה}} com um patach embaixo, o «a» se diz ANTES da letra: «ru-ach», e não «ru-cha».",
+        "textoPt": "Quando a palavra termina em {{ח}}, {{ע}} ou {{הּ}} (com o ponto dentro) e há um patach embaixo, o «a» se diz ANTES da letra: «ru-ach», e não «ru-cha».",
         "exemplos": [
           {
             "he": "וְרוּחַ",
@@ -760,7 +760,7 @@
       {
         "id": "yod",
         "tituloPt": "O י que não se lê como «y»",
-        "textoPt": "Depois de um chirik ({{ִ}}), o {{י}} só alonga o «i». No fim {{ֶיךָ}}, ele fica mudo. Depois de um tsere ({{ֵ}}), na pronúncia de hoje, soa «ei».",
+        "textoPt": "Depois de um chirik ({{ִ}}), o {{י}} não se lê: o som é só «i». No fim {{ֶיךָ}}, ele fica mudo. Depois de um tsere ({{ֵ}}), na pronúncia de hoje, soa «ei».",
         "exemplos": [
           {
             "he": "אִירָא",

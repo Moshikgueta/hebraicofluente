@@ -19,7 +19,7 @@
  * "Gustavo" viraria três vavs seguidos. No começo continua ו (ויטוריה).
  *
  * O som de J de "João" e o G de "Gisele" (/ʒ/) não existe no alfabeto
- * básico: o hebraico moderno escreve ז׳ - o zayin com o gerech, que o curso
+ * básico: o hebraico moderno escreve ז׳ - o zayin com o guéresh, que o curso
  * ensina no módulo 7. É a única marca fora das 22 letras que aparece aqui.
  */
 
@@ -168,7 +168,7 @@ function palavra(original: string, o: Opcoes): string {
   }
 
   const letras = [...out.join('')];
-  /* A forma final, na última LETRA da palavra (o gerech não conta). */
+  /* A forma final, na última LETRA da palavra (o guéresh não conta). */
   for (let k = letras.length - 1; k >= 0; k--) {
     if (letras[k] === GERESH) continue;
     const fin = BASE_TO_FINAL[letras[k]!];
