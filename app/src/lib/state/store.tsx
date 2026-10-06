@@ -7,6 +7,7 @@
  * and emit an analytics event. Keeping that sequence in one place is what
  * stops XP being awarded twice from two different screens. */
 
+import { registrarExameA1, registrarUnidade, unidadeConcluida, type GeneroA1 } from './a1-estado';
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode
 } from 'react';
@@ -132,6 +133,15 @@ type Ctx = {
   reset: () => void;
   /** Troca XP do saldo por um item da loja (lib/loja.ts). Devolve o motivo da recusa, ou null. */
   comprar: (item: ItemDaLoja['id'], alvo?: string) => Recusa | null;
+  /* ── o curso Hebraico A1 (06/10/2026) ── */
+  /** Como o aluno quer ser tratado nos exercícios do A1 (decisão 9). */
+  setGeneroA1: (g: GeneroA1) => void;
+  /** Uma rodada de exercícios de uma unidade do A1, com a nota de 0 a 1. */
+  finishUnidadeA1: (n: number, nota: number) => void;
+  /** Uma prova do exame do A1. */
+  finishExameA1: (
+    nota: number, parts: Record<string, { correct: number; total: number }>, aprovacao: number
+  ) => void;
 };
 
 const StoreContext = createContext<Ctx | null>(null);
@@ -452,6 +462,36 @@ export function ProgressProvider({
     return null;
   }, [commit, agora]);
 
+  const setGeneroA1 = useCallback((g: GeneroA1) => {
+    const s = agora();
+    commit({ ...s, a1: { ...s.a1, genero: { valor: g, em: new Date().toISOString() } } });
+  }, [commit, agora]);
+
+  /* Uma rodada do A1 conta como estudo do dia (a sequência de dias é uma só,
+     para os dois cursos), e a PRIMEIRA vez que a unidade passa de 70% vale o
+     XP de uma lição. Refazer não dá XP de novo: a regra do alfabeto. */
+  const finishUnidadeA1 = useCallback((n: number, nota: number) => {
+    const d = today();
+    const s = agora();
+    const antes = unidadeConcluida(s.a1, n);
+    let next: LearnerState = { ...s, a1: registrarUnidade(s.a1, n, nota, new Date().toISOString()) };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (!antes && unidadeConcluida(next.a1, n)) next = awardXp(next, d, XP.lesson);
+    commit(next);
+  }, [commit, agora]);
+
+  const finishExameA1 = useCallback((
+    nota: number, parts: Record<string, { correct: number; total: number }>, aprovacao: number
+  ) => {
+    const d = today();
+    const s = agora();
+    const jaPassou = !!s.a1.exame.passedAt;
+    let next: LearnerState = { ...s, a1: registrarExameA1(s.a1, nota, parts, aprovacao, new Date().toISOString()) };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (!jaPassou && next.a1.exame.passedAt) next = awardXp(next, d, XP.checkpoint);
+    commit(next);
+  }, [commit, agora]);
+
   const reset = useCallback(() => {
     gravador.cancelar();
     limparEspelho();
@@ -478,13 +518,13 @@ export function ProgressProvider({
       clearPending: () => setPending([]),
       setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
-      remember, reset, setNomeHebraico, comprar
+      remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1
     };
   }, [
     state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
-    setNomeHebraico, comprar
+    setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
