@@ -102,7 +102,7 @@ export default function MetodoPage() {
             {
               n: 5,
               t: 'A transliteração sai',
-              b: 'Enquanto houver "shalom" embaixo da palavra, você lê o português. O curso usa transliteração no começo e a retira de propósito, em etapas anunciadas, até você estar lendo sem apoio nenhum - que é a única definição de ler.'
+              b: 'Enquanto houver "shalóm" embaixo da palavra, você lê o português. O curso usa transliteração no começo e a retira de propósito, em etapas anunciadas, até você estar lendo sem apoio nenhum - que é a única definição de ler.'
             }
           ].map(x => (
             <li key={x.n}>

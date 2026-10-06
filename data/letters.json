@@ -99,13 +99,13 @@
       },
       {
         "he": "אֶתְמוֹל",
-        "translit": "etmol",
+        "translit": "etmól",
         "pt": "ontem",
         "use": "Advérbio"
       },
       {
         "he": "אַחֲרֵי",
-        "translit": "acharei",
+        "translit": "acharéi",
         "pt": "depois de",
         "use": "Preposição"
       }
@@ -340,7 +340,7 @@
     },
     "ensino": {
       "funcaoPt": "{{ת}} é a consoante /t/ e a última letra do alfabeto. Ela se junta às vogais como qualquer consoante - {{תַּ}}, {{תִּ}}, {{תּוֹ}} - e aparece com muita frequência fechando palavras: {{אֶמֶת}} (verdade) termina com ela. Encontrar o {{ת}} no fim de uma palavra é tão comum que vale reconhecê-lo de olhos fechados.",
-      "detalhePt": "Você vai encontrar {{ת}} com um pontinho dentro ({{תּ}}) e sem ele. No hebraico falado em Israel hoje, o som é /t/ nos dois casos - o ponto não muda nada para você. Ele já mudou no passado, e a diferença sobrevive na pronúncia asquenazita tradicional, em que o tav sem ponto soa como \"s\": é por isso que a mesma palavra aparece como \"Shabat\" na pronúncia israelense e \"Shabbos\" na pronúncia asquenazita tradicional (\"Shabes\" em ídiche).",
+      "detalhePt": "Você vai encontrar {{ת}} com um pontinho dentro ({{תּ}}) e sem ele. No hebraico falado em Israel hoje, o som é /t/ nos dois casos - o ponto não muda nada para você. Ele já mudou no passado, e a diferença sobrevive na pronúncia asquenazita tradicional, em que o tav sem ponto soa como \"s\": é por isso que a mesma palavra aparece como \"Shabát\" na pronúncia israelense e \"Shábbos\" na pronúncia asquenazita tradicional (\"Shábes\" em ídiche).",
       "lembrePt": "{{ת}} é sempre um T seco, com ou sem o pontinho dentro. Nunca \"tch\".",
       "checagem": [
         {
@@ -569,19 +569,19 @@
     "wordsToRecognize": [
       {
         "he": "נָכוֹן",
-        "translit": "nachon",
+        "translit": "nachón",
         "pt": "correto",
         "use": "Adjetivo muito comum"
       },
       {
         "he": "חַלּוֹן",
-        "translit": "chalon",
+        "translit": "chalón",
         "pt": "janela",
         "use": "Substantivo cotidiano"
       },
       {
         "he": "נֶחְמָד",
-        "translit": "nechmad",
+        "translit": "nechmád",
         "pt": "simpático",
         "use": "Adjetivo comum"
       }
@@ -753,13 +753,13 @@
     "wordsToRecognize": [
       {
         "he": "הַיּוֹם",
-        "translit": "hayom",
+        "translit": "hayóm",
         "pt": "hoje",
         "use": "Expressão diária"
       },
       {
         "he": "הַכֹּל",
-        "translit": "hakol",
+        "translit": "hakól",
         "pt": "tudo",
         "use": "Palavra muito comum"
       },
@@ -804,8 +804,8 @@
     ],
     "didYouKnow": "O artigo definido do hebraico é um {{ה}} grudado no começo da palavra: {{בַּיִת}} (báyit) é \"casa\" e {{הַבַּיִת}} (habáyit) é \"a casa\". Uma letra faz o trabalho de uma palavra inteira. Atenção: nem todo {{ה}} inicial é artigo - em {{הֵם}} e {{הִנֵּה}} ele faz parte da palavra.",
     "brazilianMistake": {
-      "wrong": "Não pronunciar o {{ה}} inicial, lendo {{הַיּוֹם}} como \"ayom\".",
-      "right": "Soprar o H: \"hayom\", com ar saindo antes da vogal.",
+      "wrong": "Não pronunciar o {{ה}} inicial, lendo {{הַיּוֹם}} como \"ayóm\".",
+      "right": "Soprar o H: \"hayóm\", com ar saindo antes da vogal.",
       "why": "Em português o H escrito é sempre mudo - \"hotel\" é \"otel\". Em hebraico o {{ה}} no início da palavra é um som de verdade. Na fala rápida muitos israelenses o enfraquecem, mas pronuncie-o: é o padrão e é sempre entendido."
     },
     "audioIds": [],
@@ -1135,7 +1135,7 @@
     "didYouKnow": "Uma explicação tradicional liga {{גִּימֶל}} a {{גָּמָל}}, camelo, e diz que a forma antiga desenhava o pescoço do animal. É também a letra do dreidel que significa \"gantz\" - leve tudo.",
     "brazilianMistake": {
       "wrong": "Suavizar o G antes de E e I: ler {{גֶּשֶׁם}} como \"jéshem\".",
-      "right": "Manter o G duro sempre: \"guéshem\", \"gadol\", como em \"guerra\" e \"guitarra\".",
+      "right": "Manter o G duro sempre: \"guéshem\", \"gadól\", como em \"guerra\" e \"guitarra\".",
       "why": "Em português o G antes de E e I vira J - \"gente\", \"gigante\" - e por isso escrevemos \"gu\" para manter o som duro. O hebraico não tem essa alternância: {{ג}} é sempre duro."
     },
     "audioIds": [],
@@ -1255,13 +1255,13 @@
       },
       {
         "he": "מְדַבֵּר",
-        "translit": "medaber",
+        "translit": "medabér",
         "pt": "falo, fala",
         "use": "Verbo muito comum"
       },
       {
         "he": "עֶשְׂרִים",
-        "translit": "esrim",
+        "translit": "esrím",
         "pt": "vinte",
         "use": "Número"
       }
@@ -1442,7 +1442,7 @@
     "wordsToRecognize": [
       {
         "he": "שָׁלוֹם",
-        "translit": "shalom",
+        "translit": "shalóm",
         "pt": "paz / olá / tchau",
         "use": "A palavra mais usada do hebraico"
       },
@@ -1494,8 +1494,8 @@
     ],
     "didYouKnow": "{{שָׁלוֹם}} não é só \"paz\": é o olá e o tchau do dia a dia em Israel. A mesma palavra abre e fecha uma conversa - e é quase certo que seja a primeira que você vai usar de verdade.",
     "brazilianMistake": {
-      "wrong": "Ler {{ש}} como S: \"salom\", \"sem\".",
-      "right": "Ler {{ש}} como o X de \"xícara\" ou o CH de \"chave\" (transliterado \"sh\"): \"shalom\", \"shem\".",
+      "wrong": "Ler {{ש}} como S: \"salóm\", \"sem\".",
+      "right": "Ler {{ש}} como o X de \"xícara\" ou o CH de \"chave\" (transliterado \"sh\"): \"shalóm\", \"shem\".",
       "why": "A forma da letra não lembra nada do alfabeto latino, então o cérebro brasileiro tende a encaixá-la no S. Mas o som padrão de {{ש}} é o de \"chave\". O som de S só aparece quando o ponto está do lado esquerdo ({{שׂ}})."
     },
     "audioIds": [],
@@ -1802,13 +1802,13 @@
     "wordsToRecognize": [
       {
         "he": "רְחוֹב",
-        "translit": "rechov",
+        "translit": "rechóv",
         "pt": "rua",
         "use": "Substantivo cotidiano"
       },
       {
         "he": "חָבֵר",
-        "translit": "chaver",
+        "translit": "chavér",
         "pt": "amigo",
         "use": "Substantivo muito comum"
       },
@@ -1827,7 +1827,7 @@
       },
       {
         "he": "אֹמֵר",
-        "translit": "omer",
+        "translit": "omér",
         "pt": "diz, está dizendo"
       },
       {
@@ -1837,7 +1837,7 @@
       },
       {
         "he": "נָהָר",
-        "translit": "nahar",
+        "translit": "nahár",
         "pt": "rio"
       }
     ],
@@ -1936,7 +1936,7 @@
             "Ele é mudo"
           ],
           "certa": 0,
-          "porque": "Com o ponto em cima, o {{ו}} não é consoante: ele É a vogal \"o\". Por isso a palavra se lê \"shalom\", e não \"shalvom\"."
+          "porque": "Com o ponto em cima, o {{ו}} não é consoante: ele É a vogal \"o\". Por isso a palavra se lê \"shalóm\", e não \"shalvóm\"."
         },
         {
           "t": "vf",
@@ -2004,7 +2004,7 @@
       },
       {
         "he": "עַכְשָׁיו",
-        "translit": "achshav",
+        "translit": "achsháv",
         "pt": "agora",
         "use": "Advérbio essencial"
       }
@@ -2012,7 +2012,7 @@
     "wordsToRead": [
       {
         "he": "שָׁלוֹם",
-        "translit": "shalom",
+        "translit": "shalóm",
         "pt": "paz / olá / tchau"
       },
       {
@@ -2032,7 +2032,7 @@
       },
       {
         "he": "גָּדוֹל",
-        "translit": "gadol",
+        "translit": "gadól",
         "pt": "grande"
       },
       {
@@ -2058,7 +2058,7 @@
     ],
     "didYouKnow": "Com {{ו}} você acaba de destravar {{שָׁלוֹם}} - a palavra que abre e fecha qualquer conversa em Israel. Doze letras foi tudo o que ela exigiu.",
     "brazilianMistake": {
-      "wrong": "Ler todo {{ו}} como V, inclusive quando ele é vogal: dizer \"shalvom\".",
+      "wrong": "Ler todo {{ו}} como V, inclusive quando ele é vogal: dizer \"shalvóm\".",
       "right": "Olhar o ponto: {{וֹ}} é O, {{וּ}} é U, {{ו}} sem ponto entre consoantes é V.",
       "why": "É uma letra com três funções. O ponto é o que decide, e ele é pequeno - procure sempre antes de pronunciar."
     },
@@ -2189,7 +2189,7 @@
       },
       {
         "he": "מַזָּל",
-        "translit": "mazal",
+        "translit": "mazál",
         "pt": "sorte",
         "use": "Substantivo cultural"
       },
@@ -2223,7 +2223,7 @@
       },
       {
         "he": "מָזוֹן",
-        "translit": "mazon",
+        "translit": "mazón",
         "pt": "alimento"
       }
     ],
@@ -2277,17 +2277,17 @@
     },
     "ensino": {
       "funcaoPt": "{{ח}} é uma consoante raspada na garganta, e você já tem esse som: ele é parecido com o R carioca de \"rato\" e \"carro\", só que mais forte, mais longo e feito bem no fundo da garganta. O que não existe em português é uma letra própria para ele. Aparece em palavras muito comuns, como {{לֶחֶם}} (pão) e {{אָח}} (irmão), então vale praticar desde já.",
-      "detalhePt": "Nas transliterações você vai ver esse som escrito como \"ch\" - {{לֶחֶם}} vira \"lechem\". Essa convenção vem do alemão (como em \"Bach\") e é usada nas transliterações em inglês, não vem do português (em espanhol, esse som se escreve com J), e é uma armadilha: nenhuma palavra brasileira usa CH com esse valor. Leia como raspado na garganta, nunca como o CH de \"chave\". Mais adiante você vai conhecer outra letra que, sem ponto, faz exatamente este som: no hebraico de hoje as duas soam igual.",
+      "detalhePt": "Nas transliterações você vai ver esse som escrito como \"ch\" - {{לֶחֶם}} vira \"léchem\". Essa convenção vem do alemão (como em \"Bach\") e é usada nas transliterações em inglês, não vem do português (em espanhol, esse som se escreve com J), e é uma armadilha: nenhuma palavra brasileira usa CH com esse valor. Leia como raspado na garganta, nunca como o CH de \"chave\". Mais adiante você vai conhecer outra letra que, sem ponto, faz exatamente este som: no hebraico de hoje as duas soam igual.",
       "paraBrasileiroPt": "Você já tem esse som, ou quase: comece pelo R de \"rato\" e sustente o ar raspando mais fundo, como se fosse limpar a garganta de leve. Não force - {{ח}} é raspado, e não engasgado.",
       "lembrePt": "{{ח}} é raspado na garganta, mais forte que o R de \"rato\". O \"ch\" da transliteração nunca é o CH de \"chave\".",
       "checagem": [
         {
           "t": "escolha",
-          "q": "A transliteração de {{לֶחֶם}} (pão) é \"lechem\". Como se pronuncia?",
+          "q": "A transliteração de {{לֶחֶם}} (pão) é \"léchem\". Como se pronuncia?",
           "opcoes": [
-            "\"lerrem\", com o som raspado na garganta",
-            "\"lechem\", com o CH de \"chave\"",
-            "\"leshem\""
+            "\"lérrem\", com o som raspado na garganta",
+            "\"léchem\", com o CH de \"chave\"",
+            "\"léshem\""
           ],
           "certa": 0,
           "porque": "O \"ch\" da transliteração representa o som raspado do {{ח}}, parecido com o R carioca. Ele não tem nenhuma relação com o CH de \"chave\" - esse som, em hebraico, é o do {{שׁ}}."
@@ -2358,7 +2358,7 @@
     "wordsToRecognize": [
       {
         "he": "חָבֵר",
-        "translit": "chaver",
+        "translit": "chavér",
         "pt": "amigo",
         "use": "Substantivo muito comum"
       },
@@ -2383,7 +2383,7 @@
       },
       {
         "he": "אֶחָד",
-        "translit": "echad",
+        "translit": "echád",
         "pt": "um"
       },
       {
@@ -2393,12 +2393,12 @@
       },
       {
         "he": "חַלּוֹן",
-        "translit": "chalon",
+        "translit": "chalón",
         "pt": "janela"
       },
       {
         "he": "חָדָשׁ",
-        "translit": "chadash",
+        "translit": "chadásh",
         "pt": "novo"
       }
     ],
@@ -2516,13 +2516,13 @@
     "wordsToRecognize": [
       {
         "he": "טִיּוּל",
-        "translit": "tiyul",
+        "translit": "tiyúl",
         "pt": "passeio",
         "use": "Substantivo cotidiano"
       },
       {
         "he": "סְטוּדֶנְט",
-        "translit": "student",
+        "translit": "stúdent",
         "pt": "estudante",
         "use": "Substantivo comum"
       },
@@ -2541,12 +2541,12 @@
       },
       {
         "he": "טִיּוּל",
-        "translit": "tiyul",
+        "translit": "tiyúl",
         "pt": "passeio"
       },
       {
         "he": "טָרִי",
-        "translit": "tari",
+        "translit": "tarí",
         "pt": "fresco"
       },
       {
@@ -2837,7 +2837,7 @@
     "wordsToRecognize": [
       {
         "he": "עִבְרִית",
-        "translit": "ivrit",
+        "translit": "ivrít",
         "pt": "hebraico",
         "use": "O nome do idioma"
       },
@@ -2912,7 +2912,7 @@
     "letter": "צ",
     "finalForm": "ץ",
     "nameHe": "צָדִי",
-    "namePt": "Tsadi",
+    "namePt": "Tsádi",
     "translit": "ts",
     "sound": "/ts/",
     "soundNotePt": "O som TS, como no fim de \"pizza\" ou no começo de \"tsunami\" - os dois sons colados, num golpe só. No fim da palavra vira {{ץ}}.",
@@ -3039,8 +3039,8 @@
     ],
     "didYouKnow": "Mais uma forma final. {{אֶרֶץ}}, \"terra, país\", termina com o {{ץ}} final - e aparece na expressão {{אֶרֶץ יִשְׂרָאֵל}}, \"a terra de Israel\".",
     "brazilianMistake": {
-      "wrong": "Desmontar o TS: ler {{צָרִיךְ}} como \"sarich\" ou \"tcharich\".",
-      "right": "Colar os dois sons num só golpe: \"tsarich\", como o fim de \"pizza\" transportado para o começo da palavra.",
+      "wrong": "Desmontar o TS: ler {{צָרִיךְ}} como \"sarích\" ou \"tcharích\".",
+      "right": "Colar os dois sons num só golpe: \"tsarích\", como o fim de \"pizza\" transportado para o começo da palavra.",
       "why": "O português não usa TS no início de palavra, então a boca resolve o problema sozinha apagando o T ou virando TCH. Treine dizendo \"pizza\" e isolando o \"tsa\" final."
     },
     "audioIds": [],
@@ -3188,7 +3188,7 @@
       },
       {
         "he": "קָטָן",
-        "translit": "katan",
+        "translit": "katán",
         "pt": "pequeno"
       },
       {
@@ -3203,7 +3203,7 @@
       },
       {
         "he": "מָקוֹם",
-        "translit": "makom",
+        "translit": "makóm",
         "pt": "lugar"
       }
     ],
@@ -3404,8 +3404,8 @@
       },
       {
         "he": "שַׁבָּת",
-        "translit": "shabat",
-        "pt": "sábado / shabat"
+        "translit": "shabát",
+        "pt": "sábado / shabát"
       },
       {
         "he": "בֹּקֶר",
@@ -3619,7 +3619,7 @@
       },
       {
         "he": "כַּדּוּר",
-        "translit": "kadur",
+        "translit": "kadúr",
         "pt": "bola"
       }
     ],

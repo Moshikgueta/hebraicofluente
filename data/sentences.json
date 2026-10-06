@@ -47,12 +47,12 @@
     {
       "id": "david-ve-sara",
       "he": "דָּוִד וְשָׂרָה",
-      "translit": "David veSará",
+      "translit": "Davíd veSará",
       "pt": "David e Sara",
       "after": 12,
       "era": "moderno",
       "words": [
-        { "he": "דָּוִד", "translit": "David", "pt": "David" },
+        { "he": "דָּוִד", "translit": "Davíd", "pt": "David" },
         { "he": "וְשָׂרָה", "translit": "veSará", "pt": "e Sara" }
       ],
       "notePt": "O \"e\" não é palavra solta: é a letra {{ו}} colada na frente da palavra seguinte."
@@ -85,13 +85,13 @@
     {
       "id": "ha-yam-gadol",
       "he": "הַיָּם גָּדוֹל",
-      "translit": "hayam gadol",
+      "translit": "hayám gadól",
       "pt": "o mar é grande",
       "after": 12,
       "era": "moderno",
       "words": [
-        { "he": "הַיָּם", "translit": "hayam", "pt": "o mar" },
-        { "he": "גָּדוֹל", "translit": "gadol", "pt": "grande" }
+        { "he": "הַיָּם", "translit": "hayám", "pt": "o mar" },
+        { "he": "גָּדוֹל", "translit": "gadól", "pt": "grande" }
       ],
       "notePt": "O {{ה}} na frente é o \"o/a\". Também vem colado."
     },
@@ -188,26 +188,26 @@
     {
       "id": "ani-medaber-ivrit",
       "he": "אֲנִי מְדַבֵּר עִבְרִית",
-      "translit": "aní medaber ivrit",
+      "translit": "aní medabér ivrít",
       "pt": "eu falo hebraico",
       "after": 20,
       "era": "moderno",
       "words": [
         { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
-        { "he": "מְדַבֵּר", "translit": "medaber", "pt": "falo" },
-        { "he": "עִבְרִית", "translit": "ivrit", "pt": "hebraico" }
+        { "he": "מְדַבֵּר", "translit": "medabér", "pt": "falo" },
+        { "he": "עִבְרִית", "translit": "ivrít", "pt": "hebraico" }
       ],
       "notePt": "Três palavras. A última é o nome da própria língua que você está lendo. Uma mulher diz {{מְדַבֶּרֶת}}, medabéret."
     },
     {
       "id": "shalom-ma-shlomcha",
       "he": "שָׁלוֹם, מָה שְׁלוֹמְךָ",
-      "translit": "shalom, ma shlomchá",
+      "translit": "shalóm, ma shlomchá",
       "pt": "olá, como você está",
       "after": 21,
       "era": "moderno",
       "words": [
-        { "he": "שָׁלוֹם", "translit": "shalom", "pt": "olá" },
+        { "he": "שָׁלוֹם", "translit": "shalóm", "pt": "olá" },
         { "he": "מָה", "translit": "ma", "pt": "que" },
         { "he": "שְׁלוֹמְךָ", "translit": "shlomchá", "pt": "a sua paz" }
       ],
@@ -216,13 +216,13 @@
     {
       "id": "tel-aviv",
       "he": "תֵּל אָבִיב",
-      "translit": "Tel Aviv",
+      "translit": "Tel Avív",
       "pt": "Tel Aviv",
       "after": 20,
       "era": "moderno",
       "words": [
         { "he": "תֵּל", "translit": "tel", "pt": "colina" },
-        { "he": "אָבִיב", "translit": "aviv", "pt": "primavera" }
+        { "he": "אָבִיב", "translit": "avív", "pt": "primavera" }
       ],
       "notePt": "O nome da cidade quer dizer \"colina da primavera\" - antigo e moderno na mesma placa."
     },
@@ -302,7 +302,7 @@
         { "he": "בְּרֵאשִׁית", "translit": "bereshít", "pt": "no princípio" },
         { "he": "בָּרָא", "translit": "bará", "pt": "criou" }
       ],
-      "notePt": "As duas primeiras palavras da Bíblia hebraica. A frase continua com {{אֱלֹהִים}}, Elohim."
+      "notePt": "As duas primeiras palavras da Bíblia hebraica. A frase continua com {{אֱלֹהִים}}, Elohím."
     },
     {
       "id": "ani-rotse-kafe",

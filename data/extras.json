@@ -44,7 +44,7 @@
         "hardWords": [
           { "he": "כּוֹס", "translit": "kos", "pt": "copo" },
           { "he": "כֶּלֶב", "translit": "kélev", "pt": "cachorro" },
-          { "he": "כַּדּוּר", "translit": "kadur", "pt": "bola" }
+          { "he": "כַּדּוּר", "translit": "kadúr", "pt": "bola" }
         ],
         "softWords": [
           { "he": "אֹכֶל", "translit": "óchel", "pt": "comida" },
@@ -83,7 +83,7 @@
       "word": "מֶלֶךְ", "translit": "mélech", "pt": "rei", "descends": true },
     { "base": "פ", "fin": "ף", "namePt": "Pe sofit", "nameHe": "פֵּא סוֹפִית",
       "word": "סוֹף", "translit": "sof", "pt": "fim", "descends": true },
-    { "base": "צ", "fin": "ץ", "namePt": "Tsadi sofit", "nameHe": "צָדִי סוֹפִית",
+    { "base": "צ", "fin": "ץ", "namePt": "Tsádi sofit", "nameHe": "צָדִי סוֹפִית",
       "word": "אֶרֶץ", "translit": "érets", "pt": "terra / país", "descends": true }
   ],
 
@@ -327,7 +327,7 @@
         "irmaoPt": "O Vet soa exatamente como o {{ו}}. Duas letras, um som só: quem decide qual se escreve é a palavra, e isso se aprende lendo.",
         "erro": {
           "wrong": "Ler toda {{ב}} como B, porque foi o primeiro som que você aprendeu: {{טוֹב}} vira \"tob\".",
-          "right": "Olhar o miolo da letra antes de dizer: com ponto é B, sem ponto é V. \"Tov\", \"lev\", \"chaver\".",
+          "right": "Olhar o miolo da letra antes de dizer: com ponto é B, sem ponto é V. \"Tov\", \"lev\", \"chavér\".",
           "why": "O ponto é pequeno e o olho do iniciante passa por cima dele. O remédio é o hábito de conferir o miolo de toda {{ב}} antes de pronunciar."
         },
         "silabas": [
@@ -365,7 +365,7 @@
           },
           {
             "he": "חָבֵר",
-            "translit": "chaver",
+            "translit": "chavér",
             "pt": "amigo"
           },
           {
@@ -375,12 +375,12 @@
           },
           {
             "he": "אָבִיב",
-            "translit": "aviv",
+            "translit": "avív",
             "pt": "primavera"
           },
           {
             "he": "זָהָב",
-            "translit": "zahav",
+            "translit": "zaháv",
             "pt": "ouro"
           }
         ],
@@ -491,12 +491,12 @@
           },
           {
             "he": "בָּרוּךְ",
-            "translit": "baruch",
+            "translit": "barúch",
             "pt": "abençoado"
           },
           {
             "he": "עַכְשָׁיו",
-            "translit": "achshav",
+            "translit": "achsháv",
             "pt": "agora"
           }
         ],
@@ -658,7 +658,7 @@
         "som": "tch",
         "comoPt": "o TCH de \"tchau\"",
         "parHe": "צ",
-        "parNomePt": "Tsadi",
+        "parNomePt": "Tsádi",
         "parSom": "ts",
         "parId": "tsadi",
         "introPt": "O hebraico antigo não tinha o som de \"tchau\". O moderno precisou dele para palavras de fora, e resolveu sem letra nova: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado do {{צ}}. Sem o sinal, {{צ}} é TS; com ele, {{צ׳}} é TCH.",
@@ -674,8 +674,8 @@
         "regraPt": "O traço fica à esquerda da letra, no alto: {{צ׳}}. Sem ele, a letra volta a ser {{צ}}, TS. O sinal é parte da palavra: um texto sem nikud ainda escreve o guéresh.",
         "irmaoPt": "Estes sons quase só aparecem em palavras que vieram de fora e em nomes próprios. É onde o brasileiro mais acerta: você já sabe como a palavra soa, e a escrita só confirma.",
         "erro": {
-          "wrong": "Ignorar o traço e ler {{צ׳}} como {{צ}}: \"Chile\" vira \"Tsile\".",
-          "right": "Antes de ler um {{צ}}, olhar se há um traço à esquerda. Com traço: \"tchile\", \"tchips\".",
+          "wrong": "Ignorar o traço e ler {{צ׳}} como {{צ}}: \"Chile\" vira \"Tsíle\".",
+          "right": "Antes de ler um {{צ}}, olhar se há um traço à esquerda. Com traço: \"tchíle\", \"tchips\".",
           "why": "O {{גֶּרֶשׁ}} é pequeno, parece pontuação, e o olho passa por cima. Mas ele muda o som da letra inteira."
         },
         "silabas": [],
@@ -687,7 +687,7 @@
           },
           {
             "he": "צ׳ילה",
-            "translit": "tchile",
+            "translit": "tchíle",
             "pt": "Chile"
           },
           {
@@ -697,7 +697,7 @@
           },
           {
             "he": "סנדוויץ׳",
-            "translit": "sendvitch",
+            "translit": "séndvitch",
             "pt": "sanduíche"
           },
           {
@@ -777,7 +777,7 @@
           },
           {
             "he": "פיג׳מה",
-            "translit": "pidjama",
+            "translit": "pidjáma",
             "pt": "pijama"
           },
           {
@@ -848,8 +848,8 @@
         "regraPt": "O traço fica à esquerda da letra, no alto: {{ז׳}}. Sem ele, a letra volta a ser {{ז}}, Z.",
         "irmaoPt": "{{ג׳}} e {{ז׳}} são vizinhos: DJ começa com a língua encostada, J não encosta. \"Djins\" e \"jakét\".",
         "erro": {
-          "wrong": "Trocar {{ז׳}} por {{ג׳}} e pôr um D na frente: \"djaket\".",
-          "right": "J liso, sem D: \"jakét\", \"jargon\", \"massáj\".",
+          "wrong": "Trocar {{ז׳}} por {{ג׳}} e pôr um D na frente: \"djakét\".",
+          "right": "J liso, sem D: \"jakét\", \"jargón\", \"massáj\".",
           "why": "Os dois sinais são parecidos e os dois sons são vizinhos. O que decide é a letra de baixo: {{ז}} com traço é J, {{ג}} com traço é DJ."
         },
         "silabas": [],
@@ -861,7 +861,7 @@
           },
           {
             "he": "ז׳רגון",
-            "translit": "jargon",
+            "translit": "jargón",
             "pt": "jargão"
           },
           {
@@ -876,7 +876,7 @@
           },
           {
             "he": "ז׳אנר",
-            "translit": "jánr",
+            "translit": "janr",
             "pt": "gênero (de filme, de música)"
           },
           {

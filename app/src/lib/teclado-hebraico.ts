@@ -10,12 +10,12 @@ export type Tecla = { ch: string; nome: string };
 export const LETRAS: Tecla[] = [
   ['א', 'Álef'], ['ב', 'Bet'], ['ג', 'Guímel'], ['ד', 'Dálet'], ['ה', 'He'], ['ו', 'Vav'],
   ['ז', 'Záyin'], ['ח', 'Het'], ['ט', 'Tet'], ['י', 'Yod'], ['כ', 'Kaf'], ['ל', 'Lámed'],
-  ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sámech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsadi'],
+  ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sámech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsádi'],
   ['ק', 'Qof'], ['ר', 'Resh'], ['ש', 'Shin'], ['ת', 'Tav']
 ].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));
 
 export const FINAIS: Tecla[] = [
-  ['ך', 'Kaf final'], ['ם', 'Mem final'], ['ן', 'Nun final'], ['ף', 'Pe final'], ['ץ', 'Tsadi final']
+  ['ך', 'Kaf final'], ['ם', 'Mem final'], ['ן', 'Nun final'], ['ף', 'Pe final'], ['ץ', 'Tsádi final']
 ].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));
 
 /* Os sinais que o curso ensina (data/nikud.json e as letras), na ordem em
