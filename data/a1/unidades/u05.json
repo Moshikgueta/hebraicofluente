@@ -3,6 +3,7 @@
   "revisado": true,
   "tituloPt": "O que você come? O que você quer?",
   "objetivoPt": "Dizer o que come, bebe, lê e compra, dizer o que quer, negar, e usar \"o pão\" como objeto da frase.",
+  "situacaoPt": "Café da manhã na casa da Maya. O Dani está com fome, procura o leite e acaba ganhando uma tarefa.",
   "palavras": [
     {
       "pt": "comer",
@@ -204,6 +205,23 @@
     ],
     "glossario": []
   },
+  "cultura": [
+    {
+      "tituloPt": "Carne e leite, separados",
+      "textoPt": "Muitos restaurantes e hotéis em Israel são casher: não servem carne e leite juntos. Por isso existem restaurantes \"de carne\" e restaurantes \"de leite\", e o café da manhã de hotel costuma não ter carne nenhuma, só ovos, queijos, peixe e saladas."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Belém, a \"casa do pão\"",
+      "textoPt": "Belém, a cidade, em hebraico é בֵּית לֶחֶם: \"casa do pão\". O לֶחֶם desta unidade está no nome. Muitos nomes de lugares da Bíblia que chegaram ao português têm um sentido simples em hebraico."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu digo o que como, bebo e quero.",
+    "Eu nego um verbo: אֲנִי לֹא שׁוֹתָה קָפֶה.",
+    "Eu uso o אֶת antes da coisa definida."
+  ],
   "exercicios": [
     {
       "t": "tabela",

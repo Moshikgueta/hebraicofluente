@@ -3,6 +3,7 @@
   "revisado": true,
   "tituloPt": "O que você faz? Onde você mora?",
   "objetivoPt": "Dizer onde mora, o que faz e que línguas fala, e perguntar isso a outra pessoa.",
+  "situacaoPt": "A Noa e o Tom se encontram e conversam sobre onde moram, se trabalham ou estudam, e sobre os amigos.",
   "palavras": [
     {
       "pt": "morar",
@@ -177,6 +178,23 @@
     "glossario": [],
     "notaPt": "\"מְדַבֵּר עִבְרִית טוֹב\" é como se fala na rua; o formal seria הֵיטֵב."
   },
+  "cultura": [
+    {
+      "tituloPt": "Três cidades, um trem",
+      "textoPt": "Tel Aviv, Jerusalém e Haifa são as maiores cidades do país, e ficam perto: de trem, Tel Aviv a Jerusalém leva por volta de meia hora, e Tel Aviv a Haifa, uma hora. Muita gente mora numa cidade e trabalha em outra."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "O nome Tel Aviv",
+      "textoPt": "תֵּל é uma colina formada por ruínas antigas, e אָבִיב é primavera: a ruína antiga e a estação nova. O nome veio da tradução hebraica de um romance de Theodor Herzl, \"A Velha Nova Terra\", e foi dado à cidade fundada em 1909."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu digo onde moro, o que estudo ou onde trabalho.",
+    "Eu uso o verbo nas 4 formas: homem, mulher, homens, mulheres.",
+    "Eu digo que línguas falo."
+  ],
   "exercicios": [
     {
       "t": "tabela",

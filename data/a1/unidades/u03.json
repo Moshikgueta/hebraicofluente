@@ -3,6 +3,7 @@
   "revisado": true,
   "tituloPt": "Como é?",
   "objetivoPt": "Descrever coisas e pessoas, falar de mais de uma coisa, e usar \"o/a\".",
+  "situacaoPt": "A Maya mudou de casa, e o Natan vem conhecer. Ela mostra tudo: o que é novo, o que é velho, e os presentes que ganhou.",
   "palavras": [
     {
       "pt": "grande",
@@ -227,6 +228,23 @@
     ],
     "glossario": []
   },
+  "cultura": [
+    {
+      "tituloPt": "A pedra de Jerusalém",
+      "textoPt": "Em Jerusalém, os prédios são revestidos de uma pedra clara, quase dourada, por uma regra que vem dos tempos do mandato britânico, há mais de cem anos. É por isso que a cidade inteira tem a mesma cor, e muda de tom com o sol."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Azul e branco",
+      "textoPt": "As cores da bandeira de Israel, azul (כָּחֹל) e branco (לָבָן), vêm do טַלִּית, o xale de oração judaico, branco com listras azuis. A estrela no meio é o מָגֵן דָּוִד, o \"escudo de Davi\"."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu descrevo uma coisa com um adjetivo que concorda.",
+    "Eu formo o plural com ־ִים e ־וֹת.",
+    "Eu sei a diferença entre הַסֵּפֶר הֶחָדָשׁ e הַסֵּפֶר חָדָשׁ."
+  ],
   "exercicios": [
     {
       "t": "escolha",

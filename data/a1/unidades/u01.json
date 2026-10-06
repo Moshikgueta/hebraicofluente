@@ -3,6 +3,7 @@
   "revisado": true,
   "tituloPt": "Quem é você?",
   "objetivoPt": "Se apresentar, perguntar o nome e de onde a pessoa é, e dizer a profissão.",
+  "situacaoPt": "Primeiro dia de aula na universidade. O Dani, que é brasileiro, senta ao lado de uma israelense e puxa conversa.",
   "palavras": [
     {
       "he": "שָׁלוֹם",
@@ -259,6 +260,23 @@
     ],
     "glossario": []
   },
+  "cultura": [
+    {
+      "tituloPt": "Primeiro nome e um \"você\" só",
+      "textoPt": "Em Israel quase todo mundo se trata pelo primeiro nome: o colega, o chefe, o médico. E o hebraico não separa um \"você\" formal de um informal, como \"o senhor\" e \"você\": אַתָּה e אַתְּ servem para todos. O que muda é só se a pessoa é homem ou mulher."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "שָׁלוֹם e a ideia de \"inteiro\"",
+      "textoPt": "שָׁלוֹם vem da raiz ש, ל, ם, que tem a ideia de \"inteiro, completo\". A mesma raiz aparece em לְשַׁלֵּם (pagar, \"completar\" a conta, Unidade 13) e em רְפוּאָה שְׁלֵמָה (melhoras, \"cura completa\", Unidade 18). Paz, para o hebraico, é estar inteiro."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu me apresento: nome, de onde sou e o que faço.",
+    "Eu pergunto o nome de um homem e de uma mulher, do jeito certo para cada um.",
+    "Eu cumprimento e me despeço."
+  ],
   "exercicios": [
     {
       "t": "escolha",

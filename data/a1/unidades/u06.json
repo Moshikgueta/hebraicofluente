@@ -3,6 +3,7 @@
   "revisado": true,
   "tituloPt": "Você tem irmãos? Esta é a minha família",
   "objetivoPt": "Dizer o que tem e o que não tem, falar da família, e dizer de quem é uma coisa.",
+  "situacaoPt": "O Tom vê uma foto no telefone da Noa e pergunta da família dela: irmãos, onde moram, e se ela tem bicho de estimação.",
   "palavras": [
     {
       "he": "אָח",
@@ -239,6 +240,23 @@
       }
     ]
   },
+  "cultura": [
+    {
+      "tituloPt": "Famílias grandes",
+      "textoPt": "Israel tem a maior média de filhos por mulher entre os países ricos, perto de três, e a família está muito presente: avós que ajudam com os netos, o jantar de sexta junto, grupos de WhatsApp com dezenas de primos."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "בֶּן e o sobrenome",
+      "textoPt": "בֵּן é \"filho\", e muitos sobrenomes israelenses começam com ele: Ben-Gurion, Ben-Yehuda, Ben-Ami. Vários pioneiros trocaram o sobrenome europeu por um hebraico: David Ben-Gurion nasceu David Grün."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu digo o que tenho e o que não tenho, com יֵשׁ לִי e אֵין לִי.",
+    "Eu falo da minha família.",
+    "Eu digo \"meu\" e \"seu\" com שֶׁלִּי, שֶׁלְּךָ, שֶׁלָּךְ."
+  ],
   "exercicios": [
     {
       "t": "ligar",

@@ -3,6 +3,7 @@
   "revisado": true,
   "tituloPt": "O que é isto? Quem é?",
   "objetivoPt": "Perguntar e dizer o que é uma coisa e quem é uma pessoa, e negar.",
+  "situacaoPt": "Antes da aula, o Tom pergunta à Maya o que são as coisas na mesa dela, e quem são as pessoas nas fotos do telefone.",
   "palavras": [
     {
       "he": "מָה זֶה?",
@@ -211,6 +212,23 @@
     "glossario": [],
     "notaPt": "אִמָּא e אַבָּא sem possessivo já soam como \"a mamãe\" e \"o papai\" de quem fala. O possessivo de verdade (שֶׁלִּי) chega na Unidade 6."
   },
+  "cultura": [
+    {
+      "tituloPt": "Uma sala de aula do mundo inteiro",
+      "textoPt": "Israel é um país de imigrantes. Numa turma de hebraico você ouve russo, inglês, francês, espanhol, amárico e português, e muitas famílias israelenses chegaram há uma ou duas gerações. Por isso o israelense está acostumado a ouvir hebraico com sotaque, e não estranha o seu."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "אַבָּא e אִמָּא vêm do aramaico",
+      "textoPt": "As palavras de todo dia para \"pai\" e \"mãe\" são aramaicas, a língua que os judeus falaram por séculos ao lado do hebraico. Em hebraico antigo se dizia אָב e אֵם, que continuam existindo em textos formais e em palavras compostas."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu pergunto o que é uma coisa e quem é uma pessoa.",
+    "Eu uso זֶה para masculino e זֹאת para feminino.",
+    "Eu digo que uma coisa NÃO é outra, com לֹא."
+  ],
   "exercicios": [
     {
       "t": "ligar",

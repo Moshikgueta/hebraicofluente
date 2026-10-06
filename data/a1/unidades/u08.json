@@ -3,6 +3,7 @@
   "revisado": true,
   "tituloPt": "Vamos conversar",
   "objetivoPt": "Sustentar uma conversa curta inteira com alguém novo.",
+  "situacaoPt": "A Maya apresenta a amiga Shira ao Dani. Eles conversam, combinam um café e trocam telefones.",
   "palavras": [
     {
       "he": "לִי",
@@ -258,6 +259,23 @@
       }
     ]
   },
+  "cultura": [
+    {
+      "tituloPt": "Números de telefone",
+      "textoPt": "Em Israel, todo celular começa com 05, e o número inteiro tem dez dígitos. Ao passar o número, o israelense fala os dígitos um por um, em grupos: אֶפֶס חָמֵשׁ שְׁתַּיִם… E o WhatsApp é o caminho mais comum para continuar a conversa."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "\"Como te chamam?\"",
+      "textoPt": "אֵיךְ קוֹרְאִים לְךָ? quer dizer, palavra por palavra, \"como chamam a você?\". É a mesma ideia do espanhol \"¿cómo te llamas?\" e do português \"como você se chama?\": o nome é o que os outros usam para chamar a gente."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu uso לְ, שֶׁל e עִם com as terminações (לִי, שֶׁלָּנוּ, אִתִּי…).",
+    "Eu pergunto quando, por quê e como.",
+    "Eu levo uma conversa inteira com alguém que acabei de conhecer."
+  ],
   "exercicios": [
     {
       "t": "tabela",

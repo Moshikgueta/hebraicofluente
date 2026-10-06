@@ -3,6 +3,7 @@
   "revisado": true,
   "tituloPt": "Quanto custa? Que horas são?",
   "objetivoPt": "Contar até 100, perguntar e dizer o preço, dizer as horas e os dias, e ler \"aberto/fechado\".",
+  "situacaoPt": "O Dani vai à feira comprar queijo e maçãs. Ele pergunta os preços, compra, e precisa saber que horas são.",
   "notaPt": "Esta unidade ensina a série de números usada para contar, hora, preço e telefone. A outra série, para contar coisas masculinas (שְׁנֵי אַחִים), é do A2.",
   "palavras": [
     {
@@ -358,6 +359,23 @@
       }
     ]
   },
+  "cultura": [
+    {
+      "tituloPt": "O shekel",
+      "textoPt": "O שֶׁקֶל é o nome de dinheiro mais antigo em uso: na Bíblia, era um peso de prata. A moeda israelense de hoje é o \"novo shekel\", desde 1985, dividido em 100 אֲגוֹרוֹת. Na feira, o preço se fala no singular: עֶשֶׂר שֶׁקֶל."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "A semana com números",
+      "textoPt": "Em hebraico, os dias da semana não têm nome de deus nem de planeta: são números. יוֹם רִאשׁוֹן é \"o primeiro dia\", יוֹם שֵׁנִי \"o segundo\", e assim até o sexto. Só o sétimo tem nome próprio: שַׁבָּת, o dia de descanso."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu pergunto o preço e entendo a resposta.",
+    "Eu digo as horas, com e meia e e quinze.",
+    "Eu digo os dias da semana."
+  ],
   "exercicios": [
     {
       "t": "ligar",

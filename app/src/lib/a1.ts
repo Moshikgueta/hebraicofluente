@@ -94,7 +94,7 @@ export const CURSO_A1 = 'hebraico-a1';
    são geradas na build e o conteúdo do A1 é pago: chega pela rede, dentro do
    CourseGate. Um teste confere que são as mesmas dos módulos de
    data/a1/curso.json, na mesma ordem. */
-export const UNIDADES_A1: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+export const UNIDADES_A1: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 export const ehFormas = (w: PalavraA1 | FormasA1): w is FormasA1 => 'formas' in w;
 
 /** Esta rota é do A1? (as rotas do A1 moram todas debaixo de /a1). */
