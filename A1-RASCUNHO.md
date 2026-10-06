@@ -31,6 +31,10 @@ de o dono aprovar o hebraico.
    em que o aluno fala de si (aprovado com a Unidade 4).
 10. **Falado antes de formal** quando os dois existem: מְדַבֵּר עִבְרִית טוֹב
     (e não הֵיטֵב), porque é o que o aluno vai ouvir.
+11. **Números:** o A1 ensina a série de contar (hora, preço, telefone:
+    אַחַת, שְׁתַּיִם, שָׁלוֹשׁ…). A série para contar coisas masculinas
+    (שְׁנֵי אַחִים, שְׁלוֹשָׁה…) fica para o A2. Preço como na rua, no singular:
+    עֶשֶׂר שֶׁקֶל (aprovado com a Unidade 7).
 
 ## O mapa (aprovado)
 
@@ -372,3 +376,68 @@ Só do diálogo (glossário): תְּמוּנָה (foto); אֵיתָן (personage
 18. Diálogo: quantos irmãos a Noa tem? → **dois (um irmão e uma irmã)**
 19. Diálogo, V ou F: a Noa tem um cachorro → **Falso**
 20. Escrever 3 frases sobre a sua família.
+
+## Unidade 7 - "Quanto custa? Que horas são?" (aprovada pelo dono em 06/10/2026)
+
+### Palavras
+
+Números 0-20: אֶפֶס · אַחַת · שְׁתַּיִם · שָׁלוֹשׁ · אַרְבַּע · חָמֵשׁ · שֵׁשׁ · שֶׁבַע · שְׁמוֹנֶה ·
+תֵּשַׁע · עֶשֶׂר · אַחַת־עֶשְׂרֵה · שְׁתֵּים־עֶשְׂרֵה · שְׁלוֹשׁ־עֶשְׂרֵה · אַרְבַּע־עֶשְׂרֵה ·
+חֲמֵשׁ־עֶשְׂרֵה · שֵׁשׁ־עֶשְׂרֵה · שְׁבַע־עֶשְׂרֵה · שְׁמוֹנֶה־עֶשְׂרֵה · תְּשַׁע־עֶשְׂרֵה · עֶשְׂרִים
+
+Dezenas (leve): שְׁלוֹשִׁים · אַרְבָּעִים · חֲמִשִּׁים · שִׁשִּׁים · שִׁבְעִים · שְׁמוֹנִים · תִּשְׁעִים ·
+מֵאָה · (21 = עֶשְׂרִים וְאַחַת)
+
+Preço: כַּמָּה? · כַּמָּה זֶה עוֹלֶה? · שֶׁקֶל/שְׁקָלִים · קִילוֹ · שׁוּק
+
+Horas: מָה הַשָּׁעָה? · הַשָּׁעָה… · וָחֵצִי · וָרֶבַע · בְּשָׁעָה… · עַד · בַּבֹּקֶר · בָּעֶרֶב ·
+פָּתוּחַ · סָגוּר
+
+Dias: יוֹם רִאשׁוֹן · יוֹם שֵׁנִי · יוֹם שְׁלִישִׁי · יוֹם רְבִיעִי · יוֹם חֲמִישִׁי · יוֹם שִׁשִּׁי · שַׁבָּת
+
+Só do diálogo (glossário): מַשֶּׁהוּ (alguma coisa)
+
+### Gramática
+
+1. 11-19 = número + עֶשְׂרֵה; dezenas em ־ִים; 21 = עֶשְׂרִים וְאַחַת.
+2. Hora: הַשָּׁעָה + número, sem "horas" no fim.
+3. Preço falado: número + שֶׁקֶל no singular; "custar" concorda com a coisa
+   (כַּמָּה עוֹלָה הַגְּבִינָה).
+4. Os dias são contados como no português; a semana começa no domingo.
+
+### Diálogo (Dani na feira)
+
+| Quem | Hebraico | Português |
+|---|---|---|
+| Dani | סְלִיחָה, כַּמָּה עוֹלָה הַגְּבִינָה? | Com licença, quanto custa o queijo? |
+| Vendedor | שְׁלוֹשִׁים שֶׁקֶל. | Trinta shekels. |
+| Dani | וְהַתַּפּוּחִים? | E as maçãs? |
+| Vendedor | עֶשֶׂר שֶׁקֶל לְקִילוֹ. | Dez shekels o quilo. |
+| Dani | אֲנִי רוֹצֶה קִילוֹ תַּפּוּחִים, בְּבַקָּשָׁה. | Quero um quilo de maçãs, por favor. |
+| Vendedor | בְּבַקָּשָׁה. עוֹד מַשֶּׁהוּ? | Aqui está. Mais alguma coisa? |
+| Dani | לֹא, תּוֹדָה. מָה הַשָּׁעָה? | Não, obrigado. Que horas são? |
+| Vendedor | הַשָּׁעָה אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם. | É uma e meia. A feira fica aberta até as duas. |
+| Dani | תּוֹדָה! | Obrigado! |
+
+### Banco de exercícios (20 itens)
+
+1. Ligar: שָׁלוֹשׁ · שֶׁבַע · עֶשֶׂר · חָמֵשׁ · שְׁמוֹנֶה → 3 · 7 · 10 · 5 · 8
+2. 14 → **אַרְבַּע־עֶשְׂרֵה**
+3. 40 → **אַרְבָּעִים**
+4. Escrever 21 → **עֶשְׂרִים וְאַחַת**
+5. Ouvir: שְׁתֵּים־עֶשְׂרֵה → **12**
+6. Montar: "Quanto custa?" → **כַּמָּה זֶה עוֹלֶה?**
+7. "Custa cinco shekels" (rua) → **זֶה עוֹלֶה חָמֵשׁ שֶׁקֶל**
+8. כַּמָּה ___ הָעוּגָה? → **עוֹלָה**
+9. Ouvir: שְׁלוֹשִׁים וְחָמֵשׁ שֶׁקֶל → **35**
+10. "São três e meia" → **הַשָּׁעָה שָׁלוֹשׁ וָחֵצִי**
+11. Achar o erro: הַשָּׁעָה חָמֵשׁ שָׁעוֹת → **הַשָּׁעָה חָמֵשׁ**
+12. Montar: "às oito da manhã" → **בְּשָׁעָה שְׁמוֹנֶה בַּבֹּקֶר**
+13. Ouvir: הַשָּׁעָה עֶשֶׂר וָרֶבַע → **10:15**
+14. יוֹם שְׁלִישִׁי → **terça-feira**
+15. V ou F: יוֹם רִאשׁוֹן é segunda → **Falso**
+16. Placa סָגוּר → **fechado**
+17. "Aberto até as 7" → **פָּתוּחַ עַד שֶׁבַע**
+18. Diálogo: quanto custa o quilo de maçãs? → **10 shekels**
+19. Diálogo, V ou F: a feira fecha às três → **Falso**
+20. Escrever: a que horas você começa a trabalhar ou estudar, e em que dias.
