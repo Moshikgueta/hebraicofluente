@@ -32,6 +32,7 @@ import * as auth from './api/auth.js';
 import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
 import { content } from './api/content.js';
+import { contentA1 } from './api/content-a1.js';
 import * as audio from './api/audio.js';
 import * as novidades from './api/novidades.js';
 import * as meusDados from './api/meus-dados.js';
@@ -92,6 +93,9 @@ const ROUTES = {
      viajava dentro do pacote que qualquer visitante baixava. Ver
      api/content.js. */
   'GET /api/content': content,
+  /* O curso Hebraico A1 (06/10/2026): outro curso, outro direito. Ver
+     api/content-a1.js. */
+  'GET /api/content/a1': contentA1,
 
   /* O que a CSP estrita bloqueou. Ver api/csp.js. */
   'POST /api/csp-report': csp.relatorio,

@@ -114,6 +114,13 @@ for (const c of j('culture.json').cards) {
   por(`cultura/${c.id}.leadPt`, c.leadPt);
   por(`cultura/${c.id}.bodyPt`, c.bodyPt?.[0]);
 }
+/* O curso Hebraico A1 (06/10/2026): a explicação da gramática e o objetivo
+   de cada unidade. É pago por OUTRO curso, e nada dele pode aparecer em
+   página livre. */
+for (const u of j('a1.json').unidades) {
+  por(`a1/unidade-${u.n}.objetivoPt`, u.objetivoPt);
+  for (const [i, g] of u.gramatica.entries()) por(`a1/unidade-${u.n}.gramatica-${i + 1}`, g.textoPt);
+}
 const traços = j('stroke-paths.json').letters;
 for (const [id, set] of Object.entries(traços).slice(0, 6)) {
   por(`traço/${id}`, set.strokes?.[0]?.d);
