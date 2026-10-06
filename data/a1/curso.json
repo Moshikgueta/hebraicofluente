@@ -71,6 +71,24 @@
         11,
         12
       ]
+    },
+    {
+      "n": 7,
+      "tituloPt": "Comida e compras",
+      "objetivoPt": "Pedir num café ou restaurante, comprar roupas e coisas, entender preços e pagar.",
+      "unidades": [
+        13,
+        14
+      ]
+    },
+    {
+      "n": 8,
+      "tituloPt": "Tempo e compromissos",
+      "objetivoPt": "Datas, meses e o tempo; marcar, aceitar, recusar e remarcar um compromisso.",
+      "unidades": [
+        15,
+        16
+      ]
     }
   ],
   "certificado": {

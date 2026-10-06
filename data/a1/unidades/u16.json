@@ -1,0 +1,137 @@
+{
+  "n": 16,
+  "revisado": false,
+  "tituloPt": "Vamos combinar? Convites e mensagens",
+  "objetivoPt": "Atender e fazer uma ligação, convidar alguém, aceitar ou recusar com educação, propor outro horário, e contar o que alguém disse ou o que você acha (com שֶׁ־).",
+  "situacaoPt": "O Dani quer ver um filme com a Maya. Ele liga, ela não pode, os dois tentam achar outro dia, e o plano termina no grupo de WhatsApp dos amigos.",
+  "palavras": [
+    { "he": "הַלּוֹ?", "translit": "haló?", "pt": "alô?" },
+    { "pt": "ouvir, escutar", "formas": ["שׁוֹמֵעַ", "שׁוֹמַעַת", "שׁוֹמְעִים", "שׁוֹמְעוֹת"] },
+    { "pt": "dizer", "formas": ["אוֹמֵר", "אוֹמֶרֶת", "אוֹמְרִים", "אוֹמְרוֹת"] },
+    { "pt": "pensar, achar", "formas": ["חוֹשֵׁב", "חוֹשֶׁבֶת", "חוֹשְׁבִים", "חוֹשְׁבוֹת"] },
+    { "pt": "mandar, enviar", "formas": ["שׁוֹלֵחַ", "שׁוֹלַחַת", "שׁוֹלְחִים", "שׁוֹלְחוֹת"] },
+    { "pt": "convidar; pedir (comida)", "formas": ["מַזְמִין", "מַזְמִינָה", "מַזְמִינִים", "מַזְמִינוֹת"] },
+    { "pt": "sinto muito, desculpe", "formas": ["מִצְטַעֵר", "מִצְטַעֶרֶת", "מִצְטַעֲרִים", "מִצְטַעֲרוֹת"] },
+    { "pt": "outro", "formas": ["אַחֵר", "אַחֶרֶת", "אֲחֵרִים", "אֲחֵרוֹת"] },
+    { "he": "שֶׁ־", "translit": "she-", "pt": "que (grudado: \"acho que…\")" },
+    { "he": "לְהִפָּגֵשׁ", "translit": "lehipaguésh", "pt": "encontrar-se" },
+    { "he": "מָתַי נוֹחַ לְךָ?", "translit": "matai nóach lechá?", "pt": "quando fica bom para você? (a ele)" },
+    { "he": "זֶה מַתְאִים לִי", "translit": "ze matím li", "pt": "isso fica bom para mim" },
+    { "he": "עַכְשָׁיו", "translit": "achshav", "pt": "agora" },
+    { "he": "בְּעוֹד שָׁעָה", "translit": "beod shaá", "pt": "daqui a uma hora" },
+    { "he": "הָעֶרֶב", "translit": "haérev", "pt": "hoje à noite" },
+    { "he": "הוֹדָעָה", "translit": "hodaá", "pt": "mensagem" },
+    { "he": "פְּגִישָׁה", "translit": "pgishá", "pt": "compromisso, reunião, encontro" },
+    { "he": "קוֹלְנוֹעַ", "translit": "kolnóa", "pt": "cinema" },
+    { "he": "סֶרֶט", "translit": "séret", "pt": "filme" },
+    { "he": "מְסִבָּה", "translit": "mesibá", "pt": "festa" },
+    { "he": "חֲבָל", "translit": "chaval", "pt": "que pena" }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "\"Que\" é שֶׁ־, grudado",
+      "textoPt": "Para \"acho que\", \"diz que\", \"sei que\", o hebraico usa שֶׁ־, grudado na palavra seguinte: אֲנִי חוֹשֵׁב שֶׁהוּא בָּא (acho que ele vem), הִיא אוֹמֶרֶת שֶׁזֶּה טוֹב (ela diz que está bom), אֲנִי יוֹדַעַת שֶׁאַתָּה עָסוּק (eu sei que você está ocupado).",
+      "erroPt": "No português falado, o \"que\" às vezes cai (\"acho ele vem\"). Em hebraico, não: sem שֶׁ־ a frase fica quebrada. E não confunda com כִּי, que é \"porque\".",
+      "exemplos": [
+        { "he": "אֲנִי חוֹשֶׁבֶת שֶׁנֹּעָה רוֹצָה לָבוֹא.", "pt": "Eu acho que a Noa quer vir. (mulher)" },
+        { "he": "הוּא אוֹמֵר שֶׁהוּא לֹא יָכוֹל.", "pt": "Ele diz que não pode." }
+      ]
+    },
+    {
+      "tituloPt": "Recusar com educação",
+      "textoPt": "O israelense é direto, mas recusa com uma desculpa e um motivo: אֲנִי מִצְטַעֵר, אֲנִי לֹא יָכוֹל, כִּי… E propõe outro dia: אוּלַי מָחָר? אוּלַי בְּיוֹם אַחֵר?",
+      "exemplos": [
+        { "he": "אֲנִי מִצְטַעֶרֶת, הַיּוֹם אֲנִי לֹא יְכוֹלָה.", "pt": "Sinto muito, hoje eu não posso. (mulher)" }
+      ]
+    },
+    {
+      "tituloPt": "Fica bom para você? נוֹחַ לְךָ, מַתְאִים לְךָ",
+      "textoPt": "Para combinar horário, o hebraico usa \"é conveniente PARA você\", com o לְ e as terminações da Unidade 8: מָתַי נוֹחַ לְךָ? (a ele), מָתַי נוֹחַ לָךְ? (a ela), זֶה מַתְאִים לִי (para mim fica bom). Quem muda é o לְ, não o נוֹחַ.",
+      "erroPt": "Não traduza \"você está disponível\" palavra por palavra. A pergunta natural é מָתַי נוֹחַ לָךְ? ou מַתְאִים לָךְ בְּשֶׁבַע?"
+    },
+    {
+      "tituloPt": "No telefone",
+      "textoPt": "Atende-se com הַלּוֹ? ou só כֵּן?. Quem liga diz זֶה + o nome: זֶה דָּנִי (é o Dani). Para dizer que não está ouvindo: אֲנִי לֹא שׁוֹמֵעַ (homem) / אֲנִי לֹא שׁוֹמַעַת (mulher). E para se despedir, você vai ouvir muito o inglês בַּי."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Uma ligação",
+    "linhas": [
+      { "quem": "Maya", "he": "הַלּוֹ?", "translit": "haló?", "pt": "Alô?" },
+      { "quem": "Dani", "he": "הַי מַיָּה, זֶה דָּנִי. מַה נִשְׁמָע?", "translit": "hai Maya, ze Dani. ma nishmá?", "pt": "Oi, Maya, é o Dani. Tudo bem?" },
+      { "quem": "Maya", "he": "בְּסֵדֶר. מָה קוֹרֶה?", "translit": "beséder. ma koré?", "pt": "Tudo. O que houve?" },
+      { "quem": "Dani", "he": "אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ הָעֶרֶב?", "translit": "at rotsá laléchet lakolnóa haérev?", "pt": "Você quer ir ao cinema hoje à noite?" },
+      { "quem": "Maya", "he": "הָעֶרֶב אֲנִי לֹא יְכוֹלָה, אֲנִי מִצְטַעֶרֶת. יֵשׁ לִי פְּגִישָׁה.", "translit": "haérev aní lo yecholá, aní mitstaéret. yesh li pgishá.", "pt": "Hoje à noite eu não posso, sinto muito. Tenho um compromisso." },
+      { "quem": "Dani", "he": "חֲבָל. אָז מָחָר?", "translit": "chaval. az machar?", "pt": "Que pena. Então amanhã?" },
+      { "quem": "Maya", "he": "מָחָר מַתְאִים לִי. בְּאֵיזוֹ שָׁעָה?", "translit": "machar matím li. beéizo shaá?", "pt": "Amanhã fica bom para mim. A que horas?" },
+      { "quem": "Dani", "he": "הַסֶּרֶט בְּתֵשַׁע. נוֹחַ לָךְ?", "translit": "haséret betésha. nóach lach?", "pt": "O filme é às nove. Fica bom para você?" },
+      { "quem": "Maya", "he": "כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁנֹּעָה רוֹצָה לָבוֹא גַּם.", "translit": "ken. vaaní choshévet sheNoa rotsá lavó gam.", "pt": "Fica. E eu acho que a Noa quer vir também." },
+      { "quem": "Dani", "he": "יוֹפִי! אֲנִי שׁוֹלֵחַ לָהּ הוֹדָעָה.", "translit": "yófi! aní sholéach la hodaá.", "pt": "Ótimo! Vou mandar uma mensagem para ela." },
+      { "quem": "Maya", "he": "סַבָּבָּה. נִתְרָאֶה מָחָר!", "translit": "sabába. nitraé machar!", "pt": "Beleza. Até amanhã!" },
+      { "quem": "Dani", "he": "בַּי!", "translit": "bai!", "pt": "Tchau!" }
+    ],
+    "glossario": [
+      { "he": "מָה קוֹרֶה?", "translit": "ma koré?", "pt": "o que houve? o que manda?" },
+      { "he": "בְּאֵיזוֹ שָׁעָה?", "translit": "beéizo shaá?", "pt": "a que horas?" },
+      { "he": "נִתְרָאֶה", "translit": "nitraé", "pt": "a gente se vê (expressão fixa)" },
+      { "he": "בַּי", "translit": "bai", "pt": "tchau (do inglês)" }
+    ]
+  },
+  "leitura": {
+    "tituloPt": "No grupo dos amigos",
+    "semPontos": true,
+    "linhas": [
+      { "he": "דָּנִי: מָחָר קוֹלְנוֹעַ בְּתֵשַׁע. מִי בָּא?", "translit": "Dani: machar kolnóa betésha. mi ba?", "pt": "Dani: Amanhã, cinema às nove. Quem vem?" },
+      { "he": "נֹעָה: אֲנִי! אֲבָל אֲנִי חוֹזֶרֶת מֵהָעֲבוֹדָה בִּשְׁמוֹנֶה וָחֵצִי. אֶפְשָׁר בְּתֵשַׁע וָחֵצִי?", "translit": "Noa: aní! aval aní chozéret mehaavodá bishmoné vachétsi. efshar betésha vachétsi?", "pt": "Noa: Eu! Mas eu volto do trabalho às oito e meia. Dá para ser às nove e meia?" },
+      { "he": "טוֹם: גַּם אֲנִי בָּא. תֵּשַׁע וָחֵצִי מַתְאִים לִי.", "translit": "Tom: gam aní ba. tésha vachétsi matím li.", "pt": "Tom: Eu também vou. Nove e meia fica bom para mim." },
+      { "he": "מַיָּה: סַבָּבָּה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ.", "translit": "Maya: sabába. nipaguésh leyád hakolnóa.", "pt": "Maya: Beleza. A gente se encontra ao lado do cinema." }
+    ],
+    "perguntas": [
+      { "t": "escolha", "q": "Por que a Noa pede outro horário?", "opcoes": ["Ela volta do trabalho às 8h30", "Ela não gosta de cinema", "Ela tem uma festa"], "certa": 0 },
+      { "t": "escolha", "q": "A que horas fica o cinema?", "opcoes": ["Às 9h30", "Às 9h", "Às 8h30"], "certa": 0 },
+      { "t": "vf", "q": "O Tom não vai.", "certa": false, "porque": "גַּם אֲנִי בָּא: ele vai também." },
+      { "t": "escolha", "q": "Onde eles se encontram?", "opcoes": ["Ao lado do cinema", "Na casa da Maya", "No trabalho da Noa"], "certa": 0 }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "Tudo se combina no WhatsApp",
+      "textoPt": "Em Israel quase tudo passa pelo WhatsApp: o grupo da família, o do prédio, o da escola dos filhos, o do trabalho. Muita gente prefere mandar mensagem a ligar. E, quando liga, o israelense costuma ir direto ao ponto: um \"oi, tudo bem?\" rápido e o assunto, sem rodeio. Não é falta de educação, é o ritmo da conversa."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Palavras inventadas e palavras emprestadas",
+      "textoPt": "קוֹלְנוֹעַ (cinema) foi inventada no começo do século 20: קוֹל (som, voz) + נוֹעַ (movimento). Já הַלּוֹ, בַּי e טֶלֶפוֹן vieram prontas de fora. O hebraico moderno faz as duas coisas: cria palavras a partir das raízes antigas e pega emprestado do inglês, do árabe, do russo, do iídiche, do jeito que as línguas vivas fazem."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu atendo uma ligação e digo quem está falando.",
+    "Eu convido, aceito, recuso com educação e proponho outro dia.",
+    "Eu uso שֶׁ־ para dizer o que acho e o que alguém disse."
+  ],
+  "exercicios": [
+    { "t": "ligar", "q": "Ligue as palavras.", "pares": [["הַלּוֹ", "alô"], ["פְּגִישָׁה", "compromisso"], ["הוֹדָעָה", "mensagem"], ["קוֹלְנוֹעַ", "cinema"], ["מְסִבָּה", "festa"]] },
+    { "t": "ligar", "q": "E os verbos.", "pares": [["אוֹמֵר", "dizer"], ["חוֹשֵׁב", "pensar, achar"], ["שׁוֹמֵעַ", "ouvir"], ["שׁוֹלֵחַ", "mandar, enviar"], ["מַזְמִין", "convidar"]] },
+    { "t": "escolha", "q": "\"Eu acho que ele vem\"", "opcoes": ["אֲנִי חוֹשֵׁב שֶׁהוּא בָּא.", "אֲנִי חוֹשֵׁב הוּא בָּא.", "אֲנִי חוֹשֵׁב כִּי הוּא בָּא."], "certa": 0, "dicas": { "1": "Quase. Em hebraico o \"que\" não cai: שֶׁ־, grudado em הוּא.", "2": "כִּי é \"porque\". \"Que\" é שֶׁ־." } },
+    { "t": "escolha", "q": "\"Ela diz que não pode\"", "opcoes": ["הִיא אוֹמֶרֶת שֶׁהִיא לֹא יְכוֹלָה.", "הִיא אוֹמֵר שֶׁהִיא לֹא יְכוֹלָה.", "הִיא אוֹמֶרֶת הִיא לֹא יְכוֹלָה."], "certa": 0, "dicas": { "1": "אוֹמֵר é a forma de homem. Para ela: אוֹמֶרֶת.", "2": "Faltou o שֶׁ־ (\"que\")." } },
+    { "t": "tabela", "q": "Complete as formas.", "base": "אוֹמֵר", "linhas": [["mulher", "אומרת"], ["homens", "אומרים"], ["mulheres", "אומרות"]] },
+    { "t": "tabela", "q": "Complete as formas.", "base": "חוֹשֵׁב", "linhas": [["mulher", "חושבת"], ["homens", "חושבים"], ["mulheres", "חושבות"]] },
+    { "t": "escolha", "q": "Qual é o jeito educado de recusar?", "opcoes": ["אֲנִי מִצְטַעֵר, אֲנִי לֹא יָכוֹל.", "לֹא!", "אֵין לִי."], "certa": 0, "dicas": { "1": "Só לֹא! soa seco demais para um convite." } },
+    { "t": "escolha", "q": "\"Quando fica bom para você?\" (a ela)", "opcoes": ["מָתַי נוֹחַ לָךְ?", "מָתַי נוֹחַ לְךָ?", "מָתַי אַתְּ נוֹחָה?"], "certa": 0, "dicas": { "1": "לְךָ é para homem. Para ela: לָךְ.", "2": "נוֹחַ não vai para o feminino aqui: a frase é \"é conveniente PARA você\", com לָךְ." } },
+    { "t": "vf", "q": "בְּעוֹד שָׁעָה quer dizer \"daqui a uma hora\".", "certa": true },
+    { "t": "vf", "q": "No telefone, muitos israelenses atendem só com כֵּן?.", "certa": true },
+    { "t": "erro", "q": "Ache o erro e escreva a frase certa.", "errada": "אֲנִי חוֹשֶׁבֶת זֶה טוֹב.", "respostas": ["אני חושבת שזה טוב"], "porque": "Faltou o שֶׁ־: שֶׁזֶּה טוֹב." },
+    { "t": "erro", "q": "Ache o erro e escreva a frase certa.", "errada": "הוּא אוֹמֶרֶת שֶׁהוּא בָּא.", "respostas": ["הוא אומר שהוא בא"], "porque": "Para ele: אוֹמֵר." },
+    { "t": "montar", "pt": "Sinto muito, hoje eu não posso. (fala uma mulher)", "palavras": ["אֲנִי", "מִצְטַעֶרֶת,", "הַיּוֹם", "אֲנִי", "לֹא", "יְכוֹלָה"] },
+    { "t": "montar", "pt": "Amanhã fica bom para mim.", "palavras": ["מָחָר", "מַתְאִים", "לִי"] },
+    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["Maya", "הַלּוֹ?"]], "opcoes": ["הַי, זֶה טוֹם. מַה נִשְׁמָע?", "לְהִתְרָאוֹת!", "בְּתֵאָבוֹן."], "certa": 0 },
+    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["Dani", "אַתְּ רוֹצָה לָבוֹא לַמְּסִבָּה?"]], "opcoes": ["בְּשִׂמְחָה! מָתַי?", "חַם לִי.", "הַחֶשְׁבּוֹן, בְּבַקָּשָׁה."], "certa": 0 },
+    { "t": "ordenar", "q": "Ponha a conversa na ordem.", "falas": ["אַתָּה רוֹצֶה לִרְאוֹת סֶרֶט?", "הָעֶרֶב אֲנִי לֹא יָכוֹל.", "אָז מָחָר?", "מָחָר מַתְאִים לִי."] },
+    { "t": "ouvir", "he": "אֲנִי לֹא שׁוֹמַעַת, רֶגַע.", "q": "O que ela diz?", "opcoes": ["Não estou ouvindo, espera", "Não posso, desculpa", "Não sei, espera"], "certa": 0 },
+    { "t": "ouvir", "he": "נִפָּגֵשׁ בְּעוֹד שָׁעָה.", "q": "Quando eles se encontram?", "opcoes": ["Daqui a uma hora", "Amanhã", "Hoje à noite"], "certa": 0 },
+    { "t": "ditado", "he": "עַכְשָׁיו", "respostas": ["עכשיו", "עכשו"] },
+    { "t": "escrever", "pt": "\"que você\" (a ele), numa palavra só", "respostas": ["שאתה"] },
+    { "t": "aberta", "pt": "Escreva uma mensagem convidando alguém para sair: o quê, quando e onde.", "exemplo": "אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ מָחָר? הַסֶּרֶט בִּשְׁמוֹנֶה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ." }
+  ]
+}
