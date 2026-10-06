@@ -10,7 +10,7 @@
         {
           "quem": "Dana",
           "he": "אִמָּא, יֵשׁ לֶחֶם?",
-          "translit": "imá, yesh léchem?",
+          "translit": "íma, yesh léchem?",
           "pt": "Mãe, tem pão?"
         },
         {
@@ -352,7 +352,7 @@
         {
           "quem": "Mãe",
           "he": "דָּנִי, אֵיפֹה אַתָּה?",
-          "translit": "Dani, eifo atá?",
+          "translit": "Dáni, eifo atá?",
           "pt": "Dani, onde você está?"
         },
         {
@@ -375,21 +375,21 @@
         },
         {
           "quem": "Mãe",
-          "he": "מְעוּלֶה. יֵשׁ אֹכֶל בַּמְּקָרֵר.",
+          "he": "מְעוּלֶה. יֵשׁ אוֹכֶל בַּמְּקָרֵר.",
           "translit": "meulé. yesh óchel bamekarer.",
           "pt": "Ótimo. Tem comida na geladeira."
         },
         {
           "quem": "Dani",
           "he": "תּוֹדָה, אִמָּא!",
-          "translit": "todá, imá!",
+          "translit": "todá, íma!",
           "pt": "Obrigado, mãe!"
         }
       ],
       "novas": [
         {
           "he": "דָּנִי",
-          "translit": "Dani",
+          "translit": "Dáni",
           "pt": "Dani (nome)"
         },
         {
@@ -428,7 +428,7 @@
           "pt": "minutos"
         },
         {
-          "he": "אֹכֶל",
+          "he": "אוֹכֶל",
           "translit": "óchel",
           "pt": "comida"
         },
@@ -471,7 +471,7 @@
           "t": "vf",
           "q": "Tem comida na geladeira.",
           "certa": true,
-          "porque": "{{יֵשׁ אֹכֶל בַּמְּקָרֵר}}."
+          "porque": "{{יֵשׁ אוֹכֶל בַּמְּקָרֵר}}."
         }
       ]
     },
@@ -593,7 +593,7 @@
           "t": "vf",
           "q": "A Dana tem pijama.",
           "certa": false,
-          "porque": "{{אֵין לִי!}}: não tenho - e ela vai comprar lá."
+          "porque": "{{אֵין לִי!}}: não tenho - e ela vai comprar aí mesmo, onde está."
         },
         {
           "t": "escolha",
@@ -631,7 +631,7 @@
         {
           "quem": "Natan",
           "he": "אֲנִי נָתָן. הִנֵּה אִמָּא.",
-          "translit": "aní Natan. hiné imá.",
+          "translit": "aní Natan. hiné íma.",
           "pt": "Eu sou o Natan. Olha a mamãe aqui."
         },
         {
@@ -695,7 +695,7 @@
         },
         {
           "t": "vf",
-          "q": "A Maya prefere o mar ao chá.",
+          "q": "A Maya fala do mar.",
           "certa": true,
           "porque": "Ela responde {{תֵּה? הִנֵּה הַיָּם!}}: chá? Olha o mar ali!"
         }
@@ -736,13 +736,13 @@
         {
           "quem": "Maya",
           "he": "הוּא דָּנִי.",
-          "translit": "hu Dani.",
+          "translit": "hu Dáni.",
           "pt": "É o Dani."
         },
         {
           "quem": "Tia",
           "he": "הִנֵּה גְּלִידָה גַּם לְדָנִי!",
-          "translit": "hiné glidá gam leDani!",
+          "translit": "hiné glidá gam leDáni!",
           "pt": "Tem sorvete para o Dani também!"
         }
       ],
@@ -754,7 +754,7 @@
         },
         {
           "he": "דָּנִי",
-          "translit": "Dani",
+          "translit": "Dáni",
           "pt": "Dani (nome)"
         },
         {
@@ -810,7 +810,7 @@
         {
           "quem": "Dani",
           "he": "אִמָּא, הַיּוֹם טִיּוּל?",
-          "translit": "imá, hayom tiyul?",
+          "translit": "íma, hayom tiyul?",
           "pt": "Mãe, hoje tem passeio?"
         },
         {
@@ -853,7 +853,7 @@
       "novas": [
         {
           "he": "דָּנִי",
-          "translit": "Dani",
+          "translit": "Dáni",
           "pt": "Dani (nome)"
         },
         {
@@ -920,15 +920,15 @@
         },
         {
           "quem": "Noa",
-          "he": "אֲנִי נֹעָה. נָעִים! אַתָּה רוֹצֶה מִיץ?",
+          "he": "אֲנִי נוֹעָה. נָעִים! אַתָּה רוֹצֶה מִיץ?",
           "translit": "aní Noa. naím! atá rotsé mits?",
           "pt": "Eu sou a Noa. Prazer! Você quer um suco?"
         },
         {
           "quem": "Dani",
-          "he": "רַק מְעַט, תּוֹדָה. אֲנִי רוֹצֶה מָקוֹם שֶׁקֶט.",
-          "translit": "rak meát, todá. aní rotsé makom shéket.",
-          "pt": "Só um pouco, obrigado. Quero um lugar tranquilo."
+          "he": "לֹא, תּוֹדָה. אֲנִי רוֹצֶה מָקוֹם שֶׁקֶט.",
+          "translit": "lo, todá. aní rotsé makom shéket.",
+          "pt": "Não, obrigado. Quero um lugar tranquilo."
         },
         {
           "quem": "Noa",
@@ -938,20 +938,20 @@
         },
         {
           "quem": "Dani",
-          "he": "תּוֹדָה, נֹעָה. זֶה נֶחְמָד!",
+          "he": "תּוֹדָה, נוֹעָה. זֶה נֶחְמָד!",
           "translit": "todá, Noa. ze nechmad!",
           "pt": "Obrigado, Noa. Que legal!"
         }
       ],
       "novas": [
         {
-          "he": "נֹעָה",
+          "he": "נוֹעָה",
           "translit": "Noa",
           "pt": "Noa (nome)"
         },
         {
           "he": "דָּנִי",
-          "translit": "Dani",
+          "translit": "Dáni",
           "pt": "Dani (nome)"
         },
         {
@@ -1002,7 +1002,7 @@
         {
           "quem": "Pai",
           "he": "שָׁלוֹם, מִשְׁפָּחָה! הִנֵּה קָפֶה וְתֵה.",
-          "translit": "shalom, mishpachá! hiné kafé vete.",
+          "translit": "shalom, mishpachá! hiné kafé veté.",
           "pt": "Bom dia, família! Tem café e chá."
         },
         {
@@ -1020,7 +1020,7 @@
         {
           "quem": "Dani",
           "he": "אַבָּא, הָאוֹטוֹבּוּס! עַכְשָׁיו!",
-          "translit": "aba, haotobus! achshav!",
+          "translit": "ába, haótobus! achshav!",
           "pt": "Pai, o ônibus! Agora!"
         },
         {
@@ -1032,14 +1032,14 @@
         {
           "quem": "Dani",
           "he": "תּוֹדָה, אַבָּא! שָׁלוֹם!",
-          "translit": "todá, aba! shalom!",
+          "translit": "todá, ába! shalom!",
           "pt": "Obrigado, pai! Tchau!"
         }
       ],
       "novas": [
         {
           "he": "דָּנִי",
-          "translit": "Dani",
+          "translit": "Dáni",
           "pt": "Dani (nome)"
         },
         {
@@ -1096,7 +1096,7 @@
         {
           "quem": "Dani",
           "he": "שָׁלוֹם, חָבֵר! אַתָּה בָּעִיר?",
-          "translit": "shalom, chaver! atá bair?",
+          "translit": "shalom, chaver! atá baír?",
           "pt": "Oi, amigo! Você está na cidade?"
         },
         {
@@ -1138,7 +1138,7 @@
         },
         {
           "he": "דָּנִי",
-          "translit": "Dani",
+          "translit": "Dáni",
           "pt": "Dani (nome)"
         },
         {
@@ -1189,12 +1189,12 @@
       "tituloPt": "Viagem ao Chile",
       "tipoPt": "Conversa no WhatsApp",
       "revisado": true,
-      "introPt": "A Maya vai viajar, e o Dani quer saber o que vai na mochila. Repare nas palavras de fora, com o gerech.",
+      "introPt": "A Maya está viajando, e o Dani quer saber o que ela levou na mochila. Repare nas palavras de fora, com o gerech.",
       "linhas": [
         {
           "quem": "Maya",
           "he": "דָּנִי, הַיּוֹם אֲנִי בְּצ׳ילה!",
-          "translit": "Dani, hayom aní beTchile!",
+          "translit": "Dáni, hayom aní beTchile!",
           "pt": "Dani, hoje estou no Chile!"
         },
         {
@@ -1236,7 +1236,7 @@
         },
         {
           "he": "דָּנִי",
-          "translit": "Dani",
+          "translit": "Dáni",
           "pt": "Dani (nome)"
         },
         {

@@ -242,7 +242,7 @@ export function normalizeTyped(text: string): string {
  * som, e que a transliteração do curso escreve de um jeito só.
  *
  *   · consoante dobrada vira uma - "imma", "abba" e "shabbat" são o que o
- *     daguesh sugere, e o som é o mesmo de "imá", "abá", "shabat";
+ *     daguesh sugere, e o som é o mesmo de "íma", "ába", "shabat";
  *   · y vira i - "iam", "iom", "tiul" é como se escreve esse som em português,
  *     e o "ii" que isso cria em "tiyul" vira um i só;
  *   · kh vira ch, tz vira ts - as duas convenções de transliteração que o

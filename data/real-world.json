@@ -25,7 +25,7 @@
       "id": "quem-e",
       "fromOrder": 6,
       "sceneType": "conversa",
-      "labelPt": "A pergunta que abre qualquer apresentação",
+      "labelPt": "Quando alguém bate na porta ou liga",
       "he": "מִי",
       "contextPt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém."
     },
@@ -46,12 +46,12 @@
       "contextPt": "Impresso no fim de quase todo cupom fiscal do país."
     },
     {
-      "id": "aula-morá",
+      "id": "aula-more",
       "fromOrder": 12,
       "sceneType": "conversa",
-      "labelPt": "Como se chama o professor, na escola e no ulpan",
+      "labelPt": "Como se chama o professor na escola",
       "he": "מוֹרֶה",
-      "contextPt": "Se você fizer um ulpan em Israel, é assim que vai chamar quem está na frente da sala."
+      "contextPt": "Professor. Se for professora, {{מוֹרָה}}. Na escola as crianças chamam assim quem está na frente da sala; no ulpan, quase sempre se usa o primeiro nome."
     },
     {
       "id": "padaria-lechem",
@@ -67,7 +67,7 @@
       "sceneType": "anuncio",
       "labelPt": "Num anúncio de imóvel",
       "he": "חָדָשׁ",
-      "contextPt": "Aparece em anúncio de tudo: apartamento, carro, cardápio. Quer dizer \"novo\"."
+      "contextPt": "Aparece em anúncio de tudo: prédio, celular, cardápio. Quer dizer \"novo\"; com palavra feminina, como {{דִּירָה}} (apartamento), vira {{חֲדָשָׁה}}."
     },
     {
       "id": "horario-shaa",
@@ -146,7 +146,7 @@
       "sceneType": "vitrine",
       "labelPt": "Na vitrine de uma casa de câmbio",
       "he": "כֶּסֶף",
-      "contextPt": "Dinheiro - e, por acaso, também é a palavra para prata."
+      "contextPt": "Dinheiro - e também prata: o dinheiro de antigamente era prata, e a palavra ficou."
     },
     {
       "id": "livraria-sefer",

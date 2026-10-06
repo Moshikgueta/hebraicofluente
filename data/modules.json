@@ -65,7 +65,7 @@
         { "n": 9, "letters": ["het", "tet"] },
         { "n": 10, "kind": "practice" }
       ],
-      "introPt": "O {{ו}} é a letra mais versátil do alfabeto: sozinha vale V, com um ponto em cima vira o som O, com um ponto no meio vira U. É por causa dela que este módulo abre a porta para metade do vocabulário básico. O {{ח}} traz o primeiro som que o português não tem - o raspado da garganta, como o J espanhol de \"Juan\".",
+      "introPt": "O {{ו}} é a letra mais versátil do alfabeto: sozinha vale V, com um ponto em cima vira o som O, com um ponto no meio vira U. É por causa dela que este módulo abre a porta para metade do vocabulário básico. O {{ח}} traz o primeiro som raspado da garganta - como o R de \"carro\" no sotaque carioca, ou o J espanhol de \"Juan\". Não é o {{ר}}: aquele vibra com voz, este é só ar raspando.",
       "goalsPt": [
         "Ler e escrever {{ו ז ח ט}}",
         "Ler {{ו}} nos três papéis: consoante V, vogal {{וֹ}} (o) e vogal {{וּ}} (u)",
@@ -77,7 +77,7 @@
     {
       "n": 4,
       "id": "mod4",
-      "titlePt": "Sámech, áyin, tsadi e qof",
+      "titlePt": "Sámech, áyin, tsádi e qof",
       "subPt": "as quatro letras de placa e rótulo",
       "letters": ["samekh", "ayin", "tsadi", "qof"],
       "lessons": [
@@ -92,7 +92,7 @@
         "Ler {{עִיר}}, {{אֶרֶץ}}, {{מָקוֹם}} e {{שֶׁקֶט}}",
         "Não confundir {{ס}} com a forma final {{ם}}"
       ],
-      "milestonePt": "No fim deste módulo você lê {{אֶרֶץ}} - \"terra\", \"país\" - a palavra que abre o nome do jornal e o do país."
+      "milestonePt": "No fim deste módulo você lê {{אֶרֶץ}} - \"terra\", \"país\" - a palavra que está no nome do jornal {{הָאָרֶץ}} e na expressão {{אֶרֶץ יִשְׂרָאֵל}}, a Terra de Israel."
     },
     {
       "n": 5,
@@ -130,14 +130,14 @@
         { "n": 22, "topicPt": "As cinco formas finais, juntas pela primeira vez" },
         { "n": 23, "topicPt": "Ler sem nikud, e o fecho do módulo" }
       ],
-      "introPt": "Nenhuma letra nova neste módulo - e ainda assim ele é o que separa quem decora de quem lê. Você já viu as três letras do daguesh com o ponto; agora vai vê-las sem ele, no meio e no fim da palavra, onde o ponto quase nunca aparece. É aqui também que as cinco formas finais deixam de ser curiosidade e viram hábito de leitura.",
+      "introPt": "Nenhuma letra nova neste módulo - e ainda assim ele é o que separa quem decora de quem lê. Você já viu as três letras do daguesh com o ponto; agora vai vê-las sem ele. No começo da palavra elas quase sempre soam b, k, p, como se tivessem o ponto; no fim, praticamente sempre v, ch, f; no meio, depende da palavra, e é preciso conhecê-la. É aqui também que as cinco formas finais deixam de ser curiosidade e viram hábito de leitura.",
       "goalsPt": [
         "Ler {{ב}}, {{כ}} e {{פ}} sem daguesh, do jeito que aparecem na rua",
         "Saber quando o ponto some - e por que isso não é opcional",
         "Reconhecer {{ם ן ך ף ץ}} de relance, sem pensar",
         "Ler {{דֶּרֶךְ}}, {{כֶּסֶף}}, {{סוֹף}} e {{מֶלֶךְ}}"
       ],
-      "milestonePt": "No fim deste módulo você lê uma palavra sem nikud e acerta o som das letras com ponto pelo lugar em que elas estão."
+      "milestonePt": "No fim deste módulo você lê palavras sem nikud: no começo e no fim da palavra, o lugar da letra quase sempre diz o som; no meio, é o conhecimento da palavra que decide."
     },
     {
       "n": 7,

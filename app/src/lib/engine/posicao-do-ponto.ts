@@ -5,17 +5,19 @@
  * seguinte: fora do livro o ponto não é impresso, e o leitor decide o som
  * pelo LUGAR da letra na palavra. A regra (extras.dagesh.rulePt):
  *
- *   · no começo da palavra, e depois de consoante sem vogal (shevá): com o
- *     ponto - B, K, P;
- *   · depois de vogal: sem o ponto - V, CH, F;
+ *   · no começo da palavra, e depois de uma consoante que FECHA a sílaba
+ *     (shevá no meio da palavra, como em מִשְׁפָּחָה): com o ponto - B, K, P;
+ *   · depois de vogal, e também depois de uma letra com shevá no começo da
+ *     palavra ou de um prefixo (בְּבַקָּשָׁה, כְּבָר): sem o ponto - V, CH, F;
  *   · as formas finais ך e ף nunca levam ponto.
  *
  * Tudo aqui sai das palavras que o curso já ensina. Cada palavra é analisada
  * (em que posição a letra está) e conferida contra o ponto que ela TEM no
  * conteúdo: só vira exercício a palavra em que a regra acerta. As que a regra
- * erra porque o ponto dobra a consoante depois de vogal (אַבָּא) vão para um
- * quadro à parte, "quando a regra não basta" - é a verdade da língua, e
- * esconder faria o aluno achar que a regra é lei.
+ * erra porque o ponto dobra a consoante depois de vogal (אַבָּא), e as que
+ * ficam sem o ponto depois do shevá do começo da palavra (בְּבַקָּשָׁה), vão
+ * para um quadro à parte, "quando a regra não basta" - é a verdade da língua,
+ * e esconder faria o aluno achar que a regra é lei.
  */
 
 import type { Exercise } from './types';
@@ -41,7 +43,7 @@ export type Posicao = 'comeco' | 'depois-de-consoante' | 'depois-de-vogal';
 
 export const POSICAO_PT: Record<Posicao, string> = {
   'comeco': 'no começo da palavra',
-  'depois-de-consoante': 'depois de consoante sem vogal (com shevá)',
+  'depois-de-consoante': 'depois de consoante que fecha a sílaba (shevá no meio da palavra)',
   'depois-de-vogal': 'depois de vogal'
 };
 
@@ -101,7 +103,11 @@ export type Classificada = PalavraDoPonto & { analise: Analise };
 /**
  * As palavras boas para o exercício: exatamente UMA letra do ponto (fora as
  * finais), com posição conhecida e a regra acertando. E, à parte, as que a
- * regra erra porque o ponto aparece depois de vogal - o ponto que dobra.
+ * regra erra: o ponto que aparece depois de vogal (o ponto que dobra), e a
+ * letra sem o ponto depois de uma consoante com shevá - o shevá do começo da
+ * palavra, que se diz "e" ou não se diz, não fecha sílaba (בְּבַקָּשָׁה).
+ * Para o quadro das exceções a palavra pode ter mais de uma letra do ponto,
+ * desde que a regra erre em uma só.
  */
 export function classificar(palavras: readonly PalavraDoPonto[]): { certas: Classificada[]; excecoes: Classificada[] } {
   const vistas = new Set<string>();
@@ -112,12 +118,24 @@ export function classificar(palavras: readonly PalavraDoPonto[]): { certas: Clas
     vistas.add(k);
     const todas = clusters(k).filter(g => LETRAS_DO_PONTO.some(l => g[0] === l.he));
     const as = analisar(k);
+    const erradas = as.filter(a => a.previsto !== a.real);
+    const excecao = erradas.length === 1 && as.length === todas.length ? erradas[0]! : null;
+    if (excecao && ((excecao.posicao === 'depois-de-vogal' && excecao.real)
+      || (excecao.posicao === 'depois-de-consoante' && !excecao.real))) {
+      excecoes.push({ ...w, analise: excecao });
+      continue;
+    }
     if (todas.length !== 1 || as.length !== 1) continue;
     const a = as[0]!;
     if (a.previsto === a.real) certas.push({ ...w, analise: a });
-    else if (a.posicao === 'depois-de-vogal' && a.real) excecoes.push({ ...w, analise: a });
   }
   return { certas, excecoes };
+}
+
+/** O grupo (letra + sinais) que a análise olhou - para destacar a letra certa
+ *  quando a palavra tem duas letras do ponto (בְּבַקָּשָׁה). */
+export function grupoAnalisado(w: Classificada): string {
+  return clusters(w.he.normalize('NFC'))[w.analise.indice] ?? w.analise.letra.he;
 }
 
 /** A palavra com o ponto da letra tirado - como ela aparece fora do livro. */
