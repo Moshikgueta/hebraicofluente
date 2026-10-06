@@ -7,7 +7,7 @@
   "palavras": [
     {
       "he": "חֲנוּת",
-      "translit": "chanut",
+      "translit": "chanút",
       "pt": "loja"
     },
     {
@@ -24,10 +24,10 @@
         "מוֹכְרוֹת"
       ],
       "translit": [
-        "mocher",
+        "mochér",
         "mochéret",
-        "mochrim",
-        "mochrot"
+        "mochrím",
+        "mochrót"
       ]
     },
     {
@@ -41,8 +41,8 @@
       "translit": [
         "lokéach",
         "lokáchat",
-        "lokchim",
-        "lokchot"
+        "lokchím",
+        "lokchót"
       ]
     },
     {
@@ -54,10 +54,10 @@
         "מְשַׁלְּמוֹת"
       ],
       "translit": [
-        "meshalem",
+        "meshalém",
         "meshalémet",
-        "meshalmim",
-        "meshalmot"
+        "meshalmím",
+        "meshalmót"
       ]
     },
     {
@@ -67,7 +67,7 @@
     },
     {
       "he": "מִכְנָסַיִם",
-      "translit": "michnasáyim",
+      "translit": "michnassáyim",
       "pt": "calça"
     },
     {
@@ -77,7 +77,7 @@
     },
     {
       "he": "חֲצָאִית",
-      "translit": "chatsait",
+      "translit": "chatsaít",
       "pt": "saia"
     },
     {
@@ -87,7 +87,7 @@
     },
     {
       "he": "מְעִיל",
-      "translit": "meil",
+      "translit": "meíl",
       "pt": "casaco"
     },
     {
@@ -117,7 +117,7 @@
         "צְהֻבָּה"
       ],
       "translit": [
-        "tsahov",
+        "tsahóv",
         "tsehubá"
       ]
     },
@@ -128,7 +128,7 @@
         "וְרֻדָּה"
       ],
       "translit": [
-        "varod",
+        "varód",
         "vrudá"
       ]
     },
@@ -139,7 +139,7 @@
         "אֲפֹרָה"
       ],
       "translit": [
-        "afor",
+        "afór",
         "aforá"
       ]
     },
@@ -161,7 +161,7 @@
         "כְּתֻמָּה"
       ],
       "translit": [
-        "katom",
+        "katóm",
         "ktumá"
       ]
     },
@@ -174,10 +174,10 @@
         "יְקָרוֹת"
       ],
       "translit": [
-        "yakar",
+        "yakár",
         "yekará",
-        "yekarim",
-        "yekarot"
+        "yekarím",
+        "yekarót"
       ]
     },
     {
@@ -191,13 +191,13 @@
       "translit": [
         "zol",
         "zolá",
-        "zolim",
-        "zolot"
+        "zolím",
+        "zolót"
       ]
     },
     {
       "he": "יוֹתֵר",
-      "translit": "yoter",
+      "translit": "yotér",
       "pt": "mais"
     },
     {
@@ -278,37 +278,37 @@
       {
         "quem": "A vendedora",
         "he": "שָׁלוֹם! אֶפְשָׁר לַעֲזוֹר?",
-        "translit": "shalom! efshar laazor?",
+        "translit": "shalóm! efshár laazór?",
         "pt": "Olá! Posso ajudar?"
       },
       {
         "quem": "Noa",
         "he": "כֵּן. כַּמָּה עוֹלָה הַחֻלְצָה הַזֹּאת?",
-        "translit": "ken. kama olá hachultsá hazot?",
+        "translit": "ken. káma olá hachultsá hazót?",
         "pt": "Sim. Quanto custa esta blusa?"
       },
       {
         "quem": "A vendedora",
         "he": "מֵאָה וְעֶשְׂרִים שֶׁקֶל.",
-        "translit": "meá veesrim shékel.",
+        "translit": "meá veesrím shékel.",
         "pt": "Cento e vinte shekels."
       },
       {
         "quem": "Noa",
         "he": "זֶה יָקָר מִדַּי… יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל?",
-        "translit": "ze yakar midái… yesh máshehu yoter zol?",
+        "translit": "ze yakár midái… yesh máshehu yotér zol?",
         "pt": "É caro demais… Tem alguma coisa mais barata?"
       },
       {
         "quem": "A vendedora",
         "he": "הַחֻלְצוֹת הָאֵלֶּה בְּמִבְצָע: שִׁשִּׁים שֶׁקֶל.",
-        "translit": "hachultsot haéle bemivtsá: shishim shékel.",
+        "translit": "hachultsót haéle bemivtsá: shishím shékel.",
         "pt": "Estas blusas estão em promoção: sessenta shekels."
       },
       {
         "quem": "Noa",
         "he": "יֵשׁ בְּכָחֹל?",
-        "translit": "yesh bechachol?",
+        "translit": "yesh bechachól?",
         "pt": "Tem em azul?"
       },
       {
@@ -320,19 +320,19 @@
       {
         "quem": "Noa",
         "he": "מֶדְיוּם. אֶפְשָׁר לִמְדּוֹד?",
-        "translit": "médium. efshar limdód?",
+        "translit": "médium. efshár limdód?",
         "pt": "Médio. Posso experimentar?"
       },
       {
         "quem": "A vendedora",
         "he": "בְּטַח. הַתָּא שָׁם.",
-        "translit": "betach. hatá sham.",
+        "translit": "betách. hatá sham.",
         "pt": "Claro. O provador é ali."
       },
       {
         "quem": "Noa",
         "he": "הִיא קְצָת גְּדוֹלָה. יֵשׁ מִדָּה יוֹתֵר קְטַנָּה?",
-        "translit": "hi ktsat gdolá. yesh midá yoter ktaná?",
+        "translit": "hi ktsat gdolá. yesh midá yotér ktaná?",
         "pt": "Ficou um pouco grande. Tem um tamanho menor?"
       },
       {
@@ -344,7 +344,7 @@
       {
         "quem": "Noa",
         "he": "מְצֻיָּן! אֲנִי לוֹקַחַת אוֹתָהּ. אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?",
-        "translit": "metsuyán! aní lokáchat otá. efshar leshalém bekartís?",
+        "translit": "metsuyán! aní lokáchat otá. efshár leshalém bekartís?",
         "pt": "Ótimo! Vou levar. Dá para pagar no cartão?"
       },
       {
@@ -357,7 +357,7 @@
     "glossario": [
       {
         "he": "לַעֲזוֹר",
-        "translit": "laazor",
+        "translit": "laazór",
         "pt": "ajudar"
       },
       {
@@ -384,22 +384,22 @@
     "linhas": [
       {
         "he": "מִבְצָע! 1+1 עַל כָּל הַגַּרְבַּיִם",
-        "translit": "mivtsá! achat plus achat al kol hagarbáyim",
+        "translit": "mivtsá! achát plus achát al kol hagarbáyim",
         "pt": "Promoção! Leve 2, pague 1 em todas as meias"
       },
       {
         "he": "הֲנָחָה 50% עַל מְעִילִים",
-        "translit": "hanachá chamishim achuz al meilim",
+        "translit": "hanachá chamishím achúz al meilím",
         "pt": "50% de desconto em casacos"
       },
       {
         "he": "רִאשׁוֹן עַד חֲמִישִׁי: 9:00 עַד 20:00",
-        "translit": "rishon ad chamishi: tésha ad esrim",
+        "translit": "rishón ad chamishí: tésha ad esrím",
         "pt": "De domingo a quinta: das 9h às 20h"
       },
       {
         "he": "שִׁשִּׁי: 9:00 עַד 14:00. שַׁבָּת: סָגוּר",
-        "translit": "shishi: tésha ad shtáyim. shabát: sagur",
+        "translit": "shishí: tésha ad shtáyim. shabát: sagúr",
         "pt": "Sexta: das 9h às 14h. Sábado: fechado"
       }
     ],

@@ -7,12 +7,12 @@
   "palavras": [
     {
       "he": "יָנוּאָר",
-      "translit": "yanuar",
+      "translit": "yanuár",
       "pt": "janeiro"
     },
     {
       "he": "פֶבְּרוּאָר",
-      "translit": "februar",
+      "translit": "február",
       "pt": "fevereiro"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "he": "אַפְּרִיל",
-      "translit": "april",
+      "translit": "apríl",
       "pt": "abril"
     },
     {
@@ -32,12 +32,12 @@
     },
     {
       "he": "יוּנִי",
-      "translit": "yuni",
+      "translit": "yúni",
       "pt": "junho"
     },
     {
       "he": "יוּלִי",
-      "translit": "yuli",
+      "translit": "yúli",
       "pt": "julho"
     },
     {
@@ -77,7 +77,7 @@
     },
     {
       "he": "אָבִיב",
-      "translit": "aviv",
+      "translit": "avív",
       "pt": "primavera"
     },
     {
@@ -87,7 +87,7 @@
     },
     {
       "he": "מֶזֶג אֲוִיר",
-      "translit": "mézeg avir",
+      "translit": "mézeg avír",
       "pt": "o tempo (clima do dia)"
     },
     {
@@ -112,7 +112,7 @@
     },
     {
       "he": "יוֹרֵד גֶּשֶׁם",
-      "translit": "yored guéshem",
+      "translit": "yoréd guéshem",
       "pt": "está chovendo"
     },
     {
@@ -137,7 +137,7 @@
     },
     {
       "he": "מָחָר",
-      "translit": "machar",
+      "translit": "machár",
       "pt": "amanhã"
     },
     {
@@ -177,7 +177,7 @@
     },
     {
       "he": "נָכוֹן",
-      "translit": "nachon",
+      "translit": "nachón",
       "pt": "certo, verdade; né?"
     }
   ],
@@ -227,67 +227,67 @@
       {
         "quem": "Dani",
         "he": "נֹעָה, מָתַי יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?",
-        "translit": "Noa, matai yom hahulédet shelach?",
+        "translit": "Nóa, matái yom hahulédet shelách?",
         "pt": "Noa, quando é o seu aniversário?"
       },
       {
         "quem": "Noa",
         "he": "בְּעֶשְׂרִים בְּיוּנִי. לָמָּה?",
-        "translit": "beesrim beyuni. láma?",
+        "translit": "beesrím beyúni. láma?",
         "pt": "Em 20 de junho. Por quê?"
       },
       {
         "quem": "Dani",
         "he": "סְתָם… אֲנִי רוֹצֶה לַעֲשׂוֹת מְסִבָּה בַּיָּם. בְּיוּנִי חַם, נָכוֹן?",
-        "translit": "stam… aní rotsé laasót mesibá bayám. beyuni cham, nachon?",
+        "translit": "stam… aní rotsé laassót messibá bayám. beyúni cham, nachón?",
         "pt": "Por nada… Quero fazer uma festa na praia. Em junho faz calor, né?"
       },
       {
         "quem": "Noa",
         "he": "חַם מְאֹד! יֵשׁ שְׁלוֹשִׁים מַעֲלוֹת.",
-        "translit": "cham meod! yesh shloshim maalót.",
+        "translit": "cham meód! yesh shloshím maalót.",
         "pt": "Muito calor! Faz trinta graus."
       },
       {
         "quem": "Dani",
         "he": "וְאֵין גֶּשֶׁם?",
-        "translit": "veein guéshem?",
+        "translit": "veéin guéshem?",
         "pt": "E não chove?"
       },
       {
         "quem": "Noa",
         "he": "לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף.",
-        "translit": "lo. beYisrael yored guéshem rak bachóref.",
+        "translit": "lo. beYisraél yoréd guéshem rak bachóref.",
         "pt": "Não. Em Israel só chove no inverno."
       },
       {
         "quem": "Dani",
         "he": "וּבִבְרָזִיל בְּיוּנִי זֶה חֹרֶף!",
-        "translit": "uviVrazil beyuni ze chóref!",
+        "translit": "uviVrazíl beyúni ze chóref!",
         "pt": "E no Brasil, junho é inverno!"
       },
       {
         "quem": "Noa",
         "he": "בֶּאֱמֶת? חֹרֶף בְּיוּנִי? מְשֻׁגָּע!",
-        "translit": "beemet? chóref beyuni? meshugá!",
+        "translit": "beemét? chóref beyúni? meshugá!",
         "pt": "Sério? Inverno em junho? Que loucura!"
       },
       {
         "quem": "Dani",
         "he": "כֵּן. בְּיוּלִי קַר לִי בְּסָאוֹ פָּאוּלוֹ.",
-        "translit": "ken. beyuli kar li beSão Paulo.",
+        "translit": "ken. beyúli kar li beSão Paulo.",
         "pt": "É. Em julho eu passo frio em São Paulo."
       },
       {
         "quem": "Noa",
         "he": "וּמָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ?",
-        "translit": "umatai yom hahulédet shelchá?",
+        "translit": "umatái yom hahulédet shelchá?",
         "pt": "E quando é o seu aniversário?"
       },
       {
         "quem": "Dani",
         "he": "בְּדֶצֶמְבֶּר. בַּקַּיִץ שֶׁל בְּרָזִיל!",
-        "translit": "bedetsémber. bakáyits shel Brazil!",
+        "translit": "bedetsémber. bakáyits shel Brazíl!",
         "pt": "Em dezembro. No verão do Brasil!"
       }
     ],
@@ -299,12 +299,12 @@
       },
       {
         "he": "מְסִבָּה",
-        "translit": "mesibá",
+        "translit": "messibá",
         "pt": "festa"
       },
       {
         "he": "בֶּאֱמֶת?",
-        "translit": "beemet?",
+        "translit": "beemét?",
         "pt": "sério? de verdade?"
       },
       {
@@ -321,27 +321,27 @@
     "linhas": [
       {
         "he": "מֶזֶג הָאֲוִיר לְמָחָר",
-        "translit": "mézeg haavir lemachar",
+        "translit": "mézeg haavír lemachár",
         "pt": "O tempo para amanhã"
       },
       {
         "he": "תֵּל אָבִיב: שֶׁמֶשׁ, 28 מַעֲלוֹת",
-        "translit": "Tel Aviv: shémesh, esrim ushmoné maalót",
+        "translit": "Tel Avív: shémesh, esrím ushmoné maalót",
         "pt": "Tel Aviv: sol, 28 graus"
       },
       {
         "he": "יְרוּשָׁלַיִם: מְעֻנָּן, 22 מַעֲלוֹת",
-        "translit": "Yerushaláyim: meunán, esrim ushtáyim maalót",
+        "translit": "Yerushaláyim: meunán, esrím ushtáyim maalót",
         "pt": "Jerusalém: nublado, 22 graus"
       },
       {
         "he": "חֵיפָה: גֶּשֶׁם, 20 מַעֲלוֹת",
-        "translit": "Cháifa: guéshem, esrim maalót",
+        "translit": "Cháifa: guéshem, esrím maalót",
         "pt": "Haifa: chuva, 20 graus"
       },
       {
         "he": "אֵילַת: חַם מְאֹד, 38 מַעֲלוֹת",
-        "translit": "Eilat: cham meod, shloshim ushmoné maalót",
+        "translit": "Eilát: cham meód, shloshím ushmoné maalót",
         "pt": "Eilat: muito calor, 38 graus"
       }
     ],

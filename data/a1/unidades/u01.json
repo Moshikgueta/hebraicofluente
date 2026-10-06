@@ -7,7 +7,7 @@
   "palavras": [
     {
       "he": "שָׁלוֹם",
-      "translit": "shalom",
+      "translit": "shalóm",
       "pt": "olá / tchau / paz"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "he": "מַה שְּׁלוֹמֵךְ?",
-      "translit": "ma shlomech?",
+      "translit": "ma shloméch?",
       "pt": "como vai? (a ela)"
     },
     {
@@ -32,12 +32,12 @@
     },
     {
       "he": "נָעִים מְאֹד",
-      "translit": "naim meod",
+      "translit": "naím meód",
       "pt": "muito prazer"
     },
     {
       "he": "לְהִתְרָאוֹת",
-      "translit": "lehitraot",
+      "translit": "lehitraót",
       "pt": "até logo"
     },
     {
@@ -83,13 +83,13 @@
     },
     {
       "he": "אַתֶּם",
-      "translit": "atem",
+      "translit": "atém",
       "pt": "vocês (eles)",
       "reconhecer": true
     },
     {
       "he": "אַתֶּן",
-      "translit": "aten",
+      "translit": "atén",
       "pt": "vocês (elas)",
       "reconhecer": true
     },
@@ -127,12 +127,12 @@
     },
     {
       "he": "מֵאֵיפֹה אַתָּה?",
-      "translit": "meeifo atá?",
+      "translit": "meéifo atá?",
       "pt": "de onde você é? (a ele)"
     },
     {
       "he": "מֵאֵיפֹה אַתְּ?",
-      "translit": "meeifo at?",
+      "translit": "meéifo at?",
       "pt": "de onde você é? (a ela)"
     },
     {
@@ -142,12 +142,12 @@
     },
     {
       "he": "בְּרָזִיל",
-      "translit": "Brazil",
+      "translit": "Brazíl",
       "pt": "Brasil"
     },
     {
       "he": "יִשְׂרָאֵל",
-      "translit": "Israel",
+      "translit": "Israél",
       "pt": "Israel"
     },
     {
@@ -167,17 +167,17 @@
     },
     {
       "he": "יִשְׂרְאֵלִית",
-      "translit": "israelit",
+      "translit": "israelít",
       "pt": "israelense (f)"
     },
     {
       "he": "סְטוּדֶנְט",
-      "translit": "student",
+      "translit": "stúdent",
       "pt": "estudante (m)"
     },
     {
       "he": "סְטוּדֶנְטִית",
-      "translit": "studentit",
+      "translit": "studentít",
       "pt": "estudante (f)"
     },
     {
@@ -224,37 +224,37 @@
       {
         "quem": "Dani",
         "he": "שָׁלוֹם! אֲנִי דָּנִי. מַה שְּׁמֵךְ?",
-        "translit": "shalom! aní Dani. ma shmech?",
+        "translit": "shalóm! aní Dáni. ma shmech?",
         "pt": "Olá! Eu sou o Dani. Qual é o seu nome?"
       },
       {
         "quem": "Noa",
         "he": "שָׁלוֹם, דָּנִי. שְׁמִי נֹעָה. נָעִים מְאֹד.",
-        "translit": "shalom, Dani. shmi Noa. naim meod.",
+        "translit": "shalóm, Dáni. shmi Nóa. naím meód.",
         "pt": "Olá, Dani. Meu nome é Noa. Muito prazer."
       },
       {
         "quem": "Dani",
         "he": "נָעִים מְאֹד. מֵאֵיפֹה אַתְּ?",
-        "translit": "naim meod. meeifo at?",
+        "translit": "naím meód. meéifo at?",
         "pt": "Muito prazer. De onde você é?"
       },
       {
         "quem": "Noa",
         "he": "אֲנִי מִיִּשְׂרָאֵל. וְאַתָּה?",
-        "translit": "aní miIsrael. veatá?",
+        "translit": "aní miIsraél. veatá?",
         "pt": "Eu sou de Israel. E você?"
       },
       {
         "quem": "Dani",
         "he": "אֲנִי מִבְּרָזִיל. אֲנִי סְטוּדֶנְט.",
-        "translit": "aní miBrazil. aní student.",
+        "translit": "aní miBrazíl. aní stúdent.",
         "pt": "Eu sou do Brasil. Sou estudante."
       },
       {
         "quem": "Noa",
         "he": "גַּם אֲנִי סְטוּדֶנְטִית!",
-        "translit": "gam aní studentit!",
+        "translit": "gam aní studentít!",
         "pt": "Eu também sou estudante!"
       }
     ],

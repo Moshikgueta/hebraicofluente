@@ -12,22 +12,22 @@
     },
     {
       "he": "אַחִים",
-      "translit": "achim",
+      "translit": "achím",
       "pt": "irmãos"
     },
     {
       "he": "אָחוֹת",
-      "translit": "achot",
+      "translit": "achót",
       "pt": "irmã"
     },
     {
       "he": "אֲחָיוֹת",
-      "translit": "achayot",
+      "translit": "achayót",
       "pt": "irmãs"
     },
     {
       "he": "הוֹרִים",
-      "translit": "horim",
+      "translit": "horím",
       "pt": "pais (pai e mãe)"
     },
     {
@@ -42,7 +42,7 @@
     },
     {
       "he": "סַבָּא",
-      "translit": "saba",
+      "translit": "sába",
       "pt": "avô"
     },
     {
@@ -72,7 +72,7 @@
     },
     {
       "he": "חָתוּל",
-      "translit": "chatul",
+      "translit": "chatúl",
       "pt": "gato"
     },
     {
@@ -132,7 +132,7 @@
     },
     {
       "he": "שֶׁלִּי",
-      "translit": "sheli",
+      "translit": "shelí",
       "pt": "meu, minha"
     },
     {
@@ -142,7 +142,7 @@
     },
     {
       "he": "שֶׁלָּךְ",
-      "translit": "shelach",
+      "translit": "shelách",
       "pt": "seu, sua (falando com uma mulher)"
     },
     {
@@ -187,13 +187,13 @@
       {
         "quem": "Tom",
         "he": "נֹעָה, יֵשׁ לָךְ אַחִים?",
-        "translit": "Noa, yesh lach achim?",
+        "translit": "Nóa, yesh lach achím?",
         "pt": "Noa, você tem irmãos?"
       },
       {
         "quem": "Noa",
         "he": "כֵּן, יֵשׁ לִי אָח וְאָחוֹת.",
-        "translit": "ken, yesh li ach veachot.",
+        "translit": "ken, yesh li ach veachót.",
         "pt": "Tenho, um irmão e uma irmã."
       },
       {
@@ -205,25 +205,25 @@
       {
         "quem": "Noa",
         "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
-        "translit": "ze Eitan, haach sheli. hu gar beCháifa.",
+        "translit": "ze Eitán, haách shelí. hu gar beCháifa.",
         "pt": "Este é o Eitan, o meu irmão. Ele mora em Haifa."
       },
       {
         "quem": "Tom",
         "he": "וְיֵשׁ לָךְ כֶּלֶב?",
-        "translit": "veyesh lach kélev?",
+        "translit": "veyésh lach kélev?",
         "pt": "E você tem cachorro?"
       },
       {
         "quem": "Noa",
         "he": "לֹא, אֵין לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ?",
-        "translit": "lo, ein li kélev. yesh li chatul! ulechá?",
+        "translit": "lo, ein li kélev. yesh li chatúl! ulechá?",
         "pt": "Não, não tenho cachorro. Tenho um gato! E você?"
       },
       {
         "quem": "Tom",
         "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל.",
-        "translit": "ein li chatul. aval lahorim sheli yesh kélev gadol.",
+        "translit": "ein li chatúl. avál lahorím shelí yesh kélev gadól.",
         "pt": "Não tenho gato. Mas os meus pais têm um cachorro grande."
       }
     ],
@@ -235,7 +235,7 @@
       },
       {
         "he": "אֵיתָן",
-        "translit": "Eitan",
+        "translit": "Eitán",
         "pt": "Eitan (nome)"
       }
     ]

@@ -19,10 +19,10 @@
         "שׁוֹמְעוֹת"
       ],
       "translit": [
-        "shomea",
+        "shoméa",
         "shomáat",
-        "shomim",
-        "shomot"
+        "shomím",
+        "shomót"
       ]
     },
     {
@@ -34,10 +34,10 @@
         "אוֹמְרוֹת"
       ],
       "translit": [
-        "omer",
+        "omér",
         "oméret",
-        "omrim",
-        "omrot"
+        "omrím",
+        "omrót"
       ]
     },
     {
@@ -49,10 +49,10 @@
         "חוֹשְׁבוֹת"
       ],
       "translit": [
-        "choshev",
+        "choshév",
         "choshévet",
-        "choshvim",
-        "choshvot"
+        "choshvím",
+        "choshvót"
       ]
     },
     {
@@ -66,8 +66,8 @@
       "translit": [
         "sholéach",
         "sholáchat",
-        "sholchim",
-        "sholchot"
+        "sholchím",
+        "sholchót"
       ]
     },
     {
@@ -79,10 +79,10 @@
         "מַזְמִינוֹת"
       ],
       "translit": [
-        "mazmin",
+        "mazmín",
         "mazminá",
-        "mazminim",
-        "mazminot"
+        "mazminím",
+        "mazminót"
       ]
     },
     {
@@ -94,10 +94,10 @@
         "מִצְטַעֲרוֹת"
       ],
       "translit": [
-        "mitstaer",
+        "mitstaér",
         "mitstaéret",
-        "mitstaarim",
-        "mitstaarot"
+        "mitstaarím",
+        "mitstaarót"
       ]
     },
     {
@@ -109,10 +109,10 @@
         "אֲחֵרוֹת"
       ],
       "translit": [
-        "acher",
+        "achér",
         "achéret",
-        "acherim",
-        "acherot"
+        "acherím",
+        "acherót"
       ]
     },
     {
@@ -132,7 +132,7 @@
     },
     {
       "he": "מָתַי נוֹחַ לְךָ?",
-      "translit": "matai nóach lechá?",
+      "translit": "matái nóach lechá?",
       "pt": "quando fica bom para você? (a ele)"
     },
     {
@@ -142,12 +142,12 @@
     },
     {
       "he": "עַכְשָׁיו",
-      "translit": "achshav",
+      "translit": "achsháv",
       "pt": "agora"
     },
     {
       "he": "בְּעוֹד שָׁעָה",
-      "translit": "beod shaá",
+      "translit": "beód shaá",
       "pt": "daqui a uma hora"
     },
     {
@@ -177,12 +177,12 @@
     },
     {
       "he": "מְסִבָּה",
-      "translit": "mesibá",
+      "translit": "messibá",
       "pt": "festa"
     },
     {
       "he": "חֲבָל",
-      "translit": "chaval",
+      "translit": "chavál",
       "pt": "que pena"
     }
   ],
@@ -234,13 +234,13 @@
       {
         "quem": "Dani",
         "he": "הַי מַיָּה, זֶה דָּנִי. מַה נִּשְׁמָע?",
-        "translit": "hai Maya, ze Dani. ma nishmá?",
+        "translit": "hai Máya, ze Dáni. ma nishmá?",
         "pt": "Oi, Maya, é o Dani. Tudo bem?"
       },
       {
         "quem": "Maya",
         "he": "בְּסֵדֶר. מָה קוֹרֶה?",
-        "translit": "beséder. ma koré?",
+        "translit": "besséder. ma koré?",
         "pt": "Tudo. E aí, o que manda?"
       },
       {
@@ -258,25 +258,25 @@
       {
         "quem": "Dani",
         "he": "חֲבָל. אָז מָחָר?",
-        "translit": "chaval. az machar?",
+        "translit": "chavál. az machár?",
         "pt": "Que pena. Então amanhã?"
       },
       {
         "quem": "Maya",
         "he": "מָחָר מַתְאִים לִי. בְּאֵיזוֹ שָׁעָה?",
-        "translit": "machar matím li. beéizo shaá?",
+        "translit": "machár matím li. beéizo shaá?",
         "pt": "Amanhã fica bom para mim. A que horas?"
       },
       {
         "quem": "Dani",
         "he": "הַסֶּרֶט בְּתֵשַׁע. נוֹחַ לָךְ?",
-        "translit": "haséret betésha. nóach lach?",
+        "translit": "hasséret betésha. nóach lach?",
         "pt": "O filme é às nove. Fica bom para você?"
       },
       {
         "quem": "Maya",
         "he": "כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁגַּם נֹעָה רוֹצָה לָבוֹא.",
-        "translit": "ken. vaaní choshévet shegám Noa rotsá lavó.",
+        "translit": "ken. vaaní choshévet shegám Nóa rotsá lavó.",
         "pt": "Fica. E eu acho que a Noa também quer vir."
       },
       {
@@ -288,7 +288,7 @@
       {
         "quem": "Maya",
         "he": "סַבָּבָּה. נִתְרָאֶה מָחָר!",
-        "translit": "sabába. nitraé machar!",
+        "translit": "sabába. nitraé machár!",
         "pt": "Beleza. Até amanhã!"
       },
       {
@@ -327,12 +327,12 @@
     "linhas": [
       {
         "he": "דָּנִי: מָחָר קוֹלְנוֹעַ בְּתֵשַׁע. מִי בָּא?",
-        "translit": "Dani: machar kolnóa betésha. mi ba?",
+        "translit": "Dáni: machár kolnóa betésha. mi ba?",
         "pt": "Dani: Amanhã, cinema às nove. Quem vem?"
       },
       {
         "he": "נֹעָה: אֲנִי! אֲבָל אֲנִי חוֹזֶרֶת מֵהָעֲבוֹדָה בִּשְׁמוֹנֶה וָחֵצִי. אֶפְשָׁר בְּתֵשַׁע וָחֵצִי?",
-        "translit": "Noa: aní! aval aní chozéret mehaavodá bishmoné vachétsi. efshar betésha vachétsi?",
+        "translit": "Nóa: aní! avál aní chozéret mehaavodá bishmoné vachétsi. efshár betésha vachétsi?",
         "pt": "Noa: Eu! Mas eu volto do trabalho às oito e meia. Dá para ser às nove e meia?"
       },
       {
@@ -342,7 +342,7 @@
       },
       {
         "he": "מַיָּה: סַבָּבָּה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ.",
-        "translit": "Maya: sabába. nipaguésh leyád hakolnóa.",
+        "translit": "Máya: sabába. nipaguésh leyád hakolnóa.",
         "pt": "Maya: Beleza. A gente se encontra ao lado do cinema."
       }
     ],

@@ -42,7 +42,7 @@
     },
     {
       "he": "לָכֶן",
-      "translit": "lachen",
+      "translit": "lachén",
       "pt": "para vocês (só mulheres)"
     },
     {
@@ -52,7 +52,7 @@
     },
     {
       "he": "לָהֶן",
-      "translit": "lahen",
+      "translit": "lahén",
       "pt": "para elas"
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "he": "שֶׁלָּכֶן",
-      "translit": "shelachen",
+      "translit": "shelachén",
       "pt": "de vocês (só mulheres)"
     },
     {
@@ -72,12 +72,12 @@
     },
     {
       "he": "שֶׁלָּהֶן",
-      "translit": "shelahen",
+      "translit": "shelahén",
       "pt": "delas"
     },
     {
       "he": "אִתִּי",
-      "translit": "iti",
+      "translit": "ití",
       "pt": "comigo"
     },
     {
@@ -87,17 +87,17 @@
     },
     {
       "he": "אִתָּךְ",
-      "translit": "itach",
+      "translit": "itách",
       "pt": "contigo (f)"
     },
     {
       "he": "אִתּוֹ",
-      "translit": "ito",
+      "translit": "itó",
       "pt": "com ele"
     },
     {
       "he": "אִתָּהּ",
-      "translit": "ita",
+      "translit": "itá",
       "pt": "com ela"
     },
     {
@@ -112,7 +112,7 @@
     },
     {
       "he": "מָתַי?",
-      "translit": "matai?",
+      "translit": "matái?",
       "pt": "quando?"
     },
     {
@@ -122,22 +122,22 @@
     },
     {
       "he": "אֵיךְ קוֹרְאִים לְךָ?",
-      "translit": "eich korim lechá?",
+      "translit": "eich korím lechá?",
       "pt": "como você se chama? (falando com um homem)"
     },
     {
       "he": "אֵיךְ קוֹרְאִים לָךְ?",
-      "translit": "eich korim lach?",
+      "translit": "eich korím lach?",
       "pt": "como você se chama? (falando com uma mulher)"
     },
     {
       "he": "קוֹרְאִים לִי…",
-      "translit": "korim li…",
+      "translit": "korím li…",
       "pt": "eu me chamo…"
     },
     {
       "he": "מִסְפָּר",
-      "translit": "mispar",
+      "translit": "mispár",
       "pt": "número"
     },
     {
@@ -182,19 +182,19 @@
       {
         "quem": "Maya",
         "he": "דָּנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִּי.",
-        "translit": "Dani, zot Shira. hi lomédet iti.",
+        "translit": "Dáni, zot Shíra. hi lomédet ití.",
         "pt": "Dani, esta é a Shira. Ela estuda comigo."
       },
       {
         "quem": "Dani",
         "he": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְּ?",
-        "translit": "naim meod, Shira! meeifo at?",
+        "translit": "naím meód, Shíra! meéifo at?",
         "pt": "Muito prazer, Shira! De onde você é?"
       },
       {
         "quem": "Shira",
         "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָּרָה בְּתֵל אָבִיב.",
-        "translit": "aní meCháifa, aval aní gará beTel Aviv.",
+        "translit": "aní meCháifa, avál aní gará beTél Avív.",
         "pt": "Sou de Haifa, mas moro em Tel Aviv."
       },
       {
@@ -206,19 +206,19 @@
       {
         "quem": "Shira",
         "he": "כֵּן, הַהוֹרִים שֶׁלִּי גָּרִים שָׁם.",
-        "translit": "ken, hahorim sheli garim sham.",
+        "translit": "ken, hahorím shelí garím sham.",
         "pt": "Sim, os meus pais moram lá."
       },
       {
         "quem": "Maya",
         "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?",
-        "translit": "anáchnu shotot kafé. atá rotsé kafé itánu?",
+        "translit": "anáchnu shotót kafé. atá rotsé kafé itánu?",
         "pt": "Nós estamos tomando um café. Você quer um café com a gente?"
       },
       {
         "quem": "Dani",
         "he": "כֵּן! אֲבָל רַק עַד שָׁלוֹשׁ. בְּשָׁלוֹשׁ אֲנִי עוֹבֵד.",
-        "translit": "ken! aval rak ad shalosh. beshalosh aní oved.",
+        "translit": "ken! avál rak ad shalósh. beshalósh aní ovéd.",
         "pt": "Quero! Mas só até as três. Às três eu trabalho."
       },
       {
@@ -230,31 +230,31 @@
       {
         "quem": "Dani",
         "he": "שִׁירָה, מָה מִסְפַּר הַטֶּלֶפוֹן שֶׁלָּךְ?",
-        "translit": "Shira, ma mispar hatélefon shelach?",
+        "translit": "Shíra, ma mispár hatélefon shelách?",
         "pt": "Shira, qual é o número do seu telefone?"
       },
       {
         "quem": "Shira",
         "he": "אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם…",
-        "translit": "éfes chamishim ushtáyim…",
+        "translit": "éfes chamishím ushtáyim…",
         "pt": "Zero cinquenta e dois…"
       },
       {
         "quem": "Maya",
         "he": "דָּנִי!",
-        "translit": "Dani!",
+        "translit": "Dáni!",
         "pt": "Dani!"
       }
     ],
     "glossario": [
       {
         "he": "מִסְפַּר הַטֶּלֶפוֹן",
-        "translit": "mispar hatélefon",
+        "translit": "mispár hatélefon",
         "pt": "o número do telefone (expressão fixa)"
       },
       {
         "he": "שִׁירָה",
-        "translit": "Shira",
+        "translit": "Shíra",
         "pt": "Shira (nome)"
       }
     ]

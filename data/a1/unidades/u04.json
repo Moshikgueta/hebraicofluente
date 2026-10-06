@@ -16,8 +16,8 @@
       "translit": [
         "gar",
         "gará",
-        "garim",
-        "garot"
+        "garím",
+        "garót"
       ]
     },
     {
@@ -29,10 +29,10 @@
         "לוֹמְדוֹת"
       ],
       "translit": [
-        "lomed",
+        "loméd",
         "lomédet",
-        "lomdim",
-        "lomdot"
+        "lomdím",
+        "lomdót"
       ]
     },
     {
@@ -44,10 +44,10 @@
         "עוֹבְדוֹת"
       ],
       "translit": [
-        "oved",
+        "ovéd",
         "ovédet",
-        "ovdim",
-        "ovdot"
+        "ovdím",
+        "ovdót"
       ]
     },
     {
@@ -59,10 +59,10 @@
         "כּוֹתְבוֹת"
       ],
       "translit": [
-        "kotev",
+        "kotév",
         "kotévet",
-        "kotvim",
-        "kotvot"
+        "kotvím",
+        "kotvót"
       ]
     },
     {
@@ -74,15 +74,15 @@
         "מְדַבְּרוֹת"
       ],
       "translit": [
-        "medaber",
+        "medabér",
         "medabéret",
-        "medabrim",
-        "medabrot"
+        "medabrím",
+        "medabrót"
       ]
     },
     {
       "he": "אֵיפֹה?",
-      "translit": "eifo?",
+      "translit": "éifo?",
       "pt": "onde?"
     },
     {
@@ -92,7 +92,7 @@
     },
     {
       "he": "תֵּל אָבִיב",
-      "translit": "Tel Aviv",
+      "translit": "Tel Avív",
       "pt": "Tel Aviv"
     },
     {
@@ -112,17 +112,17 @@
     },
     {
       "he": "עִבְרִית",
-      "translit": "ivrit",
+      "translit": "ivrít",
       "pt": "hebraico"
     },
     {
       "he": "פּוֹרְטוּגֶזִית",
-      "translit": "portugezit",
+      "translit": "portugezít",
       "pt": "português"
     },
     {
       "he": "אַנְגְּלִית",
-      "translit": "anglit",
+      "translit": "anglít",
       "pt": "inglês"
     },
     {
@@ -153,55 +153,55 @@
       {
         "quem": "Noa",
         "he": "טוֹם, אֵיפֹה אַתָּה גָּר?",
-        "translit": "Tom, eifo atá gar?",
+        "translit": "Tom, éifo atá gar?",
         "pt": "Tom, onde você mora?"
       },
       {
         "quem": "Tom",
         "he": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?",
-        "translit": "aní gar biYerushaláyim. veat?",
+        "translit": "aní gar biYerushaláyim. veát?",
         "pt": "Moro em Jerusalém. E você?"
       },
       {
         "quem": "Noa",
         "he": "אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד?",
-        "translit": "aní gará beTel Aviv. atá oved?",
+        "translit": "aní gará beTél Avív. atá ovéd?",
         "pt": "Moro em Tel Aviv. Você trabalha?"
       },
       {
         "quem": "Tom",
         "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ?",
-        "translit": "lo, aní lomed ivrit. veat?",
+        "translit": "lo, aní loméd ivrít. veát?",
         "pt": "Não, estudo hebraico. E você?"
       },
       {
         "quem": "Noa",
         "he": "אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב!",
-        "translit": "aní ovédet. atá medaber ivrit tov!",
+        "translit": "aní ovédet. atá medabér ivrít tov!",
         "pt": "Eu trabalho. Você fala hebraico bem!"
       },
       {
         "quem": "Tom",
         "he": "תּוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
-        "translit": "todá! aní medaber ktsat.",
+        "translit": "todá! aní medabér ktsat.",
         "pt": "Obrigado! Falo um pouco."
       },
       {
         "quem": "Noa",
         "he": "דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית.",
-        "translit": "Dani uMaya gam lomdim ivrit.",
+        "translit": "Dáni uMáya gam lomdím ivrít.",
         "pt": "O Dani e a Maya também estudam hebraico."
       },
       {
         "quem": "Tom",
         "he": "הֵם גָּרִים בִּירוּשָׁלַיִם?",
-        "translit": "hem garim biYerushaláyim?",
+        "translit": "hem garím biYerushaláyim?",
         "pt": "Eles moram em Jerusalém?"
       },
       {
         "quem": "Noa",
         "he": "לֹא, הֵם גָּרִים בְּתֵל אָבִיב.",
-        "translit": "lo, hem garim beTel Aviv.",
+        "translit": "lo, hem garím beTél Avív.",
         "pt": "Não, eles moram em Tel Aviv."
       }
     ],

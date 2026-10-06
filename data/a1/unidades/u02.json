@@ -62,12 +62,12 @@
     },
     {
       "he": "שֻׁלְחָן",
-      "translit": "shulchan",
+      "translit": "shulchán",
       "pt": "mesa"
     },
     {
       "he": "כִּסֵּא",
-      "translit": "kisé",
+      "translit": "kissé",
       "pt": "cadeira"
     },
     {
@@ -122,7 +122,7 @@
     },
     {
       "he": "חָבֵר",
-      "translit": "chaver",
+      "translit": "chavér",
       "pt": "amigo"
     },
     {
@@ -163,7 +163,7 @@
       {
         "quem": "Tom",
         "he": "מַיָּה, מַה זֶּה?",
-        "translit": "Maya, ma ze?",
+        "translit": "Máya, ma ze?",
         "pt": "Maya, o que é isto?"
       },
       {
@@ -175,7 +175,7 @@
       {
         "quem": "Tom",
         "he": "וּמַה זֶּה?",
-        "translit": "uma ze?",
+        "translit": "umá ze?",
         "pt": "E o que é isto?"
       },
       {
@@ -187,25 +187,25 @@
       {
         "quem": "Tom",
         "he": "וּמִי זֹאת?",
-        "translit": "umi zot?",
+        "translit": "umí zot?",
         "pt": "E quem é esta?"
       },
       {
         "quem": "Maya",
         "he": "זֹאת אִמָּא. וְזֶה אַבָּא.",
-        "translit": "zot íma. veze ába.",
+        "translit": "zot íma. vezé ába.",
         "pt": "Esta é a minha mãe. E este é o meu pai."
       },
       {
         "quem": "Tom",
         "he": "וּמִי זֶה?",
-        "translit": "umi ze?",
+        "translit": "umí ze?",
         "pt": "E quem é este?"
       },
       {
         "quem": "Maya",
         "he": "זֶה לֹא אַבָּא, זֶה דָּנִי!",
-        "translit": "ze lo ába, ze Dani!",
+        "translit": "ze lo ába, ze Dáni!",
         "pt": "Este não é o meu pai, é o Dani!"
       }
     ],

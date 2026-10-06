@@ -13,7 +13,7 @@
     },
     {
       "he": "אַחַת",
-      "translit": "achat",
+      "translit": "achát",
       "pt": "1"
     },
     {
@@ -23,7 +23,7 @@
     },
     {
       "he": "שָׁלוֹשׁ",
-      "translit": "shalosh",
+      "translit": "shalósh",
       "pt": "3"
     },
     {
@@ -33,7 +33,7 @@
     },
     {
       "he": "חָמֵשׁ",
-      "translit": "chamesh",
+      "translit": "chamésh",
       "pt": "5"
     },
     {
@@ -58,12 +58,12 @@
     },
     {
       "he": "עֶשֶׂר",
-      "translit": "éser",
+      "translit": "ésser",
       "pt": "10"
     },
     {
       "he": "אַחַת־עֶשְׂרֵה",
-      "translit": "achat-esré",
+      "translit": "achát-esré",
       "pt": "11"
     },
     {
@@ -83,7 +83,7 @@
     },
     {
       "he": "חֲמֵשׁ־עֶשְׂרֵה",
-      "translit": "chamesh-esré",
+      "translit": "chamésh-esré",
       "pt": "15"
     },
     {
@@ -108,42 +108,42 @@
     },
     {
       "he": "עֶשְׂרִים",
-      "translit": "esrim",
+      "translit": "esrím",
       "pt": "20"
     },
     {
       "he": "שְׁלוֹשִׁים",
-      "translit": "shloshim",
+      "translit": "shloshím",
       "pt": "30"
     },
     {
       "he": "אַרְבָּעִים",
-      "translit": "arbaim",
+      "translit": "arbaím",
       "pt": "40"
     },
     {
       "he": "חֲמִשִּׁים",
-      "translit": "chamishim",
+      "translit": "chamishím",
       "pt": "50"
     },
     {
       "he": "שִׁשִּׁים",
-      "translit": "shishim",
+      "translit": "shishím",
       "pt": "60"
     },
     {
       "he": "שִׁבְעִים",
-      "translit": "shivim",
+      "translit": "shivím",
       "pt": "70"
     },
     {
       "he": "שְׁמוֹנִים",
-      "translit": "shmonim",
+      "translit": "shmoním",
       "pt": "80"
     },
     {
       "he": "תִּשְׁעִים",
-      "translit": "tishim",
+      "translit": "tishím",
       "pt": "90"
     },
     {
@@ -153,17 +153,17 @@
     },
     {
       "he": "עֶשְׂרִים וְאַחַת",
-      "translit": "esrim veachat",
+      "translit": "esrím veachát",
       "pt": "21"
     },
     {
       "he": "כַּמָּה?",
-      "translit": "kama?",
+      "translit": "káma?",
       "pt": "quanto? quantos?"
     },
     {
       "he": "כַּמָּה זֶה עוֹלֶה?",
-      "translit": "kama ze olé?",
+      "translit": "káma ze olé?",
       "pt": "quanto custa?"
     },
     {
@@ -173,12 +173,12 @@
     },
     {
       "he": "שְׁקָלִים",
-      "translit": "shkalim",
+      "translit": "shkalím",
       "pt": "shekels"
     },
     {
       "he": "קִילוֹ",
-      "translit": "kilo",
+      "translit": "kílo",
       "pt": "quilo"
     },
     {
@@ -233,22 +233,22 @@
     },
     {
       "he": "סָגוּר",
-      "translit": "sagur",
+      "translit": "sagúr",
       "pt": "fechado"
     },
     {
       "he": "יוֹם רִאשׁוֹן",
-      "translit": "yom rishon",
+      "translit": "yom rishón",
       "pt": "domingo"
     },
     {
       "he": "יוֹם שֵׁנִי",
-      "translit": "yom sheni",
+      "translit": "yom shení",
       "pt": "segunda-feira"
     },
     {
       "he": "יוֹם שְׁלִישִׁי",
-      "translit": "yom shlishi",
+      "translit": "yom shlishí",
       "pt": "terça-feira"
     },
     {
@@ -258,17 +258,17 @@
     },
     {
       "he": "יוֹם חֲמִישִׁי",
-      "translit": "yom chamishi",
+      "translit": "yom chamishí",
       "pt": "quinta-feira"
     },
     {
       "he": "יוֹם שִׁשִּׁי",
-      "translit": "yom shishi",
+      "translit": "yom shishí",
       "pt": "sexta-feira"
     },
     {
       "he": "שַׁבָּת",
-      "translit": "shabat",
+      "translit": "shabát",
       "pt": "sábado"
     }
   ],
@@ -299,31 +299,31 @@
       {
         "quem": "Dani",
         "he": "סְלִיחָה, כַּמָּה עוֹלָה הַגְּבִינָה?",
-        "translit": "slichá, kama olá hagviná?",
+        "translit": "slichá, káma olá hagviná?",
         "pt": "Com licença, quanto custa o queijo?"
       },
       {
         "quem": "Vendedor",
         "he": "שְׁלוֹשִׁים שֶׁקֶל.",
-        "translit": "shloshim shékel.",
+        "translit": "shloshím shékel.",
         "pt": "Trinta shekels."
       },
       {
         "quem": "Dani",
         "he": "וְהַתַּפּוּחִים?",
-        "translit": "vehatapuchim?",
+        "translit": "vehatapuchím?",
         "pt": "E as maçãs?"
       },
       {
         "quem": "Vendedor",
         "he": "עֶשֶׂר שֶׁקֶל לְקִילוֹ.",
-        "translit": "éser shékel lekilo.",
+        "translit": "ésser shékel lekílo.",
         "pt": "Dez shekels o quilo."
       },
       {
         "quem": "Dani",
         "he": "אֲנִי רוֹצֶה קִילוֹ תַּפּוּחִים, בְּבַקָּשָׁה.",
-        "translit": "aní rotsé kilo tapuchim, bevakashá.",
+        "translit": "aní rotsé kílo tapuchím, bevakashá.",
         "pt": "Quero um quilo de maçãs, por favor."
       },
       {
@@ -341,7 +341,7 @@
       {
         "quem": "Vendedor",
         "he": "הַשָּׁעָה אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
-        "translit": "hashaá achat vachétsi. hashuk patúach ad shtáyim.",
+        "translit": "hashaá achát vachétsi. hashúk patúach ad shtáyim.",
         "pt": "É uma e meia. A feira fica aberta até as duas."
       },
       {

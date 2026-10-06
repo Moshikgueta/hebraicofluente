@@ -14,10 +14,10 @@
         "אוֹהֲבוֹת"
       ],
       "translit": [
-        "ohev",
+        "ohév",
         "ohévet",
-        "ohavim",
-        "ohavot"
+        "ohavím",
+        "ohavót"
       ]
     },
     {
@@ -29,10 +29,10 @@
         "צְרִיכוֹת"
       ],
       "translit": [
-        "tsarich",
+        "tsarích",
         "tsrichá",
-        "tsrichim",
-        "tsrichot"
+        "tsrichím",
+        "tsrichót"
       ]
     },
     {
@@ -44,10 +44,10 @@
         "יְכוֹלוֹת"
       ],
       "translit": [
-        "yachol",
+        "yachól",
         "yecholá",
-        "yecholim",
-        "yecholot"
+        "yecholím",
+        "yecholót"
       ]
     },
     {
@@ -59,10 +59,10 @@
         "יוֹדְעוֹת"
       ],
       "translit": [
-        "yodea",
+        "yodéa",
         "yodáat",
-        "yodim",
-        "yodot"
+        "yodím",
+        "yodót"
       ]
     },
     {
@@ -127,7 +127,7 @@
     },
     {
       "he": "לַעֲשׂוֹת",
-      "translit": "laasót",
+      "translit": "laassót",
       "pt": "fazer"
     },
     {
@@ -187,7 +187,7 @@
     },
     {
       "he": "בְּשִׂמְחָה",
-      "translit": "besimchá",
+      "translit": "bessimchá",
       "pt": "com prazer"
     }
   ],
@@ -238,13 +238,13 @@
       {
         "quem": "Maya",
         "he": "דָּנִי, מָה אַתָּה אוֹהֵב לַעֲשׂוֹת בְּשַׁבָּת?",
-        "translit": "Dani, ma atá ohev laasót beshabát?",
+        "translit": "Dáni, ma atá ohév laassót beshabát?",
         "pt": "Dani, o que você gosta de fazer no sábado?"
       },
       {
         "quem": "Dani",
         "he": "אֲנִי אוֹהֵב לְטַיֵּל וְלִשְׂחוֹת.",
-        "translit": "aní ohev letayél velischót.",
+        "translit": "aní ohév letayél velischót.",
         "pt": "Eu gosto de passear e de nadar."
       },
       {
@@ -256,7 +256,7 @@
       {
         "quem": "Dani",
         "he": "כֵּן, בְּשִׂמְחָה! מָתַי?",
-        "translit": "ken, besimchá! matai?",
+        "translit": "ken, bessimchá! matái?",
         "pt": "Sim, com prazer! Quando?"
       },
       {
@@ -268,7 +268,7 @@
       {
         "quem": "Dani",
         "he": "אוֹי, בְּתֵשַׁע אֲנִי לֹא יָכוֹל.",
-        "translit": "oi, betésha aní lo yachol.",
+        "translit": "oi, betésha aní lo yachól.",
         "pt": "Ai, às nove eu não posso."
       },
       {
@@ -280,19 +280,19 @@
       {
         "quem": "Dani",
         "he": "כִּי בְּשַׁבָּת אֲנִי אוֹהֵב לִישׁוֹן עַד עֶשֶׂר!",
-        "translit": "ki beshabát aní ohev lishón ad éser!",
+        "translit": "ki beshabát aní ohév lishón ad ésser!",
         "pt": "Porque no sábado eu gosto de dormir até as dez!"
       },
       {
         "quem": "Maya",
         "he": "אֵין בְּעָיָה. אֲנַחְנוּ יְכוֹלִים לָלֶכֶת בְּאַחַת־עֶשְׂרֵה.",
-        "translit": "ein beayá. anáchnu yecholim laléchet beachat-esré.",
+        "translit": "ein beayá. anáchnu yecholím laléchet beachát-esré.",
         "pt": "Sem problema. A gente pode ir às onze."
       },
       {
         "quem": "Dani",
         "he": "סַבָּבָּה! אֲנִי יוֹדֵעַ לִשְׂחוֹת, אֲבָל לֹא טוֹב…",
-        "translit": "sabába! aní yodéa lischót, aval lo tov…",
+        "translit": "sabába! aní yodéa lischót, avál lo tov…",
         "pt": "Beleza! Eu sei nadar, mas não muito bem…"
       },
       {
@@ -322,7 +322,7 @@
     "linhas": [
       {
         "he": "קוֹרְאִים לִי לִיאַת. אֲנִי גָּרָה בְּחֵיפָה.",
-        "translit": "korim li Liat. aní gará beCháifa.",
+        "translit": "korím li Liát. aní gará beCháifa.",
         "pt": "Eu me chamo Liat. Moro em Haifa."
       },
       {
@@ -337,7 +337,7 @@
       },
       {
         "he": "אֲנִי רוֹצָה לִלְמוֹד פּוֹרְטוּגֶזִית, כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל!",
-        "translit": "aní rotsá lilmód portugezit, ki aní rotsá letayél biVrazil!",
+        "translit": "aní rotsá lilmód portugezít, ki aní rotsá letayél biVrazíl!",
         "pt": "Quero estudar português, porque quero viajar pelo Brasil!"
       }
     ],
@@ -378,7 +378,7 @@
   },
   "cultura": [
     {
-      "tituloPt": "Na praia: o barulho do matkot",
+      "tituloPt": "Na praia: o barulho do matkót",
       "textoPt": "Numa praia israelense você ouve um \"toc, toc\" sem parar: é o מַטְקוֹת, duas raquetes de madeira e uma bolinha, jogado em dupla na beira do mar, sem rede e sem placar. Não tem vencedor: o jogo é não deixar a bola cair."
     }
   ],

@@ -14,10 +14,10 @@
         "אוֹכְלוֹת"
       ],
       "translit": [
-        "ochel",
+        "ochél",
         "ochélet",
-        "ochlim",
-        "ochlot"
+        "ochlím",
+        "ochlót"
       ]
     },
     {
@@ -30,9 +30,9 @@
       ],
       "translit": [
         "koré",
-        "koret",
-        "korim",
-        "korot"
+        "korét",
+        "korím",
+        "korót"
       ]
     },
     {
@@ -46,8 +46,8 @@
       "translit": [
         "shoté",
         "shotá",
-        "shotim",
-        "shotot"
+        "shotím",
+        "shotót"
       ]
     },
     {
@@ -61,8 +61,8 @@
       "translit": [
         "koné",
         "koná",
-        "konim",
-        "konot"
+        "koním",
+        "konót"
       ]
     },
     {
@@ -76,8 +76,8 @@
       "translit": [
         "rotsé",
         "rotsá",
-        "rotsim",
-        "rotsot"
+        "rotsím",
+        "rotsót"
       ]
     },
     {
@@ -97,7 +97,7 @@
     },
     {
       "he": "בֵּיצִים",
-      "translit": "beitsim",
+      "translit": "beitsím",
       "pt": "ovos"
     },
     {
@@ -107,7 +107,7 @@
     },
     {
       "he": "תַּפּוּחִים",
-      "translit": "tapuchim",
+      "translit": "tapuchím",
       "pt": "maçãs"
     },
     {
@@ -117,12 +117,12 @@
     },
     {
       "he": "סָלָט",
-      "translit": "salat",
+      "translit": "salát",
       "pt": "salada"
     },
     {
       "he": "חָלָב",
-      "translit": "chalav",
+      "translit": "chaláv",
       "pt": "leite"
     },
     {
@@ -137,17 +137,17 @@
     },
     {
       "he": "תֵּה",
-      "translit": "té",
+      "translit": "te",
       "pt": "chá"
     },
     {
       "he": "מִטְבָּח",
-      "translit": "mitbach",
+      "translit": "mitbách",
       "pt": "cozinha"
     },
     {
       "he": "מְקָרֵר",
-      "translit": "mekarer",
+      "translit": "mekarér",
       "pt": "geladeira"
     },
     {
@@ -157,7 +157,7 @@
     },
     {
       "he": "עִתּוֹן",
-      "translit": "iton",
+      "translit": "itón",
       "pt": "jornal"
     }
   ],
@@ -187,7 +187,7 @@
       {
         "quem": "Dani",
         "he": "מַיָּה, מָה אַתְּ אוֹכֶלֶת?",
-        "translit": "Maya, ma at ochélet?",
+        "translit": "Máya, ma at ochélet?",
         "pt": "Maya, o que você está comendo?"
       },
       {
@@ -199,13 +199,13 @@
       {
         "quem": "Dani",
         "he": "כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב?",
-        "translit": "ken, todá. eifo hechalav?",
+        "translit": "ken, todá. éifo hechaláv?",
         "pt": "Quero, obrigado. Onde está o leite?"
       },
       {
         "quem": "Maya",
         "he": "הֶחָלָב בַּמְקָרֵר.",
-        "translit": "hechalav bamekarer.",
+        "translit": "hechaláv bamekarér.",
         "pt": "O leite está na geladeira."
       },
       {
@@ -217,13 +217,13 @@
       {
         "quem": "Maya",
         "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
-        "translit": "lo, aní lo shotá kafé. aní shotá té.",
+        "translit": "lo, aní lo shotá kafé. aní shotá te.",
         "pt": "Não, não bebo café. Bebo chá."
       },
       {
         "quem": "Dani",
         "he": "וּמִי קוֹנֶה אֶת הַלֶּחֶם?",
-        "translit": "umi koné et haléchem?",
+        "translit": "umí koné et haléchem?",
         "pt": "E quem compra o pão?"
       },
       {

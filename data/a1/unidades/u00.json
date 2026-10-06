@@ -4,7 +4,7 @@
   "tituloPt": "Antes de começar: os sons e as palavras do primeiro dia",
   "objetivoPt": "Pronunciar os sons que mais confundem brasileiros, saber onde cai a força da palavra, e reconhecer as expressões que você ouve no primeiro dia em Israel.",
   "situacaoPt": "Primeira manhã em Tel Aviv. O Dani, que é brasileiro, entra num café perto do hostel. A Maya trabalha no balcão. Ele já sabe ler as letras; agora precisa fazer o hebraico sair da boca do jeito que um israelense entende.",
-  "notaPt": "Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA. Na transliteração (as letras latinas que acompanham o hebraico): s é sempre S, nunca Z (beséder); m e n no fim da palavra são consoantes e não nasalizam (shalom termina com a boca fechada no M); ch é o R raspado do ח e do כ, nunca o CH de \"chave\"; r é sempre o ר, feito no fundo da boca, mesmo no começo da palavra.",
+  "notaPt": "Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA. Na transliteração (as letras latinas que acompanham o hebraico): toda palavra de duas sílabas ou mais leva acento na vogal da sílaba forte (todá, bóker), e a de uma sílaba não leva (tov); s é sempre S, nunca Z, e por isso entre vogais vem dobrado, ss (kissé, cadeira); m e n no fim da palavra são consoantes e não nasalizam (shalóm termina com a boca fechada no M); ch é o R raspado do ח e do כ, nunca o CH de \"chave\"; r é sempre o ר, feito no fundo da boca, mesmo no começo da palavra.",
   "palavras": [
     {
       "he": "תּוֹדָה",
@@ -28,7 +28,7 @@
     },
     {
       "he": "בְּסֵדֶר",
-      "translit": "beséder",
+      "translit": "besséder",
       "pt": "tudo bem, ok"
     },
     {
@@ -68,7 +68,7 @@
     },
     {
       "he": "שַׁבָּת שָׁלוֹם",
-      "translit": "shabat shalom",
+      "translit": "shabát shalóm",
       "pt": "bom shabat (de sexta, já de manhã, até sábado)"
     },
     {
@@ -135,7 +135,7 @@
     },
     {
       "tituloPt": "A força da palavra: em geral na última sílaba",
-      "textoPt": "Na maioria das palavras, a sílaba forte é a última: to-DÁ, sha-LOM, be-va-ka-SHÁ. Mas muitas palavras do dia a dia têm a força na penúltima. O grupo mais comum é o de בֹּקֶר, עֶרֶב, סֵדֶר, רֶגַע: duas sílabas, a última com ֶ (ou com ַ quando há ח, ע ou ה, como em רֶגַע). Nessas, a força vai na penúltima: BÓ-ker, É-rev, be-SÉ-der, RÉ-ga. Também têm a força na penúltima as palavras que terminam em ־ַיִם e ־ַיִת (máyim, báyit), gírias como yála e sabába, e muitas palavras estrangeiras (télefon). Na transliteração, o acento mostra a sílaba forte sempre que o português leria outra.",
+      "textoPt": "Na maioria das palavras, a sílaba forte é a última: to-DÁ, sha-LOM, be-va-ka-SHÁ. Mas muitas palavras do dia a dia têm a força na penúltima. O grupo mais comum é o de בֹּקֶר, עֶרֶב, סֵדֶר, רֶגַע: duas sílabas, a última com ֶ (ou com ַ quando há ח, ע ou ה, como em רֶגַע). Nessas, a força vai na penúltima: BÓ-ker, É-rev, be-SÉ-der, RÉ-ga. Também têm a força na penúltima as palavras que terminam em ־ַיִם e ־ַיִת (máyim, báyit), gírias como yála e sabába, e muitas palavras estrangeiras (télefon). Na transliteração, toda palavra de duas sílabas ou mais leva acento na sílaba forte, no fim (todá, shalóm) ou na penúltima (bóker, máyim); palavra de uma sílaba não leva (tov, ken).",
       "erroPt": "O português põe a força na penúltima, e o ouvido brasileiro lê תּוֹדָה como a palavra \"toda\" (TÓ-da). Em hebraico é to-DÁ. O mesmo com מוֹרָה (professora): é mo-RÁ, não \"mora\"."
     }
   ],
@@ -151,7 +151,7 @@
       {
         "quem": "Dani",
         "he": "בְּסֵדֶר, תּוֹדָה.",
-        "translit": "beséder, todá.",
+        "translit": "besséder, todá.",
         "pt": "Tudo bem, obrigado."
       },
       {
@@ -187,7 +187,7 @@
       {
         "quem": "Dani",
         "he": "יוֹפִי. יַאלְלָה, שָׁלוֹם!",
-        "translit": "yófi. yála, shalom!",
+        "translit": "yófi. yála, shalóm!",
         "pt": "Ótimo. Bom, tchau!"
       }
     ],
@@ -209,7 +209,7 @@
       },
       {
         "he": "שָׁלוֹם",
-        "translit": "shalom",
+        "translit": "shalóm",
         "pt": "olá / tchau"
       }
     ],
@@ -235,7 +235,7 @@
       },
       {
         "he": "שַׁבָּת שָׁלוֹם לְכֻלָּם!",
-        "translit": "shabat shalom lechulám!",
+        "translit": "shabát shalóm lechulám!",
         "pt": "Bom shabat para todos!"
       }
     ],
@@ -272,11 +272,11 @@
   },
   "cultura": [
     {
-      "tituloPt": "Sababa, yalla e o hebraico da rua",
+      "tituloPt": "Sabába, yála e o hebraico da rua",
       "textoPt": "סַבָּבָּה e יַאלְלָה vieram do árabe e todo israelense usa, de criança a ministro, mas entre conhecidos e em situação informal. No banco ou com um médico, prefira בְּסֵדֶר e תּוֹדָה. E יַאלְלָה muda de sentido com o tom: \"vamos!\", \"anda logo!\" ou \"bom, tchau\"."
     },
     {
-      "tituloPt": "Shabat shalom",
+      "tituloPt": "Shabát shalóm",
       "textoPt": "O shabat começa na sexta ao pôr do sol e vai até sábado à noite. De sexta (já de manhã) até sábado você ouve שַׁבָּת שָׁלוֹם no mercado, na padaria, no trabalho, de gente religiosa ou não. É um \"bom fim de semana\" com mais peso."
     }
   ],

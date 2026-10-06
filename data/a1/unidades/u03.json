@@ -14,10 +14,10 @@
         "גְּדוֹלוֹת"
       ],
       "translit": [
-        "gadol",
+        "gadól",
         "gdolá",
-        "gdolim",
-        "gdolot"
+        "gdolím",
+        "gdolót"
       ]
     },
     {
@@ -29,10 +29,10 @@
         "קְטַנּוֹת"
       ],
       "translit": [
-        "katan",
+        "katán",
         "ktaná",
-        "ktanim",
-        "ktanot"
+        "ktaním",
+        "ktanót"
       ]
     },
     {
@@ -44,10 +44,10 @@
         "חֲדָשׁוֹת"
       ],
       "translit": [
-        "chadash",
+        "chadásh",
         "chadashá",
-        "chadashim",
-        "chadashot"
+        "chadashím",
+        "chadashót"
       ]
     },
     {
@@ -59,10 +59,10 @@
         "יְשָׁנוֹת"
       ],
       "translit": [
-        "yashan",
+        "yashán",
         "yeshaná",
-        "yeshanim",
-        "yeshanot"
+        "yeshaním",
+        "yeshanót"
       ]
     },
     {
@@ -76,8 +76,8 @@
       "translit": [
         "yafé",
         "yafá",
-        "yafim",
-        "yafot"
+        "yafím",
+        "yafót"
       ]
     },
     {
@@ -91,8 +91,8 @@
       "translit": [
         "tov",
         "tová",
-        "tovim",
-        "tovot"
+        "tovím",
+        "tovót"
       ]
     },
     {
@@ -104,10 +104,10 @@
         "נֶחְמָדוֹת"
       ],
       "translit": [
-        "nechmad",
+        "nechmád",
         "nechmadá",
-        "nechmadim",
-        "nechmadot"
+        "nechmadím",
+        "nechmadót"
       ]
     },
     {
@@ -117,7 +117,7 @@
         "אֲדֻמָּה"
       ],
       "translit": [
-        "adom",
+        "adóm",
         "adumá"
       ]
     },
@@ -128,7 +128,7 @@
         "כְּחֻלָּה"
       ],
       "translit": [
-        "kachol",
+        "kachól",
         "kchulá"
       ]
     },
@@ -139,7 +139,7 @@
         "לְבָנָה"
       ],
       "translit": [
-        "lavan",
+        "laván",
         "levaná"
       ]
     },
@@ -150,7 +150,7 @@
         "שְׁחֹרָה"
       ],
       "translit": [
-        "shachor",
+        "shachór",
         "shchorá"
       ]
     },
@@ -161,7 +161,7 @@
         "יְרֻקָּה"
       ],
       "translit": [
-        "yarok",
+        "yarók",
         "yeruká"
       ]
     },
@@ -182,12 +182,12 @@
     },
     {
       "he": "אַתֶּם",
-      "translit": "atem",
+      "translit": "atém",
       "pt": "vocês (eles)"
     },
     {
       "he": "אַתֶּן",
-      "translit": "aten",
+      "translit": "atén",
       "pt": "vocês (elas)"
     },
     {
@@ -202,12 +202,12 @@
     },
     {
       "he": "אֲבָל",
-      "translit": "aval",
+      "translit": "avál",
       "pt": "mas"
     },
     {
       "he": "מְאֹד",
-      "translit": "meod",
+      "translit": "meód",
       "pt": "muito"
     }
   ],
@@ -242,43 +242,43 @@
       {
         "quem": "Natan",
         "he": "מַיָּה, זֶה הַבַּיִת הֶחָדָשׁ?",
-        "translit": "Maya, ze habáyit hechadash?",
+        "translit": "Máya, ze habáyit hechadásh?",
         "pt": "Maya, esta é a casa nova?"
       },
       {
         "quem": "Maya",
         "he": "כֵּן! הַבַּיִת קָטָן, אֲבָל יָפֶה.",
-        "translit": "ken! habáyit katan, aval yafé.",
+        "translit": "ken! habáyit katán, avál yafé.",
         "pt": "Sim! A casa é pequena, mas bonita."
       },
       {
         "quem": "Natan",
         "he": "הַשֻּׁלְחָן חָדָשׁ?",
-        "translit": "hashulchan chadash?",
+        "translit": "hashulchán chadásh?",
         "pt": "A mesa é nova?"
       },
       {
         "quem": "Maya",
         "he": "לֹא, הַשֻּׁלְחָן יָשָׁן. אֲבָל הַכִּסְאוֹת חֲדָשִׁים!",
-        "translit": "lo, hashulchan yashan. aval hakisot chadashim!",
+        "translit": "lo, hashulchán yashán. avál hakissót chadashím!",
         "pt": "Não, a mesa é velha. Mas as cadeiras são novas!"
       },
       {
         "quem": "Natan",
         "he": "וּמָה אֵלֶּה?",
-        "translit": "uma éle?",
+        "translit": "umá éle?",
         "pt": "E o que são estas?"
       },
       {
         "quem": "Maya",
         "he": "אֵלֶּה מַתָּנוֹת. הֵן מִנֹּעָה וּמִדָּנִי.",
-        "translit": "éle matanot. hen miNoa umiDani.",
+        "translit": "éle matanót. hen miNóa umiDáni.",
         "pt": "São presentes. São da Noa e do Dani."
       },
       {
         "quem": "Natan",
         "he": "הַמְּנוֹרָה הָאֲדֻמָּה יָפָה מְאֹד!",
-        "translit": "hamenorá haadumá yafá meod!",
+        "translit": "hamenorá haadumá yafá meód!",
         "pt": "A luminária vermelha é muito bonita!"
       },
       {
@@ -296,7 +296,7 @@
       },
       {
         "he": "כִּסְאוֹת",
-        "translit": "kisot",
+        "translit": "kissót",
         "pt": "cadeiras (plural de כִּסֵּא)"
       }
     ]

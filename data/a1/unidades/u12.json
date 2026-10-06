@@ -24,10 +24,10 @@
         "נוֹסְעוֹת"
       ],
       "translit": [
-        "nosea",
-        "nosáat",
-        "nosim",
-        "nosot"
+        "nosséa",
+        "nossáat",
+        "nossím",
+        "nossót"
       ]
     },
     {
@@ -41,13 +41,13 @@
       "translit": [
         "poné",
         "poná",
-        "ponim",
-        "ponot"
+        "poním",
+        "ponót"
       ]
     },
     {
       "he": "יָשָׁר",
-      "translit": "yashar",
+      "translit": "yashár",
       "pt": "reto, em frente"
     },
     {
@@ -62,17 +62,17 @@
     },
     {
       "he": "קָרוֹב",
-      "translit": "karov",
+      "translit": "karóv",
       "pt": "perto"
     },
     {
       "he": "רָחוֹק",
-      "translit": "rachok",
+      "translit": "rachók",
       "pt": "longe"
     },
     {
       "he": "רְחוֹב",
-      "translit": "rechov",
+      "translit": "rechóv",
       "pt": "rua"
     },
     {
@@ -82,7 +82,7 @@
     },
     {
       "he": "רַמְזוֹר",
-      "translit": "ramzor",
+      "translit": "ramzór",
       "pt": "semáforo"
     },
     {
@@ -92,7 +92,7 @@
     },
     {
       "he": "הַתַּחֲנָה הַמֶּרְכָּזִית",
-      "translit": "hatachaná hamerkazit",
+      "translit": "hatachaná hamerkazít",
       "pt": "a rodoviária central"
     },
     {
@@ -112,7 +112,7 @@
     },
     {
       "he": "מוֹנִית",
-      "translit": "monit",
+      "translit": "monít",
       "pt": "táxi"
     },
     {
@@ -183,13 +183,13 @@
       {
         "quem": "Tom",
         "he": "סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה הַמֶּרְכָּזִית?",
-        "translit": "slichá, eich maguiím latachaná hamerkazit?",
+        "translit": "slichá, eich maguiím latachaná hamerkazít?",
         "pt": "Com licença, como se chega à rodoviária central?"
       },
       {
         "quem": "A senhora",
         "he": "זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל?",
-        "translit": "ze rachok. atá holech baréguel?",
+        "translit": "ze rachók. atá holéch baréguel?",
         "pt": "É longe. Você vai a pé?"
       },
       {
@@ -201,31 +201,31 @@
       {
         "quem": "A senhora",
         "he": "אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם פּוֹנֶה שְׂמֹאלָה.",
-        "translit": "az atá holech yashar ad haramzor, vesham poné smóla.",
+        "translit": "az atá holéch yashár ad haramzór, veshám poné smóla.",
         "pt": "Então você vai reto até o semáforo, e lá vira à esquerda."
       },
       {
         "quem": "Tom",
         "he": "יָשָׁר, וְאָז שְׂמֹאלָה. וְאַחַר כָּךְ?",
-        "translit": "yashar, veaz smóla. veachar kach?",
+        "translit": "yashár, veáz smóla. veachár kach?",
         "pt": "Reto, e depois à esquerda. E depois?"
       },
       {
         "quem": "A senhora",
         "he": "אַחַר כָּךְ יָמִינָה, וְהַתַּחֲנָה מוּל הַבַּנְק. אֲבָל זֶה עֶשְׂרִים דַּקּוֹת.",
-        "translit": "achar kach yamína, vehatachaná mul habank. aval ze esrim dakót.",
+        "translit": "achár kach yamína, vehatachaná mul habánk. avál ze esrím dakót.",
         "pt": "Depois à direita, e a rodoviária fica em frente ao banco. Mas são vinte minutos."
       },
       {
         "quem": "Tom",
         "he": "עֶשְׂרִים דַּקּוֹת? יֵשׁ אוֹטוֹבּוּס?",
-        "translit": "esrim dakót? yesh ótobus?",
+        "translit": "esrím dakót? yesh ótobus?",
         "pt": "Vinte minutos? Tem ônibus?"
       },
       {
         "quem": "A senhora",
         "he": "כֵּן, קַו חָמֵשׁ. הַתַּחֲנָה פֹּה, בַּפִּנָּה.",
-        "translit": "ken, kav chamesh. hatachaná po, bapiná.",
+        "translit": "ken, kav chamésh. hatachaná po, bapiná.",
         "pt": "Tem, a linha 5. O ponto é aqui, na esquina."
       },
       {
@@ -237,7 +237,7 @@
       {
         "quem": "A senhora",
         "he": "בְּבַקָּשָׁה. נְסִיעָה טוֹבָה!",
-        "translit": "bevakashá. nesiá tová!",
+        "translit": "bevakashá. nessiá tová!",
         "pt": "De nada. Boa viagem!"
       }
     ],
@@ -249,7 +249,7 @@
       },
       {
         "he": "נְסִיעָה טוֹבָה",
-        "translit": "nesiá tová",
+        "translit": "nessiá tová",
         "pt": "boa viagem"
       }
     ],
@@ -261,7 +261,7 @@
     "linhas": [
       {
         "he": "מֵהָרַכֶּבֶת אַתָּה הוֹלֵךְ יָשָׁר עַד הַסּוּפֶּרְמַרְקֶט.",
-        "translit": "meharakévet atá holech yashar ad hasupermárket.",
+        "translit": "meharakévet atá holéch yashár ad hassupermárket.",
         "pt": "Do trem você vai reto até o supermercado."
       },
       {
@@ -271,12 +271,12 @@
       },
       {
         "he": "הַבַּיִת שֶׁלִּי בִּרְחוֹב הֶרְצְל 12, מוּל הַבַּנְק.",
-        "translit": "habáyit sheli birchov Hertsl shteim-esré, mul habank.",
+        "translit": "habáyit shelí birchóv Hértsl shteim-esré, mul habánk.",
         "pt": "A minha casa fica na rua Herzl, 12, em frente ao banco."
       },
       {
         "he": "זֶה קָרוֹב, חָמֵשׁ דַּקּוֹת בָּרֶגֶל!",
-        "translit": "ze karov, chamesh dakót baréguel!",
+        "translit": "ze karóv, chamésh dakót baréguel!",
         "pt": "É perto, cinco minutos a pé!"
       }
     ],

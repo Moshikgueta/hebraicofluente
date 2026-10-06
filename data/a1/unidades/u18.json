@@ -17,7 +17,7 @@
     },
     {
       "he": "גָּרוֹן",
-      "translit": "garon",
+      "translit": "garón",
       "pt": "garganta"
     },
     {
@@ -59,10 +59,10 @@
         "כּוֹאֲבוֹת"
       ],
       "translit": [
-        "koev",
+        "koév",
         "koévet",
-        "koavim",
-        "koavot"
+        "koavím",
+        "koavót"
       ]
     },
     {
@@ -74,10 +74,10 @@
         "מַרְגִּישׁוֹת"
       ],
       "translit": [
-        "margish",
+        "margísh",
         "margishá",
-        "margishim",
-        "margishot"
+        "margishím",
+        "margishót"
       ]
     },
     {
@@ -91,8 +91,8 @@
       "translit": [
         "cholé",
         "cholá",
-        "cholim",
-        "cholot"
+        "cholím",
+        "cholót"
       ]
     },
     {
@@ -102,7 +102,7 @@
     },
     {
       "he": "כְּאֵב רֹאשׁ",
-      "translit": "keev rosh",
+      "translit": "keév rosh",
       "pt": "dor de cabeça"
     },
     {
@@ -112,7 +112,7 @@
     },
     {
       "he": "כַּדּוּר",
-      "translit": "kadur",
+      "translit": "kadúr",
       "pt": "comprimido; bola"
     },
     {
@@ -122,7 +122,7 @@
     },
     {
       "he": "קֻפַּת חוֹלִים",
-      "translit": "kupat cholim",
+      "translit": "kupát cholím",
       "pt": "plano de saúde israelense"
     },
     {
@@ -187,13 +187,13 @@
       {
         "quem": "A farmacêutica",
         "he": "שָׁלוֹם, אֵיךְ אֶפְשָׁר לַעֲזוֹר?",
-        "translit": "shalóm, eich efshar laazor?",
+        "translit": "shalóm, eich efshár laazór?",
         "pt": "Olá, como posso ajudar?"
       },
       {
         "quem": "Noa",
         "he": "שָׁלוֹם. אֲנִי מַרְגִּישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן.",
-        "translit": "shalóm. aní margishá lo tov. koev li harosh, vegam hagaron.",
+        "translit": "shalóm. aní margishá lo tov. koév li harósh, vegám hagarón.",
         "pt": "Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também."
       },
       {
@@ -205,7 +205,7 @@
       {
         "quem": "Noa",
         "he": "כֵּן, קְצָת. שְׁלוֹשִׁים וּשְׁמוֹנֶה.",
-        "translit": "ken, ktsat. shloshim ushmoné.",
+        "translit": "ken, ktsat. shloshím ushmoné.",
         "pt": "Estou, um pouco. Trinta e oito."
       },
       {
@@ -217,25 +217,25 @@
       {
         "quem": "Noa",
         "he": "מָה אֲנִי צְרִיכָה לַעֲשׂוֹת?",
-        "translit": "ma aní tsrichá laasót?",
+        "translit": "ma aní tsrichá laassót?",
         "pt": "O que eu preciso fazer?"
       },
       {
         "quem": "A farmacêutica",
         "he": "צָרִיךְ לִשְׁתּוֹת הַרְבֵּה מַיִם וְלָנוּחַ. הִנֵּה כַּדּוּרִים נֶגֶד כְּאֵב רֹאשׁ.",
-        "translit": "tsarich lishtót harbé máyim velanúach. hiné kadurim néged keev rosh.",
+        "translit": "tsarích lishtót harbé máyim velanúach. hiné kadurím néged keév rosh.",
         "pt": "É preciso beber bastante água e descansar. Aqui estão comprimidos para dor de cabeça."
       },
       {
         "quem": "Noa",
         "he": "כַּמָּה פְּעָמִים בַּיּוֹם?",
-        "translit": "kama peamim bayom?",
+        "translit": "káma peamím bayóm?",
         "pt": "Quantas vezes por dia?"
       },
       {
         "quem": "A farmacêutica",
         "he": "שָׁלוֹשׁ פְּעָמִים בַּיּוֹם, אַחֲרֵי הָאֹכֶל. וְאִם זֶה לֹא עוֹבֵר, צָרִיךְ לָלֶכֶת לָרוֹפֵא.",
-        "translit": "shalosh peamim bayom, acharei haóchel. veim ze lo over, tsarich laléchet larofé.",
+        "translit": "shalósh peamím bayóm, acharéi haóchel. veím ze lo ovér, tsarích laléchet larofé.",
         "pt": "Três vezes por dia, depois da comida. E se não passar, é preciso ir ao médico."
       },
       {
@@ -269,7 +269,7 @@
       },
       {
         "he": "פְּעָמִים",
-        "translit": "peamim",
+        "translit": "peamím",
         "pt": "vezes"
       },
       {
@@ -279,7 +279,7 @@
       },
       {
         "he": "עוֹבֵר",
-        "translit": "over",
+        "translit": "ovér",
         "pt": "passa"
       }
     ]
@@ -290,7 +290,7 @@
     "linhas": [
       {
         "he": "שָׁלוֹם רוֹנִית,",
-        "translit": "shalóm Ronit,",
+        "translit": "shalóm Ronít,",
         "pt": "Olá, Ronit,"
       },
       {
@@ -300,22 +300,22 @@
       },
       {
         "he": "יֵשׁ לִי חֹם, וְכוֹאֵב לִי הַגָּרוֹן.",
-        "translit": "yesh li chom, vechoev li hagaron.",
+        "translit": "yesh li chom, vechoév li hagarón.",
         "pt": "Estou com febre e com dor de garganta."
       },
       {
         "he": "מָחָר בַּבֹּקֶר יֵשׁ לִי תּוֹר לָרוֹפֵא.",
-        "translit": "machar babóker yesh li tor larofé.",
+        "translit": "machár babóker yesh li tor larofé.",
         "pt": "Amanhã de manhã tenho consulta no médico."
       },
       {
         "he": "סְלִיחָה, נֹעָה",
-        "translit": "slichá, Noa",
+        "translit": "slichá, Nóa",
         "pt": "Desculpe, Noa"
       },
       {
         "he": "רוֹנִית: רְפוּאָה שְׁלֵמָה, נֹעָה!",
-        "translit": "Ronit: refuá shlemá, Noa!",
+        "translit": "Ronít: refuá shlemá, Nóa!",
         "pt": "Ronit: Melhoras, Noa!"
       }
     ],
@@ -359,7 +359,7 @@
   },
   "cultura": [
     {
-      "tituloPt": "Kupat cholim, 101 e \"refuá shlemá\"",
+      "tituloPt": "Kupát cholím, 101 e \"refuá shlemá\"",
       "textoPt": "Todo morador de Israel é ligado a uma קֻפַּת חוֹלִים, um dos planos de saúde do sistema público, e marca as consultas por aplicativo ou telefone. Turista precisa de seguro-viagem. Em emergência, o número da ambulância é 101 (a polícia é 100, os bombeiros, 102). E a quem está doente se deseja רְפוּאָה שְׁלֵמָה, \"uma cura completa\"."
     }
   ],

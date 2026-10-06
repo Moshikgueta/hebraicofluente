@@ -28,13 +28,13 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Objetivo:** Pronunciar os sons que mais confundem brasileiros, saber onde cai a força da palavra, e reconhecer as expressões que você ouve no primeiro dia em Israel.
 
-**Nota:** Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA. Na transliteração (as letras latinas que acompanham o hebraico): s é sempre S, nunca Z (beséder); m e n no fim da palavra são consoantes e não nasalizam (shalom termina com a boca fechada no M); ch é o R raspado do ח e do כ, nunca o CH de "chave"; r é sempre o ר, feito no fundo da boca, mesmo no começo da palavra.
+**Nota:** Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA. Na transliteração (as letras latinas que acompanham o hebraico): toda palavra de duas sílabas ou mais leva acento na vogal da sílaba forte (todá, bóker), e a de uma sílaba não leva (tov); s é sempre S, nunca Z, e por isso entre vogais vem dobrado, ss (kissé, cadeira); m e n no fim da palavra são consoantes e não nasalizam (shalóm termina com a boca fechada no M); ch é o R raspado do ח e do כ, nunca o CH de "chave"; r é sempre o ר, feito no fundo da boca, mesmo no começo da palavra.
 
 **A situação:** Primeira manhã em Tel Aviv. O Dani, que é brasileiro, entra num café perto do hostel. A Maya trabalha no balcão. Ele já sabe ler as letras; agora precisa fazer o hebraico sair da boca do jeito que um israelense entende.
 
-**Em Israel · Sababa, yalla e o hebraico da rua:** סַבָּבָּה e יַאלְלָה vieram do árabe e todo israelense usa, de criança a ministro, mas entre conhecidos e em situação informal. No banco ou com um médico, prefira בְּסֵדֶר e תּוֹדָה. E יַאלְלָה muda de sentido com o tom: "vamos!", "anda logo!" ou "bom, tchau".
+**Em Israel · Sabába, yála e o hebraico da rua:** סַבָּבָּה e יַאלְלָה vieram do árabe e todo israelense usa, de criança a ministro, mas entre conhecidos e em situação informal. No banco ou com um médico, prefira בְּסֵדֶר e תּוֹדָה. E יַאלְלָה muda de sentido com o tom: "vamos!", "anda logo!" ou "bom, tchau".
 
-**Em Israel · Shabat shalom:** O shabat começa na sexta ao pôr do sol e vai até sábado à noite. De sexta (já de manhã) até sábado você ouve שַׁבָּת שָׁלוֹם no mercado, na padaria, no trabalho, de gente religiosa ou não. É um "bom fim de semana" com mais peso.
+**Em Israel · Shabát shalóm:** O shabat começa na sexta ao pôr do sol e vai até sábado à noite. De sexta (já de manhã) até sábado você ouve שַׁבָּת שָׁלוֹם no mercado, na padaria, no trabalho, de gente religiosa ou não. É um "bom fim de semana" com mais peso.
 
 **Curiosidade · Por que da direita para a esquerda?:** O hebraico herdou a direção da escrita fenícia, como o árabe e o aramaico. O nosso alfabeto também descende do fenício, passando pelo grego, e os gregos antigos chegaram a escrever da direita para a esquerda, até que a direção virou. O hebraico ficou com a original.
 
@@ -53,7 +53,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - תּוֹדָה רַבָּה (todá rabá) = muito obrigado
 - כֵּן (ken) = sim
 - לֹא (lo) = não
-- בְּסֵדֶר (beséder) = tudo bem, ok
+- בְּסֵדֶר (besséder) = tudo bem, ok
 - מַה נִּשְׁמָע? (ma nishmá?) = e aí? tudo bem? (informal)
 - סַבָּבָּה (sabába) = beleza, tranquilo (informal)
 - יַאלְלָה (yála) = vamos! bora! (informal)
@@ -61,7 +61,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - יוֹפִי (yófi) = ótimo, que bom
 - עֶרֶב טוֹב (érev tov) = boa noite (ao chegar)
 - לַיְלָה טוֹב (láila tov) = boa noite (ao ir dormir)
-- שַׁבָּת שָׁלוֹם (shabat shalom) = bom shabat (de sexta, já de manhã, até sábado)
+- שַׁבָּת שָׁלוֹם (shabát shalóm) = bom shabat (de sexta, já de manhã, até sábado)
 - חַג שָׂמֵחַ (chag saméach) = boas festas (num feriado)
 - בְּתֵאָבוֹן (beteavón) = bom apetite
 - לְחַיִּים (lechaím) = saúde! (no brinde)
@@ -83,23 +83,23 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
    - Erro comum: No começo da palavra o português não usa TS, e a boca simplifica: vira S ou TCH. Diga "pizza", isole o "tsa" do fim, e leve para o começo.
 6. **ת, ט e ד: T e D secos, nunca TCH e DJ.** תִּי é "ti", e דִּי é "di": a língua bate atrás dos dentes e sai, sem chiar.
    - Erro comum: Em boa parte do Brasil, T e D antes de I viram TCH e DJ ("tia", "dia"). O hábito é automático. Em hebraico isso soa estrangeiro: preste atenção nas sílabas com I.
-7. **A força da palavra: em geral na última sílaba.** Na maioria das palavras, a sílaba forte é a última: to-DÁ, sha-LOM, be-va-ka-SHÁ. Mas muitas palavras do dia a dia têm a força na penúltima. O grupo mais comum é o de בֹּקֶר, עֶרֶב, סֵדֶר, רֶגַע: duas sílabas, a última com ֶ (ou com ַ quando há ח, ע ou ה, como em רֶגַע). Nessas, a força vai na penúltima: BÓ-ker, É-rev, be-SÉ-der, RÉ-ga. Também têm a força na penúltima as palavras que terminam em ־ַיִם e ־ַיִת (máyim, báyit), gírias como yála e sabába, e muitas palavras estrangeiras (télefon). Na transliteração, o acento mostra a sílaba forte sempre que o português leria outra.
+7. **A força da palavra: em geral na última sílaba.** Na maioria das palavras, a sílaba forte é a última: to-DÁ, sha-LOM, be-va-ka-SHÁ. Mas muitas palavras do dia a dia têm a força na penúltima. O grupo mais comum é o de בֹּקֶר, עֶרֶב, סֵדֶר, רֶגַע: duas sílabas, a última com ֶ (ou com ַ quando há ח, ע ou ה, como em רֶגַע). Nessas, a força vai na penúltima: BÓ-ker, É-rev, be-SÉ-der, RÉ-ga. Também têm a força na penúltima as palavras que terminam em ־ַיִם e ־ַיִת (máyim, báyit), gírias como yála e sabába, e muitas palavras estrangeiras (télefon). Na transliteração, toda palavra de duas sílabas ou mais leva acento na sílaba forte, no fim (todá, shalóm) ou na penúltima (bóker, máyim); palavra de uma sílaba não leva (tov, ken).
    - Erro comum: O português põe a força na penúltima, e o ouvido brasileiro lê תּוֹדָה como a palavra "toda" (TÓ-da). Em hebraico é to-DÁ. O mesmo com מוֹרָה (professora): é mo-RÁ, não "mora".
 
 **Diálogo: O primeiro café em Tel Aviv**
 
 - Maya: בֹּקֶר טוֹב! מַה נִּשְׁמָע? (bóker tov! ma nishmá?) = Bom dia! Tudo bem?
-- Dani: בְּסֵדֶר, תּוֹדָה. (beséder, todá.) = Tudo bem, obrigado.
+- Dani: בְּסֵדֶר, תּוֹדָה. (besséder, todá.) = Tudo bem, obrigado.
 - Maya: קָפֶה? (kafé?) = Café?
 - Dani: כֵּן, בְּבַקָּשָׁה. (ken, bevakashá.) = Sim, por favor.
 - Maya: רֶגַע… הִנֵּה! (réga… hiné!) = Um momento… aqui está!
 - Dani: תּוֹדָה רַבָּה! (todá rabá!) = Muito obrigado!
 - Maya: בְּבַקָּשָׁה. בְּתֵאָבוֹן! (bevakashá. beteavón!) = De nada. Bom apetite!
-- Dani: יוֹפִי. יַאלְלָה, שָׁלוֹם! (yófi. yála, shalom!) = Ótimo. Bom, tchau!
+- Dani: יוֹפִי. יַאלְלָה, שָׁלוֹם! (yófi. yála, shalóm!) = Ótimo. Bom, tchau!
 - glossário: קָפֶה (kafé) = café
 - glossário: בְּבַקָּשָׁה (bevakashá) = por favor / de nada
 - glossário: הִנֵּה (hiné) = aqui está
-- glossário: שָׁלוֹם (shalom) = olá / tchau
+- glossário: שָׁלוֹם (shalóm) = olá / tchau
 - nota: שָׁלוֹם serve para chegar e para ir embora. E יַאלְלָה, no fim de uma conversa, quer dizer "bom, vou indo".
 
 **Leitura: Mensagens no grupo da família**
@@ -107,7 +107,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - בֹּקֶר טוֹב! (bóker tov!) = Bom dia!
 - מַזָּל טוֹב לְנֹעָה! (mazál tov le-Nóa!) = Parabéns para a Noa!
 - תּוֹדָה רַבָּה! (todá rabá!) = Muito obrigada!
-- שַׁבָּת שָׁלוֹם לְכֻלָּם! (shabat shalom lechulám!) = Bom shabat para todos!
+- שַׁבָּת שָׁלוֹם לְכֻלָּם! (shabát shalóm lechulám!) = Bom shabat para todos!
 - P1. escolha: O que aconteceu com a Noa? → **Algo bom: ela recebeu os parabéns** / Ela ficou doente / Ela foi viajar (מַזָּל טוֹב é o que se diz numa boa notícia: aniversário, casamento, um filho, um emprego novo.)
 - P2. escolha: Em que dia foi mandada a última mensagem, provavelmente? → **Na sexta-feira** / Na segunda-feira / Na quarta-feira (שַׁבָּת שָׁלוֹם se diz de sexta (já de manhã) até sábado: o shabat começa na sexta ao pôr do sol.)
 - P3. V ou F: Alguém agradeceu os parabéns. → **Verdadeiro** (תּוֹדָה רַבָּה é "muito obrigado": é a resposta aos parabéns (pelo "obrigada", foi a própria Noa).)
@@ -161,29 +161,29 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- קָם (kam) · קָמָה (kamá) · קָמִים (kamim) · קָמוֹת (kamot) = levantar (da cama)
-- הוֹלֵךְ (holech) · הוֹלֶכֶת (holéchet) · הוֹלְכִים (holchim) · הוֹלְכוֹת (holchot) = ir, andar
-- בָּא (ba) · בָּאָה (baá) · בָּאִים (baím) · בָּאוֹת (baot) = vir, chegar
-- חוֹזֵר (chozer) · חוֹזֶרֶת (chozéret) · חוֹזְרִים (chozrim) · חוֹזְרוֹת (chozrot) = voltar
-- עוֹשֶׂה (osé) · עוֹשָׂה (osá) · עוֹשִׂים (osim) · עוֹשׂוֹת (osot) = fazer
-- יָשֵׁן (yashen) · יְשֵׁנָה (yeshená) · יְשֵׁנִים (yeshenim) · יְשֵׁנוֹת (yeshenot) = dormir
-- עָסוּק (asuk) · עֲסוּקָה (asuká) · עֲסוּקִים (asukim) · עֲסוּקוֹת (asukot) = ocupado
+- קָם (kam) · קָמָה (kamá) · קָמִים (kamím) · קָמוֹת (kamót) = levantar (da cama)
+- הוֹלֵךְ (holéch) · הוֹלֶכֶת (holéchet) · הוֹלְכִים (holchím) · הוֹלְכוֹת (holchót) = ir, andar
+- בָּא (ba) · בָּאָה (baá) · בָּאִים (baím) · בָּאוֹת (baót) = vir, chegar
+- חוֹזֵר (chozér) · חוֹזֶרֶת (chozéret) · חוֹזְרִים (chozrím) · חוֹזְרוֹת (chozrót) = voltar
+- עוֹשֶׂה (ossé) · עוֹשָׂה (ossá) · עוֹשִׂים (ossím) · עוֹשׂוֹת (ossót) = fazer
+- יָשֵׁן (yashén) · יְשֵׁנָה (yeshená) · יְשֵׁנִים (yeshením) · יְשֵׁנוֹת (yeshenót) = dormir
+- עָסוּק (assúk) · עֲסוּקָה (assuká) · עֲסוּקִים (assukím) · עֲסוּקוֹת (assukót) = ocupado
 - בַּצָּהֳרַיִם (batsohoráyim) = ao meio-dia, na hora do almoço
-- אַחֲרֵי הַצָּהֳרַיִם (acharei hatsohoráyim) = à tarde (por escrito, também אַחַר הַצָּהֳרַיִם)
+- אַחֲרֵי הַצָּהֳרַיִם (acharéi hatsohoráyim) = à tarde (por escrito, também אַחַר הַצָּהֳרַיִם)
 - בַּלַּיְלָה (baláila) = à noite (mais tarde que o עֶרֶב), de madrugada
-- לִפְנֵי (lifnei) = antes de
-- אַחֲרֵי (acharei) = depois de
-- אַחַר כָּךְ (achar kach) = depois, em seguida
-- וְאָז (veaz) = e então
+- לִפְנֵי (lifnéi) = antes de
+- אַחֲרֵי (acharéi) = depois de
+- אַחַר כָּךְ (achár kach) = depois, em seguida
+- וְאָז (veáz) = e então
 - כָּל יוֹם (kol yom) = todo dia
-- תָּמִיד (tamid) = sempre
-- לִפְעָמִים (lif'amim) = às vezes
-- מוּקְדָּם (mukdam) = cedo
-- מְאֻחָר (meuchar) = tarde
+- תָּמִיד (tamíd) = sempre
+- לִפְעָמִים (lif'amím) = às vezes
+- מוּקְדָּם (mukdám) = cedo
+- מְאֻחָר (meuchár) = tarde
 - עֲבוֹדָה (avodá) = trabalho
-- שִׁעוּר (shiur) = aula
-- אוּנִיבֶרְסִיטָה (universita) = universidade
-- אֻלְפָּן (ulpan) = curso intensivo de hebraico
+- שִׁעוּר (shiúr) = aula
+- אוּנִיבֶרְסִיטָה (universíta) = universidade
+- אֻלְפָּן (ulpán) = curso intensivo de hebraico
 - יָם (yam) = mar; לַיָּם = para a praia
 - הַבַּיְתָה (habáyta) = para casa
 
@@ -205,27 +205,27 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: A Noa nunca está livre**
 
-- Tom: נֹעָה, מָה אַתְּ עוֹשָׂה כָּל יוֹם? (Noa, ma at osá kol yom?) = Noa, o que você faz todo dia?
-- Noa: אֲנִי קָמָה מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי. (aní kamá mukdam, beshesh vachétsi.) = Eu levanto cedo, às seis e meia.
-- Tom: בְּשֵׁשׁ וָחֵצִי? וּמָה אַתְּ עוֹשָׂה בַּבֹּקֶר? (beshesh vachétsi? uma at osá babóker?) = Às seis e meia? E o que você faz de manhã?
-- Noa: בַּבֹּקֶר אֲנִי עוֹבֶדֶת בְּבֵית קָפֶה. (babóker aní ovédet beveit kafé.) = De manhã eu trabalho num café.
-- Tom: וְאַחַר כָּךְ? (veachar kach?) = E depois?
-- Noa: אַחֲרֵי הַצָּהֳרַיִם אֲנִי הוֹלֶכֶת לָאוּנִיבֶרְסִיטָה. (acharei hatsohoráyim aní holéchet launiversita.) = À tarde eu vou para a universidade.
-- Tom: וּמָתַי אַתְּ חוֹזֶרֶת הַבַּיְתָה? (umatai at chozéret habáyta?) = E quando você volta para casa?
-- Noa: בָּעֶרֶב, מְאֻחָר. אֲנִי עֲסוּקָה מְאֹד! (baérev, meuchar. aní asuká meod!) = À noite, tarde. Eu sou muito ocupada!
-- Tom: וּבְשַׁבָּת? (uveshabat?) = E no sábado?
-- Noa: בְּשַׁבָּת אֲנִי יְשֵׁנָה עַד עֶשֶׂר! (beshabat aní yeshená ad éser!) = No sábado eu durmo até as dez!
+- Tom: נֹעָה, מָה אַתְּ עוֹשָׂה כָּל יוֹם? (Nóa, ma at ossá kol yom?) = Noa, o que você faz todo dia?
+- Noa: אֲנִי קָמָה מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי. (aní kamá mukdám, beshésh vachétsi.) = Eu levanto cedo, às seis e meia.
+- Tom: בְּשֵׁשׁ וָחֵצִי? וּמָה אַתְּ עוֹשָׂה בַּבֹּקֶר? (beshésh vachétsi? umá at ossá babóker?) = Às seis e meia? E o que você faz de manhã?
+- Noa: בַּבֹּקֶר אֲנִי עוֹבֶדֶת בְּבֵית קָפֶה. (babóker aní ovédet bevéit kafé.) = De manhã eu trabalho num café.
+- Tom: וְאַחַר כָּךְ? (veachár kach?) = E depois?
+- Noa: אַחֲרֵי הַצָּהֳרַיִם אֲנִי הוֹלֶכֶת לָאוּנִיבֶרְסִיטָה. (acharéi hatsohoráyim aní holéchet launiversíta.) = À tarde eu vou para a universidade.
+- Tom: וּמָתַי אַתְּ חוֹזֶרֶת הַבַּיְתָה? (umatái at chozéret habáyta?) = E quando você volta para casa?
+- Noa: בָּעֶרֶב, מְאֻחָר. אֲנִי עֲסוּקָה מְאֹד! (baérev, meuchár. aní assuká meód!) = À noite, tarde. Eu sou muito ocupada!
+- Tom: וּבְשַׁבָּת? (uveshabát?) = E no sábado?
+- Noa: בְּשַׁבָּת אֲנִי יְשֵׁנָה עַד עֶשֶׂר! (beshabát aní yeshená ad ésser!) = No sábado eu durmo até as dez!
 - glossário: בֵּית קָפֶה (beit kafé) = café (o lugar); expressão fixa
 - nota: בֵּית קָפֶה quer dizer, palavra por palavra, "casa de café": é o café como lugar. A forma בֵּית no lugar de בַּיִת tem explicação, e ela vem na Unidade 19. Por enquanto, guarde como expressão.
 
 **Leitura: Mensagem do Dani para a mãe** (aparece sem nikud, com a chave para mostrar)
 
-- שָׁלוֹם אִמָּא! הַכֹּל בְּסֵדֶר. (shalom íma! hakol beséder.) = Oi, mãe! Está tudo bem.
+- שָׁלוֹם אִמָּא! הַכֹּל בְּסֵדֶר. (shalóm íma! hakól besséder.) = Oi, mãe! Está tudo bem.
 - כָּל יוֹם אֲנִי קָם בְּשֶׁבַע. (kol yom aní kam beshéva.) = Todo dia eu levanto às sete.
-- בַּבֹּקֶר אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן. (babóker aní lomed ivrit baulpan.) = De manhã eu estudo hebraico no ulpan.
-- אַחֲרֵי הַצָּהֳרַיִם אֲנִי עוֹבֵד בְּבֵית קָפֶה. (acharei hatsohoráyim aní oved beveit kafé.) = À tarde eu trabalho num café.
-- בָּעֶרֶב אֲנִי חוֹזֵר הַבַּיְתָה מְאֻחָר. (baérev aní chozer habáyta meuchar.) = À noite eu volto para casa tarde.
-- בְּשַׁבָּת אֲנִי לֹא עוֹבֵד! (beshabat aní lo oved!) = No sábado eu não trabalho!
+- בַּבֹּקֶר אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן. (babóker aní loméd ivrít baulpán.) = De manhã eu estudo hebraico no ulpan.
+- אַחֲרֵי הַצָּהֳרַיִם אֲנִי עוֹבֵד בְּבֵית קָפֶה. (acharéi hatsohoráyim aní ovéd bevéit kafé.) = À tarde eu trabalho num café.
+- בָּעֶרֶב אֲנִי חוֹזֵר הַבַּיְתָה מְאֻחָר. (baérev aní chozér habáyta meuchár.) = À noite eu volto para casa tarde.
+- בְּשַׁבָּת אֲנִי לֹא עוֹבֵד! (beshabát aní lo ovéd!) = No sábado eu não trabalho!
 - P1. escolha: Quando o Dani estuda hebraico? → **De manhã** / À tarde / À noite (בַּבֹּקֶר אֲנִי לוֹמֵד עִבְרִית: de manhã.)
 - P2. escolha: Onde ele trabalha? → **Num café** / No ulpan / Em casa 
 - P3. V ou F: O Dani volta cedo para casa. → **Falso** (מְאֻחָר é "tarde".)
@@ -269,7 +269,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **A situação:** A Maya vai à praia no sábado com uns amigos e chama o Dani. Ele quer ir, mas tem um problema com o horário.
 
-**Em Israel · Na praia: o barulho do matkot:** Numa praia israelense você ouve um "toc, toc" sem parar: é o מַטְקוֹת, duas raquetes de madeira e uma bolinha, jogado em dupla na beira do mar, sem rede e sem placar. Não tem vencedor: o jogo é não deixar a bola cair.
+**Em Israel · Na praia: o barulho do matkót:** Numa praia israelense você ouve um "toc, toc" sem parar: é o מַטְקוֹת, duas raquetes de madeira e uma bolinha, jogado em dupla na beira do mar, sem rede e sem placar. Não tem vencedor: o jogo é não deixar a bola cair.
 
 **Curiosidade · Como nascem palavras novas:** כַּדּוּרֶגֶל (futebol) é כַּדּוּר (bola) + רֶגֶל (pé), coladas numa palavra só. Quando o hebraico voltou a ser falado, faltavam palavras para o mundo moderno, e um comitê criado em 1890 começou a inventá-las a partir de raízes antigas. Hoje esse trabalho é da Academia da Língua Hebraica, fundada em 1953.
 
@@ -281,10 +281,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- אוֹהֵב (ohev) · אוֹהֶבֶת (ohévet) · אוֹהֲבִים (ohavim) · אוֹהֲבוֹת (ohavot) = gostar, amar
-- צָרִיךְ (tsarich) · צְרִיכָה (tsrichá) · צְרִיכִים (tsrichim) · צְרִיכוֹת (tsrichot) = precisar, ter que
-- יָכוֹל (yachol) · יְכוֹלָה (yecholá) · יְכוֹלִים (yecholim) · יְכוֹלוֹת (yecholot) = poder
-- יוֹדֵעַ (yodea) · יוֹדַעַת (yodáat) · יוֹדְעִים (yodim) · יוֹדְעוֹת (yodot) = saber
+- אוֹהֵב (ohév) · אוֹהֶבֶת (ohévet) · אוֹהֲבִים (ohavím) · אוֹהֲבוֹת (ohavót) = gostar, amar
+- צָרִיךְ (tsarích) · צְרִיכָה (tsrichá) · צְרִיכִים (tsrichím) · צְרִיכוֹת (tsrichót) = precisar, ter que
+- יָכוֹל (yachól) · יְכוֹלָה (yecholá) · יְכוֹלִים (yecholím) · יְכוֹלוֹת (yecholót) = poder
+- יוֹדֵעַ (yodéa) · יוֹדַעַת (yodáat) · יוֹדְעִים (yodím) · יוֹדְעוֹת (yodót) = saber
 - לִלְמוֹד (lilmód) = estudar (infinitivo)
 - לַעֲבוֹד (laavód) = trabalhar
 - לִכְתּוֹב (lichtóv) = escrever
@@ -297,7 +297,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - לָלֶכֶת (laléchet) = ir
 - לָבוֹא (lavó) = vir
 - לַחֲזוֹר (lachzór) = voltar
-- לַעֲשׂוֹת (laasót) = fazer
+- לַעֲשׂוֹת (laassót) = fazer
 - לִישׁוֹן (lishón) = dormir
 - לְבַשֵּׁל (levashél) = cozinhar
 - לִרְקוֹד (lirkód) = dançar
@@ -309,7 +309,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - מוּזִיקָה (múzika) = música
 - כִּי (ki) = porque
 - הַיּוֹם (hayóm) = hoje
-- בְּשִׂמְחָה (besimchá) = com prazer
+- בְּשִׂמְחָה (bessimchá) = com prazer
 
 **Gramática**
 
@@ -327,16 +327,16 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: Um convite para a praia**
 
-- Maya: דָּנִי, מָה אַתָּה אוֹהֵב לַעֲשׂוֹת בְּשַׁבָּת? (Dani, ma atá ohev laasót beshabát?) = Dani, o que você gosta de fazer no sábado?
-- Dani: אֲנִי אוֹהֵב לְטַיֵּל וְלִשְׂחוֹת. (aní ohev letayél velischót.) = Eu gosto de passear e de nadar.
+- Maya: דָּנִי, מָה אַתָּה אוֹהֵב לַעֲשׂוֹת בְּשַׁבָּת? (Dáni, ma atá ohév laassót beshabát?) = Dani, o que você gosta de fazer no sábado?
+- Dani: אֲנִי אוֹהֵב לְטַיֵּל וְלִשְׂחוֹת. (aní ohév letayél velischót.) = Eu gosto de passear e de nadar.
 - Maya: גַּם אֲנִי! אַתָּה רוֹצֶה לָבוֹא לַיָּם אִתָּנוּ? (gam aní! atá rotsé lavó layám itánu?) = Eu também! Quer vir à praia com a gente?
-- Dani: כֵּן, בְּשִׂמְחָה! מָתַי? (ken, besimchá! matai?) = Sim, com prazer! Quando?
+- Dani: כֵּן, בְּשִׂמְחָה! מָתַי? (ken, bessimchá! matái?) = Sim, com prazer! Quando?
 - Maya: בְּשַׁבָּת בַּבֹּקֶר, בְּתֵשַׁע. (beshabát babóker, betésha.) = No sábado de manhã, às nove.
-- Dani: אוֹי, בְּתֵשַׁע אֲנִי לֹא יָכוֹל. (oi, betésha aní lo yachol.) = Ai, às nove eu não posso.
+- Dani: אוֹי, בְּתֵשַׁע אֲנִי לֹא יָכוֹל. (oi, betésha aní lo yachól.) = Ai, às nove eu não posso.
 - Maya: לָמָּה? (láma?) = Por quê?
-- Dani: כִּי בְּשַׁבָּת אֲנִי אוֹהֵב לִישׁוֹן עַד עֶשֶׂר! (ki beshabát aní ohev lishón ad éser!) = Porque no sábado eu gosto de dormir até as dez!
-- Maya: אֵין בְּעָיָה. אֲנַחְנוּ יְכוֹלִים לָלֶכֶת בְּאַחַת־עֶשְׂרֵה. (ein beayá. anáchnu yecholim laléchet beachat-esré.) = Sem problema. A gente pode ir às onze.
-- Dani: סַבָּבָּה! אֲנִי יוֹדֵעַ לִשְׂחוֹת, אֲבָל לֹא טוֹב… (sabába! aní yodéa lischót, aval lo tov…) = Beleza! Eu sei nadar, mas não muito bem…
+- Dani: כִּי בְּשַׁבָּת אֲנִי אוֹהֵב לִישׁוֹן עַד עֶשֶׂר! (ki beshabát aní ohév lishón ad ésser!) = Porque no sábado eu gosto de dormir até as dez!
+- Maya: אֵין בְּעָיָה. אֲנַחְנוּ יְכוֹלִים לָלֶכֶת בְּאַחַת־עֶשְׂרֵה. (ein beayá. anáchnu yecholím laléchet beachát-esré.) = Sem problema. A gente pode ir às onze.
+- Dani: סַבָּבָּה! אֲנִי יוֹדֵעַ לִשְׂחוֹת, אֲבָל לֹא טוֹב… (sabába! aní yodéa lischót, avál lo tov…) = Beleza! Eu sei nadar, mas não muito bem…
 - Maya: לֹא נוֹרָא! (lo norá!) = Não tem problema!
 - glossário: אוֹי (oi) = ai (decepção, susto)
 - glossário: לֹא נוֹרָא (lo norá) = não tem problema, não é grave
@@ -344,10 +344,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Leitura: Um perfil num aplicativo de troca de idiomas** (aparece sem nikud, com a chave para mostrar)
 
-- קוֹרְאִים לִי לִיאַת. אֲנִי גָּרָה בְּחֵיפָה. (korim li Liat. aní gará beCháifa.) = Eu me chamo Liat. Moro em Haifa.
+- קוֹרְאִים לִי לִיאַת. אֲנִי גָּרָה בְּחֵיפָה. (korím li Liát. aní gará beCháifa.) = Eu me chamo Liat. Moro em Haifa.
 - אֲנִי אוֹהֶבֶת לְבַשֵּׁל וְלִרְקוֹד. (aní ohévet levashél velirkód.) = Gosto de cozinhar e de dançar.
 - אֲנִי לֹא אוֹהֶבֶת כַּדּוּרֶגֶל. (aní lo ohévet kadurégel.) = Não gosto de futebol.
-- אֲנִי רוֹצָה לִלְמוֹד פּוֹרְטוּגֶזִית, כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל! (aní rotsá lilmód portugezit, ki aní rotsá letayél biVrazil!) = Quero estudar português, porque quero viajar pelo Brasil!
+- אֲנִי רוֹצָה לִלְמוֹד פּוֹרְטוּגֶזִית, כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל! (aní rotsá lilmód portugezít, ki aní rotsá letayél biVrazíl!) = Quero estudar português, porque quero viajar pelo Brasil!
 - P1. escolha: Do que a Liat gosta? → **Cozinhar e dançar** / Futebol e música / Nadar e correr 
 - P2. escolha: Por que ela quer aprender português? → **Para viajar pelo Brasil** / Para trabalhar no Brasil / Porque mora no Brasil (כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל.)
 - P3. V ou F: A Liat mora em Tel Aviv. → **Falso** (Ela mora em Haifa: בְּחֵיפָה.)
@@ -404,18 +404,18 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 **Palavras**
 
 - דִּירָה (dirá) = apartamento
-- סָלוֹן (salon) = sala de estar
-- חֲדַר שֵׁנָה (chadar shená) = quarto de dormir (expressão fixa)
-- שֵׁרוּתִים (sherutim) = banheiro (o vaso sanitário)
+- סָלוֹן (salón) = sala de estar
+- חֲדַר שֵׁנָה (chadár shená) = quarto de dormir (expressão fixa)
+- שֵׁרוּתִים (sherutím) = banheiro (o vaso sanitário)
 - אַמְבַּטְיָה (ambátya) = banheiro (com chuveiro ou banheira)
-- מִרְפֶּסֶת (mirpéset) = varanda
+- מִרְפֶּסֶת (mirpésset) = varanda
 - קוֹמָה (komá) = andar (do prédio)
-- מַעֲלִית (maalit) = elevador
+- מַעֲלִית (maalít) = elevador
 - מִטָּה (mitá) = cama
 - סָפָּה (sapá) = sofá
-- אָרוֹן (aron) = armário
-- חַלּוֹן (chalon) = janela
-- מַחְשֵׁב (machshev) = computador
+- אָרוֹן (arón) = armário
+- חַלּוֹן (chalón) = janela
+- מַחְשֵׁב (machshév) = computador
 - עַל (al) = em cima de, sobre
 - מִתַּחַת לְ־ (mitáchat le-) = embaixo de
 - לְיַד (leyád) = ao lado de, perto de
@@ -442,25 +442,25 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: Cadê o telefone?**
 
-- Maya: נָתָן, אֵיפֹה הַטֶּלֶפוֹן שֶׁלִּי? (Natan, eifo hatélefon sheli?) = Natan, onde está o meu telefone?
-- Natan: הוּא לֹא עַל הַשֻּׁלְחָן? (hu lo al hashulchan?) = Não está na mesa?
+- Maya: נָתָן, אֵיפֹה הַטֶּלֶפוֹן שֶׁלִּי? (Natán, éifo hatélefon shelí?) = Natan, onde está o meu telefone?
+- Natan: הוּא לֹא עַל הַשֻּׁלְחָן? (hu lo al hashulchán?) = Não está na mesa?
 - Maya: לֹא. הוּא לֹא פֹּה. (lo. hu lo po.) = Não. Não está aqui.
-- Natan: אוּלַי בַּסָּלוֹן, עַל הַסָּפָּה? (ulái basalon, al hasapá?) = Talvez na sala, em cima do sofá?
+- Natan: אוּלַי בַּסָּלוֹן, עַל הַסָּפָּה? (ulái bassalón, al hassapá?) = Talvez na sala, em cima do sofá?
 - Maya: לֹא, גַּם לֹא שָׁם. (lo, gam lo sham.) = Não, lá também não.
-- Natan: וּבַמִּטְבָּח, לְיַד הַמְּקָרֵר? (uvamitbach, leyád hamekarer?) = E na cozinha, ao lado da geladeira?
-- Maya: לֹא. וְהוּא לֹא בַּתִּיק… (lo. vehu lo batik…) = Não. E não está na mochila…
-- Natan: רֶגַע, מַה זֶּה, מִתַּחַת לַסָּפָּה? (réga, ma ze, mitáchat lasapá?) = Espera, o que é isso, embaixo do sofá?
-- Maya: הַטֶּלֶפוֹן! תּוֹדָה, נָתָן! (hatélefon! todá, Natan!) = O telefone! Obrigada, Natan!
-- Natan: וְאֵיפֹה הַמַּפְתֵּחַ? (veeifo hamafteach?) = E onde está a chave?
+- Natan: וּבַמִּטְבָּח, לְיַד הַמְּקָרֵר? (uvamitbách, leyád hamekarér?) = E na cozinha, ao lado da geladeira?
+- Maya: לֹא. וְהוּא לֹא בַּתִּיק… (lo. vehú lo batík…) = Não. E não está na mochila…
+- Natan: רֶגַע, מַה זֶּה, מִתַּחַת לַסָּפָּה? (réga, ma ze, mitáchat lassapá?) = Espera, o que é isso, embaixo do sofá?
+- Maya: הַטֶּלֶפוֹן! תּוֹדָה, נָתָן! (hatélefon! todá, Natán!) = O telefone! Obrigada, Natan!
+- Natan: וְאֵיפֹה הַמַּפְתֵּחַ? (veéifo hamaftéach?) = E onde está a chave?
 - Maya: הוּא… בַּדֶּלֶת! (hu… badélet!) = Está… na porta!
 - nota: O Natan pergunta pela chave, e a Maya responde הוּא: מַפְתֵּחַ é masculino.
 
 **Leitura: Um anúncio de aluguel** (aparece sem nikud, com a chave para mostrar)
 
-- דִּירָה לְהַשְׂכָּרָה בְּתֵל אָבִיב (dirá lehaskará beTel Aviv) = Apartamento para alugar em Tel Aviv
-- 3 חֲדָרִים, עִם סָלוֹן גָּדוֹל (shloshá chadarim, im salon gadol) = 3 cômodos, com sala grande
-- מִטְבָּח חָדָשׁ, מִרְפֶּסֶת קְטַנָּה (mitbach chadash, mirpéset ktaná) = Cozinha nova, varanda pequena
-- קוֹמָה 2, אֵין מַעֲלִית (komá shtáyim, ein maalit) = 2º andar, sem elevador
+- דִּירָה לְהַשְׂכָּרָה בְּתֵל אָבִיב (dirá lehaskará beTél Avív) = Apartamento para alugar em Tel Aviv
+- 3 חֲדָרִים, עִם סָלוֹן גָּדוֹל (shloshá chadarím, im salón gadól) = 3 cômodos, com sala grande
+- מִטְבָּח חָדָשׁ, מִרְפֶּסֶת קְטַנָּה (mitbách chadásh, mirpésset ktaná) = Cozinha nova, varanda pequena
+- קוֹמָה 2, אֵין מַעֲלִית (komá shtáyim, ein maalít) = 2º andar, sem elevador
 - לְיַד הַיָּם! (leyád hayám!) = Perto do mar!
 - P1. V ou F: O prédio tem elevador. → **Falso** (אֵין מַעֲלִית: não tem.)
 - P2. escolha: O que fica perto do apartamento? → **O mar** / A universidade / A feira 
@@ -518,22 +518,22 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 - לְאָן? (leán?) = para onde?
 - אֵיךְ מַגִּיעִים לְ…? (eich maguiím le…?) = como se chega a…?
-- נוֹסֵעַ (nosea) · נוֹסַעַת (nosáat) · נוֹסְעִים (nosim) · נוֹסְעוֹת (nosot) = ir (de veículo), viajar
-- פּוֹנֶה (poné) · פּוֹנָה (poná) · פּוֹנִים (ponim) · פּוֹנוֹת (ponot) = virar (para um lado)
-- יָשָׁר (yashar) = reto, em frente
+- נוֹסֵעַ (nosséa) · נוֹסַעַת (nossáat) · נוֹסְעִים (nossím) · נוֹסְעוֹת (nossót) = ir (de veículo), viajar
+- פּוֹנֶה (poné) · פּוֹנָה (poná) · פּוֹנִים (poním) · פּוֹנוֹת (ponót) = virar (para um lado)
+- יָשָׁר (yashár) = reto, em frente
 - יָמִינָה (yamína) = para a direita
 - שְׂמֹאלָה (smóla) = para a esquerda
-- קָרוֹב (karov) = perto
-- רָחוֹק (rachok) = longe
-- רְחוֹב (rechov) = rua
+- קָרוֹב (karóv) = perto
+- רָחוֹק (rachók) = longe
+- רְחוֹב (rechóv) = rua
 - פִּנָּה (piná) = esquina
-- רַמְזוֹר (ramzor) = semáforo
+- רַמְזוֹר (ramzór) = semáforo
 - תַּחֲנָה (tachaná) = ponto (de ônibus), estação
-- הַתַּחֲנָה הַמֶּרְכָּזִית (hatachaná hamerkazit) = a rodoviária central
+- הַתַּחֲנָה הַמֶּרְכָּזִית (hatachaná hamerkazít) = a rodoviária central
 - אוֹטוֹבּוּס (ótobus) = ônibus
 - קַו (kav) = linha (de ônibus)
 - רַכֶּבֶת (rakévet) = trem
-- מוֹנִית (monit) = táxi
+- מוֹנִית (monít) = táxi
 - בָּרֶגֶל (baréguel) = a pé
 - בַּנְק (bank) = banco
 - סוּפֶּרְמַרְקֶט (supermárket) = supermercado
@@ -554,26 +554,26 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: Na rua, sem bateria**
 
-- Tom: סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה הַמֶּרְכָּזִית? (slichá, eich maguiím latachaná hamerkazit?) = Com licença, como se chega à rodoviária central?
-- A senhora: זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל? (ze rachok. atá holech baréguel?) = É longe. Você vai a pé?
+- Tom: סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה הַמֶּרְכָּזִית? (slichá, eich maguiím latachaná hamerkazít?) = Com licença, como se chega à rodoviária central?
+- A senhora: זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל? (ze rachók. atá holéch baréguel?) = É longe. Você vai a pé?
 - Tom: כֵּן. (ken.) = Vou.
-- A senhora: אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם פּוֹנֶה שְׂמֹאלָה. (az atá holech yashar ad haramzor, vesham poné smóla.) = Então você vai reto até o semáforo, e lá vira à esquerda.
-- Tom: יָשָׁר, וְאָז שְׂמֹאלָה. וְאַחַר כָּךְ? (yashar, veaz smóla. veachar kach?) = Reto, e depois à esquerda. E depois?
-- A senhora: אַחַר כָּךְ יָמִינָה, וְהַתַּחֲנָה מוּל הַבַּנְק. אֲבָל זֶה עֶשְׂרִים דַּקּוֹת. (achar kach yamína, vehatachaná mul habank. aval ze esrim dakót.) = Depois à direita, e a rodoviária fica em frente ao banco. Mas são vinte minutos.
-- Tom: עֶשְׂרִים דַּקּוֹת? יֵשׁ אוֹטוֹבּוּס? (esrim dakót? yesh ótobus?) = Vinte minutos? Tem ônibus?
-- A senhora: כֵּן, קַו חָמֵשׁ. הַתַּחֲנָה פֹּה, בַּפִּנָּה. (ken, kav chamesh. hatachaná po, bapiná.) = Tem, a linha 5. O ponto é aqui, na esquina.
+- A senhora: אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם פּוֹנֶה שְׂמֹאלָה. (az atá holéch yashár ad haramzór, veshám poné smóla.) = Então você vai reto até o semáforo, e lá vira à esquerda.
+- Tom: יָשָׁר, וְאָז שְׂמֹאלָה. וְאַחַר כָּךְ? (yashár, veáz smóla. veachár kach?) = Reto, e depois à esquerda. E depois?
+- A senhora: אַחַר כָּךְ יָמִינָה, וְהַתַּחֲנָה מוּל הַבַּנְק. אֲבָל זֶה עֶשְׂרִים דַּקּוֹת. (achár kach yamína, vehatachaná mul habánk. avál ze esrím dakót.) = Depois à direita, e a rodoviária fica em frente ao banco. Mas são vinte minutos.
+- Tom: עֶשְׂרִים דַּקּוֹת? יֵשׁ אוֹטוֹבּוּס? (esrím dakót? yesh ótobus?) = Vinte minutos? Tem ônibus?
+- A senhora: כֵּן, קַו חָמֵשׁ. הַתַּחֲנָה פֹּה, בַּפִּנָּה. (ken, kav chamésh. hatachaná po, bapiná.) = Tem, a linha 5. O ponto é aqui, na esquina.
 - Tom: תּוֹדָה רַבָּה! (todá rabá!) = Muito obrigado!
-- A senhora: בְּבַקָּשָׁה. נְסִיעָה טוֹבָה! (bevakashá. nesiá tová!) = De nada. Boa viagem!
+- A senhora: בְּבַקָּשָׁה. נְסִיעָה טוֹבָה! (bevakashá. nessiá tová!) = De nada. Boa viagem!
 - glossário: אָז (az) = então
-- glossário: נְסִיעָה טוֹבָה (nesiá tová) = boa viagem
+- glossário: נְסִיעָה טוֹבָה (nessiá tová) = boa viagem
 - nota: נְסִיעָה (viagem, trajeto) é da mesma raiz de נוֹסֵעַ: נ, ס, ע.
 
 **Leitura: A Maya explica como chegar** (aparece sem nikud, com a chave para mostrar)
 
-- מֵהָרַכֶּבֶת אַתָּה הוֹלֵךְ יָשָׁר עַד הַסּוּפֶּרְמַרְקֶט. (meharakévet atá holech yashar ad hasupermárket.) = Do trem você vai reto até o supermercado.
+- מֵהָרַכֶּבֶת אַתָּה הוֹלֵךְ יָשָׁר עַד הַסּוּפֶּרְמַרְקֶט. (meharakévet atá holéch yashár ad hassupermárket.) = Do trem você vai reto até o supermercado.
 - שָׁם אַתָּה פּוֹנֶה יָמִינָה. (sham atá poné yamína.) = Lá você vira à direita.
-- הַבַּיִת שֶׁלִּי בִּרְחוֹב הֶרְצְל 12, מוּל הַבַּנְק. (habáyit sheli birchov Hertsl shteim-esré, mul habank.) = A minha casa fica na rua Herzl, 12, em frente ao banco.
-- זֶה קָרוֹב, חָמֵשׁ דַּקּוֹת בָּרֶגֶל! (ze karov, chamesh dakót baréguel!) = É perto, cinco minutos a pé!
+- הַבַּיִת שֶׁלִּי בִּרְחוֹב הֶרְצְל 12, מוּל הַבַּנְק. (habáyit shelí birchóv Hértsl shteim-esré, mul habánk.) = A minha casa fica na rua Herzl, 12, em frente ao banco.
+- זֶה קָרוֹב, חָמֵשׁ דַּקּוֹת בָּרֶגֶל! (ze karóv, chamésh dakót baréguel!) = É perto, cinco minutos a pé!
 - P1. escolha: Onde é preciso virar à direita? → **No supermercado** / No banco / No semáforo 
 - P2. escolha: A casa da Maya fica em frente a quê? → **Ao banco** / Ao supermercado / À estação de trem 
 - P3. V ou F: Da estação de trem até a casa dela é preciso pegar um ônibus. → **Falso** (חָמֵשׁ דַּקּוֹת בָּרֶגֶל: são cinco minutos a pé.)
@@ -614,7 +614,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **A situação:** Sexta à noite. O Dani e a Maya jantam num restaurante pequeno perto do mercado. O Dani é vegetariano e quer saber o que é gostoso ali.
 
-**Em Israel · Café hafuch e o café da manhã israelense:** Peça um קָפֶה הָפוּךְ, "café de ponta-cabeça": o leite vem primeiro e o café por cima. É o café com leite de todo dia. E o café da manhã israelense de restaurante é farto: ovos, uma salada de pepino e tomate cortados bem miudinho, queijos, pastas e pão. Na conta do restaurante a gorjeta não vem incluída, e o costume é deixar algo entre 10% e 15%.
+**Em Israel · Café hafúch e o café da manhã israelense:** Peça um קָפֶה הָפוּךְ, "café de ponta-cabeça": o leite vem primeiro e o café por cima. É o café com leite de todo dia. E o café da manhã israelense de restaurante é farto: ovos, uma salada de pepino e tomate cortados bem miudinho, queijos, pastas e pão. Na conta do restaurante a gorjeta não vem incluída, e o costume é deixar algo entre 10% e 15%.
 
 **Curiosidade · Por que hebraico e árabe se parecem?:** Os dois são línguas semíticas, da mesma família do aramaico, e muitas palavras vêm da mesma origem: שָׁלוֹם e o árabe "salam" (paz), יוֹם e "yawm" (dia), בַּיִת e "bayt" (casa). E algumas vieram emprestadas do árabe falado para o hebraico moderno, como חוּמוּס, פָלָאפֶל e o סַבָּבָּה da Unidade 0.
 
@@ -627,26 +627,26 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 **Palavras**
 
 - מִסְעָדָה (mis'adá) = restaurante
-- תַּפְרִיט (tafrit) = cardápio
-- מֶלְצָר (meltsar) = garçom
-- מֶלְצָרִית (meltsarit) = garçonete
-- חֶשְׁבּוֹן (cheshbon) = conta
+- תַּפְרִיט (tafrít) = cardápio
+- מֶלְצָר (meltsár) = garçom
+- מֶלְצָרִית (meltsarít) = garçonete
+- חֶשְׁבּוֹן (cheshbón) = conta
 - מָנָה (maná) = prato, porção
 - אֹכֶל (óchel) = comida
 - עוֹף (of) = frango
-- בָּשָׂר (basar) = carne
+- בָּשָׂר (bassár) = carne
 - דָּג (dag) = peixe
 - אֹרֶז (órez) = arroz
-- בָּצָל (batsal) = cebola
+- בָּצָל (batsál) = cebola
 - מִיץ (mits) = suco
-- סֻכָּר (sukar) = açúcar
+- סֻכָּר (sukár) = açúcar
 - קֶרַח (kérach) = gelo
-- טָעִים (taím) · טְעִימָה (teimá) · טְעִימִים (teimim) · טְעִימוֹת (teimot) = gostoso
-- מְבַקֵּשׁ (mevakesh) · מְבַקֶּשֶׁת (mevakéshet) · מְבַקְּשִׁים (mevakshim) · מְבַקְּשׁוֹת (mevakshot) = pedir, solicitar (para pedir comida no restaurante, se usa אֶפְשָׁר… ou אֲנִי רוֹצֶה…)
-- צִמְחוֹנִי (tsimchoni) = vegetariano
-- צִמְחוֹנִית (tsimchonit) = vegetariana
-- חָרִיף (charif) = picante
-- אֶפְשָׁר…? (efshar…?) = pode ser…? dá para…?
+- טָעִים (taím) · טְעִימָה (teimá) · טְעִימִים (teimím) · טְעִימוֹת (teimót) = gostoso
+- מְבַקֵּשׁ (mevakésh) · מְבַקֶּשֶׁת (mevakéshet) · מְבַקְּשִׁים (mevakshím) · מְבַקְּשׁוֹת (mevakshót) = pedir, solicitar (para pedir comida no restaurante, se usa אֶפְשָׁר… ou אֲנִי רוֹצֶה…)
+- צִמְחוֹנִי (tsimchoní) = vegetariano
+- צִמְחוֹנִית (tsimchonít) = vegetariana
+- חָרִיף (charíf) = picante
+- אֶפְשָׁר…? (efshár…?) = pode ser…? dá para…?
 - לְשַׁלֵּם (leshalém) = pagar
 - אֵיזֶה? (éize?) = qual? (masculino)
 - אֵיזוֹ? (éizo?) = qual? (feminino)
@@ -670,28 +670,28 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: Jantar de sexta**
 
-- O garçom: עֶרֶב טוֹב! הִנֵּה הַתַּפְרִיט. (érev tov! hiné hatafrit.) = Boa noite! Aqui está o cardápio.
-- Maya: תּוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָּשָׁה? (todá. efshar máyim, bevakashá?) = Obrigada. Pode ser uma água, por favor?
-- O garçom: בְּטַח. (betach.) = Claro.
-- Dani: מָה טָעִים פֹּה? (ma taim po?) = O que é gostoso aqui?
-- O garçom: הַשַּׁקְשׁוּקָה מְאֹד טְעִימָה. וְגַם הַדָּג. (hashakshuka meod teimá. vegam hadag.) = A shakshuka é muito gostosa. E o peixe também.
-- Dani: אֲנִי צִמְחוֹנִי. אֲנִי רוֹצֶה שַׁקְשׁוּקָה, בְּבַקָּשָׁה. (aní tsimchoni. aní rotsé shakshuka, bevakashá.) = Eu sou vegetariano. Quero uma shakshuka, por favor.
+- O garçom: עֶרֶב טוֹב! הִנֵּה הַתַּפְרִיט. (érev tov! hiné hatafrít.) = Boa noite! Aqui está o cardápio.
+- Maya: תּוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָּשָׁה? (todá. efshár máyim, bevakashá?) = Obrigada. Pode ser uma água, por favor?
+- O garçom: בְּטַח. (betách.) = Claro.
+- Dani: מָה טָעִים פֹּה? (ma taím po?) = O que é gostoso aqui?
+- O garçom: הַשַּׁקְשׁוּקָה מְאֹד טְעִימָה. וְגַם הַדָּג. (hashakshúka meód teimá. vegám hadág.) = A shakshuka é muito gostosa. E o peixe também.
+- Dani: אֲנִי צִמְחוֹנִי. אֲנִי רוֹצֶה שַׁקְשׁוּקָה, בְּבַקָּשָׁה. (aní tsimchoní. aní rotsé shakshúka, bevakashá.) = Eu sou vegetariano. Quero uma shakshuka, por favor.
 - O garçom: עִם לֶחֶם? (im léchem?) = Com pão?
 - Dani: כֵּן, תּוֹדָה. (ken, todá.) = Sim, obrigado.
-- Maya: וַאֲנִי רוֹצָה סָלָט. אֵיזֶה סָלָט יֵשׁ? (vaaní rotsá salat. éize salat yesh?) = E eu quero uma salada. Que salada tem?
-- O garçom: יֵשׁ סָלָט יְרָקוֹת וְסָלָט טוּנָה. (yesh salat yerakot vesalat tuna.) = Tem salada de legumes e salada de atum.
-- Maya: סָלָט יְרָקוֹת, בְּלִי בָּצָל. (salat yerakot, bli batsal.) = Salada de legumes, sem cebola.
-- Dani (depois do jantar): אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה? (efshar cheshbon, bevakashá?) = Pode trazer a conta, por favor?
-- glossário: בְּטַח (betach) = claro
-- glossário: סָלָט יְרָקוֹת (salat yerakot) = salada de legumes (expressão fixa)
-- glossário: טוּנָה (tuna) = atum
+- Maya: וַאֲנִי רוֹצָה סָלָט. אֵיזֶה סָלָט יֵשׁ? (vaaní rotsá salát. éize salát yesh?) = E eu quero uma salada. Que salada tem?
+- O garçom: יֵשׁ סָלָט יְרָקוֹת וְסָלָט טוּנָה. (yesh salát yerakót vessalát túna.) = Tem salada de legumes e salada de atum.
+- Maya: סָלָט יְרָקוֹת, בְּלִי בָּצָל. (salát yerakót, bli batsál.) = Salada de legumes, sem cebola.
+- Dani (depois do jantar): אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה? (efshár cheshbón, bevakashá?) = Pode trazer a conta, por favor?
+- glossário: בְּטַח (betách) = claro
+- glossário: סָלָט יְרָקוֹת (salát yerakót) = salada de legumes (expressão fixa)
+- glossário: טוּנָה (túna) = atum
 
 **Leitura: O cardápio do café** (aparece sem nikud, com a chave para mostrar)
 
-- אֲרוּחַת בֹּקֶר יִשְׂרְאֵלִית: בֵּיצִים, סָלָט, לֶחֶם, גְּבִינָה, קָפֶה אוֹ מִיץ. 62 שֶׁקֶל (aruchat bóker yisraelit: beitsim, salat, léchem, gviná, kafé o mits. shishim ushtáyim shékel) = Café da manhã israelense: ovos, salada, pão, queijo, café ou suco. 62 shekels
-- שַׁקְשׁוּקָה (חָרִיף!): 48 שֶׁקֶל (shakshuka (charif!): arbaím ushmoné shékel) = Shakshuka (picante!): 48 shekels
-- טוֹסְט גְּבִינָה: 39 שֶׁקֶל (tost gviná: shloshim vatésha shékel) = Queijo quente: 39 shekels
-- קָפֶה הָפוּךְ: 14 שֶׁקֶל (kafé hafuch: arbá-esré shékel) = Café com leite ("hafuch"): 14 shekels
+- אֲרוּחַת בֹּקֶר יִשְׂרְאֵלִית: בֵּיצִים, סָלָט, לֶחֶם, גְּבִינָה, קָפֶה אוֹ מִיץ. 62 שֶׁקֶל (aruchát bóker yisraelít: beitsím, salát, léchem, gviná, kafé o mits. shishím ushtáyim shékel) = Café da manhã israelense: ovos, salada, pão, queijo, café ou suco. 62 shekels
+- שַׁקְשׁוּקָה (חָרִיף!): 48 שֶׁקֶל (shakshúka (charíf!): arbaím ushmoné shékel) = Shakshuka (picante!): 48 shekels
+- טוֹסְט גְּבִינָה: 39 שֶׁקֶל (tost gviná: shloshím vatésha shékel) = Queijo quente: 39 shekels
+- קָפֶה הָפוּךְ: 14 שֶׁקֶל (kafé hafúch: arbá-esré shékel) = Café com leite ("hafúch"): 14 shekels
 - P1. escolha: Quanto custa o café da manhã israelense? → **62 shekels** / 48 shekels / 14 shekels 
 - P2. escolha: Qual prato é picante? → **A shakshuka** / O queijo quente / O café da manhã 
 - P3. V ou F: No café da manhã israelense dá para escolher café ou suco. → **Verdadeiro** (קָפֶה אוֹ מִיץ: café OU suco.)
@@ -745,29 +745,29 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- חֲנוּת (chanut) = loja
+- חֲנוּת (chanút) = loja
 - קֻפָּה (kupá) = caixa (onde se paga)
-- מוֹכֵר (mocher) · מוֹכֶרֶת (mochéret) · מוֹכְרִים (mochrim) · מוֹכְרוֹת (mochrot) = vender; vendedor
-- לוֹקֵחַ (lokéach) · לוֹקַחַת (lokáchat) · לוֹקְחִים (lokchim) · לוֹקְחוֹת (lokchot) = levar, pegar
-- מְשַׁלֵּם (meshalem) · מְשַׁלֶּמֶת (meshalémet) · מְשַׁלְּמִים (meshalmim) · מְשַׁלְּמוֹת (meshalmot) = pagar
+- מוֹכֵר (mochér) · מוֹכֶרֶת (mochéret) · מוֹכְרִים (mochrím) · מוֹכְרוֹת (mochrót) = vender; vendedor
+- לוֹקֵחַ (lokéach) · לוֹקַחַת (lokáchat) · לוֹקְחִים (lokchím) · לוֹקְחוֹת (lokchót) = levar, pegar
+- מְשַׁלֵּם (meshalém) · מְשַׁלֶּמֶת (meshalémet) · מְשַׁלְּמִים (meshalmím) · מְשַׁלְּמוֹת (meshalmót) = pagar
 - חֻלְצָה (chultsá) = camisa, blusa
-- מִכְנָסַיִם (michnasáyim) = calça
+- מִכְנָסַיִם (michnassáyim) = calça
 - שִׂמְלָה (simlá) = vestido
-- חֲצָאִית (chatsait) = saia
+- חֲצָאִית (chatsaít) = saia
 - סְוֶדֶר (svéder) = suéter, blusa de frio
-- מְעִיל (meil) = casaco
+- מְעִיל (meíl) = casaco
 - כּוֹבַע (kóva) = chapéu, boné
 - נַעֲלַיִם (naaláyim) = sapatos
 - גַּרְבַּיִם (garbáyim) = meias
 - מִדָּה (midá) = tamanho
-- צָהֹב (tsahov) · צְהֻבָּה (tsehubá) = amarelo
-- וָרֹד (varod) · וְרֻדָּה (vrudá) = rosa
-- אָפֹר (afor) · אֲפֹרָה (aforá) = cinza
+- צָהֹב (tsahóv) · צְהֻבָּה (tsehubá) = amarelo
+- וָרֹד (varód) · וְרֻדָּה (vrudá) = rosa
+- אָפֹר (afór) · אֲפֹרָה (aforá) = cinza
 - חוּם (chum) · חוּמָה (chumá) = marrom
-- כָּתֹם (katom) · כְּתֻמָּה (ktumá) = laranja (cor)
-- יָקָר (yakar) · יְקָרָה (yekará) · יְקָרִים (yekarim) · יְקָרוֹת (yekarot) = caro
-- זוֹל (zol) · זוֹלָה (zolá) · זוֹלִים (zolim) · זוֹלוֹת (zolot) = barato
-- יוֹתֵר (yoter) = mais
+- כָּתֹם (katóm) · כְּתֻמָּה (ktumá) = laranja (cor)
+- יָקָר (yakár) · יְקָרָה (yekará) · יְקָרִים (yekarím) · יְקָרוֹת (yekarót) = caro
+- זוֹל (zol) · זוֹלָה (zolá) · זוֹלִים (zolím) · זוֹלוֹת (zolót) = barato
+- יוֹתֵר (yotér) = mais
 - מִדַּי (midái) = demais (caro demais)
 - לִמְדּוֹד (limdód) = experimentar (roupa)
 - מִבְצָע (mivtsá) = promoção
@@ -791,20 +791,20 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: A blusa azul**
 
-- A vendedora: שָׁלוֹם! אֶפְשָׁר לַעֲזוֹר? (shalom! efshar laazor?) = Olá! Posso ajudar?
-- Noa: כֵּן. כַּמָּה עוֹלָה הַחֻלְצָה הַזֹּאת? (ken. kama olá hachultsá hazot?) = Sim. Quanto custa esta blusa?
-- A vendedora: מֵאָה וְעֶשְׂרִים שֶׁקֶל. (meá veesrim shékel.) = Cento e vinte shekels.
-- Noa: זֶה יָקָר מִדַּי… יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל? (ze yakar midái… yesh máshehu yoter zol?) = É caro demais… Tem alguma coisa mais barata?
-- A vendedora: הַחֻלְצוֹת הָאֵלֶּה בְּמִבְצָע: שִׁשִּׁים שֶׁקֶל. (hachultsot haéle bemivtsá: shishim shékel.) = Estas blusas estão em promoção: sessenta shekels.
-- Noa: יֵשׁ בְּכָחֹל? (yesh bechachol?) = Tem em azul?
+- A vendedora: שָׁלוֹם! אֶפְשָׁר לַעֲזוֹר? (shalóm! efshár laazór?) = Olá! Posso ajudar?
+- Noa: כֵּן. כַּמָּה עוֹלָה הַחֻלְצָה הַזֹּאת? (ken. káma olá hachultsá hazót?) = Sim. Quanto custa esta blusa?
+- A vendedora: מֵאָה וְעֶשְׂרִים שֶׁקֶל. (meá veesrím shékel.) = Cento e vinte shekels.
+- Noa: זֶה יָקָר מִדַּי… יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל? (ze yakár midái… yesh máshehu yotér zol?) = É caro demais… Tem alguma coisa mais barata?
+- A vendedora: הַחֻלְצוֹת הָאֵלֶּה בְּמִבְצָע: שִׁשִּׁים שֶׁקֶל. (hachultsót haéle bemivtsá: shishím shékel.) = Estas blusas estão em promoção: sessenta shekels.
+- Noa: יֵשׁ בְּכָחֹל? (yesh bechachól?) = Tem em azul?
 - A vendedora: כֵּן. אֵיזוֹ מִדָּה? (ken. éizo midá?) = Tem. Qual tamanho?
-- Noa: מֶדְיוּם. אֶפְשָׁר לִמְדּוֹד? (médium. efshar limdód?) = Médio. Posso experimentar?
-- A vendedora: בְּטַח. הַתָּא שָׁם. (betach. hatá sham.) = Claro. O provador é ali.
-- Noa: הִיא קְצָת גְּדוֹלָה. יֵשׁ מִדָּה יוֹתֵר קְטַנָּה? (hi ktsat gdolá. yesh midá yoter ktaná?) = Ficou um pouco grande. Tem um tamanho menor?
+- Noa: מֶדְיוּם. אֶפְשָׁר לִמְדּוֹד? (médium. efshár limdód?) = Médio. Posso experimentar?
+- A vendedora: בְּטַח. הַתָּא שָׁם. (betách. hatá sham.) = Claro. O provador é ali.
+- Noa: הִיא קְצָת גְּדוֹלָה. יֵשׁ מִדָּה יוֹתֵר קְטַנָּה? (hi ktsat gdolá. yesh midá yotér ktaná?) = Ficou um pouco grande. Tem um tamanho menor?
 - A vendedora: הִנֵּה, סְמוֹל. (hiné, smol.) = Aqui, pequeno.
-- Noa: מְצֻיָּן! אֲנִי לוֹקַחַת אוֹתָהּ. אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס? (metsuyán! aní lokáchat otá. efshar leshalém bekartís?) = Ótimo! Vou levar. Dá para pagar no cartão?
+- Noa: מְצֻיָּן! אֲנִי לוֹקַחַת אוֹתָהּ. אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס? (metsuyán! aní lokáchat otá. efshár leshalém bekartís?) = Ótimo! Vou levar. Dá para pagar no cartão?
 - A vendedora: כֵּן, בַּקֻּפָּה. (ken, bakupá.) = Dá, no caixa.
-- glossário: לַעֲזוֹר (laazor) = ajudar
+- glossário: לַעֲזוֹר (laazór) = ajudar
 - glossário: תָּא (ta) = provador (cabine)
 - glossário: מְצֻיָּן (metsuyán) = ótimo, excelente
 - glossário: אוֹתָהּ (otá) = a (ela, como objeto): "vou levá-la"
@@ -812,10 +812,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Leitura: Na vitrine** (aparece sem nikud, com a chave para mostrar)
 
-- מִבְצָע! 1+1 עַל כָּל הַגַּרְבַּיִם (mivtsá! achat plus achat al kol hagarbáyim) = Promoção! Leve 2, pague 1 em todas as meias
-- הֲנָחָה 50% עַל מְעִילִים (hanachá chamishim achuz al meilim) = 50% de desconto em casacos
-- רִאשׁוֹן עַד חֲמִישִׁי: 9:00 עַד 20:00 (rishon ad chamishi: tésha ad esrim) = De domingo a quinta: das 9h às 20h
-- שִׁשִּׁי: 9:00 עַד 14:00. שַׁבָּת: סָגוּר (shishi: tésha ad shtáyim. shabát: sagur) = Sexta: das 9h às 14h. Sábado: fechado
+- מִבְצָע! 1+1 עַל כָּל הַגַּרְבַּיִם (mivtsá! achát plus achát al kol hagarbáyim) = Promoção! Leve 2, pague 1 em todas as meias
+- הֲנָחָה 50% עַל מְעִילִים (hanachá chamishím achúz al meilím) = 50% de desconto em casacos
+- רִאשׁוֹן עַד חֲמִישִׁי: 9:00 עַד 20:00 (rishón ad chamishí: tésha ad esrím) = De domingo a quinta: das 9h às 20h
+- שִׁשִּׁי: 9:00 עַד 14:00. שַׁבָּת: סָגוּר (shishí: tésha ad shtáyim. shabát: sagúr) = Sexta: das 9h às 14h. Sábado: fechado
 - P1. escolha: O que tem desconto de 50%? → **Os casacos** / As meias / As blusas 
 - P2. escolha: Até que horas a loja fica aberta na sexta? → **Até as 14h** / Até as 20h / Ela não abre 
 - P3. V ou F: A loja abre no sábado. → **Falso** (שַׁבָּת: סָגוּר.)
@@ -870,13 +870,13 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- יָנוּאָר (yanuar) = janeiro
-- פֶבְּרוּאָר (februar) = fevereiro
+- יָנוּאָר (yanuár) = janeiro
+- פֶבְּרוּאָר (február) = fevereiro
 - מֶרְץ (merts) = março
-- אַפְּרִיל (april) = abril
+- אַפְּרִיל (apríl) = abril
 - מַאי (mai) = maio
-- יוּנִי (yuni) = junho
-- יוּלִי (yuli) = julho
+- יוּנִי (yúni) = junho
+- יוּלִי (yúli) = julho
 - אוֹגוּסְט (ógust) = agosto
 - סֶפְּטֶמְבֶּר (septémber) = setembro
 - אוֹקְטוֹבֶּר (október) = outubro
@@ -884,19 +884,19 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - דֶּצֶמְבֶּר (detsémber) = dezembro
 - קַיִץ (káyits) = verão
 - חֹרֶף (chóref) = inverno
-- אָבִיב (aviv) = primavera
+- אָבִיב (avív) = primavera
 - סְתָו (stav) = outono
-- מֶזֶג אֲוִיר (mézeg avir) = o tempo (clima do dia)
+- מֶזֶג אֲוִיר (mézeg avír) = o tempo (clima do dia)
 - חַם (cham) = quente; faz calor
 - קַר (kar) = frio; faz frio
 - חַם לִי / קַר לִי (cham li / kar li) = estou com calor / estou com frio
 - גֶּשֶׁם (guéshem) = chuva
-- יוֹרֵד גֶּשֶׁם (yored guéshem) = está chovendo
+- יוֹרֵד גֶּשֶׁם (yoréd guéshem) = está chovendo
 - שֶׁמֶשׁ (shémesh) = sol
 - מְעֻנָּן (meunán) = nublado
 - רוּחַ (rúach) = vento
 - מַעֲלוֹת (maalót) = graus
-- מָחָר (machar) = amanhã
+- מָחָר (machár) = amanhã
 - שָׁבוּעַ (shavúa) = semana
 - בַּשָּׁבוּעַ הַבָּא (bashavúa habá) = na semana que vem
 - חֹדֶשׁ (chódesh) = mês
@@ -904,7 +904,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - יוֹם הֻלֶּדֶת (yom hulédet) = aniversário
 - יוֹם הֻלֶּדֶת שָׂמֵחַ! (yom hulédet saméach!) = feliz aniversário!
 - רַק (rak) = só, apenas
-- נָכוֹן (nachon) = certo, verdade; né?
+- נָכוֹן (nachón) = certo, verdade; né?
 
 **Gramática**
 
@@ -921,30 +921,30 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: Uma festa em junho**
 
-- Dani: נֹעָה, מָתַי יוֹם הַהֻלֶּדֶת שֶׁלָּךְ? (Noa, matai yom hahulédet shelach?) = Noa, quando é o seu aniversário?
-- Noa: בְּעֶשְׂרִים בְּיוּנִי. לָמָּה? (beesrim beyuni. láma?) = Em 20 de junho. Por quê?
-- Dani: סְתָם… אֲנִי רוֹצֶה לַעֲשׂוֹת מְסִבָּה בַּיָּם. בְּיוּנִי חַם, נָכוֹן? (stam… aní rotsé laasót mesibá bayám. beyuni cham, nachon?) = Por nada… Quero fazer uma festa na praia. Em junho faz calor, né?
-- Noa: חַם מְאֹד! יֵשׁ שְׁלוֹשִׁים מַעֲלוֹת. (cham meod! yesh shloshim maalót.) = Muito calor! Faz trinta graus.
-- Dani: וְאֵין גֶּשֶׁם? (veein guéshem?) = E não chove?
-- Noa: לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף. (lo. beYisrael yored guéshem rak bachóref.) = Não. Em Israel só chove no inverno.
-- Dani: וּבִבְרָזִיל בְּיוּנִי זֶה חֹרֶף! (uviVrazil beyuni ze chóref!) = E no Brasil, junho é inverno!
-- Noa: בֶּאֱמֶת? חֹרֶף בְּיוּנִי? מְשֻׁגָּע! (beemet? chóref beyuni? meshugá!) = Sério? Inverno em junho? Que loucura!
-- Dani: כֵּן. בְּיוּלִי קַר לִי בְּסָאוֹ פָּאוּלוֹ. (ken. beyuli kar li beSão Paulo.) = É. Em julho eu passo frio em São Paulo.
-- Noa: וּמָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ? (umatai yom hahulédet shelchá?) = E quando é o seu aniversário?
-- Dani: בְּדֶצֶמְבֶּר. בַּקַּיִץ שֶׁל בְּרָזִיל! (bedetsémber. bakáyits shel Brazil!) = Em dezembro. No verão do Brasil!
+- Dani: נֹעָה, מָתַי יוֹם הַהֻלֶּדֶת שֶׁלָּךְ? (Nóa, matái yom hahulédet shelách?) = Noa, quando é o seu aniversário?
+- Noa: בְּעֶשְׂרִים בְּיוּנִי. לָמָּה? (beesrím beyúni. láma?) = Em 20 de junho. Por quê?
+- Dani: סְתָם… אֲנִי רוֹצֶה לַעֲשׂוֹת מְסִבָּה בַּיָּם. בְּיוּנִי חַם, נָכוֹן? (stam… aní rotsé laassót messibá bayám. beyúni cham, nachón?) = Por nada… Quero fazer uma festa na praia. Em junho faz calor, né?
+- Noa: חַם מְאֹד! יֵשׁ שְׁלוֹשִׁים מַעֲלוֹת. (cham meód! yesh shloshím maalót.) = Muito calor! Faz trinta graus.
+- Dani: וְאֵין גֶּשֶׁם? (veéin guéshem?) = E não chove?
+- Noa: לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף. (lo. beYisraél yoréd guéshem rak bachóref.) = Não. Em Israel só chove no inverno.
+- Dani: וּבִבְרָזִיל בְּיוּנִי זֶה חֹרֶף! (uviVrazíl beyúni ze chóref!) = E no Brasil, junho é inverno!
+- Noa: בֶּאֱמֶת? חֹרֶף בְּיוּנִי? מְשֻׁגָּע! (beemét? chóref beyúni? meshugá!) = Sério? Inverno em junho? Que loucura!
+- Dani: כֵּן. בְּיוּלִי קַר לִי בְּסָאוֹ פָּאוּלוֹ. (ken. beyúli kar li beSão Paulo.) = É. Em julho eu passo frio em São Paulo.
+- Noa: וּמָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ? (umatái yom hahulédet shelchá?) = E quando é o seu aniversário?
+- Dani: בְּדֶצֶמְבֶּר. בַּקַּיִץ שֶׁל בְּרָזִיל! (bedetsémber. bakáyits shel Brazíl!) = Em dezembro. No verão do Brasil!
 - glossário: סְתָם (stam) = por nada, à toa
-- glossário: מְסִבָּה (mesibá) = festa
-- glossário: בֶּאֱמֶת? (beemet?) = sério? de verdade?
+- glossário: מְסִבָּה (messibá) = festa
+- glossário: בֶּאֱמֶת? (beemét?) = sério? de verdade?
 - glossário: מְשֻׁגָּע (meshugá) = louco; que loucura
 - nota: Repare em יוֹם הַהֻלֶּדֶת: com "meu", "seu", o הַ entra no meio da expressão, e não no começo. A regra está na Unidade 19.
 
 **Leitura: A previsão do tempo para amanhã** (aparece sem nikud, com a chave para mostrar)
 
-- מֶזֶג הָאֲוִיר לְמָחָר (mézeg haavir lemachar) = O tempo para amanhã
-- תֵּל אָבִיב: שֶׁמֶשׁ, 28 מַעֲלוֹת (Tel Aviv: shémesh, esrim ushmoné maalót) = Tel Aviv: sol, 28 graus
-- יְרוּשָׁלַיִם: מְעֻנָּן, 22 מַעֲלוֹת (Yerushaláyim: meunán, esrim ushtáyim maalót) = Jerusalém: nublado, 22 graus
-- חֵיפָה: גֶּשֶׁם, 20 מַעֲלוֹת (Cháifa: guéshem, esrim maalót) = Haifa: chuva, 20 graus
-- אֵילַת: חַם מְאֹד, 38 מַעֲלוֹת (Eilat: cham meod, shloshim ushmoné maalót) = Eilat: muito calor, 38 graus
+- מֶזֶג הָאֲוִיר לְמָחָר (mézeg haavír lemachár) = O tempo para amanhã
+- תֵּל אָבִיב: שֶׁמֶשׁ, 28 מַעֲלוֹת (Tel Avív: shémesh, esrím ushmoné maalót) = Tel Aviv: sol, 28 graus
+- יְרוּשָׁלַיִם: מְעֻנָּן, 22 מַעֲלוֹת (Yerushaláyim: meunán, esrím ushtáyim maalót) = Jerusalém: nublado, 22 graus
+- חֵיפָה: גֶּשֶׁם, 20 מַעֲלוֹת (Cháifa: guéshem, esrím maalót) = Haifa: chuva, 20 graus
+- אֵילַת: חַם מְאֹד, 38 מַעֲלוֹת (Eilát: cham meód, shloshím ushmoné maalót) = Eilat: muito calor, 38 graus
 - P1. escolha: Onde vai chover amanhã? → **Em Haifa** / Em Tel Aviv / Em Eilat 
 - P2. escolha: Onde vai fazer mais calor? → **Em Eilat** / Em Jerusalém / Em Haifa 
 - P3. V ou F: Em Jerusalém vai estar nublado. → **Verdadeiro** (מְעֻנָּן = nublado.)
@@ -999,27 +999,27 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 **Palavras**
 
 - הַלּוֹ? (haló?) = alô?
-- שׁוֹמֵעַ (shomea) · שׁוֹמַעַת (shomáat) · שׁוֹמְעִים (shomim) · שׁוֹמְעוֹת (shomot) = ouvir, escutar
-- אוֹמֵר (omer) · אוֹמֶרֶת (oméret) · אוֹמְרִים (omrim) · אוֹמְרוֹת (omrot) = dizer
-- חוֹשֵׁב (choshev) · חוֹשֶׁבֶת (choshévet) · חוֹשְׁבִים (choshvim) · חוֹשְׁבוֹת (choshvot) = pensar, achar
-- שׁוֹלֵחַ (sholéach) · שׁוֹלַחַת (sholáchat) · שׁוֹלְחִים (sholchim) · שׁוֹלְחוֹת (sholchot) = mandar, enviar
-- מַזְמִין (mazmin) · מַזְמִינָה (mazminá) · מַזְמִינִים (mazminim) · מַזְמִינוֹת (mazminot) = convidar; pedir (comida)
-- מִצְטַעֵר (mitstaer) · מִצְטַעֶרֶת (mitstaéret) · מִצְטַעֲרִים (mitstaarim) · מִצְטַעֲרוֹת (mitstaarot) = sinto muito, desculpe
-- אַחֵר (acher) · אַחֶרֶת (achéret) · אֲחֵרִים (acherim) · אֲחֵרוֹת (acherot) = outro
+- שׁוֹמֵעַ (shoméa) · שׁוֹמַעַת (shomáat) · שׁוֹמְעִים (shomím) · שׁוֹמְעוֹת (shomót) = ouvir, escutar
+- אוֹמֵר (omér) · אוֹמֶרֶת (oméret) · אוֹמְרִים (omrím) · אוֹמְרוֹת (omrót) = dizer
+- חוֹשֵׁב (choshév) · חוֹשֶׁבֶת (choshévet) · חוֹשְׁבִים (choshvím) · חוֹשְׁבוֹת (choshvót) = pensar, achar
+- שׁוֹלֵחַ (sholéach) · שׁוֹלַחַת (sholáchat) · שׁוֹלְחִים (sholchím) · שׁוֹלְחוֹת (sholchót) = mandar, enviar
+- מַזְמִין (mazmín) · מַזְמִינָה (mazminá) · מַזְמִינִים (mazminím) · מַזְמִינוֹת (mazminót) = convidar; pedir (comida)
+- מִצְטַעֵר (mitstaér) · מִצְטַעֶרֶת (mitstaéret) · מִצְטַעֲרִים (mitstaarím) · מִצְטַעֲרוֹת (mitstaarót) = sinto muito, desculpe
+- אַחֵר (achér) · אַחֶרֶת (achéret) · אֲחֵרִים (acherím) · אֲחֵרוֹת (acherót) = outro
 - שֶׁ־ (she-) = que (grudado: "acho que…")
 - לְהִפָּגֵשׁ (lehipaguésh) = encontrar-se
 - נִפָּגֵשׁ (nipaguésh) = a gente se encontra, combinado (expressão fixa, como נִתְרָאֶה)
-- מָתַי נוֹחַ לְךָ? (matai nóach lechá?) = quando fica bom para você? (a ele)
+- מָתַי נוֹחַ לְךָ? (matái nóach lechá?) = quando fica bom para você? (a ele)
 - זֶה מַתְאִים לִי (ze matím li) = isso fica bom para mim
-- עַכְשָׁיו (achshav) = agora
-- בְּעוֹד שָׁעָה (beod shaá) = daqui a uma hora
+- עַכְשָׁיו (achsháv) = agora
+- בְּעוֹד שָׁעָה (beód shaá) = daqui a uma hora
 - הָעֶרֶב (haérev) = hoje à noite
 - הוֹדָעָה (hodaá) = mensagem
 - פְּגִישָׁה (pgishá) = compromisso, reunião, encontro
 - קוֹלְנוֹעַ (kolnóa) = cinema
 - סֶרֶט (séret) = filme
-- מְסִבָּה (mesibá) = festa
-- חֲבָל (chaval) = que pena
+- מְסִבָּה (messibá) = festa
+- חֲבָל (chavál) = que pena
 
 **Gramática**
 
@@ -1036,16 +1036,16 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 **Diálogo: Uma ligação**
 
 - Maya: הַלּוֹ? (haló?) = Alô?
-- Dani: הַי מַיָּה, זֶה דָּנִי. מַה נִּשְׁמָע? (hai Maya, ze Dani. ma nishmá?) = Oi, Maya, é o Dani. Tudo bem?
-- Maya: בְּסֵדֶר. מָה קוֹרֶה? (beséder. ma koré?) = Tudo. E aí, o que manda?
+- Dani: הַי מַיָּה, זֶה דָּנִי. מַה נִּשְׁמָע? (hai Máya, ze Dáni. ma nishmá?) = Oi, Maya, é o Dani. Tudo bem?
+- Maya: בְּסֵדֶר. מָה קוֹרֶה? (besséder. ma koré?) = Tudo. E aí, o que manda?
 - Dani: אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ הָעֶרֶב? (at rotsá laléchet lakolnóa haérev?) = Você quer ir ao cinema hoje à noite?
 - Maya: הָעֶרֶב אֲנִי לֹא יְכוֹלָה, אֲנִי מִצְטַעֶרֶת. יֵשׁ לִי פְּגִישָׁה. (haérev aní lo yecholá, aní mitstaéret. yesh li pgishá.) = Hoje à noite eu não posso, sinto muito. Tenho um compromisso.
-- Dani: חֲבָל. אָז מָחָר? (chaval. az machar?) = Que pena. Então amanhã?
-- Maya: מָחָר מַתְאִים לִי. בְּאֵיזוֹ שָׁעָה? (machar matím li. beéizo shaá?) = Amanhã fica bom para mim. A que horas?
-- Dani: הַסֶּרֶט בְּתֵשַׁע. נוֹחַ לָךְ? (haséret betésha. nóach lach?) = O filme é às nove. Fica bom para você?
-- Maya: כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁגַּם נֹעָה רוֹצָה לָבוֹא. (ken. vaaní choshévet shegám Noa rotsá lavó.) = Fica. E eu acho que a Noa também quer vir.
+- Dani: חֲבָל. אָז מָחָר? (chavál. az machár?) = Que pena. Então amanhã?
+- Maya: מָחָר מַתְאִים לִי. בְּאֵיזוֹ שָׁעָה? (machár matím li. beéizo shaá?) = Amanhã fica bom para mim. A que horas?
+- Dani: הַסֶּרֶט בְּתֵשַׁע. נוֹחַ לָךְ? (hasséret betésha. nóach lach?) = O filme é às nove. Fica bom para você?
+- Maya: כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁגַּם נֹעָה רוֹצָה לָבוֹא. (ken. vaaní choshévet shegám Nóa rotsá lavó.) = Fica. E eu acho que a Noa também quer vir.
 - Dani: יוֹפִי! אֲנִי שׁוֹלֵחַ לָהּ הוֹדָעָה. (yófi! aní sholéach la hodaá.) = Ótimo! Vou mandar uma mensagem para ela.
-- Maya: סַבָּבָּה. נִתְרָאֶה מָחָר! (sabába. nitraé machar!) = Beleza. Até amanhã!
+- Maya: סַבָּבָּה. נִתְרָאֶה מָחָר! (sabába. nitraé machár!) = Beleza. Até amanhã!
 - Dani: בַּי! (bai!) = Tchau!
 - glossário: מָה קוֹרֶה? (ma koré?) = e aí? o que manda? (literalmente: o que está acontecendo?)
 - glossário: בְּאֵיזוֹ שָׁעָה? (beéizo shaá?) = a que horas?
@@ -1054,10 +1054,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Leitura: No grupo dos amigos** (aparece sem nikud, com a chave para mostrar)
 
-- דָּנִי: מָחָר קוֹלְנוֹעַ בְּתֵשַׁע. מִי בָּא? (Dani: machar kolnóa betésha. mi ba?) = Dani: Amanhã, cinema às nove. Quem vem?
-- נֹעָה: אֲנִי! אֲבָל אֲנִי חוֹזֶרֶת מֵהָעֲבוֹדָה בִּשְׁמוֹנֶה וָחֵצִי. אֶפְשָׁר בְּתֵשַׁע וָחֵצִי? (Noa: aní! aval aní chozéret mehaavodá bishmoné vachétsi. efshar betésha vachétsi?) = Noa: Eu! Mas eu volto do trabalho às oito e meia. Dá para ser às nove e meia?
+- דָּנִי: מָחָר קוֹלְנוֹעַ בְּתֵשַׁע. מִי בָּא? (Dáni: machár kolnóa betésha. mi ba?) = Dani: Amanhã, cinema às nove. Quem vem?
+- נֹעָה: אֲנִי! אֲבָל אֲנִי חוֹזֶרֶת מֵהָעֲבוֹדָה בִּשְׁמוֹנֶה וָחֵצִי. אֶפְשָׁר בְּתֵשַׁע וָחֵצִי? (Nóa: aní! avál aní chozéret mehaavodá bishmoné vachétsi. efshár betésha vachétsi?) = Noa: Eu! Mas eu volto do trabalho às oito e meia. Dá para ser às nove e meia?
 - טוֹם: גַּם אֲנִי בָּא. תֵּשַׁע וָחֵצִי מַתְאִים לִי. (Tom: gam aní ba. tésha vachétsi matím li.) = Tom: Eu também vou. Nove e meia fica bom para mim.
-- מַיָּה: סַבָּבָּה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ. (Maya: sabába. nipaguésh leyád hakolnóa.) = Maya: Beleza. A gente se encontra ao lado do cinema.
+- מַיָּה: סַבָּבָּה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ. (Máya: sabába. nipaguésh leyád hakolnóa.) = Maya: Beleza. A gente se encontra ao lado do cinema.
 - P1. escolha: Por que a Noa pede outro horário? → **Ela volta do trabalho às 8h30** / Ela não gosta de cinema / Ela tem uma festa 
 - P2. escolha: No fim, a que horas eles vão ao cinema? → **Às 9h30** / Às 9h / Às 8h30 
 - P3. V ou F: O Tom não vai. → **Falso** (גַּם אֲנִי בָּא: ele vai também.)
@@ -1111,27 +1111,27 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- שְׂדֵה תְּעוּפָה (sdé teufá) = aeroporto (expressão fixa)
-- טִיסָה (tisá) = voo
+- שְׂדֵה תְּעוּפָה (sde teufá) = aeroporto (expressão fixa)
+- טִיסָה (tissá) = voo
 - מָטוֹס (matós) = avião
-- דַּרְכּוֹן (darkon) = passaporte
+- דַּרְכּוֹן (darkón) = passaporte
 - מִזְוָדָה (mizvadá) = mala
 - כַּרְטִיס (kartís) = passagem; cartão
-- תַּיָּר (tayar) · תַּיֶּרֶת (tayéret) · תַּיָּרִים (tayarim) · תַּיָּרוֹת (tayarot) = turista
+- תַּיָּר (tayár) · תַּיֶּרֶת (tayéret) · תַּיָּרִים (tayarím) · תַּיָּרוֹת (tayarót) = turista
 - מָלוֹן (malón) = hotel
 - קַבָּלָה (kabalá) = recepção
 - הַזְמָנָה (hazmaná) = reserva; pedido
-- מַזְגָן (mazgan) = ar-condicionado
+- מַזְגָן (mazgán) = ar-condicionado
 - מַגֶּבֶת (magévet) = toalha
 - סִיסְמָה (sismá) = senha
-- עוֹזֵר (ozer) · עוֹזֶרֶת (ozéret) · עוֹזְרִים (ozrim) · עוֹזְרוֹת (ozrot) = ajudar
-- מְחַכֶּה (mechaké) · מְחַכָּה (mechaká) · מְחַכִּים (mechakim) · מְחַכּוֹת (mechakot) = esperar
-- מוּכָן (muchan) · מוּכָנָה (muchaná) · מוּכָנִים (muchanim) · מוּכָנוֹת (muchanot) = pronto
-- כָּבֵד (kaved) · כְּבֵדָה (kvedá) · כְּבֵדִים (kvedim) · כְּבֵדוֹת (kvedot) = pesado
+- עוֹזֵר (ozér) · עוֹזֶרֶת (ozéret) · עוֹזְרִים (ozrím) · עוֹזְרוֹת (ozrót) = ajudar
+- מְחַכֶּה (mechaké) · מְחַכָּה (mechaká) · מְחַכִּים (mechakím) · מְחַכּוֹת (mechakót) = esperar
+- מוּכָן (muchán) · מוּכָנָה (muchaná) · מוּכָנִים (muchaním) · מוּכָנוֹת (muchanót) = pronto
+- כָּבֵד (kavéd) · כְּבֵדָה (kvedá) · כְּבֵדִים (kvedím) · כְּבֵדוֹת (kvedót) = pesado
 - כְּבָר (kvar) = já
 - עוֹד לֹא (od lo) = ainda não
 - מִ־… עַד… (mi-… ad…) = de… até…
-- בְּרוּכִים הַבָּאִים! (bruchim habaím!) = bem-vindos!
+- בְּרוּכִים הַבָּאִים! (bruchím habaím!) = bem-vindos!
 - עַל שֵׁם… (al shem…) = no nome de…
 
 **Gramática**
@@ -1148,27 +1148,27 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: Check-in em Eilat**
 
-- A recepcionista: עֶרֶב טוֹב, בְּרוּכִים הַבָּאִים! (érev tov, bruchim habaím!) = Boa noite, bem-vindo!
+- A recepcionista: עֶרֶב טוֹב, בְּרוּכִים הַבָּאִים! (érev tov, bruchím habaím!) = Boa noite, bem-vindo!
 - Tom: עֶרֶב טוֹב. יֵשׁ לִי הַזְמָנָה עַל שֵׁם טוֹם סִילְבָה. (érev tov. yesh li hazmaná al shem Tom Silva.) = Boa noite. Tenho uma reserva no nome de Tom Silva.
-- A recepcionista: רֶגַע… כֵּן. עַד יוֹם שִׁשִּׁי, נָכוֹן? (réga… ken. ad yom shishi, nachon?) = Um momento… Sim. Até sexta-feira, certo?
-- Tom: נָכוֹן. הַחֶדֶר כְּבָר מוּכָן? (nachon. hachéder kvar muchan?) = Certo. O quarto já está pronto?
-- A recepcionista: כֵּן. הִנֵּה הַמַּפְתֵּחַ: חֶדֶר 304, בַּקּוֹמָה הַשְּׁלִישִׁית. (ken. hiné hamafteach: chéder shalosh éfes arbá, bakomá hashlishit.) = Sim. Aqui está a chave: quarto 304, no terceiro andar.
-- Tom: יֵשׁ מַזְגָן בַּחֶדֶר? (yesh mazgan bachéder?) = Tem ar-condicionado no quarto?
-- A recepcionista: כֵּן, וְגַם וַויְפַיי. הַסִּיסְמָה עַל הַכַּרְטִיס. (ken, vegam wáifai. hasismá al hakartís.) = Tem, e wi-fi também. A senha está no cartão.
-- Tom: וּמָתַי אֲרוּחַת הַבֹּקֶר? (umatai aruchat habóker?) = E quando é o café da manhã?
-- A recepcionista: מִשֶּׁבַע עַד עֶשֶׂר, בַּקּוֹמָה הָרִאשׁוֹנָה. (mishéva ad éser, bakomá harishoná.) = Das sete às dez, no primeiro andar.
-- Tom: תּוֹדָה. אַתְּ יְכוֹלָה לַעֲזוֹר לִי עִם הַמִּזְוָדָה? הִיא מְאֹד כְּבֵדָה. (todá. at yecholá laazor li im hamizvadá? hi meod kvedá.) = Obrigado. Você pode me ajudar com a mala? Ela está muito pesada.
-- A recepcionista: בְּטַח. לַיְלָה טוֹב, וּבְרוּכִים הַבָּאִים לְאֵילַת! (betach. láila tov, uvruchim habaím leEilat!) = Claro. Boa noite, e bem-vindo a Eilat!
+- A recepcionista: רֶגַע… כֵּן. עַד יוֹם שִׁשִּׁי, נָכוֹן? (réga… ken. ad yom shishí, nachón?) = Um momento… Sim. Até sexta-feira, certo?
+- Tom: נָכוֹן. הַחֶדֶר כְּבָר מוּכָן? (nachón. hachéder kvar muchán?) = Certo. O quarto já está pronto?
+- A recepcionista: כֵּן. הִנֵּה הַמַּפְתֵּחַ: חֶדֶר 304, בַּקּוֹמָה הַשְּׁלִישִׁית. (ken. hiné hamaftéach: chéder shalósh éfes arbá, bakomá hashlishít.) = Sim. Aqui está a chave: quarto 304, no terceiro andar.
+- Tom: יֵשׁ מַזְגָן בַּחֶדֶר? (yesh mazgán bachéder?) = Tem ar-condicionado no quarto?
+- A recepcionista: כֵּן, וְגַם וַויְפַיי. הַסִּיסְמָה עַל הַכַּרְטִיס. (ken, vegám wáifai. hassismá al hakartís.) = Tem, e wi-fi também. A senha está no cartão.
+- Tom: וּמָתַי אֲרוּחַת הַבֹּקֶר? (umatái aruchát habóker?) = E quando é o café da manhã?
+- A recepcionista: מִשֶּׁבַע עַד עֶשֶׂר, בַּקּוֹמָה הָרִאשׁוֹנָה. (mishéva ad ésser, bakomá harishoná.) = Das sete às dez, no primeiro andar.
+- Tom: תּוֹדָה. אַתְּ יְכוֹלָה לַעֲזוֹר לִי עִם הַמִּזְוָדָה? הִיא מְאֹד כְּבֵדָה. (todá. at yecholá laazór li im hamizvadá? hi meód kvedá.) = Obrigado. Você pode me ajudar com a mala? Ela está muito pesada.
+- A recepcionista: בְּטַח. לַיְלָה טוֹב, וּבְרוּכִים הַבָּאִים לְאֵילַת! (betách. láila tov, uvruchím habaím leEilát!) = Claro. Boa noite, e bem-vindo a Eilat!
 - glossário: וַויְפַיי (wáifai) = wi-fi
-- glossário: אֲרוּחַת הַבֹּקֶר (aruchat habóker) = o café da manhã (expressão fixa)
+- glossário: אֲרוּחַת הַבֹּקֶר (aruchát habóker) = o café da manhã (expressão fixa)
 - nota: בְּרוּכִים הַבָּאִים está no plural, e se diz assim até para uma pessoa só, como saudação geral. Para um homem, também se ouve בָּרוּךְ הַבָּא; para uma mulher, בְּרוּכָה הַבָּאָה.
 
 **Leitura: O painel do aeroporto** (aparece sem nikud, com a chave para mostrar)
 
-- שְׂדֵה הַתְּעוּפָה בֶּן גּוּרְיוֹן (sdé hateufá Ben Gurion) = Aeroporto Ben Gurion
-- טִיסָה לְסָאוֹ פָּאוּלוֹ: 23:40 (tisá leSão Paulo: esrim veshalosh arbaím) = Voo para São Paulo: 23h40
+- שְׂדֵה הַתְּעוּפָה בֶּן גּוּרְיוֹן (sde hateufá Ben Gurión) = Aeroporto Ben Gurion
+- טִיסָה לְסָאוֹ פָּאוּלוֹ: 23:40 (tissá leSão Paulo: esrím veshalósh arbaím) = Voo para São Paulo: 23h40
 - שַׁעַר 7 (sháar shéva) = Portão 7
-- הַטִּיסָה מְאַחֶרֶת בְּשָׁעָה (hatisá meachéret beshaá) = O voo está atrasado uma hora
+- הַטִּיסָה מְאַחֶרֶת בְּשָׁעָה (hatissá meachéret beshaá) = O voo está atrasado uma hora
 - P1. escolha: Para onde vai o voo? → **São Paulo** / Rio / Tel Aviv 
 - P2. escolha: Qual é o portão? → **7** / 23 / 40 
 - P3. V ou F: O voo está no horário. → **Falso** (מְאַחֶרֶת בְּשָׁעָה: atrasado uma hora. מְאַחֶרֶת é "está atrasada" (o verbo מְאַחֵר, que volta na Unidade 20), no feminino porque טִיסָה é feminina. Não é מְאֻחָר (Unidade 9), que é "tarde".)
@@ -1210,7 +1210,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **A situação:** A Noa acorda com dor de cabeça e a garganta arranhando. Antes de ir ao médico, ela passa na farmácia do bairro.
 
-**Em Israel · Kupat cholim, 101 e "refuá shlemá":** Todo morador de Israel é ligado a uma קֻפַּת חוֹלִים, um dos planos de saúde do sistema público, e marca as consultas por aplicativo ou telefone. Turista precisa de seguro-viagem. Em emergência, o número da ambulância é 101 (a polícia é 100, os bombeiros, 102). E a quem está doente se deseja רְפוּאָה שְׁלֵמָה, "uma cura completa".
+**Em Israel · Kupát cholím, 101 e "refuá shlemá":** Todo morador de Israel é ligado a uma קֻפַּת חוֹלִים, um dos planos de saúde do sistema público, e marca as consultas por aplicativo ou telefone. Turista precisa de seguro-viagem. Em emergência, o número da ambulância é 101 (a polícia é 100, os bombeiros, 102). E a quem está doente se deseja רְפוּאָה שְׁלֵמָה, "uma cura completa".
 
 **Curiosidade · Bola ou comprimido?:** כַּדּוּר é "bola" (o כַּדּוּר de כַּדּוּרֶגֶל, Unidade 10) e também "comprimido" (e até "bala" de arma): a ideia é a de uma coisa em forma de bola. O planeta Terra é כַּדּוּר הָאָרֶץ, "a bola da terra". Quem decide o sentido é a frase: na farmácia, ninguém vai lhe vender uma bola.
 
@@ -1224,22 +1224,22 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 - רֹאשׁ (rosh) = cabeça
 - בֶּטֶן (béten) = barriga (feminina)
-- גָּרוֹן (garon) = garganta
+- גָּרוֹן (garón) = garganta
 - גַּב (gav) = costas
 - יָד / יָדַיִם (yad / yadáyim) = mão, braço / mãos
 - רֶגֶל / רַגְלַיִם (régel / ragláyim) = perna, pé / pernas
 - עַיִן / עֵינַיִם (áyin / eináyim) = olho / olhos
 - אֹזֶן / אָזְנַיִם (ózen / oznáyim) = orelha, ouvido / orelhas
 - שֵׁן / שִׁנַּיִם (shen / shináyim) = dente / dentes
-- כּוֹאֵב (koev) · כּוֹאֶבֶת (koévet) · כּוֹאֲבִים (koavim) · כּוֹאֲבוֹת (koavot) = doer
-- מַרְגִּישׁ (margish) · מַרְגִּישָׁה (margishá) · מַרְגִּישִׁים (margishim) · מַרְגִּישׁוֹת (margishot) = sentir-se
-- חוֹלֶה (cholé) · חוֹלָה (cholá) · חוֹלִים (cholim) · חוֹלוֹת (cholot) = doente
+- כּוֹאֵב (koév) · כּוֹאֶבֶת (koévet) · כּוֹאֲבִים (koavím) · כּוֹאֲבוֹת (koavót) = doer
+- מַרְגִּישׁ (margísh) · מַרְגִּישָׁה (margishá) · מַרְגִּישִׁים (margishím) · מַרְגִּישׁוֹת (margishót) = sentir-se
+- חוֹלֶה (cholé) · חוֹלָה (cholá) · חוֹלִים (cholím) · חוֹלוֹת (cholót) = doente
 - חֹם (chom) = febre
-- כְּאֵב רֹאשׁ (keev rosh) = dor de cabeça
+- כְּאֵב רֹאשׁ (keév rosh) = dor de cabeça
 - תְּרוּפָה (trufá) = remédio
-- כַּדּוּר (kadur) = comprimido; bola
+- כַּדּוּר (kadúr) = comprimido; bola
 - בֵּית מִרְקַחַת (beit mirkáchat) = farmácia (expressão fixa)
-- קֻפַּת חוֹלִים (kupat cholim) = plano de saúde israelense
+- קֻפַּת חוֹלִים (kupát cholím) = plano de saúde israelense
 - תּוֹר (tor) = consulta marcada; fila
 - הַרְבֵּה (harbé) = muito, bastante (quantidade)
 - רְפוּאָה שְׁלֵמָה! (refuá shlemá!) = melhoras!
@@ -1259,32 +1259,32 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: Na farmácia**
 
-- A farmacêutica: שָׁלוֹם, אֵיךְ אֶפְשָׁר לַעֲזוֹר? (shalóm, eich efshar laazor?) = Olá, como posso ajudar?
-- Noa: שָׁלוֹם. אֲנִי מַרְגִּישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן. (shalóm. aní margishá lo tov. koev li harosh, vegam hagaron.) = Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também.
+- A farmacêutica: שָׁלוֹם, אֵיךְ אֶפְשָׁר לַעֲזוֹר? (shalóm, eich efshár laazór?) = Olá, como posso ajudar?
+- Noa: שָׁלוֹם. אֲנִי מַרְגִּישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן. (shalóm. aní margishá lo tov. koév li harósh, vegám hagarón.) = Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também.
 - A farmacêutica: יֵשׁ לָךְ חֹם? (yesh lach chom?) = Você está com febre?
-- Noa: כֵּן, קְצָת. שְׁלוֹשִׁים וּשְׁמוֹנֶה. (ken, ktsat. shloshim ushmoné.) = Estou, um pouco. Trinta e oito.
+- Noa: כֵּן, קְצָת. שְׁלוֹשִׁים וּשְׁמוֹנֶה. (ken, ktsat. shloshím ushmoné.) = Estou, um pouco. Trinta e oito.
 - A farmacêutica: אוּלַי זֹאת שַׁפַּעַת. (ulái zot shapáat.) = Talvez seja gripe.
-- Noa: מָה אֲנִי צְרִיכָה לַעֲשׂוֹת? (ma aní tsrichá laasót?) = O que eu preciso fazer?
-- A farmacêutica: צָרִיךְ לִשְׁתּוֹת הַרְבֵּה מַיִם וְלָנוּחַ. הִנֵּה כַּדּוּרִים נֶגֶד כְּאֵב רֹאשׁ. (tsarich lishtót harbé máyim velanúach. hiné kadurim néged keev rosh.) = É preciso beber bastante água e descansar. Aqui estão comprimidos para dor de cabeça.
-- Noa: כַּמָּה פְּעָמִים בַּיּוֹם? (kama peamim bayom?) = Quantas vezes por dia?
-- A farmacêutica: שָׁלוֹשׁ פְּעָמִים בַּיּוֹם, אַחֲרֵי הָאֹכֶל. וְאִם זֶה לֹא עוֹבֵר, צָרִיךְ לָלֶכֶת לָרוֹפֵא. (shalosh peamim bayom, acharei haóchel. veim ze lo over, tsarich laléchet larofé.) = Três vezes por dia, depois da comida. E se não passar, é preciso ir ao médico.
+- Noa: מָה אֲנִי צְרִיכָה לַעֲשׂוֹת? (ma aní tsrichá laassót?) = O que eu preciso fazer?
+- A farmacêutica: צָרִיךְ לִשְׁתּוֹת הַרְבֵּה מַיִם וְלָנוּחַ. הִנֵּה כַּדּוּרִים נֶגֶד כְּאֵב רֹאשׁ. (tsarích lishtót harbé máyim velanúach. hiné kadurím néged keév rosh.) = É preciso beber bastante água e descansar. Aqui estão comprimidos para dor de cabeça.
+- Noa: כַּמָּה פְּעָמִים בַּיּוֹם? (káma peamím bayóm?) = Quantas vezes por dia?
+- A farmacêutica: שָׁלוֹשׁ פְּעָמִים בַּיּוֹם, אַחֲרֵי הָאֹכֶל. וְאִם זֶה לֹא עוֹבֵר, צָרִיךְ לָלֶכֶת לָרוֹפֵא. (shalósh peamím bayóm, acharéi haóchel. veím ze lo ovér, tsarích laléchet larofé.) = Três vezes por dia, depois da comida. E se não passar, é preciso ir ao médico.
 - Noa: תּוֹדָה רַבָּה. (todá rabá.) = Muito obrigada.
 - A farmacêutica: בְּבַקָּשָׁה. רְפוּאָה שְׁלֵמָה! (bevakashá. refuá shlemá!) = De nada. Melhoras!
 - glossário: שַׁפַּעַת (shapáat) = gripe
 - glossário: לָנוּחַ (lanúach) = descansar
 - glossário: נֶגֶד (néged) = contra
-- glossário: פְּעָמִים (peamim) = vezes
+- glossário: פְּעָמִים (peamím) = vezes
 - glossário: אִם (im) = se (condição)
-- glossário: עוֹבֵר (over) = passa
+- glossário: עוֹבֵר (ovér) = passa
 
 **Leitura: A Noa avisa o trabalho** (aparece sem nikud, com a chave para mostrar)
 
-- שָׁלוֹם רוֹנִית, (shalóm Ronit,) = Olá, Ronit,
+- שָׁלוֹם רוֹנִית, (shalóm Ronít,) = Olá, Ronit,
 - אֲנִי חוֹלָה הַיּוֹם, וַאֲנִי לֹא יְכוֹלָה לָבוֹא לָעֲבוֹדָה. (aní cholá hayóm, vaaní lo yecholá lavó laavodá.) = Estou doente hoje e não posso ir ao trabalho.
-- יֵשׁ לִי חֹם, וְכוֹאֵב לִי הַגָּרוֹן. (yesh li chom, vechoev li hagaron.) = Estou com febre e com dor de garganta.
-- מָחָר בַּבֹּקֶר יֵשׁ לִי תּוֹר לָרוֹפֵא. (machar babóker yesh li tor larofé.) = Amanhã de manhã tenho consulta no médico.
-- סְלִיחָה, נֹעָה (slichá, Noa) = Desculpe, Noa
-- רוֹנִית: רְפוּאָה שְׁלֵמָה, נֹעָה! (Ronit: refuá shlemá, Noa!) = Ronit: Melhoras, Noa!
+- יֵשׁ לִי חֹם, וְכוֹאֵב לִי הַגָּרוֹן. (yesh li chom, vechoév li hagarón.) = Estou com febre e com dor de garganta.
+- מָחָר בַּבֹּקֶר יֵשׁ לִי תּוֹר לָרוֹפֵא. (machár babóker yesh li tor larofé.) = Amanhã de manhã tenho consulta no médico.
+- סְלִיחָה, נֹעָה (slichá, Nóa) = Desculpe, Noa
+- רוֹנִית: רְפוּאָה שְׁלֵמָה, נֹעָה! (Ronít: refuá shlemá, Nóa!) = Ronit: Melhoras, Noa!
 - P1. escolha: Por que a Noa não vai trabalhar? → **Ela está doente** / Ela vai viajar / Ela tem uma festa 
 - P2. escolha: O que dói? → **A garganta** / A barriga / As costas 
 - P3. escolha: Quando é a consulta? → **Amanhã de manhã** / Hoje à noite / Na semana que vem 
@@ -1338,7 +1338,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- אֶחָד (echad) = 1 (com masculino)
+- אֶחָד (echád) = 1 (com masculino)
 - שְׁנַיִם (shnáyim) = 2 (com masculino, sozinho)
 - שְׁלוֹשָׁה (shloshá) = 3 (com masculino)
 - אַרְבָּעָה (arbaá) = 4 (com masculino)
@@ -1347,21 +1347,21 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - שִׁבְעָה (shiv'á) = 7 (com masculino)
 - שְׁמוֹנָה (shmoná) = 8 (com masculino)
 - תִּשְׁעָה (tish'á) = 9 (com masculino)
-- עֲשָׂרָה (asará) = 10 (com masculino)
+- עֲשָׂרָה (assará) = 10 (com masculino)
 - שְׁנֵי / שְׁתֵּי (shnei / shtei) = dois / duas (antes da coisa)
-- אֲנָשִׁים (anashim) = pessoas (plural de אִישׁ)
-- יָמִים (yamim) = dias
+- אֲנָשִׁים (anashím) = pessoas (plural de אִישׁ)
+- יָמִים (yamím) = dias
 - שָׁעוֹת (shaót) = horas (feminino)
 - כִּתָּה (kitá) = turma, série (da escola)
 - גַּן (gan) = jardim de infância
 - בֵּית סֵפֶר (beit séfer) = escola ("casa de livro")
-- בֵּית חוֹלִים (beit cholim) = hospital ("casa de doentes")
-- תַּחֲנַת רַכֶּבֶת (tachanat rakévet) = estação de trem
+- בֵּית חוֹלִים (beit cholím) = hospital ("casa de doentes")
+- תַּחֲנַת רַכֶּבֶת (tachanát rakévet) = estação de trem
 - כּוֹס מַיִם (kos máyim) = copo de água
-- מִיץ תַּפּוּזִים (mits tapuzim) = suco de laranja
-- עוּגַת שׁוֹקוֹלָד (ugat shokolad) = bolo de chocolate
+- מִיץ תַּפּוּזִים (mits tapuzím) = suco de laranja
+- עוּגַת שׁוֹקוֹלָד (ugát shokolád) = bolo de chocolate
 - בֶּן דּוֹד / בַּת דּוֹדָה (ben dod / bat dodá) = primo / prima ("filho do tio"; para "prima" também se diz בַּת דּוֹד)
-- בְּנֵי דּוֹדִים (bnei dodim) = primos
+- בְּנֵי דּוֹדִים (bnei dodím) = primos
 
 **Gramática**
 
@@ -1382,16 +1382,16 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: A família do Natan**
 
-- Dani: נָתָן, כַּמָּה יְלָדִים יֵשׁ לְךָ? (Natan, kama yeladim yesh lechá?) = Natan, quantos filhos você tem?
-- Natan: יֵשׁ לִי שְׁלוֹשָׁה יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת. (yesh li shloshá yeladim: shnei banim uvat achat.) = Tenho três filhos: dois meninos e uma menina.
-- Dani: וְהֵם לוֹמְדִים בְּבֵית סֵפֶר? (vehem lomdim beveit séfer?) = E eles estudam numa escola?
-- Natan: הַבַּת בְּבֵית סֵפֶר, בְּכִתָּה ב׳. הַבָּנִים קְטַנִּים, הֵם בַּגַּן. (habat beveit séfer, bekitá bet. habanim ktanim, hem bagan.) = A menina está na escola, no segundo ano. Os meninos são pequenos, estão no jardim de infância.
-- Dani: כַּמָּה יְלָדִים יֵשׁ בַּכִּתָּה שֶׁלָּהּ? (kama yeladim yesh bakitá shelá?) = Quantas crianças há na turma dela?
-- Natan: עֶשְׂרִים וְשִׁשָּׁה! (esrim veshishá!) = Vinte e seis!
-- Dani: וְאַתָּה עוֹבֵד בְּבֵית חוֹלִים, נָכוֹן? (veatá oved beveit cholim, nachon?) = E você trabalha num hospital, né?
-- Natan: כֵּן, אֲנִי אָח בְּבֵית הַחוֹלִים הַגָּדוֹל בְּתֵל אָבִיב. (ken, aní ach beveit hacholim hagadol beTel Aviv.) = Sim, sou enfermeiro no hospital grande de Tel Aviv.
-- Dani: כַּמָּה יָמִים בַּשָּׁבוּעַ? (kama yamim bashavúa?) = Quantos dias por semana?
-- Natan: אַרְבָּעָה יָמִים. אֲבָל שְׁתֵּים־עֶשְׂרֵה שָׁעוֹת בַּיּוֹם! (arbaá yamim. aval shteim-esré shaót bayom!) = Quatro dias. Mas doze horas por dia!
+- Dani: נָתָן, כַּמָּה יְלָדִים יֵשׁ לְךָ? (Natán, káma yeladím yesh lechá?) = Natan, quantos filhos você tem?
+- Natan: יֵשׁ לִי שְׁלוֹשָׁה יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת. (yesh li shloshá yeladím: shnei baním uvát achát.) = Tenho três filhos: dois meninos e uma menina.
+- Dani: וְהֵם לוֹמְדִים בְּבֵית סֵפֶר? (vehém lomdím bevéit séfer?) = E eles estudam numa escola?
+- Natan: הַבַּת בְּבֵית סֵפֶר, בְּכִתָּה ב׳. הַבָּנִים קְטַנִּים, הֵם בַּגַּן. (habát bevéit séfer, bekitá bet. habaním ktaním, hem bagán.) = A menina está na escola, no segundo ano. Os meninos são pequenos, estão no jardim de infância.
+- Dani: כַּמָּה יְלָדִים יֵשׁ בַּכִּתָּה שֶׁלָּהּ? (káma yeladím yesh bakitá shelá?) = Quantas crianças há na turma dela?
+- Natan: עֶשְׂרִים וְשִׁשָּׁה! (esrím veshishá!) = Vinte e seis!
+- Dani: וְאַתָּה עוֹבֵד בְּבֵית חוֹלִים, נָכוֹן? (veatá ovéd bevéit cholím, nachón?) = E você trabalha num hospital, né?
+- Natan: כֵּן, אֲנִי אָח בְּבֵית הַחוֹלִים הַגָּדוֹל בְּתֵל אָבִיב. (ken, aní ach bevéit hacholím hagadól beTél Avív.) = Sim, sou enfermeiro no hospital grande de Tel Aviv.
+- Dani: כַּמָּה יָמִים בַּשָּׁבוּעַ? (káma yamím bashavúa?) = Quantos dias por semana?
+- Natan: אַרְבָּעָה יָמִים. אֲבָל שְׁתֵּים־עֶשְׂרֵה שָׁעוֹת בַּיּוֹם! (arbaá yamím. avál shteim-esré shaót bayóm!) = Quatro dias. Mas doze horas por dia!
 - Dani: וָואוּ! (wau!) = Uau!
 - glossário: אָח (ach) = aqui: enfermeiro (a mesma palavra de "irmão"); enfermeira é אָחוֹת
 - glossário: כִּתָּה ב׳ (kitá bet) = segundo ano (as séries têm letras)
@@ -1399,12 +1399,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Leitura: Receita: bolo de chocolate** (aparece sem nikud, com a chave para mostrar)
 
-- עוּגַת שׁוֹקוֹלָד (ugat shokolad) = Bolo de chocolate
-- שָׁלוֹשׁ בֵּיצִים (shalosh beitsim) = Três ovos
-- שְׁתֵּי כּוֹסוֹת קֶמַח (shtei kosot kémach) = Duas xícaras de farinha
-- כּוֹס סֻכָּר (kos sukar) = Uma xícara de açúcar
-- מֵאָה גְּרָם שׁוֹקוֹלָד (meá gram shokolad) = Cem gramas de chocolate
-- אַרְבָּעִים דַּקּוֹת בַּתַּנּוּר (arbaím dakót batanur) = Quarenta minutos no forno
+- עוּגַת שׁוֹקוֹלָד (ugát shokolád) = Bolo de chocolate
+- שָׁלוֹשׁ בֵּיצִים (shalósh beitsím) = Três ovos
+- שְׁתֵּי כּוֹסוֹת קֶמַח (shtei kossót kémach) = Duas xícaras de farinha
+- כּוֹס סֻכָּר (kos sukár) = Uma xícara de açúcar
+- מֵאָה גְּרָם שׁוֹקוֹלָד (meá gram shokolád) = Cem gramas de chocolate
+- אַרְבָּעִים דַּקּוֹת בַּתַּנּוּר (arbaím dakót batanúr) = Quarenta minutos no forno
 - P1. escolha: Quantos ovos vão no bolo? → **Três** / Dois / Quatro 
 - P2. escolha: Quanto tempo no forno? → **40 minutos** / 100 minutos / 4 minutos 
 - P3. escolha: Por que é שָׁלוֹשׁ בֵּיצִים, e não שְׁלוֹשָׁה? → **Porque בֵּיצָה é feminina** / Porque são ovos pequenos / Porque é uma receita 
@@ -1460,16 +1460,16 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- מֵבִין (mevin) · מְבִינָה (meviná) · מְבִינִים (mevinim) · מְבִינוֹת (mevinot) = entender
-- מְאַחֵר (meacher) · מְאַחֶרֶת (meachéret) · מְאַחֲרִים (meacharim) · מְאַחֲרוֹת (meacharot) = estar atrasado
+- מֵבִין (mevín) · מְבִינָה (meviná) · מְבִינִים (meviním) · מְבִינוֹת (mevinót) = entender
+- מְאַחֵר (meachér) · מְאַחֶרֶת (meachéret) · מְאַחֲרִים (meacharím) · מְאַחֲרוֹת (meacharót) = estar atrasado
 - לְאַט (leát) = devagar
-- מַהֵר (maher) = rápido
+- מַהֵר (mahér) = rápido
 - עוֹד פַּעַם (od páam) = mais uma vez
-- אֵיךְ אוֹמְרִים … בְּעִבְרִית? (eich omrim … beivrit?) = como se diz … em hebraico?
+- אֵיךְ אוֹמְרִים … בְּעִבְרִית? (eich omrím … beivrít?) = como se diz … em hebraico?
 - מַה זֶּה …? (ma ze …?) = o que é …?
-- אֵיךְ כּוֹתְבִים …? (eich kotvim …?) = como se escreve …?
+- אֵיךְ כּוֹתְבִים …? (eich kotvím …?) = como se escreve …?
 - כְּמוֹ (kmo) = como (igual a)
-- הַכֹּל (hakol) = tudo
+- הַכֹּל (hakól) = tudo
 - לְאַט לְאַט (leát leát) = pouco a pouco
 - בְּהַצְלָחָה! (behatslachá!) = boa sorte!
 
@@ -1483,31 +1483,31 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: No ônibus**
 
-- Uma mulher: סְלִיחָה, הָאוֹטוֹבּוּס הַזֶּה נוֹסֵעַ לַתַּחֲנָה הַמֶּרְכָּזִית? (slichá, haótobus haze nosea latachaná hamerkazit?) = Com licença, este ônibus vai para a rodoviária central?
-- Dani: סְלִיחָה, אֲנִי לֹא מֵבִין. אֶפְשָׁר לְדַבֵּר לְאַט? (slichá, aní lo mevin. efshar ledabér leát?) = Desculpe, não entendo. Dá para falar devagar?
-- Uma mulher: בְּטַח. הָאוֹטוֹבּוּס הַזֶּה… נוֹסֵעַ… לַתַּחֲנָה הַמֶּרְכָּזִית? (betach. haótobus haze… nosea… latachaná hamerkazit?) = Claro. Este ônibus… vai… para a rodoviária central?
-- Dani: אָה! כֵּן, קַו חָמֵשׁ נוֹסֵעַ לְשָׁם. (a! ken, kav chamesh nosea lesham.) = Ah! Sim, a linha 5 vai para lá.
-- Uma mulher: תּוֹדָה. אֲנִי מְאַחֶרֶת לְרֵאָיוֹן עֲבוֹדָה! (todá. aní meachéret lereayon avodá!) = Obrigada. Estou atrasada para uma entrevista de emprego!
-- Dani: מַה זֶּה "רֵאָיוֹן"? (ma ze "reayon"?) = O que é "reayon"?
-- Uma mulher: אִינְטֶרְוְיוּ, כְּמוֹ בְּאַנְגְּלִית. אַתָּה לֹא מִפֹּה, נָכוֹן? (intervyu, kmo beanglit. atá lo mipo, nachon?) = Interview, como em inglês. Você não é daqui, né?
-- Dani: לֹא, אֲנִי מִבְּרָזִיל. אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן. (lo, aní miBrazil. aní lomed ivrit baulpan.) = Não, sou do Brasil. Estudo hebraico no ulpan.
-- Uma mulher: וְאַתָּה כְּבָר מְדַבֵּר יָפֶה מְאֹד! (veatá kvar medaber yafé meod!) = E você já fala muito bem!
-- Dani: תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא מֵבִין הַכֹּל. (todá! aval aní od lo mevin hakol.) = Obrigado! Mas ainda não entendo tudo.
+- Uma mulher: סְלִיחָה, הָאוֹטוֹבּוּס הַזֶּה נוֹסֵעַ לַתַּחֲנָה הַמֶּרְכָּזִית? (slichá, haótobus hazé nosséa latachaná hamerkazít?) = Com licença, este ônibus vai para a rodoviária central?
+- Dani: סְלִיחָה, אֲנִי לֹא מֵבִין. אֶפְשָׁר לְדַבֵּר לְאַט? (slichá, aní lo mevín. efshár ledabér leát?) = Desculpe, não entendo. Dá para falar devagar?
+- Uma mulher: בְּטַח. הָאוֹטוֹבּוּס הַזֶּה… נוֹסֵעַ… לַתַּחֲנָה הַמֶּרְכָּזִית? (betách. haótobus hazé… nosséa… latachaná hamerkazít?) = Claro. Este ônibus… vai… para a rodoviária central?
+- Dani: אָה! כֵּן, קַו חָמֵשׁ נוֹסֵעַ לְשָׁם. (a! ken, kav chamésh nosséa leshám.) = Ah! Sim, a linha 5 vai para lá.
+- Uma mulher: תּוֹדָה. אֲנִי מְאַחֶרֶת לְרֵאָיוֹן עֲבוֹדָה! (todá. aní meachéret lereayón avodá!) = Obrigada. Estou atrasada para uma entrevista de emprego!
+- Dani: מַה זֶּה "רֵאָיוֹן"? (ma ze "reayón"?) = O que é "reayón"?
+- Uma mulher: אִינְטֶרְוְיוּ, כְּמוֹ בְּאַנְגְּלִית. אַתָּה לֹא מִפֹּה, נָכוֹן? (íntervyu, kmo beanglít. atá lo mipó, nachón?) = Interview, como em inglês. Você não é daqui, né?
+- Dani: לֹא, אֲנִי מִבְּרָזִיל. אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן. (lo, aní miBrazíl. aní loméd ivrít baulpán.) = Não, sou do Brasil. Estudo hebraico no ulpan.
+- Uma mulher: וְאַתָּה כְּבָר מְדַבֵּר יָפֶה מְאֹד! (veatá kvar medabér yafé meód!) = E você já fala muito bem!
+- Dani: תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא מֵבִין הַכֹּל. (todá! avál aní od lo mevín hakól.) = Obrigado! Mas ainda não entendo tudo.
 - Uma mulher: לֹא נוֹרָא. לְאַט לְאַט! (lo norá. leát leát!) = Não tem problema. Pouco a pouco!
-- Dani: בְּהַצְלָחָה בָּרֵאָיוֹן! (behatslachá bareayon!) = Boa sorte na entrevista!
-- glossário: לְשָׁם (lesham) = para lá
-- glossário: רֵאָיוֹן עֲבוֹדָה (reayon avodá) = entrevista de emprego
-- glossário: מִפֹּה (mipo) = daqui
+- Dani: בְּהַצְלָחָה בָּרֵאָיוֹן! (behatslachá bareayón!) = Boa sorte na entrevista!
+- glossário: לְשָׁם (leshám) = para lá
+- glossário: רֵאָיוֹן עֲבוֹדָה (reayón avodá) = entrevista de emprego
+- glossário: מִפֹּה (mipó) = daqui
 - nota: יָפֶה, depois de um verbo, quer dizer "bem": מְדַבֵּר יָפֶה, "fala bem". É o mesmo יָפֶה de "bonito", sem mudar para o feminino.
 
 **Leitura: Uma sexta-feira em Tel Aviv (o blog do Dani)** (aparece sem nikud, com a chave para mostrar)
 
-- כָּל יוֹם שִׁשִּׁי אֲנִי קָם בִּשְׁמוֹנֶה וְנוֹסֵעַ בְּאוֹטוֹבּוּס לַשּׁוּק. (kol yom shishi aní kam bishmoné venosea beótobus lashuk.) = Toda sexta eu levanto às oito e vou de ônibus para a feira.
-- בַּשּׁוּק אֲנִי קוֹנֶה פֵּרוֹת וִירָקוֹת. הַכֹּל זוֹל וְטָעִים! (bashuk aní koné perot virakot. hakol zol vetaím!) = Na feira eu compro frutas e verduras. Tudo barato e gostoso!
-- אַחַר כָּךְ אֲנִי שׁוֹתֶה קָפֶה הָפוּךְ עִם מַיָּה בְּבֵית קָפֶה לְיַד הַיָּם. (achar kach aní shoté kafé hafuch im Maya beveit kafé leyád hayám.) = Depois eu tomo um café com leite com a Maya num café perto do mar.
-- בְּאַרְבַּע הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת, וְכֻלָּם אוֹמְרִים "שַׁבָּת שָׁלוֹם". (bearbá harbé chanuyot kvar sgurot, vechulám omrim "shabát shalóm".) = Às quatro muitas lojas já estão fechadas, e todo mundo diz "shabat shalom".
-- בָּעֶרֶב אֲנִי אוֹכֵל אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה. אֲנַחְנוּ עֲשָׂרָה אֲנָשִׁים לְיַד הַשֻּׁלְחָן! (baérev aní ochel étsel hamishpachá shel Noa. anáchnu asará anashim leyád hashulchan!) = À noite eu janto na casa da família da Noa. Somos dez pessoas em volta da mesa!
-- אֲנִי עוֹד לֹא מֵבִין הַכֹּל, אֲבָל אֲנִי מֵבִין הַרְבֵּה. (aní od lo mevin hakol, aval aní mevin harbé.) = Eu ainda não entendo tudo, mas entendo muita coisa.
+- כָּל יוֹם שִׁשִּׁי אֲנִי קָם בִּשְׁמוֹנֶה וְנוֹסֵעַ בְּאוֹטוֹבּוּס לַשּׁוּק. (kol yom shishí aní kam bishmoné venosséa beótobus lashúk.) = Toda sexta eu levanto às oito e vou de ônibus para a feira.
+- בַּשּׁוּק אֲנִי קוֹנֶה פֵּרוֹת וִירָקוֹת. הַכֹּל זוֹל וְטָעִים! (bashúk aní koné perót virakót. hakól zol vetaím!) = Na feira eu compro frutas e verduras. Tudo barato e gostoso!
+- אַחַר כָּךְ אֲנִי שׁוֹתֶה קָפֶה הָפוּךְ עִם מַיָּה בְּבֵית קָפֶה לְיַד הַיָּם. (achár kach aní shoté kafé hafúch im Máya bevéit kafé leyád hayám.) = Depois eu tomo um café com leite com a Maya num café perto do mar.
+- בְּאַרְבַּע הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת, וְכֻלָּם אוֹמְרִים "שַׁבָּת שָׁלוֹם". (bearbá harbé chanuyót kvar sgurót, vechulám omrím "shabát shalóm".) = Às quatro muitas lojas já estão fechadas, e todo mundo diz "shabát shalóm".
+- בָּעֶרֶב אֲנִי אוֹכֵל אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה. אֲנַחְנוּ עֲשָׂרָה אֲנָשִׁים לְיַד הַשֻּׁלְחָן! (baérev aní ochél étsel hamishpachá shel Nóa. anáchnu assará anashím leyád hashulchán!) = À noite eu janto na casa da família da Noa. Somos dez pessoas em volta da mesa!
+- אֲנִי עוֹד לֹא מֵבִין הַכֹּל, אֲבָל אֲנִי מֵבִין הַרְבֵּה. (aní od lo mevín hakól, avál aní mevín harbé.) = Eu ainda não entendo tudo, mas entendo muita coisa.
 - P1. escolha: Como o Dani vai para a feira? → **De ônibus** / A pé / De táxi 
 - P2. escolha: Onde ele toma café com a Maya? → **Num café perto do mar** / Na feira / Na casa da Noa 
 - P3. V ou F: Às quatro da tarde todas as lojas ainda estão abertas. → **Falso** (הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת: muitas lojas já estão fechadas, por causa do shabat.)

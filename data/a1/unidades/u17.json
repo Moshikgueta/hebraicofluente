@@ -7,12 +7,12 @@
   "palavras": [
     {
       "he": "שְׂדֵה תְּעוּפָה",
-      "translit": "sdé teufá",
+      "translit": "sde teufá",
       "pt": "aeroporto (expressão fixa)"
     },
     {
       "he": "טִיסָה",
-      "translit": "tisá",
+      "translit": "tissá",
       "pt": "voo"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "he": "דַּרְכּוֹן",
-      "translit": "darkon",
+      "translit": "darkón",
       "pt": "passaporte"
     },
     {
@@ -44,10 +44,10 @@
         "תַּיָּרוֹת"
       ],
       "translit": [
-        "tayar",
+        "tayár",
         "tayéret",
-        "tayarim",
-        "tayarot"
+        "tayarím",
+        "tayarót"
       ]
     },
     {
@@ -67,7 +67,7 @@
     },
     {
       "he": "מַזְגָן",
-      "translit": "mazgan",
+      "translit": "mazgán",
       "pt": "ar-condicionado"
     },
     {
@@ -89,10 +89,10 @@
         "עוֹזְרוֹת"
       ],
       "translit": [
-        "ozer",
+        "ozér",
         "ozéret",
-        "ozrim",
-        "ozrot"
+        "ozrím",
+        "ozrót"
       ]
     },
     {
@@ -106,8 +106,8 @@
       "translit": [
         "mechaké",
         "mechaká",
-        "mechakim",
-        "mechakot"
+        "mechakím",
+        "mechakót"
       ]
     },
     {
@@ -119,10 +119,10 @@
         "מוּכָנוֹת"
       ],
       "translit": [
-        "muchan",
+        "muchán",
         "muchaná",
-        "muchanim",
-        "muchanot"
+        "muchaním",
+        "muchanót"
       ]
     },
     {
@@ -134,10 +134,10 @@
         "כְּבֵדוֹת"
       ],
       "translit": [
-        "kaved",
+        "kavéd",
         "kvedá",
-        "kvedim",
-        "kvedot"
+        "kvedím",
+        "kvedót"
       ]
     },
     {
@@ -157,7 +157,7 @@
     },
     {
       "he": "בְּרוּכִים הַבָּאִים!",
-      "translit": "bruchim habaím!",
+      "translit": "bruchím habaím!",
       "pt": "bem-vindos!"
     },
     {
@@ -208,7 +208,7 @@
       {
         "quem": "A recepcionista",
         "he": "עֶרֶב טוֹב, בְּרוּכִים הַבָּאִים!",
-        "translit": "érev tov, bruchim habaím!",
+        "translit": "érev tov, bruchím habaím!",
         "pt": "Boa noite, bem-vindo!"
       },
       {
@@ -220,55 +220,55 @@
       {
         "quem": "A recepcionista",
         "he": "רֶגַע… כֵּן. עַד יוֹם שִׁשִּׁי, נָכוֹן?",
-        "translit": "réga… ken. ad yom shishi, nachon?",
+        "translit": "réga… ken. ad yom shishí, nachón?",
         "pt": "Um momento… Sim. Até sexta-feira, certo?"
       },
       {
         "quem": "Tom",
         "he": "נָכוֹן. הַחֶדֶר כְּבָר מוּכָן?",
-        "translit": "nachon. hachéder kvar muchan?",
+        "translit": "nachón. hachéder kvar muchán?",
         "pt": "Certo. O quarto já está pronto?"
       },
       {
         "quem": "A recepcionista",
         "he": "כֵּן. הִנֵּה הַמַּפְתֵּחַ: חֶדֶר 304, בַּקּוֹמָה הַשְּׁלִישִׁית.",
-        "translit": "ken. hiné hamafteach: chéder shalosh éfes arbá, bakomá hashlishit.",
+        "translit": "ken. hiné hamaftéach: chéder shalósh éfes arbá, bakomá hashlishít.",
         "pt": "Sim. Aqui está a chave: quarto 304, no terceiro andar."
       },
       {
         "quem": "Tom",
         "he": "יֵשׁ מַזְגָן בַּחֶדֶר?",
-        "translit": "yesh mazgan bachéder?",
+        "translit": "yesh mazgán bachéder?",
         "pt": "Tem ar-condicionado no quarto?"
       },
       {
         "quem": "A recepcionista",
         "he": "כֵּן, וְגַם וַויְפַיי. הַסִּיסְמָה עַל הַכַּרְטִיס.",
-        "translit": "ken, vegam wáifai. hasismá al hakartís.",
+        "translit": "ken, vegám wáifai. hassismá al hakartís.",
         "pt": "Tem, e wi-fi também. A senha está no cartão."
       },
       {
         "quem": "Tom",
         "he": "וּמָתַי אֲרוּחַת הַבֹּקֶר?",
-        "translit": "umatai aruchat habóker?",
+        "translit": "umatái aruchát habóker?",
         "pt": "E quando é o café da manhã?"
       },
       {
         "quem": "A recepcionista",
         "he": "מִשֶּׁבַע עַד עֶשֶׂר, בַּקּוֹמָה הָרִאשׁוֹנָה.",
-        "translit": "mishéva ad éser, bakomá harishoná.",
+        "translit": "mishéva ad ésser, bakomá harishoná.",
         "pt": "Das sete às dez, no primeiro andar."
       },
       {
         "quem": "Tom",
         "he": "תּוֹדָה. אַתְּ יְכוֹלָה לַעֲזוֹר לִי עִם הַמִּזְוָדָה? הִיא מְאֹד כְּבֵדָה.",
-        "translit": "todá. at yecholá laazor li im hamizvadá? hi meod kvedá.",
+        "translit": "todá. at yecholá laazór li im hamizvadá? hi meód kvedá.",
         "pt": "Obrigado. Você pode me ajudar com a mala? Ela está muito pesada."
       },
       {
         "quem": "A recepcionista",
         "he": "בְּטַח. לַיְלָה טוֹב, וּבְרוּכִים הַבָּאִים לְאֵילַת!",
-        "translit": "betach. láila tov, uvruchim habaím leEilat!",
+        "translit": "betách. láila tov, uvruchím habaím leEilát!",
         "pt": "Claro. Boa noite, e bem-vindo a Eilat!"
       }
     ],
@@ -280,7 +280,7 @@
       },
       {
         "he": "אֲרוּחַת הַבֹּקֶר",
-        "translit": "aruchat habóker",
+        "translit": "aruchát habóker",
         "pt": "o café da manhã (expressão fixa)"
       }
     ],
@@ -292,12 +292,12 @@
     "linhas": [
       {
         "he": "שְׂדֵה הַתְּעוּפָה בֶּן גּוּרְיוֹן",
-        "translit": "sdé hateufá Ben Gurion",
+        "translit": "sde hateufá Ben Gurión",
         "pt": "Aeroporto Ben Gurion"
       },
       {
         "he": "טִיסָה לְסָאוֹ פָּאוּלוֹ: 23:40",
-        "translit": "tisá leSão Paulo: esrim veshalosh arbaím",
+        "translit": "tissá leSão Paulo: esrím veshalósh arbaím",
         "pt": "Voo para São Paulo: 23h40"
       },
       {
@@ -307,7 +307,7 @@
       },
       {
         "he": "הַטִּיסָה מְאַחֶרֶת בְּשָׁעָה",
-        "translit": "hatisá meachéret beshaá",
+        "translit": "hatissá meachéret beshaá",
         "pt": "O voo está atrasado uma hora"
       }
     ],

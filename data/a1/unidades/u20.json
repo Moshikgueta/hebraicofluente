@@ -14,10 +14,10 @@
         "מְבִינוֹת"
       ],
       "translit": [
-        "mevin",
+        "mevín",
         "meviná",
-        "mevinim",
-        "mevinot"
+        "meviním",
+        "mevinót"
       ]
     },
     {
@@ -29,10 +29,10 @@
         "מְאַחֲרוֹת"
       ],
       "translit": [
-        "meacher",
+        "meachér",
         "meachéret",
-        "meacharim",
-        "meacharot"
+        "meacharím",
+        "meacharót"
       ]
     },
     {
@@ -42,7 +42,7 @@
     },
     {
       "he": "מַהֵר",
-      "translit": "maher",
+      "translit": "mahér",
       "pt": "rápido"
     },
     {
@@ -52,7 +52,7 @@
     },
     {
       "he": "אֵיךְ אוֹמְרִים … בְּעִבְרִית?",
-      "translit": "eich omrim … beivrit?",
+      "translit": "eich omrím … beivrít?",
       "pt": "como se diz … em hebraico?"
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "he": "אֵיךְ כּוֹתְבִים …?",
-      "translit": "eich kotvim …?",
+      "translit": "eich kotvím …?",
       "pt": "como se escreve …?"
     },
     {
@@ -72,7 +72,7 @@
     },
     {
       "he": "הַכֹּל",
-      "translit": "hakol",
+      "translit": "hakól",
       "pt": "tudo"
     },
     {
@@ -113,61 +113,61 @@
       {
         "quem": "Uma mulher",
         "he": "סְלִיחָה, הָאוֹטוֹבּוּס הַזֶּה נוֹסֵעַ לַתַּחֲנָה הַמֶּרְכָּזִית?",
-        "translit": "slichá, haótobus haze nosea latachaná hamerkazit?",
+        "translit": "slichá, haótobus hazé nosséa latachaná hamerkazít?",
         "pt": "Com licença, este ônibus vai para a rodoviária central?"
       },
       {
         "quem": "Dani",
         "he": "סְלִיחָה, אֲנִי לֹא מֵבִין. אֶפְשָׁר לְדַבֵּר לְאַט?",
-        "translit": "slichá, aní lo mevin. efshar ledabér leát?",
+        "translit": "slichá, aní lo mevín. efshár ledabér leát?",
         "pt": "Desculpe, não entendo. Dá para falar devagar?"
       },
       {
         "quem": "Uma mulher",
         "he": "בְּטַח. הָאוֹטוֹבּוּס הַזֶּה… נוֹסֵעַ… לַתַּחֲנָה הַמֶּרְכָּזִית?",
-        "translit": "betach. haótobus haze… nosea… latachaná hamerkazit?",
+        "translit": "betách. haótobus hazé… nosséa… latachaná hamerkazít?",
         "pt": "Claro. Este ônibus… vai… para a rodoviária central?"
       },
       {
         "quem": "Dani",
         "he": "אָה! כֵּן, קַו חָמֵשׁ נוֹסֵעַ לְשָׁם.",
-        "translit": "a! ken, kav chamesh nosea lesham.",
+        "translit": "a! ken, kav chamésh nosséa leshám.",
         "pt": "Ah! Sim, a linha 5 vai para lá."
       },
       {
         "quem": "Uma mulher",
         "he": "תּוֹדָה. אֲנִי מְאַחֶרֶת לְרֵאָיוֹן עֲבוֹדָה!",
-        "translit": "todá. aní meachéret lereayon avodá!",
+        "translit": "todá. aní meachéret lereayón avodá!",
         "pt": "Obrigada. Estou atrasada para uma entrevista de emprego!"
       },
       {
         "quem": "Dani",
         "he": "מַה זֶּה \"רֵאָיוֹן\"?",
-        "translit": "ma ze \"reayon\"?",
-        "pt": "O que é \"reayon\"?"
+        "translit": "ma ze \"reayón\"?",
+        "pt": "O que é \"reayón\"?"
       },
       {
         "quem": "Uma mulher",
         "he": "אִינְטֶרְוְיוּ, כְּמוֹ בְּאַנְגְּלִית. אַתָּה לֹא מִפֹּה, נָכוֹן?",
-        "translit": "intervyu, kmo beanglit. atá lo mipo, nachon?",
+        "translit": "íntervyu, kmo beanglít. atá lo mipó, nachón?",
         "pt": "Interview, como em inglês. Você não é daqui, né?"
       },
       {
         "quem": "Dani",
         "he": "לֹא, אֲנִי מִבְּרָזִיל. אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן.",
-        "translit": "lo, aní miBrazil. aní lomed ivrit baulpan.",
+        "translit": "lo, aní miBrazíl. aní loméd ivrít baulpán.",
         "pt": "Não, sou do Brasil. Estudo hebraico no ulpan."
       },
       {
         "quem": "Uma mulher",
         "he": "וְאַתָּה כְּבָר מְדַבֵּר יָפֶה מְאֹד!",
-        "translit": "veatá kvar medaber yafé meod!",
+        "translit": "veatá kvar medabér yafé meód!",
         "pt": "E você já fala muito bem!"
       },
       {
         "quem": "Dani",
         "he": "תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא מֵבִין הַכֹּל.",
-        "translit": "todá! aval aní od lo mevin hakol.",
+        "translit": "todá! avál aní od lo mevín hakól.",
         "pt": "Obrigado! Mas ainda não entendo tudo."
       },
       {
@@ -179,24 +179,24 @@
       {
         "quem": "Dani",
         "he": "בְּהַצְלָחָה בָּרֵאָיוֹן!",
-        "translit": "behatslachá bareayon!",
+        "translit": "behatslachá bareayón!",
         "pt": "Boa sorte na entrevista!"
       }
     ],
     "glossario": [
       {
         "he": "לְשָׁם",
-        "translit": "lesham",
+        "translit": "leshám",
         "pt": "para lá"
       },
       {
         "he": "רֵאָיוֹן עֲבוֹדָה",
-        "translit": "reayon avodá",
+        "translit": "reayón avodá",
         "pt": "entrevista de emprego"
       },
       {
         "he": "מִפֹּה",
-        "translit": "mipo",
+        "translit": "mipó",
         "pt": "daqui"
       }
     ],
@@ -208,32 +208,32 @@
     "linhas": [
       {
         "he": "כָּל יוֹם שִׁשִּׁי אֲנִי קָם בִּשְׁמוֹנֶה וְנוֹסֵעַ בְּאוֹטוֹבּוּס לַשּׁוּק.",
-        "translit": "kol yom shishi aní kam bishmoné venosea beótobus lashuk.",
+        "translit": "kol yom shishí aní kam bishmoné venosséa beótobus lashúk.",
         "pt": "Toda sexta eu levanto às oito e vou de ônibus para a feira."
       },
       {
         "he": "בַּשּׁוּק אֲנִי קוֹנֶה פֵּרוֹת וִירָקוֹת. הַכֹּל זוֹל וְטָעִים!",
-        "translit": "bashuk aní koné perot virakot. hakol zol vetaím!",
+        "translit": "bashúk aní koné perót virakót. hakól zol vetaím!",
         "pt": "Na feira eu compro frutas e verduras. Tudo barato e gostoso!"
       },
       {
         "he": "אַחַר כָּךְ אֲנִי שׁוֹתֶה קָפֶה הָפוּךְ עִם מַיָּה בְּבֵית קָפֶה לְיַד הַיָּם.",
-        "translit": "achar kach aní shoté kafé hafuch im Maya beveit kafé leyád hayám.",
+        "translit": "achár kach aní shoté kafé hafúch im Máya bevéit kafé leyád hayám.",
         "pt": "Depois eu tomo um café com leite com a Maya num café perto do mar."
       },
       {
         "he": "בְּאַרְבַּע הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת, וְכֻלָּם אוֹמְרִים \"שַׁבָּת שָׁלוֹם\".",
-        "translit": "bearbá harbé chanuyot kvar sgurot, vechulám omrim \"shabát shalóm\".",
-        "pt": "Às quatro muitas lojas já estão fechadas, e todo mundo diz \"shabat shalom\"."
+        "translit": "bearbá harbé chanuyót kvar sgurót, vechulám omrím \"shabát shalóm\".",
+        "pt": "Às quatro muitas lojas já estão fechadas, e todo mundo diz \"shabát shalóm\"."
       },
       {
         "he": "בָּעֶרֶב אֲנִי אוֹכֵל אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה. אֲנַחְנוּ עֲשָׂרָה אֲנָשִׁים לְיַד הַשֻּׁלְחָן!",
-        "translit": "baérev aní ochel étsel hamishpachá shel Noa. anáchnu asará anashim leyád hashulchan!",
+        "translit": "baérev aní ochél étsel hamishpachá shel Nóa. anáchnu assará anashím leyád hashulchán!",
         "pt": "À noite eu janto na casa da família da Noa. Somos dez pessoas em volta da mesa!"
       },
       {
         "he": "אֲנִי עוֹד לֹא מֵבִין הַכֹּל, אֲבָל אֲנִי מֵבִין הַרְבֵּה.",
-        "translit": "aní od lo mevin hakol, aval aní mevin harbé.",
+        "translit": "aní od lo mevín hakól, avál aní mevín harbé.",
         "pt": "Eu ainda não entendo tudo, mas entendo muita coisa."
       }
     ],

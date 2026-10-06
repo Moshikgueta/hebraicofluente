@@ -7,7 +7,7 @@
   "palavras": [
     {
       "he": "אֶחָד",
-      "translit": "echad",
+      "translit": "echád",
       "pt": "1 (com masculino)"
     },
     {
@@ -52,7 +52,7 @@
     },
     {
       "he": "עֲשָׂרָה",
-      "translit": "asará",
+      "translit": "assará",
       "pt": "10 (com masculino)"
     },
     {
@@ -62,12 +62,12 @@
     },
     {
       "he": "אֲנָשִׁים",
-      "translit": "anashim",
+      "translit": "anashím",
       "pt": "pessoas (plural de אִישׁ)"
     },
     {
       "he": "יָמִים",
-      "translit": "yamim",
+      "translit": "yamím",
       "pt": "dias"
     },
     {
@@ -92,12 +92,12 @@
     },
     {
       "he": "בֵּית חוֹלִים",
-      "translit": "beit cholim",
+      "translit": "beit cholím",
       "pt": "hospital (\"casa de doentes\")"
     },
     {
       "he": "תַּחֲנַת רַכֶּבֶת",
-      "translit": "tachanat rakévet",
+      "translit": "tachanát rakévet",
       "pt": "estação de trem"
     },
     {
@@ -107,12 +107,12 @@
     },
     {
       "he": "מִיץ תַּפּוּזִים",
-      "translit": "mits tapuzim",
+      "translit": "mits tapuzím",
       "pt": "suco de laranja"
     },
     {
       "he": "עוּגַת שׁוֹקוֹלָד",
-      "translit": "ugat shokolad",
+      "translit": "ugát shokolád",
       "pt": "bolo de chocolate"
     },
     {
@@ -122,7 +122,7 @@
     },
     {
       "he": "בְּנֵי דּוֹדִים",
-      "translit": "bnei dodim",
+      "translit": "bnei dodím",
       "pt": "primos"
     }
   ],
@@ -187,61 +187,61 @@
       {
         "quem": "Dani",
         "he": "נָתָן, כַּמָּה יְלָדִים יֵשׁ לְךָ?",
-        "translit": "Natan, kama yeladim yesh lechá?",
+        "translit": "Natán, káma yeladím yesh lechá?",
         "pt": "Natan, quantos filhos você tem?"
       },
       {
         "quem": "Natan",
         "he": "יֵשׁ לִי שְׁלוֹשָׁה יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת.",
-        "translit": "yesh li shloshá yeladim: shnei banim uvat achat.",
+        "translit": "yesh li shloshá yeladím: shnei baním uvát achát.",
         "pt": "Tenho três filhos: dois meninos e uma menina."
       },
       {
         "quem": "Dani",
         "he": "וְהֵם לוֹמְדִים בְּבֵית סֵפֶר?",
-        "translit": "vehem lomdim beveit séfer?",
+        "translit": "vehém lomdím bevéit séfer?",
         "pt": "E eles estudam numa escola?"
       },
       {
         "quem": "Natan",
         "he": "הַבַּת בְּבֵית סֵפֶר, בְּכִתָּה ב׳. הַבָּנִים קְטַנִּים, הֵם בַּגַּן.",
-        "translit": "habat beveit séfer, bekitá bet. habanim ktanim, hem bagan.",
+        "translit": "habát bevéit séfer, bekitá bet. habaním ktaním, hem bagán.",
         "pt": "A menina está na escola, no segundo ano. Os meninos são pequenos, estão no jardim de infância."
       },
       {
         "quem": "Dani",
         "he": "כַּמָּה יְלָדִים יֵשׁ בַּכִּתָּה שֶׁלָּהּ?",
-        "translit": "kama yeladim yesh bakitá shelá?",
+        "translit": "káma yeladím yesh bakitá shelá?",
         "pt": "Quantas crianças há na turma dela?"
       },
       {
         "quem": "Natan",
         "he": "עֶשְׂרִים וְשִׁשָּׁה!",
-        "translit": "esrim veshishá!",
+        "translit": "esrím veshishá!",
         "pt": "Vinte e seis!"
       },
       {
         "quem": "Dani",
         "he": "וְאַתָּה עוֹבֵד בְּבֵית חוֹלִים, נָכוֹן?",
-        "translit": "veatá oved beveit cholim, nachon?",
+        "translit": "veatá ovéd bevéit cholím, nachón?",
         "pt": "E você trabalha num hospital, né?"
       },
       {
         "quem": "Natan",
         "he": "כֵּן, אֲנִי אָח בְּבֵית הַחוֹלִים הַגָּדוֹל בְּתֵל אָבִיב.",
-        "translit": "ken, aní ach beveit hacholim hagadol beTel Aviv.",
+        "translit": "ken, aní ach bevéit hacholím hagadól beTél Avív.",
         "pt": "Sim, sou enfermeiro no hospital grande de Tel Aviv."
       },
       {
         "quem": "Dani",
         "he": "כַּמָּה יָמִים בַּשָּׁבוּעַ?",
-        "translit": "kama yamim bashavúa?",
+        "translit": "káma yamím bashavúa?",
         "pt": "Quantos dias por semana?"
       },
       {
         "quem": "Natan",
         "he": "אַרְבָּעָה יָמִים. אֲבָל שְׁתֵּים־עֶשְׂרֵה שָׁעוֹת בַּיּוֹם!",
-        "translit": "arbaá yamim. aval shteim-esré shaót bayom!",
+        "translit": "arbaá yamím. avál shteim-esré shaót bayóm!",
         "pt": "Quatro dias. Mas doze horas por dia!"
       },
       {
@@ -271,32 +271,32 @@
     "linhas": [
       {
         "he": "עוּגַת שׁוֹקוֹלָד",
-        "translit": "ugat shokolad",
+        "translit": "ugát shokolád",
         "pt": "Bolo de chocolate"
       },
       {
         "he": "שָׁלוֹשׁ בֵּיצִים",
-        "translit": "shalosh beitsim",
+        "translit": "shalósh beitsím",
         "pt": "Três ovos"
       },
       {
         "he": "שְׁתֵּי כּוֹסוֹת קֶמַח",
-        "translit": "shtei kosot kémach",
+        "translit": "shtei kossót kémach",
         "pt": "Duas xícaras de farinha"
       },
       {
         "he": "כּוֹס סֻכָּר",
-        "translit": "kos sukar",
+        "translit": "kos sukár",
         "pt": "Uma xícara de açúcar"
       },
       {
         "he": "מֵאָה גְּרָם שׁוֹקוֹלָד",
-        "translit": "meá gram shokolad",
+        "translit": "meá gram shokolád",
         "pt": "Cem gramas de chocolate"
       },
       {
         "he": "אַרְבָּעִים דַּקּוֹת בַּתַּנּוּר",
-        "translit": "arbaím dakót batanur",
+        "translit": "arbaím dakót batanúr",
         "pt": "Quarenta minutos no forno"
       }
     ],

@@ -12,17 +12,17 @@
     },
     {
       "he": "סָלוֹן",
-      "translit": "salon",
+      "translit": "salón",
       "pt": "sala de estar"
     },
     {
       "he": "חֲדַר שֵׁנָה",
-      "translit": "chadar shená",
+      "translit": "chadár shená",
       "pt": "quarto de dormir (expressão fixa)"
     },
     {
       "he": "שֵׁרוּתִים",
-      "translit": "sherutim",
+      "translit": "sherutím",
       "pt": "banheiro (o vaso sanitário)"
     },
     {
@@ -32,7 +32,7 @@
     },
     {
       "he": "מִרְפֶּסֶת",
-      "translit": "mirpéset",
+      "translit": "mirpésset",
       "pt": "varanda"
     },
     {
@@ -42,7 +42,7 @@
     },
     {
       "he": "מַעֲלִית",
-      "translit": "maalit",
+      "translit": "maalít",
       "pt": "elevador"
     },
     {
@@ -57,17 +57,17 @@
     },
     {
       "he": "אָרוֹן",
-      "translit": "aron",
+      "translit": "arón",
       "pt": "armário"
     },
     {
       "he": "חַלּוֹן",
-      "translit": "chalon",
+      "translit": "chalón",
       "pt": "janela"
     },
     {
       "he": "מַחְשֵׁב",
-      "translit": "machshev",
+      "translit": "machshév",
       "pt": "computador"
     },
     {
@@ -159,13 +159,13 @@
       {
         "quem": "Maya",
         "he": "נָתָן, אֵיפֹה הַטֶּלֶפוֹן שֶׁלִּי?",
-        "translit": "Natan, eifo hatélefon sheli?",
+        "translit": "Natán, éifo hatélefon shelí?",
         "pt": "Natan, onde está o meu telefone?"
       },
       {
         "quem": "Natan",
         "he": "הוּא לֹא עַל הַשֻּׁלְחָן?",
-        "translit": "hu lo al hashulchan?",
+        "translit": "hu lo al hashulchán?",
         "pt": "Não está na mesa?"
       },
       {
@@ -177,7 +177,7 @@
       {
         "quem": "Natan",
         "he": "אוּלַי בַּסָּלוֹן, עַל הַסָּפָּה?",
-        "translit": "ulái basalon, al hasapá?",
+        "translit": "ulái bassalón, al hassapá?",
         "pt": "Talvez na sala, em cima do sofá?"
       },
       {
@@ -189,31 +189,31 @@
       {
         "quem": "Natan",
         "he": "וּבַמִּטְבָּח, לְיַד הַמְּקָרֵר?",
-        "translit": "uvamitbach, leyád hamekarer?",
+        "translit": "uvamitbách, leyád hamekarér?",
         "pt": "E na cozinha, ao lado da geladeira?"
       },
       {
         "quem": "Maya",
         "he": "לֹא. וְהוּא לֹא בַּתִּיק…",
-        "translit": "lo. vehu lo batik…",
+        "translit": "lo. vehú lo batík…",
         "pt": "Não. E não está na mochila…"
       },
       {
         "quem": "Natan",
         "he": "רֶגַע, מַה זֶּה, מִתַּחַת לַסָּפָּה?",
-        "translit": "réga, ma ze, mitáchat lasapá?",
+        "translit": "réga, ma ze, mitáchat lassapá?",
         "pt": "Espera, o que é isso, embaixo do sofá?"
       },
       {
         "quem": "Maya",
         "he": "הַטֶּלֶפוֹן! תּוֹדָה, נָתָן!",
-        "translit": "hatélefon! todá, Natan!",
+        "translit": "hatélefon! todá, Natán!",
         "pt": "O telefone! Obrigada, Natan!"
       },
       {
         "quem": "Natan",
         "he": "וְאֵיפֹה הַמַּפְתֵּחַ?",
-        "translit": "veeifo hamafteach?",
+        "translit": "veéifo hamaftéach?",
         "pt": "E onde está a chave?"
       },
       {
@@ -232,22 +232,22 @@
     "linhas": [
       {
         "he": "דִּירָה לְהַשְׂכָּרָה בְּתֵל אָבִיב",
-        "translit": "dirá lehaskará beTel Aviv",
+        "translit": "dirá lehaskará beTél Avív",
         "pt": "Apartamento para alugar em Tel Aviv"
       },
       {
         "he": "3 חֲדָרִים, עִם סָלוֹן גָּדוֹל",
-        "translit": "shloshá chadarim, im salon gadol",
+        "translit": "shloshá chadarím, im salón gadól",
         "pt": "3 cômodos, com sala grande"
       },
       {
         "he": "מִטְבָּח חָדָשׁ, מִרְפֶּסֶת קְטַנָּה",
-        "translit": "mitbach chadash, mirpéset ktaná",
+        "translit": "mitbách chadásh, mirpésset ktaná",
         "pt": "Cozinha nova, varanda pequena"
       },
       {
         "he": "קוֹמָה 2, אֵין מַעֲלִית",
-        "translit": "komá shtáyim, ein maalit",
+        "translit": "komá shtáyim, ein maalít",
         "pt": "2º andar, sem elevador"
       },
       {

@@ -16,8 +16,8 @@
       "translit": [
         "kam",
         "kamá",
-        "kamim",
-        "kamot"
+        "kamím",
+        "kamót"
       ]
     },
     {
@@ -29,10 +29,10 @@
         "הוֹלְכוֹת"
       ],
       "translit": [
-        "holech",
+        "holéch",
         "holéchet",
-        "holchim",
-        "holchot"
+        "holchím",
+        "holchót"
       ]
     },
     {
@@ -47,7 +47,7 @@
         "ba",
         "baá",
         "baím",
-        "baot"
+        "baót"
       ]
     },
     {
@@ -59,10 +59,10 @@
         "חוֹזְרוֹת"
       ],
       "translit": [
-        "chozer",
+        "chozér",
         "chozéret",
-        "chozrim",
-        "chozrot"
+        "chozrím",
+        "chozrót"
       ]
     },
     {
@@ -74,10 +74,10 @@
         "עוֹשׂוֹת"
       ],
       "translit": [
-        "osé",
-        "osá",
-        "osim",
-        "osot"
+        "ossé",
+        "ossá",
+        "ossím",
+        "ossót"
       ]
     },
     {
@@ -89,10 +89,10 @@
         "יְשֵׁנוֹת"
       ],
       "translit": [
-        "yashen",
+        "yashén",
         "yeshená",
-        "yeshenim",
-        "yeshenot"
+        "yeshením",
+        "yeshenót"
       ]
     },
     {
@@ -104,10 +104,10 @@
         "עֲסוּקוֹת"
       ],
       "translit": [
-        "asuk",
-        "asuká",
-        "asukim",
-        "asukot"
+        "assúk",
+        "assuká",
+        "assukím",
+        "assukót"
       ]
     },
     {
@@ -117,7 +117,7 @@
     },
     {
       "he": "אַחֲרֵי הַצָּהֳרַיִם",
-      "translit": "acharei hatsohoráyim",
+      "translit": "acharéi hatsohoráyim",
       "pt": "à tarde (por escrito, também אַחַר הַצָּהֳרַיִם)"
     },
     {
@@ -127,22 +127,22 @@
     },
     {
       "he": "לִפְנֵי",
-      "translit": "lifnei",
+      "translit": "lifnéi",
       "pt": "antes de"
     },
     {
       "he": "אַחֲרֵי",
-      "translit": "acharei",
+      "translit": "acharéi",
       "pt": "depois de"
     },
     {
       "he": "אַחַר כָּךְ",
-      "translit": "achar kach",
+      "translit": "achár kach",
       "pt": "depois, em seguida"
     },
     {
       "he": "וְאָז",
-      "translit": "veaz",
+      "translit": "veáz",
       "pt": "e então"
     },
     {
@@ -152,22 +152,22 @@
     },
     {
       "he": "תָּמִיד",
-      "translit": "tamid",
+      "translit": "tamíd",
       "pt": "sempre"
     },
     {
       "he": "לִפְעָמִים",
-      "translit": "lif'amim",
+      "translit": "lif'amím",
       "pt": "às vezes"
     },
     {
       "he": "מוּקְדָּם",
-      "translit": "mukdam",
+      "translit": "mukdám",
       "pt": "cedo"
     },
     {
       "he": "מְאֻחָר",
-      "translit": "meuchar",
+      "translit": "meuchár",
       "pt": "tarde"
     },
     {
@@ -177,17 +177,17 @@
     },
     {
       "he": "שִׁעוּר",
-      "translit": "shiur",
+      "translit": "shiúr",
       "pt": "aula"
     },
     {
       "he": "אוּנִיבֶרְסִיטָה",
-      "translit": "universita",
+      "translit": "universíta",
       "pt": "universidade"
     },
     {
       "he": "אֻלְפָּן",
-      "translit": "ulpan",
+      "translit": "ulpán",
       "pt": "curso intensivo de hebraico"
     },
     {
@@ -258,61 +258,61 @@
       {
         "quem": "Tom",
         "he": "נֹעָה, מָה אַתְּ עוֹשָׂה כָּל יוֹם?",
-        "translit": "Noa, ma at osá kol yom?",
+        "translit": "Nóa, ma at ossá kol yom?",
         "pt": "Noa, o que você faz todo dia?"
       },
       {
         "quem": "Noa",
         "he": "אֲנִי קָמָה מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי.",
-        "translit": "aní kamá mukdam, beshesh vachétsi.",
+        "translit": "aní kamá mukdám, beshésh vachétsi.",
         "pt": "Eu levanto cedo, às seis e meia."
       },
       {
         "quem": "Tom",
         "he": "בְּשֵׁשׁ וָחֵצִי? וּמָה אַתְּ עוֹשָׂה בַּבֹּקֶר?",
-        "translit": "beshesh vachétsi? uma at osá babóker?",
+        "translit": "beshésh vachétsi? umá at ossá babóker?",
         "pt": "Às seis e meia? E o que você faz de manhã?"
       },
       {
         "quem": "Noa",
         "he": "בַּבֹּקֶר אֲנִי עוֹבֶדֶת בְּבֵית קָפֶה.",
-        "translit": "babóker aní ovédet beveit kafé.",
+        "translit": "babóker aní ovédet bevéit kafé.",
         "pt": "De manhã eu trabalho num café."
       },
       {
         "quem": "Tom",
         "he": "וְאַחַר כָּךְ?",
-        "translit": "veachar kach?",
+        "translit": "veachár kach?",
         "pt": "E depois?"
       },
       {
         "quem": "Noa",
         "he": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי הוֹלֶכֶת לָאוּנִיבֶרְסִיטָה.",
-        "translit": "acharei hatsohoráyim aní holéchet launiversita.",
+        "translit": "acharéi hatsohoráyim aní holéchet launiversíta.",
         "pt": "À tarde eu vou para a universidade."
       },
       {
         "quem": "Tom",
         "he": "וּמָתַי אַתְּ חוֹזֶרֶת הַבַּיְתָה?",
-        "translit": "umatai at chozéret habáyta?",
+        "translit": "umatái at chozéret habáyta?",
         "pt": "E quando você volta para casa?"
       },
       {
         "quem": "Noa",
         "he": "בָּעֶרֶב, מְאֻחָר. אֲנִי עֲסוּקָה מְאֹד!",
-        "translit": "baérev, meuchar. aní asuká meod!",
+        "translit": "baérev, meuchár. aní assuká meód!",
         "pt": "À noite, tarde. Eu sou muito ocupada!"
       },
       {
         "quem": "Tom",
         "he": "וּבְשַׁבָּת?",
-        "translit": "uveshabat?",
+        "translit": "uveshabát?",
         "pt": "E no sábado?"
       },
       {
         "quem": "Noa",
         "he": "בְּשַׁבָּת אֲנִי יְשֵׁנָה עַד עֶשֶׂר!",
-        "translit": "beshabat aní yeshená ad éser!",
+        "translit": "beshabát aní yeshená ad ésser!",
         "pt": "No sábado eu durmo até as dez!"
       }
     ],
@@ -331,7 +331,7 @@
     "linhas": [
       {
         "he": "שָׁלוֹם אִמָּא! הַכֹּל בְּסֵדֶר.",
-        "translit": "shalom íma! hakol beséder.",
+        "translit": "shalóm íma! hakól besséder.",
         "pt": "Oi, mãe! Está tudo bem."
       },
       {
@@ -341,22 +341,22 @@
       },
       {
         "he": "בַּבֹּקֶר אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן.",
-        "translit": "babóker aní lomed ivrit baulpan.",
+        "translit": "babóker aní loméd ivrít baulpán.",
         "pt": "De manhã eu estudo hebraico no ulpan."
       },
       {
         "he": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי עוֹבֵד בְּבֵית קָפֶה.",
-        "translit": "acharei hatsohoráyim aní oved beveit kafé.",
+        "translit": "acharéi hatsohoráyim aní ovéd bevéit kafé.",
         "pt": "À tarde eu trabalho num café."
       },
       {
         "he": "בָּעֶרֶב אֲנִי חוֹזֵר הַבַּיְתָה מְאֻחָר.",
-        "translit": "baérev aní chozer habáyta meuchar.",
+        "translit": "baérev aní chozér habáyta meuchár.",
         "pt": "À noite eu volto para casa tarde."
       },
       {
         "he": "בְּשַׁבָּת אֲנִי לֹא עוֹבֵד!",
-        "translit": "beshabat aní lo oved!",
+        "translit": "beshabát aní lo ovéd!",
         "pt": "No sábado eu não trabalho!"
       }
     ],

@@ -12,22 +12,22 @@
     },
     {
       "he": "תַּפְרִיט",
-      "translit": "tafrit",
+      "translit": "tafrít",
       "pt": "cardápio"
     },
     {
       "he": "מֶלְצָר",
-      "translit": "meltsar",
+      "translit": "meltsár",
       "pt": "garçom"
     },
     {
       "he": "מֶלְצָרִית",
-      "translit": "meltsarit",
+      "translit": "meltsarít",
       "pt": "garçonete"
     },
     {
       "he": "חֶשְׁבּוֹן",
-      "translit": "cheshbon",
+      "translit": "cheshbón",
       "pt": "conta"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "he": "בָּשָׂר",
-      "translit": "basar",
+      "translit": "bassár",
       "pt": "carne"
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "he": "בָּצָל",
-      "translit": "batsal",
+      "translit": "batsál",
       "pt": "cebola"
     },
     {
@@ -72,7 +72,7 @@
     },
     {
       "he": "סֻכָּר",
-      "translit": "sukar",
+      "translit": "sukár",
       "pt": "açúcar"
     },
     {
@@ -91,8 +91,8 @@
       "translit": [
         "taím",
         "teimá",
-        "teimim",
-        "teimot"
+        "teimím",
+        "teimót"
       ]
     },
     {
@@ -104,30 +104,30 @@
         "מְבַקְּשׁוֹת"
       ],
       "translit": [
-        "mevakesh",
+        "mevakésh",
         "mevakéshet",
-        "mevakshim",
-        "mevakshot"
+        "mevakshím",
+        "mevakshót"
       ]
     },
     {
       "he": "צִמְחוֹנִי",
-      "translit": "tsimchoni",
+      "translit": "tsimchoní",
       "pt": "vegetariano"
     },
     {
       "he": "צִמְחוֹנִית",
-      "translit": "tsimchonit",
+      "translit": "tsimchonít",
       "pt": "vegetariana"
     },
     {
       "he": "חָרִיף",
-      "translit": "charif",
+      "translit": "charíf",
       "pt": "picante"
     },
     {
       "he": "אֶפְשָׁר…?",
-      "translit": "efshar…?",
+      "translit": "efshár…?",
       "pt": "pode ser…? dá para…?"
     },
     {
@@ -209,37 +209,37 @@
       {
         "quem": "O garçom",
         "he": "עֶרֶב טוֹב! הִנֵּה הַתַּפְרִיט.",
-        "translit": "érev tov! hiné hatafrit.",
+        "translit": "érev tov! hiné hatafrít.",
         "pt": "Boa noite! Aqui está o cardápio."
       },
       {
         "quem": "Maya",
         "he": "תּוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָּשָׁה?",
-        "translit": "todá. efshar máyim, bevakashá?",
+        "translit": "todá. efshár máyim, bevakashá?",
         "pt": "Obrigada. Pode ser uma água, por favor?"
       },
       {
         "quem": "O garçom",
         "he": "בְּטַח.",
-        "translit": "betach.",
+        "translit": "betách.",
         "pt": "Claro."
       },
       {
         "quem": "Dani",
         "he": "מָה טָעִים פֹּה?",
-        "translit": "ma taim po?",
+        "translit": "ma taím po?",
         "pt": "O que é gostoso aqui?"
       },
       {
         "quem": "O garçom",
         "he": "הַשַּׁקְשׁוּקָה מְאֹד טְעִימָה. וְגַם הַדָּג.",
-        "translit": "hashakshuka meod teimá. vegam hadag.",
+        "translit": "hashakshúka meód teimá. vegám hadág.",
         "pt": "A shakshuka é muito gostosa. E o peixe também."
       },
       {
         "quem": "Dani",
         "he": "אֲנִי צִמְחוֹנִי. אֲנִי רוֹצֶה שַׁקְשׁוּקָה, בְּבַקָּשָׁה.",
-        "translit": "aní tsimchoni. aní rotsé shakshuka, bevakashá.",
+        "translit": "aní tsimchoní. aní rotsé shakshúka, bevakashá.",
         "pt": "Eu sou vegetariano. Quero uma shakshuka, por favor."
       },
       {
@@ -257,42 +257,42 @@
       {
         "quem": "Maya",
         "he": "וַאֲנִי רוֹצָה סָלָט. אֵיזֶה סָלָט יֵשׁ?",
-        "translit": "vaaní rotsá salat. éize salat yesh?",
+        "translit": "vaaní rotsá salát. éize salát yesh?",
         "pt": "E eu quero uma salada. Que salada tem?"
       },
       {
         "quem": "O garçom",
         "he": "יֵשׁ סָלָט יְרָקוֹת וְסָלָט טוּנָה.",
-        "translit": "yesh salat yerakot vesalat tuna.",
+        "translit": "yesh salát yerakót vessalát túna.",
         "pt": "Tem salada de legumes e salada de atum."
       },
       {
         "quem": "Maya",
         "he": "סָלָט יְרָקוֹת, בְּלִי בָּצָל.",
-        "translit": "salat yerakot, bli batsal.",
+        "translit": "salát yerakót, bli batsál.",
         "pt": "Salada de legumes, sem cebola."
       },
       {
         "quem": "Dani (depois do jantar)",
         "he": "אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה?",
-        "translit": "efshar cheshbon, bevakashá?",
+        "translit": "efshár cheshbón, bevakashá?",
         "pt": "Pode trazer a conta, por favor?"
       }
     ],
     "glossario": [
       {
         "he": "בְּטַח",
-        "translit": "betach",
+        "translit": "betách",
         "pt": "claro"
       },
       {
         "he": "סָלָט יְרָקוֹת",
-        "translit": "salat yerakot",
+        "translit": "salát yerakót",
         "pt": "salada de legumes (expressão fixa)"
       },
       {
         "he": "טוּנָה",
-        "translit": "tuna",
+        "translit": "túna",
         "pt": "atum"
       }
     ]
@@ -303,23 +303,23 @@
     "linhas": [
       {
         "he": "אֲרוּחַת בֹּקֶר יִשְׂרְאֵלִית: בֵּיצִים, סָלָט, לֶחֶם, גְּבִינָה, קָפֶה אוֹ מִיץ. 62 שֶׁקֶל",
-        "translit": "aruchat bóker yisraelit: beitsim, salat, léchem, gviná, kafé o mits. shishim ushtáyim shékel",
+        "translit": "aruchát bóker yisraelít: beitsím, salát, léchem, gviná, kafé o mits. shishím ushtáyim shékel",
         "pt": "Café da manhã israelense: ovos, salada, pão, queijo, café ou suco. 62 shekels"
       },
       {
         "he": "שַׁקְשׁוּקָה (חָרִיף!): 48 שֶׁקֶל",
-        "translit": "shakshuka (charif!): arbaím ushmoné shékel",
+        "translit": "shakshúka (charíf!): arbaím ushmoné shékel",
         "pt": "Shakshuka (picante!): 48 shekels"
       },
       {
         "he": "טוֹסְט גְּבִינָה: 39 שֶׁקֶל",
-        "translit": "tost gviná: shloshim vatésha shékel",
+        "translit": "tost gviná: shloshím vatésha shékel",
         "pt": "Queijo quente: 39 shekels"
       },
       {
         "he": "קָפֶה הָפוּךְ: 14 שֶׁקֶל",
-        "translit": "kafé hafuch: arbá-esré shékel",
-        "pt": "Café com leite (\"hafuch\"): 14 shekels"
+        "translit": "kafé hafúch: arbá-esré shékel",
+        "pt": "Café com leite (\"hafúch\"): 14 shekels"
       }
     ],
     "perguntas": [
@@ -353,7 +353,7 @@
   },
   "cultura": [
     {
-      "tituloPt": "Café hafuch e o café da manhã israelense",
+      "tituloPt": "Café hafúch e o café da manhã israelense",
       "textoPt": "Peça um קָפֶה הָפוּךְ, \"café de ponta-cabeça\": o leite vem primeiro e o café por cima. É o café com leite de todo dia. E o café da manhã israelense de restaurante é farto: ovos, uma salada de pepino e tomate cortados bem miudinho, queijos, pastas e pão. Na conta do restaurante a gorjeta não vem incluída, e o costume é deixar algo entre 10% e 15%."
     }
   ],
