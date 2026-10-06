@@ -501,3 +501,66 @@ Só do diálogo (glossário): מִסְפַּר הַטֶּלֶפוֹן (expressã
 18. Diálogo, V ou F: Dani pode ficar até as quatro → **Falso**
 19. Diálogo: por que a Maya diz דָּנִי!? → **ele pediu o telefone da Shira**
 20. Escrever uma apresentação de 5 frases (nome com קוֹרְאִים לִי, de onde, onde mora, o que faz, alguém da família).
+
+## Exame final do A1 (aprovado pelo dono em 06/10/2026)
+
+Regras: 6 partes, cada uma com 6 perguntas guardadas e 4 sorteadas por
+tentativa (24 por prova); aprovado com 70% no total (EXAM_PASS do alfabeto);
+relatório por parte, e cada parte abaixo de 70% aponta as unidades para
+revisar. Nada novo; perguntas inéditas. Escrita corrigida sem exigir nikud.
+
+### Parte 1 - Vocabulário (Unidades 2, 5, 6, 7)
+1. Ligar: חָלָב · אָחוֹת · יוֹם שֵׁנִי · עִתּוֹן → leite · irmã · segunda-feira · jornal
+2. מְקָרֵר → **geladeira** / cozinha / quarto
+3. Intruso: גְּבִינָה · לֶחֶם · עוּגָה · **מְנוֹרָה**
+4. "Fechado" → **סָגוּר** / פָּתוּחַ
+5. סַבְתָּא → **avó** / tia / irmã
+6. Intruso: אִישׁ · יַלְדָּה · **כִּסֵּא** · חָבֵר
+
+### Parte 2 - Concordância (Unidades 2, 3)
+1. דֶּלֶת ___ (azul) → **כְּחֻלָּה**
+2. הַחֲבֵרִים ___ (os amigos simpáticos) → **הַנֶּחְמָדִים**
+3. ___ מַחְבָּרוֹת → **אֵלֶּה**
+4. Frase "o quarto é grande" → **הַחֶדֶר גָּדוֹל**
+5. שֻׁלְחָנוֹת ___ (novos) → **חֲדָשִׁים**
+6. ___ כּוֹס → **זֹאת**
+
+### Parte 3 - Verbos e frases (Unidades 4, 5, 6, 8)
+1. A Noa: אֲנִי ___ בְּחֵיפָה → **גָּרָה**
+2. Tom e Maya: הֵם ___ תֵּה → **שׁוֹתִים**
+3. אֲנִי קוֹנֶה ___ הַלֶּחֶם → **אֶת**
+4. "Ela não tem irmãos" → **אֵין לָהּ אַחִים**
+5. הוּא עוֹבֵד ___ (comigo) → **אִתִּי**
+6. "O cachorro deles" → **הַכֶּלֶב שֶׁלָּהֶם**
+
+### Parte 4 - Escuta (todas)
+1. הַשָּׁעָה שֶׁבַע וָחֵצִי → **7:30**
+2. זֶה עוֹלֶה עֶשְׂרִים וְחָמֵשׁ שֶׁקֶל → **25**
+3. אֲנִי לֹא שׁוֹתָה קָפֶה → **uma mulher que não bebe café**
+4. הַכֶּלֶב שֶׁלָּהֶם גָּדוֹל → **o cachorro deles é grande**
+5. אֵיךְ קוֹרְאִים לָךְ? → **pergunta o nome de uma mulher**
+6. אֲנַחְנוּ גָּרִים בִּירוּשָׁלַיִם → **nós moramos em Jerusalém**
+
+### Parte 5 - Leitura (Unidades 7, 8)
+Texto: שָׁלוֹם טוֹם! אֲנִי בַּשּׁוּק עִם אֵיתָן. יֵשׁ פֹּה תַּפּוּחִים וּגְבִינָה. אַתָּה רוֹצֶה
+מַשֶּׁהוּ? הַשּׁוּק פָּתוּחַ עַד שָׁלוֹשׁ. בְּאַרְבַּע אֲנַחְנוּ שׁוֹתִים קָפֶה בַּבַּיִת שֶׁלִּי.
+אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?
+1. Onde está a Noa? → **na feira**
+2. Com quem? → **com o Eitan**
+3. Até que horas a feira abre? → **até as três**
+4. O que fazem às quatro? → **tomam café na casa da Noa**
+5. V ou F: a Noa pergunta se o Tom quer algo da feira → **Verdadeiro**
+6. Placa sem pontos: סגור ביום שישי → **fechado na sexta**
+
+### Parte 6 - Escrita (Unidades 1, 4, 6, 7)
+1. "Eu sou do Brasil" → **אֲנִי מִבְּרָזִיל**
+2. "Eu tenho um irmão" → **יֵשׁ לִי אָח**
+3. "A minha casa" → **הַבַּיִת שֶׁלִּי**
+4. "Quanto custa?" → **כַּמָּה זֶה עוֹלֶה?**
+5. "Onde você mora?" (mulher) → **אֵיפֹה אַתְּ גָּרָה?**
+6. "São duas horas" → **הַשָּׁעָה שְׁתַּיִם**
+
+### Certificado
+- Título: "Hebraico A1 - curso concluído"
+- "[Nome] concluiu o curso Hebraico A1 do Hebraico Fluente e foi aprovado no exame final."
+- "Este certificado mostra que você concluiu o curso. Não é uma certificação oficial de nível."
