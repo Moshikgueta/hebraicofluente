@@ -691,6 +691,8 @@ function main() {
   const a1Nums = a1Curso.modulos.flatMap(m => m.unidades);
   const a1Unidades = a1Nums.map(n => readJson(`data/a1/unidades/u${String(n).padStart(2, '0')}.json`));
   const a1Exame = readJson('data/a1/exame.json');
+  const { _: _a1HistNota, ...a1Historia } = readJson('data/a1/historia.json');
+  void _a1HistNota;
   const comAudio = x => ({ ...x, he: NFC(x.he), audioId: audioIdFor(x.he) });
   const itemA1 = it => (it.t === 'ouvir' || it.t === 'ditado' ? { ...it, he: NFC(it.he), audioId: audioIdFor(it.he) } : it);
   const unidadeA1 = u => ({
@@ -709,6 +711,7 @@ function main() {
   writeFileSync(join(OUT, 'a1.json'), JSON.stringify({
     ...a1Publico,
     unidades: a1Unidades.map(unidadeA1),
+    historia: a1Historia,
     exame: {
       sorteio: a1Exame.sorteio,
       aprovacao: a1Exame.aprovacao,

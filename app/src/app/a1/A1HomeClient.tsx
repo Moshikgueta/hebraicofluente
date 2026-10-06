@@ -11,7 +11,8 @@ import { Badge, Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { useProgress } from '@/lib/state/store';
 import { cursoA1, type UnidadeA1 } from '@/lib/a1';
-import { unidadeConcluida } from '@/lib/state/a1-estado';
+import { paraRevisarHoje, unidadeConcluida } from '@/lib/state/a1-estado';
+import { today } from '@/lib/state/rules';
 import { GeneroA1 } from '@/components/a1/GeneroA1';
 import { Misto } from '@/components/a1/A1Player';
 
@@ -25,6 +26,7 @@ export function A1HomeClient() {
   const proxima = ordem.find(n => !unidadeConcluida(a1, n)) ?? null;
   const pct = ordem.length ? Math.round((feitas / ordem.length) * 100) : 0;
   const unidadeProxima = proxima != null ? porN.get(proxima) : undefined;
+  const vencidos = paraRevisarHoje(a1, today()).length;
 
   return (
     <div className="grid gap-6 reading">
@@ -46,6 +48,12 @@ export function A1HomeClient() {
       </header>
 
       {!a1.genero && <GeneroA1 />}
+
+      <nav aria-label="Ferramentas do curso" className="grid grid-cols-3 gap-2">
+        <Atalho href="/a1/revisao" titulo="Minha revisão" detalhe={vencidos ? `${vencidos} para hoje` : 'em dia'} destaque={vencidos > 0} />
+        <Atalho href="/a1/meu-hebraico" titulo="Meu hebraico" detalhe="caderno e progresso" />
+        <Atalho href="/a1/historia" titulo="História" detalhe="bônus" />
+      </nav>
 
       {unidadeProxima && (
         <Card tone="wash" className="p-5 grid gap-3">
@@ -104,5 +112,16 @@ export function A1HomeClient() {
         </details>
       )}
     </div>
+  );
+}
+
+function Atalho({ href, titulo, detalhe, destaque = false }: { href: string; titulo: string; detalhe: string; destaque?: boolean }) {
+  return (
+    <Link href={href} className="block rounded-[var(--r-lg)] focus-visible:outline-2">
+      <Card tone={destaque ? 'ember' : 'surface'} className="p-3 sm:p-4 grid gap-0.5 h-full hover:border-[var(--accent-soft)]">
+        <span className="font-ui text-[14px] sm:text-[15px] font-semibold text-ink leading-tight">{titulo}</span>
+        <span className="font-ui text-[12px] sm:text-[12.5px] text-ink-muted">{detalhe}</span>
+      </Card>
+    </Link>
   );
 }

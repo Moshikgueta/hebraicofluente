@@ -68,6 +68,7 @@ export function ExerciciosA1Client({ n }: { n: number }) {
         prefixo={`a1-u${n}-r${rodada}`}
         genero={genero}
         titulo={`Unidade ${n} · exercícios`}
+        onItem={(_, item, certo) => p.responderItemA1(n, item, certo)}
         onDone={r => { p.finishUnidadeA1(n, r.nota); setFim(r); }}
       />
     </div>

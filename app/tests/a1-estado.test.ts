@@ -6,7 +6,8 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
-  A1_APROVA, A1_VAZIO, a1Valido, fundirA1, registrarExameA1, registrarUnidade, unidadeConcluida,
+  A1_APROVA, A1_VAZIO, a1Valido, chaveDoItem, dominio, fundirA1, paraRevisarHoje, registrarExameA1,
+  registrarHabilidade, registrarUnidade, responderRevisao, situacaoRevisao, unidadeConcluida,
   type EstadoA1
 } from '@/lib/state/a1-estado';
 import { mergeStates } from '@/lib/state/merge';
@@ -37,11 +38,13 @@ describe('o progresso do A1', () => {
 
   it('a fusão é comutativa e idempotente, e não perde conquista', () => {
     const a: EstadoA1 = {
+      ...A1_VAZIO,
       genero: { valor: 'f', em: T1 },
       unidades: { '1': { best: 0.9, runs: 2, concluidaEm: T2 } },
       exame: { best: 0.6, attempts: 1, passedAt: null }
     };
     const b: EstadoA1 = {
+      ...A1_VAZIO,
       genero: { valor: 'm', em: T2 },
       unidades: { '1': { best: 0.7, runs: 5, concluidaEm: T1 }, '2': { best: 0.4, runs: 1, concluidaEm: null } },
       exame: { best: 0.8, attempts: 2, passedAt: T2 }
@@ -81,5 +84,68 @@ describe('o progresso do A1', () => {
   it('as páginas geradas são as unidades dos módulos de data/a1/curso.json, na ordem', () => {
     const curso = JSON.parse(readFileSync(new URL('../../data/a1/curso.json', import.meta.url), 'utf8')) as { modulos: { unidades: number[] }[] };
     expect([...UNIDADES_A1]).toEqual(curso.modulos.flatMap(m => m.unidades));
+  });
+
+  it('revisão espaçada: só o erro entra; acertar sobe de caixa, errar volta à 0', () => {
+    const k = chaveDoItem(3, { t: 'vf', q: 'x', certa: true, porque: 'y' });
+    expect(k).toMatch(/^u3:[0-9a-f]{8}$/);
+    let e = responderRevisao(A1_VAZIO, k, true, '2026-10-06');
+    expect(e.revisao).toEqual({});                                         // acerto de primeira não entra
+    e = responderRevisao(e, k, false, '2026-10-06');
+    expect(e.revisao[k]).toMatchObject({ caixa: 0, vence: '2026-10-06', erros: 1 });
+    expect(paraRevisarHoje(e, '2026-10-06')).toEqual([k]);
+    expect(situacaoRevisao(e.revisao[k]!, '2026-10-06')).toBe('agora');
+    e = responderRevisao(e, k, true, '2026-10-06');
+    expect(e.revisao[k]).toMatchObject({ caixa: 1, vence: '2026-10-07' });
+    expect(paraRevisarHoje(e, '2026-10-06')).toEqual([]);
+    for (const d of ['2026-10-07', '2026-10-10', '2026-10-17']) e = responderRevisao(e, k, true, d);
+    expect(situacaoRevisao(e.revisao[k]!, '2026-10-17')).toBe('dominado');
+  });
+
+  it('o domínio de uma habilidade só aparece com 10 respostas', () => {
+    let e = A1_VAZIO;
+    for (let i = 0; i < 9; i++) e = registrarHabilidade(e, 'escuta', i < 6);
+    expect(dominio(e, 'escuta')).toBeNull();
+    e = registrarHabilidade(e, 'escuta', true);
+    expect(dominio(e, 'escuta')).toBe(0.7);
+  });
+
+  it('o caderno funde entre aparelhos sem perder nada, e comutativo', () => {
+    const k = 'u2:0000abcd';
+    const a: EstadoA1 = {
+      ...A1_VAZIO,
+      revisao: { [k]: { caixa: 2, vence: '2026-10-09', acertos: 2, erros: 1, visto: '2026-10-06' } },
+      habilidades: { leitura: { h: 5, m: 1 } },
+      favoritos: { 'w:שלום': { on: true, em: T1 } },
+      translit: { valor: 'esconder', em: T2 },
+      dias: { '2026-10-06': 4 }
+    };
+    const b: EstadoA1 = {
+      ...A1_VAZIO,
+      revisao: { [k]: { caixa: 0, vence: '2026-10-07', acertos: 2, erros: 2, visto: '2026-10-07' } },
+      habilidades: { leitura: { h: 3, m: 4 }, escuta: { h: 1, m: 0 } },
+      favoritos: { 'w:שלום': { on: false, em: T2 } },
+      translit: { valor: 'mostrar', em: T1 },
+      dias: { '2026-10-06': 2, '2026-10-07': 1 }
+    };
+    const ab = fundirA1(a, b);
+    expect(fundirA1(b, a)).toEqual(ab);
+    expect(fundirA1(ab, ab)).toEqual(ab);
+    expect(ab.revisao[k]!.visto).toBe('2026-10-07');                       // o visto por último
+    expect(ab.habilidades).toEqual({ leitura: { h: 5, m: 4 }, escuta: { h: 1, m: 0 } });
+    expect(ab.favoritos['w:שלום']!.on).toBe(false);                         // a decisão mais recente
+    expect(ab.translit!.valor).toBe('esconder');
+    expect(ab.dias).toEqual({ '2026-10-06': 4, '2026-10-07': 1 });
+  });
+
+  it('chaves do caderno com forma errada não entram', () => {
+    const e = a1Valido({
+      revisao: { 'u3:zzzz': { caixa: 1, vence: '2026-10-06', visto: '2026-10-06' }, 'u3:0000abcd': { caixa: 9, vence: '2026-10-06', visto: '2026-10-06' } },
+      favoritos: { 'w:abc': { on: true, em: T1 }, 'w:שלום': { on: true, em: T1 } },
+      translit: { valor: 'sempre', em: T1 }
+    });
+    expect(e.revisao).toEqual({});
+    expect(Object.keys(e.favoritos)).toEqual(['w:שלום']);
+    expect(e.translit).toBeNull();
   });
 });

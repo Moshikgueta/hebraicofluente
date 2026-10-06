@@ -17,7 +17,8 @@ import { useProgress } from '@/lib/state/store';
 import { ehFormas, moduloDaUnidade, UNIDADES_A1, unidadeA1, type CaixaA1, type FormasA1, type PalavraA1 } from '@/lib/a1';
 import { A1Player } from '@/components/a1/A1Player';
 import { TituloComSelo } from '@/components/learn/Blocks';
-import { unidadeConcluida } from '@/lib/state/a1-estado';
+import { chaveDeFrase, chaveDePalavra, favorito, unidadeConcluida } from '@/lib/state/a1-estado';
+import { ChaveTranslit, Translit, modoTranslit } from '@/components/a1/TranslitA1';
 
 const ROTULOS_4 = ['masculino', 'feminino', 'masc. plural', 'fem. plural'];
 
@@ -33,6 +34,7 @@ export function UnidadeA1Client({ n }: { n: number }) {
   const posicao = UNIDADES_A1.indexOf(n) + 1;
   const simples = u.palavras.filter((w): w is PalavraA1 => !ehFormas(w));
   const formas = u.palavras.filter((w): w is FormasA1 => ehFormas(w));
+  const modo = modoTranslit(p.state.a1.translit?.valor, n);
 
   return (
     <div className="grid gap-6 reading">
@@ -65,6 +67,7 @@ export function UnidadeA1Client({ n }: { n: number }) {
 
       <section className="grid gap-3" aria-labelledby="t-palavras">
         <h2 id="t-palavras" className="font-display text-[20px] font-semibold m-0">Palavras novas</h2>
+        <ChaveTranslit n={n} />
         {formas.length > 0 && (
           <Card className="p-4 grid gap-3">
             {formas.map(f => (
@@ -89,12 +92,13 @@ export function UnidadeA1Client({ n }: { n: number }) {
               <div key={w.he} className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
                 <He size="word">{w.he}</He>
                 {hasAudio(w.audioId) && <AudioButton audioId={w.audioId!} ariaLabel={`Ouvir ${w.translit}`} size="sm" />}
-                <span className="grid min-w-0">
-                  <span className="font-ui text-[14px] font-semibold text-ink">{w.translit}</span>
+                <span className="grid min-w-0 flex-1">
+                  <Translit texto={w.translit} modo={modo} />
                   <span className="font-ui text-[12.5px] text-ink-muted">
                     {w.pt}{w.reconhecer ? ' · só para reconhecer, por enquanto' : ''}
                   </span>
                 </span>
+                <Estrela chave={chaveDePalavra(w.he)} rotulo={w.pt} />
               </div>
             ))}
           </Card>
@@ -142,6 +146,17 @@ export function UnidadeA1Client({ n }: { n: number }) {
           </Card>
         )}
         {u.dialogo.notaPt && <p className="font-ui text-[14px] text-ink-muted m-0"><Misto texto={u.dialogo.notaPt} /></p>}
+        <details className="rounded-[var(--r-md)] border border-line bg-surface px-4 py-2">
+          <summary className="cursor-pointer min-h-[44px] flex items-center font-ui text-[14px] text-ink">Guardar frases deste diálogo em Meu hebraico</summary>
+          <ul className="grid gap-1.5 m-0 p-0 pb-2 list-none">
+            {u.dialogo.linhas.map((l, i) => (
+              <li key={i} className="flex items-center gap-3">
+                <span className="flex-1 min-w-0"><He size="word">{l.he}</He></span>
+                <Estrela chave={chaveDeFrase(l.he)} rotulo={l.pt} />
+              </li>
+            ))}
+          </ul>
+        </details>
       </section>
 
       {u.leitura && (
@@ -154,6 +169,8 @@ export function UnidadeA1Client({ n }: { n: number }) {
 
       {u.cultura?.map(c => <Caixa key={c.tituloPt} caixa={c} tipo="cultura" />)}
       {u.sabia?.map(c => <Caixa key={c.tituloPt} caixa={c} tipo="sabia" />)}
+
+      {u.autoavaliacao && u.autoavaliacao.length > 0 && <Autoavaliacao n={n} frases={u.autoavaliacao} />}
 
       <LinkButton href={`/a1/unidade/${n}/exercicios`} size="lg" full>
         {feita ? 'Fazer os exercícios de novo' : `Fazer os exercícios (${u.exercicios.length})`}
@@ -198,6 +215,49 @@ function Perguntas({ n }: { n: number }) {
   return (
     <A1Player key={rodada} itens={u.leitura!.perguntas} prefixo={`a1-u${n}-leitura-r${rodada}`}
       genero={p.state.a1.genero?.valor ?? null} titulo="Perguntas sobre o texto"
+      onItem={(_, item, certo) => p.responderItemA1(n, item, certo, true)}
       onDone={r => setFim(`${r.certas} de ${r.total} na primeira tentativa.`)} />
+  );
+}
+
+/* A estrela de "Meu hebraico": guarda a palavra ou a frase no caderno. */
+function Estrela({ chave, rotulo }: { chave: string; rotulo: string }) {
+  const p = useProgress();
+  const on = favorito(p.state.a1, chave);
+  return (
+    <button type="button" aria-pressed={on} onClick={() => p.marcarFavoritoA1(chave, !on)}
+      aria-label={on ? `Tirar "${rotulo}" de Meu hebraico` : `Guardar "${rotulo}" em Meu hebraico`}
+      className={`shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full text-[20px]
+        ${on ? 'text-[var(--amber)]' : 'text-ink-muted hover:text-ink-body'}`}>
+      <span aria-hidden>{on ? '★' : '☆'}</span>
+    </button>
+  );
+}
+
+/* "Eu consigo…": o aluno marca o que sente que já sabe. Não vale nota nem
+   trava nada; fica no caderno, para ele ver o próprio caminho. */
+function Autoavaliacao({ n, frases }: { n: number; frases: string[] }) {
+  const p = useProgress();
+  const marcadas = new Set(p.state.a1.auto[String(n)]?.itens ?? []);
+  const trocar = (i: number) => {
+    const prox = new Set(marcadas);
+    if (prox.has(i)) prox.delete(i); else prox.add(i);
+    p.setAutoA1(n, [...prox].sort((a, b) => a - b));
+  };
+  return (
+    <section className="grid gap-3" aria-labelledby="t-auto">
+      <h2 id="t-auto" className="font-display text-[20px] font-semibold m-0">Eu consigo…</h2>
+      <p className="font-ui text-[14px] text-ink-muted m-0">Marque o que você sente que já sabe fazer. Só você vê.</p>
+      <ul className="grid gap-2 m-0 p-0 list-none">
+        {frases.map((f, i) => (
+          <li key={i}>
+            <label className="flex items-start gap-3 min-h-[44px] cursor-pointer rounded-[var(--r-md)] border border-line bg-surface px-3 py-2.5">
+              <input type="checkbox" checked={marcadas.has(i)} onChange={() => trocar(i)} className="mt-1 w-5 h-5 shrink-0" />
+              <span className="text-[15px] leading-snug text-ink-body"><Misto texto={f} /></span>
+            </label>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

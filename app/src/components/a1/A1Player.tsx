@@ -55,16 +55,19 @@ export function Misto({ texto, className = '' }: { texto: string; className?: st
 const Opcao = ({ texto }: { texto: string }) =>
   soHebraico(texto) ? <He size="word">{texto}</He> : <span className="font-ui text-[16px]">{texto}</span>;
 
-type NaFila = { item: ItemA1; id: string; volta: boolean };
+type NaFila = { item: ItemA1; id: string; volta: boolean; indice: number };
 
 /** O id estável de um item: embaralhar a partir dele faz o mesmo item voltar
  *  com a mesma ordem, como os geradores do alfabeto. */
 const idDo = (prefixo: string, i: number) => `${prefixo}-${i + 1}`;
 
 export function A1Player({
-  itens, prefixo, genero, onDone, titulo
+  itens, prefixo, genero, onDone, titulo, onItem
 }: {
   itens: ItemA1[];
+  /** A primeira tentativa de cada item (não a volta), pelo índice em `itens`:
+   *  é o que alimenta a revisão espaçada e as habilidades. */
+  onItem?: (indice: number, item: ItemA1, certo: boolean) => void;
   /** Para os ids e o embaralhamento estável (ex.: "a1-u3"). */
   prefixo: string;
   genero: GeneroA1 | null;
@@ -74,7 +77,7 @@ export function A1Player({
   /* A fila é montada uma vez: um item de escuta sem gravação fica de fora
      (a regra do alfabeto: nada de voz sintética). */
   const inicial = useMemo<NaFila[]>(
-    () => itens.map((item, i) => ({ item, id: idDo(prefixo, i), volta: false }))
+    () => itens.map((item, i) => ({ item, id: idDo(prefixo, i), volta: false, indice: i }))
       .filter(f => (f.item.t !== 'ouvir' && f.item.t !== 'ditado') || hasAudio(f.item.audioId)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -94,7 +97,10 @@ export function A1Player({
     if (!atual || resposta !== null) return;
     setResposta(certo);
     setDica(!certo && dicaDaOpcao ? dicaDaOpcao : null);
-    if (!atual.volta && valeNota(atual.item)) setPrimeira(p => ({ ...p, [atual.id]: certo }));
+    if (!atual.volta && valeNota(atual.item)) {
+      setPrimeira(p => ({ ...p, [atual.id]: certo }));
+      onItem?.(atual.indice, atual.item, certo);
+    }
     if (!certo && !atual.volta) setFila(f => [...f, { ...atual, volta: true }]);
   };
 

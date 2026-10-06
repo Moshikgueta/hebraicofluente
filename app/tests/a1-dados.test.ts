@@ -204,8 +204,17 @@ describe('o curso Hebraico A1 (data/a1/)', () => {
     }
   });
 
+  it('a trilha da história tem 10 capítulos, cada um sugerido depois de uma unidade que existe', () => {
+    const h = JSON.parse(ler('historia.json')) as { capitulos: { n: number; tituloPt: string; textoPt: string; depoisDaUnidade: number }[] };
+    expect(h.capitulos.map(c => c.n)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    for (const c of h.capitulos) {
+      expect(c.tituloPt && c.textoPt, `capítulo ${c.n}`).toBeTruthy();
+      expect(ordem, `capítulo ${c.n}`).toContain(c.depoisDaUnidade);
+    }
+  });
+
   it('nenhum travessão em nenhum texto', () => {
-    const todos = ['curso.json', 'exame.json', ...ordem.map(nomeDe)].map(ler).join('\n');
+    const todos = ['curso.json', 'exame.json', 'historia.json', ...ordem.map(nomeDe)].map(ler).join('\n');
     expect(todos).not.toMatch(/[–—]/);
   });
 });
