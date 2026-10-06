@@ -35,6 +35,9 @@ de o dono aprovar o hebraico.
     אַחַת, שְׁתַּיִם, שָׁלוֹשׁ…). A série para contar coisas masculinas
     (שְׁנֵי אַחִים, שְׁלוֹשָׁה…) fica para o A2. Preço como na rua, no singular:
     עֶשֶׂר שֶׁקֶל (aprovado com a Unidade 7).
+12. **Unidade 8: עִם com finais (אִתִּי…) no lugar do בְּ com finais**, que
+    quase não aparece no A1 e fica para o A2. מִסְפַּר הַטֶּלֶפוֹן entra como
+    expressão fixa; a סְמִיכוּת é do A2 (aprovado com a Unidade 8).
 
 ## O mapa (aprovado)
 
@@ -47,7 +50,7 @@ de o dono aprovar o hebraico.
 | 5 | Falar de ações e coisas | mais verbos, o את do objeto, plural | comida, coisas da casa |
 | 6 | Tenho / é meu | יש/אין, של + sufixos, família | família, posses |
 | 7 | Contar, horas, preço | números, כמה, que horas | mercado, tempo, dias |
-| 8 | Me virar numa conversa | preposições ב/ל com sufixos, revisão | tudo acumulado |
+| 8 | Me virar numa conversa | לְ com finais (completo), שֶׁל no plural, עִם com finais, perguntas | tudo acumulado |
 
 ## Unidade 1 - "Quem é você?" (aprovada pelo dono em 06/10/2026)
 
@@ -441,3 +444,60 @@ Só do diálogo (glossário): מַשֶּׁהוּ (alguma coisa)
 18. Diálogo: quanto custa o quilo de maçãs? → **10 shekels**
 19. Diálogo, V ou F: a feira fecha às três → **Falso**
 20. Escrever: a que horas você começa a trabalhar ou estudar, e em que dias.
+
+## Unidade 8 - "Vamos conversar" (aprovada pelo dono em 06/10/2026)
+
+### Palavras
+
+לְ com finais: לִי · לְךָ · לָךְ · לוֹ · לָהּ · לָנוּ · לָכֶם · לָכֶן · לָהֶם · לָהֶן
+שֶׁל no plural: שֶׁלָּכֶם · שֶׁלָּכֶן · שֶׁלָּהֶם · שֶׁלָּהֶן
+עִם com finais: אִתִּי · אִתְּךָ · אִתָּךְ · אִתּוֹ · אִתָּהּ · אִתָּנוּ
+Perguntas: מִי · מָה · אֵיפֹה · מֵאֵיפֹה · כַּמָּה · אֵיךְ · מָתַי · לָמָּה
+E também: אֵיךְ קוֹרְאִים לְךָ? / לָךְ? · קוֹרְאִים לִי… · מִסְפָּר · שָׁם · בְּעָיָה · אֵין בְּעָיָה
+Só do diálogo (glossário): מִסְפַּר הַטֶּלֶפוֹן (expressão fixa); שִׁירָה (personagem nova)
+
+### Gramática
+
+1. לְ com todos os finais (o plural agora ativo): כּוֹתֵב לְךָ, יֵשׁ לָהֶם.
+2. O mesmo desenho em שֶׁל: שֶׁלָּכֶם, שֶׁלָּהֶם.
+3. "Comigo" = אִתִּי (como "com + mim" = "comigo").
+4. אֵיךְ קוֹרְאִים לְךָ? / קוֹרְאִים לִי… (o falado; מַה שִּׁמְךָ? é mais formal).
+
+### Diálogo (Maya apresenta Shira ao Dani)
+
+| Quem | Hebraico | Português |
+|---|---|---|
+| Maya | דָּנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִּי. | Dani, esta é a Shira. Ela estuda comigo. |
+| Dani | נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְּ? | Muito prazer, Shira! De onde você é? |
+| Shira | אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָּרָה בְּתֵל אָבִיב. | Sou de Haifa, mas moro em Tel Aviv. |
+| Dani | יֵשׁ לָךְ מִשְׁפָּחָה בְּחֵיפָה? | Você tem família em Haifa? |
+| Shira | כֵּן, הַהוֹרִים שֶׁלִּי גָּרִים שָׁם. | Sim, os meus pais moram lá. |
+| Maya | אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ? | Nós vamos tomar um café. Você quer café com a gente? |
+| Dani | כֵּן! אֲבָל רַק עַד שָׁלוֹשׁ. בְּשָׁלוֹשׁ אֲנִי עוֹבֵד. | Quero! Mas só até as três. Às três eu trabalho. |
+| Shira | אֵין בְּעָיָה! | Sem problema! |
+| Dani | שִׁירָה, מָה מִסְפַּר הַטֶּלֶפוֹן שֶׁלָּךְ? | Shira, qual é o número do seu telefone? |
+| Shira | אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם… | Zero cinquenta e dois… |
+| Maya | דָּנִי! | Dani! |
+
+### Banco de exercícios (20 itens)
+
+1. Tabela לְ: **לָנוּ · לָכֶם · לָהֶם · לָהֶן**
+2. "Eles têm um cachorro" → **יֵשׁ לָהֶם כֶּלֶב**
+3. "A casa de vocês" (Maya e Noa) → **הַבַּיִת שֶׁלָּכֶן**
+4. Montar: "Eu escrevo para ela" (homem) → **אֲנִי כּוֹתֵב לָהּ**
+5. הַהוֹרִים ___ גָּרִים בְּרִיוֹ → **שֶׁלָּהֶם**
+6. "Comigo" → **אִתִּי**
+7. Achar o erro: הִיא לוֹמֶדֶת עִם אֲנִי → **הִיא לוֹמֶדֶת אִתִּי**
+8. "Com a gente" → **אִתָּנוּ**
+9. Ligar: אֵיךְ · מָתַי · לָמָּה · כַּמָּה · אֵיפֹה → como · quando · por quê · quanto · onde
+10. Resposta "às oito" → **מָתַי?**
+11. Resposta "em Haifa" → **אֵיפֹה?**
+12. Na rua, a uma mulher → **אֵיךְ קוֹרְאִים לָךְ?**
+13. Achar o erro: קוֹרְאִים אֲנִי נֹעָה → **קוֹרְאִים לִי נֹעָה**
+14. Ouvir: אֵין לָהֶן בְּעָיָה → **elas não têm problema**
+15. Ouvir: מָתַי אַתָּה עוֹבֵד? → **quando você trabalha?**
+16. Diálogo: de onde é a Shira? → **de Haifa**
+17. Diálogo: onde ela mora? → **em Tel Aviv**
+18. Diálogo, V ou F: Dani pode ficar até as quatro → **Falso**
+19. Diálogo: por que a Maya diz דָּנִי!? → **ele pediu o telefone da Shira**
+20. Escrever uma apresentação de 5 frases (nome com קוֹרְאִים לִי, de onde, onde mora, o que faz, alguém da família).
