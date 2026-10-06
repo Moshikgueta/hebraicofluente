@@ -576,7 +576,7 @@ export function buildLetterPractice(
      e um para a frase, sobravam seis lugares para sete camadas - e a que
      caía era sempre a ÚLTIMA, a cursiva, nas três letras que têm variante e
      forma final ao mesmo tempo. Ou seja, a etapa de escrita deixava de ser
-     cobrada exatamente no Tsadi, no Kaf e no Pe.
+     cobrada exatamente no Tsádi, no Kaf e no Pe.
 
      Com o piso, um bloco pequeno perde revisão cumulativa antes de perder
      currículo - e um bloco do tamanho que a lição pede hoje tem espaço para

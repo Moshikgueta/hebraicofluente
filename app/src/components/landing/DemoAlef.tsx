@@ -183,8 +183,8 @@ const ACHAR: readonly Rodada[] = [
       { he: 'תּוֹדָה', certa: false, porque: 'Esta começa com Tav, a letra da direita. Em hebraico a palavra começa à direita.' },
       { he: 'בַּיִת', certa: false, porque: 'Esta começa com Bet, a letra da direita. Em hebraico a palavra começa à direita.' }
     ],
-    acerto: 'אֶתְמוֹל se lê «etmol» e quer dizer «ontem». O Álef está à direita, segurando o «e».',
-    ouvirAcerto: { clipe: 'etmol', rotulo: 'Ouvir «etmol»' }
+    acerto: 'אֶתְמוֹל se lê «etmól» e quer dizer «ontem». O Álef está à direita, segurando o «e».',
+    ouvirAcerto: { clipe: 'etmol', rotulo: 'Ouvir «etmól»' }
   },
   {
     pergunta: 'Mais uma: qual começa com Álef?',

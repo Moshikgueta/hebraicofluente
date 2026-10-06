@@ -544,7 +544,7 @@ export function Faq() {
 
 /* ── 14 · o fecho ───────────────────────────────────────────────────────── */
 const PALAVRAS: readonly { he: string; tr: string; pt: string }[] = [
-  { he: 'שָׁלוֹם', tr: 'shalom', pt: 'olá, paz' },
+  { he: 'שָׁלוֹם', tr: 'shalóm', pt: 'olá, paz' },
   { he: 'תּוֹדָה', tr: 'todá', pt: 'obrigado' },
   { he: 'מַיִם', tr: 'máyim', pt: 'água' }
 ];

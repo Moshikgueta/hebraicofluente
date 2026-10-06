@@ -355,7 +355,9 @@ describe('CONT-011: uma grafia só', () => {
     for (const f of arquivos) {
       const s = dado(f);
       expect(s, f).not.toMatch(/\bniqqud\b/i);
-      expect(s, f).not.toContain('shalóm');
+      /* Desde 06/10/2026 toda palavra de duas sílabas leva o acento tônico:
+         "shalóm". "shalom" sem acento só como id ("shalom-ma-shlomcha"). */
+      expect(s.replace(/"id": "shalom-[a-z-]+"/g, ''), f).not.toMatch(/(?<![A-Za-zÀ-ÿ])shalom(?![A-Za-zÀ-ÿ])/);
       /* "dagesh" só como chave ou id do JSON, nunca como texto. */
       expect(s.replace(/"dagesh":/g, '').replace(/"id": "dagesh"/g, ''), f).not.toMatch(/\bdagesh\b/);
     }
@@ -375,6 +377,13 @@ describe('CONT-012: grafias plausíveis da resposta digitada', () => {
     expect(typedIsCorrect('todah', ['todá'])).toBe(true);
     expect(typedIsCorrect('lehem', ['léchem'])).toBe(true);
     expect(typedIsCorrect('imah', ['imá'])).toBe(true);
+    /* A convenção de 06/10/2026 (acento em toda palavra de 2+ sílabas, "ss"
+       entre vogais) não cobra nada de quem digita: sem acento e com um s só
+       continua certo. */
+    expect(typedIsCorrect('shalom', ['shalóm'])).toBe(true);
+    expect(typedIsCorrect('kise', ['kissé'])).toBe(true);
+    expect(typedIsCorrect('osa', ['ossá'])).toBe(true);
+    expect(typedIsCorrect('messiba', ['messibá'])).toBe(true);
   });
 
   it('e continua recusando o que é outro som', () => {

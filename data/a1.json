@@ -17,7 +17,7 @@
    "palavras": [
     {
      "he": "שָׁלוֹם",
-     "translit": "shalom",
+     "translit": "shalóm",
      "pt": "olá / paz"
     },
     {
@@ -32,7 +32,7 @@
     },
     {
      "he": "מָה שְׁלוֹמֵךְ?",
-     "translit": "ma shlomech?",
+     "translit": "ma shloméch?",
      "pt": "como vai? (a ela)"
     },
     {
@@ -42,12 +42,12 @@
     },
     {
      "he": "נָעִים מְאֹד",
-     "translit": "naim meod",
+     "translit": "naím meód",
      "pt": "muito prazer"
     },
     {
      "he": "לְהִתְרָאוֹת",
-     "translit": "lehitraot",
+     "translit": "lehitraót",
      "pt": "até logo"
     },
     {
@@ -93,13 +93,13 @@
     },
     {
      "he": "אַתֶּם",
-     "translit": "atem",
+     "translit": "atém",
      "pt": "vocês (eles)",
      "reconhecer": true
     },
     {
      "he": "אַתֶּן",
-     "translit": "aten",
+     "translit": "atén",
      "pt": "vocês (elas)",
      "reconhecer": true
     },
@@ -137,12 +137,12 @@
     },
     {
      "he": "מֵאֵיפֹה אַתָּה?",
-     "translit": "meeifo atá?",
+     "translit": "meéifo atá?",
      "pt": "de onde você é? (a ele)"
     },
     {
      "he": "מֵאֵיפֹה אַתְּ?",
-     "translit": "meeifo at?",
+     "translit": "meéifo at?",
      "pt": "de onde você é? (a ela)"
     },
     {
@@ -152,12 +152,12 @@
     },
     {
      "he": "בְּרָזִיל",
-     "translit": "Brazil",
+     "translit": "Brazíl",
      "pt": "Brasil"
     },
     {
      "he": "יִשְׂרָאֵל",
-     "translit": "Israel",
+     "translit": "Israél",
      "pt": "Israel"
     },
     {
@@ -167,7 +167,7 @@
     },
     {
      "he": "בְּרָזִילָאִית",
-     "translit": "brazilait",
+     "translit": "brazilaít",
      "pt": "brasileira"
     },
     {
@@ -177,17 +177,17 @@
     },
     {
      "he": "יִשְׂרְאֵלִית",
-     "translit": "isreelit",
+     "translit": "isreelít",
      "pt": "israelense (f)"
     },
     {
      "he": "סְטוּדֶנְט",
-     "translit": "student",
+     "translit": "stúdent",
      "pt": "estudante (m)"
     },
     {
      "he": "סְטוּדֶנְטִית",
-     "translit": "studentit",
+     "translit": "studentít",
      "pt": "estudante (f)"
     },
     {
@@ -234,37 +234,37 @@
      {
       "quem": "Dani",
       "he": "שָׁלוֹם! אֲנִי דָּנִי. מַה שְּׁמֵךְ?",
-      "translit": "shalom! aní Dani. ma shmech?",
+      "translit": "shalóm! aní Dáni. ma shmech?",
       "pt": "Olá! Eu sou o Dani. Qual é o seu nome?"
      },
      {
       "quem": "Noa",
       "he": "שָׁלוֹם, דָּנִי. שְׁמִי נֹעָה. נָעִים מְאֹד.",
-      "translit": "shalom, Dani. shmi Noa. naim meod.",
+      "translit": "shalóm, Dáni. shmi Nóa. naím meód.",
       "pt": "Olá, Dani. Meu nome é Noa. Muito prazer."
      },
      {
       "quem": "Dani",
       "he": "נָעִים מְאֹד. מֵאֵיפֹה אַתְּ?",
-      "translit": "naim meod. meeifo at?",
+      "translit": "naím meód. meéifo at?",
       "pt": "Muito prazer. De onde você é?"
      },
      {
       "quem": "Noa",
       "he": "אֲנִי מִיִּשְׂרָאֵל. וְאַתָּה?",
-      "translit": "aní miIsrael. veatá?",
+      "translit": "aní miIsraél. veatá?",
       "pt": "Eu sou de Israel. E você?"
      },
      {
       "quem": "Dani",
       "he": "אֲנִי מִבְּרָזִיל. אֲנִי סְטוּדֶנְט.",
-      "translit": "aní miBrazil. aní student.",
+      "translit": "aní miBrazíl. aní stúdent.",
       "pt": "Eu sou do Brasil. Sou estudante."
      },
      {
       "quem": "Noa",
       "he": "גַּם אֲנִי סְטוּדֶנְטִית!",
-      "translit": "gam aní studentit!",
+      "translit": "gam aní studentít!",
       "pt": "Eu também sou estudante!"
      }
     ],
@@ -558,12 +558,12 @@
     },
     {
      "he": "שֻׁלְחָן",
-     "translit": "shulchan",
+     "translit": "shulchán",
      "pt": "mesa"
     },
     {
      "he": "כִּסֵּא",
-     "translit": "kisé",
+     "translit": "kissé",
      "pt": "cadeira"
     },
     {
@@ -593,7 +593,7 @@
     },
     {
      "he": "מַתָּנָה",
-     "translit": "matana",
+     "translit": "mataná",
      "pt": "presente"
     },
     {
@@ -618,7 +618,7 @@
     },
     {
      "he": "חָבֵר",
-     "translit": "chaver",
+     "translit": "chavér",
      "pt": "amigo"
     },
     {
@@ -628,12 +628,12 @@
     },
     {
      "he": "אַבָּא",
-     "translit": "aba",
+     "translit": "ába",
      "pt": "pai"
     },
     {
      "he": "אִמָּא",
-     "translit": "imá",
+     "translit": "íma",
      "pt": "mãe"
     }
    ],
@@ -659,7 +659,7 @@
      {
       "quem": "Tom",
       "he": "מַיָּה, מָה זֶה?",
-      "translit": "Maya, ma ze?",
+      "translit": "Máya, ma ze?",
       "pt": "Maya, o que é isto?"
      },
      {
@@ -671,7 +671,7 @@
      {
       "quem": "Tom",
       "he": "וּמָה זֶה?",
-      "translit": "uma ze?",
+      "translit": "umá ze?",
       "pt": "E o que é isto?"
      },
      {
@@ -683,25 +683,25 @@
      {
       "quem": "Tom",
       "he": "וּמִי זֹאת?",
-      "translit": "umi zot?",
+      "translit": "umí zot?",
       "pt": "E quem é esta?"
      },
      {
       "quem": "Maya",
       "he": "זֹאת אִמָּא. וְזֶה אַבָּא.",
-      "translit": "zot imá. veze aba.",
+      "translit": "zot íma. vezé ába.",
       "pt": "Esta é a minha mãe. E este é o meu pai."
      },
      {
       "quem": "Tom",
       "he": "וּמִי זֶה?",
-      "translit": "umi ze?",
+      "translit": "umí ze?",
       "pt": "E quem é este?"
      },
      {
       "quem": "Maya",
       "he": "זֶה לֹא אַבָּא, זֶה דָּנִי!",
-      "translit": "ze lo aba, ze Dani!",
+      "translit": "ze lo ába, ze Dáni!",
       "pt": "Este não é o meu pai, é o Dani!"
      }
     ],
@@ -1038,12 +1038,12 @@
     },
     {
      "he": "אַתֶּם",
-     "translit": "atem",
+     "translit": "atém",
      "pt": "vocês (eles)"
     },
     {
      "he": "אַתֶּן",
-     "translit": "aten",
+     "translit": "atén",
      "pt": "vocês (elas)"
     },
     {
@@ -1058,12 +1058,12 @@
     },
     {
      "he": "אֲבָל",
-     "translit": "aval",
+     "translit": "avál",
      "pt": "mas"
     },
     {
      "he": "מְאֹד",
-     "translit": "meod",
+     "translit": "meód",
      "pt": "muito"
     }
    ],
@@ -1098,43 +1098,43 @@
      {
       "quem": "Natan",
       "he": "מַיָּה, זֶה הַבַּיִת הֶחָדָשׁ?",
-      "translit": "Maya, ze habáyit hechadash?",
+      "translit": "Máya, ze habáyit hechadásh?",
       "pt": "Maya, esta é a casa nova?"
      },
      {
       "quem": "Maya",
       "he": "כֵּן! הַבַּיִת קָטָן, אֲבָל יָפֶה.",
-      "translit": "ken! habáyit katan, aval yafé.",
+      "translit": "ken! habáyit katán, avál yafé.",
       "pt": "Sim! A casa é pequena, mas bonita."
      },
      {
       "quem": "Natan",
       "he": "הַשֻּׁלְחָן חָדָשׁ?",
-      "translit": "hashulchan chadash?",
+      "translit": "hashulchán chadásh?",
       "pt": "A mesa é nova?"
      },
      {
       "quem": "Maya",
       "he": "לֹא, הַשֻּׁלְחָן יָשָׁן. אֲבָל הַכִּסְאוֹת חֲדָשִׁים!",
-      "translit": "lo, hashulchan yashan. aval hakisot chadashim!",
+      "translit": "lo, hashulchán yashán. avál hakissót chadashím!",
       "pt": "Não, a mesa é velha. Mas as cadeiras são novas!"
      },
      {
       "quem": "Natan",
       "he": "וּמָה אֵלֶּה?",
-      "translit": "uma éle?",
+      "translit": "umá éle?",
       "pt": "E o que são estas?"
      },
      {
       "quem": "Maya",
       "he": "אֵלֶּה מַתָּנוֹת. הֵן מִנֹּעָה וּמִדָּנִי.",
-      "translit": "éle matanot. hen miNoa umiDani.",
+      "translit": "éle matanót. hen miNóa umiDáni.",
       "pt": "São presentes. São da Noa e do Dani."
      },
      {
       "quem": "Natan",
       "he": "הַמְּנוֹרָה הָאֲדֻמָּה יָפָה מְאֹד!",
-      "translit": "hamenorá haadumá yafá meod!",
+      "translit": "hamenorá haadumá yafá meód!",
       "pt": "A luminária vermelha é muito bonita!"
      },
      {
@@ -1404,7 +1404,7 @@
     },
     {
      "he": "אֵיפֹה?",
-     "translit": "eifo?",
+     "translit": "éifo?",
      "pt": "onde?"
     },
     {
@@ -1414,7 +1414,7 @@
     },
     {
      "he": "תֵּל אָבִיב",
-     "translit": "Tel Aviv",
+     "translit": "Tel Avív",
      "pt": "Tel Aviv"
     },
     {
@@ -1434,17 +1434,17 @@
     },
     {
      "he": "עִבְרִית",
-     "translit": "ivrit",
+     "translit": "ivrít",
      "pt": "hebraico"
     },
     {
      "he": "פּוֹרְטוּגָזִית",
-     "translit": "portugezit",
+     "translit": "portugezít",
      "pt": "português"
     },
     {
      "he": "אַנְגְּלִית",
-     "translit": "anglit",
+     "translit": "anglít",
      "pt": "inglês"
     },
     {
@@ -1475,55 +1475,55 @@
      {
       "quem": "Noa",
       "he": "טוֹם, אֵיפֹה אַתָּה גָּר?",
-      "translit": "Tom, eifo atá gar?",
+      "translit": "Tom, éifo atá gar?",
       "pt": "Tom, onde você mora?"
      },
      {
       "quem": "Tom",
       "he": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?",
-      "translit": "aní gar biYerushaláyim. veat?",
+      "translit": "aní gar biYerushaláyim. veát?",
       "pt": "Moro em Jerusalém. E você?"
      },
      {
       "quem": "Noa",
       "he": "אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד?",
-      "translit": "aní gará beTel Aviv. atá oved?",
+      "translit": "aní gará beTél Avív. atá ovéd?",
       "pt": "Moro em Tel Aviv. Você trabalha?"
      },
      {
       "quem": "Tom",
       "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ?",
-      "translit": "lo, aní lomed ivrit. veat?",
+      "translit": "lo, aní loméd ivrít. veát?",
       "pt": "Não, estudo hebraico. E você?"
      },
      {
       "quem": "Noa",
       "he": "אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב!",
-      "translit": "aní ovédet. atá medaber ivrit tov!",
+      "translit": "aní ovédet. atá medabér ivrít tov!",
       "pt": "Eu trabalho. Você fala hebraico bem!"
      },
      {
       "quem": "Tom",
       "he": "תּוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
-      "translit": "todá! aní medaber ktsat.",
+      "translit": "todá! aní medabér ktsat.",
       "pt": "Obrigado! Falo um pouco."
      },
      {
       "quem": "Noa",
       "he": "דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית.",
-      "translit": "Dani uMaya gam lomdim ivrit.",
+      "translit": "Dáni uMáya gam lomdím ivrít.",
       "pt": "O Dani e a Maya também estudam hebraico."
      },
      {
       "quem": "Tom",
       "he": "הֵם גָּרִים בִּירוּשָׁלַיִם?",
-      "translit": "hem garim biYerushaláyim?",
+      "translit": "hem garím biYerushaláyim?",
       "pt": "Eles moram em Jerusalém?"
      },
      {
       "quem": "Noa",
       "he": "לֹא, הֵם גָּרִים בְּתֵל אָבִיב.",
-      "translit": "lo, hem garim beTel Aviv.",
+      "translit": "lo, hem garím beTél Avív.",
       "pt": "Não, eles moram em Tel Aviv."
      }
     ],
@@ -1821,7 +1821,7 @@
     },
     {
      "he": "בֵּיצִים",
-     "translit": "beitsim",
+     "translit": "beitsím",
      "pt": "ovos"
     },
     {
@@ -1831,7 +1831,7 @@
     },
     {
      "he": "תַּפּוּחִים",
-     "translit": "tapuchim",
+     "translit": "tapuchím",
      "pt": "maçãs"
     },
     {
@@ -1841,12 +1841,12 @@
     },
     {
      "he": "סָלָט",
-     "translit": "salat",
+     "translit": "salát",
      "pt": "salada"
     },
     {
      "he": "חָלָב",
-     "translit": "chalav",
+     "translit": "chaláv",
      "pt": "leite"
     },
     {
@@ -1866,12 +1866,12 @@
     },
     {
      "he": "מִטְבָּח",
-     "translit": "mitbach",
+     "translit": "mitbách",
      "pt": "cozinha"
     },
     {
      "he": "מְקָרֵר",
-     "translit": "mekarer",
+     "translit": "mekarér",
      "pt": "geladeira"
     },
     {
@@ -1881,7 +1881,7 @@
     },
     {
      "he": "עִתּוֹן",
-     "translit": "iton",
+     "translit": "itón",
      "pt": "jornal"
     }
    ],
@@ -1911,7 +1911,7 @@
      {
       "quem": "Dani",
       "he": "מַיָּה, מָה אַתְּ אוֹכֶלֶת?",
-      "translit": "Maya, ma at ochélet?",
+      "translit": "Máya, ma at ochélet?",
       "pt": "Maya, o que você está comendo?"
      },
      {
@@ -1923,13 +1923,13 @@
      {
       "quem": "Dani",
       "he": "כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב?",
-      "translit": "ken, todá. eifo hechalav?",
+      "translit": "ken, todá. éifo hechaláv?",
       "pt": "Quero, obrigado. Onde está o leite?"
      },
      {
       "quem": "Maya",
       "he": "הֶחָלָב בַּמְּקָרֵר.",
-      "translit": "hechalav bamekarer.",
+      "translit": "hechaláv bamekarér.",
       "pt": "O leite está na geladeira."
      },
      {
@@ -1947,7 +1947,7 @@
      {
       "quem": "Dani",
       "he": "וּמִי קוֹנֶה אֶת הַלֶּחֶם?",
-      "translit": "umi koné et haléchem?",
+      "translit": "umí koné et haléchem?",
       "pt": "E quem compra o pão?"
      },
      {
@@ -2195,22 +2195,22 @@
     },
     {
      "he": "אַחִים",
-     "translit": "achim",
+     "translit": "achím",
      "pt": "irmãos"
     },
     {
      "he": "אָחוֹת",
-     "translit": "achot",
+     "translit": "achót",
      "pt": "irmã"
     },
     {
      "he": "אֲחָיוֹת",
-     "translit": "achayot",
+     "translit": "achayót",
      "pt": "irmãs"
     },
     {
      "he": "הוֹרִים",
-     "translit": "horim",
+     "translit": "horím",
      "pt": "pais (pai e mãe)"
     },
     {
@@ -2225,7 +2225,7 @@
     },
     {
      "he": "סַבָּא",
-     "translit": "saba",
+     "translit": "sába",
      "pt": "avô"
     },
     {
@@ -2255,12 +2255,12 @@
     },
     {
      "he": "חָתוּל",
-     "translit": "chatul",
+     "translit": "chatúl",
      "pt": "gato"
     },
     {
      "he": "חֵיפָה",
-     "translit": "Cheifa",
+     "translit": "Cháifa",
      "pt": "Haifa"
     },
     {
@@ -2315,7 +2315,7 @@
     },
     {
      "he": "שֶׁלִּי",
-     "translit": "sheli",
+     "translit": "shelí",
      "pt": "meu, minha"
     },
     {
@@ -2325,17 +2325,17 @@
     },
     {
      "he": "שֶׁלָּךְ",
-     "translit": "shelach",
+     "translit": "shelách",
      "pt": "seu, sua (a ela)"
     },
     {
      "he": "שֶׁלּוֹ",
-     "translit": "shelo",
+     "translit": "sheló",
      "pt": "dele"
     },
     {
      "he": "שֶׁלָּהּ",
-     "translit": "shela",
+     "translit": "shelá",
      "pt": "dela"
     },
     {
@@ -2370,13 +2370,13 @@
      {
       "quem": "Tom",
       "he": "נֹעָה, יֵשׁ לָךְ אַחִים?",
-      "translit": "Noa, yesh lach achim?",
+      "translit": "Nóa, yesh lach achím?",
       "pt": "Noa, você tem irmãos?"
      },
      {
       "quem": "Noa",
       "he": "כֵּן, יֵשׁ לִי אָח וְאָחוֹת.",
-      "translit": "ken, yesh li ach veachot.",
+      "translit": "ken, yesh li ach veachót.",
       "pt": "Tenho, um irmão e uma irmã."
      },
      {
@@ -2388,25 +2388,25 @@
      {
       "quem": "Noa",
       "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
-      "translit": "ze Eitan, haach sheli. hu gar beCheifa.",
+      "translit": "ze Eitán, haách shelí. hu gar beCháifa.",
       "pt": "Este é o Eitan, o meu irmão. Ele mora em Haifa."
      },
      {
       "quem": "Tom",
       "he": "וְיֵשׁ לָךְ כֶּלֶב?",
-      "translit": "veyesh lach kélev?",
+      "translit": "veyésh lach kélev?",
       "pt": "E você tem cachorro?"
      },
      {
       "quem": "Noa",
       "he": "לֹא, אֵין לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ?",
-      "translit": "lo, ein li kélev. yesh li chatul! ulechá?",
+      "translit": "lo, ein li kélev. yesh li chatúl! ulechá?",
       "pt": "Não, não tenho cachorro. Tenho um gato! E você?"
      },
      {
       "quem": "Tom",
       "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל.",
-      "translit": "ein li chatul. aval lahorim sheli yesh kélev gadol.",
+      "translit": "ein li chatúl. avál lahorím shelí yesh kélev gadól.",
       "pt": "Não tenho gato. Mas os meus pais têm um cachorro grande."
      }
     ],
@@ -2418,7 +2418,7 @@
      },
      {
       "he": "אֵיתָן",
-      "translit": "Eitan",
+      "translit": "Eitán",
       "pt": "Eitan (nome)"
      }
     ]
@@ -2631,7 +2631,7 @@
     },
     {
      "he": "אַחַת",
-     "translit": "achat",
+     "translit": "achát",
      "pt": "1"
     },
     {
@@ -2641,7 +2641,7 @@
     },
     {
      "he": "שָׁלוֹשׁ",
-     "translit": "shalosh",
+     "translit": "shalósh",
      "pt": "3"
     },
     {
@@ -2651,7 +2651,7 @@
     },
     {
      "he": "חָמֵשׁ",
-     "translit": "chamesh",
+     "translit": "chamésh",
      "pt": "5"
     },
     {
@@ -2676,12 +2676,12 @@
     },
     {
      "he": "עֶשֶׂר",
-     "translit": "éser",
+     "translit": "ésser",
      "pt": "10"
     },
     {
      "he": "אַחַת־עֶשְׂרֵה",
-     "translit": "achat-esré",
+     "translit": "achát-esré",
      "pt": "11"
     },
     {
@@ -2701,7 +2701,7 @@
     },
     {
      "he": "חֲמֵשׁ־עֶשְׂרֵה",
-     "translit": "chamesh-esré",
+     "translit": "chamésh-esré",
      "pt": "15"
     },
     {
@@ -2726,42 +2726,42 @@
     },
     {
      "he": "עֶשְׂרִים",
-     "translit": "esrim",
+     "translit": "esrím",
      "pt": "20"
     },
     {
      "he": "שְׁלוֹשִׁים",
-     "translit": "shloshim",
+     "translit": "shloshím",
      "pt": "30"
     },
     {
      "he": "אַרְבָּעִים",
-     "translit": "arbaim",
+     "translit": "arbaím",
      "pt": "40"
     },
     {
      "he": "חֲמִשִּׁים",
-     "translit": "chamishim",
+     "translit": "chamishím",
      "pt": "50"
     },
     {
      "he": "שִׁשִּׁים",
-     "translit": "shishim",
+     "translit": "shishím",
      "pt": "60"
     },
     {
      "he": "שִׁבְעִים",
-     "translit": "shivim",
+     "translit": "shivím",
      "pt": "70"
     },
     {
      "he": "שְׁמוֹנִים",
-     "translit": "shmonim",
+     "translit": "shmoním",
      "pt": "80"
     },
     {
      "he": "תִּשְׁעִים",
-     "translit": "tishim",
+     "translit": "tishím",
      "pt": "90"
     },
     {
@@ -2771,17 +2771,17 @@
     },
     {
      "he": "עֶשְׂרִים וְאַחַת",
-     "translit": "esrim veachat",
+     "translit": "esrím veachát",
      "pt": "21"
     },
     {
      "he": "כַּמָּה?",
-     "translit": "kama?",
+     "translit": "káma?",
      "pt": "quanto? quantos?"
     },
     {
      "he": "כַּמָּה זֶה עוֹלֶה?",
-     "translit": "kama ze olé?",
+     "translit": "káma ze olé?",
      "pt": "quanto custa?"
     },
     {
@@ -2791,12 +2791,12 @@
     },
     {
      "he": "שְׁקָלִים",
-     "translit": "shkalim",
+     "translit": "shkalím",
      "pt": "shekels"
     },
     {
      "he": "קִילוֹ",
-     "translit": "kilo",
+     "translit": "kílo",
      "pt": "quilo"
     },
     {
@@ -2826,7 +2826,7 @@
     },
     {
      "he": "בְּשָׁעָה…",
-     "translit": "besháa…",
+     "translit": "beshaá…",
      "pt": "às…"
     },
     {
@@ -2851,22 +2851,22 @@
     },
     {
      "he": "סָגוּר",
-     "translit": "sagur",
+     "translit": "sagúr",
      "pt": "fechado"
     },
     {
      "he": "יוֹם רִאשׁוֹן",
-     "translit": "yom rishon",
+     "translit": "yom rishón",
      "pt": "domingo"
     },
     {
      "he": "יוֹם שֵׁנִי",
-     "translit": "yom sheni",
+     "translit": "yom shení",
      "pt": "segunda-feira"
     },
     {
      "he": "יוֹם שְׁלִישִׁי",
-     "translit": "yom shlishi",
+     "translit": "yom shlishí",
      "pt": "terça-feira"
     },
     {
@@ -2876,17 +2876,17 @@
     },
     {
      "he": "יוֹם חֲמִישִׁי",
-     "translit": "yom chamishi",
+     "translit": "yom chamishí",
      "pt": "quinta-feira"
     },
     {
      "he": "יוֹם שִׁשִּׁי",
-     "translit": "yom shishi",
+     "translit": "yom shishí",
      "pt": "sexta-feira"
     },
     {
      "he": "שַׁבָּת",
-     "translit": "shabat",
+     "translit": "shabát",
      "pt": "sábado"
     }
    ],
@@ -2917,31 +2917,31 @@
      {
       "quem": "Dani",
       "he": "סְלִיחָה, כַּמָּה עוֹלָה הַגְּבִינָה?",
-      "translit": "slichá, kama olá hagviná?",
+      "translit": "slichá, káma olá hagviná?",
       "pt": "Com licença, quanto custa o queijo?"
      },
      {
       "quem": "Vendedor",
       "he": "שְׁלוֹשִׁים שֶׁקֶל.",
-      "translit": "shloshim shékel.",
+      "translit": "shloshím shékel.",
       "pt": "Trinta shekels."
      },
      {
       "quem": "Dani",
       "he": "וְהַתַּפּוּחִים?",
-      "translit": "vehatapuchim?",
+      "translit": "vehatapuchím?",
       "pt": "E as maçãs?"
      },
      {
       "quem": "Vendedor",
       "he": "עֶשֶׂר שֶׁקֶל לְקִילוֹ.",
-      "translit": "éser shékel lekilo.",
+      "translit": "ésser shékel lekílo.",
       "pt": "Dez shekels o quilo."
      },
      {
       "quem": "Dani",
       "he": "אֲנִי רוֹצֶה קִילוֹ תַּפּוּחִים, בְּבַקָּשָׁה.",
-      "translit": "aní rotsé kilo tapuchim, bevakashá.",
+      "translit": "aní rotsé kílo tapuchím, bevakashá.",
       "pt": "Quero um quilo de maçãs, por favor."
      },
      {
@@ -2959,7 +2959,7 @@
      {
       "quem": "Vendedor",
       "he": "הַשָּׁעָה אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
-      "translit": "hashaá achat vachétsi. hashuk patúach ad shtáyim.",
+      "translit": "hashaá achát vachétsi. hashúk patúach ad shtáyim.",
       "pt": "É uma e meia. A feira fica aberta até as duas."
      },
      {
@@ -3210,47 +3210,47 @@
     },
     {
      "he": "לָכֶם",
-     "translit": "lachem",
+     "translit": "lachém",
      "pt": "para vocês (eles)"
     },
     {
      "he": "לָכֶן",
-     "translit": "lachen",
+     "translit": "lachén",
      "pt": "para vocês (elas)"
     },
     {
      "he": "לָהֶם",
-     "translit": "lahem",
+     "translit": "lahém",
      "pt": "para eles"
     },
     {
      "he": "לָהֶן",
-     "translit": "lahen",
+     "translit": "lahén",
      "pt": "para elas"
     },
     {
      "he": "שֶׁלָּכֶם",
-     "translit": "shelachem",
+     "translit": "shelachém",
      "pt": "de vocês (eles)"
     },
     {
      "he": "שֶׁלָּכֶן",
-     "translit": "shelachen",
+     "translit": "shelachén",
      "pt": "de vocês (elas)"
     },
     {
      "he": "שֶׁלָּהֶם",
-     "translit": "shelahem",
+     "translit": "shelahém",
      "pt": "deles"
     },
     {
      "he": "שֶׁלָּהֶן",
-     "translit": "shelahen",
+     "translit": "shelahén",
      "pt": "delas"
     },
     {
      "he": "אִתִּי",
-     "translit": "iti",
+     "translit": "ití",
      "pt": "comigo"
     },
     {
@@ -3260,17 +3260,17 @@
     },
     {
      "he": "אִתָּךְ",
-     "translit": "itach",
+     "translit": "itách",
      "pt": "contigo (f)"
     },
     {
      "he": "אִתּוֹ",
-     "translit": "ito",
+     "translit": "itó",
      "pt": "com ele"
     },
     {
      "he": "אִתָּהּ",
-     "translit": "ita",
+     "translit": "itá",
      "pt": "com ela"
     },
     {
@@ -3285,7 +3285,7 @@
     },
     {
      "he": "מָתַי?",
-     "translit": "matai?",
+     "translit": "matái?",
      "pt": "quando?"
     },
     {
@@ -3295,22 +3295,22 @@
     },
     {
      "he": "אֵיךְ קוֹרְאִים לְךָ?",
-     "translit": "eich korim lechá?",
+     "translit": "eich korím lechá?",
      "pt": "como você se chama? (a ele)"
     },
     {
      "he": "אֵיךְ קוֹרְאִים לָךְ?",
-     "translit": "eich korim lach?",
+     "translit": "eich korím lach?",
      "pt": "como você se chama? (a ela)"
     },
     {
      "he": "קוֹרְאִים לִי…",
-     "translit": "korim li…",
+     "translit": "korím li…",
      "pt": "eu me chamo…"
     },
     {
      "he": "מִסְפָּר",
-     "translit": "mispar",
+     "translit": "mispár",
      "pt": "número"
     },
     {
@@ -3355,43 +3355,43 @@
      {
       "quem": "Maya",
       "he": "דָּנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִּי.",
-      "translit": "Dani, zot Shira. hi lomédet iti.",
+      "translit": "Dáni, zot Shíra. hi lomédet ití.",
       "pt": "Dani, esta é a Shira. Ela estuda comigo."
      },
      {
       "quem": "Dani",
       "he": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְּ?",
-      "translit": "naim meod, Shira! meeifo at?",
+      "translit": "naím meód, Shíra! meéifo at?",
       "pt": "Muito prazer, Shira! De onde você é?"
      },
      {
       "quem": "Shira",
       "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָּרָה בְּתֵל אָבִיב.",
-      "translit": "aní meCheifa, aval aní gará beTel Aviv.",
+      "translit": "aní meCháifa, avál aní gará beTél Avív.",
       "pt": "Sou de Haifa, mas moro em Tel Aviv."
      },
      {
       "quem": "Dani",
       "he": "יֵשׁ לָךְ מִשְׁפָּחָה בְּחֵיפָה?",
-      "translit": "yesh lach mishpachá beCheifa?",
+      "translit": "yesh lach mishpachá beCháifa?",
       "pt": "Você tem família em Haifa?"
      },
      {
       "quem": "Shira",
       "he": "כֵּן, הַהוֹרִים שֶׁלִּי גָּרִים שָׁם.",
-      "translit": "ken, hahorim sheli garim sham.",
+      "translit": "ken, hahorím shelí garím sham.",
       "pt": "Sim, os meus pais moram lá."
      },
      {
       "quem": "Maya",
       "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?",
-      "translit": "anáchnu shotot kafé. atá rotsé kafé itánu?",
+      "translit": "anáchnu shotót kafé. atá rotsé kafé itánu?",
       "pt": "Nós vamos tomar um café. Você quer café com a gente?"
      },
      {
       "quem": "Dani",
       "he": "כֵּן! אֲבָל רַק עַד שָׁלוֹשׁ. בְּשָׁלוֹשׁ אֲנִי עוֹבֵד.",
-      "translit": "ken! aval rak ad shalosh. beshalosh aní oved.",
+      "translit": "ken! avál rak ad shalósh. beshalósh aní ovéd.",
       "pt": "Quero! Mas só até as três. Às três eu trabalho."
      },
      {
@@ -3403,31 +3403,31 @@
      {
       "quem": "Dani",
       "he": "שִׁירָה, מָה מִסְפַּר הַטֶּלֶפוֹן שֶׁלָּךְ?",
-      "translit": "Shira, ma mispar hatélefon shelach?",
+      "translit": "Shíra, ma mispár hatélefon shelách?",
       "pt": "Shira, qual é o número do seu telefone?"
      },
      {
       "quem": "Shira",
       "he": "אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם…",
-      "translit": "éfes chamishim ushtáyim…",
+      "translit": "éfes chamishím ushtáyim…",
       "pt": "Zero cinquenta e dois…"
      },
      {
       "quem": "Maya",
       "he": "דָּנִי!",
-      "translit": "Dani!",
+      "translit": "Dáni!",
       "pt": "Dani!"
      }
     ],
     "glossario": [
      {
       "he": "מִסְפַּר הַטֶּלֶפוֹן",
-      "translit": "mispar hatélefon",
+      "translit": "mispár hatélefon",
       "pt": "o número do telefone (expressão fixa)"
      },
      {
       "he": "שִׁירָה",
-      "translit": "Shira",
+      "translit": "Shíra",
       "pt": "Shira (nome)"
      }
     ]
