@@ -12,6 +12,7 @@
  *     costuma ser a primeira, e mandar as opções na ordem do arquivo seria
  *     mandar o gabarito;
  *   · o "montar" volta como a ordem das peças embaralhadas, pelo mesmo motivo;
+ *     as outras ordens aceitas (`outras`) ficam só no servidor;
  *   · a escrita é conferida como no curso inteiro: sem nikud, sem forma
  *     final, sem espaço nem pontuação, só a sequência de letras (o mesmo que
  *     hebraicoDigitadoCerto; um teste confere que os dois concordam).
@@ -22,7 +23,7 @@ export type ItemDeProva = {
   q?: string; pt?: string; he?: string; audioId?: string;
   opcoes?: string[]; certa?: number | boolean; respostas?: string[];
   antes?: string; depois?: string; errada?: string; palavras?: string[];
-  linhas?: [string, string][]; porque?: string;
+  outras?: string[][]; linhas?: [string, string][]; porque?: string;
 };
 export type ParteDaProva = {
   id: string; tituloPt: string; unidades: number[]; itens: ItemDeProva[];
@@ -151,7 +152,8 @@ function acertou(it: ItemDeProva, s: Sorteado, r: Resposta): boolean {
   if (it.t === 'montar') {
     const n = it.palavras!.length;
     if (!Array.isArray(r) || r.length !== n || new Set(r).size !== n || r.some(k => !Number.isInteger(k) || k < 0 || k >= n)) return false;
-    return r.map(k => it.palavras![s.perm![k]!]).join(' ') === it.palavras!.join(' ');
+    const montada = r.map(k => it.palavras![s.perm![k]!]).join(' ');
+    return [it.palavras!, ...(it.outras ?? [])].some(o => o.join(' ') === montada);
   }
   return false;
 }

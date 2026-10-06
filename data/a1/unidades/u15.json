@@ -3,7 +3,7 @@
   "revisado": false,
   "tituloPt": "Quando? Meses, datas e o tempo",
   "objetivoPt": "Dizer em que mês e em que dia é alguma coisa, falar de amanhã e da semana que vem, e conversar sobre o tempo (calor, frio, chuva, graus).",
-  "situacaoPt": "O Dani quer organizar uma festa surpresa para a Noa e precisa descobrir quando é o aniversário dela. A conversa acaba no tempo, e numa surpresa para a Noa também.",
+  "situacaoPt": "O Dani quer organizar uma festa para a Noa e precisa descobrir quando é o aniversário dela. A conversa acaba no tempo, e numa surpresa para a Noa.",
   "palavras": [
     {
       "he": "יָנוּאָר",
@@ -107,12 +107,12 @@
     },
     {
       "he": "גֶּשֶׁם",
-      "translit": "géshem",
+      "translit": "guéshem",
       "pt": "chuva"
     },
     {
       "he": "יוֹרֵד גֶּשֶׁם",
-      "translit": "yored géshem",
+      "translit": "yored guéshem",
       "pt": "está chovendo"
     },
     {
@@ -184,10 +184,10 @@
   "gramatica": [
     {
       "tituloPt": "Em junho, no verão",
-      "textoPt": "\"Em\" + mês é בְּ grudado: בְּיוּנִי, בְּמַאי, בְּאוֹגוּסְט. As estações levam artigo: בַּקַּיִץ, בַּחֹרֶף, בָּאָבִיב, בַּסְּתָו. Os nomes dos meses são os mesmos do português, com sotaque israelense.",
+      "textoPt": "\"Em\" + mês é בְּ grudado: בְּיוּנִי, בְּמַאי, בְּאוֹגוּסְט. As estações levam artigo: בַּקַּיִץ, בַּחֹרֶף, בָּאָבִיב, בַּסְּתָו. Os nomes dos meses são os internacionais, parecidos com os do português, com sotaque israelense.",
       "exemplos": [
         {
-          "he": "יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּמַרְץ.",
+          "he": "יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּמֶרְץ.",
           "pt": "O meu aniversário é em março."
         },
         {
@@ -251,13 +251,13 @@
       {
         "quem": "Dani",
         "he": "וְאֵין גֶּשֶׁם?",
-        "translit": "veein géshem?",
+        "translit": "veein guéshem?",
         "pt": "E não chove?"
       },
       {
         "quem": "Noa",
         "he": "לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף.",
-        "translit": "lo. beYisrael yored géshem rak bachóref.",
+        "translit": "lo. beYisrael yored guéshem rak bachóref.",
         "pt": "Não. Em Israel só chove no inverno."
       },
       {
@@ -336,7 +336,7 @@
       },
       {
         "he": "חֵיפָה: גֶּשֶׁם, 20 מַעֲלוֹת",
-        "translit": "Cheifa: géshem, esrim maalót",
+        "translit": "Cháifa: guéshem, esrim maalót",
         "pt": "Haifa: chuva, 20 graus"
       },
       {
@@ -555,7 +555,7 @@
           0
         ],
         [
-          "סְוֶודֶר וּמְעִיל",
+          "סְוֶדֶר וּמְעִיל",
           1
         ],
         [
@@ -573,7 +573,8 @@
       "q": "Ache o erro e escreva a frase certa: \"Hoje faz calor.\"",
       "errada": "הַיּוֹם הוּא חַם.",
       "respostas": [
-        "היום חם"
+        "היום חם",
+        "חם היום"
       ],
       "porque": "O tempo não tem sujeito: הַיּוֹם חַם."
     },
@@ -582,7 +583,8 @@
       "q": "Uma mulher quer dizer que está com frio. Ache o erro e escreva a frase certa.",
       "errada": "אֲנִי קָרָה.",
       "respostas": [
-        "קר לי"
+        "קר לי",
+        "לי קר"
       ],
       "porque": "\"Estou com frio\" é קַר לִי, igual para homem e mulher."
     },
@@ -593,6 +595,33 @@
         "בַּחֹרֶף",
         "קַר",
         "בִּירוּשָׁלַיִם"
+      ],
+      "outras": [
+        [
+          "בִּירוּשָׁלַיִם",
+          "קַר",
+          "בַּחֹרֶף"
+        ],
+        [
+          "קַר",
+          "בִּירוּשָׁלַיִם",
+          "בַּחֹרֶף"
+        ],
+        [
+          "בַּחֹרֶף",
+          "בִּירוּשָׁלַיִם",
+          "קַר"
+        ],
+        [
+          "בִּירוּשָׁלַיִם",
+          "בַּחֹרֶף",
+          "קַר"
+        ],
+        [
+          "קַר",
+          "בַּחֹרֶף",
+          "בִּירוּשָׁלַיִם"
+        ]
       ]
     },
     {
@@ -602,7 +631,15 @@
         "יוֹם",
         "הַהֻלֶּדֶת",
         "שֶׁלִּי",
-        "בְּמַרְץ"
+        "בְּמֶרְץ"
+      ],
+      "outras": [
+        [
+          "בְּמֶרְץ",
+          "יוֹם",
+          "הַהֻלֶּדֶת",
+          "שֶׁלִּי"
+        ]
       ]
     },
     {

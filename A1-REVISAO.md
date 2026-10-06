@@ -28,13 +28,13 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Objetivo:** Pronunciar os sons que mais confundem brasileiros, saber onde cai a força da palavra, e reconhecer as expressões que você ouve no primeiro dia em Israel.
 
-**Nota:** Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA.
+**Nota:** Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA. Na transliteração (as letras latinas que acompanham o hebraico): s é sempre S, nunca Z (beséder); m e n no fim da palavra são consoantes e não nasalizam (shalom termina com a boca fechada no M); ch é o R raspado do ח e do כ, nunca o CH de "chave"; r é sempre o ר, feito no fundo da boca, mesmo no começo da palavra.
 
 **A situação:** Primeira manhã em Tel Aviv. O Dani, que é brasileiro, entra num café perto do hostel. A Maya trabalha no balcão. Ele já sabe ler as letras; agora precisa fazer o hebraico sair da boca do jeito que um israelense entende.
 
 **Em Israel · Sababa, yalla e o hebraico da rua:** סַבָּבָּה e יַאלְלָה vieram do árabe e todo israelense usa, de criança a ministro, mas entre conhecidos e em situação informal. No banco ou com um médico, prefira בְּסֵדֶר e תּוֹדָה. E יַאלְלָה muda de sentido com o tom: "vamos!", "anda logo!" ou "bom, tchau".
 
-**Em Israel · Shabat shalom:** O shabat começa na sexta ao pôr do sol e vai até sábado à noite. Desde a sexta de manhã você ouve שַׁבָּת שָׁלוֹם no mercado, na padaria, no trabalho, de gente religiosa ou não. É um "bom fim de semana" com mais peso.
+**Em Israel · Shabat shalom:** O shabat começa na sexta ao pôr do sol e vai até sábado à noite. De sexta (já de manhã) até sábado você ouve שַׁבָּת שָׁלוֹם no mercado, na padaria, no trabalho, de gente religiosa ou não. É um "bom fim de semana" com mais peso.
 
 **Curiosidade · Por que da direita para a esquerda?:** O hebraico herdou a direção da escrita fenícia, como o árabe e o aramaico. O nosso alfabeto também descende do fenício, passando pelo grego, e os gregos antigos chegaram a escrever da direita para a esquerda, até que a direção virou. O hebraico ficou com a original.
 
@@ -54,52 +54,52 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - כֵּן (ken) = sim
 - לֹא (lo) = não
 - בְּסֵדֶר (beséder) = tudo bem, ok
-- מַה נִשְׁמָע? (ma nishmá?) = e aí? tudo bem? (informal)
+- מַה נִּשְׁמָע? (ma nishmá?) = e aí? tudo bem? (informal)
 - סַבָּבָּה (sabába) = beleza, tranquilo (informal)
 - יַאלְלָה (yála) = vamos! bora! (informal)
 - רֶגַע (réga) = um momento, espera
 - יוֹפִי (yófi) = ótimo, que bom
 - עֶרֶב טוֹב (érev tov) = boa noite (ao chegar)
 - לַיְלָה טוֹב (láila tov) = boa noite (ao ir dormir)
-- שַׁבָּת שָׁלוֹם (shabát shalóm) = bom shabat (de sexta à tarde a sábado)
+- שַׁבָּת שָׁלוֹם (shabat shalom) = bom shabat (de sexta, já de manhã, até sábado)
 - חַג שָׂמֵחַ (chag saméach) = boas festas (num feriado)
 - בְּתֵאָבוֹן (beteavón) = bom apetite
 - לְחַיִּים (lechaím) = saúde! (no brinde)
-- מַזָּל טוֹב (mazál tov) = parabéns
+- מַזָּל טוֹב (mazál tov) = parabéns (na fala, muita gente diz mázal tov)
 
 **Gramática**
 
-1. **ח e כ: o R soprado do carioca.** O ח e o כ sem ponto (também o ך do fim) têm o MESMO som: o R soprado que o carioca usa em "rato" e "carro", feito no fundo da boca. É o som de לְחַיִּים e de חַג.
+1. **ח e כ: o R soprado do carioca.** O ח e o כ sem ponto (também o ך do fim) têm o MESMO som: o R carioca de "rato" e "carro" BEM raspado, no fundo da boca (se o seu R de "carro" for só um sopro, como H, raspe mais). É o som de לְחַיִּים e de חַג.
    - Erro comum: Quem não fala com esse R tende a ler ח como K, ou como um H fraco. Não é nenhum dos dois: é um sopro raspado no fundo da boca, e é ele que separa חַג (feriado) de uma palavra qualquer.
    - Exemplo: לְחַיִּים = le-CHA-im: saúde!
    - Exemplo: חַג שָׂמֵחַ = chag sa-MÉ-ach: boas festas
 2. **ר: o R francês, com a voz ligada.** O ר israelense é feito no mesmo lugar do ח, no fundo da boca, mas com a voz ligada: é o R de "Paris" dito por um francês. Ouça a diferença em רֶגַע (réga) e em תּוֹדָה רַבָּה (todá rabá).
    - Erro comum: Três hábitos do português atrapalham: o R batido de "caro" (soa estrangeiro), o R caipira de "porta" (soa mais estrangeiro ainda), e o R soprado do carioca, que em hebraico é outra letra: o ח.
 3. **ה no começo da palavra: um sopro de verdade.** O ה no começo da palavra se pronuncia: um H leve, de ar saindo, como o H do inglês "hello". No fim da palavra (תּוֹדָה, רַבָּה) ele não soa.
-   - Erro comum: Em português o H é sempre mudo ("hotel" é "otel"). Em hebraico, apagar o ה do começo muda a palavra: הִנֵּה é "hiné" (aqui está), não "iné".
+   - Erro comum: Em português o H é sempre mudo ("hotel" é "otel"). Em hebraico, apagar o ה do começo soa estrangeiro e pode confundir: diga "hiné" (הִנֵּה, aqui está), não "iné". (Na fala rápida, o israelense às vezes engole o ה; mas quem aprende deve pronunciá-lo.)
 4. **א e ע: só a vogal.** Na fala da maioria dos israelenses, א e ע não têm som próprio: seguram a vogal, e é a vogal que se ouve. עֶרֶב soa "érev", como se não houvesse letra antes do E.
    - Erro comum: Como soam igual, o ouvido não ajuda a escrever: quem decide se é א ou ע é a memória da palavra, como "cassa" e "caça" em português.
 5. **צ: TS num golpe só.** O צ é T e S colados, como o fim de "pizza". Por isso פִּיצָה, em hebraico, se escreve com צ.
    - Erro comum: No começo da palavra o português não usa TS, e a boca simplifica: vira S ou TCH. Diga "pizza", isole o "tsa" do fim, e leve para o começo.
 6. **ת, ט e ד: T e D secos, nunca TCH e DJ.** תִּי é "ti", e דִּי é "di": a língua bate atrás dos dentes e sai, sem chiar.
-   - Erro comum: Em boa parte do Brasil, T e D antes de I viram TCH e DJ ("tia", "dia"). O hábito é automático. Em hebraico isso muda a palavra: preste atenção nas sílabas com I.
-7. **A força da palavra: quase sempre na última sílaba.** Em hebraico, a sílaba forte é quase sempre a última: to-DÁ, sha-LÓM, be-va-ka-SHÁ. A exceção que mais aparece no começo são as palavras com duas vogais E seguidas, como בֹּקֶר, עֶרֶב, רֶגַע, סֵדֶר: essas têm a força na penúltima (BÓ-ker, É-rev, RÉ-ga, be-SÉ-der).
+   - Erro comum: Em boa parte do Brasil, T e D antes de I viram TCH e DJ ("tia", "dia"). O hábito é automático. Em hebraico isso soa estrangeiro: preste atenção nas sílabas com I.
+7. **A força da palavra: em geral na última sílaba.** Na maioria das palavras, a sílaba forte é a última: to-DÁ, sha-LOM, be-va-ka-SHÁ. Mas muitas palavras do dia a dia têm a força na penúltima. O grupo mais comum é o de בֹּקֶר, עֶרֶב, סֵדֶר, רֶגַע: duas sílabas, a última com ֶ (ou com ַ quando há ח, ע ou ה, como em רֶגַע). Nessas, a força vai na penúltima: BÓ-ker, É-rev, be-SÉ-der, RÉ-ga. Também têm a força na penúltima as palavras que terminam em ־ַיִם e ־ַיִת (máyim, báyit), gírias como yála e sabába, e muitas palavras estrangeiras (télefon). Na transliteração, o acento mostra a sílaba forte sempre que o português leria outra.
    - Erro comum: O português põe a força na penúltima, e o ouvido brasileiro lê תּוֹדָה como a palavra "toda" (TÓ-da). Em hebraico é to-DÁ. O mesmo com מוֹרָה (professora): é mo-RÁ, não "mora".
 
 **Diálogo: O primeiro café em Tel Aviv**
 
-- Maya: בֹּקֶר טוֹב! מַה נִשְׁמָע? (bóker tov! ma nishmá?) = Bom dia! Tudo bem?
+- Maya: בֹּקֶר טוֹב! מַה נִּשְׁמָע? (bóker tov! ma nishmá?) = Bom dia! Tudo bem?
 - Dani: בְּסֵדֶר, תּוֹדָה. (beséder, todá.) = Tudo bem, obrigado.
 - Maya: קָפֶה? (kafé?) = Café?
 - Dani: כֵּן, בְּבַקָּשָׁה. (ken, bevakashá.) = Sim, por favor.
 - Maya: רֶגַע… הִנֵּה! (réga… hiné!) = Um momento… aqui está!
 - Dani: תּוֹדָה רַבָּה! (todá rabá!) = Muito obrigado!
 - Maya: בְּבַקָּשָׁה. בְּתֵאָבוֹן! (bevakashá. beteavón!) = De nada. Bom apetite!
-- Dani: יוֹפִי. יַאלְלָה, שָׁלוֹם! (yófi. yála, shalóm!) = Ótimo. Bom, tchau!
+- Dani: יוֹפִי. יַאלְלָה, שָׁלוֹם! (yófi. yála, shalom!) = Ótimo. Bom, tchau!
 - glossário: קָפֶה (kafé) = café
 - glossário: בְּבַקָּשָׁה (bevakashá) = por favor / de nada
 - glossário: הִנֵּה (hiné) = aqui está
-- glossário: שָׁלוֹם (shalóm) = olá / tchau
+- glossário: שָׁלוֹם (shalom) = olá / tchau
 - nota: שָׁלוֹם serve para chegar e para ir embora. E יַאלְלָה, no fim de uma conversa, quer dizer "bom, vou indo".
 
 **Leitura: Mensagens no grupo da família**
@@ -107,10 +107,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - בֹּקֶר טוֹב! (bóker tov!) = Bom dia!
 - מַזָּל טוֹב לְנֹעָה! (mazál tov le-Nóa!) = Parabéns para a Noa!
 - תּוֹדָה רַבָּה! (todá rabá!) = Muito obrigada!
-- שַׁבָּת שָׁלוֹם לְכֻלָּם! (shabát shalóm lechulám!) = Bom shabat para todos!
+- שַׁבָּת שָׁלוֹם לְכֻלָּם! (shabat shalom lechulám!) = Bom shabat para todos!
 - P1. escolha: O que aconteceu com a Noa? → **Algo bom: ela recebeu os parabéns** / Ela ficou doente / Ela foi viajar (מַזָּל טוֹב é o que se diz numa boa notícia: aniversário, casamento, um filho, um emprego novo.)
-- P2. escolha: Em que dia foi mandada a última mensagem, provavelmente? → **Na sexta-feira** / Na segunda-feira / Na quarta-feira (שַׁבָּת שָׁלוֹם se diz a partir da sexta à tarde, quando o shabat começa.)
-- P3. V ou F: A Noa agradeceu. → **Verdadeiro** (תּוֹדָה רַבָּה é "muito obrigado": é a resposta da Noa aos parabéns.)
+- P2. escolha: Em que dia foi mandada a última mensagem, provavelmente? → **Na sexta-feira** / Na segunda-feira / Na quarta-feira (שַׁבָּת שָׁלוֹם se diz de sexta (já de manhã) até sábado: o shabat começa na sexta ao pôr do sol.)
+- P3. V ou F: Alguém agradeceu os parabéns. → **Verdadeiro** (תּוֹדָה רַבָּה é "muito obrigado": é a resposta aos parabéns (pelo "obrigada", foi a própria Noa).)
 
 **Exercícios**
 
@@ -118,19 +118,19 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 2. escolha: Em qual destas aparece o som soprado do ח? → **לְחַיִּים** / רֶגַע / יַאלְלָה (לְחַיִּים: le-CHA-im. O ח está logo depois do לְ.)
 3. V ou F: O ה no começo da palavra é mudo, como o H de "hotel". → **Falso** (No começo da palavra o ה se pronuncia: הִנֵּה é "hiné". Mudo é só no fim (תּוֹדָה).)
 4. escolha: Como se lê a sílaba תִּי? → **ti, com o T seco** / tchi, como em "tia" se escolher "tchi, como em "tia"": Esse é o T do português antes de I. Em hebraico o T não chia: a língua bate atrás dos dentes e sai.
-5. escolha: Onde cai a força em תּוֹדָה? → **to-DÁ** / TÓ-da (Em hebraico a força vai quase sempre na última sílaba.) se escolher "TÓ-da": Quase. TÓ-da é a palavra "toda" do português. Em hebraico a força está no fim: to-DÁ.
-6. escolha: E em בֹּקֶר? → **BÓ-ker** / bo-KÉR (בֹּקֶר é uma das palavras com dois E seguidos (ֶ ֶ): a força vai na penúltima.) se escolher "bo-KÉR": A regra geral seria essa, mas בֹּקֶר é exceção: palavras com dois E seguidos levam a força na penúltima, BÓ-ker.
+5. escolha: Onde cai a força em תּוֹדָה? → **to-DÁ** / TÓ-da (Na maioria das palavras hebraicas, a força vai na última sílaba, e תּוֹדָה é uma delas.) se escolher "TÓ-da": Quase. TÓ-da é a palavra "toda" do português. Em hebraico a força está no fim: to-DÁ.
+6. escolha: E em בֹּקֶר? → **BÓ-ker** / bo-KÉR (בֹּקֶר é do grupo de עֶרֶב e סֵדֶר: duas sílabas, a última com ֶ, e a força vai na penúltima.) se escolher "bo-KÉR": A regra geral seria essa, mas בֹּקֶר é exceção: é do grupo de עֶרֶב e סֵדֶר (duas sílabas, a última com ֶ), que leva a força na penúltima, BÓ-ker.
 7. escolha: O צ de פִּיצָה soa como: → **ts** / s / tch (צ é T e S num golpe só, como o fim de "pizza".) se escolher "s": Quase: falta o T. צ é TS colado. · se escolher "tch": Esse é o som do צ׳, com o sinal: aqui não há sinal nenhum.
 8. V ou F: Para a maioria dos israelenses, א e ע não têm som próprio: o que se ouve é a vogal. → **Verdadeiro** (Por isso עֶרֶב soa "érev".)
 9. escolha: Você chega ao trabalho às 8 da manhã. O que diz? → **בֹּקֶר טוֹב** / עֶרֶב טוֹב / לַיְלָה טוֹב se escolher "עֶרֶב טוֹב": עֶרֶב טוֹב é para quem chega à noite. · se escolher "לַיְלָה טוֹב": לַיְלָה טוֹב é para quando alguém vai dormir.
-10. escolha: Sexta-feira à tarde, a vizinha passa por você. O que ela diz? → **שַׁבָּת שָׁלוֹם** / בְּתֵאָבוֹן / מַזָּל טוֹב (Na sexta, a partir da manhã, todo mundo deseja um bom shabat.)
+10. escolha: Sexta-feira à tarde, a vizinha passa por você. O que ela diz? → **שַׁבָּת שָׁלוֹם** / בְּתֵאָבוֹן / מַזָּל טוֹב (De sexta (já de manhã) até sábado, todo mundo deseja um bom shabat.)
 11. escolha: O garçom põe o prato na mesa e diz: → **בְּתֵאָבוֹן** / לְחַיִּים / לַיְלָה טוֹב se escolher "לְחַיִּים": לְחַיִּים é o brinde, com o copo na mão.
 12. escolha: Uma amiga conta que vai se casar. Você diz: → **מַזָּל טוֹב** / חַג שָׂמֵחַ / רֶגַע se escolher "חַג שָׂמֵחַ": חַג שָׂמֵחַ é para um feriado, como o Pessach ou o Rosh Hashaná.
-13. conversa: Noa: מַה נִשְׁמָע? → **בְּסֵדֶר, תּוֹדָה.** / מַזָּל טוֹב! / בְּתֵאָבוֹן! (מַה נִשְׁמָע? é "tudo bem?"; a resposta de sempre é בְּסֵדֶר.)
+13. conversa: Noa: מַה נִּשְׁמָע? → **בְּסֵדֶר, תּוֹדָה.** / מַזָּל טוֹב! / בְּתֵאָבוֹן! (מַה נִּשְׁמָע? é "tudo bem?"; a resposta de sempre é בְּסֵדֶר.)
 14. conversa: Tom: תּוֹדָה רַבָּה! → **בְּבַקָּשָׁה.** / לְחַיִּים! / שַׁבָּת שָׁלוֹם! (בְּבַקָּשָׁה é "por favor" e também "de nada".)
 15. escolha: A Maya diz רֶגַע. O que ela quer? → **Que você espere um momento** / Agradecer / Se despedir 
 16. ligar: סַבָּבָּה = beleza, tranquilo · יַאלְלָה = vamos! bora! · רֶגַע = um momento · בְּסֵדֶר = tudo bem, ok · יוֹפִי = ótimo
-17. separar (Serve em qualquer situação / Informal, entre conhecidos): תּוֹדָה רַבָּה → Serve em qualquer situação · בֹּקֶר טוֹב → Serve em qualquer situação · סַבָּבָּה → Informal, entre conhecidos · יַאלְלָה → Informal, entre conhecidos · עֶרֶב טוֹב → Serve em qualquer situação · מַה נִשְׁמָע? → Informal, entre conhecidos
+17. separar (Serve em qualquer situação / Informal, entre conhecidos): תּוֹדָה רַבָּה → Serve em qualquer situação · בֹּקֶר טוֹב → Serve em qualquer situação · סַבָּבָּה → Informal, entre conhecidos · יַאלְלָה → Informal, entre conhecidos · עֶרֶב טוֹב → Serve em qualquer situação · מַה נִּשְׁמָע? → Informal, entre conhecidos
 18. intruso: Qual destas NÃO tem o som soprado do ח? → לְחַיִּים / חַג שָׂמֵחַ / **רֶגַע** (רֶגַע começa com ר, o R com a voz ligada. As outras duas têm ח.)
 19. ouvir: [ouve: תּוֹדָה רַבָּה] O que você ouviu? → **Muito obrigado** / Por favor / Tudo bem 
 20. ouvir: [ouve: חַג שָׂמֵחַ] Quando se diz isto? → **Num feriado** / Num brinde / Ao ir dormir 
@@ -138,7 +138,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 22. escrever: "obrigado" → **תודה**
 23. escrever: "bom apetite" → **בתאבון**
 24. escrever: "um momento, espera" → **רגע**
-25. escrever: "bom shabat (de sexta à tarde a sábado)" → **שבת שלום**
+25. escrever: "bom shabat (de sexta, já de manhã, até sábado)" → **שבת שלום**
 26. falar
 
 ### Unidade 9: Como é o seu dia?
@@ -169,8 +169,8 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - יָשֵׁן · יְשֵׁנָה · יְשֵׁנִים · יְשֵׁנוֹת = dormir
 - עָסוּק · עֲסוּקָה · עֲסוּקִים · עֲסוּקוֹת = ocupado
 - בַּצָּהֳרַיִם (batsohoráyim) = ao meio-dia, na hora do almoço
-- אַחֲרֵי הַצָּהֳרַיִם (acharei hatsohoráyim) = à tarde
-- בַּלַּיְלָה (baláila) = de madrugada, tarde da noite
+- אַחֲרֵי הַצָּהֳרַיִם (acharei hatsohoráyim) = à tarde (por escrito, também אַחַר הַצָּהֳרַיִם)
+- בַּלַּיְלָה (baláila) = à noite (mais tarde que o עֶרֶב), de madrugada
 - לִפְנֵי (lifnei) = antes de
 - אַחֲרֵי (acharei) = depois de
 - אַחַר כָּךְ (achar kach) = depois, em seguida
@@ -189,7 +189,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Gramática**
 
-1. **Os verbos de ir e vir, no mesmo desenho de sempre.** Os verbos novos seguem as 4 formas da Unidade 4: homem, mulher, homens, mulheres. Alguns são curtos, de duas letras fortes: קָם, קָמָה, קָמִים, קָמוֹת; בָּא, בָּאָה, בָּאִים, בָּאוֹת. Mesmo curtos, o final é o de sempre: ־ָה, ־ִים, ־וֹת.
+1. **Os verbos de ir e vir, no mesmo desenho de sempre.** Os verbos novos seguem as 4 formas da Unidade 4: homem, mulher, homens, mulheres. Alguns são curtos, de duas letras fortes: קָם, קָמָה, קָמִים, קָמוֹת; בָּא, בָּאָה, בָּאִים, בָּאוֹת. Mesmo curtos, mudam do jeito de sempre no plural (־ִים, ־וֹת). No feminino singular, estes verbos curtos (קָמָה, בָּאָה) e os que terminam em ־ֶה (עוֹשָׂה) levam ־ָה; os verbos do desenho normal continuam com ־ֶת: הוֹלֶכֶת, חוֹזֶרֶת.
    - Erro comum: Uma mulher que fala da própria rotina usa as formas femininas o tempo todo: אֲנִי קָמָה, אֲנִי הוֹלֶכֶת, אֲנִי חוֹזֶרֶת. Esquecer uma só no meio da frase é o erro mais comum nesta unidade.
    - Exemplo: אֲנִי קָמָה בְּשֶׁבַע. = Eu levanto às sete. (mulher)
    - Exemplo: הֵם בָּאִים מְאֻחָר. = Eles chegam tarde.
@@ -213,19 +213,19 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - Noa: אַחֲרֵי הַצָּהֳרַיִם אֲנִי הוֹלֶכֶת לָאוּנִיבֶרְסִיטָה. (acharei hatsohoráyim aní holéchet launiversita.) = À tarde eu vou para a universidade.
 - Tom: וּמָתַי אַתְּ חוֹזֶרֶת הַבַּיְתָה? (umatai at chozéret habáyta?) = E quando você volta para casa?
 - Noa: בָּעֶרֶב, מְאֻחָר. אֲנִי עֲסוּקָה מְאֹד! (baérev, meuchar. aní asuká meod!) = À noite, tarde. Eu sou muito ocupada!
-- Tom: וּבְשַׁבָּת? (uveshabát?) = E no sábado?
-- Noa: בְּשַׁבָּת אֲנִי יְשֵׁנָה עַד עֶשֶׂר! (beshabát aní yeshená ad éser!) = No sábado eu durmo até as dez!
+- Tom: וּבְשַׁבָּת? (uveshabat?) = E no sábado?
+- Noa: בְּשַׁבָּת אֲנִי יְשֵׁנָה עַד עֶשֶׂר! (beshabat aní yeshená ad éser!) = No sábado eu durmo até as dez!
 - glossário: בֵּית קָפֶה (beit kafé) = café (o lugar); expressão fixa
 - nota: בֵּית קָפֶה quer dizer, palavra por palavra, "casa de café": é o café como lugar. A forma בֵּית no lugar de בַּיִת tem explicação, e ela vem na Unidade 19. Por enquanto, guarde como expressão.
 
 **Leitura: Mensagem do Dani para a mãe** (aparece sem nikud, com a chave para mostrar)
 
-- שָׁלוֹם אִמָּא! הַכֹּל בְּסֵדֶר. (shalóm íma! hakol beséder.) = Oi, mãe! Está tudo bem.
+- שָׁלוֹם אִמָּא! הַכֹּל בְּסֵדֶר. (shalom íma! hakol beséder.) = Oi, mãe! Está tudo bem.
 - כָּל יוֹם אֲנִי קָם בְּשֶׁבַע. (kol yom aní kam beshéva.) = Todo dia eu levanto às sete.
 - בַּבֹּקֶר אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן. (babóker aní lomed ivrit baulpan.) = De manhã eu estudo hebraico no ulpan.
 - אַחֲרֵי הַצָּהֳרַיִם אֲנִי עוֹבֵד בְּבֵית קָפֶה. (acharei hatsohoráyim aní oved beveit kafé.) = À tarde eu trabalho num café.
 - בָּעֶרֶב אֲנִי חוֹזֵר הַבַּיְתָה מְאֻחָר. (baérev aní chozer habáyta meuchar.) = À noite eu volto para casa tarde.
-- בְּשַׁבָּת אֲנִי לֹא עוֹבֵד! (beshabát aní lo oved!) = No sábado eu não trabalho!
+- בְּשַׁבָּת אֲנִי לֹא עוֹבֵד! (beshabat aní lo oved!) = No sábado eu não trabalho!
 - P1. escolha: Quando o Dani estuda hebraico? → **De manhã** / À tarde / À noite (בַּבֹּקֶר אֲנִי לוֹמֵד עִבְרִית: de manhã.)
 - P2. escolha: Onde ele trabalha? → **Num café** / No ulpan / Em casa 
 - P3. V ou F: O Dani volta cedo para casa. → **Falso** (מְאֻחָר é "tarde".)
@@ -237,17 +237,17 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 2. tabela חוֹזֵר: mulher → חוזרת · homens → חוזרים · mulheres → חוזרות
 3. separar (um homem / uma mulher / vários): קָם → um homem · קָמָה → uma mulher · בָּאִים → vários · בָּאָה → uma mulher · עוֹשֶׂה → um homem · עוֹשׂוֹת → vários
 4. escolha: A Noa conta: אֲנִי ___ מוּקְדָּם. → **קָמָה** / קָם / קָמִים se escolher "קָם": Quase. קָם é a forma de um homem; a Noa é mulher: קָמָה. · se escolher "קָמִים": קָמִים é para vários. A Noa fala só dela: קָמָה.
-5. ligar: בַּבֹּקֶר = de manhã · בַּצָּהֳרַיִם = ao meio-dia · אַחֲרֵי הַצָּהֳרַיִם = à tarde · בָּעֶרֶב = à noite, no fim do dia · בַּלַּיְלָה = de madrugada
+5. ligar: בַּבֹּקֶר = de manhã · בַּצָּהֳרַיִם = ao meio-dia · אַחֲרֵי הַצָּהֳרַיִם = à tarde · בָּעֶרֶב = no fim do dia, à noitinha · בַּלַּיְלָה = à noite, de madrugada
 6. completar: "Depois do trabalho":  ___ הָעֲבוֹדָה → **אחרי**
 7. completar: "Antes da aula":  ___ הַשִּׁעוּר → **לפני**
 8. escolha: "Eu vou para o trabalho": אֲנִי הוֹלֵךְ ___ → **לָעֲבוֹדָה** / לְהָעֲבוֹדָה / בָּעֲבוֹדָה se escolher "לְהָעֲבוֹדָה": Quase. לְ e הַ se juntam numa sílaba: לְ + הָעֲבוֹדָה = לָעֲבוֹדָה. · se escolher "בָּעֲבוֹדָה": בָּעֲבוֹדָה é estar no trabalho. Para ir até lá, é לְ: לָעֲבוֹדָה.
 9. escolha: "Eu volto para casa": אֲנִי חוֹזֵר ___ → **הַבַּיְתָה** / בַּבַּיִת se escolher "בַּבַּיִת": בַּבַּיִת é "em casa", estar. Para "para casa", o hebraico usa הַבַּיְתָה.
 10. V ou F: יָשֵׁן (dormir) e יָשָׁן (velho) se escrevem com as mesmas letras. → **Verdadeiro** (Só as vogais mudam. Sem pontos, quem decide é a frase.)
 11. escolha: O Dani está dormindo: דָּנִי ___. → **יָשֵׁן** / יְשֵׁנָה / יָשָׁן se escolher "יְשֵׁנָה": יְשֵׁנָה é para uma mulher. · se escolher "יָשָׁן": יָשָׁן, com A, é "velho" (Unidade 3). "Dorme" é יָשֵׁן, com E.
-12. montar: "O Tom vai para a universidade todo dia." → **טוֹם הוֹלֵךְ לָאוּנִיבֶרְסִיטָה כָּל יוֹם**
-13. montar: "Depois eu volto para casa. (fala uma mulher)" → **אַחַר כָּךְ אֲנִי חוֹזֶרֶת הַבַּיְתָה**
+12. montar: "O Tom vai para a universidade todo dia." → **טוֹם הוֹלֵךְ לָאוּנִיבֶרְסִיטָה כָּל יוֹם** (também: כָּל יוֹם טוֹם הוֹלֵךְ לָאוּנִיבֶרְסִיטָה / טוֹם הוֹלֵךְ כָּל יוֹם לָאוּנִיבֶרְסִיטָה)
+13. montar: "Depois eu volto para casa. (fala uma mulher)" → **אַחַר כָּךְ אֲנִי חוֹזֶרֶת הַבַּיְתָה** (também: אֲנִי חוֹזֶרֶת הַבַּיְתָה אַחַר כָּךְ / אֲנִי אַחַר כָּךְ חוֹזֶרֶת הַבַּיְתָה)
 14. achar o erro: Ache o erro e escreva a frase certa. הִיא הוֹלֵךְ לָעֲבוֹדָה. → **היא הולכת לעבודה** (Para ela, a forma é הוֹלֶכֶת.)
-15. achar o erro: Ache o erro e escreva a frase certa. אֲנַחְנוּ בָּא מְאֻחָר. → **אנחנו באים מאוחר / אנחנו באים מאחר** (Com אֲנַחְנוּ, o verbo vai para o plural: בָּאִים (ou בָּאוֹת, se forem só mulheres).)
+15. achar o erro: Ache o erro e escreva a frase certa. אֲנַחְנוּ בָּא מְאֻחָר. → **אנחנו באים מאוחר / אנחנו באים מאחר / אנחנו באות מאוחר / אנחנו באות מאחר** (Com אֲנַחְנוּ, o verbo vai para o plural: בָּאִים (ou בָּאוֹת, se forem só mulheres).)
 16. V ou F: בַּבֹּקֶר אֲנִי עוֹבֵד, וְאַחַר כָּךְ אֲנִי לוֹמֵד: primeiro ele trabalha, depois estuda. → **Verdadeiro** 
 17. conversa: Maya: מָתַי אַתָּה קָם? → **בְּשֶׁבַע.** / בַּבַּיִת. / עִם דָּנִי. (מָתַי pergunta "quando": a resposta é uma hora.)
 18. conversa: Tom: מָה אַתְּ עוֹשָׂה אַחֲרֵי הָעֲבוֹדָה? → **אֲנִי הוֹלֶכֶת לַיָּם.** / אֲנִי מִבְּרָזִיל. / כֵּן, תּוֹדָה. (Ele pergunta o que ela faz depois do trabalho: "vou para a praia" (לַיָּם, "para o mar").)
@@ -255,7 +255,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ouvir: [ouve: אֲנִי חוֹזֶרֶת הַבַּיְתָה בְּשֶׁבַע.] O que ela diz? → **Volta para casa às sete** / Sai de casa às sete / Trabalha até as sete 
 21. ouvir: [ouve: הֵם קָמִים מְאֻחָר.] O que você ouviu? → **Eles levantam tarde** / Ele levanta cedo / Elas dormem tarde 
 22. ditado: כָּל יוֹם → **כל יום**
-23. escrever: "à noite" → **בערב**
+23. escrever: "à noite" → **בערב / בלילה**
 24. escrever: "e então" → **ואז**
 25. escrever: "trabalho" → **עבודה**
 26. completar: Complete a fala do diálogo: "Eu levanto cedo, às seis e meia.": אֲנִי ___ מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי. → **קמה**
@@ -316,11 +316,11 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 1. **O infinitivo: a forma com לְ na frente.** Para "estudar", "trabalhar", "dormir" sem dizer quem, o hebraico usa uma forma que quase sempre começa com לְ (às vezes לִ, לַ, לָ, לֶ): לִלְמוֹד, לַעֲבוֹד, לִישׁוֹן. Ela não muda com homem ou mulher. Aprenda cada uma junto com o verbo que você já conhece: לוֹמֵד e לִלְמוֹד, עוֹבֵד e לַעֲבוֹד.
    - Exemplo: לוֹמֵד → לִלְמוֹד = estuda → estudar
    - Exemplo: הוֹלֵךְ → לָלֶכֶת = vai → ir
-2. **Quero, preciso, posso, sei, gosto: e depois, o infinitivo.** רוֹצֶה, צָרִיךְ, יָכוֹל, יוֹדֵעַ e אוֹהֵב mudam com quem fala (4 formas, como sempre). O segundo verbo vai no infinitivo e não muda: אֲנִי רוֹצָה לִלְמוֹד, הֵם צְרִיכִים לַעֲבוֹד, אַתָּה יָכוֹל לָבוֹא?
+2. **Quero, preciso, posso, sei, gosto: e depois, o infinitivo.** רוֹצֶה, צָרִיךְ, יָכוֹל, יוֹדֵעַ e אוֹהֵב mudam com o sujeito: homem, mulher, homens, mulheres (4 formas, como sempre). O segundo verbo vai no infinitivo e não muda: אֲנִי רוֹצָה לִלְמוֹד, הֵם צְרִיכִים לַעֲבוֹד, אַתָּה יָכוֹל לָבוֹא?
    - Erro comum: Um erro que não existe em português, mas aparece muito: mudar os DOIS verbos. "Ela quer estudar" é הִיא רוֹצָה לִלְמוֹד, e não הִיא רוֹצָה לוֹמֶדֶת.
    - Exemplo: אֲנִי יוֹדֵעַ לִשְׂחוֹת. = Eu sei nadar. (homem)
-   - Exemplo: אַתְּ יְכוֹלָה לָבוֹא? = Você pode vir? (a ela)
-3. **Gostar de coisa, gostar de fazer.** אוֹהֵב vem direto com a coisa, sem "de": אֲנִי אוֹהֵב קָפֶה. Com uma ação, vem o infinitivo: אֲנִי אוֹהֵב לְבַשֵּׁל.
+   - Exemplo: אַתְּ יְכוֹלָה לָבוֹא? = Você pode vir? (falando com uma mulher)
+3. **Gostar de coisa, gostar de fazer.** אוֹהֵב vem direto com a coisa, sem "de": אֲנִי אוֹהֵב קָפֶה. Com "o/a", entra o אֶת da Unidade 5: אֲנִי אוֹהֵב אֶת הַיָּם. Com uma ação, vem o infinitivo: אֲנִי אוֹהֵב לְבַשֵּׁל.
    - Erro comum: O português põe "de": "gosto DE café". O brasileiro tende a traduzir o "de" com מִ־. Não tem: אֲנִי אוֹהֶבֶת מוּזִיקָה.
 4. **Por quê? Porque..** A pergunta é לָמָּה? (Unidade 8) e a resposta começa com כִּי: לָמָּה אַתָּה לֹא בָּא? כִּי אֲנִי עָסוּק. O לֹא vem antes do verbo que se nega: אֲנִי לֹא יָכוֹל לָבוֹא.
    - Erro comum: Em português, "por que" e "porque" soam iguais. Em hebraico são palavras diferentes: לָמָּה pergunta, כִּי responde.
@@ -344,10 +344,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Leitura: Um perfil num aplicativo de troca de idiomas** (aparece sem nikud, com a chave para mostrar)
 
-- קוֹרְאִים לִי לִיאַת. אֲנִי גָּרָה בְּחֵיפָה. (kor'im li Liat. aní gará beCheifa.) = Eu me chamo Liat. Moro em Haifa.
+- קוֹרְאִים לִי לִיאַת. אֲנִי גָּרָה בְּחֵיפָה. (korim li Liat. aní gará beCháifa.) = Eu me chamo Liat. Moro em Haifa.
 - אֲנִי אוֹהֶבֶת לְבַשֵּׁל וְלִרְקוֹד. (aní ohévet levashél velirkód.) = Gosto de cozinhar e de dançar.
 - אֲנִי לֹא אוֹהֶבֶת כַּדּוּרֶגֶל. (aní lo ohévet kadurégel.) = Não gosto de futebol.
-- אֲנִי רוֹצָה לִלְמוֹד פּוֹרְטוּגָזִית, כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל! (aní rotsá lilmód portugezit, ki aní rotsá letayél biVrazil!) = Quero estudar português, porque quero viajar pelo Brasil!
+- אֲנִי רוֹצָה לִלְמוֹד פּוֹרְטוּגֶזִית, כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל! (aní rotsá lilmód portugezit, ki aní rotsá letayél biVrazil!) = Quero estudar português, porque quero viajar pelo Brasil!
 - P1. escolha: Do que a Liat gosta? → **Cozinhar e dançar** / Futebol e música / Nadar e correr 
 - P2. escolha: Por que ela quer aprender português? → **Para viajar pelo Brasil** / Para trabalhar no Brasil / Porque mora no Brasil (כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל.)
 - P3. V ou F: A Liat mora em Tel Aviv. → **Falso** (Ela mora em Haifa: בְּחֵיפָה.)
@@ -365,10 +365,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 8. escolha: Qual frase diz "eu preciso trabalhar"? → **אֲנִי צָרִיךְ לַעֲבוֹד.** / אֲנִי צָרִיךְ עוֹבֵד. / אֲנִי לַעֲבוֹד צָרִיךְ. se escolher "אֲנִי צָרִיךְ עוֹבֵד.": Os dois verbos mudaram. O segundo fica no infinitivo: לַעֲבוֹד. · se escolher "אֲנִי לַעֲבוֹד צָרִיךְ.": As palavras certas, na ordem errada. Como em português: preciso, e depois trabalhar.
 9. completar: "Porque eu estou ocupado":  ___ אֲנִי עָסוּק → **כי**
 10. V ou F: "Eu sei nadar" é אֲנִי יוֹדֵעַ לִשְׂחוֹת: o verbo saber com um infinitivo. → **Verdadeiro** 
-11. achar o erro: Ache o erro e escreva a frase certa. אֲנִי אוֹהֵב לוֹמֵד עִבְרִית. → **אני אוהב ללמוד עברית / אני אוהב ללמד עברית** (Depois de אוֹהֵב, a ação vai no infinitivo: לִלְמוֹד.)
+11. achar o erro: Ache o erro e escreva a frase certa. אֲנִי אוֹהֵב לוֹמֵד עִבְרִית. → **אני אוהב ללמוד עברית** (Depois de אוֹהֵב, a ação vai no infinitivo: לִלְמוֹד.)
 12. achar o erro: Ache o erro e escreva a frase certa. הִיא לֹא יָכוֹל לָבוֹא. → **היא לא יכולה לבוא** (Para ela: יְכוֹלָה. O לָבוֹא não muda.)
 13. montar: "Eu gosto de ler jornal. (fala uma mulher)" → **אֲנִי אוֹהֶבֶת לִקְרוֹא עִתּוֹן**
-14. montar: "Eu não posso hoje, porque trabalho. (fala um homem)" → **אֲנִי לֹא יָכוֹל הַיּוֹם כִּי אֲנִי עוֹבֵד**
+14. montar: "Eu não posso hoje, porque trabalho. (fala um homem)" → **אֲנִי לֹא יָכוֹל הַיּוֹם כִּי אֲנִי עוֹבֵד** (também: הַיּוֹם אֲנִי לֹא יָכוֹל כִּי אֲנִי עוֹבֵד)
 15. separar (gosta / não gosta): אֲנִי אוֹהֵב לְבַשֵּׁל → gosta · אֲנִי לֹא אוֹהֶבֶת לָרוּץ → não gosta · הוּא אוֹהֵב כַּדּוּרֶגֶל → gosta · הֵם לֹא אוֹהֲבִים קָפֶה → não gosta · אֲנַחְנוּ אוֹהֲבוֹת לִרְקוֹד → gosta · הִיא לֹא אוֹהֶבֶת לְטַיֵּל → não gosta
 16. conversa: Maya: אַתָּה רוֹצֶה לָבוֹא לַיָּם? → **כֵּן, בְּשִׂמְחָה!** / אֲנִי מִבְּרָזִיל. / בְּתֵאָבוֹן! 
 17. conversa: Tom: לָמָּה אַתָּה לֹא בָּא? → **כִּי אֲנִי צָרִיךְ לַעֲבוֹד.** / כֵּן, אֲנִי בָּא. / בְּשֶׁבַע. (לָמָּה pede um motivo, e o motivo começa com כִּי.)
@@ -379,7 +379,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 22. escrever: "porque" → **כי**
 23. escrever: "ele pode" → **הוא יכול**
 24. escrever: "morar" → **לגור**
-25. escrever: "nadar" → **לישחות / לשחות**
+25. escrever: "nadar" → **לשחות / לישחות**
 26. completar: Complete a fala do diálogo: "Eu gosto de passear e de nadar.": אֲנִי ___ לְטַיֵּל וְלִשְׂחוֹת. → **אוהב**
 27. completar: Complete a fala do diálogo: "Porque no sábado eu gosto de dormir até as dez!": כִּי בְּשַׁבָּת אֲנִי אוֹהֵב ___ עַד עֶשֶׂר! → **לישון**
 28. falar
@@ -393,7 +393,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Em Israel · Quantos cômodos?:** Num anúncio israelense, a SALA conta como cômodo: "3 חֲדָרִים" é uma sala e dois quartos, e um apartamento de "2 cômodos" tem um quarto só. Apartamentos novos têm ainda o מַמָ"ד, um quarto de paredes reforçadas que serve de abrigo e, no dia a dia, vira escritório ou quarto de hóspedes.
 
-**Curiosidade · Por que existem letras finais?:** ך, ם, ן, ף e ץ vêm da escrita aramaica antiga. No fim da palavra, o escriba esticava o traço para baixo ou fechava a letra, e isso ajudava o leitor a ver onde a palavra acabava, numa época em que nem sempre se deixava espaço entre as palavras. O costume virou regra.
+**Curiosidade · Por que existem letras finais?:** ך, ם, ן, ף e ץ vêm da escrita aramaica antiga. No meio da palavra, o traço dessas letras se curvava em direção à letra seguinte; no fim da palavra, sem letra seguinte, ficava a forma antiga, comprida. Com o tempo, as duas formas viraram regra, e a forma final ajuda a ver onde a palavra acaba.
 
 **Eu consigo…**
 
@@ -405,7 +405,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 - דִּירָה (dirá) = apartamento
 - סָלוֹן (salon) = sala de estar
-- חֲדַר שֵׁנָה (chadar sheiná) = quarto de dormir (expressão fixa)
+- חֲדַר שֵׁנָה (chadar shená) = quarto de dormir (expressão fixa)
 - שֵׁרוּתִים (sherutim) = banheiro (o vaso sanitário)
 - אַמְבַּטְיָה (ambátya) = banheiro (com chuveiro ou banheira)
 - מִרְפֶּסֶת (mirpéset) = varanda
@@ -449,7 +449,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - Maya: לֹא, גַּם לֹא שָׁם. (lo, gam lo sham.) = Não, lá também não.
 - Natan: וּבַמִּטְבָּח, לְיַד הַמְּקָרֵר? (uvamitbach, leyád hamekarer?) = E na cozinha, ao lado da geladeira?
 - Maya: לֹא. וְהוּא לֹא בַּתִּיק… (lo. vehu lo batik…) = Não. E não está na mochila…
-- Natan: רֶגַע, מָה זֶה, מִתַּחַת לַסָּפָּה? (réga, ma ze, mitáchat lasapá?) = Espera, o que é isso, embaixo do sofá?
+- Natan: רֶגַע, מַה זֶּה, מִתַּחַת לַסָּפָּה? (réga, ma ze, mitáchat lasapá?) = Espera, o que é isso, embaixo do sofá?
 - Maya: הַטֶּלֶפוֹן! תּוֹדָה, נָתָן! (hatélefon! todá, Natan!) = O telefone! Obrigada, Natan!
 - Natan: וְאֵיפֹה הַמַּפְתֵּחַ? (veeifo hamafteach?) = E onde está a chave?
 - Maya: הוּא… בַּדֶּלֶת! (hu… badélet!) = Está… na porta!
@@ -477,11 +477,11 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 6. conversa: Maya: אֵיפֹה הַמְּנוֹרָה? → **הִיא לְיַד הַסָּפָּה.** / הוּא לְיַד הַסָּפָּה. se escolher "הוּא לְיַד הַסָּפָּה.": מְנוֹרָה termina em ־ָה e é feminina: הִיא.
 7. V ou F: Para dizer "o livro está na mesa" (em cima), o hebraico usa בַּשֻּׁלְחָן. → **Falso** (Em cima é עַל: הַסֵּפֶר עַל הַשֻּׁלְחָן. בַּשֻּׁלְחָן seria dentro.)
 8. completar: "A cozinha fica entre a sala e a varanda": הַמִּטְבָּח ___ הַסָּלוֹן לַמִּרְפֶּסֶת → **בין**
-9. completar: "Hoje eu durmo na casa da vovó": הַיּוֹם אֲנִי יָשֵׁן ___ סַבְתָּא → **אצל**
+9. completar: "Hoje eu durmo na casa da vovó" (fala um homem): הַיּוֹם אֲנִי יָשֵׁן ___ סַבְתָּא → **אצל**
 10. conversa: Tom: יֵשׁ מַעֲלִית? → **לֹא, אֵין.** / לֹא, לֹא יֵשׁ. / לֹא, אֵין לִי. se escolher "לֹא, לֹא יֵשׁ.": Quase. יֵשׁ não se nega com לֹא: a negação de יֵשׁ é אֵין. · se escolher "לֹא, אֵין לִי.": אֵין לִי é "eu não tenho". A pergunta é se o prédio tem elevador: לֹא, אֵין.
-11. achar o erro: תִּיק é masculino. Ache o erro e escreva a frase certa. הִיא עַל הַכִּסֵּא. → **הוא על הכסא / הוא על הכיסא** (תִּיק é masculino, então é הוּא.)
+11. achar o erro: Pergunta: אֵיפֹה הַתִּיק? A resposta tem um erro (תִּיק é masculino). Ache o erro e escreva a frase certa. הִיא עַל הַכִּסֵּא. → **הוא על הכסא / הוא על הכיסא / התיק על הכסא / התיק על הכיסא** (תִּיק é masculino, então é הוּא.)
 12. achar o erro: O livro está EM CIMA da mesa. Ache o erro e escreva a frase certa. הַסֵּפֶר בַּשֻּׁלְחָן. → **הספר על השולחן / הספר על השלחן** (Em cima é עַל.)
-13. montar: "No apartamento tem uma varanda grande." → **בַּדִּירָה יֵשׁ מִרְפֶּסֶת גְּדוֹלָה**
+13. montar: "No apartamento tem uma varanda grande." → **בַּדִּירָה יֵשׁ מִרְפֶּסֶת גְּדוֹלָה** (também: יֵשׁ מִרְפֶּסֶת גְּדוֹלָה בַּדִּירָה)
 14. montar: "O computador está ao lado da janela." → **הַמַּחְשֵׁב לְיַד הַחַלּוֹן**
 15. separar (הוּא / הִיא): מִטָּה → הִיא · סָפָּה → הִיא · אָרוֹן → הוּא · חַלּוֹן → הוּא · מִרְפֶּסֶת → הִיא · מַחְשֵׁב → הוּא
 16. intruso: Qual não é um móvel? → מִטָּה / סָפָּה / כִּסֵּא / **מִרְפֶּסֶת** (מִרְפֶּסֶת é a varanda, uma parte da casa.)
@@ -491,7 +491,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ouvir: [ouve: אֲנִי אֵצֶל אִמָּא.] O que você ouviu? → **Estou na casa da minha mãe** / A minha mãe está em casa / Estou com a minha mãe no trabalho 
 21. ditado: לְיַד הַחַלּוֹן → **ליד החלון**
 22. escrever: "Onde fica o banheiro? (o vaso)" → **איפה השירותים / איפה השרותים**
-23. escrever: "varanda" → **מירפסת / מרפסת**
+23. escrever: "varanda" → **מרפסת / מירפסת**
 24. escrever: "armário" → **ארון**
 25. completar: Complete a fala do diálogo: "Talvez na sala, em cima do sofá?":  ___ בַּסָּלוֹן, עַל הַסָּפָּה? → **אולי**
 26. completar: Complete a fala do diálogo: "E na cozinha, ao lado da geladeira?": וּבַמִּטְבָּח, ___ הַמְּקָרֵר? → **ליד**
@@ -517,7 +517,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 **Palavras**
 
 - לְאָן? (leán?) = para onde?
-- אֵיךְ מַגִּיעִים לְ…? (eich magiím le…?) = como se chega a…?
+- אֵיךְ מַגִּיעִים לְ…? (eich maguiím le…?) = como se chega a…?
 - נוֹסֵעַ · נוֹסַעַת · נוֹסְעִים · נוֹסְעוֹת = ir (de veículo), viajar
 - פּוֹנֶה · פּוֹנָה · פּוֹנִים · פּוֹנוֹת = virar (para um lado)
 - יָשָׁר (yashar) = reto, em frente
@@ -534,7 +534,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - קַו (kav) = linha (de ônibus)
 - רַכֶּבֶת (rakévet) = trem
 - מוֹנִית (monit) = táxi
-- בָּרֶגֶל (barégel) = a pé
+- בָּרֶגֶל (baréguel) = a pé
 - בַּנְק (bank) = banco
 - סוּפֶּרְמַרְקֶט (supermárket) = supermercado
 - דַּקָּה (daká) = minuto
@@ -544,7 +544,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 1. **Onde, para onde, de onde.** Três perguntas parecidas: אֵיפֹה? (onde, parado), לְאָן? (para onde, indo) e מֵאֵיפֹה? (de onde, vindo). אֵיפֹה הַבַּנְק? · לְאָן אַתָּה נוֹסֵעַ? · מֵאֵיפֹה אַתְּ?
    - Erro comum: Em português dá para dizer "onde você vai?". Em hebraico, com movimento a pergunta é לְאָן: לְאָן אַתָּה הוֹלֵךְ?
-2. **A pé é הוֹלֵךְ; de veículo é נוֹסֵעַ.** O português usa "ir" para tudo. O hebraico separa: a pé é הוֹלֵךְ; de ônibus, trem, táxi ou carro é נוֹסֵעַ. O veículo vem com בְּ: בְּאוֹטוֹבּוּס, בְּרַכֶּבֶת, בְּמוֹנִית. "A pé" é uma palavra só: בָּרֶגֶל.
+2. **A pé é הוֹלֵךְ; de veículo é נוֹסֵעַ.** O português usa "ir" para tudo. Quando você diz COMO vai, o hebraico separa: a pé é הוֹלֵךְ; de ônibus, trem, táxi ou carro é נוֹסֵעַ. Sem falar do meio, הוֹלֵךְ também é o "ir" de todo dia: אֲנִי הוֹלֵךְ לָעֲבוֹדָה. O veículo vem com בְּ: בְּאוֹטוֹבּוּס, בְּרַכֶּבֶת, בְּמוֹנִית. "A pé" é uma palavra só: בָּרֶגֶל.
    - Erro comum: אֲנִי הוֹלֵךְ בְּאוֹטוֹבּוּס soa como andar DENTRO do ônibus. Quem vai de ônibus diz אֲנִי נוֹסֵעַ בְּאוֹטוֹבּוּס.
    - Exemplo: אֲנִי הוֹלֶכֶת לָעֲבוֹדָה בָּרֶגֶל. = Vou a pé para o trabalho. (mulher)
    - Exemplo: הֵם נוֹסְעִים לְחֵיפָה בְּרַכֶּבֶת. = Eles vão de trem para Haifa.
@@ -554,8 +554,8 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: Na rua, sem bateria**
 
-- Tom: סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה הַמֶּרְכָּזִית? (slichá, eich magiím latachaná hamerkazit?) = Com licença, como se chega à rodoviária central?
-- A senhora: זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל? (ze rachok. atá holech barégel?) = É longe. Você vai a pé?
+- Tom: סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה הַמֶּרְכָּזִית? (slichá, eich maguiím latachaná hamerkazit?) = Com licença, como se chega à rodoviária central?
+- A senhora: זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל? (ze rachok. atá holech baréguel?) = É longe. Você vai a pé?
 - Tom: כֵּן. (ken.) = Vou.
 - A senhora: אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם פּוֹנֶה שְׂמֹאלָה. (az atá holech yashar ad haramzor, vesham poné smóla.) = Então você vai reto até o semáforo, e lá vira à esquerda.
 - Tom: יָשָׁר, וְאָז שְׂמֹאלָה. וְאַחַר כָּךְ? (yashar, veaz smóla. veachar kach?) = Reto, e depois à esquerda. E depois?
@@ -573,7 +573,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - מֵהָרַכֶּבֶת אַתָּה הוֹלֵךְ יָשָׁר עַד הַסּוּפֶּרְמַרְקֶט. (meharakévet atá holech yashar ad hasupermárket.) = Do trem você vai reto até o supermercado.
 - שָׁם אַתָּה פּוֹנֶה יָמִינָה. (sham atá poné yamína.) = Lá você vira à direita.
 - הַבַּיִת שֶׁלִּי בִּרְחוֹב הֶרְצְל 12, מוּל הַבַּנְק. (habáyit sheli birchov Hertsl shteim-esré, mul habank.) = A minha casa fica na rua Herzl, 12, em frente ao banco.
-- זֶה קָרוֹב, חָמֵשׁ דַּקּוֹת בָּרֶגֶל! (ze karov, chamesh dakót barégel!) = É perto, cinco minutos a pé!
+- זֶה קָרוֹב, חָמֵשׁ דַּקּוֹת בָּרֶגֶל! (ze karov, chamesh dakót baréguel!) = É perto, cinco minutos a pé!
 - P1. escolha: Onde é preciso virar à direita? → **No supermercado** / No banco / No semáforo 
 - P2. escolha: A casa da Maya fica em frente a quê? → **Ao banco** / Ao supermercado / À estação de trem 
 - P3. V ou F: Da estação de trem até a casa dela é preciso pegar um ônibus. → **Falso** (חָמֵשׁ דַּקּוֹת בָּרֶגֶל: são cinco minutos a pé.)
@@ -583,7 +583,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 1. ligar: אוֹטוֹבּוּס = ônibus · רַכֶּבֶת = trem · מוֹנִית = táxi · בָּרֶגֶל = a pé · תַּחֲנָה = ponto, estação
 2. ligar: יָשָׁר = reto · יָמִינָה = para a direita · שְׂמֹאלָה = para a esquerda · קָרוֹב = perto · רָחוֹק = longe
 3. escolha: "Para onde você vai?" (a ele) → **לְאָן אַתָּה הוֹלֵךְ?** / אֵיפֹה אַתָּה הוֹלֵךְ? / מֵאֵיפֹה אַתָּה הוֹלֵךְ? se escolher "אֵיפֹה אַתָּה הוֹלֵךְ?": Quase. אֵיפֹה é "onde", parado. Com movimento, "para onde" é לְאָן. · se escolher "מֵאֵיפֹה אַתָּה הוֹלֵךְ?": מֵאֵיפֹה é "de onde".
-4. separar (הוֹלֵךְ (a pé) / נוֹסֵעַ (de veículo)): בָּרֶגֶל → הוֹלֵךְ (a pé) · עַד הַפִּנָּה → הוֹלֵךְ (a pé) · בְּאוֹטוֹבּוּס → נוֹסֵעַ (de veículo) · בְּרַכֶּבֶת → נוֹסֵעַ (de veículo) · בְּמוֹנִית → נוֹסֵעַ (de veículo) · לַיָּם, חָמֵשׁ דַּקּוֹת → הוֹלֵךְ (a pé)
+4. separar (הוֹלֵךְ (a pé) / נוֹסֵעַ (de veículo)): בָּרֶגֶל → הוֹלֵךְ (a pé) · עַד הַפִּנָּה בָּרֶגֶל → הוֹלֵךְ (a pé) · בְּאוֹטוֹבּוּס → נוֹסֵעַ (de veículo) · בְּרַכֶּבֶת → נוֹסֵעַ (de veículo) · בְּמוֹנִית → נוֹסֵעַ (de veículo) · לַיָּם בָּרֶגֶל, חָמֵשׁ דַּקּוֹת → הוֹלֵךְ (a pé)
 5. escolha: "Eu vou de ônibus" (fala um homem) → **אֲנִי נוֹסֵעַ בְּאוֹטוֹבּוּס.** / אֲנִי הוֹלֵךְ בְּאוֹטוֹבּוּס. se escolher "אֲנִי הוֹלֵךְ בְּאוֹטוֹבּוּס.": Quase. הוֹלֵךְ é ir a pé. De ônibus, o israelense diz נוֹסֵעַ.
 6. tabela נוֹסֵעַ: mulher → נוסעת · homens → נוסעים · mulheres → נוסעות
 7. tabela פּוֹנֶה: mulher → פונה · homens → פונים · mulheres → פונות
@@ -591,10 +591,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 9. completar: "Você vai reto até o semáforo": אַתָּה הוֹלֵךְ ___ עַד הָרַמְזוֹר → **ישר**
 10. completar: "Como se chega ao banco?":  ___ מַגִּיעִים לַבַּנְק? → **איך**
 11. V ou F: זֶה רָחוֹק quer dizer "é perto". → **Falso** (רָחוֹק é longe; perto é קָרוֹב.)
-12. achar o erro: Ela vai de ônibus. Ache o erro e escreva a frase certa. אֲנִי הוֹלֶכֶת לָעֲבוֹדָה בְּאוֹטוֹבּוּס. → **אני נוסעת לעבודה באוטובוס** (De veículo é נוֹסַעַת.)
+12. achar o erro: Uma mulher fala: "Eu vou de ônibus para o trabalho." Ache o erro e escreva a frase certa. אֲנִי הוֹלֶכֶת לָעֲבוֹדָה בְּאוֹטוֹבּוּס. → **אני נוסעת לעבודה באוטובוס / אני נוסעת באוטובוס לעבודה** (De veículo é נוֹסַעַת.)
 13. achar o erro: Ache o erro e escreva a frase certa. אֲנַחְנוּ נוֹסֵעַ בְּרַכֶּבֶת. → **אנחנו נוסעים ברכבת / אנחנו נוסעות ברכבת** (Com אֲנַחְנוּ, o verbo vai para o plural.)
 14. montar: "O ponto fica em frente ao banco." → **הַתַּחֲנָה מוּל הַבַּנְק**
-15. montar: "Vira-se à esquerda na esquina." → **פּוֹנִים שְׂמֹאלָה בַּפִּנָּה**
+15. montar: "Vira-se à esquerda na esquina." → **פּוֹנִים שְׂמֹאלָה בַּפִּנָּה** (também: בַּפִּנָּה פּוֹנִים שְׂמֹאלָה / פּוֹנִים בַּפִּנָּה שְׂמֹאלָה)
 16. conversa: Tom: סְלִיחָה, אֵיךְ מַגִּיעִים לַיָּם? → **הוֹלְכִים יָשָׁר, וְאָז שְׂמֹאלָה.** / בְּשָׁעָה שְׁתַּיִם. / כֵּן, אֲנִי יוֹדֵעַ. 
 17. conversa: Maya: זֶה רָחוֹק? → **לֹא, זֶה קָרוֹב. חָמֵשׁ דַּקּוֹת.** / לֹא, אֵין לִי. / כֵּן, בְּבַקָּשָׁה. 
 18. ordenar: 1) סְלִיחָה, אֵיפֹה הַתַּחֲנָה? 2) שָׁם, בַּפִּנָּה. 3) זֶה קַו חָמֵשׁ? 4) כֵּן. נְסִיעָה טוֹבָה!
@@ -642,7 +642,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - סֻכָּר (sukar) = açúcar
 - קֶרַח (kérach) = gelo
 - טָעִים · טְעִימָה · טְעִימִים · טְעִימוֹת = gostoso
-- מְבַקֵּשׁ · מְבַקֶּשֶׁת · מְבַקְּשִׁים · מְבַקְּשׁוֹת = pedir
+- מְבַקֵּשׁ · מְבַקֶּשֶׁת · מְבַקְּשִׁים · מְבַקְּשׁוֹת = pedir, solicitar (para pedir comida no restaurante, se usa אֶפְשָׁר… ou אֲנִי רוֹצֶה…)
 - צִמְחוֹנִי (tsimchoni) = vegetariano
 - צִמְחוֹנִית (tsimchonit) = vegetariana
 - חָרִיף (charif) = picante
@@ -662,7 +662,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
    - Exemplo: אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה? = Pode trazer a conta, por favor?
    - Exemplo: אֶפְשָׁר לְשַׁלֵּם, בְּבַקָּשָׁה? = Dá para pagar, por favor?
 2. **Qual? אֵיזֶה, אֵיזוֹ, אֵילוּ.** "Qual" concorda com a coisa: אֵיזֶה קָפֶה? (masculino), אֵיזוֹ עוּגָה? (feminino), אֵילוּ מָנוֹת? (plural).
-   - Erro comum: Na rua você vai ouvir muito אֵיזֶה para tudo, até para feminino (אֵיזֶה עוּגָה?). Entenda quando ouvir, mas, para escrever, use a forma que concorda.
+   - Erro comum: Na rua você vai ouvir muito אֵיזֶה para tudo, até para feminino (אֵיזֶה עוּגָה?). No plural, na fala, quase sempre se diz אֵיזֶה: אֵיזֶה סָלָטִים יֵשׁ? אֵילוּ é mais de texto escrito. Entenda quando ouvir, mas, para escrever, use a forma que concorda.
 3. **Com e sem.** עִם é "com" e בְּלִי é "sem": קָפֶה עִם חָלָב, תֵּה בְּלִי סֻכָּר, סָלָט בְּלִי בָּצָל.
    - Exemplo: אֲנִי רוֹצָה סָלָט בְּלִי בָּצָל. = Quero uma salada sem cebola. (mulher)
 4. **O adjetivo concorda, mesmo longe.** Como na Unidade 3: הַשַּׁקְשׁוּקָה טְעִימָה (a shakshuka está gostosa), הַדָּג טָעִים. A palavra que descreve segue o gênero da comida, não o de quem fala.
@@ -681,7 +681,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - Maya: וַאֲנִי רוֹצָה סָלָט. אֵיזֶה סָלָט יֵשׁ? (vaaní rotsá salat. éize salat yesh?) = E eu quero uma salada. Que salada tem?
 - O garçom: יֵשׁ סָלָט יְרָקוֹת וְסָלָט טוּנָה. (yesh salat yerakot vesalat tuna.) = Tem salada de legumes e salada de atum.
 - Maya: סָלָט יְרָקוֹת, בְּלִי בָּצָל. (salat yerakot, bli batsal.) = Salada de legumes, sem cebola.
-- Dani: וְאַחַר כָּךְ… אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה? (veachar kach… efshar cheshbon, bevakashá?) = E depois… pode trazer a conta, por favor?
+- Dani (depois do jantar): אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה? (efshar cheshbon, bevakashá?) = Pode trazer a conta, por favor?
 - glossário: בְּטַח (betach) = claro
 - glossário: סָלָט יְרָקוֹת (salat yerakot) = salada de legumes (expressão fixa)
 - glossário: טוּנָה (tuna) = atum
@@ -690,10 +690,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 - אֲרוּחַת בֹּקֶר יִשְׂרְאֵלִית: בֵּיצִים, סָלָט, לֶחֶם, גְּבִינָה, קָפֶה אוֹ מִיץ. 62 שֶׁקֶל (aruchat bóker yisraelit: beitsim, salat, léchem, gviná, kafé o mits. shishim ushtáyim shékel) = Café da manhã israelense: ovos, salada, pão, queijo, café ou suco. 62 shekels
 - שַׁקְשׁוּקָה (חָרִיף!): 48 שֶׁקֶל (shakshuka (charif!): arbaím ushmoné shékel) = Shakshuka (picante!): 48 shekels
-- טוֹסְט גְּבִינָה: 39 שֶׁקֶל (tost gviná: shloshim vatésha shékel) = Misto de queijo: 39 shekels
+- טוֹסְט גְּבִינָה: 39 שֶׁקֶל (tost gviná: shloshim vatésha shékel) = Queijo quente: 39 shekels
 - קָפֶה הָפוּךְ: 14 שֶׁקֶל (kafé hafuch: arbá-esré shékel) = Café com leite ("hafuch"): 14 shekels
 - P1. escolha: Quanto custa o café da manhã israelense? → **62 shekels** / 48 shekels / 14 shekels 
-- P2. escolha: Qual prato é picante? → **A shakshuka** / O misto de queijo / O café da manhã 
+- P2. escolha: Qual prato é picante? → **A shakshuka** / O queijo quente / O café da manhã 
 - P3. V ou F: No café da manhã israelense dá para escolher café ou suco. → **Verdadeiro** (קָפֶה אוֹ מִיץ: café OU suco.)
 
 **Exercícios**
@@ -702,7 +702,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 2. ligar: תַּפְרִיט = cardápio · חֶשְׁבּוֹן = conta · מֶלְצָר = garçom · מָנָה = prato, porção · טָעִים = gostoso
 3. escolha: Qual é o jeito educado de pedir água? → **אֶפְשָׁר מַיִם, בְּבַקָּשָׁה?** / מַיִם! / אֲנִי מַיִם. se escolher "מַיִם!": Só a palavra, sem nada, soa como ordem. · se escolher "אֲנִי מַיִם.": אֲנִי מַיִם quer dizer "eu sou água".
 4. escolha: ___ עוּגָה אַתְּ רוֹצָה? → **אֵיזוֹ** / אֵיזֶה / אֵילוּ se escolher "אֵיזֶה": Quase. Na rua você ouve אֵיזֶה para tudo, mas עוּגָה é feminina: com cuidado, é אֵיזוֹ. · se escolher "אֵילוּ": אֵילוּ é para plural: אֵילוּ עוּגוֹת.
-5. escolha: "Que saladas vocês têm?": ___ סָלָטִים יֵשׁ? → **אֵילוּ** / אֵיזֶה / אֵיזוֹ se escolher "אֵיזֶה": סָלָטִים é plural: אֵילוּ. · se escolher "אֵיזוֹ": סָלָטִים é plural: אֵילוּ.
+5. escolha: "Que saladas vocês têm?" (por escrito, com a forma que concorda): ___ סָלָטִים יֵשׁ? → **אֵילוּ** / אֵיזֶה / אֵיזוֹ se escolher "אֵיזֶה": Quase. Na rua você ouve אֵיזֶה סָלָטִים, mas סָלָטִים é plural: com cuidado, por escrito, é אֵילוּ. · se escolher "אֵיזוֹ": סָלָטִים é plural: אֵילוּ.
 6. separar (אֵיזֶה / אֵיזוֹ / אֵילוּ): קָפֶה → אֵיזֶה · עוּגָה → אֵיזוֹ · מָנוֹת → אֵילוּ · דָּג → אֵיזֶה · מִסְעָדָה → אֵיזוֹ · בֵּיצִים → אֵילוּ
 7. completar: "Café sem açúcar": קָפֶה ___ סֻכָּר → **בלי**
 8. completar: "Chá com leite": תֵּה ___ חָלָב → **עם**
@@ -735,7 +735,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Em Israel · "1+1" e o shuk:** Nas lojas israelenses o preço é fixo, mas as promoções aparecem em toda parte, e a mais comum é o "1+1": leve dois, pague um. No shuk, o mercado de rua, o jeito é outro: os vendedores gritam os preços, oferecem para provar, e às vezes dá para pedir um desconto se você leva bastante.
 
-**Curiosidade · Por que "calça" termina em ־ַיִם?:** O final ־ַיִם marca o que vem em par: נַעֲלַיִם (sapatos), גַּרְבַּיִם (meias), מִכְנָסַיִם (calça, que tem duas pernas), e também partes do corpo, como רַגְלַיִם (pernas) e עֵינַיִם (olhos), que aparecem na Unidade 18. É o que sobrou de um "dual" antigo. O número שְׁתַּיִם (dois) tem a mesma marca.
+**Curiosidade · Por que "calça" termina em ־ַיִם?:** O final ־ַיִם marca o que vem em par: נַעֲלַיִם (sapatos), גַּרְבַּיִם (meias), מִכְנָסַיִם (calça, que tem duas pernas), e também partes do corpo, como רַגְלַיִם (pernas) e עֵינַיִם (olhos), que aparecem na Unidade 18. É a marca do "dual", a forma de "dois". O número שְׁתַּיִם (dois) tem a mesma marca. Mas nem todo ־ַיִם é par: מַיִם (água) e שָׁמַיִם (céu) só têm essa forma. E o dual ainda vive em יוֹמַיִם (dois dias) e שְׁבוּעַיִם (duas semanas).
 
 **Eu consigo…**
 
@@ -754,7 +754,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - מִכְנָסַיִם (michnasáyim) = calça
 - שִׂמְלָה (simlá) = vestido
 - חֲצָאִית (chatsait) = saia
-- סְוֶודֶר (svéder) = suéter, blusa de frio
+- סְוֶדֶר (svéder) = suéter, blusa de frio
 - מְעִיל (meil) = casaco
 - כּוֹבַע (kóva) = chapéu, boné
 - נַעֲלַיִם (naaláyim) = sapatos
@@ -791,7 +791,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Diálogo: A blusa azul**
 
-- A vendedora: שָׁלוֹם! אֶפְשָׁר לַעֲזוֹר? (shalóm! efshar laazor?) = Olá! Posso ajudar?
+- A vendedora: שָׁלוֹם! אֶפְשָׁר לַעֲזוֹר? (shalom! efshar laazor?) = Olá! Posso ajudar?
 - Noa: כֵּן. כַּמָּה עוֹלָה הַחֻלְצָה הַזֹּאת? (ken. kama olá hachultsá hazot?) = Sim. Quanto custa esta blusa?
 - A vendedora: מֵאָה וְעֶשְׂרִים שֶׁקֶל. (meá veesrim shékel.) = Cento e vinte shekels.
 - Noa: זֶה יָקָר מִדַּי… יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל? (ze yakar midái… yesh máshehu yoter zol?) = É caro demais… Tem alguma coisa mais barata?
@@ -808,7 +808,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - glossário: תָּא (ta) = provador (cabine)
 - glossário: מְצֻיָּן (metsuyán) = ótimo, excelente
 - glossário: אוֹתָהּ (otá) = a (ela, como objeto): "vou levá-la"
-- nota: Os tamanhos de roupa em Israel se dizem como em inglês: סְמוֹל, מֶדְיוּם, לַארְג'.
+- nota: Os tamanhos de roupa em Israel se dizem como em inglês: סְמוֹל, מֶדְיוּם, לַארְג'. E בְּכַרְטִיס: pela regra do nikud se lê "bechartís"; na rua quase todo mundo diz "bekartís".
 
 **Leitura: Na vitrine** (aparece sem nikud, com a chave para mostrar)
 
@@ -817,7 +817,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - רִאשׁוֹן עַד חֲמִישִׁי: 9:00 עַד 20:00 (rishon ad chamishi: tésha ad esrim) = De domingo a quinta: das 9h às 20h
 - שִׁשִּׁי: 9:00 עַד 14:00. שַׁבָּת: סָגוּר (shishi: tésha ad shtáyim. shabát: sagur) = Sexta: das 9h às 14h. Sábado: fechado
 - P1. escolha: O que tem desconto de 50%? → **Os casacos** / As meias / As blusas 
-- P2. escolha: Até que horas a loja abre na sexta? → **Até as 14h** / Até as 20h / Ela não abre 
+- P2. escolha: Até que horas a loja fica aberta na sexta? → **Até as 14h** / Até as 20h / Ela não abre 
 - P3. V ou F: A loja abre no sábado. → **Falso** (שַׁבָּת: סָגוּר.)
 - P4. escolha: O que quer dizer "1+1" nas meias? → **Leve duas, pague uma** / Só uma por pessoa / Uma de cada cor 
 
@@ -836,7 +836,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 11. tabela יָקָר: feminino → יקרה · masc. plural → יקרים · fem. plural → יקרות
 12. achar o erro: Ache o erro e escreva a frase certa: "Eu quero este vestido." (fala uma mulher) אֲנִי רוֹצָה זֹאת הַשִּׂמְלָה. → **אני רוצה את השמלה הזאת / אני רוצה את השמלה הזו / אני רוצה את השימלה הזאת** ("Este vestido" é הַשִּׂמְלָה הַזֹּאת, e, como é definido, leva אֶת antes.)
 13. achar o erro: Ache o erro e escreva a frase certa. הַמְּעִיל הַזֶּה יְקָרָה. → **המעיל הזה יקר** (מְעִיל é masculino: יָקָר.)
-14. montar: "Tem um tamanho menor?" → **יֵשׁ מִדָּה יוֹתֵר קְטַנָּה?**
+14. montar: "Tem um tamanho menor?" → **יֵשׁ מִדָּה יוֹתֵר קְטַנָּה** (também: יֵשׁ מִדָּה קְטַנָּה יוֹתֵר)
 15. montar: "Dá para pagar no cartão?" → **אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?**
 16. conversa: O vendedor: אֶפְשָׁר לַעֲזוֹר? → **כֵּן, כַּמָּה עוֹלֶה הַמְּעִיל הַזֶּה?** / לֹא, אֵין לִי. / בְּתֵאָבוֹן! 
 17. conversa: Noa: זֶה יָקָר מִדַּי. → **יֵשׁ גַּם מִבְצָע: שְׁלוֹשִׁים שֶׁקֶל.** / כֵּן, זֶה קָרוֹב. / מַזָּל טוֹב! 
@@ -846,17 +846,17 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 21. ditado: יָקָר מִדַּי → **יקר מדי**
 22. escrever: "a loja" → **החנות**
 23. escrever: "suéter, blusa de frio" → **סוודר**
-24. escrever: "demais (caro demais)" → **מידי / מדי**
+24. escrever: "demais (caro demais)" → **מדי**
 25. completar: Complete a fala do diálogo: "É caro demais… Tem alguma coisa mais barata?": זֶה ___ מִדַּי… יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל? → **יקר**
 26. completar: Complete a fala do diálogo: "Ficou um pouco grande. Tem um tamanho menor?": הִיא קְצָת גְּדוֹלָה. יֵשׁ ___ יוֹתֵר קְטַנָּה? → **מידה / מדה**
 27. falar
-28. escrita livre: Você está numa loja. Pergunte o preço de uma roupa, peça outra cor ou outro tamanho, e diga como vai pagar. (exemplo: כַּמָּה עוֹלֶה הַסְּוֶודֶר הַזֶּה? יֵשׁ בְּאָפֹר? יֵשׁ מִדָּה יוֹתֵר גְּדוֹלָה? אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?)
+28. escrita livre: Você está numa loja. Pergunte o preço de uma roupa, peça outra cor ou outro tamanho, e diga como vai pagar. (exemplo: כַּמָּה עוֹלֶה הַסְּוֶדֶר הַזֶּה? יֵשׁ בְּאָפֹר? יֵשׁ מִדָּה יוֹתֵר גְּדוֹלָה? אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?)
 
 ### Unidade 15: Quando? Meses, datas e o tempo
 
 **Objetivo:** Dizer em que mês e em que dia é alguma coisa, falar de amanhã e da semana que vem, e conversar sobre o tempo (calor, frio, chuva, graus).
 
-**A situação:** O Dani quer organizar uma festa surpresa para a Noa e precisa descobrir quando é o aniversário dela. A conversa acaba no tempo, e numa surpresa para a Noa também.
+**A situação:** O Dani quer organizar uma festa para a Noa e precisa descobrir quando é o aniversário dela. A conversa acaba no tempo, e numa surpresa para a Noa.
 
 **Em Israel · O ano em Israel:** O verão israelense é longo e seco, e quase não chove entre maio e setembro. A chuva vem no inverno, mais ou menos de novembro a março, e em Jerusalém às vezes até neva. Na primavera e no outono aparece o חַמְסִין, um vento quente e seco do deserto que pode subir a temperatura de um dia para o outro.
 
@@ -890,8 +890,8 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - חַם (cham) = quente; faz calor
 - קַר (kar) = frio; faz frio
 - חַם לִי / קַר לִי (cham li / kar li) = estou com calor / estou com frio
-- גֶּשֶׁם (géshem) = chuva
-- יוֹרֵד גֶּשֶׁם (yored géshem) = está chovendo
+- גֶּשֶׁם (guéshem) = chuva
+- יוֹרֵד גֶּשֶׁם (yored guéshem) = está chovendo
 - שֶׁמֶשׁ (shémesh) = sol
 - מְעֻנָּן (meunán) = nublado
 - רוּחַ (rúach) = vento
@@ -908,8 +908,8 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Gramática**
 
-1. **Em junho, no verão.** "Em" + mês é בְּ grudado: בְּיוּנִי, בְּמַאי, בְּאוֹגוּסְט. As estações levam artigo: בַּקַּיִץ, בַּחֹרֶף, בָּאָבִיב, בַּסְּתָו. Os nomes dos meses são os mesmos do português, com sotaque israelense.
-   - Exemplo: יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּמַרְץ. = O meu aniversário é em março.
+1. **Em junho, no verão.** "Em" + mês é בְּ grudado: בְּיוּנִי, בְּמַאי, בְּאוֹגוּסְט. As estações levam artigo: בַּקַּיִץ, בַּחֹרֶף, בָּאָבִיב, בַּסְּתָו. Os nomes dos meses são os internacionais, parecidos com os do português, com sotaque israelense.
+   - Exemplo: יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּמֶרְץ. = O meu aniversário é em março.
    - Exemplo: בַּחֹרֶף קַר בִּירוּשָׁלַיִם. = No inverno faz frio em Jerusalém.
 2. **A data: o dia, e depois o mês.** A data vem na ordem do português, com בְּ duas vezes: בְּעֶשְׂרִים בְּיוּנִי (em 20 de junho), בִּשְׁלוֹשִׁים בְּאַפְּרִיל (em 30 de abril). Escrita, é como no Brasil: 20/6. Os dias de 1 a 19 têm um detalhe de gênero que fica para a Unidade 19; por enquanto, leia-os nos números.
    - Erro comum: O americano escreve o mês primeiro (6/20). Em Israel, como no Brasil, o dia vem antes: 20/6.
@@ -925,8 +925,8 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - Noa: בְּעֶשְׂרִים בְּיוּנִי. לָמָּה? (beesrim beyuni. láma?) = Em 20 de junho. Por quê?
 - Dani: סְתָם… אֲנִי רוֹצֶה לַעֲשׂוֹת מְסִבָּה בַּיָּם. בְּיוּנִי חַם, נָכוֹן? (stam… aní rotsé laasót mesibá bayám. beyuni cham, nachon?) = Por nada… Quero fazer uma festa na praia. Em junho faz calor, né?
 - Noa: חַם מְאֹד! יֵשׁ שְׁלוֹשִׁים מַעֲלוֹת. (cham meod! yesh shloshim maalót.) = Muito calor! Faz trinta graus.
-- Dani: וְאֵין גֶּשֶׁם? (veein géshem?) = E não chove?
-- Noa: לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף. (lo. beYisrael yored géshem rak bachóref.) = Não. Em Israel só chove no inverno.
+- Dani: וְאֵין גֶּשֶׁם? (veein guéshem?) = E não chove?
+- Noa: לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף. (lo. beYisrael yored guéshem rak bachóref.) = Não. Em Israel só chove no inverno.
 - Dani: וּבִבְרָזִיל בְּיוּנִי זֶה חֹרֶף! (uviVrazil beyuni ze chóref!) = E no Brasil, junho é inverno!
 - Noa: בֶּאֱמֶת? חֹרֶף בְּיוּנִי? מְשֻׁגָּע! (beemet? chóref beyuni? meshugá!) = Sério? Inverno em junho? Que loucura!
 - Dani: כֵּן. בְּיוּלִי קַר לִי בְּסָאוֹ פָּאוּלוֹ. (ken. beyuli kar li beSão Paulo.) = É. Em julho eu passo frio em São Paulo.
@@ -943,7 +943,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - מֶזֶג הָאֲוִיר לְמָחָר (mézeg haavir lemachar) = O tempo para amanhã
 - תֵּל אָבִיב: שֶׁמֶשׁ, 28 מַעֲלוֹת (Tel Aviv: shémesh, esrim ushmoné maalót) = Tel Aviv: sol, 28 graus
 - יְרוּשָׁלַיִם: מְעֻנָּן, 22 מַעֲלוֹת (Yerushaláyim: meunán, esrim ushtáyim maalót) = Jerusalém: nublado, 22 graus
-- חֵיפָה: גֶּשֶׁם, 20 מַעֲלוֹת (Cheifa: géshem, esrim maalót) = Haifa: chuva, 20 graus
+- חֵיפָה: גֶּשֶׁם, 20 מַעֲלוֹת (Cháifa: guéshem, esrim maalót) = Haifa: chuva, 20 graus
 - אֵילַת: חַם מְאֹד, 38 מַעֲלוֹת (Eilat: cham meod, shloshim ushmoné maalót) = Eilat: muito calor, 38 graus
 - P1. escolha: Onde vai chover amanhã? → **Em Haifa** / Em Tel Aviv / Em Eilat 
 - P2. escolha: Onde vai fazer mais calor? → **Em Eilat** / Em Jerusalém / Em Haifa 
@@ -960,11 +960,11 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 7. escolha: Qual é a pergunta certa para saber o aniversário da Noa? → **מָתַי יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?** / אֵיפֹה יוֹם הַהֻלֶּדֶת שֶׁלָּךְ? / מָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ? se escolher "אֵיפֹה יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?": אֵיפֹה é "onde". A pergunta é "quando": מָתַי. · se escolher "מָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ?": שֶׁלְּךָ é para homem; para a Noa, שֶׁלָּךְ.
 8. V ou F: Em Israel quase não chove no verão. → **Verdadeiro** (A chuva vem no inverno.)
 9. V ou F: מָחָר quer dizer "ontem". → **Falso** (מָחָר é amanhã.)
-10. separar (בַּקַּיִץ / בַּחֹרֶף): חַם מְאֹד → בַּקַּיִץ · יוֹרֵד גֶּשֶׁם → בַּחֹרֶף · שְׁלוֹשִׁים וְחָמֵשׁ מַעֲלוֹת → בַּקַּיִץ · סְוֶודֶר וּמְעִיל → בַּחֹרֶף · הוֹלְכִים לַיָּם → בַּקַּיִץ · קַר בַּלַּיְלָה → בַּחֹרֶף
-11. achar o erro: Ache o erro e escreva a frase certa: "Hoje faz calor." הַיּוֹם הוּא חַם. → **היום חם** (O tempo não tem sujeito: הַיּוֹם חַם.)
-12. achar o erro: Uma mulher quer dizer que está com frio. Ache o erro e escreva a frase certa. אֲנִי קָרָה. → **קר לי** ("Estou com frio" é קַר לִי, igual para homem e mulher.)
-13. montar: "No inverno faz frio em Jerusalém." → **בַּחֹרֶף קַר בִּירוּשָׁלַיִם**
-14. montar: "O meu aniversário é em março." → **יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּמַרְץ**
+10. separar (בַּקַּיִץ / בַּחֹרֶף): חַם מְאֹד → בַּקַּיִץ · יוֹרֵד גֶּשֶׁם → בַּחֹרֶף · שְׁלוֹשִׁים וְחָמֵשׁ מַעֲלוֹת → בַּקַּיִץ · סְוֶדֶר וּמְעִיל → בַּחֹרֶף · הוֹלְכִים לַיָּם → בַּקַּיִץ · קַר בַּלַּיְלָה → בַּחֹרֶף
+11. achar o erro: Ache o erro e escreva a frase certa: "Hoje faz calor." הַיּוֹם הוּא חַם. → **היום חם / חם היום** (O tempo não tem sujeito: הַיּוֹם חַם.)
+12. achar o erro: Uma mulher quer dizer que está com frio. Ache o erro e escreva a frase certa. אֲנִי קָרָה. → **קר לי / לי קר** ("Estou com frio" é קַר לִי, igual para homem e mulher.)
+13. montar: "No inverno faz frio em Jerusalém." → **בַּחֹרֶף קַר בִּירוּשָׁלַיִם** (também: בִּירוּשָׁלַיִם קַר בַּחֹרֶף / קַר בִּירוּשָׁלַיִם בַּחֹרֶף / בַּחֹרֶף בִּירוּשָׁלַיִם קַר / בִּירוּשָׁלַיִם בַּחֹרֶף קַר / קַר בַּחֹרֶף בִּירוּשָׁלַיִם)
+14. montar: "O meu aniversário é em março." → **יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּמֶרְץ** (também: בְּמֶרְץ יוֹם הַהֻלֶּדֶת שֶׁלִּי)
 15. conversa: Maya: מַה מֶּזֶג הָאֲוִיר הַיּוֹם? → **חַם, וְיֵשׁ שֶׁמֶשׁ.** / בְּשָׁעָה שֶׁבַע. / אֲנִי בְּסֵדֶר. 
 16. conversa: Dani: הַיּוֹם יוֹם הַהֻלֶּדֶת שֶׁלִּי! → **יוֹם הֻלֶּדֶת שָׂמֵחַ!** / בְּתֵאָבוֹן! / לֹא נוֹרָא. 
 17. ordenar: 1) מָתַי אַתָּה נוֹסֵעַ לְאֵילַת? 2) בְּאוֹגוּסְט. 3) בְּאוֹגוּסְט? חַם שָׁם מְאֹד! 4) נָכוֹן, אֲבָל יֵשׁ יָם.
@@ -1008,6 +1008,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - אַחֵר · אַחֶרֶת · אֲחֵרִים · אֲחֵרוֹת = outro
 - שֶׁ־ (she-) = que (grudado: "acho que…")
 - לְהִפָּגֵשׁ (lehipaguésh) = encontrar-se
+- נִפָּגֵשׁ (nipaguésh) = a gente se encontra, combinado (expressão fixa, como נִתְרָאֶה)
 - מָתַי נוֹחַ לְךָ? (matai nóach lechá?) = quando fica bom para você? (a ele)
 - זֶה מַתְאִים לִי (ze matím li) = isso fica bom para mim
 - עַכְשָׁיו (achshav) = agora
@@ -1023,7 +1024,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 **Gramática**
 
 1. **"Que" é שֶׁ־, grudado.** Para "acho que", "diz que", "sei que", o hebraico usa שֶׁ־, grudado na palavra seguinte: אֲנִי חוֹשֵׁב שֶׁהוּא בָּא (acho que ele vem), הִיא אוֹמֶרֶת שֶׁזֶּה טוֹב (ela diz que está bom), אֲנִי יוֹדַעַת שֶׁאַתָּה עָסוּק (eu sei que você está ocupado).
-   - Erro comum: No português falado, o "que" às vezes cai ("acho ele vem"). Em hebraico, não: sem שֶׁ־ a frase fica quebrada. E não confunda com כִּי, que é "porque".
+   - Erro comum: No português falado, o "que" às vezes cai ("acho ele vem"). Em hebraico, não: sem שֶׁ־ a frase fica quebrada. E não confunda com כִּי: na conversa, כִּי é "porque" (em texto formal, como jornal, כִּי às vezes aparece também como "que"). Na fala, "que" é שֶׁ־.
    - Exemplo: אֲנִי חוֹשֶׁבֶת שֶׁנֹּעָה רוֹצָה לָבוֹא. = Eu acho que a Noa quer vir. (mulher)
    - Exemplo: הוּא אוֹמֵר שֶׁהוּא לֹא יָכוֹל. = Ele diz que não pode.
 2. **Recusar com educação.** O israelense é direto, mas recusa com uma desculpa e um motivo: אֲנִי מִצְטַעֵר, אֲנִי לֹא יָכוֹל, כִּי… E propõe outro dia: אוּלַי מָחָר? אוּלַי בְּיוֹם אַחֵר?
@@ -1035,18 +1036,18 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 **Diálogo: Uma ligação**
 
 - Maya: הַלּוֹ? (haló?) = Alô?
-- Dani: הַי מַיָּה, זֶה דָּנִי. מַה נִשְׁמָע? (hai Maya, ze Dani. ma nishmá?) = Oi, Maya, é o Dani. Tudo bem?
-- Maya: בְּסֵדֶר. מָה קוֹרֶה? (beséder. ma koré?) = Tudo. O que houve?
+- Dani: הַי מַיָּה, זֶה דָּנִי. מַה נִּשְׁמָע? (hai Maya, ze Dani. ma nishmá?) = Oi, Maya, é o Dani. Tudo bem?
+- Maya: בְּסֵדֶר. מָה קוֹרֶה? (beséder. ma koré?) = Tudo. E aí, o que manda?
 - Dani: אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ הָעֶרֶב? (at rotsá laléchet lakolnóa haérev?) = Você quer ir ao cinema hoje à noite?
 - Maya: הָעֶרֶב אֲנִי לֹא יְכוֹלָה, אֲנִי מִצְטַעֶרֶת. יֵשׁ לִי פְּגִישָׁה. (haérev aní lo yecholá, aní mitstaéret. yesh li pgishá.) = Hoje à noite eu não posso, sinto muito. Tenho um compromisso.
 - Dani: חֲבָל. אָז מָחָר? (chaval. az machar?) = Que pena. Então amanhã?
 - Maya: מָחָר מַתְאִים לִי. בְּאֵיזוֹ שָׁעָה? (machar matím li. beéizo shaá?) = Amanhã fica bom para mim. A que horas?
 - Dani: הַסֶּרֶט בְּתֵשַׁע. נוֹחַ לָךְ? (haséret betésha. nóach lach?) = O filme é às nove. Fica bom para você?
-- Maya: כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁנֹּעָה רוֹצָה לָבוֹא גַּם. (ken. vaaní choshévet sheNoa rotsá lavó gam.) = Fica. E eu acho que a Noa quer vir também.
+- Maya: כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁגַּם נֹעָה רוֹצָה לָבוֹא. (ken. vaaní choshévet shegám Noa rotsá lavó.) = Fica. E eu acho que a Noa também quer vir.
 - Dani: יוֹפִי! אֲנִי שׁוֹלֵחַ לָהּ הוֹדָעָה. (yófi! aní sholéach la hodaá.) = Ótimo! Vou mandar uma mensagem para ela.
 - Maya: סַבָּבָּה. נִתְרָאֶה מָחָר! (sabába. nitraé machar!) = Beleza. Até amanhã!
 - Dani: בַּי! (bai!) = Tchau!
-- glossário: מָה קוֹרֶה? (ma koré?) = o que houve? o que manda?
+- glossário: מָה קוֹרֶה? (ma koré?) = e aí? o que manda? (literalmente: o que está acontecendo?)
 - glossário: בְּאֵיזוֹ שָׁעָה? (beéizo shaá?) = a que horas?
 - glossário: נִתְרָאֶה (nitraé) = a gente se vê (expressão fixa)
 - glossário: בַּי (bai) = tchau (do inglês)
@@ -1058,7 +1059,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - טוֹם: גַּם אֲנִי בָּא. תֵּשַׁע וָחֵצִי מַתְאִים לִי. (Tom: gam aní ba. tésha vachétsi matím li.) = Tom: Eu também vou. Nove e meia fica bom para mim.
 - מַיָּה: סַבָּבָּה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ. (Maya: sabába. nipaguésh leyád hakolnóa.) = Maya: Beleza. A gente se encontra ao lado do cinema.
 - P1. escolha: Por que a Noa pede outro horário? → **Ela volta do trabalho às 8h30** / Ela não gosta de cinema / Ela tem uma festa 
-- P2. escolha: A que horas fica o cinema? → **Às 9h30** / Às 9h / Às 8h30 
+- P2. escolha: No fim, a que horas eles vão ao cinema? → **Às 9h30** / Às 9h / Às 8h30 
 - P3. V ou F: O Tom não vai. → **Falso** (גַּם אֲנִי בָּא: ele vai também.)
 - P4. escolha: Onde eles se encontram? → **Ao lado do cinema** / Na casa da Maya / No trabalho da Noa 
 
@@ -1066,7 +1067,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 1. ligar: הַלּוֹ = alô · פְּגִישָׁה = compromisso · הוֹדָעָה = mensagem · קוֹלְנוֹעַ = cinema · מְסִבָּה = festa
 2. ligar: אוֹמֵר = dizer · חוֹשֵׁב = pensar, achar · שׁוֹמֵעַ = ouvir · שׁוֹלֵחַ = mandar, enviar · מַזְמִין = convidar
-3. escolha: "Eu acho que ele vem" → **אֲנִי חוֹשֵׁב שֶׁהוּא בָּא.** / אֲנִי חוֹשֵׁב הוּא בָּא. / אֲנִי חוֹשֵׁב כִּי הוּא בָּא. se escolher "אֲנִי חוֹשֵׁב הוּא בָּא.": Quase. Em hebraico o "que" não cai: שֶׁ־, grudado em הוּא. · se escolher "אֲנִי חוֹשֵׁב כִּי הוּא בָּא.": כִּי é "porque". "Que" é שֶׁ־.
+3. escolha: "Eu acho que ele vem" → **אֲנִי חוֹשֵׁב שֶׁהוּא בָּא.** / אֲנִי חוֹשֵׁב הוּא בָּא. / אֲנִי חוֹשֵׁב כִּי הוּא בָּא. se escolher "אֲנִי חוֹשֵׁב הוּא בָּא.": Quase. Em hebraico o "que" não cai: שֶׁ־, grudado em הוּא. · se escolher "אֲנִי חוֹשֵׁב כִּי הוּא בָּא.": Na conversa, כִּי é "porque"; para "que", use שֶׁ־.
 4. escolha: "Ela diz que não pode" → **הִיא אוֹמֶרֶת שֶׁהִיא לֹא יְכוֹלָה.** / הִיא אוֹמֵר שֶׁהִיא לֹא יְכוֹלָה. / הִיא אוֹמֶרֶת הִיא לֹא יְכוֹלָה. se escolher "הִיא אוֹמֵר שֶׁהִיא לֹא יְכוֹלָה.": אוֹמֵר é a forma de homem. Para ela: אוֹמֶרֶת. · se escolher "הִיא אוֹמֶרֶת הִיא לֹא יְכוֹלָה.": Faltou o שֶׁ־ ("que").
 5. tabela אוֹמֵר: mulher → אומרת · homens → אומרים · mulheres → אומרות
 6. tabela חוֹשֵׁב: mulher → חושבת · homens → חושבים · mulheres → חושבות
@@ -1076,9 +1077,9 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 10. V ou F: No telefone, muitos israelenses atendem só com כֵּן?. → **Verdadeiro** 
 11. achar o erro: Ache o erro e escreva a frase certa. אֲנִי חוֹשֶׁבֶת זֶה טוֹב. → **אני חושבת שזה טוב** (Faltou o שֶׁ־: שֶׁזֶּה טוֹב.)
 12. achar o erro: Ache o erro e escreva a frase certa. הוּא אוֹמֶרֶת שֶׁהוּא בָּא. → **הוא אומר שהוא בא** (Para ele: אוֹמֵר.)
-13. montar: "Sinto muito, hoje eu não posso. (fala uma mulher)" → **אֲנִי מִצְטַעֶרֶת, הַיּוֹם אֲנִי לֹא יְכוֹלָה**
-14. montar: "Amanhã fica bom para mim." → **מָחָר מַתְאִים לִי**
-15. conversa: Maya: הַלּוֹ? → **הַי, זֶה טוֹם. מַה נִשְׁמָע?** / לְהִתְרָאוֹת! / בְּתֵאָבוֹן. 
+13. montar: "Sinto muito, hoje eu não posso. (fala uma mulher)" → **אֲנִי מִצְטַעֶרֶת, הַיּוֹם אֲנִי לֹא יְכוֹלָה** (também: אֲנִי מִצְטַעֶרֶת, אֲנִי לֹא יְכוֹלָה הַיּוֹם / אֲנִי מִצְטַעֶרֶת, אֲנִי הַיּוֹם לֹא יְכוֹלָה)
+14. montar: "Amanhã fica bom para mim." → **מָחָר מַתְאִים לִי** (também: מַתְאִים לִי מָחָר)
+15. conversa: Maya: הַלּוֹ? → **הַי, זֶה טוֹם. מַה נִּשְׁמָע?** / לְהִתְרָאוֹת! / בְּתֵאָבוֹן. 
 16. conversa: Dani: אַתְּ רוֹצָה לָבוֹא לַמְּסִבָּה? → **בְּשִׂמְחָה! מָתַי?** / חַם לִי. / הַחֶשְׁבּוֹן, בְּבַקָּשָׁה. 
 17. ordenar: 1) אַתָּה רוֹצֶה לִרְאוֹת סֶרֶט? 2) הָעֶרֶב אֲנִי לֹא יָכוֹל. 3) אָז מָחָר? 4) מָחָר מַתְאִים לִי.
 18. ouvir: [ouve: אֲנִי לֹא שׁוֹמַעַת, רֶגַע.] O que ela diz? → **Não estou ouvindo, espera** / Não posso, desculpa / Não sei, espera 
@@ -1088,7 +1089,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 22. escrever: "hoje à noite" → **הערב**
 23. escrever: "cinema" → **קולנוע**
 24. completar: Complete a fala do diálogo: "Ótimo! Vou mandar uma mensagem para ela.": יוֹפִי! אֲנִי ___ לָהּ הוֹדָעָה. → **שולח**
-25. completar: Complete a fala do diálogo: "Fica. E eu acho que a Noa quer vir também.": כֵּן. וַאֲנִי ___ שֶׁנֹּעָה רוֹצָה לָבוֹא גַּם. → **חושבת**
+25. completar: Complete a fala do diálogo: "Fica. E eu acho que a Noa também quer vir.": כֵּן. וַאֲנִי ___ שֶׁגַּם נֹעָה רוֹצָה לָבוֹא. → **חושבת**
 26. falar
 27. escrita livre: Escreva uma mensagem convidando alguém para sair: o quê, quando e onde. (exemplo: אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ מָחָר? הַסֶּרֶט בִּשְׁמוֹנֶה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ.)
 
@@ -1141,10 +1142,9 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
    - Exemplo: אֲנַחְנוּ מְחַכִּים לָכֶם בַּקַּבָּלָה. = Estamos esperando vocês na recepção.
 2. **Já e ainda não.** כְּבָר é "já" e עוֹד לֹא é "ainda não", antes do que se diz: הַחֶדֶר כְּבָר מוּכָן? (o quarto já está pronto?) · עוֹד לֹא (ainda não) · הַחֶדֶר עוֹד לֹא מוּכָן.
    - Erro comum: Não use עוֹד sozinho para "ainda não": a resposta curta é עוֹד לֹא, as duas palavras.
-3. **De… até…: מִ־… עַד….** Para horários: מִ־ grudado no começo e עַד no fim: מִשֶּׁבַע עַד עֶשֶׂר (das sete às dez), מִיּוֹם רִאשׁוֹן עַד יוֹם חֲמִישִׁי. É o mesmo מִ־ de מִבְּרָזִיל (Unidade 1).
+3. **De… até…: מִ־… עַד….** Para horários: מִ־ grudado no começo e עַד no fim: מִשֶּׁבַע עַד עֶשֶׂר (das sete às dez), מִיּוֹם רִאשׁוֹן עַד יוֹם חֲמִישִׁי. É o mesmo מִ־ de מִבְּרָזִיל (Unidade 1). Antes de א, ה, ח, ע e ר, ele vira מֵ־: מֵאַחַת עַד שְׁתַּיִם, מֵחָמֵשׁ עַד שֵׁשׁ.
    - Exemplo: אֲרוּחַת הַבֹּקֶר מִשֶּׁבַע עַד עֶשֶׂר. = O café da manhã é das sete às dez.
-4. **O primeiro, o segundo, o terceiro andar.** Os andares usam os mesmos números de ordem dos dias da semana (Unidade 7): יוֹם שְׁלִישִׁי é "o terceiro dia". Como קוֹמָה é feminina: הַקּוֹמָה הָרִאשׁוֹנָה, הַשְּׁנִיָּה, הַשְּׁלִישִׁית.
-   - Erro comum: No Brasil o "primeiro andar" fica acima do térreo; em Israel também: o térreo é קוֹמַת קַרְקַע, e a קוֹמָה רִאשׁוֹנָה fica em cima dele.
+4. **O primeiro, o segundo, o terceiro andar.** Os andares usam os mesmos números de ordem dos dias da semana (Unidade 7): יוֹם שְׁלִישִׁי é "o terceiro dia". Como קוֹמָה é feminina: הַקּוֹמָה הָרִאשׁוֹנָה, הַשְּׁנִיָּה, הַשְּׁלִישִׁית. Boa notícia: é igual ao Brasil. O térreo é קוֹמַת קַרְקַע ("andar do chão") e a קוֹמָה רִאשׁוֹנָה fica em cima dele.
 
 **Diálogo: Check-in em Eilat**
 
@@ -1168,10 +1168,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - שְׂדֵה הַתְּעוּפָה בֶּן גּוּרְיוֹן (sdé hateufá Ben Gurion) = Aeroporto Ben Gurion
 - טִיסָה לְסָאוֹ פָּאוּלוֹ: 23:40 (tisá leSão Paulo: esrim veshalosh arbaím) = Voo para São Paulo: 23h40
 - שַׁעַר 7 (sháar shéva) = Portão 7
-- הַטִּיסָה מְאֻחֶרֶת בְּשָׁעָה (hatisá meuchéret beshaá) = O voo está atrasado uma hora
+- הַטִּיסָה מְאַחֶרֶת בְּשָׁעָה (hatisá meachéret beshaá) = O voo está atrasado uma hora
 - P1. escolha: Para onde vai o voo? → **São Paulo** / Rio / Tel Aviv 
 - P2. escolha: Qual é o portão? → **7** / 23 / 40 
-- P3. V ou F: O voo está no horário. → **Falso** (מְאֻחֶרֶת בְּשָׁעָה: atrasado uma hora. מְאֻחֶרֶת é o feminino de מְאֻחָר (Unidade 9), porque טִיסָה é feminina.)
+- P3. V ou F: O voo está no horário. → **Falso** (מְאַחֶרֶת בְּשָׁעָה: atrasado uma hora. מְאַחֶרֶת é "está atrasada" (o verbo מְאַחֵר, que volta na Unidade 20), no feminino porque טִיסָה é feminina. Não é מְאֻחָר (Unidade 9), que é "tarde".)
 
 **Exercícios**
 
@@ -1192,7 +1192,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 15. conversa: A recepcionista: בְּרוּכִים הַבָּאִים! יֵשׁ לָכֶם הַזְמָנָה? → **כֵּן, עַל שֵׁם סִילְבָה.** / לֹא, תּוֹדָה, אֲנִי צִמְחוֹנִי. / בְּאוֹגוּסְט. 
 16. conversa: Tom: מָה הַסִּיסְמָה שֶׁל הַוַּויְפַיי? → **הִיא עַל הַכַּרְטִיס.** / בַּקּוֹמָה הַשְּׁנִיָּה. / עַד יוֹם שִׁשִּׁי. 
 17. ordenar: 1) שָׁלוֹם, יֵשׁ לִי הַזְמָנָה. 2) עַל אֵיזֶה שֵׁם? 3) סִילְבָה, טוֹם סִילְבָה. 4) כֵּן, הִנֵּה הַמַּפְתֵּחַ.
-18. ouvir: [ouve: הַטִּיסָה מְאֻחֶרֶת.] O que aconteceu com o voo? → **Está atrasado** / Foi cancelado / Já saiu 
+18. ouvir: [ouve: הַטִּיסָה מְאַחֶרֶת.] O que aconteceu com o voo? → **Está atrasado** / Foi cancelado / Já saiu 
 19. ouvir: [ouve: אֲרוּחַת בֹּקֶר עַד עֶשֶׂר.] O que você ouviu? → **Café da manhã até as dez** / Café da manhã às dez / Café da manhã a partir das dez 
 20. ditado: דַּרְכּוֹן → **דרכון**
 21. escrever: ""das sete" (numa palavra só)" → **משבע**
@@ -1212,7 +1212,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Em Israel · Kupat cholim, 101 e "refuá shlemá":** Todo morador de Israel é ligado a uma קֻפַּת חוֹלִים, um dos planos de saúde do sistema público, e marca as consultas por aplicativo ou telefone. Turista precisa de seguro-viagem. Em emergência, o número da ambulância é 101 (a polícia é 100, os bombeiros, 102). E a quem está doente se deseja רְפוּאָה שְׁלֵמָה, "uma cura completa".
 
-**Curiosidade · Bola ou comprimido?:** כַּדּוּר é "bola" (o כַּדּוּר de כַּדּוּרֶגֶל, Unidade 10) e também "comprimido": é tudo o que é redondo. O planeta Terra é כַּדּוּר הָאָרֶץ, "a bola da terra". Quem decide o sentido é a frase: na farmácia, ninguém vai lhe vender uma bola.
+**Curiosidade · Bola ou comprimido?:** כַּדּוּר é "bola" (o כַּדּוּר de כַּדּוּרֶגֶל, Unidade 10) e também "comprimido" (e até "bala" de arma): a ideia é a de uma coisa em forma de bola. O planeta Terra é כַּדּוּר הָאָרֶץ, "a bola da terra". Quem decide o sentido é a frase: na farmácia, ninguém vai lhe vender uma bola.
 
 **Eu consigo…**
 
@@ -1244,14 +1244,15 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - הַרְבֵּה (harbé) = muito, bastante (quantidade)
 - רְפוּאָה שְׁלֵמָה! (refuá shlemá!) = melhoras!
 - עֶזְרָה! (ezrá!) = socorro! ajuda!
+- הַצִּילוּ! (hatsílu!) = socorro! (o grito de emergência)
 
 **Gramática**
 
 1. **"Está doendo": o verbo concorda com o que dói.** O hebraico diz "dói para mim a cabeça": כּוֹאֵב לִי הָרֹאשׁ. Quem recebe a dor vem com לְ (לִי, לְךָ, לָהּ…), e o verbo concorda com a PARTE DO CORPO: כּוֹאֵב לִי הָרֹאשׁ (masculino), כּוֹאֶבֶת לִי הַבֶּטֶן (feminino), כּוֹאֲבוֹת לִי הָרַגְלַיִם (plural feminino).
-   - Erro comum: A mulher com dor de cabeça tende a dizer כּוֹאֶבֶת, no feminino, porque ELA é mulher. Mas quem dói é a cabeça, e רֹאשׁ é masculino: כּוֹאֵב לִי הָרֹאשׁ, para homem e para mulher.
+   - Erro comum: A mulher com dor de cabeça tende a dizer כּוֹאֶבֶת, no feminino, porque ELA é mulher. Mas quem dói é a cabeça, e רֹאשׁ é masculino: כּוֹאֵב לִי הָרֹאשׁ, para homem e para mulher. Na rua você também vai ouvir כּוֹאֵב לִי para tudo, no masculino (כּוֹאֵב לִי הַבֶּטֶן). Entenda, mas fale e escreva com a concordância.
    - Exemplo: כּוֹאֵב לָהּ הַגָּרוֹן. = Ela está com dor de garganta.
    - Exemplo: כּוֹאֲבוֹת לִי הַשִּׁנַּיִם. = Estou com dor de dente (nos dentes).
-2. **Os pares do corpo: ־ַיִם, e femininos.** O que vem em par termina em ־ַיִם (Unidade 14): עֵינַיִם, אָזְנַיִם, יָדַיִם, רַגְלַיִם, שִׁנַּיִם. Essas partes do corpo são femininas, mesmo sem o ־ָה: הָעַיִן כּוֹאֶבֶת, הַיָּד כּוֹאֶבֶת.
+2. **Os pares do corpo: ־ַיִם, e femininos.** As partes do corpo que vêm em par terminam em ־ַיִם (Unidade 14): עֵינַיִם, אָזְנַיִם, יָדַיִם, רַגְלַיִם (e também שִׁנַּיִם, dentes, que não são um par mas usam a mesma forma). Todas estas são femininas, mesmo sem o ־ָה: הָעַיִן כּוֹאֶבֶת, הַיָּד כּוֹאֶבֶת.
 3. **Como você está se sentindo?.** אֵיךְ אַתָּה מַרְגִּישׁ? (a ele) / אֵיךְ אַתְּ מַרְגִּישָׁה? (a ela). Respostas: אֲנִי מַרְגִּישׁ טוֹב, לֹא טוֹב, יוֹתֵר טוֹב (melhor). E para dizer que está doente: אֲנִי חוֹלֶה / אֲנִי חוֹלָה, ou יֵשׁ לִי חֹם (estou com febre).
    - Erro comum: "Estou com febre" usa o יֵשׁ לִי da Unidade 6: יֵשׁ לִי חֹם, "tenho febre". Não é אֲנִי חֹם.
 4. **O que é preciso fazer: צָרִיךְ sem "quem".** צָרִיךְ + infinitivo, sem sujeito, é "é preciso": צָרִיךְ לִשְׁתּוֹת הַרְבֵּה מַיִם (é preciso beber muita água), צָרִיךְ לָלֶכֶת לָרוֹפֵא. Com sujeito, é a Unidade 10: אַתְּ צְרִיכָה לָנוּחַ.
@@ -1295,7 +1296,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 2. ligar: עֵינַיִם = olhos · אָזְנַיִם = orelhas · שִׁנַּיִם = dentes · יָדַיִם = mãos · רַגְלַיִם = pernas
 3. escolha: "Estou com dor de cabeça" (fala uma mulher) → **כּוֹאֵב לִי הָרֹאשׁ.** / כּוֹאֶבֶת לִי הָרֹאשׁ. / אֲנִי כּוֹאֶבֶת הָרֹאשׁ. se escolher "כּוֹאֶבֶת לִי הָרֹאשׁ.": Quase. O verbo concorda com o que dói, não com quem fala: רֹאשׁ é masculino, então כּוֹאֵב, mesmo para uma mulher. · se escolher "אֲנִי כּוֹאֶבֶת הָרֹאשׁ.": O hebraico diz "dói PARA mim a cabeça": כּוֹאֵב לִי הָרֹאשׁ.
 4. escolha: "Estou com dor de barriga" → **כּוֹאֶבֶת לִי הַבֶּטֶן.** / כּוֹאֵב לִי הַבֶּטֶן. se escolher "כּוֹאֵב לִי הַבֶּטֶן.": בֶּטֶן é feminina: כּוֹאֶבֶת.
-5. escolha: "As minhas pernas estão doendo" → **כּוֹאֲבוֹת לִי הָרַגְלַיִם.** / כּוֹאֵב לִי הָרַגְלַיִם. / כּוֹאֲבִים לִי הָרַגְלַיִם. se escolher "כּוֹאֵב לִי הָרַגְלַיִם.": São as duas pernas: o verbo vai para o plural. · se escolher "כּוֹאֲבִים לִי הָרַגְלַיִם.": Plural, sim, mas feminino: as partes do corpo em par são femininas. כּוֹאֲבוֹת.
+5. escolha: "As minhas pernas estão doendo" → **כּוֹאֲבוֹת לִי הָרַגְלַיִם.** / כּוֹאֵב לִי הָרַגְלַיִם. / כּוֹאֲבִים לִי הָרַגְלַיִם. se escolher "כּוֹאֵב לִי הָרַגְלַיִם.": São as duas pernas: o verbo vai para o plural. · se escolher "כּוֹאֲבִים לִי הָרַגְלַיִם.": Plural, sim, mas feminino: רֶגֶל é feminina. כּוֹאֲבוֹת.
 6. separar (כּוֹאֵב לִי / כּוֹאֶבֶת לִי): הָרֹאשׁ → כּוֹאֵב לִי · הַגָּרוֹן → כּוֹאֵב לִי · הַבֶּטֶן → כּוֹאֶבֶת לִי · הַיָּד → כּוֹאֶבֶת לִי · הַגַּב → כּוֹאֵב לִי · הָרֶגֶל → כּוֹאֶבֶת לִי
 7. tabela מַרְגִּישׁ: mulher → מרגישה · homens → מרגישים · mulheres → מרגישות
 8. escolha: O que se diz para alguém doente? → **רְפוּאָה שְׁלֵמָה!** / בְּתֵאָבוֹן! / מַזָּל טוֹב! 
@@ -1359,21 +1360,21 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - כּוֹס מַיִם (kos máyim) = copo de água
 - מִיץ תַּפּוּזִים (mits tapuzim) = suco de laranja
 - עוּגַת שׁוֹקוֹלָד (ugat shokolad) = bolo de chocolate
-- בֶּן דּוֹד / בַּת דּוֹדָה (ben dod / bat dodá) = primo / prima ("filho do tio")
+- בֶּן דּוֹד / בַּת דּוֹדָה (ben dod / bat dodá) = primo / prima ("filho do tio"; para "prima" também se diz בַּת דּוֹד)
 - בְּנֵי דּוֹדִים (bnei dodim) = primos
 
 **Gramática**
 
-1. **Os números que você sabe são os do feminino.** A série da Unidade 7 (אַחַת, שְׁתַּיִם, שָׁלוֹשׁ…) é a de contar, a das horas e dos preços, e é também a que se usa com palavras FEMININAS: שָׁלוֹשׁ בָּנוֹת, חָמֵשׁ דַּקּוֹת, שֶׁבַע שָׁעוֹת. Com palavras MASCULINAS, de 3 a 10, usa-se outra série, que termina em ־ָה: שְׁלוֹשָׁה יְלָדִים, אַרְבָּעָה יָמִים, עֲשָׂרָה סְפָרִים. O número vem antes da coisa. O preço, na rua, continua como na Unidade 7: עֶשֶׂר שֶׁקֶל.
+1. **Os números que você sabe são os do feminino.** A série da Unidade 7 (אַחַת, שְׁתַּיִם, שָׁלוֹשׁ…) é a de contar, a das horas e dos preços, e é também a que se usa com palavras FEMININAS: שָׁלוֹשׁ בָּנוֹת, חָמֵשׁ דַּקּוֹת, שֶׁבַע שָׁעוֹת. Com palavras MASCULINAS, de 3 a 10, usa-se outra série, que termina em ־ָה: שְׁלוֹשָׁה יְלָדִים, אַרְבָּעָה יָמִים, עֲשָׂרָה סְפָרִים. O número vem antes da coisa. O preço, na rua, continua como na Unidade 7: עֶשֶׂר שֶׁקֶל. É assim que todo mundo fala; na forma padrão, escrita, שֶׁקֶל é masculino: עֲשָׂרָה שְׁקָלִים.
    - Erro comum: É o contrário do que o olho espera: o ־ָה, que você aprendeu como marca de feminino, aqui aparece no número do MASCULINO. Não é erro de impressão. Treine com pares: שָׁלוֹשׁ בָּנוֹת, שְׁלוֹשָׁה בָּנִים.
    - Exemplo: שָׁלוֹשׁ בָּנוֹת = três filhas
    - Exemplo: שְׁלוֹשָׁה בָּנִים = três filhos
    - Exemplo: אַרְבָּעָה יָמִים בַּשָּׁבוּעַ = quatro dias por semana
 2. **Um e dois têm regras próprias.** "Um" vem DEPOIS da coisa, como um adjetivo: יֶלֶד אֶחָד, יַלְדָּה אַחַת. "Dois", antes da coisa, encurta: שְׁנֵי יְלָדִים, שְׁתֵּי יְלָדוֹת. As formas compridas, שְׁנַיִם e שְׁתַּיִם, são para contar ou responder sozinho: כַּמָּה? שְׁנַיִם.
    - Exemplo: שְׁנֵי אַחִים וְאָחוֹת אַחַת = dois irmãos e uma irmã
-3. **De 11 em diante.** As dezenas (עֶשְׂרִים, שְׁלוֹשִׁים…) e מֵאָה são iguais para os dois gêneros. Só a unidade do fim muda: עֶשְׂרִים וְשִׁשָּׁה יְלָדִים, עֶשְׂרִים וְשֵׁשׁ יְלָדוֹת. De 11 a 19 também há duas séries; no A1, basta reconhecer as do masculino quando ouvir (אַחַד־עָשָׂר, שְׁנֵים־עָשָׂר…).
+3. **De 11 em diante.** As dezenas (עֶשְׂרִים, שְׁלוֹשִׁים…) e מֵאָה são iguais para os dois gêneros. Só a unidade do fim muda: עֶשְׂרִים וְשִׁשָּׁה יְלָדִים, עֶשְׂרִים וְשֵׁשׁ יְלָדוֹת. Atenção: em 21, 22, 31… o número inteiro vem antes da coisa, e o 2 fica na forma comprida: עֶשְׂרִים וְאֶחָד יְלָדִים, עֶשְׂרִים וְאַחַת שָׁעוֹת, עֶשְׂרִים וּשְׁנַיִם יְלָדִים, עֶשְׂרִים וּשְׁתַּיִם יְלָדוֹת. De 11 a 19 também há duas séries; no A1, basta reconhecer as do masculino quando ouvir (אַחַד־עָשָׂר, שְׁנֵים־עָשָׂר…).
    - Erro comum: Na fala do dia a dia, muitos israelenses usam a série feminina para tudo. Você vai ouvir "שָׁלוֹשׁ יְלָדִים". Entenda, mas fale e escreva com a concordância.
-4. **A סְמִיכוּת: duas palavras grudadas.** Várias expressões que você guardou como fixas são, na verdade, uma regra: duas palavras grudadas, em que a segunda diz "de quê". בֵּית סֵפֶר é "casa de livro" (escola); כּוֹס מַיִם, "copo de água". A primeira palavra às vezes muda de forma: בַּיִת → בֵּית, חֶדֶר → חֲדַר, e o ־ָה do feminino vira ־ַת: אֲרוּחָה → אֲרוּחַת בֹּקֶר, תַּחֲנָה → תַּחֲנַת רַכֶּבֶת. No plural masculino, ־ִים vira ־ֵי: בָּנִים → בְּנֵי דּוֹדִים.
+4. **A סְמִיכוּת: duas palavras grudadas.** Várias expressões que você guardou como fixas são, na verdade, uma regra: duas palavras grudadas, em que a segunda diz "de quê". בֵּית סֵפֶר é "casa de livro" (escola); כּוֹס מַיִם, "copo de água". A primeira palavra às vezes muda de forma: בַּיִת → בֵּית, חֶדֶר → חֲדַר, e o ־ָה do feminino vira ־ַת: אֲרוּחָה → אֲרוּחַת בֹּקֶר, תַּחֲנָה → תַּחֲנַת רַכֶּבֶת. No plural masculino, ־ִים vira ־ֵי: בָּנִים → בְּנֵי דּוֹדִים. E você já conhece mais uma: שְׁנֵי, שְׁתֵּי ("dois de", "duas de").
    - Exemplo: אֲרוּחָה → אֲרוּחַת בֹּקֶר = refeição → café da manhã
    - Exemplo: חֶדֶר → חֲדַר שֵׁנָה = quarto → quarto de dormir
 5. **Na סְמִיכוּת, o הַ vai na segunda palavra.** Para dizer "A escola", o artigo entra só na segunda palavra: בֵּית הַסֵּפֶר, חֲדַר הַשֵּׁנָה, יוֹם הַהֻלֶּדֶת (por isso יוֹם הַהֻלֶּדֶת שֶׁלִּי, na Unidade 15). Um adjetivo depois concorda com a PRIMEIRA palavra, e também leva הַ: בֵּית הַחוֹלִים הַגָּדוֹל.
@@ -1421,7 +1422,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 8. escolha: "A escola" → **בֵּית הַסֵּפֶר** / הַבֵּית סֵפֶר / הַבַּיִת הַסֵּפֶר se escolher "הַבֵּית סֵפֶר": Na rua você ouve isso, mas o certo é o הַ na SEGUNDA palavra: בֵּית הַסֵּפֶר. · se escolher "הַבַּיִת הַסֵּפֶר": Na סְמִיכוּת, בַּיִת vira בֵּית, e o הַ vai só na segunda.
 9. escolha: "A estação de trem" → **תַּחֲנַת הָרַכֶּבֶת** / תַּחֲנָה הָרַכֶּבֶת / הַתַּחֲנָה רַכֶּבֶת se escolher "תַּחֲנָה הָרַכֶּבֶת": Quando gruda na outra palavra, o ־ָה de תַּחֲנָה vira ־ַת: תַּחֲנַת. · se escolher "הַתַּחֲנָה רַכֶּבֶת": O הַ vai na segunda palavra, e תַּחֲנָה vira תַּחֲנַת.
 10. escrever: "copo de água" → **כוס מים**
-11. escrever: "suco de laranja" → **מיץ תפוזים**
+11. escrever: "suco de laranja" → **מיץ תפוזים / מיץ תפוז**
 12. completar: "Eu trabalho quatro dias por semana": אֲנִי עוֹבֵד ___ יָמִים בַּשָּׁבוּעַ → **ארבעה**
 13. V ou F: Com palavras masculinas, os números de 3 a 10 terminam em ־ָה, que parece feminino. → **Verdadeiro** (É a troca de gênero dos números: parece estranho, e é assim mesmo.)
 14. V ou F: Em כִּתָּה ב׳, a letra ב quer dizer "segundo ano". → **Verdadeiro** 
@@ -1436,7 +1437,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 23. ditado: בֵּית סֵפֶר → **בית ספר**
 24. escrever: "7 (com masculino)" → **שיבעה / שבעה**
 25. escrever: "horas (feminino)" → **שעות**
-26. completar: Complete a fala do diálogo: "Tenho três filhos: dois meninos e uma menina.": יֵשׁ לִי ___ יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת. → **שלושה**
+26. completar: Complete a fala do diálogo: "Tenho três filhos: dois meninos e uma menina.": יֵשׁ לִי ___ יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת. → **שלושה / שלשה**
 27. completar: Complete a fala do diálogo: "Quantos dias por semana?": כַּמָּה ___ בַּשָּׁבוּעַ? → **ימים**
 28. falar
 29. escrita livre: Escreva sobre a sua família com números: quantos irmãos, irmãs, filhos ou primos (cuidado com o gênero!). (exemplo: יֵשׁ לִי שְׁנֵי אַחִים וְאָחוֹת אַחַת. יֵשׁ לִי שְׁלוֹשָׁה בְּנֵי דּוֹדִים.)
@@ -1465,7 +1466,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - מַהֵר (maher) = rápido
 - עוֹד פַּעַם (od páam) = mais uma vez
 - אֵיךְ אוֹמְרִים … בְּעִבְרִית? (eich omrim … beivrit?) = como se diz … em hebraico?
-- מָה זֶה …? (ma ze …?) = o que é …?
+- מַה זֶּה …? (ma ze …?) = o que é …?
 - אֵיךְ כּוֹתְבִים …? (eich kotvim …?) = como se escreve …?
 - כְּמוֹ (kmo) = como (igual a)
 - הַכֹּל (hakol) = tudo
@@ -1474,7 +1475,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Gramática**
 
-1. **Quando você não entende.** Não entender faz parte. O que importa é ter as frases prontas: סְלִיחָה, אֲנִי לֹא מֵבִין (não entendo) · אֶפְשָׁר לְדַבֵּר לְאַט? (dá para falar devagar?) · אֶפְשָׁר עוֹד פַּעַם? (mais uma vez?) · מָה זֶה …? (o que é…?) · אֵיךְ אוֹמְרִים … בְּעִבְרִית? (como se diz… em hebraico?). Israelense gosta de ajudar quem tenta.
+1. **Quando você não entende.** Não entender faz parte. O que importa é ter as frases prontas: סְלִיחָה, אֲנִי לֹא מֵבִין (não entendo) · אֶפְשָׁר לְדַבֵּר לְאַט? (dá para falar devagar?) · אֶפְשָׁר עוֹד פַּעַם? (mais uma vez?) · מַה זֶּה …? (o que é…?) · אֵיךְ אוֹמְרִים … בְּעִבְרִית? (como se diz… em hebraico?). Israelense gosta de ajudar quem tenta.
    - Erro comum: O brasileiro, quando trava, troca logo para o inglês ou só sorri e concorda. Peça para repetir em hebraico: é assim que a conversa continua, e é assim que o ouvido aprende.
    - Exemplo: סְלִיחָה, אֲנִי לֹא מְבִינָה. אֶפְשָׁר לְאַט? = Desculpe, não entendo. Pode ser devagar? (mulher)
 2. **As perguntas, todas juntas.** מִי? quem · מָה? o quê · אֵיפֹה? onde · לְאָן? para onde · מֵאֵיפֹה? de onde · מָתַי? quando · לָמָּה? por quê · אֵיךְ? como · כַּמָּה? quanto · אֵיזֶה / אֵיזוֹ / אֵילוּ? qual. Com elas, e com as respostas que você já sabe dar, você conduz uma conversa inteira.
@@ -1487,7 +1488,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - Uma mulher: בְּטַח. הָאוֹטוֹבּוּס הַזֶּה… נוֹסֵעַ… לַתַּחֲנָה הַמֶּרְכָּזִית? (betach. haótobus haze… nosea… latachaná hamerkazit?) = Claro. Este ônibus… vai… para a rodoviária central?
 - Dani: אָה! כֵּן, קַו חָמֵשׁ נוֹסֵעַ לְשָׁם. (a! ken, kav chamesh nosea lesham.) = Ah! Sim, a linha 5 vai para lá.
 - Uma mulher: תּוֹדָה. אֲנִי מְאַחֶרֶת לְרֵאָיוֹן עֲבוֹדָה! (todá. aní meachéret lereayon avodá!) = Obrigada. Estou atrasada para uma entrevista de emprego!
-- Dani: מָה זֶה "רֵאָיוֹן"? (ma ze "reayon"?) = O que é "reayon"?
+- Dani: מַה זֶּה "רֵאָיוֹן"? (ma ze "reayon"?) = O que é "reayon"?
 - Uma mulher: אִינְטֶרְוְיוּ, כְּמוֹ בְּאַנְגְּלִית. אַתָּה לֹא מִפֹּה, נָכוֹן? (intervyu, kmo beanglit. atá lo mipo, nachon?) = Interview, como em inglês. Você não é daqui, né?
 - Dani: לֹא, אֲנִי מִבְּרָזִיל. אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן. (lo, aní miBrazil. aní lomed ivrit baulpan.) = Não, sou do Brasil. Estudo hebraico no ulpan.
 - Uma mulher: וְאַתָּה כְּבָר מְדַבֵּר יָפֶה מְאֹד! (veatá kvar medaber yafé meod!) = E você já fala muito bem!
@@ -1504,12 +1505,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - כָּל יוֹם שִׁשִּׁי אֲנִי קָם בִּשְׁמוֹנֶה וְנוֹסֵעַ בְּאוֹטוֹבּוּס לַשּׁוּק. (kol yom shishi aní kam bishmoné venosea beótobus lashuk.) = Toda sexta eu levanto às oito e vou de ônibus para a feira.
 - בַּשּׁוּק אֲנִי קוֹנֶה פֵּרוֹת וִירָקוֹת. הַכֹּל זוֹל וְטָעִים! (bashuk aní koné perot virakot. hakol zol vetaím!) = Na feira eu compro frutas e verduras. Tudo barato e gostoso!
 - אַחַר כָּךְ אֲנִי שׁוֹתֶה קָפֶה הָפוּךְ עִם מַיָּה בְּבֵית קָפֶה לְיַד הַיָּם. (achar kach aní shoté kafé hafuch im Maya beveit kafé leyád hayám.) = Depois eu tomo um café com leite com a Maya num café perto do mar.
-- בְּאַרְבַּע הַחֲנֻיּוֹת סְגוּרוֹת, וְכֻלָּם אוֹמְרִים "שַׁבָּת שָׁלוֹם". (bearbá hachanuyot sgurot, vechulám omrim "shabát shalóm".) = Às quatro as lojas estão fechadas, e todo mundo diz "shabat shalom".
+- בְּאַרְבַּע הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת, וְכֻלָּם אוֹמְרִים "שַׁבָּת שָׁלוֹם". (bearbá harbé chanuyot kvar sgurot, vechulám omrim "shabát shalóm".) = Às quatro muitas lojas já estão fechadas, e todo mundo diz "shabat shalom".
 - בָּעֶרֶב אֲנִי אוֹכֵל אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה. אֲנַחְנוּ עֲשָׂרָה אֲנָשִׁים לְיַד הַשֻּׁלְחָן! (baérev aní ochel étsel hamishpachá shel Noa. anáchnu asará anashim leyád hashulchan!) = À noite eu janto na casa da família da Noa. Somos dez pessoas em volta da mesa!
 - אֲנִי עוֹד לֹא מֵבִין הַכֹּל, אֲבָל אֲנִי מֵבִין הַרְבֵּה. (aní od lo mevin hakol, aval aní mevin harbé.) = Eu ainda não entendo tudo, mas entendo muita coisa.
 - P1. escolha: Como o Dani vai para a feira? → **De ônibus** / A pé / De táxi 
 - P2. escolha: Onde ele toma café com a Maya? → **Num café perto do mar** / Na feira / Na casa da Noa 
-- P3. V ou F: Às quatro da tarde as lojas ainda estão abertas. → **Falso** (הַחֲנֻיּוֹת סְגוּרוֹת: estão fechadas, por causa do shabat.)
+- P3. V ou F: Às quatro da tarde todas as lojas ainda estão abertas. → **Falso** (הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת: muitas lojas já estão fechadas, por causa do shabat.)
 - P4. escolha: Onde o Dani janta na sexta? → **Na casa da família da Noa** / No restaurante / No hotel (אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה: na casa da família dela (Unidade 11).)
 - P5. V ou F: O Dani já entende tudo. → **Falso** (עוֹד לֹא מֵבִין הַכֹּל: ainda não entende tudo.)
 
@@ -1520,13 +1521,13 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 3. escolha: Você quer saber como se diz uma palavra em hebraico. O que pergunta? → **אֵיךְ אוֹמְרִים … בְּעִבְרִית?** / אֵיפֹה … בְּעִבְרִית? / מָתַי … בְּעִבְרִית? 
 4. tabela מֵבִין: mulher → מבינה · homens → מבינים · mulheres → מבינות
 5. escolha: Para saber o preço: → **כַּמָּה זֶה עוֹלֶה?** / לְאָן זֶה עוֹלֶה? / מָתַי זֶה עוֹלֶה? 
-6. separar (אֵיפֹה / לְאָן / מָתַי): … הַבַּנְק? → אֵיפֹה · … אַתָּה נוֹסֵעַ? → לְאָן · … הַשִּׁעוּר? → מָתַי · … הַשֵּׁרוּתִים? → אֵיפֹה · … הִיא הוֹלֶכֶת? → לְאָן · … יוֹם הַהֻלֶּדֶת שֶׁלְּךָ? → מָתַי
+6. separar (אֵיפֹה / לְאָן / מָתַי): … הַבַּנְק? → אֵיפֹה · … אַתָּה נוֹסֵעַ? לְתֵל אָבִיב. → לְאָן · … הַשִּׁעוּר? בְּשָׁלוֹשׁ. → מָתַי · … הַשֵּׁרוּתִים? → אֵיפֹה · … הִיא הוֹלֶכֶת? לַשּׁוּק. → לְאָן · … יוֹם הַהֻלֶּדֶת שֶׁלְּךָ? → מָתַי
 7. conversa: Shira: מֵאֵיפֹה אַתָּה? → **אֲנִי מִבְּרָזִיל.** / אֲנִי בְּסֵדֶר. / בְּיוּנִי. 
 8. conversa: O vendedor: כַּמָּה אַתְּ רוֹצָה? → **קִילוֹ אֶחָד, בְּבַקָּשָׁה.** / אֶחָד קִילוֹ, בְּבַקָּשָׁה. se escolher "אֶחָד קִילוֹ, בְּבַקָּשָׁה.": O "um" vem depois da coisa: קִילוֹ אֶחָד (Unidade 19).
 9. achar o erro: Ache o erro e escreva a frase certa. הַחֲנוּת פָּתוּחַ. → **החנות פתוחה** (חֲנוּת é feminina: פְּתוּחָה.)
 10. achar o erro: Ache o erro e escreva a frase certa. אֲנִי הוֹלֵךְ לְהָעֲבוֹדָה. → **אני הולך לעבודה** (לְ e הַ se juntam: לָעֲבוֹדָה.)
 11. achar o erro: Ache o erro e escreva a frase certa. הֵם רוֹצִים אוֹכְלִים. → **הם רוצים לאכול** (Depois de רוֹצִים vem o infinitivo: לֶאֱכוֹל.)
-12. montar: "Todo dia eu vou de ônibus para o trabalho. (fala um homem)" → **כָּל יוֹם אֲנִי נוֹסֵעַ לָעֲבוֹדָה בְּאוֹטוֹבּוּס**
+12. montar: "Todo dia eu vou de ônibus para o trabalho. (fala um homem)" → **כָּל יוֹם אֲנִי נוֹסֵעַ לָעֲבוֹדָה בְּאוֹטוֹבּוּס** (também: כָּל יוֹם אֲנִי נוֹסֵעַ בְּאוֹטוֹבּוּס לָעֲבוֹדָה / אֲנִי נוֹסֵעַ כָּל יוֹם לָעֲבוֹדָה בְּאוֹטוֹבּוּס / אֲנִי נוֹסֵעַ כָּל יוֹם בְּאוֹטוֹבּוּס לָעֲבוֹדָה / אֲנִי נוֹסֵעַ לָעֲבוֹדָה בְּאוֹטוֹבּוּס כָּל יוֹם / אֲנִי נוֹסֵעַ בְּאוֹטוֹבּוּס לָעֲבוֹדָה כָּל יוֹם / אֲנִי כָּל יוֹם נוֹסֵעַ לָעֲבוֹדָה בְּאוֹטוֹבּוּס / אֲנִי כָּל יוֹם נוֹסֵעַ בְּאוֹטוֹבּוּס לָעֲבוֹדָה)
 13. montar: "Ela diz que o filme é bom." → **הִיא אוֹמֶרֶת שֶׁהַסֶּרֶט טוֹב**
 14. completar: "O gato está embaixo da mesa": הֶחָתוּל ___ לַשֻּׁלְחָן → **מתחת**
 15. completar: "Você pode me ajudar?" (a ele): אַתָּה יָכוֹל לַעֲזוֹר ___ ? → **לי**
@@ -1634,7 +1635,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **A situação:** O Dani vai à feira comprar queijo e maçãs. Ele pergunta os preços, compra, e precisa saber que horas são.
 
-**Em Israel · O shekel:** O שֶׁקֶל é o nome de dinheiro mais antigo em uso: na Bíblia, era um peso de prata. A moeda israelense de hoje é o "novo shekel", desde 1985, dividido em 100 אֲגוֹרוֹת. Na feira, o preço se fala no singular: עֶשֶׂר שֶׁקֶל.
+**Em Israel · O shekel:** O שֶׁקֶל é um dos nomes de dinheiro mais antigos: na Bíblia, era uma unidade de peso, usada para pesar prata. A moeda israelense de hoje é o "novo shekel", desde 1985, dividido em 100 אֲגוֹרוֹת. Na feira, o preço se fala no singular: עֶשֶׂר שֶׁקֶל.
 
 **Curiosidade · A semana com números:** Em hebraico, os dias da semana não têm nome de deus nem de planeta: são números. יוֹם רִאשׁוֹן é "o primeiro dia", יוֹם שֵׁנִי "o segundo", e assim até o sexto. Só o sétimo tem nome próprio: שַׁבָּת, o dia de descanso.
 
@@ -1648,9 +1649,9 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **A situação:** A Maya apresenta a amiga Shira ao Dani. Eles conversam, combinam um café e trocam telefones.
 
-**Em Israel · Números de telefone:** Em Israel, todo celular começa com 05, e o número inteiro tem dez dígitos. Ao passar o número, o israelense fala os dígitos um por um, em grupos: אֶפֶס חָמֵשׁ שְׁתַּיִם… E o WhatsApp é o caminho mais comum para continuar a conversa.
+**Em Israel · Números de telefone:** Em Israel, todo celular começa com 05, e o número inteiro tem dez dígitos. Ao passar o número, o israelense fala os dígitos um por um ou em pares: אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם, ou אֶפֶס חָמֵשׁ שְׁתַּיִם… E o WhatsApp é o caminho mais comum para continuar a conversa.
 
-**Curiosidade · "Como te chamam?":** אֵיךְ קוֹרְאִים לְךָ? quer dizer, palavra por palavra, "como chamam a você?". É a mesma ideia do espanhol "¿cómo te llamas?" e do português "como você se chama?": o nome é o que os outros usam para chamar a gente.
+**Curiosidade · "Como te chamam?":** אֵיךְ קוֹרְאִים לְךָ? quer dizer, palavra por palavra, "como chamam a você?". Parecido com o português "como te chamam?": o nome é o que os outros usam para chamar a gente.
 
 **Eu consigo…**
 
@@ -1679,11 +1680,11 @@ Texto: שָׁלוֹם טוֹם! אֲנִי בַּשּׁוּק עִם אֵיתָ�
 2. ouvir: [ouve: זֶה עוֹלֶה עֶשְׂרִים וְחָמֵשׁ שֶׁקֶל] Quanto custa? → **25** / 52 / 20 
 3. ouvir: [ouve: אֲנִי לֹא שׁוֹתָה קָפֶה] Quem fala, e o que diz? → **uma mulher que não bebe café** / um homem que não bebe café 
 4. ouvir: [ouve: הַכֶּלֶב שֶׁלָּהֶם גָּדוֹל] O que a pessoa disse? → **o cachorro deles é grande** / o cachorro grande deles 
-5. ouvir: [ouve: אֵיךְ קוֹרְאִים לָךְ?] O que a pessoa perguntou? → **o nome de uma mulher** / onde ela mora 
+5. ouvir: [ouve: אֵיךְ קוֹרְאִים לָךְ?] O que a pessoa perguntou? → **perguntou a uma mulher como ela se chama** / perguntou a um homem como ele se chama / perguntou onde ela mora 
 6. ouvir: [ouve: אֲנַחְנוּ גָּרִים בִּירוּשָׁלַיִם] O que a pessoa disse? → **nós moramos em Jerusalém** / eles moram em Jerusalém 
 7. ouvir: [ouve: יוֹרֵד גֶּשֶׁם בְּחֵיפָה.] O que você ouviu? → **Está chovendo em Haifa** / Faz sol em Haifa / Faz frio em Haifa 
-8. ouvir: [ouve: אֲנַחְנוּ נוֹסְעִים בְּרַכֶּבֶת לִירוּשָׁלַיִם.] Como eles vão para Jerusalém? → **De trem** / De ônibus / A pé 
-9. ouvir: [ouve: אֲנִי קָמָה בְּשֵׁשׁ וָחֵצִי.] O que você ouviu? → **Ela levanta às seis e meia** / Ele levanta às seis e meia / Ela levanta às sete e meia 
+8. ouvir: [ouve: אֲנַחְנוּ נוֹסְעִים בְּרַכֶּבֶת לִירוּשָׁלַיִם.] Como as pessoas que falam vão para Jerusalém? → **De trem** / De ônibus / A pé 
+9. ouvir: [ouve: אֲנִי קָמָה בְּשֵׁשׁ וָחֵצִי.] O que você ouviu? → **Uma mulher que se levanta às seis e meia** / Um homem que se levanta às seis e meia / Uma mulher que se levanta às sete e meia 
 
 ### Vocabulário (unidades 2, 5, 6, 7, 11, 12, 13, 14, 15, 17, 18)
 
@@ -1716,14 +1717,14 @@ Texto: שָׁלוֹם טוֹם! אֲנִי בַּשּׁוּק עִם אֵיתָ�
 12. escolha: "O cachorro deles" → **הַכֶּלֶב שֶׁלָּהֶם** / הַכֶּלֶב שֶׁלּוֹ 
 13. escolha: "Ela quer estudar": הִיא רוֹצָה ___ → **לִלְמוֹד** / לוֹמֶדֶת / לוֹמֵד 
 14. escolha: "Este casaco" → **הַמְּעִיל הַזֶּה** / זֶה הַמְּעִיל / הַמְּעִיל הַזֹּאת 
-15. escolha: "Estou com dor de barriga" → **כּוֹאֶבֶת לִי הַבֶּטֶן** / כּוֹאֵב לִי הַבֶּטֶן / אֲנִי כּוֹאֵב הַבֶּטֶן 
+15. escolha: "Estou com dor de barriga" → **כּוֹאֶבֶת לִי הַבֶּטֶן** / כּוֹאֲבִים לִי הַבֶּטֶן / אֲנִי כּוֹאֵב הַבֶּטֶן 
 16. escolha: "Quatro dias" → **אַרְבָּעָה יָמִים** / אַרְבַּע יָמִים / יָמִים אַרְבָּעָה 
 17. escolha: "O hospital" → **בֵּית הַחוֹלִים** / הַבֵּית חוֹלִים / הַבַּיִת חוֹלִים 
 18. escolha: "Para onde você vai?" (a ela) → **לְאָן אַתְּ נוֹסַעַת?** / אֵיפֹה אַתְּ נוֹסַעַת? / מֵאֵיפֹה אַתְּ נוֹסַעַת? 
 
 ### Comunicação (unidades 0, 1, 10, 12, 13, 16, 17, 18, 20)
 
-1. conversa: Uma vizinha: עֶרֶב טוֹב! מַה נִשְׁמָע? → **בְּסֵדֶר, תּוֹדָה. וְאַתְּ?** / לַיְלָה טוֹב! / בְּתֵאָבוֹן! 
+1. conversa: Uma vizinha: עֶרֶב טוֹב! מַה נִּשְׁמָע? → **בְּסֵדֶר, תּוֹדָה. וְאַתְּ?** / לַיְלָה טוֹב! / בְּתֵאָבוֹן! 
 2. conversa: Natan: אַתָּה רוֹצֶה לָבוֹא אִתָּנוּ לַיָּם בְּשַׁבָּת? → **בְּשִׂמְחָה! בְּאֵיזוֹ שָׁעָה?** / כֵּן, יֵשׁ לִי חֹם. / לֹא, זֶה לֹא סֵפֶר. 
 3. conversa: Maya: לָמָּה אַתְּ לֹא בָּאָה לַמְּסִבָּה? → **כִּי אֲנִי חוֹלָה.** / כֵּן, אֲנִי בָּאָה. / בְּעֶשְׂרִים בְּיוּנִי. 
 4. conversa: Um turista: סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה? → **יָשָׁר, וְאָז יָמִינָה. זֶה קָרוֹב.** / אֵין לִי תַּחֲנָה. / בְּשִׂמְחָה, תּוֹדָה. 
@@ -1734,12 +1735,12 @@ Texto: שָׁלוֹם טוֹם! אֲנִי בַּשּׁוּק עִם אֵיתָ�
 
 ### Escrita (unidades 1, 4, 6, 7, 10, 12, 15, 19)
 
-1. escrever: "Eu sou do Brasil" → **אני מברזיל**
-2. escrever: "Eu tenho um irmão" → **יש לי אח**
+1. escrever: "Eu sou do Brasil" → **אני מברזיל / אני בא מברזיל / אני באה מברזיל**
+2. escrever: "Eu tenho um irmão" → **יש לי אח / יש לי אח אחד**
 3. escrever: "A minha casa" → **הבית שלי**
-4. escrever: "Quanto custa?" → **כמה זה עולה**
-5. escrever: "Onde você mora? (a uma mulher)" → **איפה את גרה / איפוא את גרה**
-6. escrever: "São duas horas" → **השעה שתיים / השעה שתים**
+4. escrever: "Quanto custa?" → **כמה זה עולה / כמה עולה / כמה זה**
+5. escrever: "Onde você mora? (a uma mulher)" → **איפה את גרה**
+6. escrever: "São duas horas" → **השעה שתיים / השעה שתים / עכשיו שתיים / עכשיו שתים / השעה עכשיו שתיים / השעה עכשיו שתים / עכשיו השעה שתיים / עכשיו השעה שתים**
 7. escrever: "para onde?" → **לאן**
 8. escrever: "Estou com frio." → **קר לי**
 9. escrever: "Ela quer comer." → **היא רוצה לאכול / היא רוצה לאכל**
@@ -1748,15 +1749,15 @@ Texto: שָׁלוֹם טוֹם! אֲנִי בַּשּׁוּק עִם אֵיתָ�
 ## A história do hebraico (bônus)
 
 1. **O hebraico bíblico** (Primeiro milênio antes da era comum; sugerido depois da Unidade 2): As inscrições mais antigas em hebraico são de por volta de três mil anos atrás, escritas numa letra parecida com a fenícia, bem diferente da de hoje. É dessa época a língua da maior parte da Bíblia hebraica. Muitas palavras que você aprendeu já estavam lá: שָׁלוֹם, יוֹם, בַּיִת, לֶחֶם, אִישׁ, אִשָּׁה.
-2. **O tempo do Segundo Templo** (Do século 6 a.e.c. ao século 1; sugerido depois da Unidade 4): Depois do exílio na Babilônia, o aramaico virou a língua do dia a dia de muita gente, e a escrita mudou: as letras quadradas que você lê hoje vêm da escrita aramaica. O hebraico continuou vivo, falado e escrito. Os Manuscritos do Mar Morto, achados em 1947, são em boa parte em hebraico dessa época.
-3. **O hebraico dos sábios** (Por volta do ano 200; sugerido depois da Unidade 6): A Mishná, a primeira grande obra da lei judaica oral, foi escrita em hebraico por volta do ano 200, numa língua diferente da bíblica, mais próxima da fala. Dela vêm muitas coisas do hebraico moderno, como o שֶׁ־ ("que") e o jeito de usar o presente.
+2. **O tempo do Segundo Templo** (Do século 6 a.e.c. ao século 1; sugerido depois da Unidade 4): Depois do exílio na Babilônia, o aramaico virou a língua do dia a dia de muita gente, e a escrita mudou: as letras quadradas que você lê hoje vêm da escrita aramaica. O hebraico continuou vivo, falado e escrito. Os Manuscritos do Mar Morto, achados a partir de 1947, são em boa parte em hebraico dessa época.
+3. **O hebraico dos sábios** (Por volta do ano 200; sugerido depois da Unidade 6): A Mishná, a primeira grande obra da lei judaica oral, foi escrita em hebraico por volta do ano 200, numa língua diferente da bíblica, mais próxima da fala. Dela vêm muitas coisas do hebraico moderno, como o uso constante do שֶׁ־ ("que") no lugar do bíblico אֲשֶׁר, e o jeito de usar o presente.
 4. **Na diáspora: uma língua de livros** (Do século 3 ao século 18; sugerido depois da Unidade 8): Aos poucos, o hebraico deixou de ser língua de casa. Os judeus falavam a língua do lugar e criaram línguas próprias, como o iídiche e o ladino. Mas o hebraico seguiu vivo nas rezas, no estudo, na poesia e nas cartas entre comunidades distantes. Foi nessa época que os pontos do nikud foram criados, para guardar a pronúncia dos textos sagrados.
 5. **A Haskalá** (Séculos 18 e 19; sugerido depois da Unidade 10): Na Europa, o movimento judaico do Iluminismo, a Haskalá, passou a usar o hebraico para escrever romances, artigos e jornais, sobre assuntos do mundo moderno. A língua voltava a falar de ciência, de política e da vida comum, e precisava de palavras novas.
 6. **O renascimento** (Fim do século 19; sugerido depois da Unidade 12): Nas novas comunidades judaicas da terra de Israel, imigrantes de muitos países precisavam de uma língua em comum. Escolas começaram a ensinar tudo em hebraico, até matemática, com professores inventando palavras na hora. Pela primeira vez em séculos, crianças cresciam falando hebraico.
 7. **Eliezer Ben-Yehuda** (1858 a 1922; sugerido depois da Unidade 14): Ben-Yehuda chegou a Jerusalém em 1881 e decidiu falar só hebraico em casa. O filho dele foi uma das primeiras crianças a crescer com o hebraico como língua materna nos tempos modernos. Ele criou palavras, publicou jornais e começou um grande dicionário, terminado depois da morte dele. Não reviveu a língua sozinho, mas virou o símbolo desse renascimento.
-8. **A formação do hebraico moderno** (De 1890 a 1948; sugerido depois da Unidade 16): Em 1890 nasceu o Comitê da Língua, para criar palavras novas. Em 1913, professores e alunos fizeram greve para que uma escola técnica de Haifa ensinasse em hebraico e não em alemão, e ganharam. No mandato britânico, o hebraico virou língua oficial, ao lado do inglês e do árabe. A pronúncia escolhida seguiu, em boa parte, a tradição sefaradi.
+8. **A formação do hebraico moderno** (De 1890 a 1948; sugerido depois da Unidade 16): Em 1890 nasceu o Comitê da Língua, para criar palavras novas. Em 1913, professores e alunos fizeram greve para que uma escola técnica de Haifa ensinasse em hebraico e não em alemão, e ganharam. No mandato britânico, o hebraico virou língua oficial, ao lado do inglês e do árabe. A pronúncia escolhida seguiu a tradição sefaradi nas vogais e na sílaba tônica; nas consoantes, prevaleceu o jeito de falar dos imigrantes europeus.
 9. **O hebraico no Estado de Israel** (Desde 1948; sugerido depois da Unidade 18): Com o Estado de Israel, chegaram imigrantes do mundo inteiro, e o hebraico foi a língua que os juntou. Os ulpanim, as escolas intensivas, ensinaram a língua a milhões de adultos. Em 1953 foi criada a Academia da Língua Hebraica, que até hoje propõe palavras novas.
-10. **O hebraico israelense de hoje** (Agora; sugerido depois da Unidade 20): O hebraico de hoje é uma língua viva como qualquer outra: tem gíria (סַבָּבָּה, יַאלְלָה), palavras do inglês (בַּי, הַלּוֹ), sotaques, e muda com o tempo. A pronúncia também mudou: para a maioria, א e ע soam igual, e ח e כ também. É esse hebraico, o da rua, que você aprendeu neste curso.
+10. **O hebraico israelense de hoje** (Agora; sugerido depois da Unidade 20): O hebraico de hoje é uma língua viva como qualquer outra: tem gíria que veio do árabe (סַבָּבָּה, יַאלְלָה), palavras do inglês (בַּי), sotaques, e muda com o tempo. A pronúncia também mudou: para a maioria, א e ע soam igual, e ח e כ também. É esse hebraico, o da rua, que você aprendeu neste curso.
 
 ## Textos novos de tela (português)
 
@@ -1838,7 +1839,7 @@ Os textos de interface que entraram com o A1 completo, tela por tela, como apare
 
 **Conferir um certificado (/verificar-certificado, página aberta)**
 - "Conferir um certificado" · "Digite o código que aparece no certificado (por exemplo, A1-ABCD2345)." · "Conferir"
-- "✓ Certificado válido" · "Concluiu o curso Hebraico A1 do Hebraico Fluente e foi aprovado no exame final em {data}." · "Código {código}. Não é uma certificação oficial de nível."
+- "✓ Certificado válido" · "Concluiu o curso Hebraico A1 do Hebraico Fluente, com aprovação no exame final em {data}." · "Código {código}. Não é uma certificação oficial de nível."
 - "Não achamos um certificado público com este código. Confira o código, ou peça à pessoa para ligar a verificação pública."
 
 **Conclusão (/a1/concluido)**

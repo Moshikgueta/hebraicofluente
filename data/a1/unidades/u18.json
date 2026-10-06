@@ -126,13 +126,18 @@
       "he": "עֶזְרָה!",
       "translit": "ezrá!",
       "pt": "socorro! ajuda!"
+    },
+    {
+      "he": "הַצִּילוּ!",
+      "translit": "hatsílu!",
+      "pt": "socorro! (o grito de emergência)"
     }
   ],
   "gramatica": [
     {
       "tituloPt": "\"Está doendo\": o verbo concorda com o que dói",
       "textoPt": "O hebraico diz \"dói para mim a cabeça\": כּוֹאֵב לִי הָרֹאשׁ. Quem recebe a dor vem com לְ (לִי, לְךָ, לָהּ…), e o verbo concorda com a PARTE DO CORPO: כּוֹאֵב לִי הָרֹאשׁ (masculino), כּוֹאֶבֶת לִי הַבֶּטֶן (feminino), כּוֹאֲבוֹת לִי הָרַגְלַיִם (plural feminino).",
-      "erroPt": "A mulher com dor de cabeça tende a dizer כּוֹאֶבֶת, no feminino, porque ELA é mulher. Mas quem dói é a cabeça, e רֹאשׁ é masculino: כּוֹאֵב לִי הָרֹאשׁ, para homem e para mulher.",
+      "erroPt": "A mulher com dor de cabeça tende a dizer כּוֹאֶבֶת, no feminino, porque ELA é mulher. Mas quem dói é a cabeça, e רֹאשׁ é masculino: כּוֹאֵב לִי הָרֹאשׁ, para homem e para mulher. Na rua você também vai ouvir כּוֹאֵב לִי para tudo, no masculino (כּוֹאֵב לִי הַבֶּטֶן). Entenda, mas fale e escreva com a concordância.",
       "exemplos": [
         {
           "he": "כּוֹאֵב לָהּ הַגָּרוֹן.",
@@ -146,7 +151,7 @@
     },
     {
       "tituloPt": "Os pares do corpo: ־ַיִם, e femininos",
-      "textoPt": "O que vem em par termina em ־ַיִם (Unidade 14): עֵינַיִם, אָזְנַיִם, יָדַיִם, רַגְלַיִם, שִׁנַּיִם. Essas partes do corpo são femininas, mesmo sem o ־ָה: הָעַיִן כּוֹאֶבֶת, הַיָּד כּוֹאֶבֶת."
+      "textoPt": "As partes do corpo que vêm em par terminam em ־ַיִם (Unidade 14): עֵינַיִם, אָזְנַיִם, יָדַיִם, רַגְלַיִם (e também שִׁנַּיִם, dentes, que não são um par mas usam a mesma forma). Todas estas são femininas, mesmo sem o ־ָה: הָעַיִן כּוֹאֶבֶת, הַיָּד כּוֹאֶבֶת."
     },
     {
       "tituloPt": "Como você está se sentindo?",
@@ -343,7 +348,7 @@
   "sabia": [
     {
       "tituloPt": "Bola ou comprimido?",
-      "textoPt": "כַּדּוּר é \"bola\" (o כַּדּוּר de כַּדּוּרֶגֶל, Unidade 10) e também \"comprimido\": é tudo o que é redondo. O planeta Terra é כַּדּוּר הָאָרֶץ, \"a bola da terra\". Quem decide o sentido é a frase: na farmácia, ninguém vai lhe vender uma bola."
+      "textoPt": "כַּדּוּר é \"bola\" (o כַּדּוּר de כַּדּוּרֶגֶל, Unidade 10) e também \"comprimido\" (e até \"bala\" de arma): a ideia é a de uma coisa em forma de bola. O planeta Terra é כַּדּוּר הָאָרֶץ, \"a bola da terra\". Quem decide o sentido é a frase: na farmácia, ninguém vai lhe vender uma bola."
     }
   ],
   "autoavaliacao": [
@@ -441,7 +446,7 @@
       "certa": 0,
       "dicas": {
         "1": "São as duas pernas: o verbo vai para o plural.",
-        "2": "Plural, sim, mas feminino: as partes do corpo em par são femininas. כּוֹאֲבוֹת."
+        "2": "Plural, sim, mas feminino: רֶגֶל é feminina. כּוֹאֲבוֹת."
       }
     },
     {

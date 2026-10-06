@@ -37,7 +37,8 @@ function item(it, k) {
     case 'vf': return `${k}. V ou F: ${it.q} → **${it.certa ? 'Verdadeiro' : 'Falso'}** ${extra}`;
     case 'ligar': return `${k}. ligar: ${it.pares.map(([a, b]) => `${a} = ${b}`).join(' · ')}`;
     case 'separar': return `${k}. separar (${it.baldes.join(' / ')}): ${it.itens.map(([w, b]) => `${w} → ${it.baldes[b]}`).join(' · ')}`;
-    case 'montar': return `${k}. montar: "${it.pt}" → **${it.palavras.join(' ')}**`;
+    case 'montar': return `${k}. montar: "${it.pt}" → **${it.palavras.join(' ')}**`
+      + (it.outras?.length ? ` (também: ${it.outras.map(o => o.join(' ')).join(' / ')})` : '');
     case 'ordenar': return `${k}. ordenar: ${it.falas.map((f, i) => `${i + 1}) ${f}`).join(' ')}`;
     case 'completar': return `${k}. completar: ${it.q}: ${it.antes} ___ ${it.depois} → **${it.respostas.join(' / ')}**`;
     case 'erro': return `${k}. achar o erro: ${it.q} ${it.errada} → **${it.respostas.join(' / ')}** ${extra}`;

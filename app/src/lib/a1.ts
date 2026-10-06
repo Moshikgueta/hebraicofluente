@@ -27,7 +27,9 @@ export type ItemA1 =
   | { t: 'ouvir'; he: string; audioId?: string; q: string; opcoes: string[]; certa: number; porque?: string; dicas?: DicasA1 }
   | { t: 'ligar'; q: string; pares: [string, string][] }
   | { t: 'separar'; q: string; baldes: string[]; itens: [string, number][] }
-  | { t: 'montar'; pt: string; palavras: string[]; porque?: string }
+  /** `outras`: outras ordens também certas, cada uma com as MESMAS palavras
+   *  de `palavras` em outra ordem. A resposta modelo continua `palavras`. */
+  | { t: 'montar'; pt: string; palavras: string[]; outras?: string[][]; porque?: string }
   | { t: 'completar'; q: string; antes: string; depois: string; respostas: string[]; porque?: string }
   | { t: 'erro'; q: string; errada: string; respostas: string[]; porque: string }
   | { t: 'vf'; q: string; certa: boolean; porque: string }

@@ -18,7 +18,7 @@ import * as auth from '../../worker/src/api/auth.js';
 import * as exameA1 from '../../worker/src/api/exame-a1.js';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import { grantAccess } from '../../worker/src/lib/db.js';
-import { corrigir, digitadoCerto, sortear, type Exame, type Sorteado } from '@/lib/a1-prova';
+import { corrigir, digitadoCerto, itemPublico, sortear, type Exame, type Sorteado } from '@/lib/a1-prova';
 import { hebraicoDigitadoCerto } from '@/lib/engine/palavras';
 
 const SITE = 'https://hebraicofluente.com.br';
@@ -74,7 +74,7 @@ describe('a prova do A1', () => {
     const cookie = await conta(env, ['hebraico-a1']);
     const { corpo, sorteio } = await provaDe(env, cookie);
     const texto = JSON.stringify(corpo);
-    expect(texto).not.toMatch(/"certa"|"respostas"|"porque"/);
+    expect(texto).not.toMatch(/"certa"|"respostas"|"porque"|"outras"/);
     expect(corpo.partes.length + corpo.fora.length).toBe(6);
     for (const p of corpo.partes) expect(p.itens.length).toBe(exame.sorteio);
     expect(sorteio.length).toBe(corpo.partes.length * exame.sorteio);
@@ -90,6 +90,20 @@ describe('a prova do A1', () => {
     expect(c).toMatchObject({ nota: 1, aprovado: true, revisar: [] });
     const de_novo = await exameA1.entregar({ request: post('/api/a1/exame/entregar', cookie, { prova: corpo.prova, respostas: gabarito(sorteio) }), env, ctx: {} });
     expect(de_novo.status).toBe(409);
+  });
+
+  it('montar: aceita a ordem do dado e as `outras`, e as outras não saem na prova', () => {
+    const it_ = { t: 'montar', pt: 'Tom vai à universidade todo dia',
+      palavras: ['טוֹם', 'הוֹלֵךְ', 'לָאוּנִיבֶרְסִיטָה', 'כָּל יוֹם'],
+      outras: [['כָּל יוֹם', 'טוֹם', 'הוֹלֵךְ', 'לָאוּנִיבֶרְסִיטָה']] };
+    const ex: Exame = { sorteio: 1, aprovacao: 0.7, partes: [{ id: 'm', tituloPt: 'M', unidades: [1], itens: [it_] }] };
+    const s: Sorteado = { p: 0, i: 0, perm: [2, 0, 3, 1] };
+    expect(JSON.stringify(itemPublico(it_, s.perm))).not.toMatch(/outras/);
+    /* A resposta é a ordem das peças embaralhadas: a posição k da prova é a palavra perm[k]. */
+    const ordem = (frase: string[]) => frase.map(w => s.perm!.findIndex(k => it_.palavras[k] === w));
+    expect(corrigir(ex, [s], [ordem(it_.palavras)]).nota).toBe(1);
+    expect(corrigir(ex, [s], [ordem(it_.outras[0]!)]).nota).toBe(1);
+    expect(corrigir(ex, [s], [ordem(['הוֹלֵךְ', 'טוֹם', 'לָאוּנִיבֶרְסִיטָה', 'כָּל יוֹם'])]).nota).toBe(0);
   });
 
   it('errar tudo reprova e aponta as unidades para revisar', async () => {

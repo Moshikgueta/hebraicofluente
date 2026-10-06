@@ -37,17 +37,17 @@
     },
     {
       "he": "לָכֶם",
-      "translit": "lachem",
-      "pt": "para vocês (eles)"
+      "translit": "lachém",
+      "pt": "para vocês (homens ou grupo misto)"
     },
     {
       "he": "לָכֶן",
       "translit": "lachen",
-      "pt": "para vocês (elas)"
+      "pt": "para vocês (só mulheres)"
     },
     {
       "he": "לָהֶם",
-      "translit": "lahem",
+      "translit": "lahém",
       "pt": "para eles"
     },
     {
@@ -57,17 +57,17 @@
     },
     {
       "he": "שֶׁלָּכֶם",
-      "translit": "shelachem",
-      "pt": "de vocês (eles)"
+      "translit": "shelachém",
+      "pt": "de vocês (homens ou grupo misto)"
     },
     {
       "he": "שֶׁלָּכֶן",
       "translit": "shelachen",
-      "pt": "de vocês (elas)"
+      "pt": "de vocês (só mulheres)"
     },
     {
       "he": "שֶׁלָּהֶם",
-      "translit": "shelahem",
+      "translit": "shelahém",
       "pt": "deles"
     },
     {
@@ -123,12 +123,12 @@
     {
       "he": "אֵיךְ קוֹרְאִים לְךָ?",
       "translit": "eich korim lechá?",
-      "pt": "como você se chama? (a ele)"
+      "pt": "como você se chama? (falando com um homem)"
     },
     {
       "he": "אֵיךְ קוֹרְאִים לָךְ?",
       "translit": "eich korim lach?",
-      "pt": "como você se chama? (a ela)"
+      "pt": "como você se chama? (falando com uma mulher)"
     },
     {
       "he": "קוֹרְאִים לִי…",
@@ -194,13 +194,13 @@
       {
         "quem": "Shira",
         "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָּרָה בְּתֵל אָבִיב.",
-        "translit": "aní meCheifa, aval aní gará beTel Aviv.",
+        "translit": "aní meCháifa, aval aní gará beTel Aviv.",
         "pt": "Sou de Haifa, mas moro em Tel Aviv."
       },
       {
         "quem": "Dani",
         "he": "יֵשׁ לָךְ מִשְׁפָּחָה בְּחֵיפָה?",
-        "translit": "yesh lach mishpachá beCheifa?",
+        "translit": "yesh lach mishpachá beCháifa?",
         "pt": "Você tem família em Haifa?"
       },
       {
@@ -213,7 +213,7 @@
         "quem": "Maya",
         "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?",
         "translit": "anáchnu shotot kafé. atá rotsé kafé itánu?",
-        "pt": "Nós vamos tomar um café. Você quer café com a gente?"
+        "pt": "Nós estamos tomando um café. Você quer um café com a gente?"
       },
       {
         "quem": "Dani",
@@ -262,13 +262,13 @@
   "cultura": [
     {
       "tituloPt": "Números de telefone",
-      "textoPt": "Em Israel, todo celular começa com 05, e o número inteiro tem dez dígitos. Ao passar o número, o israelense fala os dígitos um por um, em grupos: אֶפֶס חָמֵשׁ שְׁתַּיִם… E o WhatsApp é o caminho mais comum para continuar a conversa."
+      "textoPt": "Em Israel, todo celular começa com 05, e o número inteiro tem dez dígitos. Ao passar o número, o israelense fala os dígitos um por um ou em pares: אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם, ou אֶפֶס חָמֵשׁ שְׁתַּיִם… E o WhatsApp é o caminho mais comum para continuar a conversa."
     }
   ],
   "sabia": [
     {
       "tituloPt": "\"Como te chamam?\"",
-      "textoPt": "אֵיךְ קוֹרְאִים לְךָ? quer dizer, palavra por palavra, \"como chamam a você?\". É a mesma ideia do espanhol \"¿cómo te llamas?\" e do português \"como você se chama?\": o nome é o que os outros usam para chamar a gente."
+      "textoPt": "אֵיךְ קוֹרְאִים לְךָ? quer dizer, palavra por palavra, \"como chamam a você?\". Parecido com o português \"como te chamam?\": o nome é o que os outros usam para chamar a gente."
     }
   ],
   "autoavaliacao": [
@@ -287,7 +287,7 @@
           "לנו"
         ],
         [
-          "vocês (eles)",
+          "vocês (homens ou grupo misto)",
           "לכם"
         ],
         [
@@ -316,7 +316,8 @@
         "הַבַּיִת שֶׁלָּכֶן",
         "הַבַּיִת שֶׁלָּכֶם"
       ],
-      "certa": 0
+      "certa": 0,
+      "porque": "Para um grupo só de mulheres, o padrão é שֶׁלָּכֶן. Na fala, muitos israelenses usam שֶׁלָּכֶם para qualquer grupo."
     },
     {
       "t": "montar",
@@ -481,7 +482,7 @@
     },
     {
       "t": "escrever",
-      "pt": "de vocês (eles)",
+      "pt": "de vocês (homens ou grupo misto)",
       "respostas": [
         "שלכם"
       ]
@@ -496,7 +497,7 @@
     },
     {
       "t": "completar",
-      "q": "Complete a fala do diálogo: \"Nós vamos tomar um café. Você quer café com a gente?\"",
+      "q": "Complete a fala do diálogo: \"Nós estamos tomando um café. Você quer um café com a gente?\"",
       "antes": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה.",
       "depois": "רוֹצֶה קָפֶה אִתָּנוּ?",
       "respostas": [
@@ -509,8 +510,8 @@
       "antes": "שִׁירָה, מָה",
       "depois": "הַטֶּלֶפוֹן שֶׁלָּךְ?",
       "respostas": [
-        "מיספר",
-        "מספר"
+        "מספר",
+        "מיספר"
       ]
     },
     {

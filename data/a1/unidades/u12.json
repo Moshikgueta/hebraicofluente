@@ -12,7 +12,7 @@
     },
     {
       "he": "אֵיךְ מַגִּיעִים לְ…?",
-      "translit": "eich magiím le…?",
+      "translit": "eich maguiím le…?",
       "pt": "como se chega a…?"
     },
     {
@@ -105,7 +105,7 @@
     },
     {
       "he": "בָּרֶגֶל",
-      "translit": "barégel",
+      "translit": "baréguel",
       "pt": "a pé"
     },
     {
@@ -137,7 +137,7 @@
     },
     {
       "tituloPt": "A pé é הוֹלֵךְ; de veículo é נוֹסֵעַ",
-      "textoPt": "O português usa \"ir\" para tudo. O hebraico separa: a pé é הוֹלֵךְ; de ônibus, trem, táxi ou carro é נוֹסֵעַ. O veículo vem com בְּ: בְּאוֹטוֹבּוּס, בְּרַכֶּבֶת, בְּמוֹנִית. \"A pé\" é uma palavra só: בָּרֶגֶל.",
+      "textoPt": "O português usa \"ir\" para tudo. Quando você diz COMO vai, o hebraico separa: a pé é הוֹלֵךְ; de ônibus, trem, táxi ou carro é נוֹסֵעַ. Sem falar do meio, הוֹלֵךְ também é o \"ir\" de todo dia: אֲנִי הוֹלֵךְ לָעֲבוֹדָה. O veículo vem com בְּ: בְּאוֹטוֹבּוּס, בְּרַכֶּבֶת, בְּמוֹנִית. \"A pé\" é uma palavra só: בָּרֶגֶל.",
       "erroPt": "אֲנִי הוֹלֵךְ בְּאוֹטוֹבּוּס soa como andar DENTRO do ônibus. Quem vai de ônibus diz אֲנִי נוֹסֵעַ בְּאוֹטוֹבּוּס.",
       "exemplos": [
         {
@@ -171,13 +171,13 @@
       {
         "quem": "Tom",
         "he": "סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה הַמֶּרְכָּזִית?",
-        "translit": "slichá, eich magiím latachaná hamerkazit?",
+        "translit": "slichá, eich maguiím latachaná hamerkazit?",
         "pt": "Com licença, como se chega à rodoviária central?"
       },
       {
         "quem": "A senhora",
         "he": "זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל?",
-        "translit": "ze rachok. atá holech barégel?",
+        "translit": "ze rachok. atá holech baréguel?",
         "pt": "É longe. Você vai a pé?"
       },
       {
@@ -264,7 +264,7 @@
       },
       {
         "he": "זֶה קָרוֹב, חָמֵשׁ דַּקּוֹת בָּרֶגֶל!",
-        "translit": "ze karov, chamesh dakót barégel!",
+        "translit": "ze karov, chamesh dakót baréguel!",
         "pt": "É perto, cinco minutos a pé!"
       }
     ],
@@ -394,7 +394,7 @@
           0
         ],
         [
-          "עַד הַפִּנָּה",
+          "עַד הַפִּנָּה בָּרֶגֶל",
           0
         ],
         [
@@ -410,7 +410,7 @@
           1
         ],
         [
-          "לַיָּם, חָמֵשׁ דַּקּוֹת",
+          "לַיָּם בָּרֶגֶל, חָמֵשׁ דַּקּוֹת",
           0
         ]
       ]
@@ -504,10 +504,11 @@
     },
     {
       "t": "erro",
-      "q": "Ela vai de ônibus. Ache o erro e escreva a frase certa.",
+      "q": "Uma mulher fala: \"Eu vou de ônibus para o trabalho.\" Ache o erro e escreva a frase certa.",
       "errada": "אֲנִי הוֹלֶכֶת לָעֲבוֹדָה בְּאוֹטוֹבּוּס.",
       "respostas": [
-        "אני נוסעת לעבודה באוטובוס"
+        "אני נוסעת לעבודה באוטובוס",
+        "אני נוסעת באוטובוס לעבודה"
       ],
       "porque": "De veículo é נוֹסַעַת."
     },
@@ -537,6 +538,18 @@
         "פּוֹנִים",
         "שְׂמֹאלָה",
         "בַּפִּנָּה"
+      ],
+      "outras": [
+        [
+          "בַּפִּנָּה",
+          "פּוֹנִים",
+          "שְׂמֹאלָה"
+        ],
+        [
+          "פּוֹנִים",
+          "בַּפִּנָּה",
+          "שְׂמֹאלָה"
+        ]
       ]
     },
     {

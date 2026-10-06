@@ -8,7 +8,7 @@
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
   "generatedAt": "2026-10-06",
-  "total": 817,
+  "total": 818,
   "waves": [
     {
       "id": 1,
@@ -44,7 +44,7 @@
       "id": 6,
       "titlePt": "Hebraico A1",
       "notePt": "As palavras, os diálogos, as leituras e os exercícios de escuta do curso A1, unidade por unidade. As frases no ritmo natural da conversa.",
-      "count": 235
+      "count": 236
     }
   ],
   "clips": [
@@ -3368,7 +3368,8 @@
       "wave": 2,
       "where": [
         "letra 20",
-        "módulo 6"
+        "módulo 6",
+        "a1 unidade 3, diálogo"
       ],
       "file": "he-e3d8894c.mp3"
     },
@@ -7812,9 +7813,9 @@
       "file": "he-f2ab1744.mp3"
     },
     {
-      "num": 631,
+      "num": 872,
       "seq": 582,
-      "he": "מָה שְׁלוֹמְךָ?",
+      "he": "מַה שְּׁלוֹמְךָ?",
       "translit": "ma shlomchá?",
       "gloss": "como vai? (a ele)",
       "kind": "frase",
@@ -7822,12 +7823,12 @@
       "where": [
         "a1 unidade 1"
       ],
-      "file": "he-934c8f8e.mp3"
+      "file": "he-d4e9e604.mp3"
     },
     {
-      "num": 632,
+      "num": 873,
       "seq": 583,
-      "he": "מָה שְׁלוֹמֵךְ?",
+      "he": "מַה שְּׁלוֹמֵךְ?",
       "translit": "ma shlomech?",
       "gloss": "como vai? (a ela)",
       "kind": "frase",
@@ -7835,7 +7836,7 @@
       "where": [
         "a1 unidade 1"
       ],
-      "file": "he-74451639.mp3"
+      "file": "he-13ad19d7.mp3"
     },
     {
       "num": 633,
@@ -8040,7 +8041,7 @@
       "num": 648,
       "seq": 599,
       "he": "בְּרָזִילָאִית",
-      "translit": "brazilait",
+      "translit": "brazilaít",
       "gloss": "brasileira",
       "kind": "palavra",
       "wave": 6,
@@ -8053,7 +8054,7 @@
       "num": 649,
       "seq": 600,
       "he": "יִשְׂרְאֵלִי",
-      "translit": "isreelí",
+      "translit": "israelí",
       "gloss": "israelense (m)",
       "kind": "palavra",
       "wave": 6,
@@ -8066,7 +8067,7 @@
       "num": 650,
       "seq": 601,
       "he": "יִשְׂרְאֵלִית",
-      "translit": "isreelit",
+      "translit": "israelit",
       "gloss": "israelense (f)",
       "kind": "palavra",
       "wave": 6,
@@ -8206,9 +8207,9 @@
       "file": "he-37d7d4d2.mp3"
     },
     {
-      "num": 661,
+      "num": 874,
       "seq": 612,
-      "he": "מָה זֶה?",
+      "he": "מַה זֶּה?",
       "translit": "ma ze?",
       "gloss": "o que é isto?",
       "kind": "frase",
@@ -8216,7 +8217,7 @@
       "where": [
         "a1 unidade 2"
       ],
-      "file": "he-f721e84f.mp3"
+      "file": "he-5bc60477.mp3"
     },
     {
       "num": 662,
@@ -8314,7 +8315,7 @@
       "num": 669,
       "seq": 620,
       "he": "מַתָּנָה",
-      "translit": "matana",
+      "translit": "mataná",
       "gloss": "presente",
       "kind": "palavra",
       "wave": 6,
@@ -8350,9 +8351,9 @@
       "file": "he-927f4ece.mp3"
     },
     {
-      "num": 672,
+      "num": 875,
       "seq": 623,
-      "he": "מַיָּה, מָה זֶה?",
+      "he": "מַיָּה, מַה זֶּה?",
       "translit": "Maya, ma ze?",
       "gloss": "Maya, o que é isto?",
       "kind": "frase",
@@ -8360,7 +8361,7 @@
       "where": [
         "a1 unidade 2, diálogo"
       ],
-      "file": "he-6ff1a0c4.mp3"
+      "file": "he-72a3c2de.mp3"
     },
     {
       "num": 673,
@@ -8376,9 +8377,9 @@
       "file": "he-67f85d53.mp3"
     },
     {
-      "num": 674,
+      "num": 876,
       "seq": 625,
-      "he": "וּמָה זֶה?",
+      "he": "וּמַה זֶּה?",
       "translit": "uma ze?",
       "gloss": "E o que é isto?",
       "kind": "frase",
@@ -8386,7 +8387,7 @@
       "where": [
         "a1 unidade 2, diálogo"
       ],
-      "file": "he-b8c29b5f.mp3"
+      "file": "he-c81f52a5.mp3"
     },
     {
       "num": 675,
@@ -8418,7 +8419,7 @@
       "num": 677,
       "seq": 628,
       "he": "זֹאת אִמָּא. וְזֶה אַבָּא.",
-      "translit": "zot imá. veze aba.",
+      "translit": "zot íma. veze ába.",
       "gloss": "Esta é a minha mãe. E este é o meu pai.",
       "kind": "frase",
       "wave": 6,
@@ -8444,7 +8445,7 @@
       "num": 679,
       "seq": 630,
       "he": "זֶה לֹא אַבָּא, זֶה דָּנִי!",
-      "translit": "ze lo aba, ze Dani!",
+      "translit": "ze lo ába, ze Dani!",
       "gloss": "Este não é o meu pai, é o Dani!",
       "kind": "frase",
       "wave": 6,
@@ -8624,8 +8625,21 @@
       "file": "he-81d65be6.mp3"
     },
     {
-      "num": 693,
+      "num": 877,
       "seq": 644,
+      "he": "כִּסְאוֹת",
+      "translit": "kisot",
+      "gloss": "cadeiras (plural de כִּסֵּא)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo"
+      ],
+      "file": "he-5aa94c57.mp3"
+    },
+    {
+      "num": 693,
+      "seq": 645,
       "he": "הַתִּיק הַשָּׁחֹר",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -8638,7 +8652,7 @@
     },
     {
       "num": 694,
-      "seq": 645,
+      "seq": 646,
       "he": "הֵן נֶחְמָדוֹת",
       "translit": null,
       "gloss": "Fala de quem?",
@@ -8651,7 +8665,7 @@
     },
     {
       "num": 695,
-      "seq": 646,
+      "seq": 647,
       "he": "אֵיפֹה?",
       "translit": "eifo?",
       "gloss": "onde?",
@@ -8664,7 +8678,7 @@
     },
     {
       "num": 696,
-      "seq": 647,
+      "seq": 648,
       "he": "בְּ־",
       "translit": "be-",
       "gloss": "em (grudado na palavra)",
@@ -8677,7 +8691,7 @@
     },
     {
       "num": 697,
-      "seq": 648,
+      "seq": 649,
       "he": "סָאוֹ פָּאוּלוֹ",
       "translit": "São Paulo",
       "gloss": "São Paulo",
@@ -8690,7 +8704,7 @@
     },
     {
       "num": 698,
-      "seq": 649,
+      "seq": 650,
       "he": "רִיוֹ",
       "translit": "Rio",
       "gloss": "Rio",
@@ -8702,9 +8716,9 @@
       "file": "he-89e389ca.mp3"
     },
     {
-      "num": 699,
-      "seq": 650,
-      "he": "פּוֹרְטוּגָזִית",
+      "num": 878,
+      "seq": 651,
+      "he": "פּוֹרְטוּגֶזִית",
       "translit": "portugezit",
       "gloss": "português",
       "kind": "palavra",
@@ -8712,11 +8726,11 @@
       "where": [
         "a1 unidade 4"
       ],
-      "file": "he-b61037db.mp3"
+      "file": "he-ca7816d5.mp3"
     },
     {
       "num": 700,
-      "seq": 651,
+      "seq": 652,
       "he": "אַנְגְּלִית",
       "translit": "anglit",
       "gloss": "inglês",
@@ -8729,7 +8743,7 @@
     },
     {
       "num": 701,
-      "seq": 652,
+      "seq": 653,
       "he": "טוֹם, אֵיפֹה אַתָּה גָּר?",
       "translit": "Tom, eifo atá gar?",
       "gloss": "Tom, onde você mora?",
@@ -8742,7 +8756,7 @@
     },
     {
       "num": 702,
-      "seq": 653,
+      "seq": 654,
       "he": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?",
       "translit": "aní gar biYerushaláyim. veat?",
       "gloss": "Moro em Jerusalém. E você?",
@@ -8755,7 +8769,7 @@
     },
     {
       "num": 703,
-      "seq": 654,
+      "seq": 655,
       "he": "אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד?",
       "translit": "aní gará beTel Aviv. atá oved?",
       "gloss": "Moro em Tel Aviv. Você trabalha?",
@@ -8768,7 +8782,7 @@
     },
     {
       "num": 704,
-      "seq": 655,
+      "seq": 656,
       "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ?",
       "translit": "lo, aní lomed ivrit. veat?",
       "gloss": "Não, estudo hebraico. E você?",
@@ -8781,7 +8795,7 @@
     },
     {
       "num": 705,
-      "seq": 656,
+      "seq": 657,
       "he": "אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב!",
       "translit": "aní ovédet. atá medaber ivrit tov!",
       "gloss": "Eu trabalho. Você fala hebraico bem!",
@@ -8794,7 +8808,7 @@
     },
     {
       "num": 706,
-      "seq": 657,
+      "seq": 658,
       "he": "תּוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
       "translit": "todá! aní medaber ktsat.",
       "gloss": "Obrigado! Falo um pouco.",
@@ -8807,7 +8821,7 @@
     },
     {
       "num": 707,
-      "seq": 658,
+      "seq": 659,
       "he": "דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית.",
       "translit": "Dani uMaya gam lomdim ivrit.",
       "gloss": "O Dani e a Maya também estudam hebraico.",
@@ -8820,7 +8834,7 @@
     },
     {
       "num": 708,
-      "seq": 659,
+      "seq": 660,
       "he": "הֵם גָּרִים בִּירוּשָׁלַיִם?",
       "translit": "hem garim biYerushaláyim?",
       "gloss": "Eles moram em Jerusalém?",
@@ -8833,7 +8847,7 @@
     },
     {
       "num": 709,
-      "seq": 660,
+      "seq": 661,
       "he": "לֹא, הֵם גָּרִים בְּתֵל אָבִיב.",
       "translit": "lo, hem garim beTel Aviv.",
       "gloss": "Não, eles moram em Tel Aviv.",
@@ -8846,7 +8860,7 @@
     },
     {
       "num": 710,
-      "seq": 661,
+      "seq": 662,
       "he": "אֲנַחְנוּ לוֹמְדוֹת",
       "translit": null,
       "gloss": "Quem fala?",
@@ -8859,7 +8873,7 @@
     },
     {
       "num": 711,
-      "seq": 662,
+      "seq": 663,
       "he": "הוּא כּוֹתֵב בְּעִבְרִית",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -8872,7 +8886,7 @@
     },
     {
       "num": 712,
-      "seq": 663,
+      "seq": 664,
       "he": "גְּבִינָה",
       "translit": "gviná",
       "gloss": "queijo",
@@ -8885,7 +8899,7 @@
     },
     {
       "num": 713,
-      "seq": 664,
+      "seq": 665,
       "he": "בֵּיצָה",
       "translit": "beitsá",
       "gloss": "ovo",
@@ -8898,7 +8912,7 @@
     },
     {
       "num": 714,
-      "seq": 665,
+      "seq": 666,
       "he": "בֵּיצִים",
       "translit": "beitsim",
       "gloss": "ovos",
@@ -8911,7 +8925,7 @@
     },
     {
       "num": 715,
-      "seq": 666,
+      "seq": 667,
       "he": "תַּפּוּחִים",
       "translit": "tapuchim",
       "gloss": "maçãs",
@@ -8924,7 +8938,7 @@
     },
     {
       "num": 716,
-      "seq": 667,
+      "seq": 668,
       "he": "עוּגָה",
       "translit": "ugá",
       "gloss": "bolo",
@@ -8937,7 +8951,7 @@
     },
     {
       "num": 717,
-      "seq": 668,
+      "seq": 669,
       "he": "סָלָט",
       "translit": "salat",
       "gloss": "salada",
@@ -8950,7 +8964,7 @@
     },
     {
       "num": 718,
-      "seq": 669,
+      "seq": 670,
       "he": "חָלָב",
       "translit": "chalav",
       "gloss": "leite",
@@ -8963,7 +8977,7 @@
     },
     {
       "num": 719,
-      "seq": 670,
+      "seq": 671,
       "he": "מִטְבָּח",
       "translit": "mitbach",
       "gloss": "cozinha",
@@ -8976,10 +8990,10 @@
     },
     {
       "num": 720,
-      "seq": 671,
+      "seq": 672,
       "he": "חֶדֶר",
       "translit": "chéder",
-      "gloss": "quarto, sala",
+      "gloss": "cômodo, quarto",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -8989,7 +9003,7 @@
     },
     {
       "num": 721,
-      "seq": 672,
+      "seq": 673,
       "he": "עִתּוֹן",
       "translit": "iton",
       "gloss": "jornal",
@@ -9002,7 +9016,7 @@
     },
     {
       "num": 722,
-      "seq": 673,
+      "seq": 674,
       "he": "מַיָּה, מָה אַתְּ אוֹכֶלֶת?",
       "translit": "Maya, ma at ochélet?",
       "gloss": "Maya, o que você está comendo?",
@@ -9015,7 +9029,7 @@
     },
     {
       "num": 723,
-      "seq": 674,
+      "seq": 675,
       "he": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
       "translit": "aní ochélet léchem ugviná. atá rotsé?",
       "gloss": "Pão e queijo. Você quer?",
@@ -9028,7 +9042,7 @@
     },
     {
       "num": 724,
-      "seq": 675,
+      "seq": 676,
       "he": "כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב?",
       "translit": "ken, todá. eifo hechalav?",
       "gloss": "Quero, obrigado. Onde está o leite?",
@@ -9040,9 +9054,9 @@
       "file": "he-b00113c6.mp3"
     },
     {
-      "num": 725,
-      "seq": 676,
-      "he": "הֶחָלָב בַּמְּקָרֵר.",
+      "num": 879,
+      "seq": 677,
+      "he": "הֶחָלָב בַּמְקָרֵר.",
       "translit": "hechalav bamekarer.",
       "gloss": "O leite está na geladeira.",
       "kind": "frase",
@@ -9050,11 +9064,11 @@
       "where": [
         "a1 unidade 5, diálogo"
       ],
-      "file": "he-907ab402.mp3"
+      "file": "he-ecdc3497.mp3"
     },
     {
       "num": 726,
-      "seq": 677,
+      "seq": 678,
       "he": "אַתְּ שׁוֹתָה קָפֶה?",
       "translit": "at shotá kafé?",
       "gloss": "Você bebe café?",
@@ -9067,9 +9081,9 @@
     },
     {
       "num": 727,
-      "seq": 678,
+      "seq": 679,
       "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
-      "translit": "lo, aní lo shotá kafé. aní shotá te.",
+      "translit": "lo, aní lo shotá kafé. aní shotá té.",
       "gloss": "Não, não bebo café. Bebo chá.",
       "kind": "frase",
       "wave": 6,
@@ -9080,7 +9094,7 @@
     },
     {
       "num": 728,
-      "seq": 679,
+      "seq": 680,
       "he": "וּמִי קוֹנֶה אֶת הַלֶּחֶם?",
       "translit": "umi koné et haléchem?",
       "gloss": "E quem compra o pão?",
@@ -9093,7 +9107,7 @@
     },
     {
       "num": 729,
-      "seq": 680,
+      "seq": 681,
       "he": "אַתָּה!",
       "translit": "atá!",
       "gloss": "Você!",
@@ -9106,7 +9120,7 @@
     },
     {
       "num": 730,
-      "seq": 681,
+      "seq": 682,
       "he": "אֲנַחְנוּ לֹא אוֹכְלִים בֵּיצִים",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -9119,7 +9133,7 @@
     },
     {
       "num": 731,
-      "seq": 682,
+      "seq": 683,
       "he": "הִיא קוֹנָה תַּפּוּחִים",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -9132,7 +9146,7 @@
     },
     {
       "num": 732,
-      "seq": 683,
+      "seq": 684,
       "he": "אַחִים",
       "translit": "achim",
       "gloss": "irmãos",
@@ -9145,7 +9159,7 @@
     },
     {
       "num": 733,
-      "seq": 684,
+      "seq": 685,
       "he": "אָחוֹת",
       "translit": "achot",
       "gloss": "irmã",
@@ -9158,7 +9172,7 @@
     },
     {
       "num": 734,
-      "seq": 685,
+      "seq": 686,
       "he": "אֲחָיוֹת",
       "translit": "achayot",
       "gloss": "irmãs",
@@ -9171,7 +9185,7 @@
     },
     {
       "num": 735,
-      "seq": 686,
+      "seq": 687,
       "he": "הוֹרִים",
       "translit": "horim",
       "gloss": "pais (pai e mãe)",
@@ -9184,7 +9198,7 @@
     },
     {
       "num": 736,
-      "seq": 687,
+      "seq": 688,
       "he": "בֵּן",
       "translit": "ben",
       "gloss": "filho",
@@ -9197,7 +9211,7 @@
     },
     {
       "num": 737,
-      "seq": 688,
+      "seq": 689,
       "he": "בַּת",
       "translit": "bat",
       "gloss": "filha",
@@ -9210,7 +9224,7 @@
     },
     {
       "num": 738,
-      "seq": 689,
+      "seq": 690,
       "he": "סַבָּא",
       "translit": "saba",
       "gloss": "avô",
@@ -9223,7 +9237,7 @@
     },
     {
       "num": 739,
-      "seq": 690,
+      "seq": 691,
       "he": "סַבְתָּא",
       "translit": "sávta",
       "gloss": "avó",
@@ -9236,7 +9250,7 @@
     },
     {
       "num": 740,
-      "seq": 691,
+      "seq": 692,
       "he": "דּוֹד",
       "translit": "dod",
       "gloss": "tio",
@@ -9249,7 +9263,7 @@
     },
     {
       "num": 741,
-      "seq": 692,
+      "seq": 693,
       "he": "חָתוּל",
       "translit": "chatul",
       "gloss": "gato",
@@ -9262,9 +9276,9 @@
     },
     {
       "num": 742,
-      "seq": 693,
+      "seq": 694,
       "he": "חֵיפָה",
-      "translit": "Cheifa",
+      "translit": "Cháifa",
       "gloss": "Haifa",
       "kind": "palavra",
       "wave": 6,
@@ -9275,7 +9289,7 @@
     },
     {
       "num": 743,
-      "seq": 694,
+      "seq": 695,
       "he": "יֵשׁ",
       "translit": "yesh",
       "gloss": "há, existe",
@@ -9288,7 +9302,7 @@
     },
     {
       "num": 744,
-      "seq": 695,
+      "seq": 696,
       "he": "אֵין",
       "translit": "ein",
       "gloss": "não há",
@@ -9301,7 +9315,7 @@
     },
     {
       "num": 745,
-      "seq": 696,
+      "seq": 697,
       "he": "יֵשׁ לִי",
       "translit": "yesh li",
       "gloss": "eu tenho",
@@ -9314,7 +9328,7 @@
     },
     {
       "num": 746,
-      "seq": 697,
+      "seq": 698,
       "he": "לִי",
       "translit": "li",
       "gloss": "para mim",
@@ -9328,7 +9342,7 @@
     },
     {
       "num": 747,
-      "seq": 698,
+      "seq": 699,
       "he": "לְךָ",
       "translit": "lechá",
       "gloss": "para você (m)",
@@ -9342,7 +9356,7 @@
     },
     {
       "num": 748,
-      "seq": 699,
+      "seq": 700,
       "he": "לָךְ",
       "translit": "lach",
       "gloss": "para você (f)",
@@ -9356,7 +9370,7 @@
     },
     {
       "num": 749,
-      "seq": 700,
+      "seq": 701,
       "he": "לָהּ",
       "translit": "la",
       "gloss": "para ela",
@@ -9370,7 +9384,7 @@
     },
     {
       "num": 750,
-      "seq": 701,
+      "seq": 702,
       "he": "לָנוּ",
       "translit": "lánu",
       "gloss": "para nós",
@@ -9384,7 +9398,7 @@
     },
     {
       "num": 751,
-      "seq": 702,
+      "seq": 703,
       "he": "שֶׁלִּי",
       "translit": "sheli",
       "gloss": "meu, minha",
@@ -9397,10 +9411,10 @@
     },
     {
       "num": 752,
-      "seq": 703,
+      "seq": 704,
       "he": "שֶׁלְּךָ",
       "translit": "shelchá",
-      "gloss": "seu, sua (a ele)",
+      "gloss": "seu, sua (falando com um homem)",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -9410,10 +9424,10 @@
     },
     {
       "num": 753,
-      "seq": 704,
+      "seq": 705,
       "he": "שֶׁלָּךְ",
       "translit": "shelach",
-      "gloss": "seu, sua (a ela)",
+      "gloss": "seu, sua (falando com uma mulher)",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -9423,9 +9437,9 @@
     },
     {
       "num": 754,
-      "seq": 705,
+      "seq": 706,
       "he": "שֶׁלּוֹ",
-      "translit": "shelo",
+      "translit": "sheló",
       "gloss": "dele",
       "kind": "palavra",
       "wave": 6,
@@ -9436,9 +9450,9 @@
     },
     {
       "num": 755,
-      "seq": 706,
+      "seq": 707,
       "he": "שֶׁלָּהּ",
-      "translit": "shela",
+      "translit": "shelá",
       "gloss": "dela",
       "kind": "palavra",
       "wave": 6,
@@ -9449,7 +9463,7 @@
     },
     {
       "num": 756,
-      "seq": 707,
+      "seq": 708,
       "he": "שֶׁלָּנוּ",
       "translit": "shelánu",
       "gloss": "nosso, nossa",
@@ -9462,7 +9476,7 @@
     },
     {
       "num": 757,
-      "seq": 708,
+      "seq": 709,
       "he": "נֹעָה, יֵשׁ לָךְ אַחִים?",
       "translit": "Noa, yesh lach achim?",
       "gloss": "Noa, você tem irmãos?",
@@ -9475,7 +9489,7 @@
     },
     {
       "num": 758,
-      "seq": 709,
+      "seq": 710,
       "he": "כֵּן, יֵשׁ לִי אָח וְאָחוֹת.",
       "translit": "ken, yesh li ach veachot.",
       "gloss": "Tenho, um irmão e uma irmã.",
@@ -9488,7 +9502,7 @@
     },
     {
       "num": 759,
-      "seq": 710,
+      "seq": 711,
       "he": "מִי זֶה בַּתְּמוּנָה?",
       "translit": "mi ze batmuná?",
       "gloss": "Quem é este na foto?",
@@ -9501,9 +9515,9 @@
     },
     {
       "num": 760,
-      "seq": 711,
+      "seq": 712,
       "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
-      "translit": "ze Eitan, haach sheli. hu gar beCheifa.",
+      "translit": "ze Eitan, haach sheli. hu gar beCháifa.",
       "gloss": "Este é o Eitan, o meu irmão. Ele mora em Haifa.",
       "kind": "frase",
       "wave": 6,
@@ -9514,7 +9528,7 @@
     },
     {
       "num": 761,
-      "seq": 712,
+      "seq": 713,
       "he": "וְיֵשׁ לָךְ כֶּלֶב?",
       "translit": "veyesh lach kélev?",
       "gloss": "E você tem cachorro?",
@@ -9527,7 +9541,7 @@
     },
     {
       "num": 762,
-      "seq": 713,
+      "seq": 714,
       "he": "לֹא, אֵין לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ?",
       "translit": "lo, ein li kélev. yesh li chatul! ulechá?",
       "gloss": "Não, não tenho cachorro. Tenho um gato! E você?",
@@ -9540,7 +9554,7 @@
     },
     {
       "num": 763,
-      "seq": 714,
+      "seq": 715,
       "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל.",
       "translit": "ein li chatul. aval lahorim sheli yesh kélev gadol.",
       "gloss": "Não tenho gato. Mas os meus pais têm um cachorro grande.",
@@ -9553,7 +9567,7 @@
     },
     {
       "num": 764,
-      "seq": 715,
+      "seq": 716,
       "he": "תְּמוּנָה",
       "translit": "tmuná",
       "gloss": "foto",
@@ -9566,7 +9580,7 @@
     },
     {
       "num": 765,
-      "seq": 716,
+      "seq": 717,
       "he": "אֵיתָן",
       "translit": "Eitan",
       "gloss": "Eitan (nome)",
@@ -9579,7 +9593,7 @@
     },
     {
       "num": 766,
-      "seq": 717,
+      "seq": 718,
       "he": "אֵין לָנוּ אַחִים",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -9592,7 +9606,7 @@
     },
     {
       "num": 767,
-      "seq": 718,
+      "seq": 719,
       "he": "הַבַּת שֶׁלָּהּ גָּרָה בְּחֵיפָה",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -9605,7 +9619,7 @@
     },
     {
       "num": 768,
-      "seq": 719,
+      "seq": 720,
       "he": "אֶפֶס",
       "translit": "éfes",
       "gloss": "0",
@@ -9618,7 +9632,7 @@
     },
     {
       "num": 769,
-      "seq": 720,
+      "seq": 721,
       "he": "אַחַת",
       "translit": "achat",
       "gloss": "1",
@@ -9631,7 +9645,7 @@
     },
     {
       "num": 770,
-      "seq": 721,
+      "seq": 722,
       "he": "שְׁתַּיִם",
       "translit": "shtáyim",
       "gloss": "2",
@@ -9644,7 +9658,7 @@
     },
     {
       "num": 771,
-      "seq": 722,
+      "seq": 723,
       "he": "שָׁלוֹשׁ",
       "translit": "shalosh",
       "gloss": "3",
@@ -9657,7 +9671,7 @@
     },
     {
       "num": 772,
-      "seq": 723,
+      "seq": 724,
       "he": "חָמֵשׁ",
       "translit": "chamesh",
       "gloss": "5",
@@ -9670,7 +9684,7 @@
     },
     {
       "num": 773,
-      "seq": 724,
+      "seq": 725,
       "he": "שֵׁשׁ",
       "translit": "shesh",
       "gloss": "6",
@@ -9683,7 +9697,7 @@
     },
     {
       "num": 774,
-      "seq": 725,
+      "seq": 726,
       "he": "שֶׁבַע",
       "translit": "shéva",
       "gloss": "7",
@@ -9696,7 +9710,7 @@
     },
     {
       "num": 775,
-      "seq": 726,
+      "seq": 727,
       "he": "שְׁמוֹנֶה",
       "translit": "shmoné",
       "gloss": "8",
@@ -9709,7 +9723,7 @@
     },
     {
       "num": 776,
-      "seq": 727,
+      "seq": 728,
       "he": "תֵּשַׁע",
       "translit": "tésha",
       "gloss": "9",
@@ -9722,7 +9736,7 @@
     },
     {
       "num": 777,
-      "seq": 728,
+      "seq": 729,
       "he": "אַחַת־עֶשְׂרֵה",
       "translit": "achat-esré",
       "gloss": "11",
@@ -9735,7 +9749,7 @@
     },
     {
       "num": 778,
-      "seq": 729,
+      "seq": 730,
       "he": "שְׁתֵּים־עֶשְׂרֵה",
       "translit": "shteim-esré",
       "gloss": "12",
@@ -9749,7 +9763,7 @@
     },
     {
       "num": 779,
-      "seq": 730,
+      "seq": 731,
       "he": "שְׁלוֹשׁ־עֶשְׂרֵה",
       "translit": "shlosh-esré",
       "gloss": "13",
@@ -9762,7 +9776,7 @@
     },
     {
       "num": 780,
-      "seq": 731,
+      "seq": 732,
       "he": "אַרְבַּע־עֶשְׂרֵה",
       "translit": "arbá-esré",
       "gloss": "14",
@@ -9775,7 +9789,7 @@
     },
     {
       "num": 781,
-      "seq": 732,
+      "seq": 733,
       "he": "חֲמֵשׁ־עֶשְׂרֵה",
       "translit": "chamesh-esré",
       "gloss": "15",
@@ -9788,7 +9802,7 @@
     },
     {
       "num": 782,
-      "seq": 733,
+      "seq": 734,
       "he": "שֵׁשׁ־עֶשְׂרֵה",
       "translit": "shesh-esré",
       "gloss": "16",
@@ -9801,7 +9815,7 @@
     },
     {
       "num": 783,
-      "seq": 734,
+      "seq": 735,
       "he": "שְׁבַע־עֶשְׂרֵה",
       "translit": "shva-esré",
       "gloss": "17",
@@ -9814,7 +9828,7 @@
     },
     {
       "num": 784,
-      "seq": 735,
+      "seq": 736,
       "he": "שְׁמוֹנֶה־עֶשְׂרֵה",
       "translit": "shmoné-esré",
       "gloss": "18",
@@ -9827,7 +9841,7 @@
     },
     {
       "num": 785,
-      "seq": 736,
+      "seq": 737,
       "he": "תְּשַׁע־עֶשְׂרֵה",
       "translit": "tsha-esré",
       "gloss": "19",
@@ -9840,7 +9854,7 @@
     },
     {
       "num": 786,
-      "seq": 737,
+      "seq": 738,
       "he": "שְׁלוֹשִׁים",
       "translit": "shloshim",
       "gloss": "30",
@@ -9853,7 +9867,7 @@
     },
     {
       "num": 787,
-      "seq": 738,
+      "seq": 739,
       "he": "אַרְבָּעִים",
       "translit": "arbaim",
       "gloss": "40",
@@ -9866,7 +9880,7 @@
     },
     {
       "num": 788,
-      "seq": 739,
+      "seq": 740,
       "he": "חֲמִשִּׁים",
       "translit": "chamishim",
       "gloss": "50",
@@ -9879,7 +9893,7 @@
     },
     {
       "num": 789,
-      "seq": 740,
+      "seq": 741,
       "he": "שִׁשִּׁים",
       "translit": "shishim",
       "gloss": "60",
@@ -9892,7 +9906,7 @@
     },
     {
       "num": 790,
-      "seq": 741,
+      "seq": 742,
       "he": "שִׁבְעִים",
       "translit": "shivim",
       "gloss": "70",
@@ -9905,7 +9919,7 @@
     },
     {
       "num": 791,
-      "seq": 742,
+      "seq": 743,
       "he": "שְׁמוֹנִים",
       "translit": "shmonim",
       "gloss": "80",
@@ -9918,7 +9932,7 @@
     },
     {
       "num": 792,
-      "seq": 743,
+      "seq": 744,
       "he": "תִּשְׁעִים",
       "translit": "tishim",
       "gloss": "90",
@@ -9931,7 +9945,7 @@
     },
     {
       "num": 793,
-      "seq": 744,
+      "seq": 745,
       "he": "מֵאָה",
       "translit": "meá",
       "gloss": "100",
@@ -9944,7 +9958,7 @@
     },
     {
       "num": 794,
-      "seq": 745,
+      "seq": 746,
       "he": "עֶשְׂרִים וְאַחַת",
       "translit": "esrim veachat",
       "gloss": "21",
@@ -9957,7 +9971,7 @@
     },
     {
       "num": 795,
-      "seq": 746,
+      "seq": 747,
       "he": "כַּמָּה?",
       "translit": "kama?",
       "gloss": "quanto? quantos?",
@@ -9970,7 +9984,7 @@
     },
     {
       "num": 796,
-      "seq": 747,
+      "seq": 748,
       "he": "כַּמָּה זֶה עוֹלֶה?",
       "translit": "kama ze olé?",
       "gloss": "quanto custa?",
@@ -9983,7 +9997,7 @@
     },
     {
       "num": 797,
-      "seq": 748,
+      "seq": 749,
       "he": "שֶׁקֶל",
       "translit": "shékel",
       "gloss": "shekel",
@@ -9996,7 +10010,7 @@
     },
     {
       "num": 798,
-      "seq": 749,
+      "seq": 750,
       "he": "שְׁקָלִים",
       "translit": "shkalim",
       "gloss": "shekels",
@@ -10009,7 +10023,7 @@
     },
     {
       "num": 799,
-      "seq": 750,
+      "seq": 751,
       "he": "קִילוֹ",
       "translit": "kilo",
       "gloss": "quilo",
@@ -10022,7 +10036,7 @@
     },
     {
       "num": 800,
-      "seq": 751,
+      "seq": 752,
       "he": "שׁוּק",
       "translit": "shuk",
       "gloss": "feira, mercado de rua",
@@ -10035,7 +10049,7 @@
     },
     {
       "num": 801,
-      "seq": 752,
+      "seq": 753,
       "he": "מָה הַשָּׁעָה?",
       "translit": "ma hashaá?",
       "gloss": "que horas são?",
@@ -10048,7 +10062,7 @@
     },
     {
       "num": 802,
-      "seq": 753,
+      "seq": 754,
       "he": "הַשָּׁעָה…",
       "translit": "hashaá…",
       "gloss": "são… (horas)",
@@ -10061,7 +10075,7 @@
     },
     {
       "num": 803,
-      "seq": 754,
+      "seq": 755,
       "he": "וָחֵצִי",
       "translit": "vachétsi",
       "gloss": "e meia",
@@ -10074,7 +10088,7 @@
     },
     {
       "num": 804,
-      "seq": 755,
+      "seq": 756,
       "he": "וָרֶבַע",
       "translit": "varéva",
       "gloss": "e quinze",
@@ -10087,9 +10101,9 @@
     },
     {
       "num": 805,
-      "seq": 756,
+      "seq": 757,
       "he": "בְּשָׁעָה…",
-      "translit": "besháa…",
+      "translit": "beshaá…",
       "gloss": "às…",
       "kind": "palavra",
       "wave": 6,
@@ -10100,7 +10114,7 @@
     },
     {
       "num": 806,
-      "seq": 757,
+      "seq": 758,
       "he": "עַד",
       "translit": "ad",
       "gloss": "até",
@@ -10113,7 +10127,7 @@
     },
     {
       "num": 807,
-      "seq": 758,
+      "seq": 759,
       "he": "בַּבֹּקֶר",
       "translit": "babóker",
       "gloss": "de manhã",
@@ -10126,7 +10140,7 @@
     },
     {
       "num": 808,
-      "seq": 759,
+      "seq": 760,
       "he": "בָּעֶרֶב",
       "translit": "baérev",
       "gloss": "à noite",
@@ -10139,7 +10153,7 @@
     },
     {
       "num": 809,
-      "seq": 760,
+      "seq": 761,
       "he": "פָּתוּחַ",
       "translit": "patúach",
       "gloss": "aberto",
@@ -10152,7 +10166,7 @@
     },
     {
       "num": 810,
-      "seq": 761,
+      "seq": 762,
       "he": "סָגוּר",
       "translit": "sagur",
       "gloss": "fechado",
@@ -10165,7 +10179,7 @@
     },
     {
       "num": 811,
-      "seq": 762,
+      "seq": 763,
       "he": "יוֹם רִאשׁוֹן",
       "translit": "yom rishon",
       "gloss": "domingo",
@@ -10178,7 +10192,7 @@
     },
     {
       "num": 812,
-      "seq": 763,
+      "seq": 764,
       "he": "יוֹם שֵׁנִי",
       "translit": "yom sheni",
       "gloss": "segunda-feira",
@@ -10191,7 +10205,7 @@
     },
     {
       "num": 813,
-      "seq": 764,
+      "seq": 765,
       "he": "יוֹם שְׁלִישִׁי",
       "translit": "yom shlishi",
       "gloss": "terça-feira",
@@ -10204,7 +10218,7 @@
     },
     {
       "num": 814,
-      "seq": 765,
+      "seq": 766,
       "he": "יוֹם רְבִיעִי",
       "translit": "yom revií",
       "gloss": "quarta-feira",
@@ -10217,7 +10231,7 @@
     },
     {
       "num": 815,
-      "seq": 766,
+      "seq": 767,
       "he": "יוֹם חֲמִישִׁי",
       "translit": "yom chamishi",
       "gloss": "quinta-feira",
@@ -10230,7 +10244,7 @@
     },
     {
       "num": 816,
-      "seq": 767,
+      "seq": 768,
       "he": "יוֹם שִׁשִּׁי",
       "translit": "yom shishi",
       "gloss": "sexta-feira",
@@ -10243,7 +10257,7 @@
     },
     {
       "num": 817,
-      "seq": 768,
+      "seq": 769,
       "he": "סְלִיחָה, כַּמָּה עוֹלָה הַגְּבִינָה?",
       "translit": "slichá, kama olá hagviná?",
       "gloss": "Com licença, quanto custa o queijo?",
@@ -10256,7 +10270,7 @@
     },
     {
       "num": 818,
-      "seq": 769,
+      "seq": 770,
       "he": "שְׁלוֹשִׁים שֶׁקֶל.",
       "translit": "shloshim shékel.",
       "gloss": "Trinta shekels.",
@@ -10269,7 +10283,7 @@
     },
     {
       "num": 819,
-      "seq": 770,
+      "seq": 771,
       "he": "וְהַתַּפּוּחִים?",
       "translit": "vehatapuchim?",
       "gloss": "E as maçãs?",
@@ -10282,7 +10296,7 @@
     },
     {
       "num": 820,
-      "seq": 771,
+      "seq": 772,
       "he": "עֶשֶׂר שֶׁקֶל לְקִילוֹ.",
       "translit": "éser shékel lekilo.",
       "gloss": "Dez shekels o quilo.",
@@ -10295,7 +10309,7 @@
     },
     {
       "num": 821,
-      "seq": 772,
+      "seq": 773,
       "he": "אֲנִי רוֹצֶה קִילוֹ תַּפּוּחִים, בְּבַקָּשָׁה.",
       "translit": "aní rotsé kilo tapuchim, bevakashá.",
       "gloss": "Quero um quilo de maçãs, por favor.",
@@ -10308,7 +10322,7 @@
     },
     {
       "num": 822,
-      "seq": 773,
+      "seq": 774,
       "he": "בְּבַקָּשָׁה. עוֹד מַשֶּׁהוּ?",
       "translit": "bevakashá. od máshehu?",
       "gloss": "Aqui está. Mais alguma coisa?",
@@ -10321,7 +10335,7 @@
     },
     {
       "num": 823,
-      "seq": 774,
+      "seq": 775,
       "he": "לֹא, תּוֹדָה. מָה הַשָּׁעָה?",
       "translit": "lo, todá. ma hashaá?",
       "gloss": "Não, obrigado. Que horas são?",
@@ -10334,7 +10348,7 @@
     },
     {
       "num": 824,
-      "seq": 775,
+      "seq": 776,
       "he": "הַשָּׁעָה אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
       "translit": "hashaá achat vachétsi. hashuk patúach ad shtáyim.",
       "gloss": "É uma e meia. A feira fica aberta até as duas.",
@@ -10347,7 +10361,7 @@
     },
     {
       "num": 825,
-      "seq": 776,
+      "seq": 777,
       "he": "מַשֶּׁהוּ",
       "translit": "máshehu",
       "gloss": "alguma coisa",
@@ -10360,7 +10374,7 @@
     },
     {
       "num": 826,
-      "seq": 777,
+      "seq": 778,
       "he": "שְׁלוֹשִׁים וְחָמֵשׁ שֶׁקֶל",
       "translit": null,
       "gloss": "Quanto custa?",
@@ -10373,7 +10387,7 @@
     },
     {
       "num": 827,
-      "seq": 778,
+      "seq": 779,
       "he": "הַשָּׁעָה עֶשֶׂר וָרֶבַע",
       "translit": null,
       "gloss": "Que horas são?",
@@ -10386,10 +10400,10 @@
     },
     {
       "num": 828,
-      "seq": 779,
+      "seq": 780,
       "he": "לָכֶם",
-      "translit": "lachem",
-      "gloss": "para vocês (eles)",
+      "translit": "lachém",
+      "gloss": "para vocês (homens ou grupo misto)",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -10399,10 +10413,10 @@
     },
     {
       "num": 829,
-      "seq": 780,
+      "seq": 781,
       "he": "לָכֶן",
       "translit": "lachen",
-      "gloss": "para vocês (elas)",
+      "gloss": "para vocês (só mulheres)",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -10412,9 +10426,9 @@
     },
     {
       "num": 830,
-      "seq": 781,
+      "seq": 782,
       "he": "לָהֶם",
-      "translit": "lahem",
+      "translit": "lahém",
       "gloss": "para eles",
       "kind": "palavra",
       "wave": 6,
@@ -10425,7 +10439,7 @@
     },
     {
       "num": 831,
-      "seq": 782,
+      "seq": 783,
       "he": "לָהֶן",
       "translit": "lahen",
       "gloss": "para elas",
@@ -10438,10 +10452,10 @@
     },
     {
       "num": 832,
-      "seq": 783,
+      "seq": 784,
       "he": "שֶׁלָּכֶם",
-      "translit": "shelachem",
-      "gloss": "de vocês (eles)",
+      "translit": "shelachém",
+      "gloss": "de vocês (homens ou grupo misto)",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -10451,10 +10465,10 @@
     },
     {
       "num": 833,
-      "seq": 784,
+      "seq": 785,
       "he": "שֶׁלָּכֶן",
       "translit": "shelachen",
-      "gloss": "de vocês (elas)",
+      "gloss": "de vocês (só mulheres)",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -10464,9 +10478,9 @@
     },
     {
       "num": 834,
-      "seq": 785,
+      "seq": 786,
       "he": "שֶׁלָּהֶם",
-      "translit": "shelahem",
+      "translit": "shelahém",
       "gloss": "deles",
       "kind": "palavra",
       "wave": 6,
@@ -10477,7 +10491,7 @@
     },
     {
       "num": 835,
-      "seq": 786,
+      "seq": 787,
       "he": "שֶׁלָּהֶן",
       "translit": "shelahen",
       "gloss": "delas",
@@ -10490,7 +10504,7 @@
     },
     {
       "num": 836,
-      "seq": 787,
+      "seq": 788,
       "he": "אִתִּי",
       "translit": "iti",
       "gloss": "comigo",
@@ -10503,7 +10517,7 @@
     },
     {
       "num": 837,
-      "seq": 788,
+      "seq": 789,
       "he": "אִתְּךָ",
       "translit": "itchá",
       "gloss": "contigo (m)",
@@ -10516,7 +10530,7 @@
     },
     {
       "num": 838,
-      "seq": 789,
+      "seq": 790,
       "he": "אִתָּךְ",
       "translit": "itach",
       "gloss": "contigo (f)",
@@ -10529,7 +10543,7 @@
     },
     {
       "num": 839,
-      "seq": 790,
+      "seq": 791,
       "he": "אִתּוֹ",
       "translit": "ito",
       "gloss": "com ele",
@@ -10542,7 +10556,7 @@
     },
     {
       "num": 840,
-      "seq": 791,
+      "seq": 792,
       "he": "אִתָּהּ",
       "translit": "ita",
       "gloss": "com ela",
@@ -10555,7 +10569,7 @@
     },
     {
       "num": 841,
-      "seq": 792,
+      "seq": 793,
       "he": "אִתָּנוּ",
       "translit": "itánu",
       "gloss": "com a gente",
@@ -10568,7 +10582,7 @@
     },
     {
       "num": 842,
-      "seq": 793,
+      "seq": 794,
       "he": "אֵיךְ?",
       "translit": "eich?",
       "gloss": "como?",
@@ -10581,7 +10595,7 @@
     },
     {
       "num": 843,
-      "seq": 794,
+      "seq": 795,
       "he": "מָתַי?",
       "translit": "matai?",
       "gloss": "quando?",
@@ -10594,7 +10608,7 @@
     },
     {
       "num": 844,
-      "seq": 795,
+      "seq": 796,
       "he": "לָמָּה?",
       "translit": "láma?",
       "gloss": "por quê?",
@@ -10607,10 +10621,10 @@
     },
     {
       "num": 845,
-      "seq": 796,
+      "seq": 797,
       "he": "אֵיךְ קוֹרְאִים לְךָ?",
       "translit": "eich korim lechá?",
-      "gloss": "como você se chama? (a ele)",
+      "gloss": "como você se chama? (falando com um homem)",
       "kind": "frase",
       "wave": 6,
       "where": [
@@ -10620,10 +10634,10 @@
     },
     {
       "num": 846,
-      "seq": 797,
+      "seq": 798,
       "he": "אֵיךְ קוֹרְאִים לָךְ?",
       "translit": "eich korim lach?",
-      "gloss": "como você se chama? (a ela)",
+      "gloss": "como você se chama? (falando com uma mulher)",
       "kind": "frase",
       "wave": 6,
       "where": [
@@ -10633,7 +10647,7 @@
     },
     {
       "num": 847,
-      "seq": 798,
+      "seq": 799,
       "he": "קוֹרְאִים לִי…",
       "translit": "korim li…",
       "gloss": "eu me chamo…",
@@ -10646,7 +10660,7 @@
     },
     {
       "num": 848,
-      "seq": 799,
+      "seq": 800,
       "he": "מִסְפָּר",
       "translit": "mispar",
       "gloss": "número",
@@ -10659,7 +10673,7 @@
     },
     {
       "num": 849,
-      "seq": 800,
+      "seq": 801,
       "he": "בְּעָיָה",
       "translit": "beayá",
       "gloss": "problema",
@@ -10672,7 +10686,7 @@
     },
     {
       "num": 850,
-      "seq": 801,
+      "seq": 802,
       "he": "אֵין בְּעָיָה",
       "translit": "ein beayá",
       "gloss": "sem problema",
@@ -10685,7 +10699,7 @@
     },
     {
       "num": 851,
-      "seq": 802,
+      "seq": 803,
       "he": "דָּנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִּי.",
       "translit": "Dani, zot Shira. hi lomédet iti.",
       "gloss": "Dani, esta é a Shira. Ela estuda comigo.",
@@ -10698,7 +10712,7 @@
     },
     {
       "num": 852,
-      "seq": 803,
+      "seq": 804,
       "he": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְּ?",
       "translit": "naim meod, Shira! meeifo at?",
       "gloss": "Muito prazer, Shira! De onde você é?",
@@ -10711,9 +10725,9 @@
     },
     {
       "num": 853,
-      "seq": 804,
+      "seq": 805,
       "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָּרָה בְּתֵל אָבִיב.",
-      "translit": "aní meCheifa, aval aní gará beTel Aviv.",
+      "translit": "aní meCháifa, aval aní gará beTel Aviv.",
       "gloss": "Sou de Haifa, mas moro em Tel Aviv.",
       "kind": "frase",
       "wave": 6,
@@ -10724,9 +10738,9 @@
     },
     {
       "num": 854,
-      "seq": 805,
+      "seq": 806,
       "he": "יֵשׁ לָךְ מִשְׁפָּחָה בְּחֵיפָה?",
-      "translit": "yesh lach mishpachá beCheifa?",
+      "translit": "yesh lach mishpachá beCháifa?",
       "gloss": "Você tem família em Haifa?",
       "kind": "frase",
       "wave": 6,
@@ -10737,7 +10751,7 @@
     },
     {
       "num": 855,
-      "seq": 806,
+      "seq": 807,
       "he": "כֵּן, הַהוֹרִים שֶׁלִּי גָּרִים שָׁם.",
       "translit": "ken, hahorim sheli garim sham.",
       "gloss": "Sim, os meus pais moram lá.",
@@ -10750,10 +10764,10 @@
     },
     {
       "num": 856,
-      "seq": 807,
+      "seq": 808,
       "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?",
       "translit": "anáchnu shotot kafé. atá rotsé kafé itánu?",
-      "gloss": "Nós vamos tomar um café. Você quer café com a gente?",
+      "gloss": "Nós estamos tomando um café. Você quer um café com a gente?",
       "kind": "frase",
       "wave": 6,
       "where": [
@@ -10763,7 +10777,7 @@
     },
     {
       "num": 857,
-      "seq": 808,
+      "seq": 809,
       "he": "כֵּן! אֲבָל רַק עַד שָׁלוֹשׁ. בְּשָׁלוֹשׁ אֲנִי עוֹבֵד.",
       "translit": "ken! aval rak ad shalosh. beshalosh aní oved.",
       "gloss": "Quero! Mas só até as três. Às três eu trabalho.",
@@ -10776,7 +10790,7 @@
     },
     {
       "num": 858,
-      "seq": 809,
+      "seq": 810,
       "he": "אֵין בְּעָיָה!",
       "translit": "ein beayá!",
       "gloss": "Sem problema!",
@@ -10789,7 +10803,7 @@
     },
     {
       "num": 859,
-      "seq": 810,
+      "seq": 811,
       "he": "שִׁירָה, מָה מִסְפַּר הַטֶּלֶפוֹן שֶׁלָּךְ?",
       "translit": "Shira, ma mispar hatélefon shelach?",
       "gloss": "Shira, qual é o número do seu telefone?",
@@ -10802,7 +10816,7 @@
     },
     {
       "num": 860,
-      "seq": 811,
+      "seq": 812,
       "he": "אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם…",
       "translit": "éfes chamishim ushtáyim…",
       "gloss": "Zero cinquenta e dois…",
@@ -10815,7 +10829,7 @@
     },
     {
       "num": 861,
-      "seq": 812,
+      "seq": 813,
       "he": "דָּנִי!",
       "translit": "Dani!",
       "gloss": "Dani!",
@@ -10828,7 +10842,7 @@
     },
     {
       "num": 862,
-      "seq": 813,
+      "seq": 814,
       "he": "מִסְפַּר הַטֶּלֶפוֹן",
       "translit": "mispar hatélefon",
       "gloss": "o número do telefone (expressão fixa)",
@@ -10841,7 +10855,7 @@
     },
     {
       "num": 863,
-      "seq": 814,
+      "seq": 815,
       "he": "שִׁירָה",
       "translit": "Shira",
       "gloss": "Shira (nome)",
@@ -10854,7 +10868,7 @@
     },
     {
       "num": 864,
-      "seq": 815,
+      "seq": 816,
       "he": "אֵין לָהֶן בְּעָיָה",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -10867,7 +10881,7 @@
     },
     {
       "num": 865,
-      "seq": 816,
+      "seq": 817,
       "he": "מָתַי אַתָּה עוֹבֵד?",
       "translit": null,
       "gloss": "O que a pessoa perguntou?",

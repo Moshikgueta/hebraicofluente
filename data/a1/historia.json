@@ -18,14 +18,14 @@
       "tituloPt": "O tempo do Segundo Templo",
       "epocaPt": "Do século 6 a.e.c. ao século 1",
       "depoisDaUnidade": 4,
-      "textoPt": "Depois do exílio na Babilônia, o aramaico virou a língua do dia a dia de muita gente, e a escrita mudou: as letras quadradas que você lê hoje vêm da escrita aramaica. O hebraico continuou vivo, falado e escrito. Os Manuscritos do Mar Morto, achados em 1947, são em boa parte em hebraico dessa época."
+      "textoPt": "Depois do exílio na Babilônia, o aramaico virou a língua do dia a dia de muita gente, e a escrita mudou: as letras quadradas que você lê hoje vêm da escrita aramaica. O hebraico continuou vivo, falado e escrito. Os Manuscritos do Mar Morto, achados a partir de 1947, são em boa parte em hebraico dessa época."
     },
     {
       "n": 3,
       "tituloPt": "O hebraico dos sábios",
       "epocaPt": "Por volta do ano 200",
       "depoisDaUnidade": 6,
-      "textoPt": "A Mishná, a primeira grande obra da lei judaica oral, foi escrita em hebraico por volta do ano 200, numa língua diferente da bíblica, mais próxima da fala. Dela vêm muitas coisas do hebraico moderno, como o שֶׁ־ (\"que\") e o jeito de usar o presente."
+      "textoPt": "A Mishná, a primeira grande obra da lei judaica oral, foi escrita em hebraico por volta do ano 200, numa língua diferente da bíblica, mais próxima da fala. Dela vêm muitas coisas do hebraico moderno, como o uso constante do שֶׁ־ (\"que\") no lugar do bíblico אֲשֶׁר, e o jeito de usar o presente."
     },
     {
       "n": 4,
@@ -60,7 +60,7 @@
       "tituloPt": "A formação do hebraico moderno",
       "epocaPt": "De 1890 a 1948",
       "depoisDaUnidade": 16,
-      "textoPt": "Em 1890 nasceu o Comitê da Língua, para criar palavras novas. Em 1913, professores e alunos fizeram greve para que uma escola técnica de Haifa ensinasse em hebraico e não em alemão, e ganharam. No mandato britânico, o hebraico virou língua oficial, ao lado do inglês e do árabe. A pronúncia escolhida seguiu, em boa parte, a tradição sefaradi."
+      "textoPt": "Em 1890 nasceu o Comitê da Língua, para criar palavras novas. Em 1913, professores e alunos fizeram greve para que uma escola técnica de Haifa ensinasse em hebraico e não em alemão, e ganharam. No mandato britânico, o hebraico virou língua oficial, ao lado do inglês e do árabe. A pronúncia escolhida seguiu a tradição sefaradi nas vogais e na sílaba tônica; nas consoantes, prevaleceu o jeito de falar dos imigrantes europeus."
     },
     {
       "n": 9,
@@ -74,7 +74,7 @@
       "tituloPt": "O hebraico israelense de hoje",
       "epocaPt": "Agora",
       "depoisDaUnidade": 20,
-      "textoPt": "O hebraico de hoje é uma língua viva como qualquer outra: tem gíria (סַבָּבָּה, יַאלְלָה), palavras do inglês (בַּי, הַלּוֹ), sotaques, e muda com o tempo. A pronúncia também mudou: para a maioria, א e ע soam igual, e ח e כ também. É esse hebraico, o da rua, que você aprendeu neste curso."
+      "textoPt": "O hebraico de hoje é uma língua viva como qualquer outra: tem gíria que veio do árabe (סַבָּבָּה, יַאלְלָה), palavras do inglês (בַּי), sotaques, e muda com o tempo. A pronúncia também mudou: para a maioria, א e ע soam igual, e ח e כ também. É esse hebraico, o da rua, que você aprendeu neste curso."
     }
   ]
 }

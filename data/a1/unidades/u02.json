@@ -6,7 +6,7 @@
   "situacaoPt": "Antes da aula, o Tom pergunta à Maya o que são as coisas na mesa dela, e quem são as pessoas nas fotos do telefone.",
   "palavras": [
     {
-      "he": "מָה זֶה?",
+      "he": "מַה זֶּה?",
       "translit": "ma ze?",
       "pt": "o que é isto?"
     },
@@ -97,7 +97,7 @@
     },
     {
       "he": "מַתָּנָה",
-      "translit": "matana",
+      "translit": "mataná",
       "pt": "presente"
     },
     {
@@ -132,12 +132,12 @@
     },
     {
       "he": "אַבָּא",
-      "translit": "aba",
+      "translit": "ába",
       "pt": "pai"
     },
     {
       "he": "אִמָּא",
-      "translit": "imá",
+      "translit": "íma",
       "pt": "mãe"
     }
   ],
@@ -149,11 +149,11 @@
     },
     {
       "tituloPt": "Como saber o gênero",
-      "textoPt": "A maioria das femininas termina em ־ָה (מְנוֹרָה) ou ־ֶת (מַחְבֶּרֶת). As outras, em geral, são masculinas. Há exceções, como כּוֹס."
+      "textoPt": "A maioria das femininas termina em ־ָה (מְנוֹרָה) ou ־ֶת (מַחְבֶּרֶת), e também em ־ִית (עִבְרִית). As outras, em geral, são masculinas. Há exceções, como כּוֹס (feminina). E atenção: לַיְלָה é masculino."
     },
     {
       "tituloPt": "Não existe \"um/uma\"",
-      "textoPt": "זֶה סֵפֶר = \"isto é um livro\". Para negar, לֹא antes: זֶה לֹא סֵפֶר. E מָה זֶה? serve para qualquer coisa; a resposta é que escolhe: זֹאת מַחְבֶּרֶת.",
+      "textoPt": "זֶה סֵפֶר = \"isto é um livro\". Para negar, לֹא antes: זֶה לֹא סֵפֶר. E מַה זֶּה? serve para qualquer coisa; a resposta é que escolhe: זֹאת מַחְבֶּרֶת.",
       "erroPt": "Procurar uma palavra para \"um/uma\". Não há: סֵפֶר sozinho já é \"um livro\"."
     }
   ],
@@ -162,7 +162,7 @@
     "linhas": [
       {
         "quem": "Tom",
-        "he": "מַיָּה, מָה זֶה?",
+        "he": "מַיָּה, מַה זֶּה?",
         "translit": "Maya, ma ze?",
         "pt": "Maya, o que é isto?"
       },
@@ -174,7 +174,7 @@
       },
       {
         "quem": "Tom",
-        "he": "וּמָה זֶה?",
+        "he": "וּמַה זֶּה?",
         "translit": "uma ze?",
         "pt": "E o que é isto?"
       },
@@ -193,7 +193,7 @@
       {
         "quem": "Maya",
         "he": "זֹאת אִמָּא. וְזֶה אַבָּא.",
-        "translit": "zot imá. veze aba.",
+        "translit": "zot íma. veze ába.",
         "pt": "Esta é a minha mãe. E este é o meu pai."
       },
       {
@@ -205,7 +205,7 @@
       {
         "quem": "Maya",
         "he": "זֶה לֹא אַבָּא, זֶה דָּנִי!",
-        "translit": "ze lo aba, ze Dani!",
+        "translit": "ze lo ába, ze Dani!",
         "pt": "Este não é o meu pai, é o Dani!"
       }
     ],
@@ -372,7 +372,7 @@
       "q": "Você aponta uma mulher e pergunta quem é:",
       "opcoes": [
         "מִי זֹאת?",
-        "מָה זֶה?",
+        "מַה זֶּה?",
         "מִי זֶה?"
       ],
       "certa": 0
@@ -458,7 +458,6 @@
       "antes": "",
       "depois": "אִמָּא. וְזֶה אַבָּא.",
       "respostas": [
-        "זואת",
         "זאת"
       ]
     },

@@ -107,7 +107,7 @@
     },
     {
       "he": "תֵּה",
-      "translit": "te",
+      "translit": "té",
       "pt": "chá"
     },
     {
@@ -123,7 +123,7 @@
     {
       "he": "חֶדֶר",
       "translit": "chéder",
-      "pt": "quarto, sala"
+      "pt": "cômodo, quarto"
     },
     {
       "he": "עִתּוֹן",
@@ -138,8 +138,8 @@
     },
     {
       "tituloPt": "O אֶת: uma palavra que não se traduz",
-      "textoPt": "Vem antes do objeto quando ele tem \"o/a\": אֲנִי אוֹכֵל אֶת הַלֶּחֶם. Sem \"o/a\", não há אֶת: אֲנִי אוֹכֵל לֶחֶם.",
-      "erroPt": "O português não tem essa palavra, então o brasileiro esquece o אֶת, e quando aprende põe em todo lugar. A regra é uma só: אֶת só antes de הַ."
+      "textoPt": "Vem antes do objeto definido, e o caso mais comum é o objeto com \"o/a\" (הַ): אֲנִי אוֹכֵל אֶת הַלֶּחֶם. Sem \"o/a\" (\"um pão\", \"pão\"), não há אֶת: אֲנִי אוֹכֵל לֶחֶם.",
+      "erroPt": "O português não tem essa palavra, então o brasileiro esquece o אֶת, e quando aprende põe em todo lugar. Por enquanto: אֶת antes do objeto com הַ; sem הַ (\"um pão\", \"pão\"), não há אֶת. Mais tarde você vai ver que nomes próprios também levam אֶת (אֶת דָּנִי)."
     },
     {
       "tituloPt": "Negar o verbo",
@@ -174,7 +174,7 @@
       },
       {
         "quem": "Maya",
-        "he": "הֶחָלָב בַּמְּקָרֵר.",
+        "he": "הֶחָלָב בַּמְקָרֵר.",
         "translit": "hechalav bamekarer.",
         "pt": "O leite está na geladeira."
       },
@@ -187,7 +187,7 @@
       {
         "quem": "Maya",
         "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
-        "translit": "lo, aní lo shotá kafé. aní shotá te.",
+        "translit": "lo, aní lo shotá kafé. aní shotá té.",
         "pt": "Não, não bebo café. Bebo chá."
       },
       {
@@ -283,7 +283,7 @@
       "t": "separar",
       "q": "Qual desenho?",
       "baldes": [
-        "com ה no fim",
+        "verbo como שׁוֹתֶה (com ה no fim)",
         "o da Unidade 4"
       ],
       "itens": [
@@ -340,7 +340,7 @@
         "היא אוכלת סלט",
         "היא אוכלת את הסלט"
       ],
-      "porque": "אֶת só antes de הַ."
+      "porque": "אֶת só vem antes do objeto definido: סָלָט sem הַ não leva אֶת."
     },
     {
       "t": "montar",
@@ -356,7 +356,7 @@
       "t": "vf",
       "q": "O אֶת aparece antes de todo objeto.",
       "certa": false,
-      "porque": "Só antes do objeto com הַ."
+      "porque": "Só antes do objeto definido (com הַ, por exemplo)."
     },
     {
       "t": "montar",
@@ -381,9 +381,9 @@
       "t": "completar",
       "q": "\"Os ovos estão na geladeira\"",
       "antes": "הַבֵּיצִים",
-      "depois": "מְּקָרֵר",
+      "depois": "",
       "respostas": [
-        "ב"
+        "במקרר"
       ]
     },
     {

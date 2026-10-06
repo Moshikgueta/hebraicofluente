@@ -84,6 +84,11 @@
       "pt": "encontrar-se"
     },
     {
+      "he": "נִפָּגֵשׁ",
+      "translit": "nipaguésh",
+      "pt": "a gente se encontra, combinado (expressão fixa, como נִתְרָאֶה)"
+    },
+    {
       "he": "מָתַי נוֹחַ לְךָ?",
       "translit": "matai nóach lechá?",
       "pt": "quando fica bom para você? (a ele)"
@@ -143,7 +148,7 @@
     {
       "tituloPt": "\"Que\" é שֶׁ־, grudado",
       "textoPt": "Para \"acho que\", \"diz que\", \"sei que\", o hebraico usa שֶׁ־, grudado na palavra seguinte: אֲנִי חוֹשֵׁב שֶׁהוּא בָּא (acho que ele vem), הִיא אוֹמֶרֶת שֶׁזֶּה טוֹב (ela diz que está bom), אֲנִי יוֹדַעַת שֶׁאַתָּה עָסוּק (eu sei que você está ocupado).",
-      "erroPt": "No português falado, o \"que\" às vezes cai (\"acho ele vem\"). Em hebraico, não: sem שֶׁ־ a frase fica quebrada. E não confunda com כִּי, que é \"porque\".",
+      "erroPt": "No português falado, o \"que\" às vezes cai (\"acho ele vem\"). Em hebraico, não: sem שֶׁ־ a frase fica quebrada. E não confunda com כִּי: na conversa, כִּי é \"porque\" (em texto formal, como jornal, כִּי às vezes aparece também como \"que\"). Na fala, \"que\" é שֶׁ־.",
       "exemplos": [
         {
           "he": "אֲנִי חוֹשֶׁבֶת שֶׁנֹּעָה רוֹצָה לָבוֹא.",
@@ -186,7 +191,7 @@
       },
       {
         "quem": "Dani",
-        "he": "הַי מַיָּה, זֶה דָּנִי. מַה נִשְׁמָע?",
+        "he": "הַי מַיָּה, זֶה דָּנִי. מַה נִּשְׁמָע?",
         "translit": "hai Maya, ze Dani. ma nishmá?",
         "pt": "Oi, Maya, é o Dani. Tudo bem?"
       },
@@ -194,7 +199,7 @@
         "quem": "Maya",
         "he": "בְּסֵדֶר. מָה קוֹרֶה?",
         "translit": "beséder. ma koré?",
-        "pt": "Tudo. O que houve?"
+        "pt": "Tudo. E aí, o que manda?"
       },
       {
         "quem": "Dani",
@@ -228,9 +233,9 @@
       },
       {
         "quem": "Maya",
-        "he": "כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁנֹּעָה רוֹצָה לָבוֹא גַּם.",
-        "translit": "ken. vaaní choshévet sheNoa rotsá lavó gam.",
-        "pt": "Fica. E eu acho que a Noa quer vir também."
+        "he": "כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁגַּם נֹעָה רוֹצָה לָבוֹא.",
+        "translit": "ken. vaaní choshévet shegám Noa rotsá lavó.",
+        "pt": "Fica. E eu acho que a Noa também quer vir."
       },
       {
         "quem": "Dani",
@@ -255,7 +260,7 @@
       {
         "he": "מָה קוֹרֶה?",
         "translit": "ma koré?",
-        "pt": "o que houve? o que manda?"
+        "pt": "e aí? o que manda? (literalmente: o que está acontecendo?)"
       },
       {
         "he": "בְּאֵיזוֹ שָׁעָה?",
@@ -312,7 +317,7 @@
       },
       {
         "t": "escolha",
-        "q": "A que horas fica o cinema?",
+        "q": "No fim, a que horas eles vão ao cinema?",
         "opcoes": [
           "Às 9h30",
           "Às 9h",
@@ -419,7 +424,7 @@
       "certa": 0,
       "dicas": {
         "1": "Quase. Em hebraico o \"que\" não cai: שֶׁ־, grudado em הוּא.",
-        "2": "כִּי é \"porque\". \"Que\" é שֶׁ־."
+        "2": "Na conversa, כִּי é \"porque\"; para \"que\", use שֶׁ־."
       }
     },
     {
@@ -539,6 +544,24 @@
         "אֲנִי",
         "לֹא",
         "יְכוֹלָה"
+      ],
+      "outras": [
+        [
+          "אֲנִי",
+          "מִצְטַעֶרֶת,",
+          "אֲנִי",
+          "לֹא",
+          "יְכוֹלָה",
+          "הַיּוֹם"
+        ],
+        [
+          "אֲנִי",
+          "מִצְטַעֶרֶת,",
+          "אֲנִי",
+          "הַיּוֹם",
+          "לֹא",
+          "יְכוֹלָה"
+        ]
       ]
     },
     {
@@ -548,6 +571,13 @@
         "מָחָר",
         "מַתְאִים",
         "לִי"
+      ],
+      "outras": [
+        [
+          "מַתְאִים",
+          "לִי",
+          "מָחָר"
+        ]
       ]
     },
     {
@@ -560,7 +590,7 @@
         ]
       ],
       "opcoes": [
-        "הַי, זֶה טוֹם. מַה נִשְׁמָע?",
+        "הַי, זֶה טוֹם. מַה נִּשְׁמָע?",
         "לְהִתְרָאוֹת!",
         "בְּתֵאָבוֹן."
       ],
@@ -654,16 +684,16 @@
     },
     {
       "t": "completar",
-      "q": "Complete a fala do diálogo: \"Fica. E eu acho que a Noa quer vir também.\"",
+      "q": "Complete a fala do diálogo: \"Fica. E eu acho que a Noa também quer vir.\"",
       "antes": "כֵּן. וַאֲנִי",
-      "depois": "שֶׁנֹּעָה רוֹצָה לָבוֹא גַּם.",
+      "depois": "שֶׁגַּם נֹעָה רוֹצָה לָבוֹא.",
       "respostas": [
         "חושבת"
       ]
     },
     {
       "t": "falar",
-      "pt": "Diga em voz alta, em hebraico: \"Tudo. O que houve?\"",
+      "pt": "Diga em voz alta, em hebraico: \"Tudo. E aí, o que manda?\"",
       "exemplo": "בְּסֵדֶר. מָה קוֹרֶה?"
     },
     {

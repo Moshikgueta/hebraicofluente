@@ -139,8 +139,9 @@
           "he": "אֵיךְ קוֹרְאִים לָךְ?",
           "q": "O que a pessoa perguntou?",
           "opcoes": [
-            "o nome de uma mulher",
-            "onde ela mora"
+            "perguntou a uma mulher como ela se chama",
+            "perguntou a um homem como ele se chama",
+            "perguntou onde ela mora"
           ],
           "certa": 0
         },
@@ -168,7 +169,7 @@
         {
           "t": "ouvir",
           "he": "אֲנַחְנוּ נוֹסְעִים בְּרַכֶּבֶת לִירוּשָׁלַיִם.",
-          "q": "Como eles vão para Jerusalém?",
+          "q": "Como as pessoas que falam vão para Jerusalém?",
           "opcoes": [
             "De trem",
             "De ônibus",
@@ -181,9 +182,9 @@
           "he": "אֲנִי קָמָה בְּשֵׁשׁ וָחֵצִי.",
           "q": "O que você ouviu?",
           "opcoes": [
-            "Ela levanta às seis e meia",
-            "Ele levanta às seis e meia",
-            "Ela levanta às sete e meia"
+            "Uma mulher que se levanta às seis e meia",
+            "Um homem que se levanta às seis e meia",
+            "Uma mulher que se levanta às sete e meia"
           ],
           "certa": 0
         }
@@ -486,7 +487,7 @@
           "q": "\"Estou com dor de barriga\"",
           "opcoes": [
             "כּוֹאֶבֶת לִי הַבֶּטֶן",
-            "כּוֹאֵב לִי הַבֶּטֶן",
+            "כּוֹאֲבִים לִי הַבֶּטֶן",
             "אֲנִי כּוֹאֵב הַבֶּטֶן"
           ],
           "certa": 0
@@ -544,7 +545,7 @@
           "linhas": [
             [
               "Uma vizinha",
-              "עֶרֶב טוֹב! מַה נִשְׁמָע?"
+              "עֶרֶב טוֹב! מַה נִּשְׁמָע?"
             ]
           ],
           "opcoes": [
@@ -680,14 +681,17 @@
           "t": "escrever",
           "pt": "Eu sou do Brasil",
           "respostas": [
-            "אני מברזיל"
+            "אני מברזיל",
+            "אני בא מברזיל",
+            "אני באה מברזיל"
           ]
         },
         {
           "t": "escrever",
           "pt": "Eu tenho um irmão",
           "respostas": [
-            "יש לי אח"
+            "יש לי אח",
+            "יש לי אח אחד"
           ]
         },
         {
@@ -701,15 +705,16 @@
           "t": "escrever",
           "pt": "Quanto custa?",
           "respostas": [
-            "כמה זה עולה"
+            "כמה זה עולה",
+            "כמה עולה",
+            "כמה זה"
           ]
         },
         {
           "t": "escrever",
           "pt": "Onde você mora? (a uma mulher)",
           "respostas": [
-            "איפה את גרה",
-            "איפוא את גרה"
+            "איפה את גרה"
           ]
         },
         {
@@ -717,7 +722,13 @@
           "pt": "São duas horas",
           "respostas": [
             "השעה שתיים",
-            "השעה שתים"
+            "השעה שתים",
+            "עכשיו שתיים",
+            "עכשיו שתים",
+            "השעה עכשיו שתיים",
+            "השעה עכשיו שתים",
+            "עכשיו השעה שתיים",
+            "עכשיו השעה שתים"
           ]
         },
         {

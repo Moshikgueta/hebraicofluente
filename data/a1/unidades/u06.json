@@ -77,7 +77,7 @@
     },
     {
       "he": "חֵיפָה",
-      "translit": "Cheifa",
+      "translit": "Cháifa",
       "pt": "Haifa"
     },
     {
@@ -138,21 +138,21 @@
     {
       "he": "שֶׁלְּךָ",
       "translit": "shelchá",
-      "pt": "seu, sua (a ele)"
+      "pt": "seu, sua (falando com um homem)"
     },
     {
       "he": "שֶׁלָּךְ",
       "translit": "shelach",
-      "pt": "seu, sua (a ela)"
+      "pt": "seu, sua (falando com uma mulher)"
     },
     {
       "he": "שֶׁלּוֹ",
-      "translit": "shelo",
+      "translit": "sheló",
       "pt": "dele"
     },
     {
       "he": "שֶׁלָּהּ",
-      "translit": "shela",
+      "translit": "shelá",
       "pt": "dela"
     },
     {
@@ -172,9 +172,9 @@
       "erroPt": "Procurar um verbo \"ter\" e conjugá-lo. Não há. \"Eu tenho um irmão\" = יֵשׁ לִי אָח. \"Ela tem um gato\" = יֵשׁ לָהּ חָתוּל."
     },
     {
-      "tituloPt": "\"Meu\" vem depois, e a coisa leva הַ",
-      "textoPt": "\"A minha casa\" = הַבַּיִת שֶׁלִּי.",
-      "erroPt": "Pôr o \"meu\" antes (שֶׁלִּי בַּיִת) ou esquecer o הַ. A ordem é a coisa com הַ, e depois שֶׁלִּי: הַכֶּלֶב שֶׁלִּי, הַחֲבֵרָה שֶׁלּוֹ."
+      "tituloPt": "\"Meu\" vem depois da coisa",
+      "textoPt": "\"A minha casa\" = הַבַּיִת שֶׁלִּי. Para dizer \"o meu...\", a coisa leva הַ. Sem הַ (חָבֵר שֶׁלִּי) é \"um amigo meu\".",
+      "erroPt": "Pôr o \"meu\" antes (שֶׁלִּי בַּיִת). A ordem é a coisa, e depois שֶׁלִּי: הַכֶּלֶב שֶׁלִּי, הַחֲבֵרָה שֶׁלּוֹ."
     },
     {
       "tituloPt": "אַבָּא e אִמָּא não levam הַ",
@@ -205,7 +205,7 @@
       {
         "quem": "Noa",
         "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
-        "translit": "ze Eitan, haach sheli. hu gar beCheifa.",
+        "translit": "ze Eitan, haach sheli. hu gar beCháifa.",
         "pt": "Este é o Eitan, o meu irmão. Ele mora em Haifa."
       },
       {
@@ -404,10 +404,10 @@
     {
       "t": "completar",
       "q": "\"Os meus pais têm um cachorro\"",
-      "antes": "יֵשׁ כֶּלֶב",
-      "depois": "הוֹרִים שֶׁלִּי",
+      "antes": "",
+      "depois": "שֶׁלִּי יֵשׁ כֶּלֶב",
       "respostas": [
-        "ל"
+        "להורים"
       ]
     },
     {

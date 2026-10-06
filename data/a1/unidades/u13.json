@@ -90,7 +90,7 @@
       ]
     },
     {
-      "pt": "pedir",
+      "pt": "pedir, solicitar (para pedir comida no restaurante, se usa אֶפְשָׁר… ou אֲנִי רוֹצֶה…)",
       "formas": [
         "מְבַקֵּשׁ",
         "מְבַקֶּשֶׁת",
@@ -173,7 +173,7 @@
     {
       "tituloPt": "Qual? אֵיזֶה, אֵיזוֹ, אֵילוּ",
       "textoPt": "\"Qual\" concorda com a coisa: אֵיזֶה קָפֶה? (masculino), אֵיזוֹ עוּגָה? (feminino), אֵילוּ מָנוֹת? (plural).",
-      "erroPt": "Na rua você vai ouvir muito אֵיזֶה para tudo, até para feminino (אֵיזֶה עוּגָה?). Entenda quando ouvir, mas, para escrever, use a forma que concorda."
+      "erroPt": "Na rua você vai ouvir muito אֵיזֶה para tudo, até para feminino (אֵיזֶה עוּגָה?). No plural, na fala, quase sempre se diz אֵיזֶה: אֵיזֶה סָלָטִים יֵשׁ? אֵילוּ é mais de texto escrito. Entenda quando ouvir, mas, para escrever, use a forma que concorda."
     },
     {
       "tituloPt": "Com e sem",
@@ -261,10 +261,10 @@
         "pt": "Salada de legumes, sem cebola."
       },
       {
-        "quem": "Dani",
-        "he": "וְאַחַר כָּךְ… אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה?",
-        "translit": "veachar kach… efshar cheshbon, bevakashá?",
-        "pt": "E depois… pode trazer a conta, por favor?"
+        "quem": "Dani (depois do jantar)",
+        "he": "אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה?",
+        "translit": "efshar cheshbon, bevakashá?",
+        "pt": "Pode trazer a conta, por favor?"
       }
     ],
     "glossario": [
@@ -302,7 +302,7 @@
       {
         "he": "טוֹסְט גְּבִינָה: 39 שֶׁקֶל",
         "translit": "tost gviná: shloshim vatésha shékel",
-        "pt": "Misto de queijo: 39 shekels"
+        "pt": "Queijo quente: 39 shekels"
       },
       {
         "he": "קָפֶה הָפוּךְ: 14 שֶׁקֶל",
@@ -326,7 +326,7 @@
         "q": "Qual prato é picante?",
         "opcoes": [
           "A shakshuka",
-          "O misto de queijo",
+          "O queijo quente",
           "O café da manhã"
         ],
         "certa": 0
@@ -439,7 +439,7 @@
     },
     {
       "t": "escolha",
-      "q": "\"Que saladas vocês têm?\": ___ סָלָטִים יֵשׁ?",
+      "q": "\"Que saladas vocês têm?\" (por escrito, com a forma que concorda): ___ סָלָטִים יֵשׁ?",
       "opcoes": [
         "אֵילוּ",
         "אֵיזֶה",
@@ -447,7 +447,7 @@
       ],
       "certa": 0,
       "dicas": {
-        "1": "סָלָטִים é plural: אֵילוּ.",
+        "1": "Quase. Na rua você ouve אֵיזֶה סָלָטִים, mas סָלָטִים é plural: com cuidado, por escrito, é אֵילוּ.",
         "2": "סָלָטִים é plural: אֵילוּ."
       }
     },

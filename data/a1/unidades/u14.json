@@ -63,7 +63,7 @@
       "pt": "saia"
     },
     {
-      "he": "סְוֶודֶר",
+      "he": "סְוֶדֶר",
       "translit": "svéder",
       "pt": "suéter, blusa de frio"
     },
@@ -228,7 +228,7 @@
       {
         "quem": "A vendedora",
         "he": "שָׁלוֹם! אֶפְשָׁר לַעֲזוֹר?",
-        "translit": "shalóm! efshar laazor?",
+        "translit": "shalom! efshar laazor?",
         "pt": "Olá! Posso ajudar?"
       },
       {
@@ -326,7 +326,7 @@
         "pt": "a (ela, como objeto): \"vou levá-la\""
       }
     ],
-    "notaPt": "Os tamanhos de roupa em Israel se dizem como em inglês: סְמוֹל, מֶדְיוּם, לַארְג'."
+    "notaPt": "Os tamanhos de roupa em Israel se dizem como em inglês: סְמוֹל, מֶדְיוּם, לַארְג'. E בְּכַרְטִיס: pela regra do nikud se lê \"bechartís\"; na rua quase todo mundo diz \"bekartís\"."
   },
   "leitura": {
     "tituloPt": "Na vitrine",
@@ -366,7 +366,7 @@
       },
       {
         "t": "escolha",
-        "q": "Até que horas a loja abre na sexta?",
+        "q": "Até que horas a loja fica aberta na sexta?",
         "opcoes": [
           "Até as 14h",
           "Até as 20h",
@@ -401,7 +401,7 @@
   "sabia": [
     {
       "tituloPt": "Por que \"calça\" termina em ־ַיִם?",
-      "textoPt": "O final ־ַיִם marca o que vem em par: נַעֲלַיִם (sapatos), גַּרְבַּיִם (meias), מִכְנָסַיִם (calça, que tem duas pernas), e também partes do corpo, como רַגְלַיִם (pernas) e עֵינַיִם (olhos), que aparecem na Unidade 18. É o que sobrou de um \"dual\" antigo. O número שְׁתַּיִם (dois) tem a mesma marca."
+      "textoPt": "O final ־ַיִם marca o que vem em par: נַעֲלַיִם (sapatos), גַּרְבַּיִם (meias), מִכְנָסַיִם (calça, que tem duas pernas), e também partes do corpo, como רַגְלַיִם (pernas) e עֵינַיִם (olhos), que aparecem na Unidade 18. É a marca do \"dual\", a forma de \"dois\". O número שְׁתַּיִם (dois) tem a mesma marca. Mas nem todo ־ַיִם é par: מַיִם (água) e שָׁמַיִם (céu) só têm essa forma. E o dual ainda vive em יוֹמַיִם (dois dias) e שְׁבוּעַיִם (duas semanas)."
     }
   ],
   "autoavaliacao": [
@@ -633,7 +633,15 @@
         "יֵשׁ",
         "מִדָּה",
         "יוֹתֵר",
-        "קְטַנָּה?"
+        "קְטַנָּה"
+      ],
+      "outras": [
+        [
+          "יֵשׁ",
+          "מִדָּה",
+          "קְטַנָּה",
+          "יוֹתֵר"
+        ]
       ]
     },
     {
@@ -734,7 +742,6 @@
       "t": "escrever",
       "pt": "demais (caro demais)",
       "respostas": [
-        "מידי",
         "מדי"
       ]
     },
@@ -765,7 +772,7 @@
     {
       "t": "aberta",
       "pt": "Você está numa loja. Pergunte o preço de uma roupa, peça outra cor ou outro tamanho, e diga como vai pagar.",
-      "exemplo": "כַּמָּה עוֹלֶה הַסְּוֶודֶר הַזֶּה? יֵשׁ בְּאָפֹר? יֵשׁ מִדָּה יוֹתֵר גְּדוֹלָה? אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?"
+      "exemplo": "כַּמָּה עוֹלֶה הַסְּוֶדֶר הַזֶּה? יֵשׁ בְּאָפֹר? יֵשׁ מִדָּה יוֹתֵר גְּדוֹלָה? אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?"
     }
   ]
 }

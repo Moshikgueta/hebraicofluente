@@ -159,7 +159,7 @@
     },
     {
       "tituloPt": "De… até…: מִ־… עַד…",
-      "textoPt": "Para horários: מִ־ grudado no começo e עַד no fim: מִשֶּׁבַע עַד עֶשֶׂר (das sete às dez), מִיּוֹם רִאשׁוֹן עַד יוֹם חֲמִישִׁי. É o mesmo מִ־ de מִבְּרָזִיל (Unidade 1).",
+      "textoPt": "Para horários: מִ־ grudado no começo e עַד no fim: מִשֶּׁבַע עַד עֶשֶׂר (das sete às dez), מִיּוֹם רִאשׁוֹן עַד יוֹם חֲמִישִׁי. É o mesmo מִ־ de מִבְּרָזִיל (Unidade 1). Antes de א, ה, ח, ע e ר, ele vira מֵ־: מֵאַחַת עַד שְׁתַּיִם, מֵחָמֵשׁ עַד שֵׁשׁ.",
       "exemplos": [
         {
           "he": "אֲרוּחַת הַבֹּקֶר מִשֶּׁבַע עַד עֶשֶׂר.",
@@ -169,8 +169,7 @@
     },
     {
       "tituloPt": "O primeiro, o segundo, o terceiro andar",
-      "textoPt": "Os andares usam os mesmos números de ordem dos dias da semana (Unidade 7): יוֹם שְׁלִישִׁי é \"o terceiro dia\". Como קוֹמָה é feminina: הַקּוֹמָה הָרִאשׁוֹנָה, הַשְּׁנִיָּה, הַשְּׁלִישִׁית.",
-      "erroPt": "No Brasil o \"primeiro andar\" fica acima do térreo; em Israel também: o térreo é קוֹמַת קַרְקַע, e a קוֹמָה רִאשׁוֹנָה fica em cima dele."
+      "textoPt": "Os andares usam os mesmos números de ordem dos dias da semana (Unidade 7): יוֹם שְׁלִישִׁי é \"o terceiro dia\". Como קוֹמָה é feminina: הַקּוֹמָה הָרִאשׁוֹנָה, הַשְּׁנִיָּה, הַשְּׁלִישִׁית. Boa notícia: é igual ao Brasil. O térreo é קוֹמַת קַרְקַע (\"andar do chão\") e a קוֹמָה רִאשׁוֹנָה fica em cima dele."
     }
   ],
   "dialogo": {
@@ -277,8 +276,8 @@
         "pt": "Portão 7"
       },
       {
-        "he": "הַטִּיסָה מְאֻחֶרֶת בְּשָׁעָה",
-        "translit": "hatisá meuchéret beshaá",
+        "he": "הַטִּיסָה מְאַחֶרֶת בְּשָׁעָה",
+        "translit": "hatisá meachéret beshaá",
         "pt": "O voo está atrasado uma hora"
       }
     ],
@@ -307,7 +306,7 @@
         "t": "vf",
         "q": "O voo está no horário.",
         "certa": false,
-        "porque": "מְאֻחֶרֶת בְּשָׁעָה: atrasado uma hora. מְאֻחֶרֶת é o feminino de מְאֻחָר (Unidade 9), porque טִיסָה é feminina."
+        "porque": "מְאַחֶרֶת בְּשָׁעָה: atrasado uma hora. מְאַחֶרֶת é \"está atrasada\" (o verbo מְאַחֵר, que volta na Unidade 20), no feminino porque טִיסָה é feminina. Não é מְאֻחָר (Unidade 9), que é \"tarde\"."
       }
     ]
   },
@@ -564,7 +563,7 @@
     },
     {
       "t": "ouvir",
-      "he": "הַטִּיסָה מְאֻחֶרֶת.",
+      "he": "הַטִּיסָה מְאַחֶרֶת.",
       "q": "O que aconteceu com o voo?",
       "opcoes": [
         "Está atrasado",

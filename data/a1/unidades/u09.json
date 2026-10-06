@@ -76,12 +76,12 @@
     {
       "he": "אַחֲרֵי הַצָּהֳרַיִם",
       "translit": "acharei hatsohoráyim",
-      "pt": "à tarde"
+      "pt": "à tarde (por escrito, também אַחַר הַצָּהֳרַיִם)"
     },
     {
       "he": "בַּלַּיְלָה",
       "translit": "baláila",
-      "pt": "de madrugada, tarde da noite"
+      "pt": "à noite (mais tarde que o עֶרֶב), de madrugada"
     },
     {
       "he": "לִפְנֵי",
@@ -162,7 +162,7 @@
   "gramatica": [
     {
       "tituloPt": "Os verbos de ir e vir, no mesmo desenho de sempre",
-      "textoPt": "Os verbos novos seguem as 4 formas da Unidade 4: homem, mulher, homens, mulheres. Alguns são curtos, de duas letras fortes: קָם, קָמָה, קָמִים, קָמוֹת; בָּא, בָּאָה, בָּאִים, בָּאוֹת. Mesmo curtos, o final é o de sempre: ־ָה, ־ִים, ־וֹת.",
+      "textoPt": "Os verbos novos seguem as 4 formas da Unidade 4: homem, mulher, homens, mulheres. Alguns são curtos, de duas letras fortes: קָם, קָמָה, קָמִים, קָמוֹת; בָּא, בָּאָה, בָּאִים, בָּאוֹת. Mesmo curtos, mudam do jeito de sempre no plural (־ִים, ־וֹת). No feminino singular, estes verbos curtos (קָמָה, בָּאָה) e os que terminam em ־ֶה (עוֹשָׂה) levam ־ָה; os verbos do desenho normal continuam com ־ֶת: הוֹלֶכֶת, חוֹזֶרֶת.",
       "erroPt": "Uma mulher que fala da própria rotina usa as formas femininas o tempo todo: אֲנִי קָמָה, אֲנִי הוֹלֶכֶת, אֲנִי חוֹזֶרֶת. Esquecer uma só no meio da frase é o erro mais comum nesta unidade.",
       "exemplos": [
         {
@@ -264,13 +264,13 @@
       {
         "quem": "Tom",
         "he": "וּבְשַׁבָּת?",
-        "translit": "uveshabát?",
+        "translit": "uveshabat?",
         "pt": "E no sábado?"
       },
       {
         "quem": "Noa",
         "he": "בְּשַׁבָּת אֲנִי יְשֵׁנָה עַד עֶשֶׂר!",
-        "translit": "beshabát aní yeshená ad éser!",
+        "translit": "beshabat aní yeshená ad éser!",
         "pt": "No sábado eu durmo até as dez!"
       }
     ],
@@ -289,7 +289,7 @@
     "linhas": [
       {
         "he": "שָׁלוֹם אִמָּא! הַכֹּל בְּסֵדֶר.",
-        "translit": "shalóm íma! hakol beséder.",
+        "translit": "shalom íma! hakol beséder.",
         "pt": "Oi, mãe! Está tudo bem."
       },
       {
@@ -314,7 +314,7 @@
       },
       {
         "he": "בְּשַׁבָּת אֲנִי לֹא עוֹבֵד!",
-        "translit": "beshabát aní lo oved!",
+        "translit": "beshabat aní lo oved!",
         "pt": "No sábado eu não trabalho!"
       }
     ],
@@ -480,11 +480,11 @@
         ],
         [
           "בָּעֶרֶב",
-          "à noite, no fim do dia"
+          "no fim do dia, à noitinha"
         ],
         [
           "בַּלַּיְלָה",
-          "de madrugada"
+          "à noite, de madrugada"
         ]
       ]
     },
@@ -560,6 +560,20 @@
         "הוֹלֵךְ",
         "לָאוּנִיבֶרְסִיטָה",
         "כָּל יוֹם"
+      ],
+      "outras": [
+        [
+          "כָּל יוֹם",
+          "טוֹם",
+          "הוֹלֵךְ",
+          "לָאוּנִיבֶרְסִיטָה"
+        ],
+        [
+          "טוֹם",
+          "הוֹלֵךְ",
+          "כָּל יוֹם",
+          "לָאוּנִיבֶרְסִיטָה"
+        ]
       ]
     },
     {
@@ -570,6 +584,20 @@
         "אֲנִי",
         "חוֹזֶרֶת",
         "הַבַּיְתָה"
+      ],
+      "outras": [
+        [
+          "אֲנִי",
+          "חוֹזֶרֶת",
+          "הַבַּיְתָה",
+          "אַחַר כָּךְ"
+        ],
+        [
+          "אֲנִי",
+          "אַחַר כָּךְ",
+          "חוֹזֶרֶת",
+          "הַבַּיְתָה"
+        ]
       ]
     },
     {
@@ -587,7 +615,9 @@
       "errada": "אֲנַחְנוּ בָּא מְאֻחָר.",
       "respostas": [
         "אנחנו באים מאוחר",
-        "אנחנו באים מאחר"
+        "אנחנו באים מאחר",
+        "אנחנו באות מאוחר",
+        "אנחנו באות מאחר"
       ],
       "porque": "Com אֲנַחְנוּ, o verbo vai para o plural: בָּאִים (ou בָּאוֹת, se forem só mulheres)."
     },
@@ -673,7 +703,8 @@
       "t": "escrever",
       "pt": "à noite",
       "respostas": [
-        "בערב"
+        "בערב",
+        "בלילה"
       ]
     },
     {

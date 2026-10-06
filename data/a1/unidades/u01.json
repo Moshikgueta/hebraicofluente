@@ -8,7 +8,7 @@
     {
       "he": "שָׁלוֹם",
       "translit": "shalom",
-      "pt": "olá / paz"
+      "pt": "olá / tchau / paz"
     },
     {
       "he": "בֹּקֶר טוֹב",
@@ -16,12 +16,12 @@
       "pt": "bom dia"
     },
     {
-      "he": "מָה שְׁלוֹמְךָ?",
+      "he": "מַה שְּׁלוֹמְךָ?",
       "translit": "ma shlomchá?",
       "pt": "como vai? (a ele)"
     },
     {
-      "he": "מָה שְׁלוֹמֵךְ?",
+      "he": "מַה שְּׁלוֹמֵךְ?",
       "translit": "ma shlomech?",
       "pt": "como vai? (a ela)"
     },
@@ -157,17 +157,17 @@
     },
     {
       "he": "בְּרָזִילָאִית",
-      "translit": "brazilait",
+      "translit": "brazilaít",
       "pt": "brasileira"
     },
     {
       "he": "יִשְׂרְאֵלִי",
-      "translit": "isreelí",
+      "translit": "israelí",
       "pt": "israelense (m)"
     },
     {
       "he": "יִשְׂרְאֵלִית",
-      "translit": "isreelit",
+      "translit": "israelit",
       "pt": "israelense (f)"
     },
     {
@@ -258,7 +258,8 @@
         "pt": "Eu também sou estudante!"
       }
     ],
-    "glossario": []
+    "glossario": [],
+    "notaPt": "מַה שְּׁמֵךְ? e שְׁמִי… estão certos, mas soam um pouco formais. Na rua você vai ouvir mais אֵיךְ קוֹרְאִים לָךְ? (Unidade 8)."
   },
   "cultura": [
     {
@@ -394,7 +395,8 @@
       "antes": "אֲנִי סְטוּדֶנְט",
       "depois": "",
       "respostas": [
-        "ית"
+        "ית",
+        "סטודנטית"
       ]
     },
     {
@@ -498,7 +500,11 @@
       "t": "escrever",
       "pt": "Eu sou estudante e sou do Brasil (fala um homem)",
       "respostas": [
-        "אני סטודנט ואני מברזיל"
+        "אני סטודנט ואני מברזיל",
+        "אני סטודנט ומברזיל",
+        "אני מברזיל ואני סטודנט",
+        "אני סטודנט מברזיל",
+        "אני סטודנט אני מברזיל"
       ]
     },
     {

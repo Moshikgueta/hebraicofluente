@@ -353,7 +353,9 @@ function Separar({ item, id, settled, onAnswer }: {
   );
 }
 
-/* Montar a frase com as palavras embaralhadas. A ordem certa é a do dado. */
+/* Montar a frase com as palavras embaralhadas. A ordem certa é a do dado
+   (`palavras`) ou uma das outras ordens aceitas (`outras`); o modelo
+   mostrado depois é sempre `palavras`. */
 function Montar({ item, id, settled, onAnswer }: {
   item: Extract<ItemA1, { t: 'montar' }>; id: string; settled: boolean; onAnswer: (certo: boolean) => void;
 }) {
@@ -367,7 +369,8 @@ function Montar({ item, id, settled, onAnswer }: {
   const [usadas, setUsadas] = useState<number[]>([]);
   const conferir = () => {
     if (settled || usadas.length !== item.palavras.length) return;
-    onAnswer(usadas.map(i => item.palavras[i]).join(' ') === item.palavras.join(' '));
+    const montada = usadas.map(i => item.palavras[i]).join(' ');
+    onAnswer([item.palavras, ...(item.outras ?? [])].some(o => o.join(' ') === montada));
   };
   return (
     <div className="grid gap-4">

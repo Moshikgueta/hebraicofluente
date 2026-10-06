@@ -86,7 +86,7 @@
       "pt": "hebraico"
     },
     {
-      "he": "פּוֹרְטוּגָזִית",
+      "he": "פּוֹרְטוּגֶזִית",
       "translit": "portugezit",
       "pt": "português"
     },
@@ -113,7 +113,7 @@
     },
     {
       "tituloPt": "\"Em\" é בְּ־, grudado",
-      "textoPt": "בְּתֵל אָבִיב, בִּירוּשָׁלַיִם, בִּבְרָזִיל. Língua não leva preposição: מְדַבֵּר עִבְרִית.",
+      "textoPt": "בְּתֵל אָבִיב, בִּירוּשָׁלַיִם, בִּבְרָזִיל. Para dizer que você FALA uma língua (sabe falar), não precisa de preposição: אֲנִי מְדַבֵּר עִבְרִית. Para dizer EM que língua algo é dito ou escrito, usa-se בְּ: כּוֹתֵב בְּעִבְרִית.",
       "erroPt": "Procurar uma palavra separada para \"em\". Ela é uma letra grudada: \"em Tel Aviv\" = בְּתֵל אָבִיב."
     }
   ],
@@ -328,6 +328,13 @@
         "אֲנִי",
         "גָּר",
         "בְּסָאוֹ פָּאוּלוֹ"
+      ],
+      "outras": [
+        [
+          "בְּסָאוֹ פָּאוּלוֹ",
+          "אֲנִי",
+          "גָּר"
+        ]
       ]
     },
     {
@@ -343,11 +350,11 @@
       "t": "escolha",
       "q": "\"Falo português\" (fala um homem)",
       "opcoes": [
-        "אֲנִי מְדַבֵּר פּוֹרְטוּגָזִית",
-        "אֲנִי מְדַבֵּר בְּפּוֹרְטוּגָזִית"
+        "אֲנִי מְדַבֵּר פּוֹרְטוּגֶזִית",
+        "אֲנִי מְדַבֶּרֶת פּוֹרְטוּגֶזִית"
       ],
       "certa": 0,
-      "porque": "Língua não leva preposição."
+      "porque": "Um homem diz מְדַבֵּר; מְדַבֶּרֶת é a forma de uma mulher. E para dizer que você sabe a língua, não precisa de בְּ."
     },
     {
       "t": "escolha",

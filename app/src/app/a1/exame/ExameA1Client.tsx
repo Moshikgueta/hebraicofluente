@@ -170,7 +170,7 @@ export function ExameA1Client() {
         {estado === 'carregando' ? 'Sorteando a prova…' : 'Começar o exame'}
       </Button>
       {p.state.a1.exame.passedAt && (
-        <LinkButton href="/a1/certificado" variant="secondary">Você já foi aprovado: ver o certificado</LinkButton>
+        <LinkButton href="/a1/certificado" variant="secondary">Você já passou no exame: ver o certificado</LinkButton>
       )}
     </div>
   );

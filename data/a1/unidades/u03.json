@@ -152,7 +152,7 @@
   "gramatica": [
     {
       "tituloPt": "O plural",
-      "textoPt": "Masculino ganha ־ִים, feminino ganha ־וֹת: תִּיק → תִּיקִים, מַתָּנָה → מַתָּנוֹת."
+      "textoPt": "Masculino ganha ־ִים, feminino ganha ־וֹת: תִּיק → תִּיקִים, מַתָּנָה → מַתָּנוֹת. O ־ָה ou ־ֶת do feminino cai antes do ־וֹת (מַתָּנָה → מַתָּנוֹת, מַחְבֶּרֶת → מַחְבָּרוֹת), e as vogais de dentro podem mudar (יֶלֶד → יְלָדִים). Aprenda o plural junto com a palavra."
     },
     {
       "tituloPt": "O adjetivo vem depois e concorda",
@@ -170,7 +170,7 @@
     },
     {
       "tituloPt": "Os pronomes do plural",
-      "textoPt": "\"Vocês\" se divide: אַתֶּם (homens, ou grupo misto) e אַתֶּן (só mulheres). O mesmo com הֵם / הֵן.",
+      "textoPt": "\"Vocês\" se divide: אַתֶּם (homens, ou grupo misto) e אַתֶּן (só mulheres). O mesmo com הֵם / הֵן. Na fala informal, muita gente usa אַתֶּם e הֵם também para mulheres.",
       "erroPt": "\"Vocês\" é uma palavra só no português. Com um homem no grupo, já é אַתֶּם."
     }
   ],
@@ -226,7 +226,18 @@
         "pt": "Obrigada!"
       }
     ],
-    "glossario": []
+    "glossario": [
+      {
+        "he": "בַּיִת",
+        "translit": "báyit",
+        "pt": "casa"
+      },
+      {
+        "he": "כִּסְאוֹת",
+        "translit": "kisot",
+        "pt": "cadeiras (plural de כִּסֵּא)"
+      }
+    ]
   },
   "cultura": [
     {

@@ -76,7 +76,7 @@ Os textos de interface que entraram com o A1 completo, tela por tela, como apare
 
 **Conferir um certificado (/verificar-certificado, página aberta)**
 - "Conferir um certificado" · "Digite o código que aparece no certificado (por exemplo, A1-ABCD2345)." · "Conferir"
-- "✓ Certificado válido" · "Concluiu o curso Hebraico A1 do Hebraico Fluente e foi aprovado no exame final em {data}." · "Código {código}. Não é uma certificação oficial de nível."
+- "✓ Certificado válido" · "Concluiu o curso Hebraico A1 do Hebraico Fluente, com aprovação no exame final em {data}." · "Código {código}. Não é uma certificação oficial de nível."
 - "Não achamos um certificado público com este código. Confira o código, ou peça à pessoa para ligar a verificação pública."
 
 **Conclusão (/a1/concluido)**

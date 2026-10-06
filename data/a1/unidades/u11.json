@@ -17,7 +17,7 @@
     },
     {
       "he": "חֲדַר שֵׁנָה",
-      "translit": "chadar sheiná",
+      "translit": "chadar shená",
       "pt": "quarto de dormir (expressão fixa)"
     },
     {
@@ -200,7 +200,7 @@
       },
       {
         "quem": "Natan",
-        "he": "רֶגַע, מָה זֶה, מִתַּחַת לַסָּפָּה?",
+        "he": "רֶגַע, מַה זֶּה, מִתַּחַת לַסָּפָּה?",
         "translit": "réga, ma ze, mitáchat lasapá?",
         "pt": "Espera, o que é isso, embaixo do sofá?"
       },
@@ -308,7 +308,7 @@
   "sabia": [
     {
       "tituloPt": "Por que existem letras finais?",
-      "textoPt": "ך, ם, ן, ף e ץ vêm da escrita aramaica antiga. No fim da palavra, o escriba esticava o traço para baixo ou fechava a letra, e isso ajudava o leitor a ver onde a palavra acabava, numa época em que nem sempre se deixava espaço entre as palavras. O costume virou regra."
+      "textoPt": "ך, ם, ן, ף e ץ vêm da escrita aramaica antiga. No meio da palavra, o traço dessas letras se curvava em direção à letra seguinte; no fim da palavra, sem letra seguinte, ficava a forma antiga, comprida. Com o tempo, as duas formas viraram regra, e a forma final ajuda a ver onde a palavra acaba."
     }
   ],
   "autoavaliacao": [
@@ -452,7 +452,7 @@
     },
     {
       "t": "completar",
-      "q": "\"Hoje eu durmo na casa da vovó\"",
+      "q": "\"Hoje eu durmo na casa da vovó\" (fala um homem)",
       "antes": "הַיּוֹם אֲנִי יָשֵׁן",
       "depois": "סַבְתָּא",
       "respostas": [
@@ -481,11 +481,13 @@
     },
     {
       "t": "erro",
-      "q": "תִּיק é masculino. Ache o erro e escreva a frase certa.",
+      "q": "Pergunta: אֵיפֹה הַתִּיק? A resposta tem um erro (תִּיק é masculino). Ache o erro e escreva a frase certa.",
       "errada": "הִיא עַל הַכִּסֵּא.",
       "respostas": [
         "הוא על הכסא",
-        "הוא על הכיסא"
+        "הוא על הכיסא",
+        "התיק על הכסא",
+        "התיק על הכיסא"
       ],
       "porque": "תִּיק é masculino, então é הוּא."
     },
@@ -507,6 +509,14 @@
         "יֵשׁ",
         "מִרְפֶּסֶת",
         "גְּדוֹלָה"
+      ],
+      "outras": [
+        [
+          "יֵשׁ",
+          "מִרְפֶּסֶת",
+          "גְּדוֹלָה",
+          "בַּדִּירָה"
+        ]
       ]
     },
     {
@@ -639,8 +649,8 @@
       "t": "escrever",
       "pt": "varanda",
       "respostas": [
-        "מירפסת",
-        "מרפסת"
+        "מרפסת",
+        "מירפסת"
       ]
     },
     {

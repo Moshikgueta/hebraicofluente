@@ -48,7 +48,7 @@ const TIPOS = ['escolha', 'ouvir', 'ligar', 'separar', 'montar', 'completar', 'e
    uma resposta simples: um índice, um sim/não, um texto ou uma ordem. */
 const TIPOS_DO_EXAME = ['escolha', 'ouvir', 'intruso', 'vf', 'completar', 'escrever', 'erro', 'dialogo', 'montar'];
 const HEBRAICO = /[א-ת]/;
-/* A resposta digitada: letras hebraicas, espaço, e o ' do gerech. */
+/* A resposta digitada: letras hebraicas, espaço, e o ' do guéresh. */
 const SO_HEBRAICO = /^[א-ת׳' ]+$/;
 
 /** Os problemas de forma de um item, em texto, para a mensagem do teste. */
@@ -96,6 +96,21 @@ function problemas(it: Item, onde: string): string[] {
     case 'montar': {
       const pal = lista('palavras');
       if (!pal || pal.length < 2) p.push(`${onde}: montar com menos de 2 palavras`);
+      if (it.outras !== undefined) {
+        /* Cada ordem alternativa: as MESMAS palavras (mesmas strings, mesma
+           contagem), em outra ordem, e sem repetir a do dado nem outra. */
+        const outras = lista('outras');
+        const chave = (x: unknown[]) => [...x].map(String).sort().join('\u0000');
+        if (!outras || !outras.length) p.push(`${onde}: outras vazio`);
+        else if (pal) {
+          const vistas = new Set([pal.join(' ')]);
+          for (const o of outras) {
+            if (!Array.isArray(o) || o.length !== pal.length || chave(o) !== chave(pal)) p.push(`${onde}: outras com palavras diferentes de palavras: ${JSON.stringify(o)}`);
+            else if (vistas.has(o.join(' '))) p.push(`${onde}: outras repete uma ordem: ${o.join(' ')}`);
+            else vistas.add(o.join(' '));
+          }
+        }
+      }
       break;
     }
     case 'ordenar': {

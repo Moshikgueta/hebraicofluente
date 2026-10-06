@@ -45,7 +45,7 @@ export function VerificarClient() {
             <p className="font-ui text-[13px] font-semibold uppercase tracking-[.07em] text-ink m-0">✓ Certificado válido</p>
             <p className="font-display text-[22px] font-semibold text-ink m-0">{res.nome}</p>
             <p className="text-[15.5px] text-ink-body m-0">
-              Concluiu o curso {res.curso} do Hebraico Fluente e foi aprovado no exame final em {dataLonga(res.aprovadoEm)}.
+              Concluiu o curso {res.curso} do Hebraico Fluente, com aprovação no exame final em {dataLonga(res.aprovadoEm)}.
             </p>
             <p className="font-ui text-[13px] text-ink-muted m-0">Código {res.id}. Não é uma certificação oficial de nível.</p>
           </Card>

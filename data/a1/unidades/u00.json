@@ -4,7 +4,7 @@
   "tituloPt": "Antes de começar: os sons e as palavras do primeiro dia",
   "objetivoPt": "Pronunciar os sons que mais confundem brasileiros, saber onde cai a força da palavra, e reconhecer as expressões que você ouve no primeiro dia em Israel.",
   "situacaoPt": "Primeira manhã em Tel Aviv. O Dani, que é brasileiro, entra num café perto do hostel. A Maya trabalha no balcão. Ele já sabe ler as letras; agora precisa fazer o hebraico sair da boca do jeito que um israelense entende.",
-  "notaPt": "Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA.",
+  "notaPt": "Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA. Na transliteração (as letras latinas que acompanham o hebraico): s é sempre S, nunca Z (beséder); m e n no fim da palavra são consoantes e não nasalizam (shalom termina com a boca fechada no M); ch é o R raspado do ח e do כ, nunca o CH de \"chave\"; r é sempre o ר, feito no fundo da boca, mesmo no começo da palavra.",
   "palavras": [
     {
       "he": "תּוֹדָה",
@@ -32,7 +32,7 @@
       "pt": "tudo bem, ok"
     },
     {
-      "he": "מַה נִשְׁמָע?",
+      "he": "מַה נִּשְׁמָע?",
       "translit": "ma nishmá?",
       "pt": "e aí? tudo bem? (informal)"
     },
@@ -68,8 +68,8 @@
     },
     {
       "he": "שַׁבָּת שָׁלוֹם",
-      "translit": "shabát shalóm",
-      "pt": "bom shabat (de sexta à tarde a sábado)"
+      "translit": "shabat shalom",
+      "pt": "bom shabat (de sexta, já de manhã, até sábado)"
     },
     {
       "he": "חַג שָׂמֵחַ",
@@ -89,13 +89,13 @@
     {
       "he": "מַזָּל טוֹב",
       "translit": "mazál tov",
-      "pt": "parabéns"
+      "pt": "parabéns (na fala, muita gente diz mázal tov)"
     }
   ],
   "gramatica": [
     {
       "tituloPt": "ח e כ: o R soprado do carioca",
-      "textoPt": "O ח e o כ sem ponto (também o ך do fim) têm o MESMO som: o R soprado que o carioca usa em \"rato\" e \"carro\", feito no fundo da boca. É o som de לְחַיִּים e de חַג.",
+      "textoPt": "O ח e o כ sem ponto (também o ך do fim) têm o MESMO som: o R carioca de \"rato\" e \"carro\" BEM raspado, no fundo da boca (se o seu R de \"carro\" for só um sopro, como H, raspe mais). É o som de לְחַיִּים e de חַג.",
       "erroPt": "Quem não fala com esse R tende a ler ח como K, ou como um H fraco. Não é nenhum dos dois: é um sopro raspado no fundo da boca, e é ele que separa חַג (feriado) de uma palavra qualquer.",
       "exemplos": [
         {
@@ -116,7 +116,7 @@
     {
       "tituloPt": "ה no começo da palavra: um sopro de verdade",
       "textoPt": "O ה no começo da palavra se pronuncia: um H leve, de ar saindo, como o H do inglês \"hello\". No fim da palavra (תּוֹדָה, רַבָּה) ele não soa.",
-      "erroPt": "Em português o H é sempre mudo (\"hotel\" é \"otel\"). Em hebraico, apagar o ה do começo muda a palavra: הִנֵּה é \"hiné\" (aqui está), não \"iné\"."
+      "erroPt": "Em português o H é sempre mudo (\"hotel\" é \"otel\"). Em hebraico, apagar o ה do começo soa estrangeiro e pode confundir: diga \"hiné\" (הִנֵּה, aqui está), não \"iné\". (Na fala rápida, o israelense às vezes engole o ה; mas quem aprende deve pronunciá-lo.)"
     },
     {
       "tituloPt": "א e ע: só a vogal",
@@ -131,11 +131,11 @@
     {
       "tituloPt": "ת, ט e ד: T e D secos, nunca TCH e DJ",
       "textoPt": "תִּי é \"ti\", e דִּי é \"di\": a língua bate atrás dos dentes e sai, sem chiar.",
-      "erroPt": "Em boa parte do Brasil, T e D antes de I viram TCH e DJ (\"tia\", \"dia\"). O hábito é automático. Em hebraico isso muda a palavra: preste atenção nas sílabas com I."
+      "erroPt": "Em boa parte do Brasil, T e D antes de I viram TCH e DJ (\"tia\", \"dia\"). O hábito é automático. Em hebraico isso soa estrangeiro: preste atenção nas sílabas com I."
     },
     {
-      "tituloPt": "A força da palavra: quase sempre na última sílaba",
-      "textoPt": "Em hebraico, a sílaba forte é quase sempre a última: to-DÁ, sha-LÓM, be-va-ka-SHÁ. A exceção que mais aparece no começo são as palavras com duas vogais E seguidas, como בֹּקֶר, עֶרֶב, רֶגַע, סֵדֶר: essas têm a força na penúltima (BÓ-ker, É-rev, RÉ-ga, be-SÉ-der).",
+      "tituloPt": "A força da palavra: em geral na última sílaba",
+      "textoPt": "Na maioria das palavras, a sílaba forte é a última: to-DÁ, sha-LOM, be-va-ka-SHÁ. Mas muitas palavras do dia a dia têm a força na penúltima. O grupo mais comum é o de בֹּקֶר, עֶרֶב, סֵדֶר, רֶגַע: duas sílabas, a última com ֶ (ou com ַ quando há ח, ע ou ה, como em רֶגַע). Nessas, a força vai na penúltima: BÓ-ker, É-rev, be-SÉ-der, RÉ-ga. Também têm a força na penúltima as palavras que terminam em ־ַיִם e ־ַיִת (máyim, báyit), gírias como yála e sabába, e muitas palavras estrangeiras (télefon). Na transliteração, o acento mostra a sílaba forte sempre que o português leria outra.",
       "erroPt": "O português põe a força na penúltima, e o ouvido brasileiro lê תּוֹדָה como a palavra \"toda\" (TÓ-da). Em hebraico é to-DÁ. O mesmo com מוֹרָה (professora): é mo-RÁ, não \"mora\"."
     }
   ],
@@ -144,7 +144,7 @@
     "linhas": [
       {
         "quem": "Maya",
-        "he": "בֹּקֶר טוֹב! מַה נִשְׁמָע?",
+        "he": "בֹּקֶר טוֹב! מַה נִּשְׁמָע?",
         "translit": "bóker tov! ma nishmá?",
         "pt": "Bom dia! Tudo bem?"
       },
@@ -187,7 +187,7 @@
       {
         "quem": "Dani",
         "he": "יוֹפִי. יַאלְלָה, שָׁלוֹם!",
-        "translit": "yófi. yála, shalóm!",
+        "translit": "yófi. yála, shalom!",
         "pt": "Ótimo. Bom, tchau!"
       }
     ],
@@ -209,7 +209,7 @@
       },
       {
         "he": "שָׁלוֹם",
-        "translit": "shalóm",
+        "translit": "shalom",
         "pt": "olá / tchau"
       }
     ],
@@ -235,7 +235,7 @@
       },
       {
         "he": "שַׁבָּת שָׁלוֹם לְכֻלָּם!",
-        "translit": "shabát shalóm lechulám!",
+        "translit": "shabat shalom lechulám!",
         "pt": "Bom shabat para todos!"
       }
     ],
@@ -260,13 +260,13 @@
           "Na quarta-feira"
         ],
         "certa": 0,
-        "porque": "שַׁבָּת שָׁלוֹם se diz a partir da sexta à tarde, quando o shabat começa."
+        "porque": "שַׁבָּת שָׁלוֹם se diz de sexta (já de manhã) até sábado: o shabat começa na sexta ao pôr do sol."
       },
       {
         "t": "vf",
-        "q": "A Noa agradeceu.",
+        "q": "Alguém agradeceu os parabéns.",
         "certa": true,
-        "porque": "תּוֹדָה רַבָּה é \"muito obrigado\": é a resposta da Noa aos parabéns."
+        "porque": "תּוֹדָה רַבָּה é \"muito obrigado\": é a resposta aos parabéns (pelo \"obrigada\", foi a própria Noa)."
       }
     ]
   },
@@ -277,7 +277,7 @@
     },
     {
       "tituloPt": "Shabat shalom",
-      "textoPt": "O shabat começa na sexta ao pôr do sol e vai até sábado à noite. Desde a sexta de manhã você ouve שַׁבָּת שָׁלוֹם no mercado, na padaria, no trabalho, de gente religiosa ou não. É um \"bom fim de semana\" com mais peso."
+      "textoPt": "O shabat começa na sexta ao pôr do sol e vai até sábado à noite. De sexta (já de manhã) até sábado você ouve שַׁבָּת שָׁלוֹם no mercado, na padaria, no trabalho, de gente religiosa ou não. É um \"bom fim de semana\" com mais peso."
     }
   ],
   "sabia": [
@@ -349,7 +349,7 @@
         "TÓ-da"
       ],
       "certa": 0,
-      "porque": "Em hebraico a força vai quase sempre na última sílaba.",
+      "porque": "Na maioria das palavras hebraicas, a força vai na última sílaba, e תּוֹדָה é uma delas.",
       "dicas": {
         "1": "Quase. TÓ-da é a palavra \"toda\" do português. Em hebraico a força está no fim: to-DÁ."
       }
@@ -362,9 +362,9 @@
         "bo-KÉR"
       ],
       "certa": 0,
-      "porque": "בֹּקֶר é uma das palavras com dois E seguidos (ֶ ֶ): a força vai na penúltima.",
+      "porque": "בֹּקֶר é do grupo de עֶרֶב e סֵדֶר: duas sílabas, a última com ֶ, e a força vai na penúltima.",
       "dicas": {
-        "1": "A regra geral seria essa, mas בֹּקֶר é exceção: palavras com dois E seguidos levam a força na penúltima, BÓ-ker."
+        "1": "A regra geral seria essa, mas בֹּקֶר é exceção: é do grupo de עֶרֶב e סֵדֶר (duas sílabas, a última com ֶ), que leva a força na penúltima, BÓ-ker."
       }
     },
     {
@@ -411,7 +411,7 @@
         "מַזָּל טוֹב"
       ],
       "certa": 0,
-      "porque": "Na sexta, a partir da manhã, todo mundo deseja um bom shabat."
+      "porque": "De sexta (já de manhã) até sábado, todo mundo deseja um bom shabat."
     },
     {
       "t": "escolha",
@@ -445,7 +445,7 @@
       "linhas": [
         [
           "Noa",
-          "מַה נִשְׁמָע?"
+          "מַה נִּשְׁמָע?"
         ]
       ],
       "opcoes": [
@@ -454,7 +454,7 @@
         "בְּתֵאָבוֹן!"
       ],
       "certa": 0,
-      "porque": "מַה נִשְׁמָע? é \"tudo bem?\"; a resposta de sempre é בְּסֵדֶר."
+      "porque": "מַה נִּשְׁמָע? é \"tudo bem?\"; a resposta de sempre é בְּסֵדֶר."
     },
     {
       "t": "dialogo",
@@ -538,7 +538,7 @@
           0
         ],
         [
-          "מַה נִשְׁמָע?",
+          "מַה נִּשְׁמָע?",
           1
         ]
       ]
@@ -606,7 +606,7 @@
     },
     {
       "t": "escrever",
-      "pt": "bom shabat (de sexta à tarde a sábado)",
+      "pt": "bom shabat (de sexta, já de manhã, até sábado)",
       "respostas": [
         "שבת שלום"
       ]
