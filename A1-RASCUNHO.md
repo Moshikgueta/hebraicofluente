@@ -316,3 +316,59 @@ A casa: מִטְבָּח · מְקָרֵר · חֶדֶר · עִתּוֹן
 18. Diálogo: onde está o leite? → **na geladeira**
 19. Diálogo, V ou F: a Maya bebe café → **Falso**
 20. Escrever 2 frases: o que come de manhã e o que não bebe (gênero do aluno).
+
+## Unidade 6 - "Você tem irmãos? Esta é a minha família" (aprovada pelo dono em 06/10/2026)
+
+### Palavras
+
+Família: אָח/אַחִים · אָחוֹת/אֲחָיוֹת · הוֹרִים · בֵּן · בַּת · סַבָּא · סַבְתָּא · דּוֹד · דּוֹדָה ·
+מִשְׁפָּחָה · כֶּלֶב · חָתוּל · חֵיפָה
+
+Ter: יֵשׁ · אֵין · יֵשׁ לִי / אֵין לִי · לִי · לְךָ · לָךְ · לוֹ · לָהּ · לָנוּ
+
+De quem é: שֶׁלִּי · שֶׁלְּךָ · שֶׁלָּךְ · שֶׁלּוֹ · שֶׁלָּהּ · שֶׁלָּנוּ
+(as formas de "vocês" e "eles/elas" só para reconhecer; ativas na Unidade 8)
+
+Só do diálogo (glossário): תְּמוּנָה (foto); אֵיתָן (personagem novo, irmão da Noa)
+
+### Gramática
+
+1. יֵשׁ / אֵין = há / não há; não mudam.
+2. Não existe o verbo "ter": יֵשׁ לִי / אֵין לִי.
+3. "Meu" depois, coisa com הַ: הַבַּיִת שֶׁלִּי.
+4. אַבָּא e אִמָּא sem הַ (אִמָּא שֶׁלִּי); לְ + הַ = לַ.
+
+### Diálogo (Tom e Noa, com uma foto)
+
+| Quem | Hebraico | Português |
+|---|---|---|
+| Tom | נֹעָה, יֵשׁ לָךְ אַחִים? | Noa, você tem irmãos? |
+| Noa | כֵּן, יֵשׁ לִי אָח וְאָחוֹת. | Tenho, um irmão e uma irmã. |
+| Tom | מִי זֶה בַּתְּמוּנָה? | Quem é este na foto? |
+| Noa | זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה. | Este é o Eitan, o meu irmão. Ele mora em Haifa. |
+| Tom | וְיֵשׁ לָךְ כֶּלֶב? | E você tem cachorro? |
+| Noa | לֹא, אֵין לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ? | Não, não tenho cachorro. Tenho um gato! E você? |
+| Tom | אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל. | Não tenho gato. Mas os meus pais têm um cachorro grande. |
+
+### Banco de exercícios (20 itens)
+
+1. Ligar: אָח · אָחוֹת · הוֹרִים · בַּת · סַבְתָּא → irmão · irmã · pais · filha · avó
+2. Plural de אָחוֹת → **אֲחָיוֹת**
+3. Intruso: סַבָּא · דּוֹד · **חָתוּל** · בֵּן
+4. "Não há leite" → **אֵין חָלָב**
+5. ___ עוּגָה בַּמִּטְבָּח (há) → **יֵשׁ**
+6. Montar: "Eu tenho uma irmã" → **יֵשׁ לִי אָחוֹת**
+7. "Ela tem um gato" → **יֵשׁ לָהּ חָתוּל**
+8. Tom pergunta à Noa → **יֵשׁ לָךְ כֶּלֶב?**
+9. Montar: "Nós não temos cachorro" → **אֵין לָנוּ כֶּלֶב**
+10. V ou F: "ter" é verbo que muda com o gênero → **Falso**
+11. Montar: "a minha casa" → **הַבַּיִת שֶׁלִּי**
+12. Achar o erro: שֶׁלִּי הַחָתוּל → **הַחָתוּל שֶׁלִּי**
+13. "O cachorro dela" → **הַכֶּלֶב שֶׁלָּהּ**
+14. "A mãe dele" → **אִמָּא שֶׁלּוֹ**
+15. יֵשׁ כֶּלֶב ___הוֹרִים שֶׁלִּי → **לַ**
+16. Ouvir: אֵין לָנוּ אַחִים → **nós não temos irmãos**
+17. Ouvir: הַבַּת שֶׁלָּהּ גָּרָה בְּחֵיפָה → **a filha dela mora em Haifa**
+18. Diálogo: quantos irmãos a Noa tem? → **dois (um irmão e uma irmã)**
+19. Diálogo, V ou F: a Noa tem um cachorro → **Falso**
+20. Escrever 3 frases sobre a sua família.
