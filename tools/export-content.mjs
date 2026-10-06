@@ -674,6 +674,31 @@ function main() {
     }))
   }, null, 2) + '\n');
 
+  /* ── o curso Hebraico A1 (06/10/2026) ────────────────────────────────
+     Pago, como o resto, mas de OUTRO curso: sai por /api/content/a1, que só
+     responde a quem comprou o hebraico-a1 (worker/src/api/content-a1.js).
+     Nada daqui entra no molde do alfabeto. Cada hebraico que se ouve (as
+     palavras, as linhas do diálogo e os itens de escuta) ganha o id da sua
+     gravação, pela mesma conta de sempre (audioIdFor). */
+  const a1 = readJson('data/a1.json');
+  const comAudio = x => ({ ...x, he: NFC(x.he), audioId: audioIdFor(x.he) });
+  const itemA1 = it => (it.t === 'ouvir' ? { ...it, he: NFC(it.he), audioId: audioIdFor(it.he) } : it);
+  writeFileSync(join(OUT, 'a1.json'), JSON.stringify({
+    ...a1,
+    _: undefined,
+    unidades: a1.unidades.map(u => ({
+      ...u,
+      palavras: u.palavras.map(w => (w.formas ? { ...w, formas: w.formas.map(NFC) } : comAudio(w))),
+      dialogo: {
+        ...u.dialogo,
+        linhas: u.dialogo.linhas.map(comAudio),
+        glossario: (u.dialogo.glossario || []).map(comAudio)
+      },
+      exercicios: u.exercicios.map(itemA1)
+    })),
+    exame: { ...a1.exame, partes: a1.exame.partes.map(p => ({ ...p, itens: p.itens.map(itemA1) })) }
+  }) + '\n');
+
   /* ── stroke geometry ────────────────────────────────────────────────
      The SVG in assets/stroke-order/ is the printed diagram: the whole letter,
      with numbered start dots. This is the same run's machine-readable half -

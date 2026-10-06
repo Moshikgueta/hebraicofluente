@@ -39,7 +39,9 @@ export const PAGAS = [
   '/mapa', '/desafio-final', '/certificado', '/concluido', '/conquistas',
   '/historia', '/inicio', '/onboarding', '/meu-hebraico',
   '/vocabulario', '/meu-nome', '/teclado-hebraico',
-  '/audio', '/stroke-order', '/som', '/loja', '/bonus', '/nikud-biblico', '/depoimento'
+  '/audio', '/stroke-order', '/som', '/loja', '/bonus', '/nikud-biblico', '/depoimento',
+  /* 06/10/2026: o curso Hebraico A1 (outro curso; ver worker/src/gate.js). */
+  '/a1'
 ] as const;
 
 /**

@@ -40,7 +40,7 @@
 
 import { readSession } from './lib/session.js';
 import { aparelhoValido } from './lib/aparelhos.js';
-import { hasEntitlement, findAccountById } from './lib/db.js';
+import { hasEntitlement, activeEntitlements, findAccountById } from './lib/db.js';
 
 /* As rotas do curso pago. Uma lista de prefixos, e não uma de rotas livres:
    uma rota nova nasce protegida, e o erro possível é pedir login onde não
@@ -72,12 +72,27 @@ const GATED = [
   /* O guia opcional «O nikud da Bíblia». */
   '/nikud-biblico',
   /* 29/09/2026: o depoimento do aluno. Só quem tem o curso escreve. */
-  '/depoimento'
+  '/depoimento',
+  /* 06/10/2026: o curso Hebraico A1. É de OUTRO curso: ver `cursoDaRota`. */
+  '/a1'
 ];
 
-/* O curso que essas rotas pertencem. Quando o A1 tiver as próprias rotas,
-   esta constante vira um mapa de prefixo → curso. */
+/* O curso de cada rota (06/10/2026, com o A1). O padrão é o alfabeto; o A1
+   tem o prefixo dele; e os clipes de áudio servem aos dois cursos, porque
+   uma gravação pode estar nos dois (a mesma palavra, o mesmo id) - para
+   eles basta ter algum curso válido. `null` = qualquer curso. */
 const COURSE = 'alfabetizacao';
+const PREFIXO_A1 = '/a1';
+const QUALQUER_CURSO = ['/audio'];
+
+export function cursoDaRota(path) {
+  const p = canonical(path);
+  if (p === null) return COURSE;
+  const em = prefix => p === prefix || p.startsWith(prefix + '/');
+  if (em(PREFIXO_A1)) return 'hebraico-a1';
+  if (QUALQUER_CURSO.some(em)) return null;
+  return COURSE;
+}
 
 /**
  * O caminho, canonizado antes de comparar.
@@ -126,8 +141,12 @@ export async function gate(request, env) {
     return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}&motivo=aparelhos`);
   }
 
-  if (!await hasEntitlement(env, account.id, COURSE)) {
-    return recusa(url, documento, `/cursos/${COURSE}/`);
+  const curso = cursoDaRota(path);
+  const pode = curso === null
+    ? (await activeEntitlements(env, account.id)).length > 0
+    : await hasEntitlement(env, account.id, curso);
+  if (!pode) {
+    return recusa(url, documento, `/cursos/${curso || COURSE}/`);
   }
 
   return null;
