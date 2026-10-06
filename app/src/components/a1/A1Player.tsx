@@ -39,7 +39,10 @@ const soHebraico = (s: string) => HEB.test(s) && !LATIM.test(s);
 /** Texto com trechos em hebraico: cada trecho vai num <bdi> RTL, com a fonte
  *  hebraica, para o português em volta não embaralhar a ordem. */
 export function Misto({ texto, className = '' }: { texto: string; className?: string }) {
-  const partes = texto.split(/([֐-׿][֐-׿\s'"׳,.?!_־…]*[֐-׿?!.…]|[֐-׿])/);
+  /* O trecho termina numa letra hebraica, ou no ? e no ! de uma pergunta em
+     hebraico (מַה שִּׁמְךָ?). O ponto final fica de fora: ele é da frase em
+     português em volta, e dentro do trecho RTL ele pulava para o outro lado. */
+  const partes = texto.split(/([֐-׿][֐-׿\s'"׳,.?!_־…]*[֐-׿?!…]|[֐-׿])/);
   return (
     <span className={className}>
       {partes.map((p, i) => (HEB.test(p)
