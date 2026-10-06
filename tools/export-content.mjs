@@ -703,7 +703,7 @@ function main() {
       linhas: u.dialogo.linhas.map(comAudio),
       glossario: (u.dialogo.glossario || []).map(comAudio)
     },
-    ...(u.leitura ? { leitura: { ...u.leitura, perguntas: u.leitura.perguntas.map(itemA1) } } : {}),
+    ...(u.leitura ? { leitura: { ...u.leitura, linhas: u.leitura.linhas.map(comAudio), perguntas: u.leitura.perguntas.map(itemA1) } } : {}),
     exercicios: u.exercicios.map(itemA1)
   });
   const { _: _a1Nota, ...a1Publico } = a1Curso;

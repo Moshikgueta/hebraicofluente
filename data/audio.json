@@ -7,8 +7,8 @@
     "numeros ja atribuidos sao preservados e so clipes novos recebem numeros novos.",
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
-  "generatedAt": "2026-10-05",
-  "total": 581,
+  "generatedAt": "2026-10-06",
+  "total": 816,
   "waves": [
     {
       "id": 1,
@@ -39,6 +39,12 @@
       "titlePt": "Leituras bônus",
       "notePt": "Os textos bíblicos e as bênçãos de Recompensas, uma linha por clipe, em ritmo de leitura: calmo, mas sem pausa entre as palavras.",
       "count": 90
+    },
+    {
+      "id": 6,
+      "titlePt": "Hebraico A1",
+      "notePt": "As palavras, os diálogos, as leituras e os exercícios de escuta do curso A1, unidade por unidade. As frases no ritmo natural da conversa.",
+      "count": 235
     }
   ],
   "clips": [
@@ -889,7 +895,9 @@
       "kind": "silaba",
       "wave": 1,
       "where": [
-        "letra 10"
+        "letra 10",
+        "a1 unidade 6",
+        "a1 unidade 8"
       ],
       "file": "he-987a33d9.mp3"
     },
@@ -2189,7 +2197,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 2"
+        "letra 2",
+        "a1 unidade 2"
       ],
       "file": "he-febde9cc.mp3"
     },
@@ -2299,7 +2308,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 5"
+        "letra 5",
+        "a1 unidade 1"
       ],
       "file": "he-2dcfcfd9.mp3"
     },
@@ -2312,7 +2322,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 5"
+        "letra 5",
+        "a1 unidade 1"
       ],
       "file": "he-fc7c0593.mp3"
     },
@@ -2325,7 +2336,9 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 5"
+        "letra 5",
+        "a1 unidade 1",
+        "a1 unidade 3"
       ],
       "file": "he-f97442b5.mp3"
     },
@@ -2338,7 +2351,9 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 5"
+        "letra 5",
+        "a1 unidade 1",
+        "a1 unidade 3"
       ],
       "file": "he-6039eb15.mp3"
     },
@@ -2369,7 +2384,8 @@
         "palavras da frase ani-mi-israel",
         "palavras da frase ani-medaber-ivrit",
         "palavras da frase ani-rotse-maim",
-        "palavras da frase ani-rotse-kafe"
+        "palavras da frase ani-rotse-kafe",
+        "a1 unidade 1"
       ],
       "file": "he-eddf7041.mp3"
     },
@@ -2400,7 +2416,8 @@
         "letra 6",
         "letra 2",
         "no mundo real",
-        "palavras da frase ani-rotse-maim"
+        "palavras da frase ani-rotse-maim",
+        "a1 unidade 5"
       ],
       "file": "he-f9c5c883.mp3"
     },
@@ -2547,7 +2564,8 @@
       "where": [
         "letra 9",
         "módulo 6",
-        "palavras do texto 4"
+        "palavras do texto 4",
+        "a1 unidade 8"
       ],
       "file": "he-b19b2b8c.mp3"
     },
@@ -2573,7 +2591,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 9"
+        "letra 9",
+        "a1 unidade 2"
       ],
       "file": "he-59e65a97.mp3"
     },
@@ -2600,7 +2619,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 10"
+        "letra 10",
+        "a1 unidade 2"
       ],
       "file": "he-b3801088.mp3"
     },
@@ -2627,7 +2647,8 @@
       "wave": 2,
       "where": [
         "letra 10",
-        "módulo 6"
+        "módulo 6",
+        "a1 unidade 2"
       ],
       "file": "he-0386b412.mp3"
     },
@@ -2641,7 +2662,8 @@
       "wave": 2,
       "where": [
         "letra 10",
-        "letra 6"
+        "letra 6",
+        "a1 unidade 2"
       ],
       "file": "he-b74aea20.mp3"
     },
@@ -2724,7 +2746,8 @@
         "letra 9",
         "módulo 6",
         "no mundo real",
-        "palavras da frase shalom-ma-shlomcha"
+        "palavras da frase shalom-ma-shlomcha",
+        "a1 unidade 1"
       ],
       "file": "he-e1e7fe52.mp3"
     },
@@ -2770,7 +2793,8 @@
       "where": [
         "letra 12",
         "letra 2",
-        "no mundo real"
+        "no mundo real",
+        "a1 unidade 1"
       ],
       "file": "he-f685f16b.mp3"
     },
@@ -2797,7 +2821,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 12"
+        "letra 12",
+        "a1 unidade 1"
       ],
       "file": "he-09e06dea.mp3"
     },
@@ -2811,7 +2836,8 @@
       "wave": 2,
       "where": [
         "letra 12",
-        "palavras da frase hi-mora"
+        "palavras da frase hi-mora",
+        "a1 unidade 1"
       ],
       "file": "he-8ca5205d.mp3"
     },
@@ -2825,7 +2851,8 @@
       "wave": 2,
       "where": [
         "letra 13",
-        "palavras da frase ma-ze"
+        "palavras da frase ma-ze",
+        "a1 unidade 2"
       ],
       "file": "he-c6060038.mp3"
     },
@@ -2838,7 +2865,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 13"
+        "letra 13",
+        "a1 unidade 2"
       ],
       "file": "he-abffd910.mp3"
     },
@@ -2890,7 +2918,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 14"
+        "letra 14",
+        "a1 unidade 6"
       ],
       "file": "he-49a7d499.mp3"
     },
@@ -2919,7 +2948,8 @@
         "letra 14",
         "letra 10",
         "módulo 6",
-        "no mundo real"
+        "no mundo real",
+        "a1 unidade 5"
       ],
       "file": "he-f059f3a3.mp3"
     },
@@ -3255,7 +3285,8 @@
       "kind": "palavra",
       "wave": 2,
       "where": [
-        "letra 19"
+        "letra 19",
+        "a1 unidade 2"
       ],
       "file": "he-8e835cc6.mp3"
     },
@@ -3296,7 +3327,8 @@
       "wave": 2,
       "where": [
         "letra 20",
-        "módulo 6"
+        "módulo 6",
+        "a1 unidade 2"
       ],
       "file": "he-787bf52d.mp3"
     },
@@ -3355,7 +3387,8 @@
       "wave": 2,
       "where": [
         "letra 20",
-        "no mundo real"
+        "no mundo real",
+        "a1 unidade 7"
       ],
       "file": "he-e3a280e7.mp3"
     },
@@ -3384,7 +3417,8 @@
       "wave": 2,
       "where": [
         "letra 21",
-        "módulo 6"
+        "módulo 6",
+        "a1 unidade 6"
       ],
       "file": "he-4d6868ff.mp3"
     },
@@ -3398,7 +3432,8 @@
       "wave": 2,
       "where": [
         "letra 21",
-        "módulo 6"
+        "módulo 6",
+        "a1 unidade 2"
       ],
       "file": "he-fc626354.mp3"
     },
@@ -3477,7 +3512,8 @@
         "letra 22",
         "módulo 6",
         "lição Fe",
-        "no mundo real"
+        "no mundo real",
+        "a1 unidade 2"
       ],
       "file": "he-2089809d.mp3"
     },
@@ -3492,7 +3528,8 @@
       "where": [
         "letra 22",
         "letra 2",
-        "módulo 6"
+        "módulo 6",
+        "a1 unidade 6"
       ],
       "file": "he-23cc1517.mp3"
     },
@@ -3594,7 +3631,8 @@
         "letra 6",
         "lição Sin",
         "palavras da frase shma-israel",
-        "guia do nikud bíblico"
+        "guia do nikud bíblico",
+        "a1 unidade 1"
       ],
       "file": "he-30688018.mp3"
     },
@@ -3609,7 +3647,8 @@
       "where": [
         "letra 11",
         "letra 14",
-        "lição Vet"
+        "lição Vet",
+        "a1 unidade 2"
       ],
       "file": "he-63795cfd.mp3"
     },
@@ -3654,7 +3693,8 @@
       "where": [
         "letra 22",
         "módulo 6",
-        "lição Fe"
+        "lição Fe",
+        "a1 unidade 2"
       ],
       "file": "he-81846849.mp3"
     },
@@ -4327,7 +4367,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 3"
+        "letra 3",
+        "a1 unidade 5"
       ],
       "file": "he-c37d0ed0.mp3"
     },
@@ -4340,7 +4381,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 3"
+        "letra 3",
+        "a1 unidade 5"
       ],
       "file": "he-9cb80a37.mp3"
     },
@@ -4432,7 +4474,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 8"
+        "letra 8",
+        "a1 unidade 6"
       ],
       "file": "he-8da70e33.mp3"
     },
@@ -4459,7 +4502,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 8"
+        "letra 8",
+        "a1 unidade 7"
       ],
       "file": "he-89c714d2.mp3"
     },
@@ -4486,7 +4530,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 11"
+        "letra 11",
+        "a1 unidade 7"
       ],
       "file": "he-26346b32.mp3"
     },
@@ -4564,7 +4609,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 15"
+        "letra 15",
+        "a1 unidade 1"
       ],
       "file": "he-d7a0542e.mp3"
     },
@@ -4594,7 +4640,8 @@
         "letra 16",
         "módulo 6",
         "frases",
-        "palavras da frase slicha"
+        "palavras da frase slicha",
+        "a1 unidade 1"
       ],
       "file": "he-5afd57ab.mp3"
     },
@@ -4621,7 +4668,8 @@
       "kind": "palavra",
       "wave": 3,
       "where": [
-        "letra 16"
+        "letra 16",
+        "a1 unidade 2"
       ],
       "file": "he-bc55d5ff.mp3"
     },
@@ -4636,7 +4684,8 @@
       "where": [
         "letra 17",
         "módulo 6",
-        "palavras da frase ani-medaber-ivrit"
+        "palavras da frase ani-medaber-ivrit",
+        "a1 unidade 4"
       ],
       "file": "he-63edeaab.mp3"
     },
@@ -4680,7 +4729,8 @@
         "letra 19",
         "letra 20",
         "módulo 6",
-        "palavras da frase ken-bevakasha"
+        "palavras da frase ken-bevakasha",
+        "a1 unidade 1"
       ],
       "file": "he-f2a28ac7.mp3"
     },
@@ -4708,7 +4758,8 @@
       "where": [
         "letra 19",
         "palavras da frase ani-rotse-kafe",
-        "palavras do texto 5"
+        "palavras do texto 5",
+        "a1 unidade 5"
       ],
       "file": "he-1b13ecef.mp3"
     },
@@ -4735,7 +4786,8 @@
       "wave": 3,
       "where": [
         "letra 21",
-        "palavras da frase ken-bevakasha"
+        "palavras da frase ken-bevakasha",
+        "a1 unidade 2"
       ],
       "file": "he-288bdbba.mp3"
     },
@@ -4828,7 +4880,8 @@
       "wave": 3,
       "where": [
         "no mundo real",
-        "frases"
+        "frases",
+        "a1 unidade 1"
       ],
       "file": "he-564f6619.mp3"
     },
@@ -4894,7 +4947,8 @@
       "wave": 4,
       "where": [
         "frases",
-        "palavras da frase yerushalayim"
+        "palavras da frase yerushalayim",
+        "a1 unidade 4"
       ],
       "file": "he-e28ad13c.mp3"
     },
@@ -5025,7 +5079,8 @@
       "kind": "frase",
       "wave": 4,
       "where": [
-        "frases"
+        "frases",
+        "a1 unidade 4"
       ],
       "file": "he-1d794745.mp3"
     },
@@ -5143,7 +5198,8 @@
       "kind": "palavra",
       "wave": 4,
       "where": [
-        "palavras da frase hi-mora"
+        "palavras da frase hi-mora",
+        "a1 unidade 1"
       ],
       "file": "he-03afe381.mp3"
     },
@@ -6304,7 +6360,8 @@
       "kind": "palavra",
       "wave": 4,
       "where": [
-        "palavras do texto 4"
+        "palavras do texto 4",
+        "a1 unidade 4"
       ],
       "file": "he-3f8aa517.mp3"
     },
@@ -6421,7 +6478,8 @@
       "kind": "palavra",
       "wave": 4,
       "where": [
-        "palavras do texto 6"
+        "palavras do texto 6",
+        "a1 unidade 2"
       ],
       "file": "he-8f5647e9.mp3"
     },
@@ -6447,7 +6505,8 @@
       "kind": "palavra",
       "wave": 4,
       "where": [
-        "palavras do texto 6"
+        "palavras do texto 6",
+        "a1 unidade 7"
       ],
       "file": "he-a9e8f6bb.mp3"
     },
@@ -6473,7 +6532,8 @@
       "kind": "palavra",
       "wave": 4,
       "where": [
-        "palavras do texto 6"
+        "palavras do texto 6",
+        "a1 unidade 5"
       ],
       "file": "he-f6fac7e1.mp3"
     },
@@ -6538,7 +6598,8 @@
       "kind": "palavra",
       "wave": 4,
       "where": [
-        "palavras do texto 7"
+        "palavras do texto 7",
+        "a1 unidade 6"
       ],
       "file": "he-6ce5a3ed.mp3"
     },
@@ -7738,6 +7799,3073 @@
         "guia do nikud bíblico"
       ],
       "file": "he-f2ab1744.mp3"
+    },
+    {
+      "num": 631,
+      "seq": 581,
+      "he": "מָה שְׁלוֹמְךָ?",
+      "translit": "ma shlomchá?",
+      "gloss": "como vai? (a ele)",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-934c8f8e.mp3"
+    },
+    {
+      "num": 632,
+      "seq": 582,
+      "he": "מָה שְׁלוֹמֵךְ?",
+      "translit": "ma shlomech?",
+      "gloss": "como vai? (a ela)",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-74451639.mp3"
+    },
+    {
+      "num": 633,
+      "seq": 583,
+      "he": "טוֹב, תּוֹדָה",
+      "translit": "tov, todá",
+      "gloss": "bem, obrigado",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-492c98db.mp3"
+    },
+    {
+      "num": 634,
+      "seq": 584,
+      "he": "נָעִים מְאֹד",
+      "translit": "naim meod",
+      "gloss": "muito prazer",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-a3914810.mp3"
+    },
+    {
+      "num": 635,
+      "seq": 585,
+      "he": "לְהִתְרָאוֹת",
+      "translit": "lehitraot",
+      "gloss": "até logo",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-d9328390.mp3"
+    },
+    {
+      "num": 636,
+      "seq": 586,
+      "he": "אֲנַחְנוּ",
+      "translit": "anáchnu",
+      "gloss": "nós",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1",
+        "a1 unidade 3"
+      ],
+      "file": "he-3ea78ae9.mp3"
+    },
+    {
+      "num": 637,
+      "seq": 587,
+      "he": "אַתֶּם",
+      "translit": "atem",
+      "gloss": "vocês (eles)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1",
+        "a1 unidade 3"
+      ],
+      "file": "he-3c9a823a.mp3"
+    },
+    {
+      "num": 638,
+      "seq": 588,
+      "he": "אַתֶּן",
+      "translit": "aten",
+      "gloss": "vocês (elas)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1",
+        "a1 unidade 3"
+      ],
+      "file": "he-4b5cd69d.mp3"
+    },
+    {
+      "num": 639,
+      "seq": 589,
+      "he": "מִי?",
+      "translit": "mi?",
+      "gloss": "quem?",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-d2d7ab5d.mp3"
+    },
+    {
+      "num": 640,
+      "seq": 590,
+      "he": "מַה שִּׁמְךָ?",
+      "translit": "ma shimchá?",
+      "gloss": "qual é o seu nome? (a ele)",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-57ac3982.mp3"
+    },
+    {
+      "num": 641,
+      "seq": 591,
+      "he": "מַה שְּׁמֵךְ?",
+      "translit": "ma shmech?",
+      "gloss": "qual é o seu nome? (a ela)",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1",
+        "a1 unidade 1, escuta"
+      ],
+      "file": "he-c8e9d942.mp3"
+    },
+    {
+      "num": 642,
+      "seq": 592,
+      "he": "שְׁמִי…",
+      "translit": "shmi…",
+      "gloss": "meu nome é…",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-0b73a1bd.mp3"
+    },
+    {
+      "num": 643,
+      "seq": 593,
+      "he": "מֵאֵיפֹה אַתָּה?",
+      "translit": "meeifo atá?",
+      "gloss": "de onde você é? (a ele)",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-722b0776.mp3"
+    },
+    {
+      "num": 644,
+      "seq": 594,
+      "he": "מֵאֵיפֹה אַתְּ?",
+      "translit": "meeifo at?",
+      "gloss": "de onde você é? (a ela)",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-fe943549.mp3"
+    },
+    {
+      "num": 645,
+      "seq": 595,
+      "he": "אֲנִי מִ…",
+      "translit": "aní mi…",
+      "gloss": "eu sou de…",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-4ede395f.mp3"
+    },
+    {
+      "num": 646,
+      "seq": 596,
+      "he": "בְּרָזִיל",
+      "translit": "Brazil",
+      "gloss": "Brasil",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-fe312294.mp3"
+    },
+    {
+      "num": 647,
+      "seq": 597,
+      "he": "בְּרָזִילָאִי",
+      "translit": "brazilái",
+      "gloss": "brasileiro",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-180c1abd.mp3"
+    },
+    {
+      "num": 648,
+      "seq": 598,
+      "he": "בְּרָזִילָאִית",
+      "translit": "brazilait",
+      "gloss": "brasileira",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-169b501e.mp3"
+    },
+    {
+      "num": 649,
+      "seq": 599,
+      "he": "יִשְׂרְאֵלִי",
+      "translit": "isreelí",
+      "gloss": "israelense (m)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-72c7c96d.mp3"
+    },
+    {
+      "num": 650,
+      "seq": 600,
+      "he": "יִשְׂרְאֵלִית",
+      "translit": "isreelit",
+      "gloss": "israelense (f)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-0a64025d.mp3"
+    },
+    {
+      "num": 651,
+      "seq": 601,
+      "he": "סְטוּדֶנְטִית",
+      "translit": "studentit",
+      "gloss": "estudante (f)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-c02f223a.mp3"
+    },
+    {
+      "num": 652,
+      "seq": 602,
+      "he": "רוֹפֵא",
+      "translit": "rofé",
+      "gloss": "médico",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-063ae29c.mp3"
+    },
+    {
+      "num": 653,
+      "seq": 603,
+      "he": "רוֹפְאָה",
+      "translit": "rofá",
+      "gloss": "médica",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1"
+      ],
+      "file": "he-59ce73e6.mp3"
+    },
+    {
+      "num": 654,
+      "seq": 604,
+      "he": "שָׁלוֹם! אֲנִי דָּנִי. מַה שְּׁמֵךְ?",
+      "translit": "shalom! aní Dani. ma shmech?",
+      "gloss": "Olá! Eu sou o Dani. Qual é o seu nome?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1, diálogo"
+      ],
+      "file": "he-1559c6b3.mp3"
+    },
+    {
+      "num": 655,
+      "seq": 605,
+      "he": "שָׁלוֹם, דָּנִי. שְׁמִי נֹעָה. נָעִים מְאֹד.",
+      "translit": "shalom, Dani. shmi Noa. naim meod.",
+      "gloss": "Olá, Dani. Meu nome é Noa. Muito prazer.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1, diálogo"
+      ],
+      "file": "he-d2914b24.mp3"
+    },
+    {
+      "num": 656,
+      "seq": 606,
+      "he": "נָעִים מְאֹד. מֵאֵיפֹה אַתְּ?",
+      "translit": "naim meod. meeifo at?",
+      "gloss": "Muito prazer. De onde você é?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1, diálogo"
+      ],
+      "file": "he-13ee0edb.mp3"
+    },
+    {
+      "num": 657,
+      "seq": 607,
+      "he": "אֲנִי מִיִּשְׂרָאֵל. וְאַתָּה?",
+      "translit": "aní miIsrael. veatá?",
+      "gloss": "Eu sou de Israel. E você?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1, diálogo"
+      ],
+      "file": "he-5caf21eb.mp3"
+    },
+    {
+      "num": 658,
+      "seq": 608,
+      "he": "אֲנִי מִבְּרָזִיל. אֲנִי סְטוּדֶנְט.",
+      "translit": "aní miBrazil. aní student.",
+      "gloss": "Eu sou do Brasil. Sou estudante.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1, diálogo"
+      ],
+      "file": "he-7d7a4a9e.mp3"
+    },
+    {
+      "num": 659,
+      "seq": 609,
+      "he": "גַּם אֲנִי סְטוּדֶנְטִית!",
+      "translit": "gam aní studentit!",
+      "gloss": "Eu também sou estudante!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1, diálogo"
+      ],
+      "file": "he-393e0bb2.mp3"
+    },
+    {
+      "num": 660,
+      "seq": 610,
+      "he": "אֲנִי מִבְּרָזִיל",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 1, escuta"
+      ],
+      "file": "he-37d7d4d2.mp3"
+    },
+    {
+      "num": 661,
+      "seq": 611,
+      "he": "מָה זֶה?",
+      "translit": "ma ze?",
+      "gloss": "o que é isto?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-f721e84f.mp3"
+    },
+    {
+      "num": 662,
+      "seq": 612,
+      "he": "מִי זֶה?",
+      "translit": "mi ze?",
+      "gloss": "quem é este?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2",
+        "a1 unidade 2, escuta"
+      ],
+      "file": "he-995b7755.mp3"
+    },
+    {
+      "num": 663,
+      "seq": 613,
+      "he": "מִי זֹאת?",
+      "translit": "mi zot?",
+      "gloss": "quem é esta?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-2b7beeeb.mp3"
+    },
+    {
+      "num": 664,
+      "seq": 614,
+      "he": "זֶה לֹא…",
+      "translit": "ze lo…",
+      "gloss": "não é…",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-1e019356.mp3"
+    },
+    {
+      "num": 665,
+      "seq": 615,
+      "he": "שֻׁלְחָן",
+      "translit": "shulchan",
+      "gloss": "mesa",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-6477eb1d.mp3"
+    },
+    {
+      "num": 666,
+      "seq": 616,
+      "he": "מַחְבֶּרֶת",
+      "translit": "machbéret",
+      "gloss": "caderno",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-07af335d.mp3"
+    },
+    {
+      "num": 667,
+      "seq": 617,
+      "he": "דֶּלֶת",
+      "translit": "délet",
+      "gloss": "porta",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-d5812c2b.mp3"
+    },
+    {
+      "num": 668,
+      "seq": 618,
+      "he": "מְנוֹרָה",
+      "translit": "menorá",
+      "gloss": "luminária",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-140c1a00.mp3"
+    },
+    {
+      "num": 669,
+      "seq": 619,
+      "he": "מַתָּנָה",
+      "translit": "matana",
+      "gloss": "presente",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-94d08f48.mp3"
+    },
+    {
+      "num": 670,
+      "seq": 620,
+      "he": "אִישׁ",
+      "translit": "ish",
+      "gloss": "homem",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-9218eea6.mp3"
+    },
+    {
+      "num": 671,
+      "seq": 621,
+      "he": "חֲבֵרָה",
+      "translit": "chaverá",
+      "gloss": "amiga",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2"
+      ],
+      "file": "he-927f4ece.mp3"
+    },
+    {
+      "num": 672,
+      "seq": 622,
+      "he": "מַיָּה, מָה זֶה?",
+      "translit": "Maya, ma ze?",
+      "gloss": "Maya, o que é isto?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, diálogo"
+      ],
+      "file": "he-6ff1a0c4.mp3"
+    },
+    {
+      "num": 673,
+      "seq": 623,
+      "he": "זֶה מַפְתֵּחַ.",
+      "translit": "ze maftéach.",
+      "gloss": "É uma chave.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, diálogo"
+      ],
+      "file": "he-67f85d53.mp3"
+    },
+    {
+      "num": 674,
+      "seq": 624,
+      "he": "וּמָה זֶה?",
+      "translit": "uma ze?",
+      "gloss": "E o que é isto?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, diálogo"
+      ],
+      "file": "he-b8c29b5f.mp3"
+    },
+    {
+      "num": 675,
+      "seq": 625,
+      "he": "זֹאת מַחְבֶּרֶת.",
+      "translit": "zot machbéret.",
+      "gloss": "É um caderno.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, diálogo"
+      ],
+      "file": "he-b2c28477.mp3"
+    },
+    {
+      "num": 676,
+      "seq": 626,
+      "he": "וּמִי זֹאת?",
+      "translit": "umi zot?",
+      "gloss": "E quem é esta?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, diálogo"
+      ],
+      "file": "he-13e8a894.mp3"
+    },
+    {
+      "num": 677,
+      "seq": 627,
+      "he": "זֹאת אִמָּא. וְזֶה אַבָּא.",
+      "translit": "zot imá. veze aba.",
+      "gloss": "Esta é a minha mãe. E este é o meu pai.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, diálogo"
+      ],
+      "file": "he-03f6501d.mp3"
+    },
+    {
+      "num": 678,
+      "seq": 628,
+      "he": "וּמִי זֶה?",
+      "translit": "umi ze?",
+      "gloss": "E quem é este?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, diálogo"
+      ],
+      "file": "he-9dee6a5a.mp3"
+    },
+    {
+      "num": 679,
+      "seq": 629,
+      "he": "זֶה לֹא אַבָּא, זֶה דָּנִי!",
+      "translit": "ze lo aba, ze Dani!",
+      "gloss": "Este não é o meu pai, é o Dani!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, diálogo"
+      ],
+      "file": "he-1895709c.mp3"
+    },
+    {
+      "num": 680,
+      "seq": 630,
+      "he": "זֹאת מַתָּנָה",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 2, escuta"
+      ],
+      "file": "he-44614ebf.mp3"
+    },
+    {
+      "num": 681,
+      "seq": 631,
+      "he": "הַ־",
+      "translit": "ha-",
+      "gloss": "o, a, os, as (grudado na palavra)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3"
+      ],
+      "file": "he-8e8913b0.mp3"
+    },
+    {
+      "num": 682,
+      "seq": 632,
+      "he": "אֵלֶּה",
+      "translit": "éle",
+      "gloss": "estes, estas",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3"
+      ],
+      "file": "he-3c9fdce5.mp3"
+    },
+    {
+      "num": 683,
+      "seq": 633,
+      "he": "אֲבָל",
+      "translit": "aval",
+      "gloss": "mas",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3"
+      ],
+      "file": "he-cd924355.mp3"
+    },
+    {
+      "num": 684,
+      "seq": 634,
+      "he": "מְאֹד",
+      "translit": "meod",
+      "gloss": "muito",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3"
+      ],
+      "file": "he-0739ed3a.mp3"
+    },
+    {
+      "num": 685,
+      "seq": 635,
+      "he": "מַיָּה, זֶה הַבַּיִת הֶחָדָשׁ?",
+      "translit": "Maya, ze habáyit hechadash?",
+      "gloss": "Maya, esta é a casa nova?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo"
+      ],
+      "file": "he-21247b72.mp3"
+    },
+    {
+      "num": 686,
+      "seq": 636,
+      "he": "כֵּן! הַבַּיִת קָטָן, אֲבָל יָפֶה.",
+      "translit": "ken! habáyit katan, aval yafé.",
+      "gloss": "Sim! A casa é pequena, mas bonita.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo"
+      ],
+      "file": "he-03ccb560.mp3"
+    },
+    {
+      "num": 687,
+      "seq": 637,
+      "he": "הַשֻּׁלְחָן חָדָשׁ?",
+      "translit": "hashulchan chadash?",
+      "gloss": "A mesa é nova?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo"
+      ],
+      "file": "he-78d5c6c6.mp3"
+    },
+    {
+      "num": 688,
+      "seq": 638,
+      "he": "לֹא, הַשֻּׁלְחָן יָשָׁן. אֲבָל הַכִּסְאוֹת חֲדָשִׁים!",
+      "translit": "lo, hashulchan yashan. aval hakisot chadashim!",
+      "gloss": "Não, a mesa é velha. Mas as cadeiras são novas!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo"
+      ],
+      "file": "he-0ce39d63.mp3"
+    },
+    {
+      "num": 689,
+      "seq": 639,
+      "he": "וּמָה אֵלֶּה?",
+      "translit": "uma éle?",
+      "gloss": "E o que são estas?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo"
+      ],
+      "file": "he-10fc402c.mp3"
+    },
+    {
+      "num": 690,
+      "seq": 640,
+      "he": "אֵלֶּה מַתָּנוֹת. הֵן מִנֹּעָה וּמִדָּנִי.",
+      "translit": "éle matanot. hen miNoa umiDani.",
+      "gloss": "São presentes. São da Noa e do Dani.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo"
+      ],
+      "file": "he-87579e78.mp3"
+    },
+    {
+      "num": 691,
+      "seq": 641,
+      "he": "הַמְּנוֹרָה הָאֲדֻמָּה יָפָה מְאֹד!",
+      "translit": "hamenorá haadumá yafá meod!",
+      "gloss": "A luminária vermelha é muito bonita!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo"
+      ],
+      "file": "he-7033a3d9.mp3"
+    },
+    {
+      "num": 692,
+      "seq": 642,
+      "he": "תּוֹדָה!",
+      "translit": "todá!",
+      "gloss": "Obrigada!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, diálogo",
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-81d65be6.mp3"
+    },
+    {
+      "num": 693,
+      "seq": 643,
+      "he": "הַתִּיק הַשָּׁחֹר",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, escuta"
+      ],
+      "file": "he-5bf18c68.mp3"
+    },
+    {
+      "num": 694,
+      "seq": 644,
+      "he": "הֵן נֶחְמָדוֹת",
+      "translit": null,
+      "gloss": "Fala de quem?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 3, escuta"
+      ],
+      "file": "he-7b239888.mp3"
+    },
+    {
+      "num": 695,
+      "seq": 645,
+      "he": "אֵיפֹה?",
+      "translit": "eifo?",
+      "gloss": "onde?",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4"
+      ],
+      "file": "he-aad6431b.mp3"
+    },
+    {
+      "num": 696,
+      "seq": 646,
+      "he": "בְּ־",
+      "translit": "be-",
+      "gloss": "em (grudado na palavra)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4"
+      ],
+      "file": "he-66b60be4.mp3"
+    },
+    {
+      "num": 697,
+      "seq": 647,
+      "he": "סָאוֹ פָּאוּלוֹ",
+      "translit": "São Paulo",
+      "gloss": "São Paulo",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4"
+      ],
+      "file": "he-46bd4553.mp3"
+    },
+    {
+      "num": 698,
+      "seq": 648,
+      "he": "רִיוֹ",
+      "translit": "Rio",
+      "gloss": "Rio",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4"
+      ],
+      "file": "he-89e389ca.mp3"
+    },
+    {
+      "num": 699,
+      "seq": 649,
+      "he": "פּוֹרְטוּגָזִית",
+      "translit": "portugezit",
+      "gloss": "português",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4"
+      ],
+      "file": "he-b61037db.mp3"
+    },
+    {
+      "num": 700,
+      "seq": 650,
+      "he": "אַנְגְּלִית",
+      "translit": "anglit",
+      "gloss": "inglês",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4"
+      ],
+      "file": "he-a94160f2.mp3"
+    },
+    {
+      "num": 701,
+      "seq": 651,
+      "he": "טוֹם, אֵיפֹה אַתָּה גָּר?",
+      "translit": "Tom, eifo atá gar?",
+      "gloss": "Tom, onde você mora?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-08468f4c.mp3"
+    },
+    {
+      "num": 702,
+      "seq": 652,
+      "he": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?",
+      "translit": "aní gar biYerushaláyim. veat?",
+      "gloss": "Moro em Jerusalém. E você?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-40cb47be.mp3"
+    },
+    {
+      "num": 703,
+      "seq": 653,
+      "he": "אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד?",
+      "translit": "aní gará beTel Aviv. atá oved?",
+      "gloss": "Moro em Tel Aviv. Você trabalha?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-0c9df08a.mp3"
+    },
+    {
+      "num": 704,
+      "seq": 654,
+      "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ?",
+      "translit": "lo, aní lomed ivrit. veat?",
+      "gloss": "Não, estudo hebraico. E você?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-9c1d7bbc.mp3"
+    },
+    {
+      "num": 705,
+      "seq": 655,
+      "he": "אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב!",
+      "translit": "aní ovédet. atá medaber ivrit tov!",
+      "gloss": "Eu trabalho. Você fala hebraico bem!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-68c8028f.mp3"
+    },
+    {
+      "num": 706,
+      "seq": 656,
+      "he": "תּוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
+      "translit": "todá! aní medaber ktsat.",
+      "gloss": "Obrigado! Falo um pouco.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-31de4a8d.mp3"
+    },
+    {
+      "num": 707,
+      "seq": 657,
+      "he": "דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית.",
+      "translit": "Dani uMaya gam lomdim ivrit.",
+      "gloss": "O Dani e a Maya também estudam hebraico.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-d10eac22.mp3"
+    },
+    {
+      "num": 708,
+      "seq": 658,
+      "he": "הֵם גָּרִים בִּירוּשָׁלַיִם?",
+      "translit": "hem garim biYerushaláyim?",
+      "gloss": "Eles moram em Jerusalém?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-0ab3f0b0.mp3"
+    },
+    {
+      "num": 709,
+      "seq": 659,
+      "he": "לֹא, הֵם גָּרִים בְּתֵל אָבִיב.",
+      "translit": "lo, hem garim beTel Aviv.",
+      "gloss": "Não, eles moram em Tel Aviv.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, diálogo"
+      ],
+      "file": "he-9ce023e7.mp3"
+    },
+    {
+      "num": 710,
+      "seq": 660,
+      "he": "אֲנַחְנוּ לוֹמְדוֹת",
+      "translit": null,
+      "gloss": "Quem fala?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, escuta"
+      ],
+      "file": "he-2c755e1f.mp3"
+    },
+    {
+      "num": 711,
+      "seq": 661,
+      "he": "הוּא כּוֹתֵב בְּעִבְרִית",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 4, escuta"
+      ],
+      "file": "he-13e5e368.mp3"
+    },
+    {
+      "num": 712,
+      "seq": 662,
+      "he": "גְּבִינָה",
+      "translit": "gviná",
+      "gloss": "queijo",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-e818ee72.mp3"
+    },
+    {
+      "num": 713,
+      "seq": 663,
+      "he": "בֵּיצָה",
+      "translit": "beitsá",
+      "gloss": "ovo",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-8bcb13ec.mp3"
+    },
+    {
+      "num": 714,
+      "seq": 664,
+      "he": "בֵּיצִים",
+      "translit": "beitsim",
+      "gloss": "ovos",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-1689dd26.mp3"
+    },
+    {
+      "num": 715,
+      "seq": 665,
+      "he": "תַּפּוּחִים",
+      "translit": "tapuchim",
+      "gloss": "maçãs",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-a4e3d481.mp3"
+    },
+    {
+      "num": 716,
+      "seq": 666,
+      "he": "עוּגָה",
+      "translit": "ugá",
+      "gloss": "bolo",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-a0f0e588.mp3"
+    },
+    {
+      "num": 717,
+      "seq": 667,
+      "he": "סָלָט",
+      "translit": "salat",
+      "gloss": "salada",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-eabf8905.mp3"
+    },
+    {
+      "num": 718,
+      "seq": 668,
+      "he": "חָלָב",
+      "translit": "chalav",
+      "gloss": "leite",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-d8973bad.mp3"
+    },
+    {
+      "num": 719,
+      "seq": 669,
+      "he": "מִטְבָּח",
+      "translit": "mitbach",
+      "gloss": "cozinha",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-a156d9da.mp3"
+    },
+    {
+      "num": 720,
+      "seq": 670,
+      "he": "חֶדֶר",
+      "translit": "chéder",
+      "gloss": "quarto, sala",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-1e27be5e.mp3"
+    },
+    {
+      "num": 721,
+      "seq": 671,
+      "he": "עִתּוֹן",
+      "translit": "iton",
+      "gloss": "jornal",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5"
+      ],
+      "file": "he-e6c04667.mp3"
+    },
+    {
+      "num": 722,
+      "seq": 672,
+      "he": "מַיָּה, מָה אַתְּ אוֹכֶלֶת?",
+      "translit": "Maya, ma at ochélet?",
+      "gloss": "Maya, o que você está comendo?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, diálogo"
+      ],
+      "file": "he-07a84042.mp3"
+    },
+    {
+      "num": 723,
+      "seq": 673,
+      "he": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
+      "translit": "aní ochélet léchem ugviná. atá rotsé?",
+      "gloss": "Pão e queijo. Você quer?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, diálogo"
+      ],
+      "file": "he-37a35b59.mp3"
+    },
+    {
+      "num": 724,
+      "seq": 674,
+      "he": "כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב?",
+      "translit": "ken, todá. eifo hechalav?",
+      "gloss": "Quero, obrigado. Onde está o leite?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, diálogo"
+      ],
+      "file": "he-b00113c6.mp3"
+    },
+    {
+      "num": 725,
+      "seq": 675,
+      "he": "הֶחָלָב בַּמְּקָרֵר.",
+      "translit": "hechalav bamekarer.",
+      "gloss": "O leite está na geladeira.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, diálogo"
+      ],
+      "file": "he-907ab402.mp3"
+    },
+    {
+      "num": 726,
+      "seq": 676,
+      "he": "אַתְּ שׁוֹתָה קָפֶה?",
+      "translit": "at shotá kafé?",
+      "gloss": "Você bebe café?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, diálogo"
+      ],
+      "file": "he-626b130c.mp3"
+    },
+    {
+      "num": 727,
+      "seq": 677,
+      "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
+      "translit": "lo, aní lo shotá kafé. aní shotá te.",
+      "gloss": "Não, não bebo café. Bebo chá.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, diálogo"
+      ],
+      "file": "he-02b9cb58.mp3"
+    },
+    {
+      "num": 728,
+      "seq": 678,
+      "he": "וּמִי קוֹנֶה אֶת הַלֶּחֶם?",
+      "translit": "umi koné et haléchem?",
+      "gloss": "E quem compra o pão?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, diálogo"
+      ],
+      "file": "he-67ffb908.mp3"
+    },
+    {
+      "num": 729,
+      "seq": 679,
+      "he": "אַתָּה!",
+      "translit": "atá!",
+      "gloss": "Você!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, diálogo"
+      ],
+      "file": "he-b6c6f624.mp3"
+    },
+    {
+      "num": 730,
+      "seq": 680,
+      "he": "אֲנַחְנוּ לֹא אוֹכְלִים בֵּיצִים",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, escuta"
+      ],
+      "file": "he-b94ddf50.mp3"
+    },
+    {
+      "num": 731,
+      "seq": 681,
+      "he": "הִיא קוֹנָה תַּפּוּחִים",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 5, escuta"
+      ],
+      "file": "he-4080bbf5.mp3"
+    },
+    {
+      "num": 732,
+      "seq": 682,
+      "he": "אַחִים",
+      "translit": "achim",
+      "gloss": "irmãos",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-e562e787.mp3"
+    },
+    {
+      "num": 733,
+      "seq": 683,
+      "he": "אָחוֹת",
+      "translit": "achot",
+      "gloss": "irmã",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-c7ec25cf.mp3"
+    },
+    {
+      "num": 734,
+      "seq": 684,
+      "he": "אֲחָיוֹת",
+      "translit": "achayot",
+      "gloss": "irmãs",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-e9cec0a2.mp3"
+    },
+    {
+      "num": 735,
+      "seq": 685,
+      "he": "הוֹרִים",
+      "translit": "horim",
+      "gloss": "pais (pai e mãe)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-45f58166.mp3"
+    },
+    {
+      "num": 736,
+      "seq": 686,
+      "he": "בֵּן",
+      "translit": "ben",
+      "gloss": "filho",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-70042f52.mp3"
+    },
+    {
+      "num": 737,
+      "seq": 687,
+      "he": "בַּת",
+      "translit": "bat",
+      "gloss": "filha",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-74c23940.mp3"
+    },
+    {
+      "num": 738,
+      "seq": 688,
+      "he": "סַבָּא",
+      "translit": "saba",
+      "gloss": "avô",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-3ad93b15.mp3"
+    },
+    {
+      "num": 739,
+      "seq": 689,
+      "he": "סַבְתָּא",
+      "translit": "sávta",
+      "gloss": "avó",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-e65c4f02.mp3"
+    },
+    {
+      "num": 740,
+      "seq": 690,
+      "he": "דּוֹד",
+      "translit": "dod",
+      "gloss": "tio",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-05871222.mp3"
+    },
+    {
+      "num": 741,
+      "seq": 691,
+      "he": "חָתוּל",
+      "translit": "chatul",
+      "gloss": "gato",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-2064deed.mp3"
+    },
+    {
+      "num": 742,
+      "seq": 692,
+      "he": "חֵיפָה",
+      "translit": "Cheifa",
+      "gloss": "Haifa",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-e24b132d.mp3"
+    },
+    {
+      "num": 743,
+      "seq": 693,
+      "he": "יֵשׁ",
+      "translit": "yesh",
+      "gloss": "há, existe",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-aa48ffbd.mp3"
+    },
+    {
+      "num": 744,
+      "seq": 694,
+      "he": "אֵין",
+      "translit": "ein",
+      "gloss": "não há",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-2994cfe0.mp3"
+    },
+    {
+      "num": 745,
+      "seq": 695,
+      "he": "יֵשׁ לִי",
+      "translit": "yesh li",
+      "gloss": "eu tenho",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-ce2609db.mp3"
+    },
+    {
+      "num": 746,
+      "seq": 696,
+      "he": "לִי",
+      "translit": "li",
+      "gloss": "para mim",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6",
+        "a1 unidade 8"
+      ],
+      "file": "he-c981c6ae.mp3"
+    },
+    {
+      "num": 747,
+      "seq": 697,
+      "he": "לְךָ",
+      "translit": "lechá",
+      "gloss": "para você (m)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6",
+        "a1 unidade 8"
+      ],
+      "file": "he-9826c829.mp3"
+    },
+    {
+      "num": 748,
+      "seq": 698,
+      "he": "לָךְ",
+      "translit": "lach",
+      "gloss": "para você (f)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6",
+        "a1 unidade 8"
+      ],
+      "file": "he-5b41af50.mp3"
+    },
+    {
+      "num": 749,
+      "seq": 699,
+      "he": "לָהּ",
+      "translit": "la",
+      "gloss": "para ela",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6",
+        "a1 unidade 8"
+      ],
+      "file": "he-59972111.mp3"
+    },
+    {
+      "num": 750,
+      "seq": 700,
+      "he": "לָנוּ",
+      "translit": "lánu",
+      "gloss": "para nós",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6",
+        "a1 unidade 8"
+      ],
+      "file": "he-3ee7cd7f.mp3"
+    },
+    {
+      "num": 751,
+      "seq": 701,
+      "he": "שֶׁלִּי",
+      "translit": "sheli",
+      "gloss": "meu, minha",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-9f3b9228.mp3"
+    },
+    {
+      "num": 752,
+      "seq": 702,
+      "he": "שֶׁלְּךָ",
+      "translit": "shelchá",
+      "gloss": "seu, sua (a ele)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-aaca85db.mp3"
+    },
+    {
+      "num": 753,
+      "seq": 703,
+      "he": "שֶׁלָּךְ",
+      "translit": "shelach",
+      "gloss": "seu, sua (a ela)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-5b43213b.mp3"
+    },
+    {
+      "num": 754,
+      "seq": 704,
+      "he": "שֶׁלּוֹ",
+      "translit": "shelo",
+      "gloss": "dele",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-fc897d9c.mp3"
+    },
+    {
+      "num": 755,
+      "seq": 705,
+      "he": "שֶׁלָּהּ",
+      "translit": "shela",
+      "gloss": "dela",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-895c4429.mp3"
+    },
+    {
+      "num": 756,
+      "seq": 706,
+      "he": "שֶׁלָּנוּ",
+      "translit": "shelánu",
+      "gloss": "nosso, nossa",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6"
+      ],
+      "file": "he-509e527a.mp3"
+    },
+    {
+      "num": 757,
+      "seq": 707,
+      "he": "נֹעָה, יֵשׁ לָךְ אַחִים?",
+      "translit": "Noa, yesh lach achim?",
+      "gloss": "Noa, você tem irmãos?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-27ca4596.mp3"
+    },
+    {
+      "num": 758,
+      "seq": 708,
+      "he": "כֵּן, יֵשׁ לִי אָח וְאָחוֹת.",
+      "translit": "ken, yesh li ach veachot.",
+      "gloss": "Tenho, um irmão e uma irmã.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-a7d57a78.mp3"
+    },
+    {
+      "num": 759,
+      "seq": 709,
+      "he": "מִי זֶה בַּתְּמוּנָה?",
+      "translit": "mi ze batmuná?",
+      "gloss": "Quem é este na foto?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-987dfb4e.mp3"
+    },
+    {
+      "num": 760,
+      "seq": 710,
+      "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
+      "translit": "ze Eitan, haach sheli. hu gar beCheifa.",
+      "gloss": "Este é o Eitan, o meu irmão. Ele mora em Haifa.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-9092dbb0.mp3"
+    },
+    {
+      "num": 761,
+      "seq": 711,
+      "he": "וְיֵשׁ לָךְ כֶּלֶב?",
+      "translit": "veyesh lach kélev?",
+      "gloss": "E você tem cachorro?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-c7fd3940.mp3"
+    },
+    {
+      "num": 762,
+      "seq": 712,
+      "he": "לֹא, אֵין לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ?",
+      "translit": "lo, ein li kélev. yesh li chatul! ulechá?",
+      "gloss": "Não, não tenho cachorro. Tenho um gato! E você?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-d13e6ac8.mp3"
+    },
+    {
+      "num": 763,
+      "seq": 713,
+      "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל.",
+      "translit": "ein li chatul. aval lahorim sheli yesh kélev gadol.",
+      "gloss": "Não tenho gato. Mas os meus pais têm um cachorro grande.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-d29f42a0.mp3"
+    },
+    {
+      "num": 764,
+      "seq": 714,
+      "he": "תְּמוּנָה",
+      "translit": "tmuná",
+      "gloss": "foto",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-8116c574.mp3"
+    },
+    {
+      "num": 765,
+      "seq": 715,
+      "he": "אֵיתָן",
+      "translit": "Eitan",
+      "gloss": "Eitan (nome)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, diálogo"
+      ],
+      "file": "he-ba5298ff.mp3"
+    },
+    {
+      "num": 766,
+      "seq": 716,
+      "he": "אֵין לָנוּ אַחִים",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, escuta"
+      ],
+      "file": "he-2d57adca.mp3"
+    },
+    {
+      "num": 767,
+      "seq": 717,
+      "he": "הַבַּת שֶׁלָּהּ גָּרָה בְּחֵיפָה",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 6, escuta"
+      ],
+      "file": "he-a6781dc5.mp3"
+    },
+    {
+      "num": 768,
+      "seq": 718,
+      "he": "אֶפֶס",
+      "translit": "éfes",
+      "gloss": "0",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-e748c380.mp3"
+    },
+    {
+      "num": 769,
+      "seq": 719,
+      "he": "אַחַת",
+      "translit": "achat",
+      "gloss": "1",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-b0258316.mp3"
+    },
+    {
+      "num": 770,
+      "seq": 720,
+      "he": "שְׁתַּיִם",
+      "translit": "shtáyim",
+      "gloss": "2",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-82384e4f.mp3"
+    },
+    {
+      "num": 771,
+      "seq": 721,
+      "he": "שָׁלוֹשׁ",
+      "translit": "shalosh",
+      "gloss": "3",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-9472fb68.mp3"
+    },
+    {
+      "num": 772,
+      "seq": 722,
+      "he": "חָמֵשׁ",
+      "translit": "chamesh",
+      "gloss": "5",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-43ce0a88.mp3"
+    },
+    {
+      "num": 773,
+      "seq": 723,
+      "he": "שֵׁשׁ",
+      "translit": "shesh",
+      "gloss": "6",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-82450490.mp3"
+    },
+    {
+      "num": 774,
+      "seq": 724,
+      "he": "שֶׁבַע",
+      "translit": "shéva",
+      "gloss": "7",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-8c38edd7.mp3"
+    },
+    {
+      "num": 775,
+      "seq": 725,
+      "he": "שְׁמוֹנֶה",
+      "translit": "shmoné",
+      "gloss": "8",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-963168fa.mp3"
+    },
+    {
+      "num": 776,
+      "seq": 726,
+      "he": "תֵּשַׁע",
+      "translit": "tésha",
+      "gloss": "9",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-c5ebfe93.mp3"
+    },
+    {
+      "num": 777,
+      "seq": 727,
+      "he": "אַחַת־עֶשְׂרֵה",
+      "translit": "achat-esré",
+      "gloss": "11",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-f1f471b1.mp3"
+    },
+    {
+      "num": 778,
+      "seq": 728,
+      "he": "שְׁתֵּים־עֶשְׂרֵה",
+      "translit": "shteim-esré",
+      "gloss": "12",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7",
+        "a1 unidade 7, escuta"
+      ],
+      "file": "he-7cc591cb.mp3"
+    },
+    {
+      "num": 779,
+      "seq": 729,
+      "he": "שְׁלוֹשׁ־עֶשְׂרֵה",
+      "translit": "shlosh-esré",
+      "gloss": "13",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-0853e4c2.mp3"
+    },
+    {
+      "num": 780,
+      "seq": 730,
+      "he": "אַרְבַּע־עֶשְׂרֵה",
+      "translit": "arbá-esré",
+      "gloss": "14",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-e8c69450.mp3"
+    },
+    {
+      "num": 781,
+      "seq": 731,
+      "he": "חֲמֵשׁ־עֶשְׂרֵה",
+      "translit": "chamesh-esré",
+      "gloss": "15",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-6f1b1da9.mp3"
+    },
+    {
+      "num": 782,
+      "seq": 732,
+      "he": "שֵׁשׁ־עֶשְׂרֵה",
+      "translit": "shesh-esré",
+      "gloss": "16",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-ba957b39.mp3"
+    },
+    {
+      "num": 783,
+      "seq": 733,
+      "he": "שְׁבַע־עֶשְׂרֵה",
+      "translit": "shva-esré",
+      "gloss": "17",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-b91dfd25.mp3"
+    },
+    {
+      "num": 784,
+      "seq": 734,
+      "he": "שְׁמוֹנֶה־עֶשְׂרֵה",
+      "translit": "shmoné-esré",
+      "gloss": "18",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-da70204b.mp3"
+    },
+    {
+      "num": 785,
+      "seq": 735,
+      "he": "תְּשַׁע־עֶשְׂרֵה",
+      "translit": "tsha-esré",
+      "gloss": "19",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-02e085a6.mp3"
+    },
+    {
+      "num": 786,
+      "seq": 736,
+      "he": "שְׁלוֹשִׁים",
+      "translit": "shloshim",
+      "gloss": "30",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-1dc1599c.mp3"
+    },
+    {
+      "num": 787,
+      "seq": 737,
+      "he": "אַרְבָּעִים",
+      "translit": "arbaim",
+      "gloss": "40",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-b968bd22.mp3"
+    },
+    {
+      "num": 788,
+      "seq": 738,
+      "he": "חֲמִשִּׁים",
+      "translit": "chamishim",
+      "gloss": "50",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-8750ab54.mp3"
+    },
+    {
+      "num": 789,
+      "seq": 739,
+      "he": "שִׁשִּׁים",
+      "translit": "shishim",
+      "gloss": "60",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-8acc221a.mp3"
+    },
+    {
+      "num": 790,
+      "seq": 740,
+      "he": "שִׁבְעִים",
+      "translit": "shivim",
+      "gloss": "70",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-5be09b54.mp3"
+    },
+    {
+      "num": 791,
+      "seq": 741,
+      "he": "שְׁמוֹנִים",
+      "translit": "shmonim",
+      "gloss": "80",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-249b821f.mp3"
+    },
+    {
+      "num": 792,
+      "seq": 742,
+      "he": "תִּשְׁעִים",
+      "translit": "tishim",
+      "gloss": "90",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-edb27986.mp3"
+    },
+    {
+      "num": 793,
+      "seq": 743,
+      "he": "מֵאָה",
+      "translit": "meá",
+      "gloss": "100",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-f38bb1dc.mp3"
+    },
+    {
+      "num": 794,
+      "seq": 744,
+      "he": "עֶשְׂרִים וְאַחַת",
+      "translit": "esrim veachat",
+      "gloss": "21",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-6e579147.mp3"
+    },
+    {
+      "num": 795,
+      "seq": 745,
+      "he": "כַּמָּה?",
+      "translit": "kama?",
+      "gloss": "quanto? quantos?",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-e1b99071.mp3"
+    },
+    {
+      "num": 796,
+      "seq": 746,
+      "he": "כַּמָּה זֶה עוֹלֶה?",
+      "translit": "kama ze olé?",
+      "gloss": "quanto custa?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-571b7cd7.mp3"
+    },
+    {
+      "num": 797,
+      "seq": 747,
+      "he": "שֶׁקֶל",
+      "translit": "shékel",
+      "gloss": "shekel",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-0871ace8.mp3"
+    },
+    {
+      "num": 798,
+      "seq": 748,
+      "he": "שְׁקָלִים",
+      "translit": "shkalim",
+      "gloss": "shekels",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-036c09e1.mp3"
+    },
+    {
+      "num": 799,
+      "seq": 749,
+      "he": "קִילוֹ",
+      "translit": "kilo",
+      "gloss": "quilo",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-123ff844.mp3"
+    },
+    {
+      "num": 800,
+      "seq": 750,
+      "he": "שׁוּק",
+      "translit": "shuk",
+      "gloss": "feira, mercado de rua",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-c85edee9.mp3"
+    },
+    {
+      "num": 801,
+      "seq": 751,
+      "he": "מָה הַשָּׁעָה?",
+      "translit": "ma hashaá?",
+      "gloss": "que horas são?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-ef261ca1.mp3"
+    },
+    {
+      "num": 802,
+      "seq": 752,
+      "he": "הַשָּׁעָה…",
+      "translit": "hashaá…",
+      "gloss": "são… (horas)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-169d220d.mp3"
+    },
+    {
+      "num": 803,
+      "seq": 753,
+      "he": "וָחֵצִי",
+      "translit": "vachétsi",
+      "gloss": "e meia",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-346723f8.mp3"
+    },
+    {
+      "num": 804,
+      "seq": 754,
+      "he": "וָרֶבַע",
+      "translit": "varéva",
+      "gloss": "e quinze",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-6af18c27.mp3"
+    },
+    {
+      "num": 805,
+      "seq": 755,
+      "he": "בְּשָׁעָה…",
+      "translit": "besháa…",
+      "gloss": "às…",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-a90a535a.mp3"
+    },
+    {
+      "num": 806,
+      "seq": 756,
+      "he": "עַד",
+      "translit": "ad",
+      "gloss": "até",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-faeda962.mp3"
+    },
+    {
+      "num": 807,
+      "seq": 757,
+      "he": "בַּבֹּקֶר",
+      "translit": "babóker",
+      "gloss": "de manhã",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-1d3a9223.mp3"
+    },
+    {
+      "num": 808,
+      "seq": 758,
+      "he": "בָּעֶרֶב",
+      "translit": "baérev",
+      "gloss": "à noite",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-7c522f79.mp3"
+    },
+    {
+      "num": 809,
+      "seq": 759,
+      "he": "פָּתוּחַ",
+      "translit": "patúach",
+      "gloss": "aberto",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-e92606c9.mp3"
+    },
+    {
+      "num": 810,
+      "seq": 760,
+      "he": "סָגוּר",
+      "translit": "sagur",
+      "gloss": "fechado",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-97b5a2d1.mp3"
+    },
+    {
+      "num": 811,
+      "seq": 761,
+      "he": "יוֹם רִאשׁוֹן",
+      "translit": "yom rishon",
+      "gloss": "domingo",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-b3713d9d.mp3"
+    },
+    {
+      "num": 812,
+      "seq": 762,
+      "he": "יוֹם שֵׁנִי",
+      "translit": "yom sheni",
+      "gloss": "segunda-feira",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-e0da767d.mp3"
+    },
+    {
+      "num": 813,
+      "seq": 763,
+      "he": "יוֹם שְׁלִישִׁי",
+      "translit": "yom shlishi",
+      "gloss": "terça-feira",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-de768b3a.mp3"
+    },
+    {
+      "num": 814,
+      "seq": 764,
+      "he": "יוֹם רְבִיעִי",
+      "translit": "yom revií",
+      "gloss": "quarta-feira",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-2353f1b1.mp3"
+    },
+    {
+      "num": 815,
+      "seq": 765,
+      "he": "יוֹם חֲמִישִׁי",
+      "translit": "yom chamishi",
+      "gloss": "quinta-feira",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-98eeac9a.mp3"
+    },
+    {
+      "num": 816,
+      "seq": 766,
+      "he": "יוֹם שִׁשִּׁי",
+      "translit": "yom shishi",
+      "gloss": "sexta-feira",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7"
+      ],
+      "file": "he-e8dc2ef0.mp3"
+    },
+    {
+      "num": 817,
+      "seq": 767,
+      "he": "סְלִיחָה, כַּמָּה עוֹלָה הַגְּבִינָה?",
+      "translit": "slichá, kama olá hagviná?",
+      "gloss": "Com licença, quanto custa o queijo?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-8090c22b.mp3"
+    },
+    {
+      "num": 818,
+      "seq": 768,
+      "he": "שְׁלוֹשִׁים שֶׁקֶל.",
+      "translit": "shloshim shékel.",
+      "gloss": "Trinta shekels.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-b406a3a2.mp3"
+    },
+    {
+      "num": 819,
+      "seq": 769,
+      "he": "וְהַתַּפּוּחִים?",
+      "translit": "vehatapuchim?",
+      "gloss": "E as maçãs?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-cebf903f.mp3"
+    },
+    {
+      "num": 820,
+      "seq": 770,
+      "he": "עֶשֶׂר שֶׁקֶל לְקִילוֹ.",
+      "translit": "éser shékel lekilo.",
+      "gloss": "Dez shekels o quilo.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-32695c8f.mp3"
+    },
+    {
+      "num": 821,
+      "seq": 771,
+      "he": "אֲנִי רוֹצֶה קִילוֹ תַּפּוּחִים, בְּבַקָּשָׁה.",
+      "translit": "aní rotsé kilo tapuchim, bevakashá.",
+      "gloss": "Quero um quilo de maçãs, por favor.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-35b61bd2.mp3"
+    },
+    {
+      "num": 822,
+      "seq": 772,
+      "he": "בְּבַקָּשָׁה. עוֹד מַשֶּׁהוּ?",
+      "translit": "bevakashá. od máshehu?",
+      "gloss": "Aqui está. Mais alguma coisa?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-70cd5a46.mp3"
+    },
+    {
+      "num": 823,
+      "seq": 773,
+      "he": "לֹא, תּוֹדָה. מָה הַשָּׁעָה?",
+      "translit": "lo, todá. ma hashaá?",
+      "gloss": "Não, obrigado. Que horas são?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-9219074b.mp3"
+    },
+    {
+      "num": 824,
+      "seq": 774,
+      "he": "הַשָּׁעָה אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
+      "translit": "hashaá achat vachétsi. hashuk patúach ad shtáyim.",
+      "gloss": "É uma e meia. A feira fica aberta até as duas.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-39751c67.mp3"
+    },
+    {
+      "num": 825,
+      "seq": 775,
+      "he": "מַשֶּׁהוּ",
+      "translit": "máshehu",
+      "gloss": "alguma coisa",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, diálogo"
+      ],
+      "file": "he-6598c4ad.mp3"
+    },
+    {
+      "num": 826,
+      "seq": 776,
+      "he": "שְׁלוֹשִׁים וְחָמֵשׁ שֶׁקֶל",
+      "translit": null,
+      "gloss": "Quanto custa?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, escuta"
+      ],
+      "file": "he-98ce17b6.mp3"
+    },
+    {
+      "num": 827,
+      "seq": 777,
+      "he": "הַשָּׁעָה עֶשֶׂר וָרֶבַע",
+      "translit": null,
+      "gloss": "Que horas são?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 7, escuta"
+      ],
+      "file": "he-7cdddb07.mp3"
+    },
+    {
+      "num": 828,
+      "seq": 778,
+      "he": "לָכֶם",
+      "translit": "lachem",
+      "gloss": "para vocês (eles)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-ae590c62.mp3"
+    },
+    {
+      "num": 829,
+      "seq": 779,
+      "he": "לָכֶן",
+      "translit": "lachen",
+      "gloss": "para vocês (elas)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-1086af8f.mp3"
+    },
+    {
+      "num": 830,
+      "seq": 780,
+      "he": "לָהֶם",
+      "translit": "lahem",
+      "gloss": "para eles",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-37bf5383.mp3"
+    },
+    {
+      "num": 831,
+      "seq": 781,
+      "he": "לָהֶן",
+      "translit": "lahen",
+      "gloss": "para elas",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-241e889a.mp3"
+    },
+    {
+      "num": 832,
+      "seq": 782,
+      "he": "שֶׁלָּכֶם",
+      "translit": "shelachem",
+      "gloss": "de vocês (eles)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-91543100.mp3"
+    },
+    {
+      "num": 833,
+      "seq": 783,
+      "he": "שֶׁלָּכֶן",
+      "translit": "shelachen",
+      "gloss": "de vocês (elas)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-c3c6ae41.mp3"
+    },
+    {
+      "num": 834,
+      "seq": 784,
+      "he": "שֶׁלָּהֶם",
+      "translit": "shelahem",
+      "gloss": "deles",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-e0070c19.mp3"
+    },
+    {
+      "num": 835,
+      "seq": 785,
+      "he": "שֶׁלָּהֶן",
+      "translit": "shelahen",
+      "gloss": "delas",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-67fae5b9.mp3"
+    },
+    {
+      "num": 836,
+      "seq": 786,
+      "he": "אִתִּי",
+      "translit": "iti",
+      "gloss": "comigo",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-0e0ffb0a.mp3"
+    },
+    {
+      "num": 837,
+      "seq": 787,
+      "he": "אִתְּךָ",
+      "translit": "itchá",
+      "gloss": "contigo (m)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-17b719f9.mp3"
+    },
+    {
+      "num": 838,
+      "seq": 788,
+      "he": "אִתָּךְ",
+      "translit": "itach",
+      "gloss": "contigo (f)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-ab64c4a9.mp3"
+    },
+    {
+      "num": 839,
+      "seq": 789,
+      "he": "אִתּוֹ",
+      "translit": "ito",
+      "gloss": "com ele",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-1dd51ea7.mp3"
+    },
+    {
+      "num": 840,
+      "seq": 790,
+      "he": "אִתָּהּ",
+      "translit": "ita",
+      "gloss": "com ela",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-b439b237.mp3"
+    },
+    {
+      "num": 841,
+      "seq": 791,
+      "he": "אִתָּנוּ",
+      "translit": "itánu",
+      "gloss": "com a gente",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-9a798966.mp3"
+    },
+    {
+      "num": 842,
+      "seq": 792,
+      "he": "אֵיךְ?",
+      "translit": "eich?",
+      "gloss": "como?",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-c856833f.mp3"
+    },
+    {
+      "num": 843,
+      "seq": 793,
+      "he": "מָתַי?",
+      "translit": "matai?",
+      "gloss": "quando?",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-f70e296a.mp3"
+    },
+    {
+      "num": 844,
+      "seq": 794,
+      "he": "לָמָּה?",
+      "translit": "láma?",
+      "gloss": "por quê?",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-0aa5a2b9.mp3"
+    },
+    {
+      "num": 845,
+      "seq": 795,
+      "he": "אֵיךְ קוֹרְאִים לְךָ?",
+      "translit": "eich korim lechá?",
+      "gloss": "como você se chama? (a ele)",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-a0b95331.mp3"
+    },
+    {
+      "num": 846,
+      "seq": 796,
+      "he": "אֵיךְ קוֹרְאִים לָךְ?",
+      "translit": "eich korim lach?",
+      "gloss": "como você se chama? (a ela)",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-103d3683.mp3"
+    },
+    {
+      "num": 847,
+      "seq": 797,
+      "he": "קוֹרְאִים לִי…",
+      "translit": "korim li…",
+      "gloss": "eu me chamo…",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-a9c11bb3.mp3"
+    },
+    {
+      "num": 848,
+      "seq": 798,
+      "he": "מִסְפָּר",
+      "translit": "mispar",
+      "gloss": "número",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-288ce59a.mp3"
+    },
+    {
+      "num": 849,
+      "seq": 799,
+      "he": "בְּעָיָה",
+      "translit": "beayá",
+      "gloss": "problema",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-8257e2a6.mp3"
+    },
+    {
+      "num": 850,
+      "seq": 800,
+      "he": "אֵין בְּעָיָה",
+      "translit": "ein beayá",
+      "gloss": "sem problema",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8"
+      ],
+      "file": "he-464806ec.mp3"
+    },
+    {
+      "num": 851,
+      "seq": 801,
+      "he": "דָּנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִּי.",
+      "translit": "Dani, zot Shira. hi lomédet iti.",
+      "gloss": "Dani, esta é a Shira. Ela estuda comigo.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-e97c74dc.mp3"
+    },
+    {
+      "num": 852,
+      "seq": 802,
+      "he": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְּ?",
+      "translit": "naim meod, Shira! meeifo at?",
+      "gloss": "Muito prazer, Shira! De onde você é?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-fb3fdce0.mp3"
+    },
+    {
+      "num": 853,
+      "seq": 803,
+      "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָּרָה בְּתֵל אָבִיב.",
+      "translit": "aní meCheifa, aval aní gará beTel Aviv.",
+      "gloss": "Sou de Haifa, mas moro em Tel Aviv.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-925eb50d.mp3"
+    },
+    {
+      "num": 854,
+      "seq": 804,
+      "he": "יֵשׁ לָךְ מִשְׁפָּחָה בְּחֵיפָה?",
+      "translit": "yesh lach mishpachá beCheifa?",
+      "gloss": "Você tem família em Haifa?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-07190e49.mp3"
+    },
+    {
+      "num": 855,
+      "seq": 805,
+      "he": "כֵּן, הַהוֹרִים שֶׁלִּי גָּרִים שָׁם.",
+      "translit": "ken, hahorim sheli garim sham.",
+      "gloss": "Sim, os meus pais moram lá.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-7a63b486.mp3"
+    },
+    {
+      "num": 856,
+      "seq": 806,
+      "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?",
+      "translit": "anáchnu shotot kafé. atá rotsé kafé itánu?",
+      "gloss": "Nós vamos tomar um café. Você quer café com a gente?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-e4498042.mp3"
+    },
+    {
+      "num": 857,
+      "seq": 807,
+      "he": "כֵּן! אֲבָל רַק עַד שָׁלוֹשׁ. בְּשָׁלוֹשׁ אֲנִי עוֹבֵד.",
+      "translit": "ken! aval rak ad shalosh. beshalosh aní oved.",
+      "gloss": "Quero! Mas só até as três. Às três eu trabalho.",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-03dc5140.mp3"
+    },
+    {
+      "num": 858,
+      "seq": 808,
+      "he": "אֵין בְּעָיָה!",
+      "translit": "ein beayá!",
+      "gloss": "Sem problema!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-03f5fcf4.mp3"
+    },
+    {
+      "num": 859,
+      "seq": 809,
+      "he": "שִׁירָה, מָה מִסְפַּר הַטֶּלֶפוֹן שֶׁלָּךְ?",
+      "translit": "Shira, ma mispar hatélefon shelach?",
+      "gloss": "Shira, qual é o número do seu telefone?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-61720c47.mp3"
+    },
+    {
+      "num": 860,
+      "seq": 810,
+      "he": "אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם…",
+      "translit": "éfes chamishim ushtáyim…",
+      "gloss": "Zero cinquenta e dois…",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-4090a005.mp3"
+    },
+    {
+      "num": 861,
+      "seq": 811,
+      "he": "דָּנִי!",
+      "translit": "Dani!",
+      "gloss": "Dani!",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-5c892dea.mp3"
+    },
+    {
+      "num": 862,
+      "seq": 812,
+      "he": "מִסְפַּר הַטֶּלֶפוֹן",
+      "translit": "mispar hatélefon",
+      "gloss": "o número do telefone (expressão fixa)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-ba8dccbb.mp3"
+    },
+    {
+      "num": 863,
+      "seq": 813,
+      "he": "שִׁירָה",
+      "translit": "Shira",
+      "gloss": "Shira (nome)",
+      "kind": "palavra",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, diálogo"
+      ],
+      "file": "he-b9b6a4fe.mp3"
+    },
+    {
+      "num": 864,
+      "seq": 814,
+      "he": "אֵין לָהֶן בְּעָיָה",
+      "translit": null,
+      "gloss": "O que a pessoa disse?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, escuta"
+      ],
+      "file": "he-8a724981.mp3"
+    },
+    {
+      "num": 865,
+      "seq": 815,
+      "he": "מָתַי אַתָּה עוֹבֵד?",
+      "translit": null,
+      "gloss": "O que a pessoa perguntou?",
+      "kind": "frase",
+      "wave": 6,
+      "where": [
+        "a1 unidade 8, escuta"
+      ],
+      "file": "he-497e9adc.mp3"
     }
   ]
 }
