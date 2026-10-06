@@ -344,7 +344,7 @@ export function CertificadoClient() {
       <Card tone="wash" className="p-5 grid gap-2 reading">
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
           <strong>O que este certificado é:</strong> o registro de que você dominou as
-          22 letras e foi aprovado no exame final deste curso, com {' '}
+          22 letras e passou no exame final deste curso, com {' '}
           {score != null ? `${Math.round(score * 100)}%` : 'nota de aprovação'}.
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
