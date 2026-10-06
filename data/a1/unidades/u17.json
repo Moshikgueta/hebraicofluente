@@ -606,6 +606,43 @@
       ]
     },
     {
+      "t": "escrever",
+      "pt": "passagem",
+      "respostas": [
+        "כרטיס"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "toalha",
+      "respostas": [
+        "מגבת"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Boa noite. Tenho uma reserva no nome de Tom Silva.\"",
+      "antes": "עֶרֶב טוֹב. יֵשׁ לִי",
+      "depois": "עַל שֵׁם טוֹם סִילְבָה.",
+      "respostas": [
+        "הזמנה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Certo. O quarto já está pronto?\"",
+      "antes": "נָכוֹן. הַחֶדֶר",
+      "depois": "מוּכָן?",
+      "respostas": [
+        "כבר"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Boa noite. Tenho uma reserva no nome de Tom Silva.\"",
+      "exemplo": "עֶרֶב טוֹב. יֵשׁ לִי הַזְמָנָה עַל שֵׁם טוֹם סִילְבָה."
+    },
+    {
       "t": "aberta",
       "pt": "Você chega a um hotel. Diga que tem reserva, pergunte o horário do café da manhã e mais uma coisa.",
       "exemplo": "עֶרֶב טוֹב, יֵשׁ לִי הַזְמָנָה עַל שֵׁם סִילְבָה. מָתַי אֲרוּחַת הַבֹּקֶר? יֵשׁ מַזְגָן בַּחֶדֶר?"

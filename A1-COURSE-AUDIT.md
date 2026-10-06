@@ -374,3 +374,14 @@ A revisão de tudo o que é novo está em **A1-REVISAO.md** (gerado por
 | F8 | Carga horária no certificado | só com número medido (C5) |
 | F9 | Conteúdo dividido por módulo | o A1 inteiro pesa 78 KB comprimido, uma vez, com cache; dividir fica para quando crescer |
 | F10 | Prática de fala com correção | depende das gravações |
+
+## 12. Depois da nota de pedagogia (7/10): o que mudou
+
+| Ponto | Antes | Agora |
+|---|---|---|
+| Ordem da unidade | ler tudo, depois praticar | etapas: a conversa (ouvir, ler, falar) → palavras em blocos → cada ponto de gramática, cada etapa com a sua prática curta → leitura → rodada final |
+| Carga | até 53 palavras numa lista | blocos de até 12 palavras, cada um com prática |
+| Produção | 27% de múltipla escolha | 22% de múltipla escolha e 50% de produção: 98 itens novos (escrever, completar a fala do diálogo, falar em voz alta) |
+| Fala | não existia | gravar o diálogo e se ouvir; com as gravações, comparar fala a fala (ondas lado a lado); item "falar" em toda unidade |
+| Escuta | escondida sem gravação | continua: depende de gravar (F2) |
+| Hebraico | sem revisão nativa | continua: A1-REVISAO.md (F1) |

@@ -43,7 +43,7 @@ const unidades = ordem.map(n => JSON.parse(ler(nomeDe(n))) as Unidade);
 const exame = JSON.parse(ler('exame.json')) as { sorteio: number; aprovacao: number; partes: Parte[] };
 
 const TIPOS = ['escolha', 'ouvir', 'ligar', 'separar', 'montar', 'completar', 'erro', 'vf', 'intruso',
-  'escrever', 'tabela', 'aberta', 'ditado', 'dialogo', 'ordenar'];
+  'escrever', 'tabela', 'aberta', 'ditado', 'dialogo', 'ordenar', 'falar'];
 /* O exame é corrigido no servidor (worker/src/api/exame-a1.js), a partir de
    uma resposta simples: um índice, um sim/não, um texto ou uma ordem. */
 const TIPOS_DO_EXAME = ['escolha', 'ouvir', 'intruso', 'vf', 'completar', 'escrever', 'erro', 'dialogo', 'montar'];
@@ -120,7 +120,7 @@ function problemas(it: Item, onde: string): string[] {
     case 'vf':
       if (typeof it.certa !== 'boolean') p.push(`${onde}: vf sem certa booleana`);
       break;
-    case 'aberta':
+    case 'aberta': case 'falar':
       if (typeof it.exemplo !== 'string' || !HEBRAICO.test(it.exemplo)) p.push(`${onde}: aberta sem exemplo em hebraico`);
       break;
   }
@@ -212,6 +212,21 @@ describe('o curso Hebraico A1 (data/a1/)', () => {
       expect(cp.unidades.length, `checkpoint ${cp.n}`).toBeGreaterThanOrEqual(4);
       for (const u of cp.unidades) expect(ordem, `checkpoint ${cp.n}`).toContain(u);
       expect(curso.modulos.map(m => m.n), `checkpoint ${cp.n}`).toContain(cp.depoisDoModulo);
+    }
+  });
+
+  it('cada unidade vira etapas: conversa primeiro, palavras em blocos de até 12, prática sem repetir item', async () => {
+    const { etapasDaUnidade, PALAVRAS_POR_BLOCO } = await import('@/lib/a1');
+    for (const u of unidades) {
+      const e = etapasDaUnidade(u as never);
+      expect(e[0]!.tipo, `unidade ${u.n}`).toBe('conversa');
+      expect(e[e.length - 1]!.tipo, `unidade ${u.n}`).toBe('fim');
+      expect(e.filter(x => x.tipo === 'gramatica').length, `unidade ${u.n}`).toBe(u.gramatica.length);
+      for (const x of e) if (x.tipo === 'palavras') expect(x.palavras.length, `unidade ${u.n}`).toBeLessThanOrEqual(PALAVRAS_POR_BLOCO);
+      expect(e.filter(x => x.tipo === 'palavras').flatMap(x => (x as { palavras: unknown[] }).palavras)).toHaveLength(u.palavras.length);
+      const usados = e.flatMap(x => x.pratica);
+      expect(new Set(usados).size, `unidade ${u.n}`).toBe(usados.length);
+      expect(usados.length, `unidade ${u.n}: prática nas etapas`).toBeGreaterThanOrEqual(8);
     }
   });
 

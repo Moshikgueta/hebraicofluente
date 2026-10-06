@@ -658,6 +658,44 @@
       ]
     },
     {
+      "t": "escrever",
+      "pt": "7 (com masculino)",
+      "respostas": [
+        "שיבעה",
+        "שבעה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "horas (feminino)",
+      "respostas": [
+        "שעות"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Tenho três filhos: dois meninos e uma menina.\"",
+      "antes": "יֵשׁ לִי",
+      "depois": "יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת.",
+      "respostas": [
+        "שלושה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Quantos dias por semana?\"",
+      "antes": "כַּמָּה",
+      "depois": "בַּשָּׁבוּעַ?",
+      "respostas": [
+        "ימים"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Tenho três filhos: dois meninos e uma menina.\"",
+      "exemplo": "יֵשׁ לִי שְׁלוֹשָׁה יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת."
+    },
+    {
       "t": "aberta",
       "pt": "Escreva sobre a sua família com números: quantos irmãos, irmãs, filhos ou primos (cuidado com o gênero!).",
       "exemplo": "יֵשׁ לִי שְׁנֵי אַחִים וְאָחוֹת אַחַת. יֵשׁ לִי שְׁלוֹשָׁה בְּנֵי דּוֹדִים."

@@ -41,7 +41,10 @@ export type ItemA1 =
   /** Uma conversa que para numa fala: escolher a resposta natural. */
   | { t: 'dialogo'; q: string; linhas: [string, string][]; opcoes: string[]; certa: number; porque?: string; dicas?: DicasA1 }
   /** Pôr as falas de uma conversa na ordem (por toque, sem arrastar). */
-  | { t: 'ordenar'; q: string; falas: string[]; porque?: string };
+  | { t: 'ordenar'; q: string; falas: string[]; porque?: string }
+  /** Falar em voz alta: o aluno grava, se ouve, e compara com o modelo
+   *  (a gravação do curso, quando existir). Não vale nota, como a escrita livre. */
+  | { t: 'falar'; pt: string; exemplo: string; audioId?: string };
 
 export type TipoItemA1 = ItemA1['t'];
 
@@ -177,6 +180,7 @@ export function habilidadeDoItem(item: ItemA1, daLeitura = false): HabilidadeA1 
   switch (item.t) {
     case 'ouvir': case 'ditado': return 'escuta';
     case 'escrever': case 'completar': case 'erro': case 'tabela': case 'aberta': return 'escrita';
+    case 'falar': return 'comunicacao';
     case 'ligar': case 'separar': case 'intruso': return 'vocabulario';
     case 'dialogo': case 'ordenar': return 'comunicacao';
     case 'escolha': return item.opcoes.some(o => TEM_HEBRAICO.test(o)) ? 'gramatica' : 'vocabulario';
@@ -196,6 +200,55 @@ export function indiceDeItens(): Map<string, ItemLocalizado> {
   }
   INDICE = m;
   return m;
+}
+
+/* ── a unidade em etapas ───────────────────────────────────────────────────
+   COMPREENDER → PERCEBER → PRATICAR, em pedaços pequenos: a unidade não é
+   mais uma página para ler inteira antes de praticar. A ordem:
+     1. a conversa (a situação e o diálogo, para ouvir, ler e falar), e uma
+        prática de compreensão;
+     2. as palavras, em blocos de até 12, cada bloco com a sua prática;
+     3. cada ponto de gramática, com a sua prática logo depois;
+     4. a leitura do mundo real, com as perguntas;
+     5. o fim: cultura, curiosidade, "Eu consigo" e a rodada da unidade.
+   A prática de cada etapa sai do próprio banco da unidade, pela habilidade
+   do item, na ordem em que os itens foram escritos (que segue a ordem da
+   gramática). Cada item cai em uma etapa só; a rodada final, que é a que
+   conta para concluir, tem todos. */
+
+export const PALAVRAS_POR_BLOCO = 12;
+const PRATICA_MAX = { conversa: 4, palavras: 4, gramatica: 5 } as const;
+
+export type EtapaA1 =
+  | { tipo: 'conversa'; pratica: number[] }
+  | { tipo: 'palavras'; bloco: number; blocos: number; palavras: (PalavraA1 | FormasA1)[]; pratica: number[] }
+  | { tipo: 'gramatica'; ponto: number; pratica: number[] }
+  | { tipo: 'leitura'; pratica: number[] }
+  | { tipo: 'fim'; pratica: number[] };
+
+/** Divide uma lista em `partes` pedaços seguidos, do jeito mais igual possível. */
+function repartir<T>(lista: T[], partes: number): T[][] {
+  const out: T[][] = Array.from({ length: partes }, () => []);
+  lista.forEach((x, i) => out[Math.min(partes - 1, Math.floor((i * partes) / Math.max(1, lista.length)))]!.push(x));
+  return out;
+}
+
+export function etapasDaUnidade(u: UnidadeA1): EtapaA1[] {
+  const idx = u.exercicios.map((it, i) => ({ it, i })).filter(x => x.it.t !== 'aberta');
+  const de = (hs: HabilidadeA1[]) => idx.filter(x => hs.includes(habilidadeDoItem(x.it))).map(x => x.i);
+  const conversa = de(['comunicacao', 'escuta']).slice(0, PRATICA_MAX.conversa);
+  const blocos = Math.max(1, Math.ceil(u.palavras.length / PALAVRAS_POR_BLOCO));
+  const porBloco = repartir(de(['vocabulario']), blocos).map(l => l.slice(0, PRATICA_MAX.palavras));
+  const pontos = Math.max(1, u.gramatica.length);
+  const porPonto = repartir(de(['gramatica', 'escrita']), pontos).map(l => l.slice(0, PRATICA_MAX.gramatica));
+  const palavras = repartir(u.palavras, blocos);
+  return [
+    { tipo: 'conversa', pratica: conversa },
+    ...palavras.map((ps, b) => ({ tipo: 'palavras' as const, bloco: b + 1, blocos, palavras: ps, pratica: porBloco[b] ?? [] })),
+    ...u.gramatica.map((_, g) => ({ tipo: 'gramatica' as const, ponto: g, pratica: porPonto[g] ?? [] })),
+    ...(u.leitura ? [{ tipo: 'leitura' as const, pratica: [] }] : []),
+    { tipo: 'fim', pratica: [] }
+  ];
 }
 
 /* ── o caderno: palavras aprendidas e conquistas ───────────────────────── */

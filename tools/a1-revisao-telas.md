@@ -19,7 +19,17 @@ Os textos de interface que entraram com o A1 completo, tela por tela, como apare
 - Caixas: "Em Israel" · "📖 Curiosidade" (o selo que o alfabeto já usa) · "⚠️ Erro comum" no lugar de "✕/✓ Erro de brasileiro"
 - "Eu consigo…" · "Marque o que você sente que já sabe fazer. Só você vê."
 
+**Unidade em etapas**
+- "Etapa {k} de {n}: {nome}" · "{n} etapas" · "Ver a unidade inteira de uma vez" / "Voltar ao passo a passo"
+- Nomes das etapas: "A conversa" · "Palavras ({b} de {n})" · o título de cada ponto de gramática · "Leitura" · "Fechando a unidade"
+- "Leia (e ouça, quando houver gravação) antes de abrir a tradução. Tente entender pela situação."
+- "Agora é você: fale o diálogo" · "Escolha uma fala, ouça o modelo e grave a sua" · "Leia o diálogo em voz alta e se ouça" · "Faça as duas vozes, ou escolha um personagem. Grave, ouça, e repita a fala que travou."
+- "Palavras novas · bloco {b} de {n}" · "Praticar agora ({n})" · "Pratique: {etapa}" · "Praticar de novo" · "Continuar: {próxima etapa}"
+- "A rodada da unidade mistura tudo o que você praticou. Com 70%, a unidade fica concluída." · "Fazer a rodada da unidade ({n})" · "Fazer a rodada de novo"
+
 **Exercícios (novos tipos)**
+- Falar: "Fale em voz alta · não vale nota" · "Diga em voz alta, em hebraico: "{frase}"" · "Grave a sua voz" · "Tente primeiro sem olhar o modelo. Depois ouça a sua gravação." · "Ver o modelo" · "O modelo:" · "Compare com o modelo."
+- Completar a fala: "Complete a fala do diálogo: "{tradução}""
 - "Quase." (quando a opção errada tem explicação própria)
 - Ditado: "Ouça e escreva o que você ouviu."
 - Conversa: "E a resposta?"

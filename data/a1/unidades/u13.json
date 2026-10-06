@@ -658,6 +658,45 @@
       ]
     },
     {
+      "t": "escrever",
+      "pt": "comida",
+      "respostas": [
+        "אוכל",
+        "אכל"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "açúcar",
+      "respostas": [
+        "סוכר",
+        "סכר"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Obrigada. Pode ser uma água, por favor?\"",
+      "antes": "תּוֹדָה.",
+      "depois": "מַיִם, בְּבַקָּשָׁה?",
+      "respostas": [
+        "אפשר"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"E eu quero uma salada. Que salada tem?\"",
+      "antes": "וַאֲנִי רוֹצָה סָלָט.",
+      "depois": "סָלָט יֵשׁ?",
+      "respostas": [
+        "איזה"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Obrigada. Pode ser uma água, por favor?\"",
+      "exemplo": "תּוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָּשָׁה?"
+    },
+    {
       "t": "aberta",
       "pt": "Você está num café. Peça uma bebida e uma comida, diga uma coisa que você não quer, e peça a conta.",
       "exemplo": "אֶפְשָׁר קָפֶה הָפוּךְ וְטוֹסְט גְּבִינָה, בְּבַקָּשָׁה? בְּלִי בָּצָל. אֶפְשָׁר חֶשְׁבּוֹן?"

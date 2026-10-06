@@ -480,6 +480,45 @@
       "certa": 0
     },
     {
+      "t": "escrever",
+      "pt": "de vocês (eles)",
+      "respostas": [
+        "שלכם"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "com ele",
+      "respostas": [
+        "איתו",
+        "אתו"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Nós vamos tomar um café. Você quer café com a gente?\"",
+      "antes": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה.",
+      "depois": "רוֹצֶה קָפֶה אִתָּנוּ?",
+      "respostas": [
+        "אתה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Shira, qual é o número do seu telefone?\"",
+      "antes": "שִׁירָה, מָה",
+      "depois": "הַטֶּלֶפוֹן שֶׁלָּךְ?",
+      "respostas": [
+        "מיספר",
+        "מספר"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Muito prazer, Shira! De onde você é?\"",
+      "exemplo": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְּ?"
+    },
+    {
       "t": "aberta",
       "pt": "Escreva uma apresentação sua de 5 frases: nome (com קוֹרְאִים לִי), de onde é, onde mora, o que faz, e alguém da família.",
       "exemplo": "קוֹרְאִים לִי דָּנִי. אֲנִי מִבְּרָזִיל. אֲנִי גָּר בְּרִיוֹ. אֲנִי עוֹבֵד. יֵשׁ לִי אָחוֹת."

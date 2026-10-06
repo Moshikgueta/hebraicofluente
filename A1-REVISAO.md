@@ -137,6 +137,9 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 21. ditado: בְּסֵדֶר → **בסדר**
 22. escrever: "obrigado" → **תודה**
 23. escrever: "bom apetite" → **בתאבון**
+24. escrever: "um momento, espera" → **רגע**
+25. escrever: "bom shabat (de sexta à tarde a sábado)" → **שבת שלום**
+26. falar
 
 ### Unidade 9: Como é o seu dia?
 
@@ -253,7 +256,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 21. ouvir: [ouve: הֵם קָמִים מְאֻחָר.] O que você ouviu? → **Eles levantam tarde** / Ele levanta cedo / Elas dormem tarde 
 22. ditado: כָּל יוֹם → **כל יום**
 23. escrever: "à noite" → **בערב**
-24. escrita livre: Escreva três frases sobre o seu dia: quando você levanta, o que faz de manhã, e quando volta para casa. (exemplo: אֲנִי קָם בְּשֶׁבַע. בַּבֹּקֶר אֲנִי עוֹבֵד. אֲנִי חוֹזֵר הַבַּיְתָה בְּשֵׁשׁ.)
+24. escrever: "e então" → **ואז**
+25. escrever: "trabalho" → **עבודה**
+26. completar: Complete a fala do diálogo: "Eu levanto cedo, às seis e meia.": אֲנִי ___ מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי. → **קמה**
+27. completar: Complete a fala do diálogo: "À tarde eu vou para a universidade.": אַחֲרֵי הַצָּהֳרַיִם אֲנִי ___ לָאוּנִיבֶרְסִיטָה. → **הולכת**
+28. falar
+29. escrita livre: Escreva três frases sobre o seu dia: quando você levanta, o que faz de manhã, e quando volta para casa. (exemplo: אֲנִי קָם בְּשֶׁבַע. בַּבֹּקֶר אֲנִי עוֹבֵד. אֲנִי חוֹזֵר הַבַּיְתָה בְּשֵׁשׁ.)
 
 ### Unidade 10: Do que você gosta? O que você quer fazer?
 
@@ -370,7 +378,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 21. ditado: אֲנִי לֹא יָכוֹל → **אני לא יכול**
 22. escrever: "porque" → **כי**
 23. escrever: "ele pode" → **הוא יכול**
-24. escrita livre: Escreva o que você gosta de fazer no fim de semana, e uma coisa de que você não gosta. (exemplo: בְּשַׁבָּת אֲנִי אוֹהֵב לְטַיֵּל וְלִקְרוֹא. אֲנִי לֹא אוֹהֵב לָרוּץ.)
+24. escrever: "morar" → **לגור**
+25. escrever: "nadar" → **לישחות / לשחות**
+26. completar: Complete a fala do diálogo: "Eu gosto de passear e de nadar.": אֲנִי ___ לְטַיֵּל וְלִשְׂחוֹת. → **אוהב**
+27. completar: Complete a fala do diálogo: "Porque no sábado eu gosto de dormir até as dez!": כִּי בְּשַׁבָּת אֲנִי אוֹהֵב ___ עַד עֶשֶׂר! → **לישון**
+28. falar
+29. escrita livre: Escreva o que você gosta de fazer no fim de semana, e uma coisa de que você não gosta. (exemplo: בְּשַׁבָּת אֲנִי אוֹהֵב לְטַיֵּל וְלִקְרוֹא. אֲנִי לֹא אוֹהֵב לָרוּץ.)
 
 ### Unidade 11: Onde está? A casa por dentro
 
@@ -478,7 +491,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ouvir: [ouve: אֲנִי אֵצֶל אִמָּא.] O que você ouviu? → **Estou na casa da minha mãe** / A minha mãe está em casa / Estou com a minha mãe no trabalho 
 21. ditado: לְיַד הַחַלּוֹן → **ליד החלון**
 22. escrever: "Onde fica o banheiro? (o vaso)" → **איפה השירותים / איפה השרותים**
-23. escrita livre: Descreva a sua casa em três frases: o que tem, o que não tem, e onde fica uma coisa. (exemplo: בַּבַּיִת שֶׁלִּי יֵשׁ סָלוֹן גָּדוֹל. אֵין מִרְפֶּסֶת. הַמַּחְשֵׁב עַל הַשֻּׁלְחָן בַּסָּלוֹן.)
+23. escrever: "varanda" → **מירפסת / מרפסת**
+24. escrever: "armário" → **ארון**
+25. completar: Complete a fala do diálogo: "Talvez na sala, em cima do sofá?":  ___ בַּסָּלוֹן, עַל הַסָּפָּה? → **אולי**
+26. completar: Complete a fala do diálogo: "E na cozinha, ao lado da geladeira?": וּבַמִּטְבָּח, ___ הַמְּקָרֵר? → **ליד**
+27. falar
+28. escrita livre: Descreva a sua casa em três frases: o que tem, o que não tem, e onde fica uma coisa. (exemplo: בַּבַּיִת שֶׁלִּי יֵשׁ סָלוֹן גָּדוֹל. אֵין מִרְפֶּסֶת. הַמַּחְשֵׁב עַל הַשֻּׁלְחָן בַּסָּלוֹן.)
 
 ### Unidade 12: Como eu chego lá?
 
@@ -584,7 +602,11 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ouvir: [ouve: אֲנַחְנוּ נוֹסְעִים בְּמוֹנִית.] Como eles vão? → **De táxi** / A pé / De trem 
 21. ditado: יָשָׁר → **ישר**
 22. escrever: "para onde?" → **לאן**
-23. escrita livre: Explique a alguém como chegar da sua casa ao mercado mais perto. (exemplo: הוֹלְכִים יָשָׁר עַד הַפִּנָּה, וְאָז פּוֹנִים יָמִינָה. הַסּוּפֶּרְמַרְקֶט מוּל הַבַּנְק. זֶה קָרוֹב!)
+23. escrever: "esquina" → **פינה / פנה**
+24. escrever: "táxi" → **מונית**
+25. completar: Complete a fala do diálogo: "Então você vai reto até o semáforo, e lá vira à esquerda.": אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם ___ שְׂמֹאלָה. → **פונה**
+26. falar
+27. escrita livre: Explique a alguém como chegar da sua casa ao mercado mais perto. (exemplo: הוֹלְכִים יָשָׁר עַד הַפִּנָּה, וְאָז פּוֹנִים יָמִינָה. הַסּוּפֶּרְמַרְקֶט מוּל הַבַּנְק. זֶה קָרוֹב!)
 
 ### Unidade 13: No café e no restaurante
 
@@ -698,7 +720,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ouvir: [ouve: תֵּה בְּלִי סֻכָּר.] Como é o chá? → **Sem açúcar** / Com açúcar / Com leite 
 21. ditado: טָעִים → **טעים**
 22. escrever: "sem" → **בלי**
-23. escrita livre: Você está num café. Peça uma bebida e uma comida, diga uma coisa que você não quer, e peça a conta. (exemplo: אֶפְשָׁר קָפֶה הָפוּךְ וְטוֹסְט גְּבִינָה, בְּבַקָּשָׁה? בְּלִי בָּצָל. אֶפְשָׁר חֶשְׁבּוֹן?)
+23. escrever: "comida" → **אוכל / אכל**
+24. escrever: "açúcar" → **סוכר / סכר**
+25. completar: Complete a fala do diálogo: "Obrigada. Pode ser uma água, por favor?": תּוֹדָה. ___ מַיִם, בְּבַקָּשָׁה? → **אפשר**
+26. completar: Complete a fala do diálogo: "E eu quero uma salada. Que salada tem?": וַאֲנִי רוֹצָה סָלָט. ___ סָלָט יֵשׁ? → **איזה**
+27. falar
+28. escrita livre: Você está num café. Peça uma bebida e uma comida, diga uma coisa que você não quer, e peça a conta. (exemplo: אֶפְשָׁר קָפֶה הָפוּךְ וְטוֹסְט גְּבִינָה, בְּבַקָּשָׁה? בְּלִי בָּצָל. אֶפְשָׁר חֶשְׁבּוֹן?)
 
 ### Unidade 14: Nas lojas: quanto custa esta?
 
@@ -818,7 +845,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ouvir: [ouve: אֲנִי מְשַׁלֵּם בִּמְזֻמָּן.] Como ele paga? → **Em dinheiro** / No cartão / Ele não paga 
 21. ditado: יָקָר מִדַּי → **יקר מדי**
 22. escrever: "a loja" → **החנות**
-23. escrita livre: Você está numa loja. Pergunte o preço de uma roupa, peça outra cor ou outro tamanho, e diga como vai pagar. (exemplo: כַּמָּה עוֹלֶה הַסְּוֶודֶר הַזֶּה? יֵשׁ בְּאָפֹר? יֵשׁ מִדָּה יוֹתֵר גְּדוֹלָה? אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?)
+23. escrever: "suéter, blusa de frio" → **סוודר**
+24. escrever: "demais (caro demais)" → **מידי / מדי**
+25. completar: Complete a fala do diálogo: "É caro demais… Tem alguma coisa mais barata?": זֶה ___ מִדַּי… יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל? → **יקר**
+26. completar: Complete a fala do diálogo: "Ficou um pouco grande. Tem um tamanho menor?": הִיא קְצָת גְּדוֹלָה. יֵשׁ ___ יוֹתֵר קְטַנָּה? → **מידה / מדה**
+27. falar
+28. escrita livre: Você está numa loja. Pergunte o preço de uma roupa, peça outra cor ou outro tamanho, e diga como vai pagar. (exemplo: כַּמָּה עוֹלֶה הַסְּוֶודֶר הַזֶּה? יֵשׁ בְּאָפֹר? יֵשׁ מִדָּה יוֹתֵר גְּדוֹלָה? אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?)
 
 ### Unidade 15: Quando? Meses, datas e o tempo
 
@@ -941,7 +973,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ditado: קַר לִי → **קר לי**
 21. escrever: "em junho" → **ביוני**
 22. escrever: "amanhã" → **מחר**
-23. escrita livre: Escreva quando é o seu aniversário e como é o tempo na sua cidade nesse mês. (exemplo: יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּיוּלִי. בְּיוּלִי בְּסָאוֹ פָּאוּלוֹ קַר, אֲבָל יֵשׁ שֶׁמֶשׁ.)
+23. escrever: "novembro" → **נובמבר**
+24. escrever: "nublado" → **מעונן / מענן**
+25. completar: Complete a fala do diálogo: "Não. Em Israel só chove no inverno.": לֹא. בְּיִשְׂרָאֵל יוֹרֵד ___ רַק בַּחֹרֶף. → **גשם**
+26. completar: Complete a fala do diálogo: "Sério? Inverno em junho? Que loucura!": בֶּאֱמֶת? ___ בְּיוּנִי? מְשֻׁגָּע! → **חורף / חרף**
+27. falar
+28. escrita livre: Escreva quando é o seu aniversário e como é o tempo na sua cidade nesse mês. (exemplo: יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּיוּלִי. בְּיוּלִי בְּסָאוֹ פָּאוּלוֹ קַר, אֲבָל יֵשׁ שֶׁמֶשׁ.)
 
 ### Unidade 16: Vamos combinar? Convites e mensagens
 
@@ -1048,7 +1085,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 19. ouvir: [ouve: נִפָּגֵשׁ בְּעוֹד שָׁעָה.] Quando eles se encontram? → **Daqui a uma hora** / Amanhã / Hoje à noite 
 20. ditado: עַכְשָׁיו → **עכשיו / עכשו**
 21. escrever: ""que você" (a ele), numa palavra só" → **שאתה**
-22. escrita livre: Escreva uma mensagem convidando alguém para sair: o quê, quando e onde. (exemplo: אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ מָחָר? הַסֶּרֶט בִּשְׁמוֹנֶה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ.)
+22. escrever: "hoje à noite" → **הערב**
+23. escrever: "cinema" → **קולנוע**
+24. completar: Complete a fala do diálogo: "Ótimo! Vou mandar uma mensagem para ela.": יוֹפִי! אֲנִי ___ לָהּ הוֹדָעָה. → **שולח**
+25. completar: Complete a fala do diálogo: "Fica. E eu acho que a Noa quer vir também.": כֵּן. וַאֲנִי ___ שֶׁנֹּעָה רוֹצָה לָבוֹא גַּם. → **חושבת**
+26. falar
+27. escrita livre: Escreva uma mensagem convidando alguém para sair: o quê, quando e onde. (exemplo: אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ מָחָר? הַסֶּרֶט בִּשְׁמוֹנֶה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ.)
 
 ### Unidade 17: Viagem: no aeroporto e no hotel
 
@@ -1155,7 +1197,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ditado: דַּרְכּוֹן → **דרכון**
 21. escrever: ""das sete" (numa palavra só)" → **משבע**
 22. escrever: "o hotel" → **המלון**
-23. escrita livre: Você chega a um hotel. Diga que tem reserva, pergunte o horário do café da manhã e mais uma coisa. (exemplo: עֶרֶב טוֹב, יֵשׁ לִי הַזְמָנָה עַל שֵׁם סִילְבָה. מָתַי אֲרוּחַת הַבֹּקֶר? יֵשׁ מַזְגָן בַּחֶדֶר?)
+23. escrever: "passagem" → **כרטיס**
+24. escrever: "toalha" → **מגבת**
+25. completar: Complete a fala do diálogo: "Boa noite. Tenho uma reserva no nome de Tom Silva.": עֶרֶב טוֹב. יֵשׁ לִי ___ עַל שֵׁם טוֹם סִילְבָה. → **הזמנה**
+26. completar: Complete a fala do diálogo: "Certo. O quarto já está pronto?": נָכוֹן. הַחֶדֶר ___ מוּכָן? → **כבר**
+27. falar
+28. escrita livre: Você chega a um hotel. Diga que tem reserva, pergunte o horário do café da manhã e mais uma coisa. (exemplo: עֶרֶב טוֹב, יֵשׁ לִי הַזְמָנָה עַל שֵׁם סִילְבָה. מָתַי אֲרוּחַת הַבֹּקֶר? יֵשׁ מַזְגָן בַּחֶדֶר?)
 
 ### Unidade 18: O que está doendo? Corpo e saúde
 
@@ -1266,7 +1313,11 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ouvir: [ouve: יֵשׁ לוֹ חֹם.] O que você ouviu? → **Ele está com febre** / Ela está com febre / Ele está com frio 
 21. ditado: רֹאשׁ → **ראש**
 22. escrever: "farmácia" → **בית מרקחת**
-23. escrita livre: Você está doente. Escreva uma mensagem curta: como se sente, o que dói, e o que vai fazer. (exemplo: אֲנִי חוֹלֶה הַיּוֹם. כּוֹאֵב לִי הָרֹאשׁ, וְיֵשׁ לִי חֹם. מָחָר אֲנִי הוֹלֵךְ לָרוֹפֵא.)
+23. escrever: "remédio" → **תרופה**
+24. escrever: "consulta marcada" → **תור**
+25. completar: Complete a fala do diálogo: "Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também.": שָׁלוֹם. אֲנִי ___ לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן. → **מרגישה**
+26. falar
+27. escrita livre: Você está doente. Escreva uma mensagem curta: como se sente, o que dói, e o que vai fazer. (exemplo: אֲנִי חוֹלֶה הַיּוֹם. כּוֹאֵב לִי הָרֹאשׁ, וְיֵשׁ לִי חֹם. מָחָר אֲנִי הוֹלֵךְ לָרוֹפֵא.)
 
 ### Unidade 19: Quantos? De quê? Os números com gênero e as palavras grudadas
 
@@ -1383,7 +1434,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 21. ouvir: [ouve: יֵשׁ לָהֶם חֲמִשָּׁה יְלָדִים.] O que você ouviu? → **Eles têm cinco filhos** / Eles têm três filhos / Elas têm cinco filhas 
 22. ouvir: [ouve: שְׁתֵּי כּוֹסוֹת קָפֶה, בְּבַקָּשָׁה.] O que a pessoa pede? → **Dois cafés** / Um café / Dois chás 
 23. ditado: בֵּית סֵפֶר → **בית ספר**
-24. escrita livre: Escreva sobre a sua família com números: quantos irmãos, irmãs, filhos ou primos (cuidado com o gênero!). (exemplo: יֵשׁ לִי שְׁנֵי אַחִים וְאָחוֹת אַחַת. יֵשׁ לִי שְׁלוֹשָׁה בְּנֵי דּוֹדִים.)
+24. escrever: "7 (com masculino)" → **שיבעה / שבעה**
+25. escrever: "horas (feminino)" → **שעות**
+26. completar: Complete a fala do diálogo: "Tenho três filhos: dois meninos e uma menina.": יֵשׁ לִי ___ יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת. → **שלושה**
+27. completar: Complete a fala do diálogo: "Quantos dias por semana?": כַּמָּה ___ בַּשָּׁבוּעַ? → **ימים**
+28. falar
+29. escrita livre: Escreva sobre a sua família com números: quantos irmãos, irmãs, filhos ou primos (cuidado com o gênero!). (exemplo: יֵשׁ לִי שְׁנֵי אַחִים וְאָחוֹת אַחַת. יֵשׁ לִי שְׁלוֹשָׁה בְּנֵי דּוֹדִים.)
 
 ### Unidade 20: Um dia em Israel: juntando tudo
 
@@ -1481,7 +1537,12 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 20. ouvir: [ouve: אֲנִי לֹא מְבִינָה הַכֹּל.] O que você ouviu? → **Ela não entende tudo** / Ele não entende nada / Ela não sabe tudo 
 21. ditado: לְאַט לְאַט → **לאט לאט**
 22. escrever: "boa sorte" → **בהצלחה**
-23. escrita livre: Apresente-se como no começo do curso, mas agora com tudo o que você sabe: quem é, de onde, onde mora, o que faz, do que gosta, e um plano para a semana que vem. (exemplo: שָׁלוֹם! קוֹרְאִים לִי דָּנִי, וַאֲנִי מִבְּרָזִיל. אֲנִי גָּר בְּתֵל אָבִיב וְלוֹמֵד עִבְרִית בָּאֻלְפָּן. אֲנִי אוֹהֵב לְבַשֵּׁל וְלִשְׂחוֹת. בַּשָּׁבוּעַ הַבָּא אֲנִי נוֹסֵעַ לְחֵיפָה עִם חֲבֵרִים.)
+23. escrever: "rápido" → **מהר**
+24. escrever: "como (igual a)" → **כמו**
+25. completar: Complete a fala do diálogo: "Obrigado! Mas ainda não entendo tudo.": תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא ___ הַכֹּל. → **מבין**
+26. completar: Complete a fala do diálogo: "Obrigada. Estou atrasada para uma entrevista de emprego!": תּוֹדָה. אֲנִי ___ לְרֵאָיוֹן עֲבוֹדָה! → **מאחרת**
+27. falar
+28. escrita livre: Apresente-se como no começo do curso, mas agora com tudo o que você sabe: quem é, de onde, onde mora, o que faz, do que gosta, e um plano para a semana que vem. (exemplo: שָׁלוֹם! קוֹרְאִים לִי דָּנִי, וַאֲנִי מִבְּרָזִיל. אֲנִי גָּר בְּתֵל אָבִיב וְלוֹמֵד עִבְרִית בָּאֻלְפָּן. אֲנִי אוֹהֵב לְבַשֵּׁל וְלִשְׂחוֹת. בַּשָּׁבוּעַ הַבָּא אֲנִי נוֹסֵעַ לְחֵיפָה עִם חֲבֵרִים.)
 
 ## Unidades já aprovadas: só os blocos novos
 
@@ -1720,7 +1781,17 @@ Os textos de interface que entraram com o A1 completo, tela por tela, como apare
 - Caixas: "Em Israel" · "📖 Curiosidade" (o selo que o alfabeto já usa) · "⚠️ Erro comum" no lugar de "✕/✓ Erro de brasileiro"
 - "Eu consigo…" · "Marque o que você sente que já sabe fazer. Só você vê."
 
+**Unidade em etapas**
+- "Etapa {k} de {n}: {nome}" · "{n} etapas" · "Ver a unidade inteira de uma vez" / "Voltar ao passo a passo"
+- Nomes das etapas: "A conversa" · "Palavras ({b} de {n})" · o título de cada ponto de gramática · "Leitura" · "Fechando a unidade"
+- "Leia (e ouça, quando houver gravação) antes de abrir a tradução. Tente entender pela situação."
+- "Agora é você: fale o diálogo" · "Escolha uma fala, ouça o modelo e grave a sua" · "Leia o diálogo em voz alta e se ouça" · "Faça as duas vozes, ou escolha um personagem. Grave, ouça, e repita a fala que travou."
+- "Palavras novas · bloco {b} de {n}" · "Praticar agora ({n})" · "Pratique: {etapa}" · "Praticar de novo" · "Continuar: {próxima etapa}"
+- "A rodada da unidade mistura tudo o que você praticou. Com 70%, a unidade fica concluída." · "Fazer a rodada da unidade ({n})" · "Fazer a rodada de novo"
+
 **Exercícios (novos tipos)**
+- Falar: "Fale em voz alta · não vale nota" · "Diga em voz alta, em hebraico: "{frase}"" · "Grave a sua voz" · "Tente primeiro sem olhar o modelo. Depois ouça a sua gravação." · "Ver o modelo" · "O modelo:" · "Compare com o modelo."
+- Completar a fala: "Complete a fala do diálogo: "{tradução}""
 - "Quase." (quando a opção errada tem explicação própria)
 - Ditado: "Ouça e escreva o que você ouviu."
 - Conversa: "E a resposta?"

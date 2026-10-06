@@ -566,6 +566,43 @@
       "porque": "הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם."
     },
     {
+      "t": "escrever",
+      "pt": "40",
+      "respostas": [
+        "ארבעים"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "e quinze",
+      "respostas": [
+        "ורבע"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Dez shekels o quilo.\"",
+      "antes": "",
+      "depois": "שֶׁקֶל לְקִילוֹ.",
+      "respostas": [
+        "עשר"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"É uma e meia. A feira fica aberta até as duas.\"",
+      "antes": "",
+      "depois": "אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
+      "respostas": [
+        "השעה"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Dez shekels o quilo.\"",
+      "exemplo": "עֶשֶׂר שֶׁקֶל לְקִילוֹ."
+    },
+    {
       "t": "aberta",
       "pt": "Escreva: a que horas você começa a trabalhar ou estudar, e em que dias.",
       "exemplo": "אֲנִי עוֹבֵד בְּיוֹם שֵׁנִי עַד יוֹם חֲמִישִׁי, בְּשָׁעָה תֵּשַׁע."

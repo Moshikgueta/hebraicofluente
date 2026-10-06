@@ -440,6 +440,43 @@
       "porque": "אֲנִי שׁוֹתָה תֵּה."
     },
     {
+      "t": "escrever",
+      "pt": "maçãs",
+      "respostas": [
+        "תפוחים"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "café",
+      "respostas": [
+        "קפה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Pão e queijo. Você quer?\"",
+      "antes": "אֲנִי",
+      "depois": "לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
+      "respostas": [
+        "אוכלת"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não, não bebo café. Bebo chá.\"",
+      "antes": "לֹא, אֲנִי לֹא",
+      "depois": "קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
+      "respostas": [
+        "שותה"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Pão e queijo. Você quer?\"",
+      "exemplo": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?"
+    },
+    {
       "t": "aberta",
       "pt": "Escreva 2 frases: o que você come de manhã e o que você não bebe.",
       "exemplo": "אֲנִי אוֹכֵל לֶחֶם. אֲנִי לֹא שׁוֹתֶה קָפֶה."

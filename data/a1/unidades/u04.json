@@ -413,6 +413,43 @@
       "porque": "הֵם גָּרִים בְּתֵל אָבִיב."
     },
     {
+      "t": "escrever",
+      "pt": "São Paulo",
+      "respostas": [
+        "סאו פאולו"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "português",
+      "respostas": [
+        "פורטוגזית"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não, estudo hebraico. E você?\"",
+      "antes": "לֹא, אֲנִי",
+      "depois": "עִבְרִית. וְאַתְּ?",
+      "respostas": [
+        "לומד"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Obrigado! Falo um pouco.\"",
+      "antes": "תּוֹדָה! אֲנִי",
+      "depois": "קְצָת.",
+      "respostas": [
+        "מדבר"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Moro em Jerusalém. E você?\"",
+      "exemplo": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?"
+    },
+    {
       "t": "aberta",
       "pt": "Escreva 2 frases sobre você: onde mora e o que faz.",
       "exemplo": "אֲנִי גָּר בְּרִיוֹ. אֲנִי עוֹבֵד."

@@ -446,6 +446,43 @@
       "porque": "יֵשׁ לִי חָתוּל."
     },
     {
+      "t": "escrever",
+      "pt": "tia",
+      "respostas": [
+        "דודה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "eu não tenho",
+      "respostas": [
+        "אין לי"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não, não tenho cachorro. Tenho um gato! E você?\"",
+      "antes": "לֹא,",
+      "depois": "לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ?",
+      "respostas": [
+        "אין"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não tenho gato. Mas os meus pais têm um cachorro grande.\"",
+      "antes": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים",
+      "depois": "יֵשׁ כֶּלֶב גָּדוֹל.",
+      "respostas": [
+        "שלי"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Tenho, um irmão e uma irmã.\"",
+      "exemplo": "כֵּן, יֵשׁ לִי אָח וְאָחוֹת."
+    },
+    {
       "t": "aberta",
       "pt": "Escreva 3 frases sobre a sua família: quem você tem, quem não tem, e onde alguém mora.",
       "exemplo": "יֵשׁ לִי אָח. אֵין לִי אָחוֹת. הַהוֹרִים שֶׁלִּי גָּרִים בְּרִיוֹ."

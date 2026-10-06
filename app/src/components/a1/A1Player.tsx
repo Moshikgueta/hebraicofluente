@@ -26,6 +26,7 @@ import { Button } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { AudioButton, hasAudio } from '@/components/learn/AudioButton';
 import { MatchPairs, TypeHebrew } from '@/components/learn/Answers';
+import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { rng, shuffled } from '@/lib/engine/rng';
 import type { ItemA1 } from '@/lib/a1';
 import type { GeneroA1 } from '@/lib/state/a1-estado';
@@ -90,7 +91,7 @@ export function A1Player({
   const [primeira, setPrimeira] = useState<Record<string, boolean>>({});
 
   const atual = fila[pos];
-  const valeNota = (it: ItemA1) => it.t !== 'aberta';
+  const valeNota = (it: ItemA1) => it.t !== 'aberta' && it.t !== 'falar';
   const total = inicial.filter(f => valeNota(f.item)).length;
 
   const responder = (certo: boolean, dicaDaOpcao?: string) => {
@@ -140,11 +141,11 @@ export function A1Player({
       {resposta !== null && (
         <Card tone={resposta ? 'mint' : 'ember'} className="p-5 grid gap-3" >
           <p className="font-display text-[18px] font-semibold m-0" role="status">
-            {item.t === 'aberta' ? 'Compare com o exemplo.' : resposta ? 'Certo!' : dica ? 'Quase.' : 'Não foi desta vez.'}
+            {item.t === 'aberta' || item.t === 'falar' ? 'Compare com o modelo.' : resposta ? 'Certo!' : dica ? 'Quase.' : 'Não foi desta vez.'}
           </p>
           {dica && <p className="text-[15px] leading-relaxed text-ink-body m-0"><Misto texto={dica} /></p>}
           {'porque' in item && item.porque && <p className="text-[15px] leading-relaxed text-ink-body m-0"><Misto texto={item.porque} /></p>}
-          {!resposta && !volta && item.t !== 'aberta' && (
+          {!resposta && !volta && item.t !== 'aberta' && item.t !== 'falar' && (
             <p className="font-ui text-[13.5px] text-ink-muted m-0">Ela volta no fim, depois de outras.</p>
           )}
           <Button onClick={seguir} className="justify-self-start">Continuar</Button>
@@ -221,6 +222,8 @@ function Item({ item, id, settled, genero, onAnswer }: {
       return <Tabela item={item} settled={settled} onAnswer={onAnswer} />;
     case 'aberta':
       return <Aberta item={item} genero={genero} settled={settled} onAnswer={onAnswer} />;
+    case 'falar':
+      return <Falar item={item} settled={settled} onAnswer={onAnswer} />;
   }
 }
 
@@ -526,6 +529,34 @@ function Ordenar({ item, id, settled, onAnswer }: {
             <Button onClick={conferir} disabled={usadas.length !== item.falas.length}>Conferir</Button>
           </div>
         </>
+      )}
+    </div>
+  );
+}
+
+/* Falar em voz alta: primeiro tentar sozinho, gravando; depois ver (e, com
+   gravação, ouvir) o modelo, e comparar. Não vale nota: nenhum corretor
+   automático de pronúncia em hebraico é confiável hoje, e quem julga é o
+   ouvido do aluno, com o modelo ao lado. A gravação fica no aparelho. */
+function Falar({ item, settled, onAnswer }: {
+  item: Extract<ItemA1, { t: 'falar' }>; settled: boolean; onAnswer: (certo: boolean) => void;
+}) {
+  return (
+    <div className="grid gap-4">
+      <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted m-0">Fale em voz alta · não vale nota</p>
+      <Enunciado texto={item.pt} />
+      <GravarLeitura titulo="Grave a sua voz" instrucao="Tente primeiro sem olhar o modelo. Depois ouça a sua gravação."
+        audioId={settled ? item.audioId ?? null : null} maxSegundos={20} />
+      {settled ? (
+        <div className="grid gap-2">
+          <p className="font-ui text-[14px] text-ink-muted m-0">O modelo:</p>
+          <p className="m-0 flex items-center gap-3 flex-wrap">
+            <He size="word">{item.exemplo}</He>
+            {item.audioId && hasAudio(item.audioId) && <AudioButton audioId={item.audioId} size="sm" slow />}
+          </p>
+        </div>
+      ) : (
+        <Button onClick={() => onAnswer(true)} className="justify-self-start">Ver o modelo</Button>
       )}
     </div>
   );

@@ -448,6 +448,43 @@
       "q": "No diálogo, a mesa da Maya é nova.",
       "certa": false,
       "porque": "הַשֻּׁלְחָן יָשָׁן."
+    },
+    {
+      "t": "escrever",
+      "pt": "vocês (eles)",
+      "respostas": [
+        "אתם"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "mas",
+      "respostas": [
+        "אבל"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"São presentes. São da Noa e do Dani.\"",
+      "antes": "",
+      "depois": "מַתָּנוֹת. הֵן מִנֹּעָה וּמִדָּנִי.",
+      "respostas": [
+        "אלה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"A luminária vermelha é muito bonita!\"",
+      "antes": "הַמְּנוֹרָה הָאֲדֻמָּה",
+      "depois": "מְאֹד!",
+      "respostas": [
+        "יפה"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Sim! A casa é pequena, mas bonita.\"",
+      "exemplo": "כֵּן! הַבַּיִת קָטָן, אֲבָל יָפֶה."
     }
   ]
 }

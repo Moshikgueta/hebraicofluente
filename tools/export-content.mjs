@@ -694,7 +694,8 @@ function main() {
   const { _: _a1HistNota, ...a1Historia } = readJson('data/a1/historia.json');
   void _a1HistNota;
   const comAudio = x => ({ ...x, he: NFC(x.he), audioId: audioIdFor(x.he) });
-  const itemA1 = it => (it.t === 'ouvir' || it.t === 'ditado' ? { ...it, he: NFC(it.he), audioId: audioIdFor(it.he) } : it);
+  const itemA1 = it => (it.t === 'ouvir' || it.t === 'ditado' ? { ...it, he: NFC(it.he), audioId: audioIdFor(it.he) }
+    : it.t === 'falar' ? { ...it, exemplo: NFC(it.exemplo), audioId: audioIdFor(it.exemplo) } : it);
   const unidadeA1 = u => ({
     ...u,
     palavras: u.palavras.map(w => (w.formas ? { ...w, formas: w.formas.map(NFC) } : comAudio(w))),

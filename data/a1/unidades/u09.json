@@ -677,6 +677,43 @@
       ]
     },
     {
+      "t": "escrever",
+      "pt": "e então",
+      "respostas": [
+        "ואז"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "trabalho",
+      "respostas": [
+        "עבודה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Eu levanto cedo, às seis e meia.\"",
+      "antes": "אֲנִי",
+      "depois": "מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי.",
+      "respostas": [
+        "קמה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"À tarde eu vou para a universidade.\"",
+      "antes": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי",
+      "depois": "לָאוּנִיבֶרְסִיטָה.",
+      "respostas": [
+        "הולכת"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Eu levanto cedo, às seis e meia.\"",
+      "exemplo": "אֲנִי קָמָה מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי."
+    },
+    {
       "t": "aberta",
       "pt": "Escreva três frases sobre o seu dia: quando você levanta, o que faz de manhã, e quando volta para casa.",
       "exemplo": "אֲנִי קָם בְּשֶׁבַע. בַּבֹּקֶר אֲנִי עוֹבֵד. אֲנִי חוֹזֵר הַבַּיְתָה בְּשֵׁשׁ."

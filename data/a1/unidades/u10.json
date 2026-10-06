@@ -698,6 +698,44 @@
       ]
     },
     {
+      "t": "escrever",
+      "pt": "morar",
+      "respostas": [
+        "לגור"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "nadar",
+      "respostas": [
+        "לישחות",
+        "לשחות"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Eu gosto de passear e de nadar.\"",
+      "antes": "אֲנִי",
+      "depois": "לְטַיֵּל וְלִשְׂחוֹת.",
+      "respostas": [
+        "אוהב"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Porque no sábado eu gosto de dormir até as dez!\"",
+      "antes": "כִּי בְּשַׁבָּת אֲנִי אוֹהֵב",
+      "depois": "עַד עֶשֶׂר!",
+      "respostas": [
+        "לישון"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Eu gosto de passear e de nadar.\"",
+      "exemplo": "אֲנִי אוֹהֵב לְטַיֵּל וְלִשְׂחוֹת."
+    },
+    {
       "t": "aberta",
       "pt": "Escreva o que você gosta de fazer no fim de semana, e uma coisa de que você não gosta.",
       "exemplo": "בְּשַׁבָּת אֲנִי אוֹהֵב לְטַיֵּל וְלִקְרוֹא. אֲנִי לֹא אוֹהֵב לָרוּץ."

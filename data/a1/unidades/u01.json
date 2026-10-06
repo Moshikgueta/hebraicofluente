@@ -500,6 +500,43 @@
       "respostas": [
         "אני סטודנט ואני מברזיל"
       ]
+    },
+    {
+      "t": "escrever",
+      "pt": "você (a ele)",
+      "respostas": [
+        "אתה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "israelense (m)",
+      "respostas": [
+        "ישראלי"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Olá, Dani. Meu nome é Noa. Muito prazer.\"",
+      "antes": "שָׁלוֹם, דָּנִי.",
+      "depois": "נֹעָה. נָעִים מְאֹד.",
+      "respostas": [
+        "שמי"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Eu sou de Israel. E você?\"",
+      "antes": "",
+      "depois": "מִיִּשְׂרָאֵל. וְאַתָּה?",
+      "respostas": [
+        "אני"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Olá, Dani. Meu nome é Noa. Muito prazer.\"",
+      "exemplo": "שָׁלוֹם, דָּנִי. שְׁמִי נֹעָה. נָעִים מְאֹד."
     }
   ]
 }

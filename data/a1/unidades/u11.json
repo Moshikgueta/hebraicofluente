@@ -636,6 +636,44 @@
       ]
     },
     {
+      "t": "escrever",
+      "pt": "varanda",
+      "respostas": [
+        "מירפסת",
+        "מרפסת"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "armário",
+      "respostas": [
+        "ארון"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Talvez na sala, em cima do sofá?\"",
+      "antes": "",
+      "depois": "בַּסָּלוֹן, עַל הַסָּפָּה?",
+      "respostas": [
+        "אולי"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"E na cozinha, ao lado da geladeira?\"",
+      "antes": "וּבַמִּטְבָּח,",
+      "depois": "הַמְּקָרֵר?",
+      "respostas": [
+        "ליד"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Não está na mesa?\"",
+      "exemplo": "הוּא לֹא עַל הַשֻּׁלְחָן?"
+    },
+    {
       "t": "aberta",
       "pt": "Descreva a sua casa em três frases: o que tem, o que não tem, e onde fica uma coisa.",
       "exemplo": "בַּבַּיִת שֶׁלִּי יֵשׁ סָלוֹן גָּדוֹל. אֵין מִרְפֶּסֶת. הַמַּחְשֵׁב עַל הַשֻּׁלְחָן בַּסָּלוֹן."

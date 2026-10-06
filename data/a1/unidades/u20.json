@@ -557,6 +557,43 @@
       ]
     },
     {
+      "t": "escrever",
+      "pt": "rápido",
+      "respostas": [
+        "מהר"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "como (igual a)",
+      "respostas": [
+        "כמו"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Obrigado! Mas ainda não entendo tudo.\"",
+      "antes": "תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא",
+      "depois": "הַכֹּל.",
+      "respostas": [
+        "מבין"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Obrigada. Estou atrasada para uma entrevista de emprego!\"",
+      "antes": "תּוֹדָה. אֲנִי",
+      "depois": "לְרֵאָיוֹן עֲבוֹדָה!",
+      "respostas": [
+        "מאחרת"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Desculpe, não entendo. Dá para falar devagar?\"",
+      "exemplo": "סְלִיחָה, אֲנִי לֹא מֵבִין. אֶפְשָׁר לְדַבֵּר לְאַט?"
+    },
+    {
       "t": "aberta",
       "pt": "Apresente-se como no começo do curso, mas agora com tudo o que você sabe: quem é, de onde, onde mora, o que faz, do que gosta, e um plano para a semana que vem.",
       "exemplo": "שָׁלוֹם! קוֹרְאִים לִי דָּנִי, וַאֲנִי מִבְּרָזִיל. אֲנִי גָּר בְּתֵל אָבִיב וְלוֹמֵד עִבְרִית בָּאֻלְפָּן. אֲנִי אוֹהֵב לְבַשֵּׁל וְלִשְׂחוֹת. בַּשָּׁבוּעַ הַבָּא אֲנִי נוֹסֵעַ לְחֵיפָה עִם חֲבֵרִים."

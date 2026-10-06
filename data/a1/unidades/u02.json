@@ -436,6 +436,36 @@
       "q": "No diálogo, o homem da foto é o pai da Maya.",
       "certa": false,
       "porque": "זֶה לֹא אַבָּא, זֶה דָּנִי!"
+    },
+    {
+      "t": "escrever",
+      "pt": "mochila / bolsa",
+      "respostas": [
+        "תיק"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "mulher",
+      "respostas": [
+        "אישה",
+        "אשה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Esta é a minha mãe. E este é o meu pai.\"",
+      "antes": "",
+      "depois": "אִמָּא. וְזֶה אַבָּא.",
+      "respostas": [
+        "זואת",
+        "זאת"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Esta é a minha mãe. E este é o meu pai.\"",
+      "exemplo": "זֹאת אִמָּא. וְזֶה אַבָּא."
     }
   ]
 }

@@ -691,6 +691,45 @@
       ]
     },
     {
+      "t": "escrever",
+      "pt": "novembro",
+      "respostas": [
+        "נובמבר"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "nublado",
+      "respostas": [
+        "מעונן",
+        "מענן"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não. Em Israel só chove no inverno.\"",
+      "antes": "לֹא. בְּיִשְׂרָאֵל יוֹרֵד",
+      "depois": "רַק בַּחֹרֶף.",
+      "respostas": [
+        "גשם"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Sério? Inverno em junho? Que loucura!\"",
+      "antes": "בֶּאֱמֶת?",
+      "depois": "בְּיוּנִי? מְשֻׁגָּע!",
+      "respostas": [
+        "חורף",
+        "חרף"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Em 20 de junho. Por quê?\"",
+      "exemplo": "בְּעֶשְׂרִים בְּיוּנִי. לָמָּה?"
+    },
+    {
       "t": "aberta",
       "pt": "Escreva quando é o seu aniversário e como é o tempo na sua cidade nesse mês.",
       "exemplo": "יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּיוּלִי. בְּיוּלִי בְּסָאוֹ פָּאוּלוֹ קַר, אֲבָל יֵשׁ שֶׁמֶשׁ."

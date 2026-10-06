@@ -5,28 +5,128 @@
   "objetivoPt": "Dizer o que dói e como você se sente, se virar numa farmácia, entender como tomar um remédio, e avisar que está doente.",
   "situacaoPt": "A Noa acorda com dor de cabeça e a garganta arranhando. Antes de ir ao médico, ela passa na farmácia do bairro.",
   "palavras": [
-    { "he": "רֹאשׁ", "translit": "rosh", "pt": "cabeça" },
-    { "he": "בֶּטֶן", "translit": "béten", "pt": "barriga (feminina)" },
-    { "he": "גָּרוֹן", "translit": "garon", "pt": "garganta" },
-    { "he": "גַּב", "translit": "gav", "pt": "costas" },
-    { "he": "יָד / יָדַיִם", "translit": "yad / yadáyim", "pt": "mão, braço / mãos" },
-    { "he": "רֶגֶל / רַגְלַיִם", "translit": "régel / ragláyim", "pt": "perna, pé / pernas" },
-    { "he": "עַיִן / עֵינַיִם", "translit": "áyin / eináyim", "pt": "olho / olhos" },
-    { "he": "אֹזֶן / אָזְנַיִם", "translit": "ózen / oznáyim", "pt": "orelha, ouvido / orelhas" },
-    { "he": "שֵׁן / שִׁנַּיִם", "translit": "shen / shináyim", "pt": "dente / dentes" },
-    { "pt": "doer", "formas": ["כּוֹאֵב", "כּוֹאֶבֶת", "כּוֹאֲבִים", "כּוֹאֲבוֹת"] },
-    { "pt": "sentir-se", "formas": ["מַרְגִּישׁ", "מַרְגִּישָׁה", "מַרְגִּישִׁים", "מַרְגִּישׁוֹת"] },
-    { "pt": "doente", "formas": ["חוֹלֶה", "חוֹלָה", "חוֹלִים", "חוֹלוֹת"] },
-    { "he": "חֹם", "translit": "chom", "pt": "febre" },
-    { "he": "כְּאֵב רֹאשׁ", "translit": "keev rosh", "pt": "dor de cabeça" },
-    { "he": "תְּרוּפָה", "translit": "trufá", "pt": "remédio" },
-    { "he": "כַּדּוּר", "translit": "kadur", "pt": "comprimido; bola" },
-    { "he": "בֵּית מִרְקַחַת", "translit": "beit mirkáchat", "pt": "farmácia (expressão fixa)" },
-    { "he": "קֻפַּת חוֹלִים", "translit": "kupat cholim", "pt": "plano de saúde israelense" },
-    { "he": "תּוֹר", "translit": "tor", "pt": "consulta marcada; fila" },
-    { "he": "הַרְבֵּה", "translit": "harbé", "pt": "muito, bastante (quantidade)" },
-    { "he": "רְפוּאָה שְׁלֵמָה!", "translit": "refuá shlemá!", "pt": "melhoras!" },
-    { "he": "עֶזְרָה!", "translit": "ezrá!", "pt": "socorro! ajuda!" }
+    {
+      "he": "רֹאשׁ",
+      "translit": "rosh",
+      "pt": "cabeça"
+    },
+    {
+      "he": "בֶּטֶן",
+      "translit": "béten",
+      "pt": "barriga (feminina)"
+    },
+    {
+      "he": "גָּרוֹן",
+      "translit": "garon",
+      "pt": "garganta"
+    },
+    {
+      "he": "גַּב",
+      "translit": "gav",
+      "pt": "costas"
+    },
+    {
+      "he": "יָד / יָדַיִם",
+      "translit": "yad / yadáyim",
+      "pt": "mão, braço / mãos"
+    },
+    {
+      "he": "רֶגֶל / רַגְלַיִם",
+      "translit": "régel / ragláyim",
+      "pt": "perna, pé / pernas"
+    },
+    {
+      "he": "עַיִן / עֵינַיִם",
+      "translit": "áyin / eináyim",
+      "pt": "olho / olhos"
+    },
+    {
+      "he": "אֹזֶן / אָזְנַיִם",
+      "translit": "ózen / oznáyim",
+      "pt": "orelha, ouvido / orelhas"
+    },
+    {
+      "he": "שֵׁן / שִׁנַּיִם",
+      "translit": "shen / shináyim",
+      "pt": "dente / dentes"
+    },
+    {
+      "pt": "doer",
+      "formas": [
+        "כּוֹאֵב",
+        "כּוֹאֶבֶת",
+        "כּוֹאֲבִים",
+        "כּוֹאֲבוֹת"
+      ]
+    },
+    {
+      "pt": "sentir-se",
+      "formas": [
+        "מַרְגִּישׁ",
+        "מַרְגִּישָׁה",
+        "מַרְגִּישִׁים",
+        "מַרְגִּישׁוֹת"
+      ]
+    },
+    {
+      "pt": "doente",
+      "formas": [
+        "חוֹלֶה",
+        "חוֹלָה",
+        "חוֹלִים",
+        "חוֹלוֹת"
+      ]
+    },
+    {
+      "he": "חֹם",
+      "translit": "chom",
+      "pt": "febre"
+    },
+    {
+      "he": "כְּאֵב רֹאשׁ",
+      "translit": "keev rosh",
+      "pt": "dor de cabeça"
+    },
+    {
+      "he": "תְּרוּפָה",
+      "translit": "trufá",
+      "pt": "remédio"
+    },
+    {
+      "he": "כַּדּוּר",
+      "translit": "kadur",
+      "pt": "comprimido; bola"
+    },
+    {
+      "he": "בֵּית מִרְקַחַת",
+      "translit": "beit mirkáchat",
+      "pt": "farmácia (expressão fixa)"
+    },
+    {
+      "he": "קֻפַּת חוֹלִים",
+      "translit": "kupat cholim",
+      "pt": "plano de saúde israelense"
+    },
+    {
+      "he": "תּוֹר",
+      "translit": "tor",
+      "pt": "consulta marcada; fila"
+    },
+    {
+      "he": "הַרְבֵּה",
+      "translit": "harbé",
+      "pt": "muito, bastante (quantidade)"
+    },
+    {
+      "he": "רְפוּאָה שְׁלֵמָה!",
+      "translit": "refuá shlemá!",
+      "pt": "melhoras!"
+    },
+    {
+      "he": "עֶזְרָה!",
+      "translit": "ezrá!",
+      "pt": "socorro! ajuda!"
+    }
   ],
   "gramatica": [
     {
@@ -34,8 +134,14 @@
       "textoPt": "O hebraico diz \"dói para mim a cabeça\": כּוֹאֵב לִי הָרֹאשׁ. Quem recebe a dor vem com לְ (לִי, לְךָ, לָהּ…), e o verbo concorda com a PARTE DO CORPO: כּוֹאֵב לִי הָרֹאשׁ (masculino), כּוֹאֶבֶת לִי הַבֶּטֶן (feminino), כּוֹאֲבוֹת לִי הָרַגְלַיִם (plural feminino).",
       "erroPt": "A mulher com dor de cabeça tende a dizer כּוֹאֶבֶת, no feminino, porque ELA é mulher. Mas quem dói é a cabeça, e רֹאשׁ é masculino: כּוֹאֵב לִי הָרֹאשׁ, para homem e para mulher.",
       "exemplos": [
-        { "he": "כּוֹאֵב לָהּ הַגָּרוֹן.", "pt": "Ela está com dor de garganta." },
-        { "he": "כּוֹאֲבוֹת לִי הַשִּׁנַּיִם.", "pt": "Estou com dor de dente (nos dentes)." }
+        {
+          "he": "כּוֹאֵב לָהּ הַגָּרוֹן.",
+          "pt": "Ela está com dor de garganta."
+        },
+        {
+          "he": "כּוֹאֲבוֹת לִי הַשִּׁנַּיִם.",
+          "pt": "Estou com dor de dente (nos dentes)."
+        }
       ]
     },
     {
@@ -55,43 +161,177 @@
   "dialogo": {
     "tituloPt": "Na farmácia",
     "linhas": [
-      { "quem": "A farmacêutica", "he": "שָׁלוֹם, אֵיךְ אֶפְשָׁר לַעֲזוֹר?", "translit": "shalóm, eich efshar laazor?", "pt": "Olá, como posso ajudar?" },
-      { "quem": "Noa", "he": "שָׁלוֹם. אֲנִי מַרְגִּישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן.", "translit": "shalóm. aní margishá lo tov. koev li harosh, vegam hagaron.", "pt": "Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também." },
-      { "quem": "A farmacêutica", "he": "יֵשׁ לָךְ חֹם?", "translit": "yesh lach chom?", "pt": "Você está com febre?" },
-      { "quem": "Noa", "he": "כֵּן, קְצָת. שְׁלוֹשִׁים וּשְׁמוֹנֶה.", "translit": "ken, ktsat. shloshim ushmoné.", "pt": "Estou, um pouco. Trinta e oito." },
-      { "quem": "A farmacêutica", "he": "אוּלַי זֹאת שַׁפַּעַת.", "translit": "ulái zot shapáat.", "pt": "Talvez seja gripe." },
-      { "quem": "Noa", "he": "מָה אֲנִי צְרִיכָה לַעֲשׂוֹת?", "translit": "ma aní tsrichá laasót?", "pt": "O que eu preciso fazer?" },
-      { "quem": "A farmacêutica", "he": "צָרִיךְ לִשְׁתּוֹת הַרְבֵּה מַיִם וְלָנוּחַ. הִנֵּה כַּדּוּרִים נֶגֶד כְּאֵב רֹאשׁ.", "translit": "tsarich lishtót harbé máyim velanúach. hiné kadurim néged keev rosh.", "pt": "É preciso beber bastante água e descansar. Aqui estão comprimidos para dor de cabeça." },
-      { "quem": "Noa", "he": "כַּמָּה פְּעָמִים בַּיּוֹם?", "translit": "kama peamim bayom?", "pt": "Quantas vezes por dia?" },
-      { "quem": "A farmacêutica", "he": "שָׁלוֹשׁ פְּעָמִים בַּיּוֹם, אַחֲרֵי הָאֹכֶל. וְאִם זֶה לֹא עוֹבֵר, צָרִיךְ לָלֶכֶת לָרוֹפֵא.", "translit": "shalosh peamim bayom, acharei haóchel. veim ze lo over, tsarich laléchet larofé.", "pt": "Três vezes por dia, depois da comida. E se não passar, é preciso ir ao médico." },
-      { "quem": "Noa", "he": "תּוֹדָה רַבָּה.", "translit": "todá rabá.", "pt": "Muito obrigada." },
-      { "quem": "A farmacêutica", "he": "בְּבַקָּשָׁה. רְפוּאָה שְׁלֵמָה!", "translit": "bevakashá. refuá shlemá!", "pt": "De nada. Melhoras!" }
+      {
+        "quem": "A farmacêutica",
+        "he": "שָׁלוֹם, אֵיךְ אֶפְשָׁר לַעֲזוֹר?",
+        "translit": "shalóm, eich efshar laazor?",
+        "pt": "Olá, como posso ajudar?"
+      },
+      {
+        "quem": "Noa",
+        "he": "שָׁלוֹם. אֲנִי מַרְגִּישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן.",
+        "translit": "shalóm. aní margishá lo tov. koev li harosh, vegam hagaron.",
+        "pt": "Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também."
+      },
+      {
+        "quem": "A farmacêutica",
+        "he": "יֵשׁ לָךְ חֹם?",
+        "translit": "yesh lach chom?",
+        "pt": "Você está com febre?"
+      },
+      {
+        "quem": "Noa",
+        "he": "כֵּן, קְצָת. שְׁלוֹשִׁים וּשְׁמוֹנֶה.",
+        "translit": "ken, ktsat. shloshim ushmoné.",
+        "pt": "Estou, um pouco. Trinta e oito."
+      },
+      {
+        "quem": "A farmacêutica",
+        "he": "אוּלַי זֹאת שַׁפַּעַת.",
+        "translit": "ulái zot shapáat.",
+        "pt": "Talvez seja gripe."
+      },
+      {
+        "quem": "Noa",
+        "he": "מָה אֲנִי צְרִיכָה לַעֲשׂוֹת?",
+        "translit": "ma aní tsrichá laasót?",
+        "pt": "O que eu preciso fazer?"
+      },
+      {
+        "quem": "A farmacêutica",
+        "he": "צָרִיךְ לִשְׁתּוֹת הַרְבֵּה מַיִם וְלָנוּחַ. הִנֵּה כַּדּוּרִים נֶגֶד כְּאֵב רֹאשׁ.",
+        "translit": "tsarich lishtót harbé máyim velanúach. hiné kadurim néged keev rosh.",
+        "pt": "É preciso beber bastante água e descansar. Aqui estão comprimidos para dor de cabeça."
+      },
+      {
+        "quem": "Noa",
+        "he": "כַּמָּה פְּעָמִים בַּיּוֹם?",
+        "translit": "kama peamim bayom?",
+        "pt": "Quantas vezes por dia?"
+      },
+      {
+        "quem": "A farmacêutica",
+        "he": "שָׁלוֹשׁ פְּעָמִים בַּיּוֹם, אַחֲרֵי הָאֹכֶל. וְאִם זֶה לֹא עוֹבֵר, צָרִיךְ לָלֶכֶת לָרוֹפֵא.",
+        "translit": "shalosh peamim bayom, acharei haóchel. veim ze lo over, tsarich laléchet larofé.",
+        "pt": "Três vezes por dia, depois da comida. E se não passar, é preciso ir ao médico."
+      },
+      {
+        "quem": "Noa",
+        "he": "תּוֹדָה רַבָּה.",
+        "translit": "todá rabá.",
+        "pt": "Muito obrigada."
+      },
+      {
+        "quem": "A farmacêutica",
+        "he": "בְּבַקָּשָׁה. רְפוּאָה שְׁלֵמָה!",
+        "translit": "bevakashá. refuá shlemá!",
+        "pt": "De nada. Melhoras!"
+      }
     ],
     "glossario": [
-      { "he": "שַׁפַּעַת", "translit": "shapáat", "pt": "gripe" },
-      { "he": "לָנוּחַ", "translit": "lanúach", "pt": "descansar" },
-      { "he": "נֶגֶד", "translit": "néged", "pt": "contra" },
-      { "he": "פְּעָמִים", "translit": "peamim", "pt": "vezes" },
-      { "he": "אִם", "translit": "im", "pt": "se (condição)" },
-      { "he": "עוֹבֵר", "translit": "over", "pt": "passa" }
+      {
+        "he": "שַׁפַּעַת",
+        "translit": "shapáat",
+        "pt": "gripe"
+      },
+      {
+        "he": "לָנוּחַ",
+        "translit": "lanúach",
+        "pt": "descansar"
+      },
+      {
+        "he": "נֶגֶד",
+        "translit": "néged",
+        "pt": "contra"
+      },
+      {
+        "he": "פְּעָמִים",
+        "translit": "peamim",
+        "pt": "vezes"
+      },
+      {
+        "he": "אִם",
+        "translit": "im",
+        "pt": "se (condição)"
+      },
+      {
+        "he": "עוֹבֵר",
+        "translit": "over",
+        "pt": "passa"
+      }
     ]
   },
   "leitura": {
     "tituloPt": "A Noa avisa o trabalho",
     "semPontos": true,
     "linhas": [
-      { "he": "שָׁלוֹם רוֹנִית,", "translit": "shalóm Ronit,", "pt": "Olá, Ronit," },
-      { "he": "אֲנִי חוֹלָה הַיּוֹם, וַאֲנִי לֹא יְכוֹלָה לָבוֹא לָעֲבוֹדָה.", "translit": "aní cholá hayóm, vaaní lo yecholá lavó laavodá.", "pt": "Estou doente hoje e não posso ir ao trabalho." },
-      { "he": "יֵשׁ לִי חֹם, וְכוֹאֵב לִי הַגָּרוֹן.", "translit": "yesh li chom, vechoev li hagaron.", "pt": "Estou com febre e com dor de garganta." },
-      { "he": "מָחָר בַּבֹּקֶר יֵשׁ לִי תּוֹר לָרוֹפֵא.", "translit": "machar babóker yesh li tor larofé.", "pt": "Amanhã de manhã tenho consulta no médico." },
-      { "he": "סְלִיחָה, נֹעָה", "translit": "slichá, Noa", "pt": "Desculpe, Noa" },
-      { "he": "רוֹנִית: רְפוּאָה שְׁלֵמָה, נֹעָה!", "translit": "Ronit: refuá shlemá, Noa!", "pt": "Ronit: Melhoras, Noa!" }
+      {
+        "he": "שָׁלוֹם רוֹנִית,",
+        "translit": "shalóm Ronit,",
+        "pt": "Olá, Ronit,"
+      },
+      {
+        "he": "אֲנִי חוֹלָה הַיּוֹם, וַאֲנִי לֹא יְכוֹלָה לָבוֹא לָעֲבוֹדָה.",
+        "translit": "aní cholá hayóm, vaaní lo yecholá lavó laavodá.",
+        "pt": "Estou doente hoje e não posso ir ao trabalho."
+      },
+      {
+        "he": "יֵשׁ לִי חֹם, וְכוֹאֵב לִי הַגָּרוֹן.",
+        "translit": "yesh li chom, vechoev li hagaron.",
+        "pt": "Estou com febre e com dor de garganta."
+      },
+      {
+        "he": "מָחָר בַּבֹּקֶר יֵשׁ לִי תּוֹר לָרוֹפֵא.",
+        "translit": "machar babóker yesh li tor larofé.",
+        "pt": "Amanhã de manhã tenho consulta no médico."
+      },
+      {
+        "he": "סְלִיחָה, נֹעָה",
+        "translit": "slichá, Noa",
+        "pt": "Desculpe, Noa"
+      },
+      {
+        "he": "רוֹנִית: רְפוּאָה שְׁלֵמָה, נֹעָה!",
+        "translit": "Ronit: refuá shlemá, Noa!",
+        "pt": "Ronit: Melhoras, Noa!"
+      }
     ],
     "perguntas": [
-      { "t": "escolha", "q": "Por que a Noa não vai trabalhar?", "opcoes": ["Ela está doente", "Ela vai viajar", "Ela tem uma festa"], "certa": 0 },
-      { "t": "escolha", "q": "O que dói?", "opcoes": ["A garganta", "A barriga", "As costas"], "certa": 0 },
-      { "t": "escolha", "q": "Quando é a consulta?", "opcoes": ["Amanhã de manhã", "Hoje à noite", "Na semana que vem"], "certa": 0 },
-      { "t": "vf", "q": "A Noa está com febre.", "certa": true }
+      {
+        "t": "escolha",
+        "q": "Por que a Noa não vai trabalhar?",
+        "opcoes": [
+          "Ela está doente",
+          "Ela vai viajar",
+          "Ela tem uma festa"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "escolha",
+        "q": "O que dói?",
+        "opcoes": [
+          "A garganta",
+          "A barriga",
+          "As costas"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "escolha",
+        "q": "Quando é a consulta?",
+        "opcoes": [
+          "Amanhã de manhã",
+          "Hoje à noite",
+          "Na semana que vem"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "vf",
+        "q": "A Noa está com febre.",
+        "certa": true
+      }
     ]
   },
   "cultura": [
@@ -112,28 +352,328 @@
     "Eu entendo \"três vezes por dia, depois da comida\"."
   ],
   "exercicios": [
-    { "t": "ligar", "q": "Ligue as partes do corpo.", "pares": [["רֹאשׁ", "cabeça"], ["בֶּטֶן", "barriga"], ["גָּרוֹן", "garganta"], ["יָד", "mão, braço"], ["גַּב", "costas"]] },
-    { "t": "ligar", "q": "E os pares.", "pares": [["עֵינַיִם", "olhos"], ["אָזְנַיִם", "orelhas"], ["שִׁנַּיִם", "dentes"], ["יָדַיִם", "mãos"], ["רַגְלַיִם", "pernas"]] },
-    { "t": "escolha", "q": "\"Estou com dor de cabeça\" (fala uma mulher)", "opcoes": ["כּוֹאֵב לִי הָרֹאשׁ.", "כּוֹאֶבֶת לִי הָרֹאשׁ.", "אֲנִי כּוֹאֶבֶת הָרֹאשׁ."], "certa": 0, "dicas": { "1": "Quase. O verbo concorda com o que dói, não com quem fala: רֹאשׁ é masculino, então כּוֹאֵב, mesmo para uma mulher.", "2": "O hebraico diz \"dói PARA mim a cabeça\": כּוֹאֵב לִי הָרֹאשׁ." } },
-    { "t": "escolha", "q": "\"Estou com dor de barriga\"", "opcoes": ["כּוֹאֶבֶת לִי הַבֶּטֶן.", "כּוֹאֵב לִי הַבֶּטֶן."], "certa": 0, "dicas": { "1": "בֶּטֶן é feminina: כּוֹאֶבֶת." } },
-    { "t": "escolha", "q": "\"As minhas pernas estão doendo\"", "opcoes": ["כּוֹאֲבוֹת לִי הָרַגְלַיִם.", "כּוֹאֵב לִי הָרַגְלַיִם.", "כּוֹאֲבִים לִי הָרַגְלַיִם."], "certa": 0, "dicas": { "1": "São as duas pernas: o verbo vai para o plural.", "2": "Plural, sim, mas feminino: as partes do corpo em par são femininas. כּוֹאֲבוֹת." } },
-    { "t": "separar", "q": "כּוֹאֵב לִי ou כּוֹאֶבֶת לִי?", "baldes": ["כּוֹאֵב לִי", "כּוֹאֶבֶת לִי"], "itens": [["הָרֹאשׁ", 0], ["הַגָּרוֹן", 0], ["הַבֶּטֶן", 1], ["הַיָּד", 1], ["הַגַּב", 0], ["הָרֶגֶל", 1]] },
-    { "t": "tabela", "q": "Complete as formas.", "base": "מַרְגִּישׁ", "linhas": [["mulher", "מרגישה"], ["homens", "מרגישים"], ["mulheres", "מרגישות"]] },
-    { "t": "escolha", "q": "O que se diz para alguém doente?", "opcoes": ["רְפוּאָה שְׁלֵמָה!", "בְּתֵאָבוֹן!", "מַזָּל טוֹב!"], "certa": 0 },
-    { "t": "vf", "q": "כַּדּוּר quer dizer \"bola\" e também \"comprimido\".", "certa": true },
-    { "t": "vf", "q": "Em Israel, o número da ambulância é 101.", "certa": true },
-    { "t": "completar", "q": "\"É preciso beber bastante água\"", "antes": "צָרִיךְ לִשְׁתּוֹת", "depois": "מַיִם", "respostas": ["הרבה"] },
-    { "t": "erro", "q": "Fala uma mulher. Ache o erro e escreva a frase certa.", "errada": "אֲנִי מַרְגִּישׁ לֹא טוֹב.", "respostas": ["אני מרגישה לא טוב"], "porque": "Para ela: מַרְגִּישָׁה." },
-    { "t": "erro", "q": "Ache o erro e escreva a frase certa.", "errada": "כּוֹאֵב לִי הַבֶּטֶן.", "respostas": ["כואבת לי הבטן"], "porque": "בֶּטֶן é feminina: כּוֹאֶבֶת." },
-    { "t": "montar", "pt": "Estou com febre.", "palavras": ["יֵשׁ", "לִי", "חֹם"] },
-    { "t": "montar", "pt": "Você precisa ir ao médico. (a ele)", "palavras": ["אַתָּה", "צָרִיךְ", "לָלֶכֶת", "לָרוֹפֵא"] },
-    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["Natan", "אֵיךְ אַתְּ מַרְגִּישָׁה?"]], "opcoes": ["לֹא כָּל כָּךְ טוֹב. כּוֹאֵב לִי הַגָּרוֹן.", "בְּשִׂמְחָה!", "בְּמַרְץ."], "certa": 0, "porque": "לֹא כָּל כָּךְ טוֹב = não muito bem." },
-    { "t": "dialogo", "q": "Qual é a resposta natural da farmacêutica?", "linhas": [["Noa", "כַּמָּה פְּעָמִים בַּיּוֹם?"]], "opcoes": ["שָׁלוֹשׁ פְּעָמִים, אַחֲרֵי הָאֹכֶל.", "בְּעוֹד שָׁעָה.", "כֵּן, יֵשׁ."], "certa": 0 },
-    { "t": "ordenar", "q": "Ponha a conversa na ordem.", "falas": ["אֲנִי מַרְגִּישׁ לֹא טוֹב.", "מָה כּוֹאֵב לְךָ?", "הַבֶּטֶן.", "אוּלַי צָרִיךְ לָלֶכֶת לָרוֹפֵא."] },
-    { "t": "ouvir", "he": "כּוֹאֶבֶת לִי הָאֹזֶן.", "q": "O que dói?", "opcoes": ["O ouvido", "O dente", "O olho"], "certa": 0 },
-    { "t": "ouvir", "he": "יֵשׁ לוֹ חֹם.", "q": "O que você ouviu?", "opcoes": ["Ele está com febre", "Ela está com febre", "Ele está com frio"], "certa": 0 },
-    { "t": "ditado", "he": "רֹאשׁ", "respostas": ["ראש"] },
-    { "t": "escrever", "pt": "farmácia", "respostas": ["בית מרקחת"] },
-    { "t": "aberta", "pt": "Você está doente. Escreva uma mensagem curta: como se sente, o que dói, e o que vai fazer.", "exemplo": "אֲנִי חוֹלֶה הַיּוֹם. כּוֹאֵב לִי הָרֹאשׁ, וְיֵשׁ לִי חֹם. מָחָר אֲנִי הוֹלֵךְ לָרוֹפֵא." }
+    {
+      "t": "ligar",
+      "q": "Ligue as partes do corpo.",
+      "pares": [
+        [
+          "רֹאשׁ",
+          "cabeça"
+        ],
+        [
+          "בֶּטֶן",
+          "barriga"
+        ],
+        [
+          "גָּרוֹן",
+          "garganta"
+        ],
+        [
+          "יָד",
+          "mão, braço"
+        ],
+        [
+          "גַּב",
+          "costas"
+        ]
+      ]
+    },
+    {
+      "t": "ligar",
+      "q": "E os pares.",
+      "pares": [
+        [
+          "עֵינַיִם",
+          "olhos"
+        ],
+        [
+          "אָזְנַיִם",
+          "orelhas"
+        ],
+        [
+          "שִׁנַּיִם",
+          "dentes"
+        ],
+        [
+          "יָדַיִם",
+          "mãos"
+        ],
+        [
+          "רַגְלַיִם",
+          "pernas"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Estou com dor de cabeça\" (fala uma mulher)",
+      "opcoes": [
+        "כּוֹאֵב לִי הָרֹאשׁ.",
+        "כּוֹאֶבֶת לִי הָרֹאשׁ.",
+        "אֲנִי כּוֹאֶבֶת הָרֹאשׁ."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. O verbo concorda com o que dói, não com quem fala: רֹאשׁ é masculino, então כּוֹאֵב, mesmo para uma mulher.",
+        "2": "O hebraico diz \"dói PARA mim a cabeça\": כּוֹאֵב לִי הָרֹאשׁ."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"Estou com dor de barriga\"",
+      "opcoes": [
+        "כּוֹאֶבֶת לִי הַבֶּטֶן.",
+        "כּוֹאֵב לִי הַבֶּטֶן."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "בֶּטֶן é feminina: כּוֹאֶבֶת."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"As minhas pernas estão doendo\"",
+      "opcoes": [
+        "כּוֹאֲבוֹת לִי הָרַגְלַיִם.",
+        "כּוֹאֵב לִי הָרַגְלַיִם.",
+        "כּוֹאֲבִים לִי הָרַגְלַיִם."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "São as duas pernas: o verbo vai para o plural.",
+        "2": "Plural, sim, mas feminino: as partes do corpo em par são femininas. כּוֹאֲבוֹת."
+      }
+    },
+    {
+      "t": "separar",
+      "q": "כּוֹאֵב לִי ou כּוֹאֶבֶת לִי?",
+      "baldes": [
+        "כּוֹאֵב לִי",
+        "כּוֹאֶבֶת לִי"
+      ],
+      "itens": [
+        [
+          "הָרֹאשׁ",
+          0
+        ],
+        [
+          "הַגָּרוֹן",
+          0
+        ],
+        [
+          "הַבֶּטֶן",
+          1
+        ],
+        [
+          "הַיָּד",
+          1
+        ],
+        [
+          "הַגַּב",
+          0
+        ],
+        [
+          "הָרֶגֶל",
+          1
+        ]
+      ]
+    },
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "מַרְגִּישׁ",
+      "linhas": [
+        [
+          "mulher",
+          "מרגישה"
+        ],
+        [
+          "homens",
+          "מרגישים"
+        ],
+        [
+          "mulheres",
+          "מרגישות"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "O que se diz para alguém doente?",
+      "opcoes": [
+        "רְפוּאָה שְׁלֵמָה!",
+        "בְּתֵאָבוֹן!",
+        "מַזָּל טוֹב!"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "vf",
+      "q": "כַּדּוּר quer dizer \"bola\" e também \"comprimido\".",
+      "certa": true
+    },
+    {
+      "t": "vf",
+      "q": "Em Israel, o número da ambulância é 101.",
+      "certa": true
+    },
+    {
+      "t": "completar",
+      "q": "\"É preciso beber bastante água\"",
+      "antes": "צָרִיךְ לִשְׁתּוֹת",
+      "depois": "מַיִם",
+      "respostas": [
+        "הרבה"
+      ]
+    },
+    {
+      "t": "erro",
+      "q": "Fala uma mulher. Ache o erro e escreva a frase certa.",
+      "errada": "אֲנִי מַרְגִּישׁ לֹא טוֹב.",
+      "respostas": [
+        "אני מרגישה לא טוב"
+      ],
+      "porque": "Para ela: מַרְגִּישָׁה."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "כּוֹאֵב לִי הַבֶּטֶן.",
+      "respostas": [
+        "כואבת לי הבטן"
+      ],
+      "porque": "בֶּטֶן é feminina: כּוֹאֶבֶת."
+    },
+    {
+      "t": "montar",
+      "pt": "Estou com febre.",
+      "palavras": [
+        "יֵשׁ",
+        "לִי",
+        "חֹם"
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "Você precisa ir ao médico. (a ele)",
+      "palavras": [
+        "אַתָּה",
+        "צָרִיךְ",
+        "לָלֶכֶת",
+        "לָרוֹפֵא"
+      ]
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "Natan",
+          "אֵיךְ אַתְּ מַרְגִּישָׁה?"
+        ]
+      ],
+      "opcoes": [
+        "לֹא כָּל כָּךְ טוֹב. כּוֹאֵב לִי הַגָּרוֹן.",
+        "בְּשִׂמְחָה!",
+        "בְּמַרְץ."
+      ],
+      "certa": 0,
+      "porque": "לֹא כָּל כָּךְ טוֹב = não muito bem."
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural da farmacêutica?",
+      "linhas": [
+        [
+          "Noa",
+          "כַּמָּה פְּעָמִים בַּיּוֹם?"
+        ]
+      ],
+      "opcoes": [
+        "שָׁלוֹשׁ פְּעָמִים, אַחֲרֵי הָאֹכֶל.",
+        "בְּעוֹד שָׁעָה.",
+        "כֵּן, יֵשׁ."
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ordenar",
+      "q": "Ponha a conversa na ordem.",
+      "falas": [
+        "אֲנִי מַרְגִּישׁ לֹא טוֹב.",
+        "מָה כּוֹאֵב לְךָ?",
+        "הַבֶּטֶן.",
+        "אוּלַי צָרִיךְ לָלֶכֶת לָרוֹפֵא."
+      ]
+    },
+    {
+      "t": "ouvir",
+      "he": "כּוֹאֶבֶת לִי הָאֹזֶן.",
+      "q": "O que dói?",
+      "opcoes": [
+        "O ouvido",
+        "O dente",
+        "O olho"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "יֵשׁ לוֹ חֹם.",
+      "q": "O que você ouviu?",
+      "opcoes": [
+        "Ele está com febre",
+        "Ela está com febre",
+        "Ele está com frio"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ditado",
+      "he": "רֹאשׁ",
+      "respostas": [
+        "ראש"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "farmácia",
+      "respostas": [
+        "בית מרקחת"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "remédio",
+      "respostas": [
+        "תרופה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "consulta marcada",
+      "respostas": [
+        "תור"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também.\"",
+      "antes": "שָׁלוֹם. אֲנִי",
+      "depois": "לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן.",
+      "respostas": [
+        "מרגישה"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também.\"",
+      "exemplo": "שָׁלוֹם. אֲנִי מַרְגִּישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן."
+    },
+    {
+      "t": "aberta",
+      "pt": "Você está doente. Escreva uma mensagem curta: como se sente, o que dói, e o que vai fazer.",
+      "exemplo": "אֲנִי חוֹלֶה הַיּוֹם. כּוֹאֵב לִי הָרֹאשׁ, וְיֵשׁ לִי חֹם. מָחָר אֲנִי הוֹלֵךְ לָרוֹפֵא."
+    }
   ]
 }
