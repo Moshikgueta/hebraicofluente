@@ -142,3 +142,61 @@ pessoas: אִישׁ / אִשָּׁה · יֶלֶד / יַלְדָּה · חָב�
 16. Ouvir: מִי זֶה? → sobre **um homem/menino**
 17. Diálogo: o que Maya mostra primeiro? → **uma chave**
 18. Diálogo, V ou F: na foto, o homem é o pai da Maya → **Falso**
+
+## Unidade 3 - "Como é?" (aprovada pelo dono em 06/10/2026)
+
+### Palavras
+
+Adjetivos (m · f · m pl · f pl): גָּדוֹל גְּדוֹלָה גְּדוֹלִים גְּדוֹלוֹת ·
+קָטָן קְטַנָּה קְטַנִּים קְטַנּוֹת · חָדָשׁ חֲדָשָׁה חֲדָשִׁים חֲדָשׁוֹת ·
+יָשָׁן יְשָׁנָה יְשָׁנִים יְשָׁנוֹת · יָפֶה יָפָה יָפִים יָפוֹת ·
+טוֹב טוֹבָה טוֹבִים טוֹבוֹת · נֶחְמָד נֶחְמָדָה נֶחְמָדִים נֶחְמָדוֹת
+
+Cores (m · f): אָדֹם אֲדֻמָּה · כָּחֹל כְּחֻלָּה · לָבָן לְבָנָה · שָׁחֹר שְׁחֹרָה · יָרֹק יְרֻקָּה
+
+E também: הַ־ · אֵלֶּה · אֲנַחְנוּ · אַתֶּם / אַתֶּן · הֵם / הֵן · אֲבָל · מְאֹד
+
+### Gramática
+
+1. Plural: masculino ־ִים, feminino ־וֹת.
+2. Adjetivo depois e concorda. Exceções mantidas: שֻׁלְחָנוֹת e כִּסְאוֹת são
+   masculinos com ־וֹת (שֻׁלְחָנוֹת גְּדוֹלִים, כִּסְאוֹת חֲדָשִׁים).
+3. "O/a" = הַ־, nas duas palavras: הַסֵּפֶר הֶחָדָשׁ.
+4. Artigo só no substantivo = frase: הַסֵּפֶר חָדָשׁ ("o livro é novo").
+5. Pronomes do plural ativos; אַתֶּם/אַתֶּן e הֵם/הֵן (grupo misto = masculino).
+
+### Diálogo (Natan visita a casa nova da Maya)
+
+| Quem | Hebraico | Português |
+|---|---|---|
+| Natan | מַיָּה, זֶה הַבַּיִת הֶחָדָשׁ? | Maya, esta é a casa nova? |
+| Maya | כֵּן! הַבַּיִת קָטָן, אֲבָל יָפֶה. | Sim! A casa é pequena, mas bonita. |
+| Natan | הַשֻּׁלְחָן חָדָשׁ? | A mesa é nova? |
+| Maya | לֹא, הַשֻּׁלְחָן יָשָׁן. אֲבָל הַכִּסְאוֹת חֲדָשִׁים! | Não, a mesa é velha. Mas as cadeiras são novas! |
+| Natan | וּמָה אֵלֶּה? | E o que são estas? |
+| Maya | אֵלֶּה מַתָּנוֹת. הֵן מִנֹּעָה וּמִדָּנִי. | São presentes. São da Noa e do Dani. |
+| Natan | הַמְּנוֹרָה הָאֲדֻמָּה יָפָה מְאֹד! | A luminária vermelha é muito bonita! |
+| Maya | תּוֹדָה! | Obrigada! |
+
+### Banco de exercícios (20 itens)
+
+1. Plural de יֶלֶד → **יְלָדִים**
+2. Plural de מַתָּנָה → **מַתָּנוֹת**
+3. Separar (־ִים / ־וֹת): תִּיקִים · מְנוֹרוֹת · חֲבֵרִים · מַחְבָּרוֹת · טֶלֶפוֹנִים · יְלָדוֹת
+4. מְנוֹרָה ___ (grande) → **גְּדוֹלָה**
+5. תִּיקִים ___ (novos) → **חֲדָשִׁים**
+6. חֲבֵרוֹת ___ → **נֶחְמָדוֹת**
+7. שֻׁלְחָנוֹת ___ → **גְּדוֹלִים** (exceção)
+8. Achar o erro: סֵפֶר טוֹבָה → **סֵפֶר טוֹב**
+9. כּוֹס ___ (azul) → **כְּחֻלָּה**
+10. Montar: "o caderno novo" → **הַמַּחְבֶּרֶת הַחֲדָשָׁה**
+11. Frase inteira "a mesa é velha" → **הַשֻּׁלְחָן יָשָׁן**
+12. הַיֶּלֶד הַקָּטָן → **o menino pequeno**
+13. V ou F: "o livro novo" usa הַ duas vezes → **Verdadeiro**
+14. Falando com a Maya e a Noa → **אַתֶּן**
+15. Falando com o Dani e a Noa → **אַתֶּם**
+16. ___ מַתָּנוֹת → **אֵלֶּה**
+17. Ouvir: הַתִּיק הַשָּׁחֹר → **a mochila preta**
+18. Ouvir: הֵן נֶחְמָדוֹת → fala de **mulheres**
+19. Diálogo: como é a casa? → **pequena, mas bonita**
+20. Diálogo, V ou F: a mesa é nova → **Falso**
