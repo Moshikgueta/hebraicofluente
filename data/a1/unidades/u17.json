@@ -1,0 +1,137 @@
+{
+  "n": 17,
+  "revisado": false,
+  "tituloPt": "Viagem: no aeroporto e no hotel",
+  "objetivoPt": "Fazer o check-in num hotel, perguntar horários (de… até…), pedir ajuda, dizer o que já está pronto e o que ainda não, e entender o painel do aeroporto.",
+  "situacaoPt": "O Tom, que é brasileiro, chega a Jerusalém às dez da noite, cansado e com uma mala pesada. Na recepção do hotel, ele precisa resolver tudo em hebraico.",
+  "palavras": [
+    { "he": "שְׂדֵה תְּעוּפָה", "translit": "sdé teufá", "pt": "aeroporto (expressão fixa)" },
+    { "he": "טִיסָה", "translit": "tisá", "pt": "voo" },
+    { "he": "מָטוֹס", "translit": "matós", "pt": "avião" },
+    { "he": "דַּרְכּוֹן", "translit": "darkon", "pt": "passaporte" },
+    { "he": "מִזְוָדָה", "translit": "mizvadá", "pt": "mala" },
+    { "he": "כַּרְטִיס", "translit": "kartís", "pt": "passagem; cartão" },
+    { "pt": "turista", "formas": ["תַּיָּר", "תַּיֶּרֶת", "תַּיָּרִים", "תַּיָּרוֹת"] },
+    { "he": "מָלוֹן", "translit": "malón", "pt": "hotel" },
+    { "he": "קַבָּלָה", "translit": "kabalá", "pt": "recepção" },
+    { "he": "הַזְמָנָה", "translit": "hazmaná", "pt": "reserva; pedido" },
+    { "he": "מַזְגָן", "translit": "mazgan", "pt": "ar-condicionado" },
+    { "he": "מַגֶּבֶת", "translit": "magévet", "pt": "toalha" },
+    { "he": "סִיסְמָה", "translit": "sismá", "pt": "senha" },
+    { "pt": "ajudar", "formas": ["עוֹזֵר", "עוֹזֶרֶת", "עוֹזְרִים", "עוֹזְרוֹת"] },
+    { "pt": "esperar", "formas": ["מְחַכֶּה", "מְחַכָּה", "מְחַכִּים", "מְחַכּוֹת"] },
+    { "pt": "pronto", "formas": ["מוּכָן", "מוּכָנָה", "מוּכָנִים", "מוּכָנוֹת"] },
+    { "pt": "pesado", "formas": ["כָּבֵד", "כְּבֵדָה", "כְּבֵדִים", "כְּבֵדוֹת"] },
+    { "he": "כְּבָר", "translit": "kvar", "pt": "já" },
+    { "he": "עוֹד לֹא", "translit": "od lo", "pt": "ainda não" },
+    { "he": "מִ־… עַד…", "translit": "mi-… ad…", "pt": "de… até…" },
+    { "he": "בְּרוּכִים הַבָּאִים!", "translit": "bruchim habaím!", "pt": "bem-vindos!" },
+    { "he": "עַל שֵׁם…", "translit": "al shem…", "pt": "no nome de…" }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "Ajudar e esperar: PARA alguém",
+      "textoPt": "Em hebraico se ajuda e se espera \"para\" alguém, com o לְ e as terminações da Unidade 8: לַעֲזוֹר לִי (me ajudar), אֲנִי מְחַכֶּה לָךְ (estou esperando você), הִיא עוֹזֶרֶת לוֹ (ela o ajuda).",
+      "erroPt": "O brasileiro traduz \"me ajuda\" com a palavra de objeto direto, אוֹתִי. Mas com עוֹזֵר e מְחַכֶּה é sempre לְ: אַתָּה יָכוֹל לַעֲזוֹר לִי?",
+      "exemplos": [
+        { "he": "אַתָּה יָכוֹל לַעֲזוֹר לִי?", "pt": "Você pode me ajudar? (a ele)" },
+        { "he": "אֲנַחְנוּ מְחַכִּים לָכֶם בַּקַּבָּלָה.", "pt": "Estamos esperando vocês na recepção." }
+      ]
+    },
+    {
+      "tituloPt": "Já e ainda não",
+      "textoPt": "כְּבָר é \"já\" e עוֹד לֹא é \"ainda não\", antes do que se diz: הַחֶדֶר כְּבָר מוּכָן? (o quarto já está pronto?) · עוֹד לֹא (ainda não) · הַחֶדֶר עוֹד לֹא מוּכָן.",
+      "erroPt": "Não use עוֹד sozinho para \"ainda não\": a resposta curta é עוֹד לֹא, as duas palavras."
+    },
+    {
+      "tituloPt": "De… até…: מִ־… עַד…",
+      "textoPt": "Para horários: מִ־ grudado no começo e עַד no fim: מִשֶּׁבַע עַד עֶשֶׂר (das sete às dez), מִיּוֹם רִאשׁוֹן עַד יוֹם חֲמִישִׁי. É o mesmo מִ־ de מִבְּרָזִיל (Unidade 1).",
+      "exemplos": [
+        { "he": "אֲרוּחַת הַבֹּקֶר מִשֶּׁבַע עַד עֶשֶׂר.", "pt": "O café da manhã é das sete às dez." }
+      ]
+    },
+    {
+      "tituloPt": "O primeiro, o segundo, o terceiro andar",
+      "textoPt": "Os andares usam os mesmos números de ordem dos dias da semana (Unidade 7): יוֹם שְׁלִישִׁי é \"o terceiro dia\". Como קוֹמָה é feminina: הַקּוֹמָה הָרִאשׁוֹנָה, הַשְּׁנִיָּה, הַשְּׁלִישִׁית.",
+      "erroPt": "No Brasil o \"primeiro andar\" fica acima do térreo; em Israel também: o térreo é קוֹמַת קַרְקַע, e a קוֹמָה רִאשׁוֹנָה fica em cima dele."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Check-in em Jerusalém",
+    "linhas": [
+      { "quem": "A recepcionista", "he": "עֶרֶב טוֹב, בְּרוּכִים הַבָּאִים!", "translit": "érev tov, bruchim habaím!", "pt": "Boa noite, bem-vindo!" },
+      { "quem": "Tom", "he": "עֶרֶב טוֹב. יֵשׁ לִי הַזְמָנָה עַל שֵׁם טוֹם סִילְבָה.", "translit": "érev tov. yesh li hazmaná al shem Tom Silva.", "pt": "Boa noite. Tenho uma reserva no nome de Tom Silva." },
+      { "quem": "A recepcionista", "he": "רֶגַע… כֵּן. עַד יוֹם שִׁשִּׁי, נָכוֹן?", "translit": "réga… ken. ad yom shishi, nachon?", "pt": "Um momento… Sim. Até sexta-feira, certo?" },
+      { "quem": "Tom", "he": "נָכוֹן. הַחֶדֶר כְּבָר מוּכָן?", "translit": "nachon. hachéder kvar muchan?", "pt": "Certo. O quarto já está pronto?" },
+      { "quem": "A recepcionista", "he": "כֵּן. הִנֵּה הַמַּפְתֵּחַ: חֶדֶר 304, בַּקּוֹמָה הַשְּׁלִישִׁית.", "translit": "ken. hiné hamafteach: chéder shalosh éfes arbá, bakomá hashlishit.", "pt": "Sim. Aqui está a chave: quarto 304, no terceiro andar." },
+      { "quem": "Tom", "he": "יֵשׁ מַזְגָן בַּחֶדֶר?", "translit": "yesh mazgan bachéder?", "pt": "Tem ar-condicionado no quarto?" },
+      { "quem": "A recepcionista", "he": "כֵּן, וְגַם וַויְפַיי. הַסִּיסְמָה עַל הַכַּרְטִיס.", "translit": "ken, vegam wáifai. hasismá al hakartís.", "pt": "Tem, e wi-fi também. A senha está no cartão." },
+      { "quem": "Tom", "he": "וּמָתַי אֲרוּחַת הַבֹּקֶר?", "translit": "umatai aruchat habóker?", "pt": "E quando é o café da manhã?" },
+      { "quem": "A recepcionista", "he": "מִשֶּׁבַע עַד עֶשֶׂר, בַּקּוֹמָה הָרִאשׁוֹנָה.", "translit": "mishéva ad éser, bakomá harishoná.", "pt": "Das sete às dez, no primeiro andar." },
+      { "quem": "Tom", "he": "תּוֹדָה. אַתְּ יְכוֹלָה לַעֲזוֹר לִי עִם הַמִּזְוָדָה? הִיא מְאֹד כְּבֵדָה.", "translit": "todá. at yecholá laazor li im hamizvadá? hi meod kvedá.", "pt": "Obrigado. Você pode me ajudar com a mala? Ela está muito pesada." },
+      { "quem": "A recepcionista", "he": "בְּטַח. לַיְלָה טוֹב, וּבְרוּכִים הַבָּאִים לִירוּשָׁלַיִם!", "translit": "betach. láila tov, uvruchim habaím liYerushaláyim!", "pt": "Claro. Boa noite, e bem-vindo a Jerusalém!" }
+    ],
+    "glossario": [
+      { "he": "וַויְפַיי", "translit": "wáifai", "pt": "wi-fi" },
+      { "he": "אֲרוּחַת הַבֹּקֶר", "translit": "aruchat habóker", "pt": "o café da manhã (expressão fixa)" }
+    ],
+    "notaPt": "בְּרוּכִים הַבָּאִים está no plural, e se diz assim até para uma pessoa só, como saudação geral. Para um homem, também se ouve בָּרוּךְ הַבָּא; para uma mulher, בְּרוּכָה הַבָּאָה."
+  },
+  "leitura": {
+    "tituloPt": "O painel do aeroporto",
+    "semPontos": true,
+    "linhas": [
+      { "he": "שְׂדֵה הַתְּעוּפָה בֶּן גּוּרְיוֹן", "translit": "sdé hateufá Ben Gurion", "pt": "Aeroporto Ben Gurion" },
+      { "he": "טִיסָה לְסָאוֹ פָּאוּלוֹ: 23:40", "translit": "tisá leSão Paulo: esrim veshalosh arbaím", "pt": "Voo para São Paulo: 23h40" },
+      { "he": "שַׁעַר 7", "translit": "sháar shéva", "pt": "Portão 7" },
+      { "he": "הַטִּיסָה מְאֻחֶרֶת בְּשָׁעָה", "translit": "hatisá meuchéret beshaá", "pt": "O voo está atrasado uma hora" }
+    ],
+    "perguntas": [
+      { "t": "escolha", "q": "Para onde vai o voo?", "opcoes": ["São Paulo", "Rio", "Tel Aviv"], "certa": 0 },
+      { "t": "escolha", "q": "Qual é o portão?", "opcoes": ["7", "23", "40"], "certa": 0 },
+      { "t": "vf", "q": "O voo está no horário.", "certa": false, "porque": "מְאֻחֶרֶת בְּשָׁעָה: atrasado uma hora. מְאֻחֶרֶת é o feminino de מְאֻחָר (Unidade 9), porque טִיסָה é feminina." }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "As perguntas do aeroporto Ben Gurion",
+      "textoPt": "Ao sair de Israel pelo aeroporto Ben Gurion, antes do check-in, um agente de segurança faz algumas perguntas: o que você veio fazer, onde ficou, se alguém lhe deu alguma coisa para levar. É rotina e acontece com todo mundo. Chegue com tempo: o costume é estar no aeroporto três horas antes de um voo internacional."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Voar, voo, avião, piloto",
+      "textoPt": "טָס (voa), טִיסָה (voo), מָטוֹס (avião) e טַיָּס (piloto) saem todos da mesma raiz: ט, ו/י, ס. É a mesma ideia da Unidade 9: aprendeu uma, você está a meio caminho das outras."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu faço o check-in num hotel e pergunto os horários.",
+    "Eu peço ajuda com לַעֲזוֹר לִי.",
+    "Eu digo o que já está pronto (כְּבָר) e o que ainda não (עוֹד לֹא)."
+  ],
+  "exercicios": [
+    { "t": "ligar", "q": "Ligue as palavras da viagem.", "pares": [["טִיסָה", "voo"], ["דַּרְכּוֹן", "passaporte"], ["מִזְוָדָה", "mala"], ["כַּרְטִיס", "passagem, cartão"], ["שְׂדֵה תְּעוּפָה", "aeroporto"]] },
+    { "t": "ligar", "q": "E as do hotel.", "pares": [["מָלוֹן", "hotel"], ["קַבָּלָה", "recepção"], ["הַזְמָנָה", "reserva"], ["מַזְגָן", "ar-condicionado"], ["מַגֶּבֶת", "toalha"]] },
+    { "t": "escolha", "q": "\"Você pode me ajudar?\" (a ele)", "opcoes": ["אַתָּה יָכוֹל לַעֲזוֹר לִי?", "אַתָּה יָכוֹל לַעֲזוֹר אוֹתִי?", "אַתָּה יָכוֹל עוֹזֵר לִי?"], "certa": 0, "dicas": { "1": "Quase. Em hebraico se ajuda PARA alguém: לַעֲזוֹר לִי.", "2": "Depois de יָכוֹל vem o infinitivo: לַעֲזוֹר." } },
+    { "t": "escolha", "q": "\"Estou esperando você\" (fala um homem, para uma mulher)", "opcoes": ["אֲנִי מְחַכֶּה לָךְ.", "אֲנִי מְחַכֶּה אוֹתָךְ.", "אֲנִי מְחַכָּה לָךְ."], "certa": 0, "dicas": { "1": "Espera-se PARA alguém: מְחַכֶּה לָךְ.", "2": "מְחַכָּה é a forma de quem fala sendo mulher. Quem fala aqui é um homem: מְחַכֶּה." } },
+    { "t": "tabela", "q": "Complete as formas. (Verbo em ה.)", "base": "מְחַכֶּה", "linhas": [["mulher", "מחכה"], ["homens", "מחכים"], ["mulheres", "מחכות"]] },
+    { "t": "tabela", "q": "Complete as formas.", "base": "מוּכָן", "linhas": [["feminino", "מוכנה"], ["masc. plural", "מוכנים"], ["fem. plural", "מוכנות"]] },
+    { "t": "escolha", "q": "\"O quarto já está pronto?\"", "opcoes": ["הַחֶדֶר כְּבָר מוּכָן?", "הַחֶדֶר עוֹד מוּכָן?", "הַחֶדֶר כְּבָר מוּכָנָה?"], "certa": 0, "dicas": { "1": "עוֹד לֹא é \"ainda não\"; \"já\" é כְּבָר.", "2": "חֶדֶר é masculino: מוּכָן." } },
+    { "t": "escolha", "q": "A recepcionista diz: הַחֶדֶר עוֹד לֹא מוּכָן. O que isso quer dizer?", "opcoes": ["O quarto ainda não está pronto", "O quarto já está pronto", "Não tem quarto"], "certa": 0 },
+    { "t": "vf", "q": "בְּרוּכִים הַבָּאִים quer dizer \"bem-vindos\".", "certa": true },
+    { "t": "vf", "q": "טִיסָה (voo) e מָטוֹס (avião) têm a mesma raiz.", "certa": true, "porque": "ט, ו/י, ס: a raiz de \"voar\"." },
+    { "t": "erro", "q": "Ache o erro e escreva a frase certa.", "errada": "אַתְּ יְכוֹלָה לַעֲזוֹר אוֹתִי?", "respostas": ["את יכולה לעזור לי"], "porque": "Com לַעֲזוֹר é לִי." },
+    { "t": "erro", "q": "Ache o erro e escreva a frase certa.", "errada": "הַמִּזְוָדָה כָּבֵד.", "respostas": ["המזוודה כבדה", "המזודה כבדה"], "porque": "מִזְוָדָה é feminina: כְּבֵדָה." },
+    { "t": "montar", "pt": "Eu tenho uma reserva.", "palavras": ["יֵשׁ", "לִי", "הַזְמָנָה"] },
+    { "t": "montar", "pt": "O café da manhã é das sete às dez.", "palavras": ["אֲרוּחַת הַבֹּקֶר", "מִשֶּׁבַע", "עַד", "עֶשֶׂר"] },
+    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["A recepcionista", "בְּרוּכִים הַבָּאִים! יֵשׁ לָכֶם הַזְמָנָה?"]], "opcoes": ["כֵּן, עַל שֵׁם סִילְבָה.", "לֹא, תּוֹדָה, אֲנִי צִמְחוֹנִי.", "בְּאוֹגוּסְט."], "certa": 0 },
+    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["Tom", "מָה הַסִּיסְמָה שֶׁל הַוַּויְפַיי?"]], "opcoes": ["הִיא עַל הַכַּרְטִיס.", "בַּקּוֹמָה הַשְּׁנִיָּה.", "עַד יוֹם שִׁשִּׁי."], "certa": 0 },
+    { "t": "ordenar", "q": "Ponha a conversa na ordem.", "falas": ["שָׁלוֹם, יֵשׁ לִי הַזְמָנָה.", "עַל אֵיזֶה שֵׁם?", "סִילְבָה, טוֹם סִילְבָה.", "כֵּן, הִנֵּה הַמַּפְתֵּחַ."] },
+    { "t": "ouvir", "he": "הַטִּיסָה מְאֻחֶרֶת.", "q": "O que aconteceu com o voo?", "opcoes": ["Está atrasado", "Foi cancelado", "Já saiu"], "certa": 0 },
+    { "t": "ouvir", "he": "אֲרוּחַת בֹּקֶר עַד עֶשֶׂר.", "q": "O que você ouviu?", "opcoes": ["Café da manhã até as dez", "Café da manhã às dez", "Café da manhã a partir das dez"], "certa": 0 },
+    { "t": "ditado", "he": "דַּרְכּוֹן", "respostas": ["דרכון"] },
+    { "t": "escrever", "pt": "\"das sete\" (numa palavra só)", "respostas": ["משבע"] },
+    { "t": "escrever", "pt": "o hotel", "respostas": ["המלון"] },
+    { "t": "aberta", "pt": "Você chega a um hotel. Diga que tem reserva, pergunte o horário do café da manhã e mais uma coisa.", "exemplo": "עֶרֶב טוֹב, יֵשׁ לִי הַזְמָנָה עַל שֵׁם סִילְבָה. מָתַי אֲרוּחַת הַבֹּקֶר? יֵשׁ מַזְגָן בַּחֶדֶר?" }
+  ]
+}
