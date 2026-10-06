@@ -319,3 +319,58 @@ administrador) até o dono decidir lançar.
 | 8 | certificado com identificador e verificação pública; tela de encerramento | aprovar textos |
 | 9 | QA: celular em 375, 390 e 430 px, RTL, teclado, leitor de tela, as 20 perguntas do pedido | |
 | 10 | polimento; catálogo de áudio do A1 para gravar no painel | gravar |
+
+## 9. O que foi feito (06/10/2026)
+
+| Fase | Entrega |
+|---|---|
+| 1 | esta auditoria; conflitos C1 a C5 decididos pelo dono |
+| 2 e 3 | data/a1/ com módulos, um arquivo por unidade, blocos novos (situação, leitura, Em Israel, curiosidade, Eu consigo), tipos novos (ditado, conversa, ordenar) e retorno por opção errada |
+| 4 | Unidades 0 e 9 a 20 escritas (rascunho); blocos novos nas Unidades 1 a 8; trilha de história em 10 capítulos. Total: 21 unidades, 11 módulos, 544 entradas de vocabulário, 507 exercícios |
+| 5 | revisão espaçada (Leitner 0 a 4), Minha revisão, Meu hebraico, competências por habilidade, conquistas do A1, chave de transliteração, estatísticas anônimas por unidade |
+| 6 | 4 checkpoints cumulativos |
+| 7 | exame em 6 habilidades, sorteado e corrigido no servidor (tabela provas_a1), sem gabarito no navegador |
+| 8 | certificado emitido só pelo servidor, com código e página pública de verificação; tela de conclusão |
+| 9 | QA: 15 telas do A1 em 375, 390 e 430 px sem rolagem horizontal, sem erro de página, alvos de toque de 44 px; build, SEO, pacote público, testes (1.363) |
+| 10 | catálogo de gravação: onda 6 com as unidades revisadas (235 clipes das Unidades 1 a 8) |
+
+A revisão de tudo o que é novo está em **A1-REVISAO.md** (gerado por
+`node tools/a1-revisao.mjs`).
+
+## 10. As 20 perguntas do QA, com franqueza
+
+1. **Um aluno do zero consegue usar?** Sim, com o alfabeto antes (a Unidade 0 diz isso). Sem o alfabeto, o A1 sozinho não ensina a ler as letras.
+2. **Progressão lógica?** Sim: a ordem aprovada (1 a 8) e as novas em cima dela; cada unidade nova usa só o que veio antes, e o que ainda não foi ensinado aparece como expressão fixa, com glossário.
+3. **Algo aparece sem ter sido ensinado?** Nas leituras e diálogos, algumas palavras novas, sempre traduzidas no glossário ou na linha. Nos exercícios, conferi item por item.
+4. **Conteúdo suficiente para A1?** As situações do A1 estão todas cobertas (seção 2.1). O vocabulário ativo passa de 540 entradas, sem contar as formas.
+5. **Vocabulário suficiente?** Sim para um A1 funcional.
+6. **Escuta suficiente?** No conteúdo, sim (2 a 3 itens de escuta e um ditado por unidade, diálogos e leituras com gravação). **Na prática, ainda não:** o A1 não tem nenhuma gravação; até gravar, a escuta fica escondida e não entra no exame.
+7. **Leitura suficiente?** Sim: uma leitura do mundo real por unidade nova, sem nikud a partir da Unidade 9, com a chave para mostrar.
+8. **Produção?** Escrita guiada em toda unidade e uma escrita livre (sem nota) por unidade. A fala depende das gravações (para comparar) e não foi feita.
+9. **Revisão?** Sim: espaçada, por item, com desafio acumulativo.
+10. **Avaliação?** 4 checkpoints e o exame corrigido no servidor.
+11. **O aluno percebe o progresso?** Sim: barra do curso, porcentagem por módulo, competências, conquistas, caderno.
+12. **Celular?** Testado em 375, 390 e 430 px; sem rolagem horizontal; arrastar não existe (tudo é por toque).
+13. **RTL?** Todo hebraico vai em `dir="rtl" lang="he"`; frases mistas pelo `Misto`; campos de resposta RTL com o teclado virtual.
+14. **Português natural?** Escrito para brasileiros, sem travessão.
+15. **Hebraico natural?** Escrito para soar como a rua, com as variantes que se ouvem anotadas. **Precisa da revisão do dono antes de abrir.**
+16. **Erros de brasileiro?** Um "Erro comum" em quase toda explicação, mais a Unidade 0 inteira de pronúncia.
+17. **Cultura?** Uma caixa "Em Israel" e uma curiosidade por unidade, e a trilha de história.
+18. **Divertido sem ser infantil?** Situações com personagens recorrentes, conquistas sóbrias, sem mascote.
+19. **Parece premium?** A identidade do site, limpa, testada no celular.
+20. **Dá para cobrar?** Depois de: revisar o hebraico novo, gravar o áudio do A1, e acertar os pontos abaixo.
+
+## 11. O que ainda falta (e por quê)
+
+| # | Falta | Por quê / quem |
+|---|---|---|
+| F1 | Revisar o hebraico novo (A1-REVISAO.md) | decisão do dono: tudo no fim |
+| F2 | Gravar o A1 (onda 6) e, depois de aprovadas, as Unidades 0 e 9 a 20 | o catálogo só pede gravação de unidade revisada |
+| F3 | Menu do aluno que comprou só o A1 | o menu de baixo é o do alfabeto; decisão antes de vender |
+| F4 | Página de vendas do A1 (diz "6 módulos") | texto comercial: decisão do dono |
+| F5 | Política de privacidade: o exame, o certificado e a página pública de verificação | texto legal: revisão de advogado |
+| F6 | Exercícios com imagem (imagem → palavra) | previstos (5.2), não feitos: as 102 ilustrações são do alfabeto e cobrem pouco do A1 |
+| F7 | QR code no certificado | o certificado tem o código e o link; QR pede uma biblioteca nova |
+| F8 | Carga horária no certificado | só com número medido (C5) |
+| F9 | Conteúdo dividido por módulo | o A1 inteiro pesa 78 KB comprimido, uma vez, com cache; dividir fica para quando crescer |
+| F10 | Prática de fala com correção | depende das gravações |
