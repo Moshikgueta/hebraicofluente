@@ -126,7 +126,7 @@ function UmaDeCadaVez() {
    depende dela, e ver os três estágios lado a lado mostra que a retirada é
    gradual, não um corte. */
 const APOIO = [
-  { rotulo: 'Início', he: 'שָׁלוֹם', tr: 'shalom', pt: 'olá, paz', nota: 'Tudo à mostra: a palavra, como se diz e o que quer dizer.' },
+  { rotulo: 'Início', he: 'שָׁלוֹם', tr: 'shalóm', pt: 'olá, paz', nota: 'Tudo à mostra: a palavra, como se diz e o que quer dizer.' },
   { rotulo: 'Meio', he: 'שָׁלוֹם', tr: 'sh… …', pt: 'olá, paz', nota: 'O apoio encolhe. Você lê e confere só o que ficou em dúvida.' },
   { rotulo: 'Depois', he: 'שָׁלוֹם', tr: '', pt: 'olá, paz', nota: 'Você lê direto do hebraico. O apoio saiu porque já não fazia falta.' }
 ] as const;

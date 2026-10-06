@@ -25,7 +25,9 @@ import { normalizeTyped } from '@/lib/engine/types';
 import { stripNikud } from '@/lib/hebrew';
 import { track } from '@/lib/analytics';
 
-const semAcento = (s: string) => normalizeTyped(s);
+/* Sem acento e com o "ss" do curso (kissé) igual a um s: quem busca "kise"
+   acha a palavra. */
+const semAcento = (s: string) => normalizeTyped(s).replace(/ss/g, 's');
 
 export function VocabularioClient() {
   const leitura = useLeitura();

@@ -242,9 +242,10 @@ export function normalizeTyped(text: string): string {
  * som, e que a transliteração do curso escreve de um jeito só.
  *
  *   · consoante dobrada vira uma - "imma", "abba" e "shabbat" são o que o
- *     daguesh sugere, e o som é o mesmo de "íma", "ába", "shabat";
+ *     daguesh sugere, e o som é o mesmo de "íma", "ába", "shabát"; e o "ss"
+ *     que o curso escreve entre vogais ("kissé", "ossá") é o S de "kise";
  *   · y vira i - "iam", "iom", "tiul" é como se escreve esse som em português,
- *     e o "ii" que isso cria em "tiyul" vira um i só;
+ *     e o "ii" que isso cria em "tiyúl" vira um i só;
  *   · kh vira ch, tz vira ts - as duas convenções de transliteração que o
  *     aluno encontra fora do curso.
  *
@@ -270,7 +271,7 @@ export function normalizeLoose(text: string): string {
     .replace(/([aeiou])h\b/g, '$1')
     .replace(/tz/g, 'ts')
     .replace(/y/g, 'i')
-    /* "tiyul" vira "tiiul" na linha de cima; "tiul" é o mesmo som. */
+    /* "tiyúl" vira "tiiul" na linha de cima; "tiul" é o mesmo som. */
     .replace(/i{2,}/g, 'i')
     .replace(/([^aeiou])\1+/g, '$1');
 }

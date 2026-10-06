@@ -68,10 +68,16 @@ const comOpcoes = (certa: string, erradas: string[], rand: Rand) => {
   return { options: opcoes, answer: opcoes.indexOf(certa) };
 };
 
-/** A leitura errada que o aluno faria sem olhar o ponto: "tov" → "tob". */
+/** A leitura errada que o aluno faria sem olhar o ponto: "tov" → "tob".
+ *  O "ss" entre vogais é um S só, escrito dobrado para o brasileiro não ler Z
+ *  (convenção de 06/10/2026): a troca leva as duas letras, "nassí" → "nashí",
+ *  e não "nasshí". */
 export function leituraTrocada(translit: string, som: string, parSom: string): string {
-  const i = translit.toLowerCase().lastIndexOf(som);
-  return i < 0 ? translit : translit.slice(0, i) + parSom + translit.slice(i + som.length);
+  let i = translit.toLowerCase().lastIndexOf(som);
+  if (i < 0) return translit;
+  let n = som.length;
+  if (som.length === 1 && i > 0 && translit[i - 1]!.toLowerCase() === som) { i -= 1; n = 2; }
+  return translit.slice(0, i) + parSom + translit.slice(i + n);
 }
 
 /**

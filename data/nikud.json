@@ -45,7 +45,7 @@
           "position": "embaixo"
         }
       ],
-      "note": "Também dois sinais para um som só. O chataf segol, o segol com dois pontos ao lado, soa igual: {{אֱלֹהִים}} Elohim. Com {{י}} depois, o tsere muitas vezes soa \"ei\": {{אֵין}} ein, {{אֵיפֹה}} eifo."
+      "note": "Também dois sinais para um som só. O chataf segol, o segol com dois pontos ao lado, soa igual: {{אֱלֹהִים}} Elohím. Com {{י}} depois, o tsere muitas vezes soa \"ei\": {{אֵין}} ein, {{אֵיפֹה}} éifo."
     },
     {
       "sound": "i",
@@ -115,7 +115,7 @@
           "position": "embaixo, dois pontos verticais"
         }
       ],
-      "note": "Não é uma vogal de verdade. Às vezes não tem som nenhum ({{זְמַן}} zman, {{סְלִיחָה}} slichá) e às vezes soa como um E normal, principalmente nos prefixos {{בְּ}}, {{וְ}} e {{לְ}} e embaixo de {{מ}}, {{נ}}, {{ל}}, {{ר}} ou {{י}} no começo da palavra ({{מְדַבֵּר}} medaber, {{בְּבַקָּשָׁה}} bevakashá, {{רְחוֹב}} rechov). A transliteração mostra qual é o caso."
+      "note": "Não é uma vogal de verdade. Às vezes não tem som nenhum ({{זְמַן}} zman, {{סְלִיחָה}} slichá) e às vezes soa como um E normal, principalmente nos prefixos {{בְּ}}, {{וְ}} e {{לְ}} e embaixo de {{מ}}, {{נ}}, {{ל}}, {{ר}} ou {{י}} no começo da palavra ({{מְדַבֵּר}} medabér, {{בְּבַקָּשָׁה}} bevakashá, {{רְחוֹב}} rechóv). A transliteração mostra qual é o caso."
     }
   ],
   "dagesh": {

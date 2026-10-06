@@ -154,6 +154,8 @@ describe('os exercícios de cada som', () => {
     expect(leituraTrocada('óchel', 'ch', 'k')).toBe('ókel');
     expect(leituraTrocada('séfer', 'f', 'p')).toBe('séper');
     expect(leituraTrocada('smol', 's', 'sh')).toBe('shmol');
+    /* "ss" entre vogais é um S só: troca as duas letras. */
+    expect(leituraTrocada('nassí', 's', 'sh')).toBe('nashí');
   });
 
   it('todo exercício tem a resposta certa entre as opções, sem repetir opção nem id', () => {
