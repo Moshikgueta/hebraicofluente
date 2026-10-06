@@ -258,6 +258,7 @@ function Palavras({ e, n, modo }: { e: Extract<EtapaA1, { tipo: 'palavras' }>; n
                 {f.formas.map((h, i) => (
                   <div key={i} className="rounded-[var(--r-md)] bg-surface-2 px-3 py-2 grid gap-0.5 text-center">
                     <He size="word">{h}</He>
+                    {f.translit?.[i] && <span dir="ltr"><Translit texto={f.translit[i]!} modo={modo} /></span>}
                     <span dir="ltr" className="font-ui text-[11.5px] text-ink-muted">{ROTULOS_4[i]}</span>
                   </div>
                 ))}

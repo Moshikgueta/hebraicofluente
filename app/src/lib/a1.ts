@@ -16,7 +16,8 @@ import {
 } from '@/lib/state/a1-estado';
 
 export type PalavraA1 = { he: string; translit: string; pt: string; audioId?: string; reconhecer?: boolean };
-export type FormasA1 = { pt: string; formas: string[] };
+/** `translit`, quando existe, tem uma leitura por forma, na mesma ordem. */
+export type FormasA1 = { pt: string; formas: string[]; translit?: string[] };
 export type LinhaA1 = { quem: string; he: string; translit: string; pt: string; audioId?: string };
 
 /** O retorno de uma opção errada, pelo índice dela: "Quase. בַּיִת é masculino...". */

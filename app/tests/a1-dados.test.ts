@@ -172,6 +172,12 @@ describe('o curso Hebraico A1 (data/a1/)', () => {
       for (const w of u.palavras) {
         if ('formas' in w) {
           if (!w.pt || !w.formas.length || w.formas.some(f => !HEBRAICO.test(f))) faltam.push(`${u.n}: formas de ${w.pt}`);
+          /* Uma leitura por forma, na mesma ordem: a tabela mostra cada uma
+             embaixo da sua forma. */
+          const t = (w as { translit?: unknown }).translit;
+          if (!Array.isArray(t) || t.length !== w.formas.length || t.some(x => typeof x !== 'string' || !x.trim())) {
+            faltam.push(`${u.n}: leitura das formas de ${w.pt}`);
+          }
         } else if (!HEBRAICO.test(w.he) || !w.translit || !w.pt) faltam.push(`${u.n}: ${w.he}`);
       }
       for (const l of u.dialogo.linhas) if (!l.quem || !HEBRAICO.test(l.he) || !l.translit || !l.pt) faltam.push(`${u.n}: ${l.he}`);

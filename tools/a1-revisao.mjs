@@ -83,7 +83,7 @@ for (const n of novas) {
   p('');
   if (u.notaPt) { p(`**Nota:** ${u.notaPt}`); p(''); }
   caixas(u);
-  lista('Palavras', u.palavras.map(w => (w.formas ? `${w.formas.join(' · ')} = ${w.pt}` : `${w.he} (${w.translit}) = ${w.pt}`)));
+  lista('Palavras', u.palavras.map(w => (w.formas ? `${w.formas.map((h, i) => (w.translit?.[i] ? `${h} (${w.translit[i]})` : h)).join(' · ')} = ${w.pt}` : `${w.he} (${w.translit}) = ${w.pt}`)));
   p('**Gramática**');
   p('');
   u.gramatica.forEach((g, i) => {

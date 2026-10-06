@@ -161,13 +161,13 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- קָם · קָמָה · קָמִים · קָמוֹת = levantar (da cama)
-- הוֹלֵךְ · הוֹלֶכֶת · הוֹלְכִים · הוֹלְכוֹת = ir, andar
-- בָּא · בָּאָה · בָּאִים · בָּאוֹת = vir, chegar
-- חוֹזֵר · חוֹזֶרֶת · חוֹזְרִים · חוֹזְרוֹת = voltar
-- עוֹשֶׂה · עוֹשָׂה · עוֹשִׂים · עוֹשׂוֹת = fazer
-- יָשֵׁן · יְשֵׁנָה · יְשֵׁנִים · יְשֵׁנוֹת = dormir
-- עָסוּק · עֲסוּקָה · עֲסוּקִים · עֲסוּקוֹת = ocupado
+- קָם (kam) · קָמָה (kamá) · קָמִים (kamim) · קָמוֹת (kamot) = levantar (da cama)
+- הוֹלֵךְ (holech) · הוֹלֶכֶת (holéchet) · הוֹלְכִים (holchim) · הוֹלְכוֹת (holchot) = ir, andar
+- בָּא (ba) · בָּאָה (baá) · בָּאִים (baím) · בָּאוֹת (baot) = vir, chegar
+- חוֹזֵר (chozer) · חוֹזֶרֶת (chozéret) · חוֹזְרִים (chozrim) · חוֹזְרוֹת (chozrot) = voltar
+- עוֹשֶׂה (osé) · עוֹשָׂה (osá) · עוֹשִׂים (osim) · עוֹשׂוֹת (osot) = fazer
+- יָשֵׁן (yashen) · יְשֵׁנָה (yeshená) · יְשֵׁנִים (yeshenim) · יְשֵׁנוֹת (yeshenot) = dormir
+- עָסוּק (asuk) · עֲסוּקָה (asuká) · עֲסוּקִים (asukim) · עֲסוּקוֹת (asukot) = ocupado
 - בַּצָּהֳרַיִם (batsohoráyim) = ao meio-dia, na hora do almoço
 - אַחֲרֵי הַצָּהֳרַיִם (acharei hatsohoráyim) = à tarde (por escrito, também אַחַר הַצָּהֳרַיִם)
 - בַּלַּיְלָה (baláila) = à noite (mais tarde que o עֶרֶב), de madrugada
@@ -281,10 +281,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- אוֹהֵב · אוֹהֶבֶת · אוֹהֲבִים · אוֹהֲבוֹת = gostar, amar
-- צָרִיךְ · צְרִיכָה · צְרִיכִים · צְרִיכוֹת = precisar, ter que
-- יָכוֹל · יְכוֹלָה · יְכוֹלִים · יְכוֹלוֹת = poder
-- יוֹדֵעַ · יוֹדַעַת · יוֹדְעִים · יוֹדְעוֹת = saber
+- אוֹהֵב (ohev) · אוֹהֶבֶת (ohévet) · אוֹהֲבִים (ohavim) · אוֹהֲבוֹת (ohavot) = gostar, amar
+- צָרִיךְ (tsarich) · צְרִיכָה (tsrichá) · צְרִיכִים (tsrichim) · צְרִיכוֹת (tsrichot) = precisar, ter que
+- יָכוֹל (yachol) · יְכוֹלָה (yecholá) · יְכוֹלִים (yecholim) · יְכוֹלוֹת (yecholot) = poder
+- יוֹדֵעַ (yodea) · יוֹדַעַת (yodáat) · יוֹדְעִים (yodim) · יוֹדְעוֹת (yodot) = saber
 - לִלְמוֹד (lilmód) = estudar (infinitivo)
 - לַעֲבוֹד (laavód) = trabalhar
 - לִכְתּוֹב (lichtóv) = escrever
@@ -518,8 +518,8 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 - לְאָן? (leán?) = para onde?
 - אֵיךְ מַגִּיעִים לְ…? (eich maguiím le…?) = como se chega a…?
-- נוֹסֵעַ · נוֹסַעַת · נוֹסְעִים · נוֹסְעוֹת = ir (de veículo), viajar
-- פּוֹנֶה · פּוֹנָה · פּוֹנִים · פּוֹנוֹת = virar (para um lado)
+- נוֹסֵעַ (nosea) · נוֹסַעַת (nosáat) · נוֹסְעִים (nosim) · נוֹסְעוֹת (nosot) = ir (de veículo), viajar
+- פּוֹנֶה (poné) · פּוֹנָה (poná) · פּוֹנִים (ponim) · פּוֹנוֹת (ponot) = virar (para um lado)
 - יָשָׁר (yashar) = reto, em frente
 - יָמִינָה (yamína) = para a direita
 - שְׂמֹאלָה (smóla) = para a esquerda
@@ -641,8 +641,8 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - מִיץ (mits) = suco
 - סֻכָּר (sukar) = açúcar
 - קֶרַח (kérach) = gelo
-- טָעִים · טְעִימָה · טְעִימִים · טְעִימוֹת = gostoso
-- מְבַקֵּשׁ · מְבַקֶּשֶׁת · מְבַקְּשִׁים · מְבַקְּשׁוֹת = pedir, solicitar (para pedir comida no restaurante, se usa אֶפְשָׁר… ou אֲנִי רוֹצֶה…)
+- טָעִים (taím) · טְעִימָה (teimá) · טְעִימִים (teimim) · טְעִימוֹת (teimot) = gostoso
+- מְבַקֵּשׁ (mevakesh) · מְבַקֶּשֶׁת (mevakéshet) · מְבַקְּשִׁים (mevakshim) · מְבַקְּשׁוֹת (mevakshot) = pedir, solicitar (para pedir comida no restaurante, se usa אֶפְשָׁר… ou אֲנִי רוֹצֶה…)
 - צִמְחוֹנִי (tsimchoni) = vegetariano
 - צִמְחוֹנִית (tsimchonit) = vegetariana
 - חָרִיף (charif) = picante
@@ -747,9 +747,9 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 - חֲנוּת (chanut) = loja
 - קֻפָּה (kupá) = caixa (onde se paga)
-- מוֹכֵר · מוֹכֶרֶת · מוֹכְרִים · מוֹכְרוֹת = vender; vendedor
-- לוֹקֵחַ · לוֹקַחַת · לוֹקְחִים · לוֹקְחוֹת = levar, pegar
-- מְשַׁלֵּם · מְשַׁלֶּמֶת · מְשַׁלְּמִים · מְשַׁלְּמוֹת = pagar
+- מוֹכֵר (mocher) · מוֹכֶרֶת (mochéret) · מוֹכְרִים (mochrim) · מוֹכְרוֹת (mochrot) = vender; vendedor
+- לוֹקֵחַ (lokéach) · לוֹקַחַת (lokáchat) · לוֹקְחִים (lokchim) · לוֹקְחוֹת (lokchot) = levar, pegar
+- מְשַׁלֵּם (meshalem) · מְשַׁלֶּמֶת (meshalémet) · מְשַׁלְּמִים (meshalmim) · מְשַׁלְּמוֹת (meshalmot) = pagar
 - חֻלְצָה (chultsá) = camisa, blusa
 - מִכְנָסַיִם (michnasáyim) = calça
 - שִׂמְלָה (simlá) = vestido
@@ -760,13 +760,13 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - נַעֲלַיִם (naaláyim) = sapatos
 - גַּרְבַּיִם (garbáyim) = meias
 - מִדָּה (midá) = tamanho
-- צָהֹב · צְהֻבָּה = amarelo
-- וָרֹד · וְרֻדָּה = rosa
-- אָפֹר · אֲפֹרָה = cinza
-- חוּם · חוּמָה = marrom
-- כָּתֹם · כְּתֻמָּה = laranja (cor)
-- יָקָר · יְקָרָה · יְקָרִים · יְקָרוֹת = caro
-- זוֹל · זוֹלָה · זוֹלִים · זוֹלוֹת = barato
+- צָהֹב (tsahov) · צְהֻבָּה (tsehubá) = amarelo
+- וָרֹד (varod) · וְרֻדָּה (vrudá) = rosa
+- אָפֹר (afor) · אֲפֹרָה (aforá) = cinza
+- חוּם (chum) · חוּמָה (chumá) = marrom
+- כָּתֹם (katom) · כְּתֻמָּה (ktumá) = laranja (cor)
+- יָקָר (yakar) · יְקָרָה (yekará) · יְקָרִים (yekarim) · יְקָרוֹת (yekarot) = caro
+- זוֹל (zol) · זוֹלָה (zolá) · זוֹלִים (zolim) · זוֹלוֹת (zolot) = barato
 - יוֹתֵר (yoter) = mais
 - מִדַּי (midái) = demais (caro demais)
 - לִמְדּוֹד (limdód) = experimentar (roupa)
@@ -999,13 +999,13 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 **Palavras**
 
 - הַלּוֹ? (haló?) = alô?
-- שׁוֹמֵעַ · שׁוֹמַעַת · שׁוֹמְעִים · שׁוֹמְעוֹת = ouvir, escutar
-- אוֹמֵר · אוֹמֶרֶת · אוֹמְרִים · אוֹמְרוֹת = dizer
-- חוֹשֵׁב · חוֹשֶׁבֶת · חוֹשְׁבִים · חוֹשְׁבוֹת = pensar, achar
-- שׁוֹלֵחַ · שׁוֹלַחַת · שׁוֹלְחִים · שׁוֹלְחוֹת = mandar, enviar
-- מַזְמִין · מַזְמִינָה · מַזְמִינִים · מַזְמִינוֹת = convidar; pedir (comida)
-- מִצְטַעֵר · מִצְטַעֶרֶת · מִצְטַעֲרִים · מִצְטַעֲרוֹת = sinto muito, desculpe
-- אַחֵר · אַחֶרֶת · אֲחֵרִים · אֲחֵרוֹת = outro
+- שׁוֹמֵעַ (shomea) · שׁוֹמַעַת (shomáat) · שׁוֹמְעִים (shomim) · שׁוֹמְעוֹת (shomot) = ouvir, escutar
+- אוֹמֵר (omer) · אוֹמֶרֶת (oméret) · אוֹמְרִים (omrim) · אוֹמְרוֹת (omrot) = dizer
+- חוֹשֵׁב (choshev) · חוֹשֶׁבֶת (choshévet) · חוֹשְׁבִים (choshvim) · חוֹשְׁבוֹת (choshvot) = pensar, achar
+- שׁוֹלֵחַ (sholéach) · שׁוֹלַחַת (sholáchat) · שׁוֹלְחִים (sholchim) · שׁוֹלְחוֹת (sholchot) = mandar, enviar
+- מַזְמִין (mazmin) · מַזְמִינָה (mazminá) · מַזְמִינִים (mazminim) · מַזְמִינוֹת (mazminot) = convidar; pedir (comida)
+- מִצְטַעֵר (mitstaer) · מִצְטַעֶרֶת (mitstaéret) · מִצְטַעֲרִים (mitstaarim) · מִצְטַעֲרוֹת (mitstaarot) = sinto muito, desculpe
+- אַחֵר (acher) · אַחֶרֶת (achéret) · אֲחֵרִים (acherim) · אֲחֵרוֹת (acherot) = outro
 - שֶׁ־ (she-) = que (grudado: "acho que…")
 - לְהִפָּגֵשׁ (lehipaguésh) = encontrar-se
 - נִפָּגֵשׁ (nipaguésh) = a gente se encontra, combinado (expressão fixa, como נִתְרָאֶה)
@@ -1117,17 +1117,17 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - דַּרְכּוֹן (darkon) = passaporte
 - מִזְוָדָה (mizvadá) = mala
 - כַּרְטִיס (kartís) = passagem; cartão
-- תַּיָּר · תַּיֶּרֶת · תַּיָּרִים · תַּיָּרוֹת = turista
+- תַּיָּר (tayar) · תַּיֶּרֶת (tayéret) · תַּיָּרִים (tayarim) · תַּיָּרוֹת (tayarot) = turista
 - מָלוֹן (malón) = hotel
 - קַבָּלָה (kabalá) = recepção
 - הַזְמָנָה (hazmaná) = reserva; pedido
 - מַזְגָן (mazgan) = ar-condicionado
 - מַגֶּבֶת (magévet) = toalha
 - סִיסְמָה (sismá) = senha
-- עוֹזֵר · עוֹזֶרֶת · עוֹזְרִים · עוֹזְרוֹת = ajudar
-- מְחַכֶּה · מְחַכָּה · מְחַכִּים · מְחַכּוֹת = esperar
-- מוּכָן · מוּכָנָה · מוּכָנִים · מוּכָנוֹת = pronto
-- כָּבֵד · כְּבֵדָה · כְּבֵדִים · כְּבֵדוֹת = pesado
+- עוֹזֵר (ozer) · עוֹזֶרֶת (ozéret) · עוֹזְרִים (ozrim) · עוֹזְרוֹת (ozrot) = ajudar
+- מְחַכֶּה (mechaké) · מְחַכָּה (mechaká) · מְחַכִּים (mechakim) · מְחַכּוֹת (mechakot) = esperar
+- מוּכָן (muchan) · מוּכָנָה (muchaná) · מוּכָנִים (muchanim) · מוּכָנוֹת (muchanot) = pronto
+- כָּבֵד (kaved) · כְּבֵדָה (kvedá) · כְּבֵדִים (kvedim) · כְּבֵדוֹת (kvedot) = pesado
 - כְּבָר (kvar) = já
 - עוֹד לֹא (od lo) = ainda não
 - מִ־… עַד… (mi-… ad…) = de… até…
@@ -1231,9 +1231,9 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - עַיִן / עֵינַיִם (áyin / eináyim) = olho / olhos
 - אֹזֶן / אָזְנַיִם (ózen / oznáyim) = orelha, ouvido / orelhas
 - שֵׁן / שִׁנַּיִם (shen / shináyim) = dente / dentes
-- כּוֹאֵב · כּוֹאֶבֶת · כּוֹאֲבִים · כּוֹאֲבוֹת = doer
-- מַרְגִּישׁ · מַרְגִּישָׁה · מַרְגִּישִׁים · מַרְגִּישׁוֹת = sentir-se
-- חוֹלֶה · חוֹלָה · חוֹלִים · חוֹלוֹת = doente
+- כּוֹאֵב (koev) · כּוֹאֶבֶת (koévet) · כּוֹאֲבִים (koavim) · כּוֹאֲבוֹת (koavot) = doer
+- מַרְגִּישׁ (margish) · מַרְגִּישָׁה (margishá) · מַרְגִּישִׁים (margishim) · מַרְגִּישׁוֹת (margishot) = sentir-se
+- חוֹלֶה (cholé) · חוֹלָה (cholá) · חוֹלִים (cholim) · חוֹלוֹת (cholot) = doente
 - חֹם (chom) = febre
 - כְּאֵב רֹאשׁ (keev rosh) = dor de cabeça
 - תְּרוּפָה (trufá) = remédio
@@ -1460,8 +1460,8 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Palavras**
 
-- מֵבִין · מְבִינָה · מְבִינִים · מְבִינוֹת = entender
-- מְאַחֵר · מְאַחֶרֶת · מְאַחֲרִים · מְאַחֲרוֹת = estar atrasado
+- מֵבִין (mevin) · מְבִינָה (meviná) · מְבִינִים (mevinim) · מְבִינוֹת (mevinot) = entender
+- מְאַחֵר (meacher) · מְאַחֶרֶת (meachéret) · מְאַחֲרִים (meacharim) · מְאַחֲרוֹת (meacharot) = estar atrasado
 - לְאַט (leát) = devagar
 - מַהֵר (maher) = rápido
 - עוֹד פַּעַם (od páam) = mais uma vez
