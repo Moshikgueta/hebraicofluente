@@ -78,8 +78,8 @@ describe('o progresso do A1', () => {
     expect(migrate(antigo).a1).toEqual(A1_VAZIO);
   });
 
-  it('as páginas geradas são as mesmas 8 unidades do data/a1.json', () => {
-    const dados = JSON.parse(readFileSync(new URL('../../data/a1.json', import.meta.url), 'utf8')) as { unidades: { n: number }[] };
-    expect([...UNIDADES_A1]).toEqual(dados.unidades.map(u => u.n));
+  it('as páginas geradas são as unidades dos módulos de data/a1/curso.json, na ordem', () => {
+    const curso = JSON.parse(readFileSync(new URL('../../data/a1/curso.json', import.meta.url), 'utf8')) as { modulos: { unidades: number[] }[] };
+    expect([...UNIDADES_A1]).toEqual(curso.modulos.flatMap(m => m.unidades));
   });
 });

@@ -1,0 +1,403 @@
+{
+  "n": 4,
+  "revisado": true,
+  "tituloPt": "O que você faz? Onde você mora?",
+  "objetivoPt": "Dizer onde mora, o que faz e que línguas fala, e perguntar isso a outra pessoa.",
+  "palavras": [
+    {
+      "pt": "morar",
+      "formas": [
+        "גָּר",
+        "גָּרָה",
+        "גָּרִים",
+        "גָּרוֹת"
+      ]
+    },
+    {
+      "pt": "estudar",
+      "formas": [
+        "לוֹמֵד",
+        "לוֹמֶדֶת",
+        "לוֹמְדִים",
+        "לוֹמְדוֹת"
+      ]
+    },
+    {
+      "pt": "trabalhar",
+      "formas": [
+        "עוֹבֵד",
+        "עוֹבֶדֶת",
+        "עוֹבְדִים",
+        "עוֹבְדוֹת"
+      ]
+    },
+    {
+      "pt": "escrever",
+      "formas": [
+        "כּוֹתֵב",
+        "כּוֹתֶבֶת",
+        "כּוֹתְבִים",
+        "כּוֹתְבוֹת"
+      ]
+    },
+    {
+      "pt": "falar",
+      "formas": [
+        "מְדַבֵּר",
+        "מְדַבֶּרֶת",
+        "מְדַבְּרִים",
+        "מְדַבְּרוֹת"
+      ]
+    },
+    {
+      "he": "אֵיפֹה?",
+      "translit": "eifo?",
+      "pt": "onde?"
+    },
+    {
+      "he": "בְּ־",
+      "translit": "be-",
+      "pt": "em (grudado na palavra)"
+    },
+    {
+      "he": "תֵּל אָבִיב",
+      "translit": "Tel Aviv",
+      "pt": "Tel Aviv"
+    },
+    {
+      "he": "יְרוּשָׁלַיִם",
+      "translit": "Yerushaláyim",
+      "pt": "Jerusalém"
+    },
+    {
+      "he": "סָאוֹ פָּאוּלוֹ",
+      "translit": "São Paulo",
+      "pt": "São Paulo"
+    },
+    {
+      "he": "רִיוֹ",
+      "translit": "Rio",
+      "pt": "Rio"
+    },
+    {
+      "he": "עִבְרִית",
+      "translit": "ivrit",
+      "pt": "hebraico"
+    },
+    {
+      "he": "פּוֹרְטוּגָזִית",
+      "translit": "portugezit",
+      "pt": "português"
+    },
+    {
+      "he": "אַנְגְּלִית",
+      "translit": "anglit",
+      "pt": "inglês"
+    },
+    {
+      "he": "קְצָת",
+      "translit": "ktsat",
+      "pt": "um pouco"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "O presente muda com o gênero e o número, não com a pessoa",
+      "textoPt": "אֲנִי / אַתָּה / הוּא לוֹמֵד: a mesma palavra. O que muda é homem ou mulher, um ou vários: אֲנִי לוֹמֵד (homem), אֲנִי לוֹמֶדֶת (mulher).",
+      "erroPt": "O português conjuga pela pessoa (estudo, estuda, estudamos). O hebraico, no presente, conjuga por quem é e quantos. Uma mulher diz אֲנִי לוֹמֶדֶת, nunca אֲנִי לוֹמֵד."
+    },
+    {
+      "tituloPt": "O desenho das 4 formas",
+      "textoPt": "Na maioria dos verbos: _וֹ_ֵ_ · _וֹ_ֶ_ֶת · _וֹ_ְ_ִים · _וֹ_ְ_וֹת. É o mesmo final do adjetivo (־ִים / ־וֹת). גָּר e מְדַבֵּר fogem do desenho e são aprendidos como estão."
+    },
+    {
+      "tituloPt": "\"Em\" é בְּ־, grudado",
+      "textoPt": "בְּתֵל אָבִיב, בִּירוּשָׁלַיִם, בִּבְרָזִיל. Língua não leva preposição: מְדַבֵּר עִבְרִית.",
+      "erroPt": "Procurar uma palavra separada para \"em\". Ela é uma letra grudada: \"em Tel Aviv\" = בְּתֵל אָבִיב."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Noa e Tom",
+    "linhas": [
+      {
+        "quem": "Noa",
+        "he": "טוֹם, אֵיפֹה אַתָּה גָּר?",
+        "translit": "Tom, eifo atá gar?",
+        "pt": "Tom, onde você mora?"
+      },
+      {
+        "quem": "Tom",
+        "he": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?",
+        "translit": "aní gar biYerushaláyim. veat?",
+        "pt": "Moro em Jerusalém. E você?"
+      },
+      {
+        "quem": "Noa",
+        "he": "אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד?",
+        "translit": "aní gará beTel Aviv. atá oved?",
+        "pt": "Moro em Tel Aviv. Você trabalha?"
+      },
+      {
+        "quem": "Tom",
+        "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ?",
+        "translit": "lo, aní lomed ivrit. veat?",
+        "pt": "Não, estudo hebraico. E você?"
+      },
+      {
+        "quem": "Noa",
+        "he": "אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב!",
+        "translit": "aní ovédet. atá medaber ivrit tov!",
+        "pt": "Eu trabalho. Você fala hebraico bem!"
+      },
+      {
+        "quem": "Tom",
+        "he": "תּוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
+        "translit": "todá! aní medaber ktsat.",
+        "pt": "Obrigado! Falo um pouco."
+      },
+      {
+        "quem": "Noa",
+        "he": "דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית.",
+        "translit": "Dani uMaya gam lomdim ivrit.",
+        "pt": "O Dani e a Maya também estudam hebraico."
+      },
+      {
+        "quem": "Tom",
+        "he": "הֵם גָּרִים בִּירוּשָׁלַיִם?",
+        "translit": "hem garim biYerushaláyim?",
+        "pt": "Eles moram em Jerusalém?"
+      },
+      {
+        "quem": "Noa",
+        "he": "לֹא, הֵם גָּרִים בְּתֵל אָבִיב.",
+        "translit": "lo, hem garim beTel Aviv.",
+        "pt": "Não, eles moram em Tel Aviv."
+      }
+    ],
+    "glossario": [],
+    "notaPt": "\"מְדַבֵּר עִבְרִית טוֹב\" é como se fala na rua; o formal seria הֵיטֵב."
+  },
+  "exercicios": [
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "לוֹמֵד",
+      "linhas": [
+        [
+          "mulher",
+          "לומדת"
+        ],
+        [
+          "homens",
+          "לומדים"
+        ],
+        [
+          "mulheres",
+          "לומדות"
+        ]
+      ]
+    },
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "עוֹבֵד",
+      "linhas": [
+        [
+          "mulher",
+          "עובדת"
+        ],
+        [
+          "homens",
+          "עובדים"
+        ],
+        [
+          "mulheres",
+          "עובדות"
+        ]
+      ]
+    },
+    {
+      "t": "separar",
+      "q": "De quem se fala?",
+      "baldes": [
+        "um homem",
+        "uma mulher",
+        "vários"
+      ],
+      "itens": [
+        [
+          "כּוֹתֵב",
+          0
+        ],
+        [
+          "כּוֹתֶבֶת",
+          1
+        ],
+        [
+          "כּוֹתְבִים",
+          2
+        ],
+        [
+          "גָּרָה",
+          1
+        ],
+        [
+          "גָּר",
+          0
+        ],
+        [
+          "גָּרוֹת",
+          2
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "A Maya diz: אֲנִי ___ עִבְרִית",
+      "opcoes": [
+        "לוֹמֶדֶת",
+        "לוֹמֵד"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "O Dani diz: אֲנִי ___ בְּרִיוֹ",
+      "opcoes": [
+        "גָּר",
+        "גָּרָה"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Sobre a Noa e a Maya: הֵן ___",
+      "opcoes": [
+        "עוֹבְדוֹת",
+        "עוֹבְדִים"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Sobre o Dani e a Noa: הֵם ___ אַנְגְּלִית",
+      "opcoes": [
+        "מְדַבְּרִים",
+        "מְדַבְּרוֹת"
+      ],
+      "certa": 0,
+      "porque": "Grupo misto é masculino."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "אֲנִי עוֹבֵד בִּירוּשָׁלַיִם (fala uma mulher)",
+      "respostas": [
+        "אני עובדת בירושלים"
+      ],
+      "porque": "Uma mulher diz עוֹבֶדֶת."
+    },
+    {
+      "t": "vf",
+      "q": "Em hebraico, \"eu estudo\" e \"ele estuda\" usam a mesma palavra (se forem homens).",
+      "certa": true,
+      "porque": "אֲנִי לוֹמֵד, הוּא לוֹמֵד."
+    },
+    {
+      "t": "montar",
+      "pt": "Moro em São Paulo (fala um homem)",
+      "palavras": [
+        "אֲנִי",
+        "גָּר",
+        "בְּסָאוֹ פָּאוּלוֹ"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete com \"em\".",
+      "antes": "הִיא גָּרָה",
+      "depois": "תֵל אָבִיב",
+      "respostas": [
+        "ב"
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Falo português\" (fala um homem)",
+      "opcoes": [
+        "אֲנִי מְדַבֵּר פּוֹרְטוּגָזִית",
+        "אֲנִי מְדַבֵּר בְּפּוֹרְטוּגָזִית"
+      ],
+      "certa": 0,
+      "porque": "Língua não leva preposição."
+    },
+    {
+      "t": "escolha",
+      "q": "Pergunte à Noa onde ela mora:",
+      "opcoes": [
+        "אֵיפֹה אַתְּ גָּרָה?",
+        "אֵיפֹה אַתָּה גָּר?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Alguém pergunta: אַתָּה מְדַבֵּר עִבְרִית? Você responde:",
+      "opcoes": [
+        "קְצָת",
+        "תּוֹדָה",
+        "סְלִיחָה"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "אֲנַחְנוּ לוֹמְדוֹת",
+      "q": "Quem fala?",
+      "opcoes": [
+        "um grupo de mulheres",
+        "um grupo misto"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "הוּא כּוֹתֵב בְּעִבְרִית",
+      "q": "O que a pessoa disse?",
+      "opcoes": [
+        "ele escreve em hebraico",
+        "ele fala hebraico"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: onde o Tom mora?",
+      "opcoes": [
+        "em Jerusalém",
+        "em Tel Aviv"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: o que a Noa faz?",
+      "opcoes": [
+        "trabalha",
+        "estuda"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "vf",
+      "q": "No diálogo, o Dani e a Maya moram em Jerusalém.",
+      "certa": false,
+      "porque": "הֵם גָּרִים בְּתֵל אָבִיב."
+    },
+    {
+      "t": "aberta",
+      "pt": "Escreva 2 frases sobre você: onde mora e o que faz.",
+      "exemplo": "אֲנִי גָּר בְּרִיוֹ. אֲנִי עוֹבֵד."
+    }
+  ]
+}

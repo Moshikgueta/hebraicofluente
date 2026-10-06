@@ -12,7 +12,7 @@ import { Milestone } from '@/components/game/Game';
 import { A1Player, type ResultadoA1 } from '@/components/a1/A1Player';
 import { GeneroA1 } from '@/components/a1/GeneroA1';
 import { useProgress } from '@/lib/state/store';
-import { unidadeA1 } from '@/lib/a1';
+import { proximaUnidade, unidadeA1 } from '@/lib/a1';
 import { A1_APROVA } from '@/lib/state/a1-estado';
 
 export function ExerciciosA1Client({ n }: { n: number }) {
@@ -36,6 +36,7 @@ export function ExerciciosA1Client({ n }: { n: number }) {
   if (fim) {
     const passou = fim.nota >= A1_APROVA;
     const pct = Math.round(fim.nota * 100);
+    const prox = proximaUnidade(n);
     return (
       <div className="focus-col grid gap-5">
         <Milestone
@@ -48,8 +49,8 @@ export function ExerciciosA1Client({ n }: { n: number }) {
         >
           <div className="flex flex-wrap justify-center gap-2">
             <Button variant="secondary" onClick={() => { setFim(null); setRodada(r => r + 1); }}>Fazer de novo</Button>
-            {passou && n < 8
-              ? <LinkButton href={`/a1/unidade/${n + 1}`}>Próxima unidade</LinkButton>
+            {passou && prox != null
+              ? <LinkButton href={`/a1/unidade/${prox}`}>Próxima unidade</LinkButton>
               : <LinkButton href={`/a1/unidade/${n}`} variant={passou ? 'primary' : 'secondary'}>Voltar à unidade</LinkButton>}
           </div>
         </Milestone>

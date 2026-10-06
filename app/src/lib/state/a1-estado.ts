@@ -55,7 +55,7 @@ export function a1Valido(bruto: unknown): EstadoA1 {
   const unidades: Record<string, UnidadeFeita> = {};
   if (ehObj(bruto.unidades)) {
     for (const [k, v] of Object.entries(bruto.unidades)) {
-      if (!/^[1-8]$/.test(k) || !ehObj(v)) continue;
+      if (!/^(?:[0-9]|[1-3][0-9])$/.test(k) || !ehObj(v)) continue;
       unidades[k] = { best: num(v.best), runs: Math.max(0, num(v.runs) ?? 0), concluidaEm: data(v.concluidaEm) };
     }
   }

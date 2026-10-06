@@ -1,0 +1,418 @@
+{
+  "_": [
+    "O exame final do A1. Fica SÓ no servidor: o Worker sorteia a prova, entrega as perguntas sem gabarito e corrige (worker/src/api/exame-a1.js).",
+    "Nada daqui entra no conteúdo que o navegador recebe."
+  ],
+  "sorteio": 4,
+  "aprovacao": 0.7,
+  "partes": [
+    {
+      "id": "vocabulario",
+      "tituloPt": "Vocabulário",
+      "unidades": [
+        2,
+        5,
+        6,
+        7
+      ],
+      "itens": [
+        {
+          "t": "escolha",
+          "q": "O que quer dizer עִתּוֹן?",
+          "opcoes": [
+            "jornal",
+            "leite",
+            "irmã"
+          ],
+          "certa": 0,
+          "porque": "עִתּוֹן é jornal; leite é חָלָב e irmã é אָחוֹת."
+        },
+        {
+          "t": "escolha",
+          "q": "O que quer dizer מְקָרֵר?",
+          "opcoes": [
+            "geladeira",
+            "cozinha",
+            "quarto"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "intruso",
+          "q": "Qual não combina com as outras?",
+          "opcoes": [
+            "גְּבִינָה",
+            "לֶחֶם",
+            "עוּגָה",
+            "מְנוֹרָה"
+          ],
+          "certa": 3,
+          "porque": "מְנוֹרָה não é comida."
+        },
+        {
+          "t": "escolha",
+          "q": "\"Fechado\"",
+          "opcoes": [
+            "סָגוּר",
+            "פָּתוּחַ"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "O que quer dizer סַבְתָּא?",
+          "opcoes": [
+            "avó",
+            "tia",
+            "irmã"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "intruso",
+          "q": "Qual não combina com as outras?",
+          "opcoes": [
+            "אִישׁ",
+            "יַלְדָּה",
+            "כִּסֵּא",
+            "חָבֵר"
+          ],
+          "certa": 2,
+          "porque": "כִּסֵּא não é pessoa."
+        }
+      ]
+    },
+    {
+      "id": "concordancia",
+      "tituloPt": "Concordância",
+      "unidades": [
+        2,
+        3
+      ],
+      "itens": [
+        {
+          "t": "completar",
+          "q": "Complete com \"azul\".",
+          "antes": "דֶּלֶת",
+          "depois": "",
+          "respostas": [
+            "כחולה"
+          ]
+        },
+        {
+          "t": "escolha",
+          "q": "\"Os amigos simpáticos\"",
+          "opcoes": [
+            "הַחֲבֵרִים הַנֶּחְמָדִים",
+            "הַחֲבֵרִים נֶחְמָדִים"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "___ מַחְבָּרוֹת (estes são cadernos)",
+          "opcoes": [
+            "אֵלֶּה",
+            "זֹאת"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "A frase inteira \"o quarto é grande\":",
+          "opcoes": [
+            "הַחֶדֶר גָּדוֹל",
+            "הַחֶדֶר הַגָּדוֹל"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "שֻׁלְחָנוֹת ___ (novos)",
+          "opcoes": [
+            "חֲדָשִׁים",
+            "חֲדָשׁוֹת"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "___ כּוֹס",
+          "opcoes": [
+            "זֹאת",
+            "זֶה"
+          ],
+          "certa": 0
+        }
+      ]
+    },
+    {
+      "id": "verbos",
+      "tituloPt": "Verbos e frases",
+      "unidades": [
+        4,
+        5,
+        6,
+        8
+      ],
+      "itens": [
+        {
+          "t": "escolha",
+          "q": "A Noa diz: אֲנִי ___ בְּחֵיפָה",
+          "opcoes": [
+            "גָּרָה",
+            "גָּר"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "Sobre o Tom e a Maya: הֵם ___ תֵּה",
+          "opcoes": [
+            "שׁוֹתִים",
+            "שׁוֹתוֹת"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "אֲנִי קוֹנֶה ___ הַלֶּחֶם",
+          "opcoes": [
+            "אֶת",
+            "(nada)"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "\"Ela não tem irmãos\"",
+          "opcoes": [
+            "אֵין לָהּ אַחִים",
+            "לֹא לָהּ אַחִים"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "completar",
+          "q": "Complete com \"comigo\".",
+          "antes": "הוּא עוֹבֵד",
+          "depois": "",
+          "respostas": [
+            "איתי",
+            "אתי"
+          ]
+        },
+        {
+          "t": "escolha",
+          "q": "\"O cachorro deles\"",
+          "opcoes": [
+            "הַכֶּלֶב שֶׁלָּהֶם",
+            "הַכֶּלֶב שֶׁלּוֹ"
+          ],
+          "certa": 0
+        }
+      ]
+    },
+    {
+      "id": "escuta",
+      "tituloPt": "Escuta",
+      "unidades": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "itens": [
+        {
+          "t": "ouvir",
+          "he": "הַשָּׁעָה שֶׁבַע וָחֵצִי",
+          "q": "Que horas são?",
+          "opcoes": [
+            "7:30",
+            "7:15",
+            "17:00"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "ouvir",
+          "he": "זֶה עוֹלֶה עֶשְׂרִים וְחָמֵשׁ שֶׁקֶל",
+          "q": "Quanto custa?",
+          "opcoes": [
+            "25",
+            "52",
+            "20"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "ouvir",
+          "he": "אֲנִי לֹא שׁוֹתָה קָפֶה",
+          "q": "Quem fala, e o que diz?",
+          "opcoes": [
+            "uma mulher que não bebe café",
+            "um homem que não bebe café"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "ouvir",
+          "he": "הַכֶּלֶב שֶׁלָּהֶם גָּדוֹל",
+          "q": "O que a pessoa disse?",
+          "opcoes": [
+            "o cachorro deles é grande",
+            "o cachorro grande deles"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "ouvir",
+          "he": "אֵיךְ קוֹרְאִים לָךְ?",
+          "q": "O que a pessoa perguntou?",
+          "opcoes": [
+            "o nome de uma mulher",
+            "onde ela mora"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "ouvir",
+          "he": "אֲנַחְנוּ גָּרִים בִּירוּשָׁלַיִם",
+          "q": "O que a pessoa disse?",
+          "opcoes": [
+            "nós moramos em Jerusalém",
+            "eles moram em Jerusalém"
+          ],
+          "certa": 0
+        }
+      ]
+    },
+    {
+      "id": "leitura",
+      "tituloPt": "Leitura",
+      "unidades": [
+        7,
+        8
+      ],
+      "texto": {
+        "tipoPt": "Mensagem da Noa para o Tom",
+        "he": "שָׁלוֹם טוֹם! אֲנִי בַּשּׁוּק עִם אֵיתָן. יֵשׁ פֹּה תַּפּוּחִים וּגְבִינָה. אַתָּה רוֹצֶה מַשֶּׁהוּ? הַשּׁוּק פָּתוּחַ עַד שָׁלוֹשׁ. בְּאַרְבַּע אֲנַחְנוּ שׁוֹתִים קָפֶה בַּבַּיִת שֶׁלִּי. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?",
+        "pt": "Olá, Tom! Estou na feira com o Eitan. Tem maçãs e queijo aqui. Você quer alguma coisa? A feira fica aberta até as três. Às quatro vamos tomar café na minha casa. Você quer café com a gente?"
+      },
+      "itens": [
+        {
+          "t": "escolha",
+          "q": "Onde está a Noa?",
+          "opcoes": [
+            "na feira",
+            "em casa"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "Com quem?",
+          "opcoes": [
+            "com o Eitan",
+            "com o Tom"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "Até que horas a feira fica aberta?",
+          "opcoes": [
+            "até as três",
+            "até as quatro"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "escolha",
+          "q": "O que eles fazem às quatro?",
+          "opcoes": [
+            "tomam café na casa da Noa",
+            "vão à feira"
+          ],
+          "certa": 0
+        },
+        {
+          "t": "vf",
+          "q": "A Noa pergunta se o Tom quer alguma coisa da feira.",
+          "certa": true,
+          "porque": "אַתָּה רוֹצֶה מַשֶּׁהוּ?"
+        },
+        {
+          "t": "escolha",
+          "q": "Uma placa, sem os pontos: סגור ביום שישי",
+          "opcoes": [
+            "fechado na sexta",
+            "aberto na sexta"
+          ],
+          "certa": 0,
+          "semPontos": true
+        }
+      ]
+    },
+    {
+      "id": "escrita",
+      "tituloPt": "Escrita",
+      "unidades": [
+        1,
+        4,
+        6,
+        7
+      ],
+      "itens": [
+        {
+          "t": "escrever",
+          "pt": "Eu sou do Brasil",
+          "respostas": [
+            "אני מברזיל"
+          ]
+        },
+        {
+          "t": "escrever",
+          "pt": "Eu tenho um irmão",
+          "respostas": [
+            "יש לי אח"
+          ]
+        },
+        {
+          "t": "escrever",
+          "pt": "A minha casa",
+          "respostas": [
+            "הבית שלי"
+          ]
+        },
+        {
+          "t": "escrever",
+          "pt": "Quanto custa?",
+          "respostas": [
+            "כמה זה עולה"
+          ]
+        },
+        {
+          "t": "escrever",
+          "pt": "Onde você mora? (a uma mulher)",
+          "respostas": [
+            "איפה את גרה",
+            "איפוא את גרה"
+          ]
+        },
+        {
+          "t": "escrever",
+          "pt": "São duas horas",
+          "respostas": [
+            "השעה שתיים",
+            "השעה שתים"
+          ]
+        }
+      ]
+    }
+  ]
+}

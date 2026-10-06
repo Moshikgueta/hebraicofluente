@@ -198,7 +198,7 @@ sugestão do pedido não bate com a ordem aprovada, o nome muda, não a ordem.
 | 7 Comida e compras | **U13** no café e no restaurante · **U14** nas lojas | pedir, a conta, אֵיזֶה/אֵיזוֹ/אֵילוּ, אֶפְשָׁר; roupas, tamanho, caro/barato, pagar |
 | 8 Tempo e compromissos | **U15** dias, meses e clima · **U16** marcar e convidar | datas, מָתַי, clima; telefone, mensagem, aceitar e recusar |
 | **Checkpoint 4** | U9 a U16 | |
-| 9 Israel na vida real | **U17** viagem e hotel · **U18** corpo e saúde · **U19** o que eu fiz | aeroporto, hotel; כּוֹאֵב לִי, farmácia; passado frequente |
+| 9 Israel na vida real | **U17** viagem e hotel · **U18** corpo e saúde · **U19** quantos e de quem | aeroporto, hotel; כּוֹאֵב לִי, farmácia; os números com gênero (שְׁלוֹשָׁה יְלָדִים, שָׁלוֹשׁ בָּנוֹת) e a סְמִיכוּת (בֵּית סֵפֶר, חֲדַר שֵׁנָה) |
 | 10 Consolidação | **U20** um dia em Israel (simulação) + exame final + certificado + encerramento | usar tudo junto |
 
 Total: 21 unidades (13 novas), 4 checkpoints, exame, certificado. Meta de
@@ -287,15 +287,18 @@ Nenhum exercício depende de hover.
 - **Desempenho:** conteúdo do A1 dividido por módulo (/api/content/a1?m=N),
   carregado quando a tela do módulo abre; áudio sob demanda.
 
-## 7. Conflitos com decisões já aprovadas (o dono decide)
+## 7. Conflitos com decisões já aprovadas: decididos pelo dono (06/10/2026)
 
-| # | Pedido novo | Decisão aprovada | Recomendação |
+| # | Pedido novo | Decisão antiga | Decisão do dono agora |
 |---|---|---|---|
-| C1 | "números masculinos e femininos" | 3 e 11: a série de contar coisas masculinas fica para o A2 | manter A2; no A1 só reconhecer שְׁנֵי/שְׁתֵּי com dois e preço, como expressão fixa |
-| C2 | "introdução natural à סמיכות" | 12: סמיכות é do A2; מִסְפַּר הַטֶּלֶפוֹן como expressão fixa | introduzir 4 ou 5 expressões fixas (בֵּית סֵפֶר, בֵּית קָפֶה, תַּחֲנַת אוֹטוֹבּוּס) sem a regra |
-| C3 | passado perto do fim | não decidido | U19 com o passado de poucos verbos muito frequentes (הָיִיתִי, הָלַכְתִּי, אָכַלְתִּי...) e só a 1ª pessoa + הוּא/הִיא |
-| C4 | Módulo 0 com alfabeto completo dentro do A1 | o A1 é curso separado do alfabeto | U0 Ponte no A1 e o alfabeto como pré-requisito recomendado. Vender os dois juntos é decisão comercial |
-| C5 | certificado com "nível A1", carga horária, ID, QR | texto aprovado: "Não é uma certificação oficial de nível" | manter o aviso; "Hebraico A1" é o nome do curso; carga horária só com número que dê para justificar (medido no uso real) |
+| C1 | números masculinos e femininos | 3 e 11: série masculina no A2 | **entra no A1** (U19), depois de todo o resto; até lá vale a série de contar (hora, preço, telefone) |
+| C2 | introdução à סְמִיכוּת | 12: סְמִיכוּת no A2 | **entra no A1** (U19), com a regra; antes disso, expressões fixas (מִסְפַּר הַטֶּלֶפוֹן, בֵּית קָפֶה) |
+| C3 | passado perto do fim | não decidido | **sem passado no A1**; o passado é do A2 |
+| C4 | Módulo 0 com o alfabeto dentro do A1 | o A1 é curso separado | **U0 Ponte no A1, alfabeto recomendado antes**; vender juntos fica para depois |
+| C5 | certificado com "nível A1", carga horária, ID, QR | "Não é uma certificação oficial de nível" | mantido o aviso; "Hebraico A1" é o nome do curso; carga horária só com número medido |
+
+Revisão do hebraico novo: **tudo no fim** (o dono revisa as 13 unidades
+juntas). Até lá o A1 continua escondido, só o administrador abre.
 
 ## 8. Plano de implementação
 
@@ -306,10 +309,10 @@ administrador) até o dono decidir lançar.
 
 | Fase | Entrega | Precisa do dono |
 |---|---|---|
-| 1 | esta auditoria | ler e decidir C1 a C5 |
+| 1 | esta auditoria | C1 a C5 decididos |
 | 2 | currículo completo: mapa das 21 unidades com objetivos, vocabulário, gramática e situações, no A1-RASCUNHO.md | aprovar o mapa |
 | 3 | arquitetura: `modulos`, blocos, tipos novos, feedback por opção, conteúdo por módulo, testes | aprovar textos de interface |
-| 4 | conteúdo: U0 e U9 a U20, um módulo por vez, com cultura e "Você sabia?" nas unidades novas e antigas | aprovar o hebraico de cada unidade |
+| 4 | conteúdo: U0 e U9 a U20, um módulo por vez, com cultura e "Você sabia?" nas unidades novas e antigas | revisar todo o hebraico novo no fim |
 | 5 | revisão espaçada, Meu hebraico, competências, transliteração, conquistas | aprovar textos |
 | 6 | os 4 checkpoints | aprovar as perguntas |
 | 7 | exame corrigido no servidor (tabela nova em D1) | |

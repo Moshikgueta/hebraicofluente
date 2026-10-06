@@ -1,0 +1,435 @@
+{
+  "n": 3,
+  "revisado": true,
+  "tituloPt": "Como é?",
+  "objetivoPt": "Descrever coisas e pessoas, falar de mais de uma coisa, e usar \"o/a\".",
+  "palavras": [
+    {
+      "pt": "grande",
+      "formas": [
+        "גָּדוֹל",
+        "גְּדוֹלָה",
+        "גְּדוֹלִים",
+        "גְּדוֹלוֹת"
+      ]
+    },
+    {
+      "pt": "pequeno",
+      "formas": [
+        "קָטָן",
+        "קְטַנָּה",
+        "קְטַנִּים",
+        "קְטַנּוֹת"
+      ]
+    },
+    {
+      "pt": "novo",
+      "formas": [
+        "חָדָשׁ",
+        "חֲדָשָׁה",
+        "חֲדָשִׁים",
+        "חֲדָשׁוֹת"
+      ]
+    },
+    {
+      "pt": "velho (coisa)",
+      "formas": [
+        "יָשָׁן",
+        "יְשָׁנָה",
+        "יְשָׁנִים",
+        "יְשָׁנוֹת"
+      ]
+    },
+    {
+      "pt": "bonito",
+      "formas": [
+        "יָפֶה",
+        "יָפָה",
+        "יָפִים",
+        "יָפוֹת"
+      ]
+    },
+    {
+      "pt": "bom",
+      "formas": [
+        "טוֹב",
+        "טוֹבָה",
+        "טוֹבִים",
+        "טוֹבוֹת"
+      ]
+    },
+    {
+      "pt": "legal, simpático",
+      "formas": [
+        "נֶחְמָד",
+        "נֶחְמָדָה",
+        "נֶחְמָדִים",
+        "נֶחְמָדוֹת"
+      ]
+    },
+    {
+      "pt": "vermelho",
+      "formas": [
+        "אָדֹם",
+        "אֲדֻמָּה"
+      ]
+    },
+    {
+      "pt": "azul",
+      "formas": [
+        "כָּחֹל",
+        "כְּחֻלָּה"
+      ]
+    },
+    {
+      "pt": "branco",
+      "formas": [
+        "לָבָן",
+        "לְבָנָה"
+      ]
+    },
+    {
+      "pt": "preto",
+      "formas": [
+        "שָׁחֹר",
+        "שְׁחֹרָה"
+      ]
+    },
+    {
+      "pt": "verde",
+      "formas": [
+        "יָרֹק",
+        "יְרֻקָּה"
+      ]
+    },
+    {
+      "he": "הַ־",
+      "translit": "ha-",
+      "pt": "o, a, os, as (grudado na palavra)"
+    },
+    {
+      "he": "אֵלֶּה",
+      "translit": "éle",
+      "pt": "estes, estas"
+    },
+    {
+      "he": "אֲנַחְנוּ",
+      "translit": "anáchnu",
+      "pt": "nós"
+    },
+    {
+      "he": "אַתֶּם",
+      "translit": "atem",
+      "pt": "vocês (eles)"
+    },
+    {
+      "he": "אַתֶּן",
+      "translit": "aten",
+      "pt": "vocês (elas)"
+    },
+    {
+      "he": "הֵם",
+      "translit": "hem",
+      "pt": "eles"
+    },
+    {
+      "he": "הֵן",
+      "translit": "hen",
+      "pt": "elas"
+    },
+    {
+      "he": "אֲבָל",
+      "translit": "aval",
+      "pt": "mas"
+    },
+    {
+      "he": "מְאֹד",
+      "translit": "meod",
+      "pt": "muito"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "O plural",
+      "textoPt": "Masculino ganha ־ִים, feminino ganha ־וֹת: תִּיק → תִּיקִים, מַתָּנָה → מַתָּנוֹת."
+    },
+    {
+      "tituloPt": "O adjetivo vem depois e concorda",
+      "textoPt": "תִּיק גָּדוֹל, מְנוֹרָה גְּדוֹלָה, תִּיקִים גְּדוֹלִים. Atenção: שֻׁלְחָנוֹת e כִּסְאוֹת terminam em ־וֹת mas são masculinos: שֻׁלְחָנוֹת גְּדוֹלִים, כִּסְאוֹת חֲדָשִׁים. O adjetivo segue o gênero da palavra, não a terminação."
+    },
+    {
+      "tituloPt": "\"O/a\" é הַ־, e vai nas duas palavras",
+      "textoPt": "\"O livro novo\" = הַסֵּפֶר הֶחָדָשׁ.",
+      "erroPt": "Em português o artigo vai uma vez só. Em hebraico vai duas: הַסֵּפֶר הֶחָדָשׁ."
+    },
+    {
+      "tituloPt": "Com artigo só no substantivo, vira frase",
+      "textoPt": "הַסֵּפֶר חָדָשׁ = \"o livro é novo\". É a frase sem \"ser\" da Unidade 1, agora com adjetivo.",
+      "erroPt": "הַסֵּפֶר הֶחָדָשׁ = \"o livro novo\"; הַסֵּפֶר חָדָשׁ = \"o livro é novo\". A diferença é um ה."
+    },
+    {
+      "tituloPt": "Os pronomes do plural",
+      "textoPt": "\"Vocês\" se divide: אַתֶּם (homens, ou grupo misto) e אַתֶּן (só mulheres). O mesmo com הֵם / הֵן.",
+      "erroPt": "\"Vocês\" é uma palavra só no português. Com um homem no grupo, já é אַתֶּם."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Natan visita a casa nova da Maya",
+    "linhas": [
+      {
+        "quem": "Natan",
+        "he": "מַיָּה, זֶה הַבַּיִת הֶחָדָשׁ?",
+        "translit": "Maya, ze habáyit hechadash?",
+        "pt": "Maya, esta é a casa nova?"
+      },
+      {
+        "quem": "Maya",
+        "he": "כֵּן! הַבַּיִת קָטָן, אֲבָל יָפֶה.",
+        "translit": "ken! habáyit katan, aval yafé.",
+        "pt": "Sim! A casa é pequena, mas bonita."
+      },
+      {
+        "quem": "Natan",
+        "he": "הַשֻּׁלְחָן חָדָשׁ?",
+        "translit": "hashulchan chadash?",
+        "pt": "A mesa é nova?"
+      },
+      {
+        "quem": "Maya",
+        "he": "לֹא, הַשֻּׁלְחָן יָשָׁן. אֲבָל הַכִּסְאוֹת חֲדָשִׁים!",
+        "translit": "lo, hashulchan yashan. aval hakisot chadashim!",
+        "pt": "Não, a mesa é velha. Mas as cadeiras são novas!"
+      },
+      {
+        "quem": "Natan",
+        "he": "וּמָה אֵלֶּה?",
+        "translit": "uma éle?",
+        "pt": "E o que são estas?"
+      },
+      {
+        "quem": "Maya",
+        "he": "אֵלֶּה מַתָּנוֹת. הֵן מִנֹּעָה וּמִדָּנִי.",
+        "translit": "éle matanot. hen miNoa umiDani.",
+        "pt": "São presentes. São da Noa e do Dani."
+      },
+      {
+        "quem": "Natan",
+        "he": "הַמְּנוֹרָה הָאֲדֻמָּה יָפָה מְאֹד!",
+        "translit": "hamenorá haadumá yafá meod!",
+        "pt": "A luminária vermelha é muito bonita!"
+      },
+      {
+        "quem": "Maya",
+        "he": "תּוֹדָה!",
+        "translit": "todá!",
+        "pt": "Obrigada!"
+      }
+    ],
+    "glossario": []
+  },
+  "exercicios": [
+    {
+      "t": "escolha",
+      "q": "Qual é o plural de יֶלֶד?",
+      "opcoes": [
+        "יְלָדִים",
+        "יְלָדוֹת"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Qual é o plural de מַתָּנָה?",
+      "opcoes": [
+        "מַתָּנוֹת",
+        "מַתָּנִים"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "separar",
+      "q": "Como termina o plural?",
+      "baldes": [
+        "termina em ־ִים",
+        "termina em ־וֹת"
+      ],
+      "itens": [
+        [
+          "תִּיקִים",
+          0
+        ],
+        [
+          "מְנוֹרוֹת",
+          1
+        ],
+        [
+          "חֲבֵרִים",
+          0
+        ],
+        [
+          "מַחְבָּרוֹת",
+          1
+        ],
+        [
+          "טֶלֶפוֹנִים",
+          0
+        ],
+        [
+          "יְלָדוֹת",
+          1
+        ]
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete com \"grande\".",
+      "antes": "מְנוֹרָה",
+      "depois": "",
+      "respostas": [
+        "גדולה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete com \"novos\".",
+      "antes": "תִּיקִים",
+      "depois": "",
+      "respostas": [
+        "חדשים"
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "חֲבֵרוֹת ___",
+      "opcoes": [
+        "נֶחְמָדוֹת",
+        "נֶחְמָדִים",
+        "נֶחְמָדָה"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "שֻׁלְחָנוֹת ___",
+      "opcoes": [
+        "גְּדוֹלִים",
+        "גְּדוֹלוֹת"
+      ],
+      "certa": 0,
+      "porque": "שֻׁלְחָן é masculino, mesmo com ־וֹת."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "סֵפֶר טוֹבָה",
+      "respostas": [
+        "ספר טוב"
+      ],
+      "porque": "סֵפֶר é masculino."
+    },
+    {
+      "t": "completar",
+      "q": "Complete com \"azul\".",
+      "antes": "כּוֹס",
+      "depois": "",
+      "respostas": [
+        "כחולה"
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "o caderno novo",
+      "palavras": [
+        "הַמַּחְבֶּרֶת",
+        "הַחֲדָשָׁה"
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "Qual é a frase inteira \"a mesa é velha\"?",
+      "opcoes": [
+        "הַשֻּׁלְחָן יָשָׁן",
+        "הַשֻּׁלְחָן הַיָּשָׁן"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "O que quer dizer הַיֶּלֶד הַקָּטָן?",
+      "opcoes": [
+        "o menino pequeno",
+        "o menino é pequeno"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "vf",
+      "q": "Em \"o livro novo\", o hebraico usa הַ duas vezes.",
+      "certa": true,
+      "porque": "הַסֵּפֶר הֶחָדָשׁ."
+    },
+    {
+      "t": "escolha",
+      "q": "Você fala com a Maya e a Noa:",
+      "opcoes": [
+        "אַתֶּן",
+        "אַתֶּם"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Você fala com o Dani e a Noa:",
+      "opcoes": [
+        "אַתֶּם",
+        "אַתֶּן"
+      ],
+      "certa": 0,
+      "porque": "Com um homem no grupo, é masculino."
+    },
+    {
+      "t": "escolha",
+      "q": "___ מַתָּנוֹת (estes são presentes)",
+      "opcoes": [
+        "אֵלֶּה",
+        "זֹאת"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "הַתִּיק הַשָּׁחֹר",
+      "q": "O que a pessoa disse?",
+      "opcoes": [
+        "a mochila preta",
+        "a mochila é preta"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "הֵן נֶחְמָדוֹת",
+      "q": "Fala de quem?",
+      "opcoes": [
+        "mulheres",
+        "homens"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: como é a casa da Maya?",
+      "opcoes": [
+        "pequena, mas bonita",
+        "grande e nova"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "vf",
+      "q": "No diálogo, a mesa da Maya é nova.",
+      "certa": false,
+      "porque": "הַשֻּׁלְחָן יָשָׁן."
+    }
+  ]
+}

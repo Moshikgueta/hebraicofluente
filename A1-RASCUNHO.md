@@ -39,6 +39,13 @@ de o dono aprovar o hebraico.
     quase não aparece no A1 e fica para o A2. מִסְפַּר הַטֶּלֶפוֹן entra como
     expressão fixa; a סְמִיכוּת é do A2 (aprovado com a Unidade 8).
 
+**Revisto pelo dono em 06/10/2026, com o pedido do A1 completo
+(A1-COURSE-AUDIT.md, seção 7):** os números com gênero e a סְמִיכוּת entram
+no A1, na Unidade 19, depois de todo o resto (as decisões 3, 11 e 12 valem até
+a Unidade 18). Sem passado no A1. O alfabeto continua curso separado; o A1
+ganha a Unidade 0 (ponte de pronúncia). O hebraico novo é revisado todo junto
+no fim.
+
 ## O mapa (aprovado)
 
 | # | Sei fazer | Gramática | Vocabulário |

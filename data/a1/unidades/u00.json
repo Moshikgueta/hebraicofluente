@@ -1,0 +1,153 @@
+{
+  "n": 0,
+  "revisado": false,
+  "tituloPt": "Antes de começar: os sons e as palavras do primeiro dia",
+  "objetivoPt": "Pronunciar os sons que mais confundem brasileiros, saber onde cai a força da palavra, e reconhecer as expressões que você ouve no primeiro dia em Israel.",
+  "situacaoPt": "Primeira manhã em Tel Aviv. O Dani, que é brasileiro, entra num café perto do hostel. A Maya trabalha no balcão. Ele já sabe ler as letras; agora precisa fazer o hebraico sair da boca do jeito que um israelense entende.",
+  "notaPt": "Esta unidade parte do curso de alfabetização: você já reconhece as letras e os sinais de vogal. Se ainda não reconhece, faça o curso de alfabetização antes. Aqui o assunto é a FALA.",
+  "palavras": [
+    { "he": "תּוֹדָה", "translit": "todá", "pt": "obrigado, obrigada" },
+    { "he": "תּוֹדָה רַבָּה", "translit": "todá rabá", "pt": "muito obrigado" },
+    { "he": "כֵּן", "translit": "ken", "pt": "sim" },
+    { "he": "לֹא", "translit": "lo", "pt": "não" },
+    { "he": "בְּסֵדֶר", "translit": "beséder", "pt": "tudo bem, ok" },
+    { "he": "מַה נִשְׁמָע?", "translit": "ma nishmá?", "pt": "e aí? tudo bem? (informal)" },
+    { "he": "סַבָּבָּה", "translit": "sabába", "pt": "beleza, tranquilo (informal)" },
+    { "he": "יַאלְלָה", "translit": "yála", "pt": "vamos! bora! (informal)" },
+    { "he": "רֶגַע", "translit": "réga", "pt": "um momento, espera" },
+    { "he": "יוֹפִי", "translit": "yófi", "pt": "ótimo, que bom" },
+    { "he": "עֶרֶב טוֹב", "translit": "érev tov", "pt": "boa noite (ao chegar)" },
+    { "he": "לַיְלָה טוֹב", "translit": "láila tov", "pt": "boa noite (ao ir dormir)" },
+    { "he": "שַׁבָּת שָׁלוֹם", "translit": "shabát shalóm", "pt": "bom shabat (de sexta à tarde a sábado)" },
+    { "he": "חַג שָׂמֵחַ", "translit": "chag saméach", "pt": "boas festas (num feriado)" },
+    { "he": "בְּתֵאָבוֹן", "translit": "beteavón", "pt": "bom apetite" },
+    { "he": "לְחַיִּים", "translit": "lechaím", "pt": "saúde! (no brinde)" },
+    { "he": "מַזָּל טוֹב", "translit": "mazál tov", "pt": "parabéns" }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "ח e כ: o R soprado do carioca",
+      "textoPt": "O ח e o כ sem ponto (também o ך do fim) têm o MESMO som: o R soprado que o carioca usa em \"rato\" e \"carro\", feito no fundo da boca. É o som de לְחַיִּים e de חַג.",
+      "erroPt": "Quem não fala com esse R tende a ler ח como K, ou como um H fraco. Não é nenhum dos dois: é um sopro raspado no fundo da boca, e é ele que separa חַג (feriado) de uma palavra qualquer.",
+      "exemplos": [
+        { "he": "לְחַיִּים", "pt": "le-CHA-im: saúde!" },
+        { "he": "חַג שָׂמֵחַ", "pt": "chag sa-MÉ-ach: boas festas" }
+      ]
+    },
+    {
+      "tituloPt": "ר: o R francês, com a voz ligada",
+      "textoPt": "O ר israelense é feito no mesmo lugar do ח, no fundo da boca, mas com a voz ligada: é o R de \"Paris\" dito por um francês. Ouça a diferença em רֶגַע (réga) e em תּוֹדָה רַבָּה (todá rabá).",
+      "erroPt": "Três hábitos do português atrapalham: o R batido de \"caro\" (soa estrangeiro), o R caipira de \"porta\" (soa mais estrangeiro ainda), e o R soprado do carioca, que em hebraico é outra letra: o ח."
+    },
+    {
+      "tituloPt": "ה no começo da palavra: um sopro de verdade",
+      "textoPt": "O ה no começo da palavra se pronuncia: um H leve, de ar saindo, como o H do inglês \"hello\". No fim da palavra (תּוֹדָה, רַבָּה) ele não soa.",
+      "erroPt": "Em português o H é sempre mudo (\"hotel\" é \"otel\"). Em hebraico, apagar o ה do começo muda a palavra: הִנֵּה é \"hiné\" (aqui está), não \"iné\"."
+    },
+    {
+      "tituloPt": "א e ע: só a vogal",
+      "textoPt": "Na fala da maioria dos israelenses, א e ע não têm som próprio: seguram a vogal, e é a vogal que se ouve. עֶרֶב soa \"érev\", como se não houvesse letra antes do E.",
+      "erroPt": "Como soam igual, o ouvido não ajuda a escrever: quem decide se é א ou ע é a memória da palavra, como \"cassa\" e \"caça\" em português."
+    },
+    {
+      "tituloPt": "צ: TS num golpe só",
+      "textoPt": "O צ é T e S colados, como o fim de \"pizza\". Por isso פִּיצָה, em hebraico, se escreve com צ.",
+      "erroPt": "No começo da palavra o português não usa TS, e a boca simplifica: vira S ou TCH. Diga \"pizza\", isole o \"tsa\" do fim, e leve para o começo."
+    },
+    {
+      "tituloPt": "ת, ט e ד: T e D secos, nunca TCH e DJ",
+      "textoPt": "תִּי é \"ti\", e דִּי é \"di\": a língua bate atrás dos dentes e sai, sem chiar.",
+      "erroPt": "Em boa parte do Brasil, T e D antes de I viram TCH e DJ (\"tia\", \"dia\"). O hábito é automático. Em hebraico isso muda a palavra: preste atenção nas sílabas com I."
+    },
+    {
+      "tituloPt": "A força da palavra: quase sempre na última sílaba",
+      "textoPt": "Em hebraico, a sílaba forte é quase sempre a última: to-DÁ, sha-LÓM, be-va-ka-SHÁ. A exceção que mais aparece no começo são as palavras com duas vogais E seguidas, como בֹּקֶר, עֶרֶב, רֶגַע, סֵדֶר: essas têm a força na penúltima (BÓ-ker, É-rev, RÉ-ga, be-SÉ-der).",
+      "erroPt": "O português põe a força na penúltima, e o ouvido brasileiro lê תּוֹדָה como a palavra \"toda\" (TÓ-da). Em hebraico é to-DÁ. O mesmo com מוֹרָה (professora): é mo-RÁ, não \"mora\"."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "O primeiro café em Tel Aviv",
+    "linhas": [
+      { "quem": "Maya", "he": "בֹּקֶר טוֹב! מַה נִשְׁמָע?", "translit": "bóker tov! ma nishmá?", "pt": "Bom dia! Tudo bem?" },
+      { "quem": "Dani", "he": "בְּסֵדֶר, תּוֹדָה.", "translit": "beséder, todá.", "pt": "Tudo bem, obrigado." },
+      { "quem": "Maya", "he": "קָפֶה?", "translit": "kafé?", "pt": "Café?" },
+      { "quem": "Dani", "he": "כֵּן, בְּבַקָּשָׁה.", "translit": "ken, bevakashá.", "pt": "Sim, por favor." },
+      { "quem": "Maya", "he": "רֶגַע… הִנֵּה!", "translit": "réga… hiné!", "pt": "Um momento… aqui está!" },
+      { "quem": "Dani", "he": "תּוֹדָה רַבָּה!", "translit": "todá rabá!", "pt": "Muito obrigado!" },
+      { "quem": "Maya", "he": "בְּבַקָּשָׁה. בְּתֵאָבוֹן!", "translit": "bevakashá. beteavón!", "pt": "De nada. Bom apetite!" },
+      { "quem": "Dani", "he": "יוֹפִי. יַאלְלָה, שָׁלוֹם!", "translit": "yófi. yála, shalóm!", "pt": "Ótimo. Bom, tchau!" }
+    ],
+    "glossario": [
+      { "he": "קָפֶה", "translit": "kafé", "pt": "café" },
+      { "he": "בְּבַקָּשָׁה", "translit": "bevakashá", "pt": "por favor / de nada" },
+      { "he": "הִנֵּה", "translit": "hiné", "pt": "aqui está" },
+      { "he": "שָׁלוֹם", "translit": "shalóm", "pt": "olá / tchau" }
+    ],
+    "notaPt": "שָׁלוֹם serve para chegar e para ir embora. E יַאלְלָה, no fim de uma conversa, quer dizer \"bom, vou indo\"."
+  },
+  "leitura": {
+    "tituloPt": "Mensagens no grupo da família",
+    "linhas": [
+      { "he": "בֹּקֶר טוֹב!", "translit": "bóker tov!", "pt": "Bom dia!" },
+      { "he": "מַזָּל טוֹב לְנֹעָה!", "translit": "mazál tov le-Nóa!", "pt": "Parabéns para a Noa!" },
+      { "he": "תּוֹדָה רַבָּה!", "translit": "todá rabá!", "pt": "Muito obrigada!" },
+      { "he": "שַׁבָּת שָׁלוֹם לְכֻלָּם!", "translit": "shabát shalóm lechulám!", "pt": "Bom shabat para todos!" }
+    ],
+    "perguntas": [
+      { "t": "escolha", "q": "O que aconteceu com a Noa?", "opcoes": ["Algo bom: ela recebeu os parabéns", "Ela ficou doente", "Ela foi viajar"], "certa": 0, "porque": "מַזָּל טוֹב é o que se diz numa boa notícia: aniversário, casamento, um filho, um emprego novo." },
+      { "t": "escolha", "q": "Em que dia foi mandada a última mensagem, provavelmente?", "opcoes": ["Na sexta-feira", "Na segunda-feira", "Na quarta-feira"], "certa": 0, "porque": "שַׁבָּת שָׁלוֹם se diz a partir da sexta à tarde, quando o shabat começa." },
+      { "t": "vf", "q": "A Noa agradeceu.", "certa": true, "porque": "תּוֹדָה רַבָּה é \"muito obrigado\": é a resposta da Noa aos parabéns." }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "Sababa, yalla e o hebraico da rua",
+      "textoPt": "סַבָּבָּה e יַאלְלָה vieram do árabe e todo israelense usa, de criança a ministro, mas entre conhecidos e em situação informal. No banco ou com um médico, prefira בְּסֵדֶר e תּוֹדָה. E יַאלְלָה muda de sentido com o tom: \"vamos!\", \"anda logo!\" ou \"bom, tchau\"."
+    },
+    {
+      "tituloPt": "Shabat shalom",
+      "textoPt": "O shabat começa na sexta ao pôr do sol e vai até sábado à noite. Desde a sexta de manhã você ouve שַׁבָּת שָׁלוֹם no mercado, na padaria, no trabalho, de gente religiosa ou não. É um \"bom fim de semana\" com mais peso."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Por que da direita para a esquerda?",
+      "textoPt": "O hebraico herdou a direção da escrita fenícia, como o árabe e o aramaico. O nosso alfabeto também descende do fenício, passando pelo grego, e os gregos antigos chegaram a escrever da direita para a esquerda, até que a direção virou. O hebraico ficou com a original."
+    },
+    {
+      "tituloPt": "Uma língua que voltou a ser falada",
+      "textoPt": "Por uns 1.700 anos o hebraico foi língua de reza, de estudo e de escrita, mas quase ninguém o tinha como língua de casa. No fim do século 19, Eliezer Ben-Yehuda e as escolas das novas comunidades judaicas na terra de Israel decidiram falar hebraico com as crianças. O filho de Ben-Yehuda foi um dos primeiros falantes nativos em séculos."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu sei a diferença entre o som do ח e o do ר.",
+    "Eu pronuncio o ה do começo da palavra.",
+    "Eu sei onde cai a força em תּוֹדָה e em בֹּקֶר.",
+    "Eu sei o que dizer quando alguém agradece, num brinde e numa sexta-feira."
+  ],
+  "exercicios": [
+    { "t": "escolha", "q": "Qual destas letras tem o som do R soprado de \"carro\", na fala carioca?", "opcoes": ["ח", "ר", "ה"], "certa": 0, "porque": "O ח (e o כ sem ponto) é o R soprado do carioca.", "dicas": { "1": "Quase. O ר é feito no mesmo lugar, mas com a voz ligada, como o R francês. O soprado é o ח.", "2": "O ה é só um sopro leve, sem raspar no fundo da boca, como o H de \"hello\"." } },
+    { "t": "escolha", "q": "Em qual destas aparece o som soprado do ח?", "opcoes": ["לְחַיִּים", "רֶגַע", "יַאלְלָה"], "certa": 0, "porque": "לְחַיִּים: le-CHA-im. O ח está logo depois do לְ." },
+    { "t": "vf", "q": "O ה no começo da palavra é mudo, como o H de \"hotel\".", "certa": false, "porque": "No começo da palavra o ה se pronuncia: הִנֵּה é \"hiné\". Mudo é só no fim (תּוֹדָה)." },
+    { "t": "escolha", "q": "Como se lê a sílaba תִּי?", "opcoes": ["ti, com o T seco", "tchi, como em \"tia\""], "certa": 0, "dicas": { "1": "Esse é o T do português antes de I. Em hebraico o T não chia: a língua bate atrás dos dentes e sai." } },
+    { "t": "escolha", "q": "Onde cai a força em תּוֹדָה?", "opcoes": ["to-DÁ", "TÓ-da"], "certa": 0, "porque": "Em hebraico a força vai quase sempre na última sílaba.", "dicas": { "1": "Quase. TÓ-da é a palavra \"toda\" do português. Em hebraico a força está no fim: to-DÁ." } },
+    { "t": "escolha", "q": "E em בֹּקֶר?", "opcoes": ["BÓ-ker", "bo-KÉR"], "certa": 0, "porque": "בֹּקֶר é uma das palavras com dois E seguidos (ֶ ֶ): a força vai na penúltima.", "dicas": { "1": "A regra geral seria essa, mas בֹּקֶר é exceção: palavras com dois E seguidos levam a força na penúltima, BÓ-ker." } },
+    { "t": "escolha", "q": "O צ de פִּיצָה soa como:", "opcoes": ["ts", "s", "tch"], "certa": 0, "porque": "צ é T e S num golpe só, como o fim de \"pizza\".", "dicas": { "1": "Quase: falta o T. צ é TS colado.", "2": "Esse é o som do צ׳, com o sinal: aqui não há sinal nenhum." } },
+    { "t": "vf", "q": "Para a maioria dos israelenses, א e ע não têm som próprio: o que se ouve é a vogal.", "certa": true, "porque": "Por isso עֶרֶב soa \"érev\"." },
+    { "t": "escolha", "q": "Você chega ao trabalho às 8 da manhã. O que diz?", "opcoes": ["בֹּקֶר טוֹב", "עֶרֶב טוֹב", "לַיְלָה טוֹב"], "certa": 0, "dicas": { "1": "עֶרֶב טוֹב é para quem chega à noite.", "2": "לַיְלָה טוֹב é para quando alguém vai dormir." } },
+    { "t": "escolha", "q": "Sexta-feira à tarde, a vizinha passa por você. O que ela diz?", "opcoes": ["שַׁבָּת שָׁלוֹם", "בְּתֵאָבוֹן", "מַזָּל טוֹב"], "certa": 0, "porque": "Na sexta, a partir da manhã, todo mundo deseja um bom shabat." },
+    { "t": "escolha", "q": "O garçom põe o prato na mesa e diz:", "opcoes": ["בְּתֵאָבוֹן", "לְחַיִּים", "לַיְלָה טוֹב"], "certa": 0, "dicas": { "1": "לְחַיִּים é o brinde, com o copo na mão." } },
+    { "t": "escolha", "q": "Uma amiga conta que vai se casar. Você diz:", "opcoes": ["מַזָּל טוֹב", "חַג שָׂמֵחַ", "רֶגַע"], "certa": 0, "dicas": { "1": "חַג שָׂמֵחַ é para um feriado, como o Pessach ou o Rosh Hashaná." } },
+    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["Noa", "מַה נִשְׁמָע?"]], "opcoes": ["בְּסֵדֶר, תּוֹדָה.", "מַזָּל טוֹב!", "בְּתֵאָבוֹן!"], "certa": 0, "porque": "מַה נִשְׁמָע? é \"tudo bem?\"; a resposta de sempre é בְּסֵדֶר." },
+    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["Tom", "תּוֹדָה רַבָּה!"]], "opcoes": ["בְּבַקָּשָׁה.", "לְחַיִּים!", "שַׁבָּת שָׁלוֹם!"], "certa": 0, "porque": "בְּבַקָּשָׁה é \"por favor\" e também \"de nada\"." },
+    { "t": "escolha", "q": "A Maya diz רֶגַע. O que ela quer?", "opcoes": ["Que você espere um momento", "Agradecer", "Se despedir"], "certa": 0 },
+    { "t": "ligar", "q": "Ligue cada expressão ao que ela quer dizer.", "pares": [["סַבָּבָּה", "beleza, tranquilo"], ["יַאלְלָה", "vamos! bora!"], ["רֶגַע", "um momento"], ["בְּסֵדֶר", "tudo bem, ok"], ["יוֹפִי", "ótimo"]] },
+    { "t": "separar", "q": "Qual serve em qualquer situação, e qual é mais de rua?", "baldes": ["Serve em qualquer situação", "Informal, entre conhecidos"], "itens": [["תּוֹדָה רַבָּה", 0], ["בֹּקֶר טוֹב", 0], ["סַבָּבָּה", 1], ["יַאלְלָה", 1], ["עֶרֶב טוֹב", 0], ["מַה נִשְׁמָע?", 1]] },
+    { "t": "intruso", "q": "Qual destas NÃO tem o som soprado do ח?", "opcoes": ["לְחַיִּים", "חַג שָׂמֵחַ", "רֶגַע"], "certa": 2, "porque": "רֶגַע começa com ר, o R com a voz ligada. As outras duas têm ח." },
+    { "t": "ouvir", "he": "תּוֹדָה רַבָּה", "q": "O que você ouviu?", "opcoes": ["Muito obrigado", "Por favor", "Tudo bem"], "certa": 0 },
+    { "t": "ouvir", "he": "חַג שָׂמֵחַ", "q": "Quando se diz isto?", "opcoes": ["Num feriado", "Num brinde", "Ao ir dormir"], "certa": 0 },
+    { "t": "ditado", "he": "בְּסֵדֶר", "respostas": ["בסדר"] },
+    { "t": "escrever", "pt": "obrigado", "respostas": ["תודה"] },
+    { "t": "escrever", "pt": "bom apetite", "respostas": ["בתאבון"] }
+  ]
+}

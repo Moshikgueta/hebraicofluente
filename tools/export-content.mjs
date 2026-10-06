@@ -678,25 +678,47 @@ function main() {
      Pago, como o resto, mas de OUTRO curso: sai por /api/content/a1, que só
      responde a quem comprou o hebraico-a1 (worker/src/api/content-a1.js).
      Nada daqui entra no molde do alfabeto. Cada hebraico que se ouve (as
-     palavras, as linhas do diálogo e os itens de escuta) ganha o id da sua
-     gravação, pela mesma conta de sempre (audioIdFor). */
-  const a1 = readJson('data/a1.json');
+     palavras, as linhas do diálogo e os itens de escuta e de ditado) ganha o
+     id da sua gravação, pela mesma conta de sempre (audioIdFor).
+
+     A fonte é data/a1/: curso.json (módulos, ordem, certificado) e um
+     arquivo por unidade. Saem DOIS arquivos:
+       · a1.json, o que o navegador recebe: o curso, as unidades e, do exame,
+         só as regras e os nomes das partes;
+       · a1-exame.json, as perguntas do exame COM o gabarito, que só o Worker
+         lê (api/exame-a1.js) - o exame é corrigido no servidor. */
+  const a1Curso = readJson('data/a1/curso.json');
+  const a1Nums = a1Curso.modulos.flatMap(m => m.unidades);
+  const a1Unidades = a1Nums.map(n => readJson(`data/a1/unidades/u${String(n).padStart(2, '0')}.json`));
+  const a1Exame = readJson('data/a1/exame.json');
   const comAudio = x => ({ ...x, he: NFC(x.he), audioId: audioIdFor(x.he) });
-  const itemA1 = it => (it.t === 'ouvir' ? { ...it, he: NFC(it.he), audioId: audioIdFor(it.he) } : it);
+  const itemA1 = it => (it.t === 'ouvir' || it.t === 'ditado' ? { ...it, he: NFC(it.he), audioId: audioIdFor(it.he) } : it);
+  const unidadeA1 = u => ({
+    ...u,
+    palavras: u.palavras.map(w => (w.formas ? { ...w, formas: w.formas.map(NFC) } : comAudio(w))),
+    dialogo: {
+      ...u.dialogo,
+      linhas: u.dialogo.linhas.map(comAudio),
+      glossario: (u.dialogo.glossario || []).map(comAudio)
+    },
+    ...(u.leitura ? { leitura: { ...u.leitura, perguntas: u.leitura.perguntas.map(itemA1) } } : {}),
+    exercicios: u.exercicios.map(itemA1)
+  });
+  const { _: _a1Nota, ...a1Publico } = a1Curso;
+  void _a1Nota;
   writeFileSync(join(OUT, 'a1.json'), JSON.stringify({
-    ...a1,
-    _: undefined,
-    unidades: a1.unidades.map(u => ({
-      ...u,
-      palavras: u.palavras.map(w => (w.formas ? { ...w, formas: w.formas.map(NFC) } : comAudio(w))),
-      dialogo: {
-        ...u.dialogo,
-        linhas: u.dialogo.linhas.map(comAudio),
-        glossario: (u.dialogo.glossario || []).map(comAudio)
-      },
-      exercicios: u.exercicios.map(itemA1)
-    })),
-    exame: { ...a1.exame, partes: a1.exame.partes.map(p => ({ ...p, itens: p.itens.map(itemA1) })) }
+    ...a1Publico,
+    unidades: a1Unidades.map(unidadeA1),
+    exame: {
+      sorteio: a1Exame.sorteio,
+      aprovacao: a1Exame.aprovacao,
+      partes: a1Exame.partes.map(p => ({ id: p.id, tituloPt: p.tituloPt, unidades: p.unidades }))
+    }
+  }) + '\n');
+  writeFileSync(join(OUT, 'a1-exame.json'), JSON.stringify({
+    sorteio: a1Exame.sorteio,
+    aprovacao: a1Exame.aprovacao,
+    partes: a1Exame.partes.map(p => ({ ...p, itens: p.itens.map(itemA1) }))
   }) + '\n');
 
   /* ── stroke geometry ────────────────────────────────────────────────

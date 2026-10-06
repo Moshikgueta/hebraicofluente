@@ -1,0 +1,63 @@
+{
+  "_": [
+    "O curso Hebraico A1 (aprovado pelo dono em 06/10/2026; ver A1-RASCUNHO.md).",
+    "Segue a ordem e a lógica do livro \"עברית מן ההתחלה\", com palavras, nomes, diálogos e exercícios próprios.",
+    "Instruções em português; respostas e opções em hebraico. Respostas escritas são conferidas sem nikud e sem finais.",
+    "O A1 só aparece para quem comprou o curso hebraico-a1 (rotas /a1, GET /api/content/a1).",
+    "Um arquivo por unidade em data/a1/unidades/uNN.json; os módulos e a ordem moram aqui. Para acrescentar uma unidade: criar o arquivo e pôr o número no módulo."
+  ],
+  "genero": {
+    "perguntaPt": "Como você quer ser tratado nos exercícios: no masculino ou no feminino?"
+  },
+  "modulos": [
+    {
+      "n": 0,
+      "tituloPt": "Começando no hebraico",
+      "objetivoPt": "Os sons que mais confundem brasileiros e as expressões do primeiro dia. As letras e o nikud estão no curso de alfabetização.",
+      "unidades": [
+        0
+      ]
+    },
+    {
+      "n": 1,
+      "tituloPt": "Eu e você",
+      "objetivoPt": "Se apresentar, perguntar quem é e o que é.",
+      "unidades": [
+        1,
+        2
+      ]
+    },
+    {
+      "n": 2,
+      "tituloPt": "Minha vida",
+      "objetivoPt": "Descrever pessoas e coisas, dizer o que você faz e onde mora.",
+      "unidades": [
+        3,
+        4
+      ]
+    },
+    {
+      "n": 3,
+      "tituloPt": "Comer, querer e ter",
+      "objetivoPt": "Dizer o que você come e quer, falar da família e do que você tem.",
+      "unidades": [
+        5,
+        6
+      ]
+    },
+    {
+      "n": 4,
+      "tituloPt": "Números e conversa",
+      "objetivoPt": "Preço, hora e dias da semana, e uma conversa inteira com alguém novo.",
+      "unidades": [
+        7,
+        8
+      ]
+    }
+  ],
+  "certificado": {
+    "tituloPt": "Hebraico A1 - curso concluído",
+    "linhaPt": "{nome} concluiu o curso Hebraico A1 do Hebraico Fluente e foi aprovado no exame final.",
+    "avisoPt": "Este certificado mostra que você concluiu o curso. Não é uma certificação oficial de nível."
+  }
+}
