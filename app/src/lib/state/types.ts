@@ -1,6 +1,7 @@
 /* The learner's state. One shape, two adapters (localStorage now, Supabase
  * when there are keys), so nothing above this line knows where it is stored. */
 
+import { A1_VAZIO, type EstadoA1 } from './a1-estado';
 import type { Rodadas } from '@/lib/rodadas';
 
 export type DailyGoalMinutes = 5 | 10 | 15 | 20;
@@ -208,6 +209,12 @@ export type LearnerState = {
    * aqui. Por isso gastar não apaga esforço nenhum.
    */
   loja: { compras: Record<string, Compra> };
+
+  /* ── acrescentado à v2 em 06/10/2026 ─────────────────────────────── */
+
+  /** O curso Hebraico A1: gênero dos exercícios, unidades e exame
+   *  (lib/state/a1-estado.ts). Chave própria, para não misturar com as letras. */
+  a1: EstadoA1;
 };
 
 /** Uma troca de XP. O id é único por compra (`folga:<instante>`, `carta:<id>`). */
@@ -265,7 +272,8 @@ export const EMPTY_STATE: LearnerState = {
   nomeHebraico: null,
   kinds: {},
   rodadas: {},
-  loja: { compras: {} }
+  loja: { compras: {} },
+  a1: A1_VAZIO
 };
 
 export interface ProgressStore {

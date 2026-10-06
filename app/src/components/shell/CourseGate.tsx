@@ -39,8 +39,9 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Card, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
-import { FLAGSHIP, flagship } from '@/lib/catalog';
+import { FLAGSHIP, getCourse } from '@/lib/catalog';
 import { carregarConteudo, conteudoPronto } from '@/lib/content';
+import { CURSO_A1, a1Pronto, carregarA1, rotaDoA1 } from '@/lib/a1';
 import { AvisoDeDireitos, MarcaDagua } from '@/components/shell/MarcaDagua';
 
 /** Rotas de aluno que não exigem compra: a conta, e nada mais. */
@@ -55,23 +56,33 @@ export function CourseGate({ children }: { children: ReactNode }) {
 
   const here = norm(pathname);
   const needsPurchase = !FREE_FOR_ACCOUNT.includes(here);
-  const allowed = account.signedIn && (!needsPurchase || account.can(FLAGSHIP));
+  /* Qual curso esta rota pede (06/10/2026, com o A1): /a1 é do A1, o resto
+     do alfabeto - a mesma divisão do portão do servidor (worker/src/gate.js).
+     Cada curso tem o seu depósito de conteúdo e a sua rota de busca. */
+  const doA1 = rotaDoA1(here);
+  const curso = doA1 ? CURSO_A1 : FLAGSHIP;
+  const pronto = doA1 ? a1Pronto : conteudoPronto;
+  const carregar = doA1 ? carregarA1 : carregarConteudo;
+  const allowed = account.signedIn && (!needsPurchase || account.can(curso));
 
   /* O conteúdo do curso, buscado uma vez por sessão do navegador. `pronto`
      começa consultando o depósito porque uma segunda tela montando depois da
      primeira não deve esperar de novo - o dado já está na memória. */
   const [conteudo, setConteudo] = useState<'pronto' | 'buscando' | 'falhou'>(
-    () => (conteudoPronto() ? 'pronto' : 'buscando')
+    () => (pronto() ? 'pronto' : 'buscando')
   );
+  /* Navegar de uma rota do alfabeto para uma do A1 (ou o contrário) troca o
+     depósito: o estado de "pronto" é o do curso desta rota. */
+  useEffect(() => { setConteudo(pronto() ? 'pronto' : 'buscando'); }, [doA1]);
 
   useEffect(() => {
     if (!account.ready || allowed) return;
     if (!account.signedIn) {
       router.replace(`/entrar?next=${encodeURIComponent(here)}`);
     } else {
-      router.replace(`/cursos/${FLAGSHIP}?${PARAM_SEM_ACESSO}=1`);
+      router.replace(`/cursos/${curso}?${PARAM_SEM_ACESSO}=1`);
     }
-  }, [account.ready, account.signedIn, allowed, here, router]);
+  }, [account.ready, account.signedIn, allowed, here, router, curso]);
 
   /* A busca do conteúdo começa JÁ, em paralelo com /api/me (auditoria de
      01/10/2026, PERF-004). Numa rota paga o HTML só saiu do Worker depois de
@@ -81,7 +92,7 @@ export function CourseGate({ children }: { children: ReactNode }) {
      disser que não, a recusa do servidor é engolida aqui: nada se mostra
      sem `allowed`, e o efeito abaixo pede de novo quando puder. */
   useEffect(() => {
-    if (needsPurchase && !conteudoPronto()) carregarConteudo().catch(() => {});
+    if (needsPurchase && !pronto()) carregar().catch(() => {});
   }, []);
 
   /* Só busca depois de saber que pode, e só onde o conteúdo é preciso.
@@ -94,11 +105,11 @@ export function CourseGate({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!allowed || !needsPurchase || conteudo === 'pronto') return;
     let vivo = true;
-    carregarConteudo()
+    carregar()
       .then(() => { if (vivo) setConteudo('pronto'); })
       .catch(() => { if (vivo) setConteudo('falhou'); });
     return () => { vivo = false; };
-  }, [allowed, needsPurchase, conteudo]);
+  }, [allowed, needsPurchase, conteudo, carregar]);
 
   if (!account.ready) return <GateSkeleton />;
 
@@ -146,11 +157,11 @@ export function CourseGate({ children }: { children: ReactNode }) {
         </h1>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
           {account.signedIn
-            ? `O ${flagship().titlePt} é liberado assim que o pagamento é confirmado.`
+            ? `O ${getCourse(curso)?.titlePt ?? ''} é liberado assim que o pagamento é confirmado.`
             : 'Suas aulas, seu progresso e seu certificado ficam na sua conta.'}
         </p>
         <LinkButton
-          href={account.signedIn ? `/cursos/${FLAGSHIP}?${PARAM_SEM_ACESSO}=1` : `/entrar?next=${encodeURIComponent(here)}`}
+          href={account.signedIn ? `/cursos/${curso}?${PARAM_SEM_ACESSO}=1` : `/entrar?next=${encodeURIComponent(here)}`}
           className="justify-self-start"
         >
           {account.signedIn ? 'Ver o curso' : 'Entrar'}

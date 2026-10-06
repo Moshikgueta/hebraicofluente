@@ -27,6 +27,7 @@
  * primeira coisa que um aluno nota num curso é o número que mente para cima.
  */
 
+import { fundirA1 } from './a1-estado';
 import {
   EMPTY_STATE, SKILLS,
   type Achievement, type CheckpointProgress, type Confusion, type DayRecord,
@@ -271,7 +272,9 @@ export function mergeStates(local: LearnerState, remoto: LearnerState): LearnerS
     rodadas: fundirRodadas(a.rodadas ?? {}, b.rodadas ?? {}),
     /* As trocas de XP: união por id (cada compra tem id próprio), e numa folga
        comprada nos dois lados vale o uso MAIS CEDO. Comutativa e idempotente. */
-    loja: { compras: fundirCompras(a.loja?.compras ?? {}, b.loja?.compras ?? {}) }
+    loja: { compras: fundirCompras(a.loja?.compras ?? {}, b.loja?.compras ?? {}) },
+    /* O A1: regras próprias, comutativas como as daqui (lib/state/a1-estado.ts). */
+    a1: fundirA1(a.a1, b.a1)
   };
 }
 
