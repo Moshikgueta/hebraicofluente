@@ -53,6 +53,24 @@
         7,
         8
       ]
+    },
+    {
+      "n": 5,
+      "tituloPt": "Minha rotina",
+      "objetivoPt": "Contar o seu dia, dizer do que gosta e o que quer, precisa ou pode fazer.",
+      "unidades": [
+        9,
+        10
+      ]
+    },
+    {
+      "n": 6,
+      "tituloPt": "Casa e cidade",
+      "objetivoPt": "Dizer onde as coisas estão, descrever a casa, andar pela cidade e perguntar o caminho.",
+      "unidades": [
+        11,
+        12
+      ]
     }
   ],
   "certificado": {

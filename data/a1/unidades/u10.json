@@ -1,0 +1,147 @@
+{
+  "n": 10,
+  "revisado": false,
+  "tituloPt": "Do que você gosta? O que você quer fazer?",
+  "objetivoPt": "Dizer do que você gosta, o que quer, precisa, pode e sabe fazer; aceitar e recusar um convite, explicando o porquê.",
+  "situacaoPt": "A Maya vai à praia no sábado com uns amigos e chama o Dani. Ele quer ir, mas tem um problema com o horário.",
+  "palavras": [
+    { "pt": "gostar, amar", "formas": ["אוֹהֵב", "אוֹהֶבֶת", "אוֹהֲבִים", "אוֹהֲבוֹת"] },
+    { "pt": "precisar, ter que", "formas": ["צָרִיךְ", "צְרִיכָה", "צְרִיכִים", "צְרִיכוֹת"] },
+    { "pt": "poder", "formas": ["יָכוֹל", "יְכוֹלָה", "יְכוֹלִים", "יְכוֹלוֹת"] },
+    { "pt": "saber", "formas": ["יוֹדֵעַ", "יוֹדַעַת", "יוֹדְעִים", "יוֹדְעוֹת"] },
+    { "he": "לִלְמוֹד", "translit": "lilmód", "pt": "estudar (infinitivo)" },
+    { "he": "לַעֲבוֹד", "translit": "laavód", "pt": "trabalhar" },
+    { "he": "לִכְתּוֹב", "translit": "lichtóv", "pt": "escrever" },
+    { "he": "לְדַבֵּר", "translit": "ledabér", "pt": "falar" },
+    { "he": "לִקְרוֹא", "translit": "likró", "pt": "ler" },
+    { "he": "לֶאֱכוֹל", "translit": "leechól", "pt": "comer" },
+    { "he": "לִשְׁתּוֹת", "translit": "lishtót", "pt": "beber" },
+    { "he": "לִקְנוֹת", "translit": "liknót", "pt": "comprar" },
+    { "he": "לָגוּר", "translit": "lagúr", "pt": "morar" },
+    { "he": "לָלֶכֶת", "translit": "laléchet", "pt": "ir" },
+    { "he": "לָבוֹא", "translit": "lavó", "pt": "vir" },
+    { "he": "לַחֲזוֹר", "translit": "lachzór", "pt": "voltar" },
+    { "he": "לַעֲשׂוֹת", "translit": "laasót", "pt": "fazer" },
+    { "he": "לִישׁוֹן", "translit": "lishón", "pt": "dormir" },
+    { "he": "לְבַשֵּׁל", "translit": "levashél", "pt": "cozinhar" },
+    { "he": "לִרְקוֹד", "translit": "lirkód", "pt": "dançar" },
+    { "he": "לִשְׂחוֹת", "translit": "lischót", "pt": "nadar" },
+    { "he": "לְטַיֵּל", "translit": "letayél", "pt": "passear, viajar" },
+    { "he": "לָרוּץ", "translit": "larúts", "pt": "correr" },
+    { "he": "לִרְאוֹת סְרָטִים", "translit": "lirót sratím", "pt": "ver filmes" },
+    { "he": "כַּדּוּרֶגֶל", "translit": "kadurégel", "pt": "futebol" },
+    { "he": "מוּזִיקָה", "translit": "múzika", "pt": "música" },
+    { "he": "כִּי", "translit": "ki", "pt": "porque" },
+    { "he": "הַיּוֹם", "translit": "hayóm", "pt": "hoje" },
+    { "he": "בְּשִׂמְחָה", "translit": "besimchá", "pt": "com prazer" }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "O infinitivo: a forma com לְ na frente",
+      "textoPt": "Para \"estudar\", \"trabalhar\", \"dormir\" sem dizer quem, o hebraico usa uma forma que quase sempre começa com לְ (às vezes לִ, לַ, לָ, לֶ): לִלְמוֹד, לַעֲבוֹד, לִישׁוֹן. Ela não muda com homem ou mulher. Aprenda cada uma junto com o verbo que você já conhece: לוֹמֵד e לִלְמוֹד, עוֹבֵד e לַעֲבוֹד.",
+      "exemplos": [
+        { "he": "לוֹמֵד → לִלְמוֹד", "pt": "estuda → estudar" },
+        { "he": "הוֹלֵךְ → לָלֶכֶת", "pt": "vai → ir" }
+      ]
+    },
+    {
+      "tituloPt": "Quero, preciso, posso, sei, gosto: e depois, o infinitivo",
+      "textoPt": "רוֹצֶה, צָרִיךְ, יָכוֹל, יוֹדֵעַ e אוֹהֵב mudam com quem fala (4 formas, como sempre). O segundo verbo vai no infinitivo e não muda: אֲנִי רוֹצָה לִלְמוֹד, הֵם צְרִיכִים לַעֲבוֹד, אַתָּה יָכוֹל לָבוֹא?",
+      "erroPt": "Um erro que não existe em português, mas aparece muito: mudar os DOIS verbos. \"Ela quer estudar\" é הִיא רוֹצָה לִלְמוֹד, e não הִיא רוֹצָה לוֹמֶדֶת.",
+      "exemplos": [
+        { "he": "אֲנִי יוֹדֵעַ לִשְׂחוֹת.", "pt": "Eu sei nadar. (homem)" },
+        { "he": "אַתְּ יְכוֹלָה לָבוֹא?", "pt": "Você pode vir? (a ela)" }
+      ]
+    },
+    {
+      "tituloPt": "Gostar de coisa, gostar de fazer",
+      "textoPt": "אוֹהֵב vem direto com a coisa, sem \"de\": אֲנִי אוֹהֵב קָפֶה. Com uma ação, vem o infinitivo: אֲנִי אוֹהֵב לְבַשֵּׁל.",
+      "erroPt": "O português põe \"de\": \"gosto DE café\". O brasileiro tende a traduzir o \"de\" com מִ־. Não tem: אֲנִי אוֹהֶבֶת מוּזִיקָה."
+    },
+    {
+      "tituloPt": "Por quê? Porque.",
+      "textoPt": "A pergunta é לָמָּה? (Unidade 8) e a resposta começa com כִּי: לָמָּה אַתָּה לֹא בָּא? כִּי אֲנִי עָסוּק. O לֹא vem antes do verbo que se nega: אֲנִי לֹא יָכוֹל לָבוֹא.",
+      "erroPt": "Em português, \"por que\" e \"porque\" soam iguais. Em hebraico são palavras diferentes: לָמָּה pergunta, כִּי responde."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Um convite para a praia",
+    "linhas": [
+      { "quem": "Maya", "he": "דָּנִי, מָה אַתָּה אוֹהֵב לַעֲשׂוֹת בְּשַׁבָּת?", "translit": "Dani, ma atá ohev laasót beshabát?", "pt": "Dani, o que você gosta de fazer no sábado?" },
+      { "quem": "Dani", "he": "אֲנִי אוֹהֵב לְטַיֵּל וְלִשְׂחוֹת.", "translit": "aní ohev letayél velischót.", "pt": "Eu gosto de passear e de nadar." },
+      { "quem": "Maya", "he": "גַּם אֲנִי! אַתָּה רוֹצֶה לָבוֹא לַיָּם אִתָּנוּ?", "translit": "gam aní! atá rotsé lavó layám itánu?", "pt": "Eu também! Quer vir à praia com a gente?" },
+      { "quem": "Dani", "he": "כֵּן, בְּשִׂמְחָה! מָתַי?", "translit": "ken, besimchá! matai?", "pt": "Sim, com prazer! Quando?" },
+      { "quem": "Maya", "he": "בְּשַׁבָּת בַּבֹּקֶר, בְּתֵשַׁע.", "translit": "beshabát babóker, betésha.", "pt": "No sábado de manhã, às nove." },
+      { "quem": "Dani", "he": "אוֹי, בְּתֵשַׁע אֲנִי לֹא יָכוֹל.", "translit": "oi, betésha aní lo yachol.", "pt": "Ai, às nove eu não posso." },
+      { "quem": "Maya", "he": "לָמָּה?", "translit": "láma?", "pt": "Por quê?" },
+      { "quem": "Dani", "he": "כִּי בְּשַׁבָּת אֲנִי אוֹהֵב לִישׁוֹן עַד עֶשֶׂר!", "translit": "ki beshabát aní ohev lishón ad éser!", "pt": "Porque no sábado eu gosto de dormir até as dez!" },
+      { "quem": "Maya", "he": "אֵין בְּעָיָה. אֲנַחְנוּ יְכוֹלִים לָלֶכֶת בְּאַחַת־עֶשְׂרֵה.", "translit": "ein beayá. anáchnu yecholim laléchet beachat-esré.", "pt": "Sem problema. A gente pode ir às onze." },
+      { "quem": "Dani", "he": "סַבָּבָּה! אֲנִי יוֹדֵעַ לִשְׂחוֹת, אֲבָל לֹא טוֹב…", "translit": "sabába! aní yodéa lischót, aval lo tov…", "pt": "Beleza! Eu sei nadar, mas não muito bem…" },
+      { "quem": "Maya", "he": "לֹא נוֹרָא!", "translit": "lo norá!", "pt": "Não tem problema!" }
+    ],
+    "glossario": [
+      { "he": "אוֹי", "translit": "oi", "pt": "ai (decepção, susto)" },
+      { "he": "לֹא נוֹרָא", "translit": "lo norá", "pt": "não tem problema, não é grave" }
+    ],
+    "notaPt": "Repare que a Maya diz אֲנַחְנוּ יְכוֹלִים, no masculino plural: o grupo tem homens e mulheres, e grupo misto é masculino (Unidade 3)."
+  },
+  "leitura": {
+    "tituloPt": "Um perfil num aplicativo de troca de idiomas",
+    "semPontos": true,
+    "linhas": [
+      { "he": "קוֹרְאִים לִי שִׁירָה. אֲנִי גָּרָה בְּחֵיפָה.", "translit": "kor'im li Shira. aní gará beCheifa.", "pt": "Eu me chamo Shira. Moro em Haifa." },
+      { "he": "אֲנִי אוֹהֶבֶת לְבַשֵּׁל וְלִרְקוֹד.", "translit": "aní ohévet levashél velirkód.", "pt": "Gosto de cozinhar e de dançar." },
+      { "he": "אֲנִי לֹא אוֹהֶבֶת כַּדּוּרֶגֶל.", "translit": "aní lo ohévet kadurégel.", "pt": "Não gosto de futebol." },
+      { "he": "אֲנִי רוֹצָה לִלְמוֹד פּוֹרְטוּגָזִית, כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל!", "translit": "aní rotsá lilmód portugezit, ki aní rotsá letayél biVrazil!", "pt": "Quero estudar português, porque quero viajar pelo Brasil!" }
+    ],
+    "perguntas": [
+      { "t": "escolha", "q": "Do que a Shira gosta?", "opcoes": ["Cozinhar e dançar", "Futebol e música", "Nadar e correr"], "certa": 0 },
+      { "t": "escolha", "q": "Por que ela quer aprender português?", "opcoes": ["Para viajar pelo Brasil", "Para trabalhar no Brasil", "Porque mora no Brasil"], "certa": 0, "porque": "כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל." },
+      { "t": "vf", "q": "A Shira mora em Tel Aviv.", "certa": false, "porque": "Ela mora em Haifa: בְּחֵיפָה." },
+      { "t": "vf", "q": "Ela não gosta de futebol.", "certa": true }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "Na praia: o barulho do matkot",
+      "textoPt": "Numa praia israelense você ouve um \"toc, toc\" sem parar: é o מַטְקוֹת, duas raquetes de madeira e uma bolinha, jogado em dupla na beira do mar, sem rede e sem placar. Não tem vencedor: o jogo é não deixar a bola cair."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Como nascem palavras novas",
+      "textoPt": "כַּדּוּרֶגֶל (futebol) é כַּדּוּר (bola) + רֶגֶל (pé), coladas numa palavra só. Quando o hebraico voltou a ser falado, faltavam palavras para o mundo moderno, e um comitê criado em 1890 começou a inventá-las a partir de raízes antigas. Hoje esse trabalho é da Academia da Língua Hebraica, fundada em 1953."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu digo do que gosto e do que não gosto.",
+    "Eu uso רוֹצֶה, צָרִיךְ e יָכוֹל com um infinitivo depois.",
+    "Eu aceito ou recuso um convite, e explico com כִּי."
+  ],
+  "exercicios": [
+    { "t": "ligar", "q": "Ligue cada infinitivo ao que ele quer dizer.", "pares": [["לִלְמוֹד", "estudar"], ["לַעֲבוֹד", "trabalhar"], ["לִכְתּוֹב", "escrever"], ["לִשְׁתּוֹת", "beber"], ["לֶאֱכוֹל", "comer"]] },
+    { "t": "ligar", "q": "E os passatempos.", "pares": [["לְבַשֵּׁל", "cozinhar"], ["לִרְקוֹד", "dançar"], ["לִשְׂחוֹת", "nadar"], ["לְטַיֵּל", "passear, viajar"], ["לָרוּץ", "correr"]] },
+    { "t": "escolha", "q": "\"Eu quero estudar hebraico\": אֲנִי רוֹצֶה ___ עִבְרִית.", "opcoes": ["לִלְמוֹד", "לוֹמֵד", "לוֹמֶדֶת"], "certa": 0, "dicas": { "1": "Quase. Depois de רוֹצֶה, o segundo verbo vai no infinitivo: לִלְמוֹד. Como \"quero estudar\", e não \"quero estudo\".", "2": "Depois de רוֹצֶה vem o infinitivo, que não muda com homem ou mulher: לִלְמוֹד." } },
+    { "t": "tabela", "q": "Complete as formas.", "base": "אוֹהֵב", "linhas": [["mulher", "אוהבת"], ["homens", "אוהבים"], ["mulheres", "אוהבות"]] },
+    { "t": "tabela", "q": "Complete as formas.", "base": "צָרִיךְ", "linhas": [["mulher", "צריכה"], ["homens", "צריכים"], ["mulheres", "צריכות"]] },
+    { "t": "tabela", "q": "Complete as formas.", "base": "יָכוֹל", "linhas": [["mulher", "יכולה"], ["homens", "יכולים"], ["mulheres", "יכולות"]] },
+    { "t": "escolha", "q": "A Maya diz que pode vir: אֲנִי ___ לָבוֹא.", "opcoes": ["יְכוֹלָה", "יָכוֹל", "יְכוֹלִים"], "certa": 0, "dicas": { "1": "יָכוֹל é a forma de um homem. A Maya é mulher: יְכוֹלָה.", "2": "יְכוֹלִים é para vários." } },
+    { "t": "escolha", "q": "Qual frase diz \"eu preciso trabalhar\"?", "opcoes": ["אֲנִי צָרִיךְ לַעֲבוֹד.", "אֲנִי צָרִיךְ עוֹבֵד.", "אֲנִי לַעֲבוֹד צָרִיךְ."], "certa": 0, "dicas": { "1": "Os dois verbos mudaram. O segundo fica no infinitivo: לַעֲבוֹד.", "2": "As palavras certas, na ordem errada. Como em português: preciso, e depois trabalhar." } },
+    { "t": "completar", "q": "\"Porque eu estou ocupado\"", "antes": "", "depois": "אֲנִי עָסוּק", "respostas": ["כי"] },
+    { "t": "vf", "q": "\"Eu sei nadar\" é אֲנִי יוֹדֵעַ לִשְׂחוֹת: o verbo saber com um infinitivo.", "certa": true },
+    { "t": "erro", "q": "Ache o erro e escreva a frase certa.", "errada": "אֲנִי אוֹהֵב לוֹמֵד עִבְרִית.", "respostas": ["אני אוהב ללמוד עברית", "אני אוהב ללמד עברית"], "porque": "Depois de אוֹהֵב, a ação vai no infinitivo: לִלְמוֹד." },
+    { "t": "erro", "q": "Ache o erro e escreva a frase certa.", "errada": "הִיא לֹא יָכוֹל לָבוֹא.", "respostas": ["היא לא יכולה לבוא"], "porque": "Para ela: יְכוֹלָה. O לָבוֹא não muda." },
+    { "t": "montar", "pt": "Eu gosto de ler jornal. (fala uma mulher)", "palavras": ["אֲנִי", "אוֹהֶבֶת", "לִקְרוֹא", "עִתּוֹן"] },
+    { "t": "montar", "pt": "Eu não posso hoje, porque trabalho. (fala um homem)", "palavras": ["אֲנִי", "לֹא", "יָכוֹל", "הַיּוֹם", "כִּי", "אֲנִי", "עוֹבֵד"] },
+    { "t": "separar", "q": "Gosta ou não gosta?", "baldes": ["gosta", "não gosta"], "itens": [["אֲנִי אוֹהֵב לְבַשֵּׁל", 0], ["אֲנִי לֹא אוֹהֶבֶת לָרוּץ", 1], ["הוּא אוֹהֵב כַּדּוּרֶגֶל", 0], ["הֵם לֹא אוֹהֲבִים קָפֶה", 1], ["אֲנַחְנוּ אוֹהֲבוֹת לִרְקוֹד", 0], ["הִיא לֹא אוֹהֶבֶת לְטַיֵּל", 1]] },
+    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["Maya", "אַתָּה רוֹצֶה לָבוֹא לַיָּם?"]], "opcoes": ["כֵּן, בְּשִׂמְחָה!", "אֲנִי מִבְּרָזִיל.", "בְּתֵאָבוֹן!"], "certa": 0 },
+    { "t": "dialogo", "q": "Qual é a resposta natural?", "linhas": [["Tom", "לָמָּה אַתָּה לֹא בָּא?"]], "opcoes": ["כִּי אֲנִי צָרִיךְ לַעֲבוֹד.", "כֵּן, אֲנִי בָּא.", "בְּשֶׁבַע."], "certa": 0, "porque": "לָמָּה pede um motivo, e o motivo começa com כִּי." },
+    { "t": "ordenar", "q": "Ponha a conversa na ordem.", "falas": ["אַתְּ רוֹצָה לְטַיֵּל בְּשַׁבָּת?", "אֲנִי לֹא יְכוֹלָה.", "לָמָּה?", "כִּי אֲנִי צְרִיכָה לִלְמוֹד."] },
+    { "t": "ouvir", "he": "אֲנִי לֹא יוֹדַעַת לְבַשֵּׁל.", "q": "O que você ouviu?", "opcoes": ["Ela não sabe cozinhar", "Ela não gosta de cozinhar", "Ele não sabe cozinhar"], "certa": 0 },
+    { "t": "ouvir", "he": "הֵם צְרִיכִים לַחֲזוֹר הַבַּיְתָה.", "q": "O que você ouviu?", "opcoes": ["Eles precisam voltar para casa", "Eles querem voltar para casa", "Eles podem ficar em casa"], "certa": 0 },
+    { "t": "ditado", "he": "אֲנִי לֹא יָכוֹל", "respostas": ["אני לא יכול"] },
+    { "t": "escrever", "pt": "porque", "respostas": ["כי"] },
+    { "t": "escrever", "pt": "ele pode", "respostas": ["הוא יכול"] },
+    { "t": "aberta", "pt": "Escreva o que você gosta de fazer no fim de semana, e uma coisa de que você não gosta.", "exemplo": "בְּשַׁבָּת אֲנִי אוֹהֵב לְטַיֵּל וְלִקְרוֹא. אֲנִי לֹא אוֹהֵב לָרוּץ." }
+  ]
+}
