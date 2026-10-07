@@ -169,7 +169,7 @@
         "likePt": "como o J do francês \"jour\" - o nosso J de \"jarro\"",
         "words": [
           { "he": "ז׳רגון", "pt": "jargão" },
-          { "he": "ז׳סטה", "pt": "gesto" }
+          { "he": "מסאז׳", "pt": "massagem" }
         ]
       }
     ]
@@ -878,11 +878,6 @@
             "he": "ז׳אנר",
             "translit": "janr",
             "pt": "gênero (de filme, de música)"
-          },
-          {
-            "he": "ז׳סטה",
-            "translit": "jésta",
-            "pt": "gesto"
           }
         ],
         "checagem": [
