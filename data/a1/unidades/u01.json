@@ -16,12 +16,12 @@
       "pt": "bom dia"
     },
     {
-      "he": "מַה שְּׁלוֹמְךָ?",
+      "he": "מָה שְׁלוֹמְךָ?",
       "translit": "ma shlomchá?",
       "pt": "como vai? (a ele)"
     },
     {
-      "he": "מַה שְּׁלוֹמֵךְ?",
+      "he": "מָה שְׁלוֹמֵךְ?",
       "translit": "ma shloméch?",
       "pt": "como vai? (a ela)"
     },
@@ -84,13 +84,13 @@
     {
       "he": "אַתֶּם",
       "translit": "atém",
-      "pt": "vocês (eles)",
+      "pt": "vocês, para homens ou grupo misto",
       "reconhecer": true
     },
     {
       "he": "אַתֶּן",
       "translit": "atén",
-      "pt": "vocês (elas)",
+      "pt": "vocês, só para mulheres",
       "reconhecer": true
     },
     {
@@ -111,12 +111,12 @@
       "pt": "quem?"
     },
     {
-      "he": "מַה שִּׁמְךָ?",
+      "he": "מָה שִׁמְךָ?",
       "translit": "ma shimchá?",
       "pt": "qual é o seu nome? (a ele)"
     },
     {
-      "he": "מַה שְּׁמֵךְ?",
+      "he": "מָה שְׁמֵךְ?",
       "translit": "ma shmech?",
       "pt": "qual é o seu nome? (a ela)"
     },
@@ -157,7 +157,7 @@
     },
     {
       "he": "בְּרָזִילָאִית",
-      "translit": "brazilaít",
+      "translit": "braziláit",
       "pt": "brasileira"
     },
     {
@@ -172,7 +172,7 @@
     },
     {
       "he": "סְטוּדֶנְט",
-      "translit": "stúdent",
+      "translit": "studént",
       "pt": "estudante (m)"
     },
     {
@@ -209,7 +209,7 @@
     },
     {
       "tituloPt": "\"Você\" muda conforme a pessoa",
-      "textoPt": "אַתָּה para homem, אַתְּ para mulher, e a pergunta inteira muda junto: מַה שִּׁמְךָ? a ele, מַה שְּׁמֵךְ? a ela.",
+      "textoPt": "אַתָּה para homem, אַתְּ para mulher, e a pergunta inteira muda junto: מָה שִׁמְךָ? a ele, מָה שְׁמֵךְ? a ela.",
       "erroPt": "\"Você\" serve para os dois no português. Em hebraico a palavra muda com quem você fala."
     },
     {
@@ -223,7 +223,7 @@
     "linhas": [
       {
         "quem": "Dani",
-        "he": "שָׁלוֹם! אֲנִי דָּנִי. מַה שְּׁמֵךְ?",
+        "he": "שָׁלוֹם! אֲנִי דָּנִי. מָה שְׁמֵךְ?",
         "translit": "shalóm! aní Dáni. ma shmech?",
         "pt": "Olá! Eu sou o Dani. Qual é o seu nome?"
       },
@@ -248,7 +248,7 @@
       {
         "quem": "Dani",
         "he": "אֲנִי מִבְּרָזִיל. אֲנִי סְטוּדֶנְט.",
-        "translit": "aní miBrazíl. aní stúdent.",
+        "translit": "aní miBrazíl. aní studént.",
         "pt": "Eu sou do Brasil. Sou estudante."
       },
       {
@@ -259,7 +259,7 @@
       }
     ],
     "glossario": [],
-    "notaPt": "מַה שְּׁמֵךְ? e שְׁמִי… estão certos, mas soam um pouco formais. Na rua você vai ouvir mais אֵיךְ קוֹרְאִים לָךְ? (Unidade 8)."
+    "notaPt": "מָה שְׁמֵךְ? e שְׁמִי… estão certos, mas soam um pouco formais. Na rua você vai ouvir mais אֵיךְ קוֹרְאִים לָךְ? (Unidade 8)."
   },
   "cultura": [
     {
@@ -372,13 +372,13 @@
     },
     {
       "t": "escolha",
-      "q": "Você fala com a Noa e pergunta o nome dela: מַה ___?",
+      "q": "Você fala com a Noa e pergunta o nome dela: מָה ___?",
       "opcoes": [
-        "שְּׁמֵךְ",
-        "שִּׁמְךָ"
+        "שְׁמֵךְ",
+        "שִׁמְךָ"
       ],
       "certa": 0,
-      "porque": "שְּׁמֵךְ é a forma para uma mulher."
+      "porque": "שְׁמֵךְ é a forma para uma mulher."
     },
     {
       "t": "escolha",
@@ -454,7 +454,7 @@
     },
     {
       "t": "ouvir",
-      "he": "מַה שְּׁמֵךְ?",
+      "he": "מָה שְׁמֵךְ?",
       "q": "A pergunta é para quem?",
       "opcoes": [
         "uma mulher",
@@ -480,7 +480,7 @@
     },
     {
       "t": "escolha",
-      "q": "Alguém diz: שָׁלוֹם! מַה שִּׁמְךָ? Você responde:",
+      "q": "Alguém diz: שָׁלוֹם! מָה שִׁמְךָ? Você responde:",
       "opcoes": [
         "שְׁמִי…",
         "תּוֹדָה",

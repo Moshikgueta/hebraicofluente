@@ -268,7 +268,7 @@
       {
         "quem": "Dani",
         "he": "אוֹי, בְּתֵשַׁע אֲנִי לֹא יָכוֹל.",
-        "translit": "oi, betésha aní lo yachól.",
+        "translit": "oy, betésha aní lo yachól.",
         "pt": "Ai, às nove eu não posso."
       },
       {
@@ -305,7 +305,7 @@
     "glossario": [
       {
         "he": "אוֹי",
-        "translit": "oi",
+        "translit": "oy",
         "pt": "ai (decepção, susto)"
       },
       {
@@ -742,8 +742,7 @@
       "t": "escrever",
       "pt": "nadar",
       "respostas": [
-        "לשחות",
-        "לישחות"
+        "לשחות"
       ]
     },
     {

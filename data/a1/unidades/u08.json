@@ -172,7 +172,7 @@
     },
     {
       "tituloPt": "Como se pergunta o nome de verdade",
-      "textoPt": "אֵיךְ קוֹרְאִים לְךָ? (\"como te chamam?\"). O מַה שִּׁמְךָ? da Unidade 1 está certo, mas é mais formal.",
+      "textoPt": "אֵיךְ קוֹרְאִים לְךָ? (\"como te chamam?\"). O מָה שִׁמְךָ? da Unidade 1 está certo, mas é mais formal.",
       "erroPt": "Responder קוֹרְאִים אֲנִי… A resposta usa o לְ: קוֹרְאִים לִי דָּנִי, como o \"me\" de \"me chamo\"."
     }
   ],
@@ -211,9 +211,9 @@
       },
       {
         "quem": "Maya",
-        "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?",
-        "translit": "anáchnu shotót kafé. atá rotsé kafé itánu?",
-        "pt": "Nós estamos tomando um café. Você quer um café com a gente?"
+        "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה לִשְׁתּוֹת קָפֶה אִתָּנוּ?",
+        "translit": "anáchnu shotót kafé. atá rotsé lishtót kafé itánu?",
+        "pt": "Nós estamos tomando um café. Você quer tomar um café com a gente?"
       },
       {
         "quem": "Dani",
@@ -497,9 +497,9 @@
     },
     {
       "t": "completar",
-      "q": "Complete a fala do diálogo: \"Nós estamos tomando um café. Você quer um café com a gente?\"",
+      "q": "Complete a fala do diálogo: \"Nós estamos tomando um café. Você quer tomar um café com a gente?\"",
       "antes": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה.",
-      "depois": "רוֹצֶה קָפֶה אִתָּנוּ?",
+      "depois": "רוֹצֶה לִשְׁתּוֹת קָפֶה אִתָּנוּ?",
       "respostas": [
         "אתה"
       ]
@@ -510,8 +510,7 @@
       "antes": "שִׁירָה, מָה",
       "depois": "הַטֶּלֶפוֹן שֶׁלָּךְ?",
       "respostas": [
-        "מספר",
-        "מיספר"
+        "מספר"
       ]
     },
     {

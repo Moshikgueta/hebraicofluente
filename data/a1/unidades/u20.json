@@ -56,7 +56,7 @@
       "pt": "como se diz … em hebraico?"
     },
     {
-      "he": "מַה זֶּה …?",
+      "he": "מָה זֶה …?",
       "translit": "ma ze …?",
       "pt": "o que é …?"
     },
@@ -89,7 +89,7 @@
   "gramatica": [
     {
       "tituloPt": "Quando você não entende",
-      "textoPt": "Não entender faz parte. O que importa é ter as frases prontas: סְלִיחָה, אֲנִי לֹא מֵבִין (não entendo) · אֶפְשָׁר לְדַבֵּר לְאַט? (dá para falar devagar?) · אֶפְשָׁר עוֹד פַּעַם? (mais uma vez?) · מַה זֶּה …? (o que é…?) · אֵיךְ אוֹמְרִים … בְּעִבְרִית? (como se diz… em hebraico?). Israelense gosta de ajudar quem tenta.",
+      "textoPt": "Não entender faz parte. O que importa é ter as frases prontas: סְלִיחָה, אֲנִי לֹא מֵבִין (não entendo) · אֶפְשָׁר לְדַבֵּר לְאַט? (dá para falar devagar?) · אֶפְשָׁר עוֹד פַּעַם? (mais uma vez?) · מָה זֶה …? (o que é…?) · אֵיךְ אוֹמְרִים … בְּעִבְרִית? (como se diz… em hebraico?). Israelense gosta de ajudar quem tenta.",
       "erroPt": "O brasileiro, quando trava, troca logo para o inglês ou só sorri e concorda. Peça para repetir em hebraico: é assim que a conversa continua, e é assim que o ouvido aprende.",
       "exemplos": [
         {
@@ -142,7 +142,7 @@
       },
       {
         "quem": "Dani",
-        "he": "מַה זֶּה \"רֵאָיוֹן\"?",
+        "he": "מָה זֶה \"רֵאָיוֹן\"?",
         "translit": "ma ze \"reayón\"?",
         "pt": "O que é \"reayón\"?"
       },
@@ -223,7 +223,7 @@
       },
       {
         "he": "בְּאַרְבַּע הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת, וְכֻלָּם אוֹמְרִים \"שַׁבָּת שָׁלוֹם\".",
-        "translit": "bearbá harbé chanuyót kvar sgurót, vechulám omrím \"shabát shalóm\".",
+        "translit": "beárba harbé chanuyót kvar sgurót, vechulám omrím \"shabát shalóm\".",
         "pt": "Às quatro muitas lojas já estão fechadas, e todo mundo diz \"shabát shalóm\"."
       },
       {

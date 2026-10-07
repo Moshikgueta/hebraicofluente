@@ -32,7 +32,7 @@
       "pt": "tudo bem, ok"
     },
     {
-      "he": "מַה נִּשְׁמָע?",
+      "he": "מָה נִשְׁמָע?",
       "translit": "ma nishmá?",
       "pt": "e aí? tudo bem? (informal)"
     },
@@ -94,7 +94,7 @@
   ],
   "gramatica": [
     {
-      "tituloPt": "ח e כ: o R soprado do carioca",
+      "tituloPt": "ח e כ: um R forte e raspado, produzido no fundo da boca",
       "textoPt": "O ח e o כ sem ponto (também o ך do fim) têm o MESMO som: o R carioca de \"rato\" e \"carro\" BEM raspado, no fundo da boca (se o seu R de \"carro\" for só um sopro, como H, raspe mais). É o som de לְחַיִּים e de חַג.",
       "erroPt": "Quem não fala com esse R tende a ler ח como K, ou como um H fraco. Não é nenhum dos dois: é um sopro raspado no fundo da boca, e é ele que separa חַג (feriado) de uma palavra qualquer.",
       "exemplos": [
@@ -144,7 +144,7 @@
     "linhas": [
       {
         "quem": "Maya",
-        "he": "בֹּקֶר טוֹב! מַה נִּשְׁמָע?",
+        "he": "בֹּקֶר טוֹב! מָה נִשְׁמָע?",
         "translit": "bóker tov! ma nishmá?",
         "pt": "Bom dia! Tudo bem?"
       },
@@ -180,14 +180,14 @@
       },
       {
         "quem": "Maya",
-        "he": "בְּבַקָּשָׁה. בְּתֵאָבוֹן!",
-        "translit": "bevakashá. beteavón!",
-        "pt": "De nada. Bom apetite!"
+        "he": "בְּבַקָּשָׁה!",
+        "translit": "bevakashá!",
+        "pt": "De nada!"
       },
       {
         "quem": "Dani",
-        "he": "יוֹפִי. יַאלְלָה, שָׁלוֹם!",
-        "translit": "yófi. yála, shalóm!",
+        "he": "יוֹפִי. יַאלְלָה, בַּיי!",
+        "translit": "yófi. yála, bay!",
         "pt": "Ótimo. Bom, tchau!"
       }
     ],
@@ -306,7 +306,7 @@
         "ה"
       ],
       "certa": 0,
-      "porque": "O ח (e o כ sem ponto) é o R soprado do carioca.",
+      "porque": "O ח (e o כ sem ponto) é um R forte e raspado, produzido no fundo da boca.",
       "dicas": {
         "1": "Quase. O ר é feito no mesmo lugar, mas com a voz ligada, como o R francês. O soprado é o ח.",
         "2": "O ה é só um sopro leve, sem raspar no fundo da boca, como o H de \"hello\"."
@@ -445,7 +445,7 @@
       "linhas": [
         [
           "Noa",
-          "מַה נִּשְׁמָע?"
+          "מָה נִשְׁמָע?"
         ]
       ],
       "opcoes": [
@@ -454,7 +454,7 @@
         "בְּתֵאָבוֹן!"
       ],
       "certa": 0,
-      "porque": "מַה נִּשְׁמָע? é \"tudo bem?\"; a resposta de sempre é בְּסֵדֶר."
+      "porque": "מָה נִשְׁמָע? é \"tudo bem?\"; a resposta de sempre é בְּסֵדֶר."
     },
     {
       "t": "dialogo",
@@ -538,7 +538,7 @@
           0
         ],
         [
-          "מַה נִּשְׁמָע?",
+          "מָה נִשְׁמָע?",
           1
         ]
       ]
@@ -614,7 +614,7 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Ótimo. Bom, tchau!\"",
-      "exemplo": "יוֹפִי. יַאלְלָה, שָׁלוֹם!"
+      "exemplo": "יוֹפִי. יַאלְלָה, בַּיי!"
     }
   ]
 }

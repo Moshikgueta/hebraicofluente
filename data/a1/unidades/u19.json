@@ -129,7 +129,7 @@
   "gramatica": [
     {
       "tituloPt": "Os números que você sabe são os do feminino",
-      "textoPt": "A série da Unidade 7 (אַחַת, שְׁתַּיִם, שָׁלוֹשׁ…) é a de contar, a das horas e dos preços, e é também a que se usa com palavras FEMININAS: שָׁלוֹשׁ בָּנוֹת, חָמֵשׁ דַּקּוֹת, שֶׁבַע שָׁעוֹת. Com palavras MASCULINAS, de 3 a 10, usa-se outra série, que termina em ־ָה: שְׁלוֹשָׁה יְלָדִים, אַרְבָּעָה יָמִים, עֲשָׂרָה סְפָרִים. O número vem antes da coisa. O preço, na rua, continua como na Unidade 7: עֶשֶׂר שֶׁקֶל. É assim que todo mundo fala; na forma padrão, escrita, שֶׁקֶל é masculino: עֲשָׂרָה שְׁקָלִים.",
+      "textoPt": "A série da Unidade 7 (אַחַת, שְׁתַּיִם, שָׁלוֹשׁ…) é a de contar, a das horas e dos preços, e é também a que se usa com palavras FEMININAS: שָׁלוֹשׁ בָּנוֹת, חָמֵשׁ דַּקּוֹת, שֶׁבַע שָׁעוֹת. Com palavras MASCULINAS, de 3 a 10, usa-se outra série, que termina em ־ָה: שְׁלוֹשָׁה יְלָדִים, אַרְבָּעָה יָמִים, עֲשָׂרָה סְפָרִים. O número vem antes da coisa. O preço, na rua, continua como na Unidade 7: עֶשֶׂר שֶׁקֶל. É assim que todo mundo fala; na forma padrão, escrita, שֶׁקֶל é masculino: עֲשָׂרָה שְׁקָלִים. A partir de 3, você também pode encontrar formas de construto, como שְׁלוֹשֶׁת הַיְּלָדִים. Por enquanto, basta reconhecer.",
       "erroPt": "É o contrário do que o olho espera: o ־ָה, que você aprendeu como marca de feminino, aqui aparece no número do MASCULINO. Não é erro de impressão. Treine com pares: שָׁלוֹשׁ בָּנוֹת, שְׁלוֹשָׁה בָּנִים.",
       "exemplos": [
         {
@@ -535,8 +535,7 @@
       "t": "escrever",
       "pt": "suco de laranja",
       "respostas": [
-        "מיץ תפוזים",
-        "מיץ תפוז"
+        "מיץ תפוזים"
       ]
     },
     {

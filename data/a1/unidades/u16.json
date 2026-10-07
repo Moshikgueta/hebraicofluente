@@ -190,7 +190,7 @@
     {
       "tituloPt": "\"Que\" é שֶׁ־, grudado",
       "textoPt": "Para \"acho que\", \"diz que\", \"sei que\", o hebraico usa שֶׁ־, grudado na palavra seguinte: אֲנִי חוֹשֵׁב שֶׁהוּא בָּא (acho que ele vem), הִיא אוֹמֶרֶת שֶׁזֶּה טוֹב (ela diz que está bom), אֲנִי יוֹדַעַת שֶׁאַתָּה עָסוּק (eu sei que você está ocupado).",
-      "erroPt": "No português falado, o \"que\" às vezes cai (\"acho ele vem\"). Em hebraico, não: sem שֶׁ־ a frase fica quebrada. E não confunda com כִּי: na conversa, כִּי é \"porque\" (em texto formal, como jornal, כִּי às vezes aparece também como \"que\"). Na fala, \"que\" é שֶׁ־.",
+      "erroPt": "Em hebraico, o שֶׁ־ não pode faltar: sem ele a frase fica quebrada. E não confunda com כִּי: na conversa, כִּי é \"porque\" (em texto formal, como jornal, כִּי às vezes aparece também como \"que\"). Na fala, \"que\" é שֶׁ־.",
       "exemplos": [
         {
           "he": "אֲנִי חוֹשֶׁבֶת שֶׁנֹּעָה רוֹצָה לָבוֹא.",
@@ -233,7 +233,7 @@
       },
       {
         "quem": "Dani",
-        "he": "הַי מַיָּה, זֶה דָּנִי. מַה נִּשְׁמָע?",
+        "he": "הַי מַיָּה, זֶה דָּנִי. מָה נִשְׁמָע?",
         "translit": "hai Máya, ze Dáni. ma nishmá?",
         "pt": "Oi, Maya, é o Dani. Tudo bem?"
       },
@@ -632,7 +632,7 @@
         ]
       ],
       "opcoes": [
-        "הַי, זֶה טוֹם. מַה נִּשְׁמָע?",
+        "הַי, זֶה טוֹם. מָה נִשְׁמָע?",
         "לְהִתְרָאוֹת!",
         "בְּתֵאָבוֹן."
       ],

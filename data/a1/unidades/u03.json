@@ -183,12 +183,12 @@
     {
       "he": "אַתֶּם",
       "translit": "atém",
-      "pt": "vocês (eles)"
+      "pt": "vocês, para homens ou grupo misto"
     },
     {
       "he": "אַתֶּן",
       "translit": "atén",
-      "pt": "vocês (elas)"
+      "pt": "vocês, só para mulheres"
     },
     {
       "he": "הֵם",
@@ -524,7 +524,7 @@
     },
     {
       "t": "escrever",
-      "pt": "vocês (eles)",
+      "pt": "vocês, para homens ou grupo misto",
       "respostas": [
         "אתם"
       ]

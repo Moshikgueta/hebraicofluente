@@ -7825,9 +7825,9 @@
       "file": "he-f2ab1744.mp3"
     },
     {
-      "num": 872,
+      "num": 882,
       "seq": 583,
-      "he": "מַה שְּׁלוֹמְךָ?",
+      "he": "מָה שְׁלוֹמְךָ?",
       "translit": "ma shlomchá?",
       "gloss": "como vai? (a ele)",
       "kind": "frase",
@@ -7835,12 +7835,12 @@
       "where": [
         "a1 unidade 1"
       ],
-      "file": "he-d4e9e604.mp3"
+      "file": "he-934c8f8e.mp3"
     },
     {
-      "num": 873,
+      "num": 883,
       "seq": 584,
-      "he": "מַה שְּׁלוֹמֵךְ?",
+      "he": "מָה שְׁלוֹמֵךְ?",
       "translit": "ma shloméch?",
       "gloss": "como vai? (a ela)",
       "kind": "frase",
@@ -7848,7 +7848,7 @@
       "where": [
         "a1 unidade 1"
       ],
-      "file": "he-13ad19d7.mp3"
+      "file": "he-74451639.mp3"
     },
     {
       "num": 633,
@@ -7908,7 +7908,7 @@
       "seq": 589,
       "he": "אַתֶּם",
       "translit": "atém",
-      "gloss": "vocês (eles)",
+      "gloss": "vocês, para homens ou grupo misto",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -7922,7 +7922,7 @@
       "seq": 590,
       "he": "אַתֶּן",
       "translit": "atén",
-      "gloss": "vocês (elas)",
+      "gloss": "vocês, só para mulheres",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -7945,9 +7945,9 @@
       "file": "he-d2d7ab5d.mp3"
     },
     {
-      "num": 640,
+      "num": 884,
       "seq": 592,
-      "he": "מַה שִּׁמְךָ?",
+      "he": "מָה שִׁמְךָ?",
       "translit": "ma shimchá?",
       "gloss": "qual é o seu nome? (a ele)",
       "kind": "frase",
@@ -7955,12 +7955,12 @@
       "where": [
         "a1 unidade 1"
       ],
-      "file": "he-57ac3982.mp3"
+      "file": "he-83afbc20.mp3"
     },
     {
-      "num": 641,
+      "num": 885,
       "seq": 593,
-      "he": "מַה שְּׁמֵךְ?",
+      "he": "מָה שְׁמֵךְ?",
       "translit": "ma shmech?",
       "gloss": "qual é o seu nome? (a ela)",
       "kind": "frase",
@@ -7969,7 +7969,7 @@
         "a1 unidade 1",
         "a1 unidade 1, escuta"
       ],
-      "file": "he-c8e9d942.mp3"
+      "file": "he-afa3d41c.mp3"
     },
     {
       "num": 642,
@@ -8053,7 +8053,7 @@
       "num": 648,
       "seq": 600,
       "he": "בְּרָזִילָאִית",
-      "translit": "brazilaít",
+      "translit": "braziláit",
       "gloss": "brasileira",
       "kind": "palavra",
       "wave": 6,
@@ -8128,9 +8128,9 @@
       "file": "he-59ce73e6.mp3"
     },
     {
-      "num": 654,
+      "num": 886,
       "seq": 606,
-      "he": "שָׁלוֹם! אֲנִי דָּנִי. מַה שְּׁמֵךְ?",
+      "he": "שָׁלוֹם! אֲנִי דָּנִי. מָה שְׁמֵךְ?",
       "translit": "shalóm! aní Dáni. ma shmech?",
       "gloss": "Olá! Eu sou o Dani. Qual é o seu nome?",
       "kind": "frase",
@@ -8138,7 +8138,7 @@
       "where": [
         "a1 unidade 1, diálogo"
       ],
-      "file": "he-1559c6b3.mp3"
+      "file": "he-4b794164.mp3"
     },
     {
       "num": 655,
@@ -8183,7 +8183,7 @@
       "num": 658,
       "seq": 610,
       "he": "אֲנִי מִבְּרָזִיל. אֲנִי סְטוּדֶנְט.",
-      "translit": "aní miBrazíl. aní stúdent.",
+      "translit": "aní miBrazíl. aní studént.",
       "gloss": "Eu sou do Brasil. Sou estudante.",
       "kind": "frase",
       "wave": 6,
@@ -8219,9 +8219,9 @@
       "file": "he-37d7d4d2.mp3"
     },
     {
-      "num": 874,
+      "num": 887,
       "seq": 613,
-      "he": "מַה זֶּה?",
+      "he": "מָה זֶה?",
       "translit": "ma ze?",
       "gloss": "o que é isto?",
       "kind": "frase",
@@ -8229,7 +8229,7 @@
       "where": [
         "a1 unidade 2"
       ],
-      "file": "he-5bc60477.mp3"
+      "file": "he-f721e84f.mp3"
     },
     {
       "num": 662,
@@ -8363,9 +8363,9 @@
       "file": "he-927f4ece.mp3"
     },
     {
-      "num": 875,
+      "num": 888,
       "seq": 624,
-      "he": "מַיָּה, מַה זֶּה?",
+      "he": "מַיָּה, מָה זֶה?",
       "translit": "Máya, ma ze?",
       "gloss": "Maya, o que é isto?",
       "kind": "frase",
@@ -8373,7 +8373,7 @@
       "where": [
         "a1 unidade 2, diálogo"
       ],
-      "file": "he-72a3c2de.mp3"
+      "file": "he-6ff1a0c4.mp3"
     },
     {
       "num": 673,
@@ -8389,9 +8389,9 @@
       "file": "he-67f85d53.mp3"
     },
     {
-      "num": 876,
+      "num": 889,
       "seq": 626,
-      "he": "וּמַה זֶּה?",
+      "he": "וּמָה זֶה?",
       "translit": "umá ze?",
       "gloss": "E o que é isto?",
       "kind": "frase",
@@ -8399,7 +8399,7 @@
       "where": [
         "a1 unidade 2, diálogo"
       ],
-      "file": "he-c81f52a5.mp3"
+      "file": "he-b8c29b5f.mp3"
     },
     {
       "num": 675,
@@ -9790,7 +9790,7 @@
       "num": 780,
       "seq": 733,
       "he": "אַרְבַּע־עֶשְׂרֵה",
-      "translit": "arbá-esré",
+      "translit": "árba-esré",
       "gloss": "14",
       "kind": "palavra",
       "wave": 6,
@@ -10775,17 +10775,17 @@
       "file": "he-7a63b486.mp3"
     },
     {
-      "num": 856,
+      "num": 890,
       "seq": 809,
-      "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה אִתָּנוּ?",
-      "translit": "anáchnu shotót kafé. atá rotsé kafé itánu?",
-      "gloss": "Nós estamos tomando um café. Você quer um café com a gente?",
+      "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה לִשְׁתּוֹת קָפֶה אִתָּנוּ?",
+      "translit": "anáchnu shotót kafé. atá rotsé lishtót kafé itánu?",
+      "gloss": "Nós estamos tomando um café. Você quer tomar um café com a gente?",
       "kind": "frase",
       "wave": 6,
       "where": [
         "a1 unidade 8, diálogo"
       ],
-      "file": "he-e4498042.mp3"
+      "file": "he-e7e4f0a5.mp3"
     },
     {
       "num": 857,

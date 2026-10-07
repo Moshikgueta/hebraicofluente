@@ -200,7 +200,7 @@
       },
       {
         "quem": "Natan",
-        "he": "רֶגַע, מַה זֶּה, מִתַּחַת לַסָּפָּה?",
+        "he": "רֶגַע, מָה זֶה, מִתַּחַת לַסָּפָּה?",
         "translit": "réga, ma ze, mitáchat lassapá?",
         "pt": "Espera, o que é isso, embaixo do sofá?"
       },
@@ -308,7 +308,7 @@
   "sabia": [
     {
       "tituloPt": "Por que existem letras finais?",
-      "textoPt": "ך, ם, ן, ף e ץ vêm da escrita aramaica antiga. No meio da palavra, o traço dessas letras se curvava em direção à letra seguinte; no fim da palavra, sem letra seguinte, ficava a forma antiga, comprida. Com o tempo, as duas formas viraram regra, e a forma final ajuda a ver onde a palavra acaba."
+      "textoPt": "ך, ם, ן, ף e ץ vêm da escrita aramaica antiga. Ao longo da evolução da escrita, algumas letras desenvolveram formas diferentes no meio e no fim da palavra. Em várias delas, a forma final preserva características mais antigas. Com o tempo, as duas formas viraram regra, e a forma final ajuda a ver onde a palavra acaba."
     }
   ],
   "autoavaliacao": [
@@ -649,8 +649,7 @@
       "t": "escrever",
       "pt": "varanda",
       "respostas": [
-        "מרפסת",
-        "מירפסת"
+        "מרפסת"
       ]
     },
     {

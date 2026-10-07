@@ -7,7 +7,7 @@
   "palavras": [
     {
       "he": "מִסְעָדָה",
-      "translit": "mis'adá",
+      "translit": "misadá",
       "pt": "restaurante"
     },
     {
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "pt": "pedir, solicitar (para pedir comida no restaurante, se usa אֶפְשָׁר… ou אֲנִי רוֹצֶה…)",
+      "pt": "pedir, solicitar. No restaurante, também é muito comum pedir com אֶפְשָׁר… ou אֲנִי רוֹצֶה…",
       "formas": [
         "מְבַקֵּשׁ",
         "מְבַקֶּשֶׁת",
@@ -318,7 +318,7 @@
       },
       {
         "he": "קָפֶה הָפוּךְ: 14 שֶׁקֶל",
-        "translit": "kafé hafúch: arbá-esré shékel",
+        "translit": "kafé hafúch: árba-esré shékel",
         "pt": "Café com leite (\"hafúch\"): 14 shekels"
       }
     ],
