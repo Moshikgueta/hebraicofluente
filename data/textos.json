@@ -1217,9 +1217,9 @@
         },
         {
           "quem": "Maya",
-          "he": "לֹא. הַיּוֹם יֵשׁ שֶׁמֶשׁ!",
-          "translit": "lo. hayóm yesh shémesh!",
-          "pt": "Não. Hoje tem sol!"
+          "he": "לֹא. הַיּוֹם יֵשׁ שֶׁמֶשׁ.",
+          "translit": "lo. hayóm yesh shémesh.",
+          "pt": "Não. Hoje tem sol."
         },
         {
           "quem": "Dani",
@@ -1266,7 +1266,7 @@
           "t": "vf",
           "q": "A Maya levou um guarda-chuva.",
           "certa": false,
-          "porque": "{{לֹא. הַיּוֹם יֵשׁ שֶׁמֶשׁ!}}: não, hoje tem sol."
+          "porque": "{{לֹא. הַיּוֹם יֵשׁ שֶׁמֶשׁ.}}: não, hoje tem sol."
         },
         {
           "t": "escolha",
