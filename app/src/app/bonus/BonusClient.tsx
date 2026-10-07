@@ -139,7 +139,7 @@ function GuiaCartao() {
       <span className="block font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Guia opcional · sem XP</span>
       <span className="block font-display text-[18px] font-semibold text-ink">{guia.tituloPt} →</span>
       <span className="block font-ui text-[13.5px] text-ink-body">
-        O Nome, o sheva, as vogais rápidas e os outros pontos que a Bíblia usa além do curso.
+        O Nome, o shva, as vogais rápidas e os outros pontos que a Bíblia usa além do curso.
       </span>
     </Link>
   );

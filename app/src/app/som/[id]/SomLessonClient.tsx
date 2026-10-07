@@ -411,7 +411,7 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
 }
 
 /* A letra a destacar numa palavra. No Sin, a letra sem o ponto: o ponto do
-   ש vem depois da vogal na ordem Unicode (שְׂ = ש + sheva + ponto), e o par
+   ש vem depois da vogal na ordem Unicode (שְׂ = ש + shva + ponto), e o par
    "ש + ponto" nem sempre aparece colado dentro da palavra. */
 export function marcaDe(S: SomLicao, he: string): string {
   if (S.tipo === 'ponto') return [...S.he][0]!;

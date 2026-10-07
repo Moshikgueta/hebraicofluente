@@ -69,7 +69,7 @@ describe('as frases do curso', () => {
   it('da primeira frase em diante, TODA letra destrava uma frase nova', () => {
     /* Sem isto a promessa "hoje você lê uma frase que ontem não lia" vale só
        em algumas aulas, e o exercício cai de volta numa frase repetida. As
-       seis letras que ficavam de fora eram Záyin, Chet, Tet, Tsadi, Qof e Pê -
+       seis letras que ficavam de fora eram Záyin, Chet, Tet, Tsadi, Kuf e Pê -
        e o Pê, a última letra do curso, fechava o alfabeto sem nada novo. */
     const inicio = Math.min(...sentencesUpTo(22).map(f => f.after));
     const vazias = letras

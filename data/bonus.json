@@ -652,30 +652,30 @@
       },
       {
         "id": "sheva",
-        "tituloPt": "O sheva no começo soa «e»",
-        "textoPt": "O sheva ({{ְ}}) debaixo da primeira letra da palavra soa como um «e» rápido. No meio da palavra, depois de outra vogal, ele costuma ficar mudo: a letra fecha a sílaba anterior.",
+        "tituloPt": "O shva no começo soa «e»",
+        "textoPt": "O shva ({{ְ}}) debaixo da primeira letra da palavra soa como um «e» rápido. No meio da palavra, depois de outra vogal, ele costuma ficar mudo: a letra fecha a sílaba anterior.",
         "exemplos": [
           {
             "he": "בְּרֵאשִׁית",
             "translit": "bereshít",
-            "pt": "sheva no começo: «be»"
+            "pt": "shva no começo: «be»"
           },
           {
             "he": "שְׁמַע",
             "translit": "shemá",
-            "pt": "sheva no começo: «she»"
+            "pt": "shva no começo: «she»"
           },
           {
             "he": "יִשְׂרָאֵל",
             "translit": "Yisraél",
-            "pt": "sheva no meio, mudo: «Yis-ra-él»"
+            "pt": "shva no meio, mudo: «Yis-ra-él»"
           }
         ]
       },
       {
         "id": "chataf",
         "tituloPt": "As vogais rápidas (chataf)",
-        "textoPt": "Um sheva com outra vogal ao lado é uma vogal curta, dita depressa: {{ֲ}} soa «a», {{ֱ}} soa «e» e {{ֳ}} soa «o». Aparecem quase sempre debaixo de {{א}}, {{ה}}, {{ח}} e {{ע}}, as letras que não aceitam o sheva simples.",
+        "textoPt": "Um shva com outra vogal ao lado é uma vogal curta, dita depressa: {{ֲ}} soa «a», {{ֱ}} soa «e» e {{ֳ}} soa «o». Aparecem quase sempre debaixo de {{א}}, {{ה}}, {{ח}} e {{ע}}, as letras que não aceitam o shva simples.",
         "exemplos": [
           {
             "he": "אֱלֹהִים",
