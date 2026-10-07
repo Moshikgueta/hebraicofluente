@@ -584,7 +584,8 @@ jobs:
       # falhar com "FOREIGN KEY constraint failed" e deixa a conta de teste
       # no banco de produção - foi o que aconteceu quando `password_resets`
       # nasceu. A lista de hoje: orders, entitlements, progress,
-      # password_resets, email_verifications, registros_acesso, arrependimentos.
+      # password_resets, email_verifications, registros_acesso, arrependimentos,
+      # provas_a1, certificados.
       # Ver worker/schema.sql.
       #
       # `access_log` não tem chave estrangeira e por isso não quebrava nada -
@@ -618,6 +619,8 @@ jobs:
              DELETE FROM depoimentos         WHERE account_id IN ($ALVO);
              DELETE FROM aceites             WHERE account_id IN ($ALVO);
              DELETE FROM admin_codigos       WHERE account_id IN ($ALVO);
+             DELETE FROM provas_a1           WHERE account_id IN ($ALVO);
+             DELETE FROM certificados        WHERE account_id IN ($ALVO);
              DELETE FROM estornos            WHERE order_id IN (SELECT id FROM orders WHERE account_id IN ($ALVO));" || true
           $W d1 execute hebraico-fluente --remote --command \
             "DELETE FROM access_log       WHERE account_id IN ($ALVO);

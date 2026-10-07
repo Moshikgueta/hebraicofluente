@@ -1341,6 +1341,12 @@ export async function deleteAccount(env, accountId) {
   try {
     await env.DB.prepare('DELETE FROM admin_codigos WHERE account_id = ?').bind(id).run();
   } catch { /* tabela ausente */ }
+  /* O exame do A1 e o certificado (com o nome da pessoa) saem com ela: a
+     página pública de verificação deixa de achar o código. */
+  try {
+    await env.DB.prepare('DELETE FROM certificados WHERE account_id = ?').bind(id).run();
+    await env.DB.prepare('DELETE FROM provas_a1 WHERE account_id = ?').bind(id).run();
+  } catch { /* tabela ausente */ }
   /* O registro do aceite dos Termos também. */
   try {
     await env.DB.prepare('DELETE FROM aceites WHERE account_id = ?').bind(id).run();

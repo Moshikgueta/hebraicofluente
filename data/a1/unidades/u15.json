@@ -1,0 +1,775 @@
+{
+  "n": 15,
+  "revisado": false,
+  "tituloPt": "Quando? Meses, datas e o tempo",
+  "objetivoPt": "Dizer em que mês e em que dia é alguma coisa, falar de amanhã e da semana que vem, e conversar sobre o tempo (calor, frio, chuva, graus).",
+  "situacaoPt": "O Dani quer organizar uma festa para a Noa e precisa descobrir quando é o aniversário dela. A conversa acaba no tempo, e numa surpresa para a Noa.",
+  "palavras": [
+    {
+      "he": "יָנוּאָר",
+      "translit": "yanuár",
+      "pt": "janeiro"
+    },
+    {
+      "he": "פֶבְּרוּאָר",
+      "translit": "február",
+      "pt": "fevereiro"
+    },
+    {
+      "he": "מֶרְץ",
+      "translit": "merts",
+      "pt": "março"
+    },
+    {
+      "he": "אַפְּרִיל",
+      "translit": "apríl",
+      "pt": "abril"
+    },
+    {
+      "he": "מַאי",
+      "translit": "mai",
+      "pt": "maio"
+    },
+    {
+      "he": "יוּנִי",
+      "translit": "yúni",
+      "pt": "junho"
+    },
+    {
+      "he": "יוּלִי",
+      "translit": "yúli",
+      "pt": "julho"
+    },
+    {
+      "he": "אוֹגוּסְט",
+      "translit": "ógust",
+      "pt": "agosto"
+    },
+    {
+      "he": "סֶפְּטֶמְבֶּר",
+      "translit": "septémber",
+      "pt": "setembro"
+    },
+    {
+      "he": "אוֹקְטוֹבֶּר",
+      "translit": "október",
+      "pt": "outubro"
+    },
+    {
+      "he": "נוֹבֶמְבֶּר",
+      "translit": "novémber",
+      "pt": "novembro"
+    },
+    {
+      "he": "דֶּצֶמְבֶּר",
+      "translit": "detsémber",
+      "pt": "dezembro"
+    },
+    {
+      "he": "קַיִץ",
+      "translit": "káyits",
+      "pt": "verão"
+    },
+    {
+      "he": "חֹרֶף",
+      "translit": "chóref",
+      "pt": "inverno"
+    },
+    {
+      "he": "אָבִיב",
+      "translit": "avív",
+      "pt": "primavera"
+    },
+    {
+      "he": "סְתָו",
+      "translit": "stav",
+      "pt": "outono"
+    },
+    {
+      "he": "מֶזֶג אֲוִיר",
+      "translit": "mézeg avír",
+      "pt": "o tempo (clima do dia)"
+    },
+    {
+      "he": "חַם",
+      "translit": "cham",
+      "pt": "quente; faz calor"
+    },
+    {
+      "he": "קַר",
+      "translit": "kar",
+      "pt": "frio; faz frio"
+    },
+    {
+      "he": "חַם לִי / קַר לִי",
+      "translit": "cham li / kar li",
+      "pt": "estou com calor / estou com frio"
+    },
+    {
+      "he": "גֶּשֶׁם",
+      "translit": "guéshem",
+      "pt": "chuva"
+    },
+    {
+      "he": "יוֹרֵד גֶּשֶׁם",
+      "translit": "yoréd guéshem",
+      "pt": "está chovendo"
+    },
+    {
+      "he": "שֶׁמֶשׁ",
+      "translit": "shémesh",
+      "pt": "sol"
+    },
+    {
+      "he": "מְעֻנָּן",
+      "translit": "meunán",
+      "pt": "nublado"
+    },
+    {
+      "he": "רוּחַ",
+      "translit": "rúach",
+      "pt": "vento"
+    },
+    {
+      "he": "מַעֲלוֹת",
+      "translit": "maalót",
+      "pt": "graus"
+    },
+    {
+      "he": "מָחָר",
+      "translit": "machár",
+      "pt": "amanhã"
+    },
+    {
+      "he": "שָׁבוּעַ",
+      "translit": "shavúa",
+      "pt": "semana"
+    },
+    {
+      "he": "בַּשָּׁבוּעַ הַבָּא",
+      "translit": "bashavúa habá",
+      "pt": "na semana que vem"
+    },
+    {
+      "he": "חֹדֶשׁ",
+      "translit": "chódesh",
+      "pt": "mês"
+    },
+    {
+      "he": "שָׁנָה",
+      "translit": "shaná",
+      "pt": "ano"
+    },
+    {
+      "he": "יוֹם הֻלֶּדֶת",
+      "translit": "yom hulédet",
+      "pt": "aniversário"
+    },
+    {
+      "he": "יוֹם הֻלֶּדֶת שָׂמֵחַ!",
+      "translit": "yom hulédet saméach!",
+      "pt": "feliz aniversário!"
+    },
+    {
+      "he": "רַק",
+      "translit": "rak",
+      "pt": "só, apenas"
+    },
+    {
+      "he": "נָכוֹן",
+      "translit": "nachón",
+      "pt": "certo, verdade; né?"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "Em junho, no verão",
+      "textoPt": "\"Em\" + mês é בְּ grudado: בְּיוּנִי, בְּמַאי, בְּאוֹגוּסְט. As estações levam artigo: בַּקַּיִץ, בַּחֹרֶף, בָּאָבִיב, בַּסְּתָו. Os nomes dos meses são os internacionais, parecidos com os do português, com sotaque israelense.",
+      "exemplos": [
+        {
+          "he": "יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּמֶרְץ.",
+          "pt": "O meu aniversário é em março."
+        },
+        {
+          "he": "בַּחֹרֶף קַר בִּירוּשָׁלַיִם.",
+          "pt": "No inverno faz frio em Jerusalém."
+        }
+      ]
+    },
+    {
+      "tituloPt": "A data: o dia, e depois o mês",
+      "textoPt": "A data vem na ordem do português, com בְּ duas vezes: בְּעֶשְׂרִים בְּיוּנִי (em 20 de junho), בִּשְׁלוֹשִׁים בְּאַפְּרִיל (em 30 de abril). Escrita, é como no Brasil: 20/6. Os dias de 1 a 19 têm um detalhe de gênero que fica para a Unidade 19; por enquanto, leia-os nos números.",
+      "erroPt": "O americano escreve o mês primeiro (6/20). Em Israel, como no Brasil, o dia vem antes: 20/6."
+    },
+    {
+      "tituloPt": "O tempo, sem \"está\" e sem \"ele\"",
+      "textoPt": "Para o tempo não há sujeito: חַם (faz calor), קַר (faz frio), מְעֻנָּן (está nublado). Para a chuva, o hebraico diz que ela \"desce\": יוֹרֵד גֶּשֶׁם. E a temperatura é só o número: שְׁלוֹשִׁים מַעֲלוֹת.",
+      "erroPt": "Para dizer que VOCÊ está com frio, não use אֲנִי קַר (\"eu sou frio\"). É קַר לִי, \"está frio para mim\", com o לִי da Unidade 6. Com calor: חַם לִי.",
+      "exemplos": [
+        {
+          "he": "הַיּוֹם קַר, וְיוֹרֵד גֶּשֶׁם.",
+          "pt": "Hoje faz frio, e está chovendo."
+        },
+        {
+          "he": "קַר לִי!",
+          "pt": "Estou com frio!"
+        }
+      ]
+    },
+    {
+      "tituloPt": "Amanhã, com o verbo de hoje",
+      "textoPt": "Para um plano próximo e certo, o presente serve, como em português: מָחָר אֲנִי עוֹבֵד (amanhã eu trabalho), בַּשָּׁבוּעַ הַבָּא הִיא נוֹסַעַת לְאֵילַת (na semana que vem ela vai para Eilat)."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Uma festa em junho",
+    "linhas": [
+      {
+        "quem": "Dani",
+        "he": "נֹעָה, מָתַי יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?",
+        "translit": "Nóa, matái yom hahulédet shelách?",
+        "pt": "Noa, quando é o seu aniversário?"
+      },
+      {
+        "quem": "Noa",
+        "he": "בְּעֶשְׂרִים בְּיוּנִי. לָמָּה?",
+        "translit": "beesrím beyúni. láma?",
+        "pt": "Em 20 de junho. Por quê?"
+      },
+      {
+        "quem": "Dani",
+        "he": "סְתָם… אֲנִי רוֹצֶה לַעֲשׂוֹת מְסִבָּה בַּיָּם. בְּיוּנִי חַם, נָכוֹן?",
+        "translit": "stam… aní rotsé laassót messibá bayám. beyúni cham, nachón?",
+        "pt": "Por nada… Quero fazer uma festa na praia. Em junho faz calor, né?"
+      },
+      {
+        "quem": "Noa",
+        "he": "חַם מְאֹד! יֵשׁ שְׁלוֹשִׁים מַעֲלוֹת.",
+        "translit": "cham meód! yesh shloshím maalót.",
+        "pt": "Muito calor! Faz trinta graus."
+      },
+      {
+        "quem": "Dani",
+        "he": "וְאֵין גֶּשֶׁם?",
+        "translit": "veéin guéshem?",
+        "pt": "E não chove?"
+      },
+      {
+        "quem": "Noa",
+        "he": "לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף.",
+        "translit": "lo. beYisraél yoréd guéshem rak bachóref.",
+        "pt": "Não. Em Israel só chove no inverno."
+      },
+      {
+        "quem": "Dani",
+        "he": "וּבִבְרָזִיל בְּיוּנִי זֶה חֹרֶף!",
+        "translit": "uviVrazíl beyúni ze chóref!",
+        "pt": "E no Brasil, junho é inverno!"
+      },
+      {
+        "quem": "Noa",
+        "he": "בֶּאֱמֶת? חֹרֶף בְּיוּנִי? מְשֻׁגָּע!",
+        "translit": "beemét? chóref beyúni? meshugá!",
+        "pt": "Sério? Inverno em junho? Que loucura!"
+      },
+      {
+        "quem": "Dani",
+        "he": "כֵּן. בְּיוּלִי קַר בְּסָאוֹ פָּאוּלוֹ.",
+        "translit": "ken. beyúli kar beSão Paulo.",
+        "pt": "É. Em julho faz frio em São Paulo."
+      },
+      {
+        "quem": "Noa",
+        "he": "וּמָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ?",
+        "translit": "umatái yom hahulédet shelchá?",
+        "pt": "E quando é o seu aniversário?"
+      },
+      {
+        "quem": "Dani",
+        "he": "בְּדֶצֶמְבֶּר. בַּקַּיִץ שֶׁל בְּרָזִיל!",
+        "translit": "bedetsémber. bakáyits shel Brazíl!",
+        "pt": "Em dezembro. No verão do Brasil!"
+      }
+    ],
+    "glossario": [
+      {
+        "he": "סְתָם",
+        "translit": "stam",
+        "pt": "por nada, à toa"
+      },
+      {
+        "he": "מְסִבָּה",
+        "translit": "messibá",
+        "pt": "festa"
+      },
+      {
+        "he": "בֶּאֱמֶת?",
+        "translit": "beemét?",
+        "pt": "sério? de verdade?"
+      },
+      {
+        "he": "מְשֻׁגָּע",
+        "translit": "meshugá",
+        "pt": "louco; que loucura"
+      }
+    ],
+    "notaPt": "Repare em יוֹם הַהֻלֶּדֶת: com \"meu\", \"seu\", o הַ entra no meio da expressão, e não no começo. A regra está na Unidade 19."
+  },
+  "leitura": {
+    "tituloPt": "A previsão do tempo para amanhã",
+    "semPontos": true,
+    "linhas": [
+      {
+        "he": "מֶזֶג הָאֲוִיר לְמָחָר",
+        "translit": "mézeg haavír lemachár",
+        "pt": "O tempo para amanhã"
+      },
+      {
+        "he": "תֵּל אָבִיב: שֶׁמֶשׁ, 28 מַעֲלוֹת",
+        "translit": "Tel Avív: shémesh, esrím ushmoné maalót",
+        "pt": "Tel Aviv: sol, 28 graus"
+      },
+      {
+        "he": "יְרוּשָׁלַיִם: מְעֻנָּן, 22 מַעֲלוֹת",
+        "translit": "Yerushaláyim: meunán, esrím ushtáyim maalót",
+        "pt": "Jerusalém: nublado, 22 graus"
+      },
+      {
+        "he": "חֵיפָה: גֶּשֶׁם, 20 מַעֲלוֹת",
+        "translit": "Cháifa: guéshem, esrím maalót",
+        "pt": "Haifa: chuva, 20 graus"
+      },
+      {
+        "he": "אֵילַת: חַם מְאֹד, 38 מַעֲלוֹת",
+        "translit": "Eilát: cham meód, shloshím ushmoné maalót",
+        "pt": "Eilat: muito calor, 38 graus"
+      }
+    ],
+    "perguntas": [
+      {
+        "t": "escolha",
+        "q": "Onde vai chover amanhã?",
+        "opcoes": [
+          "Em Haifa",
+          "Em Tel Aviv",
+          "Em Eilat"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "escolha",
+        "q": "Onde vai fazer mais calor?",
+        "opcoes": [
+          "Em Eilat",
+          "Em Jerusalém",
+          "Em Haifa"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "vf",
+        "q": "Em Jerusalém vai estar nublado.",
+        "certa": true,
+        "porque": "מְעֻנָּן = nublado."
+      }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "O ano em Israel",
+      "textoPt": "O verão israelense é longo e seco, e quase não chove entre maio e setembro. A chuva vem no inverno, mais ou menos de novembro a março, e em Jerusalém às vezes até neva. Na primavera e no outono aparece o חַמְסִין, um vento quente e seco do deserto que pode subir a temperatura de um dia para o outro."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Dois calendários",
+      "textoPt": "Israel usa o calendário de janeiro a dezembro no dia a dia, mas os feriados seguem o calendário hebraico, que acompanha a lua e o sol. Por isso Rosh Hashaná (o ano novo judaico) cai em setembro ou outubro, e muda de data a cada ano. Os meses hebraicos têm nomes próprios, como תִּשְׁרֵי e נִיסָן."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu digo em que mês e em que dia é o meu aniversário.",
+    "Eu falo do tempo: calor, frio, chuva, sol, graus.",
+    "Eu digo \"estou com frio\" do jeito certo: קַר לִי."
+  ],
+  "exercicios": [
+    {
+      "t": "ligar",
+      "q": "Ligue os meses.",
+      "pares": [
+        [
+          "יָנוּאָר",
+          "janeiro"
+        ],
+        [
+          "אַפְּרִיל",
+          "abril"
+        ],
+        [
+          "יוּלִי",
+          "julho"
+        ],
+        [
+          "אוֹקְטוֹבֶּר",
+          "outubro"
+        ],
+        [
+          "דֶּצֶמְבֶּר",
+          "dezembro"
+        ]
+      ]
+    },
+    {
+      "t": "ligar",
+      "q": "E o tempo.",
+      "pares": [
+        [
+          "חַם",
+          "quente"
+        ],
+        [
+          "קַר",
+          "frio"
+        ],
+        [
+          "גֶּשֶׁם",
+          "chuva"
+        ],
+        [
+          "שֶׁמֶשׁ",
+          "sol"
+        ],
+        [
+          "מְעֻנָּן",
+          "nublado"
+        ]
+      ]
+    },
+    {
+      "t": "ligar",
+      "q": "E as estações.",
+      "pares": [
+        [
+          "קַיִץ",
+          "verão"
+        ],
+        [
+          "חֹרֶף",
+          "inverno"
+        ],
+        [
+          "אָבִיב",
+          "primavera"
+        ],
+        [
+          "סְתָו",
+          "outono"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Está chovendo\"",
+      "opcoes": [
+        "יוֹרֵד גֶּשֶׁם",
+        "הוּא גֶּשֶׁם",
+        "גֶּשֶׁם הוֹלֵךְ"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "No tempo não tem \"ele\". A chuva \"desce\": יוֹרֵד גֶּשֶׁם.",
+        "2": "Quase uma tradução palavra por palavra do jeito errado. A chuva \"desce\": יוֹרֵד גֶּשֶׁם."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"Hoje faz frio\"",
+      "opcoes": [
+        "הַיּוֹם קַר.",
+        "הַיּוֹם הוּא קַר.",
+        "אֲנִי קַר הַיּוֹם."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Não precisa de הוּא: o tempo não tem sujeito. הַיּוֹם קַר.",
+        "2": "אֲנִי קַר é \"eu sou frio\". Faz frio: הַיּוֹם קַר."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"Estou com calor\"",
+      "opcoes": [
+        "חַם לִי.",
+        "אֲנִי חַם.",
+        "יֵשׁ לִי חַם."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. אֲנִי חַם é \"eu sou quente\". Com calor é חַם לִי.",
+        "2": "יֵשׁ לִי é \"eu tenho\". Com calor é חַם לִי."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "Qual é a pergunta certa para saber o aniversário da Noa?",
+      "opcoes": [
+        "מָתַי יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?",
+        "אֵיפֹה יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?",
+        "מָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ?"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "אֵיפֹה é \"onde\". A pergunta é \"quando\": מָתַי.",
+        "2": "שֶׁלְּךָ é para homem; para a Noa, שֶׁלָּךְ."
+      }
+    },
+    {
+      "t": "vf",
+      "q": "Em Israel quase não chove no verão.",
+      "certa": true,
+      "porque": "A chuva vem no inverno."
+    },
+    {
+      "t": "vf",
+      "q": "מָחָר quer dizer \"ontem\".",
+      "certa": false,
+      "porque": "מָחָר é amanhã."
+    },
+    {
+      "t": "separar",
+      "q": "Em Israel, isso é mais do verão ou do inverno?",
+      "baldes": [
+        "בַּקַּיִץ",
+        "בַּחֹרֶף"
+      ],
+      "itens": [
+        [
+          "חַם מְאֹד",
+          0
+        ],
+        [
+          "יוֹרֵד גֶּשֶׁם",
+          1
+        ],
+        [
+          "שְׁלוֹשִׁים וְחָמֵשׁ מַעֲלוֹת",
+          0
+        ],
+        [
+          "סְוֶדֶר וּמְעִיל",
+          1
+        ],
+        [
+          "הוֹלְכִים לַיָּם",
+          0
+        ],
+        [
+          "קַר בַּלַּיְלָה",
+          1
+        ]
+      ]
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa: \"Hoje faz calor.\"",
+      "errada": "הַיּוֹם הוּא חַם.",
+      "respostas": [
+        "היום חם",
+        "חם היום"
+      ],
+      "porque": "O tempo não tem sujeito: הַיּוֹם חַם."
+    },
+    {
+      "t": "erro",
+      "q": "Uma mulher quer dizer que está com frio. Ache o erro e escreva a frase certa.",
+      "errada": "אֲנִי קָרָה.",
+      "respostas": [
+        "קר לי",
+        "לי קר"
+      ],
+      "porque": "\"Estou com frio\" é קַר לִי, igual para homem e mulher."
+    },
+    {
+      "t": "montar",
+      "pt": "No inverno faz frio em Jerusalém.",
+      "palavras": [
+        "בַּחֹרֶף",
+        "קַר",
+        "בִּירוּשָׁלַיִם"
+      ],
+      "outras": [
+        [
+          "בִּירוּשָׁלַיִם",
+          "קַר",
+          "בַּחֹרֶף"
+        ],
+        [
+          "קַר",
+          "בִּירוּשָׁלַיִם",
+          "בַּחֹרֶף"
+        ],
+        [
+          "בַּחֹרֶף",
+          "בִּירוּשָׁלַיִם",
+          "קַר"
+        ],
+        [
+          "בִּירוּשָׁלַיִם",
+          "בַּחֹרֶף",
+          "קַר"
+        ],
+        [
+          "קַר",
+          "בַּחֹרֶף",
+          "בִּירוּשָׁלַיִם"
+        ]
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "O meu aniversário é em março.",
+      "palavras": [
+        "יוֹם",
+        "הַהֻלֶּדֶת",
+        "שֶׁלִּי",
+        "בְּמֶרְץ"
+      ],
+      "outras": [
+        [
+          "בְּמֶרְץ",
+          "יוֹם",
+          "הַהֻלֶּדֶת",
+          "שֶׁלִּי"
+        ]
+      ]
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "Maya",
+          "מָה מֶזֶג הָאֲוִיר הַיּוֹם?"
+        ]
+      ],
+      "opcoes": [
+        "חַם, וְיֵשׁ שֶׁמֶשׁ.",
+        "בְּשָׁעָה שֶׁבַע.",
+        "אֲנִי בְּסֵדֶר."
+      ],
+      "certa": 0
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "Dani",
+          "הַיּוֹם יוֹם הַהֻלֶּדֶת שֶׁלִּי!"
+        ]
+      ],
+      "opcoes": [
+        "יוֹם הֻלֶּדֶת שָׂמֵחַ!",
+        "בְּתֵאָבוֹן!",
+        "לֹא נוֹרָא."
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ordenar",
+      "q": "Ponha a conversa na ordem.",
+      "falas": [
+        "מָתַי אַתָּה נוֹסֵעַ לְאֵילַת?",
+        "בְּאוֹגוּסְט.",
+        "בְּאוֹגוּסְט? חַם שָׁם מְאֹד!",
+        "נָכוֹן, אֲבָל יֵשׁ יָם."
+      ]
+    },
+    {
+      "t": "ouvir",
+      "he": "יוֹרֵד גֶּשֶׁם בִּירוּשָׁלַיִם.",
+      "q": "Como está o tempo em Jerusalém?",
+      "opcoes": [
+        "Está chovendo",
+        "Faz sol",
+        "Faz calor"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "בְּעֶשְׂרִים בְּמַאי",
+      "q": "Que data você ouviu?",
+      "opcoes": [
+        "20 de maio",
+        "20 de março",
+        "30 de maio"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ditado",
+      "he": "קַר לִי",
+      "respostas": [
+        "קר לי"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "em junho",
+      "respostas": [
+        "ביוני"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "amanhã",
+      "respostas": [
+        "מחר"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "novembro",
+      "respostas": [
+        "נובמבר"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "nublado",
+      "respostas": [
+        "מעונן",
+        "מענן"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não. Em Israel só chove no inverno.\"",
+      "antes": "לֹא. בְּיִשְׂרָאֵל יוֹרֵד",
+      "depois": "רַק בַּחֹרֶף.",
+      "respostas": [
+        "גשם"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Sério? Inverno em junho? Que loucura!\"",
+      "antes": "בֶּאֱמֶת?",
+      "depois": "בְּיוּנִי? מְשֻׁגָּע!",
+      "respostas": [
+        "חורף",
+        "חרף"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Em 20 de junho. Por quê?\"",
+      "exemplo": "בְּעֶשְׂרִים בְּיוּנִי. לָמָּה?"
+    },
+    {
+      "t": "aberta",
+      "pt": "Escreva quando é o seu aniversário e como é o tempo na sua cidade nesse mês.",
+      "exemplo": "יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּיוּלִי. בְּיוּלִי בְּסָאוֹ פָּאוּלוֹ קַר, אֲבָל יֵשׁ שֶׁמֶשׁ."
+    }
+  ]
+}

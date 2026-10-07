@@ -114,9 +114,11 @@ describe('o conteúdo do A1 só sai para quem comprou o A1', () => {
     expect(r.status).toBe(200);
     expect(r.headers.get('cache-control')).toContain('private');
     expect(r.headers.get('vary') || '').toContain('Cookie');
-    const corpo = await r.json() as { unidades: unknown[]; exame: { partes: unknown[] } };
-    expect(corpo.unidades).toHaveLength(8);
+    const corpo = await r.json() as { modulos: { unidades: number[] }[]; unidades: unknown[]; exame: { partes: { itens?: unknown }[] } };
+    expect(corpo.unidades).toHaveLength(corpo.modulos.flatMap(m => m.unidades).length);
     expect(corpo.exame.partes).toHaveLength(6);
+    /* O exame é corrigido no servidor: as perguntas e o gabarito não vêm aqui. */
+    expect(corpo.exame.partes.every(p => p.itens === undefined)).toBe(true);
   });
 
   it('e quem comprou só o A1 não baixa o conteúdo do alfabeto', async () => {

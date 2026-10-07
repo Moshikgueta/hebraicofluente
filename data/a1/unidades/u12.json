@@ -1,0 +1,680 @@
+{
+  "n": 12,
+  "revisado": false,
+  "tituloPt": "Como eu chego lá?",
+  "objetivoPt": "Perguntar o caminho e entender a resposta (reto, à direita, à esquerda), dizer como você vai (a pé, de ônibus, de trem) e se é perto ou longe.",
+  "situacaoPt": "O Tom precisa chegar à rodoviária central de Tel Aviv e o telefone dele ficou sem bateria. Ele pergunta a uma senhora na rua.",
+  "palavras": [
+    {
+      "he": "לְאָן?",
+      "translit": "leán?",
+      "pt": "para onde?"
+    },
+    {
+      "he": "אֵיךְ מַגִּיעִים לְ…?",
+      "translit": "eich maguiím le…?",
+      "pt": "como se chega a…?"
+    },
+    {
+      "pt": "ir (de veículo), viajar",
+      "formas": [
+        "נוֹסֵעַ",
+        "נוֹסַעַת",
+        "נוֹסְעִים",
+        "נוֹסְעוֹת"
+      ],
+      "translit": [
+        "nosséa",
+        "nossáat",
+        "nossím",
+        "nossót"
+      ]
+    },
+    {
+      "pt": "virar (para um lado)",
+      "formas": [
+        "פּוֹנֶה",
+        "פּוֹנָה",
+        "פּוֹנִים",
+        "פּוֹנוֹת"
+      ],
+      "translit": [
+        "poné",
+        "poná",
+        "poním",
+        "ponót"
+      ]
+    },
+    {
+      "he": "יָשָׁר",
+      "translit": "yashár",
+      "pt": "reto, em frente"
+    },
+    {
+      "he": "יָמִינָה",
+      "translit": "yamína",
+      "pt": "para a direita"
+    },
+    {
+      "he": "שְׂמֹאלָה",
+      "translit": "smóla",
+      "pt": "para a esquerda"
+    },
+    {
+      "he": "קָרוֹב",
+      "translit": "karóv",
+      "pt": "perto"
+    },
+    {
+      "he": "רָחוֹק",
+      "translit": "rachók",
+      "pt": "longe"
+    },
+    {
+      "he": "רְחוֹב",
+      "translit": "rechóv",
+      "pt": "rua"
+    },
+    {
+      "he": "פִּנָּה",
+      "translit": "piná",
+      "pt": "esquina"
+    },
+    {
+      "he": "רַמְזוֹר",
+      "translit": "ramzór",
+      "pt": "semáforo"
+    },
+    {
+      "he": "תַּחֲנָה",
+      "translit": "tachaná",
+      "pt": "ponto (de ônibus), estação"
+    },
+    {
+      "he": "הַתַּחֲנָה הַמֶּרְכָּזִית",
+      "translit": "hatachaná hamerkazít",
+      "pt": "a rodoviária central"
+    },
+    {
+      "he": "אוֹטוֹבּוּס",
+      "translit": "ótobus",
+      "pt": "ônibus"
+    },
+    {
+      "he": "קַו",
+      "translit": "kav",
+      "pt": "linha (de ônibus)"
+    },
+    {
+      "he": "רַכֶּבֶת",
+      "translit": "rakévet",
+      "pt": "trem"
+    },
+    {
+      "he": "מוֹנִית",
+      "translit": "monít",
+      "pt": "táxi"
+    },
+    {
+      "he": "בָּרֶגֶל",
+      "translit": "baréguel",
+      "pt": "a pé"
+    },
+    {
+      "he": "בַּנְק",
+      "translit": "bank",
+      "pt": "banco"
+    },
+    {
+      "he": "סוּפֶּרְמַרְקֶט",
+      "translit": "supermárket",
+      "pt": "supermercado"
+    },
+    {
+      "he": "דַּקָּה",
+      "translit": "daká",
+      "pt": "minuto"
+    },
+    {
+      "he": "דַּקּוֹת",
+      "translit": "dakót",
+      "pt": "minutos"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "Onde, para onde, de onde",
+      "textoPt": "Três perguntas parecidas: אֵיפֹה? (onde, parado), לְאָן? (para onde, indo) e מֵאֵיפֹה? (de onde, vindo). אֵיפֹה הַבַּנְק? · לְאָן אַתָּה נוֹסֵעַ? · מֵאֵיפֹה אַתְּ?",
+      "erroPt": "Em português dá para dizer \"onde você vai?\". Em hebraico, com movimento a pergunta é לְאָן: לְאָן אַתָּה הוֹלֵךְ?"
+    },
+    {
+      "tituloPt": "A pé é הוֹלֵךְ; de veículo é נוֹסֵעַ",
+      "textoPt": "O português usa \"ir\" para tudo. Quando você diz COMO vai, o hebraico separa: a pé é הוֹלֵךְ; de ônibus, trem, táxi ou carro é נוֹסֵעַ. Sem falar do meio, הוֹלֵךְ também é o \"ir\" de todo dia: אֲנִי הוֹלֵךְ לָעֲבוֹדָה. O veículo vem com בְּ: בְּאוֹטוֹבּוּס, בְּרַכֶּבֶת, בְּמוֹנִית. \"A pé\" é uma palavra só: בָּרֶגֶל.",
+      "erroPt": "אֲנִי הוֹלֵךְ בְּאוֹטוֹבּוּס soa como andar DENTRO do ônibus. Quem vai de ônibus diz אֲנִי נוֹסֵעַ בְּאוֹטוֹבּוּס.",
+      "exemplos": [
+        {
+          "he": "אֲנִי הוֹלֶכֶת לָעֲבוֹדָה בָּרֶגֶל.",
+          "pt": "Vou a pé para o trabalho. (mulher)"
+        },
+        {
+          "he": "הֵם נוֹסְעִים לְחֵיפָה בְּרַכֶּבֶת.",
+          "pt": "Eles vão de trem para Haifa."
+        }
+      ]
+    },
+    {
+      "tituloPt": "יָמִינָה, שְׂמֹאלָה: o ־ָה de direção, de novo",
+      "textoPt": "Lembra do הַבַּיְתָה (para casa)? O mesmo ־ָה está em יָמִינָה (para a direita) e שְׂמֹאלָה (para a esquerda). Aqui ele não é de feminino: quer dizer \"em direção a\"."
+    },
+    {
+      "tituloPt": "Explicar o caminho: o plural sem \"quem\"",
+      "textoPt": "Para uma regra que vale para qualquer um, o israelense usa o verbo no plural, sem sujeito: אֵיךְ מַגִּיעִים לַבַּנְק? (como se chega ao banco?), הוֹלְכִים יָשָׁר וּפוֹנִים יָמִינָה (vai-se reto e vira-se à direita). É o \"se\" do português. Também dá para explicar falando com a pessoa: אַתָּה הוֹלֵךְ יָשָׁר, וְאָז פּוֹנֶה שְׂמֹאלָה.",
+      "exemplos": [
+        {
+          "he": "פּוֹנִים שְׂמֹאלָה בַּפִּנָּה.",
+          "pt": "Vira-se à esquerda na esquina."
+        }
+      ]
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Na rua, sem bateria",
+    "linhas": [
+      {
+        "quem": "Tom",
+        "he": "סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה הַמֶּרְכָּזִית?",
+        "translit": "slichá, eich maguiím latachaná hamerkazít?",
+        "pt": "Com licença, como se chega à rodoviária central?"
+      },
+      {
+        "quem": "A senhora",
+        "he": "זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל?",
+        "translit": "ze rachók. atá holéch baréguel?",
+        "pt": "É longe. Você vai a pé?"
+      },
+      {
+        "quem": "Tom",
+        "he": "כֵּן.",
+        "translit": "ken.",
+        "pt": "Vou."
+      },
+      {
+        "quem": "A senhora",
+        "he": "אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם פּוֹנֶה שְׂמֹאלָה.",
+        "translit": "az atá holéch yashár ad haramzór, veshám poné smóla.",
+        "pt": "Então você vai reto até o semáforo, e lá vira à esquerda."
+      },
+      {
+        "quem": "Tom",
+        "he": "יָשָׁר, וְאָז שְׂמֹאלָה. וְאַחַר כָּךְ?",
+        "translit": "yashár, veáz smóla. veachár kach?",
+        "pt": "Reto, e depois à esquerda. E depois?"
+      },
+      {
+        "quem": "A senhora",
+        "he": "אַחַר כָּךְ יָמִינָה, וְהַתַּחֲנָה מוּל הַבַּנְק. אֲבָל זֶה עֶשְׂרִים דַּקּוֹת.",
+        "translit": "achár kach yamína, vehatachaná mul habánk. avál ze esrím dakót.",
+        "pt": "Depois à direita, e a rodoviária fica em frente ao banco. Mas são vinte minutos."
+      },
+      {
+        "quem": "Tom",
+        "he": "עֶשְׂרִים דַּקּוֹת? יֵשׁ אוֹטוֹבּוּס?",
+        "translit": "esrím dakót? yesh ótobus?",
+        "pt": "Vinte minutos? Tem ônibus?"
+      },
+      {
+        "quem": "A senhora",
+        "he": "כֵּן, קַו חָמֵשׁ. הַתַּחֲנָה פֹּה, בַּפִּנָּה.",
+        "translit": "ken, kav chamésh. hatachaná po, bapiná.",
+        "pt": "Tem, a linha 5. O ponto é aqui, na esquina."
+      },
+      {
+        "quem": "Tom",
+        "he": "תּוֹדָה רַבָּה!",
+        "translit": "todá rabá!",
+        "pt": "Muito obrigado!"
+      },
+      {
+        "quem": "A senhora",
+        "he": "בְּבַקָּשָׁה. נְסִיעָה טוֹבָה!",
+        "translit": "bevakashá. nessiá tová!",
+        "pt": "De nada. Boa viagem!"
+      }
+    ],
+    "glossario": [
+      {
+        "he": "אָז",
+        "translit": "az",
+        "pt": "então"
+      },
+      {
+        "he": "נְסִיעָה טוֹבָה",
+        "translit": "nessiá tová",
+        "pt": "boa viagem"
+      }
+    ],
+    "notaPt": "נְסִיעָה (viagem, trajeto) é da mesma raiz de נוֹסֵעַ: נ, ס, ע."
+  },
+  "leitura": {
+    "tituloPt": "A Maya explica como chegar",
+    "semPontos": true,
+    "linhas": [
+      {
+        "he": "מֵהָרַכֶּבֶת אַתָּה הוֹלֵךְ יָשָׁר עַד הַסּוּפֶּרְמַרְקֶט.",
+        "translit": "meharakévet atá holéch yashár ad hassupermárket.",
+        "pt": "Do trem você vai reto até o supermercado."
+      },
+      {
+        "he": "שָׁם אַתָּה פּוֹנֶה יָמִינָה.",
+        "translit": "sham atá poné yamína.",
+        "pt": "Lá você vira à direita."
+      },
+      {
+        "he": "הַבַּיִת שֶׁלִּי בִּרְחוֹב הֶרְצְל 12, מוּל הַבַּנְק.",
+        "translit": "habáyit shelí birchóv Hértsl shteim-esré, mul habánk.",
+        "pt": "A minha casa fica na rua Herzl, 12, em frente ao banco."
+      },
+      {
+        "he": "זֶה קָרוֹב, חָמֵשׁ דַּקּוֹת בָּרֶגֶל!",
+        "translit": "ze karóv, chamésh dakót baréguel!",
+        "pt": "É perto, cinco minutos a pé!"
+      }
+    ],
+    "perguntas": [
+      {
+        "t": "escolha",
+        "q": "Onde é preciso virar à direita?",
+        "opcoes": [
+          "No supermercado",
+          "No banco",
+          "No semáforo"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "escolha",
+        "q": "A casa da Maya fica em frente a quê?",
+        "opcoes": [
+          "Ao banco",
+          "Ao supermercado",
+          "À estação de trem"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "vf",
+        "q": "Da estação de trem até a casa dela é preciso pegar um ônibus.",
+        "certa": false,
+        "porque": "חָמֵשׁ דַּקּוֹת בָּרֶגֶל: são cinco minutos a pé."
+      }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "Ônibus, Rav-Kav e o shabat",
+      "textoPt": "O transporte público israelense funciona com o רַב־קַו, um cartão recarregável (ou o aplicativo) que vale para ônibus e trem no país inteiro. Na maioria das cidades, ônibus e trens param na sexta à tarde e só voltam no sábado à noite, por causa do shabat. Algumas cidades, como Tel Aviv, têm linhas especiais no fim de semana, e as vans de lotação (מוֹנִית שֵׁרוּת) rodam em várias rotas."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Ruas com nome de gente",
+      "textoPt": "Em muitas cidades israelenses há uma rua Herzl (Theodor Herzl, que defendeu a criação de um Estado judeu), uma rua Ben-Yehuda (o do renascimento do hebraico) e uma rua Rothschild. As placas de rua costumam vir em três línguas: hebraico, árabe e inglês."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu pergunto como chegar a um lugar.",
+    "Eu entendo \"reto, à direita, à esquerda, em frente a\".",
+    "Eu sei quando usar הוֹלֵךְ e quando usar נוֹסֵעַ."
+  ],
+  "exercicios": [
+    {
+      "t": "ligar",
+      "q": "Ligue os transportes.",
+      "pares": [
+        [
+          "אוֹטוֹבּוּס",
+          "ônibus"
+        ],
+        [
+          "רַכֶּבֶת",
+          "trem"
+        ],
+        [
+          "מוֹנִית",
+          "táxi"
+        ],
+        [
+          "בָּרֶגֶל",
+          "a pé"
+        ],
+        [
+          "תַּחֲנָה",
+          "ponto, estação"
+        ]
+      ]
+    },
+    {
+      "t": "ligar",
+      "q": "E as direções.",
+      "pares": [
+        [
+          "יָשָׁר",
+          "reto"
+        ],
+        [
+          "יָמִינָה",
+          "para a direita"
+        ],
+        [
+          "שְׂמֹאלָה",
+          "para a esquerda"
+        ],
+        [
+          "קָרוֹב",
+          "perto"
+        ],
+        [
+          "רָחוֹק",
+          "longe"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Para onde você vai?\" (a ele)",
+      "opcoes": [
+        "לְאָן אַתָּה הוֹלֵךְ?",
+        "אֵיפֹה אַתָּה הוֹלֵךְ?",
+        "מֵאֵיפֹה אַתָּה הוֹלֵךְ?"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. אֵיפֹה é \"onde\", parado. Com movimento, \"para onde\" é לְאָן.",
+        "2": "מֵאֵיפֹה é \"de onde\"."
+      }
+    },
+    {
+      "t": "separar",
+      "q": "Com הוֹלֵךְ ou com נוֹסֵעַ?",
+      "baldes": [
+        "הוֹלֵךְ (a pé)",
+        "נוֹסֵעַ (de veículo)"
+      ],
+      "itens": [
+        [
+          "בָּרֶגֶל",
+          0
+        ],
+        [
+          "עַד הַפִּנָּה בָּרֶגֶל",
+          0
+        ],
+        [
+          "בְּאוֹטוֹבּוּס",
+          1
+        ],
+        [
+          "בְּרַכֶּבֶת",
+          1
+        ],
+        [
+          "בְּמוֹנִית",
+          1
+        ],
+        [
+          "לַיָּם בָּרֶגֶל, חָמֵשׁ דַּקּוֹת",
+          0
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Eu vou de ônibus\" (fala um homem)",
+      "opcoes": [
+        "אֲנִי נוֹסֵעַ בְּאוֹטוֹבּוּס.",
+        "אֲנִי הוֹלֵךְ בְּאוֹטוֹבּוּס."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. הוֹלֵךְ é ir a pé. De ônibus, o israelense diz נוֹסֵעַ."
+      }
+    },
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "נוֹסֵעַ",
+      "linhas": [
+        [
+          "mulher",
+          "נוסעת"
+        ],
+        [
+          "homens",
+          "נוסעים"
+        ],
+        [
+          "mulheres",
+          "נוסעות"
+        ]
+      ]
+    },
+    {
+      "t": "tabela",
+      "q": "Complete as formas. (É um verbo em ה, como שׁוֹתֶה.)",
+      "base": "פּוֹנֶה",
+      "linhas": [
+        [
+          "mulher",
+          "פונה"
+        ],
+        [
+          "homens",
+          "פונים"
+        ],
+        [
+          "mulheres",
+          "פונות"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "O que יָמִינָה e הַבַּיְתָה têm em comum?",
+      "opcoes": [
+        "O ־ָה do fim quer dizer \"em direção a\"",
+        "As duas são femininas",
+        "As duas são plurais"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. Aqui o ־ָה não é de feminino: é o ־ָה de direção."
+      }
+    },
+    {
+      "t": "completar",
+      "q": "\"Você vai reto até o semáforo\"",
+      "antes": "אַתָּה הוֹלֵךְ",
+      "depois": "עַד הָרַמְזוֹר",
+      "respostas": [
+        "ישר"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"Como se chega ao banco?\"",
+      "antes": "",
+      "depois": "מַגִּיעִים לַבַּנְק?",
+      "respostas": [
+        "איך"
+      ]
+    },
+    {
+      "t": "vf",
+      "q": "זֶה רָחוֹק quer dizer \"é perto\".",
+      "certa": false,
+      "porque": "רָחוֹק é longe; perto é קָרוֹב."
+    },
+    {
+      "t": "erro",
+      "q": "Uma mulher fala: \"Eu vou de ônibus para o trabalho.\" Ache o erro e escreva a frase certa.",
+      "errada": "אֲנִי הוֹלֶכֶת לָעֲבוֹדָה בְּאוֹטוֹבּוּס.",
+      "respostas": [
+        "אני נוסעת לעבודה באוטובוס",
+        "אני נוסעת באוטובוס לעבודה"
+      ],
+      "porque": "De veículo é נוֹסַעַת."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "אֲנַחְנוּ נוֹסֵעַ בְּרַכֶּבֶת.",
+      "respostas": [
+        "אנחנו נוסעים ברכבת",
+        "אנחנו נוסעות ברכבת"
+      ],
+      "porque": "Com אֲנַחְנוּ, o verbo vai para o plural."
+    },
+    {
+      "t": "montar",
+      "pt": "O ponto fica em frente ao banco.",
+      "palavras": [
+        "הַתַּחֲנָה",
+        "מוּל",
+        "הַבַּנְק"
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "Vira-se à esquerda na esquina.",
+      "palavras": [
+        "פּוֹנִים",
+        "שְׂמֹאלָה",
+        "בַּפִּנָּה"
+      ],
+      "outras": [
+        [
+          "בַּפִּנָּה",
+          "פּוֹנִים",
+          "שְׂמֹאלָה"
+        ],
+        [
+          "פּוֹנִים",
+          "בַּפִּנָּה",
+          "שְׂמֹאלָה"
+        ]
+      ]
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "Tom",
+          "סְלִיחָה, אֵיךְ מַגִּיעִים לַיָּם?"
+        ]
+      ],
+      "opcoes": [
+        "הוֹלְכִים יָשָׁר, וְאָז שְׂמֹאלָה.",
+        "בְּשָׁעָה שְׁתַּיִם.",
+        "כֵּן, אֲנִי יוֹדֵעַ."
+      ],
+      "certa": 0
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "Maya",
+          "זֶה רָחוֹק?"
+        ]
+      ],
+      "opcoes": [
+        "לֹא, זֶה קָרוֹב. חָמֵשׁ דַּקּוֹת.",
+        "לֹא, אֵין לִי.",
+        "כֵּן, בְּבַקָּשָׁה."
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ordenar",
+      "q": "Ponha a conversa na ordem.",
+      "falas": [
+        "סְלִיחָה, אֵיפֹה הַתַּחֲנָה?",
+        "שָׁם, בַּפִּנָּה.",
+        "זֶה קַו חָמֵשׁ?",
+        "כֵּן. נְסִיעָה טוֹבָה!"
+      ]
+    },
+    {
+      "t": "ouvir",
+      "he": "פּוֹנִים יָמִינָה בָּרַמְזוֹר.",
+      "q": "O que você ouviu?",
+      "opcoes": [
+        "Vira à direita no semáforo",
+        "Vira à esquerda no semáforo",
+        "Segue reto até o semáforo"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "אֲנַחְנוּ נוֹסְעִים בְּמוֹנִית.",
+      "q": "Como eles vão?",
+      "opcoes": [
+        "De táxi",
+        "A pé",
+        "De trem"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ditado",
+      "he": "יָשָׁר",
+      "respostas": [
+        "ישר"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "para onde?",
+      "respostas": [
+        "לאן"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "esquina",
+      "respostas": [
+        "פינה",
+        "פנה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "táxi",
+      "respostas": [
+        "מונית"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Então você vai reto até o semáforo, e lá vira à esquerda.\"",
+      "antes": "אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם",
+      "depois": "שְׂמֹאלָה.",
+      "respostas": [
+        "פונה"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"É longe. Você vai a pé?\"",
+      "exemplo": "זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל?"
+    },
+    {
+      "t": "aberta",
+      "pt": "Explique a alguém como chegar da sua casa ao mercado mais perto.",
+      "exemplo": "הוֹלְכִים יָשָׁר עַד הַפִּנָּה, וְאָז פּוֹנִים יָמִינָה. הַסּוּפֶּרְמַרְקֶט מוּל הַבַּנְק. זֶה קָרוֹב!"
+    }
+  ]
+}

@@ -1,0 +1,665 @@
+{
+  "n": 20,
+  "revisado": false,
+  "tituloPt": "Um dia em Israel: juntando tudo",
+  "objetivoPt": "Se virar quando não entende (pedir para repetir, falar devagar, perguntar o que é uma palavra) e usar tudo o que aprendeu numa situação de verdade, do ônibus ao jantar de sexta.",
+  "situacaoPt": "Sexta de manhã, num ônibus de Tel Aviv. Uma mulher pergunta uma coisa ao Dani, rápido demais. É a primeira conversa dele com uma desconhecida, sem ninguém para ajudar.",
+  "palavras": [
+    {
+      "pt": "entender",
+      "formas": [
+        "מֵבִין",
+        "מְבִינָה",
+        "מְבִינִים",
+        "מְבִינוֹת"
+      ],
+      "translit": [
+        "mevín",
+        "meviná",
+        "meviním",
+        "mevinót"
+      ]
+    },
+    {
+      "pt": "estar atrasado",
+      "formas": [
+        "מְאַחֵר",
+        "מְאַחֶרֶת",
+        "מְאַחֲרִים",
+        "מְאַחֲרוֹת"
+      ],
+      "translit": [
+        "meachér",
+        "meachéret",
+        "meacharím",
+        "meacharót"
+      ]
+    },
+    {
+      "he": "לְאַט",
+      "translit": "leát",
+      "pt": "devagar"
+    },
+    {
+      "he": "מַהֵר",
+      "translit": "mahér",
+      "pt": "rápido"
+    },
+    {
+      "he": "עוֹד פַּעַם",
+      "translit": "od páam",
+      "pt": "mais uma vez"
+    },
+    {
+      "he": "אֵיךְ אוֹמְרִים … בְּעִבְרִית?",
+      "translit": "eich omrím … beivrít?",
+      "pt": "como se diz … em hebraico?"
+    },
+    {
+      "he": "מָה זֶה …?",
+      "translit": "ma ze …?",
+      "pt": "o que é …?"
+    },
+    {
+      "he": "אֵיךְ כּוֹתְבִים …?",
+      "translit": "eich kotvím …?",
+      "pt": "como se escreve …?"
+    },
+    {
+      "he": "כְּמוֹ",
+      "translit": "kmo",
+      "pt": "como (igual a)"
+    },
+    {
+      "he": "הַכֹּל",
+      "translit": "hakól",
+      "pt": "tudo"
+    },
+    {
+      "he": "לְאַט לְאַט",
+      "translit": "leát leát",
+      "pt": "pouco a pouco"
+    },
+    {
+      "he": "בְּהַצְלָחָה!",
+      "translit": "behatslachá!",
+      "pt": "boa sorte!"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "Quando você não entende",
+      "textoPt": "Não entender faz parte. O que importa é ter as frases prontas: סְלִיחָה, אֲנִי לֹא מֵבִין (não entendo) · אֶפְשָׁר לְדַבֵּר לְאַט? (dá para falar devagar?) · אֶפְשָׁר עוֹד פַּעַם? (mais uma vez?) · מָה זֶה …? (o que é…?) · אֵיךְ אוֹמְרִים … בְּעִבְרִית? (como se diz… em hebraico?). Israelense gosta de ajudar quem tenta.",
+      "erroPt": "O brasileiro, quando trava, troca logo para o inglês ou só sorri e concorda. Peça para repetir em hebraico: é assim que a conversa continua, e é assim que o ouvido aprende.",
+      "exemplos": [
+        {
+          "he": "סְלִיחָה, אֲנִי לֹא מְבִינָה. אֶפְשָׁר לְאַט?",
+          "pt": "Desculpe, não entendo. Pode ser devagar? (mulher)"
+        }
+      ]
+    },
+    {
+      "tituloPt": "As perguntas, todas juntas",
+      "textoPt": "מִי? quem · מָה? o quê · אֵיפֹה? onde · לְאָן? para onde · מֵאֵיפֹה? de onde · מָתַי? quando · לָמָּה? por quê · אֵיךְ? como · כַּמָּה? quanto · אֵיזֶה / אֵיזוֹ / אֵילוּ? qual. Com elas, e com as respostas que você já sabe dar, você conduz uma conversa inteira."
+    },
+    {
+      "tituloPt": "O esqueleto do hebraico que você já domina",
+      "textoPt": "Frase sem \"ser\" (אֲנִי סְטוּדֶנְט) · יֵשׁ e אֵין (יֵשׁ לִי, אֵין מַעֲלִית) · o verbo em 4 formas (הוֹלֵךְ, הוֹלֶכֶת, הוֹלְכִים, הוֹלְכוֹת) e depois o infinitivo (רוֹצֶה לָלֶכֶת) · בְּ, לְ e מִ grudados, que se juntam com o הַ (בַּ, לַ) · o adjetivo depois, concordando · שֶׁ־ para \"que\" e כִּי para \"porque\". É o A1."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "No ônibus",
+    "linhas": [
+      {
+        "quem": "Uma mulher",
+        "he": "סְלִיחָה, הָאוֹטוֹבּוּס הַזֶּה נוֹסֵעַ לַתַּחֲנָה הַמֶּרְכָּזִית?",
+        "translit": "slichá, haótobus hazé nosséa latachaná hamerkazít?",
+        "pt": "Com licença, este ônibus vai para a rodoviária central?"
+      },
+      {
+        "quem": "Dani",
+        "he": "סְלִיחָה, אֲנִי לֹא מֵבִין. אֶפְשָׁר לְדַבֵּר לְאַט?",
+        "translit": "slichá, aní lo mevín. efshár ledabér leát?",
+        "pt": "Desculpe, não entendo. Dá para falar devagar?"
+      },
+      {
+        "quem": "Uma mulher",
+        "he": "בְּטַח. הָאוֹטוֹבּוּס הַזֶּה… נוֹסֵעַ… לַתַּחֲנָה הַמֶּרְכָּזִית?",
+        "translit": "betách. haótobus hazé… nosséa… latachaná hamerkazít?",
+        "pt": "Claro. Este ônibus… vai… para a rodoviária central?"
+      },
+      {
+        "quem": "Dani",
+        "he": "אָה! כֵּן, קַו חָמֵשׁ נוֹסֵעַ לְשָׁם.",
+        "translit": "a! ken, kav chamésh nosséa leshám.",
+        "pt": "Ah! Sim, a linha 5 vai para lá."
+      },
+      {
+        "quem": "Uma mulher",
+        "he": "תּוֹדָה. אֲנִי מְאַחֶרֶת לְרֵאָיוֹן עֲבוֹדָה!",
+        "translit": "todá. aní meachéret lereayón avodá!",
+        "pt": "Obrigada. Estou atrasada para uma entrevista de emprego!"
+      },
+      {
+        "quem": "Dani",
+        "he": "מָה זֶה \"רֵאָיוֹן\"?",
+        "translit": "ma ze \"reayón\"?",
+        "pt": "O que é \"reayón\"?"
+      },
+      {
+        "quem": "Uma mulher",
+        "he": "אִינְטֶרְוְיוּ, כְּמוֹ בְּאַנְגְּלִית. אַתָּה לֹא מִפֹּה, נָכוֹן?",
+        "translit": "íntervyu, kmo beanglít. atá lo mipó, nachón?",
+        "pt": "Interview, como em inglês. Você não é daqui, né?"
+      },
+      {
+        "quem": "Dani",
+        "he": "לֹא, אֲנִי מִבְּרָזִיל. אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן.",
+        "translit": "lo, aní miBrazíl. aní loméd ivrít baulpán.",
+        "pt": "Não, sou do Brasil. Estudo hebraico no ulpan."
+      },
+      {
+        "quem": "Uma mulher",
+        "he": "וְאַתָּה כְּבָר מְדַבֵּר יָפֶה מְאֹד!",
+        "translit": "veatá kvar medabér yafé meód!",
+        "pt": "E você já fala muito bem!"
+      },
+      {
+        "quem": "Dani",
+        "he": "תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא מֵבִין הַכֹּל.",
+        "translit": "todá! avál aní od lo mevín hakól.",
+        "pt": "Obrigado! Mas ainda não entendo tudo."
+      },
+      {
+        "quem": "Uma mulher",
+        "he": "לֹא נוֹרָא. לְאַט לְאַט!",
+        "translit": "lo norá. leát leát!",
+        "pt": "Não tem problema. Pouco a pouco!"
+      },
+      {
+        "quem": "Dani",
+        "he": "בְּהַצְלָחָה בָּרֵאָיוֹן!",
+        "translit": "behatslachá bareayón!",
+        "pt": "Boa sorte na entrevista!"
+      }
+    ],
+    "glossario": [
+      {
+        "he": "לְשָׁם",
+        "translit": "leshám",
+        "pt": "para lá"
+      },
+      {
+        "he": "רֵאָיוֹן עֲבוֹדָה",
+        "translit": "reayón avodá",
+        "pt": "entrevista de emprego"
+      },
+      {
+        "he": "מִפֹּה",
+        "translit": "mipó",
+        "pt": "daqui"
+      }
+    ],
+    "notaPt": "יָפֶה, depois de um verbo, quer dizer \"bem\": מְדַבֵּר יָפֶה, \"fala bem\". É o mesmo יָפֶה de \"bonito\", sem mudar para o feminino."
+  },
+  "leitura": {
+    "tituloPt": "Uma sexta-feira em Tel Aviv (o blog do Dani)",
+    "semPontos": true,
+    "linhas": [
+      {
+        "he": "כָּל יוֹם שִׁשִּׁי אֲנִי קָם בִּשְׁמוֹנֶה וְנוֹסֵעַ בְּאוֹטוֹבּוּס לַשּׁוּק.",
+        "translit": "kol yom shishí aní kam bishmoné venosséa beótobus lashúk.",
+        "pt": "Toda sexta eu levanto às oito e vou de ônibus para a feira."
+      },
+      {
+        "he": "בַּשּׁוּק אֲנִי קוֹנֶה פֵּרוֹת וִירָקוֹת. הַכֹּל זוֹל וְטָעִים!",
+        "translit": "bashúk aní koné perót virakót. hakól zol vetaím!",
+        "pt": "Na feira eu compro frutas e verduras. Tudo barato e gostoso!"
+      },
+      {
+        "he": "אַחַר כָּךְ אֲנִי שׁוֹתֶה קָפֶה הָפוּךְ עִם מַיָּה בְּבֵית קָפֶה לְיַד הַיָּם.",
+        "translit": "achár kach aní shoté kafé hafúch im Máya bevéit kafé leyád hayám.",
+        "pt": "Depois eu tomo um café com leite com a Maya num café perto do mar."
+      },
+      {
+        "he": "בְּאַרְבַּע הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת, וְכֻלָּם אוֹמְרִים \"שַׁבָּת שָׁלוֹם\".",
+        "translit": "beárba harbé chanuyót kvar sgurót, vechulám omrím \"shabát shalóm\".",
+        "pt": "Às quatro muitas lojas já estão fechadas, e todo mundo diz \"shabát shalóm\"."
+      },
+      {
+        "he": "בָּעֶרֶב אֲנִי אוֹכֵל אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה. אֲנַחְנוּ עֲשָׂרָה אֲנָשִׁים לְיַד הַשֻּׁלְחָן!",
+        "translit": "baérev aní ochél étsel hamishpachá shel Nóa. anáchnu assará anashím leyád hashulchán!",
+        "pt": "À noite eu janto na casa da família da Noa. Somos dez pessoas em volta da mesa!"
+      },
+      {
+        "he": "אֲנִי עוֹד לֹא מֵבִין הַכֹּל, אֲבָל אֲנִי מֵבִין הַרְבֵּה.",
+        "translit": "aní od lo mevín hakól, avál aní mevín harbé.",
+        "pt": "Eu ainda não entendo tudo, mas entendo muita coisa."
+      }
+    ],
+    "perguntas": [
+      {
+        "t": "escolha",
+        "q": "Como o Dani vai para a feira?",
+        "opcoes": [
+          "De ônibus",
+          "A pé",
+          "De táxi"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "escolha",
+        "q": "Onde ele toma café com a Maya?",
+        "opcoes": [
+          "Num café perto do mar",
+          "Na feira",
+          "Na casa da Noa"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "vf",
+        "q": "Às quatro da tarde todas as lojas ainda estão abertas.",
+        "certa": false,
+        "porque": "הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת: muitas lojas já estão fechadas, por causa do shabat."
+      },
+      {
+        "t": "escolha",
+        "q": "Onde o Dani janta na sexta?",
+        "opcoes": [
+          "Na casa da família da Noa",
+          "No restaurante",
+          "No hotel"
+        ],
+        "certa": 0,
+        "porque": "אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה: na casa da família dela (Unidade 11)."
+      },
+      {
+        "t": "vf",
+        "q": "O Dani já entende tudo.",
+        "certa": false,
+        "porque": "עוֹד לֹא מֵבִין הַכֹּל: ainda não entende tudo."
+      }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "O jantar de sexta",
+      "textoPt": "Para muitas famílias israelenses, religiosas ou não, o jantar de sexta à noite é o encontro da semana: avós, filhos e netos em volta da mesa, com a chalá, o pão trançado do shabat. Ser convidado para um jantar de sexta é um gesto de carinho. Leve alguma coisa (um vinho, flores, um doce) e chegue com fome."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "O hebraico de hoje",
+      "textoPt": "Há pouco mais de cem anos, quase ninguém tinha o hebraico como língua de casa. Hoje ele é falado por milhões de pessoas, tem gíria nova a cada geração, música pop, aplicativos e memes, e convive em Israel com o árabe, o russo, o inglês, o amárico e o francês. É uma língua antiga que se tornou, de novo, uma língua do dia a dia."
+    }
+  ],
+  "autoavaliacao": [
+    "Quando não entendo, eu peço para repetir e para falar devagar, em hebraico.",
+    "Eu uso todas as palavras de pergunta.",
+    "Eu me apresento, falo da minha rotina, dos meus gostos e dos meus planos."
+  ],
+  "exercicios": [
+    {
+      "t": "ligar",
+      "q": "Ligue as frases de sobrevivência.",
+      "pares": [
+        [
+          "לְאַט",
+          "devagar"
+        ],
+        [
+          "מַהֵר",
+          "rápido"
+        ],
+        [
+          "עוֹד פַּעַם",
+          "mais uma vez"
+        ],
+        [
+          "אֲנִי לֹא מֵבִין",
+          "não entendo"
+        ],
+        [
+          "בְּהַצְלָחָה",
+          "boa sorte"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "Você não entendeu o que a pessoa disse. O que você diz?",
+      "opcoes": [
+        "סְלִיחָה, אֶפְשָׁר עוֹד פַּעַם?",
+        "בְּתֵאָבוֹן.",
+        "מַזָּל טוֹב!"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Você quer saber como se diz uma palavra em hebraico. O que pergunta?",
+      "opcoes": [
+        "אֵיךְ אוֹמְרִים … בְּעִבְרִית?",
+        "אֵיפֹה … בְּעִבְרִית?",
+        "מָתַי … בְּעִבְרִית?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "מֵבִין",
+      "linhas": [
+        [
+          "mulher",
+          "מבינה"
+        ],
+        [
+          "homens",
+          "מבינים"
+        ],
+        [
+          "mulheres",
+          "מבינות"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "Para saber o preço:",
+      "opcoes": [
+        "כַּמָּה זֶה עוֹלֶה?",
+        "לְאָן זֶה עוֹלֶה?",
+        "מָתַי זֶה עוֹלֶה?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "separar",
+      "q": "Qual palavra de pergunta completa?",
+      "baldes": [
+        "אֵיפֹה",
+        "לְאָן",
+        "מָתַי"
+      ],
+      "itens": [
+        [
+          "… הַבַּנְק?",
+          0
+        ],
+        [
+          "… אַתָּה נוֹסֵעַ? לְתֵל אָבִיב.",
+          1
+        ],
+        [
+          "… הַשִּׁעוּר? בְּשָׁלוֹשׁ.",
+          2
+        ],
+        [
+          "… הַשֵּׁרוּתִים?",
+          0
+        ],
+        [
+          "… הִיא הוֹלֶכֶת? לַשּׁוּק.",
+          1
+        ],
+        [
+          "… יוֹם הַהֻלֶּדֶת שֶׁלְּךָ?",
+          2
+        ]
+      ]
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "Shira",
+          "מֵאֵיפֹה אַתָּה?"
+        ]
+      ],
+      "opcoes": [
+        "אֲנִי מִבְּרָזִיל.",
+        "אֲנִי בְּסֵדֶר.",
+        "בְּיוּנִי."
+      ],
+      "certa": 0
+    },
+    {
+      "t": "dialogo",
+      "q": "Na feira. Qual é a resposta certa?",
+      "linhas": [
+        [
+          "O vendedor",
+          "כַּמָּה אַתְּ רוֹצָה?"
+        ]
+      ],
+      "opcoes": [
+        "קִילוֹ אֶחָד, בְּבַקָּשָׁה.",
+        "אֶחָד קִילוֹ, בְּבַקָּשָׁה."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "O \"um\" vem depois da coisa: קִילוֹ אֶחָד (Unidade 19)."
+      }
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "הַחֲנוּת פָּתוּחַ.",
+      "respostas": [
+        "החנות פתוחה"
+      ],
+      "porque": "חֲנוּת é feminina: פְּתוּחָה."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "אֲנִי הוֹלֵךְ לְהָעֲבוֹדָה.",
+      "respostas": [
+        "אני הולך לעבודה"
+      ],
+      "porque": "לְ e הַ se juntam: לָעֲבוֹדָה."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "הֵם רוֹצִים אוֹכְלִים.",
+      "respostas": [
+        "הם רוצים לאכול"
+      ],
+      "porque": "Depois de רוֹצִים vem o infinitivo: לֶאֱכוֹל."
+    },
+    {
+      "t": "montar",
+      "pt": "Todo dia eu vou de ônibus para o trabalho. (fala um homem)",
+      "palavras": [
+        "כָּל יוֹם",
+        "אֲנִי",
+        "נוֹסֵעַ",
+        "לָעֲבוֹדָה",
+        "בְּאוֹטוֹבּוּס"
+      ],
+      "outras": [
+        [
+          "כָּל יוֹם",
+          "אֲנִי",
+          "נוֹסֵעַ",
+          "בְּאוֹטוֹבּוּס",
+          "לָעֲבוֹדָה"
+        ],
+        [
+          "אֲנִי",
+          "נוֹסֵעַ",
+          "כָּל יוֹם",
+          "לָעֲבוֹדָה",
+          "בְּאוֹטוֹבּוּס"
+        ],
+        [
+          "אֲנִי",
+          "נוֹסֵעַ",
+          "כָּל יוֹם",
+          "בְּאוֹטוֹבּוּס",
+          "לָעֲבוֹדָה"
+        ],
+        [
+          "אֲנִי",
+          "נוֹסֵעַ",
+          "לָעֲבוֹדָה",
+          "בְּאוֹטוֹבּוּס",
+          "כָּל יוֹם"
+        ],
+        [
+          "אֲנִי",
+          "נוֹסֵעַ",
+          "בְּאוֹטוֹבּוּס",
+          "לָעֲבוֹדָה",
+          "כָּל יוֹם"
+        ],
+        [
+          "אֲנִי",
+          "כָּל יוֹם",
+          "נוֹסֵעַ",
+          "לָעֲבוֹדָה",
+          "בְּאוֹטוֹבּוּס"
+        ],
+        [
+          "אֲנִי",
+          "כָּל יוֹם",
+          "נוֹסֵעַ",
+          "בְּאוֹטוֹבּוּס",
+          "לָעֲבוֹדָה"
+        ]
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "Ela diz que o filme é bom.",
+      "palavras": [
+        "הִיא",
+        "אוֹמֶרֶת",
+        "שֶׁהַסֶּרֶט",
+        "טוֹב"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"O gato está embaixo da mesa\"",
+      "antes": "הֶחָתוּל",
+      "depois": "לַשֻּׁלְחָן",
+      "respostas": [
+        "מתחת"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"Você pode me ajudar?\" (a ele)",
+      "antes": "אַתָּה יָכוֹל לַעֲזוֹר",
+      "depois": "?",
+      "respostas": [
+        "לי"
+      ]
+    },
+    {
+      "t": "vf",
+      "q": "Para dizer \"estou com frio\" se diz קַר לִי.",
+      "certa": true
+    },
+    {
+      "t": "vf",
+      "q": "שְׁלוֹשָׁה שָׁעוֹת está certo.",
+      "certa": false,
+      "porque": "שָׁעָה é feminina: שָׁלוֹשׁ שָׁעוֹת."
+    },
+    {
+      "t": "ordenar",
+      "q": "Ponha a conversa na ordem.",
+      "falas": [
+        "סְלִיחָה, אֵיךְ מַגִּיעִים לַשּׁוּק?",
+        "הוֹלְכִים יָשָׁר וּפוֹנִים שְׂמֹאלָה בָּרַמְזוֹר.",
+        "סְלִיחָה, אֲנִי לֹא מֵבִין. אֶפְשָׁר לְאַט?",
+        "יָשָׁר… וְאָז… שְׂמֹאלָה."
+      ]
+    },
+    {
+      "t": "ouvir",
+      "he": "אֶפְשָׁר לְדַבֵּר לְאַט?",
+      "q": "O que a pessoa pede?",
+      "opcoes": [
+        "Para falar devagar",
+        "Para falar mais alto",
+        "Para repetir"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "אֲנִי לֹא מְבִינָה הַכֹּל.",
+      "q": "O que você ouviu?",
+      "opcoes": [
+        "Ela não entende tudo",
+        "Ele não entende nada",
+        "Ela não sabe tudo"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ditado",
+      "he": "לְאַט לְאַט",
+      "respostas": [
+        "לאט לאט"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "boa sorte",
+      "respostas": [
+        "בהצלחה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "rápido",
+      "respostas": [
+        "מהר"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "como (igual a)",
+      "respostas": [
+        "כמו"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Obrigado! Mas ainda não entendo tudo.\"",
+      "antes": "תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא",
+      "depois": "הַכֹּל.",
+      "respostas": [
+        "מבין"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Obrigada. Estou atrasada para uma entrevista de emprego!\"",
+      "antes": "תּוֹדָה. אֲנִי",
+      "depois": "לְרֵאָיוֹן עֲבוֹדָה!",
+      "respostas": [
+        "מאחרת"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Desculpe, não entendo. Dá para falar devagar?\"",
+      "exemplo": "סְלִיחָה, אֲנִי לֹא מֵבִין. אֶפְשָׁר לְדַבֵּר לְאַט?"
+    },
+    {
+      "t": "aberta",
+      "pt": "Apresente-se como no começo do curso, mas agora com tudo o que você sabe: quem é, de onde, onde mora, o que faz, do que gosta, e um plano para a semana que vem.",
+      "exemplo": "שָׁלוֹם! קוֹרְאִים לִי דָּנִי, וַאֲנִי מִבְּרָזִיל. אֲנִי גָּר בְּתֵל אָבִיב וְלוֹמֵד עִבְרִית בָּאֻלְפָּן. אֲנִי אוֹהֵב לְבַשֵּׁל וְלִשְׂחוֹת. בַּשָּׁבוּעַ הַבָּא אֲנִי נוֹסֵעַ לְחֵיפָה עִם חֲבֵרִים."
+    }
+  ]
+}

@@ -120,6 +120,12 @@ for (const c of j('culture.json').cards) {
 for (const u of j('a1.json').unidades) {
   por(`a1/unidade-${u.n}.objetivoPt`, u.objetivoPt);
   for (const [i, g] of u.gramatica.entries()) por(`a1/unidade-${u.n}.gramatica-${i + 1}`, g.textoPt);
+  for (const [i, c] of [...(u.cultura ?? []), ...(u.sabia ?? [])].entries()) por(`a1/unidade-${u.n}.caixa-${i + 1}`, c.textoPt);
+}
+/* O exame do A1 é corrigido no servidor: nem pergunta nem gabarito podem
+   chegar ao navegador por nenhum caminho, nem pago. */
+for (const p of j('a1-exame.json').partes) {
+  for (const [i, it] of p.itens.entries()) por(`a1/exame-${p.id}-${i + 1}`, it.q ?? it.pt);
 }
 const traços = j('stroke-paths.json').letters;
 for (const [id, set] of Object.entries(traços).slice(0, 6)) {

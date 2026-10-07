@@ -1,0 +1,515 @@
+{
+  "n": 5,
+  "revisado": true,
+  "tituloPt": "O que você come? O que você quer?",
+  "objetivoPt": "Dizer o que come, bebe, lê e compra, dizer o que quer, negar, e usar \"o pão\" como objeto da frase.",
+  "situacaoPt": "Café da manhã na casa da Maya. O Dani está com fome, procura o leite e acaba ganhando uma tarefa.",
+  "palavras": [
+    {
+      "pt": "comer",
+      "formas": [
+        "אוֹכֵל",
+        "אוֹכֶלֶת",
+        "אוֹכְלִים",
+        "אוֹכְלוֹת"
+      ],
+      "translit": [
+        "ochél",
+        "ochélet",
+        "ochlím",
+        "ochlót"
+      ]
+    },
+    {
+      "pt": "ler",
+      "formas": [
+        "קוֹרֵא",
+        "קוֹרֵאת",
+        "קוֹרְאִים",
+        "קוֹרְאוֹת"
+      ],
+      "translit": [
+        "koré",
+        "korét",
+        "korím",
+        "korót"
+      ]
+    },
+    {
+      "pt": "beber",
+      "formas": [
+        "שׁוֹתֶה",
+        "שׁוֹתָה",
+        "שׁוֹתִים",
+        "שׁוֹתוֹת"
+      ],
+      "translit": [
+        "shoté",
+        "shotá",
+        "shotím",
+        "shotót"
+      ]
+    },
+    {
+      "pt": "comprar",
+      "formas": [
+        "קוֹנֶה",
+        "קוֹנָה",
+        "קוֹנִים",
+        "קוֹנוֹת"
+      ],
+      "translit": [
+        "koné",
+        "koná",
+        "koním",
+        "konót"
+      ]
+    },
+    {
+      "pt": "querer",
+      "formas": [
+        "רוֹצֶה",
+        "רוֹצָה",
+        "רוֹצִים",
+        "רוֹצוֹת"
+      ],
+      "translit": [
+        "rotsé",
+        "rotsá",
+        "rotsím",
+        "rotsót"
+      ]
+    },
+    {
+      "he": "לֶחֶם",
+      "translit": "léchem",
+      "pt": "pão"
+    },
+    {
+      "he": "גְּבִינָה",
+      "translit": "gviná",
+      "pt": "queijo"
+    },
+    {
+      "he": "בֵּיצָה",
+      "translit": "beitsá",
+      "pt": "ovo"
+    },
+    {
+      "he": "בֵּיצִים",
+      "translit": "beitsím",
+      "pt": "ovos"
+    },
+    {
+      "he": "תַּפּוּחַ",
+      "translit": "tapúach",
+      "pt": "maçã"
+    },
+    {
+      "he": "תַּפּוּחִים",
+      "translit": "tapuchím",
+      "pt": "maçãs"
+    },
+    {
+      "he": "עוּגָה",
+      "translit": "ugá",
+      "pt": "bolo"
+    },
+    {
+      "he": "סָלָט",
+      "translit": "salát",
+      "pt": "salada"
+    },
+    {
+      "he": "חָלָב",
+      "translit": "chaláv",
+      "pt": "leite"
+    },
+    {
+      "he": "מַיִם",
+      "translit": "máyim",
+      "pt": "água"
+    },
+    {
+      "he": "קָפֶה",
+      "translit": "kafé",
+      "pt": "café"
+    },
+    {
+      "he": "תֵּה",
+      "translit": "te",
+      "pt": "chá"
+    },
+    {
+      "he": "מִטְבָּח",
+      "translit": "mitbách",
+      "pt": "cozinha"
+    },
+    {
+      "he": "מְקָרֵר",
+      "translit": "mekarér",
+      "pt": "geladeira"
+    },
+    {
+      "he": "חֶדֶר",
+      "translit": "chéder",
+      "pt": "cômodo, quarto"
+    },
+    {
+      "he": "עִתּוֹן",
+      "translit": "itón",
+      "pt": "jornal"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "Os verbos que terminam em ה",
+      "textoPt": "Outro desenho: ־ֶה · ־ָה · ־ִים · ־וֹת (שׁוֹתֶה, שׁוֹתָה, שׁוֹתִים, שׁוֹתוֹת). Os outros seguem o desenho da Unidade 4. קוֹרֵאת é a forma feminina de קוֹרֵא, por causa do א."
+    },
+    {
+      "tituloPt": "O אֶת: uma palavra que não se traduz",
+      "textoPt": "Vem antes do objeto definido, e o caso mais comum é o objeto com \"o/a\" (הַ): אֲנִי אוֹכֵל אֶת הַלֶּחֶם. Sem \"o/a\" (\"um pão\", \"pão\"), não há אֶת: אֲנִי אוֹכֵל לֶחֶם.",
+      "erroPt": "O português não tem essa palavra, então o brasileiro esquece o אֶת, e quando aprende põe em todo lugar. Por enquanto: אֶת antes do objeto com הַ; sem הַ (\"um pão\", \"pão\"), não há אֶת. Mais tarde você vai ver que nomes próprios também levam אֶת (אֶת דָּנִי)."
+    },
+    {
+      "tituloPt": "Negar o verbo",
+      "textoPt": "לֹא antes dele: אֲנִי לֹא שׁוֹתָה קָפֶה."
+    },
+    {
+      "tituloPt": "\"No/na\" com artigo: בְּ + הַ = בַּ",
+      "textoPt": "\"Na cozinha\" = בַּמִּטְבָּח, não בְּהַמִּטְבָּח. E מַיִם é sempre plural, como \"os óculos\".",
+      "erroPt": "Juntar as duas peças inteiras (בְּהַ). Elas se fundem numa só: בַּ."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Café da manhã na casa da Maya",
+    "linhas": [
+      {
+        "quem": "Dani",
+        "he": "מַיָּה, מָה אַתְּ אוֹכֶלֶת?",
+        "translit": "Máya, ma at ochélet?",
+        "pt": "Maya, o que você está comendo?"
+      },
+      {
+        "quem": "Maya",
+        "he": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
+        "translit": "aní ochélet léchem ugviná. atá rotsé?",
+        "pt": "Pão e queijo. Você quer?"
+      },
+      {
+        "quem": "Dani",
+        "he": "כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב?",
+        "translit": "ken, todá. éifo hechaláv?",
+        "pt": "Quero, obrigado. Onde está o leite?"
+      },
+      {
+        "quem": "Maya",
+        "he": "הֶחָלָב בַּמְקָרֵר.",
+        "translit": "hechaláv bamekarér.",
+        "pt": "O leite está na geladeira."
+      },
+      {
+        "quem": "Dani",
+        "he": "אַתְּ שׁוֹתָה קָפֶה?",
+        "translit": "at shotá kafé?",
+        "pt": "Você bebe café?"
+      },
+      {
+        "quem": "Maya",
+        "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
+        "translit": "lo, aní lo shotá kafé. aní shotá te.",
+        "pt": "Não, não bebo café. Bebo chá."
+      },
+      {
+        "quem": "Dani",
+        "he": "וּמִי קוֹנֶה אֶת הַלֶּחֶם?",
+        "translit": "umí koné et haléchem?",
+        "pt": "E quem compra o pão?"
+      },
+      {
+        "quem": "Maya",
+        "he": "אַתָּה!",
+        "translit": "atá!",
+        "pt": "Você!"
+      }
+    ],
+    "glossario": []
+  },
+  "cultura": [
+    {
+      "tituloPt": "Carne e leite, separados",
+      "textoPt": "Muitos restaurantes e hotéis em Israel são casher: não servem carne e leite juntos. Por isso existem restaurantes \"de carne\" e restaurantes \"de leite\", e o café da manhã de hotel costuma não ter carne nenhuma, só ovos, queijos, peixe e saladas."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Belém, a \"casa do pão\"",
+      "textoPt": "Belém, a cidade, em hebraico é בֵּית לֶחֶם: \"casa do pão\". O לֶחֶם desta unidade está no nome. Muitos nomes de lugares da Bíblia que chegaram ao português têm um sentido simples em hebraico."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu digo o que como, bebo e quero.",
+    "Eu nego um verbo: אֲנִי לֹא שׁוֹתָה קָפֶה.",
+    "Eu uso o אֶת antes da coisa definida."
+  ],
+  "exercicios": [
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "שׁוֹתֶה",
+      "linhas": [
+        [
+          "mulher",
+          "שותה"
+        ],
+        [
+          "homens",
+          "שותים"
+        ],
+        [
+          "mulheres",
+          "שותות"
+        ]
+      ]
+    },
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "אוֹכֵל",
+      "linhas": [
+        [
+          "mulher",
+          "אוכלת"
+        ],
+        [
+          "homens",
+          "אוכלים"
+        ],
+        [
+          "mulheres",
+          "אוכלות"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "A Noa diz: אֲנִי ___ עִתּוֹן",
+      "opcoes": [
+        "קוֹרֵאת",
+        "קוֹרֵא"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Sobre o Tom e o Dani: הֵם ___ קָפֶה",
+      "opcoes": [
+        "רוֹצִים",
+        "רוֹצוֹת"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "separar",
+      "q": "Qual desenho?",
+      "baldes": [
+        "verbo como שׁוֹתֶה (com ה no fim)",
+        "o da Unidade 4"
+      ],
+      "itens": [
+        [
+          "קוֹנֶה",
+          0
+        ],
+        [
+          "אוֹכֵל",
+          1
+        ],
+        [
+          "רוֹצָה",
+          0
+        ],
+        [
+          "לוֹמֵד",
+          1
+        ],
+        [
+          "שׁוֹתִים",
+          0
+        ],
+        [
+          "עוֹבֶדֶת",
+          1
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "אֲנִי קוֹנֶה ___ הָעוּגָה",
+      "opcoes": [
+        "אֶת",
+        "(nada)"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "אֲנִי קוֹנֶה ___ עוּגָה",
+      "opcoes": [
+        "(nada)",
+        "אֶת"
+      ],
+      "certa": 0,
+      "porque": "Sem הַ, não há אֶת."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "הִיא אוֹכֶלֶת אֶת סָלָט",
+      "respostas": [
+        "היא אוכלת סלט",
+        "היא אוכלת את הסלט"
+      ],
+      "porque": "אֶת só vem antes do objeto definido: סָלָט sem הַ não leva אֶת."
+    },
+    {
+      "t": "montar",
+      "pt": "Eu leio o jornal (fala um homem)",
+      "palavras": [
+        "אֲנִי",
+        "קוֹרֵא",
+        "אֶת",
+        "הָעִתּוֹן"
+      ]
+    },
+    {
+      "t": "vf",
+      "q": "O אֶת aparece antes de todo objeto.",
+      "certa": false,
+      "porque": "Só antes do objeto definido (com הַ, por exemplo)."
+    },
+    {
+      "t": "montar",
+      "pt": "Eu não bebo leite (fala uma mulher)",
+      "palavras": [
+        "אֲנִי",
+        "לֹא",
+        "שׁוֹתָה",
+        "חָלָב"
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Na cozinha\"",
+      "opcoes": [
+        "בַּמִּטְבָּח",
+        "בְּהַמִּטְבָּח"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "completar",
+      "q": "\"Os ovos estão na geladeira\"",
+      "antes": "הַבֵּיצִים",
+      "depois": "",
+      "respostas": [
+        "במקרר"
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "O Dani pergunta à Maya se ela quer bolo:",
+      "opcoes": [
+        "אַתְּ רוֹצָה עוּגָה?",
+        "אַתָּה רוֹצֶה עוּגָה?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Alguém pergunta: אַתָּה רוֹצֶה תֵּה? Você (homem) não quer:",
+      "opcoes": [
+        "לֹא, תּוֹדָה",
+        "כֵּן, בְּבַקָּשָׁה"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "אֲנַחְנוּ לֹא אוֹכְלִים בֵּיצִים",
+      "q": "O que a pessoa disse?",
+      "opcoes": [
+        "nós não comemos ovos",
+        "nós comemos ovos"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "הִיא קוֹנָה תַּפּוּחִים",
+      "q": "O que a pessoa disse?",
+      "opcoes": [
+        "ela compra maçãs",
+        "ela come maçãs"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: onde está o leite?",
+      "opcoes": [
+        "na geladeira",
+        "na mesa"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "vf",
+      "q": "No diálogo, a Maya bebe café.",
+      "certa": false,
+      "porque": "אֲנִי שׁוֹתָה תֵּה."
+    },
+    {
+      "t": "escrever",
+      "pt": "maçãs",
+      "respostas": [
+        "תפוחים"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "café",
+      "respostas": [
+        "קפה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Pão e queijo. Você quer?\"",
+      "antes": "אֲנִי",
+      "depois": "לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
+      "respostas": [
+        "אוכלת"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não, não bebo café. Bebo chá.\"",
+      "antes": "לֹא, אֲנִי לֹא",
+      "depois": "קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
+      "respostas": [
+        "שותה"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Pão e queijo. Você quer?\"",
+      "exemplo": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?"
+    },
+    {
+      "t": "aberta",
+      "pt": "Escreva 2 frases: o que você come de manhã e o que você não bebe.",
+      "exemplo": "אֲנִי אוֹכֵל לֶחֶם. אֲנִי לֹא שׁוֹתֶה קָפֶה."
+    }
+  ]
+}

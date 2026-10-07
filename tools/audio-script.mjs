@@ -260,7 +260,15 @@ ${audio.waves.map(waveSection).join('\n')}
      para gravar de uma vez. A ordem de cada seção é a ordem dos números, que
      é a ordem em que `cortar-audio --letra N --onda todas` nomeia os pedaços. */
   const letras = readJson('data/letters.json').slice().sort((a, b) => a.order - b.order);
-  const grupoDe = c => (c.where || []).find(w => /^letra \d+$/.test(w)) || (c.where || [])[0] || '';
+  /* O A1 (onda 6) grava por unidade: as palavras, o diálogo, a leitura e a
+     escuta de uma unidade vão num arquivo só. */
+  const grupoDe = c => {
+    const ws = c.where || [];
+    const letra = ws.find(w => /^letra \d+$/.test(w));
+    if (letra) return letra;
+    const a1 = ws.map(w => (w.match(/^a1 unidade \d+/) || [])[0]).find(Boolean);
+    return a1 || ws[0] || '';
+  };
   const doGrupo = g => clips.filter(c => grupoDe(c) === g).sort((a, b) => a.num - b.num);
   const pad2 = n => String(n).padStart(2, '0');
   /* Um arquivo por mini-texto, na ordem dos módulos. */
@@ -306,7 +314,18 @@ ${audio.waves.map(waveSection).join('\n')}
       doGrupo(g), `${g.replace(/ /g, '-').replace('ó', 'o')}.m4a`,
       `npm run cortar-audio -- --grupo "${g}" --onda todas ${g.replace(/ /g, '-').replace('ó', 'o')}.m4a`))
   ];
-  const cobertos = letras.reduce((n, L) => n + doGrupo(`letra ${L.order}`).length, 0)
+  /* Todo grupo que não tem seção própria acima (as leituras bônus, as
+     unidades do A1 e o que vier depois) ganha a sua, na ordem dos números:
+     o roteiro cobre o manifesto inteiro, e o teste abaixo continua valendo. */
+  const jaTem = new Set([...letras.map(L => `letra ${L.order}`), 'sinais de vogal', 'módulo 7', 'no mundo real', 'frases', ...textosDoRoteiro]);
+  const outros = [...new Set(clips.map(grupoDe))].filter(g => g && !jaTem.has(g))
+    .sort((a, b) => doGrupo(a)[0].num - doGrupo(b)[0].num);
+  const arquivoDe = g => `${g.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase()}.m4a`;
+  for (const g of outros) {
+    secoes.push(secao(esc(g.replace(/^a1 unidade/, 'Hebraico A1 · Unidade')), doGrupo(g), arquivoDe(g),
+      `npm run cortar-audio -- --grupo "${g}" --onda todas ${arquivoDe(g)}`));
+  }
+  const cobertos = outros.reduce((n, g) => n + doGrupo(g).length, 0) + letras.reduce((n, L) => n + doGrupo(`letra ${L.order}`).length, 0)
     + ['sinais de vogal', 'módulo 7', 'no mundo real', 'frases', ...textosDoRoteiro]
       .reduce((n, g) => n + doGrupo(g).length, 0);
   if (cobertos !== total) {

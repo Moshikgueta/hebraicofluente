@@ -54,7 +54,11 @@ export const WAVES = {
   4: { id: 4, titlePt: 'Frases e textos', notePt: 'As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.' },
   /* 27/09/2026. Os textos bíblicos e as bênçãos de Recompensas (data/bonus.json):
      lidos pelo dono do curso, uma linha por clipe. */
-  5: { id: 5, titlePt: 'Leituras bônus', notePt: 'Os textos bíblicos e as bênçãos de Recompensas, uma linha por clipe, em ritmo de leitura: calmo, mas sem pausa entre as palavras.' }
+  5: { id: 5, titlePt: 'Leituras bônus', notePt: 'Os textos bíblicos e as bênçãos de Recompensas, uma linha por clipe, em ritmo de leitura: calmo, mas sem pausa entre as palavras.' },
+  /* 06/10/2026. O curso Hebraico A1 (data/a1/): as palavras, as falas dos
+     diálogos, as leituras e os itens de escuta e de ditado de cada unidade.
+     Como os textos, só as unidades que o dono já revisou. */
+  6: { id: 6, titlePt: 'Hebraico A1', notePt: 'As palavras, os diálogos, as leituras e os exercícios de escuta do curso A1, unidade por unidade. As frases no ritmo natural da conversa.' }
 };
 
 function main() {
@@ -241,6 +245,24 @@ function main() {
   if (guia?.revisado) {
     for (const s of guia.secoes) for (const e of s.exemplos) {
       add({ he: e.ouvir ?? e.he, translit: e.translit, gloss: e.pt, kind: 'palavra', wave: 5, where: 'guia do nikud bíblico' });
+    }
+  }
+
+  /* O Hebraico A1, unidade por unidade, na ordem dos módulos. */
+  const a1Curso = readJson('data/a1/curso.json');
+  for (const n of a1Curso.modulos.flatMap(m => m.unidades)) {
+    const u = readJson(`data/a1/unidades/u${String(n).padStart(2, '0')}.json`);
+    if (!u.revisado) continue;
+    const onde = `a1 unidade ${n}`;
+    for (const w of u.palavras) {
+      /* As tabelas de formas não têm botão de ouvir: só as palavras soltas. */
+      if (!w.formas) add({ he: w.he, translit: w.translit, gloss: w.pt, kind: w.he.includes(' ') ? 'frase' : 'palavra', wave: 6, where: onde });
+    }
+    for (const l of u.dialogo.linhas) add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 6, where: `${onde}, diálogo` });
+    for (const w of u.dialogo.glossario || []) add({ he: w.he, translit: w.translit, gloss: w.pt, kind: 'palavra', wave: 6, where: `${onde}, diálogo` });
+    for (const l of u.leitura?.linhas || []) add({ he: l.he, translit: l.translit, gloss: l.pt, kind: 'frase', wave: 6, where: `${onde}, leitura` });
+    for (const it of [...u.exercicios, ...(u.leitura?.perguntas || [])]) {
+      if (it.t === 'ouvir' || it.t === 'ditado') add({ he: it.he, translit: null, gloss: it.q ?? 'ditado', kind: 'frase', wave: 6, where: `${onde}, escuta` });
     }
   }
 

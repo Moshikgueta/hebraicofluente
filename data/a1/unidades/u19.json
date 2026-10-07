@@ -1,0 +1,705 @@
+{
+  "n": 19,
+  "revisado": false,
+  "tituloPt": "Quantos? De quê? Os números com gênero e as palavras grudadas",
+  "objetivoPt": "Contar coisas masculinas e femininas (três filhos, três filhas), usar \"dois\" e \"um\" do jeito certo, e entender e formar palavras grudadas como בֵּית סֵפֶר e אֲרוּחַת בֹּקֶר.",
+  "situacaoPt": "O Dani descobre que o Natan tem filhos e trabalha num hospital. A conversa é cheia de números: filhos, dias, horas, alunos na turma.",
+  "palavras": [
+    {
+      "he": "אֶחָד",
+      "translit": "echád",
+      "pt": "1 (com masculino)"
+    },
+    {
+      "he": "שְׁנַיִם",
+      "translit": "shnáyim",
+      "pt": "2 (com masculino, sozinho)"
+    },
+    {
+      "he": "שְׁלוֹשָׁה",
+      "translit": "shloshá",
+      "pt": "3 (com masculino)"
+    },
+    {
+      "he": "אַרְבָּעָה",
+      "translit": "arbaá",
+      "pt": "4 (com masculino)"
+    },
+    {
+      "he": "חֲמִשָּׁה",
+      "translit": "chamishá",
+      "pt": "5 (com masculino)"
+    },
+    {
+      "he": "שִׁשָּׁה",
+      "translit": "shishá",
+      "pt": "6 (com masculino)"
+    },
+    {
+      "he": "שִׁבְעָה",
+      "translit": "shiv'á",
+      "pt": "7 (com masculino)"
+    },
+    {
+      "he": "שְׁמוֹנָה",
+      "translit": "shmoná",
+      "pt": "8 (com masculino)"
+    },
+    {
+      "he": "תִּשְׁעָה",
+      "translit": "tish'á",
+      "pt": "9 (com masculino)"
+    },
+    {
+      "he": "עֲשָׂרָה",
+      "translit": "assará",
+      "pt": "10 (com masculino)"
+    },
+    {
+      "he": "שְׁנֵי / שְׁתֵּי",
+      "translit": "shnei / shtei",
+      "pt": "dois / duas (antes da coisa)"
+    },
+    {
+      "he": "אֲנָשִׁים",
+      "translit": "anashím",
+      "pt": "pessoas (plural de אִישׁ)"
+    },
+    {
+      "he": "יָמִים",
+      "translit": "yamím",
+      "pt": "dias"
+    },
+    {
+      "he": "שָׁעוֹת",
+      "translit": "shaót",
+      "pt": "horas (feminino)"
+    },
+    {
+      "he": "כִּתָּה",
+      "translit": "kitá",
+      "pt": "turma, série (da escola)"
+    },
+    {
+      "he": "גַּן",
+      "translit": "gan",
+      "pt": "jardim de infância"
+    },
+    {
+      "he": "בֵּית סֵפֶר",
+      "translit": "beit séfer",
+      "pt": "escola (\"casa de livro\")"
+    },
+    {
+      "he": "בֵּית חוֹלִים",
+      "translit": "beit cholím",
+      "pt": "hospital (\"casa de doentes\")"
+    },
+    {
+      "he": "תַּחֲנַת רַכֶּבֶת",
+      "translit": "tachanát rakévet",
+      "pt": "estação de trem"
+    },
+    {
+      "he": "כּוֹס מַיִם",
+      "translit": "kos máyim",
+      "pt": "copo de água"
+    },
+    {
+      "he": "מִיץ תַּפּוּזִים",
+      "translit": "mits tapuzím",
+      "pt": "suco de laranja"
+    },
+    {
+      "he": "עוּגַת שׁוֹקוֹלָד",
+      "translit": "ugát shokolád",
+      "pt": "bolo de chocolate"
+    },
+    {
+      "he": "בֶּן דּוֹד / בַּת דּוֹדָה",
+      "translit": "ben dod / bat dodá",
+      "pt": "primo / prima (\"filho do tio\"; para \"prima\" também se diz בַּת דּוֹד)"
+    },
+    {
+      "he": "בְּנֵי דּוֹדִים",
+      "translit": "bnei dodím",
+      "pt": "primos"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "Os números que você sabe são os do feminino",
+      "textoPt": "A série da Unidade 7 (אַחַת, שְׁתַּיִם, שָׁלוֹשׁ…) é a de contar, a das horas e dos preços, e é também a que se usa com palavras FEMININAS: שָׁלוֹשׁ בָּנוֹת, חָמֵשׁ דַּקּוֹת, שֶׁבַע שָׁעוֹת. Com palavras MASCULINAS, de 3 a 10, usa-se outra série, que termina em ־ָה: שְׁלוֹשָׁה יְלָדִים, אַרְבָּעָה יָמִים, עֲשָׂרָה סְפָרִים. O número vem antes da coisa. O preço, na rua, continua como na Unidade 7: עֶשֶׂר שֶׁקֶל. É assim que todo mundo fala; na forma padrão, escrita, שֶׁקֶל é masculino: עֲשָׂרָה שְׁקָלִים. A partir de 3, você também pode encontrar formas de construto, como שְׁלוֹשֶׁת הַיְּלָדִים. Por enquanto, basta reconhecer.",
+      "erroPt": "É o contrário do que o olho espera: o ־ָה, que você aprendeu como marca de feminino, aqui aparece no número do MASCULINO. Não é erro de impressão. Treine com pares: שָׁלוֹשׁ בָּנוֹת, שְׁלוֹשָׁה בָּנִים.",
+      "exemplos": [
+        {
+          "he": "שָׁלוֹשׁ בָּנוֹת",
+          "pt": "três filhas"
+        },
+        {
+          "he": "שְׁלוֹשָׁה בָּנִים",
+          "pt": "três filhos"
+        },
+        {
+          "he": "אַרְבָּעָה יָמִים בַּשָּׁבוּעַ",
+          "pt": "quatro dias por semana"
+        }
+      ]
+    },
+    {
+      "tituloPt": "Um e dois têm regras próprias",
+      "textoPt": "\"Um\" vem DEPOIS da coisa, como um adjetivo: יֶלֶד אֶחָד, יַלְדָּה אַחַת. \"Dois\", antes da coisa, encurta: שְׁנֵי יְלָדִים, שְׁתֵּי יְלָדוֹת. As formas compridas, שְׁנַיִם e שְׁתַּיִם, são para contar ou responder sozinho: כַּמָּה? שְׁנַיִם.",
+      "exemplos": [
+        {
+          "he": "שְׁנֵי אַחִים וְאָחוֹת אַחַת",
+          "pt": "dois irmãos e uma irmã"
+        }
+      ]
+    },
+    {
+      "tituloPt": "De 11 em diante",
+      "textoPt": "As dezenas (עֶשְׂרִים, שְׁלוֹשִׁים…) e מֵאָה são iguais para os dois gêneros. Só a unidade do fim muda: עֶשְׂרִים וְשִׁשָּׁה יְלָדִים, עֶשְׂרִים וְשֵׁשׁ יְלָדוֹת. Atenção: em 21, 22, 31… o número inteiro vem antes da coisa, e o 2 fica na forma comprida: עֶשְׂרִים וְאֶחָד יְלָדִים, עֶשְׂרִים וְאַחַת שָׁעוֹת, עֶשְׂרִים וּשְׁנַיִם יְלָדִים, עֶשְׂרִים וּשְׁתַּיִם יְלָדוֹת. De 11 a 19 também há duas séries; no A1, basta reconhecer as do masculino quando ouvir (אַחַד־עָשָׂר, שְׁנֵים־עָשָׂר…).",
+      "erroPt": "Na fala do dia a dia, muitos israelenses usam a série feminina para tudo. Você vai ouvir \"שָׁלוֹשׁ יְלָדִים\". Entenda, mas fale e escreva com a concordância."
+    },
+    {
+      "tituloPt": "A סְמִיכוּת: duas palavras grudadas",
+      "textoPt": "Várias expressões que você guardou como fixas são, na verdade, uma regra: duas palavras grudadas, em que a segunda diz \"de quê\". בֵּית סֵפֶר é \"casa de livro\" (escola); כּוֹס מַיִם, \"copo de água\". A primeira palavra às vezes muda de forma: בַּיִת → בֵּית, חֶדֶר → חֲדַר, e o ־ָה do feminino vira ־ַת: אֲרוּחָה → אֲרוּחַת בֹּקֶר, תַּחֲנָה → תַּחֲנַת רַכֶּבֶת. No plural masculino, ־ִים vira ־ֵי: בָּנִים → בְּנֵי דּוֹדִים. E você já conhece mais uma: שְׁנֵי, שְׁתֵּי (\"dois de\", \"duas de\").",
+      "exemplos": [
+        {
+          "he": "אֲרוּחָה → אֲרוּחַת בֹּקֶר",
+          "pt": "refeição → café da manhã"
+        },
+        {
+          "he": "חֶדֶר → חֲדַר שֵׁנָה",
+          "pt": "quarto → quarto de dormir"
+        }
+      ]
+    },
+    {
+      "tituloPt": "Na סְמִיכוּת, o הַ vai na segunda palavra",
+      "textoPt": "Para dizer \"A escola\", o artigo entra só na segunda palavra: בֵּית הַסֵּפֶר, חֲדַר הַשֵּׁנָה, יוֹם הַהֻלֶּדֶת (por isso יוֹם הַהֻלֶּדֶת שֶׁלִּי, na Unidade 15). Um adjetivo depois concorda com a PRIMEIRA palavra, e também leva הַ: בֵּית הַחוֹלִים הַגָּדוֹל.",
+      "erroPt": "Na rua você vai ouvir הַבֵּית סֵפֶר, com o הַ no começo. É fala descuidada; escrevendo, use בֵּית הַסֵּפֶר."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "A família do Natan",
+    "linhas": [
+      {
+        "quem": "Dani",
+        "he": "נָתָן, כַּמָּה יְלָדִים יֵשׁ לְךָ?",
+        "translit": "Natán, káma yeladím yesh lechá?",
+        "pt": "Natan, quantos filhos você tem?"
+      },
+      {
+        "quem": "Natan",
+        "he": "יֵשׁ לִי שְׁלוֹשָׁה יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת.",
+        "translit": "yesh li shloshá yeladím: shnei baním uvát achát.",
+        "pt": "Tenho três filhos: dois meninos e uma menina."
+      },
+      {
+        "quem": "Dani",
+        "he": "וְהֵם לוֹמְדִים בְּבֵית סֵפֶר?",
+        "translit": "vehém lomdím bevéit séfer?",
+        "pt": "E eles estudam numa escola?"
+      },
+      {
+        "quem": "Natan",
+        "he": "הַבַּת בְּבֵית סֵפֶר, בְּכִתָּה ב׳. הַבָּנִים קְטַנִּים, הֵם בַּגַּן.",
+        "translit": "habát bevéit séfer, bekitá bet. habaním ktaním, hem bagán.",
+        "pt": "A menina está na escola, no segundo ano. Os meninos são pequenos, estão no jardim de infância."
+      },
+      {
+        "quem": "Dani",
+        "he": "כַּמָּה יְלָדִים יֵשׁ בַּכִּתָּה שֶׁלָּהּ?",
+        "translit": "káma yeladím yesh bakitá shelá?",
+        "pt": "Quantas crianças há na turma dela?"
+      },
+      {
+        "quem": "Natan",
+        "he": "עֶשְׂרִים וְשִׁשָּׁה!",
+        "translit": "esrím veshishá!",
+        "pt": "Vinte e seis!"
+      },
+      {
+        "quem": "Dani",
+        "he": "וְאַתָּה עוֹבֵד בְּבֵית חוֹלִים, נָכוֹן?",
+        "translit": "veatá ovéd bevéit cholím, nachón?",
+        "pt": "E você trabalha num hospital, né?"
+      },
+      {
+        "quem": "Natan",
+        "he": "כֵּן, אֲנִי אָח בְּבֵית הַחוֹלִים הַגָּדוֹל בְּתֵל אָבִיב.",
+        "translit": "ken, aní ach bevéit hacholím hagadól beTél Avív.",
+        "pt": "Sim, sou enfermeiro no hospital grande de Tel Aviv."
+      },
+      {
+        "quem": "Dani",
+        "he": "כַּמָּה יָמִים בַּשָּׁבוּעַ?",
+        "translit": "káma yamím bashavúa?",
+        "pt": "Quantos dias por semana?"
+      },
+      {
+        "quem": "Natan",
+        "he": "אַרְבָּעָה יָמִים. אֲבָל שְׁתֵּים־עֶשְׂרֵה שָׁעוֹת בַּיּוֹם!",
+        "translit": "arbaá yamím. avál shteim-esré shaót bayóm!",
+        "pt": "Quatro dias. Mas doze horas por dia!"
+      },
+      {
+        "quem": "Dani",
+        "he": "וָואוּ!",
+        "translit": "wau!",
+        "pt": "Uau!"
+      }
+    ],
+    "glossario": [
+      {
+        "he": "אָח",
+        "translit": "ach",
+        "pt": "aqui: enfermeiro (a mesma palavra de \"irmão\"); enfermeira é אָחוֹת"
+      },
+      {
+        "he": "כִּתָּה ב׳",
+        "translit": "kitá bet",
+        "pt": "segundo ano (as séries têm letras)"
+      }
+    ],
+    "notaPt": "Repare: יְלָדִים, בָּנִים e יָמִים são masculinos (שְׁלוֹשָׁה, שְׁנֵי, אַרְבָּעָה); בַּת e שָׁעוֹת são femininas (אַחַת, שְׁתֵּים־עֶשְׂרֵה)."
+  },
+  "leitura": {
+    "tituloPt": "Receita: bolo de chocolate",
+    "semPontos": true,
+    "linhas": [
+      {
+        "he": "עוּגַת שׁוֹקוֹלָד",
+        "translit": "ugát shokolád",
+        "pt": "Bolo de chocolate"
+      },
+      {
+        "he": "שָׁלוֹשׁ בֵּיצִים",
+        "translit": "shalósh beitsím",
+        "pt": "Três ovos"
+      },
+      {
+        "he": "שְׁתֵּי כּוֹסוֹת קֶמַח",
+        "translit": "shtei kossót kémach",
+        "pt": "Duas xícaras de farinha"
+      },
+      {
+        "he": "כּוֹס סֻכָּר",
+        "translit": "kos sukár",
+        "pt": "Uma xícara de açúcar"
+      },
+      {
+        "he": "מֵאָה גְּרָם שׁוֹקוֹלָד",
+        "translit": "meá gram shokolád",
+        "pt": "Cem gramas de chocolate"
+      },
+      {
+        "he": "אַרְבָּעִים דַּקּוֹת בַּתַּנּוּר",
+        "translit": "arbaím dakót batanúr",
+        "pt": "Quarenta minutos no forno"
+      }
+    ],
+    "perguntas": [
+      {
+        "t": "escolha",
+        "q": "Quantos ovos vão no bolo?",
+        "opcoes": [
+          "Três",
+          "Dois",
+          "Quatro"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "escolha",
+        "q": "Quanto tempo no forno?",
+        "opcoes": [
+          "40 minutos",
+          "100 minutos",
+          "4 minutos"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "escolha",
+        "q": "Por que é שָׁלוֹשׁ בֵּיצִים, e não שְׁלוֹשָׁה?",
+        "opcoes": [
+          "Porque בֵּיצָה é feminina",
+          "Porque são ovos pequenos",
+          "Porque é uma receita"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "vf",
+        "q": "A receita leva duas xícaras de farinha.",
+        "certa": true
+      }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "Turmas com letras",
+      "textoPt": "Na escola israelense, as séries têm letras, não números: כִּתָּה א׳ é o primeiro ano, כִּתָּה ב׳ o segundo, até כִּתָּה י״ב, o último. É o costume antigo de usar as letras como números (א = 1, ב = 2, י = 10), que também aparece no calendário hebraico e na numeração de capítulos."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Por que os números \"trocam\" de gênero?",
+      "textoPt": "Nas línguas semíticas antigas, os números de 3 a 10 levavam a terminação \"do outro gênero\". O árabe tem a mesma regra até hoje. Ninguém sabe ao certo por quê, e é uma das coisas mais difíceis do hebraico também para os próprios israelenses: por isso a fala do dia a dia vem simplificando, e usa cada vez mais a série feminina para tudo."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu conto coisas masculinas e femininas com a série certa.",
+    "Eu uso שְׁנֵי / שְׁתֵּי antes da coisa e אֶחָד / אַחַת depois.",
+    "Eu entendo e formo a סְמִיכוּת, e ponho o הַ na segunda palavra."
+  ],
+  "exercicios": [
+    {
+      "t": "ligar",
+      "q": "Ligue os números da série masculina.",
+      "pares": [
+        [
+          "שְׁלוֹשָׁה",
+          "3"
+        ],
+        [
+          "חֲמִשָּׁה",
+          "5"
+        ],
+        [
+          "שִׁבְעָה",
+          "7"
+        ],
+        [
+          "תִּשְׁעָה",
+          "9"
+        ],
+        [
+          "עֲשָׂרָה",
+          "10"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Três meninos\"",
+      "opcoes": [
+        "שְׁלוֹשָׁה יְלָדִים",
+        "שָׁלוֹשׁ יְלָדִים",
+        "יְלָדִים שְׁלוֹשָׁה"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. יְלָדִים é masculino, e com masculino o número é o da série com ־ָה: שְׁלוֹשָׁה.",
+        "2": "O número vem antes da coisa. Só o \"um\" vem depois."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"Três meninas\"",
+      "opcoes": [
+        "שָׁלוֹשׁ יְלָדוֹת",
+        "שְׁלוֹשָׁה יְלָדוֹת"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Com feminino, a série que você já conhece: שָׁלוֹשׁ."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"Dois irmãos\"",
+      "opcoes": [
+        "שְׁנֵי אַחִים",
+        "שְׁנַיִם אַחִים",
+        "שְׁתֵּי אַחִים"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "שְׁנַיִם é o número sozinho, contando. Antes da coisa, vira שְׁנֵי.",
+        "2": "שְׁתֵּי é para feminino. אַחִים é masculino: שְׁנֵי."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"Uma filha\"",
+      "opcoes": [
+        "בַּת אַחַת",
+        "אַחַת בַּת",
+        "בַּת אֶחָד"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "O \"um\" é o único número que vem DEPOIS da coisa.",
+        "2": "בַּת é feminina: אַחַת."
+      }
+    },
+    {
+      "t": "separar",
+      "q": "Com qual série?",
+      "baldes": [
+        "שָׁלוֹשׁ (feminino)",
+        "שְׁלוֹשָׁה (masculino)"
+      ],
+      "itens": [
+        [
+          "יְלָדִים",
+          1
+        ],
+        [
+          "בָּנוֹת",
+          0
+        ],
+        [
+          "יָמִים",
+          1
+        ],
+        [
+          "שָׁעוֹת",
+          0
+        ],
+        [
+          "דַּקּוֹת",
+          0
+        ],
+        [
+          "סְפָרִים",
+          1
+        ]
+      ]
+    },
+    {
+      "t": "ligar",
+      "q": "Ligue as palavras grudadas.",
+      "pares": [
+        [
+          "בֵּית סֵפֶר",
+          "escola"
+        ],
+        [
+          "בֵּית חוֹלִים",
+          "hospital"
+        ],
+        [
+          "בֵּית קָפֶה",
+          "café (o lugar)"
+        ],
+        [
+          "חֲדַר שֵׁנָה",
+          "quarto de dormir"
+        ],
+        [
+          "אֲרוּחַת בֹּקֶר",
+          "café da manhã"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"A escola\"",
+      "opcoes": [
+        "בֵּית הַסֵּפֶר",
+        "הַבֵּית סֵפֶר",
+        "הַבַּיִת הַסֵּפֶר"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Na rua você ouve isso, mas o certo é o הַ na SEGUNDA palavra: בֵּית הַסֵּפֶר.",
+        "2": "Na סְמִיכוּת, בַּיִת vira בֵּית, e o הַ vai só na segunda."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"A estação de trem\"",
+      "opcoes": [
+        "תַּחֲנַת הָרַכֶּבֶת",
+        "תַּחֲנָה הָרַכֶּבֶת",
+        "הַתַּחֲנָה רַכֶּבֶת"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quando gruda na outra palavra, o ־ָה de תַּחֲנָה vira ־ַת: תַּחֲנַת.",
+        "2": "O הַ vai na segunda palavra, e תַּחֲנָה vira תַּחֲנַת."
+      }
+    },
+    {
+      "t": "escrever",
+      "pt": "copo de água",
+      "respostas": [
+        "כוס מים"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "suco de laranja",
+      "respostas": [
+        "מיץ תפוזים"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"Eu trabalho quatro dias por semana\"",
+      "antes": "אֲנִי עוֹבֵד",
+      "depois": "יָמִים בַּשָּׁבוּעַ",
+      "respostas": [
+        "ארבעה"
+      ]
+    },
+    {
+      "t": "vf",
+      "q": "Com palavras masculinas, os números de 3 a 10 terminam em ־ָה, que parece feminino.",
+      "certa": true,
+      "porque": "É a troca de gênero dos números: parece estranho, e é assim mesmo."
+    },
+    {
+      "t": "vf",
+      "q": "Em כִּתָּה ב׳, a letra ב quer dizer \"segundo ano\".",
+      "certa": true
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "יֵשׁ לִי שָׁלוֹשׁ אַחִים.",
+      "respostas": [
+        "יש לי שלושה אחים",
+        "יש לי שלשה אחים"
+      ],
+      "porque": "אַחִים é masculino: שְׁלוֹשָׁה."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "הַבֵּית סֵפֶר גָּדוֹל.",
+      "respostas": [
+        "בית הספר גדול"
+      ],
+      "porque": "Na סְמִיכוּת, o הַ vai na segunda palavra: בֵּית הַסֵּפֶר."
+    },
+    {
+      "t": "montar",
+      "pt": "Eu tenho duas irmãs e um irmão.",
+      "palavras": [
+        "יֵשׁ",
+        "לִי",
+        "שְׁתֵּי",
+        "אֲחָיוֹת",
+        "וְאָח",
+        "אֶחָד"
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "O hospital grande",
+      "palavras": [
+        "בֵּית",
+        "הַחוֹלִים",
+        "הַגָּדוֹל"
+      ]
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta certa?",
+      "linhas": [
+        [
+          "Dani",
+          "כַּמָּה יְלָדִים יֵשׁ לָךְ?"
+        ]
+      ],
+      "opcoes": [
+        "יֵשׁ לִי שְׁנֵי בָּנִים.",
+        "יֵשׁ לִי שְׁנַיִם בָּנִים.",
+        "יֵשׁ לִי שְׁתֵּי בָּנִים."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Antes da coisa, שְׁנַיִם vira שְׁנֵי.",
+        "2": "בָּנִים é masculino: שְׁנֵי."
+      }
+    },
+    {
+      "t": "ordenar",
+      "q": "Ponha a conversa na ordem (num restaurante).",
+      "falas": [
+        "כַּמָּה אַתֶּם?",
+        "אַרְבָּעָה.",
+        "שֻׁלְחָן לְאַרְבָּעָה? בְּבַקָּשָׁה, פֹּה.",
+        "תּוֹדָה!"
+      ]
+    },
+    {
+      "t": "ouvir",
+      "he": "יֵשׁ לָהֶם חֲמִשָּׁה יְלָדִים.",
+      "q": "O que você ouviu?",
+      "opcoes": [
+        "Eles têm cinco filhos",
+        "Eles têm três filhos",
+        "Elas têm cinco filhas"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "שְׁתֵּי כּוֹסוֹת קָפֶה, בְּבַקָּשָׁה.",
+      "q": "O que a pessoa pede?",
+      "opcoes": [
+        "Dois cafés",
+        "Um café",
+        "Dois chás"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ditado",
+      "he": "בֵּית סֵפֶר",
+      "respostas": [
+        "בית ספר"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "7 (com masculino)",
+      "respostas": [
+        "שיבעה",
+        "שבעה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "horas (feminino)",
+      "respostas": [
+        "שעות"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Tenho três filhos: dois meninos e uma menina.\"",
+      "antes": "יֵשׁ לִי",
+      "depois": "יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת.",
+      "respostas": [
+        "שלושה",
+        "שלשה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Quantos dias por semana?\"",
+      "antes": "כַּמָּה",
+      "depois": "בַּשָּׁבוּעַ?",
+      "respostas": [
+        "ימים"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Tenho três filhos: dois meninos e uma menina.\"",
+      "exemplo": "יֵשׁ לִי שְׁלוֹשָׁה יְלָדִים: שְׁנֵי בָּנִים וּבַת אַחַת."
+    },
+    {
+      "t": "aberta",
+      "pt": "Escreva sobre a sua família com números: quantos irmãos, irmãs, filhos ou primos (cuidado com o gênero!).",
+      "exemplo": "יֵשׁ לִי שְׁנֵי אַחִים וְאָחוֹת אַחַת. יֵשׁ לִי שְׁלוֹשָׁה בְּנֵי דּוֹדִים."
+    }
+  ]
+}

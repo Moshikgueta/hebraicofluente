@@ -7,7 +7,11 @@
  * and emit an analytics event. Keeping that sequence in one place is what
  * stops XP being awarded twice from two different screens. */
 
-import { registrarExameA1, registrarUnidade, unidadeConcluida, type GeneroA1 } from './a1-estado';
+import {
+  chaveDoItem, registrarCheckpointA1, registrarExameA1, registrarHabilidade, registrarUnidade, responderRevisao, unidadeConcluida,
+  type GeneroA1, type TranslitA1
+} from './a1-estado';
+import { habilidadeDoItem, type ItemA1 } from '@/lib/a1';
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode
 } from 'react';
@@ -142,6 +146,16 @@ type Ctx = {
   finishExameA1: (
     nota: number, parts: Record<string, { correct: number; total: number }>, aprovacao: number
   ) => void;
+  /** Um item do A1 respondido pela PRIMEIRA vez numa rodada: revisão
+   *  espaçada, habilidade, e a contagem anônima de acerto por tipo. */
+  responderItemA1: (n: number, item: ItemA1, certo: boolean, daLeitura?: boolean) => void;
+  /** Um checkpoint do A1 terminou, com a nota de 0 a 1. */
+  finishCheckpointA1: (n: number, nota: number) => void;
+  /** Uma sessão de "Minha revisão" terminou, com tantos itens. */
+  revisaoA1Feita: (itens: number) => void;
+  marcarFavoritoA1: (chave: string, on: boolean) => void;
+  setAutoA1: (n: number, itens: number[]) => void;
+  setTranslitA1: (valor: TranslitA1) => void;
 };
 
 const StoreContext = createContext<Ctx | null>(null);
@@ -476,7 +490,11 @@ export function ProgressProvider({
     const antes = unidadeConcluida(s.a1, n);
     let next: LearnerState = { ...s, a1: registrarUnidade(s.a1, n, nota, new Date().toISOString()) };
     next = applyPractice(next, d, { units: ANSWER_UNITS });
-    if (!antes && unidadeConcluida(next.a1, n)) next = awardXp(next, d, XP.lesson);
+    if (!antes && unidadeConcluida(next.a1, n)) {
+      next = awardXp(next, d, XP.lesson);
+      /* O funil anônimo do painel: em que unidade do A1 as pessoas param. */
+      track('stage_completed', { letterId: `a1-u${n}`, stage: 1, primeira: true });
+    }
     commit(next);
   }, [commit, agora]);
 
@@ -490,6 +508,50 @@ export function ProgressProvider({
     next = applyPractice(next, d, { units: ANSWER_UNITS });
     if (!jaPassou && next.a1.exame.passedAt) next = awardXp(next, d, XP.checkpoint);
     commit(next);
+  }, [commit, agora]);
+
+  const responderItemA1 = useCallback((n: number, item: ItemA1, certo: boolean, daLeitura = false) => {
+    const d = today();
+    const s = agora();
+    let a1 = responderRevisao(s.a1, chaveDoItem(n, item), certo, d);
+    if (item.t !== 'aberta') a1 = registrarHabilidade(a1, habilidadeDoItem(item, daLeitura), certo);
+    commit({ ...s, a1 });
+    track('exercise_answered', { letterId: `a1-u${n}`, kind: item.t, correct: certo });
+  }, [commit, agora]);
+
+  const finishCheckpointA1 = useCallback((n: number, nota: number) => {
+    const d = today();
+    const s = agora();
+    const antes = !!s.a1.checkpoints[String(n)]?.passedAt;
+    let next: LearnerState = { ...s, a1: registrarCheckpointA1(s.a1, n, nota, new Date().toISOString()) };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (!antes && next.a1.checkpoints[String(n)]?.passedAt) next = awardXp(next, d, XP.checkpoint);
+    commit(next);
+    track('checkpoint_completed', { checkpointId: `a1-c${n}`, score: nota });
+  }, [commit, agora]);
+
+  const revisaoA1Feita = useCallback((itens: number) => {
+    const d = today();
+    const s = agora();
+    let next: LearnerState = { ...s, a1: { ...s.a1, dias: { ...s.a1.dias, [d]: (s.a1.dias[d] ?? 0) + itens } } };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    commit(next);
+    track('review_completed', { score: itens });
+  }, [commit, agora]);
+
+  const marcarFavoritoA1 = useCallback((chave: string, on: boolean) => {
+    const s = agora();
+    commit({ ...s, a1: { ...s.a1, favoritos: { ...s.a1.favoritos, [chave]: { on, em: new Date().toISOString() } } } });
+  }, [commit, agora]);
+
+  const setAutoA1 = useCallback((n: number, itens: number[]) => {
+    const s = agora();
+    commit({ ...s, a1: { ...s.a1, auto: { ...s.a1.auto, [String(n)]: { itens, em: new Date().toISOString() } } } });
+  }, [commit, agora]);
+
+  const setTranslitA1 = useCallback((valor: TranslitA1) => {
+    const s = agora();
+    commit({ ...s, a1: { ...s.a1, translit: { valor, em: new Date().toISOString() } } });
   }, [commit, agora]);
 
   const reset = useCallback(() => {
@@ -518,13 +580,15 @@ export function ProgressProvider({
       clearPending: () => setPending([]),
       setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
-      remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1
+      remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
+      responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
     };
   }, [
     state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
-    setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1
+    setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
+    responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

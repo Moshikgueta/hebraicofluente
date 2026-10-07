@@ -634,7 +634,14 @@ function main() {
   /* Quem manda no agrupamento é o `where` do manifesto, o mesmo texto que sai
      impresso na coluna "Onde aparece" do roteiro - assim o que a ferramenta
      chama de "letra 7" é exatamente o que a pessoa leu na página. */
-  const grupoDe = c => (c.where || []).find(w => /^letra \d+$/.test(w)) || (c.where || [])[0] || '';
+  /* O mesmo agrupamento do roteiro (tools/audio-script.mjs): o A1 por unidade. */
+  const grupoDe = c => {
+    const ws = c.where || [];
+    const letra = ws.find(w => /^letra \d+$/.test(w));
+    if (letra) return letra;
+    const a1 = ws.map(w => (w.match(/^a1 unidade \d+/) || [])[0]).find(Boolean);
+    return a1 || ws[0] || '';
+  };
 
   /* A onda filtra SEMPRE, inclusive quando se pede uma letra. Uma letra
      aparece nas três ondas - o nome e as sílabas na 1, as palavras de

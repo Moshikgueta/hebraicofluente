@@ -1,0 +1,795 @@
+{
+  "n": 9,
+  "revisado": false,
+  "tituloPt": "Como é o seu dia?",
+  "objetivoPt": "Contar a sua rotina: a que horas levanta, para onde vai, o que faz de manhã, de tarde e de noite, e o que vem antes e depois.",
+  "situacaoPt": "O Tom quer combinar alguma coisa com a Noa, mas ela nunca está livre. Ele pergunta como é o dia dela, do começo ao fim.",
+  "palavras": [
+    {
+      "pt": "levantar (da cama)",
+      "formas": [
+        "קָם",
+        "קָמָה",
+        "קָמִים",
+        "קָמוֹת"
+      ],
+      "translit": [
+        "kam",
+        "kamá",
+        "kamím",
+        "kamót"
+      ]
+    },
+    {
+      "pt": "ir, andar",
+      "formas": [
+        "הוֹלֵךְ",
+        "הוֹלֶכֶת",
+        "הוֹלְכִים",
+        "הוֹלְכוֹת"
+      ],
+      "translit": [
+        "holéch",
+        "holéchet",
+        "holchím",
+        "holchót"
+      ]
+    },
+    {
+      "pt": "vir, chegar",
+      "formas": [
+        "בָּא",
+        "בָּאָה",
+        "בָּאִים",
+        "בָּאוֹת"
+      ],
+      "translit": [
+        "ba",
+        "baá",
+        "baím",
+        "baót"
+      ]
+    },
+    {
+      "pt": "voltar",
+      "formas": [
+        "חוֹזֵר",
+        "חוֹזֶרֶת",
+        "חוֹזְרִים",
+        "חוֹזְרוֹת"
+      ],
+      "translit": [
+        "chozér",
+        "chozéret",
+        "chozrím",
+        "chozrót"
+      ]
+    },
+    {
+      "pt": "fazer",
+      "formas": [
+        "עוֹשֶׂה",
+        "עוֹשָׂה",
+        "עוֹשִׂים",
+        "עוֹשׂוֹת"
+      ],
+      "translit": [
+        "ossé",
+        "ossá",
+        "ossím",
+        "ossót"
+      ]
+    },
+    {
+      "pt": "dormir",
+      "formas": [
+        "יָשֵׁן",
+        "יְשֵׁנָה",
+        "יְשֵׁנִים",
+        "יְשֵׁנוֹת"
+      ],
+      "translit": [
+        "yashén",
+        "yeshená",
+        "yeshením",
+        "yeshenót"
+      ]
+    },
+    {
+      "pt": "ocupado",
+      "formas": [
+        "עָסוּק",
+        "עֲסוּקָה",
+        "עֲסוּקִים",
+        "עֲסוּקוֹת"
+      ],
+      "translit": [
+        "assúk",
+        "assuká",
+        "assukím",
+        "assukót"
+      ]
+    },
+    {
+      "he": "בַּצָּהֳרַיִם",
+      "translit": "batsohoráyim",
+      "pt": "ao meio-dia, na hora do almoço"
+    },
+    {
+      "he": "אַחֲרֵי הַצָּהֳרַיִם",
+      "translit": "acharéi hatsohoráyim",
+      "pt": "à tarde (por escrito, também אַחַר הַצָּהֳרַיִם)"
+    },
+    {
+      "he": "בַּלַּיְלָה",
+      "translit": "baláila",
+      "pt": "à noite (mais tarde que o עֶרֶב), de madrugada"
+    },
+    {
+      "he": "לִפְנֵי",
+      "translit": "lifnéi",
+      "pt": "antes de"
+    },
+    {
+      "he": "אַחֲרֵי",
+      "translit": "acharéi",
+      "pt": "depois de"
+    },
+    {
+      "he": "אַחַר כָּךְ",
+      "translit": "achár kach",
+      "pt": "depois, em seguida"
+    },
+    {
+      "he": "וְאָז",
+      "translit": "veáz",
+      "pt": "e então"
+    },
+    {
+      "he": "כָּל יוֹם",
+      "translit": "kol yom",
+      "pt": "todo dia"
+    },
+    {
+      "he": "תָּמִיד",
+      "translit": "tamíd",
+      "pt": "sempre"
+    },
+    {
+      "he": "לִפְעָמִים",
+      "translit": "lif'amím",
+      "pt": "às vezes"
+    },
+    {
+      "he": "מוּקְדָּם",
+      "translit": "mukdám",
+      "pt": "cedo"
+    },
+    {
+      "he": "מְאֻחָר",
+      "translit": "meuchár",
+      "pt": "tarde"
+    },
+    {
+      "he": "עֲבוֹדָה",
+      "translit": "avodá",
+      "pt": "trabalho"
+    },
+    {
+      "he": "שִׁעוּר",
+      "translit": "shiúr",
+      "pt": "aula"
+    },
+    {
+      "he": "אוּנִיבֶרְסִיטָה",
+      "translit": "univérsita",
+      "pt": "universidade"
+    },
+    {
+      "he": "אֻלְפָּן",
+      "translit": "ulpán",
+      "pt": "curso intensivo de hebraico"
+    },
+    {
+      "he": "יָם",
+      "translit": "yam",
+      "pt": "mar; לַיָּם = para a praia"
+    },
+    {
+      "he": "הַבַּיְתָה",
+      "translit": "habáyta",
+      "pt": "para casa"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "Os verbos de ir e vir, no mesmo desenho de sempre",
+      "textoPt": "Os verbos novos seguem as 4 formas da Unidade 4: homem, mulher, homens, mulheres. Alguns são curtos, de duas letras fortes: קָם, קָמָה, קָמִים, קָמוֹת; בָּא, בָּאָה, בָּאִים, בָּאוֹת. Mesmo curtos, mudam do jeito de sempre no plural (־ִים, ־וֹת). No feminino singular, estes verbos curtos (קָמָה, בָּאָה) e os que terminam em ־ֶה (עוֹשָׂה) levam ־ָה; os verbos do desenho normal continuam com ־ֶת: הוֹלֶכֶת, חוֹזֶרֶת.",
+      "erroPt": "Uma mulher que fala da própria rotina usa as formas femininas o tempo todo: אֲנִי קָמָה, אֲנִי הוֹלֶכֶת, אֲנִי חוֹזֶרֶת. Esquecer uma só no meio da frase é o erro mais comum nesta unidade.",
+      "exemplos": [
+        {
+          "he": "אֲנִי קָמָה בְּשֶׁבַע.",
+          "pt": "Eu levanto às sete. (mulher)"
+        },
+        {
+          "he": "הֵם בָּאִים מְאֻחָר.",
+          "pt": "Eles chegam tarde."
+        }
+      ]
+    },
+    {
+      "tituloPt": "Para onde: לְ, que se junta com o הַ",
+      "textoPt": "\"Para\" um lugar é לְ, grudado: לְחֵיפָה. Com o artigo, לְ e הַ viram uma sílaba só, como já aconteceu com בְּ e הַ (בַּ): לְ + הָעֲבוֹדָה = לָעֲבוֹדָה; לְ + הָאֻלְפָּן = לָאֻלְפָּן.",
+      "erroPt": "O português usa \"em\" para estar e para ir (\"vou no mercado\"). Em hebraico são duas coisas: בָּעֲבוֹדָה é estar no trabalho; לָעֲבוֹדָה é ir para o trabalho.",
+      "exemplos": [
+        {
+          "he": "אֲנִי בָּעֲבוֹדָה.",
+          "pt": "Estou no trabalho."
+        },
+        {
+          "he": "אֲנִי הוֹלֵךְ לָעֲבוֹדָה.",
+          "pt": "Vou para o trabalho. (homem)"
+        }
+      ]
+    },
+    {
+      "tituloPt": "\"Para casa\" tem uma palavra só: הַבַּיְתָה",
+      "textoPt": "Para \"para casa\", o hebraico não usa לְ: usa הַבַּיְתָה, com um ־ָה no fim que quer dizer \"em direção a\". Em casa (estar) continua sendo בַּבַּיִת.",
+      "exemplos": [
+        {
+          "he": "אֲנִי חוֹזֶרֶת הַבַּיְתָה.",
+          "pt": "Eu volto para casa. (mulher)"
+        },
+        {
+          "he": "הוּא בַּבַּיִת.",
+          "pt": "Ele está em casa."
+        }
+      ]
+    },
+    {
+      "tituloPt": "Antes, depois, e então",
+      "textoPt": "לִפְנֵי e אַחֲרֵי vêm antes da coisa: לִפְנֵי הַשִּׁעוּר (antes da aula), אַחֲרֵי הָעֲבוֹדָה (depois do trabalho). Sozinho, \"depois\" é אַחַר כָּךְ. Para contar em sequência: וְאָז, \"e então\".",
+      "erroPt": "Não se diz \"אַחֲרֵי\" sozinho no fim da frase, como \"depois\" em português. Sozinho é אַחַר כָּךְ: אֲנִי עוֹבֵד, וְאַחַר כָּךְ אֲנִי לוֹמֵד."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "A Noa nunca está livre",
+    "linhas": [
+      {
+        "quem": "Tom",
+        "he": "נֹעָה, מָה אַתְּ עוֹשָׂה כָּל יוֹם?",
+        "translit": "Nóa, ma at ossá kol yom?",
+        "pt": "Noa, o que você faz todo dia?"
+      },
+      {
+        "quem": "Noa",
+        "he": "אֲנִי קָמָה מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי.",
+        "translit": "aní kamá mukdám, beshésh vachétsi.",
+        "pt": "Eu levanto cedo, às seis e meia."
+      },
+      {
+        "quem": "Tom",
+        "he": "בְּשֵׁשׁ וָחֵצִי? וּמָה אַתְּ עוֹשָׂה בַּבֹּקֶר?",
+        "translit": "beshésh vachétsi? umá at ossá babóker?",
+        "pt": "Às seis e meia? E o que você faz de manhã?"
+      },
+      {
+        "quem": "Noa",
+        "he": "בַּבֹּקֶר אֲנִי עוֹבֶדֶת בְּבֵית קָפֶה.",
+        "translit": "babóker aní ovédet bevéit kafé.",
+        "pt": "De manhã eu trabalho num café."
+      },
+      {
+        "quem": "Tom",
+        "he": "וְאַחַר כָּךְ?",
+        "translit": "veachár kach?",
+        "pt": "E depois?"
+      },
+      {
+        "quem": "Noa",
+        "he": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי הוֹלֶכֶת לָאוּנִיבֶרְסִיטָה.",
+        "translit": "acharéi hatsohoráyim aní holéchet launivérsita.",
+        "pt": "À tarde eu vou para a universidade."
+      },
+      {
+        "quem": "Tom",
+        "he": "וּמָתַי אַתְּ חוֹזֶרֶת הַבַּיְתָה?",
+        "translit": "umatái at chozéret habáyta?",
+        "pt": "E quando você volta para casa?"
+      },
+      {
+        "quem": "Noa",
+        "he": "בָּעֶרֶב, מְאֻחָר. אֲנִי עֲסוּקָה מְאֹד!",
+        "translit": "baérev, meuchár. aní assuká meód!",
+        "pt": "À noite, tarde. Eu sou muito ocupada!"
+      },
+      {
+        "quem": "Tom",
+        "he": "וּבְשַׁבָּת?",
+        "translit": "uveshabát?",
+        "pt": "E no sábado?"
+      },
+      {
+        "quem": "Noa",
+        "he": "בְּשַׁבָּת אֲנִי יְשֵׁנָה עַד עֶשֶׂר!",
+        "translit": "beshabát aní yeshená ad ésser!",
+        "pt": "No sábado eu durmo até as dez!"
+      }
+    ],
+    "glossario": [
+      {
+        "he": "בֵּית קָפֶה",
+        "translit": "beit kafé",
+        "pt": "café (o lugar); expressão fixa"
+      }
+    ],
+    "notaPt": "בֵּית קָפֶה quer dizer, palavra por palavra, \"casa de café\": é o café como lugar. A forma בֵּית no lugar de בַּיִת tem explicação, e ela vem na Unidade 19. Por enquanto, guarde como expressão."
+  },
+  "leitura": {
+    "tituloPt": "Mensagem do Dani para a mãe",
+    "semPontos": true,
+    "linhas": [
+      {
+        "he": "שָׁלוֹם אִמָּא! הַכֹּל בְּסֵדֶר.",
+        "translit": "shalóm íma! hakól besséder.",
+        "pt": "Oi, mãe! Está tudo bem."
+      },
+      {
+        "he": "כָּל יוֹם אֲנִי קָם בְּשֶׁבַע.",
+        "translit": "kol yom aní kam beshéva.",
+        "pt": "Todo dia eu levanto às sete."
+      },
+      {
+        "he": "בַּבֹּקֶר אֲנִי לוֹמֵד עִבְרִית בָּאֻלְפָּן.",
+        "translit": "babóker aní loméd ivrít baulpán.",
+        "pt": "De manhã eu estudo hebraico no ulpan."
+      },
+      {
+        "he": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי עוֹבֵד בְּבֵית קָפֶה.",
+        "translit": "acharéi hatsohoráyim aní ovéd bevéit kafé.",
+        "pt": "À tarde eu trabalho num café."
+      },
+      {
+        "he": "בָּעֶרֶב אֲנִי חוֹזֵר הַבַּיְתָה מְאֻחָר.",
+        "translit": "baérev aní chozér habáyta meuchár.",
+        "pt": "À noite eu volto para casa tarde."
+      },
+      {
+        "he": "בְּשַׁבָּת אֲנִי לֹא עוֹבֵד!",
+        "translit": "beshabát aní lo ovéd!",
+        "pt": "No sábado eu não trabalho!"
+      }
+    ],
+    "perguntas": [
+      {
+        "t": "escolha",
+        "q": "Quando o Dani estuda hebraico?",
+        "opcoes": [
+          "De manhã",
+          "À tarde",
+          "À noite"
+        ],
+        "certa": 0,
+        "porque": "בַּבֹּקֶר אֲנִי לוֹמֵד עִבְרִית: de manhã."
+      },
+      {
+        "t": "escolha",
+        "q": "Onde ele trabalha?",
+        "opcoes": [
+          "Num café",
+          "No ulpan",
+          "Em casa"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "vf",
+        "q": "O Dani volta cedo para casa.",
+        "certa": false,
+        "porque": "מְאֻחָר é \"tarde\"."
+      },
+      {
+        "t": "vf",
+        "q": "No sábado ele não trabalha.",
+        "certa": true
+      }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "O ulpan",
+      "textoPt": "O ulpan é a escola intensiva de hebraico para adultos que chegam a Israel. O primeiro abriu em Jerusalém em 1949, quando o país recebia imigrantes do mundo inteiro e precisava de uma língua comum. Até hoje, imigrantes novos têm direito a estudar num ulpan."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Dormir ou velho?",
+      "textoPt": "יָשֵׁן (dorme) e יָשָׁן (velho) têm as mesmas três letras: י, ש, נ. Só as vogais mudam. Num texto sem pontos, é a frase que decide: הוּא ישן בַּבַּיִת é \"ele dorme em casa\". Isso acontece muito em hebraico, e é por isso que ler sem pontos se aprende lendo frases, não palavras soltas."
+    },
+    {
+      "tituloPt": "Três letras, uma família de palavras",
+      "textoPt": "עוֹבֵד (trabalha) e עֲבוֹדָה (trabalho) têm em comum as letras ע, ב, ד. Em hebraico, a maior parte das palavras nasce de uma raiz de três consoantes, e as vogais e letras em volta dizem se é ação, coisa ou pessoa. Quando você reconhece a raiz, adivinha o sentido de palavras que nunca viu."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu sei dizer a que horas levanto e a que horas volto para casa.",
+    "Eu sei a diferença entre בָּעֲבוֹדָה e לָעֲבוֹדָה.",
+    "Eu conto o meu dia em ordem, com לִפְנֵי, אַחֲרֵי e וְאָז."
+  ],
+  "exercicios": [
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "הוֹלֵךְ",
+      "linhas": [
+        [
+          "mulher",
+          "הולכת"
+        ],
+        [
+          "homens",
+          "הולכים"
+        ],
+        [
+          "mulheres",
+          "הולכות"
+        ]
+      ]
+    },
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "חוֹזֵר",
+      "linhas": [
+        [
+          "mulher",
+          "חוזרת"
+        ],
+        [
+          "homens",
+          "חוזרים"
+        ],
+        [
+          "mulheres",
+          "חוזרות"
+        ]
+      ]
+    },
+    {
+      "t": "separar",
+      "q": "De quem se fala?",
+      "baldes": [
+        "um homem",
+        "uma mulher",
+        "vários"
+      ],
+      "itens": [
+        [
+          "קָם",
+          0
+        ],
+        [
+          "קָמָה",
+          1
+        ],
+        [
+          "בָּאִים",
+          2
+        ],
+        [
+          "בָּאָה",
+          1
+        ],
+        [
+          "עוֹשֶׂה",
+          0
+        ],
+        [
+          "עוֹשׂוֹת",
+          2
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "A Noa conta: אֲנִי ___ מוּקְדָּם.",
+      "opcoes": [
+        "קָמָה",
+        "קָם",
+        "קָמִים"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. קָם é a forma de um homem; a Noa é mulher: קָמָה.",
+        "2": "קָמִים é para vários. A Noa fala só dela: קָמָה."
+      }
+    },
+    {
+      "t": "ligar",
+      "q": "Ligue cada parte do dia.",
+      "pares": [
+        [
+          "בַּבֹּקֶר",
+          "de manhã"
+        ],
+        [
+          "בַּצָּהֳרַיִם",
+          "ao meio-dia"
+        ],
+        [
+          "אַחֲרֵי הַצָּהֳרַיִם",
+          "à tarde"
+        ],
+        [
+          "בָּעֶרֶב",
+          "no fim do dia, à noitinha"
+        ],
+        [
+          "בַּלַּיְלָה",
+          "à noite, de madrugada"
+        ]
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"Depois do trabalho\"",
+      "antes": "",
+      "depois": "הָעֲבוֹדָה",
+      "respostas": [
+        "אחרי"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"Antes da aula\"",
+      "antes": "",
+      "depois": "הַשִּׁעוּר",
+      "respostas": [
+        "לפני"
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Eu vou para o trabalho\": אֲנִי הוֹלֵךְ ___",
+      "opcoes": [
+        "לָעֲבוֹדָה",
+        "לְהָעֲבוֹדָה",
+        "בָּעֲבוֹדָה"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. לְ e הַ se juntam numa sílaba: לְ + הָעֲבוֹדָה = לָעֲבוֹדָה.",
+        "2": "בָּעֲבוֹדָה é estar no trabalho. Para ir até lá, é לְ: לָעֲבוֹדָה."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"Eu volto para casa\": אֲנִי חוֹזֵר ___",
+      "opcoes": [
+        "הַבַּיְתָה",
+        "בַּבַּיִת"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "בַּבַּיִת é \"em casa\", estar. Para \"para casa\", o hebraico usa הַבַּיְתָה."
+      }
+    },
+    {
+      "t": "vf",
+      "q": "יָשֵׁן (dormir) e יָשָׁן (velho) se escrevem com as mesmas letras.",
+      "certa": true,
+      "porque": "Só as vogais mudam. Sem pontos, quem decide é a frase."
+    },
+    {
+      "t": "escolha",
+      "q": "O Dani está dormindo: דָּנִי ___.",
+      "opcoes": [
+        "יָשֵׁן",
+        "יְשֵׁנָה",
+        "יָשָׁן"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "יְשֵׁנָה é para uma mulher.",
+        "2": "יָשָׁן, com A, é \"velho\" (Unidade 3). \"Dorme\" é יָשֵׁן, com E."
+      }
+    },
+    {
+      "t": "montar",
+      "pt": "O Tom vai para a universidade todo dia.",
+      "palavras": [
+        "טוֹם",
+        "הוֹלֵךְ",
+        "לָאוּנִיבֶרְסִיטָה",
+        "כָּל יוֹם"
+      ],
+      "outras": [
+        [
+          "כָּל יוֹם",
+          "טוֹם",
+          "הוֹלֵךְ",
+          "לָאוּנִיבֶרְסִיטָה"
+        ],
+        [
+          "טוֹם",
+          "הוֹלֵךְ",
+          "כָּל יוֹם",
+          "לָאוּנִיבֶרְסִיטָה"
+        ]
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "Depois eu volto para casa. (fala uma mulher)",
+      "palavras": [
+        "אַחַר כָּךְ",
+        "אֲנִי",
+        "חוֹזֶרֶת",
+        "הַבַּיְתָה"
+      ],
+      "outras": [
+        [
+          "אֲנִי",
+          "חוֹזֶרֶת",
+          "הַבַּיְתָה",
+          "אַחַר כָּךְ"
+        ],
+        [
+          "אֲנִי",
+          "אַחַר כָּךְ",
+          "חוֹזֶרֶת",
+          "הַבַּיְתָה"
+        ]
+      ]
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "הִיא הוֹלֵךְ לָעֲבוֹדָה.",
+      "respostas": [
+        "היא הולכת לעבודה"
+      ],
+      "porque": "Para ela, a forma é הוֹלֶכֶת."
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "אֲנַחְנוּ בָּא מְאֻחָר.",
+      "respostas": [
+        "אנחנו באים מאוחר",
+        "אנחנו באים מאחר",
+        "אנחנו באות מאוחר",
+        "אנחנו באות מאחר"
+      ],
+      "porque": "Com אֲנַחְנוּ, o verbo vai para o plural: בָּאִים (ou בָּאוֹת, se forem só mulheres)."
+    },
+    {
+      "t": "vf",
+      "q": "בַּבֹּקֶר אֲנִי עוֹבֵד, וְאַחַר כָּךְ אֲנִי לוֹמֵד: primeiro ele trabalha, depois estuda.",
+      "certa": true
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "Maya",
+          "מָתַי אַתָּה קָם?"
+        ]
+      ],
+      "opcoes": [
+        "בְּשֶׁבַע.",
+        "בַּבַּיִת.",
+        "עִם דָּנִי."
+      ],
+      "certa": 0,
+      "porque": "מָתַי pergunta \"quando\": a resposta é uma hora."
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "Tom",
+          "מָה אַתְּ עוֹשָׂה אַחֲרֵי הָעֲבוֹדָה?"
+        ]
+      ],
+      "opcoes": [
+        "אֲנִי הוֹלֶכֶת לַיָּם.",
+        "אֲנִי מִבְּרָזִיל.",
+        "כֵּן, תּוֹדָה."
+      ],
+      "certa": 0,
+      "porque": "Ele pergunta o que ela faz depois do trabalho: \"vou para a praia\" (לַיָּם, \"para o mar\")."
+    },
+    {
+      "t": "ordenar",
+      "q": "Ponha a conversa na ordem.",
+      "falas": [
+        "מָה אַתָּה עוֹשֶׂה בַּבֹּקֶר?",
+        "בַּבֹּקֶר אֲנִי עוֹבֵד.",
+        "וְאַחֲרֵי הַצָּהֳרַיִם?",
+        "אַחֲרֵי הַצָּהֳרַיִם אֲנִי לוֹמֵד עִבְרִית."
+      ]
+    },
+    {
+      "t": "ouvir",
+      "he": "אֲנִי חוֹזֶרֶת הַבַּיְתָה בְּשֶׁבַע.",
+      "q": "O que ela diz?",
+      "opcoes": [
+        "Volta para casa às sete",
+        "Sai de casa às sete",
+        "Trabalha até as sete"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "הֵם קָמִים מְאֻחָר.",
+      "q": "O que você ouviu?",
+      "opcoes": [
+        "Eles levantam tarde",
+        "Ele levanta cedo",
+        "Elas dormem tarde"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ditado",
+      "he": "כָּל יוֹם",
+      "respostas": [
+        "כל יום"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "à noite",
+      "respostas": [
+        "בערב",
+        "בלילה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "e então",
+      "respostas": [
+        "ואז"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "trabalho",
+      "respostas": [
+        "עבודה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Eu levanto cedo, às seis e meia.\"",
+      "antes": "אֲנִי",
+      "depois": "מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי.",
+      "respostas": [
+        "קמה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"À tarde eu vou para a universidade.\"",
+      "antes": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי",
+      "depois": "לָאוּנִיבֶרְסִיטָה.",
+      "respostas": [
+        "הולכת"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Eu levanto cedo, às seis e meia.\"",
+      "exemplo": "אֲנִי קָמָה מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי."
+    },
+    {
+      "t": "aberta",
+      "pt": "Escreva três frases sobre o seu dia: quando você levanta, o que faz de manhã, e quando volta para casa.",
+      "exemplo": "אֲנִי קָם בְּשֶׁבַע. בַּבֹּקֶר אֲנִי עוֹבֵד. אֲנִי חוֹזֵר הַבַּיְתָה בְּשֵׁשׁ."
+    }
+  ]
+}

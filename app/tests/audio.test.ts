@@ -77,6 +77,22 @@ function requested(): { id: string; where: string }[] {
     out.push({ id: l.audioId!, where: `bônus ${b.id} linha ${i + 1}` })));
   guiaNikud()?.secoes.forEach(s => s.exemplos.forEach(e =>
     out.push({ id: e.audioId!, where: `guia do nikud ${s.id} ${e.he}` })));
+  /* Onda 6: o Hebraico A1 (06/10/2026), só as unidades revisadas pelo dono -
+     as outras ainda não pedem gravação. */
+  type IA1 = { t: string; audioId?: string };
+  type UA1 = {
+    n: number; revisado: boolean; palavras: { audioId?: string; he?: string }[];
+    dialogo: { linhas: { audioId?: string }[]; glossario: { audioId?: string }[] };
+    leitura?: { linhas: { audioId?: string }[]; perguntas: IA1[] }; exercicios: IA1[];
+  };
+  const a1 = JSON.parse(readFileSync(new URL('../content/a1.json', import.meta.url), 'utf8')) as { unidades: UA1[] };
+  for (const u of a1.unidades.filter(x => x.revisado)) {
+    const onde = `a1 unidade ${u.n}`;
+    u.palavras.forEach(w => { if (w.audioId) out.push({ id: w.audioId, where: `${onde} ${w.he}` }); });
+    [...u.dialogo.linhas, ...u.dialogo.glossario, ...(u.leitura?.linhas ?? [])].forEach(l => out.push({ id: l.audioId!, where: onde }));
+    [...u.exercicios, ...(u.leitura?.perguntas ?? [])].filter(i => i.t === 'ouvir' || i.t === 'ditado')
+      .forEach(i => out.push({ id: i.audioId!, where: `${onde} escuta` }));
+  }
   return out;
 }
 
@@ -112,7 +128,7 @@ describe('the audio manifest and the app agree', () => {
   });
 
   it('keeps every clip in exactly one wave, and wave 1 first', () => {
-    for (const c of manifest.clips) expect([1, 2, 3, 4, 5]).toContain(c.wave);
+    for (const c of manifest.clips) expect([1, 2, 3, 4, 5, 6]).toContain(c.wave);
     const w1 = manifest.clips.filter(c => c.wave === 1);
     /* Wave 1 must carry every letter name and every syllable: it is the wave
        that makes the course's central claim - this letter makes this sound -

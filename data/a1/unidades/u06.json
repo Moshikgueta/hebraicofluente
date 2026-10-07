@@ -1,0 +1,491 @@
+{
+  "n": 6,
+  "revisado": true,
+  "tituloPt": "Você tem irmãos? Esta é a minha família",
+  "objetivoPt": "Dizer o que tem e o que não tem, falar da família, e dizer de quem é uma coisa.",
+  "situacaoPt": "O Tom vê uma foto no telefone da Noa e pergunta da família dela: irmãos, onde moram, e se ela tem bicho de estimação.",
+  "palavras": [
+    {
+      "he": "אָח",
+      "translit": "ach",
+      "pt": "irmão"
+    },
+    {
+      "he": "אַחִים",
+      "translit": "achím",
+      "pt": "irmãos"
+    },
+    {
+      "he": "אָחוֹת",
+      "translit": "achót",
+      "pt": "irmã"
+    },
+    {
+      "he": "אֲחָיוֹת",
+      "translit": "achayót",
+      "pt": "irmãs"
+    },
+    {
+      "he": "הוֹרִים",
+      "translit": "horím",
+      "pt": "pais (pai e mãe)"
+    },
+    {
+      "he": "בֵּן",
+      "translit": "ben",
+      "pt": "filho"
+    },
+    {
+      "he": "בַּת",
+      "translit": "bat",
+      "pt": "filha"
+    },
+    {
+      "he": "סַבָּא",
+      "translit": "sába",
+      "pt": "avô"
+    },
+    {
+      "he": "סַבְתָּא",
+      "translit": "sávta",
+      "pt": "avó"
+    },
+    {
+      "he": "דּוֹד",
+      "translit": "dod",
+      "pt": "tio"
+    },
+    {
+      "he": "דּוֹדָה",
+      "translit": "dodá",
+      "pt": "tia"
+    },
+    {
+      "he": "מִשְׁפָּחָה",
+      "translit": "mishpachá",
+      "pt": "família"
+    },
+    {
+      "he": "כֶּלֶב",
+      "translit": "kélev",
+      "pt": "cachorro"
+    },
+    {
+      "he": "חָתוּל",
+      "translit": "chatúl",
+      "pt": "gato"
+    },
+    {
+      "he": "חֵיפָה",
+      "translit": "Cháifa",
+      "pt": "Haifa"
+    },
+    {
+      "he": "יֵשׁ",
+      "translit": "yesh",
+      "pt": "há, existe"
+    },
+    {
+      "he": "אֵין",
+      "translit": "ein",
+      "pt": "não há"
+    },
+    {
+      "he": "יֵשׁ לִי",
+      "translit": "yesh li",
+      "pt": "eu tenho"
+    },
+    {
+      "he": "אֵין לִי",
+      "translit": "ein li",
+      "pt": "eu não tenho"
+    },
+    {
+      "he": "לִי",
+      "translit": "li",
+      "pt": "para mim"
+    },
+    {
+      "he": "לְךָ",
+      "translit": "lechá",
+      "pt": "para você (m)"
+    },
+    {
+      "he": "לָךְ",
+      "translit": "lach",
+      "pt": "para você (f)"
+    },
+    {
+      "he": "לוֹ",
+      "translit": "lo",
+      "pt": "para ele"
+    },
+    {
+      "he": "לָהּ",
+      "translit": "la",
+      "pt": "para ela"
+    },
+    {
+      "he": "לָנוּ",
+      "translit": "lánu",
+      "pt": "para nós"
+    },
+    {
+      "he": "שֶׁלִּי",
+      "translit": "shelí",
+      "pt": "meu, minha"
+    },
+    {
+      "he": "שֶׁלְּךָ",
+      "translit": "shelchá",
+      "pt": "seu, sua (falando com um homem)"
+    },
+    {
+      "he": "שֶׁלָּךְ",
+      "translit": "shelách",
+      "pt": "seu, sua (falando com uma mulher)"
+    },
+    {
+      "he": "שֶׁלּוֹ",
+      "translit": "sheló",
+      "pt": "dele"
+    },
+    {
+      "he": "שֶׁלָּהּ",
+      "translit": "shelá",
+      "pt": "dela"
+    },
+    {
+      "he": "שֶׁלָּנוּ",
+      "translit": "shelánu",
+      "pt": "nosso, nossa"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "יֵשׁ e אֵין = há e não há",
+      "textoPt": "יֵשׁ חָלָב בַּמְקָרֵר (há leite na geladeira). אֵין חָלָב (não há leite). Não mudam com gênero nem número."
+    },
+    {
+      "tituloPt": "Não existe o verbo \"ter\"",
+      "textoPt": "\"Eu tenho\" se diz יֵשׁ לִי (\"há para mim\"). \"Eu não tenho\" = אֵין לִי.",
+      "erroPt": "Procurar um verbo \"ter\" e conjugá-lo. Não há. \"Eu tenho um irmão\" = יֵשׁ לִי אָח. \"Ela tem um gato\" = יֵשׁ לָהּ חָתוּל."
+    },
+    {
+      "tituloPt": "\"Meu\" vem depois da coisa",
+      "textoPt": "\"A minha casa\" = הַבַּיִת שֶׁלִּי. Para dizer \"o meu...\", a coisa leva הַ. Sem הַ (חָבֵר שֶׁלִּי) é \"um amigo meu\".",
+      "erroPt": "Pôr o \"meu\" antes (שֶׁלִּי בַּיִת). A ordem é a coisa, e depois שֶׁלִּי: הַכֶּלֶב שֶׁלִּי, הַחֲבֵרָה שֶׁלּוֹ."
+    },
+    {
+      "tituloPt": "אַבָּא e אִמָּא não levam הַ",
+      "textoPt": "אִמָּא שֶׁלִּי, אַבָּא שֶׁלָּהּ. E com הַ, o לְ funde como o בְּ: לְ + הַ = לַ (לַהוֹרִים שֶׁלִּי)."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Tom e Noa, com uma foto",
+    "linhas": [
+      {
+        "quem": "Tom",
+        "he": "נֹעָה, יֵשׁ לָךְ אַחִים?",
+        "translit": "Nóa, yesh lach achím?",
+        "pt": "Noa, você tem irmãos?"
+      },
+      {
+        "quem": "Noa",
+        "he": "כֵּן, יֵשׁ לִי אָח וְאָחוֹת.",
+        "translit": "ken, yesh li ach veachót.",
+        "pt": "Tenho, um irmão e uma irmã."
+      },
+      {
+        "quem": "Tom",
+        "he": "מִי זֶה בַּתְּמוּנָה?",
+        "translit": "mi ze batmuná?",
+        "pt": "Quem é este na foto?"
+      },
+      {
+        "quem": "Noa",
+        "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
+        "translit": "ze Eitán, haách shelí. hu gar beCháifa.",
+        "pt": "Este é o Eitan, o meu irmão. Ele mora em Haifa."
+      },
+      {
+        "quem": "Tom",
+        "he": "וְיֵשׁ לָךְ כֶּלֶב?",
+        "translit": "veyésh lach kélev?",
+        "pt": "E você tem cachorro?"
+      },
+      {
+        "quem": "Noa",
+        "he": "לֹא, אֵין לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ?",
+        "translit": "lo, ein li kélev. yesh li chatúl! ulechá?",
+        "pt": "Não, não tenho cachorro. Tenho um gato! E você?"
+      },
+      {
+        "quem": "Tom",
+        "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל.",
+        "translit": "ein li chatúl. avál lahorím shelí yesh kélev gadól.",
+        "pt": "Não tenho gato. Mas os meus pais têm um cachorro grande."
+      }
+    ],
+    "glossario": [
+      {
+        "he": "תְּמוּנָה",
+        "translit": "tmuná",
+        "pt": "foto"
+      },
+      {
+        "he": "אֵיתָן",
+        "translit": "Eitán",
+        "pt": "Eitan (nome)"
+      }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "Famílias grandes",
+      "textoPt": "Israel tem a maior média de filhos por mulher entre os países ricos, perto de três, e a família está muito presente: avós que ajudam com os netos, o jantar de sexta junto, grupos de WhatsApp com dezenas de primos."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "בֶּן e o sobrenome",
+      "textoPt": "בֵּן é \"filho\", e muitos sobrenomes israelenses começam com ele: Ben-Gurion, Ben-Yehuda, Ben-Ami. Vários pioneiros trocaram o sobrenome europeu por um hebraico: David Ben-Gurion nasceu David Grün."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu digo o que tenho e o que não tenho, com יֵשׁ לִי e אֵין לִי.",
+    "Eu falo da minha família.",
+    "Eu digo \"meu\" e \"seu\" com שֶׁלִּי, שֶׁלְּךָ, שֶׁלָּךְ."
+  ],
+  "exercicios": [
+    {
+      "t": "ligar",
+      "q": "Ligue cada palavra ao que ela quer dizer.",
+      "pares": [
+        [
+          "אָח",
+          "irmão"
+        ],
+        [
+          "אָחוֹת",
+          "irmã"
+        ],
+        [
+          "הוֹרִים",
+          "pais"
+        ],
+        [
+          "בַּת",
+          "filha"
+        ],
+        [
+          "סַבְתָּא",
+          "avó"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "Qual é o plural de אָחוֹת?",
+      "opcoes": [
+        "אֲחָיוֹת",
+        "אָחוֹתִים"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "intruso",
+      "q": "Qual não combina com as outras?",
+      "opcoes": [
+        "סַבָּא",
+        "דּוֹד",
+        "חָתוּל",
+        "בֵּן"
+      ],
+      "certa": 2,
+      "porque": "חָתוּל não é da família."
+    },
+    {
+      "t": "escolha",
+      "q": "\"Não há leite\"",
+      "opcoes": [
+        "אֵין חָלָב",
+        "לֹא חָלָב"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "completar",
+      "q": "\"Há bolo na cozinha\"",
+      "antes": "",
+      "depois": "עוּגָה בַּמִּטְבָּח",
+      "respostas": [
+        "יש"
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "Eu tenho uma irmã",
+      "palavras": [
+        "יֵשׁ",
+        "לִי",
+        "אָחוֹת"
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Ela tem um gato\"",
+      "opcoes": [
+        "יֵשׁ לָהּ חָתוּל",
+        "יֵשׁ לוֹ חָתוּל"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "O Tom pergunta à Noa:",
+      "opcoes": [
+        "יֵשׁ לָךְ כֶּלֶב?",
+        "יֵשׁ לְךָ כֶּלֶב?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "montar",
+      "pt": "Nós não temos cachorro",
+      "palavras": [
+        "אֵין",
+        "לָנוּ",
+        "כֶּלֶב"
+      ]
+    },
+    {
+      "t": "vf",
+      "q": "Em hebraico, \"ter\" é um verbo que muda com o gênero.",
+      "certa": false,
+      "porque": "Não há verbo: יֵשׁ לִי."
+    },
+    {
+      "t": "montar",
+      "pt": "a minha casa",
+      "palavras": [
+        "הַבַּיִת",
+        "שֶׁלִּי"
+      ]
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "שֶׁלִּי הַחָתוּל",
+      "respostas": [
+        "החתול שלי"
+      ],
+      "porque": "O \"meu\" vem depois."
+    },
+    {
+      "t": "escolha",
+      "q": "\"O cachorro dela\"",
+      "opcoes": [
+        "הַכֶּלֶב שֶׁלָּהּ",
+        "הַכֶּלֶב שֶׁלּוֹ"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "\"A mãe dele\"",
+      "opcoes": [
+        "אִמָּא שֶׁלּוֹ",
+        "הָאִמָּא שֶׁלּוֹ"
+      ],
+      "certa": 0,
+      "porque": "אִמָּא não leva הַ."
+    },
+    {
+      "t": "completar",
+      "q": "\"Os meus pais têm um cachorro\"",
+      "antes": "",
+      "depois": "שֶׁלִּי יֵשׁ כֶּלֶב",
+      "respostas": [
+        "להורים"
+      ]
+    },
+    {
+      "t": "ouvir",
+      "he": "אֵין לָנוּ אַחִים",
+      "q": "O que a pessoa disse?",
+      "opcoes": [
+        "nós não temos irmãos",
+        "nós temos irmãos"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "הַבַּת שֶׁלָּהּ גָּרָה בְּחֵיפָה",
+      "q": "O que a pessoa disse?",
+      "opcoes": [
+        "a filha dela mora em Haifa",
+        "a filha dele mora em Haifa"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: quantos irmãos a Noa tem?",
+      "opcoes": [
+        "dois (um irmão e uma irmã)",
+        "um"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "vf",
+      "q": "No diálogo, a Noa tem um cachorro.",
+      "certa": false,
+      "porque": "יֵשׁ לִי חָתוּל."
+    },
+    {
+      "t": "escrever",
+      "pt": "tia",
+      "respostas": [
+        "דודה"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "eu não tenho",
+      "respostas": [
+        "אין לי"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não, não tenho cachorro. Tenho um gato! E você?\"",
+      "antes": "לֹא,",
+      "depois": "לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ?",
+      "respostas": [
+        "אין"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Não tenho gato. Mas os meus pais têm um cachorro grande.\"",
+      "antes": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים",
+      "depois": "יֵשׁ כֶּלֶב גָּדוֹל.",
+      "respostas": [
+        "שלי"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Tenho, um irmão e uma irmã.\"",
+      "exemplo": "כֵּן, יֵשׁ לִי אָח וְאָחוֹת."
+    },
+    {
+      "t": "aberta",
+      "pt": "Escreva 3 frases sobre a sua família: quem você tem, quem não tem, e onde alguém mora.",
+      "exemplo": "יֵשׁ לִי אָח. אֵין לִי אָחוֹת. הַהוֹרִים שֶׁלִּי גָּרִים בְּרִיוֹ."
+    }
+  ]
+}
