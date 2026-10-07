@@ -260,7 +260,7 @@ function DageshStage({ onDone }: { onDone: () => void }) {
           )}
           {excecoes.some(w => w.analise.posicao === 'depois-de-consoante') && (
             <p className="text-[15px] leading-relaxed text-ink-body m-0">
-              E depois de uma letra com shevá no começo da palavra (ou de um prefixo) a regra também falha: ali a
+              E depois de uma letra com shva no começo da palavra (ou de um prefixo) a regra também falha: ali a
               letra fica sem o ponto, e o som é o suave, como em <He size="inline">בְּבַקָּשָׁה</He> (bevakashá) e{' '}
               <He size="inline">כְּבָר</He> (kvar).
             </p>

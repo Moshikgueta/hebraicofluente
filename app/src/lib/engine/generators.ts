@@ -107,7 +107,7 @@ const wordDistractors = (target: Word, pool: readonly Word[], rand: Rand, n: num
 const legiveis = (ctx: Ctx): Word[] =>
   ctx.history.flatMap(x => x.wordsToRead).filter(w => isReadableWith(w.he, ctx.alphabet));
 
-/** Syllables that spell a vowel. Shevá is excluded: it is the absence of one. */
+/** Syllables that spell a vowel. Shva is excluded: it is the absence of one. */
 const vowelSyllables = (L: Letter): Syllable[] => L.syllables.filter(s => s.vowel !== 'sheva');
 
 const at = <T,>(arr: readonly T[], i: number): T | undefined =>
@@ -466,7 +466,7 @@ export const exMatchLetterSound: Gen = (L, ctx, rand, i) => {
      O Match corrige por índice: com כ e ק ambos "k", ligar ק ao "k" do כ
      contava erro, e o modelo de confusões aprendia um par que não existe.
      A letra da lição entra sempre; das recentes, só as que não dividem
-     nenhum som com quem já está na mesa (Tav/Tet, Álef/Áyin, Kaf/Qof). */
+     nenhum som com quem já está na mesa (Tav/Tet, Álef/Áyin, Kaf/Kuf). */
   const recentes = shuffled(ctx.history.filter(x => x.id !== L.id).slice(-5), rand);
   const chosen: Letter[] = [L];
   for (const x of recentes) {

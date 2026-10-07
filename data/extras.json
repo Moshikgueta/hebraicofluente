@@ -13,7 +13,7 @@
 
   "dagesh": {
     "titlePt": "Sem o ponto",
-    "rulePt": "O ponto no meio, o daguesh, escolhe qual dos dois sons a letra tem. Em geral ele aparece no começo da palavra e depois de uma consoante que fecha a sílaba, como em {{מִשְׁפָּחָה}}; some depois de vogal e quase sempre no fim. Depois de uma letra com shevá no começo da palavra, ele também some: {{בְּבַקָּשָׁה}} é \"bevakashá\". Há exceções: palavras como {{אַבָּא}} e muitas palavras de fora ({{אוֹטוֹבּוּס}}) têm o ponto mesmo entre vogais, e nelas o som é sempre o duro. E, fora dos livros didáticos e dos textos sagrados, ele simplesmente não é impresso: a palavra vem sem pontos e sem nikud, e é você quem decide.",
+    "rulePt": "O ponto no meio, o daguesh, escolhe qual dos dois sons a letra tem. Em geral ele aparece no começo da palavra e depois de uma consoante que fecha a sílaba, como em {{מִשְׁפָּחָה}}; some depois de vogal e quase sempre no fim. Depois de uma letra com shva no começo da palavra, ele também some: {{בְּבַקָּשָׁה}} é \"bevakashá\". Há exceções: palavras como {{אַבָּא}} e muitas palavras de fora ({{אוֹטוֹבּוּס}}) têm o ponto mesmo entre vogais, e nelas o som é sempre o duro. E, fora dos livros didáticos e dos textos sagrados, ele simplesmente não é impresso: a palavra vem sem pontos e sem nikud, e é você quem decide.",
     "warningPt": "Ler {{סֵפֶר}} como \"séper\" em vez de \"séfer\" não é sotaque: é outra palavra, ou palavra nenhuma. As três letras deste módulo aparecem em quase toda frase do hebraico, e na rua elas vêm sem o ponto.",
     "letters": [
       {
