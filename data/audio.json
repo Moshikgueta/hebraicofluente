@@ -20,7 +20,7 @@
       "id": 2,
       "titlePt": "As palavras de leitura",
       "notePt": "Todo o vocabulário que o aluno lê sozinho, na ordem do curso.",
-      "count": 156
+      "count": 155
     },
     {
       "id": 3,
@@ -32,7 +32,7 @@
       "id": 4,
       "titlePt": "Frases e textos",
       "notePt": "As frases do curso e as linhas dos mini-textos, ditas no ritmo natural da fala, sem pausa entre as palavras.",
-      "count": 133
+      "count": 134
     },
     {
       "id": 5,
@@ -2293,7 +2293,6 @@
         "letra 5",
         "letra 2",
         "palavras da frase ma-hashaa",
-        "palavras da frase ma-nishma",
         "palavras da frase shalom-ma-shlomcha",
         "palavras da frase ma-ze"
       ],
@@ -3837,18 +3836,18 @@
       "file": "he-78b93e1d.mp3"
     },
     {
-      "num": 319,
+      "num": 395,
       "seq": 316,
-      "he": "ז׳סטה",
+      "he": "מסאז׳",
       "translit": null,
-      "gloss": "gesto",
+      "gloss": "massagem",
       "kind": "palavra",
       "wave": 2,
       "where": [
         "módulo 7",
         "lição J"
       ],
-      "file": "he-6d56f9a4.mp3"
+      "file": "he-4e0031d2.mp3"
     },
     {
       "num": 398,
@@ -4320,21 +4319,8 @@
       "file": "he-eeabdf52.mp3"
     },
     {
-      "num": 395,
-      "seq": 353,
-      "he": "מסאז׳",
-      "translit": "massáj",
-      "gloss": "massagem",
-      "kind": "palavra",
-      "wave": 2,
-      "where": [
-        "lição J"
-      ],
-      "file": "he-4e0031d2.mp3"
-    },
-    {
       "num": 396,
-      "seq": 354,
+      "seq": 353,
       "he": "בז׳",
       "translit": "bej",
       "gloss": "bege",
@@ -4347,7 +4333,7 @@
     },
     {
       "num": 397,
-      "seq": 355,
+      "seq": 354,
       "he": "ז׳אנר",
       "translit": "janr",
       "gloss": "gênero (de filme, de música)",
@@ -4858,7 +4844,7 @@
     },
     {
       "num": 573,
-      "seq": 356,
+      "seq": 355,
       "he": "הָאָרֶץ",
       "translit": "haárets",
       "gloss": "a terra",
@@ -4871,7 +4857,7 @@
     },
     {
       "num": 320,
-      "seq": 357,
+      "seq": 356,
       "he": "בֹּקֶר טוֹב",
       "translit": "bóker tov",
       "gloss": "bom dia",
@@ -4886,7 +4872,7 @@
     },
     {
       "num": 321,
-      "seq": 358,
+      "seq": 357,
       "he": "הַמֶּלֶךְ",
       "translit": "hamélech",
       "gloss": "o rei",
@@ -4899,7 +4885,7 @@
     },
     {
       "num": 323,
-      "seq": 359,
+      "seq": 358,
       "he": "אֲנִי לוֹמֵד",
       "translit": "aní loméd",
       "gloss": "eu estudo",
@@ -4912,7 +4898,7 @@
     },
     {
       "num": 324,
-      "seq": 360,
+      "seq": 359,
       "he": "הִיא מוֹרָה",
       "translit": "hi morá",
       "gloss": "ela é professora",
@@ -4925,7 +4911,7 @@
     },
     {
       "num": 325,
-      "seq": 361,
+      "seq": 360,
       "he": "דָּוִד וְשָׂרָה",
       "translit": "Davíd veSará",
       "gloss": "David e Sara",
@@ -4938,7 +4924,7 @@
     },
     {
       "num": 326,
-      "seq": 362,
+      "seq": 361,
       "he": "יְרוּשָׁלַיִם",
       "translit": "Yerushaláyim",
       "gloss": "Jerusalém",
@@ -4953,7 +4939,7 @@
     },
     {
       "num": 327,
-      "seq": 363,
+      "seq": 362,
       "he": "אֲנִי מִיִּשְׂרָאֵל",
       "translit": "aní miYisraél",
       "gloss": "eu sou de Israel",
@@ -4966,7 +4952,7 @@
     },
     {
       "num": 328,
-      "seq": 364,
+      "seq": 363,
       "he": "הַיָּם גָּדוֹל",
       "translit": "hayám gadól",
       "gloss": "o mar é grande",
@@ -4979,7 +4965,7 @@
     },
     {
       "num": 329,
-      "seq": 365,
+      "seq": 364,
       "he": "מָה הַשָּׁעָה",
       "translit": "ma hashaá",
       "gloss": "que horas são",
@@ -4991,9 +4977,9 @@
       "file": "he-71f8d9c9.mp3"
     },
     {
-      "num": 330,
-      "seq": 366,
-      "he": "מָה נִשְׁמָע",
+      "num": 637,
+      "seq": 365,
+      "he": "מַה נִּשְׁמָע",
       "translit": "ma nishmá",
       "gloss": "como vai",
       "kind": "frase",
@@ -5002,11 +4988,11 @@
         "frases",
         "palavras do texto 4"
       ],
-      "file": "he-82da85f2.mp3"
+      "file": "he-84599e42.mp3"
     },
     {
       "num": 331,
-      "seq": 367,
+      "seq": 366,
       "he": "שְׁמַע יִשְׂרָאֵל",
       "translit": "shemá Yisraél",
       "gloss": "ouve, Israel",
@@ -5019,7 +5005,7 @@
     },
     {
       "num": 332,
-      "seq": 368,
+      "seq": 367,
       "he": "תּוֹדָה רַבָּה",
       "translit": "todá rabá",
       "gloss": "muito obrigado",
@@ -5032,7 +5018,7 @@
     },
     {
       "num": 333,
-      "seq": 369,
+      "seq": 368,
       "he": "כֵּן, בְּבַקָּשָׁה",
       "translit": "ken, bevakashá",
       "gloss": "sim, por favor",
@@ -5045,7 +5031,7 @@
     },
     {
       "num": 334,
-      "seq": 370,
+      "seq": 369,
       "he": "אֲנִי מְדַבֵּר עִבְרִית",
       "translit": "aní medabér ivrít",
       "gloss": "eu falo hebraico",
@@ -5058,7 +5044,7 @@
     },
     {
       "num": 335,
-      "seq": 371,
+      "seq": 370,
       "he": "שָׁלוֹם, מָה שְׁלוֹמְךָ",
       "translit": "shalóm, ma shlomchá",
       "gloss": "olá, como você está",
@@ -5071,7 +5057,7 @@
     },
     {
       "num": 336,
-      "seq": 372,
+      "seq": 371,
       "he": "תֵּל אָבִיב",
       "translit": "Tel Avív",
       "gloss": "Tel Aviv",
@@ -5085,7 +5071,7 @@
     },
     {
       "num": 337,
-      "seq": 373,
+      "seq": 372,
       "he": "מָה זֶה",
       "translit": "ma ze",
       "gloss": "o que é isto",
@@ -5098,7 +5084,7 @@
     },
     {
       "num": 338,
-      "seq": 374,
+      "seq": 373,
       "he": "חַג שָׂמֵחַ",
       "translit": "chag saméach",
       "gloss": "boas festas",
@@ -5111,7 +5097,7 @@
     },
     {
       "num": 339,
-      "seq": 375,
+      "seq": 374,
       "he": "לְאַט",
       "translit": "leát",
       "gloss": "devagar",
@@ -5125,7 +5111,7 @@
     },
     {
       "num": 340,
-      "seq": 376,
+      "seq": 375,
       "he": "אֲנִי רוֹצֶה מַיִם",
       "translit": "aní rotsé máyim",
       "gloss": "eu quero água",
@@ -5138,7 +5124,7 @@
     },
     {
       "num": 341,
-      "seq": 377,
+      "seq": 376,
       "he": "רַק רֶגַע",
       "translit": "rak réga",
       "gloss": "só um momento",
@@ -5151,7 +5137,7 @@
     },
     {
       "num": 342,
-      "seq": 378,
+      "seq": 377,
       "he": "בְּרֵאשִׁית בָּרָא",
       "translit": "bereshít bará",
       "gloss": "no princípio, criou",
@@ -5164,7 +5150,7 @@
     },
     {
       "num": 343,
-      "seq": 379,
+      "seq": 378,
       "he": "אֲנִי רוֹצֶה קָפֶה",
       "translit": "aní rotsé kafé",
       "gloss": "eu quero um café",
@@ -5177,7 +5163,7 @@
     },
     {
       "num": 576,
-      "seq": 380,
+      "seq": 379,
       "he": "לוֹמֵד",
       "translit": "loméd",
       "gloss": "estudo",
@@ -5190,7 +5176,7 @@
     },
     {
       "num": 577,
-      "seq": 381,
+      "seq": 380,
       "he": "מוֹרָה",
       "translit": "morá",
       "gloss": "professora",
@@ -5204,7 +5190,7 @@
     },
     {
       "num": 578,
-      "seq": 382,
+      "seq": 381,
       "he": "דָּוִד",
       "translit": "Davíd",
       "gloss": "David",
@@ -5217,7 +5203,7 @@
     },
     {
       "num": 579,
-      "seq": 383,
+      "seq": 382,
       "he": "וְשָׂרָה",
       "translit": "veSará",
       "gloss": "e Sara",
@@ -5230,7 +5216,7 @@
     },
     {
       "num": 580,
-      "seq": 384,
+      "seq": 383,
       "he": "מִיִּשְׂרָאֵל",
       "translit": "miYisraél",
       "gloss": "de Israel",
@@ -5243,7 +5229,7 @@
     },
     {
       "num": 581,
-      "seq": 385,
+      "seq": 384,
       "he": "הַיָּם",
       "translit": "hayám",
       "gloss": "o mar",
@@ -5256,7 +5242,7 @@
     },
     {
       "num": 582,
-      "seq": 386,
+      "seq": 385,
       "he": "הַשָּׁעָה",
       "translit": "hashaá",
       "gloss": "a hora",
@@ -5268,9 +5254,22 @@
       "file": "he-adc61994.mp3"
     },
     {
-      "num": 583,
+      "num": 639,
+      "seq": 386,
+      "he": "מַה",
+      "translit": "ma",
+      "gloss": "que",
+      "kind": "palavra",
+      "wave": 4,
+      "where": [
+        "palavras da frase ma-nishma"
+      ],
+      "file": "he-444da7f6.mp3"
+    },
+    {
+      "num": 640,
       "seq": 387,
-      "he": "נִשְׁמָע",
+      "he": "נִּשְׁמָע",
       "translit": "nishmá",
       "gloss": "se ouve",
       "kind": "palavra",
@@ -5278,7 +5277,7 @@
       "where": [
         "palavras da frase ma-nishma"
       ],
-      "file": "he-1f6957b6.mp3"
+      "file": "he-27580511.mp3"
     },
     {
       "num": 503,
@@ -5440,9 +5439,9 @@
       "file": "he-c9cd02f9.mp3"
     },
     {
-      "num": 574,
+      "num": 638,
       "seq": 400,
-      "he": "הַי נוֹעָה, מָה נִשְׁמָע?",
+      "he": "הַי נוֹעָה, מַה נִּשְׁמָע?",
       "translit": "hai Nóa, ma nishmá?",
       "gloss": "Oi, Noa, tudo bem?",
       "kind": "frase",
@@ -5450,7 +5449,7 @@
       "where": [
         "texto do módulo 4"
       ],
-      "file": "he-9b11915e.mp3"
+      "file": "he-183427a3.mp3"
     },
     {
       "num": 418,

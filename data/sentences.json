@@ -110,14 +110,14 @@
     },
     {
       "id": "ma-nishma",
-      "he": "מָה נִשְׁמָע",
+      "he": "מַה נִּשְׁמָע",
       "translit": "ma nishmá",
       "pt": "como vai",
       "after": 17,
       "era": "moderno",
       "words": [
-        { "he": "מָה", "translit": "ma", "pt": "que" },
-        { "he": "נִשְׁמָע", "translit": "nishmá", "pt": "se ouve" }
+        { "he": "מַה", "translit": "ma", "pt": "que" },
+        { "he": "נִּשְׁמָע", "translit": "nishmá", "pt": "se ouve" }
       ],
       "notePt": "Ao pé da letra é \"o que se ouve?\". É o \"e aí?\" do dia a dia israelense."
     },
@@ -262,7 +262,7 @@
       "words": [
         { "he": "לְאַט", "translit": "leát", "pt": "devagar" }
       ],
-      "notePt": "Está escrito nas placas de trânsito em Israel. Dobrada, {{לְאַט לְאַט}}, vira \"calma, uma coisa de cada vez\"."
+      "notePt": "Dobrada, {{לְאַט לְאַט}}, vira \"calma, uma coisa de cada vez\"."
     },
     {
       "id": "ani-rotse-maim",
