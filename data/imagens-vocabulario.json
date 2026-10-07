@@ -298,9 +298,9 @@
   },
   "תָּא": {
    "pt": "compartimento · cabine",
-   "image": "/media/vocabulario/compartimento-caixa-postal-d6abb853.webp",
-   "imageAlt": "Uma caixa de correio pequena, com a portinha aberta.",
-   "imagePrompt": "a row of small lockers, one compartment door open"
+   "image": "/media/vocabulario/compartimento-cabine-e231913d.webp",
+   "imageAlt": "Uma cabine de estudo pequena, com mesa e cadeira, numa biblioteca.",
+   "imagePrompt": "a small one-person study booth with a desk and a chair, in a library"
   },
   "יִשְׂרָאֵל": {
    "pt": "Israel",
@@ -340,9 +340,9 @@
   },
   "אַרְבַּע": {
    "pt": "quatro",
-   "image": "/media/vocabulario/quatro-473fcd44.webp",
-   "imageAlt": "Quatro maçãs vermelhas em fila.",
-   "imagePrompt": "exactly four simple round dots in a row"
+   "image": "/media/vocabulario/quatro-d6be2e36.webp",
+   "imageAlt": "O número 4, em azul.",
+   "imagePrompt": "a big glossy blue number 4 on a light background"
   },
   "יוֹם": {
    "pt": "dia",
@@ -382,8 +382,8 @@
   },
   "סְטוּדֶנְט": {
    "pt": "estudante",
-   "image": "/media/vocabulario/estudante-a7408c76.webp",
-   "imageAlt": "Uma estudante jovem de mochila, com livros nos braços.",
+   "image": "/media/vocabulario/estudante-b8232409.webp",
+   "imageAlt": "Um estudante jovem de mochila, com livros nos braços.",
    "imagePrompt": "a young adult male student carrying books under one arm"
   },
   "סוֹד": {
