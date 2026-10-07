@@ -57,6 +57,8 @@ export function CourseCard({
       tone={state === 'owned' ? 'wash' : 'surface'}
       className={`p-5 grid gap-3 content-start ${state === 'soon' ? 'opacity-90' : ''}`}
     >
+      {/* Para numeros.mjs: os números deste cartão são deste curso. */}
+      <span hidden data-curso={course.slug} />
       <div className="flex items-start justify-between gap-3">
         <span aria-hidden className="font-display text-[28px] font-bold leading-none
                                       text-[color-mix(in_srgb,var(--accent)_35%,transparent)]
@@ -131,6 +133,7 @@ export function CourseCard({
       >
         {cta}
       </Link>
+      <span hidden data-curso="fim" />
     </Card>
   );
 }

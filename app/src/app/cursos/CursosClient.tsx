@@ -45,7 +45,7 @@ export function CursosClient() {
             const owned = account.can(c.slug);
             const open = isPlayable(c);
             return (
-              <li key={c.slug}>
+              <li key={c.slug} data-curso={c.slug}>
                 <Card className="p-5 sm:p-6 grid gap-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-start">
                   <span aria-hidden
                         className="font-display text-[30px] font-bold leading-none tabular-nums
@@ -94,6 +94,8 @@ export function CursosClient() {
             );
           })}
         </ol>
+        {/* Marca o fim dos cartões: numeros.mjs só confere os números do cartão da alfabetização. */}
+        <span hidden data-curso="fim" />
       </Section>
 
       <Section labelledBy="ordem">
