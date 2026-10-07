@@ -9,7 +9,7 @@ export type Tecla = { ch: string; nome: string };
 
 export const LETRAS: Tecla[] = [
   ['א', 'Álef'], ['ב', 'Bet'], ['ג', 'Guímel'], ['ד', 'Dálet'], ['ה', 'He'], ['ו', 'Vav'],
-  ['ז', 'Záyin'], ['ח', 'Het'], ['ט', 'Tet'], ['י', 'Yod'], ['כ', 'Kaf'], ['ל', 'Lámed'],
+  ['ז', 'Záyin'], ['ח', 'Het'], ['ט', 'Tet'], ['י', 'Yud'], ['כ', 'Kaf'], ['ל', 'Lámed'],
   ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sámech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsádi'],
   ['ק', 'Kuf'], ['ר', 'Resh'], ['ש', 'Shin'], ['ת', 'Tav']
 ].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));

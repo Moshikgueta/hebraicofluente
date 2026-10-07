@@ -191,7 +191,7 @@ const ACHAR: readonly Rodada[] = [
     opcoes: [
       { he: 'מַיִם', certa: false, porque: 'Esta começa com Mem, a letra da direita. Procure o Álef na ponta direita.' },
       { he: 'לֶחֶם', certa: false, porque: 'Esta começa com Lámed, a letra da direita. Procure o Álef na ponta direita.' },
-      { he: 'יֶלֶד', certa: false, porque: 'Esta começa com Yod, a letra da direita. Procure o Álef na ponta direita.' },
+      { he: 'יֶלֶד', certa: false, porque: 'Esta começa com Yud, a letra da direita. Procure o Álef na ponta direita.' },
       { he: 'אֹכֶל', certa: true, porque: '' }
     ],
     acerto: 'אֹכֶל se lê «óchel» e quer dizer «comida» (o ch aqui não é o ch de «chave»: é um R raspado na garganta, como o R carioca de «carro»). Duas palavras de verdade, e você achou o Álef nas duas.',
