@@ -61,7 +61,7 @@
         {
           "tipo": "ler",
           "he": "יֶלֶד",
-          "ondePt": "O campo onde vai o nome do seu filho",
+          "ondePt": "Num formulário, dentro de expressões como \"nome da criança\"",
           "erradas": [
             "יַלְדָּה",
             "אִשָּׁה",
@@ -137,7 +137,7 @@
         {
           "tipo": "ler",
           "he": "שָׁעָה",
-          "ondePt": "No horário de funcionamento de uma loja",
+          "ondePt": "Em expressões de horário, como o horário de funcionamento de uma loja",
           "erradas": [
             "שָׁנָה",
             "יוֹם",

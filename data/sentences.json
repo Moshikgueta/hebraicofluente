@@ -47,12 +47,12 @@
     {
       "id": "david-ve-sara",
       "he": "דָּוִד וְשָׂרָה",
-      "translit": "Davíd veSará",
+      "translit": "Dávid veSará",
       "pt": "David e Sara",
       "after": 12,
       "era": "moderno",
       "words": [
-        { "he": "דָּוִד", "translit": "Davíd", "pt": "David" },
+        { "he": "דָּוִד", "translit": "Dávid", "pt": "David" },
         { "he": "וְשָׂרָה", "translit": "veSará", "pt": "e Sara" }
       ],
       "notePt": "O \"e\" não é palavra solta: é a letra {{ו}} colada na frente da palavra seguinte."
@@ -110,14 +110,14 @@
     },
     {
       "id": "ma-nishma",
-      "he": "מַה נִּשְׁמָע",
+      "he": "מָה נִשְׁמָע",
       "translit": "ma nishmá",
       "pt": "como vai",
       "after": 17,
       "era": "moderno",
       "words": [
-        { "he": "מַה", "translit": "ma", "pt": "que" },
-        { "he": "נִּשְׁמָע", "translit": "nishmá", "pt": "se ouve" }
+        { "he": "מָה", "translit": "ma", "pt": "que" },
+        { "he": "נִשְׁמָע", "translit": "nishmá", "pt": "se ouve" }
       ],
       "notePt": "Ao pé da letra é \"o que se ouve?\". É o \"e aí?\" do dia a dia israelense."
     },
