@@ -7,7 +7,7 @@
     "numeros ja atribuidos sao preservados e so clipes novos recebem numeros novos.",
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
-  "generatedAt": "2026-10-06",
+  "generatedAt": "2026-10-07",
   "total": 582,
   "waves": [
     {
@@ -1638,8 +1638,8 @@
       "num": 127,
       "seq": 122,
       "he": "קוֹף",
-      "translit": "Qof",
-      "gloss": "nome da letra Qof",
+      "translit": "Kuf",
+      "gloss": "nome da letra Kuf",
       "kind": "nome",
       "wave": 1,
       "where": [
@@ -2171,8 +2171,8 @@
       "num": 168,
       "seq": 163,
       "he": "שְׁוָא",
-      "translit": "sheva",
-      "gloss": "nome do sinal sheva",
+      "translit": "shva",
+      "gloss": "nome do sinal shva",
       "kind": "nome",
       "wave": 1,
       "where": [

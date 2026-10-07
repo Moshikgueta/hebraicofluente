@@ -53,7 +53,7 @@ export type Fonte = {
   tipo: TipoPar;
   letterId: string;
   /** O som em IPA, quando o par é de som: é por ele que dois sons iguais
-   *  com rótulos diferentes ("k" do Kaf e do Qof) se reconhecem. */
+   *  com rótulos diferentes ("k" do Kaf e do Kuf) se reconhecem. */
   som?: string;
 };
 

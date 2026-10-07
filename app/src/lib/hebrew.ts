@@ -12,7 +12,7 @@
 const POINTING = /[֑-ׇ]/;
 
 /**
- * VOWEL marks only - sheva through qubuts, plus qamats qatan.
+ * VOWEL marks only - shva through qubuts, plus qamats qatan.
  *
  * Deliberately excludes three marks that look like pointing and are not vowels:
  * dagesh (U+05BC), which decides בּ from ב, and the shin and sin dots
@@ -90,7 +90,7 @@ export function clusters(text: string): string[] {
    has to be able to separate them first - and the separation is not "first
    character, rest", because a vowel can be written as a mark under the
    consonant (מַ), as a following letter carrying a mark (מוֹ, מוּ), or as
-   nothing at all (shevá, which is a mark that says "no vowel").
+   nothing at all (shva, which is a mark that says "no vowel").
 
    Both halves are returned as real strings that recombine to the original
    under NFC, and `splitSyllable` is proved round-trip for all 132 syllables in

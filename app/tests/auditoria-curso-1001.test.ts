@@ -92,7 +92,7 @@ describe('CONT-001: "Ligue cada letra ao seu som" nunca tem duas cartas com o me
           gerados++;
           const direita = ex.pairs.map(p => p.right);
           expect(new Set(direita).size, `${raw.id}#${s}: ${direita.join(' | ')}`).toBe(direita.length);
-          /* E nem som parcial em comum (Kaf "k ou raspado" ao lado de Qof "k"). */
+          /* E nem som parcial em comum (Kaf "k ou raspado" ao lado de Kuf "k"). */
           const sons = ex.pairs.map(p => letters.find(x => x.letter === p.left)!)
             .map(x => (x.id === L.id ? L.sound : x.sound));
           for (let i = 0; i < sons.length; i++) {

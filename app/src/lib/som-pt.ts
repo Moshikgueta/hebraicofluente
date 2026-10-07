@@ -7,7 +7,7 @@
  * detalhe secundário, para quem conhece.
  *
  * O mapa é por FONEMA, não por letra: Tav e Tet são o mesmo /t/, Kaf com o
- * ponto e Qof o mesmo /k/, e é exatamente essa igualdade que o exercício de
+ * ponto e Kuf o mesmo /k/, e é exatamente essa igualdade que o exercício de
  * ligar letra e som precisa enxergar (CONT-001).
  */
 
@@ -53,7 +53,7 @@ export function somPt(sound: string): string {
 
 /**
  * Os fonemas de um `sound`, como chaves comparáveis: "mudo" vale para Álef
- * e Áyin, "/k/" para Kaf e Qof. Duas letras cujos conjuntos se cruzam não
+ * e Áyin, "/k/" para Kaf e Kuf. Duas letras cujos conjuntos se cruzam não
  * podem ser respostas diferentes da mesma pergunta de som.
  */
 export function fonemasDe(sound: string): string[] {
