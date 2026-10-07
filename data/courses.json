@@ -40,7 +40,7 @@
       "summaryPt": "Você olha para o hebraico e não sabe por onde começar? Aqui você aprende letra por letra, na ordem em que elas rendem mais, e lê uma palavra de verdade já na terceira lição.",
       "outcomesPt": [
         "Reconhecer as 22 letras - incluindo as cinco formas finais - fora de ordem e fora de contexto.",
-        "Ler qualquer palavra com nikud, mesmo sem saber o que ela significa.",
+        "Ler sozinho palavras novas com nikud, mesmo sem saber o que elas significam.",
         "Ler sem nikud as palavras mais frequentes, que é como o hebraico realmente aparece.",
         "Escrever as letras à mão em cursiva, com a ordem dos traços mostrada, e reconhecer a forma impressa.",
         "Decodificar placas, rótulos e etiquetas - o hebraico como ele aparece na rua."
@@ -64,27 +64,35 @@
       "cefr": "A1",
       "status": "soon",
       "engine": null,
-      "taglinePt": "Falar de si, perguntar o básico e entender uma resposta curta.",
-      "summaryPt": "Depois de ler, falar. O A1 pega a leitura que você já tem e põe vocabulário e gramática por cima: presente dos verbos, gênero e número, as perguntas que resolvem o dia.",
+      "taglinePt": "Se apresentar, comprar, pedir, perguntar o caminho e marcar um encontro, no hebraico do dia a dia.",
+      "summaryPt": "Depois de ler, falar. São 21 unidades, cada uma em torno de uma situação real em Israel: um diálogo, as palavras novas em blocos curtos, a gramática do presente e exercícios logo depois de cada parte. A revisão traz de volta, no dia certo, o que você errou. No fim, um exame final corrigido no servidor dá um certificado com código de verificação.",
       "outcomesPt": [
-        "Se apresentar, dizer de onde é, o que faz e com quem mora.",
-        "Conjugar verbos no presente nos quatro padrões e reconhecer a raiz de três letras.",
-        "Pedir, comprar, perguntar preço e horário.",
-        "Entender frases curtas ditas devagar por um falante nativo."
+        "Se apresentar, dizer de onde é, o que faz, onde mora e falar da família.",
+        "Usar os verbos no presente nas quatro formas, com o gênero e o número certos também nos adjetivos.",
+        "Pedir num café ou restaurante, comprar, perguntar o preço e pagar.",
+        "Dizer a hora, a data e os dias da semana, e marcar, aceitar ou remarcar um compromisso.",
+        "Perguntar o caminho e se virar no aeroporto, no hotel e no médico.",
+        "Ler textos curtos e acompanhar diálogos simples do dia a dia."
       ],
       "forWhomPt": [
-        "Quem terminou a Alfabetização ou já lê hebraico com nikud."
+        "Quem terminou a Alfabetização ou já lê hebraico com nikud.",
+        "Quem quer chegar a Israel resolvendo o básico sozinho."
       ],
       "requiresPurchase": true,
       "price": { "brl": 297, "listBrl": 397, "installments": 12, "pixDiscountPct": 10 },
       "accessMonths": 12,
       "modules": [
-        { "n": 1, "titlePt": "Quem é você", "subPt": "Pronomes, gênero e a frase sem verbo" },
-        { "n": 2, "titlePt": "A raiz de três letras", "subPt": "O mecanismo que faz o hebraico inteiro" },
-        { "n": 3, "titlePt": "Presente", "subPt": "Os quatro padrões, um de cada vez" },
-        { "n": 4, "titlePt": "Números, horas e dias", "subPt": "Marcar, combinar, chegar na hora" },
-        { "n": 5, "titlePt": "Na rua", "subPt": "Comprar, pedir, perguntar o caminho" },
-        { "n": 6, "titlePt": "Sem nikud, de verdade", "subPt": "Ler o que está escrito nas placas" }
+        { "n": 0, "titlePt": "Começando no hebraico", "subPt": "Os sons que mais confundem brasileiros e as expressões do primeiro dia. As letras e o nikud estão no curso de alfabetização." },
+        { "n": 1, "titlePt": "Eu e você", "subPt": "Se apresentar, perguntar quem é e o que é." },
+        { "n": 2, "titlePt": "Minha vida", "subPt": "Descrever pessoas e coisas, dizer o que você faz e onde mora." },
+        { "n": 3, "titlePt": "Comer, querer e ter", "subPt": "Dizer o que você come e quer, falar da família e do que você tem." },
+        { "n": 4, "titlePt": "Números e conversa", "subPt": "Preço, hora e dias da semana, e uma conversa inteira com alguém novo." },
+        { "n": 5, "titlePt": "Minha rotina", "subPt": "Contar o seu dia, dizer do que gosta e o que quer, precisa ou pode fazer." },
+        { "n": 6, "titlePt": "Casa e cidade", "subPt": "Dizer onde as coisas estão, descrever a casa, andar pela cidade e perguntar o caminho." },
+        { "n": 7, "titlePt": "Comida e compras", "subPt": "Pedir num café ou restaurante, comprar roupas e coisas, entender preços e pagar." },
+        { "n": 8, "titlePt": "Tempo e compromissos", "subPt": "Datas, meses e o tempo; marcar, aceitar, recusar e remarcar um compromisso." },
+        { "n": 9, "titlePt": "Israel na vida real", "subPt": "Aeroporto e hotel, corpo e saúde, e os números e as expressões que ainda faltavam." },
+        { "n": 10, "titlePt": "Consolidação A1", "subPt": "Se virar quando não entende, juntar tudo numa situação de verdade, e o exame final." }
       ]
     },
 
