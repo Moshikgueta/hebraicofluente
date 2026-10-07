@@ -119,7 +119,14 @@ let conferidas = 0;
 for (const [rota, arquivo] of paginas('out').sort()) {
   if (!LIVRES.has(rota)) continue;
   conferidas++;
-  const t = texto(readFileSync(arquivo, 'utf8'));
+  /* Na vitrine de cursos, cada cartão fala do SEU curso: "11 módulos" no
+     cartão do A1 é do A1. Só o cartão da alfabetização entra na conta (os
+     cartões são marcados com data-curso, e um marcador "fim" fecha a lista). */
+  const html = readFileSync(arquivo, 'utf8').split(/(?=data-curso=")/).filter(p => {
+    const m = p.match(/^data-curso="([^"]*)"/);
+    return !m || m[1] === 'alfabetizacao' || m[1] === 'fim';
+  }).join('');
+  const t = texto(html);
   const vistos = new Map();
 
   for (const [, n, palavra] of t.matchAll(/(\d+)\s+(lições|lição|letras|letra|módulos|módulo)\b/g)) {
