@@ -222,7 +222,7 @@
         },
         {
           "he": "עַמֵּךְ עַמִּי וֵאלֹהַיִךְ אֱלֹהָי",
-          "translit": "améch amí, veloháyich Elohái",
+          "translit": "améch amí, ve-Eloháyich Elohái",
           "pt": "O teu povo será o meu povo, e o teu Deus, o meu Deus."
         },
         {
@@ -457,7 +457,7 @@
         },
         {
           "he": "אֹמַר לַיהוָה מַחְסִי וּמְצוּדָתִי אֱלֹהַי אֶבְטַח־בּוֹ",
-          "translit": "omár laHashém: machsí umtsudatí, Elohái evtách-bo",
+          "translit": "omár laHashém: machsí umtsudatí, Elohái evtach-bó",
           "pt": "Digo ao Senhor: meu refúgio e minha fortaleza, meu Deus, em quem confio."
         }
       ]
@@ -622,7 +622,7 @@
         },
         {
           "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד",
-          "translit": "hiné ma-tov umá-naím shévet achím gam-yáchad",
+          "translit": "hiné ma-tóv uma-naím shévet achím gam-yáchad",
           "pt": "Vejam como é bom e agradável os irmãos viverem juntos."
         }
       ]
@@ -760,7 +760,7 @@
       {
         "id": "yod",
         "tituloPt": "O י que não se lê como «y»",
-        "textoPt": "Depois de um chirik ({{ִ}}), o {{י}} não se lê: o som é só «i». No fim {{ֶיךָ}}, ele fica mudo. Depois de um tsere ({{ֵ}}), na pronúncia de hoje, soa «ei».",
+        "textoPt": "Quando o {{י}} vem depois de um chirik ({{ִ}}) só para marcar a vogal, ele não acrescenta outro som: juntos, {{ִי}} representam o som «i». No fim {{ֶיךָ}}, ele fica mudo. Depois de um tsere ({{ֵ}}), na pronúncia de hoje, soa «ei».",
         "exemplos": [
           {
             "he": "אִירָא",

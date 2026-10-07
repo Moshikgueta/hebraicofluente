@@ -110,7 +110,7 @@
       "linhas": [
         {
           "quem": "Dan",
-          "he": "הַי נוֹעָה, מַה נִּשְׁמָע?",
+          "he": "הַיי נוֹעָה, מָה נִשְׁמָע?",
           "translit": "hai Nóa, ma nishmá?",
           "pt": "Oi, Noa, tudo bem?"
         },
@@ -128,9 +128,9 @@
         },
         {
           "quem": "Noa",
-          "he": "קְצָת. אֲנִי עִם תֵּה חַם.",
-          "translit": "ktsat. aní im te cham.",
-          "pt": "Um pouco. Estou com um chá quente."
+          "he": "קְצָת. אֲנִי שׁוֹתָה תֵּה.",
+          "translit": "ktsat. aní shotá te.",
+          "pt": "Um pouco. Estou tomando chá."
         },
         {
           "quem": "Dan",
@@ -162,7 +162,7 @@
           "pt": "oi"
         },
         {
-          "he": "מַה נִּשְׁמָע?",
+          "he": "מָה נִשְׁמָע?",
           "translit": "ma nishmá?",
           "pt": "tudo bem? (o que se ouve?)"
         },
@@ -375,7 +375,7 @@
         },
         {
           "quem": "Mãe",
-          "he": "מְעוּלֶה. יֵשׁ אוֹכֶל בַּמְּקָרֵר.",
+          "he": "מְעוּלֶה. יֵשׁ אוֹכֶל בַּמְקָרֵר.",
           "translit": "meulé. yesh óchel bamekarér.",
           "pt": "Ótimo. Tem comida na geladeira."
         },
@@ -471,7 +471,7 @@
           "t": "vf",
           "q": "Tem comida na geladeira.",
           "certa": true,
-          "porque": "{{יֵשׁ אוֹכֶל בַּמְּקָרֵר}}."
+          "porque": "{{יֵשׁ אוֹכֶל בַּמְקָרֵר}}."
         }
       ]
     },
@@ -614,7 +614,7 @@
       "tituloPt": "Na praia",
       "tipoPt": "Conversa",
       "revisado": true,
-      "introPt": "Natan e Maya se conhecem na praia. Tudo aqui usa só as seis letras do módulo e as palavras que você já leu nas lições.",
+      "introPt": "Natan e Maya se conhecem na praia. Tudo aqui usa só as seis letras do módulo, as palavras que você já leu nas lições e os sinais de vogal que você já aprendeu, incluindo {{וֹ}} e {{וּ}}.",
       "linhas": [
         {
           "quem": "Natan",
@@ -839,8 +839,8 @@
         },
         {
           "quem": "Mãe",
-          "he": "לֹא. הַיּוֹם שֶׁמֶשׁ.",
-          "translit": "lo. hayóm shémesh.",
+          "he": "לֹא. הַיּוֹם יֵשׁ שֶׁמֶשׁ.",
+          "translit": "lo. hayóm yesh shémesh.",
           "pt": "Não. Hoje tem sol."
         },
         {
@@ -894,7 +894,7 @@
             "Porque o passeio é amanhã"
           ],
           "certa": 0,
-          "porque": "{{הַיּוֹם שֶׁמֶשׁ}}: hoje tem sol."
+          "porque": "{{הַיּוֹם יֵשׁ שֶׁמֶשׁ}}: hoje tem sol."
         }
       ]
     },
@@ -909,13 +909,13 @@
         {
           "quem": "Noa",
           "he": "סְלִיחָה, אַתָּה סְטוּדֶנְט?",
-          "translit": "slichá, atá stúdent?",
+          "translit": "slichá, atá studént?",
           "pt": "Com licença, você é estudante?"
         },
         {
           "quem": "Dani",
           "he": "אֲנִי סְטוּדֶנְט חָדָשׁ. וְאַתְּ?",
-          "translit": "aní stúdent chadásh. veát?",
+          "translit": "aní studént chadásh. veát?",
           "pt": "Sou um estudante novo. E você?"
         },
         {
@@ -1217,8 +1217,8 @@
         },
         {
           "quem": "Maya",
-          "he": "לֹא. הַיּוֹם שֶׁמֶשׁ!",
-          "translit": "lo. hayóm shémesh!",
+          "he": "לֹא. הַיּוֹם יֵשׁ שֶׁמֶשׁ!",
+          "translit": "lo. hayóm yesh shémesh!",
           "pt": "Não. Hoje tem sol!"
         },
         {
@@ -1266,7 +1266,7 @@
           "t": "vf",
           "q": "A Maya levou um guarda-chuva.",
           "certa": false,
-          "porque": "{{לֹא. הַיּוֹם שֶׁמֶשׁ!}}: não, hoje tem sol."
+          "porque": "{{לֹא. הַיּוֹם יֵשׁ שֶׁמֶשׁ!}}: não, hoje tem sol."
         },
         {
           "t": "escolha",

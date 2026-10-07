@@ -687,7 +687,13 @@ export function buildLetterPractice(
      um item de ouvir em 569 nas lições, com 539 gravações no curso. Sem
      áudio, ela não entra e o lugar fica para a produção. */
   tentar(girar([exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning], L.order), 1);
-  for (const camada of shuffled(producao, rand)) camada();
+  /* MONTAR vem antes de LER quando o bloco aperta (07/10/2026): no sorteio,
+     ler às vezes ocupava os dois últimos lugares e a letra ficava sem montar,
+     e bastava uma palavra nova no curso para mudar o sorteio de outra lição
+     (tests/rodada2). O sorteio continua sendo consumido, para não mudar o
+     resto do bloco; só a prioridade entre os dois fica fixa. */
+  const sorteio = shuffled(producao, rand);
+  for (const camada of [producao[0]!, ...sorteio.filter(c => c !== producao[0])]) camada();
   /* A frase NÃO entra aqui: ela é acrescentada no fim, depois do arranjo.
      Ver a nota do `return`. */
 

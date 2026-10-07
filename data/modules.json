@@ -65,7 +65,7 @@
         { "n": 9, "letters": ["het", "tet"] },
         { "n": 10, "kind": "practice" }
       ],
-      "introPt": "O {{ו}} é a letra mais versátil do alfabeto: sozinha vale V, com um ponto em cima vira o som O, com um ponto no meio vira U. É por causa dela que este módulo abre a porta para metade do vocabulário básico. O {{ח}} traz o primeiro som raspado da garganta - como o R de \"carro\" no sotaque carioca, ou o J espanhol de \"Juan\". Não é o {{ר}}: aquele vibra com voz, este é só ar raspando.",
+      "introPt": "O {{ו}} é a letra mais versátil do alfabeto: sozinha vale V, com um ponto em cima vira o som O, com um ponto no meio vira U. É por causa dela que este módulo abre a porta para metade do vocabulário básico. O {{ח}} traz o primeiro som raspado da garganta, parecido com o R de \"carro\" em muitos sotaques brasileiros ou com o J espanhol de \"Juan\". Não é o {{ר}}: aquele vibra com voz, este é só ar raspando.",
       "goalsPt": [
         "Ler e escrever {{ו ז ח ט}}",
         "Ler {{ו}} nos três papéis: consoante V, vogal {{וֹ}} (o) e vogal {{וּ}} (u)",
@@ -109,7 +109,7 @@
         { "n": 19, "som": "fe", "he": "פ", "parHe": "פּ", "nomePt": "Fe", "topicPt": "{{פ}} sem o ponto e a final {{ף}} - o som F" },
         { "n": 20, "som": "contraste", "he": "בּ ב", "nomePt": "Com e sem o ponto", "topicPt": "{{בּ}} e {{ב}}, {{כּ}} e {{כ}}, {{פּ}} e {{פ}} lado a lado - o contraste dos três pares" }
       ],
-      "introPt": "Aqui o alfabeto se fecha, e com a sua regra mais elegante: três letras mudam de som conforme levem ou não um ponto no meio - o daguesh. Com ponto são oclusivas, {{בּ}} b, {{כּ}} k, {{פּ}} p; sem ponto são fricativas, {{ב}} v, {{כ}} ch, {{פ}} f. O guia ensina as formas COM ponto primeiro, porque são as que o brasileiro reconhece nas palavras emprestadas.",
+      "introPt": "Aqui o alfabeto se fecha, e com a sua regra mais elegante: três letras mudam de som conforme levem ou não um ponto no meio - o daguesh. Com ponto são oclusivas, {{בּ}} b, {{כּ}} k, {{פּ}} p; sem ponto são fricativas, {{ב}} v, {{כ}} ch, {{פ}} f. O guia apresenta primeiro as formas com ponto para introduzir de maneira clara os sons B, K e P antes de compará-los com V, CH e F.",
       "goalsPt": [
         "Ler e escrever {{ב כ פ}} e as formas finais {{ך}} e {{ף}}",
         "Ouvir e ver a diferença entre {{בּ}}/{{ב}}, {{כּ}}/{{כ}}, {{פּ}}/{{פ}}",
