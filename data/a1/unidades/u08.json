@@ -211,9 +211,9 @@
       },
       {
         "quem": "Maya",
-        "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה לִשְׁתּוֹת קָפֶה אִתָּנוּ?",
-        "translit": "anáchnu shotót kafé. atá rotsé lishtót kafé itánu?",
-        "pt": "Nós estamos tomando um café. Você quer tomar um café com a gente?"
+        "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה?",
+        "translit": "anáchnu shotót kafé. atá rotsé kafé?",
+        "pt": "Nós estamos tomando um café. Você quer um café?"
       },
       {
         "quem": "Dani",
@@ -497,9 +497,9 @@
     },
     {
       "t": "completar",
-      "q": "Complete a fala do diálogo: \"Nós estamos tomando um café. Você quer tomar um café com a gente?\"",
+      "q": "Complete a fala do diálogo: \"Nós estamos tomando um café. Você quer um café?\"",
       "antes": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה.",
-      "depois": "רוֹצֶה לִשְׁתּוֹת קָפֶה אִתָּנוּ?",
+      "depois": "רוֹצֶה קָפֶה?",
       "respostas": [
         "אתה"
       ]

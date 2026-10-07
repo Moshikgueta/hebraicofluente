@@ -10764,17 +10764,17 @@
       "file": "he-7a63b486.mp3"
     },
     {
-      "num": 890,
+      "num": 898,
       "seq": 808,
-      "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה לִשְׁתּוֹת קָפֶה אִתָּנוּ?",
-      "translit": "anáchnu shotót kafé. atá rotsé lishtót kafé itánu?",
-      "gloss": "Nós estamos tomando um café. Você quer tomar um café com a gente?",
+      "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה?",
+      "translit": "anáchnu shotót kafé. atá rotsé kafé?",
+      "gloss": "Nós estamos tomando um café. Você quer um café?",
       "kind": "frase",
       "wave": 6,
       "where": [
         "a1 unidade 8, diálogo"
       ],
-      "file": "he-e7e4f0a5.mp3"
+      "file": "he-34393c66.mp3"
     },
     {
       "num": 857,
