@@ -25,9 +25,9 @@
       "id": "quem-e",
       "fromOrder": 6,
       "sceneType": "conversa",
-      "labelPt": "Na pergunta \"quem é?\", quando alguém bate na porta ou liga",
+      "labelPt": "Quando alguém bate na porta ou liga",
       "he": "מִי",
-      "contextPt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém."
+      "contextPt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém. Quando alguém bate na porta ou liga, a pergunta é {{מִי זֶה?}}, \"quem é?\"."
     },
     {
       "id": "porta-loja",
