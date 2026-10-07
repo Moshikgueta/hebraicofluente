@@ -188,7 +188,7 @@
       },
       {
         "quem": "Natan",
-        "he": "וּבַמִּטְבָּח, לְיַד הַמְּקָרֵר?",
+        "he": "וּבַמִּטְבָּח, לְיַד הַמְקָרֵר?",
         "translit": "uvamitbách, leyád hamekarér?",
         "pt": "E na cozinha, ao lado da geladeira?"
       },
@@ -672,7 +672,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"E na cozinha, ao lado da geladeira?\"",
       "antes": "וּבַמִּטְבָּח,",
-      "depois": "הַמְּקָרֵר?",
+      "depois": "הַמְקָרֵר?",
       "respostas": [
         "ליד"
       ]

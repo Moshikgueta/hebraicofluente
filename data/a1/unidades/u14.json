@@ -234,7 +234,7 @@
   "gramatica": [
     {
       "tituloPt": "Esta blusa: הַחֻלְצָה הַזֹּאת",
-      "textoPt": "Para \"este\" e \"esta\", a coisa vem primeiro, com הַ, e depois הַזֶּה (masculino), הַזֹּאת (feminino) ou הָאֵלֶּה (plural), também com הַ: הַמְּעִיל הַזֶּה, הַחֻלְצָה הַזֹּאת, הַנַּעֲלַיִם הָאֵלֶּה. Você também vai ouvir הַזּוֹ, que é o mesmo que הַזֹּאת.",
+      "textoPt": "Para \"este\" e \"esta\", a coisa vem primeiro, com הַ, e depois הַזֶּה (masculino), הַזֹּאת (feminino) ou הָאֵלֶּה (plural), também com הַ: הַמְעִיל הַזֶּה, הַחֻלְצָה הַזֹּאת, הַנַּעֲלַיִם הָאֵלֶּה. Você também vai ouvir הַזּוֹ, que é o mesmo que הַזֹּאת.",
       "erroPt": "O português põe \"esta\" antes: \"esta blusa\". Em hebraico, זֹאת הַחֻלְצָה é outra coisa: é uma frase, \"esta é a blusa\" (Unidade 2).",
       "exemplos": [
         {
@@ -249,7 +249,7 @@
     },
     {
       "tituloPt": "O preço concorda com a coisa",
-      "textoPt": "עוֹלֶה (custa) é um verbo em ה, com 4 formas: כַּמָּה עוֹלֶה הַמְּעִיל? · כַּמָּה עוֹלָה הַחֻלְצָה? · כַּמָּה עוֹלִים הַמִּכְנָסַיִם? · כַּמָּה עוֹלוֹת הַנַּעֲלַיִם? Repare: \"calça\" (מִכְנָסַיִם) e \"sapatos\" (נַעֲלַיִם) são plurais em hebraico.",
+      "textoPt": "עוֹלֶה (custa) é um verbo em ה, com 4 formas: כַּמָּה עוֹלֶה הַמְעִיל? · כַּמָּה עוֹלָה הַחֻלְצָה? · כַּמָּה עוֹלִים הַמִּכְנָסַיִם? · כַּמָּה עוֹלוֹת הַנַּעֲלַיִם? Repare: \"calça\" (מִכְנָסַיִם) e \"sapatos\" (נַעֲלַיִם) são plurais em hebraico.",
       "erroPt": "O brasileiro diz \"quanto custa a calça\", no singular, e traduz com עוֹלֶה. Mas מִכְנָסַיִם é plural: כַּמָּה עוֹלִים הַמִּכְנָסַיִם?"
     },
     {
@@ -261,7 +261,7 @@
           "pt": "Tem alguma coisa mais barata?"
         },
         {
-          "he": "הַמְּעִיל הַזֶּה יָקָר מִדַּי.",
+          "he": "הַמְעִיל הַזֶּה יָקָר מִדַּי.",
           "pt": "Este casaco é caro demais."
         }
       ]
@@ -269,7 +269,7 @@
     {
       "tituloPt": "Levar a coisa: o אֶת, de novo",
       "textoPt": "Quando a coisa é definida (com הַ), o אֶת da Unidade 5 aparece: אֲנִי לוֹקַחַת אֶת הַחֻלְצָה הַזֹּאת. Com coisa indefinida, não: אֲנִי רוֹצֶה חֻלְצָה.",
-      "erroPt": "É fácil esquecer o אֶת quando a frase fica comprida. \"Eu levo este casaco\" = אֲנִי לוֹקֵחַ אֶת הַמְּעִיל הַזֶּה."
+      "erroPt": "É fácil esquecer o אֶת quando a frase fica comprida. \"Eu levo este casaco\" = אֲנִי לוֹקֵחַ אֶת הַמְעִיל הַזֶּה."
     }
   ],
   "dialogo": {
@@ -530,14 +530,14 @@
       "t": "escolha",
       "q": "\"Este casaco\"",
       "opcoes": [
-        "הַמְּעִיל הַזֶּה",
-        "הַמְּעִיל הַזֹּאת",
+        "הַמְעִיל הַזֶּה",
+        "הַמְעִיל הַזֹּאת",
         "מְעִיל הַזֶּה"
       ],
       "certa": 0,
       "dicas": {
         "1": "מְעִיל é masculino: הַזֶּה.",
-        "2": "As duas palavras levam הַ: הַמְּעִיל הַזֶּה."
+        "2": "As duas palavras levam הַ: הַמְעִיל הַזֶּה."
       }
     },
     {
@@ -670,7 +670,7 @@
     {
       "t": "erro",
       "q": "Ache o erro e escreva a frase certa.",
-      "errada": "הַמְּעִיל הַזֶּה יְקָרָה.",
+      "errada": "הַמְעִיל הַזֶּה יְקָרָה.",
       "respostas": [
         "המעיל הזה יקר"
       ],
@@ -713,7 +713,7 @@
         ]
       ],
       "opcoes": [
-        "כֵּן, כַּמָּה עוֹלֶה הַמְּעִיל הַזֶּה?",
+        "כֵּן, כַּמָּה עוֹלֶה הַמְעִיל הַזֶּה?",
         "לֹא, אֵין לִי.",
         "בְּתֵאָבוֹן!"
       ],

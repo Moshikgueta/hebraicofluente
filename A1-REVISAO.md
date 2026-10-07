@@ -57,6 +57,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - מָה נִשְׁמָע? (ma nishmá?) = e aí? tudo bem? (informal)
 - סַבָּבָּה (sabába) = beleza, tranquilo (informal)
 - יַאלְלָה (yála) = vamos! bora! (informal)
+- בַּיי (bay) = tchau (informal, do inglês "bye")
 - רֶגַע (réga) = um momento, espera
 - יוֹפִי (yófi) = ótimo, que bom
 - עֶרֶב טוֹב (érev tov) = boa noite (ao chegar)
@@ -447,7 +448,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - Maya: לֹא. הוּא לֹא פֹּה. (lo. hu lo po.) = Não. Não está aqui.
 - Natan: אוּלַי בַּסָּלוֹן, עַל הַסָּפָּה? (ulái bassalón, al hassapá?) = Talvez na sala, em cima do sofá?
 - Maya: לֹא, גַּם לֹא שָׁם. (lo, gam lo sham.) = Não, lá também não.
-- Natan: וּבַמִּטְבָּח, לְיַד הַמְּקָרֵר? (uvamitbách, leyád hamekarér?) = E na cozinha, ao lado da geladeira?
+- Natan: וּבַמִּטְבָּח, לְיַד הַמְקָרֵר? (uvamitbách, leyád hamekarér?) = E na cozinha, ao lado da geladeira?
 - Maya: לֹא. וְהוּא לֹא בַּתִּיק… (lo. vehú lo batík…) = Não. E não está na mochila…
 - Natan: רֶגַע, מָה זֶה, מִתַּחַת לַסָּפָּה? (réga, ma ze, mitáchat lassapá?) = Espera, o que é isso, embaixo do sofá?
 - Maya: הַטֶּלֶפוֹן! תּוֹדָה, נָתָן! (hatélefon! todá, Natán!) = O telefone! Obrigada, Natan!
@@ -494,7 +495,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 23. escrever: "varanda" → **מרפסת**
 24. escrever: "armário" → **ארון**
 25. completar: Complete a fala do diálogo: "Talvez na sala, em cima do sofá?":  ___ בַּסָּלוֹן, עַל הַסָּפָּה? → **אולי**
-26. completar: Complete a fala do diálogo: "E na cozinha, ao lado da geladeira?": וּבַמִּטְבָּח, ___ הַמְּקָרֵר? → **ליד**
+26. completar: Complete a fala do diálogo: "E na cozinha, ao lado da geladeira?": וּבַמִּטְבָּח, ___ הַמְקָרֵר? → **ליד**
 27. falar
 28. escrita livre: Descreva a sua casa em três frases: o que tem, o que não tem, e onde fica uma coisa. (exemplo: בַּבַּיִת שֶׁלִּי יֵשׁ סָלוֹן גָּדוֹל. אֵין מִרְפֶּסֶת. הַמַּחְשֵׁב עַל הַשֻּׁלְחָן בַּסָּלוֹן.)
 
@@ -777,17 +778,17 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 
 **Gramática**
 
-1. **Esta blusa: הַחֻלְצָה הַזֹּאת.** Para "este" e "esta", a coisa vem primeiro, com הַ, e depois הַזֶּה (masculino), הַזֹּאת (feminino) ou הָאֵלֶּה (plural), também com הַ: הַמְּעִיל הַזֶּה, הַחֻלְצָה הַזֹּאת, הַנַּעֲלַיִם הָאֵלֶּה. Você também vai ouvir הַזּוֹ, que é o mesmo que הַזֹּאת.
+1. **Esta blusa: הַחֻלְצָה הַזֹּאת.** Para "este" e "esta", a coisa vem primeiro, com הַ, e depois הַזֶּה (masculino), הַזֹּאת (feminino) ou הָאֵלֶּה (plural), também com הַ: הַמְעִיל הַזֶּה, הַחֻלְצָה הַזֹּאת, הַנַּעֲלַיִם הָאֵלֶּה. Você também vai ouvir הַזּוֹ, que é o mesmo que הַזֹּאת.
    - Erro comum: O português põe "esta" antes: "esta blusa". Em hebraico, זֹאת הַחֻלְצָה é outra coisa: é uma frase, "esta é a blusa" (Unidade 2).
    - Exemplo: הַחֻלְצָה הַזֹּאת יָפָה. = Esta blusa é bonita.
    - Exemplo: זֹאת הַחֻלְצָה. = Esta é a blusa.
-2. **O preço concorda com a coisa.** עוֹלֶה (custa) é um verbo em ה, com 4 formas: כַּמָּה עוֹלֶה הַמְּעִיל? · כַּמָּה עוֹלָה הַחֻלְצָה? · כַּמָּה עוֹלִים הַמִּכְנָסַיִם? · כַּמָּה עוֹלוֹת הַנַּעֲלַיִם? Repare: "calça" (מִכְנָסַיִם) e "sapatos" (נַעֲלַיִם) são plurais em hebraico.
+2. **O preço concorda com a coisa.** עוֹלֶה (custa) é um verbo em ה, com 4 formas: כַּמָּה עוֹלֶה הַמְעִיל? · כַּמָּה עוֹלָה הַחֻלְצָה? · כַּמָּה עוֹלִים הַמִּכְנָסַיִם? · כַּמָּה עוֹלוֹת הַנַּעֲלַיִם? Repare: "calça" (מִכְנָסַיִם) e "sapatos" (נַעֲלַיִם) são plurais em hebraico.
    - Erro comum: O brasileiro diz "quanto custa a calça", no singular, e traduz com עוֹלֶה. Mas מִכְנָסַיִם é plural: כַּמָּה עוֹלִים הַמִּכְנָסַיִם?
 3. **Mais e demais.** "Mais" + adjetivo é יוֹתֵר antes: יוֹתֵר זוֹל (mais barato), מִדָּה יוֹתֵר קְטַנָּה (um tamanho menor). "Demais" é מִדַּי, depois: יָקָר מִדַּי (caro demais).
    - Exemplo: יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל? = Tem alguma coisa mais barata?
-   - Exemplo: הַמְּעִיל הַזֶּה יָקָר מִדַּי. = Este casaco é caro demais.
+   - Exemplo: הַמְעִיל הַזֶּה יָקָר מִדַּי. = Este casaco é caro demais.
 4. **Levar a coisa: o אֶת, de novo.** Quando a coisa é definida (com הַ), o אֶת da Unidade 5 aparece: אֲנִי לוֹקַחַת אֶת הַחֻלְצָה הַזֹּאת. Com coisa indefinida, não: אֲנִי רוֹצֶה חֻלְצָה.
-   - Erro comum: É fácil esquecer o אֶת quando a frase fica comprida. "Eu levo este casaco" = אֲנִי לוֹקֵחַ אֶת הַמְּעִיל הַזֶּה.
+   - Erro comum: É fácil esquecer o אֶת quando a frase fica comprida. "Eu levo este casaco" = אֲנִי לוֹקֵחַ אֶת הַמְעִיל הַזֶּה.
 
 **Diálogo: A blusa azul**
 
@@ -826,7 +827,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 1. ligar: חֻלְצָה = camisa, blusa · מִכְנָסַיִם = calça · שִׂמְלָה = vestido · נַעֲלַיִם = sapatos · מְעִיל = casaco
 2. ligar: צָהֹב = amarelo · וָרֹד = rosa · אָפֹר = cinza · חוּם = marrom · כָּתֹם = laranja
 3. escolha: "Esta blusa" → **הַחֻלְצָה הַזֹּאת** / זֹאת הַחֻלְצָה / הַזֹּאת חֻלְצָה se escolher "זֹאת הַחֻלְצָה": Quase. זֹאת הַחֻלְצָה é uma frase: "esta é a blusa". · se escolher "הַזֹּאת חֻלְצָה": A ordem é a do hebraico: a coisa primeiro, com הַ, e depois הַזֹּאת.
-4. escolha: "Este casaco" → **הַמְּעִיל הַזֶּה** / הַמְּעִיל הַזֹּאת / מְעִיל הַזֶּה se escolher "הַמְּעִיל הַזֹּאת": מְעִיל é masculino: הַזֶּה. · se escolher "מְעִיל הַזֶּה": As duas palavras levam הַ: הַמְּעִיל הַזֶּה.
+4. escolha: "Este casaco" → **הַמְעִיל הַזֶּה** / הַמְעִיל הַזֹּאת / מְעִיל הַזֶּה se escolher "הַמְעִיל הַזֹּאת": מְעִיל é masculino: הַזֶּה. · se escolher "מְעִיל הַזֶּה": As duas palavras levam הַ: הַמְעִיל הַזֶּה.
 5. escolha: כַּמָּה ___ הַנַּעֲלַיִם? → **עוֹלוֹת** / עוֹלֶה / עוֹלָה se escolher "עוֹלֶה": נַעֲלַיִם é plural (e feminino): עוֹלוֹת. · se escolher "עוֹלָה": נַעֲלַיִם é plural: עוֹלוֹת.
 6. escolha: כַּמָּה ___ הַחֻלְצָה? → **עוֹלָה** / עוֹלֶה / עוֹלִים se escolher "עוֹלֶה": חֻלְצָה é feminina: עוֹלָה. · se escolher "עוֹלִים": עוֹלִים é para plural.
 7. separar (הַזֶּה / הַזֹּאת / הָאֵלֶּה): מְעִיל → הַזֶּה · שִׂמְלָה → הַזֹּאת · מִכְנָסַיִם → הָאֵלֶּה · כּוֹבַע → הַזֶּה · חֲצָאִית → הַזֹּאת · נַעֲלַיִם → הָאֵלֶּה
@@ -835,10 +836,10 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 10. tabela לוֹקֵחַ: mulher → לוקחת · homens → לוקחים · mulheres → לוקחות
 11. tabela יָקָר: feminino → יקרה · masc. plural → יקרים · fem. plural → יקרות
 12. achar o erro: Ache o erro e escreva a frase certa: "Eu quero este vestido." (fala uma mulher) אֲנִי רוֹצָה זֹאת הַשִּׂמְלָה. → **אני רוצה את השמלה הזאת / אני רוצה את השמלה הזו / אני רוצה את השימלה הזאת** ("Este vestido" é הַשִּׂמְלָה הַזֹּאת, e, como é definido, leva אֶת antes.)
-13. achar o erro: Ache o erro e escreva a frase certa. הַמְּעִיל הַזֶּה יְקָרָה. → **המעיל הזה יקר** (מְעִיל é masculino: יָקָר.)
+13. achar o erro: Ache o erro e escreva a frase certa. הַמְעִיל הַזֶּה יְקָרָה. → **המעיל הזה יקר** (מְעִיל é masculino: יָקָר.)
 14. montar: "Tem um tamanho menor?" → **יֵשׁ מִדָּה יוֹתֵר קְטַנָּה** (também: יֵשׁ מִדָּה קְטַנָּה יוֹתֵר)
 15. montar: "Dá para pagar no cartão?" → **אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?**
-16. conversa: O vendedor: אֶפְשָׁר לַעֲזוֹר? → **כֵּן, כַּמָּה עוֹלֶה הַמְּעִיל הַזֶּה?** / לֹא, אֵין לִי. / בְּתֵאָבוֹן! 
+16. conversa: O vendedor: אֶפְשָׁר לַעֲזוֹר? → **כֵּן, כַּמָּה עוֹלֶה הַמְעִיל הַזֶּה?** / לֹא, אֵין לִי. / בְּתֵאָבוֹן! 
 17. conversa: Noa: זֶה יָקָר מִדַּי. → **יֵשׁ גַּם מִבְצָע: שְׁלוֹשִׁים שֶׁקֶל.** / כֵּן, זֶה קָרוֹב. / מַזָּל טוֹב! 
 18. ordenar: 1) כַּמָּה עוֹלָה הַשִּׂמְלָה? 2) מֵאָה שֶׁקֶל. 3) זֶה יָקָר מִדַּי! 4) יֵשׁ גַּם שְׂמָלוֹת בְּמִבְצָע.
 19. ouvir: [ouve: יֵשׁ בְּאָדֹם?] O que a pessoa pergunta? → **Se tem em vermelho** / Se tem em azul / Se é vermelho 
@@ -929,7 +930,7 @@ Como revisar: marque o que mudar (ou escreva a correção ao lado) e me mande. U
 - Noa: לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף. (lo. beYisraél yoréd guéshem rak bachóref.) = Não. Em Israel só chove no inverno.
 - Dani: וּבִבְרָזִיל בְּיוּנִי זֶה חֹרֶף! (uviVrazíl beyúni ze chóref!) = E no Brasil, junho é inverno!
 - Noa: בֶּאֱמֶת? חֹרֶף בְּיוּנִי? מְשֻׁגָּע! (beemét? chóref beyúni? meshugá!) = Sério? Inverno em junho? Que loucura!
-- Dani: כֵּן. בְּיוּלִי קַר לִי בְּסָאוֹ פָּאוּלוֹ. (ken. beyúli kar li beSão Paulo.) = É. Em julho eu passo frio em São Paulo.
+- Dani: כֵּן. בְּיוּלִי קַר בְּסָאוֹ פָּאוּלוֹ. (ken. beyúli kar beSão Paulo.) = É. Em julho faz frio em São Paulo.
 - Noa: וּמָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ? (umatái yom hahulédet shelchá?) = E quando é o seu aniversário?
 - Dani: בְּדֶצֶמְבֶּר. בַּקַּיִץ שֶׁל בְּרָזִיל! (bedetsémber. bakáyits shel Brazíl!) = Em dezembro. No verão do Brasil!
 - glossário: סְתָם (stam) = por nada, à toa
@@ -1716,7 +1717,7 @@ Texto: שָׁלוֹם טוֹם! אֲנִי בַּשּׁוּק עִם אֵיתָ�
 11. completar: Complete com "comigo".: הוּא עוֹבֵד ___  → **איתי / אתי**
 12. escolha: "O cachorro deles" → **הַכֶּלֶב שֶׁלָּהֶם** / הַכֶּלֶב שֶׁלּוֹ 
 13. escolha: "Ela quer estudar": הִיא רוֹצָה ___ → **לִלְמוֹד** / לוֹמֶדֶת / לוֹמֵד 
-14. escolha: "Este casaco" → **הַמְּעִיל הַזֶּה** / זֶה הַמְּעִיל / הַמְּעִיל הַזֹּאת 
+14. escolha: "Este casaco" → **הַמְעִיל הַזֶּה** / זֶה הַמְעִיל / הַמְעִיל הַזֹּאת 
 15. escolha: "Estou com dor de barriga" → **כּוֹאֶבֶת לִי הַבֶּטֶן** / כּוֹאֲבִים לִי הַבֶּטֶן / אֲנִי כּוֹאֵב הַבֶּטֶן 
 16. escolha: "Quatro dias" → **אַרְבָּעָה יָמִים** / אַרְבַּע יָמִים / יָמִים אַרְבָּעָה 
 17. escolha: "O hospital" → **בֵּית הַחוֹלִים** / הַבֵּית חוֹלִים / הַבַּיִת חוֹלִים 
