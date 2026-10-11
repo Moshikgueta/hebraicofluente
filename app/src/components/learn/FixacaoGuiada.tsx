@@ -78,7 +78,7 @@ const NOMES: Record<Passo, string> = {
 };
 
 const TODOS: readonly Passo[] = ['ouvir', 'observar', 'som', 'memoria', 'revisao'];
-const NUMERO = ['zero', 'um', 'Dois', 'Três', 'Quatro', 'Cinco'];
+const NUMERO = ['Zero', 'Um', 'Dois', 'Três', 'Quatro', 'Cinco'];
 
 export function FixacaoGuiada({ alvo, onDone, rotuloFim = 'Ir para os exercícios', so, rotuloDoGrupo }: {
   alvo: AlvoFixacao;
