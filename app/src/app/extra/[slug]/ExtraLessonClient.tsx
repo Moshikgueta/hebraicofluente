@@ -27,7 +27,8 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
-import { AudioButton } from '@/components/learn/AudioButton';
+import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
+import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
 import { Prose } from '@/components/learn/Blocks';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, extras, type CourseModule } from '@/lib/content';
@@ -331,8 +332,105 @@ function FinalsStage({ onDone }: { onDone: () => void }) {
         </p>
       </Card>
 
+      {/* O que uma forma final É (11/10/2026): sem isto, há quem conte 27
+          letras, ou pense que ם e ן são duas formas da mesma letra. */}
+      <Card className="p-5 grid gap-2.5">
+        <h2 className="font-display text-[19px] font-semibold">Outro desenho, a mesma letra</h2>
+        <ul className="grid gap-2 text-[15px] leading-relaxed text-ink-body list-disc pl-5 m-0">
+          <li>Cinco letras mudam de forma quando aparecem no fim da palavra.</li>
+          <li>Muda só o desenho: o nome e o som da letra continuam os mesmos.</li>
+          <li>A forma final não é uma letra a mais. O alfabeto continua tendo 22 letras.</li>
+          <li>Na leitura, o que importa é reconhecer a forma final quando ela aparece.</li>
+        </ul>
+      </Card>
+
+      <MemOuNun />
+
       <Button size="lg" full onClick={onDone}>Continuar - ler sem nikud</Button>
     </div>
+  );
+}
+
+/* ── ם ou ן: o M e o N do fim da palavra (11/10/2026) ──────────────────────
+   O brasileiro diz "bem" sem fechar os lábios: o fim vira um som nasal, e
+   não um M. Por isso ם e ן soam iguais para ele no começo. São duas letras
+   diferentes (mem e nun), cada uma com a sua forma final, e o ouvido precisa
+   separá-las. As palavras são do curso e têm gravação de estúdio; sem
+   gravação, a pergunta vira de leitura em vez de sumir. */
+const FIM_MN: { he: string; fim: 'm' | 'n' }[] = [
+  { he: 'אֵם', fim: 'm' }, { he: 'מִן', fim: 'n' }, { he: 'שָׁם', fim: 'm' },
+  { he: 'גַּן', fim: 'n' }, { he: 'יוֹם', fim: 'm' }, { he: 'חַלּוֹן', fim: 'n' }
+];
+
+function MemOuNun() {
+  const palavras = useMemo(() => {
+    const todas = allLetters().flatMap(l => [...l.wordsToRead, ...l.wordsToRecognize]);
+    return FIM_MN.flatMap(x => {
+      const w = todas.find(t => t.he === x.he);
+      return w ? [{ ...x, translit: w.translit, pt: w.pt, audioId: w.audioId }] : [];
+    });
+  }, []);
+  const [resp, setResp] = useState<Record<string, 'm' | 'n'>>({});
+  useRegistroDeAudio();
+  return (
+    <Card tone="wash" className="p-5 sm:p-6 grid gap-4">
+      <h2 className="font-display text-[19px] font-semibold">ם ou ן? O M e o N do fim da palavra</h2>
+      <p className="text-[15px] leading-relaxed text-ink-body">
+        Em português, o fim de &quot;bem&quot; não é um M de verdade: os lábios não se fecham, e o
+        som fica nasal. Em hebraico, o fim conta. <He size="inline">ם</He> é o M, com os lábios
+        fechados no fim, como em <He size="inline">אֵם</He> (em, mãe). <He size="inline">ן</He> é
+        o N, com a língua atrás dos dentes e a boca aberta, como em <He size="inline">מִן</He> (min,
+        de). São duas letras diferentes, mem e nun, e cada uma tem a sua forma final.
+      </p>
+      <div className="grid gap-2">
+        <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)] m-0">
+          Escute a diferença: português × hebraico
+        </p>
+        <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
+          Ouça como o professor diz &quot;bem&quot; em português e as palavras em hebraico: preste
+          atenção nos lábios no fim de cada uma.
+        </p>
+        <GravacaoDoProfessor id="portuguese-em-vs-hebrew-mem" />
+        <GravacaoDoProfessor id="final-mem-vs-nun" />
+      </div>
+      <p className="font-ui text-[15px] font-semibold text-ink m-0">
+        Agora você: ouça cada palavra e diga como ela termina.
+      </p>
+      <ul className="grid gap-2.5 list-none p-0 m-0">
+        {palavras.map(w => {
+          const r = resp[w.he];
+          const ouvir = hasAudio(w.audioId);
+          return (
+            <li key={w.he} className="rounded-[var(--r-md)] border border-line bg-surface px-4 py-3 grid gap-2">
+              <div className="flex items-center gap-3 flex-wrap">
+                {ouvir && <AudioButton audioId={w.audioId} size="sm" label="Ouvir" ariaLabel={`Ouvir a palavra ${w.translit}`} />}
+                {(!ouvir || r) && <He size="word" mark={w.fim === 'm' ? 'ם' : 'ן'}>{w.he}</He>}
+                <span className="flex gap-2 ml-auto" role="group" aria-label="Como a palavra termina?">
+                  {(['m', 'n'] as const).map(op => (
+                    <button key={op} type="button" disabled={!!r}
+                            onClick={() => setResp(x => ({ ...x, [w.he]: op }))}
+                            className={`min-h-[44px] min-w-[96px] px-3 rounded-[var(--r-sm)] border font-ui text-[15px]
+                              ${r && op === w.fim ? 'border-[var(--teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)]'
+                                : r === op ? 'border-[var(--gold)] bg-[var(--gold-soft)] text-[var(--gold-ink)]'
+                                : 'border-line bg-surface hover:bg-surface-2 text-ink-body'}`}>
+                      {op === 'm' ? 'ם · M' : 'ן · N'}
+                    </button>
+                  ))}
+                </span>
+              </div>
+              {r && (
+                <p role="status" className={`font-ui text-[14px] leading-relaxed m-0 ${r === w.fim ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>
+                  {r === w.fim ? 'Isso. ' : 'Não: '}
+                  {w.translit} ({w.pt}) termina em {w.fim === 'm'
+                    ? 'ם, um M: os lábios se fecham no fim.'
+                    : 'ן, um N: a língua toca atrás dos dentes, e os lábios ficam abertos.'}
+                </p>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </Card>
   );
 }
 

@@ -64,6 +64,8 @@ import { LinkButton } from '@/components/ui/Button';
 import { hasAudio, tocarClipe, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { Prose, RegraCursiva } from '@/components/learn/Blocks';
 import { Compreensao, type ItemCompreensao } from '@/components/learn/Compreensao';
+import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
+import { AULA0_CONCLUIDA, AULA0_MINIMO, AULA0_PERGUNTAS, aula0Feita } from '@/lib/state/rules';
 import { AbrirTodas, Parte, Partes, useAbrirParte } from '@/components/learn/Partes';
 import {
   ANALOGIA_CURSIVA, CURSIVA_NO_CURSO, MESMA_LETRA,
@@ -221,6 +223,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           lógica da escrita antes de aprender a primeira letra - depois disso, cada
           lição vai parecer muito mais simples.
         </p>
+        <Aula0Situacao />
       </header>
 
       <Partes ids={PARTES} abertaDeInicio="o-sistema">
@@ -382,6 +385,9 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             </li>
           ))}
         </ul>
+        <MesmasConsoantes />
+        <GravacaoDoProfessor id="intro-nikud-vowels"
+          textoPt="Consoantes, vogais e o nikud, lidos em voz alta." />
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
           Por isso o curso faz os dois, nesta ordem: primeiro você lê com os sinais,
           que é o que permite ler sem adivinhar; depois eles vão saindo aos poucos, até
@@ -481,7 +487,15 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           </div>
         </div>
 
+        <p className="text-[15px] leading-relaxed text-ink-body">
+          Só o hebraico corre ao contrário. A tela do curso continua em português, da
+          esquerda para a direita: os botões, as explicações e as transliterações.
+        </p>
+
         <PorOndeComeca />
+        <PrimeiraEUltima />
+        <GravacaoDoProfessor id="intro-rtl-reading"
+          textoPt="Como ler uma palavra da direita para a esquerda, com a palavra שָׁלוֹם." />
 
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
           Os <strong className="font-semibold text-ink">números</strong> são a exceção:
@@ -857,17 +871,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
       {/* ── 13 · a atividade rápida, agora sobre a página inteira ─────── */}
       <Parte id="atividade" titulo={<>Checagem final: dezessete perguntas</>}>
-      <Compreensao
-        id="atividade-perguntas"
-        tituloOculto
-        titulo="E o resto? Dezessete perguntas"
-        intro="A última conferência antes das letras, sobre tudo o que esta página explicou. Nada aqui vale nota nem tranca nada - errar só faz aparecer a explicação."
-        perguntas={PERGUNTAS_GERAIS}
-        fecho={{
-          bom: 'O mapa está na cabeça. Pode começar pelas letras.',
-          parcial: 'O que escapou está explicado acima - dá para reler agora, ou seguir e voltar aqui quando o assunto aparecer numa lição.'
-        }}
-      />
+      <ChecagemFinal />
       </Parte>
 
       {/* ── como o curso funciona ─────────────────────────────────────── */}
@@ -1050,6 +1054,179 @@ const LINHAS_MISTAS: { partes: PedacoLinha[]; nota: string }[] = [
    Uma pergunta só, respondida com o dedo: em qual ponta desta palavra a
    leitura começa? Ler sobre a direção e APONTAR a direção são coisas
    diferentes, e a segunda é a que fica. */
+/* ── a Aula 0 é obrigatória (11/10/2026) ───────────────────────────────
+   A primeira letra abre quando a checagem final passa com AULA0_MINIMO
+   acertos (lib/state/rules.ts). Quem já tinha progresso em alguma lição
+   conta como tendo feito: ninguém perde o acesso que já tinha. */
+function Aula0Situacao() {
+  const p = useProgress();
+  if (!p.ready) return null;
+  const feita = aula0Feita(p.state);
+  return (
+    <p className={`font-ui text-[14.5px] leading-relaxed rounded-[var(--r-md)] px-4 py-3 max-w-[60ch]
+                   ${feita ? 'bg-[var(--teal-soft)] text-[var(--teal-ink)]' : 'bg-surface-2 text-ink-body'}`}>
+      {feita
+        ? 'Aula 0 concluída. As letras estão abertas, e esta página fica aqui para você voltar quando quiser.'
+        : `Esta aula é obrigatória: a primeira letra abre quando você terminar a checagem final, no fim da página, com pelo menos ${AULA0_MINIMO} acertos em ${AULA0_PERGUNTAS}. Dá para refazer quantas vezes quiser.`}
+    </p>
+  );
+}
+
+function ChecagemFinal() {
+  const p = useProgress();
+  const [tentativa, setTentativa] = useState(0);
+  const [certas, setCertas] = useState<number | null>(null);
+  const passou = certas !== null && certas >= AULA0_MINIMO;
+  return (
+    <div className="grid gap-4">
+      <Compreensao
+        key={tentativa}
+        id="atividade-perguntas"
+        tituloOculto
+        titulo="E o resto? Dezessete perguntas"
+        intro={`A última conferência antes das letras, sobre tudo o que esta página explicou. Para abrir a primeira letra, acerte pelo menos ${AULA0_MINIMO} das ${AULA0_PERGUNTAS}. Errar faz aparecer a explicação, e dá para refazer quantas vezes quiser.`}
+        perguntas={PERGUNTAS_GERAIS}
+        fecho={{
+          bom: 'O mapa está na cabeça. Pode começar pelas letras.',
+          parcial: 'O que escapou está explicado acima: dá para reler agora e refazer a checagem.'
+        }}
+        aoCompletar={n => {
+          setCertas(n);
+          if (n >= AULA0_MINIMO) p.markFirst(AULA0_CONCLUIDA);
+        }}
+      />
+      {certas !== null && (
+        <div role="status"
+             className={`rounded-[var(--r-md)] px-4 py-4 grid gap-3
+                         ${passou ? 'bg-[var(--teal-soft)]' : 'bg-[var(--gold-soft)]'}`}>
+          <p className={`font-ui text-[15px] leading-relaxed m-0 ${passou ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>
+            {passou
+              ? `${certas} de ${AULA0_PERGUNTAS}. Aula 0 concluída: a primeira letra está aberta.`
+              : `${certas} de ${AULA0_PERGUNTAS}. Para abrir a primeira letra são ${AULA0_MINIMO}. Releia as partes que escaparam e refaça a checagem.`}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {passou
+              ? <LinkButton href="/licao/alef" size="lg">Começar: a letra Álef</LinkButton>
+              : <button type="button"
+                        onClick={() => { setCertas(null); setTentativa(n => n + 1); }}
+                        className="min-h-[44px] px-4 rounded-[var(--r-md)] border border-line bg-surface font-ui text-[15px] text-ink hover:bg-surface-2">
+                  Refazer a checagem
+                </button>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── a primeira e a última letra ─────────────────────────────────────────
+   Saber que a leitura começa pela direita é uma coisa; achar a primeira
+   letra de uma palavra de verdade é outra. As letras aparecem separadas,
+   na mesma ordem visual da palavra (a primeira à direita), e o leitor de
+   tela as lê na ordem de leitura: a lista está em `dir="rtl"`. */
+const PALAVRA_DEMO = { he: 'שָׁלוֹם', letras: [
+  { g: 'שׁ', nome: 'a primeira' }, { g: 'ל', nome: '' }, { g: 'ו', nome: '' }, { g: 'ם', nome: 'a última' }
+] };
+
+function PrimeiraEUltima() {
+  const [pergunta, setPergunta] = useState<'primeira' | 'ultima' | 'fim'>('primeira');
+  const [erro, setErro] = useState<number | null>(null);
+  const alvo = pergunta === 'primeira' ? 0 : PALAVRA_DEMO.letras.length - 1;
+  const tocar = (k: number) => {
+    if (pergunta === 'fim') return;
+    if (k !== alvo) { setErro(k); return; }
+    setErro(null);
+    setPergunta(pergunta === 'primeira' ? 'ultima' : 'fim');
+  };
+  return (
+    <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-3">
+      <p className="font-ui text-[14px] font-semibold text-ink">
+        {pergunta === 'primeira' ? 'Agora toque na PRIMEIRA letra de שָׁלוֹם.'
+          : pergunta === 'ultima' ? 'E agora na ÚLTIMA letra.'
+          : 'Isso. A primeira é a da direita, a última é a da esquerda.'}
+      </p>
+      <div className="grid justify-items-center gap-1">
+        <He size="lg">{PALAVRA_DEMO.he}</He>
+        {/* A seta corre da direita para a esquerda, no sentido da leitura. */}
+        <div aria-hidden className="relative w-40 h-4 overflow-hidden">
+          <span className="seta-rtl absolute top-0 font-ui text-[14px] text-[var(--accent)]">← leitura</span>
+        </div>
+      </div>
+      <ol dir="rtl" className="flex justify-center gap-2 list-none p-0 m-0" aria-label="As letras de שָׁלוֹם, na ordem de leitura">
+        {PALAVRA_DEMO.letras.map((l, k) => {
+          const acertada = (pergunta !== 'primeira' && k === 0)
+            || (pergunta === 'fim' && k === PALAVRA_DEMO.letras.length - 1);
+          return (
+            <li key={k}>
+              <button type="button" onClick={() => tocar(k)}
+                      aria-label={`Letra ${k + 1} de ${PALAVRA_DEMO.letras.length}`}
+                      className={`min-w-[52px] min-h-[56px] rounded-[var(--r-sm)] border grid place-items-center
+                        ${acertada ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
+                          : erro === k ? 'border-[var(--gold)] bg-[var(--gold-soft)]'
+                          : 'border-line bg-surface hover:bg-surface-2'}`}>
+                <He size="word">{l.g}</He>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+      <p role="status" className="font-ui text-[14px] leading-relaxed min-h-[1.5em] m-0">
+        {erro !== null && (
+          <span className="text-[var(--gold-ink)]">
+            Ainda não. {pergunta === 'primeira'
+              ? 'A primeira letra é a que está mais à DIREITA.'
+              : 'A última letra é a que está mais à ESQUERDA, onde a leitura termina.'}
+          </span>
+        )}
+        {pergunta === 'fim' && (
+          <span className="text-[var(--teal-ink)]">
+            Em português, BOM DIA começa no B, à esquerda. Em hebraico, שָׁלוֹם começa no שׁ, à direita.
+          </span>
+        )}
+      </p>
+    </div>
+  );
+}
+
+/* ── as mesmas consoantes, três palavras ─────────────────────────────────
+   O nikud não é enfeite: as mesmas três letras, com sinais diferentes,
+   são três palavras diferentes. E os sinais ficam embaixo, em cima ou
+   dentro da letra, conforme o sinal. */
+const MESMAS = [
+  { he: 'סֵפֶר', translit: 'séfer', pt: 'livro' },
+  { he: 'סָפַר', translit: 'safár', pt: 'contou' },
+  { he: 'סַפָּר', translit: 'sapár', pt: 'barbeiro' }
+];
+
+function MesmasConsoantes() {
+  return (
+    <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-3">
+      <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
+        As mesmas letras, três palavras
+      </p>
+      <p className="text-[15px] leading-relaxed text-ink-body">
+        Sem nikud, <He size="inline">ספר</He> são só três consoantes: S, F (ou P) e R. Com nikud,
+        a leitura fica decidida:
+      </p>
+      <ul className="grid grid-cols-3 gap-2 list-none p-0 m-0">
+        {MESMAS.map(w => (
+          <li key={w.he} className="rounded-[var(--r-md)] bg-surface-2 p-3 grid gap-1 justify-items-center text-center">
+            <He size="word">{w.he}</He>
+            <span className="font-ui text-[14px] text-ink">{w.translit}</span>
+            <span className="font-ui text-[13px] text-ink-muted">{w.pt}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="text-[14.5px] leading-relaxed text-ink-body">
+        Repare onde os sinais ficam: quase todos <strong className="font-semibold text-ink">embaixo</strong> da
+        letra; o ponto do <He size="inline">פּ</He> fica <strong className="font-semibold text-ink">dentro</strong> dela
+        e muda o som de F para P; e há sinais que ficam <strong className="font-semibold text-ink">em cima</strong>,
+        como o O de <He size="inline">שָׁלוֹם</He>. Você não precisa decorar nada disso agora.
+      </p>
+    </div>
+  );
+}
+
 function PorOndeComeca() {
   const [escolha, setEscolha] = useState<'dir' | 'esq' | null>(null);
 

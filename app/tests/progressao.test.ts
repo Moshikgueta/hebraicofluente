@@ -8,7 +8,7 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  LIBERA_MARK, STAGE_COUNT, letraAtual, letraLiberada, liberaSeguinte, porQueTrancada
+  AULA0_CONCLUIDA, AULA0_ID, LIBERA_MARK, STAGE_COUNT, aula0Feita, letraAtual, letraLiberada, liberaSeguinte, porQueTrancada
 } from '@/lib/state/rules';
 import type { LearnerState, LessonProgress } from '@/lib/state/types';
 
@@ -27,8 +27,19 @@ const estado = (licoes: Record<string, LessonProgress>): LearnerState =>
   ({ lessons: licoes } as unknown as LearnerState);
 
 describe('a porta abre no lugar certo', () => {
-  it('a primeira letra está sempre aberta, inclusive para quem nunca entrou', () => {
-    expect(letraLiberada(estado({}), ORDEM, 'alef')).toBe(true);
+  it('a primeira letra abre com a Aula 0 concluída (11/10/2026)', () => {
+    expect(letraLiberada(estado({}), ORDEM, 'alef')).toBe(false);
+    expect(porQueTrancada(estado({}), ORDEM, 'alef')).toEqual({ anterior: AULA0_ID, falta: 'aula0', nota: null });
+    const feita = { ...estado({}), firsts: { [AULA0_CONCLUIDA]: '2026-10-11' } } as unknown as LearnerState;
+    expect(letraLiberada(feita, ORDEM, 'alef')).toBe(true);
+    /* Só ABRIR a Aula 0 não basta: é concluí-la. */
+    const aberta = { ...estado({}), firsts: { [AULA0_ID]: '2026-10-11' } } as unknown as LearnerState;
+    expect(letraLiberada(aberta, ORDEM, 'alef')).toBe(false);
+  });
+
+  it('quem já tinha começado não perde a primeira letra por causa da Aula 0', () => {
+    expect(letraLiberada(estado({ alef: licao('alef', 1, null) }), ORDEM, 'alef')).toBe(true);
+    expect(aula0Feita(estado({ mem: licao('mem', 2, null) }))).toBe(true);
   });
 
   it('a segunda continua fechada enquanto a primeira não fecha', () => {
@@ -95,7 +106,7 @@ describe('a porta trancada diz o que falta', () => {
   });
 
   it('e não diz nada quando está aberta', () => {
-    expect(porQueTrancada(estado({}), ORDEM, 'alef')).toBeNull();
+    expect(porQueTrancada(estado({ alef: licao('alef', 1, null) }), ORDEM, 'alef')).toBeNull();
   });
 });
 

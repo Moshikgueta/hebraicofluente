@@ -438,6 +438,11 @@
         "he": "תָּא",
         "translit": "ta",
         "pt": "cabine · compartimento"
+      },
+      {
+        "he": "אַתְּ",
+        "translit": "at",
+        "pt": "você (para mulher)"
       }
     ],
     "didYouKnow": "{{ת}} é a última letra do alfabeto. Por isso a expressão que equivale ao nosso \"do A ao Z\" em hebraico é {{מֵאָלֶף עַד תָּו}} - de Álef a Tav.",
@@ -449,10 +454,6 @@
     "audioIds": [],
     "biblicalWord": null,
     "bridgeWords": [
-      {
-        "he": "תיאוריה",
-        "pt": "teoria"
-      },
       {
         "he": "מתמטיקה",
         "pt": "matemática"
@@ -2270,7 +2271,7 @@
     "namePt": "Het",
     "translit": "ch",
     "sound": "/χ/",
-    "soundNotePt": "O mesmo som raspado do R carioca, mas mais forte e prolongado. Escrevemos \"ch\" na transliteração, e não tem nada a ver com o CH de \"chave\".",
+    "soundNotePt": "O som do {{ח}} não existe exatamente no português brasileiro. Ele é produzido na parte de trás da boca, com uma fricção parecida com a de alguns tipos de R carioca. A comparação ajuda a imaginar o som, mas não é uma equivalência perfeita. Na transliteração escrevemos \"ch\", que não tem nada a ver com o CH de \"chave\".",
     "articulacao": {
       "pontos": [
         {
@@ -2284,7 +2285,7 @@
       "funcaoPt": "{{ח}} é uma consoante raspada na garganta, e você já conhece um som parecido: em muitos sotaques brasileiros, ele lembra o R de \"rato\" ou \"carro\". Em hebraico, porém, esse som funciona como uma consoante própria: {{ח}}. Aparece em palavras muito comuns, como {{לֶחֶם}} (pão) e {{אָח}} (irmão), então vale praticar desde já.",
       "detalhePt": "Nas transliterações você vai ver esse som escrito como \"ch\" - {{לֶחֶם}} vira \"léchem\". Essa convenção vem do alemão (como em \"Bach\") e é usada nas transliterações em inglês, não vem do português (em espanhol, esse som se escreve com J), e é uma armadilha: nenhuma palavra brasileira usa CH com esse valor. Leia como raspado na garganta, nunca como o CH de \"chave\". Mais adiante você vai conhecer outra letra que, sem ponto, faz exatamente este som: no hebraico de hoje as duas soam igual.",
       "paraBrasileiroPt": "Você já tem esse som, ou quase: comece pelo R de \"rato\" e sustente o ar raspando mais fundo, como se fosse limpar a garganta de leve. Não force - {{ח}} é raspado, e não engasgado.",
-      "lembrePt": "{{ח}} é raspado na garganta, mais forte que o R de \"rato\". O \"ch\" da transliteração nunca é o CH de \"chave\".",
+      "lembrePt": "{{ח}} é raspado no fundo da boca, parecido com alguns R cariocas. O \"ch\" da transliteração nunca é o CH de \"chave\".",
       "checagem": [
         {
           "t": "escolha",
@@ -2311,7 +2312,7 @@
           "t": "vf",
           "q": "Em português, o som mais perto do {{ח}} é o CH de \"chave\".",
           "certa": false,
-          "porque": "Não. O mais perto é o R de \"rato\" na pronúncia carioca - e o {{ח}} é uma versão mais forte e mais funda dele. Por isso vale praticar em voz alta."
+          "porque": "Não. O mais perto é o R de \"rato\" de alguns sotaques cariocas, e mesmo assim é só uma aproximação: o {{ח}} é raspado no fundo da boca. Por isso vale ouvir e praticar em voz alta."
         }
       ]
     },
@@ -2410,7 +2411,7 @@
     "didYouKnow": "Belém, a cidade, é {{בֵּית לֶחֶם}} - \"casa do pão\". Você já lê {{לֶחֶם}}; a outra palavra chega com o {{ב}}, no módulo 5. E o nome que atravessou dois mil anos e chegou ao português é literalmente isso.",
     "brazilianMistake": {
       "wrong": "Ler {{ח}} como o CH de \"chave\", ou como um H mudo.",
-      "right": "Raspar a garganta, como no R de \"carro\" carioca, só que mais forte: {{לֶחֶם}} é \"léchem\".",
+      "right": "Raspar no fundo da boca, parecido com o R de \"carro\" de alguns sotaques cariocas: {{לֶחֶם}} é \"léchem\".",
       "why": "A transliteração \"ch\" vem do alemão (como em \"Bach\") e das transliterações em inglês, não do português. Nenhuma palavra brasileira usa CH com esse valor, então o olho lê errado antes de a boca tentar."
     },
     "audioIds": [],

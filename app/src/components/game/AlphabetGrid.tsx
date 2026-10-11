@@ -72,14 +72,23 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
           a tabela de referência, dentro do painel que existe para dizer o que
           fazer agora. Em cinco ou seis colunas curtas ela vira o que sempre
           foi: um cartaz do alfabeto, lido de relance. */}
+      {/* Da DIREITA para a esquerda (11/10/2026): o Álef no canto direito, e
+          cada linha nova recomeçando à direita, como se lê o hebraico. É
+          `dir` na grade, e não a lista invertida: a ordem no HTML continua a
+          do curso, então o Tab e o leitor de tela andam do Álef ao Pe, na
+          ordem de leitura. Cada célula volta para `ltr` por dentro, porque o
+          que ela tem de texto (o nome, a contagem) é português. */}
       <div
+        dir="rtl"
+        role="list"
+        aria-label="As 22 letras, na ordem do curso"
         className={`grid gap-2 ${compact
           ? 'grid-cols-[repeat(auto-fill,minmax(52px,1fr))]'
           : 'grid-cols-[repeat(auto-fill,minmax(52px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(64px,1fr))]'}`}
       >
         {letters.map(L => (
+          <div key={L.id} role="listitem" dir="ltr" className="grid">
           <LetterCell
-            key={L.id}
             letter={L}
             estado={estadoDe(L)}
             feita={isLessonComplete(p.state, L.id)}
@@ -89,6 +98,7 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
             porque={porQueTrancada(p.state, ordem, L.id)}
             nomeAnterior={id => nomeDaLicao(id, letters, course.modules)}
           />
+          </div>
         ))}
       </div>
 
@@ -190,10 +200,12 @@ function LetterCell({
   /* O cadeado diz o que FALTA, e não só que está fechado. Uma porta sem
      maçaneta é a forma mais rápida de alguém achar que o produto quebrou. */
   const motivo = porque
-    ? porque.falta === 'licao'
+    ? porque.falta === 'aula0'
+      ? 'Conclua a Aula 0 para abrir a primeira letra.'
+      : porque.falta === 'licao'
       ? `Termine a lição de ${nomeAnterior(porque.anterior)} para abrir esta.`
       : `Sua melhor nota em ${nomeAnterior(porque.anterior)} foi ${Math.round((porque.nota ?? 0) * 100)}%. `
-        + `Refaça a fixação e chegue a ${Math.round(LIBERA_MARK * 100)}% para abrir esta.`
+        + `Refaça os exercícios e chegue a ${Math.round(LIBERA_MARK * 100)}% para abrir esta.`
     : null;
 
   const dizer = trancada && motivo ? motivo : dito;

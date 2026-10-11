@@ -81,7 +81,7 @@ describe('a landing e o áudio dizem a mesma coisa', () => {
   it('mantém o método com as etapas da lição, e não uma lista à parte', () => {
     /* Desde 01/10/2026 (CONV-010) os passos da capa são as abas da lição:
        Conhecer, Palavras, Escrever, Praticar, Fixação - com a escrita. */
-    expect(PASSOS.map(p => p[0])).toEqual(['Conhecer', 'Palavras', 'Escrever', 'Praticar', 'Fixação']);
+    expect(PASSOS.map(p => p[0])).toEqual(['Conhecer', 'Palavras', 'Escrever', 'Fixação', 'Exercícios']);
   });
 
   it('volta a prometer sozinha no dia em que a gravação entrar', () => {

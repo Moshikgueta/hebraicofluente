@@ -7,6 +7,7 @@ import { He, HeSeq } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
 import { somPt } from '@/lib/som-pt';
 import { AudioButton } from './AudioButton';
+import { GravacaoDoProfessor } from './GravacaoDoProfessor';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import type { Letter, Scene, Syllable, Word } from '@/lib/content';
@@ -202,10 +203,18 @@ export function BridgeWords({ letter }: { letter: Letter }) {
               className="flex items-center justify-between gap-4 rounded-[var(--r-md)]
                          bg-surface px-4 py-3 border border-[color:var(--line-soft)]">
             <He size="word" mark={letter.letter}>{b.he}</He>
-            <span className="font-ui text-[14px] text-ink-muted text-right">{b.pt}</span>
+            <span className="flex items-center gap-3">
+              <span className="font-ui text-[14px] text-ink-muted text-right">{b.pt}</span>
+              {/* A pronúncia hebraica, quando gravada: sem gravação, nada. */}
+              <AudioButton audioId={b.audioId} size="sm" label="" ariaLabel={`Ouvir ${b.pt} em hebraico`} />
+            </span>
           </li>
         ))}
       </ul>
+      <div className="mt-3">
+        <GravacaoDoProfessor id="international-words-pronunciation"
+          textoPt="O acento e as vogais são os do hebraico, não os do português. Ouça antes de ler." />
+      </div>
       <p className="mt-3 font-ui text-[12.5px] text-ink-muted">
         Não tente ler a palavra inteira ainda - ela usa letras que você ainda não aprendeu.
       </p>

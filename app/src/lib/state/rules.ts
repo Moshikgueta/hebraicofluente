@@ -261,7 +261,7 @@ export const REGRA_DO_DOMINIO_CURTA = `${acertosPara(MASTERY_MARK)} de ${FIXACAO
 
 /** A regra inteira, para a tela dizer o que "dominar" quer dizer. */
 export const REGRA_DO_DOMINIO =
-  `concluir as ${STAGE_COUNT} etapas da lição e acertar pelo menos ${REGRA_DO_DOMINIO_CURTA} na fixação`;
+  `concluir as ${STAGE_COUNT} etapas da lição e acertar pelo menos ${REGRA_DO_DOMINIO_CURTA} nos exercícios`;
 
 export const isLessonComplete = (state: LearnerState, letterId: string): boolean =>
   (state.lessons[letterId]?.stagesDone.length ?? 0) >= STAGE_COUNT;
@@ -888,6 +888,18 @@ export const isExtraModuleDone = (state: LearnerState, id: string): boolean =>
  *    nela - terminar as etapas ou melhorar a nota.
  */
 
+/* ── a Aula 0 ─────────────────────────────────────────────────────────────
+ * Concluída quando a checagem final (17 perguntas) é feita com pelo menos
+ * AULA0_MINIMO acertos. Quem já tem progresso em alguma lição conta como
+ * tendo feito: a Aula 0 virou obrigatória em 11/10/2026, e ninguém que já
+ * estava estudando perde o acesso que tinha. */
+export const AULA0_ID = 'aula-0';
+export const AULA0_CONCLUIDA = 'aula-0-concluida';
+export const AULA0_PERGUNTAS = 17;
+export const AULA0_MINIMO = 12;
+export const aula0Feita = (state: LearnerState): boolean =>
+  !!state.firsts?.[AULA0_CONCLUIDA] || Object.keys(state.lessons ?? {}).length > 0;
+
 /** A nota de fixação que libera a letra seguinte. Um número, num lugar só. */
 export const LIBERA_MARK = 0.8;
 
@@ -907,21 +919,17 @@ export function letraLiberada(
   state: LearnerState, ordem: readonly string[], letterId: string
 ): boolean {
   const i = ordem.indexOf(letterId);
-  /* A primeira letra abre sempre, e NÃO depende da aula 0.
+  /* A primeira letra abre quando a Aula 0 foi concluída (11/10/2026).
      ──────────────────────────────────────────────────────────────────────
-     Esta é a linha que mudaria se a aula 0 passasse a trancar o alef, e ela
-     fica como está por decisão do dono do curso, em 22/09/2026. Não é
-     esquecimento, e quem vier depois não precisa reabrir a pergunta: a
-     razão inteira está em AUDITORIA-FINAL.md, na Parte 19.
+     Até aqui o álef abria sempre, por decisão do dono em 22/09/2026. Em
+     11/10/2026 o dono decidiu o contrário: ninguém começa as letras sem
+     antes entender a direção da leitura e o que é o nikud. A Aula 0 conta
+     como concluída quando a checagem final dela passa (`aula0Feita`).
 
-     Em resumo: a trava de progressão existe para o aluno não cair numa tela
-     onde metade dos símbolos é ruído, e a lição do alef não tem esse
-     problema para quem pulou a introdução. O que a trava compraria - que a
-     pessoa saiba que a aula 0 existe e saiba voltar a ela - já vem da
-     navegação, onde ela é um destino fixo em toda tela e nas duas larguras.
-     Sobraria só uma porta a mais na primeira visita, que é o momento em que
-     se perde gente. */
-  if (i <= 0) return i === 0;
+     NUNCA TIRA O QUE JÁ FOI DADO (decisão 1, acima): quem já tem progresso
+     em qualquer lição continua com tudo aberto, com ou sem a Aula 0. */
+  if (i < 0) return false;
+  if (i === 0) return aula0Feita(state);
 
   /* Já entrou alguma vez, aqui ou mais adiante: a porta continua aberta.
      Ver a decisão 1 acima - e note que basta UMA letra posterior com
@@ -932,12 +940,14 @@ export function letraLiberada(
   return liberaSeguinte(state, ordem[i - 1]!);
 }
 
-/** O que falta para abrir. `null` quando já está aberta. */
+/** O que falta para abrir. `null` quando já está aberta. `falta: 'aula0'`
+ *  é a primeira letra antes da Aula 0: `anterior` vem como AULA0_ID. */
 export function porQueTrancada(
   state: LearnerState, ordem: readonly string[], letterId: string
-): { anterior: string; falta: 'licao' | 'nota'; nota: number | null } | null {
+): { anterior: string; falta: 'licao' | 'nota' | 'aula0'; nota: number | null } | null {
   if (letraLiberada(state, ordem, letterId)) return null;
   const i = ordem.indexOf(letterId);
+  if (i <= 0) return { anterior: AULA0_ID, falta: 'aula0', nota: null };
   const anterior = ordem[i - 1]!;
   const l = state.lessons[anterior];
   const completa = (l?.stagesDone.length ?? 0) >= STAGE_COUNT;

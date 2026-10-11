@@ -7,8 +7,8 @@
  *   1 conhecer   - the letter, its sound, its syllables
  *   2 palavras   - vocabulary, discovered rather than listed
  *   3 escrever   - model, stroke order, tracing
- *   4 praticar   - mixed recognition and reading
- *   5 fixação    - the quiz that closes the letter
+ *   4 fixação    - guided reinforcement, no score (FixacaoGuiada)
+ *   5 exercícios - the graded quiz that closes the letter
  *
  * A stage is marked done when the learner reaches its end, and XP is awarded
  * there - never on navigation. */
@@ -21,7 +21,7 @@ import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
-import { ExercisePlayer, type PlayerResult, type PosicaoNoPlayer } from '@/components/learn/ExercisePlayer';
+import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { gravarLicao, lerLicao, type LicaoEmAndamento } from '@/lib/licao-em-andamento';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
@@ -31,17 +31,20 @@ import { CultureUnlock } from '@/components/learn/Culture';
 import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioButton';
 import { ANALOGIA_CURSIVA, MESMA_LETRA } from '@/lib/cursiva';
 import {
-  BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
+  BrazilianTip, BridgeWords, HebrewLetterCard, Prose,
   RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
+import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
+import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
+import { alvoDaLetra } from '@/lib/fixacao';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
 import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { useProgress } from '@/lib/state/store';
 import { acertosPara, FIXACAO_ITENS, letraAtual, letraLiberada, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
 import { allLetters, course, cultureAt, nextLetter, scenesForOrder, semOSomDe, type Letter } from '@/lib/content';
 import {
-  buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
+  buildMiniTest, buildRemedial, type Exercise
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
 import { nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom, soOLadoDoPonto } from '@/lib/sons';
@@ -51,8 +54,8 @@ const STAGES = [
   { n: 1, label: 'Conhecer' },
   { n: 2, label: 'Palavras' },
   { n: 3, label: 'Escrever' },
-  { n: 4, label: 'Praticar' },
-  { n: 5, label: 'Fixação' }
+  { n: 4, label: 'Fixação' },
+  { n: 5, label: 'Exercícios' }
 ] as const;
 
 export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
@@ -77,23 +80,11 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     [letter]
   );
 
-  /* Dois conjuntos diferentes: a etapa 4 pratica, a 5 mede. Reaproveitar um
-     só deixaria a pessoa decorar as respostas em vez das letras.
-
-     A prática é montada em CAMADAS - reconhecer, som, discriminar, dentro da
-     palavra, forma final, outra fonte, ler - e reserva ~30% para letras
-     anteriores. O motor faz essa composição; aqui só se diz quantas e quais
-     letras andaram custando. */
-  /* Cada rodada concluída muda as perguntas da seguinte, e o que já apareceu
-     vai para o fim da fila (lib/rodadas.ts). */
-  const [rodadaPratica, setRodadaPratica] = useState(0);
-  const practice = useMemo(
-    () => escolherRodada(`licao-pratica-${letter.id}`, seed => buildLetterPractice(letter, history, {
-      audioAvailable: audioAvailable(), seed, weak: p.weak
-    })).itens,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [letter, history, p.weak, rodadaPratica]
-  );
+  /* A etapa 4 é a Fixação guiada (sem nota) e a 5 são os Exercícios (com
+     nota). Até 11/10/2026 a 4 era um segundo bloco de perguntas dos mesmos
+     geradores da 5: o aluno fazia o teste duas vezes seguidas. Ver
+     components/learn/FixacaoGuiada.tsx. */
+  const alvo = useMemo(() => alvoDaLetra(letter, history), [letter, history]);
   /* O mini-teste: dez itens, um de cada coisa que "saber a letra" quer dizer
      - reconhecer, o som ou a variante, dentro de uma palavra, a forma que
      confunde, a CURSIVA, montar, ler, o significado, um DIGITADO - o único
@@ -176,19 +167,12 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* A Prática em andamento: as questões sorteadas e a posição. */
-  const [praticaSalva, setPraticaSalva] = useState(() => salvo?.pratica ?? null);
   useEffect(() => {
-    gravarLicao(letter.id, { etapa: stage, ...(stage === 4 && praticaSalva ? { pratica: praticaSalva } : {}) });
-  }, [letter.id, stage, praticaSalva]);
-  const itensDaPratica = praticaSalva?.itens ?? practice;
-  const aoAvancarNaPratica = useCallback((pos: PosicaoNoPlayer) => {
-    setPraticaSalva({ itens: itensDaPratica, ...pos });
-  }, [itensDaPratica]);
+    gravarLicao(letter.id, { etapa: stage });
+  }, [letter.id, stage]);
 
   const done = useCallback((n: number) => {
     p.finishStage(letter.id, n);
-    if (n === 4) setPraticaSalva(null);
     if (n < 5) setStage(n + 1);
   }, [p, letter.id, setStage]);
 
@@ -207,7 +191,7 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
 
   /* A lição seguinte abre com esta nota? Abaixo de LIBERA_MARK o botão
      principal não pode mandar para uma porta trancada (UXQA-002): ele vira
-     "Refazer a fixação". */
+     "Refazer os exercícios". */
   const proximaTrancada = !!seguinte && !letraLiberada(p.state, ordemToda, seguinte);
 
   if (trancada) return <PortaTrancada letter={letter} porque={trancada} />;
@@ -220,15 +204,7 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
       {stage === 2 && <StagePalavras letter={letter} onDone={() => done(2)} />}
       {stage === 3 && <StageEscrever letter={letter} onDone={() => done(3)} />}
       {stage === 4 && (
-        <StagePraticar
-          key={`p-${letter.id}`}
-          exercises={itensDaPratica} letter={letter} onDone={() => done(4)}
-          retomar={praticaSalva} aoAvancar={aoAvancarNaPratica}
-          aoTerminar={() => {
-            registrarRodada(`licao-pratica-${letter.id}`, itensDaPratica);
-            setPraticaSalva(null); setRodadaPratica(n => n + 1);
-          }}
-        />
+        <FixacaoGuiada key={`f-${letter.id}`} alvo={alvo} onDone={() => done(4)} />
       )}
       {/* A card earned by the letter just finished, shown where it was earned.
           `cultureAt` fires on the exact count, so it appears once and then
@@ -352,7 +328,7 @@ function StageConhecer({
         <HebrewLetterCard letter={letter} />
         {mostraTudo && <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-            Quando terminar esta aula
+            O que vamos aprender hoje?
           </p>
           <p className="text-[16px] leading-relaxed text-ink-body">
             Você vai conseguir reconhecer, pronunciar, ler e escrever{' '}
@@ -369,6 +345,10 @@ function StageConhecer({
         </p>
         {/* O lugar de onde o som sai, desenhado - em toda letra. */}
         <OndeNasceOSom articulacao={letter.articulacao} letra={letter.namePt} />
+        {letter.id === 'het' && (
+          <GravacaoDoProfessor id="letter-het-pronunciation"
+            textoPt="O ח sozinho e em palavras, comparado ao R de alguns sotaques brasileiros." />
+        )}
       </Card>
 
       {/* As duas (ou três) leituras, com um botão de som para cada uma.
@@ -572,7 +552,7 @@ function Ensinamento({ letter }: { letter: Letter }) {
   return (
     <div className="grid gap-4">
       <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">O que esta letra faz</h2>
+        <h2 className="text-[19px] font-semibold">O que esta letra faz?</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <Prose text={e.funcaoPt} />
         </p>
@@ -656,6 +636,10 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
             </p>
           </div>
           <WordList letter={letter} />
+          {letter.id === 'tav' && (
+            <GravacaoDoProfessor id="letter-alef-tav-example"
+              textoPt="Como se lê אַתְּ, e por que as mesmas duas letras também formam outra palavra." />
+          )}
           <CompararPronuncia itens={letter.wordsToRead} titulo="Compare a sua leitura das palavras com a do curso" />
         </section>
       ) : (
@@ -799,49 +783,12 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
         />
       )}
 
-      <Button size="lg" onClick={onDone} full>Continuar para a prática</Button>
+      <Button size="lg" onClick={onDone} full>Continuar para a fixação</Button>
     </div>
   );
 }
 
-/* ── 4 · praticar ───────────────────────────────────────────────────────── */
-function StagePraticar({
-  exercises, letter, onDone, aoTerminar, retomar, aoAvancar
-}: {
-  exercises: Exercise[]; letter: Letter; onDone: () => void; aoTerminar: () => void;
-  retomar?: PosicaoNoPlayer | null; aoAvancar?: (p: PosicaoNoPlayer) => void;
-}) {
-  const [finished, setFinished] = useState(false);
-
-  if (!exercises.length) {
-    return (
-      <div className="grid gap-5">
-        <ReadAloudRow items={letter.syllables.map(s => s.he)} label="Leia em voz alta" />
-        <Button size="lg" onClick={onDone} full>Continuar</Button>
-      </div>
-    );
-  }
-
-  return finished ? (
-    <div className="grid gap-5">
-      <Milestone
-        kicker="Prática concluída"
-        title="Agora o teste de verdade"
-        body="A próxima etapa vale nota, e você pode repetir quantas vezes quiser."
-      />
-      <Button size="lg" onClick={onDone} full>Ir para a fixação</Button>
-    </div>
-  ) : (
-    <ExercisePlayer
-      exercises={exercises}
-      title="Prática - sem nota"
-      retomar={retomar} aoAvancar={aoAvancar}
-      onDone={() => { aoTerminar(); setFinished(true); }}
-    />
-  );
-}
-
-/* ── 5 · fixação: o mini-teste, com portão de domínio ───────────────────
+/* ── 5 · exercícios: o mini-teste, com portão de domínio ────────────────
  *
  * Aqui a lição deixa de ser "rolei até o fim" e passa a ser "mostrei que
  * sei". FIXACAO_ITENS questões (10), e 75% delas (MASTERY_MARK, 8 de 10)
@@ -940,7 +887,7 @@ function StageFixacao({
             ? `Você reconhece ${letter.namePt} sozinha, dentro de uma palavra e entre as parecidas. Pode seguir com segurança.`
             : proximaTrancada && (strong || fezReforco)
               ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
-                + `A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}% na fixação. `
+                + `A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}% nos exercícios. `
                 + 'Refaça o teste: as perguntas mudam a cada tentativa.'
             : fezReforco
               ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
@@ -962,10 +909,10 @@ function StageFixacao({
             <>
               <Button variant={!strong && !fezReforco && reforco.length > 0 ? 'secondary' : 'primary'}
                       onClick={() => { setFase('teste'); onRetry(); }}>
-                {`Refazer a fixação (precisa de ${Math.round(LIBERA_MARK * 100)}%)`}
+                {`Refazer os exercícios (precisa de ${Math.round(LIBERA_MARK * 100)}%)`}
               </Button>
               <p className="basis-full font-ui text-[13px] text-ink-muted m-0">
-                {`A próxima lição abre com ${Math.round(LIBERA_MARK * 100)}% na fixação: ${acertosPara(LIBERA_MARK)} de ${FIXACAO_ITENS}.`}
+                {`A próxima lição abre com ${Math.round(LIBERA_MARK * 100)}% nos exercícios: ${acertosPara(LIBERA_MARK)} de ${FIXACAO_ITENS}.`}
               </p>
             </>
           ) : (
@@ -987,7 +934,7 @@ function StageFixacao({
   return (
     <ExercisePlayer
       exercises={exercises}
-      title={`Mini-teste - letra ${letter.namePt}`}
+      title={`Exercícios - letra ${letter.namePt}`}
       onDone={r => { track('quiz_completed', { letterId: letter.id, score: r.score }); onResult(r); }}
     />
   );
@@ -1012,6 +959,29 @@ function PortaTrancada({ letter, porque }: {
   const atual = letraAtual(p.state, ordem);
   const atualL = { namePt: nomeDaLicao(atual, allLetters(), course.modules) };
 
+  /* A primeira letra antes da Aula 0 (11/10/2026): o que falta não é uma
+     lição, é a aula de antes das letras. */
+  if (porque.falta === 'aula0') {
+    return (
+      <div className="grid gap-5 focus-col">
+        <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
+          <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">
+            Antes da primeira letra, a Aula 0
+          </h1>
+          <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
+            A letra <He size="inline">{letter.letter}</He> abre quando você conclui a Aula 0: a
+            direção da leitura, o que é o nikud e como o curso funciona. Ela termina com uma
+            checagem curta, e dá para refazer quantas vezes quiser.
+          </p>
+          <div className="grid gap-2 w-full max-w-[320px] pt-1">
+            <LinkButton href="/inicio" size="lg" full>Ir para a Aula 0</LinkButton>
+            <LinkButton href="/mapa" variant="ghost" full>Ver o mapa</LinkButton>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-5 focus-col">
       <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
@@ -1033,7 +1003,7 @@ function PortaTrancada({ letter, porque }: {
               e essa lição ainda não foi concluída. Cada letra usa as anteriores nas
               palavras - é por isso que a ordem importa.</>
             ) : (
-              <>Falta a fixação de <strong className="font-semibold text-ink">{anterior?.namePt}</strong>.
+              <>Faltam os exercícios de <strong className="font-semibold text-ink">{anterior?.namePt}</strong>.
               Sua melhor nota lá foi {Math.round((porque.nota ?? 0) * 100)}%, e esta letra abre
               a partir de {Math.round(LIBERA_MARK * 100)}%. Dá para refazer quantas vezes quiser -
               as perguntas mudam a cada tentativa.</>
@@ -1044,7 +1014,7 @@ function PortaTrancada({ letter, porque }: {
           <LinkButton href={rotaDaLicao(porque.anterior)} size="lg" full>
             {porque.falta === 'licao'
               ? `Ir para ${anterior?.namePt}`
-              : `Refazer a fixação de ${anterior?.namePt}`}
+              : `Refazer os exercícios de ${anterior?.namePt}`}
           </LinkButton>
           {atual !== porque.anterior && atualL && (
             <LinkButton href={rotaDaLicao(atual)} variant="secondary" full>

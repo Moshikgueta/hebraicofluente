@@ -8,6 +8,7 @@
  *
  * So the app's view of the world is checked against the recording manifest. */
 
+import { gravacaoDoProfessor, idsDoProfessor } from '@/lib/gravacoes-professor';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { allLetters, extras, guiaNikud, leiturasBonus, nikud, scenesUpTo, sentencesUpTo, textosDoCurso } from '../src/lib/content';
@@ -32,7 +33,11 @@ function requested(): { id: string; where: string }[] {
        desta lista, e o id delas - da consoante sozinha - não tinha gravação
        nenhuma: o quadro "As leituras desta letra" era mudo (29/09/2026). */
     (L.variantes ?? []).forEach(v => out.push({ id: v.audioId, where: `${L.id}.variante ${v.he}` }));
+    /* As palavras internacionais, com a pronúncia hebraica (11/10/2026). */
+    L.bridgeWords.forEach(b => out.push({ id: b.audioId, where: `${L.id}.ponte ${b.he}` }));
   }
+  /* As explicações gravadas pelo professor (data/gravacoes-professor.json). */
+  for (const id of idsDoProfessor()) out.push({ id: gravacaoDoProfessor(id)!.audioId, where: `professor ${id}` });
   for (const s of nikud().sounds) {
     s.signs.forEach(g => {
       out.push({ id: g.audioId, where: `nikud ${g.namePt}` });
@@ -128,7 +133,7 @@ describe('the audio manifest and the app agree', () => {
   });
 
   it('keeps every clip in exactly one wave, and wave 1 first', () => {
-    for (const c of manifest.clips) expect([1, 2, 3, 4, 5, 6]).toContain(c.wave);
+    for (const c of manifest.clips) expect([1, 2, 3, 4, 5, 6, 7]).toContain(c.wave);
     const w1 = manifest.clips.filter(c => c.wave === 1);
     /* Wave 1 must carry every letter name and every syllable: it is the wave
        that makes the course's central claim - this letter makes this sound -

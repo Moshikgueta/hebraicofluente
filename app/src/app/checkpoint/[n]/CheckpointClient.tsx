@@ -196,7 +196,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
                   <Link href={`/licao/${l.id}`}
                         className="ml-auto inline-flex items-center min-h-[44px] pl-3 font-ui text-[13px]
                                    text-[var(--accent)] hover:underline">
-                    {done ? `refazer a fixação (${REGRA_DO_DOMINIO_CURTA})` : 'fazer a lição'}
+                    {done ? `refazer os exercícios (${REGRA_DO_DOMINIO_CURTA})` : 'fazer a lição'}
                   </Link>
                 )}
               </li>

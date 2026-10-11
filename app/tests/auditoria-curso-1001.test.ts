@@ -241,7 +241,7 @@ describe('VIS-004: o painel e a revisão contam a mesma fila, e dizem "itens"', 
 describe('UXQA-002: abaixo de 80% nada aponta para letra trancada', () => {
   it('a lição troca o botão principal, e o painel aponta "Terminar"', () => {
     const l = fonte('app/licao/[letterId]/LessonClient.tsx');
-    expect(l).toContain('Refazer a fixação (precisa de ${Math.round(LIBERA_MARK * 100)}%)');
+    expect(l).toContain('Refazer os exercícios (precisa de ${Math.round(LIBERA_MARK * 100)}%)');
     expect(l).toContain('const proximaTrancada = !!seguinte && !letraLiberada(p.state, ordemToda, seguinte);');
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
     expect(d).toContain('cta={`Terminar ${terminar.nome}`}');
@@ -252,7 +252,7 @@ describe('UXQA-002: abaixo de 80% nada aponta para letra trancada', () => {
 describe('CONV-020: no primeiro acesso, a Aula 0 é o botão principal', () => {
   it('enquanto a Aula 0 não foi aberta e nenhuma lição começou', () => {
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
-    expect(d).toContain("!p.state.firsts['aula-0'] && Object.keys(p.state.lessons).length === 0");
+    expect(d).toContain('const aula0Primeiro = !aula0Feita(p.state);');
     expect(d).toContain('cta="Começar pela Aula 0"');
     expect(fonte('app/inicio/StartHereClient.tsx')).toContain("progresso.markFirst('aula-0')");
   });

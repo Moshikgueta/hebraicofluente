@@ -36,14 +36,16 @@ import type { DageshLetter, SomLicao } from '@/lib/engine/extras';
 import { CONTRASTE, idDoSom, ordemDeEnsino, rodadaDoContraste } from '@/lib/sons';
 import { track } from '@/lib/analytics';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
-import { Linha, marcaDe, Par, Praticar, Trancada, useDestino } from './SomLessonClient';
+import { Linha, marcaDe, Par, Trancada, useDestino } from './SomLessonClient';
+import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
+import { alvoDoSom } from '@/lib/fixacao';
 
 const STAGES = [
   { n: 1, label: 'Os pares' },
   { n: 2, label: 'Sílabas' },
   { n: 3, label: 'Palavras' },
-  { n: 4, label: 'Praticar' },
-  { n: 5, label: 'Fixação' }
+  { n: 4, label: 'Fixação' },
+  { n: 5, label: 'Exercícios' }
 ] as const;
 
 export function ContrasteClient({ sons, dagesh, modulo, licao }: {
@@ -68,12 +70,11 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
     setTrancada(porQueTrancada(p.state, ordem, id));
   }, [p.ready, p.state, ordem, id]);
 
-  const [rodadaPratica, setRodadaPratica] = useState(0);
-  const pratica = useMemo(
-    () => escolherRodada(`contraste-pratica`, seed => rodadaDoContraste(sons, { seed, count: 9, temAudio: hasAudio })).itens,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sons, versaoAudio, rodadaPratica]
-  );
+  /* A etapa 4 é a Fixação guiada, um par por vez, sem nota: ouvir, ligar
+     o som à letra com dica e comparar com o par. Até 11/10/2026 ela era a
+     mesma rodada de perguntas da etapa 5, com outra semente. */
+  const [par, setPar] = useState(0);
+  const alvos = useMemo(() => sons.map(alvoDoSom), [sons]);
   const teste = useMemo(
     () => escolherRodada(`contraste-fixacao`, seed => rodadaDoContraste(sons, { seed, count: 12, temAudio: hasAudio })).itens,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,8 +128,14 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
       {stage === 2 && <Silabas sons={sons} onDone={() => feito(2)} />}
       {stage === 3 && <Palavras sons={sons} onDone={() => feito(3)} />}
       {stage === 4 && (
-        <Praticar exercicios={pratica} onDone={() => feito(4)}
-                  aoTerminar={() => { registrarRodada('contraste-pratica', pratica); setRodadaPratica(n => n + 1); }} />
+        <FixacaoGuiada
+          key={`f-contraste-${par}`}
+          alvo={alvos[Math.min(par, alvos.length - 1)]!}
+          so={['ouvir', 'som', 'revisao']}
+          rotuloDoGrupo={`par ${Math.min(par, alvos.length - 1) + 1} de ${alvos.length}`}
+          rotuloFim={par < alvos.length - 1 ? 'Próximo par' : 'Ir para os exercícios'}
+          onDone={() => (par < alvos.length - 1 ? setPar(n => n + 1) : (setPar(0), feito(4)))}
+        />
       )}
       {stage === 5 && (
         resultado ? (
@@ -140,7 +147,7 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
           <ExercisePlayer
             key={`fix-contraste-${tentativa}`}
             exercises={teste}
-            title="Fixação - com e sem o ponto"
+            title="Exercícios - com e sem o ponto"
             onDone={r => {
               track('quiz_completed', { letterId: id, score: r.score });
               registrarRodada('contraste-fixacao', teste);
@@ -280,7 +287,7 @@ function Palavras({ sons, onDone }: { sons: SomLicao[]; onDone: () => void }) {
         instrucao="Leia as palavras de cada par, grave e confira se a diferença aparece: B e V, K e o raspado, P e F."
         maxSegundos={90}
       />
-      <Button size="lg" onClick={onDone} full>Continuar para a prática</Button>
+      <Button size="lg" onClick={onDone} full>Continuar para a fixação</Button>
     </div>
   );
 }
@@ -300,7 +307,7 @@ function Resultado({ r, onRetry, onNext, dica }: {
         ? 'Você olha o miolo da letra e decide o som. Pode seguir.'
         : `Refaça quando quiser: as perguntas mudam, e o que conta é decidir com o ponto ou sem ele sem hesitar. O checkpoint abre a partir de ${Math.round(LIBERA_MARK * 100)}%.`}
     >
-      <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>Refazer a fixação</Button>
+      <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>Refazer os exercícios</Button>
       <Button variant={bom ? 'primary' : 'secondary'} onClick={onNext}>Concluir e continuar</Button>
       <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{dica}</p>
     </Milestone>
