@@ -192,7 +192,7 @@ export type Letter = {
   syllables: Syllable[];
   wordsToRead: Word[];
   wordsToRecognize: Word[];
-  bridgeWords: { he: string; pt: string }[];
+  bridgeWords: { he: string; pt: string; audioId: string }[];
   /** Every glyph the learner may legally be shown at this point. */
   alphabetSoFar: string[];
   strokeOrder: { base: string | null; final: string | null };

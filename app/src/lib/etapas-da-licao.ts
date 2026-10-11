@@ -38,8 +38,8 @@ export const ETAPAS_DA_LICAO: readonly EtapaDaLicao[] = [
   },
   { aba: 'Palavras', descricaoPt: 'Palavras reais para ler, montadas só com letras que você já aprendeu.' },
   { aba: 'Escrever', descricaoPt: 'A letra em cursiva, traçada com o dedo na ordem certa dos traços.' },
-  { aba: 'Praticar', descricaoPt: 'Exercícios alternados, corrigidos na hora, com o porquê de cada erro.' },
-  { aba: 'Fixação', descricaoPt: 'Um teste curto. O que você errar volta depois, na revisão.' }
+  { aba: 'Fixação', descricaoPt: 'Ouvir, observar e lembrar a letra, com apoio a cada passo e sem nota.' },
+  { aba: 'Exercícios', descricaoPt: 'Exercícios variados com nota, corrigidos na hora. O que você errar volta depois, na revisão.' }
 ];
 
 /** "Cinco", "Seis"... para a frase que conta as etapas. */

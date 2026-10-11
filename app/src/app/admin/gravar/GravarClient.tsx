@@ -34,7 +34,7 @@ import {
 
 type Item = {
   id: string; num: number; he: string; translit: string | null; gloss: string;
-  kind: 'nome' | 'silaba' | 'palavra' | 'frase'; where: string[]; nome: string;
+  kind: 'nome' | 'silaba' | 'palavra' | 'frase' | 'professor'; where: string[]; nome: string;
 };
 type Gravacao = {
   tipo: string; tamanho: number; inicio: number | null; fim: number | null;
@@ -456,7 +456,11 @@ export function GravarClient() {
                   </span>
                   {/* Uma frase não pode espremer o texto ao lado: fica com no
                       máximo metade da linha e quebra dentro dela. */}
-                  <span className="max-w-[48vw] sm:max-w-[320px] text-right"><He size="word">{c.he}</He></span>
+                  <span className="max-w-[48vw] sm:max-w-[320px] text-right">
+                    {c.kind === 'professor'
+                      ? <span className="font-ui text-[13px] font-semibold text-[var(--accent)]">explicação do professor</span>
+                      : <He size="word">{c.he}</He>}
+                  </span>
                 </button>
               </li>
             );
@@ -475,10 +479,11 @@ export function GravarClient() {
           ) : (
             <>
               <div className="flex items-center gap-4">
-                <He size="xl">{item.he}</He>
+                {item.kind !== 'professor' && <He size="xl">{item.he}</He>}
                 <div className="min-w-0 flex-1">
                   <p className="font-ui text-[16px] text-ink m-0"><strong>{item.translit ?? item.gloss}</strong></p>
-                  <p className="font-ui text-[13px] text-ink-muted m-0 truncate">{item.gloss}</p>
+                  {/* O roteiro da explicação precisa ser lido inteiro enquanto se grava. */}
+                  <p className={`font-ui text-[13px] text-ink-muted m-0 ${item.kind === 'professor' ? '' : 'truncate'}`}>{item.gloss}</p>
                   <p className="font-ui text-[12.5px] text-ink-muted m-0">
                     arquivo: <code>{g ? g.arquivo : `${item.nome}.mp4`}</code>
                     {st === 'estudio' && !g && ' · tem arquivo do estúdio'}

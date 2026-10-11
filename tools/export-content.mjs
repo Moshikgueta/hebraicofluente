@@ -225,7 +225,7 @@ function main() {
       })),
       wordsToRead: (L.wordsToRead || []).map(word),
       wordsToRecognize: (L.wordsToRecognize || []).map(word),
-      bridgeWords: (L.bridgeWords || []).map(b => ({ he: NFC(b.he), pt: b.pt })),
+      bridgeWords: (L.bridgeWords || []).map(b => ({ he: NFC(b.he), pt: b.pt, audioId: audioIdFor(b.he) })),
       alphabetSoFar: alphabetUpTo(L.order),
       strokeOrder: { base: strokeSvg(L.id), final: L.finalForm ? strokeSvg(`${L.id}-final`) : null },
       audioId: audioIdFor(L.nameHe)
@@ -660,6 +660,24 @@ function main() {
           exemplos: s.exemplos.map(e => ({ ...e, he: NFC(e.he), audioId: audioIdFor(e.ouvir ?? e.he) }))
         }))
       }
+    }, null, 2) + '\n');
+  }
+
+  /* As explicações do professor (data/gravacoes-professor.json): o id com
+     significado, o título que a tela mostra e o clipe do catálogo. O roteiro
+     fica de fora: é só para quem grava. */
+  {
+    const { gravacoes } = JSON.parse(readFileSync(join(ROOT, 'data/gravacoes-professor.json'), 'utf8'));
+    const ids = new Set();
+    for (const g of gravacoes) {
+      if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(g.id) || ids.has(g.id)) throw new Error(`gravacoes-professor.json: id inválido ou repetido: ${g.id}`);
+      ids.add(g.id);
+      if (!g.tituloPt || !g.ondePt || !g.roteiroPt) throw new Error(`gravacoes-professor.json: ${g.id} sem título, lugar ou roteiro`);
+    }
+    writeFileSync(join(OUT, 'professor.json'), JSON.stringify({
+      gravacoes: Object.fromEntries(gravacoes.map(g => [g.id, {
+        tituloPt: g.tituloPt, audioId: audioIdFor(`professor ${g.id}`)
+      }]))
     }, null, 2) + '\n');
   }
 

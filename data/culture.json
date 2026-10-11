@@ -4,7 +4,7 @@
   "cards": [
     {
       "id": "de-onde-vem",
-      "titlePt": "De onde vem este alfabeto",
+      "titlePt": "De onde vem este alfabeto?",
       "kind": "historia",
       "unlockAt": 3,
       "leadPt": "As 22 letras que você está aprendendo têm cerca de três mil anos - e não nasceram em Israel.",
@@ -30,7 +30,7 @@
     },
     {
       "id": "de-onde-vem-o-nikud",
-      "titlePt": "De onde vieram os pontinhos",
+      "titlePt": "De onde vieram os pontinhos?",
       "kind": "historia",
       "unlockAt": 9,
       "leadPt": "O nikud é mais de mil anos mais novo do que as letras.",
@@ -43,7 +43,7 @@
     },
     {
       "id": "por-que-finais",
-      "titlePt": "Por que cinco letras mudam no fim",
+      "titlePt": "Por que cinco letras mudam no fim?",
       "kind": "historia",
       "unlockAt": 12,
       "leadPt": "As formas finais não foram inventadas: em várias delas, a forma do fim da palavra preserva características de formas mais antigas.",
@@ -109,7 +109,7 @@
     },
     {
       "id": "na-rua",
-      "titlePt": "O que você vai ver numa rua em Israel",
+      "titlePt": "O que você vai ver numa rua em Israel?",
       "kind": "cultura",
       "unlockAt": 16,
       "leadPt": "Placas de rua costumam vir em três alfabetos.",

@@ -1,12 +1,12 @@
 /* O que sobra gravado quando a lição termina.
    ─────────────────────────────────────────────────────────────────────────
-   O aluno fecha a fixação, volta ao painel, e a letra que ele acabou de
+   O aluno fecha os exercícios, volta ao painel, e a letra que ele acabou de
    terminar não entrou na conta de "letras dominadas". Nada na tela explica
    por quê: as cinco etapas estão marcadas, a nota apareceu no fim do bloco,
    e mesmo assim a barra não andou.
 
    ── a causa, que nenhum teste de unidade alcançava ──────────────────────
-   O fim da fixação chama DOIS mutadores no mesmo manipulador:
+   O fim dos exercícios chama DOIS mutadores no mesmo manipulador:
 
        p.finishQuiz(letra, nota);   // grava a nota
        p.finishStage(letra, 5);     // marca a quinta etapa
@@ -86,10 +86,10 @@ async function pagina(estado) {
   return { ctx, p: await ctx.newPage() };
 }
 
-/* ── 1 · terminar a fixação de verdade ──────────────────────────────────
+/* ── 1 · terminar os exercícios de verdade ──────────────────────────────────
    A letra chega com as quatro primeiras etapas feitas e SEM nota, que é
-   exatamente o estado de quem abre a fixação pela primeira vez. */
-log('\n── a fixação grava a nota ─────────────────────────');
+   exatamente o estado de quem abre os exercícios pela primeira vez. */
+log('\n── os exercícios gravam a nota ───────────────────────');
 {
   const { ctx, p } = await pagina(base({ alef: licao('alef', [1, 2, 3, 4], null) }));
 
@@ -127,9 +127,9 @@ log('\n── a fixação grava a nota ─────────────�
         const e = await estado();
         /* O fim do bloco: o player sai e o resultado entra, com o botão que
            a lição chama de "Concluir e continuar". */
-        /* Abaixo de 80% o botão é "Refazer a fixação" (UXQA-002): também é o
+        /* Abaixo de 80% o botão é "Refazer os exercícios" (UXQA-002): também é o
            fim, e a nota já foi gravada. */
-        if (/Concluir e continuar|Refazer a fixação/.test(e.txt)) { acabou = true; break; }
+        if (/Concluir e continuar|Refazer os exercícios/.test(e.txt)) { acabou = true; break; }
 
         const seguir = e.botoes.find(x => !x.off
           && /^Continuar|^Próxim|^Ver resultado|^Concluir/.test(x.txt));
@@ -152,7 +152,7 @@ log('\n── a fixação grava a nota ─────────────�
         await p.waitForTimeout(260);
       }
 
-      if (!acabou) erro('não cheguei ao fim da fixação em 140 toques');
+      if (!acabou) erro('não cheguei ao fim dos exercícios em 140 toques');
       else {
         /* A gravação tem debounce de 250 ms. */
         await p.waitForTimeout(900);
@@ -166,9 +166,9 @@ log('\n── a fixação grava a nota ─────────────�
           else erro(`a quinta etapa não ficou marcada (stagesDone: ${JSON.stringify(l.stagesDone)})`);
 
           if (typeof l.quizBest === 'number') {
-            ok(`a nota da fixação ficou gravada (${l.quizBest.toFixed(2)})`);
+            ok(`a nota dos exercícios ficou gravada (${l.quizBest.toFixed(2)})`);
           } else {
-            erro('a NOTA da fixação não ficou gravada (quizBest: '
+            erro('a NOTA dos exercícios não ficou gravada (quizBest: '
                + `${JSON.stringify(l.quizBest)}) - a letra nunca vai contar como dominada`);
           }
         }

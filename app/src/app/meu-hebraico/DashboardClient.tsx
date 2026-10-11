@@ -30,7 +30,7 @@ import { allLetters, course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
 import { CartaoMeuNome } from '@/components/learn/MeuNome';
-import { alphabetComplete, isExtraModuleDone, isLessonComplete, LIBERA_MARK, needsWarmUp, porQueTrancada } from '@/lib/state/rules';
+import { alphabetComplete, aula0Feita, isExtraModuleDone, isLessonComplete, LIBERA_MARK, needsWarmUp, porQueTrancada } from '@/lib/state/rules';
 import { useAccount } from '@/lib/account/store';
 import { CourseShelf } from '@/components/platform/CourseShelf';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
@@ -87,7 +87,8 @@ export function DashboardClient() {
     if (!id) return null;
     const ordem = ordemDeEnsino(allLetters(), course.modules);
     const porque = porQueTrancada(p.state, ordem, id);
-    if (!porque) return null;
+    /* Antes da Aula 0 o cartão principal já é ela (`aula0Primeiro`). */
+    if (!porque || porque.falta === 'aula0') return null;
     return {
       id: porque.anterior,
       nome: nomeDaLicao(porque.anterior, allLetters(), course.modules),
@@ -95,9 +96,9 @@ export function DashboardClient() {
     };
   }, [next, p.state]);
 
-  /* Primeiro acesso: a Aula 0 é a ação principal enquanto não foi aberta e
-     nenhuma lição começou (CONV-020). Depois, a lição. */
-  const aula0Primeiro = !p.state.firsts['aula-0'] && Object.keys(p.state.lessons).length === 0;
+  /* A Aula 0 é a ação principal enquanto não foi CONCLUÍDA (desde 11/10/2026
+     ela é obrigatória e abre a primeira letra). Depois, a lição. */
+  const aula0Primeiro = !aula0Feita(p.state);
 
   const alfabetoFechado = alphabetComplete(p.state, allLetters().map(l => l.id));
 
@@ -193,18 +194,11 @@ export function DashboardClient() {
             <CartaoCurso
               kicker="Antes da primeira letra"
               titulo="Como o hebraico funciona"
-              sub="Dez minutos de leitura: a direção, o alfabeto, o que muda em relação ao português e como este curso funciona. Depois, a primeira letra."
+              sub="A aula que abre a primeira letra: a direção da leitura, o alfabeto, o nikud e como este curso funciona. Termina com uma checagem curta, e aí o Álef abre."
               pct={p.progress}
               href="/inicio"
               cta="Começar pela Aula 0"
             />
-            {next.kind === 'letter' && (
-              <p className="font-ui text-[13.5px] text-ink-muted">
-                <Link href={`/licao/${next.letter.id}`} className="hover:text-[var(--accent)] underline underline-offset-2">
-                  Ir direto para a primeira letra
-                </Link>
-              </p>
-            )}
           </div>
         )}
 
@@ -212,7 +206,7 @@ export function DashboardClient() {
           <CartaoCurso
             kicker="Curso em andamento"
             titulo={flagship().titlePt}
-            sub={`Falta a fixação de ${terminar.nome}: a próxima lição abre com ${Math.round(LIBERA_MARK * 100)}%.`
+            sub={`Faltam os exercícios de ${terminar.nome}: a próxima lição abre com ${Math.round(LIBERA_MARK * 100)}%.`
               + (terminar.nota != null ? ` Sua melhor nota até agora: ${Math.round(terminar.nota * 100)}%.` : '')}
             pct={p.progress}
             href={rotaDaLicao(terminar.id)}

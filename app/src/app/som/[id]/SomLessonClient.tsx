@@ -23,6 +23,8 @@ import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
+import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
+import { alvoDoSom } from '@/lib/fixacao';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
 import { CompararPronuncia } from '@/components/learn/CompararPronuncia';
@@ -45,8 +47,8 @@ const etapasDe = (S: SomLicao) => [
   { n: 1, label: 'Conhecer' },
   { n: 2, label: 'Palavras' },
   { n: 3, label: S.tipo === 'daguesh' ? 'Ler' : 'Contraste' },
-  { n: 4, label: 'Praticar' },
-  { n: 5, label: 'Fixação' }
+  { n: 4, label: 'Fixação' },
+  { n: 5, label: 'Exercícios' }
 ];
 
 export function SomLessonClient({ som: S }: { som: SomLicao }) {
@@ -71,12 +73,9 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
 
   /* Refazer é outra rodada, e o que já apareceu vai para o fim da fila
      (lib/rodadas.ts). */
-  const [rodadaPratica, setRodadaPratica] = useState(0);
-  const pratica = useMemo(
-    () => escolherRodada(`som-pratica-${S.id}`, seed => rodadaDoSom(S, { seed, count: 8, temAudio: hasAudio })).itens,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [S, versaoAudio, rodadaPratica]
-  );
+  /* A etapa 4 é a Fixação guiada, sem nota. Até 11/10/2026 ela era a mesma
+     rodada de perguntas da etapa 5, com outra semente. */
+  const alvo = useMemo(() => alvoDoSom(S), [S]);
   const teste = useMemo(
     () => escolherRodada(`som-fixacao-${S.id}`, seed => rodadaDoSom(S, { seed, count: 8, temAudio: hasAudio })).itens,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,8 +131,7 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
         ? <Ler S={S} onDone={() => feito(3)} />
         : <Contraste S={S} onDone={() => feito(3)} />)}
       {stage === 4 && (
-        <Praticar exercicios={pratica} onDone={() => feito(4)}
-                  aoTerminar={() => { registrarRodada(`som-pratica-${S.id}`, pratica); setRodadaPratica(n => n + 1); }} />
+        <FixacaoGuiada key={`f-${S.id}`} alvo={alvo} onDone={() => feito(4)} />
       )}
       {stage === 5 && (
         resultado ? (
@@ -147,7 +145,7 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
           <ExercisePlayer
             key={`fix-${S.id}-${tentativa}`}
             exercises={teste}
-            title={`Fixação - som ${S.namePt}`}
+            title={`Exercícios - som ${S.namePt}`}
             onDone={r => {
               track('quiz_completed', { letterId: id, score: r.score });
               registrarRodada(`som-fixacao-${S.id}`, teste);
@@ -190,9 +188,11 @@ export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNu
       <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
         <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">{titulo}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
-          {trancada.falta === 'licao'
+          {trancada.falta === 'aula0'
+            ? <>Antes das letras e dos sons, conclua a Aula 0.</>
+            : trancada.falta === 'licao'
             ? <>Esta lição vem depois de <strong className="font-semibold text-ink">{anterior}</strong>, e essa lição ainda não foi concluída.</>
-            : <>Falta a fixação de <strong className="font-semibold text-ink">{anterior}</strong>: sua melhor nota lá
+            : <>Faltam os exercícios de <strong className="font-semibold text-ink">{anterior}</strong>: sua melhor nota lá
               foi {Math.round((trancada.nota ?? 0) * 100)}%, e esta lição abre a partir de {Math.round(LIBERA_MARK * 100)}%.</>}
         </p>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
@@ -346,7 +346,7 @@ function Ler({ S, onDone }: { S: SomLicao; onDone: () => void }) {
         maxSegundos={60}
       />
 
-      <Button size="lg" onClick={onDone} full>Continuar para a prática</Button>
+      <Button size="lg" onClick={onDone} full>Continuar para a fixação</Button>
     </div>
   );
 }
@@ -405,7 +405,7 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
         maxSegundos={60}
       />
 
-      <Button size="lg" onClick={onDone} full>Continuar para a prática</Button>
+      <Button size="lg" onClick={onDone} full>Continuar para a fixação</Button>
     </div>
   );
 }
@@ -446,23 +446,6 @@ export function Linha({ w, mark }: { w: { he: string; translit: string; pt: stri
   );
 }
 
-/* ── 4 · praticar ──────────────────────────────────────────────────────── */
-export function Praticar({ exercicios, onDone, aoTerminar }: {
-  exercicios: ReturnType<typeof rodadaDoSom>; onDone: () => void; aoTerminar: () => void;
-}) {
-  const [fim, setFim] = useState(false);
-  if (fim) {
-    return (
-      <div className="grid gap-5">
-        <Milestone kicker="Prática concluída" title="Agora a fixação"
-                   body="A próxima etapa vale nota, e você pode repetir quantas vezes quiser." />
-        <Button size="lg" onClick={onDone} full>Ir para a fixação</Button>
-      </div>
-    );
-  }
-  return <ExercisePlayer exercises={exercicios} title="Prática - sem nota" onDone={() => { aoTerminar(); setFim(true); }} />;
-}
-
 /* ── 5 · o resultado ───────────────────────────────────────────────────── */
 function Resultado({ S, r, onRetry, onNext, dica }: {
   S: SomLicao; r: PlayerResult; onRetry: () => void; onNext: () => void; dica: string;
@@ -482,7 +465,7 @@ function Resultado({ S, r, onRetry, onNext, dica }: {
           ? `Você decide entre ${S.parSom} e ${S.som} olhando a letra. Pode seguir.`
           : `Refaça quando quiser: as perguntas mudam, e o que conta é decidir entre ${S.parSom} e ${S.som} sem hesitar. A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}%.`}
     >
-      <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>Refazer a fixação</Button>
+      <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>Refazer os exercícios</Button>
       <Button variant={bom ? 'primary' : 'secondary'} onClick={onNext}>Concluir e continuar</Button>
       <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{dica}</p>
     </Milestone>

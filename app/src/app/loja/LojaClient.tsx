@@ -147,8 +147,8 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
             {semDominio > 0 && (
               <p className="m-0">
                 {semDominio === 1
-                  ? `Uma lição que você concluiu ficou abaixo de ${REGRA_DO_DOMINIO_CURTA}. Refazer a fixação dela já conta.`
-                  : `${semDominio} lições que você concluiu ficaram abaixo de ${REGRA_DO_DOMINIO_CURTA}. Refazer a fixação delas já conta.`}{' '}
+                  ? `Uma lição que você concluiu ficou abaixo de ${REGRA_DO_DOMINIO_CURTA}. Refazer os exercícios dela já conta.`
+                  : `${semDominio} lições que você concluiu ficaram abaixo de ${REGRA_DO_DOMINIO_CURTA}. Refazer os exercícios delas já conta.`}{' '}
                 <Link href="/mapa" className="text-[var(--accent)] underline">Ver as lições</Link>
               </p>
             )}

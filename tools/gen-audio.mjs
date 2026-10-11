@@ -58,7 +58,11 @@ export const WAVES = {
   /* 06/10/2026. O curso Hebraico A1 (data/a1/): as palavras, as falas dos
      diálogos, as leituras e os itens de escuta e de ditado de cada unidade.
      Como os textos, só as unidades que o dono já revisou. */
-  6: { id: 6, titlePt: 'Hebraico A1', notePt: 'As palavras, os diálogos, as leituras e os exercícios de escuta do curso A1, unidade por unidade. As frases no ritmo natural da conversa.' }
+  6: { id: 6, titlePt: 'Hebraico A1', notePt: 'As palavras, os diálogos, as leituras e os exercícios de escuta do curso A1, unidade por unidade. As frases no ritmo natural da conversa.' },
+  /* 11/10/2026. As explicações do professor (data/gravacoes-professor.json):
+     em português, com os exemplos em hebraico. O roteiro de cada uma está no
+     painel. Sem gravação, a tela do aluno não mostra nada no lugar. */
+  7: { id: 7, titlePt: 'Explicações do professor', notePt: 'Explicações curtas em português, com os exemplos ditos em hebraico. O que dizer em cada uma está no roteiro do item.' }
 };
 
 function main() {
@@ -133,6 +137,14 @@ function main() {
   }
 
   /* ── wave 3 · recognition, modules 6 and 7, the real-world scenes ──── */
+  /* As palavras internacionais de cada letra (11/10/2026): escritas sem
+     nikud, como aparecem na rua, e agora com a pronúncia hebraica gravada. */
+  for (const L of letters) {
+    for (const b of L.bridgeWords || []) {
+      add({ he: b.he, translit: null, gloss: b.pt,
+            kind: 'palavra', wave: 3, where: `letra ${L.order}, palavras internacionais` });
+    }
+  }
   for (const L of letters) {
     for (const w of L.wordsToRecognize) {
       add({ he: w.he, translit: w.translit, gloss: w.pt,
@@ -246,6 +258,12 @@ function main() {
     for (const s of guia.secoes) for (const e of s.exemplos) {
       add({ he: e.ouvir ?? e.he, translit: e.translit, gloss: e.pt, kind: 'palavra', wave: 5, where: 'guia do nikud bíblico' });
     }
+  }
+
+  /* As explicações do professor: a chave é o id, não um texto em hebraico. */
+  for (const g of readJson('data/gravacoes-professor.json').gravacoes) {
+    add({ he: `professor ${g.id}`, translit: `professor-${g.id}`, gloss: `${g.ondePt}. ${g.roteiroPt}`,
+          kind: 'professor', wave: 7, where: g.ondePt });
   }
 
   /* O Hebraico A1, unidade por unidade, na ordem dos módulos. */

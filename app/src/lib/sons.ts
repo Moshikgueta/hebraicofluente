@@ -26,7 +26,8 @@ export const idDoSom = (id: string) => `${SOM_PREFIXO}${id}`;
 
 /** Para onde leva uma lição do caminho, seja letra ou som. */
 export const rotaDaLicao = (id: string) =>
-  ehLicaoDeSom(id) ? `/som/${id.slice(SOM_PREFIXO.length)}` : `/licao/${id}`;
+  id === 'aula-0' ? '/inicio'
+    : ehLicaoDeSom(id) ? `/som/${id.slice(SOM_PREFIXO.length)}` : `/licao/${id}`;
 
 /** O nome de uma lição do caminho: "Bet", "Vet". */
 export function nomeDaLicao(
@@ -34,6 +35,7 @@ export function nomeDaLicao(
   letras: readonly { id: string; namePt: string }[],
   modulos: readonly { lessons: readonly { som?: string; nomePt?: string }[] }[]
 ): string {
+  if (id === 'aula-0') return 'Aula 0';
   if (!ehLicaoDeSom(id)) return letras.find(l => l.id === id)?.namePt ?? id;
   const som = id.slice(SOM_PREFIXO.length);
   return modulos.flatMap(m => m.lessons).find(l => l.som === som)?.nomePt ?? som;

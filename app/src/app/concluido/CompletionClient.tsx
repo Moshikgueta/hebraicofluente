@@ -68,13 +68,13 @@ export function CompletionClient() {
             {concluidasSemDominio.length > 0 && (
               <p className="font-ui text-[14px] text-ink-body">
                 {concluidasSemDominio.length === 1
-                  ? '1 lição concluída ainda está abaixo do domínio: refazer a fixação dela já conta.'
-                  : `${concluidasSemDominio.length} lições concluídas ainda estão abaixo do domínio: refazer a fixação delas já conta.`}
+                  ? '1 lição concluída ainda está abaixo do domínio: refazer os exercícios dela já conta.'
+                  : `${concluidasSemDominio.length} lições concluídas ainda estão abaixo do domínio: refazer os exercícios delas já conta.`}
               </p>
             )}
             <LinkButton href={`/licao/${faltam[0]!.id}`}>
               {isLessonComplete(p.state, faltam[0]!.id)
-                ? `Refazer a fixação de ${faltam[0]!.namePt}`
+                ? `Refazer os exercícios de ${faltam[0]!.namePt}`
                 : `Ir para a letra ${faltam[0]!.namePt}`}
             </LinkButton>
           </div>

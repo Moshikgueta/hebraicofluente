@@ -152,6 +152,10 @@
 .animate-pulse-dot { animation: hf-pulse 1.5s ease-in-out infinite; }
 .animate-xp    { animation: hf-xp 2.1s ease-out .15s both; }
 .animate-spark { animation: hf-spark 1s ease-out both; }
+/* A seta da Aula 0 que corre da direita para a esquerda, no sentido da
+   leitura (11/10/2026). Com movimento reduzido ela para no fim: à esquerda. */
+@keyframes hf-seta-rtl { from { transform: translateX(84px); opacity: .25; } 20% { opacity: 1; } to { transform: translateX(0); opacity: 1; } }
+.seta-rtl { left: 0; animation: hf-seta-rtl 2.4s ease-in-out infinite; }
 
 /* ── revelação por scroll ───────────────────────────────────────────────
    O estado inicial mora no CSS para que o conteúdo já esteja escrito no HTML

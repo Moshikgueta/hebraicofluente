@@ -338,10 +338,13 @@ async function percorre(letraId, etapa, rotulo, abrir) {
 /* Letras escolhidas para varrer formatos diferentes: alef não tem palavra
    legível, mem abre o vocabulário, shin e bet trazem as duas leituras, vav
    traz a frase, e as tardias trazem forma final e cena. */
+/* Desde 11/10/2026 a etapa 4 é a Fixação guiada, sem o tocador de
+   perguntas (components/learn/FixacaoGuiada.tsx): os exercícios corrigidos
+   são os da etapa 5. */
 for (const [id, etapa, rotulo] of [
-  ['alef', 4, 'Praticar'], ['mem', 4, 'Praticar'], ['he', 4, 'Praticar'],
-  ['shin', 4, 'Praticar'], ['vav', 4, 'Praticar'], ['bet', 4, 'Praticar'],
-  ['mem', 5, 'Fixação'], ['pe', 5, 'Fixação']
+  ['alef', 5, 'Exercícios'], ['mem', 5, 'Exercícios'], ['he', 5, 'Exercícios'],
+  ['shin', 5, 'Exercícios'], ['vav', 5, 'Exercícios'], ['bet', 5, 'Exercícios'],
+  ['pe', 5, 'Exercícios']
 ]) {
   await percorre(id, etapa, rotulo);
 }
@@ -354,7 +357,7 @@ await percorre('academia', 0, 'Letras parecidas', async () => {
 });
 
 /* A segunda passada, agora sabendo o gabarito dos itens digitados. */
-for (const id of ['alef', 'vav']) await percorre(id, 4, 'Praticar');
+for (const id of ['alef', 'vav']) await percorre(id, 5, 'Exercícios');
 if (!digitadasCertas) erro('nenhuma resposta digitada certa foi conferida - a segunda passada não achou o item');
 else console.log(`  ✓ ${digitadasCertas} resposta(s) digitada(s) certa(s) aceita(s)`);
 

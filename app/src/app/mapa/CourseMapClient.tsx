@@ -246,7 +246,10 @@ function Trecho({ module: m, estado, ultimo }: {
               <Prose text={m.subPt} />
             </p>
           ) : (
-            <div className="flex flex-wrap gap-2">
+            /* As letras do módulo da direita para a esquerda, na ordem em
+               que se aprendem (11/10/2026): `dir` no contêiner, e a ordem do
+               HTML continua a do curso, para o teclado e o leitor de tela. */
+            <div dir="rtl" className="flex flex-wrap gap-2">
               {itens.map(L => {
                 const feita = isLessonComplete(p.state, L.id);
                 const etapasFeitas = p.state.lessons[L.id]?.stagesDone.length ?? 0;
