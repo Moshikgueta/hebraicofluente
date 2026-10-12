@@ -47,8 +47,12 @@ describe('o som do Pe e do Fe', () => {
     const sem = comPe.filter(i => !gravado(i.audioId)).map(i => i.he);
     expect(sem).toEqual([]);
     /* E o id é o do próprio texto mostrado, com o nikud: פּ e פ nunca
-       dividem uma gravação. */
-    for (const i of comPe) expect(i.audioId).toBe(idDe(i.he));
+       dividem uma gravação. Desde 12/10/2026 um texto que só perdeu um
+       daguesh sem som (tools/daguesh.mjs) guarda o id de antes, pelo
+       apelido de data/audio-alias.json. */
+    const alias = (JSON.parse(readFileSync(new URL('../../data/audio-alias.json', import.meta.url), 'utf8')) as
+      { alias: Record<string, string> }).alias;
+    for (const i of comPe) expect(i.audioId).toBe(alias[i.he.normalize('NFC')] ?? idDe(i.he));
   });
 
   it('com nikud e sem nikud: a palavra sem pontos toca a gravação da gêmea pontuada', () => {

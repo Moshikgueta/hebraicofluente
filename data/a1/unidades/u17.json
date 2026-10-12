@@ -6,7 +6,7 @@
   "situacaoPt": "O Tom tira uns dias de férias em Eilat, no sul. Ele chega ao hotel às dez da noite, cansado e com uma mala pesada, e na recepção precisa resolver tudo em hebraico.",
   "palavras": [
     {
-      "he": "שְׂדֵה תְּעוּפָה",
+      "he": "שְׂדֵה תְעוּפָה",
       "translit": "sde teufá",
       "pt": "aeroporto (expressão fixa)"
     },
@@ -21,7 +21,7 @@
       "pt": "avião"
     },
     {
-      "he": "דַּרְכּוֹן",
+      "he": "דַרְכּוֹן",
       "translit": "darkón",
       "pt": "passaporte"
     },
@@ -38,10 +38,10 @@
     {
       "pt": "turista",
       "formas": [
-        "תַּיָּר",
-        "תַּיֶּרֶת",
-        "תַּיָּרִים",
-        "תַּיָּרוֹת"
+        "תַיָר",
+        "תַיֶרֶת",
+        "תַיָרִים",
+        "תַיָרוֹת"
       ],
       "translit": [
         "tayár",
@@ -71,7 +71,7 @@
       "pt": "ar-condicionado"
     },
     {
-      "he": "מַגֶּבֶת",
+      "he": "מַגֶבֶת",
       "translit": "magévet",
       "pt": "toalha"
     },
@@ -170,14 +170,14 @@
     {
       "tituloPt": "Ajudar e esperar: PARA alguém",
       "textoPt": "Em hebraico se ajuda e se espera \"para\" alguém, com o לְ e as terminações da Unidade 8: לַעֲזוֹר לִי (me ajudar), אֲנִי מְחַכֶּה לָךְ (estou esperando você), הִיא עוֹזֶרֶת לוֹ (ela o ajuda).",
-      "erroPt": "O brasileiro traduz \"me ajuda\" com a palavra de objeto direto, אוֹתִי. Mas com עוֹזֵר e מְחַכֶּה é sempre לְ: אַתָּה יָכוֹל לַעֲזוֹר לִי?",
+      "erroPt": "O brasileiro traduz \"me ajuda\" com a palavra de objeto direto, אוֹתִי. Mas com עוֹזֵר e מְחַכֶּה é sempre לְ: אַתָה יָכוֹל לַעֲזוֹר לִי?",
       "exemplos": [
         {
-          "he": "אַתָּה יָכוֹל לַעֲזוֹר לִי?",
+          "he": "אַתָה יָכוֹל לַעֲזוֹר לִי?",
           "pt": "Você pode me ajudar? (a ele)"
         },
         {
-          "he": "אֲנַחְנוּ מְחַכִּים לָכֶם בַּקַּבָּלָה.",
+          "he": "אֲנַחְנוּ מְחַכִּים לָכֶם בַּקַבָּלָה.",
           "pt": "Estamos esperando vocês na recepção."
         }
       ]
@@ -189,17 +189,17 @@
     },
     {
       "tituloPt": "De… até…: מִ־… עַד…",
-      "textoPt": "Para horários: מִ־ grudado no começo e עַד no fim: מִשֶּׁבַע עַד עֶשֶׂר (das sete às dez), מִיּוֹם רִאשׁוֹן עַד יוֹם חֲמִישִׁי. É o mesmo מִ־ de מִבְּרָזִיל (Unidade 1). Antes de א, ה, ח, ע e ר, ele vira מֵ־: מֵאַחַת עַד שְׁתַּיִם, מֵחָמֵשׁ עַד שֵׁשׁ.",
+      "textoPt": "Para horários: מִ־ grudado no começo e עַד no fim: מִשֶׁבַע עַד עֶשֶׂר (das sete às dez), מִיוֹם רִאשׁוֹן עַד יוֹם חֲמִישִׁי. É o mesmo מִ־ de מִבְּרָזִיל (Unidade 1). Antes de א, ה, ח, ע e ר, ele vira מֵ־: מֵאַחַת עַד שְׁתַיִם, מֵחָמֵשׁ עַד שֵׁשׁ.",
       "exemplos": [
         {
-          "he": "אֲרוּחַת הַבֹּקֶר מִשֶּׁבַע עַד עֶשֶׂר.",
+          "he": "אֲרוּחַת הַבֹּקֶר מִשֶׁבַע עַד עֶשֶׂר.",
           "pt": "O café da manhã é das sete às dez."
         }
       ]
     },
     {
       "tituloPt": "O primeiro, o segundo, o terceiro andar",
-      "textoPt": "Os andares usam os mesmos números de ordem dos dias da semana (Unidade 7): יוֹם שְׁלִישִׁי é \"o terceiro dia\". Como קוֹמָה é feminina: הַקּוֹמָה הָרִאשׁוֹנָה, הַשְּׁנִיָּה, הַשְּׁלִישִׁית. Boa notícia: é igual ao Brasil. O térreo é קוֹמַת קַרְקַע (\"andar do chão\") e a קוֹמָה רִאשׁוֹנָה fica em cima dele."
+      "textoPt": "Os andares usam os mesmos números de ordem dos dias da semana (Unidade 7): יוֹם שְׁלִישִׁי é \"o terceiro dia\". Como קוֹמָה é feminina: הַקוֹמָה הָרִאשׁוֹנָה, הַשְׁנִיָה, הַשְׁלִישִׁית. Boa notícia: é igual ao Brasil. O térreo é קוֹמַת קַרְקַע (\"andar do chão\") e a קוֹמָה רִאשׁוֹנָה fica em cima dele."
     }
   ],
   "dialogo": {
@@ -219,7 +219,7 @@
       },
       {
         "quem": "A recepcionista",
-        "he": "רֶגַע… כֵּן. עַד יוֹם שִׁשִּׁי, נָכוֹן?",
+        "he": "רֶגַע… כֵּן. עַד יוֹם שִׁשִׁי, נָכוֹן?",
         "translit": "réga… ken. ad yom shishí, nachón?",
         "pt": "Um momento… Sim. Até sexta-feira, certo?"
       },
@@ -231,7 +231,7 @@
       },
       {
         "quem": "A recepcionista",
-        "he": "כֵּן. הִנֵּה הַמַּפְתֵּחַ: חֶדֶר 304, בַּקּוֹמָה הַשְּׁלִישִׁית.",
+        "he": "כֵּן. הִנֵה הַמַפְתֵחַ: חֶדֶר 304, בַּקוֹמָה הַשְׁלִישִׁית.",
         "translit": "ken. hiné hamaftéach: chéder shalósh éfes árba, bakomá hashlishít.",
         "pt": "Sim. Aqui está a chave: quarto 304, no terceiro andar."
       },
@@ -243,7 +243,7 @@
       },
       {
         "quem": "A recepcionista",
-        "he": "כֵּן, וְגַם וַויְפַיי. הַסִּיסְמָה עַל הַכַּרְטִיס.",
+        "he": "כֵּן, וְגַם וַויְפַיי. הַסִיסְמָה עַל הַכַּרְטִיס.",
         "translit": "ken, vegám wáifai. hassismá al hakartís.",
         "pt": "Tem, e wi-fi também. A senha está no cartão."
       },
@@ -255,13 +255,13 @@
       },
       {
         "quem": "A recepcionista",
-        "he": "מִשֶּׁבַע עַד עֶשֶׂר, בַּקּוֹמָה הָרִאשׁוֹנָה.",
+        "he": "מִשֶׁבַע עַד עֶשֶׂר, בַּקוֹמָה הָרִאשׁוֹנָה.",
         "translit": "mishéva ad ésser, bakomá harishoná.",
         "pt": "Das sete às dez, no primeiro andar."
       },
       {
         "quem": "Tom",
-        "he": "תּוֹדָה. אַתְּ יְכוֹלָה לַעֲזוֹר לִי עִם הַמִּזְוָדָה? הִיא מְאֹד כְּבֵדָה.",
+        "he": "תוֹדָה. אַתְ יְכוֹלָה לַעֲזוֹר לִי עִם הַמִזְוָדָה? הִיא מְאֹד כְּבֵדָה.",
         "translit": "todá. at yecholá laazór li im hamizvadá? hi meód kvedá.",
         "pt": "Obrigado. Você pode me ajudar com a mala? Ela está muito pesada."
       },
@@ -291,7 +291,7 @@
     "semPontos": true,
     "linhas": [
       {
-        "he": "שְׂדֵה הַתְּעוּפָה בֶּן גּוּרְיוֹן",
+        "he": "שְׂדֵה הַתְעוּפָה בֶּן גוּרְיוֹן",
         "translit": "sde hateufá Ben Gurión",
         "pt": "Aeroporto Ben Gurion"
       },
@@ -306,7 +306,7 @@
         "pt": "Portão 7"
       },
       {
-        "he": "הַטִּיסָה מְאַחֶרֶת בְּשָׁעָה",
+        "he": "הַטִיסָה מְאַחֶרֶת בְּשָׁעָה",
         "translit": "hatissá meachéret beshaá",
         "pt": "O voo está atrasado uma hora"
       }
@@ -349,7 +349,7 @@
   "sabia": [
     {
       "tituloPt": "Voar, voo, avião, piloto",
-      "textoPt": "טָס (voa), טִיסָה (voo), מָטוֹס (avião) e טַיָּס (piloto) saem todos da mesma raiz: ט, ו/י, ס. É a mesma ideia da Unidade 9: aprendeu uma, você está a meio caminho das outras."
+      "textoPt": "טָס (voa), טִיסָה (voo), מָטוֹס (avião) e טַיָס (piloto) saem todos da mesma raiz: ט, ו/י, ס. É a mesma ideia da Unidade 9: aprendeu uma, você está a meio caminho das outras."
     }
   ],
   "autoavaliacao": [
@@ -367,7 +367,7 @@
           "voo"
         ],
         [
-          "דַּרְכּוֹן",
+          "דַרְכּוֹן",
           "passaporte"
         ],
         [
@@ -379,7 +379,7 @@
           "passagem, cartão"
         ],
         [
-          "שְׂדֵה תְּעוּפָה",
+          "שְׂדֵה תְעוּפָה",
           "aeroporto"
         ]
       ]
@@ -405,7 +405,7 @@
           "ar-condicionado"
         ],
         [
-          "מַגֶּבֶת",
+          "מַגֶבֶת",
           "toalha"
         ]
       ]
@@ -414,9 +414,9 @@
       "t": "escolha",
       "q": "\"Você pode me ajudar?\" (a ele)",
       "opcoes": [
-        "אַתָּה יָכוֹל לַעֲזוֹר לִי?",
-        "אַתָּה יָכוֹל לַעֲזוֹר אוֹתִי?",
-        "אַתָּה יָכוֹל עוֹזֵר לִי?"
+        "אַתָה יָכוֹל לַעֲזוֹר לִי?",
+        "אַתָה יָכוֹל לַעֲזוֹר אוֹתִי?",
+        "אַתָה יָכוֹל עוֹזֵר לִי?"
       ],
       "certa": 0,
       "dicas": {
@@ -514,7 +514,7 @@
     {
       "t": "erro",
       "q": "Ache o erro e escreva a frase certa.",
-      "errada": "אַתְּ יְכוֹלָה לַעֲזוֹר אוֹתִי?",
+      "errada": "אַתְ יְכוֹלָה לַעֲזוֹר אוֹתִי?",
       "respostas": [
         "את יכולה לעזור לי"
       ],
@@ -523,7 +523,7 @@
     {
       "t": "erro",
       "q": "Ache o erro e escreva a frase certa.",
-      "errada": "הַמִּזְוָדָה כָּבֵד.",
+      "errada": "הַמִזְוָדָה כָּבֵד.",
       "respostas": [
         "המזוודה כבדה",
         "המזודה כבדה"
@@ -544,7 +544,7 @@
       "pt": "O café da manhã é das sete às dez.",
       "palavras": [
         "אֲרוּחַת הַבֹּקֶר",
-        "מִשֶּׁבַע",
+        "מִשֶׁבַע",
         "עַד",
         "עֶשֶׂר"
       ]
@@ -560,7 +560,7 @@
       ],
       "opcoes": [
         "כֵּן, עַל שֵׁם סִילְבָה.",
-        "לֹא, תּוֹדָה, אֲנִי צִמְחוֹנִי.",
+        "לֹא, תוֹדָה, אֲנִי צִמְחוֹנִי.",
         "בְּאוֹגוּסְט."
       ],
       "certa": 0
@@ -571,13 +571,13 @@
       "linhas": [
         [
           "Tom",
-          "מָה הַסִּיסְמָה שֶׁל הַוַּויְפַיי?"
+          "מָה הַסִיסְמָה שֶׁל הַוַויְפַיי?"
         ]
       ],
       "opcoes": [
         "הִיא עַל הַכַּרְטִיס.",
-        "בַּקּוֹמָה הַשְּׁנִיָּה.",
-        "עַד יוֹם שִׁשִּׁי."
+        "בַּקוֹמָה הַשְׁנִיָה.",
+        "עַד יוֹם שִׁשִׁי."
       ],
       "certa": 0
     },
@@ -588,12 +588,12 @@
         "שָׁלוֹם, יֵשׁ לִי הַזְמָנָה.",
         "עַל אֵיזֶה שֵׁם?",
         "סִילְבָה, טוֹם סִילְבָה.",
-        "כֵּן, הִנֵּה הַמַּפְתֵּחַ."
+        "כֵּן, הִנֵה הַמַפְתֵחַ."
       ]
     },
     {
       "t": "ouvir",
-      "he": "הַטִּיסָה מְאַחֶרֶת.",
+      "he": "הַטִיסָה מְאַחֶרֶת.",
       "q": "O que aconteceu com o voo?",
       "opcoes": [
         "Está atrasado",
@@ -615,7 +615,7 @@
     },
     {
       "t": "ditado",
-      "he": "דַּרְכּוֹן",
+      "he": "דַרְכּוֹן",
       "respostas": [
         "דרכון"
       ]

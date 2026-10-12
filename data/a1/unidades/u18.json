@@ -16,12 +16,12 @@
       "pt": "barriga (feminina)"
     },
     {
-      "he": "גָּרוֹן",
+      "he": "גָרוֹן",
       "translit": "garón",
       "pt": "garganta"
     },
     {
-      "he": "גַּב",
+      "he": "גַב",
       "translit": "gav",
       "pt": "costas"
     },
@@ -46,7 +46,7 @@
       "pt": "orelha, ouvido / orelhas"
     },
     {
-      "he": "שֵׁן / שִׁנַּיִם",
+      "he": "שֵׁן / שִׁנַיִם",
       "translit": "shen / shináyim",
       "pt": "dente / dentes"
     },
@@ -68,10 +68,10 @@
     {
       "pt": "sentir-se",
       "formas": [
-        "מַרְגִּישׁ",
-        "מַרְגִּישָׁה",
-        "מַרְגִּישִׁים",
-        "מַרְגִּישׁוֹת"
+        "מַרְגִישׁ",
+        "מַרְגִישָׁה",
+        "מַרְגִישִׁים",
+        "מַרְגִישׁוֹת"
       ],
       "translit": [
         "margísh",
@@ -106,12 +106,12 @@
       "pt": "dor de cabeça"
     },
     {
-      "he": "תְּרוּפָה",
+      "he": "תְרוּפָה",
       "translit": "trufá",
       "pt": "remédio"
     },
     {
-      "he": "כַּדּוּר",
+      "he": "כַּדוּר",
       "translit": "kadúr",
       "pt": "comprimido; bola"
     },
@@ -126,7 +126,7 @@
       "pt": "plano de saúde israelense"
     },
     {
-      "he": "תּוֹר",
+      "he": "תוֹר",
       "translit": "tor",
       "pt": "consulta marcada; fila"
     },
@@ -146,7 +146,7 @@
       "pt": "socorro! ajuda!"
     },
     {
-      "he": "הַצִּילוּ!",
+      "he": "הַצִילוּ!",
       "translit": "hatsílu!",
       "pt": "socorro! (o grito de emergência)"
     }
@@ -154,31 +154,31 @@
   "gramatica": [
     {
       "tituloPt": "\"Está doendo\": o verbo concorda com o que dói",
-      "textoPt": "O hebraico diz \"dói para mim a cabeça\": כּוֹאֵב לִי הָרֹאשׁ. Quem recebe a dor vem com לְ (לִי, לְךָ, לָהּ…), e o verbo concorda com a PARTE DO CORPO: כּוֹאֵב לִי הָרֹאשׁ (masculino), כּוֹאֶבֶת לִי הַבֶּטֶן (feminino), כּוֹאֲבוֹת לִי הָרַגְלַיִם (plural feminino).",
+      "textoPt": "O hebraico diz \"dói para mim a cabeça\": כּוֹאֵב לִי הָרֹאשׁ. Quem recebe a dor vem com לְ (לִי, לְךָ, לָה…), e o verbo concorda com a PARTE DO CORPO: כּוֹאֵב לִי הָרֹאשׁ (masculino), כּוֹאֶבֶת לִי הַבֶּטֶן (feminino), כּוֹאֲבוֹת לִי הָרַגְלַיִם (plural feminino).",
       "erroPt": "A mulher com dor de cabeça tende a dizer כּוֹאֶבֶת, no feminino, porque ELA é mulher. Mas quem dói é a cabeça, e רֹאשׁ é masculino: כּוֹאֵב לִי הָרֹאשׁ, para homem e para mulher. Na rua você também vai ouvir כּוֹאֵב לִי no masculino, mesmo com palavras femininas (כּוֹאֵב לִי הַבֶּטֶן). Entenda, mas fale e escreva com a concordância.",
       "exemplos": [
         {
-          "he": "כּוֹאֵב לָהּ הַגָּרוֹן.",
+          "he": "כּוֹאֵב לָה הַגָרוֹן.",
           "pt": "Ela está com dor de garganta."
         },
         {
-          "he": "כּוֹאֲבוֹת לִי הַשִּׁנַּיִם.",
+          "he": "כּוֹאֲבוֹת לִי הַשִׁנַיִם.",
           "pt": "Estou com dor de dente (nos dentes)."
         }
       ]
     },
     {
       "tituloPt": "Os pares do corpo: ־ַיִם, e femininos",
-      "textoPt": "As partes do corpo que vêm em par terminam em ־ַיִם (Unidade 14): עֵינַיִם, אָזְנַיִם, יָדַיִם, רַגְלַיִם (e também שִׁנַּיִם, dentes, que não são um par mas usam a mesma forma). Todas estas são femininas, mesmo sem o ־ָה: הָעַיִן כּוֹאֶבֶת, הַיָּד כּוֹאֶבֶת."
+      "textoPt": "As partes do corpo que vêm em par terminam em ־ַיִם (Unidade 14): עֵינַיִם, אָזְנַיִם, יָדַיִם, רַגְלַיִם (e também שִׁנַיִם, dentes, que não são um par mas usam a mesma forma). Todas estas são femininas, mesmo sem o ־ָה: הָעַיִן כּוֹאֶבֶת, הַיָד כּוֹאֶבֶת."
     },
     {
       "tituloPt": "Como você está se sentindo?",
-      "textoPt": "אֵיךְ אַתָּה מַרְגִּישׁ? (a ele) / אֵיךְ אַתְּ מַרְגִּישָׁה? (a ela). Respostas: אֲנִי מַרְגִּישׁ טוֹב, לֹא טוֹב, יוֹתֵר טוֹב (melhor). E para dizer que está doente: אֲנִי חוֹלֶה / אֲנִי חוֹלָה, ou יֵשׁ לִי חֹם (estou com febre).",
+      "textoPt": "אֵיךְ אַתָה מַרְגִישׁ? (a ele) / אֵיךְ אַתְ מַרְגִישָׁה? (a ela). Respostas: אֲנִי מַרְגִישׁ טוֹב, לֹא טוֹב, יוֹתֵר טוֹב (melhor). E para dizer que está doente: אֲנִי חוֹלֶה / אֲנִי חוֹלָה, ou יֵשׁ לִי חֹם (estou com febre).",
       "erroPt": "\"Estou com febre\" usa o יֵשׁ לִי da Unidade 6: יֵשׁ לִי חֹם, \"tenho febre\". Não é אֲנִי חֹם."
     },
     {
       "tituloPt": "O que é preciso fazer: צָרִיךְ sem \"quem\"",
-      "textoPt": "צָרִיךְ + infinitivo, sem sujeito, é \"é preciso\": צָרִיךְ לִשְׁתּוֹת הַרְבֵּה מַיִם (é preciso beber muita água), צָרִיךְ לָלֶכֶת לָרוֹפֵא. Com sujeito, é a Unidade 10: אַתְּ צְרִיכָה לָנוּחַ."
+      "textoPt": "צָרִיךְ + infinitivo, sem sujeito, é \"é preciso\": צָרִיךְ לִשְׁתוֹת הַרְבֵּה מַיִם (é preciso beber muita água), צָרִיךְ לָלֶכֶת לָרוֹפֵא. Com sujeito, é a Unidade 10: אַתְ צְרִיכָה לָנוּחַ."
     }
   ],
   "dialogo": {
@@ -192,7 +192,7 @@
       },
       {
         "quem": "Noa",
-        "he": "שָׁלוֹם. אֲנִי מַרְגִּישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן.",
+        "he": "שָׁלוֹם. אֲנִי מַרְגִישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָרוֹן.",
         "translit": "shalóm. aní margishá lo tov. koév li harósh, vegám hagarón.",
         "pt": "Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também."
       },
@@ -222,31 +222,31 @@
       },
       {
         "quem": "A farmacêutica",
-        "he": "צָרִיךְ לִשְׁתּוֹת הַרְבֵּה מַיִם וְלָנוּחַ. הִנֵּה כַּדּוּרִים נֶגֶד כְּאֵב רֹאשׁ.",
+        "he": "צָרִיךְ לִשְׁתוֹת הַרְבֵּה מַיִם וְלָנוּחַ. הִנֵה כַּדוּרִים נֶגֶד כְּאֵב רֹאשׁ.",
         "translit": "tsarích lishtót harbé máyim velanúach. hiné kadurím néged keév rosh.",
         "pt": "É preciso beber bastante água e descansar. Aqui estão comprimidos para dor de cabeça."
       },
       {
         "quem": "Noa",
-        "he": "כַּמָּה פְּעָמִים בַּיּוֹם?",
+        "he": "כַּמָה פְּעָמִים בַּיוֹם?",
         "translit": "káma peamím bayóm?",
         "pt": "Quantas vezes por dia?"
       },
       {
         "quem": "A farmacêutica",
-        "he": "שָׁלוֹשׁ פְּעָמִים בַּיּוֹם, אַחֲרֵי הָאֹכֶל. וְאִם זֶה לֹא עוֹבֵר, צָרִיךְ לָלֶכֶת לָרוֹפֵא.",
+        "he": "שָׁלוֹשׁ פְּעָמִים בַּיוֹם, אַחֲרֵי הָאֹכֶל. וְאִם זֶה לֹא עוֹבֵר, צָרִיךְ לָלֶכֶת לָרוֹפֵא.",
         "translit": "shalósh peamím bayóm, acharéi haóchel. veím ze lo ovér, tsarích laléchet larofé.",
         "pt": "Três vezes por dia, depois da comida. E se não passar, é preciso ir ao médico."
       },
       {
         "quem": "Noa",
-        "he": "תּוֹדָה רַבָּה.",
+        "he": "תוֹדָה רַבָּה.",
         "translit": "todá rabá.",
         "pt": "Muito obrigada."
       },
       {
         "quem": "A farmacêutica",
-        "he": "בְּבַקָּשָׁה. רְפוּאָה שְׁלֵמָה!",
+        "he": "בְּבַקָשָׁה. רְפוּאָה שְׁלֵמָה!",
         "translit": "bevakashá. refuá shlemá!",
         "pt": "De nada. Melhoras!"
       }
@@ -294,17 +294,17 @@
         "pt": "Olá, Ronit,"
       },
       {
-        "he": "אֲנִי חוֹלָה הַיּוֹם, וַאֲנִי לֹא יְכוֹלָה לָבוֹא לָעֲבוֹדָה.",
+        "he": "אֲנִי חוֹלָה הַיוֹם, וַאֲנִי לֹא יְכוֹלָה לָבוֹא לָעֲבוֹדָה.",
         "translit": "aní cholá hayóm, vaaní lo yecholá lavó laavodá.",
         "pt": "Estou doente hoje e não posso ir ao trabalho."
       },
       {
-        "he": "יֵשׁ לִי חֹם, וְכוֹאֵב לִי הַגָּרוֹן.",
+        "he": "יֵשׁ לִי חֹם, וְכוֹאֵב לִי הַגָרוֹן.",
         "translit": "yesh li chom, vechoév li hagarón.",
         "pt": "Estou com febre e com dor de garganta."
       },
       {
-        "he": "מָחָר בַּבֹּקֶר יֵשׁ לִי תּוֹר לָרוֹפֵא.",
+        "he": "מָחָר בַּבֹּקֶר יֵשׁ לִי תוֹר לָרוֹפֵא.",
         "translit": "machár babóker yesh li tor larofé.",
         "pt": "Amanhã de manhã tenho consulta no médico."
       },
@@ -366,7 +366,7 @@
   "sabia": [
     {
       "tituloPt": "Bola ou comprimido?",
-      "textoPt": "כַּדּוּר é \"bola\" (o כַּדּוּר de כַּדּוּרֶגֶל, Unidade 10) e também \"comprimido\" (e até \"bala\" de arma): a ideia é a de uma coisa em forma de bola. O planeta Terra é כַּדּוּר הָאָרֶץ, \"a bola da terra\". Quem decide o sentido é a frase: na farmácia, ninguém vai lhe vender uma bola."
+      "textoPt": "כַּדוּר é \"bola\" (o כַּדוּר de כַּדוּרֶגֶל, Unidade 10) e também \"comprimido\" (e até \"bala\" de arma): a ideia é a de uma coisa em forma de bola. O planeta Terra é כַּדוּר הָאָרֶץ, \"a bola da terra\". Quem decide o sentido é a frase: na farmácia, ninguém vai lhe vender uma bola."
     }
   ],
   "autoavaliacao": [
@@ -388,7 +388,7 @@
           "barriga"
         ],
         [
-          "גָּרוֹן",
+          "גָרוֹן",
           "garganta"
         ],
         [
@@ -396,7 +396,7 @@
           "mão, braço"
         ],
         [
-          "גַּב",
+          "גַב",
           "costas"
         ]
       ]
@@ -414,7 +414,7 @@
           "orelhas"
         ],
         [
-          "שִׁנַּיִם",
+          "שִׁנַיִם",
           "dentes"
         ],
         [
@@ -480,7 +480,7 @@
           0
         ],
         [
-          "הַגָּרוֹן",
+          "הַגָרוֹן",
           0
         ],
         [
@@ -488,11 +488,11 @@
           1
         ],
         [
-          "הַיָּד",
+          "הַיָד",
           1
         ],
         [
-          "הַגַּב",
+          "הַגַב",
           0
         ],
         [
@@ -504,7 +504,7 @@
     {
       "t": "tabela",
       "q": "Complete as formas.",
-      "base": "מַרְגִּישׁ",
+      "base": "מַרְגִישׁ",
       "linhas": [
         [
           "mulher",
@@ -526,13 +526,13 @@
       "opcoes": [
         "רְפוּאָה שְׁלֵמָה!",
         "בְּתֵאָבוֹן!",
-        "מַזָּל טוֹב!"
+        "מַזָל טוֹב!"
       ],
       "certa": 0
     },
     {
       "t": "vf",
-      "q": "כַּדּוּר quer dizer \"bola\" e também \"comprimido\".",
+      "q": "כַּדוּר quer dizer \"bola\" e também \"comprimido\".",
       "certa": true
     },
     {
@@ -543,7 +543,7 @@
     {
       "t": "completar",
       "q": "\"É preciso beber bastante água\"",
-      "antes": "צָרִיךְ לִשְׁתּוֹת",
+      "antes": "צָרִיךְ לִשְׁתוֹת",
       "depois": "מַיִם",
       "respostas": [
         "הרבה"
@@ -552,11 +552,11 @@
     {
       "t": "erro",
       "q": "Fala uma mulher. Ache o erro e escreva a frase certa.",
-      "errada": "אֲנִי מַרְגִּישׁ לֹא טוֹב.",
+      "errada": "אֲנִי מַרְגִישׁ לֹא טוֹב.",
       "respostas": [
         "אני מרגישה לא טוב"
       ],
-      "porque": "Para ela: מַרְגִּישָׁה."
+      "porque": "Para ela: מַרְגִישָׁה."
     },
     {
       "t": "erro",
@@ -580,7 +580,7 @@
       "t": "montar",
       "pt": "Você precisa ir ao médico. (a ele)",
       "palavras": [
-        "אַתָּה",
+        "אַתָה",
         "צָרִיךְ",
         "לָלֶכֶת",
         "לָרוֹפֵא"
@@ -592,11 +592,11 @@
       "linhas": [
         [
           "Natan",
-          "אֵיךְ אַתְּ מַרְגִּישָׁה?"
+          "אֵיךְ אַתְ מַרְגִישָׁה?"
         ]
       ],
       "opcoes": [
-        "לֹא כָּל כָּךְ טוֹב. כּוֹאֵב לִי הַגָּרוֹן.",
+        "לֹא כָּל כָּךְ טוֹב. כּוֹאֵב לִי הַגָרוֹן.",
         "בְּשִׂמְחָה!",
         "בְּמַרְץ."
       ],
@@ -609,7 +609,7 @@
       "linhas": [
         [
           "Noa",
-          "כַּמָּה פְּעָמִים בַּיּוֹם?"
+          "כַּמָה פְּעָמִים בַּיוֹם?"
         ]
       ],
       "opcoes": [
@@ -623,7 +623,7 @@
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "אֲנִי מַרְגִּישׁ לֹא טוֹב.",
+        "אֲנִי מַרְגִישׁ לֹא טוֹב.",
         "מָה כּוֹאֵב לְךָ?",
         "הַבֶּטֶן.",
         "אוּלַי צָרִיךְ לָלֶכֶת לָרוֹפֵא."
@@ -683,7 +683,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também.\"",
       "antes": "שָׁלוֹם. אֲנִי",
-      "depois": "לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן.",
+      "depois": "לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָרוֹן.",
       "respostas": [
         "מרגישה"
       ]
@@ -691,12 +691,12 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Olá. Não estou me sentindo bem. Estou com dor de cabeça, e de garganta também.\"",
-      "exemplo": "שָׁלוֹם. אֲנִי מַרְגִּישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָּרוֹן."
+      "exemplo": "שָׁלוֹם. אֲנִי מַרְגִישָׁה לֹא טוֹב. כּוֹאֵב לִי הָרֹאשׁ, וְגַם הַגָרוֹן."
     },
     {
       "t": "aberta",
       "pt": "Você está doente. Escreva uma mensagem curta: como se sente, o que dói, e o que vai fazer.",
-      "exemplo": "אֲנִי חוֹלֶה הַיּוֹם. כּוֹאֵב לִי הָרֹאשׁ, וְיֵשׁ לִי חֹם. מָחָר אֲנִי הוֹלֵךְ לָרוֹפֵא."
+      "exemplo": "אֲנִי חוֹלֶה הַיוֹם. כּוֹאֵב לִי הָרֹאשׁ, וְיֵשׁ לִי חֹם. מָחָר אֲנִי הוֹלֵךְ לָרוֹפֵא."
     }
   ]
 }

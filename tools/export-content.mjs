@@ -24,17 +24,17 @@
 
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, existsSync, cpSync } from 'node:fs';
 import { join } from 'node:path';
-import { createHash } from 'node:crypto';
 import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
+import { audioIdFor } from './audio-id.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const OUT = join(ROOT, 'app/content');
 const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
 const NFC = s => String(s ?? '').normalize('NFC');
 
-/* Same hash as tools/gen-audio.mjs, so a clip recorded for the book plays in
-   the app without a second naming scheme. Content-derived, never positional. */
-const audioIdFor = he => 'he-' + createHash('sha256').update(NFC(he)).digest('hex').slice(0, 8);
+/* Same id as tools/gen-audio.mjs (tools/audio-id.mjs), so a clip recorded for
+   the book plays in the app without a second naming scheme. Content-derived,
+   never positional. */
 
 /* O exemplo que se ouve numa leitura da letra (ver `variantes` abaixo). Uma
    forma final não leva vogal depois de si: o exemplo é a primeira palavra da

@@ -13,7 +13,7 @@
 
   "dagesh": {
     "titlePt": "Sem o ponto",
-    "rulePt": "O ponto no meio, o daguesh, escolhe qual dos dois sons a letra tem. Em geral ele aparece no começo da palavra e depois de uma consoante que fecha a sílaba, como em {{מִשְׁפָּחָה}}; some depois de vogal e quase sempre no fim. Depois de uma letra com shva no começo da palavra, ele também some: {{בְּבַקָּשָׁה}} é \"bevakashá\". Há exceções: palavras como {{אַבָּא}} e muitas palavras de fora ({{אוֹטוֹבּוּס}}) têm o ponto mesmo entre vogais, e nelas o som é sempre o duro. E, fora dos livros didáticos e dos textos sagrados, ele simplesmente não é impresso: a palavra vem sem pontos e sem nikud, e é você quem decide.",
+    "rulePt": "O ponto no meio, o daguesh, escolhe qual dos dois sons a letra tem. Em geral ele aparece no começo da palavra e depois de uma consoante que fecha a sílaba, como em {{מִשְׁפָּחָה}}; some depois de vogal e quase sempre no fim. Depois de uma letra com shva no começo da palavra, ele também some: {{בְּבַקָשָׁה}} é \"bevakashá\". Há exceções: palavras como {{אַבָּא}} e muitas palavras de fora ({{אוֹטוֹבּוּס}}) têm o ponto mesmo entre vogais, e nelas o som é sempre o duro. E, fora dos livros didáticos e dos textos sagrados, ele simplesmente não é impresso: a palavra vem sem pontos e sem nikud, e é você quem decide.",
     "warningPt": "Ler {{סֵפֶר}} como \"séper\" em vez de \"séfer\" não é sotaque: é outra palavra, ou palavra nenhuma. As três letras deste módulo aparecem em quase toda frase do hebraico, e na rua elas vêm sem o ponto.",
     "letters": [
       {
@@ -44,12 +44,12 @@
         "hardWords": [
           { "he": "כּוֹס", "translit": "kos", "pt": "copo" },
           { "he": "כֶּלֶב", "translit": "kélev", "pt": "cachorro" },
-          { "he": "כַּדּוּר", "translit": "kadúr", "pt": "bola" }
+          { "he": "כַּדוּר", "translit": "kadúr", "pt": "bola" }
         ],
         "softWords": [
           { "he": "אֹכֶל", "translit": "óchel", "pt": "comida" },
           { "he": "מֶלֶךְ", "translit": "mélech", "pt": "rei" },
-          { "he": "דֶּרֶךְ", "translit": "dérech", "pt": "caminho" }
+          { "he": "דֶרֶךְ", "translit": "dérech", "pt": "caminho" }
         ],
         "notePt": "O som suave é o mesmo raspado de {{ח}}, feito no fundo da garganta. Na forma final {{ך}}, no hebraico de hoje, ele é sempre suave (só em alguns textos bíblicos aparece {{ךָּ}}, com ponto, e aí soa K)."
       },
@@ -111,13 +111,13 @@
         "id": "sem-vogal",
         "titlePt": "Estas não trazem nenhuma vogal escrita",
         "notePt": "Três consoantes e mais nada. Quem lê hebraico não adivinha a vogal: reconhece a palavra inteira, e a vogal vem junto. É exatamente isso que você está treinando aqui.",
-        "words": ["מֶלֶךְ", "סֵפֶר", "כֶּסֶף", "דֶּרֶךְ", "אֶרֶץ", "לֶחֶם", "יֶלֶד", "שֶׁמֶשׁ"]
+        "words": ["מֶלֶךְ", "סֵפֶר", "כֶּסֶף", "דֶרֶךְ", "אֶרֶץ", "לֶחֶם", "יֶלֶד", "שֶׁמֶשׁ"]
       },
       {
         "id": "rua",
         "titlePt": "As que resolvem uma rua em Israel",
         "notePt": "Mais longas, e nenhuma delas vai aparecer com pontinhos onde você vai encontrá-las: numa placa, num ônibus, numa conversa escrita.",
-        "words": ["תּוֹדָה", "סְלִיחָה", "בְּבַקָּשָׁה", "רְחוֹב", "אוֹטוֹבּוּס", "עִבְרִית", "עַכְשָׁיו", "טֶלֶפוֹן"]
+        "words": ["תוֹדָה", "סְלִיחָה", "בְּבַקָשָׁה", "רְחוֹב", "אוֹטוֹבּוּס", "עִבְרִית", "עַכְשָׁיו", "טֶלֶפוֹן"]
       }
     ],
     "ambiguous": {
@@ -129,9 +129,9 @@
   "gerech": {
     "titlePt": "Os sons modernos",
     "signNamePt": "guéresh",
-    "signHe": "גֶּרֶשׁ",
-    "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"Djavan\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado de três letras que já existiam.",
-    "signNotePt": "O {{גֶּרֶשׁ}} é o traço que se põe à esquerda da letra, no alto. Nestas três letras, ele não é acento nem pontuação: é parte da escrita da palavra, e sem ele a palavra tem outro som.",
+    "signHe": "גֶרֶשׁ",
+    "introPt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"Djavan\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶרֶשׁ}}, ao lado de três letras que já existiam.",
+    "signNotePt": "O {{גֶרֶשׁ}} é o traço que se põe à esquerda da letra, no alto. Nestas três letras, ele não é acento nem pontuação: é parte da escrita da palavra, e sem ele a palavra tem outro som.",
     "letters": [
       {
         "id": "tsadi-gerech",
@@ -429,7 +429,7 @@
         "parNomePt": "Kaf",
         "parSom": "k",
         "finalHe": "ך",
-        "introPt": "Na lição passada você conheceu {{כּ}}, o K. Esta lição é da outra metade: {{כ}} sem o ponto, o Chaf, que soa raspado, como o {{ח}}. E ele tem forma final, {{ך}}, que no hebraico de hoje é sempre raspada: {{מֶלֶךְ}}, {{דֶּרֶךְ}}.",
+        "introPt": "Na lição passada você conheceu {{כּ}}, o K. Esta lição é da outra metade: {{כ}} sem o ponto, o Chaf, que soa raspado, como o {{ח}}. E ele tem forma final, {{ך}}, que no hebraico de hoje é sempre raspada: {{מֶלֶךְ}}, {{דֶרֶךְ}}.",
         "articulacao": {
           "pontos": [
             {
@@ -480,7 +480,7 @@
             "pt": "rei"
           },
           {
-            "he": "דֶּרֶךְ",
+            "he": "דֶרֶךְ",
             "translit": "dérech",
             "pt": "caminho"
           },
@@ -661,7 +661,7 @@
         "parNomePt": "Tsádi",
         "parSom": "ts",
         "parId": "tsadi",
-        "introPt": "O hebraico antigo não tinha o som de \"tchau\". O moderno precisou dele para palavras de fora, e resolveu sem letra nova: pôs um apóstrofo, o {{גֶּרֶשׁ}}, ao lado do {{צ}}. Sem o sinal, {{צ}} é TS; com ele, {{צ׳}} é TCH.",
+        "introPt": "O hebraico antigo não tinha o som de \"tchau\". O moderno precisou dele para palavras de fora, e resolveu sem letra nova: pôs um apóstrofo, o {{גֶרֶשׁ}}, ao lado do {{צ}}. Sem o sinal, {{צ}} é TS; com ele, {{צ׳}} é TCH.",
         "articulacao": {
           "pontos": [
             {
@@ -676,7 +676,7 @@
         "erro": {
           "wrong": "Ignorar o traço e ler {{צ׳}} como {{צ}}: \"Chile\" vira \"Tsíle\".",
           "right": "Antes de ler um {{צ}}, olhar se há um traço à esquerda. Com traço: \"tchíle\", \"tchips\".",
-          "why": "O {{גֶּרֶשׁ}} é pequeno, parece pontuação, e o olho passa por cima. Mas ele muda o som da letra inteira."
+          "why": "O {{גֶרֶשׁ}} é pequeno, parece pontuação, e o olho passa por cima. Mas ele muda o som da letra inteira."
         },
         "silabas": [],
         "palavras": [
@@ -720,11 +720,11 @@
               "צ׳"
             ],
             "certa": 1,
-            "porque": "Com o traço, o {{גֶּרֶשׁ}}, a letra soa TCH. Sem ele, {{צ}} é TS."
+            "porque": "Com o traço, o {{גֶרֶשׁ}}, a letra soa TCH. Sem ele, {{צ}} é TS."
           },
           {
             "t": "vf",
-            "q": "O {{גֶּרֶשׁ}} é só pontuação e pode ser ignorado.",
+            "q": "O {{גֶרֶשׁ}} é só pontuação e pode ser ignorado.",
             "certa": false,
             "porque": "Ele é parte da escrita da palavra e muda o som da letra."
           }
@@ -746,7 +746,7 @@
         "parNomePt": "Guímel",
         "parSom": "g",
         "parId": "gimel",
-        "introPt": "Mesmo truque, outra letra: o {{גֶּרֶשׁ}} ao lado do {{ג}}. Sem o sinal, {{ג}} é o G duro de \"gato\"; com ele, {{ג׳}} é DJ, como em \"Djavan\" ou no inglês \"jeans\".",
+        "introPt": "Mesmo truque, outra letra: o {{גֶרֶשׁ}} ao lado do {{ג}}. Sem o sinal, {{ג}} é o G duro de \"gato\"; com ele, {{ג׳}} é DJ, como em \"Djavan\" ou no inglês \"jeans\".",
         "articulacao": {
           "pontos": [
             {
@@ -805,7 +805,7 @@
               "ג׳"
             ],
             "certa": 1,
-            "porque": "Com o {{גֶּרֶשׁ}}, {{ג׳}} soa DJ. Sem ele, {{ג}} é o G de \"gato\"."
+            "porque": "Com o {{גֶרֶשׁ}}, {{ג׳}} soa DJ. Sem ele, {{ג}} é o G de \"gato\"."
           },
           {
             "t": "escolha",
@@ -835,7 +835,7 @@
         "parNomePt": "Záyin",
         "parSom": "z",
         "parId": "zayin",
-        "introPt": "O terceiro som moderno é o mais brasileiro de todos: o J de \"jarro\". O hebraico o escreve com o {{גֶּרֶשׁ}} ao lado do {{ז}}: sem o sinal, {{ז}} é Z; com ele, {{ז׳}} é J.",
+        "introPt": "O terceiro som moderno é o mais brasileiro de todos: o J de \"jarro\". O hebraico o escreve com o {{גֶרֶשׁ}} ao lado do {{ז}}: sem o sinal, {{ז}} é Z; com ele, {{ז׳}} é J.",
         "articulacao": {
           "pontos": [
             {
@@ -895,7 +895,7 @@
             "t": "vf",
             "q": "Sem o traço, {{ז}} continua soando J.",
             "certa": false,
-            "porque": "Sem o {{גֶּרֶשׁ}}, {{ז}} é Z, o Z de \"zebra\"."
+            "porque": "Sem o {{גֶרֶשׁ}}, {{ז}} é Z, o Z de \"zebra\"."
           }
         ],
         "rotuloPt": "com o traço",

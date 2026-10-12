@@ -46,13 +46,13 @@
     },
     {
       "id": "david-ve-sara",
-      "he": "דָּוִד וְשָׂרָה",
+      "he": "דָוִד וְשָׂרָה",
       "translit": "Dávid veSará",
       "pt": "David e Sara",
       "after": 12,
       "era": "moderno",
       "words": [
-        { "he": "דָּוִד", "translit": "Dávid", "pt": "David" },
+        { "he": "דָוִד", "translit": "Dávid", "pt": "David" },
         { "he": "וְשָׂרָה", "translit": "veSará", "pt": "e Sara" }
       ],
       "notePt": "O \"e\" não é palavra solta: é a letra {{ו}} colada na frente da palavra seguinte."
@@ -71,40 +71,40 @@
     },
     {
       "id": "ani-mi-israel",
-      "he": "אֲנִי מִיִּשְׂרָאֵל",
+      "he": "אֲנִי מִיִשְׂרָאֵל",
       "translit": "aní miYisraél",
       "pt": "eu sou de Israel",
       "after": 11,
       "era": "moderno",
       "words": [
         { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
-        { "he": "מִיִּשְׂרָאֵל", "translit": "miYisraél", "pt": "de Israel" }
+        { "he": "מִיִשְׂרָאֵל", "translit": "miYisraél", "pt": "de Israel" }
       ],
       "notePt": "O {{מ}} colado na frente faz o \"de\". Hebraico prende partículas na palavra em vez de soltá-las."
     },
     {
       "id": "ha-yam-gadol",
-      "he": "הַיָּם גָּדוֹל",
+      "he": "הַיָם גָדוֹל",
       "translit": "hayám gadól",
       "pt": "o mar é grande",
       "after": 12,
       "era": "moderno",
       "words": [
-        { "he": "הַיָּם", "translit": "hayám", "pt": "o mar" },
-        { "he": "גָּדוֹל", "translit": "gadól", "pt": "grande" }
+        { "he": "הַיָם", "translit": "hayám", "pt": "o mar" },
+        { "he": "גָדוֹל", "translit": "gadól", "pt": "grande" }
       ],
       "notePt": "O {{ה}} na frente é o \"o/a\". Também vem colado."
     },
     {
       "id": "ma-hashaa",
-      "he": "מָה הַשָּׁעָה",
+      "he": "מָה הַשָׁעָה",
       "translit": "ma hashaá",
       "pt": "que horas são",
       "after": 17,
       "era": "moderno",
       "words": [
         { "he": "מָה", "translit": "ma", "pt": "que" },
-        { "he": "הַשָּׁעָה", "translit": "hashaá", "pt": "a hora" }
+        { "he": "הַשָׁעָה", "translit": "hashaá", "pt": "a hora" }
       ],
       "notePt": "Literalmente \"que a hora\". É assim que se pergunta as horas em Israel."
     },
@@ -161,27 +161,27 @@
     },
     {
       "id": "toda-raba",
-      "he": "תּוֹדָה רַבָּה",
+      "he": "תוֹדָה רַבָּה",
       "translit": "todá rabá",
       "pt": "muito obrigado",
       "after": 20,
       "era": "moderno",
       "words": [
-        { "he": "תּוֹדָה", "translit": "todá", "pt": "obrigado" },
+        { "he": "תוֹדָה", "translit": "todá", "pt": "obrigado" },
         { "he": "רַבָּה", "translit": "rabá", "pt": "muita" }
       ],
       "notePt": "\"Agradecimento muito\". De novo o adjetivo atrás."
     },
     {
       "id": "ken-bevakasha",
-      "he": "כֵּן, בְּבַקָּשָׁה",
+      "he": "כֵּן, בְּבַקָשָׁה",
       "translit": "ken, bevakashá",
       "pt": "sim, por favor",
       "after": 21,
       "era": "moderno",
       "words": [
         { "he": "כֵּן", "translit": "ken", "pt": "sim" },
-        { "he": "בְּבַקָּשָׁה", "translit": "bevakashá", "pt": "por favor" }
+        { "he": "בְּבַקָשָׁה", "translit": "bevakashá", "pt": "por favor" }
       ],
       "notePt": "A mesma palavra serve para \"por favor\", \"de nada\" e \"aqui está\"."
     },
@@ -215,13 +215,13 @@
     },
     {
       "id": "tel-aviv",
-      "he": "תֵּל אָבִיב",
+      "he": "תֵל אָבִיב",
       "translit": "Tel Avív",
       "pt": "Tel Aviv",
       "after": 20,
       "era": "moderno",
       "words": [
-        { "he": "תֵּל", "translit": "tel", "pt": "colina" },
+        { "he": "תֵל", "translit": "tel", "pt": "colina" },
         { "he": "אָבִיב", "translit": "avív", "pt": "primavera" }
       ],
       "notePt": "O nome da cidade quer dizer \"colina da primavera\" - antigo e moderno na mesma placa."

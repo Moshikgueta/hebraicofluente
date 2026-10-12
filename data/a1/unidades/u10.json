@@ -76,7 +76,7 @@
       "pt": "trabalhar"
     },
     {
-      "he": "לִכְתּוֹב",
+      "he": "לִכְתוֹב",
       "translit": "lichtóv",
       "pt": "escrever"
     },
@@ -96,7 +96,7 @@
       "pt": "comer"
     },
     {
-      "he": "לִשְׁתּוֹת",
+      "he": "לִשְׁתוֹת",
       "translit": "lishtót",
       "pt": "beber"
     },
@@ -136,7 +136,7 @@
       "pt": "dormir"
     },
     {
-      "he": "לְבַשֵּׁל",
+      "he": "לְבַשֵׁל",
       "translit": "levashél",
       "pt": "cozinhar"
     },
@@ -151,7 +151,7 @@
       "pt": "nadar"
     },
     {
-      "he": "לְטַיֵּל",
+      "he": "לְטַיֵל",
       "translit": "letayél",
       "pt": "passear, viajar"
     },
@@ -166,7 +166,7 @@
       "pt": "ver filmes"
     },
     {
-      "he": "כַּדּוּרֶגֶל",
+      "he": "כַּדוּרֶגֶל",
       "translit": "kadurégel",
       "pt": "futebol"
     },
@@ -181,7 +181,7 @@
       "pt": "porque"
     },
     {
-      "he": "הַיּוֹם",
+      "he": "הַיוֹם",
       "translit": "hayóm",
       "pt": "hoje"
     },
@@ -208,7 +208,7 @@
     },
     {
       "tituloPt": "Quero, preciso, posso, sei, gosto: e depois, o infinitivo",
-      "textoPt": "רוֹצֶה, צָרִיךְ, יָכוֹל, יוֹדֵעַ e אוֹהֵב mudam com o sujeito: homem, mulher, homens, mulheres (4 formas, como sempre). O segundo verbo vai no infinitivo e não muda: אֲנִי רוֹצָה לִלְמוֹד, הֵם צְרִיכִים לַעֲבוֹד, אַתָּה יָכוֹל לָבוֹא?",
+      "textoPt": "רוֹצֶה, צָרִיךְ, יָכוֹל, יוֹדֵעַ e אוֹהֵב mudam com o sujeito: homem, mulher, homens, mulheres (4 formas, como sempre). O segundo verbo vai no infinitivo e não muda: אֲנִי רוֹצָה לִלְמוֹד, הֵם צְרִיכִים לַעֲבוֹד, אַתָה יָכוֹל לָבוֹא?",
       "erroPt": "Um erro que não existe em português, mas aparece muito: mudar os DOIS verbos. \"Ela quer estudar\" é הִיא רוֹצָה לִלְמוֹד, e não הִיא רוֹצָה לוֹמֶדֶת.",
       "exemplos": [
         {
@@ -216,20 +216,20 @@
           "pt": "Eu sei nadar. (homem)"
         },
         {
-          "he": "אַתְּ יְכוֹלָה לָבוֹא?",
+          "he": "אַתְ יְכוֹלָה לָבוֹא?",
           "pt": "Você pode vir? (falando com uma mulher)"
         }
       ]
     },
     {
       "tituloPt": "Gostar de coisa, gostar de fazer",
-      "textoPt": "אוֹהֵב vem direto com a coisa, sem \"de\": אֲנִי אוֹהֵב קָפֶה. Com \"o/a\", entra o אֶת da Unidade 5: אֲנִי אוֹהֵב אֶת הַיָּם. Com uma ação, vem o infinitivo: אֲנִי אוֹהֵב לְבַשֵּׁל.",
+      "textoPt": "אוֹהֵב vem direto com a coisa, sem \"de\": אֲנִי אוֹהֵב קָפֶה. Com \"o/a\", entra o אֶת da Unidade 5: אֲנִי אוֹהֵב אֶת הַיָם. Com uma ação, vem o infinitivo: אֲנִי אוֹהֵב לְבַשֵׁל.",
       "erroPt": "O português põe \"de\": \"gosto DE café\". O brasileiro tende a traduzir o \"de\" com מִ־. Não tem: אֲנִי אוֹהֶבֶת מוּזִיקָה."
     },
     {
       "tituloPt": "Por quê? Porque.",
-      "textoPt": "A pergunta é לָמָּה? (Unidade 8) e a resposta começa com כִּי: לָמָּה אַתָּה לֹא בָּא? כִּי אֲנִי עָסוּק. O לֹא vem antes do verbo que se nega: אֲנִי לֹא יָכוֹל לָבוֹא.",
-      "erroPt": "Em português, \"por que\" e \"porque\" soam iguais. Em hebraico são palavras diferentes: לָמָּה pergunta, כִּי responde."
+      "textoPt": "A pergunta é לָמָה? (Unidade 8) e a resposta começa com כִּי: לָמָה אַתָה לֹא בָּא? כִּי אֲנִי עָסוּק. O לֹא vem antes do verbo que se nega: אֲנִי לֹא יָכוֹל לָבוֹא.",
+      "erroPt": "Em português, \"por que\" e \"porque\" soam iguais. Em hebraico são palavras diferentes: לָמָה pergunta, כִּי responde."
     }
   ],
   "dialogo": {
@@ -237,19 +237,19 @@
     "linhas": [
       {
         "quem": "Maya",
-        "he": "דָּנִי, מָה אַתָּה אוֹהֵב לַעֲשׂוֹת בְּשַׁבָּת?",
+        "he": "דָנִי, מָה אַתָה אוֹהֵב לַעֲשׂוֹת בְּשַׁבָּת?",
         "translit": "Dáni, ma atá ohév laassót beshabát?",
         "pt": "Dani, o que você gosta de fazer no sábado?"
       },
       {
         "quem": "Dani",
-        "he": "אֲנִי אוֹהֵב לְטַיֵּל וְלִשְׂחוֹת.",
+        "he": "אֲנִי אוֹהֵב לְטַיֵל וְלִשְׂחוֹת.",
         "translit": "aní ohév letayél velischót.",
         "pt": "Eu gosto de passear e de nadar."
       },
       {
         "quem": "Maya",
-        "he": "גַּם אֲנִי! אַתָּה רוֹצֶה לָבוֹא לַיָּם אִתָּנוּ?",
+        "he": "גַם אֲנִי! אַתָה רוֹצֶה לָבוֹא לַיָם אִתָנוּ?",
         "translit": "gam aní! atá rotsé lavó layám itánu?",
         "pt": "Eu também! Quer vir à praia com a gente?"
       },
@@ -273,7 +273,7 @@
       },
       {
         "quem": "Maya",
-        "he": "לָמָּה?",
+        "he": "לָמָה?",
         "translit": "láma?",
         "pt": "Por quê?"
       },
@@ -321,22 +321,22 @@
     "semPontos": true,
     "linhas": [
       {
-        "he": "קוֹרְאִים לִי לִיאַת. אֲנִי גָּרָה בְּחֵיפָה.",
+        "he": "קוֹרְאִים לִי לִיאַת. אֲנִי גָרָה בְּחֵיפָה.",
         "translit": "korím li Liát. aní gará beCháifa.",
         "pt": "Eu me chamo Liat. Moro em Haifa."
       },
       {
-        "he": "אֲנִי אוֹהֶבֶת לְבַשֵּׁל וְלִרְקוֹד.",
+        "he": "אֲנִי אוֹהֶבֶת לְבַשֵׁל וְלִרְקוֹד.",
         "translit": "aní ohévet levashél velirkód.",
         "pt": "Gosto de cozinhar e de dançar."
       },
       {
-        "he": "אֲנִי לֹא אוֹהֶבֶת כַּדּוּרֶגֶל.",
+        "he": "אֲנִי לֹא אוֹהֶבֶת כַּדוּרֶגֶל.",
         "translit": "aní lo ohévet kadurégel.",
         "pt": "Não gosto de futebol."
       },
       {
-        "he": "אֲנִי רוֹצָה לִלְמוֹד פּוֹרְטוּגֶזִית, כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל!",
+        "he": "אֲנִי רוֹצָה לִלְמוֹד פּוֹרְטוּגֶזִית, כִּי אֲנִי רוֹצָה לְטַיֵל בִּבְרָזִיל!",
         "translit": "aní rotsá lilmód portugezít, ki aní rotsá letayél biVrazíl!",
         "pt": "Quero estudar português, porque quero viajar pelo Brasil!"
       }
@@ -361,7 +361,7 @@
           "Porque mora no Brasil"
         ],
         "certa": 0,
-        "porque": "כִּי אֲנִי רוֹצָה לְטַיֵּל בִּבְרָזִיל."
+        "porque": "כִּי אֲנִי רוֹצָה לְטַיֵל בִּבְרָזִיל."
       },
       {
         "t": "vf",
@@ -385,7 +385,7 @@
   "sabia": [
     {
       "tituloPt": "Como nascem palavras novas",
-      "textoPt": "כַּדּוּרֶגֶל (futebol) é כַּדּוּר (bola) + רֶגֶל (pé), coladas numa palavra só. Quando o hebraico voltou a ser falado, faltavam palavras para o mundo moderno, e um comitê criado em 1890 começou a inventá-las a partir de raízes antigas. Hoje esse trabalho é da Academia da Língua Hebraica, fundada em 1953."
+      "textoPt": "כַּדוּרֶגֶל (futebol) é כַּדוּר (bola) + רֶגֶל (pé), coladas numa palavra só. Quando o hebraico voltou a ser falado, faltavam palavras para o mundo moderno, e um comitê criado em 1890 começou a inventá-las a partir de raízes antigas. Hoje esse trabalho é da Academia da Língua Hebraica, fundada em 1953."
     }
   ],
   "autoavaliacao": [
@@ -407,11 +407,11 @@
           "trabalhar"
         ],
         [
-          "לִכְתּוֹב",
+          "לִכְתוֹב",
           "escrever"
         ],
         [
-          "לִשְׁתּוֹת",
+          "לִשְׁתוֹת",
           "beber"
         ],
         [
@@ -425,7 +425,7 @@
       "q": "E os passatempos.",
       "pares": [
         [
-          "לְבַשֵּׁל",
+          "לְבַשֵׁל",
           "cozinhar"
         ],
         [
@@ -437,7 +437,7 @@
           "nadar"
         ],
         [
-          "לְטַיֵּל",
+          "לְטַיֵל",
           "passear, viajar"
         ],
         [
@@ -584,7 +584,7 @@
         "אֲנִי",
         "אוֹהֶבֶת",
         "לִקְרוֹא",
-        "עִתּוֹן"
+        "עִתוֹן"
       ]
     },
     {
@@ -594,14 +594,14 @@
         "אֲנִי",
         "לֹא",
         "יָכוֹל",
-        "הַיּוֹם",
+        "הַיוֹם",
         "כִּי",
         "אֲנִי",
         "עוֹבֵד"
       ],
       "outras": [
         [
-          "הַיּוֹם",
+          "הַיוֹם",
           "אֲנִי",
           "לֹא",
           "יָכוֹל",
@@ -620,7 +620,7 @@
       ],
       "itens": [
         [
-          "אֲנִי אוֹהֵב לְבַשֵּׁל",
+          "אֲנִי אוֹהֵב לְבַשֵׁל",
           0
         ],
         [
@@ -628,7 +628,7 @@
           1
         ],
         [
-          "הוּא אוֹהֵב כַּדּוּרֶגֶל",
+          "הוּא אוֹהֵב כַּדוּרֶגֶל",
           0
         ],
         [
@@ -640,7 +640,7 @@
           0
         ],
         [
-          "הִיא לֹא אוֹהֶבֶת לְטַיֵּל",
+          "הִיא לֹא אוֹהֶבֶת לְטַיֵל",
           1
         ]
       ]
@@ -651,7 +651,7 @@
       "linhas": [
         [
           "Maya",
-          "אַתָּה רוֹצֶה לָבוֹא לַיָּם?"
+          "אַתָה רוֹצֶה לָבוֹא לַיָם?"
         ]
       ],
       "opcoes": [
@@ -667,7 +667,7 @@
       "linhas": [
         [
           "Tom",
-          "לָמָּה אַתָּה לֹא בָּא?"
+          "לָמָה אַתָה לֹא בָּא?"
         ]
       ],
       "opcoes": [
@@ -676,21 +676,21 @@
         "בְּשֶׁבַע."
       ],
       "certa": 0,
-      "porque": "לָמָּה pede um motivo, e o motivo começa com כִּי."
+      "porque": "לָמָה pede um motivo, e o motivo começa com כִּי."
     },
     {
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "אַתְּ רוֹצָה לְטַיֵּל בְּשַׁבָּת?",
+        "אַתְ רוֹצָה לְטַיֵל בְּשַׁבָּת?",
         "אֲנִי לֹא יְכוֹלָה.",
-        "לָמָּה?",
+        "לָמָה?",
         "כִּי אֲנִי צְרִיכָה לִלְמוֹד."
       ]
     },
     {
       "t": "ouvir",
-      "he": "אֲנִי לֹא יוֹדַעַת לְבַשֵּׁל.",
+      "he": "אֲנִי לֹא יוֹדַעַת לְבַשֵׁל.",
       "q": "O que você ouviu?",
       "opcoes": [
         "Ela não sabe cozinhar",
@@ -749,7 +749,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Eu gosto de passear e de nadar.\"",
       "antes": "אֲנִי",
-      "depois": "לְטַיֵּל וְלִשְׂחוֹת.",
+      "depois": "לְטַיֵל וְלִשְׂחוֹת.",
       "respostas": [
         "אוהב"
       ]
@@ -766,12 +766,12 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Eu gosto de passear e de nadar.\"",
-      "exemplo": "אֲנִי אוֹהֵב לְטַיֵּל וְלִשְׂחוֹת."
+      "exemplo": "אֲנִי אוֹהֵב לְטַיֵל וְלִשְׂחוֹת."
     },
     {
       "t": "aberta",
       "pt": "Escreva o que você gosta de fazer no fim de semana, e uma coisa de que você não gosta.",
-      "exemplo": "בְּשַׁבָּת אֲנִי אוֹהֵב לְטַיֵּל וְלִקְרוֹא. אֲנִי לֹא אוֹהֵב לָרוּץ."
+      "exemplo": "בְּשַׁבָּת אֲנִי אוֹהֵב לְטַיֵל וְלִקְרוֹא. אֲנִי לֹא אוֹהֵב לָרוּץ."
     }
   ]
 }

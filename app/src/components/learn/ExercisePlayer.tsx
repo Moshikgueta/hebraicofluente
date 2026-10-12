@@ -571,7 +571,7 @@ function Stimulus({ ex }: { ex: Exercise }) {
             <span key={k} className="inline-block rounded-[var(--r-sm)] px-1.5 py-0.5">
               {/* Uma palavra sozinha é uma placa e recebe o corpo de sempre;
                   duas e três descem um degrau cada, para caberem numa linha de
-                  telefone. A 84px, `בְּבַקָּשָׁה` sozinha já ocupa a tela toda. */}
+                  telefone. A 84px, `בְּבַקָשָׁה` sozinha já ocupa a tela toda. */}
               <He size={ex.words.length > 2 ? 'lg' : ex.words.length > 1 ? 'xl' : 'display'}>
                 {w.he}
               </He>
@@ -684,14 +684,18 @@ function Options({
   }
 
   const tiles = tileColumns(ex);
+  /* As alternativas que SÃO as cinco vogais (a, e, i, o, u, na ordem de
+     sempre) correm da direita para a esquerda, como em toda a grade de
+     vogais do curso (12/10/2026). O índice não muda: só o lado da tela. */
+  const vogais = ex.kind === 'vowel-sound' || ex.kind === 'vowel-pair';
   return (
-    <ul className={`grid gap-2.5 ${tiles}`} role="list">
+    <ul className={`grid gap-2.5 ${tiles}`} role="list" dir={vogais ? 'rtl' : undefined}>
       {ex.options.map((opt, idx) => {
         const state = !settled ? 'idle'
           : idx === ex.answer ? 'right'
           : idx === chosen ? 'wrong' : 'muted';
         return (
-          <li key={`${ex.id}-${idx}`}>
+          <li key={`${ex.id}-${idx}`} dir={vogais ? 'ltr' : undefined}>
             <OptionButton
               ex={ex} option={opt} index={idx} state={state}
               tile={tiles !== ''}

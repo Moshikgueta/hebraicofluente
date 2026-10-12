@@ -100,7 +100,7 @@
     },
     {
       "tituloPt": "As perguntas, todas juntas",
-      "textoPt": "מִי? quem · מָה? o quê · אֵיפֹה? onde · לְאָן? para onde · מֵאֵיפֹה? de onde · מָתַי? quando · לָמָּה? por quê · אֵיךְ? como · כַּמָּה? quanto · אֵיזֶה / אֵיזוֹ / אֵילוּ? qual. Com elas, e com as respostas que você já sabe dar, você conduz uma conversa inteira."
+      "textoPt": "מִי? quem · מָה? o quê · אֵיפֹה? onde · לְאָן? para onde · מֵאֵיפֹה? de onde · מָתַי? quando · לָמָה? por quê · אֵיךְ? como · כַּמָה? quanto · אֵיזֶה / אֵיזוֹ / אֵילוּ? qual. Com elas, e com as respostas que você já sabe dar, você conduz uma conversa inteira."
     },
     {
       "tituloPt": "O esqueleto do hebraico que você já domina",
@@ -112,7 +112,7 @@
     "linhas": [
       {
         "quem": "Uma mulher",
-        "he": "סְלִיחָה, הָאוֹטוֹבּוּס הַזֶּה נוֹסֵעַ לַתַּחֲנָה הַמֶּרְכָּזִית?",
+        "he": "סְלִיחָה, הָאוֹטוֹבּוּס הַזֶה נוֹסֵעַ לַתַחֲנָה הַמֶרְכָּזִית?",
         "translit": "slichá, haótobus hazé nosséa latachaná hamerkazít?",
         "pt": "Com licença, este ônibus vai para a rodoviária central?"
       },
@@ -124,7 +124,7 @@
       },
       {
         "quem": "Uma mulher",
-        "he": "בְּטַח. הָאוֹטוֹבּוּס הַזֶּה… נוֹסֵעַ… לַתַּחֲנָה הַמֶּרְכָּזִית?",
+        "he": "בְּטַח. הָאוֹטוֹבּוּס הַזֶה… נוֹסֵעַ… לַתַחֲנָה הַמֶרְכָּזִית?",
         "translit": "betách. haótobus hazé… nosséa… latachaná hamerkazít?",
         "pt": "Claro. Este ônibus… vai… para a rodoviária central?"
       },
@@ -136,7 +136,7 @@
       },
       {
         "quem": "Uma mulher",
-        "he": "תּוֹדָה. אֲנִי מְאַחֶרֶת לְרֵאָיוֹן עֲבוֹדָה!",
+        "he": "תוֹדָה. אֲנִי מְאַחֶרֶת לְרֵאָיוֹן עֲבוֹדָה!",
         "translit": "todá. aní meachéret lereayón avodá!",
         "pt": "Obrigada. Estou atrasada para uma entrevista de emprego!"
       },
@@ -148,7 +148,7 @@
       },
       {
         "quem": "Uma mulher",
-        "he": "אִינְטֶרְוְיוּ, כְּמוֹ בְּאַנְגְּלִית. אַתָּה לֹא מִפֹּה, נָכוֹן?",
+        "he": "אִינְטֶרְוְיוּ, כְּמוֹ בְּאַנְגְלִית. אַתָה לֹא מִפֹּה, נָכוֹן?",
         "translit": "íntervyu, kmo beanglít. atá lo mipó, nachón?",
         "pt": "Interview, como em inglês. Você não é daqui, né?"
       },
@@ -160,13 +160,13 @@
       },
       {
         "quem": "Uma mulher",
-        "he": "וְאַתָּה כְּבָר מְדַבֵּר יָפֶה מְאֹד!",
+        "he": "וְאַתָה כְּבָר מְדַבֵּר יָפֶה מְאֹד!",
         "translit": "veatá kvar medabér yafé meód!",
         "pt": "E você já fala muito bem!"
       },
       {
         "quem": "Dani",
-        "he": "תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא מֵבִין הַכֹּל.",
+        "he": "תוֹדָה! אֲבָל אֲנִי עוֹד לֹא מֵבִין הַכֹּל.",
         "translit": "todá! avál aní od lo mevín hakól.",
         "pt": "Obrigado! Mas ainda não entendo tudo."
       },
@@ -207,27 +207,27 @@
     "semPontos": true,
     "linhas": [
       {
-        "he": "כָּל יוֹם שִׁשִּׁי אֲנִי קָם בִּשְׁמוֹנֶה וְנוֹסֵעַ בְּאוֹטוֹבּוּס לַשּׁוּק.",
+        "he": "כָּל יוֹם שִׁשִׁי אֲנִי קָם בִּשְׁמוֹנֶה וְנוֹסֵעַ בְּאוֹטוֹבּוּס לַשׁוּק.",
         "translit": "kol yom shishí aní kam bishmoné venosséa beótobus lashúk.",
         "pt": "Toda sexta eu levanto às oito e vou de ônibus para a feira."
       },
       {
-        "he": "בַּשּׁוּק אֲנִי קוֹנֶה פֵּרוֹת וִירָקוֹת. הַכֹּל זוֹל וְטָעִים!",
+        "he": "בַּשׁוּק אֲנִי קוֹנֶה פֵּרוֹת וִירָקוֹת. הַכֹּל זוֹל וְטָעִים!",
         "translit": "bashúk aní koné perót virakót. hakól zol vetaím!",
         "pt": "Na feira eu compro frutas e verduras. Tudo barato e gostoso!"
       },
       {
-        "he": "אַחַר כָּךְ אֲנִי שׁוֹתֶה קָפֶה הָפוּךְ עִם מַיָּה בְּבֵית קָפֶה לְיַד הַיָּם.",
+        "he": "אַחַר כָּךְ אֲנִי שׁוֹתֶה קָפֶה הָפוּךְ עִם מַיָה בְּבֵית קָפֶה לְיַד הַיָם.",
         "translit": "achár kach aní shoté kafé hafúch im Máya bevéit kafé leyád hayám.",
         "pt": "Depois eu tomo um café com leite com a Maya num café perto do mar."
       },
       {
-        "he": "בְּאַרְבַּע הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת, וְכֻלָּם אוֹמְרִים \"שַׁבָּת שָׁלוֹם\".",
+        "he": "בְּאַרְבַּע הַרְבֵּה חֲנֻיוֹת כְּבָר סְגוּרוֹת, וְכֻלָם אוֹמְרִים \"שַׁבָּת שָׁלוֹם\".",
         "translit": "beárba harbé chanuyót kvar sgurót, vechulám omrím \"shabát shalóm\".",
         "pt": "Às quatro muitas lojas já estão fechadas, e todo mundo diz \"shabát shalóm\"."
       },
       {
-        "he": "בָּעֶרֶב אֲנִי אוֹכֵל אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה. אֲנַחְנוּ עֲשָׂרָה אֲנָשִׁים לְיַד הַשֻּׁלְחָן!",
+        "he": "בָּעֶרֶב אֲנִי אוֹכֵל אֵצֶל הַמִשְׁפָּחָה שֶׁל נֹעָה. אֲנַחְנוּ עֲשָׂרָה אֲנָשִׁים לְיַד הַשֻׁלְחָן!",
         "translit": "baérev aní ochél étsel hamishpachá shel Nóa. anáchnu assará anashím leyád hashulchán!",
         "pt": "À noite eu janto na casa da família da Noa. Somos dez pessoas em volta da mesa!"
       },
@@ -262,7 +262,7 @@
         "t": "vf",
         "q": "Às quatro da tarde todas as lojas ainda estão abertas.",
         "certa": false,
-        "porque": "הַרְבֵּה חֲנֻיּוֹת כְּבָר סְגוּרוֹת: muitas lojas já estão fechadas, por causa do shabat."
+        "porque": "הַרְבֵּה חֲנֻיוֹת כְּבָר סְגוּרוֹת: muitas lojas já estão fechadas, por causa do shabat."
       },
       {
         "t": "escolha",
@@ -273,7 +273,7 @@
           "No hotel"
         ],
         "certa": 0,
-        "porque": "אֵצֶל הַמִּשְׁפָּחָה שֶׁל נֹעָה: na casa da família dela (Unidade 11)."
+        "porque": "אֵצֶל הַמִשְׁפָּחָה שֶׁל נֹעָה: na casa da família dela (Unidade 11)."
       },
       {
         "t": "vf",
@@ -333,7 +333,7 @@
       "opcoes": [
         "סְלִיחָה, אֶפְשָׁר עוֹד פַּעַם?",
         "בְּתֵאָבוֹן.",
-        "מַזָּל טוֹב!"
+        "מַזָל טוֹב!"
       ],
       "certa": 0
     },
@@ -370,7 +370,7 @@
       "t": "escolha",
       "q": "Para saber o preço:",
       "opcoes": [
-        "כַּמָּה זֶה עוֹלֶה?",
+        "כַּמָה זֶה עוֹלֶה?",
         "לְאָן זֶה עוֹלֶה?",
         "מָתַי זֶה עוֹלֶה?"
       ],
@@ -390,23 +390,23 @@
           0
         ],
         [
-          "… אַתָּה נוֹסֵעַ? לְתֵל אָבִיב.",
+          "… אַתָה נוֹסֵעַ? לְתֵל אָבִיב.",
           1
         ],
         [
-          "… הַשִּׁעוּר? בְּשָׁלוֹשׁ.",
+          "… הַשִׁעוּר? בְּשָׁלוֹשׁ.",
           2
         ],
         [
-          "… הַשֵּׁרוּתִים?",
+          "… הַשֵׁרוּתִים?",
           0
         ],
         [
-          "… הִיא הוֹלֶכֶת? לַשּׁוּק.",
+          "… הִיא הוֹלֶכֶת? לַשׁוּק.",
           1
         ],
         [
-          "… יוֹם הַהֻלֶּדֶת שֶׁלְּךָ?",
+          "… יוֹם הַהֻלֶדֶת שֶׁלְךָ?",
           2
         ]
       ]
@@ -417,7 +417,7 @@
       "linhas": [
         [
           "Shira",
-          "מֵאֵיפֹה אַתָּה?"
+          "מֵאֵיפֹה אַתָה?"
         ]
       ],
       "opcoes": [
@@ -433,12 +433,12 @@
       "linhas": [
         [
           "O vendedor",
-          "כַּמָּה אַתְּ רוֹצָה?"
+          "כַּמָה אַתְ רוֹצָה?"
         ]
       ],
       "opcoes": [
-        "קִילוֹ אֶחָד, בְּבַקָּשָׁה.",
-        "אֶחָד קִילוֹ, בְּבַקָּשָׁה."
+        "קִילוֹ אֶחָד, בְּבַקָשָׁה.",
+        "אֶחָד קִילוֹ, בְּבַקָשָׁה."
       ],
       "certa": 0,
       "dicas": {
@@ -540,7 +540,7 @@
       "palavras": [
         "הִיא",
         "אוֹמֶרֶת",
-        "שֶׁהַסֶּרֶט",
+        "שֶׁהַסֶרֶט",
         "טוֹב"
       ]
     },
@@ -548,7 +548,7 @@
       "t": "completar",
       "q": "\"O gato está embaixo da mesa\"",
       "antes": "הֶחָתוּל",
-      "depois": "לַשֻּׁלְחָן",
+      "depois": "לַשֻׁלְחָן",
       "respostas": [
         "מתחת"
       ]
@@ -556,7 +556,7 @@
     {
       "t": "completar",
       "q": "\"Você pode me ajudar?\" (a ele)",
-      "antes": "אַתָּה יָכוֹל לַעֲזוֹר",
+      "antes": "אַתָה יָכוֹל לַעֲזוֹר",
       "depois": "?",
       "respostas": [
         "לי"
@@ -577,7 +577,7 @@
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "סְלִיחָה, אֵיךְ מַגִּיעִים לַשּׁוּק?",
+        "סְלִיחָה, אֵיךְ מַגִיעִים לַשׁוּק?",
         "הוֹלְכִים יָשָׁר וּפוֹנִים שְׂמֹאלָה בָּרַמְזוֹר.",
         "סְלִיחָה, אֲנִי לֹא מֵבִין. אֶפְשָׁר לְאַט?",
         "יָשָׁר… וְאָז… שְׂמֹאלָה."
@@ -636,7 +636,7 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Obrigado! Mas ainda não entendo tudo.\"",
-      "antes": "תּוֹדָה! אֲבָל אֲנִי עוֹד לֹא",
+      "antes": "תוֹדָה! אֲבָל אֲנִי עוֹד לֹא",
       "depois": "הַכֹּל.",
       "respostas": [
         "מבין"
@@ -645,7 +645,7 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Obrigada. Estou atrasada para uma entrevista de emprego!\"",
-      "antes": "תּוֹדָה. אֲנִי",
+      "antes": "תוֹדָה. אֲנִי",
       "depois": "לְרֵאָיוֹן עֲבוֹדָה!",
       "respostas": [
         "מאחרת"
@@ -659,7 +659,7 @@
     {
       "t": "aberta",
       "pt": "Apresente-se como no começo do curso, mas agora com tudo o que você sabe: quem é, de onde, onde mora, o que faz, do que gosta, e um plano para a semana que vem.",
-      "exemplo": "שָׁלוֹם! קוֹרְאִים לִי דָּנִי, וַאֲנִי מִבְּרָזִיל. אֲנִי גָּר בְּתֵל אָבִיב וְלוֹמֵד עִבְרִית בָּאֻלְפָּן. אֲנִי אוֹהֵב לְבַשֵּׁל וְלִשְׂחוֹת. בַּשָּׁבוּעַ הַבָּא אֲנִי נוֹסֵעַ לְחֵיפָה עִם חֲבֵרִים."
+      "exemplo": "שָׁלוֹם! קוֹרְאִים לִי דָנִי, וַאֲנִי מִבְּרָזִיל. אֲנִי גָר בְּתֵל אָבִיב וְלוֹמֵד עִבְרִית בָּאֻלְפָּן. אֲנִי אוֹהֵב לְבַשֵׁל וְלִשְׂחוֹת. בַּשָׁבוּעַ הַבָּא אֲנִי נוֹסֵעַ לְחֵיפָה עִם חֲבֵרִים."
     }
   ]
 }

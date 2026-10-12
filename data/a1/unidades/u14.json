@@ -48,10 +48,10 @@
     {
       "pt": "pagar",
       "formas": [
-        "מְשַׁלֵּם",
-        "מְשַׁלֶּמֶת",
-        "מְשַׁלְּמִים",
-        "מְשַׁלְּמוֹת"
+        "מְשַׁלֵם",
+        "מְשַׁלֶמֶת",
+        "מְשַׁלְמִים",
+        "מְשַׁלְמוֹת"
       ],
       "translit": [
         "meshalém",
@@ -101,12 +101,12 @@
       "pt": "sapatos"
     },
     {
-      "he": "גַּרְבַּיִם",
+      "he": "גַרְבַּיִם",
       "translit": "garbáyim",
       "pt": "meias"
     },
     {
-      "he": "מִדָּה",
+      "he": "מִדָה",
       "translit": "midá",
       "pt": "tamanho"
     },
@@ -125,7 +125,7 @@
       "pt": "rosa",
       "formas": [
         "וָרֹד",
-        "וְרֻדָּה"
+        "וְרֻדָה"
       ],
       "translit": [
         "varód",
@@ -158,7 +158,7 @@
       "pt": "laranja (cor)",
       "formas": [
         "כָּתֹם",
-        "כְּתֻמָּה"
+        "כְּתֻמָה"
       ],
       "translit": [
         "katóm",
@@ -201,12 +201,12 @@
       "pt": "mais"
     },
     {
-      "he": "מִדַּי",
+      "he": "מִדַי",
       "translit": "midái",
       "pt": "demais (caro demais)"
     },
     {
-      "he": "לִמְדּוֹד",
+      "he": "לִמְדוֹד",
       "translit": "limdód",
       "pt": "experimentar (roupa)"
     },
@@ -221,7 +221,7 @@
       "pt": "desconto"
     },
     {
-      "he": "בִּמְזֻמָּן",
+      "he": "בִּמְזֻמָן",
       "translit": "bimzumán",
       "pt": "em dinheiro"
     },
@@ -233,12 +233,12 @@
   ],
   "gramatica": [
     {
-      "tituloPt": "Esta blusa: הַחֻלְצָה הַזֹּאת",
-      "textoPt": "Para \"este\" e \"esta\", a coisa vem primeiro, com הַ, e depois הַזֶּה (masculino), הַזֹּאת (feminino) ou הָאֵלֶּה (plural), também com הַ: הַמְעִיל הַזֶּה, הַחֻלְצָה הַזֹּאת, הַנַּעֲלַיִם הָאֵלֶּה. Você também vai ouvir הַזּוֹ, que é o mesmo que הַזֹּאת.",
+      "tituloPt": "Esta blusa: הַחֻלְצָה הַזֹאת",
+      "textoPt": "Para \"este\" e \"esta\", a coisa vem primeiro, com הַ, e depois הַזֶה (masculino), הַזֹאת (feminino) ou הָאֵלֶה (plural), também com הַ: הַמְעִיל הַזֶה, הַחֻלְצָה הַזֹאת, הַנַעֲלַיִם הָאֵלֶה. Você também vai ouvir הַזוֹ, que é o mesmo que הַזֹאת.",
       "erroPt": "O português põe \"esta\" antes: \"esta blusa\". Em hebraico, זֹאת הַחֻלְצָה é outra coisa: é uma frase, \"esta é a blusa\" (Unidade 2).",
       "exemplos": [
         {
-          "he": "הַחֻלְצָה הַזֹּאת יָפָה.",
+          "he": "הַחֻלְצָה הַזֹאת יָפָה.",
           "pt": "Esta blusa é bonita."
         },
         {
@@ -249,27 +249,27 @@
     },
     {
       "tituloPt": "O preço concorda com a coisa",
-      "textoPt": "עוֹלֶה (custa) é um verbo em ה, com 4 formas: כַּמָּה עוֹלֶה הַמְעִיל? · כַּמָּה עוֹלָה הַחֻלְצָה? · כַּמָּה עוֹלִים הַמִּכְנָסַיִם? · כַּמָּה עוֹלוֹת הַנַּעֲלַיִם? Repare: \"calça\" (מִכְנָסַיִם) e \"sapatos\" (נַעֲלַיִם) são plurais em hebraico.",
-      "erroPt": "O brasileiro diz \"quanto custa a calça\", no singular, e traduz com עוֹלֶה. Mas מִכְנָסַיִם é plural: כַּמָּה עוֹלִים הַמִּכְנָסַיִם?"
+      "textoPt": "עוֹלֶה (custa) é um verbo em ה, com 4 formas: כַּמָה עוֹלֶה הַמְעִיל? · כַּמָה עוֹלָה הַחֻלְצָה? · כַּמָה עוֹלִים הַמִכְנָסַיִם? · כַּמָה עוֹלוֹת הַנַעֲלַיִם? Repare: \"calça\" (מִכְנָסַיִם) e \"sapatos\" (נַעֲלַיִם) são plurais em hebraico.",
+      "erroPt": "O brasileiro diz \"quanto custa a calça\", no singular, e traduz com עוֹלֶה. Mas מִכְנָסַיִם é plural: כַּמָה עוֹלִים הַמִכְנָסַיִם?"
     },
     {
       "tituloPt": "Mais e demais",
-      "textoPt": "\"Mais\" + adjetivo é יוֹתֵר antes: יוֹתֵר זוֹל (mais barato), מִדָּה יוֹתֵר קְטַנָּה (um tamanho menor). \"Demais\" é מִדַּי, depois: יָקָר מִדַּי (caro demais).",
+      "textoPt": "\"Mais\" + adjetivo é יוֹתֵר antes: יוֹתֵר זוֹל (mais barato), מִדָה יוֹתֵר קְטַנָה (um tamanho menor). \"Demais\" é מִדַי, depois: יָקָר מִדַי (caro demais).",
       "exemplos": [
         {
-          "he": "יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל?",
+          "he": "יֵשׁ מַשֶׁהוּ יוֹתֵר זוֹל?",
           "pt": "Tem alguma coisa mais barata?"
         },
         {
-          "he": "הַמְעִיל הַזֶּה יָקָר מִדַּי.",
+          "he": "הַמְעִיל הַזֶה יָקָר מִדַי.",
           "pt": "Este casaco é caro demais."
         }
       ]
     },
     {
       "tituloPt": "Levar a coisa: o אֶת, de novo",
-      "textoPt": "Quando a coisa é definida (com הַ), o אֶת da Unidade 5 aparece: אֲנִי לוֹקַחַת אֶת הַחֻלְצָה הַזֹּאת. Com coisa indefinida, não: אֲנִי רוֹצֶה חֻלְצָה.",
-      "erroPt": "É fácil esquecer o אֶת quando a frase fica comprida. \"Eu levo este casaco\" = אֲנִי לוֹקֵחַ אֶת הַמְעִיל הַזֶּה."
+      "textoPt": "Quando a coisa é definida (com הַ), o אֶת da Unidade 5 aparece: אֲנִי לוֹקַחַת אֶת הַחֻלְצָה הַזֹאת. Com coisa indefinida, não: אֲנִי רוֹצֶה חֻלְצָה.",
+      "erroPt": "É fácil esquecer o אֶת quando a frase fica comprida. \"Eu levo este casaco\" = אֲנִי לוֹקֵחַ אֶת הַמְעִיל הַזֶה."
     }
   ],
   "dialogo": {
@@ -283,7 +283,7 @@
       },
       {
         "quem": "Noa",
-        "he": "כֵּן. כַּמָּה עוֹלָה הַחֻלְצָה הַזֹּאת?",
+        "he": "כֵּן. כַּמָה עוֹלָה הַחֻלְצָה הַזֹאת?",
         "translit": "ken. káma olá hachultsá hazót?",
         "pt": "Sim. Quanto custa esta blusa?"
       },
@@ -295,13 +295,13 @@
       },
       {
         "quem": "Noa",
-        "he": "זֶה יָקָר מִדַּי… יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל?",
+        "he": "זֶה יָקָר מִדַי… יֵשׁ מַשֶׁהוּ יוֹתֵר זוֹל?",
         "translit": "ze yakár midái… yesh máshehu yotér zol?",
         "pt": "É caro demais… Tem alguma coisa mais barata?"
       },
       {
         "quem": "A vendedora",
-        "he": "הַחֻלְצוֹת הָאֵלֶּה בְּמִבְצָע: שִׁשִּׁים שֶׁקֶל.",
+        "he": "הַחֻלְצוֹת הָאֵלֶה בְּמִבְצָע: שִׁשִׁים שֶׁקֶל.",
         "translit": "hachultsót haéle bemivtsá: shishím shékel.",
         "pt": "Estas blusas estão em promoção: sessenta shekels."
       },
@@ -313,43 +313,43 @@
       },
       {
         "quem": "A vendedora",
-        "he": "כֵּן. אֵיזוֹ מִדָּה?",
+        "he": "כֵּן. אֵיזוֹ מִדָה?",
         "translit": "ken. éizo midá?",
         "pt": "Tem. Qual tamanho?"
       },
       {
         "quem": "Noa",
-        "he": "מֶדְיוּם. אֶפְשָׁר לִמְדּוֹד?",
+        "he": "מֶדְיוּם. אֶפְשָׁר לִמְדוֹד?",
         "translit": "médium. efshár limdód?",
         "pt": "Médio. Posso experimentar?"
       },
       {
         "quem": "A vendedora",
-        "he": "בְּטַח. הַתָּא שָׁם.",
+        "he": "בְּטַח. הַתָא שָׁם.",
         "translit": "betách. hatá sham.",
         "pt": "Claro. O provador é ali."
       },
       {
         "quem": "Noa",
-        "he": "הִיא קְצָת גְּדוֹלָה. יֵשׁ מִדָּה יוֹתֵר קְטַנָּה?",
+        "he": "הִיא קְצָת גְדוֹלָה. יֵשׁ מִדָה יוֹתֵר קְטַנָה?",
         "translit": "hi ktsat gdolá. yesh midá yotér ktaná?",
         "pt": "Ficou um pouco grande. Tem um tamanho menor?"
       },
       {
         "quem": "A vendedora",
-        "he": "הִנֵּה, סְמוֹל.",
+        "he": "הִנֵה, סְמוֹל.",
         "translit": "hiné, smol.",
         "pt": "Aqui, pequeno."
       },
       {
         "quem": "Noa",
-        "he": "מְצֻיָּן! אֲנִי לוֹקַחַת אוֹתָהּ. אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?",
+        "he": "מְצֻיָן! אֲנִי לוֹקַחַת אוֹתָה. אֶפְשָׁר לְשַׁלֵם בְּכַרְטִיס?",
         "translit": "metsuyán! aní lokáchat otá. efshár leshalém bekartís?",
         "pt": "Ótimo! Vou levar. Dá para pagar no cartão?"
       },
       {
         "quem": "A vendedora",
-        "he": "כֵּן, בַּקֻּפָּה.",
+        "he": "כֵּן, בַּקֻפָּה.",
         "translit": "ken, bakupá.",
         "pt": "Dá, no caixa."
       }
@@ -361,17 +361,17 @@
         "pt": "ajudar"
       },
       {
-        "he": "תָּא",
+        "he": "תָא",
         "translit": "ta",
         "pt": "provador (cabine)"
       },
       {
-        "he": "מְצֻיָּן",
+        "he": "מְצֻיָן",
         "translit": "metsuyán",
         "pt": "ótimo, excelente"
       },
       {
-        "he": "אוֹתָהּ",
+        "he": "אוֹתָה",
         "translit": "otá",
         "pt": "a (ela, como objeto): \"vou levá-la\""
       }
@@ -383,7 +383,7 @@
     "semPontos": true,
     "linhas": [
       {
-        "he": "מִבְצָע! 1+1 עַל כָּל הַגַּרְבַּיִם",
+        "he": "מִבְצָע! 1+1 עַל כָּל הַגַרְבַּיִם",
         "translit": "mivtsá! achát plus achát al kol hagarbáyim",
         "pt": "Promoção! Leve 2, pague 1 em todas as meias"
       },
@@ -398,7 +398,7 @@
         "pt": "De domingo a quinta: das 9h às 20h"
       },
       {
-        "he": "שִׁשִּׁי: 9:00 עַד 14:00. שַׁבָּת: סָגוּר",
+        "he": "שִׁשִׁי: 9:00 עַד 14:00. שַׁבָּת: סָגוּר",
         "translit": "shishí: tésha ad shtáyim. shabát: sagúr",
         "pt": "Sexta: das 9h às 14h. Sábado: fechado"
       }
@@ -451,7 +451,7 @@
   "sabia": [
     {
       "tituloPt": "Por que \"calça\" termina em ־ַיִם?",
-      "textoPt": "O final ־ַיִם marca o que vem em par: נַעֲלַיִם (sapatos), גַּרְבַּיִם (meias), מִכְנָסַיִם (calça, que tem duas pernas), e também partes do corpo, como רַגְלַיִם (pernas) e עֵינַיִם (olhos), que aparecem na Unidade 18. É a marca do \"dual\", a forma de \"dois\". O número שְׁתַּיִם (dois) tem a mesma marca. Mas nem todo ־ַיִם é par: מַיִם (água) e שָׁמַיִם (céu) só têm essa forma. E o dual ainda vive em יוֹמַיִם (dois dias) e שְׁבוּעַיִם (duas semanas)."
+      "textoPt": "O final ־ַיִם marca o que vem em par: נַעֲלַיִם (sapatos), גַרְבַּיִם (meias), מִכְנָסַיִם (calça, que tem duas pernas), e também partes do corpo, como רַגְלַיִם (pernas) e עֵינַיִם (olhos), que aparecem na Unidade 18. É a marca do \"dual\", a forma de \"dois\". O número שְׁתַיִם (dois) tem a mesma marca. Mas nem todo ־ַיִם é par: מַיִם (água) e שָׁמַיִם (céu) só têm essa forma. E o dual ainda vive em יוֹמַיִם (dois dias) e שְׁבוּעַיִם (duas semanas)."
     }
   ],
   "autoavaliacao": [
@@ -516,33 +516,33 @@
       "t": "escolha",
       "q": "\"Esta blusa\"",
       "opcoes": [
-        "הַחֻלְצָה הַזֹּאת",
+        "הַחֻלְצָה הַזֹאת",
         "זֹאת הַחֻלְצָה",
-        "הַזֹּאת חֻלְצָה"
+        "הַזֹאת חֻלְצָה"
       ],
       "certa": 0,
       "dicas": {
         "1": "Quase. זֹאת הַחֻלְצָה é uma frase: \"esta é a blusa\".",
-        "2": "A ordem é a do hebraico: a coisa primeiro, com הַ, e depois הַזֹּאת."
+        "2": "A ordem é a do hebraico: a coisa primeiro, com הַ, e depois הַזֹאת."
       }
     },
     {
       "t": "escolha",
       "q": "\"Este casaco\"",
       "opcoes": [
-        "הַמְעִיל הַזֶּה",
-        "הַמְעִיל הַזֹּאת",
-        "מְעִיל הַזֶּה"
+        "הַמְעִיל הַזֶה",
+        "הַמְעִיל הַזֹאת",
+        "מְעִיל הַזֶה"
       ],
       "certa": 0,
       "dicas": {
-        "1": "מְעִיל é masculino: הַזֶּה.",
-        "2": "As duas palavras levam הַ: הַמְעִיל הַזֶּה."
+        "1": "מְעִיל é masculino: הַזֶה.",
+        "2": "As duas palavras levam הַ: הַמְעִיל הַזֶה."
       }
     },
     {
       "t": "escolha",
-      "q": "כַּמָּה ___ הַנַּעֲלַיִם?",
+      "q": "כַּמָה ___ הַנַעֲלַיִם?",
       "opcoes": [
         "עוֹלוֹת",
         "עוֹלֶה",
@@ -556,7 +556,7 @@
     },
     {
       "t": "escolha",
-      "q": "כַּמָּה ___ הַחֻלְצָה?",
+      "q": "כַּמָה ___ הַחֻלְצָה?",
       "opcoes": [
         "עוֹלָה",
         "עוֹלֶה",
@@ -572,9 +572,9 @@
       "t": "separar",
       "q": "\"Este\", \"esta\" ou \"estes\"?",
       "baldes": [
-        "הַזֶּה",
-        "הַזֹּאת",
-        "הָאֵלֶּה"
+        "הַזֶה",
+        "הַזֹאת",
+        "הָאֵלֶה"
       ],
       "itens": [
         [
@@ -659,18 +659,18 @@
     {
       "t": "erro",
       "q": "Ache o erro e escreva a frase certa: \"Eu quero este vestido.\" (fala uma mulher)",
-      "errada": "אֲנִי רוֹצָה זֹאת הַשִּׂמְלָה.",
+      "errada": "אֲנִי רוֹצָה זֹאת הַשִׂמְלָה.",
       "respostas": [
         "אני רוצה את השמלה הזאת",
         "אני רוצה את השמלה הזו",
         "אני רוצה את השימלה הזאת"
       ],
-      "porque": "\"Este vestido\" é הַשִּׂמְלָה הַזֹּאת, e, como é definido, leva אֶת antes."
+      "porque": "\"Este vestido\" é הַשִׂמְלָה הַזֹאת, e, como é definido, leva אֶת antes."
     },
     {
       "t": "erro",
       "q": "Ache o erro e escreva a frase certa.",
-      "errada": "הַמְעִיל הַזֶּה יְקָרָה.",
+      "errada": "הַמְעִיל הַזֶה יְקָרָה.",
       "respostas": [
         "המעיל הזה יקר"
       ],
@@ -681,15 +681,15 @@
       "pt": "Tem um tamanho menor?",
       "palavras": [
         "יֵשׁ",
-        "מִדָּה",
+        "מִדָה",
         "יוֹתֵר",
-        "קְטַנָּה"
+        "קְטַנָה"
       ],
       "outras": [
         [
           "יֵשׁ",
-          "מִדָּה",
-          "קְטַנָּה",
+          "מִדָה",
+          "קְטַנָה",
           "יוֹתֵר"
         ]
       ]
@@ -699,7 +699,7 @@
       "pt": "Dá para pagar no cartão?",
       "palavras": [
         "אֶפְשָׁר",
-        "לְשַׁלֵּם",
+        "לְשַׁלֵם",
         "בְּכַרְטִיס?"
       ]
     },
@@ -713,7 +713,7 @@
         ]
       ],
       "opcoes": [
-        "כֵּן, כַּמָּה עוֹלֶה הַמְעִיל הַזֶּה?",
+        "כֵּן, כַּמָה עוֹלֶה הַמְעִיל הַזֶה?",
         "לֹא, אֵין לִי.",
         "בְּתֵאָבוֹן!"
       ],
@@ -725,13 +725,13 @@
       "linhas": [
         [
           "Noa",
-          "זֶה יָקָר מִדַּי."
+          "זֶה יָקָר מִדַי."
         ]
       ],
       "opcoes": [
-        "יֵשׁ גַּם מִבְצָע: שְׁלוֹשִׁים שֶׁקֶל.",
+        "יֵשׁ גַם מִבְצָע: שְׁלוֹשִׁים שֶׁקֶל.",
         "כֵּן, זֶה קָרוֹב.",
-        "מַזָּל טוֹב!"
+        "מַזָל טוֹב!"
       ],
       "certa": 0
     },
@@ -739,10 +739,10 @@
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "כַּמָּה עוֹלָה הַשִּׂמְלָה?",
+        "כַּמָה עוֹלָה הַשִׂמְלָה?",
         "מֵאָה שֶׁקֶל.",
-        "זֶה יָקָר מִדַּי!",
-        "יֵשׁ גַּם שְׂמָלוֹת בְּמִבְצָע."
+        "זֶה יָקָר מִדַי!",
+        "יֵשׁ גַם שְׂמָלוֹת בְּמִבְצָע."
       ]
     },
     {
@@ -758,7 +758,7 @@
     },
     {
       "t": "ouvir",
-      "he": "אֲנִי מְשַׁלֵּם בִּמְזֻמָּן.",
+      "he": "אֲנִי מְשַׁלֵם בִּמְזֻמָן.",
       "q": "Como ele paga?",
       "opcoes": [
         "Em dinheiro",
@@ -769,7 +769,7 @@
     },
     {
       "t": "ditado",
-      "he": "יָקָר מִדַּי",
+      "he": "יָקָר מִדַי",
       "respostas": [
         "יקר מדי"
       ]
@@ -799,7 +799,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"É caro demais… Tem alguma coisa mais barata?\"",
       "antes": "זֶה",
-      "depois": "מִדַּי… יֵשׁ מַשֶּׁהוּ יוֹתֵר זוֹל?",
+      "depois": "מִדַי… יֵשׁ מַשֶׁהוּ יוֹתֵר זוֹל?",
       "respostas": [
         "יקר"
       ]
@@ -807,8 +807,8 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Ficou um pouco grande. Tem um tamanho menor?\"",
-      "antes": "הִיא קְצָת גְּדוֹלָה. יֵשׁ",
-      "depois": "יוֹתֵר קְטַנָּה?",
+      "antes": "הִיא קְצָת גְדוֹלָה. יֵשׁ",
+      "depois": "יוֹתֵר קְטַנָה?",
       "respostas": [
         "מידה",
         "מדה"
@@ -817,12 +817,12 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Sim. Quanto custa esta blusa?\"",
-      "exemplo": "כֵּן. כַּמָּה עוֹלָה הַחֻלְצָה הַזֹּאת?"
+      "exemplo": "כֵּן. כַּמָה עוֹלָה הַחֻלְצָה הַזֹאת?"
     },
     {
       "t": "aberta",
       "pt": "Você está numa loja. Pergunte o preço de uma roupa, peça outra cor ou outro tamanho, e diga como vai pagar.",
-      "exemplo": "כַּמָּה עוֹלֶה הַסְּוֶדֶר הַזֶּה? יֵשׁ בְּאָפֹר? יֵשׁ מִדָּה יוֹתֵר גְּדוֹלָה? אֶפְשָׁר לְשַׁלֵּם בְּכַרְטִיס?"
+      "exemplo": "כַּמָה עוֹלֶה הַסְוֶדֶר הַזֶה? יֵשׁ בְּאָפֹר? יֵשׁ מִדָה יוֹתֵר גְדוֹלָה? אֶפְשָׁר לְשַׁלֵם בְּכַרְטִיס?"
     }
   ]
 }

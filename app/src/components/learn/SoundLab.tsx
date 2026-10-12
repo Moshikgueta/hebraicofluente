@@ -66,10 +66,13 @@ export function SoundLab({
           than shrinking the Hebrew, which is the one thing this component must
           never do. */}
       <div className="overflow-x-auto overscroll-x-contain">
-        <table className="w-full min-w-[344px] border-collapse">
+        {/* A tabela inteira em RTL (12/10/2026): a coluna das letras fica à
+            direita e as vogais seguem A, E, I, O, U para a esquerda, que é
+            a ordem em que uma linha de hebraico é lida. */}
+        <table className="w-full min-w-[344px] border-collapse" dir="rtl">
           <thead>
             <tr>
-              <th className="sticky left-0 z-10 bg-surface px-2 sm:px-3 py-2 text-left
+              <th className="sticky right-0 z-10 bg-surface px-2 sm:px-3 py-2 text-right
                              font-ui text-[11px] uppercase tracking-[.07em] text-ink-muted">
                 Letra
               </th>
@@ -83,10 +86,10 @@ export function SoundLab({
           <tbody>
             {rows.map(L => (
               <tr key={L.id} className="border-t border-[color:var(--line-soft)]">
-                <th scope="row" className="sticky left-0 z-10 bg-surface px-2 sm:px-3 py-1.5 text-left">
+                <th scope="row" className="sticky right-0 z-10 bg-surface px-2 sm:px-3 py-1.5 text-right">
                   <span className="flex items-center gap-2">
                     <He size="word">{L.letter}</He>
-                    <span className="hidden sm:inline font-ui text-[11.5px] text-ink-muted">
+                    <span dir="ltr" className="hidden sm:inline font-ui text-[11.5px] text-ink-muted">
                       {L.namePt}
                     </span>
                   </span>

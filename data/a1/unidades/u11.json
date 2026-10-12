@@ -6,7 +6,7 @@
   "situacaoPt": "A Maya está atrasada e não acha o telefone em lugar nenhum do apartamento. O Natan ajuda a procurar, cômodo por cômodo.",
   "palavras": [
     {
-      "he": "דִּירָה",
+      "he": "דִירָה",
       "translit": "dirá",
       "pt": "apartamento"
     },
@@ -46,7 +46,7 @@
       "pt": "elevador"
     },
     {
-      "he": "מִטָּה",
+      "he": "מִטָה",
       "translit": "mitá",
       "pt": "cama"
     },
@@ -61,7 +61,7 @@
       "pt": "armário"
     },
     {
-      "he": "חַלּוֹן",
+      "he": "חַלוֹן",
       "translit": "chalón",
       "pt": "janela"
     },
@@ -76,7 +76,7 @@
       "pt": "em cima de, sobre"
     },
     {
-      "he": "מִתַּחַת לְ־",
+      "he": "מִתַחַת לְ־",
       "translit": "mitáchat le-",
       "pt": "embaixo de"
     },
@@ -114,43 +114,43 @@
   "gramatica": [
     {
       "tituloPt": "\"Onde está?\" sem verbo",
-      "textoPt": "Como em \"eu sou\", também não há \"está\" no presente: אֵיפֹה הַמַּפְתֵּחַ? (onde está a chave?), הוּא עַל הַשֻּׁלְחָן (ela está na mesa). Para responder, a coisa vira הוּא ou הִיא, conforme o gênero dela em HEBRAICO.",
-      "erroPt": "\"A chave\" é feminina em português e o brasileiro responde הִיא. Mas מַפְתֵּחַ é masculino: הוּא עַל הַשֻּׁלְחָן. Quem manda é o gênero da palavra em hebraico (Unidade 2).",
+      "textoPt": "Como em \"eu sou\", também não há \"está\" no presente: אֵיפֹה הַמַפְתֵחַ? (onde está a chave?), הוּא עַל הַשֻׁלְחָן (ela está na mesa). Para responder, a coisa vira הוּא ou הִיא, conforme o gênero dela em HEBRAICO.",
+      "erroPt": "\"A chave\" é feminina em português e o brasileiro responde הִיא. Mas מַפְתֵחַ é masculino: הוּא עַל הַשֻׁלְחָן. Quem manda é o gênero da palavra em hebraico (Unidade 2).",
       "exemplos": [
         {
-          "he": "אֵיפֹה הַמַּפְתֵּחַ? הוּא בַּתִּיק.",
+          "he": "אֵיפֹה הַמַפְתֵחַ? הוּא בַּתִיק.",
           "pt": "Onde está a chave? Está na mochila."
         },
         {
-          "he": "אֵיפֹה הַמְּנוֹרָה? הִיא לְיַד הַסָּפָּה.",
+          "he": "אֵיפֹה הַמְנוֹרָה? הִיא לְיַד הַסָפָּה.",
           "pt": "Onde está a luminária? Está ao lado do sofá."
         }
       ]
     },
     {
       "tituloPt": "Em cima, embaixo, ao lado, entre, em frente",
-      "textoPt": "As palavras de lugar vêm antes da coisa: עַל הַשֻּׁלְחָן, לְיַד הַחַלּוֹן, מוּל הַדֶּלֶת. Duas pedem um לְ: מִתַּחַת לְ־ (embaixo de) e בֵּין… לְ־ (entre… e…). O לְ se junta com o הַ, como você já viu: מִתַּחַת לַמִּטָּה, בֵּין הַסָּפָּה לַחַלּוֹן.",
-      "erroPt": "\"Na mesa\" em português pode ser em cima. Em hebraico, בַּשֻּׁלְחָן seria DENTRO da mesa. Em cima é sempre עַל: הַסֵּפֶר עַל הַשֻּׁלְחָן.",
+      "textoPt": "As palavras de lugar vêm antes da coisa: עַל הַשֻׁלְחָן, לְיַד הַחַלוֹן, מוּל הַדֶלֶת. Duas pedem um לְ: מִתַחַת לְ־ (embaixo de) e בֵּין… לְ־ (entre… e…). O לְ se junta com o הַ, como você já viu: מִתַחַת לַמִטָה, בֵּין הַסָפָּה לַחַלוֹן.",
+      "erroPt": "\"Na mesa\" em português pode ser em cima. Em hebraico, בַּשֻׁלְחָן seria DENTRO da mesa. Em cima é sempre עַל: הַסֵפֶר עַל הַשֻׁלְחָן.",
       "exemplos": [
         {
-          "he": "הֶחָתוּל מִתַּחַת לַמִּטָּה.",
+          "he": "הֶחָתוּל מִתַחַת לַמִטָה.",
           "pt": "O gato está embaixo da cama."
         },
         {
-          "he": "הַמִּטְבָּח בֵּין הַסָּלוֹן לַמִּרְפֶּסֶת.",
+          "he": "הַמִטְבָּח בֵּין הַסָלוֹן לַמִרְפֶּסֶת.",
           "pt": "A cozinha fica entre a sala e a varanda."
         }
       ]
     },
     {
       "tituloPt": "O que tem e o que não tem: יֵשׁ e אֵין",
-      "textoPt": "Para descrever um lugar, o יֵשׁ / אֵין da Unidade 6: בַּדִּירָה יֵשׁ מִרְפֶּסֶת (o apartamento tem varanda), אֵין מַעֲלִית (não tem elevador).",
+      "textoPt": "Para descrever um lugar, o יֵשׁ / אֵין da Unidade 6: בַּדִירָה יֵשׁ מִרְפֶּסֶת (o apartamento tem varanda), אֵין מַעֲלִית (não tem elevador).",
       "erroPt": "יֵשׁ não se nega com לֹא. \"Não tem\" é אֵין, sempre: nunca לֹא יֵשׁ."
     },
     {
       "tituloPt": "אֵצֶל: na casa de alguém",
-      "textoPt": "אֵצֶל + pessoa é \"na casa de\" ou \"com\" (onde a pessoa está): אֲנִי אֵצֶל סַבְתָּא (estou na casa da vovó), הוּא גָּר אֵצֶל הַדּוֹדָה שֶׁלּוֹ (ele mora na casa da tia dele).",
-      "erroPt": "Não use בְּ com pessoa: בְּסַבְתָּא não quer dizer nada. Com gente, é אֵצֶל."
+      "textoPt": "אֵצֶל + pessoa é \"na casa de\" ou \"com\" (onde a pessoa está): אֲנִי אֵצֶל סַבְתָא (estou na casa da vovó), הוּא גָר אֵצֶל הַדוֹדָה שֶׁלוֹ (ele mora na casa da tia dele).",
+      "erroPt": "Não use בְּ com pessoa: בְּסַבְתָא não quer dizer nada. Com gente, é אֵצֶל."
     }
   ],
   "dialogo": {
@@ -158,13 +158,13 @@
     "linhas": [
       {
         "quem": "Maya",
-        "he": "נָתָן, אֵיפֹה הַטֶּלֶפוֹן שֶׁלִּי?",
+        "he": "נָתָן, אֵיפֹה הַטֶלֶפוֹן שֶׁלִי?",
         "translit": "Natán, éifo hatélefon shelí?",
         "pt": "Natan, onde está o meu telefone?"
       },
       {
         "quem": "Natan",
-        "he": "הוּא לֹא עַל הַשֻּׁלְחָן?",
+        "he": "הוּא לֹא עַל הַשֻׁלְחָן?",
         "translit": "hu lo al hashulchán?",
         "pt": "Não está na mesa?"
       },
@@ -176,72 +176,72 @@
       },
       {
         "quem": "Natan",
-        "he": "אוּלַי בַּסָּלוֹן, עַל הַסָּפָּה?",
+        "he": "אוּלַי בַּסָלוֹן, עַל הַסָפָּה?",
         "translit": "ulái bassalón, al hassapá?",
         "pt": "Talvez na sala, em cima do sofá?"
       },
       {
         "quem": "Maya",
-        "he": "לֹא, גַּם לֹא שָׁם.",
+        "he": "לֹא, גַם לֹא שָׁם.",
         "translit": "lo, gam lo sham.",
         "pt": "Não, lá também não."
       },
       {
         "quem": "Natan",
-        "he": "וּבַמִּטְבָּח, לְיַד הַמְקָרֵר?",
+        "he": "וּבַמִטְבָּח, לְיַד הַמְקָרֵר?",
         "translit": "uvamitbách, leyád hamekarér?",
         "pt": "E na cozinha, ao lado da geladeira?"
       },
       {
         "quem": "Maya",
-        "he": "לֹא. וְהוּא לֹא בַּתִּיק…",
+        "he": "לֹא. וְהוּא לֹא בַּתִיק…",
         "translit": "lo. vehú lo batík…",
         "pt": "Não. E não está na mochila…"
       },
       {
         "quem": "Natan",
-        "he": "רֶגַע, מָה זֶה, מִתַּחַת לַסָּפָּה?",
+        "he": "רֶגַע, מָה זֶה, מִתַחַת לַסָפָּה?",
         "translit": "réga, ma ze, mitáchat lassapá?",
         "pt": "Espera, o que é isso, embaixo do sofá?"
       },
       {
         "quem": "Maya",
-        "he": "הַטֶּלֶפוֹן! תּוֹדָה, נָתָן!",
+        "he": "הַטֶלֶפוֹן! תוֹדָה, נָתָן!",
         "translit": "hatélefon! todá, Natán!",
         "pt": "O telefone! Obrigada, Natan!"
       },
       {
         "quem": "Natan",
-        "he": "וְאֵיפֹה הַמַּפְתֵּחַ?",
+        "he": "וְאֵיפֹה הַמַפְתֵחַ?",
         "translit": "veéifo hamaftéach?",
         "pt": "E onde está a chave?"
       },
       {
         "quem": "Maya",
-        "he": "הוּא… בַּדֶּלֶת!",
+        "he": "הוּא… בַּדֶלֶת!",
         "translit": "hu… badélet!",
         "pt": "Está… na porta!"
       }
     ],
     "glossario": [],
-    "notaPt": "O Natan pergunta pela chave, e a Maya responde הוּא: מַפְתֵּחַ é masculino."
+    "notaPt": "O Natan pergunta pela chave, e a Maya responde הוּא: מַפְתֵחַ é masculino."
   },
   "leitura": {
     "tituloPt": "Um anúncio de aluguel",
     "semPontos": true,
     "linhas": [
       {
-        "he": "דִּירָה לְהַשְׂכָּרָה בְּתֵל אָבִיב",
+        "he": "דִירָה לְהַשְׂכָּרָה בְּתֵל אָבִיב",
         "translit": "dirá lehaskará beTél Avív",
         "pt": "Apartamento para alugar em Tel Aviv"
       },
       {
-        "he": "3 חֲדָרִים, עִם סָלוֹן גָּדוֹל",
+        "he": "3 חֲדָרִים, עִם סָלוֹן גָדוֹל",
         "translit": "shloshá chadarím, im salón gadól",
         "pt": "3 cômodos, com sala grande"
       },
       {
-        "he": "מִטְבָּח חָדָשׁ, מִרְפֶּסֶת קְטַנָּה",
+        "he": "מִטְבָּח חָדָשׁ, מִרְפֶּסֶת קְטַנָה",
         "translit": "mitbách chadásh, mirpésset ktaná",
         "pt": "Cozinha nova, varanda pequena"
       },
@@ -251,7 +251,7 @@
         "pt": "2º andar, sem elevador"
       },
       {
-        "he": "לְיַד הַיָּם!",
+        "he": "לְיַד הַיָם!",
         "translit": "leyád hayám!",
         "pt": "Perto do mar!"
       }
@@ -283,7 +283,7 @@
         ],
         "certa": 0,
         "dicas": {
-          "1": "Pequena é a varanda: מִרְפֶּסֶת קְטַנָּה."
+          "1": "Pequena é a varanda: מִרְפֶּסֶת קְטַנָה."
         }
       },
       {
@@ -313,7 +313,7 @@
   ],
   "autoavaliacao": [
     "Eu pergunto onde está uma coisa e respondo com הוּא ou הִיא certo.",
-    "Eu uso עַל, מִתַּחַת לְ־, לְיַד, בֵּין e מוּל.",
+    "Eu uso עַל, מִתַחַת לְ־, לְיַד, בֵּין e מוּל.",
     "Eu entendo um anúncio curto de apartamento."
   ],
   "exercicios": [
@@ -348,7 +348,7 @@
       "q": "E os móveis e as coisas.",
       "pares": [
         [
-          "מִטָּה",
+          "מִטָה",
           "cama"
         ],
         [
@@ -360,7 +360,7 @@
           "armário"
         ],
         [
-          "חַלּוֹן",
+          "חַלוֹן",
           "janela"
         ],
         [
@@ -371,15 +371,15 @@
     },
     {
       "t": "escolha",
-      "q": "\"O livro está em cima da mesa\": הַסֵּפֶר ___",
+      "q": "\"O livro está em cima da mesa\": הַסֵפֶר ___",
       "opcoes": [
-        "עַל הַשֻּׁלְחָן",
-        "מִתַּחַת לַשֻּׁלְחָן",
-        "לְיַד הַשֻּׁלְחָן"
+        "עַל הַשֻׁלְחָן",
+        "מִתַחַת לַשֻׁלְחָן",
+        "לְיַד הַשֻׁלְחָן"
       ],
       "certa": 0,
       "dicas": {
-        "1": "מִתַּחַת לְ־ é embaixo. Em cima é עַל.",
+        "1": "מִתַחַת לְ־ é embaixo. Em cima é עַל.",
         "2": "לְיַד é ao lado. Em cima é עַל."
       }
     },
@@ -387,9 +387,9 @@
       "t": "escolha",
       "q": "\"O gato está embaixo da cama\": הֶחָתוּל ___",
       "opcoes": [
-        "מִתַּחַת לַמִּטָּה",
-        "עַל הַמִּטָּה",
-        "מוּל הַמִּטָּה"
+        "מִתַחַת לַמִטָה",
+        "עַל הַמִטָה",
+        "מוּל הַמִטָה"
       ],
       "certa": 0,
       "dicas": {
@@ -403,17 +403,17 @@
       "linhas": [
         [
           "Natan",
-          "אֵיפֹה הַמַּפְתֵּחַ?"
+          "אֵיפֹה הַמַפְתֵחַ?"
         ]
       ],
       "opcoes": [
-        "הוּא עַל הַשֻּׁלְחָן.",
-        "הִיא עַל הַשֻּׁלְחָן.",
-        "זֹאת עַל הַשֻּׁלְחָן."
+        "הוּא עַל הַשֻׁלְחָן.",
+        "הִיא עַל הַשֻׁלְחָן.",
+        "זֹאת עַל הַשֻׁלְחָן."
       ],
       "certa": 0,
       "dicas": {
-        "1": "Quase. \"A chave\" é feminina em português, mas מַפְתֵּחַ é masculino: הוּא.",
+        "1": "Quase. \"A chave\" é feminina em português, mas מַפְתֵחַ é masculino: הוּא.",
         "2": "זֹאת é para apontar (\"esta é\"). Para dizer onde está, use הוּא ou הִיא."
       }
     },
@@ -423,12 +423,12 @@
       "linhas": [
         [
           "Maya",
-          "אֵיפֹה הַמְּנוֹרָה?"
+          "אֵיפֹה הַמְנוֹרָה?"
         ]
       ],
       "opcoes": [
-        "הִיא לְיַד הַסָּפָּה.",
-        "הוּא לְיַד הַסָּפָּה."
+        "הִיא לְיַד הַסָפָּה.",
+        "הוּא לְיַד הַסָפָּה."
       ],
       "certa": 0,
       "dicas": {
@@ -437,15 +437,15 @@
     },
     {
       "t": "vf",
-      "q": "Para dizer \"o livro está na mesa\" (em cima), o hebraico usa בַּשֻּׁלְחָן.",
+      "q": "Para dizer \"o livro está na mesa\" (em cima), o hebraico usa בַּשֻׁלְחָן.",
       "certa": false,
-      "porque": "Em cima é עַל: הַסֵּפֶר עַל הַשֻּׁלְחָן. בַּשֻּׁלְחָן seria dentro."
+      "porque": "Em cima é עַל: הַסֵפֶר עַל הַשֻׁלְחָן. בַּשֻׁלְחָן seria dentro."
     },
     {
       "t": "completar",
       "q": "\"A cozinha fica entre a sala e a varanda\"",
-      "antes": "הַמִּטְבָּח",
-      "depois": "הַסָּלוֹן לַמִּרְפֶּסֶת",
+      "antes": "הַמִטְבָּח",
+      "depois": "הַסָלוֹן לַמִרְפֶּסֶת",
       "respostas": [
         "בין"
       ]
@@ -453,8 +453,8 @@
     {
       "t": "completar",
       "q": "\"Hoje eu durmo na casa da vovó\" (fala um homem)",
-      "antes": "הַיּוֹם אֲנִי יָשֵׁן",
-      "depois": "סַבְתָּא",
+      "antes": "הַיוֹם אֲנִי יָשֵׁן",
+      "depois": "סַבְתָא",
       "respostas": [
         "אצל"
       ]
@@ -481,20 +481,20 @@
     },
     {
       "t": "erro",
-      "q": "Pergunta: אֵיפֹה הַתִּיק? A resposta tem um erro (תִּיק é masculino). Ache o erro e escreva a frase certa.",
-      "errada": "הִיא עַל הַכִּסֵּא.",
+      "q": "Pergunta: אֵיפֹה הַתִיק? A resposta tem um erro (תִיק é masculino). Ache o erro e escreva a frase certa.",
+      "errada": "הִיא עַל הַכִּסֵא.",
       "respostas": [
         "הוא על הכסא",
         "הוא על הכיסא",
         "התיק על הכסא",
         "התיק על הכיסא"
       ],
-      "porque": "תִּיק é masculino, então é הוּא."
+      "porque": "תִיק é masculino, então é הוּא."
     },
     {
       "t": "erro",
       "q": "O livro está EM CIMA da mesa. Ache o erro e escreva a frase certa.",
-      "errada": "הַסֵּפֶר בַּשֻּׁלְחָן.",
+      "errada": "הַסֵפֶר בַּשֻׁלְחָן.",
       "respostas": [
         "הספר על השולחן",
         "הספר על השלחן"
@@ -505,17 +505,17 @@
       "t": "montar",
       "pt": "No apartamento tem uma varanda grande.",
       "palavras": [
-        "בַּדִּירָה",
+        "בַּדִירָה",
         "יֵשׁ",
         "מִרְפֶּסֶת",
-        "גְּדוֹלָה"
+        "גְדוֹלָה"
       ],
       "outras": [
         [
           "יֵשׁ",
           "מִרְפֶּסֶת",
-          "גְּדוֹלָה",
-          "בַּדִּירָה"
+          "גְדוֹלָה",
+          "בַּדִירָה"
         ]
       ]
     },
@@ -523,9 +523,9 @@
       "t": "montar",
       "pt": "O computador está ao lado da janela.",
       "palavras": [
-        "הַמַּחְשֵׁב",
+        "הַמַחְשֵׁב",
         "לְיַד",
-        "הַחַלּוֹן"
+        "הַחַלוֹן"
       ]
     },
     {
@@ -537,7 +537,7 @@
       ],
       "itens": [
         [
-          "מִטָּה",
+          "מִטָה",
           1
         ],
         [
@@ -549,7 +549,7 @@
           0
         ],
         [
-          "חַלּוֹן",
+          "חַלוֹן",
           0
         ],
         [
@@ -566,9 +566,9 @@
       "t": "intruso",
       "q": "Qual não é um móvel?",
       "opcoes": [
-        "מִטָּה",
+        "מִטָה",
         "סָפָּה",
-        "כִּסֵּא",
+        "כִּסֵא",
         "מִרְפֶּסֶת"
       ],
       "certa": 3,
@@ -580,7 +580,7 @@
       "linhas": [
         [
           "Natan",
-          "אֵיפֹה אַתְּ גָּרָה?"
+          "אֵיפֹה אַתְ גָרָה?"
         ],
         [
           "Maya",
@@ -592,7 +592,7 @@
         ]
       ],
       "opcoes": [
-        "כֵּן, יֵשׁ מִרְפֶּסֶת קְטַנָּה.",
+        "כֵּן, יֵשׁ מִרְפֶּסֶת קְטַנָה.",
         "כֵּן, הִיא בְּסֵדֶר.",
         "לֹא, אֲנִי לֹא."
       ],
@@ -602,15 +602,15 @@
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "סְלִיחָה, אֵיפֹה הַשֵּׁרוּתִים?",
-        "שָׁם, לְיַד הַמִּטְבָּח.",
-        "תּוֹדָה!",
-        "בְּבַקָּשָׁה."
+        "סְלִיחָה, אֵיפֹה הַשֵׁרוּתִים?",
+        "שָׁם, לְיַד הַמִטְבָּח.",
+        "תוֹדָה!",
+        "בְּבַקָשָׁה."
       ]
     },
     {
       "t": "ouvir",
-      "he": "הֶחָתוּל עַל הַסָּפָּה.",
+      "he": "הֶחָתוּל עַל הַסָפָּה.",
       "q": "Onde está o gato?",
       "opcoes": [
         "Em cima do sofá",
@@ -621,7 +621,7 @@
     },
     {
       "t": "ouvir",
-      "he": "אֲנִי אֵצֶל אִמָּא.",
+      "he": "אֲנִי אֵצֶל אִמָא.",
       "q": "O que você ouviu?",
       "opcoes": [
         "Estou na casa da minha mãe",
@@ -632,7 +632,7 @@
     },
     {
       "t": "ditado",
-      "he": "לְיַד הַחַלּוֹן",
+      "he": "לְיַד הַחַלוֹן",
       "respostas": [
         "ליד החלון"
       ]
@@ -663,7 +663,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Talvez na sala, em cima do sofá?\"",
       "antes": "",
-      "depois": "בַּסָּלוֹן, עַל הַסָּפָּה?",
+      "depois": "בַּסָלוֹן, עַל הַסָפָּה?",
       "respostas": [
         "אולי"
       ]
@@ -671,7 +671,7 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"E na cozinha, ao lado da geladeira?\"",
-      "antes": "וּבַמִּטְבָּח,",
+      "antes": "וּבַמִטְבָּח,",
       "depois": "הַמְקָרֵר?",
       "respostas": [
         "ליד"
@@ -680,12 +680,12 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Não está na mesa?\"",
-      "exemplo": "הוּא לֹא עַל הַשֻּׁלְחָן?"
+      "exemplo": "הוּא לֹא עַל הַשֻׁלְחָן?"
     },
     {
       "t": "aberta",
       "pt": "Descreva a sua casa em três frases: o que tem, o que não tem, e onde fica uma coisa.",
-      "exemplo": "בַּבַּיִת שֶׁלִּי יֵשׁ סָלוֹן גָּדוֹל. אֵין מִרְפֶּסֶת. הַמַּחְשֵׁב עַל הַשֻּׁלְחָן בַּסָּלוֹן."
+      "exemplo": "בַּבַּיִת שֶׁלִי יֵשׁ סָלוֹן גָדוֹל. אֵין מִרְפֶּסֶת. הַמַחְשֵׁב עַל הַשֻׁלְחָן בַּסָלוֹן."
     }
   ]
 }

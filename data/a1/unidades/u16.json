@@ -6,7 +6,7 @@
   "situacaoPt": "O Dani quer ver um filme com a Maya. Ele liga, ela não pode, os dois tentam achar outro dia, e o plano termina no grupo de WhatsApp dos amigos.",
   "palavras": [
     {
-      "he": "הַלּוֹ?",
+      "he": "הַלוֹ?",
       "translit": "haló?",
       "pt": "alô?"
     },
@@ -189,11 +189,11 @@
   "gramatica": [
     {
       "tituloPt": "\"Que\" é שֶׁ־, grudado",
-      "textoPt": "Para \"acho que\", \"diz que\", \"sei que\", o hebraico usa שֶׁ־, grudado na palavra seguinte: אֲנִי חוֹשֵׁב שֶׁהוּא בָּא (acho que ele vem), הִיא אוֹמֶרֶת שֶׁזֶּה טוֹב (ela diz que está bom), אֲנִי יוֹדַעַת שֶׁאַתָּה עָסוּק (eu sei que você está ocupado).",
+      "textoPt": "Para \"acho que\", \"diz que\", \"sei que\", o hebraico usa שֶׁ־, grudado na palavra seguinte: אֲנִי חוֹשֵׁב שֶׁהוּא בָּא (acho que ele vem), הִיא אוֹמֶרֶת שֶׁזֶה טוֹב (ela diz que está bom), אֲנִי יוֹדַעַת שֶׁאַתָה עָסוּק (eu sei que você está ocupado).",
       "erroPt": "Em hebraico, o שֶׁ־ não pode faltar: sem ele a frase fica quebrada. E não confunda com כִּי: na conversa, כִּי é \"porque\" (em texto formal, como jornal, כִּי às vezes aparece também como \"que\"). Na fala, \"que\" é שֶׁ־.",
       "exemplos": [
         {
-          "he": "אֲנִי חוֹשֶׁבֶת שֶׁנֹּעָה רוֹצָה לָבוֹא.",
+          "he": "אֲנִי חוֹשֶׁבֶת שֶׁנֹעָה רוֹצָה לָבוֹא.",
           "pt": "Eu acho que a Noa quer vir. (mulher)"
         },
         {
@@ -207,7 +207,7 @@
       "textoPt": "O israelense é direto, mas recusa com uma desculpa e um motivo: אֲנִי מִצְטַעֵר, אֲנִי לֹא יָכוֹל, כִּי… E propõe outro dia: אוּלַי מָחָר? אוּלַי בְּיוֹם אַחֵר?",
       "exemplos": [
         {
-          "he": "אֲנִי מִצְטַעֶרֶת, הַיּוֹם אֲנִי לֹא יְכוֹלָה.",
+          "he": "אֲנִי מִצְטַעֶרֶת, הַיוֹם אֲנִי לֹא יְכוֹלָה.",
           "pt": "Sinto muito, hoje eu não posso. (mulher)"
         }
       ]
@@ -219,7 +219,7 @@
     },
     {
       "tituloPt": "No telefone",
-      "textoPt": "Atende-se com הַלּוֹ? ou só כֵּן?. Quem liga diz זֶה + o nome: זֶה דָּנִי (é o Dani). Para dizer que não está ouvindo: אֲנִי לֹא שׁוֹמֵעַ (homem) / אֲנִי לֹא שׁוֹמַעַת (mulher). E para se despedir, você vai ouvir muito o inglês בַּי."
+      "textoPt": "Atende-se com הַלוֹ? ou só כֵּן?. Quem liga diz זֶה + o nome: זֶה דָנִי (é o Dani). Para dizer que não está ouvindo: אֲנִי לֹא שׁוֹמֵעַ (homem) / אֲנִי לֹא שׁוֹמַעַת (mulher). E para se despedir, você vai ouvir muito o inglês בַּי."
     }
   ],
   "dialogo": {
@@ -227,13 +227,13 @@
     "linhas": [
       {
         "quem": "Maya",
-        "he": "הַלּוֹ?",
+        "he": "הַלוֹ?",
         "translit": "haló?",
         "pt": "Alô?"
       },
       {
         "quem": "Dani",
-        "he": "הַי מַיָּה, זֶה דָּנִי. מָה נִשְׁמָע?",
+        "he": "הַי מַיָה, זֶה דָנִי. מָה נִשְׁמָע?",
         "translit": "hai Máya, ze Dáni. ma nishmá?",
         "pt": "Oi, Maya, é o Dani. Tudo bem?"
       },
@@ -245,7 +245,7 @@
       },
       {
         "quem": "Dani",
-        "he": "אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ הָעֶרֶב?",
+        "he": "אַתְ רוֹצָה לָלֶכֶת לַקוֹלְנוֹעַ הָעֶרֶב?",
         "translit": "at rotsá laléchet lakolnóa haérev?",
         "pt": "Você quer ir ao cinema hoje à noite?"
       },
@@ -269,19 +269,19 @@
       },
       {
         "quem": "Dani",
-        "he": "הַסֶּרֶט בְּתֵשַׁע. נוֹחַ לָךְ?",
+        "he": "הַסֶרֶט בְּתֵשַׁע. נוֹחַ לָךְ?",
         "translit": "hasséret betésha. nóach lach?",
         "pt": "O filme é às nove. Fica bom para você?"
       },
       {
         "quem": "Maya",
-        "he": "כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁגַּם נֹעָה רוֹצָה לָבוֹא.",
+        "he": "כֵּן. וַאֲנִי חוֹשֶׁבֶת שֶׁגַם נֹעָה רוֹצָה לָבוֹא.",
         "translit": "ken. vaaní choshévet shegám Nóa rotsá lavó.",
         "pt": "Fica. E eu acho que a Noa também quer vir."
       },
       {
         "quem": "Dani",
-        "he": "יוֹפִי! אֲנִי שׁוֹלֵחַ לָהּ הוֹדָעָה.",
+        "he": "יוֹפִי! אֲנִי שׁוֹלֵחַ לָה הוֹדָעָה.",
         "translit": "yófi! aní sholéach la hodaá.",
         "pt": "Ótimo! Vou mandar uma mensagem para ela."
       },
@@ -326,7 +326,7 @@
     "semPontos": true,
     "linhas": [
       {
-        "he": "דָּנִי: מָחָר קוֹלְנוֹעַ בְּתֵשַׁע. מִי בָּא?",
+        "he": "דָנִי: מָחָר קוֹלְנוֹעַ בְּתֵשַׁע. מִי בָּא?",
         "translit": "Dáni: machár kolnóa betésha. mi ba?",
         "pt": "Dani: Amanhã, cinema às nove. Quem vem?"
       },
@@ -336,12 +336,12 @@
         "pt": "Noa: Eu! Mas eu volto do trabalho às oito e meia. Dá para ser às nove e meia?"
       },
       {
-        "he": "טוֹם: גַּם אֲנִי בָּא. תֵּשַׁע וָחֵצִי מַתְאִים לִי.",
+        "he": "טוֹם: גַם אֲנִי בָּא. תֵשַׁע וָחֵצִי מַתְאִים לִי.",
         "translit": "Tom: gam aní ba. tésha vachétsi matím li.",
         "pt": "Tom: Eu também vou. Nove e meia fica bom para mim."
       },
       {
-        "he": "מַיָּה: סַבָּבָּה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ.",
+        "he": "מַיָה: סַבָּבָּה. נִפָּגֵשׁ לְיַד הַקוֹלְנוֹעַ.",
         "translit": "Máya: sabába. nipaguésh leyád hakolnóa.",
         "pt": "Maya: Beleza. A gente se encontra ao lado do cinema."
       }
@@ -371,7 +371,7 @@
         "t": "vf",
         "q": "O Tom não vai.",
         "certa": false,
-        "porque": "גַּם אֲנִי בָּא: ele vai também."
+        "porque": "גַם אֲנִי בָּא: ele vai também."
       },
       {
         "t": "escolha",
@@ -394,7 +394,7 @@
   "sabia": [
     {
       "tituloPt": "Palavras inventadas e palavras emprestadas",
-      "textoPt": "קוֹלְנוֹעַ (cinema) foi inventada no começo do século 20: קוֹל (som, voz) + נוֹעַ (movimento). Já הַלּוֹ, בַּי e טֶלֶפוֹן vieram prontas de fora. O hebraico moderno faz as duas coisas: cria palavras a partir das raízes antigas e pega emprestado do inglês, do árabe, do russo, do iídiche, do jeito que as línguas vivas fazem."
+      "textoPt": "קוֹלְנוֹעַ (cinema) foi inventada no começo do século 20: קוֹל (som, voz) + נוֹעַ (movimento). Já הַלוֹ, בַּי e טֶלֶפוֹן vieram prontas de fora. O hebraico moderno faz as duas coisas: cria palavras a partir das raízes antigas e pega emprestado do inglês, do árabe, do russo, do iídiche, do jeito que as línguas vivas fazem."
     }
   ],
   "autoavaliacao": [
@@ -408,7 +408,7 @@
       "q": "Ligue as palavras.",
       "pares": [
         [
-          "הַלּוֹ",
+          "הַלוֹ",
           "alô"
         ],
         [
@@ -540,7 +540,7 @@
       "opcoes": [
         "מָתַי נוֹחַ לָךְ?",
         "מָתַי נוֹחַ לְךָ?",
-        "מָתַי אַתְּ נוֹחָה?"
+        "מָתַי אַתְ נוֹחָה?"
       ],
       "certa": 0,
       "dicas": {
@@ -565,7 +565,7 @@
       "respostas": [
         "אני חושבת שזה טוב"
       ],
-      "porque": "Faltou o שֶׁ־: שֶׁזֶּה טוֹב."
+      "porque": "Faltou o שֶׁ־: שֶׁזֶה טוֹב."
     },
     {
       "t": "erro",
@@ -582,7 +582,7 @@
       "palavras": [
         "אֲנִי",
         "מִצְטַעֶרֶת,",
-        "הַיּוֹם",
+        "הַיוֹם",
         "אֲנִי",
         "לֹא",
         "יְכוֹלָה"
@@ -594,13 +594,13 @@
           "אֲנִי",
           "לֹא",
           "יְכוֹלָה",
-          "הַיּוֹם"
+          "הַיוֹם"
         ],
         [
           "אֲנִי",
           "מִצְטַעֶרֶת,",
           "אֲנִי",
-          "הַיּוֹם",
+          "הַיוֹם",
           "לֹא",
           "יְכוֹלָה"
         ]
@@ -628,7 +628,7 @@
       "linhas": [
         [
           "Maya",
-          "הַלּוֹ?"
+          "הַלוֹ?"
         ]
       ],
       "opcoes": [
@@ -644,13 +644,13 @@
       "linhas": [
         [
           "Dani",
-          "אַתְּ רוֹצָה לָבוֹא לַמְּסִבָּה?"
+          "אַתְ רוֹצָה לָבוֹא לַמְסִבָּה?"
         ]
       ],
       "opcoes": [
         "בְּשִׂמְחָה! מָתַי?",
         "חַם לִי.",
-        "הַחֶשְׁבּוֹן, בְּבַקָּשָׁה."
+        "הַחֶשְׁבּוֹן, בְּבַקָשָׁה."
       ],
       "certa": 0
     },
@@ -658,7 +658,7 @@
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "אַתָּה רוֹצֶה לִרְאוֹת סֶרֶט?",
+        "אַתָה רוֹצֶה לִרְאוֹת סֶרֶט?",
         "הָעֶרֶב אֲנִי לֹא יָכוֹל.",
         "אָז מָחָר?",
         "מָחָר מַתְאִים לִי."
@@ -719,7 +719,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Ótimo! Vou mandar uma mensagem para ela.\"",
       "antes": "יוֹפִי! אֲנִי",
-      "depois": "לָהּ הוֹדָעָה.",
+      "depois": "לָה הוֹדָעָה.",
       "respostas": [
         "שולח"
       ]
@@ -728,7 +728,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Fica. E eu acho que a Noa também quer vir.\"",
       "antes": "כֵּן. וַאֲנִי",
-      "depois": "שֶׁגַּם נֹעָה רוֹצָה לָבוֹא.",
+      "depois": "שֶׁגַם נֹעָה רוֹצָה לָבוֹא.",
       "respostas": [
         "חושבת"
       ]
@@ -741,7 +741,7 @@
     {
       "t": "aberta",
       "pt": "Escreva uma mensagem convidando alguém para sair: o quê, quando e onde.",
-      "exemplo": "אַתְּ רוֹצָה לָלֶכֶת לַקּוֹלְנוֹעַ מָחָר? הַסֶּרֶט בִּשְׁמוֹנֶה. נִפָּגֵשׁ לְיַד הַקּוֹלְנוֹעַ."
+      "exemplo": "אַתְ רוֹצָה לָלֶכֶת לַקוֹלְנוֹעַ מָחָר? הַסֶרֶט בִּשְׁמוֹנֶה. נִפָּגֵשׁ לְיַד הַקוֹלְנוֹעַ."
     }
   ]
 }

@@ -232,7 +232,7 @@
     {
       "num": 15,
       "seq": 13,
-      "he": "תָּו",
+      "he": "תָו",
       "translit": "Tav",
       "gloss": "nome da letra Tav",
       "kind": "nome",
@@ -245,7 +245,7 @@
     {
       "num": 16,
       "seq": 14,
-      "he": "תַּ",
+      "he": "תַ",
       "translit": "ta",
       "gloss": "sílaba - como \"tá\"",
       "kind": "silaba",
@@ -258,7 +258,7 @@
     {
       "num": 17,
       "seq": 15,
-      "he": "תֶּ",
+      "he": "תֶ",
       "translit": "te",
       "gloss": "sílaba - como \"te\" de \"teto\"",
       "kind": "silaba",
@@ -271,7 +271,7 @@
     {
       "num": 18,
       "seq": 16,
-      "he": "תִּ",
+      "he": "תִ",
       "translit": "ti",
       "gloss": "sílaba - como \"ti\" de \"tigre\" - nunca \"tchi\"",
       "kind": "silaba",
@@ -284,7 +284,7 @@
     {
       "num": 19,
       "seq": 17,
-      "he": "תּוֹ",
+      "he": "תוֹ",
       "translit": "to",
       "gloss": "sílaba - como \"to\" de \"topo\"",
       "kind": "silaba",
@@ -297,7 +297,7 @@
     {
       "num": 20,
       "seq": 18,
-      "he": "תּוּ",
+      "he": "תוּ",
       "translit": "tu",
       "gloss": "sílaba - como \"tu\" de \"tudo\"",
       "kind": "silaba",
@@ -310,7 +310,7 @@
     {
       "num": 21,
       "seq": 19,
-      "he": "תְּ",
+      "he": "תְ",
       "translit": "t",
       "gloss": "sílaba - só a consoante, sem vogal",
       "kind": "silaba",
@@ -570,7 +570,7 @@
     {
       "num": 43,
       "seq": 39,
-      "he": "גִּימֶל",
+      "he": "גִימֶל",
       "translit": "Guímel",
       "gloss": "nome da letra Guímel",
       "kind": "nome",
@@ -661,7 +661,7 @@
     {
       "num": 50,
       "seq": 46,
-      "he": "דָּלֶת",
+      "he": "דָלֶת",
       "translit": "Dálet",
       "gloss": "nome da letra Dálet",
       "kind": "nome",
@@ -2015,7 +2015,7 @@
     {
       "num": 155,
       "seq": 150,
-      "he": "פַּתָּח",
+      "he": "פַּתָח",
       "translit": "patach",
       "gloss": "nome do sinal patach",
       "kind": "nome",
@@ -2054,7 +2054,7 @@
     {
       "num": 158,
       "seq": 153,
-      "he": "סֶגּוֹל",
+      "he": "סֶגוֹל",
       "translit": "segol",
       "gloss": "nome do sinal segol",
       "kind": "nome",
@@ -2197,7 +2197,7 @@
     {
       "num": 169,
       "seq": 164,
-      "he": "אִמָּא",
+      "he": "אִמָא",
       "translit": "íma",
       "gloss": "mãe",
       "kind": "palavra",
@@ -2237,7 +2237,7 @@
     {
       "num": 172,
       "seq": 167,
-      "he": "תָּא",
+      "he": "תָא",
       "translit": "ta",
       "gloss": "cabine · compartimento",
       "kind": "palavra",
@@ -2250,7 +2250,7 @@
     {
       "num": 179,
       "seq": 168,
-      "he": "אַתְּ",
+      "he": "אַתְ",
       "translit": "at",
       "gloss": "você (para mulher)",
       "kind": "palavra",
@@ -2323,7 +2323,7 @@
     {
       "num": 178,
       "seq": 173,
-      "he": "אַתָּה",
+      "he": "אַתָה",
       "translit": "atá",
       "gloss": "você (para homem)",
       "kind": "palavra",
@@ -2367,7 +2367,7 @@
     {
       "num": 182,
       "seq": 176,
-      "he": "הִנֵּה",
+      "he": "הִנֵה",
       "translit": "hiné",
       "gloss": "eis aqui / aqui está",
       "kind": "palavra",
@@ -2444,7 +2444,7 @@
     {
       "num": 187,
       "seq": 181,
-      "he": "גַּם",
+      "he": "גַם",
       "translit": "gam",
       "gloss": "também",
       "kind": "palavra",
@@ -2458,7 +2458,7 @@
     {
       "num": 188,
       "seq": 182,
-      "he": "גַּן",
+      "he": "גַן",
       "translit": "gan",
       "gloss": "jardim · jardim de infância",
       "kind": "palavra",
@@ -2471,7 +2471,7 @@
     {
       "num": 189,
       "seq": 183,
-      "he": "גַּג",
+      "he": "גַג",
       "translit": "gag",
       "gloss": "telhado",
       "kind": "palavra",
@@ -2510,7 +2510,7 @@
     {
       "num": 192,
       "seq": 186,
-      "he": "דָּג",
+      "he": "דָג",
       "translit": "dag",
       "gloss": "peixe",
       "kind": "palavra",
@@ -2536,7 +2536,7 @@
     {
       "num": 194,
       "seq": 188,
-      "he": "מִדָּה",
+      "he": "מִדָה",
       "translit": "midá",
       "gloss": "medida / tamanho",
       "kind": "palavra",
@@ -2592,7 +2592,7 @@
     {
       "num": 198,
       "seq": 192,
-      "he": "אִשָּׁה",
+      "he": "אִשָׁה",
       "translit": "ishá",
       "gloss": "mulher",
       "kind": "palavra",
@@ -2676,7 +2676,7 @@
     {
       "num": 203,
       "seq": 198,
-      "he": "יַלְדָּה",
+      "he": "יַלְדָה",
       "translit": "yaldá",
       "gloss": "menina",
       "kind": "palavra",
@@ -2775,7 +2775,7 @@
     {
       "num": 210,
       "seq": 205,
-      "he": "תּוֹדָה",
+      "he": "תוֹדָה",
       "translit": "todá",
       "gloss": "obrigado",
       "kind": "palavra",
@@ -2822,7 +2822,7 @@
     {
       "num": 213,
       "seq": 208,
-      "he": "גָּדוֹל",
+      "he": "גָדוֹל",
       "translit": "gadól",
       "gloss": "grande",
       "kind": "palavra",
@@ -3003,7 +3003,7 @@
     {
       "num": 224,
       "seq": 221,
-      "he": "חַלּוֹן",
+      "he": "חַלוֹן",
       "translit": "chalón",
       "gloss": "janela",
       "kind": "palavra",
@@ -3031,7 +3031,7 @@
     {
       "num": 226,
       "seq": 223,
-      "he": "מִטָּה",
+      "he": "מִטָה",
       "translit": "mitá",
       "gloss": "cama",
       "kind": "palavra",
@@ -3044,7 +3044,7 @@
     {
       "num": 227,
       "seq": 224,
-      "he": "טִיּוּל",
+      "he": "טִיוּל",
       "translit": "tiyúl",
       "gloss": "passeio",
       "kind": "palavra",
@@ -3070,7 +3070,7 @@
     {
       "num": 229,
       "seq": 226,
-      "he": "מִטְרִיָּה",
+      "he": "מִטְרִיָה",
       "translit": "mitriyá",
       "gloss": "guarda-chuva",
       "kind": "palavra",
@@ -3326,7 +3326,7 @@
     {
       "num": 248,
       "seq": 245,
-      "he": "תִּיק",
+      "he": "תִיק",
       "translit": "tik",
       "gloss": "bolsa / mochila",
       "kind": "palavra",
@@ -3534,7 +3534,7 @@
     {
       "num": 261,
       "seq": 259,
-      "he": "דֶּרֶךְ",
+      "he": "דֶרֶךְ",
       "translit": "dérech",
       "gloss": "caminho",
       "kind": "palavra",
@@ -3549,7 +3549,7 @@
     {
       "num": 262,
       "seq": 260,
-      "he": "כַּדּוּר",
+      "he": "כַּדוּר",
       "translit": "kadúr",
       "gloss": "bola",
       "kind": "palavra",
@@ -3669,7 +3669,7 @@
     {
       "num": 410,
       "seq": 268,
-      "he": "פִּתָּה",
+      "he": "פִּתָה",
       "translit": "píta",
       "gloss": "pão sírio",
       "kind": "palavra",
@@ -5474,7 +5474,7 @@
     {
       "num": 270,
       "seq": 353,
-      "he": "תֵּה",
+      "he": "תֵה",
       "translit": "te",
       "gloss": "chá",
       "kind": "palavra",
@@ -5488,7 +5488,7 @@
     {
       "num": 271,
       "seq": 354,
-      "he": "תַּפּוּחַ",
+      "he": "תַפּוּחַ",
       "translit": "tapúach",
       "gloss": "maçã",
       "kind": "palavra",
@@ -5528,7 +5528,7 @@
     {
       "num": 274,
       "seq": 357,
-      "he": "הַיּוֹם",
+      "he": "הַיוֹם",
       "translit": "hayóm",
       "gloss": "hoje",
       "kind": "palavra",
@@ -5554,7 +5554,7 @@
     {
       "num": 277,
       "seq": 360,
-      "he": "גְּלִידָה",
+      "he": "גְלִידָה",
       "translit": "glidá",
       "gloss": "sorvete",
       "kind": "palavra",
@@ -5581,7 +5581,7 @@
     {
       "num": 279,
       "seq": 362,
-      "he": "דּוֹדָה",
+      "he": "דוֹדָה",
       "translit": "dodá",
       "gloss": "tia",
       "kind": "palavra",
@@ -5651,7 +5651,7 @@
     {
       "num": 288,
       "seq": 369,
-      "he": "מַזָּל",
+      "he": "מַזָל",
       "translit": "mazál",
       "gloss": "sorte",
       "kind": "palavra",
@@ -5677,7 +5677,7 @@
     {
       "num": 290,
       "seq": 371,
-      "he": "חֲמִשָּׁה",
+      "he": "חֲמִשָׁה",
       "translit": "chamishá",
       "gloss": "cinco",
       "kind": "palavra",
@@ -5749,7 +5749,7 @@
     {
       "num": 295,
       "seq": 376,
-      "he": "כִּסֵּא",
+      "he": "כִּסֵא",
       "translit": "kissé",
       "gloss": "cadeira",
       "kind": "palavra",
@@ -5848,7 +5848,7 @@
     {
       "num": 299,
       "seq": 383,
-      "he": "בְּבַקָּשָׁה",
+      "he": "בְּבַקָשָׁה",
       "translit": "bevakashá",
       "gloss": "por favor",
       "kind": "palavra",
@@ -5880,7 +5880,7 @@
     {
       "num": 304,
       "seq": 385,
-      "he": "כִּתָּה",
+      "he": "כִּתָה",
       "translit": "kitá",
       "gloss": "sala de aula, turma",
       "kind": "palavra",
@@ -5974,7 +5974,7 @@
     {
       "num": 321,
       "seq": 441,
-      "he": "הַמֶּלֶךְ",
+      "he": "הַמֶלֶךְ",
       "translit": "hamélech",
       "gloss": "o rei",
       "kind": "palavra",
@@ -6013,7 +6013,7 @@
     {
       "num": 325,
       "seq": 444,
-      "he": "דָּוִד וְשָׂרָה",
+      "he": "דָוִד וְשָׂרָה",
       "translit": "Dávid veSará",
       "gloss": "David e Sara",
       "kind": "frase",
@@ -6041,7 +6041,7 @@
     {
       "num": 327,
       "seq": 446,
-      "he": "אֲנִי מִיִּשְׂרָאֵל",
+      "he": "אֲנִי מִיִשְׂרָאֵל",
       "translit": "aní miYisraél",
       "gloss": "eu sou de Israel",
       "kind": "frase",
@@ -6054,7 +6054,7 @@
     {
       "num": 328,
       "seq": 447,
-      "he": "הַיָּם גָּדוֹל",
+      "he": "הַיָם גָדוֹל",
       "translit": "hayám gadól",
       "gloss": "o mar é grande",
       "kind": "frase",
@@ -6067,7 +6067,7 @@
     {
       "num": 329,
       "seq": 448,
-      "he": "מָה הַשָּׁעָה",
+      "he": "מָה הַשָׁעָה",
       "translit": "ma hashaá",
       "gloss": "que horas são",
       "kind": "frase",
@@ -6107,7 +6107,7 @@
     {
       "num": 332,
       "seq": 451,
-      "he": "תּוֹדָה רַבָּה",
+      "he": "תוֹדָה רַבָּה",
       "translit": "todá rabá",
       "gloss": "muito obrigado",
       "kind": "frase",
@@ -6120,7 +6120,7 @@
     {
       "num": 333,
       "seq": 452,
-      "he": "כֵּן, בְּבַקָּשָׁה",
+      "he": "כֵּן, בְּבַקָשָׁה",
       "translit": "ken, bevakashá",
       "gloss": "sim, por favor",
       "kind": "frase",
@@ -6159,7 +6159,7 @@
     {
       "num": 336,
       "seq": 455,
-      "he": "תֵּל אָבִיב",
+      "he": "תֵל אָבִיב",
       "translit": "Tel Avív",
       "gloss": "Tel Aviv",
       "kind": "frase",
@@ -6292,7 +6292,7 @@
     {
       "num": 578,
       "seq": 465,
-      "he": "דָּוִד",
+      "he": "דָוִד",
       "translit": "Dávid",
       "gloss": "David",
       "kind": "palavra",
@@ -6318,7 +6318,7 @@
     {
       "num": 580,
       "seq": 467,
-      "he": "מִיִּשְׂרָאֵל",
+      "he": "מִיִשְׂרָאֵל",
       "translit": "miYisraél",
       "gloss": "de Israel",
       "kind": "palavra",
@@ -6331,7 +6331,7 @@
     {
       "num": 581,
       "seq": 468,
-      "he": "הַיָּם",
+      "he": "הַיָם",
       "translit": "hayám",
       "gloss": "o mar",
       "kind": "palavra",
@@ -6344,7 +6344,7 @@
     {
       "num": 582,
       "seq": 469,
-      "he": "הַשָּׁעָה",
+      "he": "הַשָׁעָה",
       "translit": "hashaá",
       "gloss": "a hora",
       "kind": "palavra",
@@ -6410,7 +6410,7 @@
     {
       "num": 586,
       "seq": 474,
-      "he": "תֵּל",
+      "he": "תֵל",
       "translit": "tel",
       "gloss": "colina",
       "kind": "palavra",
@@ -6477,7 +6477,7 @@
     {
       "num": 413,
       "seq": 479,
-      "he": "אִמָּא, יֵשׁ לֶחֶם?",
+      "he": "אִמָא, יֵשׁ לֶחֶם?",
       "translit": "íma, yesh léchem?",
       "gloss": "Mãe, tem pão?",
       "kind": "frase",
@@ -6490,7 +6490,7 @@
     {
       "num": 414,
       "seq": 480,
-      "he": "יֵשׁ לֶחֶם טָרִי, וְיֵשׁ גַּם תֵּה חַם.",
+      "he": "יֵשׁ לֶחֶם טָרִי, וְיֵשׁ גַם תֵה חַם.",
       "translit": "yesh léchem tarí, veyésh gam te cham.",
       "gloss": "Tem pão fresco, e tem chá quente também.",
       "kind": "frase",
@@ -6503,7 +6503,7 @@
     {
       "num": 415,
       "seq": 481,
-      "he": "תּוֹדָה! וְיוֹנָתָן?",
+      "he": "תוֹדָה! וְיוֹנָתָן?",
       "translit": "todá! veYonatán?",
       "gloss": "Obrigada! E o Yonatan?",
       "kind": "frase",
@@ -6568,7 +6568,7 @@
     {
       "num": 894,
       "seq": 486,
-      "he": "קְצָת. אֲנִי שׁוֹתָה תֵּה.",
+      "he": "קְצָת. אֲנִי שׁוֹתָה תֵה.",
       "translit": "ktsat. aní shotá te.",
       "gloss": "Um pouco. Estou tomando chá.",
       "kind": "frase",
@@ -6581,7 +6581,7 @@
     {
       "num": 421,
       "seq": 487,
-      "he": "מָתַי אַתְּ חוֹזֶרֶת?",
+      "he": "מָתַי אַתְ חוֹזֶרֶת?",
       "translit": "matái at chozéret?",
       "gloss": "Quando você volta?",
       "kind": "frase",
@@ -6633,7 +6633,7 @@
     {
       "num": 425,
       "seq": 491,
-      "he": "גַּם אֲנִי. אֲנִי בַּגַּן.",
+      "he": "גַם אֲנִי. אֲנִי בַּגַן.",
       "translit": "gam aní. aní bagán.",
       "gloss": "Eu também. Estou no jardim.",
       "kind": "frase",
@@ -6672,7 +6672,7 @@
     {
       "num": 428,
       "seq": 494,
-      "he": "דָּנִי, אֵיפֹה אַתָּה?",
+      "he": "דָנִי, אֵיפֹה אַתָה?",
       "translit": "Dáni, éifo atá?",
       "gloss": "Dani, onde você está?",
       "kind": "frase",
@@ -6685,7 +6685,7 @@
     {
       "num": 429,
       "seq": 495,
-      "he": "בַּדֶּרֶךְ הַבַּיְתָה.",
+      "he": "בַּדֶרֶךְ הַבַּיְתָה.",
       "translit": "badérech habáyta.",
       "gloss": "A caminho de casa.",
       "kind": "frase",
@@ -6698,7 +6698,7 @@
     {
       "num": 430,
       "seq": 496,
-      "he": "יֵשׁ לְךָ מַפְתֵּחַ?",
+      "he": "יֵשׁ לְךָ מַפְתֵחַ?",
       "translit": "yesh lechá maftéach?",
       "gloss": "Você está com a chave?",
       "kind": "frase",
@@ -6711,7 +6711,7 @@
     {
       "num": 431,
       "seq": 497,
-      "he": "כֵּן. אֲנִי בַּבַּיִת בְּעוֹד עֶשֶׂר דַּקּוֹת.",
+      "he": "כֵּן. אֲנִי בַּבַּיִת בְּעוֹד עֶשֶׂר דַקוֹת.",
       "translit": "ken. aní babáyit beód ésser dakót.",
       "gloss": "Sim. Chego em casa em dez minutos.",
       "kind": "frase",
@@ -6737,7 +6737,7 @@
     {
       "num": 433,
       "seq": 499,
-      "he": "תּוֹדָה, אִמָּא!",
+      "he": "תוֹדָה, אִמָא!",
       "translit": "todá, íma!",
       "gloss": "Obrigado, mãe!",
       "kind": "frase",
@@ -6750,7 +6750,7 @@
     {
       "num": 440,
       "seq": 500,
-      "he": "דָּנָה, אַתְּ בַּמָּלוֹן?",
+      "he": "דָנָה, אַתְ בַּמָלוֹן?",
       "translit": "Dána, at bamalón?",
       "gloss": "Dana, você está no hotel?",
       "kind": "frase",
@@ -6828,7 +6828,7 @@
     {
       "num": 589,
       "seq": 506,
-      "he": "מִי אַתְּ?",
+      "he": "מִי אַתְ?",
       "translit": "mi at?",
       "gloss": "Quem é você?",
       "kind": "frase",
@@ -6841,7 +6841,7 @@
     {
       "num": 590,
       "seq": 507,
-      "he": "אֲנִי מַיָּה. מִי אַתָּה?",
+      "he": "אֲנִי מַיָה. מִי אַתָה?",
       "translit": "aní Máya. mi atá?",
       "gloss": "Eu sou a Maya. Quem é você?",
       "kind": "frase",
@@ -6854,7 +6854,7 @@
     {
       "num": 591,
       "seq": 508,
-      "he": "אֲנִי נָתָן. הִנֵּה אִמָּא.",
+      "he": "אֲנִי נָתָן. הִנֵה אִמָא.",
       "translit": "aní Natán. hiné íma.",
       "gloss": "Eu sou o Natan. Olha a mamãe aqui.",
       "kind": "frase",
@@ -6867,7 +6867,7 @@
     {
       "num": 592,
       "seq": 509,
-      "he": "הִנֵּה תֵּה.",
+      "he": "הִנֵה תֵה.",
       "translit": "hiné te.",
       "gloss": "Aqui está um chá.",
       "kind": "frase",
@@ -6880,7 +6880,7 @@
     {
       "num": 593,
       "seq": 510,
-      "he": "תֵּה? הִנֵּה הַיָּם!",
+      "he": "תֵה? הִנֵה הַיָם!",
       "translit": "te? hiné hayám!",
       "gloss": "Chá? Olha o mar ali!",
       "kind": "frase",
@@ -6893,7 +6893,7 @@
     {
       "num": 594,
       "seq": 511,
-      "he": "הַיּוֹם יוֹם יָם!",
+      "he": "הַיוֹם יוֹם יָם!",
       "translit": "hayóm yom yam!",
       "gloss": "Hoje é dia de praia!",
       "kind": "frase",
@@ -6906,7 +6906,7 @@
     {
       "num": 595,
       "seq": 512,
-      "he": "שָׁלוֹם, דּוֹדָה!",
+      "he": "שָׁלוֹם, דוֹדָה!",
       "translit": "shalóm, dodá!",
       "gloss": "Olá, tia!",
       "kind": "frase",
@@ -6919,7 +6919,7 @@
     {
       "num": 596,
       "seq": 513,
-      "he": "שָׁלוֹם, מַיָּה! הִנֵּה גְּלִידָה.",
+      "he": "שָׁלוֹם, מַיָה! הִנֵה גְלִידָה.",
       "translit": "shalóm, Máya! hiné glidá.",
       "gloss": "Olá, Maya! Aqui está um sorvete.",
       "kind": "frase",
@@ -6932,7 +6932,7 @@
     {
       "num": 597,
       "seq": 514,
-      "he": "תּוֹדָה, דּוֹדָה!",
+      "he": "תוֹדָה, דוֹדָה!",
       "translit": "todá, dodá!",
       "gloss": "Obrigada, tia!",
       "kind": "frase",
@@ -6945,7 +6945,7 @@
     {
       "num": 598,
       "seq": 515,
-      "he": "מִי הַיֶּלֶד שָׁם?",
+      "he": "מִי הַיֶלֶד שָׁם?",
       "translit": "mi hayéled sham?",
       "gloss": "Quem é o menino ali?",
       "kind": "frase",
@@ -6958,7 +6958,7 @@
     {
       "num": 599,
       "seq": 516,
-      "he": "הוּא דָּנִי.",
+      "he": "הוּא דָנִי.",
       "translit": "hu Dáni.",
       "gloss": "É o Dani.",
       "kind": "frase",
@@ -6971,7 +6971,7 @@
     {
       "num": 600,
       "seq": 517,
-      "he": "הִנֵּה גְּלִידָה גַּם לְדָנִי!",
+      "he": "הִנֵה גְלִידָה גַם לְדָנִי!",
       "translit": "hiné glidá gam leDáni!",
       "gloss": "Tem sorvete para o Dani também!",
       "kind": "frase",
@@ -6984,7 +6984,7 @@
     {
       "num": 601,
       "seq": 518,
-      "he": "אִמָּא, הַיּוֹם טִיּוּל?",
+      "he": "אִמָא, הַיוֹם טִיוּל?",
       "translit": "íma, hayóm tiyúl?",
       "gloss": "Mãe, hoje tem passeio?",
       "kind": "frase",
@@ -6997,7 +6997,7 @@
     {
       "num": 602,
       "seq": 519,
-      "he": "הַיּוֹם טִיּוּל לַנָּהָר.",
+      "he": "הַיוֹם טִיוּל לַנָהָר.",
       "translit": "hayóm tiyúl lanahár.",
       "gloss": "Hoje tem passeio até o rio.",
       "kind": "frase",
@@ -7023,7 +7023,7 @@
     {
       "num": 604,
       "seq": 521,
-      "he": "הִנֵּה לֶחֶם טָרִי, וְגַם מַיִם.",
+      "he": "הִנֵה לֶחֶם טָרִי, וְגַם מַיִם.",
       "translit": "hiné léchem tarí, vegám máyim.",
       "gloss": "Aqui tem pão fresco, e água também.",
       "kind": "frase",
@@ -7036,7 +7036,7 @@
     {
       "num": 605,
       "seq": 522,
-      "he": "וְגַם מִטְרִיָּה?",
+      "he": "וְגַם מִטְרִיָה?",
       "translit": "vegám mitriyá?",
       "gloss": "E guarda-chuva também?",
       "kind": "frase",
@@ -7050,7 +7050,7 @@
     {
       "num": 896,
       "seq": 523,
-      "he": "לֹא. הַיּוֹם יֵשׁ שֶׁמֶשׁ.",
+      "he": "לֹא. הַיוֹם יֵשׁ שֶׁמֶשׁ.",
       "translit": "lo. hayóm yesh shémesh.",
       "gloss": "Não. Hoje tem sol.",
       "kind": "frase",
@@ -7064,7 +7064,7 @@
     {
       "num": 607,
       "seq": 524,
-      "he": "מַזָּל!",
+      "he": "מַזָל!",
       "translit": "mazál!",
       "gloss": "Que sorte!",
       "kind": "frase",
@@ -7077,7 +7077,7 @@
     {
       "num": 608,
       "seq": 525,
-      "he": "סְלִיחָה, אַתָּה סְטוּדֶנְט?",
+      "he": "סְלִיחָה, אַתָה סְטוּדֶנְט?",
       "translit": "slichá, atá studént?",
       "gloss": "Com licença, você é estudante?",
       "kind": "frase",
@@ -7090,7 +7090,7 @@
     {
       "num": 609,
       "seq": 526,
-      "he": "אֲנִי סְטוּדֶנְט חָדָשׁ. וְאַתְּ?",
+      "he": "אֲנִי סְטוּדֶנְט חָדָשׁ. וְאַתְ?",
       "translit": "aní studént chadásh. veát?",
       "gloss": "Sou um estudante novo. E você?",
       "kind": "frase",
@@ -7103,7 +7103,7 @@
     {
       "num": 881,
       "seq": 527,
-      "he": "אֲנִי נוֹעָה, נָעִים מְאוֹד! אַתָּה רוֹצֶה מִיץ?",
+      "he": "אֲנִי נוֹעָה, נָעִים מְאוֹד! אַתָה רוֹצֶה מִיץ?",
       "translit": "aní Nóa, naím meód! atá rotsé mits?",
       "gloss": "Eu sou a Noa, muito prazer! Você quer um suco?",
       "kind": "frase",
@@ -7116,7 +7116,7 @@
     {
       "num": 869,
       "seq": 528,
-      "he": "לֹא, תּוֹדָה. אֲנִי רוֹצֶה מָקוֹם שֶׁקֶט.",
+      "he": "לֹא, תוֹדָה. אֲנִי רוֹצֶה מָקוֹם שֶׁקֶט.",
       "translit": "lo, todá. aní rotsé makóm shéket.",
       "gloss": "Não, obrigado. Quero um lugar tranquilo.",
       "kind": "frase",
@@ -7129,7 +7129,7 @@
     {
       "num": 612,
       "seq": 529,
-      "he": "הִנֵּה עֵץ גָּדוֹל וְצֵל.",
+      "he": "הִנֵה עֵץ גָדוֹל וְצֵל.",
       "translit": "hiné ets gadól vetsél.",
       "gloss": "Olha aqui uma árvore grande, e sombra.",
       "kind": "frase",
@@ -7142,7 +7142,7 @@
     {
       "num": 870,
       "seq": 530,
-      "he": "תּוֹדָה, נוֹעָה. זֶה נֶחְמָד!",
+      "he": "תוֹדָה, נוֹעָה. זֶה נֶחְמָד!",
       "translit": "todá, Nóa. ze nechmád!",
       "gloss": "Obrigado, Noa. Que legal!",
       "kind": "frase",
@@ -7155,7 +7155,7 @@
     {
       "num": 614,
       "seq": 531,
-      "he": "שָׁלוֹם, מִשְׁפָּחָה! הִנֵּה קָפֶה וְתֵה.",
+      "he": "שָׁלוֹם, מִשְׁפָּחָה! הִנֵה קָפֶה וְתֵה.",
       "translit": "shalóm, mishpachá! hiné kafé veté.",
       "gloss": "Bom dia, família! Tem café e chá.",
       "kind": "frase",
@@ -7168,7 +7168,7 @@
     {
       "num": 615,
       "seq": 532,
-      "he": "תּוֹדָה! וְאֹכֶל?",
+      "he": "תוֹדָה! וְאֹכֶל?",
       "translit": "todá! veóchel?",
       "gloss": "Obrigada! E comida?",
       "kind": "frase",
@@ -7181,7 +7181,7 @@
     {
       "num": 616,
       "seq": 533,
-      "he": "הִנֵּה לֶחֶם, וְגַם תַּפּוּחַ.",
+      "he": "הִנֵה לֶחֶם, וְגַם תַפּוּחַ.",
       "translit": "hiné léchem, vegám tapúach.",
       "gloss": "Aqui tem pão, e maçã também.",
       "kind": "frase",
@@ -7207,7 +7207,7 @@
     {
       "num": 618,
       "seq": 535,
-      "he": "רֶגַע, רֶגַע! הִנֵּה הַתִּיק.",
+      "he": "רֶגַע, רֶגַע! הִנֵה הַתִיק.",
       "translit": "réga, réga! hiné hatík.",
       "gloss": "Calma, um momento! Aqui está a mochila.",
       "kind": "frase",
@@ -7220,7 +7220,7 @@
     {
       "num": 619,
       "seq": 536,
-      "he": "תּוֹדָה, אַבָּא! שָׁלוֹם!",
+      "he": "תוֹדָה, אַבָּא! שָׁלוֹם!",
       "translit": "todá, ába! shalóm!",
       "gloss": "Obrigado, pai! Tchau!",
       "kind": "frase",
@@ -7233,7 +7233,7 @@
     {
       "num": 620,
       "seq": 537,
-      "he": "שָׁלוֹם, חָבֵר! אַתָּה בָּעִיר?",
+      "he": "שָׁלוֹם, חָבֵר! אַתָה בָּעִיר?",
       "translit": "shalóm, chavér! atá baír?",
       "gloss": "Oi, amigo! Você está na cidade?",
       "kind": "frase",
@@ -7259,7 +7259,7 @@
     {
       "num": 622,
       "seq": 539,
-      "he": "אֲנִי רוֹצֶה קָפֶה. גַּם אַתָּה?",
+      "he": "אֲנִי רוֹצֶה קָפֶה. גַם אַתָה?",
       "translit": "aní rotsé kafé. gam atá?",
       "gloss": "Quero um café. Você também?",
       "kind": "frase",
@@ -7311,7 +7311,7 @@
     {
       "num": 626,
       "seq": 543,
-      "he": "דָּנִי, הַיּוֹם אֲנִי בְּצ׳ילה!",
+      "he": "דָנִי, הַיוֹם אֲנִי בְּצ׳ילה!",
       "translit": "Dáni, hayóm aní beTchíle!",
       "gloss": "Dani, hoje estou no Chile!",
       "kind": "frase",
@@ -7324,7 +7324,7 @@
     {
       "num": 627,
       "seq": 544,
-      "he": "בְּצ׳ילה? יָפֶה! מָה בַּתִּיק?",
+      "he": "בְּצ׳ילה? יָפֶה! מָה בַּתִיק?",
       "translit": "beTchíle? yafé! ma batík?",
       "gloss": "No Chile? Que lindo! O que tem na mochila?",
       "kind": "frase",
@@ -7350,7 +7350,7 @@
     {
       "num": 630,
       "seq": 546,
-      "he": "מַזָּל! שָׁלוֹם, מַיָּה!",
+      "he": "מַזָל! שָׁלוֹם, מַיָה!",
       "translit": "mazál! shalóm, Máya!",
       "gloss": "Que sorte! Tchau, Maya!",
       "kind": "frase",
@@ -7520,7 +7520,7 @@
     {
       "num": 459,
       "seq": 559,
-      "he": "בַּדֶּרֶךְ הַבַּיְתָה",
+      "he": "בַּדֶרֶךְ הַבַּיְתָה",
       "translit": "badérech habáyta",
       "gloss": "a caminho de casa",
       "kind": "palavra",
@@ -7546,7 +7546,7 @@
     {
       "num": 461,
       "seq": 561,
-      "he": "מַפְתֵּחַ",
+      "he": "מַפְתֵחַ",
       "translit": "maftéach",
       "gloss": "chave",
       "kind": "palavra",
@@ -7587,7 +7587,7 @@
     {
       "num": 464,
       "seq": 564,
-      "he": "דַּקּוֹת",
+      "he": "דַקוֹת",
       "translit": "dakót",
       "gloss": "minutos",
       "kind": "palavra",
@@ -8916,7 +8916,7 @@
     {
       "num": 633,
       "seq": 726,
-      "he": "טוֹב, תּוֹדָה",
+      "he": "טוֹב, תוֹדָה",
       "translit": "tov, todá",
       "gloss": "bem, obrigado",
       "kind": "frase",
@@ -8969,7 +8969,7 @@
     {
       "num": 637,
       "seq": 730,
-      "he": "אַתֶּם",
+      "he": "אַתֶם",
       "translit": "atém",
       "gloss": "vocês, para homens ou grupo misto",
       "kind": "palavra",
@@ -8983,7 +8983,7 @@
     {
       "num": 638,
       "seq": 731,
-      "he": "אַתֶּן",
+      "he": "אַתֶן",
       "translit": "atén",
       "gloss": "vocês, só para mulheres",
       "kind": "palavra",
@@ -9050,7 +9050,7 @@
     {
       "num": 643,
       "seq": 736,
-      "he": "מֵאֵיפֹה אַתָּה?",
+      "he": "מֵאֵיפֹה אַתָה?",
       "translit": "meéifo atá?",
       "gloss": "de onde você é? (a ele)",
       "kind": "frase",
@@ -9063,7 +9063,7 @@
     {
       "num": 644,
       "seq": 737,
-      "he": "מֵאֵיפֹה אַתְּ?",
+      "he": "מֵאֵיפֹה אַתְ?",
       "translit": "meéifo at?",
       "gloss": "de onde você é? (a ela)",
       "kind": "frase",
@@ -9193,7 +9193,7 @@
     {
       "num": 886,
       "seq": 747,
-      "he": "שָׁלוֹם! אֲנִי דָּנִי. מָה שְׁמֵךְ?",
+      "he": "שָׁלוֹם! אֲנִי דָנִי. מָה שְׁמֵךְ?",
       "translit": "shalóm! aní Dáni. ma shmech?",
       "gloss": "Olá! Eu sou o Dani. Qual é o seu nome?",
       "kind": "frase",
@@ -9206,7 +9206,7 @@
     {
       "num": 655,
       "seq": 748,
-      "he": "שָׁלוֹם, דָּנִי. שְׁמִי נֹעָה. נָעִים מְאֹד.",
+      "he": "שָׁלוֹם, דָנִי. שְׁמִי נֹעָה. נָעִים מְאֹד.",
       "translit": "shalóm, Dáni. shmi Nóa. naím meód.",
       "gloss": "Olá, Dani. Meu nome é Noa. Muito prazer.",
       "kind": "frase",
@@ -9219,7 +9219,7 @@
     {
       "num": 656,
       "seq": 749,
-      "he": "נָעִים מְאֹד. מֵאֵיפֹה אַתְּ?",
+      "he": "נָעִים מְאֹד. מֵאֵיפֹה אַתְ?",
       "translit": "naím meód. meéifo at?",
       "gloss": "Muito prazer. De onde você é?",
       "kind": "frase",
@@ -9232,7 +9232,7 @@
     {
       "num": 657,
       "seq": 750,
-      "he": "אֲנִי מִיִּשְׂרָאֵל. וְאַתָּה?",
+      "he": "אֲנִי מִיִשְׂרָאֵל. וְאַתָה?",
       "translit": "aní miIsraél. veatá?",
       "gloss": "Eu sou de Israel. E você?",
       "kind": "frase",
@@ -9258,7 +9258,7 @@
     {
       "num": 659,
       "seq": 752,
-      "he": "גַּם אֲנִי סְטוּדֶנְטִית!",
+      "he": "גַם אֲנִי סְטוּדֶנְטִית!",
       "translit": "gam aní studentít!",
       "gloss": "Eu também sou estudante!",
       "kind": "frase",
@@ -9363,7 +9363,7 @@
     {
       "num": 667,
       "seq": 760,
-      "he": "דֶּלֶת",
+      "he": "דֶלֶת",
       "translit": "délet",
       "gloss": "porta",
       "kind": "palavra",
@@ -9389,7 +9389,7 @@
     {
       "num": 669,
       "seq": 762,
-      "he": "מַתָּנָה",
+      "he": "מַתָנָה",
       "translit": "mataná",
       "gloss": "presente",
       "kind": "palavra",
@@ -9428,7 +9428,7 @@
     {
       "num": 888,
       "seq": 765,
-      "he": "מַיָּה, מָה זֶה?",
+      "he": "מַיָה, מָה זֶה?",
       "translit": "Máya, ma ze?",
       "gloss": "Maya, o que é isto?",
       "kind": "frase",
@@ -9441,7 +9441,7 @@
     {
       "num": 673,
       "seq": 766,
-      "he": "זֶה מַפְתֵּחַ.",
+      "he": "זֶה מַפְתֵחַ.",
       "translit": "ze maftéach.",
       "gloss": "É uma chave.",
       "kind": "frase",
@@ -9493,7 +9493,7 @@
     {
       "num": 677,
       "seq": 770,
-      "he": "זֹאת אִמָּא. וְזֶה אַבָּא.",
+      "he": "זֹאת אִמָא. וְזֶה אַבָּא.",
       "translit": "zot íma. vezé ába.",
       "gloss": "Esta é a minha mãe. E este é o meu pai.",
       "kind": "frase",
@@ -9519,7 +9519,7 @@
     {
       "num": 679,
       "seq": 772,
-      "he": "זֶה לֹא אַבָּא, זֶה דָּנִי!",
+      "he": "זֶה לֹא אַבָּא, זֶה דָנִי!",
       "translit": "ze lo ába, ze Dáni!",
       "gloss": "Este não é o meu pai, é o Dani!",
       "kind": "frase",
@@ -9532,7 +9532,7 @@
     {
       "num": 680,
       "seq": 773,
-      "he": "זֹאת מַתָּנָה",
+      "he": "זֹאת מַתָנָה",
       "translit": null,
       "gloss": "O que a pessoa disse?",
       "kind": "frase",
@@ -9558,7 +9558,7 @@
     {
       "num": 682,
       "seq": 775,
-      "he": "אֵלֶּה",
+      "he": "אֵלֶה",
       "translit": "éle",
       "gloss": "estes, estas",
       "kind": "palavra",
@@ -9597,7 +9597,7 @@
     {
       "num": 685,
       "seq": 778,
-      "he": "מַיָּה, זֶה הַבַּיִת הֶחָדָשׁ?",
+      "he": "מַיָה, זֶה הַבַּיִת הֶחָדָשׁ?",
       "translit": "Máya, ze habáyit hechadásh?",
       "gloss": "Maya, esta é a casa nova?",
       "kind": "frase",
@@ -9623,7 +9623,7 @@
     {
       "num": 687,
       "seq": 780,
-      "he": "הַשֻּׁלְחָן חָדָשׁ?",
+      "he": "הַשֻׁלְחָן חָדָשׁ?",
       "translit": "hashulchán chadásh?",
       "gloss": "A mesa é nova?",
       "kind": "frase",
@@ -9636,7 +9636,7 @@
     {
       "num": 688,
       "seq": 781,
-      "he": "לֹא, הַשֻּׁלְחָן יָשָׁן. אֲבָל הַכִּסְאוֹת חֲדָשִׁים!",
+      "he": "לֹא, הַשֻׁלְחָן יָשָׁן. אֲבָל הַכִּסְאוֹת חֲדָשִׁים!",
       "translit": "lo, hashulchán yashán. avál hakissót chadashím!",
       "gloss": "Não, a mesa é velha. Mas as cadeiras são novas!",
       "kind": "frase",
@@ -9649,7 +9649,7 @@
     {
       "num": 689,
       "seq": 782,
-      "he": "וּמָה אֵלֶּה?",
+      "he": "וּמָה אֵלֶה?",
       "translit": "umá éle?",
       "gloss": "E o que são estas?",
       "kind": "frase",
@@ -9662,7 +9662,7 @@
     {
       "num": 690,
       "seq": 783,
-      "he": "אֵלֶּה מַתָּנוֹת. הֵן מִנֹּעָה וּמִדָּנִי.",
+      "he": "אֵלֶה מַתָנוֹת. הֵן מִנֹעָה וּמִדָנִי.",
       "translit": "éle matanót. hen miNóa umiDáni.",
       "gloss": "São presentes. São da Noa e do Dani.",
       "kind": "frase",
@@ -9675,7 +9675,7 @@
     {
       "num": 691,
       "seq": 784,
-      "he": "הַמְּנוֹרָה הָאֲדֻמָּה יָפָה מְאֹד!",
+      "he": "הַמְנוֹרָה הָאֲדֻמָה יָפָה מְאֹד!",
       "translit": "hamenorá haadumá yafá meód!",
       "gloss": "A luminária vermelha é muito bonita!",
       "kind": "frase",
@@ -9688,7 +9688,7 @@
     {
       "num": 692,
       "seq": 785,
-      "he": "תּוֹדָה!",
+      "he": "תוֹדָה!",
       "translit": "todá!",
       "gloss": "Obrigada!",
       "kind": "frase",
@@ -9704,7 +9704,7 @@
       "seq": 786,
       "he": "כִּסְאוֹת",
       "translit": "kissót",
-      "gloss": "cadeiras (plural de כִּסֵּא)",
+      "gloss": "cadeiras (plural de כִּסֵא)",
       "kind": "palavra",
       "wave": 6,
       "where": [
@@ -9715,7 +9715,7 @@
     {
       "num": 693,
       "seq": 787,
-      "he": "הַתִּיק הַשָּׁחֹר",
+      "he": "הַתִיק הַשָׁחֹר",
       "translit": null,
       "gloss": "O que a pessoa disse?",
       "kind": "frase",
@@ -9806,7 +9806,7 @@
     {
       "num": 700,
       "seq": 794,
-      "he": "אַנְגְּלִית",
+      "he": "אַנְגְלִית",
       "translit": "anglít",
       "gloss": "inglês",
       "kind": "palavra",
@@ -9819,7 +9819,7 @@
     {
       "num": 701,
       "seq": 795,
-      "he": "טוֹם, אֵיפֹה אַתָּה גָּר?",
+      "he": "טוֹם, אֵיפֹה אַתָה גָר?",
       "translit": "Tom, éifo atá gar?",
       "gloss": "Tom, onde você mora?",
       "kind": "frase",
@@ -9832,7 +9832,7 @@
     {
       "num": 702,
       "seq": 796,
-      "he": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?",
+      "he": "אֲנִי גָר בִּירוּשָׁלַיִם. וְאַתְ?",
       "translit": "aní gar biYerushaláyim. veát?",
       "gloss": "Moro em Jerusalém. E você?",
       "kind": "frase",
@@ -9845,7 +9845,7 @@
     {
       "num": 703,
       "seq": 797,
-      "he": "אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד?",
+      "he": "אֲנִי גָרָה בְּתֵל אָבִיב. אַתָה עוֹבֵד?",
       "translit": "aní gará beTél Avív. atá ovéd?",
       "gloss": "Moro em Tel Aviv. Você trabalha?",
       "kind": "frase",
@@ -9858,7 +9858,7 @@
     {
       "num": 704,
       "seq": 798,
-      "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ?",
+      "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְ?",
       "translit": "lo, aní loméd ivrít. veát?",
       "gloss": "Não, estudo hebraico. E você?",
       "kind": "frase",
@@ -9871,7 +9871,7 @@
     {
       "num": 705,
       "seq": 799,
-      "he": "אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב!",
+      "he": "אֲנִי עוֹבֶדֶת. אַתָה מְדַבֵּר עִבְרִית טוֹב!",
       "translit": "aní ovédet. atá medabér ivrít tov!",
       "gloss": "Eu trabalho. Você fala hebraico bem!",
       "kind": "frase",
@@ -9884,7 +9884,7 @@
     {
       "num": 706,
       "seq": 800,
-      "he": "תּוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
+      "he": "תוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
       "translit": "todá! aní medabér ktsat.",
       "gloss": "Obrigado! Falo um pouco.",
       "kind": "frase",
@@ -9897,7 +9897,7 @@
     {
       "num": 707,
       "seq": 801,
-      "he": "דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית.",
+      "he": "דָנִי וּמַיָה גַם לוֹמְדִים עִבְרִית.",
       "translit": "Dáni uMáya gam lomdím ivrít.",
       "gloss": "O Dani e a Maya também estudam hebraico.",
       "kind": "frase",
@@ -9910,7 +9910,7 @@
     {
       "num": 708,
       "seq": 802,
-      "he": "הֵם גָּרִים בִּירוּשָׁלַיִם?",
+      "he": "הֵם גָרִים בִּירוּשָׁלַיִם?",
       "translit": "hem garím biYerushaláyim?",
       "gloss": "Eles moram em Jerusalém?",
       "kind": "frase",
@@ -9923,7 +9923,7 @@
     {
       "num": 709,
       "seq": 803,
-      "he": "לֹא, הֵם גָּרִים בְּתֵל אָבִיב.",
+      "he": "לֹא, הֵם גָרִים בְּתֵל אָבִיב.",
       "translit": "lo, hem garím beTél Avív.",
       "gloss": "Não, eles moram em Tel Aviv.",
       "kind": "frase",
@@ -9962,7 +9962,7 @@
     {
       "num": 712,
       "seq": 806,
-      "he": "גְּבִינָה",
+      "he": "גְבִינָה",
       "translit": "gviná",
       "gloss": "queijo",
       "kind": "palavra",
@@ -10001,7 +10001,7 @@
     {
       "num": 715,
       "seq": 809,
-      "he": "תַּפּוּחִים",
+      "he": "תַפּוּחִים",
       "translit": "tapuchím",
       "gloss": "maçãs",
       "kind": "palavra",
@@ -10079,7 +10079,7 @@
     {
       "num": 721,
       "seq": 815,
-      "he": "עִתּוֹן",
+      "he": "עִתוֹן",
       "translit": "itón",
       "gloss": "jornal",
       "kind": "palavra",
@@ -10092,7 +10092,7 @@
     {
       "num": 722,
       "seq": 816,
-      "he": "מַיָּה, מָה אַתְּ אוֹכֶלֶת?",
+      "he": "מַיָה, מָה אַתְ אוֹכֶלֶת?",
       "translit": "Máya, ma at ochélet?",
       "gloss": "Maya, o que você está comendo?",
       "kind": "frase",
@@ -10105,7 +10105,7 @@
     {
       "num": 723,
       "seq": 817,
-      "he": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
+      "he": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָה רוֹצֶה?",
       "translit": "aní ochélet léchem ugviná. atá rotsé?",
       "gloss": "Pão e queijo. Você quer?",
       "kind": "frase",
@@ -10118,7 +10118,7 @@
     {
       "num": 724,
       "seq": 818,
-      "he": "כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב?",
+      "he": "כֵּן, תוֹדָה. אֵיפֹה הֶחָלָב?",
       "translit": "ken, todá. éifo hechaláv?",
       "gloss": "Quero, obrigado. Onde está o leite?",
       "kind": "frase",
@@ -10144,7 +10144,7 @@
     {
       "num": 726,
       "seq": 820,
-      "he": "אַתְּ שׁוֹתָה קָפֶה?",
+      "he": "אַתְ שׁוֹתָה קָפֶה?",
       "translit": "at shotá kafé?",
       "gloss": "Você bebe café?",
       "kind": "frase",
@@ -10157,7 +10157,7 @@
     {
       "num": 727,
       "seq": 821,
-      "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
+      "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵה.",
       "translit": "lo, aní lo shotá kafé. aní shotá te.",
       "gloss": "Não, não bebo café. Bebo chá.",
       "kind": "frase",
@@ -10170,7 +10170,7 @@
     {
       "num": 728,
       "seq": 822,
-      "he": "וּמִי קוֹנֶה אֶת הַלֶּחֶם?",
+      "he": "וּמִי קוֹנֶה אֶת הַלֶחֶם?",
       "translit": "umí koné et haléchem?",
       "gloss": "E quem compra o pão?",
       "kind": "frase",
@@ -10183,7 +10183,7 @@
     {
       "num": 729,
       "seq": 823,
-      "he": "אַתָּה!",
+      "he": "אַתָה!",
       "translit": "atá!",
       "gloss": "Você!",
       "kind": "frase",
@@ -10209,7 +10209,7 @@
     {
       "num": 731,
       "seq": 825,
-      "he": "הִיא קוֹנָה תַּפּוּחִים",
+      "he": "הִיא קוֹנָה תַפּוּחִים",
       "translit": null,
       "gloss": "O que a pessoa disse?",
       "kind": "frase",
@@ -10313,7 +10313,7 @@
     {
       "num": 739,
       "seq": 833,
-      "he": "סַבְתָּא",
+      "he": "סַבְתָא",
       "translit": "sávta",
       "gloss": "avó",
       "kind": "palavra",
@@ -10326,7 +10326,7 @@
     {
       "num": 740,
       "seq": 834,
-      "he": "דּוֹד",
+      "he": "דוֹד",
       "translit": "dod",
       "gloss": "tio",
       "kind": "palavra",
@@ -10433,7 +10433,7 @@
     {
       "num": 749,
       "seq": 842,
-      "he": "לָהּ",
+      "he": "לָה",
       "translit": "la",
       "gloss": "para ela",
       "kind": "palavra",
@@ -10461,7 +10461,7 @@
     {
       "num": 751,
       "seq": 844,
-      "he": "שֶׁלִּי",
+      "he": "שֶׁלִי",
       "translit": "shelí",
       "gloss": "meu, minha",
       "kind": "palavra",
@@ -10474,7 +10474,7 @@
     {
       "num": 752,
       "seq": 845,
-      "he": "שֶׁלְּךָ",
+      "he": "שֶׁלְךָ",
       "translit": "shelchá",
       "gloss": "seu, sua (falando com um homem)",
       "kind": "palavra",
@@ -10487,7 +10487,7 @@
     {
       "num": 753,
       "seq": 846,
-      "he": "שֶׁלָּךְ",
+      "he": "שֶׁלָךְ",
       "translit": "shelách",
       "gloss": "seu, sua (falando com uma mulher)",
       "kind": "palavra",
@@ -10500,7 +10500,7 @@
     {
       "num": 754,
       "seq": 847,
-      "he": "שֶׁלּוֹ",
+      "he": "שֶׁלוֹ",
       "translit": "sheló",
       "gloss": "dele",
       "kind": "palavra",
@@ -10513,7 +10513,7 @@
     {
       "num": 755,
       "seq": 848,
-      "he": "שֶׁלָּהּ",
+      "he": "שֶׁלָה",
       "translit": "shelá",
       "gloss": "dela",
       "kind": "palavra",
@@ -10526,7 +10526,7 @@
     {
       "num": 756,
       "seq": 849,
-      "he": "שֶׁלָּנוּ",
+      "he": "שֶׁלָנוּ",
       "translit": "shelánu",
       "gloss": "nosso, nossa",
       "kind": "palavra",
@@ -10565,7 +10565,7 @@
     {
       "num": 759,
       "seq": 852,
-      "he": "מִי זֶה בַּתְּמוּנָה?",
+      "he": "מִי זֶה בַּתְמוּנָה?",
       "translit": "mi ze batmuná?",
       "gloss": "Quem é este na foto?",
       "kind": "frase",
@@ -10578,7 +10578,7 @@
     {
       "num": 760,
       "seq": 853,
-      "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
+      "he": "זֶה אֵיתָן, הָאָח שֶׁלִי. הוּא גָר בְּחֵיפָה.",
       "translit": "ze Eitán, haách shelí. hu gar beCháifa.",
       "gloss": "Este é o Eitan, o meu irmão. Ele mora em Haifa.",
       "kind": "frase",
@@ -10617,7 +10617,7 @@
     {
       "num": 763,
       "seq": 856,
-      "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל.",
+      "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִי יֵשׁ כֶּלֶב גָדוֹל.",
       "translit": "ein li chatúl. avál lahorím shelí yesh kélev gadól.",
       "gloss": "Não tenho gato. Mas os meus pais têm um cachorro grande.",
       "kind": "frase",
@@ -10630,7 +10630,7 @@
     {
       "num": 764,
       "seq": 857,
-      "he": "תְּמוּנָה",
+      "he": "תְמוּנָה",
       "translit": "tmuná",
       "gloss": "foto",
       "kind": "palavra",
@@ -10669,7 +10669,7 @@
     {
       "num": 767,
       "seq": 860,
-      "he": "הַבַּת שֶׁלָּהּ גָּרָה בְּחֵיפָה",
+      "he": "הַבַּת שֶׁלָה גָרָה בְּחֵיפָה",
       "translit": null,
       "gloss": "O que a pessoa disse?",
       "kind": "frase",
@@ -10708,7 +10708,7 @@
     {
       "num": 770,
       "seq": 863,
-      "he": "שְׁתַּיִם",
+      "he": "שְׁתַיִם",
       "translit": "shtáyim",
       "gloss": "2",
       "kind": "palavra",
@@ -10786,7 +10786,7 @@
     {
       "num": 776,
       "seq": 869,
-      "he": "תֵּשַׁע",
+      "he": "תֵשַׁע",
       "translit": "tésha",
       "gloss": "9",
       "kind": "palavra",
@@ -10812,7 +10812,7 @@
     {
       "num": 778,
       "seq": 871,
-      "he": "שְׁתֵּים־עֶשְׂרֵה",
+      "he": "שְׁתֵים־עֶשְׂרֵה",
       "translit": "shteim-esré",
       "gloss": "12",
       "kind": "palavra",
@@ -10904,7 +10904,7 @@
     {
       "num": 785,
       "seq": 878,
-      "he": "תְּשַׁע־עֶשְׂרֵה",
+      "he": "תְשַׁע־עֶשְׂרֵה",
       "translit": "tsha-esré",
       "gloss": "19",
       "kind": "palavra",
@@ -10943,7 +10943,7 @@
     {
       "num": 788,
       "seq": 881,
-      "he": "חֲמִשִּׁים",
+      "he": "חֲמִשִׁים",
       "translit": "chamishím",
       "gloss": "50",
       "kind": "palavra",
@@ -10956,7 +10956,7 @@
     {
       "num": 789,
       "seq": 882,
-      "he": "שִׁשִּׁים",
+      "he": "שִׁשִׁים",
       "translit": "shishím",
       "gloss": "60",
       "kind": "palavra",
@@ -10995,7 +10995,7 @@
     {
       "num": 792,
       "seq": 885,
-      "he": "תִּשְׁעִים",
+      "he": "תִשְׁעִים",
       "translit": "tishím",
       "gloss": "90",
       "kind": "palavra",
@@ -11034,7 +11034,7 @@
     {
       "num": 795,
       "seq": 888,
-      "he": "כַּמָּה?",
+      "he": "כַּמָה?",
       "translit": "káma?",
       "gloss": "quanto? quantos?",
       "kind": "palavra",
@@ -11047,7 +11047,7 @@
     {
       "num": 796,
       "seq": 889,
-      "he": "כַּמָּה זֶה עוֹלֶה?",
+      "he": "כַּמָה זֶה עוֹלֶה?",
       "translit": "káma ze olé?",
       "gloss": "quanto custa?",
       "kind": "frase",
@@ -11112,7 +11112,7 @@
     {
       "num": 801,
       "seq": 894,
-      "he": "מָה הַשָּׁעָה?",
+      "he": "מָה הַשָׁעָה?",
       "translit": "ma hashaá?",
       "gloss": "que horas são?",
       "kind": "frase",
@@ -11125,7 +11125,7 @@
     {
       "num": 802,
       "seq": 895,
-      "he": "הַשָּׁעָה…",
+      "he": "הַשָׁעָה…",
       "translit": "hashaá…",
       "gloss": "são… (horas)",
       "kind": "palavra",
@@ -11307,7 +11307,7 @@
     {
       "num": 816,
       "seq": 909,
-      "he": "יוֹם שִׁשִּׁי",
+      "he": "יוֹם שִׁשִׁי",
       "translit": "yom shishí",
       "gloss": "sexta-feira",
       "kind": "frase",
@@ -11320,7 +11320,7 @@
     {
       "num": 817,
       "seq": 910,
-      "he": "סְלִיחָה, כַּמָּה עוֹלָה הַגְּבִינָה?",
+      "he": "סְלִיחָה, כַּמָה עוֹלָה הַגְבִינָה?",
       "translit": "slichá, káma olá hagviná?",
       "gloss": "Com licença, quanto custa o queijo?",
       "kind": "frase",
@@ -11346,7 +11346,7 @@
     {
       "num": 819,
       "seq": 912,
-      "he": "וְהַתַּפּוּחִים?",
+      "he": "וְהַתַפּוּחִים?",
       "translit": "vehatapuchím?",
       "gloss": "E as maçãs?",
       "kind": "frase",
@@ -11372,7 +11372,7 @@
     {
       "num": 821,
       "seq": 914,
-      "he": "אֲנִי רוֹצֶה קִילוֹ תַּפּוּחִים, בְּבַקָּשָׁה.",
+      "he": "אֲנִי רוֹצֶה קִילוֹ תַפּוּחִים, בְּבַקָשָׁה.",
       "translit": "aní rotsé kílo tapuchím, bevakashá.",
       "gloss": "Quero um quilo de maçãs, por favor.",
       "kind": "frase",
@@ -11385,7 +11385,7 @@
     {
       "num": 822,
       "seq": 915,
-      "he": "בְּבַקָּשָׁה. עוֹד מַשֶּׁהוּ?",
+      "he": "בְּבַקָשָׁה. עוֹד מַשֶׁהוּ?",
       "translit": "bevakashá. od máshehu?",
       "gloss": "Aqui está. Mais alguma coisa?",
       "kind": "frase",
@@ -11398,7 +11398,7 @@
     {
       "num": 823,
       "seq": 916,
-      "he": "לֹא, תּוֹדָה. מָה הַשָּׁעָה?",
+      "he": "לֹא, תוֹדָה. מָה הַשָׁעָה?",
       "translit": "lo, todá. ma hashaá?",
       "gloss": "Não, obrigado. Que horas são?",
       "kind": "frase",
@@ -11411,7 +11411,7 @@
     {
       "num": 824,
       "seq": 917,
-      "he": "הַשָּׁעָה אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
+      "he": "הַשָׁעָה אַחַת וָחֵצִי. הַשׁוּק פָּתוּחַ עַד שְׁתַיִם.",
       "translit": "hashaá achát vachétsi. hashúk patúach ad shtáyim.",
       "gloss": "É uma e meia. A feira fica aberta até as duas.",
       "kind": "frase",
@@ -11424,7 +11424,7 @@
     {
       "num": 825,
       "seq": 918,
-      "he": "מַשֶּׁהוּ",
+      "he": "מַשֶׁהוּ",
       "translit": "máshehu",
       "gloss": "alguma coisa",
       "kind": "palavra",
@@ -11450,7 +11450,7 @@
     {
       "num": 827,
       "seq": 920,
-      "he": "הַשָּׁעָה עֶשֶׂר וָרֶבַע",
+      "he": "הַשָׁעָה עֶשֶׂר וָרֶבַע",
       "translit": null,
       "gloss": "Que horas são?",
       "kind": "frase",
@@ -11515,7 +11515,7 @@
     {
       "num": 832,
       "seq": 925,
-      "he": "שֶׁלָּכֶם",
+      "he": "שֶׁלָכֶם",
       "translit": "shelachém",
       "gloss": "de vocês (homens ou grupo misto)",
       "kind": "palavra",
@@ -11528,7 +11528,7 @@
     {
       "num": 833,
       "seq": 926,
-      "he": "שֶׁלָּכֶן",
+      "he": "שֶׁלָכֶן",
       "translit": "shelachén",
       "gloss": "de vocês (só mulheres)",
       "kind": "palavra",
@@ -11541,7 +11541,7 @@
     {
       "num": 834,
       "seq": 927,
-      "he": "שֶׁלָּהֶם",
+      "he": "שֶׁלָהֶם",
       "translit": "shelahém",
       "gloss": "deles",
       "kind": "palavra",
@@ -11554,7 +11554,7 @@
     {
       "num": 835,
       "seq": 928,
-      "he": "שֶׁלָּהֶן",
+      "he": "שֶׁלָהֶן",
       "translit": "shelahén",
       "gloss": "delas",
       "kind": "palavra",
@@ -11567,7 +11567,7 @@
     {
       "num": 836,
       "seq": 929,
-      "he": "אִתִּי",
+      "he": "אִתִי",
       "translit": "ití",
       "gloss": "comigo",
       "kind": "palavra",
@@ -11580,7 +11580,7 @@
     {
       "num": 837,
       "seq": 930,
-      "he": "אִתְּךָ",
+      "he": "אִתְךָ",
       "translit": "itchá",
       "gloss": "contigo (m)",
       "kind": "palavra",
@@ -11593,7 +11593,7 @@
     {
       "num": 838,
       "seq": 931,
-      "he": "אִתָּךְ",
+      "he": "אִתָךְ",
       "translit": "itách",
       "gloss": "contigo (f)",
       "kind": "palavra",
@@ -11606,7 +11606,7 @@
     {
       "num": 839,
       "seq": 932,
-      "he": "אִתּוֹ",
+      "he": "אִתוֹ",
       "translit": "itó",
       "gloss": "com ele",
       "kind": "palavra",
@@ -11619,7 +11619,7 @@
     {
       "num": 840,
       "seq": 933,
-      "he": "אִתָּהּ",
+      "he": "אִתָה",
       "translit": "itá",
       "gloss": "com ela",
       "kind": "palavra",
@@ -11632,7 +11632,7 @@
     {
       "num": 841,
       "seq": 934,
-      "he": "אִתָּנוּ",
+      "he": "אִתָנוּ",
       "translit": "itánu",
       "gloss": "com a gente",
       "kind": "palavra",
@@ -11671,7 +11671,7 @@
     {
       "num": 844,
       "seq": 937,
-      "he": "לָמָּה?",
+      "he": "לָמָה?",
       "translit": "láma?",
       "gloss": "por quê?",
       "kind": "palavra",
@@ -11762,7 +11762,7 @@
     {
       "num": 851,
       "seq": 944,
-      "he": "דָּנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִּי.",
+      "he": "דָנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִי.",
       "translit": "Dáni, zot Shíra. hi lomédet ití.",
       "gloss": "Dani, esta é a Shira. Ela estuda comigo.",
       "kind": "frase",
@@ -11775,7 +11775,7 @@
     {
       "num": 852,
       "seq": 945,
-      "he": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְּ?",
+      "he": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְ?",
       "translit": "naím meód, Shíra! meéifo at?",
       "gloss": "Muito prazer, Shira! De onde você é?",
       "kind": "frase",
@@ -11788,7 +11788,7 @@
     {
       "num": 853,
       "seq": 946,
-      "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָּרָה בְּתֵל אָבִיב.",
+      "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָרָה בְּתֵל אָבִיב.",
       "translit": "aní meCháifa, avál aní gará beTél Avív.",
       "gloss": "Sou de Haifa, mas moro em Tel Aviv.",
       "kind": "frase",
@@ -11814,7 +11814,7 @@
     {
       "num": 855,
       "seq": 948,
-      "he": "כֵּן, הַהוֹרִים שֶׁלִּי גָּרִים שָׁם.",
+      "he": "כֵּן, הַהוֹרִים שֶׁלִי גָרִים שָׁם.",
       "translit": "ken, hahorím shelí garím sham.",
       "gloss": "Sim, os meus pais moram lá.",
       "kind": "frase",
@@ -11827,7 +11827,7 @@
     {
       "num": 898,
       "seq": 949,
-      "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה?",
+      "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָה רוֹצֶה קָפֶה?",
       "translit": "anáchnu shotót kafé. atá rotsé kafé?",
       "gloss": "Nós estamos tomando um café. Você quer um café?",
       "kind": "frase",
@@ -11866,7 +11866,7 @@
     {
       "num": 859,
       "seq": 952,
-      "he": "שִׁירָה, מָה מִסְפַּר הַטֶּלֶפוֹן שֶׁלָּךְ?",
+      "he": "שִׁירָה, מָה מִסְפַּר הַטֶלֶפוֹן שֶׁלָךְ?",
       "translit": "Shíra, ma mispár hatélefon shelách?",
       "gloss": "Shira, qual é o número do seu telefone?",
       "kind": "frase",
@@ -11879,7 +11879,7 @@
     {
       "num": 860,
       "seq": 953,
-      "he": "אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם…",
+      "he": "אֶפֶס חֲמִשִׁים וּשְׁתַיִם…",
       "translit": "éfes chamishím ushtáyim…",
       "gloss": "Zero cinquenta e dois…",
       "kind": "frase",
@@ -11892,7 +11892,7 @@
     {
       "num": 861,
       "seq": 954,
-      "he": "דָּנִי!",
+      "he": "דָנִי!",
       "translit": "Dáni!",
       "gloss": "Dani!",
       "kind": "frase",
@@ -11905,7 +11905,7 @@
     {
       "num": 862,
       "seq": 955,
-      "he": "מִסְפַּר הַטֶּלֶפוֹן",
+      "he": "מִסְפַּר הַטֶלֶפוֹן",
       "translit": "mispár hatélefon",
       "gloss": "o número do telefone (expressão fixa)",
       "kind": "palavra",
@@ -11944,7 +11944,7 @@
     {
       "num": 865,
       "seq": 958,
-      "he": "מָתַי אַתָּה עוֹבֵד?",
+      "he": "מָתַי אַתָה עוֹבֵד?",
       "translit": null,
       "gloss": "O que a pessoa perguntou?",
       "kind": "frase",
@@ -12037,11 +12037,11 @@
       "seq": 670,
       "he": "professor letter-alef-tav-example",
       "translit": "professor-letter-alef-tav-example",
-      "gloss": "Lição do ת · Palavras (אַתְּ). Leia אַתְּ (\"at\", você, para uma mulher) e explique que o ponto dentro do ת e o sinal embaixo dele não mudam o som: lê-se só \"at\". Mostre que as mesmas duas letras também formam אֶת (\"et\"), a palavra que vem antes do objeto definido, e que é o nikud que decide qual das duas é.",
+      "gloss": "Lição do ת · Palavras (אַתְ). Leia אַתְ (\"at\", você, para uma mulher) e explique que o sinal embaixo do ת não muda o som: lê-se só \"at\". Mostre que as mesmas duas letras também formam אֶת (\"et\"), a palavra que vem antes do objeto definido, e que é o nikud que decide qual das duas é.",
       "kind": "professor",
       "wave": 7,
       "where": [
-        "Lição do ת · Palavras (אַתְּ)"
+        "Lição do ת · Palavras (אַתְ)"
       ],
       "file": "he-11706efb.mp3"
     },
@@ -12089,7 +12089,7 @@
       "seq": 674,
       "he": "professor module-3-welcome",
       "translit": "professor-module-3-welcome",
-      "gloss": "Módulo 3 · abertura. Dê as boas-vindas ao módulo 3, \"O vav, o zayin e os sons da garganta\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você lê שָׁלוֹם e תּוֹדָה - e já consegue cumprimentar e agradecer por escrito.",
+      "gloss": "Módulo 3 · abertura. Dê as boas-vindas ao módulo 3, \"O vav, o zayin e os sons da garganta\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você lê שָׁלוֹם e תוֹדָה - e já consegue cumprimentar e agradecer por escrito.",
       "kind": "professor",
       "wave": 7,
       "where": [
@@ -12180,7 +12180,7 @@
       "seq": 681,
       "he": "professor letter-mem-intro",
       "translit": "professor-letter-mem-intro",
-      "gloss": "Lição do מ · Conhecer. Apresente a letra Mem (מ): o nome, o som e como ela aparece na palavra, com o exemplo אִמָּא (íma, mãe). Menos de um minuto.",
+      "gloss": "Lição do מ · Conhecer. Apresente a letra Mem (מ): o nome, o som e como ela aparece na palavra, com o exemplo אִמָא (íma, mãe). Menos de um minuto.",
       "kind": "professor",
       "wave": 7,
       "where": [
@@ -12219,7 +12219,7 @@
       "seq": 684,
       "he": "professor letter-tav-common-mistake",
       "translit": "professor-letter-tav-common-mistake",
-      "gloss": "Lição do ת · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler תִּי como \"tchi\" e תֵּ como \"tche\". O certo: Ler תִּי como \"ti\" e תֵּ como \"te\", com o T seco. Por quê: Na maior parte do Brasil o T antes de I e E vira TCH - \"tia\", \"noite\". Esse hábito é automático e passa despercebido. Em hebraico o ת é sempre seco: תֵּה é \"te\", não \"tchê\". Diga os exemplos em hebraico em voz alta.",
+      "gloss": "Lição do ת · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler תִי como \"tchi\" e תֵ como \"tche\". O certo: Ler תִי como \"ti\" e תֵ como \"te\", com o T seco. Por quê: Na maior parte do Brasil o T antes de I e E vira TCH - \"tia\", \"noite\". Esse hábito é automático e passa despercebido. Em hebraico o ת é sempre seco: תֵה é \"te\", não \"tchê\". Diga os exemplos em hebraico em voz alta.",
       "kind": "professor",
       "wave": 7,
       "where": [
@@ -12271,7 +12271,7 @@
       "seq": 688,
       "he": "professor letter-he-common-mistake",
       "translit": "professor-letter-he-common-mistake",
-      "gloss": "Lição do ה · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Não pronunciar o ה inicial, lendo הַיּוֹם como \"ayóm\". O certo: Soprar o H: \"hayóm\", com ar saindo antes da vogal. Por quê: Em português o H escrito é sempre mudo - \"hotel\" é \"otel\". Em hebraico o ה no início da palavra é um som de verdade. Na fala rápida muitos israelenses o enfraquecem, mas pronuncie-o: é o padrão e é sempre entendido. Diga os exemplos em hebraico em voz alta.",
+      "gloss": "Lição do ה · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Não pronunciar o ה inicial, lendo הַיוֹם como \"ayóm\". O certo: Soprar o H: \"hayóm\", com ar saindo antes da vogal. Por quê: Em português o H escrito é sempre mudo - \"hotel\" é \"otel\". Em hebraico o ה no início da palavra é um som de verdade. Na fala rápida muitos israelenses o enfraquecem, mas pronuncie-o: é o padrão e é sempre entendido. Diga os exemplos em hebraico em voz alta.",
       "kind": "professor",
       "wave": 7,
       "where": [
@@ -12310,7 +12310,7 @@
       "seq": 691,
       "he": "professor letter-gimel-intro",
       "translit": "professor-letter-gimel-intro",
-      "gloss": "Lição do ג · Conhecer. Apresente a letra Guímel (ג): o nome, o som e como ela aparece na palavra, com o exemplo גַּם (gam, também). Menos de um minuto.",
+      "gloss": "Lição do ג · Conhecer. Apresente a letra Guímel (ג): o nome, o som e como ela aparece na palavra, com o exemplo גַם (gam, também). Menos de um minuto.",
       "kind": "professor",
       "wave": 7,
       "where": [
@@ -12323,7 +12323,7 @@
       "seq": 692,
       "he": "professor letter-gimel-common-mistake",
       "translit": "professor-letter-gimel-common-mistake",
-      "gloss": "Lição do ג · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Suavizar o G antes de E e I: ler גֶּשֶׁם como \"jéshem\". O certo: Manter o G duro sempre: \"guéshem\", \"gadól\", como em \"guerra\" e \"guitarra\". Por quê: Em português o G antes de E e I vira J - \"gente\", \"gigante\" - e por isso escrevemos \"gu\" para manter o som duro. O hebraico não tem essa alternância: ג é sempre duro. Diga os exemplos em hebraico em voz alta.",
+      "gloss": "Lição do ג · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Suavizar o G antes de E e I: ler גֶשֶׁם como \"jéshem\". O certo: Manter o G duro sempre: \"guéshem\", \"gadól\", como em \"guerra\" e \"guitarra\". Por quê: Em português o G antes de E e I vira J - \"gente\", \"gigante\" - e por isso escrevemos \"gu\" para manter o som duro. O hebraico não tem essa alternância: ג é sempre duro. Diga os exemplos em hebraico em voz alta.",
       "kind": "professor",
       "wave": 7,
       "where": [
@@ -12349,7 +12349,7 @@
       "seq": 694,
       "he": "professor letter-dalet-common-mistake",
       "translit": "professor-letter-dalet-common-mistake",
-      "gloss": "Lição do ד · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler דִּי como \"dji\", do jeito que falamos \"dia\". O certo: Ler דִּי como \"di\", com o D seco, como em \"dado\". Por quê: Na maior parte do Brasil o D antes de I e E vira DJ, e o falante nem percebe. Em hebraico o ד nunca muda: é sempre o D seco de \"dado\". Diga os exemplos em hebraico em voz alta.",
+      "gloss": "Lição do ד · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler דִי como \"dji\", do jeito que falamos \"dia\". O certo: Ler דִי como \"di\", com o D seco, como em \"dado\". Por quê: Na maior parte do Brasil o D antes de I e E vira DJ, e o falante nem percebe. Em hebraico o ד nunca muda: é sempre o D seco de \"dado\". Diga os exemplos em hebraico em voz alta.",
       "kind": "professor",
       "wave": 7,
       "where": [
@@ -12518,7 +12518,7 @@
       "seq": 707,
       "he": "professor letter-tet-intro",
       "translit": "professor-letter-tet-intro",
-      "gloss": "Lição do ט · Conhecer. Apresente a letra Tet (ט): o nome, o som e como ela aparece na palavra, com o exemplo מִטָּה (mitá, cama). Menos de um minuto.",
+      "gloss": "Lição do ט · Conhecer. Apresente a letra Tet (ט): o nome, o som e como ela aparece na palavra, com o exemplo מִטָה (mitá, cama). Menos de um minuto.",
       "kind": "professor",
       "wave": 7,
       "where": [
@@ -12531,7 +12531,7 @@
       "seq": 708,
       "he": "professor letter-tet-common-mistake",
       "translit": "professor-letter-tet-common-mistake",
-      "gloss": "Lição do ט · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Palatalizar antes de I e E: ler טִי como \"tchi\". O certo: Ler \"ti\", com o T seco, exatamente como no ת. Por quê: É o mesmo hábito automático do ת, e vale a pena revisar aqui: em טִיּוּל o começo é \"ti\", nunca \"tchi\". Diga os exemplos em hebraico em voz alta.",
+      "gloss": "Lição do ט · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Palatalizar antes de I e E: ler טִי como \"tchi\". O certo: Ler \"ti\", com o T seco, exatamente como no ת. Por quê: É o mesmo hábito automático do ת, e vale a pena revisar aqui: em טִיוּל o começo é \"ti\", nunca \"tchi\". Diga os exemplos em hebraico em voz alta.",
       "kind": "professor",
       "wave": 7,
       "where": [

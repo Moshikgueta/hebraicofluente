@@ -10,14 +10,14 @@
           "he": "מַיִם",
           "ondePt": "Na prateleira de bebidas, o rótulo de uma garrafa",
           "erradas": [
-            "תֵּה",
+            "תֵה",
             "יָם",
-            "אִמָּא"
+            "אִמָא"
           ]
         },
         {
           "tipo": "ler",
-          "he": "תֵּה",
+          "he": "תֵה",
           "ondePt": "Ao lado, uma caixinha de saquinhos",
           "erradas": [
             "מַיִם",
@@ -30,14 +30,14 @@
           "he": "אֲנִי",
           "promptPt": "Na fila do caixa, perguntam quem é o próximo. Qual destas palavras diz “eu”?",
           "erradas": [
-            "אַתָּה",
-            "הִנֵּה",
+            "אַתָה",
+            "הִנֵה",
             "מִי"
           ]
         },
         {
           "tipo": "transliterar",
-          "he": "הִנֵּה",
+          "he": "הִנֵה",
           "promptPt": "O caixa devolve o troco dizendo esta palavra. Escreva como ela se lê."
         }
       ],
@@ -63,9 +63,9 @@
           "he": "יֶלֶד",
           "ondePt": "Num formulário, dentro de expressões como \"nome da criança\"",
           "erradas": [
-            "יַלְדָּה",
-            "אִשָּׁה",
-            "דָּג"
+            "יַלְדָה",
+            "אִשָׁה",
+            "דָג"
           ]
         },
         {
@@ -96,7 +96,7 @@
           "he": "שָׁלוֹם",
           "ondePt": "Na porta da padaria, uma plaquinha",
           "erradas": [
-            "תּוֹדָה",
+            "תוֹדָה",
             "לֶחֶם",
             "חָדָשׁ"
           ]
@@ -116,14 +116,14 @@
           "he": "אֶחָד",
           "promptPt": "Você quer levar só um pão. Qual destas palavras diz “um”?",
           "erradas": [
-            "חֲמִשָּׁה",
+            "חֲמִשָׁה",
             "אָח",
             "זֶה"
           ]
         },
         {
           "tipo": "transliterar",
-          "he": "תּוֹדָה",
+          "he": "תוֹדָה",
           "promptPt": "No fim do recibo vem esta palavra. Escreva como ela se lê."
         }
       ],
@@ -161,7 +161,7 @@
           "erradas": [
             "מַיִם",
             "טָרִי",
-            "תֵּה"
+            "תֵה"
           ]
         },
         {
@@ -192,7 +192,7 @@
           "he": "כֶּלֶב",
           "promptPt": "Seu filho pede para adotar um bicho. Qual destas palavras diz “cachorro”?",
           "erradas": [
-            "כַּדּוּר",
+            "כַּדוּר",
             "כּוֹס",
             "לֵב"
           ]
@@ -227,17 +227,17 @@
           "ondePt": "Na vitrine da casa de câmbio",
           "erradas": [
             "סוֹף",
-            "דֶּרֶךְ",
+            "דֶרֶךְ",
             "סֵפֶר"
           ]
         },
         {
           "tipo": "ler",
-          "he": "הַמֶּלֶךְ",
+          "he": "הַמֶלֶךְ",
           "semPontos": true,
           "ondePt": "Na placa de uma rua",
           "erradas": [
-            "דֶּרֶךְ",
+            "דֶרֶךְ",
             "כֶּלֶב",
             "בַּיִת"
           ]
@@ -255,7 +255,7 @@
           "ondePt": "Na tela, quando o filme acaba",
           "erradas": [
             "סֵדֶר",
-            "דֶּרֶךְ",
+            "דֶרֶךְ",
             "כֶּסֶף"
           ]
         }

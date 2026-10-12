@@ -11,7 +11,7 @@ import { conferirFala, grafiaCheiaDe, palavrasDe } from '@/lib/fala';
 
 describe('palavrasDe', () => {
   it('tira os pontos, a pontuação e a forma final', () => {
-    expect(palavrasDe('שָׁלוֹם, דָּנָה!')).toEqual(['שלומ', 'דנה']);
+    expect(palavrasDe('שָׁלוֹם, דָנָה!')).toEqual(['שלומ', 'דנה']);
     expect(palavrasDe('צ׳ק-אין')).toEqual(['צק', 'אינ']);
   });
 });

@@ -86,7 +86,7 @@
       "pt": "pão"
     },
     {
-      "he": "גְּבִינָה",
+      "he": "גְבִינָה",
       "translit": "gviná",
       "pt": "queijo"
     },
@@ -101,12 +101,12 @@
       "pt": "ovos"
     },
     {
-      "he": "תַּפּוּחַ",
+      "he": "תַפּוּחַ",
       "translit": "tapúach",
       "pt": "maçã"
     },
     {
-      "he": "תַּפּוּחִים",
+      "he": "תַפּוּחִים",
       "translit": "tapuchím",
       "pt": "maçãs"
     },
@@ -136,7 +136,7 @@
       "pt": "café"
     },
     {
-      "he": "תֵּה",
+      "he": "תֵה",
       "translit": "te",
       "pt": "chá"
     },
@@ -156,7 +156,7 @@
       "pt": "cômodo, quarto"
     },
     {
-      "he": "עִתּוֹן",
+      "he": "עִתוֹן",
       "translit": "itón",
       "pt": "jornal"
     }
@@ -168,8 +168,8 @@
     },
     {
       "tituloPt": "O אֶת: uma palavra que não se traduz",
-      "textoPt": "Vem antes do objeto definido, e o caso mais comum é o objeto com \"o/a\" (הַ): אֲנִי אוֹכֵל אֶת הַלֶּחֶם. Sem \"o/a\" (\"um pão\", \"pão\"), não há אֶת: אֲנִי אוֹכֵל לֶחֶם.",
-      "erroPt": "O português não tem essa palavra, então o brasileiro esquece o אֶת, e quando aprende põe em todo lugar. Por enquanto: אֶת antes do objeto com הַ; sem הַ (\"um pão\", \"pão\"), não há אֶת. Mais tarde você vai ver que nomes próprios também levam אֶת (אֶת דָּנִי)."
+      "textoPt": "Vem antes do objeto definido, e o caso mais comum é o objeto com \"o/a\" (הַ): אֲנִי אוֹכֵל אֶת הַלֶחֶם. Sem \"o/a\" (\"um pão\", \"pão\"), não há אֶת: אֲנִי אוֹכֵל לֶחֶם.",
+      "erroPt": "O português não tem essa palavra, então o brasileiro esquece o אֶת, e quando aprende põe em todo lugar. Por enquanto: אֶת antes do objeto com הַ; sem הַ (\"um pão\", \"pão\"), não há אֶת. Mais tarde você vai ver que nomes próprios também levam אֶת (אֶת דָנִי)."
     },
     {
       "tituloPt": "Negar o verbo",
@@ -177,7 +177,7 @@
     },
     {
       "tituloPt": "\"No/na\" com artigo: בְּ + הַ = בַּ",
-      "textoPt": "\"Na cozinha\" = בַּמִּטְבָּח, não בְּהַמִּטְבָּח. E מַיִם é sempre plural, como \"os óculos\".",
+      "textoPt": "\"Na cozinha\" = בַּמִטְבָּח, não בְּהַמִטְבָּח. E מַיִם é sempre plural, como \"os óculos\".",
       "erroPt": "Juntar as duas peças inteiras (בְּהַ). Elas se fundem numa só: בַּ."
     }
   ],
@@ -186,19 +186,19 @@
     "linhas": [
       {
         "quem": "Dani",
-        "he": "מַיָּה, מָה אַתְּ אוֹכֶלֶת?",
+        "he": "מַיָה, מָה אַתְ אוֹכֶלֶת?",
         "translit": "Máya, ma at ochélet?",
         "pt": "Maya, o que você está comendo?"
       },
       {
         "quem": "Maya",
-        "he": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
+        "he": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָה רוֹצֶה?",
         "translit": "aní ochélet léchem ugviná. atá rotsé?",
         "pt": "Pão e queijo. Você quer?"
       },
       {
         "quem": "Dani",
-        "he": "כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב?",
+        "he": "כֵּן, תוֹדָה. אֵיפֹה הֶחָלָב?",
         "translit": "ken, todá. éifo hechaláv?",
         "pt": "Quero, obrigado. Onde está o leite?"
       },
@@ -210,25 +210,25 @@
       },
       {
         "quem": "Dani",
-        "he": "אַתְּ שׁוֹתָה קָפֶה?",
+        "he": "אַתְ שׁוֹתָה קָפֶה?",
         "translit": "at shotá kafé?",
         "pt": "Você bebe café?"
       },
       {
         "quem": "Maya",
-        "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
+        "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵה.",
         "translit": "lo, aní lo shotá kafé. aní shotá te.",
         "pt": "Não, não bebo café. Bebo chá."
       },
       {
         "quem": "Dani",
-        "he": "וּמִי קוֹנֶה אֶת הַלֶּחֶם?",
+        "he": "וּמִי קוֹנֶה אֶת הַלֶחֶם?",
         "translit": "umí koné et haléchem?",
         "pt": "E quem compra o pão?"
       },
       {
         "quem": "Maya",
-        "he": "אַתָּה!",
+        "he": "אַתָה!",
         "translit": "atá!",
         "pt": "Você!"
       }
@@ -293,7 +293,7 @@
     },
     {
       "t": "escolha",
-      "q": "A Noa diz: אֲנִי ___ עִתּוֹן",
+      "q": "A Noa diz: אֲנִי ___ עִתוֹן",
       "opcoes": [
         "קוֹרֵאת",
         "קוֹרֵא"
@@ -379,7 +379,7 @@
         "אֲנִי",
         "קוֹרֵא",
         "אֶת",
-        "הָעִתּוֹן"
+        "הָעִתוֹן"
       ]
     },
     {
@@ -402,8 +402,8 @@
       "t": "escolha",
       "q": "\"Na cozinha\"",
       "opcoes": [
-        "בַּמִּטְבָּח",
-        "בְּהַמִּטְבָּח"
+        "בַּמִטְבָּח",
+        "בְּהַמִטְבָּח"
       ],
       "certa": 0
     },
@@ -420,17 +420,17 @@
       "t": "escolha",
       "q": "O Dani pergunta à Maya se ela quer bolo:",
       "opcoes": [
-        "אַתְּ רוֹצָה עוּגָה?",
-        "אַתָּה רוֹצֶה עוּגָה?"
+        "אַתְ רוֹצָה עוּגָה?",
+        "אַתָה רוֹצֶה עוּגָה?"
       ],
       "certa": 0
     },
     {
       "t": "escolha",
-      "q": "Alguém pergunta: אַתָּה רוֹצֶה תֵּה? Você (homem) não quer:",
+      "q": "Alguém pergunta: אַתָה רוֹצֶה תֵה? Você (homem) não quer:",
       "opcoes": [
-        "לֹא, תּוֹדָה",
-        "כֵּן, בְּבַקָּשָׁה"
+        "לֹא, תוֹדָה",
+        "כֵּן, בְּבַקָשָׁה"
       ],
       "certa": 0
     },
@@ -446,7 +446,7 @@
     },
     {
       "t": "ouvir",
-      "he": "הִיא קוֹנָה תַּפּוּחִים",
+      "he": "הִיא קוֹנָה תַפּוּחִים",
       "q": "O que a pessoa disse?",
       "opcoes": [
         "ela compra maçãs",
@@ -467,7 +467,7 @@
       "t": "vf",
       "q": "No diálogo, a Maya bebe café.",
       "certa": false,
-      "porque": "אֲנִי שׁוֹתָה תֵּה."
+      "porque": "אֲנִי שׁוֹתָה תֵה."
     },
     {
       "t": "escrever",
@@ -487,7 +487,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Pão e queijo. Você quer?\"",
       "antes": "אֲנִי",
-      "depois": "לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
+      "depois": "לֶחֶם וּגְבִינָה. אַתָה רוֹצֶה?",
       "respostas": [
         "אוכלת"
       ]
@@ -496,7 +496,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Não, não bebo café. Bebo chá.\"",
       "antes": "לֹא, אֲנִי לֹא",
-      "depois": "קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
+      "depois": "קָפֶה. אֲנִי שׁוֹתָה תֵה.",
       "respostas": [
         "שותה"
       ]
@@ -504,7 +504,7 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Pão e queijo. Você quer?\"",
-      "exemplo": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?"
+      "exemplo": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָה רוֹצֶה?"
     },
     {
       "t": "aberta",

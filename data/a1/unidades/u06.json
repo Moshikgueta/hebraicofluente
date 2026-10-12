@@ -46,17 +46,17 @@
       "pt": "avô"
     },
     {
-      "he": "סַבְתָּא",
+      "he": "סַבְתָא",
       "translit": "sávta",
       "pt": "avó"
     },
     {
-      "he": "דּוֹד",
+      "he": "דוֹד",
       "translit": "dod",
       "pt": "tio"
     },
     {
-      "he": "דּוֹדָה",
+      "he": "דוֹדָה",
       "translit": "dodá",
       "pt": "tia"
     },
@@ -121,7 +121,7 @@
       "pt": "para ele"
     },
     {
-      "he": "לָהּ",
+      "he": "לָה",
       "translit": "la",
       "pt": "para ela"
     },
@@ -131,32 +131,32 @@
       "pt": "para nós"
     },
     {
-      "he": "שֶׁלִּי",
+      "he": "שֶׁלִי",
       "translit": "shelí",
       "pt": "meu, minha"
     },
     {
-      "he": "שֶׁלְּךָ",
+      "he": "שֶׁלְךָ",
       "translit": "shelchá",
       "pt": "seu, sua (falando com um homem)"
     },
     {
-      "he": "שֶׁלָּךְ",
+      "he": "שֶׁלָךְ",
       "translit": "shelách",
       "pt": "seu, sua (falando com uma mulher)"
     },
     {
-      "he": "שֶׁלּוֹ",
+      "he": "שֶׁלוֹ",
       "translit": "sheló",
       "pt": "dele"
     },
     {
-      "he": "שֶׁלָּהּ",
+      "he": "שֶׁלָה",
       "translit": "shelá",
       "pt": "dela"
     },
     {
-      "he": "שֶׁלָּנוּ",
+      "he": "שֶׁלָנוּ",
       "translit": "shelánu",
       "pt": "nosso, nossa"
     }
@@ -169,16 +169,16 @@
     {
       "tituloPt": "Não existe o verbo \"ter\"",
       "textoPt": "\"Eu tenho\" se diz יֵשׁ לִי (\"há para mim\"). \"Eu não tenho\" = אֵין לִי.",
-      "erroPt": "Procurar um verbo \"ter\" e conjugá-lo. Não há. \"Eu tenho um irmão\" = יֵשׁ לִי אָח. \"Ela tem um gato\" = יֵשׁ לָהּ חָתוּל."
+      "erroPt": "Procurar um verbo \"ter\" e conjugá-lo. Não há. \"Eu tenho um irmão\" = יֵשׁ לִי אָח. \"Ela tem um gato\" = יֵשׁ לָה חָתוּל."
     },
     {
       "tituloPt": "\"Meu\" vem depois da coisa",
-      "textoPt": "\"A minha casa\" = הַבַּיִת שֶׁלִּי. Para dizer \"o meu...\", a coisa leva הַ. Sem הַ (חָבֵר שֶׁלִּי) é \"um amigo meu\".",
-      "erroPt": "Pôr o \"meu\" antes (שֶׁלִּי בַּיִת). A ordem é a coisa, e depois שֶׁלִּי: הַכֶּלֶב שֶׁלִּי, הַחֲבֵרָה שֶׁלּוֹ."
+      "textoPt": "\"A minha casa\" = הַבַּיִת שֶׁלִי. Para dizer \"o meu...\", a coisa leva הַ. Sem הַ (חָבֵר שֶׁלִי) é \"um amigo meu\".",
+      "erroPt": "Pôr o \"meu\" antes (שֶׁלִי בַּיִת). A ordem é a coisa, e depois שֶׁלִי: הַכֶּלֶב שֶׁלִי, הַחֲבֵרָה שֶׁלוֹ."
     },
     {
-      "tituloPt": "אַבָּא e אִמָּא não levam הַ",
-      "textoPt": "אִמָּא שֶׁלִּי, אַבָּא שֶׁלָּהּ. E com הַ, o לְ funde como o בְּ: לְ + הַ = לַ (לַהוֹרִים שֶׁלִּי)."
+      "tituloPt": "אַבָּא e אִמָא não levam הַ",
+      "textoPt": "אִמָא שֶׁלִי, אַבָּא שֶׁלָה. E com הַ, o לְ funde como o בְּ: לְ + הַ = לַ (לַהוֹרִים שֶׁלִי)."
     }
   ],
   "dialogo": {
@@ -198,13 +198,13 @@
       },
       {
         "quem": "Tom",
-        "he": "מִי זֶה בַּתְּמוּנָה?",
+        "he": "מִי זֶה בַּתְמוּנָה?",
         "translit": "mi ze batmuná?",
         "pt": "Quem é este na foto?"
       },
       {
         "quem": "Noa",
-        "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
+        "he": "זֶה אֵיתָן, הָאָח שֶׁלִי. הוּא גָר בְּחֵיפָה.",
         "translit": "ze Eitán, haách shelí. hu gar beCháifa.",
         "pt": "Este é o Eitan, o meu irmão. Ele mora em Haifa."
       },
@@ -222,14 +222,14 @@
       },
       {
         "quem": "Tom",
-        "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל.",
+        "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִי יֵשׁ כֶּלֶב גָדוֹל.",
         "translit": "ein li chatúl. avál lahorím shelí yesh kélev gadól.",
         "pt": "Não tenho gato. Mas os meus pais têm um cachorro grande."
       }
     ],
     "glossario": [
       {
-        "he": "תְּמוּנָה",
+        "he": "תְמוּנָה",
         "translit": "tmuná",
         "pt": "foto"
       },
@@ -255,7 +255,7 @@
   "autoavaliacao": [
     "Eu digo o que tenho e o que não tenho, com יֵשׁ לִי e אֵין לִי.",
     "Eu falo da minha família.",
-    "Eu digo \"meu\" e \"seu\" com שֶׁלִּי, שֶׁלְּךָ, שֶׁלָּךְ."
+    "Eu digo \"meu\" e \"seu\" com שֶׁלִי, שֶׁלְךָ, שֶׁלָךְ."
   ],
   "exercicios": [
     {
@@ -279,7 +279,7 @@
           "filha"
         ],
         [
-          "סַבְתָּא",
+          "סַבְתָא",
           "avó"
         ]
       ]
@@ -298,7 +298,7 @@
       "q": "Qual não combina com as outras?",
       "opcoes": [
         "סַבָּא",
-        "דּוֹד",
+        "דוֹד",
         "חָתוּל",
         "בֵּן"
       ],
@@ -318,7 +318,7 @@
       "t": "completar",
       "q": "\"Há bolo na cozinha\"",
       "antes": "",
-      "depois": "עוּגָה בַּמִּטְבָּח",
+      "depois": "עוּגָה בַּמִטְבָּח",
       "respostas": [
         "יש"
       ]
@@ -336,7 +336,7 @@
       "t": "escolha",
       "q": "\"Ela tem um gato\"",
       "opcoes": [
-        "יֵשׁ לָהּ חָתוּל",
+        "יֵשׁ לָה חָתוּל",
         "יֵשׁ לוֹ חָתוּל"
       ],
       "certa": 0
@@ -370,13 +370,13 @@
       "pt": "a minha casa",
       "palavras": [
         "הַבַּיִת",
-        "שֶׁלִּי"
+        "שֶׁלִי"
       ]
     },
     {
       "t": "erro",
       "q": "Ache o erro e escreva a frase certa.",
-      "errada": "שֶׁלִּי הַחָתוּל",
+      "errada": "שֶׁלִי הַחָתוּל",
       "respostas": [
         "החתול שלי"
       ],
@@ -386,8 +386,8 @@
       "t": "escolha",
       "q": "\"O cachorro dela\"",
       "opcoes": [
-        "הַכֶּלֶב שֶׁלָּהּ",
-        "הַכֶּלֶב שֶׁלּוֹ"
+        "הַכֶּלֶב שֶׁלָה",
+        "הַכֶּלֶב שֶׁלוֹ"
       ],
       "certa": 0
     },
@@ -395,17 +395,17 @@
       "t": "escolha",
       "q": "\"A mãe dele\"",
       "opcoes": [
-        "אִמָּא שֶׁלּוֹ",
-        "הָאִמָּא שֶׁלּוֹ"
+        "אִמָא שֶׁלוֹ",
+        "הָאִמָא שֶׁלוֹ"
       ],
       "certa": 0,
-      "porque": "אִמָּא não leva הַ."
+      "porque": "אִמָא não leva הַ."
     },
     {
       "t": "completar",
       "q": "\"Os meus pais têm um cachorro\"",
       "antes": "",
-      "depois": "שֶׁלִּי יֵשׁ כֶּלֶב",
+      "depois": "שֶׁלִי יֵשׁ כֶּלֶב",
       "respostas": [
         "להורים"
       ]
@@ -422,7 +422,7 @@
     },
     {
       "t": "ouvir",
-      "he": "הַבַּת שֶׁלָּהּ גָּרָה בְּחֵיפָה",
+      "he": "הַבַּת שֶׁלָה גָרָה בְּחֵיפָה",
       "q": "O que a pessoa disse?",
       "opcoes": [
         "a filha dela mora em Haifa",
@@ -472,7 +472,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Não tenho gato. Mas os meus pais têm um cachorro grande.\"",
       "antes": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים",
-      "depois": "יֵשׁ כֶּלֶב גָּדוֹל.",
+      "depois": "יֵשׁ כֶּלֶב גָדוֹל.",
       "respostas": [
         "שלי"
       ]
@@ -485,7 +485,7 @@
     {
       "t": "aberta",
       "pt": "Escreva 3 frases sobre a sua família: quem você tem, quem não tem, e onde alguém mora.",
-      "exemplo": "יֵשׁ לִי אָח. אֵין לִי אָחוֹת. הַהוֹרִים שֶׁלִּי גָּרִים בְּרִיוֹ."
+      "exemplo": "יֵשׁ לִי אָח. אֵין לִי אָחוֹת. הַהוֹרִים שֶׁלִי גָרִים בְּרִיוֹ."
     }
   ]
 }

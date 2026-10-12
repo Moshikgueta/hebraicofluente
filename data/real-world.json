@@ -42,7 +42,7 @@
       "fromOrder": 12,
       "sceneType": "recibo",
       "labelPt": "No rodapé de um recibo de padaria",
-      "he": "תּוֹדָה",
+      "he": "תוֹדָה",
       "contextPt": "Impresso no fim de quase todo cupom fiscal do país."
     },
     {
@@ -67,7 +67,7 @@
       "sceneType": "anuncio",
       "labelPt": "Num anúncio de imóvel",
       "he": "חָדָשׁ",
-      "contextPt": "Aparece em anúncio de tudo: prédio, celular, cardápio. Quer dizer \"novo\"; com palavra feminina, como {{דִּירָה}} (apartamento), vira {{חֲדָשָׁה}}."
+      "contextPt": "Aparece em anúncio de tudo: prédio, celular, cardápio. Quer dizer \"novo\"; com palavra feminina, como {{דִירָה}} (apartamento), vira {{חֲדָשָׁה}}."
     },
     {
       "id": "horario-shaa",
@@ -135,7 +135,7 @@
       "fromOrder": 21,
       "sceneType": "placa",
       "labelPt": "Em nomes de ruas, como a rua King George (Rei George)",
-      "he": "הַמֶּלֶךְ",
+      "he": "הַמֶלֶךְ",
       "contextPt": "\"O rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
       "translit": "hamélech",
       "pt": "o rei"
