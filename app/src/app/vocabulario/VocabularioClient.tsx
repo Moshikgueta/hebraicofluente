@@ -68,6 +68,13 @@ export function VocabularioClient() {
             Praticar estas palavras à mão, em cursiva
           </Link>
         )}
+        {n > 0 && (
+          <Link href="/leitura"
+                className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium
+                           text-[var(--teal-ink)] underline">
+            Ler estas palavras sozinho, no Laboratório de Leitura
+          </Link>
+        )}
       </header>
 
       {n > 0 && (

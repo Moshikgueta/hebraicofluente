@@ -4,6 +4,7 @@
    lesson, and what the learner will be able to read at the end of it. It is
    the workbook's own module page, and it is where the bridge words live. */
 
+import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
 import { somPt } from '@/lib/som-pt';
 import { resumoDasLicoes } from '@/lib/resumo-licoes';
 import Link from 'next/link';
@@ -98,6 +99,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
 
       <Card className="p-6">
         <p className="text-[16px] leading-relaxed text-ink-body"><Prose text={mod.introPt} /></p>
+        <GravacaoDoProfessor id={`module-${mod.n}-welcome`} />
       </Card>
 
       <Card className="p-6 grid gap-4">

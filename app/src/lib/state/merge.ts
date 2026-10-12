@@ -142,7 +142,13 @@ function fundirStat(a: SkillStat, b: SkillStat): SkillStat {
     /* A sequência é do lado mais recente: ela mede acertos SEGUIDOS, e o
        máximo dos dois inventaria uma sequência que não houve. */
     streak: novo.streak,
-    lastOn: tarde(a.lastOn, b.lastOn)
+    lastOn: tarde(a.lastOn, b.lastOn),
+    /* Só quando algum dos lados tem o campo: um registro antigo dos dois
+       lados continua sem ele (o critério de dias não se aplica a ele). */
+    ...(a.diasDeAcerto !== undefined || b.diasDeAcerto !== undefined ? {
+      diasDeAcerto: Math.max(a.diasDeAcerto ?? 0, b.diasDeAcerto ?? 0),
+      ultimoAcerto: tarde(a.ultimoAcerto ?? null, b.ultimoAcerto ?? null)
+    } : {})
   };
 }
 

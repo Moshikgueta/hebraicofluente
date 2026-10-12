@@ -78,6 +78,14 @@ export type SkillStat = {
    *  that something was relearned rather than merely met often. */
   streak: number;
   lastOn: string | null;         // YYYY-MM-DD
+  /** Em quantos dias diferentes houve pelo menos um acerto (11/10/2026).
+   *  É o "ao longo do tempo" do domínio (lib/dominio.ts): quatro acertos
+   *  seguidos numa tarde só não provam que a letra ficou. Ausente nos
+   *  registros de antes dessa data, e aí o critério de dias não se aplica:
+   *  ninguém perde o nível que já tinha por causa de um campo novo. */
+  diasDeAcerto?: number;
+  /** O dia do último acerto, para contar `diasDeAcerto` uma vez por dia. */
+  ultimoAcerto?: string | null;
 };
 
 /** What the learner knows about one letter, per skill. Sparse: a skill with no

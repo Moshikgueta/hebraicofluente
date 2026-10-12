@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
+import { primeiraLeituraId } from '@/lib/laboratorio';
 import { Milestone, ProgressBar } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
@@ -95,6 +96,22 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         {passed && (
           <Card tone="mint" className="p-5">
             <p className="text-[16px] leading-relaxed text-ink"><Prose text={mod.milestonePt} /></p>
+          </Card>
+        )}
+        {/* Minha Primeira Leitura (11/10/2026): o módulo fechou, e a prova de
+            que isso virou leitura é ler, sozinho, palavras escritas só com
+            estas letras. */}
+        {passed && mod.kind === 'letters' && (
+          <Card tone="wash" className="p-5 grid gap-3 sm:flex sm:items-center sm:justify-between sm:gap-5">
+            <div className="grid gap-1 min-w-0">
+              <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Minha Primeira Leitura</p>
+              <p className="text-[15px] leading-relaxed text-ink-body m-0">
+                {p.state.firsts?.[primeiraLeituraId(mod.n)]
+                  ? 'Você já fez a leitura deste módulo. Dá para ler de novo quando quiser.'
+                  : 'Algumas palavras com as letras deste módulo. Você lê sozinho, depois ouve e confere.'}
+              </p>
+            </div>
+            <LinkButton href={`/leitura?primeira=${mod.n}`} className="shrink-0">Ler agora</LinkButton>
           </Card>
         )}
         {rampa && (

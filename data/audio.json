@@ -7,8 +7,8 @@
     "numeros ja atribuidos sao preservados e so clipes novos recebem numeros novos.",
     "Coloque os arquivos em audio/ e rode `npm run check-audio`."
   ],
-  "generatedAt": "2026-10-11",
-  "total": 906,
+  "generatedAt": "2026-10-12",
+  "total": 959,
   "waves": [
     {
       "id": 1,
@@ -50,7 +50,7 @@
       "id": 7,
       "titlePt": "Explicações do professor",
       "notePt": "Explicações curtas em português, com os exemplos ditos em hebraico. O que dizer em cada uma está no roteiro do item.",
-      "count": 7
+      "count": 60
     }
   ],
   "clips": [
@@ -8889,7 +8889,7 @@
     },
     {
       "num": 882,
-      "seq": 671,
+      "seq": 724,
       "he": "מָה שְׁלוֹמְךָ?",
       "translit": "ma shlomchá?",
       "gloss": "como vai? (a ele)",
@@ -8902,7 +8902,7 @@
     },
     {
       "num": 883,
-      "seq": 672,
+      "seq": 725,
       "he": "מָה שְׁלוֹמֵךְ?",
       "translit": "ma shloméch?",
       "gloss": "como vai? (a ela)",
@@ -8915,7 +8915,7 @@
     },
     {
       "num": 633,
-      "seq": 673,
+      "seq": 726,
       "he": "טוֹב, תּוֹדָה",
       "translit": "tov, todá",
       "gloss": "bem, obrigado",
@@ -8928,7 +8928,7 @@
     },
     {
       "num": 634,
-      "seq": 674,
+      "seq": 727,
       "he": "נָעִים מְאֹד",
       "translit": "naím meód",
       "gloss": "muito prazer",
@@ -8941,7 +8941,7 @@
     },
     {
       "num": 635,
-      "seq": 675,
+      "seq": 728,
       "he": "לְהִתְרָאוֹת",
       "translit": "lehitraót",
       "gloss": "até logo",
@@ -8954,7 +8954,7 @@
     },
     {
       "num": 636,
-      "seq": 676,
+      "seq": 729,
       "he": "אֲנַחְנוּ",
       "translit": "anáchnu",
       "gloss": "nós",
@@ -8968,7 +8968,7 @@
     },
     {
       "num": 637,
-      "seq": 677,
+      "seq": 730,
       "he": "אַתֶּם",
       "translit": "atém",
       "gloss": "vocês, para homens ou grupo misto",
@@ -8982,7 +8982,7 @@
     },
     {
       "num": 638,
-      "seq": 678,
+      "seq": 731,
       "he": "אַתֶּן",
       "translit": "atén",
       "gloss": "vocês, só para mulheres",
@@ -8996,7 +8996,7 @@
     },
     {
       "num": 639,
-      "seq": 679,
+      "seq": 732,
       "he": "מִי?",
       "translit": "mi?",
       "gloss": "quem?",
@@ -9009,7 +9009,7 @@
     },
     {
       "num": 884,
-      "seq": 680,
+      "seq": 733,
       "he": "מָה שִׁמְךָ?",
       "translit": "ma shimchá?",
       "gloss": "qual é o seu nome? (a ele)",
@@ -9022,7 +9022,7 @@
     },
     {
       "num": 885,
-      "seq": 681,
+      "seq": 734,
       "he": "מָה שְׁמֵךְ?",
       "translit": "ma shmech?",
       "gloss": "qual é o seu nome? (a ela)",
@@ -9036,7 +9036,7 @@
     },
     {
       "num": 642,
-      "seq": 682,
+      "seq": 735,
       "he": "שְׁמִי…",
       "translit": "shmi…",
       "gloss": "meu nome é…",
@@ -9049,7 +9049,7 @@
     },
     {
       "num": 643,
-      "seq": 683,
+      "seq": 736,
       "he": "מֵאֵיפֹה אַתָּה?",
       "translit": "meéifo atá?",
       "gloss": "de onde você é? (a ele)",
@@ -9062,7 +9062,7 @@
     },
     {
       "num": 644,
-      "seq": 684,
+      "seq": 737,
       "he": "מֵאֵיפֹה אַתְּ?",
       "translit": "meéifo at?",
       "gloss": "de onde você é? (a ela)",
@@ -9075,7 +9075,7 @@
     },
     {
       "num": 645,
-      "seq": 685,
+      "seq": 738,
       "he": "אֲנִי מִ…",
       "translit": "aní mi…",
       "gloss": "eu sou de…",
@@ -9088,7 +9088,7 @@
     },
     {
       "num": 646,
-      "seq": 686,
+      "seq": 739,
       "he": "בְּרָזִיל",
       "translit": "Brazíl",
       "gloss": "Brasil",
@@ -9101,7 +9101,7 @@
     },
     {
       "num": 647,
-      "seq": 687,
+      "seq": 740,
       "he": "בְּרָזִילָאִי",
       "translit": "brazilái",
       "gloss": "brasileiro",
@@ -9114,7 +9114,7 @@
     },
     {
       "num": 648,
-      "seq": 688,
+      "seq": 741,
       "he": "בְּרָזִילָאִית",
       "translit": "braziláit",
       "gloss": "brasileira",
@@ -9127,7 +9127,7 @@
     },
     {
       "num": 649,
-      "seq": 689,
+      "seq": 742,
       "he": "יִשְׂרְאֵלִי",
       "translit": "israelí",
       "gloss": "israelense (m)",
@@ -9140,7 +9140,7 @@
     },
     {
       "num": 650,
-      "seq": 690,
+      "seq": 743,
       "he": "יִשְׂרְאֵלִית",
       "translit": "israelít",
       "gloss": "israelense (f)",
@@ -9153,7 +9153,7 @@
     },
     {
       "num": 651,
-      "seq": 691,
+      "seq": 744,
       "he": "סְטוּדֶנְטִית",
       "translit": "studentít",
       "gloss": "estudante (f)",
@@ -9166,7 +9166,7 @@
     },
     {
       "num": 652,
-      "seq": 692,
+      "seq": 745,
       "he": "רוֹפֵא",
       "translit": "rofé",
       "gloss": "médico",
@@ -9179,7 +9179,7 @@
     },
     {
       "num": 653,
-      "seq": 693,
+      "seq": 746,
       "he": "רוֹפְאָה",
       "translit": "rofá",
       "gloss": "médica",
@@ -9192,7 +9192,7 @@
     },
     {
       "num": 886,
-      "seq": 694,
+      "seq": 747,
       "he": "שָׁלוֹם! אֲנִי דָּנִי. מָה שְׁמֵךְ?",
       "translit": "shalóm! aní Dáni. ma shmech?",
       "gloss": "Olá! Eu sou o Dani. Qual é o seu nome?",
@@ -9205,7 +9205,7 @@
     },
     {
       "num": 655,
-      "seq": 695,
+      "seq": 748,
       "he": "שָׁלוֹם, דָּנִי. שְׁמִי נֹעָה. נָעִים מְאֹד.",
       "translit": "shalóm, Dáni. shmi Nóa. naím meód.",
       "gloss": "Olá, Dani. Meu nome é Noa. Muito prazer.",
@@ -9218,7 +9218,7 @@
     },
     {
       "num": 656,
-      "seq": 696,
+      "seq": 749,
       "he": "נָעִים מְאֹד. מֵאֵיפֹה אַתְּ?",
       "translit": "naím meód. meéifo at?",
       "gloss": "Muito prazer. De onde você é?",
@@ -9231,7 +9231,7 @@
     },
     {
       "num": 657,
-      "seq": 697,
+      "seq": 750,
       "he": "אֲנִי מִיִּשְׂרָאֵל. וְאַתָּה?",
       "translit": "aní miIsraél. veatá?",
       "gloss": "Eu sou de Israel. E você?",
@@ -9244,7 +9244,7 @@
     },
     {
       "num": 658,
-      "seq": 698,
+      "seq": 751,
       "he": "אֲנִי מִבְּרָזִיל. אֲנִי סְטוּדֶנְט.",
       "translit": "aní miBrazíl. aní studént.",
       "gloss": "Eu sou do Brasil. Sou estudante.",
@@ -9257,7 +9257,7 @@
     },
     {
       "num": 659,
-      "seq": 699,
+      "seq": 752,
       "he": "גַּם אֲנִי סְטוּדֶנְטִית!",
       "translit": "gam aní studentít!",
       "gloss": "Eu também sou estudante!",
@@ -9270,7 +9270,7 @@
     },
     {
       "num": 660,
-      "seq": 700,
+      "seq": 753,
       "he": "אֲנִי מִבְּרָזִיל",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -9283,7 +9283,7 @@
     },
     {
       "num": 887,
-      "seq": 701,
+      "seq": 754,
       "he": "מָה זֶה?",
       "translit": "ma ze?",
       "gloss": "o que é isto?",
@@ -9296,7 +9296,7 @@
     },
     {
       "num": 662,
-      "seq": 702,
+      "seq": 755,
       "he": "מִי זֶה?",
       "translit": "mi ze?",
       "gloss": "quem é este?",
@@ -9310,7 +9310,7 @@
     },
     {
       "num": 663,
-      "seq": 703,
+      "seq": 756,
       "he": "מִי זֹאת?",
       "translit": "mi zot?",
       "gloss": "quem é esta?",
@@ -9323,7 +9323,7 @@
     },
     {
       "num": 664,
-      "seq": 704,
+      "seq": 757,
       "he": "זֶה לֹא…",
       "translit": "ze lo…",
       "gloss": "não é…",
@@ -9336,7 +9336,7 @@
     },
     {
       "num": 665,
-      "seq": 705,
+      "seq": 758,
       "he": "שֻׁלְחָן",
       "translit": "shulchán",
       "gloss": "mesa",
@@ -9349,7 +9349,7 @@
     },
     {
       "num": 666,
-      "seq": 706,
+      "seq": 759,
       "he": "מַחְבֶּרֶת",
       "translit": "machbéret",
       "gloss": "caderno",
@@ -9362,7 +9362,7 @@
     },
     {
       "num": 667,
-      "seq": 707,
+      "seq": 760,
       "he": "דֶּלֶת",
       "translit": "délet",
       "gloss": "porta",
@@ -9375,7 +9375,7 @@
     },
     {
       "num": 668,
-      "seq": 708,
+      "seq": 761,
       "he": "מְנוֹרָה",
       "translit": "menorá",
       "gloss": "luminária",
@@ -9388,7 +9388,7 @@
     },
     {
       "num": 669,
-      "seq": 709,
+      "seq": 762,
       "he": "מַתָּנָה",
       "translit": "mataná",
       "gloss": "presente",
@@ -9401,7 +9401,7 @@
     },
     {
       "num": 670,
-      "seq": 710,
+      "seq": 763,
       "he": "אִישׁ",
       "translit": "ish",
       "gloss": "homem",
@@ -9414,7 +9414,7 @@
     },
     {
       "num": 671,
-      "seq": 711,
+      "seq": 764,
       "he": "חֲבֵרָה",
       "translit": "chaverá",
       "gloss": "amiga",
@@ -9427,7 +9427,7 @@
     },
     {
       "num": 888,
-      "seq": 712,
+      "seq": 765,
       "he": "מַיָּה, מָה זֶה?",
       "translit": "Máya, ma ze?",
       "gloss": "Maya, o que é isto?",
@@ -9440,7 +9440,7 @@
     },
     {
       "num": 673,
-      "seq": 713,
+      "seq": 766,
       "he": "זֶה מַפְתֵּחַ.",
       "translit": "ze maftéach.",
       "gloss": "É uma chave.",
@@ -9453,7 +9453,7 @@
     },
     {
       "num": 889,
-      "seq": 714,
+      "seq": 767,
       "he": "וּמָה זֶה?",
       "translit": "umá ze?",
       "gloss": "E o que é isto?",
@@ -9466,7 +9466,7 @@
     },
     {
       "num": 675,
-      "seq": 715,
+      "seq": 768,
       "he": "זֹאת מַחְבֶּרֶת.",
       "translit": "zot machbéret.",
       "gloss": "É um caderno.",
@@ -9479,7 +9479,7 @@
     },
     {
       "num": 676,
-      "seq": 716,
+      "seq": 769,
       "he": "וּמִי זֹאת?",
       "translit": "umí zot?",
       "gloss": "E quem é esta?",
@@ -9492,7 +9492,7 @@
     },
     {
       "num": 677,
-      "seq": 717,
+      "seq": 770,
       "he": "זֹאת אִמָּא. וְזֶה אַבָּא.",
       "translit": "zot íma. vezé ába.",
       "gloss": "Esta é a minha mãe. E este é o meu pai.",
@@ -9505,7 +9505,7 @@
     },
     {
       "num": 678,
-      "seq": 718,
+      "seq": 771,
       "he": "וּמִי זֶה?",
       "translit": "umí ze?",
       "gloss": "E quem é este?",
@@ -9518,7 +9518,7 @@
     },
     {
       "num": 679,
-      "seq": 719,
+      "seq": 772,
       "he": "זֶה לֹא אַבָּא, זֶה דָּנִי!",
       "translit": "ze lo ába, ze Dáni!",
       "gloss": "Este não é o meu pai, é o Dani!",
@@ -9531,7 +9531,7 @@
     },
     {
       "num": 680,
-      "seq": 720,
+      "seq": 773,
       "he": "זֹאת מַתָּנָה",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -9544,7 +9544,7 @@
     },
     {
       "num": 681,
-      "seq": 721,
+      "seq": 774,
       "he": "הַ־",
       "translit": "ha-",
       "gloss": "o, a, os, as (grudado na palavra)",
@@ -9557,7 +9557,7 @@
     },
     {
       "num": 682,
-      "seq": 722,
+      "seq": 775,
       "he": "אֵלֶּה",
       "translit": "éle",
       "gloss": "estes, estas",
@@ -9570,7 +9570,7 @@
     },
     {
       "num": 683,
-      "seq": 723,
+      "seq": 776,
       "he": "אֲבָל",
       "translit": "avál",
       "gloss": "mas",
@@ -9583,7 +9583,7 @@
     },
     {
       "num": 684,
-      "seq": 724,
+      "seq": 777,
       "he": "מְאֹד",
       "translit": "meód",
       "gloss": "muito",
@@ -9596,7 +9596,7 @@
     },
     {
       "num": 685,
-      "seq": 725,
+      "seq": 778,
       "he": "מַיָּה, זֶה הַבַּיִת הֶחָדָשׁ?",
       "translit": "Máya, ze habáyit hechadásh?",
       "gloss": "Maya, esta é a casa nova?",
@@ -9609,7 +9609,7 @@
     },
     {
       "num": 686,
-      "seq": 726,
+      "seq": 779,
       "he": "כֵּן! הַבַּיִת קָטָן, אֲבָל יָפֶה.",
       "translit": "ken! habáyit katán, avál yafé.",
       "gloss": "Sim! A casa é pequena, mas bonita.",
@@ -9622,7 +9622,7 @@
     },
     {
       "num": 687,
-      "seq": 727,
+      "seq": 780,
       "he": "הַשֻּׁלְחָן חָדָשׁ?",
       "translit": "hashulchán chadásh?",
       "gloss": "A mesa é nova?",
@@ -9635,7 +9635,7 @@
     },
     {
       "num": 688,
-      "seq": 728,
+      "seq": 781,
       "he": "לֹא, הַשֻּׁלְחָן יָשָׁן. אֲבָל הַכִּסְאוֹת חֲדָשִׁים!",
       "translit": "lo, hashulchán yashán. avál hakissót chadashím!",
       "gloss": "Não, a mesa é velha. Mas as cadeiras são novas!",
@@ -9648,7 +9648,7 @@
     },
     {
       "num": 689,
-      "seq": 729,
+      "seq": 782,
       "he": "וּמָה אֵלֶּה?",
       "translit": "umá éle?",
       "gloss": "E o que são estas?",
@@ -9661,7 +9661,7 @@
     },
     {
       "num": 690,
-      "seq": 730,
+      "seq": 783,
       "he": "אֵלֶּה מַתָּנוֹת. הֵן מִנֹּעָה וּמִדָּנִי.",
       "translit": "éle matanót. hen miNóa umiDáni.",
       "gloss": "São presentes. São da Noa e do Dani.",
@@ -9674,7 +9674,7 @@
     },
     {
       "num": 691,
-      "seq": 731,
+      "seq": 784,
       "he": "הַמְּנוֹרָה הָאֲדֻמָּה יָפָה מְאֹד!",
       "translit": "hamenorá haadumá yafá meód!",
       "gloss": "A luminária vermelha é muito bonita!",
@@ -9687,7 +9687,7 @@
     },
     {
       "num": 692,
-      "seq": 732,
+      "seq": 785,
       "he": "תּוֹדָה!",
       "translit": "todá!",
       "gloss": "Obrigada!",
@@ -9701,7 +9701,7 @@
     },
     {
       "num": 877,
-      "seq": 733,
+      "seq": 786,
       "he": "כִּסְאוֹת",
       "translit": "kissót",
       "gloss": "cadeiras (plural de כִּסֵּא)",
@@ -9714,7 +9714,7 @@
     },
     {
       "num": 693,
-      "seq": 734,
+      "seq": 787,
       "he": "הַתִּיק הַשָּׁחֹר",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -9727,7 +9727,7 @@
     },
     {
       "num": 694,
-      "seq": 735,
+      "seq": 788,
       "he": "הֵן נֶחְמָדוֹת",
       "translit": null,
       "gloss": "Fala de quem?",
@@ -9740,7 +9740,7 @@
     },
     {
       "num": 695,
-      "seq": 736,
+      "seq": 789,
       "he": "אֵיפֹה?",
       "translit": "éifo?",
       "gloss": "onde?",
@@ -9753,7 +9753,7 @@
     },
     {
       "num": 696,
-      "seq": 737,
+      "seq": 790,
       "he": "בְּ־",
       "translit": "be-",
       "gloss": "em (grudado na palavra)",
@@ -9766,7 +9766,7 @@
     },
     {
       "num": 697,
-      "seq": 738,
+      "seq": 791,
       "he": "סָאוֹ פָּאוּלוֹ",
       "translit": "São Paulo",
       "gloss": "São Paulo",
@@ -9779,7 +9779,7 @@
     },
     {
       "num": 698,
-      "seq": 739,
+      "seq": 792,
       "he": "רִיוֹ",
       "translit": "Rio",
       "gloss": "Rio",
@@ -9792,7 +9792,7 @@
     },
     {
       "num": 878,
-      "seq": 740,
+      "seq": 793,
       "he": "פּוֹרְטוּגֶזִית",
       "translit": "portugezít",
       "gloss": "português",
@@ -9805,7 +9805,7 @@
     },
     {
       "num": 700,
-      "seq": 741,
+      "seq": 794,
       "he": "אַנְגְּלִית",
       "translit": "anglít",
       "gloss": "inglês",
@@ -9818,7 +9818,7 @@
     },
     {
       "num": 701,
-      "seq": 742,
+      "seq": 795,
       "he": "טוֹם, אֵיפֹה אַתָּה גָּר?",
       "translit": "Tom, éifo atá gar?",
       "gloss": "Tom, onde você mora?",
@@ -9831,7 +9831,7 @@
     },
     {
       "num": 702,
-      "seq": 743,
+      "seq": 796,
       "he": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?",
       "translit": "aní gar biYerushaláyim. veát?",
       "gloss": "Moro em Jerusalém. E você?",
@@ -9844,7 +9844,7 @@
     },
     {
       "num": 703,
-      "seq": 744,
+      "seq": 797,
       "he": "אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד?",
       "translit": "aní gará beTél Avív. atá ovéd?",
       "gloss": "Moro em Tel Aviv. Você trabalha?",
@@ -9857,7 +9857,7 @@
     },
     {
       "num": 704,
-      "seq": 745,
+      "seq": 798,
       "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ?",
       "translit": "lo, aní loméd ivrít. veát?",
       "gloss": "Não, estudo hebraico. E você?",
@@ -9870,7 +9870,7 @@
     },
     {
       "num": 705,
-      "seq": 746,
+      "seq": 799,
       "he": "אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב!",
       "translit": "aní ovédet. atá medabér ivrít tov!",
       "gloss": "Eu trabalho. Você fala hebraico bem!",
@@ -9883,7 +9883,7 @@
     },
     {
       "num": 706,
-      "seq": 747,
+      "seq": 800,
       "he": "תּוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
       "translit": "todá! aní medabér ktsat.",
       "gloss": "Obrigado! Falo um pouco.",
@@ -9896,7 +9896,7 @@
     },
     {
       "num": 707,
-      "seq": 748,
+      "seq": 801,
       "he": "דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית.",
       "translit": "Dáni uMáya gam lomdím ivrít.",
       "gloss": "O Dani e a Maya também estudam hebraico.",
@@ -9909,7 +9909,7 @@
     },
     {
       "num": 708,
-      "seq": 749,
+      "seq": 802,
       "he": "הֵם גָּרִים בִּירוּשָׁלַיִם?",
       "translit": "hem garím biYerushaláyim?",
       "gloss": "Eles moram em Jerusalém?",
@@ -9922,7 +9922,7 @@
     },
     {
       "num": 709,
-      "seq": 750,
+      "seq": 803,
       "he": "לֹא, הֵם גָּרִים בְּתֵל אָבִיב.",
       "translit": "lo, hem garím beTél Avív.",
       "gloss": "Não, eles moram em Tel Aviv.",
@@ -9935,7 +9935,7 @@
     },
     {
       "num": 710,
-      "seq": 751,
+      "seq": 804,
       "he": "אֲנַחְנוּ לוֹמְדוֹת",
       "translit": null,
       "gloss": "Quem fala?",
@@ -9948,7 +9948,7 @@
     },
     {
       "num": 711,
-      "seq": 752,
+      "seq": 805,
       "he": "הוּא כּוֹתֵב בְּעִבְרִית",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -9961,7 +9961,7 @@
     },
     {
       "num": 712,
-      "seq": 753,
+      "seq": 806,
       "he": "גְּבִינָה",
       "translit": "gviná",
       "gloss": "queijo",
@@ -9974,7 +9974,7 @@
     },
     {
       "num": 713,
-      "seq": 754,
+      "seq": 807,
       "he": "בֵּיצָה",
       "translit": "beitsá",
       "gloss": "ovo",
@@ -9987,7 +9987,7 @@
     },
     {
       "num": 714,
-      "seq": 755,
+      "seq": 808,
       "he": "בֵּיצִים",
       "translit": "beitsím",
       "gloss": "ovos",
@@ -10000,7 +10000,7 @@
     },
     {
       "num": 715,
-      "seq": 756,
+      "seq": 809,
       "he": "תַּפּוּחִים",
       "translit": "tapuchím",
       "gloss": "maçãs",
@@ -10013,7 +10013,7 @@
     },
     {
       "num": 716,
-      "seq": 757,
+      "seq": 810,
       "he": "עוּגָה",
       "translit": "ugá",
       "gloss": "bolo",
@@ -10026,7 +10026,7 @@
     },
     {
       "num": 717,
-      "seq": 758,
+      "seq": 811,
       "he": "סָלָט",
       "translit": "salát",
       "gloss": "salada",
@@ -10039,7 +10039,7 @@
     },
     {
       "num": 718,
-      "seq": 759,
+      "seq": 812,
       "he": "חָלָב",
       "translit": "chaláv",
       "gloss": "leite",
@@ -10052,7 +10052,7 @@
     },
     {
       "num": 719,
-      "seq": 760,
+      "seq": 813,
       "he": "מִטְבָּח",
       "translit": "mitbách",
       "gloss": "cozinha",
@@ -10065,7 +10065,7 @@
     },
     {
       "num": 720,
-      "seq": 761,
+      "seq": 814,
       "he": "חֶדֶר",
       "translit": "chéder",
       "gloss": "cômodo, quarto",
@@ -10078,7 +10078,7 @@
     },
     {
       "num": 721,
-      "seq": 762,
+      "seq": 815,
       "he": "עִתּוֹן",
       "translit": "itón",
       "gloss": "jornal",
@@ -10091,7 +10091,7 @@
     },
     {
       "num": 722,
-      "seq": 763,
+      "seq": 816,
       "he": "מַיָּה, מָה אַתְּ אוֹכֶלֶת?",
       "translit": "Máya, ma at ochélet?",
       "gloss": "Maya, o que você está comendo?",
@@ -10104,7 +10104,7 @@
     },
     {
       "num": 723,
-      "seq": 764,
+      "seq": 817,
       "he": "אֲנִי אוֹכֶלֶת לֶחֶם וּגְבִינָה. אַתָּה רוֹצֶה?",
       "translit": "aní ochélet léchem ugviná. atá rotsé?",
       "gloss": "Pão e queijo. Você quer?",
@@ -10117,7 +10117,7 @@
     },
     {
       "num": 724,
-      "seq": 765,
+      "seq": 818,
       "he": "כֵּן, תּוֹדָה. אֵיפֹה הֶחָלָב?",
       "translit": "ken, todá. éifo hechaláv?",
       "gloss": "Quero, obrigado. Onde está o leite?",
@@ -10130,7 +10130,7 @@
     },
     {
       "num": 879,
-      "seq": 766,
+      "seq": 819,
       "he": "הֶחָלָב בַּמְקָרֵר.",
       "translit": "hechaláv bamekarér.",
       "gloss": "O leite está na geladeira.",
@@ -10143,7 +10143,7 @@
     },
     {
       "num": 726,
-      "seq": 767,
+      "seq": 820,
       "he": "אַתְּ שׁוֹתָה קָפֶה?",
       "translit": "at shotá kafé?",
       "gloss": "Você bebe café?",
@@ -10156,7 +10156,7 @@
     },
     {
       "num": 727,
-      "seq": 768,
+      "seq": 821,
       "he": "לֹא, אֲנִי לֹא שׁוֹתָה קָפֶה. אֲנִי שׁוֹתָה תֵּה.",
       "translit": "lo, aní lo shotá kafé. aní shotá te.",
       "gloss": "Não, não bebo café. Bebo chá.",
@@ -10169,7 +10169,7 @@
     },
     {
       "num": 728,
-      "seq": 769,
+      "seq": 822,
       "he": "וּמִי קוֹנֶה אֶת הַלֶּחֶם?",
       "translit": "umí koné et haléchem?",
       "gloss": "E quem compra o pão?",
@@ -10182,7 +10182,7 @@
     },
     {
       "num": 729,
-      "seq": 770,
+      "seq": 823,
       "he": "אַתָּה!",
       "translit": "atá!",
       "gloss": "Você!",
@@ -10195,7 +10195,7 @@
     },
     {
       "num": 730,
-      "seq": 771,
+      "seq": 824,
       "he": "אֲנַחְנוּ לֹא אוֹכְלִים בֵּיצִים",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -10208,7 +10208,7 @@
     },
     {
       "num": 731,
-      "seq": 772,
+      "seq": 825,
       "he": "הִיא קוֹנָה תַּפּוּחִים",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -10221,7 +10221,7 @@
     },
     {
       "num": 732,
-      "seq": 773,
+      "seq": 826,
       "he": "אַחִים",
       "translit": "achím",
       "gloss": "irmãos",
@@ -10234,7 +10234,7 @@
     },
     {
       "num": 733,
-      "seq": 774,
+      "seq": 827,
       "he": "אָחוֹת",
       "translit": "achót",
       "gloss": "irmã",
@@ -10247,7 +10247,7 @@
     },
     {
       "num": 734,
-      "seq": 775,
+      "seq": 828,
       "he": "אֲחָיוֹת",
       "translit": "achayót",
       "gloss": "irmãs",
@@ -10260,7 +10260,7 @@
     },
     {
       "num": 735,
-      "seq": 776,
+      "seq": 829,
       "he": "הוֹרִים",
       "translit": "horím",
       "gloss": "pais (pai e mãe)",
@@ -10273,7 +10273,7 @@
     },
     {
       "num": 736,
-      "seq": 777,
+      "seq": 830,
       "he": "בֵּן",
       "translit": "ben",
       "gloss": "filho",
@@ -10286,7 +10286,7 @@
     },
     {
       "num": 737,
-      "seq": 778,
+      "seq": 831,
       "he": "בַּת",
       "translit": "bat",
       "gloss": "filha",
@@ -10299,7 +10299,7 @@
     },
     {
       "num": 738,
-      "seq": 779,
+      "seq": 832,
       "he": "סַבָּא",
       "translit": "sába",
       "gloss": "avô",
@@ -10312,7 +10312,7 @@
     },
     {
       "num": 739,
-      "seq": 780,
+      "seq": 833,
       "he": "סַבְתָּא",
       "translit": "sávta",
       "gloss": "avó",
@@ -10325,7 +10325,7 @@
     },
     {
       "num": 740,
-      "seq": 781,
+      "seq": 834,
       "he": "דּוֹד",
       "translit": "dod",
       "gloss": "tio",
@@ -10338,7 +10338,7 @@
     },
     {
       "num": 741,
-      "seq": 782,
+      "seq": 835,
       "he": "חָתוּל",
       "translit": "chatúl",
       "gloss": "gato",
@@ -10351,7 +10351,7 @@
     },
     {
       "num": 742,
-      "seq": 783,
+      "seq": 836,
       "he": "חֵיפָה",
       "translit": "Cháifa",
       "gloss": "Haifa",
@@ -10364,7 +10364,7 @@
     },
     {
       "num": 744,
-      "seq": 784,
+      "seq": 837,
       "he": "אֵין",
       "translit": "ein",
       "gloss": "não há",
@@ -10377,7 +10377,7 @@
     },
     {
       "num": 745,
-      "seq": 785,
+      "seq": 838,
       "he": "יֵשׁ לִי",
       "translit": "yesh li",
       "gloss": "eu tenho",
@@ -10390,7 +10390,7 @@
     },
     {
       "num": 746,
-      "seq": 786,
+      "seq": 839,
       "he": "לִי",
       "translit": "li",
       "gloss": "para mim",
@@ -10404,7 +10404,7 @@
     },
     {
       "num": 747,
-      "seq": 787,
+      "seq": 840,
       "he": "לְךָ",
       "translit": "lechá",
       "gloss": "para você (m)",
@@ -10418,7 +10418,7 @@
     },
     {
       "num": 748,
-      "seq": 788,
+      "seq": 841,
       "he": "לָךְ",
       "translit": "lach",
       "gloss": "para você (f)",
@@ -10432,7 +10432,7 @@
     },
     {
       "num": 749,
-      "seq": 789,
+      "seq": 842,
       "he": "לָהּ",
       "translit": "la",
       "gloss": "para ela",
@@ -10446,7 +10446,7 @@
     },
     {
       "num": 750,
-      "seq": 790,
+      "seq": 843,
       "he": "לָנוּ",
       "translit": "lánu",
       "gloss": "para nós",
@@ -10460,7 +10460,7 @@
     },
     {
       "num": 751,
-      "seq": 791,
+      "seq": 844,
       "he": "שֶׁלִּי",
       "translit": "shelí",
       "gloss": "meu, minha",
@@ -10473,7 +10473,7 @@
     },
     {
       "num": 752,
-      "seq": 792,
+      "seq": 845,
       "he": "שֶׁלְּךָ",
       "translit": "shelchá",
       "gloss": "seu, sua (falando com um homem)",
@@ -10486,7 +10486,7 @@
     },
     {
       "num": 753,
-      "seq": 793,
+      "seq": 846,
       "he": "שֶׁלָּךְ",
       "translit": "shelách",
       "gloss": "seu, sua (falando com uma mulher)",
@@ -10499,7 +10499,7 @@
     },
     {
       "num": 754,
-      "seq": 794,
+      "seq": 847,
       "he": "שֶׁלּוֹ",
       "translit": "sheló",
       "gloss": "dele",
@@ -10512,7 +10512,7 @@
     },
     {
       "num": 755,
-      "seq": 795,
+      "seq": 848,
       "he": "שֶׁלָּהּ",
       "translit": "shelá",
       "gloss": "dela",
@@ -10525,7 +10525,7 @@
     },
     {
       "num": 756,
-      "seq": 796,
+      "seq": 849,
       "he": "שֶׁלָּנוּ",
       "translit": "shelánu",
       "gloss": "nosso, nossa",
@@ -10538,7 +10538,7 @@
     },
     {
       "num": 757,
-      "seq": 797,
+      "seq": 850,
       "he": "נֹעָה, יֵשׁ לָךְ אַחִים?",
       "translit": "Nóa, yesh lach achím?",
       "gloss": "Noa, você tem irmãos?",
@@ -10551,7 +10551,7 @@
     },
     {
       "num": 758,
-      "seq": 798,
+      "seq": 851,
       "he": "כֵּן, יֵשׁ לִי אָח וְאָחוֹת.",
       "translit": "ken, yesh li ach veachót.",
       "gloss": "Tenho, um irmão e uma irmã.",
@@ -10564,7 +10564,7 @@
     },
     {
       "num": 759,
-      "seq": 799,
+      "seq": 852,
       "he": "מִי זֶה בַּתְּמוּנָה?",
       "translit": "mi ze batmuná?",
       "gloss": "Quem é este na foto?",
@@ -10577,7 +10577,7 @@
     },
     {
       "num": 760,
-      "seq": 800,
+      "seq": 853,
       "he": "זֶה אֵיתָן, הָאָח שֶׁלִּי. הוּא גָּר בְּחֵיפָה.",
       "translit": "ze Eitán, haách shelí. hu gar beCháifa.",
       "gloss": "Este é o Eitan, o meu irmão. Ele mora em Haifa.",
@@ -10590,7 +10590,7 @@
     },
     {
       "num": 761,
-      "seq": 801,
+      "seq": 854,
       "he": "וְיֵשׁ לָךְ כֶּלֶב?",
       "translit": "veyésh lach kélev?",
       "gloss": "E você tem cachorro?",
@@ -10603,7 +10603,7 @@
     },
     {
       "num": 762,
-      "seq": 802,
+      "seq": 855,
       "he": "לֹא, אֵין לִי כֶּלֶב. יֵשׁ לִי חָתוּל! וּלְךָ?",
       "translit": "lo, ein li kélev. yesh li chatúl! ulechá?",
       "gloss": "Não, não tenho cachorro. Tenho um gato! E você?",
@@ -10616,7 +10616,7 @@
     },
     {
       "num": 763,
-      "seq": 803,
+      "seq": 856,
       "he": "אֵין לִי חָתוּל. אֲבָל לַהוֹרִים שֶׁלִּי יֵשׁ כֶּלֶב גָּדוֹל.",
       "translit": "ein li chatúl. avál lahorím shelí yesh kélev gadól.",
       "gloss": "Não tenho gato. Mas os meus pais têm um cachorro grande.",
@@ -10629,7 +10629,7 @@
     },
     {
       "num": 764,
-      "seq": 804,
+      "seq": 857,
       "he": "תְּמוּנָה",
       "translit": "tmuná",
       "gloss": "foto",
@@ -10642,7 +10642,7 @@
     },
     {
       "num": 765,
-      "seq": 805,
+      "seq": 858,
       "he": "אֵיתָן",
       "translit": "Eitán",
       "gloss": "Eitan (nome)",
@@ -10655,7 +10655,7 @@
     },
     {
       "num": 766,
-      "seq": 806,
+      "seq": 859,
       "he": "אֵין לָנוּ אַחִים",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -10668,7 +10668,7 @@
     },
     {
       "num": 767,
-      "seq": 807,
+      "seq": 860,
       "he": "הַבַּת שֶׁלָּהּ גָּרָה בְּחֵיפָה",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -10681,7 +10681,7 @@
     },
     {
       "num": 768,
-      "seq": 808,
+      "seq": 861,
       "he": "אֶפֶס",
       "translit": "éfes",
       "gloss": "0",
@@ -10694,7 +10694,7 @@
     },
     {
       "num": 769,
-      "seq": 809,
+      "seq": 862,
       "he": "אַחַת",
       "translit": "achát",
       "gloss": "1",
@@ -10707,7 +10707,7 @@
     },
     {
       "num": 770,
-      "seq": 810,
+      "seq": 863,
       "he": "שְׁתַּיִם",
       "translit": "shtáyim",
       "gloss": "2",
@@ -10720,7 +10720,7 @@
     },
     {
       "num": 771,
-      "seq": 811,
+      "seq": 864,
       "he": "שָׁלוֹשׁ",
       "translit": "shalósh",
       "gloss": "3",
@@ -10733,7 +10733,7 @@
     },
     {
       "num": 772,
-      "seq": 812,
+      "seq": 865,
       "he": "חָמֵשׁ",
       "translit": "chamésh",
       "gloss": "5",
@@ -10746,7 +10746,7 @@
     },
     {
       "num": 773,
-      "seq": 813,
+      "seq": 866,
       "he": "שֵׁשׁ",
       "translit": "shesh",
       "gloss": "6",
@@ -10759,7 +10759,7 @@
     },
     {
       "num": 774,
-      "seq": 814,
+      "seq": 867,
       "he": "שֶׁבַע",
       "translit": "shéva",
       "gloss": "7",
@@ -10772,7 +10772,7 @@
     },
     {
       "num": 775,
-      "seq": 815,
+      "seq": 868,
       "he": "שְׁמוֹנֶה",
       "translit": "shmoné",
       "gloss": "8",
@@ -10785,7 +10785,7 @@
     },
     {
       "num": 776,
-      "seq": 816,
+      "seq": 869,
       "he": "תֵּשַׁע",
       "translit": "tésha",
       "gloss": "9",
@@ -10798,7 +10798,7 @@
     },
     {
       "num": 777,
-      "seq": 817,
+      "seq": 870,
       "he": "אַחַת־עֶשְׂרֵה",
       "translit": "achát-esré",
       "gloss": "11",
@@ -10811,7 +10811,7 @@
     },
     {
       "num": 778,
-      "seq": 818,
+      "seq": 871,
       "he": "שְׁתֵּים־עֶשְׂרֵה",
       "translit": "shteim-esré",
       "gloss": "12",
@@ -10825,7 +10825,7 @@
     },
     {
       "num": 779,
-      "seq": 819,
+      "seq": 872,
       "he": "שְׁלוֹשׁ־עֶשְׂרֵה",
       "translit": "shlosh-esré",
       "gloss": "13",
@@ -10838,7 +10838,7 @@
     },
     {
       "num": 780,
-      "seq": 820,
+      "seq": 873,
       "he": "אַרְבַּע־עֶשְׂרֵה",
       "translit": "árba-esré",
       "gloss": "14",
@@ -10851,7 +10851,7 @@
     },
     {
       "num": 781,
-      "seq": 821,
+      "seq": 874,
       "he": "חֲמֵשׁ־עֶשְׂרֵה",
       "translit": "chamésh-esré",
       "gloss": "15",
@@ -10864,7 +10864,7 @@
     },
     {
       "num": 782,
-      "seq": 822,
+      "seq": 875,
       "he": "שֵׁשׁ־עֶשְׂרֵה",
       "translit": "shesh-esré",
       "gloss": "16",
@@ -10877,7 +10877,7 @@
     },
     {
       "num": 783,
-      "seq": 823,
+      "seq": 876,
       "he": "שְׁבַע־עֶשְׂרֵה",
       "translit": "shva-esré",
       "gloss": "17",
@@ -10890,7 +10890,7 @@
     },
     {
       "num": 784,
-      "seq": 824,
+      "seq": 877,
       "he": "שְׁמוֹנֶה־עֶשְׂרֵה",
       "translit": "shmoné-esré",
       "gloss": "18",
@@ -10903,7 +10903,7 @@
     },
     {
       "num": 785,
-      "seq": 825,
+      "seq": 878,
       "he": "תְּשַׁע־עֶשְׂרֵה",
       "translit": "tsha-esré",
       "gloss": "19",
@@ -10916,7 +10916,7 @@
     },
     {
       "num": 786,
-      "seq": 826,
+      "seq": 879,
       "he": "שְׁלוֹשִׁים",
       "translit": "shloshím",
       "gloss": "30",
@@ -10929,7 +10929,7 @@
     },
     {
       "num": 787,
-      "seq": 827,
+      "seq": 880,
       "he": "אַרְבָּעִים",
       "translit": "arbaím",
       "gloss": "40",
@@ -10942,7 +10942,7 @@
     },
     {
       "num": 788,
-      "seq": 828,
+      "seq": 881,
       "he": "חֲמִשִּׁים",
       "translit": "chamishím",
       "gloss": "50",
@@ -10955,7 +10955,7 @@
     },
     {
       "num": 789,
-      "seq": 829,
+      "seq": 882,
       "he": "שִׁשִּׁים",
       "translit": "shishím",
       "gloss": "60",
@@ -10968,7 +10968,7 @@
     },
     {
       "num": 790,
-      "seq": 830,
+      "seq": 883,
       "he": "שִׁבְעִים",
       "translit": "shivím",
       "gloss": "70",
@@ -10981,7 +10981,7 @@
     },
     {
       "num": 791,
-      "seq": 831,
+      "seq": 884,
       "he": "שְׁמוֹנִים",
       "translit": "shmoním",
       "gloss": "80",
@@ -10994,7 +10994,7 @@
     },
     {
       "num": 792,
-      "seq": 832,
+      "seq": 885,
       "he": "תִּשְׁעִים",
       "translit": "tishím",
       "gloss": "90",
@@ -11007,7 +11007,7 @@
     },
     {
       "num": 793,
-      "seq": 833,
+      "seq": 886,
       "he": "מֵאָה",
       "translit": "meá",
       "gloss": "100",
@@ -11020,7 +11020,7 @@
     },
     {
       "num": 794,
-      "seq": 834,
+      "seq": 887,
       "he": "עֶשְׂרִים וְאַחַת",
       "translit": "esrím veachát",
       "gloss": "21",
@@ -11033,7 +11033,7 @@
     },
     {
       "num": 795,
-      "seq": 835,
+      "seq": 888,
       "he": "כַּמָּה?",
       "translit": "káma?",
       "gloss": "quanto? quantos?",
@@ -11046,7 +11046,7 @@
     },
     {
       "num": 796,
-      "seq": 836,
+      "seq": 889,
       "he": "כַּמָּה זֶה עוֹלֶה?",
       "translit": "káma ze olé?",
       "gloss": "quanto custa?",
@@ -11059,7 +11059,7 @@
     },
     {
       "num": 797,
-      "seq": 837,
+      "seq": 890,
       "he": "שֶׁקֶל",
       "translit": "shékel",
       "gloss": "shekel",
@@ -11072,7 +11072,7 @@
     },
     {
       "num": 798,
-      "seq": 838,
+      "seq": 891,
       "he": "שְׁקָלִים",
       "translit": "shkalím",
       "gloss": "shekels",
@@ -11085,7 +11085,7 @@
     },
     {
       "num": 799,
-      "seq": 839,
+      "seq": 892,
       "he": "קִילוֹ",
       "translit": "kílo",
       "gloss": "quilo",
@@ -11098,7 +11098,7 @@
     },
     {
       "num": 800,
-      "seq": 840,
+      "seq": 893,
       "he": "שׁוּק",
       "translit": "shuk",
       "gloss": "feira, mercado de rua",
@@ -11111,7 +11111,7 @@
     },
     {
       "num": 801,
-      "seq": 841,
+      "seq": 894,
       "he": "מָה הַשָּׁעָה?",
       "translit": "ma hashaá?",
       "gloss": "que horas são?",
@@ -11124,7 +11124,7 @@
     },
     {
       "num": 802,
-      "seq": 842,
+      "seq": 895,
       "he": "הַשָּׁעָה…",
       "translit": "hashaá…",
       "gloss": "são… (horas)",
@@ -11137,7 +11137,7 @@
     },
     {
       "num": 803,
-      "seq": 843,
+      "seq": 896,
       "he": "וָחֵצִי",
       "translit": "vachétsi",
       "gloss": "e meia",
@@ -11150,7 +11150,7 @@
     },
     {
       "num": 804,
-      "seq": 844,
+      "seq": 897,
       "he": "וָרֶבַע",
       "translit": "varéva",
       "gloss": "e quinze",
@@ -11163,7 +11163,7 @@
     },
     {
       "num": 805,
-      "seq": 845,
+      "seq": 898,
       "he": "בְּשָׁעָה…",
       "translit": "beshaá…",
       "gloss": "às…",
@@ -11176,7 +11176,7 @@
     },
     {
       "num": 806,
-      "seq": 846,
+      "seq": 899,
       "he": "עַד",
       "translit": "ad",
       "gloss": "até",
@@ -11189,7 +11189,7 @@
     },
     {
       "num": 807,
-      "seq": 847,
+      "seq": 900,
       "he": "בַּבֹּקֶר",
       "translit": "babóker",
       "gloss": "de manhã",
@@ -11202,7 +11202,7 @@
     },
     {
       "num": 808,
-      "seq": 848,
+      "seq": 901,
       "he": "בָּעֶרֶב",
       "translit": "baérev",
       "gloss": "à noite",
@@ -11215,7 +11215,7 @@
     },
     {
       "num": 809,
-      "seq": 849,
+      "seq": 902,
       "he": "פָּתוּחַ",
       "translit": "patúach",
       "gloss": "aberto",
@@ -11228,7 +11228,7 @@
     },
     {
       "num": 810,
-      "seq": 850,
+      "seq": 903,
       "he": "סָגוּר",
       "translit": "sagúr",
       "gloss": "fechado",
@@ -11241,7 +11241,7 @@
     },
     {
       "num": 811,
-      "seq": 851,
+      "seq": 904,
       "he": "יוֹם רִאשׁוֹן",
       "translit": "yom rishón",
       "gloss": "domingo",
@@ -11254,7 +11254,7 @@
     },
     {
       "num": 812,
-      "seq": 852,
+      "seq": 905,
       "he": "יוֹם שֵׁנִי",
       "translit": "yom shení",
       "gloss": "segunda-feira",
@@ -11267,7 +11267,7 @@
     },
     {
       "num": 813,
-      "seq": 853,
+      "seq": 906,
       "he": "יוֹם שְׁלִישִׁי",
       "translit": "yom shlishí",
       "gloss": "terça-feira",
@@ -11280,7 +11280,7 @@
     },
     {
       "num": 814,
-      "seq": 854,
+      "seq": 907,
       "he": "יוֹם רְבִיעִי",
       "translit": "yom revií",
       "gloss": "quarta-feira",
@@ -11293,7 +11293,7 @@
     },
     {
       "num": 815,
-      "seq": 855,
+      "seq": 908,
       "he": "יוֹם חֲמִישִׁי",
       "translit": "yom chamishí",
       "gloss": "quinta-feira",
@@ -11306,7 +11306,7 @@
     },
     {
       "num": 816,
-      "seq": 856,
+      "seq": 909,
       "he": "יוֹם שִׁשִּׁי",
       "translit": "yom shishí",
       "gloss": "sexta-feira",
@@ -11319,7 +11319,7 @@
     },
     {
       "num": 817,
-      "seq": 857,
+      "seq": 910,
       "he": "סְלִיחָה, כַּמָּה עוֹלָה הַגְּבִינָה?",
       "translit": "slichá, káma olá hagviná?",
       "gloss": "Com licença, quanto custa o queijo?",
@@ -11332,7 +11332,7 @@
     },
     {
       "num": 818,
-      "seq": 858,
+      "seq": 911,
       "he": "שְׁלוֹשִׁים שֶׁקֶל.",
       "translit": "shloshím shékel.",
       "gloss": "Trinta shekels.",
@@ -11345,7 +11345,7 @@
     },
     {
       "num": 819,
-      "seq": 859,
+      "seq": 912,
       "he": "וְהַתַּפּוּחִים?",
       "translit": "vehatapuchím?",
       "gloss": "E as maçãs?",
@@ -11358,7 +11358,7 @@
     },
     {
       "num": 820,
-      "seq": 860,
+      "seq": 913,
       "he": "עֶשֶׂר שֶׁקֶל לְקִילוֹ.",
       "translit": "ésser shékel lekílo.",
       "gloss": "Dez shekels o quilo.",
@@ -11371,7 +11371,7 @@
     },
     {
       "num": 821,
-      "seq": 861,
+      "seq": 914,
       "he": "אֲנִי רוֹצֶה קִילוֹ תַּפּוּחִים, בְּבַקָּשָׁה.",
       "translit": "aní rotsé kílo tapuchím, bevakashá.",
       "gloss": "Quero um quilo de maçãs, por favor.",
@@ -11384,7 +11384,7 @@
     },
     {
       "num": 822,
-      "seq": 862,
+      "seq": 915,
       "he": "בְּבַקָּשָׁה. עוֹד מַשֶּׁהוּ?",
       "translit": "bevakashá. od máshehu?",
       "gloss": "Aqui está. Mais alguma coisa?",
@@ -11397,7 +11397,7 @@
     },
     {
       "num": 823,
-      "seq": 863,
+      "seq": 916,
       "he": "לֹא, תּוֹדָה. מָה הַשָּׁעָה?",
       "translit": "lo, todá. ma hashaá?",
       "gloss": "Não, obrigado. Que horas são?",
@@ -11410,7 +11410,7 @@
     },
     {
       "num": 824,
-      "seq": 864,
+      "seq": 917,
       "he": "הַשָּׁעָה אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
       "translit": "hashaá achát vachétsi. hashúk patúach ad shtáyim.",
       "gloss": "É uma e meia. A feira fica aberta até as duas.",
@@ -11423,7 +11423,7 @@
     },
     {
       "num": 825,
-      "seq": 865,
+      "seq": 918,
       "he": "מַשֶּׁהוּ",
       "translit": "máshehu",
       "gloss": "alguma coisa",
@@ -11436,7 +11436,7 @@
     },
     {
       "num": 826,
-      "seq": 866,
+      "seq": 919,
       "he": "שְׁלוֹשִׁים וְחָמֵשׁ שֶׁקֶל",
       "translit": null,
       "gloss": "Quanto custa?",
@@ -11449,7 +11449,7 @@
     },
     {
       "num": 827,
-      "seq": 867,
+      "seq": 920,
       "he": "הַשָּׁעָה עֶשֶׂר וָרֶבַע",
       "translit": null,
       "gloss": "Que horas são?",
@@ -11462,7 +11462,7 @@
     },
     {
       "num": 828,
-      "seq": 868,
+      "seq": 921,
       "he": "לָכֶם",
       "translit": "lachém",
       "gloss": "para vocês (homens ou grupo misto)",
@@ -11475,7 +11475,7 @@
     },
     {
       "num": 829,
-      "seq": 869,
+      "seq": 922,
       "he": "לָכֶן",
       "translit": "lachén",
       "gloss": "para vocês (só mulheres)",
@@ -11488,7 +11488,7 @@
     },
     {
       "num": 830,
-      "seq": 870,
+      "seq": 923,
       "he": "לָהֶם",
       "translit": "lahém",
       "gloss": "para eles",
@@ -11501,7 +11501,7 @@
     },
     {
       "num": 831,
-      "seq": 871,
+      "seq": 924,
       "he": "לָהֶן",
       "translit": "lahén",
       "gloss": "para elas",
@@ -11514,7 +11514,7 @@
     },
     {
       "num": 832,
-      "seq": 872,
+      "seq": 925,
       "he": "שֶׁלָּכֶם",
       "translit": "shelachém",
       "gloss": "de vocês (homens ou grupo misto)",
@@ -11527,7 +11527,7 @@
     },
     {
       "num": 833,
-      "seq": 873,
+      "seq": 926,
       "he": "שֶׁלָּכֶן",
       "translit": "shelachén",
       "gloss": "de vocês (só mulheres)",
@@ -11540,7 +11540,7 @@
     },
     {
       "num": 834,
-      "seq": 874,
+      "seq": 927,
       "he": "שֶׁלָּהֶם",
       "translit": "shelahém",
       "gloss": "deles",
@@ -11553,7 +11553,7 @@
     },
     {
       "num": 835,
-      "seq": 875,
+      "seq": 928,
       "he": "שֶׁלָּהֶן",
       "translit": "shelahén",
       "gloss": "delas",
@@ -11566,7 +11566,7 @@
     },
     {
       "num": 836,
-      "seq": 876,
+      "seq": 929,
       "he": "אִתִּי",
       "translit": "ití",
       "gloss": "comigo",
@@ -11579,7 +11579,7 @@
     },
     {
       "num": 837,
-      "seq": 877,
+      "seq": 930,
       "he": "אִתְּךָ",
       "translit": "itchá",
       "gloss": "contigo (m)",
@@ -11592,7 +11592,7 @@
     },
     {
       "num": 838,
-      "seq": 878,
+      "seq": 931,
       "he": "אִתָּךְ",
       "translit": "itách",
       "gloss": "contigo (f)",
@@ -11605,7 +11605,7 @@
     },
     {
       "num": 839,
-      "seq": 879,
+      "seq": 932,
       "he": "אִתּוֹ",
       "translit": "itó",
       "gloss": "com ele",
@@ -11618,7 +11618,7 @@
     },
     {
       "num": 840,
-      "seq": 880,
+      "seq": 933,
       "he": "אִתָּהּ",
       "translit": "itá",
       "gloss": "com ela",
@@ -11631,7 +11631,7 @@
     },
     {
       "num": 841,
-      "seq": 881,
+      "seq": 934,
       "he": "אִתָּנוּ",
       "translit": "itánu",
       "gloss": "com a gente",
@@ -11644,7 +11644,7 @@
     },
     {
       "num": 842,
-      "seq": 882,
+      "seq": 935,
       "he": "אֵיךְ?",
       "translit": "eich?",
       "gloss": "como?",
@@ -11657,7 +11657,7 @@
     },
     {
       "num": 843,
-      "seq": 883,
+      "seq": 936,
       "he": "מָתַי?",
       "translit": "matái?",
       "gloss": "quando?",
@@ -11670,7 +11670,7 @@
     },
     {
       "num": 844,
-      "seq": 884,
+      "seq": 937,
       "he": "לָמָּה?",
       "translit": "láma?",
       "gloss": "por quê?",
@@ -11683,7 +11683,7 @@
     },
     {
       "num": 845,
-      "seq": 885,
+      "seq": 938,
       "he": "אֵיךְ קוֹרְאִים לְךָ?",
       "translit": "eich korím lechá?",
       "gloss": "como você se chama? (falando com um homem)",
@@ -11696,7 +11696,7 @@
     },
     {
       "num": 846,
-      "seq": 886,
+      "seq": 939,
       "he": "אֵיךְ קוֹרְאִים לָךְ?",
       "translit": "eich korím lach?",
       "gloss": "como você se chama? (falando com uma mulher)",
@@ -11709,7 +11709,7 @@
     },
     {
       "num": 847,
-      "seq": 887,
+      "seq": 940,
       "he": "קוֹרְאִים לִי…",
       "translit": "korím li…",
       "gloss": "eu me chamo…",
@@ -11722,7 +11722,7 @@
     },
     {
       "num": 848,
-      "seq": 888,
+      "seq": 941,
       "he": "מִסְפָּר",
       "translit": "mispár",
       "gloss": "número",
@@ -11735,7 +11735,7 @@
     },
     {
       "num": 849,
-      "seq": 889,
+      "seq": 942,
       "he": "בְּעָיָה",
       "translit": "beayá",
       "gloss": "problema",
@@ -11748,7 +11748,7 @@
     },
     {
       "num": 850,
-      "seq": 890,
+      "seq": 943,
       "he": "אֵין בְּעָיָה",
       "translit": "ein beayá",
       "gloss": "sem problema",
@@ -11761,7 +11761,7 @@
     },
     {
       "num": 851,
-      "seq": 891,
+      "seq": 944,
       "he": "דָּנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִּי.",
       "translit": "Dáni, zot Shíra. hi lomédet ití.",
       "gloss": "Dani, esta é a Shira. Ela estuda comigo.",
@@ -11774,7 +11774,7 @@
     },
     {
       "num": 852,
-      "seq": 892,
+      "seq": 945,
       "he": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְּ?",
       "translit": "naím meód, Shíra! meéifo at?",
       "gloss": "Muito prazer, Shira! De onde você é?",
@@ -11787,7 +11787,7 @@
     },
     {
       "num": 853,
-      "seq": 893,
+      "seq": 946,
       "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָּרָה בְּתֵל אָבִיב.",
       "translit": "aní meCháifa, avál aní gará beTél Avív.",
       "gloss": "Sou de Haifa, mas moro em Tel Aviv.",
@@ -11800,7 +11800,7 @@
     },
     {
       "num": 854,
-      "seq": 894,
+      "seq": 947,
       "he": "יֵשׁ לָךְ מִשְׁפָּחָה בְּחֵיפָה?",
       "translit": "yesh lach mishpachá beCháifa?",
       "gloss": "Você tem família em Haifa?",
@@ -11813,7 +11813,7 @@
     },
     {
       "num": 855,
-      "seq": 895,
+      "seq": 948,
       "he": "כֵּן, הַהוֹרִים שֶׁלִּי גָּרִים שָׁם.",
       "translit": "ken, hahorím shelí garím sham.",
       "gloss": "Sim, os meus pais moram lá.",
@@ -11826,7 +11826,7 @@
     },
     {
       "num": 898,
-      "seq": 896,
+      "seq": 949,
       "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָּה רוֹצֶה קָפֶה?",
       "translit": "anáchnu shotót kafé. atá rotsé kafé?",
       "gloss": "Nós estamos tomando um café. Você quer um café?",
@@ -11839,7 +11839,7 @@
     },
     {
       "num": 857,
-      "seq": 897,
+      "seq": 950,
       "he": "כֵּן! אֲבָל רַק עַד שָׁלוֹשׁ. בְּשָׁלוֹשׁ אֲנִי עוֹבֵד.",
       "translit": "ken! avál rak ad shalósh. beshalósh aní ovéd.",
       "gloss": "Quero! Mas só até as três. Às três eu trabalho.",
@@ -11852,7 +11852,7 @@
     },
     {
       "num": 858,
-      "seq": 898,
+      "seq": 951,
       "he": "אֵין בְּעָיָה!",
       "translit": "ein beayá!",
       "gloss": "Sem problema!",
@@ -11865,7 +11865,7 @@
     },
     {
       "num": 859,
-      "seq": 899,
+      "seq": 952,
       "he": "שִׁירָה, מָה מִסְפַּר הַטֶּלֶפוֹן שֶׁלָּךְ?",
       "translit": "Shíra, ma mispár hatélefon shelách?",
       "gloss": "Shira, qual é o número do seu telefone?",
@@ -11878,7 +11878,7 @@
     },
     {
       "num": 860,
-      "seq": 900,
+      "seq": 953,
       "he": "אֶפֶס חֲמִשִּׁים וּשְׁתַּיִם…",
       "translit": "éfes chamishím ushtáyim…",
       "gloss": "Zero cinquenta e dois…",
@@ -11891,7 +11891,7 @@
     },
     {
       "num": 861,
-      "seq": 901,
+      "seq": 954,
       "he": "דָּנִי!",
       "translit": "Dáni!",
       "gloss": "Dani!",
@@ -11904,7 +11904,7 @@
     },
     {
       "num": 862,
-      "seq": 902,
+      "seq": 955,
       "he": "מִסְפַּר הַטֶּלֶפוֹן",
       "translit": "mispár hatélefon",
       "gloss": "o número do telefone (expressão fixa)",
@@ -11917,7 +11917,7 @@
     },
     {
       "num": 863,
-      "seq": 903,
+      "seq": 956,
       "he": "שִׁירָה",
       "translit": "Shíra",
       "gloss": "Shira (nome)",
@@ -11930,7 +11930,7 @@
     },
     {
       "num": 864,
-      "seq": 904,
+      "seq": 957,
       "he": "אֵין לָהֶן בְּעָיָה",
       "translit": null,
       "gloss": "O que a pessoa disse?",
@@ -11943,7 +11943,7 @@
     },
     {
       "num": 865,
-      "seq": 905,
+      "seq": 958,
       "he": "מָתַי אַתָּה עוֹבֵד?",
       "translit": null,
       "gloss": "O que a pessoa perguntou?",
@@ -12044,6 +12044,695 @@
         "Lição do ת · Palavras (אַתְּ)"
       ],
       "file": "he-11706efb.mp3"
+    },
+    {
+      "num": 992,
+      "seq": 671,
+      "he": "professor reading-lab-how-to",
+      "translit": "professor-reading-lab-how-to",
+      "gloss": "Laboratório de Leitura · topo da página. Mostre como ler uma palavra nova: comece pela letra da direita, diga o som da letra junto com a vogal embaixo dela, siga para a esquerda e, no fim, junte tudo numa palavra só. Use שָׁלוֹם como exemplo, devagar e depois no ritmo normal.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Laboratório de Leitura · topo da página"
+      ],
+      "file": "he-ff299ece.mp3"
+    },
+    {
+      "num": 993,
+      "seq": 672,
+      "he": "professor module-1-welcome",
+      "translit": "professor-module-1-welcome",
+      "gloss": "Módulo 1 · abertura. Dê as boas-vindas ao módulo 1, \"As seis primeiras letras\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você lê a palavra אֲנִי - \"eu\" - e a escreve à mão.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Módulo 1 · abertura"
+      ],
+      "file": "he-8c28caea.mp3"
+    },
+    {
+      "num": 994,
+      "seq": 673,
+      "he": "professor module-2-welcome",
+      "translit": "professor-module-2-welcome",
+      "gloss": "Módulo 2 · abertura. Dê as boas-vindas ao módulo 2, \"Cinco consoantes familiares\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você lê שֶׁמֶשׁ - \"sol\" - que usa a mesma letra duas vezes.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Módulo 2 · abertura"
+      ],
+      "file": "he-4fcba17e.mp3"
+    },
+    {
+      "num": 995,
+      "seq": 674,
+      "he": "professor module-3-welcome",
+      "translit": "professor-module-3-welcome",
+      "gloss": "Módulo 3 · abertura. Dê as boas-vindas ao módulo 3, \"O vav, o zayin e os sons da garganta\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você lê שָׁלוֹם e תּוֹדָה - e já consegue cumprimentar e agradecer por escrito.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Módulo 3 · abertura"
+      ],
+      "file": "he-928d8f23.mp3"
+    },
+    {
+      "num": 996,
+      "seq": 675,
+      "he": "professor module-4-welcome",
+      "translit": "professor-module-4-welcome",
+      "gloss": "Módulo 4 · abertura. Dê as boas-vindas ao módulo 4, \"Sámech, áyin, tsádi e kuf\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você lê אֶרֶץ - \"terra\", \"país\" - a palavra que está no nome do jornal הָאָרֶץ e na expressão אֶרֶץ יִשְׂרָאֵל, a Terra de Israel.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Módulo 4 · abertura"
+      ],
+      "file": "he-63a62119.mp3"
+    },
+    {
+      "num": 997,
+      "seq": 676,
+      "he": "professor module-5-welcome",
+      "translit": "professor-module-5-welcome",
+      "gloss": "Módulo 5 · abertura. Dê as boas-vindas ao módulo 5, \"As três letras com ponto\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você conhece as 22 letras - e lê מֶלֶךְ, que estava esperando desde a primeira lição.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Módulo 5 · abertura"
+      ],
+      "file": "he-150c0dd2.mp3"
+    },
+    {
+      "num": 998,
+      "seq": 677,
+      "he": "professor module-6-welcome",
+      "translit": "professor-module-6-welcome",
+      "gloss": "Módulo 6 · abertura. Dê as boas-vindas ao módulo 6, \"Sem o ponto\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você lê palavras sem nikud: no começo e no fim da palavra, o lugar da letra quase sempre diz o som; no meio, é o conhecimento da palavra que decide.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Módulo 6 · abertura"
+      ],
+      "file": "he-0442d271.mp3"
+    },
+    {
+      "num": 999,
+      "seq": 678,
+      "he": "professor module-7-welcome",
+      "translit": "professor-module-7-welcome",
+      "gloss": "Módulo 7 · abertura. Dê as boas-vindas ao módulo 7, \"Os sons modernos\". Em duas ou três frases, diga o que o aluno vai conseguir fazer no fim dele: No fim deste módulo você lê qualquer letra que encontrar num texto hebraico moderno.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Módulo 7 · abertura"
+      ],
+      "file": "he-227a9aad.mp3"
+    },
+    {
+      "num": 1000,
+      "seq": 679,
+      "he": "professor letter-alef-intro",
+      "translit": "professor-letter-alef-intro",
+      "gloss": "Lição do א · Conhecer. Apresente a letra Álef (א): o nome, o som e como ela aparece na palavra. Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do א · Conhecer"
+      ],
+      "file": "he-9b311b25.mp3"
+    },
+    {
+      "num": 1001,
+      "seq": 680,
+      "he": "professor letter-alef-common-mistake",
+      "translit": "professor-letter-alef-common-mistake",
+      "gloss": "Lição do א · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Tentar produzir algum som para o א, ou tratá-lo como um A fixo. O certo: Ler apenas a vogal marcada: אוֹ é \"o\", אִ é \"i\". Por quê: O nome da letra começa com A, e isso engana. א não é a vogal A - é o suporte de qualquer vogal. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do א · quadro do erro comum"
+      ],
+      "file": "he-d7511753.mp3"
+    },
+    {
+      "num": 1002,
+      "seq": 681,
+      "he": "professor letter-mem-intro",
+      "translit": "professor-letter-mem-intro",
+      "gloss": "Lição do מ · Conhecer. Apresente a letra Mem (מ): o nome, o som e como ela aparece na palavra, com o exemplo אִמָּא (íma, mãe). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do מ · Conhecer"
+      ],
+      "file": "he-58441766.mp3"
+    },
+    {
+      "num": 1003,
+      "seq": 682,
+      "he": "professor letter-mem-common-mistake",
+      "translit": "professor-letter-mem-common-mistake",
+      "gloss": "Lição do מ · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler אֵם como o \"em\" do português, com a vogal anasalada e o M sumindo. O certo: Ler אֵם com a vogal oral, como o E de \"mesa\", e fechar os lábios de verdade no M do fim. Por quê: Em português o M no fim da sílaba nasaliza a vogal antes dele - \"mim\", \"bom\", \"sim\". Em hebraico isso não acontece: o M é sempre pronunciado como consoante inteira, e a vogal continua oral. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do מ · quadro do erro comum"
+      ],
+      "file": "he-70af8c7e.mp3"
+    },
+    {
+      "num": 1004,
+      "seq": 683,
+      "he": "professor letter-tav-intro",
+      "translit": "professor-letter-tav-intro",
+      "gloss": "Lição do ת · Conhecer. Apresente a letra Tav (ת): o nome, o som e como ela aparece na palavra, com o exemplo אֶמֶת (émet, verdade). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ת · Conhecer"
+      ],
+      "file": "he-f88767c0.mp3"
+    },
+    {
+      "num": 1005,
+      "seq": 684,
+      "he": "professor letter-tav-common-mistake",
+      "translit": "professor-letter-tav-common-mistake",
+      "gloss": "Lição do ת · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler תִּי como \"tchi\" e תֵּ como \"tche\". O certo: Ler תִּי como \"ti\" e תֵּ como \"te\", com o T seco. Por quê: Na maior parte do Brasil o T antes de I e E vira TCH - \"tia\", \"noite\". Esse hábito é automático e passa despercebido. Em hebraico o ת é sempre seco: תֵּה é \"te\", não \"tchê\". Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ת · quadro do erro comum"
+      ],
+      "file": "he-30ad11c6.mp3"
+    },
+    {
+      "num": 1006,
+      "seq": 685,
+      "he": "professor letter-nun-intro",
+      "translit": "professor-letter-nun-intro",
+      "gloss": "Lição do נ · Conhecer. Apresente a letra Nun (נ): o nome, o som e como ela aparece na palavra, com o exemplo אָמֵן (amén, amém). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do נ · Conhecer"
+      ],
+      "file": "he-38b63dfd.mp3"
+    },
+    {
+      "num": 1007,
+      "seq": 686,
+      "he": "professor letter-nun-common-mistake",
+      "translit": "professor-letter-nun-common-mistake",
+      "gloss": "Lição do נ · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Nasalizar a vogal antes do N: ler אָמֵן como o nosso \"amém\", \"amẽ\". O certo: Ler אָמֵן como \"amén\", com o N pronunciado e a vogal limpa. Por quê: É o mesmo hábito do מ: em português o N no fim da sílaba nasaliza a vogal e quase desaparece. Em hebraico ele é uma consoante inteira, encostando a língua atrás dos dentes. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do נ · quadro do erro comum"
+      ],
+      "file": "he-da9e4b1a.mp3"
+    },
+    {
+      "num": 1008,
+      "seq": 687,
+      "he": "professor letter-he-intro",
+      "translit": "professor-letter-he-intro",
+      "gloss": "Lição do ה · Conhecer. Apresente a letra He (ה): o nome, o som e como ela aparece na palavra, com o exemplo מָה (ma, o quê / que). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ה · Conhecer"
+      ],
+      "file": "he-506863c1.mp3"
+    },
+    {
+      "num": 1009,
+      "seq": 688,
+      "he": "professor letter-he-common-mistake",
+      "translit": "professor-letter-he-common-mistake",
+      "gloss": "Lição do ה · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Não pronunciar o ה inicial, lendo הַיּוֹם como \"ayóm\". O certo: Soprar o H: \"hayóm\", com ar saindo antes da vogal. Por quê: Em português o H escrito é sempre mudo - \"hotel\" é \"otel\". Em hebraico o ה no início da palavra é um som de verdade. Na fala rápida muitos israelenses o enfraquecem, mas pronuncie-o: é o padrão e é sempre entendido. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ה · quadro do erro comum"
+      ],
+      "file": "he-6b344905.mp3"
+    },
+    {
+      "num": 1010,
+      "seq": 689,
+      "he": "professor letter-yod-intro",
+      "translit": "professor-letter-yod-intro",
+      "gloss": "Lição do י · Conhecer. Apresente a letra Yud (י): o nome, o som e como ela aparece na palavra, com o exemplo אֲנִי (aní, eu). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do י · Conhecer"
+      ],
+      "file": "he-6fc4b38a.mp3"
+    },
+    {
+      "num": 1011,
+      "seq": 690,
+      "he": "professor letter-yod-common-mistake",
+      "translit": "professor-letter-yod-common-mistake",
+      "gloss": "Lição do י · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler י como J: \"jom\", \"jam\". O certo: Ler י como I ou Y: \"yom\", \"yam\". Por quê: Como muitos nomes bíblicos aparecem em português com J, como José, Jacó e Jerusalém, alguns brasileiros levam esse hábito para a leitura do hebraico e podem tentar ler י como J. O som é o do I de \"ioiô\". Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do י · quadro do erro comum"
+      ],
+      "file": "he-3caba4bf.mp3"
+    },
+    {
+      "num": 1012,
+      "seq": 691,
+      "he": "professor letter-gimel-intro",
+      "translit": "professor-letter-gimel-intro",
+      "gloss": "Lição do ג · Conhecer. Apresente a letra Guímel (ג): o nome, o som e como ela aparece na palavra, com o exemplo גַּם (gam, também). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ג · Conhecer"
+      ],
+      "file": "he-d73d8461.mp3"
+    },
+    {
+      "num": 1013,
+      "seq": 692,
+      "he": "professor letter-gimel-common-mistake",
+      "translit": "professor-letter-gimel-common-mistake",
+      "gloss": "Lição do ג · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Suavizar o G antes de E e I: ler גֶּשֶׁם como \"jéshem\". O certo: Manter o G duro sempre: \"guéshem\", \"gadól\", como em \"guerra\" e \"guitarra\". Por quê: Em português o G antes de E e I vira J - \"gente\", \"gigante\" - e por isso escrevemos \"gu\" para manter o som duro. O hebraico não tem essa alternância: ג é sempre duro. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ג · quadro do erro comum"
+      ],
+      "file": "he-34dc2a3f.mp3"
+    },
+    {
+      "num": 1014,
+      "seq": 693,
+      "he": "professor letter-dalet-intro",
+      "translit": "professor-letter-dalet-intro",
+      "gloss": "Lição do ד · Conhecer. Apresente a letra Dálet (ד): o nome, o som e como ela aparece na palavra, com o exemplo יָד (yad, mão). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ד · Conhecer"
+      ],
+      "file": "he-910d6a89.mp3"
+    },
+    {
+      "num": 1015,
+      "seq": 694,
+      "he": "professor letter-dalet-common-mistake",
+      "translit": "professor-letter-dalet-common-mistake",
+      "gloss": "Lição do ד · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler דִּי como \"dji\", do jeito que falamos \"dia\". O certo: Ler דִּי como \"di\", com o D seco, como em \"dado\". Por quê: Na maior parte do Brasil o D antes de I e E vira DJ, e o falante nem percebe. Em hebraico o ד nunca muda: é sempre o D seco de \"dado\". Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ד · quadro do erro comum"
+      ],
+      "file": "he-f9b1470d.mp3"
+    },
+    {
+      "num": 1016,
+      "seq": 695,
+      "he": "professor letter-shin-intro",
+      "translit": "professor-letter-shin-intro",
+      "gloss": "Lição do ש · Conhecer. Apresente a letra Shin (ש): o nome, o som e como ela aparece na palavra, com o exemplo שֵׁם (shem, nome). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ש · Conhecer"
+      ],
+      "file": "he-c5f75dd8.mp3"
+    },
+    {
+      "num": 1017,
+      "seq": 696,
+      "he": "professor letter-shin-common-mistake",
+      "translit": "professor-letter-shin-common-mistake",
+      "gloss": "Lição do ש · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler ש como S: \"salóm\", \"sem\". O certo: Ler ש como o X de \"xícara\" ou o CH de \"chave\" (transliterado \"sh\"): \"shalóm\", \"shem\". Por quê: A forma da letra não lembra nada do alfabeto latino, então o cérebro brasileiro tende a encaixá-la no S. Mas o som padrão de ש é o de \"chave\". O som de S só aparece quando o ponto está do lado esquerdo (שׂ). Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ש · quadro do erro comum"
+      ],
+      "file": "he-fc68ed74.mp3"
+    },
+    {
+      "num": 1018,
+      "seq": 697,
+      "he": "professor letter-lamed-intro",
+      "translit": "professor-letter-lamed-intro",
+      "gloss": "Lição do ל · Conhecer. Apresente a letra Lámed (ל): o nome, o som e como ela aparece na palavra, com o exemplo לֹא (lo, não). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ל · Conhecer"
+      ],
+      "file": "he-ed60a87f.mp3"
+    },
+    {
+      "num": 1019,
+      "seq": 698,
+      "he": "professor letter-lamed-common-mistake",
+      "translit": "professor-letter-lamed-common-mistake",
+      "gloss": "Lição do ל · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler שֶׁל como \"sheu\", transformando o L final em U. O certo: Ler שֶׁל como \"shel\", com o L bem apoiado na ponta da língua. Por quê: No português do Brasil o L no fim da sílaba virou U: falamos \"Brasiu\", \"mau\" por \"mal\". Em hebraico o ל nunca faz isso. Ele é sempre um L claro, mesmo no fim da palavra. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ל · quadro do erro comum"
+      ],
+      "file": "he-5f0e4e8f.mp3"
+    },
+    {
+      "num": 1020,
+      "seq": 699,
+      "he": "professor letter-resh-intro",
+      "translit": "professor-letter-resh-intro",
+      "gloss": "Lição do ר · Conhecer. Apresente a letra Resh (ר): o nome, o som e como ela aparece na palavra, com o exemplo שִׁיר (shir, canção). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ר · Conhecer"
+      ],
+      "file": "he-5987d078.mp3"
+    },
+    {
+      "num": 1021,
+      "seq": 700,
+      "he": "professor letter-resh-common-mistake",
+      "translit": "professor-letter-resh-common-mistake",
+      "gloss": "Lição do ר · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Usar o R carioca soprado de \"carro\", que em hebraico é o som de outra letra. (O R batido de \"caro\" e o R do interior paulista, de \"porta\", não trocam a palavra, mas soam com sotaque.) O certo: Usar o R francês, macio e com a voz ligada, como em \"Paris\": הַר é \"har\", com esse R no fim. Por quê: O hebraico moderno tem um único R, o francês. O R carioca soprado é o som de outra letra; o R de ponta de língua é entendido (alguns israelenses falam assim), mas não é o padrão de hoje. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ר · quadro do erro comum"
+      ],
+      "file": "he-a0c11cd1.mp3"
+    },
+    {
+      "num": 1022,
+      "seq": 701,
+      "he": "professor letter-vav-intro",
+      "translit": "professor-letter-vav-intro",
+      "gloss": "Lição do ו · Conhecer. Apresente a letra Vav (ו): o nome, o som e como ela aparece na palavra, com o exemplo שָׁלוֹם (shalóm, paz / olá / tchau). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ו · Conhecer"
+      ],
+      "file": "he-55caa8cc.mp3"
+    },
+    {
+      "num": 1023,
+      "seq": 702,
+      "he": "professor letter-vav-common-mistake",
+      "translit": "professor-letter-vav-common-mistake",
+      "gloss": "Lição do ו · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler todo ו como V, inclusive quando ele é vogal: dizer \"shalvóm\". O certo: Olhar o ponto: וֹ é O, וּ é U, ו sem ponto entre consoantes é V. Por quê: É uma letra com três funções. O ponto é o que decide, e ele é pequeno - procure sempre antes de pronunciar. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ו · quadro do erro comum"
+      ],
+      "file": "he-88ef4880.mp3"
+    },
+    {
+      "num": 1024,
+      "seq": 703,
+      "he": "professor letter-zayin-intro",
+      "translit": "professor-letter-zayin-intro",
+      "gloss": "Lição do ז · Conhecer. Apresente a letra Záyin (ז): o nome, o som e como ela aparece na palavra, com o exemplo זֶה (ze, este / isto). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ז · Conhecer"
+      ],
+      "file": "he-b63c1afd.mp3"
+    },
+    {
+      "num": 1025,
+      "seq": 704,
+      "he": "professor letter-zayin-common-mistake",
+      "translit": "professor-letter-zayin-common-mistake",
+      "gloss": "Lição do ז · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ensurdecer o Z no fim da palavra: ler אָז (então) como \"as\". O certo: Manter o Z vibrado: \"az\", com a garganta vibrando até o fim. Por quê: Em português o Z final vira S ou CH - \"paz\", \"luz\", \"rapaz\". Em hebraico o ז continua sonoro onde quer que esteja. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ז · quadro do erro comum"
+      ],
+      "file": "he-db881026.mp3"
+    },
+    {
+      "num": 1026,
+      "seq": 705,
+      "he": "professor letter-het-intro",
+      "translit": "professor-letter-het-intro",
+      "gloss": "Lição do ח · Conhecer. Apresente a letra Het (ח): o nome, o som e como ela aparece na palavra, com o exemplo אָח (ach, irmão). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ח · Conhecer"
+      ],
+      "file": "he-e4e0d7f7.mp3"
+    },
+    {
+      "num": 1027,
+      "seq": 706,
+      "he": "professor letter-het-common-mistake",
+      "translit": "professor-letter-het-common-mistake",
+      "gloss": "Lição do ח · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler ח como o CH de \"chave\", ou como um H mudo. O certo: Raspar no fundo da boca, parecido com o R de \"carro\" de alguns sotaques cariocas: לֶחֶם é \"léchem\". Por quê: A transliteração \"ch\" vem do alemão (como em \"Bach\") e das transliterações em inglês, não do português. Nenhuma palavra brasileira usa CH com esse valor, então o olho lê errado antes de a boca tentar. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ח · quadro do erro comum"
+      ],
+      "file": "he-231f4fa5.mp3"
+    },
+    {
+      "num": 1028,
+      "seq": 707,
+      "he": "professor letter-tet-intro",
+      "translit": "professor-letter-tet-intro",
+      "gloss": "Lição do ט · Conhecer. Apresente a letra Tet (ט): o nome, o som e como ela aparece na palavra, com o exemplo מִטָּה (mitá, cama). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ט · Conhecer"
+      ],
+      "file": "he-eb3dd3c9.mp3"
+    },
+    {
+      "num": 1029,
+      "seq": 708,
+      "he": "professor letter-tet-common-mistake",
+      "translit": "professor-letter-tet-common-mistake",
+      "gloss": "Lição do ט · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Palatalizar antes de I e E: ler טִי como \"tchi\". O certo: Ler \"ti\", com o T seco, exatamente como no ת. Por quê: É o mesmo hábito automático do ת, e vale a pena revisar aqui: em טִיּוּל o começo é \"ti\", nunca \"tchi\". Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ט · quadro do erro comum"
+      ],
+      "file": "he-055acfec.mp3"
+    },
+    {
+      "num": 1030,
+      "seq": 709,
+      "he": "professor letter-samekh-intro",
+      "translit": "professor-letter-samekh-intro",
+      "gloss": "Lição do ס · Conhecer. Apresente a letra Sámech (ס): o nome, o som e como ela aparece na palavra, com o exemplo סוּס (sus, cavalo). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ס · Conhecer"
+      ],
+      "file": "he-16108f66.mp3"
+    },
+    {
+      "num": 1031,
+      "seq": 710,
+      "he": "professor letter-samekh-common-mistake",
+      "translit": "professor-letter-samekh-common-mistake",
+      "gloss": "Lição do ס · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Sonorizar o S entre vogais: ler חָסָה (alface) como \"chazá\". O certo: Manter o S surdo: חָסָה é \"chassá\", com o S de \"assa\", e não \"chazá\". Por quê: Em português o S entre vogais vira Z automaticamente - \"casa\", \"mesa\". Em hebraico isso nunca acontece: ס é sempre /s/, e existe uma letra separada, ז, para o som de Z. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ס · quadro do erro comum"
+      ],
+      "file": "he-da6382e7.mp3"
+    },
+    {
+      "num": 1032,
+      "seq": 711,
+      "he": "professor letter-ayin-intro",
+      "translit": "professor-letter-ayin-intro",
+      "gloss": "Lição do ע · Conhecer. Apresente a letra Áyin (ע): o nome, o som e como ela aparece na palavra, com o exemplo עִיר (ir, cidade). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ע · Conhecer"
+      ],
+      "file": "he-6f31fc18.mp3"
+    },
+    {
+      "num": 1033,
+      "seq": 712,
+      "he": "professor letter-ayin-common-mistake",
+      "translit": "professor-letter-ayin-common-mistake",
+      "gloss": "Lição do ע · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Confundir ע com א na escrita, já que soam igual. O certo: Decorar quais palavras levam ע. O som não ajuda - só o hábito de ler. Por quê: Como as duas letras soam igual no hebraico moderno, o ouvido não distingue e a escrita fica por conta da memória visual. É o mesmo problema de \"cassa\" e \"caça\" em português. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ע · quadro do erro comum"
+      ],
+      "file": "he-34f8e4ea.mp3"
+    },
+    {
+      "num": 1034,
+      "seq": 713,
+      "he": "professor letter-tsadi-intro",
+      "translit": "professor-letter-tsadi-intro",
+      "gloss": "Lição do צ · Conhecer. Apresente a letra Tsádi (צ): o nome, o som e como ela aparece na palavra, com o exemplo עֵץ (ets, árvore). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do צ · Conhecer"
+      ],
+      "file": "he-5038a33e.mp3"
+    },
+    {
+      "num": 1035,
+      "seq": 714,
+      "he": "professor letter-tsadi-common-mistake",
+      "translit": "professor-letter-tsadi-common-mistake",
+      "gloss": "Lição do צ · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Desmontar o TS: ler צָרִיךְ como \"sarích\" ou \"tcharích\". O certo: Colar os dois sons num só golpe: \"tsarích\", como o fim de \"pizza\" transportado para o começo da palavra. Por quê: O português não usa TS no início de palavra, então a boca resolve o problema sozinha apagando o T ou virando TCH. Treine dizendo \"pizza\" e isolando o \"tsa\" final. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do צ · quadro do erro comum"
+      ],
+      "file": "he-7908cc82.mp3"
+    },
+    {
+      "num": 1036,
+      "seq": 715,
+      "he": "professor letter-qof-intro",
+      "translit": "professor-letter-qof-intro",
+      "gloss": "Lição do ק · Conhecer. Apresente a letra Kuf (ק): o nome, o som e como ela aparece na palavra, com o exemplo רַק (rak, só / apenas). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ק · Conhecer"
+      ],
+      "file": "he-629ca61e.mp3"
+    },
+    {
+      "num": 1037,
+      "seq": 716,
+      "he": "professor letter-qof-common-mistake",
+      "translit": "professor-letter-qof-common-mistake",
+      "gloss": "Lição do ק · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ler ק como \"qu\" com um U embutido, dizendo \"kuol\" para קוֹל. O certo: Ler ק como o C de \"casa\", sem nenhum U: \"kol\". Por quê: Em português, o som de K muitas vezes vem escrito com U, como em \"quando\" e \"quilo\". Em hebraico não há U nenhum na letra. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ק · quadro do erro comum"
+      ],
+      "file": "he-46320b0e.mp3"
+    },
+    {
+      "num": 1038,
+      "seq": 717,
+      "he": "professor letter-bet-intro",
+      "translit": "professor-letter-bet-intro",
+      "gloss": "Lição do ב · Conhecer. Apresente a letra Bet (ב): o nome, o som e como ela aparece na palavra, com o exemplo אַבָּא (ába, pai). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ב · Conhecer"
+      ],
+      "file": "he-03a29dda.mp3"
+    },
+    {
+      "num": 1039,
+      "seq": 718,
+      "he": "professor letter-bet-common-mistake",
+      "translit": "professor-letter-bet-common-mistake",
+      "gloss": "Lição do ב · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ignorar o ponto e ler todo ב do mesmo jeito, como se fosse sempre B. O certo: Olhar o ponto antes de ler: com ponto dentro é B, \"ába\", \"báyit\", \"bóker\". Sem ponto é o outro som, o da próxima lição. Por quê: O português não tem letra que mude de som por causa de um ponto, então o olho tende a ler pelo desenho e pular o ponto. Em hebraico é o ponto que decide entre o B e o outro som desta letra. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do ב · quadro do erro comum"
+      ],
+      "file": "he-e60edc8a.mp3"
+    },
+    {
+      "num": 1040,
+      "seq": 719,
+      "he": "professor letter-kaf-intro",
+      "translit": "professor-letter-kaf-intro",
+      "gloss": "Lição do כ · Conhecer. Apresente a letra Kaf (כ): o nome, o som e como ela aparece na palavra, com o exemplo כֶּלֶב (kélev, cachorro). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do כ · Conhecer"
+      ],
+      "file": "he-18da560d.mp3"
+    },
+    {
+      "num": 1041,
+      "seq": 720,
+      "he": "professor letter-kaf-common-mistake",
+      "translit": "professor-letter-kaf-common-mistake",
+      "gloss": "Lição do כ · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Confundir כ com ב e ler כּוֹס como \"bos\". O certo: Olhar a base: o כ é uma curva arredondada, sem pé; o ב tem um pé que avança para a direita. \"Kos\". Por quê: As duas letras têm quase o mesmo contorno, e nas duas o ponto dentro muda o som. O pé na base é o que separa uma da outra. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do כ · quadro do erro comum"
+      ],
+      "file": "he-cc8558e1.mp3"
+    },
+    {
+      "num": 1042,
+      "seq": 721,
+      "he": "professor letter-pe-intro",
+      "translit": "professor-letter-pe-intro",
+      "gloss": "Lição do פ · Conhecer. Apresente a letra Pe (פ): o nome, o som e como ela aparece na palavra, com o exemplo סֵפֶר (séfer, livro). Menos de um minuto.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do פ · Conhecer"
+      ],
+      "file": "he-53900315.mp3"
+    },
+    {
+      "num": 1043,
+      "seq": 722,
+      "he": "professor letter-pe-common-mistake",
+      "translit": "professor-letter-pe-common-mistake",
+      "gloss": "Lição do פ · quadro do erro comum. Explique o erro que o brasileiro costuma cometer: Ignorar o ponto e ler todo פ do mesmo jeito, como se fosse sempre P. O certo: Olhar o ponto antes de ler: com ponto dentro é P, פֶּה é \"pe\", como em \"pato\". Sem ponto é o outro som, o da próxima lição. Por quê: O português não tem letra que mude de som por causa de um ponto, então o olho tende a ler pelo desenho e pular o ponto. Em hebraico é o ponto que decide entre o P e o outro som desta letra. Diga os exemplos em hebraico em voz alta.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Lição do פ · quadro do erro comum"
+      ],
+      "file": "he-4a53c2de.mp3"
+    },
+    {
+      "num": 1044,
+      "seq": 723,
+      "he": "professor final-exam-congrats",
+      "translit": "professor-final-exam-congrats",
+      "gloss": "Desafio final · resultado aprovado. Parabenize o aluno por passar no desafio final do alfabeto. Diga o que ele já consegue ler e qual é o próximo passo. Não fale em nível oficial nem em certificação: o certificado do curso não é um diploma.",
+      "kind": "professor",
+      "wave": 7,
+      "where": [
+        "Desafio final · resultado aprovado"
+      ],
+      "file": "he-82be4894.mp3"
     }
   ]
 }

@@ -410,6 +410,14 @@ export function recordSkill(
     streak: correct ? prev.streak + 1 : 0,
     lastOn: day
   };
+  /* Os dias de acerto só são contados em registros que nasceram com eles:
+     um registro antigo, com respostas e sem o campo, fica sem (ver types.ts). */
+  const legado = prev.diasDeAcerto === undefined && prev.hits + prev.misses > 0;
+  if (!legado) {
+    const novoDia = correct && prev.ultimoAcerto !== day;
+    stat.diasDeAcerto = (prev.diasDeAcerto ?? 0) + (novoDia ? 1 : 0);
+    stat.ultimoAcerto = correct ? day : (prev.ultimoAcerto ?? null);
+  }
   return { ...state, skills: { ...state.skills, [letterId]: { ...letter, [skill]: stat } } };
 }
 

@@ -17,6 +17,7 @@
  * pass is never overwritten by a later, worse attempt.
  */
 
+import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
@@ -291,6 +292,7 @@ export function FinalChallengeClient() {
             <p className="text-[15px] leading-relaxed text-ink-body">
               Com o seu nome, a data e as 22 letras - para baixar ou postar.
             </p>
+            <GravacaoDoProfessor id="final-exam-congrats" />
             <div className="flex flex-wrap gap-3 pt-1">
               <LinkButton href="/certificado" size="lg">Ver o certificado</LinkButton>
               <LinkButton href="/concluido" variant="secondary">O que você conquistou</LinkButton>
