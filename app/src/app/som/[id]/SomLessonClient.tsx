@@ -259,11 +259,11 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
           {S.silabas.some(s => hasAudio(s.audioId)) ? (
             <CompararPronuncia itens={S.silabas} grade />
           ) : (
-            <ul className="grid grid-cols-2 sm:grid-cols-5 gap-3 list-none p-0 m-0">
+            <ul className="grid grid-cols-2 sm:grid-cols-5 gap-3 list-none p-0 m-0" dir="rtl">
               {S.silabas.map(s => (
                 <li key={s.he} className="rounded-[var(--r-md)] bg-surface-2 p-3 grid justify-items-center gap-1">
                   <He size="xl">{s.he}</He>
-                  <span className="font-ui text-[14px] font-semibold text-ink">{s.translit}</span>
+                  <span dir="ltr" className="font-ui text-[14px] font-semibold text-ink">{s.translit}</span>
                 </li>
               ))}
             </ul>

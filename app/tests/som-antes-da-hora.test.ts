@@ -13,7 +13,7 @@ const historia = (id: string) => letras.filter(l => l.order <= L(id).order);
 describe('o som sem o ponto espera a própria lição', () => {
   it('reconhece Vet, Chaf e Fe pelo daguesh que falta', () => {
     expect([...sonsSemPonto('בֹּקֶר טוֹב')]).toEqual(['bet']);   // טוֹב termina em Vet
-    expect([...sonsSemPonto('תֵּל אָבִיב')]).toEqual(['bet']);
+    expect([...sonsSemPonto('תֵל אָבִיב')]).toEqual(['bet']);
     expect([...sonsSemPonto('מָה שְׁלוֹמְךָ')]).toEqual(['kaf']);
     expect([...sonsSemPonto('קָפֶה')]).toEqual(['pe']);
     expect([...sonsSemPonto('שַׁבָּת')]).toEqual([]);

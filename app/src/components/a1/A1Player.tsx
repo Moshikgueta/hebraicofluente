@@ -41,7 +41,7 @@ const soHebraico = (s: string) => HEB.test(s) && !LATIM.test(s);
  *  hebraica, para o português em volta não embaralhar a ordem. */
 export function Misto({ texto, className = '' }: { texto: string; className?: string }) {
   /* O trecho termina numa letra hebraica, ou no ? e no ! de uma pergunta em
-     hebraico (מַה שִּׁמְךָ?). O ponto final fica de fora: ele é da frase em
+     hebraico (מַה שִׁמְךָ?). O ponto final fica de fora: ele é da frase em
      português em volta, e dentro do trecho RTL ele pulava para o outro lado. */
   const partes = texto.split(/([֐-׿][֐-׿\s'"׳,.?!_־…]*[֐-׿?!…]|[֐-׿])/);
   return (
@@ -459,8 +459,8 @@ function Aberta({ item, genero, settled, onAnswer }: {
           {genero && (
             <p className="font-ui text-[14px] text-ink-body m-0">
               {genero === 'f'
-                ? 'Você escolheu ser tratada no feminino: confira se os verbos e as profissões do seu texto estão na forma feminina (גָּרָה, עוֹבֶדֶת, סְטוּדֶנְטִית).'
-                : 'Você escolheu ser tratado no masculino: confira se os verbos e as profissões do seu texto estão na forma masculina (גָּר, עוֹבֵד, סְטוּדֶנְט).'}
+                ? 'Você escolheu ser tratada no feminino: confira se os verbos e as profissões do seu texto estão na forma feminina (גָרָה, עוֹבֶדֶת, סְטוּדֶנְטִית).'
+                : 'Você escolheu ser tratado no masculino: confira se os verbos e as profissões do seu texto estão na forma masculina (גָר, עוֹבֵד, סְטוּדֶנְט).'}
             </p>
           )}
         </div>

@@ -8,14 +8,14 @@
  *   · no começo da palavra, e depois de uma consoante que FECHA a sílaba
  *     (shva no meio da palavra, como em מִשְׁפָּחָה): com o ponto - B, K, P;
  *   · depois de vogal, e também depois de uma letra com shva no começo da
- *     palavra ou de um prefixo (בְּבַקָּשָׁה, כְּבָר): sem o ponto - V, CH, F;
+ *     palavra ou de um prefixo (בְּבַקָשָׁה, כְּבָר): sem o ponto - V, CH, F;
  *   · as formas finais ך e ף nunca levam ponto.
  *
  * Tudo aqui sai das palavras que o curso já ensina. Cada palavra é analisada
  * (em que posição a letra está) e conferida contra o ponto que ela TEM no
  * conteúdo: só vira exercício a palavra em que a regra acerta. As que a regra
  * erra porque o ponto dobra a consoante depois de vogal (אַבָּא), e as que
- * ficam sem o ponto depois do shva do começo da palavra (בְּבַקָּשָׁה), vão
+ * ficam sem o ponto depois do shva do começo da palavra (בְּבַקָשָׁה), vão
  * para um quadro à parte, "quando a regra não basta" - é a verdade da língua,
  * e esconder faria o aluno achar que a regra é lei.
  */
@@ -29,7 +29,7 @@ import type { Extras } from './extras';
 const DAGUESH = 'ּ';
 const SHEVA = 'ְ';
 /* Os sinais de vogal (sem o shva, sem o daguesh, sem os pontos do ש). */
-const VOGAL = /[ֱ-ׇֻ]/;
+const VOGAL = /[ֱ-ׇֻ]/;
 const MATER = new Set(['א', 'ה', 'ו', 'י']);
 
 export type LetraDoPonto = { id: 'bet' | 'kaf' | 'pe'; he: string; final: string | null; forte: string; suave: string };
@@ -105,7 +105,7 @@ export type Classificada = PalavraDoPonto & { analise: Analise };
  * finais), com posição conhecida e a regra acertando. E, à parte, as que a
  * regra erra: o ponto que aparece depois de vogal (o ponto que dobra), e a
  * letra sem o ponto depois de uma consoante com shva - o shva do começo da
- * palavra, que se diz "e" ou não se diz, não fecha sílaba (בְּבַקָּשָׁה).
+ * palavra, que se diz "e" ou não se diz, não fecha sílaba (בְּבַקָשָׁה).
  * Para o quadro das exceções a palavra pode ter mais de uma letra do ponto,
  * desde que a regra erre em uma só.
  */
@@ -133,7 +133,7 @@ export function classificar(palavras: readonly PalavraDoPonto[]): { certas: Clas
 }
 
 /** O grupo (letra + sinais) que a análise olhou - para destacar a letra certa
- *  quando a palavra tem duas letras do ponto (בְּבַקָּשָׁה). */
+ *  quando a palavra tem duas letras do ponto (בְּבַקָשָׁה). */
 export function grupoAnalisado(w: Classificada): string {
   return clusters(w.he.normalize('NFC'))[w.analise.indice] ?? w.analise.letra.he;
 }

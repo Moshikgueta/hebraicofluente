@@ -180,7 +180,7 @@ const ACHAR: readonly Rodada[] = [
     opcoes: [
       { he: 'שָׁלוֹם', certa: false, porque: 'Esta começa com Shin, a letra da direita. Em hebraico a palavra começa à direita.' },
       { he: 'אֶתְמוֹל', certa: true, porque: '' },
-      { he: 'תּוֹדָה', certa: false, porque: 'Esta começa com Tav, a letra da direita. Em hebraico a palavra começa à direita.' },
+      { he: 'תוֹדָה', certa: false, porque: 'Esta começa com Tav, a letra da direita. Em hebraico a palavra começa à direita.' },
       { he: 'בַּיִת', certa: false, porque: 'Esta começa com Bet, a letra da direita. Em hebraico a palavra começa à direita.' }
     ],
     acerto: 'אֶתְמוֹל se lê «etmól» e quer dizer «ontem». O Álef está à direita, segurando o «e».',
@@ -530,7 +530,7 @@ export function DemoAlef({
                       cada sílaba para ouvir o professor, e depois responda.
                     </p>
                   </div>
-                  <ul className="grid grid-cols-5 gap-1.5 sm:gap-2 list-none p-0 m-0 max-w-[420px]" aria-label="As vogais com o Álef">
+                  <ul className="grid grid-cols-5 gap-1.5 sm:gap-2 list-none p-0 m-0 max-w-[420px]" aria-label="As vogais com o Álef" dir="rtl">
                     {SILABAS.map(x => (
                       <li key={x.som} className="min-w-0">
                         <button
@@ -544,7 +544,7 @@ export function DemoAlef({
                             ${tocador.tocando === x.clipe ? 'bg-[var(--teal-soft)]' : 'bg-[var(--sand)] hover:bg-[var(--teal-soft)]'}`}
                         >
                           <He size="lg" tone="navy">{x.he}</He>
-                          <span className="font-ui text-[15px] font-semibold text-ink-muted">
+                          <span dir="ltr" className="font-ui text-[15px] font-semibold text-ink-muted">
                             <span aria-hidden>🔊 </span>«{x.som}»
                           </span>
                         </button>

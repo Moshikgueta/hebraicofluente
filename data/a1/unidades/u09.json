@@ -111,17 +111,17 @@
       ]
     },
     {
-      "he": "בַּצָּהֳרַיִם",
+      "he": "בַּצָהֳרַיִם",
       "translit": "batsohoráyim",
       "pt": "ao meio-dia, na hora do almoço"
     },
     {
-      "he": "אַחֲרֵי הַצָּהֳרַיִם",
+      "he": "אַחֲרֵי הַצָהֳרַיִם",
       "translit": "acharéi hatsohoráyim",
-      "pt": "à tarde (por escrito, também אַחַר הַצָּהֳרַיִם)"
+      "pt": "à tarde (por escrito, também אַחַר הַצָהֳרַיִם)"
     },
     {
-      "he": "בַּלַּיְלָה",
+      "he": "בַּלַיְלָה",
       "translit": "baláila",
       "pt": "à noite (mais tarde que o עֶרֶב), de madrugada"
     },
@@ -151,7 +151,7 @@
       "pt": "todo dia"
     },
     {
-      "he": "תָּמִיד",
+      "he": "תָמִיד",
       "translit": "tamíd",
       "pt": "sempre"
     },
@@ -161,7 +161,7 @@
       "pt": "às vezes"
     },
     {
-      "he": "מוּקְדָּם",
+      "he": "מוּקְדָם",
       "translit": "mukdám",
       "pt": "cedo"
     },
@@ -193,7 +193,7 @@
     {
       "he": "יָם",
       "translit": "yam",
-      "pt": "mar; לַיָּם = para a praia"
+      "pt": "mar; לַיָם = para a praia"
     },
     {
       "he": "הַבַּיְתָה",
@@ -248,7 +248,7 @@
     },
     {
       "tituloPt": "Antes, depois, e então",
-      "textoPt": "לִפְנֵי e אַחֲרֵי vêm antes da coisa: לִפְנֵי הַשִּׁעוּר (antes da aula), אַחֲרֵי הָעֲבוֹדָה (depois do trabalho). Sozinho, \"depois\" é אַחַר כָּךְ. Para contar em sequência: וְאָז, \"e então\".",
+      "textoPt": "לִפְנֵי e אַחֲרֵי vêm antes da coisa: לִפְנֵי הַשִׁעוּר (antes da aula), אַחֲרֵי הָעֲבוֹדָה (depois do trabalho). Sozinho, \"depois\" é אַחַר כָּךְ. Para contar em sequência: וְאָז, \"e então\".",
       "erroPt": "Não se diz \"אַחֲרֵי\" sozinho no fim da frase, como \"depois\" em português. Sozinho é אַחַר כָּךְ: אֲנִי עוֹבֵד, וְאַחַר כָּךְ אֲנִי לוֹמֵד."
     }
   ],
@@ -257,19 +257,19 @@
     "linhas": [
       {
         "quem": "Tom",
-        "he": "נֹעָה, מָה אַתְּ עוֹשָׂה כָּל יוֹם?",
+        "he": "נֹעָה, מָה אַתְ עוֹשָׂה כָּל יוֹם?",
         "translit": "Nóa, ma at ossá kol yom?",
         "pt": "Noa, o que você faz todo dia?"
       },
       {
         "quem": "Noa",
-        "he": "אֲנִי קָמָה מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי.",
+        "he": "אֲנִי קָמָה מוּקְדָם, בְּשֵׁשׁ וָחֵצִי.",
         "translit": "aní kamá mukdám, beshésh vachétsi.",
         "pt": "Eu levanto cedo, às seis e meia."
       },
       {
         "quem": "Tom",
-        "he": "בְּשֵׁשׁ וָחֵצִי? וּמָה אַתְּ עוֹשָׂה בַּבֹּקֶר?",
+        "he": "בְּשֵׁשׁ וָחֵצִי? וּמָה אַתְ עוֹשָׂה בַּבֹּקֶר?",
         "translit": "beshésh vachétsi? umá at ossá babóker?",
         "pt": "Às seis e meia? E o que você faz de manhã?"
       },
@@ -287,13 +287,13 @@
       },
       {
         "quem": "Noa",
-        "he": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי הוֹלֶכֶת לָאוּנִיבֶרְסִיטָה.",
+        "he": "אַחֲרֵי הַצָהֳרַיִם אֲנִי הוֹלֶכֶת לָאוּנִיבֶרְסִיטָה.",
         "translit": "acharéi hatsohoráyim aní holéchet launivérsita.",
         "pt": "À tarde eu vou para a universidade."
       },
       {
         "quem": "Tom",
-        "he": "וּמָתַי אַתְּ חוֹזֶרֶת הַבַּיְתָה?",
+        "he": "וּמָתַי אַתְ חוֹזֶרֶת הַבַּיְתָה?",
         "translit": "umatái at chozéret habáyta?",
         "pt": "E quando você volta para casa?"
       },
@@ -330,7 +330,7 @@
     "semPontos": true,
     "linhas": [
       {
-        "he": "שָׁלוֹם אִמָּא! הַכֹּל בְּסֵדֶר.",
+        "he": "שָׁלוֹם אִמָא! הַכֹּל בְּסֵדֶר.",
         "translit": "shalóm íma! hakól besséder.",
         "pt": "Oi, mãe! Está tudo bem."
       },
@@ -345,7 +345,7 @@
         "pt": "De manhã eu estudo hebraico no ulpan."
       },
       {
-        "he": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי עוֹבֵד בְּבֵית קָפֶה.",
+        "he": "אַחֲרֵי הַצָהֳרַיִם אֲנִי עוֹבֵד בְּבֵית קָפֶה.",
         "translit": "acharéi hatsohoráyim aní ovéd bevéit kafé.",
         "pt": "À tarde eu trabalho num café."
       },
@@ -492,7 +492,7 @@
     },
     {
       "t": "escolha",
-      "q": "A Noa conta: אֲנִי ___ מוּקְדָּם.",
+      "q": "A Noa conta: אֲנִי ___ מוּקְדָם.",
       "opcoes": [
         "קָמָה",
         "קָם",
@@ -513,11 +513,11 @@
           "de manhã"
         ],
         [
-          "בַּצָּהֳרַיִם",
+          "בַּצָהֳרַיִם",
           "ao meio-dia"
         ],
         [
-          "אַחֲרֵי הַצָּהֳרַיִם",
+          "אַחֲרֵי הַצָהֳרַיִם",
           "à tarde"
         ],
         [
@@ -525,7 +525,7 @@
           "no fim do dia, à noitinha"
         ],
         [
-          "בַּלַּיְלָה",
+          "בַּלַיְלָה",
           "à noite, de madrugada"
         ]
       ]
@@ -543,7 +543,7 @@
       "t": "completar",
       "q": "\"Antes da aula\"",
       "antes": "",
-      "depois": "הַשִּׁעוּר",
+      "depois": "הַשִׁעוּר",
       "respostas": [
         "לפני"
       ]
@@ -582,7 +582,7 @@
     },
     {
       "t": "escolha",
-      "q": "O Dani está dormindo: דָּנִי ___.",
+      "q": "O Dani está dormindo: דָנִי ___.",
       "opcoes": [
         "יָשֵׁן",
         "יְשֵׁנָה",
@@ -674,13 +674,13 @@
       "linhas": [
         [
           "Maya",
-          "מָתַי אַתָּה קָם?"
+          "מָתַי אַתָה קָם?"
         ]
       ],
       "opcoes": [
         "בְּשֶׁבַע.",
         "בַּבַּיִת.",
-        "עִם דָּנִי."
+        "עִם דָנִי."
       ],
       "certa": 0,
       "porque": "מָתַי pergunta \"quando\": a resposta é uma hora."
@@ -691,25 +691,25 @@
       "linhas": [
         [
           "Tom",
-          "מָה אַתְּ עוֹשָׂה אַחֲרֵי הָעֲבוֹדָה?"
+          "מָה אַתְ עוֹשָׂה אַחֲרֵי הָעֲבוֹדָה?"
         ]
       ],
       "opcoes": [
-        "אֲנִי הוֹלֶכֶת לַיָּם.",
+        "אֲנִי הוֹלֶכֶת לַיָם.",
         "אֲנִי מִבְּרָזִיל.",
-        "כֵּן, תּוֹדָה."
+        "כֵּן, תוֹדָה."
       ],
       "certa": 0,
-      "porque": "Ele pergunta o que ela faz depois do trabalho: \"vou para a praia\" (לַיָּם, \"para o mar\")."
+      "porque": "Ele pergunta o que ela faz depois do trabalho: \"vou para a praia\" (לַיָם, \"para o mar\")."
     },
     {
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "מָה אַתָּה עוֹשֶׂה בַּבֹּקֶר?",
+        "מָה אַתָה עוֹשֶׂה בַּבֹּקֶר?",
         "בַּבֹּקֶר אֲנִי עוֹבֵד.",
-        "וְאַחֲרֵי הַצָּהֳרַיִם?",
-        "אַחֲרֵי הַצָּהֳרַיִם אֲנִי לוֹמֵד עִבְרִית."
+        "וְאַחֲרֵי הַצָהֳרַיִם?",
+        "אַחֲרֵי הַצָהֳרַיִם אֲנִי לוֹמֵד עִבְרִית."
       ]
     },
     {
@@ -767,7 +767,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Eu levanto cedo, às seis e meia.\"",
       "antes": "אֲנִי",
-      "depois": "מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי.",
+      "depois": "מוּקְדָם, בְּשֵׁשׁ וָחֵצִי.",
       "respostas": [
         "קמה"
       ]
@@ -775,7 +775,7 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"À tarde eu vou para a universidade.\"",
-      "antes": "אַחֲרֵי הַצָּהֳרַיִם אֲנִי",
+      "antes": "אַחֲרֵי הַצָהֳרַיִם אֲנִי",
       "depois": "לָאוּנִיבֶרְסִיטָה.",
       "respostas": [
         "הולכת"
@@ -784,7 +784,7 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Eu levanto cedo, às seis e meia.\"",
-      "exemplo": "אֲנִי קָמָה מוּקְדָּם, בְּשֵׁשׁ וָחֵצִי."
+      "exemplo": "אֲנִי קָמָה מוּקְדָם, בְּשֵׁשׁ וָחֵצִי."
     },
     {
       "t": "aberta",

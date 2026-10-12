@@ -277,7 +277,7 @@ export function normalizeLoose(text: string): string {
 }
 
 /* Resposta digitada EM HEBRAICO (04/10/2026, pedido do dono): quem ouve
-   יַלְדָּה e escreve ילדה acertou. O teclado do celular não põe nikud, e o
+   יַלְדָה e escreve ילדה acertou. O teclado do celular não põe nikud, e o
    exercício de ouvir não está ensinando nikud - está ensinando a reconhecer
    a palavra. A regra é a MESMA do "Digite em hebraico" (palavras.ts,
    `hebraicoDigitadoCerto`): sem vogais e sem exigir a forma final. Duas

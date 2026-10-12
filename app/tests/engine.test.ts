@@ -395,12 +395,12 @@ describe('a checkpoint is a demonstration, not a longer lesson', () => {
 });
 
 /* "Escreva o que você ouviu" em hebraico (04/10/2026, pedido do dono): quem
-   ouviu יַלְדָּה e digitou ילדה no teclado do celular acertou. */
+   ouviu יַלְדָה e digitou ילדה no teclado do celular acertou. */
 describe('resposta digitada em hebraico', () => {
-  const accept = ['yaldá', 'יַלְדָּה'];
+  const accept = ['yaldá', 'יַלְדָה'];
   it('aceita a palavra sem nikud, com nikud e com espaço sobrando', () => {
     expect(typedIsCorrect('ילדה', accept)).toBe(true);
-    expect(typedIsCorrect('יַלְדָּה', accept)).toBe(true);
+    expect(typedIsCorrect('יַלְדָה', accept)).toBe(true);
     expect(typedIsCorrect('  ילדה ', accept)).toBe(true);
     expect(typedIsCorrect('yalda', accept)).toBe(true);
   });

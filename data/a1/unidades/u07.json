@@ -17,7 +17,7 @@
       "pt": "1"
     },
     {
-      "he": "שְׁתַּיִם",
+      "he": "שְׁתַיִם",
       "translit": "shtáyim",
       "pt": "2"
     },
@@ -52,7 +52,7 @@
       "pt": "8"
     },
     {
-      "he": "תֵּשַׁע",
+      "he": "תֵשַׁע",
       "translit": "tésha",
       "pt": "9"
     },
@@ -67,7 +67,7 @@
       "pt": "11"
     },
     {
-      "he": "שְׁתֵּים־עֶשְׂרֵה",
+      "he": "שְׁתֵים־עֶשְׂרֵה",
       "translit": "shteim-esré",
       "pt": "12"
     },
@@ -102,7 +102,7 @@
       "pt": "18"
     },
     {
-      "he": "תְּשַׁע־עֶשְׂרֵה",
+      "he": "תְשַׁע־עֶשְׂרֵה",
       "translit": "tsha-esré",
       "pt": "19"
     },
@@ -122,12 +122,12 @@
       "pt": "40"
     },
     {
-      "he": "חֲמִשִּׁים",
+      "he": "חֲמִשִׁים",
       "translit": "chamishím",
       "pt": "50"
     },
     {
-      "he": "שִׁשִּׁים",
+      "he": "שִׁשִׁים",
       "translit": "shishím",
       "pt": "60"
     },
@@ -142,7 +142,7 @@
       "pt": "80"
     },
     {
-      "he": "תִּשְׁעִים",
+      "he": "תִשְׁעִים",
       "translit": "tishím",
       "pt": "90"
     },
@@ -157,12 +157,12 @@
       "pt": "21"
     },
     {
-      "he": "כַּמָּה?",
+      "he": "כַּמָה?",
       "translit": "káma?",
       "pt": "quanto? quantos?"
     },
     {
-      "he": "כַּמָּה זֶה עוֹלֶה?",
+      "he": "כַּמָה זֶה עוֹלֶה?",
       "translit": "káma ze olé?",
       "pt": "quanto custa?"
     },
@@ -187,12 +187,12 @@
       "pt": "feira, mercado de rua"
     },
     {
-      "he": "מָה הַשָּׁעָה?",
+      "he": "מָה הַשָׁעָה?",
       "translit": "ma hashaá?",
       "pt": "que horas são?"
     },
     {
-      "he": "הַשָּׁעָה…",
+      "he": "הַשָׁעָה…",
       "translit": "hashaá…",
       "pt": "são… (horas)"
     },
@@ -262,7 +262,7 @@
       "pt": "quinta-feira"
     },
     {
-      "he": "יוֹם שִׁשִּׁי",
+      "he": "יוֹם שִׁשִׁי",
       "translit": "yom shishí",
       "pt": "sexta-feira"
     },
@@ -278,13 +278,13 @@
       "textoPt": "De 11 a 19 é \"número + עֶשְׂרֵה\": שְׁלוֹשׁ־עֶשְׂרֵה = três + dez. As dezenas terminam em ־ִים (שְׁלוֹשִׁים), e \"vinte e um\" leva וְ: עֶשְׂרִים וְאַחַת."
     },
     {
-      "tituloPt": "A hora: הַשָּׁעָה + número",
-      "textoPt": "הַשָּׁעָה שָׁלוֹשׁ = \"são três horas\".",
-      "erroPt": "Pôr \"horas\" no fim (הַשָּׁעָה שָׁלוֹשׁ שָׁעוֹת). Não se diz: a palavra שָׁעָה já veio antes."
+      "tituloPt": "A hora: הַשָׁעָה + número",
+      "textoPt": "הַשָׁעָה שָׁלוֹשׁ = \"são três horas\".",
+      "erroPt": "Pôr \"horas\" no fim (הַשָׁעָה שָׁלוֹשׁ שָׁעוֹת). Não se diz: a palavra שָׁעָה já veio antes."
     },
     {
       "tituloPt": "O preço, como se fala na rua",
-      "textoPt": "\"número + שֶׁקֶל\", no singular: זֶה עוֹלֶה עֶשֶׂר שֶׁקֶל. O formal (עֲשָׂרָה שְׁקָלִים) aparece em texto escrito. E \"custar\" concorda com a coisa: כַּמָּה עוֹלָה הַגְּבִינָה?",
+      "textoPt": "\"número + שֶׁקֶל\", no singular: זֶה עוֹלֶה עֶשֶׂר שֶׁקֶל. O formal (עֲשָׂרָה שְׁקָלִים) aparece em texto escrito. E \"custar\" concorda com a coisa: כַּמָה עוֹלָה הַגְבִינָה?",
       "erroPt": "Não é erro dizer שְׁקָלִים, mas na fala o normal é o singular: עֶשֶׂר שֶׁקֶל. Com 1: שֶׁקֶל אֶחָד."
     },
     {
@@ -298,7 +298,7 @@
     "linhas": [
       {
         "quem": "Dani",
-        "he": "סְלִיחָה, כַּמָּה עוֹלָה הַגְּבִינָה?",
+        "he": "סְלִיחָה, כַּמָה עוֹלָה הַגְבִינָה?",
         "translit": "slichá, káma olá hagviná?",
         "pt": "Com licença, quanto custa o queijo?"
       },
@@ -310,7 +310,7 @@
       },
       {
         "quem": "Dani",
-        "he": "וְהַתַּפּוּחִים?",
+        "he": "וְהַתַפּוּחִים?",
         "translit": "vehatapuchím?",
         "pt": "E as maçãs?"
       },
@@ -322,38 +322,38 @@
       },
       {
         "quem": "Dani",
-        "he": "אֲנִי רוֹצֶה קִילוֹ תַּפּוּחִים, בְּבַקָּשָׁה.",
+        "he": "אֲנִי רוֹצֶה קִילוֹ תַפּוּחִים, בְּבַקָשָׁה.",
         "translit": "aní rotsé kílo tapuchím, bevakashá.",
         "pt": "Quero um quilo de maçãs, por favor."
       },
       {
         "quem": "Vendedor",
-        "he": "בְּבַקָּשָׁה. עוֹד מַשֶּׁהוּ?",
+        "he": "בְּבַקָשָׁה. עוֹד מַשֶׁהוּ?",
         "translit": "bevakashá. od máshehu?",
         "pt": "Aqui está. Mais alguma coisa?"
       },
       {
         "quem": "Dani",
-        "he": "לֹא, תּוֹדָה. מָה הַשָּׁעָה?",
+        "he": "לֹא, תוֹדָה. מָה הַשָׁעָה?",
         "translit": "lo, todá. ma hashaá?",
         "pt": "Não, obrigado. Que horas são?"
       },
       {
         "quem": "Vendedor",
-        "he": "הַשָּׁעָה אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
+        "he": "הַשָׁעָה אַחַת וָחֵצִי. הַשׁוּק פָּתוּחַ עַד שְׁתַיִם.",
         "translit": "hashaá achát vachétsi. hashúk patúach ad shtáyim.",
         "pt": "É uma e meia. A feira fica aberta até as duas."
       },
       {
         "quem": "Dani",
-        "he": "תּוֹדָה!",
+        "he": "תוֹדָה!",
         "translit": "todá!",
         "pt": "Obrigado!"
       }
     ],
     "glossario": [
       {
-        "he": "מַשֶּׁהוּ",
+        "he": "מַשֶׁהוּ",
         "translit": "máshehu",
         "pt": "alguma coisa"
       }
@@ -431,7 +431,7 @@
     },
     {
       "t": "ouvir",
-      "he": "שְׁתֵּים־עֶשְׂרֵה",
+      "he": "שְׁתֵים־עֶשְׂרֵה",
       "q": "Que número é?",
       "opcoes": [
         "12",
@@ -444,7 +444,7 @@
       "t": "montar",
       "pt": "Quanto custa?",
       "palavras": [
-        "כַּמָּה",
+        "כַּמָה",
         "זֶה",
         "עוֹלֶה"
       ]
@@ -457,11 +457,11 @@
         "זֶה עוֹלֶה חָמֵשׁ שְׁקָלִים"
       ],
       "certa": 0,
-      "porque": "Na fala, o preço vai no singular: חָמֵשׁ שֶׁקֶל. O plural não é erro, mas é do texto escrito, e lá o número muda: חֲמִשָּׁה שְׁקָלִים."
+      "porque": "Na fala, o preço vai no singular: חָמֵשׁ שֶׁקֶל. O plural não é erro, mas é do texto escrito, e lá o número muda: חֲמִשָׁה שְׁקָלִים."
     },
     {
       "t": "escolha",
-      "q": "כַּמָּה ___ הָעוּגָה?",
+      "q": "כַּמָה ___ הָעוּגָה?",
       "opcoes": [
         "עוֹלָה",
         "עוֹלֶה"
@@ -484,15 +484,15 @@
       "t": "escolha",
       "q": "\"São três e meia\"",
       "opcoes": [
-        "הַשָּׁעָה שָׁלוֹשׁ וָחֵצִי",
-        "הַשָּׁעָה שָׁלוֹשׁ שָׁעוֹת וָחֵצִי"
+        "הַשָׁעָה שָׁלוֹשׁ וָחֵצִי",
+        "הַשָׁעָה שָׁלוֹשׁ שָׁעוֹת וָחֵצִי"
       ],
       "certa": 0
     },
     {
       "t": "erro",
       "q": "Ache o erro e escreva a frase certa.",
-      "errada": "הַשָּׁעָה חָמֵשׁ שָׁעוֹת",
+      "errada": "הַשָׁעָה חָמֵשׁ שָׁעוֹת",
       "respostas": [
         "השעה חמש"
       ],
@@ -509,7 +509,7 @@
     },
     {
       "t": "ouvir",
-      "he": "הַשָּׁעָה עֶשֶׂר וָרֶבַע",
+      "he": "הַשָׁעָה עֶשֶׂר וָרֶבַע",
       "q": "Que horas são?",
       "opcoes": [
         "10:15",
@@ -564,7 +564,7 @@
       "t": "vf",
       "q": "No diálogo, a feira fecha às três.",
       "certa": false,
-      "porque": "הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם."
+      "porque": "הַשׁוּק פָּתוּחַ עַד שְׁתַיִם."
     },
     {
       "t": "escrever",
@@ -593,7 +593,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"É uma e meia. A feira fica aberta até as duas.\"",
       "antes": "",
-      "depois": "אַחַת וָחֵצִי. הַשּׁוּק פָּתוּחַ עַד שְׁתַּיִם.",
+      "depois": "אַחַת וָחֵצִי. הַשׁוּק פָּתוּחַ עַד שְׁתַיִם.",
       "respostas": [
         "השעה"
       ]
@@ -606,7 +606,7 @@
     {
       "t": "aberta",
       "pt": "Escreva: a que horas você começa a trabalhar ou estudar, e em que dias.",
-      "exemplo": "אֲנִי עוֹבֵד בְּיוֹם שֵׁנִי, בְּיוֹם שְׁלִישִׁי וּבְיוֹם רְבִיעִי, בְּשָׁעָה תֵּשַׁע בַּבֹּקֶר."
+      "exemplo": "אֲנִי עוֹבֵד בְּיוֹם שֵׁנִי, בְּיוֹם שְׁלִישִׁי וּבְיוֹם רְבִיעִי, בְּשָׁעָה תֵשַׁע בַּבֹּקֶר."
     }
   ]
 }
