@@ -27,7 +27,7 @@ import { allLetters, course, getLetter, type CourseModule } from '@/lib/content'
 import { totalLicoes } from '@/lib/content-publico';
 import { Prose } from '@/components/learn/Blocks';
 import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
-import { isLessonComplete, letraLiberada, STAGE_COUNT } from '@/lib/state/rules';
+import { aula0Feita, isLessonComplete, letraLiberada, STAGE_COUNT } from '@/lib/state/rules';
 import { flagship } from '@/lib/catalog';
 import { idDoSom, ordemDeEnsino } from '@/lib/sons';
 
@@ -66,8 +66,10 @@ export function CourseMapClient() {
   const modulos = course.modules;
   const licoes = totalLicoes();
 
-  /* O módulo atual é o primeiro que ainda não fechou. */
-  const indiceAtual = modulos.findIndex(m => !moduloCompleto(p.state, m));
+  /* O módulo atual é o primeiro que ainda não fechou. Antes da Aula 0
+     nenhum: o passo atual é ela (12/10/2026). */
+  const a0 = aula0Feita(p.state);
+  const indiceAtual = a0 ? modulos.findIndex(m => !moduloCompleto(p.state, m)) : -2;
 
   return (
     <div className="lg:rounded-[24px] lg:bg-[var(--card)] lg:border lg:border-line lg:shadow-[var(--sh)]
@@ -95,8 +97,10 @@ export function CourseMapClient() {
       </header>
 
       <ol className="list-none p-0 m-0">
+        <TrechoAula0 feita={a0} />
         {modulos.map((m, i) => {
-          const estado: Estado = i < indiceAtual ? 'feito'
+          const estado: Estado = indiceAtual === -2 ? 'adiante'
+            : i < indiceAtual ? 'feito'
             : i === indiceAtual || indiceAtual === -1 ? 'agora'
             : 'adiante';
           return (
@@ -113,6 +117,51 @@ export function CourseMapClient() {
         <OrdemPedagogica />
       </div>
     </div>
+  );
+}
+
+/* ── a Aula 0, o primeiro passo do caminho (12/10/2026) ──────────────────
+   Ela abre a primeira letra (lib/state/rules.ts, `aula0Feita`), então mora
+   no mapa como qualquer etapa: concluída com o marcador cheio, ou o passo
+   atual, com a borda teal. Depois de feita continua aqui, para consulta. */
+function TrechoAula0({ feita }: { feita: boolean }) {
+  return (
+    <li className="grid grid-cols-[38px_minmax(0,1fr)] sm:grid-cols-[52px_minmax(0,1fr)] gap-4 sm:gap-5">
+      <div className="flex flex-col items-center">
+        <span aria-hidden
+              className={`w-[38px] h-[38px] sm:w-11 sm:h-11 rounded-[14px] border-2 grid place-items-center shrink-0
+                ${feita ? 'bg-[var(--teal)] border-[var(--teal)]' : 'bg-[var(--card)] border-[var(--teal)]'}`}>
+          {feita ? (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M3.6 9.4 7 12.8 14.4 5.4" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          ) : <span className="w-[11px] h-[11px] rounded-full bg-[var(--teal)]" />}
+        </span>
+        <span aria-hidden className="flex-1 w-[2px] min-h-[26px]"
+              style={{ background: feita ? 'var(--teal)' : 'var(--line)' }} />
+      </div>
+      <div className="pb-6 sm:pb-[26px]">
+        <div className={`relative rounded-[18px] border p-5 sm:px-6 sm:py-[22px] transition-shadow duration-[250ms]
+                         hover:shadow-[var(--sh)] bg-[var(--card)] ${feita ? 'border-line' : 'border-[var(--teal)]'}`}>
+          <div className="flex items-center gap-3.5 flex-wrap mb-2.5">
+            <span className="font-ui text-[12.5px] font-bold uppercase tracking-[.1em] text-[var(--teal-ink)]">
+              {feita ? 'Concluído' : 'Comece por aqui'}
+            </span>
+            <span className="font-ui text-[13.5px] text-ink-muted">Aula 0 · antes da primeira letra</span>
+          </div>
+          <p className="font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-2 text-ink">
+            <Link href="/inicio" className="after:absolute after:inset-0 after:rounded-[18px] after:content-['']">
+              Como o hebraico funciona
+            </Link>
+          </p>
+          <p className="font-ui text-[14.5px] leading-[1.5] text-ink-muted m-0">
+            {feita
+              ? 'A direção da leitura, o alfabeto e o nikud. Fica aqui para você reler quando quiser.'
+              : 'A direção da leitura, o alfabeto, o nikud e como o curso funciona. Termina com uma checagem curta, e aí o Álef abre.'}
+          </p>
+        </div>
+      </div>
+    </li>
   );
 }
 
@@ -150,7 +199,7 @@ function Trecho({ module: m, estado, ultimo }: {
        alto contraste. */
     /* "Em breve" sugeria conteúdo ainda não lançado, quando o módulo só
        espera o anterior (auditoria de 01/10/2026, VIS-010). */
-    adiante: { texto: `Abre depois do módulo ${m.n - 1}`, cor: 'text-ink-muted' }  // texto, não controle: 4,5:1 (UX-009)
+    adiante: { texto: m.n === 1 ? 'Abre depois da Aula 0' : `Abre depois do módulo ${m.n - 1}`, cor: 'text-ink-muted' }  // texto, não controle: 4,5:1 (UX-009)
   }[estado];
 
   return (
