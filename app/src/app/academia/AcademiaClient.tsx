@@ -32,6 +32,7 @@ function segurarFoco(e: FocusEvent<HTMLDivElement>) {
 }
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { PARES_DE_SOM } from '@/lib/engine/pares-de-som';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
@@ -41,7 +42,7 @@ import { SoundLab, VowelSigns } from '@/components/learn/SoundLab';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { EscreverPalavras } from '@/components/learn/EscreverPalavras';
 import { palavrasDosTextosLidos } from '@/lib/leitura';
-import { audioAvailable } from '@/components/learn/AudioButton';
+import { audioAvailable, hasAudio } from '@/components/learn/AudioButton';
 import { ParaRevisar } from '@/components/game/Debt';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, type Letter } from '@/lib/content';
@@ -50,7 +51,7 @@ import { availableModes, buildGym, confusionPair, type GymMode } from '@/lib/eng
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 import { GuiaTeclado } from '@/components/learn/GuiaTeclado';
 import {
-  montarBatalha, montarCacada, montarCursiva, paresParaTreinar,
+  montarBatalha, montarCacada, montarCursiva, paresParaTreinar, rodadasDeSom,
   nivelDe, NIVEL_LABEL, type Nivel
 } from '@/lib/engine/jogos';
 import type { LearnerState } from '@/lib/state/types';
@@ -229,8 +230,9 @@ export function AcademiaClient() {
   const nivel = useMemo(() => nivelDe(p.state, unlocked), [p.state, unlocked]);
 
   const fazerNovo = useCallback(
-    (jogo: Jogo, rodada: number) => montarNovo(jogo, rodada, p.state, unlocked, nivel),
-    [p.state, unlocked, nivel]);
+    (jogo: Jogo, rodada: number) => montarNovo(jogo, rodada, p.state, unlocked, nivel,
+      jogo === 'batalha' ? busca?.get('par') ?? null : null),
+    [p.state, unlocked, nivel, busca]);
 
   /* Que jogo tem material hoje? A mesma conta que a tela do jogo faz antes
      de recusar com "Ainda não há letras suficientes". Com uma letra só, os
@@ -808,7 +810,9 @@ export function AcademiaClient() {
  * "tentar de novo" não vira silenciosamente "tentar outra coisa".
  */
 function montarNovo(
-  jogo: Jogo, rodada: number, state: LearnerState, unlocked: Letter[], nivel: Nivel
+  jogo: Jogo, rodada: number, state: LearnerState, unlocked: Letter[], nivel: Nivel,
+  /** Um par pedido de fora (`?par=דר`, a sugestão "Vamos praticar a diferença"). */
+  parPedido: string | null = null
 ) {
   const rand = rng(`${jogo}-${unlocked.length}-${rodada}`);
   /* Uma CAÇADA, e não uma caça: cinco rodadas, cada uma com outra letra. A
@@ -820,11 +824,24 @@ function montarNovo(
      ELE trocou de verdade e depois o que o conteúdo prevê. */
   /* O giro sai da mesma semente da rodada: cada partida nova traz outros
      pares antigos, e voltar à mesma rodada devolve os mesmos. */
-  const pares = paresParaTreinar(state, unlocked, 4, Math.floor(rand() * 97));
+  let pares = paresParaTreinar(state, unlocked, 4, Math.floor(rand() * 97));
+  /* O par pedido vem primeiro, e só se as duas letras já foram vistas. */
+  if (parPedido) {
+    const [g1, g2] = [...parPedido];
+    const achar = (g?: string) => unlocked.find(l => l.letter === g || l.finalForm === g);
+    const a = achar(g1), b = achar(g2);
+    if (a && b && a.id !== b.id) {
+      pares = [[a, b] as [Letter, Letter], ...pares.filter(([x, y]) => !([x.id, y.id].includes(a.id) && [x.id, y.id].includes(b.id)))].slice(0, 4);
+    }
+  }
   if (!pares.length) return {};
+  /* E, depois do desenho, o ouvido: até quatro rodadas dos pares de som
+     (lib/engine/pares-de-som.ts), só com gravação das duas sílabas. */
+  const somRodadas = rodadasDeSom(PARES_DE_SOM, unlocked, rand, hasAudio);
   /* `doAluno` distingue o par que ELE trocou do par que o conteúdo prevê - e
      é o que autoriza, no fim, a frase "você confundia estas duas". */
-  return { batalha: montarBatalha(pares, Object.keys(state.confusions).length > 0, rand) };
+  const batalha = montarBatalha(pares, Object.keys(state.confusions).length > 0, rand);
+  return { batalha: { ...batalha, rodadas: [...batalha.rodadas, ...somRodadas] } };
 }
 
 /* Seis desenhos de traço, no peso do resto do sistema. Traço e não emoji: o

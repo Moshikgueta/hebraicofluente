@@ -13,6 +13,7 @@
  * A stage is marked done when the learner reaches its end, and XP is awarded
  * there - never on navigation. */
 
+import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { AvaliarLicao } from '@/components/learn/AvaliarLicao';
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
@@ -933,6 +934,7 @@ function StageFixacao({
           )}
         </Milestone>
         {strong && <MinhaConquista letter={letter} />}
+        <SugestaoDePar />
       </div>
     );
   }

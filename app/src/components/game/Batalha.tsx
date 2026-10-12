@@ -33,6 +33,7 @@
 import { useFocoDaRodada } from './foco-da-rodada';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
+import { AudioButton } from '@/components/learn/AudioButton';
 import type { Batalha as Dados, RodadaBatalha } from '@/lib/engine/jogos';
 import { porQueErrou } from '@/lib/engine/jogos';
 import type { ResultadoJogo } from './Match';
@@ -109,7 +110,8 @@ export function Batalha({
       {/* O par exibido é o da RODADA, e não o da partida: agora a partida
           percorre até quatro pares, e um cabeçalho fixo mentiria em três
           quartos dela. */}
-      <Placar i={i} total={total} acertos={acertos} par={parDaRodada} />
+      <Placar i={i} total={total} acertos={acertos} par={parDaRodada}
+              meta={rodada.tipo === 'som' ? 'som' : 'desenho'} />
 
       <div ref={foco.ref} tabIndex={-1} role="group" aria-label={`Rodada ${i + 1} de ${total}`}
            className="grid gap-5 outline-none">
@@ -127,6 +129,9 @@ export function Batalha({
       {rodada.tipo === 'relampago' && (
         <Relampago r={rodada} marca={marca} fechar={fechar} idx={i} />
       )}
+      {rodada.tipo === 'som' && (
+        <Som key={i} r={rodada} marca={marca} fechar={fechar} idx={i} />
+      )}
 
       <Retorno marca={marca} />
       </div>
@@ -136,10 +141,18 @@ export function Batalha({
 
 /* ── o cabeçalho: quem são as inimigas, e como vai a luta ──────────────── */
 function Placar({
-  i, total, acertos, par
-}: { i: number; total: number; acertos: number; par: [{ letter: string }, { letter: string }] }) {
+  i, total, acertos, par, meta
+}: {
+  i: number; total: number; acertos: number; par: [{ letter: string }, { letter: string }];
+  /** Parecidas no desenho ou no som: duas metas diferentes, e a tela diz qual. */
+  meta: 'desenho' | 'som';
+}) {
   return (
     <div className="flex items-center gap-3 flex-wrap">
+      <span className={`rounded-full px-2.5 py-1 font-ui text-[12px] font-semibold
+        ${meta === 'som' ? 'bg-[var(--gold-soft)] text-[var(--gold-ink)]' : 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'}`}>
+        {meta === 'som' ? 'Parecidas no som' : 'Parecidas no desenho'}
+      </span>
       <p className="font-ui text-[13px] uppercase tracking-[.08em] text-ink-muted flex-1 min-w-[160px]">
         Inimigas de hoje{' '}
         <span className="inline-flex items-center gap-1.5 align-middle">
@@ -260,6 +273,58 @@ function Relampago({
           );
         })}
       </div>
+    </div>
+  );
+}
+
+/* ── formato 5: o ouvido (12/10/2026) ───────────────────────────────────
+   Toca a sílaba com A de uma das duas, e o aluno escolhe a letra. É a outra
+   metade da confusão: {{ה}} e {{ח}} se parecem no desenho E no som, mas
+   {{ז}} e {{ס}} só no som. O áudio toca quando ele pedir, quantas vezes
+   quiser; a rodada só existe com gravação (rodadasDeSom). A resposta errada
+   não vira "troca de letra" na lista que a Batalha lê para o DESENHO. */
+function Som({
+  r, marca, fechar, idx
+}: {
+  r: Extract<RodadaBatalha, { tipo: 'som' }>;
+  marca: Marca; idx: number;
+  fechar: (certo: boolean, texto: string | null, letterId: string, id: string, escolhida?: string) => void;
+}) {
+  const [ouviu, setOuviu] = useState(false);
+  return (
+    <div className="grid gap-4 justify-items-center">
+      <p className="font-ui text-[14px] text-ink-muted text-center max-w-[36ch]">
+        Ouça a sílaba e escolha a letra que você ouviu.
+      </p>
+      <div className="grid place-items-center min-h-[96px]" onClickCapture={() => setOuviu(true)}>
+        <AudioButton audioId={r.audioId} label="Ouvir" ariaLabel="Ouvir a sílaba" size="lg" slow />
+      </div>
+      <div className="grid grid-cols-2 gap-2.5 w-full max-w-[420px]" dir="rtl">
+        {r.opcoes.map(o => {
+          const certa = o.id === r.alvo.id;
+          const mostrar = !!marca;
+          return (
+            <button
+              key={o.id}
+              type="button"
+              disabled={mostrar || !ouviu}
+              onClick={() => fechar(certa, certa ? null : r.notaPt, r.alvo.id, `som:batalha:${r.alvo.id}:${idx}`)}
+              className={`min-h-[72px] rounded-[var(--r-md)] border px-4 grid place-items-center gap-0.5
+                transition-colors disabled:opacity-60
+                ${mostrar && certa
+                  ? 'border-[var(--teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)]'
+                  : mostrar ? 'border-line bg-surface text-ink-muted'
+                  : 'border-line bg-surface text-ink enabled:hover:bg-surface-2 enabled:active:scale-[.98]'}`}
+            >
+              <He size="lg">{o.letter}</He>
+              <span dir="ltr" className="font-ui text-[13px]">{o.namePt}</span>
+            </button>
+          );
+        })}
+      </div>
+      {!ouviu && !marca && (
+        <p className="font-ui text-[13px] text-ink-muted m-0">Toque em Ouvir primeiro.</p>
+      )}
     </div>
   );
 }

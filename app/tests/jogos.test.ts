@@ -110,6 +110,7 @@ describe('nenhum jogo mostra letra que o aluno não viu', () => {
            viu piscando por 900 ms é ainda mais cruel do que parada. */
         const glifos = r.tipo === 'qual' || r.tipo === 'relampago'
           ? [r.glifo, ...r.opcoes.map(o => o.letter)]
+          : r.tipo === 'som' ? r.opcoes.map(o => o.letter)
           : r.fila.map(c => c.glifo);
         for (const g of glifos) expect(ok.has(g), `${g} com ${n} letras`).toBe(true);
       }

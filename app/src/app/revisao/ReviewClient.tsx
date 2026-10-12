@@ -4,6 +4,7 @@
    generic drill - which is the whole reason the SRS pool stores misses rather
    than a log of everything seen. */
 
+import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
@@ -167,19 +168,7 @@ export function ReviewClient() {
           confundindo você" is a fact about the work, not about the learner -
           and it is the thing that makes the review feel like it is paying
           attention rather than shuffling. */}
-      {p.confusions.length > 0 && (
-        <Card tone="wash" className="p-5 grid gap-2">
-          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            Percebemos que <He size="inline">{p.confusions[0]!.correct}</He> e{' '}
-            <He size="inline">{p.confusions[0]!.chosen}</He> ainda estão se
-            misturando. Vamos praticar um pouco mais as duas.
-          </p>
-          <Link href="/academia"
-                className="font-ui text-[13px] text-[var(--accent)] hover:underline min-h-[44px] flex items-center">
-            Treinar só esse par na Academia →
-          </Link>
-        </Card>
-      )}
+      <SugestaoDePar />
 
       <Card className="p-6 grid gap-4">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">

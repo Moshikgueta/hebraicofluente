@@ -37,11 +37,13 @@ import { reenfileirar } from '@/lib/engine/fila-de-revisao';
 import { useProgress } from '@/lib/state/store';
 import { clusters } from '@/lib/hebrew';
 import { supportLevel } from '@/lib/state/rules';
+import { allLetters, conteudoPronto } from '@/lib/content';
+import { trocaDeLetras, type TrocaDeLetras } from '@/lib/engine/feedback';
 
 export type PlayerResult = { correct: number; total: number; score: number; missed: string[] };
 
 /** What one settled question knows about itself. */
-type Settled = { correct: boolean; chosen: number | null; why: string | null };
+type Settled = { correct: boolean; chosen: number | null; why: string | null; troca?: TrocaDeLetras | null };
 
 /** Onde a pessoa estava: para a lição voltar à mesma questão depois de
  *  recarregar (auditoria de 01/10/2026, UXQA-003). */
@@ -127,7 +129,11 @@ export function ExercisePlayer({
     if (settled || !ex) return;
     if (julgado.current === i) return;
     julgado.current = i;
-    setSettled({ correct, chosen: opts.chosen ?? null, why: opts.why ?? null });
+    /* Uma troca entre DUAS LETRAS ganha o retorno do par: as duas lado a
+       lado e a frase revisada que as separa (lib/engine/feedback.ts). */
+    const troca = !correct && opts.expected && opts.chosenGlyph && conteudoPronto()
+      ? trocaDeLetras(opts.expected, opts.chosenGlyph, allLetters()) : null;
+    setSettled({ correct, chosen: opts.chosen ?? null, why: opts.why ?? null, troca });
     if (correct) setCorrectCount(c => c + 1);
     else setMissed(m => [...m, ex.id]);
 
@@ -342,11 +348,28 @@ export function ExercisePlayer({
                 ${isRight ? 'text-[var(--mint-ink)]' : 'text-[var(--amber)]'}`}
             >
               <span aria-hidden>{isRight ? '✓' : '↻'}</span>
-              {isRight ? 'Boa! É essa mesma.' : 'Quase. Olhe com calma:'}
+              {isRight ? 'Boa! É essa mesma.' : settled.troca ? 'Quase!' : 'Quase. Olhe com calma:'}
             </p>
+            {settled.troca && (
+              <div className="mt-3 grid gap-2">
+                <div dir="rtl" className="flex gap-2.5">
+                  <span className="grid justify-items-center gap-0.5 rounded-[var(--r-md)] border-2 border-[var(--teal)] bg-[var(--teal-soft)] px-4 py-2">
+                    <He size="lg">{settled.troca.certa.glifo}</He>
+                    <span dir="ltr" className="font-ui text-[12.5px] text-[var(--teal-ink)]">a certa: {settled.troca.certa.nome}</span>
+                  </span>
+                  <span className="grid justify-items-center gap-0.5 rounded-[var(--r-md)] border border-line bg-surface px-4 py-2">
+                    <He size="lg">{settled.troca.escolhida.glifo}</He>
+                    <span dir="ltr" className="font-ui text-[12.5px] text-ink-muted">a escolhida: {settled.troca.escolhida.nome}</span>
+                  </span>
+                </div>
+                <p className="text-[15px] leading-relaxed text-ink font-medium m-0">
+                  {settled.troca.textoPt} Observe as duas letras.
+                </p>
+              </div>
+            )}
             {/* The specific reason first, the general explanation after it. A
                 learner who chose מִ needs to hear about מִ, not about vowels. */}
-            {settled.why && (
+            {settled.why && settled.why !== settled.troca?.textoPt && !settled.troca && (
               <p className="mt-2 text-[15px] leading-relaxed text-ink font-medium"><Prose text={settled.why} /></p>
             )}
             <p className="mt-2 text-[15px] leading-relaxed text-ink-body"><Prose text={ex.explainPt} /></p>
