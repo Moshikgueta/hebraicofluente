@@ -12,7 +12,8 @@
     "",
     "ALFABETIZAÇÃO: preço decidido. R$ 197 é o preço de PRÉ-LANÇAMENTO, válido até",
     "31/10/2026 (preLancamentoAte, decisão do dono em 28/09/2026; R$ 197 em vez",
-    "de R$ 147 desde 12/10/2026, decisão do dono), e os",
+    "de R$ 147 desde 12/10/2026, decisão do dono; os links de parceria também",
+    "passaram a R$ 197 no mesmo dia), e os",
     "R$ 297 do listBrl são o preço cheio, que passa a valer quando o",
     "pré-lançamento terminar. O listBrl não é um 'de' inventado para fazer",
     "número: é o que o curso vai custar, e o site diz isso com essas palavras.",
@@ -52,7 +53,7 @@
         "Quem vai viajar, tem família israelense ou lê por motivo religioso e quer decodificar sozinho."
       ],
       "requiresPurchase": true,
-      "price": { "brl": 197, "listBrl": 297, "installments": 12, "pixDiscountPct": 10, "preLancamentoAte": "2026-10-31", "parceriaBrl": 147, "parceriaAte": "2026-11-30" },
+      "price": { "brl": 197, "listBrl": 297, "installments": 12, "pixDiscountPct": 10, "preLancamentoAte": "2026-10-31", "parceriaBrl": 197, "parceriaAte": "2026-11-30" },
       "accessMonths": 12
     },
 
