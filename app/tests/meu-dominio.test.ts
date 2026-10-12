@@ -1,7 +1,9 @@
 /* Meu domínio das letras (lib/dominio.ts) e os dias de acerto em
  * `recordSkill` (11/10/2026). */
 import { describe, expect, it } from 'vitest';
-import { dominioDaLetra, nivelDaHabilidade, resumoDoDominio, LIMIARES } from '@/lib/dominio';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { dominioDaLetra, HABILIDADES, nivelDaHabilidade, NIVEL_PT, resumoDoDominio, LIMIARES } from '@/lib/dominio';
 import { recordSkill } from '@/lib/state/rules';
 import { mergeStates } from '@/lib/state/merge';
 import { EMPTY_STATE } from '@/lib/state/types';
@@ -84,5 +86,34 @@ describe('os dias de acerto', () => {
     const m = mergeStates(a, b);
     expect(m.skills.mem!.rec!.diasDeAcerto).toBe(3);
     expect(m.skills.mem!.rec!.ultimoAcerto).toBe('2026-10-11');
+  });
+});
+
+/* "Letras dominadas" e "lições concluídas" nunca com o mesmo nome
+ * (12/10/2026). "Dominada" é só o domínio por habilidade (lib/dominio.ts);
+ * a regra antiga das cinco etapas com 75% se chama "lição concluída". */
+describe('cada número com o seu nome', () => {
+  const fonte = (p: string) => readFileSync(join(__dirname, '..', 'src', p), 'utf8');
+
+  it('no painel, "letras dominadas" vem do domínio e "lições concluídas" da regra antiga', () => {
+    const d = fonte('app/meu-hebraico/DashboardClient.tsx');
+    expect(d).toMatch(/n=\{dominio\.contagem\.dominada\} rotulo=\{[^}]*'letras dominadas'/);
+    expect(d).toMatch(/n=\{p\.mastered\} rotulo=\{[^}]*'lições concluídas'/);
+    expect(d).not.toMatch(/n=\{p\.mastered\} rotulo=\{[^}]*dominad/);
+  });
+
+  it('as telas que contam pela regra antiga não dizem "dominada"', () => {
+    for (const f of ['components/game/AlphabetGrid.tsx', 'app/concluido/CompletionClient.tsx',
+      'app/desafio-final/FinalChallengeClient.tsx', 'app/certificado/CertificadoClient.tsx',
+      'app/loja/LojaClient.tsx', 'app/checkpoint/[n]/CheckpointClient.tsx']) {
+      const visivel = fonte(f).split('\n').filter(l => !/^\s*(\*|\/\/|\/\*|\{\/\*)/.test(l)).join('\n');
+      expect(visivel, f).not.toMatch(/letras dominadas|Letras dominadas|· dominada|Dominar (é|uma)|Domine as/);
+    }
+    expect(fonte('components/game/AlphabetGrid.tsx')).toContain('lições concluídas');
+  });
+
+  it('os níveis do domínio têm os nomes combinados', () => {
+    expect(NIVEL_PT['poucos-dados']).toBe('Dados insuficientes');
+    expect(HABILIDADES.map(h => h.tituloPt)).toEqual(['Reconhecimento visual', 'Reconhecimento sonoro', 'Leitura em palavras']);
   });
 });

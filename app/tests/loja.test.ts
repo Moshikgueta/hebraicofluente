@@ -176,9 +176,9 @@ describe('o que falta para abrir uma leitura', () => {
   it('a troca é livre, e a tela diz o número e a lógica de voltar depois', () => {
     const f = readFileSync(join(__dirname, '../src/app/loja/LojaClient.tsx'), 'utf8');
     expect(f).toContain('Você pode trocar qualquer leitura agora.');
-    expect(f).toContain('Você domina <strong>{mastered} de {totalLetras} letras</strong>');
+    expect(f).toContain('Você concluiu <strong>{mastered} de {totalLetras} lições de letras</strong>');
     /* A regra sai das constantes (UXQA-005): nada de "6 de 8" escrito à mão. */
-    expect(f).toContain('Dominar uma letra é {REGRA_DO_DOMINIO}.');
+    expect(f).toContain('{REGRA_DA_CONCLUSAO}');
     expect(f).not.toContain('6 de 8');
     expect(REGRA_DO_DOMINIO).toBe('concluir as 5 etapas da lição e acertar pelo menos 8 de 10 nos exercícios');
     /* O botão só se desliga por saldo, nunca pelas letras. */

@@ -2,7 +2,7 @@
  * palavra em letras e vogais (11/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * O banco NÃO é uma lista nova escrita à mão. É o vocabulário que o curso já
- * ensina (`vocabularioDoCurso`, as 177 palavras de letters.json), com os
+ * ensina para LER (`wordsToRead` de letters.json; ver `vocabularioDeLeitura`), com os
  * campos que a leitura guiada precisa calculados a partir dele. Assim uma
  * palavra corrigida na lição sai corrigida aqui, e nenhuma palavra entra no
  * laboratório sem ter passado pela validação do curso (V1: só letras já
@@ -26,21 +26,23 @@
 
 import type { Letter } from '@/lib/content';
 import { FINAL_TO_BASE, clean, clusters, stripNikud } from '@/lib/hebrew';
-import { letrasDaGrafia, vocabularioDoCurso, consegueLer, type PalavraDoCurso } from '@/lib/engine/palavras';
+import { letrasDaGrafia, consegueLer, type PalavraDoCurso } from '@/lib/engine/palavras';
 
 export type NivelDeApoio = 'guiada' | 'menos-ajuda' | 'independente';
 
 export const NIVEIS: readonly { id: NivelDeApoio; tituloPt: string; resumoPt: string }[] = [
   { id: 'guiada', tituloPt: 'Leitura guiada',
-    resumoPt: 'Com nikud, as letras uma a uma e o áudio quando você quiser.' },
+    resumoPt: 'Com nikud, explicação letra por letra e áudio disponível quando você precisar.' },
   { id: 'menos-ajuda', tituloPt: 'Leitura com menos ajuda',
-    resumoPt: 'Você tenta primeiro. A ajuda fica guardada, a um toque.' },
+    resumoPt: 'Tente ler por conta própria. Você pode acessar dicas quando precisar.' },
   { id: 'independente', tituloPt: 'Leitura independente',
-    resumoPt: 'Só a palavra. Você lê e depois confere.' }
+    resumoPt: 'Leia a palavra por conta própria e depois confira a pronúncia.' }
 ];
 
 /** Uma vogal como o curso a ensina, pelo SOM. */
 export type Vogal = 'a' | 'e' | 'i' | 'o' | 'u';
+
+export type PapelDaLetra = 'consoante' | 'vogal' | 'apoio';
 
 export type PedacoDaPalavra = {
   /** A letra com os sinais que estão nela, como aparece na palavra. */
@@ -58,6 +60,9 @@ export type PedacoDaPalavra = {
   sinaisPt: string[];
   /** Esta letra é só apoio de vogal: o ו de וֹ e de וּ. */
   apoioDeVogal: boolean;
+  /** O que a letra faz NESTA palavra: soa como consoante, é a própria vogal
+   *  (וֹ, וּ, o Álef com vogal) ou só apoia a vogal sem som (o י de מִי). */
+  papel: PapelDaLetra;
   /** Uma observação curta, quando a letra tem uma particularidade aqui. */
   notaPt: string | null;
 };
@@ -75,6 +80,9 @@ export type PalavraDoBanco = {
   sinais: string[];
   dificuldade: 1 | 2 | 3;
   audioId: string;
+  /** A lição de som que a palavra pede (a do Vet, a do Sin...), quando pede:
+   *  sem ela concluída a palavra não entra, mesmo com as letras todas feitas. */
+  som: string | null;
   /** A ordem da letra em cuja lição a palavra aparece. */
   desde: number;
   pedacos: PedacoDaPalavra[];
@@ -107,9 +115,19 @@ function somResolvido(som: string, comDaguesh: boolean): string {
   return m ? (comDaguesh ? m[1]! : m[2]!) : som;
 }
 
-export function pedacosDe(he: string, letras: readonly Letter[]): PedacoDaPalavra[] {
+/**
+ * A palavra em letras, cada uma com o papel que ela tem NESTA palavra.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Nenhuma regra aqui é dita como regra geral do hebraico: toda nota fala da
+ * palavra que está na tela ("aqui", "nesta palavra"). O Álef e o Áyin têm
+ * som em outras pronúncias e contextos; o He tem som no começo e no meio; o
+ * Yud depois de E às vezes é ditongo, às vezes não. A tela diz o que vale
+ * nesta palavra, e a transliteração aprovada é quem confirma (12/10/2026).
+ */
+export function pedacosDe(he: string, letras: readonly Letter[], translit = ''): PedacoDaPalavra[] {
   const porGlifo = new Map(letras.map(l => [l.letter, l]));
   const cl = clusters(clean(he));
+  const tl = translit.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   return cl.map((g, i): PedacoDaPalavra => {
     const base = g[0] ?? '';
     const letra = FINAL_TO_BASE[base] ?? base;
@@ -120,46 +138,74 @@ export function pedacosDe(he: string, letras: readonly Letter[]): PedacoDaPalavr
     const daguesh = marcas.includes(DAGESH);
     const final = base !== letra;
     const ultima = i === cl.length - 1;
+    /* A vogal da letra de antes, contando a do ו que é vogal (וּ = U). */
+    const prev = i > 0 ? cl[i - 1] ?? '' : '';
+    const anterior = !prev ? null
+      : /^\u05D5\u05BC$/.test(prev) ? 'u'
+      : [...prev].map(m => SINAIS[m]?.vogal).find(Boolean) ?? null;
 
-    /* O ו que é vogal: וֹ depois de uma consoante, e וּ sem outra vogal. */
-    const cholamMale = letra === 'ו' && i > 0 && marcas.length === 1 && marcas[0] === 'ֹ';
+    /* O ו que é vogal: וֹ (cholam malê) depois de uma consoante, e וּ
+       (shuruk) sem outra vogal. Um ו com daguesh E vogal própria é o V. */
+    const cholamMale = letra === 'ו' && i > 0 && marcas.length === 1 && (marcas[0] === '\u05B9' || marcas[0] === '\u05BA');
     const shuruk = letra === 'ו' && i > 0 && marcas.length === 1 && marcas[0] === DAGESH;
     if (cholamMale || shuruk) {
       return {
         grafia: g, letra, nomePt: L?.namePt ?? 'Vav', somPt: '',
         vogal: cholamMale ? 'o' : 'u', sinaisPt: [cholamMale ? 'cholam malê' : 'shuruk'],
-        apoioDeVogal: true,
-        notaPt: cholamMale ? 'Aqui o Vav não é V: com o ponto em cima, ele é a vogal O.'
-                           : 'Aqui o Vav não é V: com o ponto dentro, ele é a vogal U.'
+        apoioDeVogal: true, papel: 'vogal',
+        notaPt: cholamMale ? 'Aqui, o Vav com o ponto acima representa o som O.'
+                           : 'Aqui, o Vav com o ponto dentro representa o som U.'
       };
     }
 
     let nomePt = L?.namePt ?? letra;
     let somPt = L ? somResolvido(L.sound, daguesh) : '';
     let notaPt: string | null = null;
+    let papel: PapelDaLetra = 'consoante';
     if (letra === 'ש' && marcas.includes(PONTO_SIN)) { nomePt = 'Sin'; somPt = '/s/'; }
     else if (letra === 'ש' && marcas.includes(PONTO_SHIN)) { somPt = '/ʃ/'; }
     if (final) nomePt = `${nomePt} final`;
-    /* O ה no fim, sem vogal própria, não se pronuncia. */
-    if (letra === 'ה' && ultima && !vogal) { somPt = ''; notaPt = 'No fim da palavra, o He sem vogal não se pronuncia.'; }
-    /* O ח e o ע no fim com pátach: o A vem ANTES da letra. */
-    if ((letra === 'ח' || letra === 'ע') && ultima && marcas.includes('ַ')) {
-      notaPt = 'No fim da palavra, este A se lê antes da letra.';
-    }
-    if (letra === 'א' && !vogal) notaPt = 'Sem vogal, o Álef não tem som: é só a letra.';
-    /* O י sem sinal nenhum depois de uma vogal é apoio, e não o som /j/:
-       מִי é "mi", עִיר é "ir". Depois do tsere ele forma o "ei" (אַחֲרֵי). */
-    const anterior = i > 0 ? [...(cl[i - 1] ?? '')].map(m => SINAIS[m]?.vogal).find(Boolean) : null;
-    if (letra === 'י' && !marcas.length && anterior) {
+
+    /* Álef e Áyin: na pronúncia israelense mais comum, nenhum dos dois soa
+       como consoante NESTA palavra. Com vogal, quem soa é a vogal; sem vogal,
+       a letra não soa. */
+    if (letra === 'א') {
       somPt = '';
-      notaPt = anterior === 'i' ? 'Depois do I, o Yud não tem som próprio: só acompanha o I.'
-        : anterior === 'e' ? 'Depois deste E, o Yud forma o som "ei".'
+      papel = vogal ? 'vogal' : 'apoio';
+      notaPt = vogal ? `Nesta palavra, o Álef não tem som próprio: quem soa é a vogal ${vogal.toUpperCase()}.`
+                     : 'Nesta palavra, o Álef não tem som próprio.';
+    }
+    if (letra === 'ע') {
+      somPt = '';
+      papel = vogal ? 'vogal' : 'apoio';
+      notaPt = 'Na pronúncia israelense mais comum, o Áyin não soa como consoante nesta palavra. '
+        + 'Em algumas tradições, ele é pronunciado no fundo da garganta.';
+    }
+    /* O ה no fim, sem vogal própria e depois de uma vogal: apoio da vogal
+       final (תוֹדָה). Não vale para o He com som. */
+    if (letra === 'ה' && ultima && !vogal && anterior) {
+      somPt = ''; papel = 'apoio';
+      notaPt = 'No fim de muitas palavras, o He não tem som próprio e ajuda a representar a vogal final.';
+    }
+    /* O pátach do fim que se lê ANTES da consoante: só em ח ou ע finais,
+       depois de uma vogal que não é A (רוּחַ, תַפּוּחַ). */
+    if ((letra === 'ח' || letra === 'ע') && ultima && marcas.includes('\u05B7') && anterior && anterior !== 'a') {
+      notaPt = 'Aqui temos um pátach especial: o som A é pronunciado antes da consoante final.';
+    }
+    /* O י sem sinal depois de uma vogal é apoio, não o som /j/: מִי é "mi".
+       Depois de E, ditongo só quando a transliteração aprovada diz "ei". */
+    if (letra === 'י' && !marcas.length && anterior) {
+      somPt = ''; papel = 'apoio';
+      notaPt = anterior === 'i' ? 'Aqui, o Yud ajuda a representar a vogal I, sem produzir um som separado.'
+        : anterior === 'e' ? (tl.includes('ei')
+            ? 'Nesta palavra, o E e o Yud formam o som "ei".'
+            : 'Aqui, o Yud faz parte da representação da vogal E. Ouça como esta palavra é pronunciada.')
         : 'Aqui o Yud não tem som próprio.';
     }
 
     return {
       grafia: g, letra, nomePt, somPt, vogal,
-      sinaisPt: sinais.map(s => s.nome), apoioDeVogal: false, notaPt
+      sinaisPt: sinais.map(s => s.nome), apoioDeVogal: false, papel, notaPt
     };
   });
 }
@@ -200,14 +246,37 @@ function dificuldadeDe(letras: readonly string[], sinais: readonly string[]): 1 
 /** As palavras que o curso considera legíveis sem os pontos (módulo 6). */
 export type ListaSemPontos = readonly { pointed: string; bare: string }[];
 
+/**
+ * O vocabulário que entra no laboratório: só as palavras de LEITURA de cada
+ * lição (`wordsToRead`), nunca as de reconhecimento (`wordsToRecognize`).
+ *
+ * É a escolha conservadora (12/10/2026). Ter todas as letras de uma palavra
+ * não garante saber lê-la: ela pode pedir um sinal de vogal ou uma regra de
+ * leitura que ainda não apareceu. As palavras de leitura de uma lição foram
+ * escolhidas pelo curso para serem lidas NAQUELA lição, com as letras, os
+ * sinais e as regras ensinados até ali; as de reconhecimento, não. O curso
+ * não guarda em que lição cada sinal de vogal é ensinado, e por isso a régua
+ * é a da lição que pôs a palavra para ser lida.
+ */
+export function vocabularioDeLeitura(letras: readonly Letter[]): (PalavraDoCurso & { som?: string | null })[] {
+  const visto = new Map<string, PalavraDoCurso & { som?: string | null }>();
+  for (const L of [...letras].sort((a, b) => a.order - b.order)) {
+    for (const w of L.wordsToRead) {
+      const k = clean(w.he);
+      if (!visto.has(k)) visto.set(k, { ...w, desde: L.order });
+    }
+  }
+  return [...visto.values()];
+}
+
 export function bancoDePalavras(
   letras: readonly Letter[],
   semPontos: ListaSemPontos = [],
-  vocab: readonly PalavraDoCurso[] = vocabularioDoCurso(letras)
+  vocab: readonly (PalavraDoCurso & { som?: string | null })[] = vocabularioDeLeitura(letras)
 ): PalavraDoBanco[] {
   const nua = new Map(semPontos.map(w => [clean(w.pointed), w.bare]));
   return vocab.map(w => {
-    const pedacos = pedacosDe(w.he, letras);
+    const pedacos = pedacosDe(w.he, letras, w.translit);
     const sinais = [...new Set(pedacos.flatMap(p => p.sinaisPt))];
     const letrasDaPalavra = letrasDaGrafia(w.he);
     return {
@@ -220,6 +289,7 @@ export function bancoDePalavras(
       sinais,
       dificuldade: dificuldadeDe(letrasDaPalavra, sinais),
       audioId: w.audioId,
+      som: w.som ?? null,
       desde: w.desde,
       pedacos,
       vogaisConferem: vogaisConferem(pedacos, w.translit)
@@ -233,18 +303,25 @@ export function bancoDePalavras(
  * pelas fáceis; a independente prefere as que ele viu há mais tempo (o
  * reconhecimento já teve tempo de assentar).
  */
+/** A palavra está ao alcance do aluno: letras concluídas, a lição de som que
+ *  ela pede concluída, e duas letras ou mais. */
+export const aoAlcance = (w: PalavraDoBanco, alfabeto: readonly string[], sonsFeitos: ReadonlySet<string>): boolean =>
+  w.letras.length >= 2 && consegueLer(w.he, alfabeto) && (!w.som || sonsFeitos.has(w.som));
+
 export function palavrasDaRodada(
   banco: readonly PalavraDoBanco[], alfabeto: readonly string[], nivel: NivelDeApoio,
-  rand: () => number, n = 5
+  rand: () => number, n = 5, sonsFeitos: ReadonlySet<string> = new Set()
 ): PalavraDoBanco[] {
-  const legiveis = banco.filter(w => w.letras.length >= 2 && consegueLer(w.he, alfabeto));
+  const legiveis = banco.filter(w => aoAlcance(w, alfabeto, sonsFeitos));
   if (!legiveis.length) return [];
   const ultima = Math.max(...legiveis.map(w => w.desde));
+  /* Uma palavra cuja vogal foge do comum (o kamats que soa O) só entra com
+     apoio: na guiada e na com menos ajuda, com o aviso. Na independente não. */
   const pool = nivel === 'guiada'
     ? legiveis.filter(w => w.dificuldade <= 2)
     : nivel === 'menos-ajuda'
       ? legiveis
-      : legiveis.filter(w => w.desde < ultima || legiveis.length < 8);
+      : legiveis.filter(w => w.vogaisConferem && (w.desde < ultima || legiveis.length < 8));
   const base = pool.length >= n ? pool : legiveis;
   const embaralhadas = [...base].map(w => ({ w, r: rand() })).sort((a, b) => a.r - b.r).map(x => x.w);
   return embaralhadas.slice(0, n);
@@ -259,11 +336,53 @@ export const primeiraLeituraId = (modulo: number): string => `primeira-leitura-m
  * as mais longas. Sem sorteio: é um marco, e todo aluno lê as mesmas.
  */
 export function palavrasDaPrimeiraLeitura(
-  banco: readonly PalavraDoBanco[], letrasDoModulo: readonly Letter[], alfabeto: readonly string[], n = 5
+  banco: readonly PalavraDoBanco[], letrasDoModulo: readonly Letter[], alfabeto: readonly string[], n = 5,
+  sonsFeitos: ReadonlySet<string> = new Set()
 ): PalavraDoBanco[] {
   const ordens = new Set(letrasDoModulo.map(l => l.order));
   return banco
-    .filter(w => ordens.has(w.desde) && w.letras.length >= 2 && consegueLer(w.he, alfabeto))
+    .filter(w => ordens.has(w.desde) && aoAlcance(w, alfabeto, sonsFeitos) && w.vogaisConferem)
     .sort((a, b) => a.letras.length - b.letras.length || a.desde - b.desde)
     .slice(0, n);
 }
+
+/* ── os textos que dependem de um número ou de uma condição ──────────────
+   Aqui, e não na tela, para os testes conferirem singular e plural e o que
+   cada frase promete (tests/laboratorio.test.ts). */
+
+/** "1 palavra", "5 palavras". */
+export const nPalavras = (n: number): string => (n === 1 ? '1 palavra' : `${n} palavras`);
+
+/** A instrução de cada nível. Só promete o áudio quando a palavra tem. */
+export function instrucao(nivel: NivelDeApoio, temAudio: boolean): string {
+  if (nivel === 'guiada') {
+    return temAudio
+      ? 'Leia da direita para a esquerda, em voz alta. Se precisar, explore as letras uma a uma ou ouça a pronúncia.'
+      : 'Leia da direita para a esquerda, em voz alta. Se precisar, explore as letras uma a uma.';
+  }
+  if (nivel === 'menos-ajuda') return 'Tente ler em voz alta sem ajuda. Se precisar, você pode acessar as dicas abaixo.';
+  return 'Leia a palavra em voz alta por conta própria. Depois, confira a pronúncia.';
+}
+
+/** O que a letra faz nesta palavra, em poucas palavras. */
+export function descricao(p: PedacoDaPalavra, comVogal: boolean): string {
+  const V = comVogal && p.vogal ? p.vogal.toUpperCase() : null;
+  if (p.papel === 'vogal') return V ? `vogal ${V}` : 'vogal';
+  if (p.papel === 'apoio') {
+    return p.letra === 'א' || p.letra === 'ע' ? 'sem som de consoante aqui' : 'apoio da vogal';
+  }
+  return V ? `${p.somPt} + ${V}` : p.somPt;
+}
+
+/** O resultado da Primeira Leitura, honesto sobre o que aconteceu: só diz
+ *  "sem ouvir a pronúncia antes" quando foi assim. */
+export function mensagemDaPrimeiraLeitura(total: number, certas: number, ouviuAlguma: boolean): string {
+  const marcou = certas === 0
+    ? 'Nenhuma foi marcada como lida corretamente ainda: vale ler de novo, com calma.'
+    : `Marcou ${certas === 1 ? '1 delas' : `${certas} delas`} como ${certas === 1 ? 'lida corretamente' : 'lidas corretamente'}.`;
+  return ouviuAlguma
+    ? `Você praticou a leitura de ${nPalavras(total)} em hebraico. ${marcou} Da próxima vez, tente ler cada palavra antes de ouvir.`
+    : `Você praticou a leitura de ${nPalavras(total)} em hebraico sem ouvir a pronúncia antes. ${marcou}`
+      + (certas > 0 ? ' Isso é um grande passo: você está começando a ler hebraico!' : '');
+}
+

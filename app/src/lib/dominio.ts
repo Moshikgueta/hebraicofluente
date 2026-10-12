@@ -30,16 +30,20 @@ import type { LearnerState, SkillStat } from '@/lib/state/types';
 
 export type HabilidadeDeLeitura = 'forma' | 'som' | 'leitura';
 
-export const HABILIDADES: readonly { id: HabilidadeDeLeitura; tituloPt: string; resumoPt: string }[] = [
-  { id: 'forma', tituloPt: 'Reconhecimento visual', resumoPt: 'reconhecer o desenho da letra' },
-  { id: 'som', tituloPt: 'Reconhecimento sonoro', resumoPt: 'ligar a letra ao som' },
-  { id: 'leitura', tituloPt: 'Leitura contextual', resumoPt: 'achar e ler a letra numa palavra' }
+export const HABILIDADES: readonly { id: HabilidadeDeLeitura; tituloPt: string; descricaoPt: string; resumoPt: string }[] = [
+  { id: 'forma', tituloPt: 'Reconhecimento visual', descricaoPt: 'Identificar a forma da letra.',
+    resumoPt: 'identificar a forma da letra' },
+  { id: 'som', tituloPt: 'Reconhecimento sonoro', descricaoPt: 'Associar a letra ao seu som.',
+    resumoPt: 'associar a letra ao som' },
+  /* O id interno continua `leitura`; na tela é "Leitura em palavras". */
+  { id: 'leitura', tituloPt: 'Leitura em palavras', descricaoPt: 'Reconhecer e ler a letra dentro de palavras.',
+    resumoPt: 'reconhecer e ler a letra dentro de palavras' }
 ];
 
 export type NivelDeDominio = 'poucos-dados' | 'aprendendo' | 'desenvolvimento' | 'quase' | 'dominada';
 
 export const NIVEL_PT: Record<NivelDeDominio, string> = {
-  'poucos-dados': 'Poucos dados ainda',
+  'poucos-dados': 'Dados insuficientes',
   aprendendo: 'Ainda aprendendo',
   desenvolvimento: 'Em desenvolvimento',
   quase: 'Quase dominada',

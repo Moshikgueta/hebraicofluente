@@ -280,7 +280,17 @@ export function mergeStates(local: LearnerState, remoto: LearnerState): LearnerS
        comprada nos dois lados vale o uso MAIS CEDO. Comutativa e idempotente. */
     loja: { compras: fundirCompras(a.loja?.compras ?? {}, b.loja?.compras ?? {}) },
     /* O A1: regras próprias, comutativas como as daqui (lib/state/a1-estado.ts). */
-    a1: fundirA1(a.a1, b.a1)
+    a1: fundirA1(a.a1, b.a1),
+    /* A autoavaliação de leitura: contadores que só sobem, o maior de cada
+       lado (como `kinds`), e a data mais recente. Só aparece quando algum
+       dos lados a tem. */
+    ...(a.leituraAutoavaliada || b.leituraAutoavaliada ? {
+      leituraAutoavaliada: fundirMapa(a.leituraAutoavaliada ?? {}, b.leituraAutoavaliada ?? {}, (x, y) => ({
+        tentadas: Math.max(x.tentadas, y.tentadas),
+        consegui: Math.max(x.consegui, y.consegui),
+        ultima: tarde(x.ultima, y.ultima)!
+      }))
+    } : {})
   };
 }
 

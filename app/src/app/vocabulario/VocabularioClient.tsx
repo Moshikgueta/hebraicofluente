@@ -72,7 +72,7 @@ export function VocabularioClient() {
           <Link href="/leitura"
                 className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium
                            text-[var(--teal-ink)] underline">
-            Ler estas palavras sozinho, no Laboratório de Leitura
+            Pratique a leitura destas palavras no Laboratório de Leitura.
           </Link>
         )}
       </header>

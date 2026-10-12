@@ -196,7 +196,7 @@ export function DashboardClient() {
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
               {needsWarmUp(p.state, p.day)
                 ? 'Você esteve fora alguns dias. Três minutos no que estava escapando e a lição de hoje rende muito mais.'
-                : `Há ${p.dueCount} itens esperando revisão. Uma revisão curta agora deixa a próxima letra mais leve.`}
+                : `Você tem ${p.dueCount} ${p.dueCount === 1 ? 'item' : 'itens'} para revisar. Uma revisão rápida agora vai ajudar você a aprender a próxima letra com mais facilidade.`}
             </p>
           </div>
           <LinkButton href="/revisao" className="justify-self-start sm:justify-self-end">
@@ -298,10 +298,10 @@ export function DashboardClient() {
           <div className="grid gap-1 min-w-0">
             <Badge tone="accent">Minha Primeira Leitura</Badge>
             <p className="font-display text-[17px] font-semibold text-ink mt-1">
-              Módulo {primeiraPendente.n} concluído: hora de ler
+              Módulo {primeiraPendente.n} concluído! Hora de praticar a leitura.
             </p>
             <p className="text-[14.5px] leading-relaxed text-ink-body">
-              Algumas palavras escritas só com as letras que você já conhece. Você lê sozinho, depois ouve e confere.
+              Algumas palavras formadas com as letras e os sinais vocálicos que você já aprendeu. Você lê por conta própria, depois ouve e confere.
             </p>
           </div>
           <LinkButton href={`/leitura?primeira=${primeiraPendente.n}`} className="shrink-0">Ler agora</LinkButton>
@@ -364,9 +364,12 @@ export function DashboardClient() {
           pendente, e como foi a semana. */}
       <section aria-label="Seus números" className="grid gap-3
                           [grid-template-columns:repeat(auto-fit,minmax(168px,1fr))]">
-        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? 'letra dominada' : 'letras dominadas'}
+        {/* 12/10/2026: "letras dominadas" é o domínio por habilidade
+            (lib/dominio.ts); "lições concluídas" é a regra antiga, as cinco
+            etapas com 75% (`p.mastered`), a mesma do alfabeto abaixo. */}
+        <CartaoNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? 'letra dominada' : 'letras dominadas'}
                       tom="teal" icone={<IconeLetras />} />
-        <CartaoNumero n={licoesFeitas} rotulo={licoesFeitas === 1 ? 'lição concluída' : 'lições concluídas'}
+        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? 'lição concluída' : 'lições concluídas'}
                       tom="teal" icone={<IconeLicoes />} />
         <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? "item a revisar" : "itens a revisar"} tom="gold" icone={<IconeRevisar />} />
         <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />
@@ -379,9 +382,9 @@ export function DashboardClient() {
           <div className="grid gap-1 min-w-0">
             <p className="font-display text-[17px] font-semibold text-ink m-0">Meu domínio das letras</p>
             <p className="font-ui text-[14.5px] leading-relaxed text-ink-body m-0">
-              {`Dominadas: ${dominio.contagem.dominada} · quase: ${dominio.contagem.quase}`}
+              {`Dominadas: ${dominio.contagem.dominada} · Quase dominadas: ${dominio.contagem.quase}`}
               {dominio.paraPraticar.length > 0 &&
-                ` · para reforçar: ${dominio.paraPraticar.map(d => getLetter(d.letterId)?.namePt).join(', ')}`}
+                ` · Para reforçar: ${dominio.paraPraticar.map(d => getLetter(d.letterId)?.namePt).join(', ')}`}
             </p>
           </div>
           <LinkButton href="/meu-hebraico/dominio" variant="secondary" className="shrink-0">Ver o meu domínio</LinkButton>
@@ -416,7 +419,7 @@ export function DashboardClient() {
         </div>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 list-none p-0 m-0">
           {([
-            ['/leitura', 'Leitura', 'Ler palavras com mais ou menos ajuda.'],
+            ['/leitura', 'Leitura', 'Pratique a leitura de palavras no seu ritmo.'],
             ['/academia?jogo=match', 'Match', 'Junte letra, nome e som.'],
             ['/academia?jogo=blast', 'Blast', 'Rápido, com sequência de acertos.'],
             ['/academia?jogo=teste', 'Teste', 'Nota no fim e revisão dos erros.']

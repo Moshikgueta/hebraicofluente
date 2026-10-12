@@ -23,7 +23,7 @@ import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
 import { allLetters, course } from '@/lib/content';
-import { certificateReady, REGRA_DO_DOMINIO } from '@/lib/state/rules';
+import { certificateReady, REGRA_DA_CONCLUSAO } from '@/lib/state/rules';
 import { CompartilharCertificado } from '@/components/platform/CompartilharCertificado';
 import { EXAM_PASS } from '@/lib/engine/exam';
 import {
@@ -151,8 +151,8 @@ export function CertificadoClient() {
           <ul className="divide-y divide-[color:var(--line-soft)]">
             <Requirement
               done={gate.lettersDone >= course.totalLetters}
-              titlePt={`As ${course.totalLetters} letras dominadas`}
-              detailPt={`${gate.lettersDone} de ${course.totalLetters} dominadas. Dominar é ${REGRA_DO_DOMINIO}.`}
+              titlePt={`As lições das ${course.totalLetters} letras concluídas`}
+              detailPt={`${gate.lettersDone} de ${course.totalLetters} concluídas. ${REGRA_DA_CONCLUSAO}`}
               href="/mapa"
               ctaPt="Ir para o mapa"
             />
@@ -343,7 +343,7 @@ export function CertificadoClient() {
 
       <Card tone="wash" className="p-5 grid gap-2 reading">
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-          <strong>O que este certificado é:</strong> o registro de que você dominou as
+          <strong>O que este certificado é:</strong> o registro de que você concluiu as lições das
           22 letras e passou no exame final deste curso, com {' '}
           {score != null ? `${Math.round(score * 100)}%` : 'nota de aprovação'}.
         </p>

@@ -28,7 +28,7 @@ export const SOM_PT: Readonly<Record<string, string>> = {
   '/v/': 'v, como em "vaca"',
   '/z/': 'z, como em "zebra"',
   /* Alinhado ao texto do ח aprovado em 11/10/2026: o R carioca é aproximação. */
-  '/χ/': 'raspado no fundo da boca, parecido com alguns R cariocas',
+  '/χ/': 'som produzido na parte de trás da boca, parecido com alguns tipos de R carioca',
   '/s/': 's, como em "sapo"',
   '/ts/': 'ts, como em "tsunami"',
   '/k/': 'k, como o c de "casa"',

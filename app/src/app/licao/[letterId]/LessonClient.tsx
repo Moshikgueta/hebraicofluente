@@ -340,7 +340,7 @@ function StageConhecer({
       </Card>
 
       <GravacaoDoProfessor id={`letter-${letter.id}-intro`}
-        textoPt={`O professor apresenta ${letter.namePt}: o nome, o som e uma palavra.`} />
+        textoPt={`O nome, o som e uma palavra com ${letter.namePt}.`} />
 
       <Card className="p-6 grid gap-3">
         <h2 className="text-[19px] font-semibold">Como pronunciar</h2>
@@ -882,7 +882,7 @@ function StageFixacao({
         <Milestone
           tone={strong || fezReforco ? 'bom' : 'parcial'}
           kicker={`${result.correct} de ${result.total} · ${pct}%`}
-          title={strong ? 'Mais uma letra dominada.'
+          title={strong ? 'Mais uma lição concluída.'
             : fezReforco ? 'Reforço feito.'
             : result.score >= 0.6 ? 'Quase lá.'
             : `Vamos firmar ${letter.namePt}.`}
@@ -896,7 +896,7 @@ function StageFixacao({
                 + 'Refaça o teste: as perguntas mudam a cada tentativa.'
             : fezReforco
               ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
-                + 'Ela ainda não conta como dominada - refaça o teste quando quiser, '
+                + 'Ela ainda não conta como concluída - refaça o teste quando quiser, '
                 + 'com outras perguntas, e ela passa a contar. Pode seguir.'
               : result.score >= 0.6
                 ? 'Faltou pouco. Quatro questões rápidas, montadas a partir do que escapou, e seguimos.'
@@ -953,20 +953,27 @@ function StageFixacao({
    quem ficou abaixo dela seria a tela fingindo. O número de palavras novas
    já está logo abaixo, no contador de leitura. */
 function MinhaConquista({ letter }: { letter: Letter }) {
+  /* O segundo som de cada letra vem de um sinal diferente, e a frase diz
+     qual: o daguesh em ב, כ, פ. O ש tem as suas duas leituras em lições
+     separadas (Shin e Sin), e por isso aqui tem um som só. */
+  const doisSons = letter.sound.includes(' ou ');
+  const semSom = letter.sound.startsWith('(');
   return (
     <Card tone="mint" className="p-5 grid gap-2.5">
       <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] m-0">Minha conquista</p>
       <ul className="grid gap-1.5 text-[15px] leading-relaxed text-ink list-disc pl-5 m-0">
-        <li>{`Reconhecer a letra ${letter.namePt}, impressa e escrita à mão.`}</li>
-        <li>{letter.sound.startsWith('(')
-          ? `Saber que ${letter.namePt} não tem som próprio: quem soa é a vogal junto dela.`
-          : letter.sound.includes(' ou ')
-            ? `Ligar ${letter.namePt} aos dois sons dela: ${somPt(letter.sound)}.`
-            : `Ligar ${letter.namePt} ao som dela: ${somPt(letter.sound)}.`}</li>
-        <li>{`Achar e ler ${letter.namePt} dentro de palavras.`}</li>
+        {/* A etapa Escrever da lição traça a cursiva, e a etapa Conhecer mostra
+            a impressa: quem chega aqui com a nota viu e praticou as duas. */}
+        <li>{`Reconhecer a letra ${letter.namePt} nas formas impressa e cursiva.`}</li>
+        <li>{semSom
+          ? `Entender que, nas palavras estudadas, a letra ${letter.namePt} pode aparecer sem um som próprio.`
+          : doisSons
+            ? `Reconhecer os dois sons da letra ${letter.namePt}, com e sem daguesh: ${somPt(letter.sound)}.`
+            : `Associar a letra ${letter.namePt} ao som ${somPt(letter.sound)}.`}</li>
+        <li>{`Reconhecer a letra ${letter.namePt} dentro de palavras.`}</li>
       </ul>
       <Link href="/leitura" className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium text-[var(--teal-ink)] underline">
-        Ler palavras sozinho no Laboratório de Leitura
+        Praticar a leitura de palavras no Laboratório de Leitura.
       </Link>
     </Card>
   );

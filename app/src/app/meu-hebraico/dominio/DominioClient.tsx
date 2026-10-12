@@ -12,7 +12,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { allLetters } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
 import {
-  HABILIDADES, NIVEL_PT, resumoDoDominio, type DominioDaLetra, type NivelDeDominio
+  HABILIDADES, LIMIARES, NIVEL_PT, resumoDoDominio, type DominioDaLetra, type NivelDeDominio
 } from '@/lib/dominio';
 
 const COR: Record<NivelDeDominio, string> = {
@@ -41,15 +41,16 @@ export function DominioClient() {
         </p>
         <h1 className="text-[28px] font-bold m-0">Meu domínio das letras</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-          Concluir uma lição é uma coisa; dominar a letra é outra. Aqui conta o que você acerta nos
-          exercícios e na revisão, ao longo dos dias: ver a forma, ligar ao som e ler dentro da palavra.
+          Concluir uma lição não significa necessariamente dominar uma letra. Aqui, você acompanha seu
+          progresso em três habilidades: reconhecer a letra, identificar seu som e lê-la dentro de
+          palavras. Seu nível de domínio evolui conforme você pratica e revisa ao longo do tempo.
         </p>
       </header>
 
       {!resumo.letras.length ? (
         <Card className="p-5 grid gap-3">
           <p className="font-ui text-[15px] text-ink-body m-0">
-            Assim que você fizer os exercícios da primeira letra, o seu domínio aparece aqui.
+            Assim que você fizer os primeiros exercícios, seu progresso começará a aparecer aqui.
           </p>
           <LinkButton href="/meu-hebraico" variant="secondary">Voltar ao painel</LinkButton>
         </Card>
@@ -62,6 +63,15 @@ export function DominioClient() {
               </span>
             ))}
           </section>
+
+          <dl className="grid sm:grid-cols-3 gap-2 m-0" aria-label="As três habilidades">
+            {HABILIDADES.map(h => (
+              <div key={h.id} className="rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
+                <dt className="font-ui text-[14px] font-semibold text-ink">{h.tituloPt}</dt>
+                <dd className="font-ui text-[13.5px] leading-snug text-ink-muted m-0">{h.descricaoPt}</dd>
+              </div>
+            ))}
+          </dl>
 
           {resumo.paraPraticar.length > 0 ? (
             <Card tone="wash" className="p-5 grid gap-3">
@@ -86,8 +96,9 @@ export function DominioClient() {
           ) : (
             <Card tone="mint" className="p-5">
               <p className="font-ui text-[15px] leading-relaxed text-ink m-0">
-                Nenhuma letra pedindo reforço agora. Para firmar o que está quase, uma leitura no
-                {' '}<Link href="/leitura" className="underline">Laboratório de Leitura</Link> ajuda.
+                Nenhuma letra precisa de reforço especial agora. Uma leitura no
+                {' '}<Link href="/leitura" className="underline">Laboratório de Leitura</Link> pode ajudar
+                você a consolidar o que aprendeu.
               </p>
             </Card>
           )}
@@ -97,10 +108,20 @@ export function DominioClient() {
           </ul>
 
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted m-0 max-w-[60ch]">
-            Com poucas respostas numa habilidade, a tela diz &quot;poucos dados ainda&quot; em vez de
-            adivinhar. Um erro recente baixa o nível até você acertar de novo, e &quot;dominada&quot;
-            pede acertos em pelo menos dois dias diferentes.
+            Seu nível de domínio é calculado com base nas suas respostas e revisões. Para considerar uma
+            letra dominada, precisamos observar bons resultados em dias diferentes.
           </p>
+          <details className="max-w-[60ch]">
+            <summary className="cursor-pointer min-h-[44px] flex items-center font-ui text-[14px] text-[var(--teal-ink)]">
+              Como o nível é calculado
+            </summary>
+            <ul className="grid gap-1.5 font-ui text-[13.5px] leading-relaxed text-ink-body list-disc pl-5 m-0 pt-1">
+              <li>Com menos de {LIMIARES.minimoDeRespostas} respostas numa habilidade, aparece &quot;Dados insuficientes&quot;, em vez de um palpite.</li>
+              <li>Um erro recente baixa o nível até você acertar de novo.</li>
+              <li>&quot;Dominada&quot; pede {LIMIARES.dominada.seguidos} acertos seguidos, uma boa taxa de acertos e acertos em pelo menos {LIMIARES.dominada.dias} dias diferentes.</li>
+              <li>Contam os exercícios corrigidos e a revisão. A sua própria avaliação no Laboratório de Leitura não entra nesta conta.</li>
+            </ul>
+          </details>
         </>
       )}
     </div>

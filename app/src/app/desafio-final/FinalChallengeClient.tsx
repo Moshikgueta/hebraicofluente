@@ -30,7 +30,7 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, course, extras, scenesUpTo, sentencesUpTo } from '@/lib/content';
 import { buildExam, examReport, EXAM_PASS, type Exam, type PartResult }
   from '@/lib/engine/exam';
-import { alphabetComplete, isExtraModuleDone, isLessonComplete, isLessonMastered, lettersLeft, REGRA_DO_DOMINIO } from '@/lib/state/rules';
+import { alphabetComplete, isExtraModuleDone, isLessonComplete, isLessonMastered, lettersLeft, REGRA_DA_CONCLUSAO } from '@/lib/state/rules';
 import { idDoSom } from '@/lib/sons';
 import { track } from '@/lib/analytics';
 
@@ -169,9 +169,9 @@ export function FinalChallengeClient() {
             O teste final ainda está trancado.
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
-            Domine as {course.totalLetters} letras para desbloquear o teste final.{' '}
-            {faltam === 1 ? 'Falta dominar 1 letra.' : `Faltam ${faltam} letras para dominar.`}{' '}
-            Dominar é {REGRA_DO_DOMINIO}. Ele mede o
+            Conclua as lições das {course.totalLetters} letras para desbloquear o teste final.{' '}
+            {faltam === 1 ? 'Falta concluir 1 lição.' : `Faltam ${faltam} lições para concluir.`}{' '}
+            {REGRA_DA_CONCLUSAO} O teste mede o
             alfabeto inteiro - feito antes da hora, ele pergunta sobre letras que você
             ainda não viu e o número não diz nada.
           </p>
@@ -383,7 +383,7 @@ export function FinalChallengeClient() {
       <Card className="p-6 grid gap-4">
         <ProgressBar
           value={course.totalLetters ? ready.length / course.totalLetters : 0}
-          label="Letras dominadas"
+          label="Lições concluídas"
           sublabel={`${ready.length} / ${course.totalLetters}`}
         />
         <div className="flex flex-wrap gap-2">

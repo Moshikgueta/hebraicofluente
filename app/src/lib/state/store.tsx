@@ -28,7 +28,7 @@ import { apiMode } from '@/lib/account/api';
 import { SESSAO_MUDOU } from '@/lib/account/store';
 import {
   ANSWER_UNITS, applyPractice, awardXp, clearConfusion, completeStage, courseProgress,
-  concluirRevisao, displayStreak, pagarAcerto, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
+  concluirRevisao, displayStreak, pagarAcerto, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer, registrarLeitura,
   recordCheckpoint, recordConfusion, recordExam, recordGym, recordQuiz, recordSkill,
   syncAchievements, today,
   topConfusions, weakLetters, XP
@@ -112,6 +112,8 @@ type Ctx = {
   setNomeHebraico: (texto: string | null) => void;
   /** Record a moment that can only happen once, and say so. */
   markFirst: (id: string) => void;
+  /** Autoavaliação de leitura: não mede domínio (rules.ts, `registrarLeitura`). */
+  registrarLeitura: (atividade: string, consegui: boolean) => void;
   /**
    * A traced or freehand attempt at a letter, scored 0-1 by the canvas.
    *
@@ -408,6 +410,10 @@ export function ProgressProvider({
     track('gym_completed', { mode: modeId, score, seconds });
   }, [commit, agora]);
 
+  const doRegistrarLeitura = useCallback((atividade: string, consegui: boolean) => {
+    commit(registrarLeitura(agora(), atividade, consegui, day));
+  }, [commit, agora, day]);
+
   const doMarkFirst = useCallback((id: string) => {
     if (agora().firsts[id]) return;
     commit(markFirst(agora(), id));
@@ -578,14 +584,14 @@ export function ProgressProvider({
       confusions: topConfusions(state),
       pending,
       clearPending: () => setPending([]),
-      setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
+      setOnboarding, finishStage, answer, markFirst: doMarkFirst, registrarLeitura: doRegistrarLeitura, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
       remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
       responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
     };
   }, [
     state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
-    setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
+    setOnboarding, finishStage, answer, doMarkFirst, doRegistrarLeitura, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
     setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
     responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1

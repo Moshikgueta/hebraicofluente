@@ -182,13 +182,13 @@ log('\n── os exercícios gravam a nota ────────────�
    A regra acima prova que a nota é gravada. Esta prova que gravá-la muda o
    número que o aluno lê - e que NÃO gravá-la o deixa parado, que é o outro
    lado da mesma frase e o controle desta verificação. */
-log('\n── a conta de letras dominadas ────────────────────');
+log('\n── a conta de lições concluídas ────────────────────');
 {
   const casos = [
     { nome: 'cinco etapas e nota cheia', licoes: { alef: licao('alef', [1, 2, 3, 4, 5], 1) }, conta: 1 },
     { nome: 'cinco etapas sem nota', licoes: { alef: licao('alef', [1, 2, 3, 4, 5], null) }, conta: 0 },
     { nome: 'cinco etapas com nota fraca', licoes: { alef: licao('alef', [1, 2, 3, 4, 5], 0.5) }, conta: 0 },
-    { nome: 'duas letras dominadas', conta: 2,
+    { nome: 'duas lições concluídas', conta: 2,
       licoes: { alef: licao('alef', [1, 2, 3, 4, 5], 1), bet: licao('bet', [1, 2, 3, 4, 5], 0.875) } }
   ];
 
@@ -199,8 +199,8 @@ log('\n── a conta de letras dominadas ────────────�
 
     const texto = await p.evaluate(() => (document.querySelector('main')?.innerText || '')
       .replace(/\s+/g, ' '));
-    const m = texto.match(/(\d+)\s+de\s+(\d+)\s+letras\s+dominadas/);
-    if (!m) erro(`${caso.nome}: não achei a frase "N de M letras dominadas" no painel`);
+    const m = texto.match(/(\d+)\s+de\s+(\d+)\s+lições\s+concluídas/);
+    if (!m) erro(`${caso.nome}: não achei a frase "N de M lições concluídas" no painel`);
     else if (Number(m[1]) !== caso.conta) {
       erro(`${caso.nome}: o painel diz ${m[1]} e deveria dizer ${caso.conta}`);
     } else {
@@ -217,4 +217,4 @@ if (falhas) {
   log(`${falhas} problema(s) no que a lição grava.\n`);
   process.exit(1);
 }
-log('a lição grava a nota, e a conta de letras dominadas a enxerga.\n');
+log('a lição grava a nota, e a conta de lições concluídas a enxerga.\n');

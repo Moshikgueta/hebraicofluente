@@ -29,7 +29,7 @@ export function gravacoesDoProfessor(ROOT) {
   for (const m of modulos) {
     geradas.push({
       id: `module-${m.n}-welcome`,
-      tituloPt: 'Uma palavra do professor',
+      tituloPt: 'Uma mensagem do seu professor',
       ondePt: `Módulo ${m.n} · abertura`,
       roteiroPt: `Dê as boas-vindas ao módulo ${m.n}, "${m.titlePt}". Em duas ou três frases, diga o que o aluno `
         + `vai conseguir fazer no fim dele: ${semChaves(m.milestonePt)}`
@@ -39,7 +39,7 @@ export function gravacoesDoProfessor(ROOT) {
     const palavra = L.wordsToRead?.[0];
     geradas.push({
       id: `letter-${L.id}-intro`,
-      tituloPt: 'O professor apresenta a letra',
+      tituloPt: `Conheça a letra ${L.namePt} com seu professor`,
       ondePt: `Lição do ${L.letter} · Conhecer`,
       roteiroPt: `Apresente a letra ${L.namePt} (${L.letter}): o nome, o som e como ela aparece na palavra`
         + (palavra ? `, com o exemplo ${palavra.he} (${palavra.translit}, ${palavra.pt})` : '')

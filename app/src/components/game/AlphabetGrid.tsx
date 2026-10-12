@@ -30,7 +30,7 @@ import {
 export type EstadoLetra = 'dominada' | 'revisar' | 'progresso' | 'nova' | 'bloqueada';
 
 const ESTADO: Record<EstadoLetra, { fundo: string; borda: string; tinta: string; rotulo: string }> = {
-  dominada:  { fundo: 'var(--teal-soft)', borda: 'var(--edge-teal)', tinta: 'var(--teal-ink)', rotulo: 'Dominada' },
+  dominada:  { fundo: 'var(--teal-soft)', borda: 'var(--edge-teal)', tinta: 'var(--teal-ink)', rotulo: 'Concluída' },
   revisar:   { fundo: 'var(--gold-soft)', borda: 'var(--edge-gold)', tinta: 'var(--gold)',     rotulo: 'Revisar' },
   progresso: { fundo: 'var(--card)',      borda: 'var(--line)',      tinta: 'var(--teal)',     rotulo: 'Em progresso' },
   /* "Aberta" e "bloqueada" são coisas diferentes, e misturá-las era o que
@@ -112,7 +112,7 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
         <div className="flex items-baseline justify-between gap-3">
           <p className="font-ui text-[13px] text-ink-body">
             <strong className="font-semibold text-ink tabular-nums">{dominadas}</strong>
-            {' '}de {letters.length} letras dominadas
+            {' '}de {letters.length} lições concluídas
           </p>
           <p className="font-ui text-[12px] tabular-nums text-ink-muted">
             {Math.round((dominadas / letters.length) * 100)}%

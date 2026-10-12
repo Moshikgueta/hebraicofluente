@@ -206,7 +206,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
                 <span className={`font-ui text-[14px] ${done ? 'text-ink' : 'text-ink-muted'}`}>
                   {l.namePt}
                   <span className="text-ink-muted">
-                    {dominada ? ' · dominada' : done ? ' · concluída' : ''}
+                    {dominada ? ' · concluída' : done ? ' · falta a nota dos exercícios' : ''}
                   </span>
                 </span>
                 {!dominada && (
