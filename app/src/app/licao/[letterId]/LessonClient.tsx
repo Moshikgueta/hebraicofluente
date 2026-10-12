@@ -797,9 +797,9 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
 /* ── 5 · exercícios: o mini-teste, com portão de domínio ────────────────
  *
  * Aqui a lição deixa de ser "rolei até o fim" e passa a ser "mostrei que
- * sei". FIXACAO_ITENS questões (10), e 75% delas (MASTERY_MARK, 8 de 10)
- * para a letra contar como dominada; a seguinte abre com LIBERA_MARK (80%,
- * também 8 de 10). Os números moram em lib/state/rules.ts e a tela os lê de
+ * sei". FIXACAO_ITENS questões (20), e 75% delas (MASTERY_MARK, 15 de 20)
+ * para a lição contar como concluída; a seguinte abre com LIBERA_MARK (80%,
+ * 16 de 20). Os números moram em lib/state/rules.ts e a tela os lê de
  * lá: este comentário já disse "seis" e "oito" quando eram outros.
  *
  * O portão NÃO tranca. Quem fica abaixo recebe "vamos praticar mais um pouco"
