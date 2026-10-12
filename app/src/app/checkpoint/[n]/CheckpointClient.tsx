@@ -7,6 +7,7 @@
  * Passing is 70%. Failing is not a failure - it is a suggestion to revisit one
  * or two letters, named specifically, and the retry is unlimited. */
 
+import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
 import { conquistaDoModulo } from '@/lib/compartilhar';
 import { useMemo, useState } from 'react';
@@ -128,6 +129,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         {/* O fim de um módulo é o melhor momento para o número: "conheço seis
             letras" vira "leio N palavras". */}
         {passed && <ContadorDeLeitura />}
+        <SugestaoDePar />
 
         {weak.length > 0 && (
           <Card className="p-5 grid gap-3">

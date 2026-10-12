@@ -29,6 +29,7 @@
  */
 
 import type { Letter } from '@/lib/content';
+import type { ParDeSom } from './pares-de-som';
 import type { LearnerState } from '@/lib/state/types';
 import { letterMastery, topConfusions } from '@/lib/state/rules';
 import { pick, shuffled, take, type Rand } from './rng';
@@ -345,7 +346,11 @@ export type RodadaBatalha =
      lado a lado - e comparar é justamente a muleta que faz alguém achar que
      sabe distinguir {{ד}} de {{ר}} quando na verdade sabe é comparar. Na
      leitura real a letra não fica esperando. */
-  | { tipo: 'relampago'; alvo: Letter; glifo: string; opcoes: Letter[]; ms: number };
+  | { tipo: 'relampago'; alvo: Letter; glifo: string; opcoes: Letter[]; ms: number }
+  /* O OUVIDO (12/10/2026): toca a sílaba com A de uma das duas, e o aluno
+     escolhe a letra. Pares de PARES_DE_SOM, que são outra meta: parecer no
+     som, e não no desenho. */
+  | { tipo: 'som'; alvo: Letter; opcoes: Letter[]; audioId: string; notaPt: string };
 
 export type Batalha = {
   /** As duas inimigas da PRIMEIRA rodada, para o anúncio de abertura. */
@@ -596,6 +601,36 @@ export function montarCursiva(
       [alvo, ...distratores(state, alvo, unlocked, opcoesN - 1, nivel, rand)], rand
     );
     out.push({ tipo: i % 2 === 0 ? 'paraCursiva' : 'paraImpressa', alvo, opcoes });
+  }
+  return out;
+}
+
+/* ── as rodadas de som da Batalha ──────────────────────────────────────── */
+
+/**
+ * Até `quantas` rodadas de ouvido, dos pares de som cujas duas letras o
+ * aluno já tem e cujas duas sílabas têm gravação (`temAudio`). Sem nenhum
+ * par assim, nenhuma rodada: a Batalha fica só no desenho.
+ */
+export function rodadasDeSom(
+  pares: readonly ParDeSom[], unlocked: readonly Letter[], rand: Rand,
+  temAudio: (audioId: string) => boolean, quantas = 4
+): Extract<RodadaBatalha, { tipo: 'som' }>[] {
+  const porGlifo = new Map(unlocked.map(l => [l.letter, l]));
+  const silaba = (L: Letter) => L.syllables.find(s => s.vowel === 'a');
+  const validos = pares.flatMap(par => {
+    const a = porGlifo.get(par.a), b = porGlifo.get(par.b);
+    const sa = a && silaba(a), sb = b && silaba(b);
+    return a && b && sa && sb && temAudio(sa.audioId) && temAudio(sb.audioId) ? [{ a, b, par }] : [];
+  });
+  if (!validos.length) return [];
+  const out: Extract<RodadaBatalha, { tipo: 'som' }>[] = [];
+  const ordem = shuffled(validos, rand);
+  for (let i = 0; i < quantas; i++) {
+    const v = ordem[i % ordem.length]!;
+    const alvo = rand() < 0.5 ? v.a : v.b;
+    const outra = alvo === v.a ? v.b : v.a;
+    out.push({ tipo: 'som', alvo, opcoes: shuffled([alvo, outra], rand), audioId: silaba(alvo)!.audioId, notaPt: v.par.notaPt });
   }
   return out;
 }
