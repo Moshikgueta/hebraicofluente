@@ -250,7 +250,7 @@ export const MASTERY_MARK = 0.75;
 
 /** Quantas perguntas a fixação tem (buildMiniTest). Um número, num lugar só:
  *  toda frase que diz "N de M" sai daqui (auditoria de 01/10/2026, UXQA-005). */
-export const FIXACAO_ITENS = 10;
+export const FIXACAO_ITENS = 20;
 
 /** Quantos acertos de `FIXACAO_ITENS` uma nota pede: 75% de 10 são 8. */
 export const acertosPara = (marca: number, total: number = FIXACAO_ITENS): number =>

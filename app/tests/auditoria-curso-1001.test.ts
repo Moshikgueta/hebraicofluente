@@ -196,11 +196,11 @@ describe('UXQA-005 / CONT-007: concluída e dominada, com os números das consta
   it('a regra sai das constantes reais', () => {
     expect(MASTERY_MARK).toBe(0.75);
     expect(LIBERA_MARK).toBe(0.8);
-    expect(FIXACAO_ITENS).toBe(10);
-    expect(acertosPara(MASTERY_MARK)).toBe(8);
-    expect(acertosPara(LIBERA_MARK)).toBe(8);
-    expect(REGRA_DO_DOMINIO_CURTA).toBe('8 de 10');
-    expect(REGRA_DO_DOMINIO).toContain('8 de 10');
+    expect(FIXACAO_ITENS).toBe(20);
+    expect(acertosPara(MASTERY_MARK)).toBe(15);
+    expect(acertosPara(LIBERA_MARK)).toBe(16);
+    expect(REGRA_DO_DOMINIO_CURTA).toBe('15 de 20');
+    expect(REGRA_DO_DOMINIO).toContain('15 de 20');
   });
 
   it('nenhuma tela escreve "6 de 8", "de 11" ou "Você já domina" à mão', () => {

@@ -31,7 +31,7 @@ import {
   exBuildSyllable, exBuildWord, exCompleteWord, exConfusablePick, exCursiveToPrint,
   exFinalForm, exFinalInWord, exLetterInWord, exLetterPosition, exLetterRecognition,
   exLetterVariant, exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning,
-  exVariantSyllable,
+  exVariantSyllable, exVowelPair, exMatchSyllable, exMatchWordMeaning,
   exMatchLetterSound, exMeaningToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
   exSentenceReading, exSyllableReading, exTypeSyllable, exTypeTranslit, exVowelSound, exWordMeaning,
   type Ctx, type Gen
@@ -831,7 +831,13 @@ export function buildMiniTest(
      explicar. Com dez, 8 acertos dão 80% e passam nas duas, 7 dão 70% e
      falham nas duas: não existe nota entre as duas réguas. E o aluno passa a
      ter dois erros perdoados em vez de um, o que é justo num teste que
-     cresceu de seis para dez itens e ganhou três gestos novos. */
+     cresceu de seis para dez itens e ganhou três gestos novos.
+
+     VINTE desde 12/10/2026, por decisão do dono do curso (ver "a segunda
+     volta", abaixo). As réguas ficam a um acerto uma da outra - 15 conclui,
+     16 abre a próxima - e a tela de resultado diz os dois números. Subir a
+     régua de concluir para 80% rebaixaria quem já concluiu com 6 de 8 ou
+     7 de 9 nas versões antigas do teste, e isso não se faz. */
   const { audioAvailable = false, seed = `mini-${L.id}`, count = FIXACAO_ITENS } = opts;
   const rand = rng(seed);
   const ctx = contextFor(L, history);
@@ -959,6 +965,51 @@ export function buildMiniTest(
       const ex = gen(P, cx, rand, giro + 1);
       if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); break;
+      }
+    }
+  }
+
+  /* ── a segunda volta: mais dez, todos diferentes dos primeiros ─────────
+     Decisão do dono do curso (12/10/2026): vinte exercícios por letra, e não
+     dez. Os dez de cima cobrem um de cada coisa que "saber a letra" quer
+     dizer; estes dez passam de novo por cada uma, com OUTRO gerador da mesma
+     camada sempre que existe - ligar pares em vez de escolher, o som pelo
+     par de vogais, a posição em vez da presença, a impressa para a cursiva
+     (a direção contrária da de cima), ouvir em vez de ler - e outra sílaba,
+     outra palavra, outros distratores. O dedupe por conteúdo (`assinatura`)
+     garante que nenhuma pergunta aparece duas vezes.
+
+     A ordem de cada lista é a de preferência; `girar` alterna o primeiro de
+     letra para letra, para que duas lições seguidas não abram a segunda
+     volta com o mesmo gesto. */
+  if (count > out.length) {
+    const segunda: (readonly Gen[])[] = [
+      girar([exMatchLetterSound, exMatchSyllable, exMatchWordMeaning], L.order),
+      girar([exVowelPair, exVowelSound, exSoundToSyllable], L.order),
+      girar([exLetterPosition, exLetterInWord, exCompleteWord], L.order),
+      L.finalForm ? [exFinalForm, exFinalInWord, exOddOneOut] : girar([exOddOneOut, exConfusablePick], L.order),
+      [exPrintVsCursive, exCursiveToPrint, exCursivaQualPalavra],
+      girar([exBuildWord, exBuildSyllable, exBuildLetters], L.order),
+      girar([exSyllableReading, exVariantSyllable, exSentenceReading], L.order),
+      girar([exMeaningToWord, exMatchWordMeaning, exWordMeaning], L.order),
+      /* Ouvir, quando há gravação; sem ela, a camada cai para o som escrito. */
+      [...girar([exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning], L.order), exSoundToSyllable, exTypeSyllable]
+    ];
+    for (const gens of segunda) {
+      if (out.length >= count) break;
+      tentar(gens);
+    }
+    /* E uma segunda letra anterior, mais antiga que a de ontem: a que a
+       ordem de revisão põe na frente. */
+    const antigas = history.filter(x => x.id !== L.id && x.order < L.order - 1);
+    if (antigas.length && out.length < count) {
+      const Q = ordemDeRevisao(L, antigas, [], rand)[0]!;
+      const cq = contextFor(Q, history);
+      for (const gen of girar([exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound, exWordMeaning], L.order)) {
+        const ex = gen(Q, cq, rand, giro + 2);
+        if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {
+          seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); break;
+        }
       }
     }
   }
