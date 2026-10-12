@@ -308,7 +308,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
       <Card className="p-5 sm:p-6 grid gap-5">
         {daParceria !== null && parceria && (
           <p className="m-0 rounded-[var(--r-md)] bg-[var(--gold-soft)] px-4 py-3 font-ui text-[14.5px] text-[var(--gold-ink)]">
-            Preço de pré-lançamento garantido pelo seu link: <strong>{brl(daParceria)}</strong>
+            Preço especial garantido pelo seu link: <strong>{brl(daParceria)}</strong>
             {fimDaParceria(getCourse(slug)!) ? `, até ${fimDaParceria(getCourse(slug)!)}` : ''}.
           </p>
         )}

@@ -5,8 +5,8 @@
  * os links do Instagram (/bio, /stories, /dm) fazem o mesmo, cada um com o
  * seu nome, e o preço vale até `price.parceriaAte`. A capa guarda o
  * nome neste aparelho, e o checkout mostra e pede o preço da parceria
- * (`price.parceriaBrl`) quando ele é menor que o preço do dia - hoje, R$ 147
- * também depois do fim do pré-lançamento.
+ * (`price.parceriaBrl`) quando ele é menor que o preço do dia - hoje, R$ 147,
+ * menor que os R$ 197 do pré-lançamento e que os R$ 297 depois dele.
  *
  * O navegador guarda só o NOME da parceria. O valor quem decide é o servidor,
  * pelo catálogo (worker/src/lib/catalog.js, `priceCents`), e a lista de nomes

@@ -50,8 +50,10 @@ describe('a tela mostra o mesmo preço que o servidor cobra', () => {
     expect(precoDaParceria(virado, 'outra')).toBeNull();
     expect(comParceria(virado, 'sefarad').price.brl).toBe(147);
     expect(comParceria(virado, null)).toBe(virado);
-    /* Hoje (pré-lançamento) os dois são iguais: nada muda na tela. */
-    expect(precoDaParceria(curso, 'sefarad')).toBeNull();
+    /* Desde 12/10/2026 o pré-lançamento é R$ 197: o link continua em R$ 147. */
+    expect(curso.price.brl).toBe(197);
+    expect(precoDaParceria(curso, 'sefarad')).toBe(147);
+    expect(precoDaParceria(curso, null)).toBeNull();
   });
 });
 
