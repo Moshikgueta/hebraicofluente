@@ -29,6 +29,7 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
 import { audioIdFor } from './audio-id.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -261,7 +262,7 @@ function main() {
   }
 
   /* As explicações do professor: a chave é o id, não um texto em hebraico. */
-  for (const g of readJson('data/gravacoes-professor.json').gravacoes) {
+  for (const g of gravacoesDoProfessor(ROOT)) {
     add({ he: `professor ${g.id}`, translit: `professor-${g.id}`, gloss: `${g.ondePt}. ${g.roteiroPt}`,
           kind: 'professor', wave: 7, where: g.ondePt });
   }

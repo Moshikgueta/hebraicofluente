@@ -24,6 +24,7 @@
 
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, existsSync, cpSync } from 'node:fs';
 import { join } from 'node:path';
+import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
 import { audioIdFor } from './audio-id.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -667,13 +668,9 @@ function main() {
      significado, o título que a tela mostra e o clipe do catálogo. O roteiro
      fica de fora: é só para quem grava. */
   {
-    const { gravacoes } = JSON.parse(readFileSync(join(ROOT, 'data/gravacoes-professor.json'), 'utf8'));
-    const ids = new Set();
-    for (const g of gravacoes) {
-      if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(g.id) || ids.has(g.id)) throw new Error(`gravacoes-professor.json: id inválido ou repetido: ${g.id}`);
-      ids.add(g.id);
-      if (!g.tituloPt || !g.ondePt || !g.roteiroPt) throw new Error(`gravacoes-professor.json: ${g.id} sem título, lugar ou roteiro`);
-    }
+    /* As escritas e as geradas (abertura de módulo, apresentação e erro
+       comum de cada letra); a validação dos ids está lá. */
+    const gravacoes = gravacoesDoProfessor(ROOT);
     writeFileSync(join(OUT, 'professor.json'), JSON.stringify({
       gravacoes: Object.fromEntries(gravacoes.map(g => [g.id, {
         tituloPt: g.tituloPt, audioId: audioIdFor(`professor ${g.id}`)

@@ -83,7 +83,7 @@ console.log('\n── o mapa ─────────────────
   bloq>0 ? ok(`${bloq} letras com cadeado, e nenhuma delas é link`) : erro('o mapa não marcou nenhuma letra como bloqueada');
   const aqui=await r.pg.locator('[aria-current="step"]').count();
   aqui===1 ? ok('uma letra marcada como "você está aqui"') : erro(`${aqui} letras marcadas como atual`);
-  /de 22 letras dominadas/.test(r.txt) ? ok('o mapa conta as letras DOMINADAS') : erro('sem a contagem de dominadas');
+  /de 22 lições concluídas/.test(r.txt) ? ok("o mapa conta as lições CONCLUÍDAS") : erro("sem a contagem de lições concluídas");
   await r.ctx.close(); }
 
 await b.close(); s.close();

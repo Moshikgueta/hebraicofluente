@@ -36,7 +36,12 @@ import { CourseShelf } from '@/components/platform/CourseShelf';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
 import { AntesEDepois } from '@/components/platform/AntesEDepois';
+import { primeiraLeituraId } from '@/lib/laboratorio';
+import { resumoDoDominio } from '@/lib/dominio';
 import { ehContraste, idDoSom, nomeDaLicao, ordemDeEnsino, rotaDaLicao, soOLadoDoPonto } from '@/lib/sons';
+
+/** Itens vencidos a partir dos quais o painel sugere revisar antes da lição. */
+export const REVISAO_URGENTE = 15;
 
 export function DashboardClient() {
   const p = useProgress();
@@ -99,6 +104,15 @@ export function DashboardClient() {
   /* A Aula 0 é a ação principal enquanto não foi CONCLUÍDA (desde 11/10/2026
      ela é obrigatória e abre a primeira letra). Depois, a lição. */
   const aula0Primeiro = !aula0Feita(p.state);
+
+  /* O primeiro módulo de letras concluído cuja Primeira Leitura ainda não
+     foi feita. Um por vez: quem chega com três módulos prontos lê o primeiro. */
+  const primeiraPendente = useMemo(() => course.modules.find(m => m.kind === 'letters'
+    && m.letterIds.length > 0
+    && m.letterIds.every(id => isLessonComplete(p.state, id))
+    && !p.state.firsts?.[primeiraLeituraId(m.n)]) ?? null, [p.state]);
+
+  const dominio = useMemo(() => resumoDoDominio(p.state, allLetters().map(l => l.id)), [p.state]);
 
   const alfabetoFechado = alphabetComplete(p.state, allLetters().map(l => l.id));
 
@@ -171,17 +185,22 @@ export function DashboardClient() {
           anything new. A learner who has been away for a week and is handed a
           brand-new letter spends the lesson quietly discovering they have
           forgotten the last one. */}
-      {needsWarmUp(p.state, p.day) && (
+      {/* E também quando a revisão acumulou (11/10/2026): com REVISAO_URGENTE
+          itens vencidos, a letra nova vai em cima de letras que estão
+          escapando. A ação principal continua sendo a lição; isto vem antes
+          dela, como sugestão. */}
+      {(needsWarmUp(p.state, p.day) || p.dueCount >= REVISAO_URGENTE) && (
         <Card tone="mint" className="p-5 sm:p-6 grid sm:grid-cols-[1fr_auto] items-center gap-4">
           <div className="grid gap-1">
-            <p className="font-display text-[18px] font-bold text-ink">Vamos aquecer?</p>
+            <p className="font-display text-[18px] font-bold text-ink">Revisar antes de continuar</p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              Você esteve fora alguns dias. Três minutos no que estava escapando e
-              a lição de hoje rende muito mais.
+              {needsWarmUp(p.state, p.day)
+                ? 'Você esteve fora alguns dias. Três minutos no que estava escapando e a lição de hoje rende muito mais.'
+                : `Você tem ${p.dueCount} ${p.dueCount === 1 ? 'item' : 'itens'} para revisar. Uma revisão rápida agora vai ajudar você a aprender a próxima letra com mais facilidade.`}
             </p>
           </div>
           <LinkButton href="/revisao" className="justify-self-start sm:justify-self-end">
-            Aquecer
+            Revisar agora
           </LinkButton>
         </Card>
       )}
@@ -273,6 +292,22 @@ export function DashboardClient() {
         )}
       </section>
 
+      {/* A Primeira Leitura do módulo que acabou de fechar (11/10/2026). */}
+      {!aula0Primeiro && primeiraPendente && (
+        <Card tone="wash" className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
+          <div className="grid gap-1 min-w-0">
+            <Badge tone="accent">Minha Primeira Leitura</Badge>
+            <p className="font-display text-[17px] font-semibold text-ink mt-1">
+              Módulo {primeiraPendente.n} concluído! Hora de praticar a leitura.
+            </p>
+            <p className="text-[14.5px] leading-relaxed text-ink-body">
+              Algumas palavras formadas com as letras e os sinais vocálicos que você já aprendeu. Você lê por conta própria, depois ouve e confere.
+            </p>
+          </div>
+          <LinkButton href={`/leitura?primeira=${primeiraPendente.n}`} className="shrink-0">Ler agora</LinkButton>
+        </Card>
+      )}
+
       {/* A aula 0, e o peso dela muda com o momento.
           ──────────────────────────────────────────────────────────────
           Para quem ainda não abriu lição nenhuma é um cartão de verdade,
@@ -329,13 +364,32 @@ export function DashboardClient() {
           pendente, e como foi a semana. */}
       <section aria-label="Seus números" className="grid gap-3
                           [grid-template-columns:repeat(auto-fit,minmax(168px,1fr))]">
-        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? 'letra dominada' : 'letras dominadas'}
+        {/* 12/10/2026: "letras dominadas" é o domínio por habilidade
+            (lib/dominio.ts); "lições concluídas" é a regra antiga, as cinco
+            etapas com 75% (`p.mastered`), a mesma do alfabeto abaixo. */}
+        <CartaoNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? 'letra dominada' : 'letras dominadas'}
                       tom="teal" icone={<IconeLetras />} />
-        <CartaoNumero n={licoesFeitas} rotulo={licoesFeitas === 1 ? 'lição concluída' : 'lições concluídas'}
+        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? 'lição concluída' : 'lições concluídas'}
                       tom="teal" icone={<IconeLicoes />} />
         <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? "item a revisar" : "itens a revisar"} tom="gold" icone={<IconeRevisar />} />
         <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />
       </section>
+
+      {/* Meu domínio das letras (11/10/2026): o que ele SABE, por habilidade,
+          ao lado do que ele concluiu. Some até haver um exercício feito. */}
+      {dominio.letras.length > 0 && (
+        <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
+          <div className="grid gap-1 min-w-0">
+            <p className="font-display text-[17px] font-semibold text-ink m-0">Meu domínio das letras</p>
+            <p className="font-ui text-[14.5px] leading-relaxed text-ink-body m-0">
+              {`Dominadas: ${dominio.contagem.dominada} · Quase dominadas: ${dominio.contagem.quase}`}
+              {dominio.paraPraticar.length > 0 &&
+                ` · Para reforçar: ${dominio.paraPraticar.map(d => getLetter(d.letterId)?.namePt).join(', ')}`}
+            </p>
+          </div>
+          <LinkButton href="/meu-hebraico/dominio" variant="secondary" className="shrink-0">Ver o meu domínio</LinkButton>
+        </Card>
+      )}
 
       {/* "Letras dominadas" é o que o curso mede; "palavras que você lê" é o
           que o aluno sente. Os dois ficam juntos, e o segundo leva ao
@@ -363,14 +417,15 @@ export function DashboardClient() {
             Ver tudo →
           </Link>
         </div>
-        <ul className="grid gap-3 sm:grid-cols-3 list-none p-0 m-0">
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 list-none p-0 m-0">
           {([
-            ['match', 'Match', 'Junte letra, nome e som.'],
-            ['blast', 'Blast', 'Rápido, com sequência de acertos.'],
-            ['teste', 'Teste', 'Nota no fim e revisão dos erros.']
-          ] as const).map(([id, titulo, desc]) => (
-            <li key={id}>
-              <Link href={`/academia?jogo=${id}`}
+            ['/leitura', 'Leitura', 'Pratique a leitura de palavras no seu ritmo.'],
+            ['/academia?jogo=match', 'Match', 'Junte letra, nome e som.'],
+            ['/academia?jogo=blast', 'Blast', 'Rápido, com sequência de acertos.'],
+            ['/academia?jogo=teste', 'Teste', 'Nota no fim e revisão dos erros.']
+          ] as const).map(([href, titulo, desc]) => (
+            <li key={href}>
+              <Link href={href}
                     className="h-full flex flex-col gap-1 rounded-[16px] border border-line
                                bg-[var(--card)] p-4 transition-[box-shadow,border-color]
                                duration-[250ms] hover:shadow-[var(--sh)] hover:border-[var(--teal)]">

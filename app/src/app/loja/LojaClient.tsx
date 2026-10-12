@@ -16,7 +16,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, cultureCards, leiturasBonus } from '@/lib/content';
-import { concluidasSemDominio, REGRA_DO_DOMINIO, REGRA_DO_DOMINIO_CURTA } from '@/lib/state/rules';
+import { concluidasSemDominio, REGRA_DA_CONCLUSAO, REGRA_DO_DOMINIO_CURTA } from '@/lib/state/rules';
 import { itemDaLeitura } from '@/lib/engine/bonus';
 import { cartasCompradas, folgasLivres, gasto, ITENS, leiturasCompradas, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
 import { arquivoDoNome, desenharNome, FORMATOS_NOME, type FormatoNome } from '@/lib/nome-decorado';
@@ -104,7 +104,7 @@ export function LojaClient() {
                      totalLetras={allLetters().length} minhas={leiturasCompradas(s)}
                      onTrocar={(item, id, legivel) => trocar(item, id, legivel
                        ? 'Leitura aberta! Ela está em Leituras bônus.'
-                       : 'Leitura guardada em Leituras bônus. Volte a ela quando dominar as letras do texto.')} />
+                       : 'Leitura guardada em Leituras bônus. Volte a ela quando concluir as lições das letras do texto.')} />
     </div>
   );
 }
@@ -138,11 +138,11 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
               acompanhar pela transliteração e pela tradução.
             </p>
             <p className="m-0">
-              Ler sozinho, direto do hebraico, vem depois: cada leitura diz quantas letras dominadas ela pede.
-              Quando chegar lá, volte a ela. Você domina <strong>{mastered} de {totalLetras} letras</strong>.
+              Ler sozinho, direto do hebraico, vem depois: cada leitura diz quantas lições de letras concluídas ela pede.
+              Quando chegar lá, volte a ela. Você concluiu <strong>{mastered} de {totalLetras} lições de letras</strong>.
             </p>
             <p className="m-0">
-              Dominar uma letra é {REGRA_DO_DOMINIO}.
+              {REGRA_DA_CONCLUSAO}
             </p>
             {semDominio > 0 && (
               <p className="m-0">
@@ -174,7 +174,7 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
              espremia o título a uma palavra por linha no celular. */
           const nota = !tem && livre < custo ? MOTIVO.saldo
             : legivel ? null
-            : `Para ler sozinho: ${l.after} letras dominadas (${faltam === 1 ? 'falta 1' : `faltam ${faltam}`}).`;
+            : `Para ler sozinho: ${l.after} lições de letras concluídas (${faltam === 1 ? 'falta 1' : `faltam ${faltam}`}).`;
           return (
             <li key={l.id}>
               <Card className="p-4 grid gap-2">

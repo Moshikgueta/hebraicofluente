@@ -47,6 +47,7 @@ import {
   buildMiniTest, buildRemedial, type Exercise
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
+import { somPt } from '@/lib/som-pt';
 import { nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom, soOLadoDoPonto } from '@/lib/sons';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
@@ -338,6 +339,9 @@ function StageConhecer({
         </div>}
       </Card>
 
+      <GravacaoDoProfessor id={`letter-${letter.id}-intro`}
+        textoPt={`O nome, o som e uma palavra com ${letter.namePt}.`} />
+
       <Card className="p-6 grid gap-3">
         <h2 className="text-[19px] font-semibold">Como pronunciar</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
@@ -373,6 +377,7 @@ function StageConhecer({
         <>
           <Ensinamento letter={letter} />
           <BrazilianTip mistake={letter.brazilianMistake} />
+          <GravacaoDoProfessor id={`letter-${letter.id}-common-mistake`} />
         </>
       ) : (
         <>
@@ -877,7 +882,7 @@ function StageFixacao({
         <Milestone
           tone={strong || fezReforco ? 'bom' : 'parcial'}
           kicker={`${result.correct} de ${result.total} · ${pct}%`}
-          title={strong ? 'Mais uma letra dominada.'
+          title={strong ? 'Mais uma lição concluída.'
             : fezReforco ? 'Reforço feito.'
             : result.score >= 0.6 ? 'Quase lá.'
             : `Vamos firmar ${letter.namePt}.`}
@@ -891,7 +896,7 @@ function StageFixacao({
                 + 'Refaça o teste: as perguntas mudam a cada tentativa.'
             : fezReforco
               ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
-                + 'Ela ainda não conta como dominada - refaça o teste quando quiser, '
+                + 'Ela ainda não conta como concluída - refaça o teste quando quiser, '
                 + 'com outras perguntas, e ela passa a contar. Pode seguir.'
               : result.score >= 0.6
                 ? 'Faltou pouco. Quatro questões rápidas, montadas a partir do que escapou, e seguimos.'
@@ -927,6 +932,7 @@ function StageFixacao({
             </>
           )}
         </Milestone>
+        {strong && <MinhaConquista letter={letter} />}
       </div>
     );
   }
@@ -937,6 +943,39 @@ function StageFixacao({
       title={`Exercícios - letra ${letter.namePt}`}
       onDone={r => { track('quiz_completed', { letterId: letter.id, score: r.score }); onResult(r); }}
     />
+  );
+}
+
+/* ── Minha conquista ──────────────────────────────────────────────────────
+   O fim de uma letra dito como CAPACIDADE, e não como etapa cumprida
+   (11/10/2026): o que o aluno consegue fazer agora que não conseguia antes
+   da lição. Só aparece com a nota de domínio: dizer "você reconhece" para
+   quem ficou abaixo dela seria a tela fingindo. O número de palavras novas
+   já está logo abaixo, no contador de leitura. */
+function MinhaConquista({ letter }: { letter: Letter }) {
+  /* O segundo som de cada letra vem de um sinal diferente, e a frase diz
+     qual: o daguesh em ב, כ, פ. O ש tem as suas duas leituras em lições
+     separadas (Shin e Sin), e por isso aqui tem um som só. */
+  const doisSons = letter.sound.includes(' ou ');
+  const semSom = letter.sound.startsWith('(');
+  return (
+    <Card tone="mint" className="p-5 grid gap-2.5">
+      <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] m-0">Minha conquista</p>
+      <ul className="grid gap-1.5 text-[15px] leading-relaxed text-ink list-disc pl-5 m-0">
+        {/* A etapa Escrever da lição traça a cursiva, e a etapa Conhecer mostra
+            a impressa: quem chega aqui com a nota viu e praticou as duas. */}
+        <li>{`Reconhecer a letra ${letter.namePt} nas formas impressa e cursiva.`}</li>
+        <li>{semSom
+          ? `Entender que, nas palavras estudadas, a letra ${letter.namePt} pode aparecer sem um som próprio.`
+          : doisSons
+            ? `Reconhecer os dois sons da letra ${letter.namePt}, com e sem daguesh: ${somPt(letter.sound)}.`
+            : `Associar a letra ${letter.namePt} ao som ${somPt(letter.sound)}.`}</li>
+        <li>{`Reconhecer a letra ${letter.namePt} dentro de palavras.`}</li>
+      </ul>
+      <Link href="/leitura" className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium text-[var(--teal-ink)] underline">
+        Praticar a leitura de palavras no Laboratório de Leitura.
+      </Link>
+    </Card>
   );
 }
 

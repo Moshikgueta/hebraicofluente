@@ -142,7 +142,13 @@ function fundirStat(a: SkillStat, b: SkillStat): SkillStat {
     /* A sequência é do lado mais recente: ela mede acertos SEGUIDOS, e o
        máximo dos dois inventaria uma sequência que não houve. */
     streak: novo.streak,
-    lastOn: tarde(a.lastOn, b.lastOn)
+    lastOn: tarde(a.lastOn, b.lastOn),
+    /* Só quando algum dos lados tem o campo: um registro antigo dos dois
+       lados continua sem ele (o critério de dias não se aplica a ele). */
+    ...(a.diasDeAcerto !== undefined || b.diasDeAcerto !== undefined ? {
+      diasDeAcerto: Math.max(a.diasDeAcerto ?? 0, b.diasDeAcerto ?? 0),
+      ultimoAcerto: tarde(a.ultimoAcerto ?? null, b.ultimoAcerto ?? null)
+    } : {})
   };
 }
 
@@ -274,7 +280,17 @@ export function mergeStates(local: LearnerState, remoto: LearnerState): LearnerS
        comprada nos dois lados vale o uso MAIS CEDO. Comutativa e idempotente. */
     loja: { compras: fundirCompras(a.loja?.compras ?? {}, b.loja?.compras ?? {}) },
     /* O A1: regras próprias, comutativas como as daqui (lib/state/a1-estado.ts). */
-    a1: fundirA1(a.a1, b.a1)
+    a1: fundirA1(a.a1, b.a1),
+    /* A autoavaliação de leitura: contadores que só sobem, o maior de cada
+       lado (como `kinds`), e a data mais recente. Só aparece quando algum
+       dos lados a tem. */
+    ...(a.leituraAutoavaliada || b.leituraAutoavaliada ? {
+      leituraAutoavaliada: fundirMapa(a.leituraAutoavaliada ?? {}, b.leituraAutoavaliada ?? {}, (x, y) => ({
+        tentadas: Math.max(x.tentadas, y.tentadas),
+        consegui: Math.max(x.consegui, y.consegui),
+        ultima: tarde(x.ultima, y.ultima)!
+      }))
+    } : {})
   };
 }
 

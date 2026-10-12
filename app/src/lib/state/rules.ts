@@ -263,6 +263,16 @@ export const REGRA_DO_DOMINIO_CURTA = `${acertosPara(MASTERY_MARK)} de ${FIXACAO
 export const REGRA_DO_DOMINIO =
   `concluir as ${STAGE_COUNT} etapas da lição e acertar pelo menos ${REGRA_DO_DOMINIO_CURTA} nos exercícios`;
 
+/**
+ * A mesma regra, dita como o que ela é desde 12/10/2026: uma lição
+ * CONCLUÍDA. "Dominar" passou a ser outra medida, mais exigente, a do
+ * domínio por habilidade ao longo dos dias (lib/dominio.ts). As duas nunca
+ * aparecem com o mesmo nome: "lições concluídas" é esta; "letras dominadas"
+ * é a de lib/dominio.ts.
+ */
+export const REGRA_DA_CONCLUSAO =
+  `Uma lição conta como concluída quando você termina as ${STAGE_COUNT} etapas e acerta pelo menos ${REGRA_DO_DOMINIO_CURTA} nos exercícios.`;
+
 export const isLessonComplete = (state: LearnerState, letterId: string): boolean =>
   (state.lessons[letterId]?.stagesDone.length ?? 0) >= STAGE_COUNT;
 
@@ -410,6 +420,14 @@ export function recordSkill(
     streak: correct ? prev.streak + 1 : 0,
     lastOn: day
   };
+  /* Os dias de acerto só são contados em registros que nasceram com eles:
+     um registro antigo, com respostas e sem o campo, fica sem (ver types.ts). */
+  const legado = prev.diasDeAcerto === undefined && prev.hits + prev.misses > 0;
+  if (!legado) {
+    const novoDia = correct && prev.ultimoAcerto !== day;
+    stat.diasDeAcerto = (prev.diasDeAcerto ?? 0) + (novoDia ? 1 : 0);
+    stat.ultimoAcerto = correct ? day : (prev.ultimoAcerto ?? null);
+  }
   return { ...state, skills: { ...state.skills, [letterId]: { ...letter, [skill]: stat } } };
 }
 
@@ -544,6 +562,23 @@ export function markFirst(state: LearnerState, id: string): LearnerState {
 }
 
 export const hasFirst = (state: LearnerState, id: string): boolean => !!state.firsts[id];
+
+/**
+ * Uma resposta de autoavaliação de leitura (12/10/2026). Grava só em
+ * `leituraAutoavaliada`: nada de `skills`, de revisão ou de XP, porque
+ * "eu li certo" é o que o aluno acha, e não o que o curso mediu.
+ */
+export function registrarLeitura(state: LearnerState, atividade: string, consegui: boolean, day: string): LearnerState {
+  const todas = state.leituraAutoavaliada ?? {};
+  const prev = todas[atividade] ?? { tentadas: 0, consegui: 0, ultima: day };
+  return {
+    ...state,
+    leituraAutoavaliada: {
+      ...todas,
+      [atividade]: { tentadas: prev.tentadas + 1, consegui: prev.consegui + (consegui ? 1 : 0), ultima: day }
+    }
+  };
+}
 
 /* ── spaced review (Leitner) ────────────────────────────────────────────── */
 

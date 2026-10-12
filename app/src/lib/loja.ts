@@ -36,7 +36,7 @@ export const ITENS: Record<ItemDaLoja['id'], ItemDaLoja> = {
   },
   carta: {
     id: 'carta', titulo: 'Carta de cultura antecipada', custo: 150,
-    descricao: 'Abre agora a próxima carta da viagem pela história do hebraico, sem esperar dominar mais letras.'
+    descricao: 'Abre agora a próxima carta da viagem pela história do hebraico, sem esperar concluir mais lições.'
   },
   'nome-decorado': {
     id: 'nome-decorado', titulo: 'Seu nome em hebraico decorado', custo: 300,

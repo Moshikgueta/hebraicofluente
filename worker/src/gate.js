@@ -52,6 +52,8 @@ const GATED = [
   /* 23/09/2026: o vocabulário, o nome em hebraico e o guia do teclado - as
      três telas das atividades de produção. */
   '/vocabulario', '/meu-nome', '/teclado-hebraico',
+  /* 11/10/2026: o Laboratório de Leitura e a Minha Primeira Leitura. */
+  '/leitura',
   /* Os clipes de áudio ainda não existem; quando chegarem, nascem atrás do
      portão em vez de serem descobertos públicos depois. Atenção: o
      AudioButton também aparece em página livre (a landing, `Fecho.tsx`), e

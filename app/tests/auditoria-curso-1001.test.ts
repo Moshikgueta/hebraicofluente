@@ -214,7 +214,9 @@ describe('UXQA-005 / CONT-007: concluída e dominada, com os números das consta
     const c = fonte('app/concluido/CompletionClient.tsx');
     expect(c).toContain('${conquistas.size} de ${ACHIEVEMENTS.length}');
     expect(c).toContain('isLessonMastered(p.state, l.id)');
-    expect(fonte('app/certificado/CertificadoClient.tsx')).toContain('dominadas. Dominar é ${REGRA_DO_DOMINIO}.');
+    /* Desde 12/10/2026 a regra antiga se chama "lição concluída" (REGRA_DA_CONCLUSAO);
+       "dominada" é o domínio por habilidade (lib/dominio.ts). */
+    expect(fonte('app/certificado/CertificadoClient.tsx')).toContain('concluídas. ${REGRA_DA_CONCLUSAO}');
     expect(fonte('app/checkpoint/[n]/CheckpointClient.tsx')).toContain('isLessonMastered(p.state, l.id)');
   });
 });

@@ -14,7 +14,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { AchievementBadge } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course } from '@/lib/content';
-import { ACHIEVEMENTS, isLessonComplete, isLessonMastered, REGRA_DO_DOMINIO } from '@/lib/state/rules';
+import { ACHIEVEMENTS, isLessonComplete, isLessonMastered, REGRA_DA_CONCLUSAO } from '@/lib/state/rules';
 import { CertificateCallout } from '@/app/certificado/CertificadoClient';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 
@@ -51,7 +51,7 @@ export function CompletionClient() {
         <p className="text-[17px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
           {alfabetoDominado
             ? 'Há algumas semanas isto era um conjunto de símbolos.'
-            : `Faltam ${faltam.length} ${faltam.length === 1 ? 'letra' : 'letras'} para dominar o alfabeto. Dominar uma letra é ${REGRA_DO_DOMINIO}.`}
+            : `Faltam ${faltam.length} ${faltam.length === 1 ? 'lição' : 'lições'} para concluir o alfabeto. ${REGRA_DA_CONCLUSAO}`}
         </p>
         <div className="py-2">
           <HeSeq items={letters.slice(0, 11).map(l => l.letter)} size="word" sep={null} />
@@ -62,7 +62,7 @@ export function CompletionClient() {
         <p className="font-display text-[40px] sm:text-[52px] font-bold tabular-nums text-ink">
           {mastered.length} / {course.totalLetters}
         </p>
-        <p className="font-ui text-[13px] text-ink-muted">letras dominadas</p>
+        <p className="font-ui text-[13px] text-ink-muted">lições concluídas</p>
         {!alfabetoDominado && (
           <div className="grid gap-2 justify-items-center">
             {concluidasSemDominio.length > 0 && (
