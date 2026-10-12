@@ -16,6 +16,7 @@
  * making them re-run onboarding to fix it would be absurd.
  */
 
+import { EXAM_PARTS } from '@/lib/engine/exam';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
@@ -346,6 +347,10 @@ export function CertificadoClient() {
           <strong>O que este certificado é:</strong> o registro de que você concluiu as lições das
           22 letras e passou no exame final deste curso, com {' '}
           {score != null ? `${Math.round(score * 100)}%` : 'nota de aprovação'}.
+        </p>
+        <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+          <strong>O que o exame verificou:</strong>{' '}
+          {EXAM_PARTS.map(x => x.titlePt.toLowerCase()).join(', ')}.
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
           <strong>O que ele não é:</strong> um certificado oficial, um diploma ou uma
