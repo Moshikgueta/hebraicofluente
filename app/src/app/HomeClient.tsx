@@ -67,7 +67,7 @@ export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: stri
     <>
       {daParceria !== null && parceria && (
         <p className="m-0 bg-[var(--gold-soft)] text-[var(--gold-ink)] text-center font-ui text-[14.5px] px-4 py-2.5 border-b border-[#EADCC0]">
-          Seu link garante o preço de pré-lançamento: o curso sai por <strong>{brl(daParceria)}</strong> no checkout
+          Seu link garante um preço especial: o curso sai por <strong>{brl(daParceria)}</strong> no checkout
           {curso && fimDaParceria(curso) ? `, até ${fimDaParceria(curso)}` : ''}.
         </p>
       )}
