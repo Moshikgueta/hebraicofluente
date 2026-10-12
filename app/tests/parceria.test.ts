@@ -36,7 +36,7 @@ describe('a virada de 01/11 mantém o preço da parceria', () => {
     const r = virar(texto, Date.parse('2026-11-01T03:05:00Z'));
     const cursos = JSON.parse(r.texto).courses ?? JSON.parse(r.texto);
     const alf = (Array.isArray(cursos) ? cursos : Object.values(cursos)).find((c: { slug: string }) => c.slug === 'alfabetizacao');
-    expect(alf.price).toMatchObject({ brl: 297, listBrl: null, parceriaBrl: 147 });
+    expect(alf.price).toMatchObject({ brl: 297, listBrl: null, parceriaBrl: 197 });
   });
 });
 
@@ -45,14 +45,15 @@ describe('a tela mostra o mesmo preço que o servidor cobra', () => {
   const virado: CatalogCourse = { ...curso, price: { ...curso.price, brl: 297, listBrl: null, preLancamentoAte: null } };
   it('só com parceria válida e preço menor', () => {
     expect(PARCERIAS.sefarad?.perfil).toBe('@adsefarditas');
-    expect(precoDaParceria(virado, 'sefarad')).toBe(147);
+    expect(precoDaParceria(virado, 'sefarad')).toBe(197);
     expect(precoDaParceria(virado, null)).toBeNull();
     expect(precoDaParceria(virado, 'outra')).toBeNull();
-    expect(comParceria(virado, 'sefarad').price.brl).toBe(147);
+    expect(comParceria(virado, 'sefarad').price.brl).toBe(197);
     expect(comParceria(virado, null)).toBe(virado);
-    /* Desde 12/10/2026 o pré-lançamento é R$ 197: o link continua em R$ 147. */
+    /* Desde 12/10/2026 o pré-lançamento e os links são R$ 197: iguais, e
+       no pré-lançamento a faixa do link não aparece. */
     expect(curso.price.brl).toBe(197);
-    expect(precoDaParceria(curso, 'sefarad')).toBe(147);
+    expect(precoDaParceria(curso, 'sefarad')).toBeNull();
     expect(precoDaParceria(curso, null)).toBeNull();
   });
 });
@@ -73,7 +74,7 @@ describe('o preço dos links tem data para acabar', () => {
     }
     const curso = getCourse(FLAGSHIP)!;
     const virado: CatalogCourse = { ...curso, price: { ...curso.price, brl: 297, listBrl: null, preLancamentoAte: null, parceriaAte: '2026-11-30' } };
-    expect(precoDaParceria(virado, 'bio', ultimoSegundo)).toBe(147);
+    expect(precoDaParceria(virado, 'bio', ultimoSegundo)).toBe(197);
     expect(precoDaParceria(virado, 'bio', ultimoSegundo + 1000)).toBeNull();
     expect(fimDaParceria(virado)).toBe('30/11');
   });
@@ -82,6 +83,6 @@ describe('o preço dos links tem data para acabar', () => {
     const r = virar(texto, Date.parse('2026-11-01T03:05:00Z'));
     const cursos = JSON.parse(r.texto).courses ?? JSON.parse(r.texto);
     const alf = (Array.isArray(cursos) ? cursos : Object.values(cursos)).find((c: { slug: string }) => c.slug === 'alfabetizacao');
-    expect(alf.price).toMatchObject({ brl: 297, parceriaBrl: 147, parceriaAte: '2026-11-30' });
+    expect(alf.price).toMatchObject({ brl: 297, parceriaBrl: 197, parceriaAte: '2026-11-30' });
   });
 });
