@@ -135,7 +135,7 @@ export function VocabularioClient() {
                 {/* À mão, a palavra vai sem os sinais de vogal. Até 29/09/2026 a
                     forma cursiva só aparecia com TODAS as letras da grafia já
                     ensinadas, e toda palavra com o ו de vogal (יוֹם, שָׁלוֹם,
-                    תּוֹדָה, הוּא) ficava sem ela até a lição do Vav - o dono do
+                    תוֹדָה, הוּא) ficava sem ela até a lição do Vav - o dono do
                     curso notou. Ler a cursiva não pede o Vav como letra: o
                     traço do ו é o mesmo que o aluno já lê como O e U. Escrever
                     pede, e por isso a escrita de palavras (palavrasAcumuladas)

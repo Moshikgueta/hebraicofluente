@@ -356,7 +356,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
       <Parte id="o-niqqud" titulo={<>O nikud: os pontinhos que marcam as vogais</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <strong className="font-semibold text-ink">Nikud</strong>{' '}
-          (<He size="inline">נִקּוּד</He>) é o sistema de pontos e traços colocados perto
+          (<He size="inline">נִקוּד</He>) é o sistema de pontos e traços colocados perto
           das letras para indicar os sons de vogal. A mesma palavra, com e sem eles:
         </p>
         <div className="grid sm:grid-cols-2 gap-3">

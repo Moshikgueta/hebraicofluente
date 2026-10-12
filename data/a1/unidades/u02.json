@@ -56,7 +56,7 @@
       "pt": "telefone"
     },
     {
-      "he": "מַפְתֵּחַ",
+      "he": "מַפְתֵחַ",
       "translit": "maftéach",
       "pt": "chave"
     },
@@ -66,12 +66,12 @@
       "pt": "mesa"
     },
     {
-      "he": "כִּסֵּא",
+      "he": "כִּסֵא",
       "translit": "kissé",
       "pt": "cadeira"
     },
     {
-      "he": "תִּיק",
+      "he": "תִיק",
       "translit": "tik",
       "pt": "mochila / bolsa"
     },
@@ -81,7 +81,7 @@
       "pt": "caderno"
     },
     {
-      "he": "דֶּלֶת",
+      "he": "דֶלֶת",
       "translit": "délet",
       "pt": "porta"
     },
@@ -96,7 +96,7 @@
       "pt": "luminária"
     },
     {
-      "he": "מַתָּנָה",
+      "he": "מַתָנָה",
       "translit": "mataná",
       "pt": "presente"
     },
@@ -106,7 +106,7 @@
       "pt": "homem"
     },
     {
-      "he": "אִשָּׁה",
+      "he": "אִשָׁה",
       "translit": "ishá",
       "pt": "mulher"
     },
@@ -116,7 +116,7 @@
       "pt": "menino"
     },
     {
-      "he": "יַלְדָּה",
+      "he": "יַלְדָה",
       "translit": "yaldá",
       "pt": "menina"
     },
@@ -136,7 +136,7 @@
       "pt": "pai"
     },
     {
-      "he": "אִמָּא",
+      "he": "אִמָא",
       "translit": "íma",
       "pt": "mãe"
     }
@@ -144,7 +144,7 @@
   "gramatica": [
     {
       "tituloPt": "זֶה para masculino, זֹאת para feminino",
-      "textoPt": "O que manda é o gênero da palavra, não da coisa: זֶה שֻׁלְחָן (mesa é masculina), זֹאת דֶּלֶת (porta é feminina).",
+      "textoPt": "O que manda é o gênero da palavra, não da coisa: זֶה שֻׁלְחָן (mesa é masculina), זֹאת דֶלֶת (porta é feminina).",
       "erroPt": "O português diz \"isto é\" para tudo. Em hebraico o \"isto\" acompanha o gênero da palavra, e nem sempre bate com o português: \"mesa\" é feminina no português e masculina no hebraico."
     },
     {
@@ -162,13 +162,13 @@
     "linhas": [
       {
         "quem": "Tom",
-        "he": "מַיָּה, מָה זֶה?",
+        "he": "מַיָה, מָה זֶה?",
         "translit": "Máya, ma ze?",
         "pt": "Maya, o que é isto?"
       },
       {
         "quem": "Maya",
-        "he": "זֶה מַפְתֵּחַ.",
+        "he": "זֶה מַפְתֵחַ.",
         "translit": "ze maftéach.",
         "pt": "É uma chave."
       },
@@ -192,7 +192,7 @@
       },
       {
         "quem": "Maya",
-        "he": "זֹאת אִמָּא. וְזֶה אַבָּא.",
+        "he": "זֹאת אִמָא. וְזֶה אַבָּא.",
         "translit": "zot íma. vezé ába.",
         "pt": "Esta é a minha mãe. E este é o meu pai."
       },
@@ -204,13 +204,13 @@
       },
       {
         "quem": "Maya",
-        "he": "זֶה לֹא אַבָּא, זֶה דָּנִי!",
+        "he": "זֶה לֹא אַבָּא, זֶה דָנִי!",
         "translit": "ze lo ába, ze Dáni!",
         "pt": "Este não é o meu pai, é o Dani!"
       }
     ],
     "glossario": [],
-    "notaPt": "אִמָּא e אַבָּא sem possessivo já soam como \"a mamãe\" e \"o papai\" de quem fala. O possessivo de verdade (שֶׁלִּי) chega na Unidade 6."
+    "notaPt": "אִמָא e אַבָּא sem possessivo já soam como \"a mamãe\" e \"o papai\" de quem fala. O possessivo de verdade (שֶׁלִי) chega na Unidade 6."
   },
   "cultura": [
     {
@@ -220,7 +220,7 @@
   ],
   "sabia": [
     {
-      "tituloPt": "אַבָּא e אִמָּא vêm do aramaico",
+      "tituloPt": "אַבָּא e אִמָא vêm do aramaico",
       "textoPt": "As palavras de todo dia para \"pai\" e \"mãe\" são aramaicas, a língua que os judeus falaram por séculos ao lado do hebraico. Em hebraico antigo se dizia אָב e אֵם, que continuam existindo em textos formais e em palavras compostas."
     }
   ],
@@ -243,15 +243,15 @@
           "mesa"
         ],
         [
-          "דֶּלֶת",
+          "דֶלֶת",
           "porta"
         ],
         [
-          "מַפְתֵּחַ",
+          "מַפְתֵחַ",
           "chave"
         ],
         [
-          "כִּסֵּא",
+          "כִּסֵא",
           "cadeira"
         ]
       ]
@@ -298,7 +298,7 @@
     },
     {
       "t": "escolha",
-      "q": "___ דֶּלֶת",
+      "q": "___ דֶלֶת",
       "opcoes": [
         "זֹאת",
         "זֶה"
@@ -307,7 +307,7 @@
     },
     {
       "t": "escolha",
-      "q": "___ כִּסֵּא",
+      "q": "___ כִּסֵא",
       "opcoes": [
         "זֶה",
         "זֹאת"
@@ -331,11 +331,11 @@
           1
         ],
         [
-          "תִּיק",
+          "תִיק",
           0
         ],
         [
-          "מַתָּנָה",
+          "מַתָנָה",
           1
         ],
         [
@@ -343,7 +343,7 @@
           0
         ],
         [
-          "דֶּלֶת",
+          "דֶלֶת",
           1
         ]
       ]
@@ -404,7 +404,7 @@
     },
     {
       "t": "ouvir",
-      "he": "זֹאת מַתָּנָה",
+      "he": "זֹאת מַתָנָה",
       "q": "O que a pessoa disse?",
       "opcoes": [
         "É um presente",
@@ -435,7 +435,7 @@
       "t": "vf",
       "q": "No diálogo, o homem da foto é o pai da Maya.",
       "certa": false,
-      "porque": "זֶה לֹא אַבָּא, זֶה דָּנִי!"
+      "porque": "זֶה לֹא אַבָּא, זֶה דָנִי!"
     },
     {
       "t": "escrever",
@@ -456,7 +456,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Esta é a minha mãe. E este é o meu pai.\"",
       "antes": "",
-      "depois": "אִמָּא. וְזֶה אַבָּא.",
+      "depois": "אִמָא. וְזֶה אַבָּא.",
       "respostas": [
         "זאת"
       ]
@@ -464,7 +464,7 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Esta é a minha mãe. E este é o meu pai.\"",
-      "exemplo": "זֹאת אִמָּא. וְזֶה אַבָּא."
+      "exemplo": "זֹאת אִמָא. וְזֶה אַבָּא."
     }
   ]
 }

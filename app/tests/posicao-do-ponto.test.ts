@@ -28,7 +28,7 @@ describe('onde o ponto aparece', () => {
   });
 
   it('tira só o ponto da letra, e troca só o som dela', () => {
-    expect(semOPonto('כִּתָּה', 0)).toBe('כִתָּה'.normalize('NFC'));
+    expect(semOPonto('כִּתָה', 0)).toBe('כִתָה'.normalize('NFC'));
     expect(outraLeitura('báyit', 'b', 'v')).toBe('váyit');
   });
 

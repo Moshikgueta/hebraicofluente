@@ -11,7 +11,7 @@
       "pt": "para onde?"
     },
     {
-      "he": "אֵיךְ מַגִּיעִים לְ…?",
+      "he": "אֵיךְ מַגִיעִים לְ…?",
       "translit": "eich maguiím le…?",
       "pt": "como se chega a…?"
     },
@@ -76,7 +76,7 @@
       "pt": "rua"
     },
     {
-      "he": "פִּנָּה",
+      "he": "פִּנָה",
       "translit": "piná",
       "pt": "esquina"
     },
@@ -86,12 +86,12 @@
       "pt": "semáforo"
     },
     {
-      "he": "תַּחֲנָה",
+      "he": "תַחֲנָה",
       "translit": "tachaná",
       "pt": "ponto (de ônibus), estação"
     },
     {
-      "he": "הַתַּחֲנָה הַמֶּרְכָּזִית",
+      "he": "הַתַחֲנָה הַמֶרְכָּזִית",
       "translit": "hatachaná hamerkazít",
       "pt": "a rodoviária central"
     },
@@ -131,12 +131,12 @@
       "pt": "supermercado"
     },
     {
-      "he": "דַּקָּה",
+      "he": "דַקָה",
       "translit": "daká",
       "pt": "minuto"
     },
     {
-      "he": "דַּקּוֹת",
+      "he": "דַקוֹת",
       "translit": "dakót",
       "pt": "minutos"
     }
@@ -144,8 +144,8 @@
   "gramatica": [
     {
       "tituloPt": "Onde, para onde, de onde",
-      "textoPt": "Três perguntas parecidas: אֵיפֹה? (onde, parado), לְאָן? (para onde, indo) e מֵאֵיפֹה? (de onde, vindo). אֵיפֹה הַבַּנְק? · לְאָן אַתָּה נוֹסֵעַ? · מֵאֵיפֹה אַתְּ?",
-      "erroPt": "Em português dá para dizer \"onde você vai?\". Em hebraico, com movimento a pergunta é לְאָן: לְאָן אַתָּה הוֹלֵךְ?"
+      "textoPt": "Três perguntas parecidas: אֵיפֹה? (onde, parado), לְאָן? (para onde, indo) e מֵאֵיפֹה? (de onde, vindo). אֵיפֹה הַבַּנְק? · לְאָן אַתָה נוֹסֵעַ? · מֵאֵיפֹה אַתְ?",
+      "erroPt": "Em português dá para dizer \"onde você vai?\". Em hebraico, com movimento a pergunta é לְאָן: לְאָן אַתָה הוֹלֵךְ?"
     },
     {
       "tituloPt": "A pé é הוֹלֵךְ; de veículo é נוֹסֵעַ",
@@ -168,10 +168,10 @@
     },
     {
       "tituloPt": "Explicar o caminho: o plural sem \"quem\"",
-      "textoPt": "Para uma regra que vale para qualquer um, o israelense usa o verbo no plural, sem sujeito: אֵיךְ מַגִּיעִים לַבַּנְק? (como se chega ao banco?), הוֹלְכִים יָשָׁר וּפוֹנִים יָמִינָה (vai-se reto e vira-se à direita). É o \"se\" do português. Também dá para explicar falando com a pessoa: אַתָּה הוֹלֵךְ יָשָׁר, וְאָז פּוֹנֶה שְׂמֹאלָה.",
+      "textoPt": "Para uma regra que vale para qualquer um, o israelense usa o verbo no plural, sem sujeito: אֵיךְ מַגִיעִים לַבַּנְק? (como se chega ao banco?), הוֹלְכִים יָשָׁר וּפוֹנִים יָמִינָה (vai-se reto e vira-se à direita). É o \"se\" do português. Também dá para explicar falando com a pessoa: אַתָה הוֹלֵךְ יָשָׁר, וְאָז פּוֹנֶה שְׂמֹאלָה.",
       "exemplos": [
         {
-          "he": "פּוֹנִים שְׂמֹאלָה בַּפִּנָּה.",
+          "he": "פּוֹנִים שְׂמֹאלָה בַּפִּנָה.",
           "pt": "Vira-se à esquerda na esquina."
         }
       ]
@@ -182,13 +182,13 @@
     "linhas": [
       {
         "quem": "Tom",
-        "he": "סְלִיחָה, אֵיךְ מַגִּיעִים לַתַּחֲנָה הַמֶּרְכָּזִית?",
+        "he": "סְלִיחָה, אֵיךְ מַגִיעִים לַתַחֲנָה הַמֶרְכָּזִית?",
         "translit": "slichá, eich maguiím latachaná hamerkazít?",
         "pt": "Com licença, como se chega à rodoviária central?"
       },
       {
         "quem": "A senhora",
-        "he": "זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל?",
+        "he": "זֶה רָחוֹק. אַתָה הוֹלֵךְ בָּרֶגֶל?",
         "translit": "ze rachók. atá holéch baréguel?",
         "pt": "É longe. Você vai a pé?"
       },
@@ -200,7 +200,7 @@
       },
       {
         "quem": "A senhora",
-        "he": "אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם פּוֹנֶה שְׂמֹאלָה.",
+        "he": "אָז אַתָה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם פּוֹנֶה שְׂמֹאלָה.",
         "translit": "az atá holéch yashár ad haramzór, veshám poné smóla.",
         "pt": "Então você vai reto até o semáforo, e lá vira à esquerda."
       },
@@ -212,31 +212,31 @@
       },
       {
         "quem": "A senhora",
-        "he": "אַחַר כָּךְ יָמִינָה, וְהַתַּחֲנָה מוּל הַבַּנְק. אֲבָל זֶה עֶשְׂרִים דַּקּוֹת.",
+        "he": "אַחַר כָּךְ יָמִינָה, וְהַתַחֲנָה מוּל הַבַּנְק. אֲבָל זֶה עֶשְׂרִים דַקוֹת.",
         "translit": "achár kach yamína, vehatachaná mul habánk. avál ze esrím dakót.",
         "pt": "Depois à direita, e a rodoviária fica em frente ao banco. Mas são vinte minutos."
       },
       {
         "quem": "Tom",
-        "he": "עֶשְׂרִים דַּקּוֹת? יֵשׁ אוֹטוֹבּוּס?",
+        "he": "עֶשְׂרִים דַקוֹת? יֵשׁ אוֹטוֹבּוּס?",
         "translit": "esrím dakót? yesh ótobus?",
         "pt": "Vinte minutos? Tem ônibus?"
       },
       {
         "quem": "A senhora",
-        "he": "כֵּן, קַו חָמֵשׁ. הַתַּחֲנָה פֹּה, בַּפִּנָּה.",
+        "he": "כֵּן, קַו חָמֵשׁ. הַתַחֲנָה פֹּה, בַּפִּנָה.",
         "translit": "ken, kav chamésh. hatachaná po, bapiná.",
         "pt": "Tem, a linha 5. O ponto é aqui, na esquina."
       },
       {
         "quem": "Tom",
-        "he": "תּוֹדָה רַבָּה!",
+        "he": "תוֹדָה רַבָּה!",
         "translit": "todá rabá!",
         "pt": "Muito obrigado!"
       },
       {
         "quem": "A senhora",
-        "he": "בְּבַקָּשָׁה. נְסִיעָה טוֹבָה!",
+        "he": "בְּבַקָשָׁה. נְסִיעָה טוֹבָה!",
         "translit": "bevakashá. nessiá tová!",
         "pt": "De nada. Boa viagem!"
       }
@@ -260,22 +260,22 @@
     "semPontos": true,
     "linhas": [
       {
-        "he": "מֵהָרַכֶּבֶת אַתָּה הוֹלֵךְ יָשָׁר עַד הַסּוּפֶּרְמַרְקֶט.",
+        "he": "מֵהָרַכֶּבֶת אַתָה הוֹלֵךְ יָשָׁר עַד הַסוּפֶּרְמַרְקֶט.",
         "translit": "meharakévet atá holéch yashár ad hassupermárket.",
         "pt": "Do trem você vai reto até o supermercado."
       },
       {
-        "he": "שָׁם אַתָּה פּוֹנֶה יָמִינָה.",
+        "he": "שָׁם אַתָה פּוֹנֶה יָמִינָה.",
         "translit": "sham atá poné yamína.",
         "pt": "Lá você vira à direita."
       },
       {
-        "he": "הַבַּיִת שֶׁלִּי בִּרְחוֹב הֶרְצְל 12, מוּל הַבַּנְק.",
+        "he": "הַבַּיִת שֶׁלִי בִּרְחוֹב הֶרְצְל 12, מוּל הַבַּנְק.",
         "translit": "habáyit shelí birchóv Hértsl shteim-esré, mul habánk.",
         "pt": "A minha casa fica na rua Herzl, 12, em frente ao banco."
       },
       {
-        "he": "זֶה קָרוֹב, חָמֵשׁ דַּקּוֹת בָּרֶגֶל!",
+        "he": "זֶה קָרוֹב, חָמֵשׁ דַקוֹת בָּרֶגֶל!",
         "translit": "ze karóv, chamésh dakót baréguel!",
         "pt": "É perto, cinco minutos a pé!"
       }
@@ -305,7 +305,7 @@
         "t": "vf",
         "q": "Da estação de trem até a casa dela é preciso pegar um ônibus.",
         "certa": false,
-        "porque": "חָמֵשׁ דַּקּוֹת בָּרֶגֶל: são cinco minutos a pé."
+        "porque": "חָמֵשׁ דַקוֹת בָּרֶגֶל: são cinco minutos a pé."
       }
     ]
   },
@@ -348,7 +348,7 @@
           "a pé"
         ],
         [
-          "תַּחֲנָה",
+          "תַחֲנָה",
           "ponto, estação"
         ]
       ]
@@ -383,9 +383,9 @@
       "t": "escolha",
       "q": "\"Para onde você vai?\" (a ele)",
       "opcoes": [
-        "לְאָן אַתָּה הוֹלֵךְ?",
-        "אֵיפֹה אַתָּה הוֹלֵךְ?",
-        "מֵאֵיפֹה אַתָּה הוֹלֵךְ?"
+        "לְאָן אַתָה הוֹלֵךְ?",
+        "אֵיפֹה אַתָה הוֹלֵךְ?",
+        "מֵאֵיפֹה אַתָה הוֹלֵךְ?"
       ],
       "certa": 0,
       "dicas": {
@@ -406,7 +406,7 @@
           0
         ],
         [
-          "עַד הַפִּנָּה בָּרֶגֶל",
+          "עַד הַפִּנָה בָּרֶגֶל",
           0
         ],
         [
@@ -422,7 +422,7 @@
           1
         ],
         [
-          "לַיָּם בָּרֶגֶל, חָמֵשׁ דַּקּוֹת",
+          "לַיָם בָּרֶגֶל, חָמֵשׁ דַקוֹת",
           0
         ]
       ]
@@ -493,7 +493,7 @@
     {
       "t": "completar",
       "q": "\"Você vai reto até o semáforo\"",
-      "antes": "אַתָּה הוֹלֵךְ",
+      "antes": "אַתָה הוֹלֵךְ",
       "depois": "עַד הָרַמְזוֹר",
       "respostas": [
         "ישר"
@@ -503,7 +503,7 @@
       "t": "completar",
       "q": "\"Como se chega ao banco?\"",
       "antes": "",
-      "depois": "מַגִּיעִים לַבַּנְק?",
+      "depois": "מַגִיעִים לַבַּנְק?",
       "respostas": [
         "איך"
       ]
@@ -538,7 +538,7 @@
       "t": "montar",
       "pt": "O ponto fica em frente ao banco.",
       "palavras": [
-        "הַתַּחֲנָה",
+        "הַתַחֲנָה",
         "מוּל",
         "הַבַּנְק"
       ]
@@ -549,17 +549,17 @@
       "palavras": [
         "פּוֹנִים",
         "שְׂמֹאלָה",
-        "בַּפִּנָּה"
+        "בַּפִּנָה"
       ],
       "outras": [
         [
-          "בַּפִּנָּה",
+          "בַּפִּנָה",
           "פּוֹנִים",
           "שְׂמֹאלָה"
         ],
         [
           "פּוֹנִים",
-          "בַּפִּנָּה",
+          "בַּפִּנָה",
           "שְׂמֹאלָה"
         ]
       ]
@@ -570,12 +570,12 @@
       "linhas": [
         [
           "Tom",
-          "סְלִיחָה, אֵיךְ מַגִּיעִים לַיָּם?"
+          "סְלִיחָה, אֵיךְ מַגִיעִים לַיָם?"
         ]
       ],
       "opcoes": [
         "הוֹלְכִים יָשָׁר, וְאָז שְׂמֹאלָה.",
-        "בְּשָׁעָה שְׁתַּיִם.",
+        "בְּשָׁעָה שְׁתַיִם.",
         "כֵּן, אֲנִי יוֹדֵעַ."
       ],
       "certa": 0
@@ -590,9 +590,9 @@
         ]
       ],
       "opcoes": [
-        "לֹא, זֶה קָרוֹב. חָמֵשׁ דַּקּוֹת.",
+        "לֹא, זֶה קָרוֹב. חָמֵשׁ דַקוֹת.",
         "לֹא, אֵין לִי.",
-        "כֵּן, בְּבַקָּשָׁה."
+        "כֵּן, בְּבַקָשָׁה."
       ],
       "certa": 0
     },
@@ -600,8 +600,8 @@
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "סְלִיחָה, אֵיפֹה הַתַּחֲנָה?",
-        "שָׁם, בַּפִּנָּה.",
+        "סְלִיחָה, אֵיפֹה הַתַחֲנָה?",
+        "שָׁם, בַּפִּנָה.",
         "זֶה קַו חָמֵשׁ?",
         "כֵּן. נְסִיעָה טוֹבָה!"
       ]
@@ -660,7 +660,7 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Então você vai reto até o semáforo, e lá vira à esquerda.\"",
-      "antes": "אָז אַתָּה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם",
+      "antes": "אָז אַתָה הוֹלֵךְ יָשָׁר עַד הָרַמְזוֹר, וְשָׁם",
       "depois": "שְׂמֹאלָה.",
       "respostas": [
         "פונה"
@@ -669,12 +669,12 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"É longe. Você vai a pé?\"",
-      "exemplo": "זֶה רָחוֹק. אַתָּה הוֹלֵךְ בָּרֶגֶל?"
+      "exemplo": "זֶה רָחוֹק. אַתָה הוֹלֵךְ בָּרֶגֶל?"
     },
     {
       "t": "aberta",
       "pt": "Explique a alguém como chegar da sua casa ao mercado mais perto.",
-      "exemplo": "הוֹלְכִים יָשָׁר עַד הַפִּנָּה, וְאָז פּוֹנִים יָמִינָה. הַסּוּפֶּרְמַרְקֶט מוּל הַבַּנְק. זֶה קָרוֹב!"
+      "exemplo": "הוֹלְכִים יָשָׁר עַד הַפִּנָה, וְאָז פּוֹנִים יָמִינָה. הַסוּפֶּרְמַרְקֶט מוּל הַבַּנְק. זֶה קָרוֹב!"
     }
   ]
 }

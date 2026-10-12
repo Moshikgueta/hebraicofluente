@@ -11,7 +11,7 @@
       "pt": "restaurante"
     },
     {
-      "he": "תַּפְרִיט",
+      "he": "תַפְרִיט",
       "translit": "tafrít",
       "pt": "cardápio"
     },
@@ -51,7 +51,7 @@
       "pt": "carne"
     },
     {
-      "he": "דָּג",
+      "he": "דָג",
       "translit": "dag",
       "pt": "peixe"
     },
@@ -98,10 +98,10 @@
     {
       "pt": "pedir, solicitar. No restaurante, também é muito comum pedir com אֶפְשָׁר… ou אֲנִי רוֹצֶה…",
       "formas": [
-        "מְבַקֵּשׁ",
-        "מְבַקֶּשֶׁת",
-        "מְבַקְּשִׁים",
-        "מְבַקְּשׁוֹת"
+        "מְבַקֵשׁ",
+        "מְבַקֶשֶׁת",
+        "מְבַקְשִׁים",
+        "מְבַקְשׁוֹת"
       ],
       "translit": [
         "mevakésh",
@@ -131,7 +131,7 @@
       "pt": "pode ser…? dá para…?"
     },
     {
-      "he": "לְשַׁלֵּם",
+      "he": "לְשַׁלֵם",
       "translit": "leshalém",
       "pt": "pagar"
     },
@@ -169,15 +169,15 @@
   "gramatica": [
     {
       "tituloPt": "Pedir com educação: אֶפְשָׁר…?",
-      "textoPt": "O jeito mais natural de pedir é אֶפְשָׁר + a coisa, como pergunta: אֶפְשָׁר מַיִם, בְּבַקָּשָׁה? (pode ser uma água?). Com uma ação, אֶפְשָׁר + infinitivo: אֶפְשָׁר לְשַׁלֵּם? (dá para pagar?). Também vale אֲנִי רוֹצֶה…, בְּבַקָּשָׁה.",
-      "erroPt": "Dizer só \"מַיִם!\" soa como uma ordem. E não traduza \"eu queria\" do português: no restaurante, o presente com בְּבַקָּשָׁה já é educado.",
+      "textoPt": "O jeito mais natural de pedir é אֶפְשָׁר + a coisa, como pergunta: אֶפְשָׁר מַיִם, בְּבַקָשָׁה? (pode ser uma água?). Com uma ação, אֶפְשָׁר + infinitivo: אֶפְשָׁר לְשַׁלֵם? (dá para pagar?). Também vale אֲנִי רוֹצֶה…, בְּבַקָשָׁה.",
+      "erroPt": "Dizer só \"מַיִם!\" soa como uma ordem. E não traduza \"eu queria\" do português: no restaurante, o presente com בְּבַקָשָׁה já é educado.",
       "exemplos": [
         {
-          "he": "אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה?",
+          "he": "אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָשָׁה?",
           "pt": "Pode trazer a conta, por favor?"
         },
         {
-          "he": "אֶפְשָׁר לְשַׁלֵּם, בְּבַקָּשָׁה?",
+          "he": "אֶפְשָׁר לְשַׁלֵם, בְּבַקָשָׁה?",
           "pt": "Dá para pagar, por favor?"
         }
       ]
@@ -189,7 +189,7 @@
     },
     {
       "tituloPt": "Com e sem",
-      "textoPt": "עִם é \"com\" e בְּלִי é \"sem\": קָפֶה עִם חָלָב, תֵּה בְּלִי סֻכָּר, סָלָט בְּלִי בָּצָל.",
+      "textoPt": "עִם é \"com\" e בְּלִי é \"sem\": קָפֶה עִם חָלָב, תֵה בְּלִי סֻכָּר, סָלָט בְּלִי בָּצָל.",
       "exemplos": [
         {
           "he": "אֲנִי רוֹצָה סָלָט בְּלִי בָּצָל.",
@@ -199,8 +199,8 @@
     },
     {
       "tituloPt": "O adjetivo concorda, mesmo longe",
-      "textoPt": "Como na Unidade 3: הַשַּׁקְשׁוּקָה טְעִימָה (a shakshuka está gostosa), הַדָּג טָעִים. A palavra que descreve segue o gênero da comida, não o de quem fala.",
-      "erroPt": "Uma mulher que gostou do peixe diz הַדָּג טָעִים, e não טְעִימָה: o gostoso é o peixe, que é masculino."
+      "textoPt": "Como na Unidade 3: הַשַׁקְשׁוּקָה טְעִימָה (a shakshuka está gostosa), הַדָג טָעִים. A palavra que descreve segue o gênero da comida, não o de quem fala.",
+      "erroPt": "Uma mulher que gostou do peixe diz הַדָג טָעִים, e não טְעִימָה: o gostoso é o peixe, que é masculino."
     }
   ],
   "dialogo": {
@@ -208,13 +208,13 @@
     "linhas": [
       {
         "quem": "O garçom",
-        "he": "עֶרֶב טוֹב! הִנֵּה הַתַּפְרִיט.",
+        "he": "עֶרֶב טוֹב! הִנֵה הַתַפְרִיט.",
         "translit": "érev tov! hiné hatafrít.",
         "pt": "Boa noite! Aqui está o cardápio."
       },
       {
         "quem": "Maya",
-        "he": "תּוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָּשָׁה?",
+        "he": "תוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָשָׁה?",
         "translit": "todá. efshár máyim, bevakashá?",
         "pt": "Obrigada. Pode ser uma água, por favor?"
       },
@@ -232,13 +232,13 @@
       },
       {
         "quem": "O garçom",
-        "he": "הַשַּׁקְשׁוּקָה מְאֹד טְעִימָה. וְגַם הַדָּג.",
+        "he": "הַשַׁקְשׁוּקָה מְאֹד טְעִימָה. וְגַם הַדָג.",
         "translit": "hashakshúka meód teimá. vegám hadág.",
         "pt": "A shakshuka é muito gostosa. E o peixe também."
       },
       {
         "quem": "Dani",
-        "he": "אֲנִי צִמְחוֹנִי. אֲנִי רוֹצֶה שַׁקְשׁוּקָה, בְּבַקָּשָׁה.",
+        "he": "אֲנִי צִמְחוֹנִי. אֲנִי רוֹצֶה שַׁקְשׁוּקָה, בְּבַקָשָׁה.",
         "translit": "aní tsimchoní. aní rotsé shakshúka, bevakashá.",
         "pt": "Eu sou vegetariano. Quero uma shakshuka, por favor."
       },
@@ -250,7 +250,7 @@
       },
       {
         "quem": "Dani",
-        "he": "כֵּן, תּוֹדָה.",
+        "he": "כֵּן, תוֹדָה.",
         "translit": "ken, todá.",
         "pt": "Sim, obrigado."
       },
@@ -274,7 +274,7 @@
       },
       {
         "quem": "Dani (depois do jantar)",
-        "he": "אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָּשָׁה?",
+        "he": "אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָשָׁה?",
         "translit": "efshár cheshbón, bevakashá?",
         "pt": "Pode trazer a conta, por favor?"
       }
@@ -302,7 +302,7 @@
     "semPontos": true,
     "linhas": [
       {
-        "he": "אֲרוּחַת בֹּקֶר יִשְׂרְאֵלִית: בֵּיצִים, סָלָט, לֶחֶם, גְּבִינָה, קָפֶה אוֹ מִיץ. 62 שֶׁקֶל",
+        "he": "אֲרוּחַת בֹּקֶר יִשְׂרְאֵלִית: בֵּיצִים, סָלָט, לֶחֶם, גְבִינָה, קָפֶה אוֹ מִיץ. 62 שֶׁקֶל",
         "translit": "aruchát bóker yisraelít: beitsím, salát, léchem, gviná, kafé o mits. shishím ushtáyim shékel",
         "pt": "Café da manhã israelense: ovos, salada, pão, queijo, café ou suco. 62 shekels"
       },
@@ -312,7 +312,7 @@
         "pt": "Shakshuka (picante!): 48 shekels"
       },
       {
-        "he": "טוֹסְט גְּבִינָה: 39 שֶׁקֶל",
+        "he": "טוֹסְט גְבִינָה: 39 שֶׁקֶל",
         "translit": "tost gviná: shloshím vatésha shékel",
         "pt": "Queijo quente: 39 shekels"
       },
@@ -364,7 +364,7 @@
     }
   ],
   "autoavaliacao": [
-    "Eu peço comida e bebida com אֶפְשָׁר e בְּבַקָּשָׁה.",
+    "Eu peço comida e bebida com אֶפְשָׁר e בְּבַקָשָׁה.",
     "Eu pergunto \"qual?\" com אֵיזֶה, אֵיזוֹ ou אֵילוּ.",
     "Eu digo o que não como e peço a conta."
   ],
@@ -382,7 +382,7 @@
           "carne"
         ],
         [
-          "דָּג",
+          "דָג",
           "peixe"
         ],
         [
@@ -400,7 +400,7 @@
       "q": "E o restaurante.",
       "pares": [
         [
-          "תַּפְרִיט",
+          "תַפְרִיט",
           "cardápio"
         ],
         [
@@ -425,7 +425,7 @@
       "t": "escolha",
       "q": "Qual é o jeito educado de pedir água?",
       "opcoes": [
-        "אֶפְשָׁר מַיִם, בְּבַקָּשָׁה?",
+        "אֶפְשָׁר מַיִם, בְּבַקָשָׁה?",
         "מַיִם!",
         "אֲנִי מַיִם."
       ],
@@ -437,7 +437,7 @@
     },
     {
       "t": "escolha",
-      "q": "___ עוּגָה אַתְּ רוֹצָה?",
+      "q": "___ עוּגָה אַתְ רוֹצָה?",
       "opcoes": [
         "אֵיזוֹ",
         "אֵיזֶה",
@@ -485,7 +485,7 @@
           2
         ],
         [
-          "דָּג",
+          "דָג",
           0
         ],
         [
@@ -510,7 +510,7 @@
     {
       "t": "completar",
       "q": "\"Chá com leite\"",
-      "antes": "תֵּה",
+      "antes": "תֵה",
       "depois": "חָלָב",
       "respostas": [
         "עם"
@@ -518,13 +518,13 @@
     },
     {
       "t": "vf",
-      "q": "אֶפְשָׁר לְשַׁלֵּם? quer dizer \"dá para pagar?\".",
+      "q": "אֶפְשָׁר לְשַׁלֵם? quer dizer \"dá para pagar?\".",
       "certa": true
     },
     {
       "t": "tabela",
       "q": "Complete as formas.",
-      "base": "מְבַקֵּשׁ",
+      "base": "מְבַקֵשׁ",
       "linhas": [
         [
           "mulher",
@@ -555,7 +555,7 @@
     {
       "t": "erro",
       "q": "A shakshuka é feminina. Ache o erro e escreva a frase certa.",
-      "errada": "הַשַּׁקְשׁוּקָה טָעִים.",
+      "errada": "הַשַׁקְשׁוּקָה טָעִים.",
       "respostas": [
         "השקשוקה טעימה"
       ],
@@ -576,7 +576,7 @@
       "palavras": [
         "אֶפְשָׁר",
         "חֶשְׁבּוֹן",
-        "בְּבַקָּשָׁה?"
+        "בְּבַקָשָׁה?"
       ]
     },
     {
@@ -596,12 +596,12 @@
       "linhas": [
         [
           "O garçom",
-          "מָה אַתֶּם רוֹצִים לִשְׁתּוֹת?"
+          "מָה אַתֶם רוֹצִים לִשְׁתוֹת?"
         ]
       ],
       "opcoes": [
-        "קָפֶה וּמַיִם, בְּבַקָּשָׁה.",
-        "חֶשְׁבּוֹן, בְּבַקָּשָׁה.",
+        "קָפֶה וּמַיִם, בְּבַקָשָׁה.",
+        "חֶשְׁבּוֹן, בְּבַקָשָׁה.",
         "אֲנִי צִמְחוֹנִי."
       ],
       "certa": 0,
@@ -617,7 +617,7 @@
         ]
       ],
       "opcoes": [
-        "מְאֹד טָעִים, תּוֹדָה!",
+        "מְאֹד טָעִים, תוֹדָה!",
         "בְּשֶׁבַע.",
         "לֹא, אֵין."
       ],
@@ -627,15 +627,15 @@
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "עֶרֶב טוֹב, הִנֵּה הַתַּפְרִיט.",
-        "תּוֹדָה. אֶפְשָׁר מַיִם?",
+        "עֶרֶב טוֹב, הִנֵה הַתַפְרִיט.",
+        "תוֹדָה. אֶפְשָׁר מַיִם?",
         "בְּטַח. עִם קֶרַח?",
         "לֹא, בְּלִי קֶרַח."
       ]
     },
     {
       "t": "ouvir",
-      "he": "הַחֶשְׁבּוֹן, בְּבַקָּשָׁה.",
+      "he": "הַחֶשְׁבּוֹן, בְּבַקָשָׁה.",
       "q": "O que a pessoa pede?",
       "opcoes": [
         "A conta",
@@ -646,7 +646,7 @@
     },
     {
       "t": "ouvir",
-      "he": "תֵּה בְּלִי סֻכָּר.",
+      "he": "תֵה בְּלִי סֻכָּר.",
       "q": "Como é o chá?",
       "opcoes": [
         "Sem açúcar",
@@ -688,8 +688,8 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Obrigada. Pode ser uma água, por favor?\"",
-      "antes": "תּוֹדָה.",
-      "depois": "מַיִם, בְּבַקָּשָׁה?",
+      "antes": "תוֹדָה.",
+      "depois": "מַיִם, בְּבַקָשָׁה?",
       "respostas": [
         "אפשר"
       ]
@@ -706,12 +706,12 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Obrigada. Pode ser uma água, por favor?\"",
-      "exemplo": "תּוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָּשָׁה?"
+      "exemplo": "תוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָשָׁה?"
     },
     {
       "t": "aberta",
       "pt": "Você está num café. Peça uma bebida e uma comida, diga uma coisa que você não quer, e peça a conta.",
-      "exemplo": "אֶפְשָׁר קָפֶה הָפוּךְ וְטוֹסְט גְּבִינָה, בְּבַקָּשָׁה? בְּלִי בָּצָל. אֶפְשָׁר חֶשְׁבּוֹן?"
+      "exemplo": "אֶפְשָׁר קָפֶה הָפוּךְ וְטוֹסְט גְבִינָה, בְּבַקָשָׁה? בְּלִי בָּצָל. אֶפְשָׁר חֶשְׁבּוֹן?"
     }
   ]
 }

@@ -8,10 +8,10 @@
     {
       "pt": "morar",
       "formas": [
-        "גָּר",
-        "גָּרָה",
-        "גָּרִים",
-        "גָּרוֹת"
+        "גָר",
+        "גָרָה",
+        "גָרִים",
+        "גָרוֹת"
       ],
       "translit": [
         "gar",
@@ -91,7 +91,7 @@
       "pt": "em (grudado na palavra)"
     },
     {
-      "he": "תֵּל אָבִיב",
+      "he": "תֵל אָבִיב",
       "translit": "Tel Avív",
       "pt": "Tel Aviv"
     },
@@ -121,7 +121,7 @@
       "pt": "português"
     },
     {
-      "he": "אַנְגְּלִית",
+      "he": "אַנְגְלִית",
       "translit": "anglít",
       "pt": "inglês"
     },
@@ -134,12 +134,12 @@
   "gramatica": [
     {
       "tituloPt": "O presente muda com o gênero e o número, não com a pessoa",
-      "textoPt": "אֲנִי / אַתָּה / הוּא לוֹמֵד: a mesma palavra. O que muda é homem ou mulher, um ou vários: אֲנִי לוֹמֵד (homem), אֲנִי לוֹמֶדֶת (mulher).",
+      "textoPt": "אֲנִי / אַתָה / הוּא לוֹמֵד: a mesma palavra. O que muda é homem ou mulher, um ou vários: אֲנִי לוֹמֵד (homem), אֲנִי לוֹמֶדֶת (mulher).",
       "erroPt": "O português conjuga pela pessoa (estudo, estuda, estudamos). O hebraico, no presente, conjuga por quem é e quantos. Uma mulher diz אֲנִי לוֹמֶדֶת, nunca אֲנִי לוֹמֵד."
     },
     {
       "tituloPt": "O desenho das 4 formas",
-      "textoPt": "Na maioria dos verbos: _וֹ_ֵ_ · _וֹ_ֶ_ֶת · _וֹ_ְ_ִים · _וֹ_ְ_וֹת. É o mesmo final do adjetivo (־ִים / ־וֹת). גָּר e מְדַבֵּר fogem do desenho e são aprendidos como estão."
+      "textoPt": "Na maioria dos verbos: _וֹ_ֵ_ · _וֹ_ֶ_ֶת · _וֹ_ְ_ִים · _וֹ_ְ_וֹת. É o mesmo final do adjetivo (־ִים / ־וֹת). גָר e מְדַבֵּר fogem do desenho e são aprendidos como estão."
     },
     {
       "tituloPt": "\"Em\" é בְּ־, grudado",
@@ -152,55 +152,55 @@
     "linhas": [
       {
         "quem": "Noa",
-        "he": "טוֹם, אֵיפֹה אַתָּה גָּר?",
+        "he": "טוֹם, אֵיפֹה אַתָה גָר?",
         "translit": "Tom, éifo atá gar?",
         "pt": "Tom, onde você mora?"
       },
       {
         "quem": "Tom",
-        "he": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?",
+        "he": "אֲנִי גָר בִּירוּשָׁלַיִם. וְאַתְ?",
         "translit": "aní gar biYerushaláyim. veát?",
         "pt": "Moro em Jerusalém. E você?"
       },
       {
         "quem": "Noa",
-        "he": "אֲנִי גָּרָה בְּתֵל אָבִיב. אַתָּה עוֹבֵד?",
+        "he": "אֲנִי גָרָה בְּתֵל אָבִיב. אַתָה עוֹבֵד?",
         "translit": "aní gará beTél Avív. atá ovéd?",
         "pt": "Moro em Tel Aviv. Você trabalha?"
       },
       {
         "quem": "Tom",
-        "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְּ?",
+        "he": "לֹא, אֲנִי לוֹמֵד עִבְרִית. וְאַתְ?",
         "translit": "lo, aní loméd ivrít. veát?",
         "pt": "Não, estudo hebraico. E você?"
       },
       {
         "quem": "Noa",
-        "he": "אֲנִי עוֹבֶדֶת. אַתָּה מְדַבֵּר עִבְרִית טוֹב!",
+        "he": "אֲנִי עוֹבֶדֶת. אַתָה מְדַבֵּר עִבְרִית טוֹב!",
         "translit": "aní ovédet. atá medabér ivrít tov!",
         "pt": "Eu trabalho. Você fala hebraico bem!"
       },
       {
         "quem": "Tom",
-        "he": "תּוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
+        "he": "תוֹדָה! אֲנִי מְדַבֵּר קְצָת.",
         "translit": "todá! aní medabér ktsat.",
         "pt": "Obrigado! Falo um pouco."
       },
       {
         "quem": "Noa",
-        "he": "דָּנִי וּמַיָּה גַּם לוֹמְדִים עִבְרִית.",
+        "he": "דָנִי וּמַיָה גַם לוֹמְדִים עִבְרִית.",
         "translit": "Dáni uMáya gam lomdím ivrít.",
         "pt": "O Dani e a Maya também estudam hebraico."
       },
       {
         "quem": "Tom",
-        "he": "הֵם גָּרִים בִּירוּשָׁלַיִם?",
+        "he": "הֵם גָרִים בִּירוּשָׁלַיִם?",
         "translit": "hem garím biYerushaláyim?",
         "pt": "Eles moram em Jerusalém?"
       },
       {
         "quem": "Noa",
-        "he": "לֹא, הֵם גָּרִים בְּתֵל אָבִיב.",
+        "he": "לֹא, הֵם גָרִים בְּתֵל אָבִיב.",
         "translit": "lo, hem garím beTél Avív.",
         "pt": "Não, eles moram em Tel Aviv."
       }
@@ -217,7 +217,7 @@
   "sabia": [
     {
       "tituloPt": "O nome Tel Aviv",
-      "textoPt": "תֵּל é uma colina formada por ruínas antigas, e אָבִיב é primavera: a ruína antiga e a estação nova. O nome veio da tradução hebraica de um romance de Theodor Herzl, \"A Velha Nova Terra\", e foi dado à cidade fundada em 1909."
+      "textoPt": "תֵל é uma colina formada por ruínas antigas, e אָבִיב é primavera: a ruína antiga e a estação nova. O nome veio da tradução hebraica de um romance de Theodor Herzl, \"A Velha Nova Terra\", e foi dado à cidade fundada em 1909."
     }
   ],
   "autoavaliacao": [
@@ -286,15 +286,15 @@
           2
         ],
         [
-          "גָּרָה",
+          "גָרָה",
           1
         ],
         [
-          "גָּר",
+          "גָר",
           0
         ],
         [
-          "גָּרוֹת",
+          "גָרוֹת",
           2
         ]
       ]
@@ -312,8 +312,8 @@
       "t": "escolha",
       "q": "O Dani diz: אֲנִי ___ בְּרִיוֹ",
       "opcoes": [
-        "גָּר",
-        "גָּרָה"
+        "גָר",
+        "גָרָה"
       ],
       "certa": 0
     },
@@ -328,7 +328,7 @@
     },
     {
       "t": "escolha",
-      "q": "Sobre o Dani e a Noa: הֵם ___ אַנְגְּלִית",
+      "q": "Sobre o Dani e a Noa: הֵם ___ אַנְגְלִית",
       "opcoes": [
         "מְדַבְּרִים",
         "מְדַבְּרוֹת"
@@ -356,21 +356,21 @@
       "pt": "Moro em São Paulo (fala um homem)",
       "palavras": [
         "אֲנִי",
-        "גָּר",
+        "גָר",
         "בְּסָאוֹ פָּאוּלוֹ"
       ],
       "outras": [
         [
           "בְּסָאוֹ פָּאוּלוֹ",
           "אֲנִי",
-          "גָּר"
+          "גָר"
         ]
       ]
     },
     {
       "t": "completar",
       "q": "Complete com \"em\".",
-      "antes": "הִיא גָּרָה",
+      "antes": "הִיא גָרָה",
       "depois": "תֵל אָבִיב",
       "respostas": [
         "ב"
@@ -390,17 +390,17 @@
       "t": "escolha",
       "q": "Pergunte à Noa onde ela mora:",
       "opcoes": [
-        "אֵיפֹה אַתְּ גָּרָה?",
-        "אֵיפֹה אַתָּה גָּר?"
+        "אֵיפֹה אַתְ גָרָה?",
+        "אֵיפֹה אַתָה גָר?"
       ],
       "certa": 0
     },
     {
       "t": "escolha",
-      "q": "Alguém pergunta: אַתָּה מְדַבֵּר עִבְרִית? Você responde:",
+      "q": "Alguém pergunta: אַתָה מְדַבֵּר עִבְרִית? Você responde:",
       "opcoes": [
         "קְצָת",
-        "תּוֹדָה",
+        "תוֹדָה",
         "סְלִיחָה"
       ],
       "certa": 0
@@ -447,7 +447,7 @@
       "t": "vf",
       "q": "No diálogo, o Dani e a Maya moram em Jerusalém.",
       "certa": false,
-      "porque": "הֵם גָּרִים בְּתֵל אָבִיב."
+      "porque": "הֵם גָרִים בְּתֵל אָבִיב."
     },
     {
       "t": "escrever",
@@ -467,7 +467,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Não, estudo hebraico. E você?\"",
       "antes": "לֹא, אֲנִי",
-      "depois": "עִבְרִית. וְאַתְּ?",
+      "depois": "עִבְרִית. וְאַתְ?",
       "respostas": [
         "לומד"
       ]
@@ -475,7 +475,7 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Obrigado! Falo um pouco.\"",
-      "antes": "תּוֹדָה! אֲנִי",
+      "antes": "תוֹדָה! אֲנִי",
       "depois": "קְצָת.",
       "respostas": [
         "מדבר"
@@ -484,12 +484,12 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Moro em Jerusalém. E você?\"",
-      "exemplo": "אֲנִי גָּר בִּירוּשָׁלַיִם. וְאַתְּ?"
+      "exemplo": "אֲנִי גָר בִּירוּשָׁלַיִם. וְאַתְ?"
     },
     {
       "t": "aberta",
       "pt": "Escreva 2 frases sobre você: onde mora e o que faz.",
-      "exemplo": "אֲנִי גָּר בְּרִיוֹ. אֲנִי עוֹבֵד."
+      "exemplo": "אֲנִי גָר בְּרִיוֹ. אֲנִי עוֹבֵד."
     }
   ]
 }

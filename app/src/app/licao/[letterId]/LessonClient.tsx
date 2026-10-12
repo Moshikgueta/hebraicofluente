@@ -462,7 +462,7 @@ function StageConhecer({
    A `notaPt` existe para impedir a leitura literal da dica. Uma pista de
    leitura vira superstição no instante em que o aluno a trata como lei -
    "{{ה}} no fim é sempre A" é falso, e um aluno que acredita nisso lê
-   {{גָּבוֹהַּ}} errado e não entende por quê. */
+   {{גָבוֹהַ}} errado e não entende por quê. */
 function DicaDeLeitura({ dica }: { dica: NonNullable<Letter['ensino']['dicaLeitura']> }) {
   return (
     <Card tone="wash" className="p-6 grid gap-4">
@@ -638,7 +638,7 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
           <WordList letter={letter} />
           {letter.id === 'tav' && (
             <GravacaoDoProfessor id="letter-alef-tav-example"
-              textoPt="Como se lê אַתְּ, e por que as mesmas duas letras também formam outra palavra." />
+              textoPt="Como se lê אַתְ, e por que as mesmas duas letras também formam outra palavra." />
           )}
           <CompararPronuncia itens={letter.wordsToRead} titulo="Compare a sua leitura das palavras com a do curso" />
         </section>

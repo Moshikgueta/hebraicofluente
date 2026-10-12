@@ -99,7 +99,11 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
 
   return (
     <div className="grid gap-3">
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      {/* Da direita para a esquerda (12/10/2026): a ordem dos dados é a, e, i,
+          o, u, e o A fica à DIREITA, onde a leitura começa - também quando a
+          grade quebra em mais linhas no telefone. Cinco colunas no computador:
+          as cinco vogais numa linha só, A à direita e U à esquerda. */}
+      <div className="grid grid-cols-3 sm:grid-cols-5 gap-3" dir="rtl">
         {shown.map((s, i) => (
           <button
             key={s.he}
@@ -114,14 +118,14 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
                 : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}
           >
             <He size="lg">{s.he}</He>
-            <span className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
+            <span dir="ltr" className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
               {s.translit || '-'}
             </span>
             {/* A instrução vive uma vez, acima da grade. Repetida em baixo de
                 cada uma das seis sílabas ela virava ruído - seis linhas de
                 texto idêntico numa tela em que o assunto é a letra. */}
             {active === i && (
-              <span className="font-ui text-[12px] text-ink-muted leading-snug">
+              <span dir="ltr" className="font-ui text-[12px] text-ink-muted leading-snug">
                 {s.ptApprox}
               </span>
             )}

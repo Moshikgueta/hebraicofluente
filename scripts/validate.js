@@ -11,6 +11,7 @@ import {
   consonantsOf, hasNikud, hasHebrew, clean, stripNikud, FINAL_TO_BASE
 } from './lib/hebrew.js';
 import { unmarkedHebrew } from './lib/render.js';
+import { dagueshFora, FORA as FORA_DO_DAGUESH } from '../tools/daguesh.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const read = p => readFileSync(join(ROOT, p), 'utf8');
@@ -189,8 +190,8 @@ export function validate({ checkDist = true } = {}) {
 
     /* ── V17 - the letter has something to gap ─────────────────────────
        The "complete a palavra" exercises need words that CONTAIN the target
-       letter. wordsToRead may legitimately hold a word that does not - אַתְּ
-       belongs on the He page as the partner of אַתָּה and has no he - so the
+       letter. wordsToRead may legitimately hold a word that does not - אַתְ
+       belongs on the He page as the partner of אַתָה and has no he - so the
        templates filter, and this warns when the filter leaves too little to
        build an exercise from. */
     {
@@ -960,6 +961,23 @@ export function validate({ checkDist = true } = {}) {
     andar(dado, '');
   }
 
+  /* ── V24 - o daguesh só onde ele muda o som (12/10/2026) ───────────────
+     Decisão do dono do curso: no hebraico de hoje o ponto dentro da letra só
+     muda a pronúncia em בּ, כּ e פּ, e é só nelas que o curso o escreve. O
+     shuruk (וּ) e a letra sozinha de uma explicação
+     ficam; os textos bíblicos têm a pontuação tradicional e ficam de fora.
+     A regra é a de tools/daguesh.mjs, e `node tools/daguesh.mjs --aplicar`
+     conserta o que esta acusar. */
+  {
+    const andar = d => readdirSync(join(ROOT, d), { withFileTypes: true }).flatMap(e =>
+      e.isDirectory() ? andar(join(d, e.name)) : e.name.endsWith('.json') ? [join(d, e.name)] : []);
+    for (const f of andar('data')) {
+      if (FORA_DO_DAGUESH.includes(f)) continue;
+      const w = dagueshFora(readFileSync(join(ROOT, f), 'utf8'));
+      if (w.length) fail('V24', f, `daguesh que não muda o som: ${[...new Set(w)].slice(0, 4).join(', ')} (rode tools/daguesh.mjs --aplicar)`);
+    }
+  }
+
   return { fails: fails.slice(), warns: warns.slice() };
 }
 
@@ -973,7 +991,7 @@ export function validate({ checkDist = true } = {}) {
    Spans nest (.he-list > .he, .he > b.he-mark), so this walks the tag stream
    and matches closings by depth rather than regexing for the nearest </span>. */
 function checkBidi(src, file) {
-  const HEB = /[֐-׿יִ-ﭏ]/;
+  const HEB = /[֐-׿יִ-ﭏ]/;
   const NEUTRAL = /[()\[\]{}:;/,<>«»|]/;
 
   /* Regions that hold no rendered body text. */

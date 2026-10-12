@@ -26,7 +26,7 @@
       "pt": "como vai? (a ela)"
     },
     {
-      "he": "טוֹב, תּוֹדָה",
+      "he": "טוֹב, תוֹדָה",
       "translit": "tov, todá",
       "pt": "bem, obrigado"
     },
@@ -46,7 +46,7 @@
       "pt": "desculpe / com licença"
     },
     {
-      "he": "בְּבַקָּשָׁה",
+      "he": "בְּבַקָשָׁה",
       "translit": "bevakashá",
       "pt": "por favor / de nada"
     },
@@ -56,12 +56,12 @@
       "pt": "eu"
     },
     {
-      "he": "אַתָּה",
+      "he": "אַתָה",
       "translit": "atá",
       "pt": "você (a ele)"
     },
     {
-      "he": "אַתְּ",
+      "he": "אַתְ",
       "translit": "at",
       "pt": "você (a ela)"
     },
@@ -82,13 +82,13 @@
       "reconhecer": true
     },
     {
-      "he": "אַתֶּם",
+      "he": "אַתֶם",
       "translit": "atém",
       "pt": "vocês, para homens ou grupo misto",
       "reconhecer": true
     },
     {
-      "he": "אַתֶּן",
+      "he": "אַתֶן",
       "translit": "atén",
       "pt": "vocês, só para mulheres",
       "reconhecer": true
@@ -126,12 +126,12 @@
       "pt": "meu nome é…"
     },
     {
-      "he": "מֵאֵיפֹה אַתָּה?",
+      "he": "מֵאֵיפֹה אַתָה?",
       "translit": "meéifo atá?",
       "pt": "de onde você é? (a ele)"
     },
     {
-      "he": "מֵאֵיפֹה אַתְּ?",
+      "he": "מֵאֵיפֹה אַתְ?",
       "translit": "meéifo at?",
       "pt": "de onde você é? (a ela)"
     },
@@ -204,12 +204,12 @@
   "gramatica": [
     {
       "tituloPt": "Frase sem \"ser\"",
-      "textoPt": "אֲנִי דָּנִי = \"eu (sou) Dani\". Não existe verbo \"ser\" no presente.",
-      "erroPt": "O brasileiro quer pôr um \"sou\" no meio. Em hebraico não há nada entre אֲנִי e דָּנִי. \"Eu sou estudante\" = אֲנִי סְטוּדֶנְט, duas palavras."
+      "textoPt": "אֲנִי דָנִי = \"eu (sou) Dani\". Não existe verbo \"ser\" no presente.",
+      "erroPt": "O brasileiro quer pôr um \"sou\" no meio. Em hebraico não há nada entre אֲנִי e דָנִי. \"Eu sou estudante\" = אֲנִי סְטוּדֶנְט, duas palavras."
     },
     {
       "tituloPt": "\"Você\" muda conforme a pessoa",
-      "textoPt": "אַתָּה para homem, אַתְּ para mulher, e a pergunta inteira muda junto: מָה שִׁמְךָ? a ele, מָה שְׁמֵךְ? a ela.",
+      "textoPt": "אַתָה para homem, אַתְ para mulher, e a pergunta inteira muda junto: מָה שִׁמְךָ? a ele, מָה שְׁמֵךְ? a ela.",
       "erroPt": "\"Você\" serve para os dois no português. Em hebraico a palavra muda com quem você fala."
     },
     {
@@ -223,25 +223,25 @@
     "linhas": [
       {
         "quem": "Dani",
-        "he": "שָׁלוֹם! אֲנִי דָּנִי. מָה שְׁמֵךְ?",
+        "he": "שָׁלוֹם! אֲנִי דָנִי. מָה שְׁמֵךְ?",
         "translit": "shalóm! aní Dáni. ma shmech?",
         "pt": "Olá! Eu sou o Dani. Qual é o seu nome?"
       },
       {
         "quem": "Noa",
-        "he": "שָׁלוֹם, דָּנִי. שְׁמִי נֹעָה. נָעִים מְאֹד.",
+        "he": "שָׁלוֹם, דָנִי. שְׁמִי נֹעָה. נָעִים מְאֹד.",
         "translit": "shalóm, Dáni. shmi Nóa. naím meód.",
         "pt": "Olá, Dani. Meu nome é Noa. Muito prazer."
       },
       {
         "quem": "Dani",
-        "he": "נָעִים מְאֹד. מֵאֵיפֹה אַתְּ?",
+        "he": "נָעִים מְאֹד. מֵאֵיפֹה אַתְ?",
         "translit": "naím meód. meéifo at?",
         "pt": "Muito prazer. De onde você é?"
       },
       {
         "quem": "Noa",
-        "he": "אֲנִי מִיִּשְׂרָאֵל. וְאַתָּה?",
+        "he": "אֲנִי מִיִשְׂרָאֵל. וְאַתָה?",
         "translit": "aní miIsraél. veatá?",
         "pt": "Eu sou de Israel. E você?"
       },
@@ -253,7 +253,7 @@
       },
       {
         "quem": "Noa",
-        "he": "גַּם אֲנִי סְטוּדֶנְטִית!",
+        "he": "גַם אֲנִי סְטוּדֶנְטִית!",
         "translit": "gam aní studentít!",
         "pt": "Eu também sou estudante!"
       }
@@ -264,13 +264,13 @@
   "cultura": [
     {
       "tituloPt": "Primeiro nome e um \"você\" só",
-      "textoPt": "Em Israel quase todo mundo se trata pelo primeiro nome: o colega, o chefe, o médico. E o hebraico não separa um \"você\" formal de um informal, como \"o senhor\" e \"você\": אַתָּה e אַתְּ servem para todos. O que muda é só se a pessoa é homem ou mulher."
+      "textoPt": "Em Israel quase todo mundo se trata pelo primeiro nome: o colega, o chefe, o médico. E o hebraico não separa um \"você\" formal de um informal, como \"o senhor\" e \"você\": אַתָה e אַתְ servem para todos. O que muda é só se a pessoa é homem ou mulher."
     }
   ],
   "sabia": [
     {
       "tituloPt": "שָׁלוֹם e a ideia de \"inteiro\"",
-      "textoPt": "שָׁלוֹם vem da raiz ש, ל, ם, que tem a ideia de \"inteiro, completo\". A mesma raiz aparece em לְשַׁלֵּם (pagar, \"completar\" a conta, Unidade 13) e em רְפוּאָה שְׁלֵמָה (melhoras, \"cura completa\", Unidade 18). Paz, para o hebraico, é estar inteiro."
+      "textoPt": "שָׁלוֹם vem da raiz ש, ל, ם, que tem a ideia de \"inteiro, completo\". A mesma raiz aparece em לְשַׁלֵם (pagar, \"completar\" a conta, Unidade 13) e em רְפוּאָה שְׁלֵמָה (melhoras, \"cura completa\", Unidade 18). Paz, para o hebraico, é estar inteiro."
     }
   ],
   "autoavaliacao": [
@@ -284,7 +284,7 @@
       "q": "O que se diz ao encontrar alguém?",
       "opcoes": [
         "שָׁלוֹם",
-        "תּוֹדָה",
+        "תוֹדָה",
         "סְלִיחָה"
       ],
       "certa": 0,
@@ -311,11 +311,11 @@
           "eu"
         ],
         [
-          "אַתָּה",
+          "אַתָה",
           "você (a ele)"
         ],
         [
-          "אַתְּ",
+          "אַתְ",
           "você (a ela)"
         ],
         [
@@ -343,7 +343,7 @@
       "pt": "Eu sou o Dani",
       "palavras": [
         "אֲנִי",
-        "דָּנִי"
+        "דָנִי"
       ]
     },
     {
@@ -384,8 +384,8 @@
       "t": "escolha",
       "q": "Você fala com o Dani: מֵאֵיפֹה ___?",
       "opcoes": [
-        "אַתָּה",
-        "אַתְּ"
+        "אַתָה",
+        "אַתְ"
       ],
       "certa": 0
     },
@@ -476,14 +476,14 @@
       "t": "vf",
       "q": "No diálogo, a Noa também é estudante.",
       "certa": true,
-      "porque": "גַּם אֲנִי סְטוּדֶנְטִית."
+      "porque": "גַם אֲנִי סְטוּדֶנְטִית."
     },
     {
       "t": "escolha",
       "q": "Alguém diz: שָׁלוֹם! מָה שִׁמְךָ? Você responde:",
       "opcoes": [
         "שְׁמִי…",
-        "תּוֹדָה",
+        "תוֹדָה",
         "לְהִתְרָאוֹת"
       ],
       "certa": 0
@@ -524,7 +524,7 @@
     {
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Olá, Dani. Meu nome é Noa. Muito prazer.\"",
-      "antes": "שָׁלוֹם, דָּנִי.",
+      "antes": "שָׁלוֹם, דָנִי.",
       "depois": "נֹעָה. נָעִים מְאֹד.",
       "respostas": [
         "שמי"
@@ -534,7 +534,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Eu sou de Israel. E você?\"",
       "antes": "",
-      "depois": "מִיִּשְׂרָאֵל. וְאַתָּה?",
+      "depois": "מִיִשְׂרָאֵל. וְאַתָה?",
       "respostas": [
         "אני"
       ]
@@ -542,7 +542,7 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Olá, Dani. Meu nome é Noa. Muito prazer.\"",
-      "exemplo": "שָׁלוֹם, דָּנִי. שְׁמִי נֹעָה. נָעִים מְאֹד."
+      "exemplo": "שָׁלוֹם, דָנִי. שְׁמִי נֹעָה. נָעִים מְאֹד."
     }
   ]
 }

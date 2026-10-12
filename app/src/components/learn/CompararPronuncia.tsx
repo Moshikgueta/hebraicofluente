@@ -262,7 +262,8 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
   if (grade) {
     return (
       <div className="grid gap-4">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3" role="group" aria-label="Sílabas">
+        {/* Da direita para a esquerda, como a grade de sílabas da lição. */}
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-3" role="group" aria-label="Sílabas" dir="rtl">
           {comAudio.map((it, k) => (
             <button key={it.he} type="button" aria-pressed={k === qual} disabled={estado === 'gravando'}
                     onClick={() => escolher(k)}
@@ -272,11 +273,11 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
                       ${k === qual ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
                         : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}>
               <He size="lg">{it.he}</He>
-              <span className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
+              <span dir="ltr" className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
                 {it.translit || '-'}
               </span>
               {k === qual && it.ptApprox && (
-                <span className="font-ui text-[12px] text-ink-muted leading-snug">{it.ptApprox}</span>
+                <span dir="ltr" className="font-ui text-[12px] text-ink-muted leading-snug">{it.ptApprox}</span>
               )}
             </button>
           ))}

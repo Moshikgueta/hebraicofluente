@@ -29,14 +29,14 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { createHash } from 'node:crypto';
+import { audioIdFor } from './audio-id.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
 const NFC = s => String(s ?? '').normalize('NFC');
 
-export const audioIdFor = he =>
-  'he-' + createHash('sha256').update(NFC(he)).digest('hex').slice(0, 8);
+/* O id mora em tools/audio-id.mjs, com os apelidos do daguesh (12/10/2026). */
+export { audioIdFor };
 
 /* ── waves ──────────────────────────────────────────────────────────────
    A speaker does not record 300 clips in one sitting, and the course does not
@@ -286,16 +286,22 @@ function main() {
 
   /* ── stable numbering ───────────────────────────────────────────────── */
   let previous = {};
+  const previousPorArquivo = {};
   try {
-    for (const c of readJson('data/audio.json').clips) previous[NFC(c.he)] = c.num;
+    for (const c of readJson('data/audio.json').clips) {
+      previous[NFC(c.he)] = c.num;
+      /* Também pelo arquivo: um texto que mudou só no daguesh guarda o id
+         (tools/audio-id.mjs), e então guarda o número também. */
+      previousPorArquivo[c.file] = c.num;
+    }
   } catch { /* first run */ }
 
   let next = Math.max(0, ...Object.values(previous)) + 1;
   const clips = [...seen.values()]
-    .map(c => ({ num: previous[c.he] ?? next++, ...c }))
+    .map(c => ({ num: previous[c.he] ?? previousPorArquivo[c.file] ?? next++, ...c }))
     .sort((a, b) => a.wave - b.wave || a.seq - b.seq);
 
-  const reused = clips.filter(c => previous[c.he] !== undefined).length;
+  const reused = clips.filter(c => previous[c.he] !== undefined || previousPorArquivo[c.file] !== undefined).length;
 
   /* A hash collision would silently give two words one recording. At this size
      it will not happen; if it ever does, the build must stop rather than teach
@@ -309,7 +315,9 @@ function main() {
     byFile.set(c.file, c.he);
   }
 
-  const orphans = Object.keys(previous).filter(h => !seen.has(h));
+  const arquivosAtuais = new Set(clips.map(c => c.file));
+  const orphans = Object.keys(previous).filter(h => !seen.has(h)
+    && !arquivosAtuais.has(audioIdFor(h) + '.mp3'));
 
   writeFileSync(join(ROOT, 'data/audio.json'), JSON.stringify({
     note: [

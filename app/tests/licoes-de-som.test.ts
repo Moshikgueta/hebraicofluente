@@ -248,7 +248,7 @@ describe('a rota', () => {
 describe('as lições de Bet, Kaf e Pe ensinam só o som com ponto (26/09/2026)', () => {
   const SUAVES: Record<string, string[]> = {
     bet: ['טוֹב', 'לֵב'],
-    kaf: ['אֹכֶל', 'מֶלֶךְ', 'דֶּרֶךְ', 'לָלֶכֶת'],
+    kaf: ['אֹכֶל', 'מֶלֶךְ', 'דֶרֶךְ', 'לָלֶכֶת'],
     pe: ['סֵפֶר', 'יָפֶה', 'כֶּסֶף', 'סוֹף', 'טֶלֶפוֹן']
   };
   const letra = (id: string) => allLetters().find(l => l.id === id)!;
@@ -288,7 +288,7 @@ describe('as lições de Bet, Kaf e Pe ensinam só o som com ponto (26/09/2026)'
 
   it('a lição do Pe ganhou palavras com P para ler', () => {
     const L = semPalavrasDeSom(letra('pe'));
-    expect(L.wordsToRead.map(w => w.he)).toEqual(expect.arrayContaining(['פֶּה', 'פָּרָה', 'פִּתָּה', 'מִשְׁפָּחָה']));
+    expect(L.wordsToRead.map(w => w.he)).toEqual(expect.arrayContaining(['פֶּה', 'פָּרָה', 'פִּתָה', 'מִשְׁפָּחָה']));
   });
 });
 

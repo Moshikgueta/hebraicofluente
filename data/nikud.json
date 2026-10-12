@@ -12,7 +12,7 @@
         {
           "sign": "ַ",
           "demo": "מַ",
-          "nameHe": "פַּתָּח",
+          "nameHe": "פַּתָח",
           "namePt": "patach",
           "position": "embaixo"
         },
@@ -24,7 +24,7 @@
           "position": "embaixo"
         }
       ],
-      "note": "Dois sinais, um único som no hebraico moderno. Não se preocupe em distingui-los agora. Só em umas poucas palavras o kamats soa \"o\" ({{כָּל}} kol, {{צָהֳרַיִם}} tsohoráyim), e a transliteração sempre avisa. O mesmo som \"a\" tem ainda o chataf patach, o patach com dois pontos ao lado ({{אֲנִי}} aní). E no fim da palavra, {{חַ}} e {{עַ}} se leem com o A antes da consoante: {{תַּפּוּחַ}} tapúach."
+      "note": "Dois sinais, um único som no hebraico moderno. Não se preocupe em distingui-los agora. Só em umas poucas palavras o kamats soa \"o\" ({{כָּל}} kol, {{צָהֳרַיִם}} tsohoráyim), e a transliteração sempre avisa. O mesmo som \"a\" tem ainda o chataf patach, o patach com dois pontos ao lado ({{אֲנִי}} aní). E no fim da palavra, {{חַ}} e {{עַ}} se leem com o A antes da consoante: {{תַפּוּחַ}} tapúach."
     },
     {
       "sound": "e",
@@ -33,7 +33,7 @@
         {
           "sign": "ֶ",
           "demo": "מֶ",
-          "nameHe": "סֶגּוֹל",
+          "nameHe": "סֶגוֹל",
           "namePt": "segol",
           "position": "embaixo"
         },
@@ -115,11 +115,11 @@
           "position": "embaixo, dois pontos verticais"
         }
       ],
-      "note": "Não é uma vogal de verdade. Às vezes não tem som nenhum ({{זְמַן}} zman, {{סְלִיחָה}} slichá) e às vezes soa como um E normal, principalmente nos prefixos {{בְּ}}, {{וְ}} e {{לְ}} e embaixo de {{מ}}, {{נ}}, {{ל}}, {{ר}} ou {{י}} no começo da palavra ({{מְדַבֵּר}} medabér, {{בְּבַקָּשָׁה}} bevakashá, {{רְחוֹב}} rechóv). A transliteração mostra qual é o caso."
+      "note": "Não é uma vogal de verdade. Às vezes não tem som nenhum ({{זְמַן}} zman, {{סְלִיחָה}} slichá) e às vezes soa como um E normal, principalmente nos prefixos {{בְּ}}, {{וְ}} e {{לְ}} e embaixo de {{מ}}, {{נ}}, {{ל}}, {{ר}} ou {{י}} no começo da palavra ({{מְדַבֵּר}} medabér, {{בְּבַקָשָׁה}} bevakashá, {{רְחוֹב}} rechóv). A transliteração mostra qual é o caso."
     }
   ],
   "dagesh": {
     "title": "O ponto dentro da letra",
-    "text": "Um ponto no meio da letra - o daguesh - muda o som de três delas: {{ב}} vira b ({{בּ}}), {{כ}} vira k ({{כּ}}) e {{פ}} vira p ({{פּ}}). Nas outras letras o ponto não muda nada que você precise ouvir agora."
+    "text": "Um ponto no meio da letra - o daguesh - muda o som de três delas: {{ב}} vira b ({{בּ}}), {{כ}} vira k ({{כּ}}) e {{פ}} vira p ({{פּ}}). Nas outras letras o ponto não muda nada que você precise ouvir agora, e por isso, neste curso, ele só é escrito nessas três."
   }
 }

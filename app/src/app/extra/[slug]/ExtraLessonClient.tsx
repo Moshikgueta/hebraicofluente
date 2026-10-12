@@ -262,7 +262,7 @@ function DageshStage({ onDone }: { onDone: () => void }) {
           {excecoes.some(w => w.analise.posicao === 'depois-de-consoante') && (
             <p className="text-[15px] leading-relaxed text-ink-body m-0">
               E depois de uma letra com shva no começo da palavra (ou de um prefixo) a regra também falha: ali a
-              letra fica sem o ponto, e o som é o suave, como em <He size="inline">בְּבַקָּשָׁה</He> (bevakashá) e{' '}
+              letra fica sem o ponto, e o som é o suave, como em <He size="inline">בְּבַקָשָׁה</He> (bevakashá) e{' '}
               <He size="inline">כְּבָר</He> (kvar).
             </p>
           )}
@@ -359,7 +359,7 @@ function FinalsStage({ onDone }: { onDone: () => void }) {
    gravação, a pergunta vira de leitura em vez de sumir. */
 const FIM_MN: { he: string; fim: 'm' | 'n' }[] = [
   { he: 'אֵם', fim: 'm' }, { he: 'מִן', fim: 'n' }, { he: 'שָׁם', fim: 'm' },
-  { he: 'גַּן', fim: 'n' }, { he: 'יוֹם', fim: 'm' }, { he: 'חַלּוֹן', fim: 'n' }
+  { he: 'גַן', fim: 'n' }, { he: 'יוֹם', fim: 'm' }, { he: 'חַלוֹן', fim: 'n' }
 ];
 
 function MemOuNun() {

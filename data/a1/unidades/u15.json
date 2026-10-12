@@ -61,7 +61,7 @@
       "pt": "novembro"
     },
     {
-      "he": "דֶּצֶמְבֶּר",
+      "he": "דֶצֶמְבֶּר",
       "translit": "detsémber",
       "pt": "dezembro"
     },
@@ -106,12 +106,12 @@
       "pt": "estou com calor / estou com frio"
     },
     {
-      "he": "גֶּשֶׁם",
+      "he": "גֶשֶׁם",
       "translit": "guéshem",
       "pt": "chuva"
     },
     {
-      "he": "יוֹרֵד גֶּשֶׁם",
+      "he": "יוֹרֵד גֶשֶׁם",
       "translit": "yoréd guéshem",
       "pt": "está chovendo"
     },
@@ -121,7 +121,7 @@
       "pt": "sol"
     },
     {
-      "he": "מְעֻנָּן",
+      "he": "מְעֻנָן",
       "translit": "meunán",
       "pt": "nublado"
     },
@@ -146,7 +146,7 @@
       "pt": "semana"
     },
     {
-      "he": "בַּשָּׁבוּעַ הַבָּא",
+      "he": "בַּשָׁבוּעַ הַבָּא",
       "translit": "bashavúa habá",
       "pt": "na semana que vem"
     },
@@ -161,12 +161,12 @@
       "pt": "ano"
     },
     {
-      "he": "יוֹם הֻלֶּדֶת",
+      "he": "יוֹם הֻלֶדֶת",
       "translit": "yom hulédet",
       "pt": "aniversário"
     },
     {
-      "he": "יוֹם הֻלֶּדֶת שָׂמֵחַ!",
+      "he": "יוֹם הֻלֶדֶת שָׂמֵחַ!",
       "translit": "yom hulédet saméach!",
       "pt": "feliz aniversário!"
     },
@@ -184,10 +184,10 @@
   "gramatica": [
     {
       "tituloPt": "Em junho, no verão",
-      "textoPt": "\"Em\" + mês é בְּ grudado: בְּיוּנִי, בְּמַאי, בְּאוֹגוּסְט. As estações levam artigo: בַּקַּיִץ, בַּחֹרֶף, בָּאָבִיב, בַּסְּתָו. Os nomes dos meses são os internacionais, parecidos com os do português, com sotaque israelense.",
+      "textoPt": "\"Em\" + mês é בְּ grudado: בְּיוּנִי, בְּמַאי, בְּאוֹגוּסְט. As estações levam artigo: בַּקַיִץ, בַּחֹרֶף, בָּאָבִיב, בַּסְתָו. Os nomes dos meses são os internacionais, parecidos com os do português, com sotaque israelense.",
       "exemplos": [
         {
-          "he": "יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּמֶרְץ.",
+          "he": "יוֹם הַהֻלֶדֶת שֶׁלִי בְּמֶרְץ.",
           "pt": "O meu aniversário é em março."
         },
         {
@@ -203,11 +203,11 @@
     },
     {
       "tituloPt": "O tempo, sem \"está\" e sem \"ele\"",
-      "textoPt": "Para o tempo não há sujeito: חַם (faz calor), קַר (faz frio), מְעֻנָּן (está nublado). Para a chuva, o hebraico diz que ela \"desce\": יוֹרֵד גֶּשֶׁם. E a temperatura é só o número: שְׁלוֹשִׁים מַעֲלוֹת.",
+      "textoPt": "Para o tempo não há sujeito: חַם (faz calor), קַר (faz frio), מְעֻנָן (está nublado). Para a chuva, o hebraico diz que ela \"desce\": יוֹרֵד גֶשֶׁם. E a temperatura é só o número: שְׁלוֹשִׁים מַעֲלוֹת.",
       "erroPt": "Para dizer que VOCÊ está com frio, não use אֲנִי קַר (\"eu sou frio\"). É קַר לִי, \"está frio para mim\", com o לִי da Unidade 6. Com calor: חַם לִי.",
       "exemplos": [
         {
-          "he": "הַיּוֹם קַר, וְיוֹרֵד גֶּשֶׁם.",
+          "he": "הַיוֹם קַר, וְיוֹרֵד גֶשֶׁם.",
           "pt": "Hoje faz frio, e está chovendo."
         },
         {
@@ -218,7 +218,7 @@
     },
     {
       "tituloPt": "Amanhã, com o verbo de hoje",
-      "textoPt": "Para um plano próximo e certo, o presente serve, como em português: מָחָר אֲנִי עוֹבֵד (amanhã eu trabalho), בַּשָּׁבוּעַ הַבָּא הִיא נוֹסַעַת לְאֵילַת (na semana que vem ela vai para Eilat)."
+      "textoPt": "Para um plano próximo e certo, o presente serve, como em português: מָחָר אֲנִי עוֹבֵד (amanhã eu trabalho), בַּשָׁבוּעַ הַבָּא הִיא נוֹסַעַת לְאֵילַת (na semana que vem ela vai para Eilat)."
     }
   ],
   "dialogo": {
@@ -226,19 +226,19 @@
     "linhas": [
       {
         "quem": "Dani",
-        "he": "נֹעָה, מָתַי יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?",
+        "he": "נֹעָה, מָתַי יוֹם הַהֻלֶדֶת שֶׁלָךְ?",
         "translit": "Nóa, matái yom hahulédet shelách?",
         "pt": "Noa, quando é o seu aniversário?"
       },
       {
         "quem": "Noa",
-        "he": "בְּעֶשְׂרִים בְּיוּנִי. לָמָּה?",
+        "he": "בְּעֶשְׂרִים בְּיוּנִי. לָמָה?",
         "translit": "beesrím beyúni. láma?",
         "pt": "Em 20 de junho. Por quê?"
       },
       {
         "quem": "Dani",
-        "he": "סְתָם… אֲנִי רוֹצֶה לַעֲשׂוֹת מְסִבָּה בַּיָּם. בְּיוּנִי חַם, נָכוֹן?",
+        "he": "סְתָם… אֲנִי רוֹצֶה לַעֲשׂוֹת מְסִבָּה בַּיָם. בְּיוּנִי חַם, נָכוֹן?",
         "translit": "stam… aní rotsé laassót messibá bayám. beyúni cham, nachón?",
         "pt": "Por nada… Quero fazer uma festa na praia. Em junho faz calor, né?"
       },
@@ -250,13 +250,13 @@
       },
       {
         "quem": "Dani",
-        "he": "וְאֵין גֶּשֶׁם?",
+        "he": "וְאֵין גֶשֶׁם?",
         "translit": "veéin guéshem?",
         "pt": "E não chove?"
       },
       {
         "quem": "Noa",
-        "he": "לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶּשֶׁם רַק בַּחֹרֶף.",
+        "he": "לֹא. בְּיִשְׂרָאֵל יוֹרֵד גֶשֶׁם רַק בַּחֹרֶף.",
         "translit": "lo. beYisraél yoréd guéshem rak bachóref.",
         "pt": "Não. Em Israel só chove no inverno."
       },
@@ -268,7 +268,7 @@
       },
       {
         "quem": "Noa",
-        "he": "בֶּאֱמֶת? חֹרֶף בְּיוּנִי? מְשֻׁגָּע!",
+        "he": "בֶּאֱמֶת? חֹרֶף בְּיוּנִי? מְשֻׁגָע!",
         "translit": "beemét? chóref beyúni? meshugá!",
         "pt": "Sério? Inverno em junho? Que loucura!"
       },
@@ -280,13 +280,13 @@
       },
       {
         "quem": "Noa",
-        "he": "וּמָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ?",
+        "he": "וּמָתַי יוֹם הַהֻלֶדֶת שֶׁלְךָ?",
         "translit": "umatái yom hahulédet shelchá?",
         "pt": "E quando é o seu aniversário?"
       },
       {
         "quem": "Dani",
-        "he": "בְּדֶצֶמְבֶּר. בַּקַּיִץ שֶׁל בְּרָזִיל!",
+        "he": "בְּדֶצֶמְבֶּר. בַּקַיִץ שֶׁל בְּרָזִיל!",
         "translit": "bedetsémber. bakáyits shel Brazíl!",
         "pt": "Em dezembro. No verão do Brasil!"
       }
@@ -308,12 +308,12 @@
         "pt": "sério? de verdade?"
       },
       {
-        "he": "מְשֻׁגָּע",
+        "he": "מְשֻׁגָע",
         "translit": "meshugá",
         "pt": "louco; que loucura"
       }
     ],
-    "notaPt": "Repare em יוֹם הַהֻלֶּדֶת: com \"meu\", \"seu\", o הַ entra no meio da expressão, e não no começo. A regra está na Unidade 19."
+    "notaPt": "Repare em יוֹם הַהֻלֶדֶת: com \"meu\", \"seu\", o הַ entra no meio da expressão, e não no começo. A regra está na Unidade 19."
   },
   "leitura": {
     "tituloPt": "A previsão do tempo para amanhã",
@@ -325,17 +325,17 @@
         "pt": "O tempo para amanhã"
       },
       {
-        "he": "תֵּל אָבִיב: שֶׁמֶשׁ, 28 מַעֲלוֹת",
+        "he": "תֵל אָבִיב: שֶׁמֶשׁ, 28 מַעֲלוֹת",
         "translit": "Tel Avív: shémesh, esrím ushmoné maalót",
         "pt": "Tel Aviv: sol, 28 graus"
       },
       {
-        "he": "יְרוּשָׁלַיִם: מְעֻנָּן, 22 מַעֲלוֹת",
+        "he": "יְרוּשָׁלַיִם: מְעֻנָן, 22 מַעֲלוֹת",
         "translit": "Yerushaláyim: meunán, esrím ushtáyim maalót",
         "pt": "Jerusalém: nublado, 22 graus"
       },
       {
-        "he": "חֵיפָה: גֶּשֶׁם, 20 מַעֲלוֹת",
+        "he": "חֵיפָה: גֶשֶׁם, 20 מַעֲלוֹת",
         "translit": "Cháifa: guéshem, esrím maalót",
         "pt": "Haifa: chuva, 20 graus"
       },
@@ -370,7 +370,7 @@
         "t": "vf",
         "q": "Em Jerusalém vai estar nublado.",
         "certa": true,
-        "porque": "מְעֻנָּן = nublado."
+        "porque": "מְעֻנָן = nublado."
       }
     ]
   },
@@ -383,7 +383,7 @@
   "sabia": [
     {
       "tituloPt": "Dois calendários",
-      "textoPt": "Israel usa o calendário de janeiro a dezembro no dia a dia, mas os feriados seguem o calendário hebraico, que acompanha a lua e o sol. Por isso Rosh Hashaná (o ano novo judaico) cai em setembro ou outubro, e muda de data a cada ano. Os meses hebraicos têm nomes próprios, como תִּשְׁרֵי e נִיסָן."
+      "textoPt": "Israel usa o calendário de janeiro a dezembro no dia a dia, mas os feriados seguem o calendário hebraico, que acompanha a lua e o sol. Por isso Rosh Hashaná (o ano novo judaico) cai em setembro ou outubro, e muda de data a cada ano. Os meses hebraicos têm nomes próprios, como תִשְׁרֵי e נִיסָן."
     }
   ],
   "autoavaliacao": [
@@ -413,7 +413,7 @@
           "outubro"
         ],
         [
-          "דֶּצֶמְבֶּר",
+          "דֶצֶמְבֶּר",
           "dezembro"
         ]
       ]
@@ -431,7 +431,7 @@
           "frio"
         ],
         [
-          "גֶּשֶׁם",
+          "גֶשֶׁם",
           "chuva"
         ],
         [
@@ -439,7 +439,7 @@
           "sol"
         ],
         [
-          "מְעֻנָּן",
+          "מְעֻנָן",
           "nublado"
         ]
       ]
@@ -470,28 +470,28 @@
       "t": "escolha",
       "q": "\"Está chovendo\"",
       "opcoes": [
-        "יוֹרֵד גֶּשֶׁם",
-        "הוּא גֶּשֶׁם",
-        "גֶּשֶׁם הוֹלֵךְ"
+        "יוֹרֵד גֶשֶׁם",
+        "הוּא גֶשֶׁם",
+        "גֶשֶׁם הוֹלֵךְ"
       ],
       "certa": 0,
       "dicas": {
-        "1": "No tempo não tem \"ele\". A chuva \"desce\": יוֹרֵד גֶּשֶׁם.",
-        "2": "Quase uma tradução palavra por palavra do jeito errado. A chuva \"desce\": יוֹרֵד גֶּשֶׁם."
+        "1": "No tempo não tem \"ele\". A chuva \"desce\": יוֹרֵד גֶשֶׁם.",
+        "2": "Quase uma tradução palavra por palavra do jeito errado. A chuva \"desce\": יוֹרֵד גֶשֶׁם."
       }
     },
     {
       "t": "escolha",
       "q": "\"Hoje faz frio\"",
       "opcoes": [
-        "הַיּוֹם קַר.",
-        "הַיּוֹם הוּא קַר.",
-        "אֲנִי קַר הַיּוֹם."
+        "הַיוֹם קַר.",
+        "הַיוֹם הוּא קַר.",
+        "אֲנִי קַר הַיוֹם."
       ],
       "certa": 0,
       "dicas": {
-        "1": "Não precisa de הוּא: o tempo não tem sujeito. הַיּוֹם קַר.",
-        "2": "אֲנִי קַר é \"eu sou frio\". Faz frio: הַיּוֹם קַר."
+        "1": "Não precisa de הוּא: o tempo não tem sujeito. הַיוֹם קַר.",
+        "2": "אֲנִי קַר é \"eu sou frio\". Faz frio: הַיוֹם קַר."
       }
     },
     {
@@ -512,14 +512,14 @@
       "t": "escolha",
       "q": "Qual é a pergunta certa para saber o aniversário da Noa?",
       "opcoes": [
-        "מָתַי יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?",
-        "אֵיפֹה יוֹם הַהֻלֶּדֶת שֶׁלָּךְ?",
-        "מָתַי יוֹם הַהֻלֶּדֶת שֶׁלְּךָ?"
+        "מָתַי יוֹם הַהֻלֶדֶת שֶׁלָךְ?",
+        "אֵיפֹה יוֹם הַהֻלֶדֶת שֶׁלָךְ?",
+        "מָתַי יוֹם הַהֻלֶדֶת שֶׁלְךָ?"
       ],
       "certa": 0,
       "dicas": {
         "1": "אֵיפֹה é \"onde\". A pergunta é \"quando\": מָתַי.",
-        "2": "שֶׁלְּךָ é para homem; para a Noa, שֶׁלָּךְ."
+        "2": "שֶׁלְךָ é para homem; para a Noa, שֶׁלָךְ."
       }
     },
     {
@@ -538,7 +538,7 @@
       "t": "separar",
       "q": "Em Israel, isso é mais do verão ou do inverno?",
       "baldes": [
-        "בַּקַּיִץ",
+        "בַּקַיִץ",
         "בַּחֹרֶף"
       ],
       "itens": [
@@ -547,7 +547,7 @@
           0
         ],
         [
-          "יוֹרֵד גֶּשֶׁם",
+          "יוֹרֵד גֶשֶׁם",
           1
         ],
         [
@@ -559,11 +559,11 @@
           1
         ],
         [
-          "הוֹלְכִים לַיָּם",
+          "הוֹלְכִים לַיָם",
           0
         ],
         [
-          "קַר בַּלַּיְלָה",
+          "קַר בַּלַיְלָה",
           1
         ]
       ]
@@ -571,12 +571,12 @@
     {
       "t": "erro",
       "q": "Ache o erro e escreva a frase certa: \"Hoje faz calor.\"",
-      "errada": "הַיּוֹם הוּא חַם.",
+      "errada": "הַיוֹם הוּא חַם.",
       "respostas": [
         "היום חם",
         "חם היום"
       ],
-      "porque": "O tempo não tem sujeito: הַיּוֹם חַם."
+      "porque": "O tempo não tem sujeito: הַיוֹם חַם."
     },
     {
       "t": "erro",
@@ -629,16 +629,16 @@
       "pt": "O meu aniversário é em março.",
       "palavras": [
         "יוֹם",
-        "הַהֻלֶּדֶת",
-        "שֶׁלִּי",
+        "הַהֻלֶדֶת",
+        "שֶׁלִי",
         "בְּמֶרְץ"
       ],
       "outras": [
         [
           "בְּמֶרְץ",
           "יוֹם",
-          "הַהֻלֶּדֶת",
-          "שֶׁלִּי"
+          "הַהֻלֶדֶת",
+          "שֶׁלִי"
         ]
       ]
     },
@@ -648,7 +648,7 @@
       "linhas": [
         [
           "Maya",
-          "מָה מֶזֶג הָאֲוִיר הַיּוֹם?"
+          "מָה מֶזֶג הָאֲוִיר הַיוֹם?"
         ]
       ],
       "opcoes": [
@@ -664,11 +664,11 @@
       "linhas": [
         [
           "Dani",
-          "הַיּוֹם יוֹם הַהֻלֶּדֶת שֶׁלִּי!"
+          "הַיוֹם יוֹם הַהֻלֶדֶת שֶׁלִי!"
         ]
       ],
       "opcoes": [
-        "יוֹם הֻלֶּדֶת שָׂמֵחַ!",
+        "יוֹם הֻלֶדֶת שָׂמֵחַ!",
         "בְּתֵאָבוֹן!",
         "לֹא נוֹרָא."
       ],
@@ -678,7 +678,7 @@
       "t": "ordenar",
       "q": "Ponha a conversa na ordem.",
       "falas": [
-        "מָתַי אַתָּה נוֹסֵעַ לְאֵילַת?",
+        "מָתַי אַתָה נוֹסֵעַ לְאֵילַת?",
         "בְּאוֹגוּסְט.",
         "בְּאוֹגוּסְט? חַם שָׁם מְאֹד!",
         "נָכוֹן, אֲבָל יֵשׁ יָם."
@@ -686,7 +686,7 @@
     },
     {
       "t": "ouvir",
-      "he": "יוֹרֵד גֶּשֶׁם בִּירוּשָׁלַיִם.",
+      "he": "יוֹרֵד גֶשֶׁם בִּירוּשָׁלַיִם.",
       "q": "Como está o tempo em Jerusalém?",
       "opcoes": [
         "Está chovendo",
@@ -755,7 +755,7 @@
       "t": "completar",
       "q": "Complete a fala do diálogo: \"Sério? Inverno em junho? Que loucura!\"",
       "antes": "בֶּאֱמֶת?",
-      "depois": "בְּיוּנִי? מְשֻׁגָּע!",
+      "depois": "בְּיוּנִי? מְשֻׁגָע!",
       "respostas": [
         "חורף",
         "חרף"
@@ -764,12 +764,12 @@
     {
       "t": "falar",
       "pt": "Diga em voz alta, em hebraico: \"Em 20 de junho. Por quê?\"",
-      "exemplo": "בְּעֶשְׂרִים בְּיוּנִי. לָמָּה?"
+      "exemplo": "בְּעֶשְׂרִים בְּיוּנִי. לָמָה?"
     },
     {
       "t": "aberta",
       "pt": "Escreva quando é o seu aniversário e como é o tempo na sua cidade nesse mês.",
-      "exemplo": "יוֹם הַהֻלֶּדֶת שֶׁלִּי בְּיוּלִי. בְּיוּלִי בְּסָאוֹ פָּאוּלוֹ קַר, אֲבָל יֵשׁ שֶׁמֶשׁ."
+      "exemplo": "יוֹם הַהֻלֶדֶת שֶׁלִי בְּיוּלִי. בְּיוּלִי בְּסָאוֹ פָּאוּלוֹ קַר, אֲבָל יֵשׁ שֶׁמֶשׁ."
     }
   ]
 }

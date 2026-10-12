@@ -2,7 +2,7 @@
  "_leia": "Imagens do vocabulário. Chave = a palavra em hebraico, exatamente como em data/letters.json. 'image' fica null até o arquivo existir em app/public/vocabulario/; o exportador recusa caminho para arquivo inexistente e chave que não é palavra do curso. 'imagePrompt' descreve só a CENA; o estilo comum está em 'estilo' e é juntado na frente de todo prompt. Direção visual: DIRECAO-VISUAL-VOCABULARIO.md.",
  "estilo": "Flat editorial illustration for an adult language-learning app. Simple geometric shapes, soft rounded corners, thin or no outlines. Limited palette taken from the product: deep petrol navy #0E3B43, teal #1F8A7D, pale teal #E4F1EE, warm sand #F3F0E9, one muted gold accent #B8862F, near-black #1B211F for small details. Plain off-white background #FBF9F5, generous empty space, one subject centred, no text, no letters, no logos, no gradients, no photorealism, not childish, no cartoon faces with big eyes. Square 1:1, 1024x1024.",
  "palavras": {
-  "אִמָּא": {
+  "אִמָא": {
    "pt": "mãe",
    "image": "/media/vocabulario/mae-37f8403f.webp",
    "imageAlt": "Uma mulher adulta sorrindo, caminhando de mãos dadas com uma criança pequena.",
@@ -26,19 +26,19 @@
    "imageAlt": "Uma coroa dourada simples sobre uma almofada.",
    "imagePrompt": "a simple golden crown resting on a cushion"
   },
-  "תֵּה": {
+  "תֵה": {
    "pt": "chá",
    "image": "/media/vocabulario/cha-0916c752.webp",
    "imageAlt": "Uma xícara de chá fumegante com um saquinho pendurado.",
    "imagePrompt": "a steaming cup of tea with a tea bag tag hanging over the rim"
   },
-  "תַּפּוּחַ": {
+  "תַפּוּחַ": {
    "pt": "maçã",
    "image": "/media/vocabulario/maca-485e6651.webp",
    "imageAlt": "Uma maçã vermelha com uma folha no cabo.",
    "imagePrompt": "a single red apple with one leaf on the stem"
   },
-  "חַלּוֹן": {
+  "חַלוֹן": {
    "pt": "janela",
    "image": "/media/vocabulario/janela-62a441d7.webp",
    "imageAlt": "Uma janela aberta, com venezianas verdes, mostrando árvores e céu azul.",
@@ -50,19 +50,19 @@
    "imageAlt": "Ondas do mar sob um céu claro, com a linha do horizonte.",
    "imagePrompt": "gentle sea waves under a clear sky, horizon line visible"
   },
-  "יַלְדָּה": {
+  "יַלְדָה": {
    "pt": "menina",
    "image": "/media/vocabulario/menina-b8552895.webp",
    "imageAlt": "Uma menina de cabelo comprido e vestido amarelo, sorrindo.",
    "imagePrompt": "a girl about eight years old wearing a backpack, waving"
   },
-  "גַּן": {
+  "גַן": {
    "pt": "jardim · jardim de infância",
    "image": "/media/vocabulario/jardim-jardim-de-infancia-ea469b09.webp",
    "imageAlt": "Um parquinho com árvore, escorregador, balanço e caixa de areia.",
    "imagePrompt": "a small garden with flowers and a wooden bench"
   },
-  "גַּג": {
+  "גַג": {
    "pt": "telhado",
    "image": "/media/vocabulario/telhado-03a6148b.webp",
    "imageAlt": "O telhado de uma casa, com telhas e uma chaminé.",
@@ -74,7 +74,7 @@
    "imageAlt": "Um lago calmo cercado de árvores, com um barquinho.",
    "imagePrompt": "a calm lake surrounded by trees with a small rowing boat"
   },
-  "גְּלִידָה": {
+  "גְלִידָה": {
    "pt": "sorvete",
    "image": "/media/vocabulario/sorvete-ad21d852.webp",
    "imageAlt": "Uma casquinha de sorvete com duas bolas.",
@@ -86,19 +86,19 @@
    "imageAlt": "Uma mão aberta, palma para a frente.",
    "imagePrompt": "an open hand, palm facing forward"
   },
-  "דָּג": {
+  "דָג": {
    "pt": "peixe",
    "image": "/media/vocabulario/peixe-792ad3c0.webp",
    "imageAlt": "Um peixe nadando, de perfil.",
    "imagePrompt": "a single fish swimming, side view"
   },
-  "דּוֹדָה": {
+  "דוֹדָה": {
    "pt": "tia",
    "image": "/media/vocabulario/tia-219ab8d7.webp",
    "imageAlt": "Uma mulher adulta abaixada para abraçar uma sobrinha.",
    "imagePrompt": "an adult woman bending down to hug her young niece"
   },
-  "אִשָּׁה": {
+  "אִשָׁה": {
    "pt": "mulher",
    "image": "/media/vocabulario/mulher-479bdbfb.webp",
    "imageAlt": "Uma mulher adulta de cabelo comprido, sorrindo, com as mãos nos bolsos.",
@@ -170,13 +170,13 @@
    "imageAlt": "Dois irmãos, um mais velho e um mais novo, lado a lado.",
    "imagePrompt": "two brothers, one older and one younger, side by side"
   },
-  "מִטָּה": {
+  "מִטָה": {
    "pt": "cama",
    "image": "/media/vocabulario/cama-336f2b72.webp",
    "imageAlt": "Uma cama arrumada com travesseiro e cobertor.",
    "imagePrompt": "a made bed with a pillow and a blanket"
   },
-  "מִטְרִיָּה": {
+  "מִטְרִיָה": {
    "pt": "guarda-chuva",
    "image": "/media/vocabulario/guarda-chuva-f232dd1a.webp",
    "imageAlt": "Um guarda-chuva verde, fechado, de cabo curvo.",
@@ -200,7 +200,7 @@
    "imageAlt": "Um ônibus urbano de frente.",
    "imagePrompt": "a city bus seen from the front"
   },
-  "כִּסֵּא": {
+  "כִּסֵא": {
    "pt": "cadeira",
    "image": "/media/vocabulario/cadeira-9043e065.webp",
    "imageAlt": "Uma cadeira de madeira simples.",
@@ -260,7 +260,7 @@
    "imageAlt": "Um copo de vidro vazio.",
    "imagePrompt": "an empty drinking glass"
   },
-  "כַּדּוּר": {
+  "כַּדוּר": {
    "pt": "bola",
    "image": "/media/vocabulario/bola-048e7acc.webp",
    "imageAlt": "Uma bola de futebol.",
@@ -296,7 +296,7 @@
    "imageAlt": "Um professor em pé ao lado de um quadro branco, apontando.",
    "imagePrompt": "a male teacher standing next to a blank board, pointing at it"
   },
-  "תָּא": {
+  "תָא": {
    "pt": "compartimento · cabine",
    "image": "/media/vocabulario/compartimento-cabine-e231913d.webp",
    "imageAlt": "Uma cabine de estudo pequena, com mesa e cadeira, numa biblioteca.",
@@ -314,7 +314,7 @@
    "imageAlt": "Um monte de terra escura com um broto saindo.",
    "imagePrompt": "a mound of dark soil with a small sprout growing out of it"
   },
-  "מִדָּה": {
+  "מִדָה": {
    "pt": "medida / tamanho",
    "image": "/media/vocabulario/medida-tamanho-c1483dbf.webp",
    "imageAlt": "Uma trena amarela com a fita puxada.",
@@ -362,13 +362,13 @@
    "imageAlt": "Uma pessoa pulando de alegria, braços para cima.",
    "imagePrompt": "an adult jumping with joy, arms raised"
   },
-  "חֲמִשָּׁה": {
+  "חֲמִשָׁה": {
    "pt": "cinco",
    "image": "/media/vocabulario/cinco-a79611e9.webp",
    "imageAlt": "Cinco maçãs vermelhas em fila.",
    "imagePrompt": "exactly five red apples in a row"
   },
-  "טִיּוּל": {
+  "טִיוּל": {
    "pt": "passeio",
    "image": "/media/vocabulario/passeio-c1722663.webp",
    "imageAlt": "Uma pessoa de mochila caminhando numa trilha.",
@@ -422,7 +422,7 @@
    "imageAlt": "O sol brilhando alto no céu, acima das nuvens.",
    "imagePrompt": "the sun high at the very top of the sky at noon"
   },
-  "תִּיק": {
+  "תִיק": {
    "pt": "bolsa / mochila",
    "image": "/media/vocabulario/bolsa-mochila-ff819ed1.webp",
    "imageAlt": "Uma mochila escolar.",
@@ -452,13 +452,13 @@
    "imageAlt": "O sol nascendo atrás de casas.",
    "imagePrompt": "the sun rising behind a few houses in the morning"
   },
-  "דֶּרֶךְ": {
+  "דֶרֶךְ": {
    "pt": "caminho",
    "image": "/media/vocabulario/caminho-7198216c.webp",
    "imageAlt": "Um caminho de terra atravessando um campo.",
    "imagePrompt": "a dirt path winding through a green field"
   },
-  "כִּתָּה": {
+  "כִּתָה": {
    "pt": "sala de aula, turma",
    "image": "/media/vocabulario/sala-de-aula-turma-6ee6a56b.webp",
    "imageAlt": "Uma sala de aula com carteiras e um quadro.",
@@ -482,7 +482,7 @@
    "imageAlt": "Uma vaca malhada no pasto.",
    "imagePrompt": "a spotted cow standing in a pasture"
   },
-  "פִּתָּה": {
+  "פִּתָה": {
    "pt": "pão sírio",
    "image": "/media/vocabulario/pao-sirio-c6413cf5.webp",
    "imageAlt": "Um pão sírio redondo, aberto ao meio.",
@@ -602,7 +602,7 @@
    "imageAlt": "Uma ampulheta com areia caindo.",
    "imagePrompt": "an hourglass with sand falling"
   },
-  "מַזָּל": {
+  "מַזָל": {
    "pt": "sorte",
    "image": "/media/vocabulario/sorte-3f790c03.webp",
    "imageAlt": "Um trevo de quatro folhas.",
