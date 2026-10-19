@@ -188,7 +188,7 @@ export type Letter = {
    *  gravação do professor (19/10/2026). Ver components/learn/CompararSons. */
   compararSons: {
     textoPt: string;
-    itens: { glifo: string; nomePt: string; gravacao: string; previaPt?: string }[];
+    itens: { glifo: string; nomePt: string; som: string; audioId: string; previaPt?: string }[];
   } | null;
   /** Um título próprio para a curiosidade, quando a letra tem um (19/10/2026). */
   didYouKnowTitle: string | null;

@@ -211,7 +211,11 @@ function main() {
          exportador que conserta dado ruim esconde dado ruim. */
       ensino: L.ensino,
       didYouKnow: L.didYouKnow,
-      compararSons: L.compararSons ?? null,
+      /* O som de cada letra é a sílaba gravada em estúdio por um falante
+         nativo (19/10/2026): o id sai do texto, como em todo o curso. */
+      compararSons: L.compararSons
+        ? { ...L.compararSons, itens: L.compararSons.itens.map(it => ({ ...it, som: NFC(it.som), audioId: audioIdFor(it.som) })) }
+        : null,
       didYouKnowTitle: L.didYouKnowTitle ?? null,
       maisCuriosidades: L.maisCuriosidades ?? [],
       brazilianMistake: L.brazilianMistake,
