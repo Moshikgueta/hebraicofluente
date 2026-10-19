@@ -233,13 +233,13 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       </Card>
 
       <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">Como pronunciar</h2>
+        <h2 className="text-[19px] font-semibold">Como pronunciar?</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">Soa como {S.comoPt.includes('{{') ? <Prose text={S.comoPt} /> : S.comoPt}.</p>
         <OndeNasceOSom articulacao={S.articulacao} letra={S.namePt} />
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-2">
-        <h2 className="text-[18px] font-semibold">Quando a letra tem este som</h2>
+        <h2 className="text-[18px] font-semibold">Quando a letra tem este som?</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body"><Prose text={S.regraPt} /></p>
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-3">
           <Prose text={S.irmaoPt} />

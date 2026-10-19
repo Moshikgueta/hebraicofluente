@@ -71,7 +71,7 @@ export function BonusClient() {
             este aviso, o aluno ouve uma palavra que não está no texto. */}
         {temONome(leitura.linhas) && (
           <Card tone="wash" className="p-4 grid gap-1">
-            <p className="font-ui text-[14.5px] font-semibold text-ink m-0">Por que a gravação diz «Hashém»</p>
+            <p className="font-ui text-[14.5px] font-semibold text-ink m-0">Por que a gravação diz «Hashém»?</p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
               Onde está escrito <He size="inline">יְהוָה</He>, o nome de Deus, a gravação diz «Hashém», «o Nome».
               É um costume judaico: o Nome não se pronuncia, e fora da reza muitos evitam até «Adonái», que é

@@ -114,7 +114,7 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-2">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">Como funciona</p>
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">Como funciona?</p>
         <p className="text-[15px] leading-relaxed text-ink-body">
           {missao.passos.length} passos, na ordem da história, só com palavras que você já
           aprendeu. Leia com calma: passa com 70%, e dá para refazer quantas vezes quiser.

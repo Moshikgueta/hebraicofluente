@@ -216,7 +216,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             que se chama assim, ou o rótulo é de outra coisa. */}
         <Badge tone="accent">Aula 0 · antes da primeira letra</Badge>
         <h1 className="text-[27px] sm:text-[34px] font-bold leading-tight">
-          Como o alfabeto hebraico funciona
+          Como o alfabeto hebraico funciona?
         </h1>
         <p className="text-[16.5px] leading-relaxed text-ink-body max-w-[54ch]">
           Dez minutos de leitura, sem nada para decorar. A ideia é você entender a
@@ -240,7 +240,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
       <nav aria-labelledby="indice"
            className="rounded-[var(--r-lg)] border border-line bg-surface p-5 grid gap-3">
         <h2 id="indice" className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-ink-muted">
-          O que tem nesta página
+          O que tem nesta página?
         </h2>
         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-0.5 list-none p-0 m-0">
           {INDICE.map((it, i) => (
@@ -695,7 +695,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
             <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-              O que é igual
+              O que é igual?
             </p>
             <ul className="grid gap-1.5 text-[14.5px] leading-relaxed text-ink-body">
               {[
@@ -707,7 +707,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           </div>
           <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
             <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-              O que mudou
+              O que mudou?
             </p>
             <ul className="grid gap-1.5 text-[14.5px] leading-relaxed text-ink-body">
               {[
@@ -875,7 +875,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
       </Parte>
 
       {/* ── como o curso funciona ─────────────────────────────────────── */}
-      <Parte id="como-funciona" titulo={<>Como este curso funciona</>}>
+      <Parte id="como-funciona" titulo={<>Como este curso funciona?</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           São {curso.licoes} lições em {curso.modulos} módulos, e uma regra que vale do
           começo ao fim: nada aparece na tela antes de ter sido ensinado. Você nunca vê
@@ -901,7 +901,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </p>
       </Parte>
 
-      <Parte id="como-praticar" tone="wash" titulo={<>Como praticar de verdade</>}>
+      <Parte id="como-praticar" tone="wash" titulo={<>Como praticar de verdade?</>}>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
           {[
             'Leia em voz alta. Sempre. Ouvir o próprio som é metade do aprendizado.',

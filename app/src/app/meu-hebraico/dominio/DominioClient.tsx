@@ -75,7 +75,7 @@ export function DominioClient() {
 
           {resumo.paraPraticar.length > 0 ? (
             <Card tone="wash" className="p-5 grid gap-3">
-              <h2 className="text-[19px] font-semibold m-0">O que vale praticar agora</h2>
+              <h2 className="text-[19px] font-semibold m-0">O que vale praticar agora?</h2>
               <ul className="grid gap-2 list-none p-0 m-0">
                 {resumo.paraPraticar.map(d => {
                   const L = porId.get(d.letterId);
@@ -113,7 +113,7 @@ export function DominioClient() {
           </p>
           <details className="max-w-[60ch]">
             <summary className="cursor-pointer min-h-[44px] flex items-center font-ui text-[14px] text-[var(--teal-ink)]">
-              Como o nível é calculado
+              Como o nível é calculado?
             </summary>
             <ul className="grid gap-1.5 font-ui text-[13.5px] leading-relaxed text-ink-body list-disc pl-5 m-0 pt-1">
               <li>Com menos de {LIMIARES.minimoDeRespostas} respostas numa habilidade, aparece &quot;Dados insuficientes&quot;, em vez de um palpite.</li>
