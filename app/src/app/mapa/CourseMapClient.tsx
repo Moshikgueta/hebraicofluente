@@ -27,7 +27,8 @@ import { allLetters, course, getLetter, type CourseModule } from '@/lib/content'
 import { totalLicoes } from '@/lib/content-publico';
 import { Prose } from '@/components/learn/Blocks';
 import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
-import { aula0Feita, isLessonComplete, letraLiberada, STAGE_COUNT } from '@/lib/state/rules';
+import { aula0Feita, isLessonComplete, isLessonMastered, letraLiberada, STAGE_COUNT } from '@/lib/state/rules';
+import { ETAPA_AULA0, ETAPA_DO_MODULO, ETAPA_FINAL } from '@/lib/jornada';
 import { flagship } from '@/lib/catalog';
 import { idDoSom, ordemDeEnsino } from '@/lib/sons';
 
@@ -104,9 +105,10 @@ export function CourseMapClient() {
             : i === indiceAtual || indiceAtual === -1 ? 'agora'
             : 'adiante';
           return (
-            <Trecho key={m.id} module={m} estado={estado} ultimo={i === modulos.length - 1} />
+            <Trecho key={m.id} module={m} estado={estado} ultimo={false} />
           );
         })}
+        <TrechoFinal />
       </ol>
 
       {/* Depois do caminho inteiro, e não antes: a pergunta "por que {{מ}}
@@ -149,6 +151,9 @@ function TrechoAula0({ feita }: { feita: boolean }) {
             </span>
             <span className="font-ui text-[13.5px] text-ink-muted">Aula 0 · antes da primeira letra</span>
           </div>
+          <p className="font-ui text-[12.5px] font-semibold uppercase tracking-[.08em] text-ink-muted m-0 mb-1">
+            {ETAPA_AULA0}
+          </p>
           <p className="font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-2 text-ink">
             <Link href="/inicio" className="after:absolute after:inset-0 after:rounded-[18px] after:content-['']">
               Como o hebraico funciona
@@ -282,6 +287,11 @@ function Trecho({ module: m, estado, ultimo }: {
             )}
           </div>
 
+          {ETAPA_DO_MODULO[m.n] && (
+            <p className="font-ui text-[12.5px] font-semibold uppercase tracking-[.08em] text-ink-muted m-0 mb-1">
+              {ETAPA_DO_MODULO[m.n]}
+            </p>
+          )}
           <p className={`font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-3.5
                          ${estado === 'adiante' ? 'text-ink-muted' : 'text-ink'}`}>
             <Link href={destino}
@@ -354,6 +364,60 @@ function Trecho({ module: m, estado, ultimo }: {
               })}
             </div>
           )}
+          {m.milestonePt && (
+            <p className={`relative mt-3 font-ui text-[14px] leading-relaxed m-0
+                           ${estado === 'feito' ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
+              <strong className="font-semibold">{estado === 'feito' ? '✓ Meta alcançada: ' : 'Meta: '}</strong>
+              <Prose text={m.milestonePt} />
+            </p>
+          )}
+        </div>
+      </div>
+    </li>
+  );
+}
+
+/* ── o fim do caminho: Meu desafio final (12/10/2026) ────────────────────
+   Abre com as lições das 22 letras concluídas, que é a régua do exame
+   (FinalChallengeClient); feito quando o exame foi aprovado. */
+function TrechoFinal() {
+  const p = useProgress();
+  const ids = allLetters().map(l => l.id);
+  const aprovado = !!p.state.finalChallenge?.passedAt;
+  const aberto = ids.every(id => isLessonMastered(p.state, id));
+  const estado: Estado = aprovado ? 'feito' : aberto ? 'agora' : 'adiante';
+  return (
+    <li className="grid grid-cols-[38px_minmax(0,1fr)] sm:grid-cols-[52px_minmax(0,1fr)] gap-4 sm:gap-5">
+      <div className="flex flex-col items-center">
+        <span aria-hidden
+              className={`w-[38px] h-[38px] sm:w-11 sm:h-11 rounded-[14px] border-2 grid place-items-center shrink-0
+                ${estado === 'feito' ? 'bg-[var(--teal)] border-[var(--teal)]'
+                  : estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]' : 'bg-[var(--sand)] border-line'}`}>
+          {estado === 'feito' ? (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M3.6 9.4 7 12.8 14.4 5.4" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          ) : estado === 'agora' ? <span className="w-[11px] h-[11px] rounded-full bg-[var(--teal)]" /> : null}
+        </span>
+      </div>
+      <div className="pb-2">
+        <div className={`relative rounded-[18px] border p-5 sm:px-6 sm:py-[22px] transition-shadow duration-[250ms] hover:shadow-[var(--sh)]
+          ${estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
+            : estado === 'adiante' ? 'bg-[var(--paper)] border-line border-dashed' : 'bg-[var(--card)] border-line'}`}>
+          <p className="font-ui text-[12.5px] font-bold uppercase tracking-[.1em] text-[var(--teal-ink)] m-0 mb-2">
+            {estado === 'feito' ? 'Aprovado' : estado === 'agora' ? 'Disponível' : 'Abre quando você concluir as lições das 22 letras'}
+          </p>
+          <p className="font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-2 text-ink">
+            <Link href={estado === 'feito' ? '/certificado' : '/desafio-final'}
+                  className="after:absolute after:inset-0 after:rounded-[18px] after:content-['']">
+              {ETAPA_FINAL}
+            </Link>
+          </p>
+          <p className="font-ui text-[14.5px] leading-[1.5] text-ink-muted m-0">
+            {estado === 'feito'
+              ? 'Você passou no exame final. O seu certificado do curso está pronto.'
+              : 'Um exame com as letras, os sons, as sílabas, palavras, frases e palavras sem nikud. No fim, o certificado do curso.'}
+          </p>
         </div>
       </div>
     </li>

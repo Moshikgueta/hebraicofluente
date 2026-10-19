@@ -1,0 +1,32 @@
+/* Minha Jornada no Hebraico (lib/jornada.ts, /mapa), 12/10/2026. */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { describe, expect, it } from 'vitest';
+import { course } from '@/lib/content-publico';
+import { ETAPA_AULA0, ETAPA_DO_MODULO, ETAPA_FINAL } from '@/lib/jornada';
+
+const fonte = (p: string) => readFileSync(join(__dirname, '..', 'src', p), 'utf8');
+
+describe('as etapas do caminho', () => {
+  it('uma por módulo que existe, na ordem do curso, sem nome repetido', () => {
+    const ns = course.modules.map(m => m.n);
+    expect(Object.keys(ETAPA_DO_MODULO).map(Number).sort()).toEqual([...ns].sort());
+    const nomes = [ETAPA_AULA0, ...ns.map(n => ETAPA_DO_MODULO[n]!), ETAPA_FINAL];
+    expect(new Set(nomes).size).toBe(nomes.length);
+  });
+
+  it('todo módulo tem a meta que o mapa mostra', () => {
+    for (const m of course.modules) expect(m.milestonePt?.trim(), `módulo ${m.n}`).toBeTruthy();
+  });
+
+  it('o mapa começa na Aula 0 e termina no desafio final', () => {
+    const s = fonte('app/mapa/CourseMapClient.tsx');
+    expect(s.indexOf('<TrechoAula0')).toBeLessThan(s.indexOf('<TrechoFinal />'));
+    expect(s).toContain("'✓ Meta alcançada: '");
+    expect(s).toContain('isLessonMastered(p.state, id)');
+  });
+
+  it('o certificado diz o que o exame verificou', () => {
+    expect(fonte('app/certificado/CertificadoClient.tsx')).toContain('O que o exame verificou:');
+  });
+});
