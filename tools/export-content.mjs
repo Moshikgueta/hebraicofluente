@@ -211,6 +211,7 @@ function main() {
          exportador que conserta dado ruim esconde dado ruim. */
       ensino: L.ensino,
       didYouKnow: L.didYouKnow,
+      compararSons: L.compararSons ?? null,
       didYouKnowTitle: L.didYouKnowTitle ?? null,
       maisCuriosidades: L.maisCuriosidades ?? [],
       brazilianMistake: L.brazilianMistake,

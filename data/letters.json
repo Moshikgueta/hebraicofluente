@@ -1900,6 +1900,22 @@
     ],
     "didYouKnowTitle": "O R israelense não é o R brasileiro",
     "didYouKnow": "O som do {{ר}} em Israel lembra bastante o R francês. Na pronúncia mais comum do hebraico de hoje, ele é feito no fundo da boca, perto da úvula.\n\nPara quem fala português, ele pode lembrar o R carioca de \"rua\", mas os dois não são iguais. Em hebraico, o som mais áspero, soprado, é de outra letra: a letra Chet, que você vai conhecer no próximo módulo.\n\nDica para memorizar: ao dizer o {{ר}}, faça um R suave no fundo da boca, com a voz, sem virar um H forte. Com a prática, o seu ouvido aprende a separar os dois sons.",
+    "compararSons": {
+      "textoPt": "Esses dois sons podem soar parecidos para quem fala português, mas são letras diferentes em hebraico. Ouça a pronúncia de um falante nativo e perceba a diferença.",
+      "itens": [
+        {
+          "glifo": "ר",
+          "nomePt": "Resh",
+          "gravacao": "compare-resh-sound"
+        },
+        {
+          "glifo": "ח",
+          "nomePt": "Chet",
+          "gravacao": "compare-het-sound",
+          "previaPt": "Prévia: você aprende esta letra no próximo módulo."
+        }
+      ]
+    },
     "brazilianMistake": {
       "wrong": "Usar o R carioca soprado de \"carro\", que em hebraico é o som de outra letra. (O R batido de \"caro\" e o R do interior paulista, de \"porta\", não trocam a palavra, mas soam com sotaque.)",
       "right": "Usar o R francês, macio e com a voz ligada, como em \"Paris\": {{הַר}} é \"har\", com esse R no fim.",
