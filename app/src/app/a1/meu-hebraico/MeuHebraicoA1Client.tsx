@@ -123,7 +123,7 @@ export function MeuHebraicoA1Client() {
       </section>
 
       <section className="grid gap-3" aria-labelledby="t-dif">
-        <h2 id="t-dif" className="font-display text-[20px] font-semibold m-0">O que ainda está difícil</h2>
+        <h2 id="t-dif" className="font-display text-[20px] font-semibold m-0">O que ainda está difícil?</h2>
         {dificeis.length === 0 ? (
           <p className="font-ui text-[14px] text-ink-muted m-0">Nada por enquanto. O que você errar nos exercícios aparece aqui até firmar.</p>
         ) : (

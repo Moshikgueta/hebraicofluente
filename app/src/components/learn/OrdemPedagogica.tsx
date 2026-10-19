@@ -85,7 +85,7 @@ export function OrdemPedagogica() {
 
       {/* ── como a ordem ajuda: a peça que aumenta o que dá para montar ── */}
       <div className="grid gap-3">
-        <h3 className="font-ui text-[15px] font-semibold text-ink">O que essa ordem compra</h3>
+        <h3 className="font-ui text-[15px] font-semibold text-ink">O que essa ordem compra?</h3>
         <p className="text-[15.5px] leading-relaxed text-ink-body max-w-[58ch]">
           Cada letra nova é uma peça que aumenta o que você consegue montar com as que
           já tem. É o mesmo princípio de um jogo de montar: a terceira peça vale mais

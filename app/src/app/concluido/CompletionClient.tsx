@@ -96,7 +96,7 @@ export function CompletionClient() {
 
       {p.state.achievements.length > 0 && (
         <section className="grid gap-3">
-          <h2 className="font-display text-[18px] font-semibold">O que você desbloqueou</h2>
+          <h2 className="font-display text-[18px] font-semibold">O que você desbloqueou?</h2>
           <div className="grid sm:grid-cols-2 gap-3">
             {p.state.achievements.map(a => (
               <AchievementBadge key={a.id} id={a.id} compact />
@@ -107,7 +107,7 @@ export function CompletionClient() {
 
       {alfabetoDominado && (
       <Card className="p-6 grid gap-3">
-        <h2 className="font-display text-[18px] font-semibold">O que você sabe fazer agora</h2>
+        <h2 className="font-display text-[18px] font-semibold">O que você sabe fazer agora?</h2>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
           {[
             'Reconhecer as 22 letras, impressas e em cursiva',

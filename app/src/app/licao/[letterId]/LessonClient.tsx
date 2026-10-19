@@ -344,7 +344,7 @@ function StageConhecer({
         textoPt={`O nome, o som e uma palavra com ${letter.namePt}.`} />
 
       <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">Como pronunciar</h2>
+        <h2 className="text-[19px] font-semibold">Como pronunciar?</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <Prose text={letter.soundNotePt} />
         </p>
@@ -617,7 +617,7 @@ function Lembre({ texto }: { texto: string }) {
   return (
     <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
       <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
-        O que você precisa lembrar
+        O que você precisa lembrar?
       </h2>
       <p className="text-[16px] leading-relaxed text-ink">
         <Prose text={texto} />
