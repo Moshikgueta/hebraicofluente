@@ -226,7 +226,12 @@ function main() {
       })),
       wordsToRead: (L.wordsToRead || []).map(word),
       wordsToRecognize: (L.wordsToRecognize || []).map(word),
-      bridgeWords: (L.bridgeWords || []).map(b => ({ he: NFC(b.he), pt: b.pt, audioId: audioIdFor(b.he) })),
+      /* A sílaba da letra vem com nikud, o resto da palavra sem (19/10/2026):
+         `marca` é o trecho destacado. O áudio é o da palavra sem pontos - a
+         marcação é só de tela, e trocar a sílaba não pode trocar a gravação. */
+      bridgeWords: (L.bridgeWords || []).map(b => ({
+        he: NFC(b.he), pt: b.pt, marca: b.marca ? NFC(b.marca) : null, audioId: audioIdFor(semPontos(b.he))
+      })),
       alphabetSoFar: alphabetUpTo(L.order),
       strokeOrder: { base: strokeSvg(L.id), final: L.finalForm ? strokeSvg(`${L.id}-final`) : null },
       audioId: audioIdFor(L.nameHe)

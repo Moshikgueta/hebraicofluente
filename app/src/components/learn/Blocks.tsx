@@ -206,7 +206,7 @@ export function BridgeWords({ letter }: { letter: Letter }) {
           <li key={b.he}
               className="flex items-center justify-between gap-4 rounded-[var(--r-md)]
                          bg-surface px-4 py-3 border border-[color:var(--line-soft)]">
-            <He size="word" mark={letter.letter}>{b.he}</He>
+            <He size="word" mark={b.marca ?? letter.letter}>{b.he}</He>
             <span className="flex items-center gap-3">
               <span className="font-ui text-[14px] text-ink-muted text-right">{b.pt}</span>
               {/* A pronúncia hebraica, quando gravada: sem gravação, nada. */}

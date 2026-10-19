@@ -209,6 +209,13 @@ export function validate({ checkDist = true } = {}) {
        without this rule the page silently printed a word with nothing
        highlighted in it. */
     (L.bridgeWords || []).forEach(w => {
+      /* A sílaba destacada (19/10/2026) tem de estar na palavra, uma vez só,
+         e conter a letra da lição. */
+      if (w.marca != null) {
+        const n = w.he.split(w.marca).length - 1;
+        const temLetra = w.marca.includes(L.letter) || (!!L.finalForm && w.marca.includes(L.finalForm));
+        if (n !== 1 || !temLetra) fail('V15', at, `bridgeWords "${w.he}": a marca "${w.marca}" aparece ${n} vez(es) ou não contém a letra`);
+      }
       const hasBase = w.he.includes(L.letter);
       const hasFinal = !!L.finalForm && w.he.includes(L.finalForm);
       if (!hasBase && !hasFinal) {
