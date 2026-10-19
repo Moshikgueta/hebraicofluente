@@ -176,6 +176,7 @@ export function validate({ checkDist = true } = {}) {
     const proseFields = [
       ['soundNotePt', L.soundNotePt],
       ['didYouKnow', L.didYouKnow],
+      ...(L.maisCuriosidades || []).map((c, i) => [`maisCuriosidades[${i}]`, c.textoPt]),
       ['brazilianMistake.wrong', L.brazilianMistake && L.brazilianMistake.wrong],
       ['brazilianMistake.right', L.brazilianMistake && L.brazilianMistake.right],
       ['brazilianMistake.why', L.brazilianMistake && L.brazilianMistake.why]

@@ -192,6 +192,8 @@ export type Letter = {
   } | null;
   /** Um título próprio para a curiosidade, quando a letra tem um (19/10/2026). */
   didYouKnowTitle: string | null;
+  /** Outras curiosidades da mesma letra, cada uma no seu quadro (19/10/2026). */
+  maisCuriosidades: { tituloPt: string; textoPt: string }[];
   brazilianMistake: { wrong: string; right: string; why: string };
   confusableWith: string[];
   /** O traço visual que separa esta letra de uma parecida, por glifo do outro.
