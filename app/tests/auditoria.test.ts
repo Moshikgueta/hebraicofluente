@@ -25,7 +25,7 @@ import * as progress from '../../worker/src/api/progress.js';
 // @ts-expect-error - idem
 import { readJson } from '../../worker/src/lib/http.js';
 // @ts-expect-error - idem
-import { LEGADO_ATE, makeSessionCookie, readSession } from '../../worker/src/lib/session.js';
+import { makeSessionCookie, readSession } from '../../worker/src/lib/session.js';
 // @ts-expect-error - idem
 import { enxuto, estourou, grantAccess, hasEntitlement, inviteCreate, recordEvent, throttled } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
@@ -305,36 +305,13 @@ describe('a sessão', () => {
     expect(inteiro).not.toMatch(/Domain=/i);
   });
 
-  it('o nome antigo vale até LEGADO_ATE, e /api/me o troca pelo novo', async () => {
-    /* O relógio fica ANTES do prazo: sem isto, o teste passou a falhar
-       sozinho em 15/10/2026 e travaria toda publicação. */
-    vi.useFakeTimers({ now: LEGADO_ATE - 86_400_000, toFake: ['Date'] });
-    try {
-      const env = envSite();
-      const { cookie } = await comConta(env);
-      const antigo = cookie.replace(/^__Host-hf_session=/, 'hf_session=');
-      const r = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: antigo } }), env });
-      expect(r.status).toBe(200);
-      const sets = r.headers.getSetCookie();
-      expect(sets.some((c: string) => c.startsWith('__Host-hf_session=') && !c.includes('Max-Age=0'))).toBe(true);
-      expect(sets.some((c: string) => c.startsWith('hf_session=;') && c.includes('Max-Age=0'))).toBe(true);
-    } finally {
-      vi.useRealTimers();
-    }
-  });
-
-  it('depois de LEGADO_ATE, o nome antigo não abre nada', async () => {
-    vi.useFakeTimers({ now: LEGADO_ATE + 60_000, toFake: ['Date'] });
-    try {
-      const env = envSite();
-      const { cookie } = await comConta(env);
-      const antigo = cookie.replace(/^__Host-hf_session=/, 'hf_session=');
-      const me = (c: string) => auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: c } }), env });
-      expect((await me(antigo)).status).toBe(401);
-      expect((await me(cookie)).status).toBe(200);
-    } finally {
-      vi.useRealTimers();
-    }
+  it('o nome antigo (hf_session) não abre nada desde 15/10/2026', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const antigo = cookie.replace(/^__Host-hf_session=/, 'hf_session=');
+    const me = (c: string) => auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: c } }), env });
+    expect((await me(antigo)).status).toBe(401);
+    expect((await me(cookie)).status).toBe(200);
   });
 
   it('sair apaga os dois nomes', async () => {
