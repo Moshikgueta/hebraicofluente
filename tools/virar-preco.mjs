@@ -14,7 +14,7 @@
  *
  * Mexe só na linha do `price` de cada curso, para não reformatar o arquivo.
  * Rodar duas vezes não faz nada na segunda. Quem roda: o workflow
- * `.github/workflows/virar-preco.yml`, agendado para 01/11 às 00:05 de
+ * `.github/workflows/virar-preco.yml`, agendado para 01/12 (era 01/11 até 19/10/2026) às 00:05 de
  * Brasília, que faz o commit e dispara a publicação. A página e a cobrança
  * mudam juntas, na mesma publicação, porque as duas leem este arquivo.
  *

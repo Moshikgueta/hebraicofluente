@@ -1,8 +1,8 @@
 # Fim do pré-lançamento: o preço sobe sozinho.
 #
-# Decisão do dono em 01/10/2026: em 01/11/2026 o curso de alfabetização
-# passa de R$ 147 para R$ 297 (data/courses.json, `listBrl`). Este workflow
-# roda às 03:05 UTC de 01/11 (00:05 de Brasília), aplica a virada com
+# Decisão do dono em 01/10/2026, adiada em 19/10/2026 para 01/12/2026: o
+# curso de alfabetização passa de R$ 147 para R$ 297 (data/courses.json,
+# `listBrl`). Este workflow roda às 03:05 UTC de 01/12 (00:05 de Brasília), aplica a virada com
 # tools/virar-preco.mjs, faz o commit em main e dispara a publicação. A
 # página e a cobrança mudam juntas, na mesma publicação.
 #
@@ -18,7 +18,7 @@ name: Virar o preço (fim do pré-lançamento)
 
 on:
   schedule:
-    - cron: '5 3 1 11 *'
+    - cron: '5 3 1 12 *'
   workflow_dispatch:
 
 permissions:

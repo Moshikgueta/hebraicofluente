@@ -226,6 +226,6 @@ describe('o preço cheio não aparece riscado', () => {
     const { fimDoPreLancamento, flagship } = await import('@/lib/catalog');
     const p = flagship().price;
     /* Depois da virada (tools/virar-preco.mjs) não há data a anunciar. */
-    expect(fimDoPreLancamento(p)).toBe(p.preLancamentoAte ? '31/10/2026' : null);
+    expect(fimDoPreLancamento(p)).toBe(p.preLancamentoAte ? '30/11/2026' : null);
   });
 });

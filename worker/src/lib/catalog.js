@@ -26,7 +26,7 @@ export const isSellable = c => !!c && c.status === 'available' && c.engine !== n
 
 /* Parcerias (02/10/2026): quem chega pelo link de uma parceria paga
    `price.parceriaBrl` quando ele é MENOR que o preço do dia. A primeira é a
-   associação sefardita (@adsefarditas, link /sefarad): R$ 197 (R$ 147 até 12/10/2026) também depois
+   associação sefardita (@adsefarditas, link /sefarad): R$ 147 também depois
    do fim do pré-lançamento. O nome vem do pedido, mas só vale se estiver
    nesta lista; o VALOR continua saindo só do catálogo.
 
