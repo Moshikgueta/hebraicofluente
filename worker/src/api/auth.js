@@ -25,7 +25,7 @@ import {
   b64url, fakeVerify, hashPassword, itersFor, sha256hex, timingSafeEqual, verifyPassword
 } from '../lib/crypto.js';
 import {
-  clearLegacyCookie, clearSessionCookie, makeSessionCookie, readSession
+  clearSessionCookie, makeSessionCookie, readSession
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
 import { nomeSeguro } from '../lib/nome.js';
@@ -820,16 +820,8 @@ export async function me({ request, env }) {
     return semSessao(request, true);
   }
 
-  /* Um cookie com o nome antigo, ainda válido: troca pelo nome novo aqui, e
-     apaga o antigo. É o que faz a mudança de nome não deslogar ninguém - o
-     app chama /api/me a cada página. Ver LEGADO_ATE em lib/session.js. */
   /* O aparelho deste navegador saiu das três vagas: outro entrou depois. */
   if (!await aparelhoValido(env, sess)) return semSessao(request, true);
-
-  if (sess.legado) {
-    return json(await sessionBody(env, account), 200,
-      { 'Set-Cookie': [await makeSessionCookie(env, account, sess.ap || await novoAparelho(env, account.id)), clearLegacyCookie] });
-  }
 
   /* Um cookie de antes do limite de aparelhos (29/09/2026): ganha o seu
      aparelho aqui, na primeira página que o app abrir. */

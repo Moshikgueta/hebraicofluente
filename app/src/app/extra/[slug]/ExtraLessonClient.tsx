@@ -42,7 +42,7 @@ export type ExtraSlug = 'sem-o-ponto' | 'sons-modernos';
 
 const STAGES: Record<ExtraSlug, { n: number; label: string; lesson: number }[]> = {
   'sem-o-ponto': [
-    { n: 1, label: 'Onde vem o ponto', lesson: 21 },
+    { n: 1, label: 'Onde vem o ponto?', lesson: 21 },
     { n: 2, label: 'As finais', lesson: 22 },
     { n: 3, label: 'Sem nikud', lesson: 23 }
   ],
@@ -210,7 +210,7 @@ function DageshStage({ onDone }: { onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-2">
-        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Onde o ponto aparece</h1>
+        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Onde o ponto aparece?</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
           Você já conhece os dois lados de <He size="inline">ב</He>, <He size="inline">כ</He> e{' '}
           <He size="inline">פ</He>. Mas fora do livro o ponto quase nunca é impresso. Então a pergunta

@@ -71,7 +71,7 @@ export function CheckpointA1Client({ n }: { n: number }) {
           body={passou ? 'O que você aprendeu nesses módulos continua firme. Siga em frente.' : 'Reveja as unidades abaixo e tente de novo: cada tentativa é um sorteio novo.'} />
         {fracas.length > 0 && (
           <Card tone="wash" className="p-5 grid gap-2">
-            <h2 className="font-display text-[18px] font-semibold text-ink m-0">Onde os erros se juntaram</h2>
+            <h2 className="font-display text-[18px] font-semibold text-ink m-0">Onde os erros se juntaram?</h2>
             <ul className="grid gap-1 m-0 p-0 list-none">
               {fracas.map(u => (
                 <li key={u}><Link href={`/a1/unidade/${u}`} className="inline-flex min-h-[40px] items-center font-ui text-[15px] text-ink underline underline-offset-2">

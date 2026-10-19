@@ -19,7 +19,8 @@
 
 import { describe, expect, it } from 'vitest';
 import { allLetters } from '../src/lib/content';
-import { buildLetterPractice, buildMiniTest } from '../src/lib/engine/exercises';
+import { assinatura, buildLetterPractice, buildMiniTest } from '../src/lib/engine/exercises';
+import { FIXACAO_ITENS } from '../src/lib/state/rules';
 
 const letters = allLetters();
 const historyOf = (order: number) => letters.filter(l => l.order <= order);
@@ -125,24 +126,34 @@ describe('a unidade de prática de cada letra', () => {
 });
 
 describe('o mini-teste que fecha a letra', () => {
-  it('tem sempre dez questões', () => {
+  it('tem sempre FIXACAO_ITENS questões (vinte desde 12/10/2026)', () => {
     /* Cinco até 21/09/2026; seis quando a cursiva ganhou camada própria; dez
        desde 23/09/2026, quando a fixação passou a cobrar também os gestos de
-       MONTAR, de LER e de ligar palavra a significado - a prova media um
-       quarto do que a lição ensina, e ensinava ao aluno que os outros três
-       gestos não valiam nota.
+       MONTAR, de LER e de ligar palavra a significado; vinte desde 12/10/2026,
+       por decisão do dono do curso - uma segunda volta por todas as camadas,
+       com outros geradores e outro conteúdo.
 
-       E dez não é escolha estética: é o único tamanho que mantém as duas
-       réguas coerentes. Dominar pede 75% e destravar a próxima pede 80%. Com
-       nove itens, 7 acertos dão 78% - dominada e mesmo assim trancada, um
-       estado que nenhuma tela consegue explicar. Com dez, 8 dão 80% e passam
-       nas duas; 7 dão 70% e falham nas duas. Não sobra nota no meio, e o
-       aluno passa a ter dois erros perdoados em vez de um. */
+       Com vinte, as duas réguas ficam a um acerto de distância: 15 (75%)
+       conclui a lição e 16 (80%) abre a próxima. A tela de resultado diz isso
+       com os números (`acertosPara(LIBERA_MARK)` de `FIXACAO_ITENS`). */
     const fora = letters
       .map(L => ({ L, n: buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-0` }).length }))
-      .filter(x => x.n !== 10)
+      .filter(x => x.n !== FIXACAO_ITENS)
       .map(x => `${x.L.namePt}: ${x.n}`);
     expect(fora).toEqual([]);
+  });
+
+  it('as vinte são perguntas diferentes, de pelo menos nove tipos', () => {
+    for (const audioAvailable of [false, true]) {
+      for (const L of letters) {
+        for (const t of [0, 1, 2]) {
+          const r = buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-${t}`, audioAvailable });
+          expect(new Set(r.map(assinatura)).size, L.id).toBe(r.length);
+          expect(new Set(r.map(e => e.id)).size, L.id).toBe(r.length);
+          expect(new Set(r.map(e => e.kind)).size, L.id).toBeGreaterThanOrEqual(9);
+        }
+      }
+    }
   });
 
   it('e nenhuma nota cai entre as duas réguas', () => {

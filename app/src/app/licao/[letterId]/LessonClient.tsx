@@ -37,6 +37,7 @@ import {
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
+import { CompararSons } from '@/components/learn/CompararSons';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
 import { alvoDaLetra } from '@/lib/fixacao';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
@@ -344,7 +345,7 @@ function StageConhecer({
         textoPt={`O nome, o som e uma palavra com ${letter.namePt}.`} />
 
       <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">Como pronunciar</h2>
+        <h2 className="text-[19px] font-semibold">Como pronunciar?</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <Prose text={letter.soundNotePt} />
         </p>
@@ -617,7 +618,7 @@ function Lembre({ texto }: { texto: string }) {
   return (
     <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
       <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
-        O que você precisa lembrar
+        O que você precisa lembrar?
       </h2>
       <p className="text-[16px] leading-relaxed text-ink">
         <Prose text={texto} />
@@ -669,11 +670,32 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
       {letter.wordsToRecognize.length > 0 && (
         <Card tone="wash" className="p-6 grid gap-2">
           <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
-          <p className="text-[15.5px] leading-relaxed text-ink-body">
-            <Prose text={letter.didYouKnow} />
-          </p>
+          {letter.didYouKnowTitle && (
+            <p className="font-ui text-[17px] font-semibold text-ink">{letter.didYouKnowTitle}</p>
+          )}
+          {/* Um parágrafo por linha em branco no texto (19/10/2026). */}
+          {letter.didYouKnow.split(/\n\n+/).map((par, i) => (
+            <p key={i} className="text-[15.5px] leading-relaxed text-ink-body">
+              <Prose text={par} />
+            </p>
+          ))}
         </Card>
       )}
+      {letter.wordsToRecognize.length > 0 && letter.maisCuriosidades.map(c => (
+        <Card key={c.tituloPt} tone="wash" className="p-6 grid gap-2">
+          <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
+          <p className="font-ui text-[17px] font-semibold text-ink">{c.tituloPt}</p>
+          {c.textoPt.split(/\n\n+/).map((par, i) => (
+            <p key={i} className="text-[15.5px] leading-relaxed text-ink-body">
+              <Prose text={par} />
+            </p>
+          ))}
+        </Card>
+      ))}
+
+      {/* Ouça a diferença (19/10/2026): só nas letras que trazem a
+          comparação em letters.json - hoje, o ר com o ח. */}
+      {letter.compararSons && <CompararSons comparacao={letter.compararSons} />}
 
       {/* Only the scenes this letter unlocks, and only ones the learner can
           decode - a sign you cannot read is not a reward. Most letters have
@@ -797,9 +819,9 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
 /* ── 5 · exercícios: o mini-teste, com portão de domínio ────────────────
  *
  * Aqui a lição deixa de ser "rolei até o fim" e passa a ser "mostrei que
- * sei". FIXACAO_ITENS questões (10), e 75% delas (MASTERY_MARK, 8 de 10)
- * para a letra contar como dominada; a seguinte abre com LIBERA_MARK (80%,
- * também 8 de 10). Os números moram em lib/state/rules.ts e a tela os lê de
+ * sei". FIXACAO_ITENS questões (20), e 75% delas (MASTERY_MARK, 15 de 20)
+ * para a lição contar como concluída; a seguinte abre com LIBERA_MARK (80%,
+ * 16 de 20). Os números moram em lib/state/rules.ts e a tela os lê de
  * lá: este comentário já disse "seis" e "oito" quando eram outros.
  *
  * O portão NÃO tranca. Quem fica abaixo recebe "vamos praticar mais um pouco"

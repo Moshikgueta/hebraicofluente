@@ -30,7 +30,7 @@ import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
 import { CompararPronuncia } from '@/components/learn/CompararPronuncia';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
-import { BrazilianTip, Prose, WordReveal } from '@/components/learn/Blocks';
+import { BrazilianTip, Prose, TituloComSelo, WordReveal } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { useProgress } from '@/lib/state/store';
 import { LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
@@ -233,13 +233,13 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       </Card>
 
       <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">Como pronunciar</h2>
+        <h2 className="text-[19px] font-semibold">Como pronunciar?</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">Soa como {S.comoPt.includes('{{') ? <Prose text={S.comoPt} /> : S.comoPt}.</p>
         <OndeNasceOSom articulacao={S.articulacao} letra={S.namePt} />
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-2">
-        <h2 className="text-[18px] font-semibold">Quando a letra tem este som</h2>
+        <h2 className="text-[18px] font-semibold">Quando a letra tem este som?</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body"><Prose text={S.regraPt} /></p>
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-3">
           <Prose text={S.irmaoPt} />
@@ -247,6 +247,16 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       </Card>
 
       <BrazilianTip mistake={S.erro} />
+
+      {S.curiosidade && (
+        <Card tone="wash" className="p-6 grid gap-2">
+          <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
+          <p className="font-ui text-[17px] font-semibold text-ink">{S.curiosidade.tituloPt}</p>
+          {S.curiosidade.textoPt.split(/\n\n+/).map((par, i) => (
+            <p key={i} className="text-[15.5px] leading-relaxed text-ink-body"><Prose text={par} /></p>
+          ))}
+        </Card>
+      )}
 
       {S.silabas.length > 0 && (
         <Card className="p-6 grid gap-4">

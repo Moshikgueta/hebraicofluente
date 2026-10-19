@@ -231,7 +231,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
 
       <Card tone="wash" className="p-6 grid gap-3">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">
-          O que vem no checkpoint
+          O que vem no checkpoint?
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body">
           12 questões misturando reconhecimento, leitura, vocabulário e as formas

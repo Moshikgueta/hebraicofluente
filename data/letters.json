@@ -121,20 +121,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "אמריקה",
-        "pt": "América"
+        "he": "סאוּנה",
+        "pt": "sauna",
+        "marca": "אוּ"
       },
       {
-        "he": "אופרה",
-        "pt": "ópera"
+        "he": "כאוֹס",
+        "pt": "caos",
+        "marca": "אוֹ"
       },
       {
-        "he": "אקורדיון",
-        "pt": "acordeão"
+        "he": "פירנאִים",
+        "pt": "Pirineus",
+        "marca": "אִי"
       },
       {
-        "he": "אנטנה",
-        "pt": "antena"
+        "he": "קואָלה",
+        "pt": "coala",
+        "marca": "אָ"
       }
     ]
   },
@@ -286,7 +290,8 @@
         "pt": "mãe (registro formal, em compostos)"
       }
     ],
-    "didYouKnow": "Mem é a letra da água. O nome da letra vem de uma antiga palavra semítica para \"água\", aparentada com {{מַיִם}} (máyim). O desenho original provavelmente representava água, com um formato que lembrava ondas. Sempre que encontrar {{מ}}, pense em água corrente: ajuda a fixar a letra e a palavra ao mesmo tempo.",
+    "didYouKnowTitle": "Mem, a letra da água",
+    "didYouKnow": "O nome Mem vem de uma palavra semítica muito antiga que queria dizer \"água\". Ela é da mesma família de {{מַיִם}} (máyim), a palavra que ainda hoje quer dizer \"água\" em hebraico.\n\nNas primeiras formas do alfabeto, a letra provavelmente era desenhada como uma linha de ondas.\n\nDica para memorizar: sempre que encontrar o {{מ}}, pense em água em movimento. Assim você liga de uma vez a letra, o som M e a palavra {{מַיִם}}.",
     "brazilianMistake": {
       "wrong": "Ler {{אֵם}} como o \"em\" do português, com a vogal anasalada e o M sumindo.",
       "right": "Ler {{אֵם}} com a vogal oral, como o E de \"mesa\", e fechar os lábios de verdade no M do fim.",
@@ -296,20 +301,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "מוזיקה",
-        "pt": "música"
+        "he": "טרמִינל",
+        "pt": "terminal",
+        "marca": "מִי"
       },
       {
-        "he": "קומדיה",
-        "pt": "comédia"
+        "he": "דיאגרמָה",
+        "pt": "diagrama",
+        "marca": "מָ"
       },
       {
-        "he": "מיקרופון",
-        "pt": "microfone"
+        "he": "דמוֹקרטיה",
+        "pt": "democracia",
+        "marca": "מוֹ"
       },
       {
-        "he": "מקסימום",
-        "pt": "máximo"
+        "he": "קרם",
+        "pt": "creme",
+        "marca": "ם"
       }
     ],
     "contrastes": {
@@ -455,16 +464,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "מתמטיקה",
-        "pt": "matemática"
+        "he": "תֵל אביב",
+        "pt": "Tel Aviv",
+        "marca": "תֵ"
       },
       {
-        "he": "תאילנד",
-        "pt": "Tailândia"
+        "he": "מרתוֹן",
+        "pt": "maratona",
+        "marca": "תוֹ"
       },
       {
-        "he": "תוניסיה",
-        "pt": "Tunísia"
+        "he": "ממותָה",
+        "pt": "mamute",
+        "marca": "תָ"
+      },
+      {
+        "he": "אתִיקה",
+        "pt": "ética",
+        "marca": "תִי"
       }
     ]
   },
@@ -604,7 +621,8 @@
         "pt": "de / a partir de (registro formal)"
       }
     ],
-    "didYouKnow": "Em aramaico, {{נוּן}} quer dizer \"peixe\". Já o desenho antigo associado à letra é interpretado por muitos estudiosos como uma serpente, e não como um peixe. O nome Nun, pai de Josué, é a mesma palavra.",
+    "didYouKnowTitle": "Nun: o peixe ou a serpente?",
+    "didYouKnow": "Em aramaico, {{נוּן}} (nun) quer dizer \"peixe\", e é daí que vem, tradicionalmente, o nome da letra.\n\nMas há uma surpresa: muitos estudiosos acham que o desenho mais antigo da letra mostrava uma serpente, e não um peixe. A origem exata ainda é discutida.\n\nE tem mais: Nun também é um nome de pessoa. Na Bíblia, o pai de Josué se chama Nun, a mesma palavra.\n\nDica para memorizar: pense num peixe e no som N de Nun.",
     "brazilianMistake": {
       "wrong": "Nasalizar a vogal antes do N: ler {{אָמֵן}} como o nosso \"amém\", \"amẽ\".",
       "right": "Ler {{אָמֵן}} como \"amén\", com o N pronunciado e a vogal limpa.",
@@ -614,20 +632,29 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "בננה",
-        "pt": "banana"
+        "he": "מנוֹרה",
+        "pt": "menorá",
+        "marca": "נוֹ"
       },
       {
-        "he": "פיאנו",
-        "pt": "piano"
+        "he": "לימונָדה",
+        "pt": "limonada",
+        "marca": "נָ"
       },
       {
-        "he": "אינטרנט",
-        "pt": "internet"
+        "he": "ברלין",
+        "pt": "Berlim",
+        "marca": "ן"
       },
       {
-        "he": "קנגורו",
-        "pt": "canguru"
+        "he": "סנְדל",
+        "pt": "sandália",
+        "marca": "נְ"
+      },
+      {
+        "he": "קנִיבל",
+        "pt": "canibal",
+        "marca": "נִי"
       }
     ],
     "contrastes": {
@@ -813,20 +840,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "הוקי",
-        "pt": "hóquei"
+        "he": "הוּריקן",
+        "pt": "furacão (hurricane)",
+        "marca": "הוּ"
       },
       {
-        "he": "הוואי",
-        "pt": "Havaí"
+        "he": "אלכוהוֹל",
+        "pt": "álcool",
+        "marca": "הוֹ"
       },
       {
-        "he": "הולנד",
-        "pt": "Holanda"
+        "he": "טהִיטי",
+        "pt": "Taiti",
+        "marca": "הִי"
       },
       {
-        "he": "המבורגר",
-        "pt": "hambúrguer"
+        "he": "הֶליקופטר",
+        "pt": "helicóptero",
+        "marca": "הֶ"
       }
     ],
     "contrastes": {
@@ -973,7 +1004,8 @@
         "pt": "mar"
       }
     ],
-    "didYouKnow": "É a menor letra do alfabeto - um traço suspenso no alto da linha. Dela vêm o iota grego e a expressão \"nem um jota\", ou seja, nem a menor parte.",
+    "didYouKnowTitle": "Yud: uma letra pequena com uma grande história",
+    "didYouKnow": "O {{י}} é a menor letra do alfabeto hebraico: um traço pequeno, suspenso no alto da linha.\n\nA letra grega iota tem a mesma origem: as duas vêm do Yodh, a letra do alfabeto fenício.\n\nÉ dessa história que vem a expressão \"nem um jota\", que quer dizer \"nem a menor parte\".\n\nDica para memorizar: o {{י}} é pequenininho, mas aparece o tempo todo. Pense nele como um traço pequeno que carrega uma grande história.",
     "brazilianMistake": {
       "wrong": "Ler {{י}} como J: \"jom\", \"jam\".",
       "right": "Ler {{י}} como I ou Y: \"yom\", \"yam\".",
@@ -983,20 +1015,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "יוגה",
-        "pt": "ioga"
+        "he": "בריטניָה",
+        "pt": "Grã-Bretanha",
+        "marca": "יָ"
       },
       {
-        "he": "פיצה",
-        "pt": "pizza"
+        "he": "קרייֶרה",
+        "pt": "carreira",
+        "marca": "יֶ"
       },
       {
-        "he": "יוגורט",
-        "pt": "iogurte"
+        "he": "רדיוֹ",
+        "pt": "rádio",
+        "marca": "יוֹ"
       },
       {
-        "he": "וידאו",
-        "pt": "vídeo"
+        "he": "אלומיניוּם",
+        "pt": "alumínio",
+        "marca": "יוּ"
       }
     ]
   },
@@ -1133,7 +1169,8 @@
         "pt": "lago"
       }
     ],
-    "didYouKnow": "Uma explicação tradicional liga o nome {{גִימֶל}} à palavra {{גָמָל}}, \"camelo\". Alguns estudiosos também relacionam a forma antiga da letra à figura de um camelo ou a uma parte do animal. É também a letra do dreidel que significa \"gantz\" - leve tudo.",
+    "didYouKnowTitle": "Gimel, o camelo e o pião de Chanucá",
+    "didYouKnow": "Uma explicação tradicional liga o nome da letra Gimel à palavra {{גָמָל}} (gamál), \"camelo\". Alguns estudiosos também relacionam o desenho antigo da letra a um camelo, mas a origem exata ainda é discutida.\n\nE o {{ג}} guarda outra surpresa. Na festa de Chanucá, as crianças brincam com um pião, o {{סְבִיבוֹן}} (sevivón). Quando ele cai no {{ג}}, quem jogou leva tudo o que está na rodada: a letra vem da palavra iídiche \"gants\", que quer dizer \"tudo\".\n\nDica para memorizar: o G de Gimel, o G de gamál e a letra que leva tudo no jogo de Chanucá.",
     "brazilianMistake": {
       "wrong": "Suavizar o G antes de E e I: ler {{גֶשֶׁם}} como \"jéshem\".",
       "right": "Manter o G duro sempre: \"guéshem\", \"gadól\", como em \"guerra\" e \"guitarra\".",
@@ -1143,20 +1180,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "גיטרה",
-        "pt": "violão, guitarra"
+        "he": "הולוגְרמה",
+        "pt": "holograma",
+        "marca": "גְ"
       },
       {
-        "he": "גולף",
-        "pt": "golfe"
+        "he": "מרגָרינה",
+        "pt": "margarina",
+        "marca": "גָ"
       },
       {
-        "he": "אוריגמי",
-        "pt": "origami"
+        "he": "ספגֶטי",
+        "pt": "espaguete",
+        "marca": "גֶ"
       },
       {
-        "he": "גורילה",
-        "pt": "gorila"
+        "he": "לגוֹ",
+        "pt": "Lego",
+        "marca": "גוֹ"
       }
     ]
   },
@@ -1289,7 +1330,8 @@
         "pt": "medida / tamanho"
       }
     ],
-    "didYouKnow": "O nome da letra vem de {{דֶלֶת}}, que significa porta - e a forma antiga da letra provavelmente desenhava uma porta. Muitos nomes de letras hebraicas são assim: a coisa que a letra desenhava originalmente.",
+    "didYouKnowTitle": "Dalet, a letra da porta",
+    "didYouKnow": "O nome da letra Dalet está ligado à palavra hebraica {{דֶלֶת}} (délet), que quer dizer \"porta\". A ligação tem milhares de anos: uma das explicações para a origem da letra é que o desenho antigo mostrava uma porta ou uma entrada.\n\nE não é a única: o nome de várias letras hebraicas guarda objetos e coisas do dia a dia dos povos antigos, como a água do {{מ}}, que você já conhece.\n\nDica para memorizar: pense no {{ד}} como uma porta. Assim você liga de uma vez a letra, o som D e a palavra {{דֶלֶת}}.",
     "brazilianMistake": {
       "wrong": "Ler {{דִי}} como \"dji\", do jeito que falamos \"dia\".",
       "right": "Ler {{דִי}} como \"di\", com o D seco, como em \"dado\".",
@@ -1299,20 +1341,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "דינוזאור",
-        "pt": "dinossauro"
+        "he": "אבסורד",
+        "pt": "absurdo",
+        "marca": "ד"
       },
       {
-        "he": "דיסקו",
-        "pt": "discoteca"
+        "he": "למבדָה",
+        "pt": "lambda",
+        "marca": "דָ"
       },
       {
-        "he": "פודינג",
-        "pt": "pudim"
+        "he": "נודִיסט",
+        "pt": "nudista",
+        "marca": "דִי"
       },
       {
-        "he": "אינדונזיה",
-        "pt": "Indonésia"
+        "he": "מדוּזה",
+        "pt": "medusa",
+        "marca": "דוּ"
       }
     ],
     "contrastes": {
@@ -1498,7 +1544,8 @@
         "pt": "há, tem"
       }
     ],
-    "didYouKnow": "{{שָׁלוֹם}} não é só \"paz\": é o olá e o tchau do dia a dia em Israel. A mesma palavra abre e fecha uma conversa - e é quase certo que seja a primeira que você vai usar de verdade.",
+    "didYouKnowTitle": "Uma palavra, três sentidos",
+    "didYouKnow": "Em hebraico, {{שָׁלוֹם}} (shalóm) quer dizer \"paz\". Mas é também o \"olá\" e o \"tchau\" do dia a dia: a mesma palavra abre e fecha uma conversa.\n\nEm Israel você também vai ouvir \"hi\" e \"bye\", mas shalóm continua sendo uma das palavras mais conhecidas do hebraico, e é quase certo que seja a primeira que você vai usar de verdade.\n\nDica para memorizar: pense em {{שָׁלוֹם}} como a palavra que leva paz na chegada e na despedida.",
     "brazilianMistake": {
       "wrong": "Ler {{ש}} como S: \"salóm\", \"sem\".",
       "right": "Ler {{ש}} como o X de \"xícara\" ou o CH de \"chave\" (transliterado \"sh\"): \"shalóm\", \"shem\".",
@@ -1508,20 +1555,19 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "שוקולד",
-        "pt": "chocolate"
+        "he": "קטשׁוֹפ",
+        "pt": "ketchup",
+        "marca": "שׁוֹ"
       },
       {
-        "he": "שמפניה",
-        "pt": "champanhe"
+        "he": "קשְׁמיר",
+        "pt": "caxemira",
+        "marca": "שְׁ"
       },
       {
-        "he": "מרשמלו",
-        "pt": "marshmallow"
-      },
-      {
-        "he": "שריף",
-        "pt": "xerife"
+        "he": "גיישָׁה",
+        "pt": "gueixa",
+        "marca": "שָׁ"
       }
     ],
     "contrastes": {
@@ -1673,7 +1719,8 @@
         "pt": "noite"
       }
     ],
-    "didYouKnow": "{{ל}} é a letra mais alta do alfabeto hebraico - a única que sobe acima da linha do texto. Em um texto corrido, ela é o ponto de referência que o olho usa para se situar.",
+    "didYouKnowTitle": "Lamed, a letra que se destaca",
+    "didYouKnow": "O {{ל}} é a letra mais alta do alfabeto hebraico. Na letra impressa, é a única que passa claramente da altura das outras, e por isso é uma das mais fáceis de achar num texto.\n\nImagine uma linha cheia de letras: o {{ל}} parece levantar a cabeça acima de todas.\n\nDica para memorizar: quando olhar para uma palavra em hebraico, procure a letra que sobe acima da linha. Achou? É quase certo que seja o {{ל}}, com o som L.",
     "brazilianMistake": {
       "wrong": "Ler {{שֶׁל}} como \"sheu\", transformando o L final em U.",
       "right": "Ler {{שֶׁל}} como \"shel\", com o L bem apoiado na ponta da língua.",
@@ -1683,20 +1730,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "לימון",
-        "pt": "limão"
+        "he": "איטלְיה",
+        "pt": "Itália",
+        "marca": "לְ"
       },
       {
-        "he": "גלקסיה",
-        "pt": "galáxia"
+        "he": "פלָאפל",
+        "pt": "falafel",
+        "marca": "לָ"
       },
       {
-        "he": "בלט",
-        "pt": "balé"
+        "he": "גלוֹבוס",
+        "pt": "globo",
+        "marca": "לוֹ"
       },
       {
-        "he": "פלסטיק",
-        "pt": "plástico"
+        "he": "פקולְטה",
+        "pt": "faculdade",
+        "marca": "לְ"
       }
     ],
     "contrastes": {
@@ -1847,7 +1898,24 @@
         "pt": "rio"
       }
     ],
-    "didYouKnow": "O R israelense é o R francês, feito no fundo da boca, perto da úvula. Ele lembra o R carioca, mas não é o mesmo: o carioca é soprado e áspero, e em hebraico esse som áspero pertence a outra letra, que você conhece no próximo módulo. Trocar um pelo outro pode confundir quem ouve.",
+    "didYouKnowTitle": "O R israelense não é o R brasileiro",
+    "didYouKnow": "O som do {{ר}} em Israel lembra bastante o R francês. Na pronúncia mais comum do hebraico de hoje, ele é feito no fundo da boca, perto da úvula.\n\nPara quem fala português, ele pode lembrar o R carioca de \"rua\", mas os dois não são iguais. Em hebraico, o som mais áspero, soprado, é de outra letra: a letra Chet, que você vai conhecer no próximo módulo.\n\nDica para memorizar: ao dizer o {{ר}}, faça um R suave no fundo da boca, com a voz, sem virar um H forte. Com a prática, o seu ouvido aprende a separar os dois sons.",
+    "compararSons": {
+      "textoPt": "Esses dois sons podem soar parecidos para quem fala português, mas são letras diferentes em hebraico. Ouça a pronúncia de um falante nativo e perceba a diferença.",
+      "itens": [
+        {
+          "glifo": "ר",
+          "nomePt": "Resh",
+          "som": "רַ"
+        },
+        {
+          "glifo": "ח",
+          "nomePt": "Chet",
+          "som": "חַ",
+          "previaPt": "Prévia: você aprende esta letra no próximo módulo."
+        }
+      ]
+    },
     "brazilianMistake": {
       "wrong": "Usar o R carioca soprado de \"carro\", que em hebraico é o som de outra letra. (O R batido de \"caro\" e o R do interior paulista, de \"porta\", não trocam a palavra, mas soam com sotaque.)",
       "right": "Usar o R francês, macio e com a voz ligada, como em \"Paris\": {{הַר}} é \"har\", com esse R no fim.",
@@ -1857,20 +1925,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "רובוט",
-        "pt": "robô"
+        "he": "אורֶגנו",
+        "pt": "orégano",
+        "marca": "רֶ"
       },
       {
-        "he": "קרמל",
-        "pt": "caramelo"
+        "he": "אנרְגיה",
+        "pt": "energia",
+        "marca": "רְ"
       },
       {
-        "he": "ריזוטו",
-        "pt": "risoto"
+        "he": "סיגרְיה",
+        "pt": "cigarro",
+        "marca": "רְ"
       },
       {
-        "he": "טרקטור",
-        "pt": "trator"
+        "he": "קרוּסלה",
+        "pt": "carrossel",
+        "marca": "רוּ"
       }
     ]
   },
@@ -2062,7 +2134,8 @@
         "pt": "e também"
       }
     ],
-    "didYouKnow": "Com {{ו}} você acaba de destravar {{שָׁלוֹם}} - a palavra que abre e fecha qualquer conversa em Israel. Doze letras foi tudo o que ela exigiu.",
+    "didYouKnowTitle": "Vav, a letra que virou várias",
+    "didYouKnow": "O {{ו}} tem parentes no nosso próprio alfabeto. O nome dele é a palavra hebraica {{וָו}} (vav), que quer dizer \"gancho\", e o desenho antigo da letra provavelmente lembrava um gancho.\n\nHá milhares de anos, a avó fenícia dessa letra foi adotada pelos gregos e, com o tempo, deu origem a várias letras do nosso alfabeto: F, U, V e W.\n\nOu seja: letras que você usa todo dia em português têm uma origem distante em comum com o {{ו}}.",
     "brazilianMistake": {
       "wrong": "Ler todo {{ו}} como V, inclusive quando ele é vogal: dizer \"shalvóm\".",
       "right": "Olhar o ponto: {{וֹ}} é O, {{וּ}} é U, {{ו}} sem ponto entre consoantes é V.",
@@ -2072,20 +2145,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "וניל",
-        "pt": "baunilha"
+        "he": "קיווִי",
+        "pt": "kiwi",
+        "marca": "ווִי"
       },
       {
-        "he": "ויזה",
-        "pt": "visto (visa)"
+        "he": "אקווָדור",
+        "pt": "Equador",
+        "marca": "ווָ"
       },
       {
-        "he": "וירוס",
-        "pt": "vírus"
+        "he": "וֶטרן",
+        "pt": "veterano",
+        "marca": "וֶ"
       },
       {
-        "he": "ויקינג",
-        "pt": "viking"
+        "he": "ווֹלונטרי",
+        "pt": "voluntário",
+        "marca": "ווֹ"
       }
     ],
     "contrastes": {
@@ -2233,7 +2310,14 @@
         "pt": "alimento"
       }
     ],
-    "didYouKnow": "{{מַזָל טוֹב}} quer dizer \"parabéns\": é o que se diz num aniversário, num casamento, num nascimento. Palavra por palavra é \"boa sorte\", mas ninguém usa para desejar sorte antes de uma prova ou de uma viagem: para isso existe {{בְּהַצְלָחָה}}. A primeira palavra você já lê; a segunda chega com o {{ב}}, no módulo 5.",
+    "didYouKnowTitle": "Zayin, a avó da letra Z",
+    "didYouKnow": "O {{ז}} tem uma ligação direta com o Z que usamos em português. Há quase três mil anos, os fenícios já usavam uma forma antiga dessa letra.\n\nQuando os gregos adaptaram o alfabeto fenício, ela virou o zeta, e do zeta veio o Z do nosso alfabeto.\n\nE tem mais: o nome Zayin é tradicionalmente ligado à ideia de uma arma. Alguns estudiosos acham que o desenho mais antigo mostrava uma arma, mas a origem exata ainda é discutida.\n\nDica para memorizar: o Z de Zayin e de zebra. O {{ז}} e o nosso Z têm uma história em comum de milhares de anos.",
+    "maisCuriosidades": [
+      {
+        "tituloPt": "Mazál tov não é \"boa sorte\"",
+        "textoPt": "Em hebraico, {{מַזָל טוֹב}} (mazál tov) quer dizer \"parabéns\". É o que se diz num aniversário, num casamento, num nascimento e em outras ocasiões especiais.\n\nPalavra por palavra, {{מַזָל}} (mazál) é \"sorte\" ou \"destino\", e {{טוֹב}} (tov) é \"bom\". Mas os israelenses não dizem mazál tov para desejar sorte antes de uma prova ou de uma viagem.\n\nPara isso existe {{בְּהַצְלָחָה}} (behatslachá): \"boa sorte\" ou \"sucesso\".\n\nDica para lembrar: {{מַזָל טוֹב}} é para celebrar algo que já aconteceu. {{בְּהַצְלָחָה}} é para desejar que algo dê certo.\n\nA palavra {{מַזָל}} você já consegue ler. As outras chegam mais adiante: {{בְּהַצְלָחָה}}, por exemplo, começa com o {{ב}}, que você vai conhecer no módulo 5."
+      }
+    ],
     "brazilianMistake": {
       "wrong": "Ensurdecer o Z no fim da palavra: ler {{אָז}} (então) como \"as\".",
       "right": "Manter o Z vibrado: \"az\", com a garganta vibrando até o fim.",
@@ -2243,20 +2327,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "פיזיקה",
-        "pt": "física"
+        "he": "אקזוֹטי",
+        "pt": "exótico",
+        "marca": "זוֹ"
       },
       {
-        "he": "זברה",
-        "pt": "zebra"
+        "he": "היפנוזָה",
+        "pt": "hipnose",
+        "marca": "זָ"
       },
       {
-        "he": "מוזאיקה",
-        "pt": "mosaico"
+        "he": "מוזֵיאון",
+        "pt": "museu",
+        "marca": "זֵי"
       },
       {
-        "he": "ברזיל",
-        "pt": "Brasil"
+        "he": "זִיגזג",
+        "pt": "zigue-zague",
+        "marca": "זִי"
       }
     ]
   },
@@ -2418,16 +2506,14 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "חומוס",
-        "pt": "homus"
+        "he": "חֵיפה",
+        "pt": "Haifa",
+        "marca": "חֵי"
       },
       {
-        "he": "בחריין",
-        "pt": "Bahrein"
-      },
-      {
-        "he": "חאקי",
-        "pt": "cáqui"
+        "he": "חוּפה",
+        "pt": "chupá",
+        "marca": "חוּ"
       }
     ]
   },
@@ -2561,7 +2647,8 @@
         "pt": "guarda-chuva"
       }
     ],
-    "didYouKnow": "Com {{ט}} você já tem quase toda a palavra {{טוֹב}}, \"bom\": falta só o {{ב}}, que chega no módulo 5. Aí você lê {{בֹּקֶר טוֹב}}, {{עֶרֶב טוֹב}} e {{מַזָל טוֹב}} inteiros.",
+    "didYouKnowTitle": "Tet, uma letra internacional",
+    "didYouKnow": "O {{ט}} aparece em várias palavras que você já conhece do português. O hebraico moderno trouxe muitas palavras de outras línguas, principalmente de tecnologia, comunicação e cultura:\n\n{{טֶלֶפוֹן}} (télefon), telefone. {{טֶלֶוִיזְיָה}} (televízya), televisão. {{טֶכְנוֹלוֹגְיָה}} (technológya), tecnologia. {{טוֹסְט}} (tost), torrada ou misto-quente.\n\nPercebeu? Você já sabe o que essas palavras querem dizer, antes mesmo de conseguir lê-las em hebraico.\n\nE tem mais: no hebraico de hoje, o {{ט}} e o {{ת}} têm o mesmo som, T, embora sejam letras diferentes.\n\nDica para memorizar: pense no T de telefone e de tecnologia.",
     "brazilianMistake": {
       "wrong": "Palatalizar antes de I e E: ler {{טִי}} como \"tchi\".",
       "right": "Ler \"ti\", com o T seco, exatamente como no {{ת}}.",
@@ -2571,20 +2658,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "טניס",
-        "pt": "tênis"
+        "he": "הליקופטֶר",
+        "pt": "helicóptero",
+        "marca": "טֶ"
       },
       {
-        "he": "טלפון",
-        "pt": "telefone"
+        "he": "ויטָמין",
+        "pt": "vitamina",
+        "marca": "טָ"
       },
       {
-        "he": "טונה",
-        "pt": "atum"
+        "he": "מטְרו",
+        "pt": "metrô",
+        "marca": "טְ"
       },
       {
-        "he": "סלט",
-        "pt": "salada"
+        "he": "פוטוֹ",
+        "pt": "foto",
+        "marca": "טוֹ"
       }
     ],
     "contrastes": {
@@ -2741,20 +2832,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "סושי",
-        "pt": "sushi"
+        "he": "פסְטה",
+        "pt": "massa (pasta)",
+        "marca": "סְ"
       },
       {
-        "he": "סטודנט",
-        "pt": "estudante"
+        "he": "רסִיטל",
+        "pt": "recital",
+        "marca": "סִי"
       },
       {
-        "he": "אוטובוס",
-        "pt": "ônibus"
+        "he": "פיקאסוֹ",
+        "pt": "Picasso",
+        "marca": "סוֹ"
       },
       {
-        "he": "קקטוס",
-        "pt": "cacto"
+        "he": "אבסוּרד",
+        "pt": "absurdo",
+        "marca": "סוּ"
       }
     ],
     "contrastes": {
@@ -2887,7 +2982,8 @@
         "pt": "agradável"
       }
     ],
-    "didYouKnow": "O nome da letra é {{עַיִן}}: olho. E {{עִבְרִית}}, o nome da própria língua que você está aprendendo, começa com ela.",
+    "didYouKnowTitle": "Ayin, a letra que enxerga",
+    "didYouKnow": "O nome da letra Ayin quer dizer \"olho\" em hebraico. Não é coincidência: nas formas mais antigas do alfabeto, a letra era desenhada como um olho, às vezes até com a pupila.\n\nE tem mais: a palavra {{עִבְרִית}} (ivrít), \"hebraico\", começa justamente com o {{ע}}.\n\nNo hebraico de Israel hoje, a maioria das pessoas não pronuncia o {{ע}} como uma consoante separada, mas ele continua na escrita e na história da língua.\n\nDica para memorizar: imagine um olho olhando para você de dentro do {{ע}}. Assim você lembra da forma, do nome e da primeira letra de {{עִבְרִית}}.",
     "brazilianMistake": {
       "wrong": "Confundir {{ע}} com {{א}} na escrita, já que soam igual.",
       "right": "Decorar quais palavras levam {{ע}}. O som não ajuda - só o hábito de ler.",
@@ -3043,7 +3139,8 @@
         "pt": "sombra"
       }
     ],
-    "didYouKnow": "Mais uma forma final. {{אֶרֶץ}}, \"terra, país\", termina com o {{ץ}} final - e aparece na expressão {{אֶרֶץ יִשְׂרָאֵל}}, \"a terra de Israel\".",
+    "didYouKnowTitle": "Tsadi, a letra da justiça",
+    "didYouKnow": "O {{צ}} está ligado a uma das ideias mais importantes da tradição judaica: a justiça. A palavra {{צֶדֶק}} (tsédek) quer dizer \"justiça\", e dela vem {{צַדִיק}} (tsadík), \"pessoa justa\".\n\nNa tradição judaica, um tsadík é alguém que procura agir com honestidade, bondade e responsabilidade.\n\nE o som da letra é TS, como em \"tsunami\".\n\nDica para memorizar: pense no TS de tsadík, a pessoa justa. Assim você liga o som da letra a uma palavra importante da cultura judaica.",
     "brazilianMistake": {
       "wrong": "Desmontar o TS: ler {{צָרִיךְ}} como \"sarích\" ou \"tcharích\".",
       "right": "Colar os dois sons num só golpe: \"tsarích\", como o fim de \"pizza\" transportado para o começo da palavra.",
@@ -3053,20 +3150,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "קונצרט",
-        "pt": "concerto"
+        "he": "צֶלופן",
+        "pt": "celofane",
+        "marca": "צֶ"
       },
       {
-        "he": "מרצדס",
-        "pt": "Mercedes"
+        "he": "מיצוּבישי",
+        "pt": "Mitsubishi",
+        "marca": "צוּ"
       },
       {
-        "he": "אנציקלופדיה",
-        "pt": "enciclopédia"
+        "he": "פניצִילין",
+        "pt": "penicilina",
+        "marca": "צִי"
       },
       {
-        "he": "צונאמי",
-        "pt": "tsunami"
+        "he": "קיבוץ",
+        "pt": "kibutz",
+        "marca": "ץ"
       }
     ],
     "contrastes": {
@@ -3218,7 +3319,8 @@
         "pt": "muito"
       }
     ],
-    "didYouKnow": "{{בֹּקֶר טוֹב}} - \"bom dia\", literalmente \"manhã boa\" - é o cumprimento que você mais vai ouvir em Israel antes do meio-dia. Falta uma letra só, o {{ב}} do módulo seguinte, para você ler a expressão inteira.",
+    "didYouKnowTitle": "Kuf, a letra do bom dia",
+    "didYouKnow": "O {{ק}} aparece numa das expressões mais ouvidas nas manhãs de Israel: {{בֹּקֶר טוֹב}} (bóker tov), \"bom dia\". Palavra por palavra, é \"manhã boa\": {{בֹּקֶר}} (bóker) quer dizer \"manhã\".\n\nO som do {{ק}} é K, como em \"quilo\". Mas há uma surpresa: hoje o hebraico tem duas letras com esse mesmo som, o {{ק}} e o {{כּ}}, o Kaf com o ponto.\n\nNa Antiguidade, as duas soavam diferente: o Kuf era dito mais no fundo da boca, e o Kaf mais à frente.\n\nDica para memorizar: pense no K de bóker. Assim você lembra da letra, do som e de uma expressão que pode usar toda manhã em Israel.",
     "brazilianMistake": {
       "wrong": "Ler {{ק}} como \"qu\" com um U embutido, dizendo \"kuol\" para {{קוֹל}}.",
       "right": "Ler {{ק}} como o C de \"casa\", sem nenhum U: \"kol\".",
@@ -3228,20 +3330,19 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "קפה",
-        "pt": "café"
+        "he": "פיקְניק",
+        "pt": "piquenique",
+        "marca": "קְ"
       },
       {
-        "he": "קקאו",
-        "pt": "cacau"
+        "he": "קִיוסק",
+        "pt": "quiosque",
+        "marca": "קִי"
       },
       {
-        "he": "אקדמיה",
-        "pt": "academia"
-      },
-      {
-        "he": "קוקוס",
-        "pt": "coco"
+        "he": "רקֶטה",
+        "pt": "raquete",
+        "marca": "קֶ"
       }
     ],
     "contrastes": {
@@ -3424,7 +3525,8 @@
         "pt": "manhã"
       }
     ],
-    "didYouKnow": "{{בַּיִת}} quer dizer casa - e é a origem do nome da letra. Você já conhece essa palavra sem saber: ela está em \"Belém\", Beit Léchem, a casa do pão.",
+    "didYouKnowTitle": "Bet, a letra da casa",
+    "didYouKnow": "O nome da letra Bet vem da palavra hebraica {{בַּיִת}} (báyit), que quer dizer \"casa\". A ligação é muito antiga: nas primeiras formas do alfabeto, a letra provavelmente era desenhada como a planta de uma casa.\n\nVocê já conhece uma palavra que guarda essa história: Belém. O nome vem de {{בֵּית לֶחֶם}} (Beit Léchem), que quer dizer \"casa do pão\".\n\nRepare na diferença: {{בַּיִת}} (báyit) vira {{בֵּית}} (beit) quando vem ligada a outra palavra, como em \"casa do pão\".\n\nDica para memorizar: pense no {{בּ}} como uma casinha. Assim você liga de uma vez a letra, o som B e a palavra {{בַּיִת}}.",
     "brazilianMistake": {
       "wrong": "Ignorar o ponto e ler todo {{ב}} do mesmo jeito, como se fosse sempre B.",
       "right": "Olhar o ponto antes de ler: com ponto dentro é B, \"ába\", \"báyit\", \"bóker\". Sem ponto é o outro som, o da próxima lição.",
@@ -3434,20 +3536,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "בלון",
-        "pt": "balão"
+        "he": "אמבּוּלנס",
+        "pt": "ambulância",
+        "marca": "בּוּ"
       },
       {
-        "he": "ברוקולי",
-        "pt": "brócolis"
+        "he": "תל אבִיב",
+        "pt": "Tel Aviv",
+        "marca": "בִי"
       },
       {
-        "he": "סמבה",
-        "pt": "samba"
+        "he": "נובֶלה",
+        "pt": "novela",
+        "marca": "בֶ"
       },
       {
-        "he": "אלבום",
-        "pt": "álbum"
+        "he": "סומבְּררו",
+        "pt": "sombrero",
+        "marca": "בְּ"
       }
     ],
     "contrastes": {
@@ -3644,12 +3750,24 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "כולסטרול",
-        "pt": "colesterol"
+        "he": "ארכִיטקט",
+        "pt": "arquiteto",
+        "marca": "כִי"
       },
       {
-        "he": "כרום",
-        "pt": "cromo"
+        "he": "מכָני",
+        "pt": "mecânico",
+        "marca": "כָ"
+      },
+      {
+        "he": "מיטוכוֹנדריה",
+        "pt": "mitocôndria",
+        "marca": "כוֹ"
+      },
+      {
+        "he": "סוכָּר",
+        "pt": "açúcar",
+        "marca": "כָּ"
       }
     ],
     "contrastes": {
@@ -3858,20 +3976,29 @@
     "biblicalWord": null,
     "bridgeWords": [
       {
-        "he": "פסטיבל",
-        "pt": "festival"
+        "he": "סופֶּרמרקט",
+        "pt": "supermercado",
+        "marca": "פֶּ"
       },
       {
-        "he": "פרלמנט",
-        "pt": "parlamento"
+        "he": "היפּוֹפוטם",
+        "pt": "hipopótamo",
+        "marca": "פּוֹ"
       },
       {
-        "he": "פינגווין",
-        "pt": "pinguim"
+        "he": "אפְריקה",
+        "pt": "África",
+        "marca": "פְ"
       },
       {
-        "he": "פירמידה",
-        "pt": "pirâmide"
+        "he": "דולפִין",
+        "pt": "golfinho",
+        "marca": "פִי"
+      },
+      {
+        "he": "טלגרף",
+        "pt": "telégrafo",
+        "marca": "ף"
       }
     ],
     "contrastes": {

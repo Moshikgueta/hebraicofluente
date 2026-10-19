@@ -35,9 +35,9 @@ describe('P0-2 · a fixação cobra a variante', () => {
     expect(sem).toEqual([]);
   });
 
-  it('e a fixação continua com dez itens', () => {
+  it('e a fixação continua com vinte itens', () => {
     for (const L of comDuas) {
-      expect(buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-0` })).toHaveLength(10);
+      expect(buildMiniTest(L, historyOf(L.order), { seed: `mini-${L.id}-0` })).toHaveLength(20);
     }
   });
 });

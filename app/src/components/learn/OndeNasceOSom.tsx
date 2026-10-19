@@ -132,7 +132,7 @@ export function OndeNasceOSom({ articulacao, letra }: {
 
       <figcaption className="grid gap-2">
         <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted m-0">
-          De onde sai o som
+          De onde sai o som?
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body m-0"><Prose text={comoPt} /></p>
         <p className="font-ui text-[13px] m-0 flex flex-wrap gap-2">
