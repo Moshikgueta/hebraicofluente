@@ -1906,12 +1906,12 @@
         {
           "glifo": "ר",
           "nomePt": "Resh",
-          "gravacao": "compare-resh-sound"
+          "som": "רַ"
         },
         {
           "glifo": "ח",
           "nomePt": "Chet",
-          "gravacao": "compare-het-sound",
+          "som": "חַ",
           "previaPt": "Prévia: você aprende esta letra no próximo módulo."
         }
       ]

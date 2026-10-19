@@ -4,7 +4,7 @@
    HF_CHROMIUM=/caminho/do/chromium node comparar.mjs (de dentro de app/). */
 
 import { createServer } from 'node:http';
-import { readFileSync, existsSync, readdirSync, writeSync } from 'node:fs';
+import { readFileSync, existsSync, writeSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const log = s => writeSync(1, s + '\n');
@@ -13,21 +13,13 @@ const T = {
   '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.json': 'application/json',
   '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.mp3': 'audio/mpeg'
 };
-const prof = JSON.parse(readFileSync('content/professor.json', 'utf8')).gravacoes;
-const IDS = [prof['compare-resh-sound'].audioId, prof['compare-het-sound'].audioId];
-/* Um mp3 qualquer da build faz as vezes das gravações que ainda não existem. */
-const amostra = readdirSync('public/audio').find(f => f.endsWith('.mp3'));
-let comGravacoes = false;
+/* As gravações são as sílabas de estúdio da própria lição (public/audio). */
 
 const srv = createServer((q, r) => {
   const c = decodeURIComponent(q.url.split('?')[0]);
   if (c === '/api/audio/manifest') {
     r.writeHead(200, { 'Content-Type': 'application/json' });
-    return r.end(JSON.stringify({ clips: comGravacoes ? Object.fromEntries(IDS.map(i => [i, [1, null, null]])) : {} }));
-  }
-  if (comGravacoes && IDS.some(i => c === `/audio/${i}.mp3`)) {
-    r.writeHead(200, { 'Content-Type': 'audio/mpeg' });
-    return r.end(readFileSync(`public/audio/${amostra}`));
+    return r.end(JSON.stringify({ clips: {} }));
   }
   for (const f of [`out${c}`, `out${c}/index.html`, `out${c}.html`, 'out/404.html']) {
     if (!existsSync(f) || f.endsWith('/')) continue;
@@ -87,24 +79,8 @@ async function abrir(largura) {
   return { ctx, p, erros, quadro };
 }
 
-log('\n── sem as gravações ─────────────────────────────────');
-{
-  comGravacoes = false;
-  const t = await abrir(1280);
-  confere(await t.quadro.count() === 1, 'o quadro aparece na lição do ר', 'sem o quadro');
-  const s = (await t.quadro.innerText()).replace(/\s+/g, ' ');
-  confere(s.includes('Ouça a diferença') && s.includes('Resh') && s.includes('Chet'), 'título e as duas letras', `texto: ${s.slice(0, 160)}`);
-  confere((s.match(/Gravação em preparação\./g) || []).length === 2, 'cada cartão diz, discreto, que a gravação está em preparação', 'sem o aviso discreto');
-  confere(await t.quadro.locator('button').count() === 0, 'nenhum botão que não toca', 'há botão sem gravação');
-  confere(!s.includes('identificar o som'), 'sem gravações, sem exercício', 'o exercício aparece sem gravação');
-  confere(s.includes('Prévia'), 'o ח aparece como prévia', 'sem a nota de prévia');
-  confere(!t.erros.length, 'sem erro de página', `erros: ${t.erros.slice(0, 2)}`);
-  await t.ctx.close();
-}
-
 log('\n── com as gravações ─────────────────────────────────');
 {
-  comGravacoes = true;
   const t = await abrir(1280);
   const ouvir = t.quadro.getByRole('button', { name: /Ouvir o som de/ });
   confere(await ouvir.count() === 2, 'dois botões de ouvir', `botões: ${await ouvir.count()}`);
@@ -140,5 +116,5 @@ log('\n── com as gravações ───────────────�
 }
 
 await b.close(); srv.close();
-log(falhas ? `\n${falhas} problema(s).` : '\no quadro ר ou ח funciona sem e com as gravações, no computador e no celular.');
+log(falhas ? `\n${falhas} problema(s).` : '\no quadro ר ou ח toca as gravações da lição e o exercício funciona, no computador e no celular.');
 process.exit(falhas ? 1 : 0);

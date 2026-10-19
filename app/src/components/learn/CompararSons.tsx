@@ -3,9 +3,9 @@
 /* Ouça a diferença: duas letras de som parecido, lado a lado (19/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Pedido do dono do curso, primeiro para o ר e o ח: para o ouvido
- * brasileiro os dois soam quase iguais. Cada cartão toca a gravação do
- * PROFESSOR daquela letra (data/gravacoes-professor.json, gravada pelo
- * painel /admin/gravar). Nunca voz sintética no lugar dela.
+ * brasileiro os dois soam quase iguais. Cada cartão toca a sílaba com A
+ * da letra (`som` em letters.json), gravada em estúdio por um falante
+ * nativo: a mesma gravação da lição. Nunca voz sintética no lugar dela.
  *
  * Sem gravação, o cartão diz isso numa linha discreta e não mostra botão
  * que não toca. O exercício "você consegue identificar o som?" só aparece
@@ -22,7 +22,6 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { clipeDoPainel, urlDoClipe } from '@/lib/audio-registro';
-import { gravacaoDoProfessor } from '@/lib/gravacoes-professor';
 import type { Letter } from '@/lib/content';
 
 type Comparacao = NonNullable<Letter['compararSons']>;
@@ -80,11 +79,7 @@ function useTocador() {
 export function CompararSons({ comparacao }: { comparacao: Comparacao }) {
   useRegistroDeAudio();
   const { atual, falhou, tocar, alternar } = useTocador();
-  const itens = comparacao.itens.map(it => {
-    const g = gravacaoDoProfessor(it.gravacao);
-    const audioId = g && hasAudio(g.audioId) ? g.audioId : null;
-    return { ...it, audioId };
-  });
+  const itens = comparacao.itens.map(it => ({ ...it, audioId: hasAudio(it.audioId) ? it.audioId : null }));
   const todas = itens.every(it => it.audioId);
 
   return (
