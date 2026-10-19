@@ -156,7 +156,8 @@ export function WordReveal({ word, mark }: { word: Word; mark?: string | null })
 
   return (
     <Card className="p-5 flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-4 min-h-[64px]">
+      {/* O hebraico à direita, o botão à esquerda (pedido do dono, 19/10/2026). */}
+      <div className="flex flex-row-reverse items-center justify-between gap-4 min-h-[64px]">
         <He size="xl" mark={mark ?? null}>{word.he}</He>
         <AudioButton audioId={word.audioId} label="Ouvir" size="sm" />
       </div>
@@ -204,11 +205,13 @@ export function BridgeWords({ letter }: { letter: Letter }) {
       <ul className="mt-4 grid gap-2">
         {letter.bridgeWords.map(b => (
           <li key={b.he}
-              className="flex items-center justify-between gap-4 rounded-[var(--r-md)]
+              /* O hebraico à direita e o português à esquerda (pedido do dono,
+                 19/10/2026): cada língua do lado em que ela começa a ser lida. */
+              className="flex flex-row-reverse items-center justify-between gap-4 rounded-[var(--r-md)]
                          bg-surface px-4 py-3 border border-[color:var(--line-soft)]">
             <He size="word" mark={b.marca ?? letter.letter}>{b.he}</He>
             <span className="flex items-center gap-3">
-              <span className="font-ui text-[14px] text-ink-muted text-right">{b.pt}</span>
+              <span className="font-ui text-[14px] text-ink-muted text-left">{b.pt}</span>
               {/* A pronúncia hebraica, quando gravada: sem gravação, nada. */}
               <AudioButton audioId={b.audioId} size="sm" label="" ariaLabel={`Ouvir ${b.pt} em hebraico`} />
             </span>
