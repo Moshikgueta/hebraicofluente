@@ -680,6 +680,17 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
           ))}
         </Card>
       )}
+      {letter.wordsToRecognize.length > 0 && letter.maisCuriosidades.map(c => (
+        <Card key={c.tituloPt} tone="wash" className="p-6 grid gap-2">
+          <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
+          <p className="font-ui text-[17px] font-semibold text-ink">{c.tituloPt}</p>
+          {c.textoPt.split(/\n\n+/).map((par, i) => (
+            <p key={i} className="text-[15.5px] leading-relaxed text-ink-body">
+              <Prose text={par} />
+            </p>
+          ))}
+        </Card>
+      ))}
 
       {/* Only the scenes this letter unlocks, and only ones the learner can
           decode - a sign you cannot read is not a reward. Most letters have

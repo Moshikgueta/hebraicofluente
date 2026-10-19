@@ -212,6 +212,7 @@ function main() {
       ensino: L.ensino,
       didYouKnow: L.didYouKnow,
       didYouKnowTitle: L.didYouKnowTitle ?? null,
+      maisCuriosidades: L.maisCuriosidades ?? [],
       brazilianMistake: L.brazilianMistake,
       confusableWith: (L.confusableWith || []).map(NFC),
       /* O traço visual que separa esta letra de uma parecida, por glifo.
