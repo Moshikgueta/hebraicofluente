@@ -184,6 +184,8 @@ export type Letter = {
   /** A camada pedagógica: o que a letra FAZ, e a checagem. Ver `Ensino`. */
   ensino: Ensino;
   didYouKnow: string;
+  /** Um título próprio para a curiosidade, quando a letra tem um (19/10/2026). */
+  didYouKnowTitle: string | null;
   brazilianMistake: { wrong: string; right: string; why: string };
   confusableWith: string[];
   /** O traço visual que separa esta letra de uma parecida, por glifo do outro.

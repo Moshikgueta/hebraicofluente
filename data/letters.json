@@ -290,7 +290,8 @@
         "pt": "mãe (registro formal, em compostos)"
       }
     ],
-    "didYouKnow": "Mem é a letra da água. O nome da letra vem de uma antiga palavra semítica para \"água\", aparentada com {{מַיִם}} (máyim). O desenho original provavelmente representava água, com um formato que lembrava ondas. Sempre que encontrar {{מ}}, pense em água corrente: ajuda a fixar a letra e a palavra ao mesmo tempo.",
+    "didYouKnowTitle": "Mem, a letra da água",
+    "didYouKnow": "O nome Mem vem de uma palavra semítica muito antiga que queria dizer \"água\". Ela é da mesma família de {{מַיִם}} (máyim), a palavra que ainda hoje quer dizer \"água\" em hebraico.\n\nNas primeiras formas do alfabeto, a letra provavelmente era desenhada como uma linha de ondas.\n\nDica para memorizar: sempre que encontrar o {{מ}}, pense em água em movimento. Assim você liga de uma vez a letra, o som M e a palavra {{מַיִם}}.",
     "brazilianMistake": {
       "wrong": "Ler {{אֵם}} como o \"em\" do português, com a vogal anasalada e o M sumindo.",
       "right": "Ler {{אֵם}} com a vogal oral, como o E de \"mesa\", e fechar os lábios de verdade no M do fim.",
