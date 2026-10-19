@@ -306,14 +306,21 @@ describe('a sessão', () => {
   });
 
   it('o nome antigo vale até LEGADO_ATE, e /api/me o troca pelo novo', async () => {
-    const env = envSite();
-    const { cookie } = await comConta(env);
-    const antigo = cookie.replace(/^__Host-hf_session=/, 'hf_session=');
-    const r = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: antigo } }), env });
-    expect(r.status).toBe(200);
-    const sets = r.headers.getSetCookie();
-    expect(sets.some((c: string) => c.startsWith('__Host-hf_session=') && !c.includes('Max-Age=0'))).toBe(true);
-    expect(sets.some((c: string) => c.startsWith('hf_session=;') && c.includes('Max-Age=0'))).toBe(true);
+    /* O relógio fica ANTES do prazo: sem isto, o teste passou a falhar
+       sozinho em 15/10/2026 e travaria toda publicação. */
+    vi.useFakeTimers({ now: LEGADO_ATE - 86_400_000, toFake: ['Date'] });
+    try {
+      const env = envSite();
+      const { cookie } = await comConta(env);
+      const antigo = cookie.replace(/^__Host-hf_session=/, 'hf_session=');
+      const r = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: antigo } }), env });
+      expect(r.status).toBe(200);
+      const sets = r.headers.getSetCookie();
+      expect(sets.some((c: string) => c.startsWith('__Host-hf_session=') && !c.includes('Max-Age=0'))).toBe(true);
+      expect(sets.some((c: string) => c.startsWith('hf_session=;') && c.includes('Max-Age=0'))).toBe(true);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('depois de LEGADO_ATE, o nome antigo não abre nada', async () => {
