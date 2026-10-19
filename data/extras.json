@@ -212,6 +212,7 @@
         },
         "regraPt": "Ponto no alto à direita, {{שׁ}}: SH. Ponto no alto à esquerda, {{שׂ}}: S. Aqui não é a posição na palavra que decide, como no daguesh: é só o lado do ponto. E num texto sem nikud não há ponto nenhum, e é a palavra conhecida que diz qual é.",
         "irmaoPt": "O Sin soa exatamente como o {{ס}}, o Sámech, que você vai conhecer no módulo 4. Duas letras, um som só: quem decide qual se escreve é a palavra.",
+        "curiosidade": {"tituloPt": "Shin e Sin, duas letras em uma", "textoPt": "Em hebraico, um pontinho pode mudar todo o som de uma letra. A letra {{ש}} tem duas pronúncias: {{שׁ}}, o Shin, com o ponto à direita, soa CH, como em \"chá\"; {{שׂ}}, o Sin, com o ponto à esquerda, soa S, como em \"sapo\".\n\nE o mais curioso: sem os sinais de pronúncia, as duas se escrevem exatamente igual, {{ש}}.\n\nDica para memorizar: o ponto muda de lado e o som muda junto. Ponto à esquerda, S de Sin."},
         "erro": {
           "wrong": "Ler toda {{ש}} como SH, sem olhar o lado do ponto: {{יִשְׂרָאֵל}} vira \"Yishraél\".",
           "right": "Olhar o ponto antes de dizer: à esquerda é S. \"Yisraél\", \"Sará\", \"smol\".",

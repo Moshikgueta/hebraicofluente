@@ -30,7 +30,7 @@ import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
 import { CompararPronuncia } from '@/components/learn/CompararPronuncia';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
-import { BrazilianTip, Prose, WordReveal } from '@/components/learn/Blocks';
+import { BrazilianTip, Prose, TituloComSelo, WordReveal } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { useProgress } from '@/lib/state/store';
 import { LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
@@ -247,6 +247,16 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       </Card>
 
       <BrazilianTip mistake={S.erro} />
+
+      {S.curiosidade && (
+        <Card tone="wash" className="p-6 grid gap-2">
+          <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
+          <p className="font-ui text-[17px] font-semibold text-ink">{S.curiosidade.tituloPt}</p>
+          {S.curiosidade.textoPt.split(/\n\n+/).map((par, i) => (
+            <p key={i} className="text-[15.5px] leading-relaxed text-ink-body"><Prose text={par} /></p>
+          ))}
+        </Card>
+      )}
 
       {S.silabas.length > 0 && (
         <Card className="p-6 grid gap-4">
