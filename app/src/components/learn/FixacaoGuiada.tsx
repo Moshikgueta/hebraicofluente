@@ -189,14 +189,17 @@ function Observar({ alvo }: { alvo: AlvoFixacao }) {
   const formas: { rotulo: string; glifo: string; cursiva: boolean }[] = [
     { rotulo: 'impressa', glifo: alvo.glifo, cursiva: false },
     ...(alvo.cursiva ? [{ rotulo: 'cursiva (à mão)', glifo: alvo.glifo, cursiva: true }] : []),
-    ...(alvo.final ? [{ rotulo: 'no fim da palavra', glifo: alvo.final, cursiva: false }] : [])
+    ...(alvo.final ? [{ rotulo: 'no fim da palavra', glifo: alvo.final, cursiva: false }] : []),
+    /* A final também à mão (pedido do dono, 19/10/2026): quem escreve um
+       bilhete escreve o ם cursivo, e ele não se parece com o impresso. */
+    ...(alvo.final && alvo.cursiva ? [{ rotulo: 'no fim, cursiva (à mão)', glifo: alvo.final, cursiva: true }] : [])
   ];
   return (
     <div className="grid gap-4">
       <p className="text-[15.5px] leading-relaxed text-ink-body">
         A mesma letra, nas formas em que você vai encontrá-la. Olhe com calma.
       </p>
-      <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 list-none p-0 m-0">
+      <ul className={`grid grid-cols-2 ${formas.length === 4 ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-3 list-none p-0 m-0`}>
         {formas.map(f => (
           <li key={f.rotulo} className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-2 justify-items-center">
             <He size="xl" cursive={f.cursiva}>{f.glifo}</He>

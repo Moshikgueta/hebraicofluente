@@ -304,7 +304,7 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
       </div>
 
       {comAudio.length > 1 && (
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Item para comparar">
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Item para comparar" dir="rtl">
           {comAudio.map((it, k) => (
             <button key={it.he} type="button" aria-pressed={k === qual} disabled={estado === 'gravando'}
                     onClick={() => { setQual(k); setEstado('parado'); }}

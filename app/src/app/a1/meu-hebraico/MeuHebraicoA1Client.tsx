@@ -113,7 +113,7 @@ export function MeuHebraicoA1Client() {
         ) : (
           <ul className="grid gap-1.5 m-0 p-0 list-none">
             {favoritas.map(w => (
-              <li key={w!.chave} className="flex flex-wrap items-baseline justify-between gap-x-4 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
+              <li key={w!.chave} className="flex flex-wrap flex-row-reverse items-baseline justify-between gap-x-4 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
                 <He size="word">{w!.he}</He>
                 <span className="font-ui text-[13.5px] text-ink-body">{w!.pt} · Unidade {w!.n}</span>
               </li>
@@ -196,7 +196,7 @@ function Aprendidas({ lista }: { lista: { chave: string; he: string; pt: string;
           </label>
           <ul className="grid gap-1.5 m-0 p-0 list-none max-h-[60vh] overflow-y-auto">
             {filtradas.map(w => (
-              <li key={w.chave} className="flex flex-wrap items-baseline justify-between gap-x-4 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
+              <li key={w.chave} className="flex flex-wrap flex-row-reverse items-baseline justify-between gap-x-4 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
                 <He size="word">{w.he}</He>
                 <span className="font-ui text-[13.5px] text-ink-body">{w.pt}</span>
               </li>
