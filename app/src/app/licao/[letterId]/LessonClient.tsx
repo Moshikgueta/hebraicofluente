@@ -37,6 +37,7 @@ import {
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
+import { CompararSons } from '@/components/learn/CompararSons';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
 import { alvoDaLetra } from '@/lib/fixacao';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
@@ -680,6 +681,10 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
           ))}
         </Card>
       )}
+
+      {/* Ouça a diferença (19/10/2026): só nas letras que trazem a
+          comparação em letters.json - hoje, o ר com o ח. */}
+      {letter.compararSons && <CompararSons comparacao={letter.compararSons} />}
 
       {/* Only the scenes this letter unlocks, and only ones the learner can
           decode - a sign you cannot read is not a reward. Most letters have

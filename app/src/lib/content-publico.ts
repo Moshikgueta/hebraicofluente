@@ -184,6 +184,12 @@ export type Letter = {
   /** A camada pedagógica: o que a letra FAZ, e a checagem. Ver `Ensino`. */
   ensino: Ensino;
   didYouKnow: string;
+  /** Duas (ou mais) letras de som parecido, para ouvir lado a lado na
+   *  gravação do professor (19/10/2026). Ver components/learn/CompararSons. */
+  compararSons: {
+    textoPt: string;
+    itens: { glifo: string; nomePt: string; gravacao: string; previaPt?: string }[];
+  } | null;
   /** Um título próprio para a curiosidade, quando a letra tem um (19/10/2026). */
   didYouKnowTitle: string | null;
   brazilianMistake: { wrong: string; right: string; why: string };
