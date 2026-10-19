@@ -169,7 +169,7 @@ function ErrosFrequentes() {
   if (!lista.length) return null;
   return (
     <section className="grid gap-2" aria-labelledby="t-erros">
-      <h2 id="t-erros" className="font-display text-[19px] font-semibold m-0">O que mais dá trabalho</h2>
+      <h2 id="t-erros" className="font-display text-[19px] font-semibold m-0">O que mais dá trabalho?</h2>
       <ul className="grid gap-2 m-0 p-0 list-none">
         {lista.map(([k, r]) => {
           const x = indice.get(k)!;

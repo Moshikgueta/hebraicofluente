@@ -340,7 +340,7 @@ export function FinalChallengeClient() {
 
       <Card className="overflow-hidden">
         <div className="px-5 py-3 border-b border-[color:var(--line-soft)]">
-          <h2 className="font-display text-[16px] font-bold text-ink">O que cai</h2>
+          <h2 className="font-display text-[16px] font-bold text-ink">O que cai?</h2>
         </div>
         <ol className="divide-y divide-[color:var(--line-soft)]">
           {parts.map((part, i) => (

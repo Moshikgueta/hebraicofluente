@@ -185,7 +185,7 @@ function OsPares({ sons, dagesh, onDone }: {
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-3">
-        <h2 className="text-[18px] font-semibold">Quando vem o ponto</h2>
+        <h2 className="text-[18px] font-semibold">Quando vem o ponto?</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body"><Prose text={dagesh.rulePt} /></p>
         {sons.map(S => {
           const D = dagesh.letters.find(d => d.id === S.parId);

@@ -184,6 +184,16 @@ export type Letter = {
   /** A camada pedagógica: o que a letra FAZ, e a checagem. Ver `Ensino`. */
   ensino: Ensino;
   didYouKnow: string;
+  /** Duas (ou mais) letras de som parecido, para ouvir lado a lado na
+   *  gravação do professor (19/10/2026). Ver components/learn/CompararSons. */
+  compararSons: {
+    textoPt: string;
+    itens: { glifo: string; nomePt: string; som: string; audioId: string; previaPt?: string }[];
+  } | null;
+  /** Um título próprio para a curiosidade, quando a letra tem um (19/10/2026). */
+  didYouKnowTitle: string | null;
+  /** Outras curiosidades da mesma letra, cada uma no seu quadro (19/10/2026). */
+  maisCuriosidades: { tituloPt: string; textoPt: string }[];
   brazilianMistake: { wrong: string; right: string; why: string };
   confusableWith: string[];
   /** O traço visual que separa esta letra de uma parecida, por glifo do outro.
@@ -192,7 +202,7 @@ export type Letter = {
   syllables: Syllable[];
   wordsToRead: Word[];
   wordsToRecognize: Word[];
-  bridgeWords: { he: string; pt: string; audioId: string }[];
+  bridgeWords: { he: string; pt: string; marca: string | null; audioId: string }[];
   /** Every glyph the learner may legally be shown at this point. */
   alphabetSoFar: string[];
   strokeOrder: { base: string | null; final: string | null };

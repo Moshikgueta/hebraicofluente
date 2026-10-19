@@ -76,6 +76,8 @@ export type SomLicao = {
   articulacao: import('@/lib/content-publico').Articulacao;
   regraPt: string;
   irmaoPt: string;
+  /** A curiosidade da lição, quando ela tem uma (19/10/2026). */
+  curiosidade?: { tituloPt: string; textoPt: string };
   erro: { wrong: string; right: string; why: string };
   audioId: string;
   silabas: { he: string; translit: string; audioId: string }[];

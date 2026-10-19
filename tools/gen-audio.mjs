@@ -142,7 +142,7 @@ function main() {
      nikud, como aparecem na rua, e agora com a pronúncia hebraica gravada. */
   for (const L of letters) {
     for (const b of L.bridgeWords || []) {
-      add({ he: b.he, translit: null, gloss: b.pt,
+      add({ he: String(b.he).normalize('NFC').replace(/[\u0591-\u05C7]/g, ''), translit: null, gloss: b.pt,
             kind: 'palavra', wave: 3, where: `letra ${L.order}, palavras internacionais` });
     }
   }

@@ -196,7 +196,7 @@ function ConteudoDaEtapa({ e, u, n, modo }: { e: EtapaA1; u: UnidadeA1; n: numbe
           {g.exemplos && g.exemplos.length > 0 && (
             <ul className="grid gap-1.5 m-0 p-0 list-none">
               {g.exemplos.map(x => (
-                <li key={x.he} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
+                <li key={x.he} className="flex flex-wrap flex-row-reverse items-baseline justify-between gap-x-4 gap-y-0.5 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
                   <He size="word">{x.he}</He>
                   <span className="font-ui text-[14px] text-ink-body">{x.pt}</span>
                 </li>

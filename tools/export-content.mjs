@@ -211,6 +211,13 @@ function main() {
          exportador que conserta dado ruim esconde dado ruim. */
       ensino: L.ensino,
       didYouKnow: L.didYouKnow,
+      /* O som de cada letra é a sílaba gravada em estúdio por um falante
+         nativo (19/10/2026): o id sai do texto, como em todo o curso. */
+      compararSons: L.compararSons
+        ? { ...L.compararSons, itens: L.compararSons.itens.map(it => ({ ...it, som: NFC(it.som), audioId: audioIdFor(it.som) })) }
+        : null,
+      didYouKnowTitle: L.didYouKnowTitle ?? null,
+      maisCuriosidades: L.maisCuriosidades ?? [],
       brazilianMistake: L.brazilianMistake,
       confusableWith: (L.confusableWith || []).map(NFC),
       /* O traço visual que separa esta letra de uma parecida, por glifo.
@@ -226,7 +233,12 @@ function main() {
       })),
       wordsToRead: (L.wordsToRead || []).map(word),
       wordsToRecognize: (L.wordsToRecognize || []).map(word),
-      bridgeWords: (L.bridgeWords || []).map(b => ({ he: NFC(b.he), pt: b.pt, audioId: audioIdFor(b.he) })),
+      /* A sílaba da letra vem com nikud, o resto da palavra sem (19/10/2026):
+         `marca` é o trecho destacado. O áudio é o da palavra sem pontos - a
+         marcação é só de tela, e trocar a sílaba não pode trocar a gravação. */
+      bridgeWords: (L.bridgeWords || []).map(b => ({
+        he: NFC(b.he), pt: b.pt, marca: b.marca ? NFC(b.marca) : null, audioId: audioIdFor(semPontos(b.he))
+      })),
       alphabetSoFar: alphabetUpTo(L.order),
       strokeOrder: { base: strokeSvg(L.id), final: L.finalForm ? strokeSvg(`${L.id}-final`) : null },
       audioId: audioIdFor(L.nameHe)
