@@ -669,9 +669,15 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
       {letter.wordsToRecognize.length > 0 && (
         <Card tone="wash" className="p-6 grid gap-2">
           <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
-          <p className="text-[15.5px] leading-relaxed text-ink-body">
-            <Prose text={letter.didYouKnow} />
-          </p>
+          {letter.didYouKnowTitle && (
+            <p className="font-ui text-[17px] font-semibold text-ink">{letter.didYouKnowTitle}</p>
+          )}
+          {/* Um parágrafo por linha em branco no texto (19/10/2026). */}
+          {letter.didYouKnow.split(/\n\n+/).map((par, i) => (
+            <p key={i} className="text-[15.5px] leading-relaxed text-ink-body">
+              <Prose text={par} />
+            </p>
+          ))}
         </Card>
       )}
 

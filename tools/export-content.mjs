@@ -211,6 +211,7 @@ function main() {
          exportador que conserta dado ruim esconde dado ruim. */
       ensino: L.ensino,
       didYouKnow: L.didYouKnow,
+      didYouKnowTitle: L.didYouKnowTitle ?? null,
       brazilianMistake: L.brazilianMistake,
       confusableWith: (L.confusableWith || []).map(NFC),
       /* O traço visual que separa esta letra de uma parecida, por glifo.

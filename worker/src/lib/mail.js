@@ -250,7 +250,7 @@ export const SEGUNDA_LETRA = {
   palavras: [['מַיִם', 'máyim', 'água'], ['אִמָא', 'íma', 'mãe']],
   cuidado: 'Em português o M no fim da sílaba nasaliza a vogal antes dele - "mim", "bom", "sim". Em hebraico isso não acontece: o M é sempre pronunciado como consoante inteira, e a vogal continua oral.',
   fim: 'faz /m/ e vira ם quando termina a palavra. Mesma letra, mesmo som, outro desenho.',
-  sabia: 'Mem é a letra da água. O nome da letra vem de uma antiga palavra semítica para "água", aparentada com מַיִם (máyim). O desenho original provavelmente representava água, com um formato que lembrava ondas.'
+  sabia: 'O nome Mem vem de uma palavra semítica muito antiga que queria dizer "água". Ela é da mesma família de מַיִם (máyim), a palavra que ainda hoje quer dizer "água" em hebraico.'
 };
 
 export function mensagemDaSegundaLetra({ site, suporte, marca }) {
