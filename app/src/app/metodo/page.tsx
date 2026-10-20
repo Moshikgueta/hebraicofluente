@@ -9,7 +9,7 @@ import { ETAPAS_DA_LICAO, quantasEtapasPt } from '@/lib/etapas-da-licao';
 
 export const metadata: Metadata = meta({
   rota: '/metodo',
-  title: 'O método - Hebraico Fluente',
+  title: 'Como aprender a ler hebraico: o método - Hebraico Fluente',
   description:
     'Uma letra por vez, na ordem que rende mais; nada de palavra com letra que você ' +
     'ainda não viu; revisão no dia certo; e a transliteração sai de propósito.'

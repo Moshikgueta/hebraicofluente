@@ -1143,3 +1143,16 @@ decidiu manter Álef primeiro: com Mem e Tav sozinhas não há palavra útil
 (אִמָּא e אֵם precisam do Álef), e a ordem atual dá a primeira palavra real já
 na lição 2. Rever só se alunos reais disserem que a lição do Álef (letra
 muda) confunde.
+
+## Busca: llms.txt, palavras-chave e Search Console (20/10/2026, pedido do dono)
+- `app/seo.mjs` gera, na publicação, `robots.txt`, `sitemap.xml` e agora `llms.txt` (formato
+  llmstxt.org): o nome, a description da capa e as páginas ANUNCIÁVEIS com o título e a
+  description que cada uma publica. Nada escrito à mão; página paga fica fora, como no sitemap.
+- `PALAVRAS_CHAVE` em `app/src/lib/seo.ts` é a lista do que as páginas públicas perseguem. O que
+  conta no Google é o título e a description (a meta `keywords` ele ignora): palavra nova na lista
+  só se uma página pública responder a ela.
+- Description de curso sai de `resumo()` (frases inteiras até 155), não de um corte por tamanho.
+- Search Console: o caminho é a propriedade de DOMÍNIO, confirmada pelo TXT no DNS da Cloudflare
+  (o próprio Search Console oferece fazer isso pela conta da Cloudflare). A meta tag
+  (`VERIFICACAO` em seo.ts, só o código) é a alternativa. Depois, enviar
+  `https://hebraicofluente.com.br/sitemap.xml` em Sitemaps.

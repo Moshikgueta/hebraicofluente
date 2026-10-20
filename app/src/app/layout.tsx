@@ -78,7 +78,7 @@ import { BotaoAcessibilidade } from '@/components/shell/BotaoAcessibilidade';
 import { EnvioDeEstatisticas } from '@/components/shell/EnvioDeEstatisticas';
 import { SCRIPT_DE_ARRANQUE } from '@/lib/acessibilidade';
 import { course } from '@/lib/content-publico';
-import { ORIGEM } from '@/lib/seo';
+import { ORIGEM, PALAVRAS_CHAVE, VERIFICACAO } from '@/lib/seo';
 
 export const metadata: Metadata = {
   /* `metadataBase` é o que transforma "/media/og.jpg" em uma URL absoluta.
@@ -87,13 +87,22 @@ export const metadata: Metadata = {
      chegando sem imagem no WhatsApp, que é o problema que esta camada existe
      para resolver. Ver lib/seo.ts. */
   metadataBase: new URL(ORIGEM),
-  title: 'Hebraico Fluente - a plataforma de hebraico para brasileiros',
+  title: 'Hebraico Fluente - curso de hebraico online para brasileiros',
   /* Sem "do alfabeto à conversa" nem a lista A1/A2/B1: o que se vende hoje é a
      alfabetização, e os outros são cursos à parte, ainda em produção
      (auditoria de 01/10, CONV-011). */
   description:
-    'Hebraico para brasileiros, começando pelo alfabeto: aulas interativas, correção na ' +
-    'hora e progresso que continua de onde você parou.',
+    'Curso de hebraico online para brasileiros, começando pelo alfabeto hebraico: aulas ' +
+    'interativas, correção na hora e progresso que continua de onde você parou.',
+  keywords: [...PALAVRAS_CHAVE],
+  /* A meta de verificação do Search Console, só quando houver código. Ver
+     VERIFICACAO em lib/seo.ts: o caminho preferido é o TXT no DNS. */
+  ...(VERIFICACAO.google || VERIFICACAO.bing ? {
+    verification: {
+      ...(VERIFICACAO.google ? { google: VERIFICACAO.google } : {}),
+      ...(VERIFICACAO.bing ? { other: { 'msvalidate.01': VERIFICACAO.bing } } : {})
+    }
+  } : {}),
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
   applicationName: 'Hebraico Fluente'

@@ -8,7 +8,7 @@ import { bibleVerses, course, licaoDaLetra, totalLicoes } from '@/lib/content-pu
 
 export const metadata: Metadata = meta({
   rota: '/biblia',
-  title: 'Vou conseguir ler a Bíblia em hebraico? - Hebraico Fluente',
+  title: 'Hebraico bíblico: vou conseguir ler a Bíblia? - Hebraico Fluente',
   description:
     'Sim, você vai ler o texto em voz alta; não, não vai entender sem vocabulário e gramática. ' +
     'Gênesis 1:1, palavra por palavra, para você julgar.'

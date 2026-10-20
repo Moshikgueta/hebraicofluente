@@ -9,12 +9,12 @@ import { grafoDaCapa, jsonLdTexto } from '@/lib/jsonld';
    hebraico" -, e não pelo nome da marca, que ninguém procura ainda. */
 export const metadata: Metadata = meta({
   rota: '/',
-  title: 'Aprenda a ler hebraico do zero - Hebraico Fluente',
+  title: 'Aprenda a ler hebraico do zero: curso online - Hebraico Fluente',
   /* Até 155 caracteres: o resultado da busca corta o resto (auditoria de
      01/10, SEO-003; tinha 208). `checa-seo.mjs` confere o limite. */
   description:
-    'Curso interativo para brasileiros aprenderem a ler hebraico do zero: as 22 letras, os ' +
-    'sinais de vogal e palavras reais, com correção na hora.'
+    'Curso de hebraico online para brasileiros: aprenda a ler do zero, com o alfabeto ' +
+    'hebraico, os sinais de vogal e palavras reais, e correção na hora.'
 });
 
 /* A capa é uma página de SERVIDOR que renderiza um cliente.

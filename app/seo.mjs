@@ -1,4 +1,4 @@
-/* robots.txt e sitemap.xml, gerados do que o site de fato publica.
+/* robots.txt, sitemap.xml e llms.txt, gerados do que o site de fato publica.
    ─────────────────────────────────────────────────────────────────────────
    Duas fontes, e nenhuma delas é uma lista escrita à mão aqui:
 
@@ -22,6 +22,13 @@
    aparecendo na busca sem título nem descrição, que é pior do que não ter
    feito nada. As páginas pagas já respondem 302 e já saem com `noindex`;
    o robots fica aberto e só aponta o sitemap.
+
+   ── o llms.txt ─────────────────────────────────────────────────────────
+   O resumo do site para assistentes de IA (formato de llmstxt.org): um
+   título, uma linha do que é, e a lista das páginas ANUNCIÁVEIS com o
+   título e a description que cada uma já publica. Nada é escrito aqui: o
+   texto sai do HTML do `out/`, então ele nunca diz mais do que o site diz,
+   e uma página paga não entra pelo mesmo motivo que não entra no sitemap.
 
    node seo.mjs  (de dentro de app/, depois do build) */
 
@@ -109,6 +116,54 @@ export function robotsTxt(site) {
   ].join('\n');
 }
 
+/* O texto de uma tag, com as entidades que o Next escreve desfeitas. */
+const desfaz = (t) => t
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+  .replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+
+/** Título e description de uma página do `out/`, como o buscador os lê. */
+export function cabecalhoDe(html) {
+  const titulo = (html.match(/<title>([^<]*)<\/title>/) || [])[1];
+  const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1];
+  return {
+    titulo: titulo ? desfaz(titulo).replace(/\s+-\s+Hebraico Fluente$/, '').trim() : null,
+    descricao: desc ? desfaz(desc).trim() : null
+  };
+}
+
+/* Em que seção do llms.txt cada página fica. A ordem das seções é a ordem em
+   que alguém que pergunta "como aprender a ler hebraico" precisa delas. */
+const SECOES = [
+  ['Cursos', r => r === '/cursos/' || r.startsWith('/cursos/')],
+  ['Como o curso funciona', r => ['/metodo/', '/biblia/', '/faq/', '/sobre/'].includes(r)],
+  ['Atendimento e políticas', () => true]
+];
+
+export function llmsTxt(site, paginas) {
+  const capa = paginas.find(p => p.rota === '/');
+  const linhas = ['# Hebraico Fluente', ''];
+  if (capa?.descricao) linhas.push(`> ${capa.descricao}`, '');
+  linhas.push(
+    `Site em português do Brasil. Endereço: ${site}/. As aulas ficam atrás de login e não`,
+    'estão listadas aqui; abaixo, só as páginas públicas, com a descrição que cada uma publica.',
+    ''
+  );
+  const resto = paginas.filter(p => p.rota !== '/');
+  const usadas = new Set();
+  for (const [nome, cabe] of SECOES) {
+    const daSecao = resto.filter(p => !usadas.has(p.rota) && cabe(p.rota));
+    if (!daSecao.length) continue;
+    linhas.push(`## ${nome}`, '');
+    for (const p of daSecao) {
+      usadas.add(p.rota);
+      linhas.push(`- [${p.titulo || p.rota}](${site}${p.rota})${p.descricao ? `: ${p.descricao}` : ''}`);
+    }
+    linhas.push('');
+  }
+  return linhas.join('\n');
+}
+
 /* ── execução ─────────────────────────────────────────────────────────── */
 if (import.meta.url === `file://${process.argv[1]}`) {
   const site = origem();
@@ -117,10 +172,12 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   writeFileSync('out/sitemap.xml', sitemapXml(site, listadas, hoje));
   writeFileSync('out/robots.txt', robotsTxt(site));
+  const paginas = listadas.map(rota => ({ rota, ...cabecalhoDe(readFileSync(`out${rota}index.html`, 'utf8')) }));
+  writeFileSync('out/llms.txt', llmsTxt(site, paginas));
 
   console.log(`  site: ${site}`);
   console.log(`  no sitemap (${listadas.length}): ${listadas.join(' ')}`);
   console.log(`  fora, por serem pagas (${pagas.length})`);
   console.log(`  fora, por não responderem a busca (${ocultas.length}): ${ocultas.join(' ')}`);
-  console.log('\n✓ out/sitemap.xml e out/robots.txt escritos');
+  console.log('\n✓ out/sitemap.xml, out/robots.txt e out/llms.txt escritos');
 }

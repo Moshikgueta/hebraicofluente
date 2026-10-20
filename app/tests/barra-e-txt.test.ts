@@ -48,4 +48,9 @@ describe('os .txt do export', () => {
     const r = await abrir('/robots.txt');
     expect(r.headers.get('x-robots-tag')).toBeNull();
   });
+
+  it('nem o llms.txt, que é feito para ser lido', async () => {
+    const r = await abrir('/llms.txt');
+    expect(r.headers.get('x-robots-tag')).toBeNull();
+  });
 });

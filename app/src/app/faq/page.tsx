@@ -17,7 +17,7 @@ const TEM_AUDIO = AUDIO_MANIFEST.length > 0;
 
 export const metadata: Metadata = meta({
   rota: '/faq',
-  title: 'Dúvidas frequentes - Hebraico Fluente',
+  title: 'Dúvidas sobre o curso de hebraico online - Hebraico Fluente',
   description:
     'Pagamento, acesso, prazo, celular, áudio, certificado e reembolso - as perguntas ' +
     'que aparecem antes da compra, respondidas sem enrolação.'

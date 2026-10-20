@@ -18,7 +18,7 @@ const RETRATO = ['media/moshik.avif', 'media/moshik.webp', 'media/moshik.jpg'];
 
 export const metadata: Metadata = meta({
   rota: '/sobre',
-  title: 'Sobre o Moshik - Hebraico Fluente',
+  title: 'Moshik Gueta, professor de hebraico - Hebraico Fluente',
   description:
     'Moshik Gueta, israelense, professor de hebraico e de idiomas: a trajetória no Brasil, em ' +
     'Israel e em Buenos Aires por trás do Hebraico Fluente.'
