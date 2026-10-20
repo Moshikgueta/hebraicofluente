@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { He } from '@/components/hebrew/He';
-import { Card, Badge } from '@/components/ui/Card';
-import { Section, SectionHead } from '@/components/platform/Section';
+import { Itens, PageHead, Section, SectionHead } from '@/components/platform/Section';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { Versiculo } from '@/components/landing/Versiculo';
 import { bibleVerses, course, licaoDaLetra, totalLicoes } from '@/lib/content-publico';
@@ -47,19 +46,11 @@ export default function BibliaPage() {
 
   return (
     <>
-      <div className="border-b border-[color:var(--line-soft)]">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-18 grid gap-5">
-          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-            A pergunta que mais chega
-          </p>
-          <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[20ch]">
-            Vou conseguir ler a Bíblia em hebraico?
-          </h1>
-          <p className="text-[17px] leading-relaxed text-ink-body max-w-[58ch]">
-            A resposta tem duas metades, e as duas importam.
-          </p>
-        </div>
-      </div>
+      <PageHead
+        eyebrowPt="A pergunta que mais chega"
+        titlePt="Vou conseguir ler a Bíblia em hebraico?"
+        leadPt="A resposta tem duas metades, e as duas importam."
+      />
 
       <Section labelledBy="resposta">
         <SectionHead
@@ -68,32 +59,36 @@ export default function BibliaPage() {
           titlePt="Sim para ler. Não para entender."
           leadPt="São duas habilidades diferentes, e confundir as duas é o que faz alguém comprar um curso de alfabetização achando que comprou um curso de língua."
         />
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Card className="p-6 grid gap-3 content-start">
-            <Badge tone="mint">Sim</Badge>
-            <h3 className="font-display text-[20px] font-bold text-ink">
+        {/* As duas metades lado a lado, do mesmo tamanho, sob o mesmo fio. O
+            "Sim" e o "Não" eram dois selos pequenos; agora são a palavra que
+            abre cada coluna, em teal e em dourado, e não só pela cor: a
+            palavra está escrita. */}
+        <div className="grid gap-10 sm:gap-12 sm:grid-cols-2">
+          <div className="border-t-2 border-[var(--teal)] pt-6 grid gap-3 content-start">
+            <p className="font-display text-[44px] leading-none font-semibold tracking-[-0.04em] text-[var(--teal-ink)] m-0">Sim.</p>
+            <h3 className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">
               Você vai ler em voz alta.
             </h3>
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body">
+            <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
               O texto hebraico da Bíblia usado hoje vem com os sinais de vogal
               - o nikud que os massoretas de Tiberíades fixaram para registrar
               a pronúncia. São exatamente as 22 letras e os sinais que este
               curso ensina. Com eles você decodifica qualquer versículo, sem
               transliteração e sem ajuda.
             </p>
-          </Card>
-          <Card className="p-6 grid gap-3 content-start">
-            <Badge tone="ember">Não</Badge>
-            <h3 className="font-display text-[20px] font-bold text-ink">
+          </div>
+          <div className="border-t-2 border-[var(--gold)] pt-6 grid gap-3 content-start">
+            <p className="font-display text-[44px] leading-none font-semibold tracking-[-0.04em] text-[var(--gold-ink)] m-0">Não.</p>
+            <h3 className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">
               Você não vai entender o que leu.
             </h3>
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body">
+            <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
               Entender pede vocabulário e gramática, e o hebraico da Bíblia tem
               construções que o hebraico de hoje não usa. Este é um curso de
               alfabetização: ele te dá a porta, não a casa. Quem promete a casa
               em oito semanas está vendendo outra coisa.
             </p>
-          </Card>
+          </div>
         </div>
       </Section>
 
@@ -120,36 +115,17 @@ export default function BibliaPage() {
           titlePt="O que muda quando você lê as letras."
           leadPt="Decodificar sem entender parece pouco escrito assim. Na prática é a diferença entre depender inteiramente de uma tradução e poder conferir."
         />
-        <ol className="grid gap-4 sm:grid-cols-2 list-none p-0 m-0">
-          {[
-            ['Você acompanha o original',
-             'Uma Bíblia interlinear ou com o hebraico ao lado deixa de ser decoração na página. Você segue a linha em vez de pular para a coluna em português.'],
-            ['Você procura no léxico',
-             'Dicionários, léxicos e concordâncias de hebraico são organizados pelo alfabeto hebraico. Sem as letras você não acha a palavra; com elas, acha.'],
-            ['Você confere uma tradução',
-             'Quando duas versões discordam num versículo, a discordância está numa palavra. Saber ler é o que permite ir olhar essa palavra.'],
-            ['Você reconhece o que já conhece',
-             'Nomes, lugares e palavras que você ouve a vida inteira param de ser som e viram texto - a começar por esta, na terceira posição do versículo acima.']
-          ].map(([t, b], i) => (
-            <li key={t}>
-              <Card className="p-5 grid gap-2 h-full content-start">
-                <span aria-hidden
-                      className="w-[30px] h-[30px] rounded-full bg-[var(--accent-wash)]
-                                 text-[var(--accent)] font-ui text-[13px] font-bold
-                                 grid place-items-center tabular-nums">
-                  {i + 1}
-                </span>
-                <h3 className="font-display text-[17px] font-bold text-ink">{t}</h3>
-                <p className="font-ui text-[14px] leading-relaxed text-ink-body">{b}</p>
-                {i === 3 && (
-                  <p className="pt-1">
-                    <He size="word">{v.words[2]!.he}</He>
-                  </p>
-                )}
-              </Card>
-            </li>
-          ))}
-        </ol>
+        <Itens itens={[
+          { t: 'Você acompanha o original',
+            b: 'Uma Bíblia interlinear ou com o hebraico ao lado deixa de ser decoração na página. Você segue a linha em vez de pular para a coluna em português.' },
+          { t: 'Você procura no léxico',
+            b: 'Dicionários, léxicos e concordâncias de hebraico são organizados pelo alfabeto hebraico. Sem as letras você não acha a palavra; com elas, acha.' },
+          { t: 'Você confere uma tradução',
+            b: 'Quando duas versões discordam num versículo, a discordância está numa palavra. Saber ler é o que permite ir olhar essa palavra.' },
+          { t: 'Você reconhece o que já conhece',
+            b: 'Nomes, lugares e palavras que você ouve a vida inteira param de ser som e viram texto - a começar por esta, na terceira posição do versículo acima.',
+            extra: <p className="pt-1 m-0"><He size="word">{v.words[2]!.he}</He></p> }
+        ]} />
       </Section>
 
       {/* A parte que quase nenhum material conta antes da compra, e que muda
@@ -161,7 +137,8 @@ export default function BibliaPage() {
           titlePt="Num rolo de Torá não há um único ponto de vogal."
           leadPt="Os sinais são uma invenção posterior, feita para registrar a pronúncia. O rolo lido na sinagoga não os tem, e a Israel de hoje escreve sem eles também."
         />
-        <Card className="p-6 sm:p-8 grid gap-4">
+        <div className="rounded-[20px] bg-[var(--card)] p-6 sm:p-8 grid gap-4
+                        shadow-[0_0_0_1px_var(--line),0_1px_2px_rgba(27,33,31,.04)]">
           <div className="grid gap-1.5">
             <p className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted">
               Com os pontos, numa Bíblia impressa
@@ -179,7 +156,7 @@ export default function BibliaPage() {
             fecha com uma etapa inteira de leitura sem os pontos, que é a forma
             em que o hebraico existe na rua, no jornal e no rolo.
           </p>
-        </Card>
+        </div>
       </Section>
 
       <Section>

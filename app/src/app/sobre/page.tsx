@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { He } from '@/components/hebrew/He';
-import { Card } from '@/components/ui/Card';
-import { LinkButton } from '@/components/ui/Button';
-import { Section, SectionHead } from '@/components/platform/Section';
+import Link from 'next/link';
+import { Itens, Section, SectionHead } from '@/components/platform/Section';
 import { empresa } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { totalLicoes } from '@/lib/content-publico';
@@ -64,8 +63,7 @@ export default function SobrePage() {
           titlePt="Três decisões que tornam o aprendizado mais leve."
           leadPt="Cada parte do curso foi organizada para evitar sobrecarga e deixar você avançar com confiança."
         />
-        <ul className="grid gap-4 sm:grid-cols-3 list-none p-0 m-0">
-          {[
+        <Itens colunas={3} itens={[
             {
               t: 'Uma letra de cada vez',
               b: 'Você conhece a letra, pratica com ela e só então avança. O que começa como um alfabeto completamente estranho vai ficando familiar aos poucos - e o que parecia impossível vira uma sequência de passos curtos.'
@@ -78,15 +76,7 @@ export default function SobrePage() {
               t: 'Retorno na hora, em cada passo',
               b: 'Você não precisa esperar por um professor para saber se acertou. Cada exercício corrige na hora, cada erro explica onde olhar, e o exame final diz antes de começar a nota que aprova e, no fim, quais partes pedem revisão.'
             }
-          ].map(x => (
-            <li key={x.t}>
-              <Card className="p-5 grid gap-2 h-full content-start">
-                <h3 className="font-display text-[16.5px] font-bold text-ink">{x.t}</h3>
-                <p className="font-ui text-[14px] leading-relaxed text-ink-body">{x.b}</p>
-              </Card>
-            </li>
-          ))}
-        </ul>
+                  ]} />
       </Section>
 
       {/* A origem do método, ENCOLHIDA - e o porquê.
@@ -115,40 +105,48 @@ export default function SobrePage() {
           titlePt="Um método adaptado para brasileiros."
           leadPt="Princípios consolidados de aprendizagem de idiomas, mais o que eu aprendi ensinando hebraico a quem fala português."
         />
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Card className="p-5 grid gap-2.5 content-start">
-            <h3 className="font-display text-[16.5px] font-bold text-ink">O que é adaptação minha</h3>
-            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+        {/* Duas colunas abertas, sob o mesmo fio: o que é adaptação e de onde
+            vem o método têm o mesmo peso, e nenhum dos dois é um produto. */}
+        <div className="grid gap-10 sm:gap-12 sm:grid-cols-2">
+          <div className="grid gap-3 content-start border-t border-line pt-6">
+            <h3 className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">O que é adaptação minha</h3>
+            <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
               Os exercícios, as explicações e a escrita cursiva foram pensados para as
               dificuldades de quem parte do português: as comparações com os nossos sons,
               os erros que só um brasileiro comete e tudo o que acontece na tela.
             </p>
-          </Card>
-          <Card tone="wash" className="p-5 grid gap-2.5 content-start">
-            <h3 className="font-display text-[16.5px] font-bold text-ink">De onde vem o método</h3>
-            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+          </div>
+          <div className="grid gap-3 content-start border-t-2 border-[var(--teal)] pt-6">
+            <h3 className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">De onde vem o método</h3>
+            <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
               O caminho que este curso segue parte do método do{' '}
               {METODO_ORIGINAL.autor}, autor de{' '}
               <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
               ({METODO_ORIGINAL.obraTranslit}). O conteúdo do livro dele é a base do que a
               plataforma ensina. {METODO_ORIGINAL.adaptacoesPt}
             </p>
-            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+            <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
               As {totalLicoes()} lições, as palavras de cada letra e os exercícios vieram
               de material impresso e passaram para a plataforma pela mesma fonte: se uma
               palavra muda, muda nos dois.
             </p>
-          </Card>
+          </div>
         </div>
       </Section>
 
-      <Section tone="wash">
+      <Section>
         <FaixaCta
           onde="sobre"
           titulo="Tem uma dúvida antes de começar?"
           linha={`As mais comuns já estão respondidas. O que não estiver, escreva para ${empresa.contato.emailSuporte}.`}
         >
-          <LinkButton href="/faq" variant="secondary">Dúvidas frequentes</LinkButton>
+          {/* Link e não um segundo botão branco: sobre o navy, dois botões
+              iguais empatavam, e o passo principal é o de baixo. */}
+          <Link href="/faq"
+                className="inline-flex items-center min-h-[44px] font-ui text-[16px] font-semibold text-white
+                           underline underline-offset-[4px] decoration-white/45 hover:decoration-white">
+            Ver as dúvidas frequentes
+          </Link>
         </FaixaCta>
       </Section>
     </>

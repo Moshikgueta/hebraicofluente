@@ -8,8 +8,7 @@
  * é "por onde eu começo e até onde isso vai".
  */
 
-import { He } from '@/components/hebrew/He';
-import { Card, Badge } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { CourseShelf } from '@/components/platform/CourseShelf';
@@ -40,38 +39,40 @@ export function CursosClient() {
           titlePt="O que cada nível entrega."
         />
 
-        <ol className="grid gap-4 list-none p-0 m-0">
+        {/* Um índice sob fios, e não quatro cartões: os níveis são capítulos
+            da mesma trilha, e a linha deixa a ordem visível. */}
+        <ol className="list-none p-0 m-0 border-t border-line">
           {courses.map(c => {
             const owned = account.can(c.slug);
             const open = isPlayable(c);
             return (
-              <li key={c.slug} data-curso={c.slug}>
-                <Card className="p-5 sm:p-6 grid gap-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-start">
+              <li key={c.slug} data-curso={c.slug} className="border-b border-line">
+                <article className="py-8 sm:py-10 grid gap-4 sm:gap-8 sm:grid-cols-[56px_minmax(0,1fr)_auto] sm:items-start">
                   <span aria-hidden
-                        className="font-display text-[30px] font-bold leading-none tabular-nums
-                                   text-[color-mix(in_srgb,var(--accent)_35%,transparent)]">
+                        className={`font-display text-[15px] font-semibold tracking-[-0.01em] tabular-nums sm:pt-1.5
+                                    ${open ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
                     {c.code}
                   </span>
 
                   <div className="grid gap-2 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="font-display text-[19px] font-bold text-ink">{c.titlePt}</h3>
+                      <h3 className="font-display text-[23px] sm:text-[26px] font-semibold tracking-[-0.022em] text-ink m-0">{c.titlePt}</h3>
                       {owned ? <Badge tone="mint">Seu curso</Badge>
                         : open ? <Badge tone="accent">Disponível</Badge>
                         : <Badge>Em breve</Badge>}
                     </div>
-                    <p className="font-ui text-[12.5px] text-ink-muted">
+                    <p className="font-ui text-[13.5px] text-ink-muted tabular-nums">
                       {c.levelPt}{c.cefr ? ` · ${c.cefr}` : ''} · {c.stats.modules} módulos
                       {c.stats.lessons ? ` · ${c.stats.lessons} lições` : ''}
                     </p>
-                    <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[62ch]">
+                    <p className="font-ui text-[16px] leading-[1.6] text-ink-body max-w-[62ch]">
                       {c.summaryPt}
                     </p>
                     <ul className="grid gap-1 list-none p-0 m-0 pt-1">
                       {c.outcomesPt.slice(0, 3).map(o => (
                         <li key={o} className="flex gap-2.5">
-                          <span aria-hidden className="text-[var(--accent)] text-[13px] mt-[3px]">✓</span>
-                          <span className="font-ui text-[13.5px] leading-relaxed text-ink-body">{o}</span>
+                          <span aria-hidden className="text-[var(--teal)] text-[13px] mt-[3px]">✓</span>
+                          <span className="font-ui text-[14.5px] leading-relaxed text-ink-body">{o}</span>
                         </li>
                       ))}
                     </ul>
@@ -79,7 +80,7 @@ export function CursosClient() {
 
                   <div className="grid gap-2 sm:justify-items-end content-start">
                     {open && !owned && (
-                      <p className="font-ui text-[15px] font-semibold text-ink">{brl(c.price.brl)}</p>
+                      <p className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink tabular-nums">{brl(c.price.brl)}</p>
                     )}
                     <LinkButton
                       href={owned ? '/meu-hebraico' : `/cursos/${c.slug}`}
@@ -89,7 +90,7 @@ export function CursosClient() {
                       {owned ? 'Continuar' : open ? 'Ver o curso' : 'O que vem nele'}
                     </LinkButton>
                   </div>
-                </Card>
+                </article>
               </li>
             );
           })}
@@ -99,18 +100,20 @@ export function CursosClient() {
       </Section>
 
       <Section labelledBy="ordem">
-        <Card tone="wash" className="p-8 grid gap-4 justify-items-center text-center">
-          <He size="lg" dim>ע</He>
-          <h2 id="ordem" className="font-display text-[23px] sm:text-[27px] font-bold text-ink max-w-[26ch]">
+        {/* Uma afirmação, não um cartão: o fio teal à esquerda é o mesmo das
+            citações da capa. */}
+        <div className="grid gap-4 max-w-[760px] pl-6 border-l-2 border-[var(--teal)]">
+          <h2 id="ordem" className="font-display font-semibold text-[clamp(26px,3vw,36px)] leading-[1.1]
+                                    tracking-[-0.03em] text-ink max-w-[26ch] m-0">
             Não dá para pular a alfabetização.
           </h2>
-          <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[52ch]">
+          <p className="font-ui text-[17px] leading-[1.65] text-ink-body max-w-[60ch] m-0">
             E não é regra de venda: do A1 em diante nada é escrito em
             transliteração. Quem chega sem ler o alfabeto passa o curso inteiro
             decorando sons em vez de aprender a língua. Se você já lê hebraico
             com nikud, comece direto no A1 quando ele sair.
           </p>
-        </Card>
+        </div>
       </Section>
     </>
   );

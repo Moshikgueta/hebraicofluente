@@ -131,10 +131,15 @@ export function PublicShell({ children }: { children: ReactNode }) {
                   key={l.href}
                   href={l.href}
                   aria-current={active ? 'page' : undefined}
-                  className={`inline-flex items-center min-h-[44px] px-3 rounded-[var(--r-md)]
-                    font-ui text-[14px] transition-colors
-                    ${active ? 'text-[var(--accent)] font-semibold bg-[var(--accent-wash)]'
-                             : 'text-ink-body hover:bg-surface-2'}`}
+                  /* Mesmo peso nos dois estados (mudar o peso no ativo empurrava
+                     os vizinhos), e o ativo marcado por um traço teal embaixo,
+                     não por um comprimido de fundo. */
+                  className={`relative inline-flex items-center min-h-[44px] px-3
+                    font-ui text-[14px] font-medium transition-colors duration-150
+                    after:absolute after:left-3 after:right-3 after:bottom-[9px] after:h-[2px]
+                    after:bg-[var(--teal)] after:transition-opacity after:duration-150
+                    ${active ? 'text-ink after:opacity-100'
+                             : 'text-ink-body hover:text-ink after:opacity-0'}`}
                 >
                   {l.label}
                 </Link>

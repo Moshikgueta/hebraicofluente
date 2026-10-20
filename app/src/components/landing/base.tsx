@@ -52,7 +52,7 @@ export function Rubrica({
 }: {
   children: ReactNode; letra?: string; tom?: 'teal' | 'lite'; className?: string;
   /** `h2` quando o rótulo É o título da seção (a faixa do "O que você aprende"). */
-  as?: 'p' | 'h2'; id?: string;
+  as?: 'p' | 'h2' | 'h3'; id?: string;
 }) {
   const cor = tom === 'lite' ? 'text-[var(--teal-lite)]' : 'text-[var(--teal-ink)]';
   const fio = tom === 'lite' ? 'bg-white/25' : 'bg-[var(--line)]';

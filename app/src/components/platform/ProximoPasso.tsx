@@ -25,28 +25,36 @@ import { track } from '@/lib/analytics';
 
 /** O botão sozinho, com a microcópia embaixo. Serve em qualquer lugar. */
 export function BotaoPasso({
-  slug = FLAGSHIP, onde, className = ''
-}: { slug?: string; onde: string; className?: string }) {
+  slug = FLAGSHIP, onde, className = '', claro = false
+}: {
+  slug?: string; onde: string; className?: string;
+  /** Botão branco, para ficar sobre o bloco navy (FaixaCta). */
+  claro?: boolean;
+}) {
   const account = useAccount();
   const passo = proximoPasso(account, slug);
+  const cor = claro
+    ? 'bg-white text-[var(--navy)] hover:bg-[var(--cream)]'
+    : 'bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] shadow-[0_1px_2px_rgba(14,59,67,.2),0_8px_20px_-10px_rgba(14,59,67,.55)]';
 
   return (
     <span className={`grid justify-items-center gap-2 ${className}`}>
       <Link
         href={passo.href}
         onClick={() => track('cta_clicked', { itemId: `${onde}:${passo.vende ? 'compra' : 'curso'}` })}
-        className="group inline-flex items-center gap-2 rounded-[13px] bg-[var(--navy)] text-white
-                   font-ui font-semibold text-[16px] sm:text-[17px] px-7 py-[15px] shadow-[var(--sh)]
-                   transition-[background-color,transform] duration-[180ms]
-                   hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0"
+        className={`group inline-flex items-center gap-2 rounded-[12px] min-h-[54px]
+                   font-ui font-semibold text-[16px] sm:text-[17px] px-7 ${cor}
+                   transition-[background-color,transform] duration-150 ease-out active:scale-[.98]`}
       >
         {passo.label}
         {/* A seta anda 3px no hover. É toda a micro-interação de que um botão
             precisa: diz "isto leva a algum lugar" sem virar animação. */}
         <span aria-hidden
-              className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
+              className="transition-transform duration-150 ease-out group-hover:translate-x-[3px]">→</span>
       </Link>
-      <span className="font-ui text-[13px] text-ink-muted text-center">{passo.micro}</span>
+      <span className={`font-ui text-[13px] text-center tabular-nums ${claro ? 'text-white/60' : 'text-ink-muted'}`}>
+        {passo.micro}
+      </span>
     </span>
   );
 }
@@ -68,16 +76,22 @@ export function FaixaCta({
   children?: ReactNode;
 }) {
   return (
-    <Card className="p-8 grid gap-4 justify-items-center text-center">
-      <h2 className="font-display text-[25px] sm:text-[30px] font-bold text-ink max-w-[26ch]">
+    /* O bloco navy do fecho da capa (CtaFinal), o recurso central do design:
+       navy sobre papel creme. Era um cartão branco numa faixa teal-clara, o
+       banner de fechamento de qualquer modelo pronto. Link dentro de `linha`
+       tem de vir claro (ver /faq). */
+    <div className="rounded-[22px] bg-[var(--navy)] px-6 py-12 sm:px-12 sm:py-16
+                    grid gap-4 justify-items-center text-center">
+      <h2 className="font-display font-semibold text-[clamp(26px,3.2vw,38px)] leading-[1.1]
+                     tracking-[-0.03em] text-white max-w-[24ch] m-0">
         {titulo}
       </h2>
-      <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[48ch]">
+      <p className="font-ui text-[16.5px] leading-[1.6] text-white/75 max-w-[50ch] m-0">
         {linha}
       </p>
       {children}
-      <BotaoPasso slug={slug} onde={onde} className="pt-1" />
-    </Card>
+      <BotaoPasso slug={slug} onde={onde} claro className="pt-2" />
+    </div>
   );
 }
 
