@@ -30,7 +30,7 @@ import { totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { confirmaSozinho, empresa, parcelasTexto, soPix, temPix } from '@/lib/empresa';
-import { Container, H2, Reveal, Check, CheckList, Chevron } from './base';
+import { Container, H2, Reveal, Rubrica, Check, CheckList, Chevron } from './base';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { perguntasDaCapa } from './faq-capa';
 
@@ -55,7 +55,7 @@ const RESUMO = [
 export function Professor({ retrato }: { retrato: string | null }) {
   return (
     <section id="sobre" aria-labelledby="sobre-titulo">
-      <Container className="pt-16 sm:pt-24">
+      <Container className="pt-20 sm:pt-28">
         <div className="grid gap-8 lg:gap-[56px] grid-cols-1 sm:grid-cols-[180px_minmax(0,1fr)] lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)] sm:items-center">
           <Reveal>
             {/* `object-top`: num retrato o rosto fica no terço de cima. */}
@@ -65,11 +65,11 @@ export function Professor({ retrato }: { retrato: string | null }) {
                 src={retrato}
                 alt="Moshik Gueta, professor e criador do Hebraico Fluente"
                 width={680} height={850} loading="lazy" decoding="async"
-                className="aspect-[4/5] w-full max-w-[220px] sm:max-w-none rounded-[22px] border border-line
-                           object-cover object-top bg-[var(--sand)]"
+                className="aspect-[4/5] w-full max-w-[240px] sm:max-w-none rounded-[16px]
+                           shadow-[0_0_0_1px_rgba(27,33,31,.06)] object-cover object-top bg-[var(--sand)]"
               />
             ) : (
-              <div className="aspect-[4/5] max-w-[220px] sm:max-w-none rounded-[22px] border border-line bg-[var(--sand)]
+              <div className="aspect-[4/5] max-w-[240px] sm:max-w-none rounded-[16px] bg-[var(--sand)]
                               grid place-items-center">
                 <span className="grid place-items-center w-24 h-24 rounded-[26px] bg-[var(--navy)]">
                   <span style={{ fontSize: 46, marginTop: -3, lineHeight: 1 }}>
@@ -80,9 +80,7 @@ export function Professor({ retrato }: { retrato: string | null }) {
             )}
           </Reveal>
           <Reveal delay={100}>
-            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
-              Quem está por trás do Hebraico Fluente
-            </p>
+            <Rubrica letra="ז" className="mb-5">Quem está por trás do Hebraico Fluente</Rubrica>
             <h2 id="sobre-titulo"
                 className="font-display font-semibold text-[clamp(26px,3vw,38px)] leading-[1.1]
                            tracking-[-0.03em] text-balance m-0 mb-4 max-w-[24ch]">
@@ -93,10 +91,16 @@ export function Professor({ retrato }: { retrato: string | null }) {
               quem começa do zero trava. O Hebraico Fluente transforma o que funcionava nas minhas
               aulas em uma metodologia que você segue no seu ritmo.
             </p>
-            <ul className="flex flex-wrap gap-2 list-none p-0 m-0 mb-6">
+            {/* Os quatro fatos eram quatro selos com borda. Viraram uma ficha
+                de duas colunas sob fios: credencial se lê como currículo, não
+                como etiqueta. */}
+            <ul className="grid sm:grid-cols-2 gap-x-8 list-none p-0 m-0 mb-7 border-t border-line max-w-[620px]">
               {RESUMO.map(t => (
-                <li key={t} className="rounded-full border border-line bg-[var(--card)] px-3.5 py-1.5
-                                       font-ui text-[14.5px] font-medium text-ink-body">{t}</li>
+                <li key={t} className="flex items-center gap-3 py-3 border-b border-line
+                                       font-ui text-[15px] font-medium text-ink-body">
+                  <span aria-hidden className="w-[5px] h-[5px] rounded-full bg-[var(--gold)] shrink-0" />
+                  {t}
+                </li>
               ))}
             </ul>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -239,7 +243,7 @@ export function AulaAmostra({ href }: { href: string }) {
                     type="button"
                     onClick={() => setEscolha(i)}
                     className="rounded-[16px] border-2 px-3 py-5 flex flex-col items-center gap-1.5
-                               transition-all duration-[220ms] hover:-translate-y-[2px]"
+                               transition-[border-color,background-color,transform] duration-[220ms] hover:-translate-y-[2px]"
                     style={{
                       background: bom ? 'var(--teal-soft)' : ruim ? 'var(--gold-soft)' : 'var(--card)',
                       borderColor: bom ? 'var(--teal)' : ruim ? '#D9B872' : 'var(--line)'
@@ -303,50 +307,83 @@ export function Depoimentos() {
      nota em lib/testimonials.ts. */
   if (DEPOIMENTOS.length === 0) return null;
 
-  const fundos = ['var(--teal-soft)', 'var(--gold-soft)', '#EAEEF0'];
-  const tintas = ['var(--teal-ink)', 'var(--gold-ink)', 'var(--navy)'];
+  /* O título diz quantos são. "Quem já está lendo." sobre um depoimento só
+     sugeria uma turma inteira (auditoria de persuasão de 20/10/2026). */
+  const titulo = DEPOIMENTOS.length === 1 ? 'O que diz uma aluna.' : 'O que dizem os alunos.';
+  const paragrafos = (c: string) => c.split(/\n\s*\n/);
 
   return (
-    <section>
-      <Container className="pt-16 sm:pt-24">
-        <Reveal><H2 className="mb-8">Quem já está lendo.</H2></Reveal>
-        {/* Um depoimento só não se estica pela largura toda: linha de texto
-            longa demais cansa. `min(275px,100%)`: com o texto em 150% num
-            telefone, sobram ~260px, e um mínimo fixo de 275 empurrava a página
-            para o lado (npm run a11y). */}
-        <ul className={`grid gap-4 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(min(275px,100%),1fr))]
-                        ${DEPOIMENTOS.length === 1 ? 'max-w-[720px]' : ''}`}>
-          {DEPOIMENTOS.map((t, i) => (
-            <Reveal as="li" key={t.nome + i} delay={i * 80}
-                    className="rounded-[18px] bg-[var(--card)] border border-line p-6">
-              <span className="flex items-center gap-3 mb-4.5">
-                <span aria-hidden
-                      className="w-[42px] h-[42px] rounded-full grid place-items-center
-                                 font-ui font-bold text-[15px]"
-                      style={{ background: fundos[i % 3], color: tintas[i % 3] }}>
-                  {t.iniciais}
-                </span>
-                <span className="grid">
+    <section aria-labelledby="depoimentos-titulo">
+      <Container className="pt-20 sm:pt-28">
+        {/* Um depoimento só vira uma citação de página inteira, como num
+            livro: rótulo e assinatura numa coluna estreita, o texto na
+            outra. O cartão de meia largura deixava a outra metade da tela
+            vazia, e vazio ao lado de um depoimento lê como "faltou gente". */}
+        {DEPOIMENTOS.length === 1 ? (() => {
+          const t = DEPOIMENTOS[0]!;
+          const ps = paragrafos(t.citacao);
+          return (
+            <figure className="m-0 grid gap-8 lg:gap-16 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)]
+                               border-t border-line pt-10">
+              <div className="grid content-start gap-6">
+                <Rubrica>Depoimento</Rubrica>
+                <H2 id="depoimentos-titulo" className="!text-[clamp(28px,3vw,38px)]">{titulo}</H2>
+                <figcaption className="grid gap-1">
                   <span className="font-ui text-[16px] font-semibold text-ink">{t.nome}</span>
-                  <span className="font-ui text-[13.5px] text-ink-muted">{t.contexto}</span>
-                </span>
-              </span>
-              {t.resultado && (
-                <span className="inline-block rounded-full bg-[var(--teal-soft)] px-[11px] py-[5px]
-                                 font-ui text-[13px] font-semibold text-[var(--teal-ink)] mb-3.5">
-                  {t.resultado}
-                </span>
-              )}
-              <blockquote className="m-0 grid gap-3">
-                {t.citacao.split(/\n\s*\n/).map((par, j) => (
-                  <p key={j} className="m-0 font-ui text-[15.5px] leading-[1.6] text-ink-muted">
-                    {j === 0 ? '“' : ''}{par}{j === t.citacao.split(/\n\s*\n/).length - 1 ? '”' : ''}
+                  <span className="font-ui text-[14px] leading-[1.5] text-ink-muted">{t.contexto}</span>
+                  {t.resultado && (
+                    <span className="mt-3 inline-flex items-center gap-2 font-ui text-[14px] font-semibold
+                                     text-[var(--teal-ink)]">
+                      <Check size={15} />
+                      {t.resultado}
+                    </span>
+                  )}
+                </figcaption>
+              </div>
+              <blockquote className="relative m-0 grid gap-5 lg:pl-10 lg:border-l lg:border-line">
+                <span aria-hidden className="font-display text-[72px] leading-[.6] text-[var(--teal)] h-[28px]">“</span>
+                {ps.map((par, j) => (
+                  <p key={j}
+                     className={j === 0
+                       ? 'm-0 font-display text-[clamp(20px,2vw,24px)] leading-[1.45] font-medium tracking-[-0.015em] text-ink'
+                       : 'm-0 font-ui text-[16.5px] sm:text-[17px] leading-[1.65] text-ink-body max-w-[62ch]'}>
+                    {par}{j === ps.length - 1 ? '”' : ''}
                   </p>
                 ))}
               </blockquote>
-            </Reveal>
-          ))}
-        </ul>
+            </figure>
+          );
+        })() : (
+          <>
+            <Rubrica className="mb-5">Depoimentos</Rubrica>
+            <H2 id="depoimentos-titulo" className="mb-8">{titulo}</H2>
+            {/* `min(275px,100%)`: com o texto em 150% num telefone, sobram
+                ~260px, e um mínimo fixo empurrava a página (npm run a11y). */}
+            <ul className="grid gap-4 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(min(275px,100%),1fr))]">
+              {DEPOIMENTOS.map((t, i) => (
+                <li key={t.nome + i}
+                    className="rounded-[20px] bg-[var(--card)] shadow-[0_0_0_1px_var(--line)] p-6 grid content-start gap-4">
+                  <span className="grid">
+                    <span className="font-ui text-[16px] font-semibold text-ink">{t.nome}</span>
+                    <span className="font-ui text-[13.5px] text-ink-muted">{t.contexto}</span>
+                  </span>
+                  {t.resultado && (
+                    <span className="inline-flex items-center gap-2 font-ui text-[13.5px] font-semibold text-[var(--teal-ink)]">
+                      <Check size={14} />{t.resultado}
+                    </span>
+                  )}
+                  <blockquote className="m-0 grid gap-3">
+                    {paragrafos(t.citacao).map((par, j, todos) => (
+                      <p key={j} className="m-0 font-ui text-[15.5px] leading-[1.6] text-ink-body">
+                        {j === 0 ? '“' : ''}{par}{j === todos.length - 1 ? '”' : ''}
+                      </p>
+                    ))}
+                  </blockquote>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </Container>
     </section>
   );
@@ -382,18 +419,20 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
 
   return (
     <section id="preco">
-      <Container className="pt-16 sm:pt-24">
-        <div className="rounded-[30px] bg-[var(--card)] border border-line shadow-[var(--sh-price)]
-                        p-7 sm:p-[44px] sm:py-12
-                        grid gap-10 lg:gap-[52px] lg:grid-cols-[minmax(0,1fr)_minmax(0,330px)] lg:items-center">
-          <div>
-            <p className="inline-block rounded-full bg-[var(--teal-soft)] px-3 py-1.5
-                          font-ui text-[13px] font-bold uppercase tracking-[.06em] text-[var(--teal-ink)] mb-4.5">
-              Pagamento único, sem mensalidade
-            </p>
+      <Container className="pt-20 sm:pt-28">
+        <div className="rounded-[22px] bg-[var(--card)]
+                        shadow-[0_0_0_1px_var(--line),0_2px_4px_rgba(27,33,31,.04),0_34px_70px_-40px_rgba(14,59,67,.32)]
+                        p-6 sm:p-[44px] sm:py-12
+                        grid grid-cols-[minmax(0,1fr)] gap-10 lg:gap-[52px]
+                        lg:grid-cols-[minmax(0,1fr)_minmax(0,330px)] lg:items-center">
+          <div className="min-w-0">
+            <Rubrica className="mb-5">Pagamento único, sem mensalidade</Rubrica>
+            {/* O nome do catálogo, o mesmo de /cursos e do checkout. Aqui
+                estava "Curso de Alfabetização Hebraica", um terceiro nome
+                para o mesmo produto. */}
             <h2 className="font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08]
                            tracking-[-0.03em] m-0 mb-3.5">
-              Curso de Alfabetização Hebraica
+              {c.titlePt}
             </h2>
             <p className="font-ui text-[17px] sm:text-[17.5px] leading-[1.6] text-ink-muted max-w-[46ch] mb-6">
               Acesso completo à plataforma, com progresso salvo e revisões liberadas
@@ -402,7 +441,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
             <CheckList items={inclui} columns={2} />
           </div>
 
-          <div className="rounded-[22px] bg-[var(--sand)] px-7 py-8 text-center">
+          <div className="min-w-0 rounded-[16px] bg-[var(--sand)] px-6 sm:px-7 py-8 text-center">
             {owned ? (
               <>
                 <p className="font-ui text-[14.5px] text-ink-muted mb-1.5">Na sua conta</p>
@@ -420,8 +459,8 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                               text-[var(--teal-ink)] mb-1.5">
                   {cheio ? 'Preço de pré-lançamento' : 'Acesso completo'}
                 </p>
-                <p className="font-display text-[44px] sm:text-[48px] font-semibold tracking-[-0.035em]
-                              leading-none text-ink mb-1">
+                <p className="font-display text-[48px] sm:text-[54px] font-semibold tracking-[-0.04em]
+                              leading-none text-ink tabular-nums mb-2">
                   {brl(precoDeVitrine())}
                 </p>
                 <p className="font-ui text-[14.5px] text-ink-muted mb-6">
@@ -435,13 +474,14 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
               </>
             )}
             <Link href={href}
-                  className="group flex items-center justify-center gap-2 rounded-[13px] bg-[var(--navy)]
-                             text-white font-ui font-semibold text-[17px] py-[15px] mb-3.5
-                             transition-[background-color,transform] duration-[180ms]
-                             hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0">
+                  className="group flex items-center justify-center gap-2 rounded-[12px] bg-[var(--navy)]
+                             min-h-[54px] text-white font-ui font-semibold text-[17px] mb-4
+                             shadow-[0_1px_2px_rgba(14,59,67,.2),0_8px_20px_-10px_rgba(14,59,67,.55)]
+                             transition-[background-color,transform] duration-150 ease-out
+                             hover:bg-[var(--navy-2)] active:scale-[.98]">
               {label}
               <span aria-hidden
-                    className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
+                    className="transition-transform duration-150 ease-out group-hover:translate-x-[3px]">→</span>
             </Link>
             {/* "No PIX sai por X" é a promessa de preço mais visível do site
                 inteiro, e ela só pode existir enquanto o PIX puder ser
@@ -449,7 +489,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 `pagamento.formas`), a frase some e fica o prazo de acesso,
                 que continua verdadeiro. Anunciar um desconto que o checkout
                 não dá é o erro que só aparece depois do clique. */}
-            <p className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
+            <p className="font-ui text-[13.5px] leading-[1.5] text-ink-muted tabular-nums">
               {owned
                 ? 'Seu progresso continua exatamente onde você parou.'
                 : !temPix()
@@ -493,43 +533,45 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
 
 /* ── 13 · as dúvidas ────────────────────────────────────────────────────── */
 export function Faq() {
-
   const PERGUNTAS = perguntasDaCapa();
-
   const [aberta, setAberta] = useState(-1);
 
   return (
-    <section id="duvidas">
-      <div className="mx-auto w-full max-w-[820px] px-5 sm:px-7 pt-16 sm:pt-24">
-        <H2 className="mb-3">Dúvidas frequentes</H2>
-        {/* Uma linha de apoio, e ela diz o ESCOPO - não pede desculpa por
-            nada e não anuncia o que falta. Onde há limitação, ela está na
-            resposta que a pergunta pede. */}
-        <p className="font-ui text-[17px] leading-[1.6] text-ink-muted max-w-[48ch] mb-8">
-          Antes de começar, vale saber: o que o curso cobre, como funciona o acesso e o
-          que esperar por dentro da plataforma.
-        </p>
-        <div className="grid gap-2">
+    <section id="duvidas" aria-labelledby="duvidas-titulo">
+      <Container className="pt-20 sm:pt-28 grid gap-8 lg:gap-16 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+        <div>
+          <Rubrica className="mb-5">Antes de começar</Rubrica>
+          <H2 id="duvidas-titulo" className="mb-3">Dúvidas frequentes</H2>
+          {/* Uma linha de apoio, e ela diz o ESCOPO - não pede desculpa por
+              nada e não anuncia o que falta. Onde há limitação, ela está na
+              resposta que a pergunta pede. */}
+          <p className="font-ui text-[17px] leading-[1.6] text-ink-muted max-w-[40ch]">
+            O que o curso cobre, como funciona o acesso e o que esperar por dentro da plataforma.
+          </p>
+        </div>
+        {/* Perguntas sob fios, e não oito caixas: a lista se lê de cima a
+            baixo como um índice, e a pergunta aberta não muda de cor de
+            borda (só o chevron gira). A resposta fechada fica no HTML, com
+            `hidden`: o JSON-LD FAQPage (lib/jsonld.ts) e a página dizem o
+            mesmo, e o leitor de tela sabe que há conteúdo. */}
+        <div className="border-t border-line">
           {PERGUNTAS.map(([q, a], i) => {
             const open = aberta === i;
+            const id = `duvida-${i}`;
             return (
-              <div key={q}
-                   className={`rounded-[16px] bg-[var(--card)] border overflow-hidden
-                               transition-colors duration-[250ms]
-                               ${open ? 'border-[var(--teal)]' : 'border-line'}`}>
+              <div key={q} className="border-b border-line">
                 <button
                   type="button"
                   onClick={() => setAberta(open ? -1 : i)}
                   aria-expanded={open}
-                  className="w-full flex items-center gap-4 px-5 sm:px-[22px] py-[19px] text-left"
+                  aria-controls={id}
+                  className="w-full flex items-center gap-4 py-5 text-left"
                 >
-                  <span className="flex-1 font-ui text-[16px] sm:text-[17px] font-semibold text-ink">{q}</span>
+                  <span className="flex-1 font-ui text-[16.5px] sm:text-[17px] font-semibold text-ink">{q}</span>
                   <Chevron open={open} />
                 </button>
-                <div className="overflow-hidden transition-[max-height] duration-[320ms] ease-[var(--ease)]"
-                     style={{ maxHeight: open ? 260 : 0 }}>
-                  <p className="px-5 sm:px-[22px] pb-5 font-ui text-[15.5px] sm:text-[16px]
-                                leading-[1.65] text-ink-muted">
+                <div id={id} hidden={!open}>
+                  <p className="pb-6 pr-8 font-ui text-[16px] leading-[1.65] text-ink-body max-w-[64ch]">
                     {a}
                   </p>
                 </div>
@@ -537,7 +579,7 @@ export function Faq() {
             );
           })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
@@ -554,10 +596,10 @@ const PALAVRAS: readonly { he: string; tr: string; pt: string }[] = [
 export function CtaFinal({ href, label }: { href: string; label: string }) {
   return (
     <section id="fecho">
-      <Container className="mt-16 sm:mt-24">
-        <div className="relative overflow-hidden rounded-[30px] bg-[var(--navy)] px-7 py-14 sm:px-12 sm:py-[72px] text-center">
-          <span aria-hidden className="absolute inset-0 pointer-events-none"
-                style={{ background: 'radial-gradient(90% 120% at 50% 0%, rgba(143,214,200,.15), transparent 62%)' }} />
+      <Container className="mt-20 sm:mt-28">
+        {/* Navy liso. O brilho radial teal que havia no topo era o gradiente
+            de todo banner de fechamento; aqui quem dá a luz é o hebraico. */}
+        <div className="relative overflow-hidden rounded-[22px] bg-[var(--navy)] px-6 py-14 sm:px-12 sm:py-[76px] text-center">
           <div className="relative">
             <ul className="flex flex-wrap justify-center gap-x-[26px] gap-y-6 list-none p-0 m-0 mb-9">
               {PALAVRAS.map(w => (
@@ -573,10 +615,10 @@ export function CtaFinal({ href, label }: { href: string; label: string }) {
               A próxima palavra em hebraico pode ser a primeira que você realmente consegue ler.
             </h2>
             <Link href={href}
-                  className="group inline-flex items-center gap-2 rounded-[14px] bg-white text-[var(--navy)]
-                             font-ui font-semibold text-[18px] px-[34px] py-4
-                             transition-transform duration-[180ms] hover:-translate-y-[2px]
-                             active:translate-y-0">
+                  className="group inline-flex items-center gap-2 rounded-[12px] bg-white text-[var(--navy)]
+                             min-h-[56px] font-ui font-semibold text-[18px] px-8
+                             transition-[background-color,transform] duration-150 ease-out
+                             hover:bg-[var(--cream)] active:scale-[.98]">
               {label}
               <span aria-hidden
                     className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>

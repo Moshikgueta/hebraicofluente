@@ -62,7 +62,7 @@ import { contarEtapaDaDemo, type EtapaDaDemo } from '@/lib/funil-demo';
 import { type NomeAmostra } from '@/lib/amostra-audio';
 import { useTocador } from './useTocador';
 import { asset } from '@/lib/asset';
-import { Container, H2, Lead, Reveal, Check } from './base';
+import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
 
 /* A letra vem do CATÁLOGO, e não escrita aqui: o glifo e o nome da primeira
    letra são os mesmos que a lição 1 usa, e um dia em que eles divergirem é um
@@ -305,11 +305,9 @@ export function DemoAlef({
 
   return (
     <section ref={secao} id="experimente" aria-labelledby="experimente-titulo">
-      <Container className="pt-16 sm:pt-24">
+      <Container className="pt-20 sm:pt-28">
         <Reveal>
-          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
-            Teste grátis · {EXERCICIOS_DA_DEMO} exercícios
-          </p>
+          <Rubrica letra="ב" className="mb-5">Teste grátis · {EXERCICIOS_DA_DEMO} exercícios</Rubrica>
           <H2 id="experimente-titulo" className="mb-3">
             Experimente aprender sua primeira letra.
           </H2>
@@ -323,8 +321,8 @@ export function DemoAlef({
         </Reveal>
 
         <Reveal delay={140}>
-          <div className="rounded-[26px] border border-line bg-[var(--card)] overflow-hidden
-                          shadow-[var(--sh-card)]">
+          <div className="rounded-[20px] bg-[var(--card)] overflow-hidden
+                          shadow-[0_0_0_1px_var(--line),0_2px_4px_rgba(27,33,31,.04),0_24px_48px_-32px_rgba(14,59,67,.3)]">
             {/* ── a régua das etapas ───────────────────────────────────────
                 Quatro traços e um rótulo. Diz onde a pessoa está e, mais
                 importante, que o caminho é curto - a desistência numa demo

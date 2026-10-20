@@ -33,7 +33,7 @@ import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { falaDisponivel } from '@/lib/fala';
 import { type NomeAmostra } from '@/lib/amostra-audio';
 import { useTocador } from './useTocador';
-import { Container, H2, Lead, Reveal, Check } from './base';
+import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
 
 type Rodada = {
   clipeNome: NomeAmostra; clipe: NomeAmostra; silaba: string; som: string; certa: string; nome: string;
@@ -67,9 +67,10 @@ const RODADAS: readonly Rodada[] = [
 export function OuvirEFalar() {
   const { tocar, tocando } = useTocador();
   return (
-    <section id="ouvir" aria-labelledby="ouvir-titulo" className="bg-[var(--sand)] border-y border-line">
-      <Container className="py-16 sm:py-[88px]">
+    <section id="ouvir" aria-labelledby="ouvir-titulo" className="mt-20 sm:mt-28 bg-[var(--sand)] border-y border-line">
+      <Container className="py-20 sm:py-28">
         <Reveal>
+          <Rubrica letra="ג" className="mb-5">Ouvir e falar</Rubrica>
           <H2 id="ouvir-titulo" className="max-w-[22ch] mb-3">Ouça a letra. Depois, fale e seja corrigido.</H2>
         </Reveal>
         <Reveal delay={80}>
@@ -89,7 +90,7 @@ export function OuvirEFalar() {
 
 function Passo({ n, titulo, children }: { n: number; titulo: string; children: React.ReactNode }) {
   return (
-    <div className="min-w-0 rounded-[22px] bg-[var(--card)] border border-line shadow-[var(--sh)] p-5 sm:p-7 grid gap-5">
+    <div className="min-w-0 rounded-[20px] bg-[var(--card)] shadow-[0_0_0_1px_var(--line),0_1px_2px_rgba(27,33,31,.04)] p-5 sm:p-7 grid gap-5">
       <div className="flex items-center gap-3">
         <span aria-hidden className="w-9 h-9 rounded-[11px] bg-[var(--teal-soft)] text-[var(--teal-ink)]
                                      grid place-items-center font-ui font-bold text-[15px]">{n}</span>

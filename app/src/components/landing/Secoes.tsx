@@ -30,7 +30,7 @@ import { Prose } from '@/components/learn/Blocks';
 import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { allCourses, isPlayable } from '@/lib/catalog';
-import { Container, H2, Lead, Reveal, Check, CheckList, Chevron } from './base';
+import { Container, H2, Lead, Reveal, Rubrica, Check, CheckList, Chevron } from './base';
 import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from './copy';
 import { quantasEtapasPt } from '@/lib/etapas-da-licao';
 
@@ -98,7 +98,7 @@ export function Demonstracao() {
               aria-selected={aba === i}
               onClick={() => setAba(i)}
               className={`rounded-[10px] px-[18px] py-[9px] font-ui text-[15px] font-semibold
-                          transition-all duration-[220ms]
+                          transition-[background-color,color,box-shadow] duration-[220ms]
                           ${aba === i
                             ? 'bg-[var(--card)] text-[var(--navy)] shadow-[var(--sh-tab)]'
                             : 'text-ink-muted hover:text-ink'}`}
@@ -305,66 +305,43 @@ function PainelProgresso() {
 /* ── 5 · o método ───────────────────────────────────────────────────────── */
 
 export function Metodo() {
-  const { ref, cls } = useLinha();
   return (
     <section id="metodo">
-      <Container className="pt-16 sm:pt-24">
-        <Reveal><H2 className="max-w-[20ch] mb-3">Um método simples para transformar símbolos em leitura.</H2></Reveal>
+      <Container className="pt-20 sm:pt-28">
+        <Rubrica letra="ה" className="mb-5">O método</Rubrica>
+        <H2 className="max-w-[20ch] mb-3">Um método simples para transformar símbolos em leitura.</H2>
         {/* O número vem do ARRAY, nunca escrito à mão. Ele estava: a página
             dizia "Seis passos" e renderizava cinco, porque `PASSOS` perde o
             "Ouça" enquanto não há gravação e ninguém voltou na frase. Um
             número errado na página que explica o método é pequeno e caro -
             é a seção que existe para dizer "aqui a gente é exato". */}
-        <Reveal delay={80}><Lead className="mb-10 sm:mb-[46px]">
+        <Lead className="mb-10 sm:mb-12">
           {quantasEtapasPt()} etapas em toda lição de letra, com os mesmos nomes que você
           vai ver lá dentro, sempre nesta sequência.
           Nenhuma letra avança sem passar por todas.
-        </Lead></Reveal>
+        </Lead>
 
-        <div className="relative">
-          {/* A linha que liga as etapas, crescendo da esquerda. Escondida
-              abaixo de sm, onde os passos empilham e ela ligaria o nada. */}
-          <span
-            ref={ref}
-            aria-hidden
-            className={`hidden sm:block absolute left-0 right-0 top-[27px] h-[2px] origin-left
-                        transition-transform duration-[1100ms] ease-[var(--ease-fill)] ${cls}`}
-            style={{ background: 'linear-gradient(90deg,var(--teal),var(--teal-lite))' }}
-          />
-          <ol className="relative grid gap-[18px] list-none p-0 m-0
-                         [grid-template-columns:repeat(auto-fit,minmax(150px,1fr))]">
-            {PASSOS.map(([t, d], i) => (
-              <Reveal as="li" key={t} delay={i * 70}>
-                <span aria-hidden className="mb-4 w-14 h-14 rounded-[16px] bg-[var(--card)]
-                                             border-[1.5px] border-[var(--teal)] grid place-items-center
-                                             font-ui font-bold text-[18px] text-[var(--teal-ink)]">
-                  {i + 1}
-                </span>
-                <p className="font-display text-[19px] font-semibold tracking-[-0.015em] text-ink mb-1.5">{t}</p>
-                <p className="font-ui text-[15px] leading-[1.55] text-ink-muted">{d}</p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
+        {/* As etapas como colunas sob um fio, e não círculos numerados ligados
+            por uma linha que crescia na rolagem: a sequência já está na ordem
+            de leitura, e o traço teal no topo de cada coluna marca o começo
+            de cada etapa sem desenhar uma linha do tempo de modelo pronto. */}
+        <ol className="grid gap-x-7 gap-y-9 list-none p-0 m-0 border-t border-line
+                       sm:grid-cols-2 lg:grid-cols-5">
+          {PASSOS.map(([t, d], i) => (
+            <li key={t} className="relative pt-6">
+              <span aria-hidden className="absolute -top-px left-0 h-[2px] w-10 bg-[var(--teal)]" />
+              <span aria-hidden className="block font-display text-[15px] font-semibold tracking-[-0.01em]
+                                           text-[var(--teal-ink)] tabular-nums mb-3">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <p className="font-display text-[20px] font-semibold tracking-[-0.018em] text-ink mb-2">{t}</p>
+              <p className="font-ui text-[15px] leading-[1.55] text-ink-muted">{d}</p>
+            </li>
+          ))}
+        </ol>
       </Container>
     </section>
   );
-}
-
-/** A linha do método anima `scaleX`, e não opacidade - por isso não usa o
- *  `Reveal` comum. */
-function useLinha() {
-  const [visivel, setVisivel] = useState(false);
-  const ref = (el: HTMLSpanElement | null) => {
-    if (!el || visivel) return;
-    const reduz = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reduz || !('IntersectionObserver' in window)) { setVisivel(true); return; }
-    const io = new IntersectionObserver(es => {
-      for (const e of es) if (e.isIntersecting) { setVisivel(true); io.disconnect(); }
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
-    io.observe(el);
-  };
-  return { ref, cls: visivel ? 'scale-x-100' : 'scale-x-0' };
 }
 
 /* ── 6 · o currículo ────────────────────────────────────────────────────── */
@@ -403,8 +380,8 @@ function Percurso() {
   if (comLetras.length === 0 || depois.length === 0) return null;
 
   return (
-    <Reveal delay={120}>
-      <div className="mb-9 sm:mb-11 rounded-[22px] bg-[var(--card)] border border-line p-6 sm:p-7">
+    <Reveal>
+      <div className="mb-10 sm:mb-12 rounded-[16px] bg-[var(--sand)] p-6 sm:p-7">
         <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1.5 mb-5">
           {([
             [mods.length, 'módulos'],
@@ -419,12 +396,12 @@ function Percurso() {
           ))}
         </div>
 
-        <div className="flex gap-1 h-[10px] mb-4" aria-hidden>
+        <div className="flex gap-[3px] h-2 mb-5" aria-hidden>
           {mods.map(m => (
             <span
               key={m.id}
               style={{ flexGrow: m.lessons.length || 1 }}
-              className={`rounded-full ${m.letterIds.length > 0
+              className={`rounded-[2px] ${m.letterIds.length > 0
                 ? 'bg-[var(--teal)]' : 'bg-[var(--gold)]'}`}
             />
           ))}
@@ -467,66 +444,68 @@ export function Curriculo() {
 
   return (
     <section>
-      <Container className="pt-16 sm:pt-24">
-        <Reveal><H2 className="mb-3">O que você estuda, módulo a módulo.</H2></Reveal>
-        <Reveal delay={80}><Lead className="mb-8">
+      <Container className="pt-20 sm:pt-28">
+        <Rubrica letra="ו" className="mb-5">O currículo</Rubrica>
+        <H2 className="mb-3">O que você estuda, módulo a módulo.</H2>
+        <Lead className="mb-9">
           {modulos.length} módulos. As letras aparecem por utilidade, não por ordem
           alfabética - você lê palavras reais já na primeira semana.
-        </Lead></Reveal>
+        </Lead>
 
         <Percurso />
 
-        <div className="grid gap-2.5">
+        {/* Um índice, não sete cartões: linhas separadas por fio, como o
+            sumário de um livro. O conteúdo fechado fica no HTML (`hidden`),
+            para quem busca e para o leitor de tela; abrir não anima a altura,
+            só troca o estado. */}
+        <div className="border-t border-line">
           {modulos.map((m, i) => {
             const open = aberto === i;
             const letras = m.letterIds
               .map(id => course.letters.find(l => l.id === id)?.letter)
               .filter((x): x is string => !!x);
+            const painel = `modulo-${m.id}`;
             return (
-              <div
-                key={m.id}
-                className={`rounded-[18px] bg-[var(--card)] border overflow-hidden
-                            transition-[border-color,box-shadow] duration-[250ms]
-                            ${open ? 'border-[var(--teal)] shadow-[var(--sh)]' : 'border-line'}`}
-              >
+              <div key={m.id} className="border-b border-line">
                 <button
                   type="button"
                   onClick={() => setAberto(open ? -1 : i)}
                   aria-expanded={open}
-                  className="w-full flex items-center gap-4 sm:gap-[18px] px-5 sm:px-6 py-[22px] text-left"
+                  aria-controls={painel}
+                  className="group w-full flex items-center gap-4 sm:gap-6 py-5 sm:py-6 text-left"
                 >
                   <span aria-hidden
-                        className={`w-11 h-11 rounded-[13px] grid place-items-center shrink-0
-                                    font-ui font-bold text-[16px]
-                                    ${open ? 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'
-                                           : 'bg-[var(--sand)] text-ink-muted'}`}>
+                        className={`w-8 shrink-0 font-display text-[15px] font-semibold tabular-nums
+                                    transition-colors duration-150
+                                    ${open ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
                     {String(m.n).padStart(2, '0')}
                   </span>
                   <span className="flex-1 min-w-0">
-                    <span className="block font-display text-[17px] sm:text-[19px] font-semibold
-                                     tracking-[-0.018em] text-ink">
+                    <span className="block font-display text-[18px] sm:text-[21px] font-semibold
+                                     tracking-[-0.02em] text-ink">
                       {m.titlePt}
                     </span>
-                    <span className="block font-ui text-[14px] sm:text-[14.5px] text-ink-muted mt-0.5">
+                    <span className="block font-ui text-[14px] sm:text-[14.5px] text-ink-muted mt-0.5 tabular-nums">
                       {m.lessons.length} {m.lessons.length === 1 ? 'lição' : 'lições'}
                       {letras.length > 0 && ` · ${letras.length} ${letras.length === 1 ? 'letra' : 'letras'}`}
                     </span>
                   </span>
                   {letras.length > 0 && (
-                    <span className="hidden sm:flex gap-[7px] shrink-0">
+                    <span className="hidden sm:flex gap-[9px] shrink-0">
                       {letras.map(l => (
-                        <He key={l} size="inline" className="!text-[21px] !leading-[1.1]" dim>{l}</He>
+                        <He key={l} size="inline" className="!text-[22px] !leading-[1.1]" dim>{l}</He>
                       ))}
                     </span>
                   )}
                   <Chevron open={open} />
                 </button>
-                <div className="overflow-hidden transition-[max-height] duration-[340ms] ease-[var(--ease)]"
-                     style={{ maxHeight: open ? 320 : 0 }}>
-                  <div className="px-5 sm:pl-[86px] sm:pr-6 pb-6 grid gap-[18px]
-                                  [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
+                <div id={painel} hidden={!open}>
+                  {/* `min(200px,100%)`: com o texto em 150% num telefone, um
+                      mínimo fixo de 200px empurrava a página para o lado. */}
+                  <div className="sm:pl-14 pb-7 grid gap-x-8 gap-y-3
+                                  [grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))]">
                     {m.goalsPt.map((g, k) => (
-                      <p key={k} className="flex gap-2.5 items-start font-ui text-[15px] leading-[1.5] text-ink-muted">
+                      <p key={k} className="flex gap-2.5 items-start font-ui text-[15px] leading-[1.5] text-ink-body">
                         <span className="mt-1"><Check size={14} /></span>
                         <span className="min-w-0"><Prose text={g} /></span>
                       </p>
