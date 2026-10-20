@@ -74,6 +74,51 @@ export const NAO_LISTADAS = [
   '/verificar-certificado'
 ] as const;
 
+/* ── o que a pessoa digita no Google ─────────────────────────────────────
+ * As buscas que este site responde de verdade, em português. Elas entram no
+ * TÍTULO e na DESCRIPTION das páginas públicas (é isso que o Google lê e
+ * mostra), e também na meta `keywords` do layout. A meta `keywords` o Google
+ * ignora desde 2009; ela fica só porque outros buscadores ainda a leem e
+ * porque esta lista é o lugar que diz quais palavras as páginas perseguem.
+ * Palavra nova aqui só se uma página pública responder a ela. */
+export const PALAVRAS_CHAVE = [
+  'aprender hebraico', 'curso de hebraico', 'curso de hebraico online',
+  'aprender a ler hebraico', 'alfabeto hebraico', 'letras hebraicas',
+  'hebraico para iniciantes', 'hebraico do zero', 'hebraico para brasileiros',
+  'sinais de vogal do hebraico', 'nikud', 'hebraico bíblico', 'ler a Bíblia em hebraico',
+  'escrita cursiva hebraica'
+] as const;
+
+/* ── a verificação do Google Search Console ──────────────────────────────
+ * O caminho recomendado NÃO passa por aqui: a "propriedade de domínio" do
+ * Search Console se confirma por um registro TXT no DNS da Cloudflare, e
+ * cobre o apex, o www e o workers.dev de uma vez. Este código serve ao
+ * outro caminho, a "propriedade de prefixo de URL" pela meta tag: cole aqui
+ * só o valor do `content` que o Search Console mostra (não a tag inteira) e
+ * publique. O código não é segredo: ele aparece no HTML de toda página. */
+export const VERIFICACAO: { google: string | null; bing: string | null } = {
+  google: null,
+  bing: null
+};
+
+/**
+ * Uma description que cabe no resultado da busca (~155 caracteres) sem
+ * cortar palavra: junta frases inteiras enquanto couberem. Se nem a primeira
+ * couber, corta na última palavra inteira.
+ */
+export function resumo(textos: readonly string[], max = 155): string {
+  const frases = textos.flatMap(t => t.split(/(?<=[.?!])\s+/)).map(f => f.trim()).filter(Boolean);
+  let saida = '';
+  for (const f of frases) {
+    const junto = saida ? `${saida} ${f}` : f;
+    if (junto.length > max) break;
+    saida = junto;
+  }
+  if (saida) return saida;
+  const corte = (frases[0] || '').slice(0, max);
+  return corte.slice(0, Math.max(corte.lastIndexOf(' '), 1)).replace(/[,;:]$/, '');
+}
+
 /** A rota, na forma canônica que o portão também usa para comparar. */
 function limpa(rota: string): string {
   const p = ('/' + rota).replace(/\/{2,}/g, '/').replace(/\/+$/, '').toLowerCase();

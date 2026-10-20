@@ -147,6 +147,41 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
      sai da lição. */
   const etapaAtual = useRef(stage);
   etapaAtual.current = stage;
+
+  /* Sair no meio do teste (auditoria de UX de 20/10/2026, item 7).
+     ──────────────────────────────────────────────────────────────────────
+     O teste da etapa 5 não continua de onde parou: as perguntas são
+     sorteadas a cada vez, e voltar traz um teste novo. Isso é de propósito,
+     mas sair dele era um toque - no "← Mapa", numa aba de etapa, no Voltar
+     do navegador, em qualquer link da barra - sem aviso nenhum, e dez
+     minutos de respostas sumiam. Agora, com pelo menos uma resposta dada e
+     o resultado ainda por vir, todo caminho de saída pergunta antes. */
+  const [testeEmAndamento, setTesteEmAndamento] = useState(false);
+  const testeRef = useRef(false);
+  testeRef.current = testeEmAndamento && stage === 5 && !quizResult;
+  const podeSairDoTeste = useCallback(
+    () => !testeRef.current || window.confirm(AVISO_SAIDA_DO_TESTE), []);
+  useEffect(() => {
+    const aoFechar = (e: BeforeUnloadEvent) => {
+      if (!testeRef.current) return;
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    /* Links internos (Next) não disparam `beforeunload`: o clique é pego
+       antes, na captura, e só segue se a pessoa confirmar. */
+    const aoClicar = (e: MouseEvent) => {
+      if (!testeRef.current || e.defaultPrevented || e.button !== 0) return;
+      const a = (e.target as Element | null)?.closest?.('a[href]') as HTMLAnchorElement | null;
+      if (!a || a.target === '_blank' || a.href === window.location.href) return;
+      if (!window.confirm(AVISO_SAIDA_DO_TESTE)) { e.preventDefault(); e.stopPropagation(); }
+    };
+    window.addEventListener('beforeunload', aoFechar);
+    document.addEventListener('click', aoClicar, true);
+    return () => {
+      window.removeEventListener('beforeunload', aoFechar);
+      document.removeEventListener('click', aoClicar, true);
+    };
+  }, []);
   const setStage = useCallback((n: number) => {
     if (n !== etapaAtual.current && typeof window !== 'undefined') {
       window.history.pushState({ ...window.history.state, hfEtapa: n }, '', window.location.href);
@@ -162,6 +197,11 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     const aoVoltar = (e: PopStateEvent) => {
       const n = (e.state as { hfEtapa?: unknown } | null)?.hfEtapa;
       if (typeof n !== 'number' || n < 1 || n > 5) return;
+      if (n !== 5 && testeRef.current && !window.confirm(AVISO_SAIDA_DO_TESTE)) {
+        /* Ficou: devolve a entrada do histórico que o Voltar consumiu. */
+        window.history.pushState({ ...window.history.state, hfEtapa: 5 }, '', window.location.href);
+        return;
+      }
       setStageCru(n);
     };
     window.addEventListener('popstate', aoVoltar);
@@ -169,6 +209,27 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     // só na montagem: a entrada inicial é marcada uma vez
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /* Voltar à lição abre na primeira etapa que falta (auditoria de UX de
+     20/10/2026, item 5). O ponto salvo de `lerLicao` vive 12 h nesta aba;
+     em outra aba, outro dia ou outro aparelho a lição abria em "Conhecer"
+     com quatro etapas feitas, e "Continuar aprendendo" não continuava.
+     Uma vez, quando o progresso chega; a sessão em andamento manda, e a
+     lição já concluída abre do começo. */
+  const ajustouEtapa = useRef(false);
+  useEffect(() => {
+    if (!p.ready || ajustouEtapa.current) return;
+    ajustouEtapa.current = true;
+    if (salvo) return;
+    const feitas = p.state.lessons[letter.id]?.stagesDone ?? [];
+    if (feitas.length >= STAGES.length) return;
+    const primeira = STAGES.find(s => !feitas.includes(s.n))?.n ?? 1;
+    if (primeira === 1 || etapaAtual.current !== 1) return;
+    setStageCru(primeira);
+    if (typeof window !== 'undefined') {
+      window.history.replaceState({ ...window.history.state, hfEtapa: primeira }, '', window.location.href);
+    }
+  }, [p.ready, p.state, letter.id, salvo]);
 
   useEffect(() => {
     gravarLicao(letter.id, { etapa: stage });
@@ -201,7 +262,8 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
 
   return (
     <div className="grid gap-6 reading">
-      <LessonHeader letter={letter} stage={stage} stagesDone={stagesDone} onStage={setStage} />
+      <LessonHeader letter={letter} stage={stage} stagesDone={stagesDone}
+                    onStage={n => { if (n === 5 || podeSairDoTeste()) setStage(n); }} />
 
       {stage === 1 && <StageConhecer letter={letter} history={history} onDone={() => done(1)} />}
       {stage === 2 && <StagePalavras letter={letter} onDone={() => done(2)} />}
@@ -229,11 +291,13 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
           letter={letter}
           history={history}
           result={quizResult}
+          onAndamento={setTesteEmAndamento}
           onResult={r => {
+            setTesteEmAndamento(false);
             registrarRodada(`licao-fixacao-${letter.id}`, quiz);
             setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5);
           }}
-          onRetry={() => { setQuizResult(null); setQuizRun(n => n + 1); }}
+          onRetry={() => { setTesteEmAndamento(false); setQuizResult(null); setQuizRun(n => n + 1); }}
           onNext={() => {
             gravarLicao(letter.id, null);
             if (somSeguinte) router.push(rotaDaLicao(somSeguinte));
@@ -247,6 +311,8 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
              etapa precisa soar como fim, senão ele é só mais um clique. */
           nextLabel="Concluir e continuar"
           proximaTrancada={proximaTrancada}
+          etapasQueFaltam={STAGES.filter(s => s.n < 5 && !stagesDone.includes(s.n))}
+          onIrEtapa={setStage}
           nextHint={
             somSeguinte ? `Em seguida: o som ${nomeDaLicao(somSeguinte, allLetters(), course.modules)}`
               : moduleFinished && mod?.checkpoint ? `Em seguida: Checkpoint ${mod.n}`
@@ -843,8 +909,12 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
  */
 const PASSA = MASTERY_MARK;
 
+const AVISO_SAIDA_DO_TESTE =
+  'Se sair agora, as respostas deste teste se perdem e ele recomeça do zero, com outras perguntas. Sair mesmo assim?';
+
 function StageFixacao({
-  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel, nextHint, proximaTrancada = false
+  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel, nextHint, proximaTrancada = false,
+  etapasQueFaltam = [], onIrEtapa, onAndamento
 }: {
   exercises: Exercise[];
   letter: Letter;
@@ -858,6 +928,11 @@ function StageFixacao({
   nextHint: string;
   /** A lição seguinte ainda não abre com a melhor nota desta. */
   proximaTrancada?: boolean;
+  /** As etapas 1 a 4 que ainda não foram feitas (pular pelas abas é possível). */
+  etapasQueFaltam?: readonly { n: number; label: string }[];
+  onIrEtapa?: (n: number) => void;
+  /** Avisa quando o teste ganhou a primeira resposta (para perguntar antes de sair). */
+  onAndamento?: (emAndamento: boolean) => void;
 }) {
   /* 'teste' → 'reforco' → 'fechado'. O reforço só existe quando a nota
      ficou abaixo do portão. */
@@ -900,18 +975,35 @@ function StageFixacao({
     const pct = Math.round(result.score * 100);
     const strong = result.score >= PASSA;
     const fezReforco = fase === 'fechado';
+    /* Duas réguas, uma tela (auditoria de UX de 20/10/2026, item 6): a nota
+       de domínio (MASTERY_MARK, 75%) conta a letra; a de liberar
+       (LIBERA_MARK, 80%) abre a próxima lição, que também pede as cinco
+       etapas feitas. Entre as duas, ou com etapa pulada, a tela dizia "Mais
+       uma lição concluída." e mandava refazer. Agora o título diz o que
+       falta, e o botão principal leva até lá. */
+    const notaAbre = result.score >= LIBERA_MARK;
+    const faltaEtapa = proximaTrancada && notaAbre && etapasQueFaltam.length > 0;
+    const faltamAcertos = Math.max(0, acertosPara(LIBERA_MARK, result.total) - result.correct);
+    const listaEtapas = etapasQueFaltam.map(e => e.label).join(', ').replace(/, ([^,]*)$/, ' e $1');
     return (
       <div className="grid gap-5">
         <Milestone
           tone={strong || fezReforco ? 'bom' : 'parcial'}
           kicker={`${result.correct} de ${result.total} · ${pct}%`}
-          title={strong ? 'Mais uma lição concluída.'
+          title={faltaEtapa
+            ? `Falta ${etapasQueFaltam.length === 1 ? 'a etapa' : 'as etapas'} ${listaEtapas} para abrir a próxima lição.`
+            : strong && proximaTrancada
+              ? `Quase: ${faltamAcertos === 1 ? 'faltou 1 acerto' : `faltaram ${faltamAcertos} acertos`} para abrir a próxima lição.`
+            : strong ? 'Mais uma lição concluída.'
             : fezReforco ? 'Reforço feito.'
             : result.score >= 0.6 ? 'Quase lá.'
             : `Vamos firmar ${letter.namePt}.`}
           /* A mensagem acompanha a nota de verdade. "Faltou pouco" num
              resultado de zero é a plataforma fingindo que não viu. */
-          body={strong && !proximaTrancada
+          body={faltaEtapa
+            ? `A nota já abre a próxima lição (${pct}%). Falta fazer ${etapasQueFaltam.length === 1 ? 'a etapa' : 'as etapas'} `
+              + `${listaEtapas}: a lição só fica completa com as cinco.`
+            : strong && !proximaTrancada
             ? `Você reconhece ${letter.namePt} sozinha, dentro de uma palavra e entre as parecidas. Pode seguir com segurança.`
             : proximaTrancada && (strong || fezReforco)
               ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
@@ -930,7 +1022,11 @@ function StageFixacao({
               Praticar mais um pouco
             </Button>
           )}
-          {proximaTrancada ? (
+          {faltaEtapa && onIrEtapa ? (
+            <Button onClick={() => onIrEtapa(etapasQueFaltam[0]!.n)}>
+              {`Ir para ${etapasQueFaltam[0]!.label}`}
+            </Button>
+          ) : proximaTrancada ? (
             /* A próxima lição ainda não abre: o caminho principal é refazer,
                e "Em seguida" some, porque ele apontaria para uma porta
                trancada (UXQA-002). */
@@ -965,6 +1061,7 @@ function StageFixacao({
     <ExercisePlayer
       exercises={exercises}
       title={`Exercícios - letra ${letter.namePt}`}
+      aoAvancar={() => onAndamento?.(true)}
       onDone={r => { track('quiz_completed', { letterId: letter.id, score: r.score }); onResult(r); }}
     />
   );

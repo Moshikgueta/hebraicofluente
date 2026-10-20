@@ -17,6 +17,8 @@
  */
 
 import Link from 'next/link';
+import { AvisoPixAguardando } from '@/components/platform/AvisoPixAguardando';
+import { usePixAguardando } from '@/lib/pix-aguardando';
 import { useEffect, useState } from 'react';
 import { Prose } from '@/components/hebrew/Prose';
 import { Card, Badge } from '@/components/ui/Card';
@@ -240,6 +242,7 @@ function BuyBox({ slug }: { slug: string }) {
   const parcelas = parcelasMax(c.price);
   const cheio = ancora(c.price);
   const venceuEm = useVencido(c.slug, account.ready && account.signedIn && !owned && open);
+  const aguardando = usePixAguardando(c.slug, account.ready && account.signedIn && !owned && open);
 
   if (owned) {
     return (
@@ -267,6 +270,18 @@ function BuyBox({ slug }: { slug: string }) {
           Ver o curso 01
         </LinkButton>
       </Card>
+    );
+  }
+
+  /* Gerou um PIX e o acesso ainda não entrou (auditoria de UX, item 4): o
+     aviso toma o lugar do preço e do botão de pagar. Quem não pagou tem o
+     link para o checkout dentro do aviso; quem pagou não tem onde errar. */
+  if (aguardando) {
+    return (
+      <div className="grid gap-4 content-start">
+        <AvisoPixAguardando order={aguardando} email={account.session?.account.email}
+                            linkPagar={`/checkout/${c.slug}`} />
+      </div>
     );
   }
 
