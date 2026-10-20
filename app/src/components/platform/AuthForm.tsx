@@ -48,10 +48,17 @@ export const MOTIVOS: Record<string, string> = {
     'O limite é de 3 aparelhos ao mesmo tempo.'
 };
 
-export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
+export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarPara }: {
   mode: 'signin' | 'signup';
   /** No checkout o título da página é o do passo, e este vira h2 (VIS-012). */
   nivelDoTitulo?: 'h1' | 'h2';
+  /**
+   * Para onde voltar, quando o formulário mora DENTRO de outra página (o
+   * checkout). Vence o `?next=` da URL. Sem isto, criar a conta no passo 1 do
+   * checkout mandava a pessoa para o painel, e de lá para a página de venda,
+   * em vez de mostrar o passo 2 (auditoria de UX de 20/10/2026, item 1).
+   */
+  voltarPara?: string;
 }) {
   const account = useAccount();
   const router = useRouter();
@@ -63,7 +70,7 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
      o formulário inteiro; a URL só decide para onde voltar e se há aviso. */
   const [busca, setBusca] = useState<URLSearchParams | null>(null);
   useEffect(() => { setBusca(new URLSearchParams(window.location.search)); }, []);
-  const next = safeNext(busca?.get('next') ?? null);
+  const next = voltarPara ? safeNext(voltarPara) : safeNext(busca?.get('next') ?? null);
   const motivo = MOTIVOS[busca?.get('motivo') ?? ''];
   const Titulo = nivelDoTitulo;
 
@@ -75,6 +82,13 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
   const [aceite, setAceite] = useState(false);
 
   const signup = mode === 'signup';
+
+  /* "Já existe uma conta com esse e-mail" leva ao login com o e-mail já
+     preenchido: quem errou de formulário não digita duas vezes. */
+  useEffect(() => {
+    const doLink = busca?.get('email');
+    if (!signup && doLink && emailLooksValid(doLink)) setEmail(e => e || doLink);
+  }, [busca, signup]);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
@@ -89,7 +103,9 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
     try {
       if (signup) await account.signUp({ name, email, password, aceitouTermos: aceite, declarouIdade: aceite });
       else await account.signIn({ email, password });
-      router.replace(safeNext(new URLSearchParams(window.location.search).get('next')));
+      router.replace(voltarPara
+        ? safeNext(voltarPara)
+        : safeNext(new URLSearchParams(window.location.search).get('next')));
     } catch (err) {
       setError(err instanceof AuthError ? err.message : MESSAGES.server);
       setBusy(false);
@@ -175,6 +191,16 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
           )}
 
           {error && <Erro id="auth-erro">{error}</Erro>}
+          {/* A conta já existe: o caminho é entrar, e o link tem de estar
+              junto da frase que manda entrar (item 2 da auditoria de UX). */}
+          {error === MESSAGES['email-taken'] && (
+            <p className="font-ui text-[14px] m-0 -mt-1">
+              <Link href={`/entrar?next=${encodeURIComponent(next)}&email=${encodeURIComponent(email)}`}
+                    className="font-semibold text-[var(--accent)] underline underline-offset-2">
+                Entrar com {email}
+              </Link>
+            </p>
+          )}
 
           <Button type="submit" size="lg" full disabled={busy}>
             {busy ? (signup ? 'Criando…' : 'Entrando…') : (signup ? 'Criar conta' : 'Entrar')}

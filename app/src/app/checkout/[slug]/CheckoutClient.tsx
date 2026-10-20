@@ -31,7 +31,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
@@ -44,6 +44,9 @@ import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 import { api } from '@/lib/account/api';
 import { deveRetomarPix } from './retomada';
+import { qrMatriz, qrSvgPath } from '@/lib/qr';
+import { usePixAguardando } from '@/lib/pix-aguardando';
+import { AvisoPixAguardando } from '@/components/platform/AvisoPixAguardando';
 
 /** De quanto em quanto tempo perguntar, e por quanto tempo insistir.
  *
@@ -97,6 +100,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
      acesso" do painel saía para bater num "nada a pagar". */
   const restam = daysLeft(account.session, slug);
   const owned = account.can(slug) && (restam === null || restam > 45);
+  const aguardando = usePixAguardando(slug, account.ready && account.signedIn && !owned);
   const parcelas = parcelasMax(c.price);
   const total = method === 'pix' ? pixPrice(c.price) : c.price.brl;
 
@@ -312,6 +316,10 @@ export function CheckoutClient({ slug }: { slug: string }) {
             {fimDaParceria(getCourse(slug)!) ? `, até ${fimDaParceria(getCourse(slug)!)}` : ''}.
           </p>
         )}
+        {/* Um PIX deste curso gerado antes e ainda sem acesso, com o código
+            já vencido (o válido o checkout reabre sozinho): o aviso vem antes
+            de qualquer botão de pagar (auditoria de UX, item 4). */}
+        {aguardando && !order && <AvisoPixAguardando order={aguardando} email={account.session?.account.email} />}
         <div className="grid gap-1">
           <Badge tone="accent">Passo 2 de 2</Badge>
           {/* Um h1 por passo (auditoria de 01/10/2026, VIS-012): o título que já
@@ -537,6 +545,11 @@ function PixPanel({
           Se você já pagou, não pague de novo: o acesso entra sozinho.
         </p>
       )}
+      {/* O QR, desenhado aqui a partir do próprio código (lib/qr.ts): quem
+          compra no computador aponta o celular para a tela em vez de levar um
+          texto de 150 caracteres até o banco (auditoria de UX, item 3). No
+          celular o caminho continua sendo o copia e cola, logo abaixo. */}
+      <QrPix codigo={order.pix!.code} ate={ate} />
       <div className="grid gap-2">
         <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
           PIX copia e cola
@@ -588,6 +601,27 @@ function PixPanel({
   );
 }
 
+/** O QR do código PIX, em SVG, com o prazo do código embaixo. */
+function QrPix({ codigo, ate }: { codigo: string; ate: string }) {
+  const desenho = useMemo(() => {
+    try { return qrSvgPath(qrMatriz(codigo)); } catch { return null; }
+  }, [codigo]);
+  if (!desenho) return null;
+  return (
+    <figure className="m-0 grid justify-items-center gap-2 rounded-[var(--r-md)] border border-line bg-white p-4">
+      <svg role="img" aria-label="QR Code do PIX. Escaneie com o aplicativo do seu banco."
+           viewBox={`0 0 ${desenho.lado} ${desenho.lado}`} shapeRendering="crispEdges"
+           className="w-full max-w-[240px] aspect-square">
+        <rect width={desenho.lado} height={desenho.lado} fill="#fff" />
+        <path d={desenho.d} fill="#000" />
+      </svg>
+      <figcaption className="font-ui text-[13px] leading-relaxed text-ink-muted text-center tabular-nums">
+        Escaneie com o app do banco, na área Pix. Vale até as {ate}.
+      </figcaption>
+    </figure>
+  );
+}
+
 /* ── peças ────────────────────────────────────────────────────────────── */
 
 function MethodOption({
@@ -611,10 +645,12 @@ function MethodOption({
 
 /** O formulário de conta, apontando o retorno para o próprio checkout. */
 function AuthFormInline({ slug }: { slug: string }) {
-  /* AuthForm lê `?next=` da URL, e aqui a URL é a do checkout. Em vez de
-     duplicar o formulário com outra prop, o link de retorno é o endereço
-     atual - que é exatamente o que a pessoa quer: voltar para a compra. */
-  return <AuthForm mode="signup" nivelDoTitulo="h2" key={slug} />;
+  /* O retorno é o próprio checkout, dito ao formulário com `voltarPara`. A
+     versão anterior contava com o `?next=` da URL, que no checkout não
+     existe: criar a conta levava ao painel, e o portão de lá mandava para a
+     página de venda, longe do passo 2 (auditoria de UX de 20/10/2026, itens
+     1 e 2). O mesmo destino vale para "Já tem conta? Entrar". */
+  return <AuthForm mode="signup" nivelDoTitulo="h2" voltarPara={`/checkout/${slug}`} key={slug} />;
 }
 
 function Shell({ course, children }: {
