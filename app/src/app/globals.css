@@ -64,9 +64,16 @@
        on the page: the Portuguese is the frame, the Hebrew is the content. */
     direction: ltr;
   }
-  body { margin: 0; background: var(--paper); overflow-x: hidden; }
+  /* Suavização em escala de cinza: no macOS o padrão subpixel engorda o
+     texto claro sobre o navy e deixa a Instrument Sans com peso irregular. */
+  body {
+    margin: 0; background: var(--paper); overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  }
 
-  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; }
+  /* `balance` reparte o título em linhas de largura parecida: sem ele, um
+     H2 de duas linhas termina com uma palavra órfã na segunda. */
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; text-wrap: balance; }
   p { margin: 0; }
 }
 
@@ -157,21 +164,12 @@
 @keyframes hf-seta-rtl { from { transform: translateX(84px); opacity: .25; } 20% { opacity: 1; } to { transform: translateX(0); opacity: 1; } }
 .seta-rtl { left: 0; animation: hf-seta-rtl 2.4s ease-in-out infinite; }
 
-/* ── revelação por scroll ───────────────────────────────────────────────
-   O estado inicial mora no CSS para que o conteúdo já esteja escrito no HTML
-   exportado: o IntersectionObserver só acrescenta `.vis`. Sem JS, ou com
-   reduced-motion, nada fica invisível para sempre. */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
-.reveal.vis { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; }
-}
-/* Sem JavaScript nenhum observador acrescenta `.vis`, e a entrada do hero
-   (`data-entrada`, Hero.tsx) nasce com opacidade zero num estilo inline que
-   só o React troca. `scripting: none` mostra tudo, e o `!important` vence o
-   estilo inline (auditoria de 01/10, UXQA-001). */
+/* A entrada do hero (`data-entrada`, Hero.tsx) nasce com opacidade zero num
+   estilo inline que só o React troca. `scripting: none` mostra tudo, e o
+   `!important` vence o estilo inline (auditoria de 01/10, UXQA-001). A
+   revelação por rolagem das outras seções saiu em 20/10/2026. */
 @media (scripting: none) {
-  .reveal, [data-entrada] { opacity: 1 !important; transform: none !important; }
+  [data-entrada] { opacity: 1 !important; transform: none !important; }
 }
 
 .skeleton {
@@ -365,7 +363,6 @@ html[data-a11y-movimento='reduzido'] *::after {
   transition-duration: .001ms !important;
   scroll-behavior: auto !important;
 }
-html[data-a11y-movimento='reduzido'] .reveal { opacity: 1; transform: none; }
 
 /* ── o botão flutuante ──────────────────────────────────────────────────
    Embaixo à direita, acima da barra do polegar (que existe nas duas cascas

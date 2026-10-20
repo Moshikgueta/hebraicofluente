@@ -31,7 +31,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { course } from '@/lib/content-publico';
-import { Container, H2, Lead, Reveal, Check } from './base';
+import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
 
 /** Roda uma vez, quando o bloco entra na tela. Devolve `true` para animar. */
 function useNaTela<T extends HTMLElement>() {
@@ -303,11 +303,9 @@ const CARTOES = [
 export function Decisoes() {
   return (
     <section id="decisoes" aria-labelledby="decisoes-titulo">
-      <Container className="pt-16 sm:pt-24">
+      <Container className="pt-20 sm:pt-28">
         <Reveal>
-          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
-            Como o curso foi pensado
-          </p>
+          <Rubrica letra="ד" className="mb-5">Como o curso foi pensado</Rubrica>
           <H2 id="decisoes-titulo" className="mb-3 max-w-[22ch]">
             Três decisões que tornam o aprendizado mais leve.
           </H2>
@@ -319,38 +317,36 @@ export function Decisoes() {
           </Lead>
         </Reveal>
 
-        <ul className="grid gap-4 lg:grid-cols-3 list-none p-0 m-0">
-          {CARTOES.map((c, i) => (
-            <Reveal as="li" key={c.n} delay={i * 90}>
-              {/* `flex-col` e não `grid`: os três cartões têm quantidades
-                  diferentes de texto, e com grade o destaque de cada um
-                  parava numa altura diferente. Em coluna, o `mt-auto` do
-                  destaque empurra os três para a mesma linha de base - que é
-                  o que faz três cartões lado a lado lerem como um objeto só. */}
-              <article className="h-full rounded-[22px] border border-line bg-[var(--card)]
-                                  p-6 sm:p-7 flex flex-col gap-5">
-                <div className="grid gap-2.5">
-                  <p className="font-ui text-[12.5px] font-bold tracking-[.14em] text-[var(--teal-ink)] m-0">
-                    {c.n}
-                  </p>
-                  <h3 className="font-display text-[21px] sm:text-[22px] font-semibold
-                                 tracking-[-0.02em] text-ink m-0">
+        {/* Três linhas, e não três cartões lado a lado. Em colunas, o cartão
+            de texto mais curto ficava com um vão no meio, esperando o mais
+            longo terminar; em linhas, cada decisão tem o argumento à
+            esquerda e a prova clicável à direita, e a página muda de ritmo
+            depois de duas seções em grade. */}
+        <ol className="list-none p-0 m-0 border-t border-line">
+          {CARTOES.map(c => (
+            <li key={c.n} className="border-b border-line">
+              <article className="grid gap-6 lg:gap-14 py-9 sm:py-11
+                                  lg:grid-cols-[56px_minmax(0,1fr)_minmax(0,400px)] lg:items-start">
+                <p aria-hidden className="font-display text-[15px] font-semibold tracking-[-0.01em]
+                                          text-[var(--teal-ink)] tabular-nums m-0 lg:pt-1.5">
+                  {c.n}
+                </p>
+                <div className="grid gap-3 content-start max-w-[52ch]">
+                  <h3 className="font-display text-[23px] sm:text-[26px] font-semibold leading-[1.15]
+                                 tracking-[-0.022em] text-ink m-0">
                     {c.t}
                   </h3>
-                  <p className="font-ui text-[15.5px] leading-[1.6] text-ink-muted m-0">{c.b}</p>
+                  <p className="font-ui text-[16px] leading-[1.6] text-ink-muted m-0">{c.b}</p>
+                  <p className="font-display text-[17px] leading-[1.45] font-medium tracking-[-0.01em]
+                                text-ink m-0 mt-2 pl-4 border-l-2 border-[var(--teal)]">
+                    {c.destaque}
+                  </p>
                 </div>
-
-                {c.visual}
-
-                <p className="font-display text-[16.5px] leading-[1.45] font-medium
-                              tracking-[-0.01em] text-ink m-0 mt-auto pt-4
-                              border-t border-[color:var(--line-soft)]">
-                  {c.destaque}
-                </p>
+                <div className="min-w-0">{c.visual}</div>
               </article>
-            </Reveal>
+            </li>
           ))}
-        </ul>
+        </ol>
       </Container>
     </section>
   );

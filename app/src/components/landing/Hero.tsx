@@ -1,29 +1,41 @@
 'use client';
 
-/* O hero, e a sequência de entrada.
+/* O hero.
  * ─────────────────────────────────────────────────────────────────────────
- * Cinco etapas encadeadas: título, parágrafo, botões, mockup, e por fim a
- * resposta do mockup virando acerto - com o +10 XP subindo e a sequência
- * passando de 6 para 7 dias. Não é enfeite: em cinco segundos a página conta
- * o que o produto faz, sem vídeo e sem uma linha de texto a mais.
+ * À esquerda, a promessa em português; à direita, uma LÂMINA: a letra Shin
+ * como ela aparece na lição, grande, com o som, o traçado da cursiva e a
+ * frase que explica o ponto. É o produto mostrado pelo que ele ensina, e não
+ * pela moldura de app.
  *
- * Com `prefers-reduced-motion`, todos os atrasos viram zero. A página chega
- * no estado final na hora, em vez de encenar - e o estado final é o mesmo.
+ * Até 20/10/2026 a coluna da direita era a maquete de um exercício com dois
+ * cartões flutuantes ("Sequência 7 dias", "Lição concluída · 5 novas
+ * letras") e um +10 XP subindo. Saiu por três motivos: era a composição que
+ * todo app de idioma usa, e por isso não dizia nada desta marca; os números
+ * não eram de ninguém; e "5 novas letras" desmentia, ao lado, o "uma letra
+ * por vez" do subtítulo. A demonstração de verdade, clicável, está na seção
+ * logo abaixo (#experimente).
  *
- * Os timers são limpos no desmonte. Um `setTimeout` que dispara depois de a
- * rota trocar chama `setState` num componente que não existe mais.
+ * A entrada é curta (menos de meio segundo, só opacidade e translação) e
+ * acontece uma vez por sessão: quem volta à capa na mesma visita encontra a
+ * página parada. Com `prefers-reduced-motion`, nada se move.
  */
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { He } from '@/components/hebrew/He';
-import { Container, Check } from './base';
-import { TEM_AUDIO } from './copy';
+import { course, licaoDaLetra } from '@/lib/content-publico';
+import { Container, Rubrica } from './base';
+import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { SEM_MIDIA, type HeroMedia } from './media';
 
+/** [etapa, atraso em ms]. Título, apoio, botões, lâmina. */
+const ETAPAS: readonly [number, number][] = [[1, 40], [2, 110], [3, 180], [4, 240]];
+const VISTO = 'hf-hero-visto';
 
-const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1000], [5, 1900]];
-
+/* Os três desejos de quem chega (a versão "híbrida" do hero, escolhida pelo
+   dono do curso em 28/09/2026). Eram selos com borda; viraram uma linha
+   corrida com separadores, que diz o mesmo sem disputar com os botões. */
+const DESEJOS = ['para viajar a Israel', 'para ler as letras da Bíblia', 'para finalmente entender o alfabeto'];
 
 /* A mensagem central é em PORTUGUÊS, inteira.
  * ─────────────────────────────────────────────────────────────────────────
@@ -33,10 +45,8 @@ const ETAPAS: readonly [number, number][] = [[1, 120], [2, 420], [3, 720], [4, 1
  * está lendo, o que a pessoa vai conseguir fazer -, e um caractere que ela
  * não consegue decifrar no meio da frase trabalha contra isso.
  *
- * O hebraico continua na página, e de sobra: ele está no mockup, na aula de
- * amostra, no fecho. Ali ele é DEMONSTRAÇÃO, que é o papel certo dele numa
- * página de venda - mostra o que se vai aprender em vez de exigir que já se
- * saiba.
+ * O hebraico continua na primeira tela, como DEMONSTRAÇÃO: a lâmina mostra o
+ * que se vai aprender em vez de exigir que já se saiba.
  */
 export function Hero({
   primaryHref, primaryLabel, primaryMicro, secondaryHref, midia = SEM_MIDIA
@@ -52,176 +62,104 @@ export function Hero({
   const [etapa, setEtapa] = useState(0);
   useEffect(() => {
     const reduz = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    const timers = ETAPAS.map(([v, ms]) => setTimeout(() => setEtapa(v), reduz ? 0 : ms));
+    let visto = false;
+    try { visto = sessionStorage.getItem(VISTO) === '1'; sessionStorage.setItem(VISTO, '1'); } catch { /* aba privada */ }
+    if (reduz || visto) { setEtapa(ETAPAS.length); return; }
+    const timers = ETAPAS.map(([v, ms]) => setTimeout(() => setEtapa(v), ms));
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  const em = (n: number) => etapa >= n;
-  const certo = em(5);
+  const entra = (n: number, y = 12) => ({
+    opacity: etapa >= n ? 1 : 0,
+    transform: etapa >= n ? 'none' : `translateY(${y}px)`
+  });
+  const transicao = 'transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(.23,1,.32,1)]';
 
   return (
     <header className="relative overflow-hidden">
-      {/* O brilho do canto superior direito. Sem eventos de ponteiro: ele
-          cobre a coluna inteira e engoliria os cliques dos botões. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(120% 90% at 82% -10%, #EAF4F1 0%, rgba(234,244,241,0) 58%)' }}
-      />
       <AtmosferaFundo midia={midia} />
-      <Container className="relative pt-8 pb-16 sm:pt-[78px] sm:pb-24
-                            grid gap-12 lg:gap-[60px] lg:grid-cols-[minmax(0,1.04fr)_minmax(0,1fr)] lg:items-center">
+      <Container className="relative pt-9 pb-16 sm:pt-[76px] sm:pb-24
+                            grid gap-12 lg:gap-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)] lg:items-center">
         <div>
           {/* A mensagem do hero: o resultado claro no título e os três
-              desejos como selos logo abaixo (a versão "híbrida", escolhida
-              pelo dono do curso em 28/09/2026).
-              ──────────────────────────────────────────────────────────────
-              De 28/09 a 01/10/2026 ela disputou um teste A/B (`hero-2026-09`)
-              com uma versão B feita de perguntas ("Quer viajar para Israel?
-              Ler as letras da Bíblia no original?"). Com o volume do
-              pré-lançamento o teste não chegaria a significância antes de
-              31/10, e a auditoria de 01/10 (CONV-009) recomendou decidir por
-              clareza: ficou a A, que diz em uma linha o que se aprende. O
-              registro do teste está no CLAUDE.md ("Teste A/B do hero"). */}
-          <div
-            className="transition-[opacity,transform] duration-[600ms] ease-[var(--ease)]"
-            data-entrada
-            style={{ opacity: em(1) ? 1 : 0, transform: em(1) ? 'none' : 'translateY(20px)' }}
-          >
-            <p className="inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
-                          font-ui text-[13px] sm:text-[13.5px] font-semibold px-3.5 py-1.5 m-0 mb-4 sm:mb-5">
-              <span aria-hidden className="w-[7px] h-[7px] rounded-full bg-[var(--teal)]" />
+              desejos logo abaixo. De 28/09 a 01/10/2026 ela disputou um teste
+              A/B com uma versão feita de perguntas; ficou esta, que diz em
+              uma linha o que se aprende (CLAUDE.md, "Teste A/B do hero"). */}
+          <div className={transicao} data-entrada style={entra(1)}>
+            <Rubrica className="mb-5 sm:mb-6">
               <span className="sm:hidden">Do zero · alfabetização em hebraico</span>
               <span className="hidden sm:inline">Alfabetização em hebraico · para iniciantes absolutos</span>
-            </p>
-            <h1 className="font-display font-semibold text-[clamp(36px,4.3vw,56px)] leading-[1.04]
-                           tracking-[-0.035em] text-balance m-0 mb-5">
+            </Rubrica>
+            <h1 className="font-display font-semibold text-[clamp(38px,4.6vw,60px)] leading-[1.02]
+                           tracking-[-0.038em] m-0 mb-5">
               Ler e escrever hebraico, <span className="text-[var(--teal-ink)]">do zero.</span>
             </h1>
-            {/* Os três desejos, como selos: cada um cabe numa linha curta, e
-                juntos dizem "é para mim" sem pesar o título. */}
-            <ul className="flex flex-wrap gap-2 list-none p-0 m-0 mb-6" aria-label="Para quem é">
-              {['para viajar a Israel', 'para ler as letras da Bíblia', 'para finalmente entender o alfabeto'].map(t => (
-                <li key={t} className="inline-flex items-center gap-2 rounded-full border border-line bg-[var(--card)]
-                                       px-3.5 py-1.5 font-ui text-[14.5px] sm:text-[15px] font-medium text-ink-body">
-                  <span aria-hidden className="w-[6px] h-[6px] rounded-full bg-[var(--teal)]" />
+            <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 list-none p-0 m-0 mb-7
+                           font-ui text-[15px] sm:text-[16px] font-medium text-ink-body"
+                aria-label="Para quem é">
+              {DESEJOS.map(t => (
+                <li key={t} className="inline-flex items-center gap-2.5 mr-2">
+                  <span aria-hidden className="w-[5px] h-[5px] rounded-full bg-[var(--gold)]" />
                   {t}
                 </li>
               ))}
             </ul>
           </div>
-          <div
-            className="transition-[opacity,transform] duration-[600ms] delay-[120ms] ease-[var(--ease)]"
-            data-entrada
-            style={{ opacity: em(2) ? 1 : 0, transform: em(2) ? 'none' : 'translateY(16px)' }}
-          >
-            <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.34] font-medium tracking-[-0.02em]
-                          text-ink text-balance max-w-[30ch] m-0 mb-2">
+          <div className={transicao} data-entrada style={entra(2)}>
+            <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.32] font-medium tracking-[-0.02em]
+                          text-ink max-w-[30ch] m-0 mb-2">
               Mesmo que hoje você não reconheça uma única letra.
             </p>
-            <p className="font-ui text-[16.5px] sm:text-[18px] leading-[1.55] text-ink-muted max-w-[46ch] m-0 mb-7">
+            <p className="font-ui text-[16.5px] sm:text-[18px] leading-[1.55] text-ink-muted max-w-[46ch] m-0 mb-8">
               Uma letra por vez, com som, escrita e correção na hora, até ler suas primeiras palavras sozinho.
             </p>
           </div>
 
-          <div
-            className="grid gap-2.5 justify-items-start mb-7
-                       transition-[opacity,transform] duration-500 delay-[260ms] ease-[var(--ease)]"
-            data-entrada
-            style={{ opacity: em(3) ? 1 : 0, transform: em(3) ? 'none' : 'translateY(14px)' }}
-          >
-            {/* Medido: a coluna tem 553px e os dois botões somavam 573.
-                Cortar o respiro interno dos dois deixou 555 - dois pixels
-                de fora, o que é a pior distância possível. Então o secundário
-                cede meio ponto de corpo também, que é hierarquia normal para
-                um botão secundário e traz a soma para 547. Se numa fonte de
-                reserva eles voltarem a não caber, o `flex-wrap` empilha - que
-                é a degradação certa, e não um defeito. */}
-            <div className="flex flex-wrap gap-2.5">
+          <div className={`grid gap-3 ${transicao}`} data-entrada style={entra(3)}>
+            {/* Os dois botões com a mesma altura e o mesmo raio: no celular,
+                os dois ocupam a largura toda (antes o secundário ficava com a
+                largura do texto, torto embaixo de um primário cheio). */}
+            <div className="flex flex-col sm:flex-row gap-2.5">
               <Link
                 href={primaryHref}
-                className="group inline-flex items-center justify-center gap-2 rounded-[13px] w-full sm:w-auto
-                           text-center leading-[1.3]
-                           bg-[var(--navy)] text-white font-ui font-semibold text-[16.5px] px-5 py-[15px]
-                           shadow-[var(--sh)] transition-[background-color,transform] duration-[180ms]
-                           hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-[12px] min-h-[54px]
+                           text-center leading-[1.3] bg-[var(--navy)] text-white
+                           font-ui font-semibold text-[16.5px] px-6
+                           shadow-[0_1px_0_rgba(255,255,255,.08)_inset,0_1px_2px_rgba(14,59,67,.2),0_8px_20px_-10px_rgba(14,59,67,.55)]
+                           transition-[background-color,transform] duration-150 ease-out
+                           hover:bg-[var(--navy-2)] active:scale-[.98]"
               >
                 {primaryLabel}
                 {/* A seta anda 3px no hover. Micro-interação, não animação: o
                     botão responde ao ponteiro sem chamar atenção para si. */}
                 <span aria-hidden
-                      className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
+                      className="transition-transform duration-150 ease-out group-hover:translate-x-[3px]">→</span>
               </Link>
               <Link
                 href={secondaryHref}
-                className="inline-flex items-center justify-center rounded-[13px] bg-[var(--card)] text-ink
-                           border border-line font-ui font-semibold text-[16px] px-4 py-[15px]
-                           transition-[border-color,transform] duration-[180ms]
-                           hover:border-[#C9C3B4] hover:-translate-y-[2px]"
+                className="inline-flex items-center justify-center rounded-[12px] min-h-[54px] px-5
+                           bg-[var(--card)] text-ink font-ui font-semibold text-[16px]
+                           shadow-[0_0_0_1px_var(--line),0_1px_2px_rgba(27,33,31,.05)]
+                           transition-[box-shadow,transform] duration-150 ease-out
+                           hover:shadow-[0_0_0_1px_#C9C3B4,0_1px_2px_rgba(27,33,31,.08)] active:scale-[.98]"
               >
-                {/* Leva ao TESTE, e não a um texto sobre ele: o segundo botão
-                    de um hero existe para quem quer experimentar antes de
-                    decidir, e mandá-lo para mais copy desperdiça o clique.
-                    "Saiba mais" seria o pior dos dois mundos - não diz o que
-                    acontece e não promete nada.
-
-                    E é «teste», não «aula»: o curso não vende aula ao vivo
-                    nem videoaula, e um botão que promete uma cria a
-                    expectativa errada antes mesmo da compra. O que está do
-                    outro lado é o produto, em pequeno - que é exatamente o
-                    que «teste» diz. */}
+                {/* Leva ao TESTE, e não a um texto sobre ele, e é «teste», não
+                    «aula»: o curso não vende aula ao vivo nem videoaula. */}
                 Fazer um teste grátis
               </Link>
             </div>
             {/* A microcópia responde a pergunta que trava o clique: "e o que
-                acontece depois que eu clicar?". Fica embaixo do botão, no
-                tamanho de nota de rodapé, porque é resposta e não promessa. */}
-            <p className="font-ui text-[13.5px] text-ink-muted m-0">{primaryMicro}</p>
+                acontece depois que eu clicar?". */}
+            <p className="font-ui text-[13.5px] text-ink-muted m-0 tabular-nums">{primaryMicro}</p>
           </div>
-
-          {/* Os quatro chips de confiança ("Acesso imediato", "No seu ritmo",
-              "Feito para brasileiros", "Curso interativo") saíram daqui. Eram
-              uma segunda lista de quatro itens dizendo quase o mesmo que a
-              linha de fatos acima, e duas listas paralelas na primeira tela
-              não somam confiança - elas dividem a atenção e empurram o
-              produto para baixo da dobra no celular.
-
-              O que elas diziam de único continua na página: "acesso imediato"
-              está na microcópia do botão, e "feito para brasileiros" é a
-              frase inteira do subtítulo. */}
         </div>
 
-        <div
-          className="relative transition-[opacity,transform] duration-700 delay-[340ms] ease-[var(--ease)]"
-          data-entrada
-            style={{ opacity: em(4) ? 1 : 0, transform: em(4) ? 'none' : 'translateY(26px)' }}
-        >
+        {/* Até 1024px a lâmina fica embaixo do texto; sem o teto de 540px,
+            num tablet em pé ela ocupava a largura toda e a letra virava
+            cartaz. */}
+        <div className={`relative w-full max-w-[540px] lg:max-w-none ${transicao}`} data-entrada style={entra(4, 18)}>
           {!midia.imagem && !midia.video && <HaloDesenhado />}
-          <Mockup ativo={em(4)} certo={certo} />
-          {/* ACIMA do cartão, e não sobre a borda dele: em `top-[-22px]` o
-              selo cobria a barra de progresso e cortava o "72%" no desktop
-              (auditoria de 01/10, VIS-015). */}
-          <CartaoFlutuante
-            className="top-[-66px] right-[-6px] sm:right-[-14px]"
-            style={{ animationDuration: '5.5s' }}
-            icone={<Chama />}
-            fundo="var(--gold-soft)"
-            rotulo="Sequência"
-            valor={`${certo ? 7 : 6} dias`}
-          />
-          {/* Abaixo do mockup, e não por cima dele.
-              Em `bottom-[56px]` este cartão caía exatamente sobre a linha das
-              alternativas e escondia o "SH ✓" - que é o desfecho da cena e o
-              único lugar da primeira tela onde a página mostra uma resposta
-              sendo corrigida. Um enfeite flutuante tapando o argumento. */}
-          <CartaoFlutuante
-            className="left-[-10px] sm:left-[-26px] bottom-[-26px]"
-            style={{ animationDuration: '6.5s', animationDelay: '.8s' }}
-            icone={<Check size={16} color="var(--teal)" />}
-            fundo="var(--teal-soft)"
-            rotulo="Lição concluída"
-            valor="5 novas letras"
-          />
+          <Lamina />
         </div>
       </Container>
     </header>
@@ -320,7 +258,7 @@ function AtmosferaFundo({ midia }: { midia: HeroMedia }) {
 }
 
 /* O halo desenhado, quando não há arquivo de mídia.
-   Fica preso à coluna do mockup, e não ao hero inteiro: ele foi composto
+   Fica preso à coluna da lâmina, e não ao hero inteiro: ele foi composto
    para transbordar do cartão, com o א entrando pela borda direita. */
 function HaloDesenhado() {
   return (
@@ -349,112 +287,72 @@ function HaloDesenhado() {
   );
 }
 
-/* O mockup: a mesma questão que existe de verdade dentro do curso, parada no
-   momento em que ela é respondida. */
-function Mockup({ ativo, certo }: { ativo: boolean; certo: boolean }) {
+/* A lâmina: uma letra do curso apresentada como num livro de tipos.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Tudo aqui já existe no curso e na página pública: a letra e a frase do
+ * ponto vêm do painel "Aula" da demonstração, o som é o que a lição diz, e o
+ * diagrama é o da amostra pública (/tracado-amostra/shin.svg). Nada de
+ * hebraico novo.
+ *
+ * O Shin, e não o Álef: ele carrega a ideia que mais surpreende quem começa
+ * (um ponto muda o som) e tem forma desenhada o bastante para ser o assunto
+ * da tela. O Álef é a letra do teste grátis, logo abaixo; repetir a mesma
+ * letra duas vezes na primeira rolagem desperdiçaria a vitrine.
+ *
+ * `data-a11y-desvia`: o botão de acessibilidade sai de cima dela (CONV-021).
+ */
+function Lamina() {
+  const shin = course.letters.find(l => l.id === 'shin');
+  const licao = shin ? licaoDaLetra(shin.order) : null;
   return (
-    /* `data-a11y-desvia`: o botão de acessibilidade sai de cima dele (CONV-021). */
-    <div data-a11y-desvia
-         className="relative z-[2] rounded-[26px] bg-[var(--card)] border border-line
-                    shadow-[var(--sh-mock)] p-6 pt-[26px]">
-      <div className="flex items-center gap-3 mb-5">
-        <span aria-hidden className="text-ink-muted text-[19px] leading-none">‹</span>
-        <span className="flex-1 h-[7px] rounded-full bg-[var(--sand)] overflow-hidden">
-          <span
-            className="block h-full rounded-full transition-[width] duration-[1300ms] ease-[var(--ease-fill)]"
-            style={{ width: ativo ? '72%' : '0%', background: 'linear-gradient(90deg,var(--teal),#2FB39F)' }}
-          />
+    <figure data-a11y-desvia
+            className="relative z-[2] m-0 rounded-[20px] bg-[var(--card)] overflow-hidden
+                       shadow-[0_0_0_1px_var(--line),0_2px_4px_rgba(27,33,31,.04),0_30px_60px_-30px_rgba(14,59,67,.35)]">
+      <div className="flex items-baseline justify-between gap-4 px-5 sm:px-6 py-4 border-b border-line">
+        <span className="font-ui text-[12px] font-semibold uppercase tracking-[.12em] text-ink-muted tabular-nums">
+          {licao ? `Lição ${licao}` : 'Uma letra por vez'}
         </span>
-        <span className="font-ui text-[13px] font-semibold text-[var(--teal-ink)] tabular-nums min-w-[34px] text-right">
-          {ativo ? '72%' : '0%'}
+        <span className="font-ui text-[12px] font-semibold uppercase tracking-[.12em] text-[var(--teal-ink)]">
+          Shin
         </span>
       </div>
 
-      <p className="font-ui text-[15px] text-ink-muted mb-3.5">Qual é o som desta letra?</p>
-
-      <div className="rounded-[18px] bg-[var(--sand)] px-5 py-[26px] text-center mb-4">
-        {/* A letra num bloco próprio: <He> é um span, e sem isto o botão
-            "Ouvir" fica ao lado dela em vez de embaixo.
-
-            E o botão só aparece quando há o que tocar. Esta é a PRIMEIRA tela
-            do site, e um "Ouvir" aqui é a promessa mais visível que a página
-            faz - enquanto o manifesto de áudio está vazio, é uma promessa que
-            a lição não cumpre. A pergunta acima ("qual é o som desta letra?")
-            continua valendo nos dois casos: ela é respondida pelas opções, e
-            é exercício que existe hoje. Ver a nota em Fecho.tsx. */}
-        <div><He size="plate" tone="navy" className="animate-pop">ש</He></div>
-        {TEM_AUDIO && (
-          <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--card)] border border-line
-                           px-[17px] py-[9px] font-ui text-[14.5px] font-semibold text-ink">
-            <span aria-hidden className="w-[9px] h-[9px] rounded-full bg-[var(--teal)] animate-pulse-dot" />
-            Ouvir
-          </span>
-        )}
+      <div className="relative grid place-items-center bg-[var(--sand)] py-5 sm:py-7 select-none">
+        <MarcasDeCorte />
+        <He size="hero" tone="navy" className="!text-[150px] sm:!text-[210px] !leading-[1.05]">שׁ</He>
       </div>
 
-      <div className="grid grid-cols-2 gap-2.5">
-        <div
-          className="rounded-[14px] border-[1.5px] p-[13px] text-center font-ui font-semibold text-[16px]
-                     flex items-center justify-center gap-2 transition-all duration-[350ms]"
-          style={{
-            borderColor: certo ? 'var(--teal)' : 'var(--line)',
-            background: certo ? 'var(--teal-soft)' : 'transparent',
-            color: certo ? 'var(--teal-ink)' : 'var(--ink-muted)'
-          }}
-        >
-          SH <span className="transition-opacity duration-300 delay-100" style={{ opacity: certo ? 1 : 0 }}>✓</span>
+      <div className="grid grid-cols-2 border-t border-line">
+        <div className="px-5 sm:px-6 py-5 border-r border-line">
+          <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted m-0 mb-2">Som</p>
+          <p className="font-display text-[26px] leading-none font-semibold tracking-[-0.02em] text-ink m-0 mb-1.5">sh</p>
+          <p className="font-ui text-[14.5px] leading-[1.45] text-ink-body m-0">como o X de «xícara»</p>
         </div>
-        {['M', 'L', 'V'].map(t => (
-          <div key={t} className="rounded-[14px] border-[1.5px] border-line p-[13px] text-center
-                                  font-ui font-semibold text-[16px] text-ink-muted">
-            {t}
-          </div>
-        ))}
+        <div className="px-3 sm:px-5 py-4 grid justify-items-center content-center gap-1 text-center">
+          <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted m-0">À mão</p>
+          <DiagramaDeTracado letterId="shin" label="Shin" movimentos={1}
+                             className="[&_img]:w-[92px] sm:[&_img]:w-[104px]" />
+        </div>
       </div>
 
-      {/* Sai POR CIMA da borda do cartão, subindo. Dentro dele não há canto
-          livre: em `bottom-[96px]` pousava sobre a opção "M" e em
-          `top-[52px]` pousava sobre o "72%" do progresso - nos dois casos
-          um enfeite sujando um número que a página quer que seja lido. */}
-      {certo && (
-        <span className="absolute left-[22px] top-[-13px] z-[4] font-ui font-bold text-[17px]
-                         text-[var(--teal-ink)] pointer-events-none animate-xp">
-          +10 XP
-        </span>
-      )}
-    </div>
+      <figcaption className="px-5 sm:px-6 py-4 border-t border-line font-ui text-[14.5px] leading-[1.5] text-ink-body">
+        O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma letra vira Sin, com som de S.
+      </figcaption>
+    </figure>
   );
 }
 
-function CartaoFlutuante({
-  className, style, icone, fundo, rotulo, valor
-}: {
-  className: string; style?: React.CSSProperties; icone: React.ReactNode;
-  fundo: string; rotulo: string; valor: string;
-}) {
+/* As marcas de corte nos quatro cantos da área da letra: a referência é a
+   prova de gráfica, onde a letra é conferida antes de ir para o papel. Fio
+   de 1px na cor das divisórias; decorativo, fora do leitor de tela. */
+function MarcasDeCorte() {
+  const canto = 'absolute w-3 h-3 border-[var(--locked)] opacity-60';
   return (
-    <div
-      data-a11y-desvia
-      className={`absolute z-[3] flex items-center gap-[11px] rounded-[16px] bg-[var(--card)]
-                  border border-line shadow-[var(--sh)] px-4 py-3 animate-float ${className}`}
-      style={style}
-    >
-      <span aria-hidden className="w-8 h-8 rounded-[9px] grid place-items-center shrink-0" style={{ background: fundo }}>
-        {icone}
-      </span>
-      <span className="grid">
-        <span className="font-ui text-[12.5px] leading-[1.3] text-ink-muted">{rotulo}</span>
-        <span className="font-ui text-[15px] font-bold leading-[1.3] tabular-nums text-ink">{valor}</span>
-      </span>
-    </div>
-  );
-}
-
-function Chama() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d="M8 1.8c1.5 2.4.6 3.6-.5 4.8-1 1.1-1.9 2.2-1.9 3.7a2.4 2.4 0 0 0 4.8 0c0-.7-.2-1.2-.5-1.8 1.6.8 2.6 2 2.6 3.6A4.5 4.5 0 0 1 8 14.3a4.5 4.5 0 0 1-4.5-4.5C3.5 6.3 6.6 5 8 1.8Z"
-            stroke="var(--gold)" strokeWidth="1.3" strokeLinejoin="round" />
-    </svg>
+    <span aria-hidden className="pointer-events-none">
+      <span className={`${canto} left-3 top-3 border-l border-t`} />
+      <span className={`${canto} right-3 top-3 border-r border-t`} />
+      <span className={`${canto} left-3 bottom-3 border-l border-b`} />
+      <span className={`${canto} right-3 bottom-3 border-r border-b`} />
+    </span>
   );
 }
