@@ -28,7 +28,7 @@ export function Versiculo({ v }: { v: BibleVerse }) {
   const palavra = sel === null ? null : v.words[sel] ?? null;
 
   return (
-    <Card tone="wash" className="p-5 sm:p-8 grid gap-5">
+    <Card className="p-5 sm:p-8 grid gap-5 shadow-[0_2px_4px_rgba(27,33,31,.04),0_24px_48px_-32px_rgba(14,59,67,.3)]">
       <div className="flex items-center gap-2.5 flex-wrap">
         <Badge tone="accent">{v.fontePt}</Badge>
         <span className="font-ui text-[12.5px] text-ink-muted">

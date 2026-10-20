@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import Link from 'next/link';
-import { Card } from '@/components/ui/Card';
-import { Section, SectionHead } from '@/components/platform/Section';
+import { PageHead, Section } from '@/components/platform/Section';
 import {
   confirmaSozinho, confirmacaoDaDesistencia, DUVIDAS_DE_CONTEUDO, empresa, INICIO_DO_ACESSO,
   O_QUE_O_CURSO_ENSINA, parcelasTexto, prazoResposta, renovacaoTexto, soPix, temCartao, temPix
@@ -223,12 +222,7 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
 export default function FaqPage() {
   return (
     <>
-      <div className="border-b border-[color:var(--line-soft)]">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-18 grid gap-5">
-          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-            Dúvidas frequentes
-          </p>
-          {/* O cabeçalho NÃO antecipa objeção.
+      {/* O cabeçalho NÃO antecipa objeção.
               ──────────────────────────────────────────────────────────────
               Aqui se lia «Perguntado antes de comprar» e, abaixo, «inclusive
               o que ainda não está pronto - preferimos perder uma venda aqui a
@@ -242,37 +236,36 @@ export default function FaqPage() {
               dentro da pergunta que o pede, e não no título da seção. Uma
               limitação respondida com clareza tranquiliza; a mesma limitação
               anunciada em corpo 44 assusta. */}
-          <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[20ch]">
-            Tudo o que vale saber antes de começar.
-          </h1>
-          <p className="text-[17px] leading-relaxed text-ink-body max-w-[54ch]">
-            Respostas diretas sobre o curso, o acesso, o conteúdo e o que esperar da
-            experiência dentro da plataforma.
-          </p>
-        </div>
-      </div>
+      <PageHead
+        eyebrowPt="Dúvidas frequentes"
+        titlePt="Tudo o que vale saber antes de começar."
+        leadPt="Respostas diretas sobre o curso, o acesso, o conteúdo e o que esperar da experiência dentro da plataforma."
+      />
 
       <Section labelledBy="perguntas">
-        <SectionHead id="perguntas" titlePt="Dúvidas frequentes" />
-        <div className="grid gap-3 max-w-[820px]">
+        {/* O título visível já é o da página; o h2 fica para o leitor de tela. */}
+        <h2 id="perguntas" className="sr-only">Dúvidas frequentes</h2>
+        {/* Perguntas sob fios, como na capa: um índice que se lê de cima a
+            baixo, e não quinze caixas. `details` continua sendo o mecanismo
+            (funciona sem JavaScript e a busca do navegador abre a resposta). */}
+        <div className="max-w-[820px] border-t border-line">
           {FAQ.map(item => (
-            <Card key={item.q} as="article" className="overflow-hidden">
+            <article key={item.q} className="border-b border-line">
               <details className="group">
                 <summary
-                  className="cursor-pointer list-none px-5 py-4 min-h-[56px] flex items-center gap-4
-                             font-display text-[16.5px] font-semibold text-ink
-                             hover:bg-surface-2 transition-colors"
+                  className="cursor-pointer list-none py-5 min-h-[56px] flex items-center gap-4
+                             font-ui text-[17px] font-semibold text-ink [&::-webkit-details-marker]:hidden"
                 >
                   <span className="flex-1">{item.q}</span>
-                  <span aria-hidden
-                        className="shrink-0 text-ink-muted text-[15px] transition-transform
-                                   group-open:rotate-45">
-                    +
-                  </span>
+                  <svg aria-hidden width="14" height="14" viewBox="0 0 14 14" fill="none"
+                       className="shrink-0 text-ink-muted transition-transform duration-200 ease-[var(--ease)] group-open:rotate-180">
+                    <path d="M3 5.25 7 9.25l4-4" stroke="currentColor" strokeWidth="1.6"
+                          strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </summary>
-                <div className="px-5 pb-5 grid gap-2.5 border-t border-[color:var(--line-soft)] pt-4">
+                <div className="pb-6 pr-8 grid gap-3">
                   {item.a.map(p => (
-                    <p key={p} className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[64ch]">
+                    <p key={p} className="font-ui text-[16px] leading-[1.65] text-ink-body max-w-[64ch]">
                       {p}
                     </p>
                   ))}
@@ -285,12 +278,12 @@ export default function FaqPage() {
                   )}
                 </div>
               </details>
-            </Card>
+            </article>
           ))}
         </div>
       </Section>
 
-      <Section tone="wash">
+      <Section>
         <FaixaCta
           onde="faq"
           titulo="Ficou alguma pergunta de fora?"
@@ -298,7 +291,7 @@ export default function FaqPage() {
             <>
               Escreva para{' '}
               <a href={`mailto:${empresa.contato.emailSuporte}`}
-                 className="text-[var(--accent)] hover:underline">
+                 className="text-white underline underline-offset-[3px] decoration-white/50">
                 {empresa.contato.emailSuporte}
               </a>
               . Respondemos {prazoResposta()}. {DUVIDAS_DE_CONTEUDO}

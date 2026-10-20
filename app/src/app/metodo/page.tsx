@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { He } from '@/components/hebrew/He';
-import { Card, Badge } from '@/components/ui/Card';
-import { Section, SectionHead } from '@/components/platform/Section';
+import { Itens, PageHead, Section, SectionHead } from '@/components/platform/Section';
+import { Rubrica } from '@/components/landing/base';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { ETAPAS_DA_LICAO, quantasEtapasPt } from '@/lib/etapas-da-licao';
@@ -30,36 +30,30 @@ export default function MetodoPage() {
 
   return (
     <>
-      <div className="border-b border-[color:var(--line-soft)]">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-18 grid gap-5">
-          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-            O método
-          </p>
-          <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[20ch]">
-            {quantasEtapasPt()} etapas em toda lição, e uma regra que sustenta todas.
-          </h1>
-          <p className="text-[17px] leading-relaxed text-ink-body max-w-[58ch]">
-            Não é método novo nem segredo de ninguém. É um conjunto pequeno de
-            decisões, tomadas de propósito, e mantidas mesmo quando dão trabalho.
-          </p>
-        </div>
-      </div>
+      <PageHead
+        eyebrowPt="O método"
+        titlePt={`${quantasEtapasPt()} etapas em toda lição, e uma regra que sustenta todas.`}
+        leadPt="Não é método novo nem segredo de ninguém. É um conjunto pequeno de decisões, tomadas de propósito, e mantidas mesmo quando dão trabalho."
+      />
 
-      {/* A regra que sustenta tudo, sozinha, antes das outras. */}
+      {/* A regra que sustenta tudo, sozinha, antes das outras. O exemplo
+          (מַיִם, lição 3) vai numa lâmina como a do hero da capa: é a palavra
+          que prova a regra, e merece ser vista como objeto, não como nota. */}
       <Section labelledBy="regra">
-        <Card tone="wash" className="p-6 sm:p-10 grid gap-5">
-          <Badge tone="accent">A regra número um</Badge>
-          <h2 id="regra" className="font-display text-[25px] sm:text-[31px] font-bold leading-tight text-ink max-w-[26ch]">
-            Você nunca vê uma palavra com uma letra que ainda não aprendeu.
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body">
+        <div className="grid gap-10 lg:gap-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-center">
+          <div className="grid gap-5 content-start">
+            <Rubrica>A regra número um</Rubrica>
+            <h2 id="regra" className="font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08]
+                                      tracking-[-0.03em] text-ink max-w-[22ch] m-0">
+              Você nunca vê uma palavra com uma letra que ainda não aprendeu.
+            </h2>
+            <p className="font-ui text-[16.5px] leading-[1.65] text-ink-body max-w-[60ch] m-0">
               Parece óbvio. Quase nenhum curso faz. É comum a lição 2 trazer
               שָׁלוֹם como exemplo - quatro letras e um sinal que você ainda não
               tem. O efeito é sempre o mesmo: em vez de ler, você decora a forma
               inteira como se fosse um desenho, e a leitura nunca começa.
             </p>
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body">
+            <p className="font-ui text-[16.5px] leading-[1.65] text-ink-body max-w-[60ch] m-0">
               Aqui isso não é um cuidado editorial, é uma trava no programa. Cada
               letra carrega a lista exata de sinais que já foram ensinados, e o
               gerador de exercícios só pode usar aquela lista - inclusive nas
@@ -67,58 +61,43 @@ export default function MetodoPage() {
               porque a verificação automática não deixa a versão subir.
             </p>
           </div>
-          <div className="flex flex-wrap items-end gap-6 pt-2">
-            <div className="grid gap-1">
-              <p className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted">Lição 3</p>
-              <He size="lg">מַיִם</He>
+          <figure className="m-0 rounded-[20px] bg-[var(--card)] overflow-hidden
+                             shadow-[0_0_0_1px_var(--line),0_2px_4px_rgba(27,33,31,.04),0_30px_60px_-30px_rgba(14,59,67,.3)]">
+            <div className="flex items-baseline justify-between gap-4 px-5 sm:px-6 py-4 border-b border-line">
+              <span className="font-ui text-[12px] font-semibold uppercase tracking-[.12em] text-ink-muted">Lição 3</span>
+              <span className="font-ui text-[12px] font-semibold uppercase tracking-[.12em] text-[var(--teal-ink)]">máyim · água</span>
             </div>
-            <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted max-w-[34ch]">
+            <div className="grid place-items-center bg-[var(--sand)] py-10 sm:py-14 select-none">
+              <He size="display" tone="navy">מַיִם</He>
+            </div>
+            <figcaption className="px-5 sm:px-6 py-4 border-t border-line font-ui text-[14.5px] leading-[1.5] text-ink-body">
               Três letras, dois sinais - e todos já ensinados. Por isso ela pode
               aparecer tão cedo: ela é legível, não decorável.
-            </p>
-          </div>
-        </Card>
+            </figcaption>
+          </figure>
+        </div>
       </Section>
 
       <Section tone="surface" labelledBy="outras">
         <SectionHead id="outras" eyebrowPt="As outras decisões" titlePt="Por que a lição é assim." />
-        <ol className="grid gap-4 sm:grid-cols-2 list-none p-0 m-0">
-          {[
+        <Itens inicio={2} itens={[
             {
-              n: 2,
               t: 'A ordem é por utilidade, não pelo alfabeto',
               b: `As letras não vêm de א a ת. Vêm na ordem que abre mais palavras mais cedo - por isso a terceira lição já lê uma palavra inteira em vez de ainda estar na segunda letra. São ${letterModules} módulos de letras, em ${totalLicoes()} lições.`
             },
             {
-              n: 3,
               t: 'As letras parecidas são tratadas de frente',
               b: 'ב e כ, ד e ר, ה e ח. Em vez de esperar a confusão aparecer, o curso apresenta o par lado a lado, mostra o que diferencia e depois te obriga a escolher entre os dois. Quando você erra um par, ele volta mais vezes.'
             },
             {
-              n: 4,
               t: 'A revisão é por habilidade, não por lição',
               b: 'Reconhecer a forma, saber o som, ler a sílaba, ouvir e escrever são cinco coisas diferentes. O curso guarda as cinco separadas por letra, e a revisão traz de volta exatamente a que está fraca - não a lição inteira de novo.'
             },
             {
-              n: 5,
               t: 'A transliteração sai',
               b: 'Enquanto houver "shalóm" embaixo da palavra, você lê o português. O curso usa transliteração no começo e a retira de propósito, em etapas anunciadas, até você estar lendo sem apoio nenhum - que é a única definição de ler.'
             }
-          ].map(x => (
-            <li key={x.n}>
-              <Card className="p-5 grid gap-2 h-full content-start">
-                <span aria-hidden
-                      className="w-[30px] h-[30px] rounded-full bg-[var(--accent-wash)]
-                                 text-[var(--accent)] font-ui text-[13px] font-bold
-                                 grid place-items-center tabular-nums">
-                  {x.n}
-                </span>
-                <h3 className="font-display text-[17px] font-bold text-ink">{x.t}</h3>
-                <p className="font-ui text-[14px] leading-relaxed text-ink-body">{x.b}</p>
-              </Card>
-            </li>
-          ))}
-        </ol>
+          ]} />
       </Section>
 
       <Section labelledBy="aula">
@@ -130,22 +109,10 @@ export default function MetodoPage() {
         />
         {/* As etapas são as abas da lição (lib/etapas-da-licao.ts): a capa
             conta a mesma lista, com os mesmos nomes (auditoria, CONV-010). */}
-        <ol className="grid gap-3 sm:grid-cols-5 list-none p-0 m-0">
-          {ETAPAS_DA_LICAO.map(({ aba: t, descricaoPt: b }, i) => (
-            <li key={t}>
-              <Card className="p-4 grid gap-1.5 h-full content-start">
-                <span aria-hidden className="font-ui text-[11px] font-bold tracking-[.1em] text-ink-muted">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <h3 className="font-display text-[15.5px] font-bold text-ink">{t}</h3>
-                <p className="font-ui text-[13px] leading-relaxed text-ink-body">{b}</p>
-              </Card>
-            </li>
-          ))}
-        </ol>
+        <Itens colunas={5} itens={ETAPAS_DA_LICAO.map(({ aba, descricaoPt }) => ({ t: aba, b: descricaoPt }))} />
       </Section>
 
-      <Section tone="wash">
+      <Section>
         <FaixaCta
           onde="metodo"
           titulo="O método só existe na prática."

@@ -2,7 +2,7 @@
 
 import { PERFIL_LINKEDIN } from '@/lib/professor';
 import { He } from '@/components/hebrew/He';
-import { Container, Reveal } from './base';
+import { Container, Reveal, Rubrica } from './base';
 
 /* A trajetória do professor, na versão LONGA (28/09/2026).
  * ─────────────────────────────────────────────────────────────────────────
@@ -74,11 +74,11 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
                 src={retrato}
                 alt="Moshik Gueta, professor e criador do Hebraico Fluente"
                 width={680} height={850} loading="lazy" decoding="async"
-                className="aspect-[4/5] w-full max-w-[260px] sm:max-w-[420px] rounded-[22px] border border-line
-                           object-cover object-top bg-[var(--sand)]"
+                className="aspect-[4/5] w-full max-w-[260px] sm:max-w-[420px] rounded-[16px]
+                           shadow-[0_0_0_1px_rgba(27,33,31,.06)] object-cover object-top bg-[var(--sand)]"
               />
             ) : (
-              <div className="aspect-[4/5] max-w-[260px] sm:max-w-[420px] rounded-[22px] border border-line bg-[var(--sand)]
+              <div className="aspect-[4/5] max-w-[260px] sm:max-w-[420px] rounded-[16px] bg-[var(--sand)]
                               grid place-items-center">
                 <span className="grid place-items-center w-24 h-24 rounded-[26px] bg-[var(--navy)]">
                   <span style={{ fontSize: 46, marginTop: -3, lineHeight: 1 }}>
@@ -92,9 +92,7 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
           </Reveal>
 
           <Reveal delay={100}>
-            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-ink)] mb-3.5">
-              Quem está por trás do Hebraico Fluente
-            </p>
+            <Rubrica className="mb-5">Quem está por trás do Hebraico Fluente</Rubrica>
             <Titulo id="trajetoria-titulo"
                 className="font-display font-semibold text-[clamp(26px,3vw,38px)] leading-[1.12]
                            tracking-[-0.03em] text-balance m-0 mb-5 max-w-[26ch]">
@@ -113,10 +111,15 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
               direção de leitura, novos símbolos, novos sons e outra lógica. Em sala de aula, alguns
               pontos voltavam sempre:
             </p>
-            <ul className="flex flex-wrap gap-2 list-none p-0 m-0 mb-5">
+            {/* Os cinco pontos eram selos com borda; viraram uma lista sob
+                fios, que se lê como lista e não como etiquetas. */}
+            <ul className="grid sm:grid-cols-2 gap-x-8 list-none p-0 m-0 mb-6 border-t border-line max-w-[680px]">
               {PADROES.map(t => (
-                <li key={t} className="rounded-full border border-line bg-[var(--card)] px-3.5 py-1.5
-                                       font-ui text-[14.5px] text-ink-body">{t}</li>
+                <li key={t} className="flex items-center gap-3 py-3 border-b border-line
+                                       font-ui text-[15.5px] text-ink-body">
+                  <span aria-hidden className="w-[5px] h-[5px] rounded-full bg-[var(--gold)] shrink-0" />
+                  {t}
+                </li>
               ))}
             </ul>
             <p className="font-display text-[19px] sm:text-[20px] leading-[1.45] font-medium tracking-[-0.015em] text-ink m-0">
@@ -127,25 +130,19 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
 
         {/* 2 · o caminho, com as credenciais dentro dos passos */}
         <Reveal>
-          <h3 className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-ink-muted m-0 mb-5">
-            O caminho até aqui
-          </h3>
-          <ol className="list-none p-0 m-0 grid gap-0 lg:grid-cols-6 lg:gap-4">
+          <Rubrica as="h3" className="mb-6">O caminho até aqui</Rubrica>
+          {/* Colunas sob um fio, como as etapas do método na capa: o traço
+              teal marca o começo de cada passo, e o último (o próprio
+              Hebraico Fluente) leva o traço inteiro. */}
+          <ol className="list-none p-0 m-0 grid gap-x-6 gap-y-7 border-t border-line sm:grid-cols-3 lg:grid-cols-6">
             {CAMINHO.map((c, i) => {
               const ultimo = i === CAMINHO.length - 1;
               return (
-                <li key={c.t} className="relative grid content-start grid-cols-[28px_minmax(0,1fr)] gap-3 pb-5 lg:pb-0
-                                         lg:grid-cols-1 lg:gap-3">
-                  {/* O traço que liga os passos: vertical no telefone,
-                      horizontal no desktop. */}
-                  {!ultimo && (
-                    <span aria-hidden className="absolute bg-line left-[13px] top-7 bottom-0 w-[2px]
-                                                 lg:left-7 lg:right-[-16px] lg:top-[13px] lg:bottom-auto lg:w-auto lg:h-[2px]" />
-                  )}
-                  <span aria-hidden
-                        className={`relative z-[1] w-7 h-7 rounded-full grid place-items-center font-ui font-bold text-[12.5px]
-                          ${ultimo ? 'bg-[var(--teal-solid)] text-white' : 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'}`}>
-                    {i + 1}
+                <li key={c.t} className="relative pt-5 min-w-0">
+                  <span aria-hidden className={`absolute -top-px left-0 h-[2px] bg-[var(--teal)] ${ultimo ? 'right-0' : 'w-10'}`} />
+                  <span aria-hidden className="block font-display text-[15px] font-semibold tracking-[-0.01em]
+                                               text-[var(--teal-ink)] tabular-nums mb-2.5">
+                    {String(i + 1).padStart(2, '0')}
                   </span>
                   <div className="min-w-0">
                     <p className={`font-display text-[18px] font-semibold tracking-[-0.015em] m-0 mb-1
@@ -159,8 +156,10 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
         </Reveal>
 
         {/* 3 · dois blocos: ensinar brasileiros, e o lado de aluno */}
-        <div className="grid gap-5 lg:grid-cols-2">
-          <Reveal className="min-w-0 rounded-[22px] bg-[var(--card)] border border-line p-6 sm:p-7 grid gap-4 content-start">
+        {/* Duas colunas abertas sob fio, sem cartão: são dois textos, não
+            dois produtos. */}
+        <div className="grid gap-10 lg:gap-14 lg:grid-cols-2">
+          <Reveal className="min-w-0 border-t border-line pt-7 grid gap-4 content-start">
             <h3 className="font-display text-[22px] font-semibold tracking-[-0.015em] m-0">Ensinando brasileiros</h3>
             <p className="font-ui text-[16.5px] leading-[1.65] text-ink-muted m-0">
               Foi dando aulas em Curitiba, na Escola Israelita e junto à comunidade judaica como
@@ -174,7 +173,7 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
               letras. É aprender uma nova lógica de leitura.
             </Citacao>
           </Reveal>
-          <Reveal delay={100} className="min-w-0 rounded-[22px] bg-[var(--card)] border border-line p-6 sm:p-7 grid gap-4 content-start">
+          <Reveal className="min-w-0 border-t border-line pt-7 grid gap-4 content-start">
             <h3 className="font-display text-[22px] font-semibold tracking-[-0.015em] m-0">Dos dois lados da sala de aula</h3>
             <p className="font-ui text-[16.5px] leading-[1.65] text-ink-muted m-0">
               Além de ensinar, continuo sendo aluno de idiomas. Falo hebraico, português, inglês,
@@ -190,7 +189,7 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
         </div>
 
         {/* 4 · como nasceu, e a combinação que sustenta a plataforma */}
-        <Reveal className="rounded-[24px] bg-[var(--navy)] text-white p-6 sm:p-9
+        <Reveal className="rounded-[22px] bg-[var(--navy)] text-white p-6 sm:p-10
                            grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-12">
           <div className="min-w-0 grid gap-4 content-start">
             <h3 className="font-display text-[clamp(22px,2.3vw,28px)] font-semibold tracking-[-0.02em] text-white m-0">
@@ -209,27 +208,23 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
               sequência de vídeos nem um PDF digitalizado. É a metodologia virada em atividades, em
               que você:
             </p>
-            <ul className="flex flex-wrap gap-2 list-none p-0 m-0">
+            <ul className="flex flex-wrap gap-x-4 gap-y-1.5 list-none p-0 m-0">
               {ATIVIDADES.map(t => (
-                <li key={t} className="rounded-full bg-white/[.1] border border-white/[.16] px-3 py-1.5
-                                       font-ui text-[14px] text-white">{t}</li>
+                <li key={t} className="inline-flex items-center gap-2.5 font-ui text-[15px] text-white/90">
+                  <span aria-hidden className="w-[5px] h-[5px] rounded-full bg-[var(--gold)]" />
+                  {t}
+                </li>
               ))}
             </ul>
             <p className="font-display text-[19px] leading-[1.45] font-medium tracking-[-0.015em] text-white m-0">
               e avança aos poucos, até ler as suas primeiras palavras sozinho.
             </p>
           </div>
-          <div className="min-w-0 lg:self-start rounded-[18px] bg-white/[.07] border border-white/[.14] p-5 sm:p-6 content-start grid gap-4">
-            <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal-lite,#8FD3C6)] m-0">
-              O que se junta nesta plataforma
-            </p>
-            <ul className="grid gap-3 list-none p-0 m-0">
-              {REUNE.map((t, i) => (
-                <li key={t} className="flex items-center gap-3 font-ui text-[16px] font-semibold text-white">
-                  <span aria-hidden className="w-7 h-7 rounded-full bg-white/[.12] grid place-items-center shrink-0
-                                               font-bold text-[14px] text-[var(--teal-lite,#8FD3C6)]">
-                    {i === 0 ? '✓' : '+'}
-                  </span>
+          <div className="min-w-0 lg:self-start content-start grid gap-5 lg:pl-10 lg:border-l lg:border-white/15">
+            <Rubrica tom="lite">O que se junta nesta plataforma</Rubrica>
+            <ul className="list-none p-0 m-0 border-t border-white/15">
+              {REUNE.map(t => (
+                <li key={t} className="py-3 border-b border-white/15 font-ui text-[16px] font-semibold text-white">
                   {t}
                 </li>
               ))}
@@ -252,7 +247,7 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
 function Citacao({ children }: { children: React.ReactNode }) {
   return (
     <blockquote className="m-0 flex gap-3.5 items-stretch">
-      <span aria-hidden className="w-[3px] rounded-full bg-[var(--teal)] shrink-0" />
+      <span aria-hidden className="w-[2px] bg-[var(--teal)] shrink-0" />
       <p className="font-display text-[19px] sm:text-[20px] leading-[1.45] font-medium tracking-[-0.015em] text-ink m-0">
         «{children}»
       </p>

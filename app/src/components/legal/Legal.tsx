@@ -15,6 +15,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Section } from '@/components/platform/Section';
+import { Rubrica } from '@/components/landing/base';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto, prazoResposta, whatsappUrl } from '@/lib/empresa';
 
@@ -47,15 +48,14 @@ export function LegalPage({
     <Section>
       <div className="mx-auto w-full max-w-[760px] grid gap-6">
         <article data-politica={documento} className="grid gap-6">
-        <header className="grid gap-3">
-          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-            {empresa.nomeFantasia}
-          </p>
-          <h1 className="font-display text-[30px] sm:text-[38px] font-bold leading-[1.12] text-ink">
+        <header className="grid gap-4 pb-8 border-b border-line">
+          <Rubrica>{empresa.nomeFantasia}</Rubrica>
+          <h1 className="font-display font-semibold text-[clamp(32px,4vw,46px)] leading-[1.05]
+                         tracking-[-0.034em] text-ink m-0">
             {titulo}
           </h1>
-          <p className="font-ui text-[16px] leading-relaxed text-ink-body">{resumo}</p>
-          <p className="font-ui text-[13px] text-ink-muted">
+          <p className="font-ui text-[17px] leading-[1.6] text-ink-muted m-0">{resumo}</p>
+          <p className="font-ui text-[13px] text-ink-muted tabular-nums m-0">
             Última atualização: {dataPt(empresa.politicas.atualizadoEm)}
           </p>
         </header>
@@ -99,11 +99,14 @@ export function LegalPage({
 
 export function Artigo({ n, titulo, children }: { n: number; titulo: string; children: ReactNode }) {
   return (
-    <section className="grid gap-2.5">
-      <h2 className="font-display text-[19px] sm:text-[21px] font-bold text-ink">
+    /* Só o desenho muda: o TEXTO do título fica exatamente "N. Título". A
+       versão de cada política é o sha256 do texto lido (versoes.mjs), e um
+       algarismo a mais por estética seria um contrato novo. */
+    <section className="grid gap-3 pt-2">
+      <h2 className="font-display text-[21px] sm:text-[23px] font-semibold tracking-[-0.02em] text-ink m-0">
         {n}. {titulo}
       </h2>
-      <div className="grid gap-2.5 font-ui text-[15.5px] leading-[1.65] text-ink-body">
+      <div className="grid gap-3 font-ui text-[16px] leading-[1.7] text-ink-body">
         {children}
       </div>
     </section>

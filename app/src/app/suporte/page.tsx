@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import Link from 'next/link';
-import { Card } from '@/components/ui/Card';
+import { Rubrica } from '@/components/landing/base';
 import { Section } from '@/components/platform/Section';
 import { Identificacao } from '@/components/legal/Legal';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
@@ -85,26 +85,26 @@ export default function Page() {
   return (
     <Section>
       <div className="mx-auto w-full max-w-[760px] grid gap-6">
-        <header className="grid gap-3">
-          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-            Atendimento
-          </p>
-          <h1 className="font-display text-[30px] sm:text-[38px] font-bold leading-[1.12] text-ink">
+        <header className="grid gap-4">
+          <Rubrica>Atendimento</Rubrica>
+          <h1 className="font-display font-semibold text-[clamp(32px,4vw,46px)] leading-[1.05]
+                         tracking-[-0.034em] text-ink m-0">
             Fale com a gente
           </h1>
-          <p className="font-ui text-[16px] leading-relaxed text-ink-body max-w-[54ch]">
+          <p className="font-ui text-[17px] leading-[1.6] text-ink-muted max-w-[54ch] m-0">
             Um e-mail, respondido por quem faz o curso. {atendimento.horarioPt}.
             Respondemos {prazoResposta()}.
           </p>
         </header>
 
-        <Card tone="mint" className="p-5 sm:p-6 grid gap-2 justify-items-start">
-          <p className="font-ui text-[12px] uppercase tracking-[.08em] text-[var(--mint-ink)]">
+        {/* O canal, como uma ficha: fio em cima e embaixo, o e-mail grande. */}
+        <div className="grid gap-2 justify-items-start py-6 border-y border-line">
+          <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted m-0">
             E-mail de atendimento
           </p>
           <a href={`mailto:${contato.emailSuporte}`}
-             className="font-display text-[20px] sm:text-[24px] font-bold text-ink
-                        hover:text-[var(--accent)] break-all">
+             className="font-display text-[22px] sm:text-[28px] font-semibold tracking-[-0.02em] text-ink
+                        hover:text-[var(--teal-ink)] break-all">
             {contato.emailSuporte}
           </a>
           {contato.telefone && (
@@ -121,26 +121,28 @@ export default function Page() {
                 : contato.whatsapp}
             </p>
           )}
-        </Card>
+        </div>
 
-        <section className="grid gap-3">
-          <h2 className="font-display text-[20px] font-bold text-ink">
+        <section className="grid gap-4">
+          <h2 className="font-display text-[23px] font-semibold tracking-[-0.02em] text-ink m-0">
             Antes de escrever, veja se é um destes
           </h2>
-          {ATALHOS.map(a => (
-            <Card key={a.titulo} className="p-5 grid gap-2">
-              <h3 className="font-display text-[17px] font-bold text-ink">{a.titulo}</h3>
-              <p className="font-ui text-[15px] leading-relaxed text-ink-body">{a.corpo}</p>
-              <p className="pt-1">{a.acao}</p>
-            </Card>
-          ))}
+          <div className="border-t border-line">
+            {ATALHOS.map(a => (
+              <div key={a.titulo} className="py-5 border-b border-line grid gap-2">
+                <h3 className="font-display text-[19px] font-semibold tracking-[-0.015em] text-ink m-0">{a.titulo}</h3>
+                <p className="font-ui text-[16px] leading-[1.6] text-ink-body m-0">{a.corpo}</p>
+                <p className="pt-1 m-0">{a.acao}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
-        <Card className="p-5 grid gap-2">
-          <h2 className="font-display text-[17px] font-bold text-ink">
+        <div className="grid gap-2 pl-6 border-l-2 border-[var(--teal)]">
+          <h2 className="font-display text-[21px] font-semibold tracking-[-0.02em] text-ink m-0">
             Dúvida sobre o curso em si
           </h2>
-          <p className="font-ui text-[15px] leading-relaxed text-ink-body">
+          <p className="font-ui text-[16px] leading-[1.6] text-ink-body m-0">
             As perguntas que aparecem antes da compra - preço, prazo, celular, áudio,
             certificado - estão respondidas nas{' '}
             <Link href="/faq" className="text-[var(--accent)] hover:underline">
@@ -148,7 +150,7 @@ export default function Page() {
             </Link>. O que não estiver lá, escreva: a lista cresce com o que vocês
             perguntam. {DUVIDAS_DE_CONTEUDO}
           </p>
-        </Card>
+        </div>
 
         <Identificacao />
 

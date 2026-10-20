@@ -18,7 +18,6 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
@@ -58,8 +57,8 @@ export function CourseClient({ slug }: { slug: string }) {
   return (
     <>
       {/* ── cabeçalho ───────────────────────────────────────────────── */}
-      <div className="border-b border-[color:var(--line-soft)]">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-12 sm:py-16
+      <div className="border-b border-line">
+        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 pt-12 pb-16 sm:pt-16 sm:pb-20
                         grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
           <div className="grid gap-4">
             <nav aria-label="Você está em" className="font-ui text-[13px] text-ink-muted">
@@ -77,17 +76,19 @@ export function CourseClient({ slug }: { slug: string }) {
               </span>
             </div>
 
-            <h1 className="font-display text-[32px] sm:text-[42px] font-bold leading-[1.12] text-ink">
+            <h1 className="font-display font-semibold text-[clamp(36px,4.4vw,56px)] leading-[1.03]
+                           tracking-[-0.036em] text-ink m-0">
               {c.titlePt}
             </h1>
-            <p className="text-[17px] leading-relaxed text-ink-body max-w-[54ch]">
+            <p className="font-display text-[clamp(19px,1.9vw,23px)] leading-[1.35] font-medium tracking-[-0.018em]
+                          text-ink max-w-[40ch] m-0">
               {c.taglinePt}
             </p>
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[62ch]">
+            <p className="font-ui text-[16.5px] leading-[1.6] text-ink-muted max-w-[60ch] m-0">
               {c.summaryPt}
             </p>
 
-            <dl className="flex flex-wrap gap-x-8 gap-y-3 pt-3">
+            <dl className="flex flex-wrap gap-x-10 gap-y-4 pt-5 mt-2 border-t border-line max-w-[560px]">
               {([
                 ['Módulos', String(c.stats.modules)],
                 ...(c.stats.lessons ? [['Lições', String(c.stats.lessons)] as const] : []),
@@ -95,8 +96,8 @@ export function CourseClient({ slug }: { slug: string }) {
                 ['Ritmo', 'Seu']
               ] as const).map(([k, v]) => (
                 <div key={k} className="grid gap-0.5">
-                  <dt className="font-ui text-[10.5px] uppercase tracking-[.08em] text-ink-muted">{k}</dt>
-                  <dd className="font-display text-[19px] font-bold text-ink tabular-nums">{v}</dd>
+                  <dt className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted">{k}</dt>
+                  <dd className="font-display text-[24px] font-semibold tracking-[-0.02em] text-ink tabular-nums m-0">{v}</dd>
                 </div>
               ))}
             </dl>
@@ -113,13 +114,12 @@ export function CourseClient({ slug }: { slug: string }) {
           eyebrowPt="No fim deste curso"
           titlePt="O que você vai conseguir fazer."
         />
-        <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0">
+        {/* Resultados sob fios, em duas colunas: são frases, não produtos. */}
+        <ul className="grid sm:grid-cols-2 gap-x-10 list-none p-0 m-0 border-t border-line">
           {c.outcomesPt.map(o => (
-            <li key={o}>
-              <Card className="p-4 flex gap-3 h-full">
-                <span aria-hidden className="text-[var(--accent)] text-[15px] mt-[2px]">✓</span>
-                <span className="font-ui text-[14.5px] leading-relaxed text-ink-body">{o}</span>
-              </Card>
+            <li key={o} className="flex gap-3.5 py-5 border-b border-line">
+              <span aria-hidden className="text-[var(--teal)] text-[15px] mt-[3px]">✓</span>
+              <span className="font-ui text-[16px] leading-[1.6] text-ink-body">{o}</span>
             </li>
           ))}
         </ul>
@@ -135,26 +135,24 @@ export function CourseClient({ slug }: { slug: string }) {
             ? 'A ordem não é alfabética nem histórica: é a ordem em que cada peça abre mais palavras para você ler.'
             : 'O plano do curso. Pode mudar de nome até a publicação; a sequência, não.'}
         />
-        <ol className="grid gap-3 list-none p-0 m-0">
+        {/* O sumário do curso, como o currículo da capa: linhas sob fio. */}
+        <ol className="list-none p-0 m-0 border-t border-line">
           {c.modules.map(m => (
-            <li key={m.n}>
-              <Card className="p-4 sm:p-5 flex items-start gap-4">
-                <span aria-hidden
-                      className="w-[34px] h-[34px] shrink-0 rounded-full bg-[var(--accent-wash)]
-                                 text-[var(--accent)] font-ui text-[14px] font-bold
-                                 grid place-items-center tabular-nums">
-                  {m.n}
+            <li key={m.n} className="flex items-start gap-4 sm:gap-6 py-5 sm:py-6 border-b border-line">
+              <span aria-hidden
+                    className="w-8 shrink-0 font-display text-[15px] font-semibold tabular-nums
+                               text-[var(--teal-ink)] pt-1">
+                {String(m.n).padStart(2, '0')}
+              </span>
+              <div className="grid gap-0.5 min-w-0">
+                <h3 className="font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] text-ink m-0">{m.titlePt}</h3>
+                <p className="font-ui text-[14.5px] leading-relaxed text-ink-muted m-0"><Prose text={m.subPt} /></p>
+              </div>
+              {m.letters ? (
+                <span className="ml-auto shrink-0 font-ui text-[13px] text-ink-muted tabular-nums pt-1.5">
+                  {m.letters} {m.letters === 1 ? 'letra' : 'letras'}
                 </span>
-                <div className="grid gap-0.5 min-w-0">
-                  <h3 className="font-display text-[16.5px] font-bold text-ink">{m.titlePt}</h3>
-                  <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted"><Prose text={m.subPt} /></p>
-                </div>
-                {m.letters ? (
-                  <span className="ml-auto shrink-0 font-ui text-[12px] text-ink-muted tabular-nums">
-                    {m.letters} {m.letters === 1 ? 'letra' : 'letras'}
-                  </span>
-                ) : null}
-              </Card>
+              ) : null}
             </li>
           ))}
         </ol>
@@ -168,8 +166,8 @@ export function CourseClient({ slug }: { slug: string }) {
             <ul className="grid gap-2.5 list-none p-0 m-0">
               {c.forWhomPt.map(f => (
                 <li key={f} className="flex gap-3">
-                  <span aria-hidden className="text-[var(--accent)] text-[14px] mt-[3px]">→</span>
-                  <span className="font-ui text-[14.5px] leading-relaxed text-ink-body">{f}</span>
+                  <span aria-hidden className="text-[var(--teal)] text-[14px] mt-[3px]">→</span>
+                  <span className="font-ui text-[16px] leading-[1.6] text-ink-body">{f}</span>
                 </li>
               ))}
             </ul>
@@ -180,9 +178,8 @@ export function CourseClient({ slug }: { slug: string }) {
             )}
           </div>
 
-          <Card tone="wash" className="p-6 grid gap-3 content-start">
-            <He size="lg" dim>ע</He>
-            <h3 className="font-display text-[18px] font-bold text-ink">
+          <aside className="grid gap-3 content-start pl-6 border-l-2 border-[var(--teal)] lg:mt-[76px]">
+            <h3 className="font-display text-[24px] font-semibold tracking-[-0.022em] text-ink m-0">
               E se não for para mim?
             </h3>
             {/* O título é a objeção, e a resposta começa por ela: a
@@ -190,7 +187,7 @@ export function CourseClient({ slug }: { slug: string }) {
                 e o caminho pelo site (Decreto 7.962/2013, art. 5º). Até
                 01/10/2026 o cartão respondia só com o prazo de estudo
                 (auditoria, CONV-001). */}
-            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
+            <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
               Você tem {empresa.politicas.arrependimentoDias} dias, contados da liberação
               do acesso, para desistir e receber 100% de volta, sem justificar; é só um
               botão em Sua conta. Depois disso, você tem {c.accessMonths} meses de acesso
@@ -198,11 +195,11 @@ export function CourseClient({ slug }: { slug: string }) {
               {tempoDoCursoPt()} O curso guarda onde você parou e volta
               exatamente ali.
             </p>
-            <Link href="/faq" className="font-ui text-[13.5px] text-[var(--accent)] hover:underline
+            <Link href="/faq" className="font-ui text-[15px] font-semibold text-[var(--teal-ink)] hover:underline
                                           inline-flex items-center min-h-[36px]">
               Ver as dúvidas mais comuns →
             </Link>
-          </Card>
+          </aside>
         </div>
       </Section>
 
@@ -210,7 +207,7 @@ export function CourseClient({ slug }: { slug: string }) {
       <Section tone="wash">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
           <div className="grid gap-3">
-            <h2 className="font-display text-[26px] sm:text-[30px] font-bold leading-tight text-ink max-w-[22ch]">
+            <h2 className="font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08] tracking-[-0.03em] text-ink max-w-[22ch] m-0">
               {open ? 'Comece hoje, na primeira lição.' : 'Ainda não, mas está vindo.'}
             </h2>
             <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[52ch]">
