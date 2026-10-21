@@ -1,0 +1,44 @@
+[
+  {
+    "id": "golan",
+    "nome": "Colinas de Golã",
+    "descricao_curta": "Planalto no nordeste. O CBS o inclui na área de Israel desde 1982; o status internacional é tratado no capítulo 2.",
+    "afirmacoes": ["C01-001"]
+  },
+  {
+    "id": "alta-galileia",
+    "nome": "Alta Galileia",
+    "descricao_curta": "Montanhas do norte, a parte mais chuvosa do país: a média anual chega a cerca de 1.100 mm.",
+    "afirmacoes": ["C01-021"]
+  },
+  {
+    "id": "vale-do-hula",
+    "nome": "Vale do Hula",
+    "descricao_curta": "Vale do norte que, na temporada 2024-2025, recebeu só cerca de 40% a 45% da chuva média.",
+    "afirmacoes": ["C01-026"]
+  },
+  {
+    "id": "kineret",
+    "nome": "Mar da Galileia (Kinéret)",
+    "descricao_curta": "Lago do norte, com 164 km² na tabela de área do CBS.",
+    "afirmacoes": ["C01-002"]
+  },
+  {
+    "id": "litoral",
+    "nome": "Litoral do Mediterrâneo (Carmelo e Sharon)",
+    "descricao_curta": "Costa a oeste, com cerca de 194 km. Do Carmelo ao norte do Sharon, a temporada 2024-2025 teve de 70% a 90% da chuva média.",
+    "afirmacoes": ["C01-038", "C01-010", "C01-026"]
+  },
+  {
+    "id": "mar-morto",
+    "nome": "Mar Morto",
+    "descricao_curta": "Superfície de água exposta mais baixa do planeta; em 2022, mais de 430 m abaixo do nível do mar, e descendo cerca de 1,15 m por ano.",
+    "afirmacoes": ["C01-011", "C01-012", "C01-013", "C01-016"]
+  },
+  {
+    "id": "extremo-sul",
+    "nome": "Extremo sul",
+    "descricao_curta": "A parte mais seca do país: menos de 100 mm de chuva por ano.",
+    "afirmacoes": ["C01-021"]
+  }
+]

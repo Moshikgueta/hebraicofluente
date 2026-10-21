@@ -1,0 +1,1426 @@
+{
+  "capitulo": 4,
+  "afirmacoes": [
+    {
+      "id": "C04-001",
+      "secao": "Introdução",
+      "afirmacao": "Massada e a Cidade Antiga de Acre foram inscritas na Lista do Patrimônio Mundial em 2001; a Cidade Branca de Tel Aviv, em 2003; os Lugares Sagrados Bahá'ís de Haifa e da Galileia Ocidental, em 2008.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-001",
+        "F04-010",
+        "F04-013",
+        "F04-016"
+      ],
+      "evidencia": "Fichas da UNESCO: Masada, 'Date of Inscription: 2001'; Old City of Acre, inscrita em 2001; White City of Tel-Aviv, inscrita em 2003; Bahá'i Holy Places, inscritos em 2008 (32a sessão).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Datas de inscrição; não cobre estado de conservação atual.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-002",
+      "secao": "Introdução",
+      "afirmacao": "Cesareia e o conjunto do mar da Galileia estão na Lista Indicativa de Israel, sem inscrição.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-026",
+        "F04-027"
+      ],
+      "evidencia": "Fichas 'Caesarea' (Ref. 1480) e 'Sea of Galilee & its Ancient Sites' (Ref. 1473) aparecem na seção Tentative Lists do site da UNESCO.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Situação na data da consulta; a lista indicativa muda.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-003",
+      "secao": "Mar da Galileia",
+      "afirmacao": "Em 2000, Israel incluiu o mar da Galileia e as ruínas à sua volta na Lista Indicativa da UNESCO como bem misto (cultural e natural); até a data da consulta, não havia inscrição.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-027"
+      ],
+      "evidencia": "Ficha Ref. 1473: categoria Mixed; submetida pela delegação permanente de Israel junto à UNESCO em 30 de junho de 2000.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A ficha é a proposta do Estado, não avaliação da UNESCO.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-004",
+      "secao": "Mar da Galileia",
+      "afirmacao": "A ficha da UNESCO cita Tiberíades, Hamat Gader, Korazim, Kursi, Cafarnaum e Tabgha em volta do lago.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-027"
+      ],
+      "evidencia": "'The cities of Tiberias and Hammat Gader, along with Korazim, Kursi, Capernaum, and Tabgha, surround the Sea of Galilee.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Lista da proposta; não é inventário completo dos sítios da margem.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-005",
+      "secao": "Mar da Galileia",
+      "afirmacao": "A proposta israelense 'The Galilee Journeys of Jesus & the Apostles' (2000) descreve um percurso que começa em Nazaré e contorna o lago até Tiberíades.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-028"
+      ],
+      "evidencia": "Ficha Ref. 1471, submetida em 2000: o roteiro começa em Nazaré e segue em torno do mar da Galileia até Tiberíades.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Texto da proposta; não atesta a historicidade dos episódios.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-006",
+      "secao": "Mar da Galileia",
+      "afirmacao": "A proposta 'Early Synagogues in the Galilee' inclui a sinagoga de Cafarnaum.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-029"
+      ],
+      "evidencia": "Ficha Ref. 1470 lista a sinagoga de Cafarnaum entre as sinagogas antigas da Galileia (coordenadas da série: 32°54' N, 35°35' E).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A data de submissão não apareceu no trecho.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-007",
+      "secao": "Mar da Galileia",
+      "afirmacao": "Coordenada aproximada do mar da Galileia: 32,80 N, 35,60 E.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-027"
+      ],
+      "evidencia": "Ficha Ref. 1473: 'Lat. 32°48' N / Long. 35°36' E'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Precisão de minuto; ponto central da proposta, não do lago medido.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-008",
+      "secao": "Mar da Galileia",
+      "afirmacao": "Nível do lago abaixo do nível do mar, água doce, papel como reservatório nacional.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-009",
+      "secao": "Mar da Galileia",
+      "afirmacao": "O nome Kinéret viria de kinór (harpa), pela forma do lago.",
+      "categoria": "lingua",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Etimologia popular corrente; sem fonte linguística, não pode entrar. Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-010",
+      "secao": "Mar da Galileia",
+      "afirmacao": "O barco antigo de Ginosar (o 'barco de Jesus'), achado em 1986.",
+      "categoria": "arqueologia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-011",
+      "secao": "Nazaré",
+      "afirmacao": "O Pleiades registra Nazaré como povoado antigo, com remissão ao Barrington Atlas (69 B4), em cerca de 32,70 N, 35,30 E; pela coordenada, a sudoeste do lago da Galileia.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-031",
+        "F04-027"
+      ],
+      "evidencia": "Pleiades place 678299: settlement, c. 32.70N 35.30E, BAtlas 69 B4; criadores E. M. Meyers e J. P. Brown. Lago: 32°48' N, 35°36' E (F04-027).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A direção 'a sudoeste' é dedução das duas coordenadas. O trecho não mostrou a datação do povoado.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-012",
+      "secao": "Nazaré",
+      "afirmacao": "A Basílica da Anunciação (consagrada em 1969) está sobre a gruta que a tradição católica associa à Anunciação; a tradição ortodoxa aponta a fonte de São Gabriel.",
+      "categoria": "religiao",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa. Fonte sugerida: Custódia da Terra Santa (nazareth.custodia.org).",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-013",
+      "secao": "Nazaré",
+      "afirmacao": "Nazaré é a maior cidade árabe de Israel.",
+      "categoria": "estatistica",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa. Exige CBS datado.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-014",
+      "secao": "Nazaré",
+      "afirmacao": "O Evangelho de Lucas (1,26) situa a Anunciação em Nazaré.",
+      "categoria": "religiao",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte primária (C) não acessada nesta edição. Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-015",
+      "secao": "Cafarnaum",
+      "afirmacao": "Cafarnaum (Kefar Nahum/Kapharnaoum) foi uma aldeia na margem norte do lago, que o Pleiades data a partir do período hasmoneu.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-032"
+      ],
+      "evidencia": "'Kefar Nahum/Kapharnaoum was a Hasmonean village located on the northern shore of the Sea of Galilee' (verbete de E. M. Meyers, modificado em 15 set. 2025).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O mesmo trecho traz dados incoerentes (origem em c. 515 a.C.; nomes romanos Chaberis e Kamara; 'UNESCO em 1979'), que parecem vir de mistura de registros. Só a frase sobre a aldeia hasmoneia na margem norte foi usada.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-016",
+      "secao": "Cafarnaum",
+      "afirmacao": "Um catálogo de igrejas da Universidade Hebraica de Jerusalém registra o sítio como 'Casa de São Pedro, domus ecclesiae', na margem noroeste do lago.",
+      "categoria": "religiao",
+      "fontes": [
+        "F04-034"
+      ],
+      "evidencia": "Registro 'CAPERNAUM - House of St. Peter Domus Ecclesiae'; 'Topographical location: on the northwestern shore of the sea'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O registro usa o nome tradicional; o trecho não mostrou a datação das fases nem a discussão da identificação.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-017",
+      "secao": "Cafarnaum",
+      "afirmacao": "A ficha da UNESCO sobre o lago destaca em Cafarnaum uma sinagoga e um mosteiro franciscano.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-027"
+      ],
+      "evidencia": "Ficha Ref. 1473 descreve 'a synagogue and a Franciscan monastery' em Cafarnaum.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Sem datas das estruturas.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-018",
+      "secao": "Cafarnaum",
+      "afirmacao": "Escavações franciscanas (Corbo e Loffreda, a partir de 1968) acharam uma igreja octogonal do século V sobre uma casa do século I com grafites.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-035"
+      ],
+      "evidencia": "A página da Custódia sobre Cafarnaum existe (busca), mas o trecho não mostrou o conteúdo das escavações.",
+      "pagina_ou_secao": null,
+      "acesso": "referencia-confirmada",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-019",
+      "secao": "Cafarnaum",
+      "afirmacao": "A sinagoga de calcário branco é dos séculos IV-V e está sobre uma de basalto mais antiga.",
+      "categoria": "arqueologia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Datação discutida na literatura; nada lido. Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-020",
+      "secao": "Cafarnaum",
+      "afirmacao": "Coordenada aproximada de Cafarnaum: 32,88 N, 35,58 E.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-033"
+      ],
+      "evidencia": "ToposText, Kapharnaoum: c. 32.88N, 35.58E, confiança 'High', com remissão ao Pleiades.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "ToposText não é instituição oficial; conferir no registro do Pleiades.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-021",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "Cesareia foi fundada por Herodes, o Grande; a Autoridade de Natureza e Parques data a fundação em 10 a.C.; o porto Sebastos foi construído antes da cidade.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-020"
+      ],
+      "evidencia": "'since its establishment by Herod the Great in 10 BCE. Herod began construction on Caesarea's port facilities, Sebastos Harbor, before building the city itself'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A data de 10 a.C. é a da inauguração na cronologia usual; a obra começou antes. O texto diz 'data a fundação em 10 a.C.', atribuindo.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-022",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "A área abrigada do porto tinha cerca de 50 acres; o porto, cerca de 500 metros de comprimento, em três seções.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-020"
+      ],
+      "evidencia": "'its sheltered docking area extended over roughly 50 acres. The harbor was approximately 500 meters long and was built in three sections.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A conversão para cerca de 20 hectares é nossa (50 acres = 20,2 ha).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-023",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "O porto servia aos navios entre o Egito, o Levante e a Europa e protegia o trigo enviado do Egito a Roma.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-020"
+      ],
+      "evidencia": "'provide shelter and docking services to ships sailing between Egypt, the Levant, and Europe; and to protect the wheat supply shipped from Egypt to the Roman Empire.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Texto de divulgação institucional.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-024",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "A bacia ocidental parou de funcionar cerca de um século depois de construída, estava destruída antes do fim do século III, e a maior parte dos restos está submersa.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-020"
+      ],
+      "evidencia": "'the Western basin of Caesarea Harbor stopped functioning just 100 years after it was built, it was completely destroyed before the end of the third century, and most of its remnants are now under water.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte institucional que resume achados; os relatórios de escavação não foram lidos.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-025",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "O porto usou cerca de 17 mil metros cúbicos de pozolana (cinza vulcânica) de Puteoli, na baía de Nápoles.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-025"
+      ],
+      "evidencia": "Votruba (2007, IJNA): 'The three materials are 17,000 m3 of volcanic ash (pozzolana) from Puteoli'. Estudo petrográfico ligado ao projeto ROMACONS liga o tufo aos Campos Flégreos (Nápoles).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Estimativa do autor; título exato do artigo não apareceu na busca.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-026",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "As abóbadas de 7,40 m de altura e 21 m de profundidade, construídas por Herodes como depósitos do porto, serviram de base ao templo dedicado a Augusto e abrigam o centro de visitantes do porto.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-020"
+      ],
+      "evidencia": "'The huge vaults - 7.40 meters high and 21 meters deep - were erected by King Herod as part of the storage system in the harbor, and served as the basis for the temple stage, a temple he dedicated to his patron - Emperor Augustus.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Uso atual como centro de visitantes: conferir antes da edição.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C04-027",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "A inscrição latina de Pilatos, em calcário, foi achada reaproveitada na escadaria do teatro romano de Cesareia, provavelmente vinha de um templo em honra de Tibério, e o original está no Museu de Israel.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-023",
+        "F04-024"
+      ],
+      "evidencia": "Museu de Israel: 'found reused in the staircase of the Roman theater of Caesarea, the provincial capital; it was probably originally set into a temple built in the city in honor of Emperor Tiberius'; peça IAA 1961-529; 80 x 68 x 20 cm; exposta na ala de arqueologia.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O ano da descoberta e a missão italiana não foram confirmados em fonte A-D (ver C04-032).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-028",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "Segundo o Museu de Israel, é o único objeto da época de Pilatos com o nome dele; o texto reconstruído diz '[praef]ectus' da Judeia, embora a ficha o chame de procurador; o museu o situa no cargo em 26-36 d.C.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-023"
+      ],
+      "evidencia": "Ficha: 'Latin dedicatory inscription mentioning Pontius Pilate, the procurator of Judea'; texto reconstruído 'Praef]ect of Judea'; 'fifth Roman Procurator of Judea, serving in that capacity in 26-36 CE'; 'the only object from his time that bears his name'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Afirmação do museu, atribuída a ele no texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-029",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "Cesareia foi a capital da província romana.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-023"
+      ],
+      "evidencia": "'the Roman theater of Caesarea, the provincial capital'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Menção de passagem; sem datas do período como capital.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-030",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "O parque nacional de Cesareia foi declarado em 1968 e reúne teatro romano, hipódromo e fortificações cruzadas.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-021",
+        "F04-022"
+      ],
+      "evidencia": "'In 1968 the Caesarea National Park was similarly declared on land'; página do parque cita Roman Theater, hippodrome e Crusader fortifications.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O dado de mais de um milhão de visitantes por ano não foi usado (artigo sem data).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-031",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "Cesareia está na Lista Indicativa de Israel, em 32°30' N, 34°53' E (entre Tel Aviv e Haifa).",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-026",
+        "F04-015",
+        "F04-018"
+      ],
+      "evidencia": "Ficha Ref. 1480: Lat. 32°30' N / Long. 34°53' E; descreve a cidade portuária de Herodes. Tel Aviv a 32°04' N e Haifa a 32°48' N (F04-015, F04-018).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "'Entre Tel Aviv e Haifa' é dedução das coordenadas. Data de submissão não apareceu.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-032",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "A pedra de Pilatos foi achada em 1961 pela missão italiana de Antonio Frova, e no teatro há uma réplica.",
+      "categoria": "arqueologia",
+      "fontes": [],
+      "evidencia": "Só fontes de nível E e Wikipedia na busca; o número IAA 1961-529 (F04-023) é indício do ano, não prova.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Reescrito no texto sem ano nem réplica.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-033",
+      "secao": "Cesareia Marítima",
+      "afirmacao": "O aqueduto de Cesareia.",
+      "categoria": "arqueologia",
+      "fontes": [],
+      "evidencia": "Nenhuma: a busca não trouxe o aqueduto.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-034",
+      "secao": "Massada",
+      "afirmacao": "Massada fica na borda oriental do deserto da Judeia, perto da margem do Mar Morto, entre Sodoma e Ein Gedi; o platô está 450 metros acima do nível do Mar Morto.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-004"
+      ],
+      "evidencia": "'on the eastern edges of the Judean Desert near the Dead Sea shore, between Sodom and En Gedi'; 'its plateau rises 450 meters above the level of the Dead Sea'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A altura relativa muda com a queda do nível do lago; conferir a data do número do parque.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-035",
+      "secao": "Massada",
+      "afirmacao": "Herodes, rei da Judeia (37-4 a.C.), construiu em Massada um palácio-fortaleza, com palácio no estilo clássico do início do Império Romano.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-001",
+        "F04-004"
+      ],
+      "evidencia": "UNESCO: 'built in the classic style of the early Roman Empire by Herod the Great, King of Judaea (reigned 37 - 4 B.C.)'; INPA: 'built by King Herod of Judea as a palace-fortress complex'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-036",
+      "secao": "Massada",
+      "afirmacao": "Em volta de Massada há oito acampamentos romanos (de planta quadrilátera), um muro de cerco e uma rampa no lado ocidental, de subida mais suave: o sistema romano de cerco mais completo que se conhece.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-001",
+        "F04-002",
+        "F04-004"
+      ],
+      "evidencia": "UNESCO: 'eight Roman camps, a siege-wall and a ramp of earth and wood built on the western, more gradually sloping, side'; 'most complete Roman siege works to survive'; camps 'of quadrilateral plan'. INPA: 'the most complete Roman siege system found to date anywhere in the world'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-037",
+      "secao": "Massada",
+      "afirmacao": "Flávio Josefo é a única fonte histórica antiga sobre o fim de Massada.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-002",
+        "F04-008"
+      ],
+      "evidencia": "Dossiê UNESCO: Josefo é 'the sole historic source on Masada'; Magness: 'recorded by only one ancient author, the Jewish historian Josephus'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-038",
+      "secao": "Massada",
+      "afirmacao": "Segundo Josefo, quando os romanos romperam a defesa, em 73 d.C. na cronologia adotada pela UNESCO, os sitiados se mataram em vez de cair prisioneiros.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-002",
+        "F04-008"
+      ],
+      "evidencia": "Dossiê: 'the breach came in 73'; segundo Josefo, quase todos os sitiados tiraram a própria vida. Magness trata do relato de suicídio coletivo de Josefo.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O ano (73 ou 74) é discutido na literatura; o texto atribui o 73 à UNESCO. Números de mortos (960 ou 967) divergem entre resumos e não foram usados.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-039",
+      "secao": "Massada",
+      "afirmacao": "A historicidade do suicídio coletivo é debatida: Cohen (1982) argumentou que os vestígios (esqueletos numa caverna, incêndios separados) não combinam com a unanimidade que Josefo descreve; Magness (2019) escreveu que muitos estudiosos consideram a descrição inventada e que a arqueologia não tem como responder à pergunta.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-006",
+        "F04-007",
+        "F04-008",
+        "F04-009"
+      ],
+      "evidencia": "PBS Frontline, citando Cohen (JJS 33, 1982, p. 385-405): os esqueletos na caverna e os fogos separados 'cast doubt on Josephus' theory of unanimity of purpose and unity of action among the Sicarii'. Magness: 'many scholars now believe Josephus' description of the mass suicide ... is fabricated'; 'a question that archaeology is not equipped to answer'. Magness escavou em Massada.",
+      "pagina_ou_secao": "JJS 33, p. 385-405 (registro bibliográfico)",
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O artigo de Cohen não foi lido: o argumento vem de citação em fonte E (PBS) e do registro bibliográfico. Conferir no texto integral.",
+      "interpretacoes_concorrentes": "1) Leitura que aceita o relato de Josefo em linhas gerais, dominante na narrativa nacional e nas escavações dos anos 1960. 2) Crítica de Cohen (1982): vestígios incompatíveis com a ação unânime; parte dos defensores pode ter fugido ou se matado separadamente. 3) Magness (2019): muitos estudiosos tratam a descrição como invenção literária; a arqueologia não decide a questão.",
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-040",
+      "secao": "Massada",
+      "afirmacao": "As grandes escavações de Massada foram feitas em 1963-1965.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-002"
+      ],
+      "evidencia": "Dossiê UNESCO cita as escavações de 1963-65.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O nome do diretor (Yigael Yadin) só apareceu em fontes E; ver C04-046.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-041",
+      "secao": "Massada",
+      "afirmacao": "Nachman Ben-Yehuda, sociólogo da Universidade Hebraica, argumentou em The Masada Myth (1995) que o relato de Josefo foi editado e ampliado até virar mito de heroísmo, difundido por organizações clandestinas anteriores ao Estado, pelo exército, por arqueólogos, por movimentos juvenis e pela indústria do turismo.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-005"
+      ],
+      "evidencia": "Descrição do livro: 'the Josephus Flavius narrative was edited and augmented to form a simple and powerful myth of heroism'; promovido por 'pre-state underground organizations, the army, archaeologists, youth movements, and the tourist industry'; o autor é 'professor of sociology at Hebrew University'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A descrição vem do editor/catálogo; o livro não foi lido. Críticas à tese de Ben-Yehuda não foram pesquisadas.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-042",
+      "secao": "Massada",
+      "afirmacao": "Ao inscrever Massada, a UNESCO a chamou de símbolo do antigo reino judeu e de sua destruição e ligou os acontecimentos à identidade cultural judaica.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-001"
+      ],
+      "evidencia": "Critério (iii): 'symbol of the ancient Jewish Kingdom of Israel' e sua destruição; critério (vi): ligação com a identidade cultural judaica e a luta entre opressão e liberdade.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-043",
+      "secao": "Massada",
+      "afirmacao": "Massada foi inscrita pela UNESCO em 2001 (critérios iii, iv e vi) e é parque nacional desde 1966.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-001",
+        "F04-004"
+      ],
+      "evidencia": "UNESCO: inscrição em 2001 na 25a sessão; INPA: 'officially declared a national park in 1966'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-044",
+      "secao": "Massada",
+      "afirmacao": "O lado leste de Massada se sobe por teleférico ou pela Trilha da Serpente; o oeste, pela rampa romana, com acesso pela estrada 3199 a partir de Arad; não há estrada entre os dois lados; horários mudam com a estação.",
+      "categoria": "pratica",
+      "fontes": [
+        "F04-004"
+      ],
+      "evidencia": "INPA: acesso leste por teleférico ou Snake Path, oeste pela rampa; 'road 3199 from Arad'; 'there is no road between the eastern and western sides'; horários variam.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Regra de visita sujeita a mudança.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C04-045",
+      "secao": "Massada",
+      "afirmacao": "O lema 'Massada não cairá de novo' e cerimônias militares no alto.",
+      "categoria": "sociedade",
+      "fontes": [],
+      "evidencia": "Só fontes E e Wikipedia.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-046",
+      "secao": "Massada",
+      "afirmacao": "Yigael Yadin dirigiu as escavações de 1963-1965.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-007"
+      ],
+      "evidencia": "Só em fonte E (PBS) e Wikipedia; o volume do JJS de 1982 é em homenagem a Yadin.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Não entra sem fonte A-D.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-047",
+      "secao": "Dados do mapa",
+      "afirmacao": "Coordenada de Massada: 31,32 N, 35,35 E.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-003"
+      ],
+      "evidencia": "UNESCO: 'N31 18 56 E35 21 13'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-048",
+      "secao": "Mar Morto",
+      "afirmacao": "As margens do Mar Morto ficam em Israel, na Jordânia e na Cisjordânia; entre os nomes antigos registrados pelo Pleiades estão o latino Asphaltitis e o grego thálassa nekrá.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-037"
+      ],
+      "evidencia": "Pleiades (verbete de S. T. Parker): o 'Dead Sea', 'bordered by Israel, Jordan, and the West Bank'; atualização de 2023: nome latino 'Asphaltitis L.' e criado o nome grego 'thalassa nekra'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O trecho não mostra em que autor antigo cada nome é atestado.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-049",
+      "secao": "Mar Morto",
+      "afirmacao": "O nível do Mar Morto cai cerca de um metro por ano (nível atual datado).",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa. Fonte sugerida: Serviço Hidrológico de Israel / Autoridade da Água; Instituto Geológico de Israel.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-050",
+      "secao": "Mar Morto",
+      "afirmacao": "Milhares de dolinas (sinkholes) se abriram nas margens com a queda do nível.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa. Fonte sugerida: Geological Survey of Israel.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-051",
+      "secao": "Mar Morto",
+      "afirmacao": "O lago se dividiu numa bacia norte natural e em bacias de evaporação industriais ao sul.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-052",
+      "secao": "Mar Morto",
+      "afirmacao": "Na Antiguidade se recolhia betume (asfalto) do Mar Morto.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-040"
+      ],
+      "evidencia": "Artigo de 1878: asfalto 'from the Lacus Asphalces, or Dead Sea, where it was found in ancient times'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte do século XIX; precisa de fonte acadêmica moderna.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-053",
+      "secao": "Dados do mapa",
+      "afirmacao": "Coordenada do Mar Morto.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Nenhuma fonte A-D com coordenada foi encontrada.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-054",
+      "secao": "Tel Aviv",
+      "afirmacao": "Tel Aviv foi fundada em 1909, logo ao norte da cidade portuária amuralhada de Jafa, e cresceu durante o Mandato Britânico.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-013"
+      ],
+      "evidencia": "UNESCO: 'founded in 1909 to the immediate north of the walled port city of Jaffa'; cresceu sob o Mandato Britânico na Palestina.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-055",
+      "secao": "Tel Aviv",
+      "afirmacao": "A Cidade Branca, inscrita em 2003 (critérios ii e iv), segue o plano urbano de Patrick Geddes (1925-1927), descrito pela UNESCO como um dos principais teóricos do urbanismo do início da era moderna.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-013"
+      ],
+      "evidencia": "'based on the urban master plan by Sir Patrick Geddes (1925-27)'; 'one of the early modern period's leading town-planning theorists'; inscrição em 2003, critérios (ii) e (iv).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-056",
+      "secao": "Tel Aviv",
+      "afirmacao": "Os edifícios foram erguidos do começo dos anos 1930 aos anos 1950 (resumo atual) ou até 1948 (dossiê); os arquitetos se formaram na Europa e adaptaram o Movimento Moderno a tradições locais e ao clima.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-013",
+        "F04-014"
+      ],
+      "evidencia": "Resumo: 'from the early 1930s until the 1950s'; dossiê: 'early 1930s till 1948'; arquitetos formados na Europa; 'adapted to the specific climatic conditions of the site'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "As soluções concretas de adaptação ao clima não apareceram no trecho; o texto não as detalha.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-057",
+      "secao": "Tel Aviv",
+      "afirmacao": "A avaliação para a UNESCO observa que o rótulo 'estilo Bauhaus' não é necessariamente adequado; a cidade é uma síntese de correntes do Movimento Moderno.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-014",
+        "F04-013"
+      ],
+      "evidencia": "Dossiê/avaliação: 'the term \"Bauhaus style\", often applied to Tel Aviv, is not necessarily appropriate'; critério (ii): síntese de tendências do Movimento Moderno.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-058",
+      "secao": "Tel Aviv",
+      "afirmacao": "O bem tem 140,4 hectares em três zonas (Cidade Branca central, Lev Hair e bulevar Rothschild, área de Bialik); cerca de mil edifícios históricos estão sob regras de conservação, a maioria privados; a UNESCO aponta os prédios altos em volta como risco à integridade visual.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-013"
+      ],
+      "evidencia": "'140.4 ha with a 197 ha buffer zone'; três zonas; 'Conservation rules cover roughly 1,000 historic buildings, most of them privately owned'; risco do 'high-rise development'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Números da ficha atual; o estado de conservação muda.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-059",
+      "secao": "Tel Aviv",
+      "afirmacao": "O ponto da UNESCO para a Cidade Branca fica no centro da praça Dizengoff: 32,08 N, 34,77 E.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-015"
+      ],
+      "evidencia": "UNESCO: 'N32 04 40 E34 46 27'; 'in the center of Tsina Dizengoff Square'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O resumo da busca também trouxe '32.067, 34.783', que não bate com o grau-minuto-segundo; usamos a conversão de N32 04 40 E34 46 27.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-060",
+      "secao": "Tel Aviv",
+      "afirmacao": "A fundação como bairro Ahuzat Bayit e o sorteio dos lotes com conchas.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-061",
+      "secao": "Tel Aviv",
+      "afirmacao": "A Cidade Branca tem cerca de 4.000 edifícios.",
+      "categoria": "estatistica",
+      "fontes": [],
+      "evidencia": "Número corrente na imprensa; a UNESCO fala em cerca de mil sob regras de conservação.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-062",
+      "secao": "Jafa",
+      "afirmacao": "O Pleiades registra Jafa como cidade portuária antiga, com as formas Ioppe e Joppe ao lado de Yafo, em cerca de 32,05 N, 34,75 E.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-030"
+      ],
+      "evidencia": "Pleiades 687931: 'ancient port city in Iudaea'; nomes Ioppe, Joppe, Yafo; ponto c. 32.053079, 34.7499295.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Não cobre períodos, escavações nem a história do porto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-063",
+      "secao": "Jafa",
+      "afirmacao": "Menções bíblicas de Jope (Jonas 1,3; Atos 9-10).",
+      "categoria": "religiao",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte primária não acessada nesta edição. Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-064",
+      "secao": "Jafa",
+      "afirmacao": "A união municipal de Tel Aviv e Jafa (Tel Aviv-Yafo) em 1950.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-065",
+      "secao": "Jafa",
+      "afirmacao": "A torre do relógio de Jafa, do período otomano.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-066",
+      "secao": "Haifa",
+      "afirmacao": "Os Lugares Sagrados Bahá'ís foram inscritos em 2008 (32a sessão, 8 de julho), critérios iii e vi; a candidatura fora devolvida em 2007 e reapresentada em janeiro de 2008.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-016",
+        "F04-019"
+      ],
+      "evidencia": "UNESCO: inscrição em 2008, critérios (iii) e (vi); 'first referred back in 2007 and resubmitted in January 2008'; inscrita na 32a sessão em 8 de julho de 2008.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-067",
+      "secao": "Haifa",
+      "afirmacao": "O conjunto inclui os dois lugares mais sagrados da fé bahá'í, ligados aos fundadores: o santuário do Báb em Haifa, com jardins em terraços, e o santuário de Bahá'u'lláh em Acre (Bahjí).",
+      "categoria": "religiao",
+      "fontes": [
+        "F04-016",
+        "F04-018"
+      ],
+      "evidencia": "'the two most holy places in the Bahá'í religion associated with the founders, the Shrine of Bahá'u'lláh in Acre and the Shrine of the Báb in Haifa'; decisão cita 'the Holy shrine of the Báb and its terraced gardens'; mapas listam Bahjí perto de Acre.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte institucional da UNESCO; o Bahá'í World Centre não foi consultado.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-068",
+      "secao": "Haifa",
+      "afirmacao": "O bem soma 26 edifícios, monumentos e sítios: 11 locais segundo o comunicado de 2008, sete segundo a página da lista.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-016",
+        "F04-017",
+        "F04-019"
+      ],
+      "evidencia": "Comunicado: '26 buildings, monuments and sites at 11 locations in Acre and Haifa'; página: 'seven distinct locations'; dossiê: onze sítios em sete unidades de proteção.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A diferença é de agrupamento, não de conteúdo.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-069",
+      "secao": "Haifa",
+      "afirmacao": "A UNESCO destacou a tradição de peregrinação bahá'í, com milhares de peregrinos por ano.",
+      "categoria": "religiao",
+      "fontes": [
+        "F04-016"
+      ],
+      "evidencia": "'the strong cultural tradition of Bahá'í pilgrimage, with thousands of pilgrims visiting each year'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Sem número exato.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-070",
+      "secao": "Haifa",
+      "afirmacao": "Um dos conjuntos inscritos em Haifa é a encosta norte do monte Carmelo: 32,81 N, 34,99 E.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-018"
+      ],
+      "evidencia": "UNESCO: 'North Slope of Mount Carmel', N32 48 52.54 E34 59 14.2.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-071",
+      "secao": "Haifa",
+      "afirmacao": "Haifa é uma cidade mista, com judeus e árabes cristãos e muçulmanos, e bairros como Wadi Nisnas.",
+      "categoria": "sociedade",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa. Exige CBS ou município, datado.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C04-072",
+      "secao": "Haifa",
+      "afirmacao": "O porto de Haifa, o Technion e o metrô Carmelit.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-073",
+      "secao": "Acre",
+      "afirmacao": "A Cidade Antiga de Acre foi inscrita em 2001 (critérios ii, iii e v).",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F04-010"
+      ],
+      "evidencia": "UNESCO: 'inscribed ... in 2001 under criteria (ii), (iii) and (v)'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-074",
+      "secao": "Acre",
+      "afirmacao": "A cidade cruzada de 1104-1291 está quase intacta, acima e abaixo do nível atual da rua, e foi enterrada depois da tomada mameluca no fim do século XIII.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-010",
+        "F04-011"
+      ],
+      "evidencia": "'The remains of the Crusader town, dating from 1104 to 1291, lie almost intact, both above and below today's street level'; enterrada após a tomada mameluca no fim do século XIII.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-075",
+      "secao": "Acre",
+      "afirmacao": "Os restos cruzados incluem muralhas, quarteirões, ruas, edifícios públicos e religiosos, casas, lojas e drenagem.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-010"
+      ],
+      "evidencia": "'walls, quarters, streets, public and religious buildings, dwellings, shops and drainage infrastructure'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-076",
+      "secao": "Acre",
+      "afirmacao": "A cidade otomana amuralhada, com cidadela, mesquitas, khans e banhos, é quase toda dos séculos XVIII e XIX e foi construída sobre as estruturas cruzadas.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-010",
+        "F04-011"
+      ],
+      "evidencia": "'The present town, with its citadel, mosques, khans and baths, dates largely from the 18th and 19th centuries and was built on top of the Crusader structures'; critério (v) fala da cidade otomana amuralhada.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-077",
+      "secao": "Acre",
+      "afirmacao": "O dossiê observa que a construção otomana sobre as fundações cruzadas ajudou a preservá-las.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F04-011"
+      ],
+      "evidencia": "'the Ottoman town was built over the Crusader foundations, which helped preserve them'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-078",
+      "secao": "Acre",
+      "afirmacao": "Ake e Ptolemais são nomes antigos de Acre registrados pelo Pleiades.",
+      "categoria": "historia",
+      "fontes": [
+        "F04-036"
+      ],
+      "evidencia": "Pleiades 678010: 'Ake/Ptolemais', ponto c. 32.921, 35.080; local de Tel Akko.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Não cobre os períodos de cada nome.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-079",
+      "secao": "Dados do mapa",
+      "afirmacao": "Coordenada da Cidade Antiga de Acre: 32,92 N, 35,07 E.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-012"
+      ],
+      "evidencia": "UNESCO: 'N32 55 18, E35 4 8'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-080",
+      "secao": "Acre",
+      "afirmacao": "Napoleão sitiou Acre em 1799 e não a tomou.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-081",
+      "secao": "Acre",
+      "afirmacao": "Al-Jazzar Paxá reconstruiu as muralhas e a mesquita no fim do século XVIII.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-082",
+      "secao": "Acre",
+      "afirmacao": "O túnel dos Templários, de cerca de 350 m.",
+      "categoria": "arqueologia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-083",
+      "secao": "Dados do mapa",
+      "afirmacao": "Coordenada da Cidade Antiga de Jerusalém: 31,78 N, 35,23 E.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-038"
+      ],
+      "evidencia": "UNESCO: 'N31 46 40 E35 13 54'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-084",
+      "secao": "Dados do mapa",
+      "afirmacao": "Coordenada de Tel Be'er Sheva (o sítio arqueológico, não o centro da cidade moderna): 31,24 N, 34,84 E.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-039"
+      ],
+      "evidencia": "UNESCO, Biblical Tels: Tel Beer Sheba 'N31°14′41″ E34°50′27″'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Marca o tel, a leste da cidade moderna; não serve de centro urbano.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C04-085",
+      "secao": "Dados do mapa",
+      "afirmacao": "Coordenada de Eilat.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Nenhuma.",
+      "pagina_ou_secao": null,
+      "acesso": null,
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Busca não realizada ou insuficiente: a cota de buscas da sessão (compartilhada entre agentes) esgotou-se depois de cerca de 37 consultas. Fica para a revisão humana ou para a próxima rodada de pesquisa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    }
+  ]
+}

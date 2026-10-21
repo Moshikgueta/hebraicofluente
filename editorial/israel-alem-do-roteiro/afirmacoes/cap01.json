@@ -1,0 +1,648 @@
+{
+  "capitulo": 1,
+  "afirmacoes": [
+    {
+      "id": "C01-001",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "O Central Bureau of Statistics (CBS) dá a Israel 22.072 km², contando Jerusalém Oriental desde 1967 e as Colinas de Golã desde 1982.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-001",
+        "F01-002",
+        "F01-003"
+      ],
+      "evidencia": "Israel in Figures 2010 lista a área como '22,072 sq. km.', com a nota de que inclui 'as of 1967 East Jerusalem and as of 1982 the Golan Heights'. A edição de 2009 traz o mesmo total. A ficha da Universidade de Illinois: 'Area: 22,072 sq km (8,522 sq miles), including Jerusalem and Golan.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Folhetos de 2009 e 2010 lidos em cópia de terceiros (istmat.org). Não foi confirmado o número da edição mais recente do Statistical Abstract. A Cisjordânia, fora Jerusalém Oriental, não entra nessa área.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C01-002",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "Na tabela do CBS, 21.643 km² são terra e 429 km² são lagos: 164 km² do Mar da Galileia e 265 km² do Mar Morto.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-001",
+        "F01-002"
+      ],
+      "evidencia": "Israel in Figures 2010: land area 21,643 sq. km.; lakes 429 sq. km., 'Sea of Galilee 164 sq. km.' e 'Dead Sea 265 sq. km.' As edições de 2018 e 2019, segundo o resumo, mostram terra 98,0% e lagos 2,0% do mesmo total.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O valor do Mar Morto é uma convenção de tabela: o lago encolhe todo ano e sua parte sul praticamente secou (C01-016). O texto apresenta o número como 'na tabela do CBS', não como a superfície atual.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C01-003",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "O Ministério das Relações Exteriores de Israel publica outro total: 22.145 km², dos quais 21.671 km² de terra.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-004",
+        "F01-005"
+      ],
+      "evidencia": "Página 'Israel - Size and Dimension': 'The total area of the State of Israel is 22,145 sq.km (8,630 sq. miles), of which 21,671 sq. km is land area.' A página do mapa topográfico repete 22,145 km² e 2,1% de água.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "As páginas não têm data visível no trecho, e o que o total inclui é dito de forma inconsistente (ver C01-004). O texto só diz que o ministério publica esse número.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C01-004",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "O total de 22.145 km² do Ministério das Relações Exteriores inclui a Cisjordânia ('Judeia e Samaria') e as Colinas de Golã.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-005"
+      ],
+      "evidencia": "O resumo da busca cita a página do mapa topográfico: 'The total area of the state of Israel - including Judea and Samaria (the West Bank) and the Golan Heights - is 22,145 sq. km., of which 2.1% is water.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Incoerente com os outros números: 22.145 km² fica a 73 km² do total do CBS, que exclui a Cisjordânia (fora Jerusalém Oriental), e a própria Cisjordânia tem milhares de km². Pode ser erro da página ou leitura errada do resumo. Precisa ser aberta no texto integral. Não vai ao texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-005",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "Antes de junho de 1967, a área de Israel, definida pelas linhas de armistício de 1949 e 1950, era de cerca de 20.700 km², com 445 km² de águas interiores.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-008"
+      ],
+      "evidencia": "'Before June 1967, the area composing Israel (resulting from the armistice lines of 1949 and 1950) was about 20,700 square kilometers, which included 445 square kilometers of inland water.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Country Study da Library of Congress em cópia de terceiros; edição e ano não identificados no trecho.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-006",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "Segundo o Ministério das Relações Exteriores de Israel, o país tem cerca de 470 km de norte a sul e cerca de 135 km na parte mais larga, entre o Mar Morto e o Mediterrâneo.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-006",
+        "F01-007"
+      ],
+      "evidencia": "'Long and narrow in shape, the country is about 290 miles (470 km.) in length from north to south and some 85 miles (135 km.) across at its widest point between the Dead Sea and the Mediterranean coast.' O mesmo par de números aparece em 'Israel at 65'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A fonte não diz que território a medida considera. O texto atribui os números ao ministério.",
+      "interpretacoes_concorrentes": "Obras de referência citam outros valores (cerca de 424 km de comprimento, 114 km de largura máxima, 10 km de largura mínima), mas a busca só os encontrou na Wikipedia (ver C01-007).",
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-007",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "Israel tem 424 km de norte a sul, 114 km de largura máxima e 10 km na parte mais estreita.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-023"
+      ],
+      "evidencia": "O resumo da busca atribuiu esses números à Wikipedia e ao registro de autoridade da Biblioteca Nacional de Israel, mas o trecho do registro não mostrou números.",
+      "pagina_ou_secao": null,
+      "acesso": "referencia-confirmada",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só Wikipedia sustenta. Largura mínima de Israel é dado que o brief pede: procurar em fonte A a D (CBS, Survey of Israel).",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-008",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "A parte mais estreita de Israel tem 15 km, perto de Netanya.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Encontrado apenas em páginas de texto reescrito automaticamente, sem fonte.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Sem fonte confiável. Não vai ao texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-009",
+      "secao": "Abertura",
+      "afirmacao": "De carro, dá para ir da costa do Mediterrâneo ao Mar Morto em cerca de uma hora e meia.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-006"
+      ],
+      "evidencia": "O ministério diz que a distância do Mediterrâneo, a oeste, ao Mar Morto, a leste, 'can be crossed by car in about 90 minutes'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Tempo indicativo, sem ponto de partida nem trânsito definidos. O texto diz 'cerca de'.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-010",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "A costa de Israel no Mediterrâneo tem cerca de 194 km, segundo números divulgados pelo Ministério das Relações Exteriores por volta de 2013.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-007"
+      ],
+      "evidencia": "'Israel at 65' lista a fronteira terrestre total em 857 km e a costa do Mediterrâneo em 194 km.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A página não explica como a costa foi medida. Comprimento de costa depende da escala de medição.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-011",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "A superfície do Mar Morto é o ponto mais baixo da Terra fora d'água, isto é, a superfície de água exposta mais baixa do planeta.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-007",
+        "F01-013"
+      ],
+      "evidencia": "'Israel at 65' lista o Mar Morto como 'the lowest point on earth'. O Guinness World Records registra o recorde 'Lowest body of water exposed' para o Mar Morto.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O número de 417 m da página do ministério está desatualizado (ver C01-029).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-012",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "Em 2022, a superfície do Mar Morto estava a mais de 430 m abaixo do nível do mar.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-013",
+        "F01-014",
+        "F01-010"
+      ],
+      "evidencia": "Guinness, citando estimativa do Ministério da Proteção Ambiental de Israel 'as of 2022': 'an average of around 436 m (1,430 ft) below sea level' e queda de cerca de 1,1 m por ano. Britannica: em meados da década de 2010 o lago estava 'about 1,410 feet (430 metres) below sea level' e continuava a cair cerca de 1 m por ano. O relatório do Controlador do Estado (junho de 2026) confirma que a queda continua.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Os valores absolutos vêm de duas fontes de nível E independentes; a tendência vem de fonte D. Não foi obtida leitura direta da Autoridade da Água (série mensal em data.gov.il). O texto usa a formulação conservadora 'mais de 430 m' e não o número exato. Prioridade 1 da revisão: trocar por leitura oficial datada.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C01-013",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "Sem intervenção, o nível da bacia norte do Mar Morto deve continuar caindo cerca de 1,15 m por ano, segundo estimativas de 2022 do Ministério da Proteção Ambiental citadas pelo Controlador do Estado em junho de 2026.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-010",
+        "F01-012"
+      ],
+      "evidencia": "O sumário do relatório diz que o ritmo esperado na bacia norte, sem ações de contenção, é de cerca de 1,15 m por ano, segundo estimativas do Ministério da Proteção Ambiental de 2022. Ynetnews (30/06/2026): 'the water level in the Dead Sea's northern basin is expected to keep dropping by about 1.15 meters a year'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "É projeção, não medição.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C01-014",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "A queda acelerou: de 0,7 m por ano nas décadas de 1970 e 1980 para 1,2 m por ano em 2018.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-015"
+      ],
+      "evidencia": "Globes, citando o relatório ambiental anual do Ministério da Proteção Ambiental: 'accelerating from 0.7 meters per year in the 1970s and 1980s to 1.2 meters per year currently', e queda total de 30 m em 40 anos.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só fonte E. Falta abrir o relatório do ministério. Não vai ao texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-015",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "O Mar Morto encolhe principalmente porque a água que chegava a ele, sobretudo a do rio Jordão, passou a ser usada antes, e porque a indústria de minerais bombeia água do próprio lago.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-011",
+        "F01-014"
+      ],
+      "evidencia": "O relatório do Controlador atribui a mudança a 'intervenção humana que incluiu a exploração de fontes de água que antes corriam para o Mar Morto (principalmente do rio Jordão)' e ao bombeamento para a indústria de minerais. Britannica: Israel e Jordânia 'began diverting much of the Jordan River's flow and increased the use of the lake's water itself for commercial purposes'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O trecho do relatório veio parcialmente embaralhado; a ideia está em duas fontes independentes.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-016",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "Na segunda metade do século XX o Mar Morto se dividiu em duas bacias; a do sul, como lago natural, praticamente secou, e o que resta do mar natural é a bacia norte.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-010",
+        "F01-011"
+      ],
+      "evidencia": "O relatório diz que o mar se dividiu em duas bacias na segunda metade do século XX, que a bacia sul quase secou por completo e que a bacia norte é o que restou do mar natural.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O que existe hoje na área sul (tanques industriais, hotéis) não foi verificado e não é dito no texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-017",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "Segundo o Serviço Geológico de Israel, o surgimento de dolinas novas na costa oeste do Mar Morto passou de menos de 50 por ano antes de 1999 para 200 a 380 por ano a partir de 2003.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-016",
+        "F01-017"
+      ],
+      "evidencia": "O pôster do GSI relata que a formação de dolinas acelerou 'from fewer than 50 new sinkholes a year before 1999 to 200-380 a year since 2003'. O relatório GSI/04/1999 (só título confirmado) trata do desenvolvimento de dolinas na costa oeste.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Data do pôster desconhecida, então o intervalo '200 a 380 por ano' vale até a data dele. 'Costa oeste' vem do título do relatório GSI/04/1999 (só referência confirmada) e do fato de o GSI ser o serviço israelense; conferir no pôster se os números cobrem só a margem oeste. O Globes (E) fala em 5.500 dolinas em 2015, número não usado.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-018",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "As dolinas se formam porque, com a descida do lago, a água doce subterrânea dissolve uma camada de sal enterrada; o vazio cresce até o chão desabar.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-016"
+      ],
+      "evidencia": "Pesquisadores do GSI atribuem as dolinas principalmente à dissolução de uma camada de sal pela água subterrânea à medida que o nível do Mar Morto cai, o que faz cavidades subterrâneas desabarem.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Que a água subterrânea é 'doce' é a leitura mais comum do mecanismo; o trecho diz 'groundwater'. O texto diz 'água subterrânea' sem adjetivo.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-019",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "Até fevereiro de 2026, o governo de Israel não tinha decidido se e como intervir para conter a queda do Mar Morto.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-010",
+        "F01-012"
+      ],
+      "evidencia": "Sumário do relatório: em fevereiro de 2026 o governo ainda não tinha formulado política sobre o tema. Ynetnews: 'The government has still not made a fundamental decision on whether and how to intervene.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Situação política que pode mudar. Datada no texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C01-020",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "Em agosto de 2025 não havia mecanismo de seguro para danos de dolinas, e dois de quatro projetos para proteger a Estrada 90 estavam incompletos.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-012"
+      ],
+      "evidencia": "Ynetnews resume o relatório: nenhum mecanismo de seguro implementado em agosto de 2025; dois de quatro projetos para reduzir danos à Rota 90 incompletos.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só via fonte E; o trecho do relatório não mostrou esses pontos. Não vai ao texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-021",
+      "secao": "Chuva: do norte ao sul, do inverno ao verão",
+      "afirmacao": "A chuva diminui muito de norte a sul: nas montanhas da Alta Galileia a média anual chega a cerca de 1.100 mm; no extremo sul fica abaixo de 100 mm.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-018",
+        "F01-019"
+      ],
+      "evidencia": "Perfil do Climate Centre (dados da FAO): 'Rainfall is unevenly distributed, decreasing sharply as one moves southwards. In the extreme south, rainfall averages less than 100 millimetres (mm) annually; in the north, average annual rainfall is more than 1100 mm.' Britannica: 'up to 44 inches (1,120 mm) a year in the Upper Galilee region'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Período de referência não informado. 'Mais de 1.100 mm' (Climate Centre) e 'até 1.120 mm' (Britannica) divergem na forma; o texto usa 'chega a cerca de 1.100 mm', que cabe nas duas. Falta a norma do IMS.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-022",
+      "secao": "Chuva: do norte ao sul, do inverno ao verão",
+      "afirmacao": "A chuva se concentra de novembro a março; de junho a agosto é comum não chover.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-018"
+      ],
+      "evidencia": "'About 70 per cent of the average rainfall in the country falls in November-March, while the months of June-August are often rainless.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O texto usa só a parte qualitativa; a porcentagem fica de fora (ver C01-023).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-023",
+      "secao": "Chuva: do norte ao sul, do inverno ao verão",
+      "afirmacao": "Cerca de 70% da chuva média cai de novembro a março.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-018"
+      ],
+      "evidencia": "Mesmo trecho de C01-022.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A porcentagem parece baixa para um regime com verão seco (se junho a agosto não chove, a fatia de novembro a março deveria ser bem maior). Pode ser erro da fonte ou do trecho. Conferir com o IMS. Não vai ao texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-024",
+      "secao": "Chuva: do norte ao sul, do inverno ao verão",
+      "afirmacao": "Chuva média anual: Safed 718 mm, Haifa 508 mm, Tiberíades 431 mm, Tel Aviv 539 mm, Jerusalém 486 mm, Berseba 204 mm, Eilat 25 mm.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-021"
+      ],
+      "evidencia": "Tabela da Jewish Virtual Library atribuída ao Ministério das Relações Exteriores de Israel, sem período de referência. O próprio resumo pediu conferir o valor de Tel Aviv contra o original (ordem das colunas).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte E reproduzindo D, sem período. Uma planilha atribuída ao IMS dá 538,3 mm para Haifa, divergente. Não vai ao texto nem ao infográfico até a conferência com as normas do IMS.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-025",
+      "secao": "Chuva: do norte ao sul, do inverno ao verão",
+      "afirmacao": "O vale da Arava recebe cerca de 25 mm de chuva por ano.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-019",
+        "F01-021"
+      ],
+      "evidencia": "Britannica: o vale da Arava recebe 'about 1 inch (25 mm) per year'. A tabela da JVL dá 25 mm para Eilat.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só fontes E. O texto usa o valor verificado 'abaixo de 100 mm no extremo sul' (C01-021).",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-026",
+      "secao": "Chuva: do norte ao sul, do inverno ao verão",
+      "afirmacao": "Na temporada 2024-2025, as montanhas do norte e o vale do Hula receberam só cerca de 40% a 45% da chuva média, enquanto a faixa do Carmelo ao norte do Sharon ficou entre 70% e 90%.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-020"
+      ],
+      "evidencia": "Resumo da temporada 2024-2025 do IMS: o norte foi muito mais seco, com cerca de 40% a 45% da média nas montanhas do norte e no vale do Hula; do Carmelo ao norte do Sharon, cerca de 70% a 90% da média.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fato de uma temporada, datado no texto. Não diz qual é a média de referência.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-027",
+      "secao": "Chuva: do norte ao sul, do inverno ao verão",
+      "afirmacao": "Entre 1991 e 2020, as temperaturas máximas e mínimas em Israel subiram cerca de 0,59 °C e 0,58 °C por década.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-022"
+      ],
+      "evidencia": "Resumo, em hebraico, de apresentação do diretor do IMS: as temperaturas máxima e mínima no período 1991-2020 subiram cerca de 0,59 e 0,58 graus por década.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só o resumo de uma apresentação; não se sabe que estações nem que método. Ritmo alto o bastante para pedir conferência no documento. Não vai ao texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-028",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "A maior parte da comunidade internacional não reconhece a anexação de Jerusalém Oriental e das Colinas de Golã por Israel (Conselho de Segurança da ONU, resoluções 478 de 1980 e 497 de 1981).",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "A busca só trouxe essa informação em trecho da Wikipedia. Nenhuma página da ONU foi obtida antes de o orçamento de buscas acabar.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "BLOQUEANTE para a publicação: a seção 7 do PROTOCOLO exige esta frase, com fonte da ONU, sempre que o texto trata das anexações. O manuscrito, por ora, só diz como o CBS conta a área e remete ao capítulo 2.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-029",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "O Mar Morto está a 417 m abaixo do nível do mar.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-007"
+      ],
+      "evidencia": "'Israel at 65' (c. 2013) lista 417 m.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Já estava defasado na época (o Jerusalem Post, citando o serviço hidrológico da Autoridade da Água, dava 427,82 m no início de janeiro de 2014) e hoje está muito longe do nível real.",
+      "interpretacoes_concorrentes": null,
+      "status": "DESATUALIZADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-030",
+      "secao": "O Mar Morto, um lago que desce",
+      "afirmacao": "Em outubro de 2026 o Mar Morto estava a cerca de 441,5 m abaixo do nível do mar.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Valor visto só em enciclopédias colaborativas (Wikipedia em hebraico, Hamichlol) e num site comercial (deadsea.com, que cita 441,33 m em 31/08/2026 com base na Autoridade da Água).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Nenhuma fonte A a D. A série mensal da Autoridade da Água em data.gov.il (citada pelo relatório do Controlador, desde 1976) é onde conferir.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-031",
+      "secao": "Quanto mede Israel",
+      "afirmacao": "Nos textos oficiais israelenses, a Cisjordânia aparece como 'Judeia e Samaria'; o Ministério das Relações Exteriores escreve 'Judea and Samaria (the West Bank)'.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-005"
+      ],
+      "evidencia": "A página do mapa topográfico do ministério usa a expressão 'Judea and Samaria (the West Bank)'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Sustenta o uso do termo pelo ministério, não o número de área da mesma frase (ver C01-004). Que é o termo oficial israelense está também no PROTOCOLO, seção 7.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-032",
+      "secao": "Não escrita",
+      "afirmacao": "O vale do Jordão e Eilat estão numa das grandes rotas de migração de aves entre a Europa, a Ásia e a África, com centenas de milhões de aves por ano.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Não pesquisado: o orçamento de buscas acabou antes.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pedido pelo brief. Procurar em Sociedade para a Proteção da Natureza em Israel, Universidade de Tel Aviv, BirdLife.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-033",
+      "secao": "Não escrita",
+      "afirmacao": "O Makhtesh Ramon, no Neguev, é uma cratera de erosão (não de impacto), com cerca de 40 km de comprimento.",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Não pesquisado: o orçamento de buscas acabou antes.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pedido pelo brief. Procurar em Israel Nature and Parks Authority e Serviço Geológico de Israel.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-034",
+      "secao": "Não escrita",
+      "afirmacao": "A rota costeira antiga chamada hoje de Via Maris ligava o Egito à Mesopotâmia pela planície costeira; o nome é latino e posterior.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Não pesquisado: o orçamento de buscas acabou antes.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pedido pelo brief, com 'a discussão sobre o nome'. Procurar literatura acadêmica (geografia histórica: Aharoni, Rainey, Dorsey).",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-035",
+      "secao": "Não escrita",
+      "afirmacao": "O vale do Jordão, o Mar Morto e a Arava fazem parte da fenda sírio-africana (sistema de falhas do Mar Morto).",
+      "categoria": "geografia",
+      "fontes": [],
+      "evidencia": "Não pesquisado: o orçamento de buscas acabou antes.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pedido pelo brief. Procurar no Serviço Geológico de Israel; atenção ao debate de nomenclatura (fenda versus falha transformante).",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-036",
+      "secao": "Não escrita",
+      "afirmacao": "População de Israel e das principais cidades (Jerusalém, Tel Aviv, Haifa, Berseba), em data recente.",
+      "categoria": "estatistica",
+      "fontes": [],
+      "evidencia": "Não pesquisado: o orçamento de buscas acabou antes.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pedido pelo brief ('principais cidades'). Fonte: CBS, com data.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C01-037",
+      "secao": "Não escrita",
+      "afirmacao": "Temperaturas médias de janeiro e agosto em cidades de norte a sul (normas do IMS).",
+      "categoria": "clima",
+      "fontes": [],
+      "evidencia": "As buscas por normas do IMS não devolveram a tabela por estação; o orçamento acabou antes de novas tentativas.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Necessário para o infográfico climático. Procurar a página de normas climatológicas do IMS (1991-2020).",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-038",
+      "secao": "Abertura",
+      "afirmacao": "O Mediterrâneo fica a oeste de Israel (o país está no litoral leste do Mediterrâneo).",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-006"
+      ],
+      "evidencia": "O ministério descreve a travessia 'from the Mediterranean in the west to the Dead Sea in the east'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Sustenta a orientação; a lista de países vizinhos não foi verificada e não aparece no texto (só na figura mapa-regional, que vem da base cartográfica).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    }
+  ]
+}

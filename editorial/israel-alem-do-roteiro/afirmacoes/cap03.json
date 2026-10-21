@@ -1,0 +1,1470 @@
+{
+  "capitulo": 3,
+  "afirmacoes": [
+    {
+      "id": "C03-001",
+      "secao": "Patrimônio mundial, e em perigo",
+      "afirmacao": "A Cidade Antiga de Jerusalém e suas muralhas entraram na Lista do Patrimônio Mundial da UNESCO em 1981, por proposta da Jordânia, com base nos critérios (ii), (iii) e (vi).",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-001",
+        "F03-002"
+      ],
+      "evidencia": "Ficha da UNESCO: 'Year of inscription on the World Heritage List 1981. Criteria (ii)(iii)(vi)', com o status 'site proposed by Jordan'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O trecho não mostra a data exata da sessão do Comitê. Abrir a ficha da lista (whc.unesco.org/en/list/148) na revisão.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-002",
+      "secao": "Patrimônio mundial, e em perigo",
+      "afirmacao": "Em 1982 o sítio passou à Lista do Patrimônio Mundial em Perigo e continua nela; em 2005 o Comitê decidiu mantê-lo na lista.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-001"
+      ],
+      "evidencia": "'Year(s) of inscription on the List of World Heritage in Danger 1982-present'; decisão 29 COM 7A.31 (2005) de manter o sítio na lista.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A busca não trouxe decisão posterior a 2016-2017; 'continua' vale para a data da consulta e deve ser reconferido na ficha atual.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-003",
+      "secao": "Patrimônio mundial, e em perigo",
+      "afirmacao": "Os relatórios de conservação da UNESCO apontam como ameaças mudanças no tecido urbano e social, efeitos de escavações arqueológicas, deterioração de monumentos, impacto visual do entorno e problemas de trânsito e acesso.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-001"
+      ],
+      "evidencia": "Relatório de estado de conservação de 2016 lista 'alteration of the urban and social fabric', 'impact of archaeological excavations', 'deterioration of monuments', 'urban environment and visual integrity', 'traffic and access'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Lista do relatório de 2016; a de anos posteriores pode diferir.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-004",
+      "secao": "Patrimônio mundial, e em perigo",
+      "afirmacao": "Os documentos da UNESCO registram que, desde 1967, a Cidade Antiga é administrada de fato pelas autoridades israelenses.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-001",
+        "F03-002"
+      ],
+      "evidencia": "Os relatórios da UNESCO dizem que, desde 1967, a Cidade Antiga 'has been de facto administered by the Israeli authorities'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Formulação da UNESCO; o texto a apresenta como tal, sem acrescentar qualificação jurídica.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-005",
+      "secao": "A muralha que se vê é otomana",
+      "afirmacao": "A muralha atual foi construída por ordem de Solimão, o Magnífico, no fim da década de 1530: a IAA data a obra de 1537 e estima três a quatro anos de construção; outras fontes dão a conclusão em 1541.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-003",
+        "F03-004",
+        "F03-005",
+        "F03-006"
+      ],
+      "evidencia": "IAA: 'built in the Ottoman period, in 1537, by the sultan Suleiman the Magnificent'; 'It is estimated that the construction of the wall lasted three to four years'. Times of Israel: concluída em 1541. COJS: 'Rebuilding of the Walls of Jerusalem, 1538-1541'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "As fontes divergem no ano de início (1536, 1537, 1538); o texto dá a década e as duas datas com atribuição. As inscrições de fundação nas portas, que dariam datas por trecho, não foram consultadas.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-006",
+      "secao": "A muralha que se vê é otomana",
+      "afirmacao": "A construção foi financiada com impostos cobrados pelos otomanos no Egito.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-003"
+      ],
+      "evidencia": "IAA: 'Taxes the Ottomans collected in Egypt went to fund the construction'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só uma fonte (nível B).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-007",
+      "secao": "A muralha que se vê é otomana",
+      "afirmacao": "A explicação mais repetida para a obra, que a IAA apresenta com cautela, é o medo de uma nova cruzada cristã.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-003",
+        "F03-005"
+      ],
+      "evidencia": "IAA e Times of Israel: 'Suleiman, it seems, was moved to construct the walls in part because he feared a new Christian Crusade'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A afirmação é sobre o que a fonte diz, não sobre o motivo em si. Uma das fontes da busca sugere que a obra seria mais de embelezamento do que de defesa, mas não foi possível identificar qual; por isso o texto não apresenta o motivo como fato.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-008",
+      "secao": "A muralha que se vê é otomana",
+      "afirmacao": "A muralha otomana tem cerca de 4.300 m, 35 torres quadradas salientes, 344 seteiras e ameias no topo, e foi construída com sete portas voltadas para os quatro pontos cardeais.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-003"
+      ],
+      "evidencia": "IAA: 'c. 4,300 meters long with 35 square towers that protrude from the outside of the wall, 344 arrow loops and crenellation along the top of it. Seven gates which face the four cardinal directions were fixed in the wall.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Outras fontes dão números diferentes (4 ou 4,5 km; 34 ou 43 torres; 8 ou 11 portas, contando aberturas posteriores). O texto usa os da IAA e fala das portas 'construídas', não das atuais.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-009",
+      "secao": "A muralha que se vê é otomana",
+      "afirmacao": "Trechos da muralha otomana foram assentados sobre restos de fortificações mais antigas.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-003"
+      ],
+      "evidencia": "IAA: 'Parts of the wall were built on top of the remains of earlier fortifications.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A frase do manuscrito sobre 'a fiada de baixo nem sempre tem a idade da de cima' é consequência direta, não dado novo.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-010",
+      "secao": "A muralha que se vê é otomana",
+      "afirmacao": "Lenda: os arquitetos da muralha teriam sido executados por deixar o Monte Sião fora dela.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Um resumo acadêmico em academia.edu (6858175) cita a lenda como lenda; autor e título não apareceram na busca.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte não identificada. Fica fora do texto até alguém confirmar o artigo.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-011",
+      "secao": "A muralha que se vê é otomana",
+      "afirmacao": "O projeto da muralha é atribuído ao arquiteto da corte Sinan.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-003"
+      ],
+      "evidencia": "IAA: 'Suleiman's court architect, Sinan Pasha (dubbed Kuja Mimar - the great architect), was given the job of planning the new wall.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só a IAA afirma; nenhuma outra fonte da busca confirma, e a atribuição precisa ser conferida em literatura sobre a arquitetura otomana antes de entrar.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-012",
+      "secao": "O Muro Ocidental: um muro de contenção",
+      "afirmacao": "Herodes transformou o Segundo Templo num edifício monumental e cercou o Monte do Templo nos quatro lados com enormes muros de contenção; o Muro Ocidental é um desses muros.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-007"
+      ],
+      "evidencia": "MFA: 'Herod transformed the Second Temple into an edifice of splendor and surrounded the Temple Mount on its four sides with massive retaining walls.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte oficial israelense (D) que resume literatura arqueológica; a revisão deve acrescentar uma obra acadêmica (relatórios de escavação de B. Mazar ou de Reich e Billig).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-013",
+      "secao": "O Muro Ocidental: um muro de contenção",
+      "afirmacao": "O muro oeste do Monte do Templo é o mais comprido dos quatro, com 485 m.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-007"
+      ],
+      "evidencia": "MFA: 'The western wall of the Temple Mount, inside today's Old City of Jerusalem, is the longest - 485 m.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Uma fonte.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-014",
+      "secao": "O Muro Ocidental: um muro de contenção",
+      "afirmacao": "Os muros foram assentados sobre a rocha, com grandes blocos de cantaria de bordas lavradas; cada pedra pesa cerca de cinco toneladas, e as de canto, dezenas de toneladas.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-007"
+      ],
+      "evidencia": "MFA: 'The walls, founded on bedrock, were built of large ashlar stones with beautifully dressed margins. The stones weigh some five tons each, the corner blocks tens of tons.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "'Cerca de cinco toneladas' é média; há blocos muito maiores nos túneis, que o texto não cita por falta de fonte.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-015",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "O Arco de Robinson se projeta do muro perto da quina sudoeste e sustentava uma escadaria monumental que levava da rua ao Monte do Templo.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-007",
+        "F03-008"
+      ],
+      "evidencia": "MFA: 'The remains of \"Robinson's Arch\" can be seen projecting from the wall. This arch once supported a monumental staircase which gave access to the Temple Mount from the main street below it.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A origem do nome (o explorador Edward Robinson) não foi verificada e não está no texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-016",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "Escavações de 1993 a 1997, dirigidas por R. Reich e Y. Billig para a IAA, expuseram a rua herodiana ao longo do muro oeste, coberta por pedras caídas da parte alta do muro, cujos fragmentos ajudaram a reconstituir a escadaria e a parte alta do muro.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-008"
+      ],
+      "evidencia": "MFA: 'From 1993 to 1997, new excavations were conducted between the Western Wall and the southwestern corner... the Herodian street running along the western wall of the Temple Mount was exposed in its full length'; 'The later excavations were directed by R. Reich and Y. Billig on behalf of the Israel Antiquities Authority'; pedras caídas da parte alta e fragmentos usados na reconstituição.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Prenomes não aparecem no trecho; o texto usa as iniciais.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-017",
+      "secao": "O Muro Ocidental: um muro de contenção",
+      "afirmacao": "Os Túneis do Muro Ocidental expuseram outros trechos do muro, sob supervisão de M. Ben-Dov e depois D. Bahat pela IAA; no fim do percurso há cerca de 20 m de rua pavimentada e um aqueduto hasmoneu cavado na rocha que levava ao monte.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-007"
+      ],
+      "evidencia": "MFA: 'The project of the Western Wall Tunnels was supervised by archeologists M. Ben-Dov and later by D. Bahat on behalf of the Israel Antiquities Authority'; 'At the end of this man-made tunnel, a 20 m. long section of a paved road and an earlier, rock-cut Hasmonean aqueduct leading to the Temple Mount were uncovered.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Visita aos túneis (agendamento, horários) não verificada e fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-018",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "O monte se chama Monte do Templo (Har HaBáyit) para judeus e no vocabulário oficial israelense, e Haram al-Sharif (Nobre Santuário) para muçulmanos.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-007",
+        "F03-010",
+        "F03-028",
+        "F03-029"
+      ],
+      "evidencia": "As fontes oficiais israelenses usam 'Temple Mount'; Al-Monitor e Arab News: o complexo 'is known to Muslims as Al-Haram al-Sharif (the Noble Sanctuary)'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Nomes de uso. 'Esplanada das Mesquitas' é o termo do protocolo do livro em português.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-019",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "Uma faixa de mosaico no interior do Domo da Rocha traz a dedicatória do califa omíada Abd al-Malik com o ano 72 da hégira (691-692 d.C.), lida em geral como data de conclusão; um estudo de 2015 questiona a cronologia e defende que a construção começou depois de 692.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-024",
+        "F03-022",
+        "F03-025"
+      ],
+      "evidencia": "Britannica: 'An inscription in the Dome of the Rock establishes the date of construction as AH 72 (691-692 CE), generally considered to indicate the date the structure was completed.' JRAS: título 'Abd al-Malik's inscription in the Dome of the Rock'. Omer (2015) 'challenges an old belief that the Dome of the Rock... was built between 65/684 and 72/691' e propõe início depois de 73/692.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A Britannica é obra de referência (E); a datação da inscrição precisa de conferência numa edição acadêmica das inscrições (por exemplo, o estudo de Marcus Milwright, Edinburgh University Press, que a busca citou sem trecho).",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "A data de 72 H. (691-692) marca a conclusão do edifício; a construção teria começado por volta de 65 H. (684-685).",
+          "defensores": "Leitura corrente, resumida pela Britannica (F03-024).",
+          "evidencia": "A inscrição dedicatória do interior."
+        },
+        {
+          "posicao": "A construção só começou depois de 73 H. (692), após o fim da revolta de Abd Allah ibn al-Zubayr.",
+          "defensores": "Spahic Omer, 2015 (F03-025).",
+          "evidencia": "Argumento histórico sobre o contexto político do califado; o trecho não mostra como o autor lê a data da inscrição."
+        }
+      ],
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-020",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "O Domo da Rocha fica no Haram al-Sharif.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-021"
+      ],
+      "evidencia": "ACOR: Solimão substituiu o mosaico externo do Domo da Rocha por 'a new skin of tiles made on site at the Haram al-Sharif'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Implícito no trecho, mas inequívoco.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-021",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "Solimão substituiu a decoração externa de mosaico do Domo da Rocha por azulejos, feitos no próprio Haram al-Sharif por artesãos persas vindos de Tabriz, chefiados por Abdallah Tabrizi.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-020",
+        "F03-021"
+      ],
+      "evidencia": "ACOR: 'Between 1545 and 1585, Sultan Suleyman Kanuni replaced the exterior mosaic decoration of the Dome of the Rock with a new skin of tiles made on site at the Haram al-Sharif. Persian tile-makers were sent by the Sultan to Jerusalem.' V&A: 'Süleyman employed Iranian craftsmen from Tabriz led by Abdal-lah Tabrizi'; painel datado de c. 1550.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "As fontes divergem no intervalo (1545-1552; 1545-1585; 'anos 1550 em diante'). Solimão morreu em 1566, o que torna estranho o fim em 1585 do ACOR; conferir no texto integral. O manuscrito não dá data final.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-022",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "A grande inscrição em volta do tambor do Domo da Rocha faz parte do revestimento de azulejos dado por Solimão ao edifício em 1545.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-022"
+      ],
+      "evidencia": "JRAS: a inscrição foi 'inscribed on the exterior of the drum in the great cursive text which forms part of the tile coating given by the Ottoman Sultan Sulaymān in 1545'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Autor e ano do artigo a confirmar. Outras fontes (casas de leilão, não usadas) citam azulejos datados de 952 H. (1545) e 959 H. (1551-1552).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-023",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "Os azulejos do Domo da Rocha foram restaurados e trocados ao longo dos séculos seguintes, e muitos dos antigos foram retirados na restauração do início dos anos 1960.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-021",
+        "F03-023"
+      ],
+      "evidencia": "ACOR: os azulejos 'required restoration and replacement throughout the following four centuries'; descreve azulejos da 'restauração de 1961' e diz que em 2007 os antigos estavam guardados em pátios do museu. Bridgewater State: 'the older tiles were removed from the Dome of the Rock in the early 1960's'; estudo do revestimento 'removed in 1964'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Não foi verificado que proporção dos azulejos atuais é da década de 1960; o texto diz 'muitos dos antigos foram retirados', sem proporção.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-024",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "A troca dos mosaicos por azulejos foi feita entre 1545 e 1552.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-020",
+        "F03-021"
+      ],
+      "evidencia": "Roots.gov.sg (não usado) dá 1545-1552; ACOR dá 1545-1585; V&A, 'anos 1550 em diante'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Intervalo divergente; o manuscrito evita a data final.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-025",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "O Corão (17:1) fala de uma viagem noturna em que Deus leva 'o Seu servo' 'da Mesquita Sagrada à Mesquita mais Distante' (al-masjid al-aqsa).",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-026"
+      ],
+      "evidencia": "Quran.com, tradução de Mustafa Khattab: 'Glory be to the One Who took His servant ˹Muḥammad˺ by night from the Sacred Mosque to the Farthest Mosque whose surroundings We have blessed...'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Tradução para o português feita a partir da inglesa; a revisão pode preferir uma tradução portuguesa publicada.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-026",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "O versículo não diz onde fica a Mesquita mais Distante; a tradição islâmica a identifica com Jerusalém, e daí vem a importância do lugar para os muçulmanos.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-026",
+        "F03-027",
+        "F03-028",
+        "F03-029"
+      ],
+      "evidencia": "QuranEnc acrescenta entre colchetes '[in Jerusalem]' para a Mesquita mais Distante, como glosa do tradutor, fora do texto árabe. Al-Monitor e Arab News: o nome al-Aqsa 'translates to the farthest mosque', em referência à viagem noturna; os muçulmanos creem que Maomé foi levado de Meca a al-Aqsa.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A afirmação é sobre a tradição, e as fontes são exemplos dela e jornalismo. Um estudo acadêmico sobre a recepção de 17:1 fortaleceria o registro.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-027",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "A mesquita de al-Aqsa fica no mesmo complexo do Haram al-Sharif que o Domo da Rocha.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-028",
+        "F03-029"
+      ],
+      "evidencia": "Al-Monitor (2023): 'the compound houses the Al-Aqsa mosque and the Dome of the Rock'. Arab News, no mesmo sentido.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "ATENÇÃO DA REVISÃO: sustentado só por duas fontes E concordantes (fato descritivo atual, não fato datado). Marcado VERIFICADO porque é consensual e as fontes são independentes, mas o protocolo pede fonte A-D: acrescentar UNESCO, Waqf ou obra acadêmica.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-028",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "Al-Aqsa é o terceiro lugar mais sagrado do islã, depois de Meca e Medina.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-028",
+        "F03-029"
+      ],
+      "evidencia": "Al-Monitor e Arab News dizem isso.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só fontes E; não entrou no texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-029",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "Em 2015, o gabinete do primeiro-ministro de Israel resumiu o status quo ('os muçulmanos rezam no Monte do Templo; os não muçulmanos visitam o Monte do Templo'), reafirmou mantê-lo 'em palavras e na prática' e saudou a coordenação com o Waqf jordaniano.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-009"
+      ],
+      "evidencia": "Declaração do PMO: 'Israel re-affirms its commitment to upholding unchanged the status quo of the Temple Mount, in word and in practice'; 'Muslims pray on the Temple Mount; non-Muslims visit the Temple Mount'; menção à coordenação 'between the Israeli authorities and the Jordanian Waqf'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "É a política declarada em 2015. Mudanças na prática ou nas declarações depois disso não foram verificadas em fonte de nível A-D.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C03-030",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "Segundo o governo israelense, a segurança cabe a Israel e a administração ao Waqf; o visitante não muçulmano entra em horários limitados e não pode rezar ali.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-010"
+      ],
+      "evidencia": "MFA, Behind the Headlines: Israel 'would maintain overall sovereignty and be responsible for security' e o Waqf administra o local; 'Non-Muslims may visit during limited hours but are strictly prohibited from praying there.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Posição oficial israelense, apresentada como tal. A posição jordaniana e a palestina sobre a soberania não foram buscadas nesta rodada.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C03-031",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "Nos últimos anos, um ministro israelense disse ter rezado no complexo e o gabinete do primeiro-ministro repetiu que o status quo não mudou e não vai mudar.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-054"
+      ],
+      "evidencia": "Reportagens agregadas (Yahoo/AFP; Jerusalem Post) citam Itamar Ben-Gvir dizendo ter rezado no complexo e o gabinete do primeiro-ministro afirmando que o status quo 'has not changed and will not change'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Sem data confirmada no trecho; uma fonte E. Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-032",
+      "secao": "O Santo Sepulcro: seis comunidades e uma porta",
+      "afirmacao": "A Igreja do Santo Sepulcro foi fundada no século IV, sob Constantino, e passou por muitas fases de construção.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-011"
+      ],
+      "evidencia": "Galor: o capítulo traça as fases de construção 'from its founding under Constantine in the 4th century to the present'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Resumo do capítulo; datas finas das fases não verificadas.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-033",
+      "secao": "O Santo Sepulcro: seis comunidades e uma porta",
+      "afirmacao": "Segundo a tradição cristã, a igreja guarda o túmulo de Jesus; se o lugar é historicamente esse é discutido por estudiosos.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-011",
+        "F03-015"
+      ],
+      "evidencia": "Galor: o capítulo trata 'the authenticity debate over the site'. A reportagem da Reuters chama o lugar de 'Jesus tomb site', no sentido da tradição.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O texto não resume os argumentos do debate (localização fora da muralha do século I, tradição desde Constantino), que precisam do texto integral de Galor.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-034",
+      "secao": "O Santo Sepulcro: seis comunidades e uma porta",
+      "afirmacao": "Seis comunidades cristãs partilham o Santo Sepulcro: franciscanos (latinos), gregos ortodoxos, armênios, coptas, etíopes e siríacos.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-011"
+      ],
+      "evidencia": "Galor: 'the Franciscans, Greeks, Armenians, Egyptians, Ethiopians, and Syrians' partilham o controle, divisão 'rooted in a status quo confirmed by an Ottoman firman (decree) in 1852'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-035",
+      "secao": "O Santo Sepulcro: seis comunidades e uma porta",
+      "afirmacao": "Gregos ortodoxos, franciscanos e armênios dividem a posse e a administração; coptas e siríacos têm direito de uso sem voz na gestão; os etíopes ocupam o telhado, sem direitos na rotunda.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-013"
+      ],
+      "evidencia": "Cohen: 'Two minor communities, the Coptic Orthodox and Syrian Orthodox, have rights of usage, but no say in the running of the church'; os etíopes vivem 'on the roof, [with] no rights in the Anastasis'; três comunidades maiores administram.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Atribuição do ensaio a Raymond Cohen a confirmar na página (a busca associou o trecho a ele). 'Rotunda' traduz Anastasis.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-036",
+      "secao": "O Santo Sepulcro: seis comunidades e uma porta",
+      "afirmacao": "O status quo do Santo Sepulcro foi fixado por decretos otomanos, um do século XVIII (1757 na maior parte das fontes) e a confirmação por um firman de 1852; nas áreas comuns nada muda sem acordo de todos.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-011",
+        "F03-013",
+        "F03-014"
+      ],
+      "evidencia": "Galor: 'status quo confirmed by an Ottoman firman (decree) in 1852'. Resenha de Cohen: 'A 1757 Ottoman decree' congelou estrutura e mobiliário; 'none of the communities was to be allowed to change anything'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Uma fonte de imprensa dá 1767 para o primeiro decreto; o texto diz 'século XVIII (1757 na maior parte das fontes)'. O reconhecimento no Tratado de Paris (1856) e no de Berlim (1878) só apareceu em fonte não aceita e ficou fora.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-037",
+      "secao": "O Santo Sepulcro: seis comunidades e uma porta",
+      "afirmacao": "Com o congelamento, o prédio se deteriorou, e no fim do século XIX havia quem previsse seu desabamento; Raymond Cohen, professor da Universidade Hebraica, narrou como as comunidades negociaram durante décadas uma restauração compatível com o status quo.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-012",
+        "F03-014"
+      ],
+      "evidencia": "Resenha: 'by the end of the nineteenth century, many observers were predicting that the building would soon collapse'; as igrejas 'slowly worked together to repair the crumbling shrine, an objective that required many decades and much negotiation'. OUP: o planejamento da restauração da rotunda começou em 28 de maio de 1969. Uma resenha identifica Cohen como professor da Universidade Hebraica.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Vínculo institucional de Cohen dito por resenha (E); conferir na obra.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-038",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "A escada de madeira sob uma janela da fachada do Santo Sepulcro não pode ser removida por causa do status quo e aparece numa gravura de 1728 de Elzearius Horn.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-055"
+      ],
+      "evidencia": "Atlas Obscura e outras fontes não aceitas citam a gravura de 1728 e o status quo; um texto diz 1757 para a primeira menção escrita e atribui o firman a Abdul Hamid I, que só reinou a partir de 1774 (contradição interna).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só fontes E e sites de curiosidades, com contradições. Fora do texto e dos 10 detalhes. Fontes a buscar: Custódia da Terra Santa; Cohen (2008); a matéria 'Who moved the ladder?' da Biblical Archaeology Review.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-039",
+      "secao": "O Santo Sepulcro: seis comunidades e uma porta",
+      "afirmacao": "Em 2017, segundo a Reuters, Adeeb Joudeh, de família muçulmana, era o guardião da chave do Santo Sepulcro, e a família muçulmana Nusseibeh abria e fechava a porta principal.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F03-015",
+        "F03-016"
+      ],
+      "evidencia": "Reuters (2017): os Nusseibeh 'were entrusted with the duty of opening and closing the church doors, a task they perform to this day'; Adeeb Joudeh guarda a chave. Al-Monitor (2018): a família Joudeh não abre mão da chave apesar de pressões.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fato jornalístico datado (2017-2018), duas fontes E independentes. Pode ter mudado; reconferir.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C03-040",
+      "secao": "O Santo Sepulcro: seis comunidades e uma porta",
+      "afirmacao": "Joudeh liga o arranjo a Saladino (1187); os documentos que mostrou à Reuters, decretos otomanos, começam no século XVI; os historiadores divergem sobre a origem.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-015"
+      ],
+      "evidencia": "Reuters: Joudeh 'dates the arrangement back to the time of Saladin'; 'Documentation, however, only goes back to the 16th century'; 'Historians differ on the roots of the arrangement.'",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A divergência é relatada pela imprensa; nenhuma obra acadêmica sobre a origem foi localizada.",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "O arranjo vem de Saladino, depois de 1187.",
+          "defensores": "A família Joudeh (tradição familiar), e 'alguns pesquisadores' citados pela Reuters sem nome.",
+          "evidencia": "Tradição oral; nenhum documento desse período foi mostrado."
+        },
+        {
+          "posicao": "O arranjo só é documentado a partir do século XVI, sob os otomanos.",
+          "defensores": "Os próprios documentos mostrados à Reuters.",
+          "evidencia": "Firmans otomanos guardados pela família."
+        }
+      ],
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-041",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "As cruzes gravadas na escada da Capela de Santa Helena são tradicionalmente atribuídas a peregrinos da época das Cruzadas; uma pesquisa de 2022 propõe que sejam obra de poucos pedreiros experientes, provavelmente por encomenda de peregrinos.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-017",
+        "F03-018",
+        "F03-019"
+      ],
+      "evidencia": "Reem et al. (2022): uma opinião 'shared by scholarly and popular authors alike, is that these crosses are graffiti made by Crusader pilgrims'. Instituto de Chipre: as cruzes são 'the carefully crafted work of but a few accomplished stone masons rather than the work of masses of pilgrims'. Live Science resume a mesma conclusão.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Referência de Reem et al. incompleta (prenomes e título).",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "Grafite de muitos peregrinos cruzados.",
+          "defensores": "Leitura corrente em estudos e guias (segundo Reem et al.).",
+          "evidencia": "Quantidade de cruzes e contexto de peregrinação."
+        },
+        {
+          "posicao": "Trabalho de poucos pedreiros, provavelmente sob encomenda.",
+          "defensores": "Reem et al. (2022); palestra no Instituto de Chipre.",
+          "evidencia": "Análise da técnica e da uniformidade das gravações."
+        }
+      ],
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-042",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "Os peregrinos podem ter guardado o pó de cada gravação como relíquia.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-018"
+      ],
+      "evidencia": "Live Science cita o historiador William Purkis com essa hipótese.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Uma fonte E; hipótese. Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-043",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "O Mapa de Madaba, mosaico do século VI, mostra Jerusalém com a rua de colunas, e as escavações no bairro judeu encontraram o Cardo como o mosaico o desenhava.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-030",
+        "F03-031"
+      ],
+      "evidencia": "MFA: 'The Madaba map guided archeologists in their search for the remains of Byzantine Jerusalem. The Cardo was found exactly as depicted in the Madaba map'; o mapa é datado do fim do século VI.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Datação do mapa varia (meados ou fim do século VI); o texto diz 'século VI'. A localização do mosaico (Madaba, Jordânia) não foi verificada e não está no texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-044",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "O Cardo é uma grande rua ladeada de colunas, com pista central e pórticos cobertos.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-030",
+        "F03-031"
+      ],
+      "evidencia": "BAR (1977): 'a central open roadway flanked on either side by a covered columned portico'; cerca de 300 m2 expostos; largura de 60 pés. MFA confirma que a rua foi encontrada como no mapa.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Detalhes numéricos (300 m2, 60 pés) só na BAR (E) e fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-045",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A rua foi traçada primeiro pelos romanos, na Aelia Capitolina do século II, e o trecho do bairro judeu é bizantino.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-032"
+      ],
+      "evidencia": "COJS: 'probably laid out by the Romans, four centuries before the creation of the Madaba mosaic map'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só fonte E; a cronologia dos trechos (romano ao norte, bizantino ao sul) não foi verificada. Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-046",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "O Mapa de Madaba ajudou a localizar a Nea, igreja que Justiniano dedicou a Maria; uma inscrição de dedicatória achada num reservatório confirmou a identificação.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-030"
+      ],
+      "evidencia": "MFA: a Nea, igreja de Justiniano dedicada a Maria, identificada por uma inscrição dedicatória num reservatório, 'its location corroborated by the Madaba Map'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-047",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "As escavações no bairro judeu que expuseram o Cardo foram dirigidas pelo arqueólogo Nahman Avigad.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-030",
+        "F03-031"
+      ],
+      "evidencia": "MFA e BAR atribuem as escavações do bairro judeu a Nahman Avigad; um trecho dá 1969-1982 como período.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "As datas 1969-1982 apareceram num trecho cuja página exata não ficou clara; ficaram fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-048",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A ponta norte do túnel de Siloé fica junto da fonte de Giom.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-034"
+      ],
+      "evidencia": "Reich e Shukron: novas escavações 'near the Gihon Spring and the tunnel's northern end'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-049",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "O túnel faz parte do sítio visitado como Cidade de Davi.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-053",
+        "F03-052"
+      ],
+      "evidencia": "Ministério do Turismo de Israel (página 'City of David/Hezekiah's Tunnel & Pool of Siloam', só o título) e Jerusalem Post ('City of David's historical Pool of Siloam').",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "ATENÇÃO DA REVISÃO: sustentação fraca (título de página oficial + jornal). O sítio fica no bairro de Silwan, em Jerusalém Oriental, e é operado por uma fundação privada (Elad/Ir David) com papel político; isso não foi verificado em fonte aceita e está fora do texto (ver C03-077). Rebaixada na auditoria cruzada de 21/10/2026: só título de página oficial e jornal; a frase saiu do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-050",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A Bíblia atribui ao rei Ezequias, de Judá, uma obra hidráulica, e por isso o túnel leva o nome dele.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-033",
+        "F03-034"
+      ],
+      "evidencia": "Frumkin et al.: 'the Biblical text presents an accurate historic record of the Siloam Tunnel's construction'. Reich e Shukron discutem a passagem bíblica sobre as obras de água de Ezequias e observam que ela não especifica o lugar na cidade.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Os versículos (2 Reis 20:20; 2 Crônicas 32:30) não foram conferidos nesta rodada e por isso não são citados.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-051",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A data do túnel é debatida: a datação por radiocarbono e urânio-tório (2003) o põe na Idade do Ferro II, por volta de 700 a.C.; Reich e Shukron (2011) propuseram recuar a conclusão algumas décadas, ao menos para o início do século VIII a.C.; a data convencional, fim do século VIII a.C., continua defendida.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-033",
+        "F03-034",
+        "F03-035",
+        "F03-036"
+      ],
+      "evidencia": "Frumkin et al. (2003): 'radiocarbon and U-Th dating of the Siloam Tunnel, proving its Iron Age II date'; imprensa: cerca de 700 a.C. Reich e Shukron (2011): dados que sugerem que a conclusão 'should be set back several decades to at least the early part of the 8th century BCE'. Um artigo de resposta defende que os novos dados 'do not negate the conventional dating of the tunnel, which is the late 8th century BCE'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O autor do artigo de resposta não foi identificado; a Bible History Daily (E) relata o debate. Os 700 a.C. vêm da imprensa, não do resumo.",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "Idade do Ferro II, por volta de 700 a.C., compatível com Ezequias.",
+          "defensores": "Frumkin, Shimron e Rosenbaum (Nature, 2003).",
+          "evidencia": "Radiocarbono de matéria orgânica do reboco; urânio-tório de estalactites."
+        },
+        {
+          "posicao": "Concluído algumas décadas antes, ao menos no início do século VIII a.C., antes de Ezequias.",
+          "defensores": "Ronny Reich e Eli Shukron (Tel Aviv, 2011).",
+          "evidencia": "Cerâmica e estratigrafia das escavações junto à fonte de Giom e à ponta norte do túnel."
+        },
+        {
+          "posicao": "Os dados novos não derrubam a data convencional, fim do século VIII a.C.",
+          "defensores": "Artigo de resposta no mesmo debate (autor a identificar).",
+          "evidencia": "Releitura dos dados de Reich e Shukron."
+        }
+      ],
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-052",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A datação de 2003 usou radiocarbono em restos de plantas do reboco e urânio-tório em estalactites, e descartou a hipótese de um túnel do século II a.C.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-033",
+        "F03-036"
+      ],
+      "evidencia": "Frumkin et al.: 'Siloam Tunnel dating also refutes a claim that the tunnel was constructed in the second century BC'; método: carbono-14 em 'organic material within the plaster' e urânio-tório em 'stalactites which grew in the tunnel since its construction'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-053",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "Em 1880, jovens que andavam pelo túnel perceberam, perto da saída sul, a inscrição gravada na parede.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-038",
+        "F03-039"
+      ],
+      "evidencia": "AP/CBS (2007): a inscrição 'was discovered in 1880'. COJS e outras: achada por meninos no túnel, perto da saída sul.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fato datado com duas fontes E independentes. Os relatos divergem sobre quem eram os jovens (alunos de Conrad Schick, meninos que se banhavam); o texto fica no que é comum.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-054",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A inscrição de Siloé narra o encontro de duas equipes que cavavam de lados opostos: faltando três côvados, ouviram-se; rompida a rocha, a água correu da fonte ao tanque por 1.200 côvados, sob cem côvados de rocha (tradução de Albright).",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-037"
+      ],
+      "evidencia": "Tradução de W. F. Albright em ANET, p. 321: os trabalhadores se ouvem quando faltam três côvados; a água correu da fonte ao reservatório por 1.200 côvados; a rocha acima das cabeças dos cavadores tinha 100 côvados.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A Jewish Encyclopedia dá outra leitura numérica para um trecho (200 côvados); o texto atribui os números à tradução de Albright.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-055",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "Em 1890 a inscrição foi arrancada da parede e se partiu; as autoridades otomanas a recolheram e a levaram para Istambul.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-038",
+        "F03-039"
+      ],
+      "evidencia": "AP/CBS: 'removed from the tunnel wall in July 1890, and the work cracked it into six to seven pieces'; levada pelos governantes otomanos para Istambul. COJS: ladrões a arrancaram; as autoridades otomanas a tomaram de um antiquário e a mandaram para Istambul.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fato datado, duas fontes E.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-056",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A inscrição de Siloé está no acervo do Museu Arqueológico de Istambul.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-038",
+        "F03-039",
+        "F03-041"
+      ],
+      "evidencia": "AP/CBS (2007): 'in the collection of the Istanbul Archaeology Museum'; COJS: 'currently on display at the Istanbul Archaeology Museum'; Mosaic (2022) noticia acordo de devolução que, segundo relatos posteriores, a Turquia negou.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Não foi achada página dos Museus Arqueológicos de Istambul. Situação em 2026 a confirmar com o museu antes da publicação.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C03-057",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "Em 2007 o prefeito de Jerusalém pediu à Turquia a devolução da inscrição; um funcionário turco disse que a transferência era improvável, mas que se estudaria empréstimo ou réplica.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-038"
+      ],
+      "evidencia": "AP/CBS (2007), com a menção ao prefeito Uri Lupolianski e ao embaixador Namik Tan.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Uma fonte E (a do HNN é republicação). Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-058",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "Pela forma das letras, a maioria dos especialistas data a inscrição do fim do século VIII a.C.; a proposta de data no século II a.C. foi rejeitada pela maior parte deles.",
+      "categoria": "lingua",
+      "fontes": [
+        "F03-040",
+        "F03-033",
+        "F03-035"
+      ],
+      "evidencia": "BAR (1997): McCarter compara a escrita a outras inscrições do fim do século VIII a.C.; Lemaire mostra que as letras não se parecem com as formas hasmoneias. Bible History Daily: a data do século II a.C. foi 'roundly disputed by most scholars'. Frumkin et al. (2003) também refutam a data do século II a.C. para o túnel.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fontes de divulgação (E) e um artigo A sobre o túnel. Um estudo paleográfico revisado por pares deve ser acrescentado.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-059",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "Em 30 de julho de 1980 o Knesset aprovou a Lei Básica: Jerusalém, Capital de Israel, cujo artigo 1 diz 'Jerusalém, completa e unida, é a capital de Israel'.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-042"
+      ],
+      "evidencia": "Texto oficial (WIPO Lex): 'Jerusalem, complete and united, is the capital of Israel.' Data de aprovação 30 de julho de 1980.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Emenda de 2000 (limites do município) não está no texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-060",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "A Resolução 478 (1980) do Conselho de Segurança declarou a lei 'nula e sem efeito', decidiu não reconhecê-la e pediu aos Estados com missões diplomáticas em Jerusalém que as retirassem; 14 votos a favor, nenhum contra, abstenção dos EUA.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-043",
+        "F03-044"
+      ],
+      "evidencia": "Res. 478: 'the recent \"basic law\" on Jerusalem, are null and void and must be rescinded forthwith'; 'Decides not to recognize the \"basic law\"'; 'Those States that have established diplomatic missions at Jerusalem to withdraw such missions from the Holy City'; 'Adopted at the 2245th meeting by 14 votes to none, with 1 abstention (United States of America)'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Data exata da sessão (20 de agosto de 1980) não apareceu no trecho; o texto diz 'no mesmo ano'.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-061",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "Os Estados Unidos abriram sua embaixada em Jerusalém em 14 de maio de 2018.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-045",
+        "F03-046"
+      ],
+      "evidencia": "PolitiFact e AP: a embaixada foi aberta em 14 de maio de 2018, no bairro de Arnona, no 70º aniversário do Estado.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fato jornalístico datado, duas fontes E. Página do Departamento de Estado não apareceu na busca.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-062",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "Em 14 de outubro de 2026 a Colômbia inaugurou embaixada em Jerusalém, contada pela imprensa como a décima missão do tipo; ministros de 19 países condenaram a decisão como contrária a resoluções do Conselho de Segurança, e autoridades palestinas a denunciaram.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-047",
+        "F03-048",
+        "F03-049"
+      ],
+      "evidencia": "AP/ABC e Al Jazeera: inauguração em 14 de outubro de 2026; JNS: 'Colombia becomes 10th country with embassy in Jerusalem'; declaração conjunta de chanceleres de 19 países dizendo que a mudança 'violates relevant UN Security Council resolutions'; autoridades palestinas denunciaram.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Notícia de uma semana antes da consulta; a contagem 'décima' é da imprensa.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C03-063",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "A contagem de embaixadas em Jerusalém varia conforme a fonte, entre outros motivos porque inclui representações de entidades que não são membros da ONU; em qualquer contagem, a grande maioria das embaixadas estrangeiras em Israel fica fora de Jerusalém.",
+      "categoria": "estatistica",
+      "fontes": [
+        "F03-047",
+        "F03-049"
+      ],
+      "evidencia": "As reportagens de 2025-2026 listam de seis a dez países e notam que 'Kosovo and Somaliland, which are not member-states of the United Nations, have also opened what they consider their embassies in Jerusalem'; concordam que a maioria dos países mantém a embaixada em Tel Aviv.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Sem número oficial (MFA de Israel) para a lista de embaixadas; conferir antes da publicação.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C03-064",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "Em 8 de abril de 1918, o governo militar britânico passou a exigir licença do governador para demolir, erguer, alterar ou reformar prédios num raio de 2.500 m da Porta de Damasco, e uma ordem da mesma época proibiu reboco e chapa de ferro ondulada dentro das muralhas.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-050"
+      ],
+      "evidencia": "Registros do Pro-Jerusalem Council: proclamação de 8 de abril de 1918 exigindo 'a written permit from the Military Governor' para 'demolish, erect, alter or repair' qualquer prédio 'within 2,500 metres of the Damascus Gate'; ordem que proíbe 'stucco and corrugated iron' dentro das muralhas, apresentada como proteção da tradição de abóbadas de pedra.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte primária lida por trecho de busca; conferir as páginas no PDF.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-065",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "Ronald Storrs, governador militar, decretou em 1918 que todo prédio novo de Jerusalém fosse revestido de pedra natural, regra modificada várias vezes no Mandato (1936, 1944) e estendida depois de 1967.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-051"
+      ],
+      "evidencia": "Detroit Jewish News (1991): Storrs ordenou que os prédios fossem de pedra natural; fontes não aceitas (Wikipedia, artigos de opinião) dão o resto.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só uma fonte E e fontes não aceitas, com divergência sobre o alcance (só a bacia histórica ou a cidade toda). Fora do texto. Buscar: Kark e Oren-Nordheim; registros do Pro-Jerusalem Council; legislação municipal atual.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-066",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "Hoje a lei municipal de Jerusalém exige que todo prédio seja revestido de pedra de Jerusalém.",
+      "categoria": "pratica",
+      "fontes": [],
+      "evidencia": "Só a Wikipedia afirma.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Nenhuma fonte aceita. Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C03-067",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "A Cidade Antiga se divide em quatro bairros (judeu, cristão, muçulmano e armênio), e o esquema dos quatro bairros é uma simplificação do século XIX.",
+      "categoria": "sociedade",
+      "fontes": [],
+      "evidencia": "Nenhuma busca foi feita sobre o tema antes de o orçamento de buscas acabar.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Tema obrigatório do brief, pendente para a próxima rodada. Fontes a buscar: UNESCO; artigos sobre mapas do século XIX (por exemplo, o levantamento britânico de 1864-1865).",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-068",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "Nomes (português, hebraico, árabe) e posições das portas da muralha.",
+      "categoria": "patrimonio",
+      "fontes": [],
+      "evidencia": "Nenhuma busca foi feita sobre os nomes. A IAA confirma só que a muralha foi construída com sete portas (C03-008).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pendente. A lista de trabalho em ativos/dados/jerusalem.json está marcada para não ser exibida.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-069",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "A Torre de Davi não tem relação com o rei Davi; o nome vem de uma identificação posterior.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Busca não realizada (orçamento esgotado).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pendente. Fonte a buscar: Tower of David Museum.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-070",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "As estações da Via Dolorosa seguem uma tradição de peregrinação, e o percurso mudou ao longo dos séculos.",
+      "categoria": "religiao",
+      "fontes": [],
+      "evidencia": "Busca não realizada.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pendente. Fonte a buscar: Custódia da Terra Santa; literatura acadêmica sobre a Via Dolorosa.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-071",
+      "secao": "10 detalhes para observar em Jerusalém que muitos turistas deixam passar",
+      "afirmacao": "As mezuzot nos batentes do bairro judeu: o que são e por que ficam inclinadas.",
+      "categoria": "religiao",
+      "fontes": [],
+      "evidencia": "Busca não realizada.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pendente.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-072",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "O Monte das Oliveiras: localização a leste da Cidade Antiga, cemitério judaico, igrejas.",
+      "categoria": "religiao",
+      "fontes": [],
+      "evidencia": "Busca não realizada.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pendente; tema do brief.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-073",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "Os mercados (suq) da Cidade Antiga.",
+      "categoria": "sociedade",
+      "fontes": [],
+      "evidencia": "Busca não realizada.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pendente; tema do brief.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-074",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "Jerusalém foi dividida entre Israel e Jordânia de 1948 a 1967.",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Busca não realizada neste capítulo.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pendente; conferir com o capítulo 2 para não divergir.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-075",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "A saída das muralhas no século XIX (primeiros bairros fora da Cidade Antiga).",
+      "categoria": "historia",
+      "fontes": [],
+      "evidencia": "Busca não realizada.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Pendente.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-076",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "Depois de 135 d.C., Adriano refundou a cidade como Aelia Capitolina.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-032"
+      ],
+      "evidencia": "COJS menciona 'Hadrian's Aelia Capitolina in the 130s CE'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só fonte E. Fora do texto; conferir com o capítulo 2.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-077",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A Cidade de Davi fica em Wadi Hilweh, parte do bairro palestino de Silwan, em Jerusalém Oriental; o sítio é gerido pela Autoridade de Natureza e Parques e operado pela Fundação Ir David, que também participa das escavações.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F03-052",
+        "F03-056"
+      ],
+      "evidencia": "Jerusalem Post: IAA, City of David Foundation e Autoridade de Natureza e Parques anunciaram juntos a escavação do tanque de Siloé. Structurae: o túnel fica hoje no bairro de Silwan, em Jerusalém Oriental. O resto só na Wikipedia.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fontes E e não aceitas. Fora do texto, mas é contexto que o capítulo DEVE ter na versão final, apresentando a fundação como parte interessada.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-078",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "O túnel de Siloé tem cerca de 533 m.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-056"
+      ],
+      "evidencia": "Structurae: 1.748 pés (cerca de 533 m); outra fonte, 1.760 pés.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só fontes E. Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-079",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "Em 2022 noticiou-se um acordo para a Turquia devolver a inscrição de Siloé, negado depois pela Turquia.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-041"
+      ],
+      "evidencia": "Mosaic (2022) noticia o acordo; um blog relata a negativa.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Uma fonte E. Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-080",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "A cúpula original do Domo da Rocha desabou em 1015 e foi reconstruída em 1022-1023.",
+      "categoria": "patrimonio",
+      "fontes": [],
+      "evidencia": "Apareceu num resumo de busca sem fonte identificável.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-081",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "A cúpula do Domo da Rocha recebeu chapas de liga de alumínio e bronze douradas em 1959-1964, e nova douração em 1993.",
+      "categoria": "patrimonio",
+      "fontes": [],
+      "evidencia": "Datas divergentes em fontes fracas (1958; 1959-1961; 1959-1962; 1959-1964).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-082",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "Para o judaísmo, o Monte do Templo é o lugar do Primeiro e do Segundo Templo.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-007"
+      ],
+      "evidencia": "MFA confirma o Segundo Templo transformado por Herodes. O Primeiro Templo não foi buscado.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O texto fala só do Segundo Templo. O Primeiro Templo fica para o capítulo 2 ou para a próxima rodada.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    }
+  ]
+}

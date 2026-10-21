@@ -1,0 +1,20 @@
+{
+  "name": "hebraico-fluente-editorial",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pipeline editorial dos e-books da coleção Hebraico Fluente: manuscrito em Markdown, registros de fonte e afirmação em JSON, PDF pelo Chromium.",
+  "scripts": {
+    "validar": "node tools/validar.mjs israel-alem-do-roteiro",
+    "mapas": "node tools/mapas.mjs israel-alem-do-roteiro",
+    "build": "node tools/build.mjs israel-alem-do-roteiro",
+    "inspecionar": "node tools/inspecionar.mjs israel-alem-do-roteiro"
+  },
+  "dependencies": {
+    "@fontsource/literata": "5.2.8",
+    "marked": "18.0.14",
+    "pagedjs": "0.4.3",
+    "pdf-lib": "1.17.1",
+    "playwright-core": "1.63.0"
+  }
+}

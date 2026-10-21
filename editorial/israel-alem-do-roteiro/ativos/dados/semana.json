@@ -1,0 +1,105 @@
+{
+  "ativo": "infografico-semana",
+  "capitulo": 5,
+  "status": "bloqueado",
+  "motivo": "Nenhuma nota sobre a semana foi verificada nesta rodada: o limite de buscas da sessão acabou antes do tema (ver C05-060 a C05-064 e C05-076 em afirmacoes/cap05.json). O infográfico não vai para produção até cada nota abaixo ter um ID de afirmação VERIFICADO. Os rótulos em hebraico também dependem da aprovação do autor.",
+  "legenda": "Os sete dias da semana em Israel, com o nome de cada um em hebraico.",
+  "data_consulta": "2026-10-21",
+  "dias": [
+    {
+      "ordem": 1,
+      "dia_pt": "domingo",
+      "rotulo_he": "יוֹם רִאשׁוֹן",
+      "rotulo_translit": "Yom Rishón",
+      "rotulo_traducao": "primeiro dia",
+      "dia_util": null,
+      "notas": [],
+      "notas_pendentes": [
+        { "texto": "Dia útil; a semana de trabalho mais comum começa no domingo.", "afirmacoes": ["C05-060"], "status": "NÃO VERIFICADO" }
+      ],
+      "afirmacoes_rotulo": ["C05-076"]
+    },
+    {
+      "ordem": 2,
+      "dia_pt": "segunda-feira",
+      "rotulo_he": "יוֹם שֵׁנִי",
+      "rotulo_translit": "Yom Shení",
+      "rotulo_traducao": "segundo dia",
+      "dia_util": null,
+      "notas": [],
+      "notas_pendentes": [
+        { "texto": "Dia útil.", "afirmacoes": ["C05-060"], "status": "NÃO VERIFICADO" }
+      ],
+      "afirmacoes_rotulo": ["C05-076"]
+    },
+    {
+      "ordem": 3,
+      "dia_pt": "terça-feira",
+      "rotulo_he": "יוֹם שְׁלִישִׁי",
+      "rotulo_translit": "Yom Shlishí",
+      "rotulo_traducao": "terceiro dia",
+      "dia_util": null,
+      "notas": [],
+      "notas_pendentes": [
+        { "texto": "Dia útil.", "afirmacoes": ["C05-060"], "status": "NÃO VERIFICADO" }
+      ],
+      "afirmacoes_rotulo": ["C05-076"]
+    },
+    {
+      "ordem": 4,
+      "dia_pt": "quarta-feira",
+      "rotulo_he": "יוֹם רְבִיעִי",
+      "rotulo_translit": "Yom Revií",
+      "rotulo_traducao": "quarto dia",
+      "dia_util": null,
+      "notas": [],
+      "notas_pendentes": [
+        { "texto": "Dia útil.", "afirmacoes": ["C05-060"], "status": "NÃO VERIFICADO" }
+      ],
+      "afirmacoes_rotulo": ["C05-076"]
+    },
+    {
+      "ordem": 5,
+      "dia_pt": "quinta-feira",
+      "rotulo_he": "יוֹם חֲמִישִׁי",
+      "rotulo_translit": "Yom Chamishí",
+      "rotulo_traducao": "quinto dia",
+      "dia_util": null,
+      "notas": [],
+      "notas_pendentes": [
+        { "texto": "Último dia da semana de trabalho mais comum.", "afirmacoes": ["C05-060"], "status": "NÃO VERIFICADO" }
+      ],
+      "afirmacoes_rotulo": ["C05-076"]
+    },
+    {
+      "ordem": 6,
+      "dia_pt": "sexta-feira",
+      "rotulo_he": "יוֹם שִׁשִּׁי",
+      "rotulo_translit": "Yom Shishí",
+      "rotulo_traducao": "sexto dia",
+      "dia_util": null,
+      "notas": [],
+      "notas_pendentes": [
+        { "texto": "Comércio fecha mais cedo em muitos lugares; varia por cidade.", "afirmacoes": ["C05-062", "C05-064"], "status": "NÃO VERIFICADO" },
+        { "texto": "O Shabat começa ao pôr do sol.", "afirmacoes": ["C05-061"], "status": "NÃO VERIFICADO" },
+        { "texto": "Ônibus e trens param antes do Shabat na maior parte do país, com exceções locais.", "afirmacoes": ["C05-063"], "status": "NÃO VERIFICADO" }
+      ],
+      "afirmacoes_rotulo": ["C05-076"]
+    },
+    {
+      "ordem": 7,
+      "dia_pt": "sábado",
+      "rotulo_he": "שַׁבָּת",
+      "rotulo_translit": "Shabát",
+      "rotulo_traducao": "sábado",
+      "dia_util": null,
+      "notas": [],
+      "notas_pendentes": [
+        { "texto": "Shabat até o anoitecer.", "afirmacoes": ["C05-061"], "status": "NÃO VERIFICADO" },
+        { "texto": "O que abre e o que fecha varia: Tel Aviv, Jerusalém e cidades árabes têm ritmos diferentes.", "afirmacoes": ["C05-064"], "status": "NÃO VERIFICADO" },
+        { "texto": "Transporte público retoma depois do fim do Shabat, onde para.", "afirmacoes": ["C05-063"], "status": "NÃO VERIFICADO" }
+      ],
+      "afirmacoes_rotulo": ["C05-076"]
+    }
+  ]
+}

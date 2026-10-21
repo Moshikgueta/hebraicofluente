@@ -1,0 +1,248 @@
+[
+  {
+    "he": "יְרוּשָׁלַיִם",
+    "translit": "Yerushaláyim",
+    "pt": "Jerusalém",
+    "definicao_curta": "Jerusalém, em hebraico."
+  },
+  {
+    "he": "תֵל אָבִיב",
+    "translit": "Tel Avív",
+    "pt": "Tel Aviv",
+    "definicao_curta": "Tel Aviv; literalmente, colina da primavera."
+  },
+  {
+    "he": "כִּנֶרֶת",
+    "translit": "Kinéret",
+    "pt": "mar da Galileia, lago de Tiberíades",
+    "definicao_curta": "O lago da Galileia, em hebraico."
+  },
+  {
+    "he": "יַם הַמֶלַח",
+    "translit": "Yam HaMélach",
+    "pt": "Mar Morto",
+    "definicao_curta": "Mar Morto; literalmente, mar do sal."
+  },
+  {
+    "he": "עַכּוֹ",
+    "translit": "Áko",
+    "pt": "Acre",
+    "definicao_curta": "Acre, em hebraico."
+  },
+  {
+    "he": "מִדְבָּר",
+    "translit": "midbár",
+    "pt": "deserto",
+    "definicao_curta": "Deserto."
+  },
+  {
+    "he": "נֶגֶב",
+    "translit": "Néguev",
+    "pt": "Neguev",
+    "definicao_curta": "O Neguev, a região desértica do sul."
+  },
+  {
+    "he": "נַחַל",
+    "translit": "náchal",
+    "pt": "riacho, leito de rio",
+    "definicao_curta": "Riacho ou leito de rio."
+  },
+  {
+    "he": "תֵל",
+    "translit": "tel",
+    "pt": "colina de ruínas",
+    "definicao_curta": "Colina formada por camadas de ruínas."
+  },
+  {
+    "he": "מַכְתֵשׁ",
+    "translit": "machtésh",
+    "pt": "cratera de erosão; ao pé da letra, \"pilão\"",
+    "definicao_curta": "Cratera de erosão; literalmente, pilão."
+  },
+  {
+    "he": "עֵמֶק",
+    "translit": "émek",
+    "pt": "vale",
+    "definicao_curta": "Vale."
+  },
+  {
+    "he": "עֲלִיָה",
+    "translit": "aliyá",
+    "pt": "imigração para Israel; ao pé da letra, \"subida\"",
+    "definicao_curta": "Imigração judaica para Israel; literalmente, subida."
+  },
+  {
+    "he": "קִבּוּץ",
+    "translit": "kibúts",
+    "pt": "kibutz",
+    "definicao_curta": "Kibutz, comunidade de propriedade coletiva."
+  },
+  {
+    "he": "מוֹשָׁב",
+    "translit": "mosháv",
+    "pt": "moshav",
+    "definicao_curta": "Moshav, aldeia agrícola cooperativa."
+  },
+  {
+    "he": "אוּלְפָּן",
+    "translit": "ulpán",
+    "pt": "curso intensivo de hebraico",
+    "definicao_curta": "Curso intensivo de hebraico para recém-chegados."
+  },
+  {
+    "he": "יוֹם הָעַצְמָאוּת",
+    "translit": "Yom HaAtsmaút",
+    "pt": "Dia da Independência",
+    "definicao_curta": "Dia da Independência de Israel."
+  },
+  {
+    "he": "שַׁבָּת שָׁלוֹם",
+    "translit": "shabát shalóm",
+    "pt": "bom shabat; ao pé da letra, \"shabat de paz\"",
+    "definicao_curta": "Cumprimento do shabat."
+  },
+  {
+    "he": "חַג שָׂמֵחַ",
+    "translit": "chag saméach",
+    "pt": "boas festas; ao pé da letra, \"festa alegre\"",
+    "definicao_curta": "Boas festas."
+  },
+  {
+    "he": "כֹּתֶל",
+    "translit": "kótel",
+    "pt": "muro; \"o Kotel\" é o Muro Ocidental",
+    "definicao_curta": "Muro; com o artigo, o Muro Ocidental."
+  },
+  {
+    "he": "בֵּית כְּנֶסֶת",
+    "translit": "beit knésset",
+    "pt": "sinagoga; ao pé da letra, \"casa de reunião\"",
+    "definicao_curta": "Sinagoga."
+  },
+  {
+    "he": "מְזוּזָה",
+    "translit": "mezuzá",
+    "pt": "mezuzá",
+    "definicao_curta": "Estojo com pergaminho preso ao batente da porta."
+  },
+  {
+    "he": "כִּפָּה",
+    "translit": "kipá",
+    "pt": "quipá, solidéu",
+    "definicao_curta": "Solidéu judaico."
+  },
+  {
+    "he": "כָּשֵׁר",
+    "translit": "kashér",
+    "pt": "kosher, apto segundo as leis alimentares judaicas",
+    "definicao_curta": "Kosher."
+  },
+  {
+    "he": "שׁוּק",
+    "translit": "shuk",
+    "pt": "mercado",
+    "definicao_curta": "Mercado de rua."
+  },
+  {
+    "he": "בְּתֵאָבוֹן",
+    "translit": "beteavón",
+    "pt": "bom apetite",
+    "definicao_curta": "Bom apetite."
+  },
+  {
+    "he": "חֶשְׁבּוֹן",
+    "translit": "chesbón",
+    "pt": "a conta",
+    "definicao_curta": "A conta."
+  },
+  {
+    "he": "רְחוֹב",
+    "translit": "rechóv",
+    "pt": "rua",
+    "definicao_curta": "Rua."
+  },
+  {
+    "he": "שֵׁרוּת",
+    "translit": "sherút",
+    "pt": "táxi coletivo; ao pé da letra, \"serviço\"",
+    "definicao_curta": "Táxi coletivo."
+  },
+  {
+    "he": "תַחֲנָה מֶרְכָּזִית",
+    "translit": "tachaná merkazít",
+    "pt": "rodoviária central",
+    "definicao_curta": "Rodoviária central."
+  },
+  {
+    "he": "בְּסֵדֶר",
+    "translit": "beséder",
+    "pt": "tudo bem, ok",
+    "definicao_curta": "Tudo bem; literalmente, em ordem."
+  },
+  {
+    "he": "מָה נִשְׁמָע",
+    "translit": "ma nishmá",
+    "pt": "tudo bem?, e aí?",
+    "definicao_curta": "Tudo bem?"
+  },
+  {
+    "he": "תוֹדָה רַבָּה",
+    "translit": "todá rabá",
+    "pt": "muito obrigado",
+    "definicao_curta": "Muito obrigado."
+  },
+  {
+    "he": "בְּבַקָשָׁה",
+    "translit": "bevakashá",
+    "pt": "por favor; também \"aqui está\" e \"de nada\"",
+    "definicao_curta": "Por favor; aqui está; de nada."
+  },
+  {
+    "he": "צַבָּר",
+    "translit": "tsabár",
+    "pt": "nascido em Israel; também o figo-da-índia",
+    "definicao_curta": "Pessoa nascida em Israel; figo-da-índia."
+  },
+  {
+    "he": "דוּגְרִי",
+    "translit": "dúgri",
+    "pt": "franco, direto",
+    "definicao_curta": "Franco, direto."
+  },
+  {
+    "he": "חוּצְפָּה",
+    "translit": "chutspá",
+    "pt": "atrevimento, cara de pau",
+    "definicao_curta": "Atrevimento."
+  },
+  {
+    "he": "בָּלָגָן",
+    "translit": "balagán",
+    "pt": "bagunça, confusão",
+    "definicao_curta": "Bagunça."
+  },
+  {
+    "he": "סַבְלָנוּת",
+    "translit": "savlanút",
+    "pt": "paciência",
+    "definicao_curta": "Paciência."
+  },
+  {
+    "he": "יַאלְלָה",
+    "translit": "yálla",
+    "pt": "vamos!, anda!",
+    "definicao_curta": "Vamos!"
+  },
+  {
+    "he": "סַבַּבָּה",
+    "translit": "sabába",
+    "pt": "beleza, ótimo",
+    "definicao_curta": "Beleza, ótimo."
+  },
+  {
+    "he": "צִימֶר",
+    "translit": "tsímer",
+    "pt": "chalé, pousada rural",
+    "definicao_curta": "Chalé ou pousada rural."
+  }
+]
