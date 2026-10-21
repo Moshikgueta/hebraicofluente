@@ -211,3 +211,63 @@ Ver `pesquisa/temas-controversos-cap02.md`. Resumo desta rodada:
 - **Pistas bibliográficas** dos registros NÃO VERIFICADO foram escritas de
   memória como sugestão de onde procurar; nenhuma é citação e nenhuma vai ao
   texto sem trecho.
+
+## Fase 6 (21/10/2026)
+
+**Visuais no capítulo** (figuras e fotos; ficha não conta): 3 desenhados nesta
+fase + `mapa-1949` + 10 fotos candidatas; abertura mantida (`regua-do-tempo`).
+- `quem-governou-jerusalem` (novo): faixas de 586 a.C. até hoje, com escala
+  quebrada em 1500. Datas: C02-018, 020, 022, 025, 031, 040, 042, 044, 053,
+  067, 091, 092, 100 (nova), 525 e C03-103. Simplificado e dito na figura
+  (sem o retorno cruzado de 1229-1244, sem ptolemeus, sem a data de começo dos
+  reis de Judá, que fica esmaecida).
+- `tres-estelas` (novo): silhuetas fora de escala; só a altura da de Mesha
+  (1,25 m, C02-005) vem da fonte.
+- `aranha-1947` (novo): Oswaldo Aranha e os votos da Resolução 181, com o
+  Brasil marcado. C02-063, C02-101, C02-102, C02-103.
+- Código: `tools/ilustracoes/cap02.mjs`.
+
+**Comparação com o Brasil:** Oswaldo Aranha, presidente da segunda sessão da
+Assembleia Geral (biografia oficial da ONU, C02-101), e o voto do Brasil a favor
+no registro de votação da Biblioteca Digital da ONU (C02-102); C02-103 é a
+derivação "na sessão que ele presidia". O lado brasileiro (Alegrete, RS) vem da
+própria ONU: a busca não achou página do Itamaraty ou da FUNAG. O papel de
+Aranha nos bastidores e a suposta instrução de abstenção do Itamaraty só
+apareceram em fontes E: fora. A régua "o que acontecia no Brasil na mesma
+época" não foi feita (sem orçamento para verificar os dois lados).
+
+**Interações:** pegadinha do guia (a muralha "de Davi"), "História ou tradição?"
+com palpite (Davi e Salomão, `resposta: as-duas`), ficha `museu-de-israel`,
+quiz e vf (um novo, sobre Aranha).
+
+**Cortado do texto pela decisão política** (registros mantidos): da parte de
+1948 em diante saíram a cerimônia da Nakba na ONU (parte de C02-503) e a carta
+de Erdan (C02-504); a definição de refugiado da UNRWA, os 750 mil de 1950 e os
+5,9 milhões de 2023 (C02-506, 507, 508); a Resolução 194 e a leitura disputada
+(C02-519, 520); a cláusula do armistício sobre fronteira (parte de C02-522) e o
+vf correspondente; a UNEF (parte de C02-524); a Resolução 242 (C02-526); as
+declarações de nulidade de 1980/1981 e a votação de 2017 (C02-527, 528); a
+Resolução 338 (parte de C02-529); as versões e a comissão Mitchell sobre a
+visita de Sharon (parte de C02-536, agora "o peso da visita é discutido"); os
+números de mortos atribuídos a governos e ao Ministério da Saúde de Gaza
+(C02-540 só como data, C02-541 sem número, C02-542, 543, 548); a Resolução 2803
+(C02-546) e as falas do debate do Conselho de Segurança (parte de C02-547); o
+quiz da UNRWA. O debate historiográfico ficou, em forma curta (Morris, Walid
+Khalidi, Pappé, Shlaim; saíram Karsh, Lustick e a mudança política de Morris,
+C02-512, 516, 517). A linha do tempo "Depois de 1948" perdeu 194, 242, 338,
+UNRWA e 2803 e ganhou o primeiro cessar-fogo (C02-544). "Ocupou" virou
+"tomou"/"passou a administrar"; "Cisjordânia" virou "Judeia e Samaria
+(Cisjordânia)" na primeira menção (legenda do mapa de 1949) e "Judeia e
+Samaria" depois.
+
+**Buscas usadas nesta fase (capítulo 2):** 4 (Aranha na ONU, Aranha em fonte
+brasileira, registro de votação da 181, Alexandre em 332 a.C.).
+
+**Pendências:**
+- C02-100 (c. 332 a.C.): fonte B (Luther Seminary, Enter the Bible) lida em
+  trecho de busca; a atribuição do trecho deve ser conferida na página.
+- Ficha `museu-de-israel`: sem horário nem regras (sem fonte oficial vista);
+  conferir se outro capítulo cria ficha com o mesmo id.
+- Hebraico novo: nenhum.
+- Página 25 do PDF fica com meia página antes da figura de Aranha (o
+  inspecionar não acusa quase vazia).

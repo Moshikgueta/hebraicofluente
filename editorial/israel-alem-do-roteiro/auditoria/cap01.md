@@ -148,3 +148,56 @@ segunda rodada).
   pode ser resolvido com C01-055 e C01-056.
 - **Revisar até:** C01-019 e C01-059 em 2027-04-21; área e nível em
   2027-10-21.
+
+## Fase 6 (21/10/2026)
+
+**Visuais no capítulo** (figuras e fotos; ficha não conta): 4 desenhados nesta
+fase + 3 figuras que já existiam + 6 fotos candidatas.
+- `abertura-israel-no-mapa` (abertura, novo): paisagem de oeste a leste em papel
+  recortado, sem dado, com o crédito "Ilustração original".
+- `israel-sergipe` (novo, da prancha aprovada): C01-001, C01-005, C01-201, C01-202.
+- `regioes-ilustrado` (novo, mapa tocável): substitui `mapa-regioes` no texto.
+  Pontos em `ativos/dados/regioes-ilustrado-pontos.json`: nove regiões abrem o
+  texto de `mapa-regioes-pontos.json`; o vale do Hula abre a ficha.
+- `chuva-israel-brasilia` (novo): C01-021, C01-203, C01-204, C01-205.
+- `corte-faixas` (existia; saiu da abertura e foi para "Quatro faixas") e
+  `mapa-regional`, `infografico-clima`.
+- Código: `tools/ilustracoes/cap01.mjs`, com os ids das afirmações no comentário.
+
+**Comparação com o Brasil (duas):**
+- Israel x Sergipe: CBS (C01-001) e IBGE (C01-201), conta em C01-202.
+- Chuva: Israel (C01-021) e INMET, Brasília, normal de janeiro 1991-2020 de
+  206,0 mm (C01-203) e média do verão 1991-2020 de 621,7 mm (C01-204); conta em
+  C01-205. A normal ANUAL de Brasília não apareceu na busca: ficou fora.
+
+**Interações:** mapa tocável (`regioes-ilustrado`), 2 fichas (`machtesh-ramon`,
+`vale-do-hula`), pegadinha do guia (Machtésh Ramón "cratera"), quiz e vf.
+
+**Cortado do texto pela decisão política** (os registros continuam no arquivo):
+a seção "Golã e Jerusalém Oriental: o que diz a ONU" virou "Golã e Jerusalém
+Oriental: o que entra na conta", só com fatos e datas (C02-525, C03-059,
+C01-044, C01-001). Saíram do texto C01-039 (Res. 478), C01-040 (Res. 497),
+C01-041 (reconhecimento americano de 2019), C01-042 (resposta da ONU),
+C01-043 (não reconhecimento internacional), o "na prática, uma anexação" de
+C01-044 e o link `resolution-497-1981`. O texto do ponto do Golã em
+`regioes.json` e `mapa-regioes-pontos.json` foi reescrito do mesmo modo. A
+frase sobre "Judeia e Samaria" na seção das montanhas não diz mais
+"Cisjordânia" (primeira menção fica no quadro "Ler um mapa de Israel").
+
+**Buscas usadas nesta fase (capítulo 1):** 5 (2 INMET, 1 série do Mar Morto, 2
+coordenadas do Machtésh Ramón).
+
+**Pendências:**
+- Gráfico da queda do Mar Morto: NÃO desenhado. A busca só achou números
+  soltos em jornal (Hidrológico citado pelo Jerusalem Post e pelo Globes), sem
+  série oficial. Falta a série da Autoridade da Água (data.gov.il).
+- Ficha do Mar Morto e do Mar da Galileia: não criadas aqui para não duplicar
+  as fichas que o capítulo 4 tende a criar (mesmo lugar, mesmo id no roteiro).
+  O coordenador decide se o capítulo 1 aponta para elas.
+- Machtésh Ramón fora do mapa: a coordenada da lista indicativa da UNESCO
+  (30°58' N, 35°12' E) é a do conjunto dos makhteshim, não a do Ramón, e a do
+  Ramón só apareceu na Wikipedia. A ficha está no texto, sem ponto no mapa.
+- Fichas sem "regras" nem horário: nenhuma fonte oficial vista.
+- Hebraico novo: nenhum. As fichas não têm campo `he:`.
+- C01-204: um balanço antigo do INMET usa 608,2 mm para a média do verão;
+  conferir a tabela das Normais 1991-2020 da estação de Brasília.
