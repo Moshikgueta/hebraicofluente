@@ -16,6 +16,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { compilarCapitulo, registros } from './lib/conteudo.mjs';
+import { vinheta } from './lib/vinhetas.mjs';
 
 const AQUI = path.dirname(new URL(import.meta.url).pathname);
 const EDITORIAL = path.resolve(AQUI, '..');
@@ -94,7 +95,10 @@ const faces = `@font-face{font-family:'Literata';font-weight:200 900;src:url(ass
 
 /* Todas as fichas do livro, para o roteiro e para os pontos dos mapas. */
 const fichas = caps.flatMap(c => (c.fichas || []).map(f => ({ ...f, cap: c.id, capTitulo: c.titulo })));
-const dados = { titulo: meta.titulo, subtitulo: meta.subtitulo, indice, capitulos: caps, diario, svgs, pontos, fichas, gerado_em: new Date().toISOString().slice(0, 10) };
+/* Vinhetas: as das seções e as das páginas do aplicativo. */
+const vinhetas = {};
+for (const id of [...caps.flatMap(c => c.secoes.map(x => x.vinheta)), 'lupa', 'letras', 'mapa', 'mala', 'livro'].filter(Boolean)) vinhetas[id] = vinheta(id);
+const dados = { vinhetas, titulo: meta.titulo, subtitulo: meta.subtitulo, indice, capitulos: caps, diario, svgs, pontos, fichas, gerado_em: new Date().toISOString().slice(0, 10) };
 const css = fs.readFileSync(path.join(EDITORIAL, 'templates/tokens-editorial.css'), 'utf8') + '\n' + fs.readFileSync(path.join(EDITORIAL, 'templates/web.css'), 'utf8');
 const app = fs.readFileSync(path.join(EDITORIAL, 'templates/web-app.js'), 'utf8');
 const html = `<!doctype html>
@@ -102,7 +106,7 @@ const html = `<!doctype html>
 <title>${meta.titulo}</title><meta name="description" content="${meta.subtitulo}">
 <style>${faces}\n${css}</style></head>
 <body><a class="vis-oculto" href="#conteudo">Pular para o conteúdo</a>
-<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#inicio">Início</a><a href="#roteiro">Roteiro</a><a href="#viagem">Viagem</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
+<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#roteiro">Roteiro</a><a href="#viagem">Viagem</a><a href="#exercicios">Exercícios</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
 <main id="conteudo" tabindex="-1"></main>
 <div id="folha" class="folha" role="dialog" aria-modal="false" aria-labelledby="folha-t" hidden></div>
 <script type="application/json" id="dados">${JSON.stringify(dados).replace(/</g, '\\u003c')}</script>
@@ -127,7 +131,7 @@ if (opt.artefato) {
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>${facesEmb}\n${css}</style>
 <a class="vis-oculto" href="#conteudo">Pular para o conteúdo</a>
-<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#inicio">Início</a><a href="#roteiro">Roteiro</a><a href="#viagem">Viagem</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
+<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#roteiro">Roteiro</a><a href="#viagem">Viagem</a><a href="#exercicios">Exercícios</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
 <main id="conteudo" tabindex="-1"></main>
 <div id="folha" class="folha" role="dialog" aria-modal="false" aria-labelledby="folha-t" hidden></div>
 <script type="application/json" id="dados">${JSON.stringify(dadosEmb).replace(/</g, '\\u003c')}</script>

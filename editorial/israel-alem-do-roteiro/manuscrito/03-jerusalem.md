@@ -27,6 +27,9 @@ jun. 1967 | Israel toma Jerusalém Oriental.[[C02-525]]
 
 ## Patrimônio mundial, e em perigo
 
+::: vinheta pergaminho
+:::
+
 A Cidade Antiga de Jerusalém e suas muralhas entraram na Lista do Patrimônio Mundial da UNESCO em 1981, por proposta da Jordânia, com base em três dos critérios da convenção (ii, iii e vi).[[C03-001]] No ano seguinte, 1982, o sítio passou à Lista do Patrimônio Mundial em Perigo, e lá continua; em 2005, o Comitê do Patrimônio Mundial decidiu expressamente mantê-lo nela.[[C03-002]] Os relatórios de conservação dizem por quê: mudanças no tecido urbano e social, os efeitos de escavações arqueológicas, a deterioração dos monumentos, o impacto visual do entorno, problemas de trânsito e de acesso.[[C03-003]] Desde 1967, a Cidade Antiga é administrada pelas autoridades israelenses.[[C03-004]]
 
 ::: link unesco-cidade-antiga-de-jerusalem
@@ -34,6 +37,9 @@ A ficha do sítio na UNESCO, com o mapa do perímetro.
 :::
 
 ## Uma cidade em quatro bairros?
+
+::: vinheta mapa
+:::
 
 Quase todo mapa turístico divide a Cidade Antiga em quatro bairros: judeu, cristão, muçulmano e armênio. É um esquema útil para se orientar, e é também mais novo do que parece.
 
@@ -48,6 +54,9 @@ As portas, os bairros e os oito lugares das fichas deste capítulo; cada número
 :::
 
 ## A muralha e suas portas
+
+::: vinheta porta
+:::
 
 A muralha que o visitante contorna, fotografa e atravessa não é de Davi nem de Herodes. Foi levantada por ordem do sultão otomano Solimão, o Magnífico, no fim da década de 1530. O site de muralhas da Autoridade de Antiguidades de Israel (IAA) data a obra de 1537 e estima que ela durou de três a quatro anos; outras fontes dão a conclusão em 1541.[[C03-005]] O dinheiro veio dos impostos que os otomanos cobravam no Egito.[[C03-006]] Quanto ao motivo, a IAA diz, com um cauteloso "ao que parece", que Solimão agiu em parte por medo de uma nova cruzada cristã.[[C03-007]]
 
@@ -90,6 +99,9 @@ A Porta de Jafa numa foto da coleção Matson, da Library of Congress, feita ent
 
 ## A Torre de Davi, que é de Herodes
 
+::: vinheta torre
+:::
+
 Junto da Porta de Jafa, numa fortaleza medieval, fica o Museu da Torre de Davi.[[C03-111]] O nome é um engano antigo, e a história dele explica bem a cidade.
 
 Herodes ergueu ali três torres sobre fortificações hasmoneias, chamadas Hípico, Fasael e Mariamne. Segundo o historiador Flávio Josefo, só a de Fasael sobreviveu à destruição romana de 70 d.C., e é sobre ela que fica hoje o mirante do museu.[[C03-094]] Monges bizantinos, lendo mal Josefo, acharam que a torre era obra do rei Davi e a chamaram Torre de Davi. Séculos depois, a cidadela otomana ganhou um minarete, e visitantes ocidentais passaram o nome para ele.[[C03-095]] O minarete que hoje se chama Torre de Davi, portanto, não é de Davi nem de Herodes.
@@ -105,6 +117,9 @@ O museu explica, com as palavras dele, de onde vem o nome.
 :::
 
 ## O Muro Ocidental: um muro de contenção
+
+::: vinheta muralha
+:::
 
 O lugar que em hebraico se chama <he>הַכֹּתֶל הַמַּעֲרָבִי</he> (HaKótel HaMaaraví), o Muro Ocidental, ou só Kotel, tem uma história arqueológica bem documentada. Herodes transformou o Segundo Templo num edifício monumental e cercou o monte, nos quatro lados, com enormes muros de contenção.[[C03-012]] O lado oeste é o mais comprido, com 485 metros.[[C03-013]] Os muros foram assentados sobre a rocha, com grandes blocos de cantaria de bordas cuidadosamente lavradas; cada pedra pesa por volta de cinco toneladas, e as de canto, dezenas de toneladas.[[C03-014]]
 
@@ -126,6 +141,9 @@ regras: Roupa adequada; no Shabat e nos feriados judaicos, nada de aparelhos ele
 :::
 
 ## Um monte, dois nomes
+
+::: vinheta cupula
+:::
 
 A plataforma que esses muros sustentam tem dois nomes, e cada um diz de onde se olha. Para judeus, e no vocabulário do Estado de Israel, é o Monte do Templo, <he>הַר הַבַּיִת</he> (Har HaBáyit, "o monte da Casa", isto é, do Templo). Para muçulmanos, é o Haram al-Sharif, o Nobre Santuário; em português também se diz Esplanada das Mesquitas.[[C03-018]] O complexo abriga o Domo da Rocha (em árabe, Qubbat al-Sakhra) e a mesquita de al-Aqsa.[[C03-020,C03-027]]
 
@@ -161,6 +179,9 @@ Consulta em 21/10/2026. A regra descrita acima é a política declarada pelo gov
 :::
 
 ## O Santo Sepulcro e a Via Dolorosa
+
+::: vinheta chave
+:::
 
 A Igreja do Santo Sepulcro foi fundada no século IV, sob o imperador Constantino, e passou desde então por muitas fases de construção.[[C03-032]] Segundo a tradição cristã, ela guarda o túmulo de Jesus. Se o lugar é historicamente esse é uma pergunta que os estudiosos ainda discutem, com argumentos de arqueologia e de texto.[[C03-033]]
 
@@ -215,6 +236,9 @@ observar: O minarete otomano, que acabou herdando o nome de Torre de Davi.[[C03-
 
 ## Fora das muralhas: o Monte das Oliveiras
 
+::: vinheta oliveira
+:::
+
 Olhe para o leste a partir da Cidade Antiga e verá a encosta de um monte. É o Monte das Oliveiras, logo a leste da Cidade Antiga; na encosta voltada para ela está um grande cemitério judaico, usado desde a época dos Templos.[[C03-108]] Ao pé do monte, no Getsêmani, fica a Basílica da Agonia, também chamada Igreja de Todas as Nações, guardada pelos franciscanos.[[C03-109]]
 
 A mesma encosta é, portanto, lugar de luto para uma tradição e de oração para outra. Quem sobe ao mirante para fotografar a cidade passa pelas duas.
@@ -237,6 +261,9 @@ A página franciscana do santuário do Getsêmani.
 
 ## O mercado do algodão
 
+::: vinheta mercado
+:::
+
 Os mercados da Cidade Antiga, em árabe suq, parecem não ter idade. Um deles tem data e autor. O Mercado dos Mercadores de Algodão, o Suq al-Qattanin, foi construído por Tankiz, governador mameluco, por volta de 1336-1337, no reinado do sultão al-Nasir Muhammad, com um portão que liga a rua do mercado à esplanada. Um estudo de 2017 o chama do projeto mais ambicioso da era mameluca em Jerusalém.[[C03-110]]
 
 Não era só um mercado: o mesmo projeto incluía um banho duplo e uma hospedaria de mercadores, e o portão fazia a passagem entre o comércio e o santuário.[[C03-110]] As fontes divergem sobre quem teve a iniciativa, o governador ou o sultão.
@@ -250,6 +277,9 @@ observar: O portão no fim da rua, que liga o mercado à esplanada.[[C03-110]]
 :::
 
 ## Debaixo da cidade
+
+::: vinheta gota
+:::
 
 ### Um túnel e um texto na rocha
 
@@ -289,6 +319,9 @@ No bairro judeu, escavações dirigidas pelo arqueólogo Nahman Avigad expuseram
 
 ## A cidade sai das muralhas, e depois se divide
 
+::: vinheta predio
+:::
+
 Durante séculos, a cidade coube dentro da muralha. No século XIX, isso mudou. Em 1860 surgiu Mishkenot Sha'ananim, considerado o primeiro bairro judeu construído fora das muralhas.[[C03-104]] A região inteira crescia: um estudo de Justin McCarthy, a partir de registros otomanos, estima que a população da área que depois seria a Palestina mais que dobrou entre 1877-1878 e 1914-1915.[[C02-048]]
 
 Um século depois de sair das muralhas, a cidade foi cortada ao meio. Na guerra de 1948, o Bairro Judeu da Cidade Antiga caiu diante das forças jordanianas em 28 de maio.[[C02-501]] O armistício entre Israel e Jordânia foi assinado em 3 de abril de 1949.[[C02-521]] De 1949 a 1967, Jerusalém ficou dividida: a Jordânia no leste, com a Cidade Antiga, e Israel no oeste. A Porta Mandelbaum era o único ponto de passagem entre as duas partes, usado sobretudo por diplomatas, clérigos, pessoal da ONU e peregrinos cristãos.[[C03-103]]
@@ -303,6 +336,9 @@ Jerusalém dividida e Jerusalém hoje, nos mesmos contornos. A área do leste é
 
 ## Jerusalém, capital
 
+::: vinheta documento
+:::
+
 Em 30 de julho de 1980, o Knesset, o parlamento de Israel, aprovou a Lei Básica: Jerusalém, Capital de Israel. O primeiro artigo diz: "Jerusalém, completa e unida, é a capital de Israel".[[C03-059]] Na prática, a grande maioria das embaixadas estrangeiras fica fora de Jerusalém; a do Brasil fica em Tel Aviv.[[C03-063,C08-005]]
 
 ::: em-hebraico
@@ -316,6 +352,9 @@ Em 30 de julho de 1980, o Knesset, o parlamento de Israel, aprovou a Lei Básica
 :::
 
 ## 10 detalhes para observar em Jerusalém que muitos turistas deixam passar
+
+::: vinheta camera
+:::
 
 Nenhum deles exige ingresso extra nem desvio grande. Exigem só olhar para o lugar certo.
 
@@ -359,6 +398,11 @@ Na escada da Capela de Santa Helena, no Santo Sepulcro, as cruzes gravadas são 
 No fim do Mercado do Algodão, o portão que dá para a esplanada liga, desde por volta de 1336-1337, o comércio ao santuário.[[C03-110]]
 :::
 
+## Compreensão da leitura
+
+::: vinheta lupa
+:::
+
 ::: quiz pegadinha É comum ouvir que o Kotel é uma parede do próprio Templo. O que ele é, segundo a arqueologia?
 - [x] Um dos muros de contenção que Herodes ergueu em volta do monte | Herodes cercou o monte com muros de contenção nos quatro lados; o Kotel é o lado oeste.[[C03-012]]
 - [ ] Uma parede do edifício do Templo | É a versão que circula, mas o muro segurava a plataforma, não o edifício.[[C03-012]]
@@ -385,4 +429,49 @@ resposta: falso
 ::: vf De 1949 a 1967, a Porta Mandelbaum era o único ponto de passagem entre as duas partes de Jerusalém.
 resposta: verdadeiro
 Ela era usada sobretudo por diplomatas, clérigos, pessoal da ONU e peregrinos cristãos.[[C03-103]]
+:::
+
+::: associe Associe cada porta a uma informação sobre ela.
+- Porta de Jafa | Em árabe, Bab al-Khalil, por Hebron[[C03-087]]
+- Porta de Herodes | Em árabe e em hebraico, Porta das Flores[[C03-090]]
+- Porta de Sião | Em árabe, Porta do Profeta Davi[[C03-091]]
+- Porta do Esterco | A porta mais baixa da muralha[[C03-116]]
+:::
+
+::: complete A muralha que cerca a Cidade Antiga foi erguida por ordem do sultão otomano ___, no fim da década de 1530.
+resposta: Solimão / Solimão, o Magnífico / Suleiman
+explicacao: A IAA data o começo da obra de 1537.[[C03-005]]
+:::
+
+::: complete O lado oeste do Monte do Templo, o mais comprido dos quatro, tem ___ metros.
+resposta: 485
+explicacao: É desse lado que fica o Muro Ocidental.[[C03-013]]
+:::
+
+::: ordene Ponha em ordem, do mais antigo ao mais recente.
+- Herodes cerca o monte com muros de contenção.[[C03-012]]
+- O mosaico do Domo da Rocha registra o ano 72 da hégira, 691-692.[[C03-019]]
+- Tankiz constrói o Mercado do Algodão, por volta de 1336-1337.[[C03-110]]
+- Solimão manda erguer a muralha.[[C03-005]]
+- Surge Mishkenot Sha'ananim, o primeiro bairro judeu fora das muralhas, em 1860.[[C03-104]]
+- Abre o Museu da Torre de Davi, em 1989.[[C03-096]]
+:::
+
+::: quiz Quem visita o Monte do Templo sem ser muçulmano pode:
+- [x] visitar em horários limitados, sem rezar | É a regra do status quo, segundo o governo de Israel.[[C03-030]]
+- [ ] rezar em horários limitados | Não: os não muçulmanos visitam, mas não rezam ali.[[C03-030]]
+- [ ] entrar a qualquer hora | Não: a visita tem horários limitados.[[C03-030]]
+:::
+
+::: vf O Domo da Rocha e a mesquita de al-Aqsa ficam em lugares diferentes da cidade.
+resposta: falso
+Os dois ficam no mesmo complexo, o Haram al-Sharif.[[C03-020,C03-027]]
+:::
+
+::: aberta Por que as pedras do Muro Ocidental são tão grandes?
+resposta: Porque o muro é de contenção: segurava a plataforma inteira que Herodes construiu em volta do monte. Cada pedra pesa cerca de cinco toneladas, e as de canto, dezenas.[[C03-012,C03-014]]
+:::
+
+::: aberta Na Via Dolorosa, o que é tradição e o que a arqueologia poderia dizer?
+resposta: As estações marcam episódios da Paixão segundo a tradição cristã de peregrinação, mantida pela Custódia há séculos. Isso não quer dizer que uma escavação tenha localizado cada episódio naquele ponto da rua.[[C03-097,C03-098]]
 :::

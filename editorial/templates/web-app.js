@@ -15,7 +15,7 @@
   var memoria = {};
   function ler() { try { return JSON.parse(localStorage.getItem(CHAVE)) || {}; } catch (e) { return memoria; } }
   function guardar(f) { var s = ler(); f(s); try { localStorage.setItem(CHAVE, JSON.stringify(s)); } catch (e) { memoria = s; } return s; }
-  function estado() { var s = ler(); s.lidas = s.lidas || {}; s.fav = s.fav || {}; s.resp = s.resp || {}; s.desafios = s.desafios || {}; s.diario = s.diario || {}; s.check = s.check || {}; s.roteiro = s.roteiro || {}; s.palavras = s.palavras || {}; s.palpites = s.palpites || {}; return s; }
+  function estado() { var s = ler(); s.lidas = s.lidas || {}; s.fav = s.fav || {}; s.resp = s.resp || {}; s.desafios = s.desafios || {}; s.diario = s.diario || {}; s.check = s.check || {}; s.roteiro = s.roteiro || {}; s.palavras = s.palavras || {}; s.palpites = s.palpites || {}; s.exerc = s.exerc || {}; s.abertas = s.abertas || {}; return s; }
 
   /* ── utilidades ─────────────────────────────────────────────────────── */
   function el(tag, attrs, html) { var e = document.createElement(tag); for (var k in (attrs || {})) { if (attrs[k] != null) e.setAttribute(k, attrs[k]); } if (html != null) e.innerHTML = html; return e; }
@@ -124,6 +124,10 @@
       }
       case 'linha-do-tempo': return linhaDoTempo(b);
       case 'ficha': return fichaEl(b, false);
+      case 'associe': return associe(b);
+      case 'complete': return complete(b);
+      case 'ordene': return ordene(b);
+      case 'aberta': return aberta(b);
       case 'compare': return compare(b);
       default: return el('div', null, b.html || '');
     }
@@ -212,7 +216,7 @@
   /* Monte seu roteiro: todas as fichas do livro, por região. */
   function roteiro() {
     var s = estado();
-    main.innerHTML = '<h1 class="pagina">Monte seu roteiro</h1><p>Marque os lugares que você quer ver. A lista fica em "Minha viagem", agrupada por região, com o que conferir antes de ir. Nada aqui é recomendação de agência: é o seu roteiro.</p>';
+    main.innerHTML = cabPagina('Monte seu roteiro', 'mapa', '') + '<p>Marque os lugares que você quer ver. A lista fica em "Minha viagem", agrupada por região, com o que conferir antes de ir. Nada aqui é recomendação de agência: é o seu roteiro.</p>';
     var porReg = {}; D.fichas.forEach(function (f) { var r = f.regiao || 'Outros lugares'; (porReg[r] = porReg[r] || []).push(f); });
     Object.keys(porReg).forEach(function (r) {
       main.appendChild(el('h2', { class: 'pagina', style: 'font-size:22px' }, esc(r)));
@@ -229,7 +233,7 @@
   }
   function viagem() {
     var s = estado();
-    main.innerHTML = '<h1 class="pagina">Minha viagem</h1>';
+    main.innerHTML = cabPagina('Minha viagem', 'mala', '');
     var escolhidas = D.fichas.filter(function (f) { return s.roteiro[f.id]; });
     main.appendChild(el('h2', { class: 'pagina', style: 'font-size:22px' }, 'Meu roteiro'));
     if (!escolhidas.length) main.appendChild(el('p', null, 'Nenhum lugar ainda. <a href="#roteiro">Monte seu roteiro</a>.'));
@@ -250,6 +254,67 @@
     main.appendChild(fl);
   }
 
+  /* ── Compreensão da leitura ─────────────────────────────────────────── */
+  function embaralha(arr, id) { var r = 0; for (var i = 0; i < id.length; i++) r = (r * 31 + id.charCodeAt(i)) >>> 0; var v = arr.map(function (x, i) { return { x: x, i: i }; }); for (var j = v.length - 1; j > 0; j--) { r = (r * 1103515245 + 12345) >>> 0; var k = r % (j + 1); var t = v[j]; v[j] = v[k]; v[k] = t; } if (v.length > 1 && v.every(function (o, i) { return o.i === i; })) v.push(v.shift()); return v; }
+  function marcar(id, certo) { guardar(function (s) { s.exerc = s.exerc || {}; s.exerc[id] = certo; }); atualizarPlacar(); }
+  var corrigiveis = ['quiz', 'vf', 'associe', 'complete', 'ordene'];
+  function contaCap(cap) { var s = estado(); var tot = 0, feitos = 0, certos = 0; cap.atividades.forEach(function (a) { if (corrigiveis.indexOf(a.tipo) < 0) return; tot++; if (s.exerc[a.id] != null) { feitos++; if (s.exerc[a.id]) certos++; } }); return { tot: tot, feitos: feitos, certos: certos }; }
+  var placarAtual = null;
+  function placar(cap) { var p = el('p', { class: 'placar', 'aria-live': 'polite' }); placarAtual = { el: p, cap: cap }; setTimeout(atualizarPlacar, 0); return p; }
+  function atualizarPlacar() { if (!placarAtual || !document.body.contains(placarAtual.el)) return; var c = contaCap(placarAtual.cap); placarAtual.el.innerHTML = '<b>Seu resultado: ' + c.certos + ' de ' + c.tot + '</b> exercícios certos neste capítulo' + (c.feitos < c.tot ? ' (faltam ' + (c.tot - c.feitos) + ')' : '') + '.'; }
+  function caixaExerc(rot, q) { return el('section', { class: 'atividade exercicio' }, '<span class="rot">' + rot + '</span><div class="q">' + q + '</div>'); }
+  function retorno(box) { var r = el('div', { class: 'explicacao', 'aria-live': 'polite' }); box.appendChild(r); return r; }
+  function associe(a) {
+    var s = estado(); var box = caixaExerc('Associe', a.titulo); var dir = embaralha(a.pares.map(function (p) { return p.b; }), a.id);
+    var sels = a.pares.map(function (p, i) {
+      var lin = el('label', { class: 'assoc-lin' }, '<span>' + p.a + '</span>');
+      var sel = el('select', null, '<option value="">escolha</option>' + dir.map(function (d, k) { return '<option value="' + d.i + '">' + d.x.replace(/<[^>]+>/g, '') + '</option>'; }).join(''));
+      lin.appendChild(sel); box.appendChild(lin); return sel;
+    });
+    var bt = el('button', { type: 'button', class: 'botao-roteiro' }, 'Conferir'); box.appendChild(bt); var r = retorno(box);
+    bt.addEventListener('click', function () { var n = 0; sels.forEach(function (sel, i) { var ok = sel.value === String(i); sel.setAttribute('data-estado', ok ? 'certa' : 'errada'); if (ok) n++; }); var tudo = n === sels.length; r.innerHTML = tudo ? '<b>Isso.</b> Todos os pares estão certos.' : '<b>' + n + ' de ' + sels.length + '.</b> Os pares certos: ' + a.pares.map(function (p) { return p.a.replace(/<[^>]+>/g, '') + ' = ' + p.b.replace(/<[^>]+>/g, ''); }).join('; ') + '.'; marcar(a.id, tudo); });
+    if (s.exerc[a.id] === true) r.innerHTML = '<b>Feito.</b> Você acertou todos os pares.';
+    return box;
+  }
+  function normal(t) { return String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function complete(a) {
+    var s = estado(); var box = caixaExerc('Complete', a.frase.replace(/_{3,}/g, '____'));
+    var inp = el('input', { type: 'text', class: 'busca', 'aria-label': 'Sua resposta', autocomplete: 'off' }); box.appendChild(inp);
+    var bt = el('button', { type: 'button', class: 'botao-roteiro' }, 'Conferir'); box.appendChild(bt); var r = retorno(box);
+    bt.addEventListener('click', function () { var ok = a.respostas.some(function (x) { return normal(x) === normal(inp.value); }); r.innerHTML = (ok ? '<b>Isso.</b> ' : '<b>A resposta é: ' + esc(a.respostas[0]) + '.</b> ') + (a.explicacao || ''); marcar(a.id, ok); });
+    if (s.exerc[a.id] === true) r.innerHTML = '<b>Feito.</b> Resposta: ' + esc(a.respostas[0]) + '.';
+    return box;
+  }
+  function ordene(a) {
+    var s = estado(); var box = caixaExerc('Ponha em ordem', a.titulo + ' <small>Use as setas para mover.</small>'); var ol = el('ol', { class: 'ordene' });
+    var v = embaralha(a.itens, a.id);
+    function desenhar() { ol.innerHTML = ''; v.forEach(function (o, k) { var li = el('li', null, '<span class="t">' + o.x + '</span>'); var up = el('button', { type: 'button', class: 'mini', 'aria-label': 'Subir' }, '↑'); var dn = el('button', { type: 'button', class: 'mini', 'aria-label': 'Descer' }, '↓'); up.disabled = k === 0; dn.disabled = k === v.length - 1; up.addEventListener('click', function () { var t = v[k - 1]; v[k - 1] = v[k]; v[k] = t; desenhar(); ol.children[k - 1].querySelector('button').focus(); }); dn.addEventListener('click', function () { var t = v[k + 1]; v[k + 1] = v[k]; v[k] = t; desenhar(); ol.children[k + 1].querySelectorAll('button')[1].focus(); }); li.appendChild(up); li.appendChild(dn); ol.appendChild(li); }); }
+    desenhar(); box.appendChild(ol);
+    var bt = el('button', { type: 'button', class: 'botao-roteiro' }, 'Conferir'); box.appendChild(bt); var r = retorno(box);
+    bt.addEventListener('click', function () { var ok = v.every(function (o, k) { return o.i === k; }); r.innerHTML = ok ? '<b>Isso.</b> A ordem está certa.' : '<b>Ainda não.</b> A ordem certa: ' + a.itens.map(function (x, i) { return (i + 1) + '. ' + x.replace(/<[^>]+>/g, ''); }).join(' '); marcar(a.id, ok); });
+    if (s.exerc[a.id] === true) r.innerHTML = '<b>Feito.</b> Ordem certa.';
+    return box;
+  }
+  function aberta(a) {
+    var s = estado(); var box = caixaExerc('Responda com as suas palavras', a.pergunta);
+    var ta = el('textarea', { 'aria-label': 'Sua resposta' }); ta.value = s.abertas[a.id] || ''; ta.addEventListener('input', function () { guardar(function (st) { st.abertas = st.abertas || {}; st.abertas[a.id] = ta.value; }); });
+    box.appendChild(ta);
+    var bt = el('button', { type: 'button', class: 'mini', 'aria-expanded': 'false' }, 'Ver a resposta sugerida'); var sug = el('div', { class: 'explicacao' }, '<b>Resposta sugerida:</b> ' + a.resposta); sug.hidden = true;
+    bt.addEventListener('click', function () { sug.hidden = !sug.hidden; bt.setAttribute('aria-expanded', String(!sug.hidden)); });
+    box.appendChild(bt); box.appendChild(sug); return box;
+  }
+  function cabPagina(titulo, vin, texto) { return '<div class="sec-cab"><h1 class="pagina">' + titulo + '</h1>' + (D.vinhetas[vin] ? '<div class="vinheta" aria-hidden="true">' + D.vinhetas[vin] + '</div>' : '') + '</div>' + (texto ? '<p>' + texto + '</p>' : ''); }
+  function exercicios() {
+    main.innerHTML = cabPagina('Exercícios', 'lupa', 'A compreensão da leitura de cada capítulo, para fazer depois de ler. O resultado fica guardado neste aparelho.');
+    var ul = el('ul', { class: 'lista-roteiro' });
+    D.capitulos.forEach(function (c) {
+      var sec = c.secoes.filter(function (x) { return x.compreensao; })[0]; var k = contaCap(c); if (!k.tot) return;
+      var li = el('li', null, '<a href="#' + c.id + '"' + (sec ? ' data-secao="' + sec.id + '"' : '') + '><b>' + String(c.numero).padStart(2, '0') + '. ' + esc(c.titulo) + '</b><small>' + k.certos + ' de ' + k.tot + ' certos' + (k.feitos === k.tot ? ' · completo' : '') + '</small></a>');
+      var barra2 = el('span', { class: 'mini-barra' }, '<i style="width:' + Math.round(100 * k.certos / k.tot) + '%"></i>'); li.appendChild(barra2); ul.appendChild(li);
+    });
+    main.appendChild(ul);
+  }
+
   /* Pergunta de múltipla escolha: a resposta fica guardada e a explicação
      aparece sempre, certa ou não. */
   function quiz(q) {
@@ -262,7 +327,7 @@
       var certa = q.opcoes.filter(function (o) { return o.certa; })[0];
       exp.innerHTML = (q.opcoes[k].certa ? '<b>Isso.</b> ' : '<b>Quase.</b> A resposta é: ' + certa.texto + '. ') + (certa.explicacao || '');
     }
-    q.opcoes.forEach(function (o, k) { var b = el('button', { type: 'button' }, o.texto); b.addEventListener('click', function () { guardar(function (s) { s.resp = s.resp || {}; s.resp[q.id] = k; }); mostrar(k); }); ops.appendChild(b); });
+    q.opcoes.forEach(function (o, k) { var b = el('button', { type: 'button' }, o.texto); b.addEventListener('click', function () { guardar(function (s) { s.resp = s.resp || {}; s.resp[q.id] = k; s.exerc = s.exerc || {}; s.exerc[q.id] = !!o.certa; }); mostrar(k); atualizarPlacar(); }); ops.appendChild(b); });
     box.appendChild(ops); box.appendChild(exp);
     if (s.resp[q.id] != null) mostrar(s.resp[q.id]);
     return box;
@@ -350,7 +415,9 @@
         var fav = el('button', { class: 'icone', 'aria-pressed': s.fav[sec.id] ? 'true' : 'false', 'aria-label': 'Guardar esta seção nos favoritos' }, s.fav[sec.id] ? ICONE.favOn : ICONE.fav);
         fav.addEventListener('click', function () { var on = fav.getAttribute('aria-pressed') !== 'true'; guardar(function (st) { st.fav = st.fav || {}; st.fav[sec.id] = on; }); fav.setAttribute('aria-pressed', String(on)); fav.innerHTML = on ? ICONE.favOn : ICONE.fav; });
         acoes.appendChild(fav); rub.appendChild(acoes); art.appendChild(rub);
-        art.appendChild(el('h2', null, sec.titulo));
+        if (sec.vinheta && D.vinhetas[sec.vinheta]) { var cabv = el('div', { class: 'sec-cab' }); cabv.appendChild(el('h2', null, sec.titulo)); cabv.appendChild(el('div', { class: 'vinheta', 'aria-hidden': 'true' }, D.vinhetas[sec.vinheta])); art.appendChild(cabv); }
+        else art.appendChild(el('h2', null, sec.titulo));
+        if (sec.compreensao) art.appendChild(placar(cap));
       }
       sec.blocos.forEach(function (b) { art.appendChild(bloco(b, cap)); });
       if (sec.fontes.length) art.appendChild(el('details', { class: 'fontes' }, '<summary>Fontes desta seção (' + sec.fontes.length + ')</summary><ol>' + sec.fontes.map(function (f) { return '<li>' + (f.url ? '<a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(f.abnt) + '</a>' : esc(f.abnt)) + '</li>'; }).join('') + '</ol>' + (sec.revisado_em ? '<p>Consultadas até ' + sec.revisado_em.split('-').reverse().join('/') + '.</p>' : '') + '</details>'));
@@ -366,7 +433,7 @@
   }
 
   function glossario() {
-    main.innerHTML = '<h1 class="pagina">Glossário</h1><p>As palavras em hebraico deste material. Toque no alto-falante para ouvir a gravação, quando houver.</p>';
+    main.innerHTML = cabPagina('Glossário', 'letras', 'As palavras em hebraico deste material. Toque no alto-falante para ouvir a gravação, quando houver.');
     var busca = el('input', { class: 'busca', type: 'search', placeholder: 'Buscar em português, transliteração ou hebraico', 'aria-label': 'Buscar no glossário' });
     main.appendChild(busca);
     var itens = []; D.capitulos.forEach(function (c) { c.vocabulario.forEach(function (v) { itens.push(v); }); });
@@ -429,6 +496,7 @@
     else if (t === 'diario') { marcar('#diario'); diario(); }
     else if (t === 'roteiro') { marcar('#roteiro'); roteiro(); }
     else if (t === 'viagem') { marcar('#viagem'); viagem(); }
+    else if (t === 'exercicios') { marcar('#exercicios'); exercicios(); }
     else if (porId(t)) capitulo(porId(t), rolarPara);
     else { marcar('#inicio'); inicio(); }
     rolarPara = null;

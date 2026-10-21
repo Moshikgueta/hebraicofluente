@@ -153,6 +153,29 @@ function diretiva(tipo, args, miolo, acc, ctx) {
       const [a, b] = args.trim().split(/\s+/);
       return { tipo: 'compare', a: { id: a, rotulo: campos.a || '' }, b: { id: b, rotulo: campos.b || '' }, legenda: inline(marcas(semCampos, acc)) };
     }
+    case 'vinheta': return { tipo: 'vinheta', id: args.trim() };
+    /* ── Compreensão da leitura (fim de cada capítulo) ──
+       associe: "- esquerda | direita" (na ordem certa; a tela embaralha)
+       complete: frase com ___ no título; `resposta:` (variantes separadas
+         por " / ") e `explicacao:`
+       ordene: "- item" na ordem certa (a tela embaralha)
+       aberta: pergunta no título; `resposta:` é a resposta sugerida */
+    case 'associe': {
+      const pares = miolo.filter(l => /^\s*-\s+.*\|/.test(l)).map(l => { const [a, ...b] = l.replace(/^\s*-\s+/, '').split('|'); return { a: inline(marcas(a.trim(), acc)), b: inline(marcas(b.join('|').trim(), acc)) }; });
+      const q = { tipo: 'associe', id: `${ctx.idCap}-q${++ctx.nQuiz}`, titulo: inline(marcas(args, acc)), pares }; ctx.atividades.push(q); return q;
+    }
+    case 'complete': {
+      const q = { tipo: 'complete', id: `${ctx.idCap}-q${++ctx.nQuiz}`, frase: inline(marcas(args, acc)), respostas: String(campos.resposta || '').split(' / ').map(x => marcas(x, acc).trim()).filter(Boolean), explicacao: campos.explicacao ? inline(marcas(campos.explicacao, acc)) : '' };
+      ctx.atividades.push(q); return q;
+    }
+    case 'ordene': {
+      const q = { tipo: 'ordene', id: `${ctx.idCap}-q${++ctx.nQuiz}`, titulo: inline(marcas(args, acc)), itens: miolo.filter(l => /^\s*-\s+/.test(l)).map(l => inline(marcas(l.replace(/^\s*-\s+/, ''), acc))) };
+      ctx.atividades.push(q); return q;
+    }
+    case 'aberta': {
+      const q = { tipo: 'aberta', id: `${ctx.idCap}-q${++ctx.nQuiz}`, pergunta: inline(marcas(args, acc)), resposta: inline(marcas(campos.resposta || semCampos, acc)) };
+      ctx.atividades.push(q); return q;
+    }
     case 'curiosidade': {
       /* Capítulo 9: uma curiosidade = título + texto curto + (opcional)
          remissão a outro capítulo. O número é a ordem no capítulo. */
@@ -203,6 +226,8 @@ export function compilarCapitulo(raiz, arquivo, regs = registros(raiz)) {
     }
     solta();
     const titulo = p.titulo ? marcas(p.titulo, acc) : null;
+    const iv = blocos.findIndex(b => b.tipo === 'vinheta');
+    const vinheta = iv >= 0 ? blocos.splice(iv, 1)[0].id : null;
     const ids = [...acc];
     const afs = ids.map(id => regs.afirmacoes.get(id)).filter(Boolean);
     const fontesSec = []; const vistos = new Set();
@@ -213,6 +238,7 @@ export function compilarCapitulo(raiz, arquivo, regs = registros(raiz)) {
       id: titulo ? `${idCap}-${slug(titulo)}` : `${idCap}-entrada`,
       rubrica: titulo ? RUBRICAS[nRubrica++ % RUBRICAS.length] : null,
       titulo: titulo ? inline(titulo) : null,
+      vinheta, compreensao: !!titulo && /^compreens[aã]o da leitura/i.test(titulo),
       blocos, afirmacoes: ids, fontes: fontesSec,
       verificacao: { status: problemas.length ? 'pendente' : afs.some(a => a.status === 'CONTESTADO') ? 'contestado' : 'verificado', problemas, total: ids.length },
       revisado_em: datas[datas.length - 1] || null,

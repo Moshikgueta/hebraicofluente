@@ -24,6 +24,7 @@ import jsQR from 'jsqr';
 import { PNG } from 'pngjs';
 import { marked } from 'marked';
 import { compilarCapitulo, registros, esc } from './lib/conteudo.mjs';
+import { vinheta } from './lib/vinhetas.mjs';
 
 const AQUI = path.dirname(new URL(import.meta.url).pathname);
 const EDITORIAL = path.resolve(AQUI, '..');
@@ -109,7 +110,7 @@ async function bloco(b, cap, ctx) {
       return `<div class="link-qr">${await qr(b.link.url)}<div><div class="inst">${esc(b.link.instituicao || '')}</div><div class="tit"><a href="${esc(b.link.url)}">${esc(b.link.titulo)}</a></div><div class="url">${esc(b.link.url.replace(/^https?:\/\//, ''))}</div>${b.texto ? `<div class="desc">${b.texto}</div>` : b.link.para_que_serve ? `<div class="desc">${esc(b.link.para_que_serve)}</div>` : ''}</div></div>`;
     }
     case 'observacao': return `<div class="observacao"><b>${b.titulo}</b>${b.texto}</div>`;
-    case 'quiz': case 'vf': return ''; // vão para "Perguntas e descobertas"
+    case 'quiz': case 'vf': case 'associe': case 'complete': case 'ordene': case 'aberta': return ''; // vão para "Compreensão da leitura"
     case 'curiosidade': {
       const corpo = (await Promise.all(b.blocos.map(x => bloco(x, cap, ctx)))).join('');
       return `<article class="curio"><span class="curio-n">${b.n}</span><div><h3 class="curio-t">${b.titulo}</h3>${corpo}${b.remete ? `<div class="curio-r">${b.remete}</div>` : ''}</div></article>`;
@@ -149,21 +150,42 @@ async function capitulo(arq) {
     const corpo = (await Promise.all(s.blocos.map(b => bloco(b, cap, ctx)))).join('\n');
     const nums = s.fontes.map(numeroNota);
     const linhaFontes = nums.length ? `<div class="fontes-secao">Fontes desta seção: ${nums.map(n => `<a href="#nota-${cap.id}-${n}">${n}</a>`).join(', ')}</div>` : '';
+    if (s.compreensao && !corpo.replace(/\s/g, '')) continue;
+    const vin = s.vinheta ? vinheta(s.vinheta) : null;
+    const cab = vin ? `<div class="sec-cab"><h2>${s.titulo}</h2><div class="vinheta">${vin}</div></div>` : `<h2>${s.titulo}</h2>`;
     h += s.titulo
-      ? `<section class="secao" id="${s.id}"><div class="rubrica"><span class="he">${s.rubrica}</span><span>${esc(cap.titulo)}</span></div><h2>${s.titulo}</h2>${corpo}${linhaFontes}</section>`
+      ? `<section class="secao" id="${s.id}"><div class="rubrica"><span class="he">${s.rubrica}</span><span>${esc(cap.titulo)}</span></div>${cab}${corpo}${linhaFontes}</section>`
       : `<section class="secao entrada" id="${s.id}">${corpo}${linhaFontes}</section>`;
   }
 
+  /* Compreensão da leitura: todos os exercícios do capítulo (os do meio do
+     texto e os da seção final), para fazer à mão, e o gabarito depois. A
+     ordem de "associe" e "ordene" é embaralhada com semente fixa (o id),
+     para o PDF sair sempre igual. */
   if (cap.atividades.some(a => a.tipo !== 'observacao')) {
-    const letras = 'abcdefgh';
+    const letras = 'abcdefghij';
+    const semente = id => [...id].reduce((x, c) => (x * 31 + c.charCodeAt(0)) >>> 0, 7);
+    const embaralha = (arr, id) => { let r = semente(id); const v = arr.map((x, i) => ({ x, i })); for (let i = v.length - 1; i > 0; i--) { r = (r * 1103515245 + 12345) >>> 0; const j = r % (i + 1); [v[i], v[j]] = [v[j], v[i]]; } if (v.every((o, i) => o.i === i) && v.length > 1) v.push(v.shift()); return v; };
     let n = 0; let perg = ''; const resp = [];
     for (const a of cap.atividades) {
       if (a.tipo === 'quiz') { n++; const certa = a.opcoes.findIndex(o => o.certa); perg += `<div class="pergunta">${a.pegadinha ? '<span class="pegadinha">Pegadinha do guia</span>' : ''}<div class="q"><b>${n}</b>${a.pergunta}</div><ol>${a.opcoes.map(o => `<li>${o.texto}</li>`).join('')}</ol></div>`; resp.push(`<b>${n}. ${letras[certa]}</b> ${a.opcoes[certa]?.explicacao || ''}`); }
-      if (a.tipo === 'vf') { n++; perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.afirmacao}</div><div class="vf">Verdadeiro ou falso?</div></div>`; resp.push(`<b>${n}. ${a.resposta ? 'Verdadeiro' : 'Falso'}.</b> ${a.explicacao}`); }
+      if (a.tipo === 'vf') { n++; perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.afirmacao}</div><div class="vf">Verdadeiro ou falso? ( V ) ( F )</div></div>`; resp.push(`<b>${n}. ${a.resposta ? 'Verdadeiro' : 'Falso'}.</b> ${a.explicacao}`); }
+      if (a.tipo === 'associe') {
+        n++; const dir = embaralha(a.pares.map(p => p.b), a.id);
+        perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.titulo}</div><div class="assoc"><ol>${a.pares.map(p => `<li>${p.a}</li>`).join('')}</ol><ul>${dir.map((d, k) => `<li><span class="casa">( &nbsp;&nbsp; )</span> ${letras[k]}. ${d.x}</li>`).join('')}</ul></div></div>`;
+        resp.push(`<b>${n}.</b> ${a.pares.map((p, i) => `${i + 1}-${letras[dir.findIndex(d => d.i === i)]}`).join(', ')}`);
+      }
+      if (a.tipo === 'complete') { n++; perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.frase.replace(/_{3,}/g, '<span class="lacuna"></span>')}</div></div>`; resp.push(`<b>${n}.</b> ${esc(a.respostas[0] || '')}${a.explicacao ? '. ' + a.explicacao : ''}`); }
+      if (a.tipo === 'ordene') {
+        n++; const v = embaralha(a.itens, a.id);
+        perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.titulo}</div><ul class="ordem">${v.map(o => `<li><span class="casa">( &nbsp;&nbsp; )</span> ${o.x}</li>`).join('')}</ul></div>`;
+        resp.push(`<b>${n}.</b> ${v.map(o => o.i + 1).join(', ')} (de cima para baixo)`);
+      }
+      if (a.tipo === 'aberta') { n++; perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.pergunta}</div><div class="linhas"><i></i><i></i><i></i></div></div>`; resp.push(`<b>${n}. Resposta sugerida:</b> ${a.resposta}`); }
     }
-    const obs = '';
-    h += `<section class="perguntas" id="${cap.id}-perguntas"><div class="rubrica"><span class="he">?</span><span>${esc(cap.titulo)}</span></div><div class="cab">Perguntas e descobertas</div><div class="sub">Para testar o olhar antes da viagem, e para levar na estrada. As respostas vêm logo depois, com a explicação.</div>${perg}${obs}<div class="respostas"><span class="rot">Respostas</span>${resp.join('<br>')}</div></section>`;
+    h += `<section class="perguntas" id="${cap.id}-perguntas"><div class="rubrica"><span class="he">?</span><span>${esc(cap.titulo)}</span></div><div class="sec-cab"><div class="cab">Compreensão da leitura</div><div class="vinheta">${vinheta('lupa')}</div></div><div class="sub">Exercícios para depois de ler o capítulo. Responda sem olhar; o gabarito vem no fim, com a explicação.</div>${perg}<div class="respostas"><span class="rot">Gabarito</span>${resp.join('<br>')}</div></section>`;
   }
+
 
   /* Meu roteiro: as fichas do capítulo numa lista de marcar, impressa. */
   if (cap.fichas.length) h += `<section class="roteiro-impresso"><div class="rubrica"><span class="he">✓</span><span>${esc(cap.titulo)}</span></div><div class="cab">Meu roteiro</div><div class="sub">Marque o que você quer ver. Na versão digital, a mesma lista vira o seu roteiro, com as regras de cada lugar.</div><ul>${cap.fichas.map(f => `<li><b>${f.n}. ${esc(f.nome)}</b>${f.regiao ? ` <span>${esc(f.regiao)}</span>` : ''}</li>`).join('')}</ul></section>`;

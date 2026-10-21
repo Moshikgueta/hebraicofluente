@@ -198,3 +198,21 @@ figure.compare .cmp-linha { position: absolute; top: 0; bottom: 0; width: 3px; m
 .ponto.ponto-ficha span { width: 34px; height: 34px; background: transparent; border: 3px solid var(--navy); box-shadow: 0 0 0 2px #fff; }
 .ponto.ponto-ficha[aria-expanded="true"] span { background: rgba(14,59,67,.18); }
 .cmp-ctl { padding: 0 var(--gr, 16px) 0 var(--gl, 16px); }
+
+/* ── Vinhetas e compreensão da leitura ──────────────────────────────── */
+.sec-cab { display: grid; grid-template-columns: 1fr 76px; gap: 12px; align-items: center; }
+.sec-cab h2, .sec-cab h1 { margin-bottom: 0; }
+.vinheta svg { width: 76px; height: 76px; display: block; }
+.placar { font-family: var(--f-rotulo); font-size: 16px; background: var(--teal-suave); border-radius: 10px; padding: 12px 14px; }
+.exercicio .q small { display: block; font-family: var(--f-rotulo); font-size: 13px; color: var(--suave); margin-top: 4px; }
+.assoc-lin { display: grid; gap: 6px; margin: 0 0 12px; font-size: 16px; }
+.assoc-lin select { min-height: var(--toque); font-size: 15px; border: 1px solid var(--linha); border-radius: 8px; padding: 0 8px; background: var(--papel); max-width: 100%; }
+.assoc-lin select[data-estado="certa"] { border-color: var(--teal); background: var(--teal-suave); }
+.assoc-lin select[data-estado="errada"] { border-color: var(--ouro); background: var(--ouro-suave); }
+.exercicio .botao-roteiro { margin: 6px 0 4px; }
+.exercicio .busca { margin: 6px 0; }
+.exercicio textarea { width: 100%; min-height: 110px; box-sizing: border-box; font: inherit; padding: 10px; border: 1px solid var(--linha); border-radius: 10px; margin-bottom: 8px; }
+ol.ordene { list-style: decimal; padding-left: 22px; margin: 6px 0 10px; }
+ol.ordene li { display: flex; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--linha); }
+ol.ordene li .t { flex: 1; min-width: 0; }
+.mini-barra { display: block; width: 100%; height: 6px; background: var(--linha); border-radius: 3px; overflow: hidden; } .mini-barra i { display: block; height: 100%; background: var(--teal); }

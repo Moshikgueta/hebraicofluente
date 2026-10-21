@@ -266,3 +266,16 @@ figure.compare figcaption { grid-column: 1 / -1; }
 .roteiro-impresso li { position: relative; padding: 2.4mm 0 2.4mm 8mm; border-bottom: .4pt solid var(--linha); font-size: 9.4pt; }
 .roteiro-impresso li::before { content: ''; position: absolute; left: 0; top: 2.8mm; width: 4mm; height: 4mm; border: .9pt solid var(--teal); border-radius: .6mm; }
 .roteiro-impresso li span { font-family: var(--f-rotulo); font-size: 7pt; color: var(--suave); margin-left: 1.5mm; }
+
+/* ── Vinhetas de seção e compreensão da leitura ──────────────────────── */
+.sec-cab { display: grid; grid-template-columns: 1fr 19mm; gap: 3mm; align-items: center; break-after: avoid; }
+.sec-cab h2 { margin: 0 0 3mm !important; }
+.vinheta svg { width: 19mm; height: 19mm; display: block; }
+.perguntas .sec-cab .cab { margin: 0; }
+.assoc { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; font-size: 8.8pt; margin-top: 1.5mm; }
+.assoc ol { margin: 0; padding-left: 5mm; } .assoc ul, .pergunta .ordem { list-style: none; margin: 0; padding: 0; }
+.assoc li, .pergunta .ordem li { margin-bottom: 1.4mm; line-height: 1.35; }
+.pergunta .ordem { font-size: 8.8pt; margin-top: 1.5mm; }
+.casa { font-family: var(--f-rotulo); color: var(--suave); margin-right: 1mm; white-space: nowrap; }
+.lacuna { display: inline-block; width: 30mm; border-bottom: .8pt solid var(--tinta); margin: 0 1mm; }
+.pergunta .linhas i { display: block; height: 7mm; border-bottom: .4pt solid var(--pedra-escura); }
