@@ -216,3 +216,8 @@ ol.ordene { list-style: decimal; padding-left: 22px; margin: 6px 0 10px; }
 ol.ordene li { display: flex; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--linha); }
 ol.ordene li .t { flex: 1; min-width: 0; }
 .mini-barra { display: block; width: 100%; height: 6px; background: var(--linha); border-radius: 3px; overflow: hidden; } .mini-barra i { display: block; height: 100%; background: var(--teal); }
+/* Nada de desenho ou campo de formulário alargando a página no celular. */
+main svg { overflow: hidden; max-width: 100%; }
+main figure .alvo { overflow: hidden; }
+.assoc-lin, .assoc-lin span { min-width: 0; overflow-wrap: anywhere; }
+.assoc-lin select { width: 100%; }
