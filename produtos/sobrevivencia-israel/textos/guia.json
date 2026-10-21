@@ -1,0 +1,772 @@
+{
+  "_nota": [
+    "Os textos editoriais do guia: tudo o que não é vocabulário, diálogo ou atividade.",
+    "Marcação: {{hebraico}} vira hebraico isolado (direita para a esquerda, fonte certa);",
+    "**negrito**; [texto](https://...) vira link. Parágrafos são itens de lista.",
+    "Quadros (`quadros`) entram depois do item cujo id está em `apos`; sem `apos`, no",
+    "começo do capítulo. Tipos: cultura, curiosidade, pronuncia, atencao, referencia."
+  ],
+  "capa": {
+    "sobretitulo": "Guia de viagem · Hebraico Fluente",
+    "titulo": "Hebraico de Sobrevivência em Israel",
+    "subtitulo": "100 palavras e expressões essenciais para sua viagem",
+    "selos": [
+      "Pronúncia para brasileiros",
+      "Situações reais",
+      "Desafios com gabarito"
+    ],
+    "autor": "Moshik Gueta",
+    "marca": "Hebraico Fluente",
+    "bilhete": {
+      "de": "GRU",
+      "deNome": "Brasil",
+      "para": "TLV",
+      "paraNome": "Israel",
+      "itens": "100 expressões",
+      "bagagem": "Leve na bagagem"
+    }
+  },
+  "rosto": {
+    "linhas": [
+      "Hebraico de Sobrevivência em Israel",
+      "100 palavras e expressões essenciais para sua viagem"
+    ],
+    "creditos": [
+      "Texto, seleção e revisão do hebraico: Moshik Gueta",
+      "Projeto editorial: Hebraico Fluente"
+    ],
+    "direitos": [
+      "© {{ano}} Mhg Treinamentos e Idiomas (Hebraico Fluente). Todos os direitos reservados.",
+      "Este guia é de uso pessoal de quem o adquiriu. Não pode ser copiado, revendido nem distribuído, no todo ou em parte, sem autorização por escrito (Lei 9.610/1998).",
+      "Fontes: Bricolage Grotesque, Instrument Sans, Noto Sans Hebrew e Noto Serif Hebrew, todas sob a SIL Open Font License."
+    ]
+  },
+  "introducao": {
+    "titulo": "Você não precisa falar hebraico para começar a se conectar com Israel.",
+    "paragrafos": [
+      "Basta um **shalóm** dito na hora certa. Ou um **todá** no balcão do café, um **slichá** antes de perguntar o caminho. Essas palavras pequenas mudam o jeito como as pessoas olham para você, e o jeito como você vive a viagem.",
+      "Este guia reúne as 100 palavras e expressões que um viajante brasileiro realmente usa em Israel: no hotel, no café, no mercado, no ônibus, na rua. Não é um curso de gramática. É uma seleção feita para a viagem, com a pronúncia escrita para quem fala português e o contexto de cada expressão."
+    ],
+    "secoes": [
+      {
+        "titulo": "Para quem é",
+        "paragrafos": [
+          "Para quem vai a Israel pela primeira vez, sozinho, em família ou numa caravana, e não sabe nada de hebraico. Você não precisa conhecer as letras: toda palavra vem com a pronúncia em letras do nosso alfabeto."
+        ]
+      },
+      {
+        "titulo": "Como usar",
+        "paragrafos": [
+          "Antes de viajar, leia o capítulo 1, que ensina a ler a pronúncia, e depois um capítulo por dia. Em duas semanas você passa por tudo sem pressa.",
+          "Na viagem, deixe o guia no celular. Ele funciona sem internet: o sumário e o índice das 100 expressões, no fim, levam direto à página certa."
+        ]
+      },
+      {
+        "titulo": "O que esperar",
+        "paragrafos": [
+          "Você vai cumprimentar, agradecer, pedir um café, perguntar um preço, entender as placas mais comuns e se virar quando não entender. Não vai sair fluente, e nenhum guia de 100 expressões promete isso com honestidade. Vai sair com o suficiente para a viagem ficar mais sua."
+        ]
+      },
+      {
+        "titulo": "Os áudios",
+        "variante": "audio"
+      },
+      {
+        "titulo": "Como praticar durante a viagem",
+        "paragrafos": [
+          "Escolha três expressões por dia e use todas antes de dormir. Comece pelas fáceis: shalóm, todá, bevakashá.",
+          "Abra toda pergunta com slichá. E quando a resposta vier rápida demais, repita o que entendeu: quem explicou corrige na hora.",
+          "Não tenha medo de errar o masculino e o feminino. Ninguém vai deixar de entender você por isso, e todo mundo vai notar o esforço."
+        ]
+      }
+    ],
+    "audio": {
+      "em-gravacao": [
+        "Toda expressão deste guia tem a pronúncia escrita, num sistema pensado para quem fala português e explicado no capítulo 1.",
+        "As gravações com a minha voz estão sendo preparadas e não fazem parte desta edição. Quando estiverem disponíveis, cada capítulo terá um código QR que abre a página com os áudios daquela seção. Para ouvir, será preciso conexão com a internet."
+      ],
+      "disponivel": [
+        "Cada capítulo tem um código QR. Aponte a câmera do celular para ele e abra a página com os áudios daquela seção, gravados por mim. Toque quantas vezes quiser.",
+        "O guia funciona sem internet. Os áudios precisam de conexão."
+      ]
+    },
+    "assinatura": "Moshik Gueta"
+  },
+  "capitulos": [
+    {
+      "n": 1,
+      "id": "como-funciona",
+      "titulo": "Como funciona o hebraico",
+      "curto": "Como funciona",
+      "simbolo": {
+        "nikud": "עִבְרִית",
+        "tr": "ivrít",
+        "pt": "hebraico"
+      },
+      "chamada": "O mínimo para usar este guia a partir de hoje.",
+      "secoes": [
+        {
+          "titulo": "Da direita para a esquerda",
+          "paragrafos": [
+            "O hebraico se escreve e se lê da direita para a esquerda. Numa placa, a primeira letra da palavra é a da ponta direita.",
+            "Os números são a exceção: eles se escrevem com os mesmos algarismos que usamos, e da esquerda para a direita, mesmo no meio de uma frase em hebraico. O preço numa etiqueta você lê como no Brasil."
+          ],
+          "figura": "direcao"
+        },
+        {
+          "titulo": "Três jeitos de ver a mesma palavra",
+          "paragrafos": [
+            "No dia a dia, o hebraico é escrito quase sem vogais. Para quem está aprendendo, existem pontinhos e traços embaixo e em cima das letras, o **nikud**, que mostram as vogais. E para quem ainda não lê as letras, existe a **transliteração**: a palavra escrita com o nosso alfabeto.",
+            "Cada expressão deste guia aparece nos três jeitos. A transliteração é a que você vai ler para falar. O hebraico sem vogais é o que você vai encontrar nas placas e nos cardápios."
+          ],
+          "figura": "tres-formas"
+        },
+        {
+          "titulo": "Como ler um cartão",
+          "figura": "cartao-anotado"
+        },
+        {
+          "titulo": "Como ler a pronúncia",
+          "paragrafos": [
+            "A transliteração deste guia foi feita para quem fala português. Leia tudo como em português, com estas regras:"
+          ],
+          "figura": "convencao"
+        },
+        {
+          "titulo": "Os sons que pedem atenção",
+          "paragrafos": [
+            "**O ch raspado.** É o som mais característico do hebraico, e não existe no português padrão. Fica no fundo da garganta, como quem limpa a garganta de leve. Nunca é o ch de chave: para esse som o guia escreve sh.",
+            "**A sílaba forte.** Em hebraico, a força costuma cair no fim da palavra: todá, shalóm, bevakashá. Ler todá como tóda é o erro mais comum de brasileiro, e o acento escrito em cada palavra existe para evitar isso.",
+            "**O m e o n do fim.** Não viram som de nariz. Em shalóm, a boca fecha no m do fim, sem som de nariz: não é o om de bom."
+          ]
+        },
+        {
+          "titulo": "Escrito e falado",
+          "paragrafos": [
+            "A fala de Israel é rápida e encurta tudo: káma ze olé? (quanto custa?) vira káma ze? no balcão. Este guia ensina a forma que serve em qualquer lugar e avisa quando existe uma versão mais curta ou mais informal, como sabába (beleza), de conversa entre conhecidos."
+          ]
+        },
+        {
+          "titulo": "Ele, ela, você",
+          "paragrafos": [
+            "Em hebraico, muitas palavras mudam conforme o gênero. Duas situações aparecem neste guia:",
+            "**Quem fala.** Um homem diz {{אֲנִי רוֹצֶה}} (aní rotsé, eu quero); uma mulher diz {{אֲנִי רוֹצָה}} (aní rotsá). No cartão, a forma principal é a masculina, e a feminina aparece logo abaixo, marcada **Mulher diz**.",
+            "**Com quem você fala.** O você muda: {{אַתָה}} (atá) para um homem, {{אַתְ}} (at) para uma mulher. No cartão, isso aparece como **Para uma mulher**.",
+            "Quando não há marca, a expressão é igual para todo mundo, como todá, slichá e bevakashá. E se você trocar uma forma pela outra, vão entender do mesmo jeito."
+          ]
+        }
+      ],
+      "ilustracao": "livro",
+      "quadros": []
+    },
+    {
+      "n": 2,
+      "id": "primeiras-palavras",
+      "titulo": "Primeiras palavras em Israel",
+      "curto": "Primeiras palavras",
+      "simbolo": {
+        "nikud": "שָׁלוֹם",
+        "tr": "shalóm",
+        "pt": "olá, tchau, paz"
+      },
+      "chamada": "Cumprimentar, agradecer, pedir e se despedir.",
+      "abertura": [
+        "Estas são as palavras que você vai usar desde o primeiro minuto, ainda no aeroporto. Com elas, toda interação começa e termina bem."
+      ],
+      "quadros": [
+        {
+          "tipo": "pronuncia",
+          "apos": "toda-raba",
+          "titulo": "Onde cai a força",
+          "texto": [
+            "Diga todá, e não tóda. Bevakashá, e não bevakásha. O acento agudo da transliteração marca sempre a sílaba forte. Ele não abre nem fecha a vogal: só diz onde pôr a força."
+          ]
+        },
+        {
+          "tipo": "cultura",
+          "apos": "bevakasha",
+          "titulo": "Bevakashá, a palavra de três trabalhos",
+          "texto": [
+            "**Para pedir.** Máyim, bevakashá. Água, por favor.",
+            "**Para responder a um obrigado.** Todá! Bevakashá. Obrigado! De nada.",
+            "**Para entregar algo.** Ao estender o passaporte ou o dinheiro, bevakashá quer dizer aqui está. No balcão, o atendente também diz bevakashá quando chama o próximo: pode falar."
+          ]
+        },
+        {
+          "tipo": "cultura",
+          "apos": "shabat-shalom",
+          "titulo": "O ritmo do shabat",
+          "texto": [
+            "O shabat, o dia de descanso judaico, começa na sexta-feira ao pôr do sol e termina no sábado à noite. Nesse período muitas lojas fecham, e a maior parte dos ônibus e dos trens não circula.",
+            "Em compensação, a semana começa no domingo, que é dia normal de trabalho. Programe compras e deslocamentos longos para antes da sexta à tarde."
+          ]
+        },
+        {
+          "tipo": "figura",
+          "nome": "semana",
+          "apos": "shabat-shalom"
+        },
+        {
+          "tipo": "figura",
+          "nome": "dia",
+          "apos": "laila-tov"
+        }
+      ],
+      "resumo": {
+        "titulo": "Se lembrar de só três",
+        "itens": [
+          "shalom",
+          "toda",
+          "slicha"
+        ]
+      },
+      "ilustracao": "mala"
+    },
+    {
+      "n": 3,
+      "id": "conhecendo-pessoas",
+      "titulo": "Conhecendo pessoas",
+      "curto": "Conhecendo pessoas",
+      "simbolo": {
+        "nikud": "נָעִים מְאֹד",
+        "tr": "naím meód",
+        "pt": "muito prazer"
+      },
+      "chamada": "Nome, origem e uma conversa curta.",
+      "abertura": [
+        "Israelenses gostam de saber de onde você vem, e uma conversa curta pode começar na fila, no ônibus ou no mirante. Este capítulo dá o suficiente para responder, perguntar de volta e se despedir com simpatia."
+      ],
+      "quadros": [
+        {
+          "tipo": "figura",
+          "nome": "voce",
+          "apos": "ma-shlomcha"
+        },
+        {
+          "tipo": "cultura",
+          "apos": "meeifo-ata",
+          "titulo": "Perguntas diretas",
+          "texto": [
+            "O israelense costuma ser direto: pergunta de onde você é, quanto tempo vai ficar, o que achou do país. Não é falta de educação. É curiosidade sincera, e um jeito de mostrar interesse."
+          ]
+        }
+      ],
+      "resumo": {
+        "titulo": "Se lembrar de só três",
+        "itens": [
+          "ma-nishma",
+          "ani-mibrazil",
+          "naim-meod"
+        ]
+      },
+      "ilustracao": "pessoas"
+    },
+    {
+      "n": 4,
+      "id": "restaurantes",
+      "titulo": "Restaurantes e cafés",
+      "curto": "Restaurantes e cafés",
+      "simbolo": {
+        "nikud": "קָפֶה",
+        "tr": "kafé",
+        "pt": "café"
+      },
+      "chamada": "Pedir, montar o prato do seu jeito e pagar.",
+      "abertura": [
+        "Comer é uma das melhores partes de Israel. Com efshár (pode ser?) e as palavras deste capítulo, você pede quase qualquer coisa, de um café a um prato inteiro, e ainda elogia a cozinha."
+      ],
+      "quadros": [
+        {
+          "tipo": "figura",
+          "nome": "hafuch",
+          "apos": "kafe-hafuch"
+        },
+        {
+          "tipo": "curiosidade",
+          "apos": "mayim",
+          "titulo": "Água da torneira",
+          "texto": [
+            "A água da torneira em Israel é tratada e própria para beber. No restaurante, você pode pedir {{מַיִם מֵהַבֶּרֶז}} (máyim mehabérez), água da torneira, em vez da garrafa."
+          ]
+        },
+        {
+          "tipo": "referencia",
+          "apos": "kafe-hafuch",
+          "titulo": "No cardápio",
+          "texto": [
+            "Pratos que você vai encontrar em quase todo lugar. Os nomes você provavelmente já conhece; aqui está como eles aparecem escritos."
+          ],
+          "palavras": [
+            {
+              "nikud": "חוּמוּס",
+              "he": "חומוס",
+              "tr": "chúmus",
+              "pt": "homus, pasta de grão-de-bico"
+            },
+            {
+              "nikud": "פָלָאפֶל",
+              "he": "פלאפל",
+              "tr": "faláfel",
+              "pt": "bolinho frito de grão-de-bico"
+            },
+            {
+              "nikud": "שַׁקְשׁוּקָה",
+              "he": "שקשוקה",
+              "tr": "shakshúka",
+              "pt": "ovos cozidos em molho de tomate"
+            },
+            {
+              "nikud": "פִּיתָה",
+              "he": "פיתה",
+              "tr": "píta",
+              "pt": "pão sírio"
+            }
+          ]
+        },
+        {
+          "tipo": "cultura",
+          "apos": "kasher",
+          "titulo": "Carne ou leite",
+          "texto": [
+            "Pelas regras do kashrut, carne e leite não se misturam. Por isso um restaurante kosher costuma ser {{בְּשָׂרִי}} (besarí), de carnes, ou {{חָלָבִי}} (chalaví), de laticínios.",
+            "No de carnes, não espere queijo no prato, e o café com leite pode vir com um substituto vegetal. Não é descuido: é a regra da casa."
+          ]
+        },
+        {
+          "tipo": "cultura",
+          "apos": "cheshbon",
+          "titulo": "A gorjeta",
+          "texto": [
+            "Em restaurante com serviço de mesa, a gorjeta é costume e normalmente não vem incluída na conta. O habitual fica em torno de 10% a 15%. Se a conta mencionar {{שֵׁרוּת}} (sherút, serviço), confira se ele já foi cobrado. No balcão e no táxi, gorjeta não é esperada."
+          ]
+        }
+      ],
+      "resumo": {
+        "titulo": "Se lembrar de só três",
+        "itens": [
+          "efshar",
+          "mayim",
+          "cheshbon"
+        ]
+      },
+      "ilustracao": "xicara"
+    },
+    {
+      "n": 5,
+      "id": "compras",
+      "titulo": "Compras e mercados",
+      "curto": "Compras e mercados",
+      "simbolo": {
+        "nikud": "שׁוּק",
+        "tr": "shuk",
+        "pt": "mercado de rua"
+      },
+      "chamada": "Perguntar o preço, escolher, pagar.",
+      "abertura": [
+        "Do supermercado ao shuk, o mercado de rua, comprar em Israel pede poucas palavras. Aponte, pergunte o preço e diga como vai pagar."
+      ],
+      "quadros": [
+        {
+          "tipo": "cultura",
+          "apos": "ze-yakar",
+          "titulo": "Negociar, ou não?",
+          "texto": [
+            "Nas lojas de lembranças da Cidade Velha de Jerusalém, negociar faz parte da compra: pergunte o preço, diga que está caro e peça uma hanachá, um desconto, sempre com sorriso.",
+            "No supermercado, nas redes de lojas e nas bancas com preço exposto, o preço é o da etiqueta."
+          ]
+        },
+        {
+          "tipo": "pronuncia",
+          "apos": "efshar-bimzuman",
+          "titulo": "Efshár, de novo",
+          "texto": [
+            "Repare quantas vezes a mesma palavra apareceu: efshár máyim?, efshár beashrái?, efshár bimzumán?. Com ela e o nome da coisa, você monta dezenas de pedidos educados."
+          ]
+        }
+      ],
+      "resumo": {
+        "titulo": "Se lembrar de só três",
+        "itens": [
+          "kama-ze-ole",
+          "et-ze",
+          "efshar-beashrai"
+        ]
+      },
+      "ilustracao": "banca"
+    },
+    {
+      "n": 6,
+      "id": "orientacao-transporte",
+      "titulo": "Orientação e transporte",
+      "curto": "Orientação e transporte",
+      "simbolo": {
+        "nikud": "אֵיפֹה",
+        "tr": "éifo",
+        "pt": "onde"
+      },
+      "chamada": "Perguntar o caminho, entender a resposta, pegar o ônibus certo.",
+      "abertura": [
+        "Perguntar é fácil. O difícil é entender a resposta, então este capítulo traz as palavras que você vai ouvir: direita, esquerda, em frente, perto, longe. E as do transporte, que você vai ler nas placas e nos letreiros."
+      ],
+      "quadros": [
+        {
+          "tipo": "figura",
+          "nome": "direcoes"
+        },
+        {
+          "tipo": "cultura",
+          "apos": "rakevet",
+          "titulo": "Shabat e transporte",
+          "texto": [
+            "Da sexta à tarde até o sábado à noite, a maior parte dos ônibus e dos trens não circula. Táxis funcionam, e em algumas cidades há {{שֵׁרוּת}} (sherút), a van que faz o trajeto de uma linha e leva vários passageiros.",
+            "Não confunda: sherút é o táxi coletivo; sherutím, no plural, é a placa do banheiro."
+          ]
+        },
+        {
+          "tipo": "curiosidade",
+          "apos": "tachana-merkazit",
+          "titulo": "Placas em três línguas",
+          "texto": [
+            "A maioria das placas de rua e de estrada vem em hebraico, árabe e inglês. O inglês ajuda, mas o hebraico costuma vir primeiro e em letra maior. Saber reconhecê-lo poupa tempo."
+          ]
+        }
+      ],
+      "resumo": {
+        "titulo": "Se lembrar de só três",
+        "itens": [
+          "eifo",
+          "yashar",
+          "tachana"
+        ]
+      },
+      "ilustracao": "onibus"
+    },
+    {
+      "n": 7,
+      "id": "numeros",
+      "titulo": "Números e preços",
+      "curto": "Números e preços",
+      "simbolo": {
+        "nikud": "שֶׁקֶל",
+        "tr": "shékel",
+        "pt": "a moeda de Israel"
+      },
+      "chamada": "De um a dez, as dezenas, e como se diz um preço.",
+      "abertura": [
+        "Para comprar, você precisa entender o preço que o vendedor diz. Os algarismos são os mesmos do Brasil; o que muda é como eles soam."
+      ],
+      "quadros": [
+        {
+          "tipo": "atencao",
+          "titulo": "Os números têm gênero",
+          "texto": [
+            "Cada número de 1 a 10 tem duas formas. A que aparece primeiro no cartão é a de contar: é a que você ouve num preço, num telefone, numa hora. A outra é usada com coisas de gênero masculino, como um café.",
+            "Na prática, para entender preços, a primeira forma resolve. E para pedir uma quantidade, mostrar os dedos e dizer bevakashá funciona sempre."
+          ]
+        },
+        {
+          "tipo": "referencia",
+          "apos": "eser",
+          "titulo": "As dezenas",
+          "texto": [
+            "Depois do dez, os números redondos seguem um padrão: quase todos terminam em -ím. Para juntar unidades, use ve-, que quer dizer e."
+          ],
+          "palavras": [
+            {
+              "nikud": "עֶשְׂרִים",
+              "he": "עשרים",
+              "tr": "esrím",
+              "pt": "20"
+            },
+            {
+              "nikud": "שְׁלוֹשִׁים",
+              "he": "שלושים",
+              "tr": "shloshím",
+              "pt": "30"
+            },
+            {
+              "nikud": "אַרְבָּעִים",
+              "he": "ארבעים",
+              "tr": "arbaím",
+              "pt": "40"
+            },
+            {
+              "nikud": "חֲמִשִׁים",
+              "he": "חמישים",
+              "tr": "chamishím",
+              "pt": "50"
+            },
+            {
+              "nikud": "שִׁשִׁים",
+              "he": "שישים",
+              "tr": "shishím",
+              "pt": "60"
+            },
+            {
+              "nikud": "שִׁבְעִים",
+              "he": "שבעים",
+              "tr": "shivím",
+              "pt": "70"
+            },
+            {
+              "nikud": "שְׁמוֹנִים",
+              "he": "שמונים",
+              "tr": "shmoním",
+              "pt": "80"
+            },
+            {
+              "nikud": "תִשְׁעִים",
+              "he": "תשעים",
+              "tr": "tishím",
+              "pt": "90"
+            }
+          ]
+        },
+        {
+          "tipo": "figura",
+          "nome": "dinheiro",
+          "apos": "shekel"
+        },
+        {
+          "tipo": "cultura",
+          "apos": "shekel",
+          "titulo": "Como soa um preço",
+          "texto": [
+            "Um preço de 35 ₪ se diz {{שְׁלוֹשִׁים וְחָמֵשׁ}} (shloshím vechamésh), muitas vezes seguido de shékel. Primeiro a dezena, depois o e, depois a unidade, como em português.",
+            "A gramática pede o plural e outra forma do número (shloshím vechamishá shkalím), mas na rua você vai ouvir quase sempre o número de contar e shékel no singular. As duas formas estão certas no seu contexto.",
+            "Os centavos se chamam {{אֲגוֹרוֹת}} (agorót). Aparecem nas etiquetas e no visor do caixa; na fala, quase ninguém os diz."
+          ]
+        }
+      ],
+      "resumo": {
+        "titulo": "Se lembrar de só três",
+        "itens": [
+          "chamesh",
+          "eser",
+          "shekel"
+        ]
+      },
+      "ilustracao": "moeda"
+    },
+    {
+      "n": 8,
+      "id": "placas",
+      "titulo": "Palavras que você verá em Israel",
+      "curto": "Placas",
+      "simbolo": {
+        "nikud": "יְצִיאָה",
+        "tr": "yetsiá",
+        "pt": "saída"
+      },
+      "chamada": "Reconhecer as palavras das placas pela forma.",
+      "abertura": [
+        "As placas não têm nikud. Por isso, neste capítulo, o hebraico sem vogais vem em destaque: é ele que você vai ver na porta da loja, no corredor do hotel e na estação. Olhe a forma da palavra inteira, como um desenho."
+      ],
+      "galeria": {
+        "titulo": "Como elas aparecem",
+        "texto": "Reproduções simplificadas, desenhadas para este guia, do tipo de placa que você vai encontrar.",
+        "placas": [
+          {
+            "estilo": "porta",
+            "he": "פתוח",
+            "en": "Open",
+            "ref": "patuach"
+          },
+          {
+            "estilo": "porta-fechado",
+            "he": "סגור",
+            "en": "Closed",
+            "ref": "sagur"
+          },
+          {
+            "estilo": "rua",
+            "he": "רחוב יפו",
+            "en": "Jaffa St.",
+            "ref": "rechov"
+          },
+          {
+            "estilo": "saida",
+            "he": "יציאה",
+            "en": "Exit",
+            "ref": "yetsia"
+          },
+          {
+            "estilo": "info",
+            "he": "שירותים",
+            "en": "Toilets",
+            "ref": "sherutim"
+          },
+          {
+            "estilo": "info",
+            "he": "מודיעין",
+            "en": "Information",
+            "ref": "modiin"
+          }
+        ]
+      },
+      "quadros": [
+        {
+          "tipo": "cultura",
+          "apos": "maalit",
+          "titulo": "O elevador de shabat",
+          "texto": [
+            "Em muitos hotéis, um dos elevadores vira {{מַעֲלִית שַׁבָּת}} (maalít shabát) no sábado: ele para sozinho em todos os andares, para quem guarda o shabat e não aperta botões.",
+            "É mais lento. Se estiver com pressa, use outro elevador ou a escada."
+          ]
+        }
+      ],
+      "resumo": {
+        "titulo": "Se lembrar de só três",
+        "itens": [
+          "yetsia",
+          "sherutim",
+          "patuach"
+        ]
+      },
+      "ilustracao": "placa"
+    },
+    {
+      "n": 9,
+      "id": "imprevistos",
+      "titulo": "Se alguma coisa der errado",
+      "curto": "Imprevistos",
+      "simbolo": {
+        "nikud": "רֶגַע",
+        "tr": "réga",
+        "pt": "um momento"
+      },
+      "chamada": "Não entender, pedir de novo, pedir ajuda.",
+      "abertura": [
+        "Quase sempre, o imprevisto de viagem é pequeno: você não entendeu, perdeu o grupo de vista, precisa de uma farmácia. Estas expressões resolvem esses momentos e ajudam a ganhar tempo com calma."
+      ],
+      "quadros": [
+        {
+          "tipo": "emergencia",
+          "titulo": "Em caso de emergência",
+          "texto": [
+            "Este guia não substitui os serviços de emergência, o seguro-viagem nem o guia da sua caravana. Numa situação séria, ligue e peça ajuda a quem estiver por perto. Se o hebraico não sair, peça em inglês."
+          ],
+          "numeros": [
+            {
+              "num": "100",
+              "nikud": "מִשְׁטָרָה",
+              "tr": "mishtará",
+              "pt": "Polícia"
+            },
+            {
+              "num": "101",
+              "nikud": "מָגֵן דָוִד אָדֹם",
+              "tr": "Maguén Davíd Adóm",
+              "pt": "Ambulância"
+            },
+            {
+              "num": "102",
+              "nikud": "מְכַבֵּי אֵשׁ",
+              "tr": "mechabéi esh",
+              "pt": "Bombeiros"
+            }
+          ]
+        },
+        {
+          "tipo": "anotar",
+          "apos": "efshar-ledaber-leat",
+          "titulo": "Antes de viajar, anote",
+          "texto": [
+            "Guarde estes dados no celular e numa folha na carteira. Sem internet, eles fazem falta."
+          ],
+          "campos": [
+            "Guia ou responsável da caravana",
+            "Nome e endereço do hotel",
+            "Seguro-viagem: telefone e número da apólice",
+            "Plantão consular do Brasil em Israel (confira no site do Itamaraty)"
+          ]
+        }
+      ],
+      "resumo": {
+        "titulo": "Se lembrar de só três",
+        "itens": [
+          "ani-lo-mevin",
+          "efshar-ledaber-leat",
+          "ani-tsarich"
+        ]
+      },
+      "ilustracao": "boia"
+    },
+    {
+      "n": 10,
+      "id": "dialogos",
+      "titulo": "Mini diálogos reais",
+      "curto": "Diálogos",
+      "simbolo": {
+        "nikud": "שִׂיחָה",
+        "tr": "sichá",
+        "pt": "conversa"
+      },
+      "chamada": "Cinco cenas da viagem, do começo ao fim.",
+      "abertura": [
+        "Aqui as expressões dos capítulos anteriores aparecem juntas, como numa conversa de verdade. Leia em voz alta as duas partes. Depois, cubra a coluna da tradução e tente entender só pelo hebraico."
+      ],
+      "ilustracao": "baloes",
+      "quadros": []
+    },
+    {
+      "n": 11,
+      "id": "desafios",
+      "titulo": "Desafios práticos",
+      "curto": "Desafios",
+      "simbolo": {
+        "nikud": "עוֹד פַּעַם",
+        "tr": "od páam",
+        "pt": "mais uma vez"
+      },
+      "chamada": "Seis desafios para fixar antes do embarque.",
+      "abertura": [
+        "Faça no papel, se imprimiu o guia, ou de cabeça, no celular. As respostas estão no gabarito, no fim do guia. Errar aqui é o melhor jeito de acertar lá."
+      ],
+      "ilustracao": "lapis",
+      "quadros": []
+    },
+    {
+      "n": 12,
+      "id": "proximo-passo",
+      "titulo": "Seu próximo passo no hebraico",
+      "curto": "Próximo passo",
+      "simbolo": {
+        "nikud": "אָלֶף־בֵּית",
+        "tr": "álef-bet",
+        "pt": "o alfabeto"
+      },
+      "chamada": "Ler hebraico de verdade, sem depender da transliteração.",
+      "secoes": [
+        {
+          "titulo": "Agora que você conhece suas primeiras palavras, que tal aprender a ler hebraico de verdade?",
+          "paragrafos": [
+            "Neste guia, a transliteração fez o trabalho por você. Funciona bem para falar. Mas, em Israel, o que está à sua volta está escrito em hebraico: placas, cardápios, embalagens, os letreiros dos ônibus e os textos que você talvez já conheça em português.",
+            "Aprender as 22 letras e os sinais de vogal muda isso. Você passa a reconhecer as palavras sozinho, inclusive as que nunca viu, e a transliteração deixa de ser necessária.",
+            "Foi para isso que criei o curso **Alfabetização em Hebraico**, na plataforma Hebraico Fluente: letra por letra, com áudio, exercícios e escrita à mão, do zero até a leitura de palavras inteiras."
+          ],
+          "link": {
+            "texto": "Conheça o curso em hebraicofluente.com.br",
+            "url": "https://hebraicofluente.com.br/cursos/alfabetizacao/"
+          }
+        }
+      ],
+      "ilustracao": "alef",
+      "quadros": []
+    }
+  ],
+  "gabarito": {
+    "titulo": "Gabarito",
+    "chamada": "As respostas dos desafios do capítulo 11."
+  },
+  "indice": {
+    "titulo": "As 100 expressões",
+    "chamada": "Todas as expressões do guia, na ordem em que aparecem. Toque no número para ir ao cartão."
+  },
+  "final": {
+    "titulo": "Nessiá tová!",
+    "nikud": "נְסִיעָה טוֹבָה",
+    "pt": "Boa viagem!",
+    "texto": "Que estas palavras acompanhem você em cada esquina de Israel."
+  }
+}

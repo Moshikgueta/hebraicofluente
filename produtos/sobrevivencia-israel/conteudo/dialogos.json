@@ -1,0 +1,356 @@
+{
+  "_nota": [
+    "Os cinco diálogos do capítulo 10. Cada fala tem hebraico com nikud, transliteração e",
+    "tradução; `usa` lista os ids do vocabulário que o diálogo pratica (o conferir.mjs",
+    "confere que existem). As falas não contam nos 100 itens. Áudio: um arquivo por",
+    "diálogo inteiro (`audio`) e um por fala (`audio`-NN), ver audio/README.md.",
+    "Preços dos diálogos são ilustrativos e não dizem quanto as coisas custam hoje."
+  ],
+  "dialogos": [
+    {
+      "id": "cafeteria",
+      "titulo": "Na cafeteria",
+      "cena": "Manhã em Jerusalém. Você entra num café perto do hotel. Quem atende é uma moça.",
+      "pessoas": {
+        "A": "Atendente",
+        "B": "Você (homem)"
+      },
+      "falas": [
+        {
+          "quem": "A",
+          "nikud": "שָׁלוֹם! מָה בִּשְׁבִילְךָ?",
+          "tr": "shalóm! ma bishvilchá?",
+          "pt": "Olá! O que vai ser?"
+        },
+        {
+          "quem": "B",
+          "nikud": "הָפוּךְ אֶחָד, בְּבַקָשָׁה.",
+          "tr": "hafúch echád, bevakashá.",
+          "pt": "Um café com leite, por favor."
+        },
+        {
+          "quem": "A",
+          "nikud": "לָקַחַת אוֹ לָשֶׁבֶת?",
+          "tr": "lakáchat o lashévet?",
+          "pt": "Para levar ou para tomar aqui?"
+        },
+        {
+          "quem": "B",
+          "nikud": "לָשֶׁבֶת. וְאֶפְשָׁר גַם מַיִם?",
+          "tr": "lashévet. veefshár gam máyim?",
+          "pt": "Para tomar aqui. E pode ser uma água também?"
+        },
+        {
+          "quem": "A",
+          "nikud": "בֶּטַח.",
+          "tr": "bétach.",
+          "pt": "Claro."
+        },
+        {
+          "quem": "B",
+          "nikud": "תוֹדָה רַבָּה!",
+          "tr": "todá rabá!",
+          "pt": "Muito obrigado!"
+        }
+      ],
+      "comentario": "Ma bishvilchá, ao pé da letra o que é para você, é a pergunta clássica do balcão. Para uma cliente mulher, a atendente diz bishviléch. Repare que o café é masculino, por isso é hafúch echád, e não achát.",
+      "usa": [
+        "shalom",
+        "kafe-hafuch",
+        "bevakasha",
+        "lakachat-o-lashevet",
+        "efshar",
+        "mayim",
+        "toda-raba",
+        "achat"
+      ],
+      "audio": "dialogos/cafeteria"
+    },
+    {
+      "id": "loja",
+      "titulo": "Na loja de lembranças",
+      "cena": "Uma loja na rua do hotel. Você é uma mulher e quer olhar com calma.",
+      "pessoas": {
+        "A": "Vendedor",
+        "B": "Você (mulher)"
+      },
+      "falas": [
+        {
+          "quem": "A",
+          "nikud": "שָׁלוֹם, אֶפְשָׁר לַעֲזוֹר?",
+          "tr": "shalóm, efshár laazór?",
+          "pt": "Olá, posso ajudar?"
+        },
+        {
+          "quem": "B",
+          "nikud": "לֹא, תוֹדָה. אֲנִי רַק מִסְתַכֶּלֶת.",
+          "tr": "lo, todá. aní rak mistakélet.",
+          "pt": "Não, obrigada. Estou só olhando."
+        },
+        {
+          "quem": "A",
+          "nikud": "בְּסֵדֶר.",
+          "tr": "besséder.",
+          "pt": "Tudo bem."
+        },
+        {
+          "quem": "B",
+          "nikud": "סְלִיחָה, כַּמָה זֶה עוֹלֶה?",
+          "tr": "slichá, káma ze olé?",
+          "pt": "Com licença, quanto custa isto?"
+        },
+        {
+          "quem": "A",
+          "nikud": "שִׁבְעִים שֶׁקֶל.",
+          "tr": "shivím shékel.",
+          "pt": "Setenta shekels."
+        },
+        {
+          "quem": "B",
+          "nikud": "אֶפְשָׁר בְּאַשְׁרַאי?",
+          "tr": "efshár beashrái?",
+          "pt": "Posso pagar com cartão?"
+        },
+        {
+          "quem": "A",
+          "nikud": "כֵּן, בֶּטַח.",
+          "tr": "ken, bétach.",
+          "pt": "Sim, claro."
+        }
+      ],
+      "comentario": "Mistakélet, com -et no fim, porque quem fala é mulher. Um homem diria mistakél. O preço vem com shékel no singular, como se fala na rua.",
+      "usa": [
+        "efshar-laazor",
+        "lo",
+        "toda",
+        "ani-rak-mistakel",
+        "beseder",
+        "slicha",
+        "kama-ze-ole",
+        "shekel",
+        "efshar-beashrai",
+        "ken"
+      ],
+      "audio": "dialogos/loja"
+    },
+    {
+      "id": "mercado",
+      "titulo": "No mercado",
+      "cena": "Sexta de manhã no Machané Yehudá, o grande mercado de Jerusalém. Você para numa banca de frutas secas.",
+      "pessoas": {
+        "A": "Feirante",
+        "B": "Você (homem)"
+      },
+      "falas": [
+        {
+          "quem": "A",
+          "nikud": "כֵּן, בְּבַקָשָׁה?",
+          "tr": "ken, bevakashá?",
+          "pt": "Pois não?"
+        },
+        {
+          "quem": "B",
+          "nikud": "יֵשׁ תְמָרִים?",
+          "tr": "yesh tmarím?",
+          "pt": "Tem tâmaras?"
+        },
+        {
+          "quem": "A",
+          "nikud": "יֵשׁ! כַּמָה אַתָה רוֹצֶה?",
+          "tr": "yesh! káma atá rotsé?",
+          "pt": "Tem! Quanto você quer?"
+        },
+        {
+          "quem": "B",
+          "nikud": "חֲצִי קִילוֹ, בְּבַקָשָׁה.",
+          "tr": "chatsí kiló, bevakashá.",
+          "pt": "Meio quilo, por favor."
+        },
+        {
+          "quem": "A",
+          "nikud": "עוֹד מַשֶׁהוּ?",
+          "tr": "od máshehu?",
+          "pt": "Mais alguma coisa?"
+        },
+        {
+          "quem": "B",
+          "nikud": "לֹא, זֶה הַכֹּל. אֶפְשָׁר בִּמְזֻמָן?",
+          "tr": "lo, ze hakól. efshár bimzumán?",
+          "pt": "Não, é só isso. Pode ser em dinheiro?"
+        },
+        {
+          "quem": "A",
+          "nikud": "בֶּטַח. שַׁבָּת שָׁלוֹם!",
+          "tr": "bétach. shabát shalóm!",
+          "pt": "Claro. Bom shabat!"
+        },
+        {
+          "quem": "B",
+          "nikud": "שַׁבָּת שָׁלוֹם!",
+          "tr": "shabát shalóm!",
+          "pt": "Bom shabat!"
+        }
+      ],
+      "comentario": "Aqui o bevakashá do feirante quer dizer pode falar, estou ouvindo. Na sexta, o shabat shalóm aparece em toda despedida, e a resposta é a mesma frase.",
+      "usa": [
+        "ken",
+        "bevakasha",
+        "yesh",
+        "efshar-bimzuman",
+        "shabat-shalom",
+        "lo"
+      ],
+      "audio": "dialogos/mercado"
+    },
+    {
+      "id": "caminho",
+      "titulo": "Pedindo informação",
+      "cena": "Cidade Velha de Jerusalém. Você é uma mulher e pergunta o caminho a um morador.",
+      "pessoas": {
+        "A": "Morador",
+        "B": "Você (mulher)"
+      },
+      "falas": [
+        {
+          "quem": "B",
+          "nikud": "סְלִיחָה, אַתָה מְדַבֵּר אַנְגְלִית?",
+          "tr": "slichá, atá medabér anglít?",
+          "pt": "Com licença, você fala inglês?"
+        },
+        {
+          "quem": "A",
+          "nikud": "קְצָת.",
+          "tr": "ktsat.",
+          "pt": "Um pouco."
+        },
+        {
+          "quem": "B",
+          "nikud": "אֵיךְ מַגִיעִים לַכּוֹתֶל?",
+          "tr": "eich magiím laKótel?",
+          "pt": "Como chego ao Muro Ocidental?"
+        },
+        {
+          "quem": "A",
+          "nikud": "יָשָׁר, וְאָז שְׂמֹאלָה. זֶה קָרוֹב.",
+          "tr": "yashár, veáz smóla. ze karóv.",
+          "pt": "Em frente, e depois à esquerda. É perto."
+        },
+        {
+          "quem": "B",
+          "nikud": "יָשָׁר וְאָז שְׂמֹאלָה?",
+          "tr": "yashár veáz smóla?",
+          "pt": "Em frente e depois à esquerda?"
+        },
+        {
+          "quem": "A",
+          "nikud": "כֵּן. חָמֵשׁ דַקוֹת בָּרֶגֶל.",
+          "tr": "ken. chamésh dakót baréguel.",
+          "pt": "Isso. Cinco minutos a pé."
+        },
+        {
+          "quem": "B",
+          "nikud": "תוֹדָה רַבָּה!",
+          "tr": "todá rabá!",
+          "pt": "Muito obrigada!"
+        },
+        {
+          "quem": "A",
+          "nikud": "בְּבַקָשָׁה.",
+          "tr": "bevakashá.",
+          "pt": "De nada."
+        }
+      ],
+      "comentario": "Repetir a explicação, como ela fez, é o melhor truque: se você entendeu errado, a pessoa corrige na hora. E no fim, o bevakashá é o de nada.",
+      "usa": [
+        "slicha",
+        "ata-medaber-anglit",
+        "eich-magiim",
+        "yashar",
+        "smola",
+        "karov",
+        "chamesh",
+        "toda-raba",
+        "bevakasha"
+      ],
+      "audio": "dialogos/caminho"
+    },
+    {
+      "id": "conversa",
+      "titulo": "Conversando com uma pessoa local",
+      "cena": "No mirante, enquanto o grupo tira fotos, uma senhora puxa conversa com você.",
+      "pessoas": {
+        "A": "Noa",
+        "B": "Você (homem)"
+      },
+      "falas": [
+        {
+          "quem": "A",
+          "nikud": "מֵאֵיפֹה אַתָה?",
+          "tr": "meéifo atá?",
+          "pt": "De onde você é?"
+        },
+        {
+          "quem": "B",
+          "nikud": "אֲנִי מִבְּרָזִיל.",
+          "tr": "aní miBrazíl.",
+          "pt": "Sou do Brasil."
+        },
+        {
+          "quem": "A",
+          "nikud": "בְּרָזִיל? יוֹפִי! אַתָה פֹּה עִם קְבוּצָה?",
+          "tr": "Brazíl? yófi! atá po im kvutsá?",
+          "pt": "Brasil? Que legal! Você está aqui com um grupo?"
+        },
+        {
+          "quem": "B",
+          "nikud": "כֵּן. מְאֹד יָפֶה פֹּה!",
+          "tr": "ken. meód yafé po!",
+          "pt": "Sim. É muito bonito aqui!"
+        },
+        {
+          "quem": "A",
+          "nikud": "אַתָה מְדַבֵּר עִבְרִית!",
+          "tr": "atá medabér ivrít!",
+          "pt": "Você fala hebraico!"
+        },
+        {
+          "quem": "B",
+          "nikud": "רַק קְצָת. אֵיךְ קוֹרְאִים לָךְ?",
+          "tr": "rak ktsat. eich korím lach?",
+          "pt": "Só um pouco. Como você se chama?"
+        },
+        {
+          "quem": "A",
+          "nikud": "נוֹעָה. וּלְךָ?",
+          "tr": "Nóa. ulechá?",
+          "pt": "Noa. E você?"
+        },
+        {
+          "quem": "B",
+          "nikud": "קוֹרְאִים לִי מַרְקוֹס. נָעִים מְאֹד!",
+          "tr": "korím li Márkos. naím meód!",
+          "pt": "Meu nome é Marcos. Muito prazer!"
+        },
+        {
+          "quem": "A",
+          "nikud": "נָעִים מְאֹד. נְסִיעָה טוֹבָה!",
+          "tr": "naím meód. nessiá tová!",
+          "pt": "Muito prazer. Boa viagem!"
+        }
+      ],
+      "comentario": "Ele pergunta o nome dela com lach, porque fala com uma mulher, e ela responde ulechá, e para você, porque fala com um homem. Nessiá tová, boa viagem, é a despedida que você vai ouvir de quem sabe que você está viajando.",
+      "usa": [
+        "meeifo-ata",
+        "ani-mibrazil",
+        "po",
+        "ani-im-kvutsa",
+        "ken",
+        "meod-yafe-po",
+        "eich-korim-lecha",
+        "korim-li",
+        "naim-meod"
+      ],
+      "audio": "dialogos/conversa"
+    }
+  ]
+}
