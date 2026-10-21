@@ -88,10 +88,33 @@ const html = `<!doctype html>
 <title>${meta.titulo}</title><meta name="description" content="${meta.subtitulo}">
 <style>${faces}\n${css}</style></head>
 <body><a class="vis-oculto" href="#conteudo">Pular para o conteúdo</a>
-<header class="topo"><div class="linha"><a class="marca" href="#/">${meta.titulo}</a><nav aria-label="Seções"><a href="#/">Início</a><a href="#/glossario">Glossário</a><a href="#/diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
+<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#inicio">Início</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
 <main id="conteudo" tabindex="-1"></main>
 <div id="folha" class="folha" role="dialog" aria-modal="false" aria-labelledby="folha-t" hidden></div>
 <script type="application/json" id="dados">${JSON.stringify(dados).replace(/</g, '\\u003c')}</script>
 <script>${app}</script></body></html>`;
 fs.writeFileSync(path.join(OUT, 'index.html'), html);
+
+/* Versão para publicar como página (Artifact): sem doctype/head/body (a
+   plataforma envolve o arquivo), fontes e áudio embutidos em data: URI,
+   porque a página publicada só carrega fontes do Google e não lê arquivos
+   locais. Mesmo conteúdo, mesmo app. */
+if (opt.artefato) {
+  const b64 = f => fs.readFileSync(f).toString('base64');
+  const facesEmb = faces.replace(/url\(assets\/fontes\/([\w.-]+)\)/g, (_, n) => `url(data:font/woff2;base64,${b64(path.join(OUT, 'assets/fontes', n))})`);
+  const dadosEmb = JSON.parse(JSON.stringify(dados));
+  for (const c of dadosEmb.capitulos) for (const v of c.vocabulario) if (v.audio) v.audio.src = `data:audio/mpeg;base64,${b64(path.join(OUT, v.audio.src))}`;
+  for (const c of dadosEmb.capitulos) for (const s of c.secoes) for (const b of s.blocos) if (b.tipo === 'vocabulario') for (const i of b.itens) { const v = c.vocabulario.find(x => x.he === i.he); if (v) i.audio = v.audio; }
+  const art = `<title>${meta.titulo}</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>${facesEmb}\n${css}</style>
+<a class="vis-oculto" href="#conteudo">Pular para o conteúdo</a>
+<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#inicio">Início</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
+<main id="conteudo" tabindex="-1"></main>
+<div id="folha" class="folha" role="dialog" aria-modal="false" aria-labelledby="folha-t" hidden></div>
+<script type="application/json" id="dados">${JSON.stringify(dadosEmb).replace(/</g, '\\u003c')}</script>
+<script>${app}</script>`;
+  fs.writeFileSync(path.join(OUT, 'artefato.html'), art);
+  console.log(`artefato: ${path.relative(EDITORIAL, path.join(OUT, 'artefato.html'))} (${Math.round(art.length / 1024)} KB)`);
+}
 console.log(`web: ${path.relative(EDITORIAL, OUT)}/index.html (${Math.round(html.length / 1024)} KB, ${fs.readdirSync(path.join(OUT, 'assets/audio')).length} áudios)`);

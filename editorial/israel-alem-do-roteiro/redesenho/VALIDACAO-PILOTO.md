@@ -8,7 +8,7 @@ resto do livro, conforme o pedido.
 | Peça | Arquivo | Como gerar de novo |
 | --- | --- | --- |
 | Capítulo redesenhado em PDF (24 páginas, 1,1 MB) | `saida/piloto-cap01.pdf` (fora do git) | `node tools/revista.mjs israel-alem-do-roteiro --capitulos=01-israel-no-mapa.md --saida=piloto-cap01` |
-| Experiência web do capítulo | `saida/web/index.html` (fora do git) | `node tools/web.mjs israel-alem-do-roteiro` |
+| Experiência web do capítulo | `saida/web/index.html` (fora do git) e, publicada como página privada para testar no celular, https://claude.ai/artifact/5if3KkyQMZNtPaEKTs54wG | `node tools/web.mjs israel-alem-do-roteiro --artefato` |
 | Base estruturada (o JSON que alimenta os dois) | `saida/piloto-cap01.json` | sai junto com o PDF |
 | Ilustração de abertura (corte esquemático das quatro faixas) | `ativos/infograficos/corte-faixas.svg` | `node tools/infograficos.mjs` |
 | Mapa com pontos tocáveis (11 regiões, texto verificado) | `ativos/dados/mapa-regioes-pontos.json` | `node tools/mapas.mjs` |

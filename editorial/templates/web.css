@@ -2,7 +2,7 @@
    tokens-editorial.css. Os mesmos princípios do PDF: fio e rubrica no lugar
    de cartão, serifa nos títulos, hebraico isolado e grande. */
 
-:root { color-scheme: light; --toque: 44px; --larg: 680px; }
+:root { color-scheme: light; --toque: 44px; --larg: 680px; --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px)); }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--papel); color: var(--corpo); font-family: var(--f-corpo); font-size: 17px; line-height: 1.6; font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }
@@ -14,18 +14,19 @@ button { font: inherit; color: inherit; }
 .vis-oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* Barra superior com progresso de leitura */
-.topo { position: sticky; top: 0; z-index: 20; background: rgba(251,249,245,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--linha); }
-.topo .linha { max-width: var(--larg); margin: 0 auto; display: flex; align-items: center; gap: 8px; padding: 0 16px; height: 52px; }
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(251,249,245,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--linha); }
+.topo .linha { max-width: var(--larg); margin: 0 auto; display: flex; align-items: center; gap: 8px; padding-left: var(--gl); padding-right: var(--gr); height: 52px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--papel); }
 .topo .marca { font-family: var(--f-rotulo); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--navy); text-decoration: none; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .topo nav { display: flex; gap: 2px; }
 .topo nav a { font-family: var(--f-rotulo); font-size: 13px; color: var(--suave); text-decoration: none; padding: 0 9px; min-height: var(--toque); display: inline-flex; align-items: center; border-radius: 6px; }
 .topo nav a[aria-current="page"] { color: var(--navy); font-weight: 600; }
 .progresso { height: 3px; background: var(--linha); } .progresso i { display: block; height: 100%; width: 0; background: var(--teal); transition: width .2s; }
 
-main { max-width: var(--larg); margin: 0 auto; padding: 0 16px 80px; }
+main { max-width: var(--larg); margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); padding-block: 0 80px; }
 
 /* Abertura */
-.heroi { position: relative; margin: 0 -16px; background: var(--noite); color: #fff; display: flex; flex-direction: column; overflow: hidden; }
+.heroi { position: relative; margin: 0 calc(-1 * var(--gr)) 0 calc(-1 * var(--gl)); background: var(--noite); color: #fff; display: flex; flex-direction: column; overflow: hidden; }
 .heroi .arte { position: relative; height: min(62vh, 560px); } .heroi .arte svg { width: 100%; height: 100%; display: block; }
 .heroi .veu { display: none; }
 .heroi .arte:empty { display: none; }
@@ -54,7 +55,7 @@ main { max-width: var(--larg); margin: 0 auto; padding: 0 16px 80px; }
 .fontes ol { padding-left: 20px; margin: 4px 0 0; } .fontes li { margin-bottom: 6px; overflow-wrap: anywhere; }
 
 /* Figuras e mapa interativo */
-figure { margin: 22px -16px; }
+figure { margin: 22px calc(-1 * var(--gr)) 22px calc(-1 * var(--gl)); }
 figure .alvo { position: relative; background: #fff; }
 figure svg { display: block; width: 100%; height: auto; }
 figcaption { font-family: var(--f-rotulo); font-size: 13px; line-height: 1.5; color: var(--suave); padding: 8px 16px 0; border-top: 1px solid var(--linha); }
@@ -62,7 +63,7 @@ figcaption .credito { display: block; font-size: 12px; color: #6E7874; margin-to
 .ponto { position: absolute; transform: translate(-50%, -50%); min-width: var(--toque); min-height: var(--toque); border: 0; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .ponto span { width: 14px; height: 14px; border-radius: 50%; background: var(--ouro); border: 3px solid #fff; box-shadow: 0 0 0 1px var(--ouro-tinta); }
 .ponto[aria-expanded="true"] span { background: var(--navy); }
-.folha { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: #fff; border-top: 1px solid var(--linha); box-shadow: 0 -8px 30px rgba(14,59,67,.14); padding: 18px 20px 26px; max-width: var(--larg); margin: 0 auto; border-radius: 14px 14px 0 0; }
+.folha { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: #fff; border-top: 1px solid var(--linha); box-shadow: 0 -8px 30px rgba(14,59,67,.14); padding: 18px var(--gr) calc(26px + env(safe-area-inset-bottom, 0px)) var(--gl); max-width: var(--larg); margin: 0 auto; border-radius: 14px 14px 0 0; }
 .folha h4 { font-family: var(--f-display); font-weight: 450; font-size: 22px; color: var(--navy); margin: 0 0 6px; }
 .folha p { margin: 0; font-size: 16px; }
 .folha .fechar { position: absolute; top: 6px; right: 8px; }
@@ -73,7 +74,7 @@ figcaption .credito { display: block; font-size: 12px; color: #6E7874; margin-to
 .nota .rot { font-family: var(--f-rotulo); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--ouro-tinta); }
 .nota.observar .rot { color: var(--teal-tinta); } .nota.entenda-melhor .rot { color: var(--mar); }
 .nota .tit { display: block; font-family: var(--f-display); font-size: 20px; color: var(--tinta); margin: 4px 0 6px; line-height: 1.25; }
-.fundo { margin: 26px -16px; padding: 18px 16px; background: var(--pedra); }
+.fundo { margin: 26px calc(-1 * var(--gr)) 26px calc(-1 * var(--gl)); padding: 18px var(--gr) 18px var(--gl); background: var(--pedra); }
 .fundo.aviso { background: var(--ouro-suave); border-left: 4px solid var(--ouro); }
 .fundo.olhar-israelense { background: var(--navy); color: #E7EFEE; } .fundo.olhar-israelense .rot { color: var(--teal-lite); }
 .fundo .rot { font-family: var(--f-rotulo); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--neguev-tinta); }

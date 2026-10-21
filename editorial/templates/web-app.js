@@ -151,13 +151,13 @@
     var h = el('section', { class: 'heroi' }, '<div class="arte">' + arte(c1.abertura.imagem) + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Hebraico Fluente</span><span class="he" lang="he">ישראל</span></div><h1>' + esc(D.titulo) + '</h1><p>' + esc(D.subtitulo) + '.</p></div>');
     main.appendChild(h);
     main.appendChild(el('p', { class: 'aviso-prototipo' }, 'Protótipo para aprovação: só o capítulo 1 está aqui. O progresso e o diário ficam guardados neste aparelho.'));
-    if (s.ultima) { var u = porId(s.ultima.cap); if (u) main.appendChild(el('p', null, '<a class="botao" href="#/' + u.id + '/' + s.ultima.secao + '">Continuar de onde parou</a>')); }
-    else main.appendChild(el('p', null, '<a class="botao" href="#/' + c1.id + '">Começar pelo capítulo 1</a>'));
+    if (s.ultima) { var u = porId(s.ultima.cap); if (u) main.appendChild(el('p', null, '<a class="botao" href="#' + u.id + '" data-secao="' + s.ultima.secao + '">Continuar de onde parou</a>')); }
+    else main.appendChild(el('p', null, '<a class="botao" href="#' + c1.id + '">Começar pelo capítulo 1</a>'));
     var lista = el('ol', { class: 'capitulos', 'aria-label': 'Capítulos' });
     D.indice.forEach(function (c) {
       var li = el('li');
       li.innerHTML = c.disponivel
-        ? '<a href="#/' + c.id + '"><span class="n">' + String(c.n).padStart(2, '0') + '</span><span class="t">' + esc(c.titulo) + '</span><span class="pct">' + pct(porId(c.id)) + '%</span></a>'
+        ? '<a href="#' + c.id + '"><span class="n">' + String(c.n).padStart(2, '0') + '</span><span class="t">' + esc(c.titulo) + '</span><span class="pct">' + pct(porId(c.id)) + '%</span></a>'
         : '<div class="off"><span class="n">' + String(c.n).padStart(2, '0') + '</span><span class="t">' + esc(c.titulo || 'Capítulo ' + c.n) + '<small>Em produção</small></span><span></span></div>';
       lista.appendChild(li);
     });
@@ -167,7 +167,7 @@
     if (favs.length) {
       main.appendChild(el('h2', { class: 'pagina', style: 'font-size:26px' }, 'Favoritos'));
       var fl = el('ol', { class: 'capitulos' });
-      favs.forEach(function (id) { D.capitulos.forEach(function (c) { c.secoes.forEach(function (x) { if (x.id === id) fl.appendChild(el('li', null, '<a href="#/' + c.id + '/' + x.id + '"><span class="n">' + (x.rubrica ? '<span class="he">' + x.rubrica + '</span>' : '') + '</span><span class="t">' + (x.titulo || c.titulo) + '<small>' + esc(c.titulo) + '</small></span><span></span></a>')); }); }); });
+      favs.forEach(function (id) { D.capitulos.forEach(function (c) { c.secoes.forEach(function (x) { if (x.id === id) fl.appendChild(el('li', null, '<a href="#' + c.id + '" data-secao="' + x.id + '"><span class="n">' + (x.rubrica ? '<span class="he">' + x.rubrica + '</span>' : '') + '</span><span class="t">' + (x.titulo || c.titulo) + '<small>' + esc(c.titulo) + '</small></span><span></span></a>')); }); }); });
       main.appendChild(fl);
     }
   }
@@ -228,26 +228,36 @@
       sec.appendChild(ta); main.appendChild(sec);
     });
     blocos.filter(function (b) { return b.tipo === 'checklist'; }).forEach(function (b) { main.appendChild(checklist(b)); });
-    var baixar = el('button', { class: 'botao claro', type: 'button' }, 'Baixar meu diário');
+    /* Copiar, não baixar: funciona também dentro de páginas publicadas, onde
+       download iniciado por script é bloqueado. */
+    var baixar = el('button', { class: 'botao claro', type: 'button' }, 'Copiar meu diário');
+    var aviso = el('span', { 'aria-live': 'polite', style: 'margin-left:12px;font-family:var(--f-rotulo);font-size:14px' });
     baixar.addEventListener('click', function () {
       var st = estado(); var txt = blocos.filter(function (b) { return b.tipo === 'diario'; }).map(function (b, k) { return '## ' + b.titulo + '\n\n' + (st.diario['d' + k] || '') + '\n'; }).join('\n');
-      var a = el('a', { href: URL.createObjectURL(new Blob([txt], { type: 'text/plain' })), download: 'diario-israel-alem-do-roteiro.txt' }); document.body.appendChild(a); a.click(); a.remove();
+      var ok = function () { aviso.textContent = 'Copiado. Cole no seu aplicativo de notas.'; };
+      var falha = function () { var ta = el('textarea', { 'aria-label': 'Seu diário, para copiar' }); ta.value = txt; main.appendChild(ta); ta.select(); aviso.textContent = 'Selecionado abaixo: copie pelo menu do aparelho.'; };
+      try { navigator.clipboard.writeText(txt).then(ok, falha); } catch (e) { falha(); }
     });
-    main.appendChild(el('p', { style: 'margin-top:24px' })).appendChild(baixar);
+    var linhaB = el('p', { style: 'margin-top:24px' }); linhaB.appendChild(baixar); linhaB.appendChild(aviso); main.appendChild(linhaB);
   }
 
   /* ── rotas ──────────────────────────────────────────────────────────── */
+  /* Rotas com uma palavra só (#cap01, #glossario, #diario): é o que uma
+     página publicada aceita. A seção para onde rolar vai em memória. */
+  var rolarPara = null;
+  document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a[data-secao]'); if (a) rolarPara = a.getAttribute('data-secao'); });
   function rota() {
     fecharFolha();
-    var partes = location.hash.replace(/^#\/?/, '').split('/');
+    var t = location.hash.replace(/^#\/?/, '').split('/')[0];
     [].forEach.call(document.querySelectorAll('.topo nav a'), function (a) { a.removeAttribute('aria-current'); });
     var marcar = function (h) { var a = document.querySelector('.topo nav a[href="' + h + '"]'); if (a) a.setAttribute('aria-current', 'page'); };
     barra.style.width = '0';
-    if (partes[0] === 'glossario') { marcar('#/glossario'); glossario(); }
-    else if (partes[0] === 'diario') { marcar('#/diario'); diario(); }
-    else if (porId(partes[0])) capitulo(porId(partes[0]), partes[1]);
-    else { marcar('#/'); inicio(); }
-    if (!partes[1]) main.focus({ preventScroll: true });
+    if (t === 'glossario') { marcar('#glossario'); glossario(); }
+    else if (t === 'diario') { marcar('#diario'); diario(); }
+    else if (porId(t)) capitulo(porId(t), rolarPara);
+    else { marcar('#inicio'); inicio(); }
+    rolarPara = null;
+    main.focus({ preventScroll: true });
   }
   window.addEventListener('hashchange', rota);
   rota();
