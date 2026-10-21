@@ -4,7 +4,7 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 34148
+- Palavras no manuscrito: 34520
 - Fontes registradas: 670 (por nível: D 154, B 163, E 233, A 98, C 22; por acesso: trecho-de-busca 642, referencia-confirmada 28)
 - Afirmações registradas: 738 (VERIFICADO 490, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
 - Afirmações VERIFICADO sem uso no texto: 41
@@ -17,7 +17,7 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 | 00b-introducao.md | 519 | 0 |
 | 01-israel-no-mapa.md | 2736 | 97 |
 | 02-historia.md | 5777 | 207 |
-| 03-jerusalem.md | 4651 | 180 |
+| 03-jerusalem.md | 5023 | 201 |
 | 04-alem-de-jerusalem.md | 4870 | 213 |
 | 05-vida-real.md | 3211 | 117 |
 | 06-sabores.md | 2767 | 57 |
