@@ -4,10 +4,10 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 14980
+- Palavras no manuscrito: 15303
 - Fontes registradas: 269 (por nível: D 45, B 73, E 100, A 40, C 11; por acesso: trecho-de-busca 250, referencia-confirmada 19)
-- Afirmações registradas: 371 (VERIFICADO 175, NÃO VERIFICADO 147, PARCIALMENTE VERIFICADO 37, DESATUALIZADO 3, CONTESTADO 9)
-- Afirmações VERIFICADO sem uso no texto: 5
+- Afirmações registradas: 457 (VERIFICADO 211, NÃO VERIFICADO 166, PARCIALMENTE VERIFICADO 63, DESATUALIZADO 3, CONTESTADO 14)
+- Afirmações VERIFICADO sem uso no texto: 41
 - Ocorrências de hebraico: 157 (lista em auditoria/hebraico.md)
 - Links testados: 0 de 268 (rede bloqueada; ver revisão humana)
 
@@ -23,17 +23,17 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 | 07-hebraico.md | 972 | 0 |
 | 08-na-pratica.md | 1790 | 19 |
 | 10-diario.md | 533 | 0 |
+| 98-notas-sobre-fontes.md | 323 | 0 |
 | 99-encerramento.md | 169 | 0 |
 
 ## Erros (0)
 
 Nenhum.
 
-## Avisos (6)
+## Avisos (5)
 
 - manuscrito/01-israel-no-mapa.md:67: caixa "O olhar de um israelense" pendente de aprovação do autor
 - manuscrito ausente: manuscrito/02-historia.md
 - manuscrito/05-vida-real.md:97: caixa "O olhar de um israelense" pendente de aprovação do autor
 - manuscrito ausente: manuscrito/09-curiosidades.md
-- manuscrito ausente: manuscrito/98-notas-sobre-fontes.md
 - transliterações diferentes para חשבון: cheshbón / chesbón

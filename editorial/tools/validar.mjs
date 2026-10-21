@@ -202,6 +202,24 @@ const heRep = [
 ];
 fs.writeFileSync(path.join(RAIZ, 'auditoria/hebraico.md'), heRep.join('\n') + '\n');
 
+/* Bibliografia de trabalho: todas as fontes registradas, por nível, com
+   quantas afirmações cada uma sustenta e quantas delas estão no texto. */
+const usoFonte = new Map();
+for (const a of afirmacoes.values()) for (const fid of a.fontes || []) {
+  const u = usoFonte.get(fid) || { total: 0, noTexto: 0 }; u.total++; if (usadas.has(a.id)) u.noTexto++; usoFonte.set(fid, u);
+}
+const NOME_NIVEL = { A: 'A. Literatura acadêmica', B: 'B. Instituições científicas e culturais', C: 'C. Fontes primárias', D: 'D. Fontes oficiais', E: 'E. Fontes complementares' };
+const bib = ['# Bibliografia de trabalho', '', `Gerada por \`tools/validar.mjs\` em ${HOJE}. Todas as fontes registradas, inclusive as que não sustentam nada no texto. Entre parênteses: afirmações sustentadas (no texto / no total) e o modo de acesso. A bibliografia do livro sai só das fontes usadas no texto.`, ''];
+for (const [n, nome] of Object.entries(NOME_NIVEL)) {
+  const g = [...fontes.values()].filter(f => f.nivel === n).sort((a, b) => (a.abnt || '').localeCompare(b.abnt || '', 'pt'));
+  if (!g.length) continue;
+  bib.push(`## ${nome} (${g.length})`, '');
+  for (const f of g) { const u = usoFonte.get(f.id) || { total: 0, noTexto: 0 }; bib.push(`- ${f.abnt} (${f.id}; ${u.noTexto}/${u.total}; ${f.acesso})`); }
+  bib.push('');
+}
+fs.mkdirSync(path.join(RAIZ, 'pesquisa'), { recursive: true });
+fs.writeFileSync(path.join(RAIZ, 'pesquisa/bibliografia-de-trabalho.md'), bib.join('\n'));
+
 console.log(`palavras ${palavras} · fontes ${fontes.size} · afirmações ${afirmacoes.size} ${JSON.stringify(contagem)} · hebraico ${hebraico.length}`);
 console.log(`erros ${erros.length} · avisos ${avisos.length} → ${rel(path.join(RAIZ, 'auditoria/validacao.md'))}`);
 for (const e of erros.slice(0, 25)) console.log('  ERRO ' + e);

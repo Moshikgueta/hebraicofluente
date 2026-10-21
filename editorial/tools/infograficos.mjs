@@ -103,10 +103,13 @@ function semana() {
 function jerusalem() {
   const d = lerDados('jerusalem.json');
   if (!d) return null;
-  const ok = x => verificado(x.afirmacoes || []);
-  const bairros = (d.bairros || []).filter(ok);
-  const portoes = (d.portoes || []).filter(ok);
-  const pontos = (d.pontos || []).filter(ok);
+  /* Cada lista pode vir como array ou como bloco {exibir, itens}; um bloco
+     com exibir:false é lista de trabalho e não entra no desenho. */
+  const lista = v => Array.isArray(v) ? v : (v && v.exibir && Array.isArray(v.itens) ? v.itens : []);
+  const ok = x => x && typeof x === 'object' && x.exibir !== false && verificado(x.afirmacoes || []);
+  const bairros = lista(d.bairros).filter(ok);
+  const portoes = lista(d.portoes).filter(ok);
+  const pontos = lista(d.pontos).filter(ok).filter(p => p.x != null && p.y != null);
   if (!bairros.length && !pontos.length) return null;
   const W = 600, H = 520;
   /* A muralha como um quadrilátero esquemático; os bairros como quadrantes:

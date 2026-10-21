@@ -321,6 +321,14 @@ async function gerarPDF(arqHtml, arqPdf) {
   await p.goto('file://' + arqHtml, { waitUntil: 'load' });
   await p.waitForFunction(() => window.__pronto === true, null, { timeout: 300000 });
   const paginas = await p.evaluate(() => document.querySelectorAll('.pagedjs_page').length);
+  /* O Paged.js, quando não consegue quebrar um trecho ("Layout repeated"),
+     PARA e entrega um livro truncado sem erro. O fim do livro tem de estar
+     dentro de uma página; se não estiver, o build falha. */
+  const fimPaginado = await p.evaluate(() => !!document.querySelector('.pagedjs_page #bibliografia'));
+  if (!fimPaginado || erros.some(e => /Layout repeated/.test(e))) {
+    await b.close();
+    throw new Error(`paginação truncada em ${path.basename(arqHtml)} (${paginas} páginas): ${erros.filter(e => /Layout/.test(e)).join('; ') || 'bibliografia fora das páginas'}. Procure um bloco que não pode quebrar e é maior que uma página.`);
+  }
   await p.pdf({ path: arqPdf, preferCSSPageSize: true, printBackground: true, outline: true, tagged: true });
   await b.close();
   return { paginas, erros };
