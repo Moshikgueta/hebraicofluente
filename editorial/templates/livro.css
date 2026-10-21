@@ -92,6 +92,12 @@ html.a4 .capa .titulo { top: 52mm; left: 20mm; } html.a4 .capa .topo, html.a4 .c
 .abertura .secoes li span { color: var(--teal-ink); font-weight: 600; margin-right: 2mm; }
 .abertura .paisagem { position: absolute; left: 0; right: 0; bottom: 0; }
 html.a4 .abertura .num { font-size: 90pt; margin-top: 34mm; }
+/* Capítulo com muitas seções: a abertura encolhe para a lista não invadir a arte. */
+.abertura.longa .num { font-size: 44pt; margin-top: 4mm; }
+.abertura.longa h1 { font-size: calc(var(--h1) * .86); }
+.abertura.longa .subtitulo { margin-bottom: 5mm; }
+.abertura.longa .secoes li { padding: 1.05mm 0; font-size: .95em; }
+.abertura.longa .paisagem svg { height: 14mm !important; }
 
 .texto { }
 .texto > p:first-of-type::first-line { font-variant: small-caps; letter-spacing: .03em; }
@@ -182,6 +188,8 @@ html.a4 .diario .pauta div { height: 10mm; }
 .rascunho-faixa { display: none; }
 /* Número de página e cabeçalho corrente: ver tools/build.mjs (PagedConfig). */
 .pagedjs_page .pagedjs_margin-top-right > .pagedjs_margin-content::after { content: var(--cap) !important; }
+.pagedjs_page.pagedjs_abertura_page .pagedjs_margin-top-right > .pagedjs_margin-content::after,
+.pagedjs_page.pagedjs_capa_page .pagedjs_margin-top-right > .pagedjs_margin-content::after { content: none !important; }
 .pagedjs_page .pagedjs_margin-bottom-center > .pagedjs_margin-content::after { content: var(--pg) !important; }
 .pagedjs_page.pagedjs_named_page.pagedjs_capa_page .pagedjs_margin-content::after,
 .pagedjs_page.pagedjs_named_page.pagedjs_abertura_page .pagedjs_margin-bottom-center .pagedjs_margin-content::after,

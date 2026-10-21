@@ -188,7 +188,7 @@ function renderCapitulo(arquivo, n) {
   const paisagem = fs.readFileSync(path.join(EDITORIAL, 'templates/paisagem.svg'), 'utf8');
   return {
     n, titulo: fm.titulo, subtitulo: fm.subtitulo, id: idCap, notas,
-    html: `<section class="capitulo" id="${idCap}"><div class="abertura"><div class="num">${String(n).padStart(2, '0')}</div><div class="faixa"></div><h1>${esc(fm.titulo)}</h1>${fm.subtitulo ? `<div class="subtitulo">${esc(fm.subtitulo)}</div>` : ''}${lista}<div class="paisagem">${paisagem}</div></div><div class="texto">${html}</div>${notasHtml}</section>`,
+    html: `<section class="capitulo" id="${idCap}"><div class="abertura${secoes.length > 7 ? ' longa' : ''}"><div class="num">${String(n).padStart(2, '0')}</div><div class="faixa"></div><h1>${esc(fm.titulo)}</h1>${fm.subtitulo ? `<div class="subtitulo">${esc(fm.subtitulo)}</div>` : ''}${lista}<div class="paisagem">${paisagem}</div></div><div class="texto">${html}</div>${notasHtml}</section>`,
   };
 }
 
