@@ -3,6 +3,8 @@ capitulo: 3
 titulo: Jerusalém, uma cidade de muitas histórias
 subtitulo: O que as pedras contam, e o que se conta sobre elas
 abertura_frase: Uma pedra, três histórias: a que se data, a que se reza e a que se disputa.
+abertura_imagem: abertura-jerusalem
+abertura_credito: Ilustração original, não é registro fotográfico.
 ---
 
 Pare diante da Porta de Jafa. A muralha à sua frente é otomana; a cidadela ao lado guarda uma torre de Herodes e leva o nome de Davi; e a própria porta tem um nome em hebraico e outro, diferente, em árabe. Cada pedra dessas tem mais de uma história. Há a que a arqueologia consegue datar. Há a que uma tradição religiosa guarda há séculos. E há a que a política disputa.
@@ -41,11 +43,23 @@ O jornalista britânico Matthew Teller, em Nine Quarters of Jerusalem (2022), ar
 
 Use o esquema dos quatro bairros como se usa a legenda de um mapa: ajuda a achar o caminho, mas simplifica o que encontra. Ele é um jeito de ler a cidade, não uma regra de quem mora onde.
 
+Para se orientar, guarde quatro cantos. O bairro armênio fica no sudoeste, no encontro das muralhas oeste e sul; o muçulmano é o nordeste, e o maior dos quatro.[[C03-117]] O bairro judeu fica a oeste do Monte do Templo, num terreno mais alto; o Santo Sepulcro fica no bairro cristão, perto da Porta de Jafa.[[C03-118]]
+
+::: figura mapa-cidade-antiga
+As portas, os bairros e os oito lugares das fichas deste capítulo; cada número leva à ficha do lugar.[[C03-112,C03-113,C03-114,C03-115,C03-116,C03-117,C03-118]]
+:::
+
 ## A muralha e suas portas
 
 A muralha que o visitante contorna, fotografa e atravessa não é de Davi nem de Herodes. Foi levantada por ordem do sultão otomano Solimão, o Magnífico, no fim da década de 1530. O site de muralhas da Autoridade de Antiguidades de Israel (IAA) data a obra de 1537 e estima que ela durou de três a quatro anos; outras fontes dão a conclusão em 1541.[[C03-005]] O dinheiro veio dos impostos que os otomanos cobravam no Egito.[[C03-006]] Quanto ao motivo, a IAA diz, com um cauteloso "ao que parece", que Solimão agiu em parte por medo de uma nova cruzada cristã.[[C03-007]]
 
 Os números dão a escala do trabalho: cerca de 4.300 metros de muralha, 35 torres quadradas que se projetam para fora, 344 seteiras e ameias ao longo de todo o topo.[[C03-008]] A obra não partiu do zero: trechos foram assentados sobre restos de fortificações mais antigas, e por isso a fiada de baixo nem sempre tem a idade da fiada de cima.[[C03-009]]
+
+Para um brasileiro ter uma ideia do tamanho: a volta inteira da muralha é pouco mais da metade do contorno da Lagoa Rodrigo de Freitas, no Rio, que tem 7,8 km.[[C03-119,C03-120]]
+
+::: figura muralha-lagoa
+A muralha de Jerusalém e a Lagoa Rodrigo de Freitas, em anéis proporcionais ao comprimento.[[C03-008,C03-119]]
+:::
 
 ::: link muralhas-de-jerusalem-iaa
 O projeto de conservação da muralha, da Autoridade de Antiguidades de Israel.
@@ -98,6 +112,17 @@ O lugar que em hebraico se chama <he>הַכֹּתֶל הַמַּעֲרָבִי</
 
 A praça diante do Muro mostra só uma parte desse lado oeste. Outros trechos foram expostos em escavações que a IAA supervisionou ao longo do muro, conhecidas como Túneis do Muro Ocidental.[[C03-017]]
 
+::: ficha muro-ocidental
+nome: Muro Ocidental
+he: <he>הַכֹּתֶל הַמַּעֲרָבִי</he> | HaKótel HaMaaraví
+regiao: Jerusalém, Cidade Antiga
+resumo: Um dos muros de contenção com que Herodes cercou o Monte do Templo; a praça mostra só uma parte do lado oeste.[[C03-012,C03-017]]
+dado: 485 m | o lado oeste do monte, o mais comprido dos quatro[[C03-013]]
+dado: 5 t | o peso aproximado de cada pedra; as de canto, dezenas de toneladas[[C03-014]]
+observar: As bordas lavradas de cada bloco, como uma moldura em volta da pedra.[[C03-014]]
+regras: Roupa adequada; no Shabat e nos feriados judaicos, nada de aparelhos eletrônicos nem fotos, pede a fundação que administra o lugar.[[C08-038]]
+:::
+
 ::: historia-ou-tradicao Um muro do Templo?
 É comum ouvir que o Kotel é "uma parede do Templo". A arqueologia descreve outra coisa: um dos muros de contenção com que Herodes cercou o monte onde ficava o Segundo Templo.[[C03-012]] A diferença não diminui o lugar. Explica por que as pedras são tão grandes: elas seguravam uma plataforma inteira.
 :::
@@ -110,6 +135,10 @@ O Domo da Rocha é datado por ele mesmo. Uma longa faixa de mosaico no interior 
 
 O nome al-Aqsa vem do Corão. A surata 17 começa falando de uma viagem noturna: Deus leva "o Seu servo", à noite, "da Mesquita Sagrada à Mesquita mais Distante", em árabe al-masjid al-aqsa.[[C03-025]] O versículo não diz onde fica essa mesquita; a tradição islâmica a identifica com Jerusalém, e é dessa identificação que vem a importância do lugar para os muçulmanos.[[C03-026]]
 
+::: figura monte-dois-nomes
+O mesmo lugar, com os dois nomes, em corte. Na plataforma ficam o Domo da Rocha e a mesquita de al-Aqsa.[[C03-012,C03-018,C03-020,C03-027]]
+:::
+
 ::: foto foto-domo-loc-temple-area
 A esplanada com o Domo da Rocha, numa foto antiga da coleção Matson.
 :::
@@ -119,6 +148,16 @@ A esplanada com o Domo da Rocha, numa foto antiga da coleção Matson.
 Quem pode rezar ali é regulado por um arranjo conhecido como status quo. Em 2015, o gabinete do primeiro-ministro de Israel o resumiu numa frase: "os muçulmanos rezam no Monte do Templo; os não muçulmanos visitam o Monte do Templo". A mesma declaração reafirmou o compromisso de manter o status quo "em palavras e na prática" e saudou a coordenação com o Waqf jordaniano, a instituição religiosa islâmica que administra o complexo.[[C03-029]] Segundo o governo israelense, a segurança cabe a Israel e a administração do lugar, ao Waqf; o visitante não muçulmano entra em horários limitados e não pode rezar ali.[[C03-030]]
 
 A palavra "jordaniano" tem história. O tratado de paz entre Israel e Jordânia, de 1994, diz no artigo 9 que Israel respeita o papel especial atual da Jordânia nos santuários muçulmanos de Jerusalém e que dará alta prioridade ao papel histórico jordaniano quando se negociar o status permanente; o alcance desse papel não foi detalhado e é motivo de discordância.[[C03-099]] Em 2013, o rei Abdullah II, da Jordânia, e o presidente palestino Mahmoud Abbas assinaram um acordo que reconhece o papel do rei como custódio dos lugares santos da cidade. A Jordânia não reivindica soberania sobre Jerusalém; o que ela discute com Israel é até onde vai esse papel.[[C03-100]]
+
+::: ficha monte-do-templo
+nome: Monte do Templo / Haram al-Sharif
+he: <he>הַר הַבַּיִת</he> | Har HaBáyit
+regiao: Jerusalém, Cidade Antiga
+resumo: A plataforma sustentada pelos muros de Herodes, com o Domo da Rocha e a mesquita de al-Aqsa.[[C03-012,C03-020,C03-027]]
+dado: 691-692 | o ano da dedicatória no mosaico do Domo, lido em geral como o da conclusão[[C03-019]]
+observar: A grande inscrição em volta do tambor do Domo, parte dos azulejos de Solimão.[[C03-022]]
+regras: Muçulmanos rezam; não muçulmanos visitam em horários limitados e não rezam ali.[[C03-029,C03-030]]
+:::
 
 ::: aviso
 Consulta em 21/10/2026. A regra descrita acima é a política declarada pelo governo de Israel desde 2015. Horários de visita, portões de entrada e regras de vestimenta mudam e não foram conferidos para esta edição: confira antes de ir.
@@ -134,6 +173,15 @@ Quem pode fazer o quê, onde e quando está fixado no chamado status quo, um con
 
 Até a porta tem uma história à parte. Segundo uma reportagem da agência Reuters de 2017, o guardião da chave da igreja era Adeeb Joudeh, de uma família muçulmana de Jerusalém, e outra família muçulmana, os Nusseibeh, tinha o encargo de abrir e fechar a porta principal.[[C03-039]] De quando vem o arranjo? Joudeh o liga a Saladino, que tomou a cidade dos cruzados em 1187. Os documentos que ele mostrou à Reuters, decretos de sultões otomanos, começam no século XVI, e os historiadores divergem sobre a origem.[[C03-040]]
 
+::: ficha santo-sepulcro
+nome: Santo Sepulcro
+regiao: Jerusalém, Cidade Antiga
+resumo: Igreja fundada no século IV, sob Constantino; segundo a tradição cristã, guarda o túmulo de Jesus.[[C03-032,C03-033]]
+dado: 6 | comunidades cristãs partilham o edifício[[C03-034]]
+dado: 1852 | o firman que confirmou o status quo[[C03-036]]
+observar: Quem abre a porta: em 2017, segundo a Reuters, uma família muçulmana guardava a chave, e outra abria e fechava a porta principal.[[C03-039]]
+:::
+
 ::: foto foto-sepulcro-fachada-delaney
 A fachada do Santo Sepulcro, com a porta principal.
 :::
@@ -142,12 +190,30 @@ A fachada do Santo Sepulcro, com a porta principal.
 
 Do lado de fora, a Via Dolorosa termina no Santo Sepulcro. Os franciscanos a percorrem em procissão todas as sextas-feiras, há séculos: saem do santuário da Flagelação e chegam ao Santo Sepulcro, passando pelas estações da Paixão, da condenação ao sepultamento.[[C03-097]] A Custódia da Terra Santa, que organiza a procissão, conta que crônicas já falam do rito fúnebre da Sexta-Feira Santa no século XV, e que a forma atual segue um cerimonial de 1760.[[C03-098]]
 
+::: ficha via-dolorosa
+nome: Via Dolorosa
+regiao: Jerusalém, Cidade Antiga
+resumo: A rua das estações da Paixão, que termina no Santo Sepulcro; os franciscanos a percorrem em procissão toda sexta-feira.[[C03-097]]
+dado: 1760 | o ano do cerimonial que a procissão segue hoje[[C03-098]]
+observar: A igreja de Santa Ana, logo depois da Porta dos Leões, no começo da rua.[[C03-114]]
+:::
+
 ::: historia-ou-tradicao As estações da Via Dolorosa
+resposta: tradicao
 Cada estação marca um episódio da Paixão segundo a tradição cristã de peregrinação, e a Custódia mantém esse caminho como devoção há séculos.[[C03-097,C03-098]] Isso não é o mesmo que dizer que a escavação localizou cada episódio naquele ponto da rua. Para quem caminha, as duas coisas podem conviver: o percurso vale pelo que significa para quem reza nele.
 :::
 
 ::: foto foto-via-dolorosa-ecce-homo-matson
 A Via Dolorosa numa foto da coleção Matson, feita entre 1898 e 1946.
+:::
+
+::: ficha torre-de-davi
+nome: Torre de Davi
+he: <he>מִגְדַּל דָּוִד</he> | Migdál Davíd
+regiao: Jerusalém, Cidade Antiga
+resumo: Uma fortaleza junto da Porta de Jafa, com uma torre de Herodes que monges bizantinos atribuíram a Davi; hoje, museu.[[C03-111,C03-095]]
+dado: 1989 | o ano em que abriu o Museu da Torre de Davi[[C03-096]]
+observar: O minarete otomano, que acabou herdando o nome de Torre de Davi.[[C03-095]]
 :::
 
 ## Fora das muralhas: o Monte das Oliveiras
@@ -160,6 +226,14 @@ A mesma encosta é, portanto, lugar de luto para uma tradição e de oração pa
 A Cidade Antiga vista do Monte das Oliveiras, com o Domo da Rocha à frente.
 :::
 
+::: ficha monte-das-oliveiras
+nome: Monte das Oliveiras
+he: <he>הַר הַזֵּיתִים</he> | Har HaZeitím
+regiao: Jerusalém, fora das muralhas
+resumo: Logo a leste da Cidade Antiga; na encosta voltada para ela, um grande cemitério judaico usado desde a época dos Templos.[[C03-108]]
+observar: Ao pé do monte, no Getsêmani, a Basílica da Agonia, também chamada Igreja de Todas as Nações.[[C03-109]]
+:::
+
 ::: link getsemani-custodia
 A página franciscana do santuário do Getsêmani.
 :::
@@ -169,6 +243,14 @@ A página franciscana do santuário do Getsêmani.
 Os mercados da Cidade Antiga, em árabe suq, parecem não ter idade. Um deles tem data e autor. O Mercado dos Mercadores de Algodão, o Suq al-Qattanin, foi construído por Tankiz, governador mameluco, por volta de 1336-1337, no reinado do sultão al-Nasir Muhammad, com um portão que liga a rua do mercado à esplanada. Um estudo de 2017 o chama do projeto mais ambicioso da era mameluca em Jerusalém.[[C03-110]]
 
 Não era só um mercado: o mesmo projeto incluía um banho duplo e uma hospedaria de mercadores, e o portão fazia a passagem entre o comércio e o santuário.[[C03-110]] As fontes divergem sobre quem teve a iniciativa, o governador ou o sultão.
+
+::: ficha mercado-do-algodao
+nome: Mercado do Algodão
+regiao: Jerusalém, Cidade Antiga
+resumo: O Suq al-Qattanin, mercado mameluco com portão para a esplanada.[[C03-110]]
+dado: 1336-1337 | por volta desses anos, a construção, por Tankiz[[C03-110]]
+observar: O portão no fim da rua, que liga o mercado à esplanada.[[C03-110]]
+:::
 
 ## Debaixo da cidade
 
@@ -183,6 +265,7 @@ Em 1880, jovens que andavam pelo túnel perceberam, perto da saída sul, um text
 Em 1890, a inscrição foi arrancada da parede e se partiu em pedaços. As autoridades otomanas, que governavam a região, a recolheram e a levaram para Istambul.[[C03-055]] Ela está no acervo do Museu Arqueológico de Istambul.[[C03-056]]
 
 ::: historia-ou-tradicao O túnel é de Ezequias?
+resposta: as-duas
 O que a ciência mostra: o túnel é da Idade do Ferro II, segundo a datação por radiocarbono e urânio-tório publicada em 2003.[[C03-052]] O que o texto diz: a Bíblia atribui a Ezequias uma obra de água.[[C03-050]] O que está em debate: se a obra terminou no reinado dele ou algumas décadas antes.[[C03-051]] "Túnel de Ezequias" é o nome tradicional, e o debate não o torna errado nem o confirma.
 :::
 
@@ -193,6 +276,16 @@ O túnel é visitado dentro do parque chamado Cidade de Davi, em hebraico <he>ע
 O parque é operado desde 1997 pela fundação israelense Ir David, conhecida como Elad, cuja missão declarada inclui "abrigar famílias judias na Cidade de Davi". A Suprema Corte de Israel permitiu que o contrato com a Autoridade de Natureza e Parques continuasse, com mudanças, depois de uma petição da organização Ir Amim, que apontava conflito de interesse.[[C03-106]]
 
 Por isso a visita é também um debate. O governo israelense apresenta o lugar como o sítio da Cidade de Davi e do túnel de Ezequias; críticos, como o arqueólogo Rafi Greenberg, da Universidade de Tel Aviv, dizem que a arqueologia virou ali um instrumento da disputa pela presença judaica em Silwan.[[C03-107]] Quem visita pode perguntar ao guia quem administra o parque e quem mora em volta dele: são perguntas tão legítimas quanto a data de uma muralha.
+
+::: ficha cidade-de-davi
+nome: Cidade de Davi
+he: <he>עִיר דָּוִד</he> | Ir Davíd
+regiao: Jerusalém, fora das muralhas
+resumo: Parque arqueológico logo ao sul do Monte do Templo, em Silwan, com o túnel que parte da fonte de Giom.[[C03-105,C03-048]]
+dado: c. 700 a.C. | a data do túnel pela análise de 2003[[C03-052]]
+dado: 1.200 côvados | o comprimento que a inscrição de Siloé dá ao túnel[[C03-054]]
+observar: Perto da saída sul do túnel, o lugar de onde saiu a inscrição de Siloé, hoje em Istambul.[[C03-053,C03-056]]
+:::
 
 ### O Cardo e um mapa de mosaico
 
@@ -205,6 +298,12 @@ Durante séculos, a cidade coube dentro da muralha. No século XIX, isso mudou. 
 Um século depois de sair das muralhas, a cidade foi cortada ao meio. Na guerra de 1948, o Bairro Judeu da Cidade Antiga caiu diante das forças jordanianas em 28 de maio.[[C02-501]] O armistício entre Israel e Jordânia foi assinado em 3 de abril de 1949.[[C02-521]] De 1949 a 1967, Jerusalém ficou dividida: a Jordânia no leste, com a Cidade Antiga, e Israel no oeste. A Porta Mandelbaum era o único ponto de passagem entre as duas partes, usado sobretudo por diplomatas, clérigos, pessoal da ONU e peregrinos cristãos.[[C03-103]]
 
 Em junho de 1967, na Guerra dos Seis Dias, Israel ocupou Jerusalém Oriental, e o posto de Mandelbaum foi desmontado.[[C02-525,C03-103]]
+
+::: compare jerusalem-1949 jerusalem-hoje
+a: 1949-1967
+b: Desde 1967
+Jerusalém dividida e Jerusalém hoje, nos mesmos contornos. A área do leste é o limite de Jerusalém Oriental usado depois de 1967.[[C03-103,C02-525]]
+:::
 
 ## O status de Jerusalém, nas palavras de cada documento
 
@@ -268,6 +367,12 @@ Na escada da Capela de Santa Helena, no Santo Sepulcro, as cruzes gravadas são 
 
 ::: observacao Um portão entre o mercado e o santuário
 No fim do Mercado do Algodão, o portão que dá para a esplanada liga, desde por volta de 1336-1337, o comércio ao santuário.[[C03-110]]
+:::
+
+::: quiz pegadinha É comum ouvir que o Kotel é uma parede do próprio Templo. O que ele é, segundo a arqueologia?
+- [x] Um dos muros de contenção que Herodes ergueu em volta do monte | Herodes cercou o monte com muros de contenção nos quatro lados; o Kotel é o lado oeste.[[C03-012]]
+- [ ] Uma parede do edifício do Templo | É a versão que circula, mas o muro segurava a plataforma, não o edifício.[[C03-012]]
+- [ ] Um trecho da muralha de Solimão | A muralha de Solimão é do século XVI e cerca a Cidade Antiga; o Kotel é herodiano.[[C03-005,C03-012]]
 :::
 
 ::: quiz Por que a cidadela junto da Porta de Jafa se chama Torre de Davi?

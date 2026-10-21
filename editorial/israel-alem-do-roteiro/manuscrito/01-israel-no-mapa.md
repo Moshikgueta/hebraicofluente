@@ -24,11 +24,11 @@ O órgão de estatística de Israel, o CBS, dá 22.072 km² e diz o que entra na
 A diferença não é erro de conta: vem de escolhas sobre quais territórios entram na soma. Duas delas, Jerusalém Oriental e o Golã, são o assunto da próxima seção. Por enquanto, guarde uma regra prática: número de área sempre vem com uma definição, dita ou não.
 
 ::: entenda-melhor Ler um mapa de Israel
-Antes de usar um número ou um mapa, procure a legenda: ela diz que linhas estão desenhadas e o que fica dentro delas. Os nomes também mudam conforme quem escreve. Nos textos oficiais israelenses, a Cisjordânia aparece como Judeia e Samaria; o Ministério das Relações Exteriores escreve "Judea and Samaria (the West Bank)".[[C01-031]] Este livro usa Cisjordânia e, quando cita o termo oficial israelense, diz de quem ele é.
+Antes de usar um número ou um mapa, procure a legenda: ela diz que linhas estão desenhadas e o que fica dentro delas. Os nomes também mudam conforme quem escreve. Nos textos oficiais israelenses, a Cisjordânia aparece como Judeia e Samaria; o Ministério das Relações Exteriores escreve "Judea and Samaria (the West Bank)".[[C01-031]] Nos mapas deste livro, a região aparece como Judeia e Samaria, o nome usado em Israel, com Cisjordânia entre parênteses, o outro nome comum em português.
 :::
 
 ::: figura mapa-regional
-Israel e os países vizinhos, no litoral leste do Mediterrâneo. As áreas de status disputado seguem a convenção explicada em "Ler um mapa de Israel" e na seção seguinte.
+Israel e os países vizinhos, no litoral leste do Mediterrâneo. As áreas hachuradas seguem a convenção explicada em "Ler um mapa de Israel".
 :::
 
 ## Golã e Jerusalém Oriental: o que diz a ONU

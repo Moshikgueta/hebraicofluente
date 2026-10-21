@@ -137,3 +137,7 @@ Nome de trabalho: **papel recortado**. Pranchas de teste em
 - **Ilustração de cena** (mercado, Shabat, aeroporto): no mesmo estilo,
   desenhada em SVG. Ilustração feita com ferramenta generativa só se o dono
   aprovar, e sempre com o rótulo "ilustração".
+
+**Decisão do dono (21/10/2026):** estilo "papel recortado" aprovado para o
+livro inteiro; ilustração de cena **só em desenho SVG**, nenhuma imagem feita
+com ferramenta generativa.

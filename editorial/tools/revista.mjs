@@ -51,7 +51,7 @@ const candidatas = fs.readdirSync(path.join(RAIZ, 'ativos/dados')).filter(f => /
 const relQR = [];
 
 const svgDe = id => {
-  const arq = ['ativos/mapas', 'ativos/infograficos'].map(d => path.join(RAIZ, d, id + '.svg')).find(existe);
+  const arq = ['ativos/mapas', 'ativos/infograficos', 'ativos/ilustracoes'].map(d => path.join(RAIZ, d, id + '.svg')).find(existe);
   return arq ? fs.readFileSync(arq, 'utf8').replace(/<\?xml[^>]*>/, '') : null;
 };
 
@@ -114,6 +114,12 @@ async function bloco(b, cap, ctx) {
       const corpo = (await Promise.all(b.blocos.map(x => bloco(x, cap, ctx)))).join('');
       return `<article class="curio"><span class="curio-n">${b.n}</span><div><h3 class="curio-t">${b.titulo}</h3>${corpo}${b.remete ? `<div class="curio-r">${b.remete}</div>` : ''}</div></article>`;
     }
+    case 'ficha': return `<article class="ficha" id="ficha-${b.id}"><header><span class="f-n">${b.n}</span><span class="f-nome">${esc(b.nome)}</span>${b.he ? `<span class="f-he"><span class="he" lang="he" dir="rtl">${esc(b.he)}</span><small>${esc(b.translit || '')}</small></span>` : ''}</header>${b.regiao ? `<div class="f-reg">${esc(b.regiao)}</div>` : ''}<p class="f-res">${b.resumo}</p>${b.dados.length ? `<div class="f-dados">${b.dados.map(d => `<div><b>${esc(d.n)}</b><span>${d.l}</span></div>`).join('')}</div>` : ''}${b.observar ? `<p class="f-obs"><span>O que observar</span>${b.observar}</p>` : ''}${b.regras ? `<p class="f-reg2"><span>Antes de ir</span>${b.regras}</p>` : ''}</article>`;
+    case 'compare': {
+      const um = x => { const svg = svgDe(x.id); return `<div class="cmp-lado">${svg || `<div class="foto-pendente"><span class="etiqueta">Figura pendente</span><span class="assunto">${esc(x.id)}</span></div>`}<span class="cmp-rot">${esc(x.rotulo)}</span></div>`; };
+      ctx.fig++;
+      return `<figure class="larga compare">${um(b.a)}${um(b.b)}<figcaption><span class="num">Fig. ${cap.numero}.${ctx.fig}</span>${b.legenda}</figcaption></figure>`;
+    }
     case 'checklist': return `<section class="checklist">${b.titulo ? `<div class="ck-tit">${esc(b.titulo)}</div>` : ''}<ul>${b.itens.map(i => `<li>${i}</li>`).join('')}</ul></section>`;
     case 'diario': return `<section class="diario"><div class="d-tit">${esc(b.titulo)}</div>${b.instrucao ? `<div class="d-inst">${b.instrucao}</div>` : ''}<div class="pauta">${'<i></i>'.repeat(b.linhas)}</div></section>`;
     case 'linha-do-tempo': {
@@ -152,12 +158,15 @@ async function capitulo(arq) {
     const letras = 'abcdefgh';
     let n = 0; let perg = ''; const resp = [];
     for (const a of cap.atividades) {
-      if (a.tipo === 'quiz') { n++; const certa = a.opcoes.findIndex(o => o.certa); perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.pergunta}</div><ol>${a.opcoes.map(o => `<li>${o.texto}</li>`).join('')}</ol></div>`; resp.push(`<b>${n}. ${letras[certa]}</b> ${a.opcoes[certa]?.explicacao || ''}`); }
+      if (a.tipo === 'quiz') { n++; const certa = a.opcoes.findIndex(o => o.certa); perg += `<div class="pergunta">${a.pegadinha ? '<span class="pegadinha">Pegadinha do guia</span>' : ''}<div class="q"><b>${n}</b>${a.pergunta}</div><ol>${a.opcoes.map(o => `<li>${o.texto}</li>`).join('')}</ol></div>`; resp.push(`<b>${n}. ${letras[certa]}</b> ${a.opcoes[certa]?.explicacao || ''}`); }
       if (a.tipo === 'vf') { n++; perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.afirmacao}</div><div class="vf">Verdadeiro ou falso?</div></div>`; resp.push(`<b>${n}. ${a.resposta ? 'Verdadeiro' : 'Falso'}.</b> ${a.explicacao}`); }
     }
     const obs = '';
     h += `<section class="perguntas" id="${cap.id}-perguntas"><div class="rubrica"><span class="he">?</span><span>${esc(cap.titulo)}</span></div><div class="cab">Perguntas e descobertas</div><div class="sub">Para testar o olhar antes da viagem, e para levar na estrada. As respostas vêm logo depois, com a explicação.</div>${perg}${obs}<div class="respostas"><span class="rot">Respostas</span>${resp.join('<br>')}</div></section>`;
   }
+
+  /* Meu roteiro: as fichas do capítulo numa lista de marcar, impressa. */
+  if (cap.fichas.length) h += `<section class="roteiro-impresso"><div class="rubrica"><span class="he">✓</span><span>${esc(cap.titulo)}</span></div><div class="cab">Meu roteiro</div><div class="sub">Marque o que você quer ver. Na versão digital, a mesma lista vira o seu roteiro, com as regras de cada lugar.</div><ul>${cap.fichas.map(f => `<li><b>${f.n}. ${esc(f.nome)}</b>${f.regiao ? ` <span>${esc(f.regiao)}</span>` : ''}</li>`).join('')}</ul></section>`;
 
   /* Nota curta (autor, título, ano e o site, com link); a referência ABNT
      completa fica na bibliografia do livro e na web. */

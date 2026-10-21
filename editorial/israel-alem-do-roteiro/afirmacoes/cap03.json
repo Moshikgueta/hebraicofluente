@@ -1980,6 +1980,166 @@
       "interpretacoes_concorrentes": null,
       "status": "VERIFICADO",
       "revisar_ate": null
+    },
+    {
+      "id": "C03-112",
+      "secao": "Mapa ilustrado da Cidade Antiga",
+      "afirmacao": "A Porta de Jafa é a principal entrada oeste da Cidade Antiga.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-063"
+      ],
+      "evidencia": "Prefeitura: \"the main western entrance to the Old City\".",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-113",
+      "secao": "Mapa ilustrado da Cidade Antiga",
+      "afirmacao": "A Porta de Damasco e a Porta de Herodes ficam voltadas para o norte.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Visit Israel: a Porta de Damasco \"faces north\"; a de Herodes \"faces north and leads to the Old City markets\".",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Site de turismo do governo; conferir se israel.travel é do Ministério do Turismo (pendência já registrada).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-114",
+      "secao": "Mapa ilustrado da Cidade Antiga",
+      "afirmacao": "A Porta dos Leões é a entrada leste da Cidade Antiga; a igreja de Santa Ana fica logo depois dela, no começo da Via Dolorosa, no bairro muçulmano.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-095",
+        "F03-061"
+      ],
+      "evidencia": "Visit Israel: \"just inside Lion's Gate at the eastern entrance of the Old City\", no começo da Via Dolorosa, no bairro muçulmano.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-115",
+      "secao": "Mapa ilustrado da Cidade Antiga",
+      "afirmacao": "A Porta de Sião leva diretamente aos bairros armênio e judeu.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Visit Israel: \"Zion Gate leads directly to the Armenian and Jewish quarters\".",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A página não diz o lado da muralha; no mapa esquemático a porta fica entre os dois bairros, que é o que a fonte diz.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-116",
+      "secao": "Mapa ilustrado da Cidade Antiga",
+      "afirmacao": "A Porta do Esterco é a mais baixa da muralha; nos períodos mameluco e otomano se chamava Bab al-Maghariba, pelo bairro magrebino, onde hoje fica a praça do Muro Ocidental.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-096"
+      ],
+      "evidencia": "Prefeitura: \"the lowest gate\"; \"Bab Almaghraba\", pelo bairro Moghrabi, \"where the Western Wall plaza stands today\".",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Transliteração do nome árabe a conferir.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-117",
+      "secao": "Mapa ilustrado da Cidade Antiga",
+      "afirmacao": "O bairro armênio ocupa a parte sudoeste da Cidade Antiga, no encontro das muralhas oeste e sul; o bairro muçulmano é a parte nordeste e a maior.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-091",
+        "F03-092",
+        "F03-094"
+      ],
+      "evidencia": "Prefeitura: armênio \"in the southwestern part of the Old City, bordered by the junction of the western and southern city walls\"; muçulmano, \"the northeastern and largest\". Britannica concorda.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-118",
+      "secao": "Mapa ilustrado da Cidade Antiga",
+      "afirmacao": "O bairro judeu fica a oeste do Monte do Templo, num terreno mais alto que ele. O Santo Sepulcro fica no bairro cristão, cujo endereço de referência inclui a Porta de Jafa, no lado oeste.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-093",
+        "F03-095",
+        "F03-097",
+        "F03-094"
+      ],
+      "evidencia": "Visit Israel: bairro judeu \"on the western side of the Temple Mount\"; Santo Sepulcro entre o Suq Khan e-Zeit e a Christian Quarter Road, com endereço também na Porta de Jafa. UNESCO (2014): plano de ruas do bairro cristão, com a praça do Muristan e os acessos à igreja. Britannica: bairro cristão no noroeste, centrado no Santo Sepulcro.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "\"Noroeste\" só na Britannica (E). No mapa esquemático o bairro cristão fica no lado oeste, ao norte do armênio (sudoeste, pela prefeitura) e junto da Porta de Jafa: posição relativa, sem limites desenhados.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-119",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "O perímetro da Lagoa Rodrigo de Freitas, no Rio de Janeiro, é de 7,8 km, segundo o plano de contingência de 2012 da Fundação Rio-Águas.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-098"
+      ],
+      "evidencia": "Plano de contingência 2012 (Rio-Águas): perímetro da lagoa de 7,8 km.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Plano de 2012; o número do perímetro não muda, mas a ciclovia em volta pode ter outra extensão.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-120",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "A muralha da Cidade Antiga (cerca de 4.300 m) tem pouco mais da metade do perímetro da Lagoa Rodrigo de Freitas (7,8 km).",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-003",
+        "F03-098"
+      ],
+      "evidencia": "Conta: 4,3 / 7,8 = 0,55, a partir de C03-008 (IAA) e C03-119.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Comparação derivada; a muralha não é um anel completo andável, e a lagoa é medida na margem.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
     }
   ]
 }

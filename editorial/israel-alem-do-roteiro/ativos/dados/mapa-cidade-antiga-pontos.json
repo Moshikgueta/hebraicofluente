@@ -1,0 +1,58 @@
+[
+ {
+  "id": "muro-ocidental",
+  "nome": "Muro Ocidental",
+  "ficha": "muro-ocidental",
+  "x": 59.8,
+  "y": 64.8
+ },
+ {
+  "id": "monte-do-templo",
+  "nome": "Monte do Templo / Haram al-Sharif",
+  "ficha": "monte-do-templo",
+  "x": 80.6,
+  "y": 46.3
+ },
+ {
+  "id": "santo-sepulcro",
+  "nome": "Santo Sepulcro",
+  "ficha": "santo-sepulcro",
+  "x": 34.4,
+  "y": 41.9
+ },
+ {
+  "id": "via-dolorosa",
+  "nome": "Via Dolorosa",
+  "ficha": "via-dolorosa",
+  "x": 64.8,
+  "y": 35.6
+ },
+ {
+  "id": "torre-de-davi",
+  "nome": "Torre de Davi",
+  "ficha": "torre-de-davi",
+  "x": 21.1,
+  "y": 55.6
+ },
+ {
+  "id": "mercado-do-algodao",
+  "nome": "Mercado do Algodão",
+  "ficha": "mercado-do-algodao",
+  "x": 56.5,
+  "y": 50.7
+ },
+ {
+  "id": "monte-das-oliveiras",
+  "nome": "Monte das Oliveiras",
+  "ficha": "monte-das-oliveiras",
+  "x": 93.7,
+  "y": 43.5
+ },
+ {
+  "id": "cidade-de-davi",
+  "nome": "Cidade de Davi",
+  "ficha": "cidade-de-davi",
+  "x": 72.2,
+  "y": 90.7
+ }
+]

@@ -41,7 +41,7 @@ fs.mkdirSync(path.join(OUT, 'assets/fontes'), { recursive: true });
 
 const svgs = {};
 const svgDe = id => {
-  const arq = ['ativos/mapas', 'ativos/infograficos'].map(d => path.join(RAIZ, d, id + '.svg')).find(existe);
+  const arq = ['ativos/mapas', 'ativos/infograficos', 'ativos/ilustracoes'].map(d => path.join(RAIZ, d, id + '.svg')).find(existe);
   if (arq && !svgs[id]) svgs[id] = fs.readFileSync(arq, 'utf8').replace(/<\?xml[^>]*>/, '');
   return arq ? id : null;
 };
@@ -51,10 +51,13 @@ const diario = opt.diario !== false && existe(path.join(RAIZ, 'manuscrito', DIAR
 
 /* Áudio: copia só as gravações que existem; o resto fica sem src. Os itens
    do vocabulário do capítulo são os mesmos objetos dos blocos. */
+/* Fichas de lugar: o hebraico do nome toca a gravação do curso, se houver. */
+for (const c of caps) for (const f of c.fichas || []) if (f.audio?.gravado) { fs.copyFileSync(f.audio.arquivo, path.join(OUT, 'assets/audio', f.audio.id + '.mp3')); f.audio = { src: `assets/audio/${f.audio.id}.mp3` }; } else if (f) f.audio = null;
 for (const c of [...caps]) for (const v of c.vocabulario) if (v.audio?.gravado) { fs.copyFileSync(v.audio.arquivo, path.join(OUT, 'assets/audio', v.audio.id + '.mp3')); v.audio = { src: `assets/audio/${v.audio.id}.mp3` }; } else v.audio = null;
 for (const c of caps) for (const s of c.secoes) for (const b of s.blocos) {
   if (['figura', 'visual'].includes(b.tipo)) { b.svg = svgDe(b.id); b.ativo = ativos.find(a => a.id === b.id) || null; }
   if (b.tipo === 'foto') b.candidata = candidatas.find(x => x.id === b.id) || null;
+  if (b.tipo === 'compare') { b.a.svg = svgDe(b.a.id); b.b.svg = svgDe(b.b.id); }
 }
 for (const c of caps) if (c.abertura.imagem) svgDe(c.abertura.imagem);
 /* Abertura sem imagem própria: a arte da coleção (a mesma da capa). */
@@ -88,7 +91,9 @@ const faces = `@font-face{font-family:'Literata';font-weight:200 900;src:url(ass
 @font-face{font-family:'Bricolage Grotesque';font-weight:700;src:url(assets/fontes/bricolage-700.woff2) format('woff2');font-display:swap}
 @font-face{font-family:'Noto Serif Hebrew';src:url(assets/fontes/noto-serif-hebrew.woff2) format('woff2');font-display:swap}`;
 
-const dados = { titulo: meta.titulo, subtitulo: meta.subtitulo, indice, capitulos: caps, diario, svgs, pontos, gerado_em: new Date().toISOString().slice(0, 10) };
+/* Todas as fichas do livro, para o roteiro e para os pontos dos mapas. */
+const fichas = caps.flatMap(c => (c.fichas || []).map(f => ({ ...f, cap: c.id, capTitulo: c.titulo })));
+const dados = { titulo: meta.titulo, subtitulo: meta.subtitulo, indice, capitulos: caps, diario, svgs, pontos, fichas, gerado_em: new Date().toISOString().slice(0, 10) };
 const css = fs.readFileSync(path.join(EDITORIAL, 'templates/tokens-editorial.css'), 'utf8') + '\n' + fs.readFileSync(path.join(EDITORIAL, 'templates/web.css'), 'utf8');
 const app = fs.readFileSync(path.join(EDITORIAL, 'templates/web-app.js'), 'utf8');
 const html = `<!doctype html>
@@ -96,7 +101,7 @@ const html = `<!doctype html>
 <title>${meta.titulo}</title><meta name="description" content="${meta.subtitulo}">
 <style>${faces}\n${css}</style></head>
 <body><a class="vis-oculto" href="#conteudo">Pular para o conteúdo</a>
-<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#inicio">Início</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
+<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#inicio">Início</a><a href="#roteiro">Roteiro</a><a href="#viagem">Viagem</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
 <main id="conteudo" tabindex="-1"></main>
 <div id="folha" class="folha" role="dialog" aria-modal="false" aria-labelledby="folha-t" hidden></div>
 <script type="application/json" id="dados">${JSON.stringify(dados).replace(/</g, '\\u003c')}</script>
@@ -112,12 +117,16 @@ if (opt.artefato) {
   const facesEmb = faces.replace(/url\(assets\/fontes\/([\w.-]+)\)/g, (_, n) => `url(data:font/woff2;base64,${b64(path.join(OUT, 'assets/fontes', n))})`);
   const dadosEmb = JSON.parse(JSON.stringify(dados));
   for (const c of dadosEmb.capitulos) for (const v of c.vocabulario) if (v.audio) v.audio.src = `data:audio/mpeg;base64,${b64(path.join(OUT, v.audio.src))}`;
+  const emb = f => { if (f.audio && !f.audio.src.startsWith('data:')) f.audio.src = `data:audio/mpeg;base64,${b64(path.join(OUT, f.audio.src))}`; };
+  for (const c of dadosEmb.capitulos) for (const f of c.fichas || []) emb(f);
+  for (const c of dadosEmb.capitulos) for (const s of c.secoes) for (const b of s.blocos) if (b.tipo === 'ficha') emb(b);
+  for (const f of dadosEmb.fichas) emb(f);
   for (const c of dadosEmb.capitulos) for (const s of c.secoes) for (const b of s.blocos) if (b.tipo === 'vocabulario') for (const i of b.itens) { const v = c.vocabulario.find(x => x.he === i.he); if (v) i.audio = v.audio; }
   const art = `<title>${meta.titulo}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>${facesEmb}\n${css}</style>
 <a class="vis-oculto" href="#conteudo">Pular para o conteúdo</a>
-<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#inicio">Início</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
+<header class="topo"><div class="linha"><a class="marca" href="#inicio">${meta.titulo}</a><nav aria-label="Seções"><a href="#inicio">Início</a><a href="#roteiro">Roteiro</a><a href="#viagem">Viagem</a><a href="#glossario">Glossário</a><a href="#diario">Diário</a></nav></div><div class="progresso" aria-hidden="true"><i></i></div></header>
 <main id="conteudo" tabindex="-1"></main>
 <div id="folha" class="folha" role="dialog" aria-modal="false" aria-labelledby="folha-t" hidden></div>
 <script type="application/json" id="dados">${JSON.stringify(dadosEmb).replace(/</g, '\\u003c')}</script>

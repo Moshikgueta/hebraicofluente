@@ -1,46 +1,46 @@
 {
- "_": "Legendas e rótulos do mapa de 1949 (capítulo 2). Cada item só aparece com afirmação VERIFICADO.",
- "legenda": [
-  {
-   "area": "israel",
-   "texto": "Israel, dentro das linhas de armistício (1949)",
-   "afirmacoes": [
-    "C02-521",
-    "C02-522"
-   ]
-  },
-  {
-   "area": "jordania",
-   "texto": "Cisjordânia e Jerusalém Oriental: ocupadas em 1967",
-   "afirmacoes": [
-    "C02-525"
-   ]
-  },
-  {
-   "area": "egito",
-   "texto": "Faixa de Gaza: ocupada em 1967",
-   "afirmacoes": [
-    "C02-525"
-   ]
-  },
-  {
-   "area": "siria",
-   "texto": "Colinas de Golã: ocupadas em 1967",
-   "afirmacoes": [
-    "C02-525"
-   ]
-  }
- ],
- "rotulos": [
-  {
-   "texto": "Linha Verde",
-   "lon": 34.98,
-   "lat": 32.3,
-   "rot": -70,
-   "classe": "nota",
-   "afirmacoes": [
-    "C02-522"
-   ]
-  }
- ]
+  "_": "Legendas e rótulos do mapa de 1949 (capítulo 2). Cada item só aparece com afirmação VERIFICADO.",
+  "legenda": [
+    {
+      "area": "israel",
+      "texto": "Israel, dentro das linhas de armistício (1949)",
+      "afirmacoes": [
+        "C02-521",
+        "C02-522"
+      ]
+    },
+    {
+      "area": "jordania",
+      "texto": "Judeia e Samaria (Cisjordânia) e Jerusalém Oriental: tomadas por Israel em 1967",
+      "afirmacoes": [
+        "C02-525"
+      ]
+    },
+    {
+      "area": "egito",
+      "texto": "Faixa de Gaza: tomada por Israel em 1967",
+      "afirmacoes": [
+        "C02-525"
+      ]
+    },
+    {
+      "area": "siria",
+      "texto": "Colinas de Golã: tomadas por Israel em 1967",
+      "afirmacoes": [
+        "C02-525"
+      ]
+    }
+  ],
+  "rotulos": [
+    {
+      "texto": "Linha Verde",
+      "lon": 34.98,
+      "lat": 32.3,
+      "rot": -70,
+      "classe": "nota",
+      "afirmacoes": [
+        "C02-522"
+      ]
+    }
+  ]
 }

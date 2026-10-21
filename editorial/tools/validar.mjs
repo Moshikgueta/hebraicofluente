@@ -151,10 +151,11 @@ for (const arq of ordem) {
     if (/[֐-׿]/.test(l.replace(/<he>.*?<\/he>/g, '')) && !/titulo_he/.test(l)) aviso(`${onde}: hebraico fora de <he>`);
     for (const r of PROIBIDAS) if (r.test(l)) erro(`${onde}: generalização proibida (${r.source})`);
     for (const r of CLICHES) if (r.test(l)) aviso(`${onde}: clichê (${r.source})`);
-    const fig = l.match(/^:::\s*figura\s+([\w-]+)/);
-    if (fig) {
-      const id = fig[1];
-      if (!['ativos/mapas', 'ativos/infograficos'].some(d => fs.existsSync(path.join(RAIZ, d, id + '.svg')))) erro(`${onde}: figura ${id} não gerada`);
+    /* figura, os dois lados de um compare e a imagem de abertura: precisam
+       existir e estar no registro de ativos */
+    const figs = [l.match(/^:::\s*figura\s+([\w-]+)/)?.[1], ...(l.match(/^:::\s*compare\s+([\w-]+)\s+([\w-]+)/)?.slice(1) || []), l.match(/^abertura_imagem:\s*([\w-]+)/)?.[1]].filter(Boolean);
+    for (const id of figs) {
+      if (!['ativos/mapas', 'ativos/infograficos', 'ativos/ilustracoes'].some(d => fs.existsSync(path.join(RAIZ, d, id + '.svg')))) erro(`${onde}: figura ${id} não gerada`);
       if (!registroAtivos.find(a => a.id === id)) erro(`${onde}: figura ${id} fora do registro de ativos`);
     }
     const ft = l.match(/^:::\s*foto\s+([\w-]+)/);

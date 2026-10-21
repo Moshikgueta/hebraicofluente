@@ -1,0 +1,19 @@
+<svg class="fig-muralha-lagoa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 720" role="img" aria-label="Comparação: a muralha da Cidade Antiga de Jerusalém tem cerca de 4,3 km; o contorno da Lagoa Rodrigo de Freitas, no Rio, 7,8 km."><style>
+.fig-muralha-lagoa .t{font-family:'Instrument Sans',system-ui,sans-serif}
+.fig-muralha-lagoa .d{font-family:'Literata Display','Literata',Georgia,serif}
+.fig-muralha-lagoa .n{font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;font-weight:700}
+.fig-muralha-lagoa .he{font-family:'Noto Serif Hebrew',serif}
+.fig-muralha-lagoa .k{font-size:15px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
+</style><defs>
+  <marker id="muralha-lagoa--ponta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B9773E"/></marker>
+  <pattern id="muralha-lagoa--ondas" width="46" height="22" patternUnits="userSpaceOnUse">
+    <rect width="46" height="22" fill="#D3E6E8"/>
+    <path d="M3 13 q5.5 -5 11 0 t11 0" fill="none" stroke="#A9CDD2" stroke-width="1.6" stroke-linecap="round"/>
+  </pattern>
+  <pattern id="muralha-lagoa--hachura" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <rect width="7" height="7" fill="#FBF3E2"/><line x1="0" y1="0" x2="0" y2="7" stroke="#B8862F" stroke-width="2"/>
+  </pattern>
+  <pattern id="muralha-lagoa--hachura-golan" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+    <rect width="7" height="7" fill="#F4EEE2"/><line x1="0" y1="0" x2="0" y2="7" stroke="#8A6520" stroke-width="1.6"/>
+  </pattern>
+</defs><g fill="#1B211F"><rect width="1080" height="720" fill="#FBF9F5"/><rect width="1080" height="150" fill="#0E3B43"/><text class="t" x="56" y="62" font-size="15" font-weight="700" letter-spacing="3" fill="#8FD6C8">JERUSALÉM X RIO DE JANEIRO</text><text class="d" x="56" y="118" font-size="44" fill="#FFFFFF">Uma volta na muralha</text><circle cx="296" cy="418" r="93.71794871794873" fill="none" stroke="#D9CCB0" stroke-width="22"/><circle cx="290" cy="410" r="93.71794871794873" fill="#F7EFDF" stroke="#8C5426" stroke-width="22" stroke-dasharray="14 6"/><circle cx="746" cy="418" r="170" fill="none" stroke="#D9CCB0" stroke-width="22"/><circle cx="740" cy="410" r="170" fill="#D3E6E8" stroke="#1E5A73" stroke-width="22"/><text class="t n" x="290" y="420" font-size="40" text-anchor="middle" fill="#8C5426">4,3 km</text><text class="t n" x="740" y="420" font-size="48" text-anchor="middle" fill="#1E5A73">7,8 km</text><text class="t" x="290" y="640" font-size="18" font-weight="700" text-anchor="middle" fill="#0E3B43">Muralha da Cidade Antiga</text><text class="t" x="290" y="664" font-size="14" text-anchor="middle" fill="#5F6A66">Autoridade de Antiguidades de Israel</text><text class="t" x="740" y="640" font-size="18" font-weight="700" text-anchor="middle" fill="#0E3B43">Contorno da Lagoa Rodrigo de Freitas</text><text class="t" x="740" y="664" font-size="14" text-anchor="middle" fill="#5F6A66">Fundação Rio-Águas, 2012</text><text class="t" x="56" y="702" font-size="13" fill="#5F6A66">Os anéis têm comprimento proporcional aos números; não são o desenho dos lugares. A muralha tem pouco mais da metade da volta da Lagoa.</text></g></svg>

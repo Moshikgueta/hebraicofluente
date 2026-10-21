@@ -106,12 +106,14 @@ function diretiva(tipo, args, miolo, acc, ctx) {
       return { tipo: 'diario', titulo: args, instrucao: html, linhas: Number(campos.linhas || 10) };
     }
     case 'quiz': {
+      /* "pegadinha" no começo: o mito que circula e o que a fonte diz. */
+      const pegadinha = /^pegadinha\s+/.test(args); if (pegadinha) args = args.replace(/^pegadinha\s+/, '');
       const opcoes = miolo.filter(l => /^\s*-\s+\[[ x]\]/.test(l)).map(l => {
         const certa = /\[x\]/.test(l); const [t, ...exp] = l.replace(/^\s*-\s+\[[ x]\]\s*/, '').split('|');
         const local = new Set(); const r = { texto: inline(marcas(t.trim(), local)), certa, explicacao: exp.length ? inline(marcas(exp.join('|').trim(), local)) : '' };
         local.forEach(x => acc.add(x)); return r;
       });
-      const q = { tipo: 'quiz', id: `${ctx.idCap}-q${++ctx.nQuiz}`, pergunta: inline(marcas(args, acc)), opcoes };
+      const q = { tipo: 'quiz', id: `${ctx.idCap}-q${++ctx.nQuiz}`, pergunta: inline(marcas(args, acc)), opcoes, pegadinha };
       ctx.atividades.push(q); return q;
     }
     case 'vf': {
@@ -127,6 +129,30 @@ function diretiva(tipo, args, miolo, acc, ctx) {
       const l = ctx.links.find(x => x.id === args.trim());
       return { tipo: 'link', id: args.trim(), link: l || null, texto: inline(marcas(texto, acc)) };
     }
+    case 'ficha': {
+      /* Ficha de lugar (fase 6): nome, hebraico, região, resumo, números,
+         o que observar e regras. Cada campo leva os seus marcadores; as
+         fichas do livro inteiro alimentam o "Monte seu roteiro" da web. */
+      const lista = k => miolo.filter(l => l.startsWith(k + ':')).map(l => l.slice(k.length + 1).trim());
+      const um = k => lista(k)[0] || '';
+      const [heb, translit] = um('he').split('|').map(x => x.trim());
+      const hebreu = (heb || '').replace(/<\/?he>/g, '');
+      const f = {
+        tipo: 'ficha', id: args.trim(), n: ++ctx.nFicha, nome: um('nome'), he: hebreu || null, translit: translit || null,
+        audio: hebreu ? audioDe(hebreu) : null, regiao: um('regiao') || null,
+        resumo: inline(marcas(um('resumo'), acc)),
+        dados: lista('dado').map(d => { const [n, ...r] = d.split('|'); return { n: n.trim(), l: inline(marcas(r.join('|').trim(), acc)) }; }),
+        observar: um('observar') ? inline(marcas(um('observar'), acc)) : '',
+        regras: um('regras') ? inline(marcas(um('regras'), acc)) : '',
+      };
+      ctx.fichas.push(f); return f;
+    }
+    case 'compare': {
+      /* Dois desenhos do mesmo lugar em dois estados; a web desliza entre
+         eles, o PDF põe lado a lado. */
+      const [a, b] = args.trim().split(/\s+/);
+      return { tipo: 'compare', a: { id: a, rotulo: campos.a || '' }, b: { id: b, rotulo: campos.b || '' }, legenda: inline(marcas(semCampos, acc)) };
+    }
     case 'curiosidade': {
       /* Capítulo 9: uma curiosidade = título + texto curto + (opcional)
          remissão a outro capítulo. O número é a ordem no capítulo. */
@@ -138,7 +164,11 @@ function diretiva(tipo, args, miolo, acc, ctx) {
       if (!CAIXAS[tipo]) return { tipo: 'desconhecido', nome: tipo, html: inline(marcas(texto, acc)) };
       const pendente = /\bpendente\b/.test(args) || (tipo === 'olhar-israelense' && !/\baprovado\b/.test(args));
       const titulo = args.replace(/\bpendente\b|\baprovado\b|#[\w-]+/g, '').trim();
-      return { tipo: 'caixa', variante: tipo, rotulo: CAIXAS[tipo], titulo: titulo ? inline(titulo) : null, pendente, blocos: blocosDeTexto(texto, acc) };
+      /* "História ou tradição?" interativa: com `resposta:` (historia,
+         tradicao ou as-duas), a web pede o palpite antes de abrir a caixa. */
+      const resposta = tipo === 'historia-ou-tradicao' ? (campos.resposta || null) : null;
+      const corpo = resposta ? miolo.filter(l => !/^resposta:\s/.test(l)).join('\n') : texto;
+      return { tipo: 'caixa', variante: tipo, rotulo: CAIXAS[tipo], titulo: titulo ? inline(titulo) : null, pendente, resposta, blocos: blocosDeTexto(corpo, acc) };
     }
   }
 }
@@ -150,7 +180,7 @@ export function compilarCapitulo(raiz, arquivo, regs = registros(raiz)) {
   const n = Number(meta.capitulo || 0);
   const idCap = `cap${String(n).padStart(2, '0')}`;
   const linksArq = path.join(raiz, `ativos/dados/links-${idCap.replace('cap', 'cap')}.json`);
-  const ctx = { idCap, nQuiz: 0, nObs: 0, nCur: 0, vocabulario: [], atividades: [], links: existe(linksArq) ? lerJSON(linksArq).map((l, i) => ({ id: l.id || slug(l.titulo), ...l })) : [] };
+  const ctx = { idCap, nQuiz: 0, nObs: 0, nCur: 0, nFicha: 0, fichas: [], vocabulario: [], atividades: [], links: existe(linksArq) ? lerJSON(linksArq).map((l, i) => ({ id: l.id || slug(l.titulo), ...l })) : [] };
 
   /* Seções: o texto antes do primeiro ## é a entrada do capítulo. */
   const partes = []; let atual = { titulo: null, linhas: [] };
@@ -194,7 +224,7 @@ export function compilarCapitulo(raiz, arquivo, regs = registros(raiz)) {
   return {
     id: idCap, numero: n, titulo: meta.titulo, subtitulo: meta.subtitulo || null,
     abertura: { imagem: meta.abertura_imagem || null, frase: meta.abertura_frase ? inline(meta.abertura_frase) : null, credito: meta.abertura_credito || null },
-    secoes, vocabulario: ctx.vocabulario, atividades: ctx.atividades, links: ctx.links,
+    secoes, vocabulario: ctx.vocabulario, atividades: ctx.atividades, links: ctx.links, fichas: ctx.fichas,
     revisado_em: datas[datas.length - 1] || null,
     verificacao: { afirmacoes: todas.length, pendentes: secoes.flatMap(s => s.verificacao.problemas) },
   };

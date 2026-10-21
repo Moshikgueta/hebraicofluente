@@ -177,7 +177,7 @@ function legenda(x, y, itens, largura = 250) {
 
 const ITENS_LEGENDA = [
   [COR.israel, COR.israelBorda, 'Israel (linhas de armistício de 1949)'],
-  ['url(#h-disputa)', COR.disputa, 'Cisjordânia (com Jerusalém Oriental) e Gaza'],
+  ['url(#h-disputa)', COR.disputa, 'Judeia e Samaria (Cisjordânia), com Jerusalém Oriental, e Gaza'],
   ['url(#h-golan)', COR.golan, 'Colinas de Golã'],
 ];
 
@@ -223,7 +223,8 @@ function mapaRegioes() {
   c += rotulo(P, [35.5, 32.82], 'Mar da', 'nota', { anchor: 'end', dx: -6, dy: -2 });
   c += rotulo(P, [35.5, 32.82], 'Galileia', 'nota', { anchor: 'end', dx: -6, dy: 9 });
   c += rotulo(P, [34.3, 31.66], 'Faixa de Gaza', 'nota', { anchor: 'middle' });
-  c += rotulo(P, [35.24, 31.72], 'Cisjordânia', 'nota', { anchor: 'start', dx: 0 });
+  c += rotulo(P, [35.24, 31.72], 'Judeia e Samaria', 'nota', { anchor: 'start', dx: 0 });
+  c += rotulo(P, [35.24, 31.72], '(Cisjordânia)', 'nota', { anchor: 'start', dx: 0, dy: 11 });
   for (const n of ['Jerusalém', 'Tel Aviv', 'Haifa', "Be'er Sheva"]) {
     c += ponto(P, CIDADES_NE[n], { r: 2.6 });
     c += rotulo(P, CIDADES_NE[n], n, 'cid', { anchor: 'end', dx: -6, dy: 4 });
@@ -231,7 +232,7 @@ function mapaRegioes() {
   const dest = lerDados('destinos.json');
   const eilat = dest && (Array.isArray(dest) ? dest : dest.destinos || []).find(d => /eilat/i.test(d.id || d.nome));
   if (eilat && eilat.lat) { c += ponto(P, [eilat.lon, eilat.lat], { r: 2.6 }); c += rotulo(P, [eilat.lon, eilat.lat], 'Eilat', 'cid', { anchor: 'end', dx: -6, dy: 4 }); }
-  c += legenda(22, P.altura - 112, ITENS_LEGENDA.map(([f, b, t]) => [f, b, t.replace(' (com Jerusalém Oriental)', ', com Jer. Oriental,')]), 228);
+  c += legenda(22, P.altura - 112, ITENS_LEGENDA.map(([f, b, t]) => [f, b, t.replace(', com Jerusalém Oriental,', ', com Jer. Oriental,')]), 228);
   c += escala(P, 50, [18, P.altura - 20]);
   c += norte(P.largura - 24, 30);
   return svg(P, c);
@@ -273,7 +274,7 @@ function mapaDestinos() {
     c += ponto(P, [d.lon, d.lat], { r: 3, anel: jer });
     c += rotulo(P, [d.lon, d.lat], nome, 'cid', { anchor, dx: anchor === 'end' ? -7 : 7, dy: (ajuste[d.id] ?? 4) });
   }
-  c += legenda(22, 44, ITENS_LEGENDA.map(([f, b, t]) => [f, b, t.replace(' (com Jerusalém Oriental)', ', com Jer. Oriental,')]), 228);
+  c += legenda(22, 44, ITENS_LEGENDA.map(([f, b, t]) => [f, b, t.replace(', com Jerusalém Oriental,', ', com Jer. Oriental,')]), 228);
   c += escala(P, 25, [18, P.altura - 20]);
   c += norte(P.largura - 24, 30);
   return svg(P, c);

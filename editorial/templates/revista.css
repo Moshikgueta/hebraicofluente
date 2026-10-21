@@ -239,3 +239,29 @@ figure.par .grande { display: block; font-family: var(--f-display); font-style: 
 .bibliografia-r > h1, .bibliografia-r > .intro { column-span: all; }
 .bibliografia-r ol { font-size: 5.9pt; line-height: 1.35; }
 .abertura .imagem.colecao { top: 48%; }
+
+/* ── Fase 6: fichas de lugar, compare, pegadinha, meu roteiro ────────── */
+.ficha { margin: 5mm 0; border: .6pt solid var(--pedra-escura); background: #fff; break-inside: avoid; }
+.ficha header { display: grid; grid-template-columns: auto 1fr auto; gap: 2.5mm; align-items: center; background: var(--navy); color: #fff; padding: 2.4mm 3.5mm; }
+.ficha .f-n { width: 6.5mm; height: 6.5mm; border-radius: 50%; background: var(--ouro); color: var(--noite); font-family: var(--f-dado); font-weight: 700; font-size: 9pt; display: flex; align-items: center; justify-content: center; }
+.ficha .f-nome { font-family: var(--f-display); font-size: 13pt; line-height: 1.1; }
+.ficha .f-he { text-align: right; line-height: 1; } .ficha .f-he .he { font-size: 13pt; color: var(--ouro); display: block; } .ficha .f-he small { font-family: var(--f-rotulo); font-size: 6pt; color: var(--areia-clara); }
+.ficha .f-reg { font-family: var(--f-rotulo); font-size: 6pt; letter-spacing: .18em; text-transform: uppercase; color: var(--teal-tinta); padding: 2mm 3.5mm 0; font-weight: 600; }
+.ficha .f-res { padding: 1mm 3.5mm 0; font-size: 8.8pt; text-align: left; }
+.ficha .f-dados { display: flex; flex-wrap: wrap; gap: 2mm 5mm; padding: 1.5mm 3.5mm; border-top: .4pt solid var(--linha); border-bottom: .4pt solid var(--linha); margin: 1.5mm 0; }
+.ficha .f-dados div { display: flex; flex-direction: column; max-width: 40mm; } .ficha .f-dados b { font-family: var(--f-dado); font-size: 14pt; color: var(--neguev-tinta); line-height: 1; } .ficha .f-dados span { font-family: var(--f-rotulo); font-size: 6.4pt; color: var(--corpo); line-height: 1.3; }
+.ficha .f-obs, .ficha .f-reg2 { padding: 0 3.5mm 2mm; font-size: 8.2pt; text-align: left; }
+.ficha .f-obs span, .ficha .f-reg2 span { display: block; font-family: var(--f-rotulo); font-size: 6pt; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--teal-tinta); }
+.ficha .f-reg2 span { color: var(--neguev-tinta); }
+figure.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+figure.compare figcaption { grid-column: 1 / -1; }
+.cmp-lado svg { width: 100%; height: auto; display: block; }
+.cmp-rot { display: block; font-family: var(--f-rotulo); font-size: 6.6pt; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--navy); margin-top: 1mm; }
+.pegadinha { display: inline-block; font-family: var(--f-rotulo); font-size: 5.8pt; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--neguev-tinta); padding: .5mm 1.6mm; border-radius: 1mm; margin-bottom: 1mm; }
+.roteiro-impresso { break-before: page; }
+.roteiro-impresso .cab { font-family: var(--f-display); font-size: 22pt; color: var(--navy); margin: 0 0 1mm; }
+.roteiro-impresso .sub { font-style: italic; color: var(--suave); margin-bottom: 4mm; }
+.roteiro-impresso ul { list-style: none; margin: 0; padding: 0; }
+.roteiro-impresso li { position: relative; padding: 2.4mm 0 2.4mm 8mm; border-bottom: .4pt solid var(--linha); font-size: 9.4pt; }
+.roteiro-impresso li::before { content: ''; position: absolute; left: 0; top: 2.8mm; width: 4mm; height: 4mm; border: .9pt solid var(--teal); border-radius: .6mm; }
+.roteiro-impresso li span { font-family: var(--f-rotulo); font-size: 7pt; color: var(--suave); margin-left: 1.5mm; }
