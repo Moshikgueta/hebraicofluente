@@ -74,8 +74,6 @@ export type CatalogCourse = {
   tipo?: 'curso' | 'livro' | 'pacote';
   /** No pacote: os slugs que um pedido dele libera. */
   componentes?: string[];
-  /** Último dia de venda (fim do dia em Brasília). */
-  vendaAte?: string;
   /** Onde o produto abre depois de comprado. Sem isto, /meu-hebraico. */
   abre?: string;
   taglinePt: string;
@@ -107,10 +105,6 @@ export const allCourses = (): CatalogCourse[] =>
 /** Todos os produtos à venda ou não: cursos, o e-book e o pacote. */
 export const allProducts = (): CatalogCourse[] =>
   CATALOG.courses.slice().sort((a, b) => a.n - b.n);
-
-/** A venda ainda está aberta? O pacote tem data de fim (`vendaAte`). */
-export const vendaVigente = (c: CatalogCourse, agora = Date.now()): boolean =>
-  !c.vendaAte || agora <= Date.parse(`${c.vendaAte}T23:59:59.999-03:00`);
 
 export const getCourse = (slug: string): CatalogCourse | undefined =>
   CATALOG.courses.find(c => c.slug === slug);

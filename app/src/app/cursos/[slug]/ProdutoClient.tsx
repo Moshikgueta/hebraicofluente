@@ -15,17 +15,12 @@ import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { brl, getCourse, parcelasMax, pixPrice, tipoDe, vendaVigente, type CatalogCourse } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, tipoDe, type CatalogCourse } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { confirmaSozinho, empresa, parcelasTexto, prazoResposta, soPix, temCartao, temPix } from '@/lib/empresa';
 
 const LIVRO = 'israel-alem-do-roteiro';
 const PACOTE = 'alfabetizacao-e-israel';
-
-function dataBr(iso: string): string {
-  const [a, m, d] = iso.split('-');
-  return `${d}/${m}/${a}`;
-}
 
 function Preco({ c }: { c: CatalogCourse }) {
   const parcelas = parcelasMax(c.price);
@@ -78,7 +73,6 @@ function CaixaDeCompra({ c }: { c: CatalogCourse }) {
   const tipo = tipoDe(c);
   const componentes = (c.componentes ?? []).map(s => getCourse(s)).filter((x): x is CatalogCourse => !!x);
   const owned = tipo === 'pacote' ? componentes.every(x => account.can(x.slug)) : account.can(c.slug);
-  const aberto = vendaVigente(c);
 
   if (owned) {
     return (
@@ -95,23 +89,20 @@ function CaixaDeCompra({ c }: { c: CatalogCourse }) {
     );
   }
 
-  if (!aberto) {
-    return (
-      <Card className="p-6 grid gap-3 content-start">
-        <Badge>Encerrado</Badge>
-        <p className="font-display text-[19px] font-bold text-ink leading-snug">Este pacote saiu de venda.</p>
-        <LinkButton href={`/cursos/${LIVRO}`} variant="secondary" size="lg" full>Ver o e-book</LinkButton>
-      </Card>
-    );
-  }
-
   const separados = componentes.reduce((n, x) => n + x.price.brl, 0);
   return (
     <Card className="p-6 grid gap-4 content-start">
-      {tipo === 'pacote' && c.vendaAte && (
-        <p className="font-ui text-[12px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-          Até {dataBr(c.vendaAte)}
-        </p>
+      {/* Preço de pré-lançamento: o rótulo e o preço de depois andam juntos,
+          como na caixa do curso (ver `ancora()` em lib/catalog.ts). */}
+      {ancora(c.price) && (
+        <div className="grid gap-1">
+          <p className="font-ui text-[12px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
+            Preço de pré-lançamento
+          </p>
+          <p className="font-ui text-[13px] text-ink-muted">
+            {fimDoPreLancamento(c.price) ? `Até ${fimDoPreLancamento(c.price)}. ` : ''}Depois, {brl(ancora(c.price)!)}.
+          </p>
+        </div>
       )}
       <Preco c={c} />
       {tipo === 'pacote' && separados > c.price.brl && (
@@ -132,11 +123,11 @@ function CaixaDeCompra({ c }: { c: CatalogCourse }) {
   );
 }
 
-/** O convite ao pacote, na página do e-book, enquanto ele estiver à venda. */
+/** O convite ao pacote, na página do e-book. */
 function OfertaDoPacote() {
   const account = useAccount();
   const p = getCourse(PACOTE);
-  if (!p || !vendaVigente(p) || (p.componentes ?? []).some(s => account.can(s))) return null;
+  if (!p || (p.componentes ?? []).some(s => account.can(s))) return null;
   const separados = (p.componentes ?? []).map(s => getCourse(s)).reduce((n, x) => n + (x?.price.brl ?? 0), 0);
   return (
     <Card tone="wash" className="p-5 grid gap-2.5">
@@ -146,7 +137,7 @@ function OfertaDoPacote() {
       <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
         Leve junto o curso Alfabetização em Hebraico: os dois por {brl(p.price.brl)}
         {separados > p.price.brl ? ` (separados, ${brl(separados)})` : ''}
-        {p.vendaAte ? `, até ${dataBr(p.vendaAte)}` : ''}.
+        {fimDoPreLancamento(p.price) ? `, até ${fimDoPreLancamento(p.price)}` : ''}.
       </p>
       <LinkButton href={`/cursos/${PACOTE}`} variant="secondary" size="sm" className="justify-self-start">
         Ver o pacote

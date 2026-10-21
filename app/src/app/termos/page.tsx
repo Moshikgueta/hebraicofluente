@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
-import { brl, flagship, getCourse, parcelasMax, pixPrice, vendaVigente } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, flagship, getCourse, parcelasMax, pixPrice } from '@/lib/catalog';
 import {
   confirmaSozinho, confirmacaoDaDesistencia, empresa, INICIO_DO_ACESSO,
   parcelasTexto, prazoResposta, renovacaoTexto, soPix, temCartao, temPix
@@ -109,10 +109,11 @@ export default function Page() {
             {livro.accessMonths} meses {INICIO_DO_ACESSO}, e ao arquivo em PDF para baixar,
             que fica com você para uso pessoal. Ninguém pode copiar, distribuir ou
             revender o e-book (artigo 5).
-            {pacote && vendaVigente(pacote) && <>
-              {' '}O pacote {pacote.titlePt} custa {brl(pacote.price.brl)}, à venda até{' '}
-              {pacote.vendaAte!.split('-').reverse().join('/')}, e libera os dois, cada um
-              com o seu prazo.
+            {pacote && <>
+              {' '}O pacote {pacote.titlePt} custa {brl(pacote.price.brl)}
+              {ancora(pacote.price) && fimDoPreLancamento(pacote.price)
+                ? <> até {fimDoPreLancamento(pacote.price)} e {brl(ancora(pacote.price)!)} depois</>
+                : null}, e libera os dois, cada um com o seu prazo.
             </>}
           </p>
         )}

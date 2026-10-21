@@ -5,7 +5,7 @@
  *  - o pacote libera os DOIS produtos num pedido, e o estorno recua os dois;
  *  - quem tem só o e-book lê /israel/ e não abre nada do curso (nem o áudio);
  *  - quem já tem o curso não paga o pacote (`ja-tem-parte`);
- *  - o pacote sai de venda no fim de `vendaAte`;
+ *  - o pacote vira de R$ 177 para R$ 327 junto com o curso, e fica sempre acima dele;
  *  - as telas de curso continuam vendo só cursos.
  * Os handlers reais rodam contra o schema de produção e uma Mercado Pago de
  * mentira, como em estorno.test.ts.
@@ -15,7 +15,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
-import { allCourses, allProducts, getCourse as getCourseApp, vendaVigente } from '@/lib/catalog';
+import { readFileSync } from 'node:fs';
+import { allCourses, allProducts } from '@/lib/catalog';
+// @ts-expect-error - script JS sem tipos
+import { virar, fimDoDia } from '../../tools/virar-preco.mjs';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
@@ -23,7 +26,7 @@ import * as pay from '../../worker/src/api/pay.js';
 // @ts-expect-error - idem
 import { gate, cursoDaRota, isGatedPath, NAO_CURSOS } from '../../worker/src/gate.js';
 // @ts-expect-error - idem
-import { getCourse, isSellable, itensDoPedido, priceCents } from '../../worker/src/lib/catalog.js';
+import { getCourse, itensDoPedido, priceCents } from '../../worker/src/lib/catalog.js';
 // @ts-expect-error - idem
 import { grantAccess, hasEntitlement } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
@@ -133,14 +136,21 @@ describe('o catálogo', () => {
     expect(itensDoPedido(getCourse(LIVRO))).toEqual([{ courseSlug: LIVRO, months: 12 }]);
   });
 
-  it('o pacote sai de venda no fim de vendaAte, em Brasília, nos dois lados', () => {
+  it('o pacote vira de R$ 177 para R$ 327 no mesmo dia que o curso, e fica sempre acima dele', () => {
+    const texto = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
     const p = getCourse(PACOTE);
-    const ultimo = Date.parse(`${p.vendaAte}T23:59:00-03:00`);
-    const depois = Date.parse(`${p.vendaAte}T23:59:59.999-03:00`) + 1;
-    expect(isSellable(p, ultimo)).toBe(true);
-    expect(isSellable(p, depois)).toBe(false);
-    expect(vendaVigente(getCourseApp(PACOTE)!, depois)).toBe(false);
-    expect(isSellable(getCourse(LIVRO), depois), 'o e-book não tem fim de venda').toBe(true);
+    expect(p.price.preLancamentoAte, 'o pacote vira junto com o curso').toBe(getCourse('alfabetizacao').price.preLancamentoAte);
+    const preco = (t: string, slug: string) => JSON.parse(t).courses.find((c: { slug: string }) => c.slug === slug).price.brl;
+    const separados = (t: string) => preco(t, 'alfabetizacao') + preco(t, LIVRO);
+    /* Antes e depois da virada: acima do curso sozinho, abaixo dos dois separados. */
+    for (const t of [texto, virar(texto, fimDoDia(p.price.preLancamentoAte) + 1).texto]) {
+      expect(preco(t, PACOTE)).toBeGreaterThan(preco(t, 'alfabetizacao'));
+      expect(preco(t, PACOTE)).toBeLessThan(separados(t));
+    }
+    const depois = virar(texto, fimDoDia(p.price.preLancamentoAte) + 1).texto;
+    expect(preco(texto, PACOTE)).toBe(177);
+    expect(preco(depois, PACOTE)).toBe(327);
+    expect(preco(depois, 'alfabetizacao')).toBe(297);
   });
 });
 
@@ -227,13 +237,6 @@ describe('comprar o e-book e o pacote', () => {
     expect(await hasEntitlement(env, a.id, LIVRO)).toBe(true);
   });
 
-  it('depois de vendaAte o pacote não vende mais', async () => {
-    const env = envCompleto();
-    vi.useFakeTimers({ now: Date.parse(`${getCourse(PACOTE).vendaAte}T23:59:59.999-03:00`) + 60_000, toFake: ['Date'] });
-    const a = await conta(env);
-    const r = await comprar(env, a.cookie, PACOTE);
-    expect(r.status).toBe(404);
-  });
 });
 
 describe('o pacote liberado à mão (PIX direto, Actions → Acesso → liberar)', () => {

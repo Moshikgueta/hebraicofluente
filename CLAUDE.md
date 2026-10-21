@@ -1157,8 +1157,9 @@ decidiu montar no ramo e **só publicar depois de o contador confirmar o enquadr
   contém o editorial: nunca fundir esses commits na `main` sem tirar o editorial deles.
 - **Catálogo:** `data/courses.json` ganhou `tipo` (sem ele, é curso). `israel-alem-do-roteiro`
   (`livro`, R$ 67, versão interativa 12 meses + PDF) e `alfabetizacao-e-israel` (`pacote`,
-  R$ 177, `componentes` = curso + e-book, `vendaAte` 2026-11-30: depois disso o curso custa
-  R$ 297 e o preço do pacote ainda não foi decidido). `allCourses()` (app) só devolve cursos;
+  R$ 177 até 30/11 e R$ 327 a partir de 01/12 (decisão do dono, 21/10/2026: sempre acima do
+  curso sozinho, R$ 37 de economia), `componentes` = curso + e-book, `listBrl` e
+  `preLancamentoAte` como o curso, virado pela mesma Action `virar-preco`). `allCourses()` (app) só devolve cursos;
   `allProducts()` devolve tudo (checkout, páginas de venda).
 - **Pedido de pacote:** `itensDoPedido` (worker/src/lib/catalog.js) diz o que um pedido
   abre. `applyPayment` concede cada item; `refundOrder` aceita `itens` e recua todos na MESMA

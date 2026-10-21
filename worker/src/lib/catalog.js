@@ -21,14 +21,8 @@ const BY_SLUG = new Map(catalog.courses.map(c => [c.slug, c]));
 
 export const getCourse = slug => BY_SLUG.get(String(slug || '')) || null;
 
-/** A venda de um produto com `vendaAte` (o pacote) acaba no fim desse dia, em Brasília. */
-export const vendaVigente = (c, agora = Date.now()) =>
-  !c.vendaAte || agora <= Date.parse(`${c.vendaAte}T23:59:59.999-03:00`);
-
-/** Dá para comprar este produto agora? Só o que está publicado, tem conteúdo
- *  e, se tiver data de fim de venda, ainda está dentro dela. */
-export const isSellable = (c, agora = Date.now()) =>
-  !!c && c.status === 'available' && c.engine !== null && vendaVigente(c, agora);
+/** Dá para comprar este produto agora? Só o que está publicado e tem conteúdo. */
+export const isSellable = c => !!c && c.status === 'available' && c.engine !== null;
 
 /* Curso, livro ou pacote (21/10/2026). O pacote não é um direito de acesso
    por si: um pedido dele libera cada slug de `componentes`, com os meses de
