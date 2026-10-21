@@ -596,6 +596,66 @@
       "busca": "Ecce Homo arch Via Dolorosa Jerusalem",
       "share_alike": true,
       "conferido_em": "2026-10-21"
+    },
+    "foto-domo-loc-closeup": {
+      "arquivo": "ativos/fotos/foto-domo-loc-closeup.jpg",
+      "candidata": "foto-domo-loc-closeup",
+      "assunto": "Domo da Rocha (foto antiga)",
+      "fonte": "Library of Congress",
+      "pagina": "https://www.loc.gov/item/2019694536/",
+      "original": "https://tile.loc.gov/image-services/iiif/public:gdcmassbookdig:crusades00arc:crusades00arc_0005/full/pct:100.0/0/default.jpg#h=2830&w=1782",
+      "autor": "American Colony (Jerusalem). Photo Department, photographer",
+      "licenca": "Sem restrições conhecidas de publicação (Library of Congress)",
+      "licenca_url": "https://www.loc.gov/rr/print/res/rights.html",
+      "atribuicao_exigida": false,
+      "credito": "American Colony (Jerusalem). Photo Department, photographer, \"Dome of the Rock. Close-up\", Library of Congress, Prints and Photographs Division",
+      "share_alike": false,
+      "conferido_em": "2026-10-21"
+    },
+    "foto-jerusalem-jaffa-gate-matson": {
+      "arquivo": "ativos/fotos/foto-jerusalem-jaffa-gate-matson.jpg",
+      "candidata": "foto-jerusalem-jaffa-gate-1898",
+      "assunto": "Porta de Jafa (foto antiga)",
+      "fonte": "Library of Congress",
+      "pagina": "https://www.loc.gov/pictures/item/2019699906/",
+      "original": "https://cdn.loc.gov/service/pnp/matpc/08700/08787r.jpg",
+      "autor": null,
+      "licenca": "Sem restrições conhecidas de publicação (Library of Congress)",
+      "licenca_url": "https://www.loc.gov/rr/print/res/rights.html",
+      "atribuicao_exigida": false,
+      "credito": "\"The Jaffa Gate\", Library of Congress, Prints and Photographs Division",
+      "share_alike": false,
+      "conferido_em": "2026-10-21"
+    },
+    "foto-domo-loc-temple-area": {
+      "arquivo": "ativos/fotos/foto-domo-loc-temple-area.jpg",
+      "candidata": "foto-domo-loc-temple-area",
+      "assunto": "Domo da Rocha (foto antiga)",
+      "fonte": "Library of Congress",
+      "pagina": "https://www.loc.gov/pictures/item/2019697127/",
+      "original": "https://cdn.loc.gov/service/pnp/matpc/05800/05898r.jpg",
+      "autor": null,
+      "licenca": "Sem restrições conhecidas de publicação (Library of Congress)",
+      "licenca_url": "https://www.loc.gov/rr/print/res/rights.html",
+      "atribuicao_exigida": false,
+      "credito": "\"The Temple area. Jerusalem. The Dome of the Rock and the western Temple wall\", Library of Congress, Prints and Photographs Division",
+      "share_alike": false,
+      "conferido_em": "2026-10-21"
+    },
+    "foto-jaffa-do-mar-photochrom": {
+      "arquivo": "ativos/fotos/foto-jaffa-do-mar-photochrom.jpg",
+      "candidata": "foto-jaffa-do-mar-photochrom",
+      "assunto": "Jaffa ou Jerusalem no fim do seculo XIX",
+      "fonte": "Library of Congress",
+      "pagina": "https://www.loc.gov/item/2002724990/",
+      "original": "https://tile.loc.gov/storage-services/service/pnp/ppmsca/02600/02680v.jpg#h=769&w=1024",
+      "autor": null,
+      "licenca": "Sem restrições conhecidas de publicação (Library of Congress)",
+      "licenca_url": "https://www.loc.gov/rr/print/res/rights.html",
+      "atribuicao_exigida": false,
+      "credito": "\"[From the sea, Jaffa, Holy Land, (i.e. Israel)]\", Library of Congress, Prints and Photographs Division",
+      "share_alike": false,
+      "conferido_em": "2026-10-21"
     }
   }
 }
