@@ -83,3 +83,36 @@ Nenhuma foto de malawach, lafa ou sabich apareceu na busca.
 **Links oficiais** (`ativos/dados/links-cap06.json`, todos no texto): lei de 1983 em gov.il, página do Ministério do Turismo sobre o mercado de Jerusalém (conteúdo não lido, só a URL vista), passeios do Museu da Cidade de Tel Aviv-Yafo sobre a história dos cafés.
 
 **Nenhuma caixa "O olhar de um israelense"** (é do dono). Nenhuma afirmação sobre o autor.
+
+## Fase 6 (21/10/2026)
+
+### Visuais
+- Abertura ilustrada própria: `abertura-sabores` (mesa vista de cima, pratos, sem marca nem pessoa; rótulo "Ilustração original, não é registro fotográfico.").
+- `anatomia-sabich-falafel` (figura): sabich = pita, berinjela, ovo, "entre outras coisas" (C06-010); falafel na pita = pita, bolinhos fritos, salada, trio do século XX segundo Stampfer (C06-009); a fava só como hipótese egípcia (C06-008).
+- `anatomia-homus-jachnun` (figura): homus = grão-de-bico cozido e amassado, tahine, alho, suco de limão (C06-052, nova); jachnun com tomate ralado, zhug e ovo (C06-044).
+- `guia-cardapio` (figura): 13 palavras que o capítulo já tem, com o mesmo nikud e a mesma transliteração.
+- `conta-israel` / `conta-brasil` (compare): a comparação com o Brasil.
+- Fotos licenciadas candidatas já existentes: 4 (homus, jachnun, Machane Yehuda, cardápio).
+- Total no capítulo: 4 visuais desenhados + 1 compare + 4 fotos, além da abertura. Tudo registrado em `ativos/registro-de-ativos.json`; gerador `tools/ilustracoes/cap06.mjs`, com os ids das afirmações no código.
+
+### Comparação com o Brasil (gorjeta)
+- Israel: 10% a 15%, costume (C06-043, já existente).
+- Brasil: Lei 13.419/2017 (C06-053, fonte A, Planalto): o valor cobrado como serviço também é gorjeta, não é receita do empregador e é dividido entre os empregados. O texto NÃO atribui à lei percentual nem obrigatoriedade. Taxa em geral de 10% e opcional, com dever de informar (C06-054): Procon-ES (via Folha Vitória) e Idec, duas fontes E independentes, `revisar_ate` 2027-04-21.
+- Conta derivada C06-055: nos dois países a gorjeta parte de 10% e não é obrigação legal do cliente; em Israel o costume vai até 15%.
+
+### Interações
+Ficha (Mercado Machane Yehuda, região "Jerusalém, fora das muralhas"), compare, "História ou tradição?" com palpite (`resposta: tradicao`, os coptas), pegadinha do guia (o sabich "milenar"), quizzes e vf já existentes.
+
+### Cortes pela decisão política
+Nenhuma frase de posição de governo ou status de território no capítulo. A disputa do homus e do falafel é debate cultural e ficou, com as posições atribuídas. Não há menção à Cisjordânia.
+
+### Buscas
+10 no total para os capítulos 6 e 7 (6 para o capítulo 6: lei da gorjeta x3, Procon x1, receita do homus x2).
+
+### Pendências
+- Shuk HaCarmel: sem fundação verificada (C06-037), sem ficha.
+- Fonte da receita do homus: duas fontes E (Britannica, James Beard Foundation), no mesmo padrão do jachnun (C06-044); a revisão humana pode preferir uma obra acadêmica.
+- A página exata do Idec com a frase sobre a taxa facultativa deve ser conferida (F06-047).
+- Hebraico para aprovação do dono, novo nesta fase só em lugar novo: a ficha usa <he>שׁוּק מַחֲנֵה יְהוּדָה</he> (Shuk Machané Yehudá), que vem do capítulo 7. Os desenhos repetem palavras do capítulo: סַבִּיח, חוּמוּס, תַּפְרִיט, מִסְעָדָה, מֶלְצַר, בְּבַקָשָׁה, פִּיתָה, מַיִם, בְּתֵאָבוֹן, כָּשֵׁר, בְּשָׂרִי, חָלָבִי, חֶשְׁבּוֹן, תוֹדָה.
+- Fichas sem "tempo de visita" e "melhor horário" (sem fonte).
+- Testes que rodaram: validador 0 erros; PDF capitulo-06 com 24 páginas, 3/3 QR lidos; inspecionar sem transbordo nem página quase vazia; folha de contato olhada. A web não foi gerada (o coordenador monta).

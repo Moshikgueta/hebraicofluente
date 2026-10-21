@@ -116,3 +116,32 @@ Formas de apoio que aparecem nos contextos (todas novas, menos <he>חָדָשׁ<
 | 39 | Cultura | <he>יַאלְלָה</he> | <he>יאללה</he> | igual | yálla | yal (YÁL-la) | <he>א</he> sem letra; as duas <he>ל</he> escritas = ll | NOVA: precisa da aprovação do autor |
 | 40 | Cultura | <he>סַבַּבָּה</he> | <he>סבבה</he> | igual | sabába | ba (sa-BÁ-ba) | <he>בּ</he> = b; <he>ה</he> final mudo | NOVA: precisa da aprovação do autor |
 | 41 | Cultura | <he>צִימֶר</he> | <he>צימר</he> | igual | tsímer | tsi (TSÍ-mer) | <he>צ</he> = ts; <he>ִי</he> = i | NOVA: precisa da aprovação do autor |
+
+## Fase 6 (21/10/2026)
+
+### Visuais
+- Abertura ilustrada própria: `abertura-hebraico` (nove letras isoladas em papel recortado, espalhadas e giradas para não formar palavra).
+- `placa-trilingue` (figura): placa desenhada com עכו (grafia sem vogais do capítulo), a faixa do árabe SEM texto (o livro não registrou a grafia árabe; dito no desenho e na legenda) e "Akko"; o ו como vogal; os três nomes da cidade e 1191-1291 (C07-012). A ordem das faixas é ilustrativa (C07-009 segue NÃO VERIFICADO).
+- `sabado-shabat` (figura): a comparação com o Brasil.
+- `nikud-com-pontos` / `nikud-sem-pontos` (compare): Jerusalém com e sem os sinais de vogal, com o ו destacado.
+- Fotos licenciadas candidatas já existentes: 3 (Ben-Yehuda, Comitê da Língua, placa em Jafa).
+
+### Comparação com o Brasil (língua)
+"Sábado" vem do latim sabbatum, que vem do hebraico (C07-042: Dicio e Etymonline); sabbatum vem do grego sabbaton e do hebraico shabbath, "dia de descanso"; em latim era o dia de descanso dos judeus e depois o sábado (C07-043: Etymonline e Lewis & Short, A Latin Dictionary). Conta derivada C07-044. Houaiss, Michaelis e Priberam não apareceram na busca: a revisão humana deve conferir num dicionário etimológico de referência do português (Cunha ou Houaiss).
+
+### Interações
+Compare, "História ou tradição?" com palpite ("Ben-Yehuda ressuscitou o hebraico", `resposta: as-duas`), pegadinha do guia ("língua morta", C07-004), quizzes e vf já existentes; as palavras já têm "Guardar" e "Gravar a minha" na web. Sem ficha: Acre é lugar do capítulo 4.
+
+### Cortes pela decisão política
+- Supremo de 2002: saiu a frase com os princípios invocados pela maioria (igualdade, liberdade de usar a própria língua, status do árabe), que era debate jurídico; ficaram a data, o placar, os municípios e os juízes (C07-040 não mudou).
+- Remissão à Lei Básica de 2018: saiu "e o debate em torno"; ficou o fato (status especial do árabe) e a remissão ao capítulo 5.
+- Não há "Cisjordânia" no capítulo.
+
+### Buscas
+4 das 10 do lote (etimologia de sábado x3, mais 1 tentativa sem resultado num dicionário do português).
+
+### Pendências
+- Hebraico para aprovação do dono (nada novo, tudo do capítulo): עכו, שַׁבָּת e שַׁבָּת שָׁלוֹם no texto novo, יְרוּשָׁלַיִם e ירושלים nos desenhos, e as letras soltas da abertura (א ש ב ק מ ע ל ת ר).
+- A grafia árabe de Acre não está registrada; se o dono quiser a faixa preenchida, ela precisa de fonte.
+- Problema de ferramenta (não mexido): em `templates/revista.css`, `.he { font-size: 1.1em }` vence o atributo `font-size` dos `<text class="he">` dentro dos SVG inline, e o hebraico das figuras sai minúsculo no PDF. Os módulos cap06 e cap07 contornam com `style="font-size:..px"`. O `monte-dois-nomes` do capítulo 3 (e qualquer desenho com hebraico) provavelmente tem o mesmo defeito.
+- Testes que rodaram: validador 0 erros; PDF capitulo-07 com 22 páginas, 2/2 QR lidos; inspecionar sem transbordo nem página quase vazia; folha de contato olhada. A web não foi gerada.
