@@ -235,3 +235,6 @@ figure.par .grande { display: block; font-family: var(--f-display); font-style: 
 .curio-t { font-family: var(--f-display) !important; font-weight: 480 !important; font-size: 10.6pt !important; letter-spacing: 0 !important; line-height: 1.22; color: var(--tinta) !important; margin: 0 0 1mm !important; }
 .curio p { font-size: 8.9pt; line-height: 1.45; text-align: left; hyphens: manual; }
 .curio-r { font-family: var(--f-rotulo); font-size: 6.4pt; color: var(--teal-tinta); letter-spacing: .02em; }
+.bibliografia-r { columns: 2; column-gap: 5mm; }
+.bibliografia-r > h1, .bibliografia-r > .intro { column-span: all; }
+.bibliografia-r ol { font-size: 5.9pt; line-height: 1.35; }
