@@ -11,6 +11,9 @@ Toda viagem deixa umas histórias que a gente repete depois. Este capítulo junt
 
 ## História e arqueologia
 
+::: vinheta escavacao
+:::
+
 ::: curiosidade Meio milhão de anos numa encosta
 O Monte Carmelo guarda quatro cavernas inscritas pela UNESCO em 2012: Tabun, Jamal, el-Wad e Skhul, na encosta oeste, a uns 4 km do mar. Os sedimentos acumulados lá dentro cobrem pelo menos 500 mil anos.[[C09-001]]
 :::
@@ -67,6 +70,9 @@ O Santuário do Livro, pavilhão do Museu de Israel feito para os Manuscritos do
 
 ## Geografia e natureza
 
+::: vinheta passaro
+:::
+
 ::: curiosidade A ave do país tem crista
 Em maio de 2008, nos 60 anos do Estado, o presidente Shimon Peres anunciou a poupa como ave nacional. Ela venceu uma votação aberta com mais de 150 mil participantes e dez aves na disputa, com cerca de 35% dos votos.[[C09-033]]
 :::
@@ -88,6 +94,9 @@ A Netafim, empresa de irrigação por gotejamento, nasceu em 1965 no kibutz Hatz
 :::
 
 ## Língua
+
+::: vinheta letras
+:::
 
 ::: curiosidade O ano agrícola numa pedra
 O Calendário de Gezer é uma tabuinha de calcário achada em Gezer em 1908 pelo arqueólogo Macalister. Lista o trabalho de um ano no campo: azeitona, semeadura, linho, cevada, vinha, frutas de verão.[[C09-021]] A escavação não registrou as camadas, então a data é incerta, em geral posta perto do século X a.C. A escrita é lida como fenícia ou paleo-hebraica, e ninguém sabe ao certo se era exercício escolar, registro de impostos ou canção.[[C09-022]]
@@ -119,6 +128,9 @@ O Banco de Israel apresenta as notas com os quatro poetas.
 :::
 
 ## Sociedade e símbolos
+
+::: vinheta vela
+:::
 
 ::: curiosidade A menorá que veio de Roma
 O emblema do Estado é uma menorá de sete braços entre dois ramos de oliveira, com a palavra "Israel" embaixo.[[C09-023]] Foi escolhido em 10 de fevereiro de 1949, a partir de um desenho dos irmãos Gabriel e Maxim Shamir, e a menorá segue a do relevo do Arco de Tito, em Roma.[[C09-029]]
@@ -155,6 +167,9 @@ Em abril de 2019, a sonda Beresheet, da ONG SpaceIL e das Indústrias Aeroespaci
 
 ## Gastronomia
 
+::: vinheta tamareira
+:::
+
 ::: curiosidade O salgadinho que entrou num estudo médico
 No estudo LEAP, publicado em 2015 no New England Journal of Medicine, 640 bebês de 4 a 11 meses com eczema grave ou alergia a ovo foram sorteados para comer amendoim ou evitá-lo. O amendoim chegava em forma de Bamba, o salgadinho israelense.[[C09-042]] Entre os que começaram com teste cutâneo negativo, a alergia aos 5 anos foi de 13,7% no grupo que evitou e de 1,9% no que comeu.[[C09-043]] Isso é resultado de pesquisa, não conselho: quem decide é o pediatra.
 :::
@@ -175,8 +190,11 @@ remete: Massada está no capítulo 4.
 
 ## Tradições
 
+::: vinheta calendario
+:::
+
 ::: curiosidade Ano-novo para as árvores
-A Mishná abre o tratado de Rosh Hashaná com quatro começos de ano, e um deles é o das árvores. A escola de Shamai o punha no primeiro dia do mês de Shevat; a de Hilel, no dia 15. O nome Tu BiShvat quer dizer justamente "15 de Shevat".[[C09-045]][[C09-045]]
+A Mishná abre o tratado de Rosh Hashaná com quatro começos de ano, e um deles é o das árvores. A escola de Shamai o punha no primeiro dia do mês de Shevat; a de Hilel, no dia 15. O nome Tu BiShvat quer dizer justamente "15 de Shevat".[[C09-045]]
 :::
 
 ::: curiosidade Em Jerusalém, o Purim chega um dia depois
@@ -189,6 +207,9 @@ Em 2008, o Knesset fez do Sigd, festa dos judeus etíopes, um feriado do Estado,
 :::
 
 ## Cultura contemporânea
+
+::: vinheta camera
+:::
 
 ::: curiosidade Doze tribos em vidro
 Na sinagoga do hospital Hadassah, em Ein Kerem, Jerusalém, Marc Chagall fez 12 vitrais, um para cada tribo de Israel, a partir das bênçãos de Jacó (Gênesis 49) e de Moisés (Deuteronômio 33). Foram inaugurados em fevereiro de 1962, nos 50 anos da organização Hadassah.[[C09-049]]
@@ -214,6 +235,11 @@ A segunda vitória veio jogando em casa: o festival de 1979 foi realizado em Jer
 A primeira Macabíada, competição de atletas judeus de vários países, foi disputada em Tel Aviv de 28 de março a 2 de abril de 1932, com cerca de 390 atletas. A maior parte das fontes fala em 18 países, mas a conta varia.[[C09-053]]
 :::
 
+## Compreensão da leitura
+
+::: vinheta lupa
+:::
+
 ::: quiz pegadinha É comum ouvir que o Hatikvá é o hino oficial de Israel por lei desde a fundação do Estado. Desde quando ele é hino por lei?
 - [ ] Desde 1948 | É a versão que circula. A lei veio bem depois.[[C09-025]]
 - [x] Desde 2004 | Em novembro de 2004, uma emenda à lei da bandeira e do emblema de 1949 adotou o Hatikvá como hino.[[C09-025]]
@@ -235,4 +261,50 @@ A primeira Macabíada, competição de atletas judeus de vários países, foi di
 ::: vf O túmulo achado no Herodium em 2007 trazia uma inscrição com o nome de Herodes.
 resposta: falso
 Não havia ossos nem inscrição, e por isso a identificação ainda é discutida.[[C09-010]]
+:::
+
+::: vf Segundo a UNESCO, neandertais e humanos modernos viveram juntos, ao mesmo tempo, nas cavernas do Carmelo.
+resposta: falso
+A UNESCO fala de um mesmo quadro cultural do Paleolítico Médio, o musteriense, e não de convivência no mesmo dia: as camadas mostram que os dois grupos passaram pela região.[[C09-002]]
+:::
+
+::: quiz pegadinha No vale de Timna, o que o radiocarbono resolveu?
+- [x] A data do auge da produção de cobre, na primeira metade do século X a.C. | O carbono dá a data; quem trabalhava ali continua em discussão.[[C09-005,C09-006]]
+- [ ] Que as minas eram do rei Salomão | Esse é o nome que a imprensa preferiu; a Universidade de Tel Aviv fala de uma sociedade local, provavelmente os primeiros edomitas.[[C09-006]]
+- [ ] Que as minas eram egípcias, do século XIII a.C. | Essa era a datação anterior, que as novas datações deixaram para trás.[[C09-005,C09-006]]
+:::
+
+::: associe Associe cada sítio ao que ele guarda.
+- Cavernas do Carmelo | Sedimentos de pelo menos 500 mil anos[[C09-001]]
+- Maresha e Bet Guvrin | Cerca de 3.500 câmaras escavadas no giz[[C09-004]]
+- Bet She'arim | Inscrições em grego, aramaico, hebraico e palmirense[[C09-014]]
+- Ketef Hinom | Dois rolinhos de prata com a bênção sacerdotal[[C09-015]]
+- Timna | Centenas de fornos e camadas de escória de cobre[[C09-005]]
+:::
+
+::: complete Em 2008, numa votação aberta, a ave escolhida como ave nacional de Israel foi a ___.
+resposta: poupa
+explicacao: Venceu entre dez aves, com cerca de 35% dos votos, e foi anunciada por Shimon Peres nos 60 anos do Estado.[[C09-033]]
+:::
+
+::: complete Em 2017, a água dessalinizada do Mediterrâneo respondia por ___% do consumo de água de Israel.
+resposta: 25
+explicacao: Em 2000 era 0%. O número se refere a todo o consumo, não só à água de beber.[[C09-040]]
+:::
+
+::: ordene Ponha em ordem, do mais antigo ao mais recente.
+- Macalister acha o Calendário de Gezer.[[C09-021]]
+- Tel Aviv recebe a primeira Macabíada.[[C09-053]]
+- Einstein recusa a presidência de Israel.[[C09-031]]
+- Abre o Santuário do Livro, no Museu de Israel.[[C09-019]]
+- A seca revela o barco de madeira no Mar da Galileia.[[C09-007]]
+- Netta Barzilai vence o Eurovisão em Lisboa.[[C09-050]]
+:::
+
+::: aberta No Calendário de Gezer, o que se sabe e o que continua incerto?
+resposta: Sabe-se o que ele lista, o trabalho de um ano no campo, e que foi achado em Gezer em 1908. A data é incerta porque a escavação não registrou as camadas (em geral, perto do século X a.C.), e ainda se discute a escrita e se era exercício, registro de impostos ou canção.[[C09-021,C09-022]]
+:::
+
+::: aberta O que a cúpula branca e o muro negro do Santuário do Livro querem lembrar?
+resposta: A cúpula reproduz a tampa dos jarros em que os primeiros manuscritos foram achados, e o branco da cúpula diante do basalto negro lembra a luta entre os "Filhos da Luz" e os "Filhos das Trevas" descrita nos manuscritos.[[C09-020]]
 :::

@@ -19,6 +19,9 @@ Na data da consulta, 21 de outubro de 2026, o alerta consular do Itamaraty para 
 
 ## Segurança: a orientação oficial vem primeiro
 
+::: vinheta placa
+:::
+
 Este livro não dá conselho de segurança. Quem orienta o viajante brasileiro é o Itamaraty, pelos alertas consulares que publica no portal gov.br, e a Embaixada do Brasil em Tel Aviv. Dentro de Israel, os alertas à população saem do Comando da Frente Interna (em inglês, Home Front Command), das Forças de Defesa de Israel.[[C08-008]]
 
 ::: aviso Segurança: o que diziam as fontes oficiais em 21 de outubro de 2026
@@ -35,6 +38,9 @@ O alerta consular do Itamaraty para o Oriente Médio.
 Uma recomendação do Itamaraty pode mudar nos dois sentidos, e o livro não tem como acompanhar. Quem tem viagem marcada acompanha as fontes acima até o dia do embarque e durante a estadia, e leva em conta também os alertas dos países onde fará conexão.
 
 ## Documentos e entrada
+
+::: vinheta documento
+:::
 
 ### Visto e prazo de permanência
 
@@ -78,6 +84,9 @@ As quatro paradas da viagem em que uma regra pega o viajante desprevenido.[[C08-
 
 ## No aeroporto
 
+::: vinheta aviao
+:::
+
 Para voos internacionais saindo do Ben Gurion, a Autoridade de Aeroportos de Israel pede que o passageiro chegue três horas antes da partida. Na inspeção de segurança, ele mostra o passaporte e a passagem ou o cartão de embarque, e responde a perguntas de segurança sobre o voo.[[C08-025]] A mesma autoridade recomenda conferir, antes de sair para o aeroporto, de qual terminal parte o voo.[[C08-044]]
 
 Os voos também mudam. Uma página do governo de Israel para turistas que querem deixar o país, atualizada em março de 2026, avisava que os voos de saída mudavam com frequência por razões de segurança.[[C08-045]] Confirme a situação do voo com a companhia aérea no dia, e as regras de bagagem também com ela.
@@ -87,6 +96,9 @@ Os voos também mudam. Uma página do governo de Israel para turistas que querem
 Para quem precisa de visto (eVisa-B2), o seguro-saúde válido por toda a estada está entre os documentos exigidos. Nas páginas oficiais da ETA-IL vistas na consulta, ele não aparece como condição.[[C08-028]] Exigido ou não, o seguro pesa no bolso de quem adoece: a prefeitura de Tel Aviv informa que o turista com seguro do próprio país paga o atendimento e depois pede o reembolso com o recibo.[[C08-046]] Leia as condições da apólice antes de embarcar.
 
 ## Dinheiro, transporte e telefone
+
+::: vinheta onibus
+:::
 
 ### Moeda
 
@@ -126,6 +138,9 @@ A tomada brasileira da norma NBR 14136 e as tomadas de Israel, em desenho esquem
 
 ## Shabat, lugares sagrados e etiqueta
 
+::: vinheta vela
+:::
+
 O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico, de sexta à noite a sábado à noite, e é ele que explica os trens parados e os ônibus de fim de semana descritos acima.[[C08-031,C08-033]] Pergunte ao hotel como funcionam a recepção, o restaurante e o elevador nesses dias.
 
 No Muro Ocidental, a fundação que administra o lugar pede roupa adequada aos visitantes e, no Shabat e nos feriados judaicos, que não usem aparelhos eletrônicos nem tirem fotos.[[C08-038]] As regras de igrejas e mesquitas não foram confirmadas nesta edição; confira com a administração de cada lugar antes da visita. Os capítulos 3 e 4 contam a história desses lugares, e o capítulo 5 fala do jeito direto de falar, o dúgri.
@@ -136,6 +151,9 @@ Se a visita ao Muro Ocidental cair num sábado, repare quantas pessoas estão co
 
 ## Calor, água e sol
 
+::: vinheta sol
+:::
+
 No deserto, o número que importa é o de litros. A Autoridade de Natureza e Parques de Israel pede, em En Gedi, pelo menos 5 litros de água por pessoa por dia, chapéu e calçado de caminhada, sem contar com as fontes naturais para beber; no Nachal Prat, pelo menos 4,5 litros por pessoa; em Avdat, chapéu e água, porque a água da fonte não é potável.[[C08-041]]
 
 ::: figura agua-no-deserto
@@ -144,21 +162,9 @@ Cinco litros por pessoa por dia: a orientação oficial em En Gedi.[[C08-041]]
 
 O calor também muda o horário. Em dias muito quentes, trilhas fecham, e em Massada a última subida pelo Caminho da Serpente é antecipada conforme a temperatura.[[C08-049]] A chuva traz o risco oposto: em En Gedi há perigo de enchente no inverno, na primavera e no outono, e a orientação é não andar nem atravessar leitos de riacho nessas estações.[[C08-050]] Massada trabalha com as previsões do Serviço Meteorológico de Israel, e no Nachal Prat a orientação é pedir aos guardas informação atualizada antes de sair para a trilha.[[C08-051]] O capítulo 1 mostra como a chuva e a temperatura variam por região e por estação.
 
-::: quiz pegadinha Você tem um passaporte brasileiro e vai a Israel a turismo. O que precisa pedir antes de embarcar?
-- [ ] Um visto de turismo no consulado | 
-- [x] A ETA-IL, no portal oficial terminado em gov.il | Brasileiros são isentos de visto de turismo e, por isso, precisam da autorização eletrônica, pedida só no site do governo.[[C08-017,C08-011,C08-015]]
-- [ ] Nada: basta o passaporte | 
-:::
+## Antes de embarcar
 
-::: vf No ônibus, dá para pagar a passagem em dinheiro ao motorista.
-resposta: falso
-Dinheiro não é aceito a bordo. Paga-se com o Rav-Kav, com um aplicativo ou, em linhas selecionadas, com cartão de crédito.[[C08-032]]
-:::
-
-::: quiz Quantos litros de água por pessoa por dia a Autoridade de Natureza e Parques pede para En Gedi?
-- [ ] Pelo menos 1 litro | 
-- [ ] Pelo menos 2 litros | 
-- [x] Pelo menos 5 litros | E sem contar com as fontes naturais para beber.[[C08-041]]
+::: vinheta mala
 :::
 
 ::: aviso Confira antes de viajar
@@ -179,4 +185,72 @@ Todas as informações deste capítulo foram consultadas em 21 de outubro de 202
 - Falei com o meu banco sobre o cartão no exterior e com a operadora sobre o celular.
 - Levo adaptador para tomadas C e H e conferi se os carregadores aceitam 230 V.
 - Para trilhas no deserto: água de sobra, chapéu e a previsão do dia.
+:::
+
+## Compreensão da leitura
+
+::: vinheta lupa
+:::
+
+::: quiz pegadinha Você tem um passaporte brasileiro e vai a Israel a turismo. O que precisa pedir antes de embarcar?
+- [ ] Um visto de turismo no consulado | 
+- [x] A ETA-IL, no portal oficial terminado em gov.il | Brasileiros são isentos de visto de turismo e, por isso, precisam da autorização eletrônica, pedida só no site do governo.[[C08-017,C08-011,C08-015]]
+- [ ] Nada: basta o passaporte | 
+:::
+
+::: vf No ônibus, dá para pagar a passagem em dinheiro ao motorista.
+resposta: falso
+Dinheiro não é aceito a bordo. Paga-se com o Rav-Kav, com um aplicativo ou, em linhas selecionadas, com cartão de crédito.[[C08-032]]
+:::
+
+::: quiz Quantos litros de água por pessoa por dia a Autoridade de Natureza e Parques pede para En Gedi?
+- [ ] Pelo menos 1 litro | 
+- [ ] Pelo menos 2 litros | 
+- [x] Pelo menos 5 litros | E sem contar com as fontes naturais para beber.[[C08-041]]
+:::
+
+::: quiz Por que quem desembarca no Ben Gurion numa sexta à tarde pode ficar sem trem para Jerusalém?
+- [x] Porque os trens param na tarde de sexta e só voltam no sábado depois do pôr do sol | É o Shabat: o trem para Jerusalém não roda, e a estação do aeroporto tem horário reduzido na sexta.[[C08-031]]
+- [ ] Porque o trem só roda com reserva feita pela ETA-IL | A ETA-IL é a autorização de entrada, não tem nada a ver com o trem; o que pesa é o Shabat.[[C08-011,C08-031]]
+- [ ] Porque a estação do aeroporto fecha toda tarde | Não: ela tem horário reduzido na sexta e reabre na noite de sábado.[[C08-031]]
+:::
+
+::: vf Com a ETA-IL aprovada, o visitante não passa pelo controle de fronteira na chegada.
+resposta: falso
+A autorização eletrônica não substitui o controle de fronteira: todo visitante passa por ele.[[C08-022]]
+:::
+
+::: associe Associe cada lugar à orientação oficial para quem visita.
+- En Gedi | Pelo menos 5 litros de água por pessoa por dia[[C08-041]]
+- Nachal Prat | Pelo menos 4,5 litros de água por pessoa[[C08-041]]
+- Avdat | Levar água: a da fonte não é potável[[C08-041]]
+- Massada | Última subida pelo Caminho da Serpente antecipada no calor[[C08-049]]
+- Muro Ocidental | Sem fotos nem eletrônicos no Shabat e nos feriados[[C08-038]]
+:::
+
+::: complete A ETA-IL custa NIS ___, pagos com cartão de crédito e sem reembolso.
+resposta: 25
+explicacao: E vale para várias viagens, por até dois anos ou até o vencimento do passaporte.[[C08-012,C08-013]]
+:::
+
+::: complete Para voos internacionais, a Autoridade de Aeroportos pede que o passageiro chegue ao Ben Gurion ___ horas antes da partida.
+resposta: três / 3
+explicacao: Na inspeção de segurança, ele mostra passaporte e passagem e responde a perguntas sobre o voo.[[C08-025]]
+:::
+
+::: ordene Ponha em ordem, do mais antigo ao mais recente.
+- O novo shekel substitui o shekel.[[C08-029]]
+- O Decreto nº 3.549 promulga a isenção de visto para brasileiros.[[C08-017]]
+- Tel Aviv lança o Naim BaSofash, ônibus de fim de semana.[[C08-052]]
+- A ETA-IL começa em fase de teste.[[C08-021]]
+- A ETA-IL passa a ser obrigatória.[[C08-011]]
+- O Itamaraty publica o alerta consular para o Oriente Médio consultado neste livro.[[C08-001]]
+:::
+
+::: aberta Se o brasileiro não precisa de visto para turismo, por que precisa pedir a ETA-IL?
+resposta: Justamente por ser isento: a ETA-IL é exigida de quem viaja com passaporte de país isento de visto. E ela não dispensa nada na chegada, porque todo visitante passa pelo controle de fronteira.[[C08-011,C08-017,C08-022]]
+:::
+
+::: aberta Por que, na dúvida sobre a validade do passaporte, vale seguir a regra dos seis meses?
+resposta: Porque as fontes não concordam: a Sérvia e a Universidade de Tel Aviv falam em seis meses a partir da entrada, e o israel.travel em três meses além da chegada. Seis meses atende às duas versões.[[C08-019]]
 :::
