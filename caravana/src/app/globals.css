@@ -1,0 +1,178 @@
+@import 'tailwindcss';
+
+/*
+  Minha Caravana Digital: tokens de design.
+  Referencia completa em docs/DESIGN_SYSTEM.md.
+
+  Duas camadas de cor:
+  1. a paleta da plataforma (papel, areia, pedra, tinta, mar, ocre), fixa;
+  2. a cor da agencia (--brand, --brand-ink, --brand-text, --accent), definida
+     por pagina a partir do retrato publicado (src/lib/theme.ts calcula as
+     variantes com contraste minimo de 4,5:1).
+*/
+
+@theme {
+  --color-paper: #faf6ee;
+  --color-paper-raised: #fffdf8;
+  --color-sand: #efe6d4;
+  --color-sand-deep: #e2d5bc;
+  --color-stone-100: #ebe5da;
+  --color-stone-200: #ddd5c6;
+  --color-stone-300: #c9bfad;
+  --color-stone-500: #8e8372;
+  --color-stone-600: #6f6556;
+  --color-stone-700: #554c3f;
+  --color-ink: #17283a;
+  --color-ink-soft: #3b4a59;
+  --color-sea: #1f4a6b;
+  --color-sea-deep: #14324a;
+  --color-ochre: #a8702b;
+  --color-ochre-soft: #f1e1c4;
+  --color-terracotta: #9e4f2d;
+  --color-olive: #56633a;
+  --color-success: #2b6a4c;
+  --color-success-soft: #e1eee5;
+  --color-danger: #a1382a;
+  --color-danger-soft: #f6e2dc;
+  --color-warning: #8a5d0f;
+  --color-warning-soft: #f6ead0;
+
+  --font-display: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-hebrew: 'Noto Sans Hebrew Variable', 'Noto Sans Hebrew', 'Arial Hebrew', sans-serif;
+  --font-hebrew-display: 'Frank Ruhl Libre Variable', 'Noto Sans Hebrew Variable', serif;
+
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1rem;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.3rem;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65rem;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.6rem;
+  --text-display-m: 1.75rem;
+  --text-display-m--line-height: 2rem;
+  --text-display-l: 2.25rem;
+  --text-display-l--line-height: 2.45rem;
+  --text-display-xl: 3rem;
+  --text-display-xl--line-height: 3.1rem;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-card: 0 1px 0 rgb(23 40 58 / 0.05), 0 10px 24px -16px rgb(23 40 58 / 0.25);
+  --shadow-float: 0 1px 0 rgb(23 40 58 / 0.06), 0 18px 40px -18px rgb(23 40 58 / 0.4);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Cor da agencia: utilitarios que leem variaveis definidas em tempo de execucao. */
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-text: var(--brand-text);
+  --color-brand-tint: var(--brand-tint);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+}
+
+:root {
+  --brand: #1f4a6b;
+  --brand-ink: #ffffff;
+  --brand-text: #1f4a6b;
+  --brand-tint: #e6ecf0;
+  --accent: #a8702b;
+  --accent-text: #8a5b20;
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hebraico: isolado da direcao do texto em volta, sempre na fonte com nikud. */
+.he {
+  font-family: var(--font-hebrew);
+  unicode-bidi: isolate;
+  font-feature-settings: 'ccmp', 'mark', 'mkmk';
+}
+.he-display {
+  font-family: var(--font-hebrew-display);
+  unicode-bidi: isolate;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-ochre-soft);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Texto editorial: medida confortavel e hifenizacao em portugues. */
+.prose-editorial p {
+  hyphens: auto;
+}
+
+/* Entrada discreta; some para quem pediu menos movimento. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: scale(1.35) rotate(-14deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.96) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(-6deg);
+  }
+}
+.anim-rise {
+  animation: rise 420ms var(--ease-out-soft) both;
+}
+.anim-stamp {
+  animation: stamp 520ms var(--ease-out-soft) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-rise,
+  .anim-stamp {
+    animation: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Area segura do iPhone para a barra inferior. */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
