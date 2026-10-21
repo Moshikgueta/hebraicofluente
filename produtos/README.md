@@ -2,7 +2,7 @@
 
 A coleção **Guias Hebraico Fluente**, linha "Para viajar a Israel". Primeiro título: **Hebraico de Sobrevivência em Israel**. Tudo aqui é separado da plataforma: nada em `app/`, `worker/` ou `data/` lê esta pasta, e nada nesta pasta muda o curso.
 
-**Estado (21/10/2026):** conteúdo e PDF em primeira versão completa, hebraico **aguardando a revisão do dono**, áudio **não gravado**, **nada à venda**. A integração com a loja (fases 5 e 6 do briefing) está proposta abaixo e não foi feita, por um motivo que o CLAUDE.md manda levantar antes: ver "Antes de vender".
+**Estado (21/10/2026):** versão 0.2.0, redesenho editorial (relatórios em `sobrevivencia-israel/relatorios/`): PDF A4 de 37 páginas e versão de celular, hebraico **aguardando a revisão do dono**, áudio **não gravado**, **nada à venda**. A integração com a loja (fases 5 e 6 do briefing) está proposta abaixo e não foi feita, por um motivo que o CLAUDE.md manda levantar antes: ver "Antes de vender".
 
 ## Gerar de novo
 
@@ -15,7 +15,7 @@ npm run pdf:previa    # o mesmo, mais um PNG de cada página em saida/previa-*/
 
 Precisa do Chromium que já vem na máquina (`HF_CHROMIUM`, ou o do Playwright em `/opt/pw-browsers`; nunca `playwright install`), de `pdffonts`/`pdfinfo`/`pdftoppm` (poppler) e do Playwright, local ou global. As fontes saem de `assets/fonts/`, as mesmas do site.
 
-Saída em `sobrevivencia-israel/saida/`, que **não vai para o git** (`.gitignore`): o repositório é público, e o PDF é o produto pago.
+Saída em `sobrevivencia-israel/saida/` (PDFs, prévias e `paginacao-*.json` com a ocupação de cada página), que **não vai para o git** (`.gitignore`): o repositório é público, e o PDF é o produto pago.
 
 ## Onde mora o quê
 
@@ -40,6 +40,8 @@ produtos/
     textos/guia.json               2. textos editoriais: capa, introdução, aberturas, quadros
     audio/README.md, manifesto.json 5. áudio: o que gravar e como ligar
     REVISAO.md                     o documento de revisão para o dono (gerado)
+    relatorios/                    melhorias, auditoria linguística, verificação factual,
+                                   paginação e checklist da versão atual
     saida/                         7. PDF final e 8. prévias (fora do git)
 ```
 
@@ -47,6 +49,8 @@ Templates (3) e recursos visuais (4) estão em `_motor/`: os componentes em `mon
 
 ## Como o gerador garante a qualidade
 
+- **Diagramação por medida, em grade de duas colunas (A4).** O paginador mede cada bloco, enche as colunas como um jornal e equilibra o fim de cada sequência; blocos `largo` (abertura de capítulo, tabela, galeria) ocupam a largura. No A4, capítulos, gabarito e índice correm num fluxo só, e cada um abre página nova só se a atual estiver quase cheia (`quebra` em `montar.mjs`). Detalhes no cabeçalho de `_motor/paginar.js`.
+- **Componentes:** entrada de vocabulário (destaque e "você vai ouvir" por campo do item), tabela dos números, quadros (cultura, dica, curiosidade, pronúncia, atenção, referência, figura, situação real, você vai ouvir, emergência, anotar), revisão rápida, diálogo com pergunta de compreensão, desafios, gabarito e índice. Todos declarados em `textos/guia.json` ou no conteúdo, nenhum escrito à mão no HTML.
 - **Nada se diagrama à mão.** O HTML sai como uma fila de blocos; o paginador, no navegador e com as fontes carregadas, enche cada página e abre outra quando o próximo bloco não cabe. Um cartão, um quadro ou uma fala nunca se partem; um título desce junto com o bloco seguinte. Trocar uma tradução e rodar `npm run pdf` rediagrama o guia inteiro, renumera o índice e o sumário.
 - **A geração falha** (código de saída 1) se: a conferência acusar erro; uma fonte não carregar; um bloco não couber numa página inteira; sobrar página vazia; um link interno não tiver destino; o PDF embutir uma fonte que não é nossa (sinal de glifo fora das nossas fontes) ou deixar alguma sem embutir.
 - **Avisa** páginas com mais de 45% livre, para o olho decidir.
@@ -63,7 +67,7 @@ A transliteração segue a convenção do curso (`data/translit.json`, `pt-BR-pr
 
 ## Áudio
 
-Ver `sobrevivencia-israel/audio/README.md`. Em resumo: 196 faixas listadas no manifesto, nenhuma gravada; o PDF não promete áudio nem traz QR. O QR é por **capítulo** (uma página de áudio por seção, não 100 códigos) e só é gerado quando `audio.base` tiver uma URL verificada. O painel `/admin/gravar` da plataforma é o candidato natural para gravar: hoje ele trabalha com o catálogo do curso (`data/audio.json`, ids por hash do hebraico), e precisaria aceitar uma segunda lista, a deste manifesto.
+Ver `sobrevivencia-israel/audio/README.md`. Em resumo: 219 faixas listadas no manifesto, nenhuma gravada; o PDF não promete áudio nem traz QR. O QR é por **capítulo** (uma página de áudio por seção, não 100 códigos) e só é gerado quando `audio.base` tiver uma URL verificada. O painel `/admin/gravar` da plataforma é o candidato natural para gravar: hoje ele trabalha com o catálogo do curso (`data/audio.json`, ids por hash do hebraico), e precisaria aceitar uma segunda lista, a deste manifesto.
 
 ## Auditoria da plataforma (fase 1) e a integração proposta (fases 5 e 6)
 

@@ -70,14 +70,18 @@ for (const formato of soFormato ? [soFormato] : produto.meta.formatos) {
   problemas.forEach(p => console.error(`ERRO [${formato}]: ${p}`));
   if (problemas.length) falhou = true;
 
-  // Páginas de fluxo muito vazias (mais de 45% livre e não são a última do
-  // capítulo) são aviso: o olho decide se o respiro é bom ou é buraco.
-  const buracos = rel.sobraPorPagina.map((s, i) => [i + 1, s]).filter(([, s]) => s !== null && s > 0.45);
-  if (buracos.length) console.log(`aviso [${formato}]: páginas com mais de 45% livre: ${buracos.map(([p, s]) => `${p} (${Math.round(s * 100)}%)`).join(', ')}`);
+  // Ocupação de cada página de conteúdo: a meta editorial é 70% a 90%.
+  // Abaixo de 55%, aviso; o olho decide se é respiro (fim de seção) ou buraco.
+  const ocup = rel.ocupacao.map((o, k) => [k + 1, o]).filter(([, o]) => o !== null);
+  const baixas = ocup.filter(([, o]) => o < 0.55);
+  const media = ocup.reduce((a, [, o]) => a + o, 0) / (ocup.length || 1);
+  if (baixas.length) console.log(`aviso [${formato}]: páginas com menos de 55% ocupadas: ${baixas.map(([p, o]) => `${p} (${Math.round(o * 100)}%)`).join(', ')}`);
+  await writeFile(path.join(saida, `paginacao-${formato}.json`), JSON.stringify({ paginas: rel.paginas, ocupacao: rel.ocupacao, capitulos: rel.capitulos, mediaOcupacao: +media.toFixed(3) }, null, 1));
 
   const pdf = path.join(saida, `${slug}-${formato}.pdf`);
-  await page.pdf({ path: pdf, preferCSSPageSize: true, printBackground: true, tagged: true, outline: true });
+  await page.pdf({ path: pdf, preferCSSPageSize: true, printBackground: true, tagged: true, outline: false });
   await page.close();
+  metadados(pdf, produto, marcadores(produto, rel));
 
   const fontes = execFileSync('pdffonts', [pdf], { encoding: 'utf8' }).trim().split('\n').slice(2);
   const estranhas = fontes.filter(l => !/(Bricolage|Instrument|NotoSerifHebrew|NotoSansHebrew)/i.test(l));
@@ -86,7 +90,7 @@ for (const formato of soFormato ? [soFormato] : produto.meta.formatos) {
   if (estranhas.length) { console.error(`ERRO [${formato}]: fonte que não é nossa no PDF (glifo fora das fontes do guia?):\n  ${estranhas.join('\n  ')}`); falhou = true; }
   const info = execFileSync('pdfinfo', [pdf], { encoding: 'utf8' });
   const paginas = +info.match(/Pages:\s+(\d+)/)[1];
-  resumo.push(`${formato}: ${paginas} páginas, ${rel.externos.length} link(s) externo(s), sobra média ${Math.round(rel.sobraMedia * 100)}% -> ${path.relative(process.cwd(), pdf)}`);
+  resumo.push(`${formato}: ${paginas} páginas, ${rel.externos.length} link(s) externo(s), ocupação média ${Math.round(media * 100)}% -> ${path.relative(process.cwd(), pdf)}`);
   if (naoEmbutidas.length) { console.error(`ERRO [${formato}]: fonte não embutida:\n  ${naoEmbutidas.join('\n  ')}`); falhou = true; }
 
   if (comPrevia) {
@@ -104,6 +108,40 @@ await gerarDerivados(produto);
 resumo.push('derivados: audio/manifesto.json, REVISAO.md');
 console.log('\n' + resumo.join('\n'));
 process.exit(falhou ? 1 : 0);
+
+// O Chromium só grava o título. Autor, assunto, palavras-chave e idioma
+// entram depois, com pypdf, sem reescrever o conteúdo (estrutura marcada,
+// marcadores e links continuam os mesmos). Sem pypdf, só avisa.
+// Marcadores: um por seção, com o título limpo. Os automáticos do Chromium
+// saem de todo título da página (90 entradas) e colam as linhas quebradas.
+function marcadores(produto, rel) {
+  const a = rel.ancoras, n2 = n => String(n).padStart(2, '0');
+  const cap = Object.fromEntries(rel.capitulos.map(c => [c.id, c.pagina]));
+  return [
+    ['Capa', 1], ['Sumário', a.sumario], [produto.textos.emergencia.titulo.split(':')[0], a.emergencia], ['Introdução', a.introducao],
+    ...produto.capitulos.map(c => [`${n2(c.n)} · ${c.titulo}`, cap[`cap-${c.n}`]]),
+    [produto.textos.gabarito.titulo, a.gabarito], [produto.textos.indice.titulo, a.indice]
+  ].filter(([, p]) => p);
+}
+
+function metadados(pdf, produto, marcas) {
+  const m = produto.meta;
+  const py = `
+import sys
+from pypdf import PdfReader, PdfWriter
+from pypdf.generic import NameObject, TextStringObject
+r = PdfReader(sys.argv[1]); w = PdfWriter(clone_from=r)
+w.add_metadata({'/Title': sys.argv[2], '/Author': sys.argv[3], '/Subject': sys.argv[4], '/Keywords': sys.argv[5], '/Creator': 'Hebraico Fluente', '/Producer': 'Hebraico Fluente (Chromium + pypdf)'})
+w._root_object[NameObject('/Lang')] = TextStringObject('pt-BR')
+import json
+for titulo, pagina in json.loads(sys.argv[6]):
+    w.add_outline_item(titulo, pagina - 1)
+w.page_mode = '/UseOutlines'
+w.write(sys.argv[1])`;
+  try {
+    execFileSync('python3', ['-c', py, pdf, `${m.titulo}: ${m.subtitulo}`, produto.textos.capa.autor, m.descricaoCurta, 'hebraico, Israel, viagem, guia, pronúncia, Hebraico Fluente', JSON.stringify(marcas)]);
+  } catch (e) { console.log(`aviso: metadados não gravados (${String(e.message).split('\n')[0]})`); }
+}
 
 async function carregarPlaywright() {
   try { return await import('playwright'); } catch {}

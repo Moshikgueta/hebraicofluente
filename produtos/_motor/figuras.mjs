@@ -78,9 +78,9 @@ function dia() {
   ${lua(84, 11)}
   <path d="M8 29 H92" stroke="${C.line}" stroke-width=".5"/>
   ${[16, 50, 84].map(x => `<circle cx="${x}" cy="29" r="1.3" fill="${C.teal}"/>`).join('')}
-  ${txt(16, 35.5, 'bóker tov', { cor: C.tealInk, peso: 600, size: 3.6 })}${txt(16, 40, 'manhã, até o meio-dia', { cor: C.muted, size: 2.6 })}
-  ${txt(50, 35.5, 'érev tov', { cor: C.tealInk, peso: 600, size: 3.6 })}${txt(50, 40, 'fim da tarde e noite,', { cor: C.muted, size: 2.6 })}${txt(50, 43.6, 'ao chegar', { cor: C.muted, size: 2.6 })}
-  ${txt(84, 35.5, 'láyla tov', { cor: C.tealInk, peso: 600, size: 3.6 })}${txt(84, 40, 'noite, ao se', { cor: C.muted, size: 2.6 })}${txt(84, 43.6, 'despedir', { cor: C.muted, size: 2.6 })}`;
+  ${txt(16, 35.5, 'bóker tov', { cor: C.tealInk, peso: 600, size: 3.6 })}${txt(16, 40, 'manhã, até o meio-dia', { cor: C.muted, size: 3.2 })}
+  ${txt(50, 35.5, 'érev tov', { cor: C.tealInk, peso: 600, size: 3.6 })}${txt(50, 40, 'fim da tarde e noite,', { cor: C.muted, size: 3.2 })}${txt(50, 43.6, 'ao chegar', { cor: C.muted, size: 3.2 })}
+  ${txt(84, 35.5, 'láyla tov', { cor: C.tealInk, peso: 600, size: 3.6 })}${txt(84, 40, 'noite, ao se', { cor: C.muted, size: 3.2 })}${txt(84, 43.6, 'despedir', { cor: C.muted, size: 3.2 })}`;
   return { titulo: 'Bom dia e as duas boas-noites', legenda: 'Em hebraico, o cumprimento muda com a hora, e a noite tem dois: um para chegar, outro para ir embora.', svg: svg(W, H, corpo, 'Linha do dia: bóker tov de manhã, érev tov ao chegar à noite, láyla tov ao se despedir à noite') };
 }
 
@@ -99,8 +99,8 @@ function semana() {
       txt(x + w / 2, sex ? 12.4 : 18.5, s, { cor, size: sex ? 2.2 : 2.5, peso: 500 });
   }).join('') +
     `<path d="M${5 * (w + g) + w * .5} 25 v2.4 H${W - w / 2} v-2.4" fill="none" stroke="${C.gold}" stroke-width=".5"/>` +
-    txt(W, 33, 'shabat: do pôr do sol de sexta à noite de sábado', { cor: C.goldInk, size: 2.4, peso: 600, ancora: 'end' }) +
-    txt(0, 27.6, 'a semana começa no domingo', { cor: C.tealInk, size: 2.4, peso: 600, ancora: 'start' });
+    txt(W, 33, 'shabat: do pôr do sol de sexta à noite de sábado', { cor: C.goldInk, size: 3.0, peso: 600, ancora: 'end' }) +
+    txt(0, 27.6, 'a semana começa no domingo', { cor: C.tealInk, size: 3.0, peso: 600, ancora: 'start' });
   return { titulo: 'A semana em Israel', legenda: 'O fim de semana é sexta e sábado. Na sexta, o comércio fecha cedo; no shabat, quase tudo para.', svg: svg(W, 36, corpo, 'A semana: domingo a quinta são dias úteis, sexta até a tarde, sábado é shabat') };
 }
 
@@ -133,13 +133,13 @@ function direcoes() {
   ${seta('M50 38 V12 M45.5 16.5 L50 12 L54.5 16.5', C.teal)}
   ${seta('M45 44 H26 M30.5 39.5 L26 44 L30.5 48.5', C.gold)}
   ${seta('M55 44 H74 M69.5 39.5 L74 44 L69.5 48.5', C.gold)}
-  ${txt(50, 7, 'yashár', { cor: C.tealInk, peso: 700, size: 4.2 })}${txt(50, 10.6, 'em frente', { cor: C.muted, size: 2.8 })}
-  ${txt(22, 43, 'smóla', { cor: C.goldInk, peso: 700, size: 4.2, ancora: 'end' })}${txt(22, 47.4, 'à esquerda', { cor: C.muted, size: 2.8, ancora: 'end' })}
-  ${txt(78, 43, 'yamína', { cor: C.goldInk, peso: 700, size: 4.2, ancora: 'start' })}${txt(78, 47.4, 'à direita', { cor: C.muted, size: 2.8, ancora: 'start' })}
+  ${txt(50, 7, 'yashár', { cor: C.tealInk, peso: 700, size: 4.2 })}${txt(50, 10.6, 'em frente', { cor: C.muted, size: 3.2 })}
+  ${txt(22, 43, 'smóla', { cor: C.goldInk, peso: 700, size: 4.2, ancora: 'end' })}${txt(22, 47.4, 'à esquerda', { cor: C.muted, size: 3.2, ancora: 'end' })}
+  ${txt(78, 43, 'yamína', { cor: C.goldInk, peso: 700, size: 4.2, ancora: 'start' })}${txt(78, 47.4, 'à direita', { cor: C.muted, size: 3.2, ancora: 'start' })}
   <path d="M14 62 H86" stroke="${C.line}" stroke-width=".8"/>
   <circle cx="14" cy="62" r="1.4" fill="${C.teal}"/><circle cx="86" cy="62" r="1.4" fill="${C.gold}"/>
   ${txt(14, 67.5, 'karóv, perto', { cor: C.tealInk, peso: 600, size: 3, ancora: 'start' })}${txt(86, 67.5, 'rachók, longe', { cor: C.goldInk, peso: 600, size: 3, ancora: 'end' })}
-  ${txt(50, 60.5, 'ze karóv? ze rachók?', { cor: C.muted, size: 2.6 })}`;
+  ${txt(50, 60.5, 'ze karóv? ze rachók?', { cor: C.muted, size: 3.2 })}`;
   return { titulo: 'O que você vai ouvir', legenda: 'Na resposta, preste atenção nestas cinco palavras. O resto, o gesto costuma explicar.', svg: svg(100, 70, corpo, 'Direções: yashár em frente, smóla à esquerda, yamína à direita; karóv perto, rachók longe') };
 }
 
@@ -149,11 +149,12 @@ function dinheiro() {
   let x = 4;
   const m = moedas.map(([v, u, r], i) => {
     const cx = x + r; x += 2 * r + 2.6;
-    const dourada = i === 0 || i === 1 || i === 5;
-    return `<circle cx="${cx}" cy="12" r="${r}" fill="${dourada ? '#E9D3A1' : '#DADCDA'}" stroke="${dourada ? C.gold : '#9AA19D'}" stroke-width=".5"/>` +
-      `<circle cx="${cx}" cy="12" r="${r - 1.1}" fill="none" stroke="${dourada ? C.gold : '#9AA19D'}" stroke-width=".25"/>` +
+    // Cor neutra para todas: a cor real de cada moeda não foi verificada
+    // em fonte oficial, e um guia não deve ensinar o que não conferiu.
+    return `<circle cx="${cx}" cy="12" r="${r}" fill="${C.sand}" stroke="${C.muted}" stroke-width=".45"/>` +
+      `<circle cx="${cx}" cy="12" r="${r - 1.1}" fill="none" stroke="${C.muted}" stroke-width=".22"/>` +
       txt(cx, 13.4, v, { peso: 700, size: r * .78, fam: 'Bricolage', cor: C.ink }) +
-      txt(cx, 12 + r + 4, u, { size: 2.3, cor: C.muted });
+      txt(cx, 12 + r + 4, u, { size: 2.88, cor: C.muted });
   }).join('');
   const notas = [['20', '#3E8E7E'], ['50', '#3E7DB0'], ['100', '#C98B2F'], ['200', '#B05A5A']];
   const n = notas.map(([v, cor], i) => {
@@ -162,9 +163,9 @@ function dinheiro() {
       `<circle cx="${nx + 15.5}" cy="35.5" r="3.4" fill="none" stroke="${cor}" stroke-width=".4" opacity=".7"/>` +
       txt(nx + 2, 37.2, `${v} ₪`, { peso: 700, size: 4, fam: 'Bricolage', cor: C.ink, ancora: 'start' });
   }).join('');
-  const corpo = `${txt(4, 2.6, 'MOEDAS', { ancora: 'start', size: 2.2, cor: C.tealInk, peso: 600, ls: .4 })}${m}
-  ${txt(4, 28, 'NOTAS', { ancora: 'start', size: 2.2, cor: C.tealInk, peso: 600, ls: .4 })}${n}`;
-  return { titulo: 'O dinheiro de Israel', legenda: 'O shekel (₪) se divide em 100 agorót. Desenho esquemático: as cores e os tamanhos das notas de verdade são outros.', svg: svg(100, 44, corpo, 'Moedas de 10 agorót, meio, 1, 2, 5 e 10 shekels; notas de 20, 50, 100 e 200 shekels') };
+  const corpo = `${txt(4, 2.6, 'MOEDAS', { ancora: 'start', size: 2.75, cor: C.tealInk, peso: 600, ls: .4 })}${m}
+  ${txt(4, 28, 'NOTAS', { ancora: 'start', size: 2.75, cor: C.tealInk, peso: 600, ls: .4 })}${n}`;
+  return { titulo: 'O dinheiro de Israel', legenda: 'O shekel (₪) se divide em 100 agorót. Desenho esquemático: as cores e os tamanhos das moedas e das notas de verdade são outros.', svg: svg(100, 44, corpo, 'Moedas de 10 agorót, meio, 1, 2, 5 e 10 shekels; notas de 20, 50, 100 e 200 shekels') };
 }
 
 /** Atá e at: o você muda com quem ouve. */

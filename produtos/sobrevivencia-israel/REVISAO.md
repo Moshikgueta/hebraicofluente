@@ -4,32 +4,28 @@ Gerado por `npm run pdf` (em produtos/) a partir do conteúdo. Não edite à mã
 
 Como revisar: marque o que mudar, ou escreva a correção ao lado, e me mande. Um item aprovado vira `"revisao": "aprovado"` em conteudo/vocabulario.json. Quando tudo estiver aprovado, `produto.json` > `revisao` passa a `aprovado` e a faixa RASCUNHO sai do PDF.
 
-**Situação:** 0 de 100 itens aprovados. 74 aparecem iguais, com as mesmas vogais, no curso de alfabetização ou no rascunho do A1; 26 são hebraico novo, escrito para este guia. Todos precisam da sua aprovação: a coincidência só diz onde já existe um precedente.
+**Situação:** 0 de 100 itens aprovados. 73 aparecem iguais, com as mesmas vogais, no curso de alfabetização ou no rascunho do A1; 27 são hebraico novo, escrito para este guia. Todos precisam da sua aprovação: a coincidência só diz onde já existe um precedente.
 
 ## Decisões que são suas
 
-- Nikud na convenção do curso de alfabetização: daguesh só em בּ כּ פּ (תוֹדָה, כַּמָה, הַשָׁעָה). Se preferir o nikud completo da norma (תּוֹדָה, כַּמָּה), é uma troca só no gerador.
-- בֶּטַח, "claro": escrevi bétach, com a força no começo. O rascunho do A1 (unidade 20) traz בְּטַח, betách. Qual é a sua pronúncia?
-- Preços na rua: o guia ensina que se ouve "shivím shékel" (número de contar e shékel no singular) e diz que a norma é outra. Confere com o que você ouve?
-- הכול, com ו, como manda a Academia; o cartão avisa que também se vê הכל.
-- Para "posso pagar com cartão?" escolhi אֶפְשָׁר בְּאַשְׁרַאי? (efshár beashrái), para fugir da dúvida bekartís/bechartís. Fica?
-- Bombeiros: usei מְכַבֵּי אֵשׁ (mechabéi esh), o nome do dia a dia, em vez de כַּבָּאוּת.
-- O ponto de partida do guia é o Brasil (bilhete GRU-TLV na capa). Caravanas saem de outras cidades; se preferir, a capa pode ter só TLV.
-- O texto da introdução e do capítulo 12 fala em primeira pessoa, como você. Confira se a voz é a sua.
+- Nikud na convenção do curso de alfabetização: daguesh só em בּ כּ פּ (תוֹדָה, כַּמָה). O capítulo 1 explica isso ao leitor. Se preferir o nikud completo da norma (תּוֹדָה, כַּמָּה), é decisão sua e uma troca em todo o conteúdo.
+- בֶּטַח, "claro": bétach, com a força no começo (a revisão linguística confirmou). O rascunho do A1 (unidade 20) traz בְּטַח, betách: vale alinhar o A1.
+- Preços na rua: o guia diz que se ouve com frequência "shivím shékel" e que a norma é outra. Confere com o que você ouve?
+- Pedir mais devagar: troquei para אֶפְשָׁר לְדַבֵּר יוֹתֵר לְאַט? (yotér leát), que corresponde a "mais devagar".
+- Socorro: o item 090 continua עֶזְרָה! (ajuda!), e o contexto ensina הַצִילוּ! (hatsílu!) como o grito em perigo. Prefere trocar o item?
+- Para "posso pagar com cartão?": אֶפְשָׁר בְּאַשְׁרַאי? (efshár beashrái). Fica?
+- Bombeiros: מְכַבֵּי אֵשׁ (mechabéi esh), o nome do dia a dia, em vez de כַּבָּאוּת.
+- As "Dicas de um israelense" e o texto da introdução e do capítulo 12 falam em primeira pessoa, como você. Confira se a voz e os conselhos são os seus.
+- O bilhete GRU-TLV da capa supõe saída do Brasil. Se preferir, a capa pode ter só TLV.
 
 ## Fatos a conferir
 
-- Shabat: a maior parte dos ônibus e dos trens para da sexta à tarde ao sábado à noite; táxis funcionam; há sherút em algumas cidades.
-- Trem liga o aeroporto Ben Gurion a Tel Aviv e a Jerusalém.
-- Gorjeta em restaurante com mesa: costume, em torno de 10% a 15%, normalmente não incluída.
-- Sacola cobrada à parte no supermercado.
-- Água da torneira potável em Israel.
-- Emergência: 100 polícia, 101 Maguén Davíd Adóm (ambulância), 102 bombeiros.
-- Elevador de shabat em muitos hotéis.
-- Placas de rua em hebraico, árabe e inglês.
-- Taxímetro: o guia orienta a pedir a corrida "im moné".
-- Dinheiro (figura do capítulo 7): moedas de 10 agorót, ½, 1, 2, 5 e 10 shekels; notas de 20, 50, 100 e 200. A figura avisa que cores e tamanhos são esquemáticos.
-- Semana (figura do capítulo 2): domingo dia útil, sexta com comércio até a tarde.
+- Shabat e transporte: verificado em fontes secundárias (ver relatorios/VERIFICACAO-FACTUAL.md). Horários de trem no shabat: conferir em rail.co.il.
+- Gorjeta: corrigida para 10% a 12%, até 15% (fontes de hotelaria; sem fonte oficial).
+- Água da torneira: "tratada e, em geral, própria para beber" (sem página do Ministério da Saúde consultada).
+- Cores das moedas: retiradas da figura (não verificadas). Valores das moedas e notas: Banco de Israel.
+- Dica do botão de parada no ônibus: não verificada em fonte; confirmar.
+- ETA-IL para brasileiros: verificada no site oficial (israel-entry.piba.gov.il); reconferir antes de vender.
 
 ## 1. Como funciona o hebraico
 
@@ -84,12 +80,12 @@ contexto: Para concordar, para dizer que está tudo bem e para responder a um co
 
 **009. בֹּקֶר טוֹב** · bóker tov · Bom dia.  
 sem vogais: בוקר טוב · igual ao curso de alfabetização · rascunho  
-contexto: Até mais ou menos o meio-dia. No café da manhã do hotel, é o que todo mundo diz.  
+contexto: Até mais ou menos o meio-dia. No café da manhã do hotel, é o cumprimento que você mais vai ouvir.  
 nota: Você pode ouvir de volta בֹּקֶר אוֹר (bóker or), manhã de luz. É só a resposta simpática.
 
-**010. עֶרֶב טוֹב** · érev tov · Boa noite (ao chegar).  
+**010. עֶרֶב טוֹב** · érev tov · Boa tarde, no fim do dia. Boa noite, ao chegar.  
 sem vogais: ערב טוב · igual ao rascunho do A1 · rascunho  
-contexto: Do fim da tarde em diante, para cumprimentar. Na volta da excursão, na recepção do hotel, no jantar.
+contexto: Do fim da tarde em diante, para cumprimentar: na volta da excursão, na recepção do hotel, no jantar.
 
 **011. לַיְלָה טוֹב** · láyla tov · Boa noite (ao se despedir).  
 sem vogais: לילה טוב · igual ao rascunho do A1 · rascunho  
@@ -97,7 +93,7 @@ contexto: Só na despedida, quando alguém vai dormir ou você vai embora à noi
 
 **012. לְהִתְרָאוֹת** · lehitraót · Até logo. Tchau.  
 sem vogais: להתראות · igual ao rascunho do A1 · rascunho  
-contexto: Para se despedir. Também se ouve só o shalóm, ou o informal bái, do inglês.
+contexto: Para se despedir. Também se ouve só o shalóm, ou o informal bai, do inglês.
 
 **013. שַׁבָּת שָׁלוֹם** · shabát shalóm · Bom shabat.  
 sem vogais: שבת שלום · igual ao curso de alfabetização · rascunho  
@@ -105,9 +101,13 @@ contexto: Da sexta-feira, já de manhã, até o sábado. Você ouve no mercado, 
 
 **014. סַבָּבָּה** · sabába · Beleza. Combinado.  
 sem vogais: סבבה · igual ao rascunho do A1 · rascunho  
-contexto: Informal. Todo israelense usa entre conhecidos e com o vendedor simpático; com um policial ou no hotel, prefira besséder.  
-nota: Veio do árabe e virou uma das palavras mais israelenses que existem.
+contexto: Informal: muito usado entre conhecidos e com o vendedor simpático. Com um policial ou na recepção do hotel, prefira besséder.  
+nota: Vem do árabe e virou uma das gírias mais conhecidas do hebraico de Israel.
 
+Hebraico dos quadros e do texto:
+
+- סְלִיחָה · slichá · Com licença. (igual ao curso de alfabetização)
+- בְּבַקָשָׁה · bevakashá · Pode passar. (igual ao curso de alfabetização)
 
 ## 3. Conhecendo pessoas
 
@@ -136,7 +136,7 @@ contexto: O jeito natural de perguntar o nome. A última palavra muda conforme a
 **019. קוֹרְאִים לִי…** · korím li… · Meu nome é…  
 sem vogais: קוראים לי… · igual ao rascunho do A1 · rascunho  
 contexto: Igual para homem e mulher. Depois vem só o seu nome: korím li Ana.  
-nota: Existe também שְׁמִי (shmí), meu nome é, mas soa formal na conversa.
+nota: Existe também שְׁמִי (shmi), meu nome é, mas soa formal na conversa.
 
 **020. נָעִים מְאֹד** · naím meód · Muito prazer.  
 sem vogais: נעים מאוד · igual ao rascunho do A1 · rascunho  
@@ -167,8 +167,12 @@ contexto: Muda conforme quem fala. Dito com sorriso, abre a conversa e avisa que
 
 **026. מְאֹד יָפֶה פֹּה** · meód yafé po · É muito bonito aqui.  
 sem vogais: מאוד יפה פה · novo · rascunho  
-contexto: Um elogio simples ao lugar, que qualquer israelense gosta de ouvir. Igual para homem e mulher.
+contexto: Um elogio simples ao lugar, que costuma ser bem recebido. Igual para homem e mulher.
 
+Hebraico dos quadros e do texto:
+
+- סְלִיחָה, אֲנִי תַיָר. אֲנִי מְדַבֵּר קְצָת עִבְרִית. · slichá, aní tayár. aní medabér ktsat ivrít. · Desculpe, sou turista. Falo um pouco de hebraico. (novo)
+- אֵין בְּעָיָה! · ein beayá! · Sem problema! (igual ao rascunho do A1)
 
 ## 4. Restaurantes e cafés
 
@@ -188,7 +192,7 @@ nota: Ao pé da letra, é possível. Não muda com o gênero de ninguém.
 **029. אֲנִי רוֹצֶה…** · aní rotsé… · Eu quero…  
 sem vogais: אני רוצה… · novo · rascunho  
 Mulher diz: אֲנִי רוֹצָה… · aní rotsá…  
-contexto: Para dizer o que você vai pedir. Em hebraico não soa rude como pode soar em português.  
+contexto: Para dizer o que você vai pedir. Com bevakashá no fim, soa educado; para um pedido ainda mais suave, use efshár.  
 nota: Escrito sem vogais, é a mesma palavra: רוצה. Só a pronúncia muda.
 
 **030. מַיִם** · máyim · Água.  
@@ -201,8 +205,8 @@ contexto: A bebida e também o lugar. Um café, o estabelecimento, é בֵּית
 
 **032. קָפֶה הָפוּךְ** · kafé hafúch · Café com leite.  
 sem vogais: קפה הפוך · novo · rascunho  
-contexto: O café mais pedido em Israel, parecido com um cappuccino. No balcão, basta dizer hafúch.  
-nota: Hafúch quer dizer virado: primeiro vai o leite, depois o café.
+contexto: Um clássico dos cafés de Israel, parecido com um cappuccino. No balcão, basta dizer hafúch.  
+nota: Hafúch quer dizer virado. A explicação mais repetida: no hafúch o leite vai primeiro e o café, por cima.
 
 **033. עִם** · im · Com.  
 sem vogais: עם · igual ao rascunho do A1 · rascunho  
@@ -229,7 +233,7 @@ contexto: O melhor elogio para quem cozinhou. Com ênfase: taím meód, muito go
 
 **038. לָקַחַת אוֹ לָשֶׁבֶת?** · lakáchat o lashévet? · Para levar ou para comer aqui?  
 sem vogais: לקחת או לשבת? · novo · rascunho  
-contexto: Você OUVE no balcão. Responda com uma das duas palavras: lakáchat (para levar) ou lashévet (para sentar).
+contexto: Você ouve no balcão, às vezes na ordem inversa (lashévet o lakáchat?). Responda com uma das duas palavras: lakáchat (para levar) ou lashévet (para sentar).
 
 **039. חֶשְׁבּוֹן** · cheshbón · A conta.  
 sem vogais: חשבון · igual ao rascunho do A1 · rascunho  
@@ -238,6 +242,11 @@ contexto: Em restaurante com mesa, a conta só vem quando você pede.
 
 Hebraico dos quadros e do texto:
 
+- מָה בִּשְׁבִילְךָ? · ma bishvilchá? · O que vai ser? (a uma mulher: ma bishviléch?) (novo)
+- עוֹד מַשֶׁהוּ? · od máshehu? · Mais alguma coisa? (novo)
+- הַכֹּל בְּסֵדֶר? · hakól besséder? · Está tudo bem? (o garçom, durante a refeição) (novo)
+- אֶפְשָׁר מַיִם, בְּבַקָשָׁה? · efshár máyim, bevakashá? · Pode me dar uma água, por favor? (igual ao rascunho do A1)
+- בֶּטַח. · bétach. · Claro. (novo)
 - חוּמוּס · chúmus · homus, pasta de grão-de-bico (igual ao rascunho do A1)
 - פָלָאפֶל · faláfel · bolinho frito de grão-de-bico (igual ao rascunho do A1)
 - שַׁקְשׁוּקָה · shakshúka · ovos cozidos em molho de tomate (igual ao rascunho do A1)
@@ -266,7 +275,7 @@ contexto: Apontando, resolve quase qualquer compra. Junte o por favor: et ze, be
 **043. יֵשׁ…?** · yesh…? · Tem…?  
 sem vogais: יש…? · igual ao curso de alfabetização · rascunho  
 exemplo: יֵשׁ מַיִם? · yesh máyim? · Tem água?  
-contexto: Para perguntar se a loja tem alguma coisa. A resposta negativa é אֵין (éin), não tem.
+contexto: Para perguntar se a loja tem alguma coisa. A resposta negativa é אֵין (ein), não tem.
 
 **044. אֲנִי רַק מִסְתַכֵּל** · aní rak mistakél · Estou só olhando.  
 sem vogais: אני רק מסתכל · novo · rascunho  
@@ -275,11 +284,11 @@ contexto: A resposta educada quando o vendedor oferece ajuda e você ainda não 
 
 **045. אֶפְשָׁר לַעֲזוֹר?** · efshár laazór? · Posso ajudar?  
 sem vogais: אפשר לעזור? · igual ao rascunho do A1 · rascunho  
-contexto: Você OUVE ao entrar numa loja. Se não precisa, responda: lo, todá.
+contexto: Você ouve ao entrar numa loja. Se não precisa, responda: lo, todá.
 
 **046. אֶפְשָׁר בְּאַשְׁרַאי?** · efshár beashrái? · Posso pagar com cartão?  
 sem vogais: אפשר באשראי? · novo · rascunho  
-contexto: Ashrái é crédito, e é a palavra que os israelenses usam para o cartão na hora de pagar.
+contexto: Ashrái quer dizer crédito, e é a palavra usada para o cartão na hora de pagar.
 
 **047. אֶפְשָׁר בִּמְזֻמָן?** · efshár bimzumán? · Vocês aceitam dinheiro?  
 sem vogais: אפשר במזומן? · novo · rascunho  
@@ -297,12 +306,19 @@ contexto: Peça quando quiser guardar o comprovante da compra.
 
 **050. שַׂקִית** · sakít · Sacola.  
 sem vogais: שקית · novo · rascunho  
-contexto: No supermercado a sacola costuma ser cobrada à parte. Se precisar: efshár sakít?
+contexto: Nas grandes redes de supermercado, a sacola plástica é cobrada à parte. Se precisar: efshár sakít?
 
 **051. קֻפָּה** · kupá · Caixa (onde se paga).  
 sem vogais: קופה · igual ao rascunho do A1 · rascunho  
 contexto: No supermercado, na loja grande e na bilheteria. Aparece em placas: קופה.
 
+Hebraico dos quadros e do texto:
+
+- בְּאַשְׁרַאי אוֹ בִּמְזֻמָן? · beashrái o bimzumán? · No cartão ou em dinheiro? (novo)
+- צָרִיךְ שַׂקִית? · tsarích sakít? · Precisa de sacola? (novo)
+- רוֹצֶה קַבָּלָה? · rotsé kabalá? · Quer o recibo? (a uma mulher: rotsá kabalá?) (novo)
+- סְלִיחָה, כַּמָה זֶה עוֹלֶה? · slichá, káma ze olé? · Com licença, quanto custa? (novo)
+- שִׁבְעִים שֶׁקֶל. · shivím shékel. · Setenta shekels. (novo)
 
 ## 6. Orientação e transporte
 
@@ -348,16 +364,16 @@ contexto: A força cai no começo: ÓTobus. O número da linha se chama קַו (
 
 **061. רַכֶּבֶת** · rakévet · Trem.  
 sem vogais: רכבת · igual ao rascunho do A1 · rascunho  
-contexto: Liga o aeroporto Ben Gurion a Tel Aviv e a Jerusalém, entre outras cidades.
+contexto: Liga o aeroporto Ben Gurion a Tel Aviv e a Jerusalém, entre outras cidades. No shabat, não circula.
 
 **062. מוֹנִית** · monít · Táxi.  
 sem vogais: מונית · igual ao rascunho do A1 · rascunho  
-contexto: Também se diz taksí. Muita gente chama o carro por aplicativo.
+contexto: Também se diz táksi. Muita gente chama o carro por aplicativo.
 
 **063. מוֹנֶה** · moné · Taxímetro.  
 sem vogais: מונה · novo · rascunho  
 exemplo: עִם מוֹנֶה, בְּבַקָשָׁה. · im moné, bevakashá. · Com taxímetro, por favor.  
-contexto: Antes de sair, peça que a corrida seja pelo taxímetro.
+contexto: Dentro da cidade, a corrida é pelo taxímetro: peça antes de sair. Entre cidades, o preço costuma ser de tabela; combine antes.
 
 **064. תַחֲנָה** · tachaná · Ponto de ônibus. Estação.  
 sem vogais: תחנה · igual ao rascunho do A1 · rascunho  
@@ -365,15 +381,19 @@ contexto: Serve para o ponto de ônibus e para a estação de trem. A próxima p
 
 **065. זֶה נוֹסֵעַ לְ…?** · ze nosséa le…? · Este vai para…?  
 sem vogais: זה נוסע ל…? · novo · rascunho  
-exemplo: זֶה נוֹסֵעַ לְתֵל אָבִיב? · ze nosséa leTél Avív? · Este vai para Tel Aviv?  
+exemplo: זֶה נוֹסֵעַ לִירוּשָׁלַיִם? · ze nosséa lirushaláyim? · Este vai para Jerusalém?  
 contexto: Para confirmar com o motorista antes de subir. O para vem grudado no nome do lugar.
 
 **066. תַחֲנָה מֶרְכָּזִית** · tachaná merkazít · Rodoviária central.  
 sem vogais: תחנה מרכזית · novo · rascunho  
-contexto: Toda cidade grande tem uma. Nas placas e no letreiro do ônibus, aparece escrito assim.
+contexto: As cidades grandes têm a sua. Nas placas e no letreiro do ônibus, aparece escrito assim.
 
 Hebraico dos quadros e do texto:
 
+- סְלִיחָה, אֵיךְ מַגִיעִים לַכּוֹתֶל? · slichá, eich magiím laKótel? · Com licença, como chego ao Muro Ocidental? (novo)
+- יָשָׁר, וְאָז שְׂמֹאלָה. · yashár, veáz smóla. · Em frente, e depois à esquerda. (igual ao rascunho do A1)
+- הַתַחֲנָה הַבָּאָה · hatachaná habaá · A próxima parada (anúncio no ônibus e no trem). (novo)
+- לְאָן? · leán? · Para onde? (o taxista) (igual ao rascunho do A1)
 - שֵׁרוּת (novo)
 
 ## 7. Números e preços
@@ -448,6 +468,8 @@ Hebraico dos quadros e do texto:
 - שִׁבְעִים · shivím · 70 (igual ao rascunho do A1)
 - שְׁמוֹנִים · shmoním · 80 (igual ao rascunho do A1)
 - תִשְׁעִים · tishím · 90 (igual ao rascunho do A1)
+- כַּמָה זֶה? · káma ze? · Quanto é? (novo)
+- עֶשְׂרִים וְחָמֵשׁ שֶׁקֶל. · esrím vechamésh shékel. · Vinte e cinco shekels. (novo)
 - שְׁלוֹשִׁים וְחָמֵשׁ (novo)
 - אֲגוֹרוֹת (igual ao rascunho do A1)
 
@@ -457,7 +479,7 @@ Palavra da abertura: יְצִיאָה · yetsiá · saída (novo)
 
 **079. כְּנִיסָה** · knissá · Entrada.  
 sem vogais: כניסה · novo · rascunho  
-contexto: Em portas, estacionamentos, estações e atrações. Entrada proibida: אֵין כְּנִיסָה (éin knissá).
+contexto: Em portas, estacionamentos, estações e atrações. Entrada proibida: אֵין כְּנִיסָה (ein knissá).
 
 **080. יְצִיאָה** · yetsiá · Saída.  
 sem vogais: יציאה · novo · rascunho  
@@ -502,15 +524,17 @@ contexto: No hotel. Atenção à מַעֲלִית שַׁבָּת (maalít shabá
 
 Hebraico dos quadros e do texto:
 
+- גְבָרִים · gvarím · homens (novo)
+- נָשִׁים · nashím · mulheres (novo)
 - מַעֲלִית שַׁבָּת (novo)
 
 ## 9. Se alguma coisa der errado
 
 Palavra da abertura: רֶגַע · réga · um momento (igual ao curso de alfabetização)
 
-**090. עֶזְרָה!** · ezrá! · Socorro! Ajuda!  
+**090. עֶזְרָה!** · ezrá! · Ajuda!  
 sem vogais: עזרה! · igual ao rascunho do A1 · rascunho  
-contexto: Para chamar a atenção numa situação séria. Em emergência, ligue também para o número certo.
+contexto: Para pedir ajuda em voz alta. Numa situação de perigo, o grito usual é outro: הַצִילוּ! (hatsílu!), socorro! E ligue para o número de emergência (capítulo 9).
 
 **091. אֲנִי לֹא מֵבִין** · aní lo mevín · Não entendo.  
 sem vogais: אני לא מבין · igual ao rascunho do A1 · rascunho  
@@ -520,11 +544,11 @@ contexto: Muda conforme quem fala. Diga sem medo: a pessoa vai tentar de outro j
 **092. אַתָה מְדַבֵּר אַנְגְלִית?** · atá medabér anglít? · Você fala inglês?  
 sem vogais: אתה מדבר אנגלית? · novo · rascunho  
 Para uma mulher: אַתְ מְדַבֶּרֶת אַנְגְלִית? · at medabéret anglít?  
-contexto: Muita gente em Israel fala inglês. Perguntar em hebraico, antes, costuma deixar a pessoa mais disposta.
+contexto: Muita gente em Israel fala inglês. Perguntar em hebraico antes é uma gentileza que costuma ser bem recebida.
 
-**093. אֶפְשָׁר לְדַבֵּר לְאַט?** · efshár ledabér leát? · Pode falar mais devagar?  
-sem vogais: אפשר לדבר לאט? · igual ao rascunho do A1 · rascunho  
-contexto: Igual para homem e mulher. Israelenses falam rápido; pedir isto é normal.
+**093. אֶפְשָׁר לְדַבֵּר יוֹתֵר לְאַט?** · efshár ledabér yotér leát? · Pode falar mais devagar?  
+sem vogais: אפשר לדבר יותר לאט? · novo · rascunho  
+contexto: Igual para homem e mulher. A fala em Israel costuma ser rápida, e pedir isto é perfeitamente normal.
 
 **094. עוֹד פַּעַם** · od páam · De novo. Mais uma vez.  
 sem vogais: עוד פעם · igual ao rascunho do A1 · rascunho  
@@ -549,11 +573,11 @@ contexto: Serve para documento, mala ou grupo. Muda conforme quem fala.
 **098. כּוֹאֵב לִי…** · koév li… · Está doendo… Dói…  
 sem vogais: כואב לי… · igual ao rascunho do A1 · rascunho  
 contexto: Apontando, resolve: koév li po, dói aqui. Com cabeça: koév li harósh.  
-nota: Com algumas partes do corpo o verbo muda para koévet, porque a palavra é feminina. Apontar e dizer po sempre funciona.
+nota: Com algumas partes do corpo o verbo muda para koévet, porque a palavra é feminina. Apontar e dizer po costuma bastar.
 
 **099. רוֹפֵא** · rofé · Médico.  
 sem vogais: רופא · igual ao rascunho do A1 · rascunho  
-contexto: Uma médica é רוֹפְאָה (rofeá). Para pedir: aní tsarích rofé.
+contexto: Uma médica é רוֹפְאָה (rofá). Para pedir: aní tsarích rofé.
 
 **100. בֵּית מִרְקַחַת** · beit mirkáchat · Farmácia.  
 sem vogais: בית מרקחת · igual ao rascunho do A1 · rascunho  
@@ -564,6 +588,7 @@ Hebraico dos quadros e do texto:
 - מִשְׁטָרָה · mishtará · Polícia (novo)
 - מָגֵן דָוִד אָדֹם · Maguén Davíd Adóm · Ambulância (novo)
 - מְכַבֵּי אֵשׁ · mechabéi esh · Bombeiros (novo)
+- סְלִיחָה, אֲנִי לֹא מוֹצֵא אֶת הַקְבוּצָה שֶׁלִי. · slichá, aní lo motsé et hakvutsá shelí. · Com licença, não encontro o meu grupo. (novo)
 
 ## 10. Mini diálogos reais
 

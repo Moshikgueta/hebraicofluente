@@ -81,12 +81,32 @@ export function conferir(produto) {
       if (!ids.has(id)) erros.push(`cap. ${c.n}: resumo cita item inexistente ${id}`);
     }
     for (const p of c.galeria?.placas ?? []) if (!ids.has(p.ref)) erros.push(`placa cita item inexistente ${p.ref}`);
+    for (const r of c.revisao ?? []) if (!ids.has(r.resposta)) erros.push(`cap. ${c.n}: revisão rápida cita item inexistente ${r.resposta}`);
+    for (const id of c.tabela ?? []) if (itens.find(x => x.id === id)?.categoria !== c.id) erros.push(`cap. ${c.n}: tabela cita item de fora do capítulo ${id}`);
+    const TIPOS = ['cultura', 'dica', 'curiosidade', 'pronuncia', 'atencao', 'referencia', 'figura', 'situacao', 'ouvir', 'emergencia', 'anotar'];
+    for (const q of c.quadros ?? []) {
+      if (!TIPOS.includes(q.tipo)) erros.push(`cap. ${c.n}: quadro de tipo desconhecido ${q.tipo}`);
+      // O hebraico novo dos quadros também segue a convenção de transliteração.
+      for (const f of [q.diz, q.resposta, ...(q.frases ?? []), ...(q.palavras ?? [])].filter(Boolean)) {
+        if (!f.nikud || !f.tr || !f.pt) erros.push(`cap. ${c.n}: quadro ${q.tipo} com frase incompleta`);
+        else conferirTranslit(f.tr.replace(/\(.*?\)/g, ''), `cap. ${c.n} ${q.tipo}`, erros);
+      }
+    }
   }
+  // A página de emergência só cita expressões que existem, e são cerca de 12.
+  const emerg = textos.emergencia?.grupos.flatMap(g => g.itens) ?? [];
+  for (const r of emerg) {
+    const it = itens.find(x => x.id === r.id);
+    if (!it) erros.push(`emergência cita item inexistente ${r.id}`);
+    else if (r.usar === 'exemplo' && !it.exemplo) erros.push(`emergência: ${r.id} não tem exemplo`);
+  }
+  if (emerg.length < 10 || emerg.length > 14) erros.push(`a página de emergência tem ${emerg.length} expressões; a meta é cerca de 12`);
 
   // ── 3. diálogos e atividades só citam o que existe ─────────────────────
   if (dialogos.length < 5) erros.push(`São ${dialogos.length} diálogos; o mínimo é 5.`);
   for (const d of dialogos) {
     for (const id of d.usa) if (!ids.has(id)) erros.push(`diálogo ${d.id}: usa item inexistente ${id}`);
+    if (d.pergunta && !(d.pergunta.resposta >= 0 && d.pergunta.resposta < d.pergunta.opcoes.length)) erros.push(`diálogo ${d.id}: resposta da pergunta fora das opções`);
     for (const f of d.falas) {
       if (!f.nikud || !f.tr || !f.pt) erros.push(`diálogo ${d.id}: fala incompleta`);
       if (!d.pessoas[f.quem]) erros.push(`diálogo ${d.id}: falante desconhecido ${f.quem}`);

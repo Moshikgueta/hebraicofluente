@@ -9,10 +9,10 @@
 - `id`: o identificador, que é também o caminho do arquivo (`itens/shalom` vira `audio/itens/shalom.mp3`);
 - `he`: o hebraico com nikud, que é o que se lê;
 - `tr` e `pt`: a pronúncia escrita e a tradução, para conferir;
-- `tipo`: `palavra`, `expressao`, `variante` (forma para mulher ou masculina dos números), `exemplo`, `quadro` (palavras dos quadros culturais), `dialogo` (o diálogo inteiro, com as duas vozes) e `fala` (cada fala do diálogo, separada);
+- `tipo`: `palavra`, `expressao`, `variante` (forma para mulher ou masculina dos números), `exemplo`, `quadro` (palavras dos quadros, situações reais e "Você vai ouvir"), `dialogo` (o diálogo inteiro, com as duas vozes) e `fala` (cada fala do diálogo, separada);
 - `gravado`: vira `true` sozinho quando o arquivo existir.
 
-São 196 faixas: 100 itens, 22 variantes, 16 exemplos, 15 palavras de quadro, 5 diálogos inteiros e as 38 falas deles. O mínimo para anunciar "áudio de todas as 100 expressões" são as 100 faixas de `itens/` (as de tipo `palavra` e `expressao`).
+São 219 faixas: 100 itens, 22 variantes, 16 exemplos, 38 frases e palavras de quadros (inclusive as situações reais e o "Você vai ouvir"), 5 diálogos inteiros e as 38 falas deles. O mínimo para anunciar "áudio de todas as 100 expressões" são as 100 faixas de `itens/` (as de tipo `palavra` e `expressao`).
 
 ## Organização
 

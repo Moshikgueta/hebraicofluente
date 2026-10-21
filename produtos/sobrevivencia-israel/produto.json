@@ -11,7 +11,7 @@
   "subtitulo": "100 palavras e expressões essenciais para sua viagem",
   "categoria": "Guia digital",
   "descricaoCurta": "Prepare seu hebraico para Israel com 100 palavras e expressões essenciais, explicações em português e exemplos de situações reais de viagem.",
-  "versao": "0.1.0",
+  "versao": "0.2.0",
   "totalItens": 100,
   "_totalItens": "Critério de contagem em conteudo/vocabulario.json (_nota). O conferir.mjs recusa outro número.",
   "estado": "rascunho",
@@ -25,11 +25,16 @@
     "_status": "em-gravacao | disponivel. 'disponivel' só com os arquivos em audio/ E as páginas de áudio publicadas e conferidas; é isso que liga os códigos QR.",
     "base": null
   },
-  "formatos": ["celular", "a4"],
+  "formatos": [
+    "celular",
+    "a4"
+  ],
   "venda": {
     "ativa": false,
     "precoSugeridoBrl": 29,
     "_": "Preço sugerido pelo dono no briefing (21/10/2026). Não é lido por nenhum checkout ainda."
   },
-  "relacionados": ["alfabetizacao"]
+  "relacionados": [
+    "alfabetizacao"
+  ]
 }

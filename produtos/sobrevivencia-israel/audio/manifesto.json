@@ -7,7 +7,7 @@
   ],
   "produto": "sobrevivencia-israel",
   "status": "em-gravacao",
-  "total": 196,
+  "total": 219,
   "gravadas": 0,
   "secoes": [
     {
@@ -30,7 +30,9 @@
         "itens/laila-tov",
         "itens/lehitraot",
         "itens/shabat-shalom",
-        "itens/sababa"
+        "itens/sababa",
+        "quadros/cap02-slicha",
+        "quadros/cap02-bevakasha"
       ]
     },
     {
@@ -54,7 +56,9 @@
         "itens/ani-im-kvutsa",
         "itens/medaber-ktsat-ivrit",
         "itens/medaber-ktsat-ivrit--variante-1",
-        "itens/meod-yafe-po"
+        "itens/meod-yafe-po",
+        "quadros/cap03-slicha-ani-tayar-ani-medaber-ktsat-ivrit",
+        "quadros/cap03-ein-beaya"
       ]
     },
     {
@@ -82,6 +86,11 @@
         "itens/lakachat-o-lashevet",
         "itens/cheshbon",
         "itens/cheshbon--exemplo",
+        "quadros/cap04-ma-bishvilcha",
+        "quadros/cap04-od-mashehu",
+        "quadros/cap04-hakol-besseder",
+        "quadros/cap04-efshar-mayim-bevakasha",
+        "quadros/cap04-betach",
         "quadros/cap04-chumus",
         "quadros/cap04-falafel",
         "quadros/cap04-shakshuka",
@@ -108,7 +117,12 @@
         "itens/kabala",
         "itens/kabala--exemplo",
         "itens/sakit",
-        "itens/kupa"
+        "itens/kupa",
+        "quadros/cap05-beashrai-o-bimzuman",
+        "quadros/cap05-tsarich-sakit",
+        "quadros/cap05-rotse-kabala",
+        "quadros/cap05-slicha-kama-ze-ole",
+        "quadros/cap05-shivim-shekel"
       ]
     },
     {
@@ -134,7 +148,11 @@
         "itens/tachana",
         "itens/ze-nosea-le",
         "itens/ze-nosea-le--exemplo",
-        "itens/tachana-merkazit"
+        "itens/tachana-merkazit",
+        "quadros/cap06-slicha-eich-magiim-lakotel",
+        "quadros/cap06-yashar-veaz-smola",
+        "quadros/cap06-hatachana-habaa",
+        "quadros/cap06-lean"
       ]
     },
     {
@@ -171,7 +189,9 @@
         "quadros/cap07-shishim",
         "quadros/cap07-shivim",
         "quadros/cap07-shmonim",
-        "quadros/cap07-tishim"
+        "quadros/cap07-tishim",
+        "quadros/cap07-kama-ze",
+        "quadros/cap07-esrim-vechamesh-shekel"
       ]
     },
     {
@@ -189,7 +209,9 @@
         "itens/modiin",
         "itens/asur",
         "itens/zehirut",
-        "itens/maalit"
+        "itens/maalit",
+        "quadros/cap08-gvarim",
+        "quadros/cap08-nashim"
       ]
     },
     {
@@ -216,7 +238,8 @@
         "itens/beit-mirkachat",
         "quadros/cap09-mishtara",
         "quadros/cap09-maguen-david-adom",
-        "quadros/cap09-mechabei-esh"
+        "quadros/cap09-mechabei-esh",
+        "quadros/cap09-slicha-ani-lo-motse-et-hakvutsa-sheli"
       ]
     },
     {
@@ -401,7 +424,7 @@
       "item": 10,
       "he": "עֶרֶב טוֹב",
       "tr": "érev tov",
-      "pt": "Boa noite (ao chegar)."
+      "pt": "Boa tarde, no fim do dia. Boa noite, ao chegar."
     },
     {
       "id": "itens/laila-tov",
@@ -1224,9 +1247,9 @@
       "tipo": "exemplo",
       "capitulo": 6,
       "item": 65,
-      "he": "זֶה נוֹסֵעַ לְתֵל אָבִיב?",
-      "tr": "ze nosséa leTél Avív?",
-      "pt": "Este vai para Tel Aviv?"
+      "he": "זֶה נוֹסֵעַ לִירוּשָׁלַיִם?",
+      "tr": "ze nosséa lirushaláyim?",
+      "pt": "Este vai para Jerusalém?"
     },
     {
       "id": "itens/tachana-merkazit",
@@ -1611,7 +1634,7 @@
       "item": 90,
       "he": "עֶזְרָה!",
       "tr": "ezrá!",
-      "pt": "Socorro! Ajuda!"
+      "pt": "Ajuda!"
     },
     {
       "id": "itens/ani-lo-mevin",
@@ -1664,8 +1687,8 @@
       "tipo": "expressao",
       "capitulo": 9,
       "item": 93,
-      "he": "אֶפְשָׁר לְדַבֵּר לְאַט?",
-      "tr": "efshár ledabér leát?",
+      "he": "אֶפְשָׁר לְדַבֵּר יוֹתֵר לְאַט?",
+      "tr": "efshár ledabér yotér leát?",
       "pt": "Pode falar mais devagar?"
     },
     {
@@ -1790,6 +1813,96 @@
       "pt": "Farmácia."
     },
     {
+      "id": "quadros/cap02-slicha",
+      "arquivo": "quadros/cap02-slicha.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 2,
+      "he": "סְלִיחָה",
+      "tr": "slichá",
+      "pt": "Com licença."
+    },
+    {
+      "id": "quadros/cap02-bevakasha",
+      "arquivo": "quadros/cap02-bevakasha.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 2,
+      "he": "בְּבַקָשָׁה",
+      "tr": "bevakashá",
+      "pt": "Pode passar."
+    },
+    {
+      "id": "quadros/cap03-slicha-ani-tayar-ani-medaber-ktsat-ivrit",
+      "arquivo": "quadros/cap03-slicha-ani-tayar-ani-medaber-ktsat-ivrit.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 3,
+      "he": "סְלִיחָה, אֲנִי תַיָר. אֲנִי מְדַבֵּר קְצָת עִבְרִית.",
+      "tr": "slichá, aní tayár. aní medabér ktsat ivrít.",
+      "pt": "Desculpe, sou turista. Falo um pouco de hebraico."
+    },
+    {
+      "id": "quadros/cap03-ein-beaya",
+      "arquivo": "quadros/cap03-ein-beaya.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 3,
+      "he": "אֵין בְּעָיָה!",
+      "tr": "ein beayá!",
+      "pt": "Sem problema!"
+    },
+    {
+      "id": "quadros/cap04-ma-bishvilcha",
+      "arquivo": "quadros/cap04-ma-bishvilcha.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 4,
+      "he": "מָה בִּשְׁבִילְךָ?",
+      "tr": "ma bishvilchá?",
+      "pt": "O que vai ser? (a uma mulher: ma bishviléch?)"
+    },
+    {
+      "id": "quadros/cap04-od-mashehu",
+      "arquivo": "quadros/cap04-od-mashehu.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 4,
+      "he": "עוֹד מַשֶׁהוּ?",
+      "tr": "od máshehu?",
+      "pt": "Mais alguma coisa?"
+    },
+    {
+      "id": "quadros/cap04-hakol-besseder",
+      "arquivo": "quadros/cap04-hakol-besseder.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 4,
+      "he": "הַכֹּל בְּסֵדֶר?",
+      "tr": "hakól besséder?",
+      "pt": "Está tudo bem? (o garçom, durante a refeição)"
+    },
+    {
+      "id": "quadros/cap04-efshar-mayim-bevakasha",
+      "arquivo": "quadros/cap04-efshar-mayim-bevakasha.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 4,
+      "he": "אֶפְשָׁר מַיִם, בְּבַקָשָׁה?",
+      "tr": "efshár máyim, bevakashá?",
+      "pt": "Pode me dar uma água, por favor?"
+    },
+    {
+      "id": "quadros/cap04-betach",
+      "arquivo": "quadros/cap04-betach.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 4,
+      "he": "בֶּטַח.",
+      "tr": "bétach.",
+      "pt": "Claro."
+    },
+    {
       "id": "quadros/cap04-chumus",
       "arquivo": "quadros/cap04-chumus.mp3",
       "gravado": false,
@@ -1828,6 +1941,96 @@
       "he": "פִּיתָה",
       "tr": "píta",
       "pt": "pão sírio"
+    },
+    {
+      "id": "quadros/cap05-beashrai-o-bimzuman",
+      "arquivo": "quadros/cap05-beashrai-o-bimzuman.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 5,
+      "he": "בְּאַשְׁרַאי אוֹ בִּמְזֻמָן?",
+      "tr": "beashrái o bimzumán?",
+      "pt": "No cartão ou em dinheiro?"
+    },
+    {
+      "id": "quadros/cap05-tsarich-sakit",
+      "arquivo": "quadros/cap05-tsarich-sakit.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 5,
+      "he": "צָרִיךְ שַׂקִית?",
+      "tr": "tsarích sakít?",
+      "pt": "Precisa de sacola?"
+    },
+    {
+      "id": "quadros/cap05-rotse-kabala",
+      "arquivo": "quadros/cap05-rotse-kabala.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 5,
+      "he": "רוֹצֶה קַבָּלָה?",
+      "tr": "rotsé kabalá?",
+      "pt": "Quer o recibo? (a uma mulher: rotsá kabalá?)"
+    },
+    {
+      "id": "quadros/cap05-slicha-kama-ze-ole",
+      "arquivo": "quadros/cap05-slicha-kama-ze-ole.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 5,
+      "he": "סְלִיחָה, כַּמָה זֶה עוֹלֶה?",
+      "tr": "slichá, káma ze olé?",
+      "pt": "Com licença, quanto custa?"
+    },
+    {
+      "id": "quadros/cap05-shivim-shekel",
+      "arquivo": "quadros/cap05-shivim-shekel.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 5,
+      "he": "שִׁבְעִים שֶׁקֶל.",
+      "tr": "shivím shékel.",
+      "pt": "Setenta shekels."
+    },
+    {
+      "id": "quadros/cap06-slicha-eich-magiim-lakotel",
+      "arquivo": "quadros/cap06-slicha-eich-magiim-lakotel.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 6,
+      "he": "סְלִיחָה, אֵיךְ מַגִיעִים לַכּוֹתֶל?",
+      "tr": "slichá, eich magiím laKótel?",
+      "pt": "Com licença, como chego ao Muro Ocidental?"
+    },
+    {
+      "id": "quadros/cap06-yashar-veaz-smola",
+      "arquivo": "quadros/cap06-yashar-veaz-smola.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 6,
+      "he": "יָשָׁר, וְאָז שְׂמֹאלָה.",
+      "tr": "yashár, veáz smóla.",
+      "pt": "Em frente, e depois à esquerda."
+    },
+    {
+      "id": "quadros/cap06-hatachana-habaa",
+      "arquivo": "quadros/cap06-hatachana-habaa.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 6,
+      "he": "הַתַחֲנָה הַבָּאָה",
+      "tr": "hatachaná habaá",
+      "pt": "A próxima parada (anúncio no ônibus e no trem)."
+    },
+    {
+      "id": "quadros/cap06-lean",
+      "arquivo": "quadros/cap06-lean.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 6,
+      "he": "לְאָן?",
+      "tr": "leán?",
+      "pt": "Para onde? (o taxista)"
     },
     {
       "id": "quadros/cap07-esrim",
@@ -1910,6 +2113,46 @@
       "pt": "90"
     },
     {
+      "id": "quadros/cap07-kama-ze",
+      "arquivo": "quadros/cap07-kama-ze.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 7,
+      "he": "כַּמָה זֶה?",
+      "tr": "káma ze?",
+      "pt": "Quanto é?"
+    },
+    {
+      "id": "quadros/cap07-esrim-vechamesh-shekel",
+      "arquivo": "quadros/cap07-esrim-vechamesh-shekel.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 7,
+      "he": "עֶשְׂרִים וְחָמֵשׁ שֶׁקֶל.",
+      "tr": "esrím vechamésh shékel.",
+      "pt": "Vinte e cinco shekels."
+    },
+    {
+      "id": "quadros/cap08-gvarim",
+      "arquivo": "quadros/cap08-gvarim.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 8,
+      "he": "גְבָרִים",
+      "tr": "gvarím",
+      "pt": "homens"
+    },
+    {
+      "id": "quadros/cap08-nashim",
+      "arquivo": "quadros/cap08-nashim.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 8,
+      "he": "נָשִׁים",
+      "tr": "nashím",
+      "pt": "mulheres"
+    },
+    {
       "id": "quadros/cap09-mishtara",
       "arquivo": "quadros/cap09-mishtara.mp3",
       "gravado": false,
@@ -1938,6 +2181,16 @@
       "he": "מְכַבֵּי אֵשׁ",
       "tr": "mechabéi esh",
       "pt": "Bombeiros"
+    },
+    {
+      "id": "quadros/cap09-slicha-ani-lo-motse-et-hakvutsa-sheli",
+      "arquivo": "quadros/cap09-slicha-ani-lo-motse-et-hakvutsa-sheli.mp3",
+      "gravado": false,
+      "tipo": "quadro",
+      "capitulo": 9,
+      "he": "סְלִיחָה, אֲנִי לֹא מוֹצֵא אֶת הַקְבוּצָה שֶׁלִי.",
+      "tr": "slichá, aní lo motsé et hakvutsá shelí.",
+      "pt": "Com licença, não encontro o meu grupo."
     },
     {
       "id": "dialogos/cafeteria",

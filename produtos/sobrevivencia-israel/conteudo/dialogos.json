@@ -4,7 +4,8 @@
     "tradução; `usa` lista os ids do vocabulário que o diálogo pratica (o conferir.mjs",
     "confere que existem). As falas não contam nos 100 itens. Áudio: um arquivo por",
     "diálogo inteiro (`audio`) e um por fala (`audio`-NN), ver audio/README.md.",
-    "Preços dos diálogos são ilustrativos e não dizem quanto as coisas custam hoje."
+    "Preços dos diálogos são ilustrativos e não dizem quanto as coisas custam hoje.",
+    "`pergunta`: a questão de compreensão do fim do diálogo (resposta = índice da opção certa), com a resposta no gabarito."
   ],
   "dialogos": [
     {
@@ -64,7 +65,16 @@
         "toda-raba",
         "achat"
       ],
-      "audio": "dialogos/cafeteria"
+      "audio": "dialogos/cafeteria",
+      "pergunta": {
+        "texto": "Onde o cliente vai tomar o café?",
+        "opcoes": [
+          "Ali mesmo, no café.",
+          "Vai levar.",
+          "O diálogo não diz."
+        ],
+        "resposta": 0
+      }
     },
     {
       "id": "loja",
@@ -131,7 +141,16 @@
         "efshar-beashrai",
         "ken"
       ],
-      "audio": "dialogos/loja"
+      "audio": "dialogos/loja",
+      "pergunta": {
+        "texto": "Como ela vai pagar?",
+        "opcoes": [
+          "Em dinheiro.",
+          "Ainda não decidiu.",
+          "Com cartão."
+        ],
+        "resposta": 2
+      }
     },
     {
       "id": "mercado",
@@ -200,7 +219,16 @@
         "shabat-shalom",
         "lo"
       ],
-      "audio": "dialogos/mercado"
+      "audio": "dialogos/mercado",
+      "pergunta": {
+        "texto": "Quanto ele compra?",
+        "opcoes": [
+          "Um quilo.",
+          "Meio quilo.",
+          "Dois quilos."
+        ],
+        "resposta": 1
+      }
     },
     {
       "id": "caminho",
@@ -272,7 +300,16 @@
         "toda-raba",
         "bevakasha"
       ],
-      "audio": "dialogos/caminho"
+      "audio": "dialogos/caminho",
+      "pergunta": {
+        "texto": "Onde fica o Muro Ocidental?",
+        "opcoes": [
+          "Perto: em frente e depois à esquerda.",
+          "Longe, à direita.",
+          "A vinte minutos de ônibus."
+        ],
+        "resposta": 0
+      }
     },
     {
       "id": "conversa",
@@ -350,7 +387,16 @@
         "korim-li",
         "naim-meod"
       ],
-      "audio": "dialogos/conversa"
+      "audio": "dialogos/conversa",
+      "pergunta": {
+        "texto": "O que Noa deseja a ele no fim?",
+        "opcoes": [
+          "Bom shabat.",
+          "Bom apetite.",
+          "Boa viagem."
+        ],
+        "resposta": 2
+      }
     }
   ]
 }

@@ -7,6 +7,8 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { RAIZ_REPO } from './dados.mjs';
 
+// Todo hebraico que um quadro traz: palavras, números, situação, 'Você vai ouvir'.
+const heDoQuadro = q => [...(q.palavras ?? []), ...(q.numeros ?? []), q.diz, q.resposta, ...(q.frases ?? [])].filter(Boolean);
 const n3 = n => String(n).padStart(3, '0');
 const slugTr = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
@@ -34,7 +36,7 @@ function manifesto(produto) {
     (it.variantes ?? []).forEach((v, k) => faixas.push(faixa(`${it.audio}--variante-${k + 1}`, { tipo: 'variante', capitulo: cap, item: it.n, quando: v.quando, he: v.nikud, tr: v.tr })));
     if (it.exemplo) faixas.push(faixa(`${it.audio}--exemplo`, { tipo: 'exemplo', capitulo: cap, item: it.n, he: it.exemplo.nikud, tr: it.exemplo.tr, pt: it.exemplo.pt }));
   }
-  for (const c of capitulos) for (const q of c.quadros ?? []) for (const w of [...(q.palavras ?? []), ...(q.numeros ?? [])]) {
+  for (const c of capitulos) for (const q of c.quadros ?? []) for (const w of heDoQuadro(q)) {
     faixas.push(faixa(`quadros/cap${String(c.n).padStart(2, '0')}-${slugTr(w.tr)}`, { tipo: 'quadro', capitulo: c.n, he: w.nikud, tr: w.tr, pt: w.pt }));
   }
   const capDialogos = capitulos.find(c => c.id === 'dialogos').n;
@@ -87,7 +89,7 @@ async function revisao(produto) {
 
   for (const c of capitulos) {
     const doCap = itens.filter(i => i.categoria === c.id);
-    const quadrosHe = (c.quadros ?? []).flatMap(q => [...(q.palavras ?? []), ...(q.numeros ?? [])]);
+    const quadrosHe = (c.quadros ?? []).flatMap(heDoQuadro);
     const inlineHe = [...JSON.stringify({ q: c.quadros, s: c.secoes, a: c.abertura }).matchAll(/\{\{(.+?)\}\}/g)].map(m => m[1]);
     L.push('', `## ${c.n}. ${c.titulo}`, '');
     L.push(`Palavra da abertura: ${c.simbolo.nikud} · ${c.simbolo.tr} · ${c.simbolo.pt} (${origem(c.simbolo.nikud)})`, '');
@@ -118,28 +120,27 @@ async function revisao(produto) {
   return L.join('\n') + '\n';
 }
 
+// As decisões e os fatos ficam aqui só como lista de conferência. O detalhe
+// (fonte, nível de confiança, o que mudou) está nos relatórios em
+// sobrevivencia-israel/relatorios/.
 const DECISOES = [
-  'Nikud na convenção do curso de alfabetização: daguesh só em בּ כּ פּ (תוֹדָה, כַּמָה, הַשָׁעָה). Se preferir o nikud completo da norma (תּוֹדָה, כַּמָּה), é uma troca só no gerador.',
-  'בֶּטַח, "claro": escrevi bétach, com a força no começo. O rascunho do A1 (unidade 20) traz בְּטַח, betách. Qual é a sua pronúncia?',
-  'Preços na rua: o guia ensina que se ouve "shivím shékel" (número de contar e shékel no singular) e diz que a norma é outra. Confere com o que você ouve?',
-  'הכול, com ו, como manda a Academia; o cartão avisa que também se vê הכל.',
-  'Para "posso pagar com cartão?" escolhi אֶפְשָׁר בְּאַשְׁרַאי? (efshár beashrái), para fugir da dúvida bekartís/bechartís. Fica?',
-  'Bombeiros: usei מְכַבֵּי אֵשׁ (mechabéi esh), o nome do dia a dia, em vez de כַּבָּאוּת.',
-  'O ponto de partida do guia é o Brasil (bilhete GRU-TLV na capa). Caravanas saem de outras cidades; se preferir, a capa pode ter só TLV.',
-  'O texto da introdução e do capítulo 12 fala em primeira pessoa, como você. Confira se a voz é a sua.'
+  'Nikud na convenção do curso de alfabetização: daguesh só em בּ כּ פּ (תוֹדָה, כַּמָה). O capítulo 1 explica isso ao leitor. Se preferir o nikud completo da norma (תּוֹדָה, כַּמָּה), é decisão sua e uma troca em todo o conteúdo.',
+  'בֶּטַח, "claro": bétach, com a força no começo (a revisão linguística confirmou). O rascunho do A1 (unidade 20) traz בְּטַח, betách: vale alinhar o A1.',
+  'Preços na rua: o guia diz que se ouve com frequência "shivím shékel" e que a norma é outra. Confere com o que você ouve?',
+  'Pedir mais devagar: troquei para אֶפְשָׁר לְדַבֵּר יוֹתֵר לְאַט? (yotér leát), que corresponde a "mais devagar".',
+  'Socorro: o item 090 continua עֶזְרָה! (ajuda!), e o contexto ensina הַצִילוּ! (hatsílu!) como o grito em perigo. Prefere trocar o item?',
+  'Para "posso pagar com cartão?": אֶפְשָׁר בְּאַשְׁרַאי? (efshár beashrái). Fica?',
+  'Bombeiros: מְכַבֵּי אֵשׁ (mechabéi esh), o nome do dia a dia, em vez de כַּבָּאוּת.',
+  'As "Dicas de um israelense" e o texto da introdução e do capítulo 12 falam em primeira pessoa, como você. Confira se a voz e os conselhos são os seus.',
+  'O bilhete GRU-TLV da capa supõe saída do Brasil. Se preferir, a capa pode ter só TLV.'
 ];
 const FATOS = [
-  'Shabat: a maior parte dos ônibus e dos trens para da sexta à tarde ao sábado à noite; táxis funcionam; há sherút em algumas cidades.',
-  'Trem liga o aeroporto Ben Gurion a Tel Aviv e a Jerusalém.',
-  'Gorjeta em restaurante com mesa: costume, em torno de 10% a 15%, normalmente não incluída.',
-  'Sacola cobrada à parte no supermercado.',
-  'Água da torneira potável em Israel.',
-  'Emergência: 100 polícia, 101 Maguén Davíd Adóm (ambulância), 102 bombeiros.',
-  'Elevador de shabat em muitos hotéis.',
-  'Placas de rua em hebraico, árabe e inglês.',
-  'Taxímetro: o guia orienta a pedir a corrida "im moné".',
-  'Dinheiro (figura do capítulo 7): moedas de 10 agorót, ½, 1, 2, 5 e 10 shekels; notas de 20, 50, 100 e 200. A figura avisa que cores e tamanhos são esquemáticos.',
-  'Semana (figura do capítulo 2): domingo dia útil, sexta com comércio até a tarde.'
+  'Shabat e transporte: verificado em fontes secundárias (ver relatorios/VERIFICACAO-FACTUAL.md). Horários de trem no shabat: conferir em rail.co.il.',
+  'Gorjeta: corrigida para 10% a 12%, até 15% (fontes de hotelaria; sem fonte oficial).',
+  'Água da torneira: "tratada e, em geral, própria para beber" (sem página do Ministério da Saúde consultada).',
+  'Cores das moedas: retiradas da figura (não verificadas). Valores das moedas e notas: Banco de Israel.',
+  'Dica do botão de parada no ônibus: não verificada em fonte; confirmar.',
+  'ETA-IL para brasileiros: verificada no site oficial (israel-entry.piba.gov.il); reconferir antes de vender.'
 ];
 
 // Igualdade COM nikud (só a pontuação sai): "igual ao curso" quer dizer a
