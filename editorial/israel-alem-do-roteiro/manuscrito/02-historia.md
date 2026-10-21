@@ -322,7 +322,7 @@ Em agosto de 2005, Israel retirou todos os 21 assentamentos da Faixa de Gaza e q
 
 Este trecho vai até 21 de outubro de 2026, data da última consulta, e registra só fatos datados. A situação muda depressa.
 
-Em 7 de outubro de 2023, o Hamas atacou o sul de Israel e levou reféns para Gaza.[[C02-540,C02-541]] Seguiu-se a guerra de Israel na Faixa de Gaza.[[C02-542]]
+Em 7 de outubro de 2023, o Hamas atacou o sul de Israel e levou reféns para Gaza.[[C02-540,C02-541]] Seguiu-se a guerra de Israel na Faixa de Gaza.[[C02-540]]
 
 Houve dois cessar-fogos. O primeiro entrou em vigor em 19 de janeiro de 2025, com trocas de reféns por presos palestinos, e acabou em 18 de março, quando Israel retomou os ataques.[[C02-544]] O segundo foi anunciado em 10 de outubro de 2025, com base num plano do governo dos Estados Unidos.[[C02-545]] Até meados de outubro de 2026, a força internacional prevista no plano ainda não tinha sido enviada, e as fases do desarmamento do Hamas e da retirada completa das tropas israelenses não tinham sido aplicadas.[[C02-547]]
 

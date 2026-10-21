@@ -7,7 +7,7 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 - Palavras no manuscrito: 34148
 - Fontes registradas: 670 (por nível: D 154, B 163, E 233, A 98, C 22; por acesso: trecho-de-busca 642, referencia-confirmada 28)
 - Afirmações registradas: 738 (VERIFICADO 490, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
-- Afirmações VERIFICADO sem uso no texto: 40
+- Afirmações VERIFICADO sem uso no texto: 41
 - Ocorrências de hebraico: 206 (lista em auditoria/hebraico.md)
 - Links testados: 0 de 667 (rede bloqueada; ver revisão humana)
 
