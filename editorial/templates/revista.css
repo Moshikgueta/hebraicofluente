@@ -27,7 +27,8 @@ p { margin: 0 0 .55em; text-align: justify; orphans: 2; widows: 2; }
 a { color: inherit; text-decoration: none; }
 strong { font-weight: 600; color: var(--tinta); }
 em { font-style: italic; }
-.he { font-family: var(--f-he); direction: rtl; unicode-bidi: isolate; font-size: 1.1em; line-height: 1; }
+/* Hebraico do texto; o das figuras (text em SVG) mantém o tamanho do desenho. */
+.he:not(text):not(tspan) { font-family: var(--f-he); direction: rtl; unicode-bidi: isolate; font-size: 1.1em; line-height: 1; }
 
 /* ── 1. Abertura cinematográfica (página sangrada) ───────────────────── */
 .abertura { page: sangria; position: relative; width: 148mm; height: 210mm; background: var(--noite); color: #fff; overflow: hidden; break-after: page; }

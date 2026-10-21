@@ -12,7 +12,7 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 6 | יַם הַמֶּלַח |  |  | manuscrito/01-israel-no-mapa.md:139 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
 | 7 | יָם |  |  | manuscrito/01-israel-no-mapa.md:139 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
 | 8 | מֶלַח |  |  | manuscrito/01-israel-no-mapa.md:139 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
-| 9 | יְהוּד |  |  | manuscrito/02-historia.md:118 | Sob os persas, Judá virou uma província chamada Yehud (<he>יְהוּד</he>, Yehúd). Selos e moedas do período, expostos no Museu de Israel, em Jerusalém, trazem ess |
+| 9 | יְהוּד |  |  | manuscrito/02-historia.md:136 | Sob os persas, Judá virou uma província chamada Yehud (<he>יְהוּד</he>, Yehúd). Selos e moedas do período, expostos no Museu de Israel, em Jerusalém, trazem ess |
 | 10 | שַׁעַר | sháar | porta | manuscrito/03-jerusalem.md:81 |  |
 | 11 | שַׁעַר יָפוֹ | Sháar Yáfo | Porta de Jafa | manuscrito/03-jerusalem.md:82 |  |
 | 12 | שַׁעַר שְׁכֶם | Sháar Shchem | Porta de Damasco | manuscrito/03-jerusalem.md:83 |  |
