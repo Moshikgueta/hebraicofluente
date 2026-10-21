@@ -1,0 +1,119 @@
+{
+  "data_consulta": "2026-10-21",
+  "metodo": "busca na web (5 buscas de imagem); paginas dos arquivos nao abertas; licenca a confirmar na pagina do arquivo antes do uso",
+  "_criterio": [
+    "aceitavel_para_venda: 'sim' = dominio publico, CC0 ou CC BY vistos na busca para aquele arquivo; 'confirmar' = CC BY-SA (o dono confirma com o advogado), licenca que a busca nao mostrou, ou licenca vista mas sem ligacao certa com o arquivo; 'nao' = NC ou ND.",
+    "Fotos ja registradas em outros capitulos e usadas aqui: foto-capa-massada-aerea (cap01), foto-acre-castelo-matson e foto-jaffa-do-mar-photochrom (cap02).",
+    "Nenhuma NC/ND entrou."
+  ],
+  "candidatas": [
+    {
+      "id": "foto-anunciacao-spyckerelle",
+      "assunto": "Nazare: Basilica da Anunciacao",
+      "titulo_arquivo": "Basilique de l'Annonciation, Nazareth.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Basilique_de_l'Annonciation,_Nazareth.jpg",
+      "autor": "Bruno Spyckerelle",
+      "licenca_declarada": "CC BY-SA 3.0 (visto na busca para o arquivo)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Foto de 2012. Share-alike vale para a imagem adaptada; dono confirma com o advogado.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-cafarnaum-sinagoga-werner",
+      "assunto": "Cafarnaum: sinagoga",
+      "titulo_arquivo": "Kafarnaum BW 7.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Kafarnaum_BW_7.JPG",
+      "autor": "Berthold Werner",
+      "licenca_declarada": "dominio publico (dito das fotos do autor, nao deste arquivo)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Se a pagina confirmar dominio publico, vira sim.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-cafarnaum-sinagoga-gerald",
+      "assunto": "Cafarnaum: sinagoga",
+      "titulo_arquivo": "Sites of Christianity in the Galillee - Ruins of the ancient Great Synagogue at Capernaum (or Kfar Nahum) on the shore of the Lake of Galilee, Northern Israel.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Sites_of_Christianity_in_the_Galillee_-_Ruins_of_the_ancient_Great_Synagogue_at_Capernaum_(or_Kfar_Nahum)_on_the_shore_of_the_Lake_of_Galilee,_Northern_Israel.jpg",
+      "autor": "Eddie Gerald (parceria GLAM-Wiki com a UNESCO)",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": null,
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-cesareia-aereo-eldadi",
+      "assunto": "Cesareia Maritima vista do alto",
+      "titulo_arquivo": "Caesarea Maritima from air.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Caesarea_Maritima_from_air.jpg",
+      "autor": "Eldar Eldadi",
+      "licenca_declarada": "CC BY-SA 4.0 (segundo o resumo da busca)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": null,
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-cesareia-aqueduto-pd",
+      "assunto": "Cesareia: aqueduto",
+      "titulo_arquivo": "Caesarea Maritima aqueduct.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Caesarea_Maritima_aqueduct.jpg",
+      "autor": "Mark87 (Wikipedia em ingles)",
+      "licenca_declarada": "dominio publico, liberado pelo autor (visto na busca)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "O aqueduto nao e tratado no texto (C04-033 nao verificado): reserva.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-bahai-jardins-haifa",
+      "assunto": "Haifa: terracos bahais",
+      "titulo_arquivo": "The Hanging Gardens of Haifa, Israel (50099173503).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:The_Hanging_Gardens_of_Haifa,_Israel_(50099173503).jpg",
+      "autor": "a confirmar (Flickr)",
+      "licenca_declarada": "CC BY 2.0 (visto na busca para o arquivo)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Os terracos em volta do santuario do Bab, no monte Carmelo.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-bahai-santuario-bab",
+      "assunto": "Haifa: santuario do Bab",
+      "titulo_arquivo": "Shrine of The Bab.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Shrine_of_The_Bab.jpg",
+      "autor": "a confirmar",
+      "licenca_declarada": "CC BY 2.0 (visto na busca para o arquivo)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": null,
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-tel-aviv-cidade-branca",
+      "assunto": "Tel Aviv: Cidade Branca",
+      "titulo_arquivo": "White City (Bauhaus) Tel Aviv Yafo - 08.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:White_City_(Bauhaus)_Tel_Aviv_Yafo_-_08.jpg",
+      "autor": "andynash (Flickr)",
+      "licenca_declarada": "CC BY-SA 2.0 (revisado no Commons em 2023)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "O nome do arquivo diz \"Bauhaus\", rotulo que o capitulo discute: a legenda diz Cidade Branca.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-tel-aviv-rothschild-engel",
+      "assunto": "Tel Aviv: bulevar Rothschild",
+      "titulo_arquivo": "84 Rothschild Boulevard Engel House by David Shankbone.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:84_Rothschild_Boulevard_Engel_House_by_David_Shankbone.jpg",
+      "autor": "David Shankbone",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": null,
+      "uso_sugerido": "galeria"
+    }
+  ]
+}

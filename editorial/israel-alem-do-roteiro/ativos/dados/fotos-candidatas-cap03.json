@@ -1,0 +1,144 @@
+{
+  "data_consulta": "2026-10-21",
+  "metodo": "busca na web (5 buscas de imagem); paginas dos arquivos nao abertas; licenca a confirmar na pagina do arquivo antes do uso",
+  "_criterio": [
+    "aceitavel_para_venda: 'sim' = dominio publico, CC0 ou CC BY vistos na busca para aquele arquivo; 'confirmar' = CC BY-SA (o dono confirma com o advogado), licenca que a busca nao mostrou, ou licenca vista mas sem ligacao certa com o arquivo; 'nao' = NC ou ND.",
+    "Library of Congress, colecao Matson (G. Eric and Edith Matson Photograph Collection): o aviso 'no known restrictions on publication' visto na busca vale como 'sim'; onde o aviso nao apareceu, 'confirmar'.",
+    "Legenda: so diz o que o capitulo verificou. A escada da fachada do Santo Sepulcro aparece nas fotos, mas a historia dela nao foi verificada (C03-038) e nao vai a legenda.",
+    "Nenhuma NC/ND entrou."
+  ],
+  "candidatas": [
+    {
+      "id": "foto-jerusalem-jaffa-gate-matson",
+      "assunto": "Porta de Jafa (foto antiga)",
+      "titulo_arquivo": "The Gates. Jerusalem. The Jaffa Gate. (Western wall)",
+      "url_pagina": "https://www.loc.gov/resource/matpc.05875/",
+      "autor": "American Colony Photo Dept. / colecao Matson (Library of Congress)",
+      "licenca_declarada": "Rights advisory: no known restrictions on publication (visto na busca)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Datada entre 1898 e 1946 pela LoC.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-jerusalem-jaffa-gate-1898",
+      "assunto": "Porta de Jafa (foto antiga)",
+      "titulo_arquivo": "The Jaffa Gate",
+      "url_pagina": "https://www.loc.gov/pictures/item/2019699906/",
+      "autor": "colecao Matson (Library of Congress)",
+      "licenca_declarada": "aviso de direitos nao apareceu no trecho",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Datada [1898 ou antes]. A nota da LoC fala da abertura da muralha para a visita do Kaiser em 1898, que o capitulo nao verificou: nao usar na legenda.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-via-dolorosa-ecce-homo-matson",
+      "assunto": "Via Dolorosa (foto antiga)",
+      "titulo_arquivo": "The Via Dolorosa. Jerusalem. Arch of Ecce Homo. (Via Dolorosa)",
+      "url_pagina": "https://loc.gov/item/mpc2004005767/PP",
+      "autor": "colecao Matson (Library of Congress)",
+      "licenca_declarada": "Rights advisory: no known restrictions on publication (visto na busca)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Entre 1898 e 1946. O arco de Ecce Homo nao foi tratado no texto; legenda so como \"a Via Dolorosa\".",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-via-dolorosa-matson-arco",
+      "assunto": "Via Dolorosa (foto antiga)",
+      "titulo_arquivo": "Newer Jerusalem. Via Delrosa [i.e., Dolorosa] and arch",
+      "url_pagina": "https://www.loc.gov/item/2019691907/",
+      "autor": "colecao Matson (Library of Congress)",
+      "licenca_declarada": "Rights advisory: no known restrictions on publication (visto na busca)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Entre 1898 e 1946.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-torre-de-davi-mclean",
+      "assunto": "Torre de Davi (cidadela)",
+      "titulo_arquivo": "Tower of david jerusalem.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Tower_of_david_jerusalem.jpg",
+      "autor": "Wayne McLean",
+      "licenca_declarada": "CC BY 2.0 (visto na busca para o arquivo)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Pascoa de 2005. Conferir se o minarete aparece.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-torre-de-davi-lascar",
+      "assunto": "Torre de Davi (cidadela)",
+      "titulo_arquivo": "The Tower of David citadel (10805614925).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:The_Tower_of_David_citadel_(10805614925).jpg",
+      "autor": "Jorge Lascar",
+      "licenca_declarada": "CC BY 2.0 (segundo o resumo da busca)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": null,
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-torre-de-davi-bukvoed",
+      "assunto": "Torre de Davi (cidadela)",
+      "titulo_arquivo": "Jerusalem-Tower-of-David-KC-907.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Jerusalem-Tower-of-David-KC-907.jpg",
+      "autor": "Bukvoed",
+      "licenca_declarada": "CC BY 4.0 (dito da serie, nao do arquivo)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Serie de 2019-2023 do mesmo autor.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-sepulcro-fachada-delaney",
+      "assunto": "Santo Sepulcro: fachada e porta",
+      "titulo_arquivo": "Immovable Ladder, Church of the Holy Sepulchre, Jerusalem.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Immovable_Ladder,_Church_of_the_Holy_Sepulchre,_Jerusalem.jpg",
+      "autor": "Matthew Delaney",
+      "licenca_declarada": "CC BY-SA 3.0 declarada, mas o campo de autor diz \"All rights reserved\"",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Mostra a porta principal e a escada. Contradicao de licenca na pagina: so usar depois de conferir.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-sepulcro-fachada-2019",
+      "assunto": "Santo Sepulcro: fachada e porta",
+      "titulo_arquivo": "Holy Land 2019 (2) P045 Jerusalem Holy Sepulchre Immovable Ladder.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Holy_Land_2019_(2)_P045_Jerusalem_Holy_Sepulchre_Immovable_Ladder.jpg",
+      "autor": "a confirmar",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": null,
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-monte-oliveiras-vista",
+      "assunto": "Monte das Oliveiras: vista da Cidade Antiga",
+      "titulo_arquivo": "Jerusalem Church of the Holy Sepulchre & Dome of the Rock-Temple Mount from Mount of Olives (6036446624).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Jerusalem_Church_of_the_Holy_Sepulchre_%26_Dome_of_the_Rock-Temple_Mount_from_Mount_of_Olives_(6036446624).jpg",
+      "autor": "a confirmar (serie do Flickr)",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Vista a partir do monte, com o Domo e o Santo Sepulcro. Boa para pagina dupla.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-monte-oliveiras-cemiterio",
+      "assunto": "Monte das Oliveiras: cemiterio judaico",
+      "titulo_arquivo": "Mount of Olives-Jewish-Cemetery.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Mount_of_Olives-Jewish-Cemetery.jpg",
+      "autor": "a confirmar",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": null,
+      "uso_sugerido": "narrativa"
+    }
+  ]
+}

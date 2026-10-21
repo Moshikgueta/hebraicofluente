@@ -6,7 +6,10 @@
       "secao": "Quem mora em Israel",
       "afirmacao": "Na véspera do Dia da Independência de 2026, o CBS estimou a população de Israel em 10,244 milhões de pessoas.",
       "categoria": "estatistica",
-      "fontes": ["F05-001", "F05-003"],
+      "fontes": [
+        "F05-001",
+        "F05-003"
+      ],
       "evidencia": "O comunicado 117/2026 do CBS dá população de 10.244 milhões na véspera do 78º Dia da Independência, com dados preliminares atualizados até 22 de abril de 2026 e estimativas baseadas no censo de 2022. O Times of Israel reproduz o número.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -21,7 +24,9 @@
       "secao": "Quem mora em Israel",
       "afirmacao": "No mesmo comunicado, 76% da população eram 'judeus e outros' (7,790 milhões), 21,1% árabes (2,157 milhões) e 2,9% estrangeiros (296 mil); os estrangeiros entram no total, mas fora dos dois grupos.",
       "categoria": "estatistica",
-      "fontes": ["F05-001"],
+      "fontes": [
+        "F05-001"
+      ],
       "evidencia": "Trecho do comunicado: 7.790 million Jews and Others (76%), 2.157 million Arabs (21.1%) and 296,000 foreigners (2.9%). Os estrangeiros são contados no total e fora dos grupos 'judeus e outros' e 'árabes'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -36,7 +41,9 @@
       "secao": "Quem mora em Israel",
       "afirmacao": "Para o CBS, 'árabes' reúne muçulmanos, cristãos árabes e drusos; 'outros' são cristãos não árabes, fiéis de outras religiões e pessoas registradas sem classificação religiosa no Registro de População.",
       "categoria": "estatistica",
-      "fontes": ["F05-001"],
+      "fontes": [
+        "F05-001"
+      ],
       "evidencia": "Nota do comunicado: 'Others' are non-Arab Christians, other religions, and those registered as not classified by religion in the Population Register; Arabs are Moslems, Arab Christians and Druze.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -51,7 +58,9 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "No ano encerrado em abril de 2026, nasceram cerca de 177 mil bebês, morreram cerca de 48 mil pessoas, chegaram 21 mil imigrantes e 45 mil israelenses saíram para morar no exterior; o saldo dos nascimentos passou de 120 mil e o da migração de israelenses foi negativo.",
       "categoria": "estatistica",
-      "fontes": ["F05-001"],
+      "fontes": [
+        "F05-001"
+      ],
       "evidencia": "Comunicado 117/2026: 177,000 babies were born, 21,000 people immigrated to Israel and 48,000 people died, and 45,000 Israelis left the country to live abroad. Crescimento de cerca de 146 mil (1,4%). O saldo (177 - 48 = 129 mil; 21 - 45 = -24 mil) é conta feita a partir desses números.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -66,7 +75,10 @@
       "secao": "Quem mora em Israel",
       "afirmacao": "No fim de 2025, os muçulmanos de Israel eram 1,849 milhão de pessoas, 18,6% dos residentes; são a maior parte da população classificada como árabe.",
       "categoria": "estatistica",
-      "fontes": ["F05-002", "F05-001"],
+      "fontes": [
+        "F05-002",
+        "F05-001"
+      ],
       "evidencia": "CBS, The Muslim Population in Israel 2026: At the end of 2025, the Muslim population of Israel was estimated at 1.849 million (18.6% of all residents). A conclusão 'maior parte da população árabe' compara com os 2,157 milhões de árabes do comunicado 117/2026.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -81,7 +93,9 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "Jerusalém tem a maior comunidade muçulmana do país: 395.200 pessoas no fim de 2025, 37,2% dos moradores da cidade.",
       "categoria": "estatistica",
-      "fontes": ["F05-002"],
+      "fontes": [
+        "F05-002"
+      ],
       "evidencia": "CBS: Jerusalém tem a maior comunidade muçulmana, 395,200 pessoas, 21.4% of all Muslims in Israel, and 37.2% of the city's residents.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -96,7 +110,9 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "Em 2025, a fecundidade era de 3,08 filhos por mulher judia e 2,76 por mulher muçulmana; a taxa das muçulmanas caiu em relação à de 2001.",
       "categoria": "estatistica",
-      "fontes": ["F05-002"],
+      "fontes": [
+        "F05-002"
+      ],
       "evidencia": "CBS: In 2025, the rate reached 2.76 children per woman, compared with 3.08 children per Jewish woman; o trecho menciona a queda em relação ao nível de 2001.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -111,7 +127,9 @@
       "secao": "Quem mora em Israel",
       "afirmacao": "No fim de 2025, 30,9% dos muçulmanos de Israel tinham até 14 anos, e 5,4% tinham 65 anos ou mais.",
       "categoria": "estatistica",
-      "fontes": ["F05-002"],
+      "fontes": [
+        "F05-002"
+      ],
       "evidencia": "CBS: The percentage of children aged 0-14 is high (30.9%), and the percentage of people aged 65 and over is low (5.4%).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -126,7 +144,9 @@
       "secao": "Judeu, mas de que jeito?",
       "afirmacao": "Na pesquisa do Pew Research Center publicada em 2016, os judeus israelenses se definiram assim: 49% chiloní (secular), 29% masortí (tradicional), 13% datí (religioso) e 9% charedí (ultraortodoxo); seculares e tradicionais somavam mais de três quartos.",
       "categoria": "sociedade",
-      "fontes": ["F05-004"],
+      "fontes": [
+        "F05-004"
+      ],
       "evidencia": "Pew, Israel's Religiously Divided Society (8 mar. 2016): among Jews, Hilonim (49%) and Masortim (29%) together make up about three-quarters; Dati 13% e Haredim 9% dos judeus. Entre todos os adultos: 40% Hiloni, 23% Masorti, 10% Dati, 8% Haredi. Pew compara a amostra com o Anuário Estatístico do CBS de 2014.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -141,7 +161,11 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "Segundo o relatório estatístico de 2025 do Israel Democracy Institute, a população ultraortodoxa era de cerca de 1,45 milhão de pessoas, 50% a mais do que dez anos antes (cerca de 950 mil); isso equivale a cerca de 14% da população do país.",
       "categoria": "estatistica",
-      "fontes": ["F05-005", "F05-006", "F05-001"],
+      "fontes": [
+        "F05-005",
+        "F05-006",
+        "F05-001"
+      ],
       "evidencia": "Sumário executivo do IDI 2025: the community has continued to grow rapidly, 50% over the last decade, from 950,000 to 1,450,000. A cobertura de imprensa do relatório dá cerca de 14,3% da população total; 1,45 milhão sobre 10,244 milhões (CBS) dá cerca de 14%.",
       "pagina_ou_secao": "Sumário executivo",
       "acesso": "trecho-de-busca",
@@ -156,7 +180,10 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "No ano letivo 2024-2025, cerca de 420 mil alunos estudavam em instituições de ensino ultraortodoxas, perto de 21% de todos os estudantes de Israel.",
       "categoria": "estatistica",
-      "fontes": ["F05-005", "F05-006"],
+      "fontes": [
+        "F05-005",
+        "F05-006"
+      ],
       "evidencia": "IDI 2025, segundo o trecho: approximately 420,000 students were enrolled in ultra-Orthodox educational frameworks in the 2024-2025 school year, accounting for about 21% of all students in Israel.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -171,7 +198,11 @@
       "secao": "Hebraico e árabe na lei",
       "afirmacao": "Em 19 de julho de 2018, o Knesset aprovou por 62 votos a 55 a Lei Básica: Israel como Estado-Nação do Povo Judeu.",
       "categoria": "historia",
-      "fontes": ["F05-008", "F05-010", "F05-009"],
+      "fontes": [
+        "F05-008",
+        "F05-010",
+        "F05-009"
+      ],
       "evidencia": "The Jewish Press (19 jul. 2018): approved by Knesset 62-55. Cobertura do National Catholic Reporter e do Al-Monitor sobre a mesma aprovação, em julho de 2018. Fato jornalístico datado com fontes E independentes.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -186,7 +217,9 @@
       "secao": "Hebraico e árabe na lei",
       "afirmacao": "A lei de 2018 atribui ao árabe um 'status especial' no Estado e deixa para lei futura a regulamentação do uso do árabe nas instituições estatais ou por elas.",
       "categoria": "lingua",
-      "fontes": ["F05-007"],
+      "fontes": [
+        "F05-007"
+      ],
       "evidencia": "Tradução publicada pela Université Laval (cláusula 4B): The Arabic language has a special status in the state; Regulating the use of Arabic in state institutions or by them will be set in law.",
       "pagina_ou_secao": "Seção 4(b)",
       "acesso": "trecho-de-busca",
@@ -201,7 +234,9 @@
       "secao": "Hebraico e árabe na lei",
       "afirmacao": "A mesma lei diz que a cláusula sobre o árabe não prejudica o status que a língua tinha antes de a lei entrar em vigor.",
       "categoria": "lingua",
-      "fontes": ["F05-007"],
+      "fontes": [
+        "F05-007"
+      ],
       "evidencia": "Cláusula 4C, na tradução da Université Laval: This clause does not harm the status given to the Arabic language before this law came into effect.",
       "pagina_ou_secao": "Seção 4(c)",
       "acesso": "trecho-de-busca",
@@ -216,7 +251,11 @@
       "secao": "Hebraico e árabe na lei",
       "afirmacao": "O alcance da mudança é discutido: reportagem do Al-Monitor de julho de 2018 registrou que o árabe perdia o rótulo de língua oficial e que a lei não explicava o que significaria o 'status especial'; a lei como um todo foi criticada também fora de Israel, por exemplo pelo American Jewish Committee; ao mesmo tempo, o próprio texto preserva o status anterior do árabe.",
       "categoria": "lingua",
-      "fontes": ["F05-009", "F05-011", "F05-007"],
+      "fontes": [
+        "F05-009",
+        "F05-011",
+        "F05-007"
+      ],
       "evidencia": "Al-Monitor: the law does not explain what the 'special status' means and how this unique status will be implemented; a cobertura diz que o árabe perdeu o rótulo de língua oficial. AJC, 18 jul. 2018: 'AJC criticizes Knesset adoption of nation-state bill'. Cláusula 4C (Laval).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -231,7 +270,13 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "Em 1986, Tamar Katriel, da Universidade de Haifa, publicou pela Cambridge University Press 'Talking Straight: Dugri Speech in Israeli Sabra Culture', que estuda o dúgri, a 'fala reta', como forma cultural ligada à figura do sabra, o judeu nascido no país tomado como ideal mítico.",
       "categoria": "sociedade",
-      "fontes": ["F05-012", "F05-013", "F05-032", "F05-014", "F05-015"],
+      "fontes": [
+        "F05-012",
+        "F05-013",
+        "F05-032",
+        "F05-014",
+        "F05-015"
+      ],
       "evidencia": "Portal de pesquisa da Universidade de Haifa: o livro trata o 'sabra', or native-born Israeli Jew as a mythic ideal, e o 'dugri', or straight speech, como modo-chave de expressão dessa identidade; abordagem sociolinguística e de antropologia cultural. Editora, ano e série confirmados em catálogos e nas resenhas de Sokoloff (1987) e Bloch (1989).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -246,7 +291,10 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "Katriel observa que, para quem compartilha o código cultural, a franqueza do dúgri vem amortecida por significados comuns, enquanto quem vem de fora tende a lê-la como grosseria; o livro analisa dois episódios públicos do início dos anos 1980.",
       "categoria": "sociedade",
-      "fontes": ["F05-013", "F05-012"],
+      "fontes": [
+        "F05-013",
+        "F05-012"
+      ],
       "evidencia": "Resumo do portal da Universidade de Haifa: significados culturais compartilhados suavizam a aspereza do dugri para quem é de dentro, enquanto quem é de fora frequentemente lê a mesma franqueza como rudeza; o livro examina two public dramas which occurred in Israel in the early 1980s.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -261,7 +309,10 @@
       "secao": "Escola em redes",
       "afirmacao": "O Taub Center analisa o sistema de ensino de Israel em redes separadas: a estatal em hebraico, a estatal-religiosa, a ultraortodoxa e a árabe.",
       "categoria": "sociedade",
-      "fontes": ["F05-016", "F05-017"],
+      "fontes": [
+        "F05-016",
+        "F05-017"
+      ],
       "evidencia": "Blass (Taub Center, 2018), visão geral do sistema: tabelas por setor com 'Hebrew, State', 'State-religious', 'Haredi' e 'Arab'. O comunicado do Taub sobre composição dos alunos trata das transferências between education streams.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -276,7 +327,9 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "Entre 2000 e 2015, só cerca de 2% dos alunos trocaram de rede de ensino, e as trocas tenderam a ir de redes mais religiosas para menos religiosas.",
       "categoria": "sociedade",
-      "fontes": ["F05-017"],
+      "fontes": [
+        "F05-017"
+      ],
       "evidencia": "Taub Center: Between 2000 and 2015, only about 2% of pupils transferred between different educational streams; among those who did transfer, there is a trend of pupils moving from more religious to less religious school systems at every important juncture.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -291,7 +344,9 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "A maior parte da população árabe de Israel não é convocada para o serviço nacional, nem militar nem civil; desde 2007-2008, cidadãos árabes podem se voluntariar para o serviço civil-nacional, e o número de voluntários cresceu nos primeiros anos do programa.",
       "categoria": "sociedade",
-      "fontes": ["F05-018"],
+      "fontes": [
+        "F05-018"
+      ],
       "evidencia": "INSS: most of the Arab population has not been called to national service, neither in the framework of the IDF nor in a civilian framework; volunteer work by Israeli Arabs in civilian service began in 2007-2008 under the Authority for National-Civic Service; the number of volunteers has risen steadily since the program was founded.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -306,7 +361,9 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "Desde 1956, os homens drusos são convocados ao serviço militar obrigatório, depois de um acordo entre o governo e líderes da comunidade; antes disso, podiam se alistar, mas não eram convocados.",
       "categoria": "historia",
-      "fontes": ["F05-019"],
+      "fontes": [
+        "F05-019"
+      ],
       "evidencia": "Trechos da busca: government officials and 16 Druze leaders agreed to mandatory conscription for Druze males (1956); Previously, Druze males were permitted to enlist but were not conscripted.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -321,7 +378,9 @@
       "secao": "10 coisas que podem surpreender um brasileiro em Israel",
       "afirmacao": "Um estudo publicado em 2024 na revista Kulturní Studia conclui que o serviço militar reforça a identidade israelense entre jovens drusos, mas não lhes dá o acesso esperado a direitos iguais e à cidadania plena; o chamado 'modelo druso' é discutido por outros pesquisadores.",
       "categoria": "sociedade",
-      "fontes": ["F05-019"],
+      "fontes": [
+        "F05-019"
+      ],
       "evidencia": "Trecho: military service reinforces Israeli identity among Druze youth, but it fails to provide the expected access to equal rights and full citizenship.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -336,7 +395,11 @@
       "secao": "Quem serve no exército",
       "afirmacao": "Em 25 de junho de 2024, a Suprema Corte de Israel, em decisão unânime de nove juízes, decidiu que o governo não tinha base legal para isentar em bloco os estudantes de yeshivá e que, sem lei nova, o Estado deveria aplicar a eles a Lei do Serviço de Defesa como aos demais cidadãos.",
       "categoria": "sociedade",
-      "fontes": ["F05-020", "F05-021", "F05-022"],
+      "fontes": [
+        "F05-020",
+        "F05-021",
+        "F05-022"
+      ],
       "evidencia": "IDI: 'A Sharp, Unequivocal, and Unanimous Supreme Court Decision to Draft Haredim'. RNS (25 jun. 2024) e Jewish Insider: painel de nove juízes, unânime; In the absence of a law, the state must take steps to draft yeshiva students in accordance with the provisions of the Defense Service Law, in the same way as these apply to all other citizens.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -351,7 +414,9 @@
       "secao": "Quem serve no exército",
       "afirmacao": "Em 19 de novembro de 2025, um painel de cinco juízes da Suprema Corte ordenou ao governo passos concretos para aplicar a lei, com prazo de 45 dias; em 6 de janeiro de 2026, um pedido de desacato acusou o governo de não ter cumprido a decisão.",
       "categoria": "sociedade",
-      "fontes": ["F05-023"],
+      "fontes": [
+        "F05-023"
+      ],
       "evidencia": "IDI: A five-justice panel unanimously ruled against the government in HCJ 5819/24 and ordered it to take concrete and detailed steps to enforce the Defense Service Law; 45 dias para adotar política de aplicação; On January 6, 2026, a contempt-of-court motion was filed.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -366,7 +431,10 @@
       "secao": "Quem serve no exército",
       "afirmacao": "Em julho de 2026, o Knesset manteve em 32 meses o serviço militar obrigatório dos homens, apesar de o exército ter pedido 36.",
       "categoria": "pratica",
-      "fontes": ["F05-024", "F05-025"],
+      "fontes": [
+        "F05-024",
+        "F05-025"
+      ],
       "evidencia": "Haaretz (17 jul. 2026): the Knesset approved late Thursday a law maintaining mandatory military service in the Israeli army to 32 months, despite the IDF's demand to extend the service to 36 months. Jerusalem Post: proposta do Ministério da Defesa para levar o serviço masculino de 32 para 36 meses.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -381,7 +449,12 @@
       "secao": "Quem serve no exército",
       "afirmacao": "O recrutamento obrigatório em Israel se apoia na Lei do Serviço de Defesa, e a forma como ela é aplicada varia entre comunidades.",
       "categoria": "sociedade",
-      "fontes": ["F05-020", "F05-021", "F05-018", "F05-019"],
+      "fontes": [
+        "F05-020",
+        "F05-021",
+        "F05-018",
+        "F05-019"
+      ],
       "evidencia": "A decisão de 2024 manda aplicar a Defense Service Law aos estudantes de yeshivá como a todos os outros cidadãos (C05-023); o INSS registra que a maior parte dos árabes não é convocada (C05-020); os drusos são convocados desde 1956 (C05-021).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -396,7 +469,10 @@
       "secao": "Quem mora em Israel",
       "afirmacao": "Em dezembro de 2025, viviam em Israel cerca de 184.200 cristãos (cerca de 1,9% da população), cerca de 79% deles árabes; as maiores comunidades cristãs ficam em Nazaré, Haifa e Jerusalém.",
       "categoria": "estatistica",
-      "fontes": ["F05-026", "F05-027"],
+      "fontes": [
+        "F05-026",
+        "F05-027"
+      ],
       "evidencia": "KAS: 184.200 Christen, etwa 1,8 Prozent; Nazaré 18.900, Haifa 18.800, Jerusalém 13.400. JNS: cerca de 184 mil a 185 mil, perto de 2%. Comunicado do CBS citado como 413/2025, não localizado.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -426,7 +502,9 @@
       "secao": "Quem mora em Israel",
       "afirmacao": "Na véspera de Rosh Hashaná de 2026, a população era de 10,305 milhões (78,3% judeus e outros, 21,7% árabes, mais 304 mil estrangeiros).",
       "categoria": "estatistica",
-      "fontes": ["F05-028"],
+      "fontes": [
+        "F05-028"
+      ],
       "evidencia": "i24NEWS e Jerusalem Post (via Yahoo) relatam o comunicado do CBS de 9 set. 2026 com esses números.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -454,31 +532,36 @@
     {
       "id": "C05-044",
       "secao": "Quem serve no exército",
-      "afirmacao": "O serviço militar obrigatório das mulheres dura 24 meses.",
+      "afirmacao": "O serviço militar obrigatório das mulheres dura no mínimo 24 meses (ver C05-093).",
       "categoria": "pratica",
-      "fontes": [],
-      "evidencia": "Só Wikipedia e uma página educativa (iCenter); um texto do IDI e outro mais antigo dão 21 e 20-21 meses; o INSS discute proposta de 28 meses.",
+      "fontes": [
+        "F05-049"
+      ],
+      "evidencia": "Site do exército: mulheres servem no mínimo 24 meses.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Sem fonte A a D atual.",
+      "limitacoes": "Página sem data.",
       "interpretacoes_concorrentes": null,
-      "status": "NÃO VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": "2027-04-21"
     },
     {
       "id": "C05-045",
       "secao": "Quem serve no exército",
-      "afirmacao": "Mulheres drusas e circassianas são isentas do serviço obrigatório.",
+      "afirmacao": "Entre drusos e circassianos, só os homens são convocados; as mulheres dessas comunidades não são (ver C05-094).",
       "categoria": "sociedade",
-      "fontes": [],
-      "evidencia": "Só Wikipedia (Women in the Israel Defense Forces).",
+      "fontes": [
+        "F05-050",
+        "F05-049"
+      ],
+      "evidencia": "INSS: recrutamento obrigatório inclui os homens das comunidades drusa e circassiana.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Sem fonte admitida.",
+      "limitacoes": "Ver C05-094.",
       "interpretacoes_concorrentes": null,
-      "status": "NÃO VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -486,7 +569,9 @@
       "secao": "Escola em redes",
       "afirmacao": "No ano letivo 2025-2026, pela primeira vez, os alunos que entraram no 1º ano nas redes estatal-religiosa e ultraortodoxa (cerca de 72 mil) superaram os da rede estatal secular (cerca de 66 mil).",
       "categoria": "estatistica",
-      "fontes": ["F05-029"],
+      "fontes": [
+        "F05-029"
+      ],
       "evidencia": "Análise da JNS com dados do Ministério da Educação.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -501,7 +586,9 @@
       "secao": "Escola em redes",
       "afirmacao": "A Lei de Educação Estatal de 1953 criou as redes estatal e estatal-religiosa, e o sistema ultraortodoxo independente funciona com financiamento público desde então.",
       "categoria": "historia",
-      "fontes": ["F05-030"],
+      "fontes": [
+        "F05-030"
+      ],
       "evidencia": "Adalah: a lei estabelece sistemas separados, estatal secular e estatal religioso; Jewish Ideas Daily e Wikipedia falam de quatro sistemas e do Chinuch Atzmai de 1953.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -516,7 +603,9 @@
       "secao": "Quem serve no exército",
       "afirmacao": "Em 2025, 3.060 ultraortodoxos se alistaram ou fizeram serviço civil, número praticamente igual ao de 2015 (3.022).",
       "categoria": "estatistica",
-      "fontes": ["F05-006"],
+      "fontes": [
+        "F05-006"
+      ],
       "evidencia": "Cobertura de imprensa do relatório do IDI de 2025.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -531,7 +620,9 @@
       "secao": "Quem serve no exército",
       "afirmacao": "Em 14 de julho de 2026, o Knesset aprovou lei temporária que suspendia prisões e processos de estudantes de yeshivá que não atenderam à convocação, e a Suprema Corte impediu sua entrada em vigor no dia seguinte.",
       "categoria": "sociedade",
-      "fontes": ["F05-031"],
+      "fontes": [
+        "F05-031"
+      ],
       "evidencia": "Times of Israel sobre o projeto; Jewish Virtual Library sobre a lei aprovada e suspensa.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -576,7 +667,9 @@
       "secao": "Judeu, mas de que jeito?",
       "afirmacao": "57% da população ultraortodoxa tem menos de 19 anos.",
       "categoria": "estatistica",
-      "fontes": ["F05-006"],
+      "fontes": [
+        "F05-006"
+      ],
       "evidencia": "Cobertura de imprensa do relatório do IDI de 2025.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -619,16 +712,19 @@
     {
       "id": "C05-061",
       "secao": "A semana",
-      "afirmacao": "O Shabat vai do pôr do sol de sexta-feira ao anoitecer de sábado.",
+      "afirmacao": "No calendário judaico, o dia vai de um pôr do sol ao seguinte; por isso o Shabat começa na sexta-feira ao pôr do sol e termina na noite de sábado.",
       "categoria": "religiao",
-      "fontes": [],
-      "evidencia": "Não buscado (limite de buscas).",
+      "fontes": [
+        "F05-038",
+        "F05-035"
+      ],
+      "evidencia": "JewishGen: o dia do calendário hebraico rabínico vai do pôr do sol (início da noite) ao pôr do sol seguinte. Technion: o fim de semana do Shabat vai de sexta à tarde a sábado à noite.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Fonte C (texto bíblico e rabínico) mais fonte acadêmica ou institucional.",
+      "limitacoes": "O horário exato muda com a estação e o lugar; o fim do Shabat é contado pela noite (não verificado o critério exato).",
       "interpretacoes_concorrentes": null,
-      "status": "NÃO VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -679,16 +775,18 @@
     {
       "id": "C05-066",
       "secao": "Calendário e feriados",
-      "afirmacao": "O calendário judaico é lunissolar, e os dias começam ao pôr do sol.",
+      "afirmacao": "O calendário judaico é lunissolar: os meses seguem a Lua e os anos seguem o Sol; para acertar a conta, sete anos em cada dezenove ganham um 13º mês, um segundo Adar.",
       "categoria": "religiao",
-      "fontes": [],
-      "evidencia": "Não buscado (limite de buscas).",
+      "fontes": [
+        "F05-038"
+      ],
+      "evidencia": "JewishGen: o calendário judaico atual é lunissolar, meses pela Lua e anos pelo Sol; o ano bissexto tem 13 meses, com Adar I e Adar II; sete anos bissextos a cada ciclo de 19.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Fonte acadêmica sobre o calendário hebraico.",
+      "limitacoes": "Fonte B de divulgação genealógica; regra detalhada do cálculo não incluída.",
       "interpretacoes_concorrentes": null,
-      "status": "NÃO VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -829,16 +927,19 @@
     {
       "id": "C05-076",
       "secao": "A semana",
-      "afirmacao": "Em hebraico, os dias de domingo a sexta têm nomes ordinais (Yom Rishón, 'primeiro dia', até Yom Shishí, 'sexto dia'), e o sábado se chama Shabát.",
+      "afirmacao": "Em hebraico, só o sábado tem nome próprio, Shabát; os outros dias são contados pelo número, de Yom Rishón, \"primeiro dia\", a Yom Shishí, \"sexto dia\".",
       "categoria": "lingua",
-      "fontes": [],
-      "evidencia": "Não buscado (limite de buscas). Conhecimento linguístico corrente, mas sem fonte registrada; o hebraico também depende da aprovação do autor.",
+      "fontes": [
+        "F05-055",
+        "F05-056"
+      ],
+      "evidencia": "Trecho: \"בעברית רק השבת זכתה לשם של ממש, וכל שאר הימים נקראים על פי מספרם הסידורי, מראשון ועד שישי\" (em hebraico, só a Shabat ganhou nome de verdade; os demais dias são chamados pelo número ordinal, do primeiro ao sexto).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Fonte: Academia da Língua Hebraica ou dicionário.",
+      "limitacoes": "Trecho de uma das duas fontes da busca (Academia ou Makor Rishon); conferir na página da Academia.",
       "interpretacoes_concorrentes": null,
-      "status": "NÃO VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -854,6 +955,413 @@
       "limitacoes": "Pede fonte linguística (a própria Katriel, no texto integral, provavelmente trata disso).",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-078",
+      "secao": "A semana começa no domingo",
+      "afirmacao": "O domingo é dia de trabalho em Israel: uma proposta do então vice-primeiro-ministro Silvan Shalom para torná-lo dia de folga previa compensar com meio expediente na sexta e horas a mais de segunda a quinta, e o ministro da Fazenda, Yuval Steinitz, se opôs.",
+      "categoria": "pratica",
+      "fontes": [
+        "F05-057",
+        "F05-058"
+      ],
+      "evidencia": "JTA e The Globe and Mail: Shalom propôs fazer do domingo um dia de folga, com a sexta como dia de trabalho encurtado (até o meio-dia) e horas um pouco mais longas de segunda a quinta; Steinitz advertiu que a sexta viraria um dia perdido.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Duas fontes E; a data exata das reportagens não apareceu no trecho. A busca não confirmou que alguma versão da proposta virou lei (outra reportagem fala em seis e depois quatro fins de semana longos por ano).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C05-079",
+      "secao": "Shabat: o que para e o que não para",
+      "afirmacao": "Na maior parte do país, trens e ônibus deixam de circular entre a tarde de sexta e a noite de sábado; segundo reportagens de 2017, o Estado disse à Suprema Corte que transporte no Shabat não é necessidade essencial e que a ausência dele faz parte do acordo de status quo anterior ao Estado.",
+      "categoria": "pratica",
+      "fontes": [
+        "F05-035",
+        "F05-036",
+        "F05-037"
+      ],
+      "evidencia": "Technion: os trens rodam a semana toda, menos no fim de semana do Shabat (sexta à tarde a sábado à noite); os ônibus têm horário reduzido à noite e no Shabat. JPost e Jewish News: ônibus e trens não rodam nas cidades de maioria judaica na sexta à noite e no sábado antes do pôr do sol; o Estado disse à Corte que o serviço não é essencial e que isso faz parte do acordo de status quo.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Horário exato muda com a estação e com a operadora. Confira os aplicativos e as operadoras antes de viajar.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C05-080",
+      "secao": "A semana começa no domingo",
+      "afirmacao": "A Lei de Horas de Trabalho e Descanso, de 1951, fixa um descanso semanal de pelo menos 36 horas seguidas; para quem é judeu, ele inclui o Shabat; para quem não é, pode ser o sábado, o domingo ou a sexta, conforme o costume de cada um.",
+      "categoria": "pratica",
+      "fontes": [
+        "F05-033",
+        "F05-034"
+      ],
+      "evidencia": "Os trechos citam a lei: descanso de \"at least thirty-six consecutive hours per week\"; para o judeu, deve incluir o Shabat; o não judeu escolhe \"the day of Shabbat or the first day or the sixth day of the week, all according to what is acceptable to him\". A Suprema Corte (HCJ 5026/04, 2005) manteve as regras.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Texto da lei não consultado no original; o ministro pode autorizar descanso menor (seção 8). Trabalhar no dia de descanso pede autorização do ministério.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C05-081",
+      "secao": "Shabat: o que para e o que não para",
+      "afirmacao": "Há transporte público no Shabat em alguns lugares, como Haifa, parte da Galileia e localidades não judaicas.",
+      "categoria": "pratica",
+      "fontes": [
+        "F05-035"
+      ],
+      "evidencia": "Guia de transporte do Technion: o transporte público funciona no Shabat em algumas cidades, entre elas a cidade mista de Haifa, a área da Galileia e comunidades não judaicas.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Uma fonte B sem data; a lista de lugares não é completa.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C05-082",
+      "secao": "Shabat: o que para e o que não para",
+      "afirmacao": "Em novembro de 2019, Tel Aviv, Givatayim, Ramat HaSharon e Kiryat Ono lançaram ônibus gratuitos de fim de semana; a gratuidade contorna a lei que exige licença especial para transporte pago no Shabat, e mais de 10 mil passageiros usaram o serviço no primeiro dia.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-061",
+        "F05-062"
+      ],
+      "evidencia": "Al-Monitor: os municípios contornam a exigência de licença oferecendo o serviço de graça, com verba própria. Globes: mais de 10 mil passageiros no primeiro dia, nas quatro cidades.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fato datado; o serviço depois se expandiu para mais municípios (número atual não verificado em duas fontes).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-083",
+      "secao": "Shabat: o que para e o que não para",
+      "afirmacao": "Em 2017, a Suprema Corte manteve a lei municipal de Tel Aviv que permite a cerca de 160 mercearias abrir no Shabat; a presidente da Corte, Miriam Naor, observou que a lei dá aos municípios o poder de regular a abertura de lojas.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-063",
+        "F05-064"
+      ],
+      "evidencia": "Ynet: a Corte aprovou em abril de 2017 a lei municipal que permitia 164 negócios abertos no Shabat, e Naor rejeitou o pedido de nova audiência. JPost: lei de 2014, em vigor em 2017, permitindo 165 mercearias.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O número varia (164 ou 165) conforme o veículo; o texto diz \"cerca de 160\". O mês exato da decisão final não apareceu.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-084",
+      "secao": "Um calendário que segue a Lua e o Sol",
+      "afirmacao": "No Levítico, o primeiro dia do sétimo mês é um dia de toque de trombeta e de descanso; o décimo, o Dia da Expiação, com aflição da alma e sem trabalho; e, a partir do décimo quinto, a festa das Tendas dura sete dias, com cabanas para morar. A tradição judaica celebra nessas datas Rosh Hashaná, Yom Kipur e Sucot.",
+      "categoria": "religiao",
+      "fontes": [
+        "F05-039",
+        "F05-038"
+      ],
+      "evidencia": "Levítico 23:24-25, 27-28, 34-36 e 42-43 (ESV): memorial com toque de trombeta no primeiro dia do sétimo mês; Dia da Expiação no décimo, com aflição e sem trabalho; festa das Tendas a partir do décimo quinto, sete dias, e morar em tendas por sete dias.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Texto bíblico, fonte C; a identificação com os nomes das festas é da tradição. O texto apresenta isso numa caixa \"História ou tradição?\".",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-085",
+      "secao": "Um calendário que segue a Lua e o Sol",
+      "afirmacao": "Os dias de descanso oficiais do Estado, definidos no artigo 18A da Ordenação de Lei e Administração, são festas judaicas (os dois dias de Rosh Hashaná, Yom Kipur, o primeiro e o oitavo dia de Sucot, o primeiro e o sétimo de Pêssach, Shavuot) e o Dia da Independência; Chanuká e Purim não estão nessa lista.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-045",
+        "F05-034"
+      ],
+      "evidencia": "Adalah reproduz o artigo 18A, que designa como feriados oficiais do Estado dias santos judaicos e o Dia da Independência. A lista detalhada dos dias aparece em guias jurídico-trabalhistas (dois dias de Rosh Hashaná, Yom Kipur, primeiro e oitavo dias de Sucot, primeiro e sétimo de Pêssach, Shavuot).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A lista dia a dia vem de fonte E que resume a lei; conferir o artigo 18A no texto integral. Que Chanuká e Purim não são dias de descanso oficial é dedução da lista.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C05-086",
+      "secao": "Um calendário que segue a Lua e o Sol",
+      "afirmacao": "Pela mesma lei, quem não é judeu tem direito de descansar no seu próprio dia de descanso semanal e nas suas festas, definidas para cada comunidade por decisão do governo publicada no Diário Oficial.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-034",
+        "F05-045"
+      ],
+      "evidencia": "Trecho traduzido da norma: \"Non-Jews have the right to observe days of rest on their Sabbaths and holidays. These holidays will be determined for each community according to the government's decision to be published in the Official Gazette.\"",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A lista das festas por comunidade não foi consultada. Bruns e Gavison (2007) estudam o tema; só a referência foi confirmada.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C05-087",
+      "secao": "Um calendário que segue a Lua e o Sol",
+      "afirmacao": "No Yom Kipur, segundo reportagens de vários anos, as estradas ficam praticamente vazias por tradição, e não por lei; crianças e adolescentes andam de bicicleta nas pistas, ônibus e trens param, os voos do aeroporto Ben Gurion são suspensos e rádio e TV saem do ar.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-059",
+        "F05-060"
+      ],
+      "evidencia": "Times of Israel: estradas vazias \"as is the national tradition\", dirigir é tabu, crianças de bicicleta, voos suspensos em Ben Gurion, rádio e TV fora do ar. The National (2021): o país para no Yom Kipur.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Reportagens de anos diferentes; nenhuma cita base legal para as estradas vazias (por isso o texto diz \"costume\"). Varia nas cidades árabes e em áreas mistas (não verificado em detalhe).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-088",
+      "secao": "Três dias de primavera",
+      "afirmacao": "No Yom HaShoá, o dia da memória do Holocausto, uma sirene de dois minutos soa em todo o país às 10h; em 2021 e em 2023, motoristas pararam e saíram dos carros nas estradas e pedestres pararam onde estavam.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-040",
+        "F05-041"
+      ],
+      "evidencia": "UPI (8 abr. 2021): Israel parou por dois minutos. Algemeiner (18 abr. 2023): sirene de dois minutos às 10h; motoristas de pé ao lado dos carros, pedestres parados, trânsito interrompido.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Duas fontes E, fatos datados (2021 e 2023).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-089",
+      "secao": "Três dias de primavera",
+      "afirmacao": "No Yom HaZikarón, o Dia da Memória dos soldados mortos e das vítimas do terrorismo, uma sirene de um minuto soa às 20h da véspera e outra, de dois minutos, às 11h do dia seguinte; em 2026, caíram em 20 e 21 de abril.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-043",
+        "F05-044",
+        "F05-042"
+      ],
+      "evidencia": "i24NEWS (2026): sirene de um minuto na segunda, 20 de abril, às 20h, e de dois minutos na terça, 21, às 11h, \"como todo ano\". Ynet: sirene de um minuto. Páginas de embaixadas israelenses: cerimônias às 11h nos cemitérios militares depois de sirene de dois minutos.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Algumas páginas de embaixadas mais antigas descrevem a sirene da noite como de dois minutos; as fontes mais recentes dão um minuto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-090",
+      "secao": "Três dias de primavera",
+      "afirmacao": "O Dia da Memória termina ao anoitecer e emenda no Dia da Independência.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-042"
+      ],
+      "evidencia": "Nota de embaixada israelense (2024): o Dia da Memória termina na noite de segunda e abre o 76º Dia da Independência; o Dia da Memória cai logo antes do Dia da Independência.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte oficial, nota de 2024.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-091",
+      "secao": "Quem mora em Israel",
+      "afirmacao": "Na véspera do Natal de 2025, segundo o CBS, viviam em Israel cerca de 184.200 cristãos, cerca de 1,9% da população; 78,7% deles eram cristãos árabes.",
+      "categoria": "estatistica",
+      "fontes": [
+        "F05-047"
+      ],
+      "evidencia": "Comunicado 413/2025 (24 dez. 2025): \"approximately 184,200 Christians live in Israel; they comprise about 1.9%\"; 78,7% são cristãos árabes; crescimento de 0,7% em 2024.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Estimativa preliminar; os outros dados do comunicado são do fim de 2024.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C05-092",
+      "secao": "Quem mora em Israel",
+      "afirmacao": "Em fevereiro de 2026, segundo estimativa preliminar do CBS, a população drusa de Israel era de cerca de 154.400 pessoas; as maiores localidades drusas, no fim de 2024, eram Daliyat al-Karmel (17.700) e Yirka (16.400).",
+      "categoria": "estatistica",
+      "fontes": [
+        "F05-048"
+      ],
+      "evidencia": "Comunicado 121/2026: \"The Druze population in Israel was approximately 154,369 (preliminary data)\", estimativa de fevereiro de 2026; Daliyat al-Karmel 17.700 e Yirka 16.400 no fim de 2024.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O percentual (cerca de 1,5%) é cálculo deste livro com o total de abril de 2026 (C05-001); datas de referência diferentes.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C05-093",
+      "secao": "Quem serve no exército",
+      "afirmacao": "Segundo o site do exército, os homens servem no mínimo 32 meses e as mulheres no mínimo 24; mulheres religiosas, pessoas casadas e quem é considerado inapto por razões médicas ou mentais são isentos do serviço obrigatório.",
+      "categoria": "pratica",
+      "fontes": [
+        "F05-049"
+      ],
+      "evidencia": "IDF, \"Our soldiers\": \"men are expected to serve for a minimum of 32 months and women are expected to serve for a minimum of 24 months\"; \"religious women, married individuals, and those deemed unfit medically or mentally are exempt\".",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Página sem data; prazos dependem de lei e de decisão política (ver C05-025). Conferir na data da viagem.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C05-094",
+      "secao": "Quem serve no exército",
+      "afirmacao": "Entre drusos e circassianos, só os homens são convocados.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-050",
+        "F05-049"
+      ],
+      "evidencia": "INSS: o recrutamento obrigatório inclui também os homens das comunidades drusa e circassiana. Outra fonte da mesma busca: entre judeus, homens e mulheres são convocados; entre drusos e circassianos, só homens.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A data de início da convocação dos circassianos não foi verificada (C05-053).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C05-095",
+      "secao": "Kibutz e moshav",
+      "afirmacao": "Degania, às margens do Mar da Galileia, e Nahalal, no vale de Jezreel, estão juntas na lista indicativa de Israel na UNESCO; os edifícios originais de Degania datam de 1910, e ela é considerada o primeiro kibutz.",
+      "categoria": "historia",
+      "fontes": [
+        "F05-051"
+      ],
+      "evidencia": "Lista indicativa da UNESCO \"Degania et Nahalal\": os edifícios originais do kibutz datam de 1910.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Outras fontes dão 1909 ou 1912 para a fundação de Degania; o texto usa só 1910, data dos edifícios. A localização de Nahalal no vale de Jezreel e sua natureza de moshav vêm da descrição da lista; conferir na página.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-096",
+      "secao": "Kibutz e moshav",
+      "afirmacao": "Entre 1995 e 2010, a maioria dos kibutzim abandonou a partilha tradicional da renda e passou a pagar aos membros salários diferenciados pelo valor de mercado do trabalho.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-053",
+        "F05-052"
+      ],
+      "evidencia": "Russell, Hanneman e Getz (2010): \"most kibbutzim now pay their members differential salaries on the basis of the market value of their work\"; outro resumo da pesquisa: entre 1995 e 2010, a maioria abandonou a partilha da renda. O livro de 2013 (Rutgers) é a síntese do trabalho.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Proporções exatas variam com o ano e a contagem (72% ou 75% em fontes diferentes) e ficaram fora.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-097",
+      "secao": "Kibutz e moshav",
+      "afirmacao": "O CBS conta os kibutzim e os moshavim como tipos distintos de localidade rural.",
+      "categoria": "estatistica",
+      "fontes": [
+        "F05-054"
+      ],
+      "evidencia": "Tabela 2.7 do Anuário Estatístico de 2024: kibutzim e moshavim aparecem em linhas separadas entre as localidades rurais.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O trecho não deixou ler com segurança a população de cada tipo; o número ficou fora do texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C05-098",
+      "secao": "A semana começa no domingo",
+      "afirmacao": "Em 1904, o escritor Zeev Yaavetz propôs dar nome próprio a cada dia da semana em hebraico, e a proposta não pegou.",
+      "categoria": "lingua",
+      "fontes": [
+        "F05-056",
+        "F05-055"
+      ],
+      "evidencia": "Makor Rishon: Yaavetz propôs em artigo de 1904 (תרס\"ד) nomes para os dias, deixando a Shabat como está; a proposta não foi adotada.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O trecho mistura duas fontes; conferir o artigo da Academia.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C05-099",
+      "secao": "Hebraico e árabe na lei",
+      "afirmacao": "Pesquisa Social do CBS de 2011: o hebraico é a língua materna de 49% dos israelenses com mais de 20 anos; árabe 18%, russo 15%, iídiche, francês e inglês 2% cada.",
+      "categoria": "estatistica",
+      "fontes": [
+        "F05-066"
+      ],
+      "evidencia": "Resumos jornalísticos dos dados do CBS.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só uma fonte E identificada para os números; o trecho não deixou claro de qual veículo vinham. Fica fora até o CBS ser lido.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C05-100",
+      "secao": "Hebraico e árabe na lei",
+      "afirmacao": "Em julho de 2002, a Suprema Corte decidiu, por 2 a 1, que as cidades mistas deveriam incluir o árabe nas placas informativas.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-065"
+      ],
+      "evidencia": "Adalah, parte no processo, descreve a decisão (Barak e Dorner na maioria; Cheshin vencido) e o prazo de quatro anos para trocar placas antigas.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só a fonte da parte autora; falta a decisão ou uma fonte independente.",
+      "interpretacoes_concorrentes": null,
+      "status": "PARCIALMENTE VERIFICADO",
       "revisar_ate": null
     }
   ]

@@ -4,25 +4,25 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 22852
-- Fontes registradas: 410 (por nível: D 94, B 101, E 125, A 76, C 14; por acesso: trecho-de-busca 386, referencia-confirmada 24)
-- Afirmações registradas: 549 (VERIFICADO 295, NÃO VERIFICADO 170, PARCIALMENTE VERIFICADO 51, DESATUALIZADO 3, CONTESTADO 30)
-- Afirmações VERIFICADO sem uso no texto: 7
-- Ocorrências de hebraico: 158 (lista em auditoria/hebraico.md)
-- Links testados: 0 de 407 (rede bloqueada; ver revisão humana)
+- Palavras no manuscrito: 30410
+- Fontes registradas: 569 (por nível: D 135, B 149, E 175, A 91, C 19; por acesso: trecho-de-busca 541, referencia-confirmada 28)
+- Afirmações registradas: 640 (VERIFICADO 409, NÃO VERIFICADO 136, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 38)
+- Afirmações VERIFICADO sem uso no texto: 13
+- Ocorrências de hebraico: 189 (lista em auditoria/hebraico.md)
+- Links testados: 0 de 566 (rede bloqueada; ver revisão humana)
 
 | Arquivo | Palavras | Marcas de fonte |
 | --- | --- | --- |
-| 00a-nota-metodologica.md | 580 | 0 |
-| 00b-introducao.md | 482 | 0 |
+| 00a-nota-metodologica.md | 653 | 0 |
+| 00b-introducao.md | 519 | 0 |
 | 01-israel-no-mapa.md | 2531 | 73 |
 | 02-historia.md | 6604 | 199 |
-| 03-jerusalem.md | 2586 | 68 |
-| 04-alem-de-jerusalem.md | 3070 | 101 |
-| 05-vida-real.md | 1617 | 32 |
-| 06-sabores.md | 1591 | 22 |
-| 07-hebraico.md | 978 | 0 |
-| 08-na-pratica.md | 1788 | 20 |
+| 03-jerusalem.md | 4474 | 130 |
+| 04-alem-de-jerusalem.md | 3926 | 130 |
+| 05-vida-real.md | 3234 | 95 |
+| 06-sabores.md | 2465 | 41 |
+| 07-hebraico.md | 2587 | 45 |
+| 08-na-pratica.md | 2392 | 54 |
 | 10-diario.md | 533 | 0 |
 | 98-notas-sobre-fontes.md | 323 | 0 |
 | 99-encerramento.md | 169 | 0 |
@@ -34,5 +34,5 @@ Nenhum.
 ## Avisos (3)
 
 - manuscrito/01-israel-no-mapa.md:129: caixa "O olhar de um israelense" pendente de aprovação do autor
-- manuscrito/05-vida-real.md:97: caixa "O olhar de um israelense" pendente de aprovação do autor
+- manuscrito/05-vida-real.md:197: caixa "O olhar de um israelense" pendente de aprovação do autor
 - manuscrito ausente: manuscrito/09-curiosidades.md

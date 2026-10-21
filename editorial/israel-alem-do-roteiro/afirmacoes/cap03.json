@@ -1225,7 +1225,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Tema obrigatório do brief, pendente para a próxima rodada. Fontes a buscar: UNESCO; artigos sobre mapas do século XIX (por exemplo, o levantamento britânico de 1864-1865).",
+      "limitacoes": "Tema obrigatório do brief, pendente para a próxima rodada. Fontes a buscar: UNESCO; artigos sobre mapas do século XIX (por exemplo, o levantamento britânico de 1864-1865). Rodada de 21/10/2026: a origem do esquema foi tratada em C03-083 e C03-084; os limites dos bairros continuam sem fonte.",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
       "revisar_ate": null
@@ -1240,7 +1240,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pendente. A lista de trabalho em ativos/dados/jerusalem.json está marcada para não ser exibida.",
+      "limitacoes": "Pendente. A lista de trabalho em ativos/dados/jerusalem.json está marcada para não ser exibida. Rodada de 21/10/2026: nomes e características das portas em C03-085 a C03-093; posições continuam sem fonte A-D.",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
       "revisar_ate": null
@@ -1255,7 +1255,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pendente. Fonte a buscar: Tower of David Museum.",
+      "limitacoes": "Pendente. Fonte a buscar: Tower of David Museum. Rodada de 21/10/2026: resolvido em C03-094 e C03-095.",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
       "revisar_ate": null
@@ -1270,7 +1270,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pendente. Fonte a buscar: Custódia da Terra Santa; literatura acadêmica sobre a Via Dolorosa.",
+      "limitacoes": "Pendente. Fonte a buscar: Custódia da Terra Santa; literatura acadêmica sobre a Via Dolorosa. Rodada de 21/10/2026: a prática atual está em C03-097 e C03-098; a história do traçado continua sem fonte A-D.",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
       "revisar_ate": null
@@ -1300,7 +1300,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pendente; tema do brief.",
+      "limitacoes": "Pendente; tema do brief. Rodada de 21/10/2026: resolvido em C03-108 e C03-109.",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
       "revisar_ate": null
@@ -1315,7 +1315,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pendente; tema do brief.",
+      "limitacoes": "Pendente; tema do brief. Rodada de 21/10/2026: um mercado tratado em C03-110.",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
       "revisar_ate": null
@@ -1330,7 +1330,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pendente; conferir com o capítulo 2 para não divergir.",
+      "limitacoes": "Pendente; conferir com o capítulo 2 para não divergir. Rodada de 21/10/2026: resolvido em C03-103, com C02-501, C02-521 e C02-525.",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
       "revisar_ate": null
@@ -1345,7 +1345,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pendente.",
+      "limitacoes": "Pendente. Rodada de 21/10/2026: em parte, C03-104 (Mishkenot Sha'ananim, 1860).",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
       "revisar_ate": null
@@ -1362,7 +1362,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. Fora do texto; conferir com o capítulo 2.",
+      "limitacoes": "Só fonte E. Fora do texto; conferir com o capítulo 2. Rodada de 21/10/2026: o texto usa C02-028 (capítulo 2).",
       "interpretacoes_concorrentes": null,
       "status": "PARCIALMENTE VERIFICADO",
       "revisar_ate": null
@@ -1380,7 +1380,7 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Fontes E e não aceitas. Fora do texto, mas é contexto que o capítulo DEVE ter na versão final, apresentando a fundação como parte interessada.",
+      "limitacoes": "Fontes E e não aceitas. Fora do texto, mas é contexto que o capítulo DEVE ter na versão final, apresentando a fundação como parte interessada. Rodada de 21/10/2026: reescrito e verificado em C03-105 e C03-106.",
       "interpretacoes_concorrentes": null,
       "status": "PARCIALMENTE VERIFICADO",
       "revisar_ate": null
@@ -1464,6 +1464,521 @@
       "limitacoes": "O texto fala só do Segundo Templo. O Primeiro Templo fica para o capítulo 2 ou para a próxima rodada.",
       "interpretacoes_concorrentes": null,
       "status": "PARCIALMENTE VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-083",
+      "secao": "Uma cidade em quatro bairros?",
+      "afirmacao": "Matthew Teller, em Nine Quarters of Jerusalem (2022), argumenta que a ideia dos 'quatro bairros' nasceu no século XIX, em mapas britânicos; um mapa de 1841, de dois oficiais britânicos, já traz nomes parecidos com os de hoje.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-057",
+        "F03-058",
+        "F03-059"
+      ],
+      "evidencia": "Mosaic (2023): credita a dois tenentes britânicos um mapa de 1841 com nomes semelhantes aos quatro bairros atuais, rotulado depois por G. Williams (1849). Jordan Times e AramcoWorld (sobre o livro de Teller): o conceito de quatro bairros é criação do século XIX, de cartógrafos britânicos; nenhum mapa antigo mostrava bairros definidos por religião.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Três fontes E independentes sobre a tese de um autor (jornalista, livro de editora comercial). A afirmação é apresentada como argumento de Teller. Os nomes dos oficiais (Aldrich e Symonds/Simmonds) ficaram fora: a grafia diverge. Conferir no livro.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-084",
+      "secao": "Uma cidade em quatro bairros?",
+      "afirmacao": "Um estudo dos registros do tribunal islâmico de Jerusalém observa que, neles, a palavra 'bairro' não era usada para designar o conjunto da população muçulmana da cidade.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-060"
+      ],
+      "evidencia": "Sroor (Toyo Bunko): 'in the Islamic court records, the word quarter was not used in reference to the Islamic population in Jerusalem'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Trecho de busca; título do artigo e ano a confirmar.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-085",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "A muralha da Cidade Antiga, erguida no século XVI por Solimão, o Magnífico, tem oito portas em uso.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Ministério do Turismo: 'Jerusalem's Old City walls, built in the early 16th century by the Turkish Sultan Suleiman the Magnificent, have eight gates'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Conta as portas abertas; a Porta Dourada, fechada, não entra. A IAA fala em sete portas na obra original (C03-008); a oitava é a Porta Nova (C03-086).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-086",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "A Porta Nova é a única entrada da Cidade Antiga que não fazia parte do desenho original da muralha do século XVI; foi aberta no fim do período otomano para dar acesso mais rápido aos peregrinos cristãos.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Ministério do Turismo: 'the only Old City entryway not part of the original design of the 16th-century walls', aberta no fim do período otomano para os peregrinos cristãos.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O ano exato (1887 ou 1889) diverge nas fontes vistas e ficou fora.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-087",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "A Porta de Jafa leva o nome da cidade portuária por onde chegavam os peregrinos; em árabe se chama Bab al-Khalil, por Hebron; segundo a prefeitura, suas portas eram fechadas todos os dias ao pôr do sol até a década de 1870.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-061",
+        "F03-063"
+      ],
+      "evidencia": "Ministério do Turismo: ponto de chegada dos peregrinos vindos pelo porto de Jafa; em árabe Bab al-Khalil, por Hebron. Prefeitura: 'its doors were closed every day at sunset until the 1870's'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-088",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "A Porta de Damasco é descrita pelo Ministério do Turismo como a mais imponente das portas; debaixo dela os arqueólogos acharam parte de uma entrada mais antiga, da época do imperador Adriano.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Ministério do Turismo: 'the most imposing of Jerusalem's gateways'; 'part of an older entrance from Emperor Hadrian's era beneath it'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O nome árabe (Bab al-Amud) e o hebraico (Sháar Shchem) aparecem só em fontes E; vão ao texto apenas como vocabulário para aprovação do dono.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-089",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "A Porta dos Leões, também chamada Porta de Santo Estêvão, deve o nome a dois felinos esculpidos de cada lado; segundo o Ministério do Turismo, são na verdade tigres, símbolo heráldico do sultão Baybars, do século XIII.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Ministério do Turismo: os animais 'are actually tigers, the heraldic symbol of the 13th-century Sultan Beybars'; 'also called St. Stephen's Gate'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Interpretação do relevo atribuída à fonte oficial; não se conferiu literatura de história da arte.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-090",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "Herodes não teve nada a ver com a Porta de Herodes; em árabe e em hebraico ela é a Porta das Flores.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Ministério do Turismo: 'the notorious Judean king had nothing to do with this gate'; 'known in Arabic and Hebrew as the Flowers Gate'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-091",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "A Porta de Sião leva aos bairros armênio e judeu; em árabe é a Porta do Profeta Davi.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Ministério do Turismo: leva aos bairros armênio e judeu; 'its Arabic name is the Gate of the Prophet David'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A forma árabe Bab al-Nabi Daud é transliteração simples, a uniformizar.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-092",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "A Porta do Esterco deve o nome ao lixo despejado perto dela e leva ao Muro Ocidental e ao parque arqueológico do muro sul.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Ministério do Turismo: nome do lixo despejado nas proximidades; leva ao Muro Ocidental e ao Southern Wall Archaeological Park.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-093",
+      "secao": "A muralha e suas portas",
+      "afirmacao": "A Porta Dourada, ou da Misericórdia, está bloqueada e não está entre as oito portas em uso.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-061"
+      ],
+      "evidencia": "Ministério do Turismo: a Porta Dourada (Gate of Mercy) está bloqueada.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-094",
+      "secao": "A Torre de Davi, que é de Herodes",
+      "afirmacao": "Herodes ergueu três torres sobre fortificações hasmoneias, chamadas Hípico, Fasael e Mariamne; segundo Josefo, só a de Fasael sobreviveu à destruição romana de 70 d.C., e é sobre ela que fica hoje o mirante do museu.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-065",
+        "F03-066"
+      ],
+      "evidencia": "Museu da Torre de Davi: 'Herod built three towers on top of Hasmonean fortifications, named Hippicus, Phasael, and Miriam'; 'only the Phasael Tower survived'; uma delas é hoje o mirante.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O museu é a instituição que administra o sítio. 'Miriam' no trecho é a Mariamne das fontes antigas.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-095",
+      "secao": "A Torre de Davi, que é de Herodes",
+      "afirmacao": "Monges bizantinos, lendo mal Josefo, acharam que a torre de Herodes era obra do rei Davi e a chamaram Torre de Davi; a cidadela otomana ganhou um minarete, e visitantes ocidentais passaram o nome para ele.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-064",
+        "F03-065",
+        "F03-061"
+      ],
+      "evidencia": "Museu: monges bizantinos 'mistakenly believed that King David built the tower'; a designação muçulmana como 'Michrab do Profeta Davi' prolongou a confusão; 'visitors from Western countries transferred the misnomer to the minaret of the Turkish mosque'. Ministério do Turismo: a torre foi construída por Herodes, apesar do nome.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-096",
+      "secao": "A Torre de Davi, que é de Herodes",
+      "afirmacao": "Os britânicos usaram a cidadela como galeria e centro cultural; tomada por forças israelenses em 1967, ela abriu em 1989 como Museu da Torre de Davi, depois de extensas escavações.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-065",
+        "F03-066"
+      ],
+      "evidencia": "Museu: uso britânico como galeria, museu e centro cultural; tomada em 1967; escavações; aberto em 1989 como Tower of David Museum.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte é o próprio museu.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-097",
+      "secao": "O Santo Sepulcro e a Via Dolorosa",
+      "afirmacao": "Os franciscanos percorrem a Via Crucis na Via Dolorosa todas as sextas-feiras, há séculos, do santuário da Flagelação ao Santo Sepulcro, passando pelas estações da Paixão, da condenação ao sepultamento.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-067",
+        "F03-068"
+      ],
+      "evidencia": "Custódia da Terra Santa: os franciscanos mantêm a Via Crucis na Via Dolorosa 'every Friday for centuries', do santuário da Flagelação ao Santo Sepulcro; as estações vão da condenação à sepultura, terminando diante da Edícula.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A Custódia registrou suspensões em períodos de conflito; confira antes de ir.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C03-098",
+      "secao": "O Santo Sepulcro e a Via Dolorosa",
+      "afirmacao": "Segundo a Custódia da Terra Santa, crônicas já falam da procissão fúnebre da Sexta-Feira Santa no século XV, e a forma atual segue um cerimonial de 1760.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-069"
+      ],
+      "evidencia": "Custódia: 'Chronicles speak of this tradition as being present as early as the 15th century, but the current form dates back to ... a Holy Land ceremonial dated to 1760'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fonte da própria instituição que celebra o rito. A história do traçado da Via Dolorosa e do número de estações não foi verificada em fonte A-D (C03-070 continua NÃO VERIFICADO).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-099",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "O tratado de paz entre Israel e Jordânia de 1994 diz, no artigo 9, que Israel respeita o papel especial atual da Jordânia nos santuários muçulmanos de Jerusalém e dará alta prioridade ao papel histórico jordaniano nas negociações do status permanente; o alcance desse papel não foi detalhado e é motivo de discordância.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-070",
+        "F03-071"
+      ],
+      "evidencia": "Kattan: art. 9(2) compromete Israel a respeitar o papel atual da Jordânia e a dar prioridade a ele no status permanente. MEI-NUS: 'that role was not clearly spelt out, making it a point of contention'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Texto do tratado lido por meio de fontes secundárias; conferir no texto oficial.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-100",
+      "secao": "Um monte, dois nomes",
+      "afirmacao": "Em 2013, o rei Abdullah II, da Jordânia, e o presidente palestino Mahmoud Abbas assinaram um acordo que reconhece o papel do rei como custódio dos lugares santos de Jerusalém; a Jordânia não reivindica soberania sobre a cidade, e a discordância com Israel é sobre o alcance desse papel.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-070",
+        "F03-071"
+      ],
+      "evidencia": "MEI-NUS e Kattan: acordo de 2013 assinado por Abdullah II e Abbas; a Jordânia não reivindica soberania; a disputa com Israel é sobre o alcance do papel.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Uma das fontes dá 31 de março de 2013; o dia ficou fora. Kattan escreve a partir da leitura jordaniana do papel especial.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-101",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "A Lei Básica palestina emendada de 2003 diz, no artigo 3: 'Jerusalém é a capital da Palestina'.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-072",
+        "F03-073"
+      ],
+      "evidencia": "Constitute Project: 'Article 3: Jerusalem is the capital of Palestine'. Embaixada palestina: o artigo 3 da Lei Básica estabelece Jerusalém como capital.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-102",
+      "secao": "O status de Jerusalém, nas palavras de cada documento",
+      "afirmacao": "Em 2000, o Conselho Central da OLP declarou que a retirada israelense deveria incluir todo o território palestino ocupado além das linhas de 4 de junho de 1967, Jerusalém incluída, em aplicação da Resolução 242.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-074"
+      ],
+      "evidencia": "Institute for Palestine Studies, Jerusalem Chronology (2000): o Conselho Central da OLP afirmou que a retirada israelense deve cobrir todo o território palestino, inclusive Jerusalém, além das fronteiras de 4 de junho de 1967, em aplicação da Res. 242.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Cronologia de instituto palestino (parte interessada), usada para registrar a posição palestina com a voz dela.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-103",
+      "secao": "A cidade sai das muralhas, e depois se divide",
+      "afirmacao": "De 1949 a 1967, Jerusalém ficou dividida entre a Jordânia, no leste, e Israel, no oeste; a Porta Mandelbaum era o único ponto de passagem entre as duas partes, usado sobretudo por diplomatas, clérigos, pessoal da ONU e peregrinos cristãos, e foi desmontada depois de junho de 1967.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-075",
+        "F03-076",
+        "F03-077"
+      ],
+      "evidencia": "Jerusalem Story: depois da guerra de 1948, leste sob a Jordânia e oeste sob Israel; o posto Mandelbaum, com funcionários israelenses e jordanianos, servia sobretudo a diplomatas, clérigos, pessoal da ONU e peregrinos cristãos; desmontado depois da ocupação de Jerusalém Oriental em 1967. Leibniz-IRS: Mandelbaum Gate como passagem na Jerusalém dividida, 1948-1967.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Duas fontes B; a Jerusalem Story é projeto do Institute for Palestine Studies.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-104",
+      "secao": "A cidade sai das muralhas, e depois se divide",
+      "afirmacao": "Mishkenot Sha'ananim, de 1860, é considerado o primeiro bairro judeu construído fora das muralhas.",
+      "categoria": "historia",
+      "fontes": [
+        "F03-078",
+        "F03-079"
+      ],
+      "evidencia": "iTravelJerusalem e Center for Israel Education: Mishkenot Sha'ananim, construído em 1860, o primeiro bairro judeu fora das muralhas.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A expansão de bairros árabes e cristãos fora das muralhas no mesmo século não foi verificada nesta rodada.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-105",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A Cidade de Davi fica na parte sul da crista oriental da Jerusalém antiga, logo ao sul do Monte do Templo, dentro de Silwan, bairro palestino de Jerusalém Oriental.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-084",
+        "F03-080",
+        "F03-081"
+      ],
+      "evidencia": "Jerusalem Story: a Cidade de Davi fica imediatamente ao sul do Monte do Templo, na crista oriental. CMI e Al Jazeera: o sítio está em Silwan, em Jerusalém Oriental.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-106",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "O parque nacional da Cidade de Davi é operado desde 1997 pela fundação israelense Ir David (Elad), cuja missão declarada inclui 'abrigar famílias judias na Cidade de Davi'; a Suprema Corte de Israel permitiu que o contrato com a Autoridade de Natureza e Parques continuasse, com mudanças, depois de uma petição da organização Ir Amim, que apontava conflito de interesse.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F03-081",
+        "F03-082",
+        "F03-083"
+      ],
+      "evidencia": "Al Jazeera (2013): desde 1997 o parque é operado pela fundação Ir David (Elad). Jerusalem Post: a corte decidiu que o contrato entre a Autoridade de Parques e a Elad podia continuar com algumas mudanças, depois de petição da Ir Amim (conflito de interesse). Jerusalem Story: a missão declarada inclui 'house Jewish families in the City of David'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Fatos datados com duas fontes E e uma B (parte interessada). O ano da decisão judicial não apareceu no trecho; a posição da própria Elad não foi lida em fonte dela.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C03-107",
+      "secao": "Debaixo da cidade",
+      "afirmacao": "A escavação na Cidade de Davi é disputada: o governo israelense a apresenta como o sítio da Cidade de Davi e do túnel de Ezequias, enquanto críticos, como o arqueólogo Rafi Greenberg, da Universidade de Tel Aviv, dizem que a arqueologia virou instrumento da disputa pela presença judaica em Silwan.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F03-053",
+        "F03-080",
+        "F03-081"
+      ],
+      "evidencia": "Ministério do Turismo: página 'City of David/Hezekiah's Tunnel & Pool of Siloam' (referência). Al Jazeera: Greenberg diz que Israel usou a arqueologia como 'one of the weapons' nessa disputa em Silwan. CMI: estudo 'Archaeology, exclusion and conflict in Jerusalem: Silwan and the City of David'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Debate político e acadêmico; a fala de Greenberg chegou por jornalismo.",
+      "interpretacoes_concorrentes": "Governo israelense e a fundação Elad: sítio da Jerusalém da Idade do Ferro, aberto à visita como Cidade de Davi. Críticos (Greenberg; estudo do CMI; organizações como Ir Amim): a escavação e a narrativa do parque servem à expansão da presença judaica num bairro palestino e excluem a história árabe do lugar.",
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-108",
+      "secao": "Fora das muralhas: o Monte das Oliveiras",
+      "afirmacao": "O Monte das Oliveiras fica logo a leste da Cidade Antiga, e na encosta voltada para ela está um grande cemitério judaico, usado desde a época dos Templos.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-086"
+      ],
+      "evidencia": "iTravelJerusalem: o monte fica a leste da Cidade Antiga; cemitério judaico na encosta, usado desde o tempo do Primeiro e do Segundo Templo.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O número de túmulos varia muito entre as fontes e ficou fora.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-109",
+      "secao": "Fora das muralhas: o Monte das Oliveiras",
+      "afirmacao": "Ao pé do Monte das Oliveiras, no Getsêmani, fica a Basílica da Agonia, também chamada Igreja de Todas as Nações, guardada pelos franciscanos.",
+      "categoria": "religiao",
+      "fontes": [
+        "F03-085"
+      ],
+      "evidencia": "Custódia da Terra Santa: 'the Basilica of the Agony, also called the Church of the Nations, stands today at the foot of Mount Olives'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": null,
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-110",
+      "secao": "O mercado do algodão",
+      "afirmacao": "O Mercado dos Mercadores de Algodão (Suq al-Qattanin) foi construído por Tankiz, governador mameluco, por volta de 1336-1337, no reinado do sultão al-Nasir Muhammad, com um portão que liga a rua do mercado à esplanada e, no mesmo conjunto, um banho duplo e uma hospedaria de mercadores (khan); um estudo de 2017 o chama do projeto mais ambicioso da era mameluca em Jerusalém.",
+      "categoria": "patrimonio",
+      "fontes": [
+        "F03-087",
+        "F03-088",
+        "F03-089"
+      ],
+      "evidencia": "Da'adli e Barbé (2017): Tankiz iniciou o projeto, com banho duplo e khan ligados à rua do mercado; 'by far the most ambitious project of the Mamlūk era in Jerusalem'. Archnet: Bab al-Qattanin, 1336, ligação com a rua do mercado. iTravelJerusalem: o mercado e o portão.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "As fontes divergem sobre quem teve a iniciativa (Tankiz ou o sultão); o texto diz que Tankiz construiu, no reinado do sultão.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C03-111",
+      "secao": "A Torre de Davi, que é de Herodes",
+      "afirmacao": "O Museu da Torre de Davi ocupa uma fortaleza medieval junto da Porta de Jafa.",
+      "categoria": "geografia",
+      "fontes": [
+        "F03-090"
+      ],
+      "evidencia": "Museu: \"located in a medieval fortress adjacent to the Jaffa Gate of the Old City of Jerusalem\".",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A entrada atual do museu mudou com a reforma; o texto não a descreve.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
       "revisar_ate": null
     }
   ]

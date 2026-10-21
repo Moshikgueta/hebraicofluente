@@ -1,0 +1,44 @@
+[
+ {
+  "id": "unesco-massada",
+  "titulo": "Masada",
+  "url": "https://whc.unesco.org/en/list/1040/",
+  "instituicao": "UNESCO World Heritage Centre",
+  "para_que_serve": "A ficha de Massada na Lista do Patrimonio Mundial.",
+  "afirmacoes": [
+   "C04-036",
+   "C04-043"
+  ]
+ },
+ {
+  "id": "parque-nacional-massada",
+  "titulo": "Masada National Park",
+  "url": "https://en.parks.org.il/reserve-park/masada-national-park/",
+  "instituicao": "Autoridade de Natureza e Parques de Israel",
+  "para_que_serve": "Como se sobe e os horarios, que mudam com a estacao.",
+  "afirmacoes": [
+   "C04-044"
+  ]
+ },
+ {
+  "id": "parque-nacional-cesareia",
+  "titulo": "Caesarea National Park",
+  "url": "https://en.parks.org.il/reserve-park/caesarea-national-park/",
+  "instituicao": "Autoridade de Natureza e Parques de Israel",
+  "para_que_serve": "O parque do porto de Herodes, do teatro e das muralhas cruzadas.",
+  "afirmacoes": [
+   "C04-030"
+  ]
+ },
+ {
+  "id": "unesco-acre",
+  "titulo": "Old City of Acre",
+  "url": "https://whc.unesco.org/en/list/1042/",
+  "instituicao": "UNESCO World Heritage Centre",
+  "para_que_serve": "A cidade cruzada debaixo da cidade otomana, na ficha da UNESCO.",
+  "afirmacoes": [
+   "C04-073",
+   "C04-074"
+  ]
+ }
+]

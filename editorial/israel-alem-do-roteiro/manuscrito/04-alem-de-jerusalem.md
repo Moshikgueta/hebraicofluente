@@ -2,6 +2,7 @@
 capitulo: 4
 titulo: Além de Jerusalém
 subtitulo: Dez lugares, cada um com mais de uma história
+abertura_frase: Dez lugares e, em cada um, três perguntas que nem sempre têm a mesma resposta: o que se escavou, o que se escreveu e o que se acredita.
 ---
 
 Fora de Jerusalém, o país conta histórias que pouco se parecem umas com as outras. Há um lago cercado de ruínas que interessam ao mesmo tempo a cristãos, a judeus e a quem estuda a natureza.[[C04-003,C04-005,C04-006]] Há uma fortaleza no deserto que virou símbolo nacional e tema de debate acadêmico.[[C04-039,C04-041]] Há um porto que Herodes ergueu com cinza vulcânica trazida da Itália.[[C04-021,C04-025]] E há uma cidade fundada em 1909 que hoje é patrimônio da arquitetura moderna.[[C04-054,C04-055]]
@@ -41,6 +42,10 @@ Nazaré fica na Galileia, a sudoeste do lago.[[C04-011,C04-007]] O Pleiades, gaz
 
 Em Nazaré, como em todo lugar da Galileia ligado aos Evangelhos, o cuidado com as palavras rende muito. Um santuário marca o lugar que uma tradição associa a um episódio. A tradição pode ser antiga e importante para muita gente, e ainda assim continuar sendo tradição: um tipo de testemunho diferente do que a escavação oferece.
 
+A cidade tem até duas respostas para a mesma pergunta: onde o anjo Gabriel falou com Maria? A atual Basílica da Anunciação, católica, foi projetada pelo arquiteto italiano Giovanni Muzio e consagrada em março de 1969, sobre a gruta que a tradição católica associa à Anunciação e sobre restos de igrejas anteriores.[[C04-086]] A poucos passos, a igreja grega ortodoxa ligada ao anjo Gabriel fica junto da fonte da cidade, onde a tradição ortodoxa situa o mesmo episódio. Essa tradição remonta ao Protoevangelho de Tiago, um texto apócrifo do século II em que Maria sai para buscar água quando ouve uma voz.[[C04-087]]
+
+Duas igrejas, duas tradições, nenhuma das duas desmente a outra: cada uma guarda uma leitura antiga do mesmo relato. Nazaré também é uma cidade de cristãos de hoje. No fim de 2019, segundo o órgão de estatística de Israel, o CBS, ela era a localidade com mais cristãos árabes do país, 21.700.[[C04-088]]
+
 ::: historia-ou-tradicao Três perguntas para cada santuário
 De quando é o edifício que você está vendo? Desde quando a tradição liga esse lugar ao episódio que ele celebra? E o que a arqueologia encontrou embaixo dele? As três respostas costumam ser diferentes, e cada uma diz uma coisa. Um guia bem preparado sabe separá-las, e a pergunta pode ser feita com todo o respeito.
 :::
@@ -49,8 +54,12 @@ De quando é o edifício que você está vendo? Desde quando a tradição liga e
 Repare se a igreja diante de você é a primeira construída no lugar ou se está sobre restos de outras mais antigas. Essa sobreposição, quando existe, também é um documento: pode indicar há quanto tempo o lugar é venerado.
 :::
 
+::: foto foto-anunciacao-spyckerelle
+A Basílica da Anunciação, consagrada em 1969.[[C04-086]]
+:::
+
 ::: em-hebraico
-- <he>נָצְרַת</he> | Natsrát | Nazaré | Em árabe, al-Nasira.
+- <he>נָצְרַת</he> | Natsrát | Nazaré | A localidade com mais cristãos árabes em Israel em 2019.[[C04-088]]
 - <he>כְּנֵסִיָּה</he> | knessiyá | igreja | Aparece nas placas que indicam os santuários.
 :::
 
@@ -60,8 +69,14 @@ Na margem norte do lago, Cafarnaum (Kfar Nachúm, em hebraico) foi uma aldeia qu
 
 A terceira presença é uma casa. Um catálogo de igrejas antigas mantido pela Universidade Hebraica de Jerusalém registra o lugar como "Casa de São Pedro, domus ecclesiae", isto é, uma casa que passou a funcionar como igreja.[[C04-016]] O nome conta o que a tradição cristã identifica ali. Não é, sozinho, uma conclusão arqueológica.
 
+O que a escavação diz foi publicado pelos próprios franciscanos. Virgilio Corbo e Stanislao Loffreda escavaram o lugar a partir de 1968. Segundo eles, uma casa de habitação passou a servir de lugar de culto a partir do fim do século I d.C., foi cercada por um muro no século IV e, na segunda metade do século V, recebeu por cima uma igreja octogonal.[[C04-089]] O principal apoio literário para a casa ter virado igreja é o relato da peregrina Egéria, do século IV.[[C04-091]] Por cima de tudo, desde 29 de junho de 1990, está o memorial moderno projetado por Ildo Avetta.[[C04-090]]
+
 ::: historia-ou-tradicao A "casa de Pedro"
-Saber se uma casa antiga foi transformada em lugar de culto é uma pergunta que a escavação pode responder, olhando para reformas, objetos e inscrições. Saber de quem era a casa exige outro tipo de prova, e é nesse ponto que a tradição entra. Ao ouvir "esta é a casa de Pedro", o leitor atento ouve duas afirmações e pode pesar cada uma separadamente.
+Saber se uma casa antiga foi transformada em lugar de culto é uma pergunta que a escavação pode responder, olhando para reformas, objetos e inscrições. Em Cafarnaum, os escavadores responderam que sim.[[C04-089]] Saber de quem era a casa exige outro tipo de prova, e é nesse ponto que a tradição entra. Ao ouvir "esta é a casa de Pedro", o leitor atento ouve duas afirmações e pode pesar cada uma separadamente.
+:::
+
+::: foto foto-cafarnaum-sinagoga-werner
+As ruínas da sinagoga de Cafarnaum.
 :::
 
 ::: voce-sabia A sinagoga que aparece duas vezes
@@ -87,6 +102,14 @@ O porto foi também uma obra de importação. Um estudo publicado em 2007 no Int
 Cesareia foi capital da província romana.[[C04-029]] É dela a única peça da época de Pôncio Pilatos que traz o nome dele, segundo o Museu de Israel: uma pedra de calcário com inscrição em latim, achada reaproveitada na escadaria do teatro romano e provavelmente feita para um templo em honra do imperador Tibério.[[C04-027,C04-028]] O texto reconstruído chama Pilatos de "[praef]ectus" da Judeia, e o museu o situa no cargo entre 26 e 36 d.C.[[C04-027,C04-028]] O original está no Museu de Israel, em Jerusalém.[[C04-027]]
 
 O parque nacional foi declarado em 1968 e reúne, lado a lado, o teatro, o hipódromo e as fortificações dos cruzados.[[C04-030]] Cesareia está na Lista Indicativa de Israel, sem inscrição.[[C04-031]]
+
+::: foto foto-cesareia-aereo-eldadi
+Cesareia Marítima vista do alto.
+:::
+
+::: link parque-nacional-cesareia
+O parque nacional, na página da Autoridade de Natureza e Parques.
+:::
 
 ::: voce-sabia Prefeito ou procurador?
 A ficha do Museu de Israel cataloga a pedra como inscrição "mencionando Pôncio Pilatos, o procurador da Judeia", mas o texto reconstruído na própria pedra diz prefeito: "[praef]ectus".[[C04-028]] É um pequeno lembrete de que o título de Pilatos aparece de formas diferentes conforme a fonte, e de que esta pedra, segundo o museu, é o único objeto da época dele que traz o seu nome.
@@ -114,7 +137,11 @@ O fim do cerco é contado por uma única fonte antiga, o historiador judeu Fláv
 ::: historia-ou-tradicao Josefo, a arqueologia e o símbolo
 Há duas discussões aqui. A primeira é sobre o que aconteceu em 73. Em 1982, o estudioso Shaye J. D. Cohen argumentou que os vestígios escavados, como os esqueletos achados numa caverna e os focos de incêndio separados, não combinam com a decisão unânime e a ação conjunta que Josefo descreve. A arqueóloga Jodi Magness, que escavou em Massada, escreveu em 2019 que muitos estudiosos hoje consideram inventada a descrição do suicídio coletivo, e que essa é uma pergunta que a arqueologia não tem como responder.[[C04-039]]
 
-A segunda discussão é sobre o século XX. O sociólogo Nachman Ben-Yehuda, da Universidade Hebraica de Jerusalém, argumentou em The Masada Myth (1995) que o relato de Josefo foi editado e ampliado até virar um mito simples e poderoso de heroísmo, difundido por organizações clandestinas anteriores ao Estado, pelo exército, por arqueólogos, por movimentos juvenis e pela indústria do turismo.[[C04-041]] A própria UNESCO, ao inscrever o sítio, chamou Massada de símbolo do antigo reino judeu e de sua destruição, e ligou o que aconteceu ali à identidade cultural judaica.[[C04-042]] Estudar o símbolo não apaga o sítio; ajuda a entender por que ele é visitado como é.
+A segunda discussão é sobre o século XX. O sociólogo Nachman Ben-Yehuda, da Universidade Hebraica de Jerusalém, argumentou em The Masada Myth (1995) que o relato de Josefo foi editado e ampliado até virar um mito simples e poderoso de heroísmo, difundido por organizações clandestinas anteriores ao Estado, pelo exército, por arqueólogos, por movimentos juvenis e pela indústria do turismo.[[C04-041]] A própria UNESCO, ao inscrever o sítio, chamou Massada de símbolo do antigo reino judeu e de sua destruição, e ligou o que aconteceu ali à identidade cultural judaica.[[C04-042]] A tese de Ben-Yehuda também tem críticos. Louis Feldman, ao resenhar o livro seguinte dele, Sacrificing Truth (2002), deu-lhe razão por criticar o arqueólogo Yigael Yadin pelo rótulo de "zelotes", mas defendeu Yadin em outros pontos. O arqueólogo Amnon Ben-Tor, que escavou em Massada com Yadin, respondeu em Back to Masada (2009) com uma defesa da interpretação de Yadin.[[C04-096]] Estudar o símbolo não apaga o sítio; ajuda a entender por que ele é visitado como é.
+:::
+
+::: foto foto-capa-massada-aerea
+Massada vista do ar.
 :::
 
 ::: voce-sabia O cerco ficou de pé
@@ -129,6 +156,14 @@ Do alto, procure a rampa no lado ocidental e, lá embaixo, os contornos quadril�
 O lado leste se sobe pelo teleférico ou pela Trilha da Serpente; o lado oeste, pela rampa romana, com acesso pela estrada 3199, a partir de Arad. Não há estrada ligando os dois lados. Horários mudam com a estação: confira no site da Autoridade de Natureza e Parques antes de viajar.[[C04-044]]
 :::
 
+::: link parque-nacional-massada
+Acesso, trilhas e horários, na página oficial do parque.
+:::
+
+::: link unesco-massada
+A ficha de Massada na Lista do Patrimônio Mundial.
+:::
+
 ::: em-hebraico
 - <he>מְצָדָה</he> | Metsadá | Massada | Nas placas em inglês, Masada.
 - <he>מִבְצָר</he> | mivtsár | fortaleza | O palácio-fortaleza de Herodes.
@@ -139,7 +174,9 @@ O lado leste se sobe pelo teleférico ou pela Trilha da Serpente; o lado oeste, 
 
 As margens do Mar Morto ficam em Israel, na Jordânia e na Cisjordânia.[[C04-048]] Em hebraico ele se chama Yam HaMélach, "mar do sal". Entre os nomes antigos que o Pleiades registra para o lago, ao lado do latino Asphaltitis aparece o grego thálassa nekrá, literalmente "mar morto".[[C04-048]]
 
-A medida do nível do lago, que só faz sentido com data, fica no capítulo 1. Aqui basta o que se vê do alto de Massada, na seção anterior: a margem lá embaixo, centenas de metros abaixo do platô.[[C04-034]]
+A medida do nível do lago, que só faz sentido com data, fica no capítulo 1, com o resto da história: o lago que desce mais de um metro por ano, a bacia do sul que, como lago natural, praticamente secou, e as dolinas que se abrem na costa oeste.[[C01-013,C01-016,C01-017]] Aqui basta o que se vê do alto de Massada, na seção anterior: a margem lá embaixo, centenas de metros abaixo do platô.[[C04-034]]
+
+Vale levar esse capítulo na cabeça ao chegar à margem. No ritmo de descida previsto, uma placa de nível sem data envelhece depressa.[[C01-013]]
 
 ::: voce-sabia O mesmo nome em grego
 O nome que o português usa tem, palavra por palavra, o mesmo sentido de um nome grego antigo do lago: thálassa nekrá.[[C04-048]] O hebraico preferiu outro traço da água e o chama pelo sal.
@@ -152,11 +189,15 @@ O nome que o português usa tem, palavra por palavra, o mesmo sentido de um nome
 
 ## Tel Aviv
 
-Tel Aviv foi fundada em 1909, logo ao norte da cidade portuária amuralhada de Jafa, e cresceu durante o Mandato Britânico.[[C04-054]] O centro, a chamada Cidade Branca, segue o plano urbano de Patrick Geddes, de 1925-1927, que a UNESCO descreve como um dos principais teóricos do urbanismo moderno.[[C04-055]]
+Tel Aviv foi fundada em 1909, logo ao norte da cidade portuária amuralhada de Jafa, e cresceu durante o Mandato Britânico.[[C04-054]] O começo tem uma cena que os fundadores fizeram questão de registrar. Em abril de 1909, nas dunas fora de Jafa, as famílias do bairro Ahuzat Bayit sortearam os lotes com conchas: numa ia o nome da família, na outra o número do terreno. Pouco depois, o bairro passou a se chamar Tel Aviv.[[C04-092]] As fontes divergem sobre quantas famílias eram, por volta de sessenta.[[C04-092]] O centro, a chamada Cidade Branca, segue o plano urbano de Patrick Geddes, de 1925-1927, que a UNESCO descreve como um dos principais teóricos do urbanismo moderno.[[C04-055]]
 
 Os edifícios foram erguidos do começo dos anos 1930 até os anos 1950, segundo o resumo atual da UNESCO; o dossiê original da candidatura fechava a conta em 1948.[[C04-056]] Os arquitetos tinham se formado na Europa antes de emigrar, e combinaram várias correntes do Movimento Moderno com tradições locais, adaptando os prédios ao clima do lugar.[[C04-056]]
 
 A inscrição, em 2003, cobre 140,4 hectares em três zonas: a Cidade Branca central, Lev Hair com o bulevar Rothschild, e a área de Bialik.[[C04-055,C04-058]] Cerca de mil edifícios históricos estão sob regras de conservação, a maioria de propriedade privada.[[C04-058]] A UNESCO aponta os prédios altos que crescem em volta como risco para a integridade visual do conjunto.[[C04-058]] Andar pela Cidade Branca é ver um patrimônio que continua sendo cidade, em boa parte nas mãos de proprietários privados.
+
+::: foto foto-tel-aviv-cidade-branca
+Um prédio da Cidade Branca de Tel Aviv.
+:::
 
 ::: voce-sabia Bauhaus? Nem tanto
 O rótulo "estilo Bauhaus" gruda em Tel Aviv, mas a avaliação feita para a UNESCO observa que o termo não é necessariamente adequado. O que a cidade reúne é uma síntese de várias correntes do Movimento Moderno.[[C04-057]]
@@ -177,14 +218,18 @@ O ponto que a UNESCO usa para marcar o sítio no mapa fica no centro da praça D
 
 Jafa vem antes de Tel Aviv, e não só na cronologia: quando a UNESCO descreve a fundação da cidade nova, é por Jafa que ela se orienta, dizendo que Tel Aviv nasceu imediatamente ao norte da "cidade portuária amuralhada".[[C04-054]] O Pleiades registra Jafa como cidade portuária antiga, com as formas Ioppe e Joppe ao lado do hebraico Yafo.[[C04-062]]
 
-O porto é o ponto de partida da geografia da cidade grande que cresceu ao lado dele. Quem chega à cidade velha vindo do norte faz o caminho inverso ao da história.
+O porto é o ponto de partida da geografia da cidade grande que cresceu ao lado dele. Quem chega à cidade velha vindo do norte faz o caminho inverso ao da história. Em árabe, a cidade se chama Yafa, o nome que os textos palestinos usam.[[C04-095]]
+
+::: foto foto-jaffa-do-mar-photochrom
+Jafa vista do mar, num fotocromo do fim do século XIX.
+:::
 
 ::: observar
 No porto, lembre que você não está num bairro de Tel Aviv que por acaso é antigo: está na cidade mais velha das duas, aquela em relação à qual a outra foi fundada.[[C04-054,C04-062]]
 :::
 
 ::: em-hebraico
-- <he>יָפוֹ</he> | Yáfo | Jafa | Em árabe, Yafa; nas placas em inglês, Jaffa ou Yafo.
+- <he>יָפוֹ</he> | Yáfo | Jafa | Em árabe, Yafa.[[C04-095]]
 - <he>נְמַל יָפוֹ</he> | Nemál Yáfo | porto de Jafa | <he>נָמָל</he> (namál) é "porto".
 - <he>עִיר עַתִּיקָה</he> | ir atiká | cidade antiga | Indica a parte velha nas placas de várias cidades.
 :::
@@ -194,6 +239,12 @@ No porto, lembre que você não está num bairro de Tel Aviv que por acaso é an
 Em 2008, a UNESCO inscreveu os Lugares Sagrados Bahá'ís em Haifa e na Galileia Ocidental.[[C04-066]] O conjunto inclui os dois lugares mais sagrados da fé bahá'í, ligados aos seus fundadores: o santuário do Báb, em Haifa, com seus jardins em terraços, e o santuário de Bahá'u'lláh, em Bahjí, perto de Acre.[[C04-067]] Em Haifa, um dos conjuntos inscritos é a encosta norte do monte Carmelo.[[C04-070]]
 
 O bem soma 26 edifícios, monumentos e sítios. O comunicado de 2008 fala em 11 locais; a página atual da lista, em sete conjuntos.[[C04-068]] A UNESCO destacou a tradição de peregrinação, que traz milhares de peregrinos por ano.[[C04-069]] Para quem visita, isso muda o jeito de olhar: os jardins são cartão-postal, mas antes disso são lugar santo de uma religião viva.
+
+A cidade em volta dos jardins também é diversa. No perfil estatístico publicado pela prefeitura, os árabes eram cerca de 10% de uma população de cerca de 270 mil habitantes.[[C04-094]] E, no fim de 2019, segundo o CBS, Haifa tinha 16.300 cristãos árabes, a segunda maior população cristã árabe do país, depois de Nazaré.[[C04-088]]
+
+::: foto foto-bahai-jardins-haifa
+Os terraços em volta do santuário do Báb, no monte Carmelo.[[C04-067,C04-070]]
+:::
 
 ::: voce-sabia A candidatura voltou uma vez
 Na primeira tentativa, em 2007, o Comitê do Patrimônio Mundial devolveu a candidatura a Israel para revisão. Reapresentada em janeiro de 2008, ela foi aprovada em 8 de julho daquele ano.[[C04-066]]
@@ -215,6 +266,16 @@ Ao norte de Haifa, Acre já foi Ake e Ptolemais, nomes que o Pleiades registra p
 
 Por cima, está a cidade otomana amuralhada, com cidadela, mesquitas, khans (as hospedarias de caravanas) e banhos, quase toda dos séculos XVIII e XIX, construída sobre as estruturas cruzadas.[[C04-076]] É uma cidade em camadas, e quem anda por ela passa de uma época para a outra subindo e descendo escadas.
 
+Acre também ficou na história como a cidade que Napoleão não tomou. De março a maio de 1799, ele cercou Acre, defendida pelo governador otomano Jazzar Paxá com o apoio de navios britânicos comandados por Sidney Smith. Com a peste no exército, levantou o cerco e voltou ao Egito sem tomar a cidade.[[C04-093]]
+
+::: foto foto-acre-castelo-matson
+A cidadela de Acre numa foto da coleção Matson, de cerca de 1920 a 1933.
+:::
+
+::: link unesco-acre
+A ficha da Cidade Antiga de Acre na UNESCO.
+:::
+
 Acre também entra no patrimônio bahá'í: o santuário de Bahá'u'lláh, em Bahjí, fica perto da cidade e faz parte do conjunto inscrito em 2008.[[C04-067]]
 
 ::: voce-sabia Enterrada para durar
@@ -226,7 +287,29 @@ Preste atenção no nível em que você está. O que é otomano costuma estar na
 :::
 
 ::: em-hebraico
-- <he>עַכּוֹ</he> | Áko | Acre | Em árabe, Akka; nas placas em inglês, Akko ou Acre.
+- <he>עַכּוֹ</he> | Áko | Acre | Em árabe, 'Akka.[[C04-095]]
 - <he>חוֹמָה</he> | chomá | muralha | A palavra das muralhas otomanas e das cruzadas.
 - <he>צַלְבָנִים</he> | tsalvaním | cruzados | Singular: <he>צַלְבָן</he> (tsalván).
+:::
+
+::: quiz Onde a tradição ortodoxa situa a Anunciação, em Nazaré?
+- [ ] Na gruta sob a Basílica da Anunciação | 
+- [x] Junto da fonte da cidade | A tradição remonta ao Protoevangelho de Tiago, em que Maria sai para buscar água.[[C04-087]] A gruta é o lugar da tradição católica.[[C04-086]]
+- [ ] No alto do monte Carmelo | 
+:::
+
+::: vf Napoleão tomou Acre em 1799.
+resposta: falso
+Ele cercou a cidade de março a maio de 1799 e voltou ao Egito sem tomá-la.[[C04-093]]
+:::
+
+::: quiz Como as famílias de Ahuzat Bayit, o bairro que virou Tel Aviv, sortearam os lotes em 1909?
+- [ ] Com dados | 
+- [x] Com conchas | Numa concha ia o nome da família, na outra o número do terreno.[[C04-092]]
+- [ ] Por ordem de chegada | 
+:::
+
+::: vf Segundo a UNESCO, os acampamentos, o muro e a rampa em volta de Massada formam o sistema de cerco romano mais completo que se conhece.
+resposta: verdadeiro
+São oito acampamentos, um muro de cerco e uma rampa no lado ocidental.[[C04-036]]
 :::
