@@ -62,6 +62,8 @@ for (const c of [...caps, ...(diario ? [diario] : [])]) for (const s of c.secoes
 }
 for (const c of caps) if (c.abertura.imagem) svgDe(c.abertura.imagem);
 if (diario?.abertura.imagem) svgDe(diario.abertura.imagem);
+/* O mapa do diário na web: só o desenho, os alfinetes são botões da página. */
+if (diario) svgDe('mapa-marcar-web');
 /* Abertura sem imagem própria: a arte da coleção (a mesma da capa). */
 svgs['arte-colecao'] = fs.readFileSync(path.join(EDITORIAL, 'templates/capa-arte.svg'), 'utf8');
 for (const c of caps) if (!c.abertura.imagem) c.abertura.imagem = 'arte-colecao';

@@ -15,7 +15,7 @@
   var memoria = {};
   function ler() { try { return JSON.parse(localStorage.getItem(CHAVE)) || {}; } catch (e) { return memoria; } }
   function guardar(f) { var s = ler(); f(s); try { localStorage.setItem(CHAVE, JSON.stringify(s)); } catch (e) { memoria = s; } return s; }
-  function estado() { var s = ler(); s.lidas = s.lidas || {}; s.fav = s.fav || {}; s.resp = s.resp || {}; s.desafios = s.desafios || {}; s.diario = s.diario || {}; s.check = s.check || {}; s.roteiro = s.roteiro || {}; s.palavras = s.palavras || {}; s.palpites = s.palpites || {}; s.exerc = s.exerc || {}; s.abertas = s.abertas || {}; return s; }
+  function estado() { var s = ler(); s.lidas = s.lidas || {}; s.fav = s.fav || {}; s.resp = s.resp || {}; s.desafios = s.desafios || {}; s.diario = s.diario || {}; s.check = s.check || {}; s.roteiro = s.roteiro || {}; s.palavras = s.palavras || {}; s.palpites = s.palpites || {}; s.exerc = s.exerc || {}; s.abertas = s.abertas || {}; s.mapa = s.mapa || {}; s.mapa.lugares = s.mapa.lugares || {}; s.mapa.meus = s.mapa.meus || []; return s; }
 
   /* ── utilidades ─────────────────────────────────────────────────────── */
   function el(tag, attrs, html) { var e = document.createElement(tag); for (var k in (attrs || {})) { if (attrs[k] != null) e.setAttribute(k, attrs[k]); } if (html != null) e.innerHTML = html; return e; }
@@ -448,6 +448,91 @@
     busca.addEventListener('input', filtrar); filtrar();
   }
 
+  /* Onde eu estive: o leitor marca no mapa os lugares do livro por onde
+     passou (com a data) e põe alfinetes próprios onde tocar. Tudo fica no
+     aparelho, em estado.mapa; "Copiar meu diário" leva junto. */
+  function mapaMarcar(b) {
+    var pts = D.pontos['mapa-marcar-web'] || [];
+    var sec = el('section', { class: 'secao marcar', id: 'onde-estive' });
+    sec.innerHTML = '<div class="rubrica"><span>Diário</span></div><h2>Onde eu estive</h2><div class="instrucao"><p>Toque num lugar do livro para marcar que você passou por lá e anote a data. Esteve em outro lugar? Toque em "Marcar outro lugar" e depois no ponto do mapa.</p></div>';
+    var placar = el('p', { class: 'placar-mapa', 'aria-live': 'polite' }); sec.appendChild(placar);
+    var fig = el('figure'); var alvo = el('div', { class: 'alvo mapa-marcar' }, D.svgs['mapa-marcar-web']); fig.appendChild(alvo);
+    if (b.ativo) fig.appendChild(el('figcaption', null, '<span class="credito">' + esc(b.ativo.credito_curto || '') + '</span>'));
+    var acoes = el('div', { class: 'marcar-acoes' });
+    var novo = el('button', { class: 'botao-roteiro', type: 'button', 'aria-pressed': 'false' }, 'Marcar outro lugar');
+    var dica = el('span', { class: 'marcar-dica', 'aria-live': 'polite' });
+    acoes.appendChild(novo); acoes.appendChild(dica);
+    var form = el('form', { class: 'marcar-form' }, '<label>Nome do lugar<input name="nome" maxlength="60" autocomplete="off" required></label><div class="marcar-botoes"><button class="botao" type="submit">Salvar alfinete</button><button class="botao claro" type="button" data-cancelar>Cancelar</button></div>');
+    form.hidden = true;
+    var lista = el('ul', { class: 'marcar-lista' });
+    sec.appendChild(acoes); sec.appendChild(fig); sec.appendChild(form); sec.appendChild(lista);
+    var escolhendo = false, provisorio = null;
+
+    function mudar(f) { guardar(function (st) { st.mapa = st.mapa || {}; st.mapa.lugares = st.mapa.lugares || {}; st.mapa.meus = st.mapa.meus || []; f(st.mapa); }); desenhar(); }
+    function data(valor, onde) {
+      var i = el('input', { type: 'date', 'aria-label': 'Data da visita: ' + onde }); i.value = valor || ''; return i;
+    }
+    function modo(ligado) {
+      escolhendo = ligado; novo.setAttribute('aria-pressed', ligado ? 'true' : 'false'); alvo.classList.toggle('escolhendo', ligado);
+      dica.textContent = ligado ? 'Toque no mapa onde você esteve.' : '';
+      if (!ligado && provisorio) { provisorio.remove(); provisorio = null; form.hidden = true; }
+    }
+    function desenhar() {
+      var m = estado().mapa;
+      [].forEach.call(alvo.querySelectorAll('.alfinete'), function (x) { if (x !== provisorio) x.remove(); });
+      lista.innerHTML = '';
+      pts.forEach(function (p, i) {
+        var on = !!m.lugares[p.id];
+        var bt = el('button', { class: 'alfinete' + (on ? ' on' : ''), type: 'button', style: 'left:' + p.x + '%;top:' + p.y + '%', 'aria-pressed': on ? 'true' : 'false', 'aria-label': p.nome + (on ? ': marcado' : ': marcar') }, '<span>' + (on ? '✓' : i + 1) + '</span>');
+        bt.addEventListener('click', function (e) { e.stopPropagation(); mudar(function (mm) { if (mm.lugares[p.id]) delete mm.lugares[p.id]; else mm.lugares[p.id] = { data: '' }; }); });
+        alvo.appendChild(bt);
+        var li = el('li', { class: on ? 'on' : null });
+        var rot = el('label', { class: 'marcar-item' }, '<input type="checkbox"' + (on ? ' checked' : '') + '><span>' + (i + 1) + '. ' + esc(p.nome) + '</span>');
+        rot.querySelector('input').addEventListener('change', function () { bt.click(); });
+        li.appendChild(rot);
+        if (on) { var d = data(m.lugares[p.id].data, p.nome); d.addEventListener('change', function () { guardar(function (st) { st.mapa.lugares[p.id] = { data: d.value }; }); }); li.appendChild(d); }
+        lista.appendChild(li);
+      });
+      m.meus.forEach(function (p, k) {
+        var bt = el('button', { class: 'alfinete meu on', type: 'button', style: 'left:' + p.x + '%;top:' + p.y + '%', 'aria-label': p.nome + ': lugar marcado por você' }, '<span>★</span>');
+        bt.addEventListener('click', function (e) { e.stopPropagation(); var item = lista.querySelector('[data-meu="' + k + '"] input'); if (item) item.focus(); });
+        alvo.appendChild(bt);
+        var li = el('li', { class: 'on meu', 'data-meu': k }, '<span class="marcar-item"><span class="estrela" aria-hidden="true">★</span><span>' + esc(p.nome) + '</span></span>');
+        var d = data(p.data, p.nome); d.addEventListener('change', function () { guardar(function (st) { if (st.mapa.meus[k]) st.mapa.meus[k].data = d.value; }); });
+        var tirar = el('button', { class: 'marcar-tirar', type: 'button', 'aria-label': 'Tirar ' + p.nome + ' do mapa' }, 'Tirar');
+        tirar.addEventListener('click', function () { mudar(function (mm) { mm.meus.splice(k, 1); }); });
+        li.appendChild(d); li.appendChild(tirar); lista.appendChild(li);
+      });
+      var n = Object.keys(m.lugares).filter(function (id) { return pts.some(function (p) { return p.id === id; }); }).length;
+      placar.innerHTML = '<b>' + n + '</b> de ' + pts.length + ' lugares do livro' + (m.meus.length ? ' e <b>' + m.meus.length + '</b> ' + (m.meus.length === 1 ? 'lugar seu' : 'lugares seus') : '') + ' no seu mapa';
+    }
+    novo.addEventListener('click', function () { modo(!escolhendo); });
+    alvo.addEventListener('click', function (e) {
+      if (!escolhendo) return;
+      var r = alvo.getBoundingClientRect();
+      var x = +(100 * (e.clientX - r.left) / r.width).toFixed(2), y = +(100 * (e.clientY - r.top) / r.height).toFixed(2);
+      if (provisorio) provisorio.remove();
+      provisorio = el('span', { class: 'alfinete meu provisorio', style: 'left:' + x + '%;top:' + y + '%' }, '<span>★</span>');
+      provisorio.dataset.x = x; provisorio.dataset.y = y; alvo.appendChild(provisorio);
+      form.hidden = false; dica.textContent = 'Agora dê um nome ao lugar.'; form.nome.focus();
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); var nome = form.nome.value.trim(); if (!nome || !provisorio) return;
+      var x = +provisorio.dataset.x, y = +provisorio.dataset.y;
+      form.nome.value = ''; modo(false);
+      mudar(function (mm) { mm.meus.push({ x: x, y: y, nome: nome, data: '' }); });
+    });
+    form.querySelector('[data-cancelar]').addEventListener('click', function () { form.nome.value = ''; modo(false); });
+    desenhar();
+    return sec;
+  }
+  function textoDoMapa() {
+    var m = estado().mapa; var pts = D.pontos['mapa-marcar-web'] || [];
+    var linhas = pts.filter(function (p) { return m.lugares[p.id]; }).map(function (p) { return '- ' + p.nome + (m.lugares[p.id].data ? ' (' + m.lugares[p.id].data.split('-').reverse().join('/') + ')' : ''); })
+      .concat(m.meus.map(function (p) { return '- ' + p.nome + (p.data ? ' (' + p.data.split('-').reverse().join('/') + ')' : ''); }));
+    return linhas.length ? '## Onde eu estive\n\n' + linhas.join('\n') + '\n' : '';
+  }
+
   function diario() {
     var s = estado();
     main.innerHTML = '<h1 class="pagina">Diário de descobertas</h1><p>Escreva antes, durante e depois da viagem. O texto fica guardado neste aparelho; use "Copiar meu diário" para levar uma cópia.</p>';
@@ -455,6 +540,7 @@
     if (D.diario && D.diario.abertura.imagem) main.insertBefore(el('section', { class: 'heroi' }, '<div class="arte">' + arte(D.diario.abertura.imagem) + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Capítulo 10</span></div><h1>Diário de descobertas</h1></div>'), main.firstChild);
     var kd = 0;
     blocos.forEach(function (b) {
+      if (b.tipo === 'figura' && b.id === 'mapa-para-marcar' && D.svgs['mapa-marcar-web']) { main.appendChild(mapaMarcar(b)); return; }
       if (b.tipo === 'figura') { main.appendChild(figura(b)); return; }
       if (b.tipo === 'checklist') { main.appendChild(checklist(b)); return; }
       if (b.tipo !== 'diario') return;
@@ -470,6 +556,7 @@
     var aviso = el('span', { 'aria-live': 'polite', style: 'margin-left:12px;font-family:var(--f-rotulo);font-size:14px' });
     baixar.addEventListener('click', function () {
       var st = estado(); var txt = blocos.filter(function (b) { return b.tipo === 'diario'; }).map(function (b, k) { return '## ' + b.titulo + '\n\n' + (st.diario['d' + k] || '') + '\n'; }).join('\n');
+      txt += (textoDoMapa() ? '\n' + textoDoMapa() : '');
       var ok = function () { aviso.textContent = 'Copiado. Cole no seu aplicativo de notas.'; };
       var falha = function () { var ta = el('textarea', { 'aria-label': 'Seu diário, para copiar' }); ta.value = txt; main.appendChild(ta); ta.select(); aviso.textContent = 'Selecionado abaixo: copie pelo menu do aparelho.'; };
       try { navigator.clipboard.writeText(txt).then(ok, falha); } catch (e) { falha(); }

@@ -55,6 +55,32 @@ export default function capitulo10({ disputa, svg, t, sombra, RAIZ }) {
     return svg(W, H, 'Página para marcar: mapa de Israel com os destinos do livro numerados e uma lista com caixas para marcar e anotar a data da visita.', s);
   }
 
+  /* Versão da web do mapa para marcar: só o mapa, sem números nem lista; os
+     alfinetes são botões que a página põe por cima, nas posições de
+     `pontos` (em % da largura e da altura). Mesmas coordenadas do PDF. */
+  function mapaWeb() {
+    const W = 640, H = 1500;
+    const P = projetor([34.15, 29.45, 35.95, 33.4], 560, 40, 30);
+    let s = `<rect width="${W}" height="${H}" fill="${C.marClaro}"/>`;
+    const terra = featDisp(disputa, ['B91', 'B78', 'B79', 'B99', 'B98', 'B16', 'B54', 'B53']);
+    s += `<g transform="translate(6 8)">${terra.map(f => `<path d="${caminho(f.geometry, P.p)}" fill="${C.pedraEsc}"/>`).join('')}</g>`;
+    for (const f of terra) s += `<path d="${caminho(f.geometry, P.p)}" fill="${C.papel}" stroke="${C.navy}" stroke-width="2.5" stroke-linejoin="round"/>`;
+    const rot = (lon, lat, txt, o) => { const [x, y] = P.p([lon, lat]); return t(x.toFixed(0), y.toFixed(0), txt, o); };
+    s += rot(35.24, 32.12, 'Judeia e Samaria', { s: 17, f: C.suave, a: 'middle', i: true }) + rot(35.24, 32.04, '(Cisjordânia)', { s: 15, f: C.suave, a: 'middle', i: true });
+    s += rot(34.42, 32.45, 'Mar', { s: 20, f: C.mar, a: 'middle', i: true }) + rot(34.42, 32.37, 'Mediterrâneo', { s: 20, f: C.mar, a: 'middle', i: true });
+    s += rot(34.62, 30.6, 'Neguev', { s: 20, f: C.neguevTinta, a: 'middle', i: true });
+    /* Lugares a menos de um dedo de distância num celular: o alfinete sai
+       para o lado, com um fio até a posição verdadeira. */
+    const AFASTA = { jafa: [-62, 48], cafarnaum: [44, -58], acre: [56, -44] };
+    const pontos = destinos.map(d => {
+      const [x0, y0] = P.p([d.lon, d.lat]);
+      const [dx, dy] = AFASTA[d.id] || [0, 0]; const x = x0 + dx, y = y0 + dy;
+      if (dx) s += `<circle cx="${x0.toFixed(1)}" cy="${y0.toFixed(1)}" r="5" fill="${C.navy}"/><line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${C.navy}" stroke-width="2.5"/>`;
+      return { id: d.id, nome: d.id === 'beer-sheva' ? "Tel Be'er Sheva" : d.nome, x: +(100 * x / W).toFixed(2), y: +(100 * y / H).toFixed(2) };
+    });
+    return { svg: svg(W, H, 'Mapa de Israel para marcar os lugares por onde você passou.', s), pontos };
+  }
+
   /* Molduras: uma para colar uma foto, outra para desenhar. */
   function molduras() {
     const W = 1080, H = 1350;
@@ -81,5 +107,9 @@ export default function capitulo10({ disputa, svg, t, sombra, RAIZ }) {
     return svg(W, H, 'Página de selos para pintar, um para cada destino do livro, com o ícone do lugar.', s);
   }
 
-  return { svgs: { 'abertura-diario': abertura(), 'mapa-para-marcar': mapaParaMarcar(), 'molduras-diario': molduras(), 'selos-diario': selos() } };
+  const web = mapaWeb();
+  return {
+    svgs: { 'abertura-diario': abertura(), 'mapa-para-marcar': mapaParaMarcar(), 'mapa-marcar-web': web.svg, 'molduras-diario': molduras(), 'selos-diario': selos() },
+    pontos: { 'mapa-marcar-web': web.pontos },
+  };
 }

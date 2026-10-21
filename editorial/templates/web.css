@@ -221,3 +221,34 @@ main svg { overflow: hidden; max-width: 100%; }
 main figure .alvo { overflow: hidden; }
 .assoc-lin, .assoc-lin span { min-width: 0; overflow-wrap: anywhere; }
 .assoc-lin select { width: 100%; }
+
+/* Onde eu estive (diário): mapa com alfinetes que o leitor marca */
+.marcar .placar-mapa { font-family: var(--f-rotulo); font-size: 15px; color: var(--suave); margin: 4px 0 12px; }
+.marcar .placar-mapa b { color: var(--navy); font-size: 18px; }
+.marcar-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 12px; }
+.marcar-dica { font-family: var(--f-rotulo); font-size: 14px; color: var(--teal-tinta); }
+.marcar figure { margin: 0 auto; max-width: 440px; }
+.mapa-marcar { position: relative; border-radius: 14px; overflow: hidden; }
+.mapa-marcar svg { display: block; width: 100%; height: auto; }
+.mapa-marcar.escolhendo { cursor: crosshair; box-shadow: 0 0 0 3px var(--ouro); }
+.alfinete { position: absolute; transform: translate(-50%, -50%); width: var(--toque); height: var(--toque); border: 0; padding: 0; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.alfinete span { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fff; border: 3px solid var(--navy); color: var(--navy); font: 700 14px/1 var(--f-rotulo); box-shadow: 0 2px 0 rgba(0,0,0,.18); transition: transform .15s ease; }
+.alfinete.on span { background: var(--ouro); border-color: var(--ouro-tinta); color: var(--noite); transform: scale(1.08); }
+.alfinete.meu span { background: var(--teal); border-color: #fff; color: #fff; }
+.alfinete.provisorio { pointer-events: none; }
+.alfinete.provisorio span { animation: pulsar 1s ease-in-out infinite alternate; }
+@keyframes pulsar { to { transform: scale(1.2); } }
+@media (prefers-reduced-motion: reduce) { .alfinete span, .alfinete.provisorio span { transition: none; animation: none; } }
+.marcar-form { display: grid; gap: 10px; margin: 14px auto 0; max-width: 440px; font-family: var(--f-rotulo); }
+.marcar-form label { display: grid; gap: 6px; font-weight: 600; color: var(--navy); }
+.marcar-form input { min-height: 48px; border: 1px solid var(--linha); border-radius: 10px; padding: 0 12px; font: 16px var(--f-corpo); background: #fff; }
+.marcar-botoes { display: flex; flex-wrap: wrap; gap: 10px; }
+.marcar-lista { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 6px; }
+.marcar-lista li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 6px 12px; border: 1px solid var(--linha); border-radius: 12px; background: #fff; min-width: 0; }
+.marcar-lista li.on { border-color: var(--ouro); background: var(--ouro-suave); }
+.marcar-item { display: flex; align-items: center; gap: 10px; min-height: 40px; flex: 1 1 180px; min-width: 0; font-family: var(--f-rotulo); font-size: 15px; color: var(--navy); cursor: pointer; overflow-wrap: anywhere; }
+.marcar-item input { width: 22px; height: 22px; accent-color: var(--ouro-tinta); flex: none; }
+.marcar-item .estrela { width: 22px; text-align: center; color: var(--teal); }
+.marcar-lista input[type="date"] { min-height: 40px; border: 1px solid var(--linha); border-radius: 8px; padding: 0 8px; font: 15px var(--f-rotulo); background: #fff; max-width: 100%; }
+.marcar-tirar { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--linha); background: transparent; color: var(--suave); font: 600 14px var(--f-rotulo); cursor: pointer; }
+.marcar-form[hidden] { display: none; }

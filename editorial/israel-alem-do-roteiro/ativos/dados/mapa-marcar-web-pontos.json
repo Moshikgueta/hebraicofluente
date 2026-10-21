@@ -1,0 +1,68 @@
+[
+ {
+  "id": "mar-da-galileia",
+  "nome": "Mar da Galileia",
+  "x": 76.74,
+  "y": 16.58
+ },
+ {
+  "id": "nazare",
+  "nome": "Nazaré",
+  "x": 62.15,
+  "y": 19.01
+ },
+ {
+  "id": "cafarnaum",
+  "nome": "Cafarnaum",
+  "x": 82.64,
+  "y": 10.77
+ },
+ {
+  "id": "cesareia",
+  "nome": "Cesareia Marítima",
+  "x": 41.74,
+  "y": 23.88
+ },
+ {
+  "id": "massada",
+  "nome": "Massada",
+  "x": 64.58,
+  "y": 52.56
+ },
+ {
+  "id": "tel-aviv",
+  "nome": "Tel Aviv",
+  "x": 36.39,
+  "y": 34.08
+ },
+ {
+  "id": "jafa",
+  "nome": "Jafa",
+  "x": 25.73,
+  "y": 38.01
+ },
+ {
+  "id": "haifa",
+  "nome": "Haifa",
+  "x": 47.08,
+  "y": 16.34
+ },
+ {
+  "id": "acre",
+  "nome": "Acre",
+  "x": 59.72,
+  "y": 10.73
+ },
+ {
+  "id": "jerusalem",
+  "nome": "Jerusalém",
+  "x": 58.75,
+  "y": 41.38
+ },
+ {
+  "id": "beer-sheva",
+  "nome": "Tel Be'er Sheva",
+  "x": 39.79,
+  "y": 54.5
+ }
+]

@@ -402,6 +402,22 @@
    "gerador": "tools/ilustracoes.mjs"
   },
   {
+   "id": "mapa-marcar-web",
+   "titulo": "Marque onde você esteve (versão tocável da web)",
+   "tipo": "mapa",
+   "arquivo": "ativos/ilustracoes/mapa-marcar-web.svg",
+   "fonte_dados": "destinos.json (coordenadas do capítulo 4); Natural Earth",
+   "credito_curto": "Contornos: Natural Earth (domínio público). Desenho: Hebraico Fluente.",
+   "credito_longo": "Contornos: Natural Earth (domínio público). Desenho: Hebraico Fluente.",
+   "limitacoes": null,
+   "autor": "Hebraico Fluente (desenho original)",
+   "licenca": "Obra própria",
+   "url": null,
+   "data_consulta": "2026-10-21",
+   "atribuicao_exigida": false,
+   "gerador": "tools/ilustracoes.mjs"
+  },
+  {
    "id": "molduras-diario",
    "titulo": "Molduras para a viagem",
    "tipo": "ilustracao",
