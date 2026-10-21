@@ -72,13 +72,13 @@
     {
       "id": "C09-005",
       "secao": "História e arqueologia",
-      "afirmacao": "Em Timna, no sul de Israel, a produção de cobre teve o seu pico na primeira metade do século X a.C., segundo a datação por radiocarbono das escavações de Erez Ben-Yosef, da Universidade de Tel Aviv.",
+      "afirmacao": "Em Timna, no sul de Israel, a produção de cobre teve o seu pico na primeira metade do século X a.C., segundo a datação por radiocarbono das escavações de Erez Ben-Yosef, da Universidade de Tel Aviv; na Colina dos Escravos, os escavadores relatam centenas de fornos e camadas sobre camadas de escória.",
       "categoria": "arqueologia",
       "fontes": [
         "F09-005",
         "F09-004"
       ],
-      "evidencia": "Artigo de Ben-Yosef no BASOR (2016): na Colina dos Escravos (Site 34) o pico da produção de cobre foi na primeira metade do século X a.C., como no Site 30. Universidade de Tel Aviv (2013): o laboratório de radiocarbono de Oxford datou 11 itens do século X a.C.",
+      "evidencia": "Artigo de Ben-Yosef no BASOR (2016): na Colina dos Escravos (Site 34) o pico da produção de cobre foi na primeira metade do século X a.C., como no Site 30. Universidade de Tel Aviv (2013): o laboratório de radiocarbono de Oxford datou 11 itens do século X a.C. Trecho da busca sobre a Colina dos Escravos: \"hundreds of furnaces, and layers upon layers of copper slag waste\".",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
@@ -142,7 +142,7 @@
     {
       "id": "C09-009",
       "secao": "História e arqueologia",
-      "afirmacao": "Em maio de 2007, o arqueólogo Ehud Netzer, da Universidade Hebraica de Jerusalém, anunciou ter achado o túmulo do rei Herodes na encosta do Herodium, a fortaleza-palácio construída por Herodes, que fica na Cisjordânia, ao sul de Jerusalém.",
+      "afirmacao": "Em maio de 2007, o arqueólogo Ehud Netzer, da Universidade Hebraica de Jerusalém, anunciou ter achado o túmulo do rei Herodes na encosta do Herodium, fortaleza-palácio no alto de um morro na Cisjordânia, ao sul de Jerusalém.",
       "categoria": "arqueologia",
       "fontes": [
         "F09-009",
@@ -355,7 +355,7 @@
     {
       "id": "C09-021",
       "secao": "Língua",
-      "afirmacao": "O Calendário de Gezer é uma pequena tabuinha de calcário achada em Gezer em 1908 por R. A. S. Macalister, que lista as tarefas agrícolas de um ano: colheita da azeitona, semeadura, linho, cevada, vinha e frutas de verão.",
+      "afirmacao": "O Calendário de Gezer é uma pequena tabuinha de calcário achada em Gezer em 1908 pelo arqueólogo Macalister, que lista as tarefas agrícolas de um ano: colheita da azeitona, semeadura, linho, cevada, vinha e frutas de verão.",
       "categoria": "arqueologia",
       "fontes": [
         "F09-002",
@@ -670,9 +670,9 @@
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Fonte de nível E (comunicado). Ano do artigo não confirmado.",
+      "limitacoes": "Uma única fonte de nível E (comunicado); o artigo na Science of the Total Environment não foi aberto nem teve o ano confirmado. Saiu do texto.",
       "interpretacoes_concorrentes": null,
-      "status": "VERIFICADO",
+      "status": "NÃO VERIFICADO",
       "revisar_ate": "2027-10-21"
     },
     {
@@ -783,12 +783,13 @@
     {
       "id": "C09-045",
       "secao": "Tradições",
-      "afirmacao": "A Mishná abre o tratado Rosh Hashaná com quatro inícios de ano, e um deles é o das árvores: a escola de Shamai o punha no primeiro dia de Shevat, a de Hilel no dia 15, o Tu BiShvat.",
+      "afirmacao": "A Mishná abre o tratado Rosh Hashaná com quatro inícios de ano, e um deles é o das árvores: a escola de Shamai o punha no primeiro dia de Shevat, a de Hilel no dia 15; o nome Tu BiShvat quer dizer \"15 de Shevat\".",
       "categoria": "religiao",
       "fontes": [
-        "F09-033"
+        "F09-033",
+        "F09-071"
       ],
-      "evidencia": "Mishná Rosh Hashaná 1:1 (Sefaria): quatro anos-novos; o primeiro de Shevat é o ano-novo das árvores segundo a escola de Shamai; a escola de Hilel diz o dia 15 do mesmo mês.",
+      "evidencia": "Mishná Rosh Hashaná 1:1 (Sefaria): quatro anos-novos; o primeiro de Shevat é o ano-novo das árvores segundo a escola de Shamai; a escola de Hilel diz o dia 15 do mesmo mês. Hebcal: Tu BiShvat (טוּ בִּשְׁבָט) cai no dia 15 de Shevat.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",

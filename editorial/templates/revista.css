@@ -238,3 +238,4 @@ figure.par .grande { display: block; font-family: var(--f-display); font-style: 
 .bibliografia-r { columns: 2; column-gap: 5mm; }
 .bibliografia-r > h1, .bibliografia-r > .intro { column-span: all; }
 .bibliografia-r ol { font-size: 5.9pt; line-height: 1.35; }
+.abertura .imagem.colecao { top: 48%; }

@@ -4,12 +4,12 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 30003
-- Fontes registradas: 569 (por nível: D 135, B 149, E 175, A 91, C 19; por acesso: trecho-de-busca 541, referencia-confirmada 28)
-- Afirmações registradas: 640 (VERIFICADO 409, NÃO VERIFICADO 136, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 38)
+- Palavras no manuscrito: 32305
+- Fontes registradas: 640 (por nível: D 142, B 161, E 223, A 93, C 21; por acesso: trecho-de-busca 612, referencia-confirmada 28)
+- Afirmações registradas: 706 (VERIFICADO 458, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
 - Afirmações VERIFICADO sem uso no texto: 14
-- Ocorrências de hebraico: 186 (lista em auditoria/hebraico.md)
-- Links testados: 0 de 566 (rede bloqueada; ver revisão humana)
+- Ocorrências de hebraico: 188 (lista em auditoria/hebraico.md)
+- Links testados: 0 de 637 (rede bloqueada; ver revisão humana)
 
 | Arquivo | Palavras | Marcas de fonte |
 | --- | --- | --- |
@@ -23,6 +23,7 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 | 06-sabores.md | 2366 | 39 |
 | 07-hebraico.md | 2587 | 45 |
 | 08-na-pratica.md | 2392 | 54 |
+| 09-curiosidades.md | 2302 | 60 |
 | 10-diario.md | 533 | 0 |
 | 98-notas-sobre-fontes.md | 323 | 0 |
 | 99-encerramento.md | 169 | 0 |
@@ -31,7 +32,6 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 Nenhum.
 
-## Avisos (2)
+## Avisos (1)
 
 - manuscrito/01-israel-no-mapa.md:129: caixa "O olhar de um israelense" pendente de aprovação do autor
-- manuscrito ausente: manuscrito/09-curiosidades.md

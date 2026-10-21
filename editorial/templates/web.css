@@ -153,6 +153,6 @@ textarea { width: 100%; min-height: 120px; border: 1px solid var(--linha); borde
 /* Capítulo 9: curiosidades numeradas */
 .curio { display: grid; grid-template-columns: 56px 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--linha); }
 .curio-n { font-family: var(--f-dado); font-weight: 700; font-size: 36px; line-height: 1; color: var(--neguev-tinta); font-variant-numeric: lining-nums tabular-nums; }
-.curio-t { margin: 0 0 6px; font-family: var(--f-display); font-weight: 480; font-size: 20px; line-height: 1.25; color: var(--tinta); }
+.secao .curio-t, .curio-t { margin: 0 0 6px; letter-spacing: 0; text-transform: none; font-family: var(--f-display); font-weight: 480; font-size: 20px; line-height: 1.25; color: var(--tinta); }
 .curio > div { min-width: 0; }
 .curio-r { font-family: var(--f-rotulo); font-size: 14px; color: var(--teal-tinta); }

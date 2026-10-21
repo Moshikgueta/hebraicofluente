@@ -57,6 +57,9 @@ for (const c of caps) for (const s of c.secoes) for (const b of s.blocos) {
   if (b.tipo === 'foto') b.candidata = candidatas.find(x => x.id === b.id) || null;
 }
 for (const c of caps) if (c.abertura.imagem) svgDe(c.abertura.imagem);
+/* Abertura sem imagem própria: a arte da coleção (a mesma da capa). */
+svgs['arte-colecao'] = fs.readFileSync(path.join(EDITORIAL, 'templates/capa-arte.svg'), 'utf8');
+for (const c of caps) if (!c.abertura.imagem) c.abertura.imagem = 'arte-colecao';
 
 const pontos = {};
 for (const f of fs.readdirSync(path.join(RAIZ, 'ativos/dados')).filter(f => /-pontos\.json$/.test(f))) pontos[f.replace(/-pontos\.json$/, '')] = lerJSON(path.join(RAIZ, 'ativos/dados', f));

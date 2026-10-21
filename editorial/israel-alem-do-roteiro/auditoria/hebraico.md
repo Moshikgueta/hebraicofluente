@@ -190,3 +190,5 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 184 | בְּתֵאָבוֹן |  |  | manuscrito/07-hebraico.md:188 | - [x] <he>בְּתֵאָבוֹן</he> (beteavón) / "Bom apetite": diz quem serve o prato, em casa e no restaurante. |
 | 185 | שֵׁרוּת |  |  | manuscrito/08-na-pratica.md:99 | O sherut (<he>שֵׁרוּת</he>, sherút) é o táxi coletivo. Em Tel Aviv, são vans amarelas que seguem trajetos de ônibus e circulam também à noite e no Shabat, quand |
 | 186 | שַׁבָּת |  |  | manuscrito/08-na-pratica.md:109 | O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico, de sexta à noite a sábado à noite, e é ele que explica os trens parados e os ônibus de fim de  |
+| 187 | הַתִּקְוָה |  |  | manuscrito/09-curiosidades.md:95 | O hino nacional é o <he>הַתִּקְוָה</he> (Hatikvá), "a esperança", e a Lei Básica de 2018 o nomeia ao lado da bandeira e do emblema. A letra vem de um poema de N |
+| 188 | פְּתִיתִים |  |  | manuscrito/09-curiosidades.md:157 | O <he>פְּתִיתִים</he> (ptitím), massinha de trigo em grão ou em bolinha, foi criado pela Osem no começo dos anos 1950, na austeridade conhecida como tsená, a pe |

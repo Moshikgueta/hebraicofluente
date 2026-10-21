@@ -133,8 +133,11 @@ async function capitulo(arq) {
   const numeroNota = f => { if (!idxNota.has(f.id)) { notas.push(f); idxNota.set(f.id, notas.length); } return idxNota.get(f.id); };
 
   const ab = cap.abertura;
-  const imgAb = ab.imagem ? (svgDe(ab.imagem) ? { html: svgDe(ab.imagem).replace(/preserveAspectRatio="[^"]*"/, 'preserveAspectRatio="xMidYMax slice"'), credito: ativos.find(x => x.id === ab.imagem)?.credito_curto || '' } : foto(ab.imagem)) : { html: '', credito: '' };
-  let h = `<section class="abertura" id="${cap.id}"><div class="imagem${svgDe(ab.imagem || '') ? ' baixa' : ''}">${imgAb.html}</div><div class="veu"></div><div class="texto"><div class="kicker"><span>Capítulo ${String(cap.numero).padStart(2, '0')}</span><span class="he">${['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י'][cap.numero] || ''}</span></div><h1 data-cap="${esc(cap.titulo)}">${esc(cap.titulo)}</h1>${ab.frase ? `<div class="frase">${ab.frase}</div>` : cap.subtitulo ? `<div class="frase">${esc(cap.subtitulo)}</div>` : ''}</div><div class="credito">${esc(ab.credito || imgAb.credito || '')}</div></section>`;
+  /* Sem imagem própria, a abertura usa a arte da coleção (faixas de
+     paisagem, desenho original) na metade de baixo. */
+  const arteColecao = () => fs.readFileSync(path.join(EDITORIAL, 'templates/capa-arte.svg'), 'utf8');
+  const imgAb = ab.imagem ? (svgDe(ab.imagem) ? { html: svgDe(ab.imagem).replace(/preserveAspectRatio="[^"]*"/, 'preserveAspectRatio="xMidYMax slice"'), credito: ativos.find(x => x.id === ab.imagem)?.credito_curto || '' } : foto(ab.imagem)) : { html: arteColecao(), credito: '' };
+  let h = `<section class="abertura" id="${cap.id}"><div class="imagem${svgDe(ab.imagem || '') ? ' baixa' : ab.imagem ? '' : ' colecao'}">${imgAb.html}</div><div class="veu"></div><div class="texto"><div class="kicker"><span>Capítulo ${String(cap.numero).padStart(2, '0')}</span><span class="he">${['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י'][cap.numero] || ''}</span></div><h1 data-cap="${esc(cap.titulo)}">${esc(cap.titulo)}</h1>${ab.frase ? `<div class="frase">${ab.frase}</div>` : cap.subtitulo ? `<div class="frase">${esc(cap.subtitulo)}</div>` : ''}</div><div class="credito">${esc(ab.credito || imgAb.credito || '')}</div></section>`;
 
   for (const s of cap.secoes) {
     const corpo = (await Promise.all(s.blocos.map(b => bloco(b, cap, ctx)))).join('\n');
