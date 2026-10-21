@@ -1,11 +1,12 @@
 /* O e-book "Israel Além do Roteiro" e o pacote com o curso (21/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Dois produtos novos no mesmo catálogo dos cursos: o e-book (R$ 67) e o
- * pacote alfabetização + e-book (R$ 177). O que estes testes travam:
+ * pacote alfabetização + e-book (R$ 127). O que estes testes travam:
  *  - o pacote libera os DOIS produtos num pedido, e o estorno recua os dois;
  *  - quem tem só o e-book lê /israel/ e não abre nada do curso (nem o áudio);
  *  - quem já tem o curso não paga o pacote (`ja-tem-parte`);
- *  - o pacote vira de R$ 177 para R$ 327 junto com o curso, e fica sempre acima dele;
+ *  - o pacote vira de R$ 127 para R$ 327 junto com o curso; até a virada fica abaixo
+ *    do curso sozinho (decisão do dono), depois acima;
  *  - as telas de curso continuam vendo só cursos.
  * Os handlers reais rodam contra o schema de produção e uma Mercado Pago de
  * mentira, como em estorno.test.ts.
@@ -123,9 +124,9 @@ describe('o catálogo', () => {
     expect(allProducts().map(c => c.slug)).toEqual(expect.arrayContaining([LIVRO, PACOTE, 'alfabetizacao']));
   });
 
-  it('o preço cobrado sai do catálogo: R$ 67 o e-book, R$ 177 o pacote', () => {
+  it('o preço cobrado sai do catálogo: R$ 67 o e-book, R$ 127 o pacote', () => {
     expect(priceCents(getCourse(LIVRO), 'card')).toBe(6700);
-    expect(priceCents(getCourse(PACOTE), 'card')).toBe(17700);
+    expect(priceCents(getCourse(PACOTE), 'card')).toBe(12700);
   });
 
   it('o pacote abre o curso e o e-book, cada um com os seus meses', () => {
@@ -136,19 +137,19 @@ describe('o catálogo', () => {
     expect(itensDoPedido(getCourse(LIVRO))).toEqual([{ courseSlug: LIVRO, months: 12 }]);
   });
 
-  it('o pacote vira de R$ 177 para R$ 327 no mesmo dia que o curso, e fica sempre acima dele', () => {
+  it('o pacote vira de R$ 127 para R$ 327 no mesmo dia que o curso; abaixo dele antes, acima depois', () => {
     const texto = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
     const p = getCourse(PACOTE);
     expect(p.price.preLancamentoAte, 'o pacote vira junto com o curso').toBe(getCourse('alfabetizacao').price.preLancamentoAte);
     const preco = (t: string, slug: string) => JSON.parse(t).courses.find((c: { slug: string }) => c.slug === slug).price.brl;
     const separados = (t: string) => preco(t, 'alfabetizacao') + preco(t, LIVRO);
-    /* Antes e depois da virada: acima do curso sozinho, abaixo dos dois separados. */
-    for (const t of [texto, virar(texto, fimDoDia(p.price.preLancamentoAte) + 1).texto]) {
-      expect(preco(t, PACOTE)).toBeGreaterThan(preco(t, 'alfabetizacao'));
-      expect(preco(t, PACOTE)).toBeLessThan(separados(t));
-    }
     const depois = virar(texto, fimDoDia(p.price.preLancamentoAte) + 1).texto;
-    expect(preco(texto, PACOTE)).toBe(177);
+    /* Antes e depois da virada: abaixo dos dois separados. Até 30/11 o pacote fica
+       abaixo do curso sozinho (decisão do dono, 22/10/2026); depois, acima. */
+    for (const t of [texto, depois]) expect(preco(t, PACOTE)).toBeLessThan(separados(t));
+    expect(preco(texto, PACOTE)).toBeLessThan(preco(texto, 'alfabetizacao'));
+    expect(preco(depois, PACOTE)).toBeGreaterThan(preco(depois, 'alfabetizacao'));
+    expect(preco(texto, PACOTE)).toBe(127);
     expect(preco(depois, PACOTE)).toBe(327);
     expect(preco(depois, 'alfabetizacao')).toBe(297);
   });

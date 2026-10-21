@@ -27,12 +27,13 @@
     "PRODUTOS QUE NÃO SÃO CURSO (21/10/2026, decisão do dono): `tipo` diz o que é.",
     "Sem `tipo`, é curso. `livro` é o e-book Israel Além do Roteiro (versão",
     "interativa em /israel/ e o PDF), R$ 67. `pacote` libera, num pedido só, cada",
-    "slug de `componentes`, com os meses de cada um; R$ 177 = curso + e-book.",
+    "slug de `componentes`, com os meses de cada um; R$ 127 = curso + e-book.",
     "allCourses() no app só devolve cursos: /cursos, a estante, o 'próximo curso'",
     "e o rodapé não mudam. O pacote segue o pré-lançamento do curso (decisão do",
-    "dono, 21/10/2026): R$ 177 até 30/11 e R$ 327 a partir de 01/12, virado pela",
-    "mesma Action (tools/virar-preco.mjs). Sempre acima do curso sozinho, com R$ 37",
-    "de economia sobre os dois separados.",
+    "dono, 21/10/2026): R$ 127 até 30/11 e R$ 327 a partir de 01/12, virado pela",
+    "mesma Action (tools/virar-preco.mjs). Até 30/11 o pacote fica ABAIXO do curso",
+    "sozinho (R$ 147), de propósito (decisão do dono, 22/10/2026); de 01/12 em",
+    "diante, acima dele (R$ 297), com R$ 37 de economia sobre os dois separados.",
     "Vender o e-book à parte é atividade fora do curso (ver CLAUDE.md,",
     "Enquadramento): não publicar antes de o contador confirmar."
   ],
@@ -227,7 +228,7 @@
       "outcomesPt": [],
       "forWhomPt": [],
       "requiresPurchase": true,
-      "price": { "brl": 177, "listBrl": 327, "installments": 12, "pixDiscountPct": 10, "preLancamentoAte": "2026-11-30" },
+      "price": { "brl": 127, "listBrl": 327, "installments": 12, "pixDiscountPct": 10, "preLancamentoAte": "2026-11-30" },
       "accessMonths": 12,
       "modules": []
     }
