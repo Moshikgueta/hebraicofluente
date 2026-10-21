@@ -2,8 +2,8 @@
   {
     "id": "golan",
     "nome": "Colinas de Golã",
-    "descricao_curta": "Planalto de basalto no nordeste, de origem vulcânica, que termina em encostas íngremes sobre o vale do Hula. Israel estendeu sua lei ao território em 1981; a Resolução 497 do Conselho de Segurança da ONU declarou a medida nula, e a maior parte da comunidade internacional não reconhece a anexação. Os Estados Unidos a reconhecem desde 2019.",
-    "afirmacoes": ["C01-050", "C01-040", "C01-041", "C01-043", "C01-044"]
+    "descricao_curta": "Planalto de basalto no nordeste, de origem vulcânica, que termina em encostas íngremes sobre o vale do Hula. Israel passou a administrar o planalto em junho de 1967 e, em dezembro de 1981, estendeu a ele a lei israelense.",
+    "afirmacoes": ["C01-050", "C02-525", "C01-044"]
   },
   {
     "id": "galileia",

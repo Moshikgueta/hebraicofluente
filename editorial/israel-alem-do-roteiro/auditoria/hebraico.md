@@ -13,31 +13,31 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 7 | יָם |  |  | manuscrito/01-israel-no-mapa.md:130 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
 | 8 | מֶלַח |  |  | manuscrito/01-israel-no-mapa.md:130 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
 | 9 | יְהוּד |  |  | manuscrito/02-historia.md:118 | Sob os persas, Judá virou uma província chamada Yehud (<he>יְהוּד</he>, Yehúd). Selos e moedas do período, expostos no Museu de Israel, em Jerusalém, trazem ess |
-| 10 | שַׁעַר | sháar | porta | manuscrito/03-jerusalem.md:83 |  |
-| 11 | שַׁעַר יָפוֹ | Sháar Yáfo | Porta de Jafa | manuscrito/03-jerusalem.md:84 |  |
-| 12 | שַׁעַר שְׁכֶם | Sháar Shchem | Porta de Damasco | manuscrito/03-jerusalem.md:85 |  |
-| 13 | שַׁעַר הַפְּרָחִים | Sháar HaPrachím | Porta de Herodes | manuscrito/03-jerusalem.md:86 |  |
-| 14 | שַׁעַר הָאֲרָיוֹת | Sháar HaArayót | Porta dos Leões | manuscrito/03-jerusalem.md:87 |  |
-| 15 | שַׁעַר צִיּוֹן | Sháar Tsiyón | Porta de Sião | manuscrito/03-jerusalem.md:88 |  |
-| 16 | שַׁעַר הָאַשְׁפּוֹת | Sháar HaAshpót | Porta do Esterco | manuscrito/03-jerusalem.md:89 |  |
-| 17 | הַשַּׁעַר הֶחָדָשׁ | HaSháar HeChadásh | Porta Nova | manuscrito/03-jerusalem.md:90 |  |
-| 18 | הַכֹּתֶל הַמַּעֲרָבִי |  |  | manuscrito/03-jerusalem.md:111 | O lugar que em hebraico se chama <he>הַכֹּתֶל הַמַּעֲרָבִי</he> (HaKótel HaMaaraví), o Muro Ocidental, ou só Kotel, tem uma história arqueológica bem documentad |
-| 19 | הַכֹּתֶל הַמַּעֲרָבִי |  |  | manuscrito/03-jerusalem.md:117 | he: <he>הַכֹּתֶל הַמַּעֲרָבִי</he> / HaKótel HaMaaraví |
-| 20 | הַר הַבַּיִת |  |  | manuscrito/03-jerusalem.md:132 | A plataforma que esses muros sustentam tem dois nomes, e cada um diz de onde se olha. Para judeus, e no vocabulário do Estado de Israel, é o Monte do Templo, <h |
-| 21 | הַר הַבַּיִת |  |  | manuscrito/03-jerusalem.md:154 | he: <he>הַר הַבַּיִת</he> / Har HaBáyit |
-| 22 | מִגְדַּל דָּוִד |  |  | manuscrito/03-jerusalem.md:212 | he: <he>מִגְדַּל דָּוִד</he> / Migdál Davíd |
-| 23 | הַר הַזֵּיתִים |  |  | manuscrito/03-jerusalem.md:231 | he: <he>הַר הַזֵּיתִים</he> / Har HaZeitím |
-| 24 | גִּיחוֹן |  |  | manuscrito/03-jerusalem.md:259 | Debaixo de Jerusalém, um túnel cavado na rocha leva a água de uma fonte até um tanque. A ponta norte do túnel fica junto da fonte de Giom, em hebraico <he>גִּיח |
-| 25 | עִיר דָּוִד |  |  | manuscrito/03-jerusalem.md:274 | O túnel é visitado dentro do parque chamado Cidade de Davi, em hebraico <he>עִיר דָּוִד</he> (Ir Davíd). Ele fica na parte sul da crista oriental da Jerusalém a |
-| 26 | עִיר דָּוִד |  |  | manuscrito/03-jerusalem.md:282 | he: <he>עִיר דָּוִד</he> / Ir Davíd |
-| 27 | יְרוּשָׁלַיִם | Yerushaláyim | Jerusalém | manuscrito/03-jerusalem.md:319 |  |
-| 28 | הַכֹּתֶל הַמַּעֲרָבִי | HaKótel HaMaaraví | o Muro Ocidental | manuscrito/03-jerusalem.md:320 |  |
-| 29 | הַר הַבַּיִת | Har HaBáyit | o Monte do Templo | manuscrito/03-jerusalem.md:321 |  |
-| 30 | מִגְדַּל דָּוִד | Migdál Davíd | Torre de Davi | manuscrito/03-jerusalem.md:322 |  |
-| 31 | הַר הַזֵּיתִים | Har HaZeitím | Monte das Oliveiras | manuscrito/03-jerusalem.md:323 |  |
-| 32 | זַיִת |  |  | manuscrito/03-jerusalem.md:323 | - <he>הַר הַזֵּיתִים</he> / Har HaZeitím / Monte das Oliveiras / <he>זַיִת</he> (záyit) é "oliveira, azeitona". |
-| 33 | עִיר דָּוִד | Ir Davíd | Cidade de Davi | manuscrito/03-jerusalem.md:324 |  |
-| 34 | גִּיחוֹן | Guichón | Giom | manuscrito/03-jerusalem.md:325 |  |
+| 10 | שַׁעַר | sháar | porta | manuscrito/03-jerusalem.md:81 |  |
+| 11 | שַׁעַר יָפוֹ | Sháar Yáfo | Porta de Jafa | manuscrito/03-jerusalem.md:82 |  |
+| 12 | שַׁעַר שְׁכֶם | Sháar Shchem | Porta de Damasco | manuscrito/03-jerusalem.md:83 |  |
+| 13 | שַׁעַר הַפְּרָחִים | Sháar HaPrachím | Porta de Herodes | manuscrito/03-jerusalem.md:84 |  |
+| 14 | שַׁעַר הָאֲרָיוֹת | Sháar HaArayót | Porta dos Leões | manuscrito/03-jerusalem.md:85 |  |
+| 15 | שַׁעַר צִיּוֹן | Sháar Tsiyón | Porta de Sião | manuscrito/03-jerusalem.md:86 |  |
+| 16 | שַׁעַר הָאַשְׁפּוֹת | Sháar HaAshpót | Porta do Esterco | manuscrito/03-jerusalem.md:87 |  |
+| 17 | הַשַּׁעַר הֶחָדָשׁ | HaSháar HeChadásh | Porta Nova | manuscrito/03-jerusalem.md:88 |  |
+| 18 | הַכֹּתֶל הַמַּעֲרָבִי |  |  | manuscrito/03-jerusalem.md:109 | O lugar que em hebraico se chama <he>הַכֹּתֶל הַמַּעֲרָבִי</he> (HaKótel HaMaaraví), o Muro Ocidental, ou só Kotel, tem uma história arqueológica bem documentad |
+| 19 | הַכֹּתֶל הַמַּעֲרָבִי |  |  | manuscrito/03-jerusalem.md:115 | he: <he>הַכֹּתֶל הַמַּעֲרָבִי</he> / HaKótel HaMaaraví |
+| 20 | הַר הַבַּיִת |  |  | manuscrito/03-jerusalem.md:130 | A plataforma que esses muros sustentam tem dois nomes, e cada um diz de onde se olha. Para judeus, e no vocabulário do Estado de Israel, é o Monte do Templo, <h |
+| 21 | הַר הַבַּיִת |  |  | manuscrito/03-jerusalem.md:151 | he: <he>הַר הַבַּיִת</he> / Har HaBáyit |
+| 22 | מִגְדַּל דָּוִד |  |  | manuscrito/03-jerusalem.md:209 | he: <he>מִגְדַּל דָּוִד</he> / Migdál Davíd |
+| 23 | הַר הַזֵּיתִים |  |  | manuscrito/03-jerusalem.md:228 | he: <he>הַר הַזֵּיתִים</he> / Har HaZeitím |
+| 24 | גִּיחוֹן |  |  | manuscrito/03-jerusalem.md:256 | Debaixo de Jerusalém, um túnel cavado na rocha leva a água de uma fonte até um tanque. A ponta norte do túnel fica junto da fonte de Giom, em hebraico <he>גִּיח |
+| 25 | עִיר דָּוִד |  |  | manuscrito/03-jerusalem.md:271 | O túnel é visitado dentro do parque chamado Cidade de Davi, em hebraico <he>עִיר דָּוִד</he> (Ir Davíd). Ele fica na parte sul da crista oriental da Jerusalém a |
+| 26 | עִיר דָּוִד |  |  | manuscrito/03-jerusalem.md:278 | he: <he>עִיר דָּוִד</he> / Ir Davíd |
+| 27 | יְרוּשָׁלַיִם | Yerushaláyim | Jerusalém | manuscrito/03-jerusalem.md:309 |  |
+| 28 | הַכֹּתֶל הַמַּעֲרָבִי | HaKótel HaMaaraví | o Muro Ocidental | manuscrito/03-jerusalem.md:310 |  |
+| 29 | הַר הַבַּיִת | Har HaBáyit | o Monte do Templo | manuscrito/03-jerusalem.md:311 |  |
+| 30 | מִגְדַּל דָּוִד | Migdál Davíd | Torre de Davi | manuscrito/03-jerusalem.md:312 |  |
+| 31 | הַר הַזֵּיתִים | Har HaZeitím | Monte das Oliveiras | manuscrito/03-jerusalem.md:313 |  |
+| 32 | זַיִת |  |  | manuscrito/03-jerusalem.md:313 | - <he>הַר הַזֵּיתִים</he> / Har HaZeitím / Monte das Oliveiras / <he>זַיִת</he> (záyit) é "oliveira, azeitona". |
+| 33 | עִיר דָּוִד | Ir Davíd | Cidade de Davi | manuscrito/03-jerusalem.md:314 |  |
+| 34 | גִּיחוֹן | Guichón | Giom | manuscrito/03-jerusalem.md:315 |  |
 | 35 | כִּנֶּרֶת | Kinéret | o lago da Galileia | manuscrito/04-alem-de-jerusalem.md:33 |  |
 | 36 | יָם | yam | mar | manuscrito/04-alem-de-jerusalem.md:34 |  |
 | 37 | יַם כִּנֶּרֶת |  |  | manuscrito/04-alem-de-jerusalem.md:34 | - <he>יָם</he> / yam / mar / O hebraico também chama o lago de mar: <he>יַם כִּנֶּרֶת</he>, Yam Kinéret. |
@@ -193,7 +193,7 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 187 | חֶשְׁבּוֹן |  |  | manuscrito/07-hebraico.md:186 | - [ ] <he>חֶשְׁבּוֹן</he> (cheshbón) / |
 | 188 | סַבְלָנוּת |  |  | manuscrito/07-hebraico.md:187 | - [ ] <he>סַבְלָנוּת</he> (savlanút) / |
 | 189 | בְּתֵאָבוֹן |  |  | manuscrito/07-hebraico.md:188 | - [x] <he>בְּתֵאָבוֹן</he> (beteavón) / "Bom apetite": diz quem serve o prato, em casa e no restaurante. |
-| 190 | שֵׁרוּת |  |  | manuscrito/08-na-pratica.md:99 | O sherut (<he>שֵׁרוּת</he>, sherút) é o táxi coletivo. Em Tel Aviv, são vans amarelas que seguem trajetos de ônibus e circulam também à noite e no Shabat, quand |
-| 191 | שַׁבָּת |  |  | manuscrito/08-na-pratica.md:109 | O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico, de sexta à noite a sábado à noite, e é ele que explica os trens parados e os ônibus de fim de  |
-| 192 | הַתִּקְוָה |  |  | manuscrito/09-curiosidades.md:95 | O hino nacional é o <he>הַתִּקְוָה</he> (Hatikvá), "a esperança", e a Lei Básica de 2018 o nomeia ao lado da bandeira e do emblema. A letra vem de um poema de N |
-| 193 | פְּתִיתִים |  |  | manuscrito/09-curiosidades.md:157 | O <he>פְּתִיתִים</he> (ptitím), massinha de trigo em grão ou em bolinha, foi criado pela Osem no começo dos anos 1950, na austeridade conhecida como tsená, a pe |
+| 190 | שֵׁרוּת |  |  | manuscrito/08-na-pratica.md:115 | O sherut (<he>שֵׁרוּת</he>, sherút) é o táxi coletivo. Em Tel Aviv, são vans amarelas que seguem trajetos de ônibus e circulam também à noite e no Shabat, quand |
+| 191 | שַׁבָּת |  |  | manuscrito/08-na-pratica.md:129 | O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico, de sexta à noite a sábado à noite, e é ele que explica os trens parados e os ônibus de fim de  |
+| 192 | הַתִּקְוָה |  |  | manuscrito/09-curiosidades.md:97 | O hino nacional é o <he>הַתִּקְוָה</he> (Hatikvá), "a esperança", e a Lei Básica de 2018 o nomeia ao lado da bandeira e do emblema. A letra vem de um poema de N |
+| 193 | פְּתִיתִים |  |  | manuscrito/09-curiosidades.md:163 | O <he>פְּתִיתִים</he> (ptitím), massinha de trigo em grão ou em bolinha, foi criado pela Osem no começo dos anos 1950, na austeridade conhecida como tsená, a pe |

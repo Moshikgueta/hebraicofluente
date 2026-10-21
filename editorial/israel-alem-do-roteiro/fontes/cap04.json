@@ -855,6 +855,36 @@
       "data_consulta": "2026-10-21",
       "acesso": "trecho-de-busca",
       "abnt": "FELDMAN, Louis H. Sacrificing truth [resenha]. Middle East Quarterly, [s.d.]. Disponível em: https://www.meforum.org/middle-east-quarterly/book-reviews/sacrificing-truth. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F04-058",
+      "nivel": "D",
+      "tipo": "site-institucional",
+      "autor": "Brasil. Marinha do Brasil. Diretoria do Patrimônio Histórico e Documentação da Marinha",
+      "titulo": "a confirmar (página do portal da DPHDM sobre o Pão de Açúcar)",
+      "ano": null,
+      "editora_ou_periodico": null,
+      "doi": null,
+      "isbn": null,
+      "url": "https://www.marinha.mil.br/dphdm/node/1089",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "BRASIL. Marinha do Brasil. Diretoria do Patrimônio Histórico e Documentação da Marinha. [Pão de Açúcar] (título a confirmar). Rio de Janeiro: DPHDM, [s.d.]. Disponível em: https://www.marinha.mil.br/dphdm/node/1089. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F04-059",
+      "nivel": "E",
+      "tipo": "enciclopedia",
+      "autor": "Encyclopaedia Britannica",
+      "titulo": "Sugar Loaf",
+      "ano": null,
+      "editora_ou_periodico": "Encyclopaedia Britannica",
+      "doi": null,
+      "isbn": null,
+      "url": "https://www.britannica.com/place/Sugar-Loaf",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "SUGAR Loaf. Encyclopaedia Britannica. Chicago: Encyclopaedia Britannica, [s.d.]. Disponível em: https://www.britannica.com/place/Sugar-Loaf. Acesso em: 21 out. 2026."
     }
   ]
 }

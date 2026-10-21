@@ -1946,6 +1946,75 @@
       ],
       "status": "CONTESTADO",
       "revisar_ate": null
+    },
+    {
+      "id": "C02-100",
+      "secao": "Quem governou Jerusalém (figura)",
+      "afirmacao": "Jerusalém passou ao domínio macedônio, de Alexandre, por volta de 332 a.C., o que encerrou o domínio persa.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-131"
+      ],
+      "evidencia": "Trecho de busca: Alexandre destruiu o Império Persa; \"the city of Jerusalem did fall under Macedonian-Greek dominion around 332 BCE\"; a conquista encerrou mais de dois séculos de domínio persa sobre a Judeia.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só a data aproximada vai ao desenho (\"c. 332 a.C.\"). O relato de Josefo sobre o encontro de Alexandre com o sumo sacerdote é tido como lendário e fica fora. A atribuição exata do trecho entre os resultados da busca deve ser conferida na página (prioridade da revisão humana). Ver também C02-024.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-101",
+      "secao": "1947: a partilha no papel",
+      "afirmacao": "O brasileiro Oswaldo Aranha, nascido em Alegrete (RS), em 1894, foi eleito presidente da segunda sessão da Assembleia Geral da ONU (1947).",
+      "categoria": "historia",
+      "fontes": [
+        "F02-129"
+      ],
+      "evidencia": "Biografia oficial dos presidentes da Assembleia Geral: \"Oswaldo Aranha (Brazil), Elected President of the second session of the General Assembly\"; nascido em 1894 em Alegrete, Rio Grande do Sul.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Não foi encontrada página do governo brasileiro (Itamaraty, FUNAG) na busca; a fonte oficial é a da ONU. O papel de Aranha nos bastidores (adiamento da votação, conversas com delegações) só apareceu em fontes E e na Wikipedia: fica fora.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-102",
+      "secao": "1947: a partilha no papel",
+      "afirmacao": "No registro de votação da Resolução 181 (II), na 128ª sessão plenária, em 29 de novembro de 1947, o Brasil aparece entre os 33 votos a favor.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-130"
+      ],
+      "evidencia": "United Nations Digital Library, registro 671195: \"Yes: 33 | No: 13 | Abstentions: 10 | Non-Voting: 1 | Total voting membership: 57\", 128ª sessão plenária, 29/11/1947; Brasil na lista dos votos a favor.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A contagem vale para a parte A da resolução; a parte B consta como adotada sem votação. Um trabalho da ANPUH diz que o Itamaraty teria instruído a abstenção: não verificado em fonte oficial, fica fora.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-103",
+      "secao": "1947: a partilha no papel",
+      "afirmacao": "A Resolução 181 foi aprovada na segunda sessão da Assembleia Geral da ONU, que o brasileiro Oswaldo Aranha presidia.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-129",
+        "F02-130"
+      ],
+      "evidencia": "Conta de C02-063 (a resolução é a 181 (II), aprovada em 29/11/1947), C02-101 (Aranha, presidente da segunda sessão) e C02-102 (a votação na 128ª plenária da mesma sessão).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Afirmação derivada: as fontes não dizem, nos trechos vistos, quem conduziu a mesa naquela plenária específica. O texto diz \"na sessão que ele presidia\".",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
     }
   ]
 }

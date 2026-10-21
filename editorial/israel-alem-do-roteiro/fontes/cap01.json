@@ -735,6 +735,36 @@
       "data_consulta": "2026-10-21",
       "acesso": "trecho-de-busca",
       "abnt": "INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA (IBGE). Cidades e Estados: Sergipe. Rio de Janeiro: IBGE, [s.d.]. Disponível em: https://www.ibge.gov.br/cidades-e-estados/se/. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F01-202",
+      "nivel": "D",
+      "tipo": "site-institucional",
+      "autor": "Instituto Nacional de Meteorologia (INMET)",
+      "titulo": "Balanço: Brasília (DF) teve chuva abaixo da média em janeiro",
+      "ano": 2023,
+      "editora_ou_periodico": "INMET",
+      "doi": null,
+      "isbn": null,
+      "url": "https://portal.inmet.gov.br/noticias/balan%C3%A7o-bras%C3%ADlia-df-teve-chuva-abaixo-da-m%C3%A9dia-em-janeiro",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "INSTITUTO NACIONAL DE METEOROLOGIA (INMET). Balanço: Brasília (DF) teve chuva abaixo da média em janeiro. Brasília: INMET, 2023. Disponível em: https://portal.inmet.gov.br/noticias/balan%C3%A7o-bras%C3%ADlia-df-teve-chuva-abaixo-da-m%C3%A9dia-em-janeiro. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F01-203",
+      "nivel": "D",
+      "tipo": "site-institucional",
+      "autor": "Instituto Nacional de Meteorologia (INMET)",
+      "titulo": "Brasília teve um verão 2024-2025 quente e de pouca chuva",
+      "ano": 2025,
+      "editora_ou_periodico": "INMET",
+      "doi": null,
+      "isbn": null,
+      "url": "https://portal.inmet.gov.br/noticias/bras%C3%ADlia-teve-um-ver%C3%A3o-2024-2025-quente-e-de-pouca-chuva",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "INSTITUTO NACIONAL DE METEOROLOGIA (INMET). Brasília teve um verão 2024-2025 quente e de pouca chuva. Brasília: INMET, 2025. Disponível em: https://portal.inmet.gov.br/noticias/bras%C3%ADlia-teve-um-ver%C3%A3o-2024-2025-quente-e-de-pouca-chuva. Acesso em: 21 out. 2026."
     }
   ]
 }

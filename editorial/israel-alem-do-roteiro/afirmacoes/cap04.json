@@ -1618,6 +1618,68 @@
       "interpretacoes_concorrentes": "Ben-Yehuda (1995, 2002): o relato de Josefo foi transformado em mito nacional, e Yadin distorceu achados para sustentá-lo. Feldman: concorda em parte (o rótulo de zelotes), discorda em outros pontos. Ben-Tor (2009): defende a interpretação de Yadin e rebate os argumentos de Ben-Yehuda.",
       "status": "CONTESTADO",
       "revisar_ate": null
+    },
+    {
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "interpretacoes_concorrentes": null,
+      "revisar_ate": null,
+      "id": "C04-097",
+      "secao": "Mapa ilustrado e fichas",
+      "afirmacao": "Em linha reta, a partir da coordenada da Cidade Antiga de Jerusalém, as distâncias são de cerca de: Mar da Galileia 119 km, Nazaré 103 km, Cafarnaum 127 km, Cesareia 87 km, Massada 52 km, Tel Aviv 55 km, Jafa 54 km, Haifa 117 km e Acre 128 km.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-038",
+        "F04-027",
+        "F04-031",
+        "F04-033",
+        "F04-026",
+        "F04-003",
+        "F04-015",
+        "F04-030",
+        "F04-018",
+        "F04-012"
+      ],
+      "evidencia": "Conta (haversine, raio 6.371 km) feita a partir das coordenadas com duas casas decimais de C04-083, C04-007, C04-011, C04-020, C04-031, C04-047, C04-059, C04-062, C04-070 e C04-079 (destinos.json).",
+      "limitacoes": "Conta derivada; coordenadas com duas casas (erro de cerca de 1 km). Distância em linha reta, não de estrada. O Mar da Galileia é medido até o ponto da ficha da UNESCO, não até a margem mais próxima.",
+      "status": "VERIFICADO"
+    },
+    {
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "interpretacoes_concorrentes": null,
+      "revisar_ate": null,
+      "id": "C04-098",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "O Pão de Açúcar, no Rio de Janeiro, tem 396 metros de altura acima do mar.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-058",
+        "F04-059"
+      ],
+      "evidencia": "Portal da Diretoria do Patrimônio Histórico e Documentação da Marinha: o morro tem 396 m. A Britannica dá 395 m (1.296 pés).",
+      "limitacoes": "Título exato da página da Marinha a confirmar. A Britannica dá 395 m: diferença de 1 m entre as fontes; o texto usa 396 m.",
+      "status": "VERIFICADO"
+    },
+    {
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "interpretacoes_concorrentes": null,
+      "revisar_ate": null,
+      "id": "C04-099",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "O alto de Massada, 450 m acima do Mar Morto, fica cerca de 54 m mais alto em relação à água a seus pés do que o Pão de Açúcar (396 m) em relação ao mar.",
+      "categoria": "geografia",
+      "fontes": [
+        "F04-004",
+        "F04-058"
+      ],
+      "evidencia": "Conta: 450 - 396 = 54, a partir de C04-034 (Autoridade de Natureza e Parques) e C04-098.",
+      "limitacoes": "Comparação derivada de desnível, não de altitude: o Mar Morto fica muito abaixo do nível do mar (capítulo 1), e os 450 m de Massada mudam conforme o lago desce.",
+      "status": "VERIFICADO"
     }
   ]
 }

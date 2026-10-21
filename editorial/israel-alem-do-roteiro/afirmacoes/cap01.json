@@ -1111,6 +1111,60 @@
       "interpretacoes_concorrentes": null,
       "status": "VERIFICADO",
       "revisar_ate": null
+    },
+    {
+      "id": "C01-203",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "Segundo o INMET, a normal climatológica 1991-2020 de chuva de janeiro na estação de Brasília (DF) é de 206,0 mm.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-202"
+      ],
+      "evidencia": "Balanço do INMET de janeiro de 2023: a chuva do mês ficou em 93% da \"Normal Climatológica (média histórica) de 1991 a 2020, que é de 206,0 mm\".",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Valor lido no balanço mensal do INMET, não na tabela das Normais Climatológicas 1991-2020. A normal anual de Brasília não apareceu na busca e fica fora.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-204",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "Segundo o INMET, a média histórica (1991-2020) da chuva do verão na estação de Brasília (DF) é de 621,7 mm.",
+      "categoria": "clima",
+      "fontes": [
+        "F01-203"
+      ],
+      "evidencia": "Balanço do verão 2024-2025 (e o do verão 2023-2024): a chuva da estação ficou em 98% (e 109%) \"da média histórica sazonal, que é de 621,7 mm (1991-2020)\".",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Um balanço do verão 2022-2023 usa 608,2 mm para a mesma média: o recorte da estação pode variar entre relatórios. O texto e o desenho usam 621,7 mm com o nome do INMET e dizem \"o verão\", sem datas de começo e fim.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-205",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "A chuva média de um ano inteiro no extremo sul de Israel (menos de 100 mm) é menos da metade da normal de um só janeiro em Brasília (206,0 mm); a da Alta Galileia, a parte mais chuvosa de Israel (cerca de 1.100 mm por ano), é menos do dobro da chuva média de um só verão em Brasília (621,7 mm).",
+      "categoria": "clima",
+      "fontes": [
+        "F01-018",
+        "F01-019",
+        "F01-202",
+        "F01-203"
+      ],
+      "evidencia": "Conta feita a partir de C01-021, C01-203 e C01-204: 100 < 206,0 / 2 = 103; 1.100 / 621,7 = 1,77.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Comparação derivada; os períodos de referência das médias israelenses não são informados (ver C01-021).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
     }
   ]
 }

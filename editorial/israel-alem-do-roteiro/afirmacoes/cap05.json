@@ -1363,6 +1363,65 @@
       "interpretacoes_concorrentes": null,
       "status": "PARCIALMENTE VERIFICADO",
       "revisar_ate": null
+    },
+    {
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "interpretacoes_concorrentes": null,
+      "revisar_ate": "2027-10-21",
+      "id": "C05-101",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "No Brasil, as leis federais fixam nove feriados nacionais civis, todos em data fixa: 1º de janeiro, 21 de abril, 1º de maio, 7 de setembro, 2 de novembro, 15 de novembro e 25 de dezembro (Lei 662/1949, na redação da Lei 10.607/2002), 12 de outubro (Lei 6.802/1980) e 20 de novembro (Lei 14.759/2023).",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-067",
+        "F05-068",
+        "F05-069"
+      ],
+      "evidencia": "Lei 662, art. 1º (redação de 2002): \"São feriados nacionais os dias 1º de janeiro, 21 de abril, 1º de maio, 7 de setembro, 2 de novembro, 15 de novembro e 25 de dezembro\". Lei 6.802, art. 1º: \"É declarado feriado nacional o dia 12 de outubro\". Lei 14.759: declara feriado nacional o 20 de novembro, Dia Nacional de Zumbi e da Consciência Negra.",
+      "limitacoes": "A Sexta-feira da Paixão não está nessas leis; ver C05-102.",
+      "status": "VERIFICADO"
+    },
+    {
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "interpretacoes_concorrentes": null,
+      "revisar_ate": "2026-12-31",
+      "id": "C05-102",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "A portaria do governo federal com o calendário de 2026 para a administração pública federal lista também a Paixão de Cristo, em 3 de abril, entre os feriados nacionais, e o Carnaval como ponto facultativo.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-070",
+        "F05-071"
+      ],
+      "evidencia": "As duas reportagens (dez. 2025) reproduzem a lista da Portaria MGI: Paixão de Cristo, 3 de abril, entre os feriados; Carnaval (16 e 17 de fevereiro) entre os pontos facultativos.",
+      "limitacoes": "Duas fontes E independentes, fato datado; o texto da portaria no Diário Oficial não foi aberto. Número e data de publicação da portaria divergem entre as reportagens.",
+      "status": "VERIFICADO"
+    },
+    {
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "interpretacoes_concorrentes": null,
+      "revisar_ate": null,
+      "id": "C05-103",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "Os dias de descanso oficiais de Israel são nove (dois de Rosh Hashaná, Yom Kipur, dois de Sucot, dois de Pêssach, Shavuot e o Dia da Independência) e seguem o calendário judaico, por isso mudam de data no calendário civil a cada ano; os nove feriados civis fixados pelas leis federais brasileiras caem sempre no mesmo dia.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F05-045",
+        "F05-034",
+        "F05-038",
+        "F05-067",
+        "F05-068",
+        "F05-069"
+      ],
+      "evidencia": "Contagem a partir de C05-085 (lista israelense) e C05-101 (lista brasileira); a mudança de data vem de C05-066 (calendário lunissolar).",
+      "limitacoes": "Comparação derivada; não inclui as festas próprias das comunidades não judaicas (C05-086) nem os feriados estaduais e municipais brasileiros.",
+      "status": "VERIFICADO"
     }
   ]
 }

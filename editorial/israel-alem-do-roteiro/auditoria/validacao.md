@@ -4,12 +4,12 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 33130
-- Fontes registradas: 649 (por nível: D 149, B 162, E 224, A 93, C 21; por acesso: trecho-de-busca 621, referencia-confirmada 28)
-- Afirmações registradas: 717 (VERIFICADO 469, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
-- Afirmações VERIFICADO sem uso no texto: 15
+- Palavras no manuscrito: 32963
+- Fontes registradas: 662 (por nível: D 154, B 163, E 227, A 96, C 22; por acesso: trecho-de-busca 634, referencia-confirmada 28)
+- Afirmações registradas: 731 (VERIFICADO 483, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
+- Afirmações VERIFICADO sem uso no texto: 35
 - Ocorrências de hebraico: 193 (lista em auditoria/hebraico.md)
-- Links testados: 0 de 646 (rede bloqueada; ver revisão humana)
+- Links testados: 0 de 659 (rede bloqueada; ver revisão humana)
 
 | Arquivo | Palavras | Marcas de fonte |
 | --- | --- | --- |
@@ -17,14 +17,14 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 | 00b-introducao.md | 519 | 0 |
 | 01-israel-no-mapa.md | 2535 | 73 |
 | 02-historia.md | 6604 | 199 |
-| 03-jerusalem.md | 5139 | 188 |
+| 03-jerusalem.md | 4651 | 180 |
 | 04-alem-de-jerusalem.md | 3924 | 130 |
 | 05-vida-real.md | 3084 | 94 |
 | 06-sabores.md | 2366 | 39 |
 | 07-hebraico.md | 2587 | 45 |
-| 08-na-pratica.md | 2392 | 54 |
-| 09-curiosidades.md | 2302 | 60 |
-| 10-diario.md | 533 | 0 |
+| 08-na-pratica.md | 2544 | 70 |
+| 09-curiosidades.md | 2424 | 67 |
+| 10-diario.md | 580 | 0 |
 | 98-notas-sobre-fontes.md | 323 | 0 |
 | 99-encerramento.md | 169 | 0 |
 

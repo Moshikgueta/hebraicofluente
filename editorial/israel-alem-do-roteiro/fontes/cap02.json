@@ -1930,6 +1930,51 @@
       "data_consulta": "2026-10-21",
       "acesso": "trecho-de-busca",
       "abnt": "UNITED STATES HOLOCAUST MEMORIAL MUSEUM. The Harrison Report. In: Holocaust Encyclopedia. Washington: USHMM, [s.d.]. Disponível em: https://encyclopedia.ushmm.org/content/en/article/the-harrison-report. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F02-129",
+      "nivel": "D",
+      "tipo": "site-institucional",
+      "autor": "Organização das Nações Unidas (ONU)",
+      "titulo": "Oswaldo Aranha (Brazil): Elected President of the second session of the General Assembly",
+      "ano": null,
+      "editora_ou_periodico": "United Nations",
+      "doi": null,
+      "isbn": null,
+      "url": "https://www.un.org/en/ga/president/bios/bio02.shtml",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "ORGANIZAÇÃO DAS NAÇÕES UNIDAS (ONU). Oswaldo Aranha (Brazil): Elected President of the second session of the General Assembly. Nova York: ONU, [s.d.]. Disponível em: https://www.un.org/en/ga/president/bios/bio02.shtml. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F02-130",
+      "nivel": "C",
+      "tipo": "documento",
+      "autor": "Organização das Nações Unidas, Assembleia Geral",
+      "titulo": "Future government of Palestine: resolution / adopted by the General Assembly (registro de votação)",
+      "ano": 1947,
+      "editora_ou_periodico": "United Nations Digital Library",
+      "doi": null,
+      "isbn": null,
+      "url": "https://digitallibrary.un.org/record/671195",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "ORGANIZAÇÃO DAS NAÇÕES UNIDAS. Assembleia Geral. Future government of Palestine: resolution adopted by the General Assembly [registro de votação, 128ª sessão plenária, 29 nov. 1947]. United Nations Digital Library. Disponível em: https://digitallibrary.un.org/record/671195. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F02-131",
+      "nivel": "B",
+      "tipo": "site-institucional",
+      "autor": "Luther Seminary",
+      "titulo": "Judea during Hellenistic rule (Enter the Bible)",
+      "ano": null,
+      "editora_ou_periodico": "Luther Seminary",
+      "doi": null,
+      "isbn": null,
+      "url": "https://enterthebible.org/time-period/judea-during-hellenistic-rule",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "LUTHER SEMINARY. Judea during Hellenistic rule. In: Enter the Bible. Saint Paul: Luther Seminary, [s.d.]. Disponível em: https://enterthebible.org/time-period/judea-during-hellenistic-rule. Acesso em: 21 out. 2026."
     }
   ]
 }
