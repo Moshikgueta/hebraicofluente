@@ -39,6 +39,12 @@ jobs:
       - name: Baixar e conferir as licenças
         working-directory: editorial
         run: node tools/baixar-fotos.mjs israel-alem-do-roteiro | tee /tmp/fotos.txt
+      - name: Reduzir para o tamanho do livro
+        working-directory: editorial/israel-alem-do-roteiro/ativos/fotos
+        run: |
+          # 1800 px no lado maior: sobra para a página A4 do PDF e não pesa no repositório.
+          if command -v mogrify >/dev/null; then mogrify -resize '1800x1800>' -strip -interlace JPEG -sampling-factor 4:2:0 -quality 80 *.jpg; else echo 'ImageMagick ausente: fotos ficam no tamanho baixado.'; fi
+          du -sh .
       - name: Resumo
         run: |
           { echo '## Fotos do livro'; echo; echo '```'; cat /tmp/fotos.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

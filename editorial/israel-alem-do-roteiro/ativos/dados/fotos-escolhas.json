@@ -1,7 +1,13 @@
 {
  "_": "Para cada lugar de foto do manuscrito (::: foto <id>), as candidatas na ordem de preferência. tools/baixar-fotos.mjs tenta a primeira e passa à seguinte se a licença conferida no arquivo for recusada. Lugar sem linha aqui usa só a candidata de mesmo id.",
  "pular": {
-  "foto-sepulcro-fachada-delaney": "licença CC BY-SA declarada, mas o campo de autor diz 'All rights reserved': contraditória, não usar"
+  "foto-sepulcro-fachada-delaney": "licença CC BY-SA declarada, mas o campo de autor diz 'All rights reserved': contraditória, não usar",
+  "foto-kineret-taylor": "conferida em 21/10/2026: mostra uma estátua, não o lago",
+  "foto-hula-pikiwiki": "conferida em 21/10/2026: mostra uma placa, não o vale",
+  "foto-via-dolorosa-matson-arco": "conferida em 21/10/2026: mostra o interior de uma sala, não o arco",
+  "foto-jerusalem-jaffa-gate-matson": "conferida em 21/10/2026: estereografia (duas imagens lado a lado)",
+  "foto-tel-aviv-costa": "conferida em 21/10/2026: panorama estreito com moldura preta",
+  "foto-tito-menora-cc0": "conferida em 21/10/2026: menorá decorativa, não o relevo do Arco de Tito"
  },
  "reservas": {
   "foto-tel-aviv-costa": [
@@ -101,5 +107,14 @@
   "foto-mahane-yehuda-dyan": [
    "foto-mahane-yehuda-king"
   ]
+ },
+ "buscas": {
+  "foto-domo-loc-temple-area": "Matson Jerusalem Temple area Dome of the Rock",
+  "foto-via-dolorosa-ecce-homo-matson": "Ecce Homo arch Via Dolorosa Jerusalem",
+  "foto-kineret-taylor": "Sea of Galilee view",
+  "foto-hula-pikiwiki": "Agamon Hula lake cranes",
+  "foto-jerusalem-jaffa-gate-matson": "Jaffa Gate Jerusalem",
+  "foto-tito-menora-cc0": "Arch of Titus relief spoils menorah",
+  "foto-tel-aviv-costa": "Tel Aviv beach promenade"
  }
 }
