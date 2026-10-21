@@ -177,3 +177,19 @@ bairros, se entrar, deve vir atribuída (C03-083).
 - **Prazos**: C03-097 (procissão) e C03-029/030 vencem em 21/04/2027; C03-106 e
   C03-039/063 em 21/10/2027.
 - Nenhuma caixa "O olhar de um israelense".
+
+## Fase 6 (21/10/2026): piloto visual e corte político
+
+- Visuais, fichas e interações: ver `redesenho/PILOTO-FASE-6.md`.
+- **Corte por decisão do dono ("evitar a parte política", encurtar ao
+  essencial):** saíram do texto a Resolução 478 (linha do tempo e seção de
+  status), o artigo 3 da Lei Básica palestina e a declaração da OLP de 2000
+  (C03-101, C03-102), as embaixadas dos EUA e da Colômbia e as condenações
+  (C03-061, C03-062), o tratado de 1994 e o acordo de 2013 sobre a custódia
+  (C03-099, C03-100), a missão declarada da Elad, a petição da Ir Amim e o
+  debate de Greenberg sobre a Cidade de Davi (C03-106 em parte, C03-107) e a
+  frase de fecho política da seção de patrimônio. Ficaram os fatos e as
+  datas: a divisão de 1949-1967, 1967, a Lei Básica de 1980, onde ficam as
+  embaixadas, o status quo do Monte do Templo (regra de visita). Os registros
+  continuam nos arquivos, fora do texto.
+- "Ocupou" virou "tomou" no texto e na linha do tempo.

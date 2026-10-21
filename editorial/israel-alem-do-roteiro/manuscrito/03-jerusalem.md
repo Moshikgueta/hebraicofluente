@@ -20,16 +20,14 @@ c. 130-135 | Adriano refunda a cidade como Aelia Capitolina.[[C02-028]]
 1537 | Começa a muralha de Solimão.[[C03-005]]
 1860 | Mishkenot Sha'ananim, o primeiro bairro judeu fora das muralhas.[[C03-104]]
 1949-1967 | A cidade dividida entre Jordânia e Israel.[[C03-103]]
-jun. 1967 | Israel ocupa Jerusalém Oriental.[[C02-525]]
-1980 | Lei Básica israelense e Resolução 478 da ONU.[[C03-059,C03-060]]
+jun. 1967 | Israel toma Jerusalém Oriental.[[C02-525]]
+1980 | O Knesset aprova a Lei Básica sobre Jerusalém.[[C03-059]]
 1981 e 1982 | Patrimônio Mundial; depois, Patrimônio em Perigo.[[C03-001,C03-002]]
 :::
 
 ## Patrimônio mundial, e em perigo
 
-A Cidade Antiga de Jerusalém e suas muralhas entraram na Lista do Patrimônio Mundial da UNESCO em 1981, por proposta da Jordânia, com base em três dos critérios da convenção (ii, iii e vi).[[C03-001]] No ano seguinte, 1982, o sítio passou à Lista do Patrimônio Mundial em Perigo, e lá continua; em 2005, o Comitê do Patrimônio Mundial decidiu expressamente mantê-lo nela.[[C03-002]] Os relatórios de conservação dizem por quê: mudanças no tecido urbano e social, os efeitos de escavações arqueológicas, a deterioração dos monumentos, o impacto visual do entorno, problemas de trânsito e de acesso.[[C03-003]] Os mesmos documentos registram que, desde 1967, a Cidade Antiga é administrada de fato pelas autoridades israelenses.[[C03-004]]
-
-Uma proposta jordaniana em 1981 para um lugar administrado por Israel desde 1967: até a ficha técnica do patrimônio carrega a história política da cidade. Ela volta no fim do capítulo, dita com as palavras de cada documento.
+A Cidade Antiga de Jerusalém e suas muralhas entraram na Lista do Patrimônio Mundial da UNESCO em 1981, por proposta da Jordânia, com base em três dos critérios da convenção (ii, iii e vi).[[C03-001]] No ano seguinte, 1982, o sítio passou à Lista do Patrimônio Mundial em Perigo, e lá continua; em 2005, o Comitê do Patrimônio Mundial decidiu expressamente mantê-lo nela.[[C03-002]] Os relatórios de conservação dizem por quê: mudanças no tecido urbano e social, os efeitos de escavações arqueológicas, a deterioração dos monumentos, o impacto visual do entorno, problemas de trânsito e de acesso.[[C03-003]] Desde 1967, a Cidade Antiga é administrada pelas autoridades israelenses.[[C03-004]]
 
 ::: link unesco-cidade-antiga-de-jerusalem
 A ficha do sítio na UNESCO, com o mapa do perímetro.
@@ -147,7 +145,6 @@ A esplanada com o Domo da Rocha, numa foto antiga da coleção Matson.
 
 Quem pode rezar ali é regulado por um arranjo conhecido como status quo. Em 2015, o gabinete do primeiro-ministro de Israel o resumiu numa frase: "os muçulmanos rezam no Monte do Templo; os não muçulmanos visitam o Monte do Templo". A mesma declaração reafirmou o compromisso de manter o status quo "em palavras e na prática" e saudou a coordenação com o Waqf jordaniano, a instituição religiosa islâmica que administra o complexo.[[C03-029]] Segundo o governo israelense, a segurança cabe a Israel e a administração do lugar, ao Waqf; o visitante não muçulmano entra em horários limitados e não pode rezar ali.[[C03-030]]
 
-A palavra "jordaniano" tem história. O tratado de paz entre Israel e Jordânia, de 1994, diz no artigo 9 que Israel respeita o papel especial atual da Jordânia nos santuários muçulmanos de Jerusalém e que dará alta prioridade ao papel histórico jordaniano quando se negociar o status permanente; o alcance desse papel não foi detalhado e é motivo de discordância.[[C03-099]] Em 2013, o rei Abdullah II, da Jordânia, e o presidente palestino Mahmoud Abbas assinaram um acordo que reconhece o papel do rei como custódio dos lugares santos da cidade. A Jordânia não reivindica soberania sobre Jerusalém; o que ela discute com Israel é até onde vai esse papel.[[C03-100]]
 
 ::: ficha monte-do-templo
 nome: Monte do Templo / Haram al-Sharif
@@ -271,11 +268,10 @@ O que a ciência mostra: o túnel é da Idade do Ferro II, segundo a datação p
 
 ### A Cidade de Davi, em Silwan
 
-O túnel é visitado dentro do parque chamado Cidade de Davi, em hebraico <he>עִיר דָּוִד</he> (Ir Davíd). Ele fica na parte sul da crista oriental da Jerusalém antiga, logo ao sul do Monte do Templo, dentro de Silwan, bairro palestino de Jerusalém Oriental.[[C03-105]]
+O túnel é visitado dentro do parque chamado Cidade de Davi, em hebraico <he>עִיר דָּוִד</he> (Ir Davíd). Ele fica na parte sul da crista oriental da Jerusalém antiga, logo ao sul do Monte do Templo, dentro do bairro de Silwan.[[C03-105]]
 
-O parque é operado desde 1997 pela fundação israelense Ir David, conhecida como Elad, cuja missão declarada inclui "abrigar famílias judias na Cidade de Davi". A Suprema Corte de Israel permitiu que o contrato com a Autoridade de Natureza e Parques continuasse, com mudanças, depois de uma petição da organização Ir Amim, que apontava conflito de interesse.[[C03-106]]
+O parque é operado desde 1997 pela fundação Ir David, conhecida como Elad.[[C03-106]]
 
-Por isso a visita é também um debate. O governo israelense apresenta o lugar como o sítio da Cidade de Davi e do túnel de Ezequias; críticos, como o arqueólogo Rafi Greenberg, da Universidade de Tel Aviv, dizem que a arqueologia virou ali um instrumento da disputa pela presença judaica em Silwan.[[C03-107]] Quem visita pode perguntar ao guia quem administra o parque e quem mora em volta dele: são perguntas tão legítimas quanto a data de uma muralha.
 
 ::: ficha cidade-de-davi
 nome: Cidade de Davi
@@ -297,7 +293,7 @@ Durante séculos, a cidade coube dentro da muralha. No século XIX, isso mudou. 
 
 Um século depois de sair das muralhas, a cidade foi cortada ao meio. Na guerra de 1948, o Bairro Judeu da Cidade Antiga caiu diante das forças jordanianas em 28 de maio.[[C02-501]] O armistício entre Israel e Jordânia foi assinado em 3 de abril de 1949.[[C02-521]] De 1949 a 1967, Jerusalém ficou dividida: a Jordânia no leste, com a Cidade Antiga, e Israel no oeste. A Porta Mandelbaum era o único ponto de passagem entre as duas partes, usado sobretudo por diplomatas, clérigos, pessoal da ONU e peregrinos cristãos.[[C03-103]]
 
-Em junho de 1967, na Guerra dos Seis Dias, Israel ocupou Jerusalém Oriental, e o posto de Mandelbaum foi desmontado.[[C02-525,C03-103]]
+Em junho de 1967, na Guerra dos Seis Dias, Israel tomou Jerusalém Oriental, e o posto de Mandelbaum foi desmontado.[[C02-525,C03-103]]
 
 ::: compare jerusalem-1949 jerusalem-hoje
 a: 1949-1967
@@ -305,15 +301,9 @@ b: Desde 1967
 Jerusalém dividida e Jerusalém hoje, nos mesmos contornos. A área do leste é o limite de Jerusalém Oriental usado depois de 1967.[[C03-103,C02-525]]
 :::
 
-## O status de Jerusalém, nas palavras de cada documento
+## Jerusalém, capital
 
-Em 30 de julho de 1980, o Knesset, o parlamento de Israel, aprovou a Lei Básica: Jerusalém, Capital de Israel. O primeiro artigo diz: "Jerusalém, completa e unida, é a capital de Israel".[[C03-059]] No mesmo ano, o Conselho de Segurança da ONU aprovou a Resolução 478. Ela declarou a lei "nula e sem efeito", decidiu não reconhecê-la e pediu aos países que tinham missões diplomáticas em Jerusalém que as retirassem. Foram 14 votos a favor, nenhum contra, e a abstenção dos Estados Unidos.[[C03-060]]
-
-O lado palestino também escreveu a sua posição em lei. A Lei Básica palestina emendada de 2003 diz, no artigo 3: "Jerusalém é a capital da Palestina".[[C03-101]] Em 2000, o Conselho Central da OLP declarou que a retirada israelense deveria incluir todo o território palestino ocupado além das linhas de 4 de junho de 1967, Jerusalém incluída, em aplicação da Resolução 242 do Conselho de Segurança.[[C03-102]]
-
-Os Estados Unidos abriram sua embaixada em Jerusalém em 14 de maio de 2018.[[C03-061]] Em 14 de outubro de 2026, a Colômbia inaugurou a dela, que a imprensa contou como a décima missão desse tipo na cidade; ministros das Relações Exteriores de 19 países condenaram a decisão como contrária a resoluções do Conselho de Segurança, e autoridades palestinas a denunciaram.[[C03-062]] A conta varia conforme a fonte, entre outros motivos porque inclui representações de entidades que não são membros da ONU; em qualquer contagem, a grande maioria das embaixadas estrangeiras em Israel fica fora de Jerusalém.[[C03-063]]
-
-Este livro não toma partido nessa disputa. Registra o que cada documento diz e quando disse, para que o leitor reconheça os termos quando os ouvir na viagem.
+Em 30 de julho de 1980, o Knesset, o parlamento de Israel, aprovou a Lei Básica: Jerusalém, Capital de Israel. O primeiro artigo diz: "Jerusalém, completa e unida, é a capital de Israel".[[C03-059]] Na prática, a grande maioria das embaixadas estrangeiras fica fora de Jerusalém; a do Brasil fica em Tel Aviv.[[C03-063,C08-005]]
 
 ::: em-hebraico
 - <he>יְרוּשָׁלַיִם</he> | Yerushaláyim | Jerusalém | O nome da cidade em hebraico.
