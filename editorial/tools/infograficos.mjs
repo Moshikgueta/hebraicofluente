@@ -236,9 +236,51 @@ function corteFaixas(escuro = true) {
   return s + '</svg>';
 }
 
+
+/* ── régua do tempo do capítulo 2 ──────────────────────────────────────
+   Lê os marcos das caixas `linha-do-tempo` do manuscrito do capítulo 2 e
+   só desenha os que têm afirmação VERIFICADO ou CONTESTADO. A escala muda em
+   1800 (os dois trechos estão marcados): linear, mais de três mil anos
+   espremeriam os últimos dois séculos numa linha. */
+function reguaDoTempo() {
+  const arq = path.join(RAIZ, 'manuscrito/02-historia.md');
+  if (!fs.existsSync(arq)) return null;
+  const linhas = []; let dentro = false;
+  for (const l of fs.readFileSync(arq, 'utf8').split('\n')) { if (/^:::\s*linha-do-tempo/.test(l)) { dentro = true; continue; } if (/^:::\s*$/.test(l)) { dentro = false; continue; } if (dentro && l.includes('|')) linhas.push(l); }
+  const ROM = { I: 1, V: 5, X: 10, L: 50, C: 100 };
+  const romano = r => [...r].reduce((a, c, i, v) => ROM[c] < (ROM[v[i + 1]] || 0) ? a - ROM[c] : a + ROM[c], 0);
+  const ano = d => { const ac = /a\.\s?C\./.test(d); const sec = d.match(/s[ée]c\.\s*([IVXLC]+)/); if (sec) return (ac ? -1 : 1) * (romano(sec[1]) * 100 - 50); const m = d.match(/(\d{2,4})/); return m ? (ac ? -1 : 1) * +m[1] : null; };
+  const marcos = linhas.map(l => { const [d, ev] = l.split('|'); const ids = (ev.match(/\[\[([^\]]+)\]\]/) || [, ''])[1].split(',').map(x => x.trim()).filter(Boolean); return { d: d.trim(), ev: ev.replace(/\[\[[^\]]+\]\]/g, '').trim(), ids, a: ano(d) }; }).filter(m => m.a != null && verificado(m.ids));
+  if (marcos.length < 6) return null;
+  const W = 900, H = 1200, Y0 = 470, YQ = 860, Y1 = 1150, X = 300, A0 = -1400, AQ = 1800, A1 = 2026;
+  const y = a => a < AQ ? Y0 + (a - A0) / (AQ - A0) * (YQ - Y0) : YQ + (a - AQ) / (A1 - AQ) * (Y1 - YQ);
+  const DESTAQUE = { '-1350': 'Cartas de Amarna', '-1207': 'Estela de Merneptah', '586': '', '70': 'Roma destrói o Templo', '638': 'Jerusalém sob governo muçulmano', '1099': 'Cruzados', '1516': 'Otomanos', '1917': 'Declaração Balfour', '1948': 'Estado de Israel · Nakba', '2023': '7 de outubro' };
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Régua do tempo: marcos da história da região, da Idade do Bronze a 2025">
+  <style>.a{font-family:'Bricolage Grotesque',sans-serif;font-weight:700}.l{font-family:'Instrument Sans',sans-serif;font-weight:600;letter-spacing:.14em;text-transform:uppercase}.n{font-family:'Literata',serif}</style>
+  <rect width="${W}" height="${H}" fill="#0B2A31"/>
+  <rect x="${X - 2}" y="${Y0}" width="4" height="${y(0) - Y0}" fill="#B8862F" opacity=".8"/>
+  <rect x="${X - 2}" y="${y(0)}" width="4" height="${Y1 - y(0)}" fill="#8FD6C8" opacity=".85"/>
+  <line x1="${X - 40}" x2="${X + 40}" y1="${YQ}" y2="${YQ}" stroke="#E9DCC0" stroke-width="1.4" stroke-dasharray="4 5"/>
+  <text class="l" x="${X - 52}" y="${YQ + 5}" text-anchor="end" font-size="13" fill="#E9DCC0" opacity=".85">escala muda em 1800</text>`;
+  const usados = new Set(); let ultimoY = -99;
+  for (const m of marcos.sort((a, b) => a.a - b.a)) {
+    const yy = y(m.a), ac = m.a < 0;
+    s += `<circle cx="${X}" cy="${yy}" r="${ac ? 6 : 5}" fill="${ac ? '#B8862F' : '#8FD6C8'}" stroke="#0B2A31" stroke-width="2"/>`;
+    const chave = Object.keys(DESTAQUE).find(k => Math.abs(+k - m.a) < 1 || (+k === 586 && m.a === 597));
+    if (chave && !usados.has(chave) && yy - ultimoY > 34) {
+      usados.add(chave); ultimoY = yy;
+      const nome = DESTAQUE[chave] || m.ev.replace(/\.$/, '');
+      s += `<line x1="${X + 10}" x2="${X + 34}" y1="${yy}" y2="${yy}" stroke="#E9DCC0" stroke-width="1" opacity=".6"/>`;
+      s += `<text class="a" x="${X - 18}" y="${yy + 9}" text-anchor="end" font-size="26" fill="${ac ? '#E9C98A' : '#FFFFFF'}">${esc(m.d.replace(/^c\.\s*/, 'c. '))}</text>`;
+      s += `<text class="n" x="${X + 44}" y="${yy + 8}" font-size="22" fill="#E9DCC0">${esc(nome)}</text>`;
+    }
+  }
+  return s + '</svg>';
+}
+
 const SAIDA_INF = path.join(RAIZ, 'ativos/infograficos'), SAIDA_MAP = path.join(RAIZ, 'ativos/mapas');
 fs.mkdirSync(SAIDA_INF, { recursive: true });
-for (const [id, dir, fn] of [['corte-faixas', SAIDA_INF, () => corteFaixas(true)], ['corte-faixas-claro', SAIDA_INF, () => corteFaixas(false)], ['perfil-altitude', SAIDA_INF, () => perfil(true)], ['perfil-altitude-claro', SAIDA_INF, () => perfil(false)], ['infografico-clima', SAIDA_INF, clima], ['infografico-semana', SAIDA_INF, semana], ['mapa-jerusalem', SAIDA_MAP, jerusalem]]) {
+for (const [id, dir, fn] of [['regua-do-tempo', SAIDA_INF, reguaDoTempo], ['corte-faixas', SAIDA_INF, () => corteFaixas(true)], ['corte-faixas-claro', SAIDA_INF, () => corteFaixas(false)], ['perfil-altitude', SAIDA_INF, () => perfil(true)], ['perfil-altitude-claro', SAIDA_INF, () => perfil(false)], ['infografico-clima', SAIDA_INF, clima], ['infografico-semana', SAIDA_INF, semana], ['mapa-jerusalem', SAIDA_MAP, jerusalem]]) {
   const arq = path.join(dir, id + '.svg');
   const svg = fn();
   if (svg) { fs.writeFileSync(arq, comPrefixo(svg, id)); console.log('gerado', id); }

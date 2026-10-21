@@ -1,213 +1,213 @@
 # Auditoria interna, capítulo 2: Milhares de anos de história
 
-Data: 21/10/2026. Auditoria interna feita por IA, que não substitui revisão
-acadêmica: nada aqui está "revisado", "validado" ou "aprovado".
+Data: 21/10/2026 (segunda rodada no mesmo dia). Auditoria interna feita por
+IA, que não substitui revisão acadêmica: nada aqui está "revisado",
+"validado" ou "aprovado".
 
 ## 0. Situação da pesquisa (ler primeiro)
 
-A rodada de pesquisa parou no meio. Depois de 44 consultas deste capítulo, o
-limite de buscas web da rodada (compartilhado entre os agentes que escreviam
-outros capítulos ao mesmo tempo) se esgotou. As consultas que faltavam, a
-partir dos refugiados de 1948, não foram feitas. Nada foi preenchido de
-memória.
+Primeira rodada: 44 consultas, interrompida pelo limite de buscas. Segunda
+rodada (esta): 37 consultas, dedicada ao período até 1947. O período de 1948
+em diante é escrito à parte, em `manuscrito/_frag-02-1948.md` e
+`afirmacoes/cap02b.json`, e continua **bloqueante para o PDF**; esta
+auditoria não o cobre.
 
-Consequência: o manuscrito cobre do século XIV a.C. a 1947 com lacunas, e
-**não pode ir ao PDF** nesta versão. As lacunas estão marcadas no próprio
-manuscrito com comentários HTML `PENDENTE`, cada um apontando para o registro
-em `afirmacoes/cap02.json` que tem as pistas de fonte.
+O que a segunda rodada fez: trocou por fontes de nível A a D as datas que
+estavam só na Britannica (Samaria, 597 a.C., macabeus, 66-70, Bar Kochba,
+638, 1099, 1187, 1291, 1516-1517), sustentou as três estelas (Merneptah,
+Mesha, Tel Dan), escreveu a seção "Dois movimentos nacionais", o Holocausto e
+o pós-guerra, as reações ao Livro Branco, Abdi-Heba e a posição do próprio
+Finkelstein, e unificou com o capítulo 3 a data das muralhas.
 
-Uma segunda causa de lacunas é de método, não de limite: boa parte das datas
-da Antiguidade e da Idade Média só apareceu na Encyclopaedia Britannica, que o
-protocolo classifica como E. Fonte E sozinha sustenta no máximo PARCIALMENTE
-VERIFICADO, e isso não vai ao texto. Essas afirmações estão registradas com o
-que a Britannica diz e com a fonte A a D que a próxima rodada deve procurar.
+Manuscrito: 3.995 palavras no arquivo (cerca de 3.990 de texto de leitura,
+sem comentários e marcadores), dentro do teto de 4.000 desta parte.
 
 ## 1. Afirmações por status
 
 | Status | Quantidade |
 | --- | --- |
-| VERIFICADO | 36 |
-| CONTESTADO | 5 |
-| PARCIALMENTE VERIFICADO | 26 |
-| NÃO VERIFICADO | 19 |
-| Total | 86 |
+| VERIFICADO | 59 |
+| CONTESTADO | 12 |
+| PARCIALMENTE VERIFICADO | 11 |
+| NÃO VERIFICADO | 17 |
+| Total | 99 |
 
-Fontes registradas: 80 (A: 15; B: 16; C: 7; D: 10; E: 32). Sete são
-`referencia-confirmada` (existência da obra confirmada, conteúdo não lido) e
-não sustentam nada sozinhas.
+Nesta rodada: 13 afirmações novas (C02-087 a C02-099: 8 VERIFICADO, 5
+CONTESTADO) e 17 promovidas de PARCIALMENTE VERIFICADO ou NÃO VERIFICADO
+(15 a VERIFICADO: C02-003, 004, 006, 025, 027, 028, 031, 040, 042, 044, 050,
+051, 062, 083, 084; 2 a CONTESTADO: C02-007, 015).
 
-Manuscrito: cerca de 2.850 palavras de texto de leitura (sem comentários e
-sem marcadores), contra o orçamento de 5.000. Uma afirmação VERIFICADA
-(C02-067, a Declaração de 14 de maio de 1948) ficou de fora de propósito:
-ver item 2.
+Fontes registradas: 128 (A: 37; B: 37; C: 9; D: 13; E: 32). Oito são
+`referencia-confirmada` e não sustentam nada sozinhas. As 48 novas são
+F02-081 a F02-128.
+
+70 registros VERIFICADO ou CONTESTADO estão no texto; o único fora é C02-067
+(Declaração de 14 de maio de 1948), que pertence à parte de 1948.
 
 ## 2. Problemas encontrados na releitura adversária
 
 Datas e números
 
-- **1922, porcentagem de judeus.** O relatório da UNSCOP dá 12,91% para 1922,
-  mas o total que ela usa (649.048) não é a soma dos componentes; 12,91% sai de
-  83.790 / 649.048. Com o total que soma (752.048), a parcela é 11,1%. O texto
-  usa "cerca de um em cada nove" e "cerca de nove em cada dez não eram judeus",
-  e não usa os 12,91%. Registrado em C02-055.
-- **Censo de 1931.** Duas séries (1.035.154 provisório e 1.033.314). O texto
-  usa a provisória e diz que é provisória.
-- **Beduínos em 1946.** Os 105 mil e 22 mil por área vêm da proposta da
-  UNSCOP, não da versão final da Resolução 181 (as fronteiras mudaram na
-  Assembleia). A primeira redação atribuía os números à resolução; corrigido
-  para "nas contas da comissão especial que a propôs".
-- **Muralhas de Solimão.** A Britannica dá 1538-1540; o ESTRUTURA.md, 1537-1541.
-  O texto não dá anos; a revisão unifica com o capítulo 3 a partir das
-  inscrições das portas (C02-044).
-- **586 ou 587 a.C.** O texto usa 586 com a fonte A (estudo de 2020); a
-  alternativa de 587 fica no registro.
-- **Samaria.** Ano exato (722, 721 ou 720 a.C.) não sustentado por fonte A a D;
-  o texto diz "fim do século VIII a.C." (C02-014, C02-015).
-- **Domo da Rocha.** Só "fim do século VII" (califado de Abd al-Malik); o ano
-  72 da Hégira (691-692) está só na Britannica (C02-033).
+- **Merneptah.** c. 1207 a.C. (Hasel, BASOR 1994). A frase "a mais antiga
+  menção conhecida a Israel" NÃO entrou: nenhum trecho de nível A a D a
+  sustentou nesta rodada, só a Britannica e a Wikipedia. O número JE 31408
+  também ficou fora; o ISAC cataloga a peça como Cairo 34025 (verso).
+- **Mesha.** O Louvre data a gravação de "pouco depois de 842 a.C." O ano da
+  descoberta (1868) e o nome de Omri não apareceram em fonte admitida e não
+  estão no texto.
+- **Samaria.** Agora "entre 722 e 720 a.C.", com o debate sobre quem a tomou
+  (Salmanasar V ou Sargão II). C02-014 (Met, Sargão) e C02-015 (Bible Odyssey
+  e Levant 2024) aparecem lado a lado.
+- **597 a.C.** A data de 16 de março vem da crônica babilônica lida na
+  tradução de Grayson e Glassner reproduzida em Livius.org. Conferir na
+  edição acadêmica (Grayson, 1975; Glassner, 2004).
+- **Muralhas de Solimão.** Unificado com o cap. 3 pela mesma fonte da IAA
+  (F02-105 = F03-003): início em 1537, três a quatro anos de obra. O cap. 2
+  não repete a conclusão em 1541, que o cap. 3 atribui a fontes E. A
+  Britannica (1538-1540) fica só no registro.
+- **Bar Kochba.** "Fim de 132 a fim de 135" (resenha de Horbury). O nome
+  Syria Palaestina veio truncado no trecho da Bible Odyssey ("Syria-Pala...").
+- **Primeira Aliá.** Duas datações oficiais diferentes (1882-1903 no gov.il;
+  1881-1904 no Arquivo Sionista Central); o texto dá as duas.
+- **Holocausto.** Seis milhões (USHMM) e a ressalva do Yad Vashem (sem número
+  exato; entre cinco e seis milhões).
 
 Atribuições e nomes
 
-- **Dever:** o trecho só deu o sobrenome; o texto usa "William Dever". Conferir.
-- **Luz (Mamluk Studies Review, 2002):** o resumo da busca deu "Moshe", não
-  confirmado; o texto não usa prenome. Título do artigo a conferir no PDF.
-- **Amitai e Ellenblum:** dois endereços da academia.edu e não foi possível
-  saber de qual veio cada trecho (F02-046). A frase do texto sobre a
-  "islamização acelerada" se apoia só no título do estudo de Ellenblum.
-- **Revolta de 1936 e Comissão Peel:** o resumo da busca misturou páginas da
-  ONU e da Britannica; a redação é a da ONU, mas a página exata de cada frase
-  precisa ser confirmada (C02-058, C02-059).
-- **Mazar (BAR, 2003):** revista de divulgação; classificado como C só por ser
-  texto do próprio Mazar, usado como testemunho da posição dele.
+- **Hasel:** só o sobrenome no texto (as referências dão "M. G. Hasel").
+- **Bible Odyssey** (Society of Biblical Literature) foi classificada como B,
+  como site de sociedade científica. Os artigos são assinados; os autores
+  não foram identificados nos trechos, salvo Rollston (Amarna).
+- **Capítulos da Cambridge University Press** (F02-098 a F02-104, F02-125):
+  autoria não aparece nos trechos; em C02-031 e C02-042 não foi possível saber
+  de qual dos dois capítulos vem cada frase.
+- **Finkelstein 1996:** a frase sobre os edifícios da dinastia de Omri pode
+  vir de texto posterior dele; conferir no artigo da Levant.
+- **Beska (Jerusalem Quarterly 74):** prenome e título a conferir.
+- **Friesel 2008:** o texto cita só o título ("mito"); o argumento não foi
+  lido.
+- **Morris:** C02-084 se apoia na descrição da editora, não no livro.
 
 Generalizações e frases que passavam do que a fonte diz (corrigidas)
 
-- Abertura: "quase sempre houve aqui pastores, comerciantes e peregrinos" virou
-  "em cada época que os documentos alcançam, já havia gente aqui, em cidades e
-  aldeias".
-- "Muralhas otomanas" e "sultão otomano": a fonte B (UNESCO) só diz "Solimão,
-  o Magnífico"; título e frase ajustados.
-- "Herodes e o deserto", "à beira do deserto", "um dos lugares mais
-  impressionantes do país": sem trecho; retirados.
-- "Ellenblum fala em islamização acelerada no estudo sobre o povoamento
-  franco": misturava duas obras; reescrito.
-- "Súdito e morador não são a mesma coisa": sugeria a causa da diferença do
-  censo de 1914, que o trecho não deu; retirado.
-- "Gravada em pedra para a parede de um rei": o trecho não fala do palácio;
-  retirado.
-- "É comum ouvir que o cilindro prova...": generalização sem fonte; reescrito
-  como hipótese ("quem ouvir...").
-- "A casa da moeda continuou trabalhando": inferência; agora "o que sugere".
+- "Hazael foi o autor" virou "é atribuída a Hazael [...] embora o nome dele
+  não esteja preservado".
+- "Hasel prova que Israel era um povo" nunca foi escrito: o texto diz "para
+  Hasel" e "é discutido".
+- "A revolta se espalhou" (66 d.C.) e "Tito" saíram: o trecho não sustentava.
+- "O Holocausto levou à Resolução 181" não foi escrito: o texto diz que o
+  peso é discutido e só afirma o que está documentado (Harrison, Comissão
+  Anglo-Americana, Brichá, envio à ONU).
+- O pacto de rendição atribuído ao califa Omar (638) ficou fora: a
+  autenticidade é discutida (Goitein contra Gil, só no resumo).
 
 Anacronismo
 
-- Nenhum "israelense" na Antiguidade. Usados: israelitas (não aparece no texto
-  final), judaítas, Judá, Israel (reino). "Palestina" só para a região em
-  período otomano e mandatário, como nas fontes.
+- Nenhum "israelense" na Antiguidade. "Judaítas" e "Judá" para o reino do sul,
+  "israelitas" só no registro. "Palestina" para a região a partir da
+  província romana e nos períodos otomano e mandatário, como nas fontes; no
+  Congresso de Basileia, com a observação do próprio Ministério das Relações
+  Exteriores de Israel de que era termo geográfico.
 
 Desequilíbrio de perspectivas
 
-- **O risco maior:** publicar a Declaração de 14 de maio de 1948 sem o
-  deslocamento palestino e sem os dois nomes da guerra. Por isso C02-067, que
-  está VERIFICADO, não entrou: a seção de 1948 entra inteira ou não entra.
-- A partir de 1939, falta o contexto da Shoá (C02-083), sem o qual a passagem
-  do Livro Branco para 1947 fica truncada.
-- A seção "Dois movimentos nacionais" (sionismo e nacionalismo palestino) não
-  existe nesta versão; o texto só mostra as demandas árabes de 1936 e a
-  Organização Sionista no Mandato e em 1947. Precisa de Rashid Khalidi e de
-  uma história do sionismo de nível A (C02-084).
-- Reações ao Livro Branco (C02-062) ficaram fora por só terem fonte E; com
-  elas, o parágrafo fica mais justo com os dois lados.
-- No debate da monarquia unida, o lado que defende um Estado no século X tem
-  três fontes A (Garfinkel, Dever, Faust) e o lado cético tem o livro de
-  Finkelstein (referência confirmada) e a descrição que Mazar faz dele. Isso
-  reflete o que a busca devolveu, não o peso real das posições na literatura:
-  a revisão deve ler Finkelstein no original (Levant 28, 1996, e The Forgotten
-  Kingdom, 2013) e equilibrar.
+- **Dois movimentos nacionais:** sionismo com Shapira, Morris, gov.il, NLI e
+  Ministério das Relações Exteriores; nacionalismo palestino com Khalidi
+  (via resenha de Massad), Muslih (via editor) e o estudo sobre o Filastin. O
+  lado palestino tem mais historiografia e menos fonte oficial, o que reflete
+  o tipo de fonte e não o peso do tema. A crítica de Smith a Morris entrou
+  para mostrar que as sínteses são disputadas; falta uma crítica equivalente
+  à historiografia palestina, de nível A.
+- **Monarquia unida:** o lado cético agora tem Finkelstein no original
+  (Levant 1996, The Forgotten Kingdom 2013) e a réplica de Mazar (Levant
+  1997). Continua faltando uma crítica publicada a Qeiyafa (Na'aman;
+  Finkelstein e Fantalkin).
+- **Livro Branco:** as reações dos dois lados estão no texto, com fontes
+  primárias de cada um.
+- **1948:** fora deste arquivo (ver seção 0).
 
 Contradições com outros capítulos
 
-- Capítulo 3: datas das muralhas (ver acima); a frase sobre a UNESCO (1981,
-  proposta pela Jordânia, em perigo desde 1982) deve ser idêntica nos dois.
-- Capítulo 4: Massada e a data do cerco romano (73 ou 74 d.C.) ficam com o
-  capítulo 4; aqui o tema está pendente.
+- Capítulo 3: muralhas, agora com a mesma fonte (IAA, 1537). Domo da Rocha:
+  o cap. 2 segue dizendo "fim do século VII" e o cap. 3 trata da inscrição de
+  691-692 (C03-019, CONTESTADO). Coerente.
+- Capítulo 4: Massada em 73 d.C. (UNESCO no cap. 4; Bible Odyssey, "segundo
+  Josefo, provavelmente", no cap. 2). Coerente.
+- 1187 e 1291: agora com fonte B e A (Met; Cambridge), coerente com os caps.
+  3 e 4. A auditoria cruzada (3.16 e a nota sobre 1187 no cap. 3) pode ser
+  dada por resolvida no que toca ao cap. 2.
 
 ## 3. Correções feitas
 
-Todas as do item 2 marcadas como "corrigidas", mais:
-
-- Retirado o termo "Cronologia Convencional Modificada" (Mazar) e "cronologia
-  baixa" (Finkelstein): só apareceram em fonte não admitida.
-- Retirados os anos de fim da revolta de 1936 (1939) e de início do Mandato em
-  San Remo (1920), sem fonte A a D.
-- Ano do anuário da ONU (F02-075) e prenomes dos coautores de Garfinkel
-  (F02-011), que tinham sido preenchidos sem aparecer no trecho, foram
-  retirados.
+- Linha do tempo reduzida a 20 marcos, todos VERIFICADO ou CONTESTADO.
+- Comentários PENDENTE resolvidos e retirados: Merneptah, Mesha, Tel Dan,
+  Abdi-Heba, Samaria, Roma (66-70, Bar Kochba, Pompeu), conquista islâmica
+  (Yarmuk, 638), Cruzadas, 1516, muralhas, Primeira Aliá, Herzl e Basileia,
+  "Dois movimentos nacionais", Livro Branco e Holocausto.
+- Os pendentes que sobraram foram reunidos: a lista de IDs ainda sem fonte A a
+  D está na seção 4; o roteiro de 1948 ficou num comentário curto no fim do
+  manuscrito.
+- Para caber no teto de palavras, saíram do texto (os registros continuam
+  VERIFICADO): os beduínos por área da partilha (C02-057 ainda sustenta a
+  estimativa de 1946), o detalhe por religião do censo de 1931, os
+  fragmentos e cópias da estela de Mesha guardados pelo Louvre (C02-005).
 
 ## 4. Fontes adicionais necessárias (próxima rodada e revisão humana)
 
-Ordem sugerida, da mais urgente para a menos:
+Sem fonte A a D e fora do texto: C02-019 (Templo e deportações de 597/586),
+C02-021 (retorno de 538 e Segundo Templo de 515), C02-024 (Alexandre,
+ptolomeus e selêucidas), C02-029 (Mishná), C02-030 e C02-086 (Bizâncio,
+Madaba), C02-033 (inscrição do Domo, ver cap. 3), C02-034 (Ramla), C02-035
+(1009), C02-041 (mamelucos), C02-045 (Ibrahim Paxá e a Jerusalém fora das
+muralhas), C02-047 (Jafa), C02-085 (Bronze, cidades cananeias).
 
-1. **1948:** UNRWA ("Palestine refugees"), UNCCP 1949 (estimativas de
-   refugiados), Benny Morris (Cambridge UP, 1987 e 2004), Ilan Pappé (2006),
-   Avi Shlaim (1988, 2000), Walid Khalidi (Plano Dalet; All That Remains,
-   1992), Efraim Karsh (1997) e Anita Shapira como críticos; acordos de
-   armistício de 1949 (ONU, Avalon); CBS para a imigração de judeus de países
-   árabes e muçulmanos. Estes títulos são pistas: precisam de trecho que os
-   sustente antes de qualquer frase.
-2. **1956-2005:** resoluções 242 e 338 do Conselho de Segurança; textos de
-   Camp David, Oslo e do tratado com a Jordânia (Avalon, ONU, gov.il); lei do
-   desengajamento de Gaza (Knesset).
-3. **Até outubro de 2026:** busca em modo "extended", fontes D (ONU, gov.il) e
-   E de mais de uma origem (Reuters, AP, BBC), datadas.
-4. **Estelas:** Merneptah (Museu Egípcio do Cairo, JE 31408), Tel Dan (Israel
-   Museum; Biran e Naveh, Israel Exploration Journal), conteúdo da estela de
-   Mesha no próprio registro do Louvre (F02-006, texto integral).
-5. **Helenismo e Roma:** fonte A ou B para 332 a.C., macabeus (167-164 a.C.),
-   hasmoneus, Pompeu (63 a.C.), 66-70 d.C., Bar Kochba, Aelia Capitolina e
-   Syria Palaestina (Eck, Journal of Roman Studies; Isaac), Mishná (UNESCO,
-   Bet Shearim).
-6. **Bizâncio e Islã:** Mapa de Madaba (Studium Biblicum Franciscanum),
-   conquista dos anos 630, Ramla (Israel Antiquities Authority), Domo da Rocha
-   (Grabar), 1009.
-7. **Cruzadas, mamelucos, otomanos:** 1099, Hattin, 1516, arquitetura mameluca
-   (Burgoyne).
-8. **Século XIX:** Jafa (artigo acadêmico achado sem autor, academia.edu
-   88518531), aliot (Knesset, gov.il), Herzl e Basileia (Arquivo Sionista
-   Central), bairros fora das muralhas (Ben-Arieh).
-9. **Textos integrais a abrir:** McCarthy (tabelas de 1914), JPS (tabela do
-   censo de 1922), relatório A/364 da UNSCOP, Luz (2002), JJAR v. 1.
+Textos integrais a abrir: Hasel (BASOR 296); Biran e Naveh (IEJ 43 e 45);
+registros do Louvre (AO 5066 e estampagem); Finkelstein (Levant 28) e Mazar
+(Levant 29); a crônica babilônica em Grayson; os capítulos da Cambridge
+citados em C02-031, C02-042 e C02-093; Khalidi (1997) e Muslih (1988) no
+livro, não só pela resenha e pela editora; Beska (JQ 74); Friesel (2008);
+a resposta do Alto Comitê Árabe (IPS) e a audiência da Agência Judaica
+(UNSCOP). Mais: McCarthy (tabelas de 1914), JPS (censo de 1922), A/364, Luz
+(2002), JJAR v. 1.
+
+Para o equilíbrio: uma crítica acadêmica a Qeiyafa; uma estimativa
+demográfica de 1914 além de McCarthy (Bachi, 1977); uma crítica de nível A à
+historiografia palestina.
 
 ## 5. Debates acadêmicos e como o texto os apresenta
 
-Ver `pesquisa/temas-controversos-cap02.md`. Resumo:
+Ver `pesquisa/temas-controversos-cap02.md`. Resumo desta rodada:
 
-- Monarquia unida: apresentado como debate aberto, com a formulação da
-  pergunta, os nomes (Garfinkel, Dever, Faust, Finkelstein, Mazar) e uma caixa
-  "História ou tradição?".
-- Cilindro de Ciro e o retorno: caixa "História ou tradição?"; o texto separa
-  o que o cilindro diz da interpretação.
-- Islamização da população: apresentado como pergunta aberta, com dois pontos
-  de apoio documentados (cristãos nas Cruzadas; maioria muçulmana no século
-  XVI).
-- População judaica em 1914: apresentada como discrepância entre o censo
-  otomano e a estimativa corrente.
-- Tel Dan, Syria Palaestina, 1948 e "novos historiadores", historiografia
-  palestina: registrados, **não apresentados** nesta versão.
+- Estela de Merneptah: o sentido de "Israel" (Hasel: grupo socioétnico
+  agrícola em Canaã) dito como leitura de um autor, num debate aberto.
+- Tel Dan: "casa de Davi" como leitura da maioria, com a menção de que houve
+  outras propostas e de que a inscrição fala da dinastia, não do próprio Davi.
+- Monarquia unida: Garfinkel, Dever e Faust de um lado; Finkelstein (1996,
+  2001, 2013) do outro; Mazar (1997, 2003) respondendo. "O debate segue
+  aberto".
+- Samaria: quem a tomou (Salmanasar V ou Sargão II).
+- Aelia Capitolina: causa ou consequência da revolta de Bar Kochba, com três
+  posições atribuídas.
+- 1099: escala e intenção da matança discutidas; o fato da matança em massa,
+  não.
+- Islamização: inalterado (pergunta aberta, dois pontos de apoio).
+- Dois movimentos nacionais: cada historiografia com nome; a crítica de Smith
+  a Morris como sinal de que as sínteses são disputadas.
+- Holocausto e criação de Israel: o USHMM e Friesel, sem tomar o lado de um.
+- Syria Palaestina: o texto só diz que o nome substituiu o da Judeia depois da
+  derrota; o motivo segue sem fonte A a D e não aparece.
 
 ## 6. Pendências editoriais
 
 - **Hebraico para aprovação do autor:** uma ocorrência, <he>יְהוּד</he>
-  (Yehúd), nome da província persa, na seção "Pérsia".
-- **Caixas do autor:** nenhuma caixa "O olhar de um israelense" neste capítulo.
-- **Figuras:** a `linha-do-tempo` é caixa de texto (24 marcos, todos com
-  registro VERIFICADO). Mapas históricos: nenhum, por falta de dado
-  confiável nesta rodada.
-- **Linha do tempo:** ficará com mais de 30 marcos quando os pendentes
-  entrarem; escolher então os 30 mais úteis.
-- **Prenomes e títulos a confirmar:** Dever (William), Luz, título do artigo
-  de Mazar (BAR 29:2), autoria dos artigos PMC7413505 e PMC10052650 e do
-  artigo da Belleten.
-- **Pistas bibliográficas dos registros NÃO VERIFICADO** foram escritas de
+  (Yehúd), na seção "Pérsia". Nenhum hebraico novo nesta rodada. "Shoá"
+  aparece transliterado, sem letras hebraicas.
+- **Caixas do autor:** nenhuma "O olhar de um israelense".
+- **Itálico:** *bytdwd* (sequência de letras da inscrição).
+- **Prenomes e títulos a confirmar:** Dever, Luz, Hasel, Beska, Rollston,
+  autores dos capítulos da Cambridge e do artigo da Levant de 2024, título do
+  artigo de Mazar (BAR 29:2), autoria dos artigos PMC7413505 e PMC10052650 e
+  do artigo da Belleten.
+- **Pistas bibliográficas** dos registros NÃO VERIFICADO foram escritas de
   memória como sugestão de onde procurar; nenhuma é citação e nenhuma vai ao
   texto sem trecho.

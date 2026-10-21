@@ -100,7 +100,7 @@ async function bloco(b, cap, ctx) {
       /* Antes de Cristo em dourado, depois em teal: a divisão do calendário
          é informação, não enfeite. */
       const ac = d => /a\.\s?C\./.test(d.replace(/<[^>]+>/g, ''));
-      return `<section class="ldt">${b.titulo ? `<div class="ldt-tit">${esc(b.titulo)}</div>` : ''}<ol>${b.itens.map(i => `<li class="${ac(i.data) ? 'ac' : 'dc'}"><span class="ldt-data">${i.data}</span><span class="ldt-ev">${i.evento}</span></li>`).join('')}</ol></section>`;
+      return `<section class="ldt${b.itens.length > 12 ? ' longa' : ''}">${b.titulo ? `<div class="ldt-tit">${esc(b.titulo)}</div>` : ''}<ol>${b.itens.map(i => `<li class="${ac(i.data) ? 'ac' : 'dc'}"><span class="ldt-data">${i.data}</span><span class="ldt-ev">${i.evento}</span></li>`).join('')}</ol></section>`;
     }
     default: return b.html ? `<p>${b.html}</p>` : '';
   }
@@ -136,7 +136,14 @@ async function capitulo(arq) {
     h += `<section class="perguntas" id="${cap.id}-perguntas"><div class="rubrica"><span class="he">?</span><span>${esc(cap.titulo)}</span></div><div class="cab">Perguntas e descobertas</div><div class="sub">Para testar o olhar antes da viagem, e para levar na estrada. As respostas vêm logo depois, com a explicação.</div>${perg}${obs}<div class="respostas"><span class="rot">Respostas</span>${resp.join('<br>')}</div></section>`;
   }
 
-  h += `<section class="notas" id="${cap.id}-notas"><h2>Fontes do capítulo ${cap.numero}</h2><ol>${notas.map((f, i) => `<li id="nota-${cap.id}-${i + 1}">${esc(f.abnt)}</li>`).join('')}</ol></section>`;
+  /* Nota curta (autor, título, ano e o site, com link); a referência ABNT
+     completa fica na bibliografia do livro e na web. */
+  const curta = f => {
+    const base = String(f.abnt || '').replace(/\s*Dispon[ií]vel em:[\s\S]*$/, '').replace(/\s*Acesso em:[\s\S]*$/, '').trim();
+    const dom = f.url ? f.url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0] : '';
+    return esc(base) + (dom ? ` <a href="${esc(f.url)}">${esc(dom)}</a>` : '');
+  };
+  h += `<section class="notas" id="${cap.id}-notas"><h2>Fontes do capítulo ${cap.numero}</h2><ol>${notas.map((f, i) => `<li id="nota-${cap.id}-${i + 1}">${curta(f)}</li>`).join('')}</ol></section>`;
   return { cap, html: h };
 }
 

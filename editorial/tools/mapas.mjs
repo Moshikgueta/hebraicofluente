@@ -313,11 +313,11 @@ function mapa1949() {
   const leg = (d.legenda || []).filter(l => ok(l.afirmacoes));
   if (leg.length < 2) return null;
   const P = projetor(RECORTE_PAIS, 430); const { p } = P;
-  const COR1949 = { israel: [COR.israel, COR.israelBorda], jordania: ['#E9DCC0', '#8A6520'], egito: ['#F1E2CF', '#8C5426'], siria: ['#E4E7DA', '#6B7444'] };
+  const COR1949 = { israel: [COR.israel, COR.israelBorda], jordania: ['#E9DCC0', '#1F8A7D'], egito: ['#F1E2CF', '#1F8A7D'], siria: ['#E4E7DA', '#6B7444'] };
   const AREA = { B91: 'israel', B78: 'israel', B79: 'israel', B99: 'israel', B54: 'jordania', B98: 'jordania', B53: 'egito', B16: 'siria', B58: 'siria' };
   let c = `<rect width="${P.largura}" height="${P.altura}" fill="${COR.mar}"/>`;
   for (const f of paises.features) if (!['ISR', 'PSX'].includes(f.properties.a3)) c += `<path d="${caminho(f.geometry, p)}" fill="${COR.vizinho}" stroke="${COR.borda}" stroke-width=".8"/>`;
-  for (const f of disputa.features) { const k = AREA[f.properties.a3]; if (!k) continue; const [fill, stroke] = COR1949[k]; c += `<path d="${caminho(f.geometry, p)}" fill="${fill}" stroke="${stroke}" stroke-width="${k === 'israel' ? 1.3 : 1}" stroke-linejoin="round"/>`; }
+  for (const f of disputa.features) { const k = AREA[f.properties.a3]; if (!k) continue; const [fill, stroke] = COR1949[k]; c += `<path d="${caminho(f.geometry, p)}" fill="${fill}" stroke="${stroke}" stroke-width="${k === 'israel' ? 1.3 : k === 'siria' ? 1 : 2.2}" stroke-linejoin="round"/>`; }
   for (const f of lagos.features) c += `<path d="${caminho(f.geometry, p)}" fill="${COR.lago}" stroke="#8FBFB5" stroke-width=".6"/>`;
   for (const r of (d.rotulos || []).filter(r => ok(r.afirmacoes))) c += rotulo(P, [r.lon, r.lat], r.texto, r.classe || 'reg', { rot: r.rot || 0 });
   let lg = `<g transform="translate(18 ${P.altura - 26 - leg.length * 19})"><rect x="-6" y="-14" width="250" height="${leg.length * 19 + 12}" rx="6" fill="#fff" fill-opacity=".94" stroke="${COR.borda}"/>`;

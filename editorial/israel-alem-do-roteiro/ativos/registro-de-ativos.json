@@ -103,6 +103,38 @@
       "limitacoes": "Esquema: o desenho não representa um trajeto real nem altitudes proporcionais."
     },
     {
+      "id": "mapa-1949",
+      "titulo": "A Linha Verde de 1949 e as áreas ocupadas em 1967",
+      "tipo": "mapa",
+      "arquivo": "ativos/mapas/mapa-1949.svg",
+      "gerador": "tools/mapas.mjs",
+      "fonte_dados": "Natural Earth 1:10m, versão 5.2.0-pre (admin_0_disputed_areas: a Linha Verde coincide com o limite da Cisjordânia e da Faixa de Gaza); legendas de ativos/dados/mapa-1949.json com as afirmações do capítulo 2",
+      "autor": "Natural Earth (dados); Hebraico Fluente (elaboração)",
+      "licenca": "Domínio público (Natural Earth, termos de uso)",
+      "url": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "data_consulta": "2026-10-21",
+      "atribuicao_exigida": false,
+      "credito_curto": "Dados: Natural Earth (domínio público), contornos atuais. Elaboração: Hebraico Fluente.",
+      "credito_longo": "Natural Earth 1:10m (domínio público). Os contornos são os atuais da camada de áreas disputadas; o mapa não reconstitui as linhas de 1949 trecho a trecho.",
+      "limitacoes": "Usa contornos atuais; pequenas diferenças em relação aos mapas originais dos armistícios não aparecem nesta escala."
+    },
+    {
+      "id": "regua-do-tempo",
+      "titulo": "Três mil anos numa régua",
+      "tipo": "ilustracao-documental",
+      "arquivo": "ativos/infograficos/regua-do-tempo.svg",
+      "gerador": "tools/infograficos.mjs",
+      "fonte_dados": "os marcos das linhas do tempo do capítulo 2, cada um com afirmação verificada",
+      "autor": "Hebraico Fluente (elaboração)",
+      "licenca": "Obra original da editora",
+      "url": null,
+      "data_consulta": "2026-10-21",
+      "atribuicao_exigida": false,
+      "credito_curto": "Ilustração do Hebraico Fluente com os marcos verificados do capítulo 2; a escala muda em 1800.",
+      "credito_longo": "Régua do tempo original: cada ponto é um marco da linha do tempo do capítulo 2 com fonte registrada. A escala é linear em dois trechos (até 1800 e depois), marcados no desenho.",
+      "limitacoes": "Escala em dois trechos; datas antigas aproximadas (século XIV a.C. desenhado em 1350 a.C.)."
+    },
+    {
       "id": "infografico-clima",
       "titulo": "Chuva e temperatura de norte a sul",
       "tipo": "infografico",

@@ -151,10 +151,10 @@ figure.par .grande { display: block; font-family: var(--f-display); font-style: 
 
 /* ── 4. Linha do tempo ───────────────────────────────────────────────── */
 .ldt { margin: 6mm 0; }
+.ldt.longa { break-before: page; margin-top: 0; }
 .ldt-tit { font-family: var(--f-rotulo); font-size: 6.4pt; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--navy); border-top: 1.4pt solid var(--navy); padding-top: 1.6mm; margin-bottom: 2mm; }
-.ldt ol { list-style: none; margin: 0; padding: 0; position: relative; }
-.ldt ol::before { content: ''; position: absolute; left: 25mm; top: 1mm; bottom: 1mm; width: .6pt; background: var(--pedra-escura); }
-.ldt li { display: grid; grid-template-columns: 22mm 1fr; column-gap: 6mm; padding: 1.3mm 0; position: relative; break-inside: avoid; }
+.ldt ol { list-style: none; margin: 0; padding: 0; }
+.ldt li { display: grid; grid-template-columns: 22mm 1fr; column-gap: 6mm; padding: 1.3mm 0; position: relative; break-inside: avoid; background: linear-gradient(var(--pedra-escura), var(--pedra-escura)) no-repeat 25mm 0 / .6pt 100%; }
 .ldt li::before { content: ''; position: absolute; left: calc(25mm - 1.1mm); top: 2.4mm; width: 2.2mm; height: 2.2mm; border-radius: 50%; background: var(--teal); }
 .ldt li.ac::before { background: var(--ouro); }
 .ldt-data { font-family: var(--f-dado); font-weight: 700; font-size: 8.6pt; line-height: 1.25; color: var(--neguev-tinta); text-align: right; font-variant-numeric: lining-nums; }
@@ -162,7 +162,8 @@ figure.par .grande { display: block; font-family: var(--f-display); font-style: 
 .ldt-ev { font-size: 8.6pt; line-height: 1.42; text-align: left; hyphens: manual; }
 
 /* Notas do capítulo, em duas colunas */
-.notas { break-before: page; columns: 2; column-gap: 5mm; font-family: var(--f-rotulo); font-size: 6.1pt; line-height: 1.42; color: var(--suave); }
+.notas { break-before: page; columns: 2; column-gap: 5mm; font-family: var(--f-rotulo); font-size: 5.9pt; line-height: 1.38; color: var(--suave); }
+.notas li a { color: var(--teal-tinta); }
 .notas h2 { column-span: all; font-family: var(--f-display); font-weight: 400; font-size: 16pt; color: var(--navy); margin: 0 0 4mm; }
 .notas h3 { font-size: 6.4pt; letter-spacing: .16em; text-transform: uppercase; color: var(--tinta); margin: 2.4mm 0 1mm; break-after: avoid; }
 .notas ol { margin: 0; padding-left: 4mm; } .notas li { margin-bottom: 1mm; overflow-wrap: anywhere; break-inside: avoid; }
