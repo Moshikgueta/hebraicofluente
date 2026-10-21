@@ -42,6 +42,19 @@ rodada.
 
 ## 3. Itens não pesquisados nesta rodada (todos `NÃO VERIFICADO`, revisar até 2027-04-21)
 
+> **Atualização da segunda rodada (21/10/2026, 21 buscas).** Desta lista, ficaram
+> VERIFICADO com fonte oficial: isenção de visto (C08-017, Decreto nº 3.549/2000),
+> prazo de 90 dias (C08-018), segurança no Ben Gurion (C08-025, 044, 045), seguro
+> (C08-028, 046), moeda (C08-029), trem e Shabat (C08-031), ônibus e Rav-Kav
+> (C08-032, 047), Shabat em Tel Aviv (C08-033, 052), sherut (C08-034), táxi
+> (C08-035, 048), tomadas (C08-037), Muro Ocidental (C08-038) e calor e água
+> (C08-041, 049 a 051). A validade do passaporte ficou CONTESTADO (C08-019). Seguem
+> NÃO VERIFICADO: cartão de entrada no lugar do carimbo (C08-026), bagagem
+> (C08-027), cartão e aproximação no comércio (C08-030), chip e eSIM (C08-036),
+> etiqueta (C08-039), comércio e elevador no Shabat (C08-040) e o telefone 104
+> (C08-043). Detalhes em `auditoria/cap08.md`. A tabela abaixo é a da primeira
+> rodada.
+
 | Item | Registro | Fonte oficial a consultar | Situação no texto |
 | --- | --- | --- | --- |
 | Validade mínima do passaporte | C08-019 | PIBA; Embaixada de Israel no Brasil | "confira" |

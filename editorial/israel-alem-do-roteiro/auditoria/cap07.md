@@ -1,67 +1,77 @@
 # Auditoria interna: capítulo 7, Hebraico para compreender Israel
 
-Data: 21/10/2026. Auditoria interna, feita por IA. Não é revisão acadêmica nem aprovação.
+Data: 21/10/2026 (segunda rodada). Auditoria interna, feita por IA. Não é revisão acadêmica nem aprovação.
 
-**Estado: rascunho parcial, não publicável.** A busca na web não pôde ser usada nesta execução: o limite de buscas da sessão, compartilhado entre os agentes, já estava esgotado antes da primeira consulta deste capítulo. Nenhuma fonte externa foi lida, e o protocolo (seção 1) não deixa afirmar o que não foi verificado. Por isso o capítulo saiu sem a abertura histórica, sem a seção de placas e sem nenhuma etimologia. O que foi feito é o trabalho que não depende da web: escolher e fixar as 41 palavras, a grafia, o nikud e a transliteração, conferidos contra os dados do curso e contra a regra de daguesh do curso.
+**Estado:** capítulo reescrito no padrão dos capítulos 1 e 2, com as duas seções que faltavam ("A língua que voltou a ser falada" e "Como ler uma placa trilíngue") escritas sobre fontes. Validador: 0 erros. PDF `saida/capitulo-07.pdf`: 18 páginas; `inspecionar.mjs --formato=capitulo-07`: nenhum transbordo, nenhuma página quase vazia; QR lidos de volta 2/2.
 
 ## 1. Afirmações (contagem por status)
 
-| Status | Quantas |
-| --- | --- |
-| VERIFICADO | 0 |
-| PARCIALMENTE VERIFICADO | 0 |
-| CONTESTADO | 0 |
-| NÃO VERIFICADO | 34 |
-| DESATUALIZADO | 0 |
+| Status | Quantas | IDs |
+| --- | --- | --- |
+| VERIFICADO | 17 | C07-001, 002, 003, 004, 007, 010, 012, 014, 024, 031, 035 a 041 |
+| CONTESTADO | 3 | C07-005 (Zuckermann e o "israeli"), C07-006 (data do Comitê da Língua), C07-011 (Q ou K para a letra qof) |
+| NÃO VERIFICADO | 21 | C07-008, 009, 013, 015 a 023, 025 a 030, 032 a 034 (fora do texto) |
+| Total | 41 | |
 
-As 34 são as afirmações que o capítulo pretende fazer (história da língua, placas, etimologias, um dado prático). Cada registro traz, em `limitacoes`, a pista de onde procurar. Os títulos de obras citados como pista vêm de memória e **não** foram confirmados; por isso não estão em `fontes/cap07.json`, que está vazio. O manuscrito não tem nenhum marcador `[[C07-...]]`.
+O texto também cita três registros de outros capítulos, todos VERIFICADO: C02-003 (Urusalim nas cartas de Amarna), C01-055 (o que é um makhtesh) e C05-013 (o "status especial" do árabe), além de C08-034 (sherut em Tel Aviv).
 
-Palavras no manuscrito: cerca de 1.500 (contando a marcação), contra as 2.600 previstas. A diferença são as duas seções pendentes e as etimologias.
+Fontes: 25 (`fontes/cap07.json`). Níveis: A 3 (Zuckermann; resenha no LDD; Glinert, só referência confirmada), B 12 (Academia da Língua Hebraica, ANU, UNESCO, Biblioteca Nacional de Israel, Universidade de Haifa para Katriel), C 2 (decisão HCJ 4112/99; Deuteronômio por concordância), D 4 (relatórios de Israel à ONU/UNGEGN, Ministério do Turismo), E 4 (Jewish Virtual Library, Mosaic, Encyclopaedia Judaica via Encyclopedia.com, Jerusalem Post). Nenhuma frase se apoia só em fonte E, menos o ulpan de 1949 (C07-007), fato datado com duas fontes E independentes, como o PROTOCOLO permite.
 
-## 2. Problemas encontrados
+Buscas usadas neste capítulo: 20 (de 41 da rodada, somando o capítulo 8).
 
-- **Lacunas por falta de pesquisa**: as seções "A língua que voltou a ser falada" e "Como ler uma placa trilíngue" existem só como título e comentário de pendência.
-- **Contextos de vocabulário que são fatos simples sem registro**. Ficaram porque são sentido de dicionário ou geografia elementar, mas o revisor deve confirmar cada um num dicionário ou fonte: o Machtésh Ramón fica no Neguev; Tel Meguido e Tel Dan são nomes de sítios; o Shuk Machané Yehudá fica em Jerusalém e o Shuk HaKármel em Tel Aviv; o parlamento se chama Knéset; a definição de mezuzá, kipá, kibúts, mosháv, sherút e ulpán. Se o critério do livro exigir registro também para isso, essas frases precisam de afirmação própria na próxima rodada.
-- **Juízos de uso que dependem do falante nativo**: chutspá "na maior parte das vezes uma crítica"; yálla "para encerrar uma conversa"; bevakashá como "aqui está" e "de nada"; ma nishmá "não pede relatório". São a percepção do autor que vale aqui.
-- **Etimologia popular evitada**: nenhuma das explicações correntes (Kinéret e a lira, o tsabár "espinhoso por fora, doce por dentro", a origem árabe de sabába) entrou no texto. Estão registradas como NÃO VERIFICADO.
-- **Contradição com outros capítulos**: não deu para conferir. Os capítulos 1, 5, 6 e 8 ainda não estão na pasta. Pontos de contato: Neguev e Machtésh Ramón (cap. 1), kibutz, moshav, dugri e a lei de 2018 (cap. 5), shuk e chesbón (cap. 6), sherut (cap. 8). A grafia e a transliteração destas palavras devem valer para o livro inteiro.
+## 2. O que foi pesquisado e o que ficou fora
 
-## 3. Correções feitas
+**Pesquisado e no texto:** Ben-Yehuda (datas, chegada, jornais, dicionário de 17 volumes e o intervalo 1908-1959 da Academia); o que a Academia diz sobre o hebraico deixar de ser falado no século V e seguir escrito; o Comitê da Língua (datas divergentes) e o papel do sindicato dos professores; o Mandato de 1922; a lei de 1953 e o episódio do nome "Academia"; o papel atual da Academia; o primeiro ulpan (1949); a comissão de nomes (sob o Gabinete do Primeiro-Ministro, início oficial em 1951 segundo os relatórios à ONU); a romanização e a troca anunciada de Q por K; Acre no dossiê da UNESCO; a decisão do Supremo de 2002 sobre o árabe nas placas; o nome Tel Aviv (Sokolow, votação, Achuzat Bayit); mezuzot em Dt 6:9; Katriel sobre o dúgri.
 
-- A coluna "sem nikud" da verificação começou como o hebraico sem os pontos. Foi trocada pela grafia plena, que é como as palavras aparecem sem nikud (<he>קיבוץ</he>, <he>כיפה</he>, <he>עלייה</he>, <he>בתיאבון</he>, <he>שירות</he>), e não por <he>קבוץ</he> ou <he>עליה</he>.
-- Mar Morto: construto <he>יַם</he> (patach), e não <he>יָם</he>, em <he>יַם הַמֶלַח</he>.
-- Removidos dos contextos: a história do nome Tel Aviv, a origem árabe, russa ou alemã de gírias, a comparação de chutspá com o inglês, a data do Dia da Independência e a circulação de sherut no Shabat. Tudo isso está nos registros, à espera de fonte.
-- Tirei da lista inicial <he>יָפוֹ</he> (a tônica é incerta e Jafa volta na seção de placas), <he>חֲרֵדִי</he> (pede contexto sociológico com fonte), <he>חָלוּץ</he>, <he>עֵין</he>, <he>מַכֹּלֶת</he> e <he>טִיוּל</he>, para ficar perto de 40.
+**Fora do texto, por falta de fonte de nível A a D na busca:**
+- Ordem das três escritas nas placas (C07-009). O texto diz só "muitas placas vêm em três escritas".
+- Origem da forma "Acre" (cruzados) e da forma "Jaffa" (C07-013); a forma "Caesarea/Qesarya" numa placa atual. O texto explica a variação pela regra do qof, que tem fonte, e não afirma qual grafia está em qual placa.
+- Ezequiel 3:15 como fonte do nome Tel Aviv: só a Jewish Virtual Library (E) o disse.
+- Todas as etimologias de palavras (Kinéret, Négev "sul", machtésh na geologia, tel em acádio, kibúts, aliyá, tsabár, dúgri, yálla, sabába, balagán, tsímer, chutspá, kótel, knésset, kipá/yarmulke): a única etimologia do texto é o sentido bíblico de mezuzot, que vem do próprio texto bíblico. Uma busca no site da Academia por "balagan" não trouxe nada.
+- Data do Dia da Independência no calendário hebraico (C07-022).
+- O debate Harshav sobre o peso da escola e da comunidade: a busca só confirmou a referência (Language in Time of Revolution, University of California Press, 1993), sem o conteúdo; não está em `fontes/`.
 
-## 4. Fontes adicionais necessárias (para a próxima rodada e para a revisão humana)
+## 3. Problemas encontrados e correções feitas
 
-Todas: ver `limitacoes` de cada registro em `afirmacoes/cap07.json`. As de maior peso:
+- **Contradição com o capítulo 1, corrigida.** A linha de <he>מַכְתֵשׁ</he> traduzia "cratera de erosão"; o capítulo 1 diz que o Machtésh Ramón "costuma ser chamado de cratera, mas não é". A tradução virou "vale de erosão" e a nota cita C01-055. O hebraico não mudou.
+- **Erro na tabela desta auditoria, corrigido:** a linha 26 trazia "chesbón"; o manuscrito sempre teve "cheshbón", que é o certo para <he>ש</he> com ponto à direita. Nenhuma mudança no hebraico.
+- **"Única língua morta revivida":** o texto não repete a frase como fato. Diz o que a Academia afirma (não falado desde o século V, mas escrito e usado na reza) e apresenta a tese de Zuckermann como debate, atribuída.
+- **Data do Comitê:** em vez de escolher 1890 ou 1889, o texto mostra as duas versões e diz quem dá cada uma (C07-006).
+- **Q ou K:** os dois relatórios de Israel à ONU dizem coisas diferentes; o texto apresenta as duas e tira só a lição prática (não estranhar duas grafias).
+- **Natsrat Illit:** é o nome usado na decisão de 2002. O nome atual da cidade não foi conferido e não aparece.
+- **Datas que pedem conferência:** a de 1905 (forma institucional do Comitê) veio do resumo da página inicial da Academia; a de 1922 para o Mandato veio de um resumo que não isolou a página. Ambas estão marcadas em `limitacoes`.
 
-- Academia da Língua Hebraica (hebrew-academy.org.il): história da instituição, regras de transliteração para o alfabeto latino, verbetes de neologismos.
-- Klein, *A Comprehensive Etymological Dictionary of the Hebrew Language for Readers of English* (1987), para kibúts, tsímer, balagán, mezuzá, kótel e Kinéret. Confirmar a edição.
-- Harshav (1993), Glinert (2017) e Zuckermann (2003; 2020), para a abertura.
-- Katriel (1986), para dúgri; Almog (2000), para tsabár.
-- Ministério dos Transportes e Comissão Governamental de Nomes (gov.il), para as placas.
+## 4. Fontes adicionais necessárias (revisão humana)
 
-## 5. Debates acadêmicos relevantes e como o texto os apresenta
+1. Academia da Língua Hebraica: abrir "Our History", "Hebrew through the Ages", a página da instituição (id 527) e a de Ben-Yehuda, e conferir as frases citadas em `evidencia`.
+2. Os documentos da UNGEGN (F07-016 a F07-018): conferir título, data e qual deles diz que a Academia decidiu não mudar a romanização.
+3. A decisão HCJ 4112/99 no texto hebraico oficial (a tradução é da Adalah, parte no processo).
+4. Zuckermann, Revivalistics (OUP, 2020) e uma resposta acadêmica nominal à tese, para que o quadro "Que língua é essa?" tenha os dois lados com autor.
+5. Glinert, The Story of Hebrew (Princeton, 2017), e Harshav (1993), para a abertura.
+6. Um dicionário etimológico (Klein, 1987, a confirmar) para decidir se alguma etimologia volta.
 
-Nenhum aparece no texto ainda. Os que a abertura terá de apresentar como debate: (a) "revivificação" ou "renascimento" do hebraico, e o que exatamente voltou a ser falado (Zuckermann contra autores que veem continuidade); (b) o peso de Ben-Yehuda contra o da escola e da comunidade (Harshav). Entre as etimologias, são debatidas ou incertas as de Yerushaláyim, Kinéret e sabába.
+## 5. Debates acadêmicos e como o texto os apresenta
+
+- **O que voltou a ser falado** (C07-005, CONTESTADO): Zuckermann (híbrido semítico-europeu, "israeli") contra o relato convencional, descrito pela resenha do LDD e seguido pela Academia. O texto diz que adota o nome "hebraico", como a Academia, e registra o debate.
+- **Origem do Comitê da Língua** (C07-006, CONTESTADO): 1890 (Jewish Virtual Library) ou formação em etapas desde 1889 (Academia).
+- **Romanização do qof** (C07-011, CONTESTADO): mudança para K anunciada e depois suspensa, conforme o relatório.
 
 ## 6. Pendências editoriais
 
-1. **Todo o hebraico do capítulo precisa da aprovação do autor.** São 41 itens e 20 trechos de apoio nos contextos (contando as letras <he>בּ</he> e <he>ב</he> da explicação do daguesh). 11 itens coincidem inteiros com o curso, 2 coincidem em parte (Yam HaMélach e Yom HaAtsmaút) e 28 são novos.
-2. **Convenção de daguesh.** O capítulo segue a regra do curso (`tools/daguesh.mjs`, decisão de 12/10/2026): o ponto só aparece em <he>בּ</he>, <he>כּ</he> e <he>פּ</he>. O protocolo do livro pede "grafia moderna padrão". O autor precisa decidir se o livro segue o curso (como está) ou o nikud tradicional completo; a forma tradicional de cada palavra que muda está na tabela abaixo.
-3. Tônicas a confirmar com o autor: <he>עַכּוֹ</he> (Áko), <he>דוּגְרִי</he> (dúgri) e <he>יַאלְלָה</he> (yálla, escrita com dois L porque o hebraico escreve duas letras <he>ל</he>).
-4. Grafia plena de <he>כִּנֶרֶת</he>: conferir se a forma das placas é <he>כנרת</he> ou <he>כינרת</he>.
-5. <he>בְּסֵדֶר</he> existe no curso, mas sem transliteração gravada (aparece no "Você sabia?" do Samech); "beséder" aplica o padrão.
-6. Refazer a pesquisa (40 a 80 buscas) e escrever as duas seções pendentes e as etimologias com fonte.
-7. Caixas `voce-sabia` e `olhar-israelense pendente`: nenhuma foi escrita. Há candidatas boas para quando houver fonte: dúgri (Katriel) e o nome Tel Aviv (Sokolow e Herzl).
+1. **Todo o hebraico do capítulo precisa da aprovação do dono.** As 41 palavras e os trechos de apoio da tabela abaixo não mudaram de grafia. Hebraico novo nesta rodada, todo de apoio e já presente na tabela ou no curso: as letras soltas <he>ק</he>, <he>ו</he> e <he>י</he> (na explicação da placa e da escrita sem vogais) e <he>עכו</he> (grafia de placa de Acre, já na coluna "sem nikud" da tabela). Os quizzes reusam <he>תֵל</he>, <he>נַחַל</he>, <he>עֵמֶק</he>, <he>שׁוּק</he>, <he>חֶשְׁבּוֹן</he>, <he>סַבְלָנוּת</he> e <he>בְּתֵאָבוֹן</he>, com a mesma grafia das listas.
+2. **Juízos de uso do falante nativo, para o dono confirmar** (sem fonte, ficam como estão): chutspá "na maior parte das vezes uma crítica"; yálla "para encerrar uma conversa"; bevakashá como "aqui está" e "de nada"; ma nishmá "não pede relatório"; beteavón "diz quem serve o prato"; kipá "uns o tempo todo, outros só na reza".
+3. **Sentidos de dicionário sem registro próprio** (kibúts, mosháv, mezuzá como estojo, kipá, kashér, sherút "serviço", tsimer, tsabár "figo-da-índia"): a busca não chegou a dicionário ou à Academia dentro do orçamento. Conferir num dicionário antes de publicar.
+4. **Convenção de daguesh, tônicas de Áko, dúgri e yálla, grafia plena de Kinéret:** pendências da rodada anterior, mantidas (ver tabela).
+5. **Fotos** (`ativos/dados/fotos-candidatas-cap07.json`, 4 candidatas, todas "confirmar"): Comitê da Língua em 1912 e Ben-Yehuda à mesa (c. 1912), domínio público em Israel, falta a etiqueta dos EUA; retrato do GPO (data da busca, 1933, deve ser a da reprodução); placa trilíngue de Jafa (2021, licença não vista; conferir a ordem das escritas na imagem antes da legenda). Três estão no texto; o retrato do GPO é reserva. Recusado: o selo de 1957 (URAA).
+6. **Links** (`ativos/dados/links-cap07.json`): Academia ("Hebrew through the Ages" e Ben-Yehuda) e UNESCO (Acre). Dois no texto; o de Ben-Yehuda é reserva.
+7. **Figura que faria falta:** um quadro "uma placa, três escritas" (desenho esquemático de placa com o mesmo nome em hebraico, árabe e letras latinas, setas de leitura da direita para a esquerda nas duas primeiras). Só com uma placa real fotografada como modelo, para não inventar grafia.
+8. Nenhuma caixa "O olhar de um israelense" (é do dono).
 
 ## Verificação linguística
 
 Critérios: hebraico com nikud na convenção do curso, conferido com `semDagueshInutil` de `tools/daguesh.mjs` (nenhuma forma do manuscrito muda ao passar pela regra) e em NFC; transliteração `pt-BR-practical-v1` (`data/translit.json`), com acento agudo na tônica de toda palavra de duas sílabas ou mais e sem acento nos monossílabos; <he>ג</he> antes de e/i escrito "gu", como na tabela do padrão (<he>גֶשֶׁם</he> = guéshem). "No curso?" quer dizer que a palavra, com a mesma grafia e transliteração, já está em `data/*.json`, conferida pela busca do esqueleto consonantal nos pares hebraico/transliteração de todos os arquivos.
 
-Formas de apoio que aparecem nos contextos (todas novas, menos <he>חָדָשׁ</he>, <he>תוֹדָה</he> e <he>בְּבַקָשָׁה</he>): <he>ירושלים</he>, <he>רחוב</he> (grafia de placa, sem nikud); <he>תֵל</he> e <he>אָבִיב</he> (as duas partes de Tel Avív); <he>מִדְבַּר יְהוּדָה</he> Midbár Yehudá; <he>מַכְתֵשׁ רָמוֹן</he> Machtésh Ramón; <he>עֵמֶק יִזְרְעֶאל</he> Émek Yizreél; <he>עוֹלֶה חָדָשׁ</he> olé chadásh; <he>קִבּוּצִים</he> kibutsím; <he>עַצְמָאוּת</he> atsmaút; <he>הַכֹּתֶל</he> HaKótel; <he>הַכֹּתֶל הַמַעֲרָבִי</he> HaKótel HaMaaraví; <he>כְּנֶסֶת</he> knésset; <he>כַּשְׁרוּת</he> kashrút; <he>שׁוּק מַחֲנֵה יְהוּדָה</he> Shuk Machané Yehudá; <he>שׁוּק הַכַּרְמֶל</he> Shuk HaKármel; <he>חֶשְׁבּוֹן בְּבַקָשָׁה</he> chesbón bevakashá; <he>תוֹדָה</he> todá.
+Formas de apoio que aparecem nos contextos (todas novas, menos <he>חָדָשׁ</he>, <he>תוֹדָה</he> e <he>בְּבַקָשָׁה</he>): <he>ירושלים</he>, <he>רחוב</he> (grafia de placa, sem nikud); <he>תֵל</he> e <he>אָבִיב</he> (as duas partes de Tel Avív); <he>מִדְבַּר יְהוּדָה</he> Midbár Yehudá; <he>מַכְתֵשׁ רָמוֹן</he> Machtésh Ramón; <he>עֵמֶק יִזְרְעֶאל</he> Émek Yizreél; <he>עוֹלֶה חָדָשׁ</he> olé chadásh; <he>קִבּוּצִים</he> kibutsím; <he>עַצְמָאוּת</he> atsmaút; <he>הַכֹּתֶל</he> HaKótel; <he>הַכֹּתֶל הַמַעֲרָבִי</he> HaKótel HaMaaraví; <he>כְּנֶסֶת</he> knésset; <he>כַּשְׁרוּת</he> kashrút; <he>שׁוּק מַחֲנֵה יְהוּדָה</he> Shuk Machané Yehudá; <he>שׁוּק הַכַּרְמֶל</he> Shuk HaKármel; <he>חֶשְׁבּוֹן בְּבַקָשָׁה</he> cheshbón bevakashá; <he>תוֹדָה</he> todá.
 
 | # | Grupo | Hebraico com nikud (convenção do curso) | Grafia plena, sem nikud | Forma com daguesh tradicional, se difere | Transliteração | Tônica | Regras do padrão aplicadas | No curso? |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -90,7 +100,7 @@ Formas de apoio que aparecem nos contextos (todas novas, menos <he>חָדָשׁ<
 | 23 | Tradições e religião | <he>כָּשֵׁר</he> | <he>כשר</he> | igual | kashér | sher (ka-SHÉR) | <he>כּ</he> = k; <he>שׁ</he> = sh | NOVA: precisa da aprovação do autor |
 | 24 | Comida e compras | <he>שׁוּק</he> | <he>שוק</he> | igual | shuk | monossílabo | monossílabo sem acento | coincide: data/audio.json (shuk) |
 | 25 | Comida e compras | <he>בְּתֵאָבוֹן</he> | <he>בתיאבון</he> | igual | beteavón | von (be-te-a-VÓN) | shva inicial pronunciado = e; <he>א</he> sem letra; <he>ב</he> sem daguesh = v | NOVA: precisa da aprovação do autor |
-| 26 | Comida e compras | <he>חֶשְׁבּוֹן</he> | <he>חשבון</he> | igual | chesbón | bon (ches-BÓN) | <he>ח</he> = ch; shva mudo some; <he>בּ</he> = b | NOVA: precisa da aprovação do autor |
+| 26 | Comida e compras | <he>חֶשְׁבּוֹן</he> | <he>חשבון</he> | igual | cheshbón | bon (chesh-BÓN) | <he>ח</he> = ch; <he>שׁ</he> = sh; shva mudo some; <he>בּ</he> = b | NOVA: precisa da aprovação do autor |
 | 27 | Cotidiano | <he>רְחוֹב</he> | <he>רחוב</he> | igual | rechóv | chov (re-CHÓV) | como no curso | coincide: data/letters.json (rechóv) |
 | 28 | Cotidiano | <he>שֵׁרוּת</he> | <he>שירות</he> | igual | sherút | rut (she-RÚT) | <he>שׁ</he> = sh; <he>וּ</he> = u | NOVA: precisa da aprovação do autor |
 | 29 | Cotidiano | <he>תַחֲנָה מֶרְכָּזִית</he> | <he>תחנה מרכזית</he> | <he>תַּחֲנָה מֶרְכָּזִית</he> | tachaná merkazít | ambas oxítonas (ta-cha-NÁ mer-ka-ZÍT) | <he>ח</he> = ch; <he>ה</he> final mudo; shva mudo some | NOVA: precisa da aprovação do autor |
