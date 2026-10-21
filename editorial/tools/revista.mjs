@@ -2,6 +2,12 @@
 /* PDF da edição redesenhada, a partir da base estruturada (tools/lib/conteudo.mjs).
 
    Uso: node tools/revista.mjs <livro> --capitulos=01-israel-no-mapa.md [--saida=piloto-cap01]
+        node tools/revista.mjs <livro> --livro [--saida=livro-revista]
+
+   --livro monta o livro inteiro na ordem de livro.json: capa, créditos, nota
+   metodológica, sumário com página, introdução, capítulos, glossário (das
+   faixas "Em hebraico" e de ativos/dados/glossario-*.json), bibliografia
+   (todas as fontes citadas, por nível), notas finais e créditos das figuras.
 
    Gera <livro>/saida/<saida>.pdf e <saida>.html, e um relatório dos QR codes
    (<saida>-qr.json): cada código é desenhado e LIDO DE VOLTA (jsQR) para
@@ -16,6 +22,7 @@ import path from 'node:path';
 import QRCode from 'qrcode';
 import jsQR from 'jsqr';
 import { PNG } from 'pngjs';
+import { marked } from 'marked';
 import { compilarCapitulo, registros, esc } from './lib/conteudo.mjs';
 
 const AQUI = path.dirname(new URL(import.meta.url).pathname);
@@ -25,10 +32,17 @@ const livro = args.find(a => !a.startsWith('--')) || 'israel-alem-do-roteiro';
 const opt = Object.fromEntries(args.filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
 const RAIZ = path.join(EDITORIAL, livro);
 const SAIDA = path.join(RAIZ, 'saida');
-const nome = opt.saida || 'piloto';
-const arquivos = String(opt.capitulos || '01-israel-no-mapa.md').split(',');
 const lerJSON = p => JSON.parse(fs.readFileSync(p, 'utf8'));
 const existe = p => fs.existsSync(p);
+const LIVRO = !!opt.livro;
+const meta = lerJSON(path.join(RAIZ, 'livro.json'));
+const nome = opt.saida || (LIVRO ? 'livro-revista' : 'piloto');
+const arquivos = LIVRO
+  ? meta.capitulos.map(c => c.arquivo).filter(a => existe(path.join(RAIZ, 'manuscrito', a)))
+  : String(opt.capitulos || '01-israel-no-mapa.md').split(',');
+/* A identificação da empresa vem de data/empresa.json, como no site. */
+const empresa = lerJSON(path.resolve(EDITORIAL, '../data/empresa.json'));
+const comEmpresa = t => String(t).replace(/\{razaoSocial\}/g, empresa.razaoSocial).replace(/\{cnpj\}/g, empresa.cnpj);
 
 const regs = registros(RAIZ);
 const ativos = existe(path.join(RAIZ, 'ativos/registro-de-ativos.json')) ? lerJSON(path.join(RAIZ, 'ativos/registro-de-ativos.json')).ativos : [];
@@ -96,6 +110,12 @@ async function bloco(b, cap, ctx) {
     }
     case 'observacao': return `<div class="observacao"><b>${b.titulo}</b>${b.texto}</div>`;
     case 'quiz': case 'vf': return ''; // vão para "Perguntas e descobertas"
+    case 'curiosidade': {
+      const corpo = (await Promise.all(b.blocos.map(x => bloco(x, cap, ctx)))).join('');
+      return `<article class="curio"><span class="curio-n">${b.n}</span><div><h3 class="curio-t">${b.titulo}</h3>${corpo}${b.remete ? `<div class="curio-r">${b.remete}</div>` : ''}</div></article>`;
+    }
+    case 'checklist': return `<section class="checklist">${b.titulo ? `<div class="ck-tit">${esc(b.titulo)}</div>` : ''}<ul>${b.itens.map(i => `<li>${i}</li>`).join('')}</ul></section>`;
+    case 'diario': return `<section class="diario"><div class="d-tit">${esc(b.titulo)}</div>${b.instrucao ? `<div class="d-inst">${b.instrucao}</div>` : ''}<div class="pauta">${'<i></i>'.repeat(b.linhas)}</div></section>`;
     case 'linha-do-tempo': {
       /* Antes de Cristo em dourado, depois em teal: a divisão do calendário
          é informação, não enfeite. */
@@ -143,19 +163,99 @@ async function capitulo(arq) {
     const dom = f.url ? f.url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0] : '';
     return esc(base) + (dom ? ` <a href="${esc(f.url)}">${esc(dom)}</a>` : '');
   };
-  h += `<section class="notas" id="${cap.id}-notas"><h2>Fontes do capítulo ${cap.numero}</h2><ol>${notas.map((f, i) => `<li id="nota-${cap.id}-${i + 1}">${curta(f)}</li>`).join('')}</ol></section>`;
-  return { cap, html: h };
+  if (notas.length) h += `<section class="notas" id="${cap.id}-notas"><h2>Fontes do capítulo ${cap.numero}</h2><ol>${notas.map((f, i) => `<li id="nota-${cap.id}-${i + 1}">${curta(f)}</li>`).join('')}</ol></section>`;
+  return { cap, html: h, notas };
+}
+
+/* ── partes do livro inteiro (só com --livro) ───────────────────────── */
+async function secaoLivro(arq, id) {
+  const cap = compilarCapitulo(RAIZ, arq, regs);
+  const ctx = { fig: 0 }; const notas = [];
+  let corpo = '';
+  for (const s of cap.secoes) {
+    for (const f of s.fontes) if (!notas.some(n => n.id === f.id)) notas.push(f);
+    corpo += (s.titulo ? `<h2>${s.titulo}</h2>` : '') + (await Promise.all(s.blocos.map(b => bloco(b, cap, ctx)))).join('\n');
+  }
+  const fontes = notas.length ? `<div class="fontes-secao">Fontes: ${notas.map(f => esc(String(f.abnt || '').replace(/\s*Dispon[ií]vel em:[\s\S]*$/, ''))).join(' · ')}</div>` : '';
+  return { id, titulo: cap.titulo, notas, html: `<section class="secao-livro" id="${id}"><h1 data-cap="${esc(cap.titulo)}">${esc(cap.titulo)}</h1>${corpo}${fontes}</section>` };
+}
+
+function capa() {
+  const arte = fs.readFileSync(path.join(EDITORIAL, 'templates/capa-arte.svg'), 'utf8');
+  return `<section class="capa-r"><div class="arte">${arte}</div><div class="topo"><span>${esc(meta.colecao)}</span><span>${esc(meta.categoria)}</span></div><div class="titulo"><span class="he" lang="he">${esc(meta.titulo_he || '')}</span><h1 data-cap="">${esc(meta.titulo).replace(' Além', '<br>Além')}</h1><div class="sub">${esc(meta.subtitulo)}</div></div><div class="marca">Hebraico Fluente<span>${esc(meta.edicao)}</span></div></section>`;
+}
+
+function creditos() {
+  const c = meta.creditos; const md = t => marked.parseInline(comEmpresa(t), { async: false });
+  return `<section class="creditos-r" id="creditos"><p><strong>${esc(meta.titulo)}</strong><br>${esc(meta.subtitulo)}</p>${c.linhas.map(l => `<p>${md(l)}</p>`).join('')}<p>${md(c.direitos)}</p><p>${md(c.atualizacao)}</p><p>${md(c.fontes_tipograficas)}</p></section>`;
+}
+
+function sumario(itens) {
+  return `<section class="sumario-r" id="sumario"><h1 data-cap="Sumário">Sumário</h1><ol>${itens.map(it => `<li class="${it.n ? 'cap' : ''}"><a href="#${it.id}"><span class="n">${it.n ?? ''}</span><span class="t">${esc(it.titulo)}${it.sub ? `<small>${esc(it.sub)}</small>` : ''}</span><span class="pg"></span></a></li>`).join('')}</ol></section>`;
+}
+
+/* Glossário: as palavras das faixas "Em hebraico" de todos os capítulos,
+   mais os glossários de dados; uma entrada por transliteração. */
+function glossario(caps) {
+  const itens = caps.flatMap(c => c.cap.vocabulario.map(v => ({ he: v.he, translit: v.translit, pt: v.pt, cap: c.cap.numero })));
+  for (const f of fs.readdirSync(path.join(RAIZ, 'ativos/dados')).filter(f => /^glossario.*\.json$/.test(f))) itens.push(...lerJSON(path.join(RAIZ, 'ativos/dados', f)));
+  const vistos = new Set();
+  const lista = itens.filter(x => { const k = String(x.translit || '').toLowerCase(); if (!k || vistos.has(k)) return false; vistos.add(k); return true; })
+    .sort((a, b) => String(a.translit).localeCompare(String(b.translit), 'pt'));
+  if (!lista.length) return '';
+  return `<section class="secao-livro glossario-r" id="glossario"><h1 data-cap="Glossário">Glossário</h1><p class="intro">As palavras em hebraico que aparecem no livro, em ordem alfabética da transliteração. A sílaba com acento é a tônica.</p><dl>${lista.map(x => `<div><dt>${esc(x.translit)} <span class="he" lang="he" dir="rtl">${esc(x.he)}</span></dt><dd>${esc(x.pt || '')}${x.definicao_curta && x.definicao_curta !== x.pt ? `. ${esc(x.definicao_curta)}` : ''}${x.cap ? ` <span class="cap">cap. ${x.cap}</span>` : ''}</dd></div>`).join('')}</dl></section>`;
+}
+
+function bibliografia(listas) {
+  const mapa = new Map();
+  for (const l of listas) for (const f of l) mapa.set(f.id, regs.fontes.get(f.id) || f);
+  const lista = [...mapa.values()];
+  const grupo = { A: 'Estudos acadêmicos', B: 'Instituições científicas e culturais', C: 'Fontes primárias', D: 'Fontes oficiais', E: 'Fontes complementares' };
+  let h = `<section class="secao-livro bibliografia-r" id="bibliografia"><h1 data-cap="Bibliografia">Bibliografia</h1><p class="intro">Todas as obras e páginas que sustentam afirmações do livro, agrupadas pelo tipo de fonte e em ordem alfabética, no padrão da ABNT. As datas de acesso são as da consulta.</p>`;
+  for (const [nivel, nomeG] of Object.entries(grupo)) {
+    const vistos = new Set();
+    const g = lista.filter(f => f.nivel === nivel).filter(f => { const k = f.abnt; if (vistos.has(k)) return false; vistos.add(k); return true; }).sort((a, b) => String(a.abnt).localeCompare(String(b.abnt), 'pt'));
+    if (g.length) h += `<h3>${nomeG}</h3><ol>${g.map(f => `<li>${esc(f.abnt)}</li>`).join('')}</ol>`;
+  }
+  return h + '</section>';
+}
+
+function creditosFiguras(usadas) {
+  const lista = ativos.filter(a => usadas.has(a.id));
+  if (!lista.length) return '';
+  return `<section class="secao-livro creditos-fig" id="creditos-imagens"><h1 data-cap="Créditos">Mapas, infográficos e créditos</h1><dl>${lista.map(a => `<div><dt>${esc(a.titulo)}</dt><dd>${esc(a.credito_longo || a.credito_curto || '')}</dd></div>`).join('')}</dl></section>`;
 }
 
 const tokens = fs.readFileSync(path.join(EDITORIAL, 'templates/tokens-editorial.css'), 'utf8');
 const css = fs.readFileSync(path.join(EDITORIAL, 'templates/revista.css'), 'utf8').replace(/url\('([^']+)'\)/g, (_, u) => `url('file://${path.resolve(EDITORIAL, 'templates', u)}')`);
 const caps = []; for (const a of arquivos) caps.push(await capitulo(a));
+let corpoHtml = caps.map(c => c.html).join('\n');
+if (LIVRO) {
+  const pre = []; for (const p of meta.pre || []) if (existe(path.join(RAIZ, 'manuscrito', p.arquivo))) pre.push(await secaoLivro(p.arquivo, p.id));
+  const pos = []; for (const p of meta.pos || []) if (existe(path.join(RAIZ, 'manuscrito', p.arquivo))) pos.push(await secaoLivro(p.arquivo, p.id));
+  const usadas = new Set(caps.flatMap(c => [c.cap.abertura.imagem, ...c.cap.secoes.flatMap(s => s.blocos.filter(b => ['figura', 'visual'].includes(b.tipo)).map(b => b.id))]).filter(Boolean));
+  const gl = glossario(caps);
+  const nota = pre.find(p => p.id === 'nota-metodologica');
+  const outrosPre = pre.filter(p => p !== nota);
+  const cf = creditosFiguras(usadas);
+  const itens = [
+    ...outrosPre.map(p => ({ id: p.id, titulo: p.titulo })),
+    ...caps.map(c => ({ id: c.cap.id, n: String(c.cap.numero).padStart(2, '0'), titulo: c.cap.titulo, sub: c.cap.subtitulo })),
+    ...(gl ? [{ id: 'glossario', titulo: 'Glossário' }] : []),
+    { id: 'bibliografia', titulo: 'Bibliografia' },
+    ...pos.map(p => ({ id: p.id, titulo: p.titulo })),
+    ...(cf ? [{ id: 'creditos-imagens', titulo: 'Mapas, infográficos e créditos' }] : []),
+  ];
+  corpoHtml = [capa(), creditos(), nota?.html || '', sumario(itens), ...outrosPre.map(p => p.html), corpoHtml, gl, bibliografia([...pre, ...caps, ...pos].map(x => x.notas)), ...pos.map(p => p.html), cf].join('\n');
+}
 const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Israel Além do Roteiro</title><style>${tokens}\n${css}</style>
 <script>window.PagedConfig = { auto: true, after: () => {
   const pgs = [...document.querySelectorAll('.pagedjs_page')]; let cap = '';
   pgs.forEach((pg, i) => { pg.style.setProperty('--pg', '"' + (i + 1) + '"'); const t = pg.querySelector('[data-cap]'); if (t) cap = t.getAttribute('data-cap'); pg.style.setProperty('--cap', JSON.stringify(cap)); });
+  /* Sumário: o número da página sai do elemento de destino, depois da paginação. */
+  document.querySelectorAll('.sumario-r a[href^="#"]').forEach(a => { const alvo = document.getElementById(a.getAttribute('href').slice(1)); const pg = alvo && alvo.closest('.pagedjs_page'); if (pg) a.querySelector('.pg').textContent = String(pgs.indexOf(pg) + 1); });
   window.__pronto = true; } };</script>
-<script src="../../node_modules/pagedjs/dist/paged.polyfill.js"></script></head><body>${caps.map(c => c.html).join('\n')}</body></html>`;
+<script src="../../node_modules/pagedjs/dist/paged.polyfill.js"></script></head><body>${corpoHtml}<div id="fim-paginacao"></div></body></html>`;
 fs.mkdirSync(SAIDA, { recursive: true });
 const arqHtml = path.join(SAIDA, `${nome}.html`);
 fs.writeFileSync(arqHtml, html);
@@ -167,7 +267,7 @@ const p = await b.newPage(); const erros = [];
 p.on('console', m => { if (m.type() === 'error') erros.push(m.text()); }); p.on('pageerror', e => erros.push(String(e)));
 await p.goto('file://' + arqHtml); await p.waitForFunction(() => window.__pronto === true, null, { timeout: 300000 });
 const paginas = await p.evaluate(() => document.querySelectorAll('.pagedjs_page').length);
-const fim = await p.evaluate(() => !!document.querySelector('.pagedjs_page .notas'));
+const fim = await p.evaluate(() => !!document.querySelector('.pagedjs_page #fim-paginacao'));
 if (!fim || erros.some(e => /Layout repeated/.test(e))) { await b.close(); console.error('paginação truncada', erros); process.exit(1); }
 const arqPdf = path.join(SAIDA, `${nome}.pdf`);
 await p.pdf({ path: arqPdf, preferCSSPageSize: true, printBackground: true, outline: true, tagged: true });

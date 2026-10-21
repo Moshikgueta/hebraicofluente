@@ -101,6 +101,12 @@
       case 'vf': return vf(b);
       case 'observacao': return desafio(b);
       case 'checklist': return checklist(b);
+      case 'curiosidade': {
+        var c = el('article', { class: 'curio' }, '<span class="curio-n">' + b.n + '</span><div><h3 class="curio-t">' + b.titulo + '</h3></div>');
+        var dv = c.querySelector('div'); b.blocos.forEach(function (x) { dv.appendChild(bloco(x, cap)); });
+        if (b.remete) dv.appendChild(el('p', { class: 'curio-r' }, b.remete));
+        return c;
+      }
       case 'linha-do-tempo': return linhaDoTempo(b);
       default: return el('div', null, b.html || '');
     }
@@ -154,7 +160,7 @@
   function checklist(b) {
     var s = estado(); var box = el('section', { class: 'atividade desafio' }, '<span class="rot">Checklist</span><div class="q">' + esc(b.titulo || '') + '</div>');
     b.itens.forEach(function (t, k) {
-      var id = 'ck-' + k; var lab = el('label', null, '<input type="checkbox"> ' + t); var inp = lab.querySelector('input'); inp.checked = !!s.check[id];
+      var id = 'ck-' + String(b.titulo || '').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + k; var lab = el('label', null, '<input type="checkbox"> ' + t); var inp = lab.querySelector('input'); inp.checked = !!s.check[id];
       inp.addEventListener('change', function () { guardar(function (s) { s.check = s.check || {}; s.check[id] = inp.checked; }); });
       box.appendChild(lab);
     });
@@ -168,13 +174,16 @@
     main.innerHTML = '';
     var h = el('section', { class: 'heroi' }, '<div class="arte">' + arte(c1.abertura.imagem) + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Hebraico Fluente</span><span class="he" lang="he">ישראל</span></div><h1>' + esc(D.titulo) + '</h1><p>' + esc(D.subtitulo) + '.</p></div>');
     main.appendChild(h);
-    main.appendChild(el('p', { class: 'aviso-prototipo' }, 'Protótipo para aprovação: só o capítulo 1 está aqui. O progresso e o diário ficam guardados neste aparelho.'));
+    var prontos = D.indice.filter(function (c) { return c.disponivel && !c.especial; }).length;
+    main.appendChild(el('p', { class: 'aviso-prototipo' }, 'Protótipo para aprovação: ' + (prontos === 1 ? 'só o capítulo 1 está aqui' : prontos + ' capítulos estão aqui') + '. O progresso e o diário ficam guardados neste aparelho.'));
     if (s.ultima) { var u = porId(s.ultima.cap); if (u) main.appendChild(el('p', null, '<a class="botao" href="#' + u.id + '" data-secao="' + s.ultima.secao + '">Continuar de onde parou</a>')); }
     else main.appendChild(el('p', null, '<a class="botao" href="#' + c1.id + '">Começar pelo capítulo 1</a>'));
     var lista = el('ol', { class: 'capitulos', 'aria-label': 'Capítulos' });
     D.indice.forEach(function (c) {
       var li = el('li');
-      li.innerHTML = c.disponivel
+      li.innerHTML = c.especial
+        ? '<a href="#' + c.id + '"><span class="n">' + String(c.n).padStart(2, '0') + '</span><span class="t">' + esc(c.titulo) + '<small>Para escrever</small></span><span></span></a>'
+        : c.disponivel
         ? '<a href="#' + c.id + '"><span class="n">' + String(c.n).padStart(2, '0') + '</span><span class="t">' + esc(c.titulo) + '</span><span class="pct">' + pct(porId(c.id)) + '%</span></a>'
         : '<div class="off"><span class="n">' + String(c.n).padStart(2, '0') + '</span><span class="t">' + esc(c.titulo || 'Capítulo ' + c.n) + '<small>Em produção</small></span><span></span></div>';
       lista.appendChild(li);
@@ -236,11 +245,11 @@
 
   function diario() {
     var s = estado();
-    main.innerHTML = '<h1 class="pagina">Diário de descobertas</h1><p>Escreva antes, durante e depois da viagem. O texto fica guardado neste aparelho; use "Baixar meu diário" para levar uma cópia.</p>';
+    main.innerHTML = '<h1 class="pagina">Diário de descobertas</h1><p>Escreva antes, durante e depois da viagem. O texto fica guardado neste aparelho; use "Copiar meu diário" para levar uma cópia.</p>';
     var blocos = D.diario ? D.diario.secoes.reduce(function (a, x) { return a.concat(x.blocos); }, []) : [];
     blocos.filter(function (b) { return b.tipo === 'diario'; }).forEach(function (b, k) {
       var id = 'd' + k; var sec = el('section', { class: 'secao' });
-      sec.innerHTML = '<div class="rubrica"><span>Diário</span></div><h2>' + esc(b.titulo) + '</h2>' + (b.instrucao ? '<p>' + b.instrucao + '</p>' : '');
+      sec.innerHTML = '<div class="rubrica"><span>Diário</span></div><h2>' + esc(b.titulo) + '</h2>' + (b.instrucao ? '<div class="instrucao">' + b.instrucao + '</div>' : '');
       var ta = el('textarea', { 'aria-label': b.titulo }); ta.value = s.diario[id] || '';
       ta.addEventListener('input', function () { guardar(function (st) { st.diario = st.diario || {}; st.diario[id] = ta.value; }); });
       sec.appendChild(ta); main.appendChild(sec);

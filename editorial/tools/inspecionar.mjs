@@ -5,7 +5,8 @@
    vazia, hebraico desalinhado e figura estourada sem abrir o PDF.
 
    Uso:
-     node tools/inspecionar.mjs <livro> [--formato=digital|a4] [--por=24] [--paginas=1,5,9]
+     node tools/inspecionar.mjs <livro> [--formato=digital|a4|capitulo-03|livro-revista] [--por=24] [--paginas=1,5,9]
+   --formato aceita também o nome de uma saída do revista.mjs (saida/<nome>.html).
    Saída: <livro>/saida/inspecao/ */
 
 import fs from 'node:fs';
@@ -19,7 +20,7 @@ const opt = Object.fromEntries(args.filter(a => a.startsWith('--')).map(a => { c
 const formato = opt.formato || 'digital';
 const POR = Number(opt.por || 24);
 const RAIZ = path.resolve(AQUI, '..', livro);
-const html = path.join(RAIZ, 'saida', `livro-${formato}.html`);
+const html = [`livro-${formato}.html`, `${formato}.html`].map(n => path.join(RAIZ, 'saida', n)).find(f => fs.existsSync(f)) || path.join(RAIZ, 'saida', `livro-${formato}.html`);
 const dest = path.join(RAIZ, 'saida', 'inspecao');
 fs.mkdirSync(dest, { recursive: true });
 

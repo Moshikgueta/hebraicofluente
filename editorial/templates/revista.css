@@ -49,8 +49,8 @@ em { font-style: italic; }
 .rubrica .he { font-size: 13pt; color: var(--ouro); letter-spacing: 0; font-weight: 600; }
 .secao > h2 { font-family: var(--f-display); font-weight: 420; font-size: 19pt; line-height: 1.08; letter-spacing: -.01em; color: var(--navy); margin: 0 0 4mm; text-wrap: balance; hyphens: none; break-after: avoid; }
 .secao h3 { font-family: var(--f-rotulo); font-weight: 600; font-size: 8.4pt; letter-spacing: .02em; color: var(--tinta); margin: 4mm 0 1.2mm; break-after: avoid; }
-.entrada p:first-child { font-size: 12pt; line-height: 1.42; text-align: left; color: var(--tinta); }
-.entrada p:first-child::first-letter { font-family: var(--f-display); font-weight: 400; float: left; font-size: 46pt; line-height: .84; margin: 1.2mm 2mm 0 0; color: var(--navy); }
+.entrada > p:first-child { font-size: 12pt; line-height: 1.42; text-align: left; color: var(--tinta); }
+.entrada > p:first-child::first-letter { font-family: var(--f-display); font-weight: 400; float: left; font-size: 46pt; line-height: .84; margin: 1.2mm 2mm 0 0; color: var(--navy); }
 .lista { margin: 0 0 .6em; padding-left: 4mm; } .lista li { margin-bottom: .2em; }
 blockquote.citacao { margin: 5mm 0; padding: 0; font-family: var(--f-display); font-style: italic; font-weight: 360; font-size: 15pt; line-height: 1.25; color: var(--navy); border: 0; text-wrap: balance; }
 
@@ -176,3 +176,62 @@ figure.par .grande { display: block; font-family: var(--f-display); font-style: 
 .pagedjs_page .pagedjs_margin-bottom-center > .pagedjs_margin-content::after { content: var(--pg) !important; }
 .pagedjs_page .pagedjs_margin-top-right > .pagedjs_margin-content::after { content: var(--cap) !important; font-family: 'Instrument Sans', sans-serif; font-size: 5.8pt; color: #7A847F; }
 .pagedjs_page.pagedjs_sangria_page .pagedjs_margin-content::after { content: none !important; }
+
+/* ── Livro inteiro: capa, créditos, sumário, partes de referência ────── */
+.capa-r { page: sangria; position: relative; width: 148mm; height: 210mm; background: var(--navy); color: #fff; overflow: hidden; break-after: page; }
+.capa-r .arte { position: absolute; left: 0; right: 0; bottom: 0; height: 58%; }
+.capa-r .arte svg { width: 100%; height: 100%; display: block; }
+.capa-r .topo { position: absolute; left: 13mm; right: 13mm; top: 12mm; display: flex; justify-content: space-between; font-family: var(--f-rotulo); font-size: 6.4pt; letter-spacing: .24em; text-transform: uppercase; color: var(--teal-lite); font-weight: 600; }
+.capa-r .titulo { position: absolute; left: 13mm; right: 13mm; top: 34mm; }
+.capa-r .titulo .he { font-size: 30pt; color: var(--ouro); display: block; margin-bottom: 3mm; }
+.capa-r h1 { font-family: var(--f-display); font-weight: 360; font-size: 46pt; line-height: .95; letter-spacing: -.02em; margin: 0 0 5mm; color: #fff; }
+.capa-r .sub { font-family: var(--f-corpo); font-style: italic; font-size: 11.5pt; line-height: 1.38; color: var(--areia-clara); max-width: 100mm; }
+.capa-r .marca { position: absolute; left: 13mm; bottom: 10mm; font-family: var(--f-rotulo); font-weight: 600; font-size: 8pt; letter-spacing: .14em; text-transform: uppercase; color: #fff; display: flex; flex-direction: column; gap: 1mm; }
+.capa-r .marca span { font-weight: 400; font-size: 6.4pt; color: var(--areia-clara); letter-spacing: .1em; }
+
+.creditos-r { break-after: page; padding-top: 70mm; font-family: var(--f-rotulo); font-size: 7.2pt; line-height: 1.5; color: var(--suave); }
+.creditos-r p { text-align: left; margin-bottom: 2.4mm; }
+.creditos-r strong { color: var(--tinta); }
+
+.sumario-r { break-before: page; break-after: page; }
+.sumario-r h1, .secao-livro > h1 { font-family: var(--f-display); font-weight: 400; font-size: 26pt; line-height: 1.02; color: var(--navy); margin: 0 0 7mm; letter-spacing: -.01em; }
+.sumario-r ol { list-style: none; margin: 0; padding: 0; }
+.sumario-r li a { display: grid; grid-template-columns: 9mm 1fr auto; gap: 2mm; align-items: baseline; padding: 1.6mm 0; border-bottom: .4pt solid var(--linha); }
+.sumario-r .n { font-family: var(--f-dado); font-weight: 700; font-size: 10pt; color: var(--neguev-tinta); }
+.sumario-r .t { font-family: var(--f-display); font-size: 11pt; color: var(--tinta); line-height: 1.2; }
+.sumario-r li:not(.cap) .t { font-size: 9.4pt; color: var(--corpo); }
+.sumario-r .t small { display: block; font-family: var(--f-corpo); font-style: italic; font-size: 7.6pt; color: var(--suave); margin-top: .4mm; }
+.sumario-r .pg { font-family: var(--f-rotulo); font-size: 8pt; color: var(--suave); font-variant-numeric: lining-nums tabular-nums; }
+
+.secao-livro { break-before: page; }
+.secao-livro > h2 { font-family: var(--f-display); font-weight: 420; font-size: 15pt; color: var(--navy); margin: 6mm 0 3mm; break-after: avoid; }
+.secao-livro .intro { font-style: italic; color: var(--suave); text-align: left; }
+.glossario-r dl, .creditos-fig dl { margin: 0; columns: 2; column-gap: 6mm; font-size: 8pt; line-height: 1.4; }
+.glossario-r dl > div, .creditos-fig dl > div { break-inside: avoid; margin-bottom: 2mm; }
+.glossario-r dt, .creditos-fig dt { font-family: var(--f-rotulo); font-weight: 600; color: var(--tinta); }
+.glossario-r dt .he { font-size: 11pt; color: var(--navy); margin-left: 1mm; }
+.glossario-r dd, .creditos-fig dd { margin: 0; color: var(--corpo); }
+.glossario-r .cap { font-family: var(--f-rotulo); font-size: 6pt; color: var(--suave); }
+.creditos-fig dl { columns: 1; }
+.bibliografia-r h3 { font-family: var(--f-rotulo); font-size: 6.6pt; letter-spacing: .18em; text-transform: uppercase; color: var(--navy); margin: 4mm 0 1.5mm; break-after: avoid; }
+.bibliografia-r ol { list-style: none; margin: 0; padding: 0; font-family: var(--f-rotulo); font-size: 6.2pt; line-height: 1.4; color: var(--corpo); }
+.bibliografia-r li { margin-bottom: 1.3mm; padding-left: 4mm; text-indent: -4mm; overflow-wrap: anywhere; break-inside: avoid; }
+
+/* Checklist e diário: funcionam impressos (caixa de marcar, pauta). */
+.checklist { margin: 5mm 0; break-inside: avoid; }
+.checklist .ck-tit, .diario .d-tit { font-family: var(--f-rotulo); font-size: 6.4pt; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--teal-tinta); border-top: 1.4pt solid var(--teal); padding-top: 1.6mm; margin-bottom: 2mm; }
+.checklist ul { list-style: none; margin: 0; padding: 0; }
+.checklist li { position: relative; padding: 1.2mm 0 1.2mm 7mm; border-bottom: .4pt solid var(--linha); font-size: 8.8pt; line-height: 1.4; }
+.checklist li::before { content: ''; position: absolute; left: 0; top: 1.8mm; width: 3.4mm; height: 3.4mm; border: .9pt solid var(--teal); border-radius: .5mm; }
+.diario { break-before: page; }
+.diario .d-tit { font-family: var(--f-display); font-size: 17pt; letter-spacing: -.005em; text-transform: none; font-weight: 420; color: var(--navy); border-top-color: var(--ouro); }
+.diario .d-inst { font-size: 8.8pt; line-height: 1.45; color: var(--suave); font-style: italic; margin-bottom: 3mm; }
+.diario .d-inst ul { padding-left: 4mm; margin: 1mm 0; }
+.diario .pauta i { display: block; height: 8mm; border-bottom: .4pt solid var(--pedra-escura); }
+
+/* Capítulo 9: curiosidades numeradas (número grande, fio, texto curto). */
+.curio { display: grid; grid-template-columns: 13mm 1fr; column-gap: 3mm; padding: 2.6mm 0 2mm; border-top: .5pt solid var(--linha); break-inside: avoid; }
+.curio-n { font-family: var(--f-dado); font-weight: 700; font-size: 22pt; line-height: .95; color: var(--neguev-tinta); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -.02em; }
+.curio-t { font-family: var(--f-display) !important; font-weight: 480 !important; font-size: 10.6pt !important; letter-spacing: 0 !important; line-height: 1.22; color: var(--tinta) !important; margin: 0 0 1mm !important; }
+.curio p { font-size: 8.9pt; line-height: 1.45; text-align: left; hyphens: manual; }
+.curio-r { font-family: var(--f-rotulo); font-size: 6.4pt; color: var(--teal-tinta); letter-spacing: .02em; }

@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /* Experiência digital (protótipo) a partir da MESMA base do PDF.
 
-   Uso: node tools/web.mjs <livro> [--capitulos=01-israel-no-mapa.md] [--diario=10-diario.md]
+   Uso: node tools/web.mjs <livro> [--capitulos=01-israel-no-mapa.md] [--diario=10-diario.md] [--livro] [--artefato]
+   --livro: todos os capítulos de livro.json que existem (o diário vai para a aba Diário).
    Saída: <livro>/saida/web/ (index.html + assets/), abre direto no navegador.
 
    É um protótipo para aprovação, não a integração na plataforma: guarda
@@ -25,9 +26,12 @@ const RAIZ = path.join(EDITORIAL, livro);
 const OUT = path.join(RAIZ, 'saida/web');
 const lerJSON = p => JSON.parse(fs.readFileSync(p, 'utf8'));
 const existe = p => fs.existsSync(p);
-const arquivos = String(opt.capitulos || '01-israel-no-mapa.md').split(',');
 const regs = registros(RAIZ);
 const meta = lerJSON(path.join(RAIZ, 'livro.json'));
+const DIARIO = String(opt.diario || '10-diario.md');
+const arquivos = opt.livro
+  ? meta.capitulos.map(c => c.arquivo).filter(a => a !== DIARIO && existe(path.join(RAIZ, 'manuscrito', a)))
+  : String(opt.capitulos || '01-israel-no-mapa.md').split(',');
 const ativos = lerJSON(path.join(RAIZ, 'ativos/registro-de-ativos.json')).ativos;
 const candidatas = fs.readdirSync(path.join(RAIZ, 'ativos/dados')).filter(f => /^fotos-candidatas-.*\.json$/.test(f)).flatMap(f => lerJSON(path.join(RAIZ, 'ativos/dados', f)).candidatas || []);
 
@@ -43,7 +47,7 @@ const svgDe = id => {
 };
 
 const caps = arquivos.map(a => compilarCapitulo(RAIZ, a, regs));
-const diario = opt.diario !== false && existe(path.join(RAIZ, 'manuscrito', String(opt.diario || '10-diario.md'))) ? compilarCapitulo(RAIZ, String(opt.diario || '10-diario.md'), regs) : null;
+const diario = opt.diario !== false && existe(path.join(RAIZ, 'manuscrito', DIARIO)) ? compilarCapitulo(RAIZ, DIARIO, regs) : null;
 
 /* Áudio: copia só as gravações que existem; o resto fica sem src. Os itens
    do vocabulário do capítulo são os mesmos objetos dos blocos. */
@@ -60,6 +64,7 @@ for (const f of fs.readdirSync(path.join(RAIZ, 'ativos/dados')).filter(f => /-po
 const indice = meta.capitulos.map((c, k) => {
   const disp = caps.find(x => x.numero === k + 1);
   let titulo = null; try { titulo = fs.readFileSync(path.join(RAIZ, 'manuscrito', c.arquivo), 'utf8').match(/^titulo:\s*(.*)$/m)?.[1]; } catch {}
+  if (c.arquivo === DIARIO && diario) return { n: k + 1, titulo, disponivel: true, id: 'diario', especial: true };
   return { n: k + 1, titulo, disponivel: !!disp, id: disp?.id || null };
 });
 

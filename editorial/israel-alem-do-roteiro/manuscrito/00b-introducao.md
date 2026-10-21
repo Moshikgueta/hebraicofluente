@@ -17,7 +17,9 @@ Este livro foi feito para esse espaço entre a lista e o lugar. Ele não substit
 - **Entenda melhor** explica um conceito que costuma confundir.
 - **Atenção** marca informação prática que muda com o tempo.
 
-Os pequenos números no texto levam às fontes, reunidas no fim de cada capítulo. Ninguém precisa consultá-las para ler o livro. Elas estão ali para quem quiser ir além, e para que cada afirmação possa ser conferida.
+No fim de cada capítulo, **Perguntas e descobertas** propõe algumas perguntas para testar o olhar, com as respostas logo depois. Os códigos QR levam às páginas oficiais de museus, parques e instituições citados.
+
+Cada seção termina com a linha "Fontes desta seção", que leva às referências reunidas no fim do capítulo. Ninguém precisa consultá-las para ler o livro. Elas estão ali para quem quiser ir além, e para que cada afirmação possa ser conferida.
 
 **Um aviso sobre o assunto.** Israel é um país pequeno com uma história enorme, e parte dela é disputada, às vezes com violência. Este livro não toma partido nessas disputas. Ele descreve o que as fontes sustentam, diz quando os especialistas discordam e usa os nomes que cada comunidade dá aos seus lugares. Entender a complexidade não tira a beleza da viagem. Costuma aumentá-la.
 

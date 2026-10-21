@@ -100,7 +100,11 @@ function diretiva(tipo, args, miolo, acc, ctx) {
     case 'visual': { const [id, ...mods] = args.trim().split(/\s+/); return { tipo: 'visual', id, legenda: inline(marcas(texto, acc)), escuro: mods.includes('escuro') }; }
     case 'linha-do-tempo': return { tipo: 'linha-do-tempo', titulo: args || null, itens: miolo.filter(l => l.includes('|')).map(l => { const [d, ...ev] = l.replace(/^\s*-\s*/, '').split('|'); return { data: inline(d.trim()), evento: inline(marcas(ev.join('|').trim(), acc)) }; }) };
     case 'checklist': return { tipo: 'checklist', titulo: args || null, itens: miolo.filter(l => /^\s*-\s+/.test(l)).map(l => inline(marcas(l.replace(/^\s*-\s+/, ''), acc))) };
-    case 'diario': return { tipo: 'diario', titulo: args, instrucao: semCampos ? inline(marcas(semCampos, acc)) : '', linhas: Number(campos.linhas || 10) };
+    case 'diario': {
+      /* A instrução pode ter parágrafos e lista (as perguntas sugeridas). */
+      const html = semCampos ? blocosDeTexto(semCampos, acc).map(b => b.tipo === 'lista' ? `<ul>${b.itens.map(i => `<li>${i}</li>`).join('')}</ul>` : `<p>${b.html}</p>`).join('') : '';
+      return { tipo: 'diario', titulo: args, instrucao: html, linhas: Number(campos.linhas || 10) };
+    }
     case 'quiz': {
       const opcoes = miolo.filter(l => /^\s*-\s+\[[ x]\]/.test(l)).map(l => {
         const certa = /\[x\]/.test(l); const [t, ...exp] = l.replace(/^\s*-\s+\[[ x]\]\s*/, '').split('|');
@@ -123,6 +127,12 @@ function diretiva(tipo, args, miolo, acc, ctx) {
       const l = ctx.links.find(x => x.id === args.trim());
       return { tipo: 'link', id: args.trim(), link: l || null, texto: inline(marcas(texto, acc)) };
     }
+    case 'curiosidade': {
+      /* Capítulo 9: uma curiosidade = título + texto curto + (opcional)
+         remissão a outro capítulo. O número é a ordem no capítulo. */
+      const remete = campos.remete ? inline(campos.remete) : '';
+      return { tipo: 'curiosidade', n: ++ctx.nCur, titulo: inline(marcas(args, acc)), blocos: blocosDeTexto(miolo.filter(l => !/^remete:\s/.test(l)).join('\n'), acc), remete };
+    }
     case 'dado': return { tipo: 'dado', numero: campos.numero || args, rotulo: inline(marcas(campos.rotulo || semCampos, acc)), nota: campos.nota ? inline(campos.nota) : '' };
     default: {
       if (!CAIXAS[tipo]) return { tipo: 'desconhecido', nome: tipo, html: inline(marcas(texto, acc)) };
@@ -140,7 +150,7 @@ export function compilarCapitulo(raiz, arquivo, regs = registros(raiz)) {
   const n = Number(meta.capitulo || 0);
   const idCap = `cap${String(n).padStart(2, '0')}`;
   const linksArq = path.join(raiz, `ativos/dados/links-${idCap.replace('cap', 'cap')}.json`);
-  const ctx = { idCap, nQuiz: 0, nObs: 0, vocabulario: [], atividades: [], links: existe(linksArq) ? lerJSON(linksArq).map((l, i) => ({ id: l.id || slug(l.titulo), ...l })) : [] };
+  const ctx = { idCap, nQuiz: 0, nObs: 0, nCur: 0, vocabulario: [], atividades: [], links: existe(linksArq) ? lerJSON(linksArq).map((l, i) => ({ id: l.id || slug(l.titulo), ...l })) : [] };
 
   /* Seções: o texto antes do primeiro ## é a entrada do capítulo. */
   const partes = []; let atual = { titulo: null, linhas: [] };
