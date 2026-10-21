@@ -1147,9 +1147,14 @@ muda) confunde.
 ## E-book Israel Além do Roteiro à venda (21/10/2026, decisão do dono) - NÃO PUBLICADO
 Vendido à parte: é a "venda avulsa de produto digital" do Enquadramento acima. O dono
 decidiu montar no ramo e **só publicar depois de o contador confirmar o enquadramento
-(CNAE, nota) e de ele aprovar o hebraico do livro**. O manuscrito está em `editorial/`,
-num repositório PÚBLICO: o texto inteiro pode ser lido no GitHub de graça até ele ir
-para um repositório privado (decisão do dono, pendente).
+(CNAE, nota) e de ele aprovar o hebraico do livro**.
+- **O editorial é PRIVADO** (21/10/2026): manuscrito, fontes, ilustrações, fotos e
+  ferramentas moram em `Moshikgueta/hebraicofluente-editorial`, nunca neste repositório
+  (público). `editorial/` está no `.gitignore`: para trabalhar, clone o privado aí. A
+  publicação faz o checkout dele com o segredo `EDITORIAL_TOKEN` (token fino, só leitura,
+  só daquele repositório) e para com erro se o segredo faltar. A Action "Fotos do livro"
+  foi junto. O histórico do ramo `claude/wonderful-mayer-n4sc1n` (e da PR #193) ainda
+  contém o editorial: nunca fundir esses commits na `main` sem tirar o editorial deles.
 - **Catálogo:** `data/courses.json` ganhou `tipo` (sem ele, é curso). `israel-alem-do-roteiro`
   (`livro`, R$ 67, versão interativa 12 meses + PDF) e `alfabetizacao-e-israel` (`pacote`,
   R$ 177, `componentes` = curso + e-book, `vendaAte` 2026-11-30: depois disso o curso custa

@@ -1,4 +1,0 @@
-# Saída do gerador: PDFs, HTML paginado e imagens de inspeção. Tudo sai de
-# novo com `npm run build`; o PDF pago nunca entra no git.
-*/saida/
-node_modules

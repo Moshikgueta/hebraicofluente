@@ -30,3 +30,7 @@ app/.shots/
 # Cópias do banco (scripts/backup-d1.sh). Cada arquivo tem e-mail de todo
 # aluno e o hash da senha de cada um: vale o mesmo que o banco.
 backups/
+
+# O editorial dos e-books mora no repositório PRIVADO Moshikgueta/hebraicofluente-editorial
+# (21/10/2026): o conteúdo é vendido. Clone-o aqui, em editorial/.
+editorial/
