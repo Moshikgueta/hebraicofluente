@@ -96,7 +96,12 @@ async function bloco(b, cap, ctx) {
     }
     case 'observacao': return `<div class="observacao"><b>${b.titulo}</b>${b.texto}</div>`;
     case 'quiz': case 'vf': return ''; // vão para "Perguntas e descobertas"
-    case 'linha-do-tempo': return `<ol class="lista">${b.itens.map(i => `<li><b>${i.data}</b> ${i.evento}</li>`).join('')}</ol>`;
+    case 'linha-do-tempo': {
+      /* Antes de Cristo em dourado, depois em teal: a divisão do calendário
+         é informação, não enfeite. */
+      const ac = d => /a\.\s?C\./.test(d.replace(/<[^>]+>/g, ''));
+      return `<section class="ldt">${b.titulo ? `<div class="ldt-tit">${esc(b.titulo)}</div>` : ''}<ol>${b.itens.map(i => `<li class="${ac(i.data) ? 'ac' : 'dc'}"><span class="ldt-data">${i.data}</span><span class="ldt-ev">${i.evento}</span></li>`).join('')}</ol></section>`;
+    }
     default: return b.html ? `<p>${b.html}</p>` : '';
   }
 }

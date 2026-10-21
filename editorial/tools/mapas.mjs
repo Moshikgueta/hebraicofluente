@@ -298,9 +298,39 @@ function pontosRegioes() {
 }
 fs.writeFileSync(path.join(RAIZ, 'ativos/dados/mapa-regioes-pontos.json'), JSON.stringify(pontosRegioes(), null, 1) + '\n');
 
+
+/* 4. As linhas de armistício de 1949 (capítulo 2). Os CONTORNOS são os da
+   Natural Earth de hoje: a Linha Verde coincide com o limite da Cisjordânia e
+   da Faixa de Gaza nessa camada. Quem controlava cada área entre 1949 e 1967
+   vem de ativos/dados/mapa-1949.json, com afirmação VERIFICADO; sem o
+   arquivo, o mapa não é gerado. */
+function mapa1949() {
+  const d = lerDados('mapa-1949.json');
+  if (!d) return null;
+  const afs = new Map();
+  for (const f of fs.readdirSync(path.join(RAIZ, 'afirmacoes')).filter(f => f.endsWith('.json'))) for (const a of JSON.parse(fs.readFileSync(path.join(RAIZ, 'afirmacoes', f), 'utf8')).afirmacoes || []) afs.set(a.id, a.status);
+  const ok = ids => (ids || []).length && ids.every(id => ['VERIFICADO', 'CONTESTADO'].includes(afs.get(id)));
+  const leg = (d.legenda || []).filter(l => ok(l.afirmacoes));
+  if (leg.length < 2) return null;
+  const P = projetor(RECORTE_PAIS, 430); const { p } = P;
+  const COR1949 = { israel: [COR.israel, COR.israelBorda], jordania: ['#E9DCC0', '#8A6520'], egito: ['#F1E2CF', '#8C5426'], siria: ['#E4E7DA', '#6B7444'] };
+  const AREA = { B91: 'israel', B78: 'israel', B79: 'israel', B99: 'israel', B54: 'jordania', B98: 'jordania', B53: 'egito', B16: 'siria', B58: 'siria' };
+  let c = `<rect width="${P.largura}" height="${P.altura}" fill="${COR.mar}"/>`;
+  for (const f of paises.features) if (!['ISR', 'PSX'].includes(f.properties.a3)) c += `<path d="${caminho(f.geometry, p)}" fill="${COR.vizinho}" stroke="${COR.borda}" stroke-width=".8"/>`;
+  for (const f of disputa.features) { const k = AREA[f.properties.a3]; if (!k) continue; const [fill, stroke] = COR1949[k]; c += `<path d="${caminho(f.geometry, p)}" fill="${fill}" stroke="${stroke}" stroke-width="${k === 'israel' ? 1.3 : 1}" stroke-linejoin="round"/>`; }
+  for (const f of lagos.features) c += `<path d="${caminho(f.geometry, p)}" fill="${COR.lago}" stroke="#8FBFB5" stroke-width=".6"/>`;
+  for (const r of (d.rotulos || []).filter(r => ok(r.afirmacoes))) c += rotulo(P, [r.lon, r.lat], r.texto, r.classe || 'reg', { rot: r.rot || 0 });
+  let lg = `<g transform="translate(18 ${P.altura - 26 - leg.length * 19})"><rect x="-6" y="-14" width="250" height="${leg.length * 19 + 12}" rx="6" fill="#fff" fill-opacity=".94" stroke="${COR.borda}"/>`;
+  leg.forEach((l, i) => { const [fill, stroke] = COR1949[l.area]; lg += `<rect x="0" y="${i * 19 - 6}" width="16" height="11" fill="${fill}" stroke="${stroke}"/><text class="rot nota" style="font-size:10px;fill:${COR.tinta}" x="24" y="${i * 19 + 3}">${esc(l.texto)}</text>`; });
+  c += lg + '</g>';
+  c += norte(P.largura - 24, 30);
+  return svg(P, c);
+}
+
 fs.mkdirSync(SAIDA, { recursive: true });
-const gerados = { 'mapa-regional': mapaRegional(), 'mapa-regioes': mapaRegioes(), 'mapa-destinos': mapaDestinos() };
+const gerados = { 'mapa-regional': mapaRegional(), 'mapa-regioes': mapaRegioes(), 'mapa-destinos': mapaDestinos(), 'mapa-1949': mapa1949() };
 for (const [id, conteudo] of Object.entries(gerados)) {
+  if (!conteudo) { console.log('mapa', id, 'NÃO gerado (sem dado verificado)'); continue; }
   fs.writeFileSync(path.join(SAIDA, id + '.svg'), comPrefixo(conteudo, id));
   console.log('mapa', id, (conteudo.length / 1024).toFixed(0) + ' KB');
 }

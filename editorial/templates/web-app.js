@@ -101,6 +101,7 @@
       case 'vf': return vf(b);
       case 'observacao': return desafio(b);
       case 'checklist': return checklist(b);
+      case 'linha-do-tempo': return linhaDoTempo(b);
       default: return el('div', null, b.html || '');
     }
   }
@@ -132,6 +133,23 @@
     var inp = lab.querySelector('input'); inp.checked = !!s.desafios[o.id];
     inp.addEventListener('change', function () { guardar(function (s) { s.desafios = s.desafios || {}; s.desafios[o.id] = inp.checked; }); });
     box.appendChild(lab); return box;
+  }
+  /* Linha do tempo explorável: filtros por época; a escolha é só da tela. */
+  function linhaDoTempo(b) {
+    var epoca = function (d) { var t = d.replace(/<[^>]+>/g, ''); if (/a\.\s?C\./.test(t)) return 'antiguidade'; var m = t.match(/(\d{3,4})/); var n = m ? +m[1] : 0; if (/s[ée]c/i.test(t) && !/\d{3,4}/.test(t)) return 'antiguidade'; return n >= 1800 ? 'moderna' : 'medieval'; };
+    var nomes = { todas: 'Tudo', antiguidade: 'Antes de Cristo', medieval: 'Até 1800', moderna: 'Desde 1800' };
+    var box = el('section', { class: 'ldt' }, (b.titulo ? '<div class="ldt-tit">' + esc(b.titulo) + '</div>' : ''));
+    var presentes = { todas: 1 }; b.itens.forEach(function (i) { presentes[epoca(i.data)] = 1; });
+    var filtros = el('div', { class: 'ldt-filtros', role: 'group', 'aria-label': 'Filtrar por época' });
+    var ol = el('ol');
+    b.itens.forEach(function (i) { var li = el('li', { 'data-epoca': epoca(i.data) }, '<span class="ldt-data">' + i.data + '</span><span class="ldt-ev">' + i.evento + '</span>'); ol.appendChild(li); });
+    Object.keys(nomes).filter(function (k) { return presentes[k]; }).forEach(function (k) {
+      var bt = el('button', { type: 'button', 'aria-pressed': k === 'todas' ? 'true' : 'false' }, nomes[k]);
+      bt.addEventListener('click', function () { [].forEach.call(filtros.children, function (x) { x.setAttribute('aria-pressed', x === bt ? 'true' : 'false'); }); [].forEach.call(ol.children, function (li) { li.hidden = k !== 'todas' && li.getAttribute('data-epoca') !== k; }); });
+      filtros.appendChild(bt);
+    });
+    if (filtros.children.length > 2) box.appendChild(filtros);
+    box.appendChild(ol); return box;
   }
   function checklist(b) {
     var s = estado(); var box = el('section', { class: 'atividade desafio' }, '<span class="rot">Checklist</span><div class="q">' + esc(b.titulo || '') + '</div>');

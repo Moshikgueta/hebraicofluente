@@ -109,6 +109,19 @@ figcaption .credito { display: block; font-size: 12px; color: #6E7874; margin-to
 .desafio label { display: flex; gap: 10px; align-items: flex-start; min-height: var(--toque); cursor: pointer; font-family: var(--f-rotulo); font-size: 15px; }
 .desafio input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--teal); flex: none; }
 
+/* Linha do tempo */
+.ldt { margin: 28px 0; }
+.ldt-tit { font-family: var(--f-rotulo); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--navy); border-top: 2px solid var(--navy); padding-top: 8px; margin-bottom: 10px; }
+.ldt-filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.ldt-filtros button { min-height: 40px; padding: 0 14px; border: 1px solid var(--linha); border-radius: 999px; background: #fff; font-family: var(--f-rotulo); font-size: 14px; cursor: pointer; }
+.ldt-filtros button[aria-pressed="true"] { background: var(--navy); color: #fff; border-color: var(--navy); }
+.ldt ol { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--pedra-escura); }
+.ldt li { padding: 8px 0 12px 18px; position: relative; }
+.ldt li::before { content: ''; position: absolute; left: -7px; top: 14px; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); }
+.ldt li[data-epoca="antiguidade"]::before { background: var(--ouro); }
+.ldt-data { display: block; font-family: var(--f-dado); font-weight: 700; font-size: 15px; color: var(--neguev-tinta); }
+.ldt-ev { display: block; font-size: 16px; line-height: 1.5; }
+
 /* Link oficial */
 .link { display: block; margin: 22px 0; padding: 14px 0; border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); text-decoration: none; color: inherit; }
 .link .inst { font-family: var(--f-rotulo); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--mar); }
