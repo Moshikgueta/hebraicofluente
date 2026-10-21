@@ -1074,6 +1074,43 @@
       "interpretacoes_concorrentes": null,
       "status": "PARCIALMENTE VERIFICADO",
       "revisar_ate": null
+    },
+    {
+      "id": "C01-201",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "Segundo o IBGE, a área territorial de Sergipe é de 21.938,188 km² (Área territorial brasileira 2022).",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-201"
+      ],
+      "evidencia": "IBGE Cidades e Estados, Sergipe: Área territorial 21.938,188 km², com a referência à publicação Área territorial brasileira 2022 (Rio de Janeiro: IBGE, 2023).",
+      "pagina_ou_secao": "Área territorial",
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A página mostra a etiqueta [2025] junto do valor; conferir na página se houve atualização. Uma fonte E traz 21.938,184 km² (IBGE 2020): diferença nas últimas casas.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C01-202",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "A área de Israel contada pelo CBS (22.072 km², com Jerusalém Oriental e as Colinas de Golã) fica perto da de Sergipe (21.938 km²): a diferença é de 134 km², menos de 1%.",
+      "categoria": "geografia",
+      "fontes": [
+        "F01-001",
+        "F01-002",
+        "F01-003",
+        "F01-201"
+      ],
+      "evidencia": "Conta feita a partir de C01-001 (CBS) e C01-201 (IBGE): 22.072 - 21.938 = 134; 134 / 21.938 = 0,6%.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Comparação derivada; depende da definição de área de Israel (ver C01-001, C01-003, C01-005). Dentro das linhas de 1949, cerca de 20.700 km².",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
     }
   ]
 }

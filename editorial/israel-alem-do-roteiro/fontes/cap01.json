@@ -720,6 +720,21 @@
       "acesso": "trecho-de-busca",
       "observacao": "Reproduz comunicado do CBS; não sustenta texto.",
       "abnt": "ISRAEL starts 2026 with more than 10 million people. Ratopati, [S.l.], jan. 2026. Disponível em: https://english.ratopati.com/story/44341/israel-starts-2026-with-more-than-10-million-people. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F01-201",
+      "nivel": "D",
+      "tipo": "site-institucional",
+      "autor": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
+      "titulo": "Cidades e Estados: Sergipe",
+      "ano": null,
+      "editora_ou_periodico": "IBGE",
+      "doi": null,
+      "isbn": null,
+      "url": "https://www.ibge.gov.br/cidades-e-estados/se/",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA (IBGE). Cidades e Estados: Sergipe. Rio de Janeiro: IBGE, [s.d.]. Disponível em: https://www.ibge.gov.br/cidades-e-estados/se/. Acesso em: 21 out. 2026."
     }
   ]
 }

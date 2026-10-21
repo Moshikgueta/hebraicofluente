@@ -5,11 +5,11 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 ## Números
 
 - Palavras no manuscrito: 32305
-- Fontes registradas: 640 (por nível: D 142, B 161, E 223, A 93, C 21; por acesso: trecho-de-busca 612, referencia-confirmada 28)
-- Afirmações registradas: 706 (VERIFICADO 458, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
-- Afirmações VERIFICADO sem uso no texto: 14
+- Fontes registradas: 641 (por nível: D 143, B 161, E 223, A 93, C 21; por acesso: trecho-de-busca 613, referencia-confirmada 28)
+- Afirmações registradas: 708 (VERIFICADO 460, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
+- Afirmações VERIFICADO sem uso no texto: 16
 - Ocorrências de hebraico: 188 (lista em auditoria/hebraico.md)
-- Links testados: 0 de 637 (rede bloqueada; ver revisão humana)
+- Links testados: 0 de 638 (rede bloqueada; ver revisão humana)
 
 | Arquivo | Palavras | Marcas de fonte |
 | --- | --- | --- |

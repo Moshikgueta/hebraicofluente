@@ -107,3 +107,33 @@ palavra).
 Mobile first. Testado a 390 px (largura de referência do repositório): sem
 rolagem lateral em nenhuma rota. Títulos com `clamp()`; a partir de 720 px,
 figuras e caixas voltam para a coluna.
+
+## 8. Estilo de ilustração (fase 6, proposta para aprovação)
+
+Nome de trabalho: **papel recortado**. Pranchas de teste em
+`ativos/pranchas/` (gerador: `tools/pranchas.mjs`).
+
+- **Forma:** figuras chapadas, sem gradiente nem textura fotográfica. Cada
+  forma principal tem uma "sombra" da mesma forma, deslocada uns 6 px para
+  baixo e para a direita, em `pedra-escura`: parece papel recortado sobre
+  papel. É a assinatura do estilo.
+- **Traço:** contorno navy de 2 px, cantos arredondados, linha tracejada
+  pontilhada (traço 2, espaço 8) para trilhas, rotas e setas ilustrativas.
+- **Cor:** a paleta da marca e da coleção, sem cor nova. Mar em `mar-claro`
+  com ondas desenhadas; terra vizinha em `pedra`; Israel em branco ou navy;
+  áreas de status disputado sempre com a hachura dourada dos mapas do
+  capítulo 1 e a mesma legenda; destaque de número em `neguev-tinta`; caixa
+  de comparação em `ouro-suave`.
+- **Ícones:** um pictograma por lugar, branco sobre círculo navy, numa grade
+  de 24 px; são desenho, não símbolo religioso nem logotipo.
+- **Tipografia dentro da ilustração:** Literata Display para títulos,
+  Instrument Sans para rótulos e legendas, Bricolage Grotesque para números;
+  hebraico sempre em Noto Serif Hebrew, com a transliteração embaixo.
+- **Rodapé de toda prancha:** de onde vêm os contornos e os números, o que é
+  conta nossa ("em linha reta, calculado das coordenadas") e o que é só
+  desenho.
+- **Formato:** 1080 x 1350 (4:5), que serve à página do PDF, à web e ao
+  cartão de compartilhar; o 9:16 é um recorte da mesma prancha.
+- **Ilustração de cena** (mercado, Shabat, aeroporto): no mesmo estilo,
+  desenhada em SVG. Ilustração feita com ferramenta generativa só se o dono
+  aprovar, e sempre com o rótulo "ilustração".
