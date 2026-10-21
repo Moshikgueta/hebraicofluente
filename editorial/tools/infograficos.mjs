@@ -202,9 +202,43 @@ function perfil(escuro = true) {
   return s + '</svg>';
 }
 
+
+/* ── corte esquemático das quatro faixas (oeste → leste) ────────────────
+   Ilustração documental original, não fotografia: o perfil é desenhado à
+   mão e só os RÓTULOS carregam informação, cada um com afirmação VERIFICADO.
+   A legenda diz "esquema, fora de escala". */
+function corteFaixas(escuro = true) {
+  const R = { costa: ['C01-046'], montes: ['C01-047'], fenda: ['C01-051', 'C01-053'], morto: ['C01-012'] };
+  if (!Object.values(R).every(verificado)) return null;
+  const W = 900, H = 1200, NM = 760; /* NM: a linha do nível do mar */
+  const fundo = escuro ? '#0B2A31' : '#FBF9F5', tinta = escuro ? '#FFFFFF' : '#1B211F', suave = escuro ? '#E9DCC0' : '#5F6A66', traco = escuro ? '#FBF3E2' : '#0E3B43';
+  /* perfil: mar | planície | montanhas | descida | fenda com o lago | encosta leste */
+  const terra = `M0,${NM + 170} L110,${NM + 60} L150,${NM - 8} L300,${NM - 40} C360,${NM - 70} 380,${NM - 230} 430,${NM - 300} C460,${NM - 345} 480,${NM - 330} 505,${NM - 300} C540,${NM - 250} 560,${NM - 110} 600,${NM + 60} C620,${NM + 150} 640,${NM + 205} 660,${NM + 215} L760,${NM + 215} C790,${NM + 200} 805,${NM + 60} 830,${NM - 120} C850,${NM - 230} 880,${NM - 260} ${W},${NM - 265}`;
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Corte esquemático de oeste a leste: Mediterrâneo, planície costeira, montanhas e o vale da fenda com o Mar Morto abaixo do nível do mar">
+  <style>.l{font-family:'Instrument Sans',sans-serif;font-weight:600;letter-spacing:.16em;text-transform:uppercase}.t{font-family:'Literata',serif}.n{font-family:'Instrument Sans',sans-serif}.a{font-family:'Bricolage Grotesque',sans-serif;font-weight:700}</style>
+  <defs><linearGradient id="terra" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D2B07A"/><stop offset=".45" stop-color="#B9773E"/><stop offset="1" stop-color="#5E3A1E"/></linearGradient>
+  <linearGradient id="mar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B8C97"/><stop offset="1" stop-color="#1E5A73"/></linearGradient>
+  <linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${fundo}"/><stop offset="1" stop-color="${escuro ? '#155059' : '#EFE7D6'}"/></linearGradient></defs>
+  <rect width="${W}" height="${H}" fill="url(#ceu)"/>
+  <rect x="0" y="${NM}" width="160" height="${H - NM}" fill="url(#mar)"/>
+  <rect x="640" y="${NM + 150}" width="140" height="${H - NM - 150}" fill="url(#mar)"/>
+  <path d="${terra} L${W},${H} L0,${H} Z" fill="url(#terra)"/>
+  <path d="${terra}" fill="none" stroke="${traco}" stroke-width="3" stroke-linejoin="round"/>
+  <line x1="0" x2="${W}" y1="${NM}" y2="${NM}" stroke="${suave}" stroke-width="1.6" stroke-dasharray="7 8" opacity=".85"/>
+  <text class="l" x="${W - 22}" y="${NM - 12}" text-anchor="end" font-size="15" fill="${suave}">nível do mar</text>`;
+  /* o leito do Mediterrâneo some sob a água à esquerda: a terra começa abaixo dela */
+  const rot = (x, y, a, b, anchor = 'start', cor = tinta) => `<text class="l" x="${x}" y="${y}" text-anchor="${anchor}" font-size="17" fill="${cor}">${a}</text><text class="n" x="${x}" y="${y + 26}" text-anchor="${anchor}" font-size="18" fill="${suave}">${b}</text>`;
+  s += rot(18, NM - 64, 'Mediterrâneo', 'a oeste', 'start', '#FFFFFF');
+  s += `<line x1="220" x2="220" y1="${NM - 30}" y2="${NM - 150}" stroke="${suave}" stroke-width="1.2" opacity=".7"/>` + rot(150, NM - 196, 'Planície costeira', 'até ~40 km para o interior');
+  s += `<line x1="478" x2="540" y1="${NM - 318}" y2="${NM - 360}" stroke="${suave}" stroke-width="1.2" opacity=".7"/>` + rot(548, NM - 392, 'Montanhas', 'na Galileia, de 500 a 1.200 m', 'start');
+  s += `<line x1="710" x2="710" y1="${NM + 160}" y2="${NM - 66}" stroke="${suave}" stroke-width="1.2" opacity=".7"/>` + rot(710, NM - 128, 'Vale da fenda', 'o Mar Morto', 'middle');
+  s += `<text class="a" x="710" y="${NM + 300}" text-anchor="middle" font-size="52" fill="#F7EFDF">-430 m</text><text class="n" x="710" y="${NM + 332}" text-anchor="middle" font-size="17" fill="#E9DCC0">em 2022, a superfície já estava abaixo disso</text>`;
+  return s + '</svg>';
+}
+
 const SAIDA_INF = path.join(RAIZ, 'ativos/infograficos'), SAIDA_MAP = path.join(RAIZ, 'ativos/mapas');
 fs.mkdirSync(SAIDA_INF, { recursive: true });
-for (const [id, dir, fn] of [['perfil-altitude', SAIDA_INF, () => perfil(true)], ['perfil-altitude-claro', SAIDA_INF, () => perfil(false)], ['infografico-clima', SAIDA_INF, clima], ['infografico-semana', SAIDA_INF, semana], ['mapa-jerusalem', SAIDA_MAP, jerusalem]]) {
+for (const [id, dir, fn] of [['corte-faixas', SAIDA_INF, () => corteFaixas(true)], ['corte-faixas-claro', SAIDA_INF, () => corteFaixas(false)], ['perfil-altitude', SAIDA_INF, () => perfil(true)], ['perfil-altitude-claro', SAIDA_INF, () => perfil(false)], ['infografico-clima', SAIDA_INF, clima], ['infografico-semana', SAIDA_INF, semana], ['mapa-jerusalem', SAIDA_MAP, jerusalem]]) {
   const arq = path.join(dir, id + '.svg');
   const svg = fn();
   if (svg) { fs.writeFileSync(arq, comPrefixo(svg, id)); console.log('gerado', id); }

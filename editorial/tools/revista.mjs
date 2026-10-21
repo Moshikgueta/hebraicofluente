@@ -41,11 +41,11 @@ const svgDe = id => {
   return arq ? fs.readFileSync(arq, 'utf8').replace(/<\?xml[^>]*>/, '') : null;
 };
 
-function foto(id, { classe = '' } = {}) {
+function foto(id, { classe = '', assunto = '' } = {}) {
   const ok = fotosOk[id];
   if (ok && existe(path.join(RAIZ, ok.arquivo))) return { html: `<img src="file://${path.join(RAIZ, ok.arquivo)}" alt="${esc(ok.assunto || '')}">`, credito: `Foto: ${esc(ok.credito)}` };
   const c = candidatas.find(x => x.id === id);
-  if (c) return { html: `<div class="foto-pendente ${classe}"><span class="etiqueta">Fotografia a inserir</span><span class="assunto">${esc(c.assunto || c.titulo_arquivo)}</span><span class="cand">Escolhida: ${esc(c.titulo_arquivo)} · ${esc(c.autor || 'autor a confirmar')} · ${esc(c.licenca_declarada || 'licença a confirmar')} · Wikimedia Commons</span></div>`, credito: 'Licença a conferir com tools/baixar-fotos.mjs antes de usar.' };
+  if (c) return { html: `<div class="foto-pendente ${classe}"><span class="etiqueta">Fotografia a inserir</span><span class="assunto">${assunto ? assunto.replace(/<[^>]+>/g, '') : esc(c.assunto || c.titulo_arquivo)}</span><span class="cand">Escolhida: ${esc(c.titulo_arquivo)} · ${esc(c.autor || 'autor a confirmar')} · ${esc(c.licenca_declarada || 'licença a confirmar')} · Wikimedia Commons</span></div>`, credito: 'Licença a conferir com tools/baixar-fotos.mjs antes de usar.' };
   return { html: `<div class="foto-pendente ${classe}"><span class="etiqueta">Fotografia a escolher</span><span class="assunto">${esc(id)}</span></div>`, credito: '' };
 }
 
@@ -69,7 +69,13 @@ async function bloco(b, cap, ctx) {
       if (!svg) return `<figure><div class="foto-pendente"><span class="etiqueta">Figura pendente</span><span class="assunto">${esc(b.id)}</span></div></figure>`;
       return `<figure class="larga" id="fig-${b.id}">${svg}<figcaption><span class="num">Fig. ${cap.numero}.${ctx.fig}</span>${a ? `<b>${esc(a.titulo)}.</b> ` : ''}${b.legenda}<span class="credito">${esc(a?.credito_curto || '')}</span></figcaption></figure>`;
     }
-    case 'foto': { const f = foto(b.id, { classe: b.formato === 'vertical' ? 'vertical' : '' }); return `<figure class="${b.formato === 'vertical' ? '' : 'larga'}">${f.html}<figcaption>${b.legenda}<span class="credito">${f.credito}</span></figcaption></figure>`; }
+    case 'foto': {
+      const f = foto(b.id, { classe: b.formato === 'vertical' ? 'vertical' : '', assunto: b.legenda });
+      /* Vertical: grade de duas colunas (legenda em destaque | foto). Float
+         não serve: o Paged.js descarta a figura flutuante na quebra. */
+      if (b.formato === 'vertical') return `<figure class="par"><figcaption><span class="grande">${b.legenda}</span><span class="credito">${f.credito}</span></figcaption>${f.html}</figure>`;
+      return `<figure class="larga">${f.html}<figcaption>${b.legenda}<span class="credito">${f.credito}</span></figcaption></figure>`;
+    }
     case 'visual': {
       const svg = svgDe(b.id); const f = svg ? { html: svg, credito: ativos.find(x => x.id === b.id)?.credito_curto || '' } : foto(b.id);
       return `<section class="visual${b.escuro ? ' escuro' : ''}"><div class="alvo">${f.html}</div><div class="legenda">${b.legenda} <span>${esc(f.credito)}</span></div></section>`;
@@ -88,7 +94,8 @@ async function bloco(b, cap, ctx) {
       if (!b.link?.url) return '';
       return `<div class="link-qr">${await qr(b.link.url)}<div><div class="inst">${esc(b.link.instituicao || '')}</div><div class="tit"><a href="${esc(b.link.url)}">${esc(b.link.titulo)}</a></div><div class="url">${esc(b.link.url.replace(/^https?:\/\//, ''))}</div>${b.texto ? `<div class="desc">${b.texto}</div>` : b.link.para_que_serve ? `<div class="desc">${esc(b.link.para_que_serve)}</div>` : ''}</div></div>`;
     }
-    case 'quiz': case 'vf': case 'observacao': return ''; // vão para "Perguntas e descobertas"
+    case 'observacao': return `<div class="observacao"><b>${b.titulo}</b>${b.texto}</div>`;
+    case 'quiz': case 'vf': return ''; // vão para "Perguntas e descobertas"
     case 'linha-do-tempo': return `<ol class="lista">${b.itens.map(i => `<li><b>${i.data}</b> ${i.evento}</li>`).join('')}</ol>`;
     default: return b.html ? `<p>${b.html}</p>` : '';
   }
@@ -101,8 +108,8 @@ async function capitulo(arq) {
   const numeroNota = f => { if (!idxNota.has(f.id)) { notas.push(f); idxNota.set(f.id, notas.length); } return idxNota.get(f.id); };
 
   const ab = cap.abertura;
-  const imgAb = ab.imagem ? (svgDe(ab.imagem) ? { html: svgDe(ab.imagem), credito: ativos.find(x => x.id === ab.imagem)?.credito_curto || '' } : foto(ab.imagem)) : { html: '', credito: '' };
-  let h = `<section class="abertura" id="${cap.id}"><div class="imagem">${imgAb.html}</div><div class="veu"></div><div class="texto"><div class="kicker"><span>Capítulo ${String(cap.numero).padStart(2, '0')}</span><span class="he">${['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י'][cap.numero] || ''}</span></div><h1 data-cap="${esc(cap.titulo)}">${esc(cap.titulo)}</h1>${ab.frase ? `<div class="frase">${ab.frase}</div>` : cap.subtitulo ? `<div class="frase">${esc(cap.subtitulo)}</div>` : ''}</div><div class="credito">${esc(ab.credito || imgAb.credito || '')}</div></section>`;
+  const imgAb = ab.imagem ? (svgDe(ab.imagem) ? { html: svgDe(ab.imagem).replace(/preserveAspectRatio="[^"]*"/, 'preserveAspectRatio="xMidYMax slice"'), credito: ativos.find(x => x.id === ab.imagem)?.credito_curto || '' } : foto(ab.imagem)) : { html: '', credito: '' };
+  let h = `<section class="abertura" id="${cap.id}"><div class="imagem${svgDe(ab.imagem || '') ? ' baixa' : ''}">${imgAb.html}</div><div class="veu"></div><div class="texto"><div class="kicker"><span>Capítulo ${String(cap.numero).padStart(2, '0')}</span><span class="he">${['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י'][cap.numero] || ''}</span></div><h1 data-cap="${esc(cap.titulo)}">${esc(cap.titulo)}</h1>${ab.frase ? `<div class="frase">${ab.frase}</div>` : cap.subtitulo ? `<div class="frase">${esc(cap.subtitulo)}</div>` : ''}</div><div class="credito">${esc(ab.credito || imgAb.credito || '')}</div></section>`;
 
   for (const s of cap.secoes) {
     const corpo = (await Promise.all(s.blocos.map(b => bloco(b, cap, ctx)))).join('\n');
@@ -113,15 +120,15 @@ async function capitulo(arq) {
       : `<section class="secao entrada" id="${s.id}">${corpo}${linhaFontes}</section>`;
   }
 
-  if (cap.atividades.length) {
+  if (cap.atividades.some(a => a.tipo !== 'observacao')) {
     const letras = 'abcdefgh';
     let n = 0; let perg = ''; const resp = [];
     for (const a of cap.atividades) {
       if (a.tipo === 'quiz') { n++; const certa = a.opcoes.findIndex(o => o.certa); perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.pergunta}</div><ol>${a.opcoes.map(o => `<li>${o.texto}</li>`).join('')}</ol></div>`; resp.push(`<b>${n}. ${letras[certa]}</b> ${a.opcoes[certa]?.explicacao || ''}`); }
       if (a.tipo === 'vf') { n++; perg += `<div class="pergunta"><div class="q"><b>${n}</b>${a.afirmacao}</div><div class="vf">Verdadeiro ou falso?</div></div>`; resp.push(`<b>${n}. ${a.resposta ? 'Verdadeiro' : 'Falso'}.</b> ${a.explicacao}`); }
     }
-    const obs = cap.atividades.filter(a => a.tipo === 'observacao').map(a => `<div class="observacao"><b>${a.titulo}</b>${a.texto}</div>`).join('');
-    h += `<section class="perguntas" id="${cap.id}-perguntas"><div class="rubrica"><span class="he">?</span><span>${esc(cap.titulo)}</span></div><div class="cab">Perguntas e descobertas</div><div class="sub">Para testar o olhar antes da viagem, e para levar na estrada. As respostas estão no pé da página, de cabeça para baixo.</div>${perg}${obs}<div class="respostas">${resp.join(' · ')}</div></section>`;
+    const obs = '';
+    h += `<section class="perguntas" id="${cap.id}-perguntas"><div class="rubrica"><span class="he">?</span><span>${esc(cap.titulo)}</span></div><div class="cab">Perguntas e descobertas</div><div class="sub">Para testar o olhar antes da viagem, e para levar na estrada. As respostas vêm logo depois, com a explicação.</div>${perg}${obs}<div class="respostas"><span class="rot">Respostas</span>${resp.join('<br>')}</div></section>`;
   }
 
   h += `<section class="notas" id="${cap.id}-notas"><h2>Fontes do capítulo ${cap.numero}</h2><ol>${notas.map((f, i) => `<li id="nota-${cap.id}-${i + 1}">${esc(f.abnt)}</li>`).join('')}</ol></section>`;

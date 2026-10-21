@@ -32,6 +32,7 @@ em { font-style: italic; }
 /* ── 1. Abertura cinematográfica (página sangrada) ───────────────────── */
 .abertura { page: sangria; position: relative; width: 148mm; height: 210mm; background: var(--noite); color: #fff; overflow: hidden; break-after: page; }
 .abertura .imagem { position: absolute; inset: 0; }
+.abertura .imagem.baixa { top: 30%; }
 .abertura .imagem svg, .abertura .imagem img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .abertura .veu { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,42,49,.86) 0%, rgba(11,42,49,.25) 34%, rgba(11,42,49,0) 55%, rgba(11,42,49,.55) 100%); }
 .abertura .texto { position: absolute; left: 13mm; right: 13mm; top: 16mm; }
@@ -54,7 +55,7 @@ em { font-style: italic; }
 blockquote.citacao { margin: 5mm 0; padding: 0; font-family: var(--f-display); font-style: italic; font-weight: 360; font-size: 15pt; line-height: 1.25; color: var(--navy); border: 0; text-wrap: balance; }
 
 /* Fontes da seção: uma linha, não um sobrescrito por frase. */
-.fontes-secao { font-family: var(--f-rotulo); font-size: 6.4pt; color: var(--suave); margin-top: 2mm; letter-spacing: .02em; }
+.fontes-secao { break-before: avoid; font-family: var(--f-rotulo); font-size: 6.4pt; color: var(--suave); margin-top: 2mm; letter-spacing: .02em; }
 .fontes-secao a { color: var(--teal-tinta); }
 
 /* ── 2. Narrativa ilustrada: foto ou figura no fluxo ─────────────────── */
@@ -68,8 +69,11 @@ figcaption .credito { display: block; font-size: 5.9pt; margin-top: .6mm; color:
 
 /* Moldura de fotografia escolhida e ainda não inserida: mostra a composição
    final e o crédito da candidata, sem fingir que a foto está ali. */
-.foto-pendente { background: repeating-linear-gradient(135deg, var(--pedra) 0 6px, #E8DEC9 6px 12px); aspect-ratio: 3 / 2; display: flex; flex-direction: column; justify-content: flex-end; padding: 4mm; box-sizing: border-box; border: .5pt solid var(--pedra-escura); }
+.foto-pendente { background: repeating-linear-gradient(135deg, var(--pedra) 0 6px, #E8DEC9 6px 12px); aspect-ratio: 16 / 9; display: flex; flex-direction: column; justify-content: flex-end; padding: 4mm; box-sizing: border-box; border: .5pt solid var(--pedra-escura); }
 .foto-pendente.vertical { aspect-ratio: 3 / 4; }
+figure.par { display: grid; grid-template-columns: 1fr 52%; gap: 4.5mm; align-items: end; }
+figure.par figcaption { border-top: .4pt solid var(--tinta); padding-top: 2mm; margin: 0; }
+figure.par .grande { display: block; font-family: var(--f-display); font-style: italic; font-size: 11pt; line-height: 1.3; color: var(--navy); margin-bottom: 1.6mm; }
 .foto-pendente .etiqueta { font-family: var(--f-rotulo); font-size: 6pt; letter-spacing: .18em; text-transform: uppercase; color: var(--neguev-tinta); font-weight: 600; }
 .foto-pendente .assunto { font-family: var(--f-display); font-size: 11pt; color: var(--navy); line-height: 1.2; margin-top: 1mm; }
 .foto-pendente .cand { font-family: var(--f-rotulo); font-size: 6pt; color: var(--suave); margin-top: 1.2mm; }
@@ -138,9 +142,11 @@ figcaption .credito { display: block; font-size: 5.9pt; margin-top: .6mm; color:
 .pergunta .q b { font-family: var(--f-dado); color: var(--neguev-tinta); margin-right: 1.5mm; }
 .pergunta ol { list-style: lower-alpha; margin: 1.5mm 0 0; padding-left: 6mm; font-size: 9pt; }
 .pergunta .vf { font-family: var(--f-rotulo); font-size: 7pt; letter-spacing: .14em; text-transform: uppercase; color: var(--suave); margin-top: 1mm; }
-.observacao { border-left: 1.4pt solid var(--teal); padding-left: 3mm; margin-bottom: 4mm; font-size: 9pt; break-inside: avoid; }
-.observacao b { font-family: var(--f-rotulo); font-size: 7pt; letter-spacing: .14em; text-transform: uppercase; color: var(--teal-tinta); display: block; }
-.respostas { margin-top: 6mm; transform: rotate(180deg); font-family: var(--f-rotulo); font-size: 6.4pt; line-height: 1.45; color: var(--suave); border-top: .4pt solid var(--linha); padding-top: 2mm; }
+.observacao { position: relative; padding-left: 7mm; margin: 0 0 3.6mm; font-size: 9pt; line-height: 1.45; break-inside: avoid; }
+.observacao::before { content: ''; position: absolute; left: 0; top: .6mm; width: 3.6mm; height: 3.6mm; border: .9pt solid var(--teal); border-radius: .6mm; }
+.observacao b { font-family: var(--f-rotulo); font-size: 6.8pt; letter-spacing: .16em; text-transform: uppercase; color: var(--teal-tinta); display: block; margin-bottom: .4mm; }
+.respostas { margin-top: 6mm; font-family: var(--f-rotulo); font-size: 6.6pt; line-height: 1.5; color: var(--suave); border-top: .4pt solid var(--linha); padding-top: 2mm; break-inside: avoid; }
+.respostas .rot { display: block; font-size: 6pt; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--neguev-tinta); margin-bottom: 1mm; }
 .respostas b { color: var(--tinta); }
 
 /* Notas do capítulo, em duas colunas */

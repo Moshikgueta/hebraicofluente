@@ -144,10 +144,11 @@
   }
 
   /* ── páginas ────────────────────────────────────────────────────────── */
+  function arte(id) { return id && D.svgs[id] ? D.svgs[id].replace(/preserveAspectRatio="[^"]*"/, 'preserveAspectRatio="xMidYMax slice"') : ''; }
   function inicio() {
     var s = estado(); var c1 = D.capitulos[0];
     main.innerHTML = '';
-    var h = el('section', { class: 'heroi' }, '<div class="arte">' + (c1.abertura.imagem && D.svgs[c1.abertura.imagem] ? D.svgs[c1.abertura.imagem] : '') + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Hebraico Fluente</span><span class="he" lang="he">ישראל</span></div><h1>' + esc(D.titulo) + '</h1><p>' + esc(D.subtitulo) + '.</p></div>');
+    var h = el('section', { class: 'heroi' }, '<div class="arte">' + arte(c1.abertura.imagem) + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Hebraico Fluente</span><span class="he" lang="he">ישראל</span></div><h1>' + esc(D.titulo) + '</h1><p>' + esc(D.subtitulo) + '.</p></div>');
     main.appendChild(h);
     main.appendChild(el('p', { class: 'aviso-prototipo' }, 'Protótipo para aprovação: só o capítulo 1 está aqui. O progresso e o diário ficam guardados neste aparelho.'));
     if (s.ultima) { var u = porId(s.ultima.cap); if (u) main.appendChild(el('p', null, '<a class="botao" href="#/' + u.id + '/' + s.ultima.secao + '">Continuar de onde parou</a>')); }
@@ -174,7 +175,7 @@
   var observador = null;
   function capitulo(cap, alvo) {
     main.innerHTML = '';
-    main.appendChild(el('section', { class: 'heroi' }, '<div class="arte">' + (cap.abertura.imagem && D.svgs[cap.abertura.imagem] ? D.svgs[cap.abertura.imagem] : '') + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Capítulo ' + String(cap.numero).padStart(2, '0') + '</span></div><h1>' + esc(cap.titulo) + '</h1><p>' + (cap.abertura.frase || esc(cap.subtitulo || '')) + '</p>' + (cap.abertura.credito ? '<div class="credito">' + esc(cap.abertura.credito) + '</div>' : '') + '</div>'));
+    main.appendChild(el('section', { class: 'heroi' }, '<div class="arte">' + arte(cap.abertura.imagem) + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Capítulo ' + String(cap.numero).padStart(2, '0') + '</span></div><h1>' + esc(cap.titulo) + '</h1><p>' + (cap.abertura.frase || esc(cap.subtitulo || '')) + '</p>' + (cap.abertura.credito ? '<div class="credito">' + esc(cap.abertura.credito) + '</div>' : '') + '</div>'));
     var s = estado();
     cap.secoes.forEach(function (sec) {
       var art = el('section', { class: 'secao' + (sec.titulo ? '' : ' entrada'), id: sec.id });
@@ -208,7 +209,7 @@
     var caixa = el('div'); main.appendChild(caixa);
     function filtrar() {
       var t = busca.value.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-      var achados = itens.filter(function (v) { return !t || (v.translit + ' ' + v.pt + ' ' + v.he).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').indexOf(t) >= 0; });
+      var achados = itens.filter(function (v) { return !t || (v.translit + ' ' + v.pt + ' ' + v.he + ' ' + String(v.nota || '').replace(/<[^>]+>/g, '')).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').indexOf(t) >= 0; });
       caixa.innerHTML = '';
       caixa.appendChild(bloco({ tipo: 'vocabulario', titulo: achados.length + ' palavra' + (achados.length === 1 ? '' : 's'), itens: achados }));
     }

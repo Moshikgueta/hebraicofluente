@@ -112,6 +112,13 @@ const PROIBIDAS = [/os israelenses sempre/i, /todo israelense/i, /em israel ning
 const CLICHES = [/rica tape[cç]aria/i, /fascinante mosaico/i, /neste cap[ií]tulo (veremos|vamos ver)/i, /[eé] importante ressaltar/i, /terra de contrastes/i, /ber[cç]o d[aeo]s? civiliza/i];
 const registroAtivos = fs.existsSync(path.join(RAIZ, 'ativos/registro-de-ativos.json')) ? lerJSON(path.join(RAIZ, 'ativos/registro-de-ativos.json')).ativos : [];
 let palavras = 0; const porArquivo = [];
+const slugV = t => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/<[^>]+>/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const dirDados = path.join(RAIZ, 'ativos/dados');
+const fotosConhecidas = new Set([
+  ...fs.readdirSync(dirDados).filter(f => /^fotos-candidatas-.*\.json$/.test(f)).flatMap(f => (lerJSON(path.join(dirDados, f)).candidatas || []).map(c => c.id)),
+  ...Object.keys(fs.existsSync(path.join(RAIZ, 'ativos/fotos.json')) ? lerJSON(path.join(RAIZ, 'ativos/fotos.json')).fotos : {}),
+]);
+const linksConhecidos = new Set(fs.readdirSync(dirDados).filter(f => /^links-.*\.json$/.test(f)).flatMap(f => lerJSON(path.join(dirDados, f)).map(l => l.id || slugV(l.titulo))));
 for (const arq of ordem) {
   const p = path.join(man, arq);
   if (!fs.existsSync(p)) { aviso(`manuscrito ausente: manuscrito/${arq}`); continue; }
@@ -150,6 +157,10 @@ for (const arq of ordem) {
       if (!['ativos/mapas', 'ativos/infograficos'].some(d => fs.existsSync(path.join(RAIZ, d, id + '.svg')))) erro(`${onde}: figura ${id} não gerada`);
       if (!registroAtivos.find(a => a.id === id)) erro(`${onde}: figura ${id} fora do registro de ativos`);
     }
+    const ft = l.match(/^:::\s*foto\s+([\w-]+)/);
+    if (ft && !fotosConhecidas.has(ft[1])) erro(`${onde}: foto ${ft[1]} não está nas candidatas nem em ativos/fotos.json`);
+    const lk = l.match(/^:::\s*link\s+([\w-]+)/);
+    if (lk && !linksConhecidos.has(lk[1])) erro(`${onde}: link ${lk[1]} não está em ativos/dados/links-*.json`);
     if (/^:::\s*olhar-israelense/.test(l) && !/aprovado/.test(l)) aviso(`${onde}: caixa "O olhar de um israelense" pendente de aprovação do autor`);
   });
   porArquivo.push({ arq, palavras: n, marcas });

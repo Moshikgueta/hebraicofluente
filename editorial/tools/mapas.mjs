@@ -283,9 +283,9 @@ function mapaDestinos() {
    escolha de diagramação (perto do rótulo da região, nunca um limite); o
    TEXTO vem de regioes.json, e só entra região com afirmação VERIFICADO. */
 const POS_REGIAO = [
-  [/gol/i, [35.75, 32.95]], [/alta galileia|^galileia/i, [35.35, 33.0]], [/hula/i, [35.6, 33.1]], [/kin|mar da galileia/i, [35.58, 32.82]],
-  [/litoral|costeir|carmelo|sharon/i, [34.8, 32.6]], [/montes|judeia|samaria/i, [35.15, 31.9]], [/jord/i, [35.52, 32.35]],
-  [/mar morto/i, [35.5, 31.5]], [/neguev/i, [34.85, 30.8]], [/arava/i, [35.15, 30.35]], [/eilat|extremo sul/i, [34.97, 29.65]],
+  [/gol/i, [35.8, 32.86]], [/alta galileia|^galileia/i, [35.22, 32.9]], [/hula/i, [35.6, 33.1]], [/kin|mar da galileia/i, [35.58, 32.82]],
+  [/litoral|costeir|carmelo|sharon/i, [34.9, 32.32]], [/montes|judeia|samaria/i, [35.18, 32.12]], [/jord/i, [35.5, 32.05]],
+  [/mar morto/i, [35.47, 31.25]], [/neguev/i, [34.75, 30.9]], [/arava/i, [35.05, 30.4]], [/eilat|extremo sul/i, [34.97, 29.65]],
 ];
 function pontosRegioes() {
   const reg = lerDados('regioes.json'); if (!Array.isArray(reg)) return [];

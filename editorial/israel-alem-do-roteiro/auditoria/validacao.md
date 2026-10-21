@@ -4,10 +4,10 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 18909
+- Palavras no manuscrito: 18985
 - Fontes registradas: 292 (por nível: D 51, B 78, E 108, A 44, C 11; por acesso: trecho-de-busca 272, referencia-confirmada 20)
 - Afirmações registradas: 480 (VERIFICADO 233, NÃO VERIFICADO 164, PARCIALMENTE VERIFICADO 66, DESATUALIZADO 3, CONTESTADO 14)
-- Afirmações VERIFICADO sem uso no texto: 6
+- Afirmações VERIFICADO sem uso no texto: 8
 - Ocorrências de hebraico: 158 (lista em auditoria/hebraico.md)
 - Links testados: 0 de 291 (rede bloqueada; ver revisão humana)
 
@@ -15,7 +15,7 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 | --- | --- | --- |
 | 00a-nota-metodologica.md | 580 | 0 |
 | 00b-introducao.md | 482 | 0 |
-| 01-israel-no-mapa.md | 2455 | 70 |
+| 01-israel-no-mapa.md | 2531 | 73 |
 | 02-historia.md | 2737 | 78 |
 | 03-jerusalem.md | 2586 | 68 |
 | 04-alem-de-jerusalem.md | 3070 | 101 |
@@ -33,6 +33,6 @@ Nenhum.
 
 ## Avisos (3)
 
-- manuscrito/01-israel-no-mapa.md:97: caixa "O olhar de um israelense" pendente de aprovação do autor
+- manuscrito/01-israel-no-mapa.md:129: caixa "O olhar de um israelense" pendente de aprovação do autor
 - manuscrito/05-vida-real.md:97: caixa "O olhar de um israelense" pendente de aprovação do autor
 - manuscrito ausente: manuscrito/09-curiosidades.md
