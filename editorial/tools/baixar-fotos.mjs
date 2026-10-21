@@ -105,9 +105,14 @@ async function doLoc(c, arq) {
   const j = await json(url + '?fo=json');
   const texto = JSON.stringify(j);
   if (!/no known restrictions/i.test(texto)) return { recusa: 'a Library of Congress não declara "no known restrictions" para o item' };
-  const jpgs = [...new Set(texto.match(/https?:\/\/[a-z0-9.]*loc\.gov\/[^"\\\s]+?\.jpe?g/gi) || [])].map(u => u.replace(/^http:/, 'https:'));
-  const tam = u => { const m = u.match(/pct:(\d+)|_(\d+)px|(\d{3,4})v\.jpg|(\d{3,4})r\.jpg/); return m ? +(m[1] || m[2] || m[3] || m[4]) : (/\/full\//.test(u) ? 1000 : 0); };
-  const melhor = jpgs.sort((a, b) => tam(b) - tam(a))[0];
+  /* A imagem grande sai do serviço IIIF da Library of Congress, pedida com
+     2000 px de largura. Sem serviço IIIF, o maior JPEG listado, medido pelo
+     tamanho que a própria URL declara (pct:, #w=), nunca pelo número do
+     catálogo que aparece no nome do arquivo. */
+  const iiif = [...new Set((texto.match(/image-services\/iiif\/service:[a-z0-9:._-]+/gi) || []))];
+  const jpgs = [...new Set(texto.match(/https?:\/\/[a-z0-9.]*loc\.gov\/[^"\\\s]+?\.jpe?g[^"\\\s]*/gi) || [])].map(u => u.replace(/^http:/, 'https:'));
+  const tam = u => { const m = u.match(/pct:(\d+)|[#&]w=(\d+)|\/full\/(\d+),/); return m ? (m[1] ? +m[1] * 50 : +(m[2] || m[3])) : 0; };
+  const melhor = iiif.length ? `https://tile.loc.gov/${iiif[0]}/full/2000,/0/default.jpg` : jpgs.sort((a, b) => tam(b) - tam(a))[0];
   if (!melhor) return { recusa: 'item sem imagem JPEG na Library of Congress' };
   await baixar(melhor, arq);
   const item = j.item || {};

@@ -43,6 +43,7 @@ jobs:
         working-directory: editorial/israel-alem-do-roteiro/ativos/fotos
         run: |
           # 1800 px no lado maior: sobra para a página A4 do PDF e não pesa no repositório.
+          command -v mogrify >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick >/dev/null; } || true
           if command -v mogrify >/dev/null; then mogrify -resize '1800x1800>' -strip -interlace JPEG -sampling-factor 4:2:0 -quality 80 *.jpg; else echo 'ImageMagick ausente: fotos ficam no tamanho baixado.'; fi
           du -sh .
       - name: Resumo
