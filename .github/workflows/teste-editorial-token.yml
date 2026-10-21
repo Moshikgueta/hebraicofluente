@@ -1,0 +1,53 @@
+name: Teste do EDITORIAL_TOKEN (temporário)
+
+# Prova que o segredo EDITORIAL_TOKEN lê o repositório privado do editorial e
+# que o e-book monta na Action, do mesmo jeito que o deploy-worker.yml faz.
+# NÃO publica nada e NÃO guarda artefato: o resumo deste repositório é
+# público, então só saem contagens e tamanhos, nunca conteúdo. Sai do ramo
+# depois do teste.
+
+on:
+  push:
+    branches: ['claude/ebook-israel']
+    paths: ['.github/workflows/teste-editorial-token.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  teste:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: O segredo existe?
+        env:
+          TEM_TOKEN: ${{ secrets.EDITORIAL_TOKEN != '' }}
+        run: |
+          if [ "$TEM_TOKEN" != "true" ]; then echo "::error::EDITORIAL_TOKEN não existe neste repositório."; exit 1; fi
+          echo "EDITORIAL_TOKEN existe." >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          repository: Moshikgueta/hebraicofluente-editorial
+          token: ${{ secrets.EDITORIAL_TOKEN }}
+          path: editorial
+          persist-credentials: false
+      - name: O editorial chegou?
+        run: |
+          n=$(find editorial -type f -not -path '*/.git/*' | wc -l)
+          m=$(ls editorial/israel-alem-do-roteiro/manuscrito/*.md | wc -l)
+          echo "Editorial lido com o token: $n arquivos, $m capítulos do manuscrito." | tee -a "$GITHUB_STEP_SUMMARY"
+          test "$m" -ge 10
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - name: O e-book monta (versão web e PDF), sem publicar
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick >/dev/null
+          ( cd editorial && npm ci --ignore-scripts --no-audit --no-fund )
+          ( cd editorial && npx --yes "playwright@$(node -p "require('./package.json').dependencies['playwright-core']")" install --with-deps chromium >/dev/null 2>&1 )
+          export HF_CHROMIUM="$(cd editorial && node -e "import('playwright-core').then(m => console.log(m.chromium.executablePath()))")"
+          bash scripts/ebook-no-site.sh 2>&1 | tail -4 | tee -a "$GITHUB_STEP_SUMMARY"
+          test -s app/public/israel/index.html
+          test -s app/public/israel/israel-alem-do-roteiro.pdf
+          echo "Montado em app/public/israel/ (descartado ao fim do job, nada é guardado)." >> "$GITHUB_STEP_SUMMARY"
