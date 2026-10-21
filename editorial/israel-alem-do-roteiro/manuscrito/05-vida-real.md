@@ -70,13 +70,13 @@ O dia mais silencioso do ano é o Yom Kipur. Segundo reportagens de vários anos
 
 Três datas do calendário nacional caíram em abril nos anos citados aqui, e duas delas têm som.
 
-No Yom HaShoá, o dia da memória do Holocausto, uma sirene de dois minutos soa em todo o país às 10h. Em 2021 e em 2023, motoristas pararam nas estradas e saíram dos carros, e pedestres ficaram parados onde estavam.[[C05-088]]
-
-No Yom HaZikarón, o Dia da Memória dos soldados mortos e das vítimas do terrorismo, são duas sirenes: uma de um minuto, às 20h da véspera, e outra de dois minutos, às 11h do dia seguinte. Em 2026, elas caíram em 20 e 21 de abril.[[C05-089]] Ao anoitecer, o luto termina e começa o Dia da Independência: o país passa do cemitério à festa sem dia de intervalo.[[C05-090]]
-
 ::: foto foto-yom-hazikaron-2023
 Uma cerimônia do Yom HaZikarón de 2023.
 :::
+
+No Yom HaShoá, o dia da memória do Holocausto, uma sirene de dois minutos soa em todo o país às 10h. Em 2021 e em 2023, motoristas pararam nas estradas e saíram dos carros, e pedestres ficaram parados onde estavam.[[C05-088]]
+
+No Yom HaZikarón, o Dia da Memória dos soldados mortos e das vítimas do terrorismo, são duas sirenes: uma de um minuto, às 20h da véspera, e outra de dois minutos, às 11h do dia seguinte. Em 2026, elas caíram em 20 e 21 de abril.[[C05-089]] Ao anoitecer, o luto termina e começa o Dia da Independência: o país passa do cemitério à festa sem dia de intervalo.[[C05-090]]
 
 ::: observar Quando a sirene tocar
 No Yom HaShoá e no Yom HaZikarón, a sirene soa no país inteiro, e quem está na rua costuma parar onde está, inclusive na estrada.[[C05-088,C05-089]] Se você estiver em Israel nesses dias, saiba o horário com antecedência e, se for possível, pare também.
@@ -168,7 +168,7 @@ Na maior parte do país, trens e ônibus param do fim da tarde de sexta à noite
 
 ### 4. Cada cidade tem o seu Shabat
 
-Em Tel Aviv, uma lei municipal mantida pela Suprema Corte em 2017 permite a cerca de 160 mercearias abrir no Shabat.[[C05-083]] Quem atravessa o país numa sexta à noite passa por ritmos muito diferentes.
+Em Tel Aviv, uma lei municipal mantida pela Suprema Corte em 2017 permite a cerca de 160 mercearias abrir no Shabat.[[C05-083]]
 
 ### 5. O país para ao som de uma sirene
 
@@ -184,19 +184,15 @@ Os dias de descanso oficiais são festas judaicas e o Dia da Independência; Cha
 
 ### 8. Em Jerusalém, mais de um em cada três moradores é muçulmano
 
-No fim de 2025, viviam na cidade 395.200 muçulmanos, 37,2% dos moradores, a maior comunidade muçulmana do país.[[C05-006]] O dado segue a contagem que o CBS faz do município; o status de Jerusalém, discutido internacionalmente, é tema do capítulo 3.
+No fim de 2025, viviam na cidade 395.200 muçulmanos, 37,2% dos moradores, a maior comunidade muçulmana do país.[[C05-006]] O CBS conta o município; o status internacional da cidade é tema do capítulo 3.
 
 ### 9. O país cresce mais pelo berço do que pelo avião
 
-No ano encerrado em abril de 2026, nasceram cerca de 177 mil bebês e morreram cerca de 48 mil pessoas; chegaram 21 mil imigrantes e 45 mil israelenses saíram para morar no exterior.[[C05-004]] O que mais fez a população crescer, nesse período, foram os nascimentos. Em 2025, a fecundidade era de 3,08 filhos por mulher judia e de 2,76 por mulher muçulmana.[[C05-007]]
+No ano encerrado em abril de 2026, nasceram cerca de 177 mil bebês e morreram cerca de 48 mil pessoas; chegaram 21 mil imigrantes e 45 mil israelenses foram morar no exterior.[[C05-004]]
 
 ### 10. A franqueza tem nome, e tem bibliografia
 
 Em 1986, Tamar Katriel, pesquisadora da Universidade de Haifa, publicou pela Cambridge University Press um estudo sobre o <he>דּוּגְרִי</he> (dúgri), a "fala reta". Para ela, o dúgri é uma forma cultural ligada à figura do sabra, o judeu nascido no país, tomado como ideal mítico.[[C05-016]] Katriel observa que, entre quem compartilha o código, a franqueza vem amortecida por significados comuns; quem vem de fora tende a lê-la como grosseria.[[C05-017]] É o retrato de um ideal de época e de um grupo, não uma regra sobre como todo mundo fala em Israel.
-
-::: olhar-israelense pendente
-Uma resposta curta, um "não" sem rodeios ou uma correção feita na hora podem ser lidos de dois jeitos. O estudo de Katriel ajuda a separar estilo de intenção: no código de quem fala dúgri, ir direto ao ponto não é, por si, sinal de desprezo. Para o visitante, uma saída prática é tratar a resposta direta como informação, responder no mesmo tom e não levar para o lado pessoal. O estilo, porém, muda com a idade, a comunidade, a região e a situação, e a franqueza de um encontro no mercado não é a de uma reunião de trabalho.
-:::
 
 ::: quiz Em Israel, qual destes dias é normalmente dia de trabalho?
 - [x] Domingo | O domingo é dia de trabalho; uma proposta de torná-lo folga chegou ao governo e enfrentou oposição.[[C05-078]]

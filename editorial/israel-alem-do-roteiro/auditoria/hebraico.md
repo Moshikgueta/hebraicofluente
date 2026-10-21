@@ -25,14 +25,14 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 19 | הַר הַבַּיִת |  |  | manuscrito/03-jerusalem.md:107 | A plataforma que esses muros sustentam tem dois nomes, e cada um diz de onde se olha. Para judeus, e no vocabulário do Estado de Israel, é o Monte do Templo, <h |
 | 20 | גִּיחוֹן |  |  | manuscrito/03-jerusalem.md:177 | Debaixo de Jerusalém, um túnel cavado na rocha leva a água de uma fonte até um tanque. A ponta norte do túnel fica junto da fonte de Giom, em hebraico <he>גִּיח |
 | 21 | עִיר דָּוִד |  |  | manuscrito/03-jerusalem.md:191 | O túnel é visitado dentro do parque chamado Cidade de Davi, em hebraico <he>עִיר דָּוִד</he> (Ir Davíd). Ele fica na parte sul da crista oriental da Jerusalém a |
-| 22 | יְרוּשָׁלַיִם | Yerushaláyim | Jerusalém | manuscrito/03-jerusalem.md:224 |  |
-| 23 | הַכֹּתֶל הַמַּעֲרָבִי | HaKótel HaMaaraví | o Muro Ocidental | manuscrito/03-jerusalem.md:225 |  |
-| 24 | הַר הַבַּיִת | Har HaBáyit | o Monte do Templo | manuscrito/03-jerusalem.md:226 |  |
-| 25 | מִגְדַּל דָּוִד | Migdál Davíd | Torre de Davi | manuscrito/03-jerusalem.md:227 |  |
-| 26 | הַר הַזֵּיתִים | Har HaZeitím | Monte das Oliveiras | manuscrito/03-jerusalem.md:228 |  |
-| 27 | זַיִת |  |  | manuscrito/03-jerusalem.md:228 | - <he>הַר הַזֵּיתִים</he> / Har HaZeitím / Monte das Oliveiras / <he>זַיִת</he> (záyit) é "oliveira, azeitona". |
-| 28 | עִיר דָּוִד | Ir Davíd | Cidade de Davi | manuscrito/03-jerusalem.md:229 |  |
-| 29 | גִּיחוֹן | Guichón | Giom | manuscrito/03-jerusalem.md:230 |  |
+| 22 | יְרוּשָׁלַיִם | Yerushaláyim | Jerusalém | manuscrito/03-jerusalem.md:220 |  |
+| 23 | הַכֹּתֶל הַמַּעֲרָבִי | HaKótel HaMaaraví | o Muro Ocidental | manuscrito/03-jerusalem.md:221 |  |
+| 24 | הַר הַבַּיִת | Har HaBáyit | o Monte do Templo | manuscrito/03-jerusalem.md:222 |  |
+| 25 | מִגְדַּל דָּוִד | Migdál Davíd | Torre de Davi | manuscrito/03-jerusalem.md:223 |  |
+| 26 | הַר הַזֵּיתִים | Har HaZeitím | Monte das Oliveiras | manuscrito/03-jerusalem.md:224 |  |
+| 27 | זַיִת |  |  | manuscrito/03-jerusalem.md:224 | - <he>הַר הַזֵּיתִים</he> / Har HaZeitím / Monte das Oliveiras / <he>זַיִת</he> (záyit) é "oliveira, azeitona". |
+| 28 | עִיר דָּוִד | Ir Davíd | Cidade de Davi | manuscrito/03-jerusalem.md:225 |  |
+| 29 | גִּיחוֹן | Guichón | Giom | manuscrito/03-jerusalem.md:226 |  |
 | 30 | כִּנֶּרֶת | Kinéret | o lago da Galileia | manuscrito/04-alem-de-jerusalem.md:33 |  |
 | 31 | יָם | yam | mar | manuscrito/04-alem-de-jerusalem.md:34 |  |
 | 32 | יַם כִּנֶּרֶת |  |  | manuscrito/04-alem-de-jerusalem.md:34 | - <he>יָם</he> / yam / mar / O hebraico também chama o lago de mar: <he>יַם כִּנֶּרֶת</he>, Yam Kinéret. |

@@ -1,167 +1,179 @@
 # Auditoria interna do capítulo 3: Jerusalém, uma cidade de muitas histórias
 
-Data: 21/10/2026. Auditoria interna feita por IA depois da escrita. Não é revisão
-acadêmica: nada aqui foi revisado, validado ou aprovado por especialista.
+Data: 21/10/2026 (segunda rodada). Auditoria interna feita por IA depois da
+escrita. Não é revisão acadêmica: nada aqui foi revisado, validado ou aprovado
+por especialista.
 
-## Aviso sobre esta rodada
+## 0. O que esta rodada fez
 
-O orçamento de buscas na web acabou depois de **37 buscas** (o limite é
-compartilhado entre os agentes da sessão; o protocolo esperava 40 a 90). Tudo o
-que não chegou a ser buscado ficou `NÃO VERIFICADO` e fora do texto, como manda
-o protocolo. Por isso o manuscrito tem **cerca de 2.700 palavras**, contra as
-4.200 do orçamento, e vários temas do brief estão ausentes (lista no item 4). O
-capítulo não está pronto para diagramação: precisa de uma segunda rodada de
-pesquisa.
+A primeira rodada parou por falta de buscas e deixou fora os temas C03-067 a
+C03-082. Nesta, com cerca de 23 buscas (texto e imagens; o orçamento dos dois
+capítulos foi de 60, e os dois usaram 39), o capítulo foi reescrito no padrão
+dos capítulos 1 e 2: abertura com cena, linha do tempo de Jerusalém, oito
+seções novas ou ampliadas, a seção "10 detalhes" em desafios de observação
+(`observacao`), 4 perguntas, 5 fotos, 4 QR.
 
-## 1. Afirmações por status
+- Manuscrito: 4.318 palavras (validador), contra 2.743 antes.
+- PDF: `saida/capitulo-03.pdf`, 27 páginas, 4 de 4 QR lidos de volta.
+- `tools/inspecionar.mjs --formato=capitulo-03`: nenhum transbordo, nenhuma
+  página quase vazia.
+- `tools/validar.mjs`: 0 erros (os 3 avisos são de outros capítulos).
+- Travessão e meia-risca: as duas verificações da pasta saíram vazias.
+
+## 1. Afirmações por status (afirmacoes/cap03.json)
 
 | Status | Quantidade |
 | --- | --- |
-| VERIFICADO | 51 |
-| CONTESTADO | 4 (C03-019, C03-040, C03-041, C03-051) |
-| PARCIALMENTE VERIFICADO | 14 (fora do texto) |
+| VERIFICADO | 78 |
+| CONTESTADO | 5 (C03-019, C03-040, C03-041, C03-051, C03-107) |
+| PARCIALMENTE VERIFICADO | 15 (fora do texto) |
 | NÃO VERIFICADO | 13 (fora do texto) |
-| Total | 82 |
+| Total | 111 (29 novas: C03-083 a C03-111) |
 
-Fontes: 56 (A: 7; B: 9; C: 4; D: 9; E: 27). Todas com `acesso:
-trecho-de-busca`, menos F03-053 (`referencia-confirmada`, só o título).
+Fontes: 90 (A 10, B 27, C 4, D 16, E 33); 34 novas (F03-057 a F03-090), todas
+`trecho-de-busca`. O texto também cita, sem repetir a pesquisa, nove
+afirmações verificadas do capítulo 2 (C02-018, 027, 028, 031, 040, 048, 501,
+521, 525), para a linha do tempo, Aelia Capitolina e a cidade dividida: as
+datas ficam iguais às do capítulo 2 por construção.
 
-Toda marca `[[C03-NNN]]` do manuscrito aponta para afirmação `VERIFICADO` ou
-`CONTESTADO`; toda fonte citada existe; nenhuma fonte ficou sem uso (conferido
-por script). Nenhum travessão nem meia-risca na pasta.
+Os registros antigos que esta rodada resolve (C03-067 a C03-077) não foram
+apagados: ganharam uma nota em `limitacoes` apontando a afirmação nova.
 
-## 2. Problemas encontrados
+## 2. O que foi pesquisado e entrou
 
-- **Afirmações sustentadas só por nível E, marcadas VERIFICADO por exceção.**
-  C03-027 (al-Aqsa no mesmo complexo do Domo) e C03-049 (o túnel faz parte do
-  sítio Cidade de Davi) se apoiam em fontes E concordantes ou num título de
-  página oficial. São fatos consensuais, mas o protocolo pede fonte A-D. Cada
-  registro tem um "ATENÇÃO DA REVISÃO" em `limitacoes`.
-- **Fatos históricos com duas fontes E.** C03-053, C03-055 e C03-056 (descoberta,
-  remoção e paradeiro da inscrição de Siloé) e C03-061 a C03-063 (embaixadas)
-  foram tratados como fatos datados com duas fontes E independentes. Para Siloé,
-  falta a página dos Museus Arqueológicos de Istambul.
-- **Referências incompletas.** F03-017 (Reem et al., 2022: prenomes e título),
-  F03-022 (artigo do JRAS: autor e ano), F03-025 (Omer, 2015: título), F03-013
-  (atribuição do ensaio a Raymond Cohen), F03-050 (título exato do volume do
-  Pro-Jerusalem Council), F03-051 (título da matéria). Nada foi inventado: os
-  campos desconhecidos estão marcados "a confirmar".
-- **Divergências de data registradas, não escondidas:** construção da muralha
-  (1536, 1537 ou 1538 a 1541); primeiro decreto do status quo (1757 ou 1767);
-  período dos azulejos do Domo (1545-1552, 1545-1585, anos 1550). O ACOR dá 1585
-  como fim da troca, depois da morte de Solimão (1566): provável erro de trecho
-  ou obra continuada por sucessores; conferir no texto integral.
-- **Números da muralha:** a IAA dá 4.300 m, 35 torres, 344 seteiras e sete
-  portas originais; outras fontes dão números diferentes. O texto usa a IAA e
-  fala de portas "construídas", não das atuais.
-- **Contradição numa fonte descartada:** um site sobre a escada imóvel atribui
-  o firman de 1757 a Abdul Hamid I, que só reinou a partir de 1774. A escada
-  saiu do texto (C03-038).
-- **Anacronismos:** conferido. "Israelitas" não aparece; "judeus" não é usado
-  para o período do Ferro; "Judá" para o reino de Ezequias.
-- **Generalizações:** nenhuma frase do tipo "todo israelense" ou "os muçulmanos
-  sempre". "Para muçulmanos" e "para judeus" aparecem só para dizer o nome que
-  cada grupo usa.
-- **Etimologia:** só traduções literais (Har HaBáyit, "o monte da Casa";
-  Kotel, "muro"). Nenhuma etimologia de "Jerusalém" foi dada.
+- **Quatro bairros** (C03-083, C03-084): a tese de Matthew Teller (2022),
+  atribuída a ele, com o mapa britânico de 1841; e um estudo dos registros do
+  tribunal islâmico (Sroor, Toyo Bunko) em que "bairro" não designava o
+  conjunto da população muçulmana. A frase da legenda que o `jerusalem.json`
+  pedia ("simplificação do século XIX") agora tem fonte, desde que atribuída.
+- **Portas** (C03-085 a C03-093): oito em uso, a Porta Nova como acréscimo
+  otomano, a Dourada fechada; nomes árabes de Jafa, Sião e Herodes; traços de
+  Damasco, Leões e Esterco. Fontes D (Ministério do Turismo e prefeitura). A
+  IAA fala de sete portas na obra de Solimão (C03-008): o texto diz "abriu
+  sete; hoje há oito", coerente com as duas.
+- **Torre de Davi** (C03-094 a C03-096, C03-111): torres de Herodes, o engano
+  bizantino do nome, o minarete otomano, museu desde 1989, junto da Porta de
+  Jafa. Fonte: o próprio museu (parte interessada) e o Ministério do Turismo.
+- **Via Dolorosa** (C03-097, C03-098): só o que a Custódia da Terra Santa diz
+  da procissão de sexta-feira e do cerimonial de 1760, numa caixa "História ou
+  tradição?". A história do traçado e do número de estações não achou fonte
+  A-D e ficou fora (C03-070).
+- **Monte das Oliveiras** (C03-108, C03-109) e **mercado do algodão**
+  (C03-110, Da'adli e Barbé 2017, Archnet).
+- **Saída das muralhas e cidade dividida** (C03-103, C03-104): Mishkenot
+  Sha'ananim (1860) e a Porta Mandelbaum; queda do Bairro Judeu, armistício e
+  1967 pelos registros do capítulo 2.
+- **Cidade de Davi em Silwan** (C03-105 a C03-107): localização, operação pela
+  Elad desde 1997, decisão judicial após petição da Ir Amim, e o debate
+  (CONTESTADO) entre a apresentação oficial e os críticos (Greenberg, CMI).
+- **Jordânia** (C03-099, C03-100): artigo 9 do tratado de 1994 e acordo de 2013
+  (Kattan; MEI-NUS). **Posição palestina** (C03-101, C03-102): artigo 3 da Lei
+  Básica emendada de 2003 (Constitute Project; embaixada palestina) e a
+  declaração do Conselho Central da OLP em 2000 (cronologia do Institute for
+  Palestine Studies).
 
-## 3. Correções feitas durante a escrita
+## 3. Problemas encontrados e correções
 
-- "Ronny Reich e Yaakov Billig" (escavação da rua herodiana) virou "R. Reich e
-  Y. Billig": o trecho só traz as iniciais.
-- "A inscrição traz a data de 1545" virou "faz parte do revestimento que
-  Solimão deu ao edifício em 1545", que é o que o artigo do JRAS diz.
-- "A muralha acompanha o terreno" saiu: a fonte (um resumo em academia.edu) não
-  tem autor identificado.
-- "O resto do muro oeste foi exposto nos túneis" virou "outros trechos".
-- "A proposta de Reich e Shukron foi contestada" virou "tem críticos": a
-  rejeição explícita que a busca achou (Maeir e Chadwick) era de outra proposta
-  (Sneh, Shalev e Weinberger), não da de Reich e Shukron.
-- A legenda da figura foi reduzida ao que o esquema pode mostrar hoje.
-- A frase sobre a origem do nome do Arco de Robinson não entrou (não buscada).
-- Os versículos bíblicos sobre a obra de Ezequias não são citados por número
-  (não conferidos).
+- **Fontes E e partes interessadas.** C03-083 apoia-se em três fontes E sobre a
+  tese de um autor (está atribuída). C03-106 mistura duas E e uma B que é
+  projeto de um instituto palestino (Jerusalem Story). O museu da Torre de
+  Davi, a Custódia e a Elad falam de si mesmos. Tudo atribuído no texto.
+- **Fala de Rafi Greenberg** veio por jornalismo (Al Jazeera, 2013); está numa
+  afirmação CONTESTADO, com as duas posições.
+- **A posição da própria Elad** não foi lida em fonte dela (o site não apareceu
+  na busca). O texto cita a missão declarada como a Jerusalem Story a cita.
+- **Ano da decisão judicial** sobre a Elad não apareceu no trecho; o texto não
+  dá ano.
+- **Data da Porta Nova** (1887 ou 1889) diverge; o texto não dá ano.
+- **Dia do acordo de 2013** (31 de março numa fonte) ficou fora.
+- **Expansão árabe e cristã fora das muralhas** no século XIX não foi
+  verificada: o texto só nomeia o bairro judeu de 1860 e dá o crescimento da
+  população da região (capítulo 2). Falta equilíbrio aqui; ver item 4.
+- **Retirado na revisão adversária:** a cena de abertura com "hebraico, árabe,
+  armênio e inglês" no mercado; "há armênios fora do bairro armênio"; a Via
+  Dolorosa "ligando o bairro muçulmano ao Santo Sepulcro"; a "encosta coberta
+  de lápides claras"; a localização do Mapa de Madaba na legenda (a foto saiu
+  da composição). Nada disso tinha fonte.
+- **Anacronismos e generalizações:** conferido; nada novo.
 
-## 4. Fontes adicionais necessárias (para a revisão humana)
+## 4. Fontes adicionais necessárias (revisão humana)
 
-Temas do brief **ausentes** por falta de busca (todos `NÃO VERIFICADO`):
+1. Bairros árabes e cristãos fora das muralhas no século XIX (Sheikh Jarrah,
+   American Colony, Complexo Russo) com fonte A-D, para o parágrafo da saída
+   das muralhas não contar só o lado judeu. Lemire (Jerusalem 1900) e
+   Ben-Arieh são as pistas.
+2. Teller (2022) no texto integral, e um trabalho acadêmico sobre os quatro
+   bairros (Arnon, Middle Eastern Studies, foi procurado e não achado).
+3. Texto oficial do tratado Israel-Jordânia (artigo 9) e do acordo de 2013.
+4. Posição da Elad em fonte própria; ano da decisão da Suprema Corte.
+5. História do traçado da Via Dolorosa (Custódia, estudos franciscanos).
+6. Nomes hebraico e árabe da Porta de Damasco (Sháar Shchem, Bab al-Amud) e o
+   nome hebraico das demais: só achados em fontes E.
+7. Pendências da rodada anterior que seguem valendo: Galor (2017), Cohen
+   (2008), Frumkin et al. (2003), Reich e Shukron (2011), Museus Arqueológicos
+   de Istambul (Siloé), Pro-Jerusalem Council (1918), lista oficial de
+   embaixadas.
 
-1. Os quatro bairros e o esquema como simplificação do século XIX (C03-067).
-2. Nomes das portas em português, hebraico e árabe, e posição (C03-068). A lista
-   de trabalho está em `ativos/dados/jerusalem.json`, marcada para não exibir.
-3. Torre de Davi (Tower of David Museum) (C03-069).
-4. Via Dolorosa e as estações como tradição (Custódia da Terra Santa) (C03-070).
-5. Mezuzot nos batentes (C03-071).
-6. Monte das Oliveiras (C03-072) e os mercados (C03-073).
-7. Cidade dividida de 1948 a 1967 e saída das muralhas no século XIX (C03-074,
-   C03-075); Aelia Capitolina (C03-076); Primeiro Templo (C03-082). Conferir com
-   o capítulo 2 para não divergir.
-8. Cidade de Davi: localização em Silwan (Jerusalém Oriental) e o papel da
-   Fundação Ir David (Elad), que deve ser apresentada como parte interessada
-   (C03-077).
-9. A escada imóvel do Santo Sepulcro (C03-038): Custódia da Terra Santa, Cohen
-   (2008).
-10. A regra da pedra de Jerusalém de Storrs e a lei atual (C03-065, C03-066).
+## 5. Debates e como o texto os apresenta
 
-Textos integrais a abrir para confirmar o que já está no capítulo:
+- Os quatro bairros: tese de Teller, atribuída, e o que dizem os registros
+  locais; o texto conclui só que o esquema simplifica.
+- Status quo da esplanada: posição declarada do governo israelense (2015) e
+  o papel jordaniano nas palavras do tratado e do acordo de 2013, com a nota
+  de que o alcance é disputado.
+- Status de Jerusalém: Lei Básica israelense (1980), Resolução 478, Lei Básica
+  palestina (2003) e OLP (2000), cada um com data e palavras; embaixadas.
+- Cidade de Davi em Silwan: apresentação oficial contra críticos (CONTESTADO).
+- Mantidos da rodada anterior: data do túnel e da inscrição de Siloé, data do
+  Domo da Rocha, autenticidade do túmulo, origem da guarda da chave, cruzes de
+  Santa Helena.
 
-- Galor (2017), capítulo do Santo Sepulcro (comunidades, 1852, debate de
-  autenticidade).
-- Cohen (2008), para o status quo, o decreto de 1757 e a restauração.
-- Frumkin, Shimron e Rosenbaum (2003) e Reich e Shukron (2011), e o artigo de
-  resposta que defende a data do fim do século VIII a.C. (autor a identificar).
-- A ficha atual da UNESCO (whc.unesco.org/en/list/148) e a decisão mais recente
-  do Comitê sobre a Lista em Perigo.
-- Uma edição acadêmica das inscrições do Domo da Rocha (Milwright, Edinburgh
-  University Press, foi citada na busca sem trecho).
-- Os registros do Pro-Jerusalem Council (páginas da proclamação de 8 de abril de
-  1918).
-- Página dos Museus Arqueológicos de Istambul sobre a inscrição de Siloé.
-- Lista oficial de missões diplomáticas (MFA de Israel), datada.
+## 6. Esquema da Cidade Antiga (para o desenhista)
 
-## 5. Debates acadêmicos e como o texto os apresenta
+`ativos/dados/jerusalem.json` foi atualizado. Com o que está verificado hoje,
+um esquema fora de escala pode mostrar:
 
-- **Data do túnel de Siloé** (C03-051): as três posições (Frumkin et al. 2003;
-  Reich e Shukron 2011; defesa da data convencional) aparecem no texto e numa
-  caixa "História ou tradição?", que separa datação científica, texto bíblico e
-  debate.
-- **Data da inscrição de Siloé** (C03-058): a maioria pela paleografia do fim do
-  século VIII a.C.; a proposta do século II a.C. dita como minoritária.
-- **Início da construção do Domo da Rocha** (C03-019): a leitura corrente
-  (conclusão em 691-692) e a de Omer (2015), proporcional ao peso de cada uma.
-- **Autenticidade do túmulo no Santo Sepulcro** (C03-033): dita como debate, sem
-  resumir argumentos que não foram lidos.
-- **Origem da guarda muçulmana da chave** (C03-040): tradição familiar
-  (Saladino) contra documentação (século XVI).
-- **Cruzes de Santa Helena** (C03-041): peregrinos contra poucos pedreiros.
-- **Status de Jerusalém**: Lei Básica de 1980, Resolução 478 e embaixadas, cada
-  um com suas palavras e data; reações de 19 chanceleres e de autoridades
-  palestinas à embaixada da Colômbia. O texto não toma partido. Faltam, para
-  equilíbrio, a posição jordaniana sobre a custódia dos lugares santos e a
-  posição palestina sobre Jerusalém Oriental com fonte própria (D ou A).
+- muralha genérica de Solimão, com a legenda "4.300 m, 35 torres, 344
+  seteiras; sete portas na obra original, oito em uso hoje" (C03-008, C03-085);
+- dentro: a esplanada (Monte do Templo / Haram al-Sharif) com o Domo da Rocha
+  e al-Aqsa, o Muro Ocidental no lado oeste dela e o Arco de Robinson perto da
+  quina sudoeste (C03-012 a C03-015, C03-018, C03-020, C03-027);
+- a Torre de Davi colada à Porta de Jafa (C03-111);
+- fora: o Monte das Oliveiras a leste (C03-108), com o Getsêmani ao pé
+  (C03-109); a Cidade de Davi logo ao sul do Monte do Templo, em Silwan
+  (C03-105), com o túnel de Siloé partindo da fonte de Giom (C03-048);
+- uma lista lateral das oito portas com os nomes verificados (sem posição).
 
-## 6. Pendências editoriais
+Ainda não dá para desenhar: o lado da muralha de cada porta, o Santo
+Sepulcro, o Cardo, a Via Dolorosa e os limites dos bairros. A legenda dos
+bairros, se entrar, deve vir atribuída (C03-083).
 
-- **Hebraico para aprovação do autor** (todas as ocorrências, com nikud):
-  <he>יְרוּשָׁלַיִם</he> (Yerushaláyim), <he>הַכֹּתֶל הַמַּעֲרָבִי</he>
-  (HaKótel HaMaaraví), <he>הַר הַבַּיִת</he> (Har HaBáyit), <he>עִיר דָּוִד</he>
-  (Ir Davíd), <he>גִּיחוֹן</he> (Guichón). As mesmas aparecem em
-  `ativos/dados/jerusalem.json`. As transliterações das portas no JSON são lista
-  de trabalho, não exibida.
-- **Transliteração do árabe** (Haram al-Sharif, Qubbat al-Sakhra, al-masjid
-  al-aqsa, Bab al-...): forma simples, a uniformizar com os outros capítulos.
-- **Tradução do Corão 17:1** feita da tradução inglesa; a revisão pode preferir
-  uma tradução portuguesa publicada.
-- **Figura `mapa-jerusalem`**: bloqueada como planta até as posições serem
-  verificadas; hoje só pode mostrar a esplanada, o Domo, al-Aqsa, o Muro
-  Ocidental e o Arco de Robinson dentro de uma muralha genérica.
-- **Seção "10 detalhes"**: fechou 10, mas quatro dos exemplos do brief (escada
-  imóvel, mezuzot, Torre de Davi, Via Dolorosa) e o dos nomes das portas ficaram
-  de fora por falta de verificação; entraram no lugar o Arco de Robinson, a rua
-  herodiana, o aqueduto hasmoneu e as seteiras. Na segunda rodada, avaliar
-  troca.
-- **Caixa "aviso"** sobre a visita à esplanada: data de consulta 21/10/2026;
-  `revisar_ate` em C03-029 e C03-030 é 21/04/2027.
-- **Fotos**: nenhuma pedida.
-- **Revisar até**: C03-039 e C03-063 (21/10/2027); C03-029, C03-030, C03-056,
-  C03-062 (21/04/2027).
+## 7. Pendências editoriais
+
+- **Hebraico para aprovação do dono** (todas as ocorrências do capítulo):
+  <he>יְרוּשָׁלַיִם</he> Yerushaláyim; <he>הַכֹּתֶל הַמַּעֲרָבִי</he> HaKótel
+  HaMaaraví; <he>הַר הַבַּיִת</he> Har HaBáyit; <he>מִגְדַּל דָּוִד</he> Migdál
+  Davíd; <he>הַר הַזֵּיתִים</he> Har HaZeitím; <he>זַיִת</he> záyit;
+  <he>עִיר דָּוִד</he> Ir Davíd; <he>גִּיחוֹן</he> Guichón; <he>שַׁעַר</he>
+  sháar; <he>שַׁעַר יָפוֹ</he> Sháar Yáfo; <he>שַׁעַר שְׁכֶם</he> Sháar Shchem;
+  <he>שַׁעַר הַפְּרָחִים</he> Sháar HaPrachím; <he>שַׁעַר הָאֲרָיוֹת</he> Sháar
+  HaArayót; <he>שַׁעַר צִיּוֹן</he> Sháar Tsiyón; <he>שַׁעַר הָאַשְׁפּוֹת</he>
+  Sháar HaAshpót; <he>הַשַּׁעַר הֶחָדָשׁ</he> HaSháar HeChadásh. Dúvidas para o
+  dono: a tônica de "HaZeitím" e se "Sháar HaAshpót" é a forma usada nas
+  placas.
+- **Árabe transliterado** (a uniformizar com os outros capítulos): Bab
+  al-Khalil, Haram al-Sharif, Qubbat al-Sakhra, al-masjid al-aqsa, Suq
+  al-Qattanin, Silwan.
+- **Fotos** (`ativos/dados/fotos-candidatas-cap03.json`, 11 candidatas):
+  usadas a Porta de Jafa (Matson, "sim"), a Torre de Davi (Wayne McLean, CC BY
+  2.0, "sim"), a Via Dolorosa (Matson, "sim"), a fachada do Santo Sepulcro
+  (Delaney: a página declara CC BY-SA 3.0 e "All rights reserved" ao mesmo
+  tempo; "confirmar", e trocar se não se resolver) e a vista do Monte das
+  Oliveiras ("confirmar", licença não vista). Reaproveitada do capítulo 2:
+  `foto-domo-loc-temple-area` ("confirmar"). Nenhuma NC/ND.
+- **Links (QR)** em `ativos/dados/links-cap03.json`: UNESCO (página de mapas do
+  sítio 148, a URL vista), IAA (muralhas), Museu da Torre de Davi, Custódia
+  (Getsêmani).
+- **Prazos**: C03-097 (procissão) e C03-029/030 vencem em 21/04/2027; C03-106 e
+  C03-039/063 em 21/10/2027.
+- Nenhuma caixa "O olhar de um israelense".

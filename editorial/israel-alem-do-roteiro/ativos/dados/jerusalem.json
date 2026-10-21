@@ -14,30 +14,149 @@
     "portas_originais": 7,
     "nota": "A IAA diz que as sete portas originais 'face the four cardinal directions'. O número atual de portas é maior e não foi verificado.",
     "exibir": true,
-    "afirmacoes": ["C03-005", "C03-008", "C03-009"]
+    "afirmacoes": [
+      "C03-005",
+      "C03-008",
+      "C03-009"
+    ]
   },
   "bairros": {
     "exibir": false,
     "status": "NÃO VERIFICADO",
-    "itens": ["bairro judeu", "bairro cristão", "bairro muçulmano", "bairro armênio"],
+    "itens": [
+      "bairro judeu",
+      "bairro cristão",
+      "bairro muçulmano",
+      "bairro armênio"
+    ],
     "nota_obrigatoria_quando_verificado": "O esquema dos quatro bairros é uma simplificação, com origem nos mapas do século XIX; os limites reais nunca foram tão nítidos. Esta frase só pode ir para a legenda depois de verificada.",
-    "observacao": "Só o nome 'bairro judeu' aparece em fonte verificada (escavações de Nahman Avigad, C03-047), sem limites.",
-    "afirmacoes": ["C03-067", "C03-047"]
+    "observacao": "Segunda rodada: a origem do esquema dos quatro bairros como leitura do século XIX está em C03-083 e C03-084 (pode ir à legenda nessa forma, atribuída). Limites continuam sem fonte: não desenhar fronteiras.",
+    "afirmacoes": [
+      "C03-067",
+      "C03-047",
+      "C03-083",
+      "C03-084"
+    ]
   },
   "portoes": {
     "exibir": false,
-    "status": "NÃO VERIFICADO",
-    "nota": "Lista de TRABALHO montada a partir de conhecimento geral, para orientar a próxima busca. Nenhum nome, transliteração ou posição abaixo foi verificado. Ordem: no sentido horário, a partir da muralha oeste. Transliterações hebraicas no padrão pt-BR-practical-v1, a conferir pelo autor.",
-    "afirmacoes": ["C03-068"],
+    "status": "NOMES PARCIALMENTE VERIFICADOS; POSIÇÕES NÃO VERIFICADAS",
+    "nota": "Segunda rodada: oito portas em uso (C03-085); nomes e traços verificados por porta em C03-086 a C03-093 (Ministério do Turismo e prefeitura). O lado da muralha de cada porta continua sem fonte A-D: exibir só como lista, não como planta. Hebraico de todas as portas: para aprovação do dono.",
+    "afirmacoes": [
+      "C03-068"
+    ],
     "candidatos": [
-      {"ordem": 1, "pt": "Porta de Jafa", "he_translit": "Sháar Yáfo", "ar_translit": "Bab al-Khalil", "muralha": "oeste", "verificado": false},
-      {"ordem": 2, "pt": "Porta Nova", "he_translit": "HaSháar HeChadásh", "ar_translit": "Bab al-Jadid", "muralha": "norte (canto noroeste)", "verificado": false, "nota": "Aberta depois da obra de Solimão; data a verificar."},
-      {"ordem": 3, "pt": "Porta de Damasco", "he_translit": "Sháar Shchem", "ar_translit": "Bab al-Amud", "muralha": "norte", "verificado": false, "nota": "O nome em inglês, Damascus Gate, aparece verificado na fonte F03-050 (C03-064); posição e nomes em hebraico e árabe, não."},
-      {"ordem": 4, "pt": "Porta de Herodes", "he_translit": "Sháar HaPrachím", "ar_translit": "Bab al-Zahra", "muralha": "norte", "verificado": false},
-      {"ordem": 5, "pt": "Porta dos Leões", "he_translit": "Sháar HaArayót", "ar_translit": "Bab al-Asbat", "muralha": "leste", "verificado": false},
-      {"ordem": 6, "pt": "Porta Dourada (fechada)", "he_translit": "Sháar HaRachamím", "ar_translit": "Bab al-Rahma", "muralha": "leste (muro da esplanada)", "verificado": false},
-      {"ordem": 7, "pt": "Porta do Esterco", "he_translit": "Sháar HaAshpót", "ar_translit": "Bab al-Magharba", "muralha": "sul", "verificado": false},
-      {"ordem": 8, "pt": "Porta de Sião", "he_translit": "Sháar Tsiyón", "ar_translit": "Bab al-Nabi Daud", "muralha": "sul", "verificado": false}
+      {
+        "ordem": 1,
+        "pt": "Porta de Jafa",
+        "he_translit": "Sháar Yáfo",
+        "ar_translit": "Bab al-Khalil",
+        "muralha": "oeste",
+        "verificado": false,
+        "afirmacoes": [
+          "C03-087"
+        ],
+        "nome_verificado": true,
+        "posicao_verificada": false,
+        "ar_verificado": "Bab al-Khalil (C03-087)"
+      },
+      {
+        "ordem": 2,
+        "pt": "Porta Nova",
+        "he_translit": "HaSháar HeChadásh",
+        "ar_translit": "Bab al-Jadid",
+        "muralha": "norte (canto noroeste)",
+        "verificado": false,
+        "nota": "Aberta depois da obra de Solimão; data a verificar.",
+        "afirmacoes": [
+          "C03-086"
+        ],
+        "nome_verificado": true,
+        "posicao_verificada": false
+      },
+      {
+        "ordem": 3,
+        "pt": "Porta de Damasco",
+        "he_translit": "Sháar Shchem",
+        "ar_translit": "Bab al-Amud",
+        "muralha": "norte",
+        "verificado": false,
+        "nota": "O nome em inglês, Damascus Gate, aparece verificado na fonte F03-050 (C03-064); posição e nomes em hebraico e árabe, não.",
+        "afirmacoes": [
+          "C03-088"
+        ],
+        "nome_verificado": true,
+        "posicao_verificada": false
+      },
+      {
+        "ordem": 4,
+        "pt": "Porta de Herodes",
+        "he_translit": "Sháar HaPrachím",
+        "ar_translit": "Bab al-Zahra",
+        "muralha": "norte",
+        "verificado": false,
+        "afirmacoes": [
+          "C03-090"
+        ],
+        "nome_verificado": true,
+        "posicao_verificada": false,
+        "ar_verificado": "Porta das Flores, em árabe e em hebraico (C03-090)"
+      },
+      {
+        "ordem": 5,
+        "pt": "Porta dos Leões",
+        "he_translit": "Sháar HaArayót",
+        "ar_translit": "Bab al-Asbat",
+        "muralha": "leste",
+        "verificado": false,
+        "afirmacoes": [
+          "C03-089"
+        ],
+        "nome_verificado": true,
+        "posicao_verificada": false
+      },
+      {
+        "ordem": 6,
+        "pt": "Porta Dourada (fechada)",
+        "he_translit": "Sháar HaRachamím",
+        "ar_translit": "Bab al-Rahma",
+        "muralha": "leste (muro da esplanada)",
+        "verificado": false,
+        "afirmacoes": [
+          "C03-093"
+        ],
+        "nome_verificado": true,
+        "posicao_verificada": false
+      },
+      {
+        "ordem": 7,
+        "pt": "Porta do Esterco",
+        "he_translit": "Sháar HaAshpót",
+        "ar_translit": "Bab al-Magharba",
+        "muralha": "sul",
+        "verificado": false,
+        "afirmacoes": [
+          "C03-092"
+        ],
+        "nome_verificado": true,
+        "posicao_verificada": false,
+        "nota": "Leva ao Muro Ocidental e ao parque arqueológico do muro sul (C03-092): indica a vizinhança, não o lado da muralha."
+      },
+      {
+        "ordem": 8,
+        "pt": "Porta de Sião",
+        "he_translit": "Sháar Tsiyón",
+        "ar_translit": "Bab al-Nabi Daud",
+        "muralha": "sul",
+        "verificado": false,
+        "afirmacoes": [
+          "C03-091"
+        ],
+        "nome_verificado": true,
+        "posicao_verificada": false,
+        "ar_verificado": "Porta do Profeta Davi (C03-091)",
+        "nota": "Leva aos bairros armênio e judeu (C03-091)."
+      }
     ]
   },
   "pontos": [
@@ -49,7 +168,10 @@
       "ar_translit": "Haram al-Sharif",
       "posicao": "plataforma cercada por muros de contenção herodianos nos quatro lados",
       "exibir": true,
-      "afirmacoes": ["C03-012", "C03-018"]
+      "afirmacoes": [
+        "C03-012",
+        "C03-018"
+      ]
     },
     {
       "id": "muro-ocidental",
@@ -59,14 +181,20 @@
       "ar_translit": null,
       "posicao": "lado oeste da esplanada; o mais comprido dos quatro muros, 485 m",
       "exibir": true,
-      "afirmacoes": ["C03-012", "C03-013", "C03-014"]
+      "afirmacoes": [
+        "C03-012",
+        "C03-013",
+        "C03-014"
+      ]
     },
     {
       "id": "arco-de-robinson",
       "nome": "Arco de Robinson",
       "posicao": "projeta-se do muro oeste perto da quina sudoeste da esplanada",
       "exibir": true,
-      "afirmacoes": ["C03-015"]
+      "afirmacoes": [
+        "C03-015"
+      ]
     },
     {
       "id": "domo-da-rocha",
@@ -74,7 +202,10 @@
       "ar_translit": "Qubbat al-Sakhra",
       "posicao": "sobre a esplanada (Haram al-Sharif); posição exata dentro dela não verificada",
       "exibir": true,
-      "afirmacoes": ["C03-020", "C03-019"]
+      "afirmacoes": [
+        "C03-020",
+        "C03-019"
+      ]
     },
     {
       "id": "al-aqsa",
@@ -82,7 +213,9 @@
       "ar_translit": "al-Masjid al-Aqsa",
       "posicao": "no mesmo complexo; posição dentro da esplanada não verificada",
       "exibir": true,
-      "afirmacoes": ["C03-027"],
+      "afirmacoes": [
+        "C03-027"
+      ],
       "alerta": "C03-027 está sustentada por duas fontes E; a revisão deve acrescentar fonte A-D."
     },
     {
@@ -91,15 +224,23 @@
       "posicao": null,
       "exibir": false,
       "nota": "A igreja está verificada (C03-032 a C03-041), mas a posição dela na Cidade Antiga não. Exibir só depois de verificar a posição.",
-      "afirmacoes": ["C03-032", "C03-034"]
+      "afirmacoes": [
+        "C03-032",
+        "C03-034"
+      ]
     },
     {
       "id": "torre-de-davi",
       "nome": "Torre de Davi (Cidadela)",
-      "posicao": null,
-      "exibir": false,
-      "status": "NÃO VERIFICADO",
-      "afirmacoes": ["C03-069"]
+      "posicao": "junto da Porta de Jafa (C03-111)",
+      "exibir": true,
+      "status": "VERIFICADO",
+      "afirmacoes": [
+        "C03-094",
+        "C03-095",
+        "C03-111"
+      ],
+      "nota": "Desenhar colada à Porta de Jafa; o lado da muralha da porta não está verificado."
     },
     {
       "id": "cardo",
@@ -107,15 +248,23 @@
       "posicao": "no bairro judeu; posição exata não verificada",
       "exibir": false,
       "nota": "Identidade e escavação verificadas (C03-043, C03-044, C03-047); posição relativa não.",
-      "afirmacoes": ["C03-043", "C03-044", "C03-047"]
+      "afirmacoes": [
+        "C03-043",
+        "C03-044",
+        "C03-047"
+      ]
     },
     {
       "id": "via-dolorosa",
       "nome": "Via Dolorosa",
       "posicao": null,
       "exibir": false,
-      "status": "NÃO VERIFICADO",
-      "afirmacoes": ["C03-070"]
+      "status": "PRÁTICA VERIFICADA, TRAÇADO NÃO",
+      "afirmacoes": [
+        "C03-097",
+        "C03-098"
+      ],
+      "nota": "Termina no Santo Sepulcro e sai do santuário da Flagelação (C03-097); posição de ambos não verificada."
     }
   ],
   "fora_das_muralhas": [
@@ -124,10 +273,14 @@
       "nome": "Cidade de Davi",
       "he": "<he>עִיר דָּוִד</he>",
       "he_translit": "Ir Davíd",
-      "direcao": null,
-      "exibir": false,
+      "direcao": "logo ao sul do Monte do Templo, em Silwan (C03-105)",
+      "exibir": true,
       "nota": "Que o túnel de Siloé faz parte do sítio está registrado (C03-049, sustentação fraca). A direção em relação à muralha (o brief sugere a colina sudeste) não foi verificada.",
-      "afirmacoes": ["C03-049", "C03-077"]
+      "afirmacoes": [
+        "C03-105",
+        "C03-106"
+      ],
+      "status": "VERIFICADO"
     },
     {
       "id": "fonte-de-giom",
@@ -137,15 +290,21 @@
       "direcao": null,
       "exibir": false,
       "nota": "Verificado só que a ponta norte do túnel fica junto dela (C03-048).",
-      "afirmacoes": ["C03-048"]
+      "afirmacoes": [
+        "C03-048"
+      ]
     },
     {
       "id": "monte-das-oliveiras",
       "nome": "Monte das Oliveiras",
-      "direcao": null,
-      "exibir": false,
-      "status": "NÃO VERIFICADO",
-      "afirmacoes": ["C03-072"]
+      "direcao": "leste da Cidade Antiga (C03-108)",
+      "exibir": true,
+      "status": "VERIFICADO",
+      "afirmacoes": [
+        "C03-108",
+        "C03-109"
+      ]
     }
-  ]
+  ],
+  "atualizado_em": "2026-10-21 (segunda rodada do capítulo 3)"
 }
