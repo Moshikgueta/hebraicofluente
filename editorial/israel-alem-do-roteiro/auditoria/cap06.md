@@ -1,158 +1,85 @@
 # Auditoria interna: capítulo 6, Sabores de Israel
 
-Data: 21/10/2026. Esta é uma auditoria interna feita por IA na releitura do
-capítulo, não uma revisão acadêmica. Nada aqui foi revisado, validado ou
-aprovado por especialista.
+Data: 21/10/2026 (segunda rodada). Esta é uma auditoria interna feita por IA na releitura do capítulo, não uma revisão acadêmica. Nada aqui foi revisado, validado ou aprovado por especialista.
 
-## Aviso que condiciona tudo o que segue
+## Resumo da rodada
 
-A pesquisa foi interrompida pela cota de buscas da sessão: ela é compartilhada
-entre os agentes que trabalharam em paralelo e acabou depois de **17 buscas**
-deste capítulo (o brief previa 30 a 60). O capítulo entregue cobre homus,
-falafel, sabich, a moldura legal da kashrut e o vocabulário de restaurante. Os
-temas que ficaram sem nenhuma busca estão registrados como `NÃO VERIFICADO` em
-`afirmacoes/cap06.json` (C06-030 a C06-039) e **não aparecem no texto**. O
-capítulo tem cerca de 1.630 palavras contra as 2.200 do orçamento, e **não
-está pronto para publicação**: falta uma segunda rodada de pesquisa (ver
-seção 4).
+A primeira rodada parou em 17 buscas. Nesta, os capítulos 5 e 6 somaram 43 buscas (teto de 55); cerca de 21 foram para o capítulo 6, contando 2 de fotos. O capítulo ganhou: a separação entre carne e leite com fonte religiosa, o certificado e o Shabat, a decisão sobre supervisão alternativa, a gorjeta, os pães de sábado (jachnun, malawach, chalá), o mercado Machane Yehuda por um estudo acadêmico, os cafés de Tel Aviv e vozes árabes e palestinas na disputa do homus, além de fotos, links e perguntas.
+
+- Manuscrito: cerca de 2.370 palavras (contagem do validador), alvo 2.200.
+- PDF `saida/capitulo-06.pdf`: 17 páginas, 3 QR lidos de volta.
+- `node tools/inspecionar.mjs --formato=capitulo-06`: transbordo em nenhuma página; "quase vazia" só a página 1 (abertura do capítulo, sem imagem). A página 13 é a foto do cardápio com legenda (cerca de 55%) e a 17 é o fim das fontes.
+- `node tools/validar.mjs`: 0 erros no projeto.
+- Composição: o fecho genérico ("Uma refeição em Israel junta...") e a caixa de aviso sobre gorjeta saíram para não deixar páginas quase vazias; a data de consulta da gorjeta ficou na própria frase.
 
 ## 1. Afirmações por status
 
 | Status | Quantidade | No texto? |
 | --- | --- | --- |
-| VERIFICADO | 10 | sim (C06-001 a 004, 006, 007, 010 a 013) |
-| CONTESTADO | 3 | sim, apresentando o debate (C06-005, 008, 009) |
-| PARCIALMENTE VERIFICADO | 4 | não (C06-014, 018, 020, 021) |
-| NÃO VERIFICADO | 15 | não (C06-015, 016, 017, 019, 022, 030 a 039) |
-| Total | 32 | |
+| VERIFICADO | 19 | todas |
+| CONTESTADO | 5 (C06-005, 008, 009, 045, 051) | sim, apresentando o debate |
+| PARCIALMENTE VERIFICADO | 5 (C06-014, 018, 020, 021, 049) | não |
+| NÃO VERIFICADO | 15 | não |
+| Total | 44 | 24 ids no texto |
 
-Fontes: 23 (`fontes/cap06.json`). Nível A: 8 (duas só como
-`referencia-confirmada`: Ariel 2012 e Stampfer 2015). Nível D: 1 (a lei de
-1983 em gov.il, com trecho truncado). Nível E: 14. Nenhuma de nível B ou C.
+Fontes: 42 (A 13, B 1, D 1, E 27). Novas: F06-024 a F06-042. Registros novos: C06-040 a C06-051. Os antigos C06-030 a C06-039 continuam como estavam (pistas da primeira rodada); os que esta rodada cobriu foram registrados com ids novos e redação nova: C06-030 → C06-040; C06-031 → C06-041; C06-032 → C06-043; C06-035 → C06-044 e C06-045; C06-037 → C06-046 e C06-047; C06-038 → C06-048.
 
-## 2. Problemas encontrados na releitura
+## 2. O que foi pesquisado e entrou
 
-- **Peso de fontes E.** Sabich (C06-010), os julgamentos de 2016 e 2017
-  (C06-012, C06-013) e o recorde de Abu Gosh (C06-007) se apoiam em
-  jornalismo. Foram aceitos como fato jornalístico datado com dois ou mais
-  veículos independentes, como o protocolo permite, mas o sabich não é bem um
-  "fato datado": é a história de origem contada pela imprensa. O texto a
-  apresenta como "reportagens ligam" e "o nome mais citado", sem afirmar quem
-  inventou. Se a revisão humana achar que isso não basta, o trecho cai para
-  uma frase só (ligação com o café da manhã de Shabat dos judeus iraquianos).
-- **Falafel com base em revista de divulgação.** O debate (C06-008) usa a
-  *History Today* (E) e, por ela, Balta e Mardam Bey, cuja obra não foi
-  identificada. O texto atribui cada hipótese e não afirma origem. A hipótese
-  de Stampfer (C06-009) tem só a referência do capítulo confirmada; o conteúdo
-  vem de duas fontes E que o resumem.
-- **Ano da decisão de 2017** é dedução (JTA diz "um ano depois" da de 2016; o
-  Jewish News diz "em setembro"). O texto diz "no ano seguinte".
-- **Afiliações** deduzidas de repositório institucional (Avieli na BGU) ou de
-  jornalismo (Stampfer na Universidade Hebraica). Conferir.
-- **Definição de kashrut** ("conjunto de regras alimentares do judaísmo") e de
-  <he>כָּשֵׁר</he> estão sem marcador: tratadas como definição de glossário.
-  Se o padrão do livro exigir registro, ligar a uma fonte B na segunda rodada.
-- **Brief x sistema de transliteração.** O brief escreve "chesbón"; pelo
-  `pt-BR-practical-v1` (ש = sh, בּ = b) a forma é **cheshbón**, e é a usada.
-- **Falafel em hebraico ficou de fora** de propósito: o protocolo dá
-  "falafél" como exemplo de tônica, e a pronúncia corrente em Israel parece
-  ser paroxítona. O autor decide antes de a palavra entrar em qualquer caixa
-  do livro (vale também para o capítulo 7).
-- Generalizações: a releitura tirou "poucos alimentos carregam tanta
-  conversa", "sociólogos e antropólogos passaram as últimas décadas" e uma
-  frase que atribuía a Raviv e Hirsch uma conclusão sobre o sabich que eles
-  não escreveram.
-- Nenhum anacronismo, nenhuma etimologia e nenhum número sem fonte no texto
-  final. As etimologias do nome "sabich" (C06-019) e de <he>בְּשָׂרִי</he> e
-  <he>חָלָבִי</he> foram retiradas por falta de fonte linguística.
+- **Kashrut**: o versículo repetido três vezes, as três proibições lidas pelo Talmud e o que é rabínico (intervalo, louça separada), pela Yeshivat Har Etzion (C06-040, fonte B religiosa); o Rabinato não certifica restaurante aberto no Shabat, exceto hotéis, e o caso único do McDonald's de Ben Gurion em 2019 (C06-041, duas fontes E); supervisão alternativa pode ser descrita, mas sem certificado de "kosher" (C06-042).
+- **Gorjeta**: 10% a 15% segundo Jerusalem Post e Israel21c, com a subida de 10% para cerca de 12% (15% em Tel Aviv) segundo o Israel21c (C06-043). Costume, com `revisar_ate`.
+- **Pães**: jachnun e malawach (C06-044, duas fontes E de divulgação, apresentadas como "publicações de divulgação judaica descrevem"); a tese de um artigo da revista Meldar sobre a origem sefardita da chalá trançada (C06-045, CONTESTADO, dita como tese de um artigo).
+- **Mercados**: Mashkov e Shoval (2020) sobre a "boutiquização" do Machane Yehuda (C06-046); vida noturna e a reação de líderes ultraortodoxos (C06-047, Al-Monitor 2017 e Afar).
+- **Cafés**: Pinsker, *A Rich Brew* (2018), e o dado de cafés por habitante via resenha (C06-048).
+- **Homus**: Gvion (2012) sobre a comida dos cidadãos palestinos de Israel (C06-050); posições árabes e palestinas atribuídas (Fundação Heinrich Böll em Beirute, 2017; artigo de opinião no The New Arab; Steven Salaita) (C06-051, CONTESTADO). Nenhuma origem exclusiva é afirmada; a caixa "De quem é o homus?" põe as posições lado a lado.
 
-## 3. Correções feitas durante a escrita
+## 3. O que ficou fora e por quê
 
-- Tirado "o bolinho mudou de grão no caminho" (fava para grão-de-bico): só
-  metade tinha fonte (C06-018).
-- Tirado o recorde libanês de maio de 2010 (10.452 kg): um único veículo
-  independente (C06-014).
-- Tirado o pedido de registro do homus na União Europeia: só blog (C06-015).
-- Tirados os itens atribuídos a Gil Marks (C06-016, C06-017): só citação de
-  segunda mão.
-- "Painel maior de sete juízes julgou" virou "nova audiência, marcada para um
-  painel de sete juízes", que é o que a fonte diz.
-- Comentários da caixa `em-hebraico` reescritos para não afirmar fato
-  linguístico sem fonte ("só existe no plural", "também é o nome do
-  grão-de-bico", derivações de raiz).
+- **Pita e lafa**: nenhuma fonte A a D. A pita aparece só como o pão que embrulha o falafel e o sabich (e no vocabulário); a lafa saiu (só Wikipedia e uma reportagem).
+- **Shuk HaCarmel**: as versões da fundação (anos 1920, bairro iemenita, Dizengoff) vieram de fontes E e de turismo, desencontradas. O texto diz que a história aparece em versões diferentes e fica para outra edição (C06-037).
+- **Shakshuka** (C06-034): só Wikipedia e blogs.
+- **Festas** (matsá, sufganiyót, C06-036): não pesquisadas.
+- **Cafés na orla e nas ruas Dizengoff, Allenby e Ben Yehuda**: uma só reportagem (C06-049, PARCIALMENTE).
+- **Água à mesa e horários no Shabat** (C06-033): sem fonte.
+- **Influências da cozinha** (C06-039): nenhuma síntese acadêmica lida; o texto evita a frase-resumo.
 
-## 4. Fontes adicionais necessárias (segunda rodada e revisão humana)
+## 4. Pontos fracos para a revisão humana
 
-Segunda rodada de busca, por prioridade, para fechar o brief:
+1. C06-044 (jachnun) e C06-041 (Rabinato e Shabat) se apoiam em jornalismo e divulgação (E). Estão escritos como "segundo", mas uma fonte acadêmica sobre comida iemenita em Israel e o regulamento do Rabinato seriam melhores.
+2. C06-040: o trecho citou "Shemot 34:24" (provavelmente 34:26); o texto não dá o número do versículo do capítulo 34.
+3. C06-045: autor e ano do artigo da Meldar não apareceram; conferir.
+4. C06-048: o dado de cafés por habitante vem de resenha (Hadassah Magazine), não do livro.
+5. C06-051: a URL do texto de Salaita não foi identificada separadamente; a opinião foi vista no resumo da busca.
+6. Os pontos da primeira rodada continuam: Hirsch 2011 e 2026, Avieli, Ariel 2012, Stampfer 2015, Raviv 2015, a lei de 1983 e as decisões de 2016 e 2017.
 
-1. **Kashrut básica** (C06-030, C06-031): carne e leite separados, restaurante
-   de carne x de leite, por que estabelecimentos com certificado fecham no
-   Shabat. Fontes: Rabinato-Chefe e gov.il (D), enciclopédia acadêmica (B), o
-   texto bíblico como fonte C (Êx 23:19; 34:26; Dt 14:21).
-2. **Guia de restaurante** (C06-032, C06-033): gorjeta (costume e percentual,
-   dizendo que varia), água à mesa, horários no Shabat. Ministério do Turismo
-   de Israel ou duas fontes E datadas. Registros `pratica` com `revisar_ate`.
-3. **Pães e festas** (C06-035, C06-036): pita, chalá, lafa, jachnún, malawach;
-   matsá em Pêssach, sufganiyót em Chanuká. Coordenar com o capítulo 5.
-4. **Shakshuka** (C06-034), sem origem exclusiva.
-5. **Mercados** (C06-037): Machane Yehuda e Shuk HaCarmel, pelas
-   municipalidades de Jerusalém e Tel Aviv-Yafo.
-6. **Influências e cozinha contemporânea** (C06-038, C06-039): fonte
-   acadêmica para a síntese das influências (levantina, árabe, otomana,
-   norte-africana, iemenita, iraquiana, do Leste Europeu) e para os cafés.
-7. Segunda fonte para o recorde libanês de 2010 e para o caso da UE.
+## 5. Debates e como o texto os apresenta
 
-Abrir no texto integral, na revisão humana:
-
-- Hirsch 2011 (*American Ethnologist* 38/4) e Hirsch 2026 (Indiana UP).
-- Avieli 2015 (*Estudios de Asia y África* 50/3) e o capítulo de 2016.
-- Ariel 2012 (*Gastronomica* 12/1): só a referência foi confirmada.
-- Stampfer 2015 (*Jews and Their Foodways*, p. 177).
-- Raviv 2015, para os capítulos sobre falafel e cozinhas do exército.
-- A lei de 1983 em gov.il (o trecho veio truncado) e as decisões do Supremo de
-  2016 e 2017, com a regra vigente hoje.
-- A reportagem do Haaretz sobre o sabich citada pelo Jewish Independent.
-
-## 5. Debates acadêmicos e como o texto os apresenta
-
-- **De quem é o homus** (C06-005): o texto expõe a reivindicação libanesa de
-  patrimônio (pela descrição de Avieli), o homus como símbolo nacional
-  israelense, a leitura de Hirsch (apropriação, arabicidade ora suprimida,
-  ora usada como autenticidade) e a de Avieli (posse e poder, não receita).
-  Caixa `entenda-melhor` "De quem é o homus?". Nenhuma origem exclusiva é
-  afirmada. Limite: nenhuma fonte libanesa ou palestina foi lida diretamente;
-  a segunda rodada deve buscar uma.
-- **Origem do falafel** (C06-008, C06-009): Egito/Alexandria com fava,
-  primeiro registro escrito depois de 1882 e conjectura indiana (Balta e
-  Mardam Bey, via *History Today*), parentesco com bolinhos de ervilha de
-  judeus da Índia (Stampfer). A história copta da Quaresma vai numa caixa
-  `historia-ou-tradicao` como tradição sem evidência. O texto fecha dizendo
-  que nenhuma hipótese foi provada nem faz do prato propriedade de um povo.
-- **Sabich**: versões concorrentes sobre o primeiro sanduíche, ditas como
-  tal; a etimologia do nome ficou fora.
+- **De quem é o homus** (C06-005, C06-051): reivindicação libanesa, símbolo nacional israelense, Hirsch (apropriação), Avieli (posse e poder), Böll e The New Arab (negação da herança palestina; "roubo"), Salaita (pratos de judeus do mundo árabe, cuja história o rótulo "israelense" apaga). Agora há vozes árabes atribuídas, que faltavam na primeira rodada; nenhuma fonte libanesa oficial foi lida.
+- **Origem do falafel** (C06-008, C06-009): hipóteses atribuídas; a história copta numa caixa "História ou tradição?".
+- **Chalá** (C06-045): tese de um artigo, não consenso.
+- **Kashrut alternativa** (C06-012, C06-013, C06-042): decisões e datas, sem juízo.
 
 ## 6. Pendências editoriais
 
-- **Hebraico para aprovar (todo o capítulo):** <he>חוּמוּס</he>,
-  <he>סַבִּיח</he>, <he>כַּשְׁרוּת</he>, <he>כָּשֵׁר</he>,
-  <he>תְּעוּדַת כַּשְׁרוּת</he>, <he>תַּפְרִיט</he>, <he>מֶלְצַר</he>,
-  <he>מֶלְצָרִית</he>, <he>מַיִם</he>, <he>חֶשְׁבּוֹן</he>,
-  <he>בְּבַקָשָׁה</he>, <he>תוֹדָה</he>, <he>בְּשָׂרִי</he>,
-  <he>חָלָבִי</he>, <he>מִסְעָדָה</he>, <he>לֶחֶם</he>, <he>פִּיתָה</he>,
-  <he>קָפֶה</he>, <he>שׁוּק</he>, <he>בְּתֵאָבוֹן</he>. As formas de
-  <he>מַיִם</he>, <he>לֶחֶם</he>, <he>קָפֶה</he>, <he>בְּבַקָשָׁה</he> e
-  <he>תוֹדָה</he> seguem a grafia do curso (`data/translit.json`); as demais
-  foram escritas para este capítulo.
-- **Transliterações para conferir:** missadá (ס entre vogais vira ss, porque
-  o ע não ganha letra), bsarí (shva inicial tratado como mudo, como se fala),
-  beteavón (tônica na última), chúmus (tônica na primeira), sabích,
-  teudát kashrút, meltsarít. O comentário "Dito ao servir ou ao começar" (bom
-  apetite) é uso, não fato verificado: o autor confirma.
-- **Seções que o brief pede e o capítulo ainda não tem:** shakshuka, pães,
-  mercados, comida de rua em geral, tradições das festas, cafés, cozinha
-  contemporânea, gorjeta, água e horários no Shabat no guia de restaurante.
-- Nenhuma caixa "O olhar de um israelense" foi escrita.
-- Nenhuma afirmação sobre o autor.
-- Fotos: nenhuma prevista; se entrarem, sugestões são o balcão de homus, o
-  quiosque de sabich e um certificado de kashrut (sem marca de terceiros
-  identificável).
+**Hebraico para aprovar (todo o capítulo):** <he>חוּמוּס</he>, <he>סַבִּיח</he>, <he>כַּשְׁרוּת</he>, <he>כָּשֵׁר</he>, <he>תְּעוּדַת כַּשְׁרוּת</he>, <he>תַּפְרִיט</he>, <he>מֶלְצַר</he>, <he>מֶלְצָרִית</he>, <he>מַיִם</he>, <he>חֶשְׁבּוֹן</he>, <he>בְּבַקָשָׁה</he>, <he>תוֹדָה</he>, <he>בְּשָׂרִי</he>, <he>חָלָבִי</he>, <he>מִסְעָדָה</he>, <he>פִּיתָה</he>, <he>שׁוּק</he>, <he>בְּתֵאָבוֹן</he>. Nenhum hebraico novo nesta rodada; saíram da caixa de vocabulário (por espaço) <he>מַיִם</he> (que continua no texto), <he>לֶחֶם</he> e <he>קָפֶה</he>. Jachnun, malawach, zhug, chalá e Shuk HaCarmel aparecem só transliterados: conferir a grafia com o capítulo 7.
+
+**Transliterações para conferir:** missadá, bsarí, beteavón, chúmus, sabích, teudát kashrút, meltsarít; "Dito ao servir ou ao começar" (bom apetite) é uso, o dono confirma.
+
+**Fotos** (`ativos/dados/fotos-candidatas-cap06.json`, 8 candidatas; licenças vistas no resumo da busca, conferir na página do arquivo):
+
+| id | licença | venda | no texto |
+| --- | --- | --- | --- |
+| foto-homus-libanes | CC BY 3.0 | sim | sim |
+| foto-homus-cc0 | CC0 | sim | não |
+| foto-jachnun-maorx | CC BY-SA 4.0 | confirmar | sim |
+| foto-jachnun-herzig | CC BY-SA 2.5 | confirmar | não |
+| foto-mahane-yehuda-dyan | CC BY 2.0 | sim | sim |
+| foto-mahane-yehuda-king | CC BY 2.0 | sim | não |
+| foto-cardapio-mahane-yehuda | CC BY-SA 4.0, autor não apareceu | confirmar | sim |
+| foto-chala-williamsburg | CC BY-SA 3.0 e GFDL; foto de Nova York | confirmar | não |
+
+Nenhuma foto de malawach, lafa ou sabich apareceu na busca.
+
+**Links oficiais** (`ativos/dados/links-cap06.json`, todos no texto): lei de 1983 em gov.il, página do Ministério do Turismo sobre o mercado de Jerusalém (conteúdo não lido, só a URL vista), passeios do Museu da Cidade de Tel Aviv-Yafo sobre a história dos cafés.
+
+**Nenhuma caixa "O olhar de um israelense"** (é do dono). Nenhuma afirmação sobre o autor.

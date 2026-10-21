@@ -67,11 +67,11 @@ A chalá, o pão trançado da mesa de sábado, tem uma disputa própria, mais di
 
 Em Jerusalém, o mercado Machane Yehuda virou também um laboratório de mudança urbana. Um estudo de Rotem Mashkov e Noam Shoval, da Universidade Hebraica, publicado em 2020, mediu o que eles chamam de "boutiquização" do mercado: o tipo de negócio mudou de forma significativa, com usos tradicionais deslocados, e a reação dos comerciantes ao turismo variou conforme fossem ou não donos da banca.[[C06-046]]
 
+A mudança tem horário. À noite, quando as bancas fecham, o Machane Yehuda vira ponto de bares e restaurantes. Em 2017, o Al-Monitor registrou que a transformação tinha acontecido nos seis anos anteriores e que líderes ultraortodoxos tentavam conter a vida noturna no mercado.[[C06-047]] O mesmo lugar tem, assim, dois públicos e dois ritmos, e a convivência entre eles é parte da história.
+
 ::: foto foto-mahane-yehuda-dyan
 O mercado Machane Yehuda, em Jerusalém, em 2010.
 :::
-
-A mudança tem horário. À noite, quando as bancas fecham, o Machane Yehuda vira ponto de bares e restaurantes. Em 2017, o Al-Monitor registrou que a transformação tinha acontecido nos seis anos anteriores e que líderes ultraortodoxos tentavam conter a vida noturna no mercado.[[C06-047]] O mesmo lugar tem, assim, dois públicos e dois ritmos, e a convivência entre eles é parte da história.
 
 Em Tel Aviv, o mercado mais conhecido é o Shuk HaCarmel. Sua história de fundação aparece em versões diferentes nas fontes consultadas, e por isso fica para uma próxima edição.
 
@@ -111,11 +111,11 @@ Os passeios do Museu da Cidade de Tel Aviv-Yafo pela história dos cafés.
 
 Algumas palavras resolvem a maior parte da refeição. O cardápio é o <he>תַּפְרִיט</he> (tafrít); quem atende é o <he>מֶלְצַר</he> (meltsár); a água é <he>מַיִם</he> (máyim); e, na hora de pagar, a palavra é <he>חֶשְׁבּוֹן</he> (cheshbón), a conta. Um "por favor", <he>בְּבַקָשָׁה</he> (bevakashá), e um "obrigado", <he>תוֹדָה</he> (todá), fecham o pedido.
 
+A gorjeta é costume, não lei. Reportagens do Jerusalem Post e do Israel21c dão de 10% a 15% da conta nos restaurantes; segundo o Israel21c, o patamar antigo de 10% subiu para cerca de 12%, e para 15% em Tel Aviv.[[C06-043]] Antes de calcular, veja se a conta já inclui o serviço. Percentuais assim mudam com o tempo: informação consultada em 21 de outubro de 2026.
+
 ::: foto foto-cardapio-mahane-yehuda
 Cardápio em hebraico e inglês no Machane Yehuda.
 :::
-
-A gorjeta é costume, não lei. Reportagens do Jerusalem Post e do Israel21c dão de 10% a 15% da conta nos restaurantes; segundo o Israel21c, o patamar antigo de 10% subiu para cerca de 12%, e para 15% em Tel Aviv.[[C06-043]] Antes de calcular, veja se a conta já inclui o serviço. Percentuais assim mudam com o tempo: informação consultada em 21 de outubro de 2026.
 
 ::: em-hebraico
 - <he>מִסְעָדָה</he> | missadá | restaurante | A palavra da fachada.
@@ -130,8 +130,6 @@ A gorjeta é costume, não lei. Reportagens do Jerusalem Post e do Israel21c dã
 - <he>חָלָבִי</he> | chalaví | de leite | O par de <he>בְּשָׂרִי</he> na conversa sobre kashrut.
 - <he>בְּתֵאָבוֹן</he> | beteavón | bom apetite | Dito ao servir ou ao começar.
 :::
-
-Uma refeição em Israel junta, no mesmo prato, ingredientes, nomes e histórias de lugares diferentes. Saber que o homus e o falafel têm origens discutidas, que o sabich e o jachnun nasceram da mesa de sábado e que o certificado de kashrut tem uma história de tribunal não muda o sabor. Muda o que você enxerga enquanto come.
 
 ::: quiz Segundo o historiador Shaul Stampfer, o trio pita, falafel e salada é de que época?
 - [ ] Da Antiguidade | 

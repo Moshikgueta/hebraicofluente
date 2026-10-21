@@ -4,11 +4,11 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 30102
+- Palavras no manuscrito: 30003
 - Fontes registradas: 569 (por nível: D 135, B 149, E 175, A 91, C 19; por acesso: trecho-de-busca 541, referencia-confirmada 28)
 - Afirmações registradas: 640 (VERIFICADO 409, NÃO VERIFICADO 136, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 38)
 - Afirmações VERIFICADO sem uso no texto: 14
-- Ocorrências de hebraico: 189 (lista em auditoria/hebraico.md)
+- Ocorrências de hebraico: 186 (lista em auditoria/hebraico.md)
 - Links testados: 0 de 566 (rede bloqueada; ver revisão humana)
 
 | Arquivo | Palavras | Marcas de fonte |
@@ -20,7 +20,7 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 | 03-jerusalem.md | 4318 | 129 |
 | 04-alem-de-jerusalem.md | 3924 | 130 |
 | 05-vida-real.md | 3084 | 94 |
-| 06-sabores.md | 2465 | 41 |
+| 06-sabores.md | 2366 | 39 |
 | 07-hebraico.md | 2587 | 45 |
 | 08-na-pratica.md | 2392 | 54 |
 | 10-diario.md | 533 | 0 |

@@ -99,97 +99,94 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 93 | חֶשְׁבּוֹן |  |  | manuscrito/06-sabores.md:112 | Algumas palavras resolvem a maior parte da refeição. O cardápio é o <he>תַּפְרִיט</he> (tafrít); quem atende é o <he>מֶלְצַר</he> (meltsár); a água é <he>מַיִם< |
 | 94 | בְּבַקָשָׁה |  |  | manuscrito/06-sabores.md:112 | Algumas palavras resolvem a maior parte da refeição. O cardápio é o <he>תַּפְרִיט</he> (tafrít); quem atende é o <he>מֶלְצַר</he> (meltsár); a água é <he>מַיִם< |
 | 95 | תוֹדָה |  |  | manuscrito/06-sabores.md:112 | Algumas palavras resolvem a maior parte da refeição. O cardápio é o <he>תַּפְרִיט</he> (tafrít); quem atende é o <he>מֶלְצַר</he> (meltsár); a água é <he>מַיִם< |
-| 96 | מִסְעָדָה | missadá | restaurante | manuscrito/06-sabores.md:125 |  |
-| 97 | תַּפְרִיט | tafrít | cardápio | manuscrito/06-sabores.md:126 |  |
-| 98 | מֶלְצַר | meltsár | garçom | manuscrito/06-sabores.md:127 |  |
-| 99 | מֶלְצָרִית |  |  | manuscrito/06-sabores.md:127 | - <he>מֶלְצַר</he> / meltsár / garçom / No feminino, <he>מֶלְצָרִית</he> (meltsarít). |
-| 100 | חֶשְׁבּוֹן | cheshbón | conta | manuscrito/06-sabores.md:128 |  |
-| 101 | מַיִם | máyim | água | manuscrito/06-sabores.md:129 |  |
-| 102 | לֶחֶם | léchem | pão | manuscrito/06-sabores.md:130 |  |
-| 103 | פִּיתָה | píta | pita | manuscrito/06-sabores.md:131 |  |
-| 104 | חוּמוּס | chúmus | homus | manuscrito/06-sabores.md:132 |  |
-| 105 | קָפֶה | kafé | café | manuscrito/06-sabores.md:133 |  |
-| 106 | שׁוּק | shuk | mercado | manuscrito/06-sabores.md:134 |  |
-| 107 | כָּשֵׁר | kashér | kosher | manuscrito/06-sabores.md:135 |  |
-| 108 | בְּשָׂרִי | bsarí | de carne | manuscrito/06-sabores.md:136 |  |
-| 109 | חָלָבִי |  |  | manuscrito/06-sabores.md:136 | - <he>בְּשָׂרִי</he> / bsarí / de carne / O par de <he>חָלָבִי</he> na conversa sobre kashrut. |
-| 110 | חָלָבִי | chalaví | de leite | manuscrito/06-sabores.md:137 |  |
-| 111 | בְּשָׂרִי |  |  | manuscrito/06-sabores.md:137 | - <he>חָלָבִי</he> / chalaví / de leite / O par de <he>בְּשָׂרִי</he> na conversa sobre kashrut. |
-| 112 | בְּתֵאָבוֹן | beteavón | bom apetite | manuscrito/06-sabores.md:138 |  |
-| 113 | ק |  |  | manuscrito/07-hebraico.md:62 | A regra, porém, mudou de ideia. Num relatório à ONU, Israel informou que a Academia passaria a escrever a letra <he>ק</he> com K, e não com Q; num relatório pos |
-| 114 | עכו |  |  | manuscrito/07-hebraico.md:64 | Há ainda os nomes que chegaram ao português e ao inglês muito antes de qualquer regra israelense. Acre é o caso mais claro. A UNESCO inscreveu a cidade como "Ol |
-| 115 | ו |  |  | manuscrito/07-hebraico.md:78 | Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o o |
-| 116 | י |  |  | manuscrito/07-hebraico.md:78 | Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o o |
-| 117 | ירושלים |  |  | manuscrito/07-hebraico.md:78 | Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o o |
-| 118 | רחוב |  |  | manuscrito/07-hebraico.md:78 | Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o o |
-| 119 | ק |  |  | manuscrito/07-hebraico.md:85 | Repare se o mesmo lugar aparece escrito de dois jeitos em letras latinas, numa placa e num mapa, ou numa placa antiga e numa nova. A letra <he>ק</he> é a primei |
-| 120 | בּ |  |  | manuscrito/07-hebraico.md:94 | Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> é b, <he>ב</he> é v). Neste livro, como no curso, esse ponto só aparece nas letras  |
-| 121 | ב |  |  | manuscrito/07-hebraico.md:94 | Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> é b, <he>ב</he> é v). Neste livro, como no curso, esse ponto só aparece nas letras  |
-| 122 | יְרוּשָׁלַיִם | Yerushaláyim | Jerusalém | manuscrito/07-hebraico.md:101 |  |
-| 123 | ירושלים |  |  | manuscrito/07-hebraico.md:101 | - <he>יְרוּשָׁלַיִם</he> / Yerushaláyim / Jerusalém / O nome da cidade em hebraico. Nas placas aparece sem os pontos: <he>ירושלים</he>. Nas cartas de Amarna, do |
-| 124 | תֵל אָבִיב | Tel Avív | Tel Aviv | manuscrito/07-hebraico.md:102 |  |
-| 125 | תֵל |  |  | manuscrito/07-hebraico.md:102 | - <he>תֵל אָבִיב</he> / Tel Avív / Tel Aviv / <he>תֵל</he> é a colina de ruínas e <he>אָבִיב</he>, a primavera. O nome vem do título que Nahum Sokolow deu à tra |
-| 126 | אָבִיב |  |  | manuscrito/07-hebraico.md:102 | - <he>תֵל אָבִיב</he> / Tel Avív / Tel Aviv / <he>תֵל</he> é a colina de ruínas e <he>אָבִיב</he>, a primavera. O nome vem do título que Nahum Sokolow deu à tra |
-| 127 | כִּנֶרֶת | Kinéret | Mar da Galileia, lago de Tiberíades | manuscrito/07-hebraico.md:103 |  |
-| 128 | יַם הַמֶלַח | Yam HaMélach | Mar Morto | manuscrito/07-hebraico.md:104 |  |
-| 129 | עַכּוֹ | Áko | Acre | manuscrito/07-hebraico.md:105 |  |
-| 130 | מִדְבָּר | midbár | deserto | manuscrito/07-hebraico.md:111 |  |
-| 131 | מִדְבַּר יְהוּדָה |  |  | manuscrito/07-hebraico.md:111 | - <he>מִדְבָּר</he> / midbár / deserto / A palavra comum para deserto. Aparece em nomes como <he>מִדְבַּר יְהוּדָה</he> (Midbár Yehudá), o deserto da Judeia. |
-| 132 | נֶגֶב | Néguev | Neguev | manuscrito/07-hebraico.md:112 |  |
-| 133 | נַחַל | náchal | riacho, leito de rio | manuscrito/07-hebraico.md:113 |  |
-| 134 | תֵל | tel | colina de ruínas | manuscrito/07-hebraico.md:114 |  |
-| 135 | מַכְתֵשׁ | machtésh | vale de erosão; ao pé da letra, "pilão" | manuscrito/07-hebraico.md:115 |  |
-| 136 | מַכְתֵשׁ רָמוֹן |  |  | manuscrito/07-hebraico.md:115 | - <he>מַכְתֵשׁ</he> / machtésh / vale de erosão; ao pé da letra, "pilão" / Também é a palavra comum para pilão. O <he>מַכְתֵשׁ רָמוֹן</he> (Machtésh Ramón), no  |
-| 137 | עֵמֶק | émek | vale | manuscrito/07-hebraico.md:116 |  |
-| 138 | עֵמֶק יִזְרְעֶאל |  |  | manuscrito/07-hebraico.md:116 | - <he>עֵמֶק</he> / émek / vale / Em nomes de regiões: <he>עֵמֶק יִזְרְעֶאל</he> (Émek Yizreél), o vale de Jezreel. |
-| 139 | עֲלִיָה | aliyá | imigração para Israel; ao pé da letra, "subida" | manuscrito/07-hebraico.md:122 |  |
-| 140 | עוֹלֶה חָדָשׁ |  |  | manuscrito/07-hebraico.md:122 | - <he>עֲלִיָה</he> / aliyá / imigração para Israel; ao pé da letra, "subida" / Quem chega é um <he>עוֹלֶה חָדָשׁ</he> (olé chadásh), "novo imigrante". |
-| 141 | קִבּוּץ | kibúts | kibutz | manuscrito/07-hebraico.md:123 |  |
-| 142 | קִבּוּצִים |  |  | manuscrito/07-hebraico.md:123 | - <he>קִבּוּץ</he> / kibúts / kibutz / Comunidade de propriedade coletiva, em geral rural. O plural é <he>קִבּוּצִים</he> (kibutsím). |
-| 143 | מוֹשָׁב | mosháv | moshav | manuscrito/07-hebraico.md:124 |  |
-| 144 | אוּלְפָּן | ulpán | curso intensivo de hebraico | manuscrito/07-hebraico.md:125 |  |
-| 145 | יוֹם הָעַצְמָאוּת | Yom HaAtsmaút | Dia da Independência | manuscrito/07-hebraico.md:126 |  |
-| 146 | עַצְמָאוּת |  |  | manuscrito/07-hebraico.md:126 | - <he>יוֹם הָעַצְמָאוּת</he> / Yom HaAtsmaút / Dia da Independência / Feriado nacional. <he>עַצְמָאוּת</he> quer dizer "independência". |
-| 147 | שַׁבָּת שָׁלוֹם | shabát shalóm | bom Shabat; ao pé da letra, "Shabat de paz" | manuscrito/07-hebraico.md:132 |  |
-| 148 | חַג שָׂמֵחַ | chag saméach | boas festas; ao pé da letra, "festa alegre" | manuscrito/07-hebraico.md:133 |  |
-| 149 | כֹּתֶל | kótel | muro; "o Kotel" é o Muro Ocidental | manuscrito/07-hebraico.md:134 |  |
-| 150 | הַכֹּתֶל |  |  | manuscrito/07-hebraico.md:134 | - <he>כֹּתֶל</he> / kótel / muro; "o Kotel" é o Muro Ocidental / Com o artigo, <he>הַכֹּתֶל</he> (HaKótel), basta para indicar o Muro Ocidental, em Jerusalém. O |
-| 151 | הַכֹּתֶל הַמַעֲרָבִי |  |  | manuscrito/07-hebraico.md:134 | - <he>כֹּתֶל</he> / kótel / muro; "o Kotel" é o Muro Ocidental / Com o artigo, <he>הַכֹּתֶל</he> (HaKótel), basta para indicar o Muro Ocidental, em Jerusalém. O |
-| 152 | בֵּית כְּנֶסֶת | beit knésset | sinagoga; ao pé da letra, "casa de reunião" | manuscrito/07-hebraico.md:135 |  |
-| 153 | כְּנֶסֶת |  |  | manuscrito/07-hebraico.md:135 | - <he>בֵּית כְּנֶסֶת</he> / beit knésset / sinagoga; ao pé da letra, "casa de reunião" / A palavra <he>כְּנֶסֶת</he> também é o nome do parlamento israelense, o |
-| 154 | מְזוּזָה | mezuzá | mezuzá | manuscrito/07-hebraico.md:136 |  |
-| 155 | כִּפָּה | kipá | quipá, solidéu | manuscrito/07-hebraico.md:137 |  |
-| 156 | כָּשֵׁר | kashér | kosher, apto segundo as leis alimentares judaicas | manuscrito/07-hebraico.md:138 |  |
-| 157 | כַּשְׁרוּת |  |  | manuscrito/07-hebraico.md:138 | - <he>כָּשֵׁר</he> / kashér / kosher, apto segundo as leis alimentares judaicas / Em placas de restaurante e embalagens. O conjunto das regras é a <he>כַּשְׁרוּ |
-| 158 | שׁוּק | shuk | mercado | manuscrito/07-hebraico.md:144 |  |
-| 159 | שׁוּק מַחֲנֵה יְהוּדָה |  |  | manuscrito/07-hebraico.md:144 | - <he>שׁוּק</he> / shuk / mercado / O mercado de bancas: <he>שׁוּק מַחֲנֵה יְהוּדָה</he> (Shuk Machané Yehudá), em Jerusalém, e <he>שׁוּק הַכַּרְמֶל</he> (Shuk  |
-| 160 | שׁוּק הַכַּרְמֶל |  |  | manuscrito/07-hebraico.md:144 | - <he>שׁוּק</he> / shuk / mercado / O mercado de bancas: <he>שׁוּק מַחֲנֵה יְהוּדָה</he> (Shuk Machané Yehudá), em Jerusalém, e <he>שׁוּק הַכַּרְמֶל</he> (Shuk  |
-| 161 | בְּתֵאָבוֹן | beteavón | bom apetite | manuscrito/07-hebraico.md:145 |  |
-| 162 | חֶשְׁבּוֹן | cheshbón | a conta | manuscrito/07-hebraico.md:146 |  |
-| 163 | חֶשְׁבּוֹן בְּבַקָשָׁה |  |  | manuscrito/07-hebraico.md:146 | - <he>חֶשְׁבּוֹן</he> / cheshbón / a conta / No restaurante, pede-se com <he>חֶשְׁבּוֹן בְּבַקָשָׁה</he> (cheshbón bevakashá). |
-| 164 | רְחוֹב | rechóv | rua | manuscrito/07-hebraico.md:152 |  |
-| 165 | רחוב |  |  | manuscrito/07-hebraico.md:152 | - <he>רְחוֹב</he> / rechóv / rua / Vem antes do nome da rua, como em português. Nas placas, sem pontos: <he>רחוב</he>. |
-| 166 | שֵׁרוּת | sherút | táxi coletivo; ao pé da letra, "serviço" | manuscrito/07-hebraico.md:153 |  |
-| 167 | תַחֲנָה מֶרְכָּזִית | tachaná merkazít | rodoviária central | manuscrito/07-hebraico.md:154 |  |
-| 168 | בְּסֵדֶר | beséder | tudo bem, ok | manuscrito/07-hebraico.md:155 |  |
-| 169 | מָה נִשְׁמָע | ma nishmá | tudo bem?, e aí? | manuscrito/07-hebraico.md:156 |  |
-| 170 | תוֹדָה רַבָּה | todá rabá | muito obrigado | manuscrito/07-hebraico.md:157 |  |
-| 171 | תוֹדָה |  |  | manuscrito/07-hebraico.md:157 | - <he>תוֹדָה רַבָּה</he> / todá rabá / muito obrigado / A forma completa do agradecimento; sozinha, <he>תוֹדָה</he> (todá) já é "obrigado". |
-| 172 | בְּבַקָשָׁה | bevakashá | por favor; também "aqui está" e "de nada" | manuscrito/07-hebraico.md:158 |  |
-| 173 | צַבָּר | tsabár | nascido em Israel; também o figo-da-índia | manuscrito/07-hebraico.md:164 |  |
-| 174 | דוּגְרִי | dúgri | franco, direto | manuscrito/07-hebraico.md:165 |  |
-| 175 | חוּצְפָּה | chutspá | atrevimento, cara de pau | manuscrito/07-hebraico.md:166 |  |
-| 176 | בָּלָגָן | balagán | bagunça, confusão | manuscrito/07-hebraico.md:167 |  |
-| 177 | סַבְלָנוּת | savlanút | paciência | manuscrito/07-hebraico.md:168 |  |
-| 178 | יַאלְלָה | yálla | vamos!, anda! | manuscrito/07-hebraico.md:169 |  |
-| 179 | סַבַּבָּה | sabába | beleza, ótimo | manuscrito/07-hebraico.md:170 |  |
-| 180 | צִימֶר | tsímer | chalé, pousada rural | manuscrito/07-hebraico.md:171 |  |
-| 181 | תֵל |  |  | manuscrito/07-hebraico.md:179 | - [ ] <he>תֵל</he> (tel) / |
-| 182 | נַחַל |  |  | manuscrito/07-hebraico.md:180 | - [x] <he>נַחַל</he> (náchal) / É a palavra para riacho ou leito de rio, que nos mapas e placas de trilha vem antes do nome. |
-| 183 | עֵמֶק |  |  | manuscrito/07-hebraico.md:181 | - [ ] <he>עֵמֶק</he> (émek) / |
-| 184 | שׁוּק |  |  | manuscrito/07-hebraico.md:182 | - [ ] <he>שׁוּק</he> (shuk) / |
-| 185 | חֶשְׁבּוֹן |  |  | manuscrito/07-hebraico.md:186 | - [ ] <he>חֶשְׁבּוֹן</he> (cheshbón) / |
-| 186 | סַבְלָנוּת |  |  | manuscrito/07-hebraico.md:187 | - [ ] <he>סַבְלָנוּת</he> (savlanút) / |
-| 187 | בְּתֵאָבוֹן |  |  | manuscrito/07-hebraico.md:188 | - [x] <he>בְּתֵאָבוֹן</he> (beteavón) / "Bom apetite": diz quem serve o prato, em casa e no restaurante. |
-| 188 | שֵׁרוּת |  |  | manuscrito/08-na-pratica.md:99 | O sherut (<he>שֵׁרוּת</he>, sherút) é o táxi coletivo. Em Tel Aviv, são vans amarelas que seguem trajetos de ônibus e circulam também à noite e no Shabat, quand |
-| 189 | שַׁבָּת |  |  | manuscrito/08-na-pratica.md:109 | O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico, de sexta à noite a sábado à noite, e é ele que explica os trens parados e os ônibus de fim de  |
+| 96 | מִסְעָדָה | missadá | restaurante | manuscrito/06-sabores.md:121 |  |
+| 97 | תַּפְרִיט | tafrít | cardápio | manuscrito/06-sabores.md:122 |  |
+| 98 | מֶלְצַר | meltsár | garçom | manuscrito/06-sabores.md:123 |  |
+| 99 | מֶלְצָרִית |  |  | manuscrito/06-sabores.md:123 | - <he>מֶלְצַר</he> / meltsár / garçom / No feminino, <he>מֶלְצָרִית</he> (meltsarít). |
+| 100 | חֶשְׁבּוֹן | cheshbón | conta | manuscrito/06-sabores.md:124 |  |
+| 101 | פִּיתָה | píta | pita | manuscrito/06-sabores.md:125 |  |
+| 102 | חוּמוּס | chúmus | homus | manuscrito/06-sabores.md:126 |  |
+| 103 | שׁוּק | shuk | mercado | manuscrito/06-sabores.md:127 |  |
+| 104 | כָּשֵׁר | kashér | kosher | manuscrito/06-sabores.md:128 |  |
+| 105 | בְּשָׂרִי | bsarí | de carne | manuscrito/06-sabores.md:129 |  |
+| 106 | חָלָבִי |  |  | manuscrito/06-sabores.md:129 | - <he>בְּשָׂרִי</he> / bsarí / de carne / O par de <he>חָלָבִי</he> na conversa sobre kashrut. |
+| 107 | חָלָבִי | chalaví | de leite | manuscrito/06-sabores.md:130 |  |
+| 108 | בְּשָׂרִי |  |  | manuscrito/06-sabores.md:130 | - <he>חָלָבִי</he> / chalaví / de leite / O par de <he>בְּשָׂרִי</he> na conversa sobre kashrut. |
+| 109 | בְּתֵאָבוֹן | beteavón | bom apetite | manuscrito/06-sabores.md:131 |  |
+| 110 | ק |  |  | manuscrito/07-hebraico.md:62 | A regra, porém, mudou de ideia. Num relatório à ONU, Israel informou que a Academia passaria a escrever a letra <he>ק</he> com K, e não com Q; num relatório pos |
+| 111 | עכו |  |  | manuscrito/07-hebraico.md:64 | Há ainda os nomes que chegaram ao português e ao inglês muito antes de qualquer regra israelense. Acre é o caso mais claro. A UNESCO inscreveu a cidade como "Ol |
+| 112 | ו |  |  | manuscrito/07-hebraico.md:78 | Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o o |
+| 113 | י |  |  | manuscrito/07-hebraico.md:78 | Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o o |
+| 114 | ירושלים |  |  | manuscrito/07-hebraico.md:78 | Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o o |
+| 115 | רחוב |  |  | manuscrito/07-hebraico.md:78 | Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o o |
+| 116 | ק |  |  | manuscrito/07-hebraico.md:85 | Repare se o mesmo lugar aparece escrito de dois jeitos em letras latinas, numa placa e num mapa, ou numa placa antiga e numa nova. A letra <he>ק</he> é a primei |
+| 117 | בּ |  |  | manuscrito/07-hebraico.md:94 | Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> é b, <he>ב</he> é v). Neste livro, como no curso, esse ponto só aparece nas letras  |
+| 118 | ב |  |  | manuscrito/07-hebraico.md:94 | Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> é b, <he>ב</he> é v). Neste livro, como no curso, esse ponto só aparece nas letras  |
+| 119 | יְרוּשָׁלַיִם | Yerushaláyim | Jerusalém | manuscrito/07-hebraico.md:101 |  |
+| 120 | ירושלים |  |  | manuscrito/07-hebraico.md:101 | - <he>יְרוּשָׁלַיִם</he> / Yerushaláyim / Jerusalém / O nome da cidade em hebraico. Nas placas aparece sem os pontos: <he>ירושלים</he>. Nas cartas de Amarna, do |
+| 121 | תֵל אָבִיב | Tel Avív | Tel Aviv | manuscrito/07-hebraico.md:102 |  |
+| 122 | תֵל |  |  | manuscrito/07-hebraico.md:102 | - <he>תֵל אָבִיב</he> / Tel Avív / Tel Aviv / <he>תֵל</he> é a colina de ruínas e <he>אָבִיב</he>, a primavera. O nome vem do título que Nahum Sokolow deu à tra |
+| 123 | אָבִיב |  |  | manuscrito/07-hebraico.md:102 | - <he>תֵל אָבִיב</he> / Tel Avív / Tel Aviv / <he>תֵל</he> é a colina de ruínas e <he>אָבִיב</he>, a primavera. O nome vem do título que Nahum Sokolow deu à tra |
+| 124 | כִּנֶרֶת | Kinéret | Mar da Galileia, lago de Tiberíades | manuscrito/07-hebraico.md:103 |  |
+| 125 | יַם הַמֶלַח | Yam HaMélach | Mar Morto | manuscrito/07-hebraico.md:104 |  |
+| 126 | עַכּוֹ | Áko | Acre | manuscrito/07-hebraico.md:105 |  |
+| 127 | מִדְבָּר | midbár | deserto | manuscrito/07-hebraico.md:111 |  |
+| 128 | מִדְבַּר יְהוּדָה |  |  | manuscrito/07-hebraico.md:111 | - <he>מִדְבָּר</he> / midbár / deserto / A palavra comum para deserto. Aparece em nomes como <he>מִדְבַּר יְהוּדָה</he> (Midbár Yehudá), o deserto da Judeia. |
+| 129 | נֶגֶב | Néguev | Neguev | manuscrito/07-hebraico.md:112 |  |
+| 130 | נַחַל | náchal | riacho, leito de rio | manuscrito/07-hebraico.md:113 |  |
+| 131 | תֵל | tel | colina de ruínas | manuscrito/07-hebraico.md:114 |  |
+| 132 | מַכְתֵשׁ | machtésh | vale de erosão; ao pé da letra, "pilão" | manuscrito/07-hebraico.md:115 |  |
+| 133 | מַכְתֵשׁ רָמוֹן |  |  | manuscrito/07-hebraico.md:115 | - <he>מַכְתֵשׁ</he> / machtésh / vale de erosão; ao pé da letra, "pilão" / Também é a palavra comum para pilão. O <he>מַכְתֵשׁ רָמוֹן</he> (Machtésh Ramón), no  |
+| 134 | עֵמֶק | émek | vale | manuscrito/07-hebraico.md:116 |  |
+| 135 | עֵמֶק יִזְרְעֶאל |  |  | manuscrito/07-hebraico.md:116 | - <he>עֵמֶק</he> / émek / vale / Em nomes de regiões: <he>עֵמֶק יִזְרְעֶאל</he> (Émek Yizreél), o vale de Jezreel. |
+| 136 | עֲלִיָה | aliyá | imigração para Israel; ao pé da letra, "subida" | manuscrito/07-hebraico.md:122 |  |
+| 137 | עוֹלֶה חָדָשׁ |  |  | manuscrito/07-hebraico.md:122 | - <he>עֲלִיָה</he> / aliyá / imigração para Israel; ao pé da letra, "subida" / Quem chega é um <he>עוֹלֶה חָדָשׁ</he> (olé chadásh), "novo imigrante". |
+| 138 | קִבּוּץ | kibúts | kibutz | manuscrito/07-hebraico.md:123 |  |
+| 139 | קִבּוּצִים |  |  | manuscrito/07-hebraico.md:123 | - <he>קִבּוּץ</he> / kibúts / kibutz / Comunidade de propriedade coletiva, em geral rural. O plural é <he>קִבּוּצִים</he> (kibutsím). |
+| 140 | מוֹשָׁב | mosháv | moshav | manuscrito/07-hebraico.md:124 |  |
+| 141 | אוּלְפָּן | ulpán | curso intensivo de hebraico | manuscrito/07-hebraico.md:125 |  |
+| 142 | יוֹם הָעַצְמָאוּת | Yom HaAtsmaút | Dia da Independência | manuscrito/07-hebraico.md:126 |  |
+| 143 | עַצְמָאוּת |  |  | manuscrito/07-hebraico.md:126 | - <he>יוֹם הָעַצְמָאוּת</he> / Yom HaAtsmaút / Dia da Independência / Feriado nacional. <he>עַצְמָאוּת</he> quer dizer "independência". |
+| 144 | שַׁבָּת שָׁלוֹם | shabát shalóm | bom Shabat; ao pé da letra, "Shabat de paz" | manuscrito/07-hebraico.md:132 |  |
+| 145 | חַג שָׂמֵחַ | chag saméach | boas festas; ao pé da letra, "festa alegre" | manuscrito/07-hebraico.md:133 |  |
+| 146 | כֹּתֶל | kótel | muro; "o Kotel" é o Muro Ocidental | manuscrito/07-hebraico.md:134 |  |
+| 147 | הַכֹּתֶל |  |  | manuscrito/07-hebraico.md:134 | - <he>כֹּתֶל</he> / kótel / muro; "o Kotel" é o Muro Ocidental / Com o artigo, <he>הַכֹּתֶל</he> (HaKótel), basta para indicar o Muro Ocidental, em Jerusalém. O |
+| 148 | הַכֹּתֶל הַמַעֲרָבִי |  |  | manuscrito/07-hebraico.md:134 | - <he>כֹּתֶל</he> / kótel / muro; "o Kotel" é o Muro Ocidental / Com o artigo, <he>הַכֹּתֶל</he> (HaKótel), basta para indicar o Muro Ocidental, em Jerusalém. O |
+| 149 | בֵּית כְּנֶסֶת | beit knésset | sinagoga; ao pé da letra, "casa de reunião" | manuscrito/07-hebraico.md:135 |  |
+| 150 | כְּנֶסֶת |  |  | manuscrito/07-hebraico.md:135 | - <he>בֵּית כְּנֶסֶת</he> / beit knésset / sinagoga; ao pé da letra, "casa de reunião" / A palavra <he>כְּנֶסֶת</he> também é o nome do parlamento israelense, o |
+| 151 | מְזוּזָה | mezuzá | mezuzá | manuscrito/07-hebraico.md:136 |  |
+| 152 | כִּפָּה | kipá | quipá, solidéu | manuscrito/07-hebraico.md:137 |  |
+| 153 | כָּשֵׁר | kashér | kosher, apto segundo as leis alimentares judaicas | manuscrito/07-hebraico.md:138 |  |
+| 154 | כַּשְׁרוּת |  |  | manuscrito/07-hebraico.md:138 | - <he>כָּשֵׁר</he> / kashér / kosher, apto segundo as leis alimentares judaicas / Em placas de restaurante e embalagens. O conjunto das regras é a <he>כַּשְׁרוּ |
+| 155 | שׁוּק | shuk | mercado | manuscrito/07-hebraico.md:144 |  |
+| 156 | שׁוּק מַחֲנֵה יְהוּדָה |  |  | manuscrito/07-hebraico.md:144 | - <he>שׁוּק</he> / shuk / mercado / O mercado de bancas: <he>שׁוּק מַחֲנֵה יְהוּדָה</he> (Shuk Machané Yehudá), em Jerusalém, e <he>שׁוּק הַכַּרְמֶל</he> (Shuk  |
+| 157 | שׁוּק הַכַּרְמֶל |  |  | manuscrito/07-hebraico.md:144 | - <he>שׁוּק</he> / shuk / mercado / O mercado de bancas: <he>שׁוּק מַחֲנֵה יְהוּדָה</he> (Shuk Machané Yehudá), em Jerusalém, e <he>שׁוּק הַכַּרְמֶל</he> (Shuk  |
+| 158 | בְּתֵאָבוֹן | beteavón | bom apetite | manuscrito/07-hebraico.md:145 |  |
+| 159 | חֶשְׁבּוֹן | cheshbón | a conta | manuscrito/07-hebraico.md:146 |  |
+| 160 | חֶשְׁבּוֹן בְּבַקָשָׁה |  |  | manuscrito/07-hebraico.md:146 | - <he>חֶשְׁבּוֹן</he> / cheshbón / a conta / No restaurante, pede-se com <he>חֶשְׁבּוֹן בְּבַקָשָׁה</he> (cheshbón bevakashá). |
+| 161 | רְחוֹב | rechóv | rua | manuscrito/07-hebraico.md:152 |  |
+| 162 | רחוב |  |  | manuscrito/07-hebraico.md:152 | - <he>רְחוֹב</he> / rechóv / rua / Vem antes do nome da rua, como em português. Nas placas, sem pontos: <he>רחוב</he>. |
+| 163 | שֵׁרוּת | sherút | táxi coletivo; ao pé da letra, "serviço" | manuscrito/07-hebraico.md:153 |  |
+| 164 | תַחֲנָה מֶרְכָּזִית | tachaná merkazít | rodoviária central | manuscrito/07-hebraico.md:154 |  |
+| 165 | בְּסֵדֶר | beséder | tudo bem, ok | manuscrito/07-hebraico.md:155 |  |
+| 166 | מָה נִשְׁמָע | ma nishmá | tudo bem?, e aí? | manuscrito/07-hebraico.md:156 |  |
+| 167 | תוֹדָה רַבָּה | todá rabá | muito obrigado | manuscrito/07-hebraico.md:157 |  |
+| 168 | תוֹדָה |  |  | manuscrito/07-hebraico.md:157 | - <he>תוֹדָה רַבָּה</he> / todá rabá / muito obrigado / A forma completa do agradecimento; sozinha, <he>תוֹדָה</he> (todá) já é "obrigado". |
+| 169 | בְּבַקָשָׁה | bevakashá | por favor; também "aqui está" e "de nada" | manuscrito/07-hebraico.md:158 |  |
+| 170 | צַבָּר | tsabár | nascido em Israel; também o figo-da-índia | manuscrito/07-hebraico.md:164 |  |
+| 171 | דוּגְרִי | dúgri | franco, direto | manuscrito/07-hebraico.md:165 |  |
+| 172 | חוּצְפָּה | chutspá | atrevimento, cara de pau | manuscrito/07-hebraico.md:166 |  |
+| 173 | בָּלָגָן | balagán | bagunça, confusão | manuscrito/07-hebraico.md:167 |  |
+| 174 | סַבְלָנוּת | savlanút | paciência | manuscrito/07-hebraico.md:168 |  |
+| 175 | יַאלְלָה | yálla | vamos!, anda! | manuscrito/07-hebraico.md:169 |  |
+| 176 | סַבַּבָּה | sabába | beleza, ótimo | manuscrito/07-hebraico.md:170 |  |
+| 177 | צִימֶר | tsímer | chalé, pousada rural | manuscrito/07-hebraico.md:171 |  |
+| 178 | תֵל |  |  | manuscrito/07-hebraico.md:179 | - [ ] <he>תֵל</he> (tel) / |
+| 179 | נַחַל |  |  | manuscrito/07-hebraico.md:180 | - [x] <he>נַחַל</he> (náchal) / É a palavra para riacho ou leito de rio, que nos mapas e placas de trilha vem antes do nome. |
+| 180 | עֵמֶק |  |  | manuscrito/07-hebraico.md:181 | - [ ] <he>עֵמֶק</he> (émek) / |
+| 181 | שׁוּק |  |  | manuscrito/07-hebraico.md:182 | - [ ] <he>שׁוּק</he> (shuk) / |
+| 182 | חֶשְׁבּוֹן |  |  | manuscrito/07-hebraico.md:186 | - [ ] <he>חֶשְׁבּוֹן</he> (cheshbón) / |
+| 183 | סַבְלָנוּת |  |  | manuscrito/07-hebraico.md:187 | - [ ] <he>סַבְלָנוּת</he> (savlanút) / |
+| 184 | בְּתֵאָבוֹן |  |  | manuscrito/07-hebraico.md:188 | - [x] <he>בְּתֵאָבוֹן</he> (beteavón) / "Bom apetite": diz quem serve o prato, em casa e no restaurante. |
+| 185 | שֵׁרוּת |  |  | manuscrito/08-na-pratica.md:99 | O sherut (<he>שֵׁרוּת</he>, sherút) é o táxi coletivo. Em Tel Aviv, são vans amarelas que seguem trajetos de ônibus e circulam também à noite e no Shabat, quand |
+| 186 | שַׁבָּת |  |  | manuscrito/08-na-pratica.md:109 | O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico, de sexta à noite a sábado à noite, e é ele que explica os trens parados e os ônibus de fim de  |
