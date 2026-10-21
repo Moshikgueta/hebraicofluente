@@ -7,7 +7,11 @@
   "foto-via-dolorosa-matson-arco": "conferida em 21/10/2026: mostra o interior de uma sala, não o arco",
   "foto-jerusalem-jaffa-gate-matson": "conferida em 21/10/2026: estereografia (duas imagens lado a lado)",
   "foto-tel-aviv-costa": "conferida em 21/10/2026: panorama estreito com moldura preta",
-  "foto-tito-menora-cc0": "conferida em 21/10/2026: menorá decorativa, não o relevo do Arco de Tito"
+  "foto-tito-menora-cc0": "conferida em 21/10/2026: menorá decorativa, não o relevo do Arco de Tito",
+  "foto-domo-loc-closeup": "Library of Congress só oferece 640 px para este item; a versão grande vem do Commons (coleção Matson)",
+  "foto-domo-loc-temple-area": "Library of Congress só oferece 640 px e a chapa tem fita colada; a versão grande vem do Commons",
+  "foto-jerusalem-jaffa-gate-1898": "Library of Congress só oferece 640 px; a versão grande vem do Commons",
+  "foto-domo-vitrais": "outro assunto (os vitrais), não o Domo visto de perto"
  },
  "reservas": {
   "foto-tel-aviv-costa": [
@@ -109,12 +113,13 @@
   ]
  },
  "buscas": {
-  "foto-domo-loc-temple-area": "Matson Jerusalem Temple area Dome of the Rock",
+  "foto-domo-loc-temple-area": "Temple area Jerusalem Dome of the Rock western Temple wall matpc",
   "foto-via-dolorosa-ecce-homo-matson": "Ecce Homo arch Via Dolorosa Jerusalem",
   "foto-kineret-taylor": "Sea of Galilee view",
   "foto-hula-pikiwiki": "Agamon Hula lake cranes",
-  "foto-jerusalem-jaffa-gate-matson": "Jaffa Gate Jerusalem",
+  "foto-jerusalem-jaffa-gate-matson": "The Jaffa Gate Jerusalem matpc",
   "foto-tito-menora-cc0": "Arch of Titus relief spoils menorah",
-  "foto-tel-aviv-costa": "Tel Aviv beach promenade"
+  "foto-tel-aviv-costa": "Tel Aviv beach promenade",
+  "foto-domo-loc-closeup": "Dome of the Rock close-up matpc"
  }
 }

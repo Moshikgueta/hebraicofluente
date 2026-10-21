@@ -112,7 +112,12 @@ async function doLoc(c, arq) {
   const iiif = [...new Set((texto.match(/image-services\/iiif\/service:[a-z0-9:._-]+/gi) || []))];
   const jpgs = [...new Set(texto.match(/https?:\/\/[a-z0-9.]*loc\.gov\/[^"\\\s]+?\.jpe?g[^"\\\s]*/gi) || [])].map(u => u.replace(/^http:/, 'https:'));
   const tam = u => { const m = u.match(/pct:(\d+)|[#&]w=(\d+)|\/full\/(\d+),/); return m ? (m[1] ? +m[1] * 50 : +(m[2] || m[3])) : 0; };
-  const melhor = iiif.length ? `https://tile.loc.gov/${iiif[0]}/full/2000,/0/default.jpg` : jpgs.sort((a, b) => tam(b) - tam(a))[0];
+  /* Só o serviço IIIF DO PRÓPRIO item: a página lista também itens
+     relacionados (um livro, outra foto), e o primeiro da lista nem sempre é
+     o certo. O item se reconhece pelo número de reprodução (LC-DIG-matpc-04240). */
+  const repro = (texto.match(/LC-(?:DIG|USZ\w*)-([a-z]+)-(\d+)/i) || []);
+  const doItem = repro[1] ? iiif.find(x => new RegExp(`${repro[1]}:0*${+repro[2]}\\b|${repro[1]}:${repro[2]}`, 'i').test(x)) : null;
+  const melhor = doItem ? `https://tile.loc.gov/${doItem}/full/2000,/0/default.jpg` : jpgs.sort((a, b) => tam(b) - tam(a))[0];
   if (!melhor) return { recusa: 'item sem imagem JPEG na Library of Congress' };
   await baixar(melhor, arq);
   const item = j.item || {};
