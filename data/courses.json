@@ -22,7 +22,18 @@
     "",
     "OS OUTROS TRÊS PREÇOS SÃO PROVISÓRIOS. São um ponto de partida plausível",
     "para o mercado brasileiro, não uma decisão comercial - troque antes de",
-    "vender."
+    "vender.",
+    "",
+    "PRODUTOS QUE NÃO SÃO CURSO (21/10/2026, decisão do dono): `tipo` diz o que é.",
+    "Sem `tipo`, é curso. `livro` é o e-book Israel Além do Roteiro (versão",
+    "interativa em /israel/ e o PDF), R$ 67. `pacote` libera, num pedido só, cada",
+    "slug de `componentes`, com os meses de cada um; R$ 177 = curso + e-book.",
+    "allCourses() no app só devolve cursos: /cursos, a estante, o 'próximo curso'",
+    "e o rodapé não mudam. O pacote só se vende até `vendaAte` (o curso sobe para",
+    "R$ 297 em 01/12 e o pacote a R$ 177 ficaria mais barato que o curso sozinho):",
+    "o preço dele depois disso é decisão do dono, ainda não tomada.",
+    "Vender o e-book à parte é atividade fora do curso (ver CLAUDE.md,",
+    "Enquadramento): não publicar antes de o contador confirmar."
   ],
 
   "currency": "BRL",
@@ -156,6 +167,69 @@
         { "n": 4, "titlePt": "Escuta longa", "subPt": "Áudio em velocidade normal, sem legenda" },
         { "n": 5, "titlePt": "Escrita", "subPt": "E-mail, carta, mensagem" }
       ]
+    },
+
+    {
+      "slug": "israel-alem-do-roteiro",
+      "tipo": "livro",
+      "code": "E1",
+      "n": 101,
+      "titlePt": "Israel Além do Roteiro",
+      "levelPt": "E-book",
+      "cefr": null,
+      "status": "available",
+      "engine": "livro",
+      "abre": "/israel/",
+      "taglinePt": "O guia ilustrado para entender Israel antes, durante e depois da viagem.",
+      "summaryPt": "Dez capítulos para quem vai a Israel ou quer entender o país: o mapa, a história, Jerusalém, os outros destinos, a vida real, a comida, o hebraico das placas, a viagem na prática, curiosidades e um diário para preencher. Com mapas, ilustrações, fotos e exercícios de compreensão no fim de cada capítulo.",
+      "outcomesPt": [
+        "Situar no mapa as regiões e os lugares que aparecem num roteiro.",
+        "Separar o que é história do que é tradição em cada lugar visitado.",
+        "Reconhecer palavras em hebraico nas placas e nos cardápios.",
+        "Planejar a viagem com as regras práticas de entrada, transporte e Shabat."
+      ],
+      "forWhomPt": [
+        "Quem vai viajar para Israel, em grupo ou sozinho.",
+        "Quem quer entender o país além do que o guia conta no ônibus."
+      ],
+      "requiresPurchase": true,
+      "price": { "brl": 67, "installments": 3, "pixDiscountPct": 10 },
+      "accessMonths": 12,
+      "modules": [
+        { "n": 1, "titlePt": "Israel no mapa", "subPt": "Um país pequeno, uma geografia surpreendente" },
+        { "n": 2, "titlePt": "Milhares de anos de história", "subPt": "Povos, reinos e impérios na mesma terra" },
+        { "n": 3, "titlePt": "Jerusalém", "subPt": "O que as pedras contam, e o que se conta sobre elas" },
+        { "n": 4, "titlePt": "Além de Jerusalém", "subPt": "Dez lugares, cada um com mais de uma história" },
+        { "n": 5, "titlePt": "A vida real em Israel", "subPt": "A semana, o calendário e quem vive no país" },
+        { "n": 6, "titlePt": "Sabores de Israel", "subPt": "Pratos que viajaram, receitas que se disputam" },
+        { "n": 7, "titlePt": "Hebraico para compreender Israel", "subPt": "Palavras para reconhecer o que se vê e se ouve" },
+        { "n": 8, "titlePt": "Israel na prática", "subPt": "O que conferir, onde conferir e quando" },
+        { "n": 9, "titlePt": "41 curiosidades sobre Israel", "subPt": "Histórias curtas, cada uma com a fonte" },
+        { "n": 10, "titlePt": "Diário de descobertas", "subPt": "Páginas para antes, durante e depois da viagem" }
+      ]
+    },
+
+    {
+      "slug": "alfabetizacao-e-israel",
+      "tipo": "pacote",
+      "code": "P1",
+      "n": 102,
+      "titlePt": "Alfabetização em Hebraico + Israel Além do Roteiro",
+      "levelPt": "Pacote",
+      "cefr": null,
+      "status": "available",
+      "engine": "pacote",
+      "componentes": ["alfabetizacao", "israel-alem-do-roteiro"],
+      "vendaAte": "2026-11-30",
+      "abre": "/meu-hebraico/",
+      "taglinePt": "O curso de alfabetização e o e-book Israel Além do Roteiro, numa compra só.",
+      "summaryPt": "Aprenda a ler hebraico do zero e leve junto o guia ilustrado para entender Israel: o curso de alfabetização completo e o e-book, com a versão interativa e o PDF.",
+      "outcomesPt": [],
+      "forWhomPt": [],
+      "requiresPurchase": true,
+      "price": { "brl": 177, "installments": 12, "pixDiscountPct": 10 },
+      "accessMonths": 12,
+      "modules": []
     }
   ]
 }

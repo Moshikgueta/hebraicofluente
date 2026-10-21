@@ -112,7 +112,11 @@ const fichas = caps.flatMap(c => (c.fichas || []).map(f => ({ ...f, cap: c.id, c
 /* Vinhetas: as das seções e as das páginas do aplicativo. */
 const vinhetas = {};
 for (const id of [...caps.flatMap(c => c.secoes.map(x => x.vinheta)), 'lupa', 'letras', 'mapa', 'mala', 'livro'].filter(Boolean)) vinhetas[id] = vinheta(id);
-const dados = { vinhetas, titulo: meta.titulo, subtitulo: meta.subtitulo, indice, capitulos: caps, diario, svgs, pontos, fichas, gerado_em: new Date().toISOString().slice(0, 10) };
+/* --producao=<arquivo.pdf>: a versão vendida no site (/israel/). Sem o aviso
+   de protótipo, com o botão do PDF (o arquivo mora ao lado, atrás do mesmo
+   portão) e com o caminho de volta para o site. */
+const producao = typeof opt.producao === 'string' ? { pdf: opt.producao } : null;
+const dados = { producao, vinhetas, titulo: meta.titulo, subtitulo: meta.subtitulo, indice, capitulos: caps, diario, svgs, pontos, fichas, gerado_em: new Date().toISOString().slice(0, 10) };
 const css = fs.readFileSync(path.join(EDITORIAL, 'templates/tokens-editorial.css'), 'utf8') + '\n' + fs.readFileSync(path.join(EDITORIAL, 'templates/web.css'), 'utf8');
 const app = fs.readFileSync(path.join(EDITORIAL, 'templates/web-app.js'), 'utf8');
 const html = `<!doctype html>

@@ -268,7 +268,9 @@ function Footer() {
             ofertas na mesma coluna (auditoria de 01/10, CONV-011). */}
         <div className="grid gap-1 content-start">
           <FooterCol title="O curso" links={[
-            { href: '/cursos/alfabetizacao', label: 'Alfabetização em Hebraico' }
+            { href: '/cursos/alfabetizacao', label: 'Alfabetização em Hebraico' },
+            /* 21/10/2026: o e-book, vendido à parte (data/courses.json, tipo livro). */
+            { href: '/cursos/israel-alem-do-roteiro', label: 'E-book Israel Além do Roteiro' }
           ]} />
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">
             Próximos cursos, à parte e ainda em produção:{' '}

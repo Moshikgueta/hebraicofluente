@@ -257,3 +257,7 @@ main figure .alvo { overflow: hidden; }
 figure.foto img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; background: var(--pedra); }
 figure.foto.vertical img { aspect-ratio: 3 / 4; max-width: 420px; margin: 0 auto; }
 figure.foto .credito a { color: inherit; }
+
+/* Versão vendida no site: baixar o PDF e voltar */
+.acoes-livro { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.voltar-site { font-family: var(--f-rotulo); font-size: 15px; color: var(--navy); }

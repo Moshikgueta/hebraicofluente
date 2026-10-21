@@ -390,7 +390,13 @@
     var h = el('section', { class: 'heroi' }, '<div class="arte">' + arte(c1.abertura.imagem) + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Hebraico Fluente</span><span class="he" lang="he">ישראל</span></div><h1>' + esc(D.titulo) + '</h1><p>' + esc(D.subtitulo) + '.</p></div>');
     main.appendChild(h);
     var prontos = D.indice.filter(function (c) { return c.disponivel && !c.especial; }).length;
-    main.appendChild(el('p', { class: 'aviso-prototipo' }, 'Protótipo para aprovação: ' + (prontos === 1 ? 'só o capítulo 1 está aqui' : prontos + ' capítulos estão aqui') + '. O progresso e o diário ficam guardados neste aparelho.'));
+    if (D.producao) {
+      /* A versão vendida: o PDF ao lado e o caminho de volta para o site. */
+      var acoes = el('p', { class: 'acoes-livro' });
+      acoes.innerHTML = '<a class="botao claro" href="' + esc(D.producao.pdf) + '" download>Baixar o PDF</a> <a class="voltar-site" href="/">Hebraico Fluente</a>';
+      main.appendChild(acoes);
+      main.appendChild(el('p', { class: 'aviso-prototipo' }, 'O progresso, os exercícios e o diário ficam guardados neste aparelho.'));
+    } else main.appendChild(el('p', { class: 'aviso-prototipo' }, 'Protótipo para aprovação: ' + (prontos === 1 ? 'só o capítulo 1 está aqui' : prontos + ' capítulos estão aqui') + '. O progresso e o diário ficam guardados neste aparelho.'));
     if (s.ultima) { var u = porId(s.ultima.cap); if (u) main.appendChild(el('p', null, '<a class="botao" href="#' + u.id + '" data-secao="' + s.ultima.secao + '">Continuar de onde parou</a>')); }
     else main.appendChild(el('p', null, '<a class="botao" href="#' + c1.id + '">Começar pelo capítulo 1</a>'));
     var lista = el('ol', { class: 'capitulos', 'aria-label': 'Capítulos' });

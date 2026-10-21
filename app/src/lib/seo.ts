@@ -43,7 +43,9 @@ export const PAGAS = [
   '/leitura',
   '/audio', '/stroke-order', '/som', '/loja', '/bonus', '/nikud-biblico', '/depoimento',
   /* 06/10/2026: o curso Hebraico A1 (outro curso; ver worker/src/gate.js). */
-  '/a1'
+  '/a1',
+  /* 21/10/2026: o e-book Israel Além do Roteiro (outro produto). */
+  '/israel'
 ] as const;
 
 /**

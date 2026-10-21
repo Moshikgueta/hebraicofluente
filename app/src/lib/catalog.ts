@@ -67,8 +67,17 @@ export type CatalogCourse = {
   levelPt: string;
   cefr: string | null;
   status: CourseStatus;
-  /** Qual motor de curso abre as aulas. `null` = ainda não existe conteúdo. */
-  engine: 'alfabetizacao' | null;
+  /** Qual motor de curso abre as aulas. `null` = ainda não existe conteúdo.
+   *  `livro` e `pacote` não são cursos: ver `tipo`. */
+  engine: 'alfabetizacao' | 'livro' | 'pacote' | null;
+  /** Sem `tipo`, é curso. `livro` = o e-book; `pacote` = vários produtos num pedido. */
+  tipo?: 'curso' | 'livro' | 'pacote';
+  /** No pacote: os slugs que um pedido dele libera. */
+  componentes?: string[];
+  /** Último dia de venda (fim do dia em Brasília). */
+  vendaAte?: string;
+  /** Onde o produto abre depois de comprado. Sem isto, /meu-hebraico. */
+  abre?: string;
   taglinePt: string;
   summaryPt: string;
   outcomesPt: string[];
@@ -88,9 +97,20 @@ const CATALOG = catalogJson as unknown as {
 
 export const currency = CATALOG.currency;
 
-/** Todos os cursos, na ordem do catálogo. */
+export const tipoDe = (c: CatalogCourse | undefined): 'curso' | 'livro' | 'pacote' => c?.tipo ?? 'curso';
+
+/** Todos os CURSOS, na ordem do catálogo. O e-book e o pacote ficam de fora:
+ *  /cursos, a estante, o "próximo curso" e o rodapé falam de cursos. */
 export const allCourses = (): CatalogCourse[] =>
+  CATALOG.courses.filter(c => tipoDe(c) === 'curso').sort((a, b) => a.n - b.n);
+
+/** Todos os produtos à venda ou não: cursos, o e-book e o pacote. */
+export const allProducts = (): CatalogCourse[] =>
   CATALOG.courses.slice().sort((a, b) => a.n - b.n);
+
+/** A venda ainda está aberta? O pacote tem data de fim (`vendaAte`). */
+export const vendaVigente = (c: CatalogCourse, agora = Date.now()): boolean =>
+  !c.vendaAte || agora <= Date.parse(`${c.vendaAte}T23:59:59.999-03:00`);
 
 export const getCourse = (slug: string): CatalogCourse | undefined =>
   CATALOG.courses.find(c => c.slug === slug);
@@ -112,7 +132,7 @@ export const isPlayable = (c: CatalogCourse): boolean =>
 
 /** A rota que abre o curso, ou a página de venda se ele ainda não abre. */
 export function courseHref(c: CatalogCourse): string {
-  return isPlayable(c) ? '/meu-hebraico' : `/cursos/${c.slug}`;
+  return isPlayable(c) ? (c.abre ?? '/meu-hebraico') : `/cursos/${c.slug}`;
 }
 
 /* ── dinheiro ───────────────────────────────────────────────────────────

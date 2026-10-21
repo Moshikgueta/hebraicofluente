@@ -118,6 +118,13 @@ export default function Page() {
           contrapartida de receber o valor de volta. O seu progresso de estudo{' '}
           <strong>não é apagado</strong>: se um dia você comprar de novo, ele estará lá.
         </p>
+        {/* TEXTO PARA APROVAÇÃO (21/10/2026): o e-book, vendido à parte. */}
+        <p>
+          No <strong>e-book Israel Além do Roteiro</strong>, o direito de desistir é o
+          mesmo, e a versão interativa fecha quando o reembolso é processado. O PDF que você
+          baixou não tem como ser recolhido: ao pedir o reembolso, você se compromete a
+          apagá-lo. No pacote, o reembolso devolve o valor inteiro e fecha o curso e o e-book.
+        </p>
       </Artigo>
 
       <Artigo n={5} titulo="Depois dos sete dias">
