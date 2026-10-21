@@ -279,6 +279,25 @@ function mapaDestinos() {
   return svg(P, c);
 }
 
+/* Pontos tocáveis do mapa de regiões (experiência digital). A POSIÇÃO é
+   escolha de diagramação (perto do rótulo da região, nunca um limite); o
+   TEXTO vem de regioes.json, e só entra região com afirmação VERIFICADO. */
+const POS_REGIAO = [
+  [/gol/i, [35.75, 32.95]], [/alta galileia|^galileia/i, [35.35, 33.0]], [/hula/i, [35.6, 33.1]], [/kin|mar da galileia/i, [35.58, 32.82]],
+  [/litoral|costeir|carmelo|sharon/i, [34.8, 32.6]], [/montes|judeia|samaria/i, [35.15, 31.9]], [/jord/i, [35.52, 32.35]],
+  [/mar morto/i, [35.5, 31.5]], [/neguev/i, [34.85, 30.8]], [/arava/i, [35.15, 30.35]], [/eilat|extremo sul/i, [34.97, 29.65]],
+];
+function pontosRegioes() {
+  const reg = lerDados('regioes.json'); if (!Array.isArray(reg)) return [];
+  const afs = new Map();
+  for (const f of fs.readdirSync(path.join(RAIZ, 'afirmacoes')).filter(f => f.endsWith('.json'))) for (const a of JSON.parse(fs.readFileSync(path.join(RAIZ, 'afirmacoes', f), 'utf8')).afirmacoes || []) afs.set(a.id, a.status);
+  const P = projetor(RECORTE_PAIS, 430);
+  return reg.filter(r => (r.afirmacoes || []).length && r.afirmacoes.every(id => ['VERIFICADO', 'CONTESTADO'].includes(afs.get(id))))
+    .map(r => { const pos = (POS_REGIAO.find(([re]) => re.test(r.nome) || re.test(r.id)) || [])[1]; if (!pos) return null; const [x, y] = P.p(pos); return { id: r.id, nome: r.nome, texto: r.descricao_curta, x: +(x / P.largura * 100).toFixed(1), y: +(y / P.altura * 100).toFixed(1) }; })
+    .filter(Boolean);
+}
+fs.writeFileSync(path.join(RAIZ, 'ativos/dados/mapa-regioes-pontos.json'), JSON.stringify(pontosRegioes(), null, 1) + '\n');
+
 fs.mkdirSync(SAIDA, { recursive: true });
 const gerados = { 'mapa-regional': mapaRegional(), 'mapa-regioes': mapaRegioes(), 'mapa-destinos': mapaDestinos() };
 for (const [id, conteudo] of Object.entries(gerados)) {
