@@ -6,7 +6,11 @@
       "secao": "Cidades e cartas ao faraó",
       "afirmacao": "No século XIV a.C., no período de Amarna, a corte egípcia guardava num arquivo a correspondência com governantes vassalos de cidades do Levante, que escreviam ao faraó como a seu senhor.",
       "categoria": "arqueologia",
-      "fontes": ["F02-001", "F02-002", "F02-003"],
+      "fontes": [
+        "F02-001",
+        "F02-002",
+        "F02-003"
+      ],
       "evidencia": "Met: as cartas de Amarna se preservaram por terem sido guardadas no 'Records Office' real; o objeto 544696 é rotulado 'New Kingdom, Amarna Period' e é carta de um governante vassalo (Abi-milku de Tiro) ao rei do Egito. Britannica (Tell el-Amarna): correspondência da corte egípcia com outros Estados e vassalos, dos reinados de Amenhotep III e Akhenaton.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -21,7 +25,10 @@
       "secao": "Cidades e cartas ao faraó",
       "afirmacao": "Uma das cartas de Abi-milku, governante de Tiro, mostra que esse vassalo esperava proteção do senhor egípcio em troca de lealdade.",
       "categoria": "historia",
-      "fontes": ["F02-001", "F02-002"],
+      "fontes": [
+        "F02-001",
+        "F02-002"
+      ],
       "evidencia": "Met: uma das dez cartas de Abi-milku que sobreviveram 'makes it clear that this vassal ruler expected protection from his Egyptian overlord in return for his loyalty'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -34,31 +41,39 @@
     {
       "id": "C02-003",
       "secao": "Cidades e cartas ao faraó",
-      "afirmacao": "Entre as cartas de Amarna há uma de Abdi-Heba, governante de Jerusalém, pedindo ajuda ao faraó contra os hapiru.",
+      "afirmacao": "Nas cartas de Amarna, Jerusalém aparece como Urusalim; o governante dela, Abdi-Heba, pede ao faraó um mensageiro e alguns soldados para resistir aos inimigos e promete ser sempre um vassalo fiel, diga o que disser quem o acusa.",
       "categoria": "historia",
-      "fontes": ["F02-004"],
-      "evidencia": "Britannica (Jerusalem): a correspondência de Tell el-Amarna, do século XIV, contém mensagem do governante da cidade, Abdi-Kheba, pedindo ajuda do soberano contra os hapiru invasores.",
+      "fontes": [
+        "F02-122",
+        "F02-004"
+      ],
+      "evidencia": "Bible Odyssey (Rollston, 'Jerusalem in the Amarna Letters'): as cartas de Jerusalém ('Urusalim') são de um governante cananeu chamado Abdi-Heba, que 'requests that the Egyptian monarch send him a messenger and some military men to help resist his enemies' e afirma que 'he will always be a faithful vassal of his Egyptian lord, regardless of any accusation by an enemy to the contrary'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. Procurar a carta (EA 286-290) no acervo do Vorderasiatisches Museum de Berlim ou numa edição acadêmica.",
+      "limitacoes": "Trecho de busca do artigo; os números EA das cartas não foram conferidos. A menção aos hapiru ficou fora do texto (o trecho que a liga às cartas de Jerusalém não foi isolado).",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
       "id": "C02-004",
       "secao": "Israel e Judá: o que as pedras dizem",
-      "afirmacao": "A Estela de Merneptah (c. 1208 a.C., Museu Egípcio do Cairo, achada por Petrie em Tebas em 1896) traz a mais antiga menção conhecida a 'Israel', grafado com o determinativo de povo e não de território.",
+      "afirmacao": "Numa estela do faraó Merneptah, de c. 1207 a.C., aparece o nome Israel; a estela foi achada por Flinders Petrie no templo funerário do faraó, em Tebas, e está no Museu Egípcio do Cairo.",
       "categoria": "arqueologia",
-      "fontes": ["F02-005"],
-      "evidencia": "Britannica (Israel Stela): contém a mais antiga referência conhecida a Israel; uma das quatro inscrições comemorativas de Merneptah; datas de c. 1209/1207/1205 a.C. conforme a entrada; o determinativo indica um povo. Outros resultados (Wikipedia, BAR) dão c. 1208 e Petrie, Tebas, 1896, Cairo.",
+      "fontes": [
+        "F02-082",
+        "F02-081",
+        "F02-083",
+        "F02-005"
+      ],
+      "evidencia": "Hasel (BASOR 296, 1994), resumo: 'The name Israel in the Merneptah stela of ca. 1207 B.C. has entered a new phase of discussion'. UCL Digital Egypt: a estela vem do templo funerário de Merneptah em Tebas ('great stela' na planta publicada por Petrie). ISAC (Oriental Institute, SAOC 12): a Estela de Israel catalogada como Cairo 34025 (verso), isto é, no Museu do Cairo. Britannica (E) confirma.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Nenhuma fonte de nível A a D apareceu nos trechos. Datas variam entre 1209 e 1205 a.C. conforme a cronologia egípcia adotada. Procurar: Museu Egípcio do Cairo (JE 31408) e literatura acadêmica (ex.: Hasel, BASOR 1994).",
+      "limitacoes": "A data varia entre c. 1209 e 1205 a.C. conforme a cronologia egípcia. 'A mais antiga menção conhecida a Israel' não foi sustentada por fonte A a D nesta rodada e não vai ao texto. O número JE 31408 só apareceu em fonte não admitida.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -66,7 +81,10 @@
       "secao": "Israel e Judá: o que as pedras dizem",
       "afirmacao": "A estela de Mesha está no Louvre (AO 5066): um bloco de basalto de cerca de 1,25 m de altura com 34 linhas em escrita moabita; o museu guarda também fragmentos, uma estampagem em papel e uma cópia, que não ficam expostos.",
       "categoria": "arqueologia",
-      "fontes": ["F02-006", "F02-007"],
+      "fontes": [
+        "F02-006",
+        "F02-007"
+      ],
       "evidencia": "Registro do Louvre: inventário AO 5066, Departamento de Antiguidades Orientais, basalto, cerca de 125 cm, inscrição de 34 linhas em escrita moabita, exposta no Sully, nível 0; fragmentos AO 2142 e AO 5060, estampagem AO 5019 e cópia AO 5020 não expostos. Página de história das coleções: em 1873 Charles Clermont-Ganneau levou os fragmentos ao Louvre.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -79,50 +97,72 @@
     {
       "id": "C02-006",
       "secao": "Israel e Judá: o que as pedras dizem",
-      "afirmacao": "A estela de Mesha, achada em Dhiban (a Dibon bíblica, na atual Jordânia) em 1868 e datada do século IX a.C., comemora a vitória de Mesha, rei de Moabe, sobre Israel e menciona a submissão anterior de Moabe a Omri, rei de Israel.",
+      "afirmacao": "A estela de Mesha, gravada pouco depois de 842 a.C., quando se ergueu um santuário ao deus Quemós, conta como Mesha, rei de Moabe, retomou de Israel muitos territórios moabitas; os fragmentos achados em Diban foram levados ao Louvre em 1873 por Charles Clermont-Ganneau.",
       "categoria": "arqueologia",
-      "fontes": ["F02-008"],
-      "evidencia": "Britannica (Moabite Stone): descoberta em Dhiban em 1868; a inscrição comemora uma vitória sobre os israelitas que restabeleceu a independência de Moabe. Omri aparece em resultados de fonte não admitida (New World Encyclopedia, Jewish Virtual Library).",
+      "fontes": [
+        "F02-006",
+        "F02-084",
+        "F02-007"
+      ],
+      "evidencia": "Louvre (notícias de coleção): estela de basalto, inscrição moabita de 34 linhas, datada do século IX a.C., 'gravée peu après 842, à l'occasion de l'érection d'un sanctuaire au dieu Kamosch'; relata 'la reprise, sur Israël, de nombreux territoires moabites par le roi Mesha'; fragmentos descobertos em Diban; 'En 1873, Charles Clermont-Ganneau estampa puis rapporta au Louvre les fragments'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. O registro do Louvre (F02-006) deve trazer a descrição do conteúdo: conferir no texto integral e, então, promover a VERIFICADO.",
+      "limitacoes": "A menção a Omri e o ano da descoberta (1868) não apareceram nos trechos do Louvre e ficaram fora do texto. 'Quemós' é a forma portuguesa usual de Kamosh/Kemosh.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
       "id": "C02-007",
       "secao": "Israel e Judá: o que as pedras dizem",
-      "afirmacao": "A Estela de Tel Dan, fragmento em aramaico achado em Tel Dan em 1993, traz a sequência bytdwd, que a maioria dos estudiosos lê como 'casa de Davi'; uma minoria a lê como nome de lugar. O texto foi gravado mais de um século depois da data tradicional do reinado de Davi.",
+      "afirmacao": "O primeiro fragmento da Estela de Tel Dan apareceu em 1993 nas escavações de Avraham Biran, no norte de Israel; a inscrição, em aramaico, é atribuída a Hazael, rei de Damasco, no século IX a.C., sem o nome preservado; traz bytdwd, que para a maioria dos estudiosos só se traduz de modo convincente como 'casa de Davi'; refere-se à dinastia, não ao Davi histórico; a peça pertence à Autoridade de Antiguidades de Israel e fica sob a guarda do Museu de Israel.",
       "categoria": "arqueologia",
-      "fontes": ["F02-009", "F02-010"],
-      "evidencia": "Britannica (Israel, Biblical Kingdom): inscrição aramaica fragmentária que narra campanha síria e vitória sobre bytdwd, que a maioria lê como beth David; uma minoria lê como nome de lugar. Britannica (David): o fragmento foi gravado mais de um século depois da data tradicional do reinado de Davi e não é aceito por todos os estudiosos. Achado em 1993 por equipe de Avraham Biran: só em fontes não admitidas (BAR, World History Encyclopedia).",
+      "fontes": [
+        "F02-086",
+        "F02-085",
+        "F02-087",
+        "F02-009",
+        "F02-010"
+      ],
+      "evidencia": "Bible Odyssey (SBL): achada em Tel Dan em 1993 e 1994 sob Avraham Biran; atribuída ao rei de Damasco Hazael no século IX a.C., embora o nome não esteja preservado; 'the majority of scholars consider \"house of David\" to be the only compelling translation'; 'although the inscription does not refer to the historical David, it certainly refers to the Davidic dynasty'. Biran e Naveh, IEJ 43 (1993) 81-98 (referência confirmada). The Jewish Museum (NY): 'belongs to the Israel Antiquities Authority and is on loan through The Israel Museum, Jerusalem' (exposição dez. 2024 a jan. 2025).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E; o debate é real mas as posições não foram sustentadas por fonte A a D nesta rodada. Procurar: Israel Museum (peça em exposição), Biran e Naveh, Israel Exploration Journal 43 (1993) e 45 (1995); Lemche e Thompson para a leitura minoritária.",
+      "limitacoes": "As leituras alternativas (nome de lugar, 'amado', etc.) e quem as propôs (Lemche, Davies, Thompson) apareceram só em fontes não admitidas; o texto diz apenas que houve outras propostas. O lugar exato de exposição hoje não foi confirmado.",
       "interpretacoes_concorrentes": [
         {
-          "posicao": "bytdwd = 'casa de Davi', nome da dinastia de Judá; menção extrabíblica mais antiga a Davi.",
-          "quem": "maioria dos estudiosos, segundo a Britannica",
-          "fontes": ["F02-009"]
+          "posicao": "bytdwd = 'casa de Davi', a dinastia de Judá.",
+          "quem": "maioria dos estudiosos (Bible Odyssey; Britannica)",
+          "fontes": [
+            "F02-086",
+            "F02-009"
+          ]
         },
         {
-          "posicao": "bytdwd é nome de lugar e não tem relação com Davi.",
-          "quem": "minoria dos estudiosos, segundo a Britannica (nomes a identificar)",
-          "fontes": ["F02-009"]
+          "posicao": "Outras leituras de bytdwd (nome de lugar e outras).",
+          "quem": "minoria (nomes a confirmar em fonte A a D)",
+          "fontes": [
+            "F02-009"
+          ]
         }
       ],
-      "status": "PARCIALMENTE VERIFICADO",
-      "revisar_ate": null
+      "status": "CONTESTADO",
+      "revisar_ate": null,
+      "cat": "arqueologia"
     },
     {
       "id": "C02-008",
       "secao": "Israel e Judá: o que as pedras dizem",
       "afirmacao": "Há um debate aberto sobre a monarquia unida: se Davi e Salomão governaram um Estado urbanizado por volta de 1000 a.C. ou se esse grau de desenvolvimento só surgiu uns três séculos depois. Hoje ele passa por datações de radiocarbono e camadas de destruição, além da leitura do texto bíblico.",
       "categoria": "arqueologia",
-      "fontes": ["F02-011", "F02-013", "F02-014", "F02-015", "F02-016"],
+      "fontes": [
+        "F02-011",
+        "F02-013",
+        "F02-014",
+        "F02-015",
+        "F02-016"
+      ],
       "evidencia": "Garfinkel et al. (2012), resumo: enquadram o trabalho no debate sobre 'whether David and Solomon ruled an urbanized state around 1000 BCE or whether that level of development came about 300 years later', usando datas radiométricas. O Jerusalem Journal of Archaeology dedicou em 2021 um número especial aos processos de formação de Estado no Levante do século X a.C. Mazar (2003) e Finkelstein (C02-013) representam leituras opostas.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -132,12 +172,22 @@
         {
           "posicao": "Havia em Judá, no século X a.C., uma entidade política centralizada ou cidades fortificadas compatíveis com um reino de Davi e Salomão, ainda que menor do que o retrato bíblico.",
           "quem": "Yosef Garfinkel e equipe; William Dever; Avraham Faust; Amihai Mazar",
-          "fontes": ["F02-011", "F02-012", "F02-013", "F02-014", "F02-015"]
+          "fontes": [
+            "F02-011",
+            "F02-012",
+            "F02-013",
+            "F02-014",
+            "F02-015"
+          ]
         },
         {
           "posicao": "O reino de Israel do século IX a.C. é histórico, mas a monarquia unida do século X tal como a Bíblia a descreve não se sustenta; a redação de livros centrais da Bíblia é bem posterior aos fatos narrados.",
           "quem": "Israel Finkelstein (com Neil Asher Silberman)",
-          "fontes": ["F02-015", "F02-016", "F02-017"]
+          "fontes": [
+            "F02-015",
+            "F02-016",
+            "F02-017"
+          ]
         }
       ],
       "status": "CONTESTADO",
@@ -148,7 +198,10 @@
       "secao": "Israel e Judá: o que as pedras dizem",
       "afirmacao": "A equipe de Yosef Garfinkel datou por radiocarbono a cidade fortificada de Khirbet Qeiyafa, em Judá, entre o fim do século XI e o início do século X a.C.; caroços de azeitona queimados de um jarro da camada de destruição deram cerca de 1000 a.C., e a equipe conclui que havia centros fortificados no reino de Davi.",
       "categoria": "arqueologia",
-      "fontes": ["F02-011", "F02-012"],
+      "fontes": [
+        "F02-011",
+        "F02-012"
+      ],
       "evidencia": "Resumo de 2012: 'a well-planned, fortified city in Judah as early as the late 11th to early 10th centuries BC', a primeira cidade judaíta antiga datada por radiocarbono. Resumo do segundo projeto: 17 caroços de azeitona queimados de um jarro na camada de destruição, quatro divididos entre dois laboratórios, 'The dating of these samples is ~1000 BC'; conclusão: 'there were indeed fortified centers in the Davidic kingdom'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -163,7 +216,9 @@
       "secao": "Israel e Judá: o que as pedras dizem",
       "afirmacao": "No número especial de 2021 do Jerusalem Journal of Archaeology, Dever defende que no século X a.C. já havia em Judá uma entidade política centralizada, provavelmente governada por Salomão, ainda que o retrato bíblico, 'maior que a vida', seja exagerado.",
       "categoria": "arqueologia",
-      "fontes": ["F02-013"],
+      "fontes": [
+        "F02-013"
+      ],
       "evidencia": "Sumário do número: 'by the 10th century BCE in Judah we have a polity that represents a centralized state or kingdom. It was likely ruled by Solomon, even if the larger-than-life portrait of the Bible is exaggerated.'",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -178,7 +233,11 @@
       "secao": "Israel e Judá: o que as pedras dizem",
       "afirmacao": "Avraham Faust, um dos editores do número especial de 2021, publicou nele o artigo 'The United Monarchy on the Ground', sobre o caráter de ruptura da passagem do Ferro I ao Ferro II e a natureza das transformações políticas.",
       "categoria": "arqueologia",
-      "fontes": ["F02-013", "F02-014", "F02-018"],
+      "fontes": [
+        "F02-013",
+        "F02-014",
+        "F02-018"
+      ],
       "evidencia": "JJAR v. 1 (2021), p. 15-67: título completo do artigo; número especial editado por Faust, Garfinkel e Mumcuoglu, nascido de um congresso sobre formação de Estado no Levante do século X a.C. Cambridge University Press: livro de Faust e Zev Farber, The Bible's First Kings, sobre o reino dos primeiros reis, combinando dados bíblicos e arqueológicos.",
       "pagina_ou_secao": "p. 15-67",
       "acesso": "trecho-de-busca",
@@ -193,7 +252,9 @@
       "secao": "Israel e Judá: o que as pedras dizem",
       "afirmacao": "Amihai Mazar escreveu em 2003 que a abordagem de Finkelstein foi longe demais e que não há lógica em aceitar como histórico o relato bíblico sobre o Israel do norte no século IX a.C. e desacreditar a monarquia unida do século X.",
       "categoria": "arqueologia",
-      "fontes": ["F02-015"],
+      "fontes": [
+        "F02-015"
+      ],
       "evidencia": "Trecho de Mazar na Biblical Archaeology Review 29:2 (2003): Finkelstein's approach 'has gone too far'; 'there is no logic in acknowledging the historicity of the biblical account regarding ninth-century northern Israel but discrediting the historicity of the United Monarchy of the tenth century'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -203,12 +264,16 @@
         {
           "posicao": "Mazar: a monarquia unida do século X tem base histórica; a crítica cética exagera.",
           "quem": "Amihai Mazar",
-          "fontes": ["F02-015"]
+          "fontes": [
+            "F02-015"
+          ]
         },
         {
           "posicao": "Finkelstein: ver C02-013.",
           "quem": "Israel Finkelstein",
-          "fontes": ["F02-016"]
+          "fontes": [
+            "F02-016"
+          ]
         }
       ],
       "status": "CONTESTADO",
@@ -219,7 +284,11 @@
       "secao": "Israel e Judá: o que as pedras dizem",
       "afirmacao": "Israel Finkelstein é o nome mais associado à leitura cética da monarquia unida; em The Bible Unearthed (2001), com Neil Asher Silberman, ele situa a redação de livros centrais da Bíblia séculos depois dos fatos narrados, no século VII a.C.",
       "categoria": "arqueologia",
-      "fontes": ["F02-015", "F02-016", "F02-017"],
+      "fontes": [
+        "F02-015",
+        "F02-016",
+        "F02-017"
+      ],
       "evidencia": "Livro confirmado (Free Press, 2001, ISBN 978-0-684-86912-4). Resumo de catálogo e de resenha: os autores datam livros-chave do início da Bíblia no século VII a.C. e situam a composição séculos depois dos eventos; o livro foi elogiado e criticado. O texto de Mazar (2003) toma Finkelstein como o expoente da posição que ele contesta.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -229,12 +298,19 @@
         {
           "posicao": "Leitura cética: monarquia unida poderosa no século X não se sustenta; textos bíblicos tardios.",
           "quem": "Israel Finkelstein; Neil Asher Silberman",
-          "fontes": ["F02-016", "F02-017"]
+          "fontes": [
+            "F02-016",
+            "F02-017"
+          ]
         },
         {
           "posicao": "Crítica à leitura cética.",
           "quem": "Amihai Mazar; Yosef Garfinkel; William Dever",
-          "fontes": ["F02-011", "F02-013", "F02-015"]
+          "fontes": [
+            "F02-011",
+            "F02-013",
+            "F02-015"
+          ]
         }
       ],
       "status": "CONTESTADO",
@@ -245,7 +321,9 @@
       "secao": "Assírios e babilônios",
       "afirmacao": "No fim do século VIII a.C., o rei assírio Sargão II completou o cerco e a tomada de Samaria, capital do reino de Israel, e deportou grande parte da população.",
       "categoria": "historia",
-      "fontes": ["F02-019"],
+      "fontes": [
+        "F02-019"
+      ],
       "evidencia": "Met, linha do tempo Mesopotamia 1000 B.C.-1 A.D.: 'The Assyrian king Sargon II completes the siege and capture of Samaria, capital of Israel, deporting a large section of its population.'",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -258,16 +336,38 @@
     {
       "id": "C02-015",
       "secao": "Assírios e babilônios",
-      "afirmacao": "Samaria caiu em 722/720 a.C., depois de um cerco iniciado por Salmanasar V; a cidade foi repovoada com sírios e babilônios.",
+      "afirmacao": "O cerco de Samaria começou com Salmanasar V e a queda é datada entre 722 e 720 a.C.; há quem a atribua a Salmanasar e quem a atribua a Sargão II; Sargão fez de Samaria a capital da província assíria de Samerina, deportou parte dos habitantes para a Assíria e para cidades dos medos e trouxe para a província gente da Babilônia, de Hamate e árabes.",
       "categoria": "historia",
-      "fontes": ["F02-020"],
-      "evidencia": "Britannica: a Bíblia hebraica situa a campanha de Salmanasar V contra Oseias em 724; cerco de três anos; Sargão II encerra o cerco; Samaria repovoada com sírios e babilônios; entradas divergem entre 722, 721 e 720.",
+      "fontes": [
+        "F02-091",
+        "F02-092",
+        "F02-093",
+        "F02-019",
+        "F02-020"
+      ],
+      "evidencia": "Bible Odyssey (Shalmaneser): Salmanasar V cercou Samaria depois de Oseias reter o tributo; a cidade caiu diante dele no outono de 722, mas a morte dele deixou a sorte de Samaria indefinida. Bible Odyssey (Sargon): Sargão II reconquistou a cidade em 720 e exilou israelitas de Samaria. Levant (2024): Sargão estabeleceu a província de Samerina (720 a.C.), com Samaria como capital; deportou habitantes para a Assíria, Guzana e as cidades dos medos e reassentou na província gente do norte da Babilônia, de Hamate e árabes.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E e com divergência interna de datas. A data de 722 vs. 720 é debate de cronologia assíria e bíblica; procurar fonte acadêmica (ex.: Na'aman; Becking, The Fall of Samaria, 1992).",
-      "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "limitacoes": "A divisão exata de cada trecho entre as duas fontes Bible Odyssey e o artigo da Levant deve ser conferida. Um artigo na revista Iraq sobre a atribuição a Salmanasar apareceu na busca, mas não foi registrado.",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "Samaria caiu diante de Salmanasar V em 722 a.C.",
+          "quem": "leitura apoiada no relato bíblico (Bible Odyssey, verbete Shalmaneser)",
+          "fontes": [
+            "F02-091"
+          ]
+        },
+        {
+          "posicao": "Sargão II concluiu a tomada (720 a.C.) e as deportações.",
+          "quem": "Metropolitan Museum; Bible Odyssey (verbete Sargon)",
+          "fontes": [
+            "F02-019",
+            "F02-092"
+          ]
+        }
+      ],
+      "status": "CONTESTADO",
       "revisar_ate": null
     },
     {
@@ -275,7 +375,10 @@
       "secao": "Assírios e babilônios",
       "afirmacao": "Em 701 a.C., o rei assírio Senaqueribe tomou Laquis, uma das principais cidades de Judá, que tinha se recusado a pagar tributo à Assíria.",
       "categoria": "historia",
-      "fontes": ["F02-021", "F02-022"],
+      "fontes": [
+        "F02-021",
+        "F02-022"
+      ],
       "evidencia": "British Museum: Laquis era 'a major Judahite city that Sennacherib captured in 701 BC, after the city had refused to pay tribute to the Assyrian Empire'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -290,7 +393,10 @@
       "secao": "Assírios e babilônios",
       "afirmacao": "Os relevos assírios da sala 10b do Museu Britânico mostram Senaqueribe no trono enquanto prisioneiros são trazidos diante dele, filas de cativos entre vinhas, figueiras e oliveiras, e oficiais tidos como responsáveis pela rebelião sendo esfolados vivos; um prisma com o relato assírio da campanha está na mesma sala.",
       "categoria": "arqueologia",
-      "fontes": ["F02-021", "F02-022"],
+      "fontes": [
+        "F02-021",
+        "F02-022"
+      ],
       "evidencia": "British Museum: sala 10b, 'Siege of Lachish'; painel com Sennacherib 'seated on a throne, watching prisoners brought before him for execution', rosto danificado na Antiguidade; painel com cativos 'through a landscape of vines, fig trees, and olives'; oficiais 'shown being flayed alive'; 'prism' com relato assírio da campanha exposto ali.",
       "pagina_ou_secao": "Sala 10b",
       "acesso": "trecho-de-busca",
@@ -305,7 +411,9 @@
       "secao": "Assírios e babilônios",
       "afirmacao": "Em 586 a.C., o exército babilônico incendiou Jerusalém; um estudo de 2020 sobre o campo magnético registrado num edifício queimado nessa destruição usa a data como âncora e a trata como o fim da Idade do Ferro no Levante.",
       "categoria": "arqueologia",
-      "fontes": ["F02-023"],
+      "fontes": [
+        "F02-023"
+      ],
       "evidencia": "Artigo de 2020 (PMC7413505): a queima de um edifício de Jerusalém datada de agosto de 586 a.C., 'the date of the city's destruction by fire by the Babylonian army, which marks the end of the Iron Age in the Levant'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -320,7 +428,10 @@
       "secao": "Assírios e babilônios",
       "afirmacao": "Na destruição de 587/586 a.C. o Templo de Jerusalém foi destruído; houve deportações para a Babilônia em 597 e em 586 a.C.",
       "categoria": "historia",
-      "fontes": ["F02-024", "F02-027"],
+      "fontes": [
+        "F02-024",
+        "F02-027"
+      ],
       "evidencia": "Britannica: o Templo foi destruído pelos babilônios em 587/586 a.C.; primeira deportação em 597, sob Joaquim, seguida da grande deportação de 586; há divergência sobre o início do exílio.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -335,7 +446,9 @@
       "secao": "Pérsia: uma província chamada Yehud",
       "afirmacao": "Em 539 a.C. Ciro tomou a Babilônia. O Cilindro de Ciro, no Museu Britânico, escrito em babilônio e provavelmente por ordem dele, apresenta-o como devoto de Marduk que restaurou templos e cultos e devolveu deuses e povos antes deportados.",
       "categoria": "arqueologia",
-      "fontes": ["F02-025"],
+      "fontes": [
+        "F02-025"
+      ],
       "evidencia": "British Museum: relato babilônico da conquista de Babilônia por Ciro em 539 a.C., depositado depois da tomada da cidade e 'presumably written on his orders'; escrito em babilônio, não em persa antigo; Ciro 'claims to have restored their temples and religious cults, and to have returned their previously deported gods and people'; apresenta-se como adorador de Marduk.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -350,7 +463,11 @@
       "secao": "Pérsia: uma província chamada Yehud",
       "afirmacao": "Em 538 a.C. Ciro permitiu que exilados judeus, liderados por Zorobabel, voltassem a Jerusalém; o Segundo Templo foi dedicado em 515 a.C.",
       "categoria": "historia",
-      "fontes": ["F02-027", "F02-024", "F02-026"],
+      "fontes": [
+        "F02-027",
+        "F02-024",
+        "F02-026"
+      ],
       "evidencia": "Britannica: o cativeiro terminou em 538 a.C., quando Ciro permitiu o retorno liderado por Zorobabel; o Segundo Templo foi dedicado em 515 a.C. O Met tem texto intitulado 'Cyrus and the Judean Diaspora' (conteúdo não visto).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -365,7 +482,9 @@
       "secao": "Pérsia: uma província chamada Yehud",
       "afirmacao": "Sob o domínio persa, Judá tornou-se uma província chamada Yehud; selos e moedas do período, expostos no Museu de Israel, trazem esse nome oficial.",
       "categoria": "arqueologia",
-      "fontes": ["F02-028"],
+      "fontes": [
+        "F02-028"
+      ],
       "evidencia": "Museu de Israel, Archaeology of the Land of Israel: sob o domínio persa Judá tornou-se uma província, conhecida como Yehud; 'The seals and coins in the gallery bear the official name of Yehud.'",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -380,7 +499,9 @@
       "secao": "Pérsia: uma província chamada Yehud",
       "afirmacao": "As moedas de Yehud são pequenas, de prata, a maioria da série persa de c. 350-333 a.C.; análises publicadas em 2023 mostraram prata de alta pureza com um pouco de cobre, o que sugere composição controlada em cada série; há também tipos do período macedônio que se seguiu.",
       "categoria": "arqueologia",
-      "fontes": ["F02-029"],
+      "fontes": [
+        "F02-029"
+      ],
       "evidencia": "Artigo de 2023: 50 pequenas moedas de prata da Yehud dos períodos persa e helenístico, da segunda metade do século IV a.C.; maioria da série persa (c. 350-333 a.C.), com tipos macedônios posteriores; prata de alta pureza com pequena porcentagem de cobre; 'each series was manufactured using a controlled composition'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -395,7 +516,9 @@
       "secao": "Helenismo",
       "afirmacao": "Alexandre conquistou o Levante em 332 a.C.; depois de sua morte, ptolomeus e selêucidas disputaram a região, que passou aos selêucidas depois da batalha de Pânion (c. 200 a.C.).",
       "categoria": "historia",
-      "fontes": ["F02-031"],
+      "fontes": [
+        "F02-031"
+      ],
       "evidencia": "Britannica: Tiro tomada em julho de 332 a.C., cerco de Gaza; partilha entre Seleuco e Ptolomeu depois de Ipso (301); cinco guerras entre 274 e 200 a.C.; Antíoco III vence em Pânion (200, ou 198 em algumas fontes).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -407,17 +530,21 @@
     },
     {
       "id": "C02-025",
-      "secao": "Helenismo",
-      "afirmacao": "Em 167 a.C. Antíoco IV proibiu os ritos judaicos e profanou o Templo, o que desencadeou a revolta dos macabeus; o Templo foi purificado e rededicado em 164 a.C. (origem de Chanuká); a dinastia hasmonéia governou com independência desde 142 a.C. até a intervenção de Pompeu, em 63 a.C.",
+      "secao": "Dos macabeus a Roma",
+      "afirmacao": "Em 167 a.C. (há fontes que dão 168), Antíoco IV proibiu o judaísmo em Jerusalém e profanou o Templo; no inverno de 164 a.C., os macabeus retomaram o recinto do Templo e restabeleceram o culto, o que Chanuká lembra; a revolta deu origem a um Estado hasmoneu independente.",
       "categoria": "historia",
-      "fontes": ["F02-030"],
-      "evidencia": "Britannica (Maccabees, Antiochus IV, Hanukkah): datas 167, 164 (25 de Kislev), 142, 63 a.C.",
+      "fontes": [
+        "F02-123",
+        "F02-124",
+        "F02-030"
+      ],
+      "evidencia": "Bible Odyssey (Maccabees; Hanukkah): Antíoco IV proibiu o judaísmo em Jerusalém em 167 a.C. e profanou o templo (outra fonte dá 168); os macabeus retomaram o recinto do templo e retomaram o culto no inverno de 164 a.C., três anos depois; Judas retirou o altar profanado e dedicou um novo; Chanuká comemora esse evento; a revolta resultou num Estado hasmoneu independente.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. Procurar fonte acadêmica e moedas hasmonéias no Museu de Israel; 1 e 2 Macabeus e Josefo como fonte C.",
+      "limitacoes": "A distribuição das frases entre os dois artigos da Bible Odyssey deve ser conferida; as datas do Estado hasmoneu (142-63 a.C.) ficaram fora.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -425,7 +552,9 @@
       "secao": "Herodes e o deserto",
       "afirmacao": "Herodes, o Grande, rei da Judeia entre 37 e 4 a.C., escolheu o rochedo quase inexpugnável de Massada para construir um refúgio para si e a família, ameaçado por dentro do reino e por Cleópatra; o refúgio virou um palácio luxuoso, e no fim do reinado as fortificações foram reconstruídas e reforçadas.",
       "categoria": "patrimonio",
-      "fontes": ["F02-032"],
+      "fontes": [
+        "F02-032"
+      ],
       "evidencia": "UNESCO (Masada): Herodes 'selected the virtually impregnable site of Masada to build a refuge for himself and his family' diante de ameaças internas e de Cleópatra; depois um palácio luxuoso; 'towards the end of his reign Herod felt himself threatened once again and so the fortifications were rebuilt and reinforced'. Reinado 37-4 a.C. (uma página da UNESCO traz '4 CE', erro de digitação).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -437,30 +566,39 @@
     },
     {
       "id": "C02-027",
-      "secao": "Roma",
-      "afirmacao": "A grande revolta judaica contra Roma começou em 66 d.C.; Tito tomou Jerusalém e o Templo foi queimado em 70 d.C.; Massada resistiu até 73 d.C.; o Arco de Tito, em Roma, mostra a menorá levada no triunfo.",
+      "secao": "Dos macabeus a Roma",
+      "afirmacao": "Em 66 d.C., o governador romano da Judeia tirou prata do tesouro do Templo alegando impostos atrasados; vieram protestos e um massacre de civis judeus; os romanos levaram mais de quatro meses para romper as três muralhas de Jerusalém e destruíram o Templo num incêndio em 70 d.C.; Massada foi o último reduto, onde, segundo Josefo, os últimos rebeldes provavelmente morreram em 73 d.C.",
       "categoria": "historia",
-      "fontes": ["F02-033"],
-      "evidencia": "Britannica: revolta 66-70; Jerusalém cai em 70 (9 de Av); resistência em Massada até 73; menorá representada no Arco de Tito (relevo de c. 81 d.C.); Josefo escreveu a Guerra entre 75 e 79.",
+      "fontes": [
+        "F02-096",
+        "F02-033"
+      ],
+      "evidencia": "Bible Odyssey (The Jewish Revolts Against Rome): 'In 66, the Roman governor of Judaea removed silver from the Jewish temple treasury in Jerusalem for taxes which the Jews allegedly had not paid'; protestos e massacre de civis; 'It took the Romans more than four months to breach Jerusalem's three walls [...] they destroyed the temple of the Jews in a blazing inferno'; Massada, segundo Josefo, onde os últimos rebeldes 'probably died in the year 73 CE'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. A UNESCO (Masada) deve sustentar o cerco romano no texto integral; a data de 73 ou 74 d.C. é debatida. Josefo como fonte C.",
+      "limitacoes": "Outras fontes dão 66-74 para a revolta; o capítulo 4 trata de Massada e usa 73 d.C. (UNESCO). O papel de Tito ficou fora do texto.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
       "id": "C02-028",
-      "secao": "Roma",
-      "afirmacao": "A revolta de Bar Kochba (132-135 d.C.) terminou com a queda de Betar; Adriano fez de Jerusalém a colônia Aelia Capitolina e a província da Judeia passou a se chamar Syria Palaestina.",
+      "secao": "Dos macabeus a Roma",
+      "afirmacao": "A revolta de Bar Kochba começou no fim de 132 d.C. e estava encerrada no fim de 135; Adriano refundou Jerusalém como a colônia romana Aelia Capitolina, talvez na visita de 130; depois da derrota, a província da Judeia saiu do mapa do império e deu lugar a uma com um nome sem precedente, Syria Palaestina.",
       "categoria": "historia",
-      "fontes": ["F02-034", "F02-038", "F02-035"],
-      "evidencia": "Britannica: o plano de Adriano de fundar uma colônia romana e a proibição da circuncisão estão entre as causas; queda de Betar em 135; a província foi renomeada Syria Palaestina; há divergência sobre se a mudança do nome de Jerusalém foi antes ou depois da revolta. Eck (Journal of Roman Studies) existe; o trecho não foi lido.",
+      "fontes": [
+        "F02-126",
+        "F02-097",
+        "F02-096",
+        "F02-098",
+        "F02-034"
+      ],
+      "evidencia": "Resenha de Horbury (AJS Review): início no fim de 132, combates encerrados até o fim de 135. Museu de Israel (Hadrian): Adriano visitou a Judeia na primavera de 130 e 'it may have been during this visit that he re-founded Jerusalem as Aelia Capitolina'. Bible Odyssey: depois da derrota em 135, a Judeia foi apagada do mapa do Império Romano e substituída por uma província de nome sem precedente, 'Syria-Pala[estina]'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. O motivo da mudança de nome é debatido (punição deliberada vs. motivo administrativo pouco claro); as posições apareceram só em fontes não admitidas.",
+      "limitacoes": "O trecho da Bible Odyssey veio truncado no nome da província. Betar e o número de mortos ficaram fora. O motivo da troca de nome não foi sustentado por fonte A a D.",
       "interpretacoes_concorrentes": [
         {
           "posicao": "O novo nome visava apagar o vínculo entre os judeus e a terra.",
@@ -473,7 +611,7 @@
           "fontes": []
         }
       ],
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -481,7 +619,9 @@
       "secao": "Roma",
       "afirmacao": "A Mishná ganhou forma final no início do século III d.C. com Judá ha-Nassi, que foi patriarca em Bet Shearim e depois em Séforis, na Galileia.",
       "categoria": "religiao",
-      "fontes": ["F02-036"],
+      "fontes": [
+        "F02-036"
+      ],
       "evidencia": "Britannica (Judah ha-Nasi): c. 135-220 d.C.; deu à Mishná a forma final no início do século III; patriarca em Bet Sheʿarim e depois Séforis, ambas na Galileia.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -496,7 +636,9 @@
       "secao": "Bizâncio",
       "afirmacao": "O Mapa de Madaba, mosaico do século VI d.C. numa igreja de Madaba (Jordânia), mostrava a região de Biblos a Tebas e traz uma planta detalhada de Jerusalém.",
       "categoria": "arqueologia",
-      "fontes": ["F02-037"],
+      "fontes": [
+        "F02-037"
+      ],
       "evidencia": "Britannica: século VI, cerca de 22 x 7 m originalmente, de Biblos a Tebas, planta detalhada de Jerusalém; descoberta em 1884 (um arquivo da UNESCO diz 1897).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -508,17 +650,21 @@
     },
     {
       "id": "C02-031",
-      "secao": "Conquistas islâmicas",
-      "afirmacao": "A batalha do Yarmuk (636) abriu a região ao domínio muçulmano; Jerusalém se rendeu em 638 e Cesareia resistiu até 640.",
+      "secao": "Quem vivia na terra: do Domo da Rocha às Cruzadas",
+      "afirmacao": "Em 636, na batalha do Yarmuk, os muçulmanos derrotaram um grande exército bizantino, o que lhes abriu a Síria inteira; Jerusalém se rendeu, ao que parece sem luta, em 638; Cesareia só capitulou depois de um cerco de sete meses.",
       "categoria": "historia",
-      "fontes": ["F02-038"],
-      "evidencia": "Britannica: Yarmuk em 20 de agosto de 636; Jerusalém resistiu até 638, Cesareia até outubro de 640; Umar dividiu a região nos distritos (jund) da Jordânia e da Palestina.",
+      "fontes": [
+        "F02-099",
+        "F02-100",
+        "F02-038"
+      ],
+      "evidencia": "Capítulos da Cambridge University Press: 'The Muslims decisively defeated a large Byzantine army at the battle of the Yarmuk in 636, which allowed the Muslims quickly to gain permanent control of the whole of Syria'; Jerusalém 'arranged terms of surrender, perhaps in 17/638' e 'apparently surrendered peacefully in 638'; Cesareia 'capitulated after a seven-month siege'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. A data da rendição de Jerusalém (637 ou 638) varia na literatura.",
+      "limitacoes": "Não foi possível saber de qual dos dois capítulos vem cada trecho; autoria a conferir. O pacto atribuído a Omar (aman) é de autenticidade discutida e ficou fora do texto.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -526,7 +672,9 @@
       "secao": "Quem vivia na terra",
       "afirmacao": "No fim do século VII, o califa Abd al-Malik mandou erguer o Domo da Rocha em Jerusalém; para o Metropolitan Museum, o santuário celebrava o lugar da ascensão do profeta Maomé e afirmava a presença islâmica numa cidade sagrada para o judaísmo e o cristianismo.",
       "categoria": "patrimonio",
-      "fontes": ["F02-039"],
+      "fontes": [
+        "F02-039"
+      ],
       "evidencia": "Met, blog da exposição Byzantium and Islam: Abd al-Malik ibn Marwan encomendou o santuário em Jerusalém, que 'celebrated the site of the Prophet Muhammad's ascent and asserted Islamic presence in a city sacred to Judaism and Christianity'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -541,7 +689,9 @@
       "secao": "Quem vivia na terra",
       "afirmacao": "A inscrição do Domo da Rocha traz o ano 72 da Hégira (691-692 d.C.), e o edifício é o mais antigo monumento islâmico preservado.",
       "categoria": "patrimonio",
-      "fontes": ["F02-040"],
+      "fontes": [
+        "F02-040"
+      ],
       "evidencia": "Britannica: inscrição interna com o ano 72 AH = 691-692 d.C.; descrito como o mais antigo monumento islâmico que sobreviveu.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -556,7 +706,9 @@
       "secao": "Quem vivia na terra",
       "afirmacao": "Ramla foi fundada c. 716 pelo califa Sulayman e substituiu Lod como sede administrativa do distrito da Palestina; é a única cidade fundada pelos árabes na região.",
       "categoria": "historia",
-      "fontes": ["F02-041"],
+      "fontes": [
+        "F02-041"
+      ],
       "evidencia": "Britannica (Ramla): fundada em 716 por Sulayman ibn Abd al-Malik; capital administrativa no lugar de Lida; única cidade fundada pelos árabes na Palestina.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -571,7 +723,10 @@
       "secao": "Quem vivia na terra",
       "afirmacao": "Em 1009, o califa fatímida al-Hakim mandou destruir a Igreja do Santo Sepulcro.",
       "categoria": "religiao",
-      "fontes": ["F02-042", "F02-043"],
+      "fontes": [
+        "F02-042",
+        "F02-043"
+      ],
       "evidencia": "Britannica (Holy Fire): al-Hakim ordenou a destruição em 1009, possivelmente por causa da controvérsia sobre o Fogo Santo. Pré-publicação no arXiv: basílica arrasada em 18 de outubro de 1009; relatos contemporâneos divergem sobre o que sobrou do túmulo.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -586,7 +741,12 @@
       "secao": "Quem vivia na terra",
       "afirmacao": "Quando a maioria da população da região passou a ser muçulmana é uma pergunta em aberto; estudos descrevem a islamização como processo lento, e a mudança gradual das populações rurais do cristianismo ao islã é objeto de pesquisa.",
       "categoria": "historia",
-      "fontes": ["F02-044", "F02-045", "F02-046", "F02-047"],
+      "fontes": [
+        "F02-044",
+        "F02-045",
+        "F02-046",
+        "F02-047"
+      ],
       "evidencia": "Luz (Mamluk Studies Review, 2002): 'the Islamization of Syria was a slow process'. Página de Reuven Amitai (Universidade Hebraica): projeto sobre 'a slow process of change in the rural populations of Palestine, as a reflection of Islamization and the transformation from Christianity to Islam'. Ellenblum tem estudo intitulado 'Demography, Geography and the Accelerated Islamisation of the Eastern Mediterranean' e o livro sobre o povoamento rural franco (1998).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -596,12 +756,18 @@
         {
           "posicao": "Islamização lenta; comunidades cristãs significativas durante as Cruzadas; maioria muçulmana clara nos registros otomanos do século XVI.",
           "quem": "Luz (2002); projeto de Reuven Amitai",
-          "fontes": ["F02-044", "F02-045"]
+          "fontes": [
+            "F02-044",
+            "F02-045"
+          ]
         },
         {
           "posicao": "Islamização acelerada em certos momentos, ligada a fatores demográficos e geográficos, com destaque para o período posterior à reconquista muçulmana.",
           "quem": "Ronnie Ellenblum (título do estudo; argumento não lido)",
-          "fontes": ["F02-046", "F02-047"]
+          "fontes": [
+            "F02-046",
+            "F02-047"
+          ]
         },
         {
           "posicao": "A região já era majoritariamente muçulmana quando os cruzados chegaram.",
@@ -617,7 +783,9 @@
       "secao": "Quem vivia na terra",
       "afirmacao": "Durante todo o período das Cruzadas ainda havia na Palestina regiões com comunidades e povoados cristãos significativos.",
       "categoria": "historia",
-      "fontes": ["F02-044"],
+      "fontes": [
+        "F02-044"
+      ],
       "evidencia": "Luz (2002): 'Throughout the Crusader period one may still find significant regions of Christian communities and settlements in Palestine.'",
       "pagina_ou_secao": "p. 133-154",
       "acesso": "trecho-de-busca",
@@ -632,7 +800,9 @@
       "secao": "Quem vivia na terra",
       "afirmacao": "Os registros otomanos do século XVI mostram com clareza uma população majoritariamente muçulmana.",
       "categoria": "historia",
-      "fontes": ["F02-044"],
+      "fontes": [
+        "F02-044"
+      ],
       "evidencia": "Luz (2002): 'the majority of the population was mostly Muslim, as the Ottoman records clearly show by the sixteenth century'.",
       "pagina_ou_secao": "p. 133-154",
       "acesso": "trecho-de-busca",
@@ -647,7 +817,10 @@
       "secao": "Quem vivia na terra",
       "afirmacao": "A reconquista muçulmana da Palestina, depois das Cruzadas, foi um processo que começou essencialmente em 1187 e terminou em 1291.",
       "categoria": "historia",
-      "fontes": ["F02-046", "F02-048"],
+      "fontes": [
+        "F02-046",
+        "F02-048"
+      ],
       "evidencia": "Texto de Amitai e Ellenblum (academia.edu): 'the aftermath of the Muslim reconquest of Palestine and nearby countries in the Levant (a process that essentially began in 1187 and was completed in 1291)'. Britannica: Jerusalém rendida a Saladino em 2 out. 1187; Acre tomada pelos mamelucos em 1291.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -659,17 +832,21 @@
     },
     {
       "id": "C02-040",
-      "secao": "Cruzados, mamelucos e otomanos",
-      "afirmacao": "Os cruzados tomaram Jerusalém em 15 de julho de 1099, com massacre dos habitantes; Saladino venceu em Hattin em 4 de julho de 1187 e recebeu a rendição de Jerusalém em 2 de outubro de 1187; Acre, último reduto cruzado no continente, caiu em 1291.",
+      "secao": "Quem vivia na terra: do Domo da Rocha às Cruzadas",
+      "afirmacao": "Depois de um cerco de cinco a seis semanas, os cruzados tomaram Jerusalém em 15 de julho de 1099 e massacraram a população; historiadores discutem escala e intenção, mas as fontes concordam que houve violência e morte em massa. Em julho de 1187, Saladino venceu em Hattin e, em outubro, retomou Jerusalém. Em 1291 caiu Acre, capital do reino latino desde 1191, o que encerrou a era dos reinos cruzados.",
       "categoria": "historia",
-      "fontes": ["F02-048"],
-      "evidencia": "Britannica (Palestine: The Crusades; Saladin; Crusades): as quatro datas e o massacre de 1099; condições mais brandas em 1187.",
+      "fontes": [
+        "F02-101",
+        "F02-102",
+        "F02-048"
+      ],
+      "evidencia": "Met (The Crusades, 1095-1291): cerco de cinco semanas, Jerusalém caiu em 15 de julho de 1099; a vitória de Saladino em Hattin em julho de 1187; 'In 1291, the Crusader city of Acre fell, ending the era of Latin Crusader kingdoms'; Acre capital do reino de 1191 a 1291. Cambridge World History of Genocide, cap. 17: a cidade foi tomada de assalto e a população massacrada depois de um cerco de quase seis semanas; o capítulo pergunta se houve genocídio e conclui que as fontes concordam que 'violence, bloodshed and mass killing characterize the crusader victory'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E (mesmo editor). As datas 1187 e 1291 estão sustentadas em C02-039; as de 1099 e Hattin precisam de fonte A a D.",
+      "limitacoes": "Outubro de 1187 para a retomada de Jerusalém veio de uma das fontes acadêmicas sem o dia; o dia (2 de outubro) ficou fora.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -677,7 +854,9 @@
       "secao": "Cruzados, mamelucos e otomanos",
       "afirmacao": "Os mamelucos venceram os mongóis em Ain Jalut em 1260; quase tudo o que se vê hoje no Haram al-Sharif, exceto o Domo da Rocha, é obra mameluca.",
       "categoria": "patrimonio",
-      "fontes": ["F02-049"],
+      "fontes": [
+        "F02-049"
+      ],
       "evidencia": "Britannica (Mamluk dynasty): Ain Jalut em 1260, Baybars; 'in Jerusalem almost everything visible on the Ḥaram al-Sharīf, with the exception of the Dome of the Rock, is Mamluk'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -689,17 +868,21 @@
     },
     {
       "id": "C02-042",
-      "secao": "Cruzados, mamelucos e otomanos",
-      "afirmacao": "Com a vitória de Selim I sobre os mamelucos em Marj Dabiq (24 de agosto de 1516), a região passou ao domínio otomano, que durou cerca de quatro séculos.",
+      "secao": "Otomanos e as muralhas de Solimão",
+      "afirmacao": "Em agosto de 1516, Selim I venceu os mamelucos em Marj Dabiq, perto de Alepo, e, em janeiro de 1517, em Raydaniyya, perto do Cairo, pôs fim ao sultanato mameluco; a Palestina passou ao Império Otomano (1516 ou 1517, conforme a fonte), e Jerusalém com ela; entre as obras posteriores está a reconstrução das muralhas da cidade.",
       "categoria": "historia",
-      "fontes": ["F02-050"],
-      "evidencia": "Britannica: Marj Dabiq em 24 ago. 1516 e Raydaniyya em jan. 1517; início de quatro séculos de domínio otomano.",
+      "fontes": [
+        "F02-103",
+        "F02-104",
+        "F02-050"
+      ],
+      "evidencia": "Cambridge (The Arabs of the Ottoman Empire, cap. 1; Cambridge History of War, cap. 3): Marj Dabiq (1516) e Raydaniyya (1517) entre as vitórias de Selim I; a campanha decisiva foi de agosto de 1516 a janeiro de 1517 e encerrou o sultanato mameluco; Marj Dabiq perto de Alepo, Raydaniyya ao norte do Cairo; os novos territórios incluíam Meca, Medina e Jerusalém; obras posteriores incluíram 'the reconstruction of the walls of Jerusalem'. Artigos especializados divergem entre 1516 e 1517 para a entrada da Palestina.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E.",
+      "limitacoes": "A atribuição de cada trecho a um dos dois capítulos deve ser conferida; autoria a conferir.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -707,7 +890,9 @@
       "secao": "Cruzados, mamelucos e otomanos",
       "afirmacao": "As muralhas de Solimão, o Magnífico, marcam o limite do sítio 'Cidade Antiga de Jerusalém e suas Muralhas', proposto pela Jordânia e inscrito pela UNESCO em 1981 como cidade santa para o judaísmo, o cristianismo e o islã; desde 1982 ele está na lista do patrimônio em perigo.",
       "categoria": "patrimonio",
-      "fontes": ["F02-051"],
+      "fontes": [
+        "F02-051"
+      ],
       "evidencia": "UNESCO: 'The boundaries of the World Heritage property coincide with the Walls of Suleyman the Magnificent'; inscrito em 1981 'as a holy city for Judaism, Christianity and Islam'; na Lista do Patrimônio Mundial em Perigo desde 1982; o nome do sítio traz '(Site proposed by Jordan)'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -719,17 +904,20 @@
     },
     {
       "id": "C02-044",
-      "secao": "Cruzados, mamelucos e otomanos",
-      "afirmacao": "As muralhas de Solimão foram erguidas em 1538-1540, em boa parte sobre fundações mais antigas.",
+      "secao": "Otomanos e as muralhas de Solimão",
+      "afirmacao": "A Autoridade de Antiguidades de Israel data de 1537 o início da muralha de Solimão e estima que a obra levou de três a quatro anos; o domínio otomano durou até 1917.",
       "categoria": "patrimonio",
-      "fontes": ["F02-052"],
-      "evidencia": "Britannica (Wall of Süleyman): 'erected in 1538-40 by the Ottoman sultan Süleyman the Magnificent, largely on the foundations of earlier walls'.",
+      "fontes": [
+        "F02-105",
+        "F02-052"
+      ],
+      "evidencia": "IAA (Jerusalem Walls, 'The Ottoman Period, the Ottoman City Wall, 1517-1917 CE'): 'built in the Ottoman period, in 1537, by the sultan Suleiman the Magnificent'; 'It is estimated that the construction of the wall lasted three to four years'. Mesma fonte usada pelo capítulo 3 (F03-003, C03-005).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. O ESTRUTURA.md e o capítulo 3 usam 1537-1541: as inscrições das portas dão as datas exatas; a revisão unifica entre os capítulos.",
+      "limitacoes": "A Britannica dá 1538-1540 e o capítulo 3 cita, com atribuição, a conclusão em 1541 em fontes E; o capítulo 2 fica só com a IAA. As inscrições das portas não foram consultadas. O fim em 1917 vem do título da página da IAA.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -737,7 +925,9 @@
       "secao": "O século XIX",
       "afirmacao": "Ibrahim Paxá tomou Jerusalém em 1831 e introduziu reformas mantidas pelos otomanos depois de 1840; a população da cidade cresceu de forma significativa a partir de meados do século XIX, os judeus se tornaram o maior grupo religioso no terceiro quarto do século e surgiram bairros fora das muralhas.",
       "categoria": "historia",
-      "fontes": ["F02-055"],
+      "fontes": [
+        "F02-055"
+      ],
       "evidencia": "Britannica (Jerusalem): Ibrahim Pasha em 1831; reformas mantidas em 1840; crescimento só desde meados do século XIX; judeus maior grupo religioso no terceiro quarto do século XIX; imigração da Europa oriental e bairros novos fora das muralhas.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -752,7 +942,9 @@
       "secao": "O século XIX",
       "afirmacao": "O Código de Terras otomano de 1858 reconheceu a posse privada da terra, ampliou a liberdade dos proprietários e aproximou as regras de herança da igualdade entre homens e mulheres; um estudo publicado na revista Belleten o lê menos como causa e mais como produto das mudanças sociais da época.",
       "categoria": "historia",
-      "fontes": ["F02-053"],
+      "fontes": [
+        "F02-053"
+      ],
       "evidencia": "Artigo na Belleten (2016): lê o código menos como causa do que como produto da mudança social; o código reconheceu a posse privada, ampliou as liberdades dos proprietários e moveu as regras de herança em direção à igualdade de gênero.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -767,7 +959,9 @@
       "secao": "O século XIX",
       "afirmacao": "No século XIX Jafa cresceu rapidamente e se tornou o principal porto da região, ponto de exportação de cítricos (as laranjas eram o produto mais conhecido) e porta de entrada de peregrinos.",
       "categoria": "historia",
-      "fontes": ["F02-054"],
+      "fontes": [
+        "F02-054"
+      ],
       "evidencia": "Britannica (Jaffa; Tel Aviv-Yafo): desenvolvimento rápido no século XIX; porto mais importante; exportação de cítricos; laranjas como produto mais conhecido, além de sabão, azeite, gergelim.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -782,7 +976,10 @@
       "secao": "O século XIX",
       "afirmacao": "Justin McCarthy, em estudo publicado pela Columbia University Press em 1990 com base em registros otomanos corrigidos, estima que a população da área que depois seria a Palestina passou de cerca de 340 mil habitantes em 1877-1878 para cerca de 722 mil em 1914-1915.",
       "categoria": "estatistica",
-      "fontes": ["F02-056", "F02-057"],
+      "fontes": [
+        "F02-056",
+        "F02-057"
+      ],
       "evidencia": "Resenha (Institute for Palestine Studies): a cifra ajustada de McCarthy para 1914/1915 (1333 da Hégira) é 722.143, contra cerca de 340 mil em 1877/1878. O livro (Columbia University Press, 1990) tem capítulo sobre a população de 1878 a 1914.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -797,7 +994,10 @@
       "secao": "O século XIX",
       "afirmacao": "O número de judeus no fim do período otomano é discutido: o censo otomano de 1914-1915 registrou 38.754 súditos judeus, enquanto a estimativa mais aceita para a mesma época fica em torno de 85 mil; McCarthy discute se essa estimativa não estaria inflada.",
       "categoria": "estatistica",
-      "fontes": ["F02-056", "F02-057"],
+      "fontes": [
+        "F02-056",
+        "F02-057"
+      ],
       "evidencia": "Resenha: McCarthy aponta grande diferença entre o censo otomano de súditos judeus em 1914/1915 (38.754) e a cifra comumente aceita de cerca de 85.000; sugere que a cifra comum pode estar inflada (trecho truncado).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -807,12 +1007,17 @@
         {
           "posicao": "Cerca de 85 mil judeus por volta de 1914 (estimativa mais citada).",
           "quem": "estimativa comumente aceita, segundo a resenha (autores a identificar)",
-          "fontes": ["F02-057"]
+          "fontes": [
+            "F02-057"
+          ]
         },
         {
           "posicao": "O censo otomano contou 38.754 súditos judeus; a cifra corrente pode estar inflada.",
           "quem": "Justin McCarthy",
-          "fontes": ["F02-056", "F02-057"]
+          "fontes": [
+            "F02-056",
+            "F02-057"
+          ]
         }
       ],
       "status": "CONTESTADO",
@@ -820,32 +1025,42 @@
     },
     {
       "id": "C02-050",
-      "secao": "O século XIX",
-      "afirmacao": "A primeira onda de imigração sionista (Primeira Aliá) começou em 1882, com o primeiro grupo do Bilu chegando a Jafa em 6 de julho de 1882 e a fundação de Rishon LeZion; a Segunda Aliá (1904-1914) fundou Degânia, em 1909, tida como o primeiro kibutz.",
+      "secao": "Dois movimentos nacionais",
+      "afirmacao": "Os pogroms de 1881-1882 foram o principal estopim da Primeira Aliá, que o governo israelense data de 1882-1903 (o Arquivo Sionista Central dá 1881-1904): cerca de 25 mil judeus da Rússia e da Romênia e cerca de 2.500 do Iêmen; muitas colônias agrícolas sobreviveram com a ajuda financeira do barão Edmond de Rothschild.",
       "categoria": "historia",
-      "fontes": ["F02-058"],
-      "evidencia": "Jewish Virtual Library e Britannica (Rishon LeZion, aliyah): datas e fatos acima; números da Primeira Aliá variam (25-35 mil).",
+      "fontes": [
+        "F02-113",
+        "F02-114",
+        "F02-060",
+        "F02-058"
+      ],
+      "evidencia": "Ministério da Aliá e Integração (gov.il): Primeira Aliá 1882-1903; cerca de 25.000 judeus da Rússia e da Romênia e cerca de 2.500 do Iêmen; muitas comunidades agrícolas tiveram dificuldade e o barão Edmond de Rothschild as ajudou financeiramente. Biblioteca Nacional de Israel: o principal gatilho foram os pogroms de 1881-1882 na Rússia. Arquivo Sionista Central: começou em 1881 e continuou até 1904.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. Procurar Knesset, gov.il (Ministério da Aliá) e literatura acadêmica.",
+      "limitacoes": "Se os imigrantes iemenitas pertencem à Primeira Aliá é discutido (NLI). F02-060 era referência confirmada; agora a página apareceu com trecho de datas.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
       "id": "C02-051",
-      "secao": "O século XIX",
-      "afirmacao": "Theodor Herzl publicou O Estado Judeu em fevereiro de 1896; o primeiro Congresso Sionista, em Basileia, em 1897, adotou o Programa de Basileia, que pedia um lar para o povo judeu na Palestina garantido por direito público, e criou a Organização Sionista.",
+      "secao": "Dois movimentos nacionais",
+      "afirmacao": "Em agosto de 1897, Herzl reuniu em Basileia o primeiro Congresso Sionista, com 197 delegados; o Programa de Basileia pedia um lar na Palestina assegurado pública e legalmente; para o Ministério das Relações Exteriores de Israel, 'Palestina' era então um termo geográfico, numa área sob domínio otomano; o congresso fundou a Organização Sionista.",
       "categoria": "historia",
-      "fontes": ["F02-059", "F02-060"],
-      "evidencia": "Britannica (The Jewish State; Zionist Congress; Basel Program): datas e conteúdo; 197 delegados. A página do Arquivo Sionista Central sobre o Primeiro Congresso existe, mas o trecho não mostrou o conteúdo.",
+      "fontes": [
+        "F02-112",
+        "F02-070",
+        "F02-060",
+        "F02-059"
+      ],
+      "evidencia": "Ministério das Relações Exteriores de Israel: congresso em Basileia em 29-31 de agosto de 1897, convocado por Herzl, com 197 delegados, aceitou o Programa de Basileia ('a publicly and legally assured home in Palestine'); 'Palestine' era então termo puramente geográfico, área sob domínio otomano. ONU (Question of Palestine): ali foi fundada a Organização Sionista; tradução 'a home in Palestine secured by public law'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E com conteúdo visível. Conferir no Arquivo Sionista Central.",
+      "limitacoes": "As traduções do programa variam. A frase de Herzl no diário ('Em Basileia fundei o Estado judeu') ficou fora.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -853,7 +1068,10 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "Em 2 de novembro de 1917, Arthur Balfour escreveu a Lord Rothschild que o governo britânico via com bons olhos o estabelecimento na Palestina de um lar nacional para o povo judeu, ficando entendido que nada seria feito que prejudicasse os direitos civis e religiosos das comunidades não judaicas existentes na Palestina, nem os direitos e o status político dos judeus em outros países.",
       "categoria": "historia",
-      "fontes": ["F02-061", "F02-062"],
+      "fontes": [
+        "F02-061",
+        "F02-062"
+      ],
       "evidencia": "Texto da carta reproduzido pela ONU (UNISPAL) e no Hansard (debate de 30 out. 2017): 'national home for the Jewish people'; 'nothing shall be done which may prejudice the civil and religious rights of existing non-Jewish communities in Palestine, or the rights and political status enjoyed by Jews in any other country'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -868,7 +1086,11 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "O Conselho da Liga das Nações aprovou o Mandato para a Palestina em 24 de julho de 1922, em reunião em Londres; o mandato entrou em vigor em setembro de 1923.",
       "categoria": "historia",
-      "fontes": ["F02-063", "F02-064", "F02-065"],
+      "fontes": [
+        "F02-063",
+        "F02-064",
+        "F02-065"
+      ],
       "evidencia": "Texto do Mandato (Avalon/ONU): aprovado pelo Conselho da Liga 'at St James' Palace, London on July 24th, 1922'. Anglo-American Committee, Appendix IV (Avalon): 'approved by the Council of the League of Nations in July, 1922, and becoming effective in September, 1923'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -883,7 +1105,10 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "O preâmbulo do Mandato reproduz quase inteira a Declaração Balfour; o artigo 2 encarrega a potência mandatária de criar condições para o lar nacional judeu e para instituições de autogoverno, protegendo os direitos civis e religiosos de todos os habitantes; o artigo 4 reconhece uma 'agência judaica' como órgão consultivo e indica a Organização Sionista; o artigo 13 dá ao mandatário a responsabilidade pelos Lugares Santos.",
       "categoria": "historia",
-      "fontes": ["F02-063", "F02-064"],
+      "fontes": [
+        "F02-063",
+        "F02-064"
+      ],
       "evidencia": "Publicação da Liga (ONU): o preâmbulo 'reproduces the Balfour Declaration almost in full'. Texto do Mandato: art. 2 (lar nacional judeu, instituições de autogoverno, direitos civis e religiosos de todos os habitantes); art. 4 (agência judaica; Organização Sionista); art. 13 (Lugares Santos, responsável só perante a Liga).",
       "pagina_ou_secao": "Preâmbulo; arts. 2, 4 e 13",
       "acesso": "trecho-de-busca",
@@ -898,7 +1123,10 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "O censo britânico de 1922, feito por religião, registrou 752.048 habitantes: 589.177 muçulmanos, 83.790 judeus, 71.464 cristãos e 7.617 de outras religiões (judeus, cerca de 11%).",
       "categoria": "estatistica",
-      "fontes": ["F02-066", "F02-067"],
+      "fontes": [
+        "F02-066",
+        "F02-067"
+      ],
       "evidencia": "Tabela do Journal of Palestine Studies: 752.048 em 1922, com 589.177 muçulmanos, 71.464 cristãos, 7.617 outros e 83.790 judeus (a soma confere). Memorando britânico: o censo foi feito com base religiosa e não enumerou a população árabe como tal.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -913,7 +1141,10 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "O censo de 1931 chegou a 1.035.154 habitantes (número provisório): 759.952 muçulmanos, 175.006 judeus, 90.607 cristãos e 9.589 de outras religiões; os beduínos foram contados à parte.",
       "categoria": "estatistica",
-      "fontes": ["F02-066", "F02-067"],
+      "fontes": [
+        "F02-066",
+        "F02-067"
+      ],
       "evidencia": "Segundo censo, em novembro de 1931: 1.035.154 (provisório), 759.952 muçulmanos, 175.006 judeus, 90.607 cristãos, 9.589 outros (soma confere). A tabela do JPS dá 174.606 judeus e total de 1.033.314. Beduínos contados separadamente (66.553).",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -928,7 +1159,9 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "Para o fim de 1946, a comissão especial da ONU (UNSCOP) usou a estimativa de cerca de 1.203.000 árabes, 608.000 judeus e 35.000 outros na população assentada (1.846.000), além de cerca de 127 mil beduínos estimados à parte, 105 mil na área do Estado judeu proposto e 22 mil na do Estado árabe.",
       "categoria": "estatistica",
-      "fontes": ["F02-068"],
+      "fontes": [
+        "F02-068"
+      ],
       "evidencia": "Relatório A/364: 'Arabs, 1,203,000; Jews, 608,000; others, 35,000; Total, 1,846,000', a partir do Survey of Palestine; beduínos estimados pela administração em 127.000 para 1946, 105.000 na área do Estado judeu proposto e 22.000 na do Estado árabe.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -943,7 +1176,11 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "Em abril de 1936 começou uma greve geral árabe, que pedia o fim da imigração judaica, a proibição da venda de terras a judeus e a independência; a greve desembocou em ataques contra britânicos e judeus e em sabotagem de estradas, ferrovias e linhas de telégrafo e telefone, e o governo do Mandato exilou a liderança árabe palestina.",
       "categoria": "historia",
-      "fontes": ["F02-069", "F02-070", "F02-071"],
+      "fontes": [
+        "F02-069",
+        "F02-070",
+        "F02-071"
+      ],
       "evidencia": "Trechos do histórico da ONU (com complemento da Britannica): 'the rebellion began in April 1936 as a general strike; the Arab population demanded that Jewish immigration cease, that sales of land to Jews be banned, and that the British grant independence'; 'attacks on both the British and the Jews'; 'sabotage of roads, railways, telegraph and telephone lines'; 'the Mandatory government exiled the Palestinian Arab leadership'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -958,7 +1195,10 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "A comissão britânica chefiada por Lord Peel, nomeada em 1936, concluiu que as obrigações do Mandato eram inconciliáveis e recomendou, em julho de 1937, a partilha em dois Estados, um árabe e um judeu, com Jerusalém num enclave sob mandato; segundo a ONU, nenhum dos lados aceitou a fórmula; em 1938 a comissão Woodhead examinou a partilha e a ideia foi abandonada como inviável.",
       "categoria": "historia",
-      "fontes": ["F02-069", "F02-070"],
+      "fontes": [
+        "F02-069",
+        "F02-070"
+      ],
       "evidencia": "Histórico da ONU: recomendação de 'partition of Palestine into two independent States', um árabe palestino e um judeu, Jerusalém como enclave sob mandato da Liga; relatório de julho de 1937; 'Neither side accepted this formula'; comissão Woodhead em 1938 e a ideia rejeitada como inviável.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -973,7 +1213,9 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "O Livro Branco de maio de 1939 anunciava um Estado palestino independente em dez anos, com árabes e judeus partilhando o governo, limitava a imigração judaica a cerca de 75 mil pessoas em cinco anos e condicionava qualquer imigração posterior à concordância dos árabes da Palestina.",
       "categoria": "historia",
-      "fontes": ["F02-072"],
+      "fontes": [
+        "F02-072"
+      ],
       "evidencia": "Statement of Policy (ONU/UNISPAL): 'an independent Palestine State in which Arabs and Jews share in government'; 'within ten years'; cerca de 75.000 imigrantes em cinco anos; depois, nenhuma imigração 'unless the Arabs of Palestine are prepared to acquiesce in it'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -988,7 +1230,10 @@
       "secao": "O Mandato Britânico",
       "afirmacao": "Com a guerra, a circulação de pessoas ficou mais difícil; no outono de 1943 só cerca de 44 mil das 75 mil vagas tinham sido usadas, o prazo foi suspenso, e o Estado independente previsto não chegou a existir.",
       "categoria": "historia",
-      "fontes": ["F02-065", "F02-072"],
+      "fontes": [
+        "F02-065",
+        "F02-072"
+      ],
       "evidencia": "'As the war engulfed Europe, the opportunities for movements of people became less, and in the autumn of 1943 only some 44,000 of the 75,000 persons provided for had reached Palestine.' O prazo foi suspenso e o Estado independente nunca existiu.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -1001,16 +1246,20 @@
     {
       "id": "C02-062",
       "secao": "O Mandato Britânico",
-      "afirmacao": "Os judeus condenaram o Livro Branco como violação do Mandato, e os líderes árabes também o rejeitaram, de início, por não lhes dar independência imediata.",
+      "afirmacao": "Os dois lados recusaram o Livro Branco de 1939: a Agência Judaica, no dia em que ele saiu, o chamou de rendição ao terrorismo árabe e disse que os judeus não o aceitariam; o Alto Comitê Árabe o rejeitou em 30 de maio por ficar aquém das demandas árabes, sobretudo por adiar a independência.",
       "categoria": "historia",
-      "fontes": ["F02-073"],
-      "evidencia": "Britannica: 'The Jews unanimously condemned the 1939 White Paper as a violation of the Mandate. The Arab leaders, too, rejected the White Paper at first on the ground that it denied them immediate independence.'",
+      "fontes": [
+        "F02-121",
+        "F02-120",
+        "F02-073"
+      ],
+      "evidencia": "UNSCOP, audiência da Agência Judaica: a resposta da Agência em 17 de maio de 1939, dia da publicação, chamou a política de rendição ao terrorismo árabe e disse que os judeus não a aceitariam. Resposta do Alto Comitê Árabe (30 de maio de 1939, reproduzida pelo IPS): rejeição formal por ficar aquém das demandas árabes; o ponto central era a independência adiada; houve divisão interna, e Haj Amin al-Husseini barrou uma posição favorável.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Só fonte E. Procurar no histórico da ONU (Origins and Evolution, parte I).",
+      "limitacoes": "A divisão interna do Alto Comitê ficou fora do texto por falta de espaço; conferir no documento.",
       "interpretacoes_concorrentes": null,
-      "status": "PARCIALMENTE VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -1018,7 +1267,11 @@
       "secao": "1947: a partilha no papel",
       "afirmacao": "Em 29 de novembro de 1947, a Assembleia Geral da ONU aprovou a Resolução 181 (II), o plano de partilha com união econômica, por 33 votos a favor, 13 contra e 10 abstenções.",
       "categoria": "historia",
-      "fontes": ["F02-074", "F02-075", "F02-077"],
+      "fontes": [
+        "F02-074",
+        "F02-075",
+        "F02-077"
+      ],
       "evidencia": "Anuário da ONU 1947-48: 'adopted by a vote of 33 to 13, with 10 abstentions'. Britannica dá os mesmos números. Título do documento da ONU: 'General Assembly resolution 181 (II) Future government of Palestine', plano de partilha com união econômica.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -1033,7 +1286,9 @@
       "secao": "1947: a partilha no papel",
       "afirmacao": "Haiti, Libéria e Filipinas, que antes não apoiavam a partilha, votaram a favor da resolução.",
       "categoria": "historia",
-      "fontes": ["F02-076"],
+      "fontes": [
+        "F02-076"
+      ],
       "evidencia": "Estudo do CEIRPP (ONU): 'Haiti, Liberia and the Philippines which had not previously supported partition voted in favor of it'.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -1048,7 +1303,9 @@
       "secao": "1947: a partilha no papel",
       "afirmacao": "A Resolução 181 previa Jerusalém como corpus separatum sob regime internacional, administrada pela ONU por meio do Conselho de Tutela, com um governador nomeado por ele; o estatuto valeria dez anos e seria então reexaminado, com consulta aos habitantes por referendo.",
       "categoria": "historia",
-      "fontes": ["F02-074"],
+      "fontes": [
+        "F02-074"
+      ],
       "evidencia": "Texto da resolução (parte III): 'The City of Jerusalem shall be established as a corpus separatum under a special international regime and shall be administered by the United Nations. The Trusteeship Council shall be designated...'; governador nomeado pelo Conselho de Tutela; estatuto por dez anos, depois reexaminado 'with citizen participation through a referendum'.",
       "pagina_ou_secao": "Parte III",
       "acesso": "trecho-de-busca",
@@ -1063,7 +1320,9 @@
       "secao": "1947: a partilha no papel",
       "afirmacao": "Os Estados árabes e o Alto Comitê Árabe para a Palestina rejeitaram a resolução, dizendo que a ONU excedia sua competência ao propor a partilha; a Organização Sionista, que defendia um Estado judeu em toda a Palestina, aceitou a fórmula com relutância; o conflito impediu que a resolução fosse aplicada.",
       "categoria": "historia",
-      "fontes": ["F02-075"],
+      "fontes": [
+        "F02-075"
+      ],
       "evidencia": "Texto da ONU: 'The Arab States and the Arab Higher Committee for Palestine, however, rejected the resolution, declaring that the UN was exceeding its competence... The Zionist Organisation, which had insisted that a Jewish State should be established in Palestine in its entirety, reluctantly accepted the partition formula. The conflict in Palestine, however, prevented the implementation of the resolution.'",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -1078,7 +1337,11 @@
       "secao": "1948",
       "afirmacao": "Em 14 de maio de 1948, às 16h, oito horas antes do fim oficial do Mandato, David Ben-Gurion leu no Museu de Tel Aviv a Declaração de Estabelecimento do Estado de Israel; os 37 signatários eram membros do Conselho Provisório de Estado; o texto invoca a resolução de partilha da ONU.",
       "categoria": "historia",
-      "fontes": ["F02-078", "F02-079", "F02-080"],
+      "fontes": [
+        "F02-078",
+        "F02-079",
+        "F02-080"
+      ],
       "evidencia": "Arquivo do Estado de Israel: 'On Friday, May 14, 1948 at 4 PM, eight hours before the official end of the British Mandate, David Ben Gurion read out Israel's Declaration of Independence'; 37 signatários do Conselho Provisório de Estado. Avalon e Ministério do Exterior: texto da declaração, emitido em Tel Aviv em 14 de maio de 1948 (5 de Iyar de 5708), que cita a resolução da Assembleia Geral.",
       "pagina_ou_secao": null,
       "acesso": "trecho-de-busca",
@@ -1316,31 +1579,37 @@
     {
       "id": "C02-083",
       "secao": "O Mandato Britânico",
-      "afirmacao": "O Holocausto (a Shoá) e os sobreviventes deslocados na Europa pesaram na discussão internacional sobre a Palestina em 1945-1947.",
+      "afirmacao": "O Holocausto foi a perseguição e o assassinato sistemáticos, organizados pelo Estado, de seis milhões de judeus europeus pelo regime nazista alemão, seus aliados e colaboradores, entre 1933 e 1945; o assassinato em massa organizado foi de 1941 a 1945; o Yad Vashem diz que não há número exato e que a pesquisa séria situa as vítimas entre cinco e seis milhões.",
       "categoria": "historia",
-      "fontes": [],
-      "evidencia": "Nenhuma: busca não realizada (limite esgotado).",
+      "fontes": [
+        "F02-115",
+        "F02-116"
+      ],
+      "evidencia": "USHMM: 'the systematic, state-sponsored persecution and murder of six million European Jews by the Nazi German regime and its allies and collaborators'; de janeiro de 1933 a maio de 1945; a 'Solução Final' foi 'implemented between 1941 and 1945'. Yad Vashem (FAQs): 'there is no precise figure'; 'all the serious research confirms that the number of victims was between five and six million'.",
       "pagina_ou_secao": null,
-      "acesso": null,
+      "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pistas: Yad Vashem, United States Holocaust Memorial Museum; Anglo-American Committee of Inquiry (Avalon, 1946).",
+      "limitacoes": "Trechos de busca das duas páginas.",
       "interpretacoes_concorrentes": null,
-      "status": "NÃO VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
       "id": "C02-084",
       "secao": "Dois movimentos nacionais",
-      "afirmacao": "Sionismo e nacionalismo palestino como movimentos nacionais, com origens, organizações e lideranças próprias, no fim do período otomano e no Mandato.",
+      "afirmacao": "Anita Shapira situa o nascimento do sionismo na Europa do fim do século XIX, tendo ao fundo as relações entre judeus, árabes e turcos; Benny Morris, em Righteous Victims (1999), liga as raízes do sionismo político aos pogroms na Rússia e ao caso Dreyfus.",
       "categoria": "historia",
-      "fontes": [],
-      "evidencia": "Nenhuma com fonte A a D: a Britannica (Herzl: a questão judaica como questão nacional) foi vista, mas não basta.",
+      "fontes": [
+        "F02-108",
+        "F02-109"
+      ],
+      "evidencia": "Brandeis University Press (Israel: A History): o livro examina 'Zionism's emergence in Europe' no fim do século XIX 'against the backdrop of relations among Jews, Arabs, and Turks'. Penguin Random House (Righteous Victims): 'Tracing the roots of political Zionism back to the pogroms of Russia and the Dreyfus Affair, Morris describes the gradual influx of Jewish settlers into Palestine and the impact they had on the Arab population'.",
       "pagina_ou_secao": null,
-      "acesso": null,
+      "acesso": "trecho-de-busca",
       "data_consulta": "2026-10-21",
-      "limitacoes": "Pistas: Rashid Khalidi (Palestinian Identity, Columbia UP, 1997); Muhammad Muslih (The Origins of Palestinian Nationalism, Columbia UP, 1988); Anita Shapira (Israel: A History, 2012); Arquivo Sionista Central.",
+      "limitacoes": "Descrições das editoras, não o texto dos livros. Uma resenha (Publishers Weekly, E) critica Shapira por tratar pouco da história dos árabes de Israel.",
       "interpretacoes_concorrentes": null,
-      "status": "NÃO VERIFICADO",
+      "status": "VERIFICADO",
       "revisar_ate": null
     },
     {
@@ -1371,6 +1640,311 @@
       "limitacoes": "Pistas: UNESCO (Belém, Igreja da Natividade, 2012), Israel Antiquities Authority, Israel Museum.",
       "interpretacoes_concorrentes": null,
       "status": "NÃO VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-087",
+      "secao": "Israel e Judá: o que as pedras dizem",
+      "afirmacao": "Para Hasel (1994), o Israel da Estela de Merneptah é um grupo de pessoas, uma entidade socioétnica agrícola e sedentária situada em Canaã, e não uma cidade; o sentido do nome é discutido.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F02-082"
+      ],
+      "evidencia": "Resumo do artigo: 'Israel is located within the region of Canaan and Hurru' e 'Israel is an agricultural/sedentary socioethnic entity'; o nome 'has entered a new phase of discussion and debate in recent reconstructions of the origin of ancient Israel'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só o resumo foi lido. A ressalva clássica sobre o uso pouco rigoroso dos determinativos (Wilson, 1955) apareceu só em fonte não admitida.",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "Israel na estela é um grupo socioétnico agrícola e sedentário em Canaã.",
+          "quem": "Hasel (BASOR, 1994)",
+          "fontes": [
+            "F02-082"
+          ]
+        },
+        {
+          "posicao": "O sentido do nome e o valor do determinativo estão em discussão nas reconstruções da origem de Israel.",
+          "quem": "debate registrado pelo próprio Hasel (autores a identificar)",
+          "fontes": [
+            "F02-082"
+          ]
+        }
+      ],
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-088",
+      "secao": "Israel e Judá: o que as pedras dizem",
+      "afirmacao": "Em 1996, na revista Levant, Finkelstein propôs a 'cronologia baixa': as camadas atribuídas ao século X a.C. em Meguido, Arad e Berseba passariam ao século IX, e construções monumentais antes ligadas a Salomão ficariam no tempo da dinastia de Omri, no reino do norte.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F02-088"
+      ],
+      "evidencia": "Trecho do artigo (cópia do autor): datar os estratos do início do Ferro II cerca de um século mais tarde; os estratos tradicionalmente postos no século X em Meguido, Arad e Berseba (Meguido VA-IVB, Arad XI, Berseba V) passam ao século IX. O resumo da busca acrescenta que, para Finkelstein, os edifícios foram construídos sob a dinastia omrida no século IX a.C.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A frase sobre os edifícios omridas pode vir de texto posterior do autor; conferir no artigo de 1996.",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "Cronologia baixa: os monumentos 'salomônicos' são do século IX, da dinastia de Omri.",
+          "quem": "Israel Finkelstein",
+          "fontes": [
+            "F02-088",
+            "F02-090"
+          ]
+        },
+        {
+          "posicao": "A cronologia baixa se apoia em evidência frágil.",
+          "quem": "Amihai Mazar",
+          "fontes": [
+            "F02-089"
+          ]
+        }
+      ],
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-089",
+      "secao": "Israel e Judá: o que as pedras dizem",
+      "afirmacao": "Amihai Mazar respondeu em 1997, na Levant, que a cronologia baixa se apoiava em evidência frágil e criava problemas novos em vez de resolver os antigos.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F02-089"
+      ],
+      "evidencia": "Resumo: 'the suggested low chronology is based on flimsy evidence, and creates new unsolvable problems, instead of resolving the older ones'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só o resumo foi lido.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-090",
+      "secao": "Israel e Judá: o que as pedras dizem",
+      "afirmacao": "The Forgotten Kingdom (SBL Press, 2013), de Finkelstein, é uma história do reino do norte de c. 1350 a 720 a.C.",
+      "categoria": "arqueologia",
+      "fontes": [
+        "F02-090"
+      ],
+      "evidencia": "Descrição da editora: o livro cobre o reino do norte de c. 1350 a 720 a.C., das cidades-Estado cananeias à queda de Israel, com atenção à dinastia omrida.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Descrição de editora, não o texto do livro.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-091",
+      "secao": "Assírios e babilônios",
+      "afirmacao": "Uma crônica babilônica no Museu Britânico registra que o rei da Babilônia tomou Jerusalém, pôs no trono um rei da sua escolha e levou pesado tributo; os estudiosos datam a tomada de 16 de março de 597 a.C.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-095",
+        "F02-094"
+      ],
+      "evidencia": "ABC 5 (tradução adaptada de Grayson e Glassner): 'He appointed a king of his choosing there, took heavy tribute, and returned to Babylon'; o quinto parágrafo relata a captura de Jerusalém em 16 de março de 597 a.C. e a nomeação de Zedequias. British Museum: tabuinha neobabilônica, 'Chronicle for years 605-594 BC' (1896,0409.51).",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A tradução foi lida em Livius.org, que reproduz a edição acadêmica; conferir em Grayson (1975) ou Glassner (2004). O nome de Zedequias vem do contexto bíblico, não da crônica, e não vai ao texto.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-092",
+      "secao": "Dos macabeus a Roma",
+      "afirmacao": "A intervenção romana no reino hasmoneu culminou com Pompeu, em 63 a.C., a quem recorreram dois pretendentes ao trono, Hircano e Aristóbulo.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-125"
+      ],
+      "evidencia": "Cambridge History of Judaism, cap. 5 (63 a.C.-70 d.C.), resumo: o envolvimento romano começou com Escauro e Gabínio e depois o próprio Pompeu, em 63 a.C.; Hircano e Aristóbulo apelaram a ele.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só o resumo do capítulo; autoria a conferir.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-093",
+      "secao": "Dos macabeus a Roma",
+      "afirmacao": "Se a fundação de Aelia Capitolina foi causa ou consequência da revolta de Bar Kochba é discutido: o Museu de Israel diz que não se sabe; a Bible Odyssey a põe entre os estopins; a Cambridge History of Judaism registra que as causas diretas seguem em debate.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-097",
+        "F02-096",
+        "F02-098"
+      ],
+      "evidencia": "Museu de Israel: 'we do not know whether these actions were a cause or a consequence of the revolt'. Bible Odyssey: os planos de Adriano para a colônia, um templo de Júpiter no Monte do Templo e a proibição da circuncisão 'incited the Bar Kokhba revolt'. Cambridge History of Judaism, cap. 4: as causas diretas continuam debatidas.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Resumos e trechos de busca.",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "A colônia e outras medidas de Adriano provocaram a revolta.",
+          "quem": "Bible Odyssey (SBL)",
+          "fontes": [
+            "F02-096"
+          ]
+        },
+        {
+          "posicao": "Não se sabe se foram causa ou consequência.",
+          "quem": "Museu de Israel; Cambridge History of Judaism",
+          "fontes": [
+            "F02-097",
+            "F02-098"
+          ]
+        }
+      ],
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-096",
+      "secao": "Dois movimentos nacionais",
+      "afirmacao": "Rashid Khalidi, em Palestinian Identity (1997), acompanha o nacionalismo palestino desde as últimas décadas do século XIX; segundo uma resenha no IJMES, o livro mostra que a identidade palestina inicial é anterior ao encontro com o sionismo.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-106"
+      ],
+      "evidencia": "Resenha de Joseph Massad (IJMES): Khalidi mostra que 'early Palestinian identity precedes the encounter with Zionism'; o livro começa nas últimas décadas do século XIX, com o surgimento do nacionalismo palestino, e vai até os anos 1990.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Resenha, não o livro. Outra resenha (In These Times, E) resume a tese de que a identidade nacional é construída.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-097",
+      "secao": "Dois movimentos nacionais",
+      "afirmacao": "Muhammad Muslih, em The Origins of Palestinian Nationalism (Columbia University Press, 1988), segue as elites políticas palestinas de 1856 a dezembro de 1920 e mostra o nacionalismo palestino nascendo de um quadro mais amplo da política árabe, entre o otomanismo e o nacionalismo árabe.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-107"
+      ],
+      "evidencia": "Descrição do editor e sumário: o livro acompanha as elites políticas palestinas e a sua ideologia de 1856 a dezembro de 1920 (terceiro Congresso Árabe Palestino, em Haifa); apresenta as ideologias do otomanismo e do nacionalismo árabe e a sua relação com a Palestina; o nacionalismo palestino emergiu de um contexto mais amplo da política árabe.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Descrição e sumário, não o texto integral.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-098",
+      "secao": "Dois movimentos nacionais",
+      "afirmacao": "O jornal Filastin começou a circular em Jafa em janeiro de 1911; no primeiro ano tratava a colonização sionista de forma ambivalente; em 1914, o sionismo era o assunto mais discutido nas suas páginas.",
+      "categoria": "sociedade",
+      "fontes": [
+        "F02-111"
+      ],
+      "evidencia": "Jerusalem Quarterly 74 (Beska): o jornal começou em Jafa em janeiro de 1911 (proprietário Isa Dawud al-Isa, editor Yusuf al-Isa); 'a more ambivalent approach toward Zionist colonization in the first year of its publication'; em 1914 'Zionism had become the most discussed subject in the periodical'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Título e prenome do autor a conferir.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-099",
+      "secao": "Dois movimentos nacionais",
+      "afirmacao": "No Journal of Palestine Studies, Charles D. Smith escreveu, em resenha de Righteous Victims, que Morris é, no fundo, nacionalista nas conclusões que tira e no lugar onde põe a responsabilidade última.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-110",
+        "F02-109"
+      ],
+      "evidencia": "JPS, resenha: Morris 'is at heart a nationalist in the conclusions he draws from his findings and where he places ultimate responsibility'. Outras resenhas (Foreign Affairs, New York Times Book Review, só no resumo da busca) elogiaram o livro.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só o trecho da resenha. O texto não generaliza a recepção do livro além dessa crítica.",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "Síntese elogiada como matizada e sem atribuição fácil de culpa a um só lado.",
+          "quem": "Foreign Affairs; New York Times Book Review (citados na busca, não registrados)",
+          "fontes": []
+        },
+        {
+          "posicao": "Morris é nacionalista nas conclusões.",
+          "quem": "Charles D. Smith (JPS)",
+          "fontes": [
+            "F02-110"
+          ]
+        }
+      ],
+      "status": "CONTESTADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-094",
+      "secao": "O Mandato Britânico",
+      "afirmacao": "Em agosto de 1945, o relatório Harrison, que Truman encaminhou a Attlee, citava o pedido da Agência Judaica de 100 mil certificados de imigração; Attlee recusou. Em abril de 1946, a Comissão Anglo-Americana de Inquérito apoiou os 100 mil, e Londres recusou de novo. O movimento Brichá deslocou mais de 100 mil judeus entre 1945 e 1948, e em fevereiro de 1947 a Grã-Bretanha passou a questão à ONU.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-128",
+        "F02-117",
+        "F02-127",
+        "F02-118"
+      ],
+      "evidencia": "USHMM (The Harrison Report): o relatório de agosto de 1945, encaminhado por Truman a Attlee, citava a petição da Agência Judaica por 100.000 certificados. USHMM (Holocaust Survivors and the Establishment of the State of Israel): Attlee rejeitou; o relatório de abril de 1946 da Comissão Anglo-Americana apoiou os 100.000 e a Grã-Bretanha o rejeitou. USHMM (Displaced Persons): o movimento Brichá moveu mais de 100.000 judeus entre 1945 e 1948. Yad Vashem (Friesel): a Grã-Bretanha passou o problema à ONU em fevereiro de 1947.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "A data do relatório de 1946 varia (20 de abril ou 1º de maio) entre fontes do próprio USHMM; o texto diz 'abril'.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C02-095",
+      "secao": "O Mandato Britânico",
+      "afirmacao": "O peso do Holocausto na criação de Israel é discutido: o USHMM conta a criação do Estado junto com a crise dos refugiados do pós-guerra; Evyatar Friesel chamou de 'mito', no título de um artigo de 2008, a ligação entre o Holocausto e a criação de Israel.",
+      "categoria": "historia",
+      "fontes": [
+        "F02-117",
+        "F02-119",
+        "F02-118"
+      ],
+      "evidencia": "USHMM: verbete 'Holocaust Survivors and the Establishment of the State of Israel (May 14, 1948)', com endereço 'postwar-refugee-crisis-and-the-establishment-of-the-state-of-israel'. Friesel (Israel Affairs, 2008): título 'On the myth of the connection between the Holocaust and the creation of Israel'; em 1996 (Yad Vashem) ele já examinava a pergunta 'The Holocaust: Factor in the Birth of Israel?'.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Só os títulos e resumos de Friesel foram vistos; o argumento dele não foi lido e o texto só cita o título.",
+      "interpretacoes_concorrentes": [
+        {
+          "posicao": "Os sobreviventes e a crise de refugiados do pós-guerra estão no centro da história da criação de Israel.",
+          "quem": "USHMM",
+          "fontes": [
+            "F02-117"
+          ]
+        },
+        {
+          "posicao": "A ligação direta entre o Holocausto e a criação de Israel é um mito.",
+          "quem": "Evyatar Friesel",
+          "fontes": [
+            "F02-119"
+          ]
+        }
+      ],
+      "status": "CONTESTADO",
       "revisar_ate": null
     }
   ]

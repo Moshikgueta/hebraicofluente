@@ -4,19 +4,19 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 18985
-- Fontes registradas: 292 (por nível: D 51, B 78, E 108, A 44, C 11; por acesso: trecho-de-busca 272, referencia-confirmada 20)
-- Afirmações registradas: 480 (VERIFICADO 233, NÃO VERIFICADO 164, PARCIALMENTE VERIFICADO 66, DESATUALIZADO 3, CONTESTADO 14)
-- Afirmações VERIFICADO sem uso no texto: 8
+- Palavras no manuscrito: 20073
+- Fontes registradas: 410 (por nível: D 94, B 101, E 125, A 76, C 14; por acesso: trecho-de-busca 386, referencia-confirmada 24)
+- Afirmações registradas: 549 (VERIFICADO 295, NÃO VERIFICADO 170, PARCIALMENTE VERIFICADO 51, DESATUALIZADO 3, CONTESTADO 30)
+- Afirmações VERIFICADO sem uso no texto: 47
 - Ocorrências de hebraico: 158 (lista em auditoria/hebraico.md)
-- Links testados: 0 de 291 (rede bloqueada; ver revisão humana)
+- Links testados: 0 de 407 (rede bloqueada; ver revisão humana)
 
 | Arquivo | Palavras | Marcas de fonte |
 | --- | --- | --- |
 | 00a-nota-metodologica.md | 580 | 0 |
 | 00b-introducao.md | 482 | 0 |
 | 01-israel-no-mapa.md | 2531 | 73 |
-| 02-historia.md | 2737 | 78 |
+| 02-historia.md | 3825 | 108 |
 | 03-jerusalem.md | 2586 | 68 |
 | 04-alem-de-jerusalem.md | 3070 | 101 |
 | 05-vida-real.md | 1617 | 32 |
