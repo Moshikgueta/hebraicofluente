@@ -36,13 +36,13 @@ const arquivos = opt.livro
   : String(opt.capitulos || '01-israel-no-mapa.md').split(',');
 const ativos = lerJSON(path.join(RAIZ, 'ativos/registro-de-ativos.json')).ativos;
 /* Fotografias conferidas (tools/baixar-fotos.mjs): uma cópia leve para a
-   tela, 1200 px de largura, com o crédito e a licença do registro. */
+   tela, 960 px de largura, com o crédito e a licença do registro. */
 const fotosOk = fs.existsSync(path.join(RAIZ, 'ativos/fotos.json')) ? lerJSON(path.join(RAIZ, 'ativos/fotos.json')).fotos : {};
 function fotoWeb(id) {
   const f = fotosOk[id]; if (!f || !fs.existsSync(path.join(RAIZ, f.arquivo))) return null;
   fs.mkdirSync(path.join(OUT, 'assets/fotos'), { recursive: true });
   const dest = path.join(OUT, 'assets/fotos', id + '.jpg');
-  try { execFileSync('convert', [path.join(RAIZ, f.arquivo), '-resize', '1200x>', '-strip', '-quality', '72', dest]); }
+  try { execFileSync('convert', [path.join(RAIZ, f.arquivo), '-resize', '960x>', '-strip', '-interlace', 'JPEG', '-sampling-factor', '4:2:0', '-quality', '66', dest]); }
   catch { fs.copyFileSync(path.join(RAIZ, f.arquivo), dest); }
   return { src: `assets/fotos/${id}.jpg`, assunto: f.assunto, credito: f.credito, licenca: f.licenca, licenca_url: f.licenca_url, pagina: f.pagina };
 }

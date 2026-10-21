@@ -56,6 +56,8 @@ const svgDe = id => {
   return arq ? fs.readFileSync(arq, 'utf8').replace(/<\?xml[^>]*>/, '') : null;
 };
 
+/* Legenda de cada foto como aparece no livro, para a página de créditos. */
+const legendaDaFoto = new Map();
 function foto(id, { classe = '', assunto = '' } = {}) {
   const ok = fotosOk[id];
   if (ok && existe(path.join(RAIZ, ok.arquivo))) return { html: `<img class="foto ${classe}" src="file://${path.join(RAIZ, ok.arquivo)}" alt="${esc(ok.assunto || '')}">`, credito: `Foto: ${esc(ok.credito)}` };
@@ -85,6 +87,7 @@ async function bloco(b, cap, ctx) {
       return `<figure class="larga" id="fig-${b.id}">${svg}<figcaption><span class="num">Fig. ${cap.numero}.${ctx.fig}</span>${a ? `<b>${esc(a.titulo)}.</b> ` : ''}${b.legenda}<span class="credito">${esc(a?.credito_curto || '')}</span></figcaption></figure>`;
     }
     case 'foto': {
+      if (!legendaDaFoto.has(b.id)) legendaDaFoto.set(b.id, `Cap. ${cap.numero}: ${String(b.legenda || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()}`);
       const f = foto(b.id, { classe: b.formato === 'vertical' ? 'vertical' : '', assunto: b.legenda });
       /* Vertical: grade de duas colunas (legenda em destaque | foto). Float
          não serve: o Paged.js descarta a figura flutuante na quebra. */
@@ -259,8 +262,8 @@ function creditosFiguras(usadas) {
   if (!lista.length) return '';
   /* Fotografias: autor, licença com o endereço dela e a página de origem,
      como as licenças Creative Commons pedem (crédito, licença, fonte). */
-  const fotos = Object.entries(fotosOk).filter(([, f]) => existe(path.join(RAIZ, f.arquivo)));
-  const dlFotos = fotos.length ? `<h2>Fotografias</h2><dl>${fotos.map(([, f]) => `<div><dt>${esc(f.assunto)}</dt><dd>${esc(f.credito)}. Licença: ${esc(f.licenca)}${f.licenca_url ? ` (${esc(f.licenca_url.replace(/^https?:\/\//, ''))})` : ''}. Fonte: ${esc(f.pagina.replace(/^https?:\/\//, ''))}.${f.share_alike ? ' Imagem recortada para o formato da página; o recorte segue a mesma licença.' : ''}</dd></div>`).join('')}</dl>` : '';
+  const fotos = [...legendaDaFoto.keys()].filter(id => fotosOk[id] && existe(path.join(RAIZ, fotosOk[id].arquivo))).map(id => [id, fotosOk[id]]);
+  const dlFotos = fotos.length ? `<h2>Fotografias</h2><dl>${fotos.map(([id, f]) => `<div><dt>${esc(legendaDaFoto.get(id))}</dt><dd>${esc(f.credito)}. Licença: ${esc(f.licenca)}${f.licenca_url ? ` (${esc(f.licenca_url.replace(/^https?:\/\//, ''))})` : ''}. Fonte: ${esc(decodeURIComponent(f.pagina).replace(/^https?:\/\//, ''))}.${f.recorte ? ' ' + esc(f.recorte) : ''}${f.share_alike ? ' Imagem recortada para o formato da página; o recorte segue a mesma licença.' : ''}</dd></div>`).join('')}</dl>` : '';
   return `<section class="secao-livro creditos-fig" id="creditos-imagens"><h1 data-cap="Créditos">Mapas, infográficos e créditos</h1><dl>${lista.map(a => `<div><dt>${esc(a.titulo)}</dt><dd>${esc(a.credito_longo || a.credito_curto || '')}</dd></div>`).join('')}</dl>${dlFotos}</section>`;
 }
 

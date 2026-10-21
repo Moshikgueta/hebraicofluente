@@ -646,7 +646,8 @@
       "altura": 1013,
       "busca": "The Jaffa Gate Jerusalem matpc",
       "share_alike": false,
-      "conferido_em": "2026-10-21"
+      "conferido_em": "2026-10-21",
+      "recorte": "Original estereográfico: usada só a imagem da esquerda."
     },
     "foto-domo-loc-temple-area": {
       "arquivo": "ativos/fotos/foto-domo-loc-temple-area.jpg",
@@ -664,7 +665,8 @@
       "altura": 1466,
       "busca": "Temple area Jerusalem Dome of the Rock western Temple wall matpc",
       "share_alike": false,
-      "conferido_em": "2026-10-21"
+      "conferido_em": "2026-10-21",
+      "recorte": "Recortada à esquerda e embaixo para tirar a fita colada na chapa original."
     }
   }
 }

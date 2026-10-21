@@ -201,7 +201,7 @@ observar: Quem abre a porta: em 2017, segundo a Reuters, uma família muçulmana
 :::
 
 ::: foto foto-sepulcro-fachada-delaney
-A fachada do Santo Sepulcro, com a porta principal.
+A fachada do Santo Sepulcro.
 :::
 
 ### Uma rua de estações
@@ -222,7 +222,7 @@ Cada estação marca um episódio da Paixão segundo a tradição cristã de per
 :::
 
 ::: foto foto-via-dolorosa-ecce-homo-matson
-A Via Dolorosa numa foto da coleção Matson, feita entre 1898 e 1946.
+A Via Dolorosa e o arco Ecce Homo, em 2010.
 :::
 
 ::: ficha torre-de-davi

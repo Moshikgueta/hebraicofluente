@@ -64,7 +64,7 @@ De oeste a leste: o mar, a planície costeira, as montanhas e o vale da fenda co
 **A planície costeira** acompanha o Mediterrâneo: praia de areia e terras de cultivo que avançam até cerca de 40 km para o interior.[[C01-046]]
 
 ::: foto foto-tel-aviv-costa
-A costa de Tel Aviv até Jafa, na planície costeira.
+A praia de Tel Aviv, na planície costeira.
 :::
 
 ::: foto foto-kineret-taylor vertical
