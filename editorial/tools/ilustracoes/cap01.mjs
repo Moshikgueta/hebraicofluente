@@ -67,13 +67,24 @@ export default function capitulo01({ paises, disputa, lagos, rios, brasil, svg, 
     s += t(56, 240, 'de Sergipe', { cls: 'd', s: 74, f: C.ouro });
     s += t(W - 56, 240, 'Israel e Sergipe, lado a lado,', { s: 19, a: 'end', f: C.areiaClara }) + t(W - 56, 266, 'na mesma escala', { s: 19, a: 'end', f: C.areiaClara });
     const isr = featDisp(disputa, [...ISRAEL_1949, ...HACHURA]);
-    const bI = limites(isr.map(f => f.geometry));
+    /* Judeia e Samaria (Cisjordânia) aparece no mapa, em cor clara: não entra
+       nos 22.072 km² do CBS (C01-001), então fica fora da comparação. */
+    const js = featDisp(disputa, ['B54']);
+    const bI = limites([...isr, ...js].map(f => f.geometry));
     const PI = projetorKm(bI[3], bI[0], PX, 90, 350);
-    s += `<g transform="translate(6 8)">${isr.map(f => `<path d="${caminho(f.geometry, PI.p)}" fill="${C.pedraEsc}"/>`).join('')}</g>`;
+    s += `<g transform="translate(6 8)">${[...isr, ...js].map(f => `<path d="${caminho(f.geometry, PI.p)}" fill="${C.pedraEsc}"/>`).join('')}</g>`;
+    for (const f of js) s += `<path d="${caminho(f.geometry, PI.p)}" fill="${C.areiaClara}" stroke="${C.neguevTinta}" stroke-width="1.5" stroke-dasharray="5 4" stroke-linejoin="round"/>`;
     for (const f of featDisp(disputa, ISRAEL_1949)) s += `<path d="${caminho(f.geometry, PI.p)}" fill="${C.navy}" stroke="${C.navy}" stroke-width="1.5" stroke-linejoin="round"/>`;
     for (const f of featDisp(disputa, ['B98'])) s += `<path d="${caminho(f.geometry, PI.p)}" fill="url(#hachura)" stroke="${C.ouro}" stroke-width="1.5"/>`;
     for (const f of featDisp(disputa, ['B16'])) s += `<path d="${caminho(f.geometry, PI.p)}" fill="url(#hachura-golan)" stroke="${C.ouroTinta}" stroke-width="1.5"/>`;
     const [, iyMax] = PI.p([bI[2], bI[1]]);
+    /* rótulo de Judeia e Samaria ao lado, com um fio até a área */
+    const bJ = limites(js.map(f => f.geometry));
+    const [jx, jy] = PI.p([(bJ[0] + bJ[2]) / 2, (bJ[1] + bJ[3]) / 2 + 0.12]);
+    const [ixMax] = PI.p([bI[2], bI[1]]);
+    const lx = ixMax + 28;
+    s += `<circle cx="${jx.toFixed(1)}" cy="${jy.toFixed(1)}" r="4" fill="${C.neguevTinta}"/><line x1="${jx.toFixed(1)}" y1="${jy.toFixed(1)}" x2="${(lx - 8).toFixed(1)}" y2="${jy.toFixed(1)}" stroke="${C.neguevTinta}" stroke-width="1.5"/>`;
+    s += t(lx.toFixed(0), (jy - 4).toFixed(0), 'Judeia e Samaria', { s: 19, f: C.neguevTinta, w: 600 }) + t(lx.toFixed(0), (jy + 20).toFixed(0), '(Cisjordânia)', { s: 17, f: C.neguevTinta });
     s += t(280, ((350 + iyMax) / 2 + 40).toFixed(0), 'Israel', { cls: 'd', s: 30, f: C.navy });
     const se = brasil.features.find(f => f.properties.postal === 'SE');
     const bS = limites([se.geometry]);
@@ -94,7 +105,9 @@ export default function capitulo01({ paises, disputa, lagos, rios, brasil, svg, 
     const yL = Math.max(iyMax + 50, y + 170);
     s += `<rect x="90" y="${(yL - 17).toFixed(0)}" width="30" height="20" fill="url(#hachura)" stroke="${C.ouro}"/><rect x="126" y="${(yL - 17).toFixed(0)}" width="30" height="20" fill="url(#hachura-golan)" stroke="${C.ouroTinta}"/>`;
     s += t(170, yL.toFixed(0), 'Jerusalém Oriental e Golã entram na conta do CBS.', { s: 16 });
-    const y50 = yL + 70, w100 = 100 * PX;
+    s += `<rect x="90" y="${(yL + 19).toFixed(0)}" width="66" height="20" fill="${C.areiaClara}" stroke="${C.neguevTinta}" stroke-dasharray="5 4"/>`;
+    s += t(170, (yL + 36).toFixed(0), 'Judeia e Samaria (Cisjordânia) fica fora da conta.', { s: 16 });
+    const y50 = yL + 106, w100 = 100 * PX;
     s += `<rect x="90" y="${y50}" width="${(w100 / 2).toFixed(1)}" height="8" fill="${C.navy}"/><rect x="${(90 + w100 / 2).toFixed(1)}" y="${y50}" width="${(w100 / 2).toFixed(1)}" height="8" fill="${C.papel}" stroke="${C.navy}"/>`;
     s += t(90, y50 - 10, '0', { s: 13, f: C.suave }) + t((90 + w100).toFixed(1), y50 - 10, '100 km', { s: 13, a: 'end', f: C.suave }) + t((110 + w100).toFixed(1), y50 + 8, 'a mesma escala para os dois', { s: 13, f: C.suave });
     const bB = limites(brasil.features.map(f => f.geometry));
@@ -104,7 +117,7 @@ export default function capitulo01({ paises, disputa, lagos, rios, brasil, svg, 
     s += `<line x1="56" x2="${W - 56}" y1="${H - 74}" y2="${H - 74}" stroke="${C.linha}"/>`;
     s += t(56, H - 46, 'Áreas: CBS de Israel e IBGE (Área territorial brasileira 2022); 20.700 km²: Biblioteca do Congresso dos EUA. Contornos: Natural Earth.', { s: 12.5, f: C.suave });
     s += t(56, H - 26, 'Os dois contornos estão na mesma escala, em quilômetros. Hebraico Fluente · Israel Além do Roteiro', { s: 12.5, f: C.suave });
-    return svg(W, H, 'Israel e Sergipe lado a lado, na mesma escala: 22.072 km² e 21.938 km², uma diferença de 134 km², menos de 1%.', s);
+    return svg(W, H, 'Israel e Sergipe lado a lado, na mesma escala: 22.072 km² e 21.938 km², uma diferença de 134 km², menos de 1%. Judeia e Samaria (Cisjordânia) aparece em cor clara, fora da conta.', s);
   }
 
   /* ── Mapa ilustrado das regiões, tocável na web ─────────────────────────
