@@ -1,0 +1,40 @@
+{
+  "_nota": [
+    "Metadados do produto. É daqui que o gerador tira título, formatos e estado, e é daqui",
+    "que a futura integração com a loja vai ler slug, preço e arquivo. Nada aqui está à",
+    "venda: `venda.ativa` só vira true por decisão do dono, depois do conteúdo aprovado,",
+    "da entrega testada e da questão do enquadramento (ver produtos/README.md)."
+  ],
+  "slug": "sobrevivencia-israel",
+  "colecao": "guias-israel",
+  "titulo": "Hebraico de Sobrevivência em Israel",
+  "subtitulo": "100 palavras e expressões essenciais para sua viagem",
+  "categoria": "Guia digital",
+  "descricaoCurta": "Prepare seu hebraico para Israel com 100 palavras e expressões essenciais, explicações em português e exemplos de situações reais de viagem.",
+  "versao": "0.2.0",
+  "totalItens": 100,
+  "_totalItens": "Critério de contagem em conteudo/vocabulario.json (_nota). O conferir.mjs recusa outro número.",
+  "estado": "rascunho",
+  "revisao": {
+    "hebraico": "pendente",
+    "portugues": "pendente",
+    "_": "Enquanto qualquer um dos dois estiver pendente, todo PDF sai com a faixa RASCUNHO no rodapé."
+  },
+  "audio": {
+    "status": "em-gravacao",
+    "_status": "em-gravacao | disponivel. 'disponivel' só com os arquivos em audio/ E as páginas de áudio publicadas e conferidas; é isso que liga os códigos QR.",
+    "base": null
+  },
+  "formatos": [
+    "celular",
+    "a4"
+  ],
+  "venda": {
+    "ativa": false,
+    "precoSugeridoBrl": 29,
+    "_": "Preço sugerido pelo dono no briefing (21/10/2026). Não é lido por nenhum checkout ainda."
+  },
+  "relacionados": [
+    "alfabetizacao"
+  ]
+}

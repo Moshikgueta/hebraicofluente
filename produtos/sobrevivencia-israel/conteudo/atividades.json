@@ -1,0 +1,90 @@
+{
+  "_nota": [
+    "Os desafios do capítulo 11. Tudo funciona no papel ou de cabeça: nenhum campo",
+    "interativo. `resposta` alimenta o gabarito no fim do guia. Hebraico só de itens",
+    "do vocabulário (o conferir.mjs confere os `ref`)."
+  ],
+  "atividades": [
+    {
+      "id": "identificar",
+      "tipo": "escolha",
+      "titulo": "Qual é a placa?",
+      "instrucao": "As placas de verdade não têm os sinais de vogal. Olhe a forma da palavra e marque a certa.",
+      "questoes": [
+        { "pergunta": "Você quer sair da estação. Qual placa procura?", "opcoes": ["כניסה", "יציאה", "קופה"], "opcoesHe": true, "resposta": 1, "ref": ["yetsia"] },
+        { "pergunta": "Qual placa diz que a loja está aberta?", "opcoes": ["סגור", "פתוח", "אסור"], "opcoesHe": true, "resposta": 1, "ref": ["patuach"] },
+        { "pergunta": "Onde ficam os banheiros?", "opcoes": ["שירותים", "מודיעין", "מעלית"], "opcoesHe": true, "resposta": 0, "ref": ["sherutim"] },
+        { "pergunta": "Onde você pergunta pelo horário do trem?", "opcoes": ["חנות", "זהירות", "מודיעין"], "opcoesHe": true, "resposta": 2, "ref": ["modiin"] }
+      ]
+    },
+    {
+      "id": "associar",
+      "tipo": "associar",
+      "titulo": "Ligue as colunas",
+      "instrucao": "Escreva, ao lado de cada número, a letra do significado.",
+      "pares": [
+        { "nikud": "חֶשְׁבּוֹן", "tr": "cheshbón", "pt": "a conta", "ref": "cheshbon" },
+        { "nikud": "רַכֶּבֶת", "tr": "rakévet", "pt": "trem", "ref": "rakevet" },
+        { "nikud": "רָחוֹק", "tr": "rachók", "pt": "longe", "ref": "rachok" },
+        { "nikud": "הֲנָחָה", "tr": "hanachá", "pt": "desconto", "ref": "hanacha" },
+        { "nikud": "בְּלִי", "tr": "bli", "pt": "sem", "ref": "bli" },
+        { "nikud": "רוֹפֵא", "tr": "rofé", "pt": "médico", "ref": "rofe" }
+      ],
+      "embaralhar": [3, 5, 0, 4, 1, 2]
+    },
+    {
+      "id": "escolher",
+      "tipo": "escolha",
+      "titulo": "O que você diz?",
+      "instrucao": "Escolha a expressão que cabe na situação.",
+      "questoes": [
+        { "pergunta": "Você esbarrou em alguém no corredor do ônibus.", "opcoes": ["todá", "slichá", "lehitraót"], "resposta": 1, "ref": ["slicha"] },
+        { "pergunta": "São nove da noite e você chega à recepção do hotel.", "opcoes": ["bóker tov", "láyla tov", "érev tov"], "resposta": 2, "ref": ["erev-tov"] },
+        { "pergunta": "O vendedor pergunta efshár laazór? e você ainda não decidiu.", "opcoes": ["aní rak mistakél", "ze yakár", "aní lo motsé"], "resposta": 0, "ref": ["ani-rak-mistakel"] },
+        { "pergunta": "Alguém agradece a sua ajuda. Você responde:", "opcoes": ["bevakashá", "slichá", "efshár"], "resposta": 0, "ref": ["bevakasha"] },
+        { "pergunta": "A pessoa falou rápido demais. Você pede:", "opcoes": ["od páam, bevakashá", "káma ze olé?", "ze nosséa le…?"], "resposta": 0, "ref": ["od-paam"] }
+      ]
+    },
+    {
+      "id": "placas",
+      "tipo": "placas",
+      "titulo": "Leia as placas",
+      "instrucao": "O que cada placa quer dizer? Responda em português, de cabeça ou escrevendo ao lado.",
+      "placas": [
+        { "he": "אסור לעשן", "en": "No smoking", "resposta": "Proibido fumar.", "ref": ["asur"] },
+        { "he": "זהירות", "en": "Caution", "resposta": "Cuidado, atenção.", "ref": ["zehirut"] },
+        { "he": "תחנה מרכזית", "en": "Central Bus Station", "resposta": "Rodoviária central.", "ref": ["tachana-merkazit"] },
+        { "he": "אין כניסה", "en": "No entry", "resposta": "Entrada proibida, não entre.", "ref": ["knissa"] }
+      ]
+    },
+    {
+      "id": "completar",
+      "tipo": "completar",
+      "titulo": "Complete o diálogo",
+      "instrucao": "Use as palavras do quadro. Cada uma entra uma vez.",
+      "banco": ["todá", "efshár", "bevakashá", "káma"],
+      "falas": [
+        { "quem": "Você", "texto": "Slichá, ____ ze olé?", "pt": "Com licença, quanto custa isto?" },
+        { "quem": "Vendedor", "texto": "Esrím shékel.", "pt": "Vinte shekels." },
+        { "quem": "Você", "texto": "____ beashrái?", "pt": "Posso pagar com cartão?" },
+        { "quem": "Vendedor", "texto": "Ken, ____.", "pt": "Sim, pode passar." },
+        { "quem": "Você", "texto": "____ rabá!", "pt": "Muito obrigado!" }
+      ],
+      "resposta": ["káma", "efshár", "bevakashá", "todá"],
+      "ref": ["kama-ze-ole", "efshar-beashrai", "bevakasha", "toda-raba"]
+    },
+    {
+      "id": "situacoes",
+      "tipo": "situacoes",
+      "titulo": "Situações de viagem",
+      "instrucao": "Pense no que você diria em hebraico. Depois, confira no gabarito uma resposta possível.",
+      "questoes": [
+        { "pergunta": "No café: você quer uma água, por favor.", "resposta": "Efshár máyim, bevakashá?", "ref": ["efshar", "mayim"] },
+        { "pergunta": "No táxi: você quer que a corrida seja pelo taxímetro.", "resposta": "Im moné, bevakashá.", "ref": ["mone"] },
+        { "pergunta": "Na rua: você procura o ponto de ônibus.", "resposta": "Slichá, éifo hatachaná?", "ref": ["eifo", "tachana"] },
+        { "pergunta": "No mirante: você se perdeu do seu grupo.", "resposta": "Aní lo motsé et hakvutsá shelí. (Mulher: aní lo motsét…)", "ref": ["ani-lo-motse"] },
+        { "pergunta": "No restaurante: você é vegetariana e quer avisar.", "resposta": "Aní tsimchonít.", "ref": ["ani-tsimchoni"] }
+      ]
+    }
+  ]
+}

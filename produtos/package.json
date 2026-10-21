@@ -1,0 +1,11 @@
+{
+  "name": "hebraico-fluente-produtos",
+  "private": true,
+  "type": "module",
+  "description": "Guias digitais da coleção Hebraico Fluente: conteúdo estruturado, gerador de PDF e manifesto de áudio.",
+  "scripts": {
+    "conferir": "node _motor/conferir.mjs sobrevivencia-israel",
+    "pdf": "node _motor/gerar.mjs sobrevivencia-israel",
+    "pdf:previa": "node _motor/gerar.mjs sobrevivencia-israel --previa"
+  }
+}
