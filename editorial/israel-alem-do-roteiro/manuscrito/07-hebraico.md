@@ -15,6 +15,9 @@ Este capítulo começa pela história da língua e pelas placas, e depois traz a
 
 ## A língua que voltou a ser falada
 
+::: vinheta livro
+:::
+
 A frase que se ouve em todo passeio é que o hebraico é "a única língua morta que voltou a viver". Ela conta uma parte da história e esconde outra.
 
 A parte que ela conta: segundo a Academia da Língua Hebraica, a partir do século V d.C. o hebraico não foi a língua do dia a dia em lugar nenhum do mundo.[[C07-004]] A parte que ela esconde vem na mesma frase da Academia: a língua continuou sendo usada, e muito, como língua escrita e literária até voltar a ser falada, e nunca saiu do uso religioso.[[C07-004]] Durante séculos, quem escrevia um poema, um comentário ou uma carta em hebraico usava uma língua viva no papel e calada na rua. Por isso, quando os primeiros falantes quiseram usá-la em casa, faltavam palavras para muitas coisas básicas.[[C07-004]]
@@ -62,6 +65,9 @@ A história do hebraico contada pela Academia da Língua Hebraica.
 
 ## Como ler uma placa trilíngue
 
+::: vinheta placa
+:::
+
 Na estrada, muitas placas vêm em três escritas: hebraico, árabe e letras latinas. O hebraico e o árabe se leem da direita para a esquerda; o nome em letras latinas é uma transliteração, uma tentativa de escrever com o nosso alfabeto o som do nome hebraico. E é aí que começam as diferenças.
 
 Quem decide os nomes oficiais é uma comissão do governo, que funciona sob o Gabinete do Primeiro-Ministro; os relatórios de Israel à ONU dão 1951 como o início oficial dela.[[C07-036]] Para escrever esses nomes em letras latinas, vale a romanização da Academia, e mudanças nela foram ratificadas pelo governo para mapas e placas.[[C07-037,C07-010]]
@@ -104,6 +110,9 @@ Repare se o mesmo lugar aparece escrito de dois jeitos em letras latinas, numa p
 
 ## Uma palavra que o Brasil já fala
 
+::: vinheta calendario
+:::
+
 O brasileiro fala uma palavra hebraica toda semana sem perceber. O "sábado" do português vem do latim sabbatum, que vem do hebraico.[[C07-042]] O caminho passou pelo grego sabbaton, e a palavra de origem, shabbath, quer dizer "dia de descanso"; em latim, sabbatum era o dia de descanso dos judeus antes de virar o nome do dia da semana.[[C07-043]] Quem diz "sábado" está dizendo, de longe, a mesma palavra do cumprimento <he>שַׁבָּת שָׁלוֹם</he> (shabát shalóm).[[C07-044]]
 
 ::: figura sabado-shabat
@@ -112,6 +121,9 @@ De shabát a sábado: o caminho da palavra pelo grego e pelo latim, segundo as o
 
 ## Como ler esta lista
 
+::: vinheta letras
+:::
+
 Cada linha traz a palavra em hebraico com os sinais de vogal, a transliteração, a tradução e onde ela aparece. Nas placas, nos cardápios e nos jornais as palavras vêm sem esses sinais; aqui eles estão para que você possa ler a palavra inteira.
 
 A transliteração segue o padrão do Hebraico Fluente. O acento agudo marca a sílaba forte: shalóm, bóker. Palavra de uma sílaba não leva acento: shuk, tel. O "ch" é um R raspado na garganta, como o R carioca de "carro", nunca o "ch" de "chave"; esse som se escreve "sh". O "ts" soa como em "tsunami". O "h" se pronuncia, como um sopro leve.
@@ -119,6 +131,9 @@ A transliteração segue o padrão do Hebraico Fluente. O acento agudo marca a s
 Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> é b, <he>ב</he> é v). Neste livro, como no curso, esse ponto só aparece nas letras em que ele muda o que se ouve.
 
 ## As palavras
+
+::: vinheta fala
+:::
 
 ### Lugares
 
@@ -200,6 +215,11 @@ Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> �
 A antropóloga Tamar Katriel estudou o falar dúgri no livro Talking Straight (Cambridge University Press, 1986). Para ela, a fala direta é uma maneira de afirmar a identidade do sabra, o nascido no país. Quem é de dentro a entende pelos sentidos que compartilha; quem é de fora muitas vezes a toma por grosseria.[[C07-024]]
 :::
 
+## Compreensão da leitura
+
+::: vinheta lupa
+:::
+
 ::: quiz Numa placa de trilha, o que vem antes do nome de um curso d'água?
 - [ ] <he>תֵל</he> (tel) | 
 - [x] <he>נַחַל</he> (náchal) | É a palavra para riacho ou leito de rio, que nos mapas e placas de trilha vem antes do nome.
@@ -235,4 +255,44 @@ A antropóloga Tamar Katriel estudou o falar dúgri no livro Talking Straight (C
 ::: vf Até voltar a ser falado, o hebraico tinha deixado de ser escrito.
 resposta: falso
 Segundo a Academia, a partir do século V d.C. ele não foi língua do dia a dia em lugar nenhum, mas continuou amplamente usado como língua escrita e literária, e sem interrupção no uso religioso.[[C07-004]]
+:::
+
+::: vf Segundo o dossiê da UNESCO, Acre foi rebatizada Ptolemais no período helenístico e voltou ao nome original no período árabe.
+resposta: verdadeiro
+No Antigo Testamento ela se chama Akko, e entre 1191 e 1291 foi a capital do segundo reino cruzado.[[C07-012]]
+:::
+
+::: associe Associe cada pessoa ao seu papel na história da língua.
+- Eliezer Ben-Yehuda | O dicionário do hebraico antigo e moderno, em 17 volumes[[C07-002]]
+- Hemda e Ehud Ben-Yehuda | Levaram o dicionário adiante depois de 1922[[C07-002]]
+- Nahum Sokolow | Deu o título Tel Aviv à tradução de Altneuland[[C07-014]]
+- Ghil'ad Zuckermann | Propõe chamar a língua de "israeli"[[C07-005]]
+- Mishael Cheshin | Ficou vencido na decisão de 2002 sobre o árabe nas placas[[C07-040]]
+:::
+
+::: complete O primeiro ulpan, centro de estudo intensivo de hebraico para imigrantes adultos, abriu em ___, em Jerusalém.
+resposta: 1949
+explicacao: Abriu no campo de imigrantes de Etzion.[[C07-007]]
+:::
+
+::: complete O "sábado" do português vem do latim ___, que vem do hebraico.
+resposta: sabbatum
+explicacao: O caminho passou pelo grego sabbaton; a palavra de origem, shabbath, quer dizer "dia de descanso".[[C07-042,C07-043]]
+:::
+
+::: ordene Ponha em ordem, do mais antigo ao mais recente.
+- Ben-Yehuda se instala em Jerusalém.[[C07-001]]
+- Um primeiro comitê da língua se forma e logo se desfaz.[[C07-003]]
+- O Mandato Britânico reconhece o hebraico como uma das três línguas oficiais.[[C07-038]]
+- Abre o primeiro ulpan.[[C07-007]]
+- Uma lei do Knesset cria a Academia da Língua Hebraica.[[C07-035]]
+- O Supremo manda pôr árabe nas placas de cinco municípios.[[C07-040]]
+:::
+
+::: aberta Por que o mesmo lugar pode aparecer com Q numa grafia em letras latinas e com K em outra?
+resposta: Porque a regra da romanização mudou de ideia: Israel informou à ONU que a Academia passaria a escrever a letra <he>ק</he> com K, e depois a Academia disse ter decidido, por ora, não mexer no sistema existente.[[C07-011]]
+:::
+
+::: aberta Em que a tese de Ghil'ad Zuckermann se opõe ao relato da Academia da Língua Hebraica?
+resposta: Para Zuckermann, a língua de hoje é um híbrido semítico-europeu, com gramática que deve também ao iídiche e a outras línguas dos fundadores, e por isso deveria se chamar "israeli". A Academia conta que o hebraico deixou de ser falado no dia a dia, mas não de ser escrito, e voltou a ser língua falada.[[C07-005,C07-004]]
 :::

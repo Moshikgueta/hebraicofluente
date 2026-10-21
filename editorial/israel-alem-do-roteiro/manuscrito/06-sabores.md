@@ -13,11 +13,17 @@ As próximas páginas ficam com os pratos, os pães, os mercados e as regras que
 
 ## A comida como documento
 
+::: vinheta livro
+:::
+
 Em *Falafel Nation*, publicado em 2015 pela University of Nebraska Press, a pesquisadora Yael Raviv acompanha o período que vai da onda de imigração de 1905 até a Guerra dos Seis Dias, em 1967, e examina como a comida participou da construção do nacionalismo judaico e da identidade israelense.[[C06-001]] Para isso ela reuniu entrevistas com chefs, cozinheiros do exército e autores de livros de receitas, além dos próprios livros de receitas, de anúncios e de cardápios de hotéis e restaurantes.[[C06-002]]
 
 A lista de fontes já ensina alguma coisa. A cozinha de um país também se escreve na cozinha de um quartel, num anúncio e no cardápio impresso de um hotel, e não só na mesa de casa. Vale lembrar disso no balcão: o que parece "tradicional" pode ter uma história curta, e o que parece novidade pode ser muito antigo.
 
 ## Homus: um prato, várias reivindicações
+
+::: vinheta prato
+:::
 
 Em hebraico, o prato se chama <he>חוּמוּס</he> (chúmus). A receita tradicional é curta: grão-de-bico cozido e amassado, misturado com tahine, o condimento de gergelim tostado, alho e suco de limão.[[C06-052]] Já a conversa que vem com cada colherada é longa.
 
@@ -36,6 +42,9 @@ Não há resposta que encerre a pergunta, e as posições são várias. A reivin
 :::
 
 ## Falafel: uma origem em aberto
+
+::: vinheta bussola
+:::
 
 Com o falafel, a pergunta "de onde vem?" tem mais hipóteses do que documentos.[[C06-008]]
 
@@ -56,9 +65,15 @@ O sabich e o falafel na pita, em desenho esquemático: só os ingredientes que a
 
 ## Sabich: o café da manhã que virou sanduíche
 
+::: vinheta onibus
+:::
+
 O <he>סַבִּיח</he> (sabích) é pita recheada com berinjela e ovo, entre outras coisas. Reportagens da imprensa israelense e judaica ligam o prato ao café da manhã de Shabat dos judeus do Iraque, montado com itens preparados de véspera e comidos em temperatura ambiente.[[C06-010]] A passagem para dentro do pão aparece nessas reportagens ligada a um quiosque da rua Uziel, em Ramat Gan, aberto em 1961 por Sabich Halabi, imigrante nascido em Bagdá, e pela mulher, Rina; teriam sido os motoristas de uma linha de ônibus que fazia ponto final ali que pediram uma refeição de verdade. As mesmas fontes registram mais de uma versão sobre quem montou o primeiro sanduíche, e a data não é unânime.[[C06-010]]
 
 ## Pães para todo dia e para o sábado
+
+::: vinheta pao
+:::
 
 No balcão, o pão é a pita, que embrulha o falafel e o sabich. Mas alguns dos pães mais curiosos do país são de sábado.
 
@@ -75,6 +90,9 @@ O homus e o jachnun, por partes: a receita tradicional do homus segundo as obras
 A chalá, o pão trançado da mesa de sábado, tem uma disputa própria, mais discreta que a do homus. Um artigo da revista acadêmica *Meldar*, de estudos sefarditas, sustenta que a trança não é de origem asquenaze, como se costuma dizer, e sim sefardita.[[C06-045]] É a tese de um artigo, não um consenso, mas basta para mostrar que nem o pão de sábado escapa da pergunta sobre origem.
 
 ## Mercados: Machane Yehuda e Carmel
+
+::: vinheta mercado
+:::
 
 Em Jerusalém, o mercado Machane Yehuda virou também um laboratório de mudança urbana. Um estudo de Rotem Mashkov e Noam Shoval, da Universidade Hebraica, publicado em 2020, mediu o que eles chamam de "boutiquização" do mercado: o tipo de negócio mudou de forma significativa, com usos tradicionais deslocados, e a reação dos comerciantes ao turismo variou conforme fossem ou não donos da banca.[[C06-046]]
 
@@ -101,6 +119,9 @@ A página do Ministério do Turismo de Israel sobre o mercado de Jerusalém.
 
 ## Kashrut: carne, leite e certificado
 
+::: vinheta documento
+:::
+
 <he>כַּשְׁרוּת</he> (kashrút) é o nome do conjunto de regras alimentares do judaísmo, e <he>כָּשֵׁר</he> (kashér) é o alimento ou o estabelecimento que as cumpre.
 
 A regra mais visível para quem viaja é a separação entre carne e leite. Ela parte de um versículo que aparece três vezes na Torá, duas no Êxodo e uma no Deuteronômio: não cozinhar o cabrito no leite da mãe. O Talmud lê na repetição três proibições: comer a mistura, tirar proveito dela e cozinhá-la. Outras regras, como não tomar leite logo depois de comer carne, são de origem rabínica, e os rabinos discutem quanto tempo esperar entre uma coisa e outra e se é preciso louça separada.[[C06-040]] Em hebraico, as palavras <he>בְּשָׂרִי</he> (bsarí) e <he>חָלָבִי</he> (chalaví) querem dizer "de carne" e "de leite".
@@ -121,6 +142,9 @@ Num restaurante israelense, "kosher" pode significar o certificado do Rabinato o
 
 ## Cafés
 
+::: vinheta cafe
+:::
+
 O café de Tel Aviv também tem a sua história cultural. Em *A Rich Brew* (NYU Press, 2018), o pesquisador Shachar Pinsker estuda os cafés como lugar de encontro de escritores e pensadores judeus de 1848 a 1939, com um capítulo sobre Tel Aviv.[[C06-048]] Segundo uma resenha do livro, ele escreve que, dos anos 1920 a 1946, Tel Aviv tinha mais cafés por habitante do que a maioria das cidades europeias e americanas.[[C06-048]]
 
 ::: link cafes-tel-aviv-museu
@@ -128,6 +152,9 @@ Os passeios do Museu da Cidade de Tel Aviv-Yafo pela história dos cafés.
 :::
 
 ## Guia básico de restaurante
+
+::: vinheta fala
+:::
 
 Algumas palavras resolvem a maior parte da refeição. O cardápio é o <he>תַּפְרִיט</he> (tafrít); quem atende é o <he>מֶלְצַר</he> (meltsár); a água é <he>מַיִם</he> (máyim); e, na hora de pagar, a palavra é <he>חֶשְׁבּוֹן</he> (cheshbón), a conta. Um "por favor", <he>בְּבַקָשָׁה</he> (bevakashá), e um "obrigado", <he>תוֹדָה</he> (todá), fecham o pedido.
 
@@ -163,6 +190,11 @@ Cardápio em hebraico e inglês no Machane Yehuda.
 - <he>בְּתֵאָבוֹן</he> | beteavón | bom apetite | Dito ao servir ou ao começar.
 :::
 
+## Compreensão da leitura
+
+::: vinheta lupa
+:::
+
 ::: quiz pegadinha Circula que o sabich é receita antiga, servida assim há séculos. O que as reportagens contam?
 - [x] Que o prato vem do café da manhã de Shabat dos judeus do Iraque e foi para dentro da pita num quiosque de Ramat Gan aberto em 1961 | Os itens eram preparados de véspera; a passagem para o sanduíche é ligada ao quiosque de Sabich e Rina Halabi, e há mais de uma versão sobre o primeiro.[[C06-010]]
 - [ ] Que é um prato da Antiguidade, descrito em textos antigos | É a versão que circula; as fontes do capítulo não registram nada disso.[[C06-010]]
@@ -184,4 +216,50 @@ Pode descrever a supervisão que tem e as regras que segue, mas não exibir um c
 - [x] Para ser comido no sábado de manhã | É uma comida pronta de véspera, como o café da manhã de Shabat que deu origem ao sabich.[[C06-044,C06-010]]
 - [ ] Porque a massa leva fermento lento | 
 - [ ] Porque é servido só no Yom Kipur | 
+:::
+
+::: quiz Segundo a revista Tablet, por que o Rabinato não certifica restaurante que abre no Shabat?
+- [x] Porque o supervisor precisa de acesso livre à cozinha | É a explicação do Rabinato; a exceção são os hotéis.[[C06-041]]
+- [ ] Porque a lei de 1983 proíbe abrir no sábado | A lei de 1983 trata de quem pode emitir o certificado, não do horário das lojas.[[C06-011,C06-041]]
+- [ ] Porque nenhum restaurante certificado pode abrir em dia de festa | O texto não diz isso; o que a Tablet registra é a regra do Shabat e a exceção dos hotéis.[[C06-041]]
+:::
+
+::: vf Em Israel, a gorjeta no restaurante é obrigação prevista em lei.
+resposta: falso
+É costume, não lei: reportagens dão de 10% a 15% da conta, e cerca de 15% em Tel Aviv.[[C06-043]]
+:::
+
+::: associe Associe cada pesquisador ao que estudou.
+- Yael Raviv | A comida no nacionalismo judaico, de 1905 a 1967[[C06-001]]
+- Dafna Hirsch | A "biografia cultural" do homus em Israel[[C06-003]]
+- Nir Avieli | A disputa de Abu Gosh como questão de posse e de poder[[C06-006]]
+- Liora Gvion | A comida dos cidadãos palestinos de Israel[[C06-050]]
+- Shachar Pinsker | Os cafés como lugar de encontro de escritores[[C06-048]]
+:::
+
+::: complete Em janeiro de 2010, cozinheiros de Abu Gosh encheram uma antena parabólica com cerca de ___ toneladas de homus.
+resposta: quatro / 4
+explicacao: O Guinness reconheceu o recorde, numa iniciativa do dono de restaurante Jawdat Ibrahim.[[C06-007]]
+:::
+
+::: complete No Egito, o bolinho de fava parecido com o falafel se chama ___.
+resposta: taamíya / taamiya
+explicacao: É uma das hipóteses de origem do falafel, que a History Today situa em Alexandria.[[C06-008]]
+:::
+
+::: ordene Ponha em ordem, do mais antigo ao mais recente.
+- Sabich e Rina Halabi abrem o quiosque da rua Uziel, em Ramat Gan (1961).[[C06-010]]
+- Uma lei contra fraude em kashrut reserva o certificado ao Rabinato (1983).[[C06-011]]
+- O homus entra numa discussão entre Líbano e Israel sobre patrimônio (2008).[[C06-005]]
+- Abu Gosh bate o recorde do Guinness com cerca de quatro toneladas de homus (2010).[[C06-007]]
+- A Suprema Corte dá razão ao Rabinato sobre a "supervisão" de outras entidades (2016).[[C06-012]]
+- Numa nova audiência, o tribunal permite descrever a comida como kosher sem o certificado do Rabinato.[[C06-013]]
+:::
+
+::: aberta Por que a lista de fontes de Yael Raviv já ensina alguma coisa sobre a comida de um país?
+resposta: Porque ela usou entrevistas com cozinheiros do exército, livros de receitas, anúncios e cardápios de hotéis e restaurantes. A cozinha de um país também se escreve no quartel, no anúncio e no cardápio, e não só na mesa de casa.[[C06-002]]
+:::
+
+::: aberta A história de que os coptas criaram o falafel para a Quaresma é história ou tradição? Por quê?
+resposta: É tradição: a história é muito contada, mas a History Today registra que não há evidência que a sustente. As hipóteses sobre a origem do falafel não foram provadas.[[C06-008]]
 :::
