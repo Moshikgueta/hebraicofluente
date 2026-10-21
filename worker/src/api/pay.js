@@ -21,7 +21,7 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { ip, ipCompleto, requireAccount } from './auth.js';
 import { MOTIVOS_DESISTENCIA, motivoValido } from '../lib/motivos.js';
 import { contarChave } from './estatisticas.js';
-import { clampInstallments, getCourse, isSellable, parceriaValida, priceCents } from '../lib/catalog.js';
+import { clampInstallments, getCourse, isSellable, itensDoPedido, parceriaValida, priceCents, tipoDe } from '../lib/catalog.js';
 import {
   acessosVencidos, arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar,
   estornoCriar, estornoDe, estornosDe, estornosParaVarrer, findAccountById, getOrder, grantAccess, log,
@@ -157,10 +157,16 @@ export async function create({ request, env }) {
      partir do vencimento, então pagar cedo não perde dia nenhum. Sem esta
      janela o botão "Renovar acesso" do painel levava a um checkout que
      respondia 409 - a renovação só era possível DEPOIS de perder o acesso. */
-  const vence = await entitlementExpiry(env, account.id, course.slug);
+  /* No pacote, a pergunta vale para cada produto dele: quem já tem o curso
+     (fora da janela de renovação) compra só o e-book, e o checkout diz isso
+     com o erro `ja-tem-parte`, em vez de cobrar de novo o que já é dele. */
   const RENOVACAO_MS = 45 * 86_400_000;
-  if (vence !== null && (vence === undefined || vence - Date.now() > RENOVACAO_MS)) {
-    return fail('already-owned', 409);
+  const itens = itensDoPedido(course);
+  for (const item of itens) {
+    const vence = await entitlementExpiry(env, account.id, item.courseSlug);
+    if (vence !== null && (vence === undefined || vence - Date.now() > RENOVACAO_MS)) {
+      return fail(tipoDe(course) === 'pacote' ? 'ja-tem-parte' : 'already-owned', 409);
+    }
   }
 
   /* Uma forma que esta implantação não consegue cobrar é recusada AQUI, em
@@ -838,6 +844,8 @@ async function applyPayment(env, order, payment, source) {
   const atual = (await getOrder(env, order.id)) || order;
   const course = getCourse(order.course_slug);
   const months = course ? course.accessMonths : 12;
+  /* O que este pedido abre: o próprio produto, ou cada produto do pacote. */
+  const itens = course ? itensDoPedido(course) : [{ courseSlug: order.course_slug, months }];
 
   if (status === 'refunded') {
     /* Estorno ou chargeback. Fecha a porta - o cookie não carrega direito
@@ -884,9 +892,10 @@ async function applyPayment(env, order, payment, source) {
       }
       const r = await refundOrder(env, {
         accountId: order.account_id,
-        courseSlug: order.course_slug,
+        courseSlug: itens[0].courseSlug,
         orderId: order.id,
-        months,
+        months: itens[0].months,
+        itens,
         why: `${payment.id} via ${source}`
       });
       if (r.refunded) {
@@ -942,7 +951,7 @@ async function applyPayment(env, order, payment, source) {
      decide o texto do e-mail - "seu acesso está liberado" contra "foi
      renovado" -, e mandar a primeira frase a quem já estudava há meses é o
      tipo de detalhe que faz a mensagem inteira parecer automática. */
-  const antes = await entitlementOf(env, order.account_id, order.course_slug);
+  const antes = await entitlementOf(env, order.account_id, itens[0].courseSlug);
 
   /* O direito PRIMEIRO, o pedido DEPOIS. A ordem é o que torna uma
      liberação interrompida recuperável: se o banco cair entre as duas
@@ -957,12 +966,14 @@ async function applyPayment(env, order, payment, source) {
      aqui, numa leitura separada, deixava duas liberações simultâneas lerem
      "ainda não" e estenderem os meses uma da outra - ver
      worker/concessao.mjs. */
-  await grantAccess(env, {
-    accountId: order.account_id,
-    courseSlug: order.course_slug,
-    orderId: order.id,
-    months
-  });
+  for (const item of itens) {
+    await grantAccess(env, {
+      accountId: order.account_id,
+      courseSlug: item.courseSlug,
+      orderId: order.id,
+      months: item.months
+    });
+  }
 
   /* Só quem de fato virou o pedido para `paid` registra e manda o recibo.
      As outras liberações simultâneas chegam aqui com o serviço feito. */
@@ -1097,7 +1108,10 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
     if (!account?.email) return false;
 
     const curso = getCourse(order.course_slug);
-    const vence = await entitlementExpiry(env, account.id, order.course_slug);
+    const tipo = tipoDe(curso);
+    /* A validade que o recibo mostra: a do próprio produto, ou a do primeiro
+       produto do pacote (o curso). */
+    const vence = await entitlementExpiry(env, account.id, itensDoPedido(curso)[0]?.courseSlug || order.course_slug);
     const site = String(env.SITE_ORIGIN || '').replace(/\/+$/, '');
 
     const msg = mensagemDeCompra({
@@ -1106,7 +1120,9 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
       valor: reaisBR(order.amount_cents, order.currency),
       pedido: order.id,
       expiraEm: dataBR(vence),
-      link: `${site}/meu-hebraico/`,
+      link: tipo === 'livro' ? `${site}/israel/` : `${site}/meu-hebraico/`,
+      tipo,
+      ebook: tipo === 'pacote' ? `${site}/israel/` : null,
       aula0: `${site}/inicio/`,
       marca: empresa.nomeFantasia || 'Hebraico Fluente',
       suporte: empresa.contato?.emailSuporte || '',

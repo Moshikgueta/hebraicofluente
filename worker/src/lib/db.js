@@ -606,39 +606,50 @@ export const entitlementOf = (env, accountId, courseSlug) =>
  * tinha estornado este pedido; `until` é a validade que sobrou, ou null se o
  * acesso sumiu.
  */
-export async function refundOrder(env, { accountId, courseSlug, orderId, months, why = '' }) {
+export async function refundOrder(env, { accountId, courseSlug, orderId, months, itens = null, why = '' }) {
   const t = now();
-  const m = Math.max(1, Math.floor(Number(months) || 12));
   const pago = `EXISTS (SELECT 1 FROM orders WHERE id = ?3 AND status = 'paid')`;
+  /* Um pedido de pacote recua os meses de CADA produto que ele abriu, na
+     mesma transação: o pedido só sai de `paid` no último comando, então
+     recuar um produto e não o outro não acontece. */
+  const lista = (itens && itens.length ? itens : [{ courseSlug, months }])
+    .map(i => ({ courseSlug: i.courseSlug, m: Math.max(1, Math.floor(Number(i.months) || 12)) }));
 
-  const [, , marcado] = await env.DB.batch([
+  const comandos = lista.flatMap(({ courseSlug: slug, m }) => [
     env.DB.prepare(
       `UPDATE entitlements
           SET expires_at = unixepoch(CAST(expires_at AS INTEGER) / 1000, 'unixepoch', ?4) * 1000
                            + CAST(expires_at AS INTEGER) % 1000
         WHERE account_id = ?1 AND course_slug = ?2 AND expires_at IS NOT NULL
           AND ${pago}`
-    ).bind(accountId, courseSlug, orderId, `-${m} months`),
+    ).bind(accountId, slug, orderId, `-${m} months`),
     env.DB.prepare(
       `DELETE FROM entitlements
         WHERE account_id = ?1 AND course_slug = ?2
           AND (expires_at IS NULL OR expires_at <= ?4)
           AND ${pago}`
-    ).bind(accountId, courseSlug, orderId, t),
+    ).bind(accountId, slug, orderId, t)
+  ]);
+  const resultados = await env.DB.batch([...comandos,
     env.DB.prepare(
       `UPDATE orders SET status = 'refunded' WHERE id = ? AND status = 'paid'`
     ).bind(orderId)
   ]);
+  const marcado = resultados[resultados.length - 1];
 
   if (!(Number(marcado && marcado.meta && marcado.meta.changes) > 0)) {
     return { refunded: false, until: null };
   }
 
-  const row = await entitlementOf(env, accountId, courseSlug);
-  const until = row && row.expires_at !== null ? Number(row.expires_at) : null;
-  await log(env, accountId, 'revoke', until
-    ? `${courseSlug} recuou para ${new Date(until).toISOString()} ${why}`.trim()
-    : `${courseSlug} ${why}`.trim());
+  let until = null;
+  for (const [k, { courseSlug: slug }] of lista.entries()) {
+    const row = await entitlementOf(env, accountId, slug);
+    const fica = row && row.expires_at !== null ? Number(row.expires_at) : null;
+    if (k === 0) until = fica;
+    await log(env, accountId, 'revoke', fica
+      ? `${slug} recuou para ${new Date(fica).toISOString()} ${why}`.trim()
+      : `${slug} ${why}`.trim());
+  }
   return { refunded: true, until };
 }
 

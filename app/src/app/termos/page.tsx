@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
-import { brl, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
+import { brl, flagship, getCourse, parcelasMax, pixPrice, vendaVigente } from '@/lib/catalog';
 import {
   confirmaSozinho, confirmacaoDaDesistencia, empresa, INICIO_DO_ACESSO,
   parcelasTexto, prazoResposta, renovacaoTexto, soPix, temCartao, temPix
@@ -25,6 +25,9 @@ export const metadata: Metadata = meta({
  */
 export default function Page() {
   const c = flagship();
+  /* 21/10/2026: o e-book e o pacote, vendidos à parte (data/courses.json). */
+  const livro = getCourse('israel-alem-do-roteiro');
+  const pacote = getCourse('alfabetizacao-e-israel');
   const parcelas = parcelasMax(c.price);
   const pix = pixPrice(c.price);
   const { politicas, contato } = empresa;
@@ -95,6 +98,24 @@ export default function Page() {
           uma renovação no prazo do artigo 8, os meses dela são retirados e o acesso volta
           a terminar na data de antes.
         </p>
+        {/* TEXTO PARA APROVAÇÃO (21/10/2026): o e-book é atividade fora do
+            curso (ver "Enquadramento" no CLAUDE.md). Não publicar antes de o
+            contador e o advogado verem este parágrafo. */}
+        {livro && (
+          <p>
+            <strong>O e-book {livro.titlePt}.</strong> Também oferecemos, à parte, este
+            e-book: um guia ilustrado sobre Israel, que não inclui o curso. Ele custa{' '}
+            {brl(livro.price.brl)} e dá acesso à versão interativa, no navegador, por{' '}
+            {livro.accessMonths} meses {INICIO_DO_ACESSO}, e ao arquivo em PDF para baixar,
+            que fica com você para uso pessoal. Ninguém pode copiar, distribuir ou
+            revender o e-book (artigo 5).
+            {pacote && vendaVigente(pacote) && <>
+              {' '}O pacote {pacote.titlePt} custa {brl(pacote.price.brl)}, à venda até{' '}
+              {pacote.vendaAte!.split('-').reverse().join('/')}, e libera os dois, cada um
+              com o seu prazo.
+            </>}
+          </p>
+        )}
       </Artigo>
 
       <Artigo n={2} titulo="Como o acesso é liberado">

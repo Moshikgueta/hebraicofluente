@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { allCourses, getCourse, isPlayable } from '@/lib/catalog';
+import { allProducts, getCourse, isPlayable } from '@/lib/catalog';
 import { CheckoutClient } from './CheckoutClient';
 
 export function generateStaticParams() {
   /* Só os cursos que realmente abrem ganham página de pagamento. Um checkout
      para um curso "em breve" é uma cobrança por algo que não existe. */
-  return allCourses().filter(isPlayable).map(c => ({ slug: c.slug }));
+  return allProducts().filter(isPlayable).map(c => ({ slug: c.slug }));
 }
 
 export async function generateMetadata(

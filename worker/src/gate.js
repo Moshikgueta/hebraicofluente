@@ -76,7 +76,10 @@ const GATED = [
   /* 29/09/2026: o depoimento do aluno. Só quem tem o curso escreve. */
   '/depoimento',
   /* 06/10/2026: o curso Hebraico A1. É de OUTRO curso: ver `cursoDaRota`. */
-  '/a1'
+  '/a1',
+  /* 21/10/2026: o e-book Israel Além do Roteiro (versão interativa e PDF).
+     É de outro PRODUTO: ver `cursoDaRota`. */
+  '/israel'
 ];
 
 /* O curso de cada rota (06/10/2026, com o A1). O padrão é o alfabeto; o A1
@@ -86,12 +89,23 @@ const GATED = [
 const COURSE = 'alfabetizacao';
 const PREFIXO_A1 = '/a1';
 const QUALQUER_CURSO = ['/audio'];
+/* O e-book: quem comprou só ele lê /israel/ e mais nada. E o "qualquer
+   curso" de /audio conta só CURSOS: o e-book não abre os áudios das lições. */
+const PREFIXO_LIVRO = '/israel';
+export const LIVRO = 'israel-alem-do-roteiro';
+/* Os direitos de acesso que NÃO são de curso. Escrito aqui, e não lido do
+   catálogo, porque app/seo.mjs e app/pacote.mjs importam este arquivo no
+   Node puro, que não importa JSON sem atributo. tests/ebook-produto.test.ts
+   confere esta lista contra data/courses.json. */
+export const NAO_CURSOS = new Set([LIVRO]);
+const ehCurso = slug => !NAO_CURSOS.has(slug);
 
 export function cursoDaRota(path) {
   const p = canonical(path);
   if (p === null) return COURSE;
   const em = prefix => p === prefix || p.startsWith(prefix + '/');
   if (em(PREFIXO_A1)) return 'hebraico-a1';
+  if (em(PREFIXO_LIVRO)) return LIVRO;
   if (QUALQUER_CURSO.some(em)) return null;
   return COURSE;
 }
@@ -145,7 +159,7 @@ export async function gate(request, env) {
 
   const curso = cursoDaRota(path);
   const pode = curso === null
-    ? (await activeEntitlements(env, account.id)).length > 0
+    ? (await activeEntitlements(env, account.id)).some(e => ehCurso(e.courseSlug))
     : await hasEntitlement(env, account.id, curso);
   if (!pode) {
     return recusa(url, documento, `/cursos/${curso || COURSE}/`);

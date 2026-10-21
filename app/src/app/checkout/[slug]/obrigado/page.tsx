@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { allCourses, getCourse, isPlayable } from '@/lib/catalog';
+import { allProducts, getCourse, isPlayable } from '@/lib/catalog';
 import { ObrigadoClient } from './ObrigadoClient';
 
 export function generateStaticParams() {
-  return allCourses().filter(isPlayable).map(c => ({ slug: c.slug }));
+  return allProducts().filter(isPlayable).map(c => ({ slug: c.slug }));
 }
 
 export const metadata: Metadata = {

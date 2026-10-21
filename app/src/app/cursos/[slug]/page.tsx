@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { notFound } from 'next/navigation';
-import { allCourses, getCourse } from '@/lib/catalog';
+import { allProducts, getCourse, tipoDe } from '@/lib/catalog';
 import { CourseClient } from './CourseClient';
+import { ProdutoClient } from './ProdutoClient';
 
 /* Uma rota por curso do catálogo, geradas do próprio catálogo. Acrescentar um
    curso em data/courses.json cria a página dele - nenhum arquivo a escrever. */
 export function generateStaticParams() {
-  return allCourses().map(c => ({ slug: c.slug }));
+  return allProducts().map(c => ({ slug: c.slug }));
 }
 
 export async function generateMetadata(
@@ -25,5 +26,6 @@ export async function generateMetadata(
 export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
   const c = getCourse((await params).slug);
   if (!c) notFound();
-  return <CourseClient slug={c.slug} />;
+  /* O e-book e o pacote têm página própria: capítulos e formato, não módulos. */
+  return tipoDe(c) === 'curso' ? <CourseClient slug={c.slug} /> : <ProdutoClient slug={c.slug} />;
 }

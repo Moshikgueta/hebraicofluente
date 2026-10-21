@@ -55,7 +55,7 @@ on:
         required: true
         default: alfabetizacao
         type: choice
-        options: [alfabetizacao, hebraico-a1, hebraico-a2, hebraico-b1]
+        options: [alfabetizacao, israel-alem-do-roteiro, hebraico-a1, hebraico-a2, hebraico-b1]
       meses:
         description: 'Meses de acesso (só em "liberar"; de 1 a 120)'
         required: false
@@ -382,8 +382,10 @@ jobs:
                   refunded) echo "::error::O pedido $P foi estornado. Não dá para liberar um pedido devolvido."; exit 1 ;;
                 esac
                 [ "$PC" = "$CURSO" ] || say "O pedido é do curso **$PC** (o campo Curso dizia $CURSO): vale o do pedido."
-                grava "$(bash scripts/sql-liberar-pedido.sh "$P" "$SQLMAIL" "$M")"
-                say "Pedido \`$P\` marcado como **pago** e **$PC** liberado por **$M meses** para \`$(printf '%s' "$MAIL" | mascara)\`."
+                # O que o pedido abre: no pacote, cada produto de `componentes`.
+                ITENS="$(node -e "const c=require('./data/courses.json').courses.find(x=>x.slug===process.argv[1]);console.log(((c&&c.componentes)||[process.argv[1]]).join(' '))" "$PC")"
+                grava "$(bash scripts/sql-liberar-pedido.sh "$P" "$SQLMAIL" "$M" "$ITENS")"
+                say "Pedido \`$P\` marcado como **pago** e **$ITENS** liberado por **$M meses** para \`$(printf '%s' "$MAIL" | mascara)\`."
                 say "Se a conta já tinha acesso valendo, os meses foram somados ao prazo que restava."
                 say "O recibo sai por e-mail na varredura seguinte (até 5 minutos)."
                 say ""

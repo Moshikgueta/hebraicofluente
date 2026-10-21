@@ -19,7 +19,7 @@
 import { fail, json, readJson } from '../lib/http.js';
 import { estornoAtualizar, estornosAbertos, getOrder, log, refundOrder } from '../lib/db.js';
 import { exigirAdmin } from '../lib/admin.js';
-import { getCourse } from '../lib/catalog.js';
+import { getCourse, itensDoPedido } from '../lib/catalog.js';
 import { avisarEstorno } from './pay.js';
 
 export async function listar({ request, env }) {
@@ -50,11 +50,13 @@ export async function feito({ request, env }) {
   if (!order) return fail('not-found', 404);
   if (order.status === 'paid') {
     const course = getCourse(order.course_slug);
+    const itens = course ? itensDoPedido(course) : [{ courseSlug: order.course_slug, months: 12 }];
     const r = await refundOrder(env, {
       accountId: order.account_id,
-      courseSlug: order.course_slug,
+      courseSlug: itens[0].courseSlug,
       orderId: order.id,
-      months: course ? course.accessMonths : 12,
+      months: itens[0].months,
+      itens,
       why: 'devolução feita pelo dono'
     });
     /* O aluno fica sabendo que o dinheiro voltou e o acesso fechou
