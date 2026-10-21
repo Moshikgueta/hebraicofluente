@@ -38,6 +38,9 @@ mai. 1939 | Livro Branco britânico.[[C02-060]]
 
 ## Cidades e cartas ao faraó
 
+::: vinheta pergaminho
+:::
+
 Uma das melhores janelas para a região no século XIV a.C. foi achada no Egito. Na cidade de Amarna, a corte do faraó guardava num arquivo real a correspondência com reis estrangeiros e com os governantes vassalos das cidades do Levante.[[C02-001]] Os vassalos escreviam ao faraó como a seu senhor. Numa das cartas que sobreviveram, Abi-milku, governante de Tiro, deixa claro que espera proteção do soberano egípcio em troca da lealdade que jura.[[C02-002]]
 
 Jerusalém também está lá, com o nome de Urusalim. O governante dela, Abdi-Heba, pede ao faraó um mensageiro e alguns soldados para resistir aos inimigos e promete ser sempre um vassalo fiel, diga o que disser quem o acusa.[[C02-003]]
@@ -50,6 +53,9 @@ Tel Megido, numa foto de cerca de 1920.
 
 
 ## Israel e Judá: o que as pedras dizem
+
+::: vinheta estela
+:::
 
 Os textos bíblicos falam de dois reinos vizinhos, Israel ao norte e Judá ao sul, e, antes deles, de um reino unido sob Davi e Salomão. O que a arqueologia diz sobre isso é um dos debates mais vivos da área.[[C02-008,C02-012]] Três inscrições entram sempre na conversa.
 
@@ -111,6 +117,9 @@ A Bíblia apresenta Davi e Salomão como reis de um reino unido e poderoso. Isso
 
 ## Assírios e babilônios
 
+::: vinheta coroa
+:::
+
 No fim do século VIII a.C., o império assírio chegou ao reino de Israel. O cerco de Samaria, a capital, começou com o rei Salmanasar V, e a queda da cidade é datada entre 722 e 720 a.C.[[C02-015]] Quem a concluiu é discutido. Há quem a atribua ao próprio Salmanasar; para o Metropolitan Museum, foi Sargão II, o sucessor, quem completou o cerco e deportou grande parte da população.[[C02-014,C02-015]] Sargão fez de Samaria a capital da província assíria de Samerina, mandou parte dos habitantes para a Assíria e para cidades dos medos e trouxe para a província gente da Babilônia, de Hamate e árabes.[[C02-015]]
 
 Judá durou mais, mas não saiu ileso. Em 701 a.C., o rei assírio Senaqueribe tomou Laquis, uma das principais cidades judaítas, que tinha se recusado a pagar tributo à Assíria.[[C02-016]] Os relevos assírios da sala 10b do Museu Britânico, em Londres, mostram Senaqueribe no trono diante dos prisioneiros, filas de cativos entre vinhas, figueiras e oliveiras, e oficiais tidos como responsáveis pela rebelião sendo esfolados vivos. Na mesma sala fica um prisma com o relato assírio da campanha.[[C02-017]] É a versão do vencedor, gravada em pedra.
@@ -118,6 +127,9 @@ Judá durou mais, mas não saiu ileso. Em 701 a.C., o rei assírio Senaqueribe t
 Pouco mais de um século depois, foi a vez da Babilônia. Uma crônica babilônica guardada no Museu Britânico registra que o rei da Babilônia tomou Jerusalém, pôs no trono um rei da sua escolha e levou pesado tributo; os estudiosos datam a tomada de 16 de março de 597 a.C.[[C02-091]] Em 586 a.C., o exército babilônico incendiou a cidade. Um estudo de 2020 sobre o campo magnético da Terra, registrado num edifício queimado nessa destruição, usa a data como âncora e a trata como o fim da Idade do Ferro no Levante.[[C02-018]]
 
 ## Pérsia: uma província chamada Yehud
+
+::: vinheta moeda
+:::
 
 Em 539 a.C., Ciro, rei persa, tomou a Babilônia. O Cilindro de Ciro, hoje no Museu Britânico, foi escrito em babilônio, provavelmente por ordem dele, e o apresenta como devoto de Marduk que restaurou templos e cultos e devolveu às suas terras deuses e povos antes deportados.[[C02-020]]
 
@@ -137,6 +149,9 @@ Sob os persas, Judá virou uma província chamada Yehud (<he>יְהוּד</he>, 
 
 ## Dos macabeus a Roma
 
+::: vinheta coluna
+:::
+
 Em 167 a.C., o rei Antíoco IV proibiu o judaísmo em Jerusalém e profanou o Templo (há fontes que dão 168 a.C.). Os macabeus se revoltaram e, no inverno de 164 a.C., retomaram o recinto do Templo e restabeleceram o culto; a festa de Chanuká lembra essa nova dedicação. A revolta deu origem a um Estado hasmoneu independente.[[C02-025]] Roma entrou nele com Pompeu, em 63 a.C., chamado por dois pretendentes ao trono, Hircano e Aristóbulo.[[C02-092]]
 
 Herodes, o Grande, foi rei da Judeia entre 37 e 4 a.C. Ameaçado por dentro do próprio reino e por Cleópatra, ele escolheu o rochedo quase inexpugnável de Massada para construir um refúgio para si e para a família. O refúgio virou um palácio luxuoso, com fortificações reforçadas no fim do reinado.[[C02-026]]
@@ -151,6 +166,9 @@ Relevo do Arco de Tito, em Roma, com a menorá.
 A revolta de Bar Kochba começou no fim de 132 d.C. e estava encerrada no fim de 135. Adriano refundou Jerusalém como uma colônia romana, Aelia Capitolina, talvez na visita que fez à Judeia em 130. Depois da derrota dos rebeldes, a província da Judeia saiu do mapa do império e deu lugar a uma com um nome sem precedente, Syria Palaestina.[[C02-028]] Se a colônia foi causa da revolta ou consequência dela, o Museu de Israel diz que não se sabe; o site Bible Odyssey, da Society of Biblical Literature, a põe entre os estopins; a Cambridge History of Judaism diz que as causas diretas seguem em debate.[[C02-093]]
 
 ## Quem vivia na terra: do Domo da Rocha às Cruzadas
+
+::: vinheta cupula
+:::
 
 Em 636, na batalha do Yarmuk, os exércitos muçulmanos derrotaram um grande exército bizantino, o que lhes abriu a Síria inteira. Jerusalém se rendeu, ao que parece sem luta, em 638; Cesareia, no litoral, só capitulou depois de um cerco de sete meses.[[C02-031]]
 
@@ -169,6 +187,9 @@ Há dois pontos de apoio para essa pergunta. Durante todo o período das Cruzada
 
 ## Otomanos e as muralhas de Solimão
 
+::: vinheta muralha
+:::
+
 Em agosto de 1516, o sultão otomano Selim I venceu os mamelucos em Marj Dabiq, perto de Alepo, e, em janeiro de 1517, em Raydaniyya, perto do Cairo, pôs fim ao sultanato mameluco. A Palestina passou ao Império Otomano (as fontes dizem 1516 ou 1517), e Jerusalém com ela. Entre as obras que vieram depois da conquista está a reconstrução das muralhas da cidade.[[C02-042]]
 
 A muralha que hoje cerca a Cidade Antiga leva o nome de Solimão, o Magnífico. A Autoridade de Antiguidades de Israel data o início da obra de 1537 e estima que ela levou de três a quatro anos; o domínio otomano duraria até 1917.[[C02-044]] É essa muralha que marca o limite do sítio "Cidade Antiga de Jerusalém e suas Muralhas", proposto pela Jordânia e inscrito pela UNESCO em 1981 como cidade santa para o judaísmo, o cristianismo e o islã. Desde 1982, o sítio está na Lista do Patrimônio Mundial em Perigo.[[C02-043]]
@@ -180,6 +201,9 @@ Ao caminhar junto da muralha da Cidade Antiga de Jerusalém, lembre que ela é o
 
 ## O século XIX: leis novas e mais gente
 
+::: vinheta pessoas
+:::
+
 No século XIX, o Império Otomano mudou as regras da terra. O Código de Terras de 1858 reconheceu a posse privada da terra, ampliou a liberdade dos proprietários e aproximou as regras de herança da igualdade entre homens e mulheres. Um estudo publicado na revista turca Belleten lê o código menos como causa e mais como produto das mudanças sociais da época.[[C02-046]]
 
 A população cresceu depressa. Justin McCarthy, num estudo publicado pela Columbia University Press em 1990 a partir de registros otomanos corrigidos, estima que a área que depois seria a Palestina passou de cerca de 340 mil habitantes em 1877-1878 para cerca de 722 mil em 1914-1915.[[C02-048]]
@@ -187,6 +211,9 @@ A população cresceu depressa. Justin McCarthy, num estudo publicado pela Colum
 Quantos desses habitantes eram judeus é um número discutido. O censo otomano de 1914-1915 registrou 38.754 súditos judeus, enquanto a estimativa mais citada para a mesma época fica em torno de 85 mil; McCarthy discute se essa estimativa não estaria inflada.[[C02-049]] Por isso os números do período vêm sempre com o nome de quem os calculou.
 
 ## Dois movimentos nacionais
+
+::: vinheta livro
+:::
 
 No fim do século XIX nasceram dois movimentos nacionais com a mesma terra no centro.
 
@@ -201,6 +228,9 @@ O jornal Filastin começou a circular em Jafa em janeiro de 1911. No primeiro an
 Nenhuma síntese agrada a todos: no Journal of Palestine Studies, Charles D. Smith escreveu que Morris é, no fundo, nacionalista nas conclusões.[[C02-099]]
 
 ## O Mandato Britânico
+
+::: vinheta documento
+:::
 
 Em 2 de novembro de 1917, Arthur Balfour escreveu a Lord Rothschild que o governo britânico via com bons olhos o estabelecimento na Palestina de um "lar nacional para o povo judeu", ficando claro que nada seria feito que prejudicasse "os direitos civis e religiosos das comunidades não judaicas existentes na Palestina", nem os direitos e o status político dos judeus em outros países.[[C02-052]] A frase promete a um grupo e ressalva os outros, que eram a grande maioria: no censo de 1922, cerca de nove em cada dez habitantes não eram judeus.[[C02-052,C02-055]]
 
@@ -235,6 +265,9 @@ Quanto isso pesou no que veio depois é discutido. O Museu do Holocausto dos Est
 
 ## 1947: a partilha no papel
 
+::: vinheta mapa
+:::
+
 Em 29 de novembro de 1947, a Assembleia Geral da ONU aprovou a Resolução 181, o plano de partilha com união econômica, por 33 votos a favor, 13 contra e 10 abstenções.[[C02-063]] Haiti, Libéria e Filipinas, que antes não apoiavam a partilha, votaram a favor.[[C02-064]]
 
 Um brasileiro estava no centro da cena. Oswaldo Aranha, nascido em Alegrete, no Rio Grande do Sul, presidia aquela segunda sessão da Assembleia Geral.[[C02-101,C02-103]] No registro de votação, o Brasil aparece entre os 33 votos a favor.[[C02-102]]
@@ -248,6 +281,9 @@ A partilha previa um Estado árabe e um Estado judeu. Jerusalém ficaria fora do
 Segundo o histórico da ONU, os Estados árabes e o Alto Comitê Árabe para a Palestina rejeitaram a resolução, dizendo que a ONU excedia sua competência ao propor a partilha. A Organização Sionista, que defendia um Estado judeu em toda a Palestina, aceitou a fórmula com relutância. O conflito no terreno impediu que a resolução fosse aplicada.[[C02-066]]
 
 ## 1948: um Estado, uma guerra, dois nomes
+
+::: vinheta calendario
+:::
 
 Em 14 de maio de 1948, às 16h, oito horas antes do fim oficial do Mandato Britânico, David Ben-Gurion leu no Museu de Tel Aviv a Declaração de Estabelecimento do Estado de Israel. O texto invoca a resolução de partilha da ONU, e os 37 signatários eram membros do Conselho Provisório de Estado.[[C02-067]]
 
@@ -300,6 +336,9 @@ Nos anos seguintes, Israel recebeu uma imigração em massa. Segundo a Agência 
 
 ## De Suez a Gaza: 1956-2007
 
+::: vinheta ampulheta
+:::
+
 Em julho de 1956, o Egito nacionalizou o Canal de Suez. Em 29 de outubro, Israel atacou o Egito e tomou o Sinai e a Faixa de Gaza; Reino Unido e França intervieram. A retirada israelense terminou em 8 de março de 1957.[[C02-524]]
 
 Entre 5 e 10 de junho de 1967, na Guerra dos Seis Dias, Israel derrotou Egito, Jordânia e Síria e tomou o Sinai, a Faixa de Gaza, Judeia e Samaria, Jerusalém Oriental e as Colinas de Golã.[[C02-525]] Em 1980, o Knesset aprovou a Lei Básica que declara Jerusalém, "completa e unida", a capital de Israel; em 1981, estendeu ao Golã a lei israelense.[[C03-059,C01-044]]
@@ -319,6 +358,9 @@ A segunda intifada começou no fim de setembro de 2000. No dia 28, Ariel Sharon,
 Em agosto de 2005, Israel retirou todos os 21 assentamentos da Faixa de Gaza e quatro do norte de Judeia e Samaria; os últimos militares deixaram Gaza em 12 de setembro.[[C02-537]] Em janeiro de 2006, o Hamas venceu a eleição para o Conselho Legislativo Palestino, com 74 das 132 cadeiras.[[C02-538]] Em junho de 2007, depois de combates com o Fatah, tomou o controle de Gaza pela força, e Judeia e Samaria e Gaza passaram a ter governos separados. Israel fechou as fronteiras de Gaza e impôs um bloqueio.[[C02-539]]
 
 ## De 7 de outubro de 2023 até a data desta edição
+
+::: vinheta relogio
+:::
 
 Este trecho vai até 21 de outubro de 2026, data da última consulta, e registra só fatos datados. A situação muda depressa.
 
@@ -347,6 +389,11 @@ jan.-mar. 2025 | Primeiro cessar-fogo.[[C02-544]]
 10 out. 2025 | Anúncio do segundo cessar-fogo em Gaza.[[C02-545]]
 :::
 
+## Compreensão da leitura
+
+::: vinheta lupa
+:::
+
 ::: quiz pegadinha Muita gente chama a muralha da Cidade Antiga de Jerusalém de "muralha de Davi" ou "de Herodes". De que época ela é?
 - [ ] Do rei Davi | 
 - [ ] De Herodes, o Grande | 
@@ -373,4 +420,49 @@ Ela traz a sequência bytdwd, que a maioria dos estudiosos lê como "casa de Dav
 ::: vf Quem presidia a sessão da Assembleia Geral da ONU que aprovou a partilha, em 1947, era um brasileiro.
 resposta: verdadeiro
 Oswaldo Aranha, nascido em Alegrete (RS), presidiu a segunda sessão da Assembleia Geral, em que a Resolução 181 foi aprovada.[[C02-101,C02-103]]
+:::
+
+::: ordene Ponha em ordem, do mais antigo ao mais recente.
+- As cartas de Amarna, no arquivo do faraó.[[C02-001]]
+- A Estela de Merneptah, com o nome Israel.[[C02-004]]
+- A queda de Samaria diante da Assíria.[[C02-015]]
+- Senaqueribe toma Laquis.[[C02-016]]
+- O exército babilônico incendeia Jerusalém.[[C02-018]]
+- Ciro, rei persa, toma a Babilônia.[[C02-020]]
+:::
+
+::: associe Associe cada peça ao museu onde ela está hoje.
+- Estela de Merneptah | Museu Egípcio do Cairo[[C02-004]]
+- Estela de Mesha | Louvre, em Paris[[C02-005]]
+- Estela de Tel Dan | Museu de Israel, sob guarda; pertence à Autoridade de Antiguidades[[C02-007]]
+- Cilindro de Ciro | Museu Britânico, em Londres[[C02-020]]
+:::
+
+::: complete Sob os persas, Judá virou uma província chamada ___.
+resposta: Yehud
+explicacao: Selos e moedas do período, expostos no Museu de Israel, trazem esse nome oficial.[[C02-022]]
+:::
+
+::: complete Adriano refundou Jerusalém como uma colônia romana chamada ___.
+resposta: Aelia Capitolina / Aélia Capitolina
+explicacao: Se a colônia foi causa da revolta de Bar Kochba ou consequência dela, as fontes citadas no capítulo não concordam.[[C02-028,C02-093]]
+:::
+
+::: vf O Cilindro de Ciro fala da volta dos exilados de Judá a Jerusalém.
+resposta: falso
+O texto conta que o rei devolveu deuses e povos deportados; ligar isso ao retorno a Jerusalém é uma interpretação, que junta o cilindro a outras fontes.[[C02-020]]
+:::
+
+::: quiz Os relevos de Laquis, no Museu Britânico, mostram a tomada da cidade em 701 a.C. Por que ler com cuidado?
+- [x] Porque são a versão do vencedor, feita para o rei assírio | Mostram Senaqueribe no trono diante dos prisioneiros, ao lado de um prisma com o relato assírio da campanha.[[C02-016,C02-017]]
+- [ ] Porque foram feitos séculos depois, pelos romanos | São relevos assírios, da campanha de Senaqueribe.[[C02-017]]
+- [ ] Porque mostram outra cidade, e não Laquis | O capítulo os apresenta como relevos da tomada de Laquis.[[C02-016,C02-017]]
+:::
+
+::: aberta Por que a leitura "casa de Davi" na Estela de Tel Dan não basta para falar do próprio rei Davi?
+resposta: Porque a sequência bytdwd, lida pela maioria como "casa de Davi", fala de uma dinastia, não da pessoa. A inscrição é do século IX a.C., atribuída a Hazael, e mostra que a dinastia era conhecida, não o que Davi fez.[[C02-007]]
+:::
+
+::: aberta No debate sobre Davi e Salomão, o que Finkelstein propôs e o que Mazar respondeu?
+resposta: Finkelstein propôs a "cronologia baixa": camadas de Meguido, Arad e Berseba passariam do século X para o IX a.C., e obras antes ligadas a Salomão iriam para a dinastia de Omri. Mazar respondeu que a proposta se apoiava em evidência frágil e criava problemas novos.[[C02-088,C02-089]]
 :::

@@ -13,6 +13,9 @@ Saia de carro da costa do Mediterrâneo pela manhã e, em cerca de uma hora e me
 
 ## Quanto mede Israel
 
+::: vinheta mapa
+:::
+
 ::: dado 470 km
 rotulo: de norte a sul; cerca de 135 km na parte mais larga, entre o Mar Morto e o Mediterrâneo[[C01-006]]
 nota: Ministério das Relações Exteriores de Israel
@@ -40,11 +43,17 @@ Israel e os países vizinhos, no litoral leste do Mediterrâneo. As áreas hachu
 
 ## Golã e Jerusalém Oriental: o que entra na conta
 
+::: vinheta documento
+:::
+
 Em junho de 1967, na Guerra dos Seis Dias, Israel tomou Jerusalém Oriental e as Colinas de Golã e passou a administrá-las.[[C02-525]] Em 30 de julho de 1980, o Knesset, o parlamento, aprovou a Lei Básica que declara Jerusalém, "completa e unida", a capital de Israel.[[C03-059]] Em dezembro de 1981, aprovou a lei que estendeu ao Golã a lei israelense.[[C01-044]]
 
 É por isso que a conta do CBS inclui as duas áreas: Jerusalém Oriental desde 1967 e o Golã desde 1982.[[C01-001]] Nos mapas deste livro, as duas aparecem hachuradas, para que se veja o que cada número soma.
 
 ## Quatro faixas de norte a sul
+
+::: vinheta montanha
+:::
 
 Olhe o país de cima e ele se divide em faixas. O Ministério das Relações Exteriores descreve três delas correndo paralelas de norte a sul e, na metade sul, uma grande zona quase toda árida.[[C01-045]] É uma divisão didática, e funciona bem para quem olha pela janela do ônibus.
 
@@ -78,6 +87,9 @@ As regiões deste capítulo, de norte a sul. Os números ficam perto do nome de 
 
 ## A chuva some no caminho para o sul
 
+::: vinheta gota
+:::
+
 Nas montanhas da Alta Galileia, a chuva média chega a cerca de 1.100 mm por ano; no extremo sul, fica abaixo de 100 mm.[[C01-021]] Se nada evaporasse, a chuva de um ano inteiro no extremo sul encheria um copo até menos de 10 cm.[[C01-021]]
 
 Para comparar com o Brasil: o INMET calcula em 206,0 mm a chuva normal de um só mês de janeiro em Brasília, na média de 1991 a 2020.[[C01-203]] Um ano inteiro de chuva no extremo sul de Israel não chega à metade disso. Na outra ponta, a Alta Galileia recebe num ano inteiro menos do dobro do que cai em Brasília só no verão, 621,7 mm em média.[[C01-204,C01-205]]
@@ -103,6 +115,9 @@ Como a chuva se distribui: diminui de norte a sul e se concentra entre novembro 
 :::
 
 ## O Mar Morto, um lago que desce
+
+::: vinheta onda
+:::
 
 Suas margens são o ponto mais baixo da Terra fora d'água.[[C01-011]] O recorde tem um detalhe incômodo: ele aumenta todo ano. Em 2022, a superfície já estava a mais de 430 m abaixo do nível do mar.[[C01-012]] E, segundo um relatório do Controlador do Estado de junho de 2026, sem intervenção a bacia norte deve continuar descendo cerca de 1,15 m por ano.[[C01-013]]
 
@@ -140,6 +155,9 @@ O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No
 :::
 
 ## Paisagens que pedem uma parada
+
+::: vinheta cratera
+:::
 
 No meio do Neguev, o chão se abre num vale de paredes íngremes. É o Machtésh Ramón. Costuma ser chamado de cratera, mas não é: não foi aberto por meteorito nem por vulcão. Um makhtesh é um vale cercado de paredes de calcário e dolomito duros no alto e arenito friável embaixo, drenado por um único leito estreito e escavado pela erosão.[[C01-055]] O de Ramón tem cerca de 40 km de comprimento, de 2 a 19 km de largura e cerca de 500 m de profundidade.[[C01-033,C01-056]]
 
@@ -183,6 +201,9 @@ A exposição sobre a grande migração no Museu Steinhardt de História Natural
 
 ## Leia a paisagem pela janela
 
+::: vinheta onibus
+:::
+
 Não é preciso parar em tudo para entender o país: boa parte da geografia se lê pela janela. Oito desafios para a estrada, cada um ligado ao que este capítulo mostrou.
 
 ::: observacao A estação do ano
@@ -217,6 +238,11 @@ Na costa oeste do Mar Morto, as dolinas novas passaram de menos de 50 por ano an
 Cerca de 500 milhões de aves migratórias atravessam o país duas vezes por ano.[[C01-057]] O vale do Hula, onde o lago Agmon voltou a atrair aves aquáticas, é um dos lugares em que isso se vê de perto.[[C01-058]]
 :::
 
+## Compreensão da leitura
+
+::: vinheta lupa
+:::
+
 ::: quiz pegadinha Todo mundo chama o Machtésh Ramón de cratera. Ele foi aberto por quê?
 - [ ] Pelo impacto de um meteorito | 
 - [ ] Por uma erupção vulcânica | 
@@ -245,3 +271,46 @@ De menos de 50 novas por ano antes de 1999, passaram a 200 a 380 por ano a parti
 - [x] Cerca de 500 milhões | O país fica num ponto de passagem entre Europa, Ásia e África.[[C01-057]]
 :::
 
+::: associe Associe cada região à paisagem que o capítulo descreve.
+- Planície costeira | Praia de areia e terras de cultivo até cerca de 40 km para o interior[[C01-046]]
+- Galileia | Colinas de calcário e dolomito, de 500 a 1.200 m de altitude[[C01-047]]
+- Vale de Jezreel | A área agrícola mais rica do país, segundo o ministério[[C01-048]]
+- Colinas de Golã | Um planalto de basalto, de erupções vulcânicas antigas[[C01-050]]
+- Neguev | Cerca de metade da área terrestre do país, e pouco povoado[[C01-054]]
+:::
+
+::: ordene Atravesse o país de oeste a leste, como no corte das quatro faixas.
+- O mar Mediterrâneo.[[C01-046]]
+- A planície costeira, que avança até cerca de 40 km para o interior.[[C01-046]]
+- As montanhas de Samaria e da Judeia.[[C01-049]]
+- O vale da fenda, com o Mar Morto.[[C01-051,C01-053]]
+:::
+
+::: complete Na comparação de área, o estado brasileiro mais próximo de Israel é ___.
+resposta: Sergipe
+explicacao: O IBGE dá ao estado 21.938 km²; o CBS dá a Israel 22.072 km², uma diferença de menos de 1%.[[C01-201,C01-202]]
+:::
+
+::: complete Nas montanhas da Alta Galileia, a chuva média chega a cerca de ___ mm por ano.
+resposta: 1.100 / 1100
+explicacao: No extremo sul, fica abaixo de 100 mm.[[C01-021]]
+:::
+
+::: vf A geologia prefere chamar o vale da fenda de Transformante do Mar Morto porque o movimento principal das placas é de lado, uma deslizando contra a outra.
+resposta: verdadeiro
+Um estudo de 2004 calcula cerca de 105 km de deslocamento nos últimos 17 milhões de anos.[[C01-052]]
+:::
+
+::: quiz Um folheto diz quantos metros abaixo do nível do mar fica a margem do Mar Morto, sem dizer quando mediu. Qual o problema?
+- [x] O número envelhece: a bacia norte desce cerca de 1,15 m por ano | Num folheto de dez anos atrás, o erro pode passar de dez metros.[[C01-013]]
+- [ ] Nenhum: o nível do lago é estável | O lago desce, e o ritmo previsto sem intervenção é de cerca de 1,15 m por ano.[[C01-013]]
+- [ ] O número só vale para a bacia sul | A bacia sul, como lago natural, praticamente secou; o que resta do mar natural é a bacia norte.[[C01-016]]
+:::
+
+::: aberta Por que a área de Israel não é a mesma em todas as fontes oficiais?
+resposta: Porque cada fonte escolhe quais territórios entram na soma. O CBS dá 22.072 km² e conta Jerusalém Oriental desde 1967 e as Colinas de Golã desde 1982; o Ministério das Relações Exteriores publica 22.145 km²; dentro das linhas de armistício de 1949 e 1950, eram cerca de 20.700 km².[[C01-001,C01-003,C01-005]]
+:::
+
+::: aberta O que faz o Mar Morto descer, e o que essa descida provoca na costa oeste?
+resposta: A água que chegava ao lago, sobretudo a do Jordão, passou a ser usada antes de chegar, e a indústria de minerais bombeia água do próprio lago. Com o lago descendo, a água subterrânea dissolve uma camada de sal enterrada e o terreno desaba: são as dolinas.[[C01-015,C01-018]]
+:::

@@ -21,6 +21,9 @@ Os dez lugares do capítulo, numerados, e a distância de cada um até Jerusalé
 
 ## Mar da Galileia
 
+::: vinheta barco
+:::
+
 O lago que o português chama de Mar da Galileia é, em hebraico, Kinéret. Em 2000, Israel o incluiu na Lista Indicativa da UNESCO junto com as ruínas à sua volta, como bem misto, que soma valor cultural e valor natural.[[C04-003]] A ficha cita as cidades e os sítios que cercam a água: Tiberíades e Hamat Gader, Korazim, Kursi, Cafarnaum e Tabgha.[[C04-004]]
 
 O lago aparece ainda em outras duas propostas de Israel. Uma descreve os caminhos de Jesus e dos apóstolos na Galileia, num percurso que começa em Nazaré e contorna o lago até Tiberíades.[[C04-005]] A outra reúne as primeiras sinagogas da Galileia, e a de Cafarnaum está entre elas.[[C04-006]] A mesma margem, portanto, entra em listas sobre a natureza, sobre o cristianismo e sobre o judaísmo antigo. É um bom resumo da região: quem chega por um desses motivos encontra os outros dois no caminho.
@@ -52,6 +55,9 @@ observar: Em cada sítio da margem, olhe também para a água: a proposta trata 
 :::
 
 ## Nazaré
+
+::: vinheta vela
+:::
 
 Nazaré fica na Galileia, a sudoeste do lago.[[C04-011,C04-007]] O Pleiades, gazetteer acadêmico de lugares antigos, a registra como povoado antigo, com remissão ao Barrington Atlas, o atlas de referência dos estudos clássicos.[[C04-011]] É também o ponto de partida da proposta israelense dos caminhos de Jesus e dos apóstolos na Galileia.[[C04-005]]
 
@@ -90,6 +96,9 @@ A Basílica da Anunciação, consagrada em 1969.[[C04-086]]
 :::
 
 ## Cafarnaum
+
+::: vinheta coluna
+:::
 
 Na margem norte do lago, Cafarnaum (Kfar Nachúm, em hebraico) foi uma aldeia que o Pleiades data a partir do período hasmoneu.[[C04-015]] A ficha da UNESCO sobre o lago destaca duas presenças no sítio: uma sinagoga e um mosteiro franciscano.[[C04-017]]
 
@@ -132,6 +141,9 @@ Sinagoga, mosteiro e casa-igreja dividem o mesmo sítio.[[C04-016,C04-017]] Perg
 :::
 
 ## Cesareia Marítima
+
+::: vinheta anfora
+:::
 
 Cesareia fica na costa, entre Tel Aviv e Haifa.[[C04-031,C04-059,C04-070]] Foi fundada por Herodes, o Grande; a Autoridade de Natureza e Parques de Israel data a fundação em 10 a.C.[[C04-021]] Herodes começou pelo porto, o Sebastos, antes de erguer a cidade.[[C04-021]] A área abrigada tinha cerca de 50 acres (uns 20 hectares), e o porto, uns 500 metros de comprimento, em três seções.[[C04-022]] Servia aos navios que iam e vinham entre o Egito, o Levante e a Europa, e protegia o trigo que o Egito mandava para o Império Romano.[[C04-023]]
 
@@ -176,6 +188,9 @@ As abóbadas que hoje abrigam o centro de visitantes do porto têm 7,40 metros d
 :::
 
 ## Massada
+
+::: vinheta montanha
+:::
 
 Massada é um platô na borda oriental do deserto da Judeia, perto da margem do Mar Morto, entre Sodoma e Ein Gedi; segundo a Autoridade de Natureza e Parques, o alto fica 450 metros acima do nível do lago, número que muda conforme o lago desce (capítulo 1).[[C04-034]] Herodes, rei da Judeia de 37 a 4 a.C., fez dali um palácio-fortaleza, com um palácio no estilo clássico do início do Império Romano.[[C04-035]]
 
@@ -240,6 +255,9 @@ A ficha de Massada na Lista do Patrimônio Mundial.
 
 ## Mar Morto
 
+::: vinheta onda
+:::
+
 As margens do Mar Morto ficam em Israel, na Jordânia e em Judeia e Samaria (Cisjordânia).[[C04-048]] Em hebraico ele se chama Yam HaMélach, "mar do sal". Entre os nomes antigos que o Pleiades registra para o lago, ao lado do latino Asphaltitis aparece o grego thálassa nekrá, literalmente "mar morto".[[C04-048]]
 
 A medida do nível do lago, que só faz sentido com data, fica no capítulo 1, com o resto da história: o lago que desce mais de um metro por ano, a bacia do sul que, como lago natural, praticamente secou, e as dolinas que se abrem na costa oeste.[[C01-013,C01-016,C01-017]] Aqui basta o que se vê do alto de Massada, na seção anterior: a margem lá embaixo, centenas de metros abaixo do platô.[[C04-034]]
@@ -265,6 +283,9 @@ observar: Qualquer placa de nível: sem data, ela envelhece depressa.[[C01-013]]
 :::
 
 ## Tel Aviv
+
+::: vinheta predio
+:::
 
 Tel Aviv foi fundada em 1909, logo ao norte da cidade portuária amuralhada de Jafa, e cresceu durante o Mandato Britânico.[[C04-054]] O começo tem uma cena que os fundadores fizeram questão de registrar. Em abril de 1909, nas dunas fora de Jafa, as famílias do bairro Ahuzat Bayit sortearam os lotes com conchas: numa ia o nome da família, na outra o número do terreno. Pouco depois, o bairro passou a se chamar Tel Aviv.[[C04-092]] As fontes divergem sobre quantas famílias eram, por volta de sessenta.[[C04-092]] O centro, a chamada Cidade Branca, segue o plano urbano de Patrick Geddes, de 1925-1927, que a UNESCO descreve como um dos principais teóricos do urbanismo moderno.[[C04-055]]
 
@@ -305,6 +326,9 @@ O ponto que a UNESCO usa para marcar o sítio no mapa fica no centro da praça D
 
 ## Jafa
 
+::: vinheta barco
+:::
+
 Jafa vem antes de Tel Aviv, e não só na cronologia: quando a UNESCO descreve a fundação da cidade nova, é por Jafa que ela se orienta, dizendo que Tel Aviv nasceu imediatamente ao norte da "cidade portuária amuralhada".[[C04-054]] O Pleiades registra Jafa como cidade portuária antiga, com as formas Ioppe e Joppe ao lado do hebraico Yafo.[[C04-062]]
 
 O porto é o ponto de partida da geografia da cidade grande que cresceu ao lado dele. Quem chega à cidade velha vindo do norte faz o caminho inverso ao da história. Em árabe, a cidade se chama Yafa.[[C04-095]]
@@ -333,6 +357,9 @@ No porto, lembre que você não está num bairro de Tel Aviv que por acaso é an
 :::
 
 ## Haifa
+
+::: vinheta flor
+:::
 
 Em 2008, a UNESCO inscreveu os Lugares Sagrados Bahá'ís em Haifa e na Galileia Ocidental.[[C04-066]] O conjunto inclui os dois lugares mais sagrados da fé bahá'í, ligados aos seus fundadores: o santuário do Báb, em Haifa, com seus jardins em terraços, e o santuário de Bahá'u'lláh, em Bahjí, perto de Acre.[[C04-067]] Em Haifa, um dos conjuntos inscritos é a encosta norte do monte Carmelo.[[C04-070]]
 
@@ -371,6 +398,9 @@ Os jardins em terraços acompanham o santuário do Báb.[[C04-067]] Lembre que o
 :::
 
 ## Acre
+
+::: vinheta muralha
+:::
 
 Ao norte de Haifa, Acre já foi Ake e Ptolemais, nomes que o Pleiades registra para a cidade antiga.[[C04-078]] A Cidade Antiga entrou na lista da UNESCO em 2001.[[C04-073]] Na cidade de hoje, e debaixo dela, estão os restos da cidade dos cruzados, de 1104 a 1291, quase intactos, acima e abaixo do nível atual da rua.[[C04-074]] Ela foi enterrada depois da tomada pelos mamelucos, no fim do século XIII.[[C04-074]] Sobrevivem muralhas, quarteirões, ruas, edifícios públicos e religiosos, casas, lojas e até a rede de drenagem.[[C04-075]]
 
@@ -413,6 +443,11 @@ Preste atenção no nível em que você está. O que é otomano costuma estar na
 - <he>צַלְבָנִים</he> | tsalvaním | cruzados | Singular: <he>צַלְבָן</he> (tsalván).
 :::
 
+## Compreensão da leitura
+
+::: vinheta lupa
+:::
+
 ::: quiz pegadinha É comum ouvir que Tel Aviv é uma cidade "estilo Bauhaus". O que diz a avaliação feita para a UNESCO?
 - [ ] Que é a maior cidade Bauhaus do mundo | É a versão que circula, mas a avaliação não diz isso.[[C04-057]]
 - [x] Que o rótulo não é necessariamente adequado: é uma síntese de correntes do Movimento Moderno | A avaliação observa isso, e a UNESCO destaca a adaptação ao clima e às tradições locais.[[C04-057,C04-056]]
@@ -439,4 +474,49 @@ Ele cercou a cidade de março a maio de 1799 e voltou ao Egito sem tomá-la.[[C0
 ::: vf Segundo a UNESCO, os acampamentos, o muro e a rampa em volta de Massada formam o sistema de cerco romano mais completo que se conhece.
 resposta: verdadeiro
 São oito acampamentos, um muro de cerco e uma rampa no lado ocidental.[[C04-036]]
+:::
+
+::: associe Associe cada lugar a um detalhe que o capítulo conta sobre ele.
+- Cesareia | Cinza vulcânica trazida de Puteoli para o porto[[C04-025]]
+- Acre | Uma cidade dos cruzados enterrada sob a cidade otomana[[C04-074,C04-076]]
+- Haifa | O santuário do Báb e os jardins em terraços[[C04-067]]
+- Cafarnaum | Uma casa que virou lugar de culto, sob uma igreja octogonal[[C04-089]]
+- Tel Aviv | O plano urbano de Patrick Geddes[[C04-055]]
+:::
+
+::: ordene Em Cafarnaum, ponha as camadas da "casa de Pedro" em ordem, da mais antiga à mais recente.
+- Uma casa de habitação passa a servir de lugar de culto, a partir do fim do século I d.C.[[C04-089]]
+- A casa é cercada por um muro, no século IV.[[C04-089]]
+- Uma igreja octogonal é erguida por cima, na segunda metade do século V.[[C04-089]]
+- Corbo e Loffreda começam a escavar, em 1968.[[C04-089]]
+- O memorial moderno de Ildo Avetta é inaugurado, em 1990.[[C04-090]]
+:::
+
+::: complete A única peça da época de Pôncio Pilatos que traz o nome dele foi achada em ___, reaproveitada na escadaria do teatro romano.
+resposta: Cesareia / Cesareia Marítima
+explicacao: O original está no Museu de Israel, em Jerusalém.[[C04-027,C04-028]]
+:::
+
+::: complete O fim do cerco de Massada é contado por uma única fonte antiga, o historiador ___.
+resposta: Josefo / Flávio Josefo
+explicacao: Por isso a pergunta sobre o que aconteceu em 73 continua em debate.[[C04-037,C04-039]]
+:::
+
+::: vf O Mar da Galileia está inscrito na Lista do Patrimônio Mundial da UNESCO.
+resposta: falso
+Está na Lista Indicativa, que reúne possíveis candidaturas de Israel; até a data da consulta, nenhuma das três propostas que incluem o lago tinha virado inscrição.[[C04-003,C04-005,C04-006]]
+:::
+
+::: quiz Por que a cidade dos cruzados de Acre chegou quase intacta até hoje?
+- [x] Porque a cidade otomana foi construída por cima e ajudou a preservá-la | Ela foi enterrada depois da tomada pelos mamelucos, e o que a cobriu foi o que a guardou.[[C04-074,C04-077]]
+- [ ] Porque Napoleão a restaurou depois do cerco de 1799 | Napoleão levantou o cerco e voltou ao Egito sem tomar a cidade.[[C04-093]]
+- [ ] Porque ficou abandonada e sem construções por cima | A cidade otomana, com cidadela, mesquitas, khans e banhos, foi construída sobre as estruturas cruzadas.[[C04-076]]
+:::
+
+::: aberta Ao ouvir "esta é a casa de Pedro", em Cafarnaum, que duas afirmações estão juntas na mesma frase?
+resposta: Uma é que uma casa antiga virou lugar de culto, coisa que a escavação pode responder, e os escavadores responderam que sim. A outra é de quem era a casa, e aí entra a tradição cristã.[[C04-089,C04-016]]
+:::
+
+::: aberta Massada tem duas discussões. Quais são?
+resposta: A primeira é sobre o que aconteceu em 73: estudiosos como Shaye Cohen e Jodi Magness questionam o suicídio coletivo descrito por Josefo. A segunda é sobre o século XX: Nachman Ben-Yehuda argumentou que o relato virou um mito de heroísmo, e a tese dele também tem críticos.[[C04-039,C04-041,C04-096]]
 :::
