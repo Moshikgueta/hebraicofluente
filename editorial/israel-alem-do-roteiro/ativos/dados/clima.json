@@ -1,23 +1,121 @@
 {
   "titulo": "Chuva em Israel, de norte a sul",
-  "fonte_ids": ["F01-018", "F01-019", "F01-020", "F01-021"],
-  "nota": "FIGURA BLOQUEADA. Nenhum valor por cidade chegou a VERIFICADO nesta rodada: as normas por estação do Serviço Meteorológico de Israel (IMS) não apareceram nas buscas, e o orçamento de buscas acabou antes de novas tentativas. Por isso 'cidades' está vazio. O que está verificado e pode orientar o desenho é o padrão geral (C01-021, C01-022): a chuva cai de cerca de 1.100 mm por ano nas montanhas da Alta Galileia para menos de 100 mm no extremo sul, e se concentra de novembro a março, com junho a agosto em geral sem chuva. Os valores em 'candidatos_parciais' são PARCIALMENTE VERIFICADO (tabela atribuída ao Ministério das Relações Exteriores, reproduzida pela Jewish Virtual Library, sem período de referência) e NÃO devem ser desenhados antes de conferidos com as normas 1991-2020 do IMS. Temperaturas de janeiro e agosto: nenhuma fonte obtida.",
+  "fonte_ids": [
+    "F01-018",
+    "F01-019",
+    "F01-020",
+    "F01-021"
+  ],
+  "nota": "FIGURA BLOQUEADA no detalhe por cidade. Na segunda rodada (21/10/2026), oito buscas em português, inglês e hebraico, no IMS e no CBS, não devolveram a tabela de normais por estação (nem 1991-2020 nem 1981-2010); só sites de terceiros com valores modelados ou sem fonte. Por isso \"cidades\" segue vazio. O que está verificado e pode orientar o desenho é o padrão geral (C01-021, C01-022): a chuva cai de cerca de 1.100 mm por ano nas montanhas da Alta Galileia para menos de 100 mm no extremo sul, e se concentra de novembro a março, com junho a agosto em geral sem chuva. Os valores em \"candidatos_parciais\" são PARCIALMENTE VERIFICADO (tabela atribuída ao Ministério das Relações Exteriores, reproduzida pela Jewish Virtual Library, sem período de referência) e NÃO devem ser desenhados antes de conferidos com as normais do IMS. Temperaturas de janeiro e agosto: nenhuma fonte oficial obtida (C01-037).",
   "padrao_verificado": {
     "precipitacao_norte_mm_ano_ate": 1100,
     "precipitacao_extremo_sul_mm_ano_abaixo_de": 100,
     "estacao_chuvosa": "novembro a março",
     "meses_em_geral_sem_chuva": "junho a agosto",
-    "afirmacoes": ["C01-021", "C01-022"],
-    "fontes": ["F01-018", "F01-019"]
+    "afirmacoes": [
+      "C01-021",
+      "C01-022"
+    ],
+    "fontes": [
+      "F01-018",
+      "F01-019"
+    ]
   },
   "cidades": [],
   "candidatos_parciais": [
-    {"nome": "Safed", "lat_aprox_para_ordenar": 32.96, "precipitacao_mm_ano": 718, "temp_jan_c": null, "temp_ago_c": null, "fontes": ["F01-021"], "periodo": "não informado", "status": "PARCIALMENTE VERIFICADO", "afirmacao": "C01-024"},
-    {"nome": "Haifa", "lat_aprox_para_ordenar": 32.79, "precipitacao_mm_ano": 508, "temp_jan_c": null, "temp_ago_c": null, "fontes": ["F01-021"], "periodo": "não informado", "status": "PARCIALMENTE VERIFICADO", "afirmacao": "C01-024", "observacao": "Planilha atribuída ao IMS (site de terceiros) dá 538,3 mm."},
-    {"nome": "Tiberíades", "lat_aprox_para_ordenar": 32.79, "precipitacao_mm_ano": 431, "temp_jan_c": null, "temp_ago_c": null, "fontes": ["F01-021"], "periodo": "não informado", "status": "PARCIALMENTE VERIFICADO", "afirmacao": "C01-024"},
-    {"nome": "Tel Aviv", "lat_aprox_para_ordenar": 32.08, "precipitacao_mm_ano": 539, "temp_jan_c": null, "temp_ago_c": null, "fontes": ["F01-021"], "periodo": "não informado", "status": "PARCIALMENTE VERIFICADO", "afirmacao": "C01-024", "observacao": "O próprio resumo da busca pediu conferir este valor contra o original (ordem das colunas)."},
-    {"nome": "Jerusalém", "lat_aprox_para_ordenar": 31.78, "precipitacao_mm_ano": 486, "temp_jan_c": null, "temp_ago_c": null, "fontes": ["F01-021"], "periodo": "não informado", "status": "PARCIALMENTE VERIFICADO", "afirmacao": "C01-024"},
-    {"nome": "Berseba", "lat_aprox_para_ordenar": 31.25, "precipitacao_mm_ano": 204, "temp_jan_c": null, "temp_ago_c": null, "fontes": ["F01-021"], "periodo": "não informado", "status": "PARCIALMENTE VERIFICADO", "afirmacao": "C01-024"},
-    {"nome": "Eilat", "lat_aprox_para_ordenar": 29.56, "precipitacao_mm_ano": 25, "temp_jan_c": null, "temp_ago_c": null, "fontes": ["F01-021", "F01-019"], "periodo": "não informado", "status": "PARCIALMENTE VERIFICADO", "afirmacao": "C01-025"}
+    {
+      "nome": "Safed",
+      "lat_aprox_para_ordenar": 32.96,
+      "precipitacao_mm_ano": 718,
+      "temp_jan_c": null,
+      "temp_ago_c": null,
+      "fontes": [
+        "F01-021"
+      ],
+      "periodo": "não informado",
+      "status": "PARCIALMENTE VERIFICADO",
+      "afirmacao": "C01-024"
+    },
+    {
+      "nome": "Haifa",
+      "lat_aprox_para_ordenar": 32.79,
+      "precipitacao_mm_ano": 508,
+      "temp_jan_c": null,
+      "temp_ago_c": null,
+      "fontes": [
+        "F01-021"
+      ],
+      "periodo": "não informado",
+      "status": "PARCIALMENTE VERIFICADO",
+      "afirmacao": "C01-024",
+      "observacao": "Planilha atribuída ao IMS (site de terceiros) dá 538,3 mm."
+    },
+    {
+      "nome": "Tiberíades",
+      "lat_aprox_para_ordenar": 32.79,
+      "precipitacao_mm_ano": 431,
+      "temp_jan_c": null,
+      "temp_ago_c": null,
+      "fontes": [
+        "F01-021"
+      ],
+      "periodo": "não informado",
+      "status": "PARCIALMENTE VERIFICADO",
+      "afirmacao": "C01-024"
+    },
+    {
+      "nome": "Tel Aviv",
+      "lat_aprox_para_ordenar": 32.08,
+      "precipitacao_mm_ano": 539,
+      "temp_jan_c": null,
+      "temp_ago_c": null,
+      "fontes": [
+        "F01-021"
+      ],
+      "periodo": "não informado",
+      "status": "PARCIALMENTE VERIFICADO",
+      "afirmacao": "C01-024",
+      "observacao": "O próprio resumo da busca pediu conferir este valor contra o original (ordem das colunas)."
+    },
+    {
+      "nome": "Jerusalém",
+      "lat_aprox_para_ordenar": 31.78,
+      "precipitacao_mm_ano": 486,
+      "temp_jan_c": null,
+      "temp_ago_c": null,
+      "fontes": [
+        "F01-021"
+      ],
+      "periodo": "não informado",
+      "status": "PARCIALMENTE VERIFICADO",
+      "afirmacao": "C01-024"
+    },
+    {
+      "nome": "Berseba",
+      "lat_aprox_para_ordenar": 31.25,
+      "precipitacao_mm_ano": 204,
+      "temp_jan_c": null,
+      "temp_ago_c": null,
+      "fontes": [
+        "F01-021"
+      ],
+      "periodo": "não informado",
+      "status": "PARCIALMENTE VERIFICADO",
+      "afirmacao": "C01-024"
+    },
+    {
+      "nome": "Eilat",
+      "lat_aprox_para_ordenar": 29.56,
+      "precipitacao_mm_ano": 25,
+      "temp_jan_c": null,
+      "temp_ago_c": null,
+      "fontes": [
+        "F01-021",
+        "F01-019"
+      ],
+      "periodo": "não informado",
+      "status": "PARCIALMENTE VERIFICADO",
+      "afirmacao": "C01-025"
+    }
   ]
 }

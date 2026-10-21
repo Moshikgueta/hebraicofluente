@@ -23,7 +23,12 @@ const verificado = ids => Array.isArray(ids) && ids.length > 0 && ids.every(id =
 /* Várias figuras moram no mesmo HTML do livro: um id repetido (a moldura, a
    hachura) faria uma figura usar o recorte da outra. Cada id ganha o nome da
    figura como prefixo. */
-const comPrefixo = (svg, id) => svg.replace(/id="([\w-]+)"/g, `id="${id}--$1"`).replace(/url\(#([\w-]+)\)/g, `url(#${id}--$1)`);
+const comPrefixo = (svg, id) => svg
+  .replace(/id="([\w-]+)"/g, `id="${id}--$1"`).replace(/url\(#([\w-]+)\)/g, `url(#${id}--$1)`)
+  /* O <style> de um SVG inline vale para a página inteira: cada seletor fica
+     preso à figura, senão a classe .nota do mapa encolhe as notas do livro. */
+  .replace(/<svg /, `<svg class="fig-${id}" `)
+  .replace(/<style>([\s\S]*?)<\/style>/, (_, css) => `<style>${css.replace(/(^|\})\s*([^{}]+)\{/g, (m, a, sel) => `${a}\n${sel.split(',').map(x => `.fig-${id} ${x.trim()}`).join(',')}{`)}</style>`);
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 const ESTILO = `<style>
@@ -79,7 +84,7 @@ function clima() {
 /* ── semana ─────────────────────────────────────────────────────────── */
 function semana() {
   const d = lerDados('semana.json');
-  if (!d || d.status === 'bloqueado') return null;
+  if (!d || /bloquead/i.test(d.status || '')) return null;
   const dias = (d.dias || []).filter(x => verificado(x.afirmacoes_rotulo));
   if (dias.length !== 7) return null;
   const W = 640, H = 250; const w = 84;
@@ -143,9 +148,63 @@ function jerusalem() {
   return s + '</svg>';
 }
 
+
+/* ── perfil de altitude: do Mediterrâneo ao Mar Morto ────────────────────
+   Só os pontos com afirmação VERIFICADO entram. O traçado ENTRE os pontos é
+   esquemático (uma curva suave), e a legenda diz isso; sem distância
+   verificada, os pontos ficam igualmente espaçados e a legenda também diz. */
+function perfil(escuro = true) {
+  const d = lerDados('perfil.json');
+  if (!d || /bloquead/i.test(d.status || '')) return null;
+  const pts = (d.pontos || []).filter(p => typeof p.altitude_m === 'number' && verificado(p.afirmacoes));
+  if (pts.length < 2) return null;
+  const W = 900, H = 1200, X0 = 70, X1 = W - 70, TOPO = 430, BASE = 1010;
+  const max = Math.max(...pts.map(p => p.altitude_m)), min = Math.min(0, ...pts.map(p => p.altitude_m));
+  const y = a => TOPO + (max - a) / (max - min) * (BASE - TOPO);
+  const temDist = pts.every(p => typeof p.dist_km_desde_tel_aviv === 'number');
+  const dmax = temDist ? Math.max(...pts.map(p => p.dist_km_desde_tel_aviv)) : pts.length - 1;
+  const x = (p, i) => X0 + (temDist ? p.dist_km_desde_tel_aviv : i) / dmax * (X1 - X0);
+  const P = pts.map((p, i) => [x(p, i), y(p.altitude_m)]);
+  /* curva suave (Catmull-Rom → Bézier) */
+  let path = `M${P[0][0]},${P[0][1]}`;
+  for (let i = 0; i < P.length - 1; i++) {
+    const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+    path += ` C${p1[0] + (p2[0] - p0[0]) / 6},${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6},${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]},${p2[1]}`;
+  }
+  const fundo = escuro ? '#0B2A31' : '#FBF9F5', tinta = escuro ? '#FFFFFF' : '#1B211F', suave = escuro ? '#E9DCC0' : '#5F6A66';
+  const zero = y(0);
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Perfil de altitude do Mediterrâneo ao Mar Morto">
+  <style>.a{font-family:'Bricolage Grotesque',sans-serif;font-weight:700}.l{font-family:'Instrument Sans',sans-serif;font-weight:600;letter-spacing:.14em;text-transform:uppercase}.n{font-family:'Instrument Sans',sans-serif}</style>
+  <defs><linearGradient id="terra" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9A36A"/><stop offset=".55" stop-color="#B9773E"/><stop offset="1" stop-color="#6E4423"/></linearGradient>
+  <linearGradient id="agua" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F7F8C"/><stop offset="1" stop-color="#1E5A73"/></linearGradient></defs>
+  <rect width="${W}" height="${H}" fill="${fundo}"/>`;
+  /* o mar à esquerda, no nível zero */
+  s += `<rect x="0" y="${zero}" width="${X0 + 6}" height="${H - zero}" fill="url(#agua)" opacity=".9"/>`;
+  s += `<path d="${path} L${P[P.length - 1][0]},${H} L${P[0][0]},${H} Z" fill="url(#terra)"/>`;
+  /* a água do Mar Morto no último ponto, se for ele */
+  const ult = pts[pts.length - 1]; const pu = P[P.length - 1];
+  if (/morto/i.test(ult.nome)) s += `<rect x="${pu[0] - 10}" y="${pu[1]}" width="${W - pu[0] + 10}" height="${H - pu[1]}" fill="url(#agua)"/>`;
+  else s += `<rect x="${pu[0]}" y="${pu[1]}" width="${W - pu[0]}" height="${H - pu[1]}" fill="url(#terra)"/>`;
+  s += `<path d="${path}" fill="none" stroke="${escuro ? '#FBF3E2' : '#0E3B43'}" stroke-width="3"/>`;
+  s += `<line x1="0" x2="${W}" y1="${zero}" y2="${zero}" stroke="${suave}" stroke-dasharray="6 7" stroke-width="1.5" opacity=".8"/>
+  <text class="l" x="${W - 24}" y="${zero - 10}" text-anchor="end" font-size="15" fill="${suave}">nível do mar · 0 m</text>`;
+  pts.forEach((p, i) => {
+    const [px, py] = P[i]; const acima = p.altitude_m >= 0;
+    const ty = acima ? py - 70 : py + 64;
+    const anchor = i === 0 ? 'start' : i === pts.length - 1 ? 'end' : 'middle';
+    const tx = i === 0 ? px - 10 : i === pts.length - 1 ? px + 10 : px;
+    s += `<circle cx="${px}" cy="${py}" r="9" fill="${fundo}" stroke="${escuro ? '#FBF3E2' : '#0E3B43'}" stroke-width="3"/>`;
+    s += `<line x1="${px}" x2="${px}" y1="${acima ? py - 14 : py + 14}" y2="${acima ? ty + 16 : ty - 40}" stroke="${suave}" stroke-width="1.2" opacity=".6"/>`;
+    s += `<text class="a" x="${tx}" y="${ty}" text-anchor="${anchor}" font-size="46" fill="${acima ? tinta : '#F7EFDF'}">${p.altitude_m > 0 ? '+' : ''}${p.altitude_m.toLocaleString('pt-BR')} m</text>`;
+    s += `<text class="l" x="${tx}" y="${ty + 30}" text-anchor="${anchor}" font-size="17" fill="${acima ? suave : '#E9DCC0'}">${esc(p.nome)}</text>`;
+  });
+  s += `<text class="n" x="${X0}" y="${H - 28}" font-size="16" fill="${suave}" opacity=".85">Corte esquemático, fora de escala horizontal${temDist ? '' : ' (pontos igualmente espaçados)'}; altitudes conforme as fontes do capítulo 1.</text>`;
+  return s + '</svg>';
+}
+
 const SAIDA_INF = path.join(RAIZ, 'ativos/infograficos'), SAIDA_MAP = path.join(RAIZ, 'ativos/mapas');
 fs.mkdirSync(SAIDA_INF, { recursive: true });
-for (const [id, dir, fn] of [['infografico-clima', SAIDA_INF, clima], ['infografico-semana', SAIDA_INF, semana], ['mapa-jerusalem', SAIDA_MAP, jerusalem]]) {
+for (const [id, dir, fn] of [['perfil-altitude', SAIDA_INF, () => perfil(true)], ['perfil-altitude-claro', SAIDA_INF, () => perfil(false)], ['infografico-clima', SAIDA_INF, clima], ['infografico-semana', SAIDA_INF, semana], ['mapa-jerusalem', SAIDA_MAP, jerusalem]]) {
   const arq = path.join(dir, id + '.svg');
   const svg = fn();
   if (svg) { fs.writeFileSync(arq, comPrefixo(svg, id)); console.log('gerado', id); }

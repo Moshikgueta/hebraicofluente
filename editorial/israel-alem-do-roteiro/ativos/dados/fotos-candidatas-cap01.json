@@ -1,0 +1,679 @@
+{
+  "data_consulta": "2026-10-21",
+  "metodo": "busca na web; páginas dos arquivos não abertas; licença a confirmar na página do arquivo antes do uso",
+  "_criterio": [
+    "aceitavel_para_venda: 'sim' = dominio publico, CC0 ou CC BY vistos na busca; 'confirmar' = CC BY-SA (o dono confirma com o advogado) ou licenca que a busca nao mostrou; 'nao' = NC ou ND.",
+    "Nenhuma candidata NC/ND entrou. Recusadas na busca: fotos de dolinas do imaggeo.egu.eu (CC BY-NC-ND 3.0 e CC BY-ND 3.0), 'Frumkin_sinkholes Fig 2' do SERC (CC BY-NC-SA) e a do Smithsonian (todos os direitos reservados). A foto de cristais de sal de Moshe Armon no imaggeo.egu.eu/view/14254 e CC BY 3.0, fora do Commons, e pode servir se faltar opcao.",
+    "Legenda: fotos na margem jordaniana, nas Colinas de Golã ou na Cisjordania precisam dizer o lugar conforme a convencao do capitulo ('Ler um mapa de Israel')."
+  ],
+  "candidatas": [
+    {
+      "id": "foto-mar-morto-sal-pedras",
+      "assunto": "Mar Morto: margem com sal",
+      "titulo_arquivo": "Dead Sea salt incrusted stones.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dead_Sea_salt_incrusted_stones.jpg",
+      "autor": "SailE",
+      "licenca_declarada": "CC BY-SA 4.0 (tambem 3.0, 2.5, 2.0, 1.0 e GFDL 1.2)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Crosta de sal sobre pedras na margem, foto de 2017. Detalhe forte para a secao sobre o lago que desce. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-mar-morto-sal-pedras-2",
+      "assunto": "Mar Morto: margem com sal",
+      "titulo_arquivo": "Dead Sea, stones covered by salt.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dead_Sea,_stones_covered_by_salt.JPG",
+      "autor": "Juandev",
+      "licenca_declarada": "CC BY-SA 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Pedras cobertas de sal, 4416 x 3312 px (2011). Boa resolucao para pagina cheia. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-mar-morto-pilar-sal",
+      "assunto": "Mar Morto: margem com sal",
+      "titulo_arquivo": "Salt pillar at the Dead Sea, Israel (35253925685).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Salt_pillar_at_the_Dead_Sea,_Israel_(35253925685).jpg",
+      "autor": "Yair Aronshtam",
+      "licenca_declarada": "CC BY-SA 2.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Pilar de sal no lado israelense; veio do Flickr. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-mar-morto-sal-jordania",
+      "assunto": "Mar Morto: margem com sal",
+      "titulo_arquivo": "Dead Sea, Jordan 02.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dead_Sea,_Jordan_02.jpg",
+      "autor": "Bernard Gagnon",
+      "licenca_declarada": "CC BY-SA 3.0 (tambem 2.5, 2.0, 1.0) ou GFDL 1.2, a escolha",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Depositos de sal na margem, 2010, 3456 x 2592 px. ATENCAO: margem JORDANIANA; a legenda tem de dizer isso. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-mar-morto-margem",
+      "assunto": "Mar Morto: margem com sal",
+      "titulo_arquivo": "Dead sea shore.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dead_sea_shore.JPG",
+      "autor": "Adiel lo",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": null,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Margem com rochas salgadas, 2008, 2592 x 1944 px. Licenca a ler na pagina.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-mar-morto-landsat-2019",
+      "assunto": "Mar Morto: vista alta da bacia norte",
+      "titulo_arquivo": "Dead sea.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dead_sea.jpg",
+      "autor": "NASA (Landsat 8)",
+      "licenca_declarada": "Dominio publico (PD-USGov-NASA)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Imagem de satelite em cor real, 21/07/2019: mostra as duas bacias e as evaporadoras ao sul. Serve ao paragrafo 'O resultado aparece no mapa'. Creditar NASA por cortesia.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-mar-morto-1972-2011",
+      "assunto": "Mar Morto: vista alta da bacia norte",
+      "titulo_arquivo": "The Dead Sea 1972-2011 - NASA Earth Observatory.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:The_Dead_Sea_1972-2011_-_NASA_Earth_Observatory.jpg",
+      "autor": "NASA Earth Observatory",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": null,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Comparacao 1972-2011 do recuo do lago; ilustra diretamente 'um lago que desce'. Material da NASA costuma ser dominio publico, mas a licenca nao foi vista: ler a pagina.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-mar-morto-norte-pikiwiki",
+      "assunto": "Mar Morto: vista alta da bacia norte",
+      "titulo_arquivo": "PikiWiki Israel 16235 Dead Sea.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:PikiWiki_Israel_16235_Dead_Sea.JPG",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "Creative Commons com atribuicao (versao nao apareceu)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Chao da costa norte do Mar Morto; foto ao nivel do solo, nao aerea.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-mar-morto-dolina-shankbone",
+      "assunto": "Mar Morto: dolinas na costa oeste",
+      "titulo_arquivo": "Dead Sea sinkhole by David Shankbone.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dead_Sea_sinkhole_by_David_Shankbone.jpg",
+      "autor": "David Shankbone",
+      "licenca_declarada": "CC BY-SA 3.0 (tambem GFDL 1.2)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Dolina no Mar Morto, dezembro de 2007, 3264 x 2448 px; usada no artigo 'Sinkhole' da Wikipedia. Unica dolina com licenca confirmada na busca. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-mar-morto-dolinas-pikiwiki",
+      "assunto": "Mar Morto: dolinas na costa oeste",
+      "titulo_arquivo": "PikiWiki Israel 14532 Dead Sea sinkholes.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:PikiWiki_Israel_14532_Dead_Sea_sinkholes.jpg",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": null,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Dolinas do Mar Morto, 2592 x 1944 px, listada na categoria de fotos aereas do Mar Morto. URL montada a partir do titulo listado numa categoria; a pagina do arquivo nao apareceu na busca.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-mar-morto-evaporacao-sts102",
+      "assunto": "Mar Morto: bacias de evaporacao ao sul",
+      "titulo_arquivo": "Dead-Sea---Salt-Evaporation-Ponds.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dead-Sea---Salt-Evaporation-Ponds.jpg",
+      "autor": "Tripulacao STS-102 (NASA)",
+      "licenca_declarada": "Dominio publico nos EUA (obra exclusiva da NASA)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Vista orbital, marco de 2001, das bacias de evaporacao israelenses e jordanianas ao sul, separadas por um dique. 1057 x 1206 px: pequena, so para coluna ou quadro.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-mar-morto-evaporacao-chao",
+      "assunto": "Mar Morto: bacias de evaporacao ao sul",
+      "titulo_arquivo": "Evaporation Ponds at the Southern Dead Sea, near the Dead Sea Works.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Evaporation_Ponds_at_the_Southern_Dead_Sea,_near_the_Dead_Sea_Works.jpg",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": null,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Bacias de evaporacao ao sul, 2272 x 1241 px, horizontal. Mostra a area industrial: legenda descritiva, sem promover a empresa. URL montada a partir do titulo listado numa categoria; a pagina do arquivo nao apareceu na busca.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-mar-morto-ein-bokek",
+      "assunto": "Mar Morto: bacias de evaporacao ao sul",
+      "titulo_arquivo": "Ein Bokek. Dead Sea. Israel. 08.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Ein_Bokek._Dead_Sea._Israel._08.jpg",
+      "autor": "Staselnik",
+      "licenca_declarada": "CC BY-SA 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Ein Bokek, na bacia de evaporacao do sul (onde ficam os hoteis), janeiro de 2012. Ajuda a explicar que a agua dali nao e mais o lago natural. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-ramon-2019",
+      "assunto": "Neguev e Makhtesh Ramon",
+      "titulo_arquivo": "Makhtesh Ramon 2019.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Makhtesh_Ramon_2019.jpg",
+      "autor": "M.Antarctica",
+      "licenca_declarada": "CC BY-SA 4.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Vista geral do Makhtesh Ramon. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-ramon-gvanim",
+      "assunto": "Neguev e Makhtesh Ramon",
+      "titulo_arquivo": "Makhtesh Ramon (50785).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Makhtesh_Ramon_(50785).jpg",
+      "autor": "Rhododendrites",
+      "licenca_declarada": "CC BY-SA (versao vista so num espelho do Commons)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Vista ampla do crater a partir do monte Gvanim, 4511 x 2163 px, marcada como Quality Image. Horizontal: candidata a abertura. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "abertura"
+    },
+    {
+      "id": "foto-ramon-camadas",
+      "assunto": "Neguev e Makhtesh Ramon",
+      "titulo_arquivo": "Layers of sedimentary rock in Makhtesh Ramon (50754).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Layers_of_sedimentary_rock_in_Makhtesh_Ramon_(50754).jpg",
+      "autor": "Rhododendrites",
+      "licenca_declarada": "CC BY-SA 4.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Camadas de rocha sedimentar: detalhe geologico. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-ramon-aereo-2013",
+      "assunto": "Neguev e Makhtesh Ramon",
+      "titulo_arquivo": "Israel-2013-Aerial 03-Negev-Makhtesh Ramon.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Israel-2013-Aerial_03-Negev-Makhtesh_Ramon.jpg",
+      "autor": "Andrew Shiva (Godot13)",
+      "licenca_declarada": "CC BY-SA 4.0 numa parte da pagina; outra parte descreve permissao ampla com atribuicao",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Aerea do Makhtesh Ramon. A propria busca apontou inconsistencia na licenca: ler a pagina. O autor exige credito fora da Wikipedia. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-neguev-zin",
+      "assunto": "Neguev e Makhtesh Ramon",
+      "titulo_arquivo": "Zin Valley in the Negev Desert of Israel 2.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Zin_Valley_in_the_Negev_Desert_of_Israel_2.jpg",
+      "autor": "David Shankbone",
+      "licenca_declarada": "CC BY 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Paisagem do vale do Zin, 2009. Licenca sem share-alike: so atribuicao.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-neguev-chao-seco",
+      "assunto": "Neguev e Makhtesh Ramon",
+      "titulo_arquivo": "Dry ground of the Negev desert, Israel.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dry_ground_of_the_Negev_desert,_Israel.jpg",
+      "autor": "MinoZig",
+      "licenca_declarada": "CC BY-SA 4.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Chao seco do Neguev, 2016; ilustra 'menos de 100 mm por ano'. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-kineret-vista",
+      "assunto": "Galileia e Mar da Galileia",
+      "titulo_arquivo": "Sea of Galilee View.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Sea_of_Galilee_View.jpg",
+      "autor": "Itamar Grinberg (israeltourism, via Flickr)",
+      "licenca_declarada": "CC BY-SA 2.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Vista do lago publicada pela conta de turismo de Israel no Flickr. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-kineret-taylor",
+      "assunto": "Galileia e Mar da Galileia",
+      "titulo_arquivo": "Israel - Sea of Galilee - 50 (4263070869).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Israel_-_Sea_of_Galilee_-_50_(4263070869).jpg",
+      "autor": "Kyle Taylor (Flickr)",
+      "licenca_declarada": "CC BY 2.0 (revisada pelo FlickreviewR em 17/02/2015)",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "2848 x 4272 px, vertical. Sem share-alike.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-kineret-praia",
+      "assunto": "Galileia e Mar da Galileia",
+      "titulo_arquivo": "Beach of Sea of Galilee in summer 2011.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Beach_of_Sea_of_Galilee_in_summer_2011.JPG",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "CC BY 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Praia do Kinéret no verao: serve ao contraste de estacoes. Autor a ler na pagina para o credito.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-kineret-ramot",
+      "assunto": "Galileia e Mar da Galileia",
+      "titulo_arquivo": "Israel Sea of Galilee at sunrise panoramic view from Ramot (Golan).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Israel_Sea_of_Galilee_at_sunrise_panoramic_view_from_Ramot_(Golan).jpg",
+      "autor": "Djampa",
+      "licenca_declarada": "GFDL 1.2 ou CC BY-SA 4.0/3.0/2.5/2.0/1.0, a escolha",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Panorama ao nascer do sol. ATENCAO: tirada das Colinas de Golã; a legenda tem de seguir a convencao do capitulo sobre areas de status disputado. Data EXIF marcada como errada. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "abertura"
+    },
+    {
+      "id": "foto-hula-agamon",
+      "assunto": "Vale do Jordao e vale do Hula",
+      "titulo_arquivo": "Agamon HaHula in Hula Valley.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Agamon_HaHula_in_Hula_Valley.jpg",
+      "autor": "בר (usuario do Commons)",
+      "licenca_declarada": "CC BY-SA 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Agamon HaHula, 12/03/2021, 4029 x 2266 px, horizontal. Liga ao trecho sobre o vale do Hula e a chuva de 2024-2025. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-hula-grou",
+      "assunto": "Vale do Jordao e vale do Hula",
+      "titulo_arquivo": "Common crane in flight.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Common_crane_in_flight.jpg",
+      "autor": "Вых Пыхманн",
+      "licenca_declarada": "CC BY-SA 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Grou-comum em voo no vale do Hula, 19/01/2013: as aves migratorias. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-hula-pikiwiki",
+      "assunto": "Vale do Jordao e vale do Hula",
+      "titulo_arquivo": "PikiWiki Israel 34425 Agamon Hahula in Hula Valley.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:PikiWiki_Israel_34425_Agamon_Hahula_in_Hula_Valley.JPG",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "CC BY 2.5",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Agamon HaHula; sem share-alike. Ler o nome do autor na pagina para o credito.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-hula-grous-alimentando",
+      "assunto": "Vale do Jordao e vale do Hula",
+      "titulo_arquivo": "Feeding Common crane in Hula Valley, Israel.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Feeding_Common_crane_in_Hula_Valley,_Israel.jpg",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "nao apareceu na busca",
+      "atribuicao_exigida": null,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Grous se alimentando, 5472 x 3648 px: a melhor resolucao das fotos de grous vistas. URL montada a partir do titulo listado numa categoria; a pagina do arquivo nao apareceu na busca.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-vale-jordao",
+      "assunto": "Vale do Jordao e vale do Hula",
+      "titulo_arquivo": "Israel Jordan valley.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Israel_Jordan_valley.JPG",
+      "autor": "Dickelbers",
+      "licenca_declarada": "CC BY-SA 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Vale do Jordao, 2012, 4320 x 3240 px; camera em 32°35'N 35°31'E (confirmar o lugar exato para a legenda). Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-vale-jordao-fenda",
+      "assunto": "Vale do Jordao e vale do Hula",
+      "titulo_arquivo": "Israel Jordan Rift Valley 19.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Israel_Jordan_Rift_Valley_19.JPG",
+      "autor": "Zairon",
+      "licenca_declarada": "CC BY-SA 4.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Vale da fenda do Jordao, 2014. Confirmar o ponto da foto: parte do vale fica na Cisjordania, e a legenda segue a convencao do capitulo. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-haifa-baia",
+      "assunto": "Costa mediterranea",
+      "titulo_arquivo": "Haifa Bay.JPG",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Haifa_Bay.JPG",
+      "autor": "Uria Ashkenazy",
+      "licenca_declarada": "CC BY-SA 2.5",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Baia de Haifa vista do Carmelo, 2004, 2048 x 1536 px (resolucao modesta). Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-haifa-bat-galim",
+      "assunto": "Costa mediterranea",
+      "titulo_arquivo": "Bat Galim neighborhood and Haifa Bay.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Bat_Galim_neighborhood_and_Haifa_Bay.jpg",
+      "autor": "Zvi Roger (Prefeitura de Haifa)",
+      "licenca_declarada": "CC BY 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Bairro Bat Galim e a baia, ao pe do Carmelo. Sem share-alike.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-haifa-carmelo-aerea",
+      "assunto": "Costa mediterranea",
+      "titulo_arquivo": "Haifa View.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Haifa_View.jpg",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "CC BY-SA 2.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Vista aerea do Carmelo e de Haifa: mostra a montanha encontrando o mar. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-tel-aviv-costa",
+      "assunto": "Costa mediterranea",
+      "titulo_arquivo": "Tel-Aviv, Coastal view from Atarim Sq. to Jaffa.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Tel-Aviv,_Coastal_view_from_Atarim_Sq._to_Jaffa.jpg",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "CC BY 2.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Costa de Tel Aviv ate Jafa, 2000 x 729 px: panoramica estreita, boa para faixa.",
+      "uso_sugerido": "abertura"
+    },
+    {
+      "id": "foto-tel-aviv-praia",
+      "assunto": "Costa mediterranea",
+      "titulo_arquivo": "Tel Aviv beach (467425979).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Tel_Aviv_beach_(467425979).jpg",
+      "autor": "Ilan from Tel Aviv (Flickr)",
+      "licenca_declarada": "CC BY 2.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Praia de Tel Aviv, 2007, 2496 x 1664 px.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-tel-aviv-skyline",
+      "assunto": "Costa mediterranea",
+      "titulo_arquivo": "Tel Aviv Skyline 02.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Tel_Aviv_Skyline_02.jpg",
+      "autor": "Ynhockey",
+      "licenca_declarada": "CC BY-SA 4.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Skyline de Tel Aviv e Ramat Gan, 2022. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-eilat-golfo",
+      "assunto": "Arava e Eilat",
+      "titulo_arquivo": "Gulf of Eilat.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Gulf_of_Eilat.jpg",
+      "autor": "Little Savage",
+      "licenca_declarada": "Dominio publico (liberada pelo autor)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Golfo de Eilat, 14/02/2007, 1600 x 1200 px (resolucao baixa: so meia pagina).",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-eilat-aqaba",
+      "assunto": "Arava e Eilat",
+      "titulo_arquivo": "Aqaba.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Aqaba.jpg",
+      "autor": "Aviad2001",
+      "licenca_declarada": "GFDL, CC BY-SA 3.0 ou CC BY 2.5, a escolha",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Aqaba vista de Eilat, 2006: mostra o golfo dividido entre paises. Usar a opcao CC BY 2.5 (sem share-alike).",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-eilat-panorama",
+      "assunto": "Arava e Eilat",
+      "titulo_arquivo": "Red Sea panorama.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Red_Sea_panorama.jpg",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "CC BY-SA 3.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Panorama com Eilat a esquerda e Aqaba a direita. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "abertura"
+    },
+    {
+      "id": "foto-arava-tzin",
+      "assunto": "Arava e Eilat",
+      "titulo_arquivo": "PikiWiki Israel 85174 nahal tzin in the arava.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:PikiWiki_Israel_85174_nahal_tzin_in_the_arava.jpg",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "CC BY 2.5",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "sim",
+      "nota": "Nahal Tzin na Arava, 4000 x 1800 px: panoramica horizontal. Ler o autor na pagina para o credito.",
+      "uso_sugerido": "abertura"
+    },
+    {
+      "id": "foto-arava-paisagem",
+      "assunto": "Arava e Eilat",
+      "titulo_arquivo": "Israel landscape.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Israel_landscape.jpg",
+      "autor": "nao apareceu na busca",
+      "licenca_declarada": "CC BY-SA 4.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Neve Michael na primavera: a legenda NAO nomeia a Arava; usar so se o lugar for confirmado. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-historica-ain-jiddy",
+      "assunto": "Foto historica de dominio publico",
+      "titulo_arquivo": "Around the Dead Sea. Looking east from 'Ain Jiddy LOC matpc.00111.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Around_the_Dead_Sea._Looking_east_from_'Ain_Jiddy_LOC_matpc.00111.jpg",
+      "autor": "Matson Photo Service / American Colony (Library of Congress, Matson Collection)",
+      "licenca_declarada": "Dominio publico; 'no known restrictions on publication' (LOC)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Negativo de 1900, olhando para leste a partir de Ein Gedi ('Ain Jiddy): o mesmo lugar das dolinas de hoje. Creditar LOC por cortesia. A ligacao com o estudio American Colony nao foi confirmada na busca.",
+      "uso_sugerido": "pagina-cheia"
+    },
+    {
+      "id": "foto-historica-ain-jiddy-cena",
+      "assunto": "Foto historica de dominio publico",
+      "titulo_arquivo": "Around the Dead Sea. Scene at 'Ain Jiddy LOC matpc.01753.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Around_the_Dead_Sea._Scene_at_'Ain_Jiddy_LOC_matpc.01753.jpg",
+      "autor": "Matson Photo Service / American Colony (Library of Congress, Matson Collection)",
+      "licenca_declarada": "Dominio publico; 'no known restrictions on publication' (LOC)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Negativo de 1900 em Ein Gedi; par com a foto de hoje para mostrar a margem que mudou.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-historica-pilar-sal",
+      "assunto": "Foto historica de dominio publico",
+      "titulo_arquivo": "Around the Dead Sea. 'Pillar of Salt' at Jebel Usdum LOC matpc.01779.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Around_the_Dead_Sea._'Pillar_of_Salt'_at_Jebel_Usdum_LOC_matpc.01779.jpg",
+      "autor": "Matson Photo Service / American Colony (Library of Congress, Matson Collection)",
+      "licenca_declarada": "Dominio publico (marcado assim no Commons; status a ler na pagina, a busca avisou que a etiqueta pode nao indicar o status)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Pilar de sal no monte Sodoma (Jebel Usdum), ao sul. Conferir o registro da LOC.",
+      "uso_sugerido": "galeria"
+    },
+    {
+      "id": "foto-historica-mapa",
+      "assunto": "Foto historica de dominio publico",
+      "titulo_arquivo": "Around the Dead Sea. Map of the Dead Sea LOC matpc.01736.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Around_the_Dead_Sea._Map_of_the_Dead_Sea_LOC_matpc.01736.jpg",
+      "autor": "Matson Photo Service / American Colony (Library of Congress, Matson Collection)",
+      "licenca_declarada": "Dominio publico (publicado antes de 01/01/1931; sem restricoes conhecidas)",
+      "atribuicao_exigida": false,
+      "aceitavel_para_venda": "sim",
+      "nota": "Mapa fotografado em 1900: compara a costa de antes com a de hoje.",
+      "uso_sugerido": "narrativa"
+    },
+    {
+      "id": "foto-capa-judeia-aerea",
+      "assunto": "Capa: paisagem horizontal forte",
+      "titulo_arquivo": "Aerial view of the Judean Desert (near Masada), Israel 03.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Judean_Desert_(near_Masada),_Israel_03.jpg",
+      "autor": "Andrew Shiva (Godot13)",
+      "licenca_declarada": "CC BY-SA 4.0; o autor exige credito fora da Wikipedia",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Aerea do deserto da Judeia perto de Massada. 2371 x 3571 px: VERTICAL, serve a capa de e-book em retrato, nao a faixa horizontal. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "abertura"
+    },
+    {
+      "id": "foto-capa-massada-aerea",
+      "assunto": "Capa: paisagem horizontal forte",
+      "titulo_arquivo": "Israel-2013-Aerial 21-Masada.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Israel-2013-Aerial_21-Masada.jpg",
+      "autor": "Andrew Shiva (Godot13)",
+      "licenca_declarada": "CC BY-SA 4.0; credito a Andrew Shiva exigido fora da Wikipedia",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Massada do ar, com o Mar Morto ao fundo segundo as coordenadas. Tambem serve ao capitulo 4. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "abertura"
+    },
+    {
+      "id": "foto-capa-sal-aereo",
+      "assunto": "Capa: paisagem horizontal forte",
+      "titulo_arquivo": "Dead Sea salt formation (Aerial view, 2007).jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Dead_Sea_salt_formation_(Aerial_view,_2007).jpg",
+      "autor": "Godot13 (Andrew Shiva)",
+      "licenca_declarada": "nao apareceu na busca (outras fotos do mesmo autor sao CC BY-SA 4.0, mas isso nao vale para esta sem ler a pagina)",
+      "atribuicao_exigida": null,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Formacoes de sal vistas do alto, 4288 x 2848 px, horizontal; foi candidata a Picture of the Year 2013 e o autor a lista como featured picture. A imagem mais forte para capa ou abertura.",
+      "uso_sugerido": "abertura"
+    },
+    {
+      "id": "foto-capa-judeia-arad",
+      "assunto": "Capa: paisagem horizontal forte",
+      "titulo_arquivo": "Judea.jpg",
+      "url_pagina": "https://commons.wikimedia.org/wiki/File:Judea.jpg",
+      "autor": "Inbal & Nir (Flickr)",
+      "licenca_declarada": "CC BY-SA 2.0",
+      "atribuicao_exigida": true,
+      "aceitavel_para_venda": "confirmar",
+      "nota": "Deserto da Judeia visto de Arad. Share-alike vale para a imagem adaptada (recorte, cor), nao para o livro inteiro; dono confirmar com o advogado.",
+      "uso_sugerido": "galeria"
+    }
+  ],
+  "links_oficiais": [
+    {
+      "titulo": "En Gedi Nature Reserve",
+      "url": "https://en.parks.org.il/reserve-park/en-gedi-nature-reserve/",
+      "instituicao": "Israel Nature and Parks Authority",
+      "para_que_serve": "QR da margem oeste do Mar Morto (Ein Gedi); a pagina avisa que a visita pede reserva"
+    },
+    {
+      "titulo": "Enot Tsukim Nature Reserve",
+      "url": "https://en.parks.org.il/reserve-park/enot-tsukim-nature-reserve/",
+      "instituicao": "Israel Nature and Parks Authority",
+      "para_que_serve": "Reserva na costa norte do Mar Morto, a bacia que ainda e lago natural"
+    },
+    {
+      "titulo": "Hula Nature Reserve",
+      "url": "https://en.parks.org.il/reserve-park/hula-nature-reserve/",
+      "instituicao": "Israel Nature and Parks Authority",
+      "para_que_serve": "Vale do Hula e as aves aquaticas; a pagina conta a drenagem dos anos 1950"
+    },
+    {
+      "titulo": "Makhtesh Ramon Visitors Center",
+      "url": "https://en.parks.org.il/reserve-park/makhtesh-ramon-nature-reserve-and-visitors-center/",
+      "instituicao": "Israel Nature and Parks Authority",
+      "para_que_serve": "QR do Neguev / Makhtesh Ramon"
+    },
+    {
+      "titulo": "National Parks and Nature Reserves - Map",
+      "url": "https://en.parks.org.il/map/",
+      "instituicao": "Israel Nature and Parks Authority",
+      "para_que_serve": "Mapa de todas as reservas; link geral do capitulo"
+    },
+    {
+      "titulo": "Masada",
+      "url": "https://whc.unesco.org/en/list/1040/",
+      "instituicao": "UNESCO World Heritage Centre",
+      "para_que_serve": "Bem inscrito em 2001 (criterios culturais), sobre o Mar Morto; util se a capa ou a abertura usar Massada"
+    },
+    {
+      "titulo": "Makhteshim Country (lista indicativa)",
+      "url": "https://whc.unesco.org/en/tentativelists/1486/",
+      "instituicao": "UNESCO World Heritage Centre",
+      "para_que_serve": "Makhtesh Ramon na lista indicativa (2001). ATENCAO: a busca mostrou que a candidatura foi retirada em 2005; nao escrever que e patrimonio"
+    },
+    {
+      "titulo": "Israel - UNESCO World Heritage Convention",
+      "url": "https://whc.unesco.org/en/statesparties/il/",
+      "instituicao": "UNESCO World Heritage Centre",
+      "para_que_serve": "Pagina do pais com bens inscritos e a lista indicativa (onde aparece 'The Great Rift Valley, migratory routes, The Hula', de 2004)"
+    },
+    {
+      "titulo": "State of the Climate Report 2022",
+      "url": "https://ims.gov.il/en/node/2113",
+      "instituicao": "Israel Meteorological Service",
+      "para_que_serve": "Relatorio oficial do clima; apoio a secao de chuva"
+    },
+    {
+      "titulo": "Climate Changes Report 2019",
+      "url": "https://ims.gov.il/en/node/117",
+      "instituicao": "Israel Meteorological Service",
+      "para_que_serve": "Tendencias de temperatura e chuva por regiao"
+    },
+    {
+      "titulo": "Initial Review 2025",
+      "url": "https://ims.gov.il/en/node/2851",
+      "instituicao": "Israel Meteorological Service",
+      "para_que_serve": "Resumo do ano de 2025; o mais recente visto. A fonte da temporada 2024-2025 citada no texto (C01-026) nao apareceu nesta busca"
+    },
+    {
+      "titulo": "Sinkhole poster (Baer et al.)",
+      "url": "https://www.gov.il/BlobFolder/reports/baer-et-al-poster/he/Posters_C_sinkhole_poster_baer2.pdf",
+      "instituicao": "Geological Survey of Israel",
+      "para_que_serve": "Traz o numero do capitulo: menos de 50 dolinas novas por ano antes de 1999, 200 a 380 por ano desde 2003; conferir se e a fonte de C01-017"
+    },
+    {
+      "titulo": "Sinkhole Development, Western Coast of the Dead Sea (Gilat, GSI 04/1999)",
+      "url": "https://www.gov.il/BlobFolder/reports/gilat-report-1999/he/report_1999_4%20Gilat-A-Sinkhole-Development-Western-Coast-Dead-Sea-GSI-04-1999.pdf",
+      "instituicao": "Geological Survey of Israel",
+      "para_que_serve": "Relatorio de 1999 sobre as dolinas da costa oeste; leitura de aprofundamento"
+    },
+    {
+      "titulo": "Report GSI/27/2009 (Abelson et al.)",
+      "url": "https://www.gov.il/BlobFolder/reports/abelson-et-al-report-2009-27/he/report_2009_GSI-27-2009.pdf",
+      "instituicao": "Geological Survey of Israel",
+      "para_que_serve": "Risco de dolinas em volta das bacias de evaporacao ao sul"
+    },
+    {
+      "titulo": "Matson (G. Eric and Edith) Photograph Collection",
+      "url": "https://www.loc.gov/pictures/item/2007675852/marc/",
+      "instituicao": "Library of Congress",
+      "para_que_serve": "Registro da colecao de onde vem a foto historica; credito e conferencia dos direitos (a LOC diz que a responsabilidade de verificar e de quem publica)"
+    }
+  ]
+}

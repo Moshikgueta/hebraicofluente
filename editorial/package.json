@@ -11,10 +11,14 @@
     "inspecionar": "node tools/inspecionar.mjs israel-alem-do-roteiro"
   },
   "dependencies": {
+    "@fontsource-variable/literata": "5.2.8",
     "@fontsource/literata": "5.2.8",
+    "jsqr": "1.4.0",
     "marked": "18.0.14",
     "pagedjs": "0.4.3",
     "pdf-lib": "1.17.1",
-    "playwright-core": "1.63.0"
+    "playwright-core": "1.63.0",
+    "pngjs": "7.0.0",
+    "qrcode": "1.5.4"
   }
 }

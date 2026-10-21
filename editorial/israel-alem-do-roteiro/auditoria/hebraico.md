@@ -4,14 +4,14 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 
 | # | Hebraico | Transliteração | Tradução | Onde | Contexto |
 | --- | --- | --- | --- | --- | --- |
-| 1 | יָם | yam | mar | manuscrito/01-israel-no-mapa.md:60 |  |
-| 2 | הַיָּם הַתִּיכוֹן | hayám hatichón | mar Mediterrâneo | manuscrito/01-israel-no-mapa.md:61 |  |
-| 3 | יַם הַמֶּלַח | Yam HaMélach | Mar Morto | manuscrito/01-israel-no-mapa.md:62 |  |
-| 4 | כִּנֶּרֶת | Kinéret | Mar da Galileia | manuscrito/01-israel-no-mapa.md:63 |  |
-| 5 | גֶּשֶׁם | guéshem | chuva | manuscrito/01-israel-no-mapa.md:64 |  |
-| 6 | יַם הַמֶּלַח |  |  | manuscrito/01-israel-no-mapa.md:68 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
-| 7 | יָם |  |  | manuscrito/01-israel-no-mapa.md:68 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
-| 8 | מֶלַח |  |  | manuscrito/01-israel-no-mapa.md:68 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
+| 1 | יָם | yam | mar | manuscrito/01-israel-no-mapa.md:90 |  |
+| 2 | הַיָּם הַתִּיכוֹן | hayám hatichón | mar Mediterrâneo | manuscrito/01-israel-no-mapa.md:91 |  |
+| 3 | יַם הַמֶּלַח | Yam HaMélach | Mar Morto | manuscrito/01-israel-no-mapa.md:92 |  |
+| 4 | כִּנֶּרֶת | Kinéret | Mar da Galileia | manuscrito/01-israel-no-mapa.md:93 |  |
+| 5 | גֶּשֶׁם | guéshem | chuva | manuscrito/01-israel-no-mapa.md:94 |  |
+| 6 | יַם הַמֶּלַח |  |  | manuscrito/01-israel-no-mapa.md:98 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
+| 7 | יָם |  |  | manuscrito/01-israel-no-mapa.md:98 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
+| 8 | מֶלַח |  |  | manuscrito/01-israel-no-mapa.md:98 | O nome hebraico descreve o lago pelo que ele tem, e não pelo que falta nele. No hebraico do dia a dia, o passeio é ao <he>יַם הַמֶּלַח</he>, o mar do sal. Para  |
 | 9 | יְהוּד |  |  | manuscrito/02-historia.md:102 | Sob os persas, Judá virou uma província chamada Yehud (<he>יְהוּד</he>, Yehúd). Selos e moedas do período, expostos no Museu de Israel, em Jerusalém, trazem ess |
 | 10 | הַכֹּתֶל הַמַּעֲרָבִי |  |  | manuscrito/03-jerusalem.md:23 | O lugar que em hebraico se chama <he>הַכֹּתֶל הַמַּעֲרָבִי</he> (HaKótel HaMaaraví), o Muro Ocidental, ou só Kotel, tem uma história arqueológica bem documentad |
 | 11 | הַר הַבַּיִת |  |  | manuscrito/03-jerusalem.md:33 | A plataforma que esses muros sustentam tem dois nomes, e cada um diz de onde se olha. Para judeus, e no vocabulário do Estado de Israel, é o Monte do Templo, <h |

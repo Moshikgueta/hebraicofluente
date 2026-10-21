@@ -1,0 +1,253 @@
+/* Experiência digital de Israel Além do Roteiro (protótipo).
+   Sem biblioteca: lê o JSON da base editorial embutido na página e desenha
+   início, capítulo, glossário e diário. O estado do leitor (progresso,
+   favoritos, respostas, desafios, diário) fica no aparelho; toda leitura e
+   escrita passa por `guardar`, que tolera navegador sem armazenamento. */
+(function () {
+  'use strict';
+  var D = JSON.parse(document.getElementById('dados').textContent);
+  var main = document.getElementById('conteudo');
+  var folha = document.getElementById('folha');
+  var barra = document.querySelector('.progresso i');
+
+  /* ── estado no aparelho ─────────────────────────────────────────────── */
+  var CHAVE = 'iar-estado-v1';
+  var memoria = {};
+  function ler() { try { return JSON.parse(localStorage.getItem(CHAVE)) || {}; } catch (e) { return memoria; } }
+  function guardar(f) { var s = ler(); f(s); try { localStorage.setItem(CHAVE, JSON.stringify(s)); } catch (e) { memoria = s; } return s; }
+  function estado() { var s = ler(); s.lidas = s.lidas || {}; s.fav = s.fav || {}; s.resp = s.resp || {}; s.desafios = s.desafios || {}; s.diario = s.diario || {}; s.check = s.check || {}; return s; }
+
+  /* ── utilidades ─────────────────────────────────────────────────────── */
+  function el(tag, attrs, html) { var e = document.createElement(tag); for (var k in (attrs || {})) { if (attrs[k] != null) e.setAttribute(k, attrs[k]); } if (html != null) e.innerHTML = html; return e; }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var ICONE = {
+    fav: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+    favOn: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+    som: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>',
+    fechar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+  };
+  function porId(id) { for (var i = 0; i < D.capitulos.length; i++) if (D.capitulos[i].id === id) return D.capitulos[i]; return null; }
+  function pct(cap) { var s = estado(); var n = 0; cap.secoes.forEach(function (x) { if (s.lidas[x.id]) n++; }); return Math.round(100 * n / Math.max(1, cap.secoes.length)); }
+
+  /* ── folha inferior (mapa, figura) ──────────────────────────────────── */
+  var origemFolha = null;
+  function abrirFolha(titulo, html, origem) {
+    origemFolha = origem || null;
+    folha.innerHTML = '<button class="icone fechar" aria-label="Fechar">' + ICONE.fechar + '</button><h4 id="folha-t">' + titulo + '</h4>' + html;
+    folha.hidden = false; folha.querySelector('.fechar').addEventListener('click', fecharFolha); folha.querySelector('.fechar').focus();
+  }
+  function fecharFolha() { folha.hidden = true; if (origemFolha) { origemFolha.setAttribute('aria-expanded', 'false'); origemFolha.focus(); } }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !folha.hidden) fecharFolha(); });
+
+  /* ── áudio: só gravação humana ──────────────────────────────────────── */
+  var tocando = null;
+  function tocar(src) { if (tocando) { tocando.pause(); } tocando = new Audio(src); tocando.play().catch(function () {}); }
+
+  /* ── blocos ─────────────────────────────────────────────────────────── */
+  function figura(b) {
+    var f = el('figure');
+    var alvo = el('div', { class: 'alvo' }, b.svg ? D.svgs[b.svg] : '<div class="foto-pendente"><b>Figura pendente</b><span>' + esc(b.id) + '</span></div>');
+    f.appendChild(alvo);
+    var pts = D.pontos[b.id];
+    if (pts && pts.length) {
+      pts.forEach(function (p) {
+        var bt = el('button', { class: 'ponto', style: 'left:' + p.x + '%;top:' + p.y + '%', 'aria-label': p.nome + ': ver detalhes', 'aria-expanded': 'false' }, '<span></span>');
+        bt.addEventListener('click', function () { bt.setAttribute('aria-expanded', 'true'); abrirFolha(esc(p.nome), '<p>' + p.texto + '</p>', bt); });
+        alvo.appendChild(bt);
+      });
+    }
+    var cap = (b.ativo ? '<b>' + esc(b.ativo.titulo) + '.</b> ' : '') + (b.legenda || '') + (pts && pts.length ? ' <em>Toque nos pontos para ver cada região.</em>' : '') + (b.ativo ? '<span class="credito">' + esc(b.ativo.credito_curto || '') + '</span>' : '');
+    f.appendChild(el('figcaption', null, cap));
+    return f;
+  }
+  function bloco(b, cap) {
+    switch (b.tipo) {
+      case 'p': return el('p', null, b.html);
+      case 'h3': return el('h3', null, b.html);
+      case 'lista': return el('ul', null, b.itens.map(function (i) { return '<li>' + i + '</li>'; }).join(''));
+      case 'citacao': return el('blockquote', null, b.html);
+      case 'figura': case 'visual': return figura(b);
+      case 'foto': {
+        var c = b.candidata; var f = el('figure');
+        f.innerHTML = '<div class="foto-pendente"><b>Fotografia a inserir</b><span>' + esc(c ? c.assunto : b.id) + '</span>' + (c ? '<small>' + esc(c.titulo_arquivo) + ' · ' + esc(c.licenca_declarada || 'licença a confirmar') + '</small>' : '') + '</div><figcaption>' + (b.legenda || '') + '</figcaption>';
+        return f;
+      }
+      case 'dado': return el('div', { class: 'dado' }, '<span class="numero">' + esc(b.numero) + '</span><span class="rotulo">' + b.rotulo + (b.nota ? '<span class="nota-d">' + b.nota + '</span>' : '') + '</span>');
+      case 'vocabulario': {
+        var v = el('div', { class: 'vocab' }, '<div class="cab"><span>' + esc(b.titulo || 'Em hebraico') + '</span><span>Toque para ouvir</span></div>');
+        var ol = el('ol');
+        b.itens.forEach(function (i) {
+          var li = el('li');
+          var bt = el('button', { class: 'icone ouvir', 'aria-label': i.audio ? 'Ouvir ' + i.translit : 'Gravação ainda não disponível para ' + i.translit }, ICONE.som);
+          if (i.audio) bt.addEventListener('click', function () { tocar(i.audio.src); }); else bt.disabled = true;
+          li.appendChild(bt);
+          li.appendChild(el('span', { class: 'p-tr' }, esc(i.translit) + ' <em>' + esc(i.pt) + '</em>'));
+          li.appendChild(el('span', { class: 'p-he', lang: 'he', dir: 'rtl' }, esc(i.he)));
+          if (i.nota) li.appendChild(el('span', { class: 'p-nota' }, i.nota));
+          ol.appendChild(li);
+        });
+        v.appendChild(ol); return v;
+      }
+      case 'caixa': {
+        var fundo = ['historia-ou-tradicao', 'aviso', 'olhar-israelense'].indexOf(b.variante) >= 0;
+        var cx = el('aside', { class: (fundo ? 'fundo ' : 'nota ') + b.variante + (b.pendente ? ' pendente' : '') }, '<span class="rot">' + esc(b.rotulo) + '</span>' + (b.titulo ? '<span class="tit">' + b.titulo + '</span>' : ''));
+        b.blocos.forEach(function (x) { cx.appendChild(bloco(x, cap)); });
+        return cx;
+      }
+      case 'link':
+        if (!b.link || !b.link.url) return el('span');
+        return el('a', { class: 'link', href: b.link.url, target: '_blank', rel: 'noopener' }, '<span class="inst">' + esc(b.link.instituicao || '') + '</span><span class="tit">' + esc(b.link.titulo) + '</span><span class="desc">' + (b.texto || esc(b.link.para_que_serve || '')) + '</span><span class="vis-oculto"> (abre em outra aba)</span>');
+      case 'quiz': return quiz(b);
+      case 'vf': return vf(b);
+      case 'observacao': return desafio(b);
+      case 'checklist': return checklist(b);
+      default: return el('div', null, b.html || '');
+    }
+  }
+
+  /* Pergunta de múltipla escolha: a resposta fica guardada e a explicação
+     aparece sempre, certa ou não. */
+  function quiz(q) {
+    var s = estado(); var box = el('section', { class: 'atividade', 'aria-labelledby': q.id + '-q' });
+    box.innerHTML = '<span class="rot">Teste o olhar</span><div class="q" id="' + q.id + '-q">' + q.pergunta + '</div>';
+    var ops = el('div', { class: 'opcoes', role: 'group', 'aria-labelledby': q.id + '-q' });
+    var exp = el('div', { class: 'explicacao', 'aria-live': 'polite' });
+    function mostrar(k) {
+      [].forEach.call(ops.children, function (b, j) { b.setAttribute('data-estado', q.opcoes[j].certa ? 'certa' : (j === k ? 'errada' : '')); b.setAttribute('aria-pressed', j === k ? 'true' : 'false'); });
+      var certa = q.opcoes.filter(function (o) { return o.certa; })[0];
+      exp.innerHTML = (q.opcoes[k].certa ? '<b>Isso.</b> ' : '<b>Quase.</b> A resposta é: ' + certa.texto + '. ') + (certa.explicacao || '');
+    }
+    q.opcoes.forEach(function (o, k) { var b = el('button', { type: 'button' }, o.texto); b.addEventListener('click', function () { guardar(function (s) { s.resp = s.resp || {}; s.resp[q.id] = k; }); mostrar(k); }); ops.appendChild(b); });
+    box.appendChild(ops); box.appendChild(exp);
+    if (s.resp[q.id] != null) mostrar(s.resp[q.id]);
+    return box;
+  }
+  function vf(q) {
+    return quiz({ id: q.id, pergunta: q.afirmacao, opcoes: [{ texto: 'Verdadeiro', certa: q.resposta, explicacao: q.explicacao }, { texto: 'Falso', certa: !q.resposta, explicacao: q.explicacao }] });
+  }
+  function desafio(o) {
+    var s = estado(); var box = el('section', { class: 'atividade desafio' });
+    box.innerHTML = '<span class="rot">Desafio de observação</span><div class="q">' + o.titulo + '</div><p>' + o.texto + '</p>';
+    var lab = el('label', null, '<input type="checkbox"> Observei isto na viagem');
+    var inp = lab.querySelector('input'); inp.checked = !!s.desafios[o.id];
+    inp.addEventListener('change', function () { guardar(function (s) { s.desafios = s.desafios || {}; s.desafios[o.id] = inp.checked; }); });
+    box.appendChild(lab); return box;
+  }
+  function checklist(b) {
+    var s = estado(); var box = el('section', { class: 'atividade desafio' }, '<span class="rot">Checklist</span><div class="q">' + esc(b.titulo || '') + '</div>');
+    b.itens.forEach(function (t, k) {
+      var id = 'ck-' + k; var lab = el('label', null, '<input type="checkbox"> ' + t); var inp = lab.querySelector('input'); inp.checked = !!s.check[id];
+      inp.addEventListener('change', function () { guardar(function (s) { s.check = s.check || {}; s.check[id] = inp.checked; }); });
+      box.appendChild(lab);
+    });
+    return box;
+  }
+
+  /* ── páginas ────────────────────────────────────────────────────────── */
+  function inicio() {
+    var s = estado(); var c1 = D.capitulos[0];
+    main.innerHTML = '';
+    var h = el('section', { class: 'heroi' }, '<div class="arte">' + (c1.abertura.imagem && D.svgs[c1.abertura.imagem] ? D.svgs[c1.abertura.imagem] : '') + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Hebraico Fluente</span><span class="he" lang="he">ישראל</span></div><h1>' + esc(D.titulo) + '</h1><p>' + esc(D.subtitulo) + '.</p></div>');
+    main.appendChild(h);
+    main.appendChild(el('p', { class: 'aviso-prototipo' }, 'Protótipo para aprovação: só o capítulo 1 está aqui. O progresso e o diário ficam guardados neste aparelho.'));
+    if (s.ultima) { var u = porId(s.ultima.cap); if (u) main.appendChild(el('p', null, '<a class="botao" href="#/' + u.id + '/' + s.ultima.secao + '">Continuar de onde parou</a>')); }
+    else main.appendChild(el('p', null, '<a class="botao" href="#/' + c1.id + '">Começar pelo capítulo 1</a>'));
+    var lista = el('ol', { class: 'capitulos', 'aria-label': 'Capítulos' });
+    D.indice.forEach(function (c) {
+      var li = el('li');
+      li.innerHTML = c.disponivel
+        ? '<a href="#/' + c.id + '"><span class="n">' + String(c.n).padStart(2, '0') + '</span><span class="t">' + esc(c.titulo) + '</span><span class="pct">' + pct(porId(c.id)) + '%</span></a>'
+        : '<div class="off"><span class="n">' + String(c.n).padStart(2, '0') + '</span><span class="t">' + esc(c.titulo || 'Capítulo ' + c.n) + '<small>Em produção</small></span><span></span></div>';
+      lista.appendChild(li);
+    });
+    main.appendChild(el('h2', { class: 'pagina', style: 'font-size:26px' }, 'Capítulos'));
+    main.appendChild(lista);
+    var favs = Object.keys(s.fav).filter(function (k) { return s.fav[k]; });
+    if (favs.length) {
+      main.appendChild(el('h2', { class: 'pagina', style: 'font-size:26px' }, 'Favoritos'));
+      var fl = el('ol', { class: 'capitulos' });
+      favs.forEach(function (id) { D.capitulos.forEach(function (c) { c.secoes.forEach(function (x) { if (x.id === id) fl.appendChild(el('li', null, '<a href="#/' + c.id + '/' + x.id + '"><span class="n">' + (x.rubrica ? '<span class="he">' + x.rubrica + '</span>' : '') + '</span><span class="t">' + (x.titulo || c.titulo) + '<small>' + esc(c.titulo) + '</small></span><span></span></a>')); }); }); });
+      main.appendChild(fl);
+    }
+  }
+
+  var observador = null;
+  function capitulo(cap, alvo) {
+    main.innerHTML = '';
+    main.appendChild(el('section', { class: 'heroi' }, '<div class="arte">' + (cap.abertura.imagem && D.svgs[cap.abertura.imagem] ? D.svgs[cap.abertura.imagem] : '') + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Capítulo ' + String(cap.numero).padStart(2, '0') + '</span></div><h1>' + esc(cap.titulo) + '</h1><p>' + (cap.abertura.frase || esc(cap.subtitulo || '')) + '</p>' + (cap.abertura.credito ? '<div class="credito">' + esc(cap.abertura.credito) + '</div>' : '') + '</div>'));
+    var s = estado();
+    cap.secoes.forEach(function (sec) {
+      var art = el('section', { class: 'secao' + (sec.titulo ? '' : ' entrada'), id: sec.id });
+      if (sec.titulo) {
+        var rub = el('div', { class: 'rubrica' }, '<span class="he" lang="he">' + sec.rubrica + '</span><span>' + esc(cap.titulo) + '</span>');
+        var acoes = el('span', { class: 'acoes' });
+        var fav = el('button', { class: 'icone', 'aria-pressed': s.fav[sec.id] ? 'true' : 'false', 'aria-label': 'Guardar esta seção nos favoritos' }, s.fav[sec.id] ? ICONE.favOn : ICONE.fav);
+        fav.addEventListener('click', function () { var on = fav.getAttribute('aria-pressed') !== 'true'; guardar(function (st) { st.fav = st.fav || {}; st.fav[sec.id] = on; }); fav.setAttribute('aria-pressed', String(on)); fav.innerHTML = on ? ICONE.favOn : ICONE.fav; });
+        acoes.appendChild(fav); rub.appendChild(acoes); art.appendChild(rub);
+        art.appendChild(el('h2', null, sec.titulo));
+      }
+      sec.blocos.forEach(function (b) { art.appendChild(bloco(b, cap)); });
+      if (sec.fontes.length) art.appendChild(el('details', { class: 'fontes' }, '<summary>Fontes desta seção (' + sec.fontes.length + ')</summary><ol>' + sec.fontes.map(function (f) { return '<li>' + (f.url ? '<a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(f.abnt) + '</a>' : esc(f.abnt)) + '</li>'; }).join('') + '</ol>' + (sec.revisado_em ? '<p>Consultadas até ' + sec.revisado_em.split('-').reverse().join('/') + '.</p>' : '') + '</details>'));
+      main.appendChild(art);
+    });
+    if (observador) observador.disconnect();
+    observador = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { var id = e.target.id; guardar(function (st) { st.lidas = st.lidas || {}; st.lidas[id] = true; st.ultima = { cap: cap.id, secao: id }; }); barra.style.width = pct(cap) + '%'; } });
+    }, { rootMargin: '0px 0px -60% 0px' });
+    [].forEach.call(main.querySelectorAll('.secao'), function (x) { observador.observe(x); });
+    barra.style.width = pct(cap) + '%';
+    if (alvo) { var a = document.getElementById(alvo); if (a) a.scrollIntoView(); } else window.scrollTo(0, 0);
+  }
+
+  function glossario() {
+    main.innerHTML = '<h1 class="pagina">Glossário</h1><p>As palavras em hebraico deste material. Toque no alto-falante para ouvir a gravação, quando houver.</p>';
+    var busca = el('input', { class: 'busca', type: 'search', placeholder: 'Buscar em português, transliteração ou hebraico', 'aria-label': 'Buscar no glossário' });
+    main.appendChild(busca);
+    var itens = []; D.capitulos.forEach(function (c) { c.vocabulario.forEach(function (v) { itens.push(v); }); });
+    var vistos = {}; itens = itens.filter(function (v) { if (vistos[v.he]) return false; vistos[v.he] = 1; return true; }).sort(function (a, b) { return a.translit.localeCompare(b.translit, 'pt'); });
+    var caixa = el('div'); main.appendChild(caixa);
+    function filtrar() {
+      var t = busca.value.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      var achados = itens.filter(function (v) { return !t || (v.translit + ' ' + v.pt + ' ' + v.he).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').indexOf(t) >= 0; });
+      caixa.innerHTML = '';
+      caixa.appendChild(bloco({ tipo: 'vocabulario', titulo: achados.length + ' palavra' + (achados.length === 1 ? '' : 's'), itens: achados }));
+    }
+    busca.addEventListener('input', filtrar); filtrar();
+  }
+
+  function diario() {
+    var s = estado();
+    main.innerHTML = '<h1 class="pagina">Diário de descobertas</h1><p>Escreva antes, durante e depois da viagem. O texto fica guardado neste aparelho; use "Baixar meu diário" para levar uma cópia.</p>';
+    var blocos = D.diario ? D.diario.secoes.reduce(function (a, x) { return a.concat(x.blocos); }, []) : [];
+    blocos.filter(function (b) { return b.tipo === 'diario'; }).forEach(function (b, k) {
+      var id = 'd' + k; var sec = el('section', { class: 'secao' });
+      sec.innerHTML = '<div class="rubrica"><span>Diário</span></div><h2>' + esc(b.titulo) + '</h2>' + (b.instrucao ? '<p>' + b.instrucao + '</p>' : '');
+      var ta = el('textarea', { 'aria-label': b.titulo }); ta.value = s.diario[id] || '';
+      ta.addEventListener('input', function () { guardar(function (st) { st.diario = st.diario || {}; st.diario[id] = ta.value; }); });
+      sec.appendChild(ta); main.appendChild(sec);
+    });
+    blocos.filter(function (b) { return b.tipo === 'checklist'; }).forEach(function (b) { main.appendChild(checklist(b)); });
+    var baixar = el('button', { class: 'botao claro', type: 'button' }, 'Baixar meu diário');
+    baixar.addEventListener('click', function () {
+      var st = estado(); var txt = blocos.filter(function (b) { return b.tipo === 'diario'; }).map(function (b, k) { return '## ' + b.titulo + '\n\n' + (st.diario['d' + k] || '') + '\n'; }).join('\n');
+      var a = el('a', { href: URL.createObjectURL(new Blob([txt], { type: 'text/plain' })), download: 'diario-israel-alem-do-roteiro.txt' }); document.body.appendChild(a); a.click(); a.remove();
+    });
+    main.appendChild(el('p', { style: 'margin-top:24px' })).appendChild(baixar);
+  }
+
+  /* ── rotas ──────────────────────────────────────────────────────────── */
+  function rota() {
+    fecharFolha();
+    var partes = location.hash.replace(/^#\/?/, '').split('/');
+    [].forEach.call(document.querySelectorAll('.topo nav a'), function (a) { a.removeAttribute('aria-current'); });
+    var marcar = function (h) { var a = document.querySelector('.topo nav a[href="' + h + '"]'); if (a) a.setAttribute('aria-current', 'page'); };
+    barra.style.width = '0';
+    if (partes[0] === 'glossario') { marcar('#/glossario'); glossario(); }
+    else if (partes[0] === 'diario') { marcar('#/diario'); diario(); }
+    else if (porId(partes[0])) capitulo(porId(partes[0]), partes[1]);
+    else { marcar('#/'); inicio(); }
+    if (!partes[1]) main.focus({ preventScroll: true });
+  }
+  window.addEventListener('hashchange', rota);
+  rota();
+})();

@@ -63,7 +63,12 @@ function caminho(geom, p) {
 /* Várias figuras moram no mesmo HTML do livro: um id repetido (a moldura, a
    hachura) faria uma figura usar o recorte da outra. Cada id ganha o nome da
    figura como prefixo. */
-const comPrefixo = (svg, id) => svg.replace(/id="([\w-]+)"/g, `id="${id}--$1"`).replace(/url\(#([\w-]+)\)/g, `url(#${id}--$1)`);
+const comPrefixo = (svg, id) => svg
+  .replace(/id="([\w-]+)"/g, `id="${id}--$1"`).replace(/url\(#([\w-]+)\)/g, `url(#${id}--$1)`)
+  /* O <style> de um SVG inline vale para a página inteira: cada seletor fica
+     preso à figura, senão a classe .nota do mapa encolhe as notas do livro. */
+  .replace(/<svg /, `<svg class="fig-${id}" `)
+  .replace(/<style>([\s\S]*?)<\/style>/, (_, css) => `<style>${css.replace(/(^|\})\s*([^{}]+)\{/g, (m, a, sel) => `${a}\n${sel.split(',').map(x => `.fig-${id} ${x.trim()}`).join(',')}{`)}</style>`);
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 function estilo() {

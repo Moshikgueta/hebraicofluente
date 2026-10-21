@@ -1,0 +1,11 @@
+{
+  "titulo": "Do Mediterrâneo ao Mar Morto",
+  "status": "FIGURA BLOQUEADA",
+  "pontos": [
+    {"nome": "Mediterrâneo (Tel Aviv)", "altitude_m": 0, "dist_km_desde_tel_aviv": 0, "afirmacoes": ["C01-038"], "observacao": "Nível do mar, por definição."},
+    {"nome": "Jerusalém", "altitude_m": null, "dist_km_desde_tel_aviv": null, "afirmacoes": ["C01-060"], "observacao": "PARCIALMENTE VERIFICADO: cerca de 750 m em fonte E; as montanhas da Judeia têm média de 700 a 900 m (Britannica). Falta número do CBS, do IMS ou do Survey of Israel."},
+    {"nome": "Monte das Oliveiras (cume sul)", "altitude_m": null, "dist_km_desde_tel_aviv": null, "afirmacoes": ["C01-061"], "observacao": "PARCIALMENTE VERIFICADO: 808 m na Britannica, outras fontes divergem."},
+    {"nome": "Mar Morto (superfície, 2022)", "altitude_m": -430, "dist_km_desde_tel_aviv": null, "afirmacoes": ["C01-012"], "observacao": "Em 2022, MAIS de 430 m abaixo do nível do mar; o número é um limite, não a medida. Desce cerca de 1,15 m por ano (C01-013)."}
+  ],
+  "nota": "Não desenhar até Jerusalém ter altitude de fonte A a D e o Mar Morto ter leitura oficial datada (Autoridade da Água, série mensal em data.gov.il). Distâncias não foram verificadas e ficam null. Só o ponto de partida e o limite de 2022 do Mar Morto estão verificados, o que não basta para um perfil."
+}

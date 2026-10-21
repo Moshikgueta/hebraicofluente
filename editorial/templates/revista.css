@@ -1,0 +1,159 @@
+/* Folha da edição redesenhada (PDF): "publicação de museu com ritmo de
+   revista de viagem". Lida junto com tokens-editorial.css.
+   ─────────────────────────────────────────────────────────────────────────
+   Princípios, todos visíveis no código:
+   - Fio e rubrica no lugar de cartão. Caixa com fundo só para o que é aviso.
+   - A seção é numerada com uma letra hebraica (a capa do site já faz isso).
+   - Corpo do texto sem sobrescritos: as fontes de cada seção estão numa linha
+     discreta no fim dela, que leva às notas no fim do capítulo.
+   - Dez composições (DESIGN-SYSTEM.md); cada bloco do JSON tem a sua.
+   - Hebraico sempre isolado (unicode-bidi: isolate), Noto Serif Hebrew. */
+
+@font-face { font-family: 'Literata'; font-style: normal; font-weight: 200 900; src: url('../node_modules/@fontsource-variable/literata/files/literata-latin-opsz-normal.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Literata'; font-style: italic; font-weight: 200 900; src: url('../node_modules/@fontsource-variable/literata/files/literata-latin-opsz-italic.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Literata'; font-style: normal; font-weight: 200 900; src: url('../node_modules/@fontsource-variable/literata/files/literata-latin-ext-opsz-normal.woff2') format('woff2-variations'); unicode-range: U+0100-024F, U+1E00-1EFF, U+2010-2027; }
+@font-face { font-family: 'Bricolage Grotesque'; font-weight: 500; src: url('../../assets/fonts/bricolage-grotesque-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Bricolage Grotesque'; font-weight: 700; src: url('../../assets/fonts/bricolage-grotesque-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Sans'; font-weight: 400; src: url('../../assets/fonts/instrument-sans-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Sans'; font-weight: 500; src: url('../../assets/fonts/instrument-sans-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Sans'; font-weight: 600; src: url('../../assets/fonts/instrument-sans-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Serif Hebrew'; font-weight: 400; src: url('../../assets/fonts/noto-serif-hebrew-hebrew-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Serif Hebrew'; font-weight: 600; src: url('../../assets/fonts/noto-serif-hebrew-hebrew-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Sans Hebrew'; font-weight: 400; src: url('../../assets/fonts/noto-sans-hebrew-hebrew-400-normal.woff2') format('woff2'); }
+
+html { font-family: var(--f-corpo); font-size: 10.1pt; line-height: 1.5; color: var(--corpo); font-optical-sizing: auto; font-kerning: normal; font-variant-numeric: oldstyle-nums; hyphens: auto; -webkit-hyphens: auto; }
+body { margin: 0; }
+p { margin: 0 0 .55em; text-align: justify; orphans: 2; widows: 2; }
+a { color: inherit; text-decoration: none; }
+strong { font-weight: 600; color: var(--tinta); }
+em { font-style: italic; }
+.he { font-family: var(--f-he); direction: rtl; unicode-bidi: isolate; font-size: 1.1em; line-height: 1; }
+
+/* ── 1. Abertura cinematográfica (página sangrada) ───────────────────── */
+.abertura { page: sangria; position: relative; width: 148mm; height: 210mm; background: var(--noite); color: #fff; overflow: hidden; break-after: page; }
+.abertura .imagem { position: absolute; inset: 0; }
+.abertura .imagem svg, .abertura .imagem img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.abertura .veu { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,42,49,.86) 0%, rgba(11,42,49,.25) 34%, rgba(11,42,49,0) 55%, rgba(11,42,49,.55) 100%); }
+.abertura .texto { position: absolute; left: 13mm; right: 13mm; top: 16mm; }
+.abertura .kicker { font-family: var(--f-rotulo); font-size: 6.8pt; letter-spacing: .26em; text-transform: uppercase; color: var(--teal-lite); font-weight: 600; display: flex; gap: 3mm; align-items: center; }
+.abertura .kicker .he { font-size: 13pt; color: var(--ouro); letter-spacing: 0; }
+.abertura h1 { font-family: var(--f-display); font-weight: 380; font-size: 40pt; line-height: .98; letter-spacing: -.018em; margin: 5mm 0 4mm; color: #fff; text-wrap: balance; }
+.abertura .frase { font-family: var(--f-corpo); font-style: italic; font-size: 11.5pt; line-height: 1.38; color: var(--areia-clara); max-width: 98mm; }
+.abertura .credito { position: absolute; right: 13mm; bottom: 9mm; font-family: var(--f-rotulo); font-size: 5.8pt; color: rgba(233,220,192,.8); max-width: 90mm; text-align: right; }
+
+/* ── seções: rubrica com letra hebraica, título serifado ─────────────── */
+.secao { break-before: auto; }
+.secao + .secao { margin-top: 7mm; }
+.rubrica { display: flex; align-items: baseline; gap: 2.6mm; border-top: .5pt solid var(--tinta); padding-top: 2mm; margin-bottom: 2.2mm; font-family: var(--f-rotulo); font-size: 6.6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--suave); font-weight: 600; }
+.rubrica .he { font-size: 13pt; color: var(--ouro); letter-spacing: 0; font-weight: 600; }
+.secao > h2 { font-family: var(--f-display); font-weight: 420; font-size: 19pt; line-height: 1.08; letter-spacing: -.01em; color: var(--navy); margin: 0 0 4mm; text-wrap: balance; hyphens: none; break-after: avoid; }
+.secao h3 { font-family: var(--f-rotulo); font-weight: 600; font-size: 8.4pt; letter-spacing: .02em; color: var(--tinta); margin: 4mm 0 1.2mm; break-after: avoid; }
+.entrada p:first-child { font-size: 12pt; line-height: 1.42; text-align: left; color: var(--tinta); }
+.entrada p:first-child::first-letter { font-family: var(--f-display); font-weight: 400; float: left; font-size: 46pt; line-height: .84; margin: 1.2mm 2mm 0 0; color: var(--navy); }
+.lista { margin: 0 0 .6em; padding-left: 4mm; } .lista li { margin-bottom: .2em; }
+blockquote.citacao { margin: 5mm 0; padding: 0; font-family: var(--f-display); font-style: italic; font-weight: 360; font-size: 15pt; line-height: 1.25; color: var(--navy); border: 0; text-wrap: balance; }
+
+/* Fontes da seção: uma linha, não um sobrescrito por frase. */
+.fontes-secao { font-family: var(--f-rotulo); font-size: 6.4pt; color: var(--suave); margin-top: 2mm; letter-spacing: .02em; }
+.fontes-secao a { color: var(--teal-tinta); }
+
+/* ── 2. Narrativa ilustrada: foto ou figura no fluxo ─────────────────── */
+figure { margin: 4mm 0 5mm; break-inside: avoid; }
+figure.larga { margin-left: -13mm; margin-right: -13mm; }
+figure.larga figcaption { margin: 0 13mm; }
+figure svg, figure img { width: 100%; height: auto; display: block; max-height: 150mm; }
+figcaption { font-family: var(--f-rotulo); font-size: 6.8pt; line-height: 1.45; color: var(--suave); margin-top: 1.8mm; padding-top: 1.4mm; border-top: .4pt solid var(--linha); }
+figcaption .num { font-weight: 600; color: var(--tinta); margin-right: 1.2mm; }
+figcaption .credito { display: block; font-size: 5.9pt; margin-top: .6mm; color: #7A847F; }
+
+/* Moldura de fotografia escolhida e ainda não inserida: mostra a composição
+   final e o crédito da candidata, sem fingir que a foto está ali. */
+.foto-pendente { background: repeating-linear-gradient(135deg, var(--pedra) 0 6px, #E8DEC9 6px 12px); aspect-ratio: 3 / 2; display: flex; flex-direction: column; justify-content: flex-end; padding: 4mm; box-sizing: border-box; border: .5pt solid var(--pedra-escura); }
+.foto-pendente.vertical { aspect-ratio: 3 / 4; }
+.foto-pendente .etiqueta { font-family: var(--f-rotulo); font-size: 6pt; letter-spacing: .18em; text-transform: uppercase; color: var(--neguev-tinta); font-weight: 600; }
+.foto-pendente .assunto { font-family: var(--f-display); font-size: 11pt; color: var(--navy); line-height: 1.2; margin-top: 1mm; }
+.foto-pendente .cand { font-family: var(--f-rotulo); font-size: 6pt; color: var(--suave); margin-top: 1.2mm; }
+
+/* ── 3. Infográfico / 10. Experiência visual (página inteira) ────────── */
+.visual { page: sangria; width: 148mm; height: 210mm; position: relative; break-before: page; break-after: page; background: var(--papel); }
+.visual.escuro { background: var(--noite); color: #fff; }
+.visual .alvo { position: absolute; inset: 0 0 26mm 0; display: flex; align-items: center; justify-content: center; }
+.visual .alvo svg { width: 100%; height: 100%; }
+.visual .legenda { position: absolute; left: 13mm; right: 13mm; bottom: 9mm; font-family: var(--f-rotulo); font-size: 6.8pt; line-height: 1.45; color: var(--suave); border-top: .4pt solid var(--linha); padding-top: 1.6mm; }
+.visual.escuro .legenda { color: var(--areia-clara); border-color: rgba(233,220,192,.3); }
+
+/* Dado em destaque */
+.dado { display: grid; grid-template-columns: auto 1fr; gap: 3.5mm; align-items: center; margin: 5mm 0; padding: 3mm 0; border-top: .5pt solid var(--tinta); border-bottom: .5pt solid var(--linha); break-inside: avoid; }
+.dado .numero { font-family: var(--f-dado); font-weight: 700; font-size: 30pt; line-height: .9; color: var(--neguev-tinta); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -.02em; }
+.dado .rotulo { font-family: var(--f-rotulo); font-size: 7.6pt; line-height: 1.4; color: var(--tinta); }
+.dado .nota { display: block; color: var(--suave); font-size: 6.4pt; margin-top: .8mm; }
+
+/* ── 5. Descoberta / notas de margem (Você sabia?, Observar) ─────────── */
+.nota-lateral { margin: 4.5mm 0; padding: 2.2mm 0 0 0; border-top: 1.4pt solid var(--ouro); font-size: 8.6pt; line-height: 1.45; break-inside: avoid; }
+.nota-lateral.observar { border-top-color: var(--teal); }
+.nota-lateral.entenda-melhor { border-top-color: var(--mar); }
+.nota-lateral .rot { font-family: var(--f-rotulo); font-size: 6.2pt; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--ouro-tinta); display: block; }
+.nota-lateral.observar .rot { color: var(--teal-tinta); } .nota-lateral.entenda-melhor .rot { color: var(--mar); }
+.nota-lateral .tit { font-family: var(--f-display); font-weight: 480; font-size: 11pt; color: var(--tinta); display: block; margin: .6mm 0 1mm; line-height: 1.2; }
+.nota-lateral p { text-align: left; hyphens: manual; }
+
+/* 6. História ou tradição? e Atenção: as únicas caixas com fundo. */
+.caixa-fundo { background: var(--pedra); padding: 3.5mm 4mm 2.5mm; margin: 5mm 0; font-size: 8.8pt; line-height: 1.45; break-inside: avoid; }
+.caixa-fundo.aviso { background: var(--ouro-suave); border-left: 1.2mm solid var(--ouro); }
+.caixa-fundo .rot { font-family: var(--f-rotulo); font-size: 6.2pt; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--neguev-tinta); display: block; margin-bottom: .8mm; }
+.caixa-fundo .tit { font-family: var(--f-display); font-size: 11pt; color: var(--tinta); display: block; margin-bottom: 1mm; }
+.caixa-fundo p { text-align: left; }
+.olhar-israelense { background: var(--navy); color: #E7EFEE; }
+.olhar-israelense .rot { color: var(--teal-lite); } .olhar-israelense strong, .olhar-israelense .tit { color: #fff; }
+.pendente-autor { outline: 1pt dashed #C2410C; outline-offset: 1mm; }
+.pendente-autor::after { content: 'Rascunho: depende da aprovação do autor'; display: block; font-family: var(--f-rotulo); font-size: 6pt; color: #C2410C; margin-top: 1mm; }
+
+/* ── 7. Hebraico na vida real: faixa tipográfica, sem cartão ─────────── */
+.vocab { margin: 6mm 0; break-inside: avoid; }
+.vocab .cab { display: flex; justify-content: space-between; align-items: baseline; border-top: 1.4pt solid var(--navy); padding-top: 1.6mm; margin-bottom: 1mm; }
+.vocab .cab span { font-family: var(--f-rotulo); font-size: 6.2pt; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--navy); }
+.vocab .cab .he { font-size: 11pt; letter-spacing: 0; text-transform: none; color: var(--ouro); }
+.vocab ol { list-style: none; padding: 0; margin: 0; }
+.vocab li { display: grid; grid-template-columns: 1fr auto; column-gap: 4mm; align-items: center; padding: 2mm 0; border-bottom: .4pt solid var(--linha); }
+.vocab .p-he { grid-column: 2; grid-row: 1 / span 2; font-family: var(--f-he); font-size: 19pt; line-height: 1.15; color: var(--navy); direction: rtl; unicode-bidi: isolate; text-align: right; }
+.vocab .p-tr { font-family: var(--f-rotulo); font-weight: 600; font-size: 8.2pt; color: var(--tinta); }
+.vocab .p-tr em { font-style: normal; font-weight: 400; color: var(--suave); margin-left: 1mm; }
+.vocab .p-nota { font-size: 7.8pt; line-height: 1.4; color: var(--corpo); }
+.vocab .audio { font-family: var(--f-rotulo); font-size: 5.8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-tinta); margin-left: 1.5mm; }
+
+/* ── 8. Explore o lugar e links com QR ───────────────────────────────── */
+.link-qr { display: grid; grid-template-columns: 19mm 1fr; gap: 3.5mm; align-items: center; margin: 4mm 0; padding: 2.5mm 0; border-top: .4pt solid var(--linha); border-bottom: .4pt solid var(--linha); break-inside: avoid; }
+.link-qr svg { width: 19mm; height: 19mm; display: block; }
+.link-qr .inst { font-family: var(--f-rotulo); font-size: 6pt; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--mar); }
+.link-qr .tit { font-family: var(--f-display); font-size: 10pt; color: var(--tinta); line-height: 1.25; margin: .4mm 0; }
+.link-qr .url { font-family: var(--f-rotulo); font-size: 6pt; color: var(--suave); word-break: break-all; }
+.link-qr .desc { font-size: 7.6pt; line-height: 1.4; color: var(--corpo); margin-top: .6mm; }
+
+/* ── 9. Perguntas e descobertas ──────────────────────────────────────── */
+.perguntas { break-before: page; }
+.perguntas .cab { font-family: var(--f-display); font-size: 22pt; font-weight: 400; color: var(--navy); margin: 0 0 1mm; }
+.perguntas .sub { font-style: italic; color: var(--suave); margin-bottom: 5mm; }
+.pergunta { margin-bottom: 5mm; break-inside: avoid; }
+.pergunta .q { font-family: var(--f-display); font-size: 11pt; line-height: 1.3; color: var(--tinta); }
+.pergunta .q b { font-family: var(--f-dado); color: var(--neguev-tinta); margin-right: 1.5mm; }
+.pergunta ol { list-style: lower-alpha; margin: 1.5mm 0 0; padding-left: 6mm; font-size: 9pt; }
+.pergunta .vf { font-family: var(--f-rotulo); font-size: 7pt; letter-spacing: .14em; text-transform: uppercase; color: var(--suave); margin-top: 1mm; }
+.observacao { border-left: 1.4pt solid var(--teal); padding-left: 3mm; margin-bottom: 4mm; font-size: 9pt; break-inside: avoid; }
+.observacao b { font-family: var(--f-rotulo); font-size: 7pt; letter-spacing: .14em; text-transform: uppercase; color: var(--teal-tinta); display: block; }
+.respostas { margin-top: 6mm; transform: rotate(180deg); font-family: var(--f-rotulo); font-size: 6.4pt; line-height: 1.45; color: var(--suave); border-top: .4pt solid var(--linha); padding-top: 2mm; }
+.respostas b { color: var(--tinta); }
+
+/* Notas do capítulo, em duas colunas */
+.notas { break-before: page; columns: 2; column-gap: 5mm; font-family: var(--f-rotulo); font-size: 6.1pt; line-height: 1.42; color: var(--suave); }
+.notas h2 { column-span: all; font-family: var(--f-display); font-weight: 400; font-size: 16pt; color: var(--navy); margin: 0 0 4mm; }
+.notas h3 { font-size: 6.4pt; letter-spacing: .16em; text-transform: uppercase; color: var(--tinta); margin: 2.4mm 0 1mm; break-after: avoid; }
+.notas ol { margin: 0; padding-left: 4mm; } .notas li { margin-bottom: 1mm; overflow-wrap: anywhere; break-inside: avoid; }
+
+/* ── páginas ─────────────────────────────────────────────────────────── */
+@page { size: 148mm 210mm; margin: 16mm 13mm 17mm 13mm;
+  @top-left { content: 'Israel Além do Roteiro'; font-family: 'Instrument Sans', sans-serif; font-size: 5.8pt; letter-spacing: .22em; text-transform: uppercase; color: #7A847F; }
+  @bottom-center { content: ''; font-family: 'Instrument Sans', sans-serif; font-size: 7pt; color: #5F6A66; } }
+@page sangria { margin: 0; @top-left { content: none; } @top-right { content: none; } @bottom-center { content: none; } }
+.pagedjs_page .pagedjs_margin-bottom-center > .pagedjs_margin-content::after { content: var(--pg) !important; }
+.pagedjs_page .pagedjs_margin-top-right > .pagedjs_margin-content::after { content: var(--cap) !important; font-family: 'Instrument Sans', sans-serif; font-size: 5.8pt; color: #7A847F; }
+.pagedjs_page.pagedjs_sangria_page .pagedjs_margin-content::after { content: none !important; }

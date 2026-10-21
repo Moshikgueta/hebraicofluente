@@ -1,0 +1,39 @@
+/* Tokens da coleção editorial Hebraico Fluente: a mesma base para o PDF
+   (revista.css) e para a experiência web (web.css).
+   ─────────────────────────────────────────────────────────────────────────
+   Parte da marca (app/src/styles/tokens.css): navy, teal, gold e creme são os
+   mesmos valores. O que é da coleção: a pedra de Jerusalém, o ocre do Neguev,
+   a oliveira e o azul do Mediterrâneo, para mapas, dados e acentos.
+
+   Contraste medido (WCAG, texto pequeno precisa de 4,5:1):
+     sobre --papel: tinta 15,6 · corpo 11,8 · suave 5,3 · navy 11,6 · mar 7,2 ·
+       teal-tinta 6,5 · ouro-tinta 5,0 · neguev-tinta 5,9 · oliveira-tinta 7,5
+     sobre --pedra: suave 4,6 · ouro-tinta 4,3 (NÃO usar em texto pequeno)
+     sobre --navy: branco 12,2 · areia-clara 9,0 · teal-lite 7,3 · ouro 3,8
+       (ouro sobre navy só em título grande ou fio)
+   --ouro (#B8862F) nunca é cor de texto pequeno: só fio, número grande e
+   letra hebraica de rubrica. */
+
+:root {
+  /* marca */
+  --navy: #0E3B43; --navy-2: #155059; --noite: #0B2A31;
+  --teal: #1F8A7D; --teal-tinta: #12665C; --teal-lite: #8FD6C8; --teal-suave: #E4F1EE;
+  --ouro: #B8862F; --ouro-tinta: #8A6520; --ouro-suave: #F7EFDF;
+  --papel: #FBF9F5; --areia: #F3F0E9; --linha: #E4E0D6;
+  --tinta: #1B211F; --corpo: #2E3633; --suave: #5F6A66;
+
+  /* coleção */
+  --pedra: #EFE7D6;          /* calcário de Jerusalém: fundos de seção, página de dados */
+  --pedra-escura: #D9CCB0;   /* fios sobre pedra */
+  --mar: #1E5A73;            /* Mediterrâneo: mapas, links */
+  --neguev: #B9773E; --neguev-tinta: #8C5426;
+  --oliveira: #6B7444; --oliveira-tinta: #4E5530;
+  --areia-clara: #E9DCC0;    /* texto secundário sobre navy */
+
+  /* tipografia */
+  --f-display: 'Literata Display', 'Literata', Georgia, serif;   /* títulos: Literata no tamanho óptico de display */
+  --f-corpo: 'Literata', Georgia, serif;
+  --f-rotulo: 'Instrument Sans', system-ui, sans-serif;          /* rubricas, legendas, interface */
+  --f-dado: 'Bricolage Grotesque', 'Instrument Sans', sans-serif; /* números e estatísticas (a fonte de títulos da marca) */
+  --f-he: 'Noto Serif Hebrew', 'Noto Sans Hebrew', serif;         /* todo hebraico, com nikud */
+}
