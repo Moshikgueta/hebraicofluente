@@ -61,7 +61,7 @@ Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> �
 ::: em-hebraico
 - <he>יְרוּשָׁלַיִם</he> | Yerushaláyim | Jerusalém | O nome da cidade em hebraico. Nas placas aparece sem os pontos: <he>ירושלים</he>.
 - <he>תֵל אָבִיב</he> | Tel Avív | Tel Aviv | Ao pé da letra, "colina da primavera": <he>תֵל</he> é a colina de ruínas (veja Geografia) e <he>אָבִיב</he>, a primavera.
-- <he>כִּנֶרֶת</he> | Kinéret | mar da Galileia, lago de Tiberíades | O nome hebraico do lago que em português se chama mar da Galileia ou lago de Tiberíades.
+- <he>כִּנֶרֶת</he> | Kinéret | Mar da Galileia, lago de Tiberíades | O nome hebraico do lago que em português se chama Mar da Galileia ou lago de Tiberíades.
 - <he>יַם הַמֶלַח</he> | Yam HaMélach | Mar Morto | Ao pé da letra, "mar do sal". O nome hebraico não fala em morte.
 - <he>עַכּוֹ</he> | Áko | Acre | O nome hebraico da cidade que em português se chama Acre.
 :::
@@ -90,12 +90,12 @@ Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> �
 ### Tradições e religião
 
 ::: em-hebraico
-- <he>שַׁבָּת שָׁלוֹם</he> | shabát shalóm | bom shabat; ao pé da letra, "shabat de paz" | O cumprimento da sexta-feira e do sábado. Responde-se com as mesmas palavras.
+- <he>שַׁבָּת שָׁלוֹם</he> | shabát shalóm | bom Shabat; ao pé da letra, "Shabat de paz" | O cumprimento da sexta-feira e do sábado. Responde-se com as mesmas palavras.
 - <he>חַג שָׂמֵחַ</he> | chag saméach | boas festas; ao pé da letra, "festa alegre" | Serve para qualquer festa do calendário judaico.
 - <he>כֹּתֶל</he> | kótel | muro; "o Kotel" é o Muro Ocidental | Com o artigo, <he>הַכֹּתֶל</he> (HaKótel), basta para indicar o Muro Ocidental, em Jerusalém. O nome completo é <he>הַכֹּתֶל הַמַעֲרָבִי</he> (HaKótel HaMaaraví).
-- <he>בֵּית כְּנֶסֶת</he> | beit knésset | sinagoga; ao pé da letra, "casa de reunião" | A palavra <he>כְּנֶסֶת</he> também é o nome do parlamento israelense, a Knéset.
+- <he>בֵּית כְּנֶסֶת</he> | beit knésset | sinagoga; ao pé da letra, "casa de reunião" | A palavra <he>כְּנֶסֶת</he> também é o nome do parlamento israelense, o Knesset.
 - <he>מְזוּזָה</he> | mezuzá | mezuzá | O estojo preso ao batente da porta, com um pergaminho de versículos dentro.
-- <he>כִּפָּה</he> | kipá | quipá, solidéu | O pequeno chapéu redondo que homens judeus usam sempre ou só na reza, conforme o costume de cada um.
+- <he>כִּפָּה</he> | kipá | quipá, solidéu | A pequena cobertura redonda de cabeça que muitos homens judeus usam, uns o tempo todo, outros só na reza, conforme o costume de cada um.
 - <he>כָּשֵׁר</he> | kashér | kosher, apto segundo as leis alimentares judaicas | Em placas de restaurante e embalagens. O conjunto das regras é a <he>כַּשְׁרוּת</he> (kashrút).
 :::
 
@@ -104,7 +104,7 @@ Em hebraico, o mesmo ponto dentro de uma letra pode mudar o som (<he>בּ</he> �
 ::: em-hebraico
 - <he>שׁוּק</he> | shuk | mercado | O mercado de bancas: <he>שׁוּק מַחֲנֵה יְהוּדָה</he> (Shuk Machané Yehudá), em Jerusalém, e <he>שׁוּק הַכַּרְמֶל</he> (Shuk HaKármel), em Tel Aviv.
 - <he>בְּתֵאָבוֹן</he> | beteavón | bom apetite | Diz quem serve o prato, em casa e no restaurante.
-- <he>חֶשְׁבּוֹן</he> | chesbón | a conta | No restaurante, pede-se com <he>חֶשְׁבּוֹן בְּבַקָשָׁה</he> (chesbón bevakashá).
+- <he>חֶשְׁבּוֹן</he> | cheshbón | a conta | No restaurante, pede-se com <he>חֶשְׁבּוֹן בְּבַקָשָׁה</he> (cheshbón bevakashá).
 :::
 
 ### Cotidiano

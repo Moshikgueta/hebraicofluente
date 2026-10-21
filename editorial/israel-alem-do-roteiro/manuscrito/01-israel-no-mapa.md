@@ -21,7 +21,7 @@ Antes de usar um número ou um mapa, procure a legenda: ela diz que linhas estã
 :::
 
 ::: voce-sabia Um lago que a tabela não acompanha
-Nos folhetos estatísticos do CBS de 2009 e 2010, o Mar Morto entra com 265 km², mais que os 164 km² do Mar da Galileia.[[C01-002]] O lago de verdade não espera a próxima edição da tabela: ele desce mais de um metro por ano, como mostra a seção sobre o Mar Morto, mais adiante.[[C01-013]]
+No folheto estatístico do CBS de 2010, o Mar Morto entra com 265 km², mais que os 164 km² do Mar da Galileia.[[C01-002]] O lago de verdade não espera a próxima edição da tabela: ele desce mais de um metro por ano, como mostra a seção sobre o Mar Morto, mais adiante.[[C01-013]]
 :::
 
 ::: figura mapa-regional
@@ -30,7 +30,7 @@ Israel e os países vizinhos, no litoral leste do Mediterrâneo. As linhas de fr
 
 ## Chuva: do norte ao sul, do inverno ao verão
 
-A chuva diminui muito à medida que se desce para o sul: nas montanhas da Alta Galileia, a média anual chega a cerca de 1.100 mm; no extremo sul, fica abaixo de 100 mm por ano.[[C01-021]] Dito de forma concreta: um copo deixado ao relento no extremo sul juntaria, num ano inteiro, menos de 10 cm de água.[[C01-021]]
+A chuva diminui muito à medida que se desce para o sul: nas montanhas da Alta Galileia, a média anual chega a cerca de 1.100 mm; no extremo sul, fica abaixo de 100 mm por ano.[[C01-021]] Dito de forma concreta: se nada evaporasse, a chuva de um ano inteiro no extremo sul encheria um copo até menos de 10 cm.[[C01-021]]
 
 O calendário pesa tanto quanto o mapa. A chuva se concentra de novembro a março, e de junho a agosto é comum não chover.[[C01-022]] Quem viaja em agosto atravessa o país na estação seca; quem viaja em janeiro, na estação das chuvas. Fotos das duas épocas mostram o mesmo lugar em estados diferentes, e convém lembrar disso ao comparar o que você vê com o que viu num folheto.
 

@@ -15,7 +15,7 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 9 | יְהוּד |  |  | manuscrito/02-historia.md:102 | Sob os persas, Judá virou uma província chamada Yehud (<he>יְהוּד</he>, Yehúd). Selos e moedas do período, expostos no Museu de Israel, em Jerusalém, trazem ess |
 | 10 | הַכֹּתֶל הַמַּעֲרָבִי |  |  | manuscrito/03-jerusalem.md:23 | O lugar que em hebraico se chama <he>הַכֹּתֶל הַמַּעֲרָבִי</he> (HaKótel HaMaaraví), o Muro Ocidental, ou só Kotel, tem uma história arqueológica bem documentad |
 | 11 | הַר הַבַּיִת |  |  | manuscrito/03-jerusalem.md:33 | A plataforma que esses muros sustentam tem dois nomes, e cada um diz de onde se olha. Para judeus, e no vocabulário do Estado de Israel, é o Monte do Templo, <h |
-| 12 | גִּיחוֹן |  |  | manuscrito/03-jerusalem.md:59 | Debaixo da cidade antiga, um túnel cavado na rocha leva a água de uma fonte até um tanque. A ponta norte do túnel fica junto da fonte de Giom, em hebraico <he>ג |
+| 12 | גִּיחוֹן |  |  | manuscrito/03-jerusalem.md:59 | Debaixo de Jerusalém, um túnel cavado na rocha leva a água de uma fonte até um tanque. A ponta norte do túnel fica junto da fonte de Giom, em hebraico <he>גִּיח |
 | 13 | יְרוּשָׁלַיִם | Yerushaláyim | Jerusalém | manuscrito/03-jerusalem.md:126 |  |
 | 14 | הַכֹּתֶל הַמַּעֲרָבִי | HaKótel HaMaaraví | o Muro Ocidental | manuscrito/03-jerusalem.md:127 |  |
 | 15 | הַר הַבַּיִת | Har HaBáyit | o Monte do Templo | manuscrito/03-jerusalem.md:128 |  |
@@ -40,31 +40,31 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 34 | מְצָדָה | Metsadá | Massada | manuscrito/04-alem-de-jerusalem.md:133 |  |
 | 35 | מִבְצָר | mivtsár | fortaleza | manuscrito/04-alem-de-jerusalem.md:134 |  |
 | 36 | סוֹלְלָה | solelá | rampa de cerco | manuscrito/04-alem-de-jerusalem.md:135 |  |
-| 37 | יַם הַמֶּלַח | Yam HaMélach | Mar Morto | manuscrito/04-alem-de-jerusalem.md:153 |  |
-| 38 | מֶלַח | mélach | sal | manuscrito/04-alem-de-jerusalem.md:154 |  |
-| 39 | תֵּל אָבִיב | Tel Avív | Tel Aviv | manuscrito/04-alem-de-jerusalem.md:174 |  |
-| 40 | תֵּל |  |  | manuscrito/04-alem-de-jerusalem.md:174 | - <he>תֵּל אָבִיב</he> / Tel Avív / Tel Aviv / <he>תֵּל</he> (tel) é a colina formada por camadas de ruínas; <he>אָבִיב</he> (avív), a primavera. |
-| 41 | אָבִיב |  |  | manuscrito/04-alem-de-jerusalem.md:174 | - <he>תֵּל אָבִיב</he> / Tel Avív / Tel Aviv / <he>תֵּל</he> (tel) é a colina formada por camadas de ruínas; <he>אָבִיב</he> (avív), a primavera. |
-| 42 | הָעִיר הַלְּבָנָה | haír halevaná | a Cidade Branca | manuscrito/04-alem-de-jerusalem.md:175 |  |
-| 43 | לָבָן |  |  | manuscrito/04-alem-de-jerusalem.md:175 | - <he>הָעִיר הַלְּבָנָה</he> / haír halevaná / a Cidade Branca / <he>לָבָן</he> (laván) é "branco". |
-| 44 | כִּכַּר דִּיזֶנְגּוֹף | Kikár Dízengof | praça Dizengoff | manuscrito/04-alem-de-jerusalem.md:176 |  |
-| 45 | כִּכָּר |  |  | manuscrito/04-alem-de-jerusalem.md:176 | - <he>כִּכַּר דִּיזֶנְגּוֹף</he> / Kikár Dízengof / praça Dizengoff / <he>כִּכָּר</he> (kikár) é "praça". |
-| 46 | שְׂדֵרוֹת רוֹטְשִׁילְד | Sderót Rótshild | bulevar Rothschild | manuscrito/04-alem-de-jerusalem.md:177 |  |
-| 47 | שְׂדֵרוֹת |  |  | manuscrito/04-alem-de-jerusalem.md:177 | - <he>שְׂדֵרוֹת רוֹטְשִׁילְד</he> / Sderót Rótshild / bulevar Rothschild / <he>שְׂדֵרוֹת</he> (sderót) é "bulevar, avenida arborizada". |
-| 48 | יָפוֹ | Yáfo | Jafa | manuscrito/04-alem-de-jerusalem.md:191 |  |
-| 49 | נְמַל יָפוֹ | Nemál Yáfo | porto de Jafa | manuscrito/04-alem-de-jerusalem.md:192 |  |
-| 50 | נָמָל |  |  | manuscrito/04-alem-de-jerusalem.md:192 | - <he>נְמַל יָפוֹ</he> / Nemál Yáfo / porto de Jafa / <he>נָמָל</he> (namál) é "porto". |
-| 51 | עִיר עַתִּיקָה | ir atiká | cidade antiga | manuscrito/04-alem-de-jerusalem.md:193 |  |
-| 52 | חֵיפָה | Chéifa | Haifa | manuscrito/04-alem-de-jerusalem.md:211 |  |
-| 53 | ח |  |  | manuscrito/04-alem-de-jerusalem.md:211 | - <he>חֵיפָה</he> / Chéifa / Haifa / O <he>ח</he> inicial é o R raspado (ch). |
-| 54 | הַר הַכַּרְמֶל | Har HaKármel | monte Carmelo | manuscrito/04-alem-de-jerusalem.md:212 |  |
-| 55 | הַר |  |  | manuscrito/04-alem-de-jerusalem.md:212 | - <he>הַר הַכַּרְמֶל</he> / Har HaKármel / monte Carmelo / <he>הַר</he> (har) é "monte". |
-| 56 | גַּנִּים | ganím | jardins | manuscrito/04-alem-de-jerusalem.md:213 |  |
-| 57 | גַּן |  |  | manuscrito/04-alem-de-jerusalem.md:213 | - <he>גַּנִּים</he> / ganím / jardins / Singular: <he>גַּן</he> (gan). |
-| 58 | עַכּוֹ | Áko | Acre | manuscrito/04-alem-de-jerusalem.md:233 |  |
-| 59 | חוֹמָה | chomá | muralha | manuscrito/04-alem-de-jerusalem.md:234 |  |
-| 60 | צַלְבָנִים | tsalvaním | cruzados | manuscrito/04-alem-de-jerusalem.md:235 |  |
-| 61 | צַלְבָן |  |  | manuscrito/04-alem-de-jerusalem.md:235 | - <he>צַלְבָנִים</he> / tsalvaním / cruzados / Singular: <he>צַלְבָן</he> (tsalván). |
+| 37 | יַם הַמֶּלַח | Yam HaMélach | Mar Morto | manuscrito/04-alem-de-jerusalem.md:149 |  |
+| 38 | מֶלַח | mélach | sal | manuscrito/04-alem-de-jerusalem.md:150 |  |
+| 39 | תֵּל אָבִיב | Tel Avív | Tel Aviv | manuscrito/04-alem-de-jerusalem.md:170 |  |
+| 40 | תֵּל |  |  | manuscrito/04-alem-de-jerusalem.md:170 | - <he>תֵּל אָבִיב</he> / Tel Avív / Tel Aviv / <he>תֵּל</he> (tel) é a colina formada por camadas de ruínas; <he>אָבִיב</he> (avív), a primavera. |
+| 41 | אָבִיב |  |  | manuscrito/04-alem-de-jerusalem.md:170 | - <he>תֵּל אָבִיב</he> / Tel Avív / Tel Aviv / <he>תֵּל</he> (tel) é a colina formada por camadas de ruínas; <he>אָבִיב</he> (avív), a primavera. |
+| 42 | הָעִיר הַלְּבָנָה | haír halevaná | a Cidade Branca | manuscrito/04-alem-de-jerusalem.md:171 |  |
+| 43 | לָבָן |  |  | manuscrito/04-alem-de-jerusalem.md:171 | - <he>הָעִיר הַלְּבָנָה</he> / haír halevaná / a Cidade Branca / <he>לָבָן</he> (laván) é "branco". |
+| 44 | כִּכַּר דִּיזֶנְגּוֹף | Kikár Dízengof | praça Dizengoff | manuscrito/04-alem-de-jerusalem.md:172 |  |
+| 45 | כִּכָּר |  |  | manuscrito/04-alem-de-jerusalem.md:172 | - <he>כִּכַּר דִּיזֶנְגּוֹף</he> / Kikár Dízengof / praça Dizengoff / <he>כִּכָּר</he> (kikár) é "praça". |
+| 46 | שְׂדֵרוֹת רוֹטְשִׁילְד | Sderót Rótshild | bulevar Rothschild | manuscrito/04-alem-de-jerusalem.md:173 |  |
+| 47 | שְׂדֵרוֹת |  |  | manuscrito/04-alem-de-jerusalem.md:173 | - <he>שְׂדֵרוֹת רוֹטְשִׁילְד</he> / Sderót Rótshild / bulevar Rothschild / <he>שְׂדֵרוֹת</he> (sderót) é "bulevar, avenida arborizada". |
+| 48 | יָפוֹ | Yáfo | Jafa | manuscrito/04-alem-de-jerusalem.md:187 |  |
+| 49 | נְמַל יָפוֹ | Nemál Yáfo | porto de Jafa | manuscrito/04-alem-de-jerusalem.md:188 |  |
+| 50 | נָמָל |  |  | manuscrito/04-alem-de-jerusalem.md:188 | - <he>נְמַל יָפוֹ</he> / Nemál Yáfo / porto de Jafa / <he>נָמָל</he> (namál) é "porto". |
+| 51 | עִיר עַתִּיקָה | ir atiká | cidade antiga | manuscrito/04-alem-de-jerusalem.md:189 |  |
+| 52 | חֵיפָה | Chéifa | Haifa | manuscrito/04-alem-de-jerusalem.md:207 |  |
+| 53 | ח |  |  | manuscrito/04-alem-de-jerusalem.md:207 | - <he>חֵיפָה</he> / Chéifa / Haifa / O <he>ח</he> inicial é o R raspado (ch). |
+| 54 | הַר הַכַּרְמֶל | Har HaKármel | monte Carmelo | manuscrito/04-alem-de-jerusalem.md:208 |  |
+| 55 | הַר |  |  | manuscrito/04-alem-de-jerusalem.md:208 | - <he>הַר הַכַּרְמֶל</he> / Har HaKármel / monte Carmelo / <he>הַר</he> (har) é "monte". |
+| 56 | גַּנִּים | ganím | jardins | manuscrito/04-alem-de-jerusalem.md:209 |  |
+| 57 | גַּן |  |  | manuscrito/04-alem-de-jerusalem.md:209 | - <he>גַּנִּים</he> / ganím / jardins / Singular: <he>גַּן</he> (gan). |
+| 58 | עַכּוֹ | Áko | Acre | manuscrito/04-alem-de-jerusalem.md:229 |  |
+| 59 | חוֹמָה | chomá | muralha | manuscrito/04-alem-de-jerusalem.md:230 |  |
+| 60 | צַלְבָנִים | tsalvaním | cruzados | manuscrito/04-alem-de-jerusalem.md:231 |  |
+| 61 | צַלְבָן |  |  | manuscrito/04-alem-de-jerusalem.md:231 | - <he>צַלְבָנִים</he> / tsalvaním / cruzados / Singular: <he>צַלְבָן</he> (tsalván). |
 | 62 | חִלּוֹנִי | chiloní | secular | manuscrito/05-vida-real.md:29 |  |
 | 63 | מָסָרְתִּי | masortí | tradicional | manuscrito/05-vida-real.md:30 |  |
 | 64 | דָּתִי | datí | religioso | manuscrito/05-vida-real.md:31 |  |
@@ -107,7 +107,7 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 101 | תֵל אָבִיב | Tel Avív | Tel Aviv | manuscrito/07-hebraico.md:63 |  |
 | 102 | תֵל |  |  | manuscrito/07-hebraico.md:63 | - <he>תֵל אָבִיב</he> / Tel Avív / Tel Aviv / Ao pé da letra, "colina da primavera": <he>תֵל</he> é a colina de ruínas (veja Geografia) e <he>אָבִיב</he>, a pri |
 | 103 | אָבִיב |  |  | manuscrito/07-hebraico.md:63 | - <he>תֵל אָבִיב</he> / Tel Avív / Tel Aviv / Ao pé da letra, "colina da primavera": <he>תֵל</he> é a colina de ruínas (veja Geografia) e <he>אָבִיב</he>, a pri |
-| 104 | כִּנֶרֶת | Kinéret | mar da Galileia, lago de Tiberíades | manuscrito/07-hebraico.md:64 |  |
+| 104 | כִּנֶרֶת | Kinéret | Mar da Galileia, lago de Tiberíades | manuscrito/07-hebraico.md:64 |  |
 | 105 | יַם הַמֶלַח | Yam HaMélach | Mar Morto | manuscrito/07-hebraico.md:65 |  |
 | 106 | עַכּוֹ | Áko | Acre | manuscrito/07-hebraico.md:66 |  |
 | 107 | מִדְבָּר | midbár | deserto | manuscrito/07-hebraico.md:72 |  |
@@ -127,13 +127,13 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 121 | אוּלְפָּן | ulpán | curso intensivo de hebraico | manuscrito/07-hebraico.md:86 |  |
 | 122 | יוֹם הָעַצְמָאוּת | Yom HaAtsmaút | Dia da Independência | manuscrito/07-hebraico.md:87 |  |
 | 123 | עַצְמָאוּת |  |  | manuscrito/07-hebraico.md:87 | - <he>יוֹם הָעַצְמָאוּת</he> / Yom HaAtsmaút / Dia da Independência / Feriado nacional. <he>עַצְמָאוּת</he> quer dizer "independência". |
-| 124 | שַׁבָּת שָׁלוֹם | shabát shalóm | bom shabat; ao pé da letra, "shabat de paz" | manuscrito/07-hebraico.md:93 |  |
+| 124 | שַׁבָּת שָׁלוֹם | shabát shalóm | bom Shabat; ao pé da letra, "Shabat de paz" | manuscrito/07-hebraico.md:93 |  |
 | 125 | חַג שָׂמֵחַ | chag saméach | boas festas; ao pé da letra, "festa alegre" | manuscrito/07-hebraico.md:94 |  |
 | 126 | כֹּתֶל | kótel | muro; "o Kotel" é o Muro Ocidental | manuscrito/07-hebraico.md:95 |  |
 | 127 | הַכֹּתֶל |  |  | manuscrito/07-hebraico.md:95 | - <he>כֹּתֶל</he> / kótel / muro; "o Kotel" é o Muro Ocidental / Com o artigo, <he>הַכֹּתֶל</he> (HaKótel), basta para indicar o Muro Ocidental, em Jerusalém. O |
 | 128 | הַכֹּתֶל הַמַעֲרָבִי |  |  | manuscrito/07-hebraico.md:95 | - <he>כֹּתֶל</he> / kótel / muro; "o Kotel" é o Muro Ocidental / Com o artigo, <he>הַכֹּתֶל</he> (HaKótel), basta para indicar o Muro Ocidental, em Jerusalém. O |
 | 129 | בֵּית כְּנֶסֶת | beit knésset | sinagoga; ao pé da letra, "casa de reunião" | manuscrito/07-hebraico.md:96 |  |
-| 130 | כְּנֶסֶת |  |  | manuscrito/07-hebraico.md:96 | - <he>בֵּית כְּנֶסֶת</he> / beit knésset / sinagoga; ao pé da letra, "casa de reunião" / A palavra <he>כְּנֶסֶת</he> também é o nome do parlamento israelense, a |
+| 130 | כְּנֶסֶת |  |  | manuscrito/07-hebraico.md:96 | - <he>בֵּית כְּנֶסֶת</he> / beit knésset / sinagoga; ao pé da letra, "casa de reunião" / A palavra <he>כְּנֶסֶת</he> também é o nome do parlamento israelense, o |
 | 131 | מְזוּזָה | mezuzá | mezuzá | manuscrito/07-hebraico.md:97 |  |
 | 132 | כִּפָּה | kipá | quipá, solidéu | manuscrito/07-hebraico.md:98 |  |
 | 133 | כָּשֵׁר | kashér | kosher, apto segundo as leis alimentares judaicas | manuscrito/07-hebraico.md:99 |  |
@@ -142,8 +142,8 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 136 | שׁוּק מַחֲנֵה יְהוּדָה |  |  | manuscrito/07-hebraico.md:105 | - <he>שׁוּק</he> / shuk / mercado / O mercado de bancas: <he>שׁוּק מַחֲנֵה יְהוּדָה</he> (Shuk Machané Yehudá), em Jerusalém, e <he>שׁוּק הַכַּרְמֶל</he> (Shuk  |
 | 137 | שׁוּק הַכַּרְמֶל |  |  | manuscrito/07-hebraico.md:105 | - <he>שׁוּק</he> / shuk / mercado / O mercado de bancas: <he>שׁוּק מַחֲנֵה יְהוּדָה</he> (Shuk Machané Yehudá), em Jerusalém, e <he>שׁוּק הַכַּרְמֶל</he> (Shuk  |
 | 138 | בְּתֵאָבוֹן | beteavón | bom apetite | manuscrito/07-hebraico.md:106 |  |
-| 139 | חֶשְׁבּוֹן | chesbón | a conta | manuscrito/07-hebraico.md:107 |  |
-| 140 | חֶשְׁבּוֹן בְּבַקָשָׁה |  |  | manuscrito/07-hebraico.md:107 | - <he>חֶשְׁבּוֹן</he> / chesbón / a conta / No restaurante, pede-se com <he>חֶשְׁבּוֹן בְּבַקָשָׁה</he> (chesbón bevakashá). |
+| 139 | חֶשְׁבּוֹן | cheshbón | a conta | manuscrito/07-hebraico.md:107 |  |
+| 140 | חֶשְׁבּוֹן בְּבַקָשָׁה |  |  | manuscrito/07-hebraico.md:107 | - <he>חֶשְׁבּוֹן</he> / cheshbón / a conta / No restaurante, pede-se com <he>חֶשְׁבּוֹן בְּבַקָשָׁה</he> (cheshbón bevakashá). |
 | 141 | רְחוֹב | rechóv | rua | manuscrito/07-hebraico.md:113 |  |
 | 142 | רחוב |  |  | manuscrito/07-hebraico.md:113 | - <he>רְחוֹב</he> / rechóv / rua / Vem antes do nome da rua, como em português. Nas placas, sem pontos: <he>רחוב</he>. |
 | 143 | שֵׁרוּת | sherút | táxi coletivo; ao pé da letra, "serviço" | manuscrito/07-hebraico.md:114 |  |
@@ -161,4 +161,4 @@ Regra do repositório: hebraico escrito com ajuda de IA só vai ao ar com a apro
 | 155 | יַאלְלָה | yálla | vamos!, anda! | manuscrito/07-hebraico.md:130 |  |
 | 156 | סַבַּבָּה | sabába | beleza, ótimo | manuscrito/07-hebraico.md:131 |  |
 | 157 | צִימֶר | tsímer | chalé, pousada rural | manuscrito/07-hebraico.md:132 |  |
-| 158 | שַׁבָּת |  |  | manuscrito/08-na-pratica.md:70 | O capítulo 5 explica o Shabat (<he>שַׁבָּת</he>, shabát), o descanso semanal judaico, e por que o que fecha varia de cidade para cidade e de comunidade para com |
+| 158 | שַׁבָּת |  |  | manuscrito/08-na-pratica.md:70 | O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico. Para quem viaja, a pergunta prática é: o que vai estar aberto onde eu estiver na sexta à noite |

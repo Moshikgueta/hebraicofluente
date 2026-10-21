@@ -4,7 +4,7 @@ titulo: Jerusalém, uma cidade de muitas histórias
 subtitulo: O que as pedras contam, e o que se conta sobre elas
 ---
 
-Na Cidade Antiga de Jerusalém, a mesma pedra costuma ter mais de uma história. Há a que a arqueologia consegue datar. Há a que uma tradição religiosa guarda há séculos. E há a que a política disputa. As três movem gente, mas não são a mesma coisa, e a visita fica muito mais rica para quem aprende a separá-las sem desprezar nenhuma. É esse o exercício das próximas páginas: nos lugares que quase todo roteiro inclui, e em alguns detalhes por onde quase todo roteiro passa sem olhar.
+Na Cidade Antiga de Jerusalém, a mesma pedra costuma ter mais de uma história. Há a que a arqueologia consegue datar. Há a que uma tradição religiosa guarda há séculos. E há a que a política disputa. As três movem gente, mas não são a mesma coisa, e quem aprende a separá-las, sem desprezar nenhuma, enxerga mais na visita. É esse o exercício das próximas páginas: nos lugares que quase todo roteiro inclui, e em alguns detalhes por onde quase todo roteiro passa sem olhar.
 
 ## Patrimônio mundial, e em perigo
 
@@ -14,7 +14,7 @@ Uma proposta jordaniana em 1981 para um lugar administrado por Israel desde 1967
 
 ## A muralha que se vê é otomana
 
-A muralha que o visitante contorna, fotografa e atravessa não é de Davi nem de Herodes. Foi levantada por ordem do sultão otomano Solimão, o Magnífico, no fim da década de 1530. O site de muralhas da Autoridade de Antiguidades de Israel (IAA) data a obra de 1537 e estima que ela durou de três a quatro anos; outras fontes dão a conclusão em 1541.[[C03-005]] O dinheiro veio dos impostos que os otomanos cobravam no Egito.[[C03-006]] Quanto ao motivo, a explicação mais repetida, que a própria IAA apresenta com um cauteloso "ao que parece", é o medo de uma nova cruzada cristã para tomar a cidade.[[C03-007]]
+A muralha que o visitante contorna, fotografa e atravessa não é de Davi nem de Herodes. Foi levantada por ordem do sultão otomano Solimão, o Magnífico, no fim da década de 1530. O site de muralhas da Autoridade de Antiguidades de Israel (IAA) data a obra de 1537 e estima que ela durou de três a quatro anos; outras fontes dão a conclusão em 1541.[[C03-005]] O dinheiro veio dos impostos que os otomanos cobravam no Egito.[[C03-006]] Quanto ao motivo, a IAA diz, com um cauteloso "ao que parece", que Solimão agiu em parte por medo de uma nova cruzada cristã.[[C03-007]]
 
 Os números dão a escala do trabalho: cerca de 4.300 metros de muralha, 35 torres quadradas que se projetam para fora, 344 seteiras e ameias ao longo de todo o topo. Solimão abriu nela sete portas, voltadas para os quatro pontos cardeais.[[C03-008]] A obra não partiu do zero: trechos foram assentados sobre restos de fortificações mais antigas, e por isso a fiada de baixo nem sempre tem a idade da fiada de cima.[[C03-009]]
 
@@ -22,7 +22,7 @@ Os números dão a escala do trabalho: cerca de 4.300 metros de muralha, 35 torr
 
 O lugar que em hebraico se chama <he>הַכֹּתֶל הַמַּעֲרָבִי</he> (HaKótel HaMaaraví), o Muro Ocidental, ou só Kotel, tem uma história arqueológica bem documentada. Herodes transformou o Segundo Templo num edifício monumental e cercou o monte, nos quatro lados, com enormes muros de contenção.[[C03-012]] O lado oeste é o mais comprido, com 485 metros.[[C03-013]] Os muros foram assentados sobre a rocha, com grandes blocos de cantaria de bordas cuidadosamente lavradas; cada pedra pesa por volta de cinco toneladas, e as de canto, dezenas de toneladas.[[C03-014]]
 
-A praça diante do Muro mostra só uma parte desse lado oeste. Outros trechos foram expostos em escavações que a IAA supervisionou ao longo do muro, e que se visitam como Túneis do Muro Ocidental.[[C03-017]]
+A praça diante do Muro mostra só uma parte desse lado oeste. Outros trechos foram expostos em escavações que a IAA supervisionou ao longo do muro, conhecidas como Túneis do Muro Ocidental.[[C03-017]]
 
 ::: historia-ou-tradicao Um muro do Templo?
 É comum ouvir que o Kotel é "uma parede do Templo". A arqueologia descreve outra coisa: um dos muros de contenção com que Herodes cercou o monte onde ficava o Segundo Templo.[[C03-012]] A diferença não diminui o lugar. Explica por que as pedras são tão grandes: elas seguravam uma plataforma inteira.
@@ -50,15 +50,15 @@ O edifício é partilhado por seis comunidades cristãs: os franciscanos (catól
 
 Quem pode fazer o quê, onde e quando está fixado no chamado status quo, um conjunto de regras congelado por decretos otomanos: um do século XVIII (1757, segundo a maior parte das fontes) e a confirmação por um firman, um decreto do sultão, em 1852. Nas áreas comuns, nada muda sem o acordo de todos.[[C03-036]] O preço do congelamento foi alto. Se ninguém podia mexer sem o consentimento dos outros, ninguém consertava, e no fim do século XIX havia quem previsse que o prédio ia desabar. Raymond Cohen, professor da Universidade Hebraica de Jerusalém, contou em livro como as comunidades rivais acabaram negociando, durante décadas, uma restauração que coubesse dentro das regras.[[C03-037]]
 
-Até a porta tem uma história à parte. Em 2017, a agência Reuters encontrou Adeeb Joudeh, de uma família muçulmana de Jerusalém, como guardião da chave da igreja; os Nusseibeh, outra família muçulmana antiga da cidade, são os encarregados de abrir e fechar a porta principal.[[C03-039]] De quando vem o arranjo? Joudeh o liga a Saladino, que tomou a cidade dos cruzados em 1187. Os documentos que ele mostrou à Reuters, decretos de sultões otomanos, começam no século XVI, e os historiadores divergem sobre a origem.[[C03-040]]
+Até a porta tem uma história à parte. Segundo uma reportagem da agência Reuters de 2017, o guardião da chave da igreja era Adeeb Joudeh, de uma família muçulmana de Jerusalém, e outra família muçulmana, os Nusseibeh, tinha o encargo de abrir e fechar a porta principal.[[C03-039]] De quando vem o arranjo? Joudeh o liga a Saladino, que tomou a cidade dos cruzados em 1187. Os documentos que ele mostrou à Reuters, decretos de sultões otomanos, começam no século XVI, e os historiadores divergem sobre a origem.[[C03-040]]
 
 ## Debaixo da cidade
 
 ### Um túnel e um texto na rocha
 
-Debaixo da cidade antiga, um túnel cavado na rocha leva a água de uma fonte até um tanque.[[C03-054]] A ponta norte do túnel fica junto da fonte de Giom, em hebraico <he>גִּיחוֹן</he> (Guichón).[[C03-048]] A Bíblia atribui ao rei Ezequias, de Judá, uma obra hidráulica, e é por isso que o túnel leva o nome dele.[[C03-050]]
+Debaixo de Jerusalém, um túnel cavado na rocha leva a água de uma fonte até um tanque.[[C03-054]] A ponta norte do túnel fica junto da fonte de Giom, em hebraico <he>גִּיחוֹן</he> (Guichón).[[C03-048]] A Bíblia atribui ao rei Ezequias, de Judá, uma obra hidráulica, e é por isso que o túnel leva o nome dele.[[C03-050]]
 
-De quando ele é, porém, é assunto de debate. Em 2003, uma equipe de pesquisadores datou por radiocarbono restos de plantas presos no reboco do túnel e, pelo método urânio-tório, estalactites que cresceram depois da escavação. O resultado o coloca na Idade do Ferro II, por volta de 700 a.C., e descarta a hipótese de que ele fosse do século II a.C.[[C03-051,C03-052]] Em 2011, os arqueólogos Ronny Reich e Eli Shukron, a partir de escavações perto da fonte e da ponta norte do túnel, propuseram recuar a conclusão da obra algumas décadas, pelo menos para o início do século VIII a.C., o que a colocaria antes do reinado de Ezequias. A proposta tem críticos, e a data convencional, fim do século VIII a.C., continua a ter defensores.[[C03-051]]
+De quando ele é, porém, é assunto de debate. Em 2003, uma equipe de pesquisadores datou por radiocarbono material orgânico preso no reboco do túnel e, pelo método urânio-tório, estalactites que cresceram depois da escavação. O resultado o coloca na Idade do Ferro II, por volta de 700 a.C., e descarta a hipótese de que ele fosse do século II a.C.[[C03-051,C03-052]] Em 2011, os arqueólogos Ronny Reich e Eli Shukron, a partir de escavações perto da fonte e da ponta norte do túnel, propuseram recuar a conclusão da obra algumas décadas, pelo menos para o início do século VIII a.C., o que a colocaria antes do reinado de Ezequias. A proposta tem críticos, e a data convencional, fim do século VIII a.C., continua a ter defensores.[[C03-051]]
 
 Em 1880, jovens que andavam pelo túnel perceberam, perto da saída sul, um texto gravado na parede.[[C03-053]] É a inscrição de Siloé, e ela conta o último dia da obra. Duas equipes cavavam de lados opostos. Faltando três côvados, uma ouviu a voz da outra; quando romperam a rocha, a água correu da fonte até o tanque por 1.200 côvados, sob cem côvados de rocha (na tradução de W. F. Albright).[[C03-054]] Pela forma das letras, a maioria dos especialistas data a escrita do fim do século VIII a.C.; a proposta de uma data no século II a.C. não convenceu a maior parte deles.[[C03-058]]
 
@@ -84,7 +84,7 @@ Este livro não toma partido nessa disputa. Registra o que cada documento diz e 
 
 ### 1. A moldura das pedras de Herodes
 
-Nos blocos grandes da parte baixa do Muro Ocidental, procure a faixa lisa lavrada em volta de cada pedra, como uma moldura. É o acabamento da cantaria dos muros de contenção de Herodes, e ajuda a separar, no mesmo paredão, as pedras herodianas das fiadas mais recentes por cima delas.[[C03-014]]
+Nos blocos grandes da parte baixa do Muro Ocidental, procure a faixa lisa lavrada em volta de cada pedra, como uma moldura. São as bordas lavradas da cantaria com que Herodes ergueu os muros de contenção do monte.[[C03-014]]
 
 ### 2. Um arco que não leva a lugar nenhum
 
@@ -118,9 +118,9 @@ Na escada que desce para a Capela de Santa Helena, dentro do Santo Sepulcro, as 
 
 No Cardo, no bairro judeu, pense no Mapa de Madaba: foi um mosaico do século VI que mostrou aos arqueólogos onde procurar esta rua de colunas, e ela estava onde o mosaico a desenhava.[[C03-043,C03-044]]
 
-### 10. A cor da cidade tem data
+### 10. Uma regra de construção de 1918
 
-A pedra clara das fachadas não é só gosto. Os registros do Pro-Jerusalem Council mostram que, em 8 de abril de 1918, o governo militar britânico passou a exigir licença do governador para demolir, erguer, alterar ou reformar qualquer prédio num raio de 2.500 metros da Porta de Damasco, e que uma ordem da mesma época proibiu reboco e chapa de ferro ondulada dentro das muralhas.[[C03-064]]
+O aspecto das fachadas também tem história administrativa. Os registros do Pro-Jerusalem Council mostram que, em 8 de abril de 1918, o governo militar britânico passou a exigir licença do governador para demolir, erguer, alterar ou reformar qualquer prédio num raio de 2.500 metros da Porta de Damasco, e que uma ordem da mesma época, apresentada como proteção da tradição das abóbadas de pedra, proibiu reboco e chapa de ferro ondulada dentro das muralhas.[[C03-064]]
 
 ::: em-hebraico
 - <he>יְרוּשָׁלַיִם</he> | Yerushaláyim | Jerusalém | O nome da cidade em hebraico.

@@ -29,7 +29,7 @@ São rótulos que a própria pessoa escolhe, não degraus de uma escala oficial.
 - <he>חִלּוֹנִי</he> | chiloní | secular | O rótulo mais escolhido pelos judeus israelenses na pesquisa do Pew de 2016.[[C05-009]]
 - <he>מָסָרְתִּי</he> | masortí | tradicional | O segundo mais escolhido na mesma pesquisa.[[C05-009]]
 - <he>דָּתִי</he> | datí | religioso | Um em cada oito judeus, na pesquisa de 2016.[[C05-009]]
-- <he>חֲרֵדִי</he> | charedí | ultraortodoxo | O grupo que o Israel Democracy Institute acompanha em relatório anual.[[C05-010]]
+- <he>חֲרֵדִי</he> | charedí | ultraortodoxo | O grupo do relatório estatístico de 2025 do Israel Democracy Institute.[[C05-010]]
 :::
 
 ## Hebraico e árabe na lei
@@ -64,7 +64,7 @@ No comunicado de abril de 2026, 296 mil estrangeiros, 2,9% da população, apare
 
 ### 3. O país cresce mais pelo berço do que pelo avião
 
-No ano encerrado em abril de 2026, nasceram cerca de 177 mil bebês e morreram cerca de 48 mil pessoas. No mesmo período, chegaram 21 mil imigrantes e 45 mil israelenses saíram para morar no exterior. O saldo dos nascimentos passou de 120 mil pessoas; o da migração de israelenses foi negativo.[[C05-004]] Nesse período, quem fez a população crescer foram os nascimentos.
+No ano encerrado em abril de 2026, nasceram cerca de 177 mil bebês e morreram cerca de 48 mil pessoas. No mesmo período, chegaram 21 mil imigrantes e 45 mil israelenses saíram para morar no exterior. A diferença entre nascimentos e mortes passou de 120 mil pessoas; entre os imigrantes que chegaram e os israelenses que saíram, a conta foi negativa.[[C05-004]] Nesse período, o que mais fez a população crescer foram os nascimentos.
 
 ### 4. Três filhos por mulher judia
 
@@ -78,13 +78,13 @@ O relatório estatístico de 2025 do Israel Democracy Institute (IDI) estimou a 
 
 No ano letivo 2024-2025, cerca de 420 mil alunos estudavam em instituições de ensino ultraortodoxas, perto de 21% de todos os estudantes de Israel, segundo o mesmo relatório do IDI.[[C05-011]]
 
-### 7. Quase ninguém troca de rede escolar
+### 7. Poucos trocam de rede escolar
 
 Entre 2000 e 2015, só cerca de 2% dos alunos passaram de uma rede de ensino para outra. Quando houve troca, a tendência foi sair de redes mais religiosas para menos religiosas.[[C05-019]] Na prática, a rede em que a criança entra no primeiro ano tende a ser a rede em que ela termina a escola.
 
 ### 8. Os drusos são convocados desde 1956
 
-Desde 1956, os homens drusos são convocados ao serviço militar obrigatório, depois de um acordo entre o governo e líderes da comunidade. Antes disso, podiam se alistar, mas não eram convocados.[[C05-021]] O que esse arranjo significa é discutido. Um estudo publicado em 2024 na revista Kulturní Studia conclui que o serviço reforça a identidade israelense entre jovens drusos, mas não lhes dá o acesso esperado a direitos iguais e à cidadania plena.[[C05-022]] É a conclusão de um estudo, e o chamado "modelo druso" é discutido por outros pesquisadores.[[C05-022]]
+Desde 1956, os homens drusos são convocados ao serviço militar obrigatório. Antes disso, podiam se alistar, mas não eram convocados.[[C05-021]] O que esse arranjo significa é discutido. Um estudo publicado em 2024 na revista Kulturní Studia conclui que o serviço reforça a identidade israelense entre jovens drusos, mas não lhes dá o acesso esperado a direitos iguais e à cidadania plena.[[C05-022]] É a conclusão de um estudo, e não uma regra que valha para todos os drusos.[[C05-022]]
 
 ### 9. A maioria dos cidadãos árabes não é convocada
 
@@ -92,7 +92,7 @@ A maior parte da população árabe de Israel não é chamada ao serviço nacion
 
 ### 10. A franqueza tem nome, e tem bibliografia
 
-Em 1986, Tamar Katriel, pesquisadora da Universidade de Haifa, publicou pela Cambridge University Press um estudo sobre o <he>דּוּגְרִי</he> (dúgri), a "fala reta". Para ela, o dúgri é uma forma cultural ligada à figura do sabra, o judeu nascido no país, tomado como ideal mítico.[[C05-016]] Katriel observa que, entre quem compartilha o código, a franqueza vem amortecida por significados comuns; quem vem de fora tende a lê-la como grosseria. O livro parte de dois episódios públicos do início dos anos 1980.[[C05-017]] É o retrato de um ideal de época e de um grupo, não uma regra sobre como todo mundo fala em Israel.
+Em 1986, Tamar Katriel, pesquisadora da Universidade de Haifa, publicou pela Cambridge University Press um estudo sobre o <he>דּוּגְרִי</he> (dúgri), a "fala reta". Para ela, o dúgri é uma forma cultural ligada à figura do sabra, o judeu nascido no país, tomado como ideal mítico.[[C05-016]] Katriel observa que, entre quem compartilha o código, a franqueza vem amortecida por significados comuns; quem vem de fora tende a lê-la como grosseria. O livro analisa dois episódios públicos do início dos anos 1980.[[C05-017]] É o retrato de um ideal de época e de um grupo, não uma regra sobre como todo mundo fala em Israel.
 
 ::: olhar-israelense pendente
 Uma resposta curta, um "não" sem rodeios ou uma correção feita na hora podem ser lidos de dois jeitos. O estudo de Katriel ajuda a separar estilo de intenção: no código de quem fala dúgri, ir direto ao ponto não é, por si, sinal de desprezo. Para o visitante, uma saída prática é tratar a resposta direta como informação, responder no mesmo tom e não levar para o lado pessoal. O estilo, porém, muda com a idade, a comunidade, a região e a situação, e a franqueza de um encontro no mercado não é a de uma reunião de trabalho.

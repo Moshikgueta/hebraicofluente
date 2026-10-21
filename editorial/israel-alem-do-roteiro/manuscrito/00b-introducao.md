@@ -2,7 +2,7 @@
 titulo: Introdução
 ---
 
-Quem chega a Israel pela primeira vez costuma trazer uma lista: o Muro Ocidental, o Mar Morto, a Galileia, Massada, Tel Aviv. A lista é boa. O que ela não traz é o que está em volta de cada nome: por que uma muralha tem pedras de tamanhos tão diferentes, por que o ônibus some na sexta à tarde, por que a mesma cidade aparece com três grafias numa placa, por que um guia diz "segundo a tradição" e outro diz "segundo os arqueólogos" falando do mesmo lugar.
+Quem chega a Israel pela primeira vez costuma trazer uma lista: o Muro Ocidental, o Mar Morto, a Galileia, Massada, Tel Aviv. A lista é boa. O que ela não traz é o que está em volta de cada nome: por que uma muralha tem pedras de tamanhos tão diferentes, por que a mesma cidade aparece com três grafias numa placa, por que um guia diz "segundo a tradição" e outro diz "segundo os arqueólogos" falando do mesmo lugar.
 
 Este livro foi feito para esse espaço entre a lista e o lugar. Ele não substitui o seu guia nem o seu roteiro. Ele prepara o olhar: dá o contexto que não cabe numa parada de vinte minutos, as palavras em hebraico que você vai ver e ouvir, e as perguntas que valem a pena fazer.
 

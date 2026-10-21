@@ -24,17 +24,17 @@ Em 2026 ela levou a pesquisa para um livro, *The Israeli Career of Hummus*, pela
 
 A pergunta "de quem é o homus?" ganhou palco internacional em 2008, quando o prato entrou numa discussão entre Líbano e Israel sobre direito autoral cultural e patrimônio nacional.[[C06-005]] A briga virou competição de recordes. Em janeiro de 2010, cozinheiros de Abu Gosh encheram uma antena parabólica, usada como tigela, com cerca de quatro toneladas de homus, numa iniciativa do dono de restaurante Jawdat Ibrahim, e o Guinness reconheceu o recorde.[[C06-007]]
 
-O pesquisador Nir Avieli, da Universidade Ben-Gurion do Neguev, estudou esse evento em Abu Gosh, aldeia que ele descreve como palestino-israelense. A conclusão dele é que a disputa não tratava de preparo, de autenticidade ou de qualidade, e sim de posse e de poder. No caso de Abu Gosh, chama atenção o papel de mediadores que coube a palestinos com cidadania israelense.[[C06-006]] O título que Avieli escolheu, "The Hummus Wars" (as guerras do homus), também é o de um artigo do pesquisador Ari Ariel publicado em 2012 na revista *Gastronomica*.[[C06-005]]
+O pesquisador Nir Avieli, da Universidade Ben-Gurion do Neguev, estudou um evento em Abu Gosh, aldeia que ele descreve como palestino-israelense. A conclusão dele é que a disputa não tratava de preparo, de autenticidade ou de qualidade, e sim de posse e de poder. No caso de Abu Gosh, chama atenção o papel de mediadores que coube a palestinos com cidadania israelense.[[C06-006]] O título que Avieli escolheu, "The Hummus Wars" (as guerras do homus), também é o de um artigo do pesquisador Ari Ariel publicado em 2012 na revista *Gastronomica*.[[C06-005]]
 
 ::: entenda-melhor De quem é o homus?
-Não há resposta que encerre a pergunta, e os pesquisadores citados aqui nem tentam dar uma. A reivindicação libanesa falava em patrimônio nacional; em Israel, o prato virou símbolo do país; Hirsch lê essa trajetória como apropriação de uma comida árabe, em que a origem árabe ora some, ora serve de prova de autenticidade; Avieli vê na corrida de recordes uma disputa de posse e de poder, mais do que de receita.[[C06-005]] Comer homus em Israel é provar um prato que vários povos da região reconhecem como seu.
+Não há resposta que encerre a pergunta, e os pesquisadores citados aqui nem tentam dar uma. A reivindicação libanesa falava em patrimônio nacional; em Israel, o prato virou símbolo do país; Hirsch lê essa trajetória como apropriação de uma comida árabe, em que a origem árabe ora some, ora serve de prova de autenticidade; Avieli vê na disputa uma questão de posse e de poder, mais do que de receita.[[C06-005]] Comer homus em Israel é provar um prato que vários povos da região reconhecem como seu.
 :::
 
 ## Falafel: uma origem em aberto
 
 Com o falafel, a pergunta "de onde vem?" tem mais hipóteses do que documentos.[[C06-008]]
 
-A hipótese mais repetida põe o prato no Egito, onde o bolinho de fava é chamado de taamíya. A revista britânica *History Today*, numa série sobre história da culinária, situa o surgimento em Alexandria, com a fava como ingrediente original.[[C06-008]] A mesma revista cita os autores Paul Balta e Farouk Mardam Bey, segundo os quais o falafel só aparece na literatura egípcia depois da ocupação britânica de 1882. Daí veio uma conjectura deles: oficiais britânicos que tinham provado bolinhos fritos de legumes na Índia teriam pedido a cozinheiros egípcios uma versão com ingredientes locais. A revista lembra que não há prova disso.[[C06-008]]
+Uma das hipóteses põe o prato no Egito, onde o bolinho de fava é chamado de taamíya. A revista britânica *History Today*, numa série sobre história da culinária, situa o surgimento em Alexandria, com a fava como ingrediente original.[[C06-008]] A mesma revista cita os autores Paul Balta e Farouk Mardam Bey, segundo os quais o falafel só aparece na literatura egípcia depois da ocupação britânica de 1882. Daí veio uma conjectura deles: oficiais britânicos que tinham provado bolinhos fritos de legumes na Índia teriam pedido a cozinheiros egípcios uma versão com ingredientes locais. A revista lembra que não há prova disso.[[C06-008]]
 
 O historiador Shaul Stampfer, da Universidade Hebraica de Jerusalém, aponta outro parente: os bolinhos fritos de ervilha partida que judeus de Kerala e de Calcutá faziam no fim do século XIX, que ele achou "impressionantemente parecidos" com o falafel. Para Stampfer, o trio pita, falafel e salada é uma combinação do século XX. A pesquisa saiu num capítulo da coletânea *Jews and Their Foodways*, da Oxford University Press, em 2015.[[C06-009]]
 
@@ -42,13 +42,13 @@ O historiador Shaul Stampfer, da Universidade Hebraica de Jerusalém, aponta out
 Circula muito a história de que cristãos coptas do Egito criaram o falafel como comida sem carne para os jejuns da Quaresma. É uma tradição contada, não um fato documentado: a *History Today* registra que não há evidência que a sustente.[[C06-008]]
 :::
 
-Nenhuma dessas hipóteses faz do falafel propriedade de um único povo, e nenhuma delas foi provada. O que se pode dizer com segurança é que o bolinho frito atravessou fronteiras e ganhou um lugar no pão em mais de uma cozinha da região.[[C06-008,C06-009]]
+Nenhuma dessas hipóteses faz do falafel propriedade de um único povo, e nenhuma delas foi provada. O que as fontes citadas aqui permitem dizer é que bolinhos fritos parecidos existiram em mais de uma cozinha e que, segundo Stampfer, o trio de pita, falafel e salada é do século XX.[[C06-008,C06-009]]
 
 ## Sabich: o café da manhã que virou sanduíche
 
 O <he>סַבִּיח</he> (sabích) é pita recheada com berinjela e ovo, entre outras coisas. Reportagens da imprensa israelense e judaica ligam o prato ao café da manhã de Shabat dos judeus do Iraque, montado com itens preparados de véspera, que podiam ser comidos em temperatura ambiente e eram servidos separados.[[C06-010]]
 
-A passagem para dentro do pão aparece nessas reportagens ligada a Ramat Gan, na rua Uziel. O nome mais citado é o de Sabich Halabi, imigrante nascido em Bagdá que abriu ali um quiosque com a mulher, Rina, em 1961. Segundo essas reportagens, o quiosque vendia refrigerante, doces e cigarro, e foram os motoristas da linha 63 de ônibus, cujo ponto final ficava ao lado, que pediram uma refeição de verdade. As mesmas fontes registram mais de uma versão sobre quem montou o primeiro sanduíche, e a data de 1961 não é unânime.[[C06-010]]
+A passagem para dentro do pão aparece nessas reportagens ligada a Ramat Gan, na rua Uziel. O nome que elas destacam é o de Sabich Halabi, imigrante nascido em Bagdá que abriu ali um quiosque com a mulher, Rina, em 1961. Segundo essas reportagens, o quiosque vendia refrigerante, doces e cigarro, e foram os motoristas da linha 63 de ônibus, cujo ponto final ficava ao lado, que pediram uma refeição de verdade. As mesmas fontes registram mais de uma versão sobre quem montou o primeiro sanduíche, e a data de 1961 não é unânime.[[C06-010]]
 
 No sabich dá para ver o caminho inteiro: um costume de uma comunidade, ligado a um dia da semana e à mesa de casa, que virou comida de balcão.
 
@@ -58,7 +58,7 @@ No sabich dá para ver o caminho inteiro: um costume de uma comunidade, ligado a
 
 Uma lei de 1983 contra fraude em kashrut reserva a emissão do certificado, a <he>תְּעוּדַת כַּשְׁרוּת</he> (teudát kashrút), ao Conselho do Rabinato-Chefe de Israel ou a um rabino autorizado por ele, o que na prática passa pelos rabinatos locais.[[C06-011]]
 
-O monopólio foi parar no tribunal. Em 2015, o procurador-geral permitiu que estabelecimentos sem o certificado oficial se declarassem "sob supervisão" de outra entidade. Em junho de 2016, o Supremo Tribunal deu razão ao Rabinato: sem o certificado, um negócio não pode se apresentar por escrito como kosher.[[C06-012]] O caso ganhou nova audiência, marcada para um painel de sete juízes, e no ano seguinte o tribunal mudou de direção: restaurantes sem o certificado do Rabinato podem dizer aos clientes que servem comida kosher.[[C06-013]]
+O monopólio foi parar no tribunal. Em 2015, o procurador-geral permitiu que estabelecimentos sem o certificado oficial se declarassem "sob supervisão" de outra entidade. Em junho de 2016, a Suprema Corte deu razão ao Rabinato: sem o certificado, um negócio não pode se apresentar por escrito como kosher.[[C06-012]] O caso ganhou nova audiência, marcada para um painel de sete juízes, e no ano seguinte o tribunal mudou de direção: restaurantes sem o certificado do Rabinato podem dizer aos clientes que servem comida kosher.[[C06-013]]
 
 Para quem viaja, a consequência prática é que "kosher", num restaurante israelense, pode significar o certificado do Rabinato ou a declaração de outra supervisão. Para quem segue as regras com rigor, a pergunta direta ao atendente resolve a dúvida melhor do que supor.
 
@@ -85,4 +85,4 @@ Se a kashrut importa para você, procure saber que tipo de supervisão o lugar t
 - <he>בְּתֵאָבוֹן</he> | beteavón | bom apetite | Dito ao servir ou ao começar.
 :::
 
-Uma refeição em Israel junta, no mesmo prato, ingredientes, nomes e histórias de lugares diferentes. Saber que o homus e o falafel têm origens discutidas, que o sabich nasceu de um costume de Shabat e que o certificado de kashrut tem uma história de tribunal não muda o sabor. Muda o que você enxerga enquanto come.
+Uma refeição em Israel junta, no mesmo prato, ingredientes, nomes e histórias de lugares diferentes. Saber que o homus e o falafel têm origens discutidas, que o sabich é ligado a um costume de Shabat e que o certificado de kashrut tem uma história de tribunal não muda o sabor. Muda o que você enxerga enquanto come.

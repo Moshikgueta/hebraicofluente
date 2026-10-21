@@ -8,7 +8,7 @@ Este é o capítulo do livro que envelhece mais depressa. Regra de entrada, taxa
 
 O que não pôde ser confirmado em fonte oficial não aparece como regra. Aparece como o endereço onde você confere. Pode parecer menos do que um guia costuma prometer, mas é o que este livro pode garantir: nenhuma frase deste capítulo foi tirada de site de agência ou de fórum.
 
-Comece pela primeira seção. Ela trata de segurança, e na data da consulta a orientação oficial do governo brasileiro sobre Israel era de não viajar.
+Comece pela primeira seção. Ela trata de segurança, e na data da consulta a orientação oficial do governo brasileiro sobre Israel era de não viajar.[[C08-001]]
 
 ## Segurança: a orientação oficial vem primeiro
 
@@ -47,7 +47,7 @@ Sobre os sites intermediários: na pesquisa para este livro, uma busca por "ETA 
 
 ## No aeroporto
 
-O controle de segurança e a entrevista na chegada e na saída do aeroporto Ben Gurion, e o comprovante de entrada que o viajante recebe no lugar do carimbo, não foram confirmados em página oficial atual nesta edição. Por isso o livro não descreve o procedimento. As fontes são o site da Israel Airports Authority e o portal da PIBA.
+Os procedimentos de segurança e de controle na chegada e na saída do aeroporto Ben Gurion, inclusive o tipo de registro de entrada que o viajante recebe, não foram confirmados em página oficial atual nesta edição. Por isso o livro não descreve o procedimento. As fontes são o site da Israel Airports Authority e o portal da PIBA.
 
 O mesmo vale para a bagagem: peso, volumes e itens proibidos na cabine dependem da companhia aérea e das regras do aeroporto, e as duas mudam. E para o seguro de viagem: se Israel o exige ou só o recomenda a turistas não foi confirmado em fonte oficial nesta consulta. Pergunte no portal da PIBA e à Embaixada de Israel antes de embarcar, e leia as condições da apólice que você contratar.
 
@@ -55,7 +55,7 @@ O mesmo vale para a bagagem: peso, volumes e itens proibidos na cabine dependem 
 
 Nenhum dos itens desta seção foi confirmado em fonte oficial na data da consulta, e por isso nenhum deles vem com número, preço ou regra. Em vez disso, a lista diz quem responde cada pergunta.
 
-- **Clima.** O capítulo 1 explica o clima por região e por estação. Para a previsão da semana da viagem, consulte o Israel Meteorological Service.
+- **Clima.** O capítulo 1 mostra como a chuva varia por região e por estação. Para a previsão da semana da viagem, consulte o Serviço Meteorológico de Israel (Israel Meteorological Service, IMS).
 - **Moeda e câmbio.** Consulte o Banco de Israel (Bank of Israel).
 - **Cartão e saque.** Pergunte ao banco que emitiu o seu cartão quais tarifas e limites valem para compras e saques no exterior, e se o pagamento por aproximação funciona fora do Brasil.
 - **Trem.** Horários, linhas e tarifas: consulte o site da Israel Railways.
@@ -67,15 +67,15 @@ Nenhum dos itens desta seção foi confirmado em fonte oficial na data da consul
 
 ## Shabat, lugares sagrados e etiqueta
 
-O capítulo 5 explica o Shabat (<he>שַׁבָּת</he>, shabát), o descanso semanal judaico, e por que o que fecha varia de cidade para cidade e de comunidade para comunidade. Para quem viaja, a pergunta prática é mais estreita: o que vai estar aberto onde eu estiver na sexta à noite e no sábado? Pergunte ao hotel como funcionam a recepção, o restaurante e o elevador nesses dias, e confira o transporte com antecedência.
+O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico. Para quem viaja, a pergunta prática é: o que vai estar aberto onde eu estiver na sexta à noite e no sábado? Pergunte ao hotel como funcionam a recepção, o restaurante e o elevador nesses dias, e confira o transporte com antecedência.
 
-Regras de vestimenta e de acesso em sinagogas, igrejas, mesquitas e no Muro Ocidental não foram confirmadas em fonte oficial nesta edição. Confira com a administração de cada lugar antes da visita. Os capítulos 3 e 4 contam a história desses lugares; o que vestir para entrar neles você confere perto da data.
+Regras de vestimenta e de acesso em sinagogas, igrejas, mesquitas e no Muro Ocidental não foram confirmadas em fonte oficial nesta edição. Confira com a administração de cada lugar antes da visita. Os capítulos 3 e 4 contam a história de alguns desses lugares; o que vestir para entrar neles você confere perto da data.
 
-Sobre o trato do dia a dia, o capítulo 5 fala dos costumes sociais e o capítulo 6, do restaurante e da gorjeta.
+Sobre o trato do dia a dia, o capítulo 5 fala do jeito direto de falar, o dúgri, e o capítulo 6, das palavras úteis no restaurante.
 
 ## Calor, água e sol
 
-As recomendações oficiais para trilhas no deserto, para o calor do verão e para o banho no Mar Morto não foram confirmadas nesta consulta, e o livro não as substitui por conselho próprio. As fontes são a Israel Nature and Parks Authority e o Ministério da Saúde de Israel. Confira as duas antes de qualquer passeio ao ar livre, sobretudo no deserto.
+As recomendações oficiais para trilhas no deserto, para o calor do verão e para o banho no Mar Morto não foram confirmadas nesta consulta, e o livro não as substitui por conselho próprio. As fontes são a Autoridade de Natureza e Parques de Israel (Israel Nature and Parks Authority) e o Ministério da Saúde de Israel. Confira as duas antes de qualquer passeio ao ar livre, sobretudo no deserto.
 
 ::: aviso Confira antes de viajar
 Todas as informações deste capítulo foram consultadas em 21 de outubro de 2026 e devem ser conferidas de novo até 21 de abril de 2027. Antes de comprar a passagem, e de novo na semana do embarque, abra:

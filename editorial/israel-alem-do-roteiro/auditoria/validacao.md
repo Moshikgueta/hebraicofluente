@@ -4,7 +4,7 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 18029
+- Palavras no manuscrito: 18004
 - Fontes registradas: 269 (por nível: D 45, B 73, E 100, A 40, C 11; por acesso: trecho-de-busca 250, referencia-confirmada 19)
 - Afirmações registradas: 457 (VERIFICADO 211, NÃO VERIFICADO 166, PARCIALMENTE VERIFICADO 63, DESATUALIZADO 3, CONTESTADO 14)
 - Afirmações VERIFICADO sem uso no texto: 6
@@ -14,15 +14,15 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 | Arquivo | Palavras | Marcas de fonte |
 | --- | --- | --- |
 | 00a-nota-metodologica.md | 580 | 0 |
-| 00b-introducao.md | 491 | 0 |
-| 01-israel-no-mapa.md | 1549 | 37 |
-| 02-historia.md | 2726 | 78 |
-| 03-jerusalem.md | 2604 | 68 |
-| 04-alem-de-jerusalem.md | 3087 | 101 |
-| 05-vida-real.md | 1620 | 32 |
-| 06-sabores.md | 1585 | 22 |
-| 07-hebraico.md | 972 | 0 |
-| 08-na-pratica.md | 1790 | 19 |
+| 00b-introducao.md | 482 | 0 |
+| 01-israel-no-mapa.md | 1550 | 37 |
+| 02-historia.md | 2737 | 78 |
+| 03-jerusalem.md | 2586 | 68 |
+| 04-alem-de-jerusalem.md | 3070 | 101 |
+| 05-vida-real.md | 1617 | 32 |
+| 06-sabores.md | 1591 | 22 |
+| 07-hebraico.md | 978 | 0 |
+| 08-na-pratica.md | 1788 | 20 |
 | 10-diario.md | 533 | 0 |
 | 98-notas-sobre-fontes.md | 323 | 0 |
 | 99-encerramento.md | 169 | 0 |
@@ -31,9 +31,8 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 Nenhum.
 
-## Avisos (4)
+## Avisos (3)
 
 - manuscrito/01-israel-no-mapa.md:67: caixa "O olhar de um israelense" pendente de aprovação do autor
 - manuscrito/05-vida-real.md:97: caixa "O olhar de um israelense" pendente de aprovação do autor
 - manuscrito ausente: manuscrito/09-curiosidades.md
-- transliterações diferentes para חשבון: cheshbón / chesbón

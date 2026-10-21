@@ -12,7 +12,7 @@ PARCIALMENTE VERIFICADO em afirmacoes/cap02.json, com as pistas de fonte.
 BLOQUEANTE: o capítulo não vai ao PDF sem a seção de 1948 e as seguintes.
 -->
 
-Num único dia de viagem por Israel, dá para passar por uma muralha otomana, ouvir falar de um rei da Bíblia, ver o lugar de um palácio de Herodes e escutar alguém citar uma resolução da ONU. A tentação é enfileirar tudo numa linha só, como se a terra tivesse esperado vazia a chegada de cada novo dono. Os documentos contam outra coisa: em cada época que eles alcançam, já havia gente aqui, em cidades e aldeias, e quem mandava de longe, do Egito, da Mesopotâmia, da Pérsia ou de Londres, governava essa gente.
+Num único dia de viagem por Israel, dá para passar por uma muralha otomana, ouvir falar de um rei da Bíblia, ver o lugar de um palácio de Herodes e escutar alguém citar uma resolução da ONU. A tentação é enfileirar tudo numa linha só, como se a terra tivesse esperado vazia a chegada de cada novo dono. Os documentos contam outra coisa: em cada época que eles alcançam, já havia gente na região, em cidades e aldeias, e muitas vezes quem a governava mandava de longe, do Egito, da Mesopotâmia, da Pérsia ou de Londres.
 
 As páginas seguintes separam três coisas que costumam vir misturadas no discurso de viagem: o que dizem os objetos e os documentos, o que diz a tradição religiosa e o que os historiadores ainda discutem. Quando há debate, ele aparece com o nome de quem defende cada lado.
 
@@ -25,7 +25,7 @@ fim do séc. VIII a.C. | O rei assírio Sargão II toma Samaria, capital de Isra
 539 a.C. | Ciro, rei persa, toma a Babilônia.[[C02-020]]
 c. 350-333 a.C. | Moedas de prata da província persa de Yehud.[[C02-023]]
 37-4 a.C. | Reinado de Herodes, o Grande, na Judeia; palácio-fortaleza de Massada.[[C02-026]]
-fim do séc. VII | O califa Abd al-Malik manda erguer o Domo da Rocha.[[C02-032]]
+fim do séc. VII d.C. | O califa Abd al-Malik manda erguer o Domo da Rocha.[[C02-032]]
 1187-1291 | Reconquista muçulmana dos territórios dos cruzados.[[C02-039]]
 séc. XVI | Registros otomanos já mostram maioria muçulmana na população.[[C02-038]]
 1858 | Código de Terras otomano.[[C02-046]]
@@ -96,7 +96,7 @@ Pouco mais de um século depois, foi a vez da Babilônia. Em 586 a.C., o exérci
 Em 539 a.C., Ciro, rei persa, tomou a Babilônia. O Cilindro de Ciro, hoje no Museu Britânico, foi escrito em babilônio, provavelmente por ordem dele, e o apresenta como devoto de Marduk que restaurou templos e cultos e devolveu às suas terras deuses e povos antes deportados.[[C02-020]]
 
 ::: historia-ou-tradicao O Cilindro de Ciro e o retorno a Jerusalém
-Quem ouvir que o Cilindro de Ciro "prova" a volta dos exilados de Judá deve saber o que ele diz. O texto conta é que o novo rei devolveu deuses e povos deportados, num documento feito para louvar esse mesmo rei.[[C02-020]] Ligar essas linhas ao retorno a Jerusalém é uma interpretação, que depende de juntar o cilindro a outras fontes. A interpretação pode ser razoável; o que não se sustenta é atribuir ao cilindro uma frase que ele não tem.
+Quem ouvir que o Cilindro de Ciro "prova" a volta dos exilados de Judá deve saber o que ele diz. O que o texto conta é que o novo rei devolveu deuses e povos deportados, num documento feito para louvar esse mesmo rei.[[C02-020]] Ligar essas linhas ao retorno a Jerusalém é uma interpretação, que depende de juntar o cilindro a outras fontes. A interpretação pode ser razoável; o que não se sustenta é atribuir ao cilindro uma frase que ele não tem.
 :::
 
 Sob os persas, Judá virou uma província chamada Yehud (<he>יְהוּד</he>, Yehúd). Selos e moedas do período, expostos no Museu de Israel, em Jerusalém, trazem esse nome oficial.[[C02-022]] As moedas são miúdas, de prata, e a maioria pertence à série persa de cerca de 350 a 333 a.C. Análises publicadas em 2023 mostraram prata de alta pureza com um pouco de cobre, sinal de uma receita controlada em cada série. Há também moedas do período macedônio que veio em seguida, o que sugere que a cunhagem local seguiu de pé quando o império mudou de mãos.[[C02-023]]
@@ -123,7 +123,7 @@ Dois pontos de apoio ajudam a não se perder. Durante todo o período das Cruzad
 
 ## As muralhas de Solimão
 
-A muralha que hoje cerca a Cidade Antiga de Jerusalém leva o nome de Solimão, o Magnífico. É ela que marca o limite do sítio "Cidade Antiga de Jerusalém e suas Muralhas", proposto pela Jordânia e inscrito pela UNESCO em 1981 como cidade santa para o judaísmo, o cristianismo e o islã. Desde 1982, o sítio está na lista do patrimônio mundial em perigo.[[C02-043]]
+A muralha que hoje cerca a Cidade Antiga de Jerusalém leva o nome de Solimão, o Magnífico. É ela que marca o limite do sítio "Cidade Antiga de Jerusalém e suas Muralhas", proposto pela Jordânia e inscrito pela UNESCO em 1981 como cidade santa para o judaísmo, o cristianismo e o islã. Desde 1982, o sítio está na Lista do Patrimônio Mundial em Perigo.[[C02-043]]
 
 <!-- PENDENTE: as datas de construção (1538-1540 segundo a Britannica; 1537-1541 no ESTRUTURA.md), a conferir nas inscrições das portas e unificar com o capítulo 3 (C02-044). -->
 
@@ -165,7 +165,7 @@ Em 29 de novembro de 1947, a Assembleia Geral da ONU aprovou a Resolução 181, 
 
 A partilha previa um Estado árabe e um Estado judeu. Nas contas da comissão especial que a propôs, a maior parte dos cerca de 127 mil beduínos estimados para 1946 vivia na área do Estado judeu proposto (105 mil) e o restante na do Estado árabe (22 mil).[[C02-057]] Jerusalém ficaria fora dos dois, como corpus separatum: uma entidade à parte, sob regime internacional, administrada pela ONU por meio do Conselho de Tutela, com um governador nomeado por ele e um estatuto de dez anos, a ser reexaminado depois com consulta aos habitantes.[[C02-065]]
 
-Os Estados árabes e o Alto Comitê Árabe para a Palestina rejeitaram a resolução, dizendo que a ONU excedia sua competência ao propor a partilha. A Organização Sionista, que defendia um Estado judeu em toda a Palestina, aceitou a fórmula com relutância. O conflito no terreno impediu que a resolução fosse aplicada.[[C02-066]]
+Segundo o histórico da ONU, os Estados árabes e o Alto Comitê Árabe para a Palestina rejeitaram a resolução, dizendo que a ONU excedia sua competência ao propor a partilha. A Organização Sionista, que defendia um Estado judeu em toda a Palestina, aceitou a fórmula com relutância. O conflito no terreno impediu que a resolução fosse aplicada.[[C02-066]]
 
 <!--
 PENDENTE, BLOQUEANTE PARA A PUBLICAÇÃO:
