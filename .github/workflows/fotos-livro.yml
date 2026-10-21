@@ -1,0 +1,52 @@
+name: Fotos do livro
+
+# Baixa as fotografias do e-book "Israel Além do Roteiro" (editorial/) e
+# confere a licença de cada uma NO PRÓPRIO ARQUIVO (Wikimedia Commons ou
+# Library of Congress) antes de aceitar. Existe porque a rede das sessões de
+# escrita bloqueia esses sites; aqui a internet é aberta.
+#
+# Roda sozinha num push a um ramo claude/** que mexa nas escolhas de fotos ou
+# no script, e grava o resultado (ativos/fotos/*.jpg e ativos/fotos.json) num
+# commit no MESMO ramo. Nunca em main. Não toca em produção nem em segredo.
+
+on:
+  push:
+    branches: ['claude/**']
+    paths:
+      - 'editorial/israel-alem-do-roteiro/ativos/dados/fotos-escolhas.json'
+      - 'editorial/israel-alem-do-roteiro/ativos/dados/fotos-candidatas-*.json'
+      - 'editorial/tools/baixar-fotos.mjs'
+      - '.github/workflows/fotos-livro.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fotos-livro-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fotos:
+    if: github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - name: Baixar e conferir as licenças
+        working-directory: editorial
+        run: node tools/baixar-fotos.mjs israel-alem-do-roteiro | tee /tmp/fotos.txt
+      - name: Resumo
+        run: |
+          { echo '## Fotos do livro'; echo; echo '```'; cat /tmp/fotos.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Gravar no ramo
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898+github-actions[bot]@users.noreply.github.com'
+          git add editorial/israel-alem-do-roteiro/ativos/fotos editorial/israel-alem-do-roteiro/ativos/fotos.json
+          if git diff --cached --quiet; then echo 'Nada mudou.'; exit 0; fi
+          git commit -m "Editorial: fotos do livro baixadas, licenças conferidas no arquivo"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

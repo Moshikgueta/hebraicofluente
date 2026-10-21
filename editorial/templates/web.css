@@ -252,3 +252,8 @@ main figure .alvo { overflow: hidden; }
 .marcar-lista input[type="date"] { min-height: 40px; border: 1px solid var(--linha); border-radius: 8px; padding: 0 8px; font: 15px var(--f-rotulo); background: #fff; max-width: 100%; }
 .marcar-tirar { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--linha); background: transparent; color: var(--suave); font: 600 14px var(--f-rotulo); cursor: pointer; }
 .marcar-form[hidden] { display: none; }
+
+/* Fotografias conferidas */
+figure.foto img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; background: var(--pedra); }
+figure.foto.vertical img { aspect-ratio: 3 / 4; max-width: 420px; margin: 0 auto; }
+figure.foto .credito a { color: inherit; }

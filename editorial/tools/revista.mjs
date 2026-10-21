@@ -58,7 +58,7 @@ const svgDe = id => {
 
 function foto(id, { classe = '', assunto = '' } = {}) {
   const ok = fotosOk[id];
-  if (ok && existe(path.join(RAIZ, ok.arquivo))) return { html: `<img src="file://${path.join(RAIZ, ok.arquivo)}" alt="${esc(ok.assunto || '')}">`, credito: `Foto: ${esc(ok.credito)}` };
+  if (ok && existe(path.join(RAIZ, ok.arquivo))) return { html: `<img class="foto ${classe}" src="file://${path.join(RAIZ, ok.arquivo)}" alt="${esc(ok.assunto || '')}">`, credito: `Foto: ${esc(ok.credito)}` };
   const c = candidatas.find(x => x.id === id);
   if (c) return { html: `<div class="foto-pendente ${classe}"><span class="etiqueta">Fotografia a inserir</span><span class="assunto">${assunto ? assunto.replace(/<[^>]+>/g, '') : esc(c.assunto || c.titulo_arquivo)}</span><span class="cand">Escolhida: ${esc(c.titulo_arquivo)} · ${esc(c.autor || 'autor a confirmar')} · ${esc(c.licenca_declarada || 'licença a confirmar')} · Wikimedia Commons</span></div>`, credito: 'Licença a conferir com tools/baixar-fotos.mjs antes de usar.' };
   return { html: `<div class="foto-pendente ${classe}"><span class="etiqueta">Fotografia a escolher</span><span class="assunto">${esc(id)}</span></div>`, credito: '' };
@@ -257,7 +257,11 @@ function bibliografia(listas) {
 function creditosFiguras(usadas) {
   const lista = ativos.filter(a => usadas.has(a.id));
   if (!lista.length) return '';
-  return `<section class="secao-livro creditos-fig" id="creditos-imagens"><h1 data-cap="Créditos">Mapas, infográficos e créditos</h1><dl>${lista.map(a => `<div><dt>${esc(a.titulo)}</dt><dd>${esc(a.credito_longo || a.credito_curto || '')}</dd></div>`).join('')}</dl></section>`;
+  /* Fotografias: autor, licença com o endereço dela e a página de origem,
+     como as licenças Creative Commons pedem (crédito, licença, fonte). */
+  const fotos = Object.entries(fotosOk).filter(([, f]) => existe(path.join(RAIZ, f.arquivo)));
+  const dlFotos = fotos.length ? `<h2>Fotografias</h2><dl>${fotos.map(([, f]) => `<div><dt>${esc(f.assunto)}</dt><dd>${esc(f.credito)}. Licença: ${esc(f.licenca)}${f.licenca_url ? ` (${esc(f.licenca_url.replace(/^https?:\/\//, ''))})` : ''}. Fonte: ${esc(f.pagina.replace(/^https?:\/\//, ''))}.${f.share_alike ? ' Imagem recortada para o formato da página; o recorte segue a mesma licença.' : ''}</dd></div>`).join('')}</dl>` : '';
+  return `<section class="secao-livro creditos-fig" id="creditos-imagens"><h1 data-cap="Créditos">Mapas, infográficos e créditos</h1><dl>${lista.map(a => `<div><dt>${esc(a.titulo)}</dt><dd>${esc(a.credito_longo || a.credito_curto || '')}</dd></div>`).join('')}</dl>${dlFotos}</section>`;
 }
 
 const tokens = fs.readFileSync(path.join(EDITORIAL, 'templates/tokens-editorial.css'), 'utf8');

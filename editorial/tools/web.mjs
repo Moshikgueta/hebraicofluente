@@ -14,6 +14,7 @@
    mostra o botão desligado, nunca voz sintética. */
 
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { compilarCapitulo, registros } from './lib/conteudo.mjs';
 import { vinheta } from './lib/vinhetas.mjs';
@@ -34,6 +35,17 @@ const arquivos = opt.livro
   ? meta.capitulos.map(c => c.arquivo).filter(a => a !== DIARIO && existe(path.join(RAIZ, 'manuscrito', a)))
   : String(opt.capitulos || '01-israel-no-mapa.md').split(',');
 const ativos = lerJSON(path.join(RAIZ, 'ativos/registro-de-ativos.json')).ativos;
+/* Fotografias conferidas (tools/baixar-fotos.mjs): uma cópia leve para a
+   tela, 1200 px de largura, com o crédito e a licença do registro. */
+const fotosOk = fs.existsSync(path.join(RAIZ, 'ativos/fotos.json')) ? lerJSON(path.join(RAIZ, 'ativos/fotos.json')).fotos : {};
+function fotoWeb(id) {
+  const f = fotosOk[id]; if (!f || !fs.existsSync(path.join(RAIZ, f.arquivo))) return null;
+  fs.mkdirSync(path.join(OUT, 'assets/fotos'), { recursive: true });
+  const dest = path.join(OUT, 'assets/fotos', id + '.jpg');
+  try { execFileSync('convert', [path.join(RAIZ, f.arquivo), '-resize', '1200x>', '-strip', '-quality', '72', dest]); }
+  catch { fs.copyFileSync(path.join(RAIZ, f.arquivo), dest); }
+  return { src: `assets/fotos/${id}.jpg`, assunto: f.assunto, credito: f.credito, licenca: f.licenca, licenca_url: f.licenca_url, pagina: f.pagina };
+}
 const candidatas = fs.readdirSync(path.join(RAIZ, 'ativos/dados')).filter(f => /^fotos-candidatas-.*\.json$/.test(f)).flatMap(f => lerJSON(path.join(RAIZ, 'ativos/dados', f)).candidatas || []);
 
 fs.rmSync(OUT, { recursive: true, force: true });
@@ -57,7 +69,7 @@ for (const c of caps) for (const f of c.fichas || []) if (f.audio?.gravado) { fs
 for (const c of [...caps]) for (const v of c.vocabulario) if (v.audio?.gravado) { fs.copyFileSync(v.audio.arquivo, path.join(OUT, 'assets/audio', v.audio.id + '.mp3')); v.audio = { src: `assets/audio/${v.audio.id}.mp3` }; } else v.audio = null;
 for (const c of [...caps, ...(diario ? [diario] : [])]) for (const s of c.secoes) for (const b of s.blocos) {
   if (['figura', 'visual'].includes(b.tipo)) { b.svg = svgDe(b.id); b.ativo = ativos.find(a => a.id === b.id) || null; }
-  if (b.tipo === 'foto') b.candidata = candidatas.find(x => x.id === b.id) || null;
+  if (b.tipo === 'foto') { b.candidata = candidatas.find(x => x.id === b.id) || null; b.foto = fotoWeb(b.id); }
   if (b.tipo === 'compare') { b.a.svg = svgDe(b.a.id); b.b.svg = svgDe(b.b.id); }
 }
 for (const c of caps) if (c.abertura.imagem) svgDe(c.abertura.imagem);
@@ -124,6 +136,7 @@ if (opt.artefato) {
   const facesEmb = faces.replace(/url\(assets\/fontes\/([\w.-]+)\)/g, (_, n) => `url(data:font/woff2;base64,${b64(path.join(OUT, 'assets/fontes', n))})`);
   const dadosEmb = JSON.parse(JSON.stringify(dados));
   for (const c of dadosEmb.capitulos) for (const v of c.vocabulario) if (v.audio) v.audio.src = `data:audio/mpeg;base64,${b64(path.join(OUT, v.audio.src))}`;
+  for (const c of [...dadosEmb.capitulos, ...(dadosEmb.diario ? [dadosEmb.diario] : [])]) for (const sx of c.secoes) for (const b of sx.blocos) if (b.foto && !b.foto.src.startsWith('data:')) b.foto.src = `data:image/jpeg;base64,${b64(path.join(OUT, b.foto.src))}`;
   const emb = f => { if (f.audio && !f.audio.src.startsWith('data:')) f.audio.src = `data:audio/mpeg;base64,${b64(path.join(OUT, f.audio.src))}`; };
   for (const c of dadosEmb.capitulos) for (const f of c.fichas || []) emb(f);
   for (const c of dadosEmb.capitulos) for (const s of c.secoes) for (const b of s.blocos) if (b.tipo === 'ficha') emb(b);

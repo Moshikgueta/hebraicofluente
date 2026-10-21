@@ -65,6 +65,13 @@
     f.appendChild(el('figcaption', null, cap));
     return f;
   }
+  /* Crédito da foto com a licença como link (quando o crédito já cita a
+     licença, ela vira o link ali mesmo, sem repetir). */
+  function creditoFoto(f) {
+    var cr = esc(f.credito), li = esc(f.licenca);
+    var link = f.licenca_url ? '<a href="' + esc(f.licenca_url) + '" target="_blank" rel="noopener">' + li + '</a>' : li;
+    return cr.indexOf(li) >= 0 ? cr.replace(li, link) : cr + ' · ' + link;
+  }
   function bloco(b, cap) {
     switch (b.tipo) {
       case 'p': return el('p', null, b.html);
@@ -73,6 +80,11 @@
       case 'citacao': return el('blockquote', null, b.html);
       case 'figura': case 'visual': return figura(b);
       case 'foto': {
+        if (b.foto) {
+          var fo = el('figure', { class: 'foto' + (b.formato === 'vertical' ? ' vertical' : '') });
+          fo.innerHTML = '<img src="' + b.foto.src + '" alt="' + esc(b.foto.assunto || '') + '" loading="lazy" decoding="async"><figcaption>' + (b.legenda || '') + '<span class="credito">Foto: ' + creditoFoto(b.foto) + ' · <a href="' + esc(b.foto.pagina) + '" target="_blank" rel="noopener">fonte</a></span></figcaption>';
+          return fo;
+        }
         var c = b.candidata; var f = el('figure');
         f.innerHTML = '<div class="foto-pendente"><b>Fotografia a inserir</b><span>' + esc(c ? c.assunto : b.id) + '</span>' + (c ? '<small>' + esc(c.titulo_arquivo) + ' · ' + esc(c.licenca_declarada || 'licença a confirmar') + '</small>' : '') + '</div><figcaption>' + (b.legenda || '') + '</figcaption>';
         return f;

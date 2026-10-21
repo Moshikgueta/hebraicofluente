@@ -1,0 +1,105 @@
+{
+ "_": "Para cada lugar de foto do manuscrito (::: foto <id>), as candidatas na ordem de preferência. tools/baixar-fotos.mjs tenta a primeira e passa à seguinte se a licença conferida no arquivo for recusada. Lugar sem linha aqui usa só a candidata de mesmo id.",
+ "pular": {
+  "foto-sepulcro-fachada-delaney": "licença CC BY-SA declarada, mas o campo de autor diz 'All rights reserved': contraditória, não usar"
+ },
+ "reservas": {
+  "foto-tel-aviv-costa": [
+   "foto-tel-aviv-praia",
+   "foto-tel-aviv-skyline"
+  ],
+  "foto-kineret-taylor": [
+   "foto-kineret-vista",
+   "foto-kineret-praia",
+   "foto-kineret-ramot"
+  ],
+  "foto-mar-morto-evaporacao-sts102": [
+   "foto-mar-morto-evaporacao-chao",
+   "foto-mar-morto-ein-bokek"
+  ],
+  "foto-mar-morto-dolina-shankbone": [
+   "foto-mar-morto-dolinas-pikiwiki"
+  ],
+  "foto-ramon-2019": [
+   "foto-ramon-gvanim",
+   "foto-ramon-camadas",
+   "foto-ramon-aereo-2013"
+  ],
+  "foto-hula-pikiwiki": [
+   "foto-hula-agamon",
+   "foto-hula-grou"
+  ],
+  "foto-abertura-megido-1920": [
+   "foto-abertura-megido-aerea",
+   "foto-abertura-megido-graicer"
+  ],
+  "foto-merneptah-wellcome": [
+   "foto-merneptah-cairo-tausch",
+   "foto-merneptah-cairo-webscribe",
+   "foto-merneptah-2022"
+  ],
+  "foto-mesha-replica-chicago": [
+   "foto-mesha-louvre-mbzt",
+   "foto-mesha-louvre-f4171"
+  ],
+  "foto-tel-dan-rozen-01": [
+   "foto-tel-dan-rozen-02",
+   "foto-tel-dan-2009"
+  ],
+  "foto-ciro-froberg": [
+   "foto-ciro-dsc01316",
+   "foto-ciro-peel"
+  ],
+  "foto-tito-menora-cc0": [
+   "foto-tito-relevo-flickr",
+   "foto-tito-macpherson",
+   "foto-tito-villa"
+  ],
+  "foto-domo-loc-closeup": [
+   "foto-domo-vitrais"
+  ],
+  "foto-balfour-carta": [
+   "foto-balfour-rascunho"
+  ],
+  "foto-1948-declaracao-gpo": [
+   "foto-1948-declaracao-mfa"
+  ],
+  "foto-1948-refugiados-csasznik": [
+   "foto-1948-refugiados-ein-el-hilweh",
+   "foto-1948-nli",
+   "foto-1948-refugiados-jaffa-unrwa"
+  ],
+  "foto-jerusalem-jaffa-gate-matson": [
+   "foto-jerusalem-jaffa-gate-1898"
+  ],
+  "foto-torre-de-davi-mclean": [
+   "foto-torre-de-davi-lascar",
+   "foto-torre-de-davi-bukvoed"
+  ],
+  "foto-domo-loc-temple-area": [],
+  "foto-sepulcro-fachada-delaney": [
+   "foto-sepulcro-fachada-2019"
+  ],
+  "foto-via-dolorosa-ecce-homo-matson": [
+   "foto-via-dolorosa-matson-arco"
+  ],
+  "foto-monte-oliveiras-vista": [
+   "foto-monte-oliveiras-cemiterio"
+  ],
+  "foto-cafarnaum-sinagoga-werner": [
+   "foto-cafarnaum-sinagoga-gerald"
+  ],
+  "foto-jaffa-do-mar-photochrom": [
+   "foto-jaffa-barqueiros"
+  ],
+  "foto-homus-libanes": [
+   "foto-homus-cc0"
+  ],
+  "foto-jachnun-maorx": [
+   "foto-jachnun-herzig"
+  ],
+  "foto-mahane-yehuda-dyan": [
+   "foto-mahane-yehuda-king"
+  ]
+ }
+}

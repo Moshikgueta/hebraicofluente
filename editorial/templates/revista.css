@@ -279,3 +279,8 @@ figure.compare figcaption { grid-column: 1 / -1; }
 .casa { font-family: var(--f-rotulo); color: var(--suave); margin-right: 1mm; white-space: nowrap; }
 .lacuna { display: inline-block; width: 30mm; border-bottom: .8pt solid var(--tinta); margin: 0 1mm; }
 .pergunta .linhas i { display: block; height: 7mm; border-bottom: .4pt solid var(--pedra-escura); }
+
+/* Fotografia inserida: mesmo formato da moldura que ela substitui */
+figure img.foto { aspect-ratio: 16 / 9; object-fit: cover; }
+figure img.foto.vertical { aspect-ratio: 3 / 4; }
+.creditos-fig h2 { font-family: var(--f-display); font-size: 13pt; color: var(--navy); margin: 7mm 0 2mm; }
