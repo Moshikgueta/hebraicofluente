@@ -55,11 +55,11 @@ O <he>סַבִּיח</he> (sabích) é pita recheada com berinjela e ovo, entre 
 
 No balcão, o pão é a pita, que embrulha o falafel e o sabich. Mas alguns dos pães mais curiosos do país são de sábado.
 
-O jachnun é um deles. Publicações de divulgação judaica o descrevem como uma massa fina, amanteigada e enrolada, que assa devagar durante a noite para ser comida no sábado de manhã; o prato é associado aos judeus do Iêmen, em especial de Aden, e a massa é praticamente a mesma do malawach, que vai à frigideira. Em Israel, o jachnun costuma vir com tomate ralado, zhug (o molho picante iemenita) e ovo.[[C06-044]] A lógica é a mesma do sabich: comida pronta de véspera, para um dia em que não se cozinha.
-
 ::: foto foto-jachnun-maorx
 Jachnun com tomate ralado, zhug e ovo cozido.
 :::
+
+O jachnun é um deles. Publicações de divulgação judaica o descrevem como uma massa fina, amanteigada e enrolada, que assa devagar durante a noite para ser comida no sábado de manhã; o prato é associado aos judeus do Iêmen, em especial de Aden, e a massa é praticamente a mesma do malawach, que vai à frigideira. Em Israel, o jachnun costuma vir com tomate ralado, zhug (o molho picante iemenita) e ovo.[[C06-044]] A lógica é a mesma do sabich: comida pronta de véspera, para um dia em que não se cozinha.
 
 A chalá, o pão trançado da mesa de sábado, tem uma disputa própria, mais discreta que a do homus. Um artigo da revista acadêmica *Meldar*, de estudos sefarditas, sustenta que a trança não é de origem asquenaze, como se costuma dizer, e sim sefardita.[[C06-045]] É a tese de um artigo, não um consenso, mas basta para mostrar que nem o pão de sábado escapa da pergunta sobre origem.
 
@@ -115,22 +115,15 @@ Algumas palavras resolvem a maior parte da refeição. O cardápio é o <he>תַ
 Cardápio em hebraico e inglês no Machane Yehuda.
 :::
 
-A gorjeta é costume, não lei. Reportagens do Jerusalem Post e do Israel21c dão de 10% a 15% da conta nos restaurantes; segundo o Israel21c, o patamar antigo de 10% subiu para cerca de 12%, e para 15% em Tel Aviv.[[C06-043]] Antes de calcular, veja se a conta já inclui o serviço.
-
-::: aviso Gorjeta e kashrut
-Os percentuais de gorjeta e as regras de certificação mudam com o tempo e de uma casa para outra.[[C06-043,C06-041]] Pergunte no restaurante. Informação consultada em 21 de outubro de 2026.
-:::
+A gorjeta é costume, não lei. Reportagens do Jerusalem Post e do Israel21c dão de 10% a 15% da conta nos restaurantes; segundo o Israel21c, o patamar antigo de 10% subiu para cerca de 12%, e para 15% em Tel Aviv.[[C06-043]] Antes de calcular, veja se a conta já inclui o serviço. Percentuais assim mudam com o tempo: informação consultada em 21 de outubro de 2026.
 
 ::: em-hebraico
 - <he>מִסְעָדָה</he> | missadá | restaurante | A palavra da fachada.
 - <he>תַּפְרִיט</he> | tafrít | cardápio | Peça logo ao sentar.
 - <he>מֶלְצַר</he> | meltsár | garçom | No feminino, <he>מֶלְצָרִית</he> (meltsarít).
 - <he>חֶשְׁבּוֹן</he> | cheshbón | conta | A palavra para pedir a conta.
-- <he>מַיִם</he> | máyim | água | Para pedir água à mesa.
-- <he>לֶחֶם</he> | léchem | pão | O pão em geral.
 - <he>פִּיתָה</he> | píta | pita | O pão de bolso do falafel e do sabich.
 - <he>חוּמוּס</he> | chúmus | homus | O ch é raspado, como no R de "carro".
-- <he>קָפֶה</he> | kafé | café | Tônica no fim, como em português.
 - <he>שׁוּק</he> | shuk | mercado | O mercado de rua.
 - <he>כָּשֵׁר</he> | kashér | kosher | O que cumpre as regras da kashrut.
 - <he>בְּשָׂרִי</he> | bsarí | de carne | O par de <he>חָלָבִי</he> na conversa sobre kashrut.
