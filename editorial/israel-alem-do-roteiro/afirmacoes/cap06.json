@@ -746,6 +746,79 @@
       "interpretacoes_concorrentes": "Posições palestinas e árabes (apropriação ou roubo de herança), a leitura de Salaita (pratos compartilhados por judeus do mundo árabe, cuja história o rótulo \"israelense\" apaga), e as análises acadêmicas israelenses já registradas (Hirsch, Avieli, Raviv).",
       "status": "CONTESTADO",
       "revisar_ate": null
+    },
+    {
+      "id": "C06-052",
+      "secao": "Homus: um prato, várias reivindicações",
+      "afirmacao": "O homus é tradicionalmente feito de grão-de-bico cozido e amassado, misturado com tahine (condimento de gergelim tostado), alho e suco de limão.",
+      "categoria": "gastronomia",
+      "fontes": [
+        "F06-043",
+        "F06-044"
+      ],
+      "evidencia": "Britannica: \"paste originating in the Middle East that is traditionally made of pureed or mashed cooked chickpeas mixed with tahini, a toasted sesame condiment, and diced garlic, lemon juice, and salt\". James Beard Foundation (receita hummus bi tahini): grão-de-bico processado com suco de limão e água, alho e sal, e o tahine por último.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Duas fontes de nível E independentes (obra de referência e arquivo de receitas de instituição culinária), como no jachnun (C06-044). Receita tradicional, não regra: medidas e acréscimos (sal, azeite) variam.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C06-053",
+      "secao": "Guia básico de restaurante",
+      "afirmacao": "A Lei 13.419/2017 alterou o art. 457 da CLT: considera gorjeta não só o que o cliente dá espontaneamente ao empregado, mas também o valor cobrado pela empresa como serviço ou adicional e destinado aos empregados; a gorjeta não é receita própria do empregador e é dividida segundo convenção ou acordo coletivo.",
+      "categoria": "pratica",
+      "fontes": [
+        "F06-045"
+      ],
+      "evidencia": "Texto da lei (§ 3º do art. 457): \"Considera-se gorjeta não só a importância espontaneamente dada pelo cliente ao empregado, como também o valor cobrado pela empresa, como serviço ou adicional, a qualquer título, e destinado à distribuição aos empregados\"; § 4º: não constitui receita própria dos empregadores; critérios de custeio e rateio por convenção ou acordo coletivo.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Lido o texto da lei no trecho de busca e em reproduções. O livro não afirma o que a lei não diz (percentual, obrigatoriedade para o cliente).",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-10-21"
+    },
+    {
+      "id": "C06-054",
+      "secao": "Guia básico de restaurante",
+      "afirmacao": "No Brasil, a taxa de serviço de restaurante é em geral de 10% e é opcional para o cliente, que deve ser informado disso com clareza, segundo o Procon-ES e o Idec.",
+      "categoria": "pratica",
+      "fontes": [
+        "F06-046",
+        "F06-047"
+      ],
+      "evidencia": "Folha Vitória, citando o Procon-ES: o pagamento dos 10% não é obrigatório, é cortesia do consumidor satisfeito, e o estabelecimento deve informar com clareza que é opcional. Idec: \"A taxa de serviço nada mais é do que uma gorjeta que, por sua própria natureza, é facultativa\"; o estabelecimento deve informar o caráter opcional, o percentual e o valor.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Orientação de órgão e entidade de defesa do consumidor, lida em reportagem e em página do Idec; não é texto de lei. Há casas que cobram mais de 10% (uma reportagem de 2026 fala em até 15% em São Paulo). A página exata do Idec com a frase citada deve ser conferida.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
+    },
+    {
+      "id": "C06-055",
+      "secao": "Guia básico de restaurante",
+      "afirmacao": "Em Israel e no Brasil, a gorjeta de restaurante parte de 10% e não é obrigação legal do cliente: em Israel, de 10% a 15% por costume; no Brasil, a taxa de serviço, em geral de 10%, é opcional.",
+      "categoria": "pratica",
+      "fontes": [
+        "F06-028",
+        "F06-029",
+        "F06-046",
+        "F06-047"
+      ],
+      "evidencia": "Comparação a partir de C06-043 e C06-054.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Comparação derivada; costumes mudam.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
     }
   ]
 }

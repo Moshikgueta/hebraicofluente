@@ -6,7 +6,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { C, esc, projetor, caminho, km, ISRAEL_1949, HACHURA, featDisp } from '../lib/desenho.mjs';
+import { C, esc, projetor, km, ISRAEL_1949, HACHURA, featDisp } from '../lib/desenho.mjs';
 
 export default function capitulo04({ paises, disputa, lagos, rios, svg, t, sombra, RAIZ }) {
   const destinos = JSON.parse(fs.readFileSync(path.join(RAIZ, 'ativos/dados/destinos.json'), 'utf8'));
@@ -47,8 +47,8 @@ export default function capitulo04({ paises, disputa, lagos, rios, svg, t, sombr
      Tempo de carro da costa ao Mar Morto: C01-009. */
   const ORDEM = ['mar-da-galileia', 'nazare', 'cafarnaum', 'cesareia', 'massada', 'mar-morto', 'tel-aviv', 'jafa', 'haifa', 'acre'];
   const NOMES = { 'mar-da-galileia': 'Mar da Galileia', nazare: 'Nazaré', cafarnaum: 'Cafarnaum', cesareia: 'Cesareia', massada: 'Massada', 'mar-morto': 'Mar Morto', 'tel-aviv': 'Tel Aviv', jafa: 'Jafa', haifa: 'Haifa', acre: 'Acre' };
-  const W = 1080, H = 1350;
-  const P = projetor([34.25, 31.15, 35.95, 33.1], 800, 40, 150);
+  const W = 1080, H = 1250;
+  const P = projetor([34.25, 31.15, 35.95, 33.1], 730, 40, 140);
   const mortoNorte = (() => {
     const pts = [];
     for (const f of lagos.features) {
@@ -66,21 +66,43 @@ export default function capitulo04({ paises, disputa, lagos, rios, svg, t, sombr
     return { n: i + 1, id, nome: NOMES[id], x, y, dist };
   });
 
+  /* Recorte dos países vizinhos ao retângulo do mapa (Sutherland-Hodgman):
+     sem ele, o Egito e a Arábia inteiros entram no SVG e o Paged.js, ao medir
+     a figura, a parte em duas páginas. */
+  function recortado(geom, rect) {
+    const [x0, y0, x1, y1] = rect;
+    const lados = [[q => q[0] >= x0, (a, b) => [x0, a[1] + (b[1] - a[1]) * (x0 - a[0]) / (b[0] - a[0])]], [q => q[0] <= x1, (a, b) => [x1, a[1] + (b[1] - a[1]) * (x1 - a[0]) / (b[0] - a[0])]],
+      [q => q[1] >= y0, (a, b) => [a[0] + (b[0] - a[0]) * (y0 - a[1]) / (b[1] - a[1]), y0]], [q => q[1] <= y1, (a, b) => [a[0] + (b[0] - a[0]) * (y1 - a[1]) / (b[1] - a[1]), y1]]];
+    const anel = pts => { let out = pts; for (const [dentro, corte] of lados) { const inp = out; out = []; for (let i = 0; i < inp.length; i++) { const a = inp[(i + inp.length - 1) % inp.length], b = inp[i]; if (dentro(b)) { if (!dentro(a)) out.push(corte(a, b)); out.push(b); } else if (dentro(a)) out.push(corte(a, b)); } if (!out.length) break; } return out; };
+    const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.type === 'MultiPolygon' ? geom.coordinates : [];
+    let d = '';
+    for (const pol of polys) for (const r of pol) { const c = anel(r.map(P.p)); if (c.length > 2) d += c.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join('') + 'Z'; }
+    return d;
+  }
+
+  function linhaDentro(geom, [x0, y0, x1, y1]) {
+    const linhas = geom.type === 'LineString' ? [geom.coordinates] : geom.type === 'MultiLineString' ? geom.coordinates : [];
+    let d = '';
+    for (const l of linhas) { let novo = true; for (const c of l) { const [x, y] = P.p(c); if (x < x0 || x > x1 || y < y0 || y > y1) { novo = true; continue; } d += (novo ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1); novo = false; } }
+    return d;
+  }
+
   function mapa() {
     const p = P.p, alt = P.altura;
+    const RECT = [36, 136, 774, 144 + alt];
     let s = `<rect width="${W}" height="${H}" fill="${C.papel}"/>`;
-    s += `<clipPath id="moldura"><rect x="40" y="150" width="800" height="${alt.toFixed(0)}" rx="18"/></clipPath><g clip-path="url(#moldura)">`;
-    s += `<rect x="40" y="150" width="800" height="${alt.toFixed(0)}" fill="url(#ondas)"/>`;
-    for (const f of paises.features) if (!['ISR', 'PSX'].includes(f.properties.a3)) s += `<path d="${caminho(f.geometry, p)}" fill="${C.pedra}" stroke="${C.pedraEsc}" stroke-width="1"/>`;
+    s += `<clipPath id="moldura"><rect x="40" y="140" width="730" height="${alt.toFixed(0)}" rx="18"/></clipPath><g clip-path="url(#moldura)">`;
+    s += `<rect x="40" y="140" width="730" height="${alt.toFixed(0)}" fill="url(#ondas)"/>`;
+    for (const f of paises.features) if (!['ISR', 'PSX'].includes(f.properties.a3)) { const d = recortado(f.geometry, RECT); if (d) s += `<path d="${d}" fill="${C.pedra}" stroke="${C.pedraEsc}" stroke-width="1"/>`; }
     const israel = featDisp(disputa, [...ISRAEL_1949, ...HACHURA, 'B54', 'B53']);
-    s += `<g transform="translate(5 7)">${israel.map(f => `<path d="${caminho(f.geometry, p)}" fill="${C.pedraEsc}"/>`).join('')}</g>`;
-    for (const f of featDisp(disputa, ISRAEL_1949)) s += `<path d="${caminho(f.geometry, p)}" fill="#FFFFFF" stroke="${C.navy}" stroke-width="2.2" stroke-linejoin="round"/>`;
-    for (const f of featDisp(disputa, ['B54', 'B98', 'B53'])) s += `<path d="${caminho(f.geometry, p)}" fill="url(#hachura)" stroke="${C.ouro}" stroke-width="1.4"/>`;
-    for (const f of featDisp(disputa, ['B16', 'B58'])) s += `<path d="${caminho(f.geometry, p)}" fill="url(#hachura-golan)" stroke="${C.ouroTinta}" stroke-width="1.4"/>`;
-    for (const f of rios.features) if (/Jordan/.test(f.properties.nome || f.properties.name || '')) s += `<path d="${caminho(f.geometry, p)}" fill="none" stroke="#7FB8AE" stroke-width="2.4" stroke-linecap="round"/>`;
-    for (const f of lagos.features) s += `<path d="${caminho(f.geometry, p)}" fill="${C.mar}" fill-opacity=".85" stroke="${C.mar}" stroke-width="1"/>`;
+    s += `<g transform="translate(5 7)">${israel.map(f => `<path d="${recortado(f.geometry, RECT)}" fill="${C.pedraEsc}"/>`).join('')}</g>`;
+    for (const f of featDisp(disputa, ISRAEL_1949)) s += `<path d="${recortado(f.geometry, RECT)}" fill="#FFFFFF" stroke="${C.navy}" stroke-width="2.2" stroke-linejoin="round"/>`;
+    for (const f of featDisp(disputa, ['B54', 'B98', 'B53'])) s += `<path d="${recortado(f.geometry, RECT)}" fill="url(#hachura)" stroke="${C.ouro}" stroke-width="1.4"/>`;
+    for (const f of featDisp(disputa, ['B16', 'B58'])) s += `<path d="${recortado(f.geometry, RECT)}" fill="url(#hachura-golan)" stroke="${C.ouroTinta}" stroke-width="1.4"/>`;
+    for (const f of rios.features) if (/Jordan/.test(f.properties.nome || f.properties.name || '')) s += `<path d="${linhaDentro(f.geometry, RECT)}" fill="none" stroke="#7FB8AE" stroke-width="2.4" stroke-linecap="round"/>`;
+    for (const f of lagos.features) { const d = recortado(f.geometry, RECT); if (d) s += `<path d="${d}" fill="${C.mar}" fill-opacity=".85" stroke="${C.mar}" stroke-width="1"/>`; }
     s += '</g>';
-    s += `<rect x="40" y="150" width="800" height="${alt.toFixed(0)}" rx="18" fill="none" stroke="${C.navy}" stroke-width="2"/>`;
+    s += `<rect x="40" y="140" width="730" height="${alt.toFixed(0)}" rx="18" fill="none" stroke="${C.navy}" stroke-width="2"/>`;
     const [mx, my] = p([34.42, 32.45]);
     s += `<text class="d" x="${mx.toFixed(0)}" y="${my.toFixed(0)}" font-size="24" font-style="italic" fill="${C.mar}" transform="rotate(-70 ${mx.toFixed(0)} ${my.toFixed(0)})">Mar Mediterrâneo</text>`;
     /* seta ilustrativa da costa ao Mar Morto (C01-009) */
@@ -100,13 +122,13 @@ export default function capitulo04({ paises, disputa, lagos, rios, svg, t, sombr
     }
     /* escala e norte */
     const px50 = 50 * (P.escala / 110.57);
-    s += `<g transform="translate(70 ${(150 + alt - 40).toFixed(0)})"><rect x="-12" y="-26" width="${(px50 + 24).toFixed(0)}" height="44" rx="8" fill="${C.papel}" fill-opacity=".92"/><rect width="${(px50 / 2).toFixed(1)}" height="7" fill="${C.navy}"/><rect x="${(px50 / 2).toFixed(1)}" width="${(px50 / 2).toFixed(1)}" height="7" fill="${C.papel}" stroke="${C.navy}"/>${t(0, -8, '0', { s: 12, f: C.suave })}${t(px50.toFixed(1), -8, '50 km', { s: 12, a: 'end', f: C.suave })}</g>`;
-    s += `<g transform="translate(795 195)"><circle r="22" fill="${C.papel}" stroke="${C.navy}" stroke-width="1.5"/><path d="M0 -16 L6 6 L0 2 L-6 6Z" fill="${C.navy}"/>${t(0, -28, 'N', { s: 13, w: 700, a: 'middle', f: C.navy })}</g>`;
+    s += `<g transform="translate(70 ${(140 + alt - 40).toFixed(0)})"><rect x="-12" y="-26" width="${(px50 + 24).toFixed(0)}" height="44" rx="8" fill="${C.papel}" fill-opacity=".92"/><rect width="${(px50 / 2).toFixed(1)}" height="7" fill="${C.navy}"/><rect x="${(px50 / 2).toFixed(1)}" width="${(px50 / 2).toFixed(1)}" height="7" fill="${C.papel}" stroke="${C.navy}"/>${t(0, -8, '0', { s: 12, f: C.suave })}${t(px50.toFixed(1), -8, '50 km', { s: 12, a: 'end', f: C.suave })}</g>`;
+    s += `<g transform="translate(725 185)"><circle r="22" fill="${C.papel}" stroke="${C.navy}" stroke-width="1.5"/><path d="M0 -16 L6 6 L0 2 L-6 6Z" fill="${C.navy}"/>${t(0, -28, 'N', { s: 13, w: 700, a: 'middle', f: C.navy })}</g>`;
     /* cabeçalho */
     s += t(40, 58, 'MAPA ILUSTRADO · CAPÍTULO 4', { s: 15, w: 700, ls: 3, f: C.tealTinta });
     s += t(40, 112, 'Israel, de lugar em lugar', { cls: 'd', s: 46, f: C.navy });
     /* coluna da direita: a lista dos números */
-    let cy = 186; const cx = 862;
+    let cy = 176; const cx = 800;
     s += t(cx, cy, 'OS DEZ LUGARES', { s: 13, w: 700, ls: 2, f: C.navy }); cy += 18;
     s += t(cx, cy, 'km de Jerusalém,', { s: 13, f: C.suave }); cy += 16; s += t(cx, cy, 'em linha reta', { s: 13, f: C.suave }); cy += 34;
     for (const l of LUGARES) {
@@ -134,7 +156,7 @@ export default function capitulo04({ paises, disputa, lagos, rios, svg, t, sombr
   function massadaPao() {
     const W = 1080, H = 990, base = 760, k = 500 / 450;
     let s = `<rect width="${W}" height="${H}" fill="${C.papel}"/>`;
-    s += `<rect width="${W}" height="150" fill="${C.navy}"/>` + t(56, 62, 'MASSADA X RIO DE JANEIRO', { s: 15, w: 700, ls: 3, f: C.tealLite }) + t(56, 118, 'Mais alto que o Pão de Açúcar', { cls: 'd', s: 44, f: '#FFFFFF' });
+    s += `<rect width="${W}" height="150" fill="${C.navy}"/>` + t(56, 62, 'MASSADA X RIO DE JANEIRO', { s: 15, w: 700, ls: 3, f: C.tealLite }) + t(56, 118, 'Do pé ao topo, maior que o Pão de Açúcar', { cls: 'd', s: 44, f: '#FFFFFF' });
     const hM = 450 * k, hP = 396 * k;
     /* Massada: platô com penhasco a leste (à direita), rampa a oeste */
     const mas = `M60 ${base} C150 ${base - 40} 220 ${base - hM + 120} 270 ${base - hM + 10} L290 ${base - hM} L440 ${base - hM} L452 ${base - hM + 30} L470 ${base}Z`;

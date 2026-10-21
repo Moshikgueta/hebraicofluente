@@ -10,8 +10,8 @@ export default function capitulo05({ svg, t, sombra }) {
   function abertura() {
     const W = 1480, H = 1300;
     let s = `<rect width="${W}" height="${H}" fill="${C.noite}"/>`;
-    s += `<rect y="560" width="${W}" height="200" fill="${C.navy}"/>`;
-    s += `<circle cx="1180" cy="640" r="130" fill="${C.ouro}"/>`;
+    s += `<rect y="300" width="${W}" height="200" fill="${C.navy}" opacity=".6"/>`;
+    s += `<circle cx="1260" cy="250" r="110" fill="${C.ouro}"/>`;
     s += `<rect y="700" width="${W}" height="600" fill="${C.noite}"/>`;
     /* casas e prédios baixos, com janelas acesas */
     const blocos = [[60, 380, 260, 520], [340, 300, 220, 600], [580, 420, 300, 480], [900, 340, 240, 560], [1160, 460, 280, 440]];
@@ -82,7 +82,7 @@ export default function capitulo05({ svg, t, sombra }) {
     s += '</g>';
     s += t(x0 + 28, y + 70, '76%', { cls: 't n', s: 44, f: '#FFFFFF' });
     s += t(x0 + larg * .76 + 22, y + 70, '21,1%', { cls: 't n', s: 38, f: '#FFFFFF' });
-    s += `<path d="M${x0 + larg * .985} ${y + h} V${y + h + 40} H${x0 + larg - 150}" fill="none" stroke="${C.ouroTinta}" stroke-width="2"/>` + t(x0 + larg, y + h + 46, '2,9%', { cls: 't n', s: 30, a: 'end', f: C.ouroTinta });
+    s += `<path d="M${x0 + larg * .985} ${y + h} V${y + h + 18}" fill="none" stroke="${C.ouroTinta}" stroke-width="2"/>` + t(x0 + larg, y + h + 50, '2,9%', { cls: 't n', s: 30, a: 'end', f: C.ouroTinta });
     const caixa = (cx, titulo, num, linhas, cor) => `<rect x="${cx}" y="450" width="300" height="250" rx="14" fill="${cor}" opacity=".12"/>` + t(cx + 20, 492, titulo, { s: 20, w: 700, f: C.navy }) + t(cx + 20, 520, num, { s: 16, f: C.suave }) + linhas.map((l, i) => t(cx + 20, 562 + i * 24, l, { s: 16, f: C.corpo })).join('');
     s += caixa(56, 'Judeus e outros', '7,790 milhões', ['"Outros": cristãos não', 'árabes, outras religiões', 'e quem está registrado', 'sem religião.'], C.navy);
     s += caixa(390, 'Árabes', '2,157 milhões', ['Muçulmanos, cristãos', 'árabes e drusos: três', 'comunidades com o', 'mesmo rótulo.'], C.teal);
@@ -99,7 +99,7 @@ export default function capitulo05({ svg, t, sombra }) {
      sherut), C08-035 (+25% no táxi), C05-083 (mercearias de Tel Aviv). Sem
      relógio: o horário muda com a estação e o lugar. */
   function shabat() {
-    const W = 1080, H = 1060;
+    const W = 1080, H = 1130;
     let s = `<rect width="${W}" height="${H}" fill="${C.papel}"/>`;
     s += t(56, 72, 'O SHABAT, DO COMEÇO AO FIM', { s: 15, w: 700, ls: 3, f: C.tealTinta });
     s += t(56, 126, 'O que roda e o que para', { cls: 'd', s: 44, f: C.navy });
@@ -116,7 +116,7 @@ export default function capitulo05({ svg, t, sombra }) {
     const linhas = [
       ['Trens', 'param na sexta à tarde; voltam no sábado depois do pôr do sol', [[x0, xa - 40, 1], [xa - 40, xb, 0], [xb, x1, 1]]],
       ['Ônibus', 'na maior parte do país, não rodam; Haifa, parte da Galileia e localidades não judaicas têm', [[x0, xa - 40, 1], [xa - 40, xb, .5], [xb, x1, 1]]],
-      ['Ônibus de fim', 'de semana gratuitos, criados em 2019 por Tel Aviv e três vizinhas', [[x0, xa, 0], [xa, xb, 1], [xb, x1, 0]], 'de semana'],
+      ['Ônibus de fim', 'gratuitos, criados em 2019 por Tel Aviv e três cidades vizinhas', [[x0, xa, 0], [xa, xb, 1], [xb, x1, 0]], 'de semana'],
       ['Táxi', 'roda; a tarifa tem acréscimo de 25% no Shabat', [[x0, xa, 1], [xa, xb, 1], [xb, x1, 1]]],
       ['Sherut', 'as vans amarelas de Tel Aviv circulam, com tarifa mais alta', [[x0, xa, 1], [xa, xb, 1], [xb, x1, 1]]],
       ['Mercearias', 'em Tel Aviv, cerca de 160 podem abrir, por lei municipal', [[x0, x1, 1]]],
@@ -136,8 +136,8 @@ export default function capitulo05({ svg, t, sombra }) {
     s += `<rect x="210" y="${yl}" width="34" height="20" fill="url(#parcial)"/>` + t(254, yl + 16, 'só em alguns lugares', { s: 14.5 });
     s += `<rect x="440" y="${yl}" width="34" height="20" fill="${C.areia}" stroke="${C.linha}"/>` + t(484, yl + 16, 'não funciona', { s: 14.5 });
     s += `<line x1="56" x2="${W - 56}" y1="${H - 74}" y2="${H - 74}" stroke="${C.linha}"/>`;
-    s += t(56, H - 48, 'Fontes: Israel Railways e reportagens (trens e ônibus), prefeitura de Tel Aviv (táxi e sherut), lei do táxi, Suprema Corte (2017).', { s: 12.5, f: C.suave });
-    s += t(56, H - 28, 'Esquema sem horário: o Shabat acompanha o pôr do sol e muda com a estação. Confira na semana da viagem.', { s: 12.5, f: C.suave });
+    s += t(56, H - 48, 'Fontes: Israel Railways e prefeitura de Tel Aviv (trens), Technion e reportagens (ônibus), prefeitura de Tel Aviv (sherut), gov.il (táxi).', { s: 12.5, f: C.suave });
+    s += t(56, H - 28, 'Mercearias: Suprema Corte (2017). Esquema sem horário: o Shabat acompanha o pôr do sol. Confira na semana da viagem.', { s: 12.5, f: C.suave });
     return svg(W, H, 'Esquema do Shabat, do fim da tarde de sexta à noite de sábado: trens e a maior parte dos ônibus param; há ônibus em alguns lugares e ônibus gratuitos de fim de semana em Tel Aviv e vizinhas; táxi e sherut rodam com tarifa mais alta; em Tel Aviv, cerca de 160 mercearias podem abrir.', s);
   }
 

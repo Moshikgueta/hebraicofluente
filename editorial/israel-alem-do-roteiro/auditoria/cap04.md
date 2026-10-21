@@ -126,3 +126,74 @@ também C01-013, C01-016 e C01-017 (capítulo 1) na remissão sobre o Mar Morto.
 - **Prazos**: C04-088 e C04-094 vencem em 21/10/2027; C04-044 e C04-026 em
   21/04/2027.
 - Nenhuma caixa "O olhar de um israelense".
+
+## Fase 6 (21/10/2026)
+
+Aplicada a linguagem visual aprovada (estilo "papel recortado", só desenho
+SVG). Módulo: `tools/ilustracoes/cap04.mjs`.
+
+### Visuais
+| Peça | Tipo | Dados |
+| --- | --- | --- |
+| `abertura-alem-de-jerusalem` | abertura ilustrada (nova) | desenho, sem dado, rotulado "ilustração" |
+| `mapa-destinos-ilustrado` | mapa ilustrado e tocável (novo, a partir da prancha aprovada), substitui `mapa-destinos` no texto | coordenadas de destinos.json (C04-007, 011, 020, 031, 047, 059, 062, 070, 079, 083); distâncias C04-097; seta C01-009 |
+| `massada-pao-de-acucar` | comparação com o Brasil (nova) | C04-034, C04-098, C04-099 |
+| 8 fotos candidatas (já existiam) | foto | ver fotos-candidatas-cap04.json |
+
+Pontos tocáveis: `ativos/dados/mapa-destinos-ilustrado-pontos.json`, dez
+pontos, cada um com `ficha`. O Mar Morto não tem coordenada registrada
+(C04-053): o número fica no meio da bacia norte do contorno do lago da Natural
+Earth, e o rodapé do mapa diz isso. Jafa sai deslocada com uma linha, porque
+fica colada em Tel Aviv.
+
+### Comparação com o Brasil
+Massada (450 m acima do Mar Morto, Autoridade de Natureza e Parques, C04-034)
+x Pão de Açúcar (396 m acima do mar, Marinha do Brasil, C04-098; a Britannica
+dá 395 m): o paredão de Massada tem uns 54 m a mais (C04-099, conta derivada).
+O texto e o desenho dizem que é desnível, não altitude.
+
+### Interações
+Mapa tocável; 10 fichas (`::: ficha`, uma por destino, com distância de
+Jerusalém em linha reta, C04-097); pegadinha do guia ("estilo Bauhaus",
+C04-057); "História ou tradição?" com palpite na "casa de Pedro"
+(`resposta: as-duas`); os quizzes e V/F que já havia. Regiões das fichas:
+"Galileia", "Costa", "Mar Morto e deserto da Judeia".
+
+### Fichas: o que ficou fora
+Altitude (fora Massada) e tempo de visita: sem fonte oficial nesta rodada,
+não entraram. A ficha de Massada usa os dados da prancha aprovada (450 m,
+2001, 1966, oito acampamentos, distância) e as regras de acesso (C04-044) e
+de calor (C08-049). A semente "Matusalém" (C09-017) ficou para o capítulo 9.
+
+### Decisão política (o que mudou no texto)
+- "Cisjordânia" na margem do Mar Morto passou a "Judeia e Samaria
+  (Cisjordânia)" (única menção do capítulo).
+- Jafa: saiu "o nome que os textos palestinos usam"; ficou "Em árabe, a
+  cidade se chama Yafa" (C04-095 continua o registro).
+- O debate sobre Massada como símbolo ficou (é debate histórico).
+
+### Registros novos
+C04-097 (distâncias, conta derivada), C04-098 (Pão de Açúcar), C04-099
+(comparação); F04-058 (Marinha, DPHDM), F04-059 (Britannica, nível E, só como
+segunda referência).
+
+### Buscas
+2 (Pão de Açúcar). Total da fase nos capítulos 4 e 5: 6.
+
+### Testes
+Validador: 0 erros. PDF `saida/capitulo-04.pdf`: 36 páginas, 4/4 QR lidos,
+inspecionar sem transbordo nem página quase vazia. O mapa primeiro saía
+partido em duas páginas: os países vizinhos inteiros da Natural Earth
+estouravam a caixa do SVG e o Paged.js os dividia. Agora o módulo recorta
+países, lagos e o rio no retângulo do mapa. Web: não rodada (o coordenador
+monta).
+
+### Pendências
+- Hebraico: nenhum novo; as fichas reusam o do capítulo (Kinéret, Natsrát,
+  Kfar Nachúm, Keisárya, Metsadá, Yam HaMélach, Tel Avív, Yáfo, Chéifa, Áko),
+  todo à espera da aprovação do dono.
+- Título da página da Marinha (F04-058) a confirmar.
+- Coordenada do Mar Morto (C04-053) segue sem fonte.
+- Para o coordenador: outros mapas feitos com os países inteiros da Natural
+  Earth podem ter o mesmo problema de quebra no PDF (a prancha do mapa, se for
+  usada como figura).

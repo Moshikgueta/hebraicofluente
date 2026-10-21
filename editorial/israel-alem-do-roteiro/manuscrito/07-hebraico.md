@@ -3,6 +3,8 @@ capitulo: 7
 titulo: Hebraico para compreender Israel
 subtitulo: Palavras para reconhecer o que se vê e se ouve no país
 abertura_frase: Cerca de quarenta palavras para transformar placas, cardápios e conversas de rua em pistas.
+abertura_imagem: abertura-hebraico
+abertura_credito: Ilustração original, não é registro fotográfico.
 ---
 
 Em 1881, um jovem chegou a Jerusalém, então uma cidade do Império Otomano, com a mulher, Devora.[[C07-001]] Chamava-se Eliezer Ben-Yehuda, e o projeto dele parecia pequeno e era enorme: fazer do hebraico, a língua dos livros e das orações, a língua da casa, da rua e do jornal.
@@ -25,6 +27,11 @@ Ben-Yehuda (1858-1922) é o nome que a própria Academia põe à frente do movim
 
 Ele não trabalhou sozinho. A própria Academia conta que um primeiro comitê, de 1889, se desfez em 1891, e que o Comitê da Língua que veio depois nasceu do impulso do sindicato dos professores.[[C07-003]] A data de nascimento do comitê, aliás, depende de quem conta: obras de referência falam em 1890; a Academia descreve uma formação em etapas, a partir de 1889, que só ganhou forma mais institucional em 1905.[[C07-006]]
 
+::: historia-ou-tradicao "Ben-Yehuda ressuscitou o hebraico"
+resposta: as-duas
+O que as fontes confirmam: a própria Academia põe Ben-Yehuda à frente do movimento, e o dicionário dele é obra de décadas.[[C07-001,C07-002]] O que a frase simplifica: ele não trabalhou sozinho, o Comitê da Língua nasceu do impulso dos professores, e o hebraico nunca deixou de ser escrito.[[C07-003,C07-004]] A frase é verdadeira como símbolo e incompleta como história.
+:::
+
 ::: foto foto-comite-lingua-1912
 O Comitê da Língua Hebraica em Jerusalém, em 1912.
 :::
@@ -37,7 +44,7 @@ Em 1922, o governo do Mandato Britânico reconheceu o hebraico como uma das trê
 
 Para quem chegava ao país, a porta de entrada foi o ulpan. O primeiro centro de estudo intensivo de hebraico para imigrantes adultos abriu em 1949, no campo de imigrantes de Etzion, em Jerusalém.[[C07-007]]
 
-O hebraico não é a única língua do Estado. O lugar do árabe na lei, e o debate em torno da Lei Básica de 2018, que lhe deu um "status especial", estão no capítulo 5.[[C05-013]]
+O hebraico não é a única língua do Estado. O lugar do árabe na lei, com a Lei Básica de 2018, que lhe deu um "status especial", está no capítulo 5.[[C05-013]]
 
 ::: linha-do-tempo A língua em datas
 1881 | Ben-Yehuda se instala em Jerusalém.[[C07-001]]
@@ -63,11 +70,15 @@ A regra, porém, mudou de ideia. Num relatório à ONU, Israel informou que a Ac
 
 Há ainda os nomes que chegaram ao português e ao inglês muito antes de qualquer regra israelense. Acre é o caso mais claro. A UNESCO inscreveu a cidade como "Old City of Acre", e o dossiê da candidatura conta que ela se chama Akko no Antigo Testamento, foi rebatizada Ptolemais no período helenístico e voltou ao nome original no período árabe; entre 1191 e 1291 foi a capital do segundo reino cruzado.[[C07-012]] Na placa em hebraico, sem os sinais de vogal, o nome aparece como <he>עכו</he>.
 
+::: figura placa-trilingue
+Uma placa desenhada com o nome de Acre: o hebraico sem vogais, a faixa do árabe (deixada sem texto, porque este livro não registrou a grafia árabe do nome) e a transliteração; embaixo, os nomes da cidade ao longo do tempo segundo a UNESCO.[[C07-012]]
+:::
+
 ::: link unesco-cidade-antiga-de-acre
 A cidade velha de Acre na lista do Patrimônio Mundial.
 :::
 
-O árabe nas placas também tem história. Em julho de 2002, o Supremo Tribunal de Israel decidiu, por dois votos a um, que os municípios de Tel Aviv-Jafa, Ramla, Lod, Acre e Natsrat Illit deviam acrescentar o árabe às placas informativas. A maioria, com os juízes Aharon Barak e Dalia Dorner, invocou a igualdade, a liberdade de usar a própria língua e o status especial do árabe; o juiz Mishael Cheshin ficou vencido.[[C07-040]]
+O árabe nas placas também tem história. Em julho de 2002, o Supremo Tribunal de Israel decidiu, por dois votos a um, que os municípios de Tel Aviv-Jafa, Ramla, Lod, Acre e Natsrat Illit deviam acrescentar o árabe às placas informativas. A maioria foi dos juízes Aharon Barak e Dalia Dorner; o juiz Mishael Cheshin ficou vencido.[[C07-040]]
 
 ::: foto foto-placa-jafa-trilingue
 Placa trilíngue em Jafa.
@@ -77,12 +88,26 @@ Placa trilíngue em Jafa.
 
 Nas placas, quase nada vem com os sinais de vogal (o nikud). Para compensar, a escrita do dia a dia usa duas letras como vogais: o <he>ו</he> faz o papel de o ou u, e o <he>י</he>, de i ou e. É o que se vê em <he>ירושלים</he>, Jerusalém, e em <he>רחוב</he>, rua, as duas grafias da lista adiante. Quem conhece as letras consegue, devagar, chegar ao som.
 
+::: compare nikud-com-pontos nikud-sem-pontos
+a: Com os sinais de vogal
+b: Sem os sinais de vogal
+Jerusalém escrita dos dois jeitos. Sem os pontos, o <he>ו</he> (em dourado) faz o papel da vogal.
+:::
+
 ::: observacao Três escritas, uma placa
 Na próxima placa de estrada, procure o mesmo nome nas três escritas. Compare o comprimento do hebraico com o das letras latinas: sem vogais, o hebraico costuma ser mais curto.
 :::
 
 ::: observacao Duas grafias para um lugar
 Repare se o mesmo lugar aparece escrito de dois jeitos em letras latinas, numa placa e num mapa, ou numa placa antiga e numa nova. A letra <he>ק</he> é a primeira suspeita: Q ou K.[[C07-011]]
+:::
+
+## Uma palavra que o Brasil já fala
+
+O brasileiro fala uma palavra hebraica toda semana sem perceber. O "sábado" do português vem do latim sabbatum, que vem do hebraico.[[C07-042]] O caminho passou pelo grego sabbaton, e a palavra de origem, shabbath, quer dizer "dia de descanso"; em latim, sabbatum era o dia de descanso dos judeus antes de virar o nome do dia da semana.[[C07-043]] Quem diz "sábado" está dizendo, de longe, a mesma palavra do cumprimento <he>שַׁבָּת שָׁלוֹם</he> (shabát shalóm).[[C07-044]]
+
+::: figura sabado-shabat
+De shabát a sábado: o caminho da palavra pelo grego e pelo latim, segundo as obras de referência.[[C07-042,C07-043]]
 :::
 
 ## Como ler esta lista
@@ -192,6 +217,12 @@ A antropóloga Tamar Katriel estudou o falar dúgri no livro Talking Straight (C
 - [ ] De uma colina com ruínas que existia no lugar da cidade | 
 - [x] Do título da tradução hebraica de um romance de Herzl | Nahum Sokolow deu o título Tel Aviv à tradução de Altneuland, e os moradores do bairro escolheram o nome por votação.[[C07-014]]
 - [ ] De um decreto do Mandato Britânico | 
+:::
+
+::: quiz pegadinha Diz-se em todo passeio que o hebraico era "uma língua morta". O que a Academia da Língua Hebraica diz?
+- [ ] Que ninguém usava o hebraico até o fim do século XIX | É a versão que circula; a Academia diz outra coisa.[[C07-004]]
+- [x] Que deixou de ser língua do dia a dia, mas continuou escrito e na reza | A partir do século V d.C. não foi falado no cotidiano em lugar nenhum, mas seguiu como língua escrita, literária e religiosa.[[C07-004]]
+- [ ] Que só sobreviveu em inscrições de pedra | Não é o que a Academia descreve: houve poemas, comentários e cartas em hebraico durante séculos.[[C07-004]]
 :::
 
 ::: quiz Em que ano uma lei criou a Academia da Língua Hebraica?

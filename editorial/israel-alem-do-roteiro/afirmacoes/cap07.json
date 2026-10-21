@@ -671,6 +671,61 @@
       "evidencia": "Ministério do Turismo (F07-023): Tel Aviv combina palavras hebraicas, tel, colina de ruínas, e aviv, primavera.",
       "limitacoes": "Sentido de dicionário confirmado por fonte oficial; não é etimologia.",
       "status": "VERIFICADO"
+    },
+    {
+      "id": "C07-042",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "A palavra portuguesa \"sábado\" vem do latim sabbatum, que vem do hebraico.",
+      "categoria": "lingua",
+      "fontes": [
+        "F07-026",
+        "F07-027"
+      ],
+      "evidencia": "Dicio, etimologia de sábado: \"Do hebraico xabbat; pelo latim sabbatum.\"",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Dicionário on-line (E); confirmado pela cadeia do Etymonline (C07-043). Houaiss, Michaelis e Priberam não apareceram na busca.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C07-043",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "O latim sabbatum vem do grego sabbaton e, por ele, do hebraico shabbath, \"dia de descanso\", ligado ao verbo shabath, \"descansou\"; em latim, sabbatum era o dia de descanso dos judeus e depois passou a nomear o sábado.",
+      "categoria": "lingua",
+      "fontes": [
+        "F07-027",
+        "F07-028"
+      ],
+      "evidencia": "Etymonline: latim sabbatum, do grego sabbaton, do hebraico shabbath, \"dia de descanso\", de shabath, \"ele descansou\". Lewis & Short: sabbatum, o dia de descanso judaico; depois, o nome do sábado.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Dicionário etimológico de divulgação (E) e dicionário latino de referência (C), lidos em trecho de busca.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
+    },
+    {
+      "id": "C07-044",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "O \"sábado\" do português e o shabát do hebraico são a mesma palavra, pelo caminho hebraico, grego e latim.",
+      "categoria": "lingua",
+      "fontes": [
+        "F07-026",
+        "F07-027",
+        "F07-028"
+      ],
+      "evidencia": "Conta a partir de C07-042 e C07-043.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "Comparação derivada; o caminho resume as obras de referência.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": null
     }
   ]
 }

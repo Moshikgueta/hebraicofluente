@@ -1,0 +1,72 @@
+[
+ {
+  "id": "golan",
+  "nome": "1. Colinas de Golã",
+  "x": 55.6,
+  "y": 20.9,
+  "texto": "Planalto de basalto no nordeste, de origem vulcânica, que termina em encostas íngremes sobre o vale do Hula. Israel passou a administrar o planalto em junho de 1967 e, em dezembro de 1981, estendeu a ele a lei israelense."
+ },
+ {
+  "id": "galileia",
+  "nome": "2. Galileia",
+  "x": 38.4,
+  "y": 20,
+  "texto": "Colinas de calcário e dolomito, de 500 a 1.200 m de altitude, com riachos perenes. A Alta Galileia é a parte mais chuvosa do país: a média anual chega a cerca de 1.100 mm."
+ },
+ {
+  "id": "vale-do-hula",
+  "nome": "3. Vale do Hula",
+  "x": 49.6,
+  "y": 15.8,
+  "ficha": "vale-do-hula"
+ },
+ {
+  "id": "kineret",
+  "nome": "4. Mar da Galileia (Kinéret)",
+  "x": 49,
+  "y": 21.7,
+  "texto": "Lago do norte, com 164 km² na tabela de área do CBS."
+ },
+ {
+  "id": "planicie-costeira",
+  "nome": "5. Planície costeira (com o Carmelo e o Sharon)",
+  "x": 28.9,
+  "y": 32.3,
+  "texto": "Faixa ao longo do Mediterrâneo, com cerca de 194 km de costa, praia de areia e terras de cultivo até cerca de 40 km para o interior. Do Carmelo ao norte do Sharon, a temporada 2024-2025 teve de 70% a 90% da chuva média."
+ },
+ {
+  "id": "montes-centrais",
+  "nome": "6. Montes centrais (Samaria e Judeia)",
+  "x": 37.2,
+  "y": 36.5,
+  "texto": "Colinas onduladas, de topos rochosos e vales férteis. Samaria e Judeia são aqui nomes das montanhas; nos textos oficiais israelenses, 'Judeia e Samaria' é também o nome dado à Cisjordânia."
+ },
+ {
+  "id": "vale-do-jordao",
+  "nome": "7. Vale do Jordão",
+  "x": 46.7,
+  "y": 37.9,
+  "texto": "Parte da fenda sírio-africana, como a chama o ministério; para a geologia, a Transformante do Mar Morto, limite entre placas com cerca de 105 km de deslocamento em 17 milhões de anos. Fértil no norte, semiárido no sul."
+ },
+ {
+  "id": "mar-morto",
+  "nome": "8. Mar Morto",
+  "x": 45.8,
+  "y": 54.8,
+  "texto": "Numa bacia ao longo da mesma falha. Superfície de água exposta mais baixa do planeta; em 2022, mais de 430 m abaixo do nível do mar, e descendo cerca de 1,15 m por ano."
+ },
+ {
+  "id": "neguev",
+  "nome": "9. Neguev",
+  "x": 24.4,
+  "y": 62.2,
+  "texto": "Cerca de metade da área terrestre de Israel, segundo o ministério, e pouco povoado. Ali fica o Machtésh Ramón, vale escavado pela erosão com cerca de 40 km de comprimento."
+ },
+ {
+  "id": "arava",
+  "nome": "10. Arava",
+  "x": 33.3,
+  "y": 72.7,
+  "texto": "Continuação da fenda ao sul do Mar Morto, semiárida. O extremo sul recebe menos de 100 mm de chuva por ano."
+ }
+]

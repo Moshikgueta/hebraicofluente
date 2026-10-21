@@ -2,7 +2,8 @@
 capitulo: 1
 titulo: Israel no mapa
 subtitulo: Um país pequeno, uma geografia surpreendente
-abertura_imagem: corte-faixas
+abertura_imagem: abertura-israel-no-mapa
+abertura_credito: Ilustração original, não é registro fotográfico.
 abertura_frase: Em uma hora e meia de estrada, do nível do Mediterrâneo à superfície de água mais baixa do planeta.
 ---
 
@@ -23,6 +24,12 @@ O órgão de estatística de Israel, o CBS, dá 22.072 km² e diz o que entra na
 
 A diferença não é erro de conta: vem de escolhas sobre quais territórios entram na soma. Duas delas, Jerusalém Oriental e o Golã, são o assunto da próxima seção. Por enquanto, guarde uma regra prática: número de área sempre vem com uma definição, dita ou não.
 
+Para um brasileiro, a comparação mais próxima é Sergipe. O IBGE dá ao estado 21.938 km² de área territorial; a diferença para o número do CBS é de 134 km², menos de 1%.[[C01-201,C01-202]] Contado só dentro das linhas de 1949, cerca de 20.700 km², Israel fica um pouco menor que Sergipe.[[C01-005,C01-201]]
+
+::: figura israel-sergipe
+Israel, na conta do CBS, e Sergipe, na do IBGE, lado a lado e na mesma escala.[[C01-001,C01-201,C01-202]]
+:::
+
 ::: entenda-melhor Ler um mapa de Israel
 Antes de usar um número ou um mapa, procure a legenda: ela diz que linhas estão desenhadas e o que fica dentro delas. Os nomes também mudam conforme quem escreve. Nos textos oficiais israelenses, a Cisjordânia aparece como Judeia e Samaria; o Ministério das Relações Exteriores escreve "Judea and Samaria (the West Bank)".[[C01-031]] Nos mapas deste livro, a região aparece como Judeia e Samaria, o nome usado em Israel, com Cisjordânia entre parênteses, o outro nome comum em português.
 :::
@@ -31,23 +38,19 @@ Antes de usar um número ou um mapa, procure a legenda: ela diz que linhas estã
 Israel e os países vizinhos, no litoral leste do Mediterrâneo. As áreas hachuradas seguem a convenção explicada em "Ler um mapa de Israel".
 :::
 
-## Golã e Jerusalém Oriental: o que diz a ONU
+## Golã e Jerusalém Oriental: o que entra na conta
 
-Israel trata Jerusalém Oriental e as Colinas de Golã como parte do seu território, e é assim que o CBS as conta.[[C01-001]] No caso do Golã, o passo formal veio em dezembro de 1981: o Knesset, o parlamento, aprovou a lei que estendeu ao planalto a lei israelense; na prática, uma anexação.[[C01-044]]
+Em junho de 1967, na Guerra dos Seis Dias, Israel tomou Jerusalém Oriental e as Colinas de Golã e passou a administrá-las.[[C02-525]] Em 30 de julho de 1980, o Knesset, o parlamento, aprovou a Lei Básica que declara Jerusalém, "completa e unida", a capital de Israel.[[C03-059]] Em dezembro de 1981, aprovou a lei que estendeu ao Golã a lei israelense.[[C01-044]]
 
-O Conselho de Segurança da ONU respondeu às duas medidas. Em 1980, a Resolução 478 decidiu não reconhecer a "lei básica" israelense sobre Jerusalém nem as ações que buscassem alterar o caráter e o status da cidade, e pediu aos Estados com missões diplomáticas em Jerusalém que as retirassem.[[C01-039]] Em 17 de dezembro de 1981, por unanimidade, a Resolução 497 declarou "nula e sem efeito jurídico internacional" a decisão de impor ao Golã ocupado as leis, a jurisdição e a administração israelenses.[[C01-040]]
-
-A maior parte da comunidade internacional não reconhece nenhuma das duas anexações.[[C01-043]] Em março de 2019, os Estados Unidos passaram a reconhecer o Golã como parte de Israel.[[C01-041]] A ONU disse em seguida que sua posição não tinha mudado.[[C01-042]]
-
-Por isso este livro, ao falar dessas áreas, diz quem as conta de que maneira: o número do CBS inclui as duas; as resoluções do Conselho de Segurança tratam ambas como território ocupado.[[C01-001,C01-039,C01-040]]
-
-::: link resolution-497-1981
-O texto da resolução sobre o Golã, no sistema de documentação da ONU sobre a questão da Palestina.
-:::
+É por isso que a conta do CBS inclui as duas áreas: Jerusalém Oriental desde 1967 e o Golã desde 1982.[[C01-001]] Nos mapas deste livro, as duas aparecem hachuradas, para que se veja o que cada número soma.
 
 ## Quatro faixas de norte a sul
 
 Olhe o país de cima e ele se divide em faixas. O Ministério das Relações Exteriores descreve três delas correndo paralelas de norte a sul e, na metade sul, uma grande zona quase toda árida.[[C01-045]] É uma divisão didática, e funciona bem para quem olha pela janela do ônibus.
+
+::: figura corte-faixas
+De oeste a leste: o mar, a planície costeira, as montanhas e o vale da fenda com o Mar Morto, em corte esquemático.[[C01-046,C01-047,C01-053,C01-012]]
+:::
 
 **A planície costeira** acompanha o Mediterrâneo: praia de areia e terras de cultivo que avançam até cerca de 40 km para o interior.[[C01-046]]
 
@@ -59,7 +62,7 @@ A costa de Tel Aviv até Jafa, na planície costeira.
 O Mar da Galileia, o Kinéret.
 :::
 
-**As montanhas** vêm a seguir. No norte, a Galileia: colinas de calcário macio e dolomito, de 500 a 1.200 m de altitude, verdes o ano todo graças a riachos perenes e a uma chuva relativamente farta.[[C01-047]] O vale de Jezreel corta essa linha e separa a Galileia das colinas de Samaria; o ministério o chama de a área agrícola mais rica do país.[[C01-048]] Mais ao sul, as montanhas de Samaria e da Judeia: topos rochosos, vales férteis e olivais antigos.[[C01-049]] Aqui, Samaria e Judeia são nomes de montanhas; em outros textos oficiais israelenses, "Judeia e Samaria" designa a Cisjordânia, e vale saber em qual dos dois sentidos a expressão aparece.[[C01-031]]
+**As montanhas** vêm a seguir. No norte, a Galileia: colinas de calcário macio e dolomito, de 500 a 1.200 m de altitude, verdes o ano todo graças a riachos perenes e a uma chuva relativamente farta.[[C01-047]] O vale de Jezreel corta essa linha e separa a Galileia das colinas de Samaria; o ministério o chama de a área agrícola mais rica do país.[[C01-048]] Mais ao sul, as montanhas de Samaria e da Judeia: topos rochosos, vales férteis e olivais antigos.[[C01-049]] Aqui, Samaria e Judeia são nomes de montanhas; nos textos oficiais israelenses, "Judeia e Samaria" é também o nome do território inteiro (ver "Ler um mapa de Israel"), e vale saber em qual dos dois sentidos a expressão aparece.[[C01-031]]
 
 **O vale da fenda**, no leste, é a terceira faixa. O vale do Jordão e a Arava fazem parte do que o ministério chama de fenda sírio-africana: fértil no norte, semiárida no sul.[[C01-051]] O Mar Morto ocupa uma bacia ao longo dessa mesma estrutura.[[C01-053]]
 
@@ -69,13 +72,19 @@ O nome "fenda sírio-africana" sugere uma rachadura que se abre.[[C01-051]] A ge
 
 No nordeste, acima do vale do Hula, ficam as Colinas de Golã, um planalto de basalto formado por erupções vulcânicas antigas, que termina em encostas íngremes sobre o vale.[[C01-050]] E toda a metade sul é **o Neguev**, cerca de metade da área terrestre do país e pouco povoado.[[C01-054]]
 
-::: figura mapa-regioes
-As regiões deste capítulo, de norte a sul. Os nomes indicam a área aproximada, não um limite.
+::: figura regioes-ilustrado
+As regiões deste capítulo, de norte a sul. Os números ficam perto do nome de cada região, que não tem limite traçado; o vale do Hula tem ficha neste capítulo.[[C01-045,C01-050,C01-054,C01-058]]
 :::
 
 ## A chuva some no caminho para o sul
 
 Nas montanhas da Alta Galileia, a chuva média chega a cerca de 1.100 mm por ano; no extremo sul, fica abaixo de 100 mm.[[C01-021]] Se nada evaporasse, a chuva de um ano inteiro no extremo sul encheria um copo até menos de 10 cm.[[C01-021]]
+
+Para comparar com o Brasil: o INMET calcula em 206,0 mm a chuva normal de um só mês de janeiro em Brasília, na média de 1991 a 2020.[[C01-203]] Um ano inteiro de chuva no extremo sul de Israel não chega à metade disso. Na outra ponta, a Alta Galileia recebe num ano inteiro menos do dobro do que cai em Brasília só no verão, 621,7 mm em média.[[C01-204,C01-205]]
+
+::: figura chuva-israel-brasilia
+Um ano de chuva em Israel ao lado de um mês e de um verão em Brasília, na mesma escala.[[C01-021,C01-203,C01-204,C01-205]]
+:::
 
 O calendário pesa tanto quanto o mapa. A chuva se concentra de novembro a março; de junho a agosto, é comum não chover.[[C01-022]] Quem viaja em agosto atravessa o país na estação seca; quem viaja em janeiro, na das chuvas. O mesmo lugar muda de cor de uma estação para a outra, e vale lembrar disso ao comparar o que se vê com a foto do folheto.
 
@@ -138,6 +147,16 @@ No meio do Neguev, o chão se abre num vale de paredes íngremes. É o Machtésh
 O Machtésh Ramón, no Neguev.
 :::
 
+::: ficha machtesh-ramon
+nome: Machtésh Ramón
+regiao: Neguev
+resumo: Um vale de paredes íngremes no Neguev, escavado pela erosão, não por meteorito nem por vulcão.[[C01-055]]
+dado: 40 km | de comprimento, aproximadamente[[C01-056]]
+dado: 2 a 19 km | de largura[[C01-056]]
+dado: 500 m | de profundidade, aproximadamente[[C01-056]]
+observar: As camadas da parede: calcário e dolomito duros no alto, arenito friável embaixo.[[C01-055]]
+:::
+
 ::: link makhteshim-country-lista-indicativa
 Os makhteshim na lista indicativa de Israel na UNESCO. Lista indicativa não é inscrição: o lugar não é Patrimônio Mundial.
 :::
@@ -148,6 +167,14 @@ No norte, o vale do Hula mostra como a paisagem pode ser desfeita e refeita. O l
 
 ::: foto foto-hula-pikiwiki
 O lago Agmon, no vale do Hula.
+:::
+
+::: ficha vale-do-hula
+nome: Vale do Hula e lago Agmon
+regiao: Galileia
+resumo: O antigo lago e os pântanos foram drenados no fim da década de 1950; em 1994, parte da área voltou a ser alagada e formou o lago Agmon.[[C01-058]]
+dado: 1994 | o ano em que parte do vale voltou a ser alagada[[C01-058]]
+observar: As aves aquáticas que o lago novo atraiu, sobretudo patos, garças e garçotas.[[C01-058]]
 :::
 
 ::: link the-great-bird-migration
@@ -190,7 +217,7 @@ Na costa oeste do Mar Morto, as dolinas novas passaram de menos de 50 por ano an
 Cerca de 500 milhões de aves migratórias atravessam o país duas vezes por ano.[[C01-057]] O vale do Hula, onde o lago Agmon voltou a atrair aves aquáticas, é um dos lugares em que isso se vê de perto.[[C01-058]]
 :::
 
-::: quiz O Machtésh Ramón, no Neguev, foi aberto por quê?
+::: quiz pegadinha Todo mundo chama o Machtésh Ramón de cratera. Ele foi aberto por quê?
 - [ ] Pelo impacto de um meteorito | 
 - [ ] Por uma erupção vulcânica | 
 - [x] Pela erosão | Um makhtesh é escavado pela erosão, num vale de paredes duras no alto e arenito friável embaixo, drenado por um único leito.[[C01-055]] Por isso "cratera" é um apelido, não uma descrição.

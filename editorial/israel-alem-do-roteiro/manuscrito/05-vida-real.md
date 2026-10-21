@@ -3,6 +3,8 @@ capitulo: 5
 titulo: A vida real em Israel
 subtitulo: A semana, o calendário e quem vive no país
 abertura_frase: Na sexta à tarde, os trens param. No domingo de manhã, é dia de trabalho.
+abertura_imagem: abertura-vida-real
+abertura_credito: Ilustração original, não é registro fotográfico.
 ---
 
 Sexta-feira, fim de tarde. Na maior parte do país, os trens já não saem, e os ônibus vão rareando até sumir.[[C05-079]] Ao pôr do sol começa o Shabat, o sábado judaico, que só termina na noite seguinte.[[C05-061]] E, quando o visitante brasileiro acorda no domingo pensando em descanso, o escritório da esquina já abriu: o domingo, em Israel, é dia de trabalho.[[C05-078]]
@@ -41,6 +43,12 @@ Mas "o país para" é uma frase que precisa de mapa. Há transporte público no 
 
 O comércio segue a mesma lógica local. Em 2017, a Suprema Corte manteve a lei municipal de Tel Aviv que permite a cerca de 160 mercearias abrir no Shabat; a presidente da Corte, Miriam Naor, lembrou que a lei dá aos municípios o poder de regular a abertura das lojas.[[C05-083]] É por isso que a mesma noite de sexta pode ser silenciosa num bairro e movimentada em outro.
 
+Quem não depende do ônibus tem saída: o táxi roda no Shabat, com acréscimo de 25% na tarifa, e em Tel Aviv os sheruts, as vans amarelas que seguem trajetos de ônibus, também circulam, com tarifa mais alta.[[C08-035,C08-034]]
+
+::: figura shabat-do-comeco-ao-fim
+O que roda e o que para, da tarde de sexta à noite de sábado; sem horário, porque o Shabat acompanha o pôr do sol.[[C05-061,C08-031,C05-079,C05-081,C05-082,C08-034,C08-035,C05-083]]
+:::
+
 ::: aviso Transporte no Shabat
 Os horários de trens e ônibus na sexta e no sábado mudam com a estação, a cidade e a operadora, e os serviços municipais de fim de semana mudam de um ano para outro.[[C05-079,C05-082]] Consulte os aplicativos e as operadoras na semana da viagem. Informação consultada em 21 de outubro de 2026.
 :::
@@ -50,6 +58,7 @@ Os horários de trens e ônibus na sexta e no sábado mudam com a estação, a c
 As festas judaicas não têm data fixa no calendário que o brasileiro usa, e há uma razão técnica. O calendário judaico é lunissolar: os meses seguem a Lua e os anos seguem o Sol. Para que as duas contas não se afastem, sete anos em cada dezenove ganham um 13º mês, um segundo Adar.[[C05-066]] O resultado é que a mesma festa cai em datas diferentes a cada ano, e, como todo dia começa ao pôr do sol, cada festa começa na noite da véspera.[[C05-061,C05-066]]
 
 ::: historia-ou-tradicao As festas do sétimo mês
+resposta: as-duas
 O Levítico, livro da Bíblia hebraica, marca no primeiro dia do sétimo mês um dia de descanso com toque de trombeta; no décimo, o Dia da Expiação, com aflição da alma e sem trabalho; e, a partir do décimo quinto, sete dias de festa morando em cabanas. A tradição judaica celebra nessas datas Rosh Hashaná, Yom Kipur e Sucot.[[C05-084]] O texto é a fonte religiosa das festas; como elas são vividas hoje é obra de séculos de tradição posterior.
 :::
 
@@ -62,7 +71,13 @@ Quais festas param o país é coisa que a lei diz. Os dias de descanso oficiais 
 - Shavuot;
 - o Dia da Independência.
 
-Chanuká e Purim não estão nessa lista.[[C05-085]] A mesma lei dá a quem não é judeu o direito de descansar no seu dia semanal e nas suas festas, definidas para cada comunidade por decisão do governo publicada no Diário Oficial.[[C05-086]] Natal, Páscoa cristã e as festas muçulmanas e drusas são dias de descanso para quem as celebra, não para o país inteiro.[[C05-086]]
+Chanuká e Purim não estão nessa lista.[[C05-085]] São nove dias, o mesmo número dos feriados civis que as leis federais brasileiras fixam: 1º de janeiro, 21 de abril, 1º de maio, 7 de setembro, 12 de outubro, 2 de novembro, 15 de novembro, 20 de novembro e 25 de dezembro.[[C05-101]] A diferença é o calendário: os brasileiros caem sempre no mesmo dia; os israelenses seguem o calendário judaico e mudam de data a cada ano.[[C05-103]] Para 2026, a portaria do governo federal pôs também a Paixão de Cristo, em 3 de abril, entre os feriados nacionais.[[C05-102]]
+
+::: figura feriados-israel-brasil
+Os nove dias de descanso oficiais de Israel e os nove feriados nacionais fixados pelas leis federais do Brasil.[[C05-085,C05-101,C05-102,C05-103]]
+:::
+
+ A mesma lei dá a quem não é judeu o direito de descansar no seu dia semanal e nas suas festas, definidas para cada comunidade por decisão do governo publicada no Diário Oficial.[[C05-086]] Natal, Páscoa cristã e as festas muçulmanas e drusas são dias de descanso para quem as celebra, não para o país inteiro.[[C05-086]]
 
 O dia mais silencioso do ano é o Yom Kipur. Segundo reportagens de vários anos, as estradas ficam praticamente vazias, por tradição e não por lei; crianças e adolescentes ocupam as pistas de bicicleta; ônibus e trens param; os voos do aeroporto Ben Gurion são suspensos; e rádio e TV saem do ar.[[C05-087]]
 
@@ -86,9 +101,8 @@ No Yom HaShoá e no Yom HaZikarón, a sirene soa no país inteiro, e quem está 
 
 Na véspera do Dia da Independência de 2026, o Escritório Central de Estatística (CBS, na sigla em inglês) estimou a população do país em 10,244 milhões de pessoas.[[C05-001]] O comunicado dividia o total em três partes: 76% de "judeus e outros", 21,1% de árabes e 2,9% de estrangeiros.[[C05-002]]
 
-::: dado 10,244 milhões
-rotulo: de habitantes na véspera do Dia da Independência de 2026[[C05-001]]
-nota: CBS, comunicado 117/2026, dado preliminar
+::: figura quem-mora-israel
+A população de Israel em abril de 2026, nas três partes do comunicado do CBS, todas do mesmo dia.[[C05-001,C05-002,C05-003]]
 :::
 
 As etiquetas pedem uma segunda leitura. "Árabes", para o CBS, reúne muçulmanos, cristãos árabes e drusos, três comunidades religiosas diferentes sob o mesmo nome. "Outros" junta cristãos que não são árabes, fiéis de outras religiões e pessoas registradas sem classificação religiosa.[[C05-003]] Quem lê "judeus e outros" como se fosse só "judeus" erra a conta; quem lê "árabes" como se fosse "muçulmanos" erra a religião.
@@ -116,29 +130,35 @@ São rótulos que a própria pessoa escolhe, não degraus de uma escala oficial.
 
 Em 19 de julho de 2018, o Knesset, o parlamento israelense, aprovou por 62 votos a 55 a Lei Básica: Israel como Estado-Nação do Povo Judeu.[[C05-012]] Uma das suas cláusulas trata das línguas: dá ao árabe um "status especial" no Estado e deixa para uma lei futura a regulamentação do uso do árabe nas instituições estatais.[[C05-013]] O item seguinte afirma que a cláusula não prejudica o status que o árabe tinha antes de a lei entrar em vigor.[[C05-014]]
 
-O que isso muda é discutido. A cobertura do Al-Monitor em julho de 2018 registrou que o árabe perdia o rótulo de língua oficial e que a lei não explicava o que o "status especial" significaria. A lei como um todo foi criticada também fora de Israel, por exemplo pelo American Jewish Committee. Do outro lado do argumento está o próprio texto, que preserva o status anterior do árabe.[[C05-015]] Entre a palavra "especial" e a cláusula de preservação, a lei não define o conteúdo do novo status, e é nesse intervalo que o debate se instalou.
-
 ## Escola em redes
 
 Uma criança israelense não entra simplesmente "na escola". Os estudos do Taub Center, instituto de pesquisa em políticas sociais, analisam o ensino do país em redes separadas: a estatal em hebraico, a estatal-religiosa, a ultraortodoxa e a árabe.[[C05-018]] Entre 2000 e 2015, só cerca de 2% dos alunos passaram de uma rede para outra; quando houve troca, a tendência foi sair de redes mais religiosas para menos religiosas.[[C05-019]] Na prática, a rede em que a criança entra no primeiro ano tende a ser a rede em que ela termina a escola.
 
 ## Quem serve no exército
 
-O recrutamento obrigatório se apoia na Lei do Serviço de Defesa, e a forma como ela é aplicada muda de uma comunidade para outra.[[C05-026]] Pelo site do exército, os homens servem no mínimo 32 meses e as mulheres no mínimo 24; mulheres religiosas, pessoas casadas e quem é considerado inapto por razões médicas ou mentais são isentos.[[C05-093]] Em julho de 2026, o Knesset manteve em 32 meses o serviço dos homens, apesar de o exército ter pedido 36.[[C05-025]] O número depende de decisão política: confira o que estiver em vigor na data da leitura.
+O recrutamento obrigatório se apoia na Lei do Serviço de Defesa, e a forma como ela é aplicada muda de uma comunidade para outra.[[C05-026]] Pelo site do exército, os homens servem no mínimo 32 meses e as mulheres no mínimo 24; mulheres religiosas, pessoas casadas e quem é considerado inapto por razões médicas ou mentais são isentos.[[C05-093]] Em julho de 2026, o Knesset manteve em 32 meses o serviço dos homens.[[C05-025]] A duração é fixada em lei e pode mudar: confira o que estiver em vigor na data da leitura.
 
 ::: link idf-our-soldiers
 A página do exército com a duração mínima do serviço e as isenções.
 :::
 
-Entre drusos e circassianos, só os homens são convocados.[[C05-094]] Os drusos o são desde 1956; antes, podiam se alistar, mas não eram chamados.[[C05-021]] O que esse arranjo significa é discutido: um estudo publicado em 2024 na revista Kulturní Studia conclui que o serviço reforça a identidade israelense entre jovens drusos, mas não lhes dá o acesso esperado a direitos iguais e à cidadania plena.[[C05-022]] É a conclusão de um estudo, não uma regra que valha para todos os drusos.[[C05-022]]
+Entre drusos e circassianos, só os homens são convocados.[[C05-094]] Os drusos o são desde 1956; antes, podiam se alistar, mas não eram chamados.[[C05-021]]
 
 A maior parte da população árabe não é chamada ao serviço nacional, nem militar nem civil. Desde 2007-2008, cidadãos árabes podem se voluntariar para o serviço civil-nacional, e o número de voluntários cresceu nos primeiros anos do programa, segundo estudo do Instituto de Estudos de Segurança Nacional (INSS).[[C05-020]]
 
-O caso que mais mudou nos últimos anos é o dos estudantes ultraortodoxos de yeshivá, a academia de estudo religioso. Em 25 de junho de 2024, a Suprema Corte decidiu, por unanimidade de nove juízes, que o governo não tinha base legal para isentá-los em bloco e que, sem lei nova, o Estado deveria aplicar a eles a Lei do Serviço de Defesa como aplica aos demais.[[C05-023]] Em 19 de novembro de 2025, um painel de cinco juízes ordenou ao governo passos concretos, com prazo de 45 dias; em 6 de janeiro de 2026, um pedido de desacato acusou o governo de não ter cumprido a ordem.[[C05-024]]
+O caso que mais mudou nos últimos anos é o dos estudantes ultraortodoxos de yeshivá, a academia de estudo religioso. Em 25 de junho de 2024, a Suprema Corte decidiu, por unanimidade, que sem lei nova o Estado deveria aplicar a eles a Lei do Serviço de Defesa como aplica aos demais.[[C05-023]]
 
 ## Kibutz e moshav
 
 Degania é considerada o primeiro kibutz; os edifícios originais são de 1910. Degania e Nahalal, um moshav, estão juntas na lista indicativa de Israel na UNESCO, a etapa anterior a uma candidatura a Patrimônio Mundial.[[C05-095]]
+
+::: ficha degania
+nome: Degania
+regiao: Galileia
+resumo: Considerada o primeiro kibutz, às margens do Mar da Galileia; está na lista indicativa de Israel na UNESCO junto com Nahalal.[[C05-095]]
+dado: 1910 | o ano dos edifícios originais[[C05-095]]
+observar: Os edifícios originais, de 1910, que levaram Degania à lista indicativa da UNESCO.[[C05-095]]
+:::
 
 ::: foto foto-nahalal-aereo-stein
 Nahalal vista do alto, em 2016.
@@ -184,7 +204,7 @@ Os dias de descanso oficiais são festas judaicas e o Dia da Independência; Cha
 
 ### 8. Em Jerusalém, mais de um em cada três moradores é muçulmano
 
-No fim de 2025, viviam na cidade 395.200 muçulmanos, 37,2% dos moradores, a maior comunidade muçulmana do país.[[C05-006]] O CBS conta o município; o status internacional da cidade é tema do capítulo 3.
+No fim de 2025, viviam na cidade 395.200 muçulmanos, 37,2% dos moradores, a maior comunidade muçulmana do país.[[C05-006]] O número é do município, como o CBS o conta.
 
 ### 9. O país cresce mais pelo berço do que pelo avião
 
@@ -193,6 +213,12 @@ No ano encerrado em abril de 2026, nasceram cerca de 177 mil bebês e morreram c
 ### 10. A franqueza tem nome, e tem bibliografia
 
 Em 1986, Tamar Katriel, pesquisadora da Universidade de Haifa, publicou pela Cambridge University Press um estudo sobre o <he>דּוּגְרִי</he> (dúgri), a "fala reta". Para ela, o dúgri é uma forma cultural ligada à figura do sabra, o judeu nascido no país, tomado como ideal mítico.[[C05-016]] Katriel observa que, entre quem compartilha o código, a franqueza vem amortecida por significados comuns; quem vem de fora tende a lê-la como grosseria.[[C05-017]] É o retrato de um ideal de época e de um grupo, não uma regra sobre como todo mundo fala em Israel.
+
+::: quiz pegadinha É comum ouvir que, no Shabat, Israel inteiro para e não há como se deslocar. O que dizem as fontes?
+- [ ] Que nada circula no país inteiro | É a versão que circula. Trens e a maior parte dos ônibus param, mas não tudo.[[C05-079]]
+- [x] Que trens e a maioria dos ônibus param, mas há transporte em alguns lugares e táxis rodam | Haifa, parte da Galileia e localidades não judaicas têm transporte; Tel Aviv e vizinhas criaram ônibus gratuitos; o táxi roda com tarifa maior.[[C05-081,C05-082,C08-035]]
+- [ ] Que o transporte público funciona normalmente | Na maior parte do país, trens e ônibus deixam de circular entre a tarde de sexta e a noite de sábado.[[C05-079]]
+:::
 
 ::: quiz Em Israel, qual destes dias é normalmente dia de trabalho?
 - [x] Domingo | O domingo é dia de trabalho; uma proposta de torná-lo folga chegou ao governo e enfrentou oposição.[[C05-078]]

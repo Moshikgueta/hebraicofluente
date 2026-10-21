@@ -89,3 +89,64 @@ Registros novos: C05-078 a C05-100. Atualizados para VERIFICADO com fonte: C05-0
 **Figura sugerida (não criada)**: um gráfico de barras das comunidades religiosas com datas explícitas por barra (muçulmanos fim de 2025; cristãos dezembro de 2025; drusos fevereiro de 2026), sem soma total, com C05-005, C05-091 e C05-092.
 
 **Para a próxima rodada**: número atual de kibutzim e moshavim (CBS), moshav (fonte acadêmica), Chanuká e Purim, línguas (CBS), comércio na sexta, decisão de 2002 sobre as placas.
+
+## Fase 6 (21/10/2026)
+
+Módulo: `tools/ilustracoes/cap05.mjs`.
+
+### Visuais
+| Peça | Tipo | Dados |
+| --- | --- | --- |
+| `abertura-vida-real` | abertura ilustrada (nova): rua no fim da tarde de sexta | desenho, sem dado, rotulado "ilustração" |
+| `shabat-do-comeco-ao-fim` | infográfico (novo), sem horário | C05-061, 079, 081, 082, 083; C08-031, 033, 034, 035 |
+| `feriados-israel-brasil` | comparação com o Brasil (nova) | C05-085, 066, 101, 102, 103 |
+| `quem-mora-israel` | gráfico (novo), os três números do mesmo comunicado | C05-001, 002, 003 |
+| `infografico-semana` | infográfico (já existia, ficou) | C05-076, 078, 080, 061 |
+| 2 fotos candidatas (já existiam) | foto | Yom HaZikarón, Nahalal |
+
+O `::: dado 10,244 milhões` virou a figura `quem-mora-israel`. Os números de
+religião (muçulmanos, cristãos, drusos) não entraram no gráfico: são de datas
+diferentes, e o texto já explica por que não somam.
+
+### Comparação com o Brasil
+Nove dias de descanso oficiais em Israel (C05-085), que mudam de data a cada
+ano (C05-066), e nove feriados civis fixados pelas leis federais brasileiras:
+Lei 662/1949 na redação da Lei 10.607/2002, Lei 6.802/1980 e Lei 14.759/2023
+(C05-101, fontes nível A). Conta derivada em C05-103. A portaria federal de
+2026 com a Paixão de Cristo (3 de abril) foi vista só pela imprensa (duas
+fontes E, C05-102, com `revisar_ate`).
+
+### Interações
+Pegadinha do guia ("no Shabat nada circula"); "História ou tradição?" com
+palpite nas festas do Levítico (`resposta: as-duas`); ficha de Degania
+(C05-095); os quizzes e V/F que já havia.
+
+### Decisão política (o que saiu do texto)
+- Lei do Estado-Nação: ficou o que a lei diz e quando (C05-012 a C05-014);
+  saiu o parágrafo do debate (Al-Monitor, American Jewish Committee, C05-015).
+- Serviço militar: ficaram duração, quem serve e as isenções; saiu "apesar de
+  o exército ter pedido 36" e o estudo da Kulturní Studia sobre os drusos
+  (C05-022).
+- Ultraortodoxos: ficou a decisão de 25/06/2024 (C05-023), sem o placar de
+  juízes; saíram a ordem de novembro de 2025 e o pedido de desacato (C05-024).
+- Item 8 das surpresas: saiu a remissão ao "status internacional" de
+  Jerusalém.
+Os registros continuam nos arquivos; só saíram do texto.
+
+### Registros novos
+C05-101 a C05-103; F05-067 a F05-071.
+
+### Buscas
+4 (feriados brasileiros e portaria de 2026).
+
+### Testes
+Validador: 0 erros. PDF `saida/capitulo-05.pdf`: 25 páginas, 2/2 QR lidos,
+inspecionar sem transbordo nem página quase vazia. Web: não rodada.
+
+### Pendências
+- Hebraico: nenhum novo; os rótulos de `infografico-semana` e os do capítulo
+  seguem à espera da aprovação do dono.
+- Conferir no Diário Oficial a portaria de 2026 (número e data divergem na
+  imprensa).
+- "Shabat hora a hora": sem relógio, de propósito; nenhuma fonte dá horário
+  fixo que valha para o país.

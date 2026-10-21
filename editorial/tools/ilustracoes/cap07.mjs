@@ -6,7 +6,7 @@
 import { C, esc } from '../lib/desenho.mjs';
 
 export default function capitulo07({ svg, t, sombra }) {
-  const he = (x, y, txt, o = {}) => `<text class="he" x="${x}" y="${y}" font-size="${o.s || 30}" fill="${o.f || C.navy}" direction="rtl" unicode-bidi="embed" text-anchor="${o.a || 'start'}"${o.tr ? ` transform="${o.tr}"` : ''}>${txt}</text>`;
+  const he = (x, y, txt, o = {}) => `<text class="he" x="${x}" y="${y}" font-size="${o.s || 30}" style="font-size:${o.s || 30}px" fill="${o.f || C.navy}" direction="rtl" unicode-bidi="embed" text-anchor="${o.a || 'start'}"${o.tr ? ` transform="${o.tr}"` : ''}>${txt}</text>`;
   const cabeca = (W, kicker, titulo) => `<rect width="${W}" height="140" fill="${C.navy}"/>` + t(56, 58, kicker, { s: 15, w: 700, ls: 3, f: C.tealLite }) + t(56, 112, titulo, { cls: 'd', s: 42, f: '#FFFFFF' });
 
   /* ── Abertura: letras hebraicas soltas, em papel recortado. Letras
@@ -21,8 +21,8 @@ export default function capitulo07({ svg, t, sombra }) {
       ['ל', 1320, 690, 220, 12, C.areiaClara], ['ת', 110, 650, 200, 6, C.tealLite], ['ר', 820, 200, 170, -12, C.areiaClara],
     ];
     for (const [l, x, y, sz, rot, cor] of L) {
-      s += `<text class="he" x="${x + 10}" y="${y + 14}" font-size="${sz}" fill="${C.noite}" opacity=".55" text-anchor="middle" transform="rotate(${rot} ${x} ${y})">${l}</text>`;
-      s += `<text class="he" x="${x}" y="${y}" font-size="${sz}" fill="${cor}" text-anchor="middle" font-weight="700" transform="rotate(${rot} ${x} ${y})">${l}</text>`;
+      s += `<text class="he" x="${x + 10}" y="${y + 14}" font-size="${sz}" style="font-size:${sz}px" fill="${C.noite}" opacity=".55" text-anchor="middle" transform="rotate(${rot} ${x} ${y})">${l}</text>`;
+      s += `<text class="he" x="${x}" y="${y}" font-size="${sz}" style="font-size:${sz}px" fill="${cor}" text-anchor="middle" font-weight="700" transform="rotate(${rot} ${x} ${y})">${l}</text>`;
     }
     for (const [x, y, r] of [[470, 180, 14], [1000, 660, 10], [520, 760, 12], [1250, 1180, 16], [140, 1180, 10], [880, 430, 8]]) s += `<circle cx="${x}" cy="${y}" r="${r}" fill="${C.ouro}"/>`;
     return svg(W, H, 'Ilustração: letras hebraicas soltas, recortadas em papel e espalhadas sobre fundo azul-escuro.', s);
@@ -38,10 +38,10 @@ export default function capitulo07({ svg, t, sombra }) {
      sinais de vogal". A ordem das faixas NÃO é dado (C07-009 não verificada),
      e a faixa do árabe fica sem texto. */
   function placa() {
-    const W = 1080, H = 1300;
+    const W = 1080, H = 1110;
     let s = `<rect width="${W}" height="${H}" fill="${C.papel}"/>` + cabeca(W, 'ANATOMIA DE UMA PLACA', 'Três escritas, um nome');
     /* poste e placa */
-    s += `<rect x="530" y="660" width="26" height="250" fill="${C.pedraEsc}"/><rect x="524" y="652" width="26" height="260" fill="${C.suave}"/>`;
+    s += `<rect x="530" y="660" width="26" height="90" fill="${C.pedraEsc}"/><rect x="524" y="652" width="26" height="100" fill="${C.suave}"/>`;
     const pl = 'M240 200 H840 Q860 200 860 220 V640 Q860 660 840 660 H240 Q220 660 220 640 V220 Q220 200 240 200Z';
     s += sombra(pl, 9, 11) + `<path d="${pl}" fill="${C.navy}"/><path d="M240 214 H840 Q846 214 846 220 V640 Q846 646 840 646 H240 Q234 646 234 640 V220 Q234 214 240 214Z" fill="none" stroke="#FFFFFF" stroke-width="4"/>`;
     /* faixa 1: hebraico */
@@ -61,14 +61,14 @@ export default function capitulo07({ svg, t, sombra }) {
     /* o ו como vogal */
     s += `<circle cx="472" cy="296" r="40" fill="none" stroke="${C.ouro}" stroke-width="4"/><path d="M432 280 C 380 250 920 250 880 290" fill="none" stroke="none"/>`;
     s += `<path d="M512 276 C 600 250 760 250 880 262" fill="none" stroke="${C.ouro}" stroke-width="2.5" stroke-dasharray="2 6" stroke-linecap="round"/>`;
-    s += t(886, 254, 'o ו faz o', { s: 16, w: 700, f: C.ouroTinta }) + t(886, 276, 'papel do o:', { s: 16, w: 700, f: C.ouroTinta }) + t(886, 298, 'Á-ko', { s: 16, i: true, f: C.ouroTinta });
+    s += `<text class="t" x="886" y="254" font-size="16" font-weight="700" fill="${C.ouroTinta}">o <tspan class="he" font-size="20" style="font-size:20px">ו</tspan> faz o</text>` + t(886, 276, 'papel do o:', { s: 16, w: 700, f: C.ouroTinta }) + t(886, 298, 'Áko', { s: 16, i: true, f: C.ouroTinta });
     /* um nome, três épocas */
-    s += `<rect x="56" y="950" width="${W - 112}" height="270" rx="16" fill="${C.ouroSuave}"/>`;
-    s += t(86, 994, 'UM NOME, TRÊS ÉPOCAS, SEGUNDO O DOSSIÊ DA UNESCO', { s: 15, w: 700, ls: 2, f: C.neguevTinta });
-    const etapa = (x, a, b, c) => `<circle cx="${x}" cy="1062" r="12" fill="${C.navy}"/>` + t(x, 1106, a, { s: 26, w: 700, a: 'middle', f: C.navy }) + t(x, 1134, b, { s: 16, a: 'middle', f: C.corpo }) + (c ? t(x, 1156, c, { s: 16, a: 'middle', f: C.corpo }) : '');
-    s += `<line x1="200" x2="880" y1="1062" y2="1062" stroke="${C.navy}" stroke-width="3"/>`;
+    s += `<rect x="56" y="760" width="${W - 112}" height="270" rx="16" fill="${C.ouroSuave}"/>`;
+    s += t(86, 804, 'UM NOME, TRÊS ÉPOCAS, SEGUNDO O DOSSIÊ DA UNESCO', { s: 15, w: 700, ls: 2, f: C.neguevTinta });
+    const etapa = (x, a, b, c) => `<circle cx="${x}" cy="872" r="12" fill="${C.navy}"/>` + t(x, 916, a, { s: 26, w: 700, a: 'middle', f: C.navy }) + t(x, 944, b, { s: 16, a: 'middle', f: C.corpo }) + (c ? t(x, 966, c, { s: 16, a: 'middle', f: C.corpo }) : '');
+    s += `<line x1="200" x2="880" y1="872" y2="872" stroke="${C.navy}" stroke-width="3"/>`;
     s += etapa(200, 'Akko', 'no Antigo', 'Testamento') + etapa(540, 'Ptolemais', 'no período', 'helenístico') + etapa(880, 'Akko', 'de volta, no', 'período árabe');
-    s += t(540, 1198, 'Entre 1191 e 1291, capital do segundo reino cruzado. Em português, Acre.', { s: 16, i: true, a: 'middle', f: C.neguevTinta });
+    s += t(540, 1008, 'Entre 1191 e 1291, capital do segundo reino cruzado. Em português, Acre.', { s: 16, i: true, a: 'middle', f: C.neguevTinta });
     s += t(56, H - 40, 'Placa desenhada, não é retrato de uma placa real: a ordem das faixas é ilustrativa, e a faixa do árabe vai sem texto', { s: 13, f: C.suave });
     s += t(56, H - 20, 'porque este livro não registrou a grafia árabe do nome. Fonte dos nomes: dossiê de candidatura da UNESCO.', { s: 13, f: C.suave });
     return svg(W, H, 'Anatomia de uma placa trilíngue desenhada: em cima o nome de Acre em hebraico sem vogais, no meio a faixa do árabe deixada sem texto, embaixo a transliteração Akko; e, abaixo, os três nomes da cidade ao longo do tempo segundo a UNESCO.', s);
@@ -114,8 +114,8 @@ export default function capitulo07({ svg, t, sombra }) {
     s += he(540, 390, com ? `יְר${vav}שָׁלַיִם` : `יר${vav}שלים`, { s: 150, a: 'middle', f: C.navy });
     s += t(540, 580, 'Yerushaláyim, Jerusalém', { s: 26, w: 700, a: 'middle', f: C.navy });
     s += t(540, 620, com ? 'Os pontos e traços em volta das letras dão as vogais.' : 'Sem os pontos, quem sinaliza a vogal é a própria letra.', { s: 20, a: 'middle', f: C.corpo });
-    s += t(540, 652, 'Em dourado, o ו, que faz o papel de o ou u.', { s: 20, a: 'middle', f: C.ouroTinta });
-    s += t(540, H - 30, 'Desenho tipográfico. Fonte: Noto Serif Hebrew.', { s: 13, a: 'middle', f: C.suave });
+    s += `<text class="t" x="540" y="652" font-size="20" text-anchor="middle" fill="${C.ouroTinta}">Em dourado, o <tspan class="he" font-size="26" style="font-size:26px">ו</tspan>, que faz o papel de o ou u.</text>`;
+    s += t(540, H - 30, 'Desenho tipográfico.', { s: 13, a: 'middle', f: C.suave });
     return svg(W, H, com ? 'Jerusalém em hebraico com os sinais de vogal, como neste livro, com a letra vav em destaque.' : 'Jerusalém em hebraico sem os sinais de vogal, como nas placas, com a letra vav em destaque fazendo o papel de vogal.', s);
   }
 

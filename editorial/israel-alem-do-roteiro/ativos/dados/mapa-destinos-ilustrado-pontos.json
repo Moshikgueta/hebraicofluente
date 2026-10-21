@@ -3,70 +3,70 @@
   "id": "mar-da-galileia",
   "nome": "Mar da Galileia",
   "ficha": "mar-da-galileia",
-  "x": 62.5,
-  "y": 23.5
+  "x": 57.4,
+  "y": 23.4
  },
  {
   "id": "nazare",
   "nome": "Nazaré",
   "ficha": "nazare",
-  "x": 49.5,
-  "y": 27.6
+  "x": 45.5,
+  "y": 27.4
  },
  {
   "id": "cafarnaum",
   "nome": "Cafarnaum",
   "ficha": "cafarnaum",
-  "x": 61.7,
-  "y": 20.2
+  "x": 56.6,
+  "y": 20.1
  },
  {
   "id": "cesareia",
   "nome": "Cesareia",
   "ficha": "cesareia",
-  "x": 31.2,
-  "y": 35.8
+  "x": 28.8,
+  "y": 35.5
  },
  {
   "id": "massada",
   "nome": "Massada",
   "ficha": "massada",
-  "x": 51.6,
-  "y": 84.4
+  "x": 47.4,
+  "y": 83.4
  },
  {
   "id": "mar-morto",
   "nome": "Mar Morto",
   "ficha": "mar-morto",
-  "x": 57.5,
-  "y": 71.6
+  "x": 52.8,
+  "y": 70.8
  },
  {
   "id": "tel-aviv",
   "nome": "Tel Aviv",
   "ficha": "tel-aviv",
-  "x": 26.4,
-  "y": 53.1
+  "x": 24.4,
+  "y": 52.6
  },
  {
   "id": "jafa",
   "nome": "Jafa",
   "ficha": "jafa",
-  "x": 21.2,
-  "y": 57.3
+  "x": 19.3,
+  "y": 57
  },
  {
   "id": "haifa",
   "nome": "Haifa",
   "ficha": "haifa",
-  "x": 35.9,
+  "x": 33.1,
   "y": 23
  },
  {
   "id": "acre",
   "nome": "Acre",
   "ficha": "acre",
-  "x": 39.4,
+  "x": 36.3,
   "y": 18.5
  }
 ]

@@ -7,7 +7,7 @@ import { C, esc } from '../lib/desenho.mjs';
 
 export default function capitulo06({ svg, t, sombra }) {
   /* hebraico: x é a borda direita (direction rtl, anchor start) ou o centro */
-  const he = (x, y, txt, o = {}) => `<text class="he" x="${x}" y="${y}" font-size="${o.s || 30}" fill="${o.f || C.navy}" direction="rtl" unicode-bidi="embed" text-anchor="${o.a || 'start'}">${esc(txt)}</text>`;
+  const he = (x, y, txt, o = {}) => `<text class="he" x="${x}" y="${y}" font-size="${o.s || 30}" style="font-size:${o.s || 30}px" fill="${o.f || C.navy}" direction="rtl" unicode-bidi="embed" text-anchor="${o.a || 'start'}">${esc(txt)}</text>`;
   const num = (x, y, n) => `<circle cx="${x}" cy="${y + 2}" r="15" fill="${C.pedraEsc}"/><circle cx="${x}" cy="${y}" r="15" fill="${C.ouro}" stroke="${C.papel}" stroke-width="2.5"/>` + t(x, y + 6, String(n), { cls: 't n', s: 16, a: 'middle', f: C.noite });
   const fio = (x1, y1, x2, y2) => `<path d="M${x1} ${y1} L${x2} ${y2}" stroke="${C.navy}" stroke-width="1.6" stroke-dasharray="2 5" stroke-linecap="round" fill="none"/>`;
   const cabeca = (W, kicker, titulo) => `<rect width="${W}" height="140" fill="${C.navy}"/>` + t(56, 58, kicker, { s: 15, w: 700, ls: 3, f: C.tealLite }) + t(56, 112, titulo, { cls: 'd', s: 42, f: '#FFFFFF' });
@@ -88,7 +88,7 @@ export default function capitulo06({ svg, t, sombra }) {
 
   /* ── Homus e jachnun.
      Homus: grão-de-bico cozido e amassado, tahine, alho e suco de limão
-     (C06-052, Britannica e Dictionary.com). Jachnun: massa enrolada que
+     (C06-052, Britannica e James Beard Foundation). Jachnun: massa enrolada que
      assa a noite inteira, servida em Israel com tomate ralado, zhug e ovo
      (C06-044). */
   function anatomiaHomusJachnun() {
@@ -121,7 +121,7 @@ export default function capitulo06({ svg, t, sombra }) {
     s += t(800, 790, 'Em Israel, vem com tomate ralado,', { s: 17, a: 'middle', f: C.corpo }) + t(800, 814, 'zhug (molho picante iemenita) e ovo.', { s: 17, a: 'middle', f: C.corpo });
     s += t(800, 850, 'Associado aos judeus do Iêmen, em especial de Aden.', { s: 14.5, i: true, a: 'middle', f: C.suave });
     s += `<rect x="56" y="945" width="${W - 112}" height="48" rx="10" fill="${C.ouroSuave}"/>` + t(76, 976, 'A receita tradicional, segundo as obras de referência; cada casa tem a sua medida.', { s: 15, f: C.neguevTinta });
-    s += t(56, H - 12, 'Desenho esquemático. Fontes: Encyclopaedia Britannica e Dictionary.com (homus); My Jewish Learning e Hadassah (jachnun).', { s: 12.5, f: C.suave });
+    s += t(56, H - 12, 'Desenho esquemático. Fontes: Encyclopaedia Britannica e James Beard Foundation (homus); My Jewish Learning e Hadassah (jachnun).', { s: 12.5, f: C.suave });
     return svg(W, H, 'Anatomia, em desenho: o homus leva grão-de-bico cozido e amassado, tahine, alho e suco de limão; o jachnun é massa enrolada assada a noite inteira, servida em Israel com tomate ralado, zhug e ovo.', s);
   }
 

@@ -1,0 +1,19 @@
+<svg class="fig-nikud-sem-pontos" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 760" role="img" aria-label="Jerusalém em hebraico sem os sinais de vogal, como nas placas, com a letra vav em destaque fazendo o papel de vogal."><style>
+.fig-nikud-sem-pontos .t{font-family:'Instrument Sans',system-ui,sans-serif}
+.fig-nikud-sem-pontos .d{font-family:'Literata Display','Literata',Georgia,serif}
+.fig-nikud-sem-pontos .n{font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;font-weight:700}
+.fig-nikud-sem-pontos .he{font-family:'Noto Serif Hebrew',serif}
+.fig-nikud-sem-pontos .k{font-size:15px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
+</style><defs>
+  <marker id="nikud-sem-pontos--ponta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B9773E"/></marker>
+  <pattern id="nikud-sem-pontos--ondas" width="46" height="22" patternUnits="userSpaceOnUse">
+    <rect width="46" height="22" fill="#D3E6E8"/>
+    <path d="M3 13 q5.5 -5 11 0 t11 0" fill="none" stroke="#A9CDD2" stroke-width="1.6" stroke-linecap="round"/>
+  </pattern>
+  <pattern id="nikud-sem-pontos--hachura" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <rect width="7" height="7" fill="#FBF3E2"/><line x1="0" y1="0" x2="0" y2="7" stroke="#B8862F" stroke-width="2"/>
+  </pattern>
+  <pattern id="nikud-sem-pontos--hachura-golan" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+    <rect width="7" height="7" fill="#F4EEE2"/><line x1="0" y1="0" x2="0" y2="7" stroke="#8A6520" stroke-width="1.6"/>
+  </pattern>
+</defs><g fill="#1B211F"><rect width="1080" height="760" fill="#E4F1EE"/><text class="t" x="540" y="92" font-size="18" font-weight="700" text-anchor="middle" letter-spacing="4" fill="#12665C">SEM OS SINAIS DE VOGAL</text><text class="t" x="540" y="132" font-size="20" text-anchor="middle" font-style="italic" fill="#5F6A66">como nas placas, nos cardápios e nos jornais</text><path d="M120 180 H960 V500 H120Z" transform="translate(9 11)" fill="#D9CCB0"/><path d="M120 180 H960 V500 H120Z" fill="#FFFFFF"/><text class="he" x="540" y="390" font-size="150" style="font-size:150px" fill="#0E3B43" direction="rtl" unicode-bidi="embed" text-anchor="middle">יר<tspan fill="#B8862F">ו</tspan>שלים</text><text class="t" x="540" y="580" font-size="26" font-weight="700" text-anchor="middle" fill="#0E3B43">Yerushaláyim, Jerusalém</text><text class="t" x="540" y="620" font-size="20" text-anchor="middle" fill="#2E3633">Sem os pontos, quem sinaliza a vogal é a própria letra.</text><text class="t" x="540" y="652" font-size="20" text-anchor="middle" fill="#8A6520">Em dourado, o <tspan class="he" font-size="26" style="font-size:26px">ו</tspan>, que faz o papel de o ou u.</text><text class="t" x="540" y="730" font-size="13" text-anchor="middle" fill="#5F6A66">Desenho tipográfico.</text></g></svg>

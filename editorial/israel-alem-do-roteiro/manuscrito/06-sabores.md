@@ -3,6 +3,8 @@ capitulo: 6
 titulo: Sabores de Israel
 subtitulo: Pratos que viajaram, receitas que se disputam
 abertura_frase: Um prato de homus é um almoço e, ao mesmo tempo, um assunto de pesquisa.
+abertura_imagem: abertura-sabores
+abertura_credito: Ilustração original, não é registro fotográfico.
 ---
 
 Quem pede um prato de homus num balcão em Israel está comendo um almoço e, sem perceber, um assunto de pesquisa. Nos últimos anos, pesquisadores de várias áreas passaram a olhar para o prato com a mesma atenção que dão a um arquivo. A pergunta que interessa a eles não é só "quem inventou?". É outra, mais difícil: como pratos que já circulavam pela região, e outros que chegaram na bagagem de imigrantes, passaram a ser vividos como comida israelense, e o que essa passagem diz sobre quem cozinha, quem vende e quem come.
@@ -17,7 +19,7 @@ A lista de fontes já ensina alguma coisa. A cozinha de um país também se escr
 
 ## Homus: um prato, várias reivindicações
 
-Em hebraico, o prato se chama <he>חוּמוּס</he> (chúmus). E cada colherada vem com bastante conversa.
+Em hebraico, o prato se chama <he>חוּמוּס</he> (chúmus). A receita tradicional é curta: grão-de-bico cozido e amassado, misturado com tahine, o condimento de gergelim tostado, alho e suco de limão.[[C06-052]] Já a conversa que vem com cada colherada é longa.
 
 ::: foto foto-homus-libanes
 Homus servido ao estilo libanês: o mesmo prato tem endereço em várias cozinhas da região.
@@ -42,10 +44,15 @@ Uma delas põe o prato no Egito, onde o bolinho de fava é chamado de taamíya. 
 O historiador Shaul Stampfer, da Universidade Hebraica de Jerusalém, aponta outro parente: os bolinhos fritos de ervilha partida que judeus de Kerala e de Calcutá faziam no fim do século XIX, "impressionantemente parecidos" com o falafel. Para Stampfer, o trio pita, falafel e salada é uma combinação do século XX.[[C06-009]]
 
 ::: historia-ou-tradicao Os coptas e a Quaresma
+resposta: tradicao
 Circula muito a história de que cristãos coptas do Egito criaram o falafel como comida sem carne para os jejuns da Quaresma. É uma tradição contada, não um fato documentado: a *History Today* registra que não há evidência que a sustente.[[C06-008]]
 :::
 
 Nenhuma dessas hipóteses faz do falafel propriedade de um único povo, e nenhuma foi provada. O que as fontes permitem dizer é que bolinhos fritos parecidos existiram em mais de uma cozinha.[[C06-008,C06-009]]
+
+::: figura anatomia-sabich-falafel
+O sabich e o falafel na pita, em desenho esquemático: só os ingredientes que as fontes citam.[[C06-010,C06-009,C06-008]]
+:::
 
 ## Sabich: o café da manhã que virou sanduíche
 
@@ -61,6 +68,10 @@ Jachnun com tomate ralado, zhug e ovo cozido.
 
 O jachnun é um deles. Publicações de divulgação judaica o descrevem como uma massa fina, amanteigada e enrolada, que assa devagar durante a noite para ser comida no sábado de manhã; o prato é associado aos judeus do Iêmen, em especial de Aden, e a massa é praticamente a mesma do malawach, que vai à frigideira. Em Israel, o jachnun costuma vir com tomate ralado, zhug (o molho picante iemenita) e ovo.[[C06-044]] A lógica é a mesma do sabich: comida pronta de véspera, para um dia em que não se cozinha.
 
+::: figura anatomia-homus-jachnun
+O homus e o jachnun, por partes: a receita tradicional do homus segundo as obras de referência, e o jachnun como é servido em Israel.[[C06-052,C06-044]]
+:::
+
 A chalá, o pão trançado da mesa de sábado, tem uma disputa própria, mais discreta que a do homus. Um artigo da revista acadêmica *Meldar*, de estudos sefarditas, sustenta que a trança não é de origem asquenaze, como se costuma dizer, e sim sefardita.[[C06-045]] É a tese de um artigo, não um consenso, mas basta para mostrar que nem o pão de sábado escapa da pergunta sobre origem.
 
 ## Mercados: Machane Yehuda e Carmel
@@ -71,6 +82,15 @@ A mudança tem horário. À noite, quando as bancas fecham, o Machane Yehuda vir
 
 ::: foto foto-mahane-yehuda-dyan
 O mercado Machane Yehuda, em Jerusalém, em 2010.
+:::
+
+::: ficha machane-yehuda
+nome: Mercado Machane Yehuda
+he: <he>שׁוּק מַחֲנֵה יְהוּדָה</he> | Shuk Machané Yehudá
+regiao: Jerusalém, fora das muralhas
+resumo: O mercado de rua de Jerusalém, onde negócios novos deslocaram parte dos usos tradicionais nos últimos anos.[[C06-046]]
+dado: 2020 | o ano do estudo da Universidade Hebraica que mediu a "boutiquização" do mercado[[C06-046]]
+observar: A troca de turno: quando as bancas fecham, à noite, o mercado vira ponto de bares e restaurantes.[[C06-047]]
 :::
 
 Em Tel Aviv, o mercado mais conhecido é o Shuk HaCarmel. Sua história de fundação aparece em versões diferentes nas fontes consultadas, e por isso fica para uma próxima edição.
@@ -111,7 +131,19 @@ Os passeios do Museu da Cidade de Tel Aviv-Yafo pela história dos cafés.
 
 Algumas palavras resolvem a maior parte da refeição. O cardápio é o <he>תַּפְרִיט</he> (tafrít); quem atende é o <he>מֶלְצַר</he> (meltsár); a água é <he>מַיִם</he> (máyim); e, na hora de pagar, a palavra é <he>חֶשְׁבּוֹן</he> (cheshbón), a conta. Um "por favor", <he>בְּבַקָשָׁה</he> (bevakashá), e um "obrigado", <he>תוֹדָה</he> (todá), fecham o pedido.
 
+::: figura guia-cardapio
+Treze palavras do capítulo num cardápio desenhado: para pedir, para entender a kashrut e para pagar.
+:::
+
 A gorjeta é costume, não lei. Reportagens do Jerusalem Post e do Israel21c dão de 10% a 15% da conta nos restaurantes; segundo o Israel21c, o patamar antigo de 10% subiu para cerca de 12%, e para 15% em Tel Aviv.[[C06-043]] Antes de calcular, veja se a conta já inclui o serviço. Percentuais assim mudam com o tempo: informação consultada em 21 de outubro de 2026.
+
+O brasileiro chega com uma referência parecida. Aqui, a taxa de serviço é em geral de 10% e é opcional, e o restaurante tem de dizer isso com clareza, segundo o Procon-ES e o Idec.[[C06-054]] A Lei 13.419, de 2017, não fala do cliente: trata o valor cobrado como serviço também como gorjeta, que não é receita da casa e é dividida entre os empregados.[[C06-053]] Nos dois países, a gorjeta começa nos 10% e não é obrigação legal de quem come; em Israel, o costume vai até 15%.[[C06-055]]
+
+::: compare conta-israel conta-brasil
+a: Israel
+b: Brasil
+A conta nos dois países: em Israel, de 10% a 15% por costume; no Brasil, a taxa de serviço, em geral de 10%, opcional.[[C06-043,C06-054,C06-055]]
+:::
 
 ::: foto foto-cardapio-mahane-yehuda
 Cardápio em hebraico e inglês no Machane Yehuda.
@@ -129,6 +161,12 @@ Cardápio em hebraico e inglês no Machane Yehuda.
 - <he>בְּשָׂרִי</he> | bsarí | de carne | O par de <he>חָלָבִי</he> na conversa sobre kashrut.
 - <he>חָלָבִי</he> | chalaví | de leite | O par de <he>בְּשָׂרִי</he> na conversa sobre kashrut.
 - <he>בְּתֵאָבוֹן</he> | beteavón | bom apetite | Dito ao servir ou ao começar.
+:::
+
+::: quiz pegadinha Circula que o sabich é receita antiga, servida assim há séculos. O que as reportagens contam?
+- [x] Que o prato vem do café da manhã de Shabat dos judeus do Iraque e foi para dentro da pita num quiosque de Ramat Gan aberto em 1961 | Os itens eram preparados de véspera; a passagem para o sanduíche é ligada ao quiosque de Sabich e Rina Halabi, e há mais de uma versão sobre o primeiro.[[C06-010]]
+- [ ] Que é um prato da Antiguidade, descrito em textos antigos | É a versão que circula; as fontes do capítulo não registram nada disso.[[C06-010]]
+- [ ] Que foi criado pelo exército israelense | Não há registro disso nas fontes consultadas; a história contada liga o sanduíche a um quiosque de rua.[[C06-010]]
 :::
 
 ::: quiz Segundo o historiador Shaul Stampfer, o trio pita, falafel e salada é de que época?

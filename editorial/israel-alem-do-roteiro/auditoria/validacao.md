@@ -4,24 +4,24 @@ Gerado por `tools/validar.mjs` em 2026-10-21. Este relatório confere a trilha (
 
 ## Números
 
-- Palavras no manuscrito: 32963
-- Fontes registradas: 662 (por nível: D 154, B 163, E 227, A 96, C 22; por acesso: trecho-de-busca 634, referencia-confirmada 28)
-- Afirmações registradas: 731 (VERIFICADO 483, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
-- Afirmações VERIFICADO sem uso no texto: 35
-- Ocorrências de hebraico: 193 (lista em auditoria/hebraico.md)
-- Links testados: 0 de 659 (rede bloqueada; ver revisão humana)
+- Palavras no manuscrito: 34975
+- Fontes registradas: 670 (por nível: D 154, B 163, E 233, A 98, C 22; por acesso: trecho-de-busca 642, referencia-confirmada 28)
+- Afirmações registradas: 738 (VERIFICADO 490, NÃO VERIFICADO 150, PARCIALMENTE VERIFICADO 54, DESATUALIZADO 3, CONTESTADO 41)
+- Afirmações VERIFICADO sem uso no texto: 31
+- Ocorrências de hebraico: 206 (lista em auditoria/hebraico.md)
+- Links testados: 0 de 667 (rede bloqueada; ver revisão humana)
 
 | Arquivo | Palavras | Marcas de fonte |
 | --- | --- | --- |
 | 00a-nota-metodologica.md | 653 | 0 |
 | 00b-introducao.md | 519 | 0 |
-| 01-israel-no-mapa.md | 2535 | 73 |
+| 01-israel-no-mapa.md | 2736 | 97 |
 | 02-historia.md | 6604 | 199 |
 | 03-jerusalem.md | 4651 | 180 |
-| 04-alem-de-jerusalem.md | 3924 | 130 |
-| 05-vida-real.md | 3084 | 94 |
-| 06-sabores.md | 2366 | 39 |
-| 07-hebraico.md | 2587 | 45 |
+| 04-alem-de-jerusalem.md | 4870 | 213 |
+| 05-vida-real.md | 3211 | 117 |
+| 06-sabores.md | 2767 | 57 |
+| 07-hebraico.md | 2924 | 58 |
 | 08-na-pratica.md | 2544 | 70 |
 | 09-curiosidades.md | 2424 | 67 |
 | 10-diario.md | 580 | 0 |
@@ -34,4 +34,4 @@ Nenhum.
 
 ## Avisos (1)
 
-- manuscrito/01-israel-no-mapa.md:129: caixa "O olhar de um israelense" pendente de aprovação do autor
+- manuscrito/01-israel-no-mapa.md:138: caixa "O olhar de um israelense" pendente de aprovação do autor

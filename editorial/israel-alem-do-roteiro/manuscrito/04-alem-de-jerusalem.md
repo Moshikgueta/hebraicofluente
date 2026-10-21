@@ -3,6 +3,8 @@ capitulo: 4
 titulo: Além de Jerusalém
 subtitulo: Dez lugares, cada um com mais de uma história
 abertura_frase: Dez lugares e, em cada um, três perguntas que nem sempre têm a mesma resposta: o que se escavou, o que se escreveu e o que se acredita.
+abertura_imagem: abertura-alem-de-jerusalem
+abertura_credito: Ilustração original, não é registro fotográfico.
 ---
 
 Fora de Jerusalém, o país conta histórias que pouco se parecem umas com as outras. Há um lago cercado de ruínas que interessam ao mesmo tempo a cristãos, a judeus e a quem estuda a natureza.[[C04-003,C04-005,C04-006]] Há uma fortaleza no deserto que virou símbolo nacional e tema de debate acadêmico.[[C04-039,C04-041]] Há um porto que Herodes ergueu com cinza vulcânica trazida da Itália.[[C04-021,C04-025]] E há uma cidade fundada em 1909 que hoje é patrimônio da arquitetura moderna.[[C04-054,C04-055]]
@@ -11,8 +13,10 @@ Este capítulo passa por dez desses lugares. A ordem é de leitura, não de viag
 
 Em cada lugar, vale separar três coisas que o turismo costuma misturar: o que a escavação encontrou, o que um texto antigo relata e o que uma tradição religiosa afirma. As três importam. Só não são a mesma coisa.
 
-::: figura mapa-destinos
-Os dez destinos do capítulo, com Jerusalém e o sítio de Tel Be'er Sheva como referência. Posições aproximadas, tiradas da UNESCO e de gazetteers acadêmicos (ver as fontes de cada ponto); o mapa não está em escala para medir distâncias.
+Para ter a escala na cabeça: Massada fica a uns 52 km de Jerusalém em linha reta, Tel Aviv a uns 55, e Acre, o mais distante dos dez, a uns 128.[[C04-097]] Da costa ao Mar Morto, o carro leva cerca de uma hora e meia.[[C01-009]]
+
+::: figura mapa-destinos-ilustrado
+Os dez lugares do capítulo, numerados, e a distância de cada um até Jerusalém em linha reta; cada número leva à ficha do lugar.[[C04-097,C01-009]]
 :::
 
 ## Mar da Galileia
@@ -27,6 +31,17 @@ O Mar da Galileia está em três propostas diferentes de Israel à UNESCO: a do 
 
 ::: observar
 Em cada sítio arqueológico da margem, olhe também para a água e para as margens do outro lado. A proposta israelense trata ruínas e paisagem como um conjunto só, que soma valor cultural e valor natural.[[C04-003]]
+:::
+
+::: ficha mar-da-galileia
+nome: Mar da Galileia
+he: <he>כִּנֶּרֶת</he> | Kinéret
+regiao: Galileia
+resumo: O lago e as ruínas em volta, na Lista Indicativa da UNESCO como bem misto, cultural e natural.[[C04-003]]
+dado: 2000 | o ano em que Israel pôs o lago na Lista Indicativa[[C04-003]]
+dado: 3 | propostas de Israel à UNESCO que incluem o lago[[C04-003,C04-005,C04-006]]
+dado: 119 km | de Jerusalém, em linha reta[[C04-097]]
+observar: Em cada sítio da margem, olhe também para a água: a proposta trata ruínas e paisagem como um conjunto só.[[C04-003]]
 :::
 
 ::: em-hebraico
@@ -54,6 +69,17 @@ De quando é o edifício que você está vendo? Desde quando a tradição liga e
 Repare se a igreja diante de você é a primeira construída no lugar ou se está sobre restos de outras mais antigas. Essa sobreposição, quando existe, também é um documento: pode indicar há quanto tempo o lugar é venerado.
 :::
 
+::: ficha nazare
+nome: Nazaré
+he: <he>נָצְרַת</he> | Natsrát
+regiao: Galileia
+resumo: Povoado antigo da Galileia, ponto de partida da proposta israelense dos caminhos de Jesus e dos apóstolos.[[C04-011,C04-005]]
+dado: 1969 | a consagração da atual Basílica da Anunciação[[C04-086]]
+dado: 21.700 | cristãos árabes no fim de 2019, a maior população cristã árabe do país[[C04-088]]
+dado: 103 km | de Jerusalém, em linha reta[[C04-097]]
+observar: As duas respostas para a Anunciação: a gruta sob a basílica católica e a igreja ortodoxa junto da fonte.[[C04-086,C04-087]]
+:::
+
 ::: foto foto-anunciacao-spyckerelle
 A Basílica da Anunciação, consagrada em 1969.[[C04-086]]
 :::
@@ -72,7 +98,19 @@ A terceira presença é uma casa. Um catálogo de igrejas antigas mantido pela U
 O que a escavação diz foi publicado pelos próprios franciscanos. Virgilio Corbo e Stanislao Loffreda escavaram o lugar a partir de 1968. Segundo eles, uma casa de habitação passou a servir de lugar de culto a partir do fim do século I d.C., foi cercada por um muro no século IV e, na segunda metade do século V, recebeu por cima uma igreja octogonal.[[C04-089]] O principal apoio literário para a casa ter virado igreja é o relato da peregrina Egéria, do século IV.[[C04-091]] Por cima de tudo, desde 29 de junho de 1990, está o memorial moderno projetado por Ildo Avetta.[[C04-090]]
 
 ::: historia-ou-tradicao A "casa de Pedro"
+resposta: as-duas
 Saber se uma casa antiga foi transformada em lugar de culto é uma pergunta que a escavação pode responder, olhando para reformas, objetos e inscrições. Em Cafarnaum, os escavadores responderam que sim.[[C04-089]] Saber de quem era a casa exige outro tipo de prova, e é nesse ponto que a tradição entra. Ao ouvir "esta é a casa de Pedro", o leitor atento ouve duas afirmações e pode pesar cada uma separadamente.
+:::
+
+::: ficha cafarnaum
+nome: Cafarnaum
+he: <he>כְּפַר נַחוּם</he> | Kfar Nachúm
+regiao: Galileia
+resumo: Aldeia antiga da margem norte do lago, com sinagoga, mosteiro franciscano e a casa que a tradição chama de Pedro.[[C04-015,C04-016,C04-017]]
+dado: 1968 | o começo das escavações franciscanas[[C04-089]]
+dado: 1990 | a consagração do memorial moderno sobre a casa[[C04-090]]
+dado: 127 km | de Jerusalém, em linha reta[[C04-097]]
+observar: Sinagoga, mosteiro e casa-igreja no mesmo sítio: pergunte de que século é cada ruína.[[C04-016,C04-017]]
 :::
 
 ::: foto foto-cafarnaum-sinagoga-werner
@@ -103,6 +141,17 @@ Cesareia foi capital da província romana.[[C04-029]] É dela a única peça da 
 
 O parque nacional foi declarado em 1968 e reúne, lado a lado, o teatro, o hipódromo e as fortificações dos cruzados.[[C04-030]] Cesareia está na Lista Indicativa de Israel, sem inscrição.[[C04-031]]
 
+::: ficha cesareia
+nome: Cesareia Marítima
+he: <he>קֵיסָרְיָה</he> | Keisárya
+regiao: Costa
+resumo: A cidade e o porto de Herodes, capital da província romana; hoje, parque nacional.[[C04-021,C04-029,C04-030]]
+dado: 10 a.C. | a fundação, segundo a Autoridade de Natureza e Parques[[C04-021]]
+dado: 17 mil m³ | de cinza vulcânica de Puteoli no porto[[C04-025]]
+dado: 87 km | de Jerusalém, em linha reta[[C04-097]]
+observar: As abóbadas do centro de visitantes, depósitos do porto de Herodes, e o mar à frente, com o porto submerso.[[C04-026,C04-024]]
+:::
+
 ::: foto foto-cesareia-aereo-eldadi
 Cesareia Marítima vista do alto.
 :::
@@ -130,6 +179,12 @@ As abóbadas que hoje abrigam o centro de visitantes do porto têm 7,40 metros d
 
 Massada é um platô na borda oriental do deserto da Judeia, perto da margem do Mar Morto, entre Sodoma e Ein Gedi; segundo a Autoridade de Natureza e Parques, o alto fica 450 metros acima do nível do lago, número que muda conforme o lago desce (capítulo 1).[[C04-034]] Herodes, rei da Judeia de 37 a 4 a.C., fez dali um palácio-fortaleza, com um palácio no estilo clássico do início do Império Romano.[[C04-035]]
 
+Para um brasileiro sentir a altura: o Pão de Açúcar tem 396 metros acima do mar.[[C04-098]] O paredão de Massada sobe uns 54 metros a mais sobre a água a seus pés.[[C04-099]] É uma conta de desnível, não de altitude, porque o Mar Morto fica abaixo do nível do mar.[[C04-099]]
+
+::: figura massada-pao-de-acucar
+Massada e o Pão de Açúcar na mesma escala de altura, cada um medido da água a seus pés.[[C04-034,C04-098,C04-099]]
+:::
+
 O que torna o sítio único, na avaliação da UNESCO, está em volta do platô: oito acampamentos romanos, um muro de cerco e uma rampa de terra e madeira construída no lado ocidental, o de subida mais suave. É o sistema romano de cerco mais completo que se conhece.[[C04-036]] A UNESCO inscreveu Massada em 2001, e o lugar é parque nacional desde 1966.[[C04-043]]
 
 O fim do cerco é contado por uma única fonte antiga, o historiador judeu Flávio Josefo.[[C04-037]] Segundo ele, quando os romanos romperam a defesa, em 73 d.C. na cronologia adotada pela UNESCO, quase todos os sitiados se mataram em vez de cair prisioneiros.[[C04-038]] As grandes escavações do sítio foram feitas entre 1963 e 1965.[[C04-040]]
@@ -138,6 +193,19 @@ O fim do cerco é contado por uma única fonte antiga, o historiador judeu Fláv
 Há duas discussões aqui. A primeira é sobre o que aconteceu em 73. Em 1982, o estudioso Shaye J. D. Cohen argumentou que os vestígios escavados, como os esqueletos achados numa caverna e os focos de incêndio separados, não combinam com a decisão unânime e a ação conjunta que Josefo descreve. A arqueóloga Jodi Magness, que escavou em Massada, escreveu em 2019 que muitos estudiosos hoje consideram inventada a descrição do suicídio coletivo, e que essa é uma pergunta que a arqueologia não tem como responder.[[C04-039]]
 
 A segunda discussão é sobre o século XX. O sociólogo Nachman Ben-Yehuda, da Universidade Hebraica de Jerusalém, argumentou em The Masada Myth (1995) que o relato de Josefo foi editado e ampliado até virar um mito simples e poderoso de heroísmo, difundido por organizações clandestinas anteriores ao Estado, pelo exército, por arqueólogos, por movimentos juvenis e pela indústria do turismo.[[C04-041]] A própria UNESCO, ao inscrever o sítio, chamou Massada de símbolo do antigo reino judeu e de sua destruição, e ligou o que aconteceu ali à identidade cultural judaica.[[C04-042]] A tese de Ben-Yehuda também tem críticos. Louis Feldman, ao resenhar o livro seguinte dele, Sacrificing Truth (2002), deu-lhe razão por criticar o arqueólogo Yigael Yadin pelo rótulo de "zelotes", mas defendeu Yadin em outros pontos. O arqueólogo Amnon Ben-Tor, que escavou em Massada com Yadin, respondeu em Back to Masada (2009) com uma defesa da interpretação de Yadin.[[C04-096]] Estudar o símbolo não apaga o sítio; ajuda a entender por que ele é visitado como é.
+:::
+
+::: ficha massada
+nome: Massada
+he: <he>מְצָדָה</he> | Metsadá
+regiao: Mar Morto e deserto da Judeia
+resumo: O palácio-fortaleza de Herodes e, em volta, o sistema romano de cerco mais completo que se conhece.[[C04-035,C04-036]]
+dado: 450 m | acima do Mar Morto, número que muda conforme o lago desce[[C04-034]]
+dado: 2001 | Patrimônio Mundial da UNESCO; parque nacional desde 1966[[C04-043]]
+dado: 8 | acampamentos romanos em volta do rochedo[[C04-036]]
+dado: 52 km | de Jerusalém, em linha reta[[C04-097]]
+observar: Do alto, a rampa romana no lado oeste e os contornos quadriláteros dos acampamentos lá embaixo.[[C04-036]]
+regras: Leste, pelo teleférico ou pela Trilha da Serpente; oeste, pela rampa, a partir de Arad, pela estrada 3199; não há estrada entre os dois lados. Em dias muito quentes, a última subida pela trilha é antecipada.[[C04-044,C08-049]]
 :::
 
 ::: foto foto-capa-massada-aerea
@@ -172,7 +240,7 @@ A ficha de Massada na Lista do Patrimônio Mundial.
 
 ## Mar Morto
 
-As margens do Mar Morto ficam em Israel, na Jordânia e na Cisjordânia.[[C04-048]] Em hebraico ele se chama Yam HaMélach, "mar do sal". Entre os nomes antigos que o Pleiades registra para o lago, ao lado do latino Asphaltitis aparece o grego thálassa nekrá, literalmente "mar morto".[[C04-048]]
+As margens do Mar Morto ficam em Israel, na Jordânia e em Judeia e Samaria (Cisjordânia).[[C04-048]] Em hebraico ele se chama Yam HaMélach, "mar do sal". Entre os nomes antigos que o Pleiades registra para o lago, ao lado do latino Asphaltitis aparece o grego thálassa nekrá, literalmente "mar morto".[[C04-048]]
 
 A medida do nível do lago, que só faz sentido com data, fica no capítulo 1, com o resto da história: o lago que desce mais de um metro por ano, a bacia do sul que, como lago natural, praticamente secou, e as dolinas que se abrem na costa oeste.[[C01-013,C01-016,C01-017]] Aqui basta o que se vê do alto de Massada, na seção anterior: a margem lá embaixo, centenas de metros abaixo do platô.[[C04-034]]
 
@@ -180,6 +248,15 @@ Vale levar esse capítulo na cabeça ao chegar à margem. No ritmo de descida pr
 
 ::: voce-sabia O mesmo nome em grego
 O nome que o português usa tem, palavra por palavra, o mesmo sentido de um nome grego antigo do lago: thálassa nekrá.[[C04-048]] O hebraico preferiu outro traço da água e o chama pelo sal.
+:::
+
+::: ficha mar-morto
+nome: Mar Morto
+he: <he>יַם הַמֶּלַח</he> | Yam HaMélach
+regiao: Mar Morto e deserto da Judeia
+resumo: O lago do sal, que o grego antigo também chamou de "mar morto".[[C04-048]]
+dado: 1,15 m | a queda prevista por ano na bacia norte, sem intervenção[[C01-013]]
+observar: Qualquer placa de nível: sem data, ela envelhece depressa.[[C01-013]]
 :::
 
 ::: em-hebraico
@@ -194,6 +271,18 @@ Tel Aviv foi fundada em 1909, logo ao norte da cidade portuária amuralhada de J
 Os edifícios foram erguidos do começo dos anos 1930 até os anos 1950, segundo o resumo atual da UNESCO; o dossiê original da candidatura fechava a conta em 1948.[[C04-056]] Os arquitetos tinham se formado na Europa antes de emigrar, e combinaram várias correntes do Movimento Moderno com tradições locais, adaptando os prédios ao clima do lugar.[[C04-056]]
 
 A inscrição, em 2003, cobre 140,4 hectares em três zonas: a Cidade Branca central, Lev Hair com o bulevar Rothschild, e a área de Bialik.[[C04-055,C04-058]] Cerca de mil edifícios históricos estão sob regras de conservação, a maioria de propriedade privada.[[C04-058]] A UNESCO aponta os prédios altos que crescem em volta como risco para a integridade visual do conjunto.[[C04-058]] Andar pela Cidade Branca é ver um patrimônio que continua sendo cidade, em boa parte nas mãos de proprietários privados.
+
+::: ficha tel-aviv
+nome: Tel Aviv, a Cidade Branca
+he: <he>תֵּל אָבִיב</he> | Tel Avív
+regiao: Costa
+resumo: Fundada em 1909 ao norte de Jafa; o centro, a Cidade Branca, é patrimônio da arquitetura moderna.[[C04-054,C04-055]]
+dado: 2003 | Patrimônio Mundial da UNESCO[[C04-001]]
+dado: 140,4 ha | a área inscrita, em três zonas[[C04-058]]
+dado: c. 1.000 | edifícios históricos sob regras de conservação[[C04-058]]
+dado: 55 km | de Jerusalém, em linha reta[[C04-097]]
+observar: A partir da praça Dizengoff, como as fachadas lidam com o sol e com a luz.[[C04-059,C04-056]]
+:::
 
 ::: foto foto-tel-aviv-cidade-branca
 Um prédio da Cidade Branca de Tel Aviv.
@@ -218,7 +307,16 @@ O ponto que a UNESCO usa para marcar o sítio no mapa fica no centro da praça D
 
 Jafa vem antes de Tel Aviv, e não só na cronologia: quando a UNESCO descreve a fundação da cidade nova, é por Jafa que ela se orienta, dizendo que Tel Aviv nasceu imediatamente ao norte da "cidade portuária amuralhada".[[C04-054]] O Pleiades registra Jafa como cidade portuária antiga, com as formas Ioppe e Joppe ao lado do hebraico Yafo.[[C04-062]]
 
-O porto é o ponto de partida da geografia da cidade grande que cresceu ao lado dele. Quem chega à cidade velha vindo do norte faz o caminho inverso ao da história. Em árabe, a cidade se chama Yafa, o nome que os textos palestinos usam.[[C04-095]]
+O porto é o ponto de partida da geografia da cidade grande que cresceu ao lado dele. Quem chega à cidade velha vindo do norte faz o caminho inverso ao da história. Em árabe, a cidade se chama Yafa.[[C04-095]]
+
+::: ficha jafa
+nome: Jafa
+he: <he>יָפוֹ</he> | Yáfo
+regiao: Costa
+resumo: Cidade portuária antiga, a Ioppe dos textos clássicos, mais velha que a Tel Aviv nascida ao seu lado.[[C04-062,C04-054]]
+dado: 54 km | de Jerusalém, em linha reta[[C04-097]]
+observar: No porto, que você está na mais velha das duas cidades, aquela em relação à qual a outra foi fundada.[[C04-054,C04-062]]
+:::
 
 ::: foto foto-jaffa-do-mar-photochrom
 Jafa vista do mar, num fotocromo do fim do século XIX.
@@ -241,6 +339,18 @@ Em 2008, a UNESCO inscreveu os Lugares Sagrados Bahá'ís em Haifa e na Galileia
 O bem soma 26 edifícios, monumentos e sítios. O comunicado de 2008 fala em 11 locais; a página atual da lista, em sete conjuntos.[[C04-068]] A UNESCO destacou a tradição de peregrinação, que traz milhares de peregrinos por ano.[[C04-069]] Para quem visita, isso muda o jeito de olhar: os jardins são cartão-postal, mas antes disso são lugar santo de uma religião viva.
 
 A cidade em volta dos jardins também é diversa. No perfil estatístico publicado pela prefeitura, os árabes eram cerca de 10% de uma população de cerca de 270 mil habitantes.[[C04-094]] E, no fim de 2019, segundo o CBS, Haifa tinha 16.300 cristãos árabes, a segunda maior população cristã árabe do país, depois de Nazaré.[[C04-088]]
+
+::: ficha haifa
+nome: Haifa, os jardins bahá'ís
+he: <he>חֵיפָה</he> | Chéifa
+regiao: Costa
+resumo: O santuário do Báb e os jardins em terraços na encosta norte do monte Carmelo, parte dos Lugares Sagrados Bahá'ís.[[C04-067,C04-070]]
+dado: 2008 | Patrimônio Mundial da UNESCO[[C04-066]]
+dado: 26 | edifícios, monumentos e sítios no bem inscrito[[C04-068]]
+dado: 117 km | de Jerusalém, em linha reta[[C04-097]]
+observar: Os terraços que acompanham o santuário do Báb.[[C04-067]]
+regras: Lugar santo de uma religião viva, que recebe milhares de peregrinos por ano: trate a visita como a de qualquer santuário.[[C04-069]]
+:::
 
 ::: foto foto-bahai-jardins-haifa
 Os terraços em volta do santuário do Báb, no monte Carmelo.[[C04-067,C04-070]]
@@ -268,6 +378,17 @@ Por cima, está a cidade otomana amuralhada, com cidadela, mesquitas, khans (as 
 
 Acre também ficou na história como a cidade que Napoleão não tomou. De março a maio de 1799, ele cercou Acre, defendida pelo governador otomano Jazzar Paxá com o apoio de navios britânicos comandados por Sidney Smith. Com a peste no exército, levantou o cerco e voltou ao Egito sem tomar a cidade.[[C04-093]]
 
+::: ficha acre
+nome: Acre, a Cidade Antiga
+he: <he>עַכּוֹ</he> | Áko
+regiao: Costa
+resumo: A cidade otomana amuralhada, construída sobre a cidade dos cruzados, que ficou quase intacta embaixo dela.[[C04-074,C04-076]]
+dado: 2001 | Patrimônio Mundial da UNESCO[[C04-073]]
+dado: 1104-1291 | os anos da cidade dos cruzados[[C04-074]]
+dado: 128 km | de Jerusalém, em linha reta[[C04-097]]
+observar: O nível em que você está: o otomano costuma estar na rua; o cruzado, muitas vezes, embaixo dela.[[C04-074,C04-076]]
+:::
+
 ::: foto foto-acre-castelo-matson
 A cidadela de Acre numa foto da coleção Matson, de cerca de 1920 a 1933.
 :::
@@ -290,6 +411,12 @@ Preste atenção no nível em que você está. O que é otomano costuma estar na
 - <he>עַכּוֹ</he> | Áko | Acre | Em árabe, 'Akka.[[C04-095]]
 - <he>חוֹמָה</he> | chomá | muralha | A palavra das muralhas otomanas e das cruzadas.
 - <he>צַלְבָנִים</he> | tsalvaním | cruzados | Singular: <he>צַלְבָן</he> (tsalván).
+:::
+
+::: quiz pegadinha É comum ouvir que Tel Aviv é uma cidade "estilo Bauhaus". O que diz a avaliação feita para a UNESCO?
+- [ ] Que é a maior cidade Bauhaus do mundo | É a versão que circula, mas a avaliação não diz isso.[[C04-057]]
+- [x] Que o rótulo não é necessariamente adequado: é uma síntese de correntes do Movimento Moderno | A avaliação observa isso, e a UNESCO destaca a adaptação ao clima e às tradições locais.[[C04-057,C04-056]]
+- [ ] Que os prédios foram trazidos prontos da Alemanha | Os arquitetos se formaram na Europa, mas projetaram e construíram ali, adaptando os prédios ao clima.[[C04-056]]
 :::
 
 ::: quiz Onde a tradição ortodoxa situa a Anunciação, em Nazaré?

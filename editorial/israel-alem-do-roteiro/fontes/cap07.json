@@ -386,6 +386,51 @@
       "data_consulta": "2026-10-21",
       "acesso": "trecho-de-busca",
       "abnt": "KATRIEL, Tamar. Talking Straight: Dugri Speech in Israeli Sabra Culture. Cambridge: Cambridge University Press, 1986. Registro na Universidade de Haifa. Disponível em: https://cris.haifa.ac.il/en/publications/talking-straight-dugri-speech-in-israeli-sabra-culture/. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F07-026",
+      "nivel": "E",
+      "tipo": "obra-de-referencia",
+      "autor": "Dicio",
+      "titulo": "Sábado",
+      "ano": null,
+      "editora_ou_periodico": "Dicio, Dicionário Online de Português",
+      "doi": null,
+      "isbn": null,
+      "url": "https://www.dicio.com.br/sabado/",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "SÁBADO. In: DICIO, Dicionário Online de Português. [S. l.], [s. d.]. Disponível em: https://www.dicio.com.br/sabado/. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F07-027",
+      "nivel": "E",
+      "tipo": "obra-de-referencia",
+      "autor": "Harper, Douglas",
+      "titulo": "Shabbat",
+      "ano": null,
+      "editora_ou_periodico": "Online Etymology Dictionary",
+      "doi": null,
+      "isbn": null,
+      "url": "https://www.etymonline.com/pt/word/Shabbat",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "HARPER, Douglas. Shabbat. In: ONLINE Etymology Dictionary. [S. l.], [s. d.]. Disponível em: https://www.etymonline.com/pt/word/Shabbat. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F07-028",
+      "nivel": "A",
+      "tipo": "obra-de-referencia",
+      "autor": "Lewis, Charlton T.; Short, Charles",
+      "titulo": "Sabbatum. In: A Latin Dictionary",
+      "ano": 1879,
+      "editora_ou_periodico": "Clarendon Press",
+      "doi": null,
+      "isbn": null,
+      "url": "https://alatius.com/ls/index.php?l=sabbatum",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "LEWIS, Charlton T.; SHORT, Charles. Sabbatum. In: A LATIN dictionary. Oxford: Clarendon Press, 1879. Disponível em: https://alatius.com/ls/index.php?l=sabbatum. Acesso em: 21 out. 2026."
     }
   ]
 }
