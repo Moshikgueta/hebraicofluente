@@ -3,6 +3,8 @@ capitulo: 9
 titulo: 41 curiosidades sobre Israel
 subtitulo: Histórias curtas, cada uma com a fonte que a sustenta
 abertura_frase: Pequenas histórias para contar no ônibus, no jantar ou na volta para casa.
+abertura_imagem: abertura-curiosidades
+abertura_credito: Ilustração original.
 ---
 
 Toda viagem deixa umas histórias que a gente repete depois. Este capítulo junta 41 delas, de cavernas pré-históricas a canções de festival, com uma regra: cada curiosidade passou pela mesma verificação do resto do livro. Algumas que circulam por aí ficaram de fora porque não se sustentaram, e nenhuma aqui repete o que os capítulos anteriores já contaram; quando uma completa um tema, ela diz onde ele está.
@@ -135,6 +137,10 @@ Em novembro de 1952, morto o presidente Chaim Weizmann, o embaixador Abba Eban e
 O Yad Vashem reconhece como Justos entre as Nações dois brasileiros: Aracy de Carvalho Guimarães Rosa, funcionária do consulado em Hamburgo, homenageada em 1982, e Luiz Martins de Souza Dantas, embaixador do Brasil na França, que deu vistos a judeus depois de 1940, homenageado em 2003.[[C09-032]]
 :::
 
+::: figura cartao-justos
+Aracy de Carvalho Guimarães Rosa e Luiz Martins de Souza Dantas, reconhecidos pelo Yad Vashem.[[C09-032]]
+:::
+
 ::: curiosidade O ribossomo e o Nobel de 2009
 Ada Yonath, do Instituto Weizmann, dividiu o Nobel de Química de 2009 com Venkatraman Ramakrishnan e Thomas Steitz, por estudos sobre a estrutura e a função do ribossomo.[[C09-034]]
 :::
@@ -156,6 +162,10 @@ No estudo LEAP, publicado em 2015 no New England Journal of Medicine, 640 bebês
 ::: curiosidade O arroz de Ben-Gurion
 O <he>פְּתִיתִים</he> (ptitím), massinha de trigo em grão ou em bolinha, foi criado pela Osem no começo dos anos 1950, na austeridade conhecida como tsená, a pedido de Ben-Gurion, como substituto do arroz, que faltava.[[C09-044]] Fora de Israel, a versão em bolinha virou "cuscuz israelense".
 remete: A mesa de Israel está no capítulo 6.
+:::
+
+::: figura cartao-tamareira
+A semente de Massada, da escavação à muda. Na versão digital, cada curiosidade tem um botão para copiar e enviar.[[C09-017,C09-018]]
 :::
 
 ::: curiosidade Uma tamareira de 2.000 anos
@@ -188,6 +198,10 @@ Na sinagoga do hospital Hadassah, em Ein Kerem, Jerusalém, Marc Chagall fez 12 
 Israel venceu o Festival Eurovisão quatro vezes: em 1978, com "A-Ba-Ni-Bi", de Izhar Cohen e Alphabeta; em 1979, com "Hallelujah", de Milk and Honey e Gali Atari; em 1998, com "Diva", de Dana International; e em 2018, em Lisboa, com "Toy", de Netta Barzilai.[[C09-050]]
 :::
 
+::: figura cartao-eurovisao
+As quatro vitórias, com o ano, a música e quem cantou.[[C09-050]]
+:::
+
 ::: curiosidade Hallelujah em casa
 A segunda vitória veio jogando em casa: o festival de 1979 foi realizado em Jerusalém.[[C09-051]]
 :::
@@ -198,6 +212,12 @@ A segunda vitória veio jogando em casa: o festival de 1979 foi realizado em Jer
 
 ::: curiosidade Os jogos de 1932
 A primeira Macabíada, competição de atletas judeus de vários países, foi disputada em Tel Aviv de 28 de março a 2 de abril de 1932, com cerca de 390 atletas. A maior parte das fontes fala em 18 países, mas a conta varia.[[C09-053]]
+:::
+
+::: quiz pegadinha É comum ouvir que o Hatikvá é o hino oficial de Israel por lei desde a fundação do Estado. Desde quando ele é hino por lei?
+- [ ] Desde 1948 | É a versão que circula. A lei veio bem depois.[[C09-025]]
+- [x] Desde 2004 | Em novembro de 2004, uma emenda à lei da bandeira e do emblema de 1949 adotou o Hatikvá como hino.[[C09-025]]
+- [ ] Desde 1967 | Não: a adoção por lei é de 2004.[[C09-025]]
 :::
 
 ::: quiz Que poeta aparece na nota de 100 shekels?

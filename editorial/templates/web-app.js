@@ -112,6 +112,14 @@
         var c = el('article', { class: 'curio' }, '<span class="curio-n">' + b.n + '</span><div><h3 class="curio-t">' + b.titulo + '</h3></div>');
         var dv = c.querySelector('div'); b.blocos.forEach(function (x) { dv.appendChild(bloco(x, cap)); });
         if (b.remete) dv.appendChild(el('p', { class: 'curio-r' }, b.remete));
+        /* Copiar para enviar: o texto da curiosidade, sem dado pessoal. */
+        var cp = el('button', { type: 'button', class: 'mini' }, 'Copiar para enviar'); var av = el('span', { class: 'curio-r', 'aria-live': 'polite' });
+        cp.addEventListener('click', function () {
+          var tx = (b.titulo + '. ' + dv.querySelector('p') .textContent + ' (Israel Além do Roteiro)').replace(/<[^>]+>/g, '');
+          var ok = function () { av.textContent = ' Copiado.'; };
+          try { navigator.clipboard.writeText(tx).then(ok, function () { av.textContent = ' Selecione o texto para copiar.'; }); } catch (e) { av.textContent = ' Selecione o texto para copiar.'; }
+        });
+        var lin = el('p'); lin.appendChild(cp); lin.appendChild(av); dv.appendChild(lin);
         return c;
       }
       case 'linha-do-tempo': return linhaDoTempo(b);
@@ -377,14 +385,18 @@
     var s = estado();
     main.innerHTML = '<h1 class="pagina">Diário de descobertas</h1><p>Escreva antes, durante e depois da viagem. O texto fica guardado neste aparelho; use "Copiar meu diário" para levar uma cópia.</p>';
     var blocos = D.diario ? D.diario.secoes.reduce(function (a, x) { return a.concat(x.blocos); }, []) : [];
-    blocos.filter(function (b) { return b.tipo === 'diario'; }).forEach(function (b, k) {
-      var id = 'd' + k; var sec = el('section', { class: 'secao' });
+    if (D.diario && D.diario.abertura.imagem) main.insertBefore(el('section', { class: 'heroi' }, '<div class="arte">' + arte(D.diario.abertura.imagem) + '</div><div class="veu"></div><div class="txt"><div class="kicker"><span>Capítulo 10</span></div><h1>Diário de descobertas</h1></div>'), main.firstChild);
+    var kd = 0;
+    blocos.forEach(function (b) {
+      if (b.tipo === 'figura') { main.appendChild(figura(b)); return; }
+      if (b.tipo === 'checklist') { main.appendChild(checklist(b)); return; }
+      if (b.tipo !== 'diario') return;
+      var id = 'd' + (kd++); var sec = el('section', { class: 'secao' });
       sec.innerHTML = '<div class="rubrica"><span>Diário</span></div><h2>' + esc(b.titulo) + '</h2>' + (b.instrucao ? '<div class="instrucao">' + b.instrucao + '</div>' : '');
       var ta = el('textarea', { 'aria-label': b.titulo }); ta.value = s.diario[id] || '';
       ta.addEventListener('input', function () { guardar(function (st) { st.diario = st.diario || {}; st.diario[id] = ta.value; }); });
       sec.appendChild(ta); main.appendChild(sec);
     });
-    blocos.filter(function (b) { return b.tipo === 'checklist'; }).forEach(function (b) { main.appendChild(checklist(b)); });
     /* Copiar, não baixar: funciona também dentro de páginas publicadas, onde
        download iniciado por script é bloqueado. */
     var baixar = el('button', { class: 'botao claro', type: 'button' }, 'Copiar meu diário');

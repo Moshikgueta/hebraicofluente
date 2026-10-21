@@ -3,6 +3,8 @@ capitulo: 8
 titulo: Israel na prática
 subtitulo: O que conferir, onde conferir e quando
 abertura_frase: Regras de entrada, trens de sexta-feira e litros de água: o capítulo que se confere antes de embarcar.
+abertura_imagem: abertura-pratica
+abertura_credito: Ilustração original.
 ---
 
 Sexta-feira, começo da tarde, estação do aeroporto Ben Gurion. Quem desembarca com a ideia de pegar o trem para Jerusalém pode descobrir que o último já passou: os trens param na tarde de sexta e só voltam no sábado depois do pôr do sol.[[C08-031]] Nada disso está escondido. Só está escrito em sites oficiais que o viajante raramente abre antes de partir.
@@ -20,7 +22,7 @@ Na data da consulta, 21 de outubro de 2026, o alerta consular do Itamaraty para 
 Este livro não dá conselho de segurança. Quem orienta o viajante brasileiro é o Itamaraty, pelos alertas consulares que publica no portal gov.br, e a Embaixada do Brasil em Tel Aviv. Dentro de Israel, os alertas à população saem do Comando da Frente Interna (em inglês, Home Front Command), das Forças de Defesa de Israel.[[C08-008]]
 
 ::: aviso Segurança: o que diziam as fontes oficiais em 21 de outubro de 2026
-- **Itamaraty.** O alerta consular "Oriente Médio", com data de 4 de julho de 2026, recomendava não viajar para Israel e evitar viagens não essenciais à Cisjordânia.[[C08-001,C08-002]] A busca feita nessa data não mostrou o texto integral da página nem confirmou se havia versão mais recente.
+- **Itamaraty.** O alerta consular "Oriente Médio", com data de 4 de julho de 2026, recomendava não viajar para Israel e evitar viagens não essenciais à Cisjordânia (Judeia e Samaria).[[C08-001,C08-002]] A busca feita nessa data não mostrou o texto integral da página nem confirmou se havia versão mais recente.
 - **Embaixada do Brasil em Tel Aviv.** O Itamaraty indicava o plantão consular da embaixada, +972 54 803 5858, e pedia a quem está em Israel que baixasse o aplicativo do Comando da Frente Interna, mantivesse os alertas ligados e seguisse rigorosamente as orientações desse comando.[[C08-005,C08-006]] Confirme o número na página da embaixada antes de anotá-lo.
 - **Comando da Frente Interna.** Publica orientações em inglês em oref.org.il, endereço que o governo de Israel indica aos turistas.[[C08-007]] O aplicativo é gratuito para Android e iPhone e emite alertas em tempo real.[[C08-008]]
 - **Voos.** Em 18 de outubro de 2026, a Embaixada dos Estados Unidos em Jerusalém alertava os cidadãos dela para possíveis cancelamentos de voos, fechamento do espaço aéreo e interrupções de viagem.[[C08-009]] Não é orientação dirigida a brasileiros, mas mostra o que pode mudar entre a compra da passagem e o embarque.
@@ -59,6 +61,20 @@ O portal oficial de entrada em Israel, onde se pede a ETA-IL.
 :::
 
 Na pesquisa para este livro, uma busca por "ETA Israel" devolveu, ao lado do portal oficial, vários sites de outros domínios sobre o mesmo assunto. A regra do aviso oficial resolve a dúvida: se o endereço não termina em gov.il, não é ali.[[C08-015]] Se você trocar de passaporte, confira no portal o que acontece com a autorização, porque a validade dela está presa à do documento.[[C08-013]] A Embaixada de Israel no Brasil também mantém uma página sobre o pedido.[[C08-016]]
+
+::: figura viagem-quatro-paradas
+As quatro paradas da viagem em que uma regra pega o viajante desprevenido.[[C08-011,C08-012,C08-014,C08-025,C08-032,C08-047,C08-031]]
+:::
+
+::: entenda-melhor Perguntas que o brasileiro faz
+**Preciso de visto?** Para turismo, não: um acordo promulgado pelo Decreto nº 3.549, de 2000, isenta o brasileiro. Mas a ETA-IL aprovada é obrigatória desde 1º de janeiro de 2025.[[C08-017,C08-011]]
+
+**Pago o ônibus em dinheiro?** Não: o ônibus se paga com o cartão Rav-Kav, com aplicativo ou, em algumas linhas, com cartão de crédito.[[C08-032]]
+
+**Tem trem no sábado?** Não durante o Shabat: os trens param na sexta à tarde e voltam no sábado depois do pôr do sol.[[C08-031]]
+
+**A minha tomada serve?** O padrão brasileiro é outro (veja a figura): leve adaptador.[[C08-053,C08-037]]
+:::
 
 ## No aeroporto
 
@@ -104,6 +120,10 @@ No táxi comum, a lei obriga o motorista a ligar o taxímetro em toda viagem, ex
 
 A corrente em Israel é de 230 V e 50 Hz, e as tomadas são dos tipos C e H.[[C08-037]] Confira na etiqueta do carregador se ele aceita 230 V e leve um adaptador para esses tipos. Para o celular, pergunte à sua operadora como funciona o roaming em Israel e quanto custa; se preferir chip ou eSIM local, compare as condições antes de comprar.
 
+::: figura tomadas-brasil-israel
+A tomada brasileira da norma NBR 14136 e as tomadas de Israel, em desenho esquemático.[[C08-053,C08-037]]
+:::
+
 ## Shabat, lugares sagrados e etiqueta
 
 O Shabat (<he>שַׁבָּת</he>, shabát) é o descanso semanal judaico, de sexta à noite a sábado à noite, e é ele que explica os trens parados e os ônibus de fim de semana descritos acima.[[C08-031,C08-033]] Pergunte ao hotel como funcionam a recepção, o restaurante e o elevador nesses dias.
@@ -118,9 +138,13 @@ Se a visita ao Muro Ocidental cair num sábado, repare quantas pessoas estão co
 
 No deserto, o número que importa é o de litros. A Autoridade de Natureza e Parques de Israel pede, em En Gedi, pelo menos 5 litros de água por pessoa por dia, chapéu e calçado de caminhada, sem contar com as fontes naturais para beber; no Nachal Prat, pelo menos 4,5 litros por pessoa; em Avdat, chapéu e água, porque a água da fonte não é potável.[[C08-041]]
 
+::: figura agua-no-deserto
+Cinco litros por pessoa por dia: a orientação oficial em En Gedi.[[C08-041]]
+:::
+
 O calor também muda o horário. Em dias muito quentes, trilhas fecham, e em Massada a última subida pelo Caminho da Serpente é antecipada conforme a temperatura.[[C08-049]] A chuva traz o risco oposto: em En Gedi há perigo de enchente no inverno, na primavera e no outono, e a orientação é não andar nem atravessar leitos de riacho nessas estações.[[C08-050]] Massada trabalha com as previsões do Serviço Meteorológico de Israel, e no Nachal Prat a orientação é pedir aos guardas informação atualizada antes de sair para a trilha.[[C08-051]] O capítulo 1 mostra como a chuva e a temperatura variam por região e por estação.
 
-::: quiz Você tem um passaporte brasileiro e vai a Israel a turismo. O que precisa pedir antes de embarcar?
+::: quiz pegadinha Você tem um passaporte brasileiro e vai a Israel a turismo. O que precisa pedir antes de embarcar?
 - [ ] Um visto de turismo no consulado | 
 - [x] A ETA-IL, no portal oficial terminado em gov.il | Brasileiros são isentos de visto de turismo e, por isso, precisam da autorização eletrônica, pedida só no site do governo.[[C08-017,C08-011,C08-015]]
 - [ ] Nada: basta o passaporte | 

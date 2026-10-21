@@ -887,6 +887,23 @@
       ],
       "evidencia": "F08-035 (em hebraico): serviço que opera nos fins de semana e feriados, nas horas em que o transporte público geral não está ativo; 17 linhas, mais de 650 paradas; começou em novembro de 2019.",
       "limitacoes": "A página tinha cerca de 3,7 anos; horários não conferidos e fora do texto. Ser gratuito apareceu só no resumo, não no trecho: fora do texto."
+    },
+    {
+      "id": "C08-053",
+      "secao": "Comparações com o Brasil",
+      "afirmacao": "O padrão brasileiro de plugues e tomadas é o da norma ABNT NBR 14136: tomadas de três furos e plugues de pinos redondos, de 4,0 mm até 10 A e de 4,8 mm acima de 10 A até 20 A.",
+      "categoria": "pratica",
+      "fontes": [
+        "F08-046"
+      ],
+      "evidencia": "Inmetro (perguntas frequentes e páginas do padrão): NBR 14136; pinos de 4 mm até 10 A e de 4,8 mm até 20 A; tomadas com três furos; plugues de dois ou três pinos conforme a classe de isolamento.",
+      "pagina_ou_secao": null,
+      "acesso": "trecho-de-busca",
+      "data_consulta": "2026-10-21",
+      "limitacoes": "O Inmetro não diz se o plugue brasileiro entra na tomada israelense: o livro não afirma isso e recomenda adaptador.",
+      "interpretacoes_concorrentes": null,
+      "status": "VERIFICADO",
+      "revisar_ate": "2027-04-21"
     }
   ]
 }

@@ -678,6 +678,21 @@
       "data_consulta": "2026-10-21",
       "acesso": "trecho-de-busca",
       "abnt": "ISRAEL NATURE AND PARKS AUTHORITY. Avdat National Park (folheto). [S.l.], [s.d.]. Disponível em: https://www.parks.org.il/wp-content/uploads/2018/06/en-avdat-eng.pdf. Acesso em: 21 out. 2026."
+    },
+    {
+      "id": "F08-046",
+      "nivel": "D",
+      "tipo": "site-institucional",
+      "autor": "Instituto Nacional de Metrologia, Qualidade e Tecnologia (Inmetro)",
+      "titulo": "Plugues e tomadas: perguntas frequentes",
+      "ano": null,
+      "editora_ou_periodico": "gov.br",
+      "doi": null,
+      "isbn": null,
+      "url": "https://www.gov.br/inmetro/pt-br/acesso-a-informacao/perguntas-frequentes/avaliacao-da-conformidade/plugues-e-tomadas/porque-foi-criado-o-padrao-brasileiro-de-plugues-e-tomadas-tomada-de-3-pinos",
+      "data_consulta": "2026-10-21",
+      "acesso": "trecho-de-busca",
+      "abnt": "INSTITUTO NACIONAL DE METROLOGIA, QUALIDADE E TECNOLOGIA (INMETRO). Plugues e tomadas: perguntas frequentes. Brasília: Inmetro, [s.d.]. Disponível em: https://www.gov.br/inmetro/pt-br/acesso-a-informacao/perguntas-frequentes/avaliacao-da-conformidade/plugues-e-tomadas/porque-foi-criado-o-padrao-brasileiro-de-plugues-e-tomadas-tomada-de-3-pinos. Acesso em: 21 out. 2026."
     }
   ]
 }

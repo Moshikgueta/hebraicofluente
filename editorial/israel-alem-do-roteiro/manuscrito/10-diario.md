@@ -2,6 +2,8 @@
 capitulo: 10
 titulo: Diário de descobertas
 subtitulo: Páginas para escrever antes, durante e depois da viagem
+abertura_imagem: abertura-diario
+abertura_credito: Ilustração original.
 ---
 
 As próximas páginas são suas. Elas foram feitas para funcionar das duas maneiras: impressas, para levar na mala e escrever à mão, ou abertas no celular, como roteiro de perguntas para anotar no seu aplicativo de notas. Não há resposta certa. O que vale é o hábito de observar e registrar, que transforma uma lista de lugares numa viagem lembrada.
@@ -20,6 +22,10 @@ linhas: 16
 ::: diario Palavras em hebraico que aprendi
 Escreva a palavra como você ouviu, o que ela quer dizer e onde a encontrou: numa placa, num cardápio, na boca de alguém. Se quiser, copie também as letras. O capítulo 7 e o glossário ajudam a conferir.
 linhas: 16
+:::
+
+::: figura mapa-para-marcar
+Marque cada lugar por onde passou e anote a data. As posições são as do capítulo 4.
 :::
 
 ::: diario Curiosidades que me surpreenderam
@@ -45,6 +51,10 @@ Horários, gestos, o jeito de pedir a conta, o que fecha no Shabat, a língua qu
 linhas: 16
 :::
 
+::: figura selos-diario
+Pinte o selo de cada lugar visitado.
+:::
+
 ::: diario Minhas descobertas
 O que esta viagem mudou na maneira como você via Israel e a região?
 linhas: 16
@@ -65,6 +75,10 @@ linhas: 18
 - Chapéu, protetor solar e garrafa de água
 - Plano de deslocamento para sexta à noite e sábado (Shabat)
 - Este livro baixado no celular, para ler sem internet
+:::
+
+::: figura molduras-diario
+Uma foto colada e um desenho seu: as duas lembranças que nenhum aplicativo guarda.
 :::
 
 ::: diario Recordações

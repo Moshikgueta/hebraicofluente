@@ -54,12 +54,13 @@ const diario = opt.diario !== false && existe(path.join(RAIZ, 'manuscrito', DIAR
 /* Fichas de lugar: o hebraico do nome toca a gravação do curso, se houver. */
 for (const c of caps) for (const f of c.fichas || []) if (f.audio?.gravado) { fs.copyFileSync(f.audio.arquivo, path.join(OUT, 'assets/audio', f.audio.id + '.mp3')); f.audio = { src: `assets/audio/${f.audio.id}.mp3` }; } else if (f) f.audio = null;
 for (const c of [...caps]) for (const v of c.vocabulario) if (v.audio?.gravado) { fs.copyFileSync(v.audio.arquivo, path.join(OUT, 'assets/audio', v.audio.id + '.mp3')); v.audio = { src: `assets/audio/${v.audio.id}.mp3` }; } else v.audio = null;
-for (const c of caps) for (const s of c.secoes) for (const b of s.blocos) {
+for (const c of [...caps, ...(diario ? [diario] : [])]) for (const s of c.secoes) for (const b of s.blocos) {
   if (['figura', 'visual'].includes(b.tipo)) { b.svg = svgDe(b.id); b.ativo = ativos.find(a => a.id === b.id) || null; }
   if (b.tipo === 'foto') b.candidata = candidatas.find(x => x.id === b.id) || null;
   if (b.tipo === 'compare') { b.a.svg = svgDe(b.a.id); b.b.svg = svgDe(b.b.id); }
 }
 for (const c of caps) if (c.abertura.imagem) svgDe(c.abertura.imagem);
+if (diario?.abertura.imagem) svgDe(diario.abertura.imagem);
 /* Abertura sem imagem própria: a arte da coleção (a mesma da capa). */
 svgs['arte-colecao'] = fs.readFileSync(path.join(EDITORIAL, 'templates/capa-arte.svg'), 'utf8');
 for (const c of caps) if (!c.abertura.imagem) c.abertura.imagem = 'arte-colecao';
