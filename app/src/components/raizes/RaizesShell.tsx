@@ -65,7 +65,7 @@ export function RaizesShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
           <Link href="/raizes/busca" prefetch={false} aria-label="Buscar" aria-current={ativo('/raizes/busca') ? 'page' : undefined}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[var(--titulo)] hover:bg-[var(--pedra)]">
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[var(--titulo)] hover:bg-[var(--pedra)]">
             <svg viewBox="0 0 20 20" aria-hidden className="h-[18px] w-[18px]"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" /><path d="M13 13l4.5 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
           </Link>
           {account.signedIn && (

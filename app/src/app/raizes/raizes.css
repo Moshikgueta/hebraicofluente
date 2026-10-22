@@ -7,8 +7,9 @@
    de hebraico. Os nomes da coleção apontam para os tokens do app, e é isso
    que mantém o tema escuro do menu de acessibilidade funcionando aqui.
 
-   Movimento: só cor, fundo, borda e opacidade, por 160 ms, e nada com
-   `prefers-reduced-motion`. Nada anima o que o aluno vê cem vezes. */
+   Movimento: cor, fundo, borda e opacidade, por 160 ms, e o aperto de 3% no
+   toque (veja "acabamento" no fim); nada com `prefers-reduced-motion`. Nada
+   anima o que o aluno vê cem vezes. */
 
 .rz {
   --papel: var(--cream);
@@ -283,3 +284,40 @@
 .rz-selo-pass.tem .rz-selo-pass-marca { border-style: solid; border-color: var(--ocre); }
 .rz-porta { display: grid; gap: 2px; align-content: start; min-height: 76px; height: 100%; padding: 10px 12px; border: 1px solid var(--linha); border-radius: 8px; text-decoration: none; transition: border-color .15s, background-color .15s; }
 .rz-porta:hover { border-color: var(--ocre); background: var(--pedra); }
+
+/* ── acabamento (22/10/2026) ─────────────────────────────────────────── */
+/* Texto: títulos equilibrados, parágrafos sem palavra órfã, letra mais limpa. */
+.rz { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.rz h1.rz-pagina { text-wrap: balance; }
+.rz-corpo, .rz-entrada, .rz-italico { text-wrap: pretty; }
+.rz .tabular-nums, .rz-selo-pass, .rz [aria-label="Seu progresso"] { font-variant-numeric: tabular-nums; }
+
+/* Toque: o que é botão afunda 3% enquanto o dedo está nele. Transição só de
+   transform, para não brigar com a de cor que cada peça já tem. */
+.rz-botao, .rz-chip, .rz-opcao, .rz-mini, .rz-guardar, .rz-vitrine, .rz-porta {
+  transition-property: background-color, border-color, color, opacity, box-shadow, transform;
+  transition-duration: var(--dur);
+  transition-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rz-botao:active:not(:disabled), .rz-chip:active:not(:disabled), .rz-opcao:active:not(:disabled),
+  .rz-mini:active:not(:disabled), .rz-guardar:active, .rz-porta:active { transform: scale(.97); }
+  .rz-vitrine:active { transform: scale(.98); }
+}
+
+/* Superfícies: as portas e os selos ganham profundidade por sombra em camadas,
+   que se ajusta ao papel e ao tema escuro, em vez de uma borda dura. */
+.rz-porta { border-color: transparent; box-shadow: 0 0 0 1px var(--linha), 0 1px 2px rgb(11 42 49 / .05); }
+.rz-porta:hover { border-color: transparent; box-shadow: 0 0 0 1px var(--ocre), 0 4px 12px -4px rgb(11 42 49 / .14); }
+.rz-selo-pass.tem { box-shadow: 0 1px 2px rgb(11 42 49 / .05), 0 6px 16px -8px rgb(142 43 31 / .25); }
+
+/* Entrada escalonada: só no que o aluno ABRE (ficha, vida de personagem),
+   nunca no que já está na página quando ela carrega. Saída sem animação. */
+@media (prefers-reduced-motion: no-preference) {
+  .rz-escalonar > * { animation: rz-subir .36s cubic-bezier(.2, .8, .2, 1) both; }
+  .rz-escalonar > :nth-child(2) { animation-delay: 70ms; }
+  .rz-escalonar > :nth-child(3) { animation-delay: 140ms; }
+  .rz-escalonar > :nth-child(4) { animation-delay: 210ms; }
+  .rz-escalonar > :nth-child(n+5) { animation-delay: 280ms; }
+}
+.rz-revelado.rz-escalonar { animation: none; }

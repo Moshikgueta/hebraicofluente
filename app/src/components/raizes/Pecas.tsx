@@ -177,7 +177,7 @@ export function Artefatos({ b, n }: { b: De<'artefatos'>; n: number }) {
             <span className="rz-rot !text-[#8FD6C8]">{TIPO_DO_ARTEFATO[a.tipo] ?? a.tipo} · {a.quando}</span>
             <h4 className="rz-serif m-0 text-[22px] font-[440]">{a.nome}</h4>
           </header>
-          <div className="grid gap-3 p-4">
+          <div className="rz-escalonar grid gap-3 p-4">
             <figure className="m-0 grid gap-1">
               <Gravura nome={a.gravura} className="mx-auto h-[150px] w-full max-w-[240px] text-[var(--tinta)]" />
               <figcaption className="font-ui text-[12px] leading-snug text-[var(--suave)]">{a.legenda}</figcaption>

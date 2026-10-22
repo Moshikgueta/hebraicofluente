@@ -60,7 +60,7 @@ export function PersonagensClient() {
                   </span>
                 </button>
                 {ab && (
-                  <div id={`vida-${x.id}`} className="rz-revelado grid gap-3 pt-3">
+                  <div id={`vida-${x.id}`} className="rz-revelado rz-escalonar grid gap-3 pt-3">
                     {x.paragrafos.map((t, i) => <TextoComFontes key={i} texto={t} />)}
                     {x.lugares.length > 0 && (
                       <p className="m-0 font-ui text-[14px] text-[var(--corpo)]">
