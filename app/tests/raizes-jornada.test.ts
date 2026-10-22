@@ -193,4 +193,12 @@ describe.skipIf(!TEM_CONTEUDO)('o objeto de cada unidade e o mapa do capítulo',
     }
     expect(lugaresDoModulo(dados.conteudo[0]!).length).toBeGreaterThanOrEqual(2);
   });
+
+  it('o desenho de cada personagem existe e não é retrato', async () => {
+    const { GRAVURAS } = await import('@/components/raizes/ilustracoes/Gravuras');
+    for (const p of dados.personagens ?? []) {
+      expect(p.objeto && GRAVURAS[p.objeto], p.id).toBeTruthy();
+      expect(GRAVURAS[p.objeto!]!.nome.toLowerCase()).not.toMatch(/retrato|rosto/);
+    }
+  });
 });

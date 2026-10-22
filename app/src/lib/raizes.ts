@@ -188,6 +188,8 @@ export type Personagem = {
   id: string; nome: string; quando: string;
   /** Lugares do Atlas ligados a ele (ids de atlas.lugares). */
   lugares: string[]; modulos: number[]; resumo: string; paragrafos: string[];
+  /** A gravura do ofício que o texto descreve (interpretativa, nunca retrato). */
+  objeto?: string;
 };
 
 export type PaginaDeLugar = {
