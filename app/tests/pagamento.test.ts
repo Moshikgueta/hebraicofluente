@@ -529,10 +529,16 @@ describe('9. um pagamento que a Mercado Pago não conhece não vira reenvio eter
     /* A Mercado Pago de mentira responde 500 para qualquer id fora do
        padrão dela - uma falha de consulta, do nosso lado da conversa. */
     vi.stubGlobal('fetch', async () => new Response('{"message":"internal"}', { status: 500 }));
-    for (let i = 0; i < 40; i++) {
-      const w = await pay.webhook({ request: await avisoAssinado(800000 + i), env });
-      expect(w.status).toBe(500);
-    }
+    /* O teto é por minuto: com o relógio de verdade, as 40 chamadas às vezes
+       atravessavam a virada do minuto e o teto valia duas vezes. O relógio
+       fica parado no meio de um minuto. */
+    const agora = vi.spyOn(Date, 'now').mockReturnValue(Date.UTC(2026, 9, 22, 12, 0, 30));
+    try {
+      for (let i = 0; i < 40; i++) {
+        const w = await pay.webhook({ request: await avisoAssinado(800000 + i), env });
+        expect(w.status).toBe(500);
+      }
+    } finally { agora.mockRestore(); }
     const n = Number(linha(env, "SELECT COUNT(*) AS n FROM access_log WHERE action = 'settle-error'")!.n);
     expect(n).toBeGreaterThan(0);
     expect(n).toBeLessThanOrEqual(20);
