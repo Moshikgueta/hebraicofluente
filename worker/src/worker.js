@@ -34,7 +34,7 @@ import * as progress from './api/progress.js';
 import { content } from './api/content.js';
 import { contentA1 } from './api/content-a1.js';
 import { contentRaizes } from './api/content-raizes.js';
-import { licenca as licencaDoLivro } from './api/livro.js';
+import { licenca as licencaDoLivro, pdfMarcado, CAMINHO_DO_PDF } from './api/livro.js';
 import * as exameA1 from './api/exame-a1.js';
 import * as audio from './api/audio.js';
 import * as novidades from './api/novidades.js';
@@ -310,6 +310,17 @@ async function responder(request, env, ctx) {
          Range. Se vier 200 com Range no pedido, a fatia é feita aqui
          (lib/range.js); um 206 pronto passa como veio. */
       return comRange(request, await env.ASSETS.fetch(request));
+    }
+
+    /* ── o PDF do e-book, com a marca da conta ─────────────────────────
+       Depois do portão, que já conferiu o direito. Sem como marcar, segue
+       para o arquivo como está (api/livro.js). */
+    if (canonical(path) === CAMINHO_DO_PDF && (request.method === 'GET' || request.method === 'HEAD')) {
+      const marcado = await pdfMarcado(request, env, ctx).catch(e => {
+        console.error('pdf-marca', e && e.stack || e);
+        return null;
+      });
+      if (marcado) return marcado;
     }
 
     /* ── o site ─────────────────────────────────────────────────────── */

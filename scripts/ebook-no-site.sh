@@ -30,4 +30,7 @@ if [ "$tamanho" -gt $((25 * 1024 * 1024)) ]; then
   echo "O PDF tem $tamanho bytes, acima dos 25 MiB que a Cloudflare serve." >&2
   exit 1
 fi
+# A marca d'água de cada comprador: a cauda que o Worker completa por pedido
+# (scripts/pdf-marca.mjs e worker/src/lib/pdf-marca.js).
+node scripts/pdf-marca.mjs "$DEST/$PDF"
 echo "e-book em $DEST: $(du -sh "$DEST" | cut -f1), PDF $((tamanho / 1024 / 1024)) MB"
