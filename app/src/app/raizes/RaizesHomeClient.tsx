@@ -9,6 +9,7 @@
 import Link from 'next/link';
 import { Heroi } from '@/components/raizes/Heroi';
 import { useProgress } from '@/lib/state/store';
+import { useAccount } from '@/lib/account/store';
 import {
   certificadoRaizes, conquistasObtidas, modulo, moduloAberto, progressoDoModulo, progressoGeral, raizes
 } from '@/lib/raizes';
@@ -32,6 +33,7 @@ export function SemConteudo() {
 
 export function RaizesHomeClient() {
   const p = useProgress();
+  const revisor = !!useAccount().session?.account.revisor;
   const r = raizes();
   if (r.semConteudo) return <SemConteudo />;
   const e = p.state.raizes;
@@ -81,10 +83,15 @@ export function RaizesHomeClient() {
       <section className="grid gap-3" aria-labelledby="jornada">
         <div className="rz-rubrica"><h2 id="jornada" className="rz-rot m-0">A jornada</h2><span className="rz-rot ml-auto tabular-nums">10 módulos</span></div>
         <p className="rz-corpo !text-[16px] !text-[var(--suave)]">{r.regras.desbloqueio}</p>
+        {revisor && (
+          <p className="m-0 font-ui text-[13.5px] leading-relaxed text-[var(--mar)]">
+            Modo de revisão: como administrador, você vê todos os módulos abertos. Os alunos continuam abrindo um de cada vez.
+          </p>
+        )}
         <ol className="rz-lista">
           {r.modulos.map(rm => {
             const conteudo = modulo(rm.n);
-            const aberto = moduloAberto(e, rm.n);
+            const aberto = moduloAberto(e, rm.n, revisor);
             const prog = conteudo ? progressoDoModulo(e, conteudo) : null;
             const estado = !conteudo ? 'em preparação' : prog?.concluido ? 'concluído' : aberto ? (prog && prog.feitas > 0 ? 'em andamento' : 'aberto') : 'abre depois do anterior';
             const corpo = (
@@ -150,7 +157,7 @@ export function RaizesHomeClient() {
           <p className="m-0 font-ui text-[14.5px] leading-relaxed text-[var(--corpo)]">
             Fichas, diário e tipos de evidência, sem conclusão automática sobre ascendência, e com os dados só no seu aparelho.
           </p>
-          {moduloAberto(e, 9) && (
+          {moduloAberto(e, 9, revisor) && (
             <Link href="/raizes/modulo/9?etapa=aplicar" prefetch={false} className="rz-link justify-self-start min-h-[44px] inline-flex items-center">Abrir o laboratório</Link>
           )}
         </div>
