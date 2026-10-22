@@ -19,7 +19,7 @@ export const CURSO_RAIZES = 'raizes-sefarditas';
 /* Os módulos que têm conteúdo e, portanto, página gerada na build. Escritos
    aqui pelo mesmo motivo de UNIDADES_A1: a página é gerada antes de o
    conteúdo (pago) chegar. tests/raizes.test.ts confere contra raizes/data. */
-export const MODULOS_COM_CONTEUDO: readonly number[] = [1, 2, 3, 4, 5, 6, 7, 8];
+export const MODULOS_COM_CONTEUDO: readonly number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const TOTAL_DE_MODULOS = 10;
 
 export type StatusAfirmacao = 'VERIFICADO' | 'CONTESTADO';
@@ -83,6 +83,7 @@ export type Bloco =
       posicoes: { nome: string; resumo: string }[]; nota: string;
     }
   | { tipo: 'reflexao'; id: string; pergunta: string; apoio: string }
+  | { tipo: 'laboratorio'; titulo: string; apresentacao: string }
   | { tipo: 'sintese'; itens: string[] };
 
 export type Etapa = { id: string; titulo: string; pergunta: string; blocos: Bloco[] };
