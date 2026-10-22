@@ -1,7 +1,8 @@
 /* Raízes Sefarditas num navegador de verdade, a 390 px.
    ────────────────────────────────────────────────────────────────────────
    Contra o export local (npm run build), com uma conta de demonstração que
-   tem o direito raizes-sefarditas. Percorre o módulo 1 como um aluno:
+   tem o direito raizes-sefarditas. Percorre o módulo 1 como um aluno (e
+   depois os outros módulos com conteúdo, só acertando):
      · a casa abre, com a jornada e o "Começar pelo módulo 1";
      · cada etapa abre sem rolagem lateral e sem erro de console;
      · cada atividade é feita: primeiro errando (a explicação aparece e nada
@@ -29,6 +30,7 @@ mkdirSync('.shots', { recursive: true });
 const BASE = 'http://127.0.0.1:4411';
 const DADOS = JSON.parse(readFileSync('content/raizes.json', 'utf8'));
 const M1 = DADOS.conteudo[0];
+const EM_PREPARACAO = DADOS.modulos.length - DADOS.conteudo.length;
 const conta = cursos => ({
   v: 1, current: 'r@h.test',
   accounts: { 'r@h.test': { id: 'r', name: 'R', email: 'r@h.test', createdAt: new Date().toISOString(), pw: 'x', orders: [],
@@ -54,7 +56,8 @@ async function contexto(cursos) {
   return { ctx, p, erros };
 }
 const semRolagemLateral = p => p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
-const etapa = async (p, id) => { await p.goto(`${BASE}/raizes/modulo/1/?etapa=${id}`, { waitUntil: 'networkidle' }); await p.waitForTimeout(300); };
+const etapa = async (p, id, n = 1) => { await p.goto(`${BASE}/raizes/modulo/${n}/?etapa=${id}`, { waitUntil: 'networkidle' }); await p.waitForTimeout(300); };
+const re = t => new RegExp(t.slice(0, 30).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
 const textoDe = t => t.replace(/\[\[[^\]]*\]\]/g, '').trim();
 
 /* ── com o direito ─────────────────────────────────────────────────────── */
@@ -64,7 +67,12 @@ await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
 await p.waitForTimeout(500);
 ok(await p.locator('h1', { hasText: 'Raízes Sefarditas' }).count() === 1, 'a casa abre com o título');
 ok(await p.locator('text=Começar pelo módulo 1').count() === 1, 'oferece começar pelo módulo 1');
-ok(await p.getByText('em preparação', { exact: true }).count() === 9, 'os nove módulos em preparação aparecem como tais');
+ok(await p.getByText('em preparação', { exact: true }).count() === EM_PREPARACAO, `os ${EM_PREPARACAO} módulos em preparação aparecem como tais`);
+if (DADOS.conteudo.length > 1) {
+  await etapa(p, 'descobrir', 2);
+  ok(await p.locator('text=Este módulo abre quando o módulo 1 estiver concluído.').count() === 1, 'o módulo 2 espera o 1');
+  await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
+}
 ok(await semRolagemLateral(p), 'casa sem rolagem lateral');
 ok(await p.getByText('Meu curso', { exact: true }).count() === 0 && await p.locator('text=/\\d+ XP/').count() === 0,
   'casca própria: nada do menu nem do XP do curso de hebraico');
@@ -195,6 +203,70 @@ ok(await p.locator('text=Continuar de onde parei').count() === 1, 'a casa oferec
 ok(await p.locator('[aria-label="Seu progresso"]', { hasText: '1/10' }).count() === 1, 'a casa mostra o progresso geral');
 ok(await p.locator('li', { hasText: 'Explorador de Sefarad' }).locator('text=✓').count() === 1, 'a conquista do módulo aparece');
 await p.screenshot({ path: '.shots/raizes-casa-depois.png', fullPage: true });
+
+/* ── os outros módulos com conteúdo: cada atividade, só acertando ─────── */
+async function resolver(sec, a) {
+  if (a.tipo === 'escolha') await sec.getByRole('button', { name: a.opcoes.find(o => o.correta).texto }).click();
+  if (a.tipo === 'multipla') {
+    for (const o of a.opcoes.filter(x => x.correta)) await sec.getByRole('checkbox', { name: o.texto }).click();
+    await sec.getByRole('button', { name: 'Conferir', exact: true }).click();
+  }
+  if (a.tipo === 'mapa') {
+    for (const l of a.lugares.slice(0, a.minimoExplorados)) {
+      const bt = sec.locator(`button[aria-label^="${l.nome}"]`).first();
+      await bt.focus();
+      await p.keyboard.press('Enter');
+    }
+    for (const [i, q] of a.perguntas.entries()) await sec.locator('select').nth(i).selectOption(q.resposta);
+    await sec.getByRole('button', { name: 'Conferir', exact: true }).click();
+  }
+  if (a.tipo === 'associacao') {
+    for (let i = 0; i < a.documentos.length; i++) {
+      const titulo = await sec.locator('h4').nth(i).innerText();
+      await sec.locator('select').nth(i).selectOption(a.documentos.find(x => x.titulo === titulo).contexto);
+    }
+    await sec.getByRole('button', { name: 'Conferir', exact: true }).click();
+  }
+  if (a.tipo === 'ordenar') {
+    for (let alvo = 0; alvo < a.eventos.length; alvo++) {
+      const atuais = await sec.locator('button[aria-label^="Subir: "]').evaluateAll(bs => bs.map(x => x.getAttribute('aria-label').slice(7)));
+      const i = atuais.indexOf(a.eventos[alvo].texto);
+      for (let k = i; k > alvo; k--) await sec.getByRole('button', { name: `Subir: ${a.eventos[alvo].texto}` }).click();
+    }
+    await sec.getByRole('button', { name: 'Conferir a ordem' }).click();
+  }
+  if (a.tipo === 'classificar') {
+    const nome = id => a.categorias.find(c => c.id === id).nome;
+    for (const it of a.itens) {
+      await sec.getByRole('radiogroup', { name: re(it.texto) }).getByRole('radio', { name: nome(it.categoria) }).click();
+    }
+    await sec.getByRole('button', { name: 'Conferir' }).click();
+  }
+}
+
+for (const M of DADOS.conteudo.slice(1)) {
+  console.log(`\n  módulo ${M.n}`);
+  for (const e of M.etapas) {
+    await etapa(p, e.id, M.n);
+    const ids = e.blocos.filter(x => x.tipo === 'atividade').map(x => x.id);
+    for (const [i, id] of ids.entries()) {
+      const sec = p.locator('section.rz-atividade').nth(i);
+      await resolver(sec, M.atividades[id]);
+      ok(await sec.locator('.rz-rot', { hasText: 'Concluída' }).count() > 0, `módulo ${M.n}, ${e.id}: ${id} concluída`);
+    }
+    if (e.blocos.some(x => x.tipo === 'reflexao')) await p.locator('textarea').fill('Preciso saber mais da família de cada um.');
+    ok(await semRolagemLateral(p), `módulo ${M.n}, ${e.id}: sem rolagem lateral`);
+    await p.screenshot({ path: `.shots/raizes-m${M.n}-${e.id}.png`, fullPage: true });
+  }
+  await p.reload({ waitUntil: 'networkidle' });
+  await p.waitForTimeout(500);
+  ok(await p.locator(`text=/Módulo ${M.n} concluído/`).count() > 0, `módulo ${M.n} concluído depois de recarregar`);
+}
+if (DADOS.conteudo.length > 1) {
+  await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(400);
+  ok(await p.locator('[aria-label="Seu progresso"]', { hasText: `${DADOS.conteudo.length}/10` }).count() === 1, 'a casa conta os módulos concluídos');
+}
 
 await p.goto(`${BASE}/raizes/biblioteca/`, { waitUntil: 'networkidle' });
 await p.waitForTimeout(300);

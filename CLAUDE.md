@@ -755,7 +755,9 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   (o latin-ext numa segunda face, baixada só quando a página tem a letra).
   No mapa, o toque abre o ponto mais próximo do dedo (pontos a 20 px no
   celular); os botões dos pontos são para teclado e leitor de tela.
-- Módulo 1 pronto para revisão humana; módulos 2-10 só no plano.
+- Módulos 1 e 2 prontos para revisão humana; módulos 3-10 só no plano. Módulo novo:
+  `MODULOS_COM_CONTEUDO` em `lib/raizes.ts`, e conteúdo de lá precisa de publicação
+  manual (o deploy só roda sozinho com push no site).
   `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.
 
 ## Antes de commitar
