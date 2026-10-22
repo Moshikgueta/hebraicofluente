@@ -25,7 +25,7 @@ import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
 import * as pay from '../../worker/src/api/pay.js';
 // @ts-expect-error - idem
-import { gate, cursoDaRota, isGatedPath, NAO_CURSOS } from '../../worker/src/gate.js';
+import { gate, cursoDaRota, isGatedPath, NAO_CURSOS, SEM_PAGINA_DE_VENDA } from '../../worker/src/gate.js';
 // @ts-expect-error - idem
 import { getCourse, itensDoPedido, priceCents } from '../../worker/src/lib/catalog.js';
 // @ts-expect-error - idem
@@ -207,17 +207,27 @@ describe('o portão do e-book', () => {
     expect((await porta('/audio/he-12345678.mp3'))?.status, 'o e-book abriu o áudio do curso').toBe(302);
   });
 
-  it('quem tem só o curso não lê o e-book: vai para /cursos/ enquanto ele não está à venda, e para a página de venda depois', async () => {
+  it('quem tem só o curso não lê o e-book, e vai para /cursos/ (o e-book não tem página de venda)', async () => {
     const env = envDeTeste();
     const a = await conta(env);
     await grantAccess(env, { accountId: a.id, courseSlug: 'alfabetizacao', orderId: 'T-curso', months: 12 });
-    const porta = () => gate(new Request(`${SITE}/israel/`, { headers: { Cookie: a.cookie } }), env);
-    const r = await porta();
+    const r = await gate(new Request(`${SITE}/israel/`, { headers: { Cookie: a.cookie } }), env);
     expect(r?.status).toBe(302);
     expect(new URL(r!.headers.get('location')!, SITE).pathname).toBe('/cursos/');
-    abrirVenda();
-    const r2 = await porta();
-    expect(r2?.headers.get('location')).toContain(`/cursos/${LIVRO}/`);
+  });
+
+  it('a lista do portão dos produtos sem página de venda é a do catálogo (aVenda: false) mais o Raízes', () => {
+    const todos = JSON.parse(readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8')).courses as { slug: string; aVenda?: boolean; tipo?: string }[];
+    const doCatalogo = todos.filter(c => c.aVenda === false && (c.tipo ?? 'curso') !== 'pacote').map(c => c.slug);
+    expect([...SEM_PAGINA_DE_VENDA].sort()).toEqual([...doCatalogo, 'raizes-sefarditas'].sort());
+  });
+
+  /* 22/10/2026: a publicação parou porque o gate.js passou a importar o
+     catálogo, e o seo.mjs carrega o gate.js no Node puro, que recusa JSON sem
+     atributo de importação. */
+  it('o gate.js carrega no Node puro (o seo.mjs da publicação depende disso)', () => {
+    const gateJs = fileURLToPath(new URL('../../worker/src/gate.js', import.meta.url));
+    expect(() => execFileSync(process.execPath, ['-e', `import(${JSON.stringify(gateJs)}).then(m => { if (!m.isGatedPath) process.exit(1); })`], { stdio: 'pipe' })).not.toThrow();
   });
 
   it('o acesso liberado à mão (Actions → Acesso → liberar) abre /israel mesmo fora da venda', async () => {

@@ -41,7 +41,6 @@
 import { readSession } from './lib/session.js';
 import { aparelhoValido } from './lib/aparelhos.js';
 import { hasEntitlement, activeEntitlements, findAccountById } from './lib/db.js';
-import { getCourse } from './lib/catalog.js';
 
 /* As rotas do curso pago. Uma lista de prefixos, e não uma de rotas livres:
    uma rota nova nasce protegida, e o erro possível é pedir login onde não
@@ -102,6 +101,12 @@ export const LIVRO = 'israel-alem-do-roteiro';
    Node puro, que não importa JSON sem atributo. tests/ebook-produto.test.ts
    confere esta lista contra data/courses.json. */
 export const NAO_CURSOS = new Set([LIVRO]);
+/* Produtos sem página de venda: fora do catálogo (Raízes) ou com `aVenda:
+   false` em data/courses.json (o e-book, 22/10/2026). Lista fixa porque este
+   arquivo não pode importar o catálogo: o seo.mjs da publicação o carrega no
+   Node puro, que recusa JSON sem atributo de importação. tests/ebook-produto
+   confere a lista contra o catálogo: abrir a venda pede tirar o slug daqui. */
+export const SEM_PAGINA_DE_VENDA = new Set(['raizes-sefarditas', LIVRO]);
 const ehCurso = slug => !NAO_CURSOS.has(slug);
 
 export function cursoDaRota(path) {
@@ -170,8 +175,7 @@ export async function gate(request, env) {
     /* Produto sem página de venda - fora do catálogo (Raízes Sefarditas) ou
        com `aVenda: false` (o e-book, 22/10/2026): quem não tem o direito vai
        para a lista de cursos, e não para um 404. */
-    const produto = getCourse(curso || COURSE);
-    const pagina = !produto || produto.aVenda === false ? '/cursos/' : `/cursos/${curso || COURSE}/`;
+    const pagina = SEM_PAGINA_DE_VENDA.has(curso) ? '/cursos/' : `/cursos/${curso || COURSE}/`;
     return recusa(url, documento, pagina);
   }
 
