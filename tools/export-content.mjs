@@ -784,13 +784,22 @@ function main() {
     const { _: _mapaNota, ...raizesMapa } = lerRaizes('data/mapa-peninsula.json');
     void _mapaNota;
     citadas.add(raizesMapa.fonte);
+    /* Os outros desenhos (data/mapa-<nome>.json), que uma atividade pede pelo
+       campo `desenho`. A península continua em `mapa`. */
+    const raizesMapas = {};
+    for (const arq of readdirSync(join(RAIZES, 'data')).filter(n => /^mapa-.+\.json$/.test(n) && n !== 'mapa-peninsula.json')) {
+      const { _: _n, ...d } = lerRaizes(`data/${arq}`);
+      void _n;
+      raizesMapas[arq.slice(5, -5)] = d;
+      citadas.add(d.fonte);
+    }
     const raizesFontes = lerRaizes('data/fontes.json').fontes
       .filter(f => citadas.has(f.id))
       .map(({ id, nivel, tipo, autor, titulo, ano, editora_ou_periodico, url, acesso, data_consulta, abnt }) =>
         ({ id, nivel, tipo, autor, titulo, ano, publicacao: editora_ou_periodico, url, acesso, consulta: data_consulta, abnt }));
     const { _: _cursoNota, ...raizesPublico } = raizesCurso;
     void _cursoNota;
-    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa };
+    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa, mapas: raizesMapas };
   } else {
     console.warn(`  ! Raízes Sefarditas: ${RAIZES}/data não existe; raizes.json sai vazio.`);
     raizesJson = {

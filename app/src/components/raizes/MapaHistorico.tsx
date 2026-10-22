@@ -14,7 +14,7 @@
  */
 
 import { useState } from 'react';
-import { janelaDoMapa, projetar, raizes, type Atividade } from '@/lib/raizes';
+import { desenhoDoMapa, janelaDoMapa, projetar, type Atividade } from '@/lib/raizes';
 import { Moldura, Veredito, useAtividade } from './Atividades';
 import { PainelDeFonte } from './Texto';
 
@@ -22,9 +22,10 @@ type Mapa = Extract<Atividade, { tipo: 'mapa' }>;
 
 export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a: Mapa }) {
   const { feita, registrar } = useAtividade(modulo, id);
-  const desenho = raizes().mapa;
-  /* A janela: a península inteira, ou o recorte da atividade (Portugal, no módulo 3). */
-  const j = janelaDoMapa(a.recorte);
+  /* O desenho (a península, ou outro pelo nome, como o Mediterrâneo da
+     diáspora) e a janela (inteiro, ou o recorte da atividade). */
+  const desenho = desenhoDoMapa(a.desenho);
+  const j = janelaDoMapa(a.recorte, desenho);
   const k = j.w / desenho.largura;
   const [aberto, setAberto] = useState<string | null>(null);
   const [vistos, setVistos] = useState<Set<string>>(new Set());
@@ -63,7 +64,7 @@ export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a
             const caixa = e.currentTarget.getBoundingClientRect();
             let melhor: string | null = null, dist = 36;
             for (const l of a.lugares) {
-              const [x, y] = projetar(l.lon, l.lat);
+              const [x, y] = projetar(l.lon, l.lat, desenho);
               const d = Math.hypot(caixa.left + ((x - j.x) / j.w) * caixa.width - e.clientX,
                 caixa.top + ((y - j.y) / j.h) * caixa.height - e.clientY);
               if (d < dist) { dist = d; melhor = l.id; }
@@ -76,7 +77,7 @@ export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a
             <path d={desenho.terra} fill="var(--rz-terra-mapa)" stroke="var(--pedra-escura)" strokeWidth={1.2 * k} />
           </svg>
           {a.lugares.map(l => {
-            const [x, y] = projetar(l.lon, l.lat);
+            const [x, y] = projetar(l.lon, l.lat, desenho);
             const ativo = aberto === l.id, visto = vistos.has(l.id);
             return (
               <button

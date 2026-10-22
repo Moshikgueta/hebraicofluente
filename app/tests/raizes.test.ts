@@ -307,10 +307,14 @@ describe.skipIf(!TEM_CONTEUDO)('as atividades funcionam como prometem', () => {
   }
 
   it('o mapa: todo ponto cai dentro do desenho', () => {
-    const mapa = lerRaizes('data/mapa-peninsula.json');
+    const peninsula = lerRaizes('data/mapa-peninsula.json');
     for (const m of modulos) {
       for (const a of Object.values(m.atividades)) {
         if (a.tipo !== 'mapa') continue;
+        /* O desenho que a atividade pede existe, e é dele que se mede. */
+        if (a.desenho) expect(existsSync(join(RAIZES, `data/mapa-${a.desenho}.json`)), a.desenho).toBe(true);
+        const mapa = a.desenho ? lerRaizes(`data/mapa-${a.desenho}.json`) : peninsula;
+        expect(mapa._.join(' ')).toMatch(/land/);
         /* O recorte cabe no desenho, e os pontos cabem no recorte. */
         const r = a.recorte ?? mapa.quadro;
         expect(r.oeste).toBeGreaterThanOrEqual(mapa.quadro.oeste);
@@ -330,7 +334,7 @@ describe.skipIf(!TEM_CONTEUDO)('as atividades funcionam como prometem', () => {
       }
     }
     /* Sem fronteira desenhada: o contorno é só terra (tools/raizes-mapa.mjs). */
-    expect(mapa._.join(' ')).toMatch(/land/);
+    expect(peninsula._.join(' ')).toMatch(/land/);
   });
 
   it('embaralhar nunca devolve a ordem certa e é sempre a mesma para a mesma semente', () => {

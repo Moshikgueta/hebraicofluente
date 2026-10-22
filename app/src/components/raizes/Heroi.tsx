@@ -8,15 +8,16 @@
 
 import type { ReactNode } from 'react';
 import { He } from '@/components/hebrew/He';
-import { projetar, raizes } from '@/lib/raizes';
+import { desenhoDoMapa, projetar } from '@/lib/raizes';
 
 export function Heroi({
-  kicker, titulo, subtitulo, pontos = [], children, compacto = false
+  kicker, titulo, subtitulo, pontos = [], desenho, children, compacto = false
 }: {
   kicker: string; titulo: string; subtitulo?: string;
-  pontos?: { lon: number; lat: number }[]; children?: ReactNode; compacto?: boolean;
+  pontos?: { lon: number; lat: number }[]; desenho?: string; children?: ReactNode; compacto?: boolean;
 }) {
-  const m = raizes().mapa;
+  /* O desenho do módulo: a península, ou o Mediterrâneo na diáspora. */
+  const m = desenhoDoMapa(desenho);
   return (
     <header className="rz-heroi -mx-4 flex flex-col">
       {/* A arte em cima, inteira (a península tem de ser reconhecível), e o
@@ -30,7 +31,7 @@ export function Heroi({
           <path d={m.terra} fill="#061A20" transform="translate(16 18)" />
           <path d={m.terra} fill="#17505A" />
           {pontos.map((p, i) => {
-            const [x, y] = projetar(p.lon, p.lat);
+            const [x, y] = projetar(p.lon, p.lat, m);
             return <circle key={i} cx={x} cy={y} r={11} fill="#B8862F" stroke="#0B2A31" strokeWidth={5} />;
           })}
         </svg>
