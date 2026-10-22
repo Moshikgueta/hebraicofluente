@@ -256,9 +256,23 @@ for (const M of DADOS.conteudo.slice(1)) {
     await etapa(p, e.id, M.n);
     const ids = e.blocos.filter(x => x.tipo === 'atividade').map(x => x.id);
     for (const [i, id] of ids.entries()) {
-      const sec = p.locator('section.rz-atividade').nth(i);
+      const sec = p.locator('section.rz-atividade:not(.rz-lab)').nth(i);
       await resolver(sec, M.atividades[id]);
       ok(await sec.locator('.rz-rot', { hasText: 'Concluída' }).count() > 0, `módulo ${M.n}, ${e.id}: ${id} concluída`);
+    }
+    if (e.blocos.some(x => x.tipo === 'laboratorio')) {
+      /* O Laboratório guarda no aparelho, sobrevive à recarga e apaga tudo quando pedido. */
+      const lab = p.locator('section.rz-lab');
+      await lab.getByLabel('Nome', { exact: true }).fill('Maria (teste)');
+      await lab.getByRole('radio', { name: /Hipótese/ }).check();
+      await lab.getByRole('button', { name: 'Guardar a ficha' }).click();
+      await p.reload({ waitUntil: 'networkidle' });
+      await p.waitForTimeout(400);
+      ok(await p.locator('section.rz-lab h3', { hasText: 'Maria (teste)' }).count() === 1, `módulo ${M.n}: a ficha do Laboratório volta depois de recarregar`);
+      ok(await p.locator('section.rz-lab li', { hasText: /^1 hipótese$/ }).count() === 1, `módulo ${M.n}: o resumo conta a ficha como hipótese`);
+      await p.locator('section.rz-lab').getByRole('button', { name: 'Apagar tudo do laboratório' }).click();
+      await p.locator('section.rz-lab').getByRole('button', { name: 'Sim, apagar' }).click();
+      ok(await p.locator('section.rz-lab h3', { hasText: 'Maria (teste)' }).count() === 0, `módulo ${M.n}: apagar tudo limpa o Laboratório`);
     }
     if (e.blocos.some(x => x.tipo === 'reflexao')) await p.locator('textarea').fill('Preciso saber mais da família de cada um.');
     ok(await semRolagemLateral(p), `módulo ${M.n}, ${e.id}: sem rolagem lateral`);

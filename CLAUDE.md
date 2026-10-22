@@ -746,7 +746,10 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   Toda frase factual leva `[[R01-NNN]]`; só VERIFICADO e CONTESTADO vão ao
   texto, e CONTESTADO só como debate. `tests/raizes.test.ts` cobra.
 - Estado: `LearnerState.raizes` (opcional), fusão em `state/raizes-estado.ts`.
-  A reflexão livre e, no futuro, o laboratório genealógico ficam SÓ no aparelho.
+  A reflexão livre e o Laboratório de Memórias Familiares (módulo 9, bloco `laboratorio`,
+  `lib/raizes-laboratorio.ts`) ficam SÓ no aparelho: sem servidor, sem progresso, sem
+  certificado e sem percentual; o resumo só conta fichas por tipo de evidência.
+  `tests/raizes-laboratorio.test.ts` trava isso.
 - NÃO está em `data/courses.json`: falta preço, o contador (CNAE de idiomas) e
   mudar o art. 1 dos Termos. Até lá o acesso só existe concedido à mão.
 - Visual: a estética da coleção editorial (Israel Além do Roteiro), em
@@ -759,7 +762,7 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   do mesmo desenho (Portugal, no módulo 3).
   E pode pedir outro desenho com `desenho` (o nome de `raizes/data/mapa-<nome>.json`,
   exportado em `mapas`): o Mediterrâneo (módulo 5) e o litoral do Brasil (módulo 6). Sem ele, a península.
-- Módulos 1 a 8 prontos para revisão humana; módulos 9 e 10 só no plano. Módulo novo:
+- Módulos 1 a 9 prontos para revisão humana; o módulo 10 só no plano. Módulo novo:
   `MODULOS_COM_CONTEUDO` em `lib/raizes.ts`, e conteúdo de lá precisa de publicação
   manual (o deploy só roda sozinho com push no site).
   `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.
