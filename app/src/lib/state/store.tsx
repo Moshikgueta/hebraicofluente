@@ -12,6 +12,7 @@ import {
   type GeneroA1, type TranslitA1
 } from './a1-estado';
 import { habilidadeDoItem, type ItemA1 } from '@/lib/a1';
+import { chaveDaAtividade, chaveDaEtapa, registrarAtividade, visitarEtapa } from './raizes-estado';
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode
 } from 'react';
@@ -158,6 +159,11 @@ type Ctx = {
   marcarFavoritoA1: (chave: string, on: boolean) => void;
   setAutoA1: (n: number, itens: number[]) => void;
   setTranslitA1: (valor: TranslitA1) => void;
+  /* ── Raízes Sefarditas (21/10/2026) ── */
+  /** Uma tentativa de atividade terminada: nota de 0 a 1 e se o critério foi cumprido. Não dá XP. */
+  registrarAtividadeRaizes: (modulo: number, id: string, nota: number, concluiu: boolean) => void;
+  /** O aluno abriu uma etapa: guarda a primeira visita e o "onde parei". */
+  visitarEtapaRaizes: (modulo: number, etapa: string, rota: string) => void;
 };
 
 const StoreContext = createContext<Ctx | null>(null);
@@ -482,6 +488,26 @@ export function ProgressProvider({
     return null;
   }, [commit, agora]);
 
+  /* Raízes Sefarditas: sem XP e sem sequência de dias, de propósito
+     (lib/state/raizes-estado.ts). Só o progresso do próprio produto. */
+  const registrarAtividadeRaizes = useCallback((modulo: number, id: string, nota: number, concluiu: boolean) => {
+    const s = agora();
+    commit({ ...s, raizes: registrarAtividade(s.raizes, chaveDaAtividade(modulo, id), nota, concluiu, new Date().toISOString()) });
+    /* Grava já, sem esperar os 250 ms do agendamento: concluir uma atividade
+       e recarregar logo em seguida perdia a conclusão (visto em raizes.mjs).
+       O gravador não descarrega o que estava agendado quando a página sai. */
+    void gravador.agora();
+  }, [commit, agora, gravador]);
+
+  const visitarEtapaRaizes = useCallback((modulo: number, etapa: string, rota: string) => {
+    const s = agora();
+    const chave = chaveDaEtapa(modulo, etapa);
+    /* Voltar à mesma etapa sem nada novo não grava: o "onde parei" só muda
+       quando o lugar muda, para não escrever no servidor a cada clique. */
+    if (s.raizes?.etapas[chave] && s.raizes.onde?.rota === rota) return;
+    commit({ ...s, raizes: visitarEtapa(s.raizes, chave, rota, new Date().toISOString()) });
+  }, [commit, agora]);
+
   const setGeneroA1 = useCallback((g: GeneroA1) => {
     const s = agora();
     commit({ ...s, a1: { ...s.a1, genero: { valor: g, em: new Date().toISOString() } } });
@@ -587,14 +613,16 @@ export function ProgressProvider({
       setOnboarding, finishStage, answer, markFirst: doMarkFirst, registrarLeitura: doRegistrarLeitura, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
       remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
-      responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
+      responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1,
+      registrarAtividadeRaizes, visitarEtapaRaizes
     };
   }, [
     state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
     setOnboarding, finishStage, answer, doMarkFirst, doRegistrarLeitura, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
     setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
-    responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1
+    responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1,
+    registrarAtividadeRaizes, visitarEtapaRaizes
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

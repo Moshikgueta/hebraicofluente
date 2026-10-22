@@ -28,6 +28,7 @@
  */
 
 import { fundirA1 } from './a1-estado';
+import { fundirRaizes } from './raizes-estado';
 import {
   EMPTY_STATE, SKILLS,
   type Achievement, type CheckpointProgress, type Confusion, type DayRecord,
@@ -284,6 +285,10 @@ export function mergeStates(local: LearnerState, remoto: LearnerState): LearnerS
     /* A autoavaliação de leitura: contadores que só sobem, o maior de cada
        lado (como `kinds`), e a data mais recente. Só aparece quando algum
        dos lados a tem. */
+    /* Raízes Sefarditas: o maior de cada contador, a conclusão mais antiga,
+       a visita mais recente (lib/state/raizes-estado.ts). Só aparece quando
+       algum dos lados a tem. */
+    ...(a.raizes || b.raizes ? { raizes: fundirRaizes(a.raizes, b.raizes) } : {}),
     ...(a.leituraAutoavaliada || b.leituraAutoavaliada ? {
       leituraAutoavaliada: fundirMapa(a.leituraAutoavaliada ?? {}, b.leituraAutoavaliada ?? {}, (x, y) => ({
         tentadas: Math.max(x.tentadas, y.tentadas),

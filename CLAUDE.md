@@ -727,6 +727,37 @@ tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
   confere); gravações na onda 5.
 - `tests/loja.test.ts`.
 
+## Raízes Sefarditas (21-22/10/2026)
+Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
+(decisão do dono, 22/10/2026).
+- **O conteúdo mora num repositório PRIVADO**, `Moshikgueta/hebraicofluente-raizes`
+  (dados, fontes, matriz, documentos, gerador do mapa), clonado em `raizes/`
+  (ignorado aqui), como o editorial. A publicação o busca com o segredo
+  `RAIZES_TOKEN` (token fino, só leitura); sem ele, publica com um
+  `raizes.json` vazio e avisa no resumo. Aqui fica só o CÓDIGO (telas, portão,
+  rota, testes). Mudar o conteúdo lá NÃO publica sozinho: rodar o
+  "Deploy platform to Cloudflare" à mão. Sem o clone, `tests/raizes.test.ts`
+  pula os casos de conteúdo.
+- Rotas `/raizes`, casca própria (`components/raizes/RaizesShell.tsx`, sem o
+  menu nem o XP do curso de hebraico), direito `raizes-sefarditas` no portão,
+  conteúdo por `GET /api/content/raizes`. Não paga XP.
+- Dados em `raizes/data/`: `fontes.json` e `afirmacoes.json` seguem o
+  protocolo do repositório editorial (níveis A-E, status, forma de acesso).
+  Toda frase factual leva `[[R01-NNN]]`; só VERIFICADO e CONTESTADO vão ao
+  texto, e CONTESTADO só como debate. `tests/raizes.test.ts` cobra.
+- Estado: `LearnerState.raizes` (opcional), fusão em `state/raizes-estado.ts`.
+  A reflexão livre e, no futuro, o laboratório genealógico ficam SÓ no aparelho.
+- NÃO está em `data/courses.json`: falta preço, o contador (CNAE de idiomas) e
+  mudar o art. 1 dos Termos. Até lá o acesso só existe concedido à mão.
+- Visual: a estética da coleção editorial (Israel Além do Roteiro), em
+  `app/src/app/raizes/raizes.css` (classes `rz-*`, só debaixo de `.rz`) e no
+  layout `app/src/app/raizes/layout.tsx`, que carrega a Literata SÓ em /raizes
+  (o latin-ext numa segunda face, baixada só quando a página tem a letra).
+  No mapa, o toque abre o ponto mais próximo do dedo (pontos a 20 px no
+  celular); os botões dos pontos são para teclado e leitor de tela.
+- Módulo 1 pronto para revisão humana; módulos 2-10 só no plano.
+  `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.
+
 ## Antes de commitar
 ```sh
 cd app && npm test        # 302 testes

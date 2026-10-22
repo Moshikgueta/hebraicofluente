@@ -34,3 +34,6 @@ backups/
 # O editorial dos e-books mora no repositório PRIVADO Moshikgueta/hebraicofluente-editorial
 # (21/10/2026): o conteúdo é vendido. Clone-o aqui, em editorial/.
 editorial/
+# Raízes Sefarditas: o CONTEÚDO mora no repositório privado
+# Moshikgueta/hebraicofluente-raizes, clonado aqui (ver tools/export-content.mjs).
+raizes/

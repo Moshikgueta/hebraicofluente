@@ -45,7 +45,9 @@ export const PAGAS = [
   /* 06/10/2026: o curso Hebraico A1 (outro curso; ver worker/src/gate.js). */
   '/a1',
   /* 21/10/2026: o e-book Israel Além do Roteiro (outro produto). */
-  '/israel'
+  '/israel',
+  /* 21/10/2026: Raízes Sefarditas (outro produto; ver worker/src/gate.js). */
+  '/raizes'
 ] as const;
 
 /**

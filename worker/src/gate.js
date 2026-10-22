@@ -79,7 +79,9 @@ const GATED = [
   '/a1',
   /* 21/10/2026: o e-book Israel Além do Roteiro (versão interativa e PDF).
      É de outro PRODUTO: ver `cursoDaRota`. */
-  '/israel'
+  '/israel',
+  /* 21/10/2026: Raízes Sefarditas, outro produto (ver `cursoDaRota`). */
+  '/raizes'
 ];
 
 /* O curso de cada rota (06/10/2026, com o A1). O padrão é o alfabeto; o A1
@@ -88,6 +90,7 @@ const GATED = [
    eles basta ter algum curso válido. `null` = qualquer curso. */
 const COURSE = 'alfabetizacao';
 const PREFIXO_A1 = '/a1';
+const PREFIXO_RAIZES = '/raizes';
 const QUALQUER_CURSO = ['/audio'];
 /* O e-book: quem comprou só ele lê /israel/ e mais nada. E o "qualquer
    curso" de /audio conta só CURSOS: o e-book não abre os áudios das lições. */
@@ -106,6 +109,7 @@ export function cursoDaRota(path) {
   const em = prefix => p === prefix || p.startsWith(prefix + '/');
   if (em(PREFIXO_A1)) return 'hebraico-a1';
   if (em(PREFIXO_LIVRO)) return LIVRO;
+  if (em(PREFIXO_RAIZES)) return 'raizes-sefarditas';
   if (QUALQUER_CURSO.some(em)) return null;
   return COURSE;
 }
@@ -162,7 +166,10 @@ export async function gate(request, env) {
     ? (await activeEntitlements(env, account.id)).some(e => ehCurso(e.courseSlug))
     : await hasEntitlement(env, account.id, curso);
   if (!pode) {
-    return recusa(url, documento, `/cursos/${curso || COURSE}/`);
+    /* Raízes Sefarditas não tem página de venda (não está no catálogo): quem
+       não tem o direito vai para a lista de cursos, e não para um 404. */
+    const pagina = curso === 'raizes-sefarditas' ? '/cursos/' : `/cursos/${curso || COURSE}/`;
+    return recusa(url, documento, pagina);
   }
 
   return null;
