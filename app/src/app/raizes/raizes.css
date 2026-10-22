@@ -405,3 +405,48 @@
 .rz-foto-grande::backdrop { background: rgb(0 0 0 / .85); }
 .rz-foto-grande img { display: block; width: 100%; height: auto; }
 @media (prefers-reduced-motion: no-preference) { .rz-foto-grande[open] { animation: rz-subir .3s cubic-bezier(.2, .8, .2, 1); } }
+
+/* ── a casa: estante, mundos e carimbos (22/10/2026) ─────────────────── */
+.rz-estante { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px 4px; margin: 0; padding: 12px 8px 4px; list-style: none;
+  border-radius: 14px; background: linear-gradient(180deg, transparent 0 46%, var(--rz-madeira-fundo) 46% 48%, transparent 48% 94%, var(--rz-madeira-fundo) 94% 96%, transparent 96%),
+  color-mix(in srgb, var(--pedra) 70%, transparent); box-shadow: inset 0 0 0 1px var(--linha); }
+.rz-estante li { display: grid; }
+.rz-estante a, .rz-estante [role="img"] { display: grid; justify-items: center; gap: 2px; min-height: 64px; padding: 4px 0 6px; border-radius: 10px; text-decoration: none;
+  transition-property: transform, background-color; transition-duration: var(--dur); transition-timing-function: cubic-bezier(.2, .8, .2, 1); }
+.rz-estante a:active { transform: scale(.95); }
+.rz-estante a:focus-visible { outline: 3px solid var(--titulo); outline-offset: 1px; }
+@media (hover: hover) { .rz-estante a:hover { background: color-mix(in srgb, var(--branco) 70%, transparent); } }
+.rz-estante .fechado { opacity: .42; filter: saturate(.4); }
+.rz-estante-n { font-family: var(--dado); font-weight: 700; font-size: 11.5px; line-height: 1; color: var(--ocre); }
+.rz-estante .feito .rz-estante-n { color: var(--teal-ink); }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-estante li { animation: rz-subir .4s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 40ms); }
+}
+
+.rz-mundo { border-radius: 16px; overflow: hidden; background: var(--branco);
+  box-shadow: 0 0 0 1px var(--linha), 0 1px 2px rgb(11 42 49 / .05), 0 14px 32px -20px rgb(11 42 49 / .45); }
+.rz-mundo-capa { position: relative; aspect-ratio: 16 / 9; background: var(--noite); overflow: hidden; }
+.rz-mundo-capa img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.rz-mundo-capa::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(11 42 49 / 0) 35%, rgb(11 42 49 / .92) 100%); }
+.rz-mundo-sem-foto { position: absolute; inset: 0; display: grid; place-items: center; padding-bottom: 40px; background: radial-gradient(circle at 50% 35%, #17505A, #0B2A31); }
+.rz-mundo-titulo { position: absolute; inset: auto 0 0 0; z-index: 1; display: grid; gap: 2px; padding: 14px 16px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .rz-mundo-capa img { transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+  .rz-mundo:hover .rz-mundo-capa img { transform: scale(1.03); }
+}
+
+.rz-porta { gap: 4px; }
+.rz-porta .rz-gravura, .rz-porta svg { margin-bottom: 2px; }
+
+.rz-carimbos { display: flex; flex-wrap: wrap; gap: 10px; padding: 14px; border-radius: 14px; text-decoration: none;
+  background: var(--rz-papel-objeto); box-shadow: 0 0 0 1px rgb(59 38 24 / .12), 0 10px 22px -16px rgb(59 38 24 / .5); }
+.rz-carimbos:focus-visible { outline: 3px solid var(--titulo); outline-offset: 3px; }
+.rz-carimbo-mini { display: grid; justify-items: center; align-content: center; gap: 1px; width: 74px; height: 74px; padding: 6px; border-radius: 50%;
+  border: 1.5px dashed rgb(59 38 24 / .3); color: rgb(59 38 24 / .45); text-align: center; transform: rotate(var(--giro)); }
+.rz-carimbo-mini.tem { border: 2px solid var(--lacre); color: var(--lacre); box-shadow: inset 0 0 0 3px var(--rz-papel-objeto), inset 0 0 0 4px color-mix(in srgb, var(--lacre) 55%, transparent); }
+.rz-carimbo-mini > span:first-child { font-size: 14px; font-weight: 700; line-height: 1; min-height: 14px; }
+.rz-carimbo-nome { font-family: var(--rotulo); font-size: 8.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; line-height: 1.15; }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-carimbo-mini.tem { animation: rz-carimbar-mini .5s cubic-bezier(.3, 1.5, .5, 1) both; animation-delay: calc(var(--i) * 60ms); }
+}
+@keyframes rz-carimbar-mini { from { opacity: 0; transform: rotate(var(--giro)) scale(1.6); } to { opacity: 1; transform: rotate(var(--giro)) scale(1); } }
