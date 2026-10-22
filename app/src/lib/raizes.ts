@@ -19,7 +19,7 @@ export const CURSO_RAIZES = 'raizes-sefarditas';
 /* Os módulos que têm conteúdo e, portanto, página gerada na build. Escritos
    aqui pelo mesmo motivo de UNIDADES_A1: a página é gerada antes de o
    conteúdo (pago) chegar. tests/raizes.test.ts confere contra raizes/data. */
-export const MODULOS_COM_CONTEUDO: readonly number[] = [1, 2, 3, 4];
+export const MODULOS_COM_CONTEUDO: readonly number[] = [1, 2, 3, 4, 5];
 export const TOTAL_DE_MODULOS = 10;
 
 export type StatusAfirmacao = 'VERIFICADO' | 'CONTESTADO';
@@ -50,6 +50,8 @@ export type Atividade =
       minimoExplorados: number; lugares: Lugar[];
       /** Aproxima o desenho numa região (graus), quando os pontos ficam juntos demais na península inteira. */
       recorte?: { oeste: number; leste: number; sul: number; norte: number };
+      /** Outro desenho, de `mapas` (ex.: 'mediterraneo', a diáspora). Sem ele, a península. */
+      desenho?: string;
       perguntas: { id: string; enunciado: string; resposta: string; explicacao: string }[];
     }
   | {
@@ -112,7 +114,16 @@ export type DadosRaizes = {
   conteudo: ModuloRaizes[];
   afirmacoes: Afirmacao[];
   fontes: Fonte[];
-  mapa: { quadro: { oeste: number; leste: number; sul: number; norte: number }; largura: number; altura: number; projecao: { latitudePadrao: number; escala: number }; terra: string; fonte: string };
+  mapa: DesenhoDoMapa;
+  /** Os outros desenhos, pelo nome (data/mapa-<nome>.json no repositório do conteúdo). */
+  mapas?: Record<string, DesenhoDoMapa>;
+};
+
+export type DesenhoDoMapa = {
+  quadro: { oeste: number; leste: number; sul: number; norte: number };
+  largura: number; altura: number;
+  projecao: { latitudePadrao: number; escala: number };
+  terra: string; fonte: string;
 };
 
 /** Esta rota é de Raízes? (todas moram debaixo de /raizes). */
@@ -239,18 +250,24 @@ export function progressoGeral(e: EstadoRaizes | undefined) {
 
 /* ── o mapa ───────────────────────────────────────────────────────────── */
 
-/** Longitude e latitude → coordenadas do desenho (a projeção de tools/raizes-mapa.mjs). */
-/** A janela do desenho em unidades do mapa: a península inteira, ou o recorte da atividade. */
-export function janelaDoMapa(recorte?: { oeste: number; leste: number; sul: number; norte: number }) {
-  const { largura, altura } = raizes().mapa;
+/** O desenho pelo nome; sem nome (ou nome que não existe), a península. */
+export function desenhoDoMapa(nome?: string): DesenhoDoMapa {
+  const r = raizes();
+  return (nome && r.mapas?.[nome]) || r.mapa;
+}
+
+/** A janela do desenho em unidades do mapa: o desenho inteiro, ou o recorte da atividade. */
+export function janelaDoMapa(recorte?: { oeste: number; leste: number; sul: number; norte: number }, d: DesenhoDoMapa = raizes().mapa) {
+  const { largura, altura } = d;
   if (!recorte) return { x: 0, y: 0, w: largura, h: altura };
-  const [x0, y0] = projetar(recorte.oeste, recorte.norte);
-  const [x1, y1] = projetar(recorte.leste, recorte.sul);
+  const [x0, y0] = projetar(recorte.oeste, recorte.norte, d);
+  const [x1, y1] = projetar(recorte.leste, recorte.sul, d);
   return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
 }
 
-export function projetar(lon: number, lat: number): [number, number] {
-  const { quadro, projecao } = raizes().mapa;
+/** Longitude e latitude → coordenadas do desenho (a projeção de tools/raizes-mapa.mjs). */
+export function projetar(lon: number, lat: number, d: DesenhoDoMapa = raizes().mapa): [number, number] {
+  const { quadro, projecao } = d;
   const cos = Math.cos((projecao.latitudePadrao * Math.PI) / 180);
   return [(lon - quadro.oeste) * cos * projecao.escala, (quadro.norte - lat) * projecao.escala];
 }

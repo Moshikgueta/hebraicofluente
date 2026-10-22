@@ -66,11 +66,12 @@ export function ModuloRaizesClient({ n }: { n: number }) {
     });
   };
 
-  const lugares = Object.values(m.atividades).flatMap(a => (a.tipo === 'mapa' ? a.lugares : []));
+  const mapas = Object.values(m.atividades).flatMap(a => (a.tipo === 'mapa' ? [a] : []));
+  const lugares = mapas.flatMap(a => a.lugares);
 
   return (
     <div className="grid gap-8">
-      <Heroi compacto kicker={`Módulo ${m.n} · ${m.regiao}`} titulo={m.titulo} subtitulo={m.periodo} pontos={lugares}>
+      <Heroi compacto kicker={`Módulo ${m.n} · ${m.regiao}`} titulo={m.titulo} subtitulo={m.periodo} pontos={lugares} desenho={mapas[0]?.desenho}>
         <div className="grid gap-1.5 pt-2 max-w-[420px]">
           <div className="h-[3px] bg-white/20" role="progressbar" aria-valuemin={0}
             aria-valuemax={prog.total} aria-valuenow={prog.feitas} aria-label="Atividades concluídas no módulo">
