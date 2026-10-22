@@ -33,7 +33,30 @@ import { grantAccess, hasEntitlement } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
 import { hmacHex } from '../../worker/src/lib/crypto.js';
 // @ts-expect-error - idem
-import { licenca, mascarar } from '../../worker/src/api/livro.js';
+import { licenca, mascarar, pdfMarcado, CAMINHO_DO_PDF } from '../../worker/src/api/livro.js';
+// @ts-expect-error - script JS sem tipos
+import { montarCauda } from '../../scripts/pdf-marca.mjs';
+
+/** Um PDF de duas páginas no formato que o Chromium escreve: xref clássica,
+ *  /Resources e /Font dentro da página. */
+function pdfMinimo() {
+  const objs = [
+    '<</Title (Livro)>>',
+    '<</Type /Catalog /Pages 3 0 R>>',
+    '<</Type /Pages /Kids [5 0 R 6 0 R] /Count 2>>',
+    '<</Length 21>>\nstream\nBT /F7 12 Tf (oi) Tj ET\nendstream',
+    '<</Type /Page\n/Resources <</Font <</F7 7 0 R>>>>\n/MediaBox [0 0 420 594.95996]\n/Contents 4 0 R\n/Parent 3 0 R>>',
+    '<</Type /Page\n/Resources <</ProcSet [/PDF]>>\n/MediaBox [0 0 420 594.95996]\n/Contents [4 0 R]\n/Parent 3 0 R>>',
+    '<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>'
+  ];
+  let s = '%PDF-1.4\n';
+  const pos: number[] = [];
+  objs.forEach((o, i) => { pos.push(s.length); s += `${i + 1} 0 obj\n${o}\nendobj\n`; });
+  const xref = s.length;
+  s += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` + pos.map(p => `${String(p).padStart(10, '0')} 00000 n \n`).join('');
+  s += `trailer\n<</Size ${objs.length + 1}\n/Root 2 0 R\n/Info 1 0 R>>\nstartxref\n${xref}\n%%EOF\n`;
+  return Buffer.from(s, 'latin1');
+}
 
 const SITE = 'https://hebraicofluente.com.br';
 const SEGREDO = 'segredo-do-webhook-de-teste';
@@ -246,6 +269,50 @@ describe('o portão do e-book', () => {
     expect(corpo.copia).toMatch(/^[0-9A-F]{8}$/);
     expect(((await (await pedir()).json()) as { copia: string }).copia, 'o número da cópia não muda').toBe(corpo.copia);
     expect((await licenca({ request: new Request(`${SITE}/api/livro/licenca`), env })).status).toBe(401);
+  });
+
+  /* 22/10/2026: o PDF baixado leva a mesma marca, em toda página, por uma
+     atualização incremental montada na publicação (scripts/pdf-marca.mjs). */
+  it('o PDF sai com a marca da conta, o original intacto na frente e a xref apontando certo', async () => {
+    const pdf = pdfMinimo();
+    const { cauda, meta } = montarCauda(pdf);
+    expect(meta.paginas).toBe(2);
+    const arquivos: Record<string, Uint8Array> = {
+      [CAMINHO_DO_PDF]: pdf, [CAMINHO_DO_PDF + '.cauda']: cauda,
+      [CAMINHO_DO_PDF + '.cauda.json']: Buffer.from(JSON.stringify(meta))
+    };
+    const env = envDeTeste({
+      ASSETS: { fetch: async (r: Request) => {
+        const corpo = arquivos[new URL(r.url).pathname];
+        return corpo ? new Response(corpo, { headers: { 'Content-Length': String(corpo.length) } }) : new Response('', { status: 404 });
+      } }
+    });
+    const a = await conta(env);
+    await grantAccess(env, { accountId: a.id, courseSlug: LIVRO, orderId: 'manual-dono', months: 12 });
+    const r = await pdfMarcado(new Request(`${SITE}${CAMINHO_DO_PDF}`, { headers: { Cookie: a.cookie } }), env, ctx);
+    expect(r.headers.get('Content-Type')).toBe('application/pdf');
+    const saida = Buffer.from(await r.arrayBuffer());
+    await assentar();
+    expect(Number(r.headers.get('Content-Length'))).toBe(saida.length);
+    expect(saida.subarray(0, pdf.length).equals(Buffer.from(pdf)), 'o original vai inteiro na frente').toBe(true);
+    const texto = saida.toString('latin1');
+    const copia = (await (await licenca({ request: new Request(`${SITE}/api/livro/licenca`, { headers: { Cookie: a.cookie } }), env })).json() as { copia: string }).copia;
+    expect(texto).toContain(`(Licenciado para an\x95\x95\x95@exemplo.com.br \xb7 c\xf3pia ${copia}`);
+    expect(texto).not.toContain(a.email);
+    /* Toda entrada da xref nova aponta para o começo do objeto certo, e o
+       startxref aponta para ela; o trailer encadeia a xref do original. */
+    const ultima = Number(texto.match(/startxref\s+(\d+)\s+%%EOF\s*$/)![1]);
+    expect(texto.startsWith('xref', ultima)).toBe(true);
+    const tabela = texto.slice(ultima, texto.indexOf('trailer', ultima));
+    for (const [, num, pos] of tabela.matchAll(/(\d+) 1\n(\d{10}) 00000 n/g)) {
+      expect(texto.startsWith(`${num} 0 obj`, Number(pos)), `objeto ${num}`).toBe(true);
+    }
+    expect(texto.slice(ultima)).toMatch(/\/Prev \d+/);
+    /* Cada página nova desenha o original entre q/Q e a marca depois. */
+    expect(texto.match(/\/Contents \[\d+ 0 R 4 0 R \d+ 0 R \d+ 0 R\]/g)?.length).toBe(2);
+    /* Sem a cauda (PDF de outra publicação), nada de marca: o portão serve o arquivo. */
+    delete arquivos[CAMINHO_DO_PDF + '.cauda'];
+    expect(await pdfMarcado(new Request(`${SITE}${CAMINHO_DO_PDF}`, { headers: { Cookie: a.cookie } }), env, ctx)).toBeNull();
   });
 
   it('o acesso liberado à mão (Actions → Acesso → liberar) abre /israel mesmo fora da venda', async () => {
