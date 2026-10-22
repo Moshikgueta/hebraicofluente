@@ -55,7 +55,9 @@ on:
         required: true
         default: alfabetizacao
         type: choice
-        options: [alfabetizacao, hebraico-a1, hebraico-a2, hebraico-b1]
+        # raizes-sefarditas (22/10/2026): o produto de história, comprado à
+        # parte. Ainda não está à venda; liberar à mão é como o dono revisa.
+        options: [alfabetizacao, hebraico-a1, hebraico-a2, hebraico-b1, raizes-sefarditas]
       meses:
         description: 'Meses de acesso (só em "liberar"; de 1 a 120)'
         required: false
