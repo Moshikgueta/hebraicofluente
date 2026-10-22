@@ -37,6 +37,7 @@
     "rodada2": "node rodada2.mjs",
     "pacote": "node pacote.mjs",
     "promessas": "node promessas.mjs",
+    "raizes": "node raizes.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {

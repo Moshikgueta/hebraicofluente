@@ -30,3 +30,7 @@ app/.shots/
 # Cópias do banco (scripts/backup-d1.sh). Cada arquivo tem e-mail de todo
 # aluno e o hash da senha de cada um: vale o mesmo que o banco.
 backups/
+
+# Raízes Sefarditas: o CONTEÚDO mora no repositório privado
+# Moshikgueta/hebraicofluente-raizes, clonado aqui (ver tools/export-content.mjs).
+raizes/

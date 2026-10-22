@@ -1,0 +1,143 @@
+/* Raízes Sefarditas: a direção editorial da coleção (22/10/2026).
+   ─────────────────────────────────────────────────────────────────────────
+   Portada de hebraicofluente-editorial/templates/web.css (Israel Além do
+   Roteiro): fio e rubrica no lugar de cartão, serifa nos títulos, número em
+   Bricolage cor de ocre, hebraico isolado e grande, pílula nos botões.
+   Tudo debaixo de `.rz` (o layout de /raizes), para não vazar para o curso
+   de hebraico. Os nomes da coleção apontam para os tokens do app, e é isso
+   que mantém o tema escuro do menu de acessibilidade funcionando aqui.
+
+   Movimento: só cor, fundo, borda e opacidade, por 160 ms, e nada com
+   `prefers-reduced-motion`. Nada anima o que o aluno vê cem vezes. */
+
+.rz {
+  --papel: var(--cream);
+  --branco: var(--card);
+  --linha: var(--line);
+  --tinta: var(--ink);
+  --corpo: var(--ink-body);
+  --suave: var(--ink-muted);
+  --titulo: var(--rz-titulo);
+  --ouro: #B8862F;
+  --ouro-tinta: var(--gold-ink);
+  --ocre: var(--rz-terra);
+  --mar: var(--rz-mar);
+  --pedra: var(--rz-pedra);
+  --pedra-escura: var(--rz-pedra-borda);
+  --noite: #0B2A31;
+  --serif: var(--rz-literata), var(--rz-literata-ext), Georgia, serif;
+  --rotulo: var(--font-ui);
+  --dado: var(--font-display);
+  --larg: 680px;
+  --toque: 44px;
+  --dur: 160ms;
+  background: var(--papel);
+  color: var(--corpo);
+}
+
+/* ── texto ───────────────────────────────────────────────────────────── */
+.rz-serif { font-family: var(--serif); font-optical-sizing: auto; }
+.rz-corpo { font-family: var(--serif); font-size: 17px; line-height: 1.62; color: var(--corpo); font-optical-sizing: auto; }
+.rz-corpo p, p.rz-corpo { margin: 0; }
+.rz-entrada { font-family: var(--serif); font-size: 20px; line-height: 1.5; color: var(--tinta); }
+.rz-italico { font-family: var(--serif); font-style: italic; }
+.rz h1.rz-h1, .rz .rz-h1 { font-family: var(--serif); font-weight: 380; font-size: clamp(38px, 10vw, 60px); line-height: 1.02; letter-spacing: -.02em; text-wrap: balance; margin: 0; }
+.rz h2.rz-h2, .rz .rz-h2 { font-family: var(--serif); font-weight: 420; font-size: clamp(26px, 7vw, 34px); line-height: 1.1; letter-spacing: -.012em; color: var(--titulo); text-wrap: balance; margin: 0; }
+.rz h3.rz-h3, .rz .rz-h3 { font-family: var(--serif); font-weight: 460; font-size: 21px; line-height: 1.28; color: var(--tinta); text-wrap: balance; margin: 0; }
+.rz h1.rz-pagina { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 8vw, 40px); line-height: 1.08; color: var(--titulo); margin: 0; }
+
+/* A rubrica: fio fino em cima, versalete espaçado, letra hebraica em ouro. */
+.rz-rot { font-family: var(--rotulo); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--suave); }
+.rz-rot.ocre { color: var(--ocre); }
+.rz-rot.mar { color: var(--mar); }
+.rz-rubrica { display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--tinta); padding-top: 8px; }
+.rz-rubrica .he { font-size: 22px; color: var(--ouro); letter-spacing: 0; }
+.rz-numero { font-family: var(--dado); font-weight: 700; color: var(--ocre); font-variant-numeric: lining-nums tabular-nums; line-height: 1; }
+
+/* ── a abertura escura, de borda a borda ─────────────────────────────── */
+.rz-heroi { position: relative; background: var(--noite); color: #fff; overflow: hidden; isolation: isolate; }
+.rz-heroi .rz-kicker { font-family: var(--rotulo); font-size: 12px; letter-spacing: .24em; text-transform: uppercase; font-weight: 600; color: #8FD6C8; display: flex; align-items: center; gap: 10px; }
+.rz-heroi .rz-kicker .he { color: var(--ouro); font-size: 22px; letter-spacing: 0; }
+.rz-heroi .rz-h1 { color: #fff; }
+.rz-heroi .rz-sub { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.5; color: #E9DCC0; max-width: 34ch; margin: 0; }
+.rz-heroi .rz-credito { font-family: var(--rotulo); font-size: 11.5px; color: rgba(233, 220, 192, .78); }
+
+/* ── notas e fundos (as caixas da coleção) ───────────────────────────── */
+.rz-nota { padding-top: 10px; border-top: 2px solid var(--ouro); }
+.rz-nota .rz-rot { color: var(--ouro-tinta); }
+.rz-nota.mar { border-top-color: var(--mar); } .rz-nota.mar .rz-rot { color: var(--mar); }
+.rz-nota.teal { border-top-color: var(--teal); } .rz-nota.teal .rz-rot { color: var(--teal-ink); }
+.rz-fundo { background: var(--pedra); padding: 18px 16px; margin-inline: -16px; }
+.rz-fundo .rz-rot { color: var(--ocre); }
+@media (min-width: 720px) { .rz-fundo { margin-inline: 0; border-radius: 4px; padding: 20px 22px; } }
+
+/* ── listas com fio (no lugar de cartões) ────────────────────────────── */
+.rz-lista { list-style: none; margin: 0; padding: 0; }
+.rz-lista > li { border-bottom: 1px solid var(--linha); }
+.rz-lista > li:first-child { border-top: 1px solid var(--linha); }
+.rz-curio { display: grid; grid-template-columns: 52px 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--linha); }
+.rz-curio .rz-numero { font-size: 34px; }
+
+/* ── botões ──────────────────────────────────────────────────────────── */
+.rz-botao { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: var(--accent-bg); color: #fff; font-family: var(--rotulo); font-weight: 600; font-size: 15px; border: 1px solid transparent; cursor: pointer; text-decoration: none; transition: background-color var(--dur) ease, opacity var(--dur) ease; }
+.rz-botao:disabled { opacity: .45; cursor: not-allowed; }
+.rz-botao.claro { background: transparent; color: var(--titulo); border-color: currentColor; }
+.rz-botao.pequeno { min-height: var(--toque); padding: 0 16px; font-size: 14px; }
+@media (hover: hover) { .rz-botao:not(:disabled):hover { background: var(--navy-2); } .rz-botao.claro:not(:disabled):hover { background: var(--pedra); } }
+.rz-mini { display: inline-flex; align-items: center; gap: 6px; min-height: var(--toque); padding: 0 14px; border-radius: 999px; border: 1px solid var(--linha); background: var(--branco); font-family: var(--rotulo); font-size: 13.5px; font-weight: 600; color: var(--corpo); cursor: pointer; white-space: nowrap; transition: background-color var(--dur) ease, border-color var(--dur) ease, color var(--dur) ease; }
+.rz-mini[aria-current="step"], .rz-mini[aria-pressed="true"] { background: var(--accent-bg); border-color: var(--accent-bg); color: #fff; }
+@media (hover: hover) { .rz-mini:not([aria-current="step"]):hover { border-color: var(--ocre); } }
+.rz-link { font-family: var(--rotulo); font-size: 14px; font-weight: 600; color: var(--mar); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+/* ── atividades: convite, não prova ──────────────────────────────────── */
+.rz-atividade { border: 1px solid var(--linha); border-radius: 12px; background: var(--branco); padding: 18px 16px 20px; }
+@media (min-width: 640px) { .rz-atividade { padding: 22px 24px 24px; } }
+.rz-opcao { width: 100%; text-align: left; min-height: var(--toque); padding: 11px 14px; border: 1px solid var(--linha); border-radius: 10px; background: var(--papel); color: var(--tinta); font-family: var(--rotulo); font-size: 16px; line-height: 1.4; cursor: pointer; transition: background-color var(--dur) ease, border-color var(--dur) ease, opacity var(--dur) ease; }
+@media (hover: hover) { .rz-opcao:not(:disabled):hover { border-color: var(--mar); } }
+.rz-opcao[data-estado="marcada"] { border-color: var(--mar); background: var(--pedra); }
+.rz-opcao[data-estado="certa"] { border-color: var(--teal); background: var(--teal-soft); }
+.rz-opcao[data-estado="errada"] { border-color: var(--ouro); background: var(--gold-soft); }
+.rz-opcao[data-estado="apagada"] { opacity: .6; }
+.rz-campo { width: 100%; min-height: 48px; border: 1px solid var(--linha); border-radius: 10px; padding: 0 12px; background: var(--branco); color: var(--tinta); font-family: var(--rotulo); font-size: 16px; }
+.rz textarea.rz-campo { padding: 12px; min-height: 130px; font-family: var(--serif); line-height: 1.55; }
+
+/* ── linha do tempo ──────────────────────────────────────────────────── */
+.rz-ldt { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--pedra-escura); }
+.rz-ldt > li { position: relative; padding: 6px 0 14px 18px; }
+.rz-ldt > li::before { content: ''; position: absolute; left: -7px; top: 12px; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); }
+.rz-ldt > li.antes::before { background: var(--ouro); }
+
+/* ── o mapa ──────────────────────────────────────────────────────────── */
+.rz-figura { margin: 0 -16px; }
+@media (min-width: 720px) { .rz-figura { margin: 0; } }
+.rz-figura figcaption { font-family: var(--rotulo); font-size: 13px; line-height: 1.5; color: var(--suave); padding: 8px 16px 0; border-top: 1px solid var(--linha); }
+@media (min-width: 720px) { .rz-figura figcaption { padding-inline: 0; } }
+/* O botão é do teclado e do leitor de tela; o toque é decidido pelo mapa
+   (o ponto mais próximo do dedo: ver MapaHistorico.tsx). */
+.rz-ponto { position: absolute; transform: translate(-50%, -50%); width: 28px; height: 28px; border: 0; padding: 0; background: none; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.rz-ponto:focus-visible { outline-offset: 0; border-radius: 50%; }
+.rz-ponto > span { width: 14px; height: 14px; border-radius: 50%; background: var(--ouro); border: 3px solid #fff; box-shadow: 0 0 0 1px var(--ouro-tinta); transition: background-color var(--dur) ease; }
+.rz-ponto[data-visto="true"] > span { background: var(--mar); box-shadow: 0 0 0 1px var(--mar); }
+.rz-ponto[aria-pressed="true"] > span { background: #0B2A31; box-shadow: 0 0 0 1px #0B2A31; }
+.rz-ponto.incerto > span { width: 22px; height: 22px; background: transparent; border: 2px dashed var(--ocre); box-shadow: none; }
+.rz-ficha { border: 1px solid var(--pedra-escura); border-radius: 14px; background: var(--branco); overflow: hidden; box-shadow: 5px 6px 0 var(--pedra-escura); }
+.rz-ficha header { background: var(--noite); color: #fff; padding: 12px 16px; }
+.rz-ficha header .rz-serif, .rz-ficha header h4 { font-size: 21px; line-height: 1.15; color: #fff; }
+
+/* ── fontes no texto: o número discreto da coleção ───────────────────── */
+.rz-marca { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 5px; margin: 0 1px; border-radius: 999px; vertical-align: super; font-family: var(--rotulo); font-size: 11px; font-weight: 600; line-height: 1; color: var(--mar); background: transparent; border: 1px solid var(--pedra-escura); cursor: pointer; position: relative; transition: background-color var(--dur) ease, color var(--dur) ease; }
+/* O alvo de toque cresce sem crescer o desenho. */
+.rz-marca::after { content: ''; position: absolute; inset: -11px -6px; }
+.rz-marca[aria-expanded="true"] { background: var(--mar); color: var(--papel); border-color: var(--mar); }
+.rz-painel { border-top: 2px solid var(--mar); background: var(--pedra); padding: 14px 16px; border-radius: 0 0 6px 6px; }
+
+/* ── a barra de leitura no topo ──────────────────────────────────────── */
+.rz-topo { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--papel) 94%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--linha); }
+.rz-topo .rz-marca-da-casa { font-family: var(--rotulo); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--titulo); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rz-topo nav a { font-family: var(--rotulo); font-size: 13.5px; color: var(--suave); text-decoration: none; padding: 0 10px; min-height: var(--toque); display: inline-flex; align-items: center; border-radius: 6px; }
+.rz-topo nav a[aria-current="page"] { color: var(--titulo); font-weight: 600; }
+.rz-progresso { height: 3px; background: var(--linha); }
+.rz-progresso > i { display: block; height: 100%; background: var(--teal); transform-origin: left; }
+
+.rz :focus-visible { outline: 2px solid var(--mar); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .rz *, .rz *::before, .rz *::after { transition: none !important; scroll-behavior: auto !important; } }

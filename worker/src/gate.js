@@ -76,7 +76,9 @@ const GATED = [
   /* 29/09/2026: o depoimento do aluno. Só quem tem o curso escreve. */
   '/depoimento',
   /* 06/10/2026: o curso Hebraico A1. É de OUTRO curso: ver `cursoDaRota`. */
-  '/a1'
+  '/a1',
+  /* 21/10/2026: Raízes Sefarditas, outro produto (ver `cursoDaRota`). */
+  '/raizes'
 ];
 
 /* O curso de cada rota (06/10/2026, com o A1). O padrão é o alfabeto; o A1
@@ -85,6 +87,7 @@ const GATED = [
    eles basta ter algum curso válido. `null` = qualquer curso. */
 const COURSE = 'alfabetizacao';
 const PREFIXO_A1 = '/a1';
+const PREFIXO_RAIZES = '/raizes';
 const QUALQUER_CURSO = ['/audio'];
 
 export function cursoDaRota(path) {
@@ -92,6 +95,7 @@ export function cursoDaRota(path) {
   if (p === null) return COURSE;
   const em = prefix => p === prefix || p.startsWith(prefix + '/');
   if (em(PREFIXO_A1)) return 'hebraico-a1';
+  if (em(PREFIXO_RAIZES)) return 'raizes-sefarditas';
   if (QUALQUER_CURSO.some(em)) return null;
   return COURSE;
 }
@@ -148,7 +152,10 @@ export async function gate(request, env) {
     ? (await activeEntitlements(env, account.id)).length > 0
     : await hasEntitlement(env, account.id, curso);
   if (!pode) {
-    return recusa(url, documento, `/cursos/${curso || COURSE}/`);
+    /* Raízes Sefarditas não tem página de venda (não está no catálogo): quem
+       não tem o direito vai para a lista de cursos, e não para um 404. */
+    const pagina = curso === 'raizes-sefarditas' ? '/cursos/' : `/cursos/${curso || COURSE}/`;
+    return recusa(url, documento, pagina);
   }
 
   return null;

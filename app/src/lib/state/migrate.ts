@@ -18,6 +18,7 @@
  */
 
 import { a1Valido } from './a1-estado';
+import { raizesValido } from './raizes-estado';
 import { EMPTY_STATE, STATE_VERSION, type LearnerState } from './types';
 import { fundirRodadas, type Rodadas } from '@/lib/rodadas';
 import { comprasValidas } from '@/lib/loja';
@@ -93,6 +94,8 @@ export function migrate(raw: unknown): LearnerState {
     loja: { compras: comprasValidas(isObject(merged.loja) ? (merged.loja as { compras?: unknown }).compras : null) },
     /* O A1 (06/10/2026): só com a forma certa (lib/state/a1-estado.ts). */
     a1: a1Valido((merged as { a1?: unknown }).a1),
+    /* Raízes Sefarditas (21/10/2026): só com a forma certa, e só se existir. */
+    raizes: raizesValido((merged as { raizes?: unknown }).raizes),
     streak: merged.streak ?? { current: 0, longest: 0, lastDay: null },
     finalChallenge: merged.finalChallenge ?? { best: null, completedAt: null }
   };

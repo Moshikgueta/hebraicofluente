@@ -2,6 +2,7 @@
  * when there are keys), so nothing above this line knows where it is stored. */
 
 import { A1_VAZIO, type EstadoA1 } from './a1-estado';
+import type { EstadoRaizes } from './raizes-estado';
 import type { Rodadas } from '@/lib/rodadas';
 
 export type DailyGoalMinutes = 5 | 10 | 15 | 20;
@@ -243,6 +244,15 @@ export type LearnerState = {
    * corrigido pelo curso mede. Opcional: estados antigos não o têm.
    */
   leituraAutoavaliada?: Record<string, LeituraAutoavaliada>;
+
+  /* ── acrescentado à v2 em 21/10/2026 ─────────────────────────────── */
+
+  /**
+   * Raízes Sefarditas: atividades, etapas abertas e onde o aluno parou
+   * (lib/state/raizes-estado.ts). Opcional: só existe para quem abriu o
+   * produto, e nada do curso de hebraico lê esta chave.
+   */
+  raizes?: EstadoRaizes;
 };
 
 /** Uma troca de XP. O id é único por compra (`folga:<instante>`, `carta:<id>`). */

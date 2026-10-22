@@ -127,6 +127,18 @@ for (const u of j('a1.json').unidades) {
 for (const p of j('a1-exame.json').partes) {
   for (const [i, it] of p.itens.entries()) por(`a1/exame-${p.id}-${i + 1}`, it.q ?? it.pt);
 }
+/* Raízes Sefarditas (21/10/2026): outro produto pago. A prosa de cada
+   módulo, a evidência da matriz e o enunciado das atividades. */
+const semMarcas = t => String(t || '').replace(/\[\[[^\]]*\]\]/g, ' ');
+for (const m of j('raizes.json').conteudo) {
+  for (const e of m.etapas) {
+    for (const [i, b] of e.blocos.entries()) {
+      if (b.tipo === 'texto') por(`raizes/m${m.n}.${e.id}.${i}`, semMarcas(b.paragrafos[0]));
+    }
+  }
+  for (const [id, a] of Object.entries(m.atividades)) por(`raizes/m${m.n}.atividade.${id}`, a.enunciado);
+}
+for (const a of j('raizes.json').afirmacoes.slice(0, 8)) por(`raizes/${a.id}`, a.evidencia);
 const traços = j('stroke-paths.json').letters;
 for (const [id, set] of Object.entries(traços).slice(0, 6)) {
   por(`traço/${id}`, set.strokes?.[0]?.d);
