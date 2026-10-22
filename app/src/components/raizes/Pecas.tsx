@@ -14,7 +14,8 @@
 
 import { useMemo, useState } from 'react';
 import type { Bloco } from '@/lib/raizes';
-import { embaralhar } from '@/lib/raizes';
+import { embaralhar, fotosDe } from '@/lib/raizes';
+import { Foto } from './Foto';
 import { TextoComFontes } from './Texto';
 import { Gravura } from './ilustracoes/Gravuras';
 import { Guardar } from './Guardar';
@@ -178,10 +179,15 @@ export function Artefatos({ b, n }: { b: De<'artefatos'>; n: number }) {
             <h4 className="rz-serif m-0 text-[22px] font-[440]">{a.nome}</h4>
           </header>
           <div className="rz-escalonar grid gap-3 p-4">
-            <figure className="m-0 grid gap-1">
-              <Gravura nome={a.gravura} className="mx-auto h-[150px] w-full max-w-[240px] text-[var(--tinta)]" />
-              <figcaption className="font-ui text-[12px] leading-snug text-[var(--suave)]">{a.legenda}</figcaption>
-            </figure>
+            {(() => {
+              const foto = fotosDe(`artefato:${mm(n)}:${a.id}`)[0];
+              return foto ? <Foto f={foto} /> : (
+                <figure className="m-0 grid gap-1">
+                  <Gravura nome={a.gravura} className="mx-auto h-[150px] w-full max-w-[240px] text-[var(--tinta)]" />
+                  <figcaption className="font-ui text-[12px] leading-snug text-[var(--suave)]">{a.legenda}</figcaption>
+                </figure>
+              );
+            })()}
             <p className="rz-corpo m-0 !text-[16.5px] font-[480]">{a.resumo}</p>
             <TextoComFontes texto={a.texto} />
             <div className="flex flex-wrap items-center gap-3">

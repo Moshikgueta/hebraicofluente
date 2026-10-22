@@ -409,6 +409,28 @@ ok(await p.locator('dialog[open] h2', { hasText: 'baú de viagem' }).count() ===
 await p.screenshot({ path: '.shots/raizes-objeto-aberto.png' });
 await p.keyboard.press('Escape');
 
+/* ── as fotos históricas, sempre com o crédito ao lado ─────────────────── */
+if (DADOS.fotos?.length) {
+  await p.goto(`${BASE}/raizes/lugar/lisboa/`, { waitUntil: 'networkidle' });
+  const fotoLisboa = p.locator('figure.rz-foto').first();
+  await fotoLisboa.scrollIntoViewIfNeeded();
+  await p.waitForTimeout(600);
+  ok(await fotoLisboa.locator('button.rz-foto-quadro img').evaluate(i => i.complete && i.naturalWidth > 0), 'a foto de Lisboa carrega');
+  ok(await fotoLisboa.locator('figcaption a', { hasText: 'Wikimedia Commons' }).count() === 1, 'a foto traz o crédito com o link de origem');
+  await fotoLisboa.screenshot({ path: '.shots/raizes-foto-lisboa.png' });
+  await fotoLisboa.locator('button.rz-foto-quadro').click();
+  await p.waitForTimeout(400);
+  ok(await p.locator('dialog.rz-foto-grande[open]').count() === 1, 'tocar na foto abre a imagem grande');
+  await p.keyboard.press('Escape');
+  await p.goto(`${BASE}/raizes/modulo/1/`, { waitUntil: 'networkidle' });
+  const faixa = p.locator('section[aria-label="Imagens deste capítulo"]');
+  ok(await faixa.count() === 1, 'o módulo 1 mostra as imagens do capítulo');
+  await faixa.scrollIntoViewIfNeeded();
+  await p.waitForTimeout(600);
+  ok(await semRolagemLateral(p), 'faixa de imagens sem rolagem lateral da página');
+  await faixa.screenshot({ path: '.shots/raizes-fotos-modulo.png' });
+}
+
 /* ── a jornada: interesses, personagens, coleção, busca, glossário, passaporte ── */
 await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
 await p.waitForTimeout(400);

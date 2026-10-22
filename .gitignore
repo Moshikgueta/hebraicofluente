@@ -10,6 +10,7 @@ app/public/stroke-order/
 app/public/tracado-amostra/
 app/public/amostra-audio/
 app/public/audio/
+app/public/raizes/fotos/
 app/next-env.d.ts
 
 # Os .mp3 CORTADOS entram no git (25/09/2026): o site é montado a partir do

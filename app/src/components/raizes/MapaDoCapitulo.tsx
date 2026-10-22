@@ -8,7 +8,8 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import type { ModuloRaizes } from '@/lib/raizes';
-import { LUGARES_COM_PAGINA } from '@/lib/raizes';
+import { LUGARES_COM_PAGINA, fotosDe } from '@/lib/raizes';
+import { Foto } from './Foto';
 import { lugaresDoModulo } from '@/lib/raizes-jornada';
 import { useProgress } from '@/lib/state/store';
 import { MiniMapa } from './MiniMapa';
@@ -48,6 +49,7 @@ export function MapaDoCapitulo({ m }: { m: ModuloRaizes }) {
               <h3 className="rz-serif m-0 text-[21px] font-[440]">{l.nome}</h3>
             </header>
             <div className="rz-escalonar grid gap-3 p-4">
+              {fotosDe(`lugar:${l.id}`)[0] && <Foto f={fotosDe(`lugar:${l.id}`)[0]!} compacta />}
               <p className="rz-corpo m-0">{l.resumo}</p>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 <Guardar chave={`lugar:${l.id}`} />

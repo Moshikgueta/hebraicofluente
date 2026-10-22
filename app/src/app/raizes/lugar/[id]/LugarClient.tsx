@@ -15,7 +15,8 @@ import { useProgress } from '@/lib/state/store';
 import { Heroi } from '@/components/raizes/Heroi';
 import { PainelDeFonte, TextoComFontes } from '@/components/raizes/Texto';
 import { ESTILO_DA_EVIDENCIA } from '@/components/raizes/AtlasMapa';
-import { desenhoDoMapa, marcasDe, projetar, raizes, type PaginaDeLugar } from '@/lib/raizes';
+import { desenhoDoMapa, fotosDe, marcasDe, projetar, raizes, type PaginaDeLugar } from '@/lib/raizes';
+import { Foto } from '@/components/raizes/Foto';
 import { caminhoDaRota, janelaDaVista } from '@/lib/raizes-atlas';
 import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
 
@@ -143,18 +144,17 @@ export function LugarClient({ id }: { id: string }) {
         ))}
       </section>
 
-      <section className="rz-fundo grid gap-2">
-        <p className="rz-rot m-0">Fotografias</p>
-        {p.fotografias.length === 0
-          ? <p className="m-0 font-ui text-[14px] leading-relaxed text-[var(--corpo)]">{p.fotografiasNota}</p>
-          : p.fotografias.map(f => (
-            <figure key={f.src} className="m-0 grid gap-1">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={f.src} alt={f.legenda} loading="lazy" className="w-full rounded-[8px]" />
-              <figcaption className="font-ui text-[12.5px] text-[var(--suave)]">{f.legenda} · {f.autor} · {f.licenca}</figcaption>
-            </figure>
-          ))}
-      </section>
+      {(() => {
+        const fotos = fotosDe(`lugar:${p.id}`);
+        return (
+          <section className={`${fotos.length ? '' : 'rz-fundo '}grid gap-4`}>
+            <p className="rz-rot ocre m-0">Fotografias e imagens</p>
+            {fotos.length === 0
+              ? <p className="m-0 font-ui text-[14px] leading-relaxed text-[var(--corpo)]">{p.fotografiasNota}</p>
+              : fotos.map(f => <Foto key={f.id} f={f} />)}
+          </section>
+        );
+      })()}
 
       <section className="grid gap-2">
         <h2 className="rz-rot !text-[var(--titulo)] m-0 border-t-2 border-[var(--titulo)] pt-2">Referências desta página</h2>

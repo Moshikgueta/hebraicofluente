@@ -23,6 +23,8 @@ import { NarrativaComMapa } from '@/components/raizes/arquivo/NarrativaComMapa';
 import { Selo } from '@/components/raizes/arquivo/Selo';
 import { FolhaDaSecao, ObjetoDoModulo } from '@/components/raizes/Recipientes';
 import { MapaDoCapitulo } from '@/components/raizes/MapaDoCapitulo';
+import { Fotos } from '@/components/raizes/Foto';
+import { fotosDe } from '@/lib/raizes';
 import { Gravura, VINHETA_DA_SECAO } from '@/components/raizes/ilustracoes/Gravuras';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
@@ -109,6 +111,8 @@ export function ModuloRaizesClient({ n }: { n: number }) {
       <Sumario m={m} lendo={lendo} e={e} />
 
       <MapaDoCapitulo m={m} />
+
+      <Fotos fotos={fotosDe(`modulo:${m.n}`)} titulo="Imagens deste capítulo" />
 
       {m.etapas.map((x, k) => {
         const narrativa = exp?.narrativa?.etapa === x.id ? exp.narrativa : undefined;
