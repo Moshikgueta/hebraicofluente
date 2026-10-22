@@ -32,6 +32,8 @@ import { getCourse, itensDoPedido, priceCents } from '../../worker/src/lib/catal
 import { grantAccess, hasEntitlement } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
 import { hmacHex } from '../../worker/src/lib/crypto.js';
+// @ts-expect-error - idem
+import { licenca, mascarar } from '../../worker/src/api/livro.js';
 
 const SITE = 'https://hebraicofluente.com.br';
 const SEGREDO = 'segredo-do-webhook-de-teste';
@@ -228,6 +230,22 @@ describe('o portão do e-book', () => {
   it('o gate.js carrega no Node puro (o seo.mjs da publicação depende disso)', () => {
     const gateJs = fileURLToPath(new URL('../../worker/src/gate.js', import.meta.url));
     expect(() => execFileSync(process.execPath, ['-e', `import(${JSON.stringify(gateJs)}).then(m => { if (!m.isGatedPath) process.exit(1); })`], { stdio: 'pipe' })).not.toThrow();
+  });
+
+  it('a marca d\'água do livro: só quem tem o livro recebe o e-mail escondido e o número da cópia', async () => {
+    const env = envDeTeste();
+    const a = await conta(env);
+    const pedir = () => licenca({ request: new Request(`${SITE}/api/livro/licenca`, { headers: { Cookie: a.cookie } }), env });
+    expect((await pedir()).status, 'sem o livro, nada').toBe(403);
+    await grantAccess(env, { accountId: a.id, courseSlug: LIVRO, orderId: 'manual-dono', months: 12 });
+    const r = await pedir();
+    expect(r.status).toBe(200);
+    const corpo = await r.json() as { email: string; copia: string };
+    expect(corpo.email).toBe(mascarar(a.email));
+    expect(corpo.email).not.toBe(a.email);
+    expect(corpo.copia).toMatch(/^[0-9A-F]{8}$/);
+    expect(((await (await pedir()).json()) as { copia: string }).copia, 'o número da cópia não muda').toBe(corpo.copia);
+    expect((await licenca({ request: new Request(`${SITE}/api/livro/licenca`), env })).status).toBe(401);
   });
 
   it('o acesso liberado à mão (Actions → Acesso → liberar) abre /israel mesmo fora da venda', async () => {
