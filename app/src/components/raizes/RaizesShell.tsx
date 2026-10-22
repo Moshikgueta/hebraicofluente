@@ -25,6 +25,7 @@ import { useAccount } from '@/lib/account/store';
 
 const LINKS = [
   { href: '/raizes', rotulo: 'Jornada' },
+  { href: '/raizes/atlas', rotulo: 'Atlas' },
   { href: '/raizes/biblioteca', rotulo: 'Biblioteca' }
 ];
 

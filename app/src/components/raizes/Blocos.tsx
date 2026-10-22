@@ -9,6 +9,7 @@ import { TextoComFontes, PainelDeFonte } from './Texto';
 import { Associacao, Classificar, Escolha, Multipla, Ordenar } from './Atividades';
 import { MapaHistorico } from './MapaHistorico';
 import { Laboratorio } from './Laboratorio';
+import { LeiaODocumento } from './arquivo/LeiaODocumento';
 
 export function BlocoRaizes({ b, m }: { b: Bloco; m: ModuloRaizes }) {
   switch (b.tipo) {
@@ -55,6 +56,8 @@ export function BlocoRaizes({ b, m }: { b: Bloco; m: ModuloRaizes }) {
       return <Reflexao id={`m${m.n}:${b.id}`} pergunta={b.pergunta} apoio={b.apoio} />;
     case 'laboratorio':
       return <Laboratorio titulo={b.titulo} apresentacao={b.apresentacao} />;
+    case 'documento':
+      return <LeiaODocumento b={b} />;
     case 'sintese':
       return (
         <section className="grid gap-2">

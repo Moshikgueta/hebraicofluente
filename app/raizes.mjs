@@ -299,6 +299,76 @@ if (DADOS.conteudo.length > 1) {
   }
 }
 
+/* O protótipo "O Arquivo Aberto" no módulo 3: abertura, narrativa com o mapa, o édito. */
+if (DADOS.conteudo.some(x => x.n === 3 && x.experiencia)) {
+  await etapa(p, 'descobrir', 3);
+  await p.waitForTimeout(3200);
+  ok(await p.locator('header.rz-abertura figure svg').count() === 1, 'm3: a abertura tem a folha desenhada');
+  ok(await p.locator('header.rz-abertura figcaption', { hasText: 'interpretativa' }).count() === 1, 'm3: a ilustração se diz interpretativa');
+  ok(await semRolagemLateral(p), 'm3: abertura sem rolagem lateral');
+  await p.screenshot({ path: '.shots/arquivo-abertura.png', fullPage: false });
+  await etapa(p, 'contextualizar', 3);
+  ok(await p.locator('.rz-ficha-mapa svg').count() === 1, 'm3: a ficha com o mapa aparece');
+  await p.evaluate(() => {
+    const el = document.querySelector('[data-passo="2"]');
+    window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3);
+  });
+  await p.waitForTimeout(1200);
+  ok(await p.locator('.rz-ficha-mapa .rz-ano', { hasText: '1497' }).count() === 1, 'm3: ao ler 1497, o ano da ficha muda');
+  ok(await p.locator('.rz-ficha-mapa circle.aceso').count() === 2, 'm3: Évora e Lisboa acendem no mapa');
+  await p.screenshot({ path: '.shots/arquivo-narrativa.png', fullPage: false });
+  const marcos = p.locator('.rz-edito .rz-marco');
+  ok(await marcos.count() === 4, 'm3: a folha tem quatro partes tocáveis');
+  for (let k = 0; k < 4; k++) { await marcos.nth(k).click(); await p.waitForTimeout(250); }
+  ok(await p.locator('text=4 de 4 partes lidas').count() === 1, 'm3: as quatro partes contam como lidas');
+  ok(await p.locator('text=O que a folha ensina').count() === 1, 'm3: o fecho aparece depois de ler tudo');
+  ok(await semRolagemLateral(p), 'm3: Contextualizar sem rolagem lateral');
+  await p.locator('text=Leia o édito').scrollIntoViewIfNeeded();
+  await p.screenshot({ path: '.shots/arquivo-edito.png', fullPage: false });
+  await p.screenshot({ path: '.shots/arquivo-contextualizar.png', fullPage: true });
+}
+
+/* O Atlas: lugares, um ponto aberto, os Caminhos tocando. */
+if (DADOS.atlas) {
+  await p.goto(`${BASE}/raizes/atlas/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(500);
+  ok(await p.locator('h1', { hasText: 'O que a história dos sefarditas' }).count() === 1, 'o Atlas abre');
+  ok(await semRolagemLateral(p), 'Atlas sem rolagem lateral');
+  await p.locator('.rz-atlas button.rz-ponto').first().click();
+  await p.waitForTimeout(300);
+  await p.getByRole('button', { name: 'De onde vem isso?' }).click();
+  await p.waitForTimeout(200);
+  ok(await p.locator('text=O que a fonte diz:').count() > 0, 'um lugar abre a ficha, e a ficha abre as fontes');
+  await p.screenshot({ path: '.shots/raizes-atlas.png', fullPage: false });
+  await p.getByRole('tab', { name: 'Caminhos do Exílio' }).click();
+  await p.getByRole('button', { name: /^Tocar/ }).click();
+  await p.waitForTimeout(3000);
+  ok(await p.locator('.rz-atlas svg path[stroke-dasharray], .rz-atlas svg path[mask]').count() > 0, 'as rotas se desenham ao tocar');
+  ok(await p.locator('text=Hipótese').count() > 0, 'a legenda diz o que é hipótese');
+  ok(await semRolagemLateral(p), 'Caminhos sem rolagem lateral');
+  await p.screenshot({ path: '.shots/raizes-caminhos.png', fullPage: true });
+
+  await p.goto(`${BASE}/raizes/lugar/lisboa/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(400);
+  ok(await p.locator('h1', { hasText: 'Lisboa' }).count() === 1, 'a página de Lisboa abre');
+  ok(await p.locator('text=Ilustração interpretativa.').count() === 1, 'a ilustração se diz interpretativa');
+  ok(await semRolagemLateral(p), 'Lisboa sem rolagem lateral');
+  await p.screenshot({ path: '.shots/raizes-lisboa.png', fullPage: true });
+
+  await p.goto(`${BASE}/raizes/familia/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(400);
+  await p.getByRole('button', { name: 'Ver um exemplo fictício' }).click();
+  await p.waitForTimeout(300);
+  ok(await p.locator('text=Exemplo didático, fictício').count() === 1, 'o exemplo se diz fictício');
+  ok(await p.locator('text=não comprova, por si só, ascendência judaica').count() === 1, 'o aviso do sobrenome está à vista');
+  ok(await p.locator('svg[aria-label^="Mapa com"]').count() === 1, 'o Caminho da Família aparece no mapa');
+  ok(await semRolagemLateral(p), 'árvore sem rolagem lateral');
+  await p.screenshot({ path: '.shots/raizes-familia.png', fullPage: true });
+  await p.reload({ waitUntil: 'networkidle' });
+  await p.waitForTimeout(400);
+  ok(await p.locator('text=Exemplo didático, fictício').count() === 1, 'a árvore continua no aparelho depois de recarregar');
+}
+
 await p.goto(`${BASE}/raizes/biblioteca/`, { waitUntil: 'networkidle' });
 await p.waitForTimeout(300);
 ok(await p.locator('h1', { hasText: 'Biblioteca' }).count() === 1, 'a biblioteca abre');
