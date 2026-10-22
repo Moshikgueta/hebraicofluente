@@ -15,7 +15,7 @@
  * vem de fora.
  */
 
-import catalog from '../../../data/courses.json';
+import catalog from '../../../data/courses.json' with { type: 'json' };
 
 const BY_SLUG = new Map(catalog.courses.map(c => [c.slug, c]));
 
