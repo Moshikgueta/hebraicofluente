@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { Heroi } from '@/components/raizes/Heroi';
 import { useProgress } from '@/lib/state/store';
 import {
-  conquistasObtidas, modulo, moduloAberto, progressoDoModulo, progressoGeral, raizes
+  certificadoRaizes, conquistasObtidas, modulo, moduloAberto, progressoDoModulo, progressoGeral, raizes
 } from '@/lib/raizes';
 
 /** "a, b, c nem d", a partir dos itens do certificado (que terminam em ; ou .). */
@@ -145,11 +145,14 @@ export function RaizesHomeClient() {
           <Link href="/raizes/biblioteca" prefetch={false} className="rz-link justify-self-start min-h-[44px] inline-flex items-center">Abrir a biblioteca</Link>
         </div>
         <div className="rz-nota teal grid content-start gap-2">
-          <p className="rz-rot m-0">Em preparação · módulo 9</p>
+          <p className="rz-rot m-0">Módulo 9</p>
           <h2 className="rz-h3">Laboratório de Memórias Familiares</h2>
           <p className="m-0 font-ui text-[14.5px] leading-relaxed text-[var(--corpo)]">
-            Árvore, fichas, diário e evidências, sem conclusão automática sobre ascendência, e com os dados só no seu aparelho.
+            Fichas, diário e tipos de evidência, sem conclusão automática sobre ascendência, e com os dados só no seu aparelho.
           </p>
+          {moduloAberto(e, 9) && (
+            <Link href="/raizes/modulo/9?etapa=aplicar" prefetch={false} className="rz-link justify-self-start min-h-[44px] inline-flex items-center">Abrir o laboratório</Link>
+          )}
         </div>
       </section>
 
@@ -157,8 +160,11 @@ export function RaizesHomeClient() {
         <p className="rz-rot m-0">{r.certificado.titulo}</p>
         <p className="rz-corpo">{r.certificado.nota}</p>
         <p className="m-0 font-ui text-[13.5px] leading-relaxed text-[var(--suave)]">
-          Ele vai certificar só a conclusão das atividades. Não certifica {listaComNem(r.certificado.naoCertifica)}.
+          Ele certifica só a conclusão das atividades. Não certifica {listaComNem(r.certificado.naoCertifica)}.
         </p>
+        <Link href="/raizes/certificado" prefetch={false} className="rz-link justify-self-start min-h-[44px] inline-flex items-center">
+          {certificadoRaizes(e).pronto ? 'Ver o seu certificado' : 'Como se obtém o certificado'}
+        </Link>
       </section>
     </div>
   );

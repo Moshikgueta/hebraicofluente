@@ -19,7 +19,7 @@ export const CURSO_RAIZES = 'raizes-sefarditas';
 /* Os módulos que têm conteúdo e, portanto, página gerada na build. Escritos
    aqui pelo mesmo motivo de UNIDADES_A1: a página é gerada antes de o
    conteúdo (pago) chegar. tests/raizes.test.ts confere contra raizes/data. */
-export const MODULOS_COM_CONTEUDO: readonly number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+export const MODULOS_COM_CONTEUDO: readonly number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const TOTAL_DE_MODULOS = 10;
 
 export type StatusAfirmacao = 'VERIFICADO' | 'CONTESTADO';
@@ -247,6 +247,21 @@ export function conquistasObtidas(e: EstadoRaizes | undefined): Set<string> {
 export function progressoGeral(e: EstadoRaizes | undefined) {
   const modulosFeitos = raizes().conteudo.filter(m => progressoDoModulo(e, m).concluido).length;
   return { modulosFeitos, total: TOTAL_DE_MODULOS, pct: Math.round((modulosFeitos / TOTAL_DE_MODULOS) * 100) };
+}
+
+/**
+ * O certificado: só com os dez módulos publicados E concluídos. A data é a da
+ * última atividade concluída, a que fechou o percurso. Ele certifica o estudo
+ * e nada mais (curso.json, `naoCertifica`).
+ */
+export function certificadoRaizes(e: EstadoRaizes | undefined) {
+  const r = raizes();
+  const feitos = r.conteudo.filter(m => progressoDoModulo(e, m).concluido);
+  const pronto = r.conteudo.length === TOTAL_DE_MODULOS && feitos.length === TOTAL_DE_MODULOS;
+  const datas = pronto
+    ? r.conteudo.flatMap(m => chavesDoModulo(m).map(k => e?.atividades[k]?.concluidaEm ?? '')).filter(Boolean).sort()
+    : [];
+  return { pronto, faltam: TOTAL_DE_MODULOS - feitos.length, concluidoEm: datas.at(-1) ?? null };
 }
 
 /* ── o mapa ───────────────────────────────────────────────────────────── */
