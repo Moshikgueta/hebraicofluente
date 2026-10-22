@@ -1,0 +1,419 @@
+{
+  "_": [
+    "Módulo 1 de Raízes Sefarditas. Toda frase factual termina com a marca da afirmação, [[R01-NNN]],",
+    "depois da pontuação; o leitor mostra a marca como um botão de fonte. {{he:...}} é hebraico, que passa",
+    "por <He> e precisa da aprovação do dono antes de ir ao ar (CLAUDE.md).",
+    "As oito etapas seguem o percurso do plano pedagógico: descobrir, contextualizar, explorar, investigar,",
+    "aplicar, refletir, consolidar, avançar. As atividades moram em `atividades`, pelo id; a etapa só as cita.",
+    "Frases sem marca são de método (como ler uma fonte) ou de ligação entre seções, nunca fato histórico."
+  ],
+  "n": 1,
+  "titulo": "Sefarad: um mundo antes da ruptura",
+  "subtitulo": "Da Hispânia romana a 1391",
+  "periodo": "Do século IV ao fim do século XIV",
+  "regiao": "Península Ibérica",
+  "objetivos": [
+    "Explicar de onde vem o nome Sefarad e por que a identificação com a Península Ibérica é posterior ao texto bíblico.",
+    "Situar no tempo e no mapa os principais marcos da presença judaica na península, de Elvira a 1391.",
+    "Distinguir o que um documento diz do que se pode concluir dele.",
+    "Reconhecer que a vida judaica ibérica mudou conforme o governo, o lugar e o século.",
+    "Explicar por que a palavra 'convivência' é debatida pelos historiadores."
+  ],
+  "etapas": [
+    {
+      "id": "descobrir",
+      "titulo": "Descobrir",
+      "pergunta": "Onde fica Sefarad?",
+      "blocos": [
+        {
+          "tipo": "texto",
+          "paragrafos": [
+            "Em hebraico, a Península Ibérica tem um nome: {{he:סְפָרַד}}, Sefarad. É dele que vem a palavra sefardita. Mas o nome é mais antigo que a ligação com Portugal e a Espanha, e começar por ele é começar pelo método deste percurso: perguntar de onde vem cada coisa que se diz sobre o passado."
+          ]
+        },
+        { "tipo": "atividade", "id": "descobrir" }
+      ]
+    },
+    {
+      "id": "contextualizar",
+      "titulo": "Contextualizar",
+      "pergunta": "O que os documentos contam, século a século?",
+      "blocos": [
+        {
+          "tipo": "texto",
+          "titulo": "Antes de al-Andalus",
+          "paragrafos": [
+            "Os registros mais antigos deste módulo não são de judeus falando de si mesmos. São regras escritas por bispos. O Concílio de Elvira, reunido na Hispânia romana, proibiu cristãos de casar com judeus sem conversão, de pedir a um judeu que abençoasse a colheita, de comer com judeus e de ter relações com eles.[[R01-004]] Quando ele se reuniu é discutido: as propostas vão de cerca de 300 a 309.[[R01-005]] Esses cânones estão entre os mais antigos de um concílio da Igreja dirigidos aos judeus.[[R01-006]]",
+            "Em Tortosa, na Catalunha, sobreviveu uma lápide judaica com o mesmo texto em três línguas: hebraico, latim e grego. Quando ela foi feita também é discutido; o banco epigráfico de Heidelberg a situa entre os anos 501 e 700.[[R01-007]]",
+            "No reino visigodo, por volta de 615, o rei Sisebuto ordenou que os judeus fossem batizados, e os próprios bispos parecem ter se dividido sobre o valor de uma conversão imposta.[[R01-008]]"
+          ]
+        },
+        {
+          "tipo": "caixa",
+          "variante": "metodo",
+          "titulo": "Como ler uma lei antiga",
+          "paragrafos": [
+            "Uma lei que proíbe uma prática sugere que a prática existia, a ponto de alguém querer proibi-la. Ela não diz quantas pessoas a praticavam, nem se a proibição foi obedecida. Esta pergunta vai voltar o percurso inteiro: o que o documento diz, e o que dá para concluir dele?"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "titulo": "al-Andalus",
+          "paragrafos": [
+            "Em julho de 711, um exército em grande parte berbere, comandado por Tariq ibn Ziyad, derrotou o rei visigodo Rodrigo. O lugar exato da batalha é discutido, e o episódio está cercado de lendas.[[R01-010]] Al-Andalus foi o nome que os muçulmanos deram primeiro à península inteira; com o avanço dos reinos cristãos, a partir do século XI, passou a designar só a parte sob governo muçulmano.[[R01-035]]",
+            "Em 929, Abd al-Rahman III assumiu em Córdoba o título de califa. O califado durou até 1031, quando se dividiu em reinos menores, as taifas.[[R01-011]] Na corte dele trabalhou Hasdai ibn Shaprut, um judeu que foi médico, tradutor e, na prática, vizir sem o título; ele ajudou a negociar com o Império Bizantino e a traduzir para o árabe a obra de Dioscórides.[[R01-012]]",
+            "Uma carreira como a de Hasdai mostra até onde um judeu podia chegar numa corte muçulmana. Não mostra como viviam todos os judeus, nem que a posição fosse segura. Em 1066, em Granada, o vizir judeu José ha-Nagid foi assassinado, e seguiu-se uma matança dos judeus da cidade; os números de mortos variam muito entre as fontes.[[R01-013]]",
+            "No século XII, os almóadas pressionaram judeus e cristãos dos territórios que conquistavam a se converter ao islã, partir ou arriscar a morte. Até onde essas conversões forçadas atingiram as comunidades é discutido pelos historiadores, porque as fontes são poucas.[[R01-014]] Uma família que viveu isso foi a de Maimônides, nascido em Córdoba (em 1135 ou 1138: as obras de referência divergem). Os almóadas tomaram a cidade em 1148; a família saiu por volta de 1159-1160 para Fez, no Marrocos, e em 1166 ele chegou ao Egito.[[R01-015]]"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "titulo": "Línguas de Sefarad",
+          "paragrafos": [
+            "Sefarad não escrevia numa língua só. Maimônides escreveu o Guia dos Perplexos em árabe, com o título Dalālat al-ḥāʾirīn, e a obra foi traduzida para o hebraico por Samuel ibn Tibbon.[[R01-016]] O Guia foi concluído em 1190, quando o autor já vivia no Egito.[[R01-034]] Rascunhos escritos pela mão do próprio Maimônides sobreviveram na Guenizá do Cairo e estão hoje na Biblioteca da Universidade de Cambridge.[[R01-017]]",
+            "Sob Afonso X de Castela, no século XIII, Toledo foi um centro de tradução: tradutores judeus como Isaac ibn Sid e Judá ben Moisés ha-Kohen verteram obras do árabe para o hebraico e, menos vezes, para o latim e o castelhano.[[R01-019]]"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "titulo": "Nos reinos cristãos",
+          "paragrafos": [
+            "Toledo, sob governo muçulmano desde 712, foi tomada por Afonso VI de Castela em maio de 1085, com termos que deixavam aos muçulmanos seus bens e sua religião.[[R01-018]] Córdoba passou a Castela em 1236, tomada por Fernando III.[[R01-033]]",
+            "A lei dos reinos cristãos também falava dos judeus. As Siete Partidas, código compilado sob Afonso X, dedicam a eles um título inteiro, 'De los judíos', com onze leis.[[R01-020]] A primeira justifica a presença judaica com uma ideia teológica: os judeus viveriam entre os cristãos 'como en cativerio para siempre', como uma lembrança.[[R01-021]]",
+            "Em julho de 1263, no palácio de Jaime I de Aragão, em Barcelona, o frade dominicano Pablo Christiani, nascido judeu, debateu em público com o sábio judeu Nahmânides. Sobreviveram dois relatos, um em hebraico, do próprio Nahmânides, e um em latim, da corte, e eles discordam sobre quem venceu. Nahmânides deixou a península e chegou à Terra de Israel em 1267.[[R01-022]]"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "titulo": "Portugal",
+          "paragrafos": [
+            "Em Portugal, a partir do século XIV, os judeus passaram a viver em bairros próprios, as judiarias. Tinham certa proteção do rei e autonomia relativa; Lisboa, Porto, Lamego, Santarém e Évora estavam entre os centros mais importantes.[[R01-030]] As comunas judaicas tinham administração própria, com o rabino como autoridade máxima, e no século XV seguiam em boa parte o modelo dos concelhos.[[R01-031]]"
+          ]
+        },
+        {
+          "tipo": "texto",
+          "titulo": "1391",
+          "paragrafos": [
+            "Em 1391, ataques às comunidades judaicas começaram em Sevilha e se espalharam por Castela e pela Coroa de Aragão. Milhares de judeus foram convertidos à força; quantos morreram e quantos foram batizados, as estimativas divergem muito.[[R01-026]] O arcediago Ferrant Martínez costuma ser apontado como o instigador, mas há pesquisa recente que vê causas além de um pregador: facções urbanas e disputas políticas.[[R01-027]]",
+            "É aqui que este módulo para. Os convertidos e seus descendentes, a expulsão dos reinos espanhóis e as conversões forçadas em Portugal são o assunto dos próximos módulos."
+          ]
+        },
+        {
+          "tipo": "glossario",
+          "termos": [
+            { "termo": "Sefarad", "definicao": "Nome hebraico da Península Ibérica, usual desde o fim do século VIII. No livro bíblico de Obadias, o lugar que o nome designava é discutido.", "afirmacoes": ["R01-001", "R01-003"] },
+            { "termo": "al-Andalus", "definicao": "Nome que os muçulmanos deram primeiro à península inteira e que depois passou a designar só a parte sob governo muçulmano.", "afirmacoes": ["R01-035"] },
+            { "termo": "Califado de Córdoba", "definicao": "O governo de Córdoba a partir de 929, quando Abd al-Rahman III assumiu o título de califa, até 1031.", "afirmacoes": ["R01-011"] },
+            { "termo": "Taifas", "definicao": "Os reinos menores em que o califado de Córdoba se dividiu em 1031.", "afirmacoes": ["R01-011"] },
+            { "termo": "Almóadas", "definicao": "Poder muçulmano que tomou Córdoba em 1148 e pressionou judeus e cristãos a se converter ao islã.", "afirmacoes": ["R01-014", "R01-015"] },
+            { "termo": "Judiaria", "definicao": "Bairro onde os judeus passaram a viver em Portugal a partir do século XIV.", "afirmacoes": ["R01-030"] },
+            { "termo": "Comuna", "definicao": "A comunidade judaica portuguesa organizada, com administração própria e o rabino como autoridade máxima.", "afirmacoes": ["R01-031"] },
+            { "termo": "Convivência", "definicao": "Palavra associada a Américo Castro (1948) para as relações entre cristãos, muçulmanos e judeus na Ibéria medieval. O que ela descreve é debatido.", "afirmacoes": ["R01-028"] }
+          ]
+        },
+        {
+          "tipo": "linha-do-tempo",
+          "titulo": "A linha do tempo do módulo",
+          "eventos": [
+            { "quando": "c. 300-309", "titulo": "Concílio de Elvira", "texto": "Cânones sobre o contato entre cristãos e judeus. Data discutida.", "afirmacoes": ["R01-004", "R01-005"] },
+            { "quando": "c. 615", "titulo": "Batismo imposto por Sisebuto", "texto": "No reino visigodo; os bispos parecem ter se dividido.", "afirmacoes": ["R01-008"] },
+            { "quando": "711", "titulo": "Tariq derrota Rodrigo", "texto": "Começo do governo muçulmano na península.", "afirmacoes": ["R01-010"] },
+            { "quando": "929", "titulo": "Califado de Córdoba", "texto": "Abd al-Rahman III assume o título de califa.", "afirmacoes": ["R01-011"] },
+            { "quando": "1031", "titulo": "As taifas", "texto": "O califado se divide em reinos menores.", "afirmacoes": ["R01-011"] },
+            { "quando": "1066", "titulo": "Granada", "texto": "Assassinato de José ha-Nagid e matança dos judeus da cidade.", "afirmacoes": ["R01-013"] },
+            { "quando": "1085", "titulo": "Toledo passa a Castela", "texto": "Afonso VI toma a cidade.", "afirmacoes": ["R01-018"] },
+            { "quando": "1148", "titulo": "Os almóadas tomam Córdoba", "texto": "A família de Maimônides sai depois, rumo a Fez.", "afirmacoes": ["R01-015"] },
+            { "quando": "1190", "titulo": "O Guia dos Perplexos", "texto": "Concluído por Maimônides, no Egito, em árabe.", "afirmacoes": ["R01-016", "R01-034"] },
+            { "quando": "1236", "titulo": "Córdoba passa a Castela", "texto": "Tomada por Fernando III.", "afirmacoes": ["R01-033"] },
+            { "quando": "1263", "titulo": "Disputa de Barcelona", "texto": "Pablo Christiani e Nahmânides, diante de Jaime I.", "afirmacoes": ["R01-022"] },
+            { "quando": "1314-1315", "titulo": "Sinagoga de Córdoba", "texto": "Data dada pela inscrição fundacional.", "afirmacoes": ["R01-023"] },
+            { "quando": "c. 1357", "titulo": "Sinagoga de Samuel ha-Leví, em Toledo", "texto": "Hoje o Museo Sefardí.", "afirmacoes": ["R01-024"] },
+            { "quando": "1391", "titulo": "Os ataques de 1391", "texto": "De Sevilha a Castela e à Coroa de Aragão.", "afirmacoes": ["R01-026"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "explorar",
+      "titulo": "Explorar",
+      "pergunta": "Onde isso aconteceu?",
+      "blocos": [
+        { "tipo": "atividade", "id": "mapa" }
+      ]
+    },
+    {
+      "id": "investigar",
+      "titulo": "Investigar",
+      "pergunta": "O que cada documento realmente prova?",
+      "blocos": [
+        {
+          "tipo": "texto",
+          "paragrafos": [
+            "Cinco documentos apareceram neste módulo. Antes de usar um documento, um historiador pergunta quem o produziu, quando e para quê. Ligue cada um ao seu contexto; depois, olhe de perto um deles."
+          ]
+        },
+        { "tipo": "atividade", "id": "documentos" },
+        { "tipo": "atividade", "id": "prova" }
+      ]
+    },
+    {
+      "id": "aplicar",
+      "titulo": "Aplicar",
+      "pergunta": "Dá para contar essa história em ordem, e sem simplificar?",
+      "blocos": [
+        { "tipo": "atividade", "id": "linha-do-tempo" },
+        { "tipo": "atividade", "id": "desafio-fatos" },
+        { "tipo": "atividade", "id": "desafio-frase" }
+      ]
+    },
+    {
+      "id": "refletir",
+      "titulo": "Refletir",
+      "pergunta": "Convivência: harmonia, tolerância ou outra coisa?",
+      "blocos": [
+        {
+          "tipo": "debate",
+          "titulo": "Um debate que continua aberto",
+          "paragrafos": [
+            "A palavra 'convivência', para as relações entre cristãos, muçulmanos e judeus na Ibéria medieval, ficou associada ao historiador Américo Castro, a partir de España en su historia, publicado na Argentina em 1948. Desde então, a ideia é debatida.[[R01-028]]",
+            "David Nirenberg estudou ataques a minorias no século XIV, na França e na Coroa de Aragão, e questionou as leituras que tratam a relação entre as comunidades como um quadro fixo.[[R01-029]]"
+          ],
+          "posicoes": [
+            { "nome": "Harmonia e tolerância", "resumo": "A leitura que se popularizou: um tempo em que três religiões viveram e criaram juntas." },
+            { "nome": "Acomodação", "resumo": "Viver lado a lado por necessidade, com regras desiguais, sem que isso fosse tolerância no sentido de hoje." },
+            { "nome": "Conflito como parte da coexistência", "resumo": "Violência e convivência não como opostos, mas como partes da mesma relação, que muda com o lugar e o momento." }
+          ],
+          "nota": "Este percurso não escolhe uma das posições por você. O que ele cobra é que a sua resposta use os fatos do módulo."
+        },
+        {
+          "tipo": "reflexao",
+          "id": "convivencia",
+          "pergunta": "Com os fatos deste módulo, qual palavra você usaria no lugar de 'convivência'? Por quê?",
+          "apoio": "Pense em 1066, nos almóadas, em Hasdai ibn Shaprut, nas Partidas, na sinagoga de Córdoba e em 1391. O que você escrever fica só neste aparelho e não é corrigido."
+        }
+      ]
+    },
+    {
+      "id": "consolidar",
+      "titulo": "Consolidar",
+      "pergunta": "Mito ou evidência?",
+      "blocos": [
+        { "tipo": "atividade", "id": "mito-ou-evidencia" }
+      ]
+    },
+    {
+      "id": "avancar",
+      "titulo": "Avançar",
+      "pergunta": "O que fica deste módulo?",
+      "blocos": [
+        {
+          "tipo": "sintese",
+          "itens": [
+            "Sefarad é o nome hebraico da Península Ibérica; na Bíblia, o lugar que ele designava é discutido.",
+            "A presença judaica na península é documentada desde antes de 711, e os primeiros documentos são regras de quem não era judeu.",
+            "Sob governos muçulmanos e cristãos houve carreiras na corte, vida intelectual e sinagogas, e também restrição, conversão forçada e violência.",
+            "Sefarad escrevia em mais de uma língua: árabe, hebraico, latim, castelhano.",
+            "Uma lei mostra o que o legislador queria; um documento diz menos do que a conclusão que se tira dele.",
+            "'Convivência' é uma palavra em debate, não um fato."
+          ]
+        }
+      ]
+    }
+  ],
+  "atividades": {
+    "descobrir": {
+      "tipo": "escolha",
+      "objetivo": "Separar o que o texto bíblico diz da leitura que veio depois.",
+      "enunciado": "Na Bíblia hebraica, o livro de Obadias fala de exilados de Jerusalém que estão em Sefarad. O que se pode dizer, com segurança, sobre o lugar que o texto chamava assim?",
+      "criterio": "Concluída com a resposta certa. Errar mostra a explicação; dá para tentar de novo.",
+      "opcoes": [
+        {
+          "texto": "Era a Península Ibérica: o texto bíblico já falava da Espanha.",
+          "correta": false,
+          "feedback": "Essa é a leitura que se tornou tradicional, mas ela é posterior ao texto. Ela aparece numa antiga tradução aramaica, o Targum Jonathan, que escreveu Ispamia, isto é, Hispânia."
+        },
+        {
+          "texto": "O lugar exato é discutido; a identificação com a Península Ibérica veio depois, numa tradução antiga.",
+          "correta": true,
+          "feedback": "Isso. Os estudiosos propõem lugares diferentes para a Sefarad bíblica. A ligação com a Hispânia aparece numa tradução aramaica, e no fim do século VIII Sefarad já era o nome hebraico usual da península."
+        },
+        {
+          "texto": "Era a própria Jerusalém.",
+          "correta": false,
+          "feedback": "O versículo fala de exilados de Jerusalém que estão em Sefarad: são dois lugares diferentes."
+        }
+      ],
+      "afirmacoes": ["R01-001", "R01-002", "R01-003"]
+    },
+    "mapa": {
+      "tipo": "mapa",
+      "objetivo": "Localizar os marcos do módulo e ver que eles se espalham por toda a península, sob governos diferentes.",
+      "enunciado": "Toque nos pontos para abrir cada lugar. Explore pelo menos cinco e responda às três perguntas no fim.",
+      "criterio": "Concluída com pelo menos cinco lugares explorados e as três perguntas certas. Pode errar e tentar de novo.",
+      "legenda": "Contorno atual da costa (Natural Earth, domínio público), sem fronteiras: os reinos medievais mudaram muitas vezes e não estão desenhados. Os pontos marcam as cidades de hoje. O círculo tracejado marca um lugar de localização incerta.",
+      "minimoExplorados": 5,
+      "lugares": [
+        { "id": "toledo", "nome": "Toledo", "lat": 39.8628, "lon": -4.0273, "periodo": "712 a 1085 sob governo muçulmano; depois, Castela", "resumo": "Tomada por Afonso VI em 1085. No século XIII, centro de tradutores judeus sob Afonso X. A sinagoga de Samuel ha-Leví (El Tránsito), de por volta de 1357, abriga hoje o Museo Sefardí.", "afirmacoes": ["R01-018", "R01-019", "R01-024"] },
+        { "id": "cordoba", "nome": "Córdoba", "lat": 37.8882, "lon": -4.7794, "periodo": "Califado de 929 a 1031; Castela desde 1236", "resumo": "Sede do califado, onde trabalhou Hasdai ibn Shaprut. Cidade natal de Maimônides; tomada pelos almóadas em 1148. A sinagoga da cidade, de 1314-1315, é datada pela inscrição fundacional.", "afirmacoes": ["R01-011", "R01-012", "R01-015", "R01-023", "R01-033"] },
+        { "id": "granada", "nome": "Granada", "lat": 37.1773, "lon": -3.5986, "periodo": "Século XI", "resumo": "Em 1066, o vizir judeu José ha-Nagid foi assassinado, e seguiu-se uma matança dos judeus da cidade.", "afirmacoes": ["R01-013"] },
+        { "id": "sevilha", "nome": "Sevilha", "lat": 37.3891, "lon": -5.9845, "periodo": "1391", "resumo": "Onde começaram os ataques de 1391, que se espalharam por Castela e pela Coroa de Aragão.", "afirmacoes": ["R01-026", "R01-027"] },
+        { "id": "barcelona", "nome": "Barcelona", "lat": 41.3851, "lon": 2.1734, "periodo": "1263", "resumo": "No palácio de Jaime I de Aragão, a disputa entre Pablo Christiani e Nahmânides. Dois relatos, em hebraico e em latim, que discordam sobre quem venceu.", "afirmacoes": ["R01-022"] },
+        { "id": "tortosa", "nome": "Tortosa", "lat": 40.8125, "lon": 0.5216, "periodo": "Antiguidade tardia (data discutida)", "resumo": "Uma lápide judaica com o mesmo texto em hebraico, latim e grego, datada pelo banco de Heidelberg entre 501 e 700.", "afirmacoes": ["R01-007"] },
+        { "id": "guadalete", "nome": "Rio Guadalete (lugar incerto)", "lat": 36.75, "lon": -5.81, "periodo": "Julho de 711", "resumo": "Onde provavelmente Tariq ibn Ziyad derrotou o rei visigodo Rodrigo. A localização exata é discutida, e o episódio está cercado de lendas.", "incerto": true, "afirmacoes": ["R01-010"] },
+        { "id": "lisboa", "nome": "Lisboa", "lat": 38.7223, "lon": -9.1393, "periodo": "Séculos XIV e XV", "resumo": "Um dos centros judaicos mais importantes de Portugal, com judiaria e comuna organizada.", "afirmacoes": ["R01-030", "R01-031"] },
+        { "id": "porto", "nome": "Porto", "lat": 41.1579, "lon": -8.6291, "periodo": "Séculos XIV e XV", "resumo": "Outro dos centros judaicos importantes de Portugal.", "afirmacoes": ["R01-030"] },
+        { "id": "evora", "nome": "Évora", "lat": 38.5714, "lon": -7.9135, "periodo": "Séculos XIV e XV", "resumo": "Também entre os centros judaicos importantes de Portugal.", "afirmacoes": ["R01-030"] },
+        { "id": "tomar", "nome": "Tomar", "lat": 39.6013, "lon": -8.4092, "periodo": "Século XV; museu desde o século XX", "resumo": "A sinagoga, que o município descreve como o único templo hebraico proto-renascentista de Portugal, é monumento nacional desde 1921 e abriga o Museu Luso-Hebraico Abraão Zacuto.", "afirmacoes": ["R01-032"] }
+      ],
+      "perguntas": [
+        { "id": "museu", "enunciado": "Em que cidade fica a sinagoga que hoje abriga o Museo Sefardí?", "resposta": "toledo", "explicacao": "É a sinagoga de Samuel ha-Leví, conhecida como El Tránsito, em Toledo." },
+        { "id": "1391", "enunciado": "Onde começaram os ataques de 1391?", "resposta": "sevilha", "explicacao": "Em Sevilha. De lá a violência se espalhou por Castela e pela Coroa de Aragão." },
+        { "id": "maimonides", "enunciado": "Em que cidade nasceu Maimônides?", "resposta": "cordoba", "explicacao": "Em Córdoba, a cidade que os almóadas tomaram em 1148." }
+      ]
+    },
+    "documentos": {
+      "tipo": "associacao",
+      "objetivo": "Ligar cada documento a quem o produziu e quando, antes de tirar conclusões dele.",
+      "enunciado": "Para cada documento, escolha o contexto em que ele foi produzido.",
+      "criterio": "Concluída com os cinco documentos ligados certo. Cada erro mostra por quê; dá para tentar de novo.",
+      "contextos": [
+        { "id": "antes-de-711", "nome": "Hispânia romana e reino visigodo, antes de 711" },
+        { "id": "arabe-fora", "nome": "Um autor nascido em Sefarad, escrevendo em árabe fora da península, no século XII" },
+        { "id": "castela-xiii", "nome": "Castela cristã, século XIII" },
+        { "id": "cordoba-xiv", "nome": "Córdoba sob Castela, século XIV" }
+      ],
+      "documentos": [
+        {
+          "id": "elvira",
+          "titulo": "Cânones do Concílio de Elvira",
+          "descricao": "Regras de um concílio de bispos sobre casamento, refeições e bênçãos entre cristãos e judeus.",
+          "contexto": "antes-de-711",
+          "diz": "Proíbe casamentos, refeições em comum, bênçãos de colheita e relações entre cristãos e judeus.",
+          "naoProva": "Não diz quantos judeus viviam na Hispânia, nem se as regras foram cumpridas.",
+          "explicacao": "O concílio se reuniu na Hispânia romana, por volta de 300 a 309 (data discutida).",
+          "afirmacoes": ["R01-004", "R01-005"]
+        },
+        {
+          "id": "tortosa",
+          "titulo": "Lápide trilíngue de Tortosa",
+          "descricao": "Uma lápide judaica com o mesmo texto em hebraico, latim e grego.",
+          "contexto": "antes-de-711",
+          "diz": "Uma pessoa judia foi sepultada com um texto em três línguas.",
+          "naoProva": "Não data a si mesma: a datação é discutida (o banco de Heidelberg diz 501 a 700).",
+          "explicacao": "A datação mais citada a põe na antiguidade tardia, antes de 711.",
+          "afirmacoes": ["R01-007"]
+        },
+        {
+          "id": "guia",
+          "titulo": "Rascunho autógrafo do Guia dos Perplexos",
+          "descricao": "Folhas escritas pela mão de Maimônides, achadas na Guenizá do Cairo e guardadas em Cambridge.",
+          "contexto": "arabe-fora",
+          "diz": "Maimônides escreveu o Guia em árabe, e rascunhos dele, escritos à mão pelo autor, sobreviveram.",
+          "naoProva": "Não foi escrito em Sefarad: o Guia foi concluído em 1190, e Maimônides vivia no Egito desde 1166. Ser de um autor nascido em Córdoba não faz de um documento um documento ibérico.",
+          "explicacao": "Maimônides nasceu em Córdoba, mas concluiu o Guia no Egito.",
+          "afirmacoes": ["R01-015", "R01-016", "R01-017", "R01-034"]
+        },
+        {
+          "id": "partidas",
+          "titulo": "Siete Partidas, título 'De los judíos'",
+          "descricao": "Onze leis de um código compilado sob Afonso X.",
+          "contexto": "castela-xiii",
+          "diz": "A lei do rei define as condições da presença judaica e a justifica com uma ideia teológica.",
+          "naoProva": "Uma lei mostra o que o legislador queria; sozinha, não mostra como era a vida no dia a dia.",
+          "explicacao": "As Partidas foram compiladas em Castela sob Afonso X, no século XIII.",
+          "afirmacoes": ["R01-020", "R01-021"]
+        },
+        {
+          "id": "inscricao-cordoba",
+          "titulo": "Inscrição fundacional da sinagoga de Córdoba",
+          "descricao": "A inscrição achada em 1884 no muro da sala de oração.",
+          "contexto": "cordoba-xiv",
+          "diz": "Uma sinagoga foi terminada em Córdoba em 1314-1315.",
+          "naoProva": "Não diz quantos judeus viviam na cidade, nem como era a relação deles com os vizinhos.",
+          "explicacao": "Em 1314-1315 Córdoba já era castelhana: tinha sido tomada por Fernando III em 1236.",
+          "afirmacoes": ["R01-023", "R01-033"]
+        }
+      ]
+    },
+    "prova": {
+      "tipo": "multipla",
+      "objetivo": "Separar o que o documento diz do que se conclui dele, e do que ele não permite concluir.",
+      "enunciado": "Os cânones de Elvira proíbem cristãos de comer com judeus. O que esse documento, sozinho, permite afirmar? Marque todas as que valem.",
+      "criterio": "Concluída quando a seleção estiver exatamente certa. Cada alternativa tem a sua explicação.",
+      "opcoes": [
+        { "texto": "Havia bispos na Hispânia que queriam limitar o contato entre cristãos e judeus.", "correta": true, "feedback": "É o que o documento diz: são regras de bispos." },
+        { "texto": "Havia contato entre cristãos e judeus a ponto de os bispos quererem limitá-lo.", "correta": true, "feedback": "É uma inferência razoável: uma regra contra uma prática sugere que a prática existia. Note que é inferência, não o que o texto diz." },
+        { "texto": "A maioria dos cristãos obedecia à proibição.", "correta": false, "feedback": "Uma lei não mostra se foi cumprida. Para isso seriam precisos outros documentos." },
+        { "texto": "Quantos judeus viviam na Hispânia.", "correta": false, "feedback": "Nada nos cânones permite contar pessoas." },
+        { "texto": "Os judeus da Hispânia descendiam dos exilados de Jerusalém de que fala Obadias.", "correta": false, "feedback": "Os cânones não falam de origem. E a ligação entre a Sefarad bíblica e a Hispânia é uma leitura posterior." }
+      ],
+      "afirmacoes": ["R01-004", "R01-001"]
+    },
+    "linha-do-tempo": {
+      "tipo": "ordenar",
+      "objetivo": "Pôr em ordem os marcos e ver que restrição e violência aparecem sob governos diferentes, não numa linha reta.",
+      "enunciado": "Ponha os acontecimentos em ordem, do mais antigo ao mais recente. Use as setas, ou toque num item e depois no lugar para onde ele vai.",
+      "criterio": "Concluída com a ordem toda certa. Ao conferir, cada item fora do lugar é marcado; dá para tentar quantas vezes quiser.",
+      "eventos": [
+        { "id": "elvira", "quando": "c. 300-309", "texto": "O Concílio de Elvira proíbe cristãos de comer com judeus.", "afirmacoes": ["R01-004", "R01-005"] },
+        { "id": "sisebuto", "quando": "c. 615", "texto": "O rei visigodo Sisebuto ordena o batismo dos judeus.", "afirmacoes": ["R01-008"] },
+        { "id": "711", "quando": "711", "texto": "Tariq ibn Ziyad derrota o rei visigodo Rodrigo.", "afirmacoes": ["R01-010"] },
+        { "id": "granada", "quando": "1066", "texto": "Em Granada, o vizir judeu José ha-Nagid é assassinado.", "afirmacoes": ["R01-013"] },
+        { "id": "toledo", "quando": "1085", "texto": "Afonso VI de Castela toma Toledo.", "afirmacoes": ["R01-018"] },
+        { "id": "almoadas", "quando": "1148", "texto": "Os almóadas tomam Córdoba.", "afirmacoes": ["R01-015"] },
+        { "id": "barcelona", "quando": "1263", "texto": "Disputa de Barcelona, diante de Jaime I.", "afirmacoes": ["R01-022"] },
+        { "id": "1391", "quando": "1391", "texto": "Ataques às comunidades judaicas começam em Sevilha.", "afirmacoes": ["R01-026"] }
+      ],
+      "explicacao": "A ordem mostra que não houve uma linha reta da tolerância à perseguição. Restrições e batismos impostos aparecem antes de 711, sob reis visigodos; violência e conversão forçada aparecem sob governo muçulmano (1066, os almóadas) e sob governo cristão (1391). Entre um episódio e outro, comunidades viveram, estudaram e construíram sinagogas."
+    },
+    "desafio-fatos": {
+      "tipo": "multipla",
+      "objetivo": "Usar os fatos do módulo para examinar uma frase que circula.",
+      "enunciado": "Uma postagem diz: 'Em Sefarad, judeus, cristãos e muçulmanos viveram sempre em paz, até 1492.' Quais fatos deste módulo contradizem a frase? Marque todos.",
+      "criterio": "Concluída quando a seleção estiver exatamente certa.",
+      "opcoes": [
+        { "texto": "A matança de Granada, em 1066.", "correta": true, "feedback": "Contradiz: violência contra judeus sob governo muçulmano, séculos antes de 1492." },
+        { "texto": "A pressão dos almóadas pela conversão, no século XII.", "correta": true, "feedback": "Contradiz: conversão forçada, ainda que o alcance seja discutido." },
+        { "texto": "O batismo imposto por Sisebuto, por volta de 615.", "correta": true, "feedback": "Contradiz: e mostra que a frase também esquece o período antes de 711." },
+        { "texto": "Os ataques de 1391.", "correta": true, "feedback": "Contradiz: violência e conversões forçadas sob governo cristão, cem anos antes de 1492." },
+        { "texto": "A sinagoga de Córdoba, terminada em 1314-1315.", "correta": false, "feedback": "Não contradiz: mostra vida comunitária organizada. Também não prova a frase: uma sinagoga não diz como era a relação com os vizinhos." },
+        { "texto": "A carreira de Hasdai ibn Shaprut na corte de Córdoba.", "correta": false, "feedback": "Não contradiz: mostra até onde um judeu podia chegar numa corte. Também não prova a frase: uma carreira não descreve a vida de todos." }
+      ],
+      "afirmacoes": ["R01-013", "R01-014", "R01-008", "R01-026", "R01-023", "R01-012"]
+    },
+    "desafio-frase": {
+      "tipo": "escolha",
+      "objetivo": "Reescrever uma generalização de forma fiel às fontes.",
+      "enunciado": "Qual destas versões da frase é a mais fiel ao que as fontes sustentam?",
+      "criterio": "Concluída ao escolher a versão certa. As outras explicam por que não servem.",
+      "opcoes": [
+        { "texto": "Em Sefarad, judeus, cristãos e muçulmanos viveram sempre em guerra.", "correta": false, "feedback": "Troca uma generalização por outra. As fontes mostram também carreiras na corte, traduções e sinagogas construídas." },
+        { "texto": "Durante muitos séculos, comunidades judaicas viveram na península sob governos diferentes, com vida intelectual e comunitária e também com restrições, conversões forçadas e violência; como chamar essa coexistência é debatido.", "correta": true, "feedback": "Esta cabe no que foi verificado: diz o que aconteceu, sem decidir por você o nome do período." },
+        { "texto": "A convivência é um mito inventado no século XX.", "correta": false, "feedback": "A palavra ficou associada a Américo Castro, em 1948, mas as relações que ela descreve existiram. O debate é sobre como interpretá-las, não sobre se existiram." }
+      ],
+      "afirmacoes": ["R01-028", "R01-012", "R01-019", "R01-023", "R01-026"]
+    },
+    "mito-ou-evidencia": {
+      "tipo": "classificar",
+      "objetivo": "Revisar o módulo distinguindo o que as fontes sustentam, o que não sustentam e o que está em debate.",
+      "enunciado": "Classifique cada afirmação. Atenção: 'em debate' não é 'não sei', é quando historiadores sérios discordam.",
+      "criterio": "Concluída com pelo menos 6 de 8 certas. Toda resposta mostra a explicação; dá para refazer.",
+      "minimo": 6,
+      "categorias": [
+        { "id": "sustentada", "nome": "As fontes sustentam" },
+        { "id": "debate", "nome": "Em debate" },
+        { "id": "nao-sustentada", "nome": "As fontes não sustentam" }
+      ],
+      "itens": [
+        { "id": "antes-711", "texto": "Houve presença judaica na Península Ibérica antes da conquista muçulmana de 711.", "categoria": "sustentada", "explicacao": "Os cânones de Elvira e o batismo imposto por Sisebuto são anteriores a 711.", "afirmacoes": ["R01-004", "R01-008"] },
+        { "id": "biblia", "texto": "Na Bíblia, 'Sefarad' designava com certeza a Península Ibérica.", "categoria": "nao-sustentada", "explicacao": "O lugar bíblico é discutido; a identificação com a Hispânia aparece depois, numa tradução aramaica.", "afirmacoes": ["R01-001", "R01-002"] },
+        { "id": "harmonia", "texto": "Judeus, cristãos e muçulmanos viveram em harmonia durante toda a Idade Média ibérica.", "categoria": "nao-sustentada", "explicacao": "1066, os almóadas e 1391 bastam para desmentir o 'toda'.", "afirmacoes": ["R01-013", "R01-014", "R01-026"] },
+        { "id": "tolerancia", "texto": "O que se chama de convivência em al-Andalus foi, antes de tudo, tolerância.", "categoria": "debate", "explicacao": "É exatamente o ponto em discussão entre historiadores desde Américo Castro.", "afirmacoes": ["R01-028", "R01-029"] },
+        { "id": "lingua", "texto": "Os judeus de Sefarad escreviam todos na mesma língua.", "categoria": "nao-sustentada", "explicacao": "Maimônides escreveu em árabe; tradutores judeus em Toledo verteram obras para o hebraico, o latim e o castelhano.", "afirmacoes": ["R01-016", "R01-019"] },
+        { "id": "um-homem", "texto": "A violência de 1391 se explica pela pregação de um único homem.", "categoria": "debate", "explicacao": "Ferrant Martínez costuma ser apontado como instigador, e há pesquisa recente que vê causas além dele.", "afirmacoes": ["R01-027"] },
+        { "id": "maimonides", "texto": "Maimônides nasceu em Córdoba.", "categoria": "sustentada", "explicacao": "As obras de referência concordam no lugar; divergem só no ano (1135 ou 1138).", "afirmacoes": ["R01-015"] },
+        { "id": "hasdai", "texto": "A carreira de Hasdai ibn Shaprut prova que todos os judeus de al-Andalus viviam em segurança.", "categoria": "nao-sustentada", "explicacao": "Uma carreira na corte mostra o que era possível para alguém, não a vida de todos.", "afirmacoes": ["R01-012", "R01-013"] }
+      ]
+    }
+  }
+}

@@ -727,6 +727,23 @@ tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
   confere); gravações na onda 5.
 - `tests/loja.test.ts`.
 
+## Raízes Sefarditas (21-22/10/2026)
+Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
+(decisão do dono, 22/10/2026). Tudo em `docs/raizes-sefarditas/`.
+- Rotas `/raizes`, casca própria (`components/raizes/RaizesShell.tsx`, sem o
+  menu nem o XP do curso de hebraico), direito `raizes-sefarditas` no portão,
+  conteúdo por `GET /api/content/raizes`. Não paga XP.
+- Dados em `data/raizes/`: `fontes.json` e `afirmacoes.json` seguem o
+  protocolo do repositório editorial (níveis A-E, status, forma de acesso).
+  Toda frase factual leva `[[R01-NNN]]`; só VERIFICADO e CONTESTADO vão ao
+  texto, e CONTESTADO só como debate. `tests/raizes.test.ts` cobra.
+- Estado: `LearnerState.raizes` (opcional), fusão em `state/raizes-estado.ts`.
+  A reflexão livre e, no futuro, o laboratório genealógico ficam SÓ no aparelho.
+- NÃO está em `data/courses.json`: falta preço, o contador (CNAE de idiomas) e
+  mudar o art. 1 dos Termos. Até lá o acesso só existe concedido à mão.
+- Módulo 1 pronto para revisão humana; módulos 2-10 só no plano.
+  `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.
+
 ## Antes de commitar
 ```sh
 cd app && npm test        # 302 testes

@@ -1,0 +1,130 @@
+{
+  "_": [
+    "Raízes Sefarditas: o percurso, os módulos, as conquistas e o certificado.",
+    "Produto à parte do curso de hebraico, com direito de acesso próprio (raizes-sefarditas) e rotas /raizes.",
+    "NÃO está no catálogo de venda (data/courses.json): vender um curso de história é atividade nova para o",
+    "enquadramento da empresa (CLAUDE.md, 'Enquadramento') e precisa da decisão do dono antes. Ver",
+    "docs/raizes-sefarditas/auditoria-inicial.md, seção 6.",
+    "estado de cada módulo: 'em-revisao' = conteúdo escrito e verificado por busca, esperando a revisão humana;",
+    "'em-preparacao' = só o plano existe. Um módulo em preparação aparece no mapa da jornada sem conteúdo.",
+    "A matriz de afirmações (afirmacoes.json) e as fontes (fontes.json) servem a todos os módulos."
+  ],
+  "slug": "raizes-sefarditas",
+  "titulo": "Raízes Sefarditas",
+  "subtitulo": "Uma viagem interativa pela história, memória e herança dos judeus de Portugal e Espanha.",
+  "aviso": "Conhecer a história sefardita não é o mesmo que comprovar uma ascendência sefardita pessoal. Este percurso ensina a história e o método; ele não diz, e não pode dizer, quem descende de quem.",
+  "edicao": {
+    "numero": 0,
+    "rotulo": "Edição de pré-lançamento, em revisão",
+    "atualizadoEm": "2026-10-21",
+    "revisaoHumana": false
+  },
+  "regras": {
+    "desbloqueio": "Um módulo abre quando o anterior é concluído. Módulo concluído continua aberto para revisão, e nenhuma atividade tranca para sempre: errar mostra a explicação e deixa tentar de novo.",
+    "conclusaoDoModulo": "Um módulo é concluído quando todas as atividades dele estão concluídas. Cada atividade diz o seu critério."
+  },
+  "modulos": [
+    {
+      "n": 1,
+      "titulo": "Sefarad: um mundo antes da ruptura",
+      "periodo": "Da Hispânia romana a 1391",
+      "regiao": "Península Ibérica",
+      "resumo": "De onde vem o nome Sefarad, o que os documentos mais antigos dizem e não dizem, a vida judaica sob governos cristãos e muçulmanos, e o debate sobre a 'convivência'.",
+      "estado": "em-revisao"
+    },
+    {
+      "n": 2,
+      "titulo": "1492: a expulsão dos judeus dos reinos espanhóis",
+      "periodo": "Fim do século XV",
+      "regiao": "Castela e Aragão",
+      "resumo": "O contexto, o decreto, a escolha imposta entre conversão e saída, e os destinos de quem partiu.",
+      "estado": "em-preparacao"
+    },
+    {
+      "n": 3,
+      "titulo": "Portugal: da expulsão anunciada às conversões forçadas",
+      "periodo": "1496-1497 e depois",
+      "regiao": "Portugal",
+      "resumo": "As comunidades judaicas portuguesas, as decisões de D. Manuel I e a formação da população cristã-nova.",
+      "estado": "em-preparacao"
+    },
+    {
+      "n": 4,
+      "titulo": "Cristãos-novos e Inquisição",
+      "periodo": "Séculos XVI a XVIII",
+      "regiao": "Portugal, Espanha e domínios",
+      "resumo": "Como os tribunais funcionavam, o que um processo registra e o que ele não prova.",
+      "estado": "em-preparacao"
+    },
+    {
+      "n": 5,
+      "titulo": "Os caminhos da diáspora",
+      "periodo": "Séculos XV a XVIII",
+      "regiao": "Norte da África, Império Otomano, Itália, Países Baixos, Américas",
+      "resumo": "As comunidades formadas depois da saída da península, e as diferenças entre elas.",
+      "estado": "em-preparacao"
+    },
+    {
+      "n": 6,
+      "titulo": "Sefarditas e cristãos-novos no Brasil",
+      "periodo": "Brasil colonial",
+      "regiao": "Brasil",
+      "resumo": "Visitações inquisitoriais, o Pernambuco neerlandês, Recife e a memória que ficou.",
+      "estado": "em-preparacao"
+    },
+    {
+      "n": 7,
+      "titulo": "Sobrenomes: entre história e mito",
+      "periodo": "Da Idade Média aos registros civis",
+      "regiao": "Mundo de língua portuguesa e espanhola",
+      "resumo": "Como os sobrenomes se formam e mudam, e por que um sobrenome sozinho não prova ascendência.",
+      "estado": "em-preparacao"
+    },
+    {
+      "n": 8,
+      "titulo": "Língua, cultura e memória sefardita",
+      "periodo": "Da diáspora a hoje",
+      "regiao": "Comunidades sefarditas",
+      "resumo": "O judeu-espanhol e outras línguas, música, literatura, cozinha e cultura material, sem supor uma tradição única.",
+      "estado": "em-preparacao"
+    },
+    {
+      "n": 9,
+      "titulo": "Laboratório: investigue sua história familiar",
+      "periodo": "Método",
+      "regiao": "Arquivos e registros",
+      "resumo": "Fontes primárias, arquivos, leitura crítica, genética e seus limites, e a organização de uma pesquisa.",
+      "estado": "em-preparacao"
+    },
+    {
+      "n": 10,
+      "titulo": "Heranças, identidades e memória",
+      "periodo": "Hoje",
+      "regiao": "Diáspora",
+      "resumo": "Continuidade e transformação, preservação e memória coletiva; revisão final e certificado.",
+      "estado": "em-preparacao"
+    }
+  ],
+  "conquistas": [
+    { "id": "primeiro-documento", "titulo": "Primeiro documento investigado", "descricao": "Ligou cinco documentos aos seus contextos no módulo 1.", "condicao": { "atividade": "m01:documentos" } },
+    { "id": "explorador-de-sefarad", "titulo": "Explorador de Sefarad", "descricao": "Concluiu o módulo 1.", "condicao": { "modulo": 1 } },
+    { "id": "leitor-de-fontes", "titulo": "Leitor de fontes históricas", "descricao": "Concluirá o módulo 4.", "condicao": { "modulo": 4 } },
+    { "id": "investigador-da-diaspora", "titulo": "Investigador da diáspora", "descricao": "Concluirá o módulo 5.", "condicao": { "modulo": 5 } },
+    { "id": "explorador-da-historia-brasileira", "titulo": "Explorador da história brasileira", "descricao": "Concluirá o módulo 6.", "condicao": { "modulo": 6 } },
+    { "id": "pesquisador-de-memorias", "titulo": "Pesquisador de memórias", "descricao": "Concluirá o módulo 9.", "condicao": { "modulo": 9 } }
+  ],
+  "certificado": {
+    "titulo": "Certificado de Conclusão",
+    "curso": "Raízes Sefarditas",
+    "subtitulo": "História, Memória e Pesquisa Genealógica",
+    "texto": "Certificamos que o participante concluiu o percurso educacional interativo Raízes Sefarditas, desenvolvido pelo Hebraico Fluente.",
+    "naoCertifica": [
+      "origem sefardita;",
+      "ancestralidade judaica;",
+      "identidade religiosa;",
+      "vínculo genealógico;",
+      "elegibilidade para cidadania."
+    ],
+    "nota": "O certificado representa exclusivamente a conclusão de atividades educacionais. Ainda não é emitido: depende dos dez módulos."
+  }
+}

@@ -33,6 +33,7 @@ import * as pay from './api/pay.js';
 import * as progress from './api/progress.js';
 import { content } from './api/content.js';
 import { contentA1 } from './api/content-a1.js';
+import { contentRaizes } from './api/content-raizes.js';
 import * as exameA1 from './api/exame-a1.js';
 import * as audio from './api/audio.js';
 import * as novidades from './api/novidades.js';
@@ -97,6 +98,9 @@ const ROUTES = {
   /* O curso Hebraico A1 (06/10/2026): outro curso, outro direito. Ver
      api/content-a1.js. */
   'GET /api/content/a1': contentA1,
+  /* Raízes Sefarditas (21/10/2026): outro produto, outro direito. Ver
+     api/content-raizes.js. */
+  'GET /api/content/raizes': contentRaizes,
   /* O exame final do A1, corrigido aqui, e o certificado que só ele libera. */
   'POST /api/a1/exame/iniciar': exameA1.iniciar,
   'POST /api/a1/exame/entregar': exameA1.entregar,

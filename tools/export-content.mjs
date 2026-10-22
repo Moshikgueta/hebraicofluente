@@ -752,6 +752,45 @@ function main() {
     partes: a1Exame.partes.map(p => ({ ...p, itens: p.itens.map(itemA1) }))
   }) + '\n');
 
+  /* ── Raízes Sefarditas (21/10/2026) ────────────────────────────────
+     Outro produto, outro direito (raizes-sefarditas): sai por
+     /api/content/raizes (worker/src/api/content-raizes.js), nunca no pacote.
+     A fonte é data/raizes/: curso.json, um arquivo por módulo, a matriz de
+     afirmações e as fontes. Só vão ao aluno as afirmações que podem aparecer
+     no texto (VERIFICADO ou CONTESTADO) e as fontes que elas citam: o que
+     não foi verificado fica no repositório, para a próxima rodada de
+     pesquisa, e não vira nota de rodapé de ninguém. */
+  const raizesCurso = readJson('data/raizes/curso.json');
+  const raizesModulos = raizesCurso.modulos
+    .filter(m => existsSync(join(ROOT, `data/raizes/modulos/m${String(m.n).padStart(2, '0')}.json`)))
+    .map(m => {
+      const { _: _nota, ...modulo } = readJson(`data/raizes/modulos/m${String(m.n).padStart(2, '0')}.json`);
+      void _nota;
+      return modulo;
+    });
+  const NO_TEXTO = new Set(['VERIFICADO', 'CONTESTADO']);
+  const raizesAfirmacoes = readJson('data/raizes/afirmacoes.json').afirmacoes
+    .filter(a => NO_TEXTO.has(a.status))
+    .map(({ id, modulo, afirmacao, fontes, evidencia, limitacoes, interpretacoes_concorrentes, status, pagina_ou_secao, acesso, data_consulta }) =>
+      ({ id, modulo, afirmacao, fontes, evidencia, limitacoes, interpretacoes: interpretacoes_concorrentes, status, pagina: pagina_ou_secao, acesso, consulta: data_consulta }));
+  const citadas = new Set(raizesAfirmacoes.flatMap(a => a.fontes));
+  const { _: _mapaNota, ...raizesMapa } = readJson('data/raizes/mapa-peninsula.json');
+  void _mapaNota;
+  citadas.add(raizesMapa.fonte);
+  const raizesFontes = readJson('data/raizes/fontes.json').fontes
+    .filter(f => citadas.has(f.id))
+    .map(({ id, nivel, tipo, autor, titulo, ano, editora_ou_periodico, url, acesso, data_consulta, abnt }) =>
+      ({ id, nivel, tipo, autor, titulo, ano, publicacao: editora_ou_periodico, url, acesso, consulta: data_consulta, abnt }));
+  const { _: _cursoNota, ...raizesPublico } = raizesCurso;
+  void _cursoNota;
+  writeFileSync(join(OUT, 'raizes.json'), JSON.stringify({
+    ...raizesPublico,
+    conteudo: raizesModulos,
+    afirmacoes: raizesAfirmacoes,
+    fontes: raizesFontes,
+    mapa: raizesMapa
+  }) + '\n');
+
   /* ── stroke geometry ────────────────────────────────────────────────
      The SVG in assets/stroke-order/ is the printed diagram: the whole letter,
      with numbered start dots. This is the same run's machine-readable half -

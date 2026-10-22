@@ -117,6 +117,19 @@
   --mint-ink: var(--teal-ink);
   --green:    var(--teal);
 
+  /* ── Raízes Sefarditas (21/10/2026) ───────────────────────────────────
+     A subidentidade editorial do produto de história, emprestada da coleção
+     editorial (hebraicofluente-editorial, templates/tokens-editorial.css):
+     a pedra, o mar e o ocre. Só nas telas de /raizes. Contraste sobre o
+     creme: --rz-terra 5,9:1 e --rz-mar 7,2:1 (medidos na coleção). */
+  --rz-pedra:        #EFE7D6;   /* fundo de caixa de método e de debate */
+  --rz-pedra-borda:  #D9CCB0;
+  --rz-mar:          #1E5A73;   /* tinta de fonte, link e rótulo */
+  --rz-mar-claro:    #DCE8EE;   /* o mar do mapa */
+  --rz-terra:        #8C5426;   /* número grande, data, ponto do mapa */
+  --rz-terra-suave:  #F4E7DA;
+  --rz-terra-mapa:   #EFE7D6;   /* a terra do mapa */
+
   --ember:      var(--gold);
   --ember-wash: var(--gold-soft);
 
@@ -234,6 +247,16 @@
     --ink-body:  #C4CFCC;
     --ink-muted: #94A29E;
     --ink-placeholder: #6F7C79;
+
+    /* Raízes Sefarditas no escuro: as mesmas famílias, clareadas como tinta
+       e escurecidas como fundo (o mesmo princípio do --accent acima). */
+    --rz-pedra:        #221F18;
+    --rz-pedra-borda:  #3A3427;
+    --rz-mar:          #8EC3D9;
+    --rz-mar-claro:    #12252C;
+    --rz-terra:        #E2A877;
+    --rz-terra-suave:  #2A1F16;
+    --rz-terra-mapa:   #2B3134;
 
     /* ── teal: progresso e acerto ──────────────────────────────────────── */
     --teal:      #41B5A4;
