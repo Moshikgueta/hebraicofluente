@@ -34,6 +34,7 @@ import * as progress from './api/progress.js';
 import { content } from './api/content.js';
 import { contentA1 } from './api/content-a1.js';
 import { contentRaizes } from './api/content-raizes.js';
+import { licenca as licencaDoLivro } from './api/livro.js';
 import * as exameA1 from './api/exame-a1.js';
 import * as audio from './api/audio.js';
 import * as novidades from './api/novidades.js';
@@ -101,6 +102,9 @@ const ROUTES = {
   /* Raízes Sefarditas (21/10/2026): outro produto, outro direito. Ver
      api/content-raizes.js. */
   'GET /api/content/raizes': contentRaizes,
+  /* A marca d'água do e-book (/israel/): e-mail escondido e número da cópia.
+     Ver api/livro.js. */
+  'GET /api/livro/licenca': licencaDoLivro,
   /* O exame final do A1, corrigido aqui, e o certificado que só ele libera. */
   'POST /api/a1/exame/iniciar': exameA1.iniciar,
   'POST /api/a1/exame/entregar': exameA1.entregar,

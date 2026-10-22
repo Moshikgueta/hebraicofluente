@@ -1224,6 +1224,9 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
 - **Texto protegido contra cópia** na versão web (editorial, `templates/web-app.js` e `web.css`):
   sem seleção, copiar, recortar, arrastar nem menu do botão direito; campos, links e fotos (CC)
   ficam livres. O PDF baixado continua copiável.
+- **Marca d'água do livro** (22/10/2026): a versão web pede `GET /api/livro/licenca`
+  (worker/src/api/livro.js, só com o direito do livro) e mostra na margem o e-mail escondido e o
+  número da cópia, o mesmo da marca do curso (`marcas`), que o /admin/marca reconhece.
 - **Páginas:** `/cursos/<slug>` usa `ProdutoClient` para livro e pacote; rodapé e /cursos
   linkam o e-book. Termos (art. 1) e Reembolso (art. 4) têm um parágrafo marcado TEXTO PARA
   APROVAÇÃO; políticas na versão 2026-10-21.
