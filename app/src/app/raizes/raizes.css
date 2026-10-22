@@ -142,3 +142,10 @@
 
 .rz :focus-visible { outline: 2px solid var(--mar); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .rz *, .rz *::before, .rz *::after { transition: none !important; scroll-behavior: auto !important; } }
+
+/* O certificado (/raizes/certificado): uma folha com fio, e a impressão só dela. */
+.rz-certificado { padding: 28px 22px; border: 1px solid var(--linha); border-top: 3px solid var(--ouro); background: var(--branco); }
+@media print {
+  .rz-topo, .rz-sem-impressao, [data-plataforma] > footer { display: none !important; }
+  .rz-certificado { border-color: #999; break-inside: avoid; }
+}

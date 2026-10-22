@@ -29,7 +29,7 @@ import { contentRaizes, conteudoRaizesBruto } from '../../worker/src/api/content
 import { grantAccess } from '../../worker/src/lib/db.js';
 import {
   MODULOS_COM_CONTEUDO, TOTAL_DE_MODULOS, embaralhar, hidratarRaizes, marcasDe, moduloAberto, partir,
-  progressoDoModulo, conquistasObtidas, type DadosRaizes, type ModuloRaizes
+  progressoDoModulo, conquistasObtidas, certificadoRaizes, type DadosRaizes, type ModuloRaizes
 } from '@/lib/raizes';
 import {
   RAIZES_VAZIO, chaveDaAtividade, fundirRaizes, moduloConcluido, raizesValido, registrarAtividade, visitarEtapa,
@@ -378,6 +378,26 @@ describe.skipIf(!TEM_CONTEUDO)('a jornada e o que ela promete', () => {
     expect(progressoDoModulo(e, m1).concluido).toBe(true);
     expect(conquistasObtidas(e).has('explorador-de-sefarad')).toBe(true);
     expect(conquistasObtidas(e).has('primeiro-documento')).toBe(true);
+  });
+
+  it('o certificado só sai com os dez módulos concluídos, com a data da última atividade', () => {
+    const dados = JSON.parse(conteudoRaizesBruto()) as DadosRaizes;
+    hidratarRaizes(dados);
+    expect(certificadoRaizes(undefined)).toEqual({ pronto: false, faltam: TOTAL_DE_MODULOS, concluidoEm: null });
+    let e: EstadoRaizes = RAIZES_VAZIO;
+    let dia = 0;
+    const quando = () => `2026-11-${String(1 + (dia++ % 28)).padStart(2, '0')}T10:00:00Z`;
+    for (const m of dados.conteudo.slice(0, -1)) {
+      for (const id of Object.keys(m.atividades)) e = registrarAtividade(e, chaveDaAtividade(m.n, id), 1, true, quando());
+    }
+    const quase = certificadoRaizes(e);
+    expect(quase.pronto).toBe(false);
+    if (dados.conteudo.length < TOTAL_DE_MODULOS) return;
+    expect(quase.faltam).toBe(1);
+    const ultimo = dados.conteudo.at(-1)!;
+    for (const id of Object.keys(ultimo.atividades)) e = registrarAtividade(e, chaveDaAtividade(ultimo.n, id), 1, true, '2026-12-25T09:00:00Z');
+    expect(certificadoRaizes(e)).toEqual({ pronto: true, faltam: 0, concluidoEm: '2026-12-25T09:00:00Z' });
+    expect(conquistasObtidas(e).has('percurso-completo')).toBe(true);
   });
 });
 

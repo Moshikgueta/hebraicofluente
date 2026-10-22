@@ -286,6 +286,17 @@ if (DADOS.conteudo.length > 1) {
   await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
   await p.waitForTimeout(400);
   ok(await p.locator('[aria-label="Seu progresso"]', { hasText: `${DADOS.conteudo.length}/10` }).count() === 1, 'a casa conta os módulos concluídos');
+  if (DADOS.conteudo.length === 10) {
+    /* Os dez concluídos: o certificado abre, com o nome e o que ele não certifica. */
+    await p.goto(`${BASE}/raizes/certificado/`, { waitUntil: 'networkidle' });
+    await p.waitForTimeout(400);
+    await p.getByLabel('Nome que aparece no certificado').fill('Ana de Teste');
+    const cert = p.locator('article.rz-certificado');
+    ok(await cert.locator('text=Ana de Teste').count() === 1, 'o certificado leva o nome digitado');
+    ok(await cert.locator('text=Este certificado não certifica:').count() === 1, 'o certificado diz o que não certifica');
+    ok(await semRolagemLateral(p), 'certificado sem rolagem lateral');
+    await p.screenshot({ path: '.shots/raizes-certificado.png', fullPage: true });
+  }
 }
 
 await p.goto(`${BASE}/raizes/biblioteca/`, { waitUntil: 'networkidle' });

@@ -762,7 +762,10 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   do mesmo desenho (Portugal, no módulo 3).
   E pode pedir outro desenho com `desenho` (o nome de `raizes/data/mapa-<nome>.json`,
   exportado em `mapas`): o Mediterrâneo (módulo 5) e o litoral do Brasil (módulo 6). Sem ele, a península.
-- Módulos 1 a 9 prontos para revisão humana; o módulo 10 só no plano. Módulo novo:
+- Os dez módulos prontos para revisão humana (22/10/2026). O certificado
+  (`/raizes/certificado`, `certificadoRaizes` em lib/raizes.ts) só abre com os dez
+  concluídos; sai em HTML para imprimir, com o nome guardado só no aparelho e a lista do
+  que não certifica, sem código de verificação. Módulo novo:
   `MODULOS_COM_CONTEUDO` em `lib/raizes.ts`, e conteúdo de lá precisa de publicação
   manual (o deploy só roda sozinho com push no site).
   `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.
