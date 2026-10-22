@@ -79,6 +79,13 @@ export const IconeRecompensas = (p: P) => wrap(
           stroke="currentColor" />
   </>, p);
 
+/** Livro: o e-book Israel Além do Roteiro, aberto. */
+export const IconeLivro = (p: P) => wrap(
+  <>
+    <path d="M10 5.4C8.4 4.3 6.2 3.8 3.4 4v11.2c2.8-.2 5 .3 6.6 1.4 1.6-1.1 3.8-1.6 6.6-1.4V4c-2.8-.2-5 .3-6.6 1.4Z" stroke="currentColor" />
+    <path d="M10 5.4v11.2" stroke="currentColor" />
+  </>, p);
+
 /** Perfil: a pessoa. */
 export const IconePerfil = (p: P) => wrap(
   <>

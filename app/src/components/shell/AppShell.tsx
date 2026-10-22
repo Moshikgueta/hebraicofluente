@@ -35,7 +35,7 @@ import { Logo } from '@/components/shell/Logo';
 import { He } from '@/components/hebrew/He';
 import {
   IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil, IconeAula0,
-  IconePalavras, IconeRecompensas
+  IconePalavras, IconeRecompensas, IconeLivro
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
@@ -94,6 +94,21 @@ const NAV = [
   { href: '/perfil', label: 'Perfil', icon: IconePerfil, movel: 'conta' }
 ] as const;
 
+/* Os produtos à parte numa aba própria (22/10/2026, pedido do dono).
+ * ─────────────────────────────────────────────────────────────────────────
+ * O e-book Israel Além do Roteiro não é o curso: mora em /israel/, uma
+ * página estática atrás do portão, fora do roteador do app (por isso <a>, e
+ * não <Link>). A aba só aparece para quem tem o direito, e enquanto o livro
+ * não está à venda isso quer dizer: só para quem o dono liberou à mão.
+ * Na sidebar ela vem separada da navegação do curso; no telefone, como um
+ * ícone no cabeçalho, porque a barra de baixo não tem lugar (ver NAV). */
+const LIVRO = { slug: 'israel-alem-do-roteiro', href: '/israel/', label: 'Israel Além do Roteiro' } as const;
+
+function useTemLivro(): boolean {
+  const account = useAccount();
+  return account.ready && account.signedIn && account.can(LIVRO.slug);
+}
+
 /**
  * Is this nav item the page we are on?
  *
@@ -111,6 +126,7 @@ export function isActive(pathname: string | null, href: string): boolean {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const p = useProgress();
+  const temLivro = useTemLivro();
   const pathname = usePathname();
   const { remember } = p;
 
@@ -179,9 +195,16 @@ export function AppShell({ children }: { children: ReactNode }) {
               baixo do "◆ XP" (auditoria de 01/10, VIS-003). O site público
               já faz o mesmo abaixo de sm. */}
           <Link href="/meu-hebraico" className="flex items-center min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
-            <span className="min-[380px]:hidden"><Logo size={30} words={false} /></span>
-            <span className="hidden min-[380px]:inline-flex min-w-0"><Logo size={30} /></span>
-            <span className="sr-only min-[380px]:hidden">Hebraico Fluente</span>
+            {/* Com a aba do livro (mais 40 px + 16 de vão), o nome só cabe inteiro a partir de 480 px. */}
+            {temLivro ? <>
+              <span className="min-[480px]:hidden"><Logo size={30} words={false} /></span>
+              <span className="hidden min-[480px]:inline-flex min-w-0"><Logo size={30} /></span>
+              <span className="sr-only min-[480px]:hidden">Hebraico Fluente</span>
+            </> : <>
+              <span className="min-[380px]:hidden"><Logo size={30} words={false} /></span>
+              <span className="hidden min-[380px]:inline-flex min-w-0"><Logo size={30} /></span>
+              <span className="sr-only min-[380px]:hidden">Hebraico Fluente</span>
+            </>}
           </Link>
           <div className="flex items-center gap-4">
             {/* O XP leva às Recompensas (27/09/2026): é onde ele vale alguma coisa. */}
@@ -204,6 +227,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 )}
               </Link>
             )}
+            <LinkDoLivroNoCabecalho />
             <ProfileLink />
           </div>
         </div>
@@ -355,6 +379,8 @@ function Sidebar({ pathname }: { pathname: string | null }) {
         </ul>
       </nav>
 
+      <LinkDoLivroNaSidebar />
+
       <div className="flex-1" />
 
       {/* Aqui havia um cartão de "próximo nível" dizendo que o A1 seria
@@ -368,6 +394,31 @@ function Sidebar({ pathname }: { pathname: string | null }) {
         Nas lições, <Key dark>1</Key>-<Key dark>4</Key> respondem e <Key dark>Enter</Key> avança.
       </p>
     </aside>
+  );
+}
+
+function LinkDoLivroNaSidebar() {
+  if (!useTemLivro()) return null;
+  return (
+    <nav aria-label="Seus livros" className="grid gap-[3px]">
+      <p className="px-3 font-ui text-[11.5px] font-semibold uppercase tracking-[.08em] text-white/[.6]">Seus livros</p>
+      <a href={LIVRO.href}
+         className="flex items-center gap-[11px] rounded-[11px] px-3 py-2.5 font-ui text-[15px] font-medium
+                    text-white/[.66] hover:bg-white/[.06] transition-colors">
+        <IconeLivro className="text-white/[.55]" />
+        <span className="flex-1">{LIVRO.label}</span>
+      </a>
+    </nav>
+  );
+}
+
+function LinkDoLivroNoCabecalho() {
+  if (!useTemLivro()) return null;
+  return (
+    <a href={LIVRO.href} aria-label={LIVRO.label} title={LIVRO.label}
+       className="inline-grid place-items-center w-[40px] h-[40px] rounded-full hover:bg-surface-2 text-ink-muted">
+      <IconeLivro size={21} />
+    </a>
   );
 }
 
