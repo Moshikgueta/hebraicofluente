@@ -12,13 +12,21 @@ import { useState } from 'react';
 import type { Bloco } from '@/lib/raizes';
 import { TextoComFontes } from '../Texto';
 import { Edito } from './Edito';
+import { useProgress } from '@/lib/state/store';
 
 type Documento = Extract<Bloco, { tipo: 'documento' }>;
 
 export function LeiaODocumento({ b }: { b: Documento }) {
   const [ativa, setAtiva] = useState<string | null>(null);
   const [lidas, setLidas] = useState<Set<string>>(new Set());
-  const abrir = (id: string) => { setAtiva(id); setLidas(l => new Set(l).add(id)); };
+  const p = useProgress();
+  const abrir = (id: string) => {
+    setAtiva(id);
+    const n = new Set(lidas).add(id);
+    setLidas(n);
+    /* Ler todas as partes é examinar o documento: vai para o passaporte. */
+    if (n.size === b.partes.length) p.descobrirRaizes(`documento:${b.id}`);
+  };
   const parte = b.partes.find(p => p.id === ativa);
   const k = b.partes.findIndex(p => p.id === ativa);
   const todas = lidas.size === b.partes.length;

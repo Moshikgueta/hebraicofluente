@@ -265,3 +265,21 @@
 .rz-vitrine.aberta { border-color: var(--titulo); box-shadow: 0 0 0 1px var(--titulo); }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) { .rz-vitrine:hover { transform: translateY(-2px); } }
 .rz-vitrine:focus-visible { outline: 3px solid var(--titulo); outline-offset: 3px; }
+
+/* ── A jornada: coleção, passaporte, mundos (22/10/2026) ───────────────── */
+.rz-guardar { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--linha); background: var(--branco); color: var(--corpo); font-family: var(--rotulo); font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: border-color var(--dur) ease, background-color var(--dur) ease, color var(--dur) ease; }
+.rz-guardar[aria-pressed='true'] { border-color: var(--ocre); color: var(--ocre); background: var(--rz-terra-suave); }
+.rz-guardar:focus-visible { outline: 3px solid var(--titulo); outline-offset: 2px; }
+.rz-pessoa { border-top: 1px solid var(--linha); padding: 12px 0; }
+.rz-pessoa.aberta { border-top-color: var(--ocre); }
+.rz-monograma { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%;
+  border: 1.5px solid var(--ocre); color: var(--ocre); font-family: var(--serif); font-size: 18px; letter-spacing: .02em; }
+.rz-selo-pass { display: grid; grid-template-columns: 36px 1fr; gap: 10px; padding: 12px; border: 1px dashed var(--pedra-escura); border-radius: 8px; }
+.rz-selo-pass.tem { border-style: solid; border-color: var(--ocre); background: color-mix(in srgb, var(--ocre) 6%, transparent); }
+.rz-selo-pass-marca { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%;
+  border: 1.5px dashed var(--pedra-escura); color: var(--ocre); font-size: 14px; font-weight: 700; }
+.rz-selo-pass.tem .rz-selo-pass-marca { border-style: solid; border-color: var(--ocre); }
+.rz-porta { display: grid; gap: 2px; align-content: start; min-height: 76px; height: 100%; padding: 10px 12px; border: 1px solid var(--linha); border-radius: 8px; text-decoration: none; transition: border-color .15s, background-color .15s; }
+.rz-porta:hover { border-color: var(--ocre); background: var(--pedra); }

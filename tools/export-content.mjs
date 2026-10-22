@@ -809,7 +809,9 @@ function main() {
         raizesLugares[arq.slice(0, -5)] = semNota(lerRaizes(`data/lugares/${arq}`));
       }
     }
-    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa, mapas: raizesMapas, atlas: raizesAtlas, lugares: raizesLugares };
+    /* Os personagens históricos (data/personagens.json, 22/10/2026). */
+    const raizesPersonagens = existsSync(join(RAIZES, 'data/personagens.json')) ? lerRaizes('data/personagens.json').personagens : undefined;
+    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa, mapas: raizesMapas, atlas: raizesAtlas, lugares: raizesLugares, personagens: raizesPersonagens };
   } else {
     console.warn(`  ! Raízes Sefarditas: ${RAIZES}/data não existe; raizes.json sai vazio.`);
     raizesJson = {

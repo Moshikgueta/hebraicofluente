@@ -149,6 +149,8 @@ export type DadosRaizes = {
   atlas?: Atlas;
   /** As páginas de lugar (raizes/data/lugares/<id>.json). */
   lugares?: Record<string, PaginaDeLugar>;
+  /** Os personagens históricos (raizes/data/personagens.json): só o que a matriz sustenta. */
+  personagens?: Personagem[];
 };
 
 /* ── o Atlas ──────────────────────────────────────────────────────────────
@@ -180,6 +182,12 @@ export type Atlas = {
   grupos: { id: string; nome: string; descricao: string }[];
   evidencias: { id: Evidencia; nome: string; descricao: string }[];
   rotas: RotaDoExilio[];
+};
+
+export type Personagem = {
+  id: string; nome: string; quando: string;
+  /** Lugares do Atlas ligados a ele (ids de atlas.lugares). */
+  lugares: string[]; modulos: number[]; resumo: string; paragrafos: string[];
 };
 
 export type PaginaDeLugar = {

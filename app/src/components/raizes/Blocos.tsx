@@ -62,9 +62,9 @@ export function BlocoRaizes({ b, m }: { b: Bloco; m: ModuloRaizes }) {
     case 'vf':
       return <VerdadeiroOuFalso b={b} />;
     case 'curiosidades':
-      return <Curiosidades b={b} />;
+      return <Curiosidades b={b} n={m.n} />;
     case 'artefatos':
-      return <Artefatos b={b} />;
+      return <Artefatos b={b} n={m.n} />;
     case 'documento':
       return <LeiaODocumento b={b} />;
     case 'sintese':

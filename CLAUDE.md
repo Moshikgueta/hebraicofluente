@@ -796,6 +796,14 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   visual é o da coleção em todos os módulos; a identidade "O Arquivo Aberto" (protótipo do módulo
   3) foi descartada pelo dono, ficaram a folha do édito, a narrativa com o mapa e o "Leia o édito".
   Estratégia e diagnóstico: `raizes/docs/experiencia-premium-fase1-2.md`.
+- **Jornada personalizada** (22/10/2026, master prompt de 50 etapas): a casa agrupa os 10 módulos
+  em cinco mundos (`MUNDOS` em `lib/raizes-jornada.ts`), pergunta os interesses (opcional, só muda a
+  ordem das sugestões; `recomendar` sempre diz o porquê) e mostra "Continue sua jornada". Páginas
+  `/raizes/personagens` (`raizes/data/personagens.json`, toda frase com marca), `/raizes/busca`
+  (local), `/raizes/glossario`, `/raizes/passaporte` (selos do que se explorou, nunca de origem) e
+  `/raizes/colecao` ("Guardar na coleção", `components/raizes/Guardar.tsx`). Estado novo em
+  `EstadoRaizes`: `descobertas` (a primeira vez), `colecao` (o gesto mais recente), `perfil` (o mais
+  recente). O que falta: `raizes/docs/matriz-master-prompt-50-etapas.md`. `tests/raizes-jornada.test.ts`.
 - **Peças do Israel Além do Roteiro** (`components/raizes/Pecas.tsx`): `palpite`, `vf`
   (verdadeiro ou falso), `curiosidades` e `artefatos` (vitrine com ficha). Nenhuma conta para a
   conclusão nem grava no servidor. Todo texto factual delas segue a regra das marcas

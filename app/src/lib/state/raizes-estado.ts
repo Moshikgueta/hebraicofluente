@@ -42,7 +42,21 @@ export type EstadoRaizes = {
   atividades: Record<string, AtividadeFeita>;
   etapas: Record<string, string>;
   onde: { rota: string; em: string } | null;
+  /* Os três abaixo são de 22/10/2026 (MASTER PROMPT do dono) e opcionais:
+     estados antigos não os têm. Nenhum guarda dado de família. */
+  /** O que o aluno descobriu (abriu um artefato, um lugar, um personagem...): a primeira vez. */
+  descobertas?: Record<string, string>;
+  /** A coleção pessoal: guardar e tirar. Vale o gesto mais recente. */
+  colecao?: Record<string, { em: string; ativo: boolean }>;
+  /** Os interesses escolhidos na entrada; mudam quando o aluno quiser. Vale o mais recente. */
+  perfil?: { interesses: Interesse[]; em: string };
 };
+
+/** Por onde o aluno quer começar (a entrada do Raízes). Só orienta a recomendação: tudo fica aberto. */
+export const INTERESSES = ['familia', 'historia', 'cultura', 'diaspora', 'brasil'] as const;
+export type Interesse = (typeof INTERESSES)[number];
+const MAXIMO = 600;
+const ehChaveDeDescoberta = (k: string) => /^(artefato|lugar|rota|personagem|documento|curiosidade|termo):[a-z0-9:-]{1,80}$/.test(k);
 
 export const RAIZES_VAZIO: EstadoRaizes = { atividades: {}, etapas: {}, onde: null };
 
@@ -73,7 +87,27 @@ export function fundirRaizes(a: EstadoRaizes | undefined, b: EstadoRaizes | unde
   const onde = !x.onde ? y.onde : !y.onde ? x.onde
     : x.onde.em !== y.onde.em ? (x.onde.em > y.onde.em ? x.onde : y.onde)
     : (x.onde.rota >= y.onde.rota ? x.onde : y.onde);
-  return { atividades, etapas, onde };
+  /* Descoberta: a primeira vez (a mais antiga), união dos dois lados. */
+  const descobertas: Record<string, string> = {};
+  for (const k of new Set([...Object.keys(x.descobertas ?? {}), ...Object.keys(y.descobertas ?? {})])) {
+    descobertas[k] = cedo(x.descobertas?.[k] ?? null, y.descobertas?.[k] ?? null)!;
+  }
+  /* Coleção: o gesto mais recente vence; empate, "guardado" vence (o máximo). */
+  const colecao: Record<string, { em: string; ativo: boolean }> = {};
+  for (const k of new Set([...Object.keys(x.colecao ?? {}), ...Object.keys(y.colecao ?? {})])) {
+    const p = x.colecao?.[k], q = y.colecao?.[k];
+    colecao[k] = !p ? q! : !q ? p : p.em !== q.em ? (p.em > q.em ? p : q) : { em: p.em, ativo: p.ativo || q.ativo };
+  }
+  /* Perfil: o mais recente; empate, o maior na ordem do texto (comutativa). */
+  const perfil = !x.perfil ? y.perfil : !y.perfil ? x.perfil
+    : x.perfil.em !== y.perfil.em ? (x.perfil.em > y.perfil.em ? x.perfil : y.perfil)
+    : (x.perfil.interesses.join() >= y.perfil.interesses.join() ? x.perfil : y.perfil);
+  return {
+    atividades, etapas, onde,
+    ...(Object.keys(descobertas).length ? { descobertas } : {}),
+    ...(Object.keys(colecao).length ? { colecao } : {}),
+    ...(perfil ? { perfil } : {})
+  };
 }
 
 const ehIso = (v: unknown): v is string => typeof v === 'string' && v.length <= 40 && !Number.isNaN(Date.parse(v));
@@ -104,8 +138,51 @@ export function raizesValido(v: unknown): EstadoRaizes | undefined {
   const w = o.onde as Record<string, unknown> | null | undefined;
   const onde = w && typeof w.rota === 'string' && w.rota.startsWith('/raizes') && w.rota.length <= 120 && ehIso(w.em)
     ? { rota: w.rota, em: w.em } : null;
-  return { atividades, etapas, onde };
+  const descobertas: Record<string, string> = {};
+  if (o.descobertas && typeof o.descobertas === 'object') {
+    for (const [k, em] of Object.entries(o.descobertas as Record<string, unknown>).slice(0, MAXIMO)) {
+      if (ehChaveDeDescoberta(k) && ehIso(em)) descobertas[k] = em;
+    }
+  }
+  const colecao: Record<string, { em: string; ativo: boolean }> = {};
+  if (o.colecao && typeof o.colecao === 'object') {
+    for (const [k, c] of Object.entries(o.colecao as Record<string, unknown>).slice(0, MAXIMO)) {
+      const r = c as Record<string, unknown> | null;
+      if (ehChaveDeDescoberta(k) && r && ehIso(r.em) && typeof r.ativo === 'boolean') colecao[k] = { em: r.em, ativo: r.ativo };
+    }
+  }
+  const pf = o.perfil as Record<string, unknown> | null | undefined;
+  const interesses = Array.isArray(pf?.interesses)
+    ? [...new Set((pf!.interesses as unknown[]).filter((i): i is Interesse => INTERESSES.includes(i as Interesse)))] : [];
+  const perfil = pf && ehIso(pf.em) ? { interesses, em: pf.em as string } : undefined;
+  return {
+    atividades, etapas, onde,
+    ...(Object.keys(descobertas).length ? { descobertas } : {}),
+    ...(Object.keys(colecao).length ? { colecao } : {}),
+    ...(perfil ? { perfil } : {})
+  };
 }
+
+/** Uma descoberta nova (a primeira vez fica). */
+export function descobrir(e: EstadoRaizes | undefined, chave: string, agora: string): EstadoRaizes {
+  const s = e ?? RAIZES_VAZIO;
+  if (!ehChaveDeDescoberta(chave) || s.descobertas?.[chave]) return s;
+  return { ...s, descobertas: { ...s.descobertas, [chave]: agora } };
+}
+
+/** Guardar na coleção, ou tirar dela. */
+export function guardarNaColecao(e: EstadoRaizes | undefined, chave: string, ativo: boolean, agora: string): EstadoRaizes {
+  const s = e ?? RAIZES_VAZIO;
+  if (!ehChaveDeDescoberta(chave)) return s;
+  return { ...s, colecao: { ...s.colecao, [chave]: { em: agora, ativo } } };
+}
+
+export function escolherInteresses(e: EstadoRaizes | undefined, interesses: Interesse[], agora: string): EstadoRaizes {
+  const s = e ?? RAIZES_VAZIO;
+  return { ...s, perfil: { interesses: [...new Set(interesses.filter(i => INTERESSES.includes(i)))], em: agora } };
+}
+
+export const naColecao = (e: EstadoRaizes | undefined, chave: string) => !!e?.colecao?.[chave]?.ativo;
 
 /** Uma tentativa terminada. `nota` de 0 a 1; `concluiu` = o critério da atividade foi cumprido. */
 export function registrarAtividade(

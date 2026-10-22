@@ -12,7 +12,7 @@ import {
   type GeneroA1, type TranslitA1
 } from './a1-estado';
 import { habilidadeDoItem, type ItemA1 } from '@/lib/a1';
-import { chaveDaAtividade, chaveDaEtapa, registrarAtividade, visitarEtapa } from './raizes-estado';
+import { chaveDaAtividade, chaveDaEtapa, descobrir, escolherInteresses, guardarNaColecao, registrarAtividade, visitarEtapa, type Interesse } from './raizes-estado';
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode
 } from 'react';
@@ -164,6 +164,12 @@ type Ctx = {
   registrarAtividadeRaizes: (modulo: number, id: string, nota: number, concluiu: boolean) => void;
   /** O aluno abriu uma etapa: guarda a primeira visita e o "onde parei". */
   visitarEtapaRaizes: (modulo: number, etapa: string, rota: string) => void;
+  /** Uma descoberta (artefato, lugar, personagem...): fica a primeira vez. */
+  descobrirRaizes: (chave: string) => void;
+  /** Guardar na coleção pessoal, ou tirar. */
+  colecaoRaizes: (chave: string, ativo: boolean) => void;
+  /** Os interesses escolhidos na entrada (podem mudar a qualquer hora). */
+  interessesRaizes: (interesses: Interesse[]) => void;
 };
 
 const StoreContext = createContext<Ctx | null>(null);
@@ -508,6 +514,22 @@ export function ProgressProvider({
     commit({ ...s, raizes: visitarEtapa(s.raizes, chave, rota, new Date().toISOString()) });
   }, [commit, agora]);
 
+  const descobrirRaizes = useCallback((chave: string) => {
+    const s = agora();
+    if (s.raizes?.descobertas?.[chave]) return;
+    commit({ ...s, raizes: descobrir(s.raizes, chave, new Date().toISOString()) });
+  }, [commit, agora]);
+
+  const colecaoRaizes = useCallback((chave: string, ativo: boolean) => {
+    const s = agora();
+    commit({ ...s, raizes: guardarNaColecao(s.raizes, chave, ativo, new Date().toISOString()) });
+  }, [commit, agora]);
+
+  const interessesRaizes = useCallback((interesses: Interesse[]) => {
+    const s = agora();
+    commit({ ...s, raizes: escolherInteresses(s.raizes, interesses, new Date().toISOString()) });
+  }, [commit, agora]);
+
   const setGeneroA1 = useCallback((g: GeneroA1) => {
     const s = agora();
     commit({ ...s, a1: { ...s.a1, genero: { valor: g, em: new Date().toISOString() } } });
@@ -614,7 +636,7 @@ export function ProgressProvider({
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
       remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
       responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1,
-      registrarAtividadeRaizes, visitarEtapaRaizes
+      registrarAtividadeRaizes, visitarEtapaRaizes, descobrirRaizes, colecaoRaizes, interessesRaizes
     };
   }, [
     state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
@@ -622,7 +644,7 @@ export function ProgressProvider({
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
     setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
     responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1,
-    registrarAtividadeRaizes, visitarEtapaRaizes
+    registrarAtividadeRaizes, visitarEtapaRaizes, descobrirRaizes, colecaoRaizes, interessesRaizes
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

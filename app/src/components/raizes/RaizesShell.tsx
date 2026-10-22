@@ -58,12 +58,16 @@ export function RaizesShell({ children }: { children: ReactNode }) {
     <div data-plataforma className="min-h-[100dvh] flex flex-col">
       <header className="rz-topo">
         <div className="mx-auto flex h-[54px] max-w-[var(--larg)] items-center gap-2 px-4">
-          <Link href="/raizes" prefetch={false} className="rz-marca-da-casa flex-1 min-w-0">Raízes Sefarditas</Link>
+          <Link href="/raizes" prefetch={false} className="rz-marca-da-casa flex-1 min-w-0"><span className="min-[480px]:hidden">Raízes</span><span className="hidden min-[480px]:inline">Raízes Sefarditas</span></Link>
           <nav aria-label="Raízes Sefarditas" className="flex items-center">
             {LINKS.map(l => (
               <Link key={l.href} href={l.href} prefetch={false} aria-current={ativo(l.href) ? 'page' : undefined}>{l.rotulo}</Link>
             ))}
           </nav>
+          <Link href="/raizes/busca" prefetch={false} aria-label="Buscar" aria-current={ativo('/raizes/busca') ? 'page' : undefined}
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[var(--titulo)] hover:bg-[var(--pedra)]">
+            <svg viewBox="0 0 20 20" aria-hidden className="h-[18px] w-[18px]"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.6" /><path d="M13 13l4.5 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+          </Link>
           {account.signedIn && (
             <Link href="/perfil" prefetch={false} aria-label="Sua conta"
               className="ml-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--linha)] font-ui text-[13px] font-semibold text-[var(--titulo)]">

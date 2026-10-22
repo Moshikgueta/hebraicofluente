@@ -375,6 +375,58 @@ if (DADOS.atlas) {
   ok(await p.locator('text=Exemplo didático, fictício').count() === 1, 'a árvore continua no aparelho depois de recarregar');
 }
 
+/* ── a jornada: interesses, personagens, coleção, busca, glossário, passaporte ── */
+await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
+await p.waitForTimeout(400);
+const cartao = p.locator('section[aria-labelledby="interesses"]');
+if (await cartao.count()) {
+  await cartao.getByRole('button', { name: 'Conhecer a presença sefardita no Brasil' }).click();
+  await cartao.getByRole('button', { name: 'Guardar' }).click();
+  await p.waitForTimeout(200);
+}
+ok(await p.locator('text=Seus interesses').count() === 1, 'os interesses ficam guardados');
+ok(await p.locator('text=Porque você escolheu').count() > 0, 'a sugestão diz por quê');
+ok(await p.locator('h3', { hasText: 'A herança sefardita no Brasil' }).count() === 1, 'os cinco mundos aparecem na casa');
+ok(await semRolagemLateral(p), 'casa sem rolagem lateral');
+await p.screenshot({ path: '.shots/raizes-casa-jornada.png', fullPage: true });
+
+if (DADOS.personagens?.length) {
+  await p.goto(`${BASE}/raizes/personagens/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(300);
+  const nome = DADOS.personagens[0].nome;
+  await p.getByRole('button', { name: new RegExp(nome) }).first().click();
+  await p.waitForTimeout(200);
+  await p.getByRole('button', { name: 'Guardar na coleção' }).first().click();
+  await p.waitForTimeout(800);
+  ok(await p.getByRole('button', { name: 'Na sua coleção' }).count() === 1, 'o botão diz que guardou');
+  ok(await semRolagemLateral(p), 'personagens sem rolagem lateral');
+  await p.screenshot({ path: '.shots/raizes-personagens.png', fullPage: false });
+  await p.goto(`${BASE}/raizes/colecao/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(800);
+  ok(await p.locator('.rz-lista li', { hasText: nome }).count() === 1, 'o personagem guardado está na coleção');
+  ok(await semRolagemLateral(p), 'coleção sem rolagem lateral');
+  await p.screenshot({ path: '.shots/raizes-colecao.png', fullPage: false });
+}
+
+await p.goto(`${BASE}/raizes/busca/?q=lisboa`, { waitUntil: 'networkidle' });
+await p.waitForTimeout(300);
+ok(await p.locator('.rz-lista li').count() > 0, 'a busca acha Lisboa');
+ok(await semRolagemLateral(p), 'busca sem rolagem lateral');
+await p.screenshot({ path: '.shots/raizes-busca.png', fullPage: false });
+
+await p.goto(`${BASE}/raizes/glossario/`, { waitUntil: 'networkidle' });
+await p.waitForTimeout(300);
+ok(await p.locator('dl dt').count() > 10, 'o glossário lista os termos');
+ok(await semRolagemLateral(p), 'glossário sem rolagem lateral');
+await p.screenshot({ path: '.shots/raizes-glossario.png', fullPage: false });
+
+await p.goto(`${BASE}/raizes/passaporte/`, { waitUntil: 'networkidle' });
+await p.waitForTimeout(300);
+ok(await p.locator('.rz-selo-pass').count() >= 9, 'o passaporte mostra os selos');
+ok(await p.locator('text=não vale como documento').count() === 1, 'o passaporte diz que não certifica origem');
+ok(await semRolagemLateral(p), 'passaporte sem rolagem lateral');
+await p.screenshot({ path: '.shots/raizes-passaporte.png', fullPage: true });
+
 await p.goto(`${BASE}/raizes/biblioteca/`, { waitUntil: 'networkidle' });
 await p.waitForTimeout(300);
 ok(await p.locator('h1', { hasText: 'Biblioteca' }).count() === 1, 'a biblioteca abre');

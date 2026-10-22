@@ -17,6 +17,11 @@ import type { Bloco } from '@/lib/raizes';
 import { embaralhar } from '@/lib/raizes';
 import { TextoComFontes } from './Texto';
 import { Gravura } from './ilustracoes/Gravuras';
+import { Guardar } from './Guardar';
+import { useProgress } from '@/lib/state/store';
+
+const mm = (n: number) => `m${String(n).padStart(2, '0')}`;
+const slug = (t: string) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
 
 type De<T extends Bloco['tipo']> = Extract<Bloco, { tipo: T }>;
 const semMarcas = (t: string) => t.replace(/\[\[[^\]]*\]\]/g, '').replace(/\s+([.,;:!?])/g, '$1').trim();
@@ -105,7 +110,7 @@ export function VerdadeiroOuFalso({ b }: { b: De<'vf'> }) {
 
 /* ── curiosidades ─────────────────────────────────────────────────────── */
 
-export function Curiosidades({ b }: { b: De<'curiosidades'> }) {
+export function Curiosidades({ b, n }: { b: De<'curiosidades'>; n: number }) {
   const [copiada, setCopiada] = useState<number | null>(null);
   const copiar = (i: number) => {
     const it = b.itens[i]!;
@@ -123,9 +128,10 @@ export function Curiosidades({ b }: { b: De<'curiosidades'> }) {
             <div className="grid gap-1.5">
               <h4 className="rz-serif m-0 text-[18.5px] font-[480] leading-snug text-[var(--titulo)]">{it.titulo}</h4>
               <TextoComFontes texto={it.texto} />
-              <p className="m-0">
+              <p className="m-0 flex flex-wrap items-center gap-3">
+                <Guardar chave={`curiosidade:${mm(n)}:${slug(it.titulo)}`} />
                 <button type="button" className="rz-link !text-[13px] min-h-[36px]" onClick={() => copiar(i)}>Copiar para enviar</button>
-                <span className="font-ui text-[12.5px] text-[var(--suave)]" aria-live="polite">{copiada === i ? ' Copiado.' : ''}</span>
+                <span className="font-ui text-[12.5px] text-[var(--suave)]" aria-live="polite">{copiada === i ? 'Copiado.' : ''}</span>
               </p>
             </div>
           </li>
@@ -139,8 +145,15 @@ export function Curiosidades({ b }: { b: De<'curiosidades'> }) {
 
 const TIPO_DO_ARTEFATO: Record<string, string> = { documento: 'Documento', objeto: 'Objeto', lugar: 'Lugar', livro: 'Livro' };
 
-export function Artefatos({ b }: { b: De<'artefatos'> }) {
+export function Artefatos({ b, n }: { b: De<'artefatos'>; n: number }) {
   const [aberto, setAberto] = useState<string | null>(null);
+  const p = useProgress();
+  /* Abrir a ficha é uma descoberta (vai para o passaporte). */
+  const abrir = (id: string) => {
+    const novo = aberto === id ? null : id;
+    setAberto(novo);
+    if (novo) p.descobrirRaizes(`artefato:${mm(n)}:${novo}`);
+  };
   const a = b.itens.find(x => x.id === aberto);
   return (
     <section className="grid gap-3" aria-labelledby={`ar-${b.titulo}`}>
@@ -149,7 +162,7 @@ export function Artefatos({ b }: { b: De<'artefatos'> }) {
       <ul className="-mx-4 m-0 flex snap-x gap-3 overflow-x-auto px-4 pb-2 list-none [scrollbar-width:thin]">
         {b.itens.map(x => (
           <li key={x.id} className="snap-start shrink-0">
-            <button type="button" onClick={() => setAberto(aberto === x.id ? null : x.id)} aria-expanded={aberto === x.id}
+            <button type="button" onClick={() => abrir(x.id)} aria-expanded={aberto === x.id}
               aria-controls={`ficha-${x.id}`} className={`rz-vitrine ${aberto === x.id ? 'aberta' : ''}`}>
               <Gravura nome={x.gravura} className="h-[74px] w-full text-[var(--tinta)]" />
               <span className="rz-rot !text-[10.5px]">{TIPO_DO_ARTEFATO[x.tipo] ?? x.tipo} · {x.quando}</span>
@@ -171,7 +184,10 @@ export function Artefatos({ b }: { b: De<'artefatos'> }) {
             </figure>
             <p className="rz-corpo m-0 !text-[16.5px] font-[480]">{a.resumo}</p>
             <TextoComFontes texto={a.texto} />
-            <button type="button" className="rz-link justify-self-start min-h-[40px]" onClick={() => setAberto(null)}>Fechar a ficha</button>
+            <div className="flex flex-wrap items-center gap-3">
+              <Guardar chave={`artefato:${mm(n)}:${a.id}`} />
+              <button type="button" className="rz-link min-h-[40px]" onClick={() => setAberto(null)}>Fechar a ficha</button>
+            </div>
           </div>
         </article>
       )}
