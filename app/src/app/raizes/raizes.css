@@ -149,3 +149,12 @@
   .rz-topo, .rz-sem-impressao, [data-plataforma] > footer { display: none !important; }
   .rz-certificado { border-color: #999; break-inside: avoid; }
 }
+
+/* O Atlas (/raizes/atlas): reinos como rótulo, nunca fronteira; e o alvo de
+   toque de cada rota, no meio dela. */
+.rz-area { font-family: var(--serif); font-style: italic; font-size: 13px; letter-spacing: .04em; color: var(--suave); white-space: nowrap; text-shadow: 0 0 3px var(--rz-terra-mapa), 0 0 3px var(--rz-terra-mapa); }
+.rz-rota-alvo { position: absolute; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 50%; border: 2px solid; background: var(--branco); color: var(--tinta); font-size: 14px; line-height: 1; display: flex; align-items: center; justify-content: center; padding: 0; }
+.rz-rota-alvo[aria-pressed="true"] { background: var(--noite); color: #fff; }
+.rz-chip { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--linha); background: var(--branco); color: var(--tinta); font-family: var(--rotulo); font-size: 13.5px; font-weight: 600; }
+.rz-chip[aria-pressed="true"] { background: var(--noite); border-color: var(--noite); color: #fff; }
+@media (prefers-reduced-motion: reduce) { .rz-atlas * { transition: none !important; } }

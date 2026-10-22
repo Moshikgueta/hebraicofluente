@@ -144,6 +144,22 @@ export function RaizesHomeClient() {
 
       <section className="grid gap-8 sm:grid-cols-2">
         <div className="rz-nota mar grid content-start gap-2">
+          <p className="rz-rot m-0">Atlas</p>
+          <h2 className="rz-h3">Lugares, tempo e os Caminhos do Exílio</h2>
+          <p className="m-0 font-ui text-[14.5px] leading-relaxed text-[var(--corpo)]">
+            O mapa por período, as rotas com o nível de evidência de cada uma, e a página de Lisboa.
+          </p>
+          <Link href="/raizes/atlas" prefetch={false} className="rz-link justify-self-start min-h-[44px] inline-flex items-center">Abrir o Atlas</Link>
+        </div>
+        <div className="rz-nota teal grid content-start gap-2">
+          <p className="rz-rot m-0">Minha história</p>
+          <h2 className="rz-h3">Minha História, Minhas Raízes</h2>
+          <p className="m-0 font-ui text-[14.5px] leading-relaxed text-[var(--corpo)]">
+            A árvore da família com o tipo de evidência de cada dado, o caminho dela no mapa e o registro das pesquisas. Só no seu aparelho.
+          </p>
+          <Link href="/raizes/familia" prefetch={false} className="rz-link justify-self-start min-h-[44px] inline-flex items-center">Abrir a árvore</Link>
+        </div>
+        <div className="rz-nota mar grid content-start gap-2">
           <p className="rz-rot m-0">Biblioteca</p>
           <h2 className="rz-h3">Cada fonte, e o que ela sustenta</h2>
           <p className="m-0 font-ui text-[14.5px] leading-relaxed text-[var(--corpo)]">

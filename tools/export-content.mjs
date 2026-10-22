@@ -799,7 +799,17 @@ function main() {
         ({ id, nivel, tipo, autor, titulo, ano, publicacao: editora_ou_periodico, url, acesso, consulta: data_consulta, abnt }));
     const { _: _cursoNota, ...raizesPublico } = raizesCurso;
     void _cursoNota;
-    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa, mapas: raizesMapas };
+    /* O Atlas (data/atlas.json) e as páginas de lugar (data/lugares/*.json),
+       atrás do mesmo portão. As notas `_` ficam no repositório. */
+    const semNota = d => { const { _: _n, ...resto } = d; void _n; return resto; };
+    const raizesAtlas = existsSync(join(RAIZES, 'data/atlas.json')) ? semNota(lerRaizes('data/atlas.json')) : undefined;
+    const raizesLugares = {};
+    if (existsSync(join(RAIZES, 'data/lugares'))) {
+      for (const arq of readdirSync(join(RAIZES, 'data/lugares')).filter(n => n.endsWith('.json'))) {
+        raizesLugares[arq.slice(0, -5)] = semNota(lerRaizes(`data/lugares/${arq}`));
+      }
+    }
+    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa, mapas: raizesMapas, atlas: raizesAtlas, lugares: raizesLugares };
   } else {
     console.warn(`  ! Raízes Sefarditas: ${RAIZES}/data não existe; raizes.json sai vazio.`);
     raizesJson = {

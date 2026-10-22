@@ -299,6 +299,47 @@ if (DADOS.conteudo.length > 1) {
   }
 }
 
+/* O Atlas: lugares, um ponto aberto, os Caminhos tocando. */
+if (DADOS.atlas) {
+  await p.goto(`${BASE}/raizes/atlas/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(500);
+  ok(await p.locator('h1', { hasText: 'O que a história dos sefarditas' }).count() === 1, 'o Atlas abre');
+  ok(await semRolagemLateral(p), 'Atlas sem rolagem lateral');
+  await p.locator('.rz-atlas button.rz-ponto').first().click();
+  await p.waitForTimeout(300);
+  await p.getByRole('button', { name: 'De onde vem isso?' }).click();
+  await p.waitForTimeout(200);
+  ok(await p.locator('text=O que a fonte diz:').count() > 0, 'um lugar abre a ficha, e a ficha abre as fontes');
+  await p.screenshot({ path: '.shots/raizes-atlas.png', fullPage: false });
+  await p.getByRole('tab', { name: 'Caminhos do Exílio' }).click();
+  await p.getByRole('button', { name: /^Tocar/ }).click();
+  await p.waitForTimeout(3000);
+  ok(await p.locator('.rz-atlas svg path[stroke-dasharray], .rz-atlas svg path[mask]').count() > 0, 'as rotas se desenham ao tocar');
+  ok(await p.locator('text=Hipótese').count() > 0, 'a legenda diz o que é hipótese');
+  ok(await semRolagemLateral(p), 'Caminhos sem rolagem lateral');
+  await p.screenshot({ path: '.shots/raizes-caminhos.png', fullPage: true });
+
+  await p.goto(`${BASE}/raizes/lugar/lisboa/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(400);
+  ok(await p.locator('h1', { hasText: 'Lisboa' }).count() === 1, 'a página de Lisboa abre');
+  ok(await p.locator('text=Ilustração interpretativa.').count() === 1, 'a ilustração se diz interpretativa');
+  ok(await semRolagemLateral(p), 'Lisboa sem rolagem lateral');
+  await p.screenshot({ path: '.shots/raizes-lisboa.png', fullPage: true });
+
+  await p.goto(`${BASE}/raizes/familia/`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(400);
+  await p.getByRole('button', { name: 'Ver um exemplo fictício' }).click();
+  await p.waitForTimeout(300);
+  ok(await p.locator('text=Exemplo didático, fictício').count() === 1, 'o exemplo se diz fictício');
+  ok(await p.locator('text=não comprova, por si só, ascendência judaica').count() === 1, 'o aviso do sobrenome está à vista');
+  ok(await p.locator('svg[aria-label^="Mapa com"]').count() === 1, 'o Caminho da Família aparece no mapa');
+  ok(await semRolagemLateral(p), 'árvore sem rolagem lateral');
+  await p.screenshot({ path: '.shots/raizes-familia.png', fullPage: true });
+  await p.reload({ waitUntil: 'networkidle' });
+  await p.waitForTimeout(400);
+  ok(await p.locator('text=Exemplo didático, fictício').count() === 1, 'a árvore continua no aparelho depois de recarregar');
+}
+
 await p.goto(`${BASE}/raizes/biblioteca/`, { waitUntil: 'networkidle' });
 await p.waitForTimeout(300);
 ok(await p.locator('h1', { hasText: 'Biblioteca' }).count() === 1, 'a biblioteca abre');

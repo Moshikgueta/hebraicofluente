@@ -118,7 +118,58 @@ export type DadosRaizes = {
   mapa: DesenhoDoMapa;
   /** Os outros desenhos, pelo nome (data/mapa-<nome>.json no repositório do conteúdo). */
   mapas?: Record<string, DesenhoDoMapa>;
+  /** O Atlas (raizes/data/atlas.json): lugares, períodos e os Caminhos do Exílio. */
+  atlas?: Atlas;
+  /** As páginas de lugar (raizes/data/lugares/<id>.json). */
+  lugares?: Record<string, PaginaDeLugar>;
 };
+
+/* ── o Atlas ──────────────────────────────────────────────────────────────
+ * Os DADOS são do repositório de conteúdo; a forma das linhas é do código
+ * (components/raizes/AtlasMapa.tsx). Uma rota é a lista de lugares que as
+ * fontes dão, e a curva entre eles nunca é estrada nem rota marítima. */
+
+export type TipoDeLugar = 'vida' | 'saber' | 'decreto' | 'tribunal' | 'inquisicao' | 'porto' | 'diaspora' | 'memoria';
+export type Evidencia = 'documentado' | 'corredor' | 'hipotese';
+
+export type LugarDoAtlas = {
+  id: string; nome: string; lat: number; lon: number;
+  tipos: TipoDeLugar[]; periodos: string[]; resumo: string; afirmacoes: string[];
+  /** Rótulo de região (um reino), sem ponto: não é cidade nem fronteira. */
+  area?: boolean;
+  /** Tem página própria em /raizes/lugar/<pagina>. */
+  pagina?: string;
+};
+
+export type RotaDoExilio = {
+  id: string; titulo: string; de: number; ate: number; quando: string;
+  grupo: string; evidencia: Evidencia; pontos: string[]; resumo: string; afirmacoes: string[];
+};
+
+export type Atlas = {
+  tipos: { id: TipoDeLugar; nome: string; descricao: string }[];
+  periodos: { id: string; titulo: string; quando: string; de: number; ate: number; resumo: string; afirmacoes: string[] }[];
+  lugares: LugarDoAtlas[];
+  grupos: { id: string; nome: string; descricao: string }[];
+  evidencias: { id: Evidencia; nome: string; descricao: string }[];
+  rotas: RotaDoExilio[];
+};
+
+export type PaginaDeLugar = {
+  id: string; nome: string; lat: number; lon: number; subtitulo: string; abertura: string;
+  secoes: { titulo: string; paragrafos: string[] }[];
+  cronologia: { quando: string; titulo: string; texto: string; afirmacoes: string[] }[];
+  vestigios: { nome: string; estado: 'existe' | 'nao-existe' | 'incerto'; texto: string; afirmacoes: string[] }[];
+  personagens: { nome: string; texto: string; afirmacoes: string[] }[];
+  documentos: { titulo: string; texto: string; leitura: string; afirmacoes: string[]; link?: string }[];
+  diaspora: { texto: string; rota?: string; afirmacoes: string[] }[];
+  fotografias: { src: string; legenda: string; autor: string; licenca: string }[];
+  fotografiasNota: string;
+  ilustracao: { tipo: string; legenda: string };
+};
+
+/** As páginas de lugar que existem (a rota estática precisa saber na build). */
+export const LUGARES_COM_PAGINA: readonly string[] = ['lisboa'];
 
 export type DesenhoDoMapa = {
   quadro: { oeste: number; leste: number; sul: number; norte: number };
