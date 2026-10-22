@@ -228,3 +228,15 @@ export function glossario() {
 
 /** Para os testes: o índice é recalculado quando o conteúdo muda. */
 export function _limparIndice() { INDICE = null; }
+
+/** Os lugares do Atlas que o texto do módulo NOMEIA (o nome, sem o parêntese, aparece no texto). */
+export function lugaresDoModulo(m: ModuloRaizes) {
+  const r = raizes();
+  const texto = normalizar(JSON.stringify(m.etapas).replace(/\[\[[^\]]*\]\]/g, ''));
+  const escapar = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return (r.atlas?.lugares ?? []).filter(l => {
+    if (l.area) return false;
+    const nome = normalizar(l.nome.replace(/ \(.*\)$/, ''));
+    return new RegExp(`(^|[^a-z0-9])${escapar(nome)}([^a-z0-9]|$)`).test(texto);
+  });
+}

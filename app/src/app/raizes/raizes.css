@@ -321,3 +321,76 @@
   .rz-escalonar > :nth-child(n+5) { animation-delay: 280ms; }
 }
 .rz-revelado.rz-escalonar { animation: none; }
+
+/* ── os objetos de cada unidade e a folha que voa (22/10/2026) ─────────── */
+.rz {
+  --rz-objeto-tinta: #3B2618; --rz-objeto-tinta-suave: #6E5440; --rz-objeto-sombra: rgb(59 38 24 / .14);
+  --rz-madeira: #B27A4E; --rz-madeira-fundo: #6E4528; --rz-couro: #93603F; --rz-couro-escuro: #6B4329;
+  --rz-metal: #C9A04E; --rz-corda: #C8A673; --rz-papel-objeto: #FBF6EA; --rz-papel-escuro: #E6D8BC;
+  --rz-papelao: #C9A77E; --rz-ocre-objeto: #A9603C;
+}
+.rz-recipiente { overflow: visible; }
+.rz-recipiente .rz-tampa { transform-box: view-box; transition: transform 320ms cubic-bezier(.3, 1.4, .5, 1); }
+.rz-recipiente.recebendo .rz-tampa { transform: rotate(-24deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-recipiente.recebendo .rz-recipiente-corpo { animation: rz-receber .9s cubic-bezier(.3, 1.5, .5, 1); transform-box: view-box; transform-origin: 48px 76px; }
+  .rz-recipiente .rz-item { animation: rz-item-entra .5s cubic-bezier(.2, .9, .3, 1.3) both; animation-delay: calc(var(--i) * 40ms); transform-box: fill-box; transform-origin: bottom; }
+}
+@keyframes rz-receber { 0% { transform: none; } 25% { transform: scale(1.06, .93); } 50% { transform: scale(.97, 1.04) translateY(-2px); } 75% { transform: rotate(-2deg); } 100% { transform: none; } }
+@keyframes rz-item-entra { from { opacity: 0; transform: translateY(-10px) scaleY(.6); } to { opacity: 1; transform: none; } }
+
+/* O objeto flutua no canto esquerdo (o botão de acessibilidade mora no direito). */
+.rz-objeto-flutuante { position: fixed; left: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 40;
+  display: grid; justify-items: center; gap: 0; padding: 6px 8px 4px; border-radius: 18px; background: var(--branco);
+  box-shadow: 0 0 0 1px var(--linha), 0 8px 24px -10px rgb(11 42 49 / .35); cursor: pointer;
+  transition-property: transform, box-shadow; transition-duration: var(--dur); }
+.rz-objeto-flutuante:active { transform: scale(.95); }
+.rz-objeto-flutuante:focus-visible { outline: 3px solid var(--titulo); outline-offset: 3px; }
+.rz-objeto-conta { font-family: var(--rotulo); font-size: 11.5px; font-weight: 700; color: var(--tinta); line-height: 1.2; }
+.rz-objeto-flutuante.recebendo .rz-objeto-conta { color: var(--lacre); }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-objeto-flutuante.recebendo .rz-objeto-conta { animation: rz-conta .6s cubic-bezier(.3, 1.6, .5, 1); }
+}
+@keyframes rz-conta { 40% { transform: scale(1.35); } 100% { transform: none; } }
+
+/* A folha do caderno de viagem: papel claro com tinta escura, nos dois temas. */
+.rz-folha { position: relative; padding: 12px 14px; border-radius: 4px; background: var(--rz-papel-objeto);
+  box-shadow: 0 0 0 1px rgb(59 38 24 / .14), 0 2px 0 rgb(59 38 24 / .06), 0 10px 22px -14px rgb(59 38 24 / .45);
+  transform: rotate(-.6deg); transition-property: opacity, transform; transition-duration: 200ms; }
+.rz-folha::before { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: repeating-linear-gradient(transparent 0 23px, rgb(29 84 94 / .07) 23px 24px); }
+.rz-folha.some { opacity: 0; }
+.rz-folha.guardada { opacity: .78; }
+.rz-folha-carimbo { position: absolute; right: 10px; bottom: 8px; padding: 1px 8px; border: 1.5px solid var(--lacre); border-radius: 4px;
+  color: var(--lacre); font-family: var(--rotulo); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; transform: rotate(-7deg); opacity: .85; }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-folha-carimbo { animation: rz-carimbar .45s cubic-bezier(.3, 1.6, .5, 1) both; }
+}
+@keyframes rz-carimbar { from { opacity: 0; transform: rotate(-7deg) scale(1.8); } to { opacity: .85; transform: rotate(-7deg) scale(1); } }
+
+/* A folha de baixo: o que o objeto guarda. */
+.rz-folha-de-baixo { width: min(560px, 100vw); max-width: 100vw; max-height: 86dvh; margin: auto auto 0; padding: 0; border: 0;
+  border-radius: 20px 20px 0 0; background: var(--papel); color: var(--corpo); overflow-y: auto; overscroll-behavior: contain;
+  box-shadow: 0 -10px 40px -10px rgb(11 42 49 / .4); }
+.rz-folha-de-baixo::backdrop { background: rgb(11 42 49 / .45); }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-folha-de-baixo[open] { animation: rz-subir-folha .34s cubic-bezier(.2, .9, .25, 1); }
+  .rz-folha-de-baixo[open]::backdrop { animation: rz-escurecer .3s ease; }
+}
+@keyframes rz-subir-folha { from { transform: translateY(40%); opacity: .4; } to { transform: none; opacity: 1; } }
+@keyframes rz-escurecer { from { opacity: 0; } }
+.rz-guardado { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 6px 8px;
+  border-radius: 10px; background: transparent; cursor: pointer; opacity: .5; transition-property: background-color, opacity; transition-duration: var(--dur); }
+.rz-guardado.tem { opacity: 1; }
+.rz-guardado:hover { background: var(--pedra); }
+
+/* ── os mapas pequenos ───────────────────────────────────────────────── */
+.rz-minimapa-moldura { border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--linha), 0 6px 18px -10px rgb(11 42 49 / .3); }
+.rz-minimapa-nome { font-family: var(--rotulo); font-weight: 600; fill: var(--tinta); paint-order: stroke; stroke: var(--rz-terra-mapa); stroke-width: 3px; stroke-linejoin: round; }
+.rz-minimapa svg { cursor: pointer; }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-minimapa .rz-minimapa-ponto { opacity: 0; transform: translateY(-14px); transform-box: fill-box; }
+  .rz-minimapa.visto .rz-minimapa-ponto { animation: rz-cair .55s cubic-bezier(.3, 1.5, .5, 1) both; animation-delay: calc(var(--i) * 55ms); }
+}
+@keyframes rz-cair { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+.rz-folha.guardada { padding-bottom: 30px; }

@@ -8,6 +8,8 @@
  * módulos onde aparece. Abrir uma vida é uma descoberta (passaporte). */
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { MiniMapa } from '@/components/raizes/MiniMapa';
 import { useEffect, useState } from 'react';
 import { raizes } from '@/lib/raizes';
 import { useProgress } from '@/lib/state/store';
@@ -21,6 +23,7 @@ const iniciais = (nome: string) => nome.split(/\s+/).filter(p => /^[A-ZÁÉÍÓ�
 export function PersonagensClient() {
   const r = raizes();
   const p = useProgress();
+  const router = useRouter();
   const [aberto, setAberto] = useState<string | null>(null);
 
   useEffect(() => {
@@ -62,6 +65,13 @@ export function PersonagensClient() {
                 {ab && (
                   <div id={`vida-${x.id}`} className="rz-revelado rz-escalonar grid gap-3 pt-3">
                     {x.paragrafos.map((t, i) => <TextoComFontes key={i} texto={t} />)}
+                    {x.lugares.length > 0 && r.atlas && (
+                      <div className="rz-minimapa-moldura max-w-[420px]">
+                        <MiniMapa lugares={r.atlas.lugares.filter(l => x.lugares.includes(l.id))} proporcao={1.7}
+                          onLugar={id => router.push(`/raizes/atlas?lugar=${id}`)}
+                          rotulo={`Mapa com os lugares ligados a ${x.nome}`} />
+                      </div>
+                    )}
                     {x.lugares.length > 0 && (
                       <p className="m-0 font-ui text-[14px] text-[var(--corpo)]">
                         <span className="font-semibold text-[var(--tinta)]">No Atlas: </span>

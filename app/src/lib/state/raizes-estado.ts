@@ -56,7 +56,7 @@ export type EstadoRaizes = {
 export const INTERESSES = ['familia', 'historia', 'cultura', 'diaspora', 'brasil'] as const;
 export type Interesse = (typeof INTERESSES)[number];
 const MAXIMO = 600;
-const ehChaveDeDescoberta = (k: string) => /^(artefato|lugar|rota|personagem|documento|curiosidade|termo):[a-z0-9:-]{1,80}$/.test(k);
+const ehChaveDeDescoberta = (k: string) => /^(artefato|lugar|rota|personagem|documento|curiosidade|termo|secao):[a-z0-9:-]{1,80}$/.test(k);
 
 export const RAIZES_VAZIO: EstadoRaizes = { atividades: {}, etapas: {}, onde: null };
 

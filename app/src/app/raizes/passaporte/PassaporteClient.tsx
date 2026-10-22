@@ -6,6 +6,9 @@
  * como documento de origem. */
 
 import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { MiniMapa } from '@/components/raizes/MiniMapa';
 import { useProgress } from '@/lib/state/store';
 import { raizes } from '@/lib/raizes';
 import { MUNDOS, descobertasRecentes, progressoDoMundo, rotuloDoTipo, selos } from '@/lib/raizes-jornada';
@@ -14,6 +17,8 @@ import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
 export function PassaporteClient() {
   const p = useProgress();
   const r = raizes();
+  const router = useRouter();
+  const [sel, setSel] = useState<string | null>(null);
   if (r.semConteudo) return <SemConteudo />;
   const e = p.state.raizes;
   const lista = selos(e);
@@ -28,6 +33,27 @@ export function PassaporteClient() {
         <h1 className="rz-pagina">Seu passaporte de viagem</h1>
         <p className="rz-entrada m-0">Cada selo marca uma parte da história que você estudou ou explorou. {ganhos} de {lista.length} selos, {total} descoberta{total === 1 ? '' : 's'}.</p>
       </header>
+
+      {(r.atlas?.lugares.length ?? 0) > 0 && (() => {
+        const todos = r.atlas!.lugares.filter(l => !l.area);
+        const marcados = new Set(todos.filter(l => e?.descobertas?.[`lugar:${l.id}`]).map(l => l.id));
+        const l = todos.find(x => x.id === sel);
+        return (
+          <section className="grid gap-3" aria-labelledby="mapa-viagem">
+            <div className="rz-rubrica"><h2 id="mapa-viagem" className="rz-rot m-0">Seu mapa de viagem</h2><span className="rz-rot ml-auto tabular-nums">{marcados.size} de {todos.length}</span></div>
+            <div className="rz-minimapa-moldura">
+              <MiniMapa lugares={todos} marcados={marcados} selecionado={sel} onLugar={setSel} proporcao={1.25} rotulos={false}
+                rotulo={`Mapa com ${todos.length} lugares; ${marcados.size} carimbados`} />
+            </div>
+            <p className="m-0 font-ui text-[13.5px] leading-relaxed text-[var(--corpo)]" aria-live="polite">
+              {l
+                ? <><span className="rz-serif text-[17px] text-[var(--titulo)]">{l.nome.replace(/ \(.*\)$/, '')}</span> · {marcados.has(l.id) ? 'carimbado' : 'ainda não aberto'}.{' '}
+                    <button type="button" className="rz-link !text-[13.5px] min-h-[36px]" onClick={() => router.push(`/raizes/atlas?lugar=${l.id}`)}>Abrir no Atlas</button></>
+                : 'Cada lugar que você abre no Atlas, num módulo ou numa página de cidade ganha um carimbo. Toque num ponto.'}
+            </p>
+          </section>
+        );
+      })()}
 
       <section className="grid gap-3" aria-labelledby="mundos">
         <div className="rz-rubrica"><h2 id="mundos" className="rz-rot m-0">Os cinco mundos</h2></div>
