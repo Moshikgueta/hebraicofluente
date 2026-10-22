@@ -22,7 +22,7 @@
  * Run: npm run export-content (from app/), or node tools/export-content.mjs
  */
 
-import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, existsSync, cpSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, existsSync, cpSync, copyFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
 import { audioIdFor } from './audio-id.mjs';
@@ -811,7 +811,21 @@ function main() {
     }
     /* Os personagens históricos (data/personagens.json, 22/10/2026). */
     const raizesPersonagens = existsSync(join(RAIZES, 'data/personagens.json')) ? lerRaizes('data/personagens.json').personagens : undefined;
-    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa, mapas: raizesMapas, atlas: raizesAtlas, lugares: raizesLugares, personagens: raizesPersonagens };
+    /* As fotos escolhidas (data/fotos.json, 22/10/2026): cada uma com autor, licença e
+       página de origem. O arquivo vai para app/public/raizes/fotos/, atrás do portão
+       de /raizes (o mesmo direito do conteúdo). Sem ficha, não vai. */
+    let raizesFotos;
+    if (existsSync(join(RAIZES, 'data/fotos.json'))) {
+      raizesFotos = lerRaizes('data/fotos.json').fotos;
+      const destino = join(ROOT, 'app/public/raizes/fotos');
+      rmSync(destino, { recursive: true, force: true });
+      mkdirSync(destino, { recursive: true });
+      for (const f of raizesFotos) {
+        if (!f.autor || !f.licenca || !f.pagina) throw new Error(`foto ${f.id}: falta autor, licença ou página`);
+        copyFileSync(join(RAIZES, 'fotos/escolhidas', f.arquivo), join(destino, f.arquivo));
+      }
+    }
+    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa, mapas: raizesMapas, atlas: raizesAtlas, lugares: raizesLugares, personagens: raizesPersonagens, fotos: raizesFotos };
   } else {
     console.warn(`  ! Raízes Sefarditas: ${RAIZES}/data não existe; raizes.json sai vazio.`);
     raizesJson = {

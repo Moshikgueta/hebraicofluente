@@ -151,6 +151,7 @@ export type DadosRaizes = {
   lugares?: Record<string, PaginaDeLugar>;
   /** Os personagens históricos (raizes/data/personagens.json): só o que a matriz sustenta. */
   personagens?: Personagem[];
+  fotos?: FotoRaizes[];
 };
 
 /* ── o Atlas ──────────────────────────────────────────────────────────────
@@ -190,6 +191,16 @@ export type Personagem = {
   lugares: string[]; modulos: number[]; resumo: string; paragrafos: string[];
   /** A gravura do ofício que o texto descreve (interpretativa, nunca retrato). */
   objeto?: string;
+};
+
+/** Uma foto escolhida (raizes/data/fotos.json): sempre com autor, licença e página de origem. */
+export type FotoRaizes = {
+  id: string; arquivo: string; largura: number; altura: number;
+  /** O que a imagem mostra, em português, a partir da ficha do arquivo. */
+  mostra: string;
+  autor: string; data: string | null; licenca: string; licencaUrl: string | null; pagina: string;
+  /** Onde ela aparece: chaves como lugar:lisboa, artefato:m02:decreto, modulo:5, personagem:x. */
+  onde: string[];
 };
 
 export type PaginaDeLugar = {
@@ -391,3 +402,6 @@ export function embaralhar<T>(itens: readonly T[], semente: string): T[] {
   if (a.length > 1 && a.every((x, i) => x === itens[i])) a.push(a.shift()!);
   return a;
 }
+
+/** As fotos que aparecem num lugar do curso (a chave é a mesma da coleção: lugar:lisboa, modulo:5...). */
+export const fotosDe = (chave: string): FotoRaizes[] => (raizes().fotos ?? []).filter(f => f.onde.includes(chave));

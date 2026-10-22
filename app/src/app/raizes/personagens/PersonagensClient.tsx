@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { MiniMapa } from '@/components/raizes/MiniMapa';
 import { Gravura } from '@/components/raizes/ilustracoes/Gravuras';
+import { Fotos } from '@/components/raizes/Foto';
+import { fotosDe } from '@/lib/raizes';
 import { useEffect, useState } from 'react';
 import { raizes } from '@/lib/raizes';
 import { useProgress } from '@/lib/state/store';
@@ -67,6 +69,7 @@ export function PersonagensClient() {
                 {ab && (
                   <div id={`vida-${x.id}`} className="rz-revelado rz-escalonar grid gap-3 pt-3">
                     {x.paragrafos.map((t, i) => <TextoComFontes key={i} texto={t} />)}
+                    <Fotos fotos={fotosDe(`personagem:${x.id}`)} titulo="Imagens ligadas a esta vida" />
                     {x.lugares.length > 0 && r.atlas && (
                       <div className="rz-minimapa-moldura max-w-[420px]">
                         <MiniMapa lugares={r.atlas.lugares.filter(l => x.lugares.includes(l.id))} proporcao={1.7}
