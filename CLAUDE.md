@@ -757,7 +757,7 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   celular); os botões dos pontos são para teclado e leitor de tela.
   Uma atividade de mapa pode ter `recorte` (graus) para aproximar uma região
   do mesmo desenho (Portugal, no módulo 3).
-- Módulos 1, 2 e 3 prontos para revisão humana; módulos 4-10 só no plano. Módulo novo:
+- Módulos 1 a 4 prontos para revisão humana; módulos 5-10 só no plano. Módulo novo:
   `MODULOS_COM_CONTEUDO` em `lib/raizes.ts`, e conteúdo de lá precisa de publicação
   manual (o deploy só roda sozinho com push no site).
   `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.
