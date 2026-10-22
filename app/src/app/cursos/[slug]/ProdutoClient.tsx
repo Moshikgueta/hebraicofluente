@@ -63,6 +63,7 @@ function Condicoes({ c }: { c: CatalogCourse }) {
           ? `Versão interativa por ${c.accessMonths} meses; o PDF baixado fica com você.`
           : `${c.accessMonths} meses de curso e de e-book, do celular ao computador.`}
       </li>
+      <li>O e-book recebe atualizações, e o PDF para baixar é sempre o da edição mais recente.</li>
       <li>{empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar.</li>
     </ul>
   );
