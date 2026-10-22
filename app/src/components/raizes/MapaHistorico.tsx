@@ -14,7 +14,7 @@
  */
 
 import { useState } from 'react';
-import { projetar, raizes, type Atividade } from '@/lib/raizes';
+import { janelaDoMapa, projetar, raizes, type Atividade } from '@/lib/raizes';
 import { Moldura, Veredito, useAtividade } from './Atividades';
 import { PainelDeFonte } from './Texto';
 
@@ -23,6 +23,9 @@ type Mapa = Extract<Atividade, { tipo: 'mapa' }>;
 export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a: Mapa }) {
   const { feita, registrar } = useAtividade(modulo, id);
   const desenho = raizes().mapa;
+  /* A janela: a península inteira, ou o recorte da atividade (Portugal, no módulo 3). */
+  const j = janelaDoMapa(a.recorte);
+  const k = j.w / desenho.largura;
   const [aberto, setAberto] = useState<string | null>(null);
   const [vistos, setVistos] = useState<Set<string>>(new Set());
   const [fonteAberta, setFonteAberta] = useState(false);
@@ -54,23 +57,23 @@ export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a
             ponto ganha a maior área possível sem invadir a do vizinho. Os
             botões continuam ali para o teclado e o leitor de tela. */}
         <div className="relative w-full overflow-hidden bg-[var(--rz-mar-claro)] cursor-pointer"
-          style={{ aspectRatio: `${desenho.largura} / ${desenho.altura}` }}
+          style={{ aspectRatio: `${j.w} / ${j.h}` }}
           onClick={e => {
             if ((e.target as HTMLElement).closest('button')) return;
             const caixa = e.currentTarget.getBoundingClientRect();
             let melhor: string | null = null, dist = 36;
             for (const l of a.lugares) {
               const [x, y] = projetar(l.lon, l.lat);
-              const d = Math.hypot(caixa.left + (x / desenho.largura) * caixa.width - e.clientX,
-                caixa.top + (y / desenho.altura) * caixa.height - e.clientY);
+              const d = Math.hypot(caixa.left + ((x - j.x) / j.w) * caixa.width - e.clientX,
+                caixa.top + ((y - j.y) / j.h) * caixa.height - e.clientY);
               if (d < dist) { dist = d; melhor = l.id; }
             }
             if (melhor) abrir(melhor);
           }}>
-          <svg viewBox={`0 0 ${desenho.largura} ${desenho.altura}`} className="absolute inset-0 h-full w-full" aria-hidden focusable="false">
+          <svg viewBox={`${j.x} ${j.y} ${j.w} ${j.h}`} className="absolute inset-0 h-full w-full" aria-hidden focusable="false">
             {/* "Papel recortado", o estilo da coleção: a mesma terra, deslocada, faz a sombra. */}
-            <path d={desenho.terra} fill="var(--pedra-escura)" transform="translate(9 11)" />
-            <path d={desenho.terra} fill="var(--rz-terra-mapa)" stroke="var(--pedra-escura)" strokeWidth={1.2} />
+            <path d={desenho.terra} fill="var(--pedra-escura)" transform={`translate(${9 * k} ${11 * k})`} />
+            <path d={desenho.terra} fill="var(--rz-terra-mapa)" stroke="var(--pedra-escura)" strokeWidth={1.2 * k} />
           </svg>
           {a.lugares.map(l => {
             const [x, y] = projetar(l.lon, l.lat);
@@ -84,7 +87,7 @@ export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a
                 data-visto={visto}
                 aria-label={`${l.nome}${l.incerto ? ', localização incerta' : ''}${visto ? ', já explorado' : ''}`}
                 className={`rz-ponto ${l.incerto ? 'incerto' : ''}`}
-                style={{ left: `${(x / desenho.largura) * 100}%`, top: `${(y / desenho.altura) * 100}%` }}
+                style={{ left: `${((x - j.x) / j.w) * 100}%`, top: `${((y - j.y) / j.h) * 100}%` }}
               >
                 <span aria-hidden />
                 <span aria-hidden className={`pointer-events-none absolute left-[34px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-[3px] px-1.5 py-[1px]

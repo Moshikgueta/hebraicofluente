@@ -19,7 +19,7 @@ export const CURSO_RAIZES = 'raizes-sefarditas';
 /* Os módulos que têm conteúdo e, portanto, página gerada na build. Escritos
    aqui pelo mesmo motivo de UNIDADES_A1: a página é gerada antes de o
    conteúdo (pago) chegar. tests/raizes.test.ts confere contra raizes/data. */
-export const MODULOS_COM_CONTEUDO: readonly number[] = [1, 2];
+export const MODULOS_COM_CONTEUDO: readonly number[] = [1, 2, 3];
 export const TOTAL_DE_MODULOS = 10;
 
 export type StatusAfirmacao = 'VERIFICADO' | 'CONTESTADO';
@@ -48,6 +48,8 @@ export type Atividade =
   | {
       tipo: 'mapa'; objetivo: string; enunciado: string; criterio: string; legenda: string;
       minimoExplorados: number; lugares: Lugar[];
+      /** Aproxima o desenho numa região (graus), quando os pontos ficam juntos demais na península inteira. */
+      recorte?: { oeste: number; leste: number; sul: number; norte: number };
       perguntas: { id: string; enunciado: string; resposta: string; explicacao: string }[];
     }
   | {
@@ -238,6 +240,15 @@ export function progressoGeral(e: EstadoRaizes | undefined) {
 /* ── o mapa ───────────────────────────────────────────────────────────── */
 
 /** Longitude e latitude → coordenadas do desenho (a projeção de tools/raizes-mapa.mjs). */
+/** A janela do desenho em unidades do mapa: a península inteira, ou o recorte da atividade. */
+export function janelaDoMapa(recorte?: { oeste: number; leste: number; sul: number; norte: number }) {
+  const { largura, altura } = raizes().mapa;
+  if (!recorte) return { x: 0, y: 0, w: largura, h: altura };
+  const [x0, y0] = projetar(recorte.oeste, recorte.norte);
+  const [x1, y1] = projetar(recorte.leste, recorte.sul);
+  return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+}
+
 export function projetar(lon: number, lat: number): [number, number] {
   const { quadro, projecao } = raizes().mapa;
   const cos = Math.cos((projecao.latitudePadrao * Math.PI) / 180);

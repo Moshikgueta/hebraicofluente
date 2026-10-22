@@ -311,7 +311,17 @@ describe.skipIf(!TEM_CONTEUDO)('as atividades funcionam como prometem', () => {
     for (const m of modulos) {
       for (const a of Object.values(m.atividades)) {
         if (a.tipo !== 'mapa') continue;
+        /* O recorte cabe no desenho, e os pontos cabem no recorte. */
+        const r = a.recorte ?? mapa.quadro;
+        expect(r.oeste).toBeGreaterThanOrEqual(mapa.quadro.oeste);
+        expect(r.leste).toBeLessThanOrEqual(mapa.quadro.leste);
+        expect(r.sul).toBeGreaterThanOrEqual(mapa.quadro.sul);
+        expect(r.norte).toBeLessThanOrEqual(mapa.quadro.norte);
         for (const l of a.lugares) {
+          expect(l.lon, l.id).toBeGreaterThan(r.oeste);
+          expect(l.lon, l.id).toBeLessThan(r.leste);
+          expect(l.lat, l.id).toBeGreaterThan(r.sul);
+          expect(l.lat, l.id).toBeLessThan(r.norte);
           expect(l.lon, l.id).toBeGreaterThan(mapa.quadro.oeste);
           expect(l.lon, l.id).toBeLessThan(mapa.quadro.leste);
           expect(l.lat, l.id).toBeGreaterThan(mapa.quadro.sul);
