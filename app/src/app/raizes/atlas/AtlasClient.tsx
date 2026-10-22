@@ -12,7 +12,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Heroi } from '@/components/raizes/Heroi';
 import { AtlasMapa, ESTILO_DA_EVIDENCIA, LegendaDasRotas } from '@/components/raizes/AtlasMapa';
 import { PainelDeFonte } from '@/components/raizes/Texto';
-import { desenhoDoMapa, raizes, type TipoDeLugar } from '@/lib/raizes';
+import { desenhoDoMapa, fotosDe, raizes, type TipoDeLugar } from '@/lib/raizes';
+import { Foto } from '@/components/raizes/Foto';
 import { anosDosCaminhos, lugaresVisiveis, rotasAte, VISTAS } from '@/lib/raizes-atlas';
 import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
 import { Guardar } from '@/components/raizes/Guardar';
@@ -164,6 +165,7 @@ export function AtlasClient() {
                 <h3 className="rz-serif m-0 font-[440]">{lugar.nome}</h3>
               </header>
               <div className="grid gap-3 p-4">
+                {fotosDe(`lugar:${lugar.id}`)[0] && <Foto f={fotosDe(`lugar:${lugar.id}`)[0]!} compacta />}
                 <p className="rz-corpo">{lugar.resumo}</p>
                 <p className="m-0 font-ui text-[13px] text-[var(--suave)]">
                   Nos períodos: {lugar.periodos.map(id => atlas.periodos.find(p => p.id === id)?.titulo).join(', ')}.

@@ -813,6 +813,13 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   lugares do Atlas que o texto do módulo NOMEIA (`lugaresDoModulo`), com ficha e carimbo; o mesmo
   `MiniMapa` mostra o mapa de viagem no passaporte e os lugares de cada personagem. Só pontos:
   linha entre lugares só no Atlas, com o nível de evidência.
+- **Fotos históricas** (22/10/2026, pedido do dono): só do Wikimedia Commons, com domínio público,
+  CC0, CC BY ou CC BY-SA, autor e página de origem. A Action "Fotos candidatas" do repositório
+  privado (ramo `fotos`, `fotos/pedido.json`) busca e guarda as candidatas com a ficha; a revisão
+  escolhe em `raizes/data/fotos.json` (`mostra` só diz o que a ficha do arquivo diz; `onde` = as
+  chaves `lugar:`, `artefato:`, `modulo:`, `personagem:`). O exportador copia para
+  `app/public/raizes/fotos/` (gitignored, atrás do portão de /raizes). `components/raizes/Foto.tsx`
+  mostra o crédito SEMPRE junto da imagem. Retrato e cena imaginada (pintura do séc. XIX) não entram.
 - **Peças do Israel Além do Roteiro** (`components/raizes/Pecas.tsx`): `palpite`, `vf`
   (verdadeiro ou falso), `curiosidades` e `artefatos` (vitrine com ficha). Nenhuma conta para a
   conclusão nem grava no servidor. Todo texto factual delas segue a regra das marcas

@@ -202,3 +202,29 @@ describe.skipIf(!TEM_CONTEUDO)('o objeto de cada unidade e o mapa do capítulo',
     }
   });
 });
+
+describe.skipIf(!TEM_CONTEUDO)('as fotos históricas', () => {
+  const dados = JSON.parse(conteudoRaizesBruto()) as DadosRaizes;
+  const fotos = dados.fotos ?? [];
+  it('toda foto tem autor, licença que permite uso comercial e página de origem, e o arquivo existe', () => {
+    expect(fotos.length).toBeGreaterThan(0);
+    for (const f of fotos) {
+      expect(f.autor.trim().length, f.id).toBeGreaterThan(1);
+      expect(f.licenca, f.id).toMatch(/^(Public domain|CC0|CC BY(-SA)? \d)/);
+      expect(f.licenca, f.id).not.toMatch(/NC|ND/);
+      expect(f.pagina, f.id).toMatch(/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+      expect(existsSync(join(RAIZES, 'fotos/escolhidas', f.arquivo)), f.arquivo).toBe(true);
+      expect(f.mostra.length, f.id).toBeGreaterThan(10);
+    }
+  });
+  it('cada foto aparece num lugar que existe no curso', () => {
+    const lugares = new Set((dados.atlas?.lugares ?? []).map(l => l.id));
+    const pessoas = new Set((dados.personagens ?? []).map(p => p.id));
+    const artefatos = new Set(dados.conteudo.flatMap(m => m.etapas.flatMap(e => e.blocos.flatMap(b => (b.tipo === 'artefatos' ? b.itens.map(i => `m${String(m.n).padStart(2, '0')}:${i.id}`) : [])))));
+    for (const f of fotos) for (const k of f.onde) {
+      const [tipo, ...resto] = k.split(':'); const id = resto.join(':');
+      const ok = tipo === 'lugar' ? lugares.has(id) : tipo === 'personagem' ? pessoas.has(id) : tipo === 'artefato' ? artefatos.has(id) : tipo === 'modulo' ? dados.conteudo.some(m => String(m.n) === id) : false;
+      expect(ok, `${f.id}: ${k}`).toBe(true);
+    }
+  });
+});
