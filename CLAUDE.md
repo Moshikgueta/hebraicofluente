@@ -758,8 +758,8 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   Uma atividade de mapa pode ter `recorte` (graus) para aproximar uma região
   do mesmo desenho (Portugal, no módulo 3).
   E pode pedir outro desenho com `desenho` (o nome de `raizes/data/mapa-<nome>.json`,
-  exportado em `mapas`): o Mediterrâneo da diáspora, no módulo 5. Sem ele, a península.
-- Módulos 1 a 5 prontos para revisão humana; módulos 6-10 só no plano. Módulo novo:
+  exportado em `mapas`): o Mediterrâneo (módulo 5) e o litoral do Brasil (módulo 6). Sem ele, a península.
+- Módulos 1 a 6 prontos para revisão humana; módulos 7-10 só no plano. Módulo novo:
   `MODULOS_COM_CONTEUDO` em `lib/raizes.ts`, e conteúdo de lá precisa de publicação
   manual (o deploy só roda sozinho com push no site).
   `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.
