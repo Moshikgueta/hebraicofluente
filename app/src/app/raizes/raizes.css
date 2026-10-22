@@ -116,10 +116,11 @@
    (o ponto mais próximo do dedo: ver MapaHistorico.tsx). */
 .rz-ponto { position: absolute; transform: translate(-50%, -50%); width: 28px; height: 28px; border: 0; padding: 0; background: none; display: flex; align-items: center; justify-content: center; pointer-events: none; }
 .rz-ponto:focus-visible { outline-offset: 0; border-radius: 50%; }
-.rz-ponto > span { width: 14px; height: 14px; border-radius: 50%; background: var(--ouro); border: 3px solid #fff; box-shadow: 0 0 0 1px var(--ouro-tinta); transition: background-color var(--dur) ease; }
-.rz-ponto[data-visto="true"] > span { background: var(--mar); box-shadow: 0 0 0 1px var(--mar); }
-.rz-ponto[aria-pressed="true"] > span { background: #0B2A31; box-shadow: 0 0 0 1px #0B2A31; }
-.rz-ponto.incerto > span { width: 22px; height: 22px; background: transparent; border: 2px dashed var(--ocre); box-shadow: none; }
+/* Só o primeiro filho é o ponto; o segundo é a etiqueta com o nome. */
+.rz-ponto > span:first-child { width: 14px; height: 14px; border-radius: 50%; background: var(--ouro); border: 3px solid #fff; box-shadow: 0 0 0 1px var(--ouro-tinta); transition: background-color var(--dur) ease; }
+.rz-ponto[data-visto="true"] > span:first-child { background: var(--mar); box-shadow: 0 0 0 1px var(--mar); }
+.rz-ponto[aria-pressed="true"] > span:first-child { background: #0B2A31; box-shadow: 0 0 0 1px #0B2A31; }
+.rz-ponto.incerto > span:first-child { width: 22px; height: 22px; background: transparent; border: 2px dashed var(--ocre); box-shadow: none; }
 .rz-ficha { border: 1px solid var(--pedra-escura); border-radius: 14px; background: var(--branco); overflow: hidden; box-shadow: 5px 6px 0 var(--pedra-escura); }
 .rz-ficha header { background: var(--noite); color: #fff; padding: 12px 16px; }
 .rz-ficha header .rz-serif, .rz-ficha header h4 { font-size: 21px; line-height: 1.15; color: #fff; }

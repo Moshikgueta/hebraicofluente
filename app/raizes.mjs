@@ -111,6 +111,12 @@ for (const l of mapa.lugares.filter(x => x.id !== 'sevilha').slice(0, mapa.minim
 const sevilha = await p.locator('button[aria-label^="Sevilha"]').boundingBox();
 await p.mouse.click(sevilha.x + sevilha.width / 2 + 4, sevilha.y + sevilha.height / 2 - 6);
 ok(await p.locator('article.rz-ficha h4', { hasText: 'Sevilha' }).count() === 1, 'o toque perto de Sevilha abre Sevilha, não o Guadalete');
+/* A etiqueta com o nome é o segundo filho do botão: ela não pode herdar o
+   desenho do ponto (era uma bolinha escura por baixo do nome, 22/10/2026). */
+const etiqueta = await p.locator('button[aria-label^="Sevilha"] > span').nth(1).evaluate(e => {
+  const c = getComputedStyle(e); return { raio: c.borderTopLeftRadius, largura: e.getBoundingClientRect().width };
+});
+ok(etiqueta.raio !== '50%' && etiqueta.largura > 30, `a etiqueta do ponto não vira bolinha (${etiqueta.raio}, ${Math.round(etiqueta.largura)} px)`);
 ok(await p.locator(`text=Explorados: ${mapa.minimoExplorados} de`).count() > 0, 'o mapa conta os lugares explorados');
 await p.screenshot({ path: '.shots/raizes-mapa.png', fullPage: false });
 const selects = p.locator('select');
