@@ -765,7 +765,10 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
 - Os dez módulos prontos para revisão humana (22/10/2026). O certificado
   (`/raizes/certificado`, `certificadoRaizes` em lib/raizes.ts) só abre com os dez
   concluídos; sai em HTML para imprimir, com o nome guardado só no aparelho e a lista do
-  que não certifica, sem código de verificação. Módulo novo:
+  que não certifica, sem código de verificação. **Modo de revisão** (22/10/2026, pedido do
+  dono): conta de `ADMIN_EMAILS` recebe `account.revisor` no /api/me e vê todos os módulos
+  abertos (`moduloAberto(e, n, revisor)`); o portão continua exigindo o direito
+  `raizes-sefarditas` no banco, dado à mão em Actions → Acesso → `liberar`. Módulo novo:
   `MODULOS_COM_CONTEUDO` em `lib/raizes.ts`, e conteúdo de lá precisa de publicação
   manual (o deploy só roda sozinho com push no site).
   `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.

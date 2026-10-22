@@ -29,7 +29,7 @@ import {
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
 import { nomeSeguro } from '../lib/nome.js';
-import { exigirAdmin } from '../lib/admin.js';
+import { exigirAdmin, isAdmin } from '../lib/admin.js';
 import { avisarRetirada } from './depoimentos.js';
 import { versaoAtual } from '../lib/versoes.js';
 import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelhos.js';
@@ -168,7 +168,11 @@ async function sessionBody(env, account) {
       createdAt: new Date(account.created_at).toISOString(),
       emailVerified: await emailVerified(env, account.id, account.email),
       /* Pediu o e-mail do próximo curso? Ver api/novidades.js. */
-      novidades: await novidadesQuer(env, account.id)
+      novidades: await novidadesQuer(env, account.id),
+      /* Conta de ADMIN_EMAILS: o app abre todos os módulos de Raízes para
+         revisar (moduloAberto em lib/raizes.ts). Não dá acesso a nada: o
+         portão continua exigindo o direito do produto no banco. */
+      ...(isAdmin(account, env) ? { revisor: true } : {})
     },
     entitlements: await activeEntitlements(env, account.id)
   };

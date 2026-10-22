@@ -14,6 +14,7 @@ import { Heroi } from '@/components/raizes/Heroi';
 import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
 import { BlocoRaizes } from '@/components/raizes/Blocos';
 import { useProgress } from '@/lib/state/store';
+import { useAccount } from '@/lib/account/store';
 import { atividadeConcluida, chaveDaAtividade } from '@/lib/state/raizes-estado';
 import {
   conquistasObtidas, modulo, moduloAberto, progressoDoModulo, raizes, type ModuloRaizes
@@ -21,6 +22,7 @@ import {
 
 export function ModuloRaizesClient({ n }: { n: number }) {
   const p = useProgress();
+  const revisor = !!useAccount().session?.account.revisor;
   const m = modulo(n);
   const e = p.state.raizes;
   const [etapa, setEtapa] = useState<string | null>(null);
@@ -45,7 +47,7 @@ export function ModuloRaizesClient({ n }: { n: number }) {
   if (!m) {
     return <p className="rz-corpo pt-8">Este módulo ainda está em preparação.</p>;
   }
-  if (!moduloAberto(e, n)) {
+  if (!moduloAberto(e, n, revisor)) {
     return (
       <div className="grid gap-4 pt-8">
         <h1 className="rz-pagina">{m.titulo}</h1>

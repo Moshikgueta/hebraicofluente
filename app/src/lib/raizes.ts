@@ -220,12 +220,14 @@ export function progressoDoModulo(e: EstadoRaizes | undefined, m: ModuloRaizes) 
 /**
  * Pode abrir o módulo n? O 1 sempre; os outros quando o anterior está
  * concluído (regra de curso.json). Concluído continua aberto: revisar nunca
- * tranca. Módulo sem conteúdo (em preparação) nunca abre.
+ * tranca. Módulo sem conteúdo (em preparação) nunca abre. A conta de
+ * administrador (`revisor`) abre todos, para revisar o conteúdo.
  */
-export function moduloAberto(e: EstadoRaizes | undefined, n: number): boolean {
+export function moduloAberto(e: EstadoRaizes | undefined, n: number, revisor = false): boolean {
   const m = modulo(n);
   if (!m) return false;
-  if (n === 1) return true;
+  /* O dono revisa: todos os módulos com conteúdo abertos (Account.revisor). */
+  if (n === 1 || revisor) return true;
   const anterior = modulo(n - 1);
   return !!anterior && progressoDoModulo(e, anterior).concluido;
 }

@@ -151,6 +151,23 @@ describe('Raízes é outro produto, com outro direito', () => {
     expect((await content({ request: new Request(`${SITE}/api/content`, { headers: { cookie } }), env, ctx: {} })).status).toBe(403);
   });
 
+  it('a conta de administrador é revisora: /api/me diz, e ela vê todos os módulos abertos', async () => {
+    const env = envDeTeste({ ADMIN_EMAILS: 'ana@exemplo.com.br' });
+    const cookie = await comConta(env, ['raizes-sefarditas']);
+    const me = await (await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { cookie } }), env })).json() as { account: { revisor?: boolean } };
+    expect(me.account.revisor).toBe(true);
+    const outro = envDeTeste({ ADMIN_EMAILS: 'dono@exemplo.com.br' });
+    const c2 = await comConta(outro, ['raizes-sefarditas']);
+    const me2 = await (await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { cookie: c2 } }), env: outro })).json() as { account: { revisor?: boolean } };
+    expect(me2.account.revisor).toBeUndefined();
+    if (!TEM_CONTEUDO) return;
+    hidratarRaizes(JSON.parse(conteudoRaizesBruto()) as DadosRaizes);
+    const ultimo = MODULOS_COM_CONTEUDO.at(-1)!;
+    expect(moduloAberto(undefined, ultimo)).toBe(ultimo === 1);
+    expect(moduloAberto(undefined, ultimo, true)).toBe(true);
+    expect(moduloAberto(undefined, 99, true)).toBe(false);
+  });
+
   it('não está no catálogo de venda: vender depende da decisão do dono', () => {
     const catalogo = ler('data/courses.json').courses.map((c: { slug: string }) => c.slug);
     expect(catalogo).not.toContain('raizes-sefarditas');
