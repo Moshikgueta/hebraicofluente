@@ -1,10 +1,11 @@
 'use client';
 
 /* A casa de Raízes Sefarditas, no formato da página inicial da coleção
- * editorial: abertura escura, o número do progresso em destaque, a jornada
- * como sumário de capítulos (fio entre as linhas, não cartões), e as portas
- * para a biblioteca, o laboratório e o certificado como notas com fio.
- * Os módulos em preparação aparecem na jornada sem fingir que existem. */
+ * editorial: abertura escura, a estante dos dez objetos (o progresso que se
+ * vê), os cinco mundos como cartões com uma imagem histórica (crédito sempre
+ * junto), as portas da exploração com as gravuras, e o passaporte em
+ * carimbos. Os módulos em preparação aparecem sem fingir que existem.
+ * Movimento só na entrada de cada bloco, e nenhum com movimento reduzido. */
 
 import Link from 'next/link';
 import { useState } from 'react';
@@ -12,8 +13,10 @@ import { Heroi } from '@/components/raizes/Heroi';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
 import {
-  certificadoRaizes, conquistasObtidas, modulo, moduloAberto, progressoDoModulo, progressoGeral, raizes
+  certificadoRaizes, conquistasObtidas, modulo, moduloAberto, progressoDoModulo, progressoGeral, raizes, type FotoRaizes
 } from '@/lib/raizes';
+import { Recipiente, guardaveis, nomeDoRecipiente } from '@/components/raizes/Recipientes';
+import { Gravura } from '@/components/raizes/ilustracoes/Gravuras';
 import { INTERESSES, type EstadoRaizes, type Interesse } from '@/lib/state/raizes-estado';
 import { MUNDOS, NOME_DO_INTERESSE, descobertasRecentes, progressoDoMundo, recomendar, rotuloDoTipo, selos } from '@/lib/raizes-jornada';
 
@@ -60,16 +63,18 @@ export function RaizesHomeClient() {
         <p className="rz-credito m-0 pt-2">{r.edicao.rotulo} · contorno: Natural Earth, domínio público</p>
       </Heroi>
 
-      <section aria-label="Seu progresso" className="grid grid-cols-[auto_1fr] items-center gap-4 border-y border-[var(--linha)] py-4"
-        style={{ borderTopColor: 'var(--tinta)' }}>
-        <span className="rz-numero text-[46px]">{geral.modulosFeitos}<span className="text-[24px] text-[var(--suave)]">/{geral.total}</span></span>
-        <div className="grid gap-2">
-          <span className="font-ui text-[14.5px] text-[var(--tinta)]">módulos concluídos</span>
-          <div className="h-[3px] bg-[var(--linha)]" role="progressbar" aria-valuemin={0} aria-valuemax={100}
-            aria-valuenow={geral.pct} aria-label="Progresso no percurso">
-            <div className="h-full bg-[var(--teal)]" style={{ width: `${geral.pct}%` }} />
+      <section aria-label="Seu progresso" className="grid gap-4">
+        <div className="grid grid-cols-[auto_1fr] items-end gap-4">
+          <span className="rz-numero text-[46px]">{geral.modulosFeitos}<span className="text-[24px] text-[var(--suave)]">/{geral.total}</span></span>
+          <div className="grid gap-2 pb-1.5">
+            <span className="font-ui text-[14.5px] text-[var(--tinta)]">módulos concluídos</span>
+            <div className="h-[3px] bg-[var(--linha)]" role="progressbar" aria-valuemin={0} aria-valuemax={100}
+              aria-valuenow={geral.pct} aria-label="Progresso no percurso">
+              <div className="h-full bg-[var(--teal)]" style={{ width: `${geral.pct}%` }} />
+            </div>
           </div>
         </div>
+        <Estante e={e} revisor={revisor} />
       </section>
 
       <Interesses e={e} escolher={p.interessesRaizes} />
@@ -95,42 +100,27 @@ export function RaizesHomeClient() {
             Modo de revisão: como administrador, você vê todos os módulos abertos. Os alunos continuam abrindo um de cada vez.
           </p>
         )}
-        {MUNDOS.map(w => {
-          const pw = progressoDoMundo(e, w);
-          return (
-            <section key={w.id} className="grid gap-1 pt-3" aria-labelledby={`mundo-${w.id}`}>
-              <p className="rz-rot ocre m-0">Mundo {w.n} · {pw.feitos} de {pw.total}</p>
-              <h3 id={`mundo-${w.id}`} className="rz-h3">{w.titulo}</h3>
-              <p className="m-0 font-ui text-[14px] leading-relaxed text-[var(--suave)]">{w.subtitulo}</p>
-              <ol className="rz-lista">
-                {r.modulos.filter(rm => w.modulos.includes(rm.n)).map(rm => <LinhaDoModulo key={rm.n} rm={rm} e={e} revisor={revisor} />)}
-              </ol>
-              {w.portas.length > 0 && (
-                <p className="m-0 flex flex-wrap gap-x-4 gap-y-1">
-                  {w.portas.map(pt => <Link key={pt.rota} href={pt.rota} prefetch={false} className="rz-link min-h-[40px] inline-flex items-center">{pt.rotulo}</Link>)}
-                </p>
-              )}
-            </section>
-          );
-        })}
+        <div className="grid gap-6">
+          {MUNDOS.map(w => <CartaoDoMundo key={w.id} w={w} e={e} revisor={revisor} />)}
+        </div>
       </section>
 
       <section className="grid gap-3" aria-labelledby="explorar">
         <div className="rz-rubrica"><h2 id="explorar" className="rz-rot m-0">Explorar livremente</h2></div>
-        <ul className="m-0 grid grid-cols-2 gap-2 p-0 list-none sm:grid-cols-4">
+        <ul className="m-0 grid grid-cols-2 gap-2.5 p-0 list-none sm:grid-cols-4">
           {EXPLORAR.map(x => (
             <li key={x.rota}>
               <Link href={x.rota} prefetch={false} className="rz-porta">
+                <Gravura nome={x.gravura} className="h-[38px] w-[50px] text-[var(--ocre)]" />
                 <span className="rz-serif text-[17px] text-[var(--titulo)]">{x.rotulo}</span>
                 <span className="font-ui text-[12.5px] leading-snug text-[var(--suave)]">{x.dica}</span>
               </Link>
             </li>
           ))}
         </ul>
-        <p className="m-0 font-ui text-[13.5px] text-[var(--corpo)]">
-          Passaporte: <Link href="/raizes/passaporte" prefetch={false} className="rz-link">{selos(e).filter(x => x.tem).length} de {selos(e).length} selos</Link>
-        </p>
       </section>
+
+      <Carimbos e={e} />
 
       <section className="grid gap-3" aria-labelledby="conquistas">
         <div className="rz-rubrica"><h2 id="conquistas" className="rz-rot m-0">Conquistas</h2><span className="rz-rot ml-auto tabular-nums">{ganhas.size} de {r.conquistas.length}</span></div>
@@ -237,14 +227,14 @@ function LinhaDoModulo({ rm, e, revisor }: { rm: LinhaRm; e: EstadoRaizes | unde
 }
 
 const EXPLORAR = [
-  { rota: '/raizes/atlas', rotulo: 'Atlas', dica: 'Lugares e Caminhos do Exílio' },
-  { rota: '/raizes/personagens', rotulo: 'Personagens', dica: 'Vidas com fonte' },
-  { rota: '/raizes/glossario', rotulo: 'Glossário', dica: 'As palavras desta história' },
-  { rota: '/raizes/biblioteca', rotulo: 'Biblioteca', dica: 'Cada fonte' },
-  { rota: '/raizes/busca', rotulo: 'Buscar', dica: 'Lugar, pessoa, termo' },
-  { rota: '/raizes/colecao', rotulo: 'Coleção', dica: 'O que você guardou' },
-  { rota: '/raizes/passaporte', rotulo: 'Passaporte', dica: 'Selos do que explorou' },
-  { rota: '/raizes/familia', rotulo: 'Minha história', dica: 'Só no seu aparelho' }
+  { rota: '/raizes/atlas', rotulo: 'Atlas', dica: 'Lugares e Caminhos do Exílio', gravura: 'mapa' },
+  { rota: '/raizes/personagens', rotulo: 'Personagens', dica: 'Vidas com fonte', gravura: 'pena' },
+  { rota: '/raizes/glossario', rotulo: 'Glossário', dica: 'As palavras desta história', gravura: 'livro' },
+  { rota: '/raizes/biblioteca', rotulo: 'Biblioteca', dica: 'Cada fonte', gravura: 'documento' },
+  { rota: '/raizes/busca', rotulo: 'Buscar', dica: 'Lugar, pessoa, termo', gravura: 'lupa' },
+  { rota: '/raizes/colecao', rotulo: 'Coleção', dica: 'O que você guardou', gravura: 'chave' },
+  { rota: '/raizes/passaporte', rotulo: 'Passaporte', dica: 'Selos do que explorou', gravura: 'carimbo' },
+  { rota: '/raizes/familia', rotulo: 'Minha história', dica: 'Só no seu aparelho', gravura: 'arvore' }
 ];
 
 /** A entrada personalizada: o que trouxe a pessoa até aqui. Opcional, muda
@@ -314,6 +304,110 @@ function Continuar({ e, revisor }: { e: EstadoRaizes | undefined; revisor: boole
           ))}
         </p>
       )}
+    </section>
+  );
+}
+
+/* ── a estante dos dez objetos ───────────────────────────────────────── */
+
+/** Os objetos dos módulos, enchendo com o que o aluno guardou. Abre o módulo, se ele estiver aberto. */
+function Estante({ e, revisor }: { e: EstadoRaizes | undefined; revisor: boolean }) {
+  const r = raizes();
+  const desc = e?.descobertas ?? {};
+  return (
+    <ol className="rz-estante" aria-label="Os objetos de cada módulo">
+      {r.modulos.map((rm, i) => {
+        const m = modulo(rm.n);
+        const g = m ? guardaveis(m) : [];
+        const dentro = g.filter(x => desc[x.chave]).length;
+        const aberto = !!m && moduloAberto(e, rm.n, revisor);
+        const feito = !!m && progressoDoModulo(e, m).concluido;
+        const corpo = (
+          <>
+            <Recipiente n={rm.n} quantos={dentro} className="h-[44px] w-[52px]" />
+            <span className="rz-estante-n tabular-nums">{feito ? '✓' : String(rm.n).padStart(2, '0')}</span>
+          </>
+        );
+        const rotulo = `Módulo ${rm.n}, ${nomeDoRecipiente(rm.n)}: ${dentro} de ${g.length} guardados${feito ? ', concluído' : ''}`;
+        return (
+          <li key={rm.n} style={{ ['--i' as string]: i }} className={`${aberto ? '' : 'fechado'} ${feito ? 'feito' : ''}`}>
+            {aberto
+              ? <Link href={`/raizes/modulo/${rm.n}`} prefetch={false} aria-label={rotulo}>{corpo}</Link>
+              : <span role="img" aria-label={`${rotulo}. Abre depois do anterior.`}>{corpo}</span>}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/* ── os cinco mundos, em cartões com imagem ──────────────────────────── */
+
+/** A imagem de cada mundo (raizes/data/fotos.json); sem ela, o cartão usa o objeto do primeiro módulo. */
+const FOTO_DO_MUNDO: Record<string, string> = {
+  sefarad: 'santa-maria-blanca', ruptura: 'decreto-1492', diaspora: 'esnoga-interior', brasil: 'recife-mapa', 'minha-historia': 'torre-do-tombo'
+};
+
+function CreditoCurto({ f }: { f: FotoRaizes }) {
+  const licenca = f.licenca === 'Public domain' ? 'Domínio público' : f.licenca;
+  return (
+    <p className="m-0 px-4 pt-2 font-ui text-[11px] leading-snug text-[var(--suave)] [overflow-wrap:anywhere]">
+      Imagem: {f.autor}{f.data ? `, ${f.data}` : ''} · {f.licencaUrl ? <a href={f.licencaUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">{licenca}</a> : licenca} · <a href={f.pagina} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">Commons</a>
+    </p>
+  );
+}
+
+function CartaoDoMundo({ w, e, revisor }: { w: (typeof MUNDOS)[number]; e: EstadoRaizes | undefined; revisor: boolean }) {
+  const r = raizes();
+  const pw = progressoDoMundo(e, w);
+  const foto = (r.fotos ?? []).find(f => f.id === FOTO_DO_MUNDO[w.id]);
+  const pct = pw.total ? Math.round((pw.feitos / pw.total) * 100) : 0;
+  return (
+    <section className="rz-mundo" aria-labelledby={`mundo-${w.id}`}>
+      <div className="rz-mundo-capa">
+        {foto
+          ? /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={`/raizes/fotos/${foto.arquivo}`} alt={foto.mostra} width={foto.largura} height={foto.altura} loading="lazy" decoding="async" />
+          : <div className="rz-mundo-sem-foto"><Recipiente n={w.modulos[0]!} quantos={0} className="h-[90px] w-[108px]" /></div>}
+        <div className="rz-mundo-titulo">
+          <p className="rz-rot m-0 !text-[#8FD6C8]">Mundo {w.n} · {pw.feitos} de {pw.total}{pw.concluido ? ' · concluído' : ''}</p>
+          <h3 id={`mundo-${w.id}`} className="rz-serif m-0 text-[24px] font-[420] leading-tight text-white [text-wrap:balance]">{w.titulo}</h3>
+        </div>
+      </div>
+      {foto && <CreditoCurto f={foto} />}
+      <div className="grid gap-2 px-4 pb-4 pt-2">
+        <div className="h-[3px] rounded-full bg-[var(--linha)]" aria-hidden><div className="h-full rounded-full bg-[var(--lacre)]" style={{ width: `${pct}%` }} /></div>
+        <p className="m-0 font-ui text-[14px] leading-relaxed text-[var(--corpo)]">{w.subtitulo}</p>
+        <ol className="rz-lista">
+          {r.modulos.filter(rm => w.modulos.includes(rm.n)).map(rm => <LinhaDoModulo key={rm.n} rm={rm} e={e} revisor={revisor} />)}
+        </ol>
+        {w.portas.length > 0 && (
+          <p className="m-0 flex flex-wrap gap-2">
+            {w.portas.map(pt => <Link key={pt.rota} href={pt.rota} prefetch={false} className="rz-chip inline-flex items-center">{pt.rotulo} →</Link>)}
+          </p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ── o passaporte em carimbos ────────────────────────────────────────── */
+
+function Carimbos({ e }: { e: EstadoRaizes | undefined }) {
+  const lista = selos(e);
+  const ganhos = lista.filter(x => x.tem).length;
+  return (
+    <section className="grid gap-3" aria-labelledby="carimbos">
+      <div className="rz-rubrica"><h2 id="carimbos" className="rz-rot m-0">Passaporte</h2><span className="rz-rot ml-auto tabular-nums">{ganhos} de {lista.length} selos</span></div>
+      <Link href="/raizes/passaporte" prefetch={false} className="rz-carimbos" aria-label={`Abrir o passaporte: ${ganhos} de ${lista.length} selos`}>
+        {lista.map((x, i) => (
+          <span key={x.id} className={`rz-carimbo-mini ${x.tem ? 'tem' : ''}`} style={{ ['--i' as string]: i, ['--giro' as string]: `${((i * 37) % 17) - 8}deg` }} title={x.titulo}>
+            <span aria-hidden>{x.tem ? '✓' : ''}</span>
+            <span className="rz-carimbo-nome">{x.titulo.replace(/^Mundo \d: /, '')}</span>
+          </span>
+        ))}
+      </Link>
+      <p className="m-0 font-ui text-[13px] text-[var(--suave)]">Selos do que você estudou e explorou. Não dizem nada sobre a origem da sua família.</p>
     </section>
   );
 }
