@@ -12,13 +12,14 @@ import { Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { CourseShelf } from '@/components/platform/CourseShelf';
-import { allCourses, brl, getCourse, isPlayable } from '@/lib/catalog';
+import { allCourses, brl, estaAVenda, getCourse, isPlayable } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 
 export function CursosClient() {
   const account = useAccount();
   const courses = allCourses();
   const livro = getCourse('israel-alem-do-roteiro');
+  const livroAVenda = estaAVenda(livro);
 
   return (
     <>
@@ -100,8 +101,9 @@ export function CursosClient() {
         <span hidden data-curso="fim" />
       </Section>
 
-      {/* O e-book (21/10/2026): não é um nível da trilha, é um guia à parte. */}
-      <Section tone="surface" labelledBy="ebook">
+      {/* O e-book (21/10/2026): não é um nível da trilha, é um guia à parte.
+          Só aparece quando está à venda (`aVenda` em data/courses.json). */}
+      {livroAVenda && <Section tone="surface" labelledBy="ebook">
         <div className="grid gap-4 max-w-[760px]">
           <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-[var(--accent)] m-0">E-book</p>
           <h2 id="ebook" className="font-display font-semibold text-[clamp(26px,3vw,36px)] leading-[1.1] tracking-[-0.03em] text-ink m-0">
@@ -112,7 +114,7 @@ export function CursosClient() {
             <LinkButton href="/cursos/israel-alem-do-roteiro" variant="secondary">Conhecer o e-book</LinkButton>
           </div>
         </div>
-      </Section>
+      </Section>}
 
       <Section labelledBy="ordem">
         {/* Uma afirmação, não um cartão: o fio teal à esquerda é o mesmo das

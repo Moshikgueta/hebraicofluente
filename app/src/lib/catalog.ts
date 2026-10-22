@@ -76,6 +76,10 @@ export type CatalogCourse = {
   componentes?: string[];
   /** Onde o produto abre depois de comprado. Sem isto, /meu-hebraico. */
   abre?: string;
+  /** `false` = no ar só para quem tem o acesso liberado à mão: sem página de
+   *  venda, sem checkout, sem link e sem parágrafo nas políticas (22/10/2026,
+   *  o e-book, como o Raízes Sefarditas). Sem o campo, está à venda. */
+  aVenda?: boolean;
   taglinePt: string;
   summaryPt: string;
   outcomesPt: string[];
@@ -102,9 +106,13 @@ export const tipoDe = (c: CatalogCourse | undefined): 'curso' | 'livro' | 'pacot
 export const allCourses = (): CatalogCourse[] =>
   CATALOG.courses.filter(c => tipoDe(c) === 'curso').sort((a, b) => a.n - b.n);
 
-/** Todos os produtos à venda ou não: cursos, o e-book e o pacote. */
+/** Está à venda? `aVenda: false` tira o produto da vitrine e do checkout. */
+export const estaAVenda = (c: CatalogCourse | undefined): c is CatalogCourse => !!c && c.aVenda !== false;
+
+/** Todos os produtos À VENDA: cursos, o e-book e o pacote. Um produto com
+ *  `aVenda: false` não ganha página de venda nem de checkout. */
 export const allProducts = (): CatalogCourse[] =>
-  CATALOG.courses.slice().sort((a, b) => a.n - b.n);
+  CATALOG.courses.filter(estaAVenda).sort((a, b) => a.n - b.n);
 
 export const getCourse = (slug: string): CatalogCourse | undefined =>
   CATALOG.courses.find(c => c.slug === slug);

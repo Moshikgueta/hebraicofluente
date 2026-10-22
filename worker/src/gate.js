@@ -41,6 +41,7 @@
 import { readSession } from './lib/session.js';
 import { aparelhoValido } from './lib/aparelhos.js';
 import { hasEntitlement, activeEntitlements, findAccountById } from './lib/db.js';
+import { getCourse } from './lib/catalog.js';
 
 /* As rotas do curso pago. Uma lista de prefixos, e não uma de rotas livres:
    uma rota nova nasce protegida, e o erro possível é pedir login onde não
@@ -166,9 +167,11 @@ export async function gate(request, env) {
     ? (await activeEntitlements(env, account.id)).some(e => ehCurso(e.courseSlug))
     : await hasEntitlement(env, account.id, curso);
   if (!pode) {
-    /* Raízes Sefarditas não tem página de venda (não está no catálogo): quem
-       não tem o direito vai para a lista de cursos, e não para um 404. */
-    const pagina = curso === 'raizes-sefarditas' ? '/cursos/' : `/cursos/${curso || COURSE}/`;
+    /* Produto sem página de venda - fora do catálogo (Raízes Sefarditas) ou
+       com `aVenda: false` (o e-book, 22/10/2026): quem não tem o direito vai
+       para a lista de cursos, e não para um 404. */
+    const produto = getCourse(curso || COURSE);
+    const pagina = !produto || produto.aVenda === false ? '/cursos/' : `/cursos/${curso || COURSE}/`;
     return recusa(url, documento, pagina);
   }
 

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
-import { flagship } from '@/lib/catalog';
+import { estaAVenda, flagship, getCourse } from '@/lib/catalog';
 import { confirmacaoDaDesistencia, empresa, INICIO_DO_ACESSO, temCartao, temPix } from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
@@ -118,13 +118,14 @@ export default function Page() {
           contrapartida de receber o valor de volta. O seu progresso de estudo{' '}
           <strong>não é apagado</strong>: se um dia você comprar de novo, ele estará lá.
         </p>
-        {/* TEXTO PARA APROVAÇÃO (21/10/2026): o e-book, vendido à parte. */}
-        <p>
+        {/* TEXTO PARA APROVAÇÃO (21/10/2026): o e-book, vendido à parte. Só
+            aparece quando ele está à venda (`aVenda` em data/courses.json). */}
+        {estaAVenda(getCourse('israel-alem-do-roteiro')) && <p>
           No <strong>e-book Israel Além do Roteiro</strong>, o direito de desistir é o
           mesmo, e a versão interativa fecha quando o reembolso é processado. O PDF que você
           baixou não tem como ser recolhido: ao pedir o reembolso, você se compromete a
           apagá-lo. No pacote, o reembolso devolve o valor inteiro e fecha o curso e o e-book.
-        </p>
+        </p>}
       </Artigo>
 
       <Artigo n={5} titulo="Depois dos sete dias">

@@ -173,6 +173,7 @@
 
     {
       "slug": "israel-alem-do-roteiro",
+      "aVenda": false,
       "tipo": "livro",
       "code": "E1",
       "n": 101,
@@ -214,6 +215,7 @@
 
     {
       "slug": "alfabetizacao-e-israel",
+      "aVenda": false,
       "tipo": "pacote",
       "code": "P1",
       "n": 102,

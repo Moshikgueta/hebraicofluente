@@ -1175,10 +1175,18 @@ decidiu manter Álef primeiro: com Mem e Tav sozinhas não há palavra útil
 na lição 2. Rever só se alunos reais disserem que a lição do Álef (letra
 muda) confunde.
 
-## E-book Israel Além do Roteiro à venda (21/10/2026, decisão do dono) - NÃO PUBLICADO
+## E-book Israel Além do Roteiro (21/10/2026, decisão do dono) - NO AR SÓ PARA O DONO
 Vendido à parte: é a "venda avulsa de produto digital" do Enquadramento acima. O dono
-decidiu montar no ramo e **só publicar depois de o contador confirmar o enquadramento
-(CNAE, nota) e de ele aprovar o hebraico do livro**.
+decidiu **só abrir a venda depois de o contador confirmar o enquadramento (CNAE, nota)
+e de o advogado ler os parágrafos dos Termos e do Reembolso**.
+- **No ar sem venda** (22/10/2026, decisão do dono, como o Raízes Sefarditas): o e-book e
+  o pacote têm `"aVenda": false` em `data/courses.json`. Com isso não há página de venda,
+  checkout (`isSellable` recusa com 404), link no rodapé nem em /cursos, e os parágrafos
+  do e-book somem dos Termos e do Reembolso (as políticas ficam na versão de antes).
+  `/israel/` vai ao ar atrás do portão e só abre com o direito `israel-alem-do-roteiro`,
+  dado à mão em Actions → Acesso → `liberar`; quem não o tem vai para /cursos/.
+  **Abrir a venda** = tirar as duas linhas `aVenda`, subir `politicas.atualizadoEm` e
+  publicar (nasce versão nova dos Termos e do Reembolso).
 - **O editorial é PRIVADO** (21/10/2026): manuscrito, fontes, ilustrações, fotos e
   ferramentas moram em `Moshikgueta/hebraicofluente-editorial`, nunca neste repositório
   (público). `editorial/` está no `.gitignore`: para trabalhar, clone o privado aí. A

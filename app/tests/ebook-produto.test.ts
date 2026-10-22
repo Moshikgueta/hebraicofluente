@@ -117,11 +117,38 @@ async function comprar(env: Record<string, unknown>, cookie: string, slug: strin
   return { status: 200, order: ordem.id, pagamento: p.id };
 }
 
+/* Liga a venda do e-book e do pacote só no teste (o objeto do catálogo do
+   servidor é o mesmo em todo o arquivo; o afterEach devolve como estava). */
+const VENDA = new Map<string, unknown>();
+function abrirVenda() {
+  for (const slug of [LIVRO, PACOTE]) { const c = getCourse(slug); if (!VENDA.has(slug)) VENDA.set(slug, c.aVenda); c.aVenda = true; }
+}
+afterEach(() => { for (const [slug, v] of VENDA) getCourse(slug).aVenda = v; VENDA.clear(); });
+
 describe('o catálogo', () => {
-  it('as telas de curso só veem cursos; checkout e páginas de venda veem tudo', () => {
+  it('as telas de curso só veem cursos; checkout e páginas de venda veem o que está à venda', () => {
     expect(allCourses().map(c => c.slug)).not.toContain(LIVRO);
     expect(allCourses().map(c => c.slug)).not.toContain(PACOTE);
-    expect(allProducts().map(c => c.slug)).toEqual(expect.arrayContaining([LIVRO, PACOTE, 'alfabetizacao']));
+    expect(allProducts().map(c => c.slug)).toContain('alfabetizacao');
+  });
+
+  /* 22/10/2026 (decisão do dono): o e-book vai ao ar como o Raízes Sefarditas,
+     só para quem tem o acesso liberado à mão. `aVenda: false` no catálogo; abrir
+     a venda é tirar essa linha (e o contador e o advogado verem antes). */
+  it('enquanto `aVenda` é false: sem página de venda, sem checkout, sem link', () => {
+    expect(getCourse(LIVRO).aVenda).toBe(false);
+    expect(getCourse(PACOTE).aVenda).toBe(false);
+    expect(allProducts().map(c => c.slug)).not.toContain(LIVRO);
+    expect(allProducts().map(c => c.slug)).not.toContain(PACOTE);
+  });
+
+  it('enquanto `aVenda` é false, o servidor recusa a compra do e-book e do pacote', async () => {
+    const env = envDeTeste();
+    const a = await conta(env);
+    for (const slug of [LIVRO, PACOTE]) {
+      const r = await pay.create({ request: pedido(`${SITE}/api/pay/create`, { courseSlug: slug, method: 'pix' }, { Cookie: a.cookie }), env, ctx });
+      expect(r.status, slug).toBe(404);
+    }
   });
 
   it('o preço cobrado sai do catálogo: R$ 67 o e-book, R$ 127 o pacote', () => {
@@ -157,7 +184,8 @@ describe('o catálogo', () => {
 
 describe('o portão do e-book', () => {
   it('a lista do portão dos produtos que não são curso é a do catálogo (menos o pacote, que não vira direito)', () => {
-    const doCatalogo = allProducts().filter(c => (c.tipo ?? 'curso') === 'livro').map(c => c.slug);
+    const todos = JSON.parse(readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8')).courses as { slug: string; tipo?: string }[];
+    const doCatalogo = todos.filter(c => (c.tipo ?? 'curso') === 'livro').map(c => c.slug);
     expect([...NAO_CURSOS].sort()).toEqual(doCatalogo.sort());
   });
 
@@ -179,17 +207,29 @@ describe('o portão do e-book', () => {
     expect((await porta('/audio/he-12345678.mp3'))?.status, 'o e-book abriu o áudio do curso').toBe(302);
   });
 
-  it('quem tem só o curso não lê o e-book, e vai para a página de venda dele', async () => {
+  it('quem tem só o curso não lê o e-book: vai para /cursos/ enquanto ele não está à venda, e para a página de venda depois', async () => {
     const env = envDeTeste();
     const a = await conta(env);
     await grantAccess(env, { accountId: a.id, courseSlug: 'alfabetizacao', orderId: 'T-curso', months: 12 });
-    const r = await gate(new Request(`${SITE}/israel/`, { headers: { Cookie: a.cookie } }), env);
+    const porta = () => gate(new Request(`${SITE}/israel/`, { headers: { Cookie: a.cookie } }), env);
+    const r = await porta();
     expect(r?.status).toBe(302);
-    expect(r?.headers.get('location')).toContain(`/cursos/${LIVRO}/`);
+    expect(new URL(r!.headers.get('location')!, SITE).pathname).toBe('/cursos/');
+    abrirVenda();
+    const r2 = await porta();
+    expect(r2?.headers.get('location')).toContain(`/cursos/${LIVRO}/`);
+  });
+
+  it('o acesso liberado à mão (Actions → Acesso → liberar) abre /israel mesmo fora da venda', async () => {
+    const env = envDeTeste();
+    const a = await conta(env);
+    await grantAccess(env, { accountId: a.id, courseSlug: LIVRO, orderId: 'manual-dono', months: 12 });
+    expect(await gate(new Request(`${SITE}/israel/`, { headers: { Cookie: a.cookie } }), env)).toBeNull();
   });
 });
 
-describe('comprar o e-book e o pacote', () => {
+describe('comprar o e-book e o pacote (o dia em que a venda abrir)', () => {
+  beforeEach(abrirVenda);
   it('o e-book libera só o e-book, e o recibo leva ao e-book', async () => {
     const env = envCompleto();
     const a = await conta(env);

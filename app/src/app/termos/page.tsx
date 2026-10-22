@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import Link from 'next/link';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
-import { ancora, brl, fimDoPreLancamento, flagship, getCourse, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, estaAVenda, fimDoPreLancamento, flagship, getCourse, parcelasMax, pixPrice } from '@/lib/catalog';
 import {
   confirmaSozinho, confirmacaoDaDesistencia, empresa, INICIO_DO_ACESSO,
   parcelasTexto, prazoResposta, renovacaoTexto, soPix, temCartao, temPix
@@ -26,8 +26,9 @@ export const metadata: Metadata = meta({
 export default function Page() {
   const c = flagship();
   /* 21/10/2026: o e-book e o pacote, vendidos à parte (data/courses.json). */
-  const livro = getCourse('israel-alem-do-roteiro');
-  const pacote = getCourse('alfabetizacao-e-israel');
+  /* Só entram nos Termos quando estão à venda (`aVenda` em data/courses.json). */
+  const livro = [getCourse('israel-alem-do-roteiro')].find(estaAVenda);
+  const pacote = [getCourse('alfabetizacao-e-israel')].find(estaAVenda);
   const parcelas = parcelasMax(c.price);
   const pix = pixPrice(c.price);
   const { politicas, contato } = empresa;

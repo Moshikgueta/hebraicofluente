@@ -21,8 +21,9 @@ const BY_SLUG = new Map(catalog.courses.map(c => [c.slug, c]));
 
 export const getCourse = slug => BY_SLUG.get(String(slug || '')) || null;
 
-/** Dá para comprar este produto agora? Só o que está publicado e tem conteúdo. */
-export const isSellable = c => !!c && c.status === 'available' && c.engine !== null;
+/** Dá para comprar este produto agora? Só o que está publicado, tem conteúdo e
+ *  não está marcado `aVenda: false` (o e-book, no ar só para o dono, 22/10/2026). */
+export const isSellable = c => !!c && c.status === 'available' && c.engine !== null && c.aVenda !== false;
 
 /* Curso, livro ou pacote (21/10/2026). O pacote não é um direito de acesso
    por si: um pedido dele libera cada slug de `componentes`, com os meses de
