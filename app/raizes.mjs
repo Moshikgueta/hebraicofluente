@@ -287,6 +287,12 @@ for (const M of DADOS.conteudo.slice(1)) {
   await p.reload({ waitUntil: 'networkidle' });
   await p.waitForTimeout(500);
   ok(await p.locator(`text=/Módulo ${M.n} concluído/`).count() > 0, `módulo ${M.n} concluído depois de recarregar`);
+  /* O objeto da unidade abre e mostra o que guarda. */
+  await p.locator('#rz-objeto-do-modulo').click();
+  await p.waitForTimeout(450);
+  ok(await p.locator('dialog[open]').count() === 1, `módulo ${M.n}: o objeto da unidade abre`);
+  await p.locator('dialog[open] header').screenshot({ path: `.shots/objeto-m${M.n}.png` });
+  await p.keyboard.press('Escape');
 }
 if (DADOS.conteudo.length > 1) {
   await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
@@ -329,7 +335,7 @@ if (DADOS.conteudo.some(x => x.n === 3 && x.experiencia)) {
   ok(await p.locator('text=4 de 4 partes lidas').count() === 1, 'm3: as quatro partes contam como lidas');
   ok(await p.locator('text=O que a folha ensina').count() === 1, 'm3: o fecho aparece depois de ler tudo');
   ok(await semRolagemLateral(p), 'm3: Contextualizar sem rolagem lateral');
-  await p.locator('text=Leia o édito').scrollIntoViewIfNeeded();
+  await p.locator('h2', { hasText: 'Leia o édito' }).scrollIntoViewIfNeeded();
   await p.screenshot({ path: '.shots/arquivo-edito.png', fullPage: false });
   await p.screenshot({ path: '.shots/arquivo-contextualizar.png', fullPage: true });
 }
@@ -374,6 +380,34 @@ if (DADOS.atlas) {
   await p.waitForTimeout(400);
   ok(await p.locator('text=Exemplo didático, fictício').count() === 1, 'a árvore continua no aparelho depois de recarregar');
 }
+
+/* ── o objeto da unidade, a folha que voa e o mapa do capítulo ───────────── */
+await p.goto(`${BASE}/raizes/modulo/2/`, { waitUntil: 'networkidle' });
+await p.waitForTimeout(500);
+ok(await p.locator('#rz-objeto-do-modulo').count() === 1, 'o objeto da unidade aparece');
+const mapaCap = p.locator('section', { has: p.locator('h2', { hasText: 'O mapa do capítulo' }) });
+ok(await mapaCap.count() === 1, 'o mapa do capítulo aparece');
+await mapaCap.scrollIntoViewIfNeeded();
+await p.waitForTimeout(900);
+await mapaCap.locator('.sr-only button').first().evaluate(b => b.click());
+await p.waitForTimeout(400);
+ok(await mapaCap.locator('.rz-ficha').count() === 1, 'tocar num lugar abre a ficha');
+ok(await semRolagemLateral(p), 'mapa do capítulo sem rolagem lateral');
+await mapaCap.screenshot({ path: '.shots/raizes-mapa-capitulo.png' });
+const contaAntes = await p.locator('.rz-objeto-conta').innerText();
+const folha1 = p.locator('.rz-folha-secao').first();
+await folha1.scrollIntoViewIfNeeded();
+await p.waitForTimeout(400);
+await p.screenshot({ path: '.shots/raizes-folha-voando.png' });
+await p.waitForTimeout(1900);
+ok(await p.locator('.rz-objeto-conta').innerText() !== contaAntes, `a folha vista entra no objeto (${contaAntes} → ${await p.locator('.rz-objeto-conta').innerText()})`);
+ok(await folha1.locator('text=✓ Guardada').count() === 1, 'a folha diz que foi guardada');
+await p.screenshot({ path: '.shots/raizes-folha-guardada.png' });
+await p.locator('#rz-objeto-do-modulo').click();
+await p.waitForTimeout(500);
+ok(await p.locator('dialog[open] h2', { hasText: 'baú de viagem' }).count() === 1, 'o baú abre e mostra o que guarda');
+await p.screenshot({ path: '.shots/raizes-objeto-aberto.png' });
+await p.keyboard.press('Escape');
 
 /* ── a jornada: interesses, personagens, coleção, busca, glossário, passaporte ── */
 await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });

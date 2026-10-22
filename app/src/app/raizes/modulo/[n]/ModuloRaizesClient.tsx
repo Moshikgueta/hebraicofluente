@@ -21,6 +21,8 @@ import { BlocoRaizes } from '@/components/raizes/Blocos';
 import { AberturaDoMaco } from '@/components/raizes/arquivo/AberturaDoMaco';
 import { NarrativaComMapa } from '@/components/raizes/arquivo/NarrativaComMapa';
 import { Selo } from '@/components/raizes/arquivo/Selo';
+import { FolhaDaSecao, ObjetoDoModulo } from '@/components/raizes/Recipientes';
+import { MapaDoCapitulo } from '@/components/raizes/MapaDoCapitulo';
 import { Gravura, VINHETA_DA_SECAO } from '@/components/raizes/ilustracoes/Gravuras';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
@@ -106,6 +108,8 @@ export function ModuloRaizesClient({ n }: { n: number }) {
 
       <Sumario m={m} lendo={lendo} e={e} />
 
+      <MapaDoCapitulo m={m} />
+
       {m.etapas.map((x, k) => {
         const narrativa = exp?.narrativa?.etapa === x.id ? exp.narrativa : undefined;
         return (
@@ -124,6 +128,7 @@ export function ModuloRaizesClient({ n }: { n: number }) {
             {narrativa
               ? <NarrativaComMapa m={m} blocos={x.blocos} passos={narrativa.passos} />
               : x.blocos.map((b, j) => <BlocoRaizes key={`${x.id}-${j}`} b={b} m={m} />)}
+            <FolhaDaSecao m={m} etapa={x} numero={k + 1} />
             {x.id === 'avancar' && <Fechamento m={m} />}
           </section>
         );
@@ -135,6 +140,7 @@ export function ModuloRaizesClient({ n }: { n: number }) {
           <Link href={`/raizes/modulo/${proximo.n}`} prefetch={false} className="rz-botao">Módulo {proximo.n} →</Link>
         )}
       </nav>
+      <ObjetoDoModulo m={m} />
     </div>
   );
 }

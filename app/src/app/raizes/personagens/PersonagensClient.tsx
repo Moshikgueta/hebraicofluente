@@ -8,6 +8,9 @@
  * módulos onde aparece. Abrir uma vida é uma descoberta (passaporte). */
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { MiniMapa } from '@/components/raizes/MiniMapa';
+import { Gravura } from '@/components/raizes/ilustracoes/Gravuras';
 import { useEffect, useState } from 'react';
 import { raizes } from '@/lib/raizes';
 import { useProgress } from '@/lib/state/store';
@@ -21,6 +24,7 @@ const iniciais = (nome: string) => nome.split(/\s+/).filter(p => /^[A-ZÁÉÍÓ�
 export function PersonagensClient() {
   const r = raizes();
   const p = useProgress();
+  const router = useRouter();
   const [aberto, setAberto] = useState<string | null>(null);
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export function PersonagensClient() {
         <h1 className="rz-pagina">Pessoas que a história registrou</h1>
         <p className="rz-entrada m-0">Sábios, rabinos, poetas, comerciantes e historiadores: o que se sabe de cada um, com a fonte de cada frase.</p>
         <p className="m-0 font-ui text-[13.5px] leading-relaxed text-[var(--suave)]">
-          Sem retratos: quase ninguém aqui tem imagem da época, e um rosto desenhado seria inventado. Ninguém fala em primeira pessoa.
+          Sem retratos: quase ninguém aqui tem imagem da época, e um rosto desenhado seria inventado. O desenho ao lado de cada nome é o objeto do ofício que o texto descreve, uma ilustração interpretativa. Ninguém fala em primeira pessoa.
         </p>
       </header>
       <ol className="m-0 grid gap-3 p-0 list-none">
@@ -52,16 +56,24 @@ export function PersonagensClient() {
             <li key={x.id} id={x.id} className="scroll-mt-20">
               <article className={`rz-pessoa ${ab ? 'aberta' : ''}`}>
                 <button type="button" aria-expanded={ab} aria-controls={`vida-${x.id}`} onClick={() => setAberto(ab ? null : x.id)}
-                  className="grid w-full grid-cols-[52px_1fr] items-center gap-3 text-left">
+                  className="grid w-full grid-cols-[52px_1fr_auto] items-center gap-3 text-left">
                   <span aria-hidden className="rz-monograma">{iniciais(x.nome)}</span>
                   <span className="grid gap-0.5">
                     <span className="rz-serif text-[19px] leading-snug text-[var(--titulo)]">{x.nome}</span>
                     <span className="font-ui text-[13px] text-[var(--suave)]">{x.quando ? `${x.quando} · ` : ''}{semMarcas(x.resumo)}</span>
                   </span>
+                  {x.objeto && <Gravura nome={x.objeto} className="h-[40px] w-[54px] text-[var(--ocre)]" />}
                 </button>
                 {ab && (
                   <div id={`vida-${x.id}`} className="rz-revelado rz-escalonar grid gap-3 pt-3">
                     {x.paragrafos.map((t, i) => <TextoComFontes key={i} texto={t} />)}
+                    {x.lugares.length > 0 && r.atlas && (
+                      <div className="rz-minimapa-moldura max-w-[420px]">
+                        <MiniMapa lugares={r.atlas.lugares.filter(l => x.lugares.includes(l.id))} proporcao={1.7}
+                          onLugar={id => router.push(`/raizes/atlas?lugar=${id}`)}
+                          rotulo={`Mapa com os lugares ligados a ${x.nome}`} />
+                      </div>
+                    )}
                     {x.lugares.length > 0 && (
                       <p className="m-0 font-ui text-[14px] text-[var(--corpo)]">
                         <span className="font-semibold text-[var(--tinta)]">No Atlas: </span>

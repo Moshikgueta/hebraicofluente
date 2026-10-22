@@ -804,6 +804,15 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   `/raizes/colecao` ("Guardar na coleção", `components/raizes/Guardar.tsx`). Estado novo em
   `EstadoRaizes`: `descobertas` (a primeira vez), `colecao` (o gesto mais recente), `perfil` (o mais
   recente). O que falta: `raizes/docs/matriz-master-prompt-50-etapas.md`. `tests/raizes-jornada.test.ts`.
+- **O objeto de cada unidade** (22/10/2026, pedido do dono; `components/raizes/Recipientes.tsx`):
+  estante (1), baú de viagem (2), maço do arquivo (3), pasta (4), arca do navio (5), caixa de
+  cartas (6), fichário (7), caderno (8), caixa de arquivo (9), caixa de memórias (10). No fim de
+  cada seção, a folha do caderno de viagem (`FolhaDaSecao`, chave `secao:mNN:<etapa>`) voa para o
+  objeto, que flutua no canto esquerdo e abre o que guarda (folhas, artefatos, documentos). A folha
+  é anotação do aluno, nunca documento da época. **Mapa do capítulo** (`MapaDoCapitulo`): os
+  lugares do Atlas que o texto do módulo NOMEIA (`lugaresDoModulo`), com ficha e carimbo; o mesmo
+  `MiniMapa` mostra o mapa de viagem no passaporte e os lugares de cada personagem. Só pontos:
+  linha entre lugares só no Atlas, com o nível de evidência.
 - **Peças do Israel Além do Roteiro** (`components/raizes/Pecas.tsx`): `palpite`, `vf`
   (verdadeiro ou falso), `curiosidades` e `artefatos` (vitrine com ficha). Nenhuma conta para a
   conclusão nem grava no servidor. Todo texto factual delas segue a regra das marcas

@@ -161,6 +161,41 @@ export const GRAVURAS: Record<string, { nome: string; tracos: ReactNode }> = {
       {T('M6 84 L114 84', 4)}
     </>
   },
+  astrolabio: {
+    nome: 'Astrolábio',
+    tracos: <>
+      {T('M60 18 a30 30 0 1 0 0.01 0 Z')}
+      {T('M60 24 a24 24 0 1 0 0.01 0 Z', 1)}
+      {T('M60 8 a5 5 0 1 0 0.01 0 M60 13 L60 18', 2)}
+      {T('M36 48 H84 M60 24 V72', 3)}
+      {T('M40 66 L80 30 M78 28 l4 -2 l-2 4 M42 68 l-4 2 l2 -4', 4)}
+      {T('M60 18 v4 M90 48 h-4 M60 78 v-4 M30 48 h4 M81 27 l-3 3 M39 69 l3 -3 M81 69 l-3 -3 M39 27 l3 3', 5)}
+      <circle cx="60" cy="48" r="2.5" className="rz-traco-cheio" />
+    </>
+  },
+  prensa: {
+    nome: 'Prensa de tipografia',
+    tracos: <>
+      {T('M30 82 V12 M90 82 V12 M24 12 H96 M24 20 H96')}
+      {T('M60 20 V44 M58 26 H62 M58 32 H62 M58 38 H62', 1)}
+      {T('M44 30 L76 34', 2)}
+      {T('M42 44 H78 V50 H42 Z', 3)}
+      {T('M30 62 H90 M34 62 V70 H86 V62', 4)}
+      {T('M44 56 H76 V62 H44 Z M48 58 H70', 5)}
+      {T('M20 82 H100', 6)}
+    </>
+  },
+  teatro: {
+    nome: 'Palco de bonecos, com as cortinas abertas',
+    tracos: <>
+      {T('M16 80 V14 H104 V80 M10 80 H110')}
+      {T('M16 14 Q30 30 22 60 L16 60 M104 14 Q90 30 98 60 L104 60', 1)}
+      {T('M16 14 Q60 24 104 14', 2)}
+      {T('M24 66 H96 V80 H24 Z', 3)}
+      {T('M48 30 H72 M60 26 V34 M50 30 V48 M70 30 V46 M60 34 V44', 4)}
+      {T('M34 72 h8 M54 72 h12 M78 72 h8', 5)}
+    </>
+  },
   balanca: {
     nome: 'Dois pratos de uma balança, para comparar',
     tracos: <>

@@ -77,7 +77,9 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { hidratarRaizes, marcasDe, type DadosRaizes } from '@/lib/raizes';
 import { MUNDOS, _limparIndice, buscar, glossario, itemPorChave, recomendar, selos } from '@/lib/raizes-jornada';
+// @ts-expect-error - módulo JS do Worker, sem tipos
 import { conteudoRaizesBruto } from '../../worker/src/api/content-raizes.js';
+// @ts-expect-error - módulo JS do Worker, sem tipos
 import { isGatedPath, cursoDaRota } from '../../worker/src/gate.js';
 
 const RAIZ = new URL('../../', import.meta.url).pathname;
@@ -157,5 +159,46 @@ describe.skipIf(!TEM_CONTEUDO)('a jornada com o conteúdo de verdade', () => {
     for (const x of sem) expect(x.porque.length).toBeGreaterThan(5);
     const brasil = recomendar(escolherInteresses(RAIZES_VAZIO, ['brasil'], T1), true);
     expect(brasil.some(x => x.porque.includes('presença sefardita no brasil'))).toBe(true);
+  });
+});
+
+describe.skipIf(!TEM_CONTEUDO)('o objeto de cada unidade e o mapa do capítulo', async () => {
+  const { RECIPIENTES, guardaveis } = await import('@/components/raizes/Recipientes');
+  const { lugaresDoModulo } = await import('@/lib/raizes-jornada');
+  const dados = JSON.parse(conteudoRaizesBruto()) as DadosRaizes;
+  hidratarRaizes(dados); _limparIndice();
+
+  it('cada um dos dez módulos tem o seu objeto, e nenhum se repete', () => {
+    const nomes = dados.conteudo.map(m => RECIPIENTES[m.n]?.nome);
+    expect(nomes.every(Boolean)).toBe(true);
+    expect(new Set(nomes).size).toBe(nomes.length);
+  });
+
+  it('o objeto guarda uma folha por seção, e toda chave passa pela validação do estado', () => {
+    for (const m of dados.conteudo) {
+      const g = guardaveis(m);
+      expect(g.filter(x => x.tipo === 'folha').length).toBe(m.etapas.length);
+      const desc = Object.fromEntries(g.map(x => [x.chave, T1]));
+      expect(Object.keys(raizesValido({ atividades: {}, etapas: {}, onde: null, descobertas: desc })?.descobertas ?? {}).length).toBe(g.length);
+    }
+  });
+
+  it('o mapa do capítulo só mostra lugares que o texto do módulo nomeia', () => {
+    for (const m of dados.conteudo) {
+      const texto = JSON.stringify(m.etapas).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      for (const l of lugaresDoModulo(m)) {
+        const nome = l.nome.replace(/ \(.*\)$/, '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        expect(texto.includes(nome), `${m.n}: ${l.nome}`).toBe(true);
+      }
+    }
+    expect(lugaresDoModulo(dados.conteudo[0]!).length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('o desenho de cada personagem existe e não é retrato', async () => {
+    const { GRAVURAS } = await import('@/components/raizes/ilustracoes/Gravuras');
+    for (const p of dados.personagens ?? []) {
+      expect(p.objeto && GRAVURAS[p.objeto], p.id).toBeTruthy();
+      expect(GRAVURAS[p.objeto!]!.nome.toLowerCase()).not.toMatch(/retrato|rosto/);
+    }
   });
 });
