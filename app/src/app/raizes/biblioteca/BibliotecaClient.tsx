@@ -7,6 +7,7 @@
 import { useState } from 'react';
 import { raizes, type Fonte } from '@/lib/raizes';
 import { StatusDaAfirmacao } from '@/components/raizes/Texto';
+import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
 
 const NIVEIS: { n: Fonte['nivel']; nome: string; texto: string }[] = [
   { n: 'A', nome: 'Literatura acadêmica', texto: 'Artigos com revisão por pares, livros de editora universitária, monografias.' },
@@ -19,6 +20,7 @@ const NIVEIS: { n: Fonte['nivel']; nome: string; texto: string }[] = [
 export function BibliotecaClient() {
   const r = raizes();
   const [busca, setBusca] = useState('');
+  if (r.semConteudo) return <SemConteudo />;
   const q = busca.trim().toLocaleLowerCase('pt-BR');
   const casa = (f: Fonte) => !q || `${f.autor} ${f.titulo} ${f.publicacao ?? ''}`.toLocaleLowerCase('pt-BR').includes(q);
   const citam = (fid: string) => r.afirmacoes.filter(a => a.fontes.includes(fid));

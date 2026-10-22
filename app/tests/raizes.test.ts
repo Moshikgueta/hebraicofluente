@@ -40,17 +40,25 @@ import { migrate } from '@/lib/state/migrate';
 import { EMPTY_STATE } from '@/lib/state/types';
 
 const RAIZ = new URL('../../', import.meta.url).pathname;
+/* O conteúdo mora no repositório privado Moshikgueta/hebraicofluente-raizes,
+   clonado em raizes/ (22/10/2026). Sem o clone, os casos que leem o conteúdo
+   são pulados e os de acesso, fusão e pacote continuam valendo. Na
+   publicação, o clone vem com o segredo RAIZES_TOKEN. */
+const RAIZES = process.env.HF_RAIZES || join(RAIZ, 'raizes');
+const TEM_CONTEUDO = existsSync(join(RAIZES, 'data/curso.json'));
 const ler = (p: string) => JSON.parse(readFileSync(join(RAIZ, p), 'utf8'));
+const lerRaizes = (p: string) => JSON.parse(readFileSync(join(RAIZES, p), 'utf8'));
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
 
 type Afirmacao = { id: string; status: string; fontes: string[]; interpretacoes_concorrentes: string | null; revisao_humana: boolean; acesso: string; modulo: number };
 type Fonte = { id: string; nivel: string; url: string | null; acesso: string; abnt: string };
 
-const curso = ler('data/raizes/curso.json');
-const afirmacoes: Afirmacao[] = ler('data/raizes/afirmacoes.json').afirmacoes;
-const fontes: Fonte[] = ler('data/raizes/fontes.json').fontes;
-const modulos: ModuloRaizes[] = MODULOS_COM_CONTEUDO.map(n => ler(`data/raizes/modulos/m${String(n).padStart(2, '0')}.json`));
+const curso = TEM_CONTEUDO ? lerRaizes('data/curso.json') : { modulos: [], conquistas: [], certificado: { naoCertifica: [] }, aviso: '' };
+const afirmacoes: Afirmacao[] = TEM_CONTEUDO ? lerRaizes('data/afirmacoes.json').afirmacoes : [];
+const fontes: Fonte[] = TEM_CONTEUDO ? lerRaizes('data/fontes.json').fontes : [];
+const modulos: ModuloRaizes[] = TEM_CONTEUDO
+  ? MODULOS_COM_CONTEUDO.map(n => lerRaizes(`data/modulos/m${String(n).padStart(2, '0')}.json`)) : [];
 const porId = new Map(afirmacoes.map(a => [a.id, a]));
 const fontePorId = new Map(fontes.map(f => [f.id, f]));
 const NO_TEXTO = new Set(['VERIFICADO', 'CONTESTADO']);
@@ -139,7 +147,7 @@ describe('Raízes é outro produto, com outro direito', () => {
     expect(r.headers.get('cache-control')).toContain('private');
     expect(r.headers.get('vary') || '').toContain('Cookie');
     const corpo = await r.json() as DadosRaizes;
-    expect(corpo.conteudo.map(m => m.n)).toEqual([...MODULOS_COM_CONTEUDO]);
+    expect(corpo.conteudo.map(m => m.n)).toEqual(TEM_CONTEUDO ? [...MODULOS_COM_CONTEUDO] : []);
     expect((await content({ request: new Request(`${SITE}/api/content`, { headers: { cookie } }), env, ctx: {} })).status).toBe(403);
   });
 
@@ -151,7 +159,7 @@ describe('Raízes é outro produto, com outro direito', () => {
 
 /* ── 2. a matriz de verificação ────────────────────────────────────────── */
 
-describe('a matriz: o que vai ao texto tem fonte', () => {
+describe.skipIf(!TEM_CONTEUDO)('a matriz: o que vai ao texto tem fonte', () => {
   it('toda marca e toda lista citam uma afirmação que existe e pode ir ao texto', () => {
     const ruins: string[] = [];
     for (const m of modulos) {
@@ -232,7 +240,7 @@ describe('a matriz: o que vai ao texto tem fonte', () => {
 
 const primeiroAno = (q: string) => Number(q.match(/\d{3,4}/)?.[0]);
 
-describe('as atividades funcionam como prometem', () => {
+describe.skipIf(!TEM_CONTEUDO)('as atividades funcionam como prometem', () => {
   for (const m of modulos) {
     it(`módulo ${m.n}: todo bloco de atividade aponta para uma atividade, e toda atividade aparece uma vez`, () => {
       const citadas = m.etapas.flatMap(e => e.blocos.filter(b => b.tipo === 'atividade').map(b => (b as { id: string }).id));
@@ -299,7 +307,7 @@ describe('as atividades funcionam como prometem', () => {
   }
 
   it('o mapa: todo ponto cai dentro do desenho', () => {
-    const mapa = ler('data/raizes/mapa-peninsula.json');
+    const mapa = lerRaizes('data/mapa-peninsula.json');
     for (const m of modulos) {
       for (const a of Object.values(m.atividades)) {
         if (a.tipo !== 'mapa') continue;
@@ -325,11 +333,11 @@ describe('as atividades funcionam como prometem', () => {
 
 /* ── a jornada, as conquistas e o certificado ──────────────────────────── */
 
-describe('a jornada e o que ela promete', () => {
+describe.skipIf(!TEM_CONTEUDO)('a jornada e o que ela promete', () => {
   it('dez módulos no plano, e as páginas geradas são as dos módulos que têm arquivo', () => {
     expect(curso.modulos.map((m: { n: number }) => m.n)).toEqual(Array.from({ length: TOTAL_DE_MODULOS }, (_, i) => i + 1));
     const comArquivo = curso.modulos.map((m: { n: number }) => m.n)
-      .filter((n: number) => existsSync(join(RAIZ, `data/raizes/modulos/m${String(n).padStart(2, '0')}.json`)));
+      .filter((n: number) => existsSync(join(RAIZES, `data/modulos/m${String(n).padStart(2, '0')}.json`)));
     expect(comArquivo).toEqual([...MODULOS_COM_CONTEUDO]);
   });
 
@@ -428,18 +436,20 @@ describe('o conteúdo não vai para o pacote público', () => {
 
   it('sem travessão nem meia-risca nos dados, nos componentes e nos documentos de Raízes', () => {
     const alvos = [
-      ...readdirSync(join(RAIZ, 'data/raizes')).filter(n => n.endsWith('.json')).map(n => join(RAIZ, 'data/raizes', n)),
-      ...readdirSync(join(RAIZ, 'data/raizes/modulos')).map(n => join(RAIZ, 'data/raizes/modulos', n)),
+      ...(TEM_CONTEUDO ? [
+        ...readdirSync(join(RAIZES, 'data')).filter(n => n.endsWith('.json')).map(n => join(RAIZES, 'data', n)),
+        ...readdirSync(join(RAIZES, 'data/modulos')).map(n => join(RAIZES, 'data/modulos', n)),
+        ...readdirSync(join(RAIZES, 'docs')).map(n => join(RAIZES, 'docs', n))
+      ] : []),
       ...arquivos('src/components/raizes'), ...arquivos('src/app/raizes'),
-      ...(existsSync(join(RAIZ, 'docs/raizes-sefarditas')) ? readdirSync(join(RAIZ, 'docs/raizes-sefarditas')).map(n => join(RAIZ, 'docs/raizes-sefarditas', n)) : [])
     ];
     const proibido = new RegExp(`[${String.fromCharCode(0x2013)}${String.fromCharCode(0x2014)}]`);
     expect(alvos.filter(p => proibido.test(readFileSync(p, 'utf8')))).toEqual([]);
   });
 
   it('o hebraico do texto é NFC e está na lista de aprovação do dono', () => {
-    const lista = existsSync(join(RAIZ, 'docs/raizes-sefarditas/hebraico-para-aprovar.md'))
-      ? readFileSync(join(RAIZ, 'docs/raizes-sefarditas/hebraico-para-aprovar.md'), 'utf8') : '';
+    const lista = existsSync(join(RAIZES, 'docs/hebraico-para-aprovar.md'))
+      ? readFileSync(join(RAIZES, 'docs/hebraico-para-aprovar.md'), 'utf8') : '';
     for (const m of modulos) {
       for (const e of m.etapas) {
         for (const b of e.blocos) {

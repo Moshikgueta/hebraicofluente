@@ -11,6 +11,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Heroi } from '@/components/raizes/Heroi';
+import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
 import { BlocoRaizes } from '@/components/raizes/Blocos';
 import { useProgress } from '@/lib/state/store';
 import { atividadeConcluida, chaveDaAtividade } from '@/lib/state/raizes-estado';
@@ -40,6 +41,7 @@ export function ModuloRaizesClient({ n }: { n: number }) {
     p.visitarEtapaRaizes(n, etapa, rota);
   }, [etapa, m, n, p.ready]);
 
+  if (raizes().semConteudo) return <SemConteudo />;
   if (!m) {
     return <p className="rz-corpo pt-8">Este módulo ainda está em preparação.</p>;
   }

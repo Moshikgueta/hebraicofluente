@@ -729,11 +729,19 @@ tudo: **o XP total é conquista e nunca diminui; o que se gasta é o saldo** =
 
 ## Raízes Sefarditas (21-22/10/2026)
 Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
-(decisão do dono, 22/10/2026). Tudo em `docs/raizes-sefarditas/`.
+(decisão do dono, 22/10/2026).
+- **O conteúdo mora num repositório PRIVADO**, `Moshikgueta/hebraicofluente-raizes`
+  (dados, fontes, matriz, documentos, gerador do mapa), clonado em `raizes/`
+  (ignorado aqui), como o editorial. A publicação o busca com o segredo
+  `RAIZES_TOKEN` (token fino, só leitura); sem ele, publica com um
+  `raizes.json` vazio e avisa no resumo. Aqui fica só o CÓDIGO (telas, portão,
+  rota, testes). Mudar o conteúdo lá NÃO publica sozinho: rodar o
+  "Deploy platform to Cloudflare" à mão. Sem o clone, `tests/raizes.test.ts`
+  pula os casos de conteúdo.
 - Rotas `/raizes`, casca própria (`components/raizes/RaizesShell.tsx`, sem o
   menu nem o XP do curso de hebraico), direito `raizes-sefarditas` no portão,
   conteúdo por `GET /api/content/raizes`. Não paga XP.
-- Dados em `data/raizes/`: `fontes.json` e `afirmacoes.json` seguem o
+- Dados em `raizes/data/`: `fontes.json` e `afirmacoes.json` seguem o
   protocolo do repositório editorial (níveis A-E, status, forma de acesso).
   Toda frase factual leva `[[R01-NNN]]`; só VERIFICADO e CONTESTADO vão ao
   texto, e CONTESTADO só como debate. `tests/raizes.test.ts` cobra.

@@ -8,7 +8,7 @@
  * Na build de demonstração o conteúdo vem do JSON local, por `import()`
  * dentro de um `if` que a build de produção apaga (pacote.mjs confere).
  *
- * Os dados históricos ficam em data/raizes/*.json e nunca em string de
+ * Os dados históricos ficam no repositório privado (raizes/data/*.json) e nunca em string de
  * componente: corrigir uma data é editar o dado, não a tela.
  */
 
@@ -18,7 +18,7 @@ export const CURSO_RAIZES = 'raizes-sefarditas';
 
 /* Os módulos que têm conteúdo e, portanto, página gerada na build. Escritos
    aqui pelo mesmo motivo de UNIDADES_A1: a página é gerada antes de o
-   conteúdo (pago) chegar. tests/raizes.test.ts confere contra data/raizes. */
+   conteúdo (pago) chegar. tests/raizes.test.ts confere contra raizes/data. */
 export const MODULOS_COM_CONTEUDO: readonly number[] = [1];
 export const TOTAL_DE_MODULOS = 10;
 
@@ -99,6 +99,8 @@ export type Conquista = {
 };
 
 export type DadosRaizes = {
+  /** A publicação saiu sem o repositório privado do conteúdo (tools/export-content.mjs). */
+  semConteudo?: boolean;
   slug: string; titulo: string; subtitulo: string; aviso: string;
   edicao: { numero: number; rotulo: string; atualizadoEm: string; revisaoHumana: boolean };
   regras: { desbloqueio: string; conclusaoDoModulo: string };

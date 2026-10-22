@@ -19,9 +19,21 @@ function listaComNem(itens: string[]): string {
   return l.length < 2 ? (l[0] ?? '') : `${l.slice(0, -1).join(', ')} nem ${l[l.length - 1]}`;
 }
 
+/** A publicação saiu sem o repositório privado do conteúdo (sem RAIZES_TOKEN). */
+export function SemConteudo() {
+  return (
+    <div className="grid gap-3 pt-10">
+      <p className="rz-rot ocre m-0">Raízes Sefarditas</p>
+      <h1 className="rz-pagina">O conteúdo não está nesta publicação.</h1>
+      <p className="rz-corpo">Seu acesso está em dia. O conteúdo deste percurso não foi incluído na última publicação do site; escreva para o suporte.</p>
+    </div>
+  );
+}
+
 export function RaizesHomeClient() {
   const p = useProgress();
   const r = raizes();
+  if (r.semConteudo) return <SemConteudo />;
   const e = p.state.raizes;
   const geral = progressoGeral(e);
   const ganhas = conquistasObtidas(e);

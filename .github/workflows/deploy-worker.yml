@@ -196,6 +196,36 @@ jobs:
             app/package-lock.json
             package-lock.json
 
+      # Raízes Sefarditas (22/10/2026): o CONTEÚDO mora num repositório
+      # PRIVADO (Moshikgueta/hebraicofluente-raizes), como o editorial. O
+      # segredo RAIZES_TOKEN é um token fino, SÓ LEITURA, só daquele
+      # repositório. Antes do Install, porque os testes e o exportador
+      # (tools/export-content.mjs) leem raizes/data/.
+      #
+      # Sem o segredo a publicação NÃO para: Raízes ainda não é vendido, e o
+      # site inteiro builda com um raizes.json vazio (as telas dizem que o
+      # conteúdo não veio). Fica um aviso no resumo.
+      - name: Há o conteúdo de Raízes?
+        id: raizes
+        if: steps.guard.outputs.ok == 'true'
+        env:
+          TEM_TOKEN: ${{ secrets.RAIZES_TOKEN != '' }}
+        run: |
+          if [ "$TEM_TOKEN" = "true" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Sem o segredo RAIZES_TOKEN: Raízes Sefarditas publica sem conteúdo."
+            echo "- ⚠ Raízes Sefarditas: sem o segredo \`RAIZES_TOKEN\`, publicado sem conteúdo." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        if: steps.guard.outputs.ok == 'true' && steps.raizes.outputs.ok == 'true'
+        with:
+          repository: Moshikgueta/hebraicofluente-raizes
+          token: ${{ secrets.RAIZES_TOKEN }}
+          path: raizes
+          persist-credentials: false
+
       - name: Install
         if: steps.guard.outputs.ok == 'true'
         working-directory: app
