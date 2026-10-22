@@ -64,7 +64,7 @@ await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
 await p.waitForTimeout(500);
 ok(await p.locator('h1', { hasText: 'Raízes Sefarditas' }).count() === 1, 'a casa abre com o título');
 ok(await p.locator('text=Começar pelo módulo 1').count() === 1, 'oferece começar pelo módulo 1');
-ok(await p.getByText('Em preparação', { exact: true }).count() === 9, 'os nove módulos em preparação aparecem como tais');
+ok(await p.getByText('em preparação', { exact: true }).count() === 9, 'os nove módulos em preparação aparecem como tais');
 ok(await semRolagemLateral(p), 'casa sem rolagem lateral');
 ok(await p.getByText('Meu curso', { exact: true }).count() === 0 && await p.locator('text=/\\d+ XP/').count() === 0,
   'casca própria: nada do menu nem do XP do curso de hebraico');
@@ -93,10 +93,17 @@ await p.screenshot({ path: '.shots/raizes-contextualizar.png', fullPage: true })
 /* Explorar: cinco lugares, três perguntas. */
 await etapa(p, 'explorar');
 const mapa = M1.atividades.mapa;
-for (const l of mapa.lugares.slice(0, mapa.minimoExplorados)) {
-  await p.locator(`button[aria-label^="${l.nome}"]`).first().click();
+/* Quatro pelo teclado (o caminho do leitor de tela)... */
+for (const l of mapa.lugares.filter(x => x.id !== 'sevilha').slice(0, mapa.minimoExplorados - 1)) {
+  const b = p.locator(`button[aria-label^="${l.nome}"]`).first();
+  await b.focus();
+  await p.keyboard.press('Enter');
 }
-ok(await p.locator(`text=Lugares explorados: ${mapa.minimoExplorados}`).count() > 0, 'o mapa conta os lugares explorados');
+/* ...e um pelo toque, perto (não em cima) de Sevilha, que tem o Guadalete a 20 px. */
+const sevilha = await p.locator('button[aria-label^="Sevilha"]').boundingBox();
+await p.mouse.click(sevilha.x + sevilha.width / 2 + 4, sevilha.y + sevilha.height / 2 - 6);
+ok(await p.locator('article.rz-ficha h4', { hasText: 'Sevilha' }).count() === 1, 'o toque perto de Sevilha abre Sevilha, não o Guadalete');
+ok(await p.locator(`text=Explorados: ${mapa.minimoExplorados} de`).count() > 0, 'o mapa conta os lugares explorados');
 await p.screenshot({ path: '.shots/raizes-mapa.png', fullPage: false });
 const selects = p.locator('select');
 for (const [i, q] of mapa.perguntas.entries()) await selects.nth(i).selectOption(q.resposta);
@@ -185,8 +192,8 @@ await p.screenshot({ path: '.shots/raizes-avancar.png', fullPage: true });
 await p.goto(`${BASE}/raizes/`, { waitUntil: 'networkidle' });
 await p.waitForTimeout(400);
 ok(await p.locator('text=Continuar de onde parei').count() === 1, 'a casa oferece continuar de onde parou');
-ok(await p.locator('text=1 de 10 módulos concluídos').count() === 1, 'a casa mostra o progresso geral');
-ok(await p.locator('text=✓ Explorador de Sefarad').count() === 1, 'a conquista do módulo aparece');
+ok(await p.locator('[aria-label="Seu progresso"]', { hasText: '1/10' }).count() === 1, 'a casa mostra o progresso geral');
+ok(await p.locator('li', { hasText: 'Explorador de Sefarad' }).locator('text=✓').count() === 1, 'a conquista do módulo aparece');
 await p.screenshot({ path: '.shots/raizes-casa-depois.png', fullPage: true });
 
 await p.goto(`${BASE}/raizes/biblioteca/`, { waitUntil: 'networkidle' });

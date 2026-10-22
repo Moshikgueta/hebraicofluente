@@ -14,7 +14,6 @@
  */
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/Button';
 import { projetar, raizes, type Atividade } from '@/lib/raizes';
 import { Moldura, Veredito, useAtividade } from './Atividades';
 import { PainelDeFonte } from './Texto';
@@ -47,16 +46,34 @@ export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a
 
   return (
     <Moldura rotulo="Mapa explorável" objetivo={a.objetivo} enunciado={a.enunciado} criterio={a.criterio} concluida={!!feita?.concluidaEm}>
-      <figure className="m-0 grid gap-2">
-        <div className="relative w-full overflow-hidden rounded-[var(--r-md)] border border-line"
-          style={{ aspectRatio: `${desenho.largura} / ${desenho.altura}` }}>
+      <figure className="rz-figura">
+        {/* O toque abre o ponto MAIS PRÓXIMO do dedo, até 36 px de distância.
+            No celular, Sevilha e o Guadalete ficam a 20 px um do outro e quatro
+            cidades portuguesas a menos de 34 px: alvos de 44 px cada se
+            cobririam, e o de cima roubaria o toque do de baixo. Assim cada
+            ponto ganha a maior área possível sem invadir a do vizinho. Os
+            botões continuam ali para o teclado e o leitor de tela. */}
+        <div className="relative w-full overflow-hidden bg-[var(--rz-mar-claro)] cursor-pointer"
+          style={{ aspectRatio: `${desenho.largura} / ${desenho.altura}` }}
+          onClick={e => {
+            if ((e.target as HTMLElement).closest('button')) return;
+            const caixa = e.currentTarget.getBoundingClientRect();
+            let melhor: string | null = null, dist = 36;
+            for (const l of a.lugares) {
+              const [x, y] = projetar(l.lon, l.lat);
+              const d = Math.hypot(caixa.left + (x / desenho.largura) * caixa.width - e.clientX,
+                caixa.top + (y / desenho.altura) * caixa.height - e.clientY);
+              if (d < dist) { dist = d; melhor = l.id; }
+            }
+            if (melhor) abrir(melhor);
+          }}>
           <svg viewBox={`0 0 ${desenho.largura} ${desenho.altura}`} className="absolute inset-0 h-full w-full" aria-hidden focusable="false">
-            <rect width={desenho.largura} height={desenho.altura} fill="var(--rz-mar-claro)" />
-            <path d={desenho.terra} fill="var(--rz-terra-mapa)" stroke="var(--rz-pedra-borda)" strokeWidth={1.5} />
+            {/* "Papel recortado", o estilo da coleção: a mesma terra, deslocada, faz a sombra. */}
+            <path d={desenho.terra} fill="var(--pedra-escura)" transform="translate(9 11)" />
+            <path d={desenho.terra} fill="var(--rz-terra-mapa)" stroke="var(--pedra-escura)" strokeWidth={1.2} />
           </svg>
           {a.lugares.map(l => {
             const [x, y] = projetar(l.lon, l.lat);
-            const esq = (x / desenho.largura) * 100, topo = (y / desenho.altura) * 100;
             const ativo = aberto === l.id, visto = vistos.has(l.id);
             return (
               <button
@@ -64,65 +81,71 @@ export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a
                 type="button"
                 onClick={() => abrir(l.id)}
                 aria-pressed={ativo}
+                data-visto={visto}
                 aria-label={`${l.nome}${l.incerto ? ', localização incerta' : ''}${visto ? ', já explorado' : ''}`}
-                className="group absolute -translate-x-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full"
-                style={{ left: `${esq}%`, top: `${topo}%` }}
+                className={`rz-ponto ${l.incerto ? 'incerto' : ''}`}
+                style={{ left: `${(x / desenho.largura) * 100}%`, top: `${(y / desenho.altura) * 100}%` }}
               >
-                <span aria-hidden className={`block rounded-full transition-transform group-hover:scale-125
-                  ${l.incerto ? 'h-5 w-5 border-2 border-dashed border-[var(--rz-terra)] bg-transparent'
-                    : `h-3.5 w-3.5 border-2 border-[var(--card)] ${visto ? 'bg-[var(--rz-mar)]' : 'bg-[var(--rz-terra)]'}`}
-                  ${ativo ? 'ring-4 ring-[var(--rz-mar)]/40 scale-125' : ''}`} />
-                <span aria-hidden className={`pointer-events-none absolute left-7 top-1/2 -translate-y-1/2 whitespace-nowrap rounded px-1
-                  font-ui text-[11px] font-semibold text-ink bg-[var(--card)]/85 ${ativo ? 'block' : 'hidden sm:block'}`}>
+                <span aria-hidden />
+                <span aria-hidden className={`pointer-events-none absolute left-[34px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-[3px] px-1.5 py-[1px]
+                  font-ui text-[11.5px] font-semibold text-[var(--tinta)] bg-[var(--branco)] shadow-[0_1px_0_var(--pedra-escura)] ${ativo ? 'block' : 'hidden sm:block'}`}>
                   {l.nome.replace(/ \(.*\)$/, '')}
                 </span>
               </button>
             );
           })}
         </div>
-        <figcaption className="font-ui text-[12px] leading-relaxed text-ink-muted">
-          {a.legenda} Lugares explorados: {vistos.size} de {a.lugares.length} (mínimo {a.minimoExplorados}).
+        <figcaption>
+          {a.legenda} <span className="tabular-nums">Explorados: {vistos.size} de {a.lugares.length} (mínimo {a.minimoExplorados}).</span>
         </figcaption>
       </figure>
 
       <div aria-live="polite">
         {lugar ? (
-          <article className="grid gap-2 rounded-[var(--r-md)] border border-[var(--rz-pedra-borda)] bg-[var(--rz-pedra)] p-4">
-            <p className="m-0 font-ui text-[11px] font-semibold uppercase tracking-[.08em] text-[var(--rz-terra)]">{lugar.periodo}</p>
-            <h4 className="m-0 font-display text-[18px] font-bold">{lugar.nome}</h4>
-            <p className="m-0 font-ui text-[14.5px] leading-relaxed text-ink-body">{lugar.resumo}</p>
-            {lugar.incerto && (
-              <p className="m-0 font-ui text-[13px] text-[var(--rz-terra)]">O ponto marca um lugar provável, não uma localização comprovada.</p>
-            )}
-            <button type="button" onClick={() => setFonteAberta(!fonteAberta)} aria-expanded={fonteAberta}
-              className="justify-self-start font-ui text-[13px] font-semibold text-[var(--rz-mar)] underline underline-offset-2 min-h-[32px]">
-              {fonteAberta ? 'Fechar as fontes' : 'De onde vem isso?'}
-            </button>
-            {fonteAberta && <PainelDeFonte ids={lugar.afirmacoes} />}
+          <article className="rz-ficha">
+            <header className="grid gap-0.5">
+              <span className="rz-rot !text-[#8FD6C8]">{lugar.periodo}</span>
+              <h4 className="rz-serif m-0 font-[440]">{lugar.nome}</h4>
+            </header>
+            <div className="grid gap-3 p-4">
+              <p className="rz-corpo">{lugar.resumo}</p>
+              {lugar.incerto && (
+                <p className="m-0 font-ui text-[13.5px] text-[var(--ocre)]">O ponto marca um lugar provável, não uma localização comprovada.</p>
+              )}
+              <button type="button" onClick={() => setFonteAberta(!fonteAberta)} aria-expanded={fonteAberta}
+                className="rz-link justify-self-start min-h-[44px] inline-flex items-center">
+                {fonteAberta ? 'Fechar as fontes' : 'De onde vem isso?'}
+              </button>
+              {fonteAberta && <PainelDeFonte ids={lugar.afirmacoes} />}
+            </div>
           </article>
         ) : (
-          <p className="m-0 font-ui text-[14px] text-ink-muted">Toque num ponto do mapa ou num lugar da lista.</p>
+          <p className="m-0 font-ui text-[14px] text-[var(--suave)]">Toque num ponto do mapa ou num lugar da lista.</p>
         )}
       </div>
 
-      <details className="rounded-[var(--r-md)] border border-line p-3">
-        <summary className="cursor-pointer font-ui text-[14px] font-semibold text-ink min-h-[32px]">Os lugares em lista</summary>
-        <ul className="mt-2 grid gap-1.5 m-0 p-0 list-none">
+      <details className="group border-y border-[var(--linha)]">
+        <summary className="cursor-pointer list-none flex min-h-[48px] items-center gap-2 font-ui text-[14px] font-semibold text-[var(--tinta)]">
+          <span aria-hidden className="inline-block transition-transform duration-150 group-open:rotate-90">›</span>
+          Os lugares em lista
+        </summary>
+        <ul className="rz-lista pb-2">
           {a.lugares.map(l => (
             <li key={l.id}>
               <button type="button" onClick={() => abrir(l.id)} aria-pressed={aberto === l.id}
-                className="w-full rounded-[var(--r-md)] px-3 py-2 min-h-[44px] text-left font-ui text-[14px] text-ink hover:bg-[var(--sand)]">
-                {vistos.has(l.id) ? '✓ ' : ''}{l.nome} <span className="text-ink-muted">({l.periodo})</span>
+                className="grid w-full grid-cols-[22px_1fr] items-baseline gap-2 py-2.5 min-h-[44px] text-left">
+                <span aria-hidden className="text-[var(--teal-ink)]">{vistos.has(l.id) ? '✓' : ''}</span>
+                <span className="font-ui text-[15px] text-[var(--tinta)]">{l.nome} <span className="text-[13px] text-[var(--suave)]">· {l.periodo}</span></span>
               </button>
             </li>
           ))}
         </ul>
       </details>
 
-      <div className="grid gap-3 border-t border-line pt-4">
-        <h4 className="m-0 font-display text-[16px] font-bold">Três perguntas</h4>
+      <div className="grid gap-4">
+        <p className="rz-rot ocre m-0">Três perguntas</p>
         {!explorouOBastante && (
-          <p className="m-0 font-ui text-[13.5px] text-ink-muted">
+          <p className="m-0 font-ui text-[14px] text-[var(--suave)]">
             Explore mais {a.minimoExplorados - vistos.size} {a.minimoExplorados - vistos.size === 1 ? 'lugar' : 'lugares'} para liberar a conferência.
           </p>
         )}
@@ -130,11 +153,11 @@ export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a
           const certo = respostas[q.id] === q.resposta;
           return (
             <div key={q.id} className="grid gap-1.5">
-              <label className="grid gap-1 font-ui text-[14px] text-ink">
+              <label className="rz-serif grid gap-1.5 text-[17px] leading-snug text-[var(--tinta)]">
                 {q.enunciado}
                 <select value={respostas[q.id] ?? ''} disabled={conferido}
                   onChange={e => setRespostas({ ...respostas, [q.id]: e.target.value })}
-                  className="min-h-[48px] rounded-[var(--r-md)] border border-line bg-[var(--card)] px-3 font-ui text-[14px] text-ink">
+                  className="rz-campo">
                   <option value="">Escolha o lugar</option>
                   {a.lugares.filter(l => !l.incerto).map(l => <option key={l.id} value={l.id}>{l.nome}</option>)}
                 </select>
@@ -145,14 +168,14 @@ export function MapaHistorico({ modulo, id, a }: { modulo: number; id: string; a
         })}
         <div aria-live="polite" className="grid gap-3">
           {!conferido && (
-            <Button className="justify-self-start" onClick={conferir}
-              disabled={!explorouOBastante || a.perguntas.some(q => !respostas[q.id])}>Conferir</Button>
+            <button type="button" className="rz-botao justify-self-start" onClick={conferir}
+              disabled={!explorouOBastante || a.perguntas.some(q => !respostas[q.id])}>Conferir</button>
           )}
           {conferido && !tudoCerto && (
-            <Button variant="secondary" size="sm" className="justify-self-start" onClick={() => {
+            <button type="button" className="rz-botao claro pequeno justify-self-start" onClick={() => {
               setConferido(false);
               setRespostas(Object.fromEntries(a.perguntas.filter(q => respostas[q.id] === q.resposta).map(q => [q.id, q.resposta])));
-            }}>Corrigir</Button>
+            }}>Corrigir</button>
           )}
           {conferido && tudoCerto && <Veredito certo>As três certas, com {vistos.size} lugares explorados.</Veredito>}
         </div>

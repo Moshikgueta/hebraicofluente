@@ -10,7 +10,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Button, LinkButton } from '@/components/ui/Button';
+import { Heroi } from '@/components/raizes/Heroi';
 import { BlocoRaizes } from '@/components/raizes/Blocos';
 import { useProgress } from '@/lib/state/store';
 import { atividadeConcluida, chaveDaAtividade } from '@/lib/state/raizes-estado';
@@ -41,14 +41,14 @@ export function ModuloRaizesClient({ n }: { n: number }) {
   }, [etapa, m, n, p.ready]);
 
   if (!m) {
-    return <p className="font-ui text-[15px] text-ink-body">Este módulo ainda está em preparação.</p>;
+    return <p className="rz-corpo pt-8">Este módulo ainda está em preparação.</p>;
   }
   if (!moduloAberto(e, n)) {
     return (
-      <div className="grid gap-4 reading">
-        <h1 className="m-0 font-display text-[28px] font-bold">{m.titulo}</h1>
-        <p className="m-0 font-ui text-[15px] text-ink-body">Este módulo abre quando o módulo {n - 1} estiver concluído.</p>
-        <LinkButton href="/raizes" variant="secondary">Voltar à jornada</LinkButton>
+      <div className="grid gap-4 pt-8">
+        <h1 className="rz-pagina">{m.titulo}</h1>
+        <p className="rz-corpo">Este módulo abre quando o módulo {n - 1} estiver concluído.</p>
+        <Link href="/raizes" prefetch={false} className="rz-botao claro justify-self-start">Voltar à jornada</Link>
       </div>
     );
   }
@@ -64,43 +64,45 @@ export function ModuloRaizesClient({ n }: { n: number }) {
     });
   };
 
-  return (
-    <div className="grid gap-6 reading">
-      <header className="grid gap-3">
-        <Link href="/raizes" prefetch={false} className="font-ui text-[13px] text-[var(--rz-mar)] underline underline-offset-2 justify-self-start">
-          Raízes Sefarditas
-        </Link>
-        <p className="m-0 font-ui text-[12px] font-semibold uppercase tracking-[.1em] text-[var(--rz-terra)]">
-          Módulo {m.n} · {m.periodo} · {m.regiao}
-        </p>
-        <h1 className="m-0 font-display text-[30px] sm:text-[40px] font-bold leading-[1.08]">{m.titulo}</h1>
-        <div className="grid gap-1.5 max-w-[520px]">
-          <div className="h-2 rounded-full bg-[var(--sand)] overflow-hidden" role="progressbar" aria-valuemin={0}
-            aria-valuemax={prog.total} aria-valuenow={prog.feitas} aria-label="Atividades concluídas no módulo">
-            <div className="h-full bg-[var(--rz-terra)]" style={{ width: `${(prog.feitas / Math.max(1, prog.total)) * 100}%` }} />
-          </div>
-          <p className="m-0 font-ui text-[13px] text-ink-muted">{prog.feitas} de {prog.total} atividades concluídas</p>
-        </div>
-        <details className="rounded-[var(--r-md)] border border-line bg-[var(--card)] p-3">
-          <summary className="cursor-pointer font-ui text-[14px] font-semibold text-ink min-h-[28px]">O que você vai conseguir fazer</summary>
-          <ul className="mt-2 grid gap-1.5 m-0 pl-5">
-            {m.objetivos.map((o, k) => <li key={k} className="font-ui text-[14px] leading-relaxed text-ink-body">{o}</li>)}
-          </ul>
-        </details>
-      </header>
+  const lugares = Object.values(m.atividades).flatMap(a => (a.tipo === 'mapa' ? a.lugares : []));
 
-      <nav aria-label="Etapas do módulo" className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+  return (
+    <div className="grid gap-8">
+      <Heroi compacto kicker={`Módulo ${m.n} · ${m.regiao}`} titulo={m.titulo} subtitulo={m.periodo} pontos={lugares}>
+        <div className="grid gap-1.5 pt-2 max-w-[420px]">
+          <div className="h-[3px] bg-white/20" role="progressbar" aria-valuemin={0}
+            aria-valuemax={prog.total} aria-valuenow={prog.feitas} aria-label="Atividades concluídas no módulo">
+            <div className="h-full bg-[#8FD6C8]" style={{ width: `${(prog.feitas / Math.max(1, prog.total)) * 100}%` }} />
+          </div>
+          <p className="rz-credito m-0 tabular-nums">{prog.feitas} de {prog.total} atividades concluídas</p>
+        </div>
+      </Heroi>
+
+      <details className="group border-y border-[var(--linha)]">
+        <summary className="cursor-pointer list-none flex min-h-[48px] items-center gap-2 font-ui text-[14px] font-semibold text-[var(--tinta)]">
+          <span aria-hidden className="inline-block transition-transform duration-150 group-open:rotate-90">›</span>
+          O que você vai conseguir fazer
+        </summary>
+        <ol className="m-0 p-0 pb-3 list-none">
+          {m.objetivos.map((o, k) => (
+            <li key={k} className="grid grid-cols-[28px_1fr] gap-2 py-1.5">
+              <span className="rz-numero text-[15px] pt-1">{k + 1}</span>
+              <span className="rz-corpo !text-[16px]">{o}</span>
+            </li>
+          ))}
+        </ol>
+      </details>
+
+      <nav aria-label="Etapas do módulo" className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none]">
         <ol className="m-0 flex gap-2 p-0 list-none min-w-max">
           {m.etapas.map((x, k) => {
             const feita = etapaFeita(m, x.id, e);
             return (
               <li key={x.id}>
-                <button type="button" onClick={() => ir(k)} aria-current={k === i ? 'step' : undefined}
-                  className={`flex min-h-[44px] items-center gap-2 rounded-full border px-3.5 font-ui text-[13px] font-semibold
-                    ${k === i ? 'border-[var(--rz-terra)] bg-[var(--rz-terra)] text-white' : 'border-line bg-[var(--card)] text-ink-body hover:border-[var(--rz-terra)]'}`}>
-                  <span className="tabular-nums">{k + 1}</span>
+                <button type="button" onClick={() => ir(k)} aria-current={k === i ? 'step' : undefined} className="rz-mini">
+                  <span className="tabular-nums opacity-70">{k + 1}</span>
                   <span>{x.titulo}</span>
-                  {feita && <span aria-label="concluída">✓</span>}
+                  {feita && <span aria-label="concluída" className={k === i ? '' : 'text-[var(--teal-ink)]'}>✓</span>}
                 </button>
               </li>
             );
@@ -108,24 +110,25 @@ export function ModuloRaizesClient({ n }: { n: number }) {
         </ol>
       </nav>
 
-      <section className="grid gap-6" aria-labelledby="etapa-titulo">
-        <div className="grid gap-1">
-          <p className="m-0 font-ui text-[12px] font-semibold uppercase tracking-[.1em] text-ink-muted">
-            Etapa {i + 1} de {m.etapas.length} · {atual.titulo}
-          </p>
-          <h2 id="etapa-titulo" ref={topo} tabIndex={-1} className="m-0 font-display text-[24px] sm:text-[30px] font-bold leading-tight outline-none scroll-mt-24">
-            {atual.pergunta}
-          </h2>
+      <section className="grid gap-7" aria-labelledby="etapa-titulo">
+        <div className="grid gap-3">
+          <div className="rz-rubrica">
+            <span className="rz-rot">Etapa {i + 1} de {m.etapas.length}</span>
+            <span className="rz-rot ocre ml-auto">{atual.titulo}</span>
+          </div>
+          <h2 id="etapa-titulo" ref={topo} tabIndex={-1} className="rz-h2 outline-none scroll-mt-20">{atual.pergunta}</h2>
         </div>
         {atual.blocos.map((b, k) => <BlocoRaizes key={`${atual.id}-${k}`} b={b} m={m} />)}
         {atual.id === 'avancar' && <Fechamento m={m} />}
       </section>
 
-      <nav aria-label="Navegar entre as etapas" className="flex flex-wrap justify-between gap-3 border-t border-line pt-5">
-        {i > 0 ? <Button variant="secondary" onClick={() => ir(i - 1)}>← {m.etapas[i - 1]!.titulo}</Button> : <span />}
+      <nav aria-label="Navegar entre as etapas" className="flex flex-wrap justify-between gap-3 border-t border-[var(--tinta)] pt-5">
+        {i > 0
+          ? <button type="button" className="rz-botao claro" onClick={() => ir(i - 1)}>← {m.etapas[i - 1]!.titulo}</button>
+          : <span />}
         {i < m.etapas.length - 1
-          ? <Button onClick={() => ir(i + 1)}>{m.etapas[i + 1]!.titulo} →</Button>
-          : <LinkButton href="/raizes">Voltar à jornada</LinkButton>}
+          ? <button type="button" className="rz-botao" onClick={() => ir(i + 1)}>{m.etapas[i + 1]!.titulo} →</button>
+          : <Link href="/raizes" prefetch={false} className="rz-botao">Voltar à jornada</Link>}
       </nav>
     </div>
   );
@@ -154,34 +157,34 @@ function Fechamento({ m }: { m: ModuloRaizes }) {
   const proximo = r.modulos.find(x => x.n === m.n + 1);
 
   return (
-    <section className="grid gap-4 rounded-[var(--r-lg)] border border-line bg-[var(--card)] p-5" aria-live="polite">
+    <section className={`rz-nota ${prog.concluido ? 'teal' : ''} grid gap-3`} aria-live="polite">
       {prog.concluido ? (
         <>
-          <h3 className="m-0 font-display text-[20px] font-bold text-[var(--teal-ink)]">✓ Módulo {m.n} concluído</h3>
-          <ul className="m-0 grid gap-1 p-0 list-none">
+          <p className="rz-rot m-0">✓ Módulo {m.n} concluído</p>
+          <ul className="rz-lista">
             {daqui.map(c => (
-              <li key={c.id} className="font-ui text-[14.5px] text-ink-body">
-                {ganhas.has(c.id) ? '✓ ' : ''}Conquista: <span className="font-semibold">{c.titulo}</span>
+              <li key={c.id} className="py-2.5 font-ui text-[15px] text-[var(--corpo)]">
+                Conquista: <span className="rz-serif text-[17px] text-[var(--tinta)]">{c.titulo}</span> {ganhas.has(c.id) ? '✓' : ''}
               </li>
             ))}
           </ul>
           {proximo && (
-            <p className="m-0 font-ui text-[14.5px] leading-relaxed text-ink-body">
+            <p className="rz-corpo">
               Próximo: módulo {proximo.n}, «{proximo.titulo}». {proximo.estado === 'em-preparacao' ? 'Ele está em preparação e aparece na jornada quando estiver pronto.' : ''}
             </p>
           )}
         </>
       ) : (
         <>
-          <h3 className="m-0 font-display text-[19px] font-bold">Faltam {faltam.length} {faltam.length === 1 ? 'atividade' : 'atividades'} para concluir o módulo</h3>
-          <ul className="m-0 grid gap-1.5 pl-5">
+          <p className="rz-rot m-0">Faltam {faltam.length} {faltam.length === 1 ? 'atividade' : 'atividades'} para concluir o módulo</p>
+          <ul className="rz-lista">
             {faltam.map(f => (
-              <li key={f.id} className="font-ui text-[14px] leading-relaxed text-ink-body">
-                <span className="font-semibold">{f.etapa}:</span> {f.enunciado}
+              <li key={f.id} className="py-2.5 font-ui text-[14.5px] leading-relaxed text-[var(--corpo)]">
+                <span className="font-semibold text-[var(--tinta)]">{f.etapa}:</span> {f.enunciado}
               </li>
             ))}
           </ul>
-          <p className="m-0 font-ui text-[13px] text-ink-muted">{r.regras.conclusaoDoModulo}</p>
+          <p className="m-0 font-ui text-[13px] text-[var(--suave)]">{r.regras.conclusaoDoModulo}</p>
         </>
       )}
     </section>

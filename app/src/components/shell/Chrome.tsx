@@ -18,7 +18,6 @@ import type { ReactNode } from 'react';
 import { AppShell } from '@/components/shell/AppShell';
 import { PublicShell } from '@/components/shell/PublicShell';
 import { CourseGate } from '@/components/shell/CourseGate';
-import { RaizesShell } from '@/components/raizes/RaizesShell';
 import { rotaDasRaizes } from '@/lib/raizes';
 import { isPublicRoute } from '@/lib/rotas';
 import { useAccount } from '@/lib/account/store';
@@ -57,15 +56,10 @@ export function Chrome({ children }: { children: ReactNode }) {
   }
 
   /* Raízes Sefarditas (22/10/2026): produto individual, comprado à parte.
-     Casca própria, sem a navegação nem o XP do curso de hebraico; o portão é
-     o mesmo, com o direito raizes-sefarditas. */
-  if (rotaDasRaizes(pathname)) {
-    return (
-      <RaizesShell>
-        <CourseGate>{children}</CourseGate>
-      </RaizesShell>
-    );
-  }
+     A casca, o portão e as fontes moram no layout dele (app/raizes/layout.tsx),
+     com a estética da coleção editorial; aqui ele só não ganha a casca do
+     curso de hebraico. */
+  if (rotaDasRaizes(pathname)) return <>{children}</>;
 
   return (
     <AppShell>

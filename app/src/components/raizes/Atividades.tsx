@@ -15,7 +15,6 @@
  */
 
 import { useMemo, useState, type ReactNode } from 'react';
-import { Button } from '@/components/ui/Button';
 import { useProgress } from '@/lib/state/store';
 import { chaveDaAtividade } from '@/lib/state/raizes-estado';
 import { embaralhar, type Atividade } from '@/lib/raizes';
@@ -39,21 +38,23 @@ export function Moldura({
   rotulo?: string; objetivo: string; enunciado: string; criterio: string; concluida: boolean; children: ReactNode;
 }) {
   return (
-    <section className="grid gap-4 rounded-[var(--r-lg)] border border-line bg-[var(--card)] p-4 sm:p-6">
+    <section className="rz-atividade grid gap-4">
       <header className="grid gap-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-ui text-[11px] font-semibold uppercase tracking-[.08em] text-[var(--rz-terra)]">{rotulo}</span>
-          {concluida && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[var(--teal-soft)] px-2.5 py-0.5 font-ui text-[11px] font-semibold text-[var(--teal-ink)]">
-              <span aria-hidden>✓</span> Concluída
-            </span>
-          )}
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="rz-rot ocre">{rotulo}</span>
+          {concluida && <span className="rz-rot !text-[var(--teal-ink)]"><span aria-hidden>✓ </span>Concluída</span>}
         </div>
-        <h3 className="font-display text-[19px] sm:text-[21px] font-bold leading-snug m-0">{enunciado}</h3>
-        <p className="font-ui text-[13px] leading-relaxed text-ink-muted m-0">
-          <span className="font-semibold text-ink-body">Objetivo:</span> {objetivo}{' '}
-          <span className="font-semibold text-ink-body">Para concluir:</span> {criterio}
-        </p>
+        <h3 className="rz-h3">{enunciado}</h3>
+        <details className="group">
+          <summary className="cursor-pointer list-none font-ui text-[13px] text-[var(--suave)] min-h-[32px] inline-flex items-center gap-1.5">
+            <span aria-hidden className="inline-block transition-transform duration-150 group-open:rotate-90">›</span>
+            Objetivo e critério
+          </summary>
+          <p className="m-0 mt-1 font-ui text-[13.5px] leading-relaxed text-[var(--corpo)]">
+            <span className="font-semibold text-[var(--tinta)]">Objetivo:</span> {objetivo}{' '}
+            <span className="font-semibold text-[var(--tinta)]">Para concluir:</span> {criterio}
+          </p>
+        </details>
       </header>
       {children}
     </section>
@@ -63,9 +64,9 @@ export function Moldura({
 /** A palavra e o ícone de cada resultado: nunca só a cor. */
 export function Veredito({ certo, children }: { certo: boolean; children?: ReactNode }) {
   return (
-    <div className={`grid gap-1 rounded-[var(--r-md)] p-3 font-ui text-[14px] leading-relaxed
-      ${certo ? 'bg-[var(--teal-soft)] text-[var(--teal-body)]' : 'bg-[var(--gold-soft)] text-[var(--gold-body)]'}`}>
-      <p className={`m-0 font-semibold ${certo ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>
+    <div className={`grid gap-1 border-l-[3px] pl-3 py-1 font-ui text-[15px] leading-relaxed text-[var(--corpo)]
+      ${certo ? 'border-[var(--teal)]' : 'border-[var(--ouro)]'}`}>
+      <p className={`m-0 font-semibold ${certo ? 'text-[var(--teal-ink)]' : 'text-[var(--ouro-tinta)]'}`}>
         <span aria-hidden>{certo ? '✓ ' : '↺ '}</span>{certo ? 'Certo.' : 'Ainda não.'}
       </p>
       {children && <div className="m-0">{children}</div>}
@@ -73,7 +74,6 @@ export function Veredito({ certo, children }: { certo: boolean; children?: React
   );
 }
 
-const opcaoBase = 'w-full text-left rounded-[var(--r-md)] border px-4 py-3 min-h-[48px] font-ui text-[15px] leading-snug transition-colors';
 
 /* ── escolha única ─────────────────────────────────────────────────────── */
 
@@ -95,14 +95,10 @@ export function Escolha({ modulo, id, a }: { modulo: number; id: string; a: De<'
       <div role="group" aria-label="Alternativas" className="grid gap-2">
         {opcoes.map(o => {
           const esta = marcada === o.i;
-          const cls = marcada === null
-            ? 'border-line bg-[var(--card)] hover:border-[var(--rz-mar)]'
-            : esta
-              ? (o.correta ? 'border-[var(--teal)] bg-[var(--teal-soft)]' : 'border-[var(--gold)] bg-[var(--gold-soft)]')
-              : 'border-line bg-[var(--card)] opacity-70';
+          const estado = marcada === null ? undefined : esta ? (o.correta ? 'certa' : 'errada') : 'apagada';
           return (
             <button key={o.i} type="button" aria-pressed={esta} disabled={marcada !== null && !esta}
-              onClick={() => responder(o.i)} className={`${opcaoBase} ${cls} text-ink`}>
+              onClick={() => responder(o.i)} data-estado={estado} className="rz-opcao">
               {o.texto}
             </button>
           );
@@ -113,9 +109,9 @@ export function Escolha({ modulo, id, a }: { modulo: number; id: string; a: De<'
           <div className="grid gap-3">
             <Veredito certo={escolhida.correta}>{escolhida.feedback}</Veredito>
             {!escolhida.correta && (
-              <Button variant="secondary" size="sm" className="justify-self-start" onClick={() => setMarcada(null)}>
+              <button type="button" className="rz-botao claro pequeno justify-self-start" onClick={() => setMarcada(null)}>
                 Tentar de novo
-              </Button>
+              </button>
             )}
             {escolhida.correta && a.afirmacoes.length > 0 && <PainelDeFonte ids={a.afirmacoes} />}
           </div>
@@ -152,19 +148,17 @@ export function Multipla({ modulo, id, a }: { modulo: number; id: string; a: De<
         {opcoes.map(o => {
           const esta = marcadas.has(o.i);
           const certo = o.correta === esta;
-          const cls = !conferido
-            ? (esta ? 'border-[var(--rz-mar)] bg-[var(--rz-pedra)]' : 'border-line bg-[var(--card)] hover:border-[var(--rz-mar)]')
-            : (certo ? 'border-[var(--teal)] bg-[var(--teal-soft)]' : 'border-[var(--gold)] bg-[var(--gold-soft)]');
+          const estado = !conferido ? (esta ? 'marcada' : undefined) : (certo ? 'certa' : 'errada');
           return (
             <div key={o.i} className="grid gap-1.5">
               <button type="button" role="checkbox" aria-checked={esta} onClick={() => alternar(o.i)}
-                className={`${opcaoBase} ${cls} text-ink flex items-start gap-3`}>
+                data-estado={estado} className="rz-opcao flex items-start gap-3">
                 <span aria-hidden className={`mt-[2px] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border text-[12px]
-                  ${esta ? 'border-[var(--rz-mar)] bg-[var(--rz-mar)] text-[var(--cream)]' : 'border-[var(--locked)]'}`}>{esta ? '✓' : ''}</span>
+                  ${esta ? 'border-[var(--mar)] bg-[var(--mar)] text-[var(--papel)]' : 'border-[var(--locked)] bg-[var(--branco)]'}`}>{esta ? '✓' : ''}</span>
                 <span>{o.texto}</span>
               </button>
               {conferido && (
-                <p className={`m-0 pl-3 font-ui text-[13.5px] leading-relaxed ${certo ? 'text-[var(--teal-body)]' : 'text-[var(--gold-body)]'}`}>
+                <p className={`m-0 pl-3 font-ui text-[14px] leading-relaxed text-[var(--corpo)] border-l-2 ${certo ? 'border-[var(--teal)]' : 'border-[var(--ouro)]'}`}>
                   <span className="font-semibold">{certo ? '✓ ' : '↺ '}{o.correta ? 'Vale.' : 'Não vale.'}</span> {o.feedback}
                 </p>
               )}
@@ -174,7 +168,7 @@ export function Multipla({ modulo, id, a }: { modulo: number; id: string; a: De<
       </div>
       <div aria-live="polite" className="grid gap-3">
         {!conferido && (
-          <Button className="justify-self-start" onClick={conferir} disabled={marcadas.size === 0}>Conferir</Button>
+          <button type="button" className="rz-botao justify-self-start" onClick={conferir} disabled={marcadas.size === 0}>Conferir</button>
         )}
         {conferido && (
           <>
@@ -182,8 +176,8 @@ export function Multipla({ modulo, id, a }: { modulo: number; id: string; a: De<
               {tudoCerto ? 'Todas certas.' : `${acertos} de ${a.opcoes.length} alternativas certas. Leia as explicações e tente de novo.`}
             </Veredito>
             {!tudoCerto && (
-              <Button variant="secondary" size="sm" className="justify-self-start"
-                onClick={() => { setConferido(false); setMarcadas(new Set()); }}>Tentar de novo</Button>
+              <button type="button" className="rz-botao claro pequeno justify-self-start"
+                onClick={() => { setConferido(false); setMarcadas(new Set()); }}>Tentar de novo</button>
             )}
           </>
         )}
@@ -215,24 +209,24 @@ export function Associacao({ modulo, id, a }: { modulo: number; id: string; a: D
         {docs.map((d, k) => {
           const certo = escolha[d.id] === d.contexto;
           return (
-            <li key={d.id} className="grid gap-2.5 rounded-[var(--r-md)] border border-[var(--rz-pedra-borda)] bg-[var(--rz-pedra)] p-4">
-              <p className="m-0 font-ui text-[11px] font-semibold uppercase tracking-[.08em] text-[var(--rz-terra)]">Documento {k + 1}</p>
-              <h4 className="m-0 font-display text-[17px] font-bold leading-snug">{d.titulo}</h4>
-              <p className="m-0 font-ui text-[14px] leading-relaxed text-ink-body">{d.descricao}</p>
-              <label className="grid gap-1 font-ui text-[13px] font-semibold text-ink">
+            <li key={d.id} className="grid grid-cols-[40px_1fr] gap-x-3 gap-y-2.5 border-t border-[var(--linha)] pt-4">
+              <span className="rz-numero text-[30px] row-span-3">{k + 1}</span>
+              <h4 className="rz-serif m-0 text-[19px] font-[480] leading-snug text-[var(--tinta)]">{d.titulo}</h4>
+              <p className="rz-corpo !text-[16px]">{d.descricao}</p>
+              <label className="grid gap-1 font-ui text-[13px] font-semibold text-[var(--tinta)]">
                 Contexto
                 <select
                   value={escolha[d.id] ?? ''}
                   disabled={conferido}
                   onChange={e => setEscolha({ ...escolha, [d.id]: e.target.value })}
-                  className="min-h-[48px] w-full rounded-[var(--r-md)] border border-line bg-[var(--card)] px-3 font-ui text-[14px] font-normal text-ink"
+                  className="rz-campo font-normal"
                 >
                   <option value="">Escolha o contexto</option>
                   {a.contextos.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
                 </select>
               </label>
               {conferido && (
-                <Veredito certo={certo}>
+                <div className="col-start-2"><Veredito certo={certo}>
                   {certo ? (
                     <div className="grid gap-1.5">
                       <p className="m-0">{d.explicacao}</p>
@@ -242,7 +236,7 @@ export function Associacao({ modulo, id, a }: { modulo: number; id: string; a: D
                   ) : (
                     <p className="m-0">Não é «{nomeDe(escolha[d.id] ?? '')}». {d.explicacao}</p>
                   )}
-                </Veredito>
+                </Veredito></div>
               )}
             </li>
           );
@@ -250,9 +244,9 @@ export function Associacao({ modulo, id, a }: { modulo: number; id: string; a: D
       </ol>
       <div aria-live="polite" className="grid gap-3">
         {!conferido && (
-          <Button className="justify-self-start" onClick={conferir} disabled={!completos}>
+          <button type="button" className="rz-botao justify-self-start" onClick={conferir} disabled={!completos}>
             {completos ? 'Conferir' : 'Escolha o contexto de todos'}
-          </Button>
+          </button>
         )}
         {conferido && (
           <>
@@ -261,10 +255,10 @@ export function Associacao({ modulo, id, a }: { modulo: number; id: string; a: D
                 : `${certos} de ${a.documentos.length} certos. Corrija os outros e confira de novo.`}
             </Veredito>
             {!tudoCerto && (
-              <Button variant="secondary" size="sm" className="justify-self-start" onClick={() => {
+              <button type="button" className="rz-botao claro pequeno justify-self-start" onClick={() => {
                 setConferido(false);
                 setEscolha(Object.fromEntries(a.documentos.filter(d => escolha[d.id] === d.contexto).map(d => [d.id, d.contexto])));
-              }}>Corrigir</Button>
+              }}>Corrigir</button>
             )}
           </>
         )}
@@ -309,29 +303,28 @@ export function Ordenar({ modulo, id, a }: { modulo: number; id: string; a: De<'
 
   return (
     <Moldura rotulo="Linha do tempo" objetivo={a.objetivo} enunciado={a.enunciado} criterio={a.criterio} concluida={!!feita?.concluidaEm}>
-      <p className="font-ui text-[12.5px] text-ink-muted m-0">Mais antigo no alto, mais recente embaixo.</p>
+      <p className="rz-rot m-0">Mais antigo no alto · mais recente embaixo</p>
       <ol className="grid gap-2 m-0 p-0 list-none">
         {ordem.map((eid, i) => {
           const e = porId.get(eid)!;
-          const marca = conferido ? (certoNa(i) ? 'border-[var(--teal)] bg-[var(--teal-soft)]' : 'border-[var(--gold)] bg-[var(--gold-soft)]')
-            : pego === i ? 'border-[var(--rz-mar)] bg-[var(--rz-pedra)]' : 'border-line bg-[var(--card)]';
+          const estado = conferido ? (certoNa(i) ? 'certa' : 'errada') : pego === i ? 'marcada' : undefined;
           return (
-            <li key={eid} className={`flex items-stretch gap-2 rounded-[var(--r-md)] border ${marca}`}>
+            <li key={eid} data-estado={estado} className="rz-opcao !p-0 flex items-stretch gap-2">
               <button type="button" onClick={() => tocar(i)} aria-pressed={pego === i}
                 aria-label={`${i + 1}. ${e.texto}. ${pego === null ? 'Tocar para escolher' : pego === i ? 'Escolhido; toque em outro lugar para mover' : 'Tocar para mover o item escolhido para cá'}`}
-                className="flex flex-1 items-start gap-3 px-3 py-3 text-left font-ui text-[14.5px] leading-snug text-ink min-h-[48px]">
-                <span className="font-display text-[15px] font-bold text-[var(--rz-terra)] tabular-nums w-5 shrink-0">{i + 1}</span>
+                className="flex flex-1 items-start gap-3 px-3 py-3 text-left font-ui text-[15.5px] leading-snug text-[var(--tinta)] min-h-[48px]">
+                <span className="rz-numero text-[18px] w-6 shrink-0">{i + 1}</span>
                 <span className="grid gap-0.5">
                   <span>{e.texto}</span>
-                  {conferido && tudoCerto && <span className="font-ui text-[12.5px] font-semibold text-[var(--rz-terra)]">{e.quando}</span>}
-                  {conferido && !certoNa(i) && <span className="font-ui text-[12.5px] text-[var(--gold-ink)]">↺ fora do lugar</span>}
+                  {conferido && tudoCerto && <span className="rz-numero text-[14px]">{e.quando}</span>}
+                  {conferido && !certoNa(i) && <span className="font-ui text-[12.5px] text-[var(--ouro-tinta)]">↺ fora do lugar</span>}
                 </span>
               </button>
-              <div className="flex flex-col border-l border-line">
+              <div className="flex flex-col border-l border-[var(--linha)]">
                 <button type="button" aria-label={`Subir: ${e.texto}`} disabled={i === 0} onClick={() => mover(i, i - 1)}
-                  className="flex-1 px-3 min-h-[24px] min-w-[44px] text-ink-body disabled:opacity-30 hover:bg-[var(--sand)]">▲</button>
+                  className="flex-1 px-3 min-h-[24px] min-w-[44px] text-[var(--corpo)] disabled:opacity-30 hover:bg-[var(--pedra)] transition-colors duration-150">▲</button>
                 <button type="button" aria-label={`Descer: ${e.texto}`} disabled={i === ordem.length - 1} onClick={() => mover(i, i + 1)}
-                  className="flex-1 px-3 min-h-[24px] min-w-[44px] border-t border-line text-ink-body disabled:opacity-30 hover:bg-[var(--sand)]">▼</button>
+                  className="flex-1 px-3 min-h-[24px] min-w-[44px] border-t border-[var(--linha)] text-[var(--corpo)] disabled:opacity-30 hover:bg-[var(--pedra)] transition-colors duration-150">▼</button>
               </div>
             </li>
           );
@@ -339,14 +332,14 @@ export function Ordenar({ modulo, id, a }: { modulo: number; id: string; a: De<'
       </ol>
       <p className="sr-only" aria-live="polite">{aviso}</p>
       <div aria-live="polite" className="grid gap-3">
-        {!conferido && <Button className="justify-self-start" onClick={conferir}>Conferir a ordem</Button>}
+        {!conferido && <button type="button" className="rz-botao justify-self-start" onClick={conferir}>Conferir a ordem</button>}
         {conferido && (
           <>
             <Veredito certo={tudoCerto}>
               {tudoCerto ? a.explicacao : `${certos} de ${ordem.length} no lugar. Os marcados estão fora; mova e confira de novo.`}
             </Veredito>
             {!tudoCerto && (
-              <Button variant="secondary" size="sm" className="justify-self-start" onClick={() => setConferido(false)}>Continuar ajustando</Button>
+              <button type="button" className="rz-botao claro pequeno justify-self-start" onClick={() => setConferido(false)}>Continuar ajustando</button>
             )}
           </>
         )}
@@ -373,32 +366,31 @@ export function Classificar({ modulo, id, a }: { modulo: number; id: string; a: 
 
   return (
     <Moldura rotulo="Mito ou evidência?" objetivo={a.objetivo} enunciado={a.enunciado} criterio={a.criterio} concluida={!!feita?.concluidaEm}>
-      <ol className="grid gap-4 m-0 p-0 list-none">
+      <ol className="grid gap-5 m-0 p-0 list-none">
         {itens.map((it, k) => {
           const certo = resposta[it.id] === it.categoria;
           const nomeCerto = a.categorias.find(c => c.id === it.categoria)?.nome;
           return (
             <li key={it.id} className="grid gap-2">
-              <p id={`cl-${it.id}`} className="m-0 font-ui text-[15px] leading-snug text-ink">
-                <span className="font-display font-bold text-[var(--rz-terra)] mr-1.5">{k + 1}.</span>{it.texto}
+              <p id={`cl-${it.id}`} className="rz-serif m-0 grid grid-cols-[34px_1fr] gap-2 text-[17px] leading-snug text-[var(--tinta)]">
+                <span className="rz-numero text-[22px]">{k + 1}</span><span>{it.texto}</span>
               </p>
-              <div role="radiogroup" aria-labelledby={`cl-${it.id}`} className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div role="radiogroup" aria-labelledby={`cl-${it.id}`} className="flex flex-wrap gap-2 sm:pl-[42px]">
                 {a.categorias.map(c => {
                   const esta = resposta[it.id] === c.id;
                   return (
                     <button key={c.id} type="button" role="radio" aria-checked={esta} disabled={conferido}
                       onClick={() => setResposta({ ...resposta, [it.id]: c.id })}
-                      className={`rounded-[var(--r-md)] border px-3 py-2 min-h-[44px] font-ui text-[13.5px] text-ink
-                        ${esta ? 'border-[var(--rz-mar)] bg-[var(--rz-pedra)] font-semibold' : 'border-line bg-[var(--card)] hover:border-[var(--rz-mar)]'}`}>
+                      className={`rz-mini ${esta ? '!bg-[var(--accent-bg)] !border-[var(--accent-bg)] !text-white' : ''}`}>
                       {c.nome}
                     </button>
                   );
                 })}
               </div>
               {conferido && (
-                <Veredito certo={certo}>
+                <div className="sm:pl-[42px]"><Veredito certo={certo}>
                   {certo ? it.explicacao : <>A classificação certa é «{nomeCerto}». {it.explicacao}</>}
-                </Veredito>
+                </Veredito></div>
               )}
             </li>
           );
@@ -406,9 +398,9 @@ export function Classificar({ modulo, id, a }: { modulo: number; id: string; a: 
       </ol>
       <div aria-live="polite" className="grid gap-3">
         {!conferido && (
-          <Button className="justify-self-start" onClick={conferir} disabled={!completos}>
+          <button type="button" className="rz-botao justify-self-start" onClick={conferir} disabled={!completos}>
             {completos ? 'Conferir' : 'Classifique todas'}
-          </Button>
+          </button>
         )}
         {conferido && (
           <>
@@ -416,8 +408,8 @@ export function Classificar({ modulo, id, a }: { modulo: number; id: string; a: 
               {`${certos} de ${a.itens.length} certas. `}
               {passou ? 'Critério cumprido.' : `São precisas ${a.minimo}. Releia as explicações e refaça.`}
             </Veredito>
-            <Button variant="secondary" size="sm" className="justify-self-start"
-              onClick={() => { setConferido(false); setResposta({}); }}>Refazer</Button>
+            <button type="button" className="rz-botao claro pequeno justify-self-start"
+              onClick={() => { setConferido(false); setResposta({}); }}>Refazer</button>
           </>
         )}
       </div>

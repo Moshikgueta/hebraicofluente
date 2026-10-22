@@ -2,15 +2,12 @@
 
 /* O texto de Raízes com as suas fontes.
  * ─────────────────────────────────────────────────────────────────────────
- * Cada frase factual do dado termina com [[R01-NNN]]. Aqui a marca vira um
- * botão pequeno, numerado na ordem do parágrafo, que abre logo abaixo o painel
- * da fonte: o que a afirmação diz, o status dela, a evidência, os limites e
- * as referências. Abre no lugar, e não numa janela por cima, para o leitor
- * não perder a frase de vista nem a ordem de leitura do leitor de tela.
- *
- * Uma marca que não está na matriz publicada (afirmação não verificada que
- * escapou para o texto) aparece como "fonte não encontrada", e o teste
- * tests/raizes.test.ts reprova antes de chegar aqui.
+ * Cada frase factual do dado termina com [[R01-NNN]]. Aqui a marca vira o
+ * número discreto da coleção editorial (`.rz-marca`), numerado na ordem do
+ * parágrafo, que abre logo abaixo o painel da fonte: o que a afirmação diz,
+ * o status, a evidência, os limites e as referências. Abre no lugar, e não
+ * numa janela por cima, para o leitor não perder a frase de vista nem a ordem
+ * de leitura do leitor de tela.
  */
 
 import { Fragment, useId, useState } from 'react';
@@ -19,11 +16,11 @@ import { He } from '@/components/hebrew/He';
 import { afirmacao, fonte, partir, type Afirmacao } from '@/lib/raizes';
 
 const NIVEL: Record<string, string> = {
-  A: 'Literatura acadêmica',
-  B: 'Instituição ou obra de referência',
-  C: 'Fonte primária',
-  D: 'Fonte oficial',
-  E: 'Complementar'
+  A: 'literatura acadêmica',
+  B: 'instituição ou obra de referência',
+  C: 'fonte primária',
+  D: 'fonte oficial',
+  E: 'complementar'
 };
 
 const ACESSO: Record<string, string> = {
@@ -36,8 +33,8 @@ const ACESSO: Record<string, string> = {
 export function StatusDaAfirmacao({ status }: { status: Afirmacao['status'] }) {
   const debate = status === 'CONTESTADO';
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-ui text-[11px] font-semibold uppercase tracking-[.06em]
-      ${debate ? 'bg-[var(--rz-terra-suave)] text-[var(--rz-terra)]' : 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'}`}>
+    <span className={`rz-rot inline-flex items-center gap-1.5 ${debate ? 'ocre' : '!text-[var(--teal-ink)]'}`}>
+      <span aria-hidden className={`inline-block h-2 w-2 rounded-full ${debate ? 'bg-[var(--ocre)]' : 'bg-[var(--teal)]'}`} />
       {debate ? 'Em debate' : 'Verificada por busca'}
     </span>
   );
@@ -46,56 +43,49 @@ export function StatusDaAfirmacao({ status }: { status: Afirmacao['status'] }) {
 /** O painel de uma ou mais afirmações: o que a fonte sustenta e o que não. */
 export function PainelDeFonte({ ids, id }: { ids: string[]; id?: string }) {
   return (
-    <div id={id} className="grid gap-3 rounded-[var(--r-md)] border border-[var(--rz-pedra-borda)] bg-[var(--rz-pedra)] p-4">
+    <div id={id} className="rz-painel grid gap-4">
       {ids.map(aid => {
         const a = afirmacao(aid);
-        if (!a) {
-          return <p key={aid} className="font-ui text-[13px] text-ink-muted m-0">Fonte {aid} não encontrada.</p>;
-        }
+        if (!a) return <p key={aid} className="font-ui text-[13px] text-[var(--suave)] m-0">Fonte {aid} não encontrada.</p>;
         return (
           <div key={aid} className="grid gap-2">
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-3">
               <StatusDaAfirmacao status={a.status} />
-              <span className="font-ui text-[12px] text-ink-muted">{a.id}</span>
+              <span className="font-ui text-[12px] text-[var(--suave)] tabular-nums">{a.id}</span>
             </div>
-            <p className="font-ui text-[14px] leading-relaxed text-ink m-0">{a.afirmacao}</p>
-            <dl className="grid gap-1.5 font-ui text-[13px] leading-relaxed text-ink-body m-0">
-              <div><dt className="inline font-semibold text-ink">O que a fonte diz: </dt><dd className="inline m-0">{a.evidencia}</dd></div>
+            <p className="rz-serif m-0 text-[16px] leading-relaxed text-[var(--tinta)]">{a.afirmacao}</p>
+            <dl className="m-0 grid gap-1.5 font-ui text-[13.5px] leading-relaxed text-[var(--corpo)]">
+              <div><dt className="inline font-semibold text-[var(--tinta)]">O que a fonte diz: </dt><dd className="inline m-0">{a.evidencia}</dd></div>
               {a.interpretacoes && (
-                <div><dt className="inline font-semibold text-ink">Interpretações: </dt><dd className="inline m-0">{a.interpretacoes}</dd></div>
+                <div><dt className="inline font-semibold text-[var(--tinta)]">Interpretações: </dt><dd className="inline m-0">{a.interpretacoes}</dd></div>
               )}
               {a.limitacoes && (
-                <div><dt className="inline font-semibold text-ink">Limites: </dt><dd className="inline m-0">{a.limitacoes}</dd></div>
+                <div><dt className="inline font-semibold text-[var(--tinta)]">Limites: </dt><dd className="inline m-0">{a.limitacoes}</dd></div>
               )}
             </dl>
-            <ul className="grid gap-2 m-0 p-0 list-none">
+            <ol className="m-0 grid gap-2 pl-5 font-ui text-[12.5px] leading-snug text-[var(--corpo)]">
               {a.fontes.map(fid => {
                 const f = fonte(fid);
                 if (!f) return null;
                 return (
-                  <li key={fid} className="font-ui text-[12.5px] leading-snug text-ink-body">
-                    <span className="font-semibold text-ink">{f.autor}</span>. {f.titulo}
+                  <li key={fid} className="[overflow-wrap:anywhere]">
+                    <span className="font-semibold text-[var(--tinta)]">{f.autor}</span>. {f.titulo}
                     {f.publicacao ? `. ${f.publicacao}` : ''}{f.ano ? `, ${f.ano}` : ''}.{' '}
-                    <span className="text-ink-muted">({NIVEL[f.nivel] ?? f.nivel}; {ACESSO[f.acesso] ?? f.acesso}; consulta em {f.consulta}.)</span>{' '}
-                    {f.url && (
-                      <a href={f.url} target="_blank" rel="noopener noreferrer"
-                        className="text-[var(--rz-mar)] underline underline-offset-2 break-all">abrir a fonte</a>
-                    )}
+                    <span className="text-[var(--suave)]">({NIVEL[f.nivel] ?? f.nivel}; {ACESSO[f.acesso] ?? f.acesso}; consulta em {f.consulta}.)</span>{' '}
+                    {f.url && <a href={f.url} target="_blank" rel="noopener noreferrer" className="rz-link !text-[12.5px]">abrir a fonte ↗</a>}
                   </li>
                 );
               })}
-            </ul>
+            </ol>
           </div>
         );
       })}
-      <Link href="/raizes/biblioteca" className="font-ui text-[12.5px] text-[var(--rz-mar)] underline underline-offset-2 justify-self-start">
-        Ver todas as fontes na biblioteca
-      </Link>
+      <Link href="/raizes/biblioteca" prefetch={false} className="rz-link !text-[13px] justify-self-start">Todas as fontes na biblioteca</Link>
     </div>
   );
 }
 
-/** Um parágrafo do dado: texto, hebraico e botões de fonte. */
+/** Um parágrafo do dado: texto, hebraico e números de fonte. */
 export function TextoComFontes({ texto, className = '' }: { texto: string; className?: string }) {
   const base = useId();
   const [aberta, setAberta] = useState<number | null>(null);
@@ -104,7 +94,7 @@ export function TextoComFontes({ texto, className = '' }: { texto: string; class
   const grupos: { ids: string[]; i: number }[] = [];
   return (
     <div className="grid gap-2">
-      <p className={`font-ui text-[16px] leading-[1.7] text-ink-body m-0 ${className}`}>
+      <p className={`rz-corpo ${className}`}>
         {pedacos.map((p, k) => {
           if (p.t === 'texto') return <Fragment key={k}>{p.v}</Fragment>;
           if (p.t === 'he') return <He key={k} size="inline">{p.v}</He>;
@@ -112,17 +102,8 @@ export function TextoComFontes({ texto, className = '' }: { texto: string; class
           grupos.push({ ids: p.ids, i });
           const aberto = aberta === i;
           return (
-            <button
-              key={k}
-              type="button"
-              aria-expanded={aberto}
-              aria-controls={`${base}-${i}`}
-              aria-label={`Fonte ${i + 1}: ${aberto ? 'fechar' : 'abrir'}`}
-              onClick={() => setAberta(aberto ? null : i)}
-              className={`mx-0.5 inline-flex min-h-[24px] min-w-[24px] -translate-y-[2px] items-center justify-center rounded-full border px-1.5
-                align-middle font-ui text-[11px] font-semibold leading-none transition-colors
-                ${aberto ? 'border-[var(--rz-mar)] bg-[var(--rz-mar)] text-[var(--cream)]' : 'border-[var(--rz-pedra-borda)] bg-[var(--rz-pedra)] text-[var(--rz-mar)] hover:border-[var(--rz-mar)]'}`}
-            >
+            <button key={k} type="button" className="rz-marca" aria-expanded={aberto} aria-controls={`${base}-${i}`}
+              aria-label={`Fonte ${i + 1}: ${aberto ? 'fechar' : 'abrir'}`} onClick={() => setAberta(aberto ? null : i)}>
               {i + 1}
             </button>
           );

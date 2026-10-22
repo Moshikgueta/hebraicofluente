@@ -741,6 +741,12 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   A reflexão livre e, no futuro, o laboratório genealógico ficam SÓ no aparelho.
 - NÃO está em `data/courses.json`: falta preço, o contador (CNAE de idiomas) e
   mudar o art. 1 dos Termos. Até lá o acesso só existe concedido à mão.
+- Visual: a estética da coleção editorial (Israel Além do Roteiro), em
+  `app/src/app/raizes/raizes.css` (classes `rz-*`, só debaixo de `.rz`) e no
+  layout `app/src/app/raizes/layout.tsx`, que carrega a Literata SÓ em /raizes
+  (o latin-ext numa segunda face, baixada só quando a página tem a letra).
+  No mapa, o toque abre o ponto mais próximo do dedo (pontos a 20 px no
+  celular); os botões dos pontos são para teclado e leitor de tela.
 - Módulo 1 pronto para revisão humana; módulos 2-10 só no plano.
   `npm run raizes` (em app, depois do build) percorre o módulo num Chromium.
 

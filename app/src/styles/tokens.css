@@ -129,6 +129,7 @@
   --rz-terra:        #8C5426;   /* número grande, data, ponto do mapa */
   --rz-terra-suave:  #F4E7DA;
   --rz-terra-mapa:   #EFE7D6;   /* a terra do mapa */
+  --rz-titulo:       #0E3B43;   /* títulos em serifa: o navy da coleção */
 
   --ember:      var(--gold);
   --ember-wash: var(--gold-soft);
@@ -257,6 +258,7 @@
     --rz-terra:        #E2A877;
     --rz-terra-suave:  #2A1F16;
     --rz-terra-mapa:   #2B3134;
+    --rz-titulo:       #CFE9E3;
 
     /* ── teal: progresso e acerto ──────────────────────────────────────── */
     --teal:      #41B5A4;
