@@ -85,6 +85,14 @@ export type Bloco =
   | { tipo: 'reflexao'; id: string; pergunta: string; apoio: string }
   | { tipo: 'laboratorio'; titulo: string; apresentacao: string }
   | { tipo: 'sintese'; itens: string[] }
+  /* As peças do Israel Além do Roteiro (22/10/2026): nenhuma conta para concluir o módulo. */
+  | { tipo: 'palpite'; id: string; pergunta: string; opcoes: { texto: string; correta?: boolean }[]; resposta: string }
+  | { tipo: 'vf'; id: string; titulo: string; itens: { afirmacao: string; verdadeira: boolean; explicacao: string }[] }
+  | { tipo: 'curiosidades'; titulo: string; itens: { titulo: string; texto: string }[] }
+  | {
+      tipo: 'artefatos'; titulo: string;
+      itens: { id: string; nome: string; tipo: 'documento' | 'objeto' | 'lugar' | 'livro'; quando: string; gravura: string; resumo: string; texto: string; legenda: string }[];
+    }
   /** Um documento explorável: a ilustração tem partes tocáveis, cada uma com texto marcado. */
   | {
       tipo: 'documento'; id: string; titulo: string; ilustracao: 'edito'; apresentacao: string; legenda: string;
@@ -104,7 +112,7 @@ export type ExperienciaDoModulo = {
   };
 };
 
-export type Etapa = { id: string; titulo: string; pergunta: string; blocos: Bloco[] };
+export type Etapa = { id: string; titulo: string; pergunta: string; blocos: Bloco[]; /** A gravura da seção (components/raizes/ilustracoes). */ vinheta?: string };
 
 export type ModuloRaizes = {
   n: number; titulo: string; subtitulo: string; periodo: string; regiao: string;

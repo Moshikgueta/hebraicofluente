@@ -789,14 +789,21 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   - `tests/raizes-atlas.test.ts`; a auditoria do protótipo está em
     `raizes/docs/auditoria-prototipo-atlas.md`. Pendente antes de vender: uma linha sobre a
     árvore na Política de Privacidade.
-- **Protótipo "O Arquivo Aberto"** (22/10/2026, os dois MASTER PROMPTS do dono juntos; estratégia
-  em `raizes/docs/experiencia-premium-fase1-2.md`): SÓ no módulo 3, por `experiencia` no
-  m03.json, até o dono aprovar. Abertura com a folha selada que se escreve
-  (`components/raizes/arquivo/`: `Edito`, `AberturaDoMaco`), Contextualizar como narrativa com
-  a ficha do mapa fixa (`NarrativaComMapa`: só acende lugares que o bloco nomeia) e o bloco
-  `documento` ("Leia o édito", `LeiaODocumento`). Cores só debaixo de `.rz-arquivo`; a folha é
-  sempre papel com tinta escura, também no tema escuro. Tudo SVG e CSS, sem biblioteca;
-  movimento reduzido mostra o estado final. `tests/raizes-experiencia.test.ts`.
+- **O módulo é um capítulo de leitura contínua** (22/10/2026, decisão do dono: "parecido com o
+  Israel Além do Roteiro"). As 8 partes do dado viram SEÇÕES da mesma página
+  (`ModuloRaizesClient`), com sumário, "você está aqui", placar de atividades e o "onde parei" pela
+  seção lida (`?etapa=` continua valendo). O que conclui o módulo não mudou (as atividades). O
+  visual é o da coleção em todos os módulos; a identidade "O Arquivo Aberto" (protótipo do módulo
+  3) foi descartada pelo dono, ficaram a folha do édito, a narrativa com o mapa e o "Leia o édito".
+  Estratégia e diagnóstico: `raizes/docs/experiencia-premium-fase1-2.md`.
+- **Peças do Israel Além do Roteiro** (`components/raizes/Pecas.tsx`): `palpite`, `vf`
+  (verdadeiro ou falso), `curiosidades` e `artefatos` (vitrine com ficha). Nenhuma conta para a
+  conclusão nem grava no servidor. Todo texto factual delas segue a regra das marcas
+  (`textosMarcados` em tests/raizes.test.ts), e a frase a julgar do V/F NÃO leva marca.
+  Gravuras em SVG no código (`components/raizes/ilustracoes/Gravuras.tsx`): objetos e lugares
+  genéricos, nunca rosto, documento legível ou símbolo religioso; a peça que usa uma diz que é
+  interpretativa. Cada seção tem a sua vinheta (`VINHETA_DA_SECAO`, ou `vinheta` no dado).
+  `tests/raizes-experiencia.test.ts` exige artefatos, um jogo e curiosidades em todo módulo.
 
 ## Antes de commitar
 ```sh

@@ -63,6 +63,19 @@ const porId = new Map(afirmacoes.map(a => [a.id, a]));
 const fontePorId = new Map(fontes.map(f => [f.id, f]));
 const NO_TEXTO = new Set(['VERIFICADO', 'CONTESTADO']);
 
+/** Os textos de um bloco que seguem a regra das marcas: fonte depois da pontuação, ano sempre com fonte. */
+function textosMarcados(b: ModuloRaizes['etapas'][number]['blocos'][number]): string[] {
+  switch (b.tipo) {
+    case 'texto': case 'debate': return b.paragrafos;
+    case 'documento': return b.partes.map(x => x.texto);
+    case 'palpite': return [b.resposta];
+    case 'vf': return b.itens.map(x => x.explicacao);
+    case 'curiosidades': return b.itens.map(x => x.texto);
+    case 'artefatos': return b.itens.flatMap(x => [x.texto, x.resumo]);
+    default: return [];
+  }
+}
+
 /** Toda referência a afirmação num módulo: marcas do texto e listas `afirmacoes`. */
 function referencias(m: ModuloRaizes): { onde: string; id: string }[] {
   const saida: { onde: string; id: string }[] = [];
@@ -74,7 +87,7 @@ function referencias(m: ModuloRaizes): { onde: string; id: string }[] {
       if (b.tipo === 'texto' || b.tipo === 'caixa' || b.tipo === 'debate') b.paragrafos.forEach(p => texto(onde, p));
       if (b.tipo === 'glossario') b.termos.forEach(t => lista(`${onde}.${t.termo}`, t.afirmacoes));
       if (b.tipo === 'linha-do-tempo') b.eventos.forEach(ev => lista(`${onde}.${ev.quando}`, ev.afirmacoes));
-      if (b.tipo === 'documento') b.partes.forEach(p => texto(`${onde}.${p.id}`, p.texto));
+      if (b.tipo !== 'texto' && b.tipo !== 'debate') for (const t of textosMarcados(b)) texto(onde, t);
     }
   }
   for (const [id, a] of Object.entries(m.atividades)) {
@@ -230,8 +243,7 @@ describe.skipIf(!TEM_CONTEUDO)('a matriz: o que vai ao texto tem fonte', () => {
     for (const m of modulos) {
       for (const e of m.etapas) {
         for (const b of e.blocos) {
-          if (b.tipo !== 'texto' && b.tipo !== 'debate' && b.tipo !== 'documento') continue;
-          for (const p of b.tipo === 'documento' ? b.partes.map(x => x.texto) : b.paragrafos) {
+          for (const p of textosMarcados(b)) {
             if (/\b\d{3,4}\b/.test(p.replace(/\[\[[^\]]*\]\]/g, '').replace(/módulos? \d+(, \d+)*( e \d+)?/g, '')) && marcasDe(p).length === 0) sem.push(p.slice(0, 60));
           }
         }
@@ -244,8 +256,7 @@ describe.skipIf(!TEM_CONTEUDO)('a matriz: o que vai ao texto tem fonte', () => {
     for (const m of modulos) {
       for (const e of m.etapas) {
         for (const b of e.blocos) {
-          if (b.tipo !== 'texto' && b.tipo !== 'debate' && b.tipo !== 'documento') continue;
-          for (const p of b.tipo === 'documento' ? b.partes.map(x => x.texto) : b.paragrafos) {
+          for (const p of textosMarcados(b)) {
             for (const x of p.matchAll(/(.)\[\[/g)) expect('.?!)', p.slice(0, 50)).toContain(x[1]);
           }
         }
