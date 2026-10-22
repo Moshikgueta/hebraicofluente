@@ -31,6 +31,9 @@ app/.shots/
 # aluno e o hash da senha de cada um: vale o mesmo que o banco.
 backups/
 
+# O editorial dos e-books mora no repositório PRIVADO Moshikgueta/hebraicofluente-editorial
+# (21/10/2026): o conteúdo é vendido. Clone-o aqui, em editorial/.
+editorial/
 # Raízes Sefarditas: o CONTEÚDO mora no repositório privado
 # Moshikgueta/hebraicofluente-raizes, clonado aqui (ver tools/export-content.mjs).
 raizes/

@@ -331,6 +331,43 @@ jobs:
       # domínio é uma edição. `checa-seo.mjs` reprova se os dois divergirem,
       # que é o que aconteceria se este `export` sumisse - o Next cairia no
       # padrão embutido em lib/seo.ts e passaria a anunciar o domínio velho.
+      # O e-book "Israel Além do Roteiro" (21/10/2026): a versão interativa e o
+      # PDF saem de editorial/ a cada publicação e vão para app/public/israel/,
+      # que o build copia para o site. O portão (prefixo /israel em
+      # worker/src/gate.js) só abre para quem comprou o e-book ou o pacote.
+      # Nada disso entra no git. ANTES do build, porque é ele que copia.
+      #
+      # O editorial mora num repositório PRIVADO (Moshikgueta/hebraicofluente-editorial)
+      # desde 21/10/2026: o conteúdo é vendido, e este repositório é público.
+      # O segredo EDITORIAL_TOKEN é um token de acesso fino, SÓ LEITURA, só
+      # daquele repositório. Sem ele, a publicação para aqui em vez de pôr no ar
+      # uma página de venda de um e-book que não abre.
+      - name: Buscar o editorial (repositório privado)
+        if: steps.guard.outputs.ok == 'true'
+        env:
+          TEM_TOKEN: ${{ secrets.EDITORIAL_TOKEN != '' }}
+        run: |
+          if [ "$TEM_TOKEN" != "true" ]; then
+            echo "::error::Falta o segredo EDITORIAL_TOKEN (leitura de Moshikgueta/hebraicofluente-editorial). Sem ele o e-book não é montado."
+            exit 1
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        if: steps.guard.outputs.ok == 'true'
+        with:
+          repository: Moshikgueta/hebraicofluente-editorial
+          token: ${{ secrets.EDITORIAL_TOKEN }}
+          path: editorial
+          persist-credentials: false
+
+      - name: E-book no site
+        if: steps.guard.outputs.ok == 'true'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick >/dev/null
+          ( cd editorial && npm ci --ignore-scripts --no-audit --no-fund )
+          ( cd editorial && npx --yes "playwright@$(node -p "require('./package.json').dependencies['playwright-core']")" install --with-deps chromium >/dev/null 2>&1 )
+          export HF_CHROMIUM="$(cd editorial && node -e "import('playwright-core').then(m => console.log(m.chromium.executablePath()))")"
+          bash scripts/ebook-no-site.sh
+
       - name: Build (modo plataforma)
         if: steps.guard.outputs.ok == 'true'
         working-directory: app

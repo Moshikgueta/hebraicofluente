@@ -32,7 +32,7 @@ import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
 import { He } from '@/components/hebrew/He';
 import { METODO_ORIGINAL } from '@/lib/credito';
-import { FLAGSHIP, flagship, parcelasMax } from '@/lib/catalog';
+import { estaAVenda, FLAGSHIP, flagship, getCourse, parcelasMax } from '@/lib/catalog';
 import {
   empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
@@ -268,7 +268,12 @@ function Footer() {
             ofertas na mesma coluna (auditoria de 01/10, CONV-011). */}
         <div className="grid gap-1 content-start">
           <FooterCol title="O curso" links={[
-            { href: '/cursos/alfabetizacao', label: 'Alfabetização em Hebraico' }
+            { href: '/cursos/alfabetizacao', label: 'Alfabetização em Hebraico' },
+            /* 21/10/2026: o e-book, vendido à parte (data/courses.json, tipo livro),
+               só quando está à venda. */
+            ...(estaAVenda(getCourse('israel-alem-do-roteiro'))
+              ? [{ href: '/cursos/israel-alem-do-roteiro', label: 'E-book Israel Além do Roteiro' }]
+              : [])
           ]} />
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">
             Próximos cursos, à parte e ainda em produção:{' '}

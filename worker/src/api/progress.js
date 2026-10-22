@@ -22,6 +22,7 @@
 
 import { json, fail, notSignedIn, readJson } from '../lib/http.js';
 import { requireAccount } from './auth.js';
+import { ehCurso } from '../lib/catalog.js';
 import {
   activeEntitlements, clearProgress, getProgress, hasProgress, putProgress, throttled
 } from '../lib/db.js';
@@ -47,7 +48,7 @@ const MAX_BYTES = 512 * 1024;
  * A conferência vem ANTES do freio: o freio grava uma linha, e quem vai ser
  * recusado não pode custar escrita nenhuma. Ler o direito é uma leitura.
  */
-const temCurso = async (env, accountId) => (await activeEntitlements(env, accountId)).length > 0;
+const temCurso = async (env, accountId) => (await activeEntitlements(env, accountId)).some(e => ehCurso(e.courseSlug));
 
 /* ── o que não é progresso ─────────────────────────────────────────────────
  * Três nomes que, como CHAVE de um objeto, mexem no protótipo de quem os

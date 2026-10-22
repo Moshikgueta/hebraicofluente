@@ -25,7 +25,7 @@ import { Card, Badge, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
-import { getCourse } from '@/lib/catalog';
+import { getCourse, tipoDe } from '@/lib/catalog';
 import { empresa } from '@/lib/empresa';
 import { decidirFase, DESISTE_MS, FINAL, type Fase } from './fase';
 
@@ -116,13 +116,19 @@ export function ObrigadoClient({ slug }: { slug: string }) {
           <He size="lg" dim>ע</He>
           <Badge tone="mint">Pagamento confirmado</Badge>
           <h1 className="font-display text-[26px] sm:text-[30px] font-bold text-ink max-w-[20ch]">
-            Pronto. O curso é seu.
+            {tipoDe(c) === 'livro' ? 'Pronto. O e-book é seu.' : tipoDe(c) === 'pacote' ? 'Pronto. O pacote é seu.' : 'Pronto. O curso é seu.'}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
-            {c.titlePt}, liberado por {c.accessMonths} meses. A primeira lição
-            leva dez minutos.
+            {tipoDe(c) === 'livro'
+              ? `${c.titlePt}: versão interativa liberada por ${c.accessMonths} meses, e o PDF para baixar.`
+              : tipoDe(c) === 'pacote'
+                ? 'O curso de alfabetização e o e-book estão liberados. A primeira lição leva dez minutos.'
+                : `${c.titlePt}, liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}
           </p>
-          <LinkButton href="/meu-hebraico" size="lg">Começar agora</LinkButton>
+          {tipoDe(c) === 'livro'
+            /* /israel/ é uma página estática fora do app: link comum, sem o roteador. */
+            ? <a href={c.abre ?? '/israel/'} className="inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">Abrir o e-book</a>
+            : <LinkButton href="/meu-hebraico" size="lg">Começar agora</LinkButton>}
         </Card>
       </Wrap>
     );

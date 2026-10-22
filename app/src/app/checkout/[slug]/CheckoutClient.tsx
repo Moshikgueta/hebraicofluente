@@ -37,7 +37,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
-import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, tipoDe, type CatalogCourse } from '@/lib/catalog';
 import { comParceria, fimDaParceria, parceriaAtual, precoDaParceria } from '@/lib/parceria';
 import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
@@ -97,6 +97,19 @@ export function CheckoutClient({ slug }: { slug: string }) {
      acesso" do painel saía para bater num "nada a pagar". */
   const restam = daysLeft(account.session, slug);
   const owned = account.can(slug) && (restam === null || restam > 45);
+  /* O pacote não vira um direito com o slug dele: ele libera cada produto de
+     `componentes`. Quem já tem um deles (fora da janela de renovação) compra
+     só o que falta - o servidor recusa com `ja-tem-parte`. */
+  const tipo = tipoDe(c);
+  const jaTemParte = tipo === 'pacote' && (c.componentes ?? []).some(s => {
+    const r = daysLeft(account.session, s);
+    return account.can(s) && (r === null || r > 45);
+  });
+  /* Para onde a compra leva. O e-book abre em /israel/, uma página estática
+     fora do app: navegação de verdade, não a do roteador. */
+  const destino = c.abre ?? '/meu-hebraico';
+  const irPara = (href: string) => { if (href.startsWith('/israel')) window.location.assign(href); else router.push(href); };
+  const oQue = tipo === 'livro' ? 'O e-book' : tipo === 'pacote' ? 'O pacote' : 'O curso';
   const parcelas = parcelasMax(c.price);
   const total = method === 'pix' ? pixPrice(c.price) : c.price.brl;
 
@@ -239,6 +252,30 @@ export function CheckoutClient({ slug }: { slug: string }) {
     );
   }
 
+  /* ── já tem parte do pacote ──────────────────────────────────────── */
+  if (account.ready && jaTemParte && order?.status !== 'paid') {
+    const falta = (c.componentes ?? []).map(s => getCourse(s)).filter((x): x is CatalogCourse => !!x)
+      .filter(x => !account.can(x.slug));
+    return (
+      <Shell course={c}>
+        <Card tone="mint" className="p-6 grid gap-3">
+          <Badge tone="mint">Você já tem parte do pacote</Badge>
+          <h1 className="font-display text-[21px] font-bold text-ink">
+            Leve só o que falta.
+          </h1>
+          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+            O pacote cobraria de novo o que já está na sua conta.
+          </p>
+          {falta.map(x => (
+            <LinkButton key={x.slug} href={`/checkout/${x.slug}`} size="lg" className="justify-self-start">
+              Comprar {x.titlePt} · {brl(x.price.brl)}
+            </LinkButton>
+          ))}
+        </Card>
+      </Shell>
+    );
+  }
+
   /* ── já é dono ───────────────────────────────────────────────────── */
   if (account.ready && owned && order?.status !== 'paid') {
     return (
@@ -246,14 +283,14 @@ export function CheckoutClient({ slug }: { slug: string }) {
         <Card tone="mint" className="p-6 grid gap-3">
           <Badge tone="mint">Já é seu</Badge>
           <h1 className="font-display text-[21px] font-bold text-ink">
-            Este curso já está na sua conta.
+            {tipo === 'livro' ? 'Este e-book já está na sua conta.' : 'Este curso já está na sua conta.'}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            Nada a pagar. Continue de onde você parou.
+            {tipo === 'livro' ? 'Nada a pagar.' : 'Nada a pagar. Continue de onde você parou.'}
           </p>
-          <LinkButton href="/meu-hebraico" size="lg" className="justify-self-start">
-            Ir para Meu Hebraico
-          </LinkButton>
+          {tipo === 'livro'
+            ? <a href={destino} className="justify-self-start inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">Abrir o e-book</a>
+            : <LinkButton href="/meu-hebraico" size="lg" className="justify-self-start">Ir para Meu Hebraico</LinkButton>}
         </Card>
       </Shell>
     );
@@ -267,12 +304,16 @@ export function CheckoutClient({ slug }: { slug: string }) {
           <He size="lg" dim>ע</He>
           <Badge tone="mint">Pagamento confirmado</Badge>
           <h1 className="font-display text-[24px] sm:text-[28px] font-bold text-ink max-w-[20ch]">
-            Pronto. O curso é seu.
+            Pronto. {oQue} é seu.
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
-            Acesso liberado por {c.accessMonths} meses. A primeira lição leva dez minutos.
+            {tipo === 'livro'
+              ? `Versão interativa liberada por ${c.accessMonths} meses, e o PDF para baixar.`
+              : tipo === 'pacote'
+                ? 'O curso e o e-book estão liberados. A primeira lição leva dez minutos.'
+                : `Acesso liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}
           </p>
-          <Button size="lg" onClick={() => router.push('/meu-hebraico')}>Começar agora</Button>
+          <Button size="lg" onClick={() => irPara(destino)}>{tipo === 'livro' ? 'Abrir o e-book' : 'Começar agora'}</Button>
         </Card>
       </Shell>
     );
@@ -445,17 +486,27 @@ export function CheckoutClient({ slug }: { slug: string }) {
  */
 function CondicoesDaCompra({ curso, renovacao = false }: { curso: CatalogCourse; renovacao?: boolean }) {
   const LINHAS: [string, React.ReactNode][] = [
-    ['O que você leva', `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
+    ['O que você leva', tipoDe(curso) === 'livro'
+      ? `O e-book ${curso.titlePt}: a versão interativa, pelo navegador, e o PDF para baixar.`
+      : tipoDe(curso) === 'pacote'
+        ? 'Acesso completo ao curso Alfabetização em Hebraico e o e-book Israel Além do Roteiro (versão interativa e PDF).'
+        : `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
     /* PAY-B-011 (auditoria de 01/10/2026): na renovação os meses SOMAM ao
        fim do acesso atual (`grantAccess`), e o quadro dizia o contrário. */
     ['Por quanto tempo', renovacao
       ? `Mais ${curso.accessMonths} meses, somados ao fim do acesso atual.`
-      : `${curso.accessMonths} meses, ${INICIO_DO_ACESSO}.`],
+      : tipoDe(curso) === 'livro'
+        ? `A versão interativa por ${curso.accessMonths} meses, ${INICIO_DO_ACESSO}. O PDF baixado fica com você.`
+        : `${curso.accessMonths} meses, ${INICIO_DO_ACESSO}.`],
     /* 30/09/2026 (CDC, art. 6º, III): dito com todas as letras, e não
        deduzido de "12 meses". Renovar é uma compra nova, feita pela pessoa. */
     ['Cobrança', 'Pagamento único. Não há assinatura nem renovação automática: ao fim do prazo, o acesso termina e nada mais é cobrado.'],
     /* COM-007 (auditoria de 28/09): o que NÃO vem junto, antes de pagar. */
-    ['O que não vem junto', <>
+    ['O que não vem junto', tipoDe(curso) === 'livro' ? <>
+      O curso de hebraico: o e-book é um guia de leitura, sem as lições da
+      plataforma.{' '}
+      <Link href="/termos" className="text-[var(--accent)] hover:underline">Termos</Link>.
+    </> : <>
       Aulas ao vivo e correção por professor: o curso é autoinstrucional, e a
       plataforma corrige cada exercício na hora.{' '}
       <Link href="/termos" className="text-[var(--accent)] hover:underline">Termos</Link>.
@@ -646,9 +697,11 @@ function Shell({ course, children }: {
         </h2>
         <p className="font-display text-[17px] font-bold text-ink leading-snug">{c.titlePt}</p>
         <p className="font-ui text-[13px] text-ink-muted">
-          {c.stats.modules} módulos
-          {c.stats.lessons ? ` · ${c.stats.lessons} lições` : ''}
-          {' · '}{c.accessMonths} meses de acesso
+          {tipoDe(c) === 'livro'
+            ? `E-book · ${c.modules.length} capítulos · versão interativa por ${c.accessMonths} meses e PDF`
+            : tipoDe(c) === 'pacote'
+              ? `Curso de alfabetização + e-book · ${c.accessMonths} meses de acesso`
+              : <>{c.stats.modules} módulos{c.stats.lessons ? ` · ${c.stats.lessons} lições` : ''}{' · '}{c.accessMonths} meses de acesso</>}
         </p>
         {/* O número grande é o número que vai ser cobrado.
             ──────────────────────────────────────────────────────────────

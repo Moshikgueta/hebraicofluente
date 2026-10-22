@@ -27,6 +27,7 @@
 
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { activeEntitlements, throttled } from '../lib/db.js';
+import { ehCurso } from '../lib/catalog.js';
 import { exigirAdmin } from '../lib/admin.js';
 import { ip, requireAccount } from './auth.js';
 
@@ -60,7 +61,7 @@ export async function registrar({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
   /* Antes do freio: quem não tem curso não gasta nem a escrita dele. */
-  if (!(await activeEntitlements(env, account.id)).length) return new Response(null, { status: 204 });
+  if (!(await activeEntitlements(env, account.id)).some(e => ehCurso(e.courseSlug))) return new Response(null, { status: 204 });
   if (await throttled(env, `estat:${account.id}`, 30, 60_000)) return new Response(null, { status: 204 });
   const b = await readJson(request, 16 * 1024);
   const eventos = b && Array.isArray(b.eventos) ? b.eventos.slice(0, MAX_EVENTOS) : [];

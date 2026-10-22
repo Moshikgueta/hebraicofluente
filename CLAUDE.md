@@ -1176,3 +1176,43 @@ decidiu manter Álef primeiro: com Mem e Tav sozinhas não há palavra útil
 (אִמָּא e אֵם precisam do Álef), e a ordem atual dá a primeira palavra real já
 na lição 2. Rever só se alunos reais disserem que a lição do Álef (letra
 muda) confunde.
+
+## E-book Israel Além do Roteiro (21/10/2026, decisão do dono) - NO AR SÓ PARA O DONO
+Vendido à parte: é a "venda avulsa de produto digital" do Enquadramento acima. O dono
+decidiu **só abrir a venda depois de o contador confirmar o enquadramento (CNAE, nota)
+e de o advogado ler os parágrafos dos Termos e do Reembolso**.
+- **No ar sem venda** (22/10/2026, decisão do dono, como o Raízes Sefarditas): o e-book e
+  o pacote têm `"aVenda": false` em `data/courses.json`. Com isso não há página de venda,
+  checkout (`isSellable` recusa com 404), link no rodapé nem em /cursos, e os parágrafos
+  do e-book somem dos Termos e do Reembolso (as políticas ficam na versão de antes).
+  `/israel/` vai ao ar atrás do portão e só abre com o direito `israel-alem-do-roteiro`,
+  dado à mão em Actions → Acesso → `liberar`; quem não o tem vai para /cursos/.
+  **Abrir a venda** = tirar as duas linhas `aVenda`, subir `politicas.atualizadoEm` e
+  publicar (nasce versão nova dos Termos e do Reembolso).
+- **O editorial é PRIVADO** (21/10/2026): manuscrito, fontes, ilustrações, fotos e
+  ferramentas moram em `Moshikgueta/hebraicofluente-editorial`, nunca neste repositório
+  (público). `editorial/` está no `.gitignore`: para trabalhar, clone o privado aí. A
+  publicação faz o checkout dele com o segredo `EDITORIAL_TOKEN` (token fino, só leitura,
+  só daquele repositório) e para com erro se o segredo faltar. A Action "Fotos do livro"
+  foi junto. O histórico do ramo `claude/wonderful-mayer-n4sc1n` (e da PR #193) ainda
+  contém o editorial: nunca fundir esses commits na `main` sem tirar o editorial deles.
+- **Catálogo:** `data/courses.json` ganhou `tipo` (sem ele, é curso). `israel-alem-do-roteiro`
+  (`livro`, R$ 67, versão interativa 12 meses + PDF) e `alfabetizacao-e-israel` (`pacote`,
+  R$ 127 até 30/11 e R$ 327 a partir de 01/12 (decisões do dono, 21 e 22/10/2026: até 30/11
+  fica ABAIXO do curso sozinho, de propósito; depois, acima, com R$ 37 de economia), `componentes` = curso + e-book, `listBrl` e
+  `preLancamentoAte` como o curso, virado pela mesma Action `virar-preco`). `allCourses()` (app) só devolve cursos;
+  `allProducts()` devolve tudo (checkout, páginas de venda).
+- **Pedido de pacote:** `itensDoPedido` (worker/src/lib/catalog.js) diz o que um pedido
+  abre. `applyPayment` concede cada item; `refundOrder` aceita `itens` e recua todos na MESMA
+  transação. Quem já tem um componente recebe 409 `ja-tem-parte`. `liberar` (Actions) passa
+  os componentes a `scripts/sql-liberar-pedido.sh`.
+- **Portão:** `/israel` no GATED e no PAGAS, `cursoDaRota` → `israel-alem-do-roteiro`.
+  `NAO_CURSOS` (gate.js) diz quais direitos não são de curso: o e-book não abre /audio, não
+  grava progresso nem estatística. A lista é conferida contra o catálogo em
+  `tests/ebook-produto.test.ts`.
+- **Os arquivos:** `scripts/ebook-no-site.sh` monta a versão web (`--producao`, com o botão
+  do PDF) e o PDF em `app/public/israel/` (gitignored); o passo "E-book no site" do
+  `deploy-worker.yml` roda antes do build. O PDF tem de ficar abaixo de 25 MiB.
+- **Páginas:** `/cursos/<slug>` usa `ProdutoClient` para livro e pacote; rodapé e /cursos
+  linkam o e-book. Termos (art. 1) e Reembolso (art. 4) têm um parágrafo marcado TEXTO PARA
+  APROVAÇÃO; políticas na versão 2026-10-21.

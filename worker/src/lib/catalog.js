@@ -21,8 +21,27 @@ const BY_SLUG = new Map(catalog.courses.map(c => [c.slug, c]));
 
 export const getCourse = slug => BY_SLUG.get(String(slug || '')) || null;
 
-/** Dá para comprar este curso agora? Só o que está publicado e tem conteúdo. */
-export const isSellable = c => !!c && c.status === 'available' && c.engine !== null;
+/** Dá para comprar este produto agora? Só o que está publicado, tem conteúdo e
+ *  não está marcado `aVenda: false` (o e-book, no ar só para o dono, 22/10/2026). */
+export const isSellable = c => !!c && c.status === 'available' && c.engine !== null && c.aVenda !== false;
+
+/* Curso, livro ou pacote (21/10/2026). O pacote não é um direito de acesso
+   por si: um pedido dele libera cada slug de `componentes`, com os meses de
+   cada um. Todo o resto - concessão, estorno, renovação - pergunta aqui o
+   que o pedido abre, em vez de supor que pedido e acesso têm o mesmo slug. */
+export const tipoDe = c => (c && c.tipo) || 'curso';
+
+/** O slug é de um CURSO? O e-book dá direito de acesso, mas não ao que é do
+ *  curso (gravar progresso, áudio das lições, estatística de aluno). */
+export const ehCurso = slug => tipoDe(getCourse(slug)) === 'curso';
+
+/** O que um pedido deste produto libera: [{ courseSlug, months }]. */
+export const itensDoPedido = c => {
+  if (!c) return [];
+  if (tipoDe(c) !== 'pacote') return [{ courseSlug: c.slug, months: c.accessMonths || 12 }];
+  return (c.componentes || []).map(getCourse).filter(Boolean)
+    .map(x => ({ courseSlug: x.slug, months: x.accessMonths || 12 }));
+};
 
 /* Parcerias (02/10/2026): quem chega pelo link de uma parceria paga
    `price.parceriaBrl` quando ele é MENOR que o preço do dia. A primeira é a

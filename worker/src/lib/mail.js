@@ -410,17 +410,30 @@ export function mensagemDeConvitePendente({ email, nome: cru, cursos, marca, pai
  */
 export function mensagemDeCompra({
   nome, curso, valor, pedido, expiraEm, link, aula0, marca, suporte, arrependimentoDias, renovacao,
-  termos, reembolso, versao, desistir
+  termos, reembolso, versao, desistir, tipo = 'curso', ebook = null
 }) {
   const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   /* "ao CURSO X", e não "ao X": o título vem do catálogo e pode começar com
      palavra de qualquer gênero - "ao Alfabetização em Hebraico" não é
-     português. O substantivo no meio resolve para qualquer título futuro. */
-  const abertura = renovacao
-    ? `Seu acesso ao curso ${curso} foi renovado.`
-    : `Seu acesso ao curso ${curso} está liberado.`;
-  const primeiroPasso = !renovacao && aula0;
+     português. O substantivo no meio resolve para qualquer título futuro.
+     O e-book (21/10/2026) diz "e-book", e o pacote, os dois produtos. */
+  const livro = tipo === 'livro';
+  const abertura = livro
+    ? (renovacao ? `Seu acesso ao e-book ${curso} foi renovado.` : `Seu e-book ${curso} está liberado.`)
+    : tipo === 'pacote'
+      ? `Seu acesso ao curso Alfabetização em Hebraico e ao e-book Israel Além do Roteiro está liberado.`
+      : renovacao
+        ? `Seu acesso ao curso ${curso} foi renovado.`
+        : `Seu acesso ao curso ${curso} está liberado.`;
+  const primeiroPasso = !livro && !renovacao && aula0;
+  const rotulo = livro ? 'E-book' : tipo === 'pacote' ? 'Pacote' : 'Curso';
+  const COMO_ENTRAR = livro
+    ? ['Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
+       'compra. Na primeira página do e-book fica o botão para baixar o PDF.']
+    : ['Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
+       'compra. Seu progresso fica na conta, então dá para estudar no celular e',
+       'continuar no computador de onde parou.'];
   const AULA0 = 'São uns dez minutos de leitura, sem nada para decorar: ela mostra como a ' +
     'escrita hebraica funciona, e depois cada letra fica muito mais simples.';
 
@@ -432,15 +445,14 @@ export function mensagemDeCompra({
     primeiroPasso ? 'Seu primeiro passo: a Aula 0.' : null,
     primeiroPasso ? AULA0 : null,
     primeiroPasso ? '' : null,
-    `Comece por aqui: ${primeiroPasso ? aula0 : link}`,
+    `${livro ? 'Abra o e-book' : 'Comece por aqui'}: ${primeiroPasso ? aula0 : link}`,
     primeiroPasso ? `Depois, o curso inteiro fica no seu painel: ${link}` : null,
+    ebook ? `O e-book Israel Além do Roteiro: ${ebook}` : null,
     '',
-    'Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
-    'compra. Seu progresso fica na conta, então dá para estudar no celular e',
-    'continuar no computador de onde parou.',
+    ...COMO_ENTRAR,
     '',
     '---',
-    `Curso: ${curso}`,
+    `${rotulo}: ${curso}`,
     `Valor: ${valor}`,
     expiraEm ? `Acesso até: ${expiraEm}` : null,
     `Pedido: ${pedido}`,
@@ -477,12 +489,11 @@ export function mensagemDeCompra({
       ? `<p><strong>Seu primeiro passo: a Aula 0.</strong> ${escapar(AULA0)}</p>` +
         `<p><a href="${escapar(aula0)}">Começar pela Aula 0</a></p>` +
         `<p>Depois, o curso inteiro fica no <a href="${escapar(link)}">seu painel</a>.</p>`
-      : `<p><a href="${escapar(link)}">Começar o curso</a></p>`,
-    '<p>Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
-    ' compra. Seu progresso fica na conta, então dá para estudar no celular e',
-    ' continuar no computador de onde parou.</p>',
+      : `<p><a href="${escapar(link)}">${livro ? 'Abrir o e-book' : 'Começar o curso'}</a></p>`,
+    ebook ? `<p>O e-book: <a href="${escapar(ebook)}">Israel Além do Roteiro</a>.</p>` : '',
+    `<p>${escapar(COMO_ENTRAR.join(' '))}</p>`,
     '<hr>',
-    `<p>Curso: ${escapar(curso)}<br>`,
+    `<p>${rotulo}: ${escapar(curso)}<br>`,
     `Valor: ${escapar(valor)}<br>`,
     expiraEm ? `Acesso até: ${escapar(expiraEm)}<br>` : '',
     `Pedido: ${escapar(pedido)}</p>`,
