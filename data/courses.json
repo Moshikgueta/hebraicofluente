@@ -183,7 +183,7 @@
       "engine": "livro",
       "abre": "/israel/",
       "taglinePt": "O guia ilustrado para entender Israel antes, durante e depois da viagem.",
-      "summaryPt": "Dez capítulos para quem vai a Israel ou quer entender o país: o mapa, a história, Jerusalém, os outros destinos, a vida real, a comida, o hebraico das placas, a viagem na prática, curiosidades e um diário para preencher. Com mapas, ilustrações, fotos e exercícios de compreensão no fim de cada capítulo.",
+      "summaryPt": "Onze capítulos para quem vai a Israel ou quer entender o país: o mapa, a história, Jerusalém, os outros destinos, a vida real, a comida, o hebraico das placas, a viagem na prática, curiosidades, as dicas do Moshik de onde comer, comprar e sair em cada cidade, e um diário para preencher. Com mapas, ilustrações, fotos e exercícios de compreensão no fim de cada capítulo.",
       "outcomesPt": [
         "Situar no mapa as regiões e os lugares que aparecem num roteiro.",
         "Separar o que é história do que é tradição em cada lugar visitado.",
@@ -207,7 +207,8 @@
         { "n": 7, "titlePt": "Hebraico para compreender Israel", "subPt": "Palavras para reconhecer o que se vê e se ouve" },
         { "n": 8, "titlePt": "Israel na prática", "subPt": "O que conferir, onde conferir e quando" },
         { "n": 9, "titlePt": "41 curiosidades sobre Israel", "subPt": "Histórias curtas, cada uma com a fonte" },
-        { "n": 10, "titlePt": "Diário de descobertas", "subPt": "Páginas para antes, durante e depois da viagem" }
+        { "n": 10, "titlePt": "Dicas do Moshik", "subPt": "Onde comer, comprar e sair em cada cidade, longe do roteiro de sempre" },
+        { "n": 11, "titlePt": "Diário de descobertas", "subPt": "Páginas para antes, durante e depois da viagem" }
       ]
     },
 
