@@ -10,6 +10,7 @@ import { Associacao, Classificar, Escolha, Multipla, Ordenar } from './Atividade
 import { MapaHistorico } from './MapaHistorico';
 import { Laboratorio } from './Laboratorio';
 import { LeiaODocumento } from './arquivo/LeiaODocumento';
+import { Artefatos, Curiosidades, Palpite, VerdadeiroOuFalso } from './Pecas';
 
 export function BlocoRaizes({ b, m }: { b: Bloco; m: ModuloRaizes }) {
   switch (b.tipo) {
@@ -56,6 +57,14 @@ export function BlocoRaizes({ b, m }: { b: Bloco; m: ModuloRaizes }) {
       return <Reflexao id={`m${m.n}:${b.id}`} pergunta={b.pergunta} apoio={b.apoio} />;
     case 'laboratorio':
       return <Laboratorio titulo={b.titulo} apresentacao={b.apresentacao} />;
+    case 'palpite':
+      return <Palpite b={b} />;
+    case 'vf':
+      return <VerdadeiroOuFalso b={b} />;
+    case 'curiosidades':
+      return <Curiosidades b={b} n={m.n} />;
+    case 'artefatos':
+      return <Artefatos b={b} n={m.n} />;
     case 'documento':
       return <LeiaODocumento b={b} />;
     case 'sintese':

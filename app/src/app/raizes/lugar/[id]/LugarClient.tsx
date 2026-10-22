@@ -9,7 +9,9 @@
  * dados do Atlas e diz que é interpretativa. */
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Guardar } from '@/components/raizes/Guardar';
+import { useProgress } from '@/lib/state/store';
 import { Heroi } from '@/components/raizes/Heroi';
 import { PainelDeFonte, TextoComFontes } from '@/components/raizes/Texto';
 import { ESTILO_DA_EVIDENCIA } from '@/components/raizes/AtlasMapa';
@@ -40,6 +42,9 @@ function Fontes({ ids }: { ids: string[] }) {
 export function LugarClient({ id }: { id: string }) {
   const r = raizes();
   const p = r.lugares?.[id];
+  const prog = useProgress();
+  /* Visitar a página da cidade é descobrir o lugar (o mesmo do Atlas). */
+  useEffect(() => { if (p) prog.descobrirRaizes(`lugar:${p.id}`); }, [p?.id]);
   if (r.semConteudo || !p || !r.atlas) return <SemConteudo />;
 
   /* Todas as afirmações citadas na página, para a lista de referências. */
@@ -55,7 +60,10 @@ export function LugarClient({ id }: { id: string }) {
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-10">
       <Heroi kicker="Atlas · um lugar" titulo={p.nome} subtitulo={p.subtitulo} pontos={[{ lon: p.lon, lat: p.lat }]} compacto>
-        <p className="rz-credito m-0 pt-1"><Link href="/raizes/atlas" prefetch={false} className="underline">Voltar ao Atlas</Link></p>
+        <div className="flex flex-wrap items-center gap-4 pt-1">
+          <Link href="/raizes/atlas" prefetch={false} className="rz-credito underline">Voltar ao Atlas</Link>
+          <Guardar chave={`lugar:${p.id}`} />
+        </div>
       </Heroi>
 
       <p className="rz-entrada m-0">{p.abertura}</p>

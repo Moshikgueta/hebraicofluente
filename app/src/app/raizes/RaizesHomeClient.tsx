@@ -7,12 +7,15 @@
  * Os módulos em preparação aparecem na jornada sem fingir que existem. */
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { Heroi } from '@/components/raizes/Heroi';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
 import {
   certificadoRaizes, conquistasObtidas, modulo, moduloAberto, progressoDoModulo, progressoGeral, raizes
 } from '@/lib/raizes';
+import { INTERESSES, type EstadoRaizes, type Interesse } from '@/lib/state/raizes-estado';
+import { MUNDOS, NOME_DO_INTERESSE, descobertasRecentes, progressoDoMundo, recomendar, rotuloDoTipo, selos } from '@/lib/raizes-jornada';
 
 /** "a, b, c nem d", a partir dos itens do certificado (que terminam em ; ou .). */
 function listaComNem(itens: string[]): string {
@@ -69,6 +72,10 @@ export function RaizesHomeClient() {
         </div>
       </section>
 
+      <Interesses e={e} escolher={p.interessesRaizes} />
+
+      <Continuar e={e} revisor={revisor} />
+
       <aside className="rz-fundo grid gap-2">
         <p className="rz-rot m-0">Antes de começar</p>
         <p className="rz-entrada m-0">{r.aviso}</p>
@@ -88,36 +95,41 @@ export function RaizesHomeClient() {
             Modo de revisão: como administrador, você vê todos os módulos abertos. Os alunos continuam abrindo um de cada vez.
           </p>
         )}
-        <ol className="rz-lista">
-          {r.modulos.map(rm => {
-            const conteudo = modulo(rm.n);
-            const aberto = moduloAberto(e, rm.n, revisor);
-            const prog = conteudo ? progressoDoModulo(e, conteudo) : null;
-            const estado = !conteudo ? 'em preparação' : prog?.concluido ? 'concluído' : aberto ? (prog && prog.feitas > 0 ? 'em andamento' : 'aberto') : 'abre depois do anterior';
-            const corpo = (
-              <>
-                <span className="rz-numero text-[22px] pt-1">{String(rm.n).padStart(2, '0')}</span>
-                <span className="grid gap-1 min-w-0">
-                  <span className={`rz-serif text-[19px] leading-snug ${aberto ? 'text-[var(--tinta)]' : 'text-[var(--suave)]'}`}>{rm.titulo}</span>
-                  <span className="font-ui text-[13px] text-[var(--suave)]">{rm.periodo} · {rm.regiao}</span>
-                  {aberto && <span className="font-ui text-[14px] leading-relaxed text-[var(--corpo)]">{rm.resumo}</span>}
-                </span>
-                <span className={`font-ui text-[12.5px] text-right tabular-nums pt-1.5 ${prog?.concluido ? 'text-[var(--teal-ink)] font-semibold' : 'text-[var(--suave)]'}`}>
-                  {prog?.concluido ? '✓' : prog && aberto ? `${prog.feitas}/${prog.total}` : ''}
-                  <span className="block text-[11.5px] font-normal">{estado}</span>
-                </span>
-              </>
-            );
-            const grade = 'grid grid-cols-[44px_1fr_auto] gap-3 py-4 min-h-[64px]';
-            return (
-              <li key={rm.n}>
-                {aberto
-                  ? <Link href={`/raizes/modulo/${rm.n}`} prefetch={false} className={`${grade} -mx-2 px-2 rounded-[6px] transition-colors duration-150 hover:bg-[var(--pedra)]`}>{corpo}</Link>
-                  : <div className={grade}>{corpo}</div>}
-              </li>
-            );
-          })}
-        </ol>
+        {MUNDOS.map(w => {
+          const pw = progressoDoMundo(e, w);
+          return (
+            <section key={w.id} className="grid gap-1 pt-3" aria-labelledby={`mundo-${w.id}`}>
+              <p className="rz-rot ocre m-0">Mundo {w.n} · {pw.feitos} de {pw.total}</p>
+              <h3 id={`mundo-${w.id}`} className="rz-h3">{w.titulo}</h3>
+              <p className="m-0 font-ui text-[14px] leading-relaxed text-[var(--suave)]">{w.subtitulo}</p>
+              <ol className="rz-lista">
+                {r.modulos.filter(rm => w.modulos.includes(rm.n)).map(rm => <LinhaDoModulo key={rm.n} rm={rm} e={e} revisor={revisor} />)}
+              </ol>
+              {w.portas.length > 0 && (
+                <p className="m-0 flex flex-wrap gap-x-4 gap-y-1">
+                  {w.portas.map(pt => <Link key={pt.rota} href={pt.rota} prefetch={false} className="rz-link min-h-[40px] inline-flex items-center">{pt.rotulo}</Link>)}
+                </p>
+              )}
+            </section>
+          );
+        })}
+      </section>
+
+      <section className="grid gap-3" aria-labelledby="explorar">
+        <div className="rz-rubrica"><h2 id="explorar" className="rz-rot m-0">Explorar livremente</h2></div>
+        <ul className="m-0 grid grid-cols-2 gap-2 p-0 list-none sm:grid-cols-4">
+          {EXPLORAR.map(x => (
+            <li key={x.rota}>
+              <Link href={x.rota} prefetch={false} className="rz-porta">
+                <span className="rz-serif text-[17px] text-[var(--titulo)]">{x.rotulo}</span>
+                <span className="font-ui text-[12.5px] leading-snug text-[var(--suave)]">{x.dica}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <p className="m-0 font-ui text-[13.5px] text-[var(--corpo)]">
+          Passaporte: <Link href="/raizes/passaporte" prefetch={false} className="rz-link">{selos(e).filter(x => x.tem).length} de {selos(e).length} selos</Link>
+        </p>
       </section>
 
       <section className="grid gap-3" aria-labelledby="conquistas">
@@ -190,5 +202,118 @@ export function RaizesHomeClient() {
         </Link>
       </section>
     </div>
+  );
+}
+
+type LinhaRm = ReturnType<typeof raizes>['modulos'][number];
+
+function LinhaDoModulo({ rm, e, revisor }: { rm: LinhaRm; e: EstadoRaizes | undefined; revisor: boolean }) {
+  const conteudo = modulo(rm.n);
+  const aberto = moduloAberto(e, rm.n, revisor);
+  const prog = conteudo ? progressoDoModulo(e, conteudo) : null;
+  const estado = !conteudo ? 'em preparação' : prog?.concluido ? 'concluído' : aberto ? (prog && prog.feitas > 0 ? 'em andamento' : 'aberto') : 'abre depois do anterior';
+  const corpo = (
+    <>
+      <span className="rz-numero text-[22px] pt-1">{String(rm.n).padStart(2, '0')}</span>
+      <span className="grid gap-1 min-w-0">
+        <span className={`rz-serif text-[19px] leading-snug ${aberto ? 'text-[var(--tinta)]' : 'text-[var(--suave)]'}`}>{rm.titulo}</span>
+        <span className="font-ui text-[13px] text-[var(--suave)]">{rm.periodo} · {rm.regiao}</span>
+        {aberto && <span className="font-ui text-[14px] leading-relaxed text-[var(--corpo)]">{rm.resumo}</span>}
+      </span>
+      <span className={`font-ui text-[12.5px] text-right tabular-nums pt-1.5 ${prog?.concluido ? 'text-[var(--teal-ink)] font-semibold' : 'text-[var(--suave)]'}`}>
+        {prog?.concluido ? '✓' : prog && aberto ? `${prog.feitas}/${prog.total}` : ''}
+        <span className="block text-[11.5px] font-normal">{estado}</span>
+      </span>
+    </>
+  );
+  const grade = 'grid grid-cols-[44px_1fr_auto] gap-3 py-4 min-h-[64px]';
+  return (
+    <li>
+      {aberto
+        ? <Link href={`/raizes/modulo/${rm.n}`} prefetch={false} className={`${grade} -mx-2 px-2 rounded-[6px] transition-colors duration-150 hover:bg-[var(--pedra)]`}>{corpo}</Link>
+        : <div className={grade}>{corpo}</div>}
+    </li>
+  );
+}
+
+const EXPLORAR = [
+  { rota: '/raizes/atlas', rotulo: 'Atlas', dica: 'Lugares e Caminhos do Exílio' },
+  { rota: '/raizes/personagens', rotulo: 'Personagens', dica: 'Vidas com fonte' },
+  { rota: '/raizes/glossario', rotulo: 'Glossário', dica: 'As palavras desta história' },
+  { rota: '/raizes/biblioteca', rotulo: 'Biblioteca', dica: 'Cada fonte' },
+  { rota: '/raizes/busca', rotulo: 'Buscar', dica: 'Lugar, pessoa, termo' },
+  { rota: '/raizes/colecao', rotulo: 'Coleção', dica: 'O que você guardou' },
+  { rota: '/raizes/passaporte', rotulo: 'Passaporte', dica: 'Selos do que explorou' },
+  { rota: '/raizes/familia', rotulo: 'Minha história', dica: 'Só no seu aparelho' }
+];
+
+/** A entrada personalizada: o que trouxe a pessoa até aqui. Opcional, muda
+ * só a ordem das sugestões, e nunca tranca nada. Pular grava a lista vazia. */
+function Interesses({ e, escolher }: { e: EstadoRaizes | undefined; escolher: (i: Interesse[]) => void }) {
+  const salvo = e?.perfil;
+  const [editando, setEditando] = useState(false);
+  const [marcados, setMarcados] = useState<Interesse[]>(salvo?.interesses ?? []);
+  if (salvo && !editando) {
+    return (
+      <p className="m-0 font-ui text-[13.5px] leading-relaxed text-[var(--suave)]">
+        {salvo.interesses.length ? <>Seus interesses: {salvo.interesses.map(i => NOME_DO_INTERESSE[i].toLowerCase()).join('; ')}. </> : null}
+        <button type="button" className="rz-link !text-[13.5px] min-h-[36px]" onClick={() => { setMarcados(salvo.interesses); setEditando(true); }}>
+          {salvo.interesses.length ? 'Mudar meus interesses' : 'Escolher interesses'}
+        </button>
+      </p>
+    );
+  }
+  const alternar = (i: Interesse) => setMarcados(m => (m.includes(i) ? m.filter(x => x !== i) : [...m, i]));
+  return (
+    <section className="rz-nota teal grid gap-3" aria-labelledby="interesses">
+      <p className="rz-rot m-0">Antes de entrar no arquivo</p>
+      <h2 id="interesses" className="rz-h3">O que trouxe você até aqui?</h2>
+      <p className="m-0 font-ui text-[14px] leading-relaxed text-[var(--corpo)]">
+        Escolha um ou mais. Isso só muda o que sugerimos primeiro: a jornada inteira continua aberta do mesmo jeito.
+      </p>
+      <div role="group" aria-label="Interesses" className="flex flex-wrap gap-2">
+        {INTERESSES.map(i => (
+          <button key={i} type="button" aria-pressed={marcados.includes(i)} onClick={() => alternar(i)} className="rz-chip text-left !h-auto py-2">
+            {NOME_DO_INTERESSE[i]}
+          </button>
+        ))}
+      </div>
+      <p className="m-0 flex flex-wrap items-center gap-3">
+        <button type="button" className="rz-botao" disabled={!marcados.length} onClick={() => { escolher(marcados); setEditando(false); }}>Guardar</button>
+        <button type="button" className="rz-link min-h-[44px]" onClick={() => { escolher(salvo && editando ? salvo.interesses : []); setEditando(false); }}>
+          {salvo && editando ? 'Cancelar' : 'Pular por agora'}
+        </button>
+      </p>
+    </section>
+  );
+}
+
+/** "Continue de onde parou": as últimas descobertas e o que sugerimos, sempre com o porquê. */
+function Continuar({ e, revisor }: { e: EstadoRaizes | undefined; revisor: boolean }) {
+  const recs = recomendar(e, revisor);
+  const recentes = descobertasRecentes(e, 3);
+  if (!recs.length && !recentes.length) return null;
+  return (
+    <section className="grid gap-3" aria-labelledby="sugestoes">
+      <div className="rz-rubrica"><h2 id="sugestoes" className="rz-rot m-0">Continue sua jornada</h2></div>
+      <ul className="rz-lista">
+        {recs.map(x => (
+          <li key={x.rota}>
+            <Link href={x.rota} prefetch={false} className="grid gap-0.5 py-3 no-underline">
+              <span className="rz-serif text-[18px] leading-snug text-[var(--titulo)]">{x.titulo}</span>
+              <span className="font-ui text-[13px] text-[var(--suave)]">{x.porque}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      {recentes.length > 0 && (
+        <p className="m-0 font-ui text-[13.5px] leading-relaxed text-[var(--corpo)]">
+          Você descobriu por último:{' '}
+          {recentes.map(({ item }, i) => (
+            <span key={item.chave}>{i > 0 ? ' · ' : ''}<Link href={item.rota} prefetch={false} className="rz-link !text-[13.5px]">{item.titulo}</Link> <span className="text-[var(--suave)]">({rotuloDoTipo(item.tipo).toLowerCase()})</span></span>
+          ))}
+        </p>
+      )}
+    </section>
   );
 }

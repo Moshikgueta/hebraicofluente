@@ -15,6 +15,8 @@ import { PainelDeFonte } from '@/components/raizes/Texto';
 import { desenhoDoMapa, raizes, type TipoDeLugar } from '@/lib/raizes';
 import { anosDosCaminhos, lugaresVisiveis, rotasAte, VISTAS } from '@/lib/raizes-atlas';
 import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
+import { Guardar } from '@/components/raizes/Guardar';
+import { useProgress } from '@/lib/state/store';
 
 type Modo = 'lugares' | 'caminhos';
 
@@ -31,6 +33,22 @@ export function AtlasClient() {
   const [ano, setAno] = useState(limites.ate);
   const [tocando, setTocando] = useState(false);
   const quadro = useRef(0);
+  const prog = useProgress();
+
+  /* Links de outras telas (busca, coleção, personagens): ?lugar=, ?modo=caminhos, ?rota=. */
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    if (q.get('modo') === 'caminhos' || q.get('rota')) setModo('caminhos');
+    const alvo = q.get('rota') ?? q.get('lugar');
+    if (alvo) { setSel(alvo); document.getElementById('atlas')?.scrollIntoView({ block: 'start' }); }
+  }, []);
+
+  /* Abrir um lugar ou uma rota é uma descoberta (vai para o passaporte). */
+  useEffect(() => {
+    if (!sel || !atlas) return;
+    if (atlas.rotas.some(rt => rt.id === sel)) prog.descobrirRaizes(`rota:${sel}`);
+    else if (atlas.lugares.some(l => l.id === sel && !l.area)) prog.descobrirRaizes(`lugar:${sel}`);
+  }, [sel, atlas]);
 
   /* A linha do tempo dos Caminhos: cerca de 24 segundos do começo ao fim.
      Com movimento reduzido, o fim aparece de uma vez. */
@@ -155,6 +173,7 @@ export function AtlasClient() {
                   <button type="button" onClick={() => setFontes(!fontes)} aria-expanded={fontes} className="rz-link min-h-[44px] inline-flex items-center">
                     {fontes ? 'Fechar as fontes' : 'De onde vem isso?'}
                   </button>
+                  <Guardar chave={`lugar:${lugar.id}`} />
                 </div>
                 {fontes && <PainelDeFonte ids={lugar.afirmacoes} />}
               </div>
@@ -172,9 +191,12 @@ export function AtlasClient() {
                 </p>
                 <p className="rz-corpo">{rota.resumo}</p>
                 <p className="m-0 font-ui text-[13px] text-[var(--suave)]">Lugares, na ordem das fontes: {rota.pontos.map(nomeDe).join(' → ')}.</p>
-                <button type="button" onClick={() => setFontes(!fontes)} aria-expanded={fontes} className="rz-link justify-self-start min-h-[44px] inline-flex items-center">
-                  {fontes ? 'Fechar as fontes' : 'De onde vem isso?'}
-                </button>
+                <div className="flex flex-wrap items-center gap-4">
+                  <button type="button" onClick={() => setFontes(!fontes)} aria-expanded={fontes} className="rz-link min-h-[44px] inline-flex items-center">
+                    {fontes ? 'Fechar as fontes' : 'De onde vem isso?'}
+                  </button>
+                  <Guardar chave={`rota:${rota.id}`} />
+                </div>
                 {fontes && <PainelDeFonte ids={rota.afirmacoes} />}
               </div>
             </article>
