@@ -299,6 +299,35 @@ if (DADOS.conteudo.length > 1) {
   }
 }
 
+/* O protótipo "O Arquivo Aberto" no módulo 3: abertura, narrativa com o mapa, o édito. */
+if (DADOS.conteudo.some(x => x.n === 3 && x.experiencia)) {
+  await etapa(p, 'descobrir', 3);
+  await p.waitForTimeout(3200);
+  ok(await p.locator('header.rz-abertura figure svg').count() === 1, 'm3: a abertura tem a folha desenhada');
+  ok(await p.locator('header.rz-abertura figcaption', { hasText: 'interpretativa' }).count() === 1, 'm3: a ilustração se diz interpretativa');
+  ok(await semRolagemLateral(p), 'm3: abertura sem rolagem lateral');
+  await p.screenshot({ path: '.shots/arquivo-abertura.png', fullPage: false });
+  await etapa(p, 'contextualizar', 3);
+  ok(await p.locator('.rz-ficha-mapa svg').count() === 1, 'm3: a ficha com o mapa aparece');
+  await p.evaluate(() => {
+    const el = document.querySelector('[data-passo="2"]');
+    window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3);
+  });
+  await p.waitForTimeout(1200);
+  ok(await p.locator('.rz-ficha-mapa .rz-ano', { hasText: '1497' }).count() === 1, 'm3: ao ler 1497, o ano da ficha muda');
+  ok(await p.locator('.rz-ficha-mapa circle.aceso').count() === 2, 'm3: Évora e Lisboa acendem no mapa');
+  await p.screenshot({ path: '.shots/arquivo-narrativa.png', fullPage: false });
+  const marcos = p.locator('.rz-edito .rz-marco');
+  ok(await marcos.count() === 4, 'm3: a folha tem quatro partes tocáveis');
+  for (let k = 0; k < 4; k++) { await marcos.nth(k).click(); await p.waitForTimeout(250); }
+  ok(await p.locator('text=4 de 4 partes lidas').count() === 1, 'm3: as quatro partes contam como lidas');
+  ok(await p.locator('text=O que a folha ensina').count() === 1, 'm3: o fecho aparece depois de ler tudo');
+  ok(await semRolagemLateral(p), 'm3: Contextualizar sem rolagem lateral');
+  await p.locator('text=Leia o édito').scrollIntoViewIfNeeded();
+  await p.screenshot({ path: '.shots/arquivo-edito.png', fullPage: false });
+  await p.screenshot({ path: '.shots/arquivo-contextualizar.png', fullPage: true });
+}
+
 /* O Atlas: lugares, um ponto aberto, os Caminhos tocando. */
 if (DADOS.atlas) {
   await p.goto(`${BASE}/raizes/atlas/`, { waitUntil: 'networkidle' });

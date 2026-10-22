@@ -158,3 +158,110 @@
 .rz-chip { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--linha); background: var(--branco); color: var(--tinta); font-family: var(--rotulo); font-size: 13.5px; font-weight: 600; }
 .rz-chip[aria-pressed="true"] { background: var(--noite); border-color: var(--noite); color: #fff; }
 @media (prefers-reduced-motion: reduce) { .rz-atlas * { transition: none !important; } }
+
+/* ── O Arquivo Aberto (protótipo de 22/10/2026) ───────────────────────────
+   A identidade nova, só debaixo de `.rz-arquivo` (hoje, o módulo 3): papel,
+   tinta ferrogálica, índigo e lacre. Os outros módulos não mudam até o
+   protótipo ser aprovado. Contraste sobre o pergaminho: tinta 14:1, sépia
+   5,9:1, índigo 8,6:1, ocre 4,8:1 (só em número e traço grande).
+   Movimento: tinta que se escreve, selo que assenta, texto que sobe 12 px.
+   Tudo com o estado final como padrão: sem JavaScript ou com movimento
+   reduzido, nada fica escondido. */
+.rz-arquivo {
+  --papel: #F4EDDF;
+  --branco: #FBF7EF;
+  --linha: #DDD0B6;
+  --tinta: #2A211B;
+  --corpo: #3B3029;
+  --suave: #6B5443;
+  --titulo: #2A211B;
+  --mar: #23426E;
+  --ocre: #8A5A1C;
+  --pedra: #EDE3CF;
+  --pedra-escura: #CDBB9A;
+  --lacre: #8E2B1F;
+  --noite: #16130F;
+  --folha: #FBF6EA;
+  --rz-terra-mapa: #EDE3CF;
+  --rz-mar-claro: #E3E6E4;
+}
+@media screen {
+  html[data-a11y-tema='escuro'] .rz-arquivo {
+    --papel: #17140F; --branco: #201C16; --linha: #3A3226; --tinta: #F1E8D8; --corpo: #D8CCB8;
+    --suave: #ADA08A; --titulo: #F1E8D8; --mar: #9DB8E0; --ocre: #E2A877; --pedra: #221E17;
+    --pedra-escura: #4A4031; --lacre: #E08A7A; --folha: #EFE5D2; --rz-terra-mapa: #2A251D; --rz-mar-claro: #12161A;
+  }
+}
+
+/* A abertura do maço: de borda a borda, noite de arquivo, a folha no centro. */
+.rz-abertura { background: radial-gradient(120% 80% at 50% 18%, #2A231B 0%, #16130F 62%); color: #F1E8D8; }
+.rz-abertura .rz-h1 { color: #F6EEDF; font-weight: 340; }
+.rz-abertura .rz-kicker { font-family: var(--rotulo); font-size: 12px; letter-spacing: .24em; text-transform: uppercase; font-weight: 600; color: #D9B26F; margin: 0; }
+.rz-abertura .rz-sub { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.5; color: #E4D6BE; margin: 0; }
+.rz-abertura .rz-credito { font-family: var(--rotulo); font-size: 11.5px; color: rgba(228, 214, 190, .78); }
+
+/* A folha. */
+.rz-edito { color: #2A211B; } /* a folha é sempre papel: tinta escura também no tema escuro */
+.rz-edito-noite { color: #2A211B; }
+.rz-edito-folha { fill: #FBF6EA; }
+.rz-edito-sombra { color: var(--suave, #6B5443); } /* a sombra fica no fundo da página, e segue o tema */
+.rz-edito-noite .rz-edito-sombra { color: #000; opacity: .55; }
+.rz-tinta { fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.rz-escrita { stroke-width: 1.1; opacity: .82; }
+.rz-dobra { stroke-width: .8; opacity: .45; }
+.rz-selo-cera { fill: #8E2B1F; }
+.rz-selo-relevo { stroke: rgba(255, 235, 220, .55); stroke-width: 1.2; stroke-linecap: round; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .rz-edito-desenha .rz-tinta { stroke-dasharray: 1; stroke-dashoffset: 1; animation: rz-escrever .9s cubic-bezier(.4, 0, .2, 1) forwards; animation-delay: var(--d, 0s); }
+  .rz-edito-desenha .rz-escrita { animation-duration: .45s; }
+  .rz-edito-desenha .rz-selo { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(1.35); animation: rz-assentar .5s cubic-bezier(.2, .8, .2, 1) forwards; animation-delay: var(--d, 0s); }
+}
+@keyframes rz-escrever { to { stroke-dashoffset: 0; } }
+@keyframes rz-assentar { 60% { opacity: 1; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+
+/* As partes tocáveis da folha. */
+.rz-marco { position: absolute; transform: translate(-50%, -50%); width: 44px; height: 44px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  font-family: var(--dado); font-weight: 700; font-size: 16px; color: #FBF6EA;
+  background: #23426E; border: 2px solid #FBF6EA; box-shadow: 0 2px 0 rgba(42, 33, 27, .35);
+  transition: background-color var(--dur) ease, transform 200ms cubic-bezier(.2, .8, .2, 1); }
+.rz-marco.lida { background: #7A4E17; }
+.rz-marco[aria-pressed='true'] { background: #8E2B1F; transform: translate(-50%, -50%) scale(1.1); }
+.rz-marco:focus-visible { outline: 3px solid #2A211B; outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-marco:not(.lida):not([aria-pressed='true'])::after { content: ''; position: absolute; inset: -6px; border-radius: 50%;
+    border: 2px solid #23426E; opacity: 0; animation: rz-chamar 2.4s ease-out infinite; }
+}
+@keyframes rz-chamar { 0% { opacity: .6; transform: scale(.8); } 100% { opacity: 0; transform: scale(1.35); } }
+
+/* O que a parte revela: um traço de tinta sublinha o rótulo ao abrir. */
+.rz-revelado { border-left: 3px solid var(--lacre, #8E2B1F); padding: 4px 0 4px 16px; }
+.rz-sublinhado { background-image: linear-gradient(var(--ocre), var(--ocre)); background-repeat: no-repeat; background-position: 0 100%; background-size: 100% 2px; padding-bottom: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-revelado { animation: rz-subir .32s cubic-bezier(.2, .8, .2, 1) both; }
+  .rz-revelado .rz-sublinhado { animation: rz-sublinhar .6s .1s cubic-bezier(.4, 0, .2, 1) both; }
+}
+@keyframes rz-sublinhar { from { background-size: 0 2px; } to { background-size: 100% 2px; } }
+@keyframes rz-subir { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* A narrativa com o mapa: a ficha fixa no alto e os passos que sobem. */
+.rz-ficha-mapa { position: sticky; top: 58px; z-index: 5; background: color-mix(in srgb, var(--papel) 94%, transparent);
+  backdrop-filter: blur(6px); border-bottom: 1px solid var(--linha); }
+.rz-ano { font-family: var(--dado); font-weight: 700; color: var(--ocre); font-variant-numeric: lining-nums tabular-nums; line-height: 1; letter-spacing: -.02em; }
+.rz-mapa-ponto { fill: var(--pedra-escura); }
+.rz-mapa-ponto.aceso { fill: #B8862F; stroke: var(--tinta); }
+.rz-mapa-anel { fill: none; stroke: #B8862F; }
+@media (prefers-reduced-motion: no-preference) {
+  .rz-ano-troca { animation: rz-subir .35s cubic-bezier(.2, .8, .2, 1) both; }
+  .rz-mapa-anel { transform-box: fill-box; transform-origin: center; animation: rz-pulsar 2s ease-out infinite; }
+  .rz-mapa-rota { stroke-dasharray: 1; stroke-dashoffset: 1; animation: rz-escrever 1.2s .1s cubic-bezier(.4, 0, .2, 1) forwards; }
+  .rz-com-movimento .rz-passo { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s cubic-bezier(.2, .8, .2, 1); }
+  .rz-com-movimento .rz-passo[data-visto] { opacity: 1; transform: none; }
+}
+@keyframes rz-pulsar { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(2.4); } }
+
+/* O fio das etapas: o índice do maço com o progresso em tinta. */
+.rz-fio { height: 2px; background: var(--linha); position: relative; overflow: hidden; }
+.rz-fio > i { position: absolute; inset: 0; background: var(--lacre, #8E2B1F); transform-origin: left; transition: transform .45s cubic-bezier(.2, .8, .2, 1); }
+.rz-arquivo .rz-mini[aria-current='step'] { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }

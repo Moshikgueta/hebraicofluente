@@ -84,13 +84,32 @@ export type Bloco =
     }
   | { tipo: 'reflexao'; id: string; pergunta: string; apoio: string }
   | { tipo: 'laboratorio'; titulo: string; apresentacao: string }
-  | { tipo: 'sintese'; itens: string[] };
+  | { tipo: 'sintese'; itens: string[] }
+  /** Um documento explorável: a ilustração tem partes tocáveis, cada uma com texto marcado. */
+  | {
+      tipo: 'documento'; id: string; titulo: string; ilustracao: 'edito'; apresentacao: string; legenda: string;
+      partes: { id: string; rotulo: string; texto: string }[]; fecho: string;
+    };
+
+/**
+ * A experiência premium de um módulo (protótipo de 22/10/2026, só no módulo 3).
+ * A abertura com ilustração e a narrativa com mapa: os passos citam blocos do
+ * Contextualizar pelo título, e o mapa só acende lugares que o bloco nomeia.
+ */
+export type ExperienciaDoModulo = {
+  abertura?: { ilustracao: 'edito'; legenda: string };
+  narrativa?: {
+    etapa: string;
+    passos: { bloco: string; ano: string; lugares: string[]; areas?: string[]; rota?: string }[];
+  };
+};
 
 export type Etapa = { id: string; titulo: string; pergunta: string; blocos: Bloco[] };
 
 export type ModuloRaizes = {
   n: number; titulo: string; subtitulo: string; periodo: string; regiao: string;
   objetivos: string[]; etapas: Etapa[]; atividades: Record<string, Atividade>;
+  experiencia?: ExperienciaDoModulo;
 };
 
 export type ResumoModulo = {

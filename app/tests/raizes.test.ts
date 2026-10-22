@@ -74,6 +74,7 @@ function referencias(m: ModuloRaizes): { onde: string; id: string }[] {
       if (b.tipo === 'texto' || b.tipo === 'caixa' || b.tipo === 'debate') b.paragrafos.forEach(p => texto(onde, p));
       if (b.tipo === 'glossario') b.termos.forEach(t => lista(`${onde}.${t.termo}`, t.afirmacoes));
       if (b.tipo === 'linha-do-tempo') b.eventos.forEach(ev => lista(`${onde}.${ev.quando}`, ev.afirmacoes));
+      if (b.tipo === 'documento') b.partes.forEach(p => texto(`${onde}.${p.id}`, p.texto));
     }
   }
   for (const [id, a] of Object.entries(m.atividades)) {
@@ -229,8 +230,8 @@ describe.skipIf(!TEM_CONTEUDO)('a matriz: o que vai ao texto tem fonte', () => {
     for (const m of modulos) {
       for (const e of m.etapas) {
         for (const b of e.blocos) {
-          if (b.tipo !== 'texto' && b.tipo !== 'debate') continue;
-          for (const p of b.paragrafos) {
+          if (b.tipo !== 'texto' && b.tipo !== 'debate' && b.tipo !== 'documento') continue;
+          for (const p of b.tipo === 'documento' ? b.partes.map(x => x.texto) : b.paragrafos) {
             if (/\b\d{3,4}\b/.test(p.replace(/\[\[[^\]]*\]\]/g, '').replace(/módulos? \d+(, \d+)*( e \d+)?/g, '')) && marcasDe(p).length === 0) sem.push(p.slice(0, 60));
           }
         }
@@ -243,8 +244,8 @@ describe.skipIf(!TEM_CONTEUDO)('a matriz: o que vai ao texto tem fonte', () => {
     for (const m of modulos) {
       for (const e of m.etapas) {
         for (const b of e.blocos) {
-          if (b.tipo !== 'texto' && b.tipo !== 'debate') continue;
-          for (const p of b.paragrafos) {
+          if (b.tipo !== 'texto' && b.tipo !== 'debate' && b.tipo !== 'documento') continue;
+          for (const p of b.tipo === 'documento' ? b.partes.map(x => x.texto) : b.paragrafos) {
             for (const x of p.matchAll(/(.)\[\[/g)) expect('.?!)', p.slice(0, 50)).toContain(x[1]);
           }
         }

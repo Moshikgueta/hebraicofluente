@@ -789,6 +789,14 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   - `tests/raizes-atlas.test.ts`; a auditoria do protótipo está em
     `raizes/docs/auditoria-prototipo-atlas.md`. Pendente antes de vender: uma linha sobre a
     árvore na Política de Privacidade.
+- **Protótipo "O Arquivo Aberto"** (22/10/2026, os dois MASTER PROMPTS do dono juntos; estratégia
+  em `raizes/docs/experiencia-premium-fase1-2.md`): SÓ no módulo 3, por `experiencia` no
+  m03.json, até o dono aprovar. Abertura com a folha selada que se escreve
+  (`components/raizes/arquivo/`: `Edito`, `AberturaDoMaco`), Contextualizar como narrativa com
+  a ficha do mapa fixa (`NarrativaComMapa`: só acende lugares que o bloco nomeia) e o bloco
+  `documento` ("Leia o édito", `LeiaODocumento`). Cores só debaixo de `.rz-arquivo`; a folha é
+  sempre papel com tinta escura, também no tema escuro. Tudo SVG e CSS, sem biblioteca;
+  movimento reduzido mostra o estado final. `tests/raizes-experiencia.test.ts`.
 
 ## Antes de commitar
 ```sh

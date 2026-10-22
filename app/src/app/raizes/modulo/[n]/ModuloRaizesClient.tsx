@@ -13,6 +13,8 @@ import Link from 'next/link';
 import { Heroi } from '@/components/raizes/Heroi';
 import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
 import { BlocoRaizes } from '@/components/raizes/Blocos';
+import { AberturaDoMaco } from '@/components/raizes/arquivo/AberturaDoMaco';
+import { NarrativaComMapa } from '@/components/raizes/arquivo/NarrativaComMapa';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
 import { atividadeConcluida, chaveDaAtividade } from '@/lib/state/raizes-estado';
@@ -27,6 +29,14 @@ export function ModuloRaizesClient({ n }: { n: number }) {
   const e = p.state.raizes;
   const [etapa, setEtapa] = useState<string | null>(null);
   const topo = useRef<HTMLHeadingElement>(null);
+  const indice = useRef<HTMLElement>(null);
+
+  /* A etapa aberta fica à vista na barra de etapas, sem rolar a página. */
+  useEffect(() => {
+    const nav = indice.current;
+    const b = nav?.querySelector<HTMLElement>('[aria-current="step"]');
+    if (nav && b) nav.scrollLeft = b.offsetLeft - (nav.clientWidth - b.offsetWidth) / 2;
+  }, [etapa]);
 
   /* A etapa da URL, depois de montar (a página é estática). */
   useEffect(() => {
@@ -68,20 +78,22 @@ export function ModuloRaizesClient({ n }: { n: number }) {
     });
   };
 
+  const exp = m.experiencia;
+  const narrativa = exp?.narrativa?.etapa === atual.id ? exp.narrativa : undefined;
   const mapas = Object.values(m.atividades).flatMap(a => (a.tipo === 'mapa' ? [a] : []));
   const lugares = mapas.flatMap(a => a.lugares);
 
   return (
-    <div className="grid gap-8">
-      <Heroi compacto kicker={`Módulo ${m.n} · ${m.regiao}`} titulo={m.titulo} subtitulo={m.periodo} pontos={lugares} desenho={mapas[0]?.desenho}>
-        <div className="grid gap-1.5 pt-2 max-w-[420px]">
-          <div className="h-[3px] bg-white/20" role="progressbar" aria-valuemin={0}
-            aria-valuemax={prog.total} aria-valuenow={prog.feitas} aria-label="Atividades concluídas no módulo">
-            <div className="h-full bg-[#8FD6C8]" style={{ width: `${(prog.feitas / Math.max(1, prog.total)) * 100}%` }} />
-          </div>
-          <p className="rz-credito m-0 tabular-nums">{prog.feitas} de {prog.total} atividades concluídas</p>
-        </div>
-      </Heroi>
+    <div className={`grid gap-8 ${exp ? 'rz-arquivo' : ''}`}>
+      {exp?.abertura ? (
+        <AberturaDoMaco kicker={`Módulo ${m.n} · ${m.regiao}`} titulo={m.titulo} subtitulo={m.periodo} legenda={exp.abertura.legenda}>
+          <BarraDoModulo feitas={prog.feitas} total={prog.total} cor="#D9B26F" />
+        </AberturaDoMaco>
+      ) : (
+        <Heroi compacto kicker={`Módulo ${m.n} · ${m.regiao}`} titulo={m.titulo} subtitulo={m.periodo} pontos={lugares} desenho={mapas[0]?.desenho}>
+          <BarraDoModulo feitas={prog.feitas} total={prog.total} cor="#8FD6C8" />
+        </Heroi>
+      )}
 
       <details className="group border-y border-[var(--linha)]">
         <summary className="cursor-pointer list-none flex min-h-[48px] items-center gap-2 font-ui text-[14px] font-semibold text-[var(--tinta)]">
@@ -98,7 +110,7 @@ export function ModuloRaizesClient({ n }: { n: number }) {
         </ol>
       </details>
 
-      <nav aria-label="Etapas do módulo" className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none]">
+      <nav ref={indice} aria-label="Etapas do módulo" className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none]">
         <ol className="m-0 flex gap-2 p-0 list-none min-w-max">
           {m.etapas.map((x, k) => {
             const feita = etapaFeita(m, x.id, e);
@@ -113,6 +125,11 @@ export function ModuloRaizesClient({ n }: { n: number }) {
             );
           })}
         </ol>
+        {exp && (
+          <div className="rz-fio mt-2" aria-hidden>
+            <i style={{ transform: `scaleX(${(i + 1) / m.etapas.length})` }} />
+          </div>
+        )}
       </nav>
 
       <section className="grid gap-7" aria-labelledby="etapa-titulo">
@@ -123,7 +140,9 @@ export function ModuloRaizesClient({ n }: { n: number }) {
           </div>
           <h2 id="etapa-titulo" ref={topo} tabIndex={-1} className="rz-h2 outline-none scroll-mt-20">{atual.pergunta}</h2>
         </div>
-        {atual.blocos.map((b, k) => <BlocoRaizes key={`${atual.id}-${k}`} b={b} m={m} />)}
+        {narrativa
+          ? <NarrativaComMapa key={atual.id} m={m} blocos={atual.blocos} passos={narrativa.passos} />
+          : atual.blocos.map((b, k) => <BlocoRaizes key={`${atual.id}-${k}`} b={b} m={m} />)}
         {atual.id === 'avancar' && <Fechamento m={m} />}
       </section>
 
@@ -132,9 +151,28 @@ export function ModuloRaizesClient({ n }: { n: number }) {
           ? <button type="button" className="rz-botao claro" onClick={() => ir(i - 1)}>← {m.etapas[i - 1]!.titulo}</button>
           : <span />}
         {i < m.etapas.length - 1
-          ? <button type="button" className="rz-botao" onClick={() => ir(i + 1)}>{m.etapas[i + 1]!.titulo} →</button>
+          ? exp
+            ? (
+              <button type="button" className="grid w-full gap-1 rounded-[12px] border border-[var(--tinta)] bg-[var(--tinta)] px-5 py-4 text-left text-[var(--papel)] sm:w-auto sm:max-w-[60%]" onClick={() => ir(i + 1)}>
+                <span className="font-ui text-[11px] font-semibold uppercase tracking-[.18em] opacity-75">Próxima etapa · {m.etapas[i + 1]!.titulo} →</span>
+                <span className="rz-serif text-[18px] leading-snug">{m.etapas[i + 1]!.pergunta}</span>
+              </button>
+            )
+            : <button type="button" className="rz-botao" onClick={() => ir(i + 1)}>{m.etapas[i + 1]!.titulo} →</button>
           : <Link href="/raizes" prefetch={false} className="rz-botao">Voltar à jornada</Link>}
       </nav>
+    </div>
+  );
+}
+
+function BarraDoModulo({ feitas, total, cor }: { feitas: number; total: number; cor: string }) {
+  return (
+    <div className="grid gap-1.5 pt-2 max-w-[420px]">
+      <div className="h-[3px] bg-white/20" role="progressbar" aria-valuemin={0}
+        aria-valuemax={total} aria-valuenow={feitas} aria-label="Atividades concluídas no módulo">
+        <div className="h-full" style={{ width: `${(feitas / Math.max(1, total)) * 100}%`, background: cor }} />
+      </div>
+      <p className="rz-credito m-0 tabular-nums">{feitas} de {total} atividades concluídas</p>
     </div>
   );
 }
