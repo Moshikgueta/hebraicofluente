@@ -70,6 +70,8 @@ vender no piloto.
 
 ## Antes do primeiro contato
 
-- O dono confirma os 5 e quem ele já conhece pessoalmente em cada um (contato quente vale mais).
+- **Os 5 do piloto foram confirmados pelo dono em 23/10/2026**, os da sugestão acima. Mensagens
+  e links de cada um em `piloto.md`.
+- Quem o dono já conhece pessoalmente em cada um (contato quente vale mais).
 - Decisão 3 do plano: haverá condição de grupo? Enquanto não, o piloto vai sem condição.
 - O dono envia; nada sai em nome dele sem a aprovação do texto.
