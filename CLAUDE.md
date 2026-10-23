@@ -877,6 +877,16 @@ compra; medição só com o contador próprio.
   (lib/ecossistema.ts; catálogo quando ele tem). Preço só no produto à venda; "Em breve" sem preço
   nem data (`tests/portal.test.ts`). Nunca as três lado a lado como tabela de planos.
 
+## O cartão do link no WhatsApp e no Instagram (23/10/2026, pedido do dono)
+- Um cartão por porta de entrada, gerados por `tools/og.mjs` (num Chromium, com as fontes e as
+  cores do site; o hebraico é só o שָׁלוֹם do curso): `og-portal.jpg` (a capa e o resto do site),
+  `og-curso.jpg` (curso, /aprender-hebraico, /metodo, /checkout, /biblia), `og-livro.jpg`
+  (/israel-alem-do-obvio e /descobrir-israel, "Em breve", sem preço) e `og-previa.jpg` (/previa, que
+  o editorial monta com `og:image` absoluto). Qual vai em qual rota: `ogDaRota` em lib/seo.ts.
+- **Nome novo a cada cartão novo:** `/media` sai com cache de um ano e o WhatsApp e o Instagram
+  guardam a imagem pelo endereço. O `og.jpg` antigo fica para os links já compartilhados.
+  `tests/cartao-do-link.test.ts` confere as rotas, o 1200x630 e o peso (menos de 300 KB).
+
 ## Fontes: preload só do texto corrido (23/10/2026, pedido do dono)
 - `app/src/app/layout.tsx`: só a Instrument Sans (texto corrido, o elemento da maior pintura) tem
   `<link rel=preload>`; Bricolage (títulos), Noto Serif Hebrew e a cursiva carregam quando o CSS

@@ -74,6 +74,8 @@ describe('/previa não oferece a compra do livro', () => {
   it.skipIf(!existsSync(montada))('a cópia montada: sem preço, sem checkout, sem o nome antigo, só os blocos pedidos', () => {
     const h = readFileSync(montada, 'utf8');
     expect(h).toMatch(/<meta name="robots" content="noindex/);
+    /* o cartão do link no direct */
+    expect(h).toContain('<meta property="og:image" content="https://hebraicofluente.com.br/media/og-previa.jpg"');
     expect(h).not.toMatch(/R\$|\/checkout|\/cursos\/israel/);
     expect(h).not.toMatch(/al[eé]m do roteiro/i);
     expect(h).toContain('/curso-de-hebraico/?utm_source=ig&utm_medium=dm&utm_content=previa-ebook');

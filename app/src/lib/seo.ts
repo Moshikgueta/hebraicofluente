@@ -109,11 +109,27 @@ export function url(rota: string): string {
   return ORIGEM + (p.endsWith('/') ? p : p + '/');
 }
 
-/* A imagem de compartilhamento. É a mesma para o site inteiro, e é escolha,
-   não preguiça: o que a pessoa reconhece numa conversa é a marca, não a
-   seção. Uma por página exigiria gerar dezenas de arquivos que ninguém
-   revisaria. Gerada por tools/og.mjs. */
-export const OG = { src: '/media/og.jpg', largura: 1200, altura: 630 } as const;
+/* A imagem de compartilhamento (o cartão que aparece no WhatsApp e no
+   Instagram). Uma por PORTA DE ENTRADA, não por página (23/10/2026, pedido
+   do dono): a capa, que é o portal das três jornadas; o curso; e o livro.
+   Gerados por tools/og.mjs. A prévia grátis (/previa) é montada pelo
+   editorial e usa /media/og-previa.jpg, do mesmo gerador. */
+/* Nome novo a cada cartão novo: /media sai com cache de um ano, e o WhatsApp
+   e o Instagram guardam a imagem pelo endereço. */
+export const OG = { src: '/media/og-portal.jpg', largura: 1200, altura: 630 } as const;
+const OG_POR_PORTA: readonly { prefixos: readonly string[]; src: string; alt: string }[] = [
+  { prefixos: ['/curso-de-hebraico', '/aprender-hebraico', '/metodo', '/checkout', '/biblia', '/cursos/alfabetizacao'],
+    src: '/media/og-curso.jpg', alt: 'Hebraico Fluente: aprenda a ler hebraico do zero' },
+  { prefixos: ['/israel-alem-do-obvio', '/descobrir-israel'],
+    src: '/media/og-livro.jpg', alt: 'Israel Além do Óbvio, de Moshik Gueta: em breve' }
+];
+
+/** O cartão de compartilhamento de uma rota. */
+export function ogDaRota(rota: string): { src: string; alt: string } {
+  const r = ('/' + rota).replace(/\/{2,}/g, '/').replace(/\/+$/, '') || '/';
+  const porta = OG_POR_PORTA.find(p => p.prefixos.some(x => r === x || r.startsWith(x + '/')));
+  return porta ? { src: porta.src, alt: porta.alt } : { src: OG.src, alt: 'Hebraico Fluente: aprender hebraico, descobrir Israel e as raízes sefarditas' };
+}
 
 /**
  * O metadata de uma página pública.
@@ -133,6 +149,7 @@ export function meta({
   tipo?: 'website' | 'article';
 }): Metadata {
   const canonical = url(rota);
+  const og = ogDaRota(rota);
 
   return {
     title,
@@ -146,13 +163,13 @@ export function meta({
       locale: 'pt_BR',
       title,
       description,
-      images: [{ url: OG.src, width: OG.largura, height: OG.altura, alt: 'Hebraico Fluente' }]
+      images: [{ url: og.src, width: OG.largura, height: OG.altura, alt: og.alt }]
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [OG.src]
+      images: [og.src]
     }
   };
 }
