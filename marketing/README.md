@@ -6,7 +6,7 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 | Arquivo | Fase | Estado |
 |---|---|---|
 | `01-diagnostico.md` | 1. Diagnóstico e as cinco oportunidades | rascunho para o dono revisar (23/10/2026) |
-| `02-estrategia.md` | 2. Estratégia por canal | a fazer, depois da revisão do diagnóstico |
+| `02-estrategia.md` | 2. Estratégia por canal | rascunho sobre hipóteses (23/10/2026) |
 | `03-plano-90-dias.md` | 3. Plano de 90 dias | a fazer |
 | `04-painel.md` | 4. Painel de indicadores | a fazer |
 
@@ -24,3 +24,4 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 ## Registro
 
 - 23/10/2026: diagnóstico inicial (`01-diagnostico.md`).
+- 23/10/2026: estratégia por canal sobre as hipóteses, a pedido do dono (`02-estrategia.md`).
