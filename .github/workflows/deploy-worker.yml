@@ -359,12 +359,22 @@ jobs:
           path: editorial
           persist-credentials: false
 
+      # Teto do passo (23/10/2026): o download do Chromium pendurou duas vezes no
+      # mesmo dia e a publicação ficou parada até ser cancelada à mão, segurando
+      # a fila das seguintes. Com o teto, ela falha em vez de travar.
       - name: E-book no site
         if: steps.guard.outputs.ok == 'true'
+        timeout-minutes: 20
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick >/dev/null
           ( cd editorial && npm ci --ignore-scripts --no-audit --no-fund )
-          ( cd editorial && npx --yes "playwright@$(node -p "require('./package.json').dependencies['playwright-core']")" install --with-deps chromium >/dev/null 2>&1 )
+          # Cada tentativa tem 5 minutos; um download pendurado é morto e tentado de novo.
+          PW="playwright@$(cd editorial && node -p "require('./package.json').dependencies['playwright-core']")"
+          for tentativa in 1 2 3; do
+            if ( cd editorial && timeout 300 npx --yes "$PW" install --with-deps chromium >/dev/null 2>&1 ); then break; fi
+            echo "Chromium: a tentativa $tentativa falhou ou passou de 5 minutos."
+            if [ "$tentativa" = 3 ]; then echo "Chromium não instalou em 3 tentativas." >&2; exit 1; fi
+          done
           export HF_CHROMIUM="$(cd editorial && node -e "import('playwright-core').then(m => console.log(m.chromium.executablePath()))")"
           bash scripts/ebook-no-site.sh
           # As imagens da página de venda do livro, tiradas do livro montado
